@@ -47,7 +47,7 @@
 #include "hbapi.h"
 #include "hbmemory.ch"
 
-void hb_verBuildInfo( void )
+void hb_verBuildInfo(void)
 {
    hb_conOutErr("Harbour++ Build Info", 0);
    hb_conOutErr(hb_conNewLine(), 0);
@@ -136,22 +136,22 @@ void hb_verBuildInfo( void )
    {
       hb_conOutErr("(memory tracking) ", 0);
    }
-#if defined( HB_TR_INFO ) && ( HB_TR_LEVEL == HB_TR_INFO || HB_TR_LEVEL == HB_TR_DEBUG )
+#if defined(HB_TR_INFO) && (HB_TR_LEVEL == HB_TR_INFO || HB_TR_LEVEL == HB_TR_DEBUG)
    hb_conOutErr("(tracing) ", 0);
 #endif
-#if ! defined( HB_NO_PROFILER )
+#if ! defined(HB_NO_PROFILER)
    hb_conOutErr("(profiler) ", 0);
 #endif
-#if defined( __cplusplus )
+#if defined(__cplusplus)
    hb_conOutErr("(C++ mode) ", 0);
 #endif
-#if defined( HB_COMPAT_C53 )
+#if defined(HB_COMPAT_C53)
    hb_conOutErr("(Clipper 5.3b) ", 0);
 #endif
-#if defined( HB_CLP_UNDOC )
+#if defined(HB_CLP_UNDOC)
    hb_conOutErr("(Clipper 5.x undoc) ", 0);
 #endif
-#if defined( HB_CLP_STRICT )
+#if defined(HB_CLP_STRICT)
    hb_conOutErr("(Clipper 5.x strict) ", 0);
 #endif
    hb_conOutErr(hb_conNewLine(), 0);

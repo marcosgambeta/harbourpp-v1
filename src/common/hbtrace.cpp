@@ -55,19 +55,17 @@
 #include "hb_io.h"
 #include "hbtrace.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    #include <windows.h>
-#elif defined( HB_OS_UNIX ) && \
-   ! defined( HB_OS_VXWORKS ) && \
-   ! defined( HB_OS_QNX_BB10 )
+#elif defined(HB_OS_UNIX) && ! defined(HB_OS_VXWORKS) && ! defined(HB_OS_QNX_BB10)
    #include <syslog.h>
 #endif
 
 #ifndef va_copy
 #  ifdef __va_copy
-#     define va_copy( dst, src )  __va_copy( dst, src )
+#     define va_copy(dst, src)  __va_copy(dst, src)
 #  else
-#     define va_copy( dst, src )  ( ( dst ) = ( src ) )
+#     define va_copy(dst, src)  ((dst) = (src))
 #  endif
 #endif
 
@@ -89,7 +87,7 @@ static const char * s_slevel[HB_TR_LAST] =
    "HB_TR_DEBUG"
 };
 
-int hb_tracestate( int new_state )
+int hb_tracestate(int new_state)
 {
    int old_state = s_enabled;
 
@@ -101,7 +99,7 @@ int hb_tracestate( int new_state )
    return old_state;
 }
 
-int hb_tracelevel( int new_level )
+int hb_tracelevel(int new_level)
 {
    int old_level = hb_tr_level();
 
@@ -113,7 +111,7 @@ int hb_tracelevel( int new_level )
    return old_level;
 }
 
-const char * hb_tracemode( const char * szNewMode )
+const char * hb_tracemode(const char * szNewMode)
 {
    const char * szPrevMode = s_mode;
 
@@ -133,7 +131,7 @@ const char * hb_tracemode( const char * szNewMode )
    return szPrevMode;
 }
 
-HB_BOOL hb_tracefile( const char * szFile )
+HB_BOOL hb_tracefile(const char * szFile)
 {
    if( szFile && *szFile )
    {
@@ -153,7 +151,7 @@ HB_BOOL hb_tracefile( const char * szFile )
    return HB_FALSE;
 }
 
-int hb_traceflush( int new_flush )
+int hb_traceflush(int new_flush)
 {
    int old_flush = HB_MAX(s_flush, 0);
 
@@ -165,7 +163,7 @@ int hb_traceflush( int new_flush )
    return old_flush;
 }
 
-int hb_tracesysout( int new_sysout )
+int hb_tracesysout(int new_sysout)
 {
    int old_sysout = HB_MAX(s_sysout, 0);
 
@@ -177,7 +175,7 @@ int hb_tracesysout( int new_sysout )
    return old_sysout;
 }
 
-int hb_tr_level( void )
+int hb_tr_level(void)
 {
    if( s_level == -1 )
    {
@@ -191,7 +189,7 @@ int hb_tr_level( void )
 
       if( s_fp == nullptr )
       {
-         if( hb_getenv_buffer( "HB_TR_OUTPUT", env, sizeof(env) ) && env[0] != '\0' )
+         if( hb_getenv_buffer("HB_TR_OUTPUT", env, sizeof(env)) && env[0] != '\0' )
          {
             s_fp = hb_fopen(env, s_mode);
 
@@ -206,13 +204,13 @@ int hb_tr_level( void )
          }
       }
 
-      if( hb_getenv_buffer( "HB_TR_LEVEL", env, sizeof(env) ) && env[0] != '\0' )
+      if( hb_getenv_buffer("HB_TR_LEVEL", env, sizeof(env)) && env[0] != '\0' )
       {
          int i;
 
          for( i = 0; i < HB_TR_LAST; ++i )
          {
-            if( hb_stricmp( env, s_slevel[i] ) == 0 || hb_stricmp( env, s_slevel[i] + 6 ) == 0 )
+            if( hb_stricmp(env, s_slevel[i]) == 0 || hb_stricmp(env, s_slevel[i] + 6) == 0 )
             {
                s_level = i;
                break;
@@ -222,12 +220,12 @@ int hb_tr_level( void )
 
       if( s_sysout < 0 )
       {
-         s_sysout = ( hb_getenv_buffer( "HB_TR_SYSOUT", env, sizeof(env) ) && env[0] != '\0' ) ? 1 : 0;
+         s_sysout = (hb_getenv_buffer("HB_TR_SYSOUT", env, sizeof(env)) && env[0] != '\0') ? 1 : 0;
       }
 
       if( s_flush < 0 )
       {
-         s_flush = ( hb_getenv_buffer( "HB_TR_FLUSH", env, sizeof(env) ) && env[0] != '\0' ) ? 1 : 0;
+         s_flush = (hb_getenv_buffer("HB_TR_FLUSH", env, sizeof(env)) && env[0] != '\0') ? 1 : 0;
       }
 
       s_enabled = enabled;
@@ -236,7 +234,7 @@ int hb_tr_level( void )
    return s_level;
 }
 
-static void hb_tracelog_( int level, const char * file, int line, const char * proc, const char * fmt, va_list ap )
+static void hb_tracelog_(int level, const char * file, int line, const char * proc, const char * fmt, va_list ap)
 {
    const char * pszLevel;
 
@@ -261,23 +259,20 @@ static void hb_tracelog_( int level, const char * file, int line, const char * p
       file = "";
    }
 
-   pszLevel = ( level >= HB_TR_ALWAYS && level <= HB_TR_LAST ) ? s_slevel[level] : "(\?\?\?)";
+   pszLevel = (level >= HB_TR_ALWAYS && level <= HB_TR_LAST) ? s_slevel[level] : "(\?\?\?)";
 
    if( s_sysout > 0 )
    {
-#if ( defined( HB_OS_WIN ) ) || \
-      ( defined( HB_OS_UNIX ) && \
-      ! defined( HB_OS_VXWORKS ) && \
-      ! defined( HB_OS_QNX_BB10 ) )
+#if defined(HB_OS_WIN) || (defined(HB_OS_UNIX) && ! defined(HB_OS_VXWORKS) && ! defined(HB_OS_QNX_BB10))
 
       char message[1024];
 
       va_list vargs;
-      va_copy( vargs, ap );
+      va_copy(vargs, ap);
 
       /* NOTE: This is protection against recursive call to trace engine when
                there is more than 16 parameters in format string */
-      if( hb_xtraced() && hb_printf_params( fmt ) > 16 )
+      if( hb_xtraced() && hb_printf_params(fmt) > 16 )
       {
          hb_snprintf(message, sizeof(message), "more then 16 parameters in message '%s'", fmt);
       }
@@ -286,9 +281,9 @@ static void hb_tracelog_( int level, const char * file, int line, const char * p
          hb_vsnprintf(message, sizeof(message), fmt, vargs);
       }
 
-      va_end( vargs );
+      va_end(vargs);
 
-#  if defined( HB_OS_WIN )
+#  if defined(HB_OS_WIN)
       {
          union
          {
@@ -306,11 +301,11 @@ static void hb_tracelog_( int level, const char * file, int line, const char * p
             hb_snprintf(buf.psz, sizeof(buf.psz), "%s:%d: %s %s\n", file, line, pszLevel, message);
          }
 
-         #if defined( UNICODE )
-         MultiByteToWideChar(CP_ACP, 0, ( LPCSTR ) memcpy(message, buf.psz, sizeof(message)), -1, buf.lp, HB_SIZEOFARRAY(buf.lp));
-         buf.lp[HB_SIZEOFARRAY( buf.lp ) - 1] = 0;
+         #if defined(UNICODE)
+         MultiByteToWideChar(CP_ACP, 0, static_cast<LPCSTR>(memcpy(message, buf.psz, sizeof(message))), -1, buf.lp, HB_SIZEOFARRAY(buf.lp));
+         buf.lp[HB_SIZEOFARRAY(buf.lp) - 1] = 0;
          #endif
-         OutputDebugString( buf.lp );
+         OutputDebugString(buf.lp);
       }
 #  else
       {
@@ -329,11 +324,11 @@ static void hb_tracelog_( int level, const char * file, int line, const char * p
 
          if( proc )
          {
-            syslog( slevel, "%s:%d:%s() %s %s", file, line, proc, pszLevel, message );
+            syslog(slevel, "%s:%d:%s() %s %s", file, line, proc, pszLevel, message);
          }
          else
          {
-            syslog( slevel, "%s:%d: %s %s", file, line, pszLevel, message );
+            syslog(slevel, "%s:%d: %s %s", file, line, pszLevel, message);
          }
       }
 #  endif
@@ -368,7 +363,7 @@ static void hb_tracelog_( int level, const char * file, int line, const char * p
    }
 }
 
-void hb_tracelog( int level, const char * file, int line, const char * proc, const char * fmt, ... )
+void hb_tracelog(int level, const char * file, int line, const char * proc, const char * fmt, ...)
 {
    /*
     * If tracing is disabled, do nothing.
@@ -376,13 +371,13 @@ void hb_tracelog( int level, const char * file, int line, const char * proc, con
    if( s_enabled && level <= hb_tr_level() )
    {
       va_list ap;
-      va_start( ap, fmt );
-      hb_tracelog_( level, file, line, proc, fmt, ap );
-      va_end( ap );
+      va_start(ap, fmt);
+      hb_tracelog_(level, file, line, proc, fmt, ap);
+      va_end(ap);
    }
 }
 
-void hb_tr_trace( const char * fmt, ... )
+void hb_tr_trace(const char * fmt, ...)
 {
    /*
     * If tracing is disabled, do nothing.
@@ -392,9 +387,9 @@ void hb_tr_trace( const char * fmt, ... )
       PHB_TRACEINFO pTrace = hb_traceinfo();
 
       va_list ap;
-      va_start( ap, fmt );
-      hb_tracelog_( pTrace->level, pTrace->file, pTrace->line, pTrace->proc, fmt, ap );
-      va_end( ap );
+      va_start(ap, fmt);
+      hb_tracelog_(pTrace->level, pTrace->file, pTrace->line, pTrace->proc, fmt, ap);
+      va_end(ap);
 
       /*
        * Reset file and line.
@@ -412,15 +407,15 @@ void hb_tr_trace( const char * fmt, ... )
    }
 }
 
-void hb_tr_stealth( const char * fmt, ... )
+void hb_tr_stealth(const char * fmt, ...)
 {
    if( s_enabled )
    {
       PHB_TRACEINFO pTrace = hb_traceinfo();
 
       va_list ap;
-      va_start( ap, fmt );
-      hb_tracelog_( pTrace->level, pTrace->file, pTrace->line, pTrace->proc, fmt, ap );
-      va_end( ap );
+      va_start(ap, fmt);
+      hb_tracelog_(pTrace->level, pTrace->file, pTrace->line, pTrace->proc, fmt, ap);
+      va_end(ap);
    }
 }

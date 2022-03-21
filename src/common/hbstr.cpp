@@ -67,10 +67,10 @@ const char * const hb_szAscii[256] = {
    "\xF0", "\xF1", "\xF2", "\xF3", "\xF4", "\xF5", "\xF6", "\xF7", "\xF8", "\xF9", "\xFA", "\xFB", "\xFC", "\xFD", "\xFE", "\xFF"
 };
 
-HB_SIZE hb_strAt( const char * szSub, HB_SIZE nSubLen, const char * szText, HB_SIZE nLen )
+HB_SIZE hb_strAt(const char * szSub, HB_SIZE nSubLen, const char * szText, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strAt(%s, %" HB_PFS "u, %s, %" HB_PFS "u)", szSub, nSubLen, szText, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strAt(%s, %" HB_PFS "u, %s, %" HB_PFS "u)", szSub, nSubLen, szText, nLen));
 #endif
 
    if( nSubLen > 0 && nLen >= nSubLen )
@@ -98,10 +98,10 @@ HB_SIZE hb_strAt( const char * szSub, HB_SIZE nSubLen, const char * szText, HB_S
    return 0;
 }
 
-HB_SIZE hb_strAtI( const char * szSub, HB_SIZE nSubLen, const char * szText, HB_SIZE nLen )
+HB_SIZE hb_strAtI(const char * szSub, HB_SIZE nSubLen, const char * szText, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strAt(%s, %" HB_PFS "u, %s, %" HB_PFS "u)", szSub, nSubLen, szText, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strAt(%s, %" HB_PFS "u, %s, %" HB_PFS "u)", szSub, nSubLen, szText, nLen));
 #endif
 
    if( nSubLen > 0 && nLen >= nSubLen )
@@ -129,10 +129,10 @@ HB_SIZE hb_strAtI( const char * szSub, HB_SIZE nSubLen, const char * szText, HB_
    return 0;
 }
 
-HB_BOOL hb_strEmpty( const char * szText, HB_SIZE nLen )
+HB_BOOL hb_strEmpty(const char * szText, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strEmpty(%s, %" HB_PFS "u)", szText, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strEmpty(%s, %" HB_PFS "u)", szText, nLen));
 #endif
 
    while( nLen-- )
@@ -148,15 +148,13 @@ HB_BOOL hb_strEmpty( const char * szText, HB_SIZE nLen )
    return HB_TRUE;
 }
 
-char * hb_strupr( char * pszText )
+char * hb_strupr(char * pszText)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strupr(%s)", pszText ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strupr(%s)", pszText));
 #endif
 
-   char * pszPos;
-
-   for( pszPos = pszText; *pszPos; pszPos++ )
+   for( char * pszPos = pszText; *pszPos; pszPos++ )
    {
       *pszPos = static_cast<char>(HB_TOUPPER(static_cast<HB_UCHAR>(*pszPos)));
    }
@@ -164,15 +162,13 @@ char * hb_strupr( char * pszText )
    return pszText;
 }
 
-char * hb_strlow( char * pszText )
+char * hb_strlow(char * pszText)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strlow(%s)", pszText ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strlow(%s)", pszText));
 #endif
 
-   char * pszPos;
-
-   for( pszPos = pszText; *pszPos; pszPos++ )
+   for( char * pszPos = pszText; *pszPos; pszPos++ )
    {
       *pszPos = static_cast<char>(HB_TOLOWER(static_cast<HB_UCHAR>(*pszPos)));
    }
@@ -180,49 +176,42 @@ char * hb_strlow( char * pszText )
    return pszText;
 }
 
-char * hb_strdup( const char * pszText )
+char * hb_strdup(const char * pszText)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strdup(%s)", pszText ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strdup(%s)", pszText));
 #endif
 
-   char * pszDup;
-   HB_SIZE nLen;
-
-   nLen = strlen(pszText) + 1;
-
-   pszDup = static_cast<char*>(hb_xgrab(nLen));
+   HB_SIZE nLen = strlen(pszText) + 1;
+   char * pszDup = static_cast<char*>(hb_xgrab(nLen));
    memcpy(pszDup, pszText, nLen);
 
    return pszDup;
 }
 
-char * hb_strndup( const char * pszText, HB_SIZE nLen )
+char * hb_strndup(const char * pszText, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strndup(%.*s, %" HB_PFS "d)", static_cast<int>(nLen), pszText, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strndup(%.*s, %" HB_PFS "d)", static_cast<int>(nLen), pszText, nLen));
 #endif
 
-   char * pszDup;
-   HB_SIZE nPos;
-
-   nPos = 0;
+   HB_SIZE nPos = 0;
    while( nLen-- && pszText[nPos] )
    {
       ++nPos;
    }
 
-   pszDup = static_cast<char*>(hb_xgrab(nPos + 1));
+   char * pszDup = static_cast<char*>(hb_xgrab(nPos + 1));
    memcpy(pszDup, pszText, nPos);
    pszDup[nPos] = '\0';
 
    return pszDup;
 }
 
-HB_SIZE hb_strnlen( const char * pszText, HB_SIZE nLen )
+HB_SIZE hb_strnlen(const char * pszText, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strnlen(%.*s, %" HB_PFS "d)", static_cast<int>(nLen), pszText, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strnlen(%.*s, %" HB_PFS "d)", static_cast<int>(nLen), pszText, nLen));
 #endif
 
    HB_SIZE nPos = 0;
@@ -235,37 +224,34 @@ HB_SIZE hb_strnlen( const char * pszText, HB_SIZE nLen )
    return nPos;
 }
 
-char * hb_strduptrim( const char * pszText )
+char * hb_strduptrim(const char * pszText)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strduptrim(%s)", pszText ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strduptrim(%s)", pszText));
 #endif
-
-   char * pszDup;
-   HB_SIZE nLen;
 
    while( pszText[0] == ' ' )
    {
       ++pszText;
    }
 
-   nLen = strlen(pszText);
+   HB_SIZE nLen = strlen(pszText);
    while( nLen && pszText[nLen - 1] == ' ' )
    {
       --nLen;
    }
 
-   pszDup = static_cast<char*>(hb_xgrab(nLen + 1));
+   char * pszDup = static_cast<char*>(hb_xgrab(nLen + 1));
    memcpy(pszDup, pszText, nLen);
    pszDup[nLen] = '\0';
 
    return pszDup;
 }
 
-HB_SIZE hb_strlentrim( const char * pszText )
+HB_SIZE hb_strlentrim(const char * pszText)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strlentrim(%s)", pszText ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strlentrim(%s)", pszText));
 #endif
 
    HB_SIZE nPos = 0;
@@ -288,10 +274,10 @@ HB_SIZE hb_strlentrim( const char * pszText )
    return nPos;
 }
 
-int hb_stricmp( const char * s1, const char * s2 )
+int hb_stricmp(const char * s1, const char * s2)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_stricmp(%s, %s)", s1, s2 ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_stricmp(%s, %s)", s1, s2));
 #endif
 
    int rc = 0, c1;
@@ -305,7 +291,7 @@ int hb_stricmp( const char * s1, const char * s2 )
 
       if( c1 != c2 )
       {
-         rc = ( c1 < c2 ? -1 : 1 );
+         rc = (c1 < c2 ? -1 : 1);
          break;
       }
 
@@ -318,23 +304,22 @@ int hb_stricmp( const char * s1, const char * s2 )
 }
 
 /* Warning: It is not case sensitive */
-int hb_strnicmp( const char * s1, const char * s2, HB_SIZE count )
+int hb_strnicmp(const char * s1, const char * s2, HB_SIZE count)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strnicmp(%.*s, %.*s, %" HB_PFS "u)", static_cast<int>(count), s1, static_cast<int>(count), s2, count ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strnicmp(%.*s, %.*s, %" HB_PFS "u)", static_cast<int>(count), s1, static_cast<int>(count), s2, count));
 #endif
 
-   HB_SIZE nCount;
    int rc = 0;
 
-   for( nCount = 0; nCount < count; nCount++ )
+   for( HB_SIZE nCount = 0; nCount < count; nCount++ )
    {
       unsigned char c1 = static_cast<char>(HB_TOUPPER(static_cast<unsigned char>(s1[nCount])));
       unsigned char c2 = static_cast<char>(HB_TOUPPER(static_cast<unsigned char>(s2[nCount])));
 
       if( c1 != c2 )
       {
-         rc = ( c1 < c2 ? -1 : 1 );
+         rc = (c1 < c2 ? -1 : 1);
          break;
       }
       else if( ! c1 )
@@ -349,12 +334,12 @@ int hb_strnicmp( const char * s1, const char * s2, HB_SIZE count )
 /*
    AJ: 2004-02-23
    Concatenates multiple strings into a single result.
-   Eg. hb_xstrcat( buffer, "A", "B", nullptr ) stores "AB" in buffer.
+   Eg. hb_xstrcat(buffer, "A", "B", nullptr) stores "AB" in buffer.
  */
-char * hb_xstrcat( char * szDest, const char * szSrc, ... )
+char * hb_xstrcat(char * szDest, const char * szSrc, ...)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_xstrcat(%p, %p, ...)", static_cast<void*>(szDest), static_cast<const void*>(szSrc) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_xstrcat(%p, %p, ...)", static_cast<void*>(szDest), static_cast<const void*>(szSrc)));
 #endif
 
    char * szResult = szDest;
@@ -365,17 +350,17 @@ char * hb_xstrcat( char * szDest, const char * szSrc, ... )
       szDest++;
    }
 
-   va_start( va, szSrc );
+   va_start(va, szSrc);
    while( szSrc )
    {
       while( *szSrc )
       {
          *szDest++ = *szSrc++;
       }
-      szSrc = va_arg( va, char * );
+      szSrc = va_arg(va, char *);
    }
    *szDest = '\0';
-   va_end( va );
+   va_end(va);
 
    return szResult;
 }
@@ -383,53 +368,52 @@ char * hb_xstrcat( char * szDest, const char * szSrc, ... )
 /*
    AJ: 2004-02-23
    Concatenates multiple strings into a single result.
-   Eg. hb_xstrcpy( buffer, "A", "B", nullptr ) stores "AB" in buffer.
+   Eg. hb_xstrcpy(buffer, "A", "B", nullptr) stores "AB" in buffer.
    Returns szDest.
    Any existing contents of szDest are cleared. If the szDest buffer is nullptr,
    allocates a new buffer with the required length and returns that. The
    buffer is allocated using hb_xgrab(), and should eventually be freed
    using hb_xfree().
  */
-char * hb_xstrcpy( char * szDest, const char * szSrc, ... )
+char * hb_xstrcpy(char * szDest, const char * szSrc, ...)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_xstrcpy(%p, %p, ...)", static_cast<void*>(szDest), static_cast<const void*>(szSrc) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_xstrcpy(%p, %p, ...)", static_cast<void*>(szDest), static_cast<const void*>(szSrc)));
 #endif
 
-   char * szResult;
    va_list va;
 
    if( szDest == nullptr )
    {
       const char * szSrcPtr = szSrc;
       HB_SIZE nSize = 1;
-      va_start( va, szSrc );
+      va_start(va, szSrc);
       while( szSrcPtr )
       {
          nSize += strlen(szSrcPtr);
-         szSrcPtr = va_arg( va, char * );
+         szSrcPtr = va_arg(va, char *);
       }
-      va_end( va );
+      va_end(va);
       szDest = static_cast<char*>(hb_xgrab(nSize));
    }
-   szResult = szDest;
+   char * szResult = szDest;
 
-   va_start( va, szSrc );
+   va_start(va, szSrc);
    while( szSrc )
    {
       while( *szSrc )
       {
          *szDest++ = *szSrc++;
       }
-      szSrc = va_arg( va, char * );
+      szSrc = va_arg(va, char *);
    }
    *szDest = '\0';
-   va_end( va );
+   va_end(va);
 
    return szResult;
 }
 
-static double hb_numPow10( int nPrecision )
+static double hb_numPow10(int nPrecision)
 {
    static const double s_dPow10[16] = { 1.0,                  /* 0 */
                                         10.0,                 /* 1 */
@@ -460,13 +444,13 @@ static double hb_numPow10( int nPrecision )
       }
    }
 
-   return pow( 10.0, static_cast<double>(nPrecision) );
+   return pow(10.0, static_cast<double>(nPrecision));
 }
 
-double hb_numRound( double dNum, int iDec )
+double hb_numRound(double dNum, int iDec)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_numRound(%lf, %d)", dNum, iDec ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_numRound(%lf, %d)", dNum, iDec));
 #endif
 
    static const double doBase = 10.0;
@@ -479,12 +463,12 @@ double hb_numRound( double dNum, int iDec )
 
    if( iDec < 0 )
    {
-      dPow = hb_numPow10( -iDec );
+      dPow = hb_numPow10(-iDec);
       doComplete5 = dNum / dPow * doBase;
    }
    else
    {
-      dPow = hb_numPow10( iDec );
+      dPow = hb_numPow10(iDec);
       doComplete5 = dNum * dPow * doBase;
    }
 
@@ -530,7 +514,7 @@ double hb_numRound( double dNum, int iDec )
          fNeg = HB_FALSE;
       }
 
-      iDecR = static_cast<int>(log10( dNum ));
+      iDecR = static_cast<int>(log10(dNum));
       iPrec = iDecR + iDec;
 
       if( iPrec < -1 )
@@ -541,7 +525,7 @@ double hb_numRound( double dNum, int iDec )
       {
          if( iPrec > HB_NUM_PRECISION )
          {
-            iDec = HB_NUM_PRECISION - ( dNum < 1.0 ? 0 : 1 ) - iDecR;
+            iDec = HB_NUM_PRECISION - (dNum < 1.0 ? 0 : 1) - iDecR;
             iPrec = -1;
          }
          else
@@ -551,13 +535,13 @@ double hb_numRound( double dNum, int iDec )
       }
       if( iDec < 0 )
       {
-         dPow = hb_numPow10( -iDec );
-         doComplete5 = dNum / dPow * doBase + 5.0 + hb_numPow10( iPrec );
+         dPow = hb_numPow10(-iDec);
+         doComplete5 = dNum / dPow * doBase + 5.0 + hb_numPow10(iPrec);
       }
       else
       {
-         dPow = hb_numPow10( iDec );
-         doComplete5 = dNum * dPow * doBase + 5.0 + hb_numPow10( iPrec );
+         dPow = hb_numPow10(iDec);
+         doComplete5 = dNum * dPow * doBase + 5.0 + hb_numPow10(iPrec);
       }
 
       if( fNeg )
@@ -578,13 +562,13 @@ double hb_numRound( double dNum, int iDec )
 
    doComplete5 /= doBase;
 
-#if defined( HB_DBLFL_PREC_FACTOR ) && ! defined( HB_CLP_STRICT )
+#if defined(HB_DBLFL_PREC_FACTOR) && ! defined(HB_CLP_STRICT)
    /* similar operation is done by Cl5.3
       it's a hack to force rounding FL values UP */
    doComplete5 *= HB_DBLFL_PREC_FACTOR;
 #endif
 
-   ( void ) modf( doComplete5, &doComplete5i );
+   ( void ) modf(doComplete5, &doComplete5i); // TODO: C++ cast
 
    if( iDec < 0 )
    {
@@ -596,44 +580,44 @@ double hb_numRound( double dNum, int iDec )
    }
 }
 
-double hb_numInt( double dNum )
+double hb_numInt(double dNum)
 {
    double dInt;
 
-#if defined( HB_DBLFL_PREC_FACTOR ) && ! defined( HB_CLP_STRICT )
+#if defined(HB_DBLFL_PREC_FACTOR) && ! defined(HB_CLP_STRICT)
    /* Similar hack as in round to make this functions compatible */
    dNum *= HB_DBLFL_PREC_FACTOR;
 #endif
-   ( void ) modf( dNum, &dInt );
+   ( void ) modf(dNum, &dInt); // TODO: C++ cast
 
    return dInt;
 }
 
-double hb_numDecConv( double dNum, int iDec )
+double hb_numDecConv(double dNum, int iDec)
 {
    if( iDec > 0 )
    {
-      return hb_numRound( dNum / hb_numPow10( iDec ), iDec );
+      return hb_numRound(dNum / hb_numPow10(iDec), iDec);
    }
    else if( iDec < 0 )
    {
-      return hb_numRound( dNum * hb_numPow10( -iDec ), 0 );
+      return hb_numRound(dNum * hb_numPow10(-iDec), 0);
    }
    else
    {
-      return hb_numRound( dNum, 0 );
+      return hb_numRound(dNum, 0);
    }
 }
 
-double hb_numExpConv( double dNum, int iExp )
+double hb_numExpConv(double dNum, int iExp)
 {
    if( iExp > 0 )
    {
-      return dNum / hb_numPow10( iExp );
+      return dNum / hb_numPow10(iExp);
    }
    else if( iExp < 0 )
    {
-      return dNum * hb_numPow10( -iExp );
+      return dNum * hb_numPow10(-iExp);
    }
    else
    {
@@ -641,10 +625,10 @@ double hb_numExpConv( double dNum, int iExp )
    }
 }
 
-static HB_BOOL hb_str2number( HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, HB_MAXINT * lVal, double * dVal, int * piDec, int * piWidth )
+static HB_BOOL hb_str2number(HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, HB_MAXINT * lVal, double * dVal, int * piDec, int * piWidth)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_str2number(%d, %p, %" HB_PFS "u, %p, %p, %p, %p)", static_cast<int>(fPCode), static_cast<const void*>(szNum), nLen, static_cast<void*>(lVal), static_cast<void*>(dVal), static_cast<void*>(piDec), static_cast<void*>(piWidth) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_str2number(%d, %p, %" HB_PFS "u, %p, %p, %p, %p)", static_cast<int>(fPCode), static_cast<const void*>(szNum), nLen, static_cast<void*>(lVal), static_cast<void*>(dVal), static_cast<void*>(piDec), static_cast<void*>(piWidth)));
 #endif
 
    HB_BOOL fDbl = HB_FALSE, fDec = HB_FALSE, fNeg, fHex = HB_FALSE;
@@ -680,7 +664,7 @@ static HB_BOOL hb_str2number( HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, 
    *lVal = 0;
 
    /* Hex Number */
-   if( fPCode && iPos + 1 < iLen && szNum[iPos] == '0' && ( szNum[iPos + 1] == 'X' || szNum[iPos + 1] == 'x' ) )
+   if( fPCode && iPos + 1 < iLen && szNum[iPos] == '0' && (szNum[iPos + 1] == 'X' || szNum[iPos + 1] == 'x') )
    {
       iPos += 2;
       iWidth = HB_DEFAULT_WIDTH;
@@ -704,7 +688,7 @@ static HB_BOOL hb_str2number( HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, 
          {
             break;
          }
-         *lVal = ( *lVal << 4 ) + c;
+         *lVal = (*lVal << 4) + c;
       }
    }
    else
@@ -724,15 +708,15 @@ static HB_BOOL hb_str2number( HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, 
          {
             if( fDbl )
             {
-               *dVal = *dVal * 10.0 + ( c - '0' );
+               *dVal = *dVal * 10.0 + (c - '0');
             }
-            else if( *lVal < lLimV || ( *lVal <= lLimV && ( static_cast<int>(c - '0') ) <= iLimC ) )
+            else if( *lVal < lLimV || (*lVal <= lLimV && (static_cast<int>(c - '0')) <= iLimC) )
             {
-               *lVal = *lVal * 10 + ( c - '0' );
+               *lVal = *lVal * 10 + (c - '0');
             }
             else
             {
-               *dVal = static_cast<double>(*lVal) * 10.0 + ( c - '0' );
+               *dVal = static_cast<double>(*lVal) * 10.0 + (c - '0');
                fDbl = HB_TRUE;
             }
             if( fDec )
@@ -782,17 +766,17 @@ static HB_BOOL hb_str2number( HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, 
       }
    }
    if( ! fDbl && (
-#if defined( PCODE_LONG_LIM )
-        ( fPCode && ! fHex && ! PCODE_LONG_LIM( *lVal ) ) ||
+#if defined(PCODE_LONG_LIM)
+        (fPCode && ! fHex && ! PCODE_LONG_LIM(*lVal)) ||
 #endif
-        fDec ) )
+        fDec) )
    {
       *dVal = static_cast<double>(*lVal);
       fDbl = HB_TRUE;
    }
    if( iDec )
    {
-      *dVal /= hb_numPow10( iDec );
+      *dVal /= hb_numPow10(iDec);
    }
 
    if( piDec )
@@ -811,16 +795,16 @@ static HB_BOOL hb_str2number( HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, 
          {
             if( iWidth < 10 || fNeg )
             {
-               *piWidth = fDbl ? HB_DBL_LENGTH( *dVal ) : HB_LONG_LENGTH( *lVal );
+               *piWidth = fDbl ? HB_DBL_LENGTH(*dVal) : HB_LONG_LENGTH(*lVal);
             }
             else
             {
-               *piWidth = iWidth + ( iDec == 0 ? 1 : 0 );
+               *piWidth = iWidth + (iDec == 0 ? 1 : 0);
             }
          }
          else if( iWidth > 10 )
          {
-            *piWidth = fDbl ? HB_DBL_LENGTH( *dVal ) : HB_LONG_LENGTH( *lVal );
+            *piWidth = fDbl ? HB_DBL_LENGTH(*dVal) : HB_LONG_LENGTH(*lVal);
          }
          else
          {
@@ -847,65 +831,65 @@ static HB_BOOL hb_str2number( HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, 
    return fDbl;
 }
 
-HB_BOOL hb_compStrToNum( const char * szNum, HB_SIZE nLen, HB_MAXINT * plVal, double * pdVal, int * piDec, int * piWidth )
+HB_BOOL hb_compStrToNum(const char * szNum, HB_SIZE nLen, HB_MAXINT * plVal, double * pdVal, int * piDec, int * piWidth)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_compStrToNum( %s, %" HB_PFS "u, %p, %p, %p, %p)", szNum, nLen, static_cast<void*>(plVal), static_cast<void*>(pdVal), static_cast<void*>(piDec), static_cast<void*>(piWidth) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_compStrToNum( %s, %" HB_PFS "u, %p, %p, %p, %p)", szNum, nLen, static_cast<void*>(plVal), static_cast<void*>(pdVal), static_cast<void*>(piDec), static_cast<void*>(piWidth)));
 #endif
-   return hb_str2number( HB_TRUE, szNum, nLen, plVal, pdVal, piDec, piWidth );
+   return hb_str2number(HB_TRUE, szNum, nLen, plVal, pdVal, piDec, piWidth);
 }
 
-HB_BOOL hb_valStrnToNum( const char * szNum, HB_SIZE nLen, HB_MAXINT * plVal, double * pdVal, int * piDec, int * piWidth )
+HB_BOOL hb_valStrnToNum(const char * szNum, HB_SIZE nLen, HB_MAXINT * plVal, double * pdVal, int * piDec, int * piWidth)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_valStrnToNum( %s, %" HB_PFS "u, %p, %p, %p, %p)", szNum, nLen, static_cast<void*>(plVal), static_cast<void*>(pdVal), static_cast<void*>(piDec), static_cast<void*>(piWidth) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_valStrnToNum( %s, %" HB_PFS "u, %p, %p, %p, %p)", szNum, nLen, static_cast<void*>(plVal), static_cast<void*>(pdVal), static_cast<void*>(piDec), static_cast<void*>(piWidth)));
 #endif
-   return hb_str2number( HB_FALSE, szNum, nLen, plVal, pdVal, piDec, piWidth );
+   return hb_str2number(HB_FALSE, szNum, nLen, plVal, pdVal, piDec, piWidth);
 }
 
-HB_BOOL hb_strToNum( const char * szNum, HB_MAXINT * plVal, double * pdVal )
+HB_BOOL hb_strToNum(const char * szNum, HB_MAXINT * plVal, double * pdVal)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strToNum(%s, %p, %p)", szNum, static_cast<void*>(plVal), static_cast<void*>(pdVal) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strToNum(%s, %p, %p)", szNum, static_cast<void*>(plVal), static_cast<void*>(pdVal)));
 #endif
-   return hb_str2number( HB_FALSE, szNum, strlen(szNum), plVal, pdVal, nullptr, nullptr );
+   return hb_str2number(HB_FALSE, szNum, strlen(szNum), plVal, pdVal, nullptr, nullptr);
 }
 
-HB_BOOL hb_strnToNum( const char * szNum, HB_SIZE nLen, HB_MAXINT * plVal, double * pdVal )
+HB_BOOL hb_strnToNum(const char * szNum, HB_SIZE nLen, HB_MAXINT * plVal, double * pdVal)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strnToNum(%.*s, %" HB_PFS "u, %p, %p)", static_cast<int>(nLen), szNum, nLen, static_cast<void*>(plVal), static_cast<void*>(pdVal) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strnToNum(%.*s, %" HB_PFS "u, %p, %p)", static_cast<int>(nLen), szNum, nLen, static_cast<void*>(plVal), static_cast<void*>(pdVal)));
 #endif
-   return hb_str2number( HB_FALSE, szNum, nLen, plVal, pdVal, nullptr, nullptr );
+   return hb_str2number(HB_FALSE, szNum, nLen, plVal, pdVal, nullptr, nullptr);
 }
 
 /* returns the numeric value of a character string representation of a number */
-double hb_strVal( const char * szText, HB_SIZE nLen )
+double hb_strVal(const char * szText, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strVal(%.*s, %" HB_PFS "u)", static_cast<int>(nLen), szText, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strVal(%.*s, %" HB_PFS "u)", static_cast<int>(nLen), szText, nLen));
 #endif
 
    HB_MAXINT lVal;
    double    dVal;
 
-   if( ! hb_str2number( HB_FALSE, szText, nLen, &lVal, &dVal, nullptr, nullptr ) )
+   if( ! hb_str2number(HB_FALSE, szText, nLen, &lVal, &dVal, nullptr, nullptr))
    {
       dVal = static_cast<double>(lVal);
    }
    return dVal;
 }
 
-HB_MAXINT hb_strValInt( const char * szText, int * iOverflow )
+HB_MAXINT hb_strValInt(const char * szText, int * iOverflow)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strValInt(%s)", szText ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strValInt(%s)", szText));
 #endif
 
    HB_MAXINT lVal;
    double    dVal;
 
-   if( hb_str2number( HB_TRUE, szText, strlen(szText), &lVal, &dVal, nullptr, nullptr ) )
+   if( hb_str2number(HB_TRUE, szText, strlen(szText), &lVal, &dVal, nullptr, nullptr) )
    {
       *iOverflow = 1;
       return 0;
@@ -914,10 +898,10 @@ HB_MAXINT hb_strValInt( const char * szText, int * iOverflow )
    return lVal;
 }
 
-char * hb_numToStr( char * szBuf, HB_SIZE nSize, HB_MAXINT lNumber )
+char * hb_numToStr(char * szBuf, HB_SIZE nSize, HB_MAXINT lNumber)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_numToStr(%p, %" HB_PFS "u, %" PFHL "i)", static_cast<void*>(szBuf), nSize, lNumber ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_numToStr(%p, %" HB_PFS "u, %" PFHL "i)", static_cast<void*>(szBuf), nSize, lNumber));
 #endif
 
    int iPos = static_cast<int>(nSize);
@@ -961,10 +945,10 @@ char * hb_numToStr( char * szBuf, HB_SIZE nSize, HB_MAXINT lNumber )
    double number with '\0' terminating character then it should have
    at least HB_MAX_DOUBLE_LENGTH bytes. If buffer is not large enough
    then nullptr is returned */
-char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
+char * hb_dblToStr(char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dblToStr(%p, %" HB_PFS "u, %f, %d)", static_cast<void*>(szBuf), nSize, dNumber, iMaxDec ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_dblToStr(%p, %" HB_PFS "u, %f, %d)", static_cast<void*>(szBuf), nSize, dNumber, iMaxDec));
 #endif
 
    double dInt, dFract, dDig, doBase = 10.0;
@@ -985,7 +969,7 @@ char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
    szResult = szBuf;
    if( dNumber < 0 )
    {
-      dFract = modf( -dNumber, &dInt );
+      dFract = modf(-dNumber, &dInt);
       if( --iLen == 0 )
       {
          if( dInt < 1 && dFract < 0.5 )
@@ -1000,7 +984,7 @@ char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
    }
    else
    {
-      dFract = modf( dNumber, &dInt );
+      dFract = modf(dNumber, &dInt);
    }
 
    iPos = iLen;
@@ -1010,7 +994,7 @@ char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
       {
          return nullptr;
       }
-      dDig = modf( dInt / doBase + 0.01, &dInt ) * doBase;
+      dDig = modf(dInt / doBase + 0.01, &dInt) * doBase;
       szBuf[--iPos] = '0' + static_cast<char>(dDig + 0.01);
    }
    while( dInt >= 1 );
@@ -1068,7 +1052,7 @@ char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
       szBuf[iPos] = '.';
       while( ++iPos < iLen && iPrec > 0 && iMaxDec-- != 0 )
       {
-         dFract = modf( dFract * doBase, &dDig );
+         dFract = modf(dFract * doBase, &dDig);
          szBuf[iPos] = '0' + static_cast<char>(dDig + 0.01);
          if( szBuf[iPos] != '0' )
          {
@@ -1079,7 +1063,7 @@ char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
             --iPrec;
          }
       }
-      if( dFract > ( iPrec > 0 ? 0.5 - hb_numPow10( -iPrec ) : 0.2 ) )
+      if( dFract > (iPrec > 0 ? 0.5 - hb_numPow10(-iPrec) : 0.2) )
       {
          iPrec = iPos;
          for( ;; )
@@ -1125,17 +1109,17 @@ char * hb_dblToStr( char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec )
  * NOTE: Unlike the documentation for strncpy, this routine will always append
  *       a null and the nLen param is pDest size not pSource limit
  */
-char * hb_strncpy( char * pDest, const char * pSource, HB_SIZE nLen )
+char * hb_strncpy(char * pDest, const char * pSource, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strncpy(%p, %.*s, %" HB_PFS "u)", static_cast<void*>(pDest), static_cast<int>(nLen), pSource, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strncpy(%p, %.*s, %" HB_PFS "u)", static_cast<void*>(pDest), static_cast<int>(nLen), pSource, nLen));
 #endif
 
    char * pBuf = pDest;
 
    pDest[nLen] = '\0';
 
-   while( nLen && ( *pDest++ = *pSource++ ) != '\0' )
+   while( nLen && (*pDest++ = *pSource++) != '\0' )
    {
       nLen--;
    }
@@ -1147,10 +1131,10 @@ char * hb_strncpy( char * pDest, const char * pSource, HB_SIZE nLen )
  * NOTE: Unlike the documentation for strncat, this routine will always append
  *       a null and the nLen param is pDest size not pSource limit
  */
-char * hb_strncat( char * pDest, const char * pSource, HB_SIZE nLen )
+char * hb_strncat(char * pDest, const char * pSource, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strncat(%p, %.*s, %" HB_PFS "u)", static_cast<void*>(pDest), static_cast<int>(nLen), pSource, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strncat(%p, %.*s, %" HB_PFS "u)", static_cast<void*>(pDest), static_cast<int>(nLen), pSource, nLen));
 #endif
 
    char * pBuf = pDest;
@@ -1163,7 +1147,7 @@ char * hb_strncat( char * pDest, const char * pSource, HB_SIZE nLen )
       nLen--;
    }
 
-   while( nLen && ( *pDest++ = *pSource++ ) != '\0' )
+   while( nLen && (*pDest++ = *pSource++) != '\0' )
    {
       nLen--;
    }
@@ -1176,17 +1160,17 @@ char * hb_strncat( char * pDest, const char * pSource, HB_SIZE nLen )
 /* NOTE: Unlike the documentation for strncpy, this routine will always append
  *       a null [pt]
  */
-char * hb_strncpyLower( char * pDest, const char * pSource, HB_SIZE nLen )
+char * hb_strncpyLower(char * pDest, const char * pSource, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strncpyLower(%p, %.*s, %" HB_PFS "u)", static_cast<void*>(pDest), static_cast<int>(nLen), pSource, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strncpyLower(%p, %.*s, %" HB_PFS "u)", static_cast<void*>(pDest), static_cast<int>(nLen), pSource, nLen));
 #endif
 
    char * pBuf = pDest;
 
    pDest[nLen] = '\0';
 
-   while( nLen && ( *pDest++ = static_cast<char>(HB_TOLOWER(static_cast<HB_UCHAR>(*pSource))) ) != '\0' )
+   while( nLen && (*pDest++ = static_cast<char>(HB_TOLOWER(static_cast<HB_UCHAR>(*pSource)))) != '\0' )
    {
       nLen--;
       pSource++;
@@ -1200,17 +1184,17 @@ char * hb_strncpyLower( char * pDest, const char * pSource, HB_SIZE nLen )
 /* NOTE: Unlike the documentation for strncpy, this routine will always append
  *       a null [pt]
  */
-char * hb_strncpyUpper( char * pDest, const char * pSource, HB_SIZE nLen )
+char * hb_strncpyUpper(char * pDest, const char * pSource, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strncpyUpper(%p, %.*s, %" HB_PFS "u)", static_cast<void*>(pDest), static_cast<int>(nLen), pSource, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strncpyUpper(%p, %.*s, %" HB_PFS "u)", static_cast<void*>(pDest), static_cast<int>(nLen), pSource, nLen));
 #endif
 
    char * pBuf = pDest;
 
    pDest[nLen] = '\0';
 
-   while( nLen && ( *pDest++ = static_cast<char>(HB_TOUPPER(static_cast<HB_UCHAR>(*pSource))) ) != '\0' )
+   while( nLen && (*pDest++ = static_cast<char>(HB_TOUPPER(static_cast<HB_UCHAR>(*pSource)))) != '\0' )
    {
       nLen--;
       pSource++;
@@ -1224,10 +1208,10 @@ char * hb_strncpyUpper( char * pDest, const char * pSource, HB_SIZE nLen )
 /* NOTE: Unlike the documentation for strncpy, this routine will always append
  *       a null [pt]
  */
-char * hb_strncpyUpperTrim( char * pDest, const char * pSource, HB_SIZE nLen )
+char * hb_strncpyUpperTrim(char * pDest, const char * pSource, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strncpyUpperTrim(%p, %.*s, %" HB_PFS "u)", static_cast<void*>(pDest), static_cast<int>(nLen), pSource, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strncpyUpperTrim(%p, %.*s, %" HB_PFS "u)", static_cast<void*>(pDest), static_cast<int>(nLen), pSource, nLen));
 #endif
 
    char * pBuf = pDest;
@@ -1244,7 +1228,7 @@ char * hb_strncpyUpperTrim( char * pDest, const char * pSource, HB_SIZE nLen )
       nSLen--;
    }
 
-   while( nLen && nSLen && ( *pDest++ = static_cast<char>(HB_TOUPPER(static_cast<HB_UCHAR>(*pSource))) ) != '\0' )
+   while( nLen && nSLen && (*pDest++ = static_cast<char>(HB_TOUPPER(static_cast<HB_UCHAR>(*pSource)))) != '\0' )
    {
       nSLen--;
       nLen--;
@@ -1261,10 +1245,10 @@ char * hb_strncpyUpperTrim( char * pDest, const char * pSource, HB_SIZE nLen )
 /* NOTE: Unlike the documentation for strncpy, this routine will always append
  *       a null
  */
-char * hb_strncpyTrim( char * pDest, const char * pSource, HB_SIZE nLen )
+char * hb_strncpyTrim(char * pDest, const char * pSource, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strncpyTrim(%p, %.*s, %" HB_PFS "u)", static_cast<void*>(pDest), static_cast<int>(nLen), pSource, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strncpyTrim(%p, %.*s, %" HB_PFS "u)", static_cast<void*>(pDest), static_cast<int>(nLen), pSource, nLen));
 #endif
 
    char * pBuf = pDest;
@@ -1281,7 +1265,7 @@ char * hb_strncpyTrim( char * pDest, const char * pSource, HB_SIZE nLen )
       nSLen--;
    }
 
-   while( nLen && nSLen && ( *pDest++ = *pSource++ ) != '\0' )
+   while( nLen && nSLen && (*pDest++ = *pSource++) != '\0' )
    {
       nSLen--;
       nLen--;
@@ -1292,7 +1276,7 @@ char * hb_strncpyTrim( char * pDest, const char * pSource, HB_SIZE nLen )
    return pBuf;
 }
 
-char * hb_strRemEscSeq( char * str, HB_SIZE * pnLen )
+char * hb_strRemEscSeq(char * str, HB_SIZE * pnLen)
 {
    HB_SIZE nPos = *pnLen, nStripped = 0;
    char * ptr, * dst;
@@ -1352,11 +1336,11 @@ char * hb_strRemEscSeq( char * str, HB_SIZE * pnLen )
                   ch -= '0';
                   if( nPos && *ptr >= '0' && *ptr <= '7' )
                   {
-                     ch = ( ch << 3 ) | ( *ptr++ - '0' );
+                     ch = (ch << 3) | (*ptr++ - '0');
                      ++nStripped;
                      if( --nPos && *ptr >= '0' && *ptr <= '7' )
                      {
-                        ch = ( ch << 3 ) | ( *ptr++ - '0' );
+                        ch = (ch << 3) | (*ptr++ - '0');
                         ++nStripped;
                         --nPos;
                      }
@@ -1368,15 +1352,15 @@ char * hb_strRemEscSeq( char * str, HB_SIZE * pnLen )
                   {
                      if( *ptr >= '0' && *ptr <= '9' )
                      {
-                        ch = ( ch << 4 ) | ( *ptr++ - '0' );
+                        ch = (ch << 4) | (*ptr++ - '0');
                      }
                      else if( *ptr >= 'A' && *ptr <= 'F' )
                      {
-                        ch = ( ch << 4 ) | ( *ptr++ - 'A' + 10 );
+                        ch = (ch << 4) | (*ptr++ - 'A' + 10);
                      }
                      else if( *ptr >= 'a' && *ptr <= 'f' )
                      {
-                        ch = ( ch << 4 ) | ( *ptr++ - 'a' + 10 );
+                        ch = (ch << 4) | (*ptr++ - 'a' + 10);
                      }
                      else
                      {
@@ -1408,7 +1392,7 @@ char * hb_strRemEscSeq( char * str, HB_SIZE * pnLen )
    return str;
 }
 
-char * hb_compEncodeString( int iMethod, const char * szText, HB_SIZE * pnLen )
+char * hb_compEncodeString(int iMethod, const char * szText, HB_SIZE * pnLen)
 {
    char * pBuffer = static_cast<char*>(hb_xgrab(*pnLen + 1));
 
@@ -1416,8 +1400,7 @@ char * hb_compEncodeString( int iMethod, const char * szText, HB_SIZE * pnLen )
    pBuffer[*pnLen] = '\0';
    if( iMethod == 1 )
    {
-      HB_SIZE nPos;
-      for( nPos = 0; nPos < *pnLen; nPos++ )
+      for( HB_SIZE nPos = 0; nPos < *pnLen; nPos++ )
       {
          pBuffer[nPos] ^= 0xF3;
       }
@@ -1425,7 +1408,7 @@ char * hb_compEncodeString( int iMethod, const char * szText, HB_SIZE * pnLen )
    return pBuffer;
 }
 
-char * hb_compDecodeString( int iMethod, const char * szText, HB_SIZE * pnLen )
+char * hb_compDecodeString(int iMethod, const char * szText, HB_SIZE * pnLen)
 {
    char * pBuffer = static_cast<char*>(hb_xgrab(*pnLen + 1));
 
@@ -1433,8 +1416,7 @@ char * hb_compDecodeString( int iMethod, const char * szText, HB_SIZE * pnLen )
    pBuffer[*pnLen] = '\0';
    if( iMethod == 1 )
    {
-      HB_SIZE nPos;
-      for( nPos = 0; nPos < *pnLen; nPos++ )
+      for( HB_SIZE nPos = 0; nPos < *pnLen; nPos++ )
       {
          pBuffer[nPos] ^= 0xF3;
       }
@@ -1443,16 +1425,14 @@ char * hb_compDecodeString( int iMethod, const char * szText, HB_SIZE * pnLen )
 }
 
 /* 'pDest' must be double the size of 'size'. [vszakats] */
-void hb_strtohex( const char * pSource, HB_SIZE size, char * pDest )
+void hb_strtohex(const char * pSource, HB_SIZE size, char * pDest)
 {
-   HB_SIZE i;
-
-   for( i = 0; i < size; i++ )
+   for( HB_SIZE i = 0; i < size; i++ )
    {
       int b;
-      b = ( static_cast<HB_UCHAR>(pSource[i]) >> 4 ) & 0x0F;
-      *pDest++ = static_cast<char>(b + ( b > 9 ? 'a' - 10 : '0' ));
+      b = (static_cast<HB_UCHAR>(pSource[i]) >> 4) & 0x0F;
+      *pDest++ = static_cast<char>(b + (b > 9 ? 'a' - 10 : '0'));
       b = static_cast<HB_UCHAR>(pSource[i]) & 0x0F;
-      *pDest++ = static_cast<char>(b + ( b > 9 ? 'a' - 10 : '0' ));
+      *pDest++ = static_cast<char>(b + (b > 9 ? 'a' - 10 : '0'));
    }
 }

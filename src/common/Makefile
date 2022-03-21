@@ -19,7 +19,6 @@ CPP_SOURCES := \
    hbver.cpp \
    hbverdsp.cpp \
    hbwin.cpp \
-   hbwince.cpp \
    strwild.cpp \
 
 LIBNAME := hbcommon

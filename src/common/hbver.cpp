@@ -55,7 +55,7 @@
 #include "hbapi.h"
 #include "hbmemory.ch"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
    #include <windows.h>
    #include "hbwinuni.h"
@@ -104,72 +104,72 @@
    #define SM_SERVERR2  89
    #endif
 
-#elif defined( HB_OS_UNIX ) && ! defined( __CEGCC__ )
+#elif defined(HB_OS_UNIX) && ! defined(__CEGCC__)
    #include <sys/utsname.h>
 #endif
 
-const char * hb_verCPU( void )
+const char * hb_verCPU(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_verCPU()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_verCPU()"));
 #endif
 
-#if   defined( HB_CPU_X86 )
+#if   defined(HB_CPU_X86)
    return "x86";
-#elif defined( HB_CPU_X86_64 )
+#elif defined(HB_CPU_X86_64)
    return "x86-64";
-#elif defined( HB_CPU_IA_64 )
+#elif defined(HB_CPU_IA_64)
    return "IA-64";
-#elif defined( HB_CPU_PPC )
+#elif defined(HB_CPU_PPC)
    return "PPC";
-#elif defined( HB_CPU_PPC_64 )
+#elif defined(HB_CPU_PPC_64)
    return "PPC64";
-#elif defined( HB_CPU_SPARC )
+#elif defined(HB_CPU_SPARC)
    return "SPARC";
-#elif defined( HB_CPU_SPARC_64 )
+#elif defined(HB_CPU_SPARC_64)
    return "SPARC64";
-#elif defined( HB_CPU_ARM )
+#elif defined(HB_CPU_ARM)
    return "ARM";
-#elif defined( HB_CPU_ARM_64 )
+#elif defined(HB_CPU_ARM_64)
    return "ARM64";
-#elif defined( HB_CPU_MIPS )
+#elif defined(HB_CPU_MIPS)
    return "MIPS";
-#elif defined( HB_CPU_SH )
+#elif defined(HB_CPU_SH)
    return "SuperH";
-#elif defined( HB_CPU_ZARCH )
+#elif defined(HB_CPU_ZARCH)
    return "z/Architecture";
-#elif defined( HB_CPU_PARISC )
+#elif defined(HB_CPU_PARISC)
    return "PA-RISC";
-#elif defined( HB_CPU_ALPHA )
+#elif defined(HB_CPU_ALPHA)
    return "Alpha";
-#elif defined( HB_CPU_POWER )
+#elif defined(HB_CPU_POWER)
    return "POWER";
-#elif defined( HB_CPU_M68K )
+#elif defined(HB_CPU_M68K)
    return "m68k";
-#elif defined( HB_CPU_SYS370 )
+#elif defined(HB_CPU_SYS370)
    return "System/370";
-#elif defined( HB_CPU_SYS390 )
+#elif defined(HB_CPU_SYS390)
    return "System/390";
 #else
    return "(unrecognized)";
 #endif
 }
 
-static HB_BOOL s_win_iswow64( void )
+static HB_BOOL s_win_iswow64(void)
 {
    HB_BOOL bRetVal = HB_FALSE;
 
-   #if defined( HB_OS_WIN ) && ! defined( HB_OS_WIN_64 )
+   #if defined(HB_OS_WIN) && ! defined(HB_OS_WIN_64)
    {
-      typedef BOOL ( WINAPI * P_ISWOW64PROCESS )( HANDLE, PBOOL );
+      using P_ISWOW64PROCESS = BOOL(WINAPI *)(HANDLE, PBOOL);
 
       P_ISWOW64PROCESS pIsWow64Process;
 
-      HMODULE hModule = GetModuleHandle( TEXT( "kernel32" ) );
+      HMODULE hModule = GetModuleHandle(TEXT("kernel32"));
 
       if( hModule )
       {
-         pIsWow64Process = reinterpret_cast<P_ISWOW64PROCESS>(HB_WINAPI_GETPROCADDRESS( hModule, "IsWow64Process" ));
+         pIsWow64Process = reinterpret_cast<P_ISWOW64PROCESS>(HB_WINAPI_GETPROCADDRESS(hModule, "IsWow64Process"));
       }
       else
       {
@@ -180,7 +180,7 @@ static HB_BOOL s_win_iswow64( void )
       {
          BOOL bIsWow64 = FALSE;
 
-         if( ! pIsWow64Process( GetCurrentProcess(), &bIsWow64 ) )
+         if( ! pIsWow64Process(GetCurrentProcess(), &bIsWow64))
          {
             /* Try alternative method? */
          }
@@ -196,10 +196,10 @@ static HB_BOOL s_win_iswow64( void )
    return bRetVal;
 }
 
-const char * hb_verHostCPU( void )
+const char * hb_verHostCPU(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_verHostCPU()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_verHostCPU()"));
 #endif
 
    if( s_win_iswow64() )
@@ -210,16 +210,16 @@ const char * hb_verHostCPU( void )
    return hb_verCPU();
 }
 
-int hb_verHostBitWidth( void )
+int hb_verHostBitWidth(void)
 {
    int nBits;
 
    /* Inherit the bit width we're building for */
-   #if   defined( HB_ARCH_64BIT )
+   #if   defined(HB_ARCH_64BIT)
       nBits = 64;
-   #elif defined( HB_ARCH_32BIT )
+   #elif defined(HB_ARCH_32BIT)
       nBits = 32;
-   #elif defined( HB_ARCH_16BIT )
+   #elif defined(HB_ARCH_16BIT)
       nBits = 16;
    #else
       nBits = 0;
@@ -246,34 +246,34 @@ int hb_verHostBitWidth( void )
          by this function. [vszakats] */
 
 /* NOTE: As it appears in __PLATFORM__* macro */
-const char * hb_verPlatformMacro( void )
+const char * hb_verPlatformMacro(void)
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    return "WINDOWS";          /* TODO: Change this to WIN for consistency? */
-#elif defined( HB_OS_LINUX )
+#elif defined(HB_OS_LINUX)
    return "LINUX";
-#elif defined( HB_OS_DARWIN )
+#elif defined(HB_OS_DARWIN)
    return "DARWIN";
-#elif defined( HB_OS_BSD )
+#elif defined(HB_OS_BSD)
    return "BSD";
-#elif defined( HB_OS_SUNOS )
+#elif defined(HB_OS_SUNOS)
    return "SUNOS";
-#elif defined( HB_OS_HPUX )
+#elif defined(HB_OS_HPUX)
    return "HPUX";
-#elif defined( HB_OS_BEOS )
+#elif defined(HB_OS_BEOS)
    return "BEOS";
-#elif defined( HB_OS_QNX )
+#elif defined(HB_OS_QNX)
    return "QNX";
-#elif defined( HB_OS_VXWORKS )
+#elif defined(HB_OS_VXWORKS)
    return "VXWORKS";
-#elif defined( HB_OS_CYGWIN )
+#elif defined(HB_OS_CYGWIN)
    return "CYGWIN";
 #else
    return nullptr;
 #endif
 }
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 static HB_BOOL s_fWinVerInit = HB_FALSE;
 
@@ -288,40 +288,22 @@ static int     s_iWinNT    = 0;
 static int     s_iWin9x    = 0;
 static int     s_iWine     = 0;
 
-#if ( defined( _MSC_VER ) && _MSC_VER < 1300 )
-
-   typedef struct _OSVERSIONINFOEXW
-   {
-      DWORD dwOSVersionInfoSize;
-      DWORD dwMajorVersion;
-      DWORD dwMinorVersion;
-      DWORD dwBuildNumber;
-      DWORD dwPlatformId;
-      WCHAR szCSDVersion[128];
-      WORD  wServicePackMajor;
-      WORD  wServicePackMinor;
-      WORD  wSuiteMask;
-      BYTE  wProductType;
-      BYTE  wReserved;
-   } OSVERSIONINFOEXW, * LPOSVERSIONINFOEXW;
-#endif
-
-typedef BOOL ( WINAPI * _HB_VERIFYVERSIONINFO )( LPOSVERSIONINFOEXW, DWORD, DWORDLONG );
-typedef ULONGLONG ( WINAPI * _HB_VERSETCONDITIONMASK )( ULONGLONG, DWORD, BYTE );
+using _HB_VERIFYVERSIONINFO = BOOL(WINAPI *)(LPOSVERSIONINFOEXW, DWORD, DWORDLONG);
+using _HB_VERSETCONDITIONMASK = ULONGLONG(WINAPI *)(ULONGLONG, DWORD, BYTE);
 
 static HB_BOOL s_fVerInfoInit = HB_TRUE;
 static _HB_VERIFYVERSIONINFO   s_pVerifyVersionInfo   = nullptr;
 static _HB_VERSETCONDITIONMASK s_pVerSetConditionMask = nullptr;
 
-static HB_BOOL s_hb_winVerifyVersionInit( void )
+static HB_BOOL s_hb_winVerifyVersionInit(void)
 {
    if( s_fVerInfoInit )
    {
-      HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
+      HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
       if( hModule )
       {
-         s_pVerifyVersionInfo = reinterpret_cast<_HB_VERIFYVERSIONINFO>(HB_WINAPI_GETPROCADDRESS( hModule, "VerifyVersionInfoW" ));
-         s_pVerSetConditionMask = reinterpret_cast<_HB_VERSETCONDITIONMASK>(HB_WINAPI_GETPROCADDRESS( hModule, "VerSetConditionMask" ));
+         s_pVerifyVersionInfo = reinterpret_cast<_HB_VERIFYVERSIONINFO>(HB_WINAPI_GETPROCADDRESS(hModule, "VerifyVersionInfoW"));
+         s_pVerSetConditionMask = reinterpret_cast<_HB_VERSETCONDITIONMASK>(HB_WINAPI_GETPROCADDRESS(hModule, "VerSetConditionMask"));
       }
       s_fVerInfoInit = HB_FALSE;
    }
@@ -329,21 +311,21 @@ static HB_BOOL s_hb_winVerifyVersionInit( void )
    return s_pVerifyVersionInfo && s_pVerSetConditionMask;
 }
 
-static void s_hb_winVerInit( void )
+static void s_hb_winVerInit(void)
 {
-   s_fWin10    = hb_iswinver( 10, 0, 0, HB_TRUE );
-   s_fWin81    = hb_iswinver( 6, 3, 0, HB_TRUE );
-   s_fWin8     = hb_iswinver( 6, 2, 0, HB_TRUE );
-   s_fWin7     = hb_iswinver( 6, 1, 0, HB_TRUE );
-   s_fWinVista = hb_iswinver( 6, 0, 0, HB_TRUE );
-   s_fWin2K3   = hb_iswinver( 5, 2, VER_NT_SERVER, HB_TRUE ) || hb_iswinver( 5, 2, VER_NT_DOMAIN_CONTROLLER, HB_TRUE );
-   s_fWin2K    = hb_iswinver( 5, 0, 0, HB_TRUE );
+   s_fWin10    = hb_iswinver(10, 0, 0, HB_TRUE);
+   s_fWin81    = hb_iswinver(6, 3, 0, HB_TRUE);
+   s_fWin8     = hb_iswinver(6, 2, 0, HB_TRUE);
+   s_fWin7     = hb_iswinver(6, 1, 0, HB_TRUE);
+   s_fWinVista = hb_iswinver(6, 0, 0, HB_TRUE);
+   s_fWin2K3   = hb_iswinver(5, 2, VER_NT_SERVER, HB_TRUE) || hb_iswinver(5, 2, VER_NT_DOMAIN_CONTROLLER, HB_TRUE);
+   s_fWin2K    = hb_iswinver(5, 0, 0, HB_TRUE);
 
-#if !( defined( HB_OS_WIN_64 ) || ( defined( _MSC_VER ) && _MSC_VER > 1310 ) )
+#if !(defined(HB_OS_WIN_64) || (defined(_MSC_VER) && _MSC_VER > 1310))
    {
       OSVERSIONINFO osvi;
       osvi.dwOSVersionInfoSize = sizeof(osvi);
-      if( GetVersionEx( &osvi ) )
+      if( GetVersionEx(&osvi) )
       {
          /* NOTE: Value is VER_PLATFORM_WIN32_CE on WinCE */
          if( osvi.dwPlatformId != VER_PLATFORM_WIN32_WINDOWS )
@@ -386,8 +368,8 @@ static void s_hb_winVerInit( void )
    {
       /* NOTE: Unofficial Wine detection.
                https://www.mail-archive.com/wine-devel@winehq.org/msg48659.html */
-      HMODULE hntdll = GetModuleHandle( TEXT( "ntdll.dll" ) );
-      if( hntdll && HB_WINAPI_GETPROCADDRESS( hntdll, "wine_get_version" ) )
+      HMODULE hntdll = GetModuleHandle(TEXT("ntdll.dll"));
+      if( hntdll && HB_WINAPI_GETPROCADDRESS(hntdll, "wine_get_version") )
       {
          s_iWine = 1;
       }
@@ -407,17 +389,17 @@ static void s_hb_winVerInit( void )
          osvi.szCSDVersion (Windows). [vszakats] */
 #define PLATFORM_BUF_SIZE  255
 
-char * hb_verPlatform( void )
+char * hb_verPlatform(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_verPlatform()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_verPlatform()"));
 #endif
 
    char * pszPlatform;
 
    pszPlatform = static_cast<char*>(hb_xgrab(PLATFORM_BUF_SIZE + 1));
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
    {
       const char * pszName = "";
@@ -448,7 +430,7 @@ char * hb_verPlatform( void )
 
       if( pszName[0] == '\0' )
       {
-         if( hb_iswinver( 11, 0, 0, HB_TRUE ) )
+         if( hb_iswinver(11, 0, 0, HB_TRUE) )
          {
             osvi.dwMajorVersion = 11;
             osvi.dwMinorVersion = 0;
@@ -458,7 +440,7 @@ char * hb_verPlatform( void )
          {
             osvi.dwMajorVersion = 10;
             osvi.dwMinorVersion = 0;
-            if( hb_iswinver( 10, 0, VER_NT_WORKSTATION, HB_FALSE ) )
+            if( hb_iswinver(10, 0, VER_NT_WORKSTATION, HB_FALSE) )
             {
                pszName = " 10";
             }
@@ -471,7 +453,7 @@ char * hb_verPlatform( void )
          {
             osvi.dwMajorVersion = 6;
             osvi.dwMinorVersion = 3;
-            if( hb_iswinver( 6, 3, VER_NT_WORKSTATION, HB_FALSE ) )
+            if( hb_iswinver(6, 3, VER_NT_WORKSTATION, HB_FALSE) )
             {
                pszName = " 8.1";
             }
@@ -486,7 +468,7 @@ char * hb_verPlatform( void )
             {
                osvi.dwMajorVersion = 6;
                osvi.dwMinorVersion = 2;
-               if( hb_iswinver( 6, 2, VER_NT_WORKSTATION, HB_FALSE ) )
+               if( hb_iswinver(6, 2, VER_NT_WORKSTATION, HB_FALSE) )
                {
                   pszName = " 8";
                }
@@ -495,11 +477,11 @@ char * hb_verPlatform( void )
                   pszName = " Server 2012";
                }
             }
-            else if( hb_iswinver( 6, 1, 0, HB_FALSE ) )
+            else if( hb_iswinver(6, 1, 0, HB_FALSE) )
             {
                osvi.dwMajorVersion = 6;
                osvi.dwMinorVersion = 1;
-               if( hb_iswinver( 6, 1, VER_NT_WORKSTATION, HB_FALSE ) )
+               if( hb_iswinver(6, 1, VER_NT_WORKSTATION, HB_FALSE) )
                {
                   pszName = " 7";
                }
@@ -512,7 +494,7 @@ char * hb_verPlatform( void )
             {
                osvi.dwMajorVersion = 6;
                osvi.dwMinorVersion = 0;
-               if( hb_iswinver( 6, 0, VER_NT_WORKSTATION, HB_FALSE ) )
+               if( hb_iswinver(6, 0, VER_NT_WORKSTATION, HB_FALSE) )
                {
                   pszName = " Vista";
                }
@@ -522,15 +504,15 @@ char * hb_verPlatform( void )
                }
             }
          }
-         else if( hb_iswinver( 5, 2, 0, HB_FALSE ) )
+         else if( hb_iswinver(5, 2, 0, HB_FALSE) )
          {
             osvi.dwMajorVersion = 5;
             osvi.dwMinorVersion = 2;
-            if( hb_iswinver( 5, 2, VER_NT_WORKSTATION, HB_FALSE ) )
+            if( hb_iswinver(5, 2, VER_NT_WORKSTATION, HB_FALSE) )
             {
                pszName = " XP x64";
             }
-            else if( GetSystemMetrics( SM_SERVERR2 ) != 0 )
+            else if( GetSystemMetrics(SM_SERVERR2) != 0 )
             {
                pszName = " Server 2003 R2";
             }
@@ -539,7 +521,7 @@ char * hb_verPlatform( void )
                pszName = " Server 2003";
             }
          }
-         else if( hb_iswinver( 5, 1, 0, HB_FALSE ) )
+         else if( hb_iswinver(5, 1, 0, HB_FALSE) )
          {
             osvi.dwMajorVersion = 5;
             osvi.dwMinorVersion = 1;
@@ -563,11 +545,9 @@ char * hb_verPlatform( void )
 
       if( hb_iswin2k() )
       {
-         int tmp;
-
-         for( tmp = 5; tmp > 0; --tmp )
+         for( int tmp = 5; tmp > 0; --tmp )
          {
-            if( hb_iswinsp( tmp, HB_TRUE ) )
+            if( hb_iswinsp(tmp, HB_TRUE) )
             {
                char szServicePack[8];
                hb_snprintf(szServicePack, sizeof(szServicePack), " SP%u", tmp);
@@ -578,17 +558,17 @@ char * hb_verPlatform( void )
       }
    }
 
-#elif defined( __CEGCC__ )
+#elif defined(__CEGCC__)
    {
       hb_snprintf(pszPlatform, PLATFORM_BUF_SIZE + 1, "Windows CE");
    }
-#elif defined( HB_OS_UNIX )
+#elif defined(HB_OS_UNIX)
 
    {
       struct utsname un;
 
-      uname( &un );
-#if defined( HB_OS_MINIX )
+      uname(&un);
+#if defined(HB_OS_MINIX)
       hb_snprintf(pszPlatform, PLATFORM_BUF_SIZE + 1, "%s Release %s Version %s %s", un.sysname, un.release, un.version, un.machine);
 #else
       hb_snprintf(pszPlatform, PLATFORM_BUF_SIZE + 1, "%s %s %s", un.sysname, un.release, un.machine);
@@ -606,9 +586,9 @@ char * hb_verPlatform( void )
    return pszPlatform;
 }
 
-HB_BOOL hb_iswinver( int iMajor, int iMinor, int iType, HB_BOOL fOrUpper )
+HB_BOOL hb_iswinver(int iMajor, int iMinor, int iType, HB_BOOL fOrUpper)
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    if( s_hb_winVerifyVersionInit() )
    {
       OSVERSIONINFOEXW ver;
@@ -620,8 +600,8 @@ HB_BOOL hb_iswinver( int iMajor, int iMinor, int iType, HB_BOOL fOrUpper )
       ver.dwMajorVersion = static_cast<DWORD>(iMajor);
       ver.dwMinorVersion = static_cast<DWORD>(iMinor);
 
-      dwlConditionMask = s_pVerSetConditionMask( dwlConditionMask, VER_MAJORVERSION, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL );
-      dwlConditionMask = s_pVerSetConditionMask( dwlConditionMask, VER_MINORVERSION, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL );
+      dwlConditionMask = s_pVerSetConditionMask(dwlConditionMask, VER_MAJORVERSION, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL);
+      dwlConditionMask = s_pVerSetConditionMask(dwlConditionMask, VER_MINORVERSION, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL);
 
       /* MSDN says in https://msdn.microsoft.com/library/ms725492
            "If you are testing the major version, you must also test the
@@ -630,26 +610,25 @@ HB_BOOL hb_iswinver( int iMajor, int iMinor, int iType, HB_BOOL fOrUpper )
          apparently doesn't care, we're not doing it for now.
          Wine (emulating Windows 7) will erroneously return HB_FALSE from
          these calls:
-           hb_iswinver( 6, 1, 0, HB_FALSE );
-           hb_iswinver( 6, 1, VER_NT_WORKSTATION, HB_FALSE );
+           hb_iswinver(6, 1, 0, HB_FALSE);
+           hb_iswinver(6, 1, VER_NT_WORKSTATION, HB_FALSE);
          Removing the Service Pack check, or changing HB_FALSE to HB_TRUE
          in above calls, both fixes the problem. [vszakats] */
-#if defined( __HB_DISABLE_WINE_VERIFYVERSIONINFO_BUG_WORKAROUND )
-      ver.wServicePackMajor =
-      ver.wServicePackMinor = static_cast<WORD>(0);
+#if defined(__HB_DISABLE_WINE_VERIFYVERSIONINFO_BUG_WORKAROUND)
+      ver.wServicePackMajor = ver.wServicePackMinor = static_cast<WORD>(0);
       dwTypeMask |= VER_SERVICEPACKMAJOR | VER_SERVICEPACKMINOR;
-      dwlConditionMask = s_pVerSetConditionMask( dwlConditionMask, VER_SERVICEPACKMAJOR, VER_GREATER_EQUAL );
-      dwlConditionMask = s_pVerSetConditionMask( dwlConditionMask, VER_SERVICEPACKMINOR, VER_GREATER_EQUAL );
+      dwlConditionMask = s_pVerSetConditionMask(dwlConditionMask, VER_SERVICEPACKMAJOR, VER_GREATER_EQUAL);
+      dwlConditionMask = s_pVerSetConditionMask(dwlConditionMask, VER_SERVICEPACKMINOR, VER_GREATER_EQUAL);
 #endif
 
       if( iType )
       {
          dwTypeMask |= VER_PRODUCT_TYPE;
          ver.wProductType = static_cast<BYTE>(iType);
-         dwlConditionMask = s_pVerSetConditionMask( dwlConditionMask, VER_PRODUCT_TYPE, VER_EQUAL );
+         dwlConditionMask = s_pVerSetConditionMask(dwlConditionMask, VER_PRODUCT_TYPE, VER_EQUAL);
       }
 
-      return static_cast<HB_BOOL>(s_pVerifyVersionInfo( &ver, dwTypeMask, dwlConditionMask ));
+      return static_cast<HB_BOOL>(s_pVerifyVersionInfo(&ver, dwTypeMask, dwlConditionMask));
    }
 #else
    HB_SYMBOL_UNUSED(iMajor);
@@ -660,9 +639,9 @@ HB_BOOL hb_iswinver( int iMajor, int iMinor, int iType, HB_BOOL fOrUpper )
    return HB_FALSE;
 }
 
-HB_BOOL hb_iswinsp( int iServicePackMajor, HB_BOOL fOrUpper )
+HB_BOOL hb_iswinsp(int iServicePackMajor, HB_BOOL fOrUpper)
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    if( s_hb_winVerifyVersionInit() )
    {
       OSVERSIONINFOEXW ver;
@@ -672,9 +651,9 @@ HB_BOOL hb_iswinsp( int iServicePackMajor, HB_BOOL fOrUpper )
       ver.dwOSVersionInfoSize = sizeof(ver);
       ver.wServicePackMajor = static_cast<WORD>(iServicePackMajor);
 
-      dwlConditionMask = s_pVerSetConditionMask( dwlConditionMask, VER_SERVICEPACKMAJOR, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL );
+      dwlConditionMask = s_pVerSetConditionMask(dwlConditionMask, VER_SERVICEPACKMAJOR, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL);
 
-      return static_cast<HB_BOOL>(s_pVerifyVersionInfo( &ver, VER_SERVICEPACKMAJOR, dwlConditionMask ));
+      return static_cast<HB_BOOL>(s_pVerifyVersionInfo(&ver, VER_SERVICEPACKMAJOR, dwlConditionMask));
    }
 #else
    HB_SYMBOL_UNUSED(iServicePackMajor);
@@ -683,9 +662,9 @@ HB_BOOL hb_iswinsp( int iServicePackMajor, HB_BOOL fOrUpper )
    return HB_FALSE;
 }
 
-int hb_iswine( void )
+int hb_iswine(void)
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    if( ! s_fWinVerInit )
    {
       s_hb_winVerInit();
@@ -696,9 +675,9 @@ int hb_iswine( void )
 #endif
 }
 
-HB_BOOL hb_iswin10( void )
+HB_BOOL hb_iswin10(void)
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    if( ! s_fWinVerInit )
    {
       s_hb_winVerInit();
@@ -709,9 +688,9 @@ HB_BOOL hb_iswin10( void )
 #endif
 }
 
-HB_BOOL hb_iswin81( void )
+HB_BOOL hb_iswin81(void)
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    if( ! s_fWinVerInit )
    {
       s_hb_winVerInit();
@@ -722,9 +701,9 @@ HB_BOOL hb_iswin81( void )
 #endif
 }
 
-HB_BOOL hb_iswin8( void )
+HB_BOOL hb_iswin8(void)
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    if( ! s_fWinVerInit )
    {
       s_hb_winVerInit();
@@ -735,9 +714,9 @@ HB_BOOL hb_iswin8( void )
 #endif
 }
 
-HB_BOOL hb_iswin7( void )
+HB_BOOL hb_iswin7(void)
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    if( ! s_fWinVerInit )
    {
       s_hb_winVerInit();
@@ -748,9 +727,9 @@ HB_BOOL hb_iswin7( void )
 #endif
 }
 
-HB_BOOL hb_iswinvista( void )
+HB_BOOL hb_iswinvista(void)
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    if( ! s_fWinVerInit )
    {
       s_hb_winVerInit();
@@ -761,9 +740,9 @@ HB_BOOL hb_iswinvista( void )
 #endif
 }
 
-HB_BOOL hb_iswin2k3( void )
+HB_BOOL hb_iswin2k3(void)
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    if( ! s_fWinVerInit )
    {
       s_hb_winVerInit();
@@ -774,9 +753,9 @@ HB_BOOL hb_iswin2k3( void )
 #endif
 }
 
-HB_BOOL hb_iswin2k( void )
+HB_BOOL hb_iswin2k(void)
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    if( ! s_fWinVerInit )
    {
       s_hb_winVerInit();
@@ -787,9 +766,9 @@ HB_BOOL hb_iswin2k( void )
 #endif
 }
 
-int hb_iswinnt( void )
+int hb_iswinnt(void)
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    if( ! s_fWinVerInit )
    {
       s_hb_winVerInit();
@@ -800,9 +779,9 @@ int hb_iswinnt( void )
 #endif
 }
 
-int hb_iswin9x( void )
+int hb_iswin9x(void)
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    if( ! s_fWinVerInit )
    {
       s_hb_winVerInit();
@@ -813,7 +792,7 @@ int hb_iswin9x( void )
 #endif
 }
 
-HB_BOOL hb_iswince( void )
+HB_BOOL hb_iswince(void)
 {
    return HB_FALSE;
 }
@@ -822,10 +801,10 @@ HB_BOOL hb_iswince( void )
 
 #define COMPILER_BUF_SIZE  80
 
-char * hb_verCompiler( void )
+char * hb_verCompiler(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_verCompiler()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_verCompiler()"));
 #endif
 
    char * pszCompiler;
@@ -840,9 +819,9 @@ char * hb_verCompiler( void )
    pszCompiler = static_cast<char*>(hb_xgrab(COMPILER_BUF_SIZE));
    szSub[0] = '\0';
 
-#if defined( __IBMC__ ) || defined( __IBMCPP__ )
+#if defined(__IBMC__) || defined(__IBMCPP__)
 
-   #if defined( __IBMC__ )
+   #if defined(__IBMC__)
       iVerMajor = __IBMC__;
    #else
       iVerMajor = __IBMCPP__;
@@ -861,23 +840,23 @@ char * hb_verCompiler( void )
    iVerMinor = iVerMajor % 100;
    iVerPatch = 0;
 
-#elif defined( __INTEL_COMPILER )
+#elif defined(__INTEL_COMPILER)
 
    pszName = "Intel(R) C";
 
-   #if defined( __cplusplus )
+   #if defined(__cplusplus)
       hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
    iVerMajor = __INTEL_COMPILER / 100;
-   iVerMinor = ( __INTEL_COMPILER % 100 ) / 10;
+   iVerMinor = (__INTEL_COMPILER % 100) / 10;
    iVerPatch = 0;
 
-#elif defined( __ICL )
+#elif defined(__ICL)
 
    pszName = "Intel(R) C";
 
-   #if defined( __cplusplus )
+   #if defined(__cplusplus)
       hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
@@ -885,11 +864,11 @@ char * hb_verCompiler( void )
    iVerMinor = __ICL % 100;
    iVerPatch = 0;
 
-#elif defined( __ICC )
+#elif defined(__ICC)
 
    pszName = "Intel(R) (ICC) C";
 
-   #if defined( __cplusplus )
+   #if defined(__cplusplus)
       hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
@@ -897,11 +876,11 @@ char * hb_verCompiler( void )
    iVerMinor = __ICC % 100;
    iVerPatch = 0;
 
-#elif defined( __OPENCC__ )
+#elif defined(__OPENCC__)
 
    pszName = "Open64 C";
 
-   #if defined( __cplusplus )
+   #if defined(__cplusplus)
       hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
@@ -913,13 +892,13 @@ char * hb_verCompiler( void )
 #endif
    iVerPatch = __OPENCC_PATCHLEVEL__;
 
-#elif defined( __clang__ ) && defined( __clang_major__ )
+#elif defined(__clang__) && defined(__clang_major__)
 
    /* NOTE: keep clang detection before msvc detection. */
 
    pszName = "LLVM/Clang C";
 
-   #if defined( __cplusplus )
+   #if defined(__cplusplus)
       hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
@@ -927,11 +906,11 @@ char * hb_verCompiler( void )
    iVerMinor = __clang_minor__;
    iVerPatch = __clang_patchlevel__;
 
-#elif defined( __clang__ )
+#elif defined(__clang__)
 
    pszName = "LLVM/Clang C";
 
-   #if defined( __cplusplus )
+   #if defined(__cplusplus)
       hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
@@ -939,23 +918,23 @@ char * hb_verCompiler( void )
 
    iVerMajor = iVerMinor = iVerPatch = 0;
 
-#elif defined( __llvm__ ) && defined( __GNUC__ )
+#elif defined(__llvm__) && defined(__GNUC__)
 
    pszName = "LLVM/GNU C";
 
-   #if defined( __cplusplus )
+   #if defined(__cplusplus)
       hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
    iVerMajor = __GNUC__;
    iVerMinor = __GNUC_MINOR__;
-   #if defined( __GNUC_PATCHLEVEL__ )
+   #if defined(__GNUC_PATCHLEVEL__)
       iVerPatch = __GNUC_PATCHLEVEL__;
    #else
       iVerPatch = 0;
    #endif
 
-#elif defined( _MSC_VER )
+#elif defined(_MSC_VER)
 
    #if _MSC_VER >= 800
       pszName = "Microsoft Visual C";
@@ -963,24 +942,24 @@ char * hb_verCompiler( void )
       pszName = "Microsoft C";
    #endif
 
-   #if defined( __cplusplus )
+   #if defined(__cplusplus)
       hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
    iVerMajor = _MSC_VER / 100;
    iVerMinor = _MSC_VER % 100;
 
-   #if defined( _MSC_FULL_VER )
+   #if defined(_MSC_FULL_VER)
       #if _MSC_VER >= 1400
-         iVerPatch = _MSC_FULL_VER - ( _MSC_VER * 100000 );
+         iVerPatch = _MSC_FULL_VER - (_MSC_VER * 100000);
       #else
-         iVerPatch = _MSC_FULL_VER - ( _MSC_VER * 10000 );
+         iVerPatch = _MSC_FULL_VER - (_MSC_VER * 10000);
       #endif
    #else
       iVerPatch = 0;
    #endif
 
-#elif defined( __BORLANDC__ )
+#elif defined(__BORLANDC__)
 
    #if __BORLANDC__ >= 0x0590  /* Version 5.9 */
       #if __BORLANDC__ >= 0x0620  /* Version 6.2 */
@@ -1009,59 +988,59 @@ char * hb_verCompiler( void )
       iVerPatch = 0;
    #elif __BORLANDC__ >= 0x0500  /* Version 5.x */
       iVerMajor = __BORLANDC__ >> 8;
-      iVerMinor = ( __BORLANDC__ & 0xFF ) >> 4;
+      iVerMinor = (__BORLANDC__ & 0xFF) >> 4;
       iVerPatch = __BORLANDC__ & 0xF;
    #else /* Version 4.x */
       iVerMajor = __BORLANDC__ >> 8;
-      iVerMinor = ( __BORLANDC__ - 1 & 0xFF ) >> 4;
+      iVerMinor = (__BORLANDC__ - 1 & 0xFF) >> 4;
       iVerPatch = 0;
    #endif
 
-#elif defined( __MPW__ )
+#elif defined(__MPW__)
 
    pszName = "MPW C";
    iVerMajor = __MPW__ / 100;
    iVerMinor = __MPW__ % 100;
    iVerPatch = 0;
 
-#elif defined( __DCC__ )
+#elif defined(__DCC__)
 
    pszName = "Wind River Compiler (diab)";
 
-   iVerMajor = ( __VERSION_NUMBER__ / 1000 ) % 10;
-   iVerMinor = ( __VERSION_NUMBER__ / 100 ) % 10;
-   iVerPatch = ( __VERSION_NUMBER__ / 10 ) % 10;
+   iVerMajor = (__VERSION_NUMBER__ / 1000) % 10;
+   iVerMinor = (__VERSION_NUMBER__ / 100) % 10;
+   iVerPatch = (__VERSION_NUMBER__ / 10) % 10;
    iVerMicro = __VERSION_NUMBER__ % 10;
    iElements = 4;
 
-#elif defined( __GNUC__ )
+#elif defined(__GNUC__)
 
-   #if defined( __CYGWIN__ )
+   #if defined(__CYGWIN__)
       pszName = "Cygwin GNU C";
-   #elif defined( __MINGW32__ )
+   #elif defined(__MINGW32__)
       pszName = "MinGW GNU C";
    #else
       pszName = "GNU C";
    #endif
 
-   #if defined( __cplusplus )
+   #if defined(__cplusplus)
       hb_strncpy(szSub, "++", sizeof(szSub) - 1);
    #endif
 
    iVerMajor = __GNUC__;
    iVerMinor = __GNUC_MINOR__;
-   #if defined( __GNUC_PATCHLEVEL__ )
+   #if defined(__GNUC_PATCHLEVEL__)
       iVerPatch = __GNUC_PATCHLEVEL__;
    #else
       iVerPatch = 0;
    #endif
 
-#elif defined( __SUNPRO_C )
+#elif defined(__SUNPRO_C)
 
    pszName = "Sun C";
    #if __SUNPRO_C < 0x1000
       iVerMajor = __SUNPRO_C / 0x100;
-      iVerMinor = ( __SUNPRO_C & 0xff ) / 0x10;
+      iVerMinor = (__SUNPRO_C & 0xff) / 0x10;
       iVerPatch = __SUNPRO_C & 0xf;
    #else
       iVerMajor = __SUNPRO_C / 0x1000;
@@ -1070,12 +1049,12 @@ char * hb_verCompiler( void )
       iVerPatch = __SUNPRO_C & 0xf;
    #endif
 
-#elif defined( __SUNPRO_CC )
+#elif defined(__SUNPRO_CC)
 
    pszName = "Sun C++";
    #if __SUNPRO_CC < 0x1000
       iVerMajor = __SUNPRO_CC / 0x100;
-      iVerMinor = ( __SUNPRO_CC & 0xff ) / 0x10;
+      iVerMinor = (__SUNPRO_CC & 0xff) / 0x10;
       iVerPatch = __SUNPRO_CC & 0xf;
    #else
       iVerMajor = __SUNPRO_CC / 0x1000;
@@ -1115,8 +1094,8 @@ char * hb_verCompiler( void )
       hb_strncpy(pszCompiler, "(unknown)", COMPILER_BUF_SIZE - 1);
    }
 
-#if defined( __clang_version__ )
-   if( strstr(__clang_version__, "(") )
+#if defined(__clang_version__)
+   if( strstr(__clang_version__, "("))
    {
       /* "2.0 (trunk 103176)" -> "(trunk 103176)" */
       hb_snprintf(szSub, sizeof(szSub), " %s", strstr(__clang_version__, "("));
@@ -1128,11 +1107,11 @@ char * hb_verCompiler( void )
    hb_strncat(pszCompiler, szSub, COMPILER_BUF_SIZE - 1);
 #endif
 
-   #if defined( HB_ARCH_16BIT )
+   #if defined(HB_ARCH_16BIT)
       hb_strncat(pszCompiler, " (16-bit)", COMPILER_BUF_SIZE - 1);
-   #elif defined( HB_ARCH_32BIT )
+   #elif defined(HB_ARCH_32BIT)
       hb_strncat(pszCompiler, " (32-bit)", COMPILER_BUF_SIZE - 1);
-   #elif defined( HB_ARCH_64BIT )
+   #elif defined(HB_ARCH_64BIT)
       hb_strncat(pszCompiler, " (64-bit)", COMPILER_BUF_SIZE - 1);
    #endif
 
@@ -1146,44 +1125,35 @@ char * hb_verCompiler( void )
    CA-Cl*pper 5.3b returns: "Clipper (R) 5.3b Intl. (Rev. 338) (1997.04.25)"
  */
 
-char * hb_verHarbour( void )
+char * hb_verHarbour(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_verHarbour()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_verHarbour()"));
 #endif
 
-   char * pszVersion;
-
-   pszVersion = static_cast<char*>(hb_xgrab(80));
+   char * pszVersion = static_cast<char*>(hb_xgrab(80));
    hb_snprintf(pszVersion, 80, "Harbour++ %d.%d.%d%s (r%d)", HB_VER_MAJOR, HB_VER_MINOR, HB_VER_RELEASE, HB_VER_STATUS, hb_verRevision());
-
    return pszVersion;
 }
 
-char * hb_verPCode( void )
+char * hb_verPCode(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_verPCode()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_verPCode()"));
 #endif
 
-   char * pszPCode;
-
-   pszPCode = static_cast<char*>(hb_xgrab(24));
+   char * pszPCode = static_cast<char*>(hb_xgrab(24));
    hb_snprintf(pszPCode, 24, "PCode version: %d.%d", HB_PCODE_VER >> 8, HB_PCODE_VER & 0xFF);
-
    return pszPCode;
 }
 
-char * hb_verBuildDate( void )
+char * hb_verBuildDate(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_verBuildDate()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_verBuildDate()"));
 #endif
 
-   char * pszDate;
-
-   pszDate = static_cast<char*>(hb_xgrab(64));
+   char * pszDate = static_cast<char*>(hb_xgrab(64));
    hb_snprintf(pszDate, 64, "%s %s", __DATE__, __TIME__);
-
    return pszDate;
 }

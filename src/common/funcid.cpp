@@ -46,13 +46,13 @@
 
 #include "hbcomp.h"
 
-typedef struct
+struct _HB_FUNCID
 {
    const char * szFuncName;
    int          iMinLen;
    int          flags;
    HB_FUNC_ID   funcID;
-} _HB_FUNCID;
+};
 
 /* NOTE: THIS TABLE MUST BE SORTED ALPHABETICALLY
  */
@@ -149,14 +149,14 @@ static _HB_FUNCID s_funcId[] =
    { "_GET_",                   0, HB_FN_UDF,      HB_F__GET_                }
 };
 
-const char * hb_compGetFuncID( const char * szFuncName, HB_FUNC_ID * pFunID, int * piFlags )
+const char * hb_compGetFuncID(const char * szFuncName, HB_FUNC_ID * pFunID, int * piFlags)
 {
-   unsigned int uiFirst = 0, uiLast = HB_SIZEOFARRAY( s_funcId ) - 1, uiMiddle;
+   unsigned int uiFirst = 0, uiLast = HB_SIZEOFARRAY(s_funcId) - 1, uiMiddle;
    int i;
 
    do
    {
-      uiMiddle = ( uiFirst + uiLast ) >> 1;
+      uiMiddle = (uiFirst + uiLast) >> 1;
       i = strcmp(szFuncName, s_funcId[uiMiddle].szFuncName);
       if( i <= 0 )
       {

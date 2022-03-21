@@ -44,7 +44,7 @@
  *
  */
 
-#if ! defined( _LARGEFILE64_SOURCE )
+#if ! defined(_LARGEFILE64_SOURCE)
 #  define _LARGEFILE64_SOURCE  1
 #endif
 
@@ -54,32 +54,32 @@
 #include "hbset.h"
 #include "hbdate.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    #include <windows.h>
    #include "hbwinuni.h"
-   #if ! defined( INVALID_FILE_ATTRIBUTES )
-      #define INVALID_FILE_ATTRIBUTES  ( static_cast<DWORD>(-1) )
+   #if ! defined(INVALID_FILE_ATTRIBUTES)
+      #define INVALID_FILE_ATTRIBUTES  (static_cast<DWORD>(-1))
    #endif
-   #if ! defined( FILE_ATTRIBUTE_DEVICE )
+   #if ! defined(FILE_ATTRIBUTE_DEVICE)
       #define FILE_ATTRIBUTE_DEVICE    0x00000040
    #endif
-#elif defined( HB_OS_UNIX )
+#elif defined(HB_OS_UNIX)
    #include <sys/types.h>
    #include <sys/stat.h>
 #endif
-#if ! defined( HB_OS_WIN )
+#if ! defined(HB_OS_WIN)
    #include <errno.h>
 #endif
 
-#if ! defined( HB_USE_LARGEFILE64 ) && defined( HB_OS_UNIX )
-   #if defined( __USE_LARGEFILE64 )
+#if ! defined(HB_USE_LARGEFILE64) && defined(HB_OS_UNIX)
+   #if defined(__USE_LARGEFILE64)
       /*
        * The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
        * defined and effectively enables lseek64/flock64/ftruncate64 functions
        * on 32-bit machines.
        */
       #define HB_USE_LARGEFILE64
-   #elif defined( HB_OS_UNIX ) && defined( O_LARGEFILE )
+   #elif defined(HB_OS_UNIX) && defined(O_LARGEFILE)
       #define HB_USE_LARGEFILE64
    #endif
 #endif
@@ -87,7 +87,7 @@
 /*
  * Function that adds zero or more paths to a list of pathnames to search
  */
-void hb_fsAddSearchPath( const char * szPath, HB_PATHNAMES ** pSearchList )
+void hb_fsAddSearchPath(const char * szPath, HB_PATHNAMES ** pSearchList)
 {
    char * pPath;
    char * pDelim;
@@ -95,30 +95,30 @@ void hb_fsAddSearchPath( const char * szPath, HB_PATHNAMES ** pSearchList )
 
    while( *pSearchList )
    {
-      pSearchList = &( *pSearchList )->pNext;
+      pSearchList = &(*pSearchList)->pNext;
    }
 
    pPath = hb_strdup(szPath);
-   while( ( pDelim = strchr( pPath, HB_OS_PATH_LIST_SEP_CHR ) ) != nullptr )
+   while( (pDelim = strchr(pPath, HB_OS_PATH_LIST_SEP_CHR)) != nullptr )
    {
       *pDelim = '\0';
       *pSearchList = static_cast<HB_PATHNAMES*>(hb_xgrab(sizeof(HB_PATHNAMES)));
-      ( *pSearchList )->szPath = pPath;
-      ( *pSearchList )->fFree  = fFree;
-      pSearchList = &( *pSearchList )->pNext;
+      (*pSearchList)->szPath = pPath;
+      (*pSearchList)->fFree = fFree;
+      pSearchList = &(*pSearchList)->pNext;
       pPath = pDelim + 1;
       fFree = HB_FALSE;
    }
    *pSearchList = static_cast<HB_PATHNAMES*>(hb_xgrab(sizeof(HB_PATHNAMES)));
-   ( *pSearchList )->szPath = pPath;
-   ( *pSearchList )->pNext  = nullptr;
-   ( *pSearchList )->fFree  = fFree;
+   (*pSearchList)->szPath = pPath;
+   (*pSearchList)->pNext = nullptr;
+   (*pSearchList)->fFree = fFree;
 }
 
 /*
  * free list of pathnames to search
  */
-void hb_fsFreeSearchPath( HB_PATHNAMES * pSearchList )
+void hb_fsFreeSearchPath(HB_PATHNAMES * pSearchList)
 {
    HB_PATHNAMES * pNext;
 
@@ -139,13 +139,13 @@ void hb_fsFreeSearchPath( HB_PATHNAMES * pSearchList )
 }
 
 /* Split given filename into path, name and extension, plus determine drive */
-PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
+PHB_FNAME hb_fsFNameSplit(const char * pszFileName)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsFNameSplit(%s)", pszFileName ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsFNameSplit(%s)", pszFileName));
 #endif
 #if 0
-   HB_TRACE( HB_TR_INFO, ( "hb_fsFNameSplit: Filename: |%s|", pszFileName ) );
+   HB_TRACE(HB_TR_INFO, ("hb_fsFNameSplit: Filename: |%s|", pszFileName));
 #endif
 
    PHB_FNAME pFileName;
@@ -153,10 +153,7 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
    /* Grab memory, set defaults */
    pFileName = static_cast<PHB_FNAME>(hb_xgrab(sizeof(HB_FNAME)));
 
-   pFileName->szPath =
-   pFileName->szName =
-   pFileName->szExtension =
-   pFileName->szDrive = nullptr;
+   pFileName->szPath = pFileName->szName = pFileName->szExtension = pFileName->szDrive = nullptr;
 
    if( pszFileName )
    {
@@ -173,7 +170,7 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
 
       while( --iPos >= 0 )
       {
-         if( pszFileName[iPos] == cDirSep || strchr( HB_OS_PATH_DELIM_CHR_LIST, pszFileName[iPos] ) )
+         if( pszFileName[iPos] == cDirSep || strchr(HB_OS_PATH_DELIM_CHR_LIST, pszFileName[iPos]) )
          {
             pFileName->szPath = pszPos;
             hb_strncpy(pszPos, pszFileName, iPos + 1);
@@ -226,10 +223,10 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
    }
 
 #if 0
-   HB_TRACE( HB_TR_INFO, ( "hb_fsFNameSplit:   szPath: |%s|", pFileName->szPath ) );
-   HB_TRACE( HB_TR_INFO, ( "hb_fsFNameSplit:   szName: |%s|", pFileName->szName ) );
-   HB_TRACE( HB_TR_INFO, ( "hb_fsFNameSplit:    szExt: |%s|", pFileName->szExtension ) );
-   HB_TRACE( HB_TR_INFO, ( "hb_fsFNameSplit:  szDrive: |%s|", pFileName->szDrive ) );
+   HB_TRACE(HB_TR_INFO, ("hb_fsFNameSplit:   szPath: |%s|", pFileName->szPath));
+   HB_TRACE(HB_TR_INFO, ("hb_fsFNameSplit:   szName: |%s|", pFileName->szName));
+   HB_TRACE(HB_TR_INFO, ("hb_fsFNameSplit:    szExt: |%s|", pFileName->szExtension));
+   HB_TRACE(HB_TR_INFO, ("hb_fsFNameSplit:  szDrive: |%s|", pFileName->szDrive));
 #endif
 
    return pFileName;
@@ -242,10 +239,10 @@ PHB_FNAME hb_fsFNameSplit( const char * pszFileName )
  */
 
 /* This function joins path, name and extension into a string with a filename */
-char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
+char * hb_fsFNameMerge(char * pszFileName, PHB_FNAME pFileName)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsFNameMerge(%p, %p)", static_cast<void*>(pszFileName), static_cast<void*>(pFileName) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsFNameMerge(%p, %p)", static_cast<void*>(pszFileName), static_cast<void*>(pFileName)));
 #endif
 
    if( pszFileName && pFileName )
@@ -261,7 +258,7 @@ char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
 
       /* Strip preceding path separators from the filename */
       pszName = pFileName->szName;
-      if( pszName && pszName[0] != '\0' && ( pszName[0] == cDirSep || strchr( HB_OS_PATH_DELIM_CHR_LIST, pszName[0] ) != nullptr ) )
+      if( pszName && pszName[0] != '\0' && (pszName[0] == cDirSep || strchr(HB_OS_PATH_DELIM_CHR_LIST, pszName[0]) != nullptr) )
       {
          pszName++;
       }
@@ -274,11 +271,11 @@ char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
 
       /* If we have a path, append a path separator to the path if there
          was none. */
-      if( pszFileName[0] != '\0' && ( pszName || pFileName->szExtension ) )
+      if( pszFileName[0] != '\0' && (pszName || pFileName->szExtension) )
       {
          int iLen = static_cast<int>(strlen(pszFileName)) - 1;
 
-         if( iLen < HB_PATH_MAX - 1 - 2 && pszFileName[iLen] != cDirSep && strchr( HB_OS_PATH_DELIM_CHR_LIST, pszFileName[iLen] ) == nullptr )
+         if( iLen < HB_PATH_MAX - 1 - 2 && pszFileName[iLen] != cDirSep && strchr(HB_OS_PATH_DELIM_CHR_LIST, pszFileName[iLen]) == nullptr )
          {
             pszFileName[iLen + 1] = HB_OS_PATH_DELIM_CHR;
             pszFileName[iLen + 2] = '\0';
@@ -304,31 +301,31 @@ char * hb_fsFNameMerge( char * pszFileName, PHB_FNAME pFileName )
       }
 
 #if 0
-      HB_TRACE( HB_TR_INFO, ( "hb_fsFNameMerge:   szPath: |%s|", pFileName->szPath ) );
-      HB_TRACE( HB_TR_INFO, ( "hb_fsFNameMerge:   szName: |%s|", pFileName->szName ) );
-      HB_TRACE( HB_TR_INFO, ( "hb_fsFNameMerge:    szExt: |%s|", pFileName->szExtension ) );
-      HB_TRACE( HB_TR_INFO, ( "hb_fsFNameMerge: Filename: |%s|", pszFileName ) );
+      HB_TRACE(HB_TR_INFO, ("hb_fsFNameMerge:   szPath: |%s|", pFileName->szPath));
+      HB_TRACE(HB_TR_INFO, ("hb_fsFNameMerge:   szName: |%s|", pFileName->szName));
+      HB_TRACE(HB_TR_INFO, ("hb_fsFNameMerge:    szExt: |%s|", pFileName->szExtension));
+      HB_TRACE(HB_TR_INFO, ("hb_fsFNameMerge: Filename: |%s|", pszFileName));
 #endif
    }
 
    return pszFileName;
 }
 
-HB_BOOL hb_fsNameExists( const char * pszFileName )
+HB_BOOL hb_fsNameExists(const char * pszFileName)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsNameExists(%p)", static_cast<const void*>(pszFileName) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsNameExists(%p)", static_cast<const void*>(pszFileName)));
 #endif
 
    HB_BOOL fExist = HB_FALSE;
 
    if( pszFileName != nullptr )
    {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
       LPTSTR lpFree;
       LPCTSTR lpFileName = HB_FSNAMECONV(pszFileName, &lpFree);
 
-      fExist = ( GetFileAttributes( lpFileName ) != INVALID_FILE_ATTRIBUTES );
+      fExist = (GetFileAttributes(lpFileName) != INVALID_FILE_ATTRIBUTES);
 
       if( lpFree )
       {
@@ -340,13 +337,13 @@ HB_BOOL hb_fsNameExists( const char * pszFileName )
       pszFileName = hb_fsNameConv(pszFileName, &pszFree);
 
       {
-#  if defined( HB_OS_UNIX )
-#     if defined( HB_USE_LARGEFILE64 )
+#  if defined(HB_OS_UNIX)
+#     if defined(HB_USE_LARGEFILE64)
          struct stat64 statbuf;
-         fExist = stat64( pszFileName, &statbuf ) == 0;
+         fExist = stat64(pszFileName, &statbuf) == 0;
 #     else
          struct stat statbuf;
-         fExist = stat( pszFileName, &statbuf ) == 0;
+         fExist = stat(pszFileName, &statbuf) == 0;
 #     endif
 #  else
          int iTODO; /* To force warning */
@@ -363,23 +360,23 @@ HB_BOOL hb_fsNameExists( const char * pszFileName )
    return fExist;
 }
 
-HB_BOOL hb_fsFileExists( const char * pszFileName )
+HB_BOOL hb_fsFileExists(const char * pszFileName)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsFileExists(%p)", static_cast<const void*>(pszFileName) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsFileExists(%p)", static_cast<const void*>(pszFileName)));
 #endif
 
    HB_BOOL fExist = HB_FALSE;
 
    if( pszFileName != nullptr )
    {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
       LPTSTR lpFree;
       LPCTSTR lpFileName = HB_FSNAMECONV(pszFileName, &lpFree);
       DWORD dwAttr;
 
-      dwAttr = GetFileAttributes( lpFileName );
-      fExist = ( dwAttr != INVALID_FILE_ATTRIBUTES ) && ( dwAttr & ( FILE_ATTRIBUTE_DIRECTORY | FILE_ATTRIBUTE_DEVICE ) ) == 0;
+      dwAttr = GetFileAttributes(lpFileName);
+      fExist = (dwAttr != INVALID_FILE_ATTRIBUTES) && (dwAttr & (FILE_ATTRIBUTE_DIRECTORY | FILE_ATTRIBUTE_DEVICE)) == 0;
 
       if( lpFree )
       {
@@ -391,13 +388,13 @@ HB_BOOL hb_fsFileExists( const char * pszFileName )
       pszFileName = hb_fsNameConv(pszFileName, &pszFree);
 
       {
-#  if defined( HB_OS_UNIX )
-#     if defined( HB_USE_LARGEFILE64 )
+#  if defined(HB_OS_UNIX)
+#     if defined(HB_USE_LARGEFILE64)
          struct stat64 statbuf;
-         fExist = stat64( pszFileName, &statbuf ) == 0 && S_ISREG( statbuf.st_mode );
+         fExist = stat64(pszFileName, &statbuf) == 0 && S_ISREG(statbuf.st_mode);
 #     else
          struct stat statbuf;
-         fExist = stat( pszFileName, &statbuf ) == 0 && S_ISREG( statbuf.st_mode );
+         fExist = stat(pszFileName, &statbuf) == 0 && S_ISREG(statbuf.st_mode);
 #     endif
 #  else
          int iTODO; /* To force warning */
@@ -414,23 +411,23 @@ HB_BOOL hb_fsFileExists( const char * pszFileName )
    return fExist;
 }
 
-HB_BOOL hb_fsDirExists( const char * pszDirName )
+HB_BOOL hb_fsDirExists(const char * pszDirName)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsDirExists(%p)", static_cast<const void*>(pszDirName) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsDirExists(%p)", static_cast<const void*>(pszDirName)));
 #endif
 
    HB_BOOL fExist = HB_FALSE;
 
    if( pszDirName != nullptr )
    {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
       LPTSTR lpFree;
       LPCTSTR lpDirName = HB_FSNAMECONV(pszDirName, &lpFree);
       DWORD dwAttr;
 
-      dwAttr = GetFileAttributes( lpDirName );
-      fExist = ( dwAttr != INVALID_FILE_ATTRIBUTES ) && ( dwAttr & FILE_ATTRIBUTE_DIRECTORY );
+      dwAttr = GetFileAttributes(lpDirName);
+      fExist = (dwAttr != INVALID_FILE_ATTRIBUTES) && (dwAttr & FILE_ATTRIBUTE_DIRECTORY);
 
       if( lpFree )
       {
@@ -442,13 +439,13 @@ HB_BOOL hb_fsDirExists( const char * pszDirName )
       pszDirName = hb_fsNameConv(pszDirName, &pszFree);
 
       {
-#  if defined( HB_OS_UNIX )
-#     if defined( HB_USE_LARGEFILE64 )
+#  if defined(HB_OS_UNIX)
+#     if defined(HB_USE_LARGEFILE64)
          struct stat64 statbuf;
-         fExist = stat64( pszDirName, &statbuf ) == 0 && S_ISDIR( statbuf.st_mode );
+         fExist = stat64(pszDirName, &statbuf) == 0 && S_ISDIR(statbuf.st_mode);
 #     else
          struct stat statbuf;
-         fExist = stat( pszDirName, &statbuf ) == 0 && S_ISDIR( statbuf.st_mode );
+         fExist = stat(pszDirName, &statbuf) == 0 && S_ISDIR(statbuf.st_mode);
 #     endif
 #  else
          int iTODO; /* To force warning */
@@ -465,13 +462,13 @@ HB_BOOL hb_fsDirExists( const char * pszDirName )
    return fExist;
 }
 
-HB_BOOL hb_fsMaxFilesError( void )
+HB_BOOL hb_fsMaxFilesError(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsMaxFilesError()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsMaxFilesError()"));
 #endif
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    return GetLastError() == ERROR_TOO_MANY_OPEN_FILES;
 #else
    return errno == EMFILE;

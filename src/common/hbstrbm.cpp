@@ -52,7 +52,7 @@
 
 #define ASIZE  UCHAR_MAX
 
-static void preBmBc( const char * needle, HB_ISIZ m, HB_ISIZ bmBc[] )
+static void preBmBc(const char * needle, HB_ISIZ m, HB_ISIZ bmBc[])
 {
    HB_ISIZ i;
 
@@ -66,7 +66,7 @@ static void preBmBc( const char * needle, HB_ISIZ m, HB_ISIZ bmBc[] )
    }
 }
 
-static void suffixes( const char * needle, HB_ISIZ m, HB_ISIZ * suff )
+static void suffixes(const char * needle, HB_ISIZ m, HB_ISIZ * suff)
 {
    HB_ISIZ f, g, i;
 
@@ -95,12 +95,12 @@ static void suffixes( const char * needle, HB_ISIZ m, HB_ISIZ * suff )
    }
 }
 
-static void preBmGs( const char * needle, HB_ISIZ m, HB_ISIZ bmGs[] )
+static void preBmGs(const char * needle, HB_ISIZ m, HB_ISIZ bmGs[])
 {
    HB_ISIZ i, j;
    HB_ISIZ * suff = static_cast<HB_ISIZ*>(hb_xgrab(m * sizeof(HB_ISIZ)));
 
-   suffixes( needle, m, suff );
+   suffixes(needle, m, suff);
 
    for( i = 0; i < m; ++i )
    {
@@ -131,7 +131,7 @@ static void preBmGs( const char * needle, HB_ISIZ m, HB_ISIZ bmGs[] )
    hb_xfree(suff);
 }
 
-HB_ISIZ hb_strAtTBM( const char * needle, HB_ISIZ m, const char * haystack, HB_ISIZ n )
+HB_ISIZ hb_strAtTBM(const char * needle, HB_ISIZ m, const char * haystack, HB_ISIZ n)
 {
    HB_ISIZ r = 0;
    HB_ISIZ bcShift, j, shift, u, v, turboShift;
@@ -141,8 +141,8 @@ HB_ISIZ hb_strAtTBM( const char * needle, HB_ISIZ m, const char * haystack, HB_I
    bmGs = static_cast<HB_ISIZ*>(hb_xgrab(m * sizeof(HB_ISIZ)));
 
    /* Preprocessing */
-   preBmGs( needle, m, bmGs );
-   preBmBc( needle, m, bmBc );
+   preBmGs(needle, m, bmGs);
+   preBmBc(needle, m, bmBc);
 
    /* Searching */
    j = u = 0;
