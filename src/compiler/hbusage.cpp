@@ -46,7 +46,7 @@
 
 #include "hbcomp.h"
 
-void hb_compPrintUsage( HB_COMP_DECL, const char * szSelf )
+void hb_compPrintUsage(HB_COMP_DECL, const char * szSelf)
 {
    static const char * s_szOptions[] =
    {
@@ -104,16 +104,16 @@ void hb_compPrintUsage( HB_COMP_DECL, const char * szSelf )
    char buffer[256];
 
    hb_snprintf(buffer, sizeof(buffer), "\nSyntax:  %s <file[s][.prg]|@file> [options]\n", szSelf);
-   hb_compOutStd( HB_COMP_PARAM, buffer );
+   hb_compOutStd(HB_COMP_PARAM, buffer);
 
-   for( int iLine = 0; iLine < static_cast<int>(HB_SIZEOFARRAY( s_szOptions )); iLine++ )
+   for( int iLine = 0; iLine < static_cast<int>(HB_SIZEOFARRAY(s_szOptions)); iLine++ )
    {
-      hb_compOutStd( HB_COMP_PARAM, s_szOptions[iLine] );
+      hb_compOutStd(HB_COMP_PARAM, s_szOptions[iLine]);
    }
 }
 
 /* List of compatibility/features modes */
-void hb_compPrintModes( HB_COMP_DECL )
+void hb_compPrintModes(HB_COMP_DECL)
 {
    static const char * s_szOptions[] =
    {
@@ -146,24 +146,23 @@ void hb_compPrintModes( HB_COMP_DECL )
       ~HB_COMPFLAG_OPTJUMP,
    };
 
-   hb_compOutStd( HB_COMP_PARAM,
-                  "\nCompatibility flags: -k[options]\n" );
+   hb_compOutStd(HB_COMP_PARAM, "\nCompatibility flags: -k[options]\n");
 
-   for( int iLine = 0; iLine < static_cast<int>(HB_SIZEOFARRAY( s_szOptions )); iLine++ )
+   for( int iLine = 0; iLine < static_cast<int>(HB_SIZEOFARRAY(s_szOptions)); iLine++ )
    {
-      hb_compOutStd( HB_COMP_PARAM, s_szOptions[iLine] );
-      if( iLine < static_cast<int>(HB_SIZEOFARRAY( s_flags )) &&
-          ( s_flags[iLine] < 0 ? HB_COMP_ISSUPPORTED( ~s_flags[iLine] ) == 0 :
-                                   HB_COMP_ISSUPPORTED( s_flags[iLine] ) != 0 ) )
+      hb_compOutStd(HB_COMP_PARAM, s_szOptions[iLine]);
+      if( iLine < static_cast<int>(HB_SIZEOFARRAY(s_flags)) &&
+          (s_flags[iLine] < 0 ? HB_COMP_ISSUPPORTED(~s_flags[iLine]) == 0 :
+                                   HB_COMP_ISSUPPORTED(s_flags[iLine]) != 0) )
       {
-         hb_compOutStd( HB_COMP_PARAM, " (default)" );
+         hb_compOutStd(HB_COMP_PARAM, " (default)");
       }
    }
 }
 
-void hb_compPrintCredits( HB_COMP_DECL )
+void hb_compPrintCredits(HB_COMP_DECL)
 {
-   hb_compOutStd( HB_COMP_PARAM,
+   hb_compOutStd(HB_COMP_PARAM,
          "\n"
          "Credits:  The Harbour Team\n"
          "          (replace space with @ in email addresses)\n"
@@ -258,14 +257,14 @@ void hb_compPrintCredits( HB_COMP_DECL )
       );
 }
 
-void hb_compPrintLogo( HB_COMP_DECL )
+void hb_compPrintLogo(HB_COMP_DECL)
 {
    char * szVer = hb_verHarbour();
 
    #define HB_VER_COMMIT_YEAR  "2020"
    #define HB_VER_ORIGIN_URL   "https://harbour.github.io/"
 
-   hb_compOutStd( HB_COMP_PARAM, szVer );
-   hb_compOutStd( HB_COMP_PARAM, "\nCopyright (c) 1999-" HB_VER_COMMIT_YEAR ", " HB_VER_ORIGIN_URL "\n" );
+   hb_compOutStd(HB_COMP_PARAM, szVer);
+   hb_compOutStd(HB_COMP_PARAM, "\nCopyright (c) 1999-" HB_VER_COMMIT_YEAR ", " HB_VER_ORIGIN_URL "\n");
    hb_xfree(szVer);
 }

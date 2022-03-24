@@ -46,10 +46,8 @@
 
 #include "hbcomp.h"
 
-static void s_pp_msg( void * cargo, int iErrorFmt, int iLine,
-                      const char * szModule, char cPrefix, int iValue,
-                      const char * szText,
-                      const char * szPar1, const char * szPar2 )
+static void s_pp_msg(void * cargo, int iErrorFmt, int iLine, const char * szModule, char cPrefix, int iValue,
+                     const char * szText, const char * szPar1, const char * szPar2)
 {
    HB_SYMBOL_UNUSED(cargo);
 
@@ -68,17 +66,14 @@ static void s_pp_msg( void * cargo, int iErrorFmt, int iLine,
       {
          hb_snprintf(szLine, sizeof(szLine), iErrorFmt == HB_ERRORFMT_CLIPPER ? "%s(%i)" : "%s:%i", szModule, iLine);
       }
-      pError = hb_errRT_New( ES_ERROR, "COMPILER", 1001, static_cast<HB_ERRCODE>(iValue), szMsgBuf, szLine, 0 /*OsCode*/, EF_NONE );
-      hb_errLaunch( pError );
-      hb_errRelease( pError );
+      pError = hb_errRT_New(ES_ERROR, "COMPILER", 1001, static_cast<HB_ERRCODE>(iValue), szMsgBuf, szLine, 0 /*OsCode*/, EF_NONE);
+      hb_errLaunch(pError);
+      hb_errRelease(pError);
    }
 }
 
-static int s_pp_openFile( void * cargo, char * szFileName,
-                          HB_BOOL fBefore, HB_BOOL fSysFile, HB_BOOL fBinary,
-                          HB_PATHNAMES * pIncludePaths,
-                          HB_BOOL * pfNested, FILE ** file_ptr,
-                          const char ** pBufPtr, HB_SIZE * pnLen, HB_BOOL * pfFree )
+static int s_pp_openFile(void * cargo, char * szFileName, HB_BOOL fBefore, HB_BOOL fSysFile, HB_BOOL fBinary, HB_PATHNAMES * pIncludePaths,
+                         HB_BOOL * pfNested, FILE ** file_ptr, const char ** pBufPtr, HB_SIZE * pnLen, HB_BOOL * pfFree)
 {
    HB_SYMBOL_UNUSED(fSysFile);
    HB_SYMBOL_UNUSED(fBinary);
@@ -95,7 +90,7 @@ static int s_pp_openFile( void * cargo, char * szFileName,
       {
          if( HB_IS_HASH(pIncItem) )
          {
-            PHB_ITEM pFileItem = hb_hashGetCItemPtr( pIncItem, szFileName );
+            PHB_ITEM pFileItem = hb_hashGetCItemPtr(pIncItem, szFileName);
 
             if( pFileItem )
             {
@@ -103,8 +98,8 @@ static int s_pp_openFile( void * cargo, char * szFileName,
                if( nLen )
                {
                   *pBufPtr = hb_itemGetCPtr(pFileItem);
-                  *pnLen   = nLen;
-                  *pfFree  = HB_FALSE;
+                  *pnLen = nLen;
+                  *pfFree = HB_FALSE;
                   return HB_PP_OPEN_OK;
                }
             }
@@ -115,11 +110,7 @@ static int s_pp_openFile( void * cargo, char * szFileName,
    return HB_PP_OPEN_FILE;
 }
 
-static void hb_compGenArgList( int iFirst, int iLast,
-                               int * pArgC, const char *** pArgV,
-                               PHB_ITEM * pIncItem,
-                               PHB_PP_OPEN_FUNC * pOpenFunc,
-                               PHB_PP_MSG_FUNC * pMsgFunc )
+static void hb_compGenArgList(int iFirst, int iLast, int * pArgC, const char *** pArgV, PHB_ITEM * pIncItem, PHB_PP_OPEN_FUNC * pOpenFunc, PHB_PP_MSG_FUNC * pMsgFunc)
 {
    PHB_ITEM pParam;
    int argc = 1, i;
@@ -128,7 +119,7 @@ static void hb_compGenArgList( int iFirst, int iLast,
    if( pMsgFunc )
    {
       *pMsgFunc = nullptr;
-      if( HB_ISLOG( iFirst ) )
+      if( HB_ISLOG(iFirst) )
       {
          if( hb_parl(iFirst) )
          {
@@ -176,7 +167,7 @@ static void hb_compGenArgList( int iFirst, int iLast,
       }
    }
 
-   argv = static_cast<const char**>(hb_xgrab(sizeof(char*) * ( argc + 1 )));
+   argv = static_cast<const char**>(hb_xgrab(sizeof(char*) * (argc + 1)));
    argc = 0;
    for( i = iFirst; i <= iLast; ++i )
    {
@@ -214,7 +205,7 @@ HB_FUNC( HB_COMPILE )
    PHB_PP_OPEN_FUNC pOpenFunc;
    PHB_PP_MSG_FUNC pMsgFunc;
 
-   hb_compGenArgList( 1, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc );
+   hb_compGenArgList(1, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc);
    hb_retni(hb_compMainExt(argc, argv, nullptr, nullptr, nullptr, 0, pIncItem, pOpenFunc, pMsgFunc));
    hb_xfree(static_cast<void*>(argv));
 }
@@ -229,8 +220,8 @@ HB_FUNC( HB_COMPILEBUF )
    HB_BYTE * pBuffer;
    HB_SIZE nLen;
 
-   hb_compGenArgList( 1, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc );
-   iResult = hb_compMainExt( argc, argv, &pBuffer, &nLen, nullptr, 0, pIncItem, pOpenFunc, pMsgFunc );
+   hb_compGenArgList(1, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc);
+   iResult = hb_compMainExt(argc, argv, &pBuffer, &nLen, nullptr, 0, pIncItem, pOpenFunc, pMsgFunc);
    hb_xfree(static_cast<void*>(argv));
 
    if( iResult == EXIT_SUCCESS && pBuffer )
@@ -253,8 +244,8 @@ HB_FUNC( HB_COMPILEFROMBUF )
       HB_BYTE * pBuffer;
       HB_SIZE nLen;
 
-      hb_compGenArgList( 2, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc );
-      iResult = hb_compMainExt( argc, argv, &pBuffer, &nLen, szSource, 0, pIncItem, pOpenFunc, pMsgFunc );
+      hb_compGenArgList(2, hb_pcount(), &argc, &argv, &pIncItem, &pOpenFunc, &pMsgFunc);
+      iResult = hb_compMainExt(argc, argv, &pBuffer, &nLen, szSource, 0, pIncItem, pOpenFunc, pMsgFunc);
       hb_xfree(static_cast<void*>(argv));
 
       if( iResult == EXIT_SUCCESS && pBuffer )

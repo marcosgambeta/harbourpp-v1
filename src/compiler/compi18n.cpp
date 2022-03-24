@@ -46,19 +46,16 @@
 
 #include "hbcomp.h"
 
-static PHB_I18NTABLE hb_compI18nCreate( void )
+static PHB_I18NTABLE hb_compI18nCreate(void)
 {
-   PHB_I18NTABLE pI18n;
-
-   pI18n = static_cast<PHB_I18NTABLE>(hb_xgrab(sizeof(HB_I18NTABLE)));
-   pI18n->pString     = nullptr;
-   pI18n->uiCount     = 0;
+   PHB_I18NTABLE pI18n = static_cast<PHB_I18NTABLE>(hb_xgrab(sizeof(HB_I18NTABLE)));
+   pI18n->pString = nullptr;
+   pI18n->uiCount = 0;
    pI18n->uiAllocated = 0;
-
    return pI18n;
 }
 
-void hb_compI18nFree( HB_COMP_DECL )
+void hb_compI18nFree(HB_COMP_DECL)
 {
    PHB_I18NTABLE pI18n = HB_COMP_PARAM->pI18n;
 
@@ -80,11 +77,10 @@ void hb_compI18nFree( HB_COMP_DECL )
    }
 }
 
-static int hb_compI18nCompare( PHB_I18NSTRING pString, const char * pText, const char * pContext )
+static int hb_compI18nCompare(PHB_I18NSTRING pString, const char * pText, const char * pContext)
 {
-   int i;
+   int i = pString->szText == pText ? 0 : pString->szText > pText ? 1 : -1;
 
-   i = pString->szText == pText ? 0 : pString->szText > pText ? 1 : -1;
    if( i == 0 && pString->szContext != pContext )
    {
       i = pString->szContext > pContext ? 1 : -1;
@@ -93,8 +89,7 @@ static int hb_compI18nCompare( PHB_I18NSTRING pString, const char * pText, const
    return i;
 }
 
-static PHB_I18NSTRING hb_compI18nAddSingle( HB_COMP_DECL, const char * szText, const char * szContext,
-                                            const char * szModule, HB_UINT uiLine )
+static PHB_I18NSTRING hb_compI18nAddSingle(HB_COMP_DECL, const char * szText, const char * szContext, const char * szModule, HB_UINT uiLine)
 {
    PHB_I18NTABLE  pI18n;
    PHB_I18NSTRING pString;
@@ -106,10 +101,10 @@ static PHB_I18NSTRING hb_compI18nAddSingle( HB_COMP_DECL, const char * szText, c
    }
    pI18n = HB_COMP_PARAM->pI18n;
 
-   szText = hb_compIdentifierNew( HB_COMP_PARAM, szText, HB_IDENT_COPY );
+   szText = hb_compIdentifierNew(HB_COMP_PARAM, szText, HB_IDENT_COPY);
    if( szContext )
    {
-      szContext = hb_compIdentifierNew( HB_COMP_PARAM, szContext, HB_IDENT_COPY );
+      szContext = hb_compIdentifierNew(HB_COMP_PARAM, szContext, HB_IDENT_COPY);
    }
 
    if( pI18n->uiCount >= pI18n->uiAllocated )
@@ -117,23 +112,22 @@ static PHB_I18NSTRING hb_compI18nAddSingle( HB_COMP_DECL, const char * szText, c
       if( pI18n->pString )
       {
          pI18n->uiAllocated += 32;
-         pI18n->pString      = static_cast<PHB_I18NSTRING>(hb_xrealloc(pI18n->pString, sizeof(HB_I18NSTRING)
-                                                               * pI18n->uiAllocated));
+         pI18n->pString = static_cast<PHB_I18NSTRING>(hb_xrealloc(pI18n->pString, sizeof(HB_I18NSTRING) * pI18n->uiAllocated));
       }
       else
       {
-         pI18n->pString     = static_cast<PHB_I18NSTRING>(hb_xgrab(sizeof(HB_I18NSTRING) * 32));
+         pI18n->pString = static_cast<PHB_I18NSTRING>(hb_xgrab(sizeof(HB_I18NSTRING) * 32));
          pI18n->uiAllocated = 32;
       }
    }
 
-   uiLeft  = 0;
+   uiLeft = 0;
    uiRight = pI18n->uiCount;
 
    while( uiLeft < uiRight )
    {
-      HB_UINT uiMiddle = ( uiLeft + uiRight ) >> 1;
-      int iCompare = hb_compI18nCompare( &pI18n->pString[uiMiddle], szText, szContext );
+      HB_UINT uiMiddle = (uiLeft + uiRight) >> 1;
+      int iCompare = hb_compI18nCompare(&pI18n->pString[uiMiddle], szText, szContext);
 
       if( iCompare == 0 )
       {
@@ -141,7 +135,7 @@ static PHB_I18NSTRING hb_compI18nAddSingle( HB_COMP_DECL, const char * szText, c
 
          if( pString->uiPosCount )
          {
-            pString->pPosLst = static_cast<PHB_I18NPOS>(hb_xrealloc(pString->pPosLst, ( pString->uiPosCount + 1 ) * sizeof(HB_I18NPOS)));
+            pString->pPosLst = static_cast<PHB_I18NPOS>(hb_xrealloc(pString->pPosLst, (pString->uiPosCount + 1) * sizeof(HB_I18NPOS)));
             pString->pPosLst[pString->uiPosCount].uiLine = uiLine;
             pString->pPosLst[pString->uiPosCount].szFile = szModule;
             pString->uiPosCount++;
@@ -167,28 +161,27 @@ static PHB_I18NSTRING hb_compI18nAddSingle( HB_COMP_DECL, const char * szText, c
 
    memmove(&pI18n->pString[uiLeft + 1], &pI18n->pString[uiLeft], (pI18n->uiCount - uiLeft) * sizeof(HB_I18NSTRING));
 
-   pString              = &pI18n->pString[uiLeft];
-   pString->szText      = szText;
-   pString->szContext   = szContext;
+   pString = &pI18n->pString[uiLeft];
+   pString->szText = szText;
+   pString->szContext = szContext;
    pString->pPos.uiLine = uiLine;
    pString->pPos.szFile = szModule;
-   pString->uiPosCount  = 0;
-   pString->uiPlurals   = 0;
+   pString->uiPosCount = 0;
+   pString->uiPlurals = 0;
 
    pI18n->uiCount++;
 
    return pString;
 }
 
-void hb_compI18nAdd( HB_COMP_DECL, const char * szText, const char * szContext, const char * szModule, HB_UINT uiLine )
+void hb_compI18nAdd(HB_COMP_DECL, const char * szText, const char * szContext, const char * szModule, HB_UINT uiLine)
 {
-   hb_compI18nAddSingle( HB_COMP_PARAM, szText, szContext, szModule, uiLine );
+   hb_compI18nAddSingle(HB_COMP_PARAM, szText, szContext, szModule, uiLine);
 }
 
-void hb_compI18nAddPlural( HB_COMP_DECL, const char ** szTexts, HB_ULONG ulCount,
-                           const char * szContext, const char * szModule, HB_UINT uiLine )
+void hb_compI18nAddPlural(HB_COMP_DECL, const char ** szTexts, HB_ULONG ulCount, const char * szContext, const char * szModule, HB_UINT uiLine)
 {
-   PHB_I18NSTRING pString = hb_compI18nAddSingle( HB_COMP_PARAM, szTexts[0], szContext, szModule, uiLine );
+   PHB_I18NSTRING pString = hb_compI18nAddSingle(HB_COMP_PARAM, szTexts[0], szContext, szModule, uiLine);
 
    if( ulCount == 1 )
    {
@@ -196,14 +189,14 @@ void hb_compI18nAddPlural( HB_COMP_DECL, const char ** szTexts, HB_ULONG ulCount
       if( ! pString->uiPlurals )
       {
          pString->szPlurals[0] = pString->szText;
-         pString->uiPlurals      = 1;
+         pString->uiPlurals = 1;
       }
    }
    else
    {
       for( HB_ULONG ul = 1; ul < ulCount && pString->uiPlurals < HB_I18N_PLURAL_MAX; ++ul )
       {
-         const char * szText = hb_compIdentifierNew( HB_COMP_PARAM, szTexts[ul], HB_IDENT_COPY );
+         const char * szText = hb_compIdentifierNew(HB_COMP_PARAM, szTexts[ul], HB_IDENT_COPY);
          HB_UINT uiPlural = pString->uiPlurals;
 
          while( uiPlural-- )
@@ -222,7 +215,7 @@ void hb_compI18nAddPlural( HB_COMP_DECL, const char ** szTexts, HB_ULONG ulCount
    }
 }
 
-static void hb_compI18nEscapeString( FILE * file, const char * szText )
+static void hb_compI18nEscapeString(FILE * file, const char * szText)
 {
    while( *szText )
    {
@@ -240,9 +233,9 @@ static void hb_compI18nEscapeString( FILE * file, const char * szText )
          {
             fprintf(file, "\\r");
          }
-         else if( ( static_cast<HB_UCHAR>(szText[1]) >= '0' && static_cast<HB_UCHAR>(szText[1]) <= '9' ) ||
-                  ( static_cast<HB_UCHAR>(szText[1]) >= 'A' && static_cast<HB_UCHAR>(szText[1]) <= 'F' ) ||
-                  ( static_cast<HB_UCHAR>(szText[1]) >= 'a' && static_cast<HB_UCHAR>(szText[1]) <= 'f' ) )
+         else if( (static_cast<HB_UCHAR>(szText[1]) >= '0' && static_cast<HB_UCHAR>(szText[1]) <= '9') ||
+                  (static_cast<HB_UCHAR>(szText[1]) >= 'A' && static_cast<HB_UCHAR>(szText[1]) <= 'F') ||
+                  (static_cast<HB_UCHAR>(szText[1]) >= 'a' && static_cast<HB_UCHAR>(szText[1]) <= 'f') )
          {
             fprintf(file, "\\%03o", *szText);
          }
@@ -268,10 +261,10 @@ static void hb_compI18nEscapeString( FILE * file, const char * szText )
    }
 }
 
-static char * hb_compI18nFileName( char * szBuffer, const char * szFileName )
+static char * hb_compI18nFileName(char * szBuffer, const char * szFileName)
 {
    HB_UINT ui = 0;
-   char    ch;
+   char ch;
 
    do
    {
@@ -294,7 +287,7 @@ static char * hb_compI18nFileName( char * szBuffer, const char * szFileName )
    return szBuffer;
 }
 
-HB_BOOL hb_compI18nSave( HB_COMP_DECL, HB_BOOL fFinal )
+HB_BOOL hb_compI18nSave(HB_COMP_DECL, HB_BOOL fFinal)
 {
    PHB_I18NTABLE pI18n;
    HB_FNAME      FileName;
@@ -308,15 +301,12 @@ HB_BOOL hb_compI18nSave( HB_COMP_DECL, HB_BOOL fFinal )
       return HB_FALSE;
    }
 
-   FileName.szPath            =
-      FileName.szName         =
-         FileName.szExtension =
-            FileName.szDrive  = nullptr;
+   FileName.szPath = FileName.szName = FileName.szExtension = FileName.szDrive = nullptr;
 
    if( HB_COMP_PARAM->pOutPath )
    {
       FileName.szDrive = HB_COMP_PARAM->pOutPath->szDrive;
-      FileName.szPath  = HB_COMP_PARAM->pOutPath->szPath;
+      FileName.szPath = HB_COMP_PARAM->pOutPath->szPath;
    }
 
    if( HB_COMP_PARAM->pI18nFileName )
@@ -334,7 +324,7 @@ HB_BOOL hb_compI18nSave( HB_COMP_DECL, HB_BOOL fFinal )
       if( HB_COMP_PARAM->pI18nFileName->szPath )
       {
          FileName.szDrive = HB_COMP_PARAM->pI18nFileName->szDrive;
-         FileName.szPath  = HB_COMP_PARAM->pI18nFileName->szPath;
+         FileName.szPath = HB_COMP_PARAM->pI18nFileName->szPath;
       }
    }
 
@@ -361,7 +351,7 @@ HB_BOOL hb_compI18nSave( HB_COMP_DECL, HB_BOOL fFinal )
 
    if( ! file )
    {
-      hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CREATE_OUTPUT, szFileName, nullptr );
+      hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CREATE_OUTPUT, szFileName, nullptr);
       return HB_FALSE;
    }
 
@@ -372,15 +362,13 @@ HB_BOOL hb_compI18nSave( HB_COMP_DECL, HB_BOOL fFinal )
    for( HB_UINT uiIndex = 0; uiIndex < pI18n->uiCount; uiIndex++ )
    {
       PHB_I18NSTRING pString = &pI18n->pString[uiIndex];
-      HB_UINT        uiLine;
+      HB_UINT uiLine;
 
       fprintf(file, "#: %s:%u", hb_compI18nFileName(szFileName, pString->pPos.szFile), pString->pPos.uiLine);
 
       for( uiLine = 0; uiLine < pString->uiPosCount; ++uiLine )
       {
-         fprintf(file, " %s:%u",
-                  hb_compI18nFileName(szFileName, pString->pPosLst[uiLine].szFile),
-                  pString->pPosLst[uiLine].uiLine);
+         fprintf(file, " %s:%u", hb_compI18nFileName(szFileName, pString->pPosLst[uiLine].szFile), pString->pPosLst[uiLine].uiLine);
       }
 
       fprintf(file, "\n#, c-format\n");
@@ -388,12 +376,12 @@ HB_BOOL hb_compI18nSave( HB_COMP_DECL, HB_BOOL fFinal )
       if( pString->szContext )
       {
          fprintf(file, "msgctxt \"");
-         hb_compI18nEscapeString( file, pString->szContext );
+         hb_compI18nEscapeString(file, pString->szContext);
          fprintf(file, "\"\n");
       }
 
       fprintf(file, "msgid \"");
-      hb_compI18nEscapeString( file, pString->szText );
+      hb_compI18nEscapeString(file, pString->szText);
       for( uiLine = 0; uiLine < pString->uiPlurals; ++uiLine )
       {
          if( uiLine == 0 )
@@ -404,7 +392,7 @@ HB_BOOL hb_compI18nSave( HB_COMP_DECL, HB_BOOL fFinal )
          {
             fprintf(file, "\"\nmsgid_plural%u \"", uiLine + 1);
          }
-         hb_compI18nEscapeString( file, pString->szPlurals[uiLine] );
+         hb_compI18nEscapeString(file, pString->szPlurals[uiLine]);
       }
       fprintf(file, "\"\nmsgstr%s \"\"\n\n", pString->uiPlurals ? "[0]" : "");
    }

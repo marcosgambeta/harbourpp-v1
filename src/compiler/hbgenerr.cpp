@@ -149,24 +149,18 @@ const char * const hb_comp_szWarnings[] =
    "2STATIC Function '%s' defined but never used"
 };
 
-static void hb_compDispMessage( HB_COMP_DECL, char cPrefix, int iValue,
-                                const char * szText,
-                                const char * szPar1, const char * szPar2 )
+static void hb_compDispMessage(HB_COMP_DECL, char cPrefix, int iValue, const char * szText, const char * szPar1, const char * szPar2 )
 {
-   HB_COMP_PARAM->outMsgFunc( HB_COMP_PARAM, HB_COMP_PARAM->iErrorFmt,
-                              HB_COMP_PARAM->currLine, HB_COMP_PARAM->currModule,
-                              cPrefix, iValue, szText, szPar1, szPar2 );
+   HB_COMP_PARAM->outMsgFunc(HB_COMP_PARAM, HB_COMP_PARAM->iErrorFmt, HB_COMP_PARAM->currLine, HB_COMP_PARAM->currModule, cPrefix, iValue, szText, szPar1, szPar2);
 }
 
-void hb_compGenError( HB_COMP_DECL, const char * const szErrors[],
-                      char cPrefix, int iError,
-                      const char * szError1, const char * szError2 )
+void hb_compGenError(HB_COMP_DECL, const char * const szErrors[], char cPrefix, int iError, const char * szError1, const char * szError2)
 {
-   if( ! HB_COMP_PARAM->fExit && ( cPrefix == 'F' || ! HB_COMP_PARAM->fError ) )
+   if( ! HB_COMP_PARAM->fExit && (cPrefix == 'F' || ! HB_COMP_PARAM->fError) )
    {
       PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
 
-      hb_compDispMessage( HB_COMP_PARAM, cPrefix, iError, szErrors[iError - 1], szError1, szError2 );
+      hb_compDispMessage(HB_COMP_PARAM, cPrefix, iError, szErrors[iError - 1], szError1, szError2);
 
       HB_COMP_PARAM->iErrorCount++;
       HB_COMP_PARAM->fError = HB_TRUE;
@@ -183,98 +177,91 @@ void hb_compGenError( HB_COMP_DECL, const char * const szErrors[],
    }
 }
 
-void hb_compGenWarning( HB_COMP_DECL, const char * const szWarnings[],
-                        char cPrefix, int iWarning,
-                        const char * szWarning1, const char * szWarning2 )
+void hb_compGenWarning(HB_COMP_DECL, const char * const szWarnings[], char cPrefix, int iWarning, const char * szWarning1, const char * szWarning2)
 {
    const char * szText = szWarnings[iWarning - 1];
 
-   if( ! HB_COMP_PARAM->fExit && ( static_cast<int>(szText[0] - '0') <= HB_COMP_PARAM->iWarnings ) )
+   if( ! HB_COMP_PARAM->fExit && (static_cast<int>(szText[0] - '0') <= HB_COMP_PARAM->iWarnings) )
    {
-      hb_compDispMessage( HB_COMP_PARAM, cPrefix, iWarning, szText + 1, szWarning1, szWarning2 );
+      hb_compDispMessage(HB_COMP_PARAM, cPrefix, iWarning, szText + 1, szWarning1, szWarning2);
 
       HB_COMP_PARAM->fAnyWarning = HB_TRUE;    /* report warnings at exit */
    }
 }
 
-PHB_EXPR hb_compErrorLValue( HB_COMP_DECL, PHB_EXPR pExpr )
+PHB_EXPR hb_compErrorLValue(HB_COMP_DECL, PHB_EXPR pExpr)
 {
-   const char * szDesc = hb_compExprDescription( pExpr );
-
-   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_LVALUE, szDesc, nullptr );
+   const char * szDesc = hb_compExprDescription(pExpr);
+   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_LVALUE, szDesc, nullptr);
    return pExpr;
 }
 
-PHB_EXPR hb_compErrorIndex( HB_COMP_DECL, PHB_EXPR pExpr )
+PHB_EXPR hb_compErrorIndex(HB_COMP_DECL, PHB_EXPR pExpr)
 {
-   const char * szDesc = hb_compExprDescription( pExpr );
-
-   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_INDEX, szDesc, nullptr );
+   const char * szDesc = hb_compExprDescription(pExpr);
+   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_INDEX, szDesc, nullptr);
    return pExpr;
 }
 
-PHB_EXPR hb_compErrorBound( HB_COMP_DECL, PHB_EXPR pExpr )
+PHB_EXPR hb_compErrorBound(HB_COMP_DECL, PHB_EXPR pExpr)
 {
-   const char * szDesc = hb_compExprDescription( pExpr );
-
-   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_BOUND, szDesc, nullptr );
+   const char * szDesc = hb_compExprDescription(pExpr);
+   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_BOUND, szDesc, nullptr);
    return pExpr;
 }
 
-PHB_EXPR hb_compErrorAlias( HB_COMP_DECL, PHB_EXPR pExpr )
+PHB_EXPR hb_compErrorAlias(HB_COMP_DECL, PHB_EXPR pExpr)
 {
-   const char * szDesc = hb_compExprDescription( pExpr );
-
-   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_ALIAS, szDesc, nullptr );
+   const char * szDesc = hb_compExprDescription(pExpr);
+   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_ALIAS, szDesc, nullptr);
    return pExpr;
 }
 
-PHB_EXPR hb_compErrorStatic( HB_COMP_DECL, const char * szVarName, PHB_EXPR pExpr )
+PHB_EXPR hb_compErrorStatic(HB_COMP_DECL, const char * szVarName, PHB_EXPR pExpr)
 {
-   const char * szDesc = hb_compExprDescription( pExpr );
-
-   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_ILLEGAL_INIT, szVarName, szDesc );
+   const char * szDesc = hb_compExprDescription(pExpr);
+   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_ILLEGAL_INIT, szVarName, szDesc);
    return pExpr;
 }
 
-PHB_EXPR hb_compWarnMeaningless( HB_COMP_DECL, PHB_EXPR pExpr )
+PHB_EXPR hb_compWarnMeaningless(HB_COMP_DECL, PHB_EXPR pExpr)
 {
    if( ! HB_COMP_PARAM->fMeaningful )
    {
-      const char * szDesc = hb_compExprDescription( pExpr );
-      hb_compGenWarning( HB_COMP_PARAM, hb_comp_szWarnings, 'W', HB_COMP_WARN_MEANINGLESS, szDesc, nullptr );
+      const char * szDesc = hb_compExprDescription(pExpr);
+      hb_compGenWarning(HB_COMP_PARAM, hb_comp_szWarnings, 'W', HB_COMP_WARN_MEANINGLESS, szDesc, nullptr);
    }
    return pExpr;
 }
 
-void hb_compErrorCodeblockDecl( HB_COMP_DECL, const char * szVarName )
+void hb_compErrorCodeblockDecl(HB_COMP_DECL, const char * szVarName)
 {
    HB_BOOL fError = HB_COMP_PARAM->fError;
 
-   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_BLOCK, szVarName, nullptr );
+   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_BLOCK, szVarName, nullptr);
    HB_COMP_PARAM->fError = fError; /* restore error flag for this line */
 }
 
-void hb_compErrorCodeblockWith( HB_COMP_DECL, const char * szMessage )
+void hb_compErrorCodeblockWith(HB_COMP_DECL, const char * szMessage)
 {
    HB_BOOL fError = HB_COMP_PARAM->fError;
 
-   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_WITHOBJECT_MACROBLOCK, szMessage, nullptr );
+   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_WITHOBJECT_MACROBLOCK, szMessage, nullptr);
    HB_COMP_PARAM->fError = fError; /* restore error flag for this line */
 }
 
-void hb_compErrorMacro( HB_COMP_DECL, const char * szText )
+void hb_compErrorMacro(HB_COMP_DECL, const char * szText)
 {
-   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_BAD_MACRO, szText, nullptr );
+   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_BAD_MACRO, szText, nullptr);
 }
 
-PHB_EXPR hb_compErrorRefer( HB_COMP_DECL, PHB_EXPR pExpr, const char * szDesc )
+PHB_EXPR hb_compErrorRefer(HB_COMP_DECL, PHB_EXPR pExpr, const char * szDesc)
 {
-   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_REFER, szDesc, nullptr );
+   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_REFER, szDesc, nullptr);
    return pExpr;
 }
 
-void hb_compErrorVParams( HB_COMP_DECL, const char * szFuncOrBlock )
+void hb_compErrorVParams(HB_COMP_DECL, const char * szFuncOrBlock)
 {
-   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_NOT_VPARAMS, szFuncOrBlock, nullptr );
+   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_NOT_VPARAMS, szFuncOrBlock, nullptr);
 }

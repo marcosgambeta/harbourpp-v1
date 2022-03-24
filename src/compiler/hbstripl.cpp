@@ -52,22 +52,22 @@ HB_EXTERN_BEGIN
 
 typedef void HB_STRIP_INFO, * PHB_STRIP_INFO;
 
-#define HB_STRIP_FUNC( func )  HB_PCODE_FUNC( func, PHB_STRIP_INFO )
-typedef HB_STRIP_FUNC( HB_STRIP_FUNC_ );
+#define HB_STRIP_FUNC(func)  HB_PCODE_FUNC(func, PHB_STRIP_INFO)
+typedef HB_STRIP_FUNC(HB_STRIP_FUNC_);
 typedef HB_STRIP_FUNC_ * PHB_STRIP_FUNC;
 
 HB_EXTERN_END
 
-static HB_STRIP_FUNC( hb_p_line )
+static HB_STRIP_FUNC(hb_p_line)
 {
    switch( pFunc->pCode[nPCodePos + 3] )
    {
       case HB_P_LINE:
       case HB_P_MODULENAME:
-         hb_compNOOPfill( pFunc, nPCodePos, 3, HB_FALSE, HB_FALSE );
+         hb_compNOOPfill(pFunc, nPCodePos, 3, HB_FALSE, HB_FALSE);
          break;
       default:
-         if( ! ( static_cast<PHB_COMP>(cargo) )->fDebugInfo )
+         if( ! (static_cast<PHB_COMP>(cargo))->fDebugInfo )
          {
             HB_SIZE nNewPos = nPCodePos;
             switch( pFunc->pCode[nPCodePos + 3] )
@@ -84,7 +84,7 @@ static HB_STRIP_FUNC( hb_p_line )
             }
             if( nNewPos != nPCodePos && pFunc->pCode[nNewPos] == HB_P_LINE )
             {
-               hb_compNOOPfill( pFunc, nPCodePos, 3, HB_FALSE, HB_FALSE );
+               hb_compNOOPfill(pFunc, nPCodePos, 3, HB_FALSE, HB_FALSE);
             }
          }
    }
@@ -283,9 +283,9 @@ static const PHB_STRIP_FUNC s_stripLines_table[] =
    nullptr                        /* HB_P_PUSHAPARAMS           */
 };
 
-void hb_compStripFuncLines( HB_COMP_DECL, PHB_HFUNC pFunc )
+void hb_compStripFuncLines(HB_COMP_DECL, PHB_HFUNC pFunc)
 {
-   assert( HB_P_LAST_PCODE == sizeof(s_stripLines_table) / sizeof(PHB_STRIP_FUNC) );
+   assert(HB_P_LAST_PCODE == sizeof(s_stripLines_table) / sizeof(PHB_STRIP_FUNC));
 
-   hb_compPCodeEval( pFunc, s_stripLines_table, static_cast<void*>(HB_COMP_PARAM) );
+   hb_compPCodeEval(pFunc, s_stripLines_table, static_cast<void*>(HB_COMP_PARAM));
 }

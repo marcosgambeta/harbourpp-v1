@@ -26,12 +26,14 @@
  *       iMaxParam = -1, means no upper limit
  */
 
-typedef struct
+struct HB_FUNCINFO
 {
    const char * cFuncName;                /* function name                   */
    int          iMinParam;                /* min number of parameters needed */
    int          iMaxParam;                /* max number of parameters needed */
-} HB_FUNCINFO, * PHB_FUNCINFO;
+};
+
+using PHB_FUNCINFO = HB_FUNCINFO *;
 
 /* NOTE: THIS TABLE MUST BE SORTED ALPHABETICALLY
  */
@@ -106,9 +108,9 @@ static const HB_FUNCINFO s_stdFunc[] =
    { "YEAR"      , 1,  1 }
 };
 
-HB_BOOL hb_compFunCallCheck( HB_COMP_DECL, const char * szFuncCall, int iArgs )
+HB_BOOL hb_compFunCallCheck(HB_COMP_DECL, const char * szFuncCall, int iArgs)
 {
-   unsigned int uiFirst = 0, uiLast = HB_SIZEOFARRAY( s_stdFunc ) - 1, uiMiddle;
+   unsigned int uiFirst = 0, uiLast = HB_SIZEOFARRAY(s_stdFunc) - 1, uiMiddle;
    int iLen = static_cast<int>(strlen(szFuncCall)), iCmp;
 
    /* Respect 4 or more letters shortcuts
@@ -121,7 +123,7 @@ HB_BOOL hb_compFunCallCheck( HB_COMP_DECL, const char * szFuncCall, int iArgs )
    }
    do
    {
-      uiMiddle = ( uiFirst + uiLast ) >> 1;
+      uiMiddle = (uiFirst + uiLast) >> 1;
       iCmp = strncmp(szFuncCall, s_stdFunc[uiMiddle].cFuncName, iLen);
       if( iCmp <= 0 )
       {
@@ -143,12 +145,11 @@ HB_BOOL hb_compFunCallCheck( HB_COMP_DECL, const char * szFuncCall, int iArgs )
    {
       const HB_FUNCINFO * pFunc = &s_stdFunc[uiFirst];
 
-      if( ( pFunc->iMinParam != -1 && iArgs < pFunc->iMinParam ) ||
-          ( pFunc->iMaxParam != -1 && iArgs > pFunc->iMaxParam ) )
+      if( (pFunc->iMinParam != -1 && iArgs < pFunc->iMinParam) || (pFunc->iMaxParam != -1 && iArgs > pFunc->iMaxParam) )
       {
          char szMsg[64];
 
-         if( HB_COMP_ISSUPPORTED( HB_COMPFLAG_HARBOUR ) )
+         if( HB_COMP_ISSUPPORTED(HB_COMPFLAG_HARBOUR) )
          {
             if( pFunc->iMinParam == pFunc->iMaxParam )
             {
@@ -172,7 +173,7 @@ HB_BOOL hb_compFunCallCheck( HB_COMP_DECL, const char * szFuncCall, int iArgs )
             szMsg[0] = '\0';
          }
 
-         hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CHECKING_ARGS, szFuncCall, szMsg );
+         hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CHECKING_ARGS, szFuncCall, szMsg);
 
          return HB_FALSE;
       }

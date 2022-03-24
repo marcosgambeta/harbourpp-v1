@@ -46,7 +46,7 @@
 
 #include "hbcomp.h"
 
-static PHB_EXPR hb_compExprAlloc( HB_COMP_DECL )
+static PHB_EXPR hb_compExprAlloc(HB_COMP_DECL)
 {
    PHB_EXPRLST pExpItm = static_cast<PHB_EXPRLST>(hb_xgrab(sizeof(HB_EXPRLST)));
 
@@ -66,7 +66,7 @@ static PHB_EXPR hb_compExprAlloc( HB_COMP_DECL )
    return &pExpItm->Expression;
 }
 
-static void hb_compExprDealloc( HB_COMP_DECL, PHB_EXPR pExpr )
+static void hb_compExprDealloc(HB_COMP_DECL, PHB_EXPR pExpr)
 {
    if( HB_COMP_PARAM->pExprLst )
    {
@@ -93,42 +93,40 @@ static void hb_compExprDealloc( HB_COMP_DECL, PHB_EXPR pExpr )
    }
 }
 
-static PHB_EXPR hb_compExprNew( HB_COMP_DECL, HB_EXPRTYPE iType )
+static PHB_EXPR hb_compExprNew(HB_COMP_DECL, HB_EXPRTYPE iType)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_compExprNew(%p,%i)", static_cast<void*>(HB_COMP_PARAM), iType ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_compExprNew(%p,%i)", static_cast<void*>(HB_COMP_PARAM), iType));
 #endif
 
-   PHB_EXPR pExpr;
-
-   pExpr = hb_compExprAlloc( HB_COMP_PARAM );
+   PHB_EXPR pExpr = hb_compExprAlloc(HB_COMP_PARAM);
    pExpr->ExprType = iType;
-   pExpr->pNext    = nullptr;
-   pExpr->ValType  = HB_EV_UNKNOWN;
+   pExpr->pNext = nullptr;
+   pExpr->ValType = HB_EV_UNKNOWN;
 
    return pExpr;
 }
 
 /* Delete self - all components will be deleted somewhere else
  */
-static void hb_compExprClear( HB_COMP_DECL, PHB_EXPR pExpr )
+static void hb_compExprClear(HB_COMP_DECL, PHB_EXPR pExpr)
 {
-   hb_compExprDealloc( HB_COMP_PARAM, pExpr );
+   hb_compExprDealloc(HB_COMP_PARAM, pExpr);
 }
 
 /* Delete all components and delete self
  */
-static void hb_compExprFree( HB_COMP_DECL, PHB_EXPR pExpr )
+static void hb_compExprFree(HB_COMP_DECL, PHB_EXPR pExpr)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_compExprFree()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_compExprFree()"));
 #endif
 
-   HB_EXPR_USE( pExpr, HB_EA_DELETE );
-   hb_compExprDealloc( HB_COMP_PARAM, pExpr );
+   HB_EXPR_USE(pExpr, HB_EA_DELETE);
+   hb_compExprDealloc(HB_COMP_PARAM, pExpr);
 }
 
-static void hb_compExprLstDealloc( HB_COMP_DECL )
+static void hb_compExprLstDealloc(HB_COMP_DECL)
 {
    if( HB_COMP_PARAM->pExprLst )
    {
@@ -137,7 +135,7 @@ static void hb_compExprLstDealloc( HB_COMP_DECL )
       HB_COMP_PARAM->pExprLst = nullptr;
       do
       {
-         hb_compExprFree( HB_COMP_PARAM, &pExp->Expression );
+         hb_compExprFree(HB_COMP_PARAM, &pExp->Expression);
          pExp = pExp->pNext;
       }
       while( pExp != pExpItm );
@@ -151,31 +149,27 @@ static void hb_compExprLstDealloc( HB_COMP_DECL )
    }
 }
 
-static PHB_EXPR hb_compErrorType( HB_COMP_DECL, PHB_EXPR pExpr )
+static PHB_EXPR hb_compErrorType(HB_COMP_DECL, PHB_EXPR pExpr)
 {
-   const char * szDesc = hb_compExprDescription( pExpr );
-
-   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_TYPE, szDesc, nullptr );
+   const char * szDesc = hb_compExprDescription(pExpr);
+   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_TYPE, szDesc, nullptr);
    return pExpr;
 }
 
-static PHB_EXPR hb_compErrorSyntax( HB_COMP_DECL, PHB_EXPR pExpr )
+static PHB_EXPR hb_compErrorSyntax(HB_COMP_DECL, PHB_EXPR pExpr)
 {
-   const char * szDesc = hb_compExprDescription( pExpr );
-
-   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_SYNTAX, szDesc, nullptr );
+   const char * szDesc = hb_compExprDescription(pExpr);
+   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_SYNTAX, szDesc, nullptr);
    return pExpr;
 }
 
-static void hb_compErrorDuplVar( HB_COMP_DECL, const char * szVarName )
+static void hb_compErrorDuplVar(HB_COMP_DECL, const char * szVarName)
 {
-   hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_VAR_DUPL, szVarName, nullptr );
+   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_VAR_DUPL, szVarName, nullptr);
 }
 
-static void hb_compOutMsg( void * cargo, int iErrorFmt, int iLine,
-                           const char * szModule, char cPrefix, int iValue,
-                           const char * szText,
-                           const char * szPar1, const char * szPar2 )
+static void hb_compOutMsg(void * cargo, int iErrorFmt, int iLine, const char * szModule, char cPrefix, int iValue,
+                          const char * szText, const char * szPar1, const char * szPar2)
 {
    char buffer[512];
 
@@ -194,7 +188,7 @@ static void hb_compOutMsg( void * cargo, int iErrorFmt, int iLine,
          hb_snprintf(buffer, sizeof(buffer), "\n%s:%s ", szModule, szPar2);
       }
 
-      hb_compOutErr( static_cast<PHB_COMP>(cargo), buffer );
+      hb_compOutErr(static_cast<PHB_COMP>(cargo), buffer);
    }
 
    if( iErrorFmt == HB_ERRORFMT_CLIPPER )
@@ -206,19 +200,19 @@ static void hb_compOutMsg( void * cargo, int iErrorFmt, int iLine,
       hb_snprintf(buffer, sizeof(buffer), "%s %c%04i  ", cPrefix == 'W' ? "warning" : "error", cPrefix, iValue);
    }
 
-   hb_compOutErr( static_cast<PHB_COMP>(cargo), buffer );
+   hb_compOutErr(static_cast<PHB_COMP>(cargo), buffer);
    hb_snprintf(buffer, sizeof(buffer), szText, szPar1, szPar2);
-   hb_compOutErr( static_cast<PHB_COMP>(cargo), buffer );
-   hb_compOutErr( static_cast<PHB_COMP>(cargo), "\n" );
+   hb_compOutErr(static_cast<PHB_COMP>(cargo), buffer);
+   hb_compOutErr(static_cast<PHB_COMP>(cargo), "\n");
 }
 
-void hb_compOutStd( HB_COMP_DECL, const char * szMessage )
+void hb_compOutStd(HB_COMP_DECL, const char * szMessage)
 {
    if( ! HB_COMP_PARAM->fFullQuiet )
    {
       if( HB_COMP_PARAM->outStdFunc )
       {
-         HB_COMP_PARAM->outStdFunc( HB_COMP_PARAM, szMessage );
+         HB_COMP_PARAM->outStdFunc(HB_COMP_PARAM, szMessage);
       }
       else
       {
@@ -228,13 +222,13 @@ void hb_compOutStd( HB_COMP_DECL, const char * szMessage )
    }
 }
 
-void hb_compOutErr( HB_COMP_DECL, const char * szMessage )
+void hb_compOutErr(HB_COMP_DECL, const char * szMessage)
 {
    if( ! HB_COMP_PARAM->fFullQuiet )
    {
       if( HB_COMP_PARAM->outErrFunc )
       {
-         HB_COMP_PARAM->outErrFunc( HB_COMP_PARAM, szMessage );
+         HB_COMP_PARAM->outErrFunc(HB_COMP_PARAM, szMessage);
       }
       else
       {
@@ -254,7 +248,7 @@ static const HB_COMP_FUNCS s_comp_funcs =
    hb_compErrorDuplVar,
 };
 
-PHB_COMP hb_comp_new( void )
+PHB_COMP hb_comp_new(void)
 {
    PHB_COMP pComp = nullptr;
    PHB_PP_STATE pPP = hb_pp_new();
@@ -312,11 +306,11 @@ PHB_COMP hb_comp_new( void )
    return pComp;
 }
 
-void hb_comp_free( PHB_COMP pComp )
+void hb_comp_free(PHB_COMP pComp)
 {
-   hb_compI18nFree( pComp );
-   hb_compCompileEnd( pComp );
-   hb_compParserStop( pComp );
+   hb_compI18nFree(pComp);
+   hb_compCompileEnd(pComp);
+   hb_compParserStop(pComp);
 
    /* free allocated expressions only when errors appear - in all
     * other cases expressions should be always cleanly freed so
@@ -325,10 +319,10 @@ void hb_comp_free( PHB_COMP pComp )
     */
    if( pComp->iErrorCount != 0 )
    {
-      hb_compExprLstDealloc( pComp );
+      hb_compExprLstDealloc(pComp);
    }
 
-   hb_compIdentifierClose( pComp );
+   hb_compIdentifierClose(pComp);
 
    if( pComp->pOutPath )
    {
@@ -365,7 +359,7 @@ void hb_comp_free( PHB_COMP pComp )
    {
       if( pComp->pLex->pPP )
       {
-         hb_pp_free( pComp->pLex->pPP );
+         hb_pp_free(pComp->pLex->pPP);
       }
       hb_xfree(pComp->pLex);
    }

@@ -46,19 +46,18 @@
 
 #include "hbcomp.h"
 
-PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
+PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL)
 {
    PHB_DEBUGINFO pLineInfo = nullptr, pInfo = nullptr;
    HB_SIZE nPos, nSkip, nOffset;
    HB_ULONG ulLine;
    const char * pszModuleName = "", * ptr;
-   PHB_HFUNC pFunc;
 
-   pFunc = HB_COMP_PARAM->functions.pFirst;
+   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pFirst;
 
    while( pFunc )
    {
-      if( ( pFunc->funFlags & HB_FUNF_FILE_DECL ) == 0 )
+      if( (pFunc->funFlags & HB_FUNF_FILE_DECL) == 0 )
       {
          nPos = ulLine = 0;
          while( nPos < pFunc->nPCodePos )
@@ -99,14 +98,13 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
                {
                   int i;
 
-                  ptr = strrchr( pszModuleName, ':' );
+                  ptr = strrchr(pszModuleName, ':');
                   i = ptr ? static_cast<int>(ptr - pszModuleName) : static_cast<int>(strlen(pszModuleName));
 
                   pInfo = pLineInfo;
                   while( pInfo != nullptr )
                   {
-                     if( strncmp(pszModuleName, pInfo->pszModuleName, i) == 0 &&
-                         ( pInfo->pszModuleName[i] == '\0' || pInfo->pszModuleName[i] == ':' ) )
+                     if( strncmp(pszModuleName, pInfo->pszModuleName, i) == 0 && (pInfo->pszModuleName[i] == '\0' || pInfo->pszModuleName[i] == ':') )
                      {
                         break;
                      }
@@ -123,7 +121,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
                       * the caller will want to use the returned buffer as
                       * parameter to hb_compGenPushString(). [druzus]
                       */
-                     pInfo->ulAllocated = ( ( ulLine >> 3 ) + 0x100 ) & 0xFFFFFF00L;
+                     pInfo->ulAllocated = ((ulLine >> 3) + 0x100) & 0xFFFFFF00L;
                      pInfo->pLineMap = static_cast<HB_BYTE*>(hb_xgrabz(pInfo->ulAllocated + 1));
                      pInfo->pNext = pLineInfo;
                      pLineInfo = pInfo;
@@ -132,12 +130,12 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
                nOffset = ulLine >> 3;
                if( pInfo->ulAllocated <= nOffset )
                {
-                  HB_ULONG ulNewSize = ( ( ulLine >> 3 ) + 0x100 ) & 0xFFFFFF00L;
+                  HB_ULONG ulNewSize = ((ulLine >> 3) + 0x100) & 0xFFFFFF00L;
                   pInfo->pLineMap = static_cast<HB_BYTE*>(hb_xrealloc(pInfo->pLineMap, ulNewSize + 1));
                   memset(pInfo->pLineMap + pInfo->ulAllocated, 0, ulNewSize - pInfo->ulAllocated + 1);
                   pInfo->ulAllocated = ulNewSize;
                }
-               pInfo->pLineMap[nOffset] |= 1 << ( ulLine & 0x7 );
+               pInfo->pLineMap[nOffset] |= 1 << (ulLine & 0x7);
                /*
                 * It's possible the the line number will be ascending
                 * if some external file is included more then once. [druzus]
@@ -155,7 +153,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo( HB_COMP_DECL )
 
             if( nSkip == 0 )
             {
-               nSkip = hb_compPCodeSize( pFunc, nPos );
+               nSkip = hb_compPCodeSize(pFunc, nPos);
                if( nSkip == 0 )
                {
                   break;

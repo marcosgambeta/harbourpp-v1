@@ -28,12 +28,10 @@
 
 /* create a new identifier or return the existing one
  */
-const char * hb_compIdentifierNew( HB_COMP_DECL, const char * szName, int iType )
+const char * hb_compIdentifierNew(HB_COMP_DECL, const char * szName, int iType)
 {
-   const char * szIdent;
+   const char * szIdent = static_cast<const char*>(hb_hashTableFind(HB_COMP_PARAM->pIdentifiers, static_cast<const void*>(szName)));
 
-   szIdent = static_cast<const char*>(hb_hashTableFind( HB_COMP_PARAM->pIdentifiers,
-                                                static_cast<const void*>(szName) ));
    if( ! szIdent )
    {
       /*
@@ -49,7 +47,7 @@ const char * hb_compIdentifierNew( HB_COMP_DECL, const char * szName, int iType 
          szIdent = szName;
       }
 
-      hb_hashTableAdd( HB_COMP_PARAM->pIdentifiers, static_cast<const void*>(szIdent), static_cast<const void*>(szIdent) );
+      hb_hashTableAdd(HB_COMP_PARAM->pIdentifiers, static_cast<const void*>(szIdent), static_cast<const void*>(szIdent));
    }
    else if( iType == HB_IDENT_FREE )
    {
@@ -60,7 +58,7 @@ const char * hb_compIdentifierNew( HB_COMP_DECL, const char * szName, int iType 
 }
 
 /* returns a hash key */
-static HB_HASH_FUNC( hb_comp_IdentKey )    /* HB_SIZE func (void *Value, void *Cargo) */
+static HB_HASH_FUNC(hb_comp_IdentKey)    /* HB_SIZE func (void *Value, void *Cargo) */
 {
    HB_SIZE nSum = 0;
    const char * szName = static_cast<const char*>(Value);
@@ -77,7 +75,7 @@ static HB_HASH_FUNC( hb_comp_IdentKey )    /* HB_SIZE func (void *Value, void *C
 }
 
 /* deletes an identifier */
-static HB_HASH_FUNC( hb_comp_IdentDel )
+static HB_HASH_FUNC(hb_comp_IdentDel)
 {
    hb_xfree(HB_UNCONST(Value));
    HB_SYMBOL_UNUSED(HashPtr);
@@ -86,24 +84,24 @@ static HB_HASH_FUNC( hb_comp_IdentDel )
 }
 
 /* compares two identifiers */
-static HB_HASH_FUNC( hb_comp_IdentComp )
+static HB_HASH_FUNC(hb_comp_IdentComp)
 {
    HB_SYMBOL_UNUSED(HashPtr);
    return strcmp(static_cast<const char*>(Value), static_cast<const char*>(Cargo));
 }
 
 /* initialize the hash table for identifiers */
-void hb_compIdentifierOpen( HB_COMP_DECL )
+void hb_compIdentifierOpen(HB_COMP_DECL)
 {
-   HB_COMP_PARAM->pIdentifiers = hb_hashTableCreate( HB_IDENT_TABLE_SIZE, hb_comp_IdentKey, hb_comp_IdentDel, hb_comp_IdentComp );
+   HB_COMP_PARAM->pIdentifiers = hb_hashTableCreate(HB_IDENT_TABLE_SIZE, hb_comp_IdentKey, hb_comp_IdentDel, hb_comp_IdentComp);
 }
 
 /* release identifiers table */
-void hb_compIdentifierClose( HB_COMP_DECL )
+void hb_compIdentifierClose(HB_COMP_DECL)
 {
    if( HB_COMP_PARAM->pIdentifiers )
    {
-      hb_hashTableKill( HB_COMP_PARAM->pIdentifiers );
+      hb_hashTableKill(HB_COMP_PARAM->pIdentifiers);
       HB_COMP_PARAM->pIdentifiers = nullptr;
    }
 }

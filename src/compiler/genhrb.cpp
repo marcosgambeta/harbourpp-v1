@@ -29,7 +29,7 @@
 #define SYM_EXTERN    2             /* function defined in other module  */
 #define SYM_DEFERRED  3             /* lately bound function             */
 
-static HB_SIZE hb_compHrbSize( HB_COMP_DECL, HB_ULONG * pulSymbols, HB_ULONG * pulFunctions )
+static HB_SIZE hb_compHrbSize(HB_COMP_DECL, HB_ULONG * pulSymbols, HB_ULONG * pulFunctions)
 {
    PHB_HFUNC pFunc;
    PHB_HSYMBOL pSym;
@@ -42,7 +42,7 @@ static HB_SIZE hb_compHrbSize( HB_COMP_DECL, HB_ULONG * pulSymbols, HB_ULONG * p
    pSym = HB_COMP_PARAM->symbols.pFirst;
    while( pSym )
    {
-      ( *pulSymbols )++;
+      (*pulSymbols)++;
       nSize += strlen(pSym->szName) + 3; /* \0 + symscope[1] + symtype[1] */
       pSym = pSym->pNext;
    }
@@ -51,9 +51,9 @@ static HB_SIZE hb_compHrbSize( HB_COMP_DECL, HB_ULONG * pulSymbols, HB_ULONG * p
    pFunc = HB_COMP_PARAM->functions.pFirst;
    while( pFunc )
    {
-      if( ( pFunc->funFlags & HB_FUNF_FILE_DECL ) == 0 )
+      if( (pFunc->funFlags & HB_FUNF_FILE_DECL) == 0 )
       {
-         ( *pulFunctions )++;
+         (*pulFunctions)++;
          nSize += strlen(pFunc->szName) + 5 + pFunc->nPCodePos; /* \0 + func_size[4] + function_body */
       }
       pFunc = pFunc->pNext;
@@ -62,7 +62,7 @@ static HB_SIZE hb_compHrbSize( HB_COMP_DECL, HB_ULONG * pulSymbols, HB_ULONG * p
    return nSize;
 }
 
-void hb_compGenBufPortObj( HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize )
+void hb_compGenBufPortObj(HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize)
 {
    PHB_HFUNC pFunc;
    PHB_HSYMBOL pSym;
@@ -70,7 +70,7 @@ void hb_compGenBufPortObj( HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize )
    HB_SIZE nLen;
    HB_BYTE * ptr;
 
-   *pnSize = hb_compHrbSize( HB_COMP_PARAM, &ulSymbols, &ulFunctions );
+   *pnSize = hb_compHrbSize(HB_COMP_PARAM, &ulSymbols, &ulFunctions);
    /* additional 0 byte is for passing buffer directly as string item */
    ptr = *pBufPtr = static_cast<HB_BYTE*>(hb_xgrab(*pnSize + 1));
 
@@ -125,7 +125,7 @@ void hb_compGenBufPortObj( HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize )
    pFunc = HB_COMP_PARAM->functions.pFirst;
    while( pFunc )
    {
-      if( ( pFunc->funFlags & HB_FUNF_FILE_DECL ) == 0 )
+      if( (pFunc->funFlags & HB_FUNF_FILE_DECL) == 0 )
       {
          nLen = strlen(pFunc->szName) + 1;
          memcpy(ptr, pFunc->szName, nLen);
@@ -139,7 +139,7 @@ void hb_compGenBufPortObj( HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize )
    }
 }
 
-void hb_compGenPortObj( HB_COMP_DECL, PHB_FNAME pFileName )
+void hb_compGenPortObj(HB_COMP_DECL, PHB_FNAME pFileName)
 {
    char szFileName[HB_PATH_MAX];
    HB_SIZE nSize;
@@ -155,7 +155,7 @@ void hb_compGenPortObj( HB_COMP_DECL, PHB_FNAME pFileName )
    yyc = hb_fopen(szFileName, "wb");
    if( ! yyc )
    {
-      hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CREATE_OUTPUT, szFileName, nullptr );
+      hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CREATE_OUTPUT, szFileName, nullptr);
       return;
    }
 
@@ -163,14 +163,14 @@ void hb_compGenPortObj( HB_COMP_DECL, PHB_FNAME pFileName )
    {
       char buffer[80 + HB_PATH_MAX - 1];
       hb_snprintf(buffer, sizeof(buffer), "Generating Harbour Portable Object output to \'%s\'... ", szFileName);
-      hb_compOutStd( HB_COMP_PARAM, buffer );
+      hb_compOutStd(HB_COMP_PARAM, buffer);
    }
 
-   hb_compGenBufPortObj( HB_COMP_PARAM, &pHrbBody, &nSize );
+   hb_compGenBufPortObj(HB_COMP_PARAM, &pHrbBody, &nSize);
 
-   if( fwrite( pHrbBody, nSize, 1, yyc ) != 1 )
+   if( fwrite(pHrbBody, nSize, 1, yyc) != 1 )
    {
-      hb_compGenError( HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_FILE_WRITE, szFileName, nullptr );
+      hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_FILE_WRITE, szFileName, nullptr);
    }
 
    hb_xfree(pHrbBody);
@@ -179,6 +179,6 @@ void hb_compGenPortObj( HB_COMP_DECL, PHB_FNAME pFileName )
 
    if( ! HB_COMP_PARAM->fQuiet )
    {
-      hb_compOutStd( HB_COMP_PARAM, "Done.\n" );
+      hb_compOutStd(HB_COMP_PARAM, "Done.\n");
    }
 }
