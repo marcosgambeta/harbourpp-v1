@@ -127,7 +127,7 @@ static void hb_lexIdentCopy(PHB_MACRO_LEX pLex)
 
 static int hb_lexTimestampGet(YYSTYPE * yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_LEX pLex)
 {
-   HB_BOOL fOK = HB_FALSE;
+   bool fOK = false;
    char * dst = pLex->pDst;
 
    pLex->quote = HB_FALSE;
@@ -136,7 +136,7 @@ static int hb_lexTimestampGet(YYSTYPE * yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_
       char ch = pLex->pString[pLex->nSrc++];
       if( ch == '"' )
       {
-         fOK = HB_TRUE;
+         fOK = true;
          break;
       }
       *dst++ = ch;
@@ -144,7 +144,7 @@ static int hb_lexTimestampGet(YYSTYPE * yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_
    *dst = '\0';
    if( ! hb_timeStampStrGetDT(pLex->pDst, &yylval_ptr->valTimeStamp.date, &yylval_ptr->valTimeStamp.time) )
    {
-      fOK = HB_FALSE;
+      fOK = false;
    }
    if( ! fOK )
    {
@@ -155,7 +155,7 @@ static int hb_lexTimestampGet(YYSTYPE * yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_
 
 static int hb_lexDateGet(YYSTYPE * yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_LEX pLex)
 {
-   HB_BOOL fOK = HB_FALSE;
+   bool fOK = false;
    char * dst = pLex->pDst;
    int iYear, iMonth, iDay;
 
@@ -165,7 +165,7 @@ static int hb_lexDateGet(YYSTYPE * yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_LEX p
       char ch = pLex->pString[pLex->nSrc++];
       if( ch == '"' )
       {
-         fOK = HB_TRUE;
+         fOK = true;
          break;
       }
       *dst++ = ch;
