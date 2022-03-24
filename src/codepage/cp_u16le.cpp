@@ -47,13 +47,13 @@
 #include "hbapi.h"
 #include "hbapicdp.h"
 
-static HB_CDP_GET_FUNC( UTF16LE_get )
+static HB_CDP_GET_FUNC(UTF16LE_get)
 {
    HB_SYMBOL_UNUSED(cdp);
 
    if( *pnIndex + 1 < nLen )
    {
-      *wc = HB_GET_LE_UINT16( &pSrc[*pnIndex] );
+      *wc = HB_GET_LE_UINT16(&pSrc[*pnIndex]);
       *pnIndex += 2;
       return HB_TRUE;
    }
@@ -64,7 +64,7 @@ static HB_CDP_GET_FUNC( UTF16LE_get )
    return HB_FALSE;
 }
 
-static HB_CDP_PUT_FUNC( UTF16LE_put )
+static HB_CDP_PUT_FUNC(UTF16LE_put)
 {
    HB_SYMBOL_UNUSED(cdp);
 
@@ -77,7 +77,7 @@ static HB_CDP_PUT_FUNC( UTF16LE_put )
    return HB_FALSE;
 }
 
-static HB_CDP_LEN_FUNC( UTF16LE_len )
+static HB_CDP_LEN_FUNC(UTF16LE_len)
 {
    HB_SYMBOL_UNUSED(cdp);
    HB_SYMBOL_UNUSED(wc);
@@ -85,7 +85,7 @@ static HB_CDP_LEN_FUNC( UTF16LE_len )
    return 2;
 }
 
-static void hb_cp_init( PHB_CODEPAGE cdp )
+static void hb_cp_init(PHB_CODEPAGE cdp)
 {
    HB_UCHAR * flags, * upper, * lower;
 

@@ -49,19 +49,19 @@
 
 #include "cp950.cpp"
 
-static HB_CDP_GET_FUNC( CP950_get )
+static HB_CDP_GET_FUNC(CP950_get)
 {
    *wc = 0;
    if( *pnIndex < nLen )
    {
-      HB_UCHAR uc = pSrc[( *pnIndex )++];
+      HB_UCHAR uc = pSrc[(*pnIndex)++];
 
-      if( uc >= ( HB_CP950_FIRST >> 8 ) && uc <= ( HB_CP950_LAST >> 8 ) && *pnIndex < nLen )
+      if( uc >= (HB_CP950_FIRST >> 8) && uc <= (HB_CP950_LAST >> 8) && *pnIndex < nLen )
       {
-         *wc = s_cp950_to_ucs16( ( static_cast<int>(uc) << 8 ) | static_cast<HB_UCHAR>(pSrc[*pnIndex]) );
+         *wc = s_cp950_to_ucs16((static_cast<int>(uc) << 8) | static_cast<HB_UCHAR>(pSrc[*pnIndex]) );
          if( *wc )
          {
-            ( *pnIndex )++;
+            (*pnIndex)++;
             return HB_TRUE;
          }
       }
@@ -75,17 +75,17 @@ static HB_CDP_GET_FUNC( CP950_get )
    return HB_FALSE;
 }
 
-static HB_CDP_PUT_FUNC( CP950_put )
+static HB_CDP_PUT_FUNC(CP950_put)
 {
    if( *pnIndex < nLen )
    {
-      HB_USHORT b5 = s_ucs16_to_cp950( wc );
+      HB_USHORT b5 = s_ucs16_to_cp950(wc);
 
       if( b5 )
       {
          if( *pnIndex + 1 < nLen )
          {
-            HB_PUT_BE_UINT16( &pDst[( *pnIndex )], b5 );
+            HB_PUT_BE_UINT16(&pDst[(*pnIndex)], b5);
             *pnIndex += 2;
             return HB_TRUE;
          }
@@ -94,16 +94,16 @@ static HB_CDP_PUT_FUNC( CP950_put )
       {
          if( cdp->uniTable->uniTrans == nullptr )
          {
-            hb_cdpBuildTransTable( cdp->uniTable );
+            hb_cdpBuildTransTable(cdp->uniTable);
          }
 
          if( wc <= cdp->uniTable->wcMax && cdp->uniTable->uniTrans[wc] )
          {
-            pDst[( *pnIndex )++] = cdp->uniTable->uniTrans[wc];
+            pDst[(*pnIndex)++] = cdp->uniTable->uniTrans[wc];
          }
          else
          {
-            pDst[( *pnIndex )++] = wc >= 0x100 ? '?' : static_cast<HB_UCHAR>(wc);
+            pDst[(*pnIndex)++] = wc >= 0x100 ? '?' : static_cast<HB_UCHAR>(wc);
          }
          return HB_TRUE;
       }
@@ -111,16 +111,16 @@ static HB_CDP_PUT_FUNC( CP950_put )
    return HB_FALSE;
 }
 
-static HB_CDP_LEN_FUNC( CP950_len )
+static HB_CDP_LEN_FUNC(CP950_len)
 {
-   HB_USHORT b5 = s_ucs16_to_cp950( wc );
+   HB_USHORT b5 = s_ucs16_to_cp950(wc);
 
    HB_SYMBOL_UNUSED(cdp);
 
    return b5 ? 2 : 1;
 }
 
-static void hb_cp_init( PHB_CODEPAGE cdp )
+static void hb_cp_init(PHB_CODEPAGE cdp)
 {
    HB_UCHAR * flags, * upper, * lower;
 
@@ -155,10 +155,10 @@ static void hb_cp_init( PHB_CODEPAGE cdp )
 #if 0
    for( i = 0; i < 0x10000; ++i )
    {
-      HB_WCHAR wc = s_cp950_to_ucs16( i );
+      HB_WCHAR wc = s_cp950_to_ucs16(i);
       if( wc )
       {
-         if( i != s_ucs16_to_cp950( wc ) )
+         if( i != s_ucs16_to_cp950(wc) )
          {
             printf("irreversible translation: (CP950)%04X -> U+%04X -> (CP950)%04X\r\n", i, wc, s_ucs16_to_cp950(wc));
             fflush(stdout);

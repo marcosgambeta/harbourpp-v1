@@ -55,7 +55,7 @@
 #  include "utf8sort.cpp"
 #endif
 
-static HB_CDP_GET_FUNC( UTF8_get )
+static HB_CDP_GET_FUNC(UTF8_get)
 {
    HB_SIZE nIndex = *pnIndex;
    int n = 0;
@@ -65,7 +65,7 @@ static HB_CDP_GET_FUNC( UTF8_get )
    *wc = 0;
    while( nIndex < nLen )
    {
-      if( hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>(pSrc[nIndex]), &n, wc ) )
+      if( hb_cdpUTF8ToU16NextChar(static_cast<HB_UCHAR>(pSrc[nIndex]), &n, wc) )
       {
          ++nIndex;
       }
@@ -83,56 +83,56 @@ static HB_CDP_GET_FUNC( UTF8_get )
    return HB_FALSE;
 }
 
-static HB_CDP_PUT_FUNC( UTF8_put )
+static HB_CDP_PUT_FUNC(UTF8_put)
 {
-   int i = hb_cdpUTF8CharSize( wc );
+   int i = hb_cdpUTF8CharSize(wc);
 
    HB_SYMBOL_UNUSED(cdp);
 
    if( *pnIndex + i <= nLen )
    {
-      hb_cdpU16CharToUTF8( &pDst[*pnIndex], wc );
+      hb_cdpU16CharToUTF8(&pDst[*pnIndex], wc);
       *pnIndex += i;
       return HB_TRUE;
    }
    return HB_FALSE;
 }
 
-static HB_CDP_LEN_FUNC( UTF8_len )
+static HB_CDP_LEN_FUNC(UTF8_len)
 {
    HB_SYMBOL_UNUSED(cdp);
 
-   return hb_cdpUTF8CharSize( wc );
+   return hb_cdpUTF8CharSize(wc);
 }
 
-static HB_CDP_UPPER_FUNC( UTF8_upper )
+static HB_CDP_UPPER_FUNC(UTF8_upper)
 {
    HB_WCHAR wcUP;
 
    HB_SYMBOL_UNUSED(cdp);
 
-   wcUP = s_uc_upper( wc );
+   wcUP = s_uc_upper(wc);
    return wcUP ? wcUP : wc;
 }
 
-static HB_CDP_LOWER_FUNC( UTF8_lower )
+static HB_CDP_LOWER_FUNC(UTF8_lower)
 {
    HB_WCHAR wcLO;
 
    HB_SYMBOL_UNUSED(cdp);
 
-   wcLO = s_uc_lower( wc );
+   wcLO = s_uc_lower(wc);
    return wcLO ? wcLO : wc;
 }
 
-static HB_CDP_FLAGS_FUNC( UTF8_flags )
+static HB_CDP_FLAGS_FUNC(UTF8_flags)
 {
    HB_SYMBOL_UNUSED(cdp);
 
-   return s_uc_flags( wc );
+   return s_uc_flags(wc);
 }
 
-static HB_CDP_CMP_FUNC( UTF8_cmp )
+static HB_CDP_CMP_FUNC(UTF8_cmp)
 {
    int iRet;
 
@@ -144,15 +144,15 @@ static HB_CDP_CMP_FUNC( UTF8_cmp )
    iRet = 0;
    for( ;; )
    {
-      if( ! HB_CDPCHAR_GET( cdp, szSecond, nLenSecond, &nPos2, &wc2 ) )
+      if( ! HB_CDPCHAR_GET(cdp, szSecond, nLenSecond, &nPos2, &wc2) )
       {
-         if( fExact && HB_CDPCHAR_GET( cdp, szFirst, nLenFirst, &nPos1, &wc1 ) )
+         if( fExact && HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1) )
          {
             iRet = 1;
          }
          break;
       }
-      if( ! HB_CDPCHAR_GET( cdp, szFirst, nLenFirst, &nPos1, &wc1 ) )
+      if( ! HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1) )
       {
          iRet = -1;
          break;
@@ -199,7 +199,7 @@ static HB_CDP_CMP_FUNC( UTF8_cmp )
    return iRet;
 }
 
-static HB_CDP_CMP_FUNC( UTF8_cmpi )
+static HB_CDP_CMP_FUNC(UTF8_cmpi)
 {
    int iRet = 0;
 
@@ -210,22 +210,22 @@ static HB_CDP_CMP_FUNC( UTF8_cmpi )
 
    for( ;; )
    {
-      if( ! HB_CDPCHAR_GET( cdp, szSecond, nLenSecond, &nPos2, &wc2 ) )
+      if( ! HB_CDPCHAR_GET(cdp, szSecond, nLenSecond, &nPos2, &wc2) )
       {
-         if( fExact && HB_CDPCHAR_GET( cdp, szFirst, nLenFirst, &nPos1, &wc1 ) )
+         if( fExact && HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1) )
          {
             iRet = 1;
          }
          break;
       }
-      if( ! HB_CDPCHAR_GET( cdp, szFirst, nLenFirst, &nPos1, &wc1 ) )
+      if( ! HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1) )
       {
          iRet = -1;
          break;
       }
       if( wc1 != wc2 )
       {
-         HB_USHORT us1 = s_uniSort[HB_CDPCHAR_UPPER( cdp, wc1 )], us2 = s_uniSort[HB_CDPCHAR_UPPER( cdp, wc2 )];
+         HB_USHORT us1 = s_uniSort[HB_CDPCHAR_UPPER(cdp, wc1)], us2 = s_uniSort[HB_CDPCHAR_UPPER(cdp, wc2)];
          if( us1 != us2 )
          {
             iRet = us1 < us2 ? -1 : 1;
@@ -243,7 +243,7 @@ static HB_CDP_CMP_FUNC( UTF8_cmpi )
       HB_UCHAR u1 = cdp->upper[static_cast<HB_UCHAR>(*szFirst++)], u2 = cdp->upper[static_cast<HB_UCHAR>(*szSecond++)];
       if( u1 != u2 )
       {
-         iRet = ( u1 < u2 ) ? -1 : 1;
+         iRet = (u1 < u2) ? -1 : 1;
          break;
       }
    }
@@ -265,7 +265,7 @@ static HB_CDP_CMP_FUNC( UTF8_cmpi )
 }
 
 
-static void hb_cp_init( PHB_CODEPAGE cdp )
+static void hb_cp_init(PHB_CODEPAGE cdp)
 {
    HB_UCHAR * flags, * upper, * lower;
 

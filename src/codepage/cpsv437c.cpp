@@ -52,13 +52,13 @@
    in NTXSWE.OBJ is that the Danish "AE" and "ae" compound characters
    (ASCII values 146 and 145 respectively) turn up between ASCII 135 and
    136, a rather pointless relocation IMHO. I found no way to replicate
-   that behaviour in the character strings below, so if you allow Chr( 146 )
-   and Chr( 145 ) to be saved in indexed fields there WILL be index corruption
+   that behaviour in the character strings below, so if you allow Chr(146)
+   and Chr(145) to be saved in indexed fields there WILL be index corruption
    if data is shared between Clipper and Harbour. Upper()/Lower() conversion
    of those characters as well as all accented characters must be done
    programmatically just like in Clipper.
 
-   For sharing data with Clipper, assuming that the Chr( 146 ) and Chr( 145 )
+   For sharing data with Clipper, assuming that the Chr(146) and Chr(145)
    problem is properly taken care of in your code, this codepage version
    must be used. For correct collation according to the book "Svenska
    skrivregler" (Swedish Writing Rules) by Svenska Språknämnden (the Swedish
