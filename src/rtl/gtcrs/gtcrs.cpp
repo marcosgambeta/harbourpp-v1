@@ -399,7 +399,7 @@ static int add_efds( InOutBase * ioBase, int fd, int mode,
        ( fl == O_WRONLY && mode == O_RDONLY ) )
       return -1;
 
-   for( int i = 0; i < ioBase->efds_no && ! pefd; i++ )
+   for( int i = 0; i < ioBase->efds_no && !pefd; i++ )
       if( ioBase->event_fds[i]->fd == fd )
          pefd = ioBase->event_fds[i];
 
@@ -1006,7 +1006,7 @@ again:
                      ioBase->key_flag |= KEY_CTRLMASK;
                      break;
                   case K_NATIONAL:
-                     ioBase->nation_mode = ! ioBase->nation_mode;
+                     ioBase->nation_mode = !ioBase->nation_mode;
                      break;
                   case K_MOUSETERM:
                      ioBase->nTermMouseChars = 3;
@@ -1146,7 +1146,7 @@ static int removeKeyMap( InOutBase * ioBase, const char * cdesc )
       if( ( *ptr )->ch == c )
       {
          c = static_cast<unsigned char>(cdesc[i++]);
-         if( ! c )
+         if( !c )
          {
             ret = ( *ptr )->key;
             ( *ptr )->key = K_UNDEF;
@@ -1326,7 +1326,7 @@ static char * tiGetS( const char * capname )
    {
       if( ptr == static_cast<char*>(-1) )
          ptr = nullptr;
-      else if( ! ptr[0] )
+      else if( !ptr[0] )
          ptr = nullptr;
    }
    return ptr;
@@ -1827,9 +1827,9 @@ static InOutBase * create_ioBase( char * term, int infd, int outfd, int errfd,
 
    ioBase = static_cast<InOutBase*>(hb_xgrabz(sizeof(InOutBase)));
 
-   if( ! term || ! *term )
+   if( !term || !*term )
       term = getenv( "HB_TERM" );
-   if( ! term || ! *term )
+   if( !term || !*term )
       term = getenv( "TERM" );
 
    if( term && *term )
@@ -1861,7 +1861,7 @@ static InOutBase * create_ioBase( char * term, int infd, int outfd, int errfd,
    ioBase->termpid = termpid;
    ioBase->cursor = ioBase->lcursor = SC_UNDEF;
 
-   if( ! isatty( ioBase->base_outfd ) && isatty( ioBase->base_infd ) )
+   if( !isatty( ioBase->base_outfd ) && isatty( ioBase->base_infd ) )
       ioBase->base_outfd = ioBase->base_infd;
 
    if( isatty( ioBase->stdoutfd ) )
@@ -2124,7 +2124,7 @@ static InOutBase * create_newXterm( void )
    pid_t termpid;
    char ptyname[64], buf[64], * ptr;
 
-   if( ! getenv( "DISPLAY" ) )
+   if( !getenv( "DISPLAY" ) )
       return nullptr;
 
    if( openpty( &masterfd, &slavefd, ptyname, nullptr, nullptr ) == -1 )
@@ -2196,14 +2196,14 @@ static int add_new_ioBase( InOutBase * ioBase )
 {
    int i, add = 0;
 
-   for( i = 0; i < s_iSize_ioBaseTab && ! add; ++i )
-      if( ! s_ioBaseTab[i] )
+   for( i = 0; i < s_iSize_ioBaseTab && !add; ++i )
+      if( !s_ioBaseTab[i] )
       {
          s_ioBaseTab[i] = ioBase;
          add = 1;
       }
 
-   if( ! add )
+   if( !add )
    {
       if( s_ioBaseTab == nullptr )
          s_ioBaseTab = static_cast<InOutBase**>(hb_xgrab(
@@ -2216,7 +2216,7 @@ static int add_new_ioBase( InOutBase * ioBase )
          s_ioBaseTab[n] = nullptr;
    }
 
-   if( ! s_ioBase )
+   if( !s_ioBase )
       set_active_ioBase( i );
 
    return i;
@@ -2232,7 +2232,7 @@ static int del_ioBase( int iNO_ioBase )
       {
          s_iActive_ioBase = -1;
          s_ioBase = nullptr;
-         for( int i = 0; i < s_iSize_ioBaseTab && ! s_ioBase; ++i )
+         for( int i = 0; i < s_iSize_ioBaseTab && !s_ioBase; ++i )
             if( s_ioBaseTab[i] )
                set_active_ioBase( i );
       }
@@ -2358,7 +2358,7 @@ static void hb_gt_crs_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_crs_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStderr)) ) );
 #endif
 
-   if( ! s_ioBase )
+   if( !s_ioBase )
    {
       InOutBase * ioBase;
 
@@ -2385,7 +2385,7 @@ static void hb_gt_crs_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       }
    }
 
-   if( ! s_ioBase )
+   if( !s_ioBase )
       hb_errInternal(9997, "Internal error: screen driver initialization failure", nullptr, nullptr);
 }
 
@@ -2826,7 +2826,7 @@ static void hb_gt_crs_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
       wmove( s_ioBase->hb_stdscr, iRow, iCol );
       while( iSize-- > 0 )
       {
-         if( ! HB_GTSELF_GETSCRUC(pGT, iRow, iCol++, &iColor, &bAttr, &uc, HB_FALSE) )
+         if( !HB_GTSELF_GETSCRUC(pGT, iRow, iCol++, &iColor, &bAttr, &uc, HB_FALSE) )
             break;
          ch = ( s_ioBase->attr_map[iColor] & s_ioBase->attr_mask ) |
               ( ( bAttr & HB_GT_ATTR_BOX ) ? s_ioBase->box_chmap[uc] :

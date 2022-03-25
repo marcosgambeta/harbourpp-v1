@@ -352,7 +352,7 @@ static void s_socket_exit( void * cargo )
 
 static void s_socket_init( void )
 {
-   if( ! s_fInit )
+   if( !s_fInit )
    {
       hb_sockexRegister( nullptr );
       hb_socketInit();
@@ -490,7 +490,7 @@ HB_BOOL hb_sockexItemSetFilter( PHB_ITEM pItem, const char * pszFilter, PHB_ITEM
    {
       PHB_SOCKEX pSock = *pSockPtr;
 
-      if( pszFilter == nullptr ? pSock->pFilter == &s_sockFilter : ! hb_stricmp( pSock->pFilter->pszName, pszFilter ) )
+      if( pszFilter == nullptr ? pSock->pFilter == &s_sockFilter : !hb_stricmp( pSock->pFilter->pszName, pszFilter ) )
       {
          return HB_TRUE;
       }

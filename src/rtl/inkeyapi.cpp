@@ -536,7 +536,7 @@ int hb_inkeyKeyMod( int iKey )
 
    int iFlags = 0;
 
-   if( HB_INKEY_ISEXT( iKey ) && ! HB_INKEY_ISMOUSEPOS( iKey ) )
+   if( HB_INKEY_ISEXT( iKey ) && !HB_INKEY_ISMOUSEPOS( iKey ) )
    {
       iFlags = HB_INKEY_FLAGS( iKey );
    }
@@ -552,7 +552,7 @@ int hb_inkeyKeyVal( int iKey )
 
    int iValue = 0;
 
-   if( HB_INKEY_ISEXT( iKey ) && ! HB_INKEY_ISMOUSEPOS( iKey ) )
+   if( HB_INKEY_ISEXT( iKey ) && !HB_INKEY_ISMOUSEPOS( iKey ) )
    {
       iValue = HB_INKEY_VALUE( iKey );
    }

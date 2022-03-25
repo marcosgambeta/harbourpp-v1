@@ -367,14 +367,14 @@ static void open_handle( PHB_SET_STRUCT pSet, const char * file_name, HB_BOOL fA
       *set_value = nullptr;
    }
 
-   if( ! szFileName )
+   if( !szFileName )
    {
       return;
    }
 
-   fStripEof = fAppend && szDevice == nullptr && ! fPipe;
+   fStripEof = fAppend && szDevice == nullptr && !fPipe;
 
-   /* Open the file either in append (fAppend) or truncate mode (! fAppend), but
+   /* Open the file either in append (fAppend) or truncate mode (!fAppend), but
       always use binary mode */
 
    /* QUESTION: What sharing mode does Clipper use ? [vszakats] */
@@ -389,7 +389,7 @@ static void open_handle( PHB_SET_STRUCT pSet, const char * file_name, HB_BOOL fA
       {
          handle = hb_fileExtOpen( szFileName,
                                   hb_stackSetStruct()->HB_SET_DEFEXTENSIONS ? def_ext : nullptr,
-                                  ( ! fStripEof || set_specifier == HB_SET_PRINTFILE ? FO_WRITE : FO_READWRITE ) |
+                                  ( !fStripEof || set_specifier == HB_SET_PRINTFILE ? FO_WRITE : FO_READWRITE ) |
                                   FO_DENYWRITE | FXO_SHARELOCK |
                                   ( fAppend ? FXO_APPEND : FXO_TRUNCATE ) |
                                   ( szDevice ? 0 : FXO_DEFAULTS ),
@@ -847,7 +847,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
       case HB_SET_EXIT:
          pResult = hb_itemPutL(pResult, pSet->HB_SET_EXIT);
          /* NOTE: Otherwise ReadExit() will always set the value. [vszakats] */
-         if( pArg1 != nullptr && ! HB_IS_NIL(pArg1) )
+         if( pArg1 != nullptr && !HB_IS_NIL(pArg1) )
          {
             pSet->HB_SET_EXIT = set_logical( pArg1, pSet->HB_SET_EXIT );
          }
@@ -1105,15 +1105,15 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
          {
             if( HB_IS_STRING(pArg1) )
             {
-               if( ! hb_stricmp( hb_itemGetCPtr(pArg1), "LOWER" ) )
+               if( !hb_stricmp( hb_itemGetCPtr(pArg1), "LOWER" ) )
                {
                   pSet->HB_SET_FILECASE = HB_SET_CASE_LOWER;
                }
-               else if( ! hb_stricmp( hb_itemGetCPtr(pArg1), "UPPER" ) )
+               else if( !hb_stricmp( hb_itemGetCPtr(pArg1), "UPPER" ) )
                {
                   pSet->HB_SET_FILECASE = HB_SET_CASE_UPPER;
                }
-               else if( ! hb_stricmp( hb_itemGetCPtr(pArg1), "MIXED" ) )
+               else if( !hb_stricmp( hb_itemGetCPtr(pArg1), "MIXED" ) )
                {
                   pSet->HB_SET_FILECASE = HB_SET_CASE_MIXED;
                }
@@ -1146,15 +1146,15 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
          {
             if( HB_IS_STRING(pArg1) )
             {
-               if( ! hb_stricmp( hb_itemGetCPtr(pArg1), "LOWER" ) )
+               if( !hb_stricmp( hb_itemGetCPtr(pArg1), "LOWER" ) )
                {
                   pSet->HB_SET_DIRCASE = HB_SET_CASE_LOWER;
                }
-               else if( ! hb_stricmp( hb_itemGetCPtr(pArg1), "UPPER" ) )
+               else if( !hb_stricmp( hb_itemGetCPtr(pArg1), "UPPER" ) )
                {
                   pSet->HB_SET_DIRCASE = HB_SET_CASE_UPPER;
                }
-               else if( ! hb_stricmp( hb_itemGetCPtr(pArg1), "MIXED" ) )
+               else if( !hb_stricmp( hb_itemGetCPtr(pArg1), "MIXED" ) )
                {
                   pSet->HB_SET_DIRCASE = HB_SET_CASE_MIXED;
                }
@@ -1614,7 +1614,7 @@ int hb_setListenerAdd( HB_SET_LISTENER_CALLBACK * callback )
    PHB_SET_LISTENER p_sl = static_cast<PHB_SET_LISTENER>(hb_xgrab(sizeof(HB_SET_LISTENER)));
    PHB_SET_LISTENER_LST pList;
 
-   if( ! pSet->hb_set_listener )
+   if( !pSet->hb_set_listener )
    {
       pSet->hb_set_listener = hb_xgrabz(sizeof(HB_SET_LISTENER_LST));
    }
@@ -1629,7 +1629,7 @@ int hb_setListenerAdd( HB_SET_LISTENER_CALLBACK * callback )
    {
       pList->last->next = p_sl;
    }
-   else if( ! pList->first )
+   else if( !pList->first )
    {
       pList->first = p_sl;
    }
@@ -2109,15 +2109,15 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
             iValue = -1;
             if( HB_IS_STRING(pItem) )
             {
-               if( ! hb_stricmp( hb_itemGetCPtr(pItem), "LOWER" ) )
+               if( !hb_stricmp( hb_itemGetCPtr(pItem), "LOWER" ) )
                {
                   iValue = HB_SET_CASE_LOWER;
                }
-               else if( ! hb_stricmp( hb_itemGetCPtr(pItem), "UPPER" ) )
+               else if( !hb_stricmp( hb_itemGetCPtr(pItem), "UPPER" ) )
                {
                   iValue = HB_SET_CASE_UPPER;
                }
-               else if( ! hb_stricmp( hb_itemGetCPtr(pItem), "MIXED" ) )
+               else if( !hb_stricmp( hb_itemGetCPtr(pItem), "MIXED" ) )
                {
                   iValue = HB_SET_CASE_MIXED;
                }
@@ -3416,13 +3416,13 @@ PHB_FILE hb_setGetPrinterHandle( int iType )
    switch( iType )
    {
       case HB_SET_PRN_DEV:
-         if( ! pSet->hb_set_prndevice )
+         if( !pSet->hb_set_prndevice )
          {
             return nullptr;
          }
          break;
       case HB_SET_PRN_CON:
-         if( ! pSet->HB_SET_PRINTER )
+         if( !pSet->HB_SET_PRINTER )
          {
             return nullptr;
          }

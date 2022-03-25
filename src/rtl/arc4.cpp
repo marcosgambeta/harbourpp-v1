@@ -48,14 +48,14 @@
 #include "hbthread.h"
 
 /* XXX: Check and possibly extend this to other Unix-like platforms */
-#if ( defined( HB_OS_BSD ) && ! defined( HB_OS_DARWIN ) ) || \
-   ( defined( HB_OS_LINUX ) && ! defined( HB_OS_ANDROID ) )
+#if ( defined( HB_OS_BSD ) && !defined( HB_OS_DARWIN ) ) || \
+   ( defined( HB_OS_LINUX ) && !defined( HB_OS_ANDROID ) )
    /*
     * sysctl() on Linux has fallen into depreciation. Newer generations
     * of runtime C libraries, like musl, doesn't even expose it. Here we
     * look for it only with "classic" line of libc's.
     */
-#  if ( ! defined( HB_OS_LINUX ) || ( defined( __GLIBC__ ) || defined( __UCLIBC__ ) ) )
+#  if ( !defined( HB_OS_LINUX ) || ( defined( __GLIBC__ ) || defined( __UCLIBC__ ) ) )
 #     define HAVE_SYS_SYSCTL_H
 #  endif
 #  define HAVE_DECL_CTL_KERN
@@ -73,7 +73,7 @@
 #  include <sys/types.h>
 #  ifdef HAVE_SYS_SYSCTL_H
 #     include <sys/sysctl.h>
-#     if ! defined( HB_OS_LINUX ) && defined( KERN_ARND )
+#     if !defined( HB_OS_LINUX ) && defined( KERN_ARND )
 #        define HAVE_DECL_KERN_ARND
 #     endif
 #  endif
@@ -98,7 +98,7 @@ struct arc4_stream
    HB_U8 s[256];
 };
 
-#if ! defined( HB_OS_UNIX )
+#if !defined( HB_OS_UNIX )
 #  define NO_PID_CHECK
 #else
 static pid_t arc4_stir_pid;
@@ -179,8 +179,8 @@ static int arc4_seed_win( void )
    static HCRYPTPROV s_provider;
    unsigned char     buf[ADD_ENTROPY];
 
-   if( ! s_provider_set &&
-       ! CryptAcquireContext( &s_provider, nullptr, nullptr, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT ) &&
+   if( !s_provider_set &&
+       !CryptAcquireContext( &s_provider, nullptr, nullptr, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT ) &&
        GetLastError() != static_cast<DWORD>(NTE_BAD_KEYSET) )
    {
       return -1;
@@ -188,7 +188,7 @@ static int arc4_seed_win( void )
 
    s_provider_set = 1;
 
-   if( ! CryptGenRandom( s_provider, sizeof(buf), buf ) )
+   if( !CryptGenRandom( s_provider, sizeof(buf), buf ) )
    {
       return -1;
    }
@@ -236,7 +236,7 @@ static int arc4_seed_sysctl_linux( void )
       any_set |= buf[i];
    }
 
-   if( ! any_set )
+   if( !any_set )
    {
       return -1;
    }
@@ -291,7 +291,7 @@ static int arc4_seed_sysctl_bsd( void )
       any_set |= buf[i];
    }
 
-   if( ! any_set )
+   if( !any_set )
    {
       return -1;
    }
@@ -489,7 +489,7 @@ static void arc4_seed( void )
     * messages when you try to use it. To avoid dmesg spamming,
     * only try this if no previous method worked.
     */
-   if( ! ok && arc4_seed_sysctl_linux() == 0 )
+   if( !ok && arc4_seed_sysctl_linux() == 0 )
    {
       ok = 1;
    }
@@ -509,7 +509,7 @@ static void arc4_seed( void )
     * (transient) failure, it will be re-tried at the next
     * seeding cycle.
     */
-   if( ! ok )
+   if( !ok )
    {
       arc4_seed_rand();
    }
@@ -517,7 +517,7 @@ static void arc4_seed( void )
 
 static void arc4_stir( void )
 {
-   if( ! rs_initialized )
+   if( !rs_initialized )
    {
       arc4_init();
       rs_initialized = 1;
@@ -554,14 +554,14 @@ static void arc4_stir( void )
 static void arc4_stir_if_needed( void )
 {
 #if defined( NO_PID_CHECK )
-   if( arc4_count <= 0 || ! rs_initialized )
+   if( arc4_count <= 0 || !rs_initialized )
    {
       arc4_stir();
    }
 #else
    pid_t pid = getpid();
 
-   if( arc4_count <= 0 || ! rs_initialized || arc4_stir_pid != pid )
+   if( arc4_count <= 0 || !rs_initialized || arc4_stir_pid != pid )
    {
       arc4_stir_pid = pid;
       arc4_stir();
@@ -610,7 +610,7 @@ void arc4random_stir( void )
 void arc4random_addrandom( const unsigned char * dat, int datlen )
 {
    ARC4_LOCK();
-   if( ! rs_initialized )
+   if( !rs_initialized )
    {
       arc4_stir();
    }

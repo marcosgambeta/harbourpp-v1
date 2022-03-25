@@ -189,7 +189,7 @@ HB_FUNC( HB_HSETDEF )
 
       if( pDest )
       {
-         if( pDefault && ! hb_itemTypeCmp(pDest, pDefault) )
+         if( pDefault && !hb_itemTypeCmp(pDest, pDefault) )
          {
             hb_itemCopy(pDest, pDefault);
          }
@@ -458,7 +458,7 @@ HB_FUNC( HB_HCOPY )
          HB_SIZE nLen = hb_hashLen( pSource ), nStart, nCount;
 
          nStart = hb_parns(3);
-         if( ! nStart )
+         if( !nStart )
          {
             ++nStart;
          }
@@ -550,7 +550,7 @@ HB_FUNC( HB_HEVAL )
       HB_SIZE nLen = hb_hashLen( pHash ), nStart, nCount;
 
       nStart = hb_parns(3);
-      if( ! nStart )
+      if( !nStart )
       {
          ++nStart;
       }
@@ -595,7 +595,7 @@ HB_FUNC( HB_HSCAN )
       HB_SIZE nLen = hb_hashLen( pHash ), nStart, nCount;
 
       nStart = hb_parns(3);
-      if( ! nStart )
+      if( !nStart )
       {
          ++nStart;
       }
@@ -702,7 +702,7 @@ HB_FUNC( HB_HSCAN )
             {
                if( HB_IS_DATETIME(pItem) &&
                    pItem->item.asDateTime.julian == pValue->item.asDateTime.julian &&
-                   ( ! fExact || pItem->item.asDateTime.time == pValue->item.asDateTime.time ) )
+                   ( !fExact || pItem->item.asDateTime.time == pValue->item.asDateTime.time ) )
                {
                   fFound = HB_TRUE;
                   break;

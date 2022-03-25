@@ -62,7 +62,7 @@
 
 /* NOTE: VxWorks supports dlopen() functionality only in shared
          executables. [vszakats] */
-#if ! defined( HB_HAS_DLFCN ) && \
+#if !defined( HB_HAS_DLFCN ) && \
     ( ( defined( HB_OS_LINUX ) ) || \
       defined( HB_OS_SUNOS ) || defined( HB_OS_DARWIN ) || \
       defined( HB_OS_BSD ) || defined( HB_OS_BEOS ) || \
@@ -120,7 +120,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
 #elif defined( HB_HAS_DLFCN )
          hDynLib = static_cast<void*>(dlopen( hb_itemGetCPtr(pLibName), RTLD_LAZY | RTLD_GLOBAL ));
 
-         if( ! hDynLib )
+         if( !hDynLib )
          {
 #if 0
             HB_TRACE( HB_TR_DEBUG, ( "hb_libLoad(): dlopen(): %s", dlerror() ) );

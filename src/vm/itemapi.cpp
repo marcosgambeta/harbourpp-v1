@@ -2186,7 +2186,7 @@ void hb_itemCopyToRef( PHB_ITEM pDest, PHB_ITEM pSource )
    if( HB_IS_BYREF(pDest) )
    {
       pDest = hb_itemUnRefWrite(pDest, pSource);
-      if( ! pDest || pDest == pSource )
+      if( !pDest || pDest == pSource )
       {
          /* extended reference or pDest is a reference to pSource
             - do not copy */
@@ -2308,7 +2308,7 @@ void hb_itemMoveToRef( PHB_ITEM pDest, PHB_ITEM pSource )
    if( HB_IS_BYREF(pDest) )
    {
       pDest = hb_itemUnRefWrite(pDest, pSource);
-      if( ! pDest || pDest == pSource )
+      if( !pDest || pDest == pSource )
       {
          /* extended reference or pDest is a reference to pSource
             - do not copy */
@@ -2789,7 +2789,7 @@ HB_BOOL hb_itemEqual( PHB_ITEM pItem1, PHB_ITEM pItem2 )
    }
    else if( HB_IS_LOGICAL(pItem1) )
    {
-      fResult = HB_IS_LOGICAL(pItem2) && ( pItem1->item.asLogical.value ? pItem2->item.asLogical.value : ! pItem2->item.asLogical.value );
+      fResult = HB_IS_LOGICAL(pItem2) && ( pItem1->item.asLogical.value ? pItem2->item.asLogical.value : !pItem2->item.asLogical.value );
    }
    else if( HB_IS_ARRAY(pItem1) )
    {
@@ -2948,7 +2948,7 @@ int hb_itemStrCmp( PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact )
       return 0;
    }
 
-   if( ! bForceExact && hb_stackSetStruct()->HB_SET_EXACT )
+   if( !bForceExact && hb_stackSetStruct()->HB_SET_EXACT )
    {
       /* SET EXACT ON and not using == */
       /* Don't include trailing spaces */
@@ -2969,7 +2969,7 @@ int hb_itemStrCmp( PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact )
    if( nMinLen )
    {
       PHB_CODEPAGE cdp = hb_vmCDP();
-      if( cdp && ! HB_CDP_ISBINSORT( cdp ) )
+      if( cdp && !HB_CDP_ISBINSORT( cdp ) )
       {
          iRet = hb_cdpcmp( szFirst, nLenFirst, szSecond, nLenSecond, cdp, bForceExact );
       }
@@ -2988,7 +2988,7 @@ int hb_itemStrCmp( PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact )
          while( --nMinLen );
 
          /* If equal and length is different ! */
-         if( ! iRet && nLenFirst != nLenSecond )
+         if( !iRet && nLenFirst != nLenSecond )
          {
             /* Force an exact comparison? */
             if( bForceExact || nLenSecond > nLenFirst )
@@ -3042,7 +3042,7 @@ int hb_itemStrICmp( PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact )
    nLenFirst = pFirst->item.asString.length;
    nLenSecond = pSecond->item.asString.length;
 
-   if( ! bForceExact && hb_stackSetStruct()->HB_SET_EXACT )
+   if( !bForceExact && hb_stackSetStruct()->HB_SET_EXACT )
    {
       /* SET EXACT ON and not using == */
       /* Don't include trailing spaces */
@@ -3063,7 +3063,7 @@ int hb_itemStrICmp( PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact )
    if( nMinLen )
    {
       PHB_CODEPAGE cdp = hb_vmCDP();
-      if( cdp && ! HB_CDP_ISBINSORT( cdp ) )
+      if( cdp && !HB_CDP_ISBINSORT( cdp ) )
       {
          iRet = hb_cdpicmp( szFirst, nLenFirst, szSecond, nLenSecond, cdp, bForceExact );
       }
@@ -3084,7 +3084,7 @@ int hb_itemStrICmp( PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact )
          while( --nMinLen );
 
          /* If equal and length is different ! */
-         if( ! iRet && nLenFirst != nLenSecond )
+         if( !iRet && nLenFirst != nLenSecond )
          {
             /* Force an exact comparison? */
             if( bForceExact || nLenSecond > nLenFirst )
@@ -3144,7 +3144,7 @@ HB_BOOL hb_itemStrBuf( char * szResult, PHB_ITEM pNumber, int iSize, int iDec )
    {
       double dNumber = hb_itemGetND(pNumber);
 
-      if( ! hb_isfinite( dNumber ) )
+      if( !hb_isfinite( dNumber ) )
       {
          /* Numeric overflow */
          iPos = -1;

@@ -59,7 +59,7 @@
 #include "hbset.h"
 #include "hbstack.h"
 
-#if ! defined( HB_MT_VM )
+#if !defined( HB_MT_VM )
 #  define hb_dynsymGetMemvar(p)     ( static_cast<PHB_ITEM>(( p )->pMemvar) )
 #  define hb_dynsymSetMemvar(p, h)  do { ( p )->pMemvar = ( h ); } while(0)
 #endif
@@ -167,7 +167,7 @@ PHB_ITEM hb_memvarDetachLocal( PHB_ITEM pLocal )
          }
          else if( HB_IS_ENUM(pLocal) )
          {
-            if( ! pLocal->item.asEnum.valuePtr )
+            if( !pLocal->item.asEnum.valuePtr )
             {
                PHB_ITEM pBase = HB_IS_BYREF(pLocal->item.asEnum.basePtr) ? hb_itemUnRef(pLocal->item.asEnum.basePtr) : pLocal->item.asEnum.basePtr;
                if( HB_IS_ARRAY(pBase) )
@@ -194,7 +194,7 @@ PHB_ITEM hb_memvarDetachLocal( PHB_ITEM pLocal )
     * In this case we have to copy the current value to a global memory
     * pool so it can be shared by codeblocks
     */
-   if( ! HB_IS_MEMVAR(pLocal) )
+   if( !HB_IS_MEMVAR(pLocal) )
    {
       PHB_ITEM pMemvar = hb_memvarValueNew();
 
@@ -249,7 +249,7 @@ static void hb_memvarAddPrivate( PHB_DYNS pDynSym, PHB_ITEM pValue )
       }
    }
 
-   if( ! pMemvar )
+   if( !pMemvar )
    {
       /* Allocate the value from the end of table
        */
@@ -500,7 +500,7 @@ void hb_memvarGetRefer( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
 
       if( pMemvar )
       {
-         if( HB_IS_BYREF(pMemvar) && ! HB_IS_ENUM(pMemvar) )
+         if( HB_IS_BYREF(pMemvar) && !HB_IS_ENUM(pMemvar) )
          {
             hb_itemCopy(pItem, pMemvar);
          }
@@ -527,7 +527,7 @@ void hb_memvarGetRefer( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
             pMemvar = hb_dynsymGetMemvar(pDyn);
             if( pMemvar )
             {
-               if( HB_IS_BYREF(pMemvar) && ! HB_IS_ENUM(pMemvar) )
+               if( HB_IS_BYREF(pMemvar) && !HB_IS_ENUM(pMemvar) )
                {
                   hb_itemCopy(pItem, pMemvar);
                }
@@ -614,7 +614,7 @@ static PHB_DYNS hb_memvarFindSymbol( const char * szArg, HB_SIZE nLen )
                break;
             }
          }
-         else if( ! cChar )
+         else if( !cChar )
          {
             break;
          }
@@ -728,7 +728,7 @@ static void hb_memvarCreateFromDynSymbol( PHB_DYNS pDynVar, int iScope, PHB_ITEM
       /* If the variable with the same name exists already
        * then the current value have to be unchanged
        */
-      if( ! hb_dynsymGetMemvar(pDynVar) )
+      if( !hb_dynsymGetMemvar(pDynVar) )
       {
          PHB_ITEM pMemvar = hb_memvarValueNew();
 
@@ -842,7 +842,7 @@ static void hb_memvarReleaseWithMask( const char * szMask, HB_BOOL bInclude )
       if( pMemvar )
       {
          HB_BOOL fMatch = hb_strMatchCaseWildExact( pDynVar->pSymbol->szName, szMask );
-         if( bInclude ? fMatch : ! fMatch )
+         if( bInclude ? fMatch : !fMatch )
          {
             hb_itemClear(pMemvar);
          }
@@ -907,7 +907,7 @@ int hb_memvarScope( const char * szVarName, HB_SIZE nLength )
    }
 }
 
-#if ! defined( HB_MT_VM )
+#if !defined( HB_MT_VM )
 /* Releases memory occupied by a variable
  */
 static HB_DYNS_FUNC( hb_memvarClear )
@@ -936,7 +936,7 @@ void hb_memvarsClear( HB_BOOL fAll )
    hb_stackClearMemvarsBase();
    hb_stackGetPrivateStack()->base = 0;
    hb_memvarSetPrivatesBase(0);
-#if ! defined( HB_MT_VM )
+#if !defined( HB_MT_VM )
    hb_dynsymEval(hb_memvarClear, static_cast<void*>(pGetList));
 #else
    /* this is a little bit hacked but many times faster version
@@ -1093,7 +1093,7 @@ static HB_DYNS_FUNC( hb_memvarCountVisible )
    if( pMemvar )
    {
       struct mv_memvarArray_info * pMVInfo = static_cast<struct mv_memvarArray_info*>(Cargo);
-      if( ! pMVInfo->iScope || ( hb_memvarScopeGet( pDynSymbol ) & pMVInfo->iScope ) != 0 )
+      if( !pMVInfo->iScope || ( hb_memvarScopeGet( pDynSymbol ) & pMVInfo->iScope ) != 0 )
       {
          pMVInfo->pDyns[pMVInfo->nCount++] = pDynSymbol;
       }
@@ -1115,7 +1115,7 @@ PHB_ITEM hb_memvarSaveInArray( int iScope, HB_BOOL fCopy )
       iScope = 0;
    }
 
-#if ! defined( HB_MT_VM )
+#if !defined( HB_MT_VM )
    MVInfo.pDyns = static_cast<PHB_DYNS*>(hb_xgrab(hb_dynsymCount() * sizeof(PHB_DYNS)));
 #else
    MVInfo.pDyns = static_cast<PHB_DYNS*>(hb_xgrab(hb_stackDynHandlesCount() * sizeof(PHB_DYNS)));
@@ -1186,7 +1186,7 @@ static const char * hb_memvarGetMask( int iParam )
 {
    const char * pszMask = hb_parc(iParam);
 
-   if( ! pszMask || pszMask[0] == '*' )
+   if( !pszMask || pszMask[0] == '*' )
    {
       pszMask = "*";
    }
@@ -1305,7 +1305,7 @@ HB_FUNC( __MVRELEASE )
       const char * pszMask;
 
       pszMask = hb_memvarGetMask(1);
-      bIncludeVar = ( pszMask[0] == '*' && ! pszMask[1] ) || iCount < 2 || hb_parl(2);
+      bIncludeVar = ( pszMask[0] == '*' && !pszMask[1] ) || iCount < 2 || hb_parl(2);
       hb_memvarReleaseWithMask( pszMask, bIncludeVar );
    }
 }
@@ -1522,7 +1522,7 @@ static HB_DYNS_FUNC( hb_memvarSave )
       HB_BOOL bMatch = hb_strMatchCaseWildExact( pDynSymbol->pSymbol->szName, pszMask );
 
       /* Process it if it matches the passed mask */
-      if( bIncludeMask ? bMatch : ! bMatch )
+      if( bIncludeMask ? bMatch : !bMatch )
       {
          /* NOTE: Clipper will not initialize the record buffer with
                   zeros, so they will look trashed. [vszakats] */
@@ -1699,7 +1699,7 @@ HB_FUNC( __MVRESTORE )
 
       /* Clear all memory variables if not ADDITIVE */
 
-      if( ! bAdditive )
+      if( !bAdditive )
       {
          hb_memvarsClear( HB_FALSE );
       }
@@ -1847,7 +1847,7 @@ HB_FUNC( __MVRESTORE )
                HB_BOOL bMatch = hb_strMatchCaseWildExact( pszName, pszMask );
 
                /* Process it if it matches the passed mask */
-               if( bIncludeMask ? bMatch : ! bMatch )
+               if( bIncludeMask ? bMatch : !bMatch )
                {
                   /* the first parameter is a string with not empty variable name */
                   PHB_DYNS pDynVar = hb_memvarFindSymbol( pszName, strlen(pszName) );

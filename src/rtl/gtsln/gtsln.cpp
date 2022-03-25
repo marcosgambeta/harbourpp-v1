@@ -295,17 +295,17 @@ static void hb_sln_setACSCtrans( void )
       }
 
       HB_SLN_BUILD_RAWCHAR( SLch, 0, 0 );
-      for( i = 0; i < 3 && ! HB_SLN_IS_CHAR( SLch ); i++ )
+      for( i = 0; i < 3 && !HB_SLN_IS_CHAR( SLch ); i++ )
       {
          SLch = chBoard[i];
       }
-      if( ! HB_SLN_IS_CHAR( SLch ) )
+      if( !HB_SLN_IS_CHAR( SLch ) )
       {
          HB_SLN_BUILD_RAWCHAR( SLch, '#', 0 );
       }
       for( i = 0; i < 3; i++ )
       {
-         if( ! HB_SLN_IS_CHAR( chBoard[i] ) )
+         if( !HB_SLN_IS_CHAR( chBoard[i] ) )
          {
             chBoard[i] = SLch;
          }
@@ -344,7 +344,7 @@ static void hb_sln_setACSCtrans( void )
 
 static void hb_sln_setCharTrans( PHB_GT pGT, HB_BOOL fBox )
 {
-#if ! defined( HB_SLN_UNICODE )
+#if !defined( HB_SLN_UNICODE )
    PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP(pGT);
 #endif
    PHB_CODEPAGE cdpHost = HB_GTSELF_HOSTCP(pGT);
@@ -613,7 +613,7 @@ static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       if( hb_sln_Init_Terminal(0) )
       {
          /* fix an OutStd()/OutErr() output */
-         if( ! s_fStdOutTTY && s_fStdInTTY )
+         if( !s_fStdOutTTY && s_fStdInTTY )
          {
             SLang_TT_Write_FD = SLang_TT_Read_FD;
          }
@@ -685,7 +685,7 @@ static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
             /* initialize conversion tables */
             hb_sln_colorTrans();
-            if( ! hb_sln_Is_Unicode )
+            if( !hb_sln_Is_Unicode )
             {
                hb_sln_setCharTrans(pGT, HB_TRUE);
                hb_sln_setKeyTrans(pGT);
@@ -710,7 +710,7 @@ static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       }
    }
 
-   if( ! gt_Inited )
+   if( !gt_Inited )
    {
       /* something went wrong - restore default settings */
       SLang_reset_tty();
@@ -877,7 +877,7 @@ static HB_BOOL hb_gt_sln_Suspend( PHB_GT pGT )
 {
    HB_SYMBOL_UNUSED(pGT);
 
-   if( ! s_bSuspended )
+   if( !s_bSuspended )
    {
       if( SLsmg_suspend_smg() != -1 )
       {
@@ -904,7 +904,7 @@ static HB_BOOL hb_gt_sln_Resume( PHB_GT pGT )
       s_bSuspended = HB_FALSE;
    }
 
-   return ! s_bSuspended;
+   return !s_bSuspended;
 }
 
 /* *********************************************************************** */
@@ -968,7 +968,7 @@ static HB_BOOL hb_gt_sln_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const c
 {
    if( HB_GTSUPER_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox) )
    {
-      if( ! hb_sln_Is_Unicode )
+      if( !hb_sln_Is_Unicode )
       {
          hb_sln_setCharTrans(pGT, fBox);
       }
@@ -983,7 +983,7 @@ static HB_BOOL hb_gt_sln_SetKeyCP( PHB_GT pGT, const char * pszTermCDP, const ch
 {
    if( HB_GTSUPER_SETKEYCP(pGT, pszTermCDP, pszHostCDP) )
    {
-      if( ! hb_sln_Is_Unicode )
+      if( !hb_sln_Is_Unicode )
       {
          hb_sln_setKeyTrans(pGT);
       }
@@ -1011,7 +1011,7 @@ static void hb_gt_sln_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
          HB_USHORT usChar;
          while( iSize-- > 0 )
          {
-            if( ! HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol, &iColor, &bAttr, &usChar) )
+            if( !HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol, &iColor, &bAttr, &usChar) )
             {
                break;
             }
@@ -1033,7 +1033,7 @@ static void hb_gt_sln_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
          HB_UCHAR uc;
          while( iSize-- > 0 )
          {
-            if( ! HB_GTSELF_GETSCRUC(pGT, iRow, iCol, &iColor, &bAttr, &uc, HB_FALSE) )
+            if( !HB_GTSELF_GETSCRUC(pGT, iRow, iCol, &iColor, &bAttr, &uc, HB_FALSE) )
             {
                break;
             }

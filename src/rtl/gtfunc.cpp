@@ -61,7 +61,7 @@ HB_FUNC( HB_SETDISPCP )
          hb_gtSetDispCP( hb_parc(1), hb_parc(2), hb_parl(3) );
       }   
    }
-   else if( ! ( hb_pcount() >= 1 && HB_ISNIL(1) ) )
+   else if( !( hb_pcount() >= 1 && HB_ISNIL(1) ) )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }   
@@ -73,7 +73,7 @@ HB_FUNC( HB_SETKEYCP )
    {
       hb_gtSetKeyCP( hb_parc(1), hb_parc(2) );
    }
-   else if( ! ( hb_pcount() >= 1 && HB_ISNIL(1) ) )
+   else if( !( hb_pcount() >= 1 && HB_ISNIL(1) ) )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }   
@@ -94,7 +94,7 @@ HB_FUNC( HB_SETTERMCP )
          hb_gtSetKeyCP( hb_parc(1), hb_parc(2) );
       }
    }
-   else if( ! ( hb_pcount() >= 1 && HB_ISNIL(1) ) )
+   else if( !( hb_pcount() >= 1 && HB_ISNIL(1) ) )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }   

@@ -63,8 +63,8 @@
 
 #include <string.h>
 
-#if ( defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) )
-#  if ! defined( HB_HAS_TERMIOS )
+#if ( defined( HB_OS_UNIX ) && !defined( HB_OS_VXWORKS ) )
+#  if !defined( HB_HAS_TERMIOS )
 #     define HB_HAS_TERMIOS
 #  endif
 #endif
@@ -428,7 +428,7 @@ static void hb_gt_pca_AnsiSetAttributes( int iAttr )
       {
          if( s_iBold != bold )
          {
-            if( ! bold )
+            if( !bold )
             {
                buff[i++] = '2';
             }
@@ -438,7 +438,7 @@ static void hb_gt_pca_AnsiSetAttributes( int iAttr )
          }
          if( s_iBlink != blink )
          {
-            if( ! blink )
+            if( !blink )
             {
                buff[i++] = '2';
             }
@@ -670,7 +670,7 @@ static int hb_gt_pca_ReadKey( PHB_GT pGT, int iEventMask )
          ch = hb_gt_dos_keyCodeTranslate( ch, 0, HB_GTSELF_CPIN(pGT) );
       }
    }
-   else if( ! _eof( static_cast<int>(s_hFilenoStdin) ) )
+   else if( !_eof( static_cast<int>(s_hFilenoStdin) ) )
    {
       HB_BYTE bChar;
       if( _read( static_cast<int>(s_hFilenoStdin), &bChar, 1 ) == 1 )
@@ -679,7 +679,7 @@ static int hb_gt_pca_ReadKey( PHB_GT pGT, int iEventMask )
       }
    }
 #elif defined( HB_OS_WIN )
-   if( ! s_bStdinConsole || WaitForSingleObject(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(s_hFilenoStdin)), 0) == 0x0000 )
+   if( !s_bStdinConsole || WaitForSingleObject(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(s_hFilenoStdin)), 0) == 0x0000 )
    {
       HB_BYTE bChar;
       if( hb_fsRead(s_hFilenoStdin, &bChar, 1) == 1 )
@@ -826,7 +826,7 @@ static void hb_gt_pca_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
    while( iSize-- )
    {
-      if( ! HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol + iLen, &iColor, &bAttr, &usChar) )
+      if( !HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol + iLen, &iColor, &bAttr, &usChar) )
       {
          break;
       }

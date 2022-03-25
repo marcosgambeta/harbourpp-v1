@@ -74,7 +74,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
       uiType = HB_DISK_AVAIL;
    }
 
-   if( ! pszPath )
+   if( !pszPath )
    {
       szPathBuf[0] = HB_OS_PATH_DELIM_CHR;
       szPathBuf[1] = '\0';
@@ -92,14 +92,14 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
          UINT uiErrMode = SetErrorMode( SEM_FAILCRITICALERRORS );
          HB_BOOL fResult;
 
-#if ! defined( HB_OS_WIN_64 )
+#if !defined( HB_OS_WIN_64 )
          /* NOTE: We need to call this function dynamically to maintain support
                   Win95 first edition. It was introduced in Win95B (aka OSR2) [vszakats] */
          typedef BOOL ( WINAPI * P_GDFSE )( LPCTSTR, PULARGE_INTEGER, PULARGE_INTEGER, PULARGE_INTEGER );
          static P_GDFSE s_pGetDiskFreeSpaceEx = nullptr;
          static HB_BOOL s_fInit = HB_FALSE;
 
-         if( ! s_fInit )
+         if( !s_fInit )
          {
             HMODULE hModule = GetModuleHandle( HB_WINAPI_KERNEL32_DLL() );
             if( hModule )
@@ -109,7 +109,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
             s_fInit = HB_TRUE;
          }
 
-         if( ! s_pGetDiskFreeSpaceEx )
+         if( !s_pGetDiskFreeSpaceEx )
          {
             DWORD dwSectorsPerCluster;
             DWORD dwBytesPerSector;
@@ -160,7 +160,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
 
             ULARGE_INTEGER i64FreeBytesToCaller, i64TotalBytes, i64FreeBytes;
 
-#if ! defined( HB_OS_WIN_64 )
+#if !defined( HB_OS_WIN_64 )
             fResult = s_pGetDiskFreeSpaceEx( lpPath,
                                              static_cast<PULARGE_INTEGER>(&i64FreeBytesToCaller),
                                              static_cast<PULARGE_INTEGER>(&i64TotalBytes),
@@ -268,7 +268,7 @@ HB_FUNC( HB_DISKSPACE )
 #ifdef HB_OS_HAS_DRIVE_LETTER
    char szPathBuf[4];
 
-   if( ! pszPath )
+   if( !pszPath )
    {
       int iDrive = hb_parni(1);
 

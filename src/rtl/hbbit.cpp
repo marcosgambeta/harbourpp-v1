@@ -76,7 +76,7 @@ HB_FUNC( HB_BITAND )
       do
       {
          HB_MAXINT lNext;
-         if( ! hb_numParam( ++i, &lNext ) )
+         if( !hb_numParam( ++i, &lNext ) )
          {
             return;
          }
@@ -97,7 +97,7 @@ HB_FUNC( HB_BITOR )
       do
       {
          HB_MAXINT lNext;
-         if( ! hb_numParam( ++i, &lNext ) )
+         if( !hb_numParam( ++i, &lNext ) )
          {
             return;
          }
@@ -118,7 +118,7 @@ HB_FUNC( HB_BITXOR )
       do
       {
          HB_MAXINT lNext;
-         if( ! hb_numParam( ++i, &lNext ) )
+         if( !hb_numParam( ++i, &lNext ) )
          {
             return;
          }

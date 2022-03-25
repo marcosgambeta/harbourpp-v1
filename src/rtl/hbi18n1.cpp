@@ -534,7 +534,7 @@ static PHB_I18N_TRANS hb_i18n_deserialize( PHB_ITEM pItem )
          if( pTable )
          {
             pI18N = hb_i18n_initialize( pTable );
-            if( ! pI18N )
+            if( !pI18N )
             {
                hb_itemRelease(pTable);
             }
@@ -580,7 +580,7 @@ static PHB_ITEM hb_i18n_newitem( PHB_I18N_TRANS pI18N )
    PHB_I18N_TRANS * pI18NHolder;
    PHB_ITEM pItem = hb_itemNew(nullptr);
 
-   if( ! pI18N )
+   if( !pI18N )
    {
       pI18N = hb_i18n_new();
    }
@@ -818,7 +818,7 @@ static void hb_i18n_addtext( PHB_I18N_TRANS pI18N, PHB_ITEM pMsgID, PHB_ITEM pTr
 {
    PHB_ITEM pTable = pContext ? hb_hashGetItemPtr( pI18N->context_table, pContext, 0 ) : pI18N->default_context;
 
-   if( ! pTable )
+   if( !pTable )
    {
       pTable = hb_hashNew( hb_itemNew(nullptr) );
       hb_hashAdd( pTable, pMsgID, pTrans );
@@ -924,7 +924,7 @@ PHB_ITEM hb_i18n_ngettext( PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext )
    {
       long lIndex;
 
-      if( ! pNum )
+      if( !pNum )
       {
          lIndex = 1;
       }
@@ -1003,7 +1003,7 @@ HB_FUNC( HB_I18N_NGETTEXT )
    PHB_ITEM pMsgID = hb_param(2, HB_IT_STRING | HB_IT_ARRAY);
    PHB_ITEM pContext = hb_param(3, HB_IT_STRING);
 
-   if( ! pNum )
+   if( !pNum )
    {
       pMsgID = nullptr;
    }
@@ -1122,7 +1122,7 @@ HB_FUNC( HB_I18N_ADDTEXT )
             {
                for( HB_SIZE n = 1; n <= nLen; ++n )
                {
-                  if( ! HB_IS_STRING(hb_arrayGetItemPtr(pTrans, n)) )
+                  if( !HB_IS_STRING(hb_arrayGetItemPtr(pTrans, n)) )
                   {
                      pTrans = nullptr;
                      break;

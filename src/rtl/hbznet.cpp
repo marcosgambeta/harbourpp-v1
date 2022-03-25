@@ -231,7 +231,7 @@ long hb_znetRead( PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len,
          }
          pStream->rd.next_in = pStream->inbuf;
 
-         if( ! pStream->crypt || pStream->crypt_in < 8 )
+         if( !pStream->crypt || pStream->crypt_in < 8 )
          {
             if( pStream->rd.avail_out != static_cast<uInt>(len) )
             {
@@ -304,7 +304,7 @@ long hb_znetRead( PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len,
       if( pStream->err == Z_STREAM_END && pStream->rd.avail_in == 0 )
          pStream->err = Z_BUF_ERROR;
  */
-      if( pStream->err != Z_OK && ! ( pStream->err == Z_BUF_ERROR && pStream->rd.avail_in == 0 ) )
+      if( pStream->err != Z_OK && !( pStream->err == Z_BUF_ERROR && pStream->rd.avail_in == 0 ) )
       {
          hb_socketSetError( HB_ZNET_SOCK_ERROR_BASE - pStream->err );
          rec = -1;

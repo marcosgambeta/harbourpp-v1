@@ -74,7 +74,7 @@ static const char * hb_compChkAddDefine(HB_COMP_DECL, const char * szSwitch, HB_
    const char * szSwPtr = szSwitch;
    HB_SIZE nValue = 0;
 
-   while( *szSwPtr && *szSwPtr != ' ' && ! HB_ISOPTSEP(*szSwPtr) )
+   while( *szSwPtr && *szSwPtr != ' ' && !HB_ISOPTSEP(*szSwPtr) )
    {
       if( *szSwPtr == '=' )
       {
@@ -95,7 +95,7 @@ static const char * hb_compChkAddDefine(HB_COMP_DECL, const char * szSwitch, HB_
          szValue = szDefine + nValue;
          *szValue++ = '\0';
       }
-      if( ! fAdd )
+      if( !fAdd )
       {
          szValue = s_szUndefineMarker;
       }
@@ -488,7 +488,7 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, H
 
          case 'K':
             ++szSwPtr;
-            while( *szSwPtr && ! HB_COMP_PARAM->fExit )
+            while( *szSwPtr && !HB_COMP_PARAM->fExit )
             {
                int ch = HB_TOUPPER(*szSwPtr);
 
@@ -879,9 +879,9 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, H
       }
    }
 
-   if( ! HB_COMP_PARAM->fExit )
+   if( !HB_COMP_PARAM->fExit )
    {
-      if( szSwPtr - szSwitch <= 1 || (*szSwPtr != '\0' && *szSwPtr != ' ' && ! HB_ISOPTSEP(*szSwPtr)) )
+      if( szSwPtr - szSwitch <= 1 || (*szSwPtr != '\0' && *szSwPtr != ' ' && !HB_ISOPTSEP(*szSwPtr)) )
       {
          hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'F', fEnv ? HB_COMP_ERR_BADOPTION : HB_COMP_ERR_BADPARAM, szSwitch, nullptr);
       }
@@ -897,7 +897,7 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, H
 /* check command-line parameters */
 void hb_compChkCommandLine(HB_COMP_DECL, int argc, const char * const argv[])
 {
-   for( int i = 1; i < argc && ! HB_COMP_PARAM->fExit; ++i )
+   for( int i = 1; i < argc && !HB_COMP_PARAM->fExit; ++i )
    {
       const char * szSwitch = argv[i];
 
@@ -918,7 +918,7 @@ void hb_compChkEnvironment(HB_COMP_DECL)
    /* NOTE: if HARBOURCMD envvar exists then it's used instead of CLIPPERCMD */
    char * szEnvCMD = hb_getenv("HARBOURCMD");
 
-   if( ! szEnvCMD || szEnvCMD[0] == '\0' )
+   if( !szEnvCMD || szEnvCMD[0] == '\0' )
    {
       if( szEnvCMD )
       {

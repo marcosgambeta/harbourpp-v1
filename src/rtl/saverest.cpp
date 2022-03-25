@@ -68,7 +68,7 @@ static void hb_getScreenRange( int * piMin, int * piMax, HB_BOOL fNoCheck, HB_BO
    {
       iFrom = 0;
    }
-   else if( iFrom > iMax && ! fNoCheck )
+   else if( iFrom > iMax && !fNoCheck )
    {
       iFrom = iMax;
    }
@@ -77,7 +77,7 @@ static void hb_getScreenRange( int * piMin, int * piMax, HB_BOOL fNoCheck, HB_BO
    {
       iTo = 0;
    }
-   else if( iTo > iMax && ! fNoCheck )
+   else if( iTo > iMax && !fNoCheck )
    {
       iTo = iMax;
    }

@@ -167,7 +167,7 @@ static HB_BOOL hb_macroCheckParam( PHB_ITEM pItem )
 
    HB_BOOL bValid = HB_TRUE;
 
-   if( ! HB_IS_STRING(pItem) )
+   if( !HB_IS_STRING(pItem) )
    {
       PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1065, nullptr, "&", 1, pItem );
 
@@ -190,7 +190,7 @@ static HB_ERROR_HANDLE( hb_macroErrorType )
    PHB_MACRO pMacro = static_cast<PHB_MACRO>(ErrorInfo->Cargo);
 
    /* copy error object for later diagnostic usage */
-   if( ! pMacro->pError )
+   if( !pMacro->pError )
    {
       pMacro->pError = hb_itemNew(ErrorInfo->Error);
    }
@@ -797,7 +797,7 @@ char * hb_macroTextSymbol( const char * szString, HB_SIZE nLength, HB_BOOL * pfN
             }
             szResult[nLen] = c - ( 'a' - 'A' );
          }
-         else if( ! ( c == '_' || ( c >= 'A' && c <= 'Z' ) || ( nLen && ( c >= '0' && c <= '9' ) ) ) )
+         else if( !( c == '_' || ( c >= 'A' && c <= 'Z' ) || ( nLen && ( c >= '0' && c <= '9' ) ) ) )
          {
             break;
          }
@@ -855,7 +855,7 @@ PHB_MACRO hb_macroCompile( const char * szString )
    pMacro->length    = strlen(szString);
 
    iStatus = hb_macroParse( pMacro );
-   if( ! ( iStatus == HB_MACRO_OK && ( pMacro->status & HB_MACRO_CONT ) ) )
+   if( !( iStatus == HB_MACRO_OK && ( pMacro->status & HB_MACRO_CONT ) ) )
    {
       hb_macroDelete( pMacro );
       pMacro = nullptr;
@@ -910,7 +910,7 @@ static void hb_macroSetGetBlock( PHB_DYNS pVarSym, PHB_ITEM pItem, int iWorkArea
       bPushPcode = HB_P_MPUSHALIASEDFIELD;
       bPopPcode  = HB_P_MPOPALIASEDFIELD;
    }
-   else if( ! fMemVar )
+   else if( !fMemVar )
    {
       bPushPcode = HB_P_MPUSHFIELD;
       bPopPcode  = HB_P_MPOPFIELD;
@@ -1109,7 +1109,7 @@ void hb_macroPushSymbol( PHB_ITEM pItem )
       }
    }
 
-   if( ! HB_IS_SYMBOL(hb_stackItemFromTop(-1)) && hb_vmRequestQuery() == 0 )
+   if( !HB_IS_SYMBOL(hb_stackItemFromTop(-1)) && hb_vmRequestQuery() == 0 )
    {
       hb_stackPop();    /* remove compiled string */
       hb_vmPushDynSym(hb_dynsymGetCase(""));  /* push compiled symbol instead of a string */
@@ -1334,7 +1334,7 @@ int hb_macroLocalVarGetPos( const char * szVarName, HB_COMP_DECL )
 
    while( pVars )
    {
-      if( pVars->szName && ! strcmp(pVars->szName, szVarName) )
+      if( pVars->szName && !strcmp(pVars->szName, szVarName) )
       {
          return iVar;
       }
@@ -1476,7 +1476,7 @@ static void hb_macroMemvarGenPCode( HB_BYTE bPCode, const char * szVarName, HB_C
        * then we shouldn't create the requested variable if it doesn't exist
        */
       pSym = hb_dynsymFind(szVarName);
-      if( ! pSym )
+      if( !pSym )
       {
          HB_MACRO_DATA->status |= HB_MACRO_UNKN_VAR;
          pSym = hb_dynsymGetCase(szVarName);
@@ -1505,7 +1505,7 @@ void hb_macroGenPushSymbol( const char * szSymbolName, HB_BOOL bFunction, HB_COM
       /* we are determining the type of expression (called from Type() function)
        */
       pSym = hb_dynsymFind(szSymbolName);
-      if( ! pSym )
+      if( !pSym )
       {
          HB_MACRO_DATA->status |= HB_MACRO_UNKN_SYM;
          HB_MACRO_DATA->status &= ~HB_MACRO_CONT;  /* don't run this pcode */
@@ -1605,7 +1605,7 @@ void hb_macroGenMessage( const char * szMsgName, HB_BOOL bIsObject, HB_COMP_DECL
       HB_PUT_PTR( &byBuf[1], pSym );
       hb_macroGenPCodeN(byBuf, sizeof(byBuf), HB_COMP_PARAM);
    }
-   if( ! bIsObject )    /* used in full compiler only */
+   if( !bIsObject )    /* used in full compiler only */
    {
       hb_macroGenPCode3(HB_P_WITHOBJECTMESSAGE, 0xFF, 0xFF, HB_COMP_PARAM);
    }

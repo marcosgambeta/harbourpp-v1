@@ -155,7 +155,7 @@ static void    hb_vmPushDoubleConst( double dNumber, int iWidth, int iDec ); /* 
 static void    hb_vmPushLocal( int iLocal );       /* pushes the content of a local onto the stack */
 static void    hb_vmPushLocalByRef( int iLocal );  /* pushes a local by reference onto the stack */
 static void    hb_vmPushHBLong( HB_MAXINT nNumber ); /* pushes a HB_MAXINT number onto the stack */
-#if ! defined( HB_LONG_LONG_OFF )
+#if !defined( HB_LONG_LONG_OFF )
    static void hb_vmPushLongLongConst( HB_LONGLONG lNumber );  /* Pushes a long long constant (pcode) */
 #endif
 #if HB_VMINT_MAX >= INT32_MAX
@@ -443,7 +443,7 @@ static void hb_vmDoInitHelp( void )
    }
 }
 
-#if ! defined( HB_MT_VM )
+#if !defined( HB_MT_VM )
 
 HB_BOOL hb_vmIsMt( void )
 {
@@ -527,7 +527,7 @@ static void hb_vmRequestTest( void )
       if( hb_vmThreadRequest & HB_THREQUEST_QUIT )
       {
          HB_STACK_TLS_PRELOAD
-         if( ! hb_stackQuitState() )
+         if( !hb_stackQuitState() )
          {
             hb_stackSetQuitState( HB_TRUE );
             hb_stackSetActionRequest( HB_QUIT_REQUESTED );
@@ -565,7 +565,7 @@ void hb_vmUnlock( void )
             {
                if( hb_vmThreadRequest & HB_THREQUEST_QUIT )
                {
-                  if( ! hb_stackQuitState() )
+                  if( !hb_stackQuitState() )
                   {
                      hb_stackSetQuitState( HB_TRUE );
                      hb_stackSetActionRequest( HB_QUIT_REQUESTED );
@@ -597,7 +597,7 @@ void hb_vmLock( void )
             {
                if( hb_vmThreadRequest & HB_THREQUEST_QUIT )
                {
-                  if( ! hb_stackQuitState() )
+                  if( !hb_stackQuitState() )
                   {
                      hb_stackSetQuitState( HB_TRUE );
                      hb_stackSetActionRequest( HB_QUIT_REQUESTED );
@@ -632,7 +632,7 @@ void hb_vmLockForce( void )
             HB_VM_LOCK();
             if( hb_vmThreadRequest & HB_THREQUEST_QUIT )
             {
-               if( ! hb_stackQuitState() )
+               if( !hb_stackQuitState() )
                {
                   hb_stackSetQuitState( HB_TRUE );
                   hb_stackSetActionRequest( HB_QUIT_REQUESTED );
@@ -661,7 +661,7 @@ HB_BOOL hb_vmSuspendThreads( HB_BOOL fWait )
             ++s_iRunningCount;
             return HB_TRUE;
          }
-         if( ! fWait )
+         if( !fWait )
          {
             break;
          }
@@ -769,7 +769,7 @@ HB_BOOL hb_vmThreadIsMain( void * Cargo )
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmThreadIsMain(%p)", Cargo ) );
 #endif
 
-   if( ! s_fHVMActive || s_main_thread == nullptr )
+   if( !s_fHVMActive || s_main_thread == nullptr )
    {
       return HB_FALSE;
    }
@@ -790,7 +790,7 @@ static void hb_vmStackAdd( PHB_THREADSTATE pState )
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmStackAdd(%p)", static_cast<void*>(pState) ) );
 #endif
 
-   if( ! pState->pPrev )
+   if( !pState->pPrev )
    {
       if( s_vmStackLst )
       {
@@ -963,7 +963,7 @@ void hb_vmThreadInit( void * Cargo )
    PHB_THREADSTATE pState;
 
    pState = static_cast<PHB_THREADSTATE>(Cargo);
-   if( ! pState )
+   if( !pState )
    {
       pState = hb_threadStateNew();
    }
@@ -1037,7 +1037,7 @@ void hb_vmThreadQuit( void )
          pReturn = hb_itemUnRef(pReturn);
       }
 
-      if( ! pState->pResult )
+      if( !pState->pResult )
       {
          pState->pResult = hb_itemNew(pReturn);
          hb_gcUnlock( pState->pResult );
@@ -1228,11 +1228,11 @@ void hb_vmInit( HB_BOOL bStartMainProc )
    if( s_pDynsDbgEntry )
    {
       /* Try to get C dbgEntry() function pointer */
-      if( ! s_pFunDbgEntry )
+      if( !s_pFunDbgEntry )
       {
          hb_vmDebugEntry( HB_DBG_GETENTRY, 0, nullptr, 0, nullptr );
       }
-      if( ! s_pFunDbgEntry )
+      if( !s_pFunDbgEntry )
       {
          s_pFunDbgEntry = hb_vmDebugEntry;
       }
@@ -1293,7 +1293,7 @@ void hb_vmInit( HB_BOOL bStartMainProc )
 #else
             pszMain = HB_START_PROCEDURE;
             pDynSym = hb_dynsymFind(pszMain);
-            if( ! ( pDynSym && pDynSym->pSymbol->value.pFunPtr ) )
+            if( !( pDynSym && pDynSym->pSymbol->value.pFunPtr ) )
 #endif
             {
                if( s_vm_pszLinkedMain )
@@ -1317,7 +1317,7 @@ void hb_vmInit( HB_BOOL bStartMainProc )
 #endif
 
 #ifndef HB_CLP_STRICT
-         if( bStartMainProc && ! s_pSymStart )
+         if( bStartMainProc && !s_pSymStart )
          {
             if( pszMain )
             {
@@ -1453,7 +1453,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
    HB_ULONG ulLastOpcode = 0; /* opcodes profiler support */
    HB_ULONG ulPastClock = 0;  /* opcodes profiler support */
 #endif
-#if ! defined( HB_GUI )
+#if !defined( HB_GUI )
    int * piKeyPolls = hb_stackKeyPolls();
 #endif
 
@@ -1478,8 +1478,8 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
       }
 #endif
 
-#if ! defined( HB_GUI )
-      if( ! --( *piKeyPolls ) )
+#if !defined( HB_GUI )
+      if( !--( *piKeyPolls ) )
       {
          hb_inkeyPoll();
          *piKeyPolls = 65536;
@@ -2182,7 +2182,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
             hb_stackDec();
 
             /* restore RETURN value if not overloaded inside ALWAYS code */
-            if( ! ( uiCurrAction & HB_ENDPROC_REQUESTED ) && ( uiPrevAction & HB_ENDPROC_REQUESTED ) )
+            if( !( uiCurrAction & HB_ENDPROC_REQUESTED ) && ( uiPrevAction & HB_ENDPROC_REQUESTED ) )
             {
                hb_stackPopReturn();
             }
@@ -2305,7 +2305,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
             break;
 
          case HB_P_JUMPFALSENEAR:
-            if( ! hb_vmPopLogical() )
+            if( !hb_vmPopLogical() )
             {
                pCode += static_cast<signed char>(pCode[1]);
             }
@@ -2316,7 +2316,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
             break;
 
          case HB_P_JUMPFALSE:
-            if( ! hb_vmPopLogical() )
+            if( !hb_vmPopLogical() )
             {
                pCode += HB_PCODE_MKSHORT(&pCode[1]);
             }
@@ -2327,7 +2327,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
             break;
 
          case HB_P_JUMPFALSEFAR:
-            if( ! hb_vmPopLogical() )
+            if( !hb_vmPopLogical() )
             {
                pCode += HB_PCODE_MKINT24(&pCode[1]);
             }
@@ -2472,7 +2472,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 #if 0
             HB_TRACE( HB_TR_DEBUG, ( "(HB_P_PUSHLONGLONG)" ) );
 #endif
-#if ! defined( HB_LONG_LONG_OFF )
+#if !defined( HB_LONG_LONG_OFF )
             hb_vmPushLongLongConst(HB_PCODE_MKLONGLONG(&pCode[1]));
 #else
             hb_vmPushDoubleConst(HB_PCODE_MKLONGLONG(&pCode[1]), HB_DEFAULT_WIDTH, HB_DEFAULT_DECIMALS);
@@ -3671,7 +3671,7 @@ static void hb_vmPlus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
          hb_itemPutDL(pResult, hb_itemGetNL(pItem1) + hb_itemGetDL(pItem2));
       }
    }
-   else if( ! hb_objOperatorCall( HB_OO_OP_PLUS, pResult, pItem1, pItem2, nullptr ) )
+   else if( !hb_objOperatorCall( HB_OO_OP_PLUS, pResult, pItem1, pItem2, nullptr ) )
    {
       PHB_ITEM pSubst = hb_errRT_BASE_Subst( EG_ARG, 1081, nullptr, "+", 2, pItem1, pItem2 );
 
@@ -3793,7 +3793,7 @@ static void hb_vmMinus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
          hb_errRT_BASE( EG_STROVERFLOW, 1210, nullptr, "-", 2, pItem1, pItem2 );
       }
    }
-   else if( ! hb_objOperatorCall( HB_OO_OP_MINUS, pResult, pItem1, pItem2, nullptr ) )
+   else if( !hb_objOperatorCall( HB_OO_OP_MINUS, pResult, pItem1, pItem2, nullptr ) )
    {
       PHB_ITEM pSubst = hb_errRT_BASE_Subst( EG_ARG, 1082, nullptr, "-", 2, pItem1, pItem2 );
 
@@ -3831,7 +3831,7 @@ static void hb_vmMult( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
 
       hb_itemPutNumType(pResult, dNumber1 * dNumber2, iDec1 + iDec2, HB_ITEM_TYPERAW( pItem1 ), HB_ITEM_TYPERAW( pItem2 ));
    }
-   else if( ! hb_objOperatorCall( HB_OO_OP_MULT, pResult, pItem1, pItem2, nullptr ) )
+   else if( !hb_objOperatorCall( HB_OO_OP_MULT, pResult, pItem1, pItem2, nullptr ) )
    {
       PHB_ITEM pSubst = hb_errRT_BASE_Subst( EG_ARG, 1083, nullptr, "*", 2, pItem1, pItem2 );
 
@@ -3895,7 +3895,7 @@ static void hb_vmDivide( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
          hb_itemPutND(pResult, hb_itemGetND(pItem1) / dDivisor);
       }
    }
-   else if( ! hb_objOperatorCall( HB_OO_OP_DIVIDE, pResult, pItem1, pItem2, nullptr ) )
+   else if( !hb_objOperatorCall( HB_OO_OP_DIVIDE, pResult, pItem1, pItem2, nullptr ) )
    {
       PHB_ITEM pSubst = hb_errRT_BASE_Subst( EG_ARG, 1084, nullptr, "/", 2, pItem1, pItem2 );
 
@@ -3953,7 +3953,7 @@ static void hb_vmModulus( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
          hb_itemPutND(pResult, fmod( hb_itemGetND(pItem1), dDivisor ));
       }
    }
-   else if( ! hb_objOperatorCall( HB_OO_OP_MOD, pResult, pItem1, pItem2, nullptr ) )
+   else if( !hb_objOperatorCall( HB_OO_OP_MOD, pResult, pItem1, pItem2, nullptr ) )
    {
       PHB_ITEM pSubst = hb_errRT_BASE_Subst( EG_ARG, 1085, nullptr, "%", 2, pItem1, pItem2 );
 
@@ -3976,7 +3976,7 @@ static void hb_vmPower( PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2 )
       /* NOTE: Clipper always returns the result of power with the SET number of decimal places. */
       hb_itemPutND(pResult, pow( hb_itemGetND(pItem1), hb_itemGetND(pItem2) ));
    }
-   else if( ! hb_objOperatorCall( HB_OO_OP_POWER, pResult, pItem1, pItem2, nullptr ) )
+   else if( !hb_objOperatorCall( HB_OO_OP_POWER, pResult, pItem1, pItem2, nullptr ) )
    {
       PHB_ITEM pSubst = hb_errRT_BASE_Subst( EG_ARG, 1088, nullptr, "^", 2, pItem1, pItem2 );
 
@@ -4043,7 +4043,7 @@ static void hb_vmInc( PHB_ITEM pItem )
       pItem->type &= ~HB_IT_DEFAULT;
       pItem->item.asDateTime.julian++;
    }
-   else if( ! hb_objOperatorCall( HB_OO_OP_INC, pItem, pItem, nullptr, nullptr ) )
+   else if( !hb_objOperatorCall( HB_OO_OP_INC, pItem, pItem, nullptr, nullptr ) )
    {
       PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1086, nullptr, "++", 1, pItem );
 
@@ -4110,7 +4110,7 @@ static void hb_vmDec( PHB_ITEM pItem )
       pItem->type &= ~HB_IT_DEFAULT;
       pItem->item.asDateTime.julian--;
    }
-   else if( ! hb_objOperatorCall( HB_OO_OP_DEC, pItem, pItem, nullptr, nullptr ) )
+   else if( !hb_objOperatorCall( HB_OO_OP_DEC, pItem, pItem, nullptr, nullptr ) )
    {
       PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1087, nullptr, "--", 1, pItem );
 
@@ -4212,7 +4212,7 @@ static void hb_vmExactlyEqual( void )
    }
    else if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) )
    {
-      pItem1->item.asLogical.value = pItem1->item.asLogical.value ? pItem2->item.asLogical.value : ! pItem2->item.asLogical.value;
+      pItem1->item.asLogical.value = pItem1->item.asLogical.value ? pItem2->item.asLogical.value : !pItem2->item.asLogical.value;
       hb_stackDec();
    }
    else if( HB_IS_POINTER(pItem1) && HB_IS_POINTER(pItem2) )
@@ -4252,7 +4252,7 @@ static void hb_vmExactlyEqual( void )
       pItem1->type = HB_IT_LOGICAL;
       hb_stackDec();
    }
-   else if( HB_IS_ARRAY(pItem1) && HB_IS_ARRAY(pItem2) && ! hb_objHasOperator( pItem1, HB_OO_OP_EXACTEQUAL ) )
+   else if( HB_IS_ARRAY(pItem1) && HB_IS_ARRAY(pItem2) && !hb_objHasOperator( pItem1, HB_OO_OP_EXACTEQUAL ) )
    {
       HB_BOOL fResult = pItem1->item.asArray.value == pItem2->item.asArray.value;
 
@@ -4343,7 +4343,7 @@ static void hb_vmEqual( void )
    }
    else if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) )
    {
-      pItem1->item.asLogical.value = pItem1->item.asLogical.value ? pItem2->item.asLogical.value : ! pItem2->item.asLogical.value;
+      pItem1->item.asLogical.value = pItem1->item.asLogical.value ? pItem2->item.asLogical.value : !pItem2->item.asLogical.value;
       hb_stackDec();
    }
    else if( HB_IS_POINTER(pItem1) && HB_IS_POINTER(pItem2) )
@@ -4397,7 +4397,7 @@ static void hb_vmNotEqual( void )
    {
       /* pItem1 is NIL so this is safe */
       pItem1->type = HB_IT_LOGICAL;
-      pItem1->item.asLogical.value = ! HB_IS_NIL(pItem2);
+      pItem1->item.asLogical.value = !HB_IS_NIL(pItem2);
       hb_stackPop();    /* clear the pItem2 */
    }
    else if( HB_IS_NIL(pItem2) )
@@ -4446,7 +4446,7 @@ static void hb_vmNotEqual( void )
    }
    else if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) )
    {
-      pItem1->item.asLogical.value = pItem1->item.asLogical.value ? ! pItem2->item.asLogical.value : pItem2->item.asLogical.value;
+      pItem1->item.asLogical.value = pItem1->item.asLogical.value ? !pItem2->item.asLogical.value : pItem2->item.asLogical.value;
       hb_stackDec();
    }
    else if( HB_IS_POINTER(pItem1) && HB_IS_POINTER(pItem2) )
@@ -4534,7 +4534,7 @@ static void hb_vmLess( void )
    }
    else if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) )
    {
-      pItem1->item.asLogical.value = ! pItem1->item.asLogical.value && pItem2->item.asLogical.value;
+      pItem1->item.asLogical.value = !pItem1->item.asLogical.value && pItem2->item.asLogical.value;
       hb_stackDec();
    }
    else if( hb_objOperatorCall( HB_OO_OP_LESS, pItem1, pItem1, pItem2, nullptr ) )
@@ -4604,7 +4604,7 @@ static void hb_vmLessEqual( void )
    }
    else if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) )
    {
-      pItem1->item.asLogical.value = ! pItem1->item.asLogical.value || pItem2->item.asLogical.value;
+      pItem1->item.asLogical.value = !pItem1->item.asLogical.value || pItem2->item.asLogical.value;
       hb_stackDec();
    }
    else if( hb_objOperatorCall( HB_OO_OP_LESSEQUAL, pItem1, pItem1, pItem2, nullptr ) )
@@ -4674,7 +4674,7 @@ static void hb_vmGreater( void )
    }
    else if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) )
    {
-      pItem1->item.asLogical.value = pItem1->item.asLogical.value && ! pItem2->item.asLogical.value;
+      pItem1->item.asLogical.value = pItem1->item.asLogical.value && !pItem2->item.asLogical.value;
       hb_stackDec();
    }
    else if( hb_objOperatorCall( HB_OO_OP_GREATER, pItem1, pItem1, pItem2, nullptr ) )
@@ -4744,7 +4744,7 @@ static void hb_vmGreaterEqual( void )
    }
    else if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) )
    {
-      pItem1->item.asLogical.value = pItem1->item.asLogical.value || ! pItem2->item.asLogical.value;
+      pItem1->item.asLogical.value = pItem1->item.asLogical.value || !pItem2->item.asLogical.value;
       hb_stackDec();
    }
    else if( hb_objOperatorCall( HB_OO_OP_GREATEREQUAL, pItem1, pItem1, pItem2, nullptr ) )
@@ -5115,7 +5115,7 @@ static void hb_vmEnumStart( int nVars, int nDescend )
          hb_vmPushLogical(nDescend == 0);
          hb_objOperatorCall( HB_OO_OP_ENUMSTART, hb_stackItemFromTop(-2), pBase, pEnumRef, hb_stackItemFromTop(-1) );
          hb_stackPop();
-         if( hb_vmRequestQuery() != 0 || ! hb_vmPopLogical() )
+         if( hb_vmRequestQuery() != 0 || !hb_vmPopLogical() )
          {
             fStart = HB_FALSE;
             break;
@@ -5203,7 +5203,7 @@ static void hb_vmEnumNext( void )
             hb_vmPushLogical(HB_FALSE);
             hb_objOperatorCall( HB_OO_OP_ENUMSKIP, hb_stackItemFromTop(-2), pBase, pEnumRef, hb_stackItemFromTop(-1) );
             hb_stackPop();
-            if( hb_vmRequestQuery() != 0 || ! hb_vmPopLogical() )
+            if( hb_vmRequestQuery() != 0 || !hb_vmPopLogical() )
             {
                break;
             }
@@ -5287,7 +5287,7 @@ static void hb_vmEnumPrev( void )
             hb_vmPushLogical(HB_TRUE);
             hb_objOperatorCall( HB_OO_OP_ENUMSKIP, hb_stackItemFromTop(-2), pBase, pEnumRef, hb_stackItemFromTop(-1) );
             hb_stackPop();
-            if( hb_vmRequestQuery() != 0 || ! hb_vmPopLogical() )
+            if( hb_vmRequestQuery() != 0 || !hb_vmPopLogical() )
             {
                break;
             }
@@ -5367,11 +5367,11 @@ static PHB_ITEM hb_vmSwitchGet( void )
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pSwitch = hb_stackItemFromTop(-1);
 
-   if( ! ( HB_IS_NUMINT(pSwitch) || HB_IS_STRING(pSwitch) ) )
+   if( !( HB_IS_NUMINT(pSwitch) || HB_IS_STRING(pSwitch) ) )
    {
       PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 3104, nullptr, "SWITCH", 1, pSwitch );
 
-      if( ! pResult )
+      if( !pResult )
       {
          return nullptr;
       }
@@ -5392,7 +5392,7 @@ static const HB_BYTE * hb_vmSwitch( const HB_BYTE * pCode, HB_USHORT casesCnt )
    {
       HB_BOOL fFound = HB_FALSE;
 
-      while( ! fFound && casesCnt-- )
+      while( !fFound && casesCnt-- )
       {
          switch( pCode[0] )
          {
@@ -5480,9 +5480,9 @@ static void hb_vmNot( void )
    if( HB_IS_LOGICAL(pItem) )
    {
       pItem->type = HB_IT_LOGICAL;
-      pItem->item.asLogical.value = ! pItem->item.asLogical.value;
+      pItem->item.asLogical.value = !pItem->item.asLogical.value;
    }
-   else if( ! hb_objOperatorCall( HB_OO_OP_NOT, pItem, pItem, nullptr, nullptr ) )
+   else if( !hb_objOperatorCall( HB_OO_OP_NOT, pItem, pItem, nullptr, nullptr ) )
    {
       PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1077, nullptr, ".NOT.", 1, pItem );
 
@@ -5650,7 +5650,7 @@ static void hb_vmArrayPush( void )
          hb_itemMove(pArray, pIndex);
          hb_stackDec();
       }
-      else if( ! HB_IS_OBJECT(pArray) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, pIndex, nullptr ) )
+      else if( !HB_IS_OBJECT(pArray) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, pIndex, nullptr ) )
       {
          hb_stackPop();
       }
@@ -5759,7 +5759,7 @@ static void hb_vmArrayPushRef( void )
          hb_arrayGetItemRef(pArray, nIndex, pRefer);
          hb_stackDec();
       }
-      else if( ! HB_IS_OBJECT(pArray) && hb_objHasOperator( pArray, HB_OO_OP_ARRAYINDEX ) )
+      else if( !HB_IS_OBJECT(pArray) && hb_objHasOperator( pArray, HB_OO_OP_ARRAYINDEX ) )
       {
          /* create extended object index reference */
          hb_vmMsgIndexReference( pRefer, pArray, pIndex );
@@ -5877,7 +5877,7 @@ static void hb_vmArrayPop( void )
          hb_stackPop();
          hb_stackDec();    /* value was moved above hb_stackDec() is enough */
       }
-      else if( ! HB_IS_OBJECT(pArray) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, pIndex, pValue ) )
+      else if( !HB_IS_OBJECT(pArray) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, pIndex, pValue ) )
       {
          hb_stackPop();
          hb_stackPop();
@@ -5982,7 +5982,7 @@ static HB_BOOL hb_vmArrayNew( PHB_ITEM pArray, HB_USHORT uiDimension )
          /* call self recursively to create next dimensions */
          while( nElements-- )
          {
-            if( ! hb_vmArrayNew( pArray->item.asArray.value->pItems + nElements, uiDimension ) )
+            if( !hb_vmArrayNew( pArray->item.asArray.value->pItems + nElements, uiDimension ) )
             {
                return HB_FALSE;
             }
@@ -6439,7 +6439,7 @@ void hb_vmProc( HB_USHORT uiParams )
 
    /* Poll the console keyboard */
 #if 0
-   #if ! defined( HB_GUI )
+   #if !defined( HB_GUI )
       hb_inkeyPoll();
    #endif
 #endif
@@ -6513,7 +6513,7 @@ void hb_vmDo( HB_USHORT uiParams )
 
    /* Poll the console keyboard */
 #if 0
-   #if ! defined( HB_GUI )
+   #if !defined( HB_GUI )
       hb_inkeyPoll();
    #endif
 #endif
@@ -6521,7 +6521,7 @@ void hb_vmDo( HB_USHORT uiParams )
    pSym = hb_stackNewFrame( &sStackState, uiParams )->item.asSymbol.value;
    pSelf = hb_stackSelfItem();   /* NIL, OBJECT or BLOCK */
 
-   if( ! HB_IS_NIL(pSelf) )  /* are we sending a message ? */
+   if( !HB_IS_NIL(pSelf) )  /* are we sending a message ? */
    {
       PHB_SYMB pExecSym;
 
@@ -6624,7 +6624,7 @@ void hb_vmSend( HB_USHORT uiParams )
 
    /* Poll the console keyboard */
 #if 0
-   #if ! defined( HB_GUI )
+   #if !defined( HB_GUI )
       hb_inkeyPoll();
    #endif
 #endif
@@ -6683,7 +6683,7 @@ static void hb_vmPushObjectVarRef( void )
    pItem = hb_stackNewFrame( &sStackState, 0 );   /* procedure name */
    pSym = pItem->item.asSymbol.value;
 
-   if( ! hb_objGetVarRef( hb_stackSelfItem(), pSym, &sStackState ) && hb_vmRequestQuery() == 0 )
+   if( !hb_objGetVarRef( hb_stackSelfItem(), pSym, &sStackState ) && hb_vmRequestQuery() == 0 )
    {
       hb_errRT_BASE_SubstR( EG_NOVARMETHOD, 1005, nullptr, pSym->szName + ( pSym->szName[0] == '_' ? 1 : 0 ), 1, hb_stackSelfItem() );
    }
@@ -6747,7 +6747,7 @@ static HARBOUR hb_vmDoBlock( void )
    int iParam;
 
    pBlock = hb_stackSelfItem();
-   if( ! HB_IS_BLOCK(pBlock) )
+   if( !HB_IS_BLOCK(pBlock) )
    {
       hb_errInternal(HB_EI_VMNOTCBLOCK, nullptr, "hb_vmDoBlock()", nullptr);
    }
@@ -7175,7 +7175,7 @@ static PHB_ITEM hb_vmTSVRefRead( PHB_ITEM pRefer )
    PHB_TSVREF pTSVRef = static_cast<PHB_TSVREF>(pRefer->item.asExtRef.value);
    PHB_ITEM pItem = static_cast<PHB_ITEM>(hb_stackTestTSD( &pTSVRef->threadData ));
 
-   if( ! pItem )
+   if( !pItem )
    {
       pItem = static_cast<PHB_ITEM>(hb_stackGetTSD(&pTSVRef->threadData));
       hb_itemCloneTo(pItem, &pTSVRef->source);
@@ -7479,7 +7479,7 @@ static void hb_vmPushHBLong( HB_MAXINT nNumber )
    pItem->item.asLong.length = HB_LONG_LENGTH( nNumber );
 }
 
-#if ! defined( HB_LONG_LONG_OFF )
+#if !defined( HB_LONG_LONG_OFF )
 static void hb_vmPushLongLongConst( HB_LONGLONG llNumber )
 {
 #if 0
@@ -7920,7 +7920,7 @@ static void hb_vmPushLocalByRef( int iLocal )
    if( iLocal >= 0 )
    {
       PHB_ITEM pLocal = hb_stackLocalVariableAt( &iLocal );
-      if( HB_IS_BYREF(pLocal) && ! HB_IS_ENUM(pLocal) )
+      if( HB_IS_BYREF(pLocal) && !HB_IS_ENUM(pLocal) )
       {
          hb_itemCopy(pTop, pLocal);
          return;
@@ -7965,7 +7965,7 @@ static void hb_vmPushStaticByRef( HB_USHORT uiStatic )
    pTop = hb_stackAllocItem();
    pBase = static_cast<PHB_ITEM>(hb_stackGetStaticsBase());
 
-   if( HB_IS_BYREF(pBase->item.asArray.value->pItems + uiStatic - 1) && ! HB_IS_ENUM(pBase->item.asArray.value->pItems + uiStatic - 1) )
+   if( HB_IS_BYREF(pBase->item.asArray.value->pItems + uiStatic - 1) && !HB_IS_ENUM(pBase->item.asArray.value->pItems + uiStatic - 1) )
    {
       hb_itemCopy(pTop, pBase->item.asArray.value->pItems + uiStatic - 1);
       return;
@@ -8243,7 +8243,7 @@ static void hb_vmPopStatic( HB_USHORT uiStatic )
 
 PHB_SYMB hb_vmGetRealFuncSym( PHB_SYMB pSym )
 {
-   if( pSym && ! ( pSym->scope.value & HB_FS_LOCAL ) )
+   if( pSym && !( pSym->scope.value & HB_FS_LOCAL ) )
    {
       pSym = pSym->pDynSym && ( pSym->pDynSym->pSymbol->scope.value & HB_FS_LOCAL ) ? pSym->pDynSym->pSymbol : nullptr;
    }
@@ -8254,7 +8254,7 @@ PHB_SYMB hb_vmGetRealFuncSym( PHB_SYMB pSym )
 HB_BOOL hb_vmLockModuleSymbols( void )
 {
 #if defined( HB_MT_VM )
-   return ! s_pSymbolsMtx || hb_threadMutexLock( s_pSymbolsMtx );
+   return !s_pSymbolsMtx || hb_threadMutexLock( s_pSymbolsMtx );
 #else
    return HB_TRUE;
 #endif /* HB_MT_VM */
@@ -8340,7 +8340,7 @@ PHB_SYMB hb_vmFindFuncSym( const char * szFuncName, void * hDynLib )
                   {
                      return pSymbol;
                   }
-                  else if( ! pFuncSym )
+                  else if( !pFuncSym )
                   {
                      pFuncSym = pSymbol;
                   }
@@ -8479,7 +8479,7 @@ static PHB_SYMBOLS hb_vmFindFreeModule( PHB_SYMB pSymbols, HB_USHORT uiSymbols, 
 
       while( pLastSymbols )
       {
-         if( ! pLastSymbols->fActive &&
+         if( !pLastSymbols->fActive &&
              pLastSymbols->ulID == ulID &&
              pLastSymbols->uiModuleSymbols == uiSymbols &&
              pLastSymbols->szModuleName != nullptr &&
@@ -8492,7 +8492,7 @@ static PHB_SYMBOLS hb_vmFindFreeModule( PHB_SYMB pSymbols, HB_USHORT uiSymbols, 
             {
                if( ( ( pSymbols[ui].scope.value & ~( HB_FS_PCODEFUNC | HB_FS_DYNCODE | HB_FS_DEFERRED ) ) !=
                      ( pModuleSymbols[ui].scope.value & ~HB_FS_DEFERRED ) &&
-                     ! ( ui != 0 && ui == pLastSymbols->uiStaticsOffset &&
+                     !( ui != 0 && ui == pLastSymbols->uiStaticsOffset &&
                          HB_SYM_STATICSBASE( &pModuleSymbols[ui] ) ) ) ||
                    strcmp(pSymbols[ui].szName, pModuleSymbols[ui].szName) != 0 )
                {
@@ -8527,7 +8527,7 @@ void hb_vmFreeSymbols( PHB_SYMBOLS pSymbols )
             PHB_SYMB pSymbol = &pSymbols->pModuleSymbols[ui];
 
             /* do not overwrite already initialized statics' frame */
-            if( ui == 0 || ui != pSymbols->uiStaticsOffset || ! HB_SYM_STATICSBASE( pSymbol ) )
+            if( ui == 0 || ui != pSymbols->uiStaticsOffset || !HB_SYM_STATICSBASE( pSymbol ) )
             {
                pSymbol->value.pFunPtr = nullptr;
                if( pSymbol->pDynSym && pSymbol->pDynSym->pSymbol != pSymbol && ( pSymbol->scope.value & HB_FS_LOCAL ) == 0 )
@@ -8584,7 +8584,7 @@ void hb_vmInitSymbolGroup( void * hNewDynLib, int argc, const char * argv[] )
                {
                   HB_SYMBOLSCOPE scope = ( pLastSymbols->pModuleSymbols + ui )->scope.value & HB_FS_INITEXIT;
 
-                  if( scope == HB_FS_INITEXIT && ! ( ui != 0 && ui == pLastSymbols->uiStaticsOffset && HB_SYM_STATICSBASE( pLastSymbols->pModuleSymbols + ui ) ) )
+                  if( scope == HB_FS_INITEXIT && !( ui != 0 && ui == pLastSymbols->uiStaticsOffset && HB_SYM_STATICSBASE( pLastSymbols->pModuleSymbols + ui ) ) )
                   {
                      hb_vmPushSymbol(pLastSymbols->pModuleSymbols + ui);
                      hb_vmPushNil();
@@ -8627,7 +8627,7 @@ void hb_vmInitSymbolGroup( void * hNewDynLib, int argc, const char * argv[] )
 
                         if( scope == HB_FS_INIT &&
                             ( strcmp(( pLastSymbols->pModuleSymbols + ui )->szName,
-                                      "CLIPINIT$") == 0 ? fClipInit : ! fClipInit ) )
+                                      "CLIPINIT$") == 0 ? fClipInit : !fClipInit ) )
                         {
                            hb_vmPushSymbol(pLastSymbols->pModuleSymbols + ui);
                            hb_vmPushNil();
@@ -8646,9 +8646,9 @@ void hb_vmInitSymbolGroup( void * hNewDynLib, int argc, const char * argv[] )
                }
                pLastSymbols = pLastSymbols->pNext;
             }
-            fClipInit = ! fClipInit;
+            fClipInit = !fClipInit;
          }
-         while( ! fClipInit );
+         while( !fClipInit );
       }
    }
 }
@@ -8788,7 +8788,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols( PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, 
                  ( fRecycled && ui != 0 && ui == pNewSymbols->uiStaticsOffset &&
                    HB_SYM_STATICSBASE( pSymbol ) );
 
-      if( fRecycled && ! fStatics )
+      if( fRecycled && !fStatics )
       {
          pSymbol->value.pFunPtr = ( pModuleSymbols + ui )->value.pFunPtr;
          pSymbol->scope.value = ( pModuleSymbols + ui )->scope.value;
@@ -8806,7 +8806,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols( PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, 
       fPublic = ( hSymScope & ( HB_FS_INITEXIT | HB_FS_STATIC | HB_FS_FRAME ) ) == 0;
       if( fStatics )
       {
-         if( ! fRecycled && strncmp(pSymbol->szName, "(_INITSTATICS", 13) == 0 )
+         if( !fRecycled && strncmp(pSymbol->szName, "(_INITSTATICS", 13) == 0 )
          {
             pNewSymbols->uiStaticsOffset = ui;
          }
@@ -8819,7 +8819,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols( PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, 
          pSymbol->value.pCodeFunc->pSymbols = pNewSymbols->pModuleSymbols;
       }
 
-      if( ! s_pSymStart && ! fDynLib && ! fStatics &&
+      if( !s_pSymStart && !fDynLib && !fStatics &&
           ( hSymScope & HB_FS_FIRST ) != 0 &&
           ( hSymScope & HB_FS_INITEXIT ) == 0 )
       {
@@ -8878,7 +8878,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols( PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, 
       }
    }
 
-   if( ! fRecycled )
+   if( !fRecycled )
    {
       pNewSymbols->fInitStatics = fInitStatics;
    }
@@ -9039,7 +9039,7 @@ static void hb_vmDoInitFunctions( HB_BOOL fClipInit )
          {
             HB_SYMBOLSCOPE scope = ( pLastSymbols->pModuleSymbols + ui )->scope.value & HB_FS_INITEXIT;
 
-            if( scope == HB_FS_INIT && ( strcmp(( pLastSymbols->pModuleSymbols + ui )->szName, "CLIPINIT$") == 0 ? fClipInit : ! fClipInit ) )
+            if( scope == HB_FS_INIT && ( strcmp(( pLastSymbols->pModuleSymbols + ui )->szName, "CLIPINIT$") == 0 ? fClipInit : !fClipInit ) )
             {
                hb_vmPushSymbol(pLastSymbols->pModuleSymbols + ui);
                hb_vmPushNil();
@@ -9164,9 +9164,9 @@ static void hb_vmItemRefClear( void * value )
    PHB_ITMREF pItmRef = static_cast<PHB_ITMREF>(value);
 
 #if 1
-   if( ! HB_IS_MEMVAR(&pItmRef->memvar) ||
+   if( !HB_IS_MEMVAR(&pItmRef->memvar) ||
        pItmRef->memvar.item.asMemvar.value != pItmRef->value ||
-       ! HB_IS_EXTREF(pItmRef->value) ||
+       !HB_IS_EXTREF(pItmRef->value) ||
        pItmRef->value->item.asExtRef.func != &s_ItmExtRawRef )
    {
       hb_errInternal(HB_EI_ERRUNRECOV, "hb_vmItemRefClear()", nullptr, nullptr);
@@ -9273,7 +9273,7 @@ static PHB_ITEM hb_vmMsgRefRead( PHB_ITEM pRefer )
       }
       else
       {
-         if( ! pMsgRef->access )
+         if( !pMsgRef->access )
          {
             pMsgRef->access = hb_dynsymGetCase(pMsgRef->assign->pSymbol->szName + 1);
          }
@@ -9596,7 +9596,7 @@ void hb_vmRequestQuit( void )
    /* In MT mode EXIT functions are executed only from hb_vmQuit()
     * when all other threads have terminated
     */
-#if ! defined( HB_MT_VM )
+#if !defined( HB_MT_VM )
    hb_vmDoExitFunctions(); /* process defined EXIT functions */
 #endif /* HB_MT_VM */
    hb_stackSetActionRequest( HB_QUIT_REQUESTED );
@@ -9718,7 +9718,7 @@ HB_USHORT hb_vmRequestQuery( void )
 #if defined( HB_MT_VM )
    if( hb_vmThreadRequest & HB_THREQUEST_QUIT )
    {
-      if( ! hb_stackQuitState() )
+      if( !hb_stackQuitState() )
       {
          hb_stackSetQuitState( HB_TRUE );
          hb_stackSetActionRequest( HB_QUIT_REQUESTED );
@@ -10102,7 +10102,7 @@ void hb_xvmEndProc( void )
 {
    HB_STACK_TLS_PRELOAD
 
-   if( ! ( hb_stackGetActionRequest() & ( HB_QUIT_REQUESTED | HB_BREAK_REQUESTED ) ) )
+   if( !( hb_stackGetActionRequest() & ( HB_QUIT_REQUESTED | HB_BREAK_REQUESTED ) ) )
    {
       hb_stackSetActionRequest( HB_ENDPROC_REQUESTED );
    }
@@ -10366,7 +10366,7 @@ HB_BOOL hb_xvmAlwaysEnd( void )
    /* remove the ALWAYS envelope */
    hb_stackDec();
    /* restore RETURN value if not overloaded inside ALWAYS code */
-   if( ! ( uiCurrAction & HB_ENDPROC_REQUESTED ) && ( uiPrevAction & HB_ENDPROC_REQUESTED ) )
+   if( !( uiCurrAction & HB_ENDPROC_REQUESTED ) && ( uiPrevAction & HB_ENDPROC_REQUESTED ) )
    {
       hb_stackPopReturn();
    }
@@ -12685,7 +12685,7 @@ static void hb_vmArrayItemPush( HB_SIZE nIndex )
       else
       {
          hb_vmPushNumInt(nIndex);
-         if( ! HB_IS_OBJECT(pArray) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, hb_stackItemFromTop(-1), nullptr ) )
+         if( !HB_IS_OBJECT(pArray) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, hb_stackItemFromTop(-1), nullptr ) )
          {
             hb_stackPop();
          }
@@ -12776,7 +12776,7 @@ static void hb_vmArrayItemPop( HB_SIZE nIndex )
       else
       {
          hb_vmPushNumInt(nIndex);
-         if( ! HB_IS_OBJECT(pArray) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, hb_stackItemFromTop(-1), pValue ) )
+         if( !HB_IS_OBJECT(pArray) && hb_objOperatorCall( HB_OO_OP_ARRAYINDEX, pArray, pArray, hb_stackItemFromTop(-1), pValue ) )
          {
             hb_stackPop();
             hb_stackPop();
@@ -13608,7 +13608,7 @@ HB_FUNC( __QUITCANCEL )
    HB_STACK_TLS_PRELOAD
 
 #if defined( HB_MT_VM )
-   if( ! hb_stackQuitState() )
+   if( !hb_stackQuitState() )
 #endif
    {
       HB_ISIZ nRecoverBase = hb_stackGetRecoverBase();
@@ -13808,7 +13808,7 @@ HB_LANG_REQUEST( HB_LANG_DEFAULT )
 
 #undef HB_FORCE_LINK_MAIN
 
-#if ! defined( HB_DYNLIB ) && defined( HB_OS_WIN ) && ( defined( __MINGW32__ ) )
+#if !defined( HB_DYNLIB ) && defined( HB_OS_WIN ) && ( defined( __MINGW32__ ) )
 
 #  define HB_FORCE_LINK_MAIN  hb_forceLinkMainWin
 

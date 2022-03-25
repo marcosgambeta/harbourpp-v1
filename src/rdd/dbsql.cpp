@@ -281,7 +281,7 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
    {
       if( pWhile )
       {
-         if( SELF_EVALBLOCK( pArea, pWhile ) != HB_SUCCESS || ! hb_itemGetL(pArea->valResult) )
+         if( SELF_EVALBLOCK( pArea, pWhile ) != HB_SUCCESS || !hb_itemGetL(pArea->valResult) )
          {
             break;
          }
@@ -299,7 +299,7 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
             break;
          }
       }
-      if( ! pFor || hb_itemGetL(pArea->valResult) )
+      if( !pFor || hb_itemGetL(pArea->valResult) )
       {
          ++ulRecords;
 
@@ -411,7 +411,7 @@ HB_FUNC( __DBSQL )
       HB_ERRCODE errCode;
       PHB_FILE pFile;
 
-      if( ! szFileName )
+      if( !szFileName )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       }
@@ -430,7 +430,7 @@ HB_FUNC( __DBSQL )
                                     nullptr, pError );
             if( pFile == nullptr )
             {
-               if( ! pError )
+               if( !pError )
                {
                   pError = hb_errNew();
                   hb_errPutSeverity( pError, ES_ERROR );
@@ -481,7 +481,7 @@ HB_FUNC( __DBSQL )
             {
                llNext = hb_itemGetNInt(pNext);
             }
-            else if( ! fRest )
+            else if( !fRest )
             {
                errCode = SELF_GOTOP( pArea );
             }

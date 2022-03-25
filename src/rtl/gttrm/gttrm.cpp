@@ -707,7 +707,7 @@ static int add_efds( PHB_GTTRM pTerm, int fd, int mode, int ( * eventFunc )( int
    }
 #endif
 
-   for( int i = 0; i < pTerm->efds_no && ! pefd; i++ )
+   for( int i = 0; i < pTerm->efds_no && !pefd; i++ )
    {
       if( pTerm->event_fds[i]->fd == fd )
       {
@@ -1399,7 +1399,7 @@ again:
                      pTerm->key_flag |= KEY_CTRLMASK;
                      break;
                   case K_NATIONAL:
-                     pTerm->nation_mode = ! pTerm->nation_mode;
+                     pTerm->nation_mode = !pTerm->nation_mode;
                      break;
                   case K_MOUSETERM:
                      pTerm->nTermMouseChars = 3;
@@ -1500,7 +1500,7 @@ again:
       }
 
 #ifdef HB_GT_UNICODE_BUF
-      if( ! pTerm->fUTF8 )
+      if( !pTerm->fUTF8 )
       {
          if( nKey != 0 )
          {
@@ -1524,7 +1524,7 @@ again:
                {
                   break;
                }
-               if( ! hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>(ch), &n, &wc ) )
+               if( !hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>(ch), &n, &wc ) )
                {
                   n = -1;
                }
@@ -1550,7 +1550,7 @@ again:
                {
                   break;
                }
-               if( ! hb_cdpGetFromUTF8( pTerm->cdpIn, ch, &n, &uc ) )
+               if( !hb_cdpGetFromUTF8( pTerm->cdpIn, ch, &n, &uc ) )
                {
                   n = -1;
                }
@@ -1769,7 +1769,7 @@ static void hb_gt_trm_XtermSetAttributes( PHB_GTTRM pTerm, int iAttr )
       buff[0] = 0x1b;
       buff[1] = '[';
 
-      acsc  = ( iAttr & HB_GTTRM_ATTR_ACSC ) && ! pTerm->fUTF8 ? 1 : 0;
+      acsc  = ( iAttr & HB_GTTRM_ATTR_ACSC ) && !pTerm->fUTF8 ? 1 : 0;
       if( pTerm->iExtColor == HB_GTTRM_CLRSTD )
       {
          bg    = s_AnsiColors[( iAttr >> 4 ) & 0x07];
@@ -1912,7 +1912,7 @@ static void hb_gt_trm_XtermSetAttributes( PHB_GTTRM pTerm, int iAttr )
          }
          if( pTerm->iBlink != blink )
          {
-            if( ! blink )
+            if( !blink )
             {
                buff[i++] = '2';
             }
@@ -2383,7 +2383,7 @@ static void hb_gt_trm_AnsiSetAttributes( PHB_GTTRM pTerm, int iAttr )
          }
          if( pTerm->iBlink != blink )
          {
-            if( ! blink )
+            if( !blink )
             {
                buff[i++] = '2';
             }
@@ -2688,7 +2688,7 @@ static void hb_gt_trm_SetDispTrans( PHB_GTTRM pTerm, int box )
    for( i = 0; i < 256; i++ )
    {
       int ch = pTerm->charmap[i] & 0xffff;
-      int mode = ! pTerm->fUTF8 ? ( pTerm->charmap[i] >> 16 ) & 0xff : 1;
+      int mode = !pTerm->fUTF8 ? ( pTerm->charmap[i] >> 16 ) & 0xff : 1;
 
       switch( mode )
       {
@@ -2793,7 +2793,7 @@ static int removeKeyMap( PHB_GTTRM pTerm, const char * cdesc )
       if( ( *ptr )->ch == c )
       {
          c = static_cast<unsigned char>(cdesc[i++]);
-         if( ! c )
+         if( !c )
          {
             ret = ( *ptr )->key;
             ( *ptr )->key = K_UNDEF;
@@ -3610,12 +3610,12 @@ static void hb_gt_trm_SetTerm( PHB_GTTRM pTerm )
    pTerm->fStderrTTY     = hb_fsIsDevice(pTerm->hFilenoStderr);
    pTerm->hFileno        = pTerm->hFilenoStdout;
    pTerm->fOutTTY        = pTerm->fStdoutTTY;
-   if( ! pTerm->fOutTTY && pTerm->fStdinTTY )
+   if( !pTerm->fOutTTY && pTerm->fStdinTTY )
    {
       pTerm->hFileno     = pTerm->hFilenoStdin;
       pTerm->fOutTTY     = HB_TRUE;
    }
-   pTerm->fPosAnswer     = pTerm->fOutTTY && ! hb_trm_Param( "NOPOS", nullptr ) && pTerm->terminal_type != TERM_CYGWIN;
+   pTerm->fPosAnswer     = pTerm->fOutTTY && !hb_trm_Param( "NOPOS", nullptr ) && pTerm->terminal_type != TERM_CYGWIN;
    pTerm->fUTF8          = HB_FALSE;
 
    hb_fsSetDevMode(pTerm->hFileno, FD_BINARY);
@@ -3703,7 +3703,7 @@ static void hb_gt_trm_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       pTerm->fRestTTY = s_fRestTTY;
    }
    set_signals();
-   if( ! hb_gt_trm_getSize( pTerm, &iRows, &iCols ) )
+   if( !hb_gt_trm_getSize( pTerm, &iRows, &iCols ) )
    {
       iRows = 24;
       iCols = 80;
@@ -3731,7 +3731,7 @@ static void hb_gt_trm_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       HB_GTSELF_SETPOS(pGT, pTerm->iRow, pTerm->iCol);
    }
 #endif
-   if( ! pTerm->fUTF8 )
+   if( !pTerm->fUTF8 )
    {
 #ifndef HB_GT_UNICODE_BUF
       hb_gt_trm_SetKeyTrans( pTerm );
@@ -4137,7 +4137,7 @@ static HB_BOOL hb_gt_trm_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const c
 
    if( HB_GTSUPER_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox) )
    {
-      if( ! HB_GTTRM_GET(pGT)->fUTF8 )
+      if( !HB_GTTRM_GET(pGT)->fUTF8 )
       {
          hb_gt_trm_SetDispTrans( HB_GTTRM_GET(pGT), fBox ? 1 : 0 );
       }
@@ -4155,7 +4155,7 @@ static HB_BOOL hb_gt_trm_SetKeyCP( PHB_GT pGT, const char * pszTermCDP, const ch
 
    if( HB_GTSUPER_SETKEYCP(pGT, pszTermCDP, pszHostCDP) )
    {
-      if( ! HB_GTTRM_GET(pGT)->fUTF8 )
+      if( !HB_GTTRM_GET(pGT)->fUTF8 )
       {
          hb_gt_trm_SetKeyTrans( HB_GTTRM_GET(pGT) );
       }
@@ -4192,7 +4192,7 @@ static void hb_gt_trm_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 #ifdef HB_GT_UNICODE_BUF
       if( pTerm->fUTF8 )
       {
-         if( ! HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol + iChars, &iColor, &bAttr, &usChar) )
+         if( !HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol + iChars, &iColor, &bAttr, &usChar) )
          {
             break;
          }
@@ -4205,7 +4205,7 @@ static void hb_gt_trm_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
       else
       {
          HB_UCHAR uc;
-         if( ! HB_GTSELF_GETSCRUC(pGT, iRow, iCol + iChars, &iColor, &bAttr, &uc, HB_FALSE) )
+         if( !HB_GTSELF_GETSCRUC(pGT, iRow, iCol + iChars, &iColor, &bAttr, &uc, HB_FALSE) )
          {
             break;
          }
@@ -4242,7 +4242,7 @@ static void hb_gt_trm_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
       }
       ++iChars;
 #else
-      if( ! HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol + iChars, &iColor, &bAttr, &usChar) )
+      if( !HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol + iChars, &iColor, &bAttr, &usChar) )
       {
          break;
       }
@@ -4250,7 +4250,7 @@ static void hb_gt_trm_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
       if( bAttr & HB_GT_ATTR_BOX )
       {
          iColor |= ( pTerm->boxattr[usChar] & ~HB_GTTRM_ATTR_CHAR );
-         if( ! pTerm->fUTF8 )
+         if( !pTerm->fUTF8 )
          {
             usChar = pTerm->boxattr[usChar] & HB_GTTRM_ATTR_CHAR;
          }
@@ -4262,7 +4262,7 @@ static void hb_gt_trm_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
       else
       {
          iColor |= ( pTerm->chrattr[usChar] & ~HB_GTTRM_ATTR_CHAR );
-         if( ! pTerm->fUTF8 )
+         if( !pTerm->fUTF8 )
          {
             usChar = pTerm->chrattr[usChar] & HB_GTTRM_ATTR_CHAR;
          }
@@ -4477,7 +4477,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          }
          else
          {
-            if( ! pInfo->pResult )
+            if( !pInfo->pResult )
             {
                pInfo->pResult = hb_itemNew(nullptr);
             }

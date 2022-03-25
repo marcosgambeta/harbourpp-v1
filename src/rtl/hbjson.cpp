@@ -153,7 +153,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
       {
          if( pCtx->pId[nIndex] == id )
          {
-            if( ! fEOL && pCtx->iIndent )
+            if( !fEOL && pCtx->iIndent )
             {
                _hb_jsonCtxAddIndent( pCtx, nLevel );
             }
@@ -337,7 +337,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
                _hb_jsonCtxAdd( pCtx, pCtx->szEol, pCtx->iEolLen );
             }
 
-            if( pCtx->iIndent && ! ( ( HB_IS_ARRAY(pItem) || HB_IS_HASH(pItem) ) && hb_itemSize(pItem) > 0 ) )
+            if( pCtx->iIndent && !( ( HB_IS_ARRAY(pItem) || HB_IS_HASH(pItem) ) && hb_itemSize(pItem) > 0 ) )
             {
                _hb_jsonCtxAddIndent( pCtx, ( nLevel + 1 ) );
             }
@@ -586,7 +586,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
             iExp = iExp * 10 + *szSource - '0';
             szSource++;
          }
-         if( ! fDbl )
+         if( !fDbl )
          {
             dblValue = static_cast<double>(nValue);
             fDbl = HB_TRUE;
@@ -608,17 +608,17 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
       }
       return szSource;
    }
-   else if( ! strncmp(szSource, "null", 4) )
+   else if( !strncmp(szSource, "null", 4) )
    {
       hb_itemClear(pValue);
       return szSource + 4;
    }
-   else if( ! strncmp(szSource, "true", 4) )
+   else if( !strncmp(szSource, "true", 4) )
    {
       hb_itemPutL(pValue, HB_TRUE);
       return szSource + 4;
    }
-   else if( ! strncmp(szSource, "false", 5) )
+   else if( !strncmp(szSource, "false", 5) )
    {
       hb_itemPutL(pValue, HB_FALSE);
       return szSource + 5;
@@ -634,7 +634,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
          for( ;; )
          {
             szSource = _hb_jsonDecode( szSource, pItem, cdp );
-            if( ! szSource )
+            if( !szSource )
             {
                hb_itemRelease(pItem);
                return nullptr;
@@ -674,7 +674,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
          {
             /* Do we need to check if key does not exist yet? */
             if( ( szSource = _hb_jsonDecode( szSource, pItemKey, cdp ) ) == nullptr ||
-                ! HB_IS_STRING(pItemKey) ||
+                !HB_IS_STRING(pItemKey) ||
                 * ( szSource = _skipws( szSource ) ) != ':' ||
                 ( szSource = _hb_jsonDecode( _skipws( szSource + 1 ), pItemValue, cdp ) ) == nullptr)
             {
@@ -724,7 +724,7 @@ char * hb_jsonEncodeCP( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent, PHB_CODEP
    pCtx->pId = static_cast<void**>(hb_xgrab(sizeof(void*) * pCtx->nAllocId));
    pCtx->iIndent = iIndent;
    pCtx->szEol = hb_setGetEOL();
-   if( ! pCtx->szEol || ! pCtx->szEol[0] )
+   if( !pCtx->szEol || !pCtx->szEol[0] )
    {
       pCtx->szEol = hb_conNewLine();
    }
@@ -759,7 +759,7 @@ HB_SIZE hb_jsonDecodeCP( const char * szSource, PHB_ITEM pValue, PHB_CODEPAGE cd
    const char * sz;
 
    sz = szSource ? _hb_jsonDecode( _skipws( szSource ), pItem, cdp ) : nullptr;
-   if( ! pValue )
+   if( !pValue )
    {
       hb_itemRelease(pItem);
    }

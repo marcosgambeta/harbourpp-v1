@@ -71,7 +71,7 @@ HB_ERRCODE hb_gtInit( HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHAN
    hb_gtStartupInit();
 
    pGT = hb_gt_Base();
-   if( ! pGT )
+   if( !pGT )
    {
       return HB_FAILURE;
    }

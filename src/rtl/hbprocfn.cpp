@@ -63,7 +63,7 @@ HB_FUNC( HB_PROCESSOPEN )
        ( pStdErr || HB_ISNIL(4) ) &&
        ( HB_ISLOG(5) || HB_ISNIL(5) ) &&
        ( HB_ISBYREF(6) || HB_ISNIL(6) ) &&
-       ( ! pStdIn || ( pStdIn != pStdOut && pStdIn != pStdErr ) ) )
+       ( !pStdIn || ( pStdIn != pStdOut && pStdIn != pStdErr ) ) )
    {
       HB_BOOL fDetach = hb_parl(5);
       HB_FHANDLE hStdIn, *phStdIn, hStdOut, *phStdOut, hStdErr, *phStdErr;
@@ -163,7 +163,7 @@ HB_FUNC( HB_PROCESSRUN )
 
       if( pStdOutBuf )
       {
-         if( ! hb_storclen_buffer(pStdOutBuf, nStdOut, 3) )
+         if( !hb_storclen_buffer(pStdOutBuf, nStdOut, 3) )
          {
             hb_xfree(pStdOutBuf);
          }
@@ -175,7 +175,7 @@ HB_FUNC( HB_PROCESSRUN )
 
       if( pStdErrBuf )
       {
-         if( ! hb_storclen_buffer(pStdErrBuf, nStdErr, 4) )
+         if( !hb_storclen_buffer(pStdErrBuf, nStdErr, 4) )
          {
             hb_xfree(pStdErrBuf);
          }

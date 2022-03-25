@@ -177,7 +177,7 @@ HB_FUNC( HB_REGEXCOMP )
       int iFlags = HBREG_EXTENDED;
       PHB_REGEX pRegEx;
 
-      if( ! hb_parldef(2, HB_TRUE) )
+      if( !hb_parldef(2, HB_TRUE) )
       {
          iFlags |= HBREG_ICASE;
       }
@@ -206,7 +206,7 @@ HB_FUNC( HB_ATX )
 
    if( pString )
    {
-      PHB_REGEX pRegEx = hb_regexGet( hb_param(1, HB_IT_ANY), ! hb_parldef(3, HB_TRUE) ? HBREG_ICASE : 0 );
+      PHB_REGEX pRegEx = hb_regexGet( hb_param(1, HB_IT_ANY), !hb_parldef(3, HB_TRUE) ? HBREG_ICASE : 0 );
 
       if( pRegEx )
       {
@@ -273,13 +273,13 @@ static HB_BOOL hb_regex( int iRequest )
    HB_SIZE nLen;
 
    pString = hb_param(2, HB_IT_STRING);
-   if( ! pString )
+   if( !pString )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3014, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return HB_FALSE;
    }
-   pRegEx = hb_regexGet( hb_param(1, HB_IT_ANY), ( ! hb_parldef(3, HB_TRUE) ? HBREG_ICASE : 0 ) | ( hb_parl(4) ? HBREG_NEWLINE : 0 ) );
-   if( ! pRegEx )
+   pRegEx = hb_regexGet( hb_param(1, HB_IT_ANY), ( !hb_parldef(3, HB_TRUE) ? HBREG_ICASE : 0 ) | ( hb_parl(4) ? HBREG_NEWLINE : 0 ) );
+   if( !pRegEx )
    {
       return HB_FALSE;
    }
@@ -401,7 +401,7 @@ static HB_BOOL hb_regex( int iRequest )
                      iSO = HB_REGMATCH_SO( aMatches, i );
                      iEO = HB_REGMATCH_EO( aMatches, i );
                      pMatch = hb_arrayGetItemPtr(pAtxArray, i + 1);
-                     if( ! fOnlyMatch )
+                     if( !fOnlyMatch )
                      {
                         hb_arrayNew(pMatch, 3);
                         if( iEO != -1 )
@@ -442,7 +442,7 @@ static HB_BOOL hb_regex( int iRequest )
                   iSO = HB_REGMATCH_SO( aMatches, i );
                   iEO = HB_REGMATCH_EO( aMatches, i );
                   pMatch = hb_itemNew(nullptr);
-                  if( ! fOnlyMatch )
+                  if( !fOnlyMatch )
                   {
                      hb_arrayNew(pMatch, 3);
                      if( iEO != -1 )
@@ -509,7 +509,7 @@ static HB_BOOL hb_regex( int iRequest )
 /* Returns array of Match + Sub-Matches. */
 HB_FUNC( HB_REGEX )
 {
-   if( ! hb_regex(0) )
+   if( !hb_regex(0) )
    {
       hb_reta(0);
    }
@@ -541,7 +541,7 @@ HB_FUNC( HB_REGEXHAS )
 /* Splits the string in an array of matched expressions */
 HB_FUNC( HB_REGEXSPLIT )
 {
-   if( ! hb_regex(3) )
+   if( !hb_regex(3) )
    {
       hb_reta(0);
    }
@@ -550,7 +550,7 @@ HB_FUNC( HB_REGEXSPLIT )
 /* Returns array of { Match, start, end }, { Sub-Matches, start, end } */
 HB_FUNC( HB_REGEXATX )
 {
-   if( ! hb_regex(4) )
+   if( !hb_regex(4) )
    {
       hb_reta(0);
    }
@@ -574,7 +574,7 @@ HB_FUNC( HB_REGEXATX )
 
 HB_FUNC( HB_REGEXALL )
 {
-   if( ! hb_regex(5) )
+   if( !hb_regex(5) )
    {
       hb_reta(0);
    }

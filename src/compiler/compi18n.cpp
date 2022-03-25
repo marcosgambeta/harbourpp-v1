@@ -95,7 +95,7 @@ static PHB_I18NSTRING hb_compI18nAddSingle(HB_COMP_DECL, const char * szText, co
    PHB_I18NSTRING pString;
    HB_UINT        uiLeft, uiRight;
 
-   if( ! HB_COMP_PARAM->pI18n )
+   if( !HB_COMP_PARAM->pI18n )
    {
       HB_COMP_PARAM->pI18n = hb_compI18nCreate();
    }
@@ -186,7 +186,7 @@ void hb_compI18nAddPlural(HB_COMP_DECL, const char ** szTexts, HB_ULONG ulCount,
    if( ulCount == 1 )
    {
       /* set the same string as plural form to mark it as plural text */
-      if( ! pString->uiPlurals )
+      if( !pString->uiPlurals )
       {
          pString->szPlurals[0] = pString->szText;
          pString->uiPlurals = 1;
@@ -296,7 +296,7 @@ HB_BOOL hb_compI18nSave(HB_COMP_DECL, HB_BOOL fFinal)
    FILE *        file;
 
    pI18n = HB_COMP_PARAM->pI18n;
-   if( ! pI18n )
+   if( !pI18n )
    {
       return HB_FALSE;
    }
@@ -328,11 +328,11 @@ HB_BOOL hb_compI18nSave(HB_COMP_DECL, HB_BOOL fFinal)
       }
    }
 
-   if( ! FileName.szName )
+   if( !FileName.szName )
    {
       FileName.szName = HB_COMP_PARAM->pFileName->szName;
    }
-   else if( ! fFinal )
+   else if( !fFinal )
    {
       /* The exact file name was given generate single .pot file for
        * all compiled .prg files in final phase.
@@ -340,7 +340,7 @@ HB_BOOL hb_compI18nSave(HB_COMP_DECL, HB_BOOL fFinal)
       return HB_FALSE;
    }
 
-   if( ! FileName.szExtension )
+   if( !FileName.szExtension )
    {
       FileName.szExtension = ".pot";
    }
@@ -349,7 +349,7 @@ HB_BOOL hb_compI18nSave(HB_COMP_DECL, HB_BOOL fFinal)
 
    file = hb_fopen(szFileName, "w");
 
-   if( ! file )
+   if( !file )
    {
       hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CREATE_OUTPUT, szFileName, nullptr);
       return HB_FALSE;

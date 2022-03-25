@@ -239,7 +239,7 @@ HB_BOOL hb_hashTableDel(PHB_HASH_TABLE pTable, const void * pKey)
    }
 
    pItem = pTable->pItems[nKey];
-   while( pItem && ! bFound )
+   while( pItem && !bFound )
    {
       if( (pTable->pCompFunc)(pTable, pItem->KeyPtr, pKey) == 0 )
       {
@@ -250,7 +250,7 @@ HB_BOOL hb_hashTableDel(PHB_HASH_TABLE pTable, const void * pKey)
          else
          {
             pTable->pItems[nKey] = pItem->next;
-            if( ! pItem->next )
+            if( !pItem->next )
             {
                --pTable->nUsed;
                pTable->pItems[nKey] = nullptr;

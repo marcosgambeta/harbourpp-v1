@@ -1055,7 +1055,7 @@ PHB_EXPR hb_compExprNewNot(PHB_EXPR pNotExpr, HB_COMP_DECL)
 
    if( pNotExpr->ExprType == HB_ET_LOGICAL )
    {
-      pNotExpr->value.asLogical = ! pNotExpr->value.asLogical;
+      pNotExpr->value.asLogical = !pNotExpr->value.asLogical;
       pExpr = pNotExpr;
    }
    else

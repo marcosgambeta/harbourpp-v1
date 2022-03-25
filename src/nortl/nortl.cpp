@@ -123,7 +123,7 @@ void * hb_xgrab( HB_SIZE nSize )        /* allocates fixed memory, exits on fail
    else
 #else
    pMem = malloc(nSize);
-   if( ! pMem )
+   if( !pMem )
 #endif
       hb_errInternal(HB_EI_XGRABALLOC, "hb_xgrab can't allocate memory", nullptr, nullptr);
 
@@ -143,7 +143,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
          hb_xfree(pMem);
       return nullptr;
    }
-   else if( ! pMem )
+   else if( !pMem )
       return hb_xgrab(nSize);
 
    pMemBlock = ( PHB_MEMINFO ) ( ( HB_BYTE * ) pMem - HB_MEMINFO_SIZE );
@@ -180,7 +180,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
    void * pResult = realloc(pMem, nSize);
 #endif
 
-   if( ! pResult && nSize )
+   if( !pResult && nSize )
       hb_errInternal(HB_EI_XREALLOC, "hb_xrealloc can't reallocate memory", nullptr, nullptr);
 
    return pResult;

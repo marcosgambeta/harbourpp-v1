@@ -49,7 +49,7 @@ static void hb_compDumpFindCFunc(HB_COMP_DECL)
    pInline = HB_COMP_PARAM->inlines.pFirst;
    while( pInline )
    {
-      if( pInline->pCode && ! pInline->szName )
+      if( pInline->pCode && !pInline->szName )
       {
          const char * pszCCode = reinterpret_cast<const char*>(pInline->pCode);
          char         ch;
@@ -191,20 +191,20 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName)       /* generates the C
    HB_BOOL     fHasHbInline = HB_FALSE;
 
    hb_fsFNameMerge(szFileName, pFileName);
-   if( ! pFileName->szExtension )
+   if( !pFileName->szExtension )
    {
       pFileName->szExtension = ".cpp";
    }
    hb_fsFNameMerge(szFileName, pFileName);
 
    yyc = hb_fopen(szFileName, "w");
-   if( ! yyc )
+   if( !yyc )
    {
       hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CREATE_OUTPUT, szFileName, nullptr);
       return;
    }
 
-   if( ! HB_COMP_PARAM->fQuiet )
+   if( !HB_COMP_PARAM->fQuiet )
    {
       char buffer[80 + HB_PATH_MAX - 1];
       hb_snprintf(buffer, sizeof(buffer), "Generating C++ source output to \'%s\'... ", szFileName);
@@ -258,7 +258,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName)       /* generates the C
          {
             if( pSym->szName[0] == '(' )
             {
-               fprintf(yyc, "HB_FUNC_INIT%s();\n", ! memcmp(pSym->szName + 1, "_INITLINES", 10) ? "LINES" : "STATICS");
+               fprintf(yyc, "HB_FUNC_INIT%s();\n", !memcmp(pSym->szName + 1, "_INITLINES", 10) ? "LINES" : "STATICS");
             }
             else if( pSym->cScope & HB_FS_LOCAL ) /* is it a function defined in this module */
             {
@@ -300,7 +300,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName)       /* generates the C
          for( int i = 0; i < iLen; i++ )
          {
             char c = szFileName[i];
-            if( ! HB_ISNEXTIDCHAR(c) )
+            if( !HB_ISNEXTIDCHAR(c) )
             {
                szFileName[i] = '_';
             }
@@ -318,7 +318,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName)       /* generates the C
              * initialize static variables or debugging info about valid stop lines
              */
             fprintf(yyc, "{ \"%s\", {HB_FS_INITEXIT | HB_FS_LOCAL}, {hb_INIT%s}, nullptr }",
-                    pSym->szName, ! memcmp(pSym->szName + 1, "_INITLINES", 10) ?
+                    pSym->szName, !memcmp(pSym->szName + 1, "_INITLINES", 10) ?
                     "LINES" : "STATICS"); /* NOTE: "hb_" intentionally in lower case */
          }
          else
@@ -352,7 +352,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName)       /* generates the C
                fprintf(yyc, " | HB_FS_MESSAGE");
             }
 
-            if( (pSym->cScope & HB_FS_FIRST) && (! HB_COMP_PARAM->fNoStartUp) )
+            if( (pSym->cScope & HB_FS_FIRST) && (!HB_COMP_PARAM->fNoStartUp) )
             {
                fprintf(yyc, " | HB_FS_FIRST");
             }
@@ -486,7 +486,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName)       /* generates the C
       {
          if( pInline->pCode )
          {
-            if( ! fHasHbInline )
+            if( !fHasHbInline )
             {
                hb_compGenCStdHeaders(HB_COMP_PARAM, yyc, HB_FALSE);
                fHasHbInline = HB_TRUE;
@@ -504,7 +504,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName)       /* generates the C
          }
          pInline = pInline->pNext;
       }
-      if( ! fHasHbInline )
+      if( !fHasHbInline )
       {
          fprintf(yyc, "\n/* Empty source file */\n");
       }
@@ -512,7 +512,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName)       /* generates the C
 
    fclose(yyc);
 
-   if( ! HB_COMP_PARAM->fQuiet )
+   if( !HB_COMP_PARAM->fQuiet )
    {
       hb_compOutStd(HB_COMP_PARAM, "Done.\n");
    }
@@ -555,7 +555,7 @@ static void hb_compGenCFunc(FILE * yyc, const char * cDecor, const char * szName
             {
                fputc(static_cast<HB_UCHAR>(c), yyc);
             }
-            else if( ! fStrip || c != '$' || *tmp != 0 )
+            else if( !fStrip || c != '$' || *tmp != 0 )
             {
                /* 'x' is used to force unique name and eliminate possible
                 * collisions with other function names.

@@ -67,16 +67,16 @@ HB_FUNC( SX_FNAMEPARSER )
          hb_xfree(pszFree);
       }
 
-      if( ! hb_parl(2) )
+      if( !hb_parl(2) )
       {
          pFileName->szPath = nullptr;
       }
-      if( ! hb_parl(3) )
+      if( !hb_parl(3) )
       {
          pFileName->szExtension = nullptr;
       }
 
-      if( ! hb_setGetTrimFileName() )
+      if( !hb_setGetTrimFileName() )
       {
          if( pFileName->szName )
          {

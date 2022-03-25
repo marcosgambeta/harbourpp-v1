@@ -50,7 +50,7 @@
 
 #if defined( HB_OS_WIN )
    #include <windows.h>
-   #if ! defined( INVALID_FILE_ATTRIBUTES )
+   #if !defined( INVALID_FILE_ATTRIBUTES )
       #define INVALID_FILE_ATTRIBUTES  ( static_cast<DWORD>(-1) )
    #endif
    #include "hbwinuni.h"
@@ -72,7 +72,7 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
 
          static _HB_CREATEHARDLINK s_pCreateHardLink = nullptr;
 
-         if( ! s_pCreateHardLink )
+         if( !s_pCreateHardLink )
          {
             HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
             if( hModule )
@@ -163,7 +163,7 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
          #define SYMBOLIC_LINK_FLAG_DIRECTORY 0x1
          #endif
 
-         if( ! s_pCreateSymbolicLink )
+         if( !s_pCreateSymbolicLink )
          {
             HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
             if( hModule )
@@ -275,7 +275,7 @@ char * hb_fsLinkRead( const char * pszFile )
          #define FILE_NAME_OPENED      0x8
          #endif
 
-         if( ! s_pGetFinalPathNameByHandle )
+         if( !s_pGetFinalPathNameByHandle )
          {
             HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
             if( hModule )

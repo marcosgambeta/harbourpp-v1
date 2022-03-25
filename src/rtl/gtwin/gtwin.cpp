@@ -111,7 +111,7 @@ using HB_PCONSOLE_SCREEN_BUFFER_INFOEX = HB_CONSOLE_SCREEN_BUFFER_INFOEX *;
 #undef PCONSOLE_SCREEN_BUFFER_INFOEX
 #define CONSOLE_SCREEN_BUFFER_INFOEX  HB_CONSOLE_SCREEN_BUFFER_INFOEX
 #define PCONSOLE_SCREEN_BUFFER_INFOEX HB_PCONSOLE_SCREEN_BUFFER_INFOEX
-#if ! defined( HB_GTWIN_USE_PCONSOLEINFOEX )
+#if !defined( HB_GTWIN_USE_PCONSOLEINFOEX )
 #  define HB_GTWIN_USE_PCONSOLEINFOEX
 #endif
 
@@ -447,7 +447,7 @@ static BOOL WINAPI hb_gt_win_CtrlHandler( DWORD dwCtrlType )
 
       case CTRL_CLOSE_EVENT:
       case CTRL_BREAK_EVENT:
-         if( ! s_fSuspend )
+         if( !s_fSuspend )
          {
             s_fBreak = HB_TRUE;
          }
@@ -477,15 +477,15 @@ static void hb_gt_win_xGetScreenContents( PHB_GT pGT, SMALL_RECT * psrWin )
 
    int iCol;
 
-#if ! defined( UNICODE )
+#if !defined( UNICODE )
    PHB_CODEPAGE cdp;
    HB_BYTE bxAttr;
 #endif
 
-#if ! defined( UNICODE )
+#if !defined( UNICODE )
    bxAttr = 0;
    cdp = HB_GTSELF_CPTERM(pGT);
-   if( ! cdp )
+   if( !cdp )
    {
       cdp = HB_GTSELF_CPBOX(pGT);
       if( cdp )
@@ -602,7 +602,7 @@ static HB_BOOL hb_gt_win_SetPalette_Vista( HB_BOOL bSet, COLORREF * colors )
    HB_BOOL bDone = HB_FALSE;
    int tmp;
 
-   if( ! s_fChecked )
+   if( !s_fChecked )
    {
       HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
       if( hModule )
@@ -621,7 +621,7 @@ static HB_BOOL hb_gt_win_SetPalette_Vista( HB_BOOL bSet, COLORREF * colors )
       bDone = s_pGetConsoleScreenBufferInfoEx( s_HOutput, &info ) != 0;
       if( bDone )
       {
-         if( ! bSet )
+         if( !bSet )
          {
             for( tmp = 0; tmp < 16; ++tmp )
             {
@@ -630,7 +630,7 @@ static HB_BOOL hb_gt_win_SetPalette_Vista( HB_BOOL bSet, COLORREF * colors )
          }
          else if( s_pSetConsoleScreenBufferInfoEx )
          {
-            if( ! s_fResetColors )
+            if( !s_fResetColors )
             {
                for( tmp = 0; tmp < 16; ++tmp )
                {
@@ -658,7 +658,7 @@ static HB_BOOL hb_gt_win_SetPalette_Vista( HB_BOOL bSet, COLORREF * colors )
       }
    }
 
-   if( ! bSet && ! bDone )
+   if( !bSet && !bDone )
    {
       for( tmp = 0; tmp < 16; ++tmp )
       {
@@ -676,7 +676,7 @@ static HB_BOOL hb_gt_win_SetPalette( HB_BOOL bSet, COLORREF * colors )
 #if defined( HB_GTWIN_USE_PCONSOLEINFOEX )
    return hb_gt_win_SetPalette_Vista( bSet, colors );
 #else
-   if( ! bSet )
+   if( !bSet )
    {
       for( int tmp = 0; tmp < 16; ++tmp )
       {
@@ -719,7 +719,7 @@ static HB_BOOL hb_gt_win_SetCloseButton( HB_BOOL bSet, HB_BOOL bClosable )
             static HB_BOOL s_fChecked = HB_FALSE;
             static P_SETCONSOLEMENUCLOSE s_pSetConsoleMenuClose = nullptr;
 
-            if( ! s_fChecked )
+            if( !s_fChecked )
             {
                HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
                if( hModule )
@@ -1323,7 +1323,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
                         /* ignore control keys */
                         continue;
                      default:
-                        if( ! pInRec->Event.KeyEvent.bKeyDown )
+                        if( !pInRec->Event.KeyEvent.bKeyDown )
                         {
                            continue;
                         }
@@ -1982,7 +1982,7 @@ static HB_BOOL hb_gt_win_FullScreen( HB_BOOL bFullScreen )
    }
    else
    {
-      return ! SetConsoleDisplayMode( s_HOutput, CONSOLE_WINDOWED_MODE, nullptr );
+      return !SetConsoleDisplayMode( s_HOutput, CONSOLE_WINDOWED_MODE, nullptr );
    }
 
    return HB_FALSE;
@@ -2087,7 +2087,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_ALTENTER:
-         pInfo->pResult = hb_itemPutL(pInfo->pResult, ! hb_iswinvista());
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, !hb_iswinvista());
          break;
 
       case HB_GTI_PALETTE:
@@ -2114,7 +2114,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             COLORREF colors[16];
             int i;
 
-            if( ! pInfo->pResult )
+            if( !pInfo->pResult )
             {
                pInfo->pResult = hb_itemNew(nullptr);
             }
@@ -2310,14 +2310,14 @@ static void hb_gt_win_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
       {
 #if defined( UNICODE )
          HB_USHORT usChar;
-         if( ! HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol++, &iColor, &bAttr, &usChar) )
+         if( !HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol++, &iColor, &bAttr, &usChar) )
          {
             break;
          }
          s_pCharInfoScreen[i].Char.UnicodeChar = hb_cdpGetU16Ctrl( usChar );
 #else
          HB_UCHAR uc;
-         if( ! HB_GTSELF_GETSCRUC(pGT, iRow, iCol++, &iColor, &bAttr, &uc, HB_TRUE) )
+         if( !HB_GTSELF_GETSCRUC(pGT, iRow, iCol++, &iColor, &bAttr, &uc, HB_TRUE) )
          {
             break;
          }

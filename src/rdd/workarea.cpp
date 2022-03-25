@@ -167,7 +167,7 @@ static HB_ERRCODE hb_waSkipFilter( AREAP pArea, HB_LONG lUpDown )
    HB_BOOL fBottom, fDeleted;
    HB_ERRCODE errCode;
 
-   if( pArea->dbfi.itmCobExpr == nullptr && ! hb_setGetDeleted() )
+   if( pArea->dbfi.itmCobExpr == nullptr && !hb_setGetDeleted() )
    {
       return HB_SUCCESS;
    }
@@ -182,7 +182,7 @@ static HB_ERRCODE hb_waSkipFilter( AREAP pArea, HB_LONG lUpDown )
    /* remember if we are here after SLEF_GOTOP() */
    fBottom = pArea->fBottom;
 
-   while( ! pArea->fBof && ! pArea->fEof )
+   while( !pArea->fBof && !pArea->fEof )
    {
       /* SET DELETED */
       if( hb_setGetDeleted() )
@@ -209,7 +209,7 @@ static HB_ERRCODE hb_waSkipFilter( AREAP pArea, HB_LONG lUpDown )
             return HB_FAILURE;
          }
 
-         if( HB_IS_LOGICAL(pArea->valResult) && ! hb_itemGetL(pArea->valResult) )
+         if( HB_IS_LOGICAL(pArea->valResult) && !hb_itemGetL(pArea->valResult) )
          {
             if( SELF_SKIPRAW( pArea, lUpDown ) != HB_SUCCESS )
             {
@@ -1060,10 +1060,10 @@ static HB_ERRCODE hb_waNewArea( AREAP pArea )
  */
 static HB_ERRCODE hb_waOpen( AREAP pArea, LPDBOPENINFO pInfo )
 {
-   if( ! pArea->atomAlias && pInfo->atomAlias && pInfo->atomAlias[0] )
+   if( !pArea->atomAlias && pInfo->atomAlias && pInfo->atomAlias[0] )
    {
       pArea->atomAlias = hb_rddAllocWorkAreaAlias( pInfo->atomAlias, static_cast<int>(pInfo->uiArea) );
-      if( ! pArea->atomAlias )
+      if( !pArea->atomAlias )
       {
          SELF_CLOSE( pArea );
          return HB_FAILURE;
@@ -1193,7 +1193,7 @@ static HB_ERRCODE hb_waEval( AREAP pArea, LPDBEVALINFO pEvalInfo )
          return HB_SUCCESS;
       }
    }
-   else if( ! pEvalInfo->dbsci.itmCobWhile && ! hb_itemGetLX(pEvalInfo->dbsci.fRest) )
+   else if( !pEvalInfo->dbsci.itmCobWhile && !hb_itemGetLX(pEvalInfo->dbsci.fRest) )
    {
       if( SELF_GOTOP( pArea ) != HB_SUCCESS )
       {
@@ -1221,7 +1221,7 @@ static HB_ERRCODE hb_waEval( AREAP pArea, LPDBEVALINFO pEvalInfo )
          {
             return HB_FAILURE;
          }
-         if( ! hb_itemGetLX(pArea->valResult) )
+         if( !hb_itemGetLX(pArea->valResult) )
          {
             break;
          }
@@ -1276,7 +1276,7 @@ static HB_ERRCODE hb_waLocate( AREAP pArea, HB_BOOL fContinue )
 
    if( fContinue )
    {
-      if( ! pArea->dbsi.itmCobFor )
+      if( !pArea->dbsi.itmCobFor )
       {
          return HB_SUCCESS;
       }
@@ -1301,7 +1301,7 @@ static HB_ERRCODE hb_waLocate( AREAP pArea, HB_BOOL fContinue )
          return HB_SUCCESS;
       }
    }
-   else if( ! pArea->dbsi.itmCobWhile && ! hb_itemGetLX(pArea->dbsi.fRest) )
+   else if( !pArea->dbsi.itmCobWhile && !hb_itemGetLX(pArea->dbsi.fRest) )
    {
       if( SELF_GOTOP( pArea ) != HB_SUCCESS )
       {
@@ -1325,19 +1325,19 @@ static HB_ERRCODE hb_waLocate( AREAP pArea, HB_BOOL fContinue )
          break;
       }
 
-      if( ! fContinue && pArea->dbsi.itmCobWhile )
+      if( !fContinue && pArea->dbsi.itmCobWhile )
       {
          if( SELF_EVALBLOCK( pArea, pArea->dbsi.itmCobWhile ) != HB_SUCCESS )
          {
             return HB_FAILURE;
          }
-         if( ! hb_itemGetLX(pArea->valResult) )
+         if( !hb_itemGetLX(pArea->valResult) )
          {
             break;
          }
       }
 
-      if( ! pArea->dbsi.itmCobFor )
+      if( !pArea->dbsi.itmCobFor )
       {
          pArea->fFound = HB_TRUE;
          break;
@@ -1356,7 +1356,7 @@ static HB_ERRCODE hb_waLocate( AREAP pArea, HB_BOOL fContinue )
          }
       }
 
-      if( ! fContinue && ( pArea->dbsi.itmRecID || ( pArea->dbsi.lNext && --lNext < 1 ) ) )
+      if( !fContinue && ( pArea->dbsi.itmRecID || ( pArea->dbsi.lNext && --lNext < 1 ) ) )
       {
          break;
       }
@@ -1397,7 +1397,7 @@ static HB_ERRCODE hb_waTrans( AREAP pArea, LPDBTRANSINFO pTransInfo )
          return HB_SUCCESS;
       }
    }
-   else if( ! pTransInfo->dbsci.itmCobWhile && ! hb_itemGetLX(pTransInfo->dbsci.fRest) )
+   else if( !pTransInfo->dbsci.itmCobWhile && !hb_itemGetLX(pTransInfo->dbsci.fRest) )
    {
       if( SELF_GOTOP( pArea ) != HB_SUCCESS )
       {
@@ -1425,7 +1425,7 @@ static HB_ERRCODE hb_waTrans( AREAP pArea, LPDBTRANSINFO pTransInfo )
          {
             return HB_FAILURE;
          }
-         if( ! hb_itemGetLX(pArea->valResult) )
+         if( !hb_itemGetLX(pArea->valResult) )
          {
             break;
          }
@@ -1775,7 +1775,7 @@ static HB_ERRCODE hb_waRelEval( AREAP pArea, LPDBRELINFO pRelInfo )
                      errCode = SELF_EOF( pArea, &fEof );
                      if( errCode == HB_SUCCESS )
                      {
-                        pArea->fFound = ! fEof;
+                        pArea->fFound = !fEof;
                      }
                   }
                }
@@ -1827,7 +1827,7 @@ static HB_ERRCODE hb_waSetRel( AREAP pArea, LPDBRELINFO lpdbRelInf )
    LPDBRELINFO lpdbRelations;
 
    lpdbRelations = pArea->lpdbRelations;
-   if( ! lpdbRelations )
+   if( !lpdbRelations )
    {
       pArea->lpdbRelations = static_cast<LPDBRELINFO>(hb_xgrab(sizeof(DBRELINFO)));
       lpdbRelations = pArea->lpdbRelations;
@@ -2106,7 +2106,7 @@ static HB_ERRCODE hb_waEvalBlock( AREAP pArea, PHB_ITEM pBlock )
       return HB_FAILURE;
    }
 
-   if( ! pArea->valResult )
+   if( !pArea->valResult )
    {
       pArea->valResult = hb_itemNew(nullptr);
    }
@@ -2670,7 +2670,7 @@ void hb_rddSetFileRedirector( HB_RDDACCEPT funcAccept, HB_BOOL fEnable )
    {
       if( s_rddRedirAccept[uiCount] == funcAccept )
       {
-         if( ! fEnable )
+         if( !fEnable )
          {
             s_rddRedirAccept[uiCount] = hb_rddDummyFileAccept;
          }
@@ -2753,7 +2753,7 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
 
    hb_snprintf(szGetFuncTable, sizeof(szGetFuncTable), "%s_GETFUNCTABLE", szDriver);
    pGetFuncTable = hb_dynsymFindName(szGetFuncTable);
-   if( ! pGetFuncTable )
+   if( !pGetFuncTable )
    {
       return 2;              /* Not valid RDD */
    }
@@ -2786,7 +2786,7 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
       /* repeat the test to protect against possible registering RDD by
        *  <szDriver>_GETFUNCTABLE()
        */
-      if( ! hb_rddFindNode( szDriver, nullptr ) )    /* Duplicated RDD */
+      if( !hb_rddFindNode( szDriver, nullptr ) )    /* Duplicated RDD */
       {
          if( s_uiRddCount == s_uiRddMax )
          {
@@ -2834,13 +2834,13 @@ HB_ERRCODE hb_rddInheritEx( RDDFUNCS * pTable, const RDDFUNCS * pSubTable,
    DBENTRYP_V * pFunction;
    const DBENTRYP_V * pSubFunction;
 
-   if( ! pTable )
+   if( !pTable )
    {
       return HB_FAILURE;
    }
 
    /* Copy the pSuperTable into pTable */
-   if( ! szDrvName || ! *szDrvName )
+   if( !szDrvName || !*szDrvName )
    {
       /* no name for inherited driver - use the default one */
       memcpy(pTable, &waTable, sizeof(RDDFUNCS));
@@ -2856,7 +2856,7 @@ HB_ERRCODE hb_rddInheritEx( RDDFUNCS * pTable, const RDDFUNCS * pSubTable,
       hb_strncpyUpper( szSuperName, szDrvName, sizeof(szSuperName) - 1 );
       pRddNode = hb_rddFindNode( szSuperName, nullptr );
 
-      if( ! pRddNode )
+      if( !pRddNode )
       {
          return HB_FAILURE;
       }

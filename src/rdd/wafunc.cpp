@@ -76,7 +76,7 @@ HB_ERRCODE hb_rddVerifyAliasName( const char * szAlias )
          c = *( ++szAlias );
          while( c != 0 )
          {
-            if( c != '_' && ! ( c >= '0' && c <= '9' ) && ! ( c >= 'A' && c <= 'Z' ) && ! ( c >= 'a' && c <= 'z' ) )
+            if( c != '_' && !( c >= '0' && c <= '9' ) && !( c >= 'A' && c <= 'Z' ) && !( c >= 'a' && c <= 'z' ) )
             {
                if( c == ' ' )
                {
@@ -84,7 +84,7 @@ HB_ERRCODE hb_rddVerifyAliasName( const char * szAlias )
                   {
                      ;
                   }
-                  if( ! *szAlias )
+                  if( !*szAlias )
                   {
                      break;
                   }
@@ -300,9 +300,9 @@ HB_USHORT hb_rddFieldExpIndex( AREAP pArea, const char * szField )
                ++i;
             }
 
-            if( ! ( ( i == l && hb_strnicmp( &szField[n], szAlias, l ) == 0 ) ) &&
-                ! ( i >= 4 && i <= 5 && hb_strnicmp( &szField[n], "FIELD", i ) == 0 ) &&
-                ! ( i >= 4 && i <= 6 && hb_strnicmp( &szField[n], "_FIELD", i ) == 0 ) )
+            if( !( ( i == l && hb_strnicmp( &szField[n], szAlias, l ) == 0 ) ) &&
+                !( i >= 4 && i <= 5 && hb_strnicmp( &szField[n], "FIELD", i ) == 0 ) &&
+                !( i >= 4 && i <= 6 && hb_strnicmp( &szField[n], "_FIELD", i ) == 0 ) )
             {
                i = 0;
             }
@@ -405,7 +405,7 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol( PHB_SYMB pSymAlias )
 
    szName = hb_dynsymName(pSymAlias->pDynSym);
 
-   if( szName[0] && ! szName[1] )
+   if( szName[0] && !szName[1] )
    {
       if( szName[0] >= 'A' && szName[0] <= 'K' )
       {
@@ -679,7 +679,7 @@ HB_ERRCODE hb_rddOpenTable( const char * szFileName, const char * szDriver,
    szDriver = hb_rddFindDrv( szDriver, szFileName );
 
    /* First try to create new area node and validate RDD name */
-   if( ! szDriver || ! hb_rddInsertAreaNode( szDriver ) )
+   if( !szDriver || !hb_rddInsertAreaNode( szDriver ) )
    {
       hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       return HB_FAILURE;
@@ -688,7 +688,7 @@ HB_ERRCODE hb_rddOpenTable( const char * szFileName, const char * szDriver,
    /* Then check if valid file name was given - Clipper allows to use empty
     * ("") file name
     */
-   if( ! szFileName )
+   if( !szFileName )
    {
       hb_rddReleaseCurrentArea();
       hb_errRT_DBCMD( EG_ARG, EDBCMD_USE_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
@@ -710,7 +710,7 @@ HB_ERRCODE hb_rddOpenTable( const char * szFileName, const char * szDriver,
    errCode = pStruct ? SELF_CREATEFIELDS( pArea, pStruct ) : HB_SUCCESS;
    if( errCode == HB_SUCCESS )
    {
-      if( pDelim && ! HB_IS_NIL(pDelim) )
+      if( pDelim && !HB_IS_NIL(pDelim) )
       {
          errCode = SELF_INFO( pArea, DBI_SETDELIMITER, pDelim );
       }
@@ -740,7 +740,7 @@ HB_ERRCODE hb_rddCreateTable( const char * szFileName, const char * szDriver,
    HB_USHORT uiPrevArea;
    AREAP pArea;
 
-   if( ! szFileName )
+   if( !szFileName )
    {
       hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       return HB_FAILURE;
@@ -758,7 +758,7 @@ HB_ERRCODE hb_rddCreateTable( const char * szFileName, const char * szDriver,
    szDriver = hb_rddFindDrv( szDriver, szFileName );
 
    /* Create a new WorkArea node */
-   if( ! szDriver || ! hb_rddInsertAreaNode( szDriver ) )
+   if( !szDriver || !hb_rddInsertAreaNode( szDriver ) )
    {
       hb_rddSelectWorkAreaNumber( uiPrevArea );
       hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
@@ -776,7 +776,7 @@ HB_ERRCODE hb_rddCreateTable( const char * szFileName, const char * szDriver,
    pInfo.ulConnection = ulConnection;
    pInfo.lpdbHeader = nullptr;
 
-   if( pDelim && ! HB_IS_NIL(pDelim) )
+   if( pDelim && !HB_IS_NIL(pDelim) )
    {
       errCode = SELF_INFO( pArea, DBI_SETDELIMITER, pDelim );
    }
@@ -794,7 +794,7 @@ HB_ERRCODE hb_rddCreateTable( const char * szFileName, const char * szDriver,
       }
    }
 
-   if( ! fKeepOpen || errCode != HB_SUCCESS )
+   if( !fKeepOpen || errCode != HB_SUCCESS )
    {
       hb_rddReleaseCurrentArea();
       hb_rddSelectWorkAreaNumber( uiPrevArea );
@@ -828,7 +828,7 @@ HB_ERRCODE hb_rddCreateTableTemp( const char * szDriver, const char * szAlias, c
    }
 
    /* Create a new WorkArea node */
-   if( ! hb_rddInsertAreaNode( szDriver ) )
+   if( !hb_rddInsertAreaNode( szDriver ) )
    {
       hb_rddSelectWorkAreaNumber( uiPrevArea );
       hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
@@ -1005,7 +1005,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
       uiSize = uiSizeDst = uiSizeSrc;
    }
 
-   if( ! uiSize )
+   if( !uiSize )
    {
       return HB_FAILURE;
    }
@@ -1028,7 +1028,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
    lpdbTransInfo->lpaDest      = lpaDest;
    lpdbTransInfo->lpTransItems = static_cast<LPDBTRANSITEM>(hb_xgrab(uiSize * sizeof(DBTRANSITEM)));
 
-   if( ! lpaDest )
+   if( !lpaDest )
    {
       *pStruct = hb_itemNew(nullptr);
       hb_arrayNew(*pStruct, 0);
@@ -1094,7 +1094,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
          if( szField )
          {
             uiPosSrc = hb_rddFieldExpIndex( lpaSource, szField );
-            if( ! uiPosSrc )
+            if( !uiPosSrc )
             {
                continue;
             }
@@ -1114,7 +1114,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
                }
                lpdbTransInfo->lpTransItems[uiSize].uiSource = uiPosSrc;
                lpdbTransInfo->lpTransItems[uiSize++].uiDest = uiPosDst;
-               if( ! lpaDest )
+               if( !lpaDest )
                {
                   hb_arraySize(*pStruct, uiSize);
                   hb_fldStructure( lpaSource, uiPosSrc, 0, hb_arrayGetItemPtr(*pStruct, uiSize) );
@@ -1235,7 +1235,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
    {
       LPRDDNODE pRddNode = hb_rddFindNode( szDriver, nullptr );
 
-      if( ! pRddNode )
+      if( !pRddNode )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_USE_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
          return HB_FAILURE;
@@ -1396,7 +1396,7 @@ static HB_ERRCODE hb_rddEvalWABlock( AREAP pArea, void * pBlock )
    hb_rddSelectWorkAreaNumber( pArea->uiArea );
    pItem = hb_vmEvalBlockOrMacro( static_cast<PHB_ITEM>(pBlock) );
 
-   if( hb_vmRequestQuery() != 0 || ( HB_IS_LOGICAL(pItem) && ! hb_itemGetL(pItem) ) )
+   if( hb_vmRequestQuery() != 0 || ( HB_IS_LOGICAL(pItem) && !hb_itemGetL(pItem) ) )
    {
       return HB_FAILURE;
    }

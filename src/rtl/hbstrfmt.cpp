@@ -226,7 +226,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                   bufadd( &buffer, " ", 1 );
                }
             }
-            if( ! fLeftAlign )
+            if( !fLeftAlign )
             {
                bufadd( &buffer, buf, 1 );
             }
@@ -561,7 +561,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                }
             }
 
-            if( ! fLeftAlign )
+            if( !fLeftAlign )
             {
                bufadd( &buffer, pStr, nSize );
             }

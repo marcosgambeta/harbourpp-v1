@@ -56,7 +56,7 @@
 #endif
 
 /* Try to translate C errno into DOS error code */
-#if ! defined( HB_OS_WIN )
+#if !defined( HB_OS_WIN )
 static HB_ERRCODE hb_errnoToDosError( int ErrCode )
 {
    switch( ErrCode )

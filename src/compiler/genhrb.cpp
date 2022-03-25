@@ -146,20 +146,20 @@ void hb_compGenPortObj(HB_COMP_DECL, PHB_FNAME pFileName)
    HB_BYTE * pHrbBody;
    FILE * yyc;
 
-   if( ! pFileName->szExtension )
+   if( !pFileName->szExtension )
    {
       pFileName->szExtension = ".hrb";
    }
    hb_fsFNameMerge(szFileName, pFileName);
 
    yyc = hb_fopen(szFileName, "wb");
-   if( ! yyc )
+   if( !yyc )
    {
       hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CREATE_OUTPUT, szFileName, nullptr);
       return;
    }
 
-   if( ! HB_COMP_PARAM->fQuiet )
+   if( !HB_COMP_PARAM->fQuiet )
    {
       char buffer[80 + HB_PATH_MAX - 1];
       hb_snprintf(buffer, sizeof(buffer), "Generating Harbour Portable Object output to \'%s\'... ", szFileName);
@@ -177,7 +177,7 @@ void hb_compGenPortObj(HB_COMP_DECL, PHB_FNAME pFileName)
 
    fclose(yyc);
 
-   if( ! HB_COMP_PARAM->fQuiet )
+   if( !HB_COMP_PARAM->fQuiet )
    {
       hb_compOutStd(HB_COMP_PARAM, "Done.\n");
    }

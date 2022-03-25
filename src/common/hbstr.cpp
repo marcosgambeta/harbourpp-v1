@@ -139,7 +139,7 @@ HB_BOOL hb_strEmpty(const char * szText, HB_SIZE nLen)
    {
       char c = szText[nLen];
 
-      if( ! HB_ISSPACE(c) )
+      if( !HB_ISSPACE(c) )
       {
          return HB_FALSE;
       }
@@ -322,7 +322,7 @@ int hb_strnicmp(const char * s1, const char * s2, HB_SIZE count)
          rc = (c1 < c2 ? -1 : 1);
          break;
       }
-      else if( ! c1 )
+      else if( !c1 )
       {
          break;
       }
@@ -562,7 +562,7 @@ double hb_numRound(double dNum, int iDec)
 
    doComplete5 /= doBase;
 
-#if defined(HB_DBLFL_PREC_FACTOR) && ! defined(HB_CLP_STRICT)
+#if defined(HB_DBLFL_PREC_FACTOR) && !defined(HB_CLP_STRICT)
    /* similar operation is done by Cl5.3
       it's a hack to force rounding FL values UP */
    doComplete5 *= HB_DBLFL_PREC_FACTOR;
@@ -584,7 +584,7 @@ double hb_numInt(double dNum)
 {
    double dInt;
 
-#if defined(HB_DBLFL_PREC_FACTOR) && ! defined(HB_CLP_STRICT)
+#if defined(HB_DBLFL_PREC_FACTOR) && !defined(HB_CLP_STRICT)
    /* Similar hack as in round to make this functions compatible */
    dNum *= HB_DBLFL_PREC_FACTOR;
 #endif
@@ -728,13 +728,13 @@ static HB_BOOL hb_str2number(HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, H
                iWidth++;
             }
          }
-         else if( c == '.' && ! fDec )
+         else if( c == '.' && !fDec )
          {
             fDec = HB_TRUE;
          }
          else
          {
-            while( ! fDec && iPos < iLen )
+            while( !fDec && iPos < iLen )
             {
                if( szNum[iPos++] == '.' )
                {
@@ -765,9 +765,9 @@ static HB_BOOL hb_str2number(HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, H
          *lVal = -*lVal;
       }
    }
-   if( ! fDbl && (
+   if( !fDbl && (
 #if defined(PCODE_LONG_LIM)
-        (fPCode && ! fHex && ! PCODE_LONG_LIM(*lVal)) ||
+        (fPCode && !fHex && !PCODE_LONG_LIM(*lVal)) ||
 #endif
         fDec) )
    {
@@ -873,7 +873,7 @@ double hb_strVal(const char * szText, HB_SIZE nLen)
    HB_MAXINT lVal;
    double    dVal;
 
-   if( ! hb_str2number(HB_FALSE, szText, nLen, &lVal, &dVal, nullptr, nullptr))
+   if( !hb_str2number(HB_FALSE, szText, nLen, &lVal, &dVal, nullptr, nullptr))
    {
       dVal = static_cast<double>(lVal);
    }

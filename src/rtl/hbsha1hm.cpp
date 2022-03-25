@@ -118,7 +118,7 @@ HB_FUNC( HB_HMAC_SHA1 )
    hb_HMAC_SHA1_EndMessage( mac, &ctx );
    hb_HMAC_SHA1_Done( &ctx );
 
-   if( ! hb_parl(3) )
+   if( !hb_parl(3) )
    {
       char hex[( sizeof(mac) * 2 ) + 1];
       hb_strtohex( reinterpret_cast<char*>(mac), sizeof(mac), hex );

@@ -208,7 +208,7 @@ static void hb_compOutMsg(void * cargo, int iErrorFmt, int iLine, const char * s
 
 void hb_compOutStd(HB_COMP_DECL, const char * szMessage)
 {
-   if( ! HB_COMP_PARAM->fFullQuiet )
+   if( !HB_COMP_PARAM->fFullQuiet )
    {
       if( HB_COMP_PARAM->outStdFunc )
       {
@@ -224,7 +224,7 @@ void hb_compOutStd(HB_COMP_DECL, const char * szMessage)
 
 void hb_compOutErr(HB_COMP_DECL, const char * szMessage)
 {
-   if( ! HB_COMP_PARAM->fFullQuiet )
+   if( !HB_COMP_PARAM->fFullQuiet )
    {
       if( HB_COMP_PARAM->outErrFunc )
       {

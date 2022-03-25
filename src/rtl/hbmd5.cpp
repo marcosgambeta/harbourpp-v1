@@ -427,7 +427,7 @@ HB_FUNC( HB_MD5 )  /* Considered insecure. Use SHA256 or higher instead. */
 
       hb_md5( pszStr, nLen, dststr );
 
-      if( ! hb_parl(2) )
+      if( !hb_parl(2) )
       {
          char digest[( sizeof(dststr) * 2 ) + 1];
          hb_strtohex( dststr, sizeof(dststr), digest );
@@ -437,7 +437,7 @@ HB_FUNC( HB_MD5 )  /* Considered insecure. Use SHA256 or higher instead. */
       {
          hb_retclen(dststr, HB_SIZEOFARRAY(dststr));
       }
-      if( ! hb_parl(2) )
+      if( !hb_parl(2) )
       {
          char digest[( sizeof(dststr) * 2 ) + 1];
          hb_strtohex( dststr, sizeof(dststr), digest );
@@ -461,7 +461,7 @@ HB_FUNC( HB_MD5FILE )  /* Considered insecure. Use SHA256 or higher instead. */
 
    if( pszFileName && hb_md5file( pszFileName, dststr ) )
    {
-      if( ! hb_parl(2) )
+      if( !hb_parl(2) )
       {
          char digest[( sizeof(dststr) * 2 ) + 1];
          hb_strtohex( dststr, sizeof(dststr), digest );
@@ -484,7 +484,7 @@ HB_FUNC( HB_HMAC_MD5 )
 
    hb_hmac_md5( hb_parcx(2), hb_parclen(2), hb_parcx(1), hb_parclen(1), dststr );
 
-   if( ! hb_parl(3) )
+   if( !hb_parl(3) )
    {
       char digest[( sizeof(dststr) * 2 ) + 1];
       hb_strtohex( dststr, sizeof(dststr), digest );

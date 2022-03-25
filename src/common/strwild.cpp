@@ -47,7 +47,7 @@
 #include "hbapi.h"
 #include "hbapicdp.h"
 
-#if defined(HB_OS_UNIX) && ! defined(HB_NO_FNMATCH)
+#if defined(HB_OS_UNIX) && !defined(HB_NO_FNMATCH)
 #  include <fnmatch.h>
 #endif
 
@@ -62,7 +62,7 @@ static HB_BOOL hb_strMatchWildRaw(const char * szString, const char * szPattern,
    nPosP = nPosV = nAny = 0;
    nLen = strlen(szString);
    nSize = strlen(szPattern);
-   while( nPosP < nSize || (fExact && ! fAny && nPosV < nLen) )
+   while( nPosP < nSize || (fExact && !fAny && nPosV < nLen) )
    {
       if( nPosP < nSize && szPattern[nPosP] == '*' )
       {
@@ -70,7 +70,7 @@ static HB_BOOL hb_strMatchWildRaw(const char * szString, const char * szPattern,
          nPosP++;
       }
       else if( nPosV < nLen && nPosP < nSize && (szPattern[nPosP] == '?' ||
-               (! fCase ? szPattern[nPosP] == szString[nPosV] : (hb_charUpper(szPattern[nPosP]) == hb_charUpper(szString[nPosV])))) )
+               (!fCase ? szPattern[nPosP] == szString[nPosV] : (hb_charUpper(szPattern[nPosP]) == hb_charUpper(szString[nPosV])))) )
       {
          if( fAny )
          {
@@ -136,7 +136,7 @@ static HB_BOOL hb_strMatchWildCDP(const char * szString, const char * szPattern,
    nPosP = nPosV = nAny = 0;
    nLen = strlen(szString);
    nSize = strlen(szPattern);
-   while( nPosP < nSize || (fExact && ! fAny && nPosV < nLen) )
+   while( nPosP < nSize || (fExact && !fAny && nPosV < nLen) )
    {
       if( nPosP < nSize && szPattern[nPosP] == '*' )
       {
@@ -156,7 +156,7 @@ static HB_BOOL hb_strMatchWildCDP(const char * szString, const char * szPattern,
          }
          else if( fCase )
          {
-            if( ! hb_cdpCharCaseEq(cdp, szString, nLen, &nPosV, szPattern, nSize, &nPosP) )
+            if( !hb_cdpCharCaseEq(cdp, szString, nLen, &nPosV, szPattern, nSize, &nPosP) )
             {
                nPosV = nPV;
                nPosP = nPP;
@@ -164,7 +164,7 @@ static HB_BOOL hb_strMatchWildCDP(const char * szString, const char * szPattern,
          }
          else
          {
-            if( ! hb_cdpCharEq(cdp, szString, nLen, &nPosV, szPattern, nSize, &nPosP) )
+            if( !hb_cdpCharEq(cdp, szString, nLen, &nPosV, szPattern, nSize, &nPosP) )
             {
                nPosV = nPV;
                nPosP = nPP;

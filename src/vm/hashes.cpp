@@ -428,9 +428,9 @@ static PHB_ITEM hb_hashValuePtr( PHB_BASEHASH pBaseHash, PHB_ITEM pKey, HB_BOOL 
 {
    HB_SIZE nPos;
 
-   if( ! hb_hashFind( pBaseHash, pKey, &nPos ) )
+   if( !hb_hashFind( pBaseHash, pKey, &nPos ) )
    {
-      if( ! fAdd )
+      if( !fAdd )
       {
          return nullptr;
       }
@@ -467,7 +467,7 @@ static HB_BOOL hb_hashNewValue( PHB_BASEHASH pBaseHash, PHB_ITEM pKey, PHB_ITEM 
 {
    HB_SIZE nPos;
 
-   if( ! hb_hashFind( pBaseHash, pKey, &nPos ) )
+   if( !hb_hashFind( pBaseHash, pKey, &nPos ) )
    {
       if( pBaseHash->nSize == pBaseHash->nLen )
       {
@@ -808,7 +808,7 @@ PHB_ITEM hb_hashGetItemRefPtr( PHB_ITEM pHash, PHB_ITEM pKey )
             HB_HASH_AUTOADD_REFERENCE );
       if( pDest )
       {
-         if( ! HB_IS_BYREF(pDest) )
+         if( !HB_IS_BYREF(pDest) )
          {
             pDest = hb_memvarDetachLocal( pDest );
          }
@@ -1259,7 +1259,7 @@ void hb_hashJoin( PHB_ITEM pDest, PHB_ITEM pSource, int iType )
             {
                for( nPos = 0; nPos < pBaseHash->nLen; ++nPos )
                {
-                  if( ! hb_hashDel( pDest, &pBaseHash->pPairs[nPos].key ) )
+                  if( !hb_hashDel( pDest, &pBaseHash->pPairs[nPos].key ) )
                   {
                      PHB_ITEM pVal = &pBaseHash->pPairs[nPos].value;
                      if( HB_IS_BYREF(pVal) )
@@ -1304,7 +1304,7 @@ PHB_ITEM hb_hashGetKeys( PHB_ITEM pHash )
       while( ( pKey = hb_hashGetKeyAt( pHash, ++nPos ) ) != nullptr )
       {
          PHB_ITEM pDest = hb_arrayGetItemPtr(pKeys, nPos);
-         if( ! pDest )
+         if( !pDest )
          {
             break;
          }
@@ -1330,7 +1330,7 @@ PHB_ITEM hb_hashGetValues( PHB_ITEM pHash )
       while( ( pVal = hb_hashGetValueAt( pHash, ++nPos ) ) != nullptr )
       {
          PHB_ITEM pDest = hb_arrayGetItemPtr(pValues, nPos);
-         if( ! pDest )
+         if( !pDest )
          {
             break;
          }
@@ -1355,7 +1355,7 @@ void hb_hashSetDefault( PHB_ITEM pHash, PHB_ITEM pValue )
          hb_itemRelease(pHash->item.asHash.value->pDefault);
          pHash->item.asHash.value->pDefault = nullptr;
       }
-      if( pValue && ! HB_IS_NIL(pValue) && ( ! HB_IS_HASH(pValue) || pHash->item.asHash.value != pValue->item.asHash.value ) )
+      if( pValue && !HB_IS_NIL(pValue) && ( !HB_IS_HASH(pValue) || pHash->item.asHash.value != pValue->item.asHash.value ) )
       {
          pHash->item.asHash.value->pDefault = hb_itemClone(pValue);
          hb_gcUnlock( pHash->item.asHash.value->pDefault );

@@ -93,7 +93,7 @@ static HB_BOOL hb_sxOrdParam( LPDBORDERINFO pInfo )
    else if( HB_ISNUM(1) )
    {
       pInfo->itmOrder = hb_param(1, HB_IT_NUMERIC);
-      if( ! HB_ISNIL(2) ) /* hb_pcount() > 2 */
+      if( !HB_ISNIL(2) ) /* hb_pcount() > 2 */
       {
          pInfo->atomBagName = hb_param(2, HB_IT_NUMERIC);
          if( hb_parni(2) <= 0 )
@@ -211,7 +211,7 @@ HB_FUNC( SX_WARM )
          Info.itmResult = hb_itemNew(nullptr);
          if( SELF_ORDINFO( pArea, DBOI_CHGONLY, &Info ) == HB_SUCCESS )
          {
-            fResult = HB_IS_LOGICAL(Info.itmResult) && ! hb_itemGetL(Info.itmResult);
+            fResult = HB_IS_LOGICAL(Info.itmResult) && !hb_itemGetL(Info.itmResult);
          }
          hb_itemRelease(Info.itmNewVal);
          hb_itemRelease(Info.itmResult);
@@ -323,7 +323,7 @@ HB_FUNC( SX_SETSCOPE )
       {
          int iScope = hb_parni(1);
          Info.itmResult = hb_itemNew(nullptr);
-         if( ! HB_ISNIL(2) )
+         if( !HB_ISNIL(2) )
          {
             Info.itmNewVal = hb_param(2, HB_IT_ANY);
          }
@@ -497,7 +497,7 @@ HB_FUNC( SX_DESCEND )
          Info.itmResult = hb_itemNew(nullptr);
          if( SELF_ORDINFO( pArea, DBOI_ISDESC, &Info ) == HB_SUCCESS )
          {
-            Info.itmNewVal = hb_itemPutL(nullptr, ! hb_itemGetL(Info.itmResult));
+            Info.itmNewVal = hb_itemPutL(nullptr, !hb_itemGetL(Info.itmResult));
             SELF_ORDINFO( pArea, DBOI_ISDESC, &Info );
             hb_itemRelease(Info.itmNewVal);
          }
@@ -571,9 +571,9 @@ HB_FUNC( SX_KEYSKIP )
    {
       if( SELF_SKIPRAW( pArea, hb_parnldef(1, 1) ) == HB_SUCCESS )
       {
-         if( SELF_EOF( pArea, &fBEof ) == HB_SUCCESS && ! fBEof )
+         if( SELF_EOF( pArea, &fBEof ) == HB_SUCCESS && !fBEof )
          {
-            fResult = SELF_BOF( pArea, &fBEof ) == HB_SUCCESS && ! fBEof;
+            fResult = SELF_BOF( pArea, &fBEof ) == HB_SUCCESS && !fBEof;
          }
       }
    }
@@ -718,7 +718,7 @@ HB_FUNC( SX_WILDSEEK )
       if( iOrder > 0 )
       {
          HB_ERRCODE errCode = HB_SUCCESS;
-         if( ! fCont )
+         if( !fCont )
          {
             errCode = SELF_GOTOP( pArea );
             if( errCode == HB_SUCCESS )
@@ -731,7 +731,7 @@ HB_FUNC( SX_WILDSEEK )
                }
             }
          }
-         if( ! fFound && errCode == HB_SUCCESS )
+         if( !fFound && errCode == HB_SUCCESS )
          {
             Info.itmNewVal = hb_param(1, HB_IT_STRING);
             if( SELF_ORDINFO( pArea, DBOI_SKIPWILD, &Info ) == HB_SUCCESS )
@@ -827,7 +827,7 @@ HB_FUNC( SX_ISROXLOCK )
          {
             fLocked = hb_itemGetL(Info.itmResult);
          }
-         if( ! fLocked )
+         if( !fLocked )
          {
             Info.itmNewVal = hb_itemPutL(nullptr, HB_TRUE);
             if( SELF_ORDINFO( pArea, DBOI_READLOCK, &Info ) == HB_SUCCESS )

@@ -63,7 +63,7 @@
 static int     s_argc = 0;
 static char ** s_argv = nullptr;
 
-#if ! defined( HB_OS_WIN )
+#if !defined( HB_OS_WIN )
 
 static char    s_szAppName[HB_PATH_MAX];
 
@@ -107,7 +107,7 @@ void hb_winmainArgVBuild( void )
    nSize = 0;
    iArgC = -1;
 
-   while( lpCmdLine && ! lpArgV && iArgC != 0 )
+   while( lpCmdLine && !lpArgV && iArgC != 0 )
    {
       HB_BOOL fQuoted;
       LPCTSTR lpSrc;
@@ -138,9 +138,9 @@ void hb_winmainArgVBuild( void )
             {
                lpArg = lpDst;
             }
-            fQuoted = ! fQuoted;
+            fQuoted = !fQuoted;
          }
-         else if( fQuoted || ! HB_ISSPACE(*lpSrc) )
+         else if( fQuoted || !HB_ISSPACE(*lpSrc) )
          {
             if( lpArg == nullptr )
             {
@@ -371,7 +371,7 @@ void hb_cmdargUpdate( void )
    HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargUpdate()" ) );
 #endif
 
-#if ! defined( HB_OS_WIN )
+#if !defined( HB_OS_WIN )
    if( s_argc > 0 )
    {
       /* NOTE: try to create absolute path from s_argv[0] if necessary */
@@ -379,7 +379,7 @@ void hb_cmdargUpdate( void )
          PHB_FNAME pFName = hb_fsFNameSplit(s_argv[0]);
          HB_BOOL fInPath = HB_FALSE;
 
-         if( ! pFName->szPath )
+         if( !pFName->szPath )
          {
             char * pszPATH = hb_getenv( "PATH" );
 
@@ -409,7 +409,7 @@ void hb_cmdargUpdate( void )
                   pNextPath = pNextPath->pNext;
                }
                hb_fsFreeSearchPath(pSearchPath);
-               if( ! fInPath )
+               if( !fInPath )
                {
                   pFName->szPath = nullptr;
                }
@@ -422,7 +422,7 @@ void hb_cmdargUpdate( void )
          if( pFName->szPath )
          {
 #     if defined( HB_OS_HAS_DRIVE_LETTER )
-            if( pFName->szPath[0] != HB_OS_PATH_DELIM_CHR && ! pFName->szDrive )
+            if( pFName->szPath[0] != HB_OS_PATH_DELIM_CHR && !pFName->szDrive )
 #     else
             if( pFName->szPath[0] != HB_OS_PATH_DELIM_CHR )
 #     endif
@@ -463,7 +463,7 @@ int hb_cmdargPushArgs( void )
    for( int i = 1; i < s_argc; i++ )
    {
       /* Filter out any parameters beginning with //, like //INFO */
-      if( ! hb_cmdargIsInternal( s_argv[i], nullptr ) )
+      if( !hb_cmdargIsInternal( s_argv[i], nullptr ) )
       {
 #if defined( HB_OS_WIN )
          if( s_lpArgV )
@@ -565,7 +565,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
 
    /* Check the environment variable */
    pszEnvVar = hb_getenv( "HARBOUR" );
-   if( ! pszEnvVar || pszEnvVar[0] == '\0' )
+   if( !pszEnvVar || pszEnvVar[0] == '\0' )
    {
       if( pszEnvVar )
       {
@@ -770,7 +770,7 @@ HB_FUNC( HB_ARGSHIFT )
    {
       while( iArg < s_argc )
       {
-         if( ! hb_cmdargIsInternal( s_argv[iArg], nullptr ) )
+         if( !hb_cmdargIsInternal( s_argv[iArg], nullptr ) )
          {
             s_argv[0] = s_argv[iArg];
 #if defined( HB_OS_WIN )

@@ -156,7 +156,7 @@ static void hb_compDispMessage(HB_COMP_DECL, char cPrefix, int iValue, const cha
 
 void hb_compGenError(HB_COMP_DECL, const char * const szErrors[], char cPrefix, int iError, const char * szError1, const char * szError2)
 {
-   if( ! HB_COMP_PARAM->fExit && (cPrefix == 'F' || ! HB_COMP_PARAM->fError) )
+   if( !HB_COMP_PARAM->fExit && (cPrefix == 'F' || !HB_COMP_PARAM->fError) )
    {
       PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
 
@@ -181,7 +181,7 @@ void hb_compGenWarning(HB_COMP_DECL, const char * const szWarnings[], char cPref
 {
    const char * szText = szWarnings[iWarning - 1];
 
-   if( ! HB_COMP_PARAM->fExit && (static_cast<int>(szText[0] - '0') <= HB_COMP_PARAM->iWarnings) )
+   if( !HB_COMP_PARAM->fExit && (static_cast<int>(szText[0] - '0') <= HB_COMP_PARAM->iWarnings) )
    {
       hb_compDispMessage(HB_COMP_PARAM, cPrefix, iWarning, szText + 1, szWarning1, szWarning2);
 
@@ -226,7 +226,7 @@ PHB_EXPR hb_compErrorStatic(HB_COMP_DECL, const char * szVarName, PHB_EXPR pExpr
 
 PHB_EXPR hb_compWarnMeaningless(HB_COMP_DECL, PHB_EXPR pExpr)
 {
-   if( ! HB_COMP_PARAM->fMeaningful )
+   if( !HB_COMP_PARAM->fMeaningful )
    {
       const char * szDesc = hb_compExprDescription(pExpr);
       hb_compGenWarning(HB_COMP_PARAM, hb_comp_szWarnings, 'W', HB_COMP_WARN_MEANINGLESS, szDesc, nullptr);

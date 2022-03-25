@@ -282,7 +282,7 @@ static long s_sockexFlush( PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync )
    long lResult = 0;
 
    if( pZ->fCompressOut &&
-       ( ! fSync || pZ->z_write.avail_out != HB_ZSOCK_WRBUFSIZE ||
+       ( !fSync || pZ->z_write.avail_out != HB_ZSOCK_WRBUFSIZE ||
          pZ->z_write.total_in != 0 || pZ->z_write.total_out != 0 ) )
    {
       int err;

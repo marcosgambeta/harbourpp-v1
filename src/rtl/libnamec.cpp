@@ -61,7 +61,7 @@ HB_FUNC( HB_LIBEXT )
 
 HB_FUNC( HB_LIBPREFIX )
 {
-#if ! defined( HB_OS_UNIX )
+#if !defined( HB_OS_UNIX )
    hb_retc_null();
 #else
    hb_retc_const( "lib" );

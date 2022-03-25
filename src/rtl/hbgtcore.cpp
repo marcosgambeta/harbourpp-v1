@@ -260,7 +260,7 @@ static void hb_gt_def_Mark( PHB_GT pGT )
 
 static HB_BOOL hb_gt_def_Lock( PHB_GT pGT )
 {
-   return ! pGT->pMutex || hb_threadMutexLock( pGT->pMutex );
+   return !pGT->pMutex || hb_threadMutexLock( pGT->pMutex );
 }
 
 static void hb_gt_def_Unlock( PHB_GT pGT )
@@ -450,7 +450,7 @@ static const char * hb_gt_def_ColorDecode( const char * szColorString, int * piC
             break;
 
          case '/':
-            if( ! bFore )
+            if( !bFore )
             {
                nColor = ( ( nColor >> 4 ) & 0x0F07 ) | ( nColor & 0x88 );
             }
@@ -572,7 +572,7 @@ static void hb_gt_def_StringToColors( PHB_GT pGT, const char * szColorString, in
 
    pColors = *pColorsPtr;
 
-   if( ! szColorString || ! *szColorString )
+   if( !szColorString || !*szColorString )
    {
       pColors[HB_CLR_STANDARD]   = 0x07;
       pColors[HB_CLR_ENHANCED]   = 0x70;
@@ -917,7 +917,7 @@ static HB_BOOL hb_gt_def_GetUC( PHB_GT pGT, int iRow, int iCol, int * piColor, H
          }
          if( uc == 0 )
          {
-            if( pGT->cdpBox && ( ! fTerm || pGT->cdpBox != pGT->cdpTerm ) && pGT->cdpBox != pGT->cdpHost && ( *pbAttr & HB_GT_ATTR_BOX ) )
+            if( pGT->cdpBox && ( !fTerm || pGT->cdpBox != pGT->cdpTerm ) && pGT->cdpBox != pGT->cdpHost && ( *pbAttr & HB_GT_ATTR_BOX ) )
             {
                uc = hb_cdpGetUC( pGT->cdpBox, wc, 0 );
             }
@@ -964,7 +964,7 @@ static int hb_gt_def_PutText( PHB_GT pGT, int iRow, int iCol, int iColor, const 
 
    while( HB_CDPCHAR_GET( cdp, szText, nLen, &nIndex, &wc ) )
    {
-      if( ! HB_GTSELF_PUTCHAR(pGT, iRow, iCol++, iColor, 0, wc) )
+      if( !HB_GTSELF_PUTCHAR(pGT, iRow, iCol++, iColor, 0, wc) )
       {
          while( HB_CDPCHAR_GET( cdp, szText, nLen, &nIndex, &wc ) )
          {
@@ -982,7 +982,7 @@ static int hb_gt_def_PutTextW( PHB_GT pGT, int iRow, int iCol, int iColor, const
    {
       do
       {
-         if( ! HB_GTSELF_PUTCHAR(pGT, iRow, iCol, iColor, 0, *szText++) )
+         if( !HB_GTSELF_PUTCHAR(pGT, iRow, iCol, iColor, 0, *szText++) )
          {
             break;
          }
@@ -1010,7 +1010,7 @@ static void hb_gt_def_Replicate( PHB_GT pGT, int iRow, int iCol, int iColor, HB_
    }
    while( nLen-- )
    {
-      if( ! HB_GTSELF_PUTCHAR(pGT, iRow, iCol, iColor, bAttr, usChar) )
+      if( !HB_GTSELF_PUTCHAR(pGT, iRow, iCol, iColor, bAttr, usChar) )
       {
          break;
       }
@@ -1414,7 +1414,7 @@ static void hb_gt_def_Save( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iR
          HB_BYTE bAttr;
          HB_USHORT usChar;
 
-         if( ! HB_GTSELF_GETCHAR(pGT, iTop, iCol, &iColor, &bAttr, &usChar) )
+         if( !HB_GTSELF_GETCHAR(pGT, iTop, iCol, &iColor, &bAttr, &usChar) )
          {
             usChar = HB_GTSELF_GETCLEARCHAR(pGT);
             iColor = HB_GTSELF_GETCLEARCOLOR(pGT);
@@ -1480,11 +1480,11 @@ static void hb_gt_def_SetAttribute( PHB_GT pGT, int iTop, int iLeft, int iBottom
          HB_BYTE bAttr;
          HB_USHORT usChar;
 
-         if( ! HB_GTSELF_GETCHAR(pGT, iTop, iCol, &iColorOld, &bAttr, &usChar) )
+         if( !HB_GTSELF_GETCHAR(pGT, iTop, iCol, &iColorOld, &bAttr, &usChar) )
          {
             break;
          }
-         if( ! HB_GTSELF_PUTCHAR(pGT, iTop, iCol, iColor, bAttr, usChar) )
+         if( !HB_GTSELF_PUTCHAR(pGT, iTop, iCol, iColor, bAttr, usChar) )
          {
             break;
          }
@@ -1947,7 +1947,7 @@ static void hb_gt_def_VertLine( PHB_GT pGT, int iCol, int iTop, int iBottom, HB_
 
    while( --iLength >= 0 )
    {
-      if( ! HB_GTSELF_PUTCHAR(pGT, iRow, iCol, iColor, HB_GT_ATTR_BOX, usChar) )
+      if( !HB_GTSELF_PUTCHAR(pGT, iRow, iCol, iColor, HB_GT_ATTR_BOX, usChar) )
       {
          break;
       }
@@ -1957,11 +1957,11 @@ static void hb_gt_def_VertLine( PHB_GT pGT, int iCol, int iTop, int iBottom, HB_
 
 static HB_BOOL hb_gt_def_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const char * pszHostCDP, HB_BOOL fBox )
 {
-   if( ! pszHostCDP )
+   if( !pszHostCDP )
    {
       pszHostCDP = hb_cdpID();
    }
-   if( ! pszTermCDP )
+   if( !pszTermCDP )
    {
       pszTermCDP = pszHostCDP;
    }
@@ -1980,11 +1980,11 @@ static HB_BOOL hb_gt_def_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const c
 
 static HB_BOOL hb_gt_def_SetKeyCP( PHB_GT pGT, const char * pszTermCDP, const char * pszHostCDP )
 {
-   if( ! pszHostCDP )
+   if( !pszHostCDP )
    {
       pszHostCDP = hb_cdpID();
    }
-   if( ! pszTermCDP )
+   if( !pszTermCDP )
    {
       pszTermCDP = pszHostCDP;
    }
@@ -2116,7 +2116,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          int iRow, iCol, iFlag;
          HB_SIZE nSize;
 
-         if( ! pInfo->pResult )
+         if( !pInfo->pResult )
          {
             pInfo->pResult = hb_itemNew(nullptr);
          }
@@ -2323,7 +2323,7 @@ static int hb_gt_def_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
                   {
                      ulSpace1 = ulMsg;
                   }
-                  else if( ulCurrWidth <= ulMaxWidth && ! ulSpace2 )
+                  else if( ulCurrWidth <= ulMaxWidth && !ulSpace2 )
                   {
                      ulSpace2 = ulMsg;
                   }
@@ -3316,7 +3316,7 @@ static int hb_gt_def_InkeyGet( PHB_GT pGT, HB_BOOL fWait, double dSeconds, int i
       if( fPop )
       {
          hb_gt_def_InkeyPop(pGT);
-         if( ! pGT->pInkeyFilterBlock )
+         if( !pGT->pInkeyFilterBlock )
          {
             break;
          }
@@ -3331,7 +3331,7 @@ static int hb_gt_def_InkeyGet( PHB_GT pGT, HB_BOOL fWait, double dSeconds, int i
       }
 
       /* immediately break if a VM request is pending. */
-      if( ! fWait || ( timeout = hb_timerTest( timeout, &timer ) ) == 0 || hb_vmRequestQuery() != 0 )
+      if( !fWait || ( timeout = hb_timerTest( timeout, &timer ) ) == 0 || hb_vmRequestQuery() != 0 )
       {
          break;
       }
@@ -4205,7 +4205,7 @@ void * hb_gtAlloc( void * hGT )
    if( hGT )
    {
       pGT = static_cast<PHB_GT>(hGT);
-      if( ! HB_GTSELF_LOCK(pGT) )
+      if( !HB_GTSELF_LOCK(pGT) )
       {
          pGT = nullptr;
       }
@@ -4231,7 +4231,7 @@ void hb_gtRelease( void * hGT )
    if( hGT )
    {
       pGT = static_cast<PHB_GT>(hGT);
-      if( ! HB_GTSELF_LOCK(pGT) )
+      if( !HB_GTSELF_LOCK(pGT) )
       {
          pGT = nullptr;
       }

@@ -76,7 +76,7 @@
                                HB_PP_TOKEN_TYPE((t)->type) == HB_PP_TOKEN_RIGHT_SB || \
                                HB_PP_TOKEN_TYPE((t)->type) == HB_PP_TOKEN_RIGHT_CB || \
                                (HB_PP_TOKEN_TYPE((t)->type) == HB_PP_TOKEN_SEND && \
-                               (t)->spaces == 0 && ! HB_PP_LEX_SELF(t)))
+                               (t)->spaces == 0 && !HB_PP_LEX_SELF(t)))
 
 #define LOOKUP           0
 #define OPERATOR        -2
@@ -281,7 +281,7 @@ static const char * hb_comp_tokenString(YYSTYPE * yylval_ptr, HB_COMP_DECL, PHB_
    {
       yylval_ptr->valChar.dealloc = pToken->len != strlen(pToken->value);
       pToken->value = hb_compIdentifierNew(HB_COMP_PARAM, pToken->value, yylval_ptr->valChar.dealloc ? HB_IDENT_COPY : HB_IDENT_FREE);
-      if( ! yylval_ptr->valChar.dealloc )
+      if( !yylval_ptr->valChar.dealloc )
       {
          yylval_ptr->valChar.string = const_cast<char*>(pToken->value);
       }
@@ -297,27 +297,27 @@ static HB_BOOL hb_comp_timeDecode(PHB_PP_TOKEN pTime, long * plTime)
    double dNumber;
    int iDec, iWidth;
 
-   if( ! pTime || HB_PP_TOKEN_TYPE(pTime->type) != HB_PP_TOKEN_NUMBER ||
+   if( !pTime || HB_PP_TOKEN_TYPE(pTime->type) != HB_PP_TOKEN_NUMBER ||
        hb_compStrToNum(pTime->value, pTime->len, &lHour, &dNumber, &iDec, &iWidth) || lHour < 0 || lHour >= 24 )
    {
       return HB_FALSE;
    }
 
    pTime = pTime->pNext;
-   if( ! pTime || HB_PP_TOKEN_TYPE(pTime->type) != HB_PP_TOKEN_SEND )
+   if( !pTime || HB_PP_TOKEN_TYPE(pTime->type) != HB_PP_TOKEN_SEND )
    {
       return HB_FALSE;
    }
 
    pTime = pTime->pNext;
-   if( ! pTime || HB_PP_TOKEN_TYPE(pTime->type) != HB_PP_TOKEN_NUMBER ||
+   if( !pTime || HB_PP_TOKEN_TYPE(pTime->type) != HB_PP_TOKEN_NUMBER ||
        hb_compStrToNum(pTime->value, pTime->len, &lMinute, &dNumber, &iDec, &iWidth) || lMinute < 0 || lMinute >= 60 )
    {
       return HB_FALSE;
    }
 
    pTime = pTime->pNext;
-   if( ! pTime )
+   if( !pTime )
    {
       return HB_FALSE;
    }
@@ -325,7 +325,7 @@ static HB_BOOL hb_comp_timeDecode(PHB_PP_TOKEN pTime, long * plTime)
    if( HB_PP_TOKEN_TYPE(pTime->type) == HB_PP_TOKEN_SEND )
    {
       pTime = pTime->pNext;
-      if( ! pTime || HB_PP_TOKEN_TYPE(pTime->type) != HB_PP_TOKEN_NUMBER )
+      if( !pTime || HB_PP_TOKEN_TYPE(pTime->type) != HB_PP_TOKEN_NUMBER )
       {
          return HB_FALSE;
       }
@@ -377,7 +377,7 @@ static HB_BOOL hb_comp_timeDecode(PHB_PP_TOKEN pTime, long * plTime)
       }
    }
 
-   if( ! pTime || HB_PP_TOKEN_TYPE(pTime->type) != HB_PP_TOKEN_RIGHT_CB )
+   if( !pTime || HB_PP_TOKEN_TYPE(pTime->type) != HB_PP_TOKEN_RIGHT_CB )
    {
       return HB_FALSE;
    }
@@ -410,16 +410,16 @@ static int hb_comp_dayTimeDecode(PHB_COMP_LEX pLex, PHB_PP_TOKEN pToken, YYSTYPE
    if( pYear && HB_PP_TOKEN_TYPE(pYear->type) == HB_PP_TOKEN_NUMBER && pYear->pNext )
    {
       if( (HB_PP_TOKEN_TYPE(pYear->pNext->type) == HB_PP_TOKEN_DIV || HB_PP_TOKEN_TYPE(pYear->pNext->type) == HB_PP_TOKEN_MINUS ) &&
-          ! hb_compStrToNum(pYear->value, pYear->len, &lYear, &dNumber, &iDec, &iWidth) )
+          !hb_compStrToNum(pYear->value, pYear->len, &lYear, &dNumber, &iDec, &iWidth) )
       {
          pMonth = pYear->pNext->pNext;
          if( pMonth && HB_PP_TOKEN_TYPE(pMonth->type) == HB_PP_TOKEN_NUMBER && pMonth->pNext && 
              HB_PP_TOKEN_TYPE(pYear->pNext->type) == HB_PP_TOKEN_TYPE(pMonth->pNext->type) &&
-             ! hb_compStrToNum(pMonth->value, pMonth->len, &lMonth, &dNumber, &iDec, &iWidth) )
+             !hb_compStrToNum(pMonth->value, pMonth->len, &lMonth, &dNumber, &iDec, &iWidth) )
          {
             pDay = pMonth->pNext->pNext;
             if( pDay && HB_PP_TOKEN_TYPE(pDay->type) == HB_PP_TOKEN_NUMBER && pDay->pNext &&
-                ! hb_compStrToNum(pDay->value, pDay->len, &lDay, &dNumber, &iDec, &iWidth) )
+                !hb_compStrToNum(pDay->value, pDay->len, &lDay, &dNumber, &iDec, &iWidth) )
             {
                pTime = pDay->pNext;
             }
@@ -525,7 +525,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
    PHB_COMP_LEX pLex = HB_COMP_PARAM->pLex;
    PHB_PP_TOKEN pToken;
 
-   if( ! HB_COMP_PARAM->fExit )
+   if( !HB_COMP_PARAM->fExit )
    {
       if( pLex->iClose < 0 )
       {
@@ -559,9 +559,9 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
       HB_COMP_PARAM->currLine++;
    }
 
-   if( ! pToken || HB_COMP_PARAM->fExit )
+   if( !pToken || HB_COMP_PARAM->fExit )
    {
-      if( ! HB_COMP_PARAM->fExit )
+      if( !HB_COMP_PARAM->fExit )
       {
          hb_comp_funcStart(HB_COMP_PARAM, yylval_ptr);
          if( pLex->iClose > 0 )
@@ -619,7 +619,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                }
             }
          }
-         else if( ! hb_timeStampStrGet(pToken->value, &iYear, &iMonth, &iDay, nullptr, nullptr, nullptr, nullptr) )
+         else if( !hb_timeStampStrGet(pToken->value, &iYear, &iMonth, &iDay, nullptr, nullptr, nullptr, nullptr) )
          {
             iYear = -1;
          }
@@ -632,7 +632,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
       }
       case HB_PP_TOKEN_TIMESTAMP:
          pLex->iState = LITERAL;
-         if( ! hb_timeStampStrGetDT(pToken->value, &yylval_ptr->valTimeStamp.date, &yylval_ptr->valTimeStamp.time) )
+         if( !hb_timeStampStrGetDT(pToken->value, &yylval_ptr->valTimeStamp.date, &yylval_ptr->valTimeStamp.time) )
          {
             hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_INVALID_TIMESTAMP, pToken->value, nullptr);
          }
@@ -861,7 +861,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
          {
             case FUNCTION:
             case PROCEDURE:
-               if( ! HB_SUPPORT_HARBOUR || (pLex->iState == LOOKUP && pToken->pNext && HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_KEYWORD) )
+               if( !HB_SUPPORT_HARBOUR || (pLex->iState == LOOKUP && pToken->pNext && HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_KEYWORD) )
                {
                   pLex->iScope = HB_FS_PUBLIC;
                   pLex->iState = iType;
@@ -950,7 +950,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                      pLex->iState = ENDSEQ;
                      return ENDSEQ;
                   }
-                  if( ! HB_SUPPORT_HARBOUR && HB_COMP_PARAM->iSyntaxCheckOnly < 2 )
+                  if( !HB_SUPPORT_HARBOUR && HB_COMP_PARAM->iSyntaxCheckOnly < 2 )
                   {
                      /* Clipper does not like end[], end(), end->, end-- & end++ at
                         the beginning of line */
@@ -968,7 +968,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                break;
 
             case ELSE:
-               if( HB_SUPPORT_HARBOUR && (pLex->iState != LOOKUP || ! HB_PP_TOKEN_ISEOC(pToken->pNext)) )
+               if( HB_SUPPORT_HARBOUR && (pLex->iState != LOOKUP || !HB_PP_TOKEN_ISEOC(pToken->pNext)) )
                {
                   iType = IDENTIFIER;
                   break;
@@ -989,7 +989,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
             case ENDIF:
             case ENDCASE:
             case ENDDO:
-               if( HB_SUPPORT_HARBOUR && (pLex->iState != LOOKUP || ! HB_PP_TOKEN_ISEOC(pToken->pNext)) )
+               if( HB_SUPPORT_HARBOUR && (pLex->iState != LOOKUP || !HB_PP_TOKEN_ISEOC(pToken->pNext)) )
                {
                   iType = IDENTIFIER;
                   break;
@@ -1011,7 +1011,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                break;
 
             case FOR:
-               if( pLex->iState == LOOKUP && ! HB_PP_TOKEN_ISEOC(pToken->pNext) )
+               if( pLex->iState == LOOKUP && !HB_PP_TOKEN_ISEOC(pToken->pNext) )
                {
                   PHB_PP_TOKEN pNext = pToken->pNext;
 
@@ -1023,7 +1023,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                      pLex->iState = FOREACH;
                      return FOREACH;
                   }
-                  if( ! hb_pp_tokenNextExp(&pNext) && pNext &&
+                  if( !hb_pp_tokenNextExp(&pNext) && pNext &&
                       HB_PP_TOKEN_TYPE(pNext->type) == HB_PP_TOKEN_KEYWORD &&
                       hb_stricmp("TO", pNext->value) == 0 )
                   {
@@ -1042,7 +1042,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                      pLex->iState = iType;
                      return iType;
                   }
-                  if( ! HB_SUPPORT_HARBOUR && HB_COMP_PARAM->iSyntaxCheckOnly < 2 )
+                  if( !HB_SUPPORT_HARBOUR && HB_COMP_PARAM->iSyntaxCheckOnly < 2 )
                   {
                      /* Clipper does not like NEXT[], NEXT(), NEXT->,
                         NEXT++ & NEXT-- at the beginning of line */
@@ -1064,7 +1064,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                /* NOTE: Clipper does not like break[] in any context
                 *       There are no resons to limit this use in Harbour.
                 */
-               if( pLex->iState == LOOKUP && (HB_PP_TOKEN_ISEOC(pToken->pNext) || ! HB_PP_LEX_NEEDLEFT(pToken->pNext)) )
+               if( pLex->iState == LOOKUP && (HB_PP_TOKEN_ISEOC(pToken->pNext) || !HB_PP_LEX_NEEDLEFT(pToken->pNext)) )
                {
                   pLex->iState = iType;
                   return iType;
@@ -1074,7 +1074,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
 
             case WHILE:
             case DOSWITCH:
-               if( pLex->iState == LOOKUP && ! HB_PP_TOKEN_ISEOC(pToken->pNext) && ! HB_PP_LEX_NEEDLEFT(pToken->pNext) )
+               if( pLex->iState == LOOKUP && !HB_PP_TOKEN_ISEOC(pToken->pNext) && !HB_PP_LEX_NEEDLEFT(pToken->pNext) )
                {
                   pLex->iState = iType;
                   return iType;
@@ -1083,7 +1083,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                break;
 
             case DECLARE:
-               if( pLex->iState == LOOKUP && ! HB_PP_TOKEN_ISEOC(pToken->pNext) )
+               if( pLex->iState == LOOKUP && !HB_PP_TOKEN_ISEOC(pToken->pNext) )
                {
                   if( HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_MACROVAR ||
                       HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_MACROTEXT ||
@@ -1112,7 +1112,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                break;
 
             case DO:
-               if( pLex->iState == LOOKUP && ! HB_PP_TOKEN_ISEOC(pToken->pNext) )
+               if( pLex->iState == LOOKUP && !HB_PP_TOKEN_ISEOC(pToken->pNext) )
                {
                   if( HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_KEYWORD )
                   {
@@ -1127,7 +1127,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                      }
                      else if( pToken->pNext->len >= 4 && pToken->pNext->len <= 5 && hb_strnicmp("WHILE", pToken->pNext->value, pToken->pNext->len) == 0 &&
                         /* check if it's not DO while [WITH <args>] */
-                        ! HB_PP_TOKEN_ISEOC(pToken->pNext->pNext) && (HB_PP_TOKEN_TYPE(pToken->pNext->pNext->type) != HB_PP_TOKEN_KEYWORD ||
+                        !HB_PP_TOKEN_ISEOC(pToken->pNext->pNext) && (HB_PP_TOKEN_TYPE(pToken->pNext->pNext->type) != HB_PP_TOKEN_KEYWORD ||
                           pToken->pNext->pNext->len != 4 || hb_stricmp("WITH", pToken->pNext->pNext->value) != 0) )
                      {
                         /* DO WHILE <exp> */
@@ -1156,7 +1156,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                break;
 
             case WITH:
-               if( ! HB_PP_TOKEN_ISEOC(pToken->pNext) )
+               if( !HB_PP_TOKEN_ISEOC(pToken->pNext) )
                {
                   if( pLex->iState == LOOKUP &&
                       HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_KEYWORD &&
@@ -1180,7 +1180,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                break;
 
             case IIF:
-               if( pLex->iState == FUNCTION || pLex->iState == PROCEDURE || (! HB_SUPPORT_HARBOUR && HB_PP_TOKEN_ISEOC(pToken->pNext)) )
+               if( pLex->iState == FUNCTION || pLex->iState == PROCEDURE || (!HB_SUPPORT_HARBOUR && HB_PP_TOKEN_ISEOC(pToken->pNext)) )
                {
                   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_SYNTAX, "IIF", nullptr);
                }
@@ -1189,7 +1189,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                   pLex->iState = IIF;
                   return IIF;
                }
-               else if( ! HB_SUPPORT_HARBOUR )
+               else if( !HB_SUPPORT_HARBOUR )
                {
                   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_SYNTAX, pToken->pNext->value, nullptr);
                }
@@ -1200,7 +1200,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                break;
 
             case IF:
-               if( pLex->iState == FUNCTION || pLex->iState == PROCEDURE || (! HB_SUPPORT_HARBOUR && HB_PP_TOKEN_ISEOC(pToken->pNext)) )
+               if( pLex->iState == FUNCTION || pLex->iState == PROCEDURE || (!HB_SUPPORT_HARBOUR && HB_PP_TOKEN_ISEOC(pToken->pNext)) )
                {
                   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_SYNTAX, "IF", nullptr);
                }
@@ -1215,7 +1215,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                      {
                         if( hb_pp_tokenNextExp(&pNext) ) /* FALSE EXP */
                         {
-                           if( ! hb_pp_tokenNextExp(&pNext) && pNext && HB_PP_TOKEN_TYPE(pNext->type) == HB_PP_TOKEN_RIGHT_PB )
+                           if( !hb_pp_tokenNextExp(&pNext) && pNext && HB_PP_TOKEN_TYPE(pNext->type) == HB_PP_TOKEN_RIGHT_PB )
                            {
                               pLex->iState = IIF;
                            }
@@ -1231,7 +1231,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                }
                else if( HB_PP_LEX_NEEDLEFT(pToken->pNext) || pLex->iState != LOOKUP )
                {
-                  if( ! HB_SUPPORT_HARBOUR )
+                  if( !HB_SUPPORT_HARBOUR )
                   {
                      hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_SYNTAX2, pToken->pNext->value, "IF");
                   }
@@ -1245,7 +1245,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                break;
 
             case PROCREQ:
-               if( pLex->iState == LOOKUP && ! HB_PP_TOKEN_ISEOC(pToken->pNext) && HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_LEFT_PB )
+               if( pLex->iState == LOOKUP && !HB_PP_TOKEN_ISEOC(pToken->pNext) && HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_LEFT_PB )
                {
                   hb_pp_tokenGet(pLex->pPP);
                   pLex->iState = LSEPARATOR;
@@ -1300,7 +1300,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                break;
             }
             case DECLARE_CLASS:
-               if( pLex->iState == LOOKUP && ! HB_PP_TOKEN_ISEOC(pToken->pNext) && HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_KEYWORD )
+               if( pLex->iState == LOOKUP && !HB_PP_TOKEN_ISEOC(pToken->pNext) && HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_KEYWORD )
                {
                   pLex->iState = DECLARE_TYPE;
                   return DECLARE_CLASS;
@@ -1308,7 +1308,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                iType = IDENTIFIER;
                break;
             case DECLARE_MEMBER:
-               if( pLex->iState == LOOKUP && ! HB_PP_TOKEN_ISEOC(pToken->pNext) &&
+               if( pLex->iState == LOOKUP && !HB_PP_TOKEN_ISEOC(pToken->pNext) &&
                    (HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_KEYWORD || HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_LEFT_CB) )
                {
                   pLex->iState = OPERATOR;
@@ -1367,12 +1367,12 @@ void hb_compParserRun(HB_COMP_DECL)
    YYSTYPE yylval;
    int iToken;
 
-   while( ! HB_COMP_PARAM->fExit && HB_COMP_PARAM->iErrorCount == 0 )
+   while( !HB_COMP_PARAM->fExit && HB_COMP_PARAM->iErrorCount == 0 )
    {
       if( HB_COMP_PARAM->fSingleModule )
       {
          PHB_PP_TOKEN pToken = hb_pp_tokenGet(HB_COMP_PARAM->pLex->pPP);
-         if( ! pToken )
+         if( !pToken )
          {
             break;
          }

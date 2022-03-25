@@ -46,7 +46,7 @@
  *
  */
 
-#if ! defined(_LARGEFILE64_SOURCE)
+#if !defined(_LARGEFILE64_SOURCE)
 #  define _LARGEFILE64_SOURCE  1
 #endif
 
@@ -107,7 +107,7 @@
 
 #endif
 
-#if ! defined(HB_USE_LARGEFILE64) && defined(HB_OS_UNIX)
+#if !defined(HB_USE_LARGEFILE64) && defined(HB_OS_UNIX)
    #if defined(__USE_LARGEFILE64)
       /*
        * The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
@@ -175,7 +175,7 @@ HB_FATTR hb_fsAttrFromRaw(HB_FATTR raw_attr)
    if( S_ISCHR( raw_attr ) )  nAttr |= HB_FA_CHRDEVICE;
    if( S_ISBLK( raw_attr ) )  nAttr |= HB_FA_BLKDEVICE;
    if( S_ISFIFO( raw_attr ) ) nAttr |= HB_FA_FIFO;
-#if ! defined(HB_OS_VXWORKS)
+#if !defined(HB_OS_VXWORKS)
    if( S_ISSOCK(raw_attr) ) nAttr |= HB_FA_SOCKET;
 #endif
 
@@ -337,7 +337,7 @@ static HB_BOOL hb_fsFindNextLow(PHB_FFIND ffind)
 
       bFound = HB_FALSE;
 
-      if( (ffind->attrmask & HB_FA_LABEL) != 0 && ! info->fLabelDone )
+      if( (ffind->attrmask & HB_FA_LABEL) != 0 && !info->fLabelDone )
       {
          TCHAR lpVolName[HB_PATH_MAX];
          LPTSTR lpFileMask = nullptr;
@@ -362,7 +362,7 @@ static HB_BOOL hb_fsFindNextLow(PHB_FFIND ffind)
          if( bFound )
          {
             HB_OSSTRDUP2(lpVolName, ffind->szName, sizeof(ffind->szName) - 1);
-            if( mask && *mask && ! hb_strMatchFile(ffind->szName, mask) )
+            if( mask && *mask && !hb_strMatchFile(ffind->szName, mask) )
             {
                ffind->szName[0] = '\0';
                bFound = HB_FALSE;
@@ -378,7 +378,7 @@ static HB_BOOL hb_fsFindNextLow(PHB_FFIND ffind)
          }
       }
 
-      if( ! bFound && (ffind->attrmask & (HB_FA_LABEL | HB_FA_HIDDEN | HB_FA_SYSTEM | HB_FA_DIRECTORY) ) != HB_FA_LABEL )
+      if( !bFound && (ffind->attrmask & (HB_FA_LABEL | HB_FA_HIDDEN | HB_FA_SYSTEM | HB_FA_DIRECTORY) ) != HB_FA_LABEL )
       {
          if( ffind->bFirst )
          {
@@ -394,7 +394,7 @@ static HB_BOOL hb_fsFindNextLow(PHB_FFIND ffind)
             }
          }
 
-         if( ! bFound && info->hFindFile != INVALID_HANDLE_VALUE )
+         if( !bFound && info->hFindFile != INVALID_HANDLE_VALUE )
          {
             while( FindNextFile(info->hFindFile, &info->pFindFileData) )
             {
@@ -611,7 +611,7 @@ static HB_BOOL hb_fsFindNextLow(PHB_FFIND ffind)
       /* Do the conversions common for all platforms */
       ffind->szName[sizeof(ffind->szName) - 1] = '\0';
 
-#if ! defined(HB_OS_WIN)
+#if !defined(HB_OS_WIN)
       /* Convert from OS codepage */
       {
          char * pszFree = nullptr;
@@ -706,7 +706,7 @@ void hb_fsFindClose(PHB_FFIND ffind)
       {
          PHB_FFIND_INFO info = static_cast<PHB_FFIND_INFO>(ffind->info);
 
-         if( ! ffind->bFirst )
+         if( !ffind->bFirst )
          {
             hb_vmUnlock();
 

@@ -89,7 +89,7 @@ HB_BOOL hb_lppSend( PHB_LPP pSocket, const void * data, HB_SIZE len, HB_MAXINT t
    HB_MAXUINT timer;
    long       lSend;
 
-   if( ! pSocket->pSendBuffer )
+   if( !pSocket->pSendBuffer )
    {
       pSocket->pSendBuffer = static_cast<char*>(hb_xgrab(len + 4));
       HB_PUT_LE_UINT32(pSocket->pSendBuffer, len);
@@ -138,7 +138,7 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
    HB_MAXUINT timer;
    long       lRecv;
 
-   if( ! pSocket->pRecvBuffer )
+   if( !pSocket->pRecvBuffer )
    {
       pSocket->pRecvBuffer  = static_cast<char*>(hb_xgrab(4));
       pSocket->nRecvLen     = 0;
@@ -149,7 +149,7 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
 
    for( ;; )
    {
-      if( ! pSocket->fRecvHasSize )
+      if( !pSocket->fRecvHasSize )
       {
          lRecv = static_cast<long>(4 - pSocket->nRecvLen);
          lRecv = hb_socketRecv( pSocket->sd, pSocket->pRecvBuffer + pSocket->nRecvLen, lRecv, 0, timeout );

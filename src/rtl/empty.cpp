@@ -90,7 +90,7 @@ HB_FUNC( EMPTY )
          break;
 
       case HB_IT_LOGICAL:
-         hb_retl(! hb_itemGetL(pItem));
+         hb_retl(!hb_itemGetL(pItem));
          break;
 
       case HB_IT_BLOCK:

@@ -176,7 +176,7 @@ HB_FUNC( __PP_INIT )
       if( szPath )
          hb_pp_addSearchPath( pState, szPath, HB_TRUE );
 
-      if( ! szStdCh )
+      if( !szStdCh )
          hb_pp_StdRules( ppItem );
       else if( *szStdCh )
          hb_pp_readRules( pState, szStdCh );

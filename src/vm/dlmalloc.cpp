@@ -2875,7 +2875,7 @@ static void reset_on_error(mstate m);
 
 /* -------------------------- Debugging setup ---------------------------- */
 
-#if ! DEBUG
+#if !DEBUG
 
 #define check_free_chunk(M,P)
 #define check_inuse_chunk(M,P)
@@ -5284,7 +5284,7 @@ void* dlrealloc(void* oldmem, size_t bytes) {
   else {
     size_t nb = request2size(bytes);
     mchunkptr oldp = mem2chunk(oldmem);
-#if ! FOOTERS
+#if !FOOTERS
     mstate m = gm;
 #else /* FOOTERS */
     mstate m = get_mstate_for(oldp);
@@ -5322,7 +5322,7 @@ void* dlrealloc_in_place(void* oldmem, size_t bytes) {
     else {
       size_t nb = request2size(bytes);
       mchunkptr oldp = mem2chunk(oldmem);
-#if ! FOOTERS
+#if !FOOTERS
       mstate m = gm;
 #else /* FOOTERS */
       mstate m = get_mstate_for(oldp);
@@ -5834,7 +5834,7 @@ void* mspace_realloc(mspace msp, void* oldmem, size_t bytes) {
   else {
     size_t nb = request2size(bytes);
     mchunkptr oldp = mem2chunk(oldmem);
-#if ! FOOTERS
+#if !FOOTERS
     mstate m = (mstate)msp;
 #else /* FOOTERS */
     mstate m = get_mstate_for(oldp);
@@ -5872,7 +5872,7 @@ void* mspace_realloc_in_place(mspace msp, void* oldmem, size_t bytes) {
     else {
       size_t nb = request2size(bytes);
       mchunkptr oldp = mem2chunk(oldmem);
-#if ! FOOTERS
+#if !FOOTERS
       mstate m = (mstate)msp;
 #else /* FOOTERS */
       mstate m = get_mstate_for(oldp);

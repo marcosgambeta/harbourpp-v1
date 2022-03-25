@@ -64,7 +64,7 @@
 #  include <sys/time.h>
 #endif
 
-#if ! defined( HB_HAS_UCONTEXT )
+#if !defined( HB_HAS_UCONTEXT )
 #  if defined( HB_OS_LINUX ) || defined( HB_OS_MINIX )
 #     define HB_HAS_UCONTEXT
 #  endif
@@ -83,7 +83,7 @@
 
 #undef HB_TASK_STACK_INIT
 
-#if ! defined( HB_HAS_UCONTEXT )
+#if !defined( HB_HAS_UCONTEXT )
 
 #  if defined( __GNUC__ )
 #     if defined( HB_OS_LINUX )
@@ -541,7 +541,7 @@ static PHB_TASKINFO hb_taskNew( long stack_size )
    return pTask;
 }
 
-#if ! defined( HB_HAS_UCONTEXT )
+#if !defined( HB_HAS_UCONTEXT )
 static void hb_taskStart( void )
 {
    static jmp_buf context;
@@ -743,7 +743,7 @@ void hb_taskResume( void * pTaskPtr )
    {
       switch( pTask->state )
       {
-#if ! defined( HB_HAS_UCONTEXT )
+#if !defined( HB_HAS_UCONTEXT )
          case TASK_INIT:
             /* save current execution context */
             if( setjmp( s_currTask->context ) == 0 )
@@ -1114,7 +1114,7 @@ int hb_taskWait( void ** pCondPtr, void ** pMutexPtr, unsigned long ulMilliSec )
 
    hb_taskSleep( ulMilliSec );
 
-   if( ! hb_taskLock( pMutexPtr, HB_TASK_INFINITE_WAIT ) )
+   if( !hb_taskLock( pMutexPtr, HB_TASK_INFINITE_WAIT ) )
    {
       hb_errInternal(HB_EI_ERRUNRECOV, "TaskWait: lock fail", nullptr, nullptr);
    }

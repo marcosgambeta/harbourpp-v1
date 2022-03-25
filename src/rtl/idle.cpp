@@ -96,7 +96,7 @@ void hb_idleState( void )
 {
    PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
-   if( ! pIdleData->fIamIdle )
+   if( !pIdleData->fIamIdle )
    {
       pIdleData->fIamIdle = HB_TRUE;
 
@@ -128,7 +128,7 @@ void hb_idleReset( void )
 {
    PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
-   if( pIdleData->iIdleTask == pIdleData->iIdleMaxTask && ! hb_setGetIdleRepeat() )
+   if( pIdleData->iIdleTask == pIdleData->iIdleMaxTask && !hb_setGetIdleRepeat() )
    {
       pIdleData->iIdleTask = 0;
    }
@@ -185,7 +185,7 @@ HB_FUNC( HB_IDLEADD )
 
       ++pIdleData->iIdleMaxTask;
 
-      if( ! pIdleData->pIdleTasks )
+      if( !pIdleData->pIdleTasks )
       {
          pIdleData->pIdleTasks = static_cast<PHB_ITEM*>(hb_xgrab(sizeof(PHB_ITEM)));
       }

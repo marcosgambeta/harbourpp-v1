@@ -97,7 +97,7 @@ HB_FUNC( DESCEND )
       }
       else if( HB_IS_LOGICAL(pItem) )
       {
-         hb_retl(! hb_itemGetL(pItem));
+         hb_retl(!hb_itemGetL(pItem));
       }
    }
 }

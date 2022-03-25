@@ -340,7 +340,7 @@ static HB_BOOL hb_LZSSxDecode( PHB_LZSSX_COMPR pCompr )
 
       if( itemMask & 1 ) /* Is the next character normal byte ? */
       {
-         if( ! hb_LZSSxWrite( pCompr, static_cast<HB_UCHAR>(c) ) )
+         if( !hb_LZSSxWrite( pCompr, static_cast<HB_UCHAR>(c) ) )
          {
             fResult = HB_FALSE;
             break;
@@ -362,7 +362,7 @@ static HB_BOOL hb_LZSSxDecode( PHB_LZSSX_COMPR pCompr )
          for( h = 0; h < length; h++ )
          {
             c = pCompr->ring_buffer[RBUFINDEX( offset + h )];
-            if( ! hb_LZSSxWrite( pCompr, static_cast<HB_UCHAR>(c) ) )
+            if( !hb_LZSSxWrite( pCompr, static_cast<HB_UCHAR>(c) ) )
             {
                fResult = HB_FALSE;
                break;
@@ -564,7 +564,7 @@ static HB_SIZE hb_LZSSxEncode( PHB_LZSSX_COMPR pCompr )
       {
          for( i = 0; i < item; i++ )
          {
-            if( ! hb_LZSSxWrite( pCompr, itemSet[i] ) )
+            if( !hb_LZSSxWrite( pCompr, itemSet[i] ) )
             {
                return static_cast<HB_SIZE>(-1);
             }
@@ -603,7 +603,7 @@ static HB_SIZE hb_LZSSxEncode( PHB_LZSSX_COMPR pCompr )
    {
       for( i = 0; i < item; i++ )
       {
-         if( ! hb_LZSSxWrite( pCompr, itemSet[i] ) )
+         if( !hb_LZSSxWrite( pCompr, itemSet[i] ) )
          {
             return static_cast<HB_SIZE>(-1);
          }
@@ -611,7 +611,7 @@ static HB_SIZE hb_LZSSxEncode( PHB_LZSSX_COMPR pCompr )
       nSize += item;
    }
 
-   if( ! hb_LZSSxFlush( pCompr ) )
+   if( !hb_LZSSxFlush( pCompr ) )
    {
       return static_cast<HB_SIZE>(-1);
    }
@@ -745,7 +745,7 @@ HB_FUNC( _SX_STRCOMPRESS )
       nBuf = nLen + 257;
       pBuf = static_cast<char*>(hb_xgrab(nBuf));
       HB_PUT_LE_UINT32(pBuf, nLen);
-      if( ! hb_LZSSxCompressMem( pStr, nLen, pBuf + 4, nBuf - 4, &nDst ) )
+      if( !hb_LZSSxCompressMem( pStr, nLen, pBuf + 4, nBuf - 4, &nDst ) )
       {
          /* It's not six compatible - it's a workaround for wrongly defined SIX behavior */
          HB_PUT_LE_UINT32(pBuf, HB_SX_UNCOMPRESED);
@@ -806,7 +806,7 @@ HB_FUNC( _SX_STRDECOMPRESS )
       }
    }
 
-   if( ! fOK )
+   if( !fOK )
    {
       hb_itemReturn(hb_param(1, HB_IT_ANY));
    }

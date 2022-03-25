@@ -58,7 +58,7 @@
 #include "hbvm.h"
 #include "error.ch"
 
-#if ! defined( HB_GC_PTR )
+#if !defined( HB_GC_PTR )
 
 #if defined( HB_MT_VM )
 
@@ -67,7 +67,7 @@
 
 /* Use spinlock instead of mutex */
 
-#  if defined( HB_SPINLOCK_INIT ) && ! defined( HB_HELGRIND_FRIENDLY )
+#  if defined( HB_SPINLOCK_INIT ) && !defined( HB_HELGRIND_FRIENDLY )
 
       static HB_SPINLOCK_T s_gcSpinLock = HB_SPINLOCK_INIT;
 #     define HB_GC_LOCK()       HB_SPINLOCK_ACQUIRE( &s_gcSpinLock )
@@ -113,7 +113,7 @@ using PHB_GARBAGE = HB_GARBAGE *;
 
 #define HB_GC_PTR( p )        ( reinterpret_cast<PHB_GARBAGE>(reinterpret_cast<HB_BYTE*>(p) - HB_GARBAGE_SIZE) )
 
-#endif /* ! defined( HB_GC_PTR ) */
+#endif /* !defined( HB_GC_PTR ) */
 
 #define HB_BLOCK_PTR( p )       ( static_cast<void*>(reinterpret_cast<HB_BYTE*>(p) + HB_GARBAGE_SIZE) )
 
@@ -244,7 +244,7 @@ void hb_gcFree( void * pBlock )
       PHB_GARBAGE pAlloc = HB_GC_PTR( pBlock );
 
       /* Don't release the block that will be deleted during finalization */
-      if( ! ( pAlloc->used & HB_GC_DELETE ) )
+      if( !( pAlloc->used & HB_GC_DELETE ) )
       {
          HB_GC_LOCK();
          if( pAlloc->locked )
@@ -291,7 +291,7 @@ void hb_gcRefFree( void * pBlock )
       if( hb_xRefDec( pAlloc ) )
       {
          /* Don't release the block that will be deleted during finalization */
-         if( ! ( pAlloc->used & HB_GC_DELETE ) )
+         if( !( pAlloc->used & HB_GC_DELETE ) )
          {
             pAlloc->used |= HB_GC_DELETE;
 
@@ -407,7 +407,7 @@ void * hb_gcLock( void * pBlock )
       PHB_GARBAGE pAlloc = HB_GC_PTR( pBlock );
 
       HB_GC_LOCK();
-      if( ! pAlloc->locked )
+      if( !pAlloc->locked )
       {
          hb_gcUnlink( &s_pCurrBlock, pAlloc );
          hb_gcLink( &s_pLockedBlock, pAlloc );
@@ -503,7 +503,7 @@ void hb_gcItemRef( PHB_ITEM pItem )
          pItem->item.asExtRef.func->mark( pItem->item.asExtRef.value );
          return;
       }
-      else if( ! HB_IS_MEMVAR(pItem) && pItem->item.asRefer.offset == 0 && pItem->item.asRefer.value >= 0 )
+      else if( !HB_IS_MEMVAR(pItem) && pItem->item.asRefer.offset == 0 && pItem->item.asRefer.value >= 0 )
       {
          /* array item reference */
          PHB_GARBAGE pAlloc = HB_GC_PTR( pItem->item.asRefer.BasePtr.array );
@@ -592,11 +592,11 @@ void hb_gcCollectAll( HB_BOOL fForce )
     *         when all other threads are stoped by hb_vmSuspendThreads(),
     *         [druzus]
     */
-   if( ! s_bCollecting && hb_vmSuspendThreads( fForce ) )
+   if( !s_bCollecting && hb_vmSuspendThreads( fForce ) )
    {
       PHB_GARBAGE pAlloc, pDelete;
 
-      if( ! s_pCurrBlock || s_bCollecting )
+      if( !s_pCurrBlock || s_bCollecting )
       {
          hb_vmResumeThreads();
          return;
@@ -658,7 +658,7 @@ void hb_gcCollectAll( HB_BOOL fForce )
          else
          {
             /* at least one block will not be deleted, set new stop condition */
-            if( ! pAlloc )
+            if( !pAlloc )
             {
                pAlloc = s_pCurrBlock;
             }

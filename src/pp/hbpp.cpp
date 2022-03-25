@@ -96,7 +96,7 @@ static void hb_pp_writeToken( FILE * fout, PHB_PP_TOKEN pToken,
                static_cast<int>(pToken->len), static_cast<int>(pToken->spaces),
                pToken->type | HB_PP_TOKEN_STATIC | HB_PP_TOKEN_PREDEFINED,
                pToken->index,
-               fLast && ! pToken->pNext && iOptional == 0 ? "" : ",");
+               fLast && !pToken->pNext && iOptional == 0 ? "" : ",");
 
       if( iOptional )
          hb_pp_writeToken( fout, pToken->pMTokens, szName, iToken + 1,
@@ -243,7 +243,7 @@ static void hb_pp_undefCompilerRules( PHB_PP_STATE pState )
    while( *pRulePtr )
    {
       pRule = *pRulePtr;
-      if( ! pRule->pMatch->pNext &&
+      if( !pRule->pMatch->pNext &&
           strncmp(pRule->pMatch->value, "__PLATFORM__", 12) == 0 )
       {
          *pRulePtr = pRule->pPrev;
@@ -270,7 +270,7 @@ static int hb_pp_preprocesfile( PHB_PP_STATE pState, const char * szRuleFile, co
       FILE * foutr;
 
       foutr = hb_fopen(szRuleFile, "w");
-      if( ! foutr )
+      if( !foutr )
       {
          perror( szRuleFile );
          iResult = 1;
@@ -329,7 +329,7 @@ static int hb_pp_generateVerInfo( char * szVerFile,
    FILE * fout;
 
    fout = hb_fopen(szVerFile, "w");
-   if( ! fout )
+   if( !fout )
    {
       perror( szVerFile );
       iResult = 1;
@@ -444,7 +444,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
    char szToCheck[HB_PATH_MAX];
    PHB_FNAME pFileName = hb_fsFNameSplit(pszFileName);
 
-   if( ! pFileName->szName )
+   if( !pFileName->szName )
    {
       static const char * s_szNames[] = {
          "ChangeLog.txt",
@@ -453,7 +453,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
       };
       int i = 0;
 
-      if( ! pFileName->szPath )
+      if( !pFileName->szPath )
          pFileName->szPath = "../../../../..";
 
       pszFileName = s_szNames[i++];
@@ -481,14 +481,14 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
          pszFileName = s_szNames[i++];
       }
 
-      if( ! pszFileName )
+      if( !pszFileName )
          pszFileName = s_szNames[0];
    }
 
    hb_xfree(pFileName);
 
    file_in = hb_fopen(pszFileName, "r");
-   if( ! file_in )
+   if( !file_in )
    {
       if( iQuiet < 2 )
       {
@@ -511,10 +511,10 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
 
       do
       {
-         if( ! fgets( szLine, sizeof(szLine), file_in ) )
+         if( !fgets( szLine, sizeof(szLine), file_in ) )
             break;
 
-         if( ! *szId )
+         if( !*szId )
          {
             szFrom = strstr(szLine, "$" "Id");
             if( szFrom )
@@ -538,7 +538,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
                }
             }
          }
-         else if( ! *szLog )
+         else if( !*szLog )
          {
             if( szLine[4] == '-' && szLine[7] == '-' &&
                 szLine[10] == ' ' && szLine[13] == ':' )
@@ -552,11 +552,11 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
             }
          }
       }
-      while( ! *szLog );
+      while( !*szLog );
 
       fclose(file_in);
 
-      if( ! *szLog )
+      if( !*szLog )
       {
          if( iQuiet < 2 )
             fprintf(stderr, "Cannot find valid $" "Id entry in the %s file.\n", pszFileName);
@@ -680,7 +680,7 @@ int main( int argc, char * argv[] )
       szFile = argv[1];
       for( i = 2; szFile && i < argc; i++ )
       {
-         if( ! HB_ISOPTSEP( argv[i][0] ) )
+         if( !HB_ISOPTSEP( argv[i][0] ) )
             szFile = nullptr;
          else
          {
@@ -688,11 +688,11 @@ int main( int argc, char * argv[] )
             {
                case 'q':
                case 'Q':
-                  if( ! argv[i][2] )
+                  if( !argv[i][2] )
                      iQuiet = 1;
-                  else if( argv[i][2] == '-' && ! argv[i][3] )
+                  else if( argv[i][2] == '-' && !argv[i][3] )
                      iQuiet = 0;
-                  else if( argv[i][2] >= '0' && argv[i][2] <= '2' && ! argv[i][3] )
+                  else if( argv[i][2] >= '0' && argv[i][2] <= '2' && !argv[i][3] )
                      iQuiet = argv[i][2] - '0';
                   else
                      szFile = nullptr;
@@ -700,7 +700,7 @@ int main( int argc, char * argv[] )
 
                case 'd':
                case 'D':
-                  if( ! argv[i][2] )
+                  if( !argv[i][2] )
                      szFile = nullptr;
                   else
                   {
@@ -786,7 +786,7 @@ int main( int argc, char * argv[] )
 
    if( szFile )
    {
-      if( ! szRuleFile && ! szVerFile )
+      if( !szRuleFile && !szVerFile )
          fWrite = HB_TRUE;
 
       hb_pp_init( pState, iQuiet != 0, HB_TRUE, 0, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr );

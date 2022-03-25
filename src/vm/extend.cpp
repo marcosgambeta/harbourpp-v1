@@ -217,7 +217,7 @@ HB_BOOL hb_extIsArray( int iParam )
       pItem = hb_itemUnRef(pItem);
    }
 
-   return HB_IS_ARRAY(pItem) && ! HB_ARRAY_OBJ(pItem);
+   return HB_IS_ARRAY(pItem) && !HB_ARRAY_OBJ(pItem);
 }
 
 /* function to be called from pcode DLLs to detect if the extend system

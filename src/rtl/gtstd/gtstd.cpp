@@ -56,8 +56,8 @@
 #include "hbdate.h"
 #include "hb_io.h"
 
-#if ( defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS ) )
-#  if ! defined( HB_HAS_TERMIOS )
+#if ( defined( HB_OS_UNIX ) && !defined( HB_OS_VXWORKS ) )
+#  if !defined( HB_HAS_TERMIOS )
 #     define HB_HAS_TERMIOS
 #  endif
 #endif
@@ -384,7 +384,7 @@ static int hb_gt_std_ReadKey( PHB_GT pGT, int iEventMask )
          ch = hb_gt_dos_keyCodeTranslate( ch, 0, HB_GTSELF_CPIN(pGT) );
       }
    }
-   else if( ! _eof( static_cast<int>(pGTSTD->hStdin) ) )
+   else if( !_eof( static_cast<int>(pGTSTD->hStdin) ) )
    {
       HB_BYTE bChar;
       if( _read( static_cast<int>(pGTSTD->hStdin), &bChar, 1 ) == 1 )
@@ -393,7 +393,7 @@ static int hb_gt_std_ReadKey( PHB_GT pGT, int iEventMask )
       }
    }
 #elif defined( HB_OS_WIN )
-   if( ! pGTSTD->fStdinConsole )
+   if( !pGTSTD->fStdinConsole )
    {
       HB_BYTE bChar;
       if( hb_fsRead(pGTSTD->hStdin, &bChar, 1) == 1 )
@@ -423,7 +423,7 @@ static int hb_gt_std_ReadKey( PHB_GT pGT, int iEventMask )
    }
 #else
    {
-      if( ! pGTSTD->fStdinConsole )
+      if( !pGTSTD->fStdinConsole )
       {
          HB_BYTE bChar;
          if( hb_fsRead(pGTSTD->hStdin, &bChar, 1) == 1 )
@@ -604,7 +604,7 @@ static void hb_gt_std_DispLine( PHB_GT pGT, int iRow, int iFrom, int iSize )
 
    for( iCol = iLastCol = iFrom, nLen = nI = 0; iSize > 0; --iSize )
    {
-      if( ! HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol++, &iColor, &bAttr, &usChar) )
+      if( !HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol++, &iColor, &bAttr, &usChar) )
       {
          break;
       }

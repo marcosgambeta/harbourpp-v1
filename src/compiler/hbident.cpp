@@ -32,7 +32,7 @@ const char * hb_compIdentifierNew(HB_COMP_DECL, const char * szName, int iType)
 {
    const char * szIdent = static_cast<const char*>(hb_hashTableFind(HB_COMP_PARAM->pIdentifiers, static_cast<const void*>(szName)));
 
-   if( ! szIdent )
+   if( !szIdent )
    {
       /*
        * In the future we may add direct support for static identifiers

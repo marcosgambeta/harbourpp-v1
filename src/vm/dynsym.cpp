@@ -268,7 +268,7 @@ PHB_DYNS hb_dynsymNew( PHB_SYMB pSymbol )
    HB_DYNSYM_LOCK();
 
    pDynSym = hb_dynsymPos(pSymbol->szName, &uiPos); /* Find position */
-   if( ! pDynSym )
+   if( !pDynSym )
    {
       pDynSym = hb_dynsymInsert(pSymbol, uiPos);
    }
@@ -360,7 +360,7 @@ PHB_DYNS hb_dynsymNew( PHB_SYMB pSymbol )
          }
       }
 
-      if( ( ! pDynSym->pSymbol->value.pFunPtr && pSymbol->value.pFunPtr ) || ( pSymbol->scope.value & HB_FS_LOCAL ) != 0 )
+      if( ( !pDynSym->pSymbol->value.pFunPtr && pSymbol->value.pFunPtr ) || ( pSymbol->scope.value & HB_FS_LOCAL ) != 0 )
       {
          pDynSym->pSymbol = pSymbol;
 #ifndef HB_NO_PROFILER
@@ -389,7 +389,7 @@ PHB_DYNS hb_dynsymGetCase( const char * szName )
    HB_DYNSYM_LOCK();
 
    pDynSym = hb_dynsymPos(szName, &uiPos);
-   if( ! pDynSym )
+   if( !pDynSym )
    {
       pDynSym = hb_dynsymInsert(hb_symbolAlloc( szName ), uiPos);
    }
@@ -675,7 +675,7 @@ void hb_dynsymEval( PHB_DYNS_FUNC pFunction, void * Cargo )
 
       HB_DYNSYM_UNLOCK();
 
-      if( ! pDynSym || ! ( pFunction ) ( pDynSym, Cargo ) )
+      if( !pDynSym || !( pFunction ) ( pDynSym, Cargo ) )
       {
          break;
       }
@@ -694,7 +694,7 @@ void hb_dynsymProtectEval( PHB_DYNS_FUNC pFunction, void * Cargo )
 
    while( uiPos < s_uiDynSymbols )
    {
-      if( ! ( pFunction ) ( s_pDynItems[uiPos++].pDynSym, Cargo ) )
+      if( !( pFunction ) ( s_pDynItems[uiPos++].pDynSym, Cargo ) )
       {
          break;
       }

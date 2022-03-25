@@ -1933,7 +1933,7 @@ void hb_nestedCloneDo( PHB_ITEM pDstItem, PHB_ITEM pSrcItem, PHB_NESTED_CLONED p
    /* Clipper clones nested array ONLY if NOT an Object!!! */
    if( HB_IS_ARRAY(pSrcItem) )
    {
-      if( ! hb_nestedCloneFind( pClonedList, static_cast<void*>(pSrcItem->item.asArray.value), pDstItem ) )
+      if( !hb_nestedCloneFind( pClonedList, static_cast<void*>(pSrcItem->item.asArray.value), pDstItem ) )
       {
          if( pSrcItem->item.asArray.value->uiClass != 0 )
          {
@@ -1947,7 +1947,7 @@ void hb_nestedCloneDo( PHB_ITEM pDstItem, PHB_ITEM pSrcItem, PHB_NESTED_CLONED p
    }
    else if( HB_IS_HASH(pSrcItem) )
    {
-      if( ! hb_nestedCloneFind( pClonedList, static_cast<void*>(pSrcItem->item.asHash.value), pDstItem ) )
+      if( !hb_nestedCloneFind( pClonedList, static_cast<void*>(pSrcItem->item.asHash.value), pDstItem ) )
       {
          hb_hashCloneBody(pDstItem, pSrcItem, pClonedList);
       }

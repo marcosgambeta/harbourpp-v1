@@ -70,7 +70,7 @@ static char * hb_strHardCR( char * pszString, HB_SIZE nStringLen )
             pszString[nStringPos] = HB_CHAR_HARD1;
             nStringPos += 2;
          }
-         else if( ! HB_CDPCHAR_GET( cdp, pszString, nStringLen, &nStringPos, &wc ) )
+         else if( !HB_CDPCHAR_GET( cdp, pszString, nStringLen, &nStringPos, &wc ) )
          {
             break;
          }

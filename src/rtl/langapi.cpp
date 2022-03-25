@@ -272,7 +272,7 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
    HB_SIZE       nSize;
    int i;
 
-   if( ! szNewId || *szNewId == 0 || ! lang || ! cdpIn || ! cdpOut || cdpIn == cdpOut )
+   if( !szNewId || *szNewId == 0 || !lang || !cdpIn || !cdpOut || cdpIn == cdpOut )
    {
       return HB_FALSE;
    }

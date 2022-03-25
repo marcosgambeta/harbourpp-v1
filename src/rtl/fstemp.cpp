@@ -46,10 +46,10 @@
  */
 
 /* *nixes */
-#if ! defined( _LARGEFILE64_SOURCE )
+#if !defined( _LARGEFILE64_SOURCE )
 #  define _LARGEFILE64_SOURCE  1
 #endif
-#if ! defined( _GNU_SOURCE )
+#if !defined( _GNU_SOURCE )
 #  define _GNU_SOURCE
 #endif
 
@@ -72,7 +72,7 @@
 
 #if defined( HB_OS_LINUX ) || defined( HB_OS_BSD ) || defined( HB_OS_DARWIN ) || defined( HB_OS_SUNOS )
 #  define HB_HAS_MKSTEMP
-#  if ( defined( HB_OS_BSD ) && ! defined( __NetBSD__ ) ) || defined( HB_OS_DARWIN )
+#  if ( defined( HB_OS_BSD ) && !defined( __NetBSD__ ) ) || defined( HB_OS_DARWIN )
 #     define HB_HAS_MKSTEMPS
 #  elif defined( HB_OS_LINUX ) && ( defined( _BSD_SOURCE ) || defined( _SVID_SOURCE ) ) && defined( __GLIBC_PREREQ )
 #     if __GLIBC_PREREQ( 2, 12 )
@@ -81,7 +81,7 @@
 #  endif
 #endif
 
-#if ! defined( HB_USE_LARGEFILE64 ) && defined( HB_OS_UNIX )
+#if !defined( HB_USE_LARGEFILE64 ) && defined( HB_OS_UNIX )
    #if defined( __USE_LARGEFILE64 )
       /*
        * The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
@@ -94,7 +94,7 @@
    #endif
 #endif
 
-#if ! defined( HB_OS_WIN )
+#if !defined( HB_OS_WIN )
 static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_BOOL fTrans )
 {
    HB_BOOL fOK = HB_FALSE;
@@ -132,7 +132,7 @@ static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_B
 
    if( fOK )
    {
-      if( ! hb_fsDirExists(pszTempDir) )
+      if( !hb_fsDirExists(pszTempDir) )
       {
          fOK = HB_FALSE;
       }
@@ -184,7 +184,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
           hb_setGetFileCase() != HB_SET_CASE_UPPER &&
           hb_setGetDirCase() != HB_SET_CASE_LOWER &&
           hb_setGetDirCase() != HB_SET_CASE_UPPER
-#if ! defined( HB_HAS_MKSTEMPS )
+#if !defined( HB_HAS_MKSTEMPS )
           && ( pszExt == nullptr || *pszExt == 0 )
 #endif
         )
@@ -243,7 +243,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
 }
 
 /* NOTE: The buffer must be at least HB_PATH_MAX chars long */
-#if ! defined( HB_OS_UNIX )
+#if !defined( HB_OS_UNIX )
 
 static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char * pszPrefix )
 {
@@ -269,7 +269,7 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
       }
       else
       {
-         if( ! GetTempPath( HB_PATH_MAX, lpTempDir ) )
+         if( !GetTempPath( HB_PATH_MAX, lpTempDir ) )
          {
             hb_fsSetIOError(HB_FALSE, 0);
             return HB_FALSE;

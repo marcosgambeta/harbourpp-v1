@@ -59,18 +59,18 @@
    we have to miss compressBound() when using zlib 1.2.0. [vszakats] */
 /* ZLIB_VERNUM were added in version 1.2.0.2 so it cannot be used for older
    zlib libraries */
-#if defined( Z_RLE ) && ! defined( Z_SOLO )
+#if defined( Z_RLE ) && !defined( Z_SOLO )
 #define _HB_Z_COMPRESSBOUND
 #endif
 
-#if ! defined( _HB_Z_COMPRESSBOUND )
+#if !defined( _HB_Z_COMPRESSBOUND )
 /* additional 12 bytes is for GZIP compression which uses bigger header */
 #define deflateBound( s, n )  ( hb_zlibCompressBound( n ) + ( fGZip ? 12 : 0 ) )
 #endif
 
 static HB_SIZE s_zlibCompressBound( HB_SIZE nLen )
 {
-#if ! defined( _HB_Z_COMPRESSBOUND )
+#if !defined( _HB_Z_COMPRESSBOUND )
    return nLen + ( nLen >> 12 ) + ( nLen >> 14 ) + ( nLen >> 25 ) + 13;
 #else
    return compressBound( static_cast<uLong>(nLen) );
@@ -313,7 +313,7 @@ HB_FUNC( HB_ZCOMPRESS )
 
          if( pBuffer )
          {
-            if( ! hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) )
+            if( !hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) )
             {
                pDest = nullptr;
             }
@@ -336,7 +336,7 @@ HB_FUNC( HB_ZCOMPRESS )
          if( pDest || fAlloc )
          {
             iResult = s_zlibCompress2( &pDest, &nDstLen, szData, nLen, HB_FALSE, hb_parnidef(4, Z_DEFAULT_COMPRESSION) );
-            if( ! pBuffer )
+            if( !pBuffer )
             {
                if( iResult == Z_OK )
                {
@@ -392,7 +392,7 @@ HB_FUNC( HB_ZUNCOMPRESS )
 
          if( pBuffer )
          {
-            if( ! hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) )
+            if( !hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) )
             {
                iResult = Z_MEM_ERROR;
             }
@@ -403,7 +403,7 @@ HB_FUNC( HB_ZUNCOMPRESS )
             if( iResult == Z_OK )
             {
                pDest = static_cast<char*>(hb_xalloc(nDstLen + 1));
-               if( ! pDest )
+               if( !pDest )
                {
                   iResult = Z_MEM_ERROR;
                }
@@ -414,7 +414,7 @@ HB_FUNC( HB_ZUNCOMPRESS )
          {
             iResult = s_zlibUncompress( pDest, &nDstLen, szData, nLen );
 
-            if( ! pBuffer )
+            if( !pBuffer )
             {
                if( iResult == Z_OK )
                {
@@ -488,7 +488,7 @@ HB_FUNC( HB_GZCOMPRESS )
 
          if( pBuffer )
          {
-            if( ! hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) )
+            if( !hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) )
             {
                pDest = nullptr;
             }
@@ -511,7 +511,7 @@ HB_FUNC( HB_GZCOMPRESS )
          if( pDest || fAlloc )
          {
             iResult = s_zlibCompress2( &pDest, &nDstLen, szData, nLen, HB_TRUE, hb_parnidef(4, Z_DEFAULT_COMPRESSION) );
-            if( ! pBuffer )
+            if( !pBuffer )
             {
                if( iResult == Z_OK )
                {

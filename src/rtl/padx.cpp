@@ -219,7 +219,7 @@ HB_FUNC( PADL )
 {
    PHB_CODEPAGE cdp = hb_vmCDP();
 
-   if( ! HB_CDP_ISCHARIDX( cdp ) )
+   if( !HB_CDP_ISCHARIDX( cdp ) )
    {
       cdp = nullptr;
    }
@@ -236,7 +236,7 @@ HB_FUNC( HB_UPADL )
 {
    PHB_CODEPAGE cdp = hb_vmCDP();
 
-   if( ! HB_CDP_ISCUSTOM( cdp ) )
+   if( !HB_CDP_ISCUSTOM( cdp ) )
    {
       cdp = nullptr;
    }
@@ -249,7 +249,7 @@ HB_FUNC( PADR )
 {
    PHB_CODEPAGE cdp = hb_vmCDP();
 
-   if( ! HB_CDP_ISCHARIDX( cdp ) )
+   if( !HB_CDP_ISCHARIDX( cdp ) )
    {
       cdp = nullptr;
    }
@@ -266,7 +266,7 @@ HB_FUNC( HB_UPADR )
 {
    PHB_CODEPAGE cdp = hb_vmCDP();
 
-   if( ! HB_CDP_ISCUSTOM( cdp ) )
+   if( !HB_CDP_ISCUSTOM( cdp ) )
    {
       cdp = nullptr;
    }
@@ -279,7 +279,7 @@ HB_FUNC( PADC )
 {
    PHB_CODEPAGE cdp = hb_vmCDP();
 
-   if( ! HB_CDP_ISCHARIDX( cdp ) )
+   if( !HB_CDP_ISCHARIDX( cdp ) )
    {
       cdp = nullptr;
    }
@@ -296,7 +296,7 @@ HB_FUNC( HB_UPADC )
 {
    PHB_CODEPAGE cdp = hb_vmCDP();
 
-   if( ! HB_CDP_ISCUSTOM( cdp ) )
+   if( !HB_CDP_ISCUSTOM( cdp ) )
    {
       cdp = nullptr;
    }

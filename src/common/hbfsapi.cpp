@@ -44,7 +44,7 @@
  *
  */
 
-#if ! defined(_LARGEFILE64_SOURCE)
+#if !defined(_LARGEFILE64_SOURCE)
 #  define _LARGEFILE64_SOURCE  1
 #endif
 
@@ -57,21 +57,21 @@
 #if defined(HB_OS_WIN)
    #include <windows.h>
    #include "hbwinuni.h"
-   #if ! defined(INVALID_FILE_ATTRIBUTES)
+   #if !defined(INVALID_FILE_ATTRIBUTES)
       #define INVALID_FILE_ATTRIBUTES  (static_cast<DWORD>(-1))
    #endif
-   #if ! defined(FILE_ATTRIBUTE_DEVICE)
+   #if !defined(FILE_ATTRIBUTE_DEVICE)
       #define FILE_ATTRIBUTE_DEVICE    0x00000040
    #endif
 #elif defined(HB_OS_UNIX)
    #include <sys/types.h>
    #include <sys/stat.h>
 #endif
-#if ! defined(HB_OS_WIN)
+#if !defined(HB_OS_WIN)
    #include <errno.h>
 #endif
 
-#if ! defined(HB_USE_LARGEFILE64) && defined(HB_OS_UNIX)
+#if !defined(HB_USE_LARGEFILE64) && defined(HB_OS_UNIX)
    #if defined(__USE_LARGEFILE64)
       /*
        * The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is

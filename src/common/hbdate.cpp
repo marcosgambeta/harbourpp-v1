@@ -799,7 +799,7 @@ HB_BOOL hb_timeStampStrGet(const char * szDateTime, int * piYear, int * piMonth,
          if( HB_ISDIGIT(szDateTime[5]) && HB_ISDIGIT(szDateTime[6]) &&
              szDateTime[7] == szDateTime[4] &&
              HB_ISDIGIT(szDateTime[8]) && HB_ISDIGIT(szDateTime[9]) &&
-             ! HB_ISDIGIT(szDateTime[10]) )
+             !HB_ISDIGIT(szDateTime[10]) )
          {
             iMonth = (szDateTime[5] - '0') * 10 + (szDateTime[6] - '0');
             iDay = (szDateTime[8] - '0') * 10 + (szDateTime[9] - '0');
@@ -814,7 +814,7 @@ HB_BOOL hb_timeStampStrGet(const char * szDateTime, int * piYear, int * piMonth,
          else if( (szDateTime[5] == 'W' || szDateTime[5] == 'w') &&
                   HB_ISDIGIT(szDateTime[6]) && HB_ISDIGIT(szDateTime[7]) &&
                   szDateTime[8] == szDateTime[4] &&
-                  HB_ISDIGIT(szDateTime[9]) && ! HB_ISDIGIT(szDateTime[10]) )
+                  HB_ISDIGIT(szDateTime[9]) && !HB_ISDIGIT(szDateTime[10]) )
          {
             long lDate = hb_dateEncWeek(iYear, (szDateTime[6] - '0') * 10 + (szDateTime[7] - '0'), szDateTime[9] - '0');
             if( lDate )
@@ -827,7 +827,7 @@ HB_BOOL hb_timeStampStrGet(const char * szDateTime, int * piYear, int * piMonth,
          /* ISO 8601 Ordinal dates: YYYY-DDD */
          else if( szDateTime[4] == '-' && HB_ISDIGIT(szDateTime[5]) &&
                   HB_ISDIGIT(szDateTime[6]) && HB_ISDIGIT(szDateTime[7]) &&
-                  ! HB_ISDIGIT(szDateTime[8]) )
+                  !HB_ISDIGIT(szDateTime[8]) )
          {
             iDay = (static_cast<int>(szDateTime[5] - '0') * 10 +
                     static_cast<int>(szDateTime[6] - '0')) * 10 +
@@ -880,7 +880,7 @@ HB_BOOL hb_timeStampStrGet(const char * szDateTime, int * piYear, int * piMonth,
 
    if( piHour || piMinutes || piSeconds || piMSec )
    {
-      if( ! hb_timeStrGet(szDateTime, piHour, piMinutes, piSeconds, piMSec) )
+      if( !hb_timeStrGet(szDateTime, piHour, piMinutes, piSeconds, piMSec) )
       {
          if( szDateTime )
          {

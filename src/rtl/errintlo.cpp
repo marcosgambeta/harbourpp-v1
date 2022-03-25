@@ -81,7 +81,7 @@ void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * sz
    fLang = fStack && hb_langID() != nullptr;
 
    szFile = fStack ? hb_setGetCPtr( HB_SET_HBOUTLOG ) : nullptr;
-   if( ! szFile )
+   if( !szFile )
    {
       szFile = "hb_out.log";
    }
@@ -122,7 +122,7 @@ void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * sz
       fprintf(hLog, "%s", buffer);
    }
 
-   if( ! szText && fLang )
+   if( !szText && fLang )
    {
       szText = hb_langDGetItem( HB_LANG_ITEM_BASE_ERRINTR + errCode - 9000 );
    }

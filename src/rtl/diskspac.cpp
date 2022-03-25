@@ -114,7 +114,7 @@ HB_FUNC( DISKSPACE )
             static P_GDFSE s_pGetDiskFreeSpaceEx = nullptr;
             static HB_BOOL s_fInit = HB_FALSE;
 
-            if( ! s_fInit )
+            if( !s_fInit )
             {
                HMODULE hModule = GetModuleHandle( HB_WINAPI_KERNEL32_DLL() );
                if( hModule )
@@ -130,7 +130,7 @@ HB_FUNC( DISKSPACE )
                                                static_cast<PULARGE_INTEGER>(&i64FreeBytesToCaller),
                                                static_cast<PULARGE_INTEGER>(&i64TotalBytes),
                                                static_cast<PULARGE_INTEGER>(&i64FreeBytes) ) ? HB_FALSE : HB_TRUE;
-               if( ! bError )
+               if( !bError )
                {
                   dSpace = HB_GET_LARGE_UINT( i64FreeBytesToCaller );
                }
@@ -143,7 +143,7 @@ HB_FUNC( DISKSPACE )
                DWORD dwTotalNumberOfClusters;
 
                bError = GetDiskFreeSpace( lpPath, &dwSectorsPerCluster, &dwBytesPerSector, &dwNumberOfFreeClusters, &dwTotalNumberOfClusters ) ? HB_FALSE : HB_TRUE;
-               if( ! bError )
+               if( !bError )
                {
                   dSpace = static_cast<double>(dwNumberOfFreeClusters) * static_cast<double>(dwSectorsPerCluster) * static_cast<double>(dwBytesPerSector);
                }
@@ -161,7 +161,7 @@ HB_FUNC( DISKSPACE )
       const char * szName = hb_parc(1);
       char * pszFree = nullptr;
 
-      if( ! szName )
+      if( !szName )
       {
          szName = "/";
       }
@@ -183,9 +183,9 @@ HB_FUNC( DISKSPACE )
          struct statvfs st;
          bError = statvfs( szName, &st ) != 0;
 #endif
-         if( ! bError )
+         if( !bError )
          {
-#if ! defined( HB_OS_VXWORKS )
+#if !defined( HB_OS_VXWORKS )
             if( getuid() == 0 )
             {
                dSpace = static_cast<double>(st.f_bfree) * static_cast<double>(st.f_bsize);

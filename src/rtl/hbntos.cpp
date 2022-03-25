@@ -86,7 +86,7 @@ HB_FUNC( HB_NTOC )
    {
       char szBuffer[HB_MAX_DOUBLE_LENGTH];
 
-      if( ! HB_IS_DOUBLE(pNumber) )
+      if( !HB_IS_DOUBLE(pNumber) )
       {
          HB_MAXINT nNumber = hb_itemGetNInt(pNumber);
          int iPos = sizeof(szBuffer);

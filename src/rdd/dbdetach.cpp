@@ -60,7 +60,7 @@ HB_FUNC( HB_DBDETACH )
    AREAP pArea = nullptr;
    int iArea;
 
-   if( ! pAlias || HB_IS_NIL(pAlias) )
+   if( !pAlias || HB_IS_NIL(pAlias) )
    {
       pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    }
@@ -116,7 +116,7 @@ HB_FUNC( HB_DBREQUEST )
          double dTimeOut = hb_parnd(4);
          ulMilliSec = dTimeOut > 0 ? static_cast<HB_ULONG>(dTimeOut * 1000) : 0;
       }
-      else if( ! hb_parl(4) )
+      else if( !hb_parl(4) )
       {
          ulMilliSec = 0;
       }

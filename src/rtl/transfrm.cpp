@@ -115,7 +115,7 @@ HB_FUNC( TRANSFORM )
          /* Go through all function chars, until the end of the picture string
             or any whitespace found. */
 
-         while( nPicLen && ! bDone )
+         while( nPicLen && !bDone )
          {
             switch( *szPic++ )
             {
@@ -256,7 +256,7 @@ HB_FUNC( TRANSFORM )
                         }
                   }
                }
-               else if( ! ( uiPicFlags & PF_REMAIN ) )
+               else if( !( uiPicFlags & PF_REMAIN ) )
                {
                   break;
                }
@@ -339,7 +339,7 @@ HB_FUNC( TRANSFORM )
                   {
                      szResult[nExpPos] = '.';
                   }
-                  else if( ! bFound && szResult[nExpPos] == '.' )
+                  else if( !bFound && szResult[nExpPos] == '.' )
                   {
                      szResult[nExpPos] = ',';
                      bFound = HB_TRUE;
@@ -708,7 +708,7 @@ HB_FUNC( TRANSFORM )
                   szNewFormat[nFor] = cLast;
                   szBritish++;
                }
-               else if( ! *szDateFormat )
+               else if( !*szDateFormat )
                {
                   break;
                }
@@ -819,7 +819,7 @@ HB_FUNC( TRANSFORM )
                   szNewFormat[nFor] = cLast;
                   szBritish++;
                }
-               else if( ! *szDateFormat )
+               else if( !*szDateFormat )
                {
                   break;
                }
@@ -924,7 +924,7 @@ HB_FUNC( TRANSFORM )
          nResultPos = 0;
          szResult = static_cast<char*>(hb_xgrab(nPicLen + 2));
 
-         for( ; ( nPicLen || ! bDone ) && ! bExit; nResultPos++, szPic++, nPicLen-- )
+         for( ; ( nPicLen || !bDone ) && !bExit; nResultPos++, szPic++, nPicLen-- )
          {
             if( nPicLen )
             {
@@ -941,7 +941,7 @@ HB_FUNC( TRANSFORM )
                case 'y':                     /* Yes/No */
                case 'Y':                     /* Yes/No */
 
-                  if( ! bDone )
+                  if( !bDone )
                   {
                      szResult[nResultPos] = hb_itemGetL(pValue) ? 'Y' : 'N';
                      bDone = HB_TRUE;           /* Logical written */
@@ -957,7 +957,7 @@ HB_FUNC( TRANSFORM )
                case 'l':                     /* True/False */
                case 'L':                     /* True/False */
 
-                  if( ! bDone )
+                  if( !bDone )
                   {
                      szResult[nResultPos] = hb_itemGetL(pValue) ? 'T' : 'F';
                      bDone = HB_TRUE;
@@ -973,7 +973,7 @@ HB_FUNC( TRANSFORM )
                   szResult[nResultPos] = cPic;
             }
 
-            if( ! ( uiPicFlags & PF_REMAIN ) )
+            if( !( uiPicFlags & PF_REMAIN ) )
             {
                bExit = HB_TRUE;
             }
@@ -989,7 +989,7 @@ HB_FUNC( TRANSFORM )
          bError = HB_TRUE;
       }
 
-      if( ! bError )
+      if( !bError )
       {
          if( uiPicFlags & PF_EMPTY )
          {

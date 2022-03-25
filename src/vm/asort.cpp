@@ -302,7 +302,7 @@ static HB_BOOL hb_arraySortDO( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZ
          pDst = pSrc;
          pPtr1 = &pBuf[0];
       }
-      if( ! fBuf2 )
+      if( !fBuf2 )
       {
          pPtr2 = &pBuf[nCnt1];
       }
@@ -336,7 +336,7 @@ static HB_BOOL hb_arraySortDO( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZ
          }
          while( --nCnt2 );
       }
-      return ! fBuf1;
+      return !fBuf1;
    }
    return HB_TRUE;
 }
@@ -457,7 +457,7 @@ HB_FUNC( ASORT )
 {
    PHB_ITEM pArray = hb_param(1, HB_IT_ARRAY);
 
-   if( pArray && ! hb_arrayIsObject(pArray) )
+   if( pArray && !hb_arrayIsObject(pArray) )
    {
       HB_SIZE nStart = hb_parns(2);
       HB_SIZE nCount = hb_parns(3);

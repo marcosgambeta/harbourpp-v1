@@ -164,7 +164,7 @@ HB_FUNC( SX_MAKESEM )
                iUsers = HB_GET_LE_INT16( buffer ) + 1;
             }
          }
-         if( ! fError )
+         if( !fError )
          {
             HB_PUT_LE_UINT16(buffer, iUsers);
             if( hb_fileWriteAt( pFile, buffer, 2, 0 ) != 2 )

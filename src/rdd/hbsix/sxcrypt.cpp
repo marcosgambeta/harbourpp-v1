@@ -135,7 +135,7 @@ static HB_BOOL _hb_sxGetKey( PHB_ITEM pKeyItem, char * pKeyVal )
    HB_BOOL fResult = HB_FALSE;
    PHB_ITEM pItem = nullptr;
 
-   if( ! ( hb_itemType(pKeyItem) & HB_IT_STRING ) )
+   if( !( hb_itemType(pKeyItem) & HB_IT_STRING ) )
    {
       AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 

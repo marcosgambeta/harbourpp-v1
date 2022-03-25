@@ -87,7 +87,7 @@ HB_FUNC( ARRAY )
 
       for( int iParam = 1; iParam <= iPCount; iParam++ )
       {
-         if( ! HB_ISNUM( iParam ) )
+         if( !HB_ISNUM( iParam ) )
          {
             bError = HB_TRUE;
             break;
@@ -105,7 +105,7 @@ HB_FUNC( ARRAY )
          }
       }
 
-      if( ! bError )
+      if( !bError )
       {
          hb_arrayNewRagged( hb_stackReturnItem(), 1 );
       }
@@ -350,7 +350,7 @@ HB_FUNC( HB_AINS )
 
       if( hb_arrayIns(pArray, nPos) )
       {
-         if( ! HB_ISNIL(3) )
+         if( !HB_ISNIL(3) )
          {
             hb_arraySet(pArray, nPos, hb_param(3, HB_IT_ANY));
          }
@@ -416,7 +416,7 @@ HB_FUNC( ACOPY )
    if( pSrcArray && pDstArray )
    {
       /* CA-Cl*pper works this way. */
-      if( ! hb_arrayIsObject(pSrcArray) && ! hb_arrayIsObject(pDstArray) )
+      if( !hb_arrayIsObject(pSrcArray) && !hb_arrayIsObject(pDstArray) )
       {
          HB_SIZE nStart = hb_parns(3);
          HB_SIZE nCount = hb_parns(4);
@@ -435,7 +435,7 @@ HB_FUNC( ACLONE )
 {
    PHB_ITEM pSrcArray = hb_param(1, HB_IT_ARRAY);
 
-   if( pSrcArray && ! hb_arrayIsObject(pSrcArray) )
+   if( pSrcArray && !hb_arrayIsObject(pSrcArray) )
    {
       hb_arrayCloneTo(hb_stackReturnItem(), pSrcArray); /* AClone() returns the new array */
    }

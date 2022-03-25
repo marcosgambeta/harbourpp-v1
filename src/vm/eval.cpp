@@ -450,7 +450,7 @@ HB_FUNC( HB_EXECFROMARRAY )
 
       if( iPCount == 1 )
       {
-         if( HB_IS_ARRAY(pParam) && ! HB_IS_OBJECT(pParam) )
+         if( HB_IS_ARRAY(pParam) && !HB_IS_OBJECT(pParam) )
          {
             pArray = pParam;
             pItem = hb_arrayGetItemPtr(pArray, 1);
@@ -484,7 +484,7 @@ HB_FUNC( HB_EXECFROMARRAY )
       }
    }
 
-   if( pFunc && ( ! pArray || HB_IS_ARRAY(pArray) ) )
+   if( pFunc && ( !pArray || HB_IS_ARRAY(pArray) ) )
    {
       if( HB_IS_SYMBOL(pFunc) )
       {
@@ -494,7 +494,7 @@ HB_FUNC( HB_EXECFROMARRAY )
       {
          pExecSym = hb_dynsymGet(hb_itemGetCPtr(pFunc))->pSymbol;
       }
-      else if( HB_IS_BLOCK(pFunc) && ! pSelf )
+      else if( HB_IS_BLOCK(pFunc) && !pSelf )
       {
          pSelf = pFunc;
          pExecSym = &hb_symEval;
@@ -553,7 +553,7 @@ HB_BOOL hb_execFromArray( PHB_ITEM pParam )
    PHB_ITEM pSelf = nullptr;
    HB_ULONG ulParamOffset = 0;
 
-   if( pParam && HB_IS_ARRAY(pParam) && ! HB_IS_OBJECT(pParam) )
+   if( pParam && HB_IS_ARRAY(pParam) && !HB_IS_OBJECT(pParam) )
    {
       pArray = pParam;
       pParam = hb_arrayGetItemPtr(pArray, 1);
@@ -581,7 +581,7 @@ HB_BOOL hb_execFromArray( PHB_ITEM pParam )
       {
          pExecSym = hb_dynsymGet(hb_itemGetCPtr(pParam))->pSymbol;
       }
-      else if( HB_IS_BLOCK(pParam) && ! pSelf )
+      else if( HB_IS_BLOCK(pParam) && !pSelf )
       {
          pSelf = pParam;
          pExecSym = &hb_symEval;

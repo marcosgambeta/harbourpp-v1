@@ -104,7 +104,7 @@
    #define SM_SERVERR2  89
    #endif
 
-#elif defined(HB_OS_UNIX) && ! defined(__CEGCC__)
+#elif defined(HB_OS_UNIX) && !defined(__CEGCC__)
    #include <sys/utsname.h>
 #endif
 
@@ -159,7 +159,7 @@ static HB_BOOL s_win_iswow64(void)
 {
    HB_BOOL bRetVal = HB_FALSE;
 
-   #if defined(HB_OS_WIN) && ! defined(HB_OS_WIN_64)
+   #if defined(HB_OS_WIN) && !defined(HB_OS_WIN_64)
    {
       using P_ISWOW64PROCESS = BOOL(WINAPI *)(HANDLE, PBOOL);
 
@@ -180,7 +180,7 @@ static HB_BOOL s_win_iswow64(void)
       {
          BOOL bIsWow64 = FALSE;
 
-         if( ! pIsWow64Process(GetCurrentProcess(), &bIsWow64))
+         if( !pIsWow64Process(GetCurrentProcess(), &bIsWow64))
          {
             /* Try alternative method? */
          }
@@ -665,7 +665,7 @@ HB_BOOL hb_iswinsp(int iServicePackMajor, HB_BOOL fOrUpper)
 int hb_iswine(void)
 {
 #if defined(HB_OS_WIN)
-   if( ! s_fWinVerInit )
+   if( !s_fWinVerInit )
    {
       s_hb_winVerInit();
    }
@@ -678,7 +678,7 @@ int hb_iswine(void)
 HB_BOOL hb_iswin10(void)
 {
 #if defined(HB_OS_WIN)
-   if( ! s_fWinVerInit )
+   if( !s_fWinVerInit )
    {
       s_hb_winVerInit();
    }
@@ -691,7 +691,7 @@ HB_BOOL hb_iswin10(void)
 HB_BOOL hb_iswin81(void)
 {
 #if defined(HB_OS_WIN)
-   if( ! s_fWinVerInit )
+   if( !s_fWinVerInit )
    {
       s_hb_winVerInit();
    }
@@ -704,7 +704,7 @@ HB_BOOL hb_iswin81(void)
 HB_BOOL hb_iswin8(void)
 {
 #if defined(HB_OS_WIN)
-   if( ! s_fWinVerInit )
+   if( !s_fWinVerInit )
    {
       s_hb_winVerInit();
    }
@@ -717,7 +717,7 @@ HB_BOOL hb_iswin8(void)
 HB_BOOL hb_iswin7(void)
 {
 #if defined(HB_OS_WIN)
-   if( ! s_fWinVerInit )
+   if( !s_fWinVerInit )
    {
       s_hb_winVerInit();
    }
@@ -730,7 +730,7 @@ HB_BOOL hb_iswin7(void)
 HB_BOOL hb_iswinvista(void)
 {
 #if defined(HB_OS_WIN)
-   if( ! s_fWinVerInit )
+   if( !s_fWinVerInit )
    {
       s_hb_winVerInit();
    }
@@ -743,7 +743,7 @@ HB_BOOL hb_iswinvista(void)
 HB_BOOL hb_iswin2k3(void)
 {
 #if defined(HB_OS_WIN)
-   if( ! s_fWinVerInit )
+   if( !s_fWinVerInit )
    {
       s_hb_winVerInit();
    }
@@ -756,7 +756,7 @@ HB_BOOL hb_iswin2k3(void)
 HB_BOOL hb_iswin2k(void)
 {
 #if defined(HB_OS_WIN)
-   if( ! s_fWinVerInit )
+   if( !s_fWinVerInit )
    {
       s_hb_winVerInit();
    }
@@ -769,7 +769,7 @@ HB_BOOL hb_iswin2k(void)
 int hb_iswinnt(void)
 {
 #if defined(HB_OS_WIN)
-   if( ! s_fWinVerInit )
+   if( !s_fWinVerInit )
    {
       s_hb_winVerInit();
    }
@@ -782,7 +782,7 @@ int hb_iswinnt(void)
 int hb_iswin9x(void)
 {
 #if defined(HB_OS_WIN)
-   if( ! s_fWinVerInit )
+   if( !s_fWinVerInit )
    {
       s_hb_winVerInit();
    }

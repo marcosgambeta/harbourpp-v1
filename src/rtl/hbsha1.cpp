@@ -87,7 +87,7 @@ HB_FUNC( HB_SHA1 )
 
    hb_SHA1_Final( digest, &ctx );
 
-   if( ! hb_parl(2) )
+   if( !hb_parl(2) )
    {
       char hex[( sizeof(digest) * 2 ) + 1];
       hb_strtohex( reinterpret_cast<char*>(digest), sizeof(digest), hex );

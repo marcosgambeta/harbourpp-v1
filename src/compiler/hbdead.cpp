@@ -522,7 +522,7 @@ void hb_compCodeTraceMarkDead(HB_COMP_DECL, PHB_HFUNC pFunc)
    const PHB_CODETRACE_FUNC * pFuncTable = s_codeTraceFuncTable;
    HB_CODETRACE_INFO code_info;
 
-   if( ! HB_COMP_ISSUPPORTED(HB_COMPFLAG_OPTJUMP) || pFunc->nPCodePos < 2 )
+   if( !HB_COMP_ISSUPPORTED(HB_COMPFLAG_OPTJUMP) || pFunc->nPCodePos < 2 )
    {
       return;
    }

@@ -45,7 +45,7 @@
  *
  */
 
-#if ! defined( _LARGEFILE64_SOURCE )
+#if !defined( _LARGEFILE64_SOURCE )
 #  define _LARGEFILE64_SOURCE  1
 #endif
 
@@ -61,7 +61,7 @@
 #  include <sys/stat.h>
 #endif
 
-#if ! defined( HB_USE_LARGEFILE64 ) && defined( HB_OS_UNIX )
+#if !defined( HB_USE_LARGEFILE64 ) && defined( HB_OS_UNIX )
    #if defined( __USE_LARGEFILE64 )
       /*
        * The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is

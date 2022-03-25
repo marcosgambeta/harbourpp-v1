@@ -444,7 +444,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName, const c
    hb_vmDo(5);
 
    pFileItm = hb_stackReturnItem();
-   if( ! HB_IS_NIL(pFileItm) )
+   if( !HB_IS_NIL(pFileItm) )
    {
       pFile = s_fileNew( pIO, hb_itemNew(pFileItm) );
    }
@@ -738,7 +738,7 @@ HB_FUNC( IOUSR_REGISTER )
       {
          PHB_ITEM pSymItm = hb_arrayGetItemPtr(pMthItm, nAt);
 
-         if( ! HB_IS_NIL(pSymItm) && ! HB_IS_SYMBOL(pSymItm) )
+         if( !HB_IS_NIL(pSymItm) && !HB_IS_SYMBOL(pSymItm) )
          {
             break;
          }
@@ -763,7 +763,7 @@ HB_FUNC( IOUSR_REGISTER )
                   * pFunction = * pDummyFunc;
                }
             }
-            if( ! hb_fileRegisterPart( &pIO->funcs ) )
+            if( !hb_fileRegisterPart( &pIO->funcs ) )
             {
                pIO = nullptr;
             }

@@ -299,7 +299,7 @@ static int chrmap_parse( FILE * fp, const char * pszTerm, int * nTransTbl, const
    fgetpos( fp, &pos );
    ( void ) fseek( fp, 0, SEEK_SET );
 
-   while( ! feof( fp ) && isTerm < 2 )
+   while( !feof( fp ) && isTerm < 2 )
    {
       char buf[256];
       ++line;

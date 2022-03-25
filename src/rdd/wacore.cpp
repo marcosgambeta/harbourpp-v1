@@ -225,7 +225,7 @@ HB_USHORT hb_rddInsertAreaNode( const char * szDriver )
    }
 
    pRddNode = hb_rddFindNode( szDriver, &uiRddID );
-   if( ! pRddNode )
+   if( !pRddNode )
    {
       return 0;
    }
@@ -239,7 +239,7 @@ HB_USHORT hb_rddInsertAreaNode( const char * szDriver )
    }
 
    pArea = static_cast<AREAP>(hb_rddNewAreaNode( pRddNode, uiRddID ));
-   if( ! pArea )
+   if( !pArea )
    {
       return 0;
    }
@@ -264,7 +264,7 @@ void hb_rddReleaseCurrentArea( void )
 
    pRddInfo = hb_stackRDD();
    pArea = static_cast<AREAP>(pRddInfo->pCurrArea);
-   if( ! pArea )
+   if( !pArea )
    {
       return;
    }
@@ -318,7 +318,7 @@ void hb_rddCloseAll( void )
                SELF_CLOSE( pArea );
             }
          }
-         if( ! isParents && ! isFinish )
+         if( !isParents && !isFinish )
          {
             isParents = isFinish = HB_TRUE;
          }
@@ -419,14 +419,14 @@ const char * hb_rddDefaultDrv( const char * szDriver )
 
       hb_strncpyUpper( szNewDriver, szDriver, sizeof(szNewDriver) - 1 );
       pRddNode = hb_rddFindNode( szNewDriver, nullptr );
-      if( ! pRddNode )
+      if( !pRddNode )
       {
          return nullptr;
       }
 
       pRddInfo->szDefaultRDD = pRddNode->szName;
    }
-   else if( ! pRddInfo->szDefaultRDD && hb_rddGetNode(0) )
+   else if( !pRddInfo->szDefaultRDD && hb_rddGetNode(0) )
    {
       const char * szDrvTable[] = { "DBFNTX", "DBFCDX", "DBFFPT", "DBF" };
 
@@ -669,7 +669,7 @@ HB_ERRCODE hb_rddDetachArea( AREAP pArea, PHB_ITEM pCargo )
 
    /* protect by critical section access to s_pDetachedAreas array */
    hb_threadEnterCriticalSectionGC( &s_waMtx );
-   if( ! s_pDetachedAreas )
+   if( !s_pDetachedAreas )
    {
       s_pDetachedAreas = hb_itemArrayNew(1);
       nPos = 1;
@@ -707,7 +707,7 @@ AREAP hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea
    }
 
    /* close current WA or chose 1st free available */
-   if( ! fNewArea )
+   if( !fNewArea )
    {
       hb_rddReleaseCurrentArea();
    }
@@ -780,7 +780,7 @@ AREAP hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea
       {
          hb_threadCondWait( &s_waCond, &s_waMtx );
       }
-      else if( ! hb_threadCondTimedWait( &s_waCond, &s_waMtx, ulMilliSec ) )
+      else if( !hb_threadCondTimedWait( &s_waCond, &s_waMtx, ulMilliSec ) )
       {
          ulMilliSec = 0;
       }

@@ -141,7 +141,7 @@ static void hb_mlGetEOLs( PHB_MLC_INFO pMLC, int iParam )
    if( iEOLs == 0 )
    {
       pMLC->pEOLs[0].szEOL = hb_setGetEOL();
-      if( ! pMLC->pEOLs[0].szEOL || ! pMLC->pEOLs[0].szEOL[0] )
+      if( !pMLC->pEOLs[0].szEOL || !pMLC->pEOLs[0].szEOL[0] )
       {
          pMLC->pEOLs[0].szEOL = hb_conNewLine();
       }
@@ -183,7 +183,7 @@ static HB_BOOL hb_mlInit( PHB_MLC_INFO pMLC, int iParAdd )
       }
 
       pMLC->cdp = hb_vmCDP();
-      if( ! HB_CDP_ISCHARIDX( pMLC->cdp ) )
+      if( !HB_CDP_ISCHARIDX( pMLC->cdp ) )
       {
          pMLC->cdp = nullptr;
       }
@@ -249,7 +249,7 @@ static HB_SIZE hb_mlGetLine( PHB_MLC_INFO pMLC )
             nLastCol = pMLC->nCol;
          }
          pMLC->nOffset += 2;
-         if( ! pMLC->fWordWrap )
+         if( !pMLC->fWordWrap )
          {
             break;
          }
@@ -273,7 +273,7 @@ static HB_SIZE hb_mlGetLine( PHB_MLC_INFO pMLC )
          }
          break;
       }
-      else if( ! pMLC->fWordWrap && pMLC->nCol >= pMLC->nLineLength )
+      else if( !pMLC->fWordWrap && pMLC->nCol >= pMLC->nLineLength )
       {
          break;
       }
@@ -281,7 +281,7 @@ static HB_SIZE hb_mlGetLine( PHB_MLC_INFO pMLC )
       nLastPos = pMLC->nOffset;
       if( pMLC->cdp )
       {
-         if( ! HB_CDPCHAR_GET( pMLC->cdp, pMLC->pszString, pMLC->nLen, &pMLC->nOffset, &ch ) )
+         if( !HB_CDPCHAR_GET( pMLC->cdp, pMLC->pszString, pMLC->nLen, &pMLC->nOffset, &ch ) )
          {
             break;
          }
@@ -371,7 +371,7 @@ HB_FUNC( MEMOLINE )
       {
          while( --nLine )
          {
-            if( ! hb_mlGetLine( &MLC ) )
+            if( !hb_mlGetLine( &MLC ) )
             {
                break;
             }
@@ -415,7 +415,7 @@ HB_FUNC( MEMOLINE )
 
                   if( MLC.cdp )
                   {
-                     if( ! HB_CDPCHAR_GET( MLC.cdp, MLC.pszString, MLC.nLen, &nIndex, &wc ) )
+                     if( !HB_CDPCHAR_GET( MLC.cdp, MLC.pszString, MLC.nLen, &nIndex, &wc ) )
                      {
                         break;
                      }
@@ -438,7 +438,7 @@ HB_FUNC( MEMOLINE )
                   {
                      if( MLC.cdp )
                      {
-                        if( ! HB_CDPCHAR_PUT( MLC.cdp, szLine, nSize, &nLen, wc ) )
+                        if( !HB_CDPCHAR_PUT( MLC.cdp, szLine, nSize, &nLen, wc ) )
                         {
                            break;
                         }
@@ -458,7 +458,7 @@ HB_FUNC( MEMOLINE )
                {
                   nCol = nSize - nLen;
                }
-               if( ! fPad && nCol > 0 )
+               if( !fPad && nCol > 0 )
                {
                   nCol = nIndex < MLC.nLen && ( MLC.pszString[nIndex] == ' ' || MLC.pszString[nIndex] == HB_CHAR_HT ) ? 1 : 0;
                }
@@ -519,7 +519,7 @@ HB_FUNC( MLPOS )
       {
          while( --nLine )
          {
-            if( ! hb_mlGetLine( &MLC ) )
+            if( !hb_mlGetLine( &MLC ) )
             {
                break;
             }
@@ -562,7 +562,7 @@ HB_FUNC( MLCTOPOS )
          {
             while( --nLine )
             {
-               if( ! hb_mlGetLine( &MLC ) )
+               if( !hb_mlGetLine( &MLC ) )
                {
                   break;
                }
@@ -654,7 +654,7 @@ HB_FUNC( HB_MLEVAL )
       HB_BOOL fSoftCR, fEOL;
       char * pszLine;
 
-      if( ! HB_CDP_ISCHARIDX( cdp ) )
+      if( !HB_CDP_ISCHARIDX( cdp ) )
       {
          cdp = nullptr;
       }
@@ -687,7 +687,7 @@ HB_FUNC( HB_MLEVAL )
 
          fSoftCR = fEOL = HB_FALSE;
          ++nLines;
-         while( ! fSoftCR && nOffset < nLen )
+         while( !fSoftCR && nOffset < nLen )
          {
             HB_SIZE nRepl;
             HB_WCHAR ch;
@@ -724,11 +724,11 @@ HB_FUNC( HB_MLEVAL )
 
             if( cdp )
             {
-               if( ! HB_CDPCHAR_GET( cdp, pszString, nLen, &nOffset, &ch ) )
+               if( !HB_CDPCHAR_GET( cdp, pszString, nLen, &nOffset, &ch ) )
                {
                   continue;
                }
-               if( ! HB_CDPCHAR_PUT( cdp, pszLine, nLineLength + 1, &nDst, ch ) )
+               if( !HB_CDPCHAR_PUT( cdp, pszLine, nLineLength + 1, &nDst, ch ) )
                {
                   break;
                }
@@ -777,14 +777,14 @@ HB_FUNC( HB_MLEVAL )
                {
                   pszLine[nDst++] = static_cast<char>(ch);
                }
-               else if( ! HB_CDPCHAR_PUT( cdp, pszLine, nLineLength + 1, &nDst, ch ) )
+               else if( !HB_CDPCHAR_PUT( cdp, pszLine, nLineLength + 1, &nDst, ch ) )
                {
                   break;
                }
             }
          }
 
-         if( nRowPos == 0 && nOffset >= nPos && ! fSoftCR )
+         if( nRowPos == 0 && nOffset >= nPos && !fSoftCR )
          {
             nRowPos = nLines;
             nColPos = nCol;

@@ -182,7 +182,7 @@ HB_FUNC( __COPYFILE )
 
    if( szSource && szDest )
    {
-      if( ! hb_copyfile( szSource, szDest ) )
+      if( !hb_copyfile( szSource, szDest ) )
       {
          hb_retl(false);
       }

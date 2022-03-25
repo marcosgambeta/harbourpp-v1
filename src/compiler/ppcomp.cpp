@@ -314,12 +314,12 @@ static HB_BOOL hb_pp_CompilerSwitch(void * cargo, const char * szSwitch, int * p
             case 'j':
             case 'J':
                iFlag = HB_COMPFLAG_OPTJUMP;
-               iValue = ! iValue;
+               iValue = !iValue;
                break;
             case 'm':
             case 'M':
                iFlag = HB_COMPFLAG_MACROTEXT;
-               iValue = ! iValue;
+               iValue = !iValue;
                break;
             case 'd':
             case 'D':
@@ -332,7 +332,7 @@ static HB_BOOL hb_pp_CompilerSwitch(void * cargo, const char * szSwitch, int * p
             default:
                fError = HB_TRUE;
          }
-         if( ! fError && iFlag )
+         if( !fError && iFlag )
          {
             if( fSet )
             {
@@ -478,7 +478,7 @@ void hb_compInitPP(HB_COMP_DECL, PHB_PP_OPEN_FUNC pOpenFunc)
          hb_pp_setIncFunc(HB_COMP_PARAM->pLex->pPP, hb_pp_fileIncluded);
       }
 
-      if( ! HB_COMP_PARAM->szStdCh )
+      if( !HB_COMP_PARAM->szStdCh )
       {
          hb_pp_setStdRules(HB_COMP_PARAM->pLex->pPP);
       }
@@ -486,12 +486,12 @@ void hb_compInitPP(HB_COMP_DECL, PHB_PP_OPEN_FUNC pOpenFunc)
       {
          hb_pp_readRules(HB_COMP_PARAM->pLex->pPP, HB_COMP_PARAM->szStdCh);
       }
-      else if( ! HB_COMP_PARAM->fQuiet )
+      else if( !HB_COMP_PARAM->fQuiet )
       {
          hb_compOutStd(HB_COMP_PARAM, "Standard command definitions excluded.\n");
       }
 
-      hb_pp_initDynDefines(HB_COMP_PARAM->pLex->pPP, ! HB_COMP_PARAM->fNoArchDefs);
+      hb_pp_initDynDefines(HB_COMP_PARAM->pLex->pPP, !HB_COMP_PARAM->fNoArchDefs);
 
       /* Add /D and /undef: command-line or envvar defines */
       hb_compChkSetDefines(HB_COMP_PARAM);

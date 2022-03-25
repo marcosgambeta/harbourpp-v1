@@ -47,9 +47,9 @@
 
 /* NOTE: This definitions must be ahead of any and all #include statements */
 
-#if ! defined( HB_FM_STATISTICS ) && \
-    ! defined( HB_FM_STATISTICS_OFF ) && \
-    ! defined( HB_FM_STATISTICS_DYN_OFF )
+#if !defined( HB_FM_STATISTICS ) && \
+    !defined( HB_FM_STATISTICS_OFF ) && \
+    !defined( HB_FM_STATISTICS_DYN_OFF )
 #  define HB_FM_STATISTICS_OFF
 #endif
 
@@ -95,7 +95,7 @@
 #  undef HB_FM_WIN_ALLOC
 #elif defined( HB_FM_WIN_ALLOC )
 #  undef HB_FM_DL_ALLOC
-#elif ! defined( HB_FM_DL_ALLOC ) && ! defined( HB_FM_WIN_ALLOC )
+#elif !defined( HB_FM_DL_ALLOC ) && !defined( HB_FM_WIN_ALLOC )
 #  if defined( _MSC_VER ) || defined( __BORLANDC__ ) || defined( __MINGW32__ ) || \
         ( defined( HB_FM_DLMT_ALLOC ) && defined( HB_MT_VM ) )
 #     define HB_FM_DL_ALLOC
@@ -113,7 +113,7 @@
 /* #define HB_PARANOID_MEM_CHECK */
 
 #if defined( HB_FM_DL_ALLOC )
-#  if ! defined( HB_FM_DLMT_ALLOC ) && ! defined( HB_FM_DLMT_ALLOC_OFF ) && \
+#  if !defined( HB_FM_DLMT_ALLOC ) && !defined( HB_FM_DLMT_ALLOC_OFF ) && \
       defined( HB_MT_VM )
 #     define HB_FM_DLMT_ALLOC
 #  endif
@@ -121,7 +121,7 @@
 /* #  define INSECURE */
 /* #  define USE_DL_PREFIX */
 #  undef FORCEINLINE
-#  if ! defined( FORCEINLINE )
+#  if !defined( FORCEINLINE )
 #     define FORCEINLINE      HB_FORCEINLINE
 #  endif
 #  define REALLOC_ZERO_BYTES_FREES
@@ -148,7 +148,7 @@
 #     pragma warn -rch
 #     pragma warn -inl
 #  elif defined( _MSC_VER )
-#     if ! defined( USE_DL_PREFIX ) && ! defined( HB_FM_DLMT_ALLOC )
+#     if !defined( USE_DL_PREFIX ) && !defined( HB_FM_DLMT_ALLOC )
 #        define USE_DL_PREFIX
 #     endif
 #     pragma warning( push )
@@ -157,18 +157,18 @@
 #        pragma warning( disable : 4267 )
 #     endif
 #  elif defined( __MINGW32__ )
-#     if ! defined( USE_DL_PREFIX ) && ! defined( HB_FM_DLMT_ALLOC )
+#     if !defined( USE_DL_PREFIX ) && !defined( HB_FM_DLMT_ALLOC )
 #        define USE_DL_PREFIX
 #     endif
 #  endif
-#  if defined( __cplusplus ) && ! defined( USE_DL_PREFIX )
+#  if defined( __cplusplus ) && !defined( USE_DL_PREFIX )
 #     define USE_DL_PREFIX
 #  endif
 #  if defined( HB_OS_WIN )
-#     if ! defined( ENOMEM )
+#     if !defined( ENOMEM )
 #        define ENOMEM  12
 #     endif
-#     if ! defined( EINVAL )
+#     if !defined( EINVAL )
 #        define EINVAL  22
 #     endif
 #  endif
@@ -213,7 +213,7 @@
 
 #if defined( HB_MT_VM ) && \
     ( defined( HB_FM_STATISTICS ) || defined( HB_FM_DLMT_ALLOC ) || \
-      ! defined( HB_ATOM_INC ) || ! defined( HB_ATOM_DEC ) )
+      !defined( HB_ATOM_INC ) || !defined( HB_ATOM_DEC ) )
 
    static HB_CRITICAL_NEW( s_fmMtx );
 #  define HB_FM_LOCK()           do { hb_threadEnterCriticalSection( &s_fmMtx )
@@ -227,7 +227,7 @@
 #endif
 
 #if defined( HB_FM_STATISTICS )
-#  if ! defined( HB_FM_NEED_INIT )
+#  if !defined( HB_FM_NEED_INIT )
 #     define HB_FM_NEED_INIT
 #  endif
 #else
@@ -299,7 +299,7 @@ static PHB_MEMINFO s_pLastBlock  = nullptr;
 static char s_szFileName[HB_PATH_MAX] = { '\0' };
 static char s_szInfo[256] = { '\0' };
 
-#else /* ! HB_FM_STATISTICS */
+#else /* !HB_FM_STATISTICS */
 
 using PHB_MEMINFO = void *;
 #define HB_MEMINFO_SIZE  HB_COUNTER_OFFSET
@@ -311,7 +311,7 @@ using PHB_MEMINFO = void *;
 
 #define HB_MEM_PTR( p )     ( static_cast<void*>(static_cast<HB_BYTE*>(p) + HB_MEMINFO_SIZE) )
 
-#if ! defined( HB_MT_VM )
+#if !defined( HB_MT_VM )
 
 #  undef HB_ATOM_DEC
 #  undef HB_ATOM_INC
@@ -320,7 +320,7 @@ using PHB_MEMINFO = void *;
 #  define HB_ATOM_INC( p )  ( ++( *( p ) ) )
 #  define HB_ATOM_DEC( p )  ( --( *( p ) ) )
 
-#elif ! defined( HB_ATOM_INC ) || ! defined( HB_ATOM_DEC )
+#elif !defined( HB_ATOM_INC ) || !defined( HB_ATOM_DEC )
 
    /* HB_ATOM_INC and HB_ATOM_DEC have to be synced together */
 #  undef HB_ATOM_DEC
@@ -355,7 +355,7 @@ using PHB_MEMINFO = void *;
 
 #if defined( HB_FM_DLMT_ALLOC )
 
-#  if ! defined( HB_MSPACE_COUNT )
+#  if !defined( HB_MSPACE_COUNT )
 #     define HB_MSPACE_COUNT  16
 #  endif
 
@@ -379,7 +379,7 @@ static mspace hb_mspace( void )
       return pm->ms;
    }
 
-   if( ! s_gm )
+   if( !s_gm )
    {
       s_gm = create_mspace( 0, 1 );
    }
@@ -454,7 +454,7 @@ static void dlmalloc_destroy( void )
          size_t size = sp->size;
          flag_t flag = sp->sflags;
          sp = sp->next;
-         if( ( flag & USE_MMAP_BIT ) && ! ( flag & EXTERN_BIT ) )
+         if( ( flag & USE_MMAP_BIT ) && !( flag & EXTERN_BIT ) )
          {
             CALL_MUNMAP( base, size );
          }
@@ -573,7 +573,7 @@ void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns nul
    }
 
 #ifdef HB_FM_NEED_INIT
-   if( ! s_fInitedFM )
+   if( !s_fInitedFM )
    {
       hb_xinit();
    }
@@ -581,7 +581,7 @@ void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns nul
 
    pMem = static_cast<PHB_MEMINFO>(malloc(HB_ALLOC_SIZE(nSize)));
 
-   if( ! pMem )
+   if( !pMem )
    {
       return pMem;
    }
@@ -617,7 +617,7 @@ void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns nul
 
       HB_FM_LOCK();
 
-      if( ! s_pFirstBlock )
+      if( !s_pFirstBlock )
       {
          pMem->pPrevBlock = nullptr;
          s_pFirstBlock = pMem;
@@ -680,7 +680,7 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
    }
 
 #ifdef HB_FM_NEED_INIT
-   if( ! s_fInitedFM )
+   if( !s_fInitedFM )
    {
       hb_xinit();
    }
@@ -688,7 +688,7 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
 
    pMem = static_cast<PHB_MEMINFO>(malloc(HB_ALLOC_SIZE(nSize)));
 
-   if( ! pMem )
+   if( !pMem )
    {
       hb_errInternal(HB_EI_XGRABALLOC, nullptr, nullptr, nullptr);
    }
@@ -724,7 +724,7 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
 
       HB_FM_LOCK();
 
-      if( ! s_pFirstBlock )
+      if( !s_pFirstBlock )
       {
          pMem->pPrevBlock = nullptr;
          s_pFirstBlock = pMem;
@@ -780,7 +780,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
 
 #if 0
    /* disabled to make hb_xrealloc() ANSI-C realloc() compatible */
-   if( ! pMem )
+   if( !pMem )
    {
       hb_errInternal(HB_EI_XREALLOCNULL, nullptr, nullptr, nullptr);
    }
@@ -833,7 +833,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
 
       HB_FM_LOCK();
 
-#if ! ( defined( HB_PARANOID_MEM_CHECK ) || defined( HB_FM_FORCE_REALLOC ) )
+#if !( defined( HB_PARANOID_MEM_CHECK ) || defined( HB_FM_FORCE_REALLOC ) )
       pMem = realloc(pMemBlock, HB_ALLOC_SIZE(nSize));
 #endif
 
@@ -896,7 +896,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
       pMem = realloc(HB_FM_PTR(pMem), HB_ALLOC_SIZE(nSize));
    }
 
-   if( ! pMem )
+   if( !pMem )
    {
       hb_errInternal(HB_EI_XREALLOC, nullptr, nullptr, nullptr);
    }
@@ -938,7 +938,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
 #endif
    }
 
-   if( ! pMem )
+   if( !pMem )
    {
       hb_errInternal(HB_EI_XREALLOC, nullptr, nullptr, nullptr);
    }
@@ -1186,7 +1186,7 @@ void hb_xinit( void ) /* Initialize fixed memory subsystem */
 #endif
 
 #ifdef HB_FM_NEED_INIT
-   if( ! s_fInitedFM )
+   if( !s_fInitedFM )
    {
       s_fInitedFM = HB_TRUE;
 

@@ -83,7 +83,7 @@ HB_BOOL hb_spFile( const char * pszFileName, char * pszRetPath )
          bIsFile = hb_fsFile(pszPath);
       }
 
-      if( ! bIsFile && hb_setGetPath() )
+      if( !bIsFile && hb_setGetPath() )
       {
          HB_PATHNAMES * pNextPath = hb_setGetFirstSetPath();
 
@@ -102,7 +102,7 @@ HB_BOOL hb_spFile( const char * pszFileName, char * pszRetPath )
        * real path and file name we have to set its deterministic value
        * here. If it's not necessary the caller may drop this value.
        */
-      if( ! bIsFile )
+      if( !bIsFile )
       {
          pFilepath->szPath = szDefault ? szDefault : ".";
          hb_fsFNameMerge(pszPath, pFilepath);
@@ -155,7 +155,7 @@ HB_BOOL hb_spFileExists( const char * pszFileName, char * pszRetPath )
          bIsFile = hb_fsFileExists(pszPath);
       }
 
-      if( ! bIsFile && hb_setGetPath() )
+      if( !bIsFile && hb_setGetPath() )
       {
          HB_PATHNAMES * pNextPath = hb_setGetFirstSetPath();
 
@@ -174,7 +174,7 @@ HB_BOOL hb_spFileExists( const char * pszFileName, char * pszRetPath )
        * real path and file name we have to set its deterministic value
        * here. If it's not necessary the caller may drop this value.
        */
-      if( ! bIsFile )
+      if( !bIsFile )
       {
          pFilepath->szPath = szDefault ? szDefault : ".";
          hb_fsFNameMerge(pszPath, pFilepath);
@@ -219,7 +219,7 @@ HB_FHANDLE hb_spCreate( const char * pszFileName, HB_FATTR ulAttr )
    PHB_FNAME pFilepath;
 
    pFilepath = hb_fsFNameSplit(pszFileName);
-   if( ! pFilepath->szPath )
+   if( !pFilepath->szPath )
    {
       pFilepath->szPath = hb_setGetDefault();
    }
@@ -240,7 +240,7 @@ HB_FHANDLE hb_spCreateEx( const char * pszFileName, HB_FATTR ulAttr, HB_USHORT u
    PHB_FNAME pFilepath;
 
    pFilepath = hb_fsFNameSplit(pszFileName);
-   if( ! pFilepath->szPath )
+   if( !pFilepath->szPath )
    {
       pFilepath->szPath = hb_setGetDefault();
    }

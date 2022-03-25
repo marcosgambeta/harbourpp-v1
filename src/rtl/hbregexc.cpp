@@ -150,7 +150,7 @@ PHB_REGEX hb_regexGet( PHB_ITEM pRegExItm, int iFlags )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, pRegExItm );
    }
-   else if( ! pRegEx ) /* hb_regexCompile() failed */
+   else if( !pRegEx ) /* hb_regexCompile() failed */
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3015, nullptr, HB_ERR_FUNCNAME, 1, pRegExItm );
    }
@@ -173,5 +173,5 @@ HB_BOOL hb_regexMatch( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen, HB
    HB_BOOL fMatch;
 
    fMatch = ( s_reg_exec )( pRegEx, szString, nLen, 1, aMatches ) > 0;
-   return fMatch && ( ! fFull || ( HB_REGMATCH_SO( aMatches, 0 ) == 0 && HB_REGMATCH_EO( aMatches, 0 ) == static_cast<int>(nLen) ) );
+   return fMatch && ( !fFull || ( HB_REGMATCH_SO( aMatches, 0 ) == 0 && HB_REGMATCH_EO( aMatches, 0 ) == static_cast<int>(nLen) ) );
 }

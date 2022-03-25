@@ -71,7 +71,7 @@ HB_FUNC( HB_CTOD )
    {
       const char * szFormat = hb_parc(2);
 
-      if( ! szFormat )
+      if( !szFormat )
       {
          szFormat = hb_setGetDateFormat();
       }
@@ -106,7 +106,7 @@ HB_FUNC( HB_DTOC )
       char szFormatted[11];
       const char * szFormat = hb_parc(2);
 
-      if( ! szFormat )
+      if( !szFormat )
       {
          szFormat = hb_setGetDateFormat();
       }
@@ -493,11 +493,11 @@ HB_FUNC( HB_TTOC )
       const char * szTimeFormat = hb_parc(3);
       char szBuffer[27];
 
-      if( ! szDateFormat )
+      if( !szDateFormat )
       {
          szDateFormat = hb_setGetDateFormat();
       }
-      if( ! szTimeFormat )
+      if( !szTimeFormat )
       {
          szTimeFormat = hb_setGetTimeFormat();
       }
@@ -520,11 +520,11 @@ HB_FUNC( HB_CTOT )
       const char * szDateFormat = hb_parc(2);
       const char * szTimeFormat = hb_parc(3);
 
-      if( ! szDateFormat )
+      if( !szDateFormat )
       {
          szDateFormat = hb_setGetDateFormat();
       }
-      if( ! szTimeFormat )
+      if( !szTimeFormat )
       {
          szTimeFormat = hb_setGetTimeFormat();
       }

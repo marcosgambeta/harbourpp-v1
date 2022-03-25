@@ -168,7 +168,7 @@ static HB_ULONG hb_hrbFindSymbol( const char * szName, PHB_DYNF pDynFunc, HB_ULO
 
    for( HB_ULONG ulRet = 0; ulRet < ulLoaded; ++ulRet )
    {
-      if( ! strcmp(szName, pDynFunc[ulRet].szName) )
+      if( !strcmp(szName, pDynFunc[ulRet].szName) )
       {
          return ulRet;
       }
@@ -179,7 +179,7 @@ static HB_ULONG hb_hrbFindSymbol( const char * szName, PHB_DYNF pDynFunc, HB_ULO
 
 static void hb_hrbInitStatic( PHRB_BODY pHrbBody )
 {
-   if( ! pHrbBody->fInit && ! pHrbBody->fExit )
+   if( !pHrbBody->fInit && !pHrbBody->fExit )
    {
       pHrbBody->fInit = HB_TRUE;
       /* Initialize static variables first */
@@ -227,7 +227,7 @@ static void hb_hrbInit( PHRB_BODY pHrbBody, int iPCount, PHB_ITEM * pParams )
                /* Check INIT functions */
                if( ( pHrbBody->pSymRead[ul].scope.value & HB_FS_INITEXIT ) == HB_FS_INIT )
                {
-                  if( strcmp(pHrbBody->pSymRead[ul].szName, "CLIPINIT$") ? ! fClipInit : fClipInit )
+                  if( strcmp(pHrbBody->pSymRead[ul].szName, "CLIPINIT$") ? !fClipInit : fClipInit )
                   {
                      hb_vmPushSymbol(pHrbBody->pSymRead + ul);
                      hb_vmPushNil();
@@ -355,7 +355,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
       pHrbBody->pSymRead = nullptr;
       pHrbBody->pDynFunc = nullptr;
       pHrbBody->pModuleSymbols = nullptr;
-      if( ! hb_hrbReadValue( szHrbBody, nBodySize, &nBodyOffset, &pHrbBody->ulSymbols ) || pHrbBody->ulSymbols == 0 )
+      if( !hb_hrbReadValue( szHrbBody, nBodySize, &nBodyOffset, &pHrbBody->ulSymbols ) || pHrbBody->ulSymbols == 0 )
       {
          hb_hrbUnLoad( pHrbBody );
          hb_errRT_BASE( EG_CORRUPTION, 9996, nullptr, HB_ERR_FUNCNAME, 0 );
@@ -409,7 +409,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
       }
 
       /* Read number of functions */
-      if( ! hb_hrbReadValue( szHrbBody, nBodySize, &nBodyOffset, &pHrbBody->ulFuncs ) )
+      if( !hb_hrbReadValue( szHrbBody, nBodySize, &nBodyOffset, &pHrbBody->ulFuncs ) )
       {
          hb_xfree(pSymRead);
          hb_hrbUnLoad( pHrbBody );
@@ -436,7 +436,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
             }
 
             /* Read size of function */
-            if( ! hb_hrbReadValue( szHrbBody, nBodySize, &nBodyOffset, &ulValue ) )
+            if( !hb_hrbReadValue( szHrbBody, nBodySize, &nBodyOffset, &ulValue ) )
             {
                break;
             }
@@ -556,7 +556,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
             pHrbBody->pSymRead = pHrbBody->pModuleSymbols->pModuleSymbols;
             hb_xfree(pSymRead);
 
-            if( ! pHrbBody->pModuleSymbols->fInitStatics )
+            if( !pHrbBody->pModuleSymbols->fInitStatics )
             {
                pHrbBody->fInit = HB_TRUE;
             }

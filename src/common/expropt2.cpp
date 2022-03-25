@@ -60,7 +60,7 @@ static HB_BOOL hb_compExprHasMacro(const char * szText, HB_SIZE nLen, HB_COMP_DE
    {
       if( *szText++ == '&' )
       {
-         if( ! HB_SUPPORT_HARBOUR || (nLen && (*szText == '_' || (*szText >= 'A' && *szText <= 'Z') || (*szText >= 'a' && *szText <= 'z'))) )
+         if( !HB_SUPPORT_HARBOUR || (nLen && (*szText == '_' || (*szText >= 'A' && *szText <= 'Z') || (*szText >= 'a' && *szText <= 'z'))) )
          {
             return HB_TRUE;
          }
@@ -587,7 +587,7 @@ PHB_EXPR hb_compExprReduceMinus(PHB_EXPR pSelf, HB_COMP_DECL)
                if( *szText++ == '&' )
                {
                   char ch = nLen ? *szText : *pRight->value.asString.string;
-                  if( (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || ch == '_' || ! HB_SUPPORT_HARBOUR )
+                  if( (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || ch == '_' || !HB_SUPPORT_HARBOUR )
                   {
                      fReduce = HB_FALSE;
                      break;
@@ -911,7 +911,7 @@ PHB_EXPR hb_compExprReducePlus(PHB_EXPR pSelf, HB_COMP_DECL)
                if( *szText++ == '&' )
                {
                   char ch = nLen ? *szText : *pRight->value.asString.string;
-                  if( (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || ch == '_' || ! HB_SUPPORT_HARBOUR )
+                  if( (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || ch == '_' || !HB_SUPPORT_HARBOUR )
                   {
                      fReduce = HB_FALSE;
                      break;
@@ -994,9 +994,9 @@ PHB_EXPR hb_compExprReduceIN(PHB_EXPR pSelf, HB_COMP_DECL)
        *       switch) then we cannot reduce also strings which
        *       have macro operator '&'
        */
-      if( ! HB_SUPPORT_MACROTEXT ||
-          (! hb_compExprHasMacro(pLeft->value.asString.string, pLeft->nLength, HB_COMP_PARAM) &&
-           ! hb_compExprHasMacro(pRight->value.asString.string, pRight->nLength, HB_COMP_PARAM)) )
+      if( !HB_SUPPORT_MACROTEXT ||
+          (!hb_compExprHasMacro(pLeft->value.asString.string, pLeft->nLength, HB_COMP_PARAM) &&
+           !hb_compExprHasMacro(pRight->value.asString.string, pRight->nLength, HB_COMP_PARAM)) )
       {
          HB_BOOL bResult;
 
@@ -1011,7 +1011,7 @@ PHB_EXPR hb_compExprReduceIN(PHB_EXPR pSelf, HB_COMP_DECL)
           */
          if( pLeft->nLength == 0 )
          {
-            bResult = HB_COMP_PARAM->mode == HB_MODE_COMPILER && ! HB_SUPPORT_HARBOUR;
+            bResult = HB_COMP_PARAM->mode == HB_MODE_COMPILER && !HB_SUPPORT_HARBOUR;
          }
          else
          {
@@ -1146,7 +1146,7 @@ PHB_EXPR hb_compExprReduceNE(PHB_EXPR pSelf, HB_COMP_DECL)
          pLeft = pSelf->value.asOperator.pRight;
       }
 
-      if( ! pRight->value.asLogical )
+      if( !pRight->value.asLogical )
       {
          pSelf->ExprType = HB_ET_NONE;
          HB_COMP_EXPR_FREE(pSelf);
@@ -1218,7 +1218,7 @@ PHB_EXPR hb_compExprReduceGE(PHB_EXPR pSelf, HB_COMP_DECL)
              * .F. >= .F.  = .T.
              * .F. >= .T.  = .f.
              */
-            HB_BOOL bResult = ! (! pLeft->value.asLogical && pRight->value.asLogical);
+            HB_BOOL bResult = !(!pLeft->value.asLogical && pRight->value.asLogical);
             HB_COMP_EXPR_FREE(pLeft);
             HB_COMP_EXPR_FREE(pRight);
             pSelf->ExprType = HB_ET_LOGICAL;
@@ -1306,7 +1306,7 @@ PHB_EXPR hb_compExprReduceLE(PHB_EXPR pSelf, HB_COMP_DECL)
              * .F. <= .F.  = .T.
              * .F. <= .T.  = .T.
              */
-            HB_BOOL bResult = ! (pLeft->value.asLogical && ! pRight->value.asLogical);
+            HB_BOOL bResult = !(pLeft->value.asLogical && !pRight->value.asLogical);
             HB_COMP_EXPR_FREE(pLeft);
             HB_COMP_EXPR_FREE(pRight);
             pSelf->ExprType = HB_ET_LOGICAL;
@@ -1394,7 +1394,7 @@ PHB_EXPR hb_compExprReduceGT(PHB_EXPR pSelf, HB_COMP_DECL)
              * .F. > .F.  = .F.
              * .F. > .T.  = .F.
              */
-            HB_BOOL bResult = (pLeft->value.asLogical && ! pRight->value.asLogical);
+            HB_BOOL bResult = (pLeft->value.asLogical && !pRight->value.asLogical);
             HB_COMP_EXPR_FREE(pLeft);
             HB_COMP_EXPR_FREE(pRight);
             pSelf->ExprType = HB_ET_LOGICAL;
@@ -1482,7 +1482,7 @@ PHB_EXPR hb_compExprReduceLT(PHB_EXPR pSelf, HB_COMP_DECL)
              * .F. < .F.  = .F.
              * .T. < .F.  = .F.
              */
-            HB_BOOL bResult = (! pLeft->value.asLogical && pRight->value.asLogical);
+            HB_BOOL bResult = (!pLeft->value.asLogical && pRight->value.asLogical);
             HB_COMP_EXPR_FREE(pLeft);
             HB_COMP_EXPR_FREE(pRight);
             pSelf->ExprType = HB_ET_LOGICAL;
@@ -1584,9 +1584,9 @@ PHB_EXPR hb_compExprReduceEQ(PHB_EXPR pSelf, HB_COMP_DECL)
              * switch) then we cannot reduce also strings which
              * have macro operator '&'
              */
-            if( (pLeft->nLength | pRight->nLength) == 0 || (pSelf->ExprType == HB_EO_EQ && (! HB_SUPPORT_MACROTEXT ||
-                (! hb_compExprHasMacro(pLeft->value.asString.string, pLeft->nLength, HB_COMP_PARAM) &&
-                ! hb_compExprHasMacro(pRight->value.asString.string, pRight->nLength, HB_COMP_PARAM)))) )
+            if( (pLeft->nLength | pRight->nLength) == 0 || (pSelf->ExprType == HB_EO_EQ && (!HB_SUPPORT_MACROTEXT ||
+                (!hb_compExprHasMacro(pLeft->value.asString.string, pLeft->nLength, HB_COMP_PARAM) &&
+                !hb_compExprHasMacro(pRight->value.asString.string, pRight->nLength, HB_COMP_PARAM)))) )
             {
                HB_BOOL bResult = pLeft->nLength == pRight->nLength && memcmp(pLeft->value.asString.string, pRight->value.asString.string, pLeft->nLength) == 0;
                HB_COMP_EXPR_FREE(pLeft);
@@ -1937,7 +1937,7 @@ PHB_EXPR hb_compExprReduceIIF(PHB_EXPR pSelf, HB_COMP_DECL)
 PHB_EXPR hb_compExprListStrip(PHB_EXPR pSelf, HB_COMP_DECL)
 {
    while( pSelf->ExprType == HB_ET_LIST && hb_compExprListLen(pSelf) == 1 &&
-          pSelf->value.asList.pExprList->ExprType <= HB_ET_VARIABLE && ! hb_compExprIsArrayToParams(pSelf->value.asList.pExprList) )
+          pSelf->value.asList.pExprList->ExprType <= HB_ET_VARIABLE && !hb_compExprIsArrayToParams(pSelf->value.asList.pExprList) )
    {
       /* replace the list with a simple expression
        *  ( EXPR ) -> EXPR
@@ -1957,7 +1957,7 @@ HB_BOOL hb_compExprReduceAT(PHB_EXPR pSelf, HB_COMP_DECL)
    PHB_EXPR pSub = pParms->value.asList.pExprList;
    PHB_EXPR pText = pSub->pNext;
 
-   if( pSub->ExprType == HB_ET_STRING && pText->ExprType == HB_ET_STRING && ! HB_SUPPORT_USERCP )
+   if( pSub->ExprType == HB_ET_STRING && pText->ExprType == HB_ET_STRING && !HB_SUPPORT_USERCP )
    {
       PHB_EXPR pReduced;
 
@@ -1971,7 +1971,7 @@ HB_BOOL hb_compExprReduceAT(PHB_EXPR pSelf, HB_COMP_DECL)
        */
       if( pSub->nLength == 0 )
       {
-         pReduced = hb_compExprNewLong((HB_COMP_PARAM->mode == HB_MODE_COMPILER && ! HB_SUPPORT_HARBOUR) ? 1 : 0, HB_COMP_PARAM);
+         pReduced = hb_compExprNewLong((HB_COMP_PARAM->mode == HB_MODE_COMPILER && !HB_SUPPORT_HARBOUR) ? 1 : 0, HB_COMP_PARAM);
       }
       else
       {
@@ -2030,7 +2030,7 @@ HB_BOOL hb_compExprReduceCHR(PHB_EXPR pSelf, HB_COMP_DECL)
       pExpr->ValType = HB_EV_STRING;
       if( pArg->value.asNum.NumType == HB_ET_LONG )
       {
-         if( HB_COMP_PARAM->mode == HB_MODE_COMPILER && ! HB_SUPPORT_HARBOUR && (pArg->value.asNum.val.l & 0xff) == 0 && pArg->value.asNum.val.l != 0 )
+         if( HB_COMP_PARAM->mode == HB_MODE_COMPILER && !HB_SUPPORT_HARBOUR && (pArg->value.asNum.val.l & 0xff) == 0 && pArg->value.asNum.val.l != 0 )
          {
             pExpr->value.asString.string = const_cast<char*>("");
             pExpr->value.asString.dealloc = HB_FALSE;
@@ -2091,7 +2091,7 @@ HB_BOOL hb_compExprReduceLEN(PHB_EXPR pSelf, HB_COMP_DECL)
    PHB_EXPR pArg = pParms->value.asList.pExprList;
 
    /* FIXME: do not optimize when array/hash args have user expressions */
-   if( (pArg->ExprType == HB_ET_STRING && ! HB_SUPPORT_USERCP) || pArg->ExprType == HB_ET_ARRAY || pArg->ExprType == HB_ET_HASH )
+   if( (pArg->ExprType == HB_ET_STRING && !HB_SUPPORT_USERCP) || pArg->ExprType == HB_ET_ARRAY || pArg->ExprType == HB_ET_HASH )
    {
       PHB_EXPR pExpr = hb_compExprNewLong(pArg->ExprType == HB_ET_HASH ? pArg->nLength >> 1 : pArg->nLength, HB_COMP_PARAM);
 
@@ -2134,7 +2134,7 @@ HB_BOOL hb_compExprReduceEMPTY(PHB_EXPR pSelf, HB_COMP_DECL)
          break;
 
       case HB_ET_LOGICAL:
-         fResult = ! pArg->value.asLogical;
+         fResult = !pArg->value.asLogical;
          break;
 
       case HB_ET_NIL:
@@ -2174,7 +2174,7 @@ HB_BOOL hb_compExprReduceASC(PHB_EXPR pSelf, HB_COMP_DECL)
    PHB_EXPR pParms = pSelf->value.asFunCall.pParms;
    PHB_EXPR pArg = pParms->value.asList.pExprList;
 
-   if( pArg->ExprType == HB_ET_STRING && (! HB_SUPPORT_USERCP || static_cast<HB_UCHAR>(pArg->value.asString.string[0]) <= 127) )
+   if( pArg->ExprType == HB_ET_STRING && (!HB_SUPPORT_USERCP || static_cast<HB_UCHAR>(pArg->value.asString.string[0]) <= 127) )
    {
       PHB_EXPR pExpr = hb_compExprNewLong(static_cast<HB_UCHAR>(pArg->value.asString.string[0]), HB_COMP_PARAM);
       HB_COMP_EXPR_FREE(pParms);
@@ -2358,7 +2358,7 @@ HB_BOOL hb_compExprReduceUPPER(PHB_EXPR pSelf, HB_COMP_DECL)
             {
                fLower = HB_TRUE;
             }
-            else if( ! ((c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == ' ') )
+            else if( !((c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == ' ') )
             {
                break;
             }
@@ -2473,7 +2473,7 @@ HB_BOOL hb_compExprReduceMIN(PHB_EXPR pSelf, HB_COMP_DECL)
       }
       else if( pFirst->ExprType == HB_ET_LOGICAL )
       {
-         pExpr = ! pFirst->value.asLogical ? pFirst : pNext;
+         pExpr = !pFirst->value.asLogical ? pFirst : pNext;
       }
    }
    else if( pFirst->ExprType == HB_ET_DATE && pNext->ExprType == HB_ET_TIMESTAMP )

@@ -131,7 +131,7 @@ HB_BOOL hb_gt_winapi_setClipboardRaw( HB_UINT uFormat, void * pData, HB_SIZE nSi
                /* Place the handle on the clipboard. */
                fResult = SetClipboardData( static_cast<UINT>(uFormat), hglb ) != 0;
             }
-            if( ! fResult )
+            if( !fResult )
             {
                GlobalFree( hglb );
             }
@@ -189,7 +189,7 @@ HB_BOOL hb_gt_winapi_setClipboard( HB_UINT uFormat, PHB_ITEM pItem )
                /* Place the handle on the clipboard. */
                fResult = SetClipboardData( static_cast<UINT>(uFormat), hglb ) != 0;
             }
-            if( ! fResult )
+            if( !fResult )
             {
                GlobalFree( hglb );
             }

@@ -156,7 +156,7 @@ HB_BOOL hb_getenv_buffer(const char * szName, char * szBuffer, int nSize)
    }
 #endif
 
-   if( ! fRetVal && szBuffer != nullptr && nSize != 0 )
+   if( !fRetVal && szBuffer != nullptr && nSize != 0 )
    {
       szBuffer[0] = '\0';
    }

@@ -85,7 +85,7 @@ HB_FUNC( HB_HMAC_SHA224 )
    #endif
    hb_hmac_sha224_final( &ctx, mac, HB_SIZEOFARRAY( mac ) );
 
-   if( ! hb_parl(3) )
+   if( !hb_parl(3) )
    {
       char hex[( sizeof(mac) * 2 ) + 1];
       hb_strtohex( reinterpret_cast<char*>(mac), sizeof(mac), hex );
@@ -134,7 +134,7 @@ HB_FUNC( HB_HMAC_SHA256 )
    #endif
    hb_hmac_sha256_final( &ctx, mac, HB_SIZEOFARRAY( mac ) );
 
-   if( ! hb_parl(3) )
+   if( !hb_parl(3) )
    {
       char hex[( sizeof(mac) * 2 ) + 1];
       hb_strtohex( reinterpret_cast<char*>(mac), sizeof(mac), hex );
@@ -183,7 +183,7 @@ HB_FUNC( HB_HMAC_SHA384 )
    #endif
    hb_hmac_sha384_final( &ctx, mac, HB_SIZEOFARRAY( mac ) );
 
-   if( ! hb_parl(3) )
+   if( !hb_parl(3) )
    {
       char hex[( sizeof(mac) * 2 ) + 1];
       hb_strtohex( reinterpret_cast<char*>(mac), sizeof(mac), hex );
@@ -232,7 +232,7 @@ HB_FUNC( HB_HMAC_SHA512 )
    #endif
    hb_hmac_sha512_final( &ctx, mac, HB_SIZEOFARRAY( mac ) );
 
-   if( ! hb_parl(3) )
+   if( !hb_parl(3) )
    {
       char hex[( sizeof(mac) * 2 ) + 1];
       hb_strtohex( reinterpret_cast<char*>(mac), sizeof(mac), hex );

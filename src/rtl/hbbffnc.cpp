@@ -103,7 +103,7 @@ HB_FUNC( HB_BLOWFISHENCRYPT )
          pszData = static_cast<char*>(hb_xgrab(nSize + 1));
          memcpy(pszData, hb_itemGetCPtr(pData), nLen);
          memset(pszData + nLen, '\0', nSize - nLen);
-         if( ! fRaw )
+         if( !fRaw )
          {
             pszData[nSize - 1] = static_cast<char>(nSize - nLen);
          }
@@ -158,7 +158,7 @@ HB_FUNC( HB_BLOWFISHDECRYPT )
             HB_PUT_BE_UINT32(&pszData[nLen], xl);
             HB_PUT_BE_UINT32(&pszData[nLen + 4], xr);
          }
-         if( ! fRaw )
+         if( !fRaw )
          {
             nSize = static_cast<unsigned char>(pszData[nSize - 1]);
             nLen -= ( ( nSize - 1 ) & ~0x07 ) == 0 ? nSize : nLen;

@@ -94,15 +94,15 @@
 #include <sys/param.h>
 #endif
 
-#if defined(HB_LONG_DOUBLE_OFF) && ! defined(__NO_LONGDOUBLE__)
+#if defined(HB_LONG_DOUBLE_OFF) && !defined(__NO_LONGDOUBLE__)
 #  define __NO_LONGDOUBLE__
 #endif
 
-#if defined(HB_LONG_LONG_OFF) && ! defined(__NO_LONGLONG__)
+#if defined(HB_LONG_LONG_OFF) && !defined(__NO_LONGLONG__)
 #  define __NO_LONGLONG__
 #endif
 
-#if ! defined(HB_USE_CRTL_SNPRINTF)
+#if !defined(HB_USE_CRTL_SNPRINTF)
 
 /* few macros for some platform dependent floating point functions/macros */
 
@@ -774,7 +774,7 @@ static int _hb_strnlen(const char * str, int len)
 
 static size_t put_str(char *buffer, size_t bufsize, size_t size, const _x_str str, int flags, int width, int precision)
 {
-   if( ! str )
+   if( !str )
    {
       str = "(null)";
    }
@@ -826,7 +826,7 @@ static size_t put_wstr(char *buffer, size_t bufsize, size_t size, const _x_wstr 
 {
    const _x_wchar wstr_null[] = { '(', 'n', 'u', 'l', 'l', ')', 0 };
 
-   if( ! wstr )
+   if( !wstr )
    {
       wstr = wstr_null;
    }
@@ -913,7 +913,7 @@ int hb_printf_params(const char * format)
 
             /* flags */
             value = 0;
-            while( ! value )
+            while( !value )
             {
                switch( c )
                {
@@ -1152,7 +1152,7 @@ int hb_vsnprintf(char * buffer, size_t bufsize, const char * format, va_list ap)
                }
 
                /* flags */
-               while( ! stop )
+               while( !stop )
                {
                   switch( c )
                   {

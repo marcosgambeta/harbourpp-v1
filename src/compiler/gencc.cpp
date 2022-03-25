@@ -602,7 +602,7 @@ static HB_GENC_FUNC(hb_p_jumpfalsenear)
 
    HB_GENC_LABEL();
 
-   fprintf(cargo->yyc, "\tif( hb_xvmPopLogical( &fValue ) ) break;\n\tif( ! fValue )\n\t\tgoto lab%05" HB_PFS "u;\n", HB_GENC_GETLABEL(nPCodePos + nOffset));
+   fprintf(cargo->yyc, "\tif( hb_xvmPopLogical( &fValue ) ) break;\n\tif( !fValue )\n\t\tgoto lab%05" HB_PFS "u;\n", HB_GENC_GETLABEL(nPCodePos + nOffset));
    return 2;
 }
 
@@ -612,7 +612,7 @@ static HB_GENC_FUNC(hb_p_jumpfalse)
 
    HB_GENC_LABEL();
 
-   fprintf(cargo->yyc, "\tif( hb_xvmPopLogical( &fValue ) ) break;\n\tif( ! fValue )\n\t\tgoto lab%05" HB_PFS "u;\n", HB_GENC_GETLABEL(nPCodePos + nOffset));
+   fprintf(cargo->yyc, "\tif( hb_xvmPopLogical( &fValue ) ) break;\n\tif( !fValue )\n\t\tgoto lab%05" HB_PFS "u;\n", HB_GENC_GETLABEL(nPCodePos + nOffset));
    return 3;
 }
 
@@ -622,7 +622,7 @@ static HB_GENC_FUNC(hb_p_jumpfalsefar)
 
    HB_GENC_LABEL();
 
-   fprintf(cargo->yyc, "\tif( hb_xvmPopLogical( &fValue ) ) break;\n\tif( ! fValue )\n\t\tgoto lab%05" HB_PFS "u;\n", HB_GENC_GETLABEL(nPCodePos + nOffset));
+   fprintf(cargo->yyc, "\tif( hb_xvmPopLogical( &fValue ) ) break;\n\tif( !fValue )\n\t\tgoto lab%05" HB_PFS "u;\n", HB_GENC_GETLABEL(nPCodePos + nOffset));
    return 4;
 }
 
@@ -1836,7 +1836,7 @@ static HB_GENC_FUNC(hb_p_switch)
             nPCodePos += 5;
             break;
          case HB_P_PUSHSTRSHORT:
-            fprintf(cargo->yyc, "\t\tif( pszText && nLen == %d && ! memcmp(pszText, ", pFunc->pCode[nPCodePos + 1] - 1);
+            fprintf(cargo->yyc, "\t\tif( pszText && nLen == %d && !memcmp(pszText, ", pFunc->pCode[nPCodePos + 1] - 1);
             hb_compGenCString(cargo->yyc, &pFunc->pCode[nPCodePos + 2], pFunc->pCode[nPCodePos + 1] - 1);
             fprintf(cargo->yyc, ", %d ) )\n", pFunc->pCode[nPCodePos + 1] - 1);
             nPCodePos += 2 + pFunc->pCode[nPCodePos + 1];
@@ -1864,7 +1864,7 @@ static HB_GENC_FUNC(hb_p_switch)
       }
       fprintf(cargo->yyc, "\t\t{\n\t\t\thb_stackPop();\n\t\t\tgoto lab%05" HB_PFS "u;\n\t\t}\n", HB_GENC_GETLABEL(nNewPos));
    }
-   if( ! fDefault )
+   if( !fDefault )
    {
       fprintf(cargo->yyc, "\t\thb_stackPop();\n");
    }

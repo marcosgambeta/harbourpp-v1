@@ -463,13 +463,13 @@ HB_FUNC( SX_SETTURBO )
    const char * szDriver;
 
    szDriver = hb_parc(2);
-   if( ! szDriver ) /* no VIA RDD parameter, use default */
+   if( !szDriver ) /* no VIA RDD parameter, use default */
    {
       szDriver = hb_rddDefaultDrv( nullptr );
    }
 
    pRDDNode = hb_rddFindNode( szDriver, &uiRddID );  /* find the RDDNODE */
-   if( ! pRDDNode )
+   if( !pRDDNode )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }

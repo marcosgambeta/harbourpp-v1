@@ -90,7 +90,7 @@
    ===========
    // send sample
    hLPP := hb_lppCreate( hSocket )
-   DO WHILE ! ( lI := hb_lppSend( hLPP, cData, nTimeout ) ) .AND. ;
+   DO WHILE !( lI := hb_lppSend( hLPP, cData, nTimeout ) ) .AND. ;
           hb_lppError( hLPP ) == HB_SOCKET_ERR_TIMEOUT )
       // draw progress bar using hb_lppSendLen( hLPP )
    ENDDO
@@ -103,7 +103,7 @@
 
 
    // recv sample
-   DO WHILE ! ( lI := hb_lppRecv( hLPP, @cData, nTimeout ) ) .AND. ;
+   DO WHILE !( lI := hb_lppRecv( hLPP, @cData, nTimeout ) ) .AND. ;
           hb_lppError( hLPP ) == HB_SOCKET_ERR_TIMEOUT )
       // draw progress bar using hb_lppRecvLen( hLPP )
    ENDDO
@@ -167,7 +167,7 @@ HB_FUNC( HB_LPPCREATE )
    PHB_ITEM pItem;
 
    pItem = hb_param(1, HB_IT_POINTER);
-   if( ! pItem || ( sd = hb_socketItemGet(pItem) ) == HB_NO_SOCKET )
+   if( !pItem || ( sd = hb_socketItemGet(pItem) ) == HB_NO_SOCKET )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
@@ -185,7 +185,7 @@ HB_FUNC( HB_LPPDESTROY )
    PHB_LPP_GC pGC;
 
    pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
-   if( ! pGC || ! pGC->pSocket )
+   if( !pGC || !pGC->pSocket )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
@@ -201,7 +201,7 @@ HB_FUNC( HB_LPPERROR )
    PHB_LPP_GC pGC;
 
    pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
-   if( ! pGC || ! pGC->pSocket )
+   if( !pGC || !pGC->pSocket )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
@@ -214,7 +214,7 @@ HB_FUNC( HB_LPPSETLIMIT )
    PHB_LPP_GC pGC;
 
    pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
-   if( ! pGC || ! pGC->pSocket )
+   if( !pGC || !pGC->pSocket )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
@@ -228,7 +228,7 @@ HB_FUNC( HB_LPPSEND )
    PHB_ITEM pData;
 
    pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
-   if( ! pGC || ! pGC->pSocket || hb_socketItemGet( pGC->pItemSocket ) == HB_NO_SOCKET )
+   if( !pGC || !pGC->pSocket || hb_socketItemGet( pGC->pItemSocket ) == HB_NO_SOCKET )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
@@ -246,7 +246,7 @@ HB_FUNC( HB_LPPRECV )
    HB_SIZE    len;
 
    pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
-   if( ! pGC || ! pGC->pSocket || hb_socketItemGet( pGC->pItemSocket ) == HB_NO_SOCKET )
+   if( !pGC || !pGC->pSocket || hb_socketItemGet( pGC->pItemSocket ) == HB_NO_SOCKET )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
@@ -269,7 +269,7 @@ HB_FUNC( HB_LPPSENDLEN )
    PHB_LPP_GC pGC;
 
    pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
-   if( ! pGC || ! pGC->pSocket )
+   if( !pGC || !pGC->pSocket )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
@@ -282,7 +282,7 @@ HB_FUNC( HB_LPPRECVLEN )
    PHB_LPP_GC pGC;
 
    pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
-   if( ! pGC || ! pGC->pSocket )
+   if( !pGC || !pGC->pSocket )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;

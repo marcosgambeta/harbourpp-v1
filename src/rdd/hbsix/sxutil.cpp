@@ -70,7 +70,7 @@ HB_FUNC( SX_SLIMFAST )
          {
             cQuote = 0;
          }
-         else if( ! cQuote )
+         else if( !cQuote )
          {
             if( c == '"' || c == '\'' )
             {

@@ -142,11 +142,11 @@ static int hb_lexTimestampGet(YYSTYPE * yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_
       *dst++ = ch;
    }
    *dst = '\0';
-   if( ! hb_timeStampStrGetDT(pLex->pDst, &yylval_ptr->valTimeStamp.date, &yylval_ptr->valTimeStamp.time) )
+   if( !hb_timeStampStrGetDT(pLex->pDst, &yylval_ptr->valTimeStamp.date, &yylval_ptr->valTimeStamp.time) )
    {
       fOK = false;
    }
-   if( ! fOK )
+   if( !fOK )
    {
       hb_macroError(EG_SYNTAX, pMacro);
    }

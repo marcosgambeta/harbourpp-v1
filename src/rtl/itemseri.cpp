@@ -1197,7 +1197,7 @@ static HB_BOOL hb_deserializeTest( const HB_UCHAR ** pBufferPtr, HB_SIZE * pnSiz
          }
          break;
       case HB_SERIAL_REF:
-         if( ! hb_itemSerialOffsetRef( pRefList, HB_GET_LE_UINT32( pBuffer ) ) )
+         if( !hb_itemSerialOffsetRef( pRefList, HB_GET_LE_UINT32( pBuffer ) ) )
          {
             return HB_FALSE;
          }
@@ -1351,7 +1351,7 @@ static HB_BOOL hb_deserializeTest( const HB_UCHAR ** pBufferPtr, HB_SIZE * pnSiz
    {
       nOffset += nSize;
       nSize = *pnSize;
-      if( ! hb_deserializeTest( pBufferPtr, pnSize, nOffset, pRefList ) )
+      if( !hb_deserializeTest( pBufferPtr, pnSize, nOffset, pRefList ) )
       {
          return HB_FALSE;
       }
@@ -1908,7 +1908,7 @@ PHB_ITEM hb_itemDeserializeCP( const char ** pBufferPtr, HB_SIZE * pnSize, PHB_C
    HB_REF_LIST refList;
 
    hb_itemSerialRefListInit( &refList );
-   if( ! pnSize || hb_deserializeTest( reinterpret_cast<const HB_UCHAR**>(pBufferPtr), pnSize, 0, &refList ) )
+   if( !pnSize || hb_deserializeTest( reinterpret_cast<const HB_UCHAR**>(pBufferPtr), pnSize, 0, &refList ) )
    {
       pItem = hb_itemNew(nullptr);
       hb_deserializeItem( pItem, cdpIn, cdpOut, pBuffer, 0, &refList );

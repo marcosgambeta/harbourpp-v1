@@ -129,11 +129,11 @@ static void sk_add( PHB_SETKEY * sk_list_ptr, HB_BOOL bReturn, int iKeyCode, PHB
    {
       PHB_SETKEY sk_list_tmp, sk_list_end;
 
-      if( pIsActive && ! HB_IS_EVALITEM(pIsActive) )
+      if( pIsActive && !HB_IS_EVALITEM(pIsActive) )
       {
          pIsActive = nullptr;
       }
-      if( pAction && ! HB_IS_EVALITEM(pAction) )
+      if( pAction && !HB_IS_EVALITEM(pAction) )
       {
          pAction = nullptr;
       }

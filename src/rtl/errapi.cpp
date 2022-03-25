@@ -113,13 +113,13 @@ static HB_BOOL hb_errGetNumCode( int * piValue, const char * szOperation )
    else
    {
       pItem = hb_errRT_BASE_Subst( EG_ARG, 0, nullptr, szOperation, HB_ERR_ARGS_BASEPARAMS );
-      if( ! pItem )
+      if( !pItem )
       {
          *piValue = 0;
          return HB_FALSE;
       }
 
-      if( ! HB_IS_NUMERIC(pItem) )
+      if( !HB_IS_NUMERIC(pItem) )
       {
          hb_errInternal(HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr);
       }
@@ -459,7 +459,7 @@ PHB_ITEM hb_errorBlock( void )
 {
    PHB_ERRDATA pErrData = static_cast<PHB_ERRDATA>(hb_stackGetTSD(&s_errData));
 
-   if( ! pErrData->errorBlock )
+   if( !pErrData->errorBlock )
    {
       pErrData->errorBlock = hb_itemNew(nullptr);
    }
@@ -527,7 +527,7 @@ PHB_ITEM hb_errNew( void )
    HB_TRACE( HB_TR_DEBUG, ( "hb_errNew()" ) );
 #endif
 
-   if( ! s_pError || ! HB_IS_OBJECT(s_pError) )
+   if( !s_pError || !HB_IS_OBJECT(s_pError) )
    {
       hb_errInternal(HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr);
    }
@@ -550,7 +550,7 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
       PHB_ITEM pResult;
 
       /* Check if we have a valid error handler */
-      if( ! pErrData->errorBlock || ! HB_IS_EVALITEM(pErrData->errorBlock) )
+      if( !pErrData->errorBlock || !HB_IS_EVALITEM(pErrData->errorBlock) )
       {
          hb_errInternal(HB_EI_ERRNOBLOCK, nullptr, nullptr, nullptr);
       }
@@ -605,7 +605,7 @@ HB_USHORT hb_errLaunch( PHB_ITEM pError )
 
          /* If the error block didn't return a logical value, */
          /* or the canSubstitute flag has been set, consider it as a failure */
-         if( ! HB_IS_LOGICAL(pResult) || ( uiFlags & EF_CANSUBSTITUTE ) )
+         if( !HB_IS_LOGICAL(pResult) || ( uiFlags & EF_CANSUBSTITUTE ) )
          {
             bFailure = HB_TRUE;
          }
@@ -664,7 +664,7 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
       HB_USHORT uiFlags = hb_errGetFlags( pError );
 
       /* Check if we have a valid error handler */
-      if( ! pErrData->errorBlock || ! HB_IS_EVALITEM(pErrData->errorBlock) )
+      if( !pErrData->errorBlock || !HB_IS_EVALITEM(pErrData->errorBlock) )
       {
          hb_errInternal(HB_EI_ERRNOBLOCK, nullptr, nullptr, nullptr);
       }
@@ -717,7 +717,7 @@ PHB_ITEM hb_errLaunchSubst( PHB_ITEM pError )
       {
          /* If the canSubstitute flag has not been set,
             consider it as a failure. */
-         if( ! ( uiFlags & EF_CANSUBSTITUTE ) )
+         if( !( uiFlags & EF_CANSUBSTITUTE ) )
          {
             hb_errInternal(HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr);
          }
@@ -1101,7 +1101,7 @@ PHB_ITEM hb_errRT_SubstParams( const char * szSubSystem, HB_ERRCODE errGenCode, 
 
 PHB_ITEM hb_errRT_FileError( PHB_ITEM pError, const char * szSubSystem, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char * szFileName )
 {
-   if( ! pError )
+   if( !pError )
    {
       pError = hb_errNew();
       hb_errPutSeverity( pError, ES_ERROR );

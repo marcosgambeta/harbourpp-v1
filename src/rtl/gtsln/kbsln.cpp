@@ -345,8 +345,8 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
    }
 
    fInput = SLang_input_pending(0) != 0;
-   iKey = hb_gt_sln_mouse_Inkey( iEventMask, ! fInput );
-   if( ! fInput || iKey != 0 )
+   iKey = hb_gt_sln_mouse_Inkey( iEventMask, !fInput );
+   if( !fInput || iKey != 0 )
    {
       return iKey;
    }
@@ -448,7 +448,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
       }
    }
 
-   if( ! hb_sln_Is_Unicode )
+   if( !hb_sln_Is_Unicode )
    {
       /* standard ASCII key */
       if( ch && ch < 256 && hb_sln_inputTab[ch] )
@@ -473,7 +473,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
                break;
             }
             buf[i++] = SLang_getkey();
-            if( ! hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>(buf[i - 1]), &n, &wc ) )
+            if( !hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>(buf[i - 1]), &n, &wc ) )
             {
                n = -1;
             }
