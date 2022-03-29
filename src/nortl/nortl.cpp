@@ -59,7 +59,6 @@
    reasonable size */
 /* #undef HB_FM_STATISTICS */
 
-
 #ifdef HB_FM_STATISTICS
 
 #define HB_MEMINFO_SIGNATURE  0xDEADBEAF
@@ -69,19 +68,21 @@
 #define HB_MEMFILER         0xff
 #endif
 
-typedef struct _HB_MEMINFO
+struct _HB_MEMINFO
 {
    struct _HB_MEMINFO * pPrevBlock;
    struct _HB_MEMINFO * pNextBlock;
    HB_SIZE nSize;
    HB_U32  Signature;
-} HB_MEMINFO, * PHB_MEMINFO;
+};
+
+using HB_MEMINFO = _HB_MEMINFO;
+using PHB_MEMINFO = HB_MEMINFO *;
 
 #ifdef HB_ALLOC_ALIGNMENT
-#  define HB_MEMINFO_SIZE  ( ( sizeof(HB_MEMINFO) + HB_ALLOC_ALIGNMENT - 1 ) - \
-                             ( sizeof(HB_MEMINFO) + HB_ALLOC_ALIGNMENT - 1 ) % HB_ALLOC_ALIGNMENT )
+#define HB_MEMINFO_SIZE ((sizeof(HB_MEMINFO) + HB_ALLOC_ALIGNMENT - 1) - (sizeof(HB_MEMINFO) + HB_ALLOC_ALIGNMENT - 1) % HB_ALLOC_ALIGNMENT)
 #else
-#  define HB_MEMINFO_SIZE  sizeof(HB_MEMINFO)
+#define HB_MEMINFO_SIZE sizeof(HB_MEMINFO)
 #endif
 
 static PHB_MEMINFO s_pMemBlocks         = nullptr;
@@ -92,45 +93,55 @@ static HB_ISIZ     s_nMemoryConsumed    = 0; /* memory max size consumed */
 
 #endif /* HB_FM_STATISTICS */
 
-void * hb_xgrab( HB_SIZE nSize )        /* allocates fixed memory, exits on failure */
+void * hb_xgrab(HB_SIZE nSize)        /* allocates fixed memory, exits on failure */
 {
    void * pMem;
 
    if( nSize == 0 )
+   {
       hb_errInternal(HB_EI_XGRABNULLSIZE, "hb_xgrab requested to allocate zero bytes", nullptr, nullptr);
+   }
 
 #ifdef HB_FM_STATISTICS
    pMem = malloc(nSize + HB_MEMINFO_SIZE + sizeof(HB_U32));
    if( pMem )
    {
       if( s_pMemBlocks )
-         s_pMemBlocks->pPrevBlock = ( PHB_MEMINFO ) pMem;
-      ( ( PHB_MEMINFO ) pMem )->pNextBlock = s_pMemBlocks;
-      ( ( PHB_MEMINFO ) pMem )->pPrevBlock = nullptr;
-      s_pMemBlocks = ( PHB_MEMINFO ) pMem;
-      ( ( PHB_MEMINFO ) pMem )->nSize = nSize;
-      ( ( PHB_MEMINFO ) pMem )->Signature = HB_MEMINFO_SIGNATURE;
-      HB_PUT_LE_UINT32((( HB_BYTE * ) pMem) + HB_MEMINFO_SIZE + nSize, HB_MEMINFO_SIGNATURE);
+      {
+         s_pMemBlocks->pPrevBlock = static_cast<PHB_MEMINFO>(pMem);
+      }
+      (static_cast<PHB_MEMINFO>(pMem))->pNextBlock = s_pMemBlocks;
+      (static_cast<PHB_MEMINFO>(pMem))->pPrevBlock = nullptr;
+      s_pMemBlocks = static_cast<PHB_MEMINFO>(pMem);
+      (static_cast<PHB_MEMINFO>(pMem))->nSize = nSize;
+      (static_cast<PHB_MEMINFO>(pMem))->Signature = HB_MEMINFO_SIGNATURE;
+      HB_PUT_LE_UINT32((static_cast<HB_BYTE*>(pMem)) + HB_MEMINFO_SIZE + nSize, HB_MEMINFO_SIGNATURE);
 
       s_nMemoryConsumed += nSize;
       if( s_nMemoryMaxConsumed < s_nMemoryConsumed )
+      {
          s_nMemoryMaxConsumed = s_nMemoryConsumed;
+      }
       s_nMemoryBlocks++;
       if( s_nMemoryMaxBlocks < s_nMemoryBlocks )
+      {
          s_nMemoryMaxBlocks = s_nMemoryBlocks;
-      pMem = ( HB_BYTE * ) pMem + HB_MEMINFO_SIZE;
+      }
+      pMem = static_cast<HB_BYTE*>(pMem) + HB_MEMINFO_SIZE;
    }
    else
 #else
    pMem = malloc(nSize);
    if( !pMem )
 #endif
+   {
       hb_errInternal(HB_EI_XGRABALLOC, "hb_xgrab can't allocate memory", nullptr, nullptr);
+   }
 
    return pMem;
 }
 
-void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
+void * hb_xrealloc(void * pMem, HB_SIZE nSize)       /* reallocates memory */
 {
 #ifdef HB_FM_STATISTICS
    PHB_MEMINFO pMemBlock;
@@ -140,86 +151,116 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
    if( nSize == 0 )
    {
       if( pMem )
+      {
          hb_xfree(pMem);
+      }
       return nullptr;
    }
    else if( !pMem )
+   {
       return hb_xgrab(nSize);
+   }
 
-   pMemBlock = ( PHB_MEMINFO ) ( ( HB_BYTE * ) pMem - HB_MEMINFO_SIZE );
+   pMemBlock = static_cast<PHB_MEMINFO>((static_cast<HB_BYTE*>(pMem) - HB_MEMINFO_SIZE));
    nMemSize = pMemBlock->nSize;
 
    if( pMemBlock->Signature != HB_MEMINFO_SIGNATURE )
+   {
       hb_errInternal(HB_EI_XREALLOCINV, "hb_xrealloc called with an invalid pointer", nullptr, nullptr);
+   }
 
-   if( HB_GET_LE_UINT32( ( ( HB_BYTE * ) pMem ) + nMemSize ) != HB_MEMINFO_SIGNATURE )
+   if( HB_GET_LE_UINT32((static_cast<HB_BYTE*>(pMem)) + nMemSize) != HB_MEMINFO_SIGNATURE )
+   {
       hb_errInternal(HB_EI_XMEMOVERFLOW, "Memory buffer overflow", nullptr, nullptr);
+   }
 
-   HB_PUT_LE_UINT32((( HB_BYTE * ) pMem) + nMemSize, 0);
+   HB_PUT_LE_UINT32((static_cast<HB_BYTE*>(pMem)) + nMemSize, 0);
 
    pResult = realloc(pMemBlock, nSize + HB_MEMINFO_SIZE + sizeof(HB_U32));
    if( pResult )
    {
       if( s_pMemBlocks == pMemBlock )
-         s_pMemBlocks = ( PHB_MEMINFO ) pResult;
+      {
+         s_pMemBlocks = static_cast<PHB_MEMINFO>(pResult);
+      }
       else
-         ( ( PHB_MEMINFO ) pResult )->pPrevBlock->pNextBlock = ( PHB_MEMINFO ) pResult;
+      {
+         (static_cast<PHB_MEMINFO>(pResult))->pPrevBlock->pNextBlock = static_cast<PHB_MEMINFO>(pResult);
+      }
 
-      if( ( ( PHB_MEMINFO ) pResult )->pNextBlock )
-         ( ( PHB_MEMINFO ) pResult )->pNextBlock->pPrevBlock = ( PHB_MEMINFO ) pResult;
-      s_nMemoryConsumed += ( nSize - nMemSize );
+      if( (static_cast<PHB_MEMINFO>(pResult))->pNextBlock )
+      {
+         (static_cast<PHB_MEMINFO>(pResult))->pNextBlock->pPrevBlock = static_cast<PHB_MEMINFO>(pResult);
+      }
+      s_nMemoryConsumed += (nSize - nMemSize);
 
       if( s_nMemoryMaxConsumed < s_nMemoryConsumed )
+      {
          s_nMemoryMaxConsumed = s_nMemoryConsumed;
+      }
 
-      ( ( PHB_MEMINFO ) pResult )->nSize = nSize;  /* size of the memory block */
-      HB_PUT_LE_UINT32((( HB_BYTE * ) pResult) + nSize + HB_MEMINFO_SIZE, HB_MEMINFO_SIGNATURE);
-      pResult = ( HB_BYTE * ) pResult + HB_MEMINFO_SIZE;
+      (static_cast<PHB_MEMINFO>(pResult))->nSize = nSize;  /* size of the memory block */
+      HB_PUT_LE_UINT32((static_cast<HB_BYTE*>(pResult)) + nSize + HB_MEMINFO_SIZE, HB_MEMINFO_SIGNATURE);
+      pResult = static_cast<HB_BYTE*>(pResult) + HB_MEMINFO_SIZE;
    }
 #else
    void * pResult = realloc(pMem, nSize);
 #endif
 
    if( !pResult && nSize )
+   {
       hb_errInternal(HB_EI_XREALLOC, "hb_xrealloc can't reallocate memory", nullptr, nullptr);
+   }
 
    return pResult;
 }
 
-void hb_xfree( void * pMem )            /* frees fixed memory */
+void hb_xfree(void * pMem)            /* frees fixed memory */
 {
    if( pMem )
    {
 #ifdef HB_FM_STATISTICS
-      PHB_MEMINFO pMemBlock = ( PHB_MEMINFO ) ( ( HB_BYTE * ) pMem - HB_MEMINFO_SIZE );
+      PHB_MEMINFO pMemBlock = static_cast<PHB_MEMINFO>((static_cast<HB_BYTE*>(pMem) - HB_MEMINFO_SIZE));
 
       if( pMemBlock->Signature != HB_MEMINFO_SIGNATURE )
+      {
          hb_errInternal(HB_EI_XFREEINV, "hb_xfree called with an invalid pointer", nullptr, nullptr);
+      }
 
-      if( HB_GET_LE_UINT32( ( ( HB_BYTE * ) pMem ) + pMemBlock->nSize ) != HB_MEMINFO_SIGNATURE )
+      if( HB_GET_LE_UINT32((static_cast<HB_BYTE*>(pMem)) + pMemBlock->nSize) != HB_MEMINFO_SIGNATURE )
+      {
          hb_errInternal(HB_EI_XMEMOVERFLOW, "Memory buffer overflow", nullptr, nullptr);
+      }
 
       s_nMemoryConsumed -= pMemBlock->nSize;
       s_nMemoryBlocks--;
       if( s_pMemBlocks == pMemBlock )
+      {
          s_pMemBlocks = pMemBlock->pNextBlock;
+      }
       else
+      {
          pMemBlock->pPrevBlock->pNextBlock = pMemBlock->pNextBlock;
+      }
 
       if( pMemBlock->pNextBlock )
+      {
          pMemBlock->pNextBlock->pPrevBlock = pMemBlock->pPrevBlock;
+      }
 
       pMemBlock->Signature = 0;
-      HB_PUT_LE_UINT32((( HB_BYTE * ) pMem) + pMemBlock->nSize, 0);
-      pMem = ( HB_BYTE * ) pMem - HB_MEMINFO_SIZE;
+      HB_PUT_LE_UINT32((static_cast<HB_BYTE*>(pMem)) + pMemBlock->nSize, 0);
+      pMem = static_cast<HB_BYTE*>(pMem) - HB_MEMINFO_SIZE;
 #endif
-      free( pMem );
+      free(pMem);
    }
    else
+   {
       hb_errInternal(HB_EI_XFREENULL, "hb_xfree called with a NULL pointer", nullptr, nullptr);
+   }
 }
 
-HB_SIZE hb_xquery( int iMode )
+HB_SIZE hb_xquery(int iMode)
 {
    HB_SIZE nResult = 0;
 
@@ -245,35 +286,49 @@ HB_SIZE hb_xquery( int iMode )
 }
 
 #ifdef HB_FM_STATISTICS
-static char * hb_memToStr( char * szBuffer, void * pMem, HB_SIZE nSize )
+static char * hb_memToStr(char * szBuffer, void * pMem, HB_SIZE nSize)
 {
-   unsigned char * byMem = ( HB_BYTE * ) pMem;
+   unsigned char * byMem = static_cast<HB_BYTE*>(pMem);
    char * pDest = szBuffer;
-   int iSize, i, iPrintable;
+   int iSize, iPrintable;
 
    if( nSize > HB_MEMSTR_BLOCK_MAX )
+   {
       iSize = HB_MEMSTR_BLOCK_MAX;
+   }
    else
+   {
       iSize = static_cast<int>(nSize);
+   }
 
    iPrintable = 0;
-   for( i = 0; i < iSize; ++i )
-      if( ( byMem[i] & 0x7f ) >= 0x20 )
+   for( int i = 0; i < iSize; ++i )
+   {
+      if( (byMem[i] & 0x7f) >= 0x20 )
+      {
          iPrintable++;
+      }
+   }
 
-   if( ( iPrintable * 100 ) / iSize > 70 ) /* more then 70% printable chars */
+   if( (iPrintable * 100) / iSize > 70 ) /* more then 70% printable chars */
    {
       /* format as string of original chars */
-      for( i = 0; i < iSize; ++i )
-         if( ( byMem[i] & 0x7f ) >= 0x20 )
+      for( int i = 0; i < iSize; ++i )
+      {
+         if( (byMem[i] & 0x7f) >= 0x20 )
+         {
             *pDest++ = byMem[i];
+         }
          else
+         {
             *pDest++ = '.';
+         }
+      }
    }
    else
    {
       /* format as hex */
-      for( i = 0; i < iSize; ++i )
+      for( int i = 0; i < iSize; ++i )
       {
          int iLo = byMem[i] & 0x0f, iHi = byMem[i] >> 4;
          *pDest++ = '\\';
@@ -287,14 +342,13 @@ static char * hb_memToStr( char * szBuffer, void * pMem, HB_SIZE nSize )
 }
 #endif
 
-void hb_xexit( void )
+void hb_xexit(void)
 {
 #ifdef HB_FM_STATISTICS
-   if( s_nMemoryBlocks /* || hb_cmdargCheck( "INFO" ) */ )
+   if( s_nMemoryBlocks /* || hb_cmdargCheck("INFO") */ )
    {
       char szBuffer[HB_MAX(3 * HB_MEMSTR_BLOCK_MAX + 1, 100)];
       PHB_MEMINFO pMemBlock;
-      int i;
 
       hb_conOutErr(hb_conNewLine(), 0);
       hb_conOutErr("----------------------------------------", 0);
@@ -311,26 +365,27 @@ void hb_xexit( void )
 
       hb_conOutErr(hb_conNewLine(), 0);
 
-      for( i = 1, pMemBlock = s_pMemBlocks; pMemBlock; ++i, pMemBlock = pMemBlock->pNextBlock )
-         HB_TRACE( HB_TR_ERROR, ( "Block %i %p (size %" HB_PFS "u) \"%s\"", i,
-                static_cast<void*>(pMemBlock) + HB_MEMINFO_SIZE, pMemBlock->nSize,
-                hb_memToStr( szBuffer, static_cast<char*>(pMemBlock) + HB_MEMINFO_SIZE,
-                             pMemBlock->nSize ) ) );
+      for( int i = 1, pMemBlock = s_pMemBlocks; pMemBlock; ++i, pMemBlock = pMemBlock->pNextBlock )
+      {
+         HB_TRACE(HB_TR_ERROR, ("Block %i %p (size %" HB_PFS "u) \"%s\"", i,
+            static_cast<void*>(pMemBlock) + HB_MEMINFO_SIZE, pMemBlock->nSize,
+            hb_memToStr(szBuffer, static_cast<char*>(pMemBlock) + HB_MEMINFO_SIZE, pMemBlock->nSize)));
+      }
    }
 #endif
 }
 
-HB_BOOL hb_xtraced( void )
+HB_BOOL hb_xtraced(void)
 {
    return HB_FALSE;
 }
 
 /* NOTE: Use as minimal calls from here, as possible.
          Don't allocate memory from this function. [vszakats] */
-void hb_errInternal( HB_ERRCODE errCode, const char * szText, const char * szPar1, const char * szPar2 )
+void hb_errInternal(HB_ERRCODE errCode, const char * szText, const char * szPar1, const char * szPar2)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_errInternal(%d, %s, %s, %s)", errCode, szText, szPar1, szPar2 ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_errInternal(%d, %s, %s, %s)", errCode, szText, szPar1, szPar2));
 #endif
 
    char buffer[1024];
@@ -344,39 +399,41 @@ void hb_errInternal( HB_ERRCODE errCode, const char * szText, const char * szPar
       hb_conOutErr(buffer, 0);
    }
    hb_conOutErr(hb_conNewLine(), 0);
-   exit( EXIT_FAILURE );
+   exit(EXIT_FAILURE);
 }
 
 /* console */
-void hb_conOutErr( const char * pStr, HB_SIZE nLen )
+void hb_conOutErr(const char * pStr, HB_SIZE nLen)
 {
    if( nLen == 0 )
+   {
       nLen = strlen(pStr);
+   }
 
    fprintf(stderr, "%.*s", static_cast<int>(nLen), pStr);
 }
 
-const char * hb_conNewLine( void )
+const char * hb_conNewLine(void)
 {
    return "\n";
 }
 
-int hb_charUpper( int iChar )
+int hb_charUpper(int iChar)
 {
    return HB_TOUPPER(iChar);
 }
 
-int hb_charLower( int iChar )
+int hb_charLower(int iChar)
 {
    return HB_TOLOWER(iChar);
 }
 
-PHB_CODEPAGE hb_vmCDP( void )
+PHB_CODEPAGE hb_vmCDP(void)
 {
    return nullptr;
 }
 
-HB_SIZE hb_cdpTextPos( PHB_CODEPAGE cdp, const char * pText, HB_SIZE nSize, HB_SIZE nIndex )
+HB_SIZE hb_cdpTextPos(PHB_CODEPAGE cdp, const char * pText, HB_SIZE nSize, HB_SIZE nIndex)
 {
    HB_SYMBOL_UNUSED(cdp);
    HB_SYMBOL_UNUSED(pText);
@@ -384,94 +441,96 @@ HB_SIZE hb_cdpTextPos( PHB_CODEPAGE cdp, const char * pText, HB_SIZE nSize, HB_S
    return nIndex >= nSize ? nSize : nIndex;
 }
 
-HB_BOOL hb_cdpCharEq( PHB_CODEPAGE cdp, const char * szText1, HB_SIZE nLen1, HB_SIZE * pnPos1,
-                      const char * szText2, HB_SIZE nLen2, HB_SIZE * pnPos2 )
-{
-   HB_SYMBOL_UNUSED(cdp);
-
-   if( *pnPos1 < nLen1 && *pnPos2 < nLen2 )
-      return szText1[( *pnPos1 )++] == szText2[( *pnPos2 )++];
-   else
-      return HB_FALSE;
-}
-
-HB_BOOL hb_cdpCharCaseEq( PHB_CODEPAGE cdp, const char * szText1, HB_SIZE nLen1, HB_SIZE * pnPos1,
-                          const char * szText2, HB_SIZE nLen2, HB_SIZE * pnPos2 )
+HB_BOOL hb_cdpCharEq(PHB_CODEPAGE cdp, const char * szText1, HB_SIZE nLen1, HB_SIZE * pnPos1, const char * szText2, HB_SIZE nLen2, HB_SIZE * pnPos2)
 {
    HB_SYMBOL_UNUSED(cdp);
 
    if( *pnPos1 < nLen1 && *pnPos2 < nLen2 )
    {
-      HB_UCHAR uc1 = szText1[( *pnPos1 )++],
-               uc2 = szText2[( *pnPos2 )++];
+      return szText1[(*pnPos1)++] == szText2[(*pnPos2)++];
+   }
+   else
+   {
+      return HB_FALSE;
+   }
+}
+
+HB_BOOL hb_cdpCharCaseEq(PHB_CODEPAGE cdp, const char * szText1, HB_SIZE nLen1, HB_SIZE * pnPos1, const char * szText2, HB_SIZE nLen2, HB_SIZE * pnPos2)
+{
+   HB_SYMBOL_UNUSED(cdp);
+
+   if( *pnPos1 < nLen1 && *pnPos2 < nLen2 )
+   {
+      HB_UCHAR uc1 = szText1[(*pnPos1)++], uc2 = szText2[(*pnPos2)++];
       return HB_TOUPPER(uc1) == HB_TOUPPER(uc2);
    }
    else
+   {
       return HB_FALSE;
+   }
 }
 
-const char * hb_osEncodeCP( const char * szName, char ** pszFree, HB_SIZE * pnSize )
+const char * hb_osEncodeCP(const char * szName, char ** pszFree, HB_SIZE * pnSize)
 {
    HB_SYMBOL_UNUSED(pnSize);
    HB_SYMBOL_UNUSED(pszFree);
    return szName;
 }
 
-const char * hb_osDecodeCP( const char * szName, char ** pszFree, HB_SIZE * pnSize )
+const char * hb_osDecodeCP(const char * szName, char ** pszFree, HB_SIZE * pnSize)
 {
    HB_SYMBOL_UNUSED(pnSize);
    HB_SYMBOL_UNUSED(pszFree);
    return szName;
 }
 
-char * hb_osStrEncode( const char * pszName )
+char * hb_osStrEncode(const char * pszName)
 {
    return hb_strdup(pszName);
 }
 
-char * hb_osStrEncodeN( const char * pszName, HB_SIZE nLen )
+char * hb_osStrEncodeN(const char * pszName, HB_SIZE nLen)
 {
    return hb_strndup(pszName, nLen);
 }
 
-char * hb_osStrDecode( const char * pszName )
+char * hb_osStrDecode(const char * pszName)
 {
    return hb_strdup(pszName);
 }
 
-char * hb_osStrDecode2( const char * pszName, char * pszBuffer, HB_SIZE nSize )
+char * hb_osStrDecode2(const char * pszName, char * pszBuffer, HB_SIZE nSize)
 {
    return hb_strncpy(pszBuffer, pszName, nSize);
 }
 
 #if defined(HB_OS_WIN)
-HB_WCHAR * hb_osStrU16Encode( const char * pszName )
+HB_WCHAR * hb_osStrU16Encode(const char * pszName)
 {
-   return hb_mbtowc( pszName );
+   return hb_mbtowc(pszName);
 }
 
-HB_WCHAR * hb_osStrU16EncodeN( const char * pszName, HB_SIZE nLen )
+HB_WCHAR * hb_osStrU16EncodeN(const char * pszName, HB_SIZE nLen)
 {
-   return hb_mbntowc( pszName, nLen );
+   return hb_mbntowc(pszName, nLen);
 }
 
-char * hb_osStrU16Decode( const HB_WCHAR * pszNameW )
+char * hb_osStrU16Decode(const HB_WCHAR * pszNameW)
 {
-   return hb_wctomb( pszNameW );
+   return hb_wctomb(pszNameW);
 }
 
-char * hb_osStrU16Decode2( const HB_WCHAR * pszNameW, char * pszBuffer, HB_SIZE nSize )
+char * hb_osStrU16Decode2(const HB_WCHAR * pszNameW, char * pszBuffer, HB_SIZE nSize)
 {
-   hb_wcntombcpy( pszBuffer, pszNameW, nSize );
+   hb_wcntombcpy(pszBuffer, pszNameW, nSize);
    return pszBuffer;
 }
 #endif
 
-
 /* HB_TRACE */
 static HB_TRACEINFO s_traceInfo;
 
-void hb_traceset( int level, const char * file, int line, const char * proc )
+void hb_traceset(int level, const char * file, int line, const char * proc)
 {
    s_traceInfo.level = level;
    s_traceInfo.file  = file;
@@ -479,24 +538,27 @@ void hb_traceset( int level, const char * file, int line, const char * proc )
    s_traceInfo.proc  = proc;
 }
 
-PHB_TRACEINFO hb_traceinfo( void )
+PHB_TRACEINFO hb_traceinfo(void)
 {
    return &s_traceInfo;
 }
 
-
 /* VM */
-void hb_vmLock( void ) {}
+void hb_vmLock(void)
+{
+}
 
-void hb_vmUnlock( void ) {}
+void hb_vmUnlock(void)
+{
+}
 
-void hb_fsSetIOError( HB_BOOL fResult, HB_USHORT uiOperation )
+void hb_fsSetIOError(HB_BOOL fResult, HB_USHORT uiOperation)
 {
    HB_SYMBOL_UNUSED(fResult);
    HB_SYMBOL_UNUSED(uiOperation);
 }
 
-void  hb_fsSetError( HB_ERRCODE uiError )
+void  hb_fsSetError(HB_ERRCODE uiError)
 {
    HB_SYMBOL_UNUSED(uiError);
 }
@@ -508,17 +570,15 @@ static int     s_iDirCase  = HB_SET_CASE_MIXED;
 static HB_BOOL s_fFnTrim   = HB_FALSE;
 static char    s_cDirSep   = HB_OS_PATH_DELIM_CHR;
 
-const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
+const char * hb_fsNameConv(const char * szFileName, char ** pszFree)
 {
-   if( s_fFnTrim || s_cDirSep != HB_OS_PATH_DELIM_CHR ||
-       s_iFileCase != HB_SET_CASE_MIXED || s_iDirCase != HB_SET_CASE_MIXED )
+   if( s_fFnTrim || s_cDirSep != HB_OS_PATH_DELIM_CHR || s_iFileCase != HB_SET_CASE_MIXED || s_iDirCase != HB_SET_CASE_MIXED )
    {
       PHB_FNAME pFileName;
 
       if( pszFree )
       {
-         szFileName = *pszFree = hb_strncpy(static_cast<char*>(hb_xgrab(HB_PATH_MAX)),
-                                             szFileName, HB_PATH_MAX - 1);
+         szFileName = *pszFree = hb_strncpy(static_cast<char*>(hb_xgrab(HB_PATH_MAX)), szFileName, HB_PATH_MAX - 1);
       }
 
       if( s_cDirSep != HB_OS_PATH_DELIM_CHR )
@@ -527,7 +587,9 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
          while( *p )
          {
             if( *p == s_cDirSep )
+            {
                *p = HB_OS_PATH_DELIM_CHR;
+            }
             p++;
          }
       }
@@ -551,7 +613,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
                ++pFileName->szName;
                --nLen;
             }
-            ( const_cast<char*>(pFileName->szName) )[nLen] = '\0';
+            (const_cast<char*>(pFileName->szName))[nLen] = '\0';
          }
          if( pFileName->szExtension )
          {
@@ -565,7 +627,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
                ++pFileName->szExtension;
                --nLen;
             }
-            ( const_cast<char*>(pFileName->szExtension) )[nLen] = '\0';
+            (const_cast<char*>(pFileName->szExtension))[nLen] = '\0';
          }
       }
 
@@ -573,49 +635,61 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
       if( s_iFileCase == HB_SET_CASE_LOWER )
       {
          if( pFileName->szName )
-            hb_strlow( const_cast<char*>(pFileName->szName) );
+         {
+            hb_strlow(const_cast<char*>(pFileName->szName));
+         }
          if( pFileName->szExtension )
-            hb_strlow( const_cast<char*>(pFileName->szExtension) );
+         {
+            hb_strlow(const_cast<char*>(pFileName->szExtension));
+         }
       }
       else if( s_iFileCase == HB_SET_CASE_UPPER )
       {
          if( pFileName->szName )
+         {
             hb_strupr(const_cast<char*>(pFileName->szName));
+         }
          if( pFileName->szExtension )
+         {
             hb_strupr(const_cast<char*>(pFileName->szExtension));
+         }
       }
 
       /* DIRCASE */
       if( pFileName->szPath )
       {
          if( s_iDirCase == HB_SET_CASE_LOWER )
-            hb_strlow( const_cast<char*>(pFileName->szPath) );
+         {
+            hb_strlow(const_cast<char*>(pFileName->szPath));
+         }
          else if( s_iDirCase == HB_SET_CASE_UPPER )
+         {
             hb_strupr(const_cast<char*>(pFileName->szPath));
+         }
       }
 
       hb_fsFNameMerge(const_cast<char*>(szFileName), pFileName);
       hb_xfree(pFileName);
    }
    else if( pszFree )
+   {
       *pszFree = nullptr;
+   }
 
    return szFileName;
 }
 
 #if defined(HB_OS_WIN)
-HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
+HB_WCHAR * hb_fsNameConvU16(const char * szFileName)
 {
    char * pszBuffer = nullptr;
    HB_WCHAR * lpwFileName;
 
-   if( s_fFnTrim || s_cDirSep != HB_OS_PATH_DELIM_CHR ||
-       s_iFileCase != HB_SET_CASE_MIXED || s_iDirCase != HB_SET_CASE_MIXED )
+   if( s_fFnTrim || s_cDirSep != HB_OS_PATH_DELIM_CHR || s_iFileCase != HB_SET_CASE_MIXED || s_iDirCase != HB_SET_CASE_MIXED )
    {
       PHB_FNAME pFileName;
 
-      szFileName = pszBuffer = hb_strncpy(static_cast<char*>(hb_xgrab(HB_PATH_MAX)),
-                                           szFileName, HB_PATH_MAX - 1);
+      szFileName = pszBuffer = hb_strncpy(static_cast<char*>(hb_xgrab(HB_PATH_MAX)), szFileName, HB_PATH_MAX - 1);
 
       if( s_cDirSep != HB_OS_PATH_DELIM_CHR )
       {
@@ -623,7 +697,9 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
          while( *p )
          {
             if( *p == s_cDirSep )
+            {
                *p = HB_OS_PATH_DELIM_CHR;
+            }
             p++;
          }
       }
@@ -647,7 +723,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
                ++pFileName->szName;
                --nLen;
             }
-            ( const_cast<char*>(pFileName->szName) )[nLen] = '\0';
+            (const_cast<char*>(pFileName->szName))[nLen] = '\0';
          }
          if( pFileName->szExtension )
          {
@@ -661,7 +737,7 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
                ++pFileName->szExtension;
                --nLen;
             }
-            ( const_cast<char*>(pFileName->szExtension) )[nLen] = '\0';
+            (const_cast<char*>(pFileName->szExtension))[nLen] = '\0';
          }
       }
 
@@ -669,75 +745,89 @@ HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
       if( s_iFileCase == HB_SET_CASE_LOWER )
       {
          if( pFileName->szName )
-            hb_strlow( const_cast<char*>(pFileName->szName) );
+         {
+            hb_strlow(const_cast<char*>(pFileName->szName));
+         }
          if( pFileName->szExtension )
-            hb_strlow( const_cast<char*>(pFileName->szExtension) );
+         {
+            hb_strlow(const_cast<char*>(pFileName->szExtension));
+         }
       }
       else if( s_iFileCase == HB_SET_CASE_UPPER )
       {
          if( pFileName->szName )
+         {
             hb_strupr(const_cast<char*>(pFileName->szName));
+         }
          if( pFileName->szExtension )
+         {
             hb_strupr(const_cast<char*>(pFileName->szExtension));
+         }
       }
 
       /* DIRCASE */
       if( pFileName->szPath )
       {
          if( s_iDirCase == HB_SET_CASE_LOWER )
-            hb_strlow( const_cast<char*>(pFileName->szPath) );
+         {
+            hb_strlow(const_cast<char*>(pFileName->szPath));
+         }
          else if( s_iDirCase == HB_SET_CASE_UPPER )
+         {
             hb_strupr(const_cast<char*>(pFileName->szPath));
+         }
       }
 
       hb_fsFNameMerge(const_cast<char*>(szFileName), pFileName);
       hb_xfree(pFileName);
    }
 
-   lpwFileName = hb_mbtowc( szFileName );
+   lpwFileName = hb_mbtowc(szFileName);
    if( pszBuffer )
+   {
       hb_xfree(pszBuffer);
+   }
 
    return lpwFileName;
 }
 #endif
 
-int hb_setGetFileCase( void )
+int hb_setGetFileCase(void)
 {
    return s_iFileCase;
 }
 
-int hb_setGetDirCase( void )
+int hb_setGetDirCase(void)
 {
    return s_iDirCase;
 }
 
-int hb_setGetDirSeparator( void )
+int hb_setGetDirSeparator(void)
 {
    return s_cDirSep;
 }
 
-HB_BOOL hb_setGetTrimFileName( void )
+HB_BOOL hb_setGetTrimFileName(void)
 {
    return s_fFnTrim;
 }
 
-void hb_setSetFileCase( int iFileCase )
+void hb_setSetFileCase(int iFileCase)
 {
    s_iFileCase = iFileCase;
 }
 
-void hb_setSetDirCase( int iDirCase )
+void hb_setSetDirCase(int iDirCase)
 {
    s_iDirCase = iDirCase;
 }
 
-void hb_setSetDirSeparator( int iSeparator )
+void hb_setSetDirSeparator(int iSeparator)
 {
    s_cDirSep = static_cast<char>(iSeparator);
 }
 
-void hb_setSetTrimFileName( HB_BOOL fTrim )
+void hb_setSetTrimFileName(HB_BOOL fTrim)
 {
    s_fFnTrim = fTrim;
 }
