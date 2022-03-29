@@ -46,13 +46,13 @@
 
 #include "hbapi.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 #  include <windows.h>
 #endif
 
 HB_FUNC( __WAPI_GETACP )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    hb_retnl(GetACP());
 #else
    hb_retnl(0);
@@ -61,7 +61,7 @@ HB_FUNC( __WAPI_GETACP )
 
 HB_FUNC( __WAPI_GETOEMCP )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    hb_retnl(GetOEMCP());
 #else
    hb_retnl(0);
@@ -70,7 +70,7 @@ HB_FUNC( __WAPI_GETOEMCP )
 
 HB_FUNC( __WAPI_GETCONSOLEOUTPUTCP )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    hb_retnl(GetConsoleOutputCP());
 #else
    hb_retnl(0);

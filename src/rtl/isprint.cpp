@@ -63,7 +63,7 @@ HB_BOOL hb_printerIsReady( const char * pszPrinterName )
 
       if( pszPrinterName == nullptr )
       {
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
          pszPrinterName = "/dev/lp0";
 #else
          pszPrinterName = "LPT1";

@@ -61,17 +61,17 @@
 
 /* --- */
 
-#if !defined( STACK_INITHB_ITEMS )
+#if !defined(STACK_INITHB_ITEMS)
    #define STACK_INITHB_ITEMS    200
 #endif
-#if !defined( STACK_EXPANDHB_ITEMS )
+#if !defined(STACK_EXPANDHB_ITEMS)
    #define STACK_EXPANDHB_ITEMS  20
 #endif
 
 
 /* --- */
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 
 #  include "hbthread.h"
 
@@ -81,14 +81,14 @@
 #  ifdef HB_USE_TLS
 
       /* compiler has native support for TLS */
-#     if !defined( _HB_STACK_MACROS_ )
-#        if defined( __BORLANDC__ )
+#     if !defined(_HB_STACK_MACROS_)
+#        if defined(__BORLANDC__)
             static PHB_STACK HB_TLS_ATTR hb_stack_ptr;
 #        else
             static HB_TLS_ATTR PHB_STACK hb_stack_ptr;
 #        endif
-#     elif !defined( _HB_STACK_LOCAL_MACROS_ )
-#        if defined( __BORLANDC__ )
+#     elif !defined(_HB_STACK_LOCAL_MACROS_)
+#        if defined(__BORLANDC__)
             PHB_STACK HB_TLS_ATTR hb_stack_ptr = nullptr;
 #        else
             HB_TLS_ATTR PHB_STACK hb_stack_ptr = nullptr;
@@ -103,10 +103,10 @@
 #  else
 
       /* compiler has no native TLS support, we have to implement it ourselves */
-#     if !defined( _HB_STACK_MACROS_ )
+#     if !defined(_HB_STACK_MACROS_)
          static HB_TLS_KEY hb_stack_key;
 #        define hb_stack_ptr     ( static_cast<PHB_STACK>(hb_tls_get(hb_stack_key)) )
-#     elif !defined( _HB_STACK_LOCAL_MACROS_ )
+#     elif !defined(_HB_STACK_LOCAL_MACROS_)
          HB_TLS_KEY hb_stack_key;
 #     endif
       static volatile HB_BOOL s_fInited = HB_FALSE;
@@ -123,7 +123,7 @@
 
 #  endif /* HB_USE_TLS */
 
-#  if !defined( HB_STACK_PRELOAD )
+#  if !defined(HB_STACK_PRELOAD)
 #     undef hb_stack
 #     define hb_stack   ( * hb_stack_ptr )
 #  endif
@@ -131,9 +131,9 @@
 #else
 
    /* no MT mode */
-#  if !defined( _HB_STACK_MACROS_ )
+#  if !defined(_HB_STACK_MACROS_)
       static HB_STACK hb_stack;
-#  elif !defined( _HB_STACK_LOCAL_MACROS_ )
+#  elif !defined(_HB_STACK_LOCAL_MACROS_)
       HB_STACK hb_stack;
 #  endif
 
@@ -198,7 +198,7 @@ static void hb_stack_destroy_TSD( PHB_STACK pStack )
             pStack->pTSD[pStack->iTSD].pTSD->pCleanFunc( pStack->pTSD[pStack->iTSD].value );
          }
          hb_xfree(pStack->pTSD[pStack->iTSD].value);
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
          pStack->pTSD[pStack->iTSD].pTSD->iHandle = 0;
 #endif
       }
@@ -235,7 +235,7 @@ static void hb_stack_free( PHB_STACK pStack )
    hb_xfree(pStack->pItems);
    pStack->pItems = pStack->pPos = pStack->pBase = nullptr;
    pStack->nItems = 0;
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( pStack->pDirBuffer )
    {
       hb_xfree(pStack->pDirBuffer);
@@ -269,7 +269,7 @@ void * hb_stackGetTSD( PHB_TSD pTSD )
 
    HB_STACK_TLS_PRELOAD
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( pTSD->iHandle == 0 || pTSD->iHandle > hb_stack.iTSD || hb_stack.pTSD[pTSD->iHandle].pTSD == nullptr )
    {
       if( pTSD->iHandle == 0 )
@@ -322,7 +322,7 @@ void * hb_stackTestTSD( PHB_TSD pTSD )
 
    HB_STACK_TLS_PRELOAD
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    return ( pTSD->iHandle && pTSD->iHandle <= hb_stack.iTSD ) ? hb_stack.pTSD[pTSD->iHandle].value : nullptr;
 #else
    return pTSD->iHandle ? hb_stack.pTSD[pTSD->iHandle].value : nullptr;
@@ -360,7 +360,7 @@ void hb_stackInit( void )
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackInit()" ) );
 #endif
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    hb_stack_alloc();
 #endif
    {
@@ -380,12 +380,12 @@ void hb_stackFree( void )
 
    hb_stack_free( &hb_stack );
    hb_xexit_thread();
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    hb_stack_dealloc();
 #endif
 }
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 
 #undef hb_stackList
 void * hb_stackList( void )
@@ -577,7 +577,7 @@ void * hb_stackId( void )
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackId()" ) );
 #endif
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( hb_stack_ready() )
    {
       HB_STACK_TLS_PRELOAD
@@ -767,7 +767,7 @@ void hb_stackRemove( HB_ISIZ nUntilPos )
    }
 }
 
-#if defined( HB_VM_DEBUG )
+#if defined(HB_VM_DEBUG)
 
 static void hb_stackDispLocal( void )
 {
@@ -878,7 +878,7 @@ PHB_ITEM hb_stackNewFrame( PHB_STACK_STATE pFrame, HB_USHORT uiParams )
 
    if( !HB_IS_SYMBOL(pItem) )
    {
-#if defined( HB_VM_DEBUG )
+#if defined(HB_VM_DEBUG)
       hb_stackDispLocal();
 #endif
       hb_errInternal(HB_EI_VMNOTSYMBOL, nullptr, "hb_vmDo()", nullptr);
@@ -1060,7 +1060,7 @@ HB_ISIZ hb_stackBaseOffset( void )
 #undef hb_stackTotalItems
 HB_ISIZ hb_stackTotalItems( void )
 {
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( hb_stack_ready() )
    {
       HB_STACK_TLS_PRELOAD
@@ -1075,7 +1075,7 @@ HB_ISIZ hb_stackTotalItems( void )
 #endif
 }
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 void * hb_stackAllocator( void )
 {
    if( hb_stack_ready() )
@@ -1098,7 +1098,7 @@ char * hb_stackDateBuffer( void )
 
 char * hb_stackDirBuffer( void )
 {
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( hb_stack_ready() )
    {
       HB_STACK_TLS_PRELOAD
@@ -1114,7 +1114,7 @@ char * hb_stackDirBuffer( void )
 
 PHB_IOERRORS hb_stackIOErrors( void )
 {
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( hb_stack_ready() )
    {
       HB_STACK_TLS_PRELOAD
@@ -1126,7 +1126,7 @@ PHB_IOERRORS hb_stackIOErrors( void )
 
 void * hb_stackGetGT( void )
 {
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( hb_stack_ready() )
    {
       HB_STACK_TLS_PRELOAD
@@ -1345,7 +1345,7 @@ void hb_stackBaseProcInfo( char * szProcName, HB_USHORT * puiProcLine )
     * szProcName should be at least HB_SYMBOL_NAME_LEN + 1 bytes buffer
     */
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( !hb_stack_ready() )
    {
       szProcName[0] = '\0';
@@ -1396,7 +1396,7 @@ void hb_stackDispCall( void )
 /* The garbage collector interface */
 /* ------------------------------------------------------------------------ */
 
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
 /* helper function to scan all visible memvar variables
  */
 static HB_DYNS_FUNC( hb_stackMemvarScan )
@@ -1431,7 +1431,7 @@ static void hb_stackIsMemvarRef( PHB_STACK pStack )
       }
    }
    /* 2. Mark all visible memvars (PRIVATEs and PUBLICs) */
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    {
       HB_SYMCNT uiDynSym = pStack->uiDynH;
 
@@ -1510,7 +1510,7 @@ void hb_stackUpdateAllocator( void * pStackId, PHB_ALLOCUPDT_FUNC pFunc, int iCo
    HB_TRACE( HB_TR_DEBUG, ( "hb_stackUpdateAllocator(%p, %p, %d)", pStackId, reinterpret_cast<void*>(pFunc), iCount ) );
 #endif
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    {
       PHB_STACK pStack = static_cast<PHB_STACK>(pStackId);
 
@@ -1528,7 +1528,7 @@ void hb_stackUpdateAllocator( void * pStackId, PHB_ALLOCUPDT_FUNC pFunc, int iCo
 
 PHB_TRACEINFO hb_traceinfo( void )
 {
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( hb_stack_ready() )
    {
       HB_STACK_TLS_PRELOAD

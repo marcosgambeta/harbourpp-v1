@@ -47,9 +47,7 @@
 
 /* NOTE: This definitions must be ahead of any and all #include statements */
 
-#if !defined( HB_FM_STATISTICS ) && \
-    !defined( HB_FM_STATISTICS_OFF ) && \
-    !defined( HB_FM_STATISTICS_DYN_OFF )
+#if !defined(HB_FM_STATISTICS) && !defined(HB_FM_STATISTICS_OFF) && !defined(HB_FM_STATISTICS_DYN_OFF)
 #  define HB_FM_STATISTICS_OFF
 #endif
 
@@ -80,31 +78,30 @@
 #include "hbset.h"
 #include "hbvm.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 #  include <windows.h>
 #endif
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 #  include "hbthread.h"
 #  include "hbatomic.h"
 #endif
 
-#if defined( HB_FM_STD_ALLOC )
+#if defined(HB_FM_STD_ALLOC)
 #  undef HB_FM_DL_ALLOC
 #  undef HB_FM_DLMT_ALLOC
 #  undef HB_FM_WIN_ALLOC
-#elif defined( HB_FM_WIN_ALLOC )
+#elif defined(HB_FM_WIN_ALLOC)
 #  undef HB_FM_DL_ALLOC
-#elif !defined( HB_FM_DL_ALLOC ) && !defined( HB_FM_WIN_ALLOC )
-#  if defined( _MSC_VER ) || defined( __BORLANDC__ ) || defined( __MINGW32__ ) || \
-        ( defined( HB_FM_DLMT_ALLOC ) && defined( HB_MT_VM ) )
+#elif !defined(HB_FM_DL_ALLOC) && !defined(HB_FM_WIN_ALLOC)
+#  if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__MINGW32__) || ( defined(HB_FM_DLMT_ALLOC) && defined(HB_MT_VM) )
 #     define HB_FM_DL_ALLOC
 #  else
       /* #define HB_FM_DL_ALLOC */
 #  endif
 #endif
 
-#if defined( HB_FM_STATISTICS_OFF )
+#if defined(HB_FM_STATISTICS_OFF)
 #  undef HB_FM_STATISTICS
 #endif
 
@@ -112,26 +109,25 @@
 /* #define HB_FM_STATISTICS */
 /* #define HB_PARANOID_MEM_CHECK */
 
-#if defined( HB_FM_DL_ALLOC )
-#  if !defined( HB_FM_DLMT_ALLOC ) && !defined( HB_FM_DLMT_ALLOC_OFF ) && \
-      defined( HB_MT_VM )
+#if defined(HB_FM_DL_ALLOC)
+#  if !defined(HB_FM_DLMT_ALLOC) && !defined(HB_FM_DLMT_ALLOC_OFF) && defined(HB_MT_VM)
 #     define HB_FM_DLMT_ALLOC
 #  endif
 /* #  define NO_MALLINFO 1 */
 /* #  define INSECURE */
 /* #  define USE_DL_PREFIX */
 #  undef FORCEINLINE
-#  if !defined( FORCEINLINE )
+#  if !defined(FORCEINLINE)
 #     define FORCEINLINE      HB_FORCEINLINE
 #  endif
 #  define REALLOC_ZERO_BYTES_FREES
-#  if defined( HB_MT_VM )
-#     if defined( HB_SPINLOCK_R )
+#  if defined(HB_MT_VM)
+#     if defined(HB_SPINLOCK_R)
 #        define USE_LOCKS     2
 #     else
 #        define USE_LOCKS     1
 #     endif
-#     if defined( HB_FM_DLMT_ALLOC )
+#     if defined(HB_FM_DLMT_ALLOC)
 #        define ONLY_MSPACES  1
 #        define FOOTERS       1
 #     endif
@@ -139,7 +135,7 @@
 #     undef HB_FM_DLMT_ALLOC
 #     define USE_LOCKS        0
 #  endif
-#  if defined( __BORLANDC__ )
+#  if defined(__BORLANDC__)
 #     pragma warn -aus
 #     pragma warn -ccc
 #     pragma warn -eff
@@ -147,33 +143,33 @@
 #     pragma warn -prc
 #     pragma warn -rch
 #     pragma warn -inl
-#  elif defined( _MSC_VER )
-#     if !defined( USE_DL_PREFIX ) && !defined( HB_FM_DLMT_ALLOC )
+#  elif defined(_MSC_VER)
+#     if !defined(USE_DL_PREFIX) && !defined(HB_FM_DLMT_ALLOC)
 #        define USE_DL_PREFIX
 #     endif
 #     pragma warning( push )
 #     pragma warning( disable : 4702 )
-#     if defined( HB_OS_WIN_64 )
+#     if defined(HB_OS_WIN_64)
 #        pragma warning( disable : 4267 )
 #     endif
-#  elif defined( __MINGW32__ )
-#     if !defined( USE_DL_PREFIX ) && !defined( HB_FM_DLMT_ALLOC )
+#  elif defined(__MINGW32__)
+#     if !defined(USE_DL_PREFIX) && !defined(HB_FM_DLMT_ALLOC)
 #        define USE_DL_PREFIX
 #     endif
 #  endif
-#  if defined( __cplusplus ) && !defined( USE_DL_PREFIX )
+#  if defined(__cplusplus) && !defined(USE_DL_PREFIX)
 #     define USE_DL_PREFIX
 #  endif
-#  if defined( HB_OS_WIN )
-#     if !defined( ENOMEM )
+#  if defined(HB_OS_WIN)
+#     if !defined(ENOMEM)
 #        define ENOMEM  12
 #     endif
-#     if !defined( EINVAL )
+#     if !defined(EINVAL)
 #        define EINVAL  22
 #     endif
 #  endif
 #  include "dlmalloc.cpp"
-#  if defined( __BORLANDC__ )
+#  if defined(__BORLANDC__)
 #     pragma warn +aus
 #     pragma warn +ccc
 #     pragma warn +eff
@@ -181,22 +177,22 @@
 #     pragma warn +prc
 #     pragma warn +rch
 #     pragma warn +inl
-#  elif defined( _MSC_VER )
+#  elif defined(_MSC_VER)
 #     pragma warning( pop )
 #  endif
-#  if defined( HB_FM_DLMT_ALLOC )
+#  if defined(HB_FM_DLMT_ALLOC)
 #     define malloc( n )         mspace_malloc( hb_mspace(), ( n ) )
 #     define realloc( p, n )     mspace_realloc( nullptr, ( p ), ( n ) )
 #     define free( p )           mspace_free( nullptr, ( p ) )
-#  elif defined( USE_DL_PREFIX )
+#  elif defined(USE_DL_PREFIX)
 #     define malloc( n )         dlmalloc( ( n ) )
 #     define realloc( p, n )     dlrealloc( ( p ), ( n ) )
 #     define free( p )           dlfree( ( p ) )
 #  endif
 #else
 #  undef HB_FM_DLMT_ALLOC
-#  if defined( HB_FM_WIN_ALLOC ) && defined( HB_OS_WIN )
-#     if defined( HB_FM_LOCALALLOC )
+#  if defined(HB_FM_WIN_ALLOC) && defined(HB_OS_WIN)
+#     if defined(HB_FM_LOCALALLOC)
 #        define malloc( n )      static_cast<void*>(LocalAlloc( LMEM_FIXED, ( n ) ))
 #        define realloc( p, n )  static_cast<void*>(LocalReAlloc( ( HLOCAL ) ( p ), ( n ), LMEM_MOVEABLE ))
 #        define free( p )        LocalFree( ( HLOCAL ) ( p ) )
@@ -211,9 +207,7 @@
 #  endif
 #endif
 
-#if defined( HB_MT_VM ) && \
-    ( defined( HB_FM_STATISTICS ) || defined( HB_FM_DLMT_ALLOC ) || \
-      !defined( HB_ATOM_INC ) || !defined( HB_ATOM_DEC ) )
+#if defined(HB_MT_VM) && (defined(HB_FM_STATISTICS) || defined(HB_FM_DLMT_ALLOC) || !defined(HB_ATOM_INC) || !defined(HB_ATOM_DEC) )
 
    static HB_CRITICAL_NEW( s_fmMtx );
 #  define HB_FM_LOCK()           do { hb_threadEnterCriticalSection( &s_fmMtx )
@@ -226,8 +220,8 @@
 
 #endif
 
-#if defined( HB_FM_STATISTICS )
-#  if !defined( HB_FM_NEED_INIT )
+#if defined(HB_FM_STATISTICS)
+#  if !defined(HB_FM_NEED_INIT)
 #     define HB_FM_NEED_INIT
 #  endif
 #else
@@ -311,7 +305,7 @@ using PHB_MEMINFO = void *;
 
 #define HB_MEM_PTR( p )     ( static_cast<void*>(static_cast<HB_BYTE*>(p) + HB_MEMINFO_SIZE) )
 
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
 
 #  undef HB_ATOM_DEC
 #  undef HB_ATOM_INC
@@ -320,7 +314,7 @@ using PHB_MEMINFO = void *;
 #  define HB_ATOM_INC( p )  ( ++( *( p ) ) )
 #  define HB_ATOM_DEC( p )  ( --( *( p ) ) )
 
-#elif !defined( HB_ATOM_INC ) || !defined( HB_ATOM_DEC )
+#elif !defined(HB_ATOM_INC) || !defined(HB_ATOM_DEC)
 
    /* HB_ATOM_INC and HB_ATOM_DEC have to be synced together */
 #  undef HB_ATOM_DEC
@@ -353,9 +347,9 @@ using PHB_MEMINFO = void *;
 #  define HB_ATOM_SET( p, n )  ( ( *( p ) ) = ( n ) )
 #endif
 
-#if defined( HB_FM_DLMT_ALLOC )
+#if defined(HB_FM_DLMT_ALLOC)
 
-#  if !defined( HB_MSPACE_COUNT )
+#  if !defined(HB_MSPACE_COUNT)
 #     define HB_MSPACE_COUNT  16
 #  endif
 
@@ -441,7 +435,7 @@ static void hb_mspace_cleanup( void )
    }
 }
 
-#elif defined( HB_FM_DL_ALLOC ) && defined( USE_DL_PREFIX )
+#elif defined(HB_FM_DL_ALLOC) && defined(USE_DL_PREFIX)
 
 static void dlmalloc_destroy( void )
 {
@@ -466,7 +460,7 @@ static void dlmalloc_destroy( void )
 
 void hb_xinit_thread( void )
 {
-#if defined( HB_FM_DLMT_ALLOC )
+#if defined(HB_FM_DLMT_ALLOC)
    HB_STACK_TLS_PRELOAD
 
    if( hb_stack.allocator == nullptr )
@@ -480,7 +474,7 @@ void hb_xinit_thread( void )
 
 void hb_xexit_thread( void )
 {
-#if defined( HB_FM_DLMT_ALLOC )
+#if defined(HB_FM_DLMT_ALLOC)
    HB_STACK_TLS_PRELOAD
    PHB_MSPACE pm = static_cast<PHB_MSPACE>(hb_stack.allocator);
 
@@ -499,7 +493,7 @@ void hb_xexit_thread( void )
 
 void hb_xclean( void )
 {
-#if defined( HB_FM_DLMT_ALLOC )
+#if defined(HB_FM_DLMT_ALLOC)
    HB_FM_LOCK();
    {
       int i, imax, icount;
@@ -529,7 +523,7 @@ void hb_xclean( void )
       }
    }
    HB_FM_UNLOCK();
-#elif defined( HB_FM_DL_ALLOC )
+#elif defined(HB_FM_DL_ALLOC)
    dlmalloc_trim(0);
 #endif
 }
@@ -827,19 +821,19 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
       pMemBlock->u32Signature = 0;
       HB_FM_CLRSIG( HB_MEM_PTR( pMemBlock ), nMemSize );
 
-#if defined( HB_PARANOID_MEM_CHECK ) || defined( HB_FM_FORCE_REALLOC )
+#if defined(HB_PARANOID_MEM_CHECK) || defined(HB_FM_FORCE_REALLOC)
       pMem = malloc(HB_ALLOC_SIZE(nSize));
 #  endif
 
       HB_FM_LOCK();
 
-#if !( defined( HB_PARANOID_MEM_CHECK ) || defined( HB_FM_FORCE_REALLOC ) )
+#if !( defined(HB_PARANOID_MEM_CHECK) || defined(HB_FM_FORCE_REALLOC) )
       pMem = realloc(pMemBlock, HB_ALLOC_SIZE(nSize));
 #endif
 
       if( pMem )
       {
-#if defined( HB_PARANOID_MEM_CHECK ) || defined( HB_FM_FORCE_REALLOC )
+#if defined(HB_PARANOID_MEM_CHECK) || defined(HB_FM_FORCE_REALLOC)
          memcpy(pMem, pMemBlock, nSize < nMemSize ? HB_ALLOC_SIZE(nSize) : HB_ALLOC_SIZE(nMemSize));
 #endif
 
@@ -880,7 +874,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
          hb_errInternal(HB_EI_XREALLOC, nullptr, nullptr, nullptr);
       }
 
-#if defined( HB_PARANOID_MEM_CHECK ) || defined( HB_FM_FORCE_REALLOC )
+#if defined(HB_PARANOID_MEM_CHECK) || defined(HB_FM_FORCE_REALLOC)
 #  ifdef HB_PARANOID_MEM_CHECK
       memset(pMemBlock, HB_MEMFILER, HB_ALLOC_SIZE(nMemSize));
       if( nSize > nMemSize && pMem )
@@ -1190,7 +1184,7 @@ void hb_xinit( void ) /* Initialize fixed memory subsystem */
    {
       s_fInitedFM = HB_TRUE;
 
-#  if defined( HB_FM_HEAP_INIT )
+#  if defined(HB_FM_HEAP_INIT)
       s_hProcessHeap = GetProcessHeap();
 #  endif
 
@@ -1357,10 +1351,10 @@ void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
       }
    }
 
-#if defined( HB_FM_DL_ALLOC )
-#  if defined( HB_FM_DLMT_ALLOC )
+#if defined(HB_FM_DL_ALLOC)
+#  if defined(HB_FM_DLMT_ALLOC)
       hb_mspace_cleanup();
-#  elif defined( USE_DL_PREFIX )
+#  elif defined(USE_DL_PREFIX)
       dlmalloc_destroy();
 #  else
       malloc_trim(0);
@@ -1376,10 +1370,10 @@ void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
    HB_TRACE( HB_TR_DEBUG, ( "hb_xexit()" ) );
 #endif
 
-#if defined( HB_FM_DL_ALLOC )
-#  if defined( HB_FM_DLMT_ALLOC )
+#if defined(HB_FM_DL_ALLOC)
+#  if defined(HB_FM_DLMT_ALLOC)
       hb_mspace_cleanup();
-#  elif defined( USE_DL_PREFIX )
+#  elif defined(USE_DL_PREFIX)
       dlmalloc_destroy();
 #  else
       malloc_trim(0);
@@ -1402,7 +1396,7 @@ HB_SIZE hb_xquery( int iMode )
    switch( iMode )
    {
       case HB_MEM_CHAR:       /* (Free Variable Space [KB]) */
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
          {
             MEMORYSTATUS memorystatus;
             GlobalMemoryStatus( &memorystatus );
@@ -1414,7 +1408,7 @@ HB_SIZE hb_xquery( int iMode )
          break;
 
       case HB_MEM_BLOCK:      /* (Largest String [KB]) */
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
          {
             MEMORYSTATUS memorystatus;
             GlobalMemoryStatus( &memorystatus );
@@ -1426,7 +1420,7 @@ HB_SIZE hb_xquery( int iMode )
          break;
 
       case HB_MEM_RUN:        /* (RUN Memory [KB]) */
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
          {
             MEMORYSTATUS memorystatus;
             GlobalMemoryStatus( &memorystatus );
@@ -1438,7 +1432,7 @@ HB_SIZE hb_xquery( int iMode )
          break;
 
       case HB_MEM_VM:         /* UNDOCUMENTED! (Virtual Memory [KB]) */
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
          {
             MEMORYSTATUS memorystatus;
             GlobalMemoryStatus( &memorystatus );
@@ -1450,7 +1444,7 @@ HB_SIZE hb_xquery( int iMode )
          break;
 
       case HB_MEM_EMS:        /* UNDOCUMENTED! (Free Expanded Memory [KB]) (?) */
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
          nResult = 0;
 #else
          nResult = 9999;
@@ -1458,7 +1452,7 @@ HB_SIZE hb_xquery( int iMode )
          break;
 
       case HB_MEM_FM:         /* UNDOCUMENTED! (Fixed Memory/Heap [KB]) (?) */
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
          {
             MEMORYSTATUS memorystatus;
             GlobalMemoryStatus( &memorystatus );
@@ -1470,7 +1464,7 @@ HB_SIZE hb_xquery( int iMode )
          break;
 
       case HB_MEM_FMSEGS:     /* UNDOCUMENTED! (Segments in Fixed Memory/Heap) (?) */
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
          nResult = 1;
 #else
          nResult = 9999;
@@ -1478,7 +1472,7 @@ HB_SIZE hb_xquery( int iMode )
          break;
 
       case HB_MEM_SWAP:       /* UNDOCUMENTED! (Free Swap Memory [KB]) */
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
          {
             MEMORYSTATUS memorystatus;
             GlobalMemoryStatus( &memorystatus );
@@ -1490,7 +1484,7 @@ HB_SIZE hb_xquery( int iMode )
          break;
 
       case HB_MEM_CONV:       /* UNDOCUMENTED! (Free Conventional [KB]) */
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
          nResult = 0;
 #else
          nResult = 9999;
@@ -1504,9 +1498,9 @@ HB_SIZE hb_xquery( int iMode )
       case HB_MEM_USED:       /* Harbour extension (Memory used [bytes]) */
 #ifdef HB_FM_STATISTICS
          nResult = s_nMemoryConsumed;
-#elif defined( HB_FM_DLMT_ALLOC )
+#elif defined(HB_FM_DLMT_ALLOC)
          nResult = mspace_footprint( hb_mspace() );
-#elif defined( HB_FM_DL_ALLOC )
+#elif defined(HB_FM_DL_ALLOC)
          nResult = dlmalloc_footprint();
 #else
          nResult = 0;
@@ -1524,9 +1518,9 @@ HB_SIZE hb_xquery( int iMode )
       case HB_MEM_USEDMAX:    /* Harbour extension (Maximum memory used [bytes]) */
 #ifdef HB_FM_STATISTICS
          nResult = s_nMemoryMaxConsumed;
-#elif defined( HB_FM_DLMT_ALLOC )
+#elif defined(HB_FM_DLMT_ALLOC)
          nResult = mspace_max_footprint( hb_mspace() );
-#elif defined( HB_FM_DL_ALLOC )
+#elif defined(HB_FM_DL_ALLOC)
          nResult = dlmalloc_max_footprint();
 #else
          nResult = 0;
@@ -1556,11 +1550,11 @@ HB_SIZE hb_xquery( int iMode )
          break;
 
       case HB_MEM_CANLIMIT:   /* Harbour extension (Is used memory limit supported?) */
-#if defined( HB_FM_DLMT_ALLOC )
+#if defined(HB_FM_DLMT_ALLOC)
          nResult = 1;
-#elif defined( HB_FM_DL_ALLOC )
+#elif defined(HB_FM_DL_ALLOC)
          nResult = 1;
-#elif defined( HB_FM_STATISTICS )
+#elif defined(HB_FM_STATISTICS)
          nResult = s_fStatistic;
 #else
          nResult = 0;
@@ -1587,7 +1581,7 @@ HB_FUNC( __FM_ALLOCLIMIT )
 {
    HB_STACK_TLS_PRELOAD;
    hb_xclean();
-#if defined( HB_FM_DLMT_ALLOC )
+#if defined(HB_FM_DLMT_ALLOC)
    hb_retns(mspace_footprint_limit(hb_mspace()));
    if( HB_ISNUM(1) )
    {
@@ -1599,7 +1593,7 @@ HB_FUNC( __FM_ALLOCLIMIT )
       }
       mspace_set_footprint_limit( hb_mspace(), nLimit );
    }
-#elif defined( HB_FM_DL_ALLOC )
+#elif defined(HB_FM_DL_ALLOC)
    hb_retns(dlmalloc_footprint_limit());
    if( HB_ISNUM(1) )
    {
@@ -1611,7 +1605,7 @@ HB_FUNC( __FM_ALLOCLIMIT )
       }
       dlmalloc_set_footprint_limit( ( size_t ) nLimit );
    }
-#elif defined( HB_FM_STATISTICS )
+#elif defined(HB_FM_STATISTICS)
    hb_retns(s_nMemoryLimConsumed ? s_nMemoryLimConsumed : -1);
    if( HB_ISNUM(1) )
    {

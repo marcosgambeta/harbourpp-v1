@@ -134,7 +134,7 @@ HB_FUNC( HB_VERSION )
                                          compilation pass for harbour dynlib build -
                                          it is 32-bit Windows. */
 
-      #if defined( HB_DYNLIB )
+      #if defined(HB_DYNLIB)
          hb_retl(true);
       #else
          hb_retl(false);
@@ -142,7 +142,7 @@ HB_FUNC( HB_VERSION )
          break;
 
       case HB_VERSION_UNIX_COMPAT:
-      #if defined( HB_OS_UNIX )
+      #if defined(HB_OS_UNIX)
          hb_retl(true);
       #else
          hb_retl(false);
@@ -150,7 +150,7 @@ HB_FUNC( HB_VERSION )
          break;
 
       case HB_VERSION_COMPILER_CPP:
-      #if defined( __cplusplus )
+      #if defined(__cplusplus)
          hb_retl(true);
       #else
          hb_retl(false);
@@ -158,7 +158,7 @@ HB_FUNC( HB_VERSION )
          break;
 
       case HB_VERSION_PLATFORM:
-      #if defined( HB_OS_WIN )
+      #if defined(HB_OS_WIN)
          hb_retc_const( "WIN" );
       #else
          hb_retc_const( hb_verPlatformMacro() );
@@ -170,11 +170,11 @@ HB_FUNC( HB_VERSION )
          break;
 
       case HB_VERSION_ENDIANNESS:
-      #if defined( HB_LITTLE_ENDIAN )
+      #if defined(HB_LITTLE_ENDIAN)
          hb_retni(HB_VERSION_ENDIAN_LITTLE);
-      #elif defined( HB_BIG_ENDIAN )
+      #elif defined(HB_BIG_ENDIAN)
          hb_retni(HB_VERSION_ENDIAN_BIG);
-      #elif defined( HB_PDP_ENDIAN )
+      #elif defined(HB_PDP_ENDIAN)
          hb_retni(HB_VERSION_ENDIAN_PDP);
       #else
          hb_retni(0);
@@ -245,7 +245,7 @@ HB_FUNC( HB_COMPILER )
    hb_retc_buffer(hb_verCompiler());
 }
 
-#if defined( HB_LEGACY_LEVEL4 )
+#if defined(HB_LEGACY_LEVEL4)
 
 HB_FUNC( HB_PCODEVER )
 {

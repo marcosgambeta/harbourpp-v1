@@ -90,7 +90,7 @@ static HB_CRITICAL_NEW( s_wvtMtx );
 #define HB_WVT_LOCK()      hb_threadEnterCriticalSection( &s_wvtMtx )
 #define HB_WVT_UNLOCK()    hb_threadLeaveCriticalSection( &s_wvtMtx )
 
-#if ( ( defined( _MSC_VER ) && ( _MSC_VER <= 1200 ) ) ) && !defined( HB_ARCH_64BIT )
+#if ((defined(_MSC_VER) && (_MSC_VER <= 1200))) && !defined(HB_ARCH_64BIT)
 #  ifndef GetWindowLongPtr
 #     define GetWindowLongPtr   GetWindowLong
 #  endif
@@ -129,7 +129,7 @@ static const TCHAR s_szClassName[] = TEXT( "Harbour_WVT_Class" );
 
 static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam );
 static HB_BOOL hb_gt_wvt_FullScreen( PHB_GT pGT );
-#if defined( UNICODE )
+#if defined(UNICODE)
 static void hb_gt_wvt_ResetBoxCharBitmaps( PHB_GTWVT pWVT );
 #endif
 
@@ -253,7 +253,7 @@ static void hb_gt_wvt_Free( PHB_GTWVT pWVT )
       hb_strfree(pWVT->hWindowTitle);
    }
 
-#if !defined( UNICODE )
+#if !defined(UNICODE)
    if( pWVT->hFontBox && pWVT->hFontBox != pWVT->hFont )
    {
       DeleteObject( pWVT->hFontBox );
@@ -370,7 +370,7 @@ static PHB_GTWVT hb_gt_wvt_New( PHB_GT pGT, HINSTANCE hInstance, int iCmdShow )
 
    pWVT->CentreWindow      = HB_TRUE;         /* Default is to always display window in centre of screen */
    pWVT->CodePage          = OEM_CHARSET;     /* GetACP(); - set code page to default system */
-#if !defined( UNICODE )
+#if !defined(UNICODE)
    pWVT->boxCodePage       = OEM_CHARSET;     /* GetACP(); - set code page to default system */
 #else
    pWVT->wcTrans           = nullptr;
@@ -417,7 +417,7 @@ static PHB_GTWVT hb_gt_wvt_New( PHB_GT pGT, HINSTANCE hInstance, int iCmdShow )
    return pWVT;
 }
 
-#if defined( UNICODE )
+#if defined(UNICODE)
 
 #define hb_bm_line( x1, y1, x2, y2 )      do { \
                MoveToEx( pWVT->hBmpDC, x1, y1, nullptr ); \
@@ -1481,7 +1481,7 @@ static HBITMAP hb_gt_wvt_DefineBoxChar( PHB_GTWVT pWVT, HB_USHORT usCh )
 
 /* *********************************************************************** */
 
-#if defined( UNICODE )
+#if defined(UNICODE)
 static void hb_gt_wvt_ResetBoxCharBitmaps( PHB_GTWVT pWVT )
 {
    int i;
@@ -1783,7 +1783,7 @@ static HB_BOOL hb_gt_wvt_GetCharFromInputQueue( PHB_GTWVT pWVT, int * iKey )
    return HB_FALSE;
 }
 
-#if !defined( UNICODE )
+#if !defined(UNICODE)
 static int hb_gt_wvt_key_ansi_to_oem( int c )
 {
    BYTE pszSrc[2];
@@ -1898,7 +1898,7 @@ static void hb_gt_wvt_FitSize( PHB_GTWVT pWVT )
 
             if( width <= maxWidth && height <= maxHeight && tm.tmAveCharWidth >= 4 && tm.tmHeight >= 8 )
             {
-#if !defined( UNICODE )
+#if !defined(UNICODE)
                if( pWVT->hFontBox && pWVT->hFontBox != pWVT->hFont )
                {
                   DeleteObject( pWVT->hFontBox );
@@ -1928,7 +1928,7 @@ static void hb_gt_wvt_FitSize( PHB_GTWVT pWVT )
                pWVT->PTEXTSIZE.x = tm.tmAveCharWidth;
                pWVT->PTEXTSIZE.y = tm.tmHeight;
 
-#if defined( UNICODE )
+#if defined(UNICODE)
                /* reset character bitmap tables (after font selection) */
                hb_gt_wvt_ResetBoxCharBitmaps( pWVT );
 #endif
@@ -2041,7 +2041,7 @@ static void hb_gt_wvt_ResetWindowSize( PHB_GTWVT pWVT, HFONT hFont )
       {
          hFont = hb_gt_wvt_GetFont( pWVT->fontFace, pWVT->fontHeight, pWVT->fontWidth, pWVT->fontWeight, pWVT->fontQuality, pWVT->CodePage );
       }
-#if !defined( UNICODE )
+#if !defined(UNICODE)
       if( pWVT->hFont )
       {
          DeleteObject( pWVT->hFont );
@@ -2086,7 +2086,7 @@ static void hb_gt_wvt_ResetWindowSize( PHB_GTWVT pWVT, HFONT hFont )
                                        /* For fixed FONT should == tm.tmMaxCharWidth */
    pWVT->PTEXTSIZE.y = tm.tmHeight;    /* but seems to be a problem on Win9X so */
                                        /* assume proportional fonts always for Win9X */
-#if defined( UNICODE )
+#if defined(UNICODE)
    /* reset character bitmaps (after font selection) */
    hb_gt_wvt_ResetBoxCharBitmaps( pWVT );
 #endif
@@ -2425,7 +2425,7 @@ static void hb_gt_wvt_MouseEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
             RedrawWindow( pWVT->hWnd, nullptr, nullptr, RDW_INVALIDATE | RDW_UPDATENOW );
 
             {
-#if !defined( UNICODE )
+#if !defined(UNICODE)
                PHB_CODEPAGE cdpHost = HB_GTSELF_HOSTCP( pWVT->pGT ),
                             cdpBox  = HB_GTSELF_BOXCP( pWVT->pGT );
 #endif
@@ -2456,7 +2456,7 @@ static void hb_gt_wvt_MouseEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
                      {
                         break;
                      }
-#if defined( UNICODE )
+#if defined(UNICODE)
                      usChar = hb_cdpGetU16Ctrl( usChar );
 #else
                      usChar = hb_cdpGetUC( ( bAttr & HB_GT_ATTR_BOX ) ? cdpBox : cdpHost, usChar, '?' );
@@ -2470,7 +2470,7 @@ static void hb_gt_wvt_MouseEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
                   }
                }
 
-#if defined( UNICODE )
+#if defined(UNICODE)
                if( n > 0 )
                {
                   PHB_ITEM pItem = hb_itemPutStrLenU16( nullptr, HB_CDP_ENDIAN_NATIVE, sBuffer, n );
@@ -2956,7 +2956,7 @@ static HB_BOOL hb_gt_wvt_KeyEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, 
                         break;
                   }
                }
-#if defined( UNICODE )
+#if defined(UNICODE)
                if( iKey >= 127 )
                {
                   iKey = HB_INKEY_NEW_UNICODEF(iKey, iFlags);
@@ -3048,7 +3048,7 @@ static void hb_gt_wvt_PaintText( PHB_GTWVT pWVT )
    HB_BYTE     bAttr;
    HB_BOOL     fFixMetric = ( pWVT->fontAttribute & HB_GTI_FONTA_FIXMETRIC ) != 0;
 
-#if !defined( UNICODE )
+#if !defined(UNICODE)
    HFONT       hFont, hOldFont = nullptr;
 #endif
 
@@ -3114,7 +3114,7 @@ static void hb_gt_wvt_PaintText( PHB_GTWVT pWVT )
       DeleteObject( hBrush );
    }
 
-#if defined( UNICODE )
+#if defined(UNICODE)
    SelectObject( hdc, pWVT->hFont );
 #endif
 
@@ -3129,7 +3129,7 @@ static void hb_gt_wvt_PaintText( PHB_GTWVT pWVT )
 
       while( iCol <= rcRect.right )
       {
-#if defined( UNICODE )
+#if defined(UNICODE)
          HBITMAP hBitMap;
          HB_USHORT usChar;
 
@@ -3299,7 +3299,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc( HWND hWnd, UINT message, WPARAM wPara
       case WM_QUERYENDSESSION: /* check if we can shutdown or logoff */
          return 1;
 
-#if defined( WM_ENDSESSION )
+#if defined(WM_ENDSESSION)
       case WM_ENDSESSION: /* shutdown started */
          if( wParam )
          {
@@ -3506,7 +3506,7 @@ static HB_BOOL hb_gt_wvt_FullScreen( PHB_GT pGT )
    HB_GTWVT_LONG_PTR nExtendedStyle;
 
 /* Don't need this as Windows automatically maximizes to nearest [HVB] */
-#if defined( MONITOR_DEFAULTTONEAREST ) && 0
+#if defined(MONITOR_DEFAULTTONEAREST) && 0
    HMONITOR mon;
    MONITORINFO mi;
    typedef HMONITOR ( WINAPI * P_MFW )( HWND, DWORD );
@@ -3925,7 +3925,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_ISUNICODE:
-#if defined( UNICODE )
+#if defined(UNICODE)
          pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_TRUE);
 #else
          pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_FALSE);
@@ -4182,7 +4182,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                {
                   pWVT->CodePage = iVal;
                }
-#if !defined( UNICODE )
+#if !defined(UNICODE)
                else if( iVal == pWVT->boxCodePage )
                {
                   if( pWVT->hFont != pWVT->hFontBox )
@@ -4201,7 +4201,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                   HFONT hFont = hb_gt_wvt_GetFont( pWVT->fontFace, pWVT->fontHeight, pWVT->fontWidth, pWVT->fontWeight, pWVT->fontQuality, iVal );
                   if( hFont )
                   {
-#if !defined( UNICODE )
+#if !defined(UNICODE)
                      if( pWVT->hFont && pWVT->hFont != pWVT->hFontBox )
 #else
                      if( pWVT->hFont )
@@ -4217,7 +4217,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          }
          break;
 
-#if !defined( UNICODE )
+#if !defined(UNICODE)
       case HB_GTI_BOXCP:
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWVT->boxCodePage);
          if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
@@ -4340,7 +4340,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       case HB_GTI_CLIPBOARDDATA:
          if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING )
          {
-#if defined( UNICODE )
+#if defined(UNICODE)
             hb_gt_winapi_setClipboard( CF_UNICODETEXT, pInfo->pNewVal );
 #else
             hb_gt_winapi_setClipboard( pWVT->CodePage == OEM_CHARSET ? CF_OEMTEXT : CF_TEXT, pInfo->pNewVal );
@@ -4352,7 +4352,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             {
                pInfo->pResult = hb_itemNew(nullptr);
             }
-#if defined( UNICODE )
+#if defined(UNICODE)
             hb_gt_winapi_getClipboard( CF_UNICODETEXT, pInfo->pResult );
 #else
             hb_gt_winapi_getClipboard( pWVT->CodePage == OEM_CHARSET ? CF_OEMTEXT : CF_TEXT, pInfo->pResult );

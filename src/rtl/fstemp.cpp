@@ -46,10 +46,10 @@
  */
 
 /* *nixes */
-#if !defined( _LARGEFILE64_SOURCE )
+#if !defined(_LARGEFILE64_SOURCE)
 #  define _LARGEFILE64_SOURCE  1
 #endif
-#if !defined( _GNU_SOURCE )
+#if !defined(_GNU_SOURCE)
 #  define _GNU_SOURCE
 #endif
 
@@ -60,41 +60,41 @@
 #include "hbmath.h"
 #include "hbset.h"
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    #include <stdlib.h>
    #include <unistd.h>  /* We need for mkstemp() on BSD */
 #endif
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    #include <windows.h>
    #include "hbwinuni.h"
 #endif
 
-#if defined( HB_OS_LINUX ) || defined( HB_OS_BSD ) || defined( HB_OS_DARWIN ) || defined( HB_OS_SUNOS )
+#if defined(HB_OS_LINUX) || defined(HB_OS_BSD) || defined(HB_OS_DARWIN) || defined(HB_OS_SUNOS)
 #  define HB_HAS_MKSTEMP
-#  if ( defined( HB_OS_BSD ) && !defined( __NetBSD__ ) ) || defined( HB_OS_DARWIN )
+#  if ( defined(HB_OS_BSD) && !defined(__NetBSD__) ) || defined(HB_OS_DARWIN)
 #     define HB_HAS_MKSTEMPS
-#  elif defined( HB_OS_LINUX ) && ( defined( _BSD_SOURCE ) || defined( _SVID_SOURCE ) ) && defined( __GLIBC_PREREQ )
+#  elif defined(HB_OS_LINUX) && ( defined(_BSD_SOURCE) || defined(_SVID_SOURCE) ) && defined(__GLIBC_PREREQ)
 #     if __GLIBC_PREREQ( 2, 12 )
 #        define HB_HAS_MKSTEMPS
 #     endif
 #  endif
 #endif
 
-#if !defined( HB_USE_LARGEFILE64 ) && defined( HB_OS_UNIX )
-   #if defined( __USE_LARGEFILE64 )
+#if !defined(HB_USE_LARGEFILE64) && defined(HB_OS_UNIX)
+   #if defined(__USE_LARGEFILE64)
       /*
        * The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
        * defined and effectively enables lseek64()/flock64()/ftruncate64()
        * functions on 32-bit machines.
        */
       #define HB_USE_LARGEFILE64
-   #elif defined( HB_OS_UNIX ) && defined( O_LARGEFILE )
+   #elif defined(HB_OS_UNIX) && defined(O_LARGEFILE)
       #define HB_USE_LARGEFILE64
    #endif
 #endif
 
-#if !defined( HB_OS_WIN )
+#if !defined(HB_OS_WIN)
 static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_BOOL fTrans )
 {
    HB_BOOL fOK = HB_FALSE;
@@ -179,23 +179,23 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
          break;
       }
 
-#if defined( HB_HAS_MKSTEMP )
+#if defined(HB_HAS_MKSTEMP)
       if( hb_setGetFileCase() != HB_SET_CASE_LOWER &&
           hb_setGetFileCase() != HB_SET_CASE_UPPER &&
           hb_setGetDirCase() != HB_SET_CASE_LOWER &&
           hb_setGetDirCase() != HB_SET_CASE_UPPER
-#if !defined( HB_HAS_MKSTEMPS )
+#if !defined(HB_HAS_MKSTEMPS)
           && ( pszExt == nullptr || *pszExt == 0 )
 #endif
         )
       {
          hb_vmUnlock();
          hb_strncat(pszName, "XXXXXX", HB_PATH_MAX - 1);
-#if defined( HB_HAS_MKSTEMPS )
+#if defined(HB_HAS_MKSTEMPS)
          if( pszExt && *pszExt )
          {
             hb_strncat(pszName, pszExt, HB_PATH_MAX - 1);
-#if defined( HB_USE_LARGEFILE64 )
+#if defined(HB_USE_LARGEFILE64)
             fd = static_cast<HB_FHANDLE>(mkstemps64( pszName, static_cast<int>(strlen(pszExt)) ));
 #else
             fd = static_cast<HB_FHANDLE>(mkstemps( pszName, static_cast<int>(strlen(pszExt)) ));
@@ -203,7 +203,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
          }
          else
 #endif
-#if defined( HB_USE_LARGEFILE64 )
+#if defined(HB_USE_LARGEFILE64)
             fd = static_cast<HB_FHANDLE>(mkstemp64( pszName ));
 #else
             fd = static_cast<HB_FHANDLE>(mkstemp( pszName ));
@@ -243,7 +243,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
 }
 
 /* NOTE: The buffer must be at least HB_PATH_MAX chars long */
-#if !defined( HB_OS_UNIX )
+#if !defined(HB_OS_UNIX)
 
 static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char * pszPrefix )
 {
@@ -253,7 +253,7 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
 
    hb_vmUnlock();
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    {
       LPCTSTR lpPrefix, lpDir;
       LPTSTR lpPrefixFree = nullptr, lpDirFree = nullptr;
@@ -326,7 +326,7 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
 
 HB_FHANDLE hb_fsCreateTemp( const char * pszDir, const char * pszPrefix, HB_FATTR ulAttr, char * pszName )
 {
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    return hb_fsCreateTempEx(pszName, pszDir, pszPrefix, nullptr, ulAttr);
 #else
    /* If there was no special extension requested, we're using
@@ -339,7 +339,7 @@ HB_FHANDLE hb_fsCreateTemp( const char * pszDir, const char * pszPrefix, HB_FATT
       if( hb_fsTempName(pszName, pszDir, pszPrefix) )
       {
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
          /* Using FO_TRUNC on win platforms as hb_fsTempName() uses GetTempFileName(),
             which creates the file, so FO_EXCL would fail at this point. [vszakats] */
          HB_FHANDLE fhnd = hb_fsCreateEx(pszName, ulAttr, FO_EXCLUSIVE | FO_TRUNC);
@@ -374,7 +374,7 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
 
    pszTempDir[0] = '\0';
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    {
       char * pszTempDirEnv = hb_getenv( "TMPDIR" );
 
@@ -398,7 +398,7 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
          hb_xfree(pszTempDirEnv);
       }
    }
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
    {
       TCHAR lpDir[HB_PATH_MAX];
 

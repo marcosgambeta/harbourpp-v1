@@ -436,7 +436,7 @@ static void hb_pp_fileIncluded(void * cargo, const char * szFileName)
    pIncFilePtr = &HB_COMP_PARAM->incfiles;
    while( *pIncFilePtr )
    {
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
       if( strcmp((*pIncFilePtr )->szFileName, szFileName) == 0)
       {
          return;

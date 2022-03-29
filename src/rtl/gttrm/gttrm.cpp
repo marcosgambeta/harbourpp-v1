@@ -76,7 +76,7 @@
 #include <string.h>
 #include <fcntl.h>
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
 # include <errno.h>
 # include <time.h>
 # include <unistd.h>
@@ -88,9 +88,9 @@
 # include <sys/ioctl.h>
 # include <sys/wait.h>
 #endif
-#if defined( HB_HAS_GPM )
+#if defined(HB_HAS_GPM)
 # include <gpm.h>
-# if defined( HB_OS_LINUX ) && 0
+# if defined(HB_OS_LINUX) && 0
 #  include <linux/keyboard.h>
 # else
 #  define KG_SHIFT      0
@@ -218,7 +218,7 @@ static HB_GT_FUNCS SuperTable;
 #define K_MOUSETERM        0x10004
 #define K_RESIZE           0x10005
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
 
 #define TIMEVAL_GET( tv )           gettimeofday( &( tv ), nullptr )
 #define TIMEVAL_LESS( tv1, tv2 )    ( ( ( tv1 ).tv_sec == ( tv2 ).tv_sec ) ? \
@@ -264,7 +264,7 @@ struct mouseEvent
    int mbup_row, mbup_col;
    int mbdn_row, mbdn_col;
    /* to analize DBLCLK on xterm */
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    struct timeval BL_time;
    struct timeval BR_time;
    struct timeval BM_time;
@@ -347,7 +347,7 @@ struct _HB_GTTRM
    int        terminal_type;
    int        terminal_ext;
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    struct termios saved_TIO, curr_TIO;
    HB_BOOL    fRestTTY;
 #endif
@@ -366,7 +366,7 @@ struct _HB_GTTRM
    int nTermMouseChars;
    unsigned char cTermMouseBuf[3];
    mouseEvent mLastEvt;
-#if defined( HB_HAS_GPM )
+#if defined(HB_HAS_GPM)
    Gpm_Connect Conn;
 #endif
 
@@ -401,10 +401,10 @@ using HB_GTTRM = _HB_GTTRM;
 using PHB_GTTRM = _HB_GTTRM *;
 
 /* static variables use by signal handler */
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    static volatile HB_BOOL s_WinSizeChangeFlag = HB_FALSE;
 #endif
-#if defined( HB_OS_UNIX ) && defined( SA_NOCLDSTOP )
+#if defined(HB_OS_UNIX) && defined(SA_NOCLDSTOP)
    static volatile HB_BOOL s_fRestTTY = HB_FALSE;
 #endif
 
@@ -470,7 +470,7 @@ static int getClipKey( int nKey )
 }
 
 /* SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment */
-#if defined( HB_OS_UNIX ) && defined( SA_NOCLDSTOP )
+#if defined(HB_OS_UNIX) && defined(SA_NOCLDSTOP)
 
 static void sig_handler( int iSigNo )
 {
@@ -516,7 +516,7 @@ static void set_sig_handler( int iSig )
 
    sigaction( iSig, 0, &act );
    act.sa_handler = sig_handler;
-#if defined( SA_RESTART )
+#if defined(SA_RESTART)
    act.sa_flags = SA_RESTART | ( iSig == SIGCHLD ? SA_NOCLDSTOP : 0 );
 #else
    act.sa_flags = ( iSig == SIGCHLD ? SA_NOCLDSTOP : 0 );
@@ -562,7 +562,7 @@ static int hb_gt_trm_getSize( PHB_GTTRM pTerm, int * piRows, int * piCols )
 {
    *piRows = *piCols = 0;
 
-#if ( defined( HB_OS_UNIX ) ) && defined( TIOCGWINSZ )
+#if (defined(HB_OS_UNIX)) && defined(TIOCGWINSZ)
    if( pTerm->fOutTTY )
    {
       struct winsize win;
@@ -691,7 +691,7 @@ static int add_efds( PHB_GTTRM pTerm, int fd, int mode, int ( * eventFunc )( int
       return -1;
    }
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    {
       int fl;
       if( ( fl = fcntl( fd, F_GETFL, 0 ) ) == -1 )
@@ -742,7 +742,7 @@ static int add_efds( PHB_GTTRM pTerm, int fd, int mode, int ( * eventFunc )( int
    return fd;
 }
 
-#if defined( HB_HAS_GPM )
+#if defined(HB_HAS_GPM)
 static void del_efds( PHB_GTTRM pTerm, int fd )
 {
    int i, n = -1;
@@ -877,7 +877,7 @@ static void chk_mevtdblck( PHB_GTTRM pTerm )
 
    if( newbuttons != 0 )
    {
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
       struct timeval tv;
 #else
       double tv;
@@ -938,7 +938,7 @@ static void set_tmevt( PHB_GTTRM pTerm, unsigned char * cMBuf, mouseEvent * mEvt
       mEvt->col = col;
    }
 
-#if defined( HB_OS_BEOS )
+#if defined(HB_OS_BEOS)
    /* warning in HAIKU/BEOS MIDDLE and RIGHT buttons are reverted */
    switch( cMBuf[0] & 0xC3 )
    {
@@ -978,7 +978,7 @@ static void set_tmevt( PHB_GTTRM pTerm, unsigned char * cMBuf, mouseEvent * mEvt
    #endif
 }
 
-#if defined( HB_HAS_GPM )
+#if defined(HB_HAS_GPM)
 static int set_gpmevt( int fd, int mode, void * cargo )
 {
    int nKey = 0;
@@ -1068,7 +1068,7 @@ static void flush_gpmevt( PHB_GTTRM pTerm )
 
 static void disp_mousecursor( PHB_GTTRM pTerm )
 {
-#if defined( HB_HAS_GPM )
+#if defined(HB_HAS_GPM)
    if( ( pTerm->mouse_type & MOUSE_GPM ) && gpm_visiblepointer )
    {
       Gpm_DrawPointer( pTerm->mLastEvt.col, pTerm->mLastEvt.row, gpm_consolefd );
@@ -1088,7 +1088,7 @@ static void mouse_init( PHB_GTTRM pTerm )
       pTerm->mouse_type |= MOUSE_XTERM;
       pTerm->mButtons = 3;
    }
-#if defined( HB_HAS_GPM )
+#if defined(HB_HAS_GPM)
    if( pTerm->terminal_type == TERM_LINUX )
    {
       pTerm->Conn.eventMask = GPM_MOVE | GPM_DRAG | GPM_UP | GPM_DOWN | GPM_SINGLE | GPM_DOUBLE;
@@ -1134,7 +1134,7 @@ static void mouse_exit( PHB_GTTRM pTerm )
       hb_gt_trm_termOut( pTerm, s_szMouseOff, strlen(s_szMouseOff) );
       hb_gt_trm_termFlush( pTerm );
    }
-#if defined( HB_HAS_GPM )
+#if defined(HB_HAS_GPM)
    if( ( pTerm->mouse_type & MOUSE_GPM ) && gpm_fd >= 0 )
    {
       del_efds( pTerm, gpm_fd );
@@ -1151,7 +1151,7 @@ static int read_bufch( PHB_GTTRM pTerm, int fd )
    {
       unsigned char buf[STDIN_BUFLEN];
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
       n = read( fd, buf, STDIN_BUFLEN - pTerm->stdin_inbuf );
 #else
       n = hb_fsRead(fd, buf, STDIN_BUFLEN - pTerm->stdin_inbuf);
@@ -1338,7 +1338,7 @@ static int wait_key( PHB_GTTRM pTerm, int milisec )
    int nKey, esc, n, i, ch, counter;
    keyTab * ptr;
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    if( s_WinSizeChangeFlag )
    {
       s_WinSizeChangeFlag = HB_FALSE;
@@ -1737,7 +1737,7 @@ static HB_BOOL hb_gt_trm_XtermSetMode( PHB_GTTRM pTerm, int * piRows, int * piCo
    hb_gt_trm_termOut( pTerm, escseq, strlen(escseq) );
    hb_gt_trm_termFlush( pTerm );
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    /* dirty hack - wait for SIGWINCH */
    if( *piRows != iHeight || *piCols != iWidth )
    {
@@ -2247,7 +2247,7 @@ static HB_BOOL hb_gt_trm_AnsiGetCursorPos( PHB_GTTRM pTerm, int * iRow, int * iC
          }
          else
          {
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
             if( hb_fsCanRead(pTerm->hFilenoStdin, timeout) <= 0 )
             {
                break;
@@ -2934,7 +2934,7 @@ static void init_keys( PHB_GTTRM pTerm )
 
       { 0, nullptr } };
 
-#if defined( HB_OS_BEOS )
+#if defined(HB_OS_BEOS)
    /* warning above XFree 3.x.x CTRL + {UP,DOWN,RIGHT,LEFT} kyes create
     * collision with HAIKU/BEOS XTerm and standard CTRL keys
     */
@@ -3298,7 +3298,7 @@ static void init_keys( PHB_GTTRM pTerm )
       addKeyTab( pTerm, xtermModKeySeq );
       addKeyTab( pTerm, puttyKeySeq );
       addKeyTab( pTerm, haikuCtrlKeySeq );
-#if defined( HB_OS_BEOS )
+#if defined(HB_OS_BEOS)
       addKeyTab( pTerm, haikuStdKeySeq );
 #endif
    }
@@ -3651,7 +3651,7 @@ static void hb_gt_trm_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    hb_gt_trm_SetTerm( pTerm );
 
 /* SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment */
-#if defined( HB_OS_UNIX ) && defined( SA_NOCLDSTOP )
+#if defined(HB_OS_UNIX) && defined(SA_NOCLDSTOP)
 
    if( pTerm->fStdinTTY )
    {
@@ -3664,9 +3664,9 @@ static void hb_gt_trm_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       memcpy(&act, &old, sizeof(struct sigaction));
       act.sa_handler = sig_handler;
       /* do not use SA_RESTART - new Linux kernels will repeat the operation */
-#if defined( SA_ONESHOT )
+#if defined(SA_ONESHOT)
       act.sa_flags = SA_ONESHOT;
-#elif defined( SA_RESETHAND )
+#elif defined(SA_RESETHAND)
       act.sa_flags = SA_RESETHAND;
 #else
       act.sa_flags = 0;
@@ -3778,7 +3778,7 @@ static void hb_gt_trm_Exit( PHB_GT pGT )
 
    if( pTerm )
    {
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
       if( pTerm->fRestTTY )
       {
          tcsetattr( pTerm->hFilenoStdin, TCSANOW, &pTerm->saved_TIO );
@@ -3814,7 +3814,7 @@ static void hb_gt_trm_mouse_Show( PHB_GT pGT )
    PHB_GTTRM pTerm;
 
    pTerm = HB_GTTRM_GET(pGT);
-#if defined( HB_HAS_GPM )
+#if defined(HB_HAS_GPM)
    if( pTerm->mouse_type & MOUSE_GPM )
    {
       gpm_visiblepointer = 1;
@@ -3829,7 +3829,7 @@ static void hb_gt_trm_mouse_Hide( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_trm_mouse_Hide(%p)", static_cast<void*>(pGT) ) );
 #endif
 
-#if defined( HB_HAS_GPM )
+#if defined(HB_HAS_GPM)
    if( HB_GTTRM_GET(pGT)->mouse_type & MOUSE_GPM )
    {
       gpm_visiblepointer = 0;
@@ -3996,7 +3996,7 @@ static HB_BOOL hb_gt_trm_Suspend( PHB_GT pGT )
    {
       hb_gt_trm_termOut( pTerm, s_szMouseOff, strlen(s_szMouseOff) );
    }
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    if( pTerm->fRestTTY )
    {
       tcsetattr( pTerm->hFilenoStdin, TCSANOW, &pTerm->saved_TIO );
@@ -4017,7 +4017,7 @@ static HB_BOOL hb_gt_trm_Resume( PHB_GT pGT )
    int iHeight, iWidth;
 
    pTerm = HB_GTTRM_GET(pGT);
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    if( pTerm->fRestTTY )
    {
       tcsetattr( pTerm->hFilenoStdin, TCSANOW, &pTerm->curr_TIO );

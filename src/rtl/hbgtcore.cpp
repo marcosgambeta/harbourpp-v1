@@ -3792,7 +3792,7 @@ static void hb_gt_def_WhoCares( PHB_GT pGT, void * pCargo )
 
 /* - */
 
-#if defined( __GNUC__ ) && 0
+#if defined(__GNUC__) && 0
 static const HB_GT_FUNCS s_gtCoreFunc =
 {
    Lock                       : hb_gt_def_Lock                          ,
@@ -4057,13 +4057,13 @@ static const HB_GT_FUNCS s_gtCoreFunc =
 static char s_gtNameBuf[HB_GT_NAME_MAX_ + 1];
 
 /* NOTE: Must be in sync with gtsys.c */
-#if defined( HB_GT_LIB )
+#if defined(HB_GT_LIB)
    static const char * s_szNameDefault = HB_GT_DRVNAME( HB_GT_LIB );
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
    static const char * s_szNameDefault = "win";
-#elif defined( HB_OS_VXWORKS )
+#elif defined(HB_OS_VXWORKS)
    static const char * s_szNameDefault = "std";
-#elif defined( HB_OS_UNIX )
+#elif defined(HB_OS_UNIX)
    static const char * s_szNameDefault = "trm";
 #else
    static const char * s_szNameDefault = "std";

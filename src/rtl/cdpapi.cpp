@@ -2009,9 +2009,9 @@ HB_SIZE hb_cdpStrAsU16Len( PHB_CODEPAGE cdp, const char * pSrc, HB_SIZE nSrc, HB
 }
 
 #undef HB_CDP_ENDIAN_SWAP
-#if defined( HB_BIG_ENDIAN )
+#if defined(HB_BIG_ENDIAN)
 #  define HB_CDP_ENDIAN_SWAP  HB_CDP_ENDIAN_LITTLE
-#elif defined( HB_LITTLE_ENDIAN )
+#elif defined(HB_LITTLE_ENDIAN)
 #  define HB_CDP_ENDIAN_SWAP  HB_CDP_ENDIAN_BIG
 #endif
 
@@ -2034,7 +2034,7 @@ HB_SIZE hb_cdpStrToU16( PHB_CODEPAGE cdp, int iEndian, const char * pSrc, HB_SIZ
 
          if( n == 0 )
          {
-#if defined( HB_CDP_ENDIAN_SWAP )
+#if defined(HB_CDP_ENDIAN_SWAP)
             if( iEndian == HB_CDP_ENDIAN_SWAP )
             {
                wc = HB_SWAP_UINT16( wc );
@@ -2064,7 +2064,7 @@ HB_SIZE hb_cdpStrToU16( PHB_CODEPAGE cdp, int iEndian, const char * pSrc, HB_SIZ
       nPosS = nPosD = 0;
       while( nPosD < nDst && HB_CDPCHAR_GET( cdp, pSrc, nSrc, &nPosS, &wc ) )
       {
-#if defined( HB_CDP_ENDIAN_SWAP )
+#if defined(HB_CDP_ENDIAN_SWAP)
          if( iEndian == HB_CDP_ENDIAN_SWAP )
          {
             wc = HB_SWAP_UINT16( wc );
@@ -2099,7 +2099,7 @@ HB_SIZE hb_cdpStrToU16( PHB_CODEPAGE cdp, int iEndian, const char * pSrc, HB_SIZ
          {
             wc = uc;
          }
-#if defined( HB_CDP_ENDIAN_SWAP )
+#if defined(HB_CDP_ENDIAN_SWAP)
          if( iEndian == HB_CDP_ENDIAN_SWAP )
          {
             wc = HB_SWAP_UINT16( wc );
@@ -2202,7 +2202,7 @@ HB_SIZE hb_cdpU16ToStr( PHB_CODEPAGE cdp, int iEndian, const HB_WCHAR * pSrc, HB
       for( nPosS = nPosD = 0; nPosS < nSrc; ++nPosS )
       {
          int i;
-#if defined( HB_CDP_ENDIAN_SWAP )
+#if defined(HB_CDP_ENDIAN_SWAP)
          wc = pSrc[nPosS];
          if( iEndian == HB_CDP_ENDIAN_SWAP )
          {
@@ -2238,7 +2238,7 @@ HB_SIZE hb_cdpU16ToStr( PHB_CODEPAGE cdp, int iEndian, const HB_WCHAR * pSrc, HB
    {
       for( nPosS = nPosD = 0; nPosS < nSrc; ++nPosS )
       {
-#if defined( HB_CDP_ENDIAN_SWAP )
+#if defined(HB_CDP_ENDIAN_SWAP)
          wc = pSrc[nPosS];
          if( iEndian == HB_CDP_ENDIAN_SWAP )
          {
@@ -2275,7 +2275,7 @@ HB_SIZE hb_cdpU16ToStr( PHB_CODEPAGE cdp, int iEndian, const HB_WCHAR * pSrc, HB
 
       for( nPosS = nPosD = 0; nPosS < nSrc && nPosD < nDst; ++nPosS )
       {
-#if defined( HB_CDP_ENDIAN_SWAP )
+#if defined(HB_CDP_ENDIAN_SWAP)
          wc = pSrc[nPosS];
          if( iEndian == HB_CDP_ENDIAN_SWAP )
          {

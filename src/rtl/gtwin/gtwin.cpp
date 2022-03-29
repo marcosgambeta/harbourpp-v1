@@ -83,7 +83,7 @@
 
 #include <wincon.h>
 
-#if defined( _MSC_VER )
+#if defined(_MSC_VER)
 #  include <conio.h>
 #endif
 
@@ -111,7 +111,7 @@ using HB_PCONSOLE_SCREEN_BUFFER_INFOEX = HB_CONSOLE_SCREEN_BUFFER_INFOEX *;
 #undef PCONSOLE_SCREEN_BUFFER_INFOEX
 #define CONSOLE_SCREEN_BUFFER_INFOEX  HB_CONSOLE_SCREEN_BUFFER_INFOEX
 #define PCONSOLE_SCREEN_BUFFER_INFOEX HB_PCONSOLE_SCREEN_BUFFER_INFOEX
-#if !defined( HB_GTWIN_USE_PCONSOLEINFOEX )
+#if !defined(HB_GTWIN_USE_PCONSOLEINFOEX)
 #  define HB_GTWIN_USE_PCONSOLEINFOEX
 #endif
 
@@ -477,12 +477,12 @@ static void hb_gt_win_xGetScreenContents( PHB_GT pGT, SMALL_RECT * psrWin )
 
    int iCol;
 
-#if !defined( UNICODE )
+#if !defined(UNICODE)
    PHB_CODEPAGE cdp;
    HB_BYTE bxAttr;
 #endif
 
-#if !defined( UNICODE )
+#if !defined(UNICODE)
    bxAttr = 0;
    cdp = HB_GTSELF_CPTERM(pGT);
    if( !cdp )
@@ -504,7 +504,7 @@ static void hb_gt_win_xGetScreenContents( PHB_GT pGT, SMALL_RECT * psrWin )
       int i = iRow * _GetScreenWidth() + psrWin->Left;
       for( iCol = psrWin->Left; iCol <= psrWin->Right; ++iCol )
       {
-#if defined( UNICODE )
+#if defined(UNICODE)
          HB_GTSELF_PUTSCRCHAR(pGT, iRow, iCol, static_cast<HB_UCHAR>(s_pCharInfoScreen[i].Attributes), 0, s_pCharInfoScreen[i].Char.UnicodeChar);
 #else
          HB_USHORT usChar = hb_cdpGetU16( cdp, static_cast<HB_UCHAR>(s_pCharInfoScreen[i].Char.AsciiChar) );
@@ -588,7 +588,7 @@ static void hb_gt_win_xInitScreenParam( PHB_GT pGT )
    }
 }
 
-#if defined( HB_GTWIN_USE_PCONSOLEINFOEX )
+#if defined(HB_GTWIN_USE_PCONSOLEINFOEX)
 
 static HB_BOOL hb_gt_win_SetPalette_Vista( HB_BOOL bSet, COLORREF * colors )
 {
@@ -673,7 +673,7 @@ static HB_BOOL hb_gt_win_SetPalette_Vista( HB_BOOL bSet, COLORREF * colors )
 
 static HB_BOOL hb_gt_win_SetPalette( HB_BOOL bSet, COLORREF * colors )
 {
-#if defined( HB_GTWIN_USE_PCONSOLEINFOEX )
+#if defined(HB_GTWIN_USE_PCONSOLEINFOEX)
    return hb_gt_win_SetPalette_Vista( bSet, colors );
 #else
    if( !bSet )
@@ -713,7 +713,7 @@ static HB_BOOL hb_gt_win_SetCloseButton( HB_BOOL bSet, HB_BOOL bClosable )
 
          if( bSet )
          {
-#if defined( HB_GTWIN_USE_SETCONSOLEMENUCLOSE )
+#if defined(HB_GTWIN_USE_SETCONSOLEMENUCLOSE)
             typedef BOOL ( WINAPI * P_SETCONSOLEMENUCLOSE )( BOOL );
 
             static HB_BOOL s_fChecked = HB_FALSE;
@@ -1127,7 +1127,7 @@ static int Handle_Alt_Key( INPUT_RECORD * pInRec, HB_BOOL * pAltIsDown, int * pA
          }
          else if( pInRec->Event.KeyEvent.dwControlKeyState & 0x04000000 )
          {
-#if defined( UNICODE )
+#if defined(UNICODE)
             iVal = *pAltVal & 0xFFFF;
 #else
             iVal = *pAltVal & 0xFF;
@@ -1271,7 +1271,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
 
       if( s_dwNumRead )
       {
-#if defined( UNICODE )
+#if defined(UNICODE)
          /* Workaround for UNICOWS bug:
                https://web.archive.org/web/blogs.msdn.com/michkap/archive/2007/01/13/1460724.aspx
             [vszakats] */
@@ -1293,7 +1293,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
          /* Set up to process the first input event */
          s_dwNumIndex = 0;
 
-#if defined( UNICODE )
+#if defined(UNICODE)
          if( s_fWin9x )
          {
             for( DWORD tmp = 0; tmp < s_dwNumRead; ++tmp )
@@ -1306,7 +1306,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
          }
 #endif
 
-#if defined( _TRACE ) || defined( _TRACE_KEYPRESS )
+#if defined(_TRACE) || defined(_TRACE_KEYPRESS)
          {
             for( DWORD tmp = 0; tmp < s_dwNumRead; ++tmp )
             {
@@ -1419,7 +1419,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
          }
          else if( pInRec->Event.KeyEvent.bKeyDown )
          {
-#if defined( UNICODE )
+#if defined(UNICODE)
             iChar = pInRec->Event.KeyEvent.uChar.UnicodeChar;
 #else
             iChar = static_cast<HB_UCHAR>(pInRec->Event.KeyEvent.uChar.AsciiChar);
@@ -1807,7 +1807,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
          }
          else if( wVKey == VK_MENU && ( dwState & NUMLOCK_ON ) != 0 )
          {
-#if defined( UNICODE )
+#if defined(UNICODE)
             iChar = pInRec->Event.KeyEvent.uChar.UnicodeChar;
 #else
             iChar = static_cast<HB_UCHAR>(pInRec->Event.KeyEvent.uChar.AsciiChar);
@@ -1825,7 +1825,7 @@ static int hb_gt_win_ReadKey( PHB_GT pGT, int iEventMask )
          }
          else if( iChar != 0 )
          {
-#if defined( UNICODE )
+#if defined(UNICODE)
             if( iChar >= 127 )
             {
                iKey = HB_INKEY_NEW_UNICODEF(iChar, iFlags);
@@ -2016,7 +2016,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_ISUNICODE:
-#if defined( UNICODE )
+#if defined(UNICODE)
          pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_TRUE);
 #else
          pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_FALSE);
@@ -2203,7 +2203,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_CLIPBOARDDATA:
          if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING )
-#if defined( UNICODE )
+#if defined(UNICODE)
             hb_gt_winapi_setClipboard( CF_UNICODETEXT, pInfo->pNewVal );
 #else
             hb_gt_winapi_setClipboard( CF_OEMTEXT, pInfo->pNewVal );
@@ -2214,7 +2214,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             {
                pInfo->pResult = hb_itemNew(nullptr);
             }
-#if defined( UNICODE )
+#if defined(UNICODE)
             hb_gt_winapi_getClipboard( CF_UNICODETEXT, pInfo->pResult );
 #else
             hb_gt_winapi_getClipboard( CF_OEMTEXT, pInfo->pResult );
@@ -2308,7 +2308,7 @@ static void hb_gt_win_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
       while( iSize-- > 0 )
       {
-#if defined( UNICODE )
+#if defined(UNICODE)
          HB_USHORT usChar;
          if( !HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol++, &iColor, &bAttr, &usChar) )
          {

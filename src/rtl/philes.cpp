@@ -321,7 +321,7 @@ HB_FUNC( CURDIR )
 
 HB_FUNC( HB_CURDRIVE )
 {
-#if defined( HB_OS_HAS_DRIVE_LETTER )
+#if defined(HB_OS_HAS_DRIVE_LETTER)
    char szCurDrive[1];
    const char * szDrive;
 
@@ -656,7 +656,7 @@ HB_FUNC( HB_PS )
    hb_retc_const( HB_OS_PATH_DELIM_CHR_STRING );
 }
 
-#if defined( HB_LEGACY_LEVEL4 )
+#if defined(HB_LEGACY_LEVEL4)
 
 /* Deprecated */
 HB_FUNC( HB_OSPATHSEPARATOR )

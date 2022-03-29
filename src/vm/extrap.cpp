@@ -53,15 +53,13 @@
 #include "hbapierr.h"
 #include "hbset.h"
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
 #  include <unistd.h>
 #  include <signal.h>
-#  if defined( SIGSTKSZ ) && \
-      ( ( defined( _BSD_SOURCE ) && _BSD_SOURCE ) || \
-        ( defined( _XOPEN_SOURCE ) && _XOPEN_SOURCE >= 500 ) )
+#  if defined(SIGSTKSZ) && ((defined(_BSD_SOURCE) && _BSD_SOURCE) || (defined(_XOPEN_SOURCE) && _XOPEN_SOURCE >= 500))
 #     define HB_SIGNAL_EXCEPTION_HANDLER
 #  endif
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
 #  include <windows.h>
 #  include <tlhelp32.h>
 #  include "hbwinuni.h"
@@ -71,11 +69,11 @@
 #  endif
 #endif
 
-#if defined( HB_SIGNAL_EXCEPTION_HANDLER )
+#if defined(HB_SIGNAL_EXCEPTION_HANDLER)
    static HB_BYTE * s_signal_stack[SIGSTKSZ];
 #endif
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExceptionInfo )
 {
@@ -84,7 +82,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
 
    errmsg[0] = '\0';
 
-#if defined( HB_OS_WIN_64 ) && defined( HB_CPU_X86_64 )
+#if defined(HB_OS_WIN_64) && defined(HB_CPU_X86_64)
    {
       char buf[32];
       PCONTEXT pCtx = pExceptionInfo->ContextRecord;
@@ -139,7 +137,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
                See: - StackWalk64()
                     - https://www.codeproject.com/KB/threads/StackWalker.aspx?fid=202364 */
    }
-#elif defined( HB_OS_WIN_64 ) && defined( HB_CPU_IA_64 )
+#elif defined(HB_OS_WIN_64) && defined(HB_CPU_IA_64)
    {
       PCONTEXT pCtx = pExceptionInfo->ContextRecord;
 
@@ -168,7 +166,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
          pCtx->IntGp , pCtx->IntV0 , pCtx->IntSp , pCtx->IntTeb,
          pCtx->IntNats);
    }
-#elif defined( HB_CPU_X86 )
+#elif defined(HB_CPU_X86)
    {
       char         buf[64 + MAX_PATH];
       PCONTEXT     pCtx = pExceptionInfo->ContextRecord;
@@ -289,7 +287,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
       if( hToolhelp )
       {
          /* NOTE: Hack to force the ASCII versions of these types. [vszakats] */
-         #if defined( UNICODE )
+         #if defined(UNICODE)
             #undef MODULEENTRY32
             #undef LPMODULEENTRY32
          #endif
@@ -323,7 +321,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
                   do
                   {
                      char buf[256];
-#if defined( HB_OS_WIN_64 )
+#if defined(HB_OS_WIN_64)
                      /* FIXME: me32.szExePath seemed trashed in some (standalone) tests. */
                      hb_snprintf(buf, sizeof(buf), "%016" PFLL "X %016" PFLL "X %s\n", reinterpret_cast<HB_PTRUINT>(me32.modBaseAddr), static_cast<HB_PTRUINT>(me32.modBaseSize), me32.szExePath);
 #else
@@ -348,7 +346,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
    return hb_cmdargCheck( "BATCH" ) ? EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH;
 }
 
-#elif defined( HB_SIGNAL_EXCEPTION_HANDLER )
+#elif defined(HB_SIGNAL_EXCEPTION_HANDLER)
 
 static void hb_signalExceptionHandler( int sig, siginfo_t * si, void * ucp )
 {
@@ -394,12 +392,12 @@ static void hb_signalExceptionHandler( int sig, siginfo_t * si, void * ucp )
 
 void hb_vmSetExceptionHandler( void )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    {
       LPTOP_LEVEL_EXCEPTION_FILTER ef = SetUnhandledExceptionFilter( hb_winExceptionHandler );
       HB_SYMBOL_UNUSED(ef);
    }
-#elif defined( HB_SIGNAL_EXCEPTION_HANDLER )
+#elif defined(HB_SIGNAL_EXCEPTION_HANDLER)
    {
       stack_t ss;
       ss.ss_sp = static_cast<void*>(s_signal_stack);
@@ -427,7 +425,7 @@ void hb_vmSetExceptionHandler( void )
 
 void hb_vmUnsetExceptionHandler( void )
 {
-#if defined( HB_SIGNAL_EXCEPTION_HANDLER )
+#if defined(HB_SIGNAL_EXCEPTION_HANDLER)
    {
       /* we are using static buffer for alternative stack so we do not
        * have to deallocate it to free the memory on application exit

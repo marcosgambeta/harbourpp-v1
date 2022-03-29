@@ -1865,7 +1865,7 @@ HB_FUNC( SELECT )
 
       if( szAlias )
       {
-#if defined( HB_CLP_STRICT ) || 1
+#if defined(HB_CLP_STRICT) || 1
          /*
           * I do not like this Clipper behavior, in some constructions
           * programmer may use "<aliasNum>" in some others not. [Druzus]

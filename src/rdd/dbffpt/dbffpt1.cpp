@@ -49,7 +49,7 @@
  *
  */
 
-#if defined( HB_FPT_NO_READLOCK )
+#if defined(HB_FPT_NO_READLOCK)
 #  undef HB_MEMO_SAFELOCK
 #else
 /*#  define HB_MEMO_SAFELOCK */
@@ -3797,7 +3797,7 @@ static HB_ERRCODE hb_fptPutVarField( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
                                   ( pField->uiFlags & HB_FF_UNICODE ) != 0 ? FPT_TRANS_UNICODE :
                                   ( ( pField->uiFlags & HB_FF_BINARY ) == 0 &&
                                     hb_vmCDP() != pArea->area.cdPage ? FPT_TRANS_CP : FPT_TRANS_NONE ) );
-#if defined( HB_MEMO_SAFELOCK )
+#if defined(HB_MEMO_SAFELOCK)
          if( errCode == HB_SUCCESS )
          {
             /* Force writer record to eliminate race condition */
@@ -4004,7 +4004,7 @@ static HB_ERRCODE hb_fptPutVarField( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
                   {
                      HB_PUT_LE_UINT32(pFieldBuf + pField->uiLen - 6, ulOldBlock);
                   }
-#if defined( HB_MEMO_SAFELOCK )
+#if defined(HB_MEMO_SAFELOCK)
                   /* Force writer record to eliminate race condition */
                   SELF_GOCOLD( &pArea->area );
 #endif
@@ -4675,7 +4675,7 @@ static HB_ERRCODE hb_fptPutValueFile( FPTAREAP pArea, HB_USHORT uiIndex, const c
          {
             errCode = hb_dbfSetMemoData( static_cast<DBFAREAP>(pArea), uiIndex - 1, ulBlock, ulSize, ulType );
          }
-#if defined( HB_MEMO_SAFELOCK )
+#if defined(HB_MEMO_SAFELOCK)
          if( errCode == HB_SUCCESS )
          {
             /* Force writer record to eliminate race condition */
@@ -5566,7 +5566,7 @@ static HB_ERRCODE hb_fptRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          break;
 
       case RDDI_MEMOREADLOCK:
-#if defined( HB_MEMO_SAFELOCK )
+#if defined(HB_MEMO_SAFELOCK)
          hb_itemPutL(pItem, pRDD->rddID != s_uiRddIdBLOB);
 #else
          hb_itemPutL(pItem, HB_FALSE);
@@ -5806,10 +5806,10 @@ HB_CALL_ON_STARTUP_BEGIN( _hb_dbffpt_rdd_init_ )
    hb_vmAtInit( hb_dbffptRddInit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_dbffpt_rdd_init_ )
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
    #pragma startup dbffpt1__InitSymbols
    #pragma startup _hb_dbffpt_rdd_init_
-#elif defined( HB_DATASEG_STARTUP )
+#elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY    HB_DATASEG_FUNC( dbffpt1__InitSymbols ) \
                               HB_DATASEG_FUNC( _hb_dbffpt_rdd_init_ )
    #include "hbiniseg.h"

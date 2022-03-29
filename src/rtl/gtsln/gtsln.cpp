@@ -344,7 +344,7 @@ static void hb_sln_setACSCtrans( void )
 
 static void hb_sln_setCharTrans( PHB_GT pGT, HB_BOOL fBox )
 {
-#if !defined( HB_SLN_UNICODE )
+#if !defined(HB_SLN_UNICODE)
    PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP(pGT);
 #endif
    PHB_CODEPAGE cdpHost = HB_GTSELF_HOSTCP(pGT);
@@ -898,7 +898,7 @@ static HB_BOOL hb_gt_sln_Resume( PHB_GT pGT )
    if( s_bSuspended && SLsmg_resume_smg() != -1 && hb_sln_Init_Terminal(1) != -1 )
    {
       SLsmg_refresh(); /* reinitialize a terminal */
-#if defined( HB_HAS_GPM )
+#if defined(HB_HAS_GPM)
       hb_gt_sln_mouse_FixTrash();
 #endif
       s_bSuspended = HB_FALSE;
@@ -914,7 +914,7 @@ static HB_BOOL hb_gt_sln_PreExt( PHB_GT pGT )
    HB_SYMBOL_UNUSED(pGT);
 
    SLsmg_refresh();
-#if defined( HB_HAS_GPM )
+#if defined(HB_HAS_GPM)
    hb_gt_sln_mouse_FixTrash();
 #endif
    return HB_TRUE;

@@ -213,7 +213,7 @@ static const char * is_devicename( const char * szFileName )
 {
    if( szFileName && *szFileName )
    {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
       const char * szDevices[] =
             { "NUL", "PRN", "CON",
               "LPT1", "LPT2", "LPT3",
@@ -273,7 +273,7 @@ static const char * is_devicename( const char * szFileName )
             }
          }
       }
-#elif defined( HB_OS_UNIX )
+#elif defined(HB_OS_UNIX)
       if( strncmp(szFileName, "/dev/", 5) == 0 )
       {
          return szFileName;
@@ -335,7 +335,7 @@ static void open_handle( PHB_SET_STRUCT pSet, const char * file_name, HB_BOOL fA
 
    if( file_name && file_name[0] != '\0' )
    {
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
       fPipe = file_name[0] == '|';
       if( fPipe )
       {
@@ -587,9 +587,9 @@ HB_FUNC( SETCANCEL )
 /* return default printer device */
 static char * hb_set_PRINTFILE_default( void )
 {
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    return hb_strdup("|lpr");
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
    return hb_strdup("LPT1");
 #else
    return hb_strdup("PRN"); /* FIXME */
@@ -3159,7 +3159,7 @@ HB_BOOL hb_osUseCP( void )
 {
    HB_STACK_TLS_PRELOAD
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( hb_stackId() )
 #endif
    {
@@ -3326,7 +3326,7 @@ char * hb_osStrDecode2( const char * pszName, char * pszBuffer, HB_SIZE nSize )
    return hb_strncpy(pszBuffer, pszName, nSize);
 }
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 HB_WCHAR * hb_osStrU16Encode( const char * pszName )
 {
    if( hb_vmIsReady() )

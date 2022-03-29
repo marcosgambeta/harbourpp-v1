@@ -69,7 +69,7 @@ double hb_random_num( void )
       t = static_cast<HB_I32>(( hb_dateMilliSeconds() ^ reinterpret_cast<HB_PTRUINT>(hb_stackId()) ) % MODULUS);
    }
 
-#if !defined( HB_LONG_LONG_OFF )
+#if !defined(HB_LONG_LONG_OFF)
    t = static_cast<HB_I32>(static_cast<HB_LONGLONG>(t) * MULTIPLIER % MODULUS);
 #else
    {

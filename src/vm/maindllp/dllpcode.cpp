@@ -50,7 +50,7 @@
 #include "hbvm.h"
 #include "hbtypes.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    #include <windows.h>
 #endif
 
@@ -60,17 +60,17 @@
 
 #define HB_DLL_NAME      HB_DLL_PREF HB_DLL_EXT
 
-#if defined( __BORLANDC__ )
+#if defined(__BORLANDC__)
    #define HB_DLL_NAME2  HB_DLL_PREF HB_DLL_VER TEXT( "-bcc" ) HB_DLL_EXT
-#elif defined( HB_OS_WIN_64 ) && defined( HB_CPU_X86_64 )
+#elif defined(HB_OS_WIN_64) && defined(HB_CPU_X86_64)
    #define HB_DLL_NAME2  HB_DLL_PREF HB_DLL_VER TEXT( "-x64" ) HB_DLL_EXT
-#elif defined( HB_OS_WIN_64 ) && defined( HB_CPU_IA_64 )
+#elif defined(HB_OS_WIN_64) && defined(HB_CPU_IA_64)
    #define HB_DLL_NAME2  HB_DLL_PREF HB_DLL_VER TEXT( "-ia64" ) HB_DLL_EXT
 #else
    #define HB_DLL_NAME2  HB_DLL_PREF HB_DLL_VER HB_DLL_EXT
 #endif
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 HB_EXTERN_BEGIN
 

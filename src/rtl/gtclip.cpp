@@ -50,11 +50,11 @@
 #include "hbapistr.h"
 #include "hbapiitm.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    #include <windows.h>
    /* For Global*() */
 
-   #if defined( __CYGWIN__ )
+   #if defined(__CYGWIN__)
       #include <wchar.h>
    #endif
 #endif
@@ -105,7 +105,7 @@ HB_BOOL hb_gt_getClipboard( char ** pszClipData, HB_SIZE * pnLen )
    return s_nClipboardLen != 0;
 }
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 HB_BOOL hb_gt_winapi_setClipboardRaw( HB_UINT uFormat, void * pData, HB_SIZE nSize )
 {

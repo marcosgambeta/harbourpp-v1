@@ -48,13 +48,13 @@
 #include "hbapifs.h"
 #include "hbvm.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    #include <windows.h>
-   #if !defined( INVALID_FILE_ATTRIBUTES )
+   #if !defined(INVALID_FILE_ATTRIBUTES)
       #define INVALID_FILE_ATTRIBUTES  ( static_cast<DWORD>(-1) )
    #endif
    #include "hbwinuni.h"
-#elif defined( HB_OS_UNIX )
+#elif defined(HB_OS_UNIX)
    #include <unistd.h>
 #endif
 
@@ -66,7 +66,7 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
    {
       hb_vmUnlock();
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
       {
          typedef BOOL ( WINAPI * _HB_CREATEHARDLINK )( LPCTSTR, LPCTSTR, LPSECURITY_ATTRIBUTES );
 
@@ -107,7 +107,7 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
             fResult = HB_FALSE;
          }
       }
-#elif defined( HB_OS_UNIX )
+#elif defined(HB_OS_UNIX)
       {
          char * pszExistingFree;
          char * pszNewFileFree;
@@ -153,7 +153,7 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
    {
       hb_vmUnlock();
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
       {
          typedef BOOL ( WINAPI * _HB_CREATESYMBOLICLINK )( LPCTSTR, LPCTSTR, DWORD );
 
@@ -203,7 +203,7 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
             fResult = HB_FALSE;
          }
       }
-#elif defined( HB_OS_UNIX )
+#elif defined(HB_OS_UNIX)
       {
          char * pszTargetFree;
          char * pszNewFileFree;
@@ -250,7 +250,7 @@ char * hb_fsLinkRead( const char * pszFile )
    {
       hb_vmUnlock();
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
       {
          typedef DWORD ( WINAPI * _HB_GETFINALPATHNAMEBYHANDLE )( HANDLE, LPTSTR, DWORD, DWORD );
 
@@ -340,7 +340,7 @@ char * hb_fsLinkRead( const char * pszFile )
             hb_fsSetError(1);
          }
       }
-#elif defined( HB_OS_UNIX )
+#elif defined(HB_OS_UNIX)
       {
          char * pszFileFree;
          size_t size;

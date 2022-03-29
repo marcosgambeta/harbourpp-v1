@@ -107,7 +107,7 @@ static const char * const s_inetCRLF = "\r\n";
 
 static HB_COUNTER s_initialize = 1;
 
-#if defined( HB_OS_LINUX )
+#if defined(HB_OS_LINUX)
 /* #define HB_INET_LINUX_INTERRUPT     SIGUSR1 + 90 */
 #  ifdef HB_INET_LINUX_INTERRUPT
 #     include <signal.h>
@@ -251,7 +251,7 @@ static void hb_inetAutoInit( void )
       if( hb_atomic_dec( &s_initialize ) )
       {
          hb_socketInit();
-#if defined( HB_INET_LINUX_INTERRUPT )
+#if defined(HB_INET_LINUX_INTERRUPT)
          signal( HB_INET_LINUX_INTERRUPT, hb_inetLinuxSigusrHandle );
 #endif
       }
@@ -326,7 +326,7 @@ HB_FUNC( HB_INETINIT )
    ret = hb_socketInit();
    if( ret == 0 )
    {
-#if defined( HB_INET_LINUX_INTERRUPT )
+#if defined(HB_INET_LINUX_INTERRUPT)
       signal( HB_INET_LINUX_INTERRUPT, hb_inetLinuxSigusrHandle );
 #endif
    }
@@ -1305,7 +1305,7 @@ HB_FUNC( HB_INETIFINFO )
 
 static int s_inetBind( PHB_SOCKET_STRUCT socket, const void * pSockAddr, unsigned uiLen )
 {
-#if !defined( HB_OS_WIN )
+#if !defined(HB_OS_WIN)
    hb_socketSetReuseAddr( socket->sd, HB_TRUE );
 #endif
    return hb_socketBind( socket->sd, pSockAddr, uiLen );

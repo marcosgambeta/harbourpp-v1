@@ -166,7 +166,7 @@ static HB_USHORT s_uiRddId;
  * On other machines it should not cause noticeable differences because
  * most of modern C compilers auto inline small functions
  */
-#if defined( HB_LITTLE_ENDIAN ) && !defined( HB_STRICT_ALIGNMENT )
+#if defined(HB_LITTLE_ENDIAN) && !defined(HB_STRICT_ALIGNMENT)
 
 #define hb_ntxGetKeyCount( p )         HB_GET_LE_UINT16( hb_ntxPageBuffer( p ) )
 #define hb_ntxSetKeyCount( p, n )      HB_PUT_LE_UINT16( hb_ntxPageBuffer( p ), ( n ) )
@@ -1494,7 +1494,7 @@ static LPPAGEINFO hb_ntxPageNew( LPTAGINFO pTag, HB_BOOL fNull )
       }
 #endif
       pTag->pIndex->NextAvail = hb_ntxGetKeyPage( pPage, 0 );
-#if defined( HB_NTX_NOMULTITAG )
+#if defined(HB_NTX_NOMULTITAG)
       hb_ntxSetKeyPage( pPage, 0, 0 );
       pPage->uiKeys = 0;
 #else
@@ -2051,7 +2051,7 @@ static HB_ERRCODE hb_ntxIndexLoad( LPNTXINDEX pIndex, const char * szTagName )
    }
 
    type = HB_GET_LE_UINT16( pIndex->HeaderBuff );
-#if !defined( HB_NTX_NOMULTITAG )
+#if !defined(HB_NTX_NOMULTITAG)
    pIndex->Compound = ( type & NTX_FLAG_COMPOUND ) != 0;
    if( pIndex->Compound )
    {
@@ -2123,7 +2123,7 @@ static HB_ERRCODE hb_ntxIndexHeaderRead( LPNTXINDEX pIndex )
    type = HB_GET_LE_UINT16( pIndex->HeaderBuff );
    if( ( type & NTX_FLAG_COMPOUND ) != 0 )
    {
-#if defined( HB_NTX_NOMULTITAG )
+#if defined(HB_NTX_NOMULTITAG)
       hb_ntxErrorRT( pIndex->pArea, EG_CORRUPTION, EDBF_CORRUPT, pIndex->IndexName, 0, 0, nullptr );
       return HB_FAILURE;
 #else
@@ -3238,7 +3238,7 @@ static HB_BOOL hb_ntxTagKeyAdd( LPTAGINFO pTag, LPKEYINFO pKey )
       else
       {
          pTag->stackLevel = 0;
-#if defined( HB_NTX_STRONG_BALANCE )
+#if defined(HB_NTX_STRONG_BALANCE)
          if( iLevel > 0 )
          {
             LPPAGEINFO pBasePage;
@@ -7181,7 +7181,7 @@ static HB_ERRCODE hb_ntxOrderCreate( NTXAREAP pArea, LPDBORDERCREATEINFO pOrderI
     */
    fTagName = pOrderInfo->atomBagName && pOrderInfo->atomBagName[0];
    fBagName = pOrderInfo->abBagName && pOrderInfo->abBagName[0];
-#if defined( HB_NTX_NOMULTITAG )
+#if defined(HB_NTX_NOMULTITAG)
    fCompound = HB_FALSE;
 #else
    fCompound = fTagName && pData->fMultiTag;
@@ -8109,7 +8109,7 @@ static HB_ERRCODE hb_ntxOrderInfo( NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
             pInfo->itmResult = hb_itemPutL(pInfo->itmResult, pTag->fSortRec);
             break;
          case DBOI_ISMULTITAG:
-#if defined( HB_NTX_NOMULTITAG )
+#if defined(HB_NTX_NOMULTITAG)
             pInfo->itmResult = hb_itemPutL(pInfo->itmResult, HB_FALSE);
 #else
             pInfo->itmResult = hb_itemPutL(pInfo->itmResult, pTag->pIndex->Compound);
@@ -8129,7 +8129,7 @@ static HB_ERRCODE hb_ntxOrderInfo( NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
             pInfo->itmResult = hb_itemPutL(pInfo->itmResult, pTag->pIndex->fReadonly);
             break;
          case DBOI_INDEXTYPE:
-#if defined( HB_NTX_NOMULTITAG )
+#if defined(HB_NTX_NOMULTITAG)
             pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, DBOI_TYPE_NONCOMPACT);
 #else
             pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, pTag->pIndex->Compound ? DBOI_TYPE_COMPOUND : DBOI_TYPE_NONCOMPACT);
@@ -8616,7 +8616,7 @@ static HB_ERRCODE hb_ntxRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
    if( pData->bMemoType == 0 )
    {
       pData->bMemoType = DB_MEMO_DBT;
-#if !defined( HB_NTX_NOMULTITAG )
+#if !defined(HB_NTX_NOMULTITAG)
       pData->fMultiTag = HB_TRUE;
 #endif
    }
@@ -8642,7 +8642,7 @@ static HB_ERRCODE hb_ntxRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
 
       case RDDI_MULTITAG:
       {
-#if defined( HB_NTX_NOMULTITAG )
+#if defined(HB_NTX_NOMULTITAG)
          hb_itemPutL(pItem, HB_FALSE);
 #else
          HB_BOOL fMultiTag = pData->fMultiTag;
@@ -8883,10 +8883,10 @@ HB_CALL_ON_STARTUP_BEGIN( _hb_dbfntx_rdd_init_ )
    hb_vmAtInit( hb_dbfntxRddInit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_dbfntx_rdd_init_ )
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
    #pragma startup dbfntx1__InitSymbols
    #pragma startup _hb_dbfntx_rdd_init_
-#elif defined( HB_DATASEG_STARTUP )
+#elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY    HB_DATASEG_FUNC( dbfntx1__InitSymbols ) \
                               HB_DATASEG_FUNC( _hb_dbfntx_rdd_init_ )
    #include "hbiniseg.h"

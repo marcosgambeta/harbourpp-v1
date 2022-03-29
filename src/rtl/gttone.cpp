@@ -55,17 +55,17 @@
 
 #include "hbgtcore.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 #include <windows.h>
 
 #undef HB_HAS_WIN9X_TONE
 
-#if defined( HB_CPU_X86 ) && ( ( defined( _MSC_VER ) && _MSC_VER < 1900 ) || defined( __BORLANDC__ ) || defined( __MINGW32__ ) )
+#if defined(HB_CPU_X86) && ((defined(_MSC_VER) && _MSC_VER < 1900) || defined(__BORLANDC__) || defined(__MINGW32__))
 
 #define HB_HAS_WIN9X_TONE
 
-#if defined( _MSC_VER )
+#if defined(_MSC_VER)
    #include <conio.h>
 #endif
 
@@ -77,14 +77,14 @@ static int hb_Inp9x( unsigned short int usPort )
 
    unsigned short int usVal;
 
-   #if ( defined( __BORLANDC__ ) && !defined( __clang__ ) )
+   #if (defined(__BORLANDC__) && !defined(__clang__))
 
       _DX = usPort;
       __emit__(0xEC);         /* ASM  IN AL, DX */
       __emit__(0x32,0xE4);    /* ASM XOR AH, AH */
       usVal = _AX;
 
-   #elif defined( __BORLANDC__ )
+   #elif defined(__BORLANDC__)
 
       __asm {
                mov   dx, usPort
@@ -93,7 +93,7 @@ static int hb_Inp9x( unsigned short int usPort )
                mov   usVal, ax
             }
 
-   #elif defined( __MINGW32__ )
+   #elif defined(__MINGW32__)
 
       __asm__ __volatile__ ("inb %w1,%b0":"=a" (usVal):"Nd" (usPort));
 
@@ -112,13 +112,13 @@ static int hb_Outp9x( unsigned short int usPort, unsigned short int usVal )
    HB_TRACE( HB_TR_DEBUG, ( "hb_Outp9x(%hu, %hu)", usPort, usVal ) );
 #endif
 
-   #if ( defined( __BORLANDC__ ) && !defined( __clang__ ) )
+   #if (defined(__BORLANDC__) && !defined(__clang__))
 
       _DX = usPort;
       _AL = usVal;
       __emit__(0xEE);        /* ASM OUT DX, AL */
 
-   #elif defined( __BORLANDC__ )
+   #elif defined(__BORLANDC__)
 
       __asm {
                mov   dx, usPort
@@ -126,7 +126,7 @@ static int hb_Outp9x( unsigned short int usPort, unsigned short int usVal )
                out   dx, al
             }
 
-   #elif defined( __MINGW32__ )
+   #elif defined(__MINGW32__)
 
       __asm__ __volatile__ ("outb %b0,%w1": :"a" (usVal), "Nd" (usPort));
 
@@ -247,7 +247,7 @@ void hb_gt_winapi_tone( double dFrequency, double dDuration )
    /* keep the frequency in an acceptable range */
    dFrequency = HB_MIN(HB_MAX(0.0, dFrequency), 32767.0);
 
-#if defined( HB_HAS_WIN9X_TONE )
+#if defined(HB_HAS_WIN9X_TONE)
    if( hb_iswin9x() )
    {
       /* If Windows 95 or 98, use w9xTone for chosen C compilers */

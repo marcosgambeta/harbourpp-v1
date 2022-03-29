@@ -63,13 +63,13 @@
 
 /* keyboard states - these should be taken
    from system includes, not be hard coded */
-#if defined( __linux__ )
+#if defined(__linux__)
    #define SHIFT_PRESSED    1
    #define ALTR_PRESSED     2
    #define CONTROL_PRESSED  4
    #define ALTL_PRESSED     8
    #define ALT_PRESSED      ALTL_PRESSED
-#elif defined( M_UNIX )         /* SCO */
+#elif defined(M_UNIX)         /* SCO */
    #define SHIFT_PRESSED    1
    #define ALTR_PRESSED     8
    #define CONTROL_PRESSED  2
@@ -456,7 +456,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
          ch = hb_sln_inputTab[ch];
       }
    }
-#if ( defined( HB_SLN_UTF8 ) || defined( HB_SLN_UNICODE ) )
+#if (defined(HB_SLN_UTF8) || defined(HB_SLN_UNICODE))
    else if( ch >= 32 && ch <= 255 )
    {
       HB_WCHAR wc = 0;
@@ -500,7 +500,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
 
 static int hb_sln_try_get_Kbd_State( void )
 {
-#if defined( __linux__ )
+#if defined(__linux__)
    unsigned char modifiers = 6;
 
    if( ioctl( 0, TIOCLINUX, &modifiers ) < 0 )
@@ -510,7 +510,7 @@ static int hb_sln_try_get_Kbd_State( void )
 
    return static_cast<int>(modifiers);
 
-#elif defined( M_UNIX )
+#elif defined(M_UNIX)
 
    int modifiers = 0;
    int IOcommand = 0;

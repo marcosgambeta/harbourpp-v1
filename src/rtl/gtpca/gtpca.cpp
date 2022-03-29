@@ -63,14 +63,14 @@
 
 #include <string.h>
 
-#if ( defined( HB_OS_UNIX ) && !defined( HB_OS_VXWORKS ) )
-#  if !defined( HB_HAS_TERMIOS )
+#if (defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS))
+#  if !defined(HB_HAS_TERMIOS)
 #     define HB_HAS_TERMIOS
 #  endif
 #endif
 
-#if defined( HB_OS_UNIX )
-#  if defined( HB_HAS_TERMIOS )
+#if defined(HB_OS_UNIX)
+#  if defined(HB_HAS_TERMIOS)
 #     include <unistd.h>  /* read() function requires it */
 #     include <termios.h>
 #     include <sys/ioctl.h>
@@ -81,10 +81,10 @@
 #     include <sys/wait.h>
 #  endif
 #else
-#  if defined( HB_OS_WIN )
+#  if defined(HB_OS_WIN)
 #     include <windows.h>
 #  endif
-#  if ( defined( _MSC_VER ) )
+#  if ( defined(_MSC_VER) )
 #     include <conio.h>
 #  endif
 #endif
@@ -121,12 +121,12 @@ static int s_iOutBufSize  = 0;
 static int s_iOutBufIndex = 0;
 static char * s_sOutBuf;
 
-#if defined( HB_HAS_TERMIOS )
+#if defined(HB_HAS_TERMIOS)
 
 static volatile HB_BOOL s_fRestTTY = HB_FALSE;
 static struct termios s_saved_TIO, s_curr_TIO;
 
-#if defined( SIGTTOU )
+#if defined(SIGTTOU)
 static void sig_handler( int iSigNo )
 {
    switch( iSigNo )
@@ -316,7 +316,7 @@ static void hb_gt_pca_AnsiGetCurPos( int * iRow, int * iCol )
          }
          else
          {
-#if defined( HB_HAS_TERMIOS )
+#if defined(HB_HAS_TERMIOS)
             if( hb_fsCanRead(s_hFilenoStdin, timeout) <= 0 )
             {
                break;
@@ -515,11 +515,11 @@ static void hb_gt_pca_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
 
 /* SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment */
-#if defined( HB_HAS_TERMIOS ) && defined( SA_NOCLDSTOP )
+#if defined(HB_HAS_TERMIOS) && defined(SA_NOCLDSTOP)
    s_fRestTTY = HB_FALSE;
    if( s_bStdinConsole )
    {
-#if defined( SIGTTOU )
+#if defined(SIGTTOU)
       struct sigaction act, old;
 
       /* if( s_saved_TIO.c_lflag & TOSTOP ) != 0 */
@@ -527,9 +527,9 @@ static void hb_gt_pca_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       memcpy(&act, &old, sizeof(struct sigaction));
       act.sa_handler = sig_handler;
       /* do not use SA_RESTART - new Linux kernels will repeat the operation */
-#if defined( SA_ONESHOT )
+#if defined(SA_ONESHOT)
       act.sa_flags = SA_ONESHOT;
-#elif defined( SA_RESETHAND )
+#elif defined(SA_RESETHAND)
       act.sa_flags = SA_RESETHAND;
 #else
       act.sa_flags = 0;
@@ -557,7 +557,7 @@ static void hb_gt_pca_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       s_curr_TIO.c_cc[VTIME] = 0;
       tcsetattr( hFilenoStdin, TCSAFLUSH, &s_curr_TIO );
 
-#if defined( SIGTTOU )
+#if defined(SIGTTOU)
       act.sa_handler = SIG_DFL;
       sigaction( SIGTTOU, &old, nullptr );
 #endif
@@ -607,7 +607,7 @@ static void hb_gt_pca_Exit( PHB_GT pGT )
 
    HB_GTSUPER_EXIT(pGT);
 
-#if defined( HB_HAS_TERMIOS )
+#if defined(HB_HAS_TERMIOS)
    if( s_fRestTTY )
    {
       tcsetattr( s_hFilenoStdin, TCSANOW, &s_saved_TIO );
@@ -642,7 +642,7 @@ static int hb_gt_pca_ReadKey( PHB_GT pGT, int iEventMask )
    HB_SYMBOL_UNUSED(pGT);
    HB_SYMBOL_UNUSED(iEventMask);
 
-#if defined( HB_HAS_TERMIOS )
+#if defined(HB_HAS_TERMIOS)
    if( hb_fsCanRead(s_hFilenoStdin, 0) > 0 )
    {
       HB_BYTE bChar;
@@ -651,7 +651,7 @@ static int hb_gt_pca_ReadKey( PHB_GT pGT, int iEventMask )
          ch = bChar;
       }
    }
-#elif defined( _MSC_VER )
+#elif defined(_MSC_VER)
    if( s_bStdinConsole )
    {
       if( _kbhit() )
@@ -678,7 +678,7 @@ static int hb_gt_pca_ReadKey( PHB_GT pGT, int iEventMask )
          ch = bChar;
       }
    }
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
    if( !s_bStdinConsole || WaitForSingleObject(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(s_hFilenoStdin)), 0) == 0x0000 )
    {
       HB_BYTE bChar;
@@ -768,7 +768,7 @@ static HB_BOOL hb_gt_pca_Suspend( PHB_GT pGT )
 #endif
 
    HB_SYMBOL_UNUSED(pGT);
-#if defined( HB_HAS_TERMIOS )
+#if defined(HB_HAS_TERMIOS)
    if( s_fRestTTY )
    {
       tcsetattr( s_hFilenoStdin, TCSANOW, &s_saved_TIO );
@@ -786,7 +786,7 @@ static HB_BOOL hb_gt_pca_Resume( PHB_GT pGT )
 #endif
 
    HB_SYMBOL_UNUSED(pGT);
-#if defined( HB_HAS_TERMIOS )
+#if defined(HB_HAS_TERMIOS)
    if( s_fRestTTY )
    {
       tcsetattr( s_hFilenoStdin, TCSANOW, &s_curr_TIO );

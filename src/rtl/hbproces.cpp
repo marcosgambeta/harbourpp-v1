@@ -50,7 +50,7 @@
 #include "hbapifs.h"
 #include "hbvm.h"
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
 #  include <unistd.h>
 #  include <sys/time.h>
 #  include <sys/types.h>
@@ -59,20 +59,20 @@
 #  include <fcntl.h>
 #  include <signal.h>
 #  include <errno.h>
-#  if !defined( HB_HAS_POLL ) && !defined( HB_NO_POLL ) && defined( _POSIX_C_SOURCE ) && _POSIX_C_SOURCE >= 200112L
+#  if !defined(HB_HAS_POLL) && !defined(HB_NO_POLL) && defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE >= 200112L
       /* use poll() instead of select() to avoid FD_SETSIZE (1024 in Linux)
          file handle limit */
 #     define HB_HAS_POLL
 #  endif
-#  if defined( HB_HAS_POLL )
+#  if defined(HB_HAS_POLL)
 #     include <poll.h>
 #  endif
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
 #  include <windows.h>
 #  include "hbwinuni.h"
 #endif
 
-#if defined( HB_OS_UNIX ) && defined( EINTR )
+#if defined(HB_OS_UNIX) && defined(EINTR)
 #  define HB_FAILURE_RETRY( ret, exp ) \
    do \
    { \
@@ -90,7 +90,7 @@
    while(0)
 #endif
 
-#if defined( HB_PROCESS_USEFILES ) || defined( HB_OS_UNIX )
+#if defined(HB_PROCESS_USEFILES) || defined(HB_OS_UNIX)
 
 /* convert command to argument list using standard Bourne shell encoding:
  * "" and '' can be used to group parameters with blank characters,
@@ -113,7 +113,7 @@ static char ** hb_buildArgs( const char *pszFileName )
    src = dst;
    while( *src )
    {
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
       if( *src == '\\' && cQuote != '\'' )
       {
          if( src[1] )
@@ -129,7 +129,7 @@ static char ** hb_buildArgs( const char *pszFileName )
       }
       else if( cQuote == 0 )
       {
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
          if( *src == '"' || *src == '\'' )
 #else
          if( *src == '"' )
@@ -161,7 +161,7 @@ static char ** hb_buildArgs( const char *pszFileName )
    src = dst;
    while( *src )
    {
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
       if( *src == '\\' && cQuote != '\'' )
       {
          if( src[1] )
@@ -182,7 +182,7 @@ static char ** hb_buildArgs( const char *pszFileName )
       }
       else
       {
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
          if( *src == '"' || *src == '\'' )
 #else
          if( *src == '"' )
@@ -222,7 +222,7 @@ static void hb_freeArgs( char ** argv )
 
 #endif
 
-#if defined( HB_PROCESS_USEFILES )
+#if defined(HB_PROCESS_USEFILES)
 static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHANDLE hStdout, HB_FHANDLE hStderr )
 {
 #if 0
@@ -231,7 +231,7 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
 
    int iResult = FS_ERROR;
 
-#if defined( HB_OS_WIN ) || defined( HB_OS_UNIX )
+#if defined(HB_OS_WIN) || defined(HB_OS_UNIX)
 {
    int iStdIn, iStdOut, iStdErr;
    char ** argv;
@@ -257,7 +257,7 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
       iStdErr = dup(2);
       dup2( hStderr, 2 );
    }
-#if defined( HB_OS_UNIX ) && !defined( HB_OS_VXWORKS )
+#if defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS)
    {
       pid_t pid = fork();
       if( pid == 0 )
@@ -310,9 +310,9 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
       }
    }
 #else
-#  if defined( _MSC_VER )
+#  if defined(_MSC_VER)
       iResult = _spawnvp( _P_WAIT, argv[0], argv );
-#  elif defined( __MINGW32__ )
+#  elif defined(__MINGW32__)
       iResult = spawnvp( P_WAIT, argv[0], static_cast<const char* const*>(argv) );
 #  else
       iResult = spawnvp( P_WAIT, argv[0], static_cast<char* const*>(argv) );
@@ -391,7 +391,7 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
 
    if( !fError )
    {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
       PROCESS_INFORMATION pi;
       STARTUPINFO si;
@@ -473,7 +473,7 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
          hResult = reinterpret_cast<HB_FHANDLE>(pi.hProcess);
       }
 
-#elif defined( HB_OS_UNIX ) && !defined( HB_OS_VXWORKS )
+#elif defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS)
 
       char ** argv = hb_buildArgs( pszFileName );
       pid_t pid = fork();
@@ -581,7 +581,7 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
 
       hb_freeArgs( argv );
 
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
 
       int hStdIn, hStdOut, hStdErr;
       char ** argv;
@@ -629,9 +629,9 @@ HB_FHANDLE hb_fsProcessOpen( const char * pszFileName, HB_FHANDLE * phStdin, HB_
 
       argv = hb_buildArgs( pszFileName );
 
-#if defined( _MSC_VER )
+#if defined(_MSC_VER)
       pid = _spawnvp( _P_NOWAIT, argv[0], argv );
-#elif defined( __MINGW32__ )
+#elif defined(__MINGW32__)
       pid = spawnvp( P_NOWAIT, argv[0], static_cast<const char* const*>(argv) );
 #else
       pid = spawnvp( P_NOWAIT, argv[0], static_cast<char* const*>(argv) );
@@ -727,7 +727,7 @@ int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
 
    int iRetStatus = -1;
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 {
    HB_BOOL fError = HB_TRUE;
    DWORD dwResult;
@@ -754,7 +754,7 @@ int hb_fsProcessValue( HB_FHANDLE hProcess, HB_BOOL fWait )
       hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
    }
 }
-#elif defined( HB_OS_UNIX )
+#elif defined(HB_OS_UNIX)
 {
    int iStatus;
    pid_t pid = ( pid_t ) hProcess;
@@ -809,7 +809,7 @@ HB_BOOL hb_fsProcessClose( HB_FHANDLE hProcess, HB_BOOL fGentle )
 
    HB_BOOL fResult = HB_FALSE;
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 {
    HANDLE hProc = reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hProcess));
 
@@ -827,7 +827,7 @@ HB_BOOL hb_fsProcessClose( HB_FHANDLE hProcess, HB_BOOL fGentle )
       hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
    }
 }
-#elif defined( HB_OS_UNIX )
+#elif defined(HB_OS_UNIX)
 {
    pid_t pid = static_cast<pid_t>(hProcess);
    if( pid > 0 )
@@ -876,10 +876,10 @@ int hb_fsProcessRun( const char * pszFileName,
    phStdout = pStdOutPtr && pulStdOut ? &hStdout : nullptr;
    phStderr = pStdErrPtr && pulStdErr ? ( pStdOutPtr == pStdErrPtr ? phStdout : &hStderr ) : nullptr;
 
-#if defined( HB_PROCESS_USEFILES )
+#if defined(HB_PROCESS_USEFILES)
 {
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
 #  define _HB_NULLHANDLE()    open( "/dev/null", O_RDWR )
 #else
 #  define _HB_NULLHANDLE()    open( "NUL:", O_RDWR )
@@ -990,7 +990,7 @@ int hb_fsProcessRun( const char * pszFileName,
    hProcess = hb_fsProcessOpen(pszFileName, phStdin, phStdout, phStderr, fDetach, nullptr);
    if( hProcess != FS_ERROR )
    {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
       HB_BOOL fFinished = HB_FALSE, fBlocked;
       int iPipeCount = 0;
@@ -1160,7 +1160,7 @@ int hb_fsProcessRun( const char * pszFileName,
 
       CloseHandle(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hProcess)));
 
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
 
       HB_MAXINT nTimeOut = 0;
       int iPipeCount = 0;
@@ -1309,7 +1309,7 @@ int hb_fsProcessRun( const char * pszFileName,
 
       iResult = hb_fsProcessValue(hProcess, HB_TRUE);
 
-#elif defined( HB_OS_UNIX )
+#elif defined(HB_OS_UNIX)
 
       if( nStdInLen == 0 && hStdin != FS_ERROR )
       {
@@ -1339,7 +1339,7 @@ int hb_fsProcessRun( const char * pszFileName,
          HB_BOOL fStdout, fStderr, fStdin;
          HB_SIZE nLen;
 
-#if defined( HB_HAS_POLL )
+#if defined(HB_HAS_POLL)
          {
             struct pollfd fds[3];
             nfds_t nfds = 0;

@@ -63,7 +63,7 @@
 static int     s_argc = 0;
 static char ** s_argv = nullptr;
 
-#if !defined( HB_OS_WIN )
+#if !defined(HB_OS_WIN)
 
 static char    s_szAppName[HB_PATH_MAX];
 
@@ -73,7 +73,7 @@ static char    s_szAppName[HB_PATH_MAX];
 #include <windows.h>
 
 static LPTSTR * s_lpArgV = nullptr;
-#if defined( UNICODE )
+#if defined(UNICODE)
 static LPSTR * s_lpArgVStr = nullptr;
 #endif
 
@@ -230,7 +230,7 @@ void hb_winmainArgVBuild( void )
    {
       s_lpArgV = lpArgV;
       s_argc = iArgC;
-#if defined( UNICODE )
+#if defined(UNICODE)
       {
          LPSTR lpStr;
 
@@ -261,7 +261,7 @@ void hb_winmainArgVFree( void )
 {
    if( s_lpArgV )
    {
-#if defined( UNICODE )
+#if defined(UNICODE)
       if( s_lpArgVStr )
       {
          if( s_argv == s_lpArgVStr )
@@ -318,7 +318,7 @@ void hb_cmdargInit( int argc, char * argv[] )
    HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargInit(%d, %p)", argc, static_cast<void*>(argv) ) );
 #endif
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    if( s_lpArgV )
    {
       return;
@@ -356,7 +356,7 @@ const char * hb_cmdargARGVN( int argc )
 
 static char * hb_cmdargDup( int argc )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    if( s_lpArgV )
    {
       return argc >= 0 && argc < s_argc ? HB_OSSTRDUP( s_lpArgV[argc] ) : nullptr;
@@ -371,7 +371,7 @@ void hb_cmdargUpdate( void )
    HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargUpdate()" ) );
 #endif
 
-#if !defined( HB_OS_WIN )
+#if !defined(HB_OS_WIN)
    if( s_argc > 0 )
    {
       /* NOTE: try to create absolute path from s_argv[0] if necessary */
@@ -421,7 +421,7 @@ void hb_cmdargUpdate( void )
          }
          if( pFName->szPath )
          {
-#     if defined( HB_OS_HAS_DRIVE_LETTER )
+#     if defined(HB_OS_HAS_DRIVE_LETTER)
             if( pFName->szPath[0] != HB_OS_PATH_DELIM_CHR && !pFName->szDrive )
 #     else
             if( pFName->szPath[0] != HB_OS_PATH_DELIM_CHR )
@@ -465,7 +465,7 @@ int hb_cmdargPushArgs( void )
       /* Filter out any parameters beginning with //, like //INFO */
       if( !hb_cmdargIsInternal( s_argv[i], nullptr ) )
       {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
          if( s_lpArgV )
          {
             HB_ITEMPUTSTR(hb_stackAllocItem(), s_lpArgV[i]);
@@ -532,7 +532,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
       {
          if( bRetValue )
          {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
             if( s_lpArgV )
             {
                LPCTSTR lpPos = s_lpArgV[i] + iPrefixLen + strlen(pszName);
@@ -773,7 +773,7 @@ HB_FUNC( HB_ARGSHIFT )
          if( !hb_cmdargIsInternal( s_argv[iArg], nullptr ) )
          {
             s_argv[0] = s_argv[iArg];
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
             if( s_lpArgV )
             {
                s_lpArgV[0] = s_lpArgV[iArg];
@@ -790,7 +790,7 @@ HB_FUNC( HB_ARGSHIFT )
       while( iArg < s_argc )
       {
          s_argv[iArg] = s_argv[iArg + 1];
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
          if( s_lpArgV )
          {
             s_lpArgV[iArg] = s_lpArgV[iArg + 1];
@@ -828,7 +828,7 @@ HB_FUNC( HB_CMDLINE )
       HB_SIZE nLen = 0;
       int iArg;
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
       if( s_lpArgV )
       {
          LPTSTR lpBuffer, ptr;
@@ -849,7 +849,7 @@ HB_FUNC( HB_CMDLINE )
          *--ptr = TEXT( '\0' );
 
          /* Convert from OS codepage */
-#if defined( UNICODE )
+#if defined(UNICODE)
          HB_RETSTR( lpBuffer );
          hb_xfree(lpBuffer);
 #else
@@ -911,7 +911,7 @@ void hb_cmdargProcess( void )
 
       {
          char buffer[128];
-#if defined( HB_CLP_STRICT )
+#if defined(HB_CLP_STRICT)
          hb_snprintf(buffer, sizeof(buffer), "DS avail=%" HB_PFS "uKB  OS avail=%" HB_PFS "uKB  EMM avail=%" HB_PFS "uKB", hb_xquery(HB_MEM_BLOCK), hb_xquery(HB_MEM_VM), hb_xquery(HB_MEM_EMS));
 #else
          hb_snprintf(buffer, sizeof(buffer), "DS avail=%" HB_PFS "uKB  OS avail=%" HB_PFS "uKB  EMM avail=%" HB_PFS "uKB  MemStat:%s  MT:%s", hb_xquery(HB_MEM_BLOCK), hb_xquery(HB_MEM_VM), hb_xquery(HB_MEM_EMS), hb_xquery(HB_MEM_STATISTICS) ? "On" : "Off", hb_vmIsMt() ? "On" : "Off");
@@ -955,7 +955,7 @@ const char * hb_verChangeLogLastEntry( void )
    return HB_VER_LENTRY;
 }
 
-#if defined( HB_LEGACY_LEVEL4 )
+#if defined(HB_LEGACY_LEVEL4)
 
 /* Source repository revision number */
 int hb_verSvnID( void )

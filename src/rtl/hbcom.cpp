@@ -50,51 +50,51 @@
 
 #include "hbapi.h"
 
-#if defined( HB_OS_UNIX )
-#  if defined( HB_OS_VXWORKS )
-#     if !defined( HB_HAS_SIOLIB )
+#if defined(HB_OS_UNIX)
+#  if defined(HB_OS_VXWORKS)
+#     if !defined(HB_HAS_SIOLIB)
 #        define HB_HAS_SIOLIB
 #     endif
 #  else
-#     if !defined( HB_HAS_TERMIOS )
+#     if !defined(HB_HAS_TERMIOS)
 #        define HB_HAS_TERMIOS
 #     endif
 #  endif
-#  if defined( HB_OS_SUNOS )
-#     if !defined( BSD_COMP )
+#  if defined(HB_OS_SUNOS)
+#     if !defined(BSD_COMP)
 #        define BSD_COMP
 #     endif
 #  endif
 #endif
 
-#if defined( HB_HAS_TERMIOS )
+#if defined(HB_HAS_TERMIOS)
 #  include <termios.h>
 #  include <fcntl.h>
 #  include <sys/ioctl.h>
 #  include <unistd.h>
 #  include <errno.h>
-#  if defined( HB_OS_UNIX )
+#  if defined(HB_OS_UNIX)
 #     include <sys/time.h>
 #     include <sys/types.h>
-#     if !defined( HB_HAS_POLL ) && !defined( HB_NO_POLL ) && defined( _POSIX_C_SOURCE ) && _POSIX_C_SOURCE >= 200112L
+#     if !defined(HB_HAS_POLL) && !defined(HB_NO_POLL) && defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE >= 200112L
          /* use poll() instead of select() to avoid FD_SETSIZE (1024 in Linux)
             file handle limit */
 #        define HB_HAS_POLL
 #     endif
-#     if defined( HB_HAS_POLL )
+#     if defined(HB_HAS_POLL)
 #        include <poll.h>
 #     endif
 #  endif
-#  if defined( HB_OS_HPUX )
+#  if defined(HB_OS_HPUX)
 #     include <sys/modem.h>
 #  endif
-#elif defined( HB_HAS_SIOLIB )
+#elif defined(HB_HAS_SIOLIB)
 #  include <sioLib.h>
-#elif defined( HB_HAS_DOSSRL )
+#elif defined(HB_HAS_DOSSRL)
 #  include "../../src/3rd/hbdossrl/serial.h"
-#elif defined( HB_HAS_PMCOM )
+#elif defined(HB_HAS_PMCOM)
 #  include "../../src/3rd/hbpmcom/com.h"
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
 #  include <windows.h>
 #  include "hbwinuni.h"
 #endif
@@ -109,12 +109,12 @@
 
 struct HB_COM
 {
-#if defined( HB_HAS_TERMIOS )
+#if defined(HB_HAS_TERMIOS)
    HB_FHANDLE     fd;
-#  if !defined( HB_OS_UNIX )
+#  if !defined(HB_OS_UNIX)
    HB_MAXINT      rdtimeout;
 #  endif
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
    HANDLE         hComm;
    HB_MAXINT      rdtimeout;
    HB_MAXINT      wrtimeout;
@@ -187,22 +187,22 @@ static const char * hb_comGetNameRaw( PHB_COM pCom, char * buffer, int size )
 
    if( name == nullptr )
    {
-#if defined( HB_OS_UNIX )
-#  if defined( HB_OS_SUNOS )
+#if defined(HB_OS_UNIX)
+#  if defined(HB_OS_SUNOS)
       hb_snprintf(buffer, size, "/dev/tty%c", pCom->port + 'a' - 1);
-#  elif defined( HB_OS_HPUX )
+#  elif defined(HB_OS_HPUX)
       hb_snprintf(buffer, size, "/dev/tty%dp0", pCom->port);
-#  elif defined( HB_OS_AIX )
+#  elif defined(HB_OS_AIX)
       hb_snprintf(buffer, size, "/dev/tty%d", pCom->port);
-#  elif defined( HB_OS_MINIX )
+#  elif defined(HB_OS_MINIX)
       hb_snprintf(buffer, size, "/dev/tty%02d", pCom->port - 1);
-#  elif defined( HB_OS_IRIX )
+#  elif defined(HB_OS_IRIX)
       hb_snprintf(buffer, size, "/dev/ttyf%d", pCom->port);
-#  elif defined( HB_OS_DIGITAL_UNIX )
+#  elif defined(HB_OS_DIGITAL_UNIX)
       hb_snprintf(buffer, size, "/dev/ttyf%02d", pCom->port);
-#  elif defined( HB_OS_DARWIN )
+#  elif defined(HB_OS_DARWIN)
       hb_snprintf(buffer, size, "/dev/cuaa%d", pCom->port - 1);
-#  else /* defined( HB_OS_LINUX ) || defined( HB_OS_CYGWIN ) || ... */
+#  else /* defined(HB_OS_LINUX) || defined(HB_OS_CYGWIN) || ... */
       hb_snprintf(buffer, size, "/dev/ttyS%d", pCom->port - 1);
 #  endif
 #else
@@ -239,30 +239,30 @@ static int hb_comGetPortNum( const char * pszName )
 {
    int iPort = 0;
 
-#if defined( HB_OS_UNIX )
-#  if defined( HB_OS_SUNOS )
+#if defined(HB_OS_UNIX)
+#  if defined(HB_OS_SUNOS)
    if( strncmp(pszName, "/dev/tty", 8) == 0 && pszName[8] >= 'a' && pszName[9] == '\0' )
    {
       iPort = pszName[8] - 'a' + 1;
    }
 #  else
    int iLen = 0;
-#     if defined( HB_OS_HPUX ) || defined( HB_OS_AIX ) || defined( HB_OS_MINIX )
+#     if defined(HB_OS_HPUX) || defined(HB_OS_AIX) || defined(HB_OS_MINIX)
    if( strncmp(pszName, "/dev/tty", 8) == 0 )
    {
       iLen = 8;
    }
-#     elif defined( HB_OS_IRIX ) || defined( HB_OS_DIGITAL_UNIX )
+#     elif defined(HB_OS_IRIX) || defined(HB_OS_DIGITAL_UNIX)
    if( strncmp(pszName, "/dev/ttyf", 9) == 0 )
    {
       iLen = 9;
    }
-#     elif defined( HB_OS_DARWIN )
+#     elif defined(HB_OS_DARWIN)
    if( strncmp(pszName, "/dev/cuaa", 9) == 0 )
    {
       iLen = 9;
    }
-#     else /* defined( HB_OS_LINUX ) || defined( HB_OS_CYGWIN ) || ... */
+#     else /* defined(HB_OS_LINUX) || defined(HB_OS_CYGWIN) || ... */
    if( strncmp(pszName, "/dev/ttyS", 9) == 0 )
    {
       iLen = 9;
@@ -276,14 +276,11 @@ static int hb_comGetPortNum( const char * pszName )
          iPort = iPort * 10 + ( *pszName++ - '0' );
       }
 
-#     if !defined( HB_OS_HPUX ) && \
-         !defined( HB_OS_AIX ) && \
-         !defined( HB_OS_IRIX ) && \
-         !defined( HB_OS_DIGITAL_UNIX )
+#     if !defined(HB_OS_HPUX) && !defined(HB_OS_AIX) && !defined(HB_OS_IRIX) && !defined(HB_OS_DIGITAL_UNIX)
       ++iPort;
 #     endif
 
-#     if defined( HB_OS_HPUX )
+#     if defined(HB_OS_HPUX)
       if( strcmp(pszName, "p0") != 0 )
 #     else
       if( *pszName != '\0' )
@@ -315,10 +312,10 @@ static int hb_comGetPortNum( const char * pszName )
 
 static HB_BOOL hb_comPortCmp( const char * pszDevName1, const char * pszDevName2 )
 {
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    return strcmp(pszDevName1, pszDevName2) == 0;
 #else
-#  if defined( HB_OS_WIN )
+#  if defined(HB_OS_WIN)
    if( pszDevName1[0] == '\\' && pszDevName1[1] == '\\' && pszDevName1[2] == '.'  && pszDevName1[3] == '\\' )
    {
       pszDevName1 += 4;
@@ -373,7 +370,7 @@ int hb_comFindPort( const char * pszDevName, HB_BOOL fCreate )
             break;
          }
       }
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
       if( iPort == 0 && fCreate && access( pszDevName, F_OK ) == 0 )
 #else
       if( iPort == 0 && fCreate )
@@ -459,9 +456,9 @@ HB_FHANDLE hb_comGetDeviceHandle( int iPort )
 
    if( pCom )
    {
-#if defined( HB_HAS_TERMIOS )
+#if defined(HB_HAS_TERMIOS)
       hFile = pCom->fd;
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
       hFile = ( HB_FHANDLE ) pCom->hComm;
 #endif
    }
@@ -507,13 +504,13 @@ int hb_comLastNum( void )
    return iPort;
 }
 
-#if defined( HB_HAS_TERMIOS )
+#if defined(HB_HAS_TERMIOS)
 
 #define HB_COM_IS_EINTR( pCom )  ( ( pCom )->oserr == EINTR )
 #define HB_COM_IS_EBADF( pCom )  ( ( pCom )->oserr  == EBADF )
 #define HB_COM_GETERROR()        ( errno )
 
-#if defined( HB_OS_LINUX )
+#if defined(HB_OS_LINUX)
 #  define HB_HAS_SELECT_TIMER
 #endif
 
@@ -538,17 +535,17 @@ static void hb_comSetOsError( PHB_COM pCom, HB_BOOL fError )
          pCom->error = HB_COM_ERR_TIMEOUT;
          break;
       case EACCES:
-#if defined( ETXTBSY )
+#if defined(ETXTBSY)
       case ETXTBSY:
 #endif
-#if defined( EPERM )
+#if defined(EPERM)
       case EPERM:
 #endif
          pCom->error = HB_COM_ERR_ACCESS;
          break;
       case ENOTTY:
       case ENOENT:
-#if defined( ENOTDIR )
+#if defined(ENOTDIR)
       case ENOTDIR:
 #endif
          pCom->error = HB_COM_ERR_NOCOM;
@@ -559,12 +556,12 @@ static void hb_comSetOsError( PHB_COM pCom, HB_BOOL fError )
    }
 }
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
 static int hb_comCanRead( PHB_COM pCom, HB_MAXINT timeout )
 {
    int iResult;
 
-#if defined( HB_HAS_POLL )
+#if defined(HB_HAS_POLL)
    HB_MAXUINT timer = hb_timerInit( timeout );
    struct pollfd fds;
 
@@ -600,7 +597,7 @@ static int hb_comCanRead( PHB_COM pCom, HB_MAXINT timeout )
 #else /* !HB_HAS_POLL */
    struct timeval tv;
    fd_set rfds;
-#  if !defined( HB_HAS_SELECT_TIMER )
+#  if !defined(HB_HAS_SELECT_TIMER)
    HB_MAXUINT timer = hb_timerInit( timeout );
 #  else
    tv.tv_sec = static_cast<long>(timeout / 1000);
@@ -614,7 +611,7 @@ static int hb_comCanRead( PHB_COM pCom, HB_MAXINT timeout )
          tv.tv_sec = 1;
          tv.tv_usec = 0;
       }
-#  if !defined( HB_HAS_SELECT_TIMER )
+#  if !defined(HB_HAS_SELECT_TIMER)
       else
       {
          tv.tv_sec = static_cast<long>(timeout / 1000);
@@ -634,7 +631,7 @@ static int hb_comCanRead( PHB_COM pCom, HB_MAXINT timeout )
       {
          iResult = 0;
       }
-#  if defined( HB_HAS_SELECT_TIMER )
+#  if defined(HB_HAS_SELECT_TIMER)
       if( iResult != 0 || timeout >= 0 || hb_vmRequestQuery() != 0 )
       {
          break;
@@ -655,7 +652,7 @@ static int hb_comCanWrite( PHB_COM pCom, HB_MAXINT timeout )
 {
    int iResult;
 
-#if defined( HB_HAS_POLL )
+#if defined(HB_HAS_POLL)
    HB_MAXUINT timer = hb_timerInit( timeout );
    struct pollfd fds;
 
@@ -691,7 +688,7 @@ static int hb_comCanWrite( PHB_COM pCom, HB_MAXINT timeout )
 #else /* !HB_HAS_POLL */
    struct timeval tv;
    fd_set wfds;
-#  if !defined( HB_HAS_SELECT_TIMER )
+#  if !defined(HB_HAS_SELECT_TIMER)
    HB_MAXUINT timer = hb_timerInit( timeout );
 #  else
    tv.tv_sec = static_cast<long>(timeout / 1000);
@@ -705,7 +702,7 @@ static int hb_comCanWrite( PHB_COM pCom, HB_MAXINT timeout )
          tv.tv_sec = 1;
          tv.tv_usec = 0;
       }
-#  if !defined( HB_HAS_SELECT_TIMER )
+#  if !defined(HB_HAS_SELECT_TIMER)
       else
       {
          tv.tv_sec = static_cast<long>(timeout / 1000);
@@ -725,7 +722,7 @@ static int hb_comCanWrite( PHB_COM pCom, HB_MAXINT timeout )
       {
          iResult = 0;
       }
-#  if defined( HB_HAS_SELECT_TIMER )
+#  if defined(HB_HAS_SELECT_TIMER)
       if( iResult != 0 || timeout >= 0 || hb_vmRequestQuery() != 0 )
       {
          break;
@@ -750,14 +747,14 @@ int hb_comInputCount( int iPort )
 
    if( pCom )
    {
-#if defined( TIOCINQ )
+#if defined(TIOCINQ)
       int iResult = ioctl( pCom->fd, TIOCINQ, &iCount );
       if( iResult == -1 )
       {
          iCount = 0;
       }
       hb_comSetOsError( pCom, iResult == -1 );
-#elif defined( FIONREAD ) && !defined( HB_OS_CYGWIN )
+#elif defined(FIONREAD) && !defined(HB_OS_CYGWIN)
       /* Cygwin sys/termios.h explicitly says that "TIOCINQ is
        * utilized instead of FIONREAD which has been occupied for
        * other purposes under CYGWIN", so don't give Cygwin
@@ -788,14 +785,14 @@ int hb_comOutputCount( int iPort )
 
    if( pCom )
    {
-#if defined( TIOCOUTQ )
+#if defined(TIOCOUTQ)
       int iResult = ioctl( pCom->fd, TIOCOUTQ, &iCount );
       if( iResult == -1 )
       {
          iCount = 0;
       }
       hb_comSetOsError( pCom, iResult == -1 );
-#elif defined( FIONWRITE )
+#elif defined(FIONWRITE)
       int iResult = ioctl( pCom->fd, FIONWRITE, &iCount );
       if( iResult == -1 )
       {
@@ -884,7 +881,7 @@ int hb_comMCR( int iPort, int * piValue, int iClr, int iSet )
 
    if( pCom )
    {
-#if defined( TIOCMGET ) && defined( TIOCMSET )
+#if defined(TIOCMGET) && defined(TIOCMSET)
       int iRawVal, iOldVal;
 
       iResult = ioctl( pCom->fd, TIOCMGET, &iRawVal );
@@ -997,7 +994,7 @@ int hb_comMSR( int iPort, int * piValue )
 
    if( pCom )
    {
-#if defined( TIOCMGET ) && defined( TIOCMSET )
+#if defined(TIOCMGET) && defined(TIOCMSET)
       int iRawVal;
 
       iResult = ioctl( pCom->fd, TIOCMGET, &iRawVal );
@@ -1084,25 +1081,25 @@ int hb_comSendBreak( int iPort, int iDurationInMilliSecs )
    return iResult;
 }
 
-#if defined( CCTS_OFLOW ) && defined( CRTS_IFLOW )
+#if defined(CCTS_OFLOW) && defined(CRTS_IFLOW)
    #define _HB_OCRTSCTS       CCTS_OFLOW
    #define _HB_ICRTSCTS       CRTS_IFLOW
-#elif defined( CRTSCTS ) && defined( CRTSXOFF )
+#elif defined(CRTSCTS) && defined(CRTSXOFF)
    #define _HB_OCRTSCTS       CRTSCTS
    #define _HB_ICRTSCTS       CRTSXOFF
-#elif defined( CRTSCTS )
+#elif defined(CRTSCTS)
    #define _HB_OCRTSCTS       CRTSCTS
    #define _HB_ICRTSCTS       CRTSCTS
-#elif defined( CNEW_RTSCTS )
+#elif defined(CNEW_RTSCTS)
    #define _HB_OCRTSCTS       CNEW_RTSCTS
    #define _HB_ICRTSCTS       CNEW_RTSCTS
-#elif defined( CCTS_OFLOW )
+#elif defined(CCTS_OFLOW)
    #define _HB_OCRTSCTS       CCTS_OFLOW
    #define _HB_ICRTSCTS       0
-#elif defined( CRTS_IFLOW )
+#elif defined(CRTS_IFLOW)
    #define _HB_OCRTSCTS       0
    #define _HB_ICRTSCTS       CCTS_IFLOW
-#elif defined( CRTSXOFF )
+#elif defined(CRTSXOFF)
    #define _HB_OCRTSCTS       0
    #define _HB_ICRTSCTS       CRTSXOFF
 #else
@@ -1137,7 +1134,7 @@ int hb_comFlowControl( int iPort, int * piFlow, int iFlow )
          tcflag_t c_cflag = tio.c_cflag;
          tcflag_t c_iflag = tio.c_iflag;
 
-#if defined( _HB_OCRTSCTS )
+#if defined(_HB_OCRTSCTS)
          if( ( tio.c_cflag & _HB_OCRTSCTS ) == _HB_OCRTSCTS )
          {
             iValue |= HB_COM_FLOW_ORTSCTS;
@@ -1310,7 +1307,7 @@ int hb_comFlowChars( int iPort, int iXONchar, int iXOFFchar )
    return iResult;
 }
 
-#if !defined( _POSIX_VDISABLE )
+#if !defined(_POSIX_VDISABLE)
 #  define _POSIX_VDISABLE  '\0'
 #endif
 
@@ -1321,7 +1318,7 @@ int hb_comDiscardChar( int iPort, int iChar )
 
    if( pCom )
    {
-#if defined( VDISCARD ) && defined( IEXTEN )
+#if defined(VDISCARD) && defined(IEXTEN)
       struct termios tio;
 
       iResult = tcgetattr( pCom->fd, &tio );
@@ -1344,7 +1341,7 @@ int hb_comDiscardChar( int iPort, int iChar )
             {
                tio.c_lflag |= IEXTEN;
                tio.c_cc[VDISCARD] = iChar;
-#if defined( VLNEXT )
+#if defined(VLNEXT)
                tio.c_cc[VLNEXT] = _POSIX_VDISABLE;
 #endif
             }
@@ -1422,7 +1419,7 @@ long hb_comSend( int iPort, const void * data, long len, HB_MAXINT timeout )
    {
       hb_vmUnlock();
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
       if( timeout >= 0 )
       {
          lSent = hb_comCanWrite( pCom, timeout );
@@ -1466,7 +1463,7 @@ long hb_comRecv( int iPort, void * data, long len, HB_MAXINT timeout )
    {
       hb_vmUnlock();
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
       if( timeout >= 0 )
       {
          lReceived = hb_comCanRead( pCom, timeout );
@@ -1520,7 +1517,7 @@ int hb_comInit( int iPort, int iBaud, int iParity, int iSize, int iStop )
       hb_comSetOsError( pCom, iResult == -1 );
       if( iResult == 0 )
       {
-#if defined( cfmakeraw ) || defined( HB_OS_LINUX )
+#if defined(cfmakeraw) || defined(HB_OS_LINUX)
          /* Raw input from device */
          cfmakeraw( &tio );
 #endif
@@ -1607,7 +1604,7 @@ int hb_comInit( int iPort, int iBaud, int iParity, int iSize, int iStop )
                tio.c_cflag |= PARENB | PARODD;
                tio.c_iflag |= INPCK;
                break;
-#if defined( CMSPAR )
+#if defined(CMSPAR)
             case 'S':
             case 's':
                tio.c_cflag |= CMSPAR | PARENB;
@@ -1651,7 +1648,7 @@ int hb_comInit( int iPort, int iBaud, int iParity, int iSize, int iStop )
             }
 
             iResult = tcsetattr( pCom->fd, TCSAFLUSH, &tio );
-#if !defined( HB_OS_UNIX )
+#if !defined(HB_OS_UNIX)
             if( iResult == 0 )
             {
                pCom->rdtimeout = 0;
@@ -1677,7 +1674,7 @@ int hb_comClose( int iPort )
    if( pCom )
    {
       hb_vmUnlock();
-#if defined( TIOCNXCL )
+#if defined(TIOCNXCL)
       ioctl( pCom->fd, TIOCNXCL, 0 );
 #endif
       do
@@ -1719,7 +1716,7 @@ int hb_comOpen( int iPort )
          pCom->fd = open( name, O_RDWR | O_NOCTTY );
          if( pCom->fd != -1 )
          {
-#if defined( TIOCEXCL ) /* TIOCNXCL */
+#if defined(TIOCEXCL) /* TIOCNXCL */
             iResult = ioctl( pCom->fd, TIOCEXCL, 0 );
             if( iResult != 0 )
             {
@@ -1744,7 +1741,7 @@ int hb_comOpen( int iPort )
 
 /* end of HB_HAS_TERMIOS */
 
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
 
 static void hb_comSetOsError( PHB_COM pCom, BOOL fError )
 {
@@ -2593,7 +2590,7 @@ int hb_comOpen( int iPort )
 
 /* end of HB_OS_WIN */
 
-#elif defined( HB_HAS_DOSSRL )
+#elif defined(HB_HAS_DOSSRL)
 
 static void hb_comSetOsError( PHB_COM pCom, int iError )
 {
@@ -3220,7 +3217,7 @@ int hb_comOpen( int iPort )
 
 /* end of HB_HAS_DOSSRL */
 
-#elif defined( HB_HAS_PMCOM )
+#elif defined(HB_HAS_PMCOM)
 
 static void hb_comSetOsError( PHB_COM pCom, int iError )
 {
@@ -4135,9 +4132,9 @@ HB_CALL_ON_STARTUP_BEGIN( _hb_com_init_ )
    hb_vmAtInit( hb_com_init, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_com_init_ )
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_com_init_
-#elif defined( HB_DATASEG_STARTUP )
+#elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY    HB_DATASEG_FUNC( _hb_com_init_ )
    #include "hbiniseg.h"
 #endif

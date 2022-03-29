@@ -61,7 +61,7 @@
 #include "hbset.h"
 #include "hb_io.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    #include <windows.h>
 #endif
 
@@ -71,13 +71,13 @@
  */
 
 /* length of buffer for CR/LF characters */
-#if !defined( HB_OS_EOL_LEN ) || HB_OS_EOL_LEN < 4
+#if !defined(HB_OS_EOL_LEN) || HB_OS_EOL_LEN < 4
 #  define CRLF_BUFFER_LEN  4
 #else
 #  define CRLF_BUFFER_LEN  HB_OS_EOL_LEN + 1
 #endif
 
-#if defined( HB_OS_UNIX ) && !defined( HB_EOL_CRLF )
+#if defined(HB_OS_UNIX) && !defined(HB_EOL_CRLF)
    static const char s_szCrLf[CRLF_BUFFER_LEN] = { HB_CHAR_LF, 0 };
    static const int  s_iCrLfLen = 1;
 #else
@@ -110,7 +110,7 @@ void hb_conInit( void )
    HB_TRACE( HB_TR_DEBUG, ( "hb_conInit()" ) );
 #endif
 
-#if !defined( HB_OS_WIN )
+#if !defined(HB_OS_WIN)
    /* On Windows file handles with numbers 0, 1, 2 are
       translated inside filesys to:
       GetStdHandle( STD_INPUT_HANDLE ), GetStdHandle( STD_OUTPUT_HANDLE ),
@@ -201,7 +201,7 @@ HB_FUNC( HB_EOL )
    hb_retc_const( s_szCrLf );
 }
 
-#if defined( HB_LEGACY_LEVEL4 )
+#if defined(HB_LEGACY_LEVEL4)
 
 /* Deprecated */
 HB_FUNC( HB_OSNEWLINE )
@@ -541,7 +541,7 @@ HB_FUNC( DEVPOS ) /* Sets the screen and/or printer position */
       hb_conDevPos( hb_parni(1), hb_parni(2) );
    }
 
-#if defined( HB_CLP_UNDOC )
+#if defined(HB_CLP_UNDOC)
    /* NOTE: Both 5.2e and 5.3 does that, while the documentation
             says it will return NIL. [vszakats] */
    hb_itemReturn(hb_param(1, HB_IT_ANY));

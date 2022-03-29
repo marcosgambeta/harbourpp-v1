@@ -64,7 +64,7 @@
 #  endif
 #endif
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 
 static void hb_macroFlagsInit( void * pFlags )
 {

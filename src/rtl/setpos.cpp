@@ -56,7 +56,7 @@ HB_FUNC( SETPOS )  /* Sets the screen position */
       hb_gtSetPos( hb_parni(1), hb_parni(2) );
    }
 
-#if defined( HB_COMPAT_C53 ) || defined( HB_CLP_UNDOC )
+#if defined(HB_COMPAT_C53) || defined(HB_CLP_UNDOC)
    /* NOTE: Both C5.2e and C5.3 does that, but it's only documented
             in C5.3. C5.2 documentation says it would return NIL.
             [vszakats] */

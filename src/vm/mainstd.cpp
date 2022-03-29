@@ -48,7 +48,7 @@
 #include "hbvm.h"
 
 HB_EXTERN_BEGIN
-#if defined( __MINGW32__ )
+#if defined(__MINGW32__)
 int _CRT_glob = 0;
 #endif
 

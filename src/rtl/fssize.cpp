@@ -45,7 +45,7 @@
  *
  */
 
-#if !defined( _LARGEFILE64_SOURCE )
+#if !defined(_LARGEFILE64_SOURCE)
 #  define _LARGEFILE64_SOURCE  1
 #endif
 
@@ -53,7 +53,7 @@
 #include "hbapifs.h"
 #include "hbvm.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 #  include <windows.h>
 #  include "hbwinuni.h"
 #else
@@ -61,15 +61,15 @@
 #  include <sys/stat.h>
 #endif
 
-#if !defined( HB_USE_LARGEFILE64 ) && defined( HB_OS_UNIX )
-   #if defined( __USE_LARGEFILE64 )
+#if !defined(HB_USE_LARGEFILE64) && defined(HB_OS_UNIX)
+   #if defined(__USE_LARGEFILE64)
       /*
        * The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
        * defined and effectively enables lseek64()/flock64()/ftruncate64()
        * functions on 32-bit machines.
        */
       #define HB_USE_LARGEFILE64
-   #elif defined( HB_OS_UNIX ) && defined( O_LARGEFILE )
+   #elif defined(HB_OS_UNIX) && defined(O_LARGEFILE)
       #define HB_USE_LARGEFILE64
    #endif
 #endif
@@ -79,7 +79,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
 {
    if( bUseDirEntry )
    {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
       typedef BOOL ( WINAPI * _HB_GETFILEATTRIBUTESEX )( LPCTSTR, GET_FILEEX_INFO_LEVELS, LPVOID );
       static _HB_GETFILEATTRIBUTESEX s_pGetFileAttributesEx = ( _HB_GETFILEATTRIBUTESEX ) -1;
 
@@ -127,7 +127,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
             return size;
          }
       }
-#elif defined( HB_USE_LARGEFILE64 )
+#elif defined(HB_USE_LARGEFILE64)
       char * pszFree;
       HB_BOOL fResult;
       struct stat64 statbuf;

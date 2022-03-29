@@ -153,7 +153,7 @@
 #     define _x_long_dbl      long double
 #     define _FL_FIX          0.0078125L
 #     if defined(HB_NO_MODFL) || defined(__MINGW32CE__) || defined(HB_OS_CYGWIN) || defined(HB_OS_BEOS) || defined(__OpenBSD__) || \
-         defined(__NetBSD__) || defined(__DragonFly__) || (defined( __FreeBSD_version ) && __FreeBSD_version < 603000) || \
+         defined(__NetBSD__) || defined(__DragonFly__) || (defined(__FreeBSD_version) && __FreeBSD_version < 603000) || \
          defined(HB_OS_ANDROID) || defined(HB_OS_MINIX)
 #        define _HB_WRAP_MODFL_
 #        define _MODFD(x, p)     _hb_modfl(x, p)

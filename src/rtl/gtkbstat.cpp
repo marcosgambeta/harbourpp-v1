@@ -48,7 +48,7 @@
 
 #include "hbgtcore.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 #include <windows.h>
 

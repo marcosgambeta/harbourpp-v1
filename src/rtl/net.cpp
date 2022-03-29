@@ -47,21 +47,21 @@
 
 #include "hbapi.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
    #include <windows.h>
    #include "hbwinuni.h"
 
-#elif defined( HB_OS_UNIX )
+#elif defined(HB_OS_UNIX)
 
-   #if defined( HB_OS_VXWORKS )
+   #if defined(HB_OS_VXWORKS)
       #include <hostLib.h>
    #endif
    #include <unistd.h>
 
 #endif
 
-#if !defined( MAXGETHOSTNAME ) && ( defined( HB_OS_UNIX ) )
+#if !defined(MAXGETHOSTNAME) && (defined(HB_OS_UNIX))
    #define MAXGETHOSTNAME 256      /* should be enough for a host name */
 #endif
 
@@ -74,7 +74,7 @@
 
 char * hb_netname( void )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
    DWORD dwLen = MAX_COMPUTERNAME_LENGTH + 1;
    TCHAR lpValue[MAX_COMPUTERNAME_LENGTH + 1];
@@ -88,7 +88,7 @@ char * hb_netname( void )
       return HB_OSSTRDUP( lpValue );
    }
 
-#elif ( defined( HB_OS_UNIX ) )
+#elif (defined(HB_OS_UNIX))
 
    char szValue[MAXGETHOSTNAME + 1];
    szValue[0] = szValue[MAXGETHOSTNAME] = '\0';

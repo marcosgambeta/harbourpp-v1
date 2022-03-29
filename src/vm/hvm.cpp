@@ -66,7 +66,7 @@
 #include "hbdate.h"
 #include "hbmath.h"
 #include "hbdebug.ch"
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 #  include "hbthread.h"
 #endif /* HB_MT_VM */
 #include "hbmemory.ch"
@@ -155,7 +155,7 @@ static void    hb_vmPushDoubleConst( double dNumber, int iWidth, int iDec ); /* 
 static void    hb_vmPushLocal( int iLocal );       /* pushes the content of a local onto the stack */
 static void    hb_vmPushLocalByRef( int iLocal );  /* pushes a local by reference onto the stack */
 static void    hb_vmPushHBLong( HB_MAXINT nNumber ); /* pushes a HB_MAXINT number onto the stack */
-#if !defined( HB_LONG_LONG_OFF )
+#if !defined(HB_LONG_LONG_OFF)
    static void hb_vmPushLongLongConst( HB_LONGLONG lNumber );  /* Pushes a long long constant (pcode) */
 #endif
 #if HB_VMINT_MAX >= INT32_MAX
@@ -206,7 +206,7 @@ static HB_DBGENTRY_FUNC s_pFunDbgEntry;   /* C level debugger entry */
 
 static HB_BOOL s_fInternalsEnabled = HB_TRUE;
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 static int volatile hb_vmThreadRequest = 0;
 static void hb_vmRequestTest( void );
 
@@ -228,7 +228,7 @@ static HB_ULONG hb_ulOpcodesTime[HB_P_LAST_PCODE];  /* array to profile opcodes 
 static HB_BOOL hb_bProfiler = HB_FALSE;                        /* profiler status is off */
 #endif
 
-#if defined( HB_PRG_TRACE )
+#if defined(HB_PRG_TRACE)
 static HB_BOOL hb_bTracePrgCalls = HB_FALSE; /* prg tracing is off */
 #  define HB_TRACE_PRG( _TRMSG_ ) if( hb_bTracePrgCalls ) HB_TRACE( HB_TR_ALWAYS, _TRMSG_ )
 #else
@@ -443,7 +443,7 @@ static void hb_vmDoInitHelp( void )
    }
 }
 
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
 
 HB_BOOL hb_vmIsMt( void )
 {
@@ -1090,7 +1090,7 @@ PHB_ITEM hb_vmThreadStart( HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void * cargo )
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmThreadStart(%lu,%p,%p)", ulAttr, reinterpret_cast<void*>(pFunc), cargo ) );
 #endif
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    return hb_threadStart( ulAttr, pFunc, cargo );
 #else
    HB_SYMBOL_UNUSED(ulAttr);
@@ -1160,7 +1160,7 @@ void hb_vmInit( HB_BOOL bStartMainProc )
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmInit()" ) );
 #endif
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    hb_winmainArgVBuild();
 #endif
 
@@ -1170,7 +1170,7 @@ void hb_vmInit( HB_BOOL bStartMainProc )
 
    hb_vmSymbolInit_RT();      /* initialize symbol table with runtime support functions */
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    hb_threadInit();
    hb_vmStackInit( hb_threadStateNew() ); /* initialize HVM thread stack */
    s_pSymbolsMtx = hb_threadMutexCreate();
@@ -1348,7 +1348,7 @@ int hb_vmQuit( void )
 
    HB_STACK_TLS_PRELOAD
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    hb_vmTerminateThreads();
 #endif
 
@@ -1406,7 +1406,7 @@ int hb_vmQuit( void )
    hb_vmDoModuleQuitFunctions();    /* process AtQuit registered functions */
    hb_vmCleanModuleFunctions();
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    hb_vmStackRelease();             /* release HVM stack and remove it from linked HVM stacks list */
    if( s_pSymbolsMtx )
    {
@@ -1432,7 +1432,7 @@ int hb_vmQuit( void )
 
    hb_xexit();
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    hb_winmainArgVFree();
 #endif
 
@@ -1453,7 +1453,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
    HB_ULONG ulLastOpcode = 0; /* opcodes profiler support */
    HB_ULONG ulPastClock = 0;  /* opcodes profiler support */
 #endif
-#if !defined( HB_GUI )
+#if !defined(HB_GUI)
    int * piKeyPolls = hb_stackKeyPolls();
 #endif
 
@@ -1478,7 +1478,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
       }
 #endif
 
-#if !defined( HB_GUI )
+#if !defined(HB_GUI)
       if( !--( *piKeyPolls ) )
       {
          hb_inkeyPoll();
@@ -1504,7 +1504,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
          */
       }
 #endif
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
       if( hb_vmThreadRequest )
       {
          hb_vmRequestTest();
@@ -2124,7 +2124,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
          }
 
          case HB_P_ALWAYSBEGIN:
-#if defined( _HB_RECOVER_DEBUG )
+#if defined(_HB_RECOVER_DEBUG)
             if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
             {
                hb_errInternal(HB_EI_ERRUNRECOV, "HB_P_ALWAYSBEGIN", nullptr, nullptr);
@@ -2147,7 +2147,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
          {
             HB_USHORT uiPrevAction, uiCurrAction;
 
-#if defined( _HB_RECOVER_DEBUG )
+#if defined(_HB_RECOVER_DEBUG)
             if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
             {
                hb_errInternal(HB_EI_ERRUNRECOV, "HB_P_ALWAYSEND", nullptr, nullptr);
@@ -2243,7 +2243,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
              * This is executed either at the end of sequence or as the
              * response to the break statement if there is no RECOVER clause
              */
-#if defined( _HB_RECOVER_DEBUG )
+#if defined(_HB_RECOVER_DEBUG)
             if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
             {
                hb_errInternal(HB_EI_ERRUNRECOV, "HB_P_SEQEND", nullptr, nullptr);
@@ -2271,7 +2271,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
             /*
              * Execute the RECOVER code
              */
-#if defined( _HB_RECOVER_DEBUG )
+#if defined(_HB_RECOVER_DEBUG)
             if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
             {
                hb_errInternal(HB_EI_ERRUNRECOV, "HB_P_SEQRECOVER", nullptr, nullptr);
@@ -2472,7 +2472,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
 #if 0
             HB_TRACE( HB_TR_DEBUG, ( "(HB_P_PUSHLONGLONG)" ) );
 #endif
-#if !defined( HB_LONG_LONG_OFF )
+#if !defined(HB_LONG_LONG_OFF)
             hb_vmPushLongLongConst(HB_PCODE_MKLONGLONG(&pCode[1]));
 #else
             hb_vmPushDoubleConst(HB_PCODE_MKLONGLONG(&pCode[1]), HB_DEFAULT_WIDTH, HB_DEFAULT_DECIMALS);
@@ -3228,7 +3228,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
                do
                {
                   hb_stackRemove( hb_stackGetRecoverBase() );
-#if defined( _HB_RECOVER_DEBUG )
+#if defined(_HB_RECOVER_DEBUG)
                   if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
                   {
                      hb_errInternal(HB_EI_ERRUNRECOV, "ENDPROC", nullptr, nullptr);
@@ -3247,7 +3247,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
                /* ALWAYS found? */
                if( bCanRecover )
                {
-#if defined( _HB_RECOVER_DEBUG )
+#if defined(_HB_RECOVER_DEBUG)
                   if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
                   {
                      hb_errInternal(HB_EI_ERRUNRECOV, "ENDPROC ALWAYS", nullptr, nullptr);
@@ -3279,7 +3279,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
                /*
                 * reload the address of recovery code
                 */
-#if defined( _HB_RECOVER_DEBUG )
+#if defined(_HB_RECOVER_DEBUG)
                if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
                {
                   hb_errInternal(HB_EI_ERRUNRECOV, "BREAK", nullptr, nullptr);
@@ -3307,7 +3307,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
                do
                {
                   hb_stackRemove( hb_stackGetRecoverBase() );
-#if defined( _HB_RECOVER_DEBUG )
+#if defined(_HB_RECOVER_DEBUG)
                   if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
                   {
                      hb_errInternal(HB_EI_ERRUNRECOV, "QUIT", nullptr, nullptr);
@@ -3327,7 +3327,7 @@ void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols )
                /* ALWAYS found? */
                if( bCanRecover )
                {
-#if defined( _HB_RECOVER_DEBUG )
+#if defined(_HB_RECOVER_DEBUG)
                   if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
                   {
                      hb_errInternal(HB_EI_ERRUNRECOV, "QUIT ALWAYS", nullptr, nullptr);
@@ -6439,7 +6439,7 @@ void hb_vmProc( HB_USHORT uiParams )
 
    /* Poll the console keyboard */
 #if 0
-   #if !defined( HB_GUI )
+   #if !defined(HB_GUI)
       hb_inkeyPoll();
    #endif
 #endif
@@ -6513,7 +6513,7 @@ void hb_vmDo( HB_USHORT uiParams )
 
    /* Poll the console keyboard */
 #if 0
-   #if !defined( HB_GUI )
+   #if !defined(HB_GUI)
       hb_inkeyPoll();
    #endif
 #endif
@@ -6624,7 +6624,7 @@ void hb_vmSend( HB_USHORT uiParams )
 
    /* Poll the console keyboard */
 #if 0
-   #if !defined( HB_GUI )
+   #if !defined(HB_GUI)
       hb_inkeyPoll();
    #endif
 #endif
@@ -7155,7 +7155,7 @@ static void hb_vmStatics( PHB_SYMB pSym, HB_USHORT uiStatics ) /* initializes th
    pSym->scope.value |= HB_FS_FRAME;
 }
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 /*
  * extended thread static variable reference structure
  */
@@ -7479,7 +7479,7 @@ static void hb_vmPushHBLong( HB_MAXINT nNumber )
    pItem->item.asLong.length = HB_LONG_LENGTH( nNumber );
 }
 
-#if !defined( HB_LONG_LONG_OFF )
+#if !defined(HB_LONG_LONG_OFF)
 static void hb_vmPushLongLongConst( HB_LONGLONG llNumber )
 {
 #if 0
@@ -8253,7 +8253,7 @@ PHB_SYMB hb_vmGetRealFuncSym( PHB_SYMB pSym )
 
 HB_BOOL hb_vmLockModuleSymbols( void )
 {
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    return !s_pSymbolsMtx || hb_threadMutexLock( s_pSymbolsMtx );
 #else
    return HB_TRUE;
@@ -8262,7 +8262,7 @@ HB_BOOL hb_vmLockModuleSymbols( void )
 
 void hb_vmUnlockModuleSymbols( void )
 {
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( s_pSymbolsMtx )
    {
       hb_threadMutexUnlock( s_pSymbolsMtx );
@@ -9596,7 +9596,7 @@ void hb_vmRequestQuit( void )
    /* In MT mode EXIT functions are executed only from hb_vmQuit()
     * when all other threads have terminated
     */
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
    hb_vmDoExitFunctions(); /* process defined EXIT functions */
 #endif /* HB_MT_VM */
    hb_stackSetActionRequest( HB_QUIT_REQUESTED );
@@ -9625,7 +9625,7 @@ void hb_vmRequestBreak( PHB_ITEM pItem )
    nRecoverBase = hb_stackGetRecoverBase();
    while( nRecoverBase && ( hb_stackItem( nRecoverBase + HB_RECOVER_STATE )->item.asRecover.flags & HB_SEQ_DOALWAYS ) )
    {
-#if defined( _HB_RECOVER_DEBUG )
+#if defined(_HB_RECOVER_DEBUG)
       if( hb_stackItem( nRecoverBase + HB_RECOVER_STATE )->type != HB_IT_RECOVER )
       {
          hb_errInternal(HB_EI_ERRUNRECOV, "hb_vmRequestBreak", nullptr, nullptr);
@@ -9636,7 +9636,7 @@ void hb_vmRequestBreak( PHB_ITEM pItem )
 
    if( nRecoverBase )
    {
-#if defined( _HB_RECOVER_DEBUG )
+#if defined(_HB_RECOVER_DEBUG)
       if( hb_stackItem( nRecoverBase + HB_RECOVER_STATE )->type != HB_IT_RECOVER )
       {
          hb_errInternal(HB_EI_ERRUNRECOV, "hb_vmRequestBreak2", nullptr, nullptr);
@@ -9715,7 +9715,7 @@ HB_USHORT hb_vmRequestQuery( void )
 {
    HB_STACK_TLS_PRELOAD
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( hb_vmThreadRequest & HB_THREQUEST_QUIT )
    {
       if( !hb_stackQuitState() )
@@ -9741,7 +9741,7 @@ HB_BOOL hb_vmRequestReenter( void )
       PHB_ITEM pItem;
       int iLocks = 0;
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
       if( hb_stackId() == nullptr )
       {
          return HB_FALSE;
@@ -9791,7 +9791,7 @@ void hb_vmRequestRestore( void )
 
    uiAction = pItem->item.asRecover.request | hb_stackGetActionRequest();
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( uiAction & HB_VMSTACK_REQUESTED )
    {
       hb_vmThreadQuit();
@@ -9822,7 +9822,7 @@ void hb_vmRequestRestore( void )
       hb_stackDec();
       hb_stackPopReturn();
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
       while( iCount-- > 0 )
       {
          hb_vmUnlock();
@@ -9843,7 +9843,7 @@ HB_BOOL hb_vmRequestReenterExt( void )
       int iLocks = 0;
       PHB_ITEM pItem;
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
       HB_STACK_TLS_PRELOAD
 
       if( hb_stackId() == nullptr )
@@ -10007,7 +10007,7 @@ HB_BOOL hb_vmIsReady( void )
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmIsReady()" ) );
 #endif
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( s_fHVMActive )
    {
       HB_STACK_TLS_PRELOAD
@@ -10070,7 +10070,7 @@ void hb_vmSetI18N( void * pI18N )
    hb_stackSetI18N( pI18N );
 }
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 #  define HB_XVM_RETURN \
    { \
       if( hb_vmThreadRequest ) \
@@ -10152,7 +10152,7 @@ HB_BOOL hb_xvmSeqEnd( void )
     * remove all items placed on the stack after BEGIN code
     */
    hb_stackRemove( hb_stackGetRecoverBase() );
-#if defined( _HB_RECOVER_DEBUG )
+#if defined(_HB_RECOVER_DEBUG)
    if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
    {
       hb_errInternal(HB_EI_ERRUNRECOV, "hb_xvmSeqEnd", nullptr, nullptr);
@@ -10170,7 +10170,7 @@ HB_BOOL hb_xvmSeqEnd( void )
    /* 1) Discard the value returned by BREAK statement */
    hb_stackPop();
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( hb_vmThreadRequest )
    {
       hb_vmRequestTest();
@@ -10191,7 +10191,7 @@ HB_BOOL hb_xvmSeqEndTest( void )
 {
    HB_STACK_TLS_PRELOAD
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( hb_vmThreadRequest )
    {
       hb_vmRequestTest();
@@ -10206,7 +10206,7 @@ HB_BOOL hb_xvmSeqEndTest( void )
     * remove all items placed on the stack after BEGIN code
     */
    hb_stackRemove( hb_stackGetRecoverBase() );
-#if defined( _HB_RECOVER_DEBUG )
+#if defined(_HB_RECOVER_DEBUG)
    if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
    {
       hb_errInternal(HB_EI_ERRUNRECOV, "hb_xvmSeqEndTest", nullptr, nullptr);
@@ -10238,7 +10238,7 @@ HB_BOOL hb_xvmSeqRecover( void )
     * remove all items placed on the stack after BEGIN code
     */
    hb_stackRemove( hb_stackGetRecoverBase() );
-#if defined( _HB_RECOVER_DEBUG )
+#if defined(_HB_RECOVER_DEBUG)
    if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
    {
       hb_errInternal(HB_EI_ERRUNRECOV, "hb_xvmSeqRecover", nullptr, nullptr);
@@ -10249,7 +10249,7 @@ HB_BOOL hb_xvmSeqRecover( void )
    hb_stackDec();
    /* 1) Leave the value returned from BREAK */
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( hb_vmThreadRequest )
    {
       hb_vmRequestTest();
@@ -10306,7 +10306,7 @@ HB_BOOL hb_xvmAlwaysBegin( void )
 
    /* remove all items placed on the stack after BEGIN code */
    hb_stackRemove( hb_stackGetRecoverBase() );
-#if defined( _HB_RECOVER_DEBUG )
+#if defined(_HB_RECOVER_DEBUG)
    if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
    {
       hb_errInternal(HB_EI_ERRUNRECOV, "hb_xvmAlwaysBegin", nullptr, nullptr);
@@ -10336,7 +10336,7 @@ HB_BOOL hb_xvmAlwaysEnd( void )
    /* remove all items placed on the stack after ALWAYSBEGIN code */
    hb_stackRemove( hb_stackGetRecoverBase() );
 
-#if defined( _HB_RECOVER_DEBUG )
+#if defined(_HB_RECOVER_DEBUG)
    if( hb_stackItemFromTop(HB_RECOVER_STATE)->type != HB_IT_RECOVER )
    {
       hb_errInternal(HB_EI_ERRUNRECOV, "hb_xvmAlwaysEnd", nullptr, nullptr);
@@ -11321,7 +11321,7 @@ HB_BOOL hb_xvmEqualInt( HB_LONG lValue )
    }
    else if( HB_IS_LONG(pItem) )
    {
-#if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value == static_cast<HB_MAXINT>(lValue);
       pItem->item.asLogical.value = f;
 #else
@@ -11380,7 +11380,7 @@ HB_BOOL hb_xvmEqualIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    }
    else if( HB_IS_LONG(pItem) )
    {
-#if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value == static_cast<HB_MAXINT>(lValue);
       *pfValue = f;
 #else
@@ -11454,7 +11454,7 @@ HB_BOOL hb_xvmNotEqualInt( HB_LONG lValue )
    }
    else if( HB_IS_LONG(pItem) )
    {
-#if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value != static_cast<HB_MAXINT>(lValue);
       pItem->item.asLogical.value = f;
 #else
@@ -11513,7 +11513,7 @@ HB_BOOL hb_xvmNotEqualIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    }
    else if( HB_IS_LONG(pItem) )
    {
-#if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value != static_cast<HB_MAXINT>(lValue);
       *pfValue = f;
 #else
@@ -11587,7 +11587,7 @@ HB_BOOL hb_xvmLessThenInt( HB_LONG lValue )
    }
    else if( HB_IS_LONG(pItem) )
    {
-#if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value < static_cast<HB_MAXINT>(lValue);
       pItem->item.asLogical.value = f;
 #else
@@ -11641,7 +11641,7 @@ HB_BOOL hb_xvmLessThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    }
    else if( HB_IS_LONG(pItem) )
    {
-#if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value < static_cast<HB_MAXINT>(lValue);
       *pfValue = f;
 #else
@@ -11710,7 +11710,7 @@ HB_BOOL hb_xvmLessEqualThenInt( HB_LONG lValue )
    }
    else if( HB_IS_LONG(pItem) )
    {
-#if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value <= static_cast<HB_MAXINT>(lValue);
       pItem->item.asLogical.value = f;
 #else
@@ -11764,7 +11764,7 @@ HB_BOOL hb_xvmLessEqualThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    }
    else if( HB_IS_LONG(pItem) )
    {
-#if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value <= static_cast<HB_MAXINT>(lValue);
       *pfValue = f;
 #else
@@ -11833,7 +11833,7 @@ HB_BOOL hb_xvmGreaterThenInt( HB_LONG lValue )
    }
    else if( HB_IS_LONG(pItem) )
    {
-#if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value > static_cast<HB_MAXINT>(lValue);
       pItem->item.asLogical.value = f;
 #else
@@ -11887,7 +11887,7 @@ HB_BOOL hb_xvmGreaterThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    }
    else if( HB_IS_LONG(pItem) )
    {
-#if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value > static_cast<HB_MAXINT>(lValue);
       *pfValue = f;
 #else
@@ -11956,7 +11956,7 @@ HB_BOOL hb_xvmGreaterEqualThenInt( HB_LONG lValue )
    }
    else if( HB_IS_LONG(pItem) )
    {
-#if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value >= static_cast<HB_MAXINT>(lValue);
       pItem->item.asLogical.value = f;
 #else
@@ -12010,7 +12010,7 @@ HB_BOOL hb_xvmGreaterEqualThenIntIs( HB_LONG lValue, HB_BOOL * pfValue )
    }
    else if( HB_IS_LONG(pItem) )
    {
-#if defined( __DCC__ ) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
+#if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
       HB_BOOL f = pItem->item.asLong.value >= static_cast<HB_MAXINT>(lValue);
       *pfValue = f;
 #else
@@ -13490,7 +13490,7 @@ void hb_vmIsStackRef( void )
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmIsStackRef()" ) );
 #endif
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( s_vmStackLst )
    {
       PHB_THREADSTATE pStack = s_vmStackLst;
@@ -13516,7 +13516,7 @@ void hb_vmUpdateAllocator( PHB_ALLOCUPDT_FUNC pFunc, int iCount )
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmUpdateAllocator(%p, %d)", reinterpret_cast<void*>(pFunc), iCount ) );
 #endif
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( s_vmStackLst )
    {
       PHB_THREADSTATE pStack = s_vmStackLst;
@@ -13592,7 +13592,7 @@ HB_FUNC( __OPGETPRF ) /* profiler: It returns an array with an opcode called and
 HB_FUNC( __TRACEPRGCALLS )
 {
    HB_STACK_TLS_PRELOAD
-#if defined( HB_PRG_TRACE )
+#if defined(HB_PRG_TRACE)
    hb_retl(hb_bTracePrgCalls);
    if( HB_ISLOG(1) )
    {
@@ -13607,7 +13607,7 @@ HB_FUNC( __QUITCANCEL )
 {
    HB_STACK_TLS_PRELOAD
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( !hb_stackQuitState() )
 #endif
    {
@@ -13617,7 +13617,7 @@ HB_FUNC( __QUITCANCEL )
       {
          PHB_ITEM pRecover = hb_stackItem( nRecoverBase + HB_RECOVER_STATE );
 
-#if defined( _HB_RECOVER_DEBUG )
+#if defined(_HB_RECOVER_DEBUG)
          if( pRecover->type != HB_IT_RECOVER )
          {
             hb_errInternal(HB_EI_ERRUNRECOV, "hb_vmRequestBreak", nullptr, nullptr);
@@ -13706,7 +13706,7 @@ HB_FUNC( __VMCOUNTTHREADS )
 {
    int iStacks, iThreads;
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    HB_STACK_TLS_PRELOAD
 
    HB_VM_LOCK();
@@ -13808,7 +13808,7 @@ HB_LANG_REQUEST( HB_LANG_DEFAULT )
 
 #undef HB_FORCE_LINK_MAIN
 
-#if !defined( HB_DYNLIB ) && defined( HB_OS_WIN ) && ( defined( __MINGW32__ ) )
+#if !defined(HB_DYNLIB) && defined(HB_OS_WIN) && (defined(__MINGW32__))
 
 #  define HB_FORCE_LINK_MAIN  hb_forceLinkMainWin
 

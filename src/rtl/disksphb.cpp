@@ -48,18 +48,18 @@
 #include "hbapierr.h"
 #include "hbapifs.h"
 
-#if defined( HB_OS_DARWIN )
+#if defined(HB_OS_DARWIN)
    #include <sys/param.h>
    #include <sys/mount.h>
-#elif defined( HB_OS_ANDROID )
+#elif defined(HB_OS_ANDROID)
    #include <sys/statfs.h>
-#elif defined( HB_OS_UNIX ) && !( defined( __CEGCC__ ) )
-   #if defined( HB_OS_VXWORKS )
+#elif defined(HB_OS_UNIX) && !( defined(__CEGCC__) )
+   #if defined(HB_OS_VXWORKS)
       #include <sys/stat.h>
    #else
       #include <sys/statvfs.h>
    #endif
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
    #include <windows.h>
    #include "hbwinuni.h"
 #endif
@@ -81,7 +81,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
       pszPath = szPathBuf;
    }
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    {
       LPCTSTR lpPath;
       LPTSTR lpFree;
@@ -92,7 +92,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
          UINT uiErrMode = SetErrorMode( SEM_FAILCRITICALERRORS );
          HB_BOOL fResult;
 
-#if !defined( HB_OS_WIN_64 )
+#if !defined(HB_OS_WIN_64)
          /* NOTE: We need to call this function dynamically to maintain support
                   Win95 first edition. It was introduced in Win95B (aka OSR2) [vszakats] */
          typedef BOOL ( WINAPI * P_GDFSE )( LPCTSTR, PULARGE_INTEGER, PULARGE_INTEGER, PULARGE_INTEGER );
@@ -147,7 +147,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
          else
 #endif
          {
-#if defined( _MSC_VER ) || ( defined( __GNUC__ ) )
+#if defined(_MSC_VER) || ( defined(__GNUC__) )
 
 #  define HB_GET_LARGE_UINT( v )  ( static_cast<double>((v).LowPart) + static_cast<double>((v).HighPart) * ( ( static_cast<double>(0xFFFFFFFF) ) + 1 ) )
 
@@ -160,7 +160,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
 
             ULARGE_INTEGER i64FreeBytesToCaller, i64TotalBytes, i64FreeBytes;
 
-#if !defined( HB_OS_WIN_64 )
+#if !defined(HB_OS_WIN_64)
             fResult = s_pGetDiskFreeSpaceEx( lpPath,
                                              static_cast<PULARGE_INTEGER>(&i64FreeBytesToCaller),
                                              static_cast<PULARGE_INTEGER>(&i64TotalBytes),
@@ -202,9 +202,9 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
          hb_xfree(lpFree);
       }
    }
-#elif defined( HB_OS_UNIX ) && !( defined( __CEGCC__ ) )
+#elif defined(HB_OS_UNIX) && !( defined(__CEGCC__) )
    {
-#if defined( HB_OS_DARWIN ) || defined( HB_OS_ANDROID ) || defined( HB_OS_VXWORKS )
+#if defined(HB_OS_DARWIN) || defined(HB_OS_ANDROID) || defined(HB_OS_VXWORKS)
       struct statfs sf;
 #else
       struct statvfs sf;
@@ -213,7 +213,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
 
       pszPath = hb_fsNameConv(pszPath, &pszFree);
 
-#if defined( HB_OS_DARWIN ) || defined( HB_OS_ANDROID ) || defined( HB_OS_VXWORKS )
+#if defined(HB_OS_DARWIN) || defined(HB_OS_ANDROID) || defined(HB_OS_VXWORKS)
       if( statfs( pszPath, &sf ) == 0 )
 #else
       if( statvfs( pszPath, &sf ) == 0 )

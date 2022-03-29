@@ -49,7 +49,7 @@
 #include "hbapiitm.h"
 #include "hbapifs.h"
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    #include <sys/stat.h>
    #include <unistd.h>
 #endif
@@ -157,7 +157,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
 
       hb_fileClose( pSource );
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
       if( bRetVal )
       {
          HB_FATTR ulAttr;

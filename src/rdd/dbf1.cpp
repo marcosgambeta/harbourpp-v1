@@ -7909,10 +7909,10 @@ HB_CALL_ON_STARTUP_BEGIN( _hb_dbf_rdd_init_ )
    hb_vmAtInit( hb_dbfRddInit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_dbf_rdd_init_ )
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
    #pragma startup dbf1__InitSymbols
    #pragma startup _hb_dbf_rdd_init_
-#elif defined( HB_DATASEG_STARTUP )
+#elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY    HB_DATASEG_FUNC( dbf1__InitSymbols ) \
                               HB_DATASEG_FUNC( _hb_dbf_rdd_init_ )
    #include "hbiniseg.h"

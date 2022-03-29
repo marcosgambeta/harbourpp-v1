@@ -56,14 +56,14 @@
 #include "hbdate.h"
 #include "hb_io.h"
 
-#if ( defined( HB_OS_UNIX ) && !defined( HB_OS_VXWORKS ) )
-#  if !defined( HB_HAS_TERMIOS )
+#if (defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS))
+#  if !defined(HB_HAS_TERMIOS)
 #     define HB_HAS_TERMIOS
 #  endif
 #endif
 
-#if defined( HB_OS_UNIX )
-#  if defined( HB_HAS_TERMIOS )
+#if defined(HB_OS_UNIX)
+#  if defined(HB_HAS_TERMIOS)
 #     include <unistd.h>
 #     include <termios.h>
 #     include <sys/ioctl.h>
@@ -74,10 +74,10 @@
 #     include <sys/wait.h>
 #  endif
 #else
-#  if defined( HB_OS_WIN )
+#  if defined(HB_OS_WIN)
 #     include <windows.h>
 #  endif
-#  if ( defined( _MSC_VER ) )
+#  if (defined(_MSC_VER))
 #     include <conio.h>
 #  endif
 #endif
@@ -113,7 +113,7 @@ struct _HB_GTSTD
    char *         szCrLf;
    HB_SIZE        nCrLf;
 
-#if defined( HB_HAS_TERMIOS )
+#if defined(HB_HAS_TERMIOS)
    struct termios saved_TIO;
    struct termios curr_TIO;
    HB_BOOL        fRestTTY;
@@ -125,11 +125,11 @@ struct _HB_GTSTD
 using HB_GTSTD = _HB_GTSTD;
 using PHB_GTSTD = HB_GTSTD *;
 
-#if defined( HB_HAS_TERMIOS )
+#if defined(HB_HAS_TERMIOS)
 
 static volatile HB_BOOL s_fRestTTY = HB_FALSE;
 
-#if defined( SIGTTOU )
+#if defined(SIGTTOU)
 static void sig_handler( int iSigNo )
 {
    switch( iSigNo )
@@ -221,11 +221,11 @@ static void hb_gt_std_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
 
 /* SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment */
-#if defined( HB_HAS_TERMIOS ) && defined( SA_NOCLDSTOP )
+#if defined(HB_HAS_TERMIOS) && defined(SA_NOCLDSTOP)
 
    if( pGTSTD->fStdinConsole )
    {
-#if defined( SIGTTOU )
+#if defined(SIGTTOU)
       struct sigaction act, old;
 
       /* if( pGTSTD->saved_TIO.c_lflag & TOSTOP ) != 0 */
@@ -233,9 +233,9 @@ static void hb_gt_std_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       memcpy(&act, &old, sizeof(struct sigaction));
       act.sa_handler = sig_handler;
       /* do not use SA_RESTART - new Linux kernels will repeat the operation */
-#if defined( SA_ONESHOT )
+#if defined(SA_ONESHOT)
       act.sa_flags = SA_ONESHOT;
-#elif defined( SA_RESETHAND )
+#elif defined(SA_RESETHAND)
       act.sa_flags = SA_RESETHAND;
 #else
       act.sa_flags = 0;
@@ -263,7 +263,7 @@ static void hb_gt_std_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       pGTSTD->curr_TIO.c_cc[VTIME] = 0;
       tcsetattr( pGTSTD->hStdin, TCSAFLUSH, &pGTSTD->curr_TIO );
 
-#if defined( SIGTTOU )
+#if defined(SIGTTOU)
       act.sa_handler = SIG_DFL;
       sigaction( SIGTTOU, &old, nullptr );
 #endif
@@ -281,7 +281,7 @@ static void hb_gt_std_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
       }
    }
 #endif
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
    if( pGTSTD->fStdinConsole )
    {
       SetConsoleMode( ( HANDLE ) hb_fsGetOsHandle(pGTSTD->hStdin), 0x0000 );
@@ -321,7 +321,7 @@ static void hb_gt_std_Exit( PHB_GT pGT )
          hb_gt_std_newLine( pGTSTD );
       }
 
-#if defined( HB_HAS_TERMIOS )
+#if defined(HB_HAS_TERMIOS)
       if( pGTSTD->fRestTTY )
       {
          tcsetattr( pGTSTD->hStdin, TCSANOW, &pGTSTD->saved_TIO );
@@ -356,7 +356,7 @@ static int hb_gt_std_ReadKey( PHB_GT pGT, int iEventMask )
 
    pGTSTD = HB_GTSTD_GET(pGT);
 
-#if defined( HB_HAS_TERMIOS )
+#if defined(HB_HAS_TERMIOS)
    if( hb_fsCanRead(pGTSTD->hStdin, 0) > 0 )
    {
       HB_BYTE bChar;
@@ -365,7 +365,7 @@ static int hb_gt_std_ReadKey( PHB_GT pGT, int iEventMask )
          ch = bChar;
       }
    }
-#elif defined( _MSC_VER )
+#elif defined(_MSC_VER)
    if( pGTSTD->fStdinConsole )
    {
       if( _kbhit() )
@@ -392,7 +392,7 @@ static int hb_gt_std_ReadKey( PHB_GT pGT, int iEventMask )
          ch = bChar;
       }
    }
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
    if( !pGTSTD->fStdinConsole )
    {
       HB_BYTE bChar;
@@ -521,7 +521,7 @@ static HB_BOOL hb_gt_std_Suspend( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Suspend(%p)", static_cast<void*>(pGT) ) );
 #endif
 
-#if defined( HB_HAS_TERMIOS )
+#if defined(HB_HAS_TERMIOS)
    {
       PHB_GTSTD pGTSTD = HB_GTSTD_GET(pGT);
       if( pGTSTD->fRestTTY )
@@ -540,7 +540,7 @@ static HB_BOOL hb_gt_std_Resume( PHB_GT pGT )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Resume(%p)", static_cast<void*>(pGT) ) );
 #endif
 
-#if defined( HB_HAS_TERMIOS )
+#if defined(HB_HAS_TERMIOS)
    {
       PHB_GTSTD pGTSTD = HB_GTSTD_GET(pGT);
       if( pGTSTD->fRestTTY )

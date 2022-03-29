@@ -51,15 +51,15 @@
 #include "hbapierr.h"
 #include "hbinit.h"
 
-#if defined( HB_HAS_PCRE )
+#if defined(HB_HAS_PCRE)
    static int s_iUTF8Enabled;
 #endif
 
 static void hb_regfree( PHB_REGEX pRegEx )
 {
-#if defined( HB_HAS_PCRE )
+#if defined(HB_HAS_PCRE)
    ( pcre_free )( pRegEx->re_pcre );
-#elif defined( HB_POSIX_REGEX )
+#elif defined(HB_POSIX_REGEX)
    regfree( &pRegEx->reg );
 #else
    HB_SYMBOL_UNUSED(pRegEx);
@@ -68,7 +68,7 @@ static void hb_regfree( PHB_REGEX pRegEx )
 
 static int hb_regcomp( PHB_REGEX pRegEx, const char * szRegEx )
 {
-#if defined( HB_HAS_PCRE )
+#if defined(HB_HAS_PCRE)
    const unsigned char * pCharTable = nullptr;
    const char * szError = nullptr;
    int iErrOffset = 0;
@@ -87,7 +87,7 @@ static int hb_regcomp( PHB_REGEX pRegEx, const char * szRegEx )
 
    pRegEx->re_pcre = pcre_compile( szRegEx, iCFlags, &szError, &iErrOffset, pCharTable );
    return pRegEx->re_pcre ? 0 : -1;
-#elif defined( HB_POSIX_REGEX )
+#elif defined(HB_POSIX_REGEX)
    int iCFlags = REG_EXTENDED |
                  ( ( pRegEx->iFlags & HBREG_ICASE   ) ? REG_ICASE   : 0 ) |
                  ( ( pRegEx->iFlags & HBREG_NEWLINE ) ? REG_NEWLINE : 0 ) |
@@ -104,7 +104,7 @@ static int hb_regcomp( PHB_REGEX pRegEx, const char * szRegEx )
 
 static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen, int iMatches, HB_REGMATCH * aMatches )
 {
-#if defined( HB_HAS_PCRE )
+#if defined(HB_HAS_PCRE)
    int iResult, i;
 
    iResult = pcre_exec( pRegEx->re_pcre, nullptr /* pcre_extra */,
@@ -121,7 +121,7 @@ static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen, in
       }
    }
    return iResult;
-#elif defined( HB_POSIX_REGEX )
+#elif defined(HB_POSIX_REGEX)
    char * szBuffer = nullptr;
    int iResult, i;
 
@@ -519,7 +519,7 @@ HB_FUNC( HB_REGEX )
 /* NOTE: Deprecated compatibility function.
          Please use hb_regexLike() and hb_regexHas() instead. */
 
-#if defined( HB_LEGACY_LEVEL4 )
+#if defined(HB_LEGACY_LEVEL4)
 
 HB_FUNC( HB_REGEXMATCH )
 {
@@ -580,7 +580,7 @@ HB_FUNC( HB_REGEXALL )
    }
 }
 
-#if defined( HB_HAS_PCRE )
+#if defined(HB_HAS_PCRE)
 static void * hb_pcre_grab( size_t size )
 {
    return hb_xgrab(size);
@@ -592,7 +592,7 @@ static void hb_pcre_free( void * ptr )
 #endif
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_regex_init_ )
-#if defined( HB_HAS_PCRE )
+#if defined(HB_HAS_PCRE)
    /* detect UTF-8 support.
     * In BCC builds this code also forces linking newer PCRE versions
     * then the one included in BCC RTL.
@@ -610,9 +610,9 @@ HB_CALL_ON_STARTUP_BEGIN( _hb_regex_init_ )
    hb_regexInit( hb_regfree, hb_regcomp, hb_regexec );
 HB_CALL_ON_STARTUP_END( _hb_regex_init_ )
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_regex_init_
-#elif defined( HB_DATASEG_STARTUP )
+#elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY    HB_DATASEG_FUNC( _hb_regex_init_ )
    #include "hbiniseg.h"
 #endif

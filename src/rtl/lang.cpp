@@ -46,7 +46,7 @@
 
 #include "hbapi.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    #include <windows.h>
 #endif
 
@@ -80,7 +80,7 @@ HB_FUNC( HB_USERLANG )
    }
    else
    {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
       const char * ietfc;
 
       switch( GetUserDefaultLangID() )

@@ -47,11 +47,11 @@
 #include "hbvm.h"
 #include "hbapiitm.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    #include <windows.h>
 #endif
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 BOOL WINAPI HB_DLL_ENTRY_POINT( HINSTANCE hInstance, DWORD fdwReason, PVOID pvReserved )
 {

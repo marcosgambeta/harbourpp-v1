@@ -52,20 +52,20 @@
 #include "hbapierr.h"
 #include "hbapifs.h"
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
 #  include <unistd.h>
 #  include <sys/types.h>
-#  if defined( __CEGCC__ ) || defined( HB_OS_VXWORKS )
+#  if defined(__CEGCC__) || defined(HB_OS_VXWORKS)
 #     include <sys/stat.h>
-#  elif defined( HB_OS_ANDROID )
+#  elif defined(HB_OS_ANDROID)
 #     include <sys/statfs.h>
-#  elif defined( HB_OS_DARWIN )
+#  elif defined(HB_OS_DARWIN)
 #     include <sys/param.h>
 #     include <sys/mount.h>
 #  else
 #     include <sys/statvfs.h>
 #  endif
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
 #  include <windows.h>
 #  include "hbwinuni.h"
 #endif
@@ -75,9 +75,9 @@ HB_FUNC( DISKSPACE )
    double dSpace = 0.0;
    HB_BOOL bError;
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    {
-#if defined( _MSC_VER ) || ( defined( __GNUC__ ) )
+#if defined(_MSC_VER) || ( defined(__GNUC__) )
 
 #  define HB_GET_LARGE_UINT( v )  ( static_cast<double>((v).LowPart) + static_cast<double>((v).HighPart) * ( ( static_cast<double>(0xFFFFFFFF) ) + 1 ) )
 
@@ -156,7 +156,7 @@ HB_FUNC( DISKSPACE )
          bError = HB_TRUE;
       }
    }
-#elif defined( HB_OS_UNIX )
+#elif defined(HB_OS_UNIX)
    {
       const char * szName = hb_parc(1);
       char * pszFree = nullptr;
@@ -171,12 +171,12 @@ HB_FUNC( DISKSPACE )
       }
 
       {
-#if defined( __CEGCC__ )
+#if defined(__CEGCC__)
          int iTODO;
 
          bError = HB_FALSE;
 #else
-#if defined( HB_OS_DARWIN ) || defined( HB_OS_ANDROID ) || defined( HB_OS_VXWORKS )
+#if defined(HB_OS_DARWIN) || defined(HB_OS_ANDROID) || defined(HB_OS_VXWORKS)
          struct statfs st;
          bError = statfs( szName, &st ) != 0;
 #else
@@ -185,7 +185,7 @@ HB_FUNC( DISKSPACE )
 #endif
          if( !bError )
          {
-#if !defined( HB_OS_VXWORKS )
+#if !defined(HB_OS_VXWORKS)
             if( getuid() == 0 )
             {
                dSpace = static_cast<double>(st.f_bfree) * static_cast<double>(st.f_bsize);

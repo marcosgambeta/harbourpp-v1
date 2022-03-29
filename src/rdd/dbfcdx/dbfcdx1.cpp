@@ -50,7 +50,7 @@
 
 #define HB_CDX_NEW_SORT
 
-#if !defined( HB_SIXCDX )
+#if !defined(HB_SIXCDX)
 #  define HB_CDX_PACKTRAIL
 #endif
 
@@ -3764,7 +3764,7 @@ static void hb_cdxTagHeaderStore( LPCDXTAG pTag )
    {
       pTag->OptFlags |= CDX_TYPE_FORFILTER;
    }
-#if defined( HB_SIXCDX )
+#if defined(HB_SIXCDX)
    if( pTag->Custom )
    {
       pTag->OptFlags |= CDX_TYPE_PARTIAL | CDX_TYPE_CUSTOM;
@@ -3837,7 +3837,7 @@ static void hb_cdxTagHeaderStore( LPCDXTAG pTag )
    hb_cdxIndexPageWrite( pTag->pIndex, pTag->TagBlock, reinterpret_cast<const HB_BYTE*>(&tagHeader), sizeof(tagHeader) );
 }
 
-#if defined( HB_SIXCDX )
+#if defined(HB_SIXCDX)
 static HB_BOOL hb_cdxIsTemplateFunc( const char * szKeyExpr )
 {
    /* For CDX format SIx3 really makes something like that */
@@ -3952,7 +3952,7 @@ static void hb_cdxTagLoad( LPCDXTAG pTag )
 
    pTag->OptFlags  = tagHeader.indexOpt;
    pTag->UniqueKey = ( pTag->OptFlags & CDX_TYPE_UNIQUE ) != 0;
-#if defined( HB_SIXCDX )
+#if defined(HB_SIXCDX)
    pTag->Custom    = ( pTag->OptFlags & CDX_TYPE_CUSTOM ) != 0 && ( pTag->OptFlags & CDX_TYPE_PARTIAL ) != 0;
    pTag->ChgOnly   = ( pTag->OptFlags & CDX_TYPE_CUSTOM ) != 0 && ( pTag->OptFlags & CDX_TYPE_PARTIAL ) == 0;
    pTag->Partial   = ( pTag->OptFlags & CDX_TYPE_CUSTOM ) != 0 || ( pTag->OptFlags & CDX_TYPE_PARTIAL ) != 0;
@@ -4027,7 +4027,7 @@ static void hb_cdxTagLoad( LPCDXTAG pTag )
           * and do not check the FOR one.
           * CL53 / COMIX evaluates both KEY and FOR expressions.
           */
-#if !defined( HB_SIXCDX )
+#if !defined(HB_SIXCDX)
          if( hb_cdxItemType( hb_vmEvalBlockOrMacro( pTag->pForItem ) ) != 'L' )
          {
             hb_cdxErrorRT( pTag->pIndex->pArea, EG_DATATYPE, EDBF_INVALIDFOR, nullptr, 0, 0, nullptr );
@@ -5117,7 +5117,7 @@ static LPCDXTAG hb_cdxIndexCreateTag( HB_BOOL fStruct, LPCDXINDEX pIndex,
    pTag->IgnoreCase = fNoCase && bType == 'C';
    pTag->Custom = fCustom;
 
-#if defined( HB_SIXCDX )
+#if defined(HB_SIXCDX)
    pTag->Template  = pTag->KeyExpr && hb_cdxIsTemplateFunc( pTag->KeyExpr );
    if( pTag->Template )
    {
@@ -7976,7 +7976,7 @@ static HB_ERRCODE hb_cdxOpen( CDXAREAP pArea, LPDBOPENINFO pOpenInfo )
          only in the directory where DBF file is located but
          CL5.2/SIXCDX RDDs also respects SET PATH [druzus] */
       if( DBFAREA_DATA( &pArea->dbfarea )->fStrictStruct ||
-#if defined( HB_SIXCDX )
+#if defined(HB_SIXCDX)
           hb_fileExists( szFileName, szFileName ) )
 #else
           hb_fileExists( szFileName, nullptr ) )
@@ -8482,7 +8482,7 @@ static HB_ERRCODE hb_cdxOrderCreate( CDXAREAP pArea, LPDBORDERCREATEINFO pOrderI
       hb_cdxErrorRT( pArea, bType == 'U' ? EG_DATATYPE : EG_DATAWIDTH, EDBF_INVALIDKEY, nullptr, 0, 0, nullptr );
       return HB_FAILURE;
    }
-#if defined( HB_COMPAT_C53 ) && defined( HB_CLP_STRICT )
+#if defined(HB_COMPAT_C53) && defined(HB_CLP_STRICT)
    else if( bType == 'C' && uiLen > CDX_MAXKEY )
    {
       if( hb_cdxErrorRT( pArea, EG_DATAWIDTH, EDBF_INVALIDKEY, nullptr, 0, EF_CANDEFAULT, nullptr ) == E_DEFAULT )
@@ -9496,7 +9496,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
                if( pArea->dbfarea.fPositioned && ( !pTag->pForItem || hb_cdxEvalCond( pArea, pTag->pForItem, HB_TRUE ) ) )
                {
                   LPCDXKEY pKey;
-#if defined( HB_SIXCDX )
+#if defined(HB_SIXCDX)
                   if( pTag->Template )
                   {
                      if( pTag->uiType == hb_cdxItemType( pInfo->itmNewVal ) )
@@ -9530,7 +9530,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
                   }
                }
             }
-#if !defined( HB_SIXCDX )
+#if !defined(HB_SIXCDX)
             else
             {
                hb_cdxErrorRT( pArea, EG_ARG, EDBF_NOTCUSTOM, nullptr, 0, 0, nullptr );
@@ -9556,7 +9556,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
                {
                   HB_BOOL fLck = HB_FALSE;
                   LPCDXKEY pKey;
-#if defined( HB_SIXCDX )
+#if defined(HB_SIXCDX)
                   if( pTag->Template )
                   {
                      if( pTag->uiType == hb_cdxItemType( pInfo->itmNewVal ) )
@@ -9612,7 +9612,7 @@ static HB_ERRCODE hb_cdxOrderInfo( CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERI
                   }
                }
             }
-#if !defined( HB_SIXCDX )
+#if !defined(HB_SIXCDX)
             else
             {
                hb_cdxErrorRT( pArea, EG_ARG, EDBF_NOTCUSTOM, nullptr, 0, 0, nullptr );
@@ -10572,7 +10572,7 @@ static void hb_cdxTagDoIndex( LPCDXTAG pTag, HB_BOOL fReindex )
    pArea->pSort = pSort = hb_cdxSortNew( pTag, ulRecCount );
    pSort->fReindex = fReindex;
 
-#if defined( HB_SIXCDX )
+#if defined(HB_SIXCDX)
    if( ( pTag->OptFlags & CDX_TYPE_STRUCTURE ) == 0 && pEvalItem )
    {
       SELF_GOTO( &pArea->dbfarea.area, 0 );
@@ -10739,7 +10739,7 @@ static void hb_cdxTagDoIndex( LPCDXTAG pTag, HB_BOOL fReindex )
             iRecBuff++;
          }
 
-#if !defined( HB_SIXCDX )
+#if !defined(HB_SIXCDX)
          if( pEvalItem )
          {
             if( lStep >= pArea->dbfarea.area.lpdbOrdCondInfo->lStep )
@@ -10829,7 +10829,7 @@ static void hb_cdxTagDoIndex( LPCDXTAG pTag, HB_BOOL fReindex )
             }
          }
 
-#if defined( HB_SIXCDX )
+#if defined(HB_SIXCDX)
          if( pEvalItem )
          {
             if( lStep >= pArea->dbfarea.area.lpdbOrdCondInfo->lStep )
@@ -10875,7 +10875,7 @@ static void hb_cdxTagDoIndex( LPCDXTAG pTag, HB_BOOL fReindex )
       }
       pArea->uiTag = uiSaveTag;
 
-#if !defined( HB_SIXCDX )
+#if !defined(HB_SIXCDX)
       if( pEvalItem && lStep )
       {
          #if 0
@@ -10886,7 +10886,7 @@ static void hb_cdxTagDoIndex( LPCDXTAG pTag, HB_BOOL fReindex )
 #endif
    }
 
-#if defined( HB_SIXCDX )
+#if defined(HB_SIXCDX)
    if( pEvalItem )
    {
       SELF_GOTO( &pArea->dbfarea.area, 0 );
@@ -11040,7 +11040,7 @@ static const RDDFUNCS cdxTable =
    ( DBENTRYP_SVP )   nullptr    /* hb_cdxWhoCares */
 };
 
-#if defined( HB_SIXCDX )
+#if defined(HB_SIXCDX)
 #  define HB_CDXRDD  "SIXCDX"
 #else
 #  define HB_CDXRDD  "DBFCDX"
@@ -11109,7 +11109,7 @@ static void hb_cdxRddInit( void * cargo )
    hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
 }
 
-#if defined( HB_SIXCDX )
+#if defined(HB_SIXCDX)
 
 HB_FUNC_TRANSLATE( SIXCDX, _DBF )
 
@@ -11122,10 +11122,10 @@ HB_CALL_ON_STARTUP_BEGIN( _hb_sixcdx_rdd_init_ )
    hb_vmAtInit( hb_cdxRddInit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_sixcdx_rdd_init_ )
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_sixcdx1_InitSymbols_
    #pragma startup _hb_sixcdx_rdd_init_
-#elif defined( HB_DATASEG_STARTUP )
+#elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY    HB_DATASEG_FUNC( _hb_sixcdx1_InitSymbols_ ) \
                               HB_DATASEG_FUNC( _hb_sixcdx_rdd_init_ )
    #include "hbiniseg.h"
@@ -11144,10 +11144,10 @@ HB_CALL_ON_STARTUP_BEGIN( _hb_dbfcdx_rdd_init_ )
    hb_vmAtInit( hb_cdxRddInit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_dbfcdx_rdd_init_ )
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_dbfcdx1_InitSymbols_
    #pragma startup _hb_dbfcdx_rdd_init_
-#elif defined( HB_DATASEG_STARTUP )
+#elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY    HB_DATASEG_FUNC( _hb_dbfcdx1_InitSymbols_ ) \
                               HB_DATASEG_FUNC( _hb_dbfcdx_rdd_init_ )
    #include "hbiniseg.h"

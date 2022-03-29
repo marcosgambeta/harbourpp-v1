@@ -529,9 +529,9 @@ static void hb_writeEndInit(HB_COMP_DECL, FILE * yyc, const char * szModulname, 
    fprintf(yyc, ", 0x%lx, 0x%04x )\n\n", 0L, HB_PCODE_VER);
 
    fprintf(yyc,
-           "#if defined( HB_PRAGMA_STARTUP )\n"
+           "#if defined(HB_PRAGMA_STARTUP)\n"
            "   #pragma startup hb_vm_SymbolInit_%s\n"
-           "#elif defined( HB_DATASEG_STARTUP )\n"
+           "#elif defined(HB_DATASEG_STARTUP)\n"
            "   #define HB_DATASEG_BODY    HB_DATASEG_FUNC( hb_vm_SymbolInit_%s )\n"
            "   #include \"hbiniseg.h\"\n"
            "#endif\n\n",

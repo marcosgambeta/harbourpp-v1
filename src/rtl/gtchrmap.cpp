@@ -53,7 +53,7 @@
 #include "hbgtcore.h"
 #include "hbapifs.h"
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
 
 #define MAX_CHAR_VAL  0xff
 #define HB_CHRMAP( a, c )  ( ( ( a ) << 16 ) | ( c ) )

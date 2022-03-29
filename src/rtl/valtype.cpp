@@ -53,7 +53,7 @@ HB_FUNC( VALTYPE )
    hb_retc(hb_itemTypeStr(hb_param(1, HB_IT_ANY)));
 }
 
-#if defined( HB_LEGACY_LEVEL5 )
+#if defined(HB_LEGACY_LEVEL5)
 
 HB_FUNC( HB_ISNIL )
 {

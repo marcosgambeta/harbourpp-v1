@@ -196,13 +196,13 @@ using PCLASS = CLASS *;
 #  define hb_clsMthNum( p )      ( ( static_cast<HB_SIZE>(( p )->uiHashKey) + 1 ) << BUCKETBITS )
 #endif
 
-#if defined( HB_REAL_BLOCK_SCOPE )
+#if defined(HB_REAL_BLOCK_SCOPE)
 #  undef HB_CLASSY_BLOCK_SCOPE
-#elif !defined( HB_CLASSY_BLOCK_SCOPE )
+#elif !defined(HB_CLASSY_BLOCK_SCOPE)
 #  define HB_REAL_BLOCK_SCOPE
 #endif
 
-#if !defined( HB_CLASSY_BLOCK_SCOPE )
+#if !defined(HB_CLASSY_BLOCK_SCOPE)
 #  define hb_clsSenderOffset()  hb_stackBaseProcOffset(1)
 #endif
 
@@ -352,7 +352,7 @@ static HB_USHORT s_uiObjectClass    = 0;
  * class definitions so we do not have to worry about runtime
  * s_pClasses reallocation, [druzus]
  */
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 
 #  include "hbthread.h"
 
@@ -1175,7 +1175,7 @@ void hb_clsInit( void )
    s_pClasses = static_cast<PCLASS*>(hb_xgrab(( static_cast<HB_SIZE>(s_uiClsSize) + 1 ) * sizeof(PCLASS)));
    s_pClasses[0] = nullptr;
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    s_pClassMtx = hb_threadMutexCreate();
 #endif
 }
@@ -1723,7 +1723,7 @@ const char * hb_objGetRealClsName( PHB_ITEM pObject, const char * szName )
    return hb_objGetClsName( pObject );
 }
 
-#if defined( HB_CLASSY_BLOCK_SCOPE )
+#if defined(HB_CLASSY_BLOCK_SCOPE)
 static HB_ISIZ hb_clsSenderOffset( void )
 {
    HB_ISIZ nOffset = hb_stackBaseProcOffset(1);
@@ -2191,7 +2191,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
          hb_itemReturnRelease(hb_hashGetValues( pObject ));
          return &s___msgValues;
       }
-#if defined( HB_HASH_MSG_ITEMS )
+#if defined(HB_HASH_MSG_ITEMS)
       else
       {
          if( hb_pcount() == 1 && pMessage->szName[0] == '_' ) /* ASSIGN */
@@ -2396,7 +2396,7 @@ HB_BOOL hb_objGetVarRef( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
 {
    PHB_SYMB pExecSym;
 
-#if defined( HB_HASH_MSG_ITEMS )
+#if defined(HB_HASH_MSG_ITEMS)
    if( HB_IS_HASH(pObject) )
    {
       HB_STACK_TLS_PRELOAD
@@ -4686,14 +4686,14 @@ HB_FUNC( __SENDER )
 
 HB_FUNC( __CLSSYNCSIGNAL )
 {
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    hb_threadMutexSyncSignal( hb_param(1, HB_IT_ANY) );
 #endif /* HB_MT_VM */
 }
 
 HB_FUNC( __CLSSYNCWAIT )
 {
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pMutex = nullptr;
    HB_ULONG ulMilliSec = HB_THREAD_INFINITE_WAIT;
@@ -6029,7 +6029,7 @@ HB_FUNC( __OBJSETCLASSHANDLE )
    hb_retnl(uiPrevClassHandle);
 }
 
-#if defined( HB_LEGACY_LEVEL5 )
+#if defined(HB_LEGACY_LEVEL5)
 HB_FUNC_TRANSLATE( HB_SETCLSHANDLE, __OBJSETCLASSHANDLE )
 #endif
 

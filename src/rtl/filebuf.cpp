@@ -48,7 +48,7 @@
 /* this has to be declared before hbapifs.h is included */
 #define _HB_FILE_INTERNAL_
 
-#if !defined( _LARGEFILE64_SOURCE )
+#if !defined(_LARGEFILE64_SOURCE)
 #  define _LARGEFILE64_SOURCE  1
 #endif
 
@@ -60,21 +60,21 @@
 #include "hbvm.h"
 #include "directry.ch"
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
 #  include <sys/types.h>
 #  include <sys/stat.h>
 #  include <unistd.h>
 #endif
 
-#if !defined( HB_USE_LARGEFILE64 ) && defined( HB_OS_UNIX )
-   #if defined( __USE_LARGEFILE64 )
+#if !defined(HB_USE_LARGEFILE64) && defined(HB_OS_UNIX)
+   #if defined(__USE_LARGEFILE64)
       /*
        * The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
        * defined and effectively enables lseek64()/flock64()/ftruncate64()
        * functions on 32-bit machines.
        */
       #define HB_USE_LARGEFILE64
-   #elif defined( HB_OS_UNIX ) && defined( O_LARGEFILE )
+   #elif defined(HB_OS_UNIX) && defined(O_LARGEFILE)
       #define HB_USE_LARGEFILE64
    #endif
 #endif
@@ -109,7 +109,7 @@ struct _HB_FILE
 using HB_FILE = _HB_FILE;
 
 static const HB_FILE_FUNCS * s_fileMethods( void );
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    static PHB_FILE hb_fileposNew( PHB_FILE pFile );
 #endif
 
@@ -483,9 +483,9 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
                                HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError )
 {
    PHB_FILE pFile = nullptr;
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    HB_BOOL fSeek = HB_FALSE;
-#  if defined( HB_USE_LARGEFILE64 )
+#  if defined(HB_USE_LARGEFILE64)
    struct stat64 statbuf;
 #  else
    struct stat statbuf;
@@ -502,10 +502,10 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
    pszFile = hb_fsExtName(pszFileName, pDefExt, nExFlags, pPaths);
 
    hb_vmUnlock();
-#if !defined( HB_OS_UNIX )
+#if !defined(HB_OS_UNIX)
    fResult = HB_TRUE;
 #else
-#  if defined( HB_USE_SHARELOCKS ) && !defined( HB_USE_BSDLOCKS )
+#  if defined(HB_USE_SHARELOCKS) && !defined(HB_USE_BSDLOCKS)
    if( nExFlags & FXO_SHARELOCK )
    {
       if( iMode == FO_WRITE && fShared )
@@ -530,7 +530,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
 
    hb_threadEnterCriticalSection( &s_fileMtx );
 
-#  if defined( HB_USE_LARGEFILE64 )
+#  if defined(HB_USE_LARGEFILE64)
    fResult = stat64( pszFile, &statbuf ) == 0;
 #  else
    fResult = stat( pszFile, &statbuf ) == 0;
@@ -557,7 +557,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
             pFile->used++;
             if( ( nExFlags & FXO_NOSEEKPOS ) == 0 )
             {
-#  if defined( HB_OS_VXWORKS )
+#  if defined(HB_OS_VXWORKS)
                fSeek  = !S_ISFIFO( statbuf.st_mode );
 #  else
                fSeek  = !S_ISFIFO( statbuf.st_mode ) && !S_ISSOCK( statbuf.st_mode );
@@ -578,10 +578,10 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
       if( hFile != FS_ERROR )
       {
          HB_ULONG device = 0, inode = 0;
-#if !defined( HB_OS_UNIX )
+#if !defined(HB_OS_UNIX)
          hb_threadEnterCriticalSection( &s_fileMtx );
 #else
-#  if defined( HB_USE_LARGEFILE64 )
+#  if defined(HB_USE_LARGEFILE64)
          if( fstat64( hFile, &statbuf ) == 0 )
 #  else
          if( fstat( hFile, &statbuf ) == 0 )
@@ -591,7 +591,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
             inode  = static_cast<HB_ULONG>(statbuf.st_ino);
             if( ( nExFlags & FXO_NOSEEKPOS ) == 0 )
             {
-#  if defined( HB_OS_VXWORKS )
+#  if defined(HB_OS_VXWORKS)
                fSeek  = !S_ISFIFO( statbuf.st_mode );
 #  else
                fSeek  = !S_ISFIFO( statbuf.st_mode ) && !S_ISSOCK( statbuf.st_mode );
@@ -624,7 +624,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
 
             if( pFile->uiLocks == 0 )
             {
-#if !defined( HB_USE_SHARELOCKS ) || defined( HB_USE_BSDLOCKS )
+#if !defined(HB_USE_SHARELOCKS) || defined(HB_USE_BSDLOCKS)
                if( pFile->hFileRO != FS_ERROR )
                {
                   hb_fsClose(pFile->hFileRO);
@@ -635,7 +635,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
                {
                   hb_fsClose(hFile);
                   hFile = FS_ERROR;
-#if defined( HB_USE_SHARELOCKS ) && !defined( HB_USE_BSDLOCKS )
+#if defined(HB_USE_SHARELOCKS) && !defined(HB_USE_BSDLOCKS)
                   /* FIXME: possible race condition */
                   hb_fsLockLarge(pFile->hFile, HB_SHARELOCK_POS, HB_SHARELOCK_SIZE, FL_LOCK | FLX_SHARED);
 #endif
@@ -658,13 +658,13 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
                }
             }
          }
-#if !defined( HB_OS_UNIX )
+#if !defined(HB_OS_UNIX)
          hb_threadLeaveCriticalSection( &s_fileMtx );
 #endif
       }
    }
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    hb_threadLeaveCriticalSection( &s_fileMtx );
    if( pFile && fSeek )
    {
@@ -768,7 +768,7 @@ static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, i
       hb_threadLeaveCriticalSection( &s_lockMtx );
       if( fLockFS )
       {
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
          if( pFile->mode == FO_READ )
          {
             iType |= FLX_SHARED;
@@ -808,7 +808,7 @@ static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, i
    hb_threadLeaveCriticalSection( &s_lockMtx );
    if( fLocked )
    {
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
       iResult = getpid();
 #else
       iResult = 1;
@@ -944,7 +944,7 @@ static const HB_FILE_FUNCS * s_fileMethods( void )
    return &s_fileFuncs;
 }
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
 
 struct HB_FILEPOS
 {
@@ -1561,7 +1561,7 @@ HB_BOOL hb_fileDetach( PHB_FILE pFile )
          s_fileClose( pFile );
          return HB_TRUE;
       }
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
       else if( pFile->pFuncs == s_fileposMethods() )
       {
          PHB_FILEPOS pFilePos = static_cast<PHB_FILEPOS>(pFile);
@@ -1580,7 +1580,7 @@ HB_BOOL hb_fileIsLocal( PHB_FILE pFile )
 {
    if( pFile )
    {
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
       if( pFile->pFuncs == s_fileMethods() || pFile->pFuncs == s_fileposMethods() )
 #else
       if( pFile->pFuncs == s_fileMethods() )

@@ -58,16 +58,16 @@
 #include "hbvm.h"
 #include "error.ch"
 
-#if !defined( HB_GC_PTR )
+#if !defined(HB_GC_PTR)
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 
 #  include "hbthread.h"
 #  include "hbatomic.h"
 
 /* Use spinlock instead of mutex */
 
-#  if defined( HB_SPINLOCK_INIT ) && !defined( HB_HELGRIND_FRIENDLY )
+#  if defined(HB_SPINLOCK_INIT) && !defined(HB_HELGRIND_FRIENDLY)
 
       static HB_SPINLOCK_T s_gcSpinLock = HB_SPINLOCK_INIT;
 #     define HB_GC_LOCK()       HB_SPINLOCK_ACQUIRE( &s_gcSpinLock )
@@ -113,7 +113,7 @@ using PHB_GARBAGE = HB_GARBAGE *;
 
 #define HB_GC_PTR( p )        ( reinterpret_cast<PHB_GARBAGE>(reinterpret_cast<HB_BYTE*>(p) - HB_GARBAGE_SIZE) )
 
-#endif /* !defined( HB_GC_PTR ) */
+#endif /* !defined(HB_GC_PTR) */
 
 #define HB_BLOCK_PTR( p )       ( static_cast<void*>(reinterpret_cast<HB_BYTE*>(p) + HB_GARBAGE_SIZE) )
 

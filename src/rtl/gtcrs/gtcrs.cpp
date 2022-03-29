@@ -56,7 +56,7 @@ static HB_GT_FUNCS SuperTable;
 #define HB_GTID_PTR  ( &s_GtId )
 
 static volatile HB_BOOL s_SignalTable[MAX_SIGNO];
-#if defined( SA_NOCLDSTOP ) && defined( SA_RESTART ) && defined( SIGCHLD )
+#if defined(SA_NOCLDSTOP) && defined(SA_RESTART) && defined(SIGCHLD)
 static volatile HB_BOOL s_SignalFlag = HB_FALSE;
 /* this variable should be global and checked in main VM loop */
 static volatile HB_BOOL s_BreakFlag = HB_FALSE;
@@ -133,7 +133,7 @@ struct InOutBase
    int nTermMouseChars;
    unsigned char cTermMouseBuf[3];
    mouseEvent    mLastEvt;
-#if defined( HB_HAS_GPM )
+#if defined(HB_HAS_GPM)
    Gpm_Connect Conn;
 #endif
 
@@ -217,7 +217,7 @@ static int getClipKey( int nKey )
    return nRet;
 }
 
-#if defined( SA_NOCLDSTOP ) && defined( SA_RESTART ) && defined( SIGCHLD )
+#if defined(SA_NOCLDSTOP) && defined(SA_RESTART) && defined(SIGCHLD)
 #if 1
 static void sig_handler( int signo )
 {
@@ -351,7 +351,7 @@ static void set_signals( void )
 static void set_sig_handler( int iSig )
 {
    /* SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment */
-#if defined( SA_NOCLDSTOP ) && defined( SA_RESTART ) && defined( SIGCHLD )
+#if defined(SA_NOCLDSTOP) && defined(SA_RESTART) && defined(SIGCHLD)
    struct sigaction act;
 
    sigaction( iSig, 0, &act );
@@ -637,7 +637,7 @@ static void set_tmevt( unsigned char * cMBuf, mouseEvent * mEvt )
    #endif
 }
 
-#if defined( HB_HAS_GPM )
+#if defined(HB_HAS_GPM)
 static int set_gpmevt( int fd, int mode, void * data )
 {
    int nKey = 0;
@@ -707,7 +707,7 @@ static void flush_gpmevt( mouseEvent * mEvt )
 
 static void disp_mousecursor( InOutBase * ioBase )
 {
-#if defined( HB_HAS_GPM )
+#if defined(HB_HAS_GPM)
    if( ioBase->mouse_type == MOUSE_GPM && gpm_visiblepointer )
    {
       Gpm_DrawPointer( ioBase->mLastEvt.col, ioBase->mLastEvt.row,
@@ -732,7 +732,7 @@ static void mouse_init( InOutBase * ioBase )
       if( ioBase->mButtons < 1 )
          ioBase->mButtons = 3;
    }
-#if defined( HB_HAS_GPM )
+#if defined(HB_HAS_GPM)
    else if( ioBase->terminal_type == TERM_LINUX )
    {
       ioBase->Conn.eventMask =
@@ -779,7 +779,7 @@ static void mouse_exit( InOutBase * ioBase )
       /* disable mouse tracking & restore old hilit tracking */
       write_ttyseq( ioBase, "\033[?1002l\033[?1001r" );
    }
-#if defined( HB_HAS_GPM )
+#if defined(HB_HAS_GPM)
    else if( ioBase->mouse_type == MOUSE_GPM && gpm_fd >= 0 )
    {
       del_efds( ioBase, gpm_fd );
@@ -1637,7 +1637,7 @@ static int gt_getsize( InOutBase * ioBase, int * rows, int * cols )
 
    *rows = *cols = 0;
 
-#if defined( TIOCGWINSZ )
+#if defined(TIOCGWINSZ)
    if( isatty( ioBase->base_outfd ) )
    {
       struct winsize win;
@@ -1673,7 +1673,7 @@ static int gt_resize( InOutBase * ioBase )
    if( gt_getsize( ioBase, &rows, &cols ) >= 0 )
    {
 #if 0
-#if defined( NCURSES_VERSION )
+#if defined(NCURSES_VERSION)
       wresize( ioBase->hb_stdscr, rows, cols );
 #endif
 #endif
@@ -1681,7 +1681,7 @@ static int gt_resize( InOutBase * ioBase )
       gt_refresh( ioBase );
       ret = 0;
 #if 0
-#if defined( NCURSES_VERSION )
+#if defined(NCURSES_VERSION)
       if( resize_term( rows, cols ) == OK )
       {
          ret = 0;
@@ -1713,7 +1713,7 @@ static int gt_setsize( InOutBase * ioBase, int rows, int cols )
          s_WinSizeChangeFlag = HB_FALSE;
          ret = gt_resize( ioBase );
       }
-#if defined( TIOCGWINSZ )
+#if defined(TIOCGWINSZ)
       else if( isatty( ioBase->base_outfd ) )
       {
          struct winsize win;
@@ -2118,7 +2118,7 @@ static void destroy_ioBase( InOutBase * ioBase )
 
 static InOutBase * create_newXterm( void )
 {
-#if defined( HB_OS_LINUX ) || defined( HB_OS_BSD )
+#if defined(HB_OS_LINUX) || defined(HB_OS_BSD)
 #if 0
    int masterfd, slavefd, fd;
    pid_t termpid;
@@ -2612,7 +2612,7 @@ static void hb_gt_crs_mouse_Show( PHB_GT pGT )
 
    HB_SYMBOL_UNUSED(pGT);
 
-#if defined( HB_HAS_GPM )
+#if defined(HB_HAS_GPM)
    if( s_ioBase->mouse_type == MOUSE_GPM )
       gpm_visiblepointer = 1;
 #endif
@@ -2629,7 +2629,7 @@ static void hb_gt_crs_mouse_Hide( PHB_GT pGT )
 
    HB_SYMBOL_UNUSED(pGT);
 
-#if defined( HB_HAS_GPM )
+#if defined(HB_HAS_GPM)
    if( s_ioBase->mouse_type == MOUSE_GPM )
       gpm_visiblepointer = 0;
 #endif
@@ -2904,7 +2904,7 @@ static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 
 /* *********************************************************************** */
 
-#if defined( HB_GT_CRS_BCEHACK ) && defined( NCURSES_VERSION )
+#if defined(HB_GT_CRS_BCEHACK) && defined(NCURSES_VERSION)
 #include <term.h>
 static void curs_wrkaround( void )
 {

@@ -1812,7 +1812,7 @@ HB_BOOL hb_arrayCopy( PHB_ITEM pSrcArray, PHB_ITEM pDstArray, HB_SIZE * pnStart,
          }
 
 /* This is probably a bug, present in all versions of CA-Cl*pper. */
-#if defined( HB_CLP_STRICT ) || 1
+#if defined(HB_CLP_STRICT) || 1
          if( nDstLen > 0 )
          {
             if( nTarget > nDstLen )

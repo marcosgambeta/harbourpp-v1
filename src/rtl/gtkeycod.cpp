@@ -53,7 +53,7 @@
 
 #include "hbgtcore.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 int hb_gt_dos_keyCodeTranslate( int iKey, int iFlags, PHB_CODEPAGE cdp )
 {

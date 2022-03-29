@@ -47,12 +47,12 @@
 #include "hbapi.h"
 #include "hbvm.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 #define HB_VM_STARTUP
 #include "hbwmain.cpp"
 
-#if !defined( HB_DYNLIB ) && ( defined( __MINGW32__ ) )
+#if !defined(HB_DYNLIB) && (defined(__MINGW32__))
 HB_EXTERN_BEGIN
 void hb_forceLinkMainWin( void ) {}
 HB_EXTERN_END

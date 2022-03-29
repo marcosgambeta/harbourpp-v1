@@ -67,7 +67,7 @@ struct _HB_SYM_HOLDER
 using HB_SYM_HOLDER = _HB_SYM_HOLDER;
 using PHB_SYM_HOLDER = HB_SYM_HOLDER *;
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 
 #  include "hbthread.h"
 
@@ -343,9 +343,9 @@ PHB_DYNS hb_dynsymNew( PHB_SYMB pSymbol )
              */
 #define HB_OVERLOAD_MULTIPLE_FUNC
 
-#if defined( HB_OVERLOAD_MULTIPLE_FUNC )
+#if defined(HB_OVERLOAD_MULTIPLE_FUNC)
             /* In such way works MinGW, DJGPP, BCC */
-#if defined( __GNUC__ )
+#if defined(__GNUC__)
             /* MinGW (like most of other GCC ports) uses reverted order for
              * initialization functions
              */

@@ -65,11 +65,11 @@ static HB_GT_FUNCS SuperTable;
 
 #define HB_GTXWC_GET( p )  ( static_cast<PXWND_DEF>(HB_GTLOCAL(p)) )
 
-#if defined( HB_XWC_XLIB_NEEDLOCKS )
+#if defined(HB_XWC_XLIB_NEEDLOCKS)
    static HB_CRITICAL_NEW( s_xwcMtx );
 #  define HB_XWC_XLIB_LOCK( dpy )   do { hb_threadEnterCriticalSection( &s_xwcMtx )
 #  define HB_XWC_XLIB_UNLOCK( dpy ) hb_threadLeaveCriticalSection( &s_xwcMtx ); } while(0)
-#elif !defined( HB_XWC_XLOCK_OFF )
+#elif !defined(HB_XWC_XLOCK_OFF)
 #  define HB_XWC_XLIB_LOCK( dpy )   do { XLockDisplay( dpy )
 #  define HB_XWC_XLIB_UNLOCK( dpy ) XUnlockDisplay( dpy ); } while(0)
 #else
@@ -4671,7 +4671,7 @@ static PXWND_DEF hb_gt_xwc_CreateWndDef( PHB_GT pGT )
    wnd->fMaximized = HB_FALSE;
    wnd->fMinimized = HB_FALSE;
    wnd->fAltEnter = HB_FALSE;
-#if defined( HB_XWC_USE_LOCALE )
+#if defined(HB_XWC_USE_LOCALE)
    wnd->fUTF8key = hb_gt_xwc_isUTF8();
 #endif
    wnd->utf8CDP = hb_cdpFindExt( "UTF8" );
@@ -5087,7 +5087,7 @@ static void hb_gt_xwc_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
    HB_GTSELF_SETFLAG(pGT, HB_GTI_COMPATBUFFER, HB_FALSE);
 
-#if !defined( HB_XWC_XLIB_NEEDLOCKS ) && !defined( HB_XWC_XLOCK_OFF )
+#if !defined(HB_XWC_XLIB_NEEDLOCKS) && !defined(HB_XWC_XLOCK_OFF)
    if( hb_vmIsMt() )
    {
       if( !XInitThreads() )

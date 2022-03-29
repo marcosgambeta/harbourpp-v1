@@ -47,7 +47,7 @@
 #include "hbapi.h"
 #include "hbapifs.h"
 
-#if defined( HB_COMPAT_C53 ) && defined( HB_CLP_UNDOC )
+#if defined(HB_COMPAT_C53) && defined(HB_CLP_UNDOC)
 
 /* NOTE: Clipper 5.3 undocumented */
 

@@ -109,7 +109,7 @@ HB_FUNC( HB_BYTESWAPLL )
 
    if( hb_numParam( 1, &lValue ) )
    {
-#if defined( HB_LONG_LONG_OFF )
+#if defined(HB_LONG_LONG_OFF)
       HB_MAXINT iVal = static_cast<HB_MAXINT>(HB_SWAP_UINT32( lValue ));
 #else
       HB_MAXINT iVal = static_cast<HB_MAXINT>(HB_SWAP_UINT64( lValue ));

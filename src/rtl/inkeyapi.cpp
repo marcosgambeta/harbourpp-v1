@@ -48,7 +48,7 @@
 #include "hbgtcore.h"
 
 /* xHarbour compatible definitions */
-#if !defined( K_SH_LEFT )
+#if !defined(K_SH_LEFT)
 #define K_SH_LEFT           K_LEFT            /* Shift-Left  == Left  */
 #define K_SH_UP             K_UP              /* Shift-Up    == Up    */
 #define K_SH_RIGHT          K_RIGHT           /* Shift-Right == Right */

@@ -698,7 +698,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
                hb_pp_tokenGet(pLex->pPP);
                return CBSTART;
             }
-#if defined( HB_COMPAT_FOXPRO ) || 1
+#if defined(HB_COMPAT_FOXPRO) || 1
             else if( HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_POWER )
             {
                int iType = hb_comp_dayTimeDecode(pLex, pToken, yylval_ptr);

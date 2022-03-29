@@ -263,7 +263,7 @@ HB_FUNC( TRANSFORM )
                else
                {
 /* NOTE: This is a FoxPro compatible [jarabal] */
-#if defined( HB_COMPAT_FOXPRO )
+#if defined(HB_COMPAT_FOXPRO)
                   nPicPos = nPicLen;
                   break;
 #else

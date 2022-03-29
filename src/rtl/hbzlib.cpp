@@ -59,18 +59,18 @@
    we have to miss compressBound() when using zlib 1.2.0. [vszakats] */
 /* ZLIB_VERNUM were added in version 1.2.0.2 so it cannot be used for older
    zlib libraries */
-#if defined( Z_RLE ) && !defined( Z_SOLO )
+#if defined(Z_RLE) && !defined(Z_SOLO)
 #define _HB_Z_COMPRESSBOUND
 #endif
 
-#if !defined( _HB_Z_COMPRESSBOUND )
+#if !defined(_HB_Z_COMPRESSBOUND)
 /* additional 12 bytes is for GZIP compression which uses bigger header */
 #define deflateBound( s, n )  ( hb_zlibCompressBound( n ) + ( fGZip ? 12 : 0 ) )
 #endif
 
 static HB_SIZE s_zlibCompressBound( HB_SIZE nLen )
 {
-#if !defined( _HB_Z_COMPRESSBOUND )
+#if !defined(_HB_Z_COMPRESSBOUND)
    return nLen + ( nLen >> 12 ) + ( nLen >> 14 ) + ( nLen >> 25 ) + 13;
 #else
    return compressBound( static_cast<uLong>(nLen) );
@@ -229,7 +229,7 @@ HB_FUNC( HB_ZLIBVERSION )
       hb_retc_const( ZLIB_VERSION );
    }
    else
-#if defined( HB_OS_QNX )
+#if defined(HB_OS_QNX)
       /* NOTE: Hack to avoid "undefined reference to 'zlibVersion' when linking hbrun on QNX 6.2.1. */
       hb_retc_null();
 #else
@@ -551,7 +551,7 @@ HB_FUNC( HB_GZCOMPRESS )
  */
 HB_FUNC( HB_ZERROR )
 {
-#if defined( HB_OS_QNX )
+#if defined(HB_OS_QNX)
    /* NOTE: Hack to avoid "undefined reference to 'zlibVersion' when linking hbrun on QNX 6.2.1. */
    hb_retc_null();
 #else
@@ -564,9 +564,9 @@ HB_CALL_ON_STARTUP_BEGIN( _hb_zlib_init_ )
                 s_zlibCompress, s_zlibUncompress );
 HB_CALL_ON_STARTUP_END( _hb_zlib_init_ )
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_zlib_init_
-#elif defined( HB_DATASEG_STARTUP )
+#elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY    HB_DATASEG_FUNC( _hb_zlib_init_ )
    #include "hbiniseg.h"
 #endif

@@ -444,7 +444,7 @@ char * hb_osStrDecode2( const char * pszName, char * pszBuffer, HB_SIZE nSize )
    return hb_strncpy(pszBuffer, pszName, nSize);
 }
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 HB_WCHAR * hb_osStrU16Encode( const char * pszName )
 {
    return hb_mbtowc( pszName );
@@ -603,7 +603,7 @@ const char * hb_fsNameConv( const char * szFileName, char ** pszFree )
    return szFileName;
 }
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 HB_WCHAR * hb_fsNameConvU16( const char * szFileName )
 {
    char * pszBuffer = nullptr;

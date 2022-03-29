@@ -47,13 +47,13 @@
 #include "hbapi.h"
 #include "hbdate.h"
 
-#if defined( HB_OS_UNIX )
-   #if !defined( HB_OS_VXWORKS )
+#if defined(HB_OS_UNIX)
+   #if !defined(HB_OS_VXWORKS)
       #include <sys/times.h>
    #endif
    #include <unistd.h>
 #endif
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    #include <windows.h>
 #endif
 
@@ -73,7 +73,7 @@ double hb_secondsCPU( int n )
 {
    double d = 0.0;
 
-#if defined( HB_OS_WIN ) && !defined( HB_OS_UNIX )
+#if defined(HB_OS_WIN) && !defined(HB_OS_UNIX)
    FILETIME Create, Exit, Kernel, User;
 #endif
 
@@ -82,7 +82,7 @@ double hb_secondsCPU( int n )
       n = 3;
    }
 
-#if defined( HB_OS_UNIX ) && !defined( HB_OS_VXWORKS )
+#if defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS)
    {
       struct tms tm;
 
@@ -120,7 +120,7 @@ double hb_secondsCPU( int n )
    {
       n -= 10;
    }
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    if( hb_iswinnt() && GetProcessTimes( GetCurrentProcess(), &Create, &Exit, &Kernel, &User ) )
    {
       if( n & 1 )

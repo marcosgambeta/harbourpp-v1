@@ -56,22 +56,18 @@
 #include "hbvm.h"
 #include "hbwinuni.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 #  include <windows.h>
 #endif
 
 /* NOTE: VxWorks supports dlopen() functionality only in shared
          executables. [vszakats] */
-#if !defined( HB_HAS_DLFCN ) && \
-    ( ( defined( HB_OS_LINUX ) ) || \
-      defined( HB_OS_SUNOS ) || defined( HB_OS_DARWIN ) || \
-      defined( HB_OS_BSD ) || defined( HB_OS_BEOS ) || \
-      defined( HB_OS_QNX ) || defined( HB_OS_CYGWIN )  || \
-      defined( HB_OS_MINIX ) )
+#if !defined(HB_HAS_DLFCN) && ((defined(HB_OS_LINUX)) || defined(HB_OS_SUNOS) || defined(HB_OS_DARWIN) || \
+    defined(HB_OS_BSD) || defined(HB_OS_BEOS) || defined(HB_OS_QNX) || defined(HB_OS_CYGWIN) || defined(HB_OS_MINIX))
 #  define HB_HAS_DLFCN
 #endif
 
-#if defined( HB_HAS_DLFCN )
+#if defined(HB_HAS_DLFCN)
 #  include <dlfcn.h>
 #endif
 
@@ -109,7 +105,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
       {
          /* use stack address as first level marker */
          hb_vmBeginSymbolGroup( static_cast<void*>(hb_stackId()), HB_TRUE );
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
          {
             void * hFileName;
 
@@ -117,7 +113,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
 
             hb_strfree(hFileName);
          }
-#elif defined( HB_HAS_DLFCN )
+#elif defined(HB_HAS_DLFCN)
          hDynLib = static_cast<void*>(dlopen( hb_itemGetCPtr(pLibName), RTLD_LAZY | RTLD_GLOBAL ));
 
          if( !hDynLib )
@@ -126,7 +122,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
             HB_TRACE( HB_TR_DEBUG, ( "hb_libLoad(): dlopen(): %s", dlerror() ) );
 #endif
          }
-#elif defined( HB_CAUSEWAY_DLL )
+#elif defined(HB_CAUSEWAY_DLL)
          hDynLib = LoadLibrary( hb_itemGetCPtr(pLibName) );
 #else
          {
@@ -167,11 +163,11 @@ HB_BOOL hb_libFree( PHB_ITEM pDynLib )
       {
          *pDynLibPtr = nullptr;
          hb_vmExitSymbolGroup( hDynLib );
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
          fResult = FreeLibrary( static_cast<HMODULE>(hDynLib) );
-#elif defined( HB_HAS_DLFCN )
+#elif defined(HB_HAS_DLFCN)
          fResult = dlclose( hDynLib ) == 0;
-#elif defined( HB_CAUSEWAY_DLL )
+#elif defined(HB_CAUSEWAY_DLL)
          FreeLibrary( hDynLib );
          fResult = HB_TRUE;
 #endif
@@ -195,11 +191,11 @@ void * hb_libSymAddr( PHB_ITEM pDynLib, const char * pszSymbol )
 
    if( hDynLib )
    {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
       return reinterpret_cast<void*>(GetProcAddress(static_cast<HMODULE>(hDynLib), pszSymbol));
-#elif defined( HB_HAS_DLFCN )
+#elif defined(HB_HAS_DLFCN)
       return dlsym( hDynLib, pszSymbol );
-#elif defined( HB_CAUSEWAY_DLL )
+#elif defined(HB_CAUSEWAY_DLL)
       return GetProcAddress( hDynLib, pszSymbol );
 #else
       HB_SYMBOL_UNUSED(pszSymbol);
@@ -237,7 +233,7 @@ HB_FUNC( HB_LIBFREE )
 
 HB_FUNC( HB_LIBERROR )
 {
-#if defined( HB_HAS_DLFCN )
+#if defined(HB_HAS_DLFCN)
    hb_retc(dlerror());
 #else
    hb_retc_null();

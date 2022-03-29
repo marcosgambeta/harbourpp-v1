@@ -51,26 +51,26 @@
 #include "hbtask.h"
 #include "hbapierr.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 #  include <windows.h>
 #endif
 
 #include <time.h>
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
 #  include <sys/time.h>
 #  include <sys/types.h>
 #  include <unistd.h>
-#elif defined( __MINGW32__ )
+#elif defined(__MINGW32__)
 #  include <sys/time.h>
 #endif
 
-#if !defined( HB_HAS_UCONTEXT )
-#  if defined( HB_OS_LINUX ) || defined( HB_OS_MINIX )
+#if !defined(HB_HAS_UCONTEXT)
+#  if defined(HB_OS_LINUX) || defined(HB_OS_MINIX)
 #     define HB_HAS_UCONTEXT
 #  endif
 #endif
 
-#if defined( HB_HAS_UCONTEXT )
+#if defined(HB_HAS_UCONTEXT)
 #  include <ucontext.h>
 #else
 #  include <setjmp.h>
@@ -83,18 +83,18 @@
 
 #undef HB_TASK_STACK_INIT
 
-#if !defined( HB_HAS_UCONTEXT )
+#if !defined(HB_HAS_UCONTEXT)
 
-#  if defined( __GNUC__ )
-#     if defined( HB_OS_LINUX )
-#        if defined( JB_SP )
+#  if defined(__GNUC__)
+#     if defined(HB_OS_LINUX)
+#        if defined(JB_SP)
 #           define HB_TASK_STACK_INIT( jmp, sp )      \
                   do { (jmp)[0].__jmpbuf[JB_SP] = (int) (sp); } while(0)
 #        else
 #           define HB_TASK_STACK_INIT( jmp, sp )      \
                   do { (jmp)[0].__jmpbuf[4] = (int) (sp); } while(0)
 #        endif
-#     elif defined( HB_OS_WIN )
+#     elif defined(HB_OS_WIN)
 #        define HB_TASK_STACK_INIT( jmp, sp )      \
                   do { (jmp)[7] = (unsigned) (sp); } while(0)
 #     endif
@@ -131,7 +131,7 @@ struct _HB_TASKINFO
    char *         stack;
    long           stack_size;
 
-#if defined( HB_HAS_UCONTEXT )
+#if defined(HB_HAS_UCONTEXT)
    ucontext_t     context;
 #else
    jmp_buf        context;
@@ -204,7 +204,7 @@ static HB_MAXINT hb_taskTimeStop( unsigned long ulMilliSec )
       struct timespec ts;
       clock_gettime( CLOCK_REALTIME, &ts );
       return static_cast<HB_MAXINT>(ts.tv_sec) * 1000 + ts.tv_nsec / 1000000 + ulMilliSec;
-#elif defined( HB_OS_UNIX )
+#elif defined(HB_OS_UNIX)
       struct timeval tv;
       gettimeofday( &tv, nullptr );
       return static_cast<HB_MAXINT>(tv.tv_sec) * 1000 + tv.tv_usec / 1000 + ulMilliSec;
@@ -219,9 +219,9 @@ static void hb_taskFreeze( HB_MAXINT wakeup )
    wakeup -= hb_taskTimeStop(0);
    if( wakeup > 0 )
    {
-#  if defined( HB_OS_WIN )
+#  if defined(HB_OS_WIN)
       Sleep( wakeup );
-#  elif defined( HB_OS_UNIX )
+#  elif defined(HB_OS_UNIX)
       struct timeval tv;
       tv.tv_sec = wakeup / 1000;
       tv.tv_usec = ( wakeup % 1000 ) * 1000;
@@ -526,7 +526,7 @@ static PHB_TASKINFO hb_taskNew( long stack_size )
 
    pTask->state = TASK_INIT;
 
-#if defined( HB_HAS_UCONTEXT )
+#if defined(HB_HAS_UCONTEXT)
    /* create new execution context and initialize its private stack */
    if( getcontext( &pTask->context ) == -1 )
    {
@@ -541,7 +541,7 @@ static PHB_TASKINFO hb_taskNew( long stack_size )
    return pTask;
 }
 
-#if !defined( HB_HAS_UCONTEXT )
+#if !defined(HB_HAS_UCONTEXT)
 static void hb_taskStart( void )
 {
    static jmp_buf context;
@@ -743,7 +743,7 @@ void hb_taskResume( void * pTaskPtr )
    {
       switch( pTask->state )
       {
-#if !defined( HB_HAS_UCONTEXT )
+#if !defined(HB_HAS_UCONTEXT)
          case TASK_INIT:
             /* save current execution context */
             if( setjmp( s_currTask->context ) == 0 )
@@ -757,7 +757,7 @@ void hb_taskResume( void * pTaskPtr )
          case TASK_SLEEPING:
             hb_taskWakeUp( pTask );
             /* fallthrough */
-#if defined( HB_HAS_UCONTEXT )
+#if defined(HB_HAS_UCONTEXT)
          case TASK_INIT:
 #endif
             /* fallthrough */
@@ -765,7 +765,7 @@ void hb_taskResume( void * pTaskPtr )
             pTask->state = TASK_RUNNING;
             /* fallthrough */
          case TASK_RUNNING:
-#if defined( HB_HAS_UCONTEXT )
+#if defined(HB_HAS_UCONTEXT)
             {
                PHB_TASKINFO pCurrTask = s_currTask;
                s_currTask = pTask;

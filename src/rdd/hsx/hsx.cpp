@@ -350,7 +350,7 @@ struct HSXTABLE
 
 using LPHSXTABLE = HSXTABLE *;
 
-#if defined( HB_HSX_TSDSTORE )
+#if defined(HB_HSX_TSDSTORE)
 
 #include "hbstack.h"
 

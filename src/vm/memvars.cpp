@@ -59,7 +59,7 @@
 #include "hbset.h"
 #include "hbstack.h"
 
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
 #  define hb_dynsymGetMemvar(p)     ( static_cast<PHB_ITEM>(( p )->pMemvar) )
 #  define hb_dynsymSetMemvar(p, h)  do { ( p )->pMemvar = ( h ); } while(0)
 #endif
@@ -907,7 +907,7 @@ int hb_memvarScope( const char * szVarName, HB_SIZE nLength )
    }
 }
 
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
 /* Releases memory occupied by a variable
  */
 static HB_DYNS_FUNC( hb_memvarClear )
@@ -936,7 +936,7 @@ void hb_memvarsClear( HB_BOOL fAll )
    hb_stackClearMemvarsBase();
    hb_stackGetPrivateStack()->base = 0;
    hb_memvarSetPrivatesBase(0);
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
    hb_dynsymEval(hb_memvarClear, static_cast<void*>(pGetList));
 #else
    /* this is a little bit hacked but many times faster version
@@ -1115,7 +1115,7 @@ PHB_ITEM hb_memvarSaveInArray( int iScope, HB_BOOL fCopy )
       iScope = 0;
    }
 
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
    MVInfo.pDyns = static_cast<PHB_DYNS*>(hb_xgrab(hb_dynsymCount() * sizeof(PHB_DYNS)));
 #else
    MVInfo.pDyns = static_cast<PHB_DYNS*>(hb_xgrab(hb_stackDynHandlesCount() * sizeof(PHB_DYNS)));

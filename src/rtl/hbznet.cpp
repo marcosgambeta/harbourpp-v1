@@ -126,10 +126,10 @@ PHB_ZNETSTREAM hb_znetOpen( int level, int strategy )
    }
 
    if( strategy != Z_FILTERED     &&
-#if defined( Z_RLE )
+#if defined(Z_RLE)
        strategy != Z_RLE          &&
 #endif
-#if defined( Z_FIXED )
+#if defined(Z_FIXED)
        strategy != Z_FIXED        &&
 #endif
        strategy != Z_HUFFMAN_ONLY )
@@ -776,9 +776,9 @@ HB_CALL_ON_STARTUP_BEGIN( _hb_znet_init_ )
    hb_sockexRegister( &s_sockFilter );
 HB_CALL_ON_STARTUP_END( _hb_znet_init_ )
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_znet_init_
-#elif defined( HB_DATASEG_STARTUP )
+#elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY  HB_DATASEG_FUNC( _hb_znet_init_ )
    #include "hbiniseg.h"
 #endif

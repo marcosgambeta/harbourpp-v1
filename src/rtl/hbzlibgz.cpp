@@ -100,7 +100,7 @@ HB_FUNC( HB_GZOPEN )
       gzFile gz;
 
       hb_vmUnlock();
-      #if defined( HB_OS_WIN ) && ZLIB_VERNUM >= 0x1270
+      #if defined(HB_OS_WIN) && ZLIB_VERNUM >= 0x1270
       {
          void * hFile;
          gz = gzopen_w( hb_parstr_u16( 1, HB_CDP_ENDIAN_NATIVE, &hFile, nullptr ), cMode );

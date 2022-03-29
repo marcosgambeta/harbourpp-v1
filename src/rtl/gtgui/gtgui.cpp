@@ -53,7 +53,7 @@
 #include "hbinit.h"
 #include "hbapiitm.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    #include <windows.h>
    #include "hbwinuni.h"
 #endif
@@ -65,7 +65,7 @@ static HB_GT_FUNCS SuperTable;
 #define HB_GTSUPER   ( &SuperTable )
 #define HB_GTID_PTR  ( &s_GtId )
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 struct _HB_BUTTON_ID
 {
@@ -268,7 +268,7 @@ static void hb_gt_gui_Tone( PHB_GT pGT, double dFrequency, double dDuration )
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration ) );
 #endif
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    hb_gt_BaseUnlock(pGT);
    hb_gt_winapi_tone( dFrequency, dDuration );
    hb_gt_BaseLock(pGT);
@@ -287,11 +287,11 @@ static HB_BOOL hb_gt_gui_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
    switch( iType )
    {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
       case HB_GTI_CLIPBOARDDATA:
          if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING )
          {
-#if defined( UNICODE )
+#if defined(UNICODE)
             hb_gt_winapi_setClipboard( CF_UNICODETEXT, pInfo->pNewVal );
 #else
             hb_gt_winapi_setClipboard( CF_TEXT, pInfo->pNewVal );
@@ -303,7 +303,7 @@ static HB_BOOL hb_gt_gui_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             {
                pInfo->pResult = hb_itemNew(nullptr);
             }
-#if defined( UNICODE )
+#if defined(UNICODE)
             hb_gt_winapi_getClipboard( CF_UNICODETEXT, pInfo->pResult );
 #else
             hb_gt_winapi_getClipboard( CF_TEXT, pInfo->pResult );
@@ -337,7 +337,7 @@ static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
    pFuncTable->Version                    = hb_gt_gui_Version;
    pFuncTable->Tone                       = hb_gt_gui_Tone;
    pFuncTable->Info                       = hb_gt_gui_Info;
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    pFuncTable->Alert                      = hb_gt_gui_Alert;
 #endif
 

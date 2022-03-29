@@ -94,7 +94,7 @@ static HB_USHORT s_uiRddId;
  * On other machines it should not cause noticeable differences because
  * most of modern C compilers auto inline small functions
  */
-#if defined( HB_LITTLE_ENDIAN ) && !defined( HB_STRICT_ALIGNMENT ) && 1
+#if defined(HB_LITTLE_ENDIAN) && !defined(HB_STRICT_ALIGNMENT) && 1
 
 #define hb_nsxGetKeyCount( p )            HB_GET_LE_UINT16( hb_nsxPageBuffer( p ) + 2 )
 #define hb_nsxSetKeyCount( p, n )         HB_PUT_LE_UINT16( hb_nsxPageBuffer( p ) + 2, ( n ) )
@@ -5733,7 +5733,7 @@ static HB_BOOL hb_nsxSortAddNodeKey( LPNSXSORTINFO pSort, HB_UCHAR * pKeyVal, HB
             pPage->uiOffset = uiOffset;
             break;
          }
-#if defined( HB_NSX_CLEAR_UNUSED )
+#if defined(HB_NSX_CLEAR_UNUSED)
          else
          {
             memset(hb_nsxPageBuffer(pPage) + pPage->uiOffset, 0, NSX_PAGELEN - pPage->uiOffset);
@@ -6165,7 +6165,7 @@ static void hb_nsxSortOut( LPNSXSORTINFO pSort )
       pSort->pSwapPage[0].pKeyPool = pSort->pStartKey;
    }
 
-#if defined( HB_NSX_SIX_STRICT )
+#if defined(HB_NSX_SIX_STRICT)
    if( !pTag->HeadBlock )
    {
       pTag->HeadBlock = hb_nsxPageAlloc( pTag->pIndex );
@@ -6360,7 +6360,7 @@ static void hb_nsxSortOut( LPNSXSORTINFO pSort )
                {
                   pLastLeaf->uiOffset += pBuffer[pLastLeaf->uiOffset + uiRecSize];
                }
-#if defined( HB_NSX_CLEAR_UNUSED ) && !defined( HB_NSX_SIX_STRICT )
+#if defined(HB_NSX_CLEAR_UNUSED) && !defined(HB_NSX_SIX_STRICT)
                memset(hb_nsxPageBuffer(pLastLeaf) + pLastLeaf->uiOffset, 0, NSX_PAGELEN - pLastLeaf->uiOffset);
 #endif
                /* copy last key to last leaf page */
@@ -6422,7 +6422,7 @@ static HB_ERRCODE hb_nsxTagCreate( LPTAGINFO pTag, HB_BOOL fReindex )
    {
       LPPAGEINFO pPage;
 
-#if defined( HB_NSX_SIX_STRICT )
+#if defined(HB_NSX_SIX_STRICT)
       if( !pTag->HeadBlock )
       {
          pTag->HeadBlock = hb_nsxPageAlloc( pTag->pIndex );
@@ -9157,10 +9157,10 @@ HB_CALL_ON_STARTUP_BEGIN( _hb_dbfnsx_rdd_init_ )
    hb_vmAtInit( hb_dbfnsxRddInit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_dbfnsx_rdd_init_ )
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
    #pragma startup dbfnsx1__InitSymbols
    #pragma startup _hb_dbfnsx_rdd_init_
-#elif defined( HB_DATASEG_STARTUP )
+#elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY    HB_DATASEG_FUNC( dbfnsx1__InitSymbols ) \
                               HB_DATASEG_FUNC( _hb_dbfnsx_rdd_init_ )
    #include "hbiniseg.h"

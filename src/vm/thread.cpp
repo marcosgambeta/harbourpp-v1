@@ -100,24 +100,24 @@
 #include "hbmemvar.ch"
 #include "hbthread.ch"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 #  include <windows.h>
 #endif
 
-#if defined( HB_PTHREAD_API )
+#if defined(HB_PTHREAD_API)
 #  include <time.h>
 #  include <sys/time.h>
 #endif
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
 #  include <sys/time.h>
-#  if !defined( HB_OS_VXWORKS )
+#  if !defined(HB_OS_VXWORKS)
 #     include <sys/times.h>
 #  endif
 #  include <unistd.h>
 #endif
 
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
    /* nothing */
 #else
    static volatile HB_BOOL s_fThreadInit = HB_FALSE;
@@ -126,7 +126,7 @@
 
    static int s_waiting_for_threads = 0;
 
-#  if defined( HB_PTHREAD_API )
+#  if defined(HB_PTHREAD_API)
    static void hb_threadTimeInit( struct timespec * ts, HB_ULONG ulMilliSec )
    {
 #     if _POSIX_C_SOURCE >= 199309L
@@ -143,7 +143,7 @@
    }
 #  endif
 
-#  if defined( HB_CRITICAL_NEED_INIT )
+#  if defined(HB_CRITICAL_NEED_INIT)
    static HB_RAWCRITICAL_T s_init_mtx;
    static HB_RAWCRITICAL_T s_once_mtx;
    static HB_RAWCRITICAL_T s_thread_mtx;
@@ -164,7 +164,7 @@
       HB_CRITICAL_UNLOCK( s_init_mtx );
    }
 #  else
-#     if defined( HB_COND_NEED_INIT )
+#     if defined(HB_COND_NEED_INIT)
          static HB_CRITICAL_NEW( s_init_mtx );
 #     endif
       static HB_CRITICAL_NEW( s_once_mtx );
@@ -172,7 +172,7 @@
       static HB_CRITICAL_NEW( s_mutexlst_mtx );
 #  endif
 
-#  if defined( HB_COND_NEED_INIT )
+#  if defined(HB_COND_NEED_INIT)
       static HB_RAWCOND_T s_thread_cond;
       static void hb_threadCondInit( HB_COND_T * cond )
       {
@@ -185,7 +185,7 @@
          if( !cond->fInit )
          {
             HB_COND_INIT( cond->cond.value );
-#     if !defined( HB_COND_OS_SUPPORT )
+#     if !defined(HB_COND_OS_SUPPORT)
             HB_CRITICAL_INIT( cond->critical.value );
             cond->waiters = 0;
 #     endif
@@ -199,24 +199,24 @@
 
 #endif /* HB_MT_VM */
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 void hb_threadInit( void )
 {
    if( !s_fThreadInit )
    {
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
       /* nothing to do */
 #else
-#  if defined( HB_CRITICAL_NEED_INIT )
+#  if defined(HB_CRITICAL_NEED_INIT)
       HB_CRITICAL_INIT( s_init_mtx );
       HB_CRITICAL_INIT( s_once_mtx );
       HB_CRITICAL_INIT( s_thread_mtx );
       HB_CRITICAL_INIT( s_mutexlst_mtx );
 #  endif
-#  if defined( HB_COND_NEED_INIT )
+#  if defined(HB_COND_NEED_INIT)
       HB_COND_INIT( s_thread_cond );
 #  endif
-#if defined( HB_TASK_THREAD )
+#if defined(HB_TASK_THREAD)
       hb_taskInit();
 #  endif
 #endif
@@ -231,7 +231,7 @@ void hb_threadExit( void )
       hb_itemRelease(s_pOnceMutex);
       s_pOnceMutex = nullptr;
    }
-#if defined( HB_TASK_THREAD ) && defined( HB_MT_VM )
+#if defined(HB_TASK_THREAD) && defined(HB_MT_VM)
    hb_taskExit();
 #endif
 }
@@ -255,16 +255,16 @@ void hb_threadReleaseCPU( void )
 
    /* TODO: Add code to release time slices on all platforms */
 
-#if defined( HB_TASK_THREAD ) && defined( HB_MT_VM )
+#if defined(HB_TASK_THREAD) && defined(HB_MT_VM)
 
    hb_taskSleep(20);
 
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
 
    /* Forfeit the remainder of the current time slice. */
    Sleep(20);
 
-#elif defined( HB_OS_UNIX )
+#elif defined(HB_OS_UNIX)
    {
       struct timeval tv;
       tv.tv_sec = 0;
@@ -292,7 +292,7 @@ void hb_threadReleaseCPU( void )
    hb_vmLock();
 }
 
-#if defined( HB_MT_VM ) && defined( HB_COND_HARBOUR_SUPPORT )
+#if defined(HB_MT_VM) && defined(HB_COND_HARBOUR_SUPPORT)
 static PHB_WAIT_LIST _hb_thread_wait_list( void )
 {
    PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(hb_vmThreadState());
@@ -309,7 +309,7 @@ static PHB_WAIT_LIST _hb_thread_wait_list( void )
 
 static void _hb_thread_wait_add( HB_COND_T * cond, PHB_WAIT_LIST pWaiting )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    /* It's not necessary because we have workaround for possible race
     * condition inside _hb_thread_cond_wait() function
     */
@@ -354,7 +354,7 @@ static HB_BOOL _hb_thread_cond_signal( HB_COND_T * cond )
       {
          if( !pWaiting->signaled )
          {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
             ReleaseSemaphore( pWaiting->cond, 1, nullptr );
 #endif
             pWaiting->signaled = HB_TRUE;
@@ -378,7 +378,7 @@ static HB_BOOL _hb_thread_cond_broadcast( HB_COND_T * cond )
       {
          if( !pWaiting->signaled )
          {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
             ReleaseSemaphore( pWaiting->cond, 1, nullptr );
 #endif
             pWaiting->signaled = HB_TRUE;
@@ -400,7 +400,7 @@ static HB_BOOL _hb_thread_cond_wait( HB_COND_T * cond, HB_RAWCRITICAL_T * critic
    {
       _hb_thread_wait_add( cond, pWaiting );
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
       LeaveCriticalSection( critical );
       fResult = WaitForSingleObject( pWaiting->cond, ulMillisec ) == WAIT_OBJECT_0;
       EnterCriticalSection( critical );
@@ -421,7 +421,7 @@ static HB_BOOL _hb_thread_cond_wait( HB_COND_T * cond, HB_RAWCRITICAL_T * critic
 /*
  * atomic increment/decrement operations
  */
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
 void hb_atomic_set( volatile HB_COUNTER * pCounter, HB_COUNTER value )
 {
    *pCounter = value;
@@ -441,8 +441,7 @@ HB_BOOL hb_atomic_dec( volatile HB_COUNTER * pCounter )
 {
    return --( *pCounter ) == 0;
 }
-#elif defined( HB_ATOM_INC ) && defined( HB_ATOM_DEC ) && \
-      defined( HB_ATOM_GET ) && defined( HB_ATOM_SET )
+#elif defined(HB_ATOM_INC) && defined(HB_ATOM_DEC) && defined(HB_ATOM_GET) && defined(HB_ATOM_SET)
 void hb_atomic_set( volatile HB_COUNTER * pCounter, HB_COUNTER value )
 {
    HB_ATOM_SET( pCounter, value );
@@ -502,9 +501,9 @@ HB_BOOL hb_atomic_dec( volatile HB_COUNTER * pCounter )
 
 void hb_threadEnterCriticalSection( HB_CRITICAL_T * critical )
 {
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
    HB_SYMBOL_UNUSED(critical);
-#elif defined( HB_CRITICAL_NEED_INIT )
+#elif defined(HB_CRITICAL_NEED_INIT)
    if( !critical->fInit )
    {
       hb_threadCriticalInit( critical );
@@ -517,9 +516,9 @@ void hb_threadEnterCriticalSection( HB_CRITICAL_T * critical )
 
 void hb_threadEnterCriticalSectionGC( HB_CRITICAL_T * critical )
 {
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
    HB_SYMBOL_UNUSED(critical);
-#elif defined( HB_CRITICAL_NEED_INIT )
+#elif defined(HB_CRITICAL_NEED_INIT)
    if( !critical->fInit )
    {
       hb_threadCriticalInit( critical );
@@ -536,9 +535,9 @@ void hb_threadEnterCriticalSectionGC( HB_CRITICAL_T * critical )
 
 void hb_threadLeaveCriticalSection( HB_CRITICAL_T * critical )
 {
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
    HB_SYMBOL_UNUSED(critical);
-#elif defined( HB_CRITICAL_NEED_INIT )
+#elif defined(HB_CRITICAL_NEED_INIT)
    HB_CRITICAL_UNLOCK( critical->critical.value );
 #else
    HB_CRITICAL_UNLOCK( *critical );
@@ -547,19 +546,19 @@ void hb_threadLeaveCriticalSection( HB_CRITICAL_T * critical )
 
 HB_BOOL hb_threadCondSignal( HB_COND_T * cond )
 {
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
 
    HB_SYMBOL_UNUSED(cond);
    return HB_FALSE;
 
-#elif defined( HB_TASK_THREAD )
+#elif defined(HB_TASK_THREAD)
 
    HB_COND_SIGNAL( *cond );
    return HB_TRUE;
 
-#elif defined( HB_PTHREAD_API )
+#elif defined(HB_PTHREAD_API)
 
-#  if defined( HB_COND_NEED_INIT )
+#  if defined(HB_COND_NEED_INIT)
       if( !cond->fInit )
       {
          hb_threadCondInit( cond );
@@ -567,7 +566,7 @@ HB_BOOL hb_threadCondSignal( HB_COND_T * cond )
 #  endif
    return pthread_cond_signal( HB_COND_GET( cond ) ) == 0;
 
-#elif defined( HB_COND_HARBOUR_SUPPORT )
+#elif defined(HB_COND_HARBOUR_SUPPORT)
 
    return _hb_thread_cond_signal( cond );
 
@@ -593,19 +592,19 @@ HB_BOOL hb_threadCondSignal( HB_COND_T * cond )
 
 HB_BOOL hb_threadCondBroadcast( HB_COND_T * cond )
 {
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
 
    HB_SYMBOL_UNUSED(cond);
    return HB_FALSE;
 
-#elif defined( HB_TASK_THREAD )
+#elif defined(HB_TASK_THREAD)
 
    HB_COND_SIGNALN( *cond, 0 );
    return HB_TRUE;
 
-#elif defined( HB_PTHREAD_API )
+#elif defined(HB_PTHREAD_API)
 
-#  if defined( HB_COND_NEED_INIT )
+#  if defined(HB_COND_NEED_INIT)
       if( !cond->fInit )
       {
          hb_threadCondInit( cond );
@@ -613,7 +612,7 @@ HB_BOOL hb_threadCondBroadcast( HB_COND_T * cond )
 #  endif
    return pthread_cond_broadcast( HB_COND_GET( cond ) ) == 0;
 
-#elif defined( HB_COND_HARBOUR_SUPPORT )
+#elif defined(HB_COND_HARBOUR_SUPPORT)
 
    return _hb_thread_cond_broadcast( cond );
 
@@ -639,19 +638,19 @@ HB_BOOL hb_threadCondBroadcast( HB_COND_T * cond )
 
 HB_BOOL hb_threadCondWait( HB_COND_T * cond, HB_CRITICAL_T * mutex )
 {
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
 
    HB_SYMBOL_UNUSED(cond);
    HB_SYMBOL_UNUSED(mutex);
    return HB_FALSE;
 
-#elif defined( HB_TASK_THREAD )
+#elif defined(HB_TASK_THREAD)
 
    return HB_COND_WAIT( cond, mutex ) != 0;
 
-#elif defined( HB_PTHREAD_API )
+#elif defined(HB_PTHREAD_API)
 
-#  if defined( HB_COND_NEED_INIT )
+#  if defined(HB_COND_NEED_INIT)
       if( !cond->fInit )
       {
          hb_threadCondInit( cond );
@@ -659,7 +658,7 @@ HB_BOOL hb_threadCondWait( HB_COND_T * cond, HB_CRITICAL_T * mutex )
 #  endif
    return pthread_cond_wait( HB_COND_GET( cond ), HB_CRITICAL_GET( mutex ) ) == 0;
 
-#elif defined( HB_COND_HARBOUR_SUPPORT )
+#elif defined(HB_COND_HARBOUR_SUPPORT)
 
    return _hb_thread_cond_wait( cond, &mutex->critical.value, HB_THREAD_INFINITE_WAIT );
 
@@ -701,21 +700,21 @@ HB_BOOL hb_threadCondWait( HB_COND_T * cond, HB_CRITICAL_T * mutex )
 
 HB_BOOL hb_threadCondTimedWait( HB_COND_T * cond, HB_CRITICAL_T * mutex, HB_ULONG ulMilliSec )
 {
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
 
    HB_SYMBOL_UNUSED(cond);
    HB_SYMBOL_UNUSED(mutex);
    HB_SYMBOL_UNUSED(ulMilliSec);
    return HB_FALSE;
 
-#elif defined( HB_TASK_THREAD )
+#elif defined(HB_TASK_THREAD)
 
    return HB_COND_TIMEDWAIT( cond, mutex, ulMilliSec ) != 0;
 
-#elif defined( HB_PTHREAD_API )
+#elif defined(HB_PTHREAD_API)
    struct timespec ts;
 
-#  if defined( HB_COND_NEED_INIT )
+#  if defined(HB_COND_NEED_INIT)
       if( !cond->fInit )
       {
          hb_threadCondInit( cond );
@@ -724,7 +723,7 @@ HB_BOOL hb_threadCondTimedWait( HB_COND_T * cond, HB_CRITICAL_T * mutex, HB_ULON
    hb_threadTimeInit( &ts, ulMilliSec );
    return pthread_cond_timedwait( HB_COND_GET( cond ), HB_CRITICAL_GET( mutex ), &ts ) == 0;
 
-#elif defined( HB_COND_HARBOUR_SUPPORT )
+#elif defined(HB_COND_HARBOUR_SUPPORT)
 
    return _hb_thread_cond_wait( cond, &mutex->critical.value, ulMilliSec );
 
@@ -768,22 +767,22 @@ HB_THREAD_HANDLE hb_threadCreate( HB_THREAD_ID * th_id, PHB_THREAD_STARTFUNC sta
 {
    HB_THREAD_HANDLE th_h;
 
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
    HB_SYMBOL_UNUSED(start_func);
    HB_SYMBOL_UNUSED(Cargo);
    *th_id = static_cast<HB_THREAD_ID>(0);
    th_h = static_cast<HB_THREAD_HANDLE>(0);
-#elif defined( HB_TASK_THREAD )
+#elif defined(HB_TASK_THREAD)
    *th_id = hb_taskCreate( start_func, Cargo, 0 );
    th_h = *th_id;
-#elif defined( HB_PTHREAD_API )
+#elif defined(HB_PTHREAD_API)
    if( pthread_create( th_id, nullptr, start_func, Cargo ) != 0 )
    {
       *th_id = static_cast<HB_THREAD_ID>(0);
    }
    th_h = *th_id;
-#elif defined( HB_OS_WIN )
-#  if defined( HB_THREAD_RAWWINAPI )
+#elif defined(HB_OS_WIN)
+#  if defined(HB_THREAD_RAWWINAPI)
       th_h = CreateThread( nullptr, 0, start_func, Cargo, 0, th_id );
 #  else
       th_h = reinterpret_cast<HANDLE>(_beginthreadex( nullptr, 0, start_func, Cargo, 0, th_id ));
@@ -803,14 +802,14 @@ HB_THREAD_HANDLE hb_threadCreate( HB_THREAD_ID * th_id, PHB_THREAD_STARTFUNC sta
 
 HB_BOOL hb_threadJoin( HB_THREAD_HANDLE th_h )
 {
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
    HB_SYMBOL_UNUSED(th_h);
    return HB_FALSE;
-#elif defined( HB_TASK_THREAD )
+#elif defined(HB_TASK_THREAD)
    return hb_taskJoin( th_h, HB_TASK_INFINITE_WAIT, nullptr ) != 0;
-#elif defined( HB_PTHREAD_API )
+#elif defined(HB_PTHREAD_API)
    return pthread_join( th_h, nullptr ) == 0;
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
    if( WaitForSingleObject( th_h, INFINITE ) != WAIT_FAILED )
    {
       CloseHandle( th_h );
@@ -825,15 +824,15 @@ HB_BOOL hb_threadJoin( HB_THREAD_HANDLE th_h )
 
 HB_BOOL hb_threadDetach( HB_THREAD_HANDLE th_h )
 {
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
    HB_SYMBOL_UNUSED(th_h);
    return HB_FALSE;
-#elif defined( HB_TASK_THREAD )
+#elif defined(HB_TASK_THREAD)
    hb_taskDetach( th_h );
    return HB_TRUE;
-#elif defined( HB_PTHREAD_API )
+#elif defined(HB_PTHREAD_API)
    return pthread_detach( th_h ) == 0;
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
    return CloseHandle( th_h ) != 0;
 #else
    { int iTODO_MT; }
@@ -843,7 +842,7 @@ HB_BOOL hb_threadDetach( HB_THREAD_HANDLE th_h )
 
 HB_THREAD_NO hb_threadNO( void )
 {
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    PHB_THREADSTATE pThread = ( PHB_THREADSTATE ) hb_vmThreadState();
    if( pThread )
    {
@@ -899,10 +898,10 @@ static HB_GARBAGE_FUNC( hb_threadDestructor )
       hb_gtRelease( pThread->hGT );
       pThread->hGT = nullptr;
    }
-#if defined( HB_COND_HARBOUR_SUPPORT )
+#if defined(HB_COND_HARBOUR_SUPPORT)
    if( pThread->pWaitList.cond )
    {
-#  if defined( HB_OS_WIN )
+#  if defined(HB_OS_WIN)
       CloseHandle( pThread->pWaitList.cond );
       pThread->pWaitList.cond = ( HANDLE ) 0;
 #  endif
@@ -930,7 +929,7 @@ static const HB_GC_FUNCS s_gcThreadFuncs =
    hb_threadMark
 };
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 HB_CARGO_FUNC( hb_threadStartVM )
 {
    PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(cargo);
@@ -1039,8 +1038,8 @@ PHB_THREADSTATE hb_threadStateNew( void )
    pThread->pThItm  = pThItm;
    pThread->hGT     = hb_gtAlloc( nullptr );
 
-#if defined( HB_COND_HARBOUR_SUPPORT )
-#  if defined( HB_OS_WIN )
+#if defined(HB_COND_HARBOUR_SUPPORT)
+#  if defined(HB_OS_WIN)
       pThread->pWaitList.cond = CreateSemaphore( nullptr, 0, 1, nullptr );
 #  endif
 #endif
@@ -1054,7 +1053,7 @@ PHB_THREADSTATE hb_threadStateClone( HB_ULONG ulAttr, PHB_ITEM pParams )
    PHB_THREADSTATE pThread;
 
    pThread = hb_threadStateNew();
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    if( hb_stackId() != nullptr )
 #endif
    {
@@ -1112,7 +1111,7 @@ static PHB_THREADSTATE hb_thParam( int iParam, int iPos )
 
 PHB_ITEM hb_threadStart( HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void * cargo )
 {
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
    HB_SYMBOL_UNUSED(ulAttr);
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(cargo);
@@ -1188,7 +1187,7 @@ HB_FUNC( HB_THREADSTART )
 
    if( pStart )
    {
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
       HB_STACK_TLS_PRELOAD
       HB_SYMBOL_UNUSED(ulAttr);
       hb_ret();
@@ -1264,7 +1263,7 @@ HB_FUNC( HB_THREADSTART )
 
 HB_FUNC( HB_THREADSELF )
 {
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    PHB_THREADSTATE pThread = ( PHB_THREADSTATE ) hb_vmThreadState();
    /* It's possible that pThread will be nullptr and this function will
     * return NIL. It may happen only in one case when this function is
@@ -1281,7 +1280,7 @@ HB_FUNC( HB_THREADSELF )
 
 HB_FUNC( HB_THREADID )
 {
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    HB_STACK_TLS_PRELOAD
    PHB_THREADSTATE pThread;
 
@@ -1312,7 +1311,7 @@ HB_FUNC( HB_THREADID )
 
 HB_FUNC( HB_THREADISMAIN )
 {
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    HB_STACK_TLS_PRELOAD
 
    if( hb_pcount() > 0 )
@@ -1332,13 +1331,13 @@ HB_FUNC( HB_THREADISMAIN )
 #endif
 }
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 static int hb_threadWait( PHB_THREADSTATE * pThreads, int iThreads, HB_BOOL fAll, HB_ULONG ulMilliSec )
 {
    int iFinished, iResult = 0;
    HB_BOOL fExit = ulMilliSec == 0;
 
-#if defined( HB_PTHREAD_API )
+#if defined(HB_PTHREAD_API)
    struct timespec ts;
 
    if( ulMilliSec != HB_THREAD_INFINITE_WAIT )
@@ -1388,7 +1387,7 @@ static int hb_threadWait( PHB_THREADSTATE * pThreads, int iThreads, HB_BOOL fAll
       }
 
       s_waiting_for_threads++;
-#if defined( HB_PTHREAD_API )
+#if defined(HB_PTHREAD_API)
       hb_vmUnlock();
       if( ulMilliSec != HB_THREAD_INFINITE_WAIT )
       {
@@ -1400,11 +1399,11 @@ static int hb_threadWait( PHB_THREADSTATE * pThreads, int iThreads, HB_BOOL fAll
       }
       hb_vmLock();
 #else
-#  if defined( HB_TASK_THREAD )
+#  if defined(HB_TASK_THREAD)
       hb_vmUnlock();
       fExit = hb_taskWait( &s_thread_cond, &s_thread_mtx, ulMilliSec );
       hb_vmLock();
-#  elif defined( HB_COND_HARBOUR_SUPPORT )
+#  elif defined(HB_COND_HARBOUR_SUPPORT)
       hb_vmUnlock();
       fExit = !_hb_thread_cond_wait( &s_thread_cond, &s_thread_mtx, ulMilliSec );
       hb_vmLock();
@@ -1504,7 +1503,7 @@ HB_FUNC( HB_THREADQUITREQUEST )
       HB_STACK_TLS_PRELOAD
       HB_BOOL fResult = HB_FALSE;
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
       if( pThread->fActive )
       {
          hb_vmThreadQuitRequest( static_cast<void*>(pThread) );
@@ -1517,7 +1516,7 @@ HB_FUNC( HB_THREADQUITREQUEST )
 
 HB_FUNC( HB_THREADWAIT )
 {
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 #  define HB_THREAD_WAIT_ALLOC  16
    HB_STACK_TLS_PRELOAD
    HB_ULONG ulMilliSec = HB_THREAD_INFINITE_WAIT;
@@ -1583,14 +1582,14 @@ HB_FUNC( HB_THREADWAIT )
 
 HB_FUNC( HB_THREADWAITFORALL )
 {
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    hb_vmWaitForThreads();
 #endif
 }
 
 HB_FUNC( HB_THREADTERMINATEALL )
 {
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    hb_vmTerminateThreads();
 #endif
 }
@@ -1621,7 +1620,7 @@ HB_FUNC( HB_THREADONCE )
       {
          PHB_ITEM pAction = hb_param(2, HB_IT_EVALITEM);
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
          if( !s_pOnceMutex )
          {
             if( !s_fThreadInit )
@@ -1681,7 +1680,7 @@ HB_FUNC( HB_THREADONCEINIT )
 
       if( HB_IS_NIL(pItem) && !HB_IS_NIL(pValue) )
       {
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
          if( !s_fThreadInit )
          {
             hb_threadInit();
@@ -1760,7 +1759,7 @@ static void hb_mutexUnlink( PHB_MUTEX * pList, PHB_MUTEX pItem )
    }
 }
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 void hb_threadMutexUnlockAll( void )
 {
    HB_CRITICAL_LOCK( s_mutexlst_mtx );
@@ -1819,7 +1818,7 @@ static HB_GARBAGE_FUNC( hb_mutexDestructor )
 {
    PHB_MUTEX pMutex = static_cast<PHB_MUTEX>(Cargo);
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    HB_CRITICAL_LOCK( s_mutexlst_mtx );
    hb_mutexUnlink( &s_pMutexList, pMutex );
    HB_CRITICAL_UNLOCK( s_mutexlst_mtx );
@@ -1833,11 +1832,11 @@ static HB_GARBAGE_FUNC( hb_mutexDestructor )
       pMutex->events = nullptr;
    }
 
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
    /* nothing */
 #else
    HB_CRITICAL_DESTROY( pMutex->mutex );
-#  if !defined( HB_COND_HARBOUR_SUPPORT )
+#  if !defined(HB_COND_HARBOUR_SUPPORT)
    HB_COND_DESTROY( pMutex->cond_l );
    HB_COND_DESTROY( pMutex->cond_w );
 #  endif
@@ -1888,17 +1887,17 @@ PHB_ITEM hb_threadMutexCreate( void )
    memset(pMutex, 0, sizeof(HB_MUTEX));
    pItem = hb_itemPutPtrRawGC(pItem, pMutex);
 
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
    /* nothing */
 #else
    HB_CRITICAL_INIT( pMutex->mutex );
-#  if !defined( HB_COND_HARBOUR_SUPPORT )
+#  if !defined(HB_COND_HARBOUR_SUPPORT)
    HB_COND_INIT( pMutex->cond_l );
    HB_COND_INIT( pMutex->cond_w );
 #  endif
 #endif
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    HB_CRITICAL_LOCK( s_mutexlst_mtx );
    hb_mutexLink( &s_pMutexList, pMutex );
    HB_CRITICAL_UNLOCK( s_mutexlst_mtx );
@@ -1909,7 +1908,7 @@ PHB_ITEM hb_threadMutexCreate( void )
    return pItem;
 }
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 void hb_threadMutexSyncSignal( PHB_ITEM pItemMtx )
 {
    PHB_MUTEX pMutex = hb_mutexPtr( pItemMtx );
@@ -1984,11 +1983,11 @@ HB_BOOL hb_threadMutexSyncWait( PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM
             while( pMutex->syncsignals == 0 )
             {
                pMutex->waiters++;
-#  if defined( HB_PTHREAD_API )
+#  if defined(HB_PTHREAD_API)
                pthread_cond_wait( &pMutex->cond_w, &pMutex->mutex );
-#  elif defined( HB_TASK_THREAD )
+#  elif defined(HB_TASK_THREAD)
                hb_taskWait( &pMutex->cond_w, &pMutex->mutex, HB_TASK_INFINITE_WAIT );
-#  elif defined( HB_COND_HARBOUR_SUPPORT )
+#  elif defined(HB_COND_HARBOUR_SUPPORT)
                _hb_thread_cond_wait( &pMutex->cond_w, &pMutex->mutex, HB_THREAD_INFINITE_WAIT );
 #  else
                HB_CRITICAL_UNLOCK( pMutex->mutex );
@@ -2001,7 +2000,7 @@ HB_BOOL hb_threadMutexSyncWait( PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM
          else
          {
             pMutex->waiters++;
-#  if defined( HB_PTHREAD_API )
+#  if defined(HB_PTHREAD_API)
             {
                struct timespec ts;
 
@@ -2020,9 +2019,9 @@ HB_BOOL hb_threadMutexSyncWait( PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM
                 *       one thread so we should use while loop to check if wait
                 *       condition is true.
                 */
-#     if defined( HB_TASK_THREAD )
+#     if defined(HB_TASK_THREAD)
                hb_taskWait( &pMutex->cond_w, &pMutex->mutex, ulMilliSec );
-#     elif defined( HB_COND_HARBOUR_SUPPORT )
+#     elif defined(HB_COND_HARBOUR_SUPPORT)
                _hb_thread_cond_wait( &pMutex->cond_w, &pMutex->mutex, ulMilliSec );
 #     else
                HB_CRITICAL_UNLOCK( pMutex->mutex );
@@ -2052,11 +2051,11 @@ HB_BOOL hb_threadMutexSyncWait( PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM
             pSyncMutex->lockers++;
             while( pSyncMutex->lock_count != 0 )
             {
-#  if defined( HB_PTHREAD_API )
+#  if defined(HB_PTHREAD_API)
                pthread_cond_wait( &pSyncMutex->cond_l, &pSyncMutex->mutex );
-#  elif defined( HB_TASK_THREAD )
+#  elif defined(HB_TASK_THREAD)
                hb_taskWait( &pSyncMutex->cond_l, &pSyncMutex->mutex, HB_TASK_INFINITE_WAIT );
-#  elif defined( HB_COND_HARBOUR_SUPPORT )
+#  elif defined(HB_COND_HARBOUR_SUPPORT)
                _hb_thread_cond_wait( &pSyncMutex->cond_l, &pSyncMutex->mutex, HB_THREAD_INFINITE_WAIT );
 #  else
                HB_CRITICAL_UNLOCK( pSyncMutex->mutex );
@@ -2085,7 +2084,7 @@ HB_BOOL hb_threadMutexUnlock( PHB_ITEM pItem )
 
    if( pMutex )
    {
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
       if( pMutex->lock_count )
       {
          if( --pMutex->lock_count == 0 )
@@ -2123,12 +2122,12 @@ HB_BOOL hb_threadMutexLock( PHB_ITEM pItem )
 
    if( pMutex )
    {
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
       pMutex->lock_count++;
       pMutex->owner = static_cast<HB_THREAD_ID>(1);
       fResult = HB_TRUE;
 #else
-#  if !defined( HB_HELGRIND_FRIENDLY )
+#  if !defined(HB_HELGRIND_FRIENDLY)
       if( HB_THREAD_EQUAL( pMutex->owner, HB_THREAD_SELF() ) )
       {
          pMutex->lock_count++;
@@ -2140,7 +2139,7 @@ HB_BOOL hb_threadMutexLock( PHB_ITEM pItem )
          hb_vmUnlock();
 
          HB_CRITICAL_LOCK( pMutex->mutex );
-#  if defined( HB_HELGRIND_FRIENDLY )
+#  if defined(HB_HELGRIND_FRIENDLY)
          if( HB_THREAD_EQUAL( pMutex->owner, HB_THREAD_SELF() ) )
          {
             pMutex->lock_count++;
@@ -2151,11 +2150,11 @@ HB_BOOL hb_threadMutexLock( PHB_ITEM pItem )
             while( pMutex->lock_count != 0 )
             {
                pMutex->lockers++;
-#  if defined( HB_PTHREAD_API )
+#  if defined(HB_PTHREAD_API)
                pthread_cond_wait( &pMutex->cond_l, &pMutex->mutex );
-#  elif defined( HB_TASK_THREAD )
+#  elif defined(HB_TASK_THREAD)
                hb_taskWait( &pMutex->cond_l, &pMutex->mutex, HB_TASK_INFINITE_WAIT );
-#  elif defined( HB_COND_HARBOUR_SUPPORT )
+#  elif defined(HB_COND_HARBOUR_SUPPORT)
                _hb_thread_cond_wait( &pMutex->cond_l, &pMutex->mutex, HB_THREAD_INFINITE_WAIT );
 #  else
                HB_CRITICAL_UNLOCK( pMutex->mutex );
@@ -2184,7 +2183,7 @@ HB_BOOL hb_threadMutexTimedLock( PHB_ITEM pItem, HB_ULONG ulMilliSec )
 
    if( pMutex )
    {
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
       HB_SYMBOL_UNUSED(ulMilliSec);
       pMutex->lock_count++;
       pMutex->owner = static_cast<HB_THREAD_ID>(1);
@@ -2202,7 +2201,7 @@ HB_BOOL hb_threadMutexTimedLock( PHB_ITEM pItem, HB_ULONG ulMilliSec )
          HB_CRITICAL_LOCK( pMutex->mutex );
          if( ulMilliSec && pMutex->lock_count != 0 )
          {
-#  if defined( HB_PTHREAD_API )
+#  if defined(HB_PTHREAD_API)
             struct timespec ts;
 
             hb_threadTimeInit( &ts, ulMilliSec );
@@ -2226,11 +2225,11 @@ HB_BOOL hb_threadMutexTimedLock( PHB_ITEM pItem, HB_ULONG ulMilliSec )
              *       one thread so we should use while loop to check if wait
              *       condition is true.
              */
-#     if defined( HB_TASK_THREAD )
+#     if defined(HB_TASK_THREAD)
             pMutex->lockers++;
             hb_taskWait( &pMutex->cond_l, &pMutex->mutex, ulMilliSec );
             pMutex->lockers--;
-#     elif defined( HB_COND_HARBOUR_SUPPORT )
+#     elif defined(HB_COND_HARBOUR_SUPPORT)
             pMutex->lockers++;
             _hb_thread_cond_wait( &pMutex->cond_l, &pMutex->mutex, ulMilliSec );
             pMutex->lockers--;
@@ -2258,7 +2257,7 @@ HB_BOOL hb_threadMutexTimedLock( PHB_ITEM pItem, HB_ULONG ulMilliSec )
    return fResult;
 }
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 static void hb_thredMutexEventInit( PHB_MUTEX pMutex )
 {
    PHB_ITEM pEvents;
@@ -2292,7 +2291,7 @@ void hb_threadMutexNotify( PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting 
 
    if( pMutex )
    {
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
       if( !fWaiting )
       {
          if( !pMutex->events )
@@ -2417,7 +2416,7 @@ PHB_ITEM hb_threadMutexSubscribe( PHB_ITEM pItem, HB_BOOL fClear )
 
    if( pMutex )
    {
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
       if( pMutex->events && hb_arrayLen(pMutex->events) > 0 )
       {
          if( fClear && pMutex->events )
@@ -2465,11 +2464,11 @@ PHB_ITEM hb_threadMutexSubscribe( PHB_ITEM pItem, HB_BOOL fClear )
       while( ( !pMutex->events || hb_arrayLen(pMutex->events) == 0 ) && hb_vmRequestQuery() == 0 )
       {
          pMutex->waiters++;
-#  if defined( HB_PTHREAD_API )
+#  if defined(HB_PTHREAD_API)
          pthread_cond_wait( &pMutex->cond_w, &pMutex->mutex );
-#  elif defined( HB_TASK_THREAD )
+#  elif defined(HB_TASK_THREAD)
          hb_taskWait( &pMutex->cond_w, &pMutex->mutex, HB_TASK_INFINITE_WAIT );
-#  elif defined( HB_COND_HARBOUR_SUPPORT )
+#  elif defined(HB_COND_HARBOUR_SUPPORT)
          _hb_thread_cond_wait( &pMutex->cond_w, &pMutex->mutex, HB_THREAD_INFINITE_WAIT );
 #  else
          HB_CRITICAL_UNLOCK( pMutex->mutex );
@@ -2497,11 +2496,11 @@ PHB_ITEM hb_threadMutexSubscribe( PHB_ITEM pItem, HB_BOOL fClear )
             pMutex->lockers++;
             while( pMutex->lock_count != 0 )
             {
-#  if defined( HB_PTHREAD_API )
+#  if defined(HB_PTHREAD_API)
                pthread_cond_wait( &pMutex->cond_l, &pMutex->mutex );
-#  elif defined( HB_TASK_THREAD )
+#  elif defined(HB_TASK_THREAD)
                hb_taskWait( &pMutex->cond_l, &pMutex->mutex, HB_TASK_INFINITE_WAIT );
-#  elif defined( HB_COND_HARBOUR_SUPPORT )
+#  elif defined(HB_COND_HARBOUR_SUPPORT)
                _hb_thread_cond_wait( &pMutex->cond_l, &pMutex->mutex, HB_THREAD_INFINITE_WAIT );
 #  else
                HB_CRITICAL_UNLOCK( pMutex->mutex );
@@ -2535,7 +2534,7 @@ PHB_ITEM hb_threadMutexTimedSubscribe( PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_B
 
    if( pMutex )
    {
-#if !defined( HB_MT_VM )
+#if !defined(HB_MT_VM)
       HB_SYMBOL_UNUSED(ulMilliSec);
 
       if( pMutex->events && hb_arrayLen(pMutex->events) > 0 )
@@ -2585,7 +2584,7 @@ PHB_ITEM hb_threadMutexTimedSubscribe( PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_B
          }
 
          pMutex->waiters++;
-#  if defined( HB_PTHREAD_API )
+#  if defined(HB_PTHREAD_API)
          {
             struct timespec ts;
 
@@ -2604,9 +2603,9 @@ PHB_ITEM hb_threadMutexTimedSubscribe( PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_B
              *       one thread so we should use while loop to check if wait
              *       condition is true.
              */
-#     if defined( HB_TASK_THREAD )
+#     if defined(HB_TASK_THREAD)
             hb_taskWait( &pMutex->cond_w, &pMutex->mutex, ulMilliSec );
-#     elif defined( HB_COND_HARBOUR_SUPPORT )
+#     elif defined(HB_COND_HARBOUR_SUPPORT)
             _hb_thread_cond_wait( &pMutex->cond_w, &pMutex->mutex, ulMilliSec );
 #     else
             HB_CRITICAL_UNLOCK( pMutex->mutex );
@@ -2636,11 +2635,11 @@ PHB_ITEM hb_threadMutexTimedSubscribe( PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_B
             pMutex->lockers++;
             while( pMutex->lock_count != 0 )
             {
-#  if defined( HB_PTHREAD_API )
+#  if defined(HB_PTHREAD_API)
                pthread_cond_wait( &pMutex->cond_l, &pMutex->mutex );
-#  elif defined( HB_TASK_THREAD )
+#  elif defined(HB_TASK_THREAD)
                hb_taskWait( &pMutex->cond_l, &pMutex->mutex, HB_TASK_INFINITE_WAIT );
-#  elif defined( HB_COND_HARBOUR_SUPPORT )
+#  elif defined(HB_COND_HARBOUR_SUPPORT)
                _hb_thread_cond_wait( &pMutex->cond_l, &pMutex->mutex, HB_THREAD_INFINITE_WAIT );
 #  else
                HB_CRITICAL_UNLOCK( pMutex->mutex );
@@ -2860,18 +2859,18 @@ HB_FUNC( HB_MUTEXQUEUEINFO )
 HB_FUNC( HB_MTVM )
 {
    HB_STACK_TLS_PRELOAD
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
    hb_retl(true);
 #else
    hb_retl(false);
 #endif
 }
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 /* function to use in REQUEST statement in .prg code to force MT HVM */
 HB_FUNC( HB_MT ) { ; }
 #endif
 
-#if defined( HB_TASK_THREAD ) && defined( HB_MT_VM )
+#if defined(HB_TASK_THREAD) && defined(HB_MT_VM)
 #  include "task.cpp"
 #endif

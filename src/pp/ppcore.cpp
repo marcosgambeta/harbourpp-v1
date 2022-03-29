@@ -5178,7 +5178,7 @@ static void hb_pp_includeFile( PHB_PP_STATE pState, const char * szFileName, HB_
                                          nullptr, HB_TRUE, pState->pOpenFunc, HB_FALSE );
       if( pFile )
       {
-#if defined( HB_PP_STRICT_LINEINFO_TOKEN )
+#if defined(HB_PP_STRICT_LINEINFO_TOKEN)
          pState->pNextTokenPtr = &pState->pTokenOut;
          if( pState->pFile->fGenLineInfo )
          {
@@ -5209,7 +5209,7 @@ static void hb_pp_includeClose( PHB_PP_STATE pState )
    pState->pFile = pFile->pPrev;
    pState->iFiles--;
 
-#if defined( HB_PP_STRICT_LINEINFO_TOKEN )
+#if defined(HB_PP_STRICT_LINEINFO_TOKEN)
    if( pFile->fGenLineInfo )
    {
       pState->pNextTokenPtr = &pState->pTokenOut;
@@ -5718,30 +5718,30 @@ void hb_pp_initDynDefines( PHB_PP_STATE pState, HB_BOOL fArchDefs )
          hb_snprintf(szDefine, sizeof(szDefine), s_szPlatform, hb_verPlatformMacro());
          hb_pp_addDefine( pState, szDefine, nullptr );
       }
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
       hb_snprintf(szDefine, sizeof(szDefine), s_szPlatform, "UNIX");
       hb_pp_addDefine( pState, szDefine, nullptr );
 #endif
 
       hb_snprintf(szResult, sizeof(szResult), "%d", static_cast<int>(sizeof(void*)));
-#if defined( HB_ARCH_16BIT )
+#if defined(HB_ARCH_16BIT)
       hb_pp_addDefine( pState, "__ARCH16BIT__", szResult );
-#elif defined( HB_ARCH_32BIT )
+#elif defined(HB_ARCH_32BIT)
       hb_pp_addDefine( pState, "__ARCH32BIT__", szResult );
-#elif defined( HB_ARCH_64BIT )
+#elif defined(HB_ARCH_64BIT)
       hb_pp_addDefine( pState, "__ARCH64BIT__", szResult );
 #endif
 
-#if defined( HB_LITTLE_ENDIAN )
+#if defined(HB_LITTLE_ENDIAN)
       hb_pp_addDefine( pState, "__LITTLE_ENDIAN__", szResult );
-#elif defined( HB_BIG_ENDIAN )
+#elif defined(HB_BIG_ENDIAN)
       hb_pp_addDefine( pState, "__BIG_ENDIAN__", szResult );
-#elif defined( HB_PDP_ENDIAN )
+#elif defined(HB_PDP_ENDIAN)
       hb_pp_addDefine( pState, "__PDP_ENDIAN__", szResult );
 #endif
    }
 
-#if defined( __HARBOUR__ )
+#if defined(__HARBOUR__)
    hb_snprintf(szResult, sizeof(szResult), "0x%02X%02X%02X", HB_VER_MAJOR & 0xFF, HB_VER_MINOR & 0xFF, HB_VER_RELEASE & 0xFF);
    hb_pp_addDefine( pState, "__HARBOUR__", szResult );
 #endif

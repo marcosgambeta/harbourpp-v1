@@ -49,37 +49,37 @@
 #include "hbstack.h"
 #include "hb_io.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 #  include <windows.h>
 #else
 #  include <errno.h>
 #endif
 
 /* Try to translate C errno into DOS error code */
-#if !defined( HB_OS_WIN )
+#if !defined(HB_OS_WIN)
 static HB_ERRCODE hb_errnoToDosError( int ErrCode )
 {
    switch( ErrCode )
    {
-#if defined( ENMFILE )
+#if defined(ENMFILE)
       case ENMFILE:
 #endif
       case ENOENT:
          return 2;   /* File not found */
-#if defined( ENOTDIR )
+#if defined(ENOTDIR)
       case ENOTDIR:
          return 3;   /* Path not found */
 #endif
-#if defined( ENFILE )
+#if defined(ENFILE)
       case ENFILE:
 #endif
       case EMFILE:
          return 4;   /* Too many open files */
       case EACCES:
-#if defined( ETXTBSY )
+#if defined(ETXTBSY)
       case ETXTBSY:
 #endif
-#if defined( EPERM )
+#if defined(EPERM)
       case EPERM:
 #endif
          return 5;   /* Access denied */
@@ -87,21 +87,21 @@ static HB_ERRCODE hb_errnoToDosError( int ErrCode )
          return 6;   /* Invalid handle */
       case ENOMEM:
          return 8;   /* Insufficient memory */
-#if defined( EFAULT )
+#if defined(EFAULT)
       case EFAULT:
          return 9;   /* Invalid memory block address */
 #endif
       case EINVAL:
          return 13;  /* Invalid data */
-#if defined( EROFS )
+#if defined(EROFS)
       case EROFS:
          return 19;  /* Attempt to write on write-protected diskette */
 #endif
-#if defined( ESPIPE )
+#if defined(ESPIPE)
       case ESPIPE:
          return 25;  /* Seek error */
 #endif
-#if defined( ENOSPC )
+#if defined(ENOSPC)
       case ENOSPC:
          return 29;  /* Write fault */
 #endif
@@ -208,7 +208,7 @@ void  hb_fsSetIOError( HB_BOOL fResult, HB_USHORT uiOperation )
    }
    else
    {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
       DWORD dwLastError = GetLastError();
       uiOsErrorLast = static_cast<HB_ERRCODE>(dwLastError);
       uiErrorLast = hb_WinToDosError( dwLastError );

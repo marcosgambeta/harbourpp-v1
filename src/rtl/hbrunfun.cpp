@@ -50,7 +50,7 @@
 #include "hbapiitm.h"
 #include "hbapifs.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    #include "hbwinuni.h"
    #include <windows.h>
 #endif
@@ -65,7 +65,7 @@ HB_FUNC( HB_RUN )
 
       if( hb_gtSuspend() == HB_SUCCESS )
       {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
          LPTSTR lpCommand = HB_CHARDUP( pszCommand );
          iResult = HB_WINAPI_SYSTEM( lpCommand );
          hb_xfree(lpCommand);
