@@ -47,105 +47,105 @@
 HB_FUNC( WVW_SETMENU )
 {
    UINT       usWinNum = WVW_WHICH_WINDOW;
-   WIN_DATA * pWinData = hb_gt_wvw_GetWindowsData( usWinNum );
+   WIN_DATA * pWinData = hb_gt_wvw_GetWindowsData(usWinNum);
 
-   SetMenu( pWinData->hWnd, reinterpret_cast< HMENU >( HB_PARHANDLE( 2 ) ) );
+   SetMenu(pWinData->hWnd, reinterpret_cast<HMENU>(HB_PARHANDLE(2)));
 
-   hb_gt_wvwResetWindow( usWinNum );
+   hb_gt_wvwResetWindow(usWinNum);
 }
 
 HB_FUNC( WVW_SETPOPUPMENU )
 {
    UINT       usWinNum = WVW_WHICH_WINDOW;
-   WIN_DATA * pWinData = hb_gt_wvw_GetWindowsData( usWinNum );
+   WIN_DATA * pWinData = hb_gt_wvw_GetWindowsData(usWinNum);
    HMENU      hPopup   = pWinData->hPopup;
 
-   pWinData->hPopup = reinterpret_cast< HMENU >( HB_PARHANDLE( 2 ) );
+   pWinData->hPopup = reinterpret_cast<HMENU>(HB_PARHANDLE(2));
    /* if ( hPopup ) */
    {
-      HB_RETHANDLE( hPopup );
+      HB_RETHANDLE(hPopup);
    }
 }
 
 HB_FUNC( WVW_CREATEMENU )
 {
-   HB_RETHANDLE( CreateMenu() );
+   HB_RETHANDLE(CreateMenu());
 }
 
 HB_FUNC( WVW_CREATEPOPUPMENU )
 {
-   HB_RETHANDLE( CreatePopupMenu() );
+   HB_RETHANDLE(CreatePopupMenu());
 }
 
 /* wvw_AppendMenu( hMenu, nFlags, nMenuItemId, cCaption ) */
 
 HB_FUNC( WVW_APPENDMENU )
 {
-   char    ucBuf[ 256 ];
+   char    ucBuf[256];
    int     iLen;
    LPCTSTR lpszCaption;
 
-   if( ! ( hb_parni( 2 ) & ( MF_SEPARATOR | MF_POPUP ) ) && ( hb_parni( 3 ) >= WVW_ID_BASE_PUSHBUTTON ) )
+   if( !(hb_parni(2) & (MF_SEPARATOR | MF_POPUP)) && (hb_parni(3) >= WVW_ID_BASE_PUSHBUTTON) )
    {
-      MessageBox( nullptr, TEXT( "Menu Command Id too high. Potential conflict with pushbutton" ), hb_gt_wvw_GetAppName(), MB_ICONERROR );
-      hb_retl( FALSE );
+      MessageBox(nullptr, TEXT("Menu Command Id too high. Potential conflict with pushbutton"), hb_gt_wvw_GetAppName(), MB_ICONERROR);
+      hb_retl(FALSE);
       return;
    }
 
-   if( HB_ISCHAR( 4 ) )
+   if( HB_ISCHAR(4) )
    {
-      iLen = hb_parclen( 4 );
+      iLen = hb_parclen(4);
       if( iLen > 0 && iLen < 256 )
       {
-         lpszCaption = hb_parcx( 4 );
+         lpszCaption = hb_parcx(4);
          for( int i = 0; i < iLen; i++ )
          {
-            ucBuf[ i ] = ( *lpszCaption == '~' ) ? '&' : *lpszCaption;
+            ucBuf[i] = (*lpszCaption == '~') ? '&' : *lpszCaption;
             lpszCaption++;
          }
-         ucBuf[ iLen ] = '\0';
+         ucBuf[iLen] = '\0';
          lpszCaption   = ucBuf;
       }
       else
       {
-         lpszCaption = hb_parcx( 4 );
+         lpszCaption = hb_parcx(4);
       }
    }
    else
    {
-      lpszCaption = reinterpret_cast< LPCTSTR >( hb_parni( 4 ) );
+      lpszCaption = reinterpret_cast<LPCTSTR>(hb_parni(4));
    }
 
-   hb_retl( AppendMenu( reinterpret_cast< HMENU >( HB_PARHANDLE( 1 ) ), static_cast< UINT >( hb_parni( 2 ) ), static_cast< UINT_PTR >( hb_parni( 3 ) ), static_cast< LPCTSTR >( lpszCaption ) ) );
+   hb_retl(AppendMenu(reinterpret_cast<HMENU>(HB_PARHANDLE(1)), static_cast<UINT>(hb_parni(2)), static_cast<UINT_PTR>(hb_parni(3)), static_cast<LPCTSTR>(lpszCaption)));
 }
 
 HB_FUNC( WVW_DELETEMENU )
 {
-   hb_retl( DeleteMenu( reinterpret_cast< HMENU >( HB_PARHANDLE( 1 ) ), static_cast< UINT >( hb_parni( 2 ) ), static_cast< UINT >( hb_parni( 3 ) ) ) );
+   hb_retl(DeleteMenu(reinterpret_cast<HMENU>(HB_PARHANDLE(1)), static_cast<UINT>(hb_parni(2)), static_cast<UINT>(hb_parni(3))));
 }
 
 HB_FUNC( WVW_DESTROYMENU )
 {
-   hb_retl( DestroyMenu( reinterpret_cast< HMENU >( HB_PARHANDLE( 1 ) ) ) );
+   hb_retl(DestroyMenu(reinterpret_cast<HMENU>(HB_PARHANDLE(1))));
 }
 
 HB_FUNC( WVW_ENABLEMENUITEM )
 {
-   hb_retni( EnableMenuItem( reinterpret_cast< HMENU >( HB_PARHANDLE( 1 ) ), static_cast< UINT >( hb_parni( 2 ) ), static_cast< UINT >( hb_parni( 3 ) ) ) );
+   hb_retni(EnableMenuItem(reinterpret_cast<HMENU>(HB_PARHANDLE(1)), static_cast<UINT>(hb_parni(2)), static_cast<UINT>(hb_parni(3))));
 }
 
 HB_FUNC( WVW_GETLASTMENUEVENT )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
 
-   hb_retni( hb_gt_wvwGetLastMenuEvent( usWinNum ) );
+   hb_retni(hb_gt_wvwGetLastMenuEvent(usWinNum));
 }
 
 HB_FUNC( WVW_SETLASTMENUEVENT )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
 
-   hb_retni( hb_gt_wvwSetLastMenuEvent( usWinNum, hb_parni( 2 ) ) );
+   hb_retni(hb_gt_wvwSetLastMenuEvent(usWinNum, hb_parni(2)));
 }
 
 HB_FUNC( WVW_SETMENUKEYEVENT )
@@ -153,12 +153,12 @@ HB_FUNC( WVW_SETMENUKEYEVENT )
    UINT usWinNum = WVW_WHICH_WINDOW;
    int  iEvent   = 0;
 
-   if( HB_ISNUM( 2 ) )
+   if( HB_ISNUM(2) )
    {
-      iEvent = hb_parnl( 2 );
+      iEvent = hb_parnl(2);
    }
 
-   hb_retni( hb_gt_wvwSetMenuKeyEvent( usWinNum, iEvent ) );
+   hb_retni(hb_gt_wvwSetMenuKeyEvent(usWinNum, iEvent));
 }
 
 #if 0
@@ -173,114 +173,114 @@ HB_FUNC( WVW_MENUITEM_SETBITMAPS )
 {
    HBITMAP hBitmapUnchecked = nullptr;
    HBITMAP hBitmapChecked   = nullptr;
-   char    szResname[ _MAX_PATH + 1 ];
+   char    szResname[_MAX_PATH + 1];
    int     iWidth, iHeight;
 
-   if( ! HB_ISNIL( 4 ) )
+   if( !HB_ISNIL(4) )
    {
-      if( HB_ISNUM( 4 ) )
+      if( HB_ISNUM(4) )
       {
-         sprintf( szResname, "?%u", hb_parni( 4 ) );
+         sprintf(szResname, "?%u", hb_parni(4));
 
-         hBitmapUnchecked = FindBitmapHandle( szResname, &iWidth, &iHeight );
+         hBitmapUnchecked = FindBitmapHandle(szResname, &iWidth, &iHeight);
 
-         if( ! hBitmapUnchecked )
+         if( !hBitmapUnchecked )
          {
-            hBitmapUnchecked = static_cast< HBITMAP >( LoadImage( hb_getWvwData()->hInstance, static_cast< LPCTSTR >( MAKEINTRESOURCE( static_cast< WORD >( hb_parni( 4 ) ) ) ), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR ) );
-            AddBitmapHandle( szResname, hBitmapUnchecked, iWidth, iHeight );
+            hBitmapUnchecked = static_cast<HBITMAP>(LoadImage(hb_getWvwData()->hInstance, static_cast<LPCTSTR>(MAKEINTRESOURCE(static_cast<WORD>(hb_parni(4)))), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR ) );
+            AddBitmapHandle(szResname, hBitmapUnchecked, iWidth, iHeight);
          }
       }
       else
       {
-         hBitmapUnchecked = FindBitmapHandle( hb_parcx( 4 ), &iWidth, &iHeight );
+         hBitmapUnchecked = FindBitmapHandle(hb_parcx(4), &iWidth, &iHeight);
 
-         if( ! hBitmapUnchecked )
+         if( !hBitmapUnchecked )
          {
-            hBitmapUnchecked = static_cast< HBITMAP >( LoadImage( hb_getWvwData()->hInstance, hb_parcx( 4 ), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR ) );
-            AddBitmapHandle( hb_parcx( 4 ), hBitmapUnchecked, iWidth, iHeight );
+            hBitmapUnchecked = static_cast<HBITMAP>(LoadImage(hb_getWvwData()->hInstance, hb_parcx(4), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR));
+            AddBitmapHandle(hb_parcx(4), hBitmapUnchecked, iWidth, iHeight);
          }
       }
    }
 
-   if( ! HB_ISNIL( 5 ) )
+   if( !HB_ISNIL(5) )
    {
-      if( HB_ISNUM( 5 ) )
+      if( HB_ISNUM(5) )
       {
-         sprintf( szResname, "?%u", hb_parni( 5 ) );
+         sprintf(szResname, "?%u", hb_parni(5));
 
-         hBitmapChecked = FindBitmapHandle( szResname, &iWidth, &iHeight );
+         hBitmapChecked = FindBitmapHandle(szResname, &iWidth, &iHeight);
 
-         if( ! hBitmapChecked )
+         if( !hBitmapChecked )
          {
-            hBitmapChecked = static_cast< HBITMAP >( LoadImage( hb_getWvwData()->hInstance, static_cast< LPCTSTR >( MAKEINTRESOURCE( static_cast< WORD >( hb_parni( 5 ) ) ) ), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR ) );
-            AddBitmapHandle( szResname, hBitmapChecked, iWidth, iHeight );
+            hBitmapChecked = static_cast<HBITMAP>(LoadImage(hb_getWvwData()->hInstance, static_cast<LPCTSTR>(MAKEINTRESOURCE(static_cast<WORD>(hb_parni(5)))), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR ) );
+            AddBitmapHandle(szResname, hBitmapChecked, iWidth, iHeight);
          }
       }
       else
       {
-         hBitmapChecked = FindBitmapHandle( hb_parcx( 5 ), &iWidth, &iHeight );
+         hBitmapChecked = FindBitmapHandle(hb_parcx(5), &iWidth, &iHeight);
 
-         if( ! hBitmapChecked )
+         if( !hBitmapChecked )
          {
-            hBitmapChecked = static_cast< HBITMAP >( LoadImage( hb_getWvwData()->hInstance, hb_parcx( 5 ), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR ) );
-            AddBitmapHandle( hb_parcx( 5 ), hBitmapChecked, iWidth, iHeight );
+            hBitmapChecked = static_cast<HBITMAP>(LoadImage(hb_getWvwData()->hInstance, hb_parcx(5), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR));
+            AddBitmapHandle(hb_parcx(5), hBitmapChecked, iWidth, iHeight);
          }
       }
    }
 
-   if( ! HB_ISNIL( 2 ) )
+   if( !HB_ISNIL(2) )
    {
-      SetMenuItemBitmaps( reinterpret_cast< HMENU >( HB_PARHANDLE( 1 ) ), hb_parni( 2 ), MF_BYCOMMAND, static_cast< HBITMAP >( hBitmapUnchecked ), static_cast< HBITMAP >( hBitmapChecked ) );
+      SetMenuItemBitmaps(reinterpret_cast<HMENU>(HB_PARHANDLE(1)), hb_parni(2), MF_BYCOMMAND, static_cast<HBITMAP>(hBitmapUnchecked), static_cast<HBITMAP>(hBitmapChecked));
    }
    else
    {
-      SetMenuItemBitmaps( reinterpret_cast< HMENU >( HB_PARHANDLE( 1 ) ), hb_parni( 3 ), MF_BYPOSITION, static_cast< HBITMAP >( hBitmapUnchecked ), static_cast< HBITMAP >( hBitmapChecked ) );
+      SetMenuItemBitmaps(reinterpret_cast<HMENU>(HB_PARHANDLE(1)), hb_parni(3), MF_BYPOSITION, static_cast<HBITMAP>(hBitmapUnchecked), static_cast<HBITMAP>(hBitmapChecked));
    }
 }
 
 HB_FUNC( WVW_DRAWMENUBAR )
 {
    UINT       usWinNum    = WVW_WHICH_WINDOW;
-   WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
+   WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
-   DrawMenuBar( pWindowData->hWnd );
+   DrawMenuBar(pWindowData->hWnd);
 }
 
 HB_FUNC( WVW_ENDMENU )
 {
-   hb_retl( EndMenu() );
+   hb_retl(EndMenu());
 }
 
 /* wvw_GetMenu([nWinNum]) */
 HB_FUNC( WVW_GETMENU )
 {
    UINT       usWinNum    = WVW_WHICH_WINDOW;
-   WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
+   WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
-   HB_RETHANDLE( GetMenu( pWindowData->hWnd ) );
+   HB_RETHANDLE(GetMenu(pWindowData->hWnd));
 }
 
 /* wvw_TrackPopupMenu([nWinNum], n) */
 HB_FUNC( WVW_TRACKPOPUPMENU )
 {
    UINT       usWinNum    = WVW_WHICH_WINDOW;
-   WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
-   POINT      xy; memset( &xy, 0, sizeof( xy ) );
+   WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
+   POINT      xy; memset(&xy, 0, sizeof(xy));
 
-   GetCursorPos( &xy );
+   GetCursorPos(&xy);
 
-   hb_retnl( TrackPopupMenu( reinterpret_cast< HMENU >( HB_PARHANDLE( 2 ) ),
-                             TPM_CENTERALIGN | TPM_RETURNCMD | TPM_RECURSE,
-                             xy.x,
-                             xy.y,
-                             0,
-                             pWindowData->hWnd,
-                             nullptr ) );
+   hb_retnl(TrackPopupMenu(reinterpret_cast<HMENU>(HB_PARHANDLE(2)),
+                           TPM_CENTERALIGN | TPM_RETURNCMD | TPM_RECURSE,
+                           xy.x,
+                           xy.y,
+                           0,
+                           pWindowData->hWnd,
+                           nullptr));
 }
 
 HB_FUNC( WIN_SETMENU )
 {
-   SetMenu( reinterpret_cast< HWND >( HB_PARHANDLE( 1 ) ), reinterpret_cast< HMENU >( HB_PARHANDLE( 2 ) ) );
+   SetMenu(reinterpret_cast<HWND>(HB_PARHANDLE(1)), reinterpret_cast<HMENU>(HB_PARHANDLE(2)));
 }
 
 /*
@@ -293,24 +293,24 @@ HB_FUNC( WIN_SETMENU )
 HB_FUNC( WVW_NOSYSMENU )
 {
    UINT       usWinNum     = WVW_WHICH_WINDOW;
-   BOOL       lRemoveClose = HB_ISNIL( 2 ) ? FALSE : hb_parl( 2 );
-   WIN_DATA * pWindowData  = hb_gt_wvw_GetWindowsData( usWinNum );
-   HMENU      hMenu        = GetSystemMenu( pWindowData->hWnd, FALSE );
+   BOOL       lRemoveClose = HB_ISNIL(2) ? FALSE : hb_parl(2);
+   WIN_DATA * pWindowData  = hb_gt_wvw_GetWindowsData(usWinNum);
+   HMENU      hMenu        = GetSystemMenu(pWindowData->hWnd, FALSE);
 
    if( hMenu )
    {
-      DeleteMenu( hMenu, SC_MAXIMIZE, MF_BYCOMMAND );
-      DeleteMenu( hMenu, SC_MINIMIZE, MF_BYCOMMAND );
-      DeleteMenu( hMenu, SC_SIZE, MF_BYCOMMAND );
-      DeleteMenu( hMenu, SC_MOVE, MF_BYCOMMAND );
-      DeleteMenu( hMenu, SC_RESTORE, MF_BYCOMMAND );
-      DeleteMenu( hMenu, SC_NEXTWINDOW, MF_BYCOMMAND );
+      DeleteMenu(hMenu, SC_MAXIMIZE, MF_BYCOMMAND);
+      DeleteMenu(hMenu, SC_MINIMIZE, MF_BYCOMMAND);
+      DeleteMenu(hMenu, SC_SIZE, MF_BYCOMMAND);
+      DeleteMenu(hMenu, SC_MOVE, MF_BYCOMMAND);
+      DeleteMenu(hMenu, SC_RESTORE, MF_BYCOMMAND);
+      DeleteMenu(hMenu, SC_NEXTWINDOW, MF_BYCOMMAND);
       if( lRemoveClose )
       {
-         DeleteMenu( hMenu, SC_CLOSE, MF_BYCOMMAND );
-         DeleteMenu( hMenu, 0, MF_BYPOSITION );
+         DeleteMenu(hMenu, SC_CLOSE, MF_BYCOMMAND);
+         DeleteMenu(hMenu, 0, MF_BYPOSITION);
       }
-      DrawMenuBar( pWindowData->hWnd );
+      DrawMenuBar(pWindowData->hWnd);
    }
 }
 
@@ -321,8 +321,8 @@ HB_FUNC( WVW_NOSYSMENU )
 HB_FUNC( WVW_GETSYSTEMMENU )
 {
    UINT       usWinNum    = WVW_WHICH_WINDOW;
-   WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData( usWinNum );
-   BOOL       lReset      = HB_ISNIL( 2 ) ? FALSE : hb_parl( 2 );
+   WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
+   BOOL       lReset      = HB_ISNIL(2) ? FALSE : hb_parl(2);
 
-   hb_retnl( reinterpret_cast< ULONG >( GetSystemMenu( pWindowData->hWnd, lReset ) ) );
+   hb_retnl(reinterpret_cast<ULONG>(GetSystemMenu(pWindowData->hWnd, lReset)));
 }
