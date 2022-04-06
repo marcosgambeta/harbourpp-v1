@@ -70,9 +70,9 @@
 static PHB_GOBJS hb_wvg_ObjectNew( PHB_GTWVT pWVT )
 {
    int iHandle     = ( pWVT->gObjs ? pWVT->gObjs->iHandle + 1 : 1 );
-   HB_GOBJS * gObj = static_cast< HB_GOBJS * >( hb_xgrab( sizeof( HB_GOBJS ) ) );
+   HB_GOBJS * gObj = static_cast<HB_GOBJS*>(hb_xgrab(sizeof(HB_GOBJS)));
 
-   memset( gObj, 0, sizeof( HB_GOBJS ) );
+   memset( gObj, 0, sizeof(HB_GOBJS) );
 
    gObj->iHandle = iHandle;
    gObj->iState  = GOBJ_OBJSTATE_ENABLED;
@@ -175,7 +175,7 @@ HB_FUNC( WVG_SETGOBJSTATE )
          {
             iOState = gObj->iState;
 
-            if( HB_ISNUM( 2 ) )
+            if( HB_ISNUM(2) )
             {
                int iState = hb_parni( 2 );
                if( iOState != iState && iState > 0 && iState <= 4 )
@@ -218,41 +218,41 @@ HB_FUNC( WVG_SETGOBJDATA )
                   {
                      hb_strfree( gObj->hText );
                   }
-                  gObj->lpText = HB_PARSTR( 3, &gObj->hText, nullptr );
+                  gObj->lpText = HB_PARSTR(3, &gObj->hText, nullptr);
                   break;
                case GOBJ_OBJDATA_PICTUREEX:
-                  if( HB_ISNUM( 3 )  )
+                  if( HB_ISNUM(3)  )
                   {
-                     gObj->pPicture = reinterpret_cast< IPicture * >( static_cast< HB_PTRUINT >( hb_parni( 3 ) ) );
+                     gObj->pPicture = reinterpret_cast<IPicture*>(static_cast<HB_PTRUINT>(hb_parni(3)));
                   }
                   break;
                case GOBJ_OBJDATA_PICTURE:
-                  if( HB_ISNUM( 3 ) && hb_parni( 3 ) <= WVT_PICTURES_MAX )
+                  if( HB_ISNUM(3) && hb_parni( 3 ) <= WVT_PICTURES_MAX )
                   {
-                     gObj->pPicture = pWVT->pGUI->pPicture[ hb_parni( 3 ) - 1 ];
+                     gObj->pPicture = pWVT->pGUI->pPicture[hb_parni(3) - 1];
                   }
                   break;
                case GOBJ_OBJDATA_IMAGE:
                {
                   IPicture * iPicture = nullptr;
 
-                  if( HB_ISNUM( 3 ) )
+                  if( HB_ISNUM(3) )
                   {
                      if( hb_parni( 3 ) <= WVT_PICTURES_MAX )
                      {
-                        iPicture = pWVT->pGUI->pPicture[ hb_parni( 3 ) - 1 ];
+                        iPicture = pWVT->pGUI->pPicture[hb_parni(3) - 1];
                      }
                   }
                   else
                   {
                      void * hPic;
-                     iPicture = hb_wvt_gtLoadPicture( HB_PARSTR( 3, &hPic, nullptr ) );
+                     iPicture = hb_wvt_gtLoadPicture( HB_PARSTR(3, &hPic, nullptr) );
                      hb_strfree( hPic );
-                     if( ! iPicture )
+                     if( !iPicture )
                      {
                         void * hRes;
                         void * hSec;
-                        iPicture = hb_wvt_gtLoadPictureFromResource( HB_PARSTR( 3, &hRes, nullptr ), HB_PARSTR( 4, &hSec, nullptr ) );
+                        iPicture = hb_wvt_gtLoadPictureFromResource( HB_PARSTR(3, &hRes, nullptr), HB_PARSTR(4, &hSec, nullptr) );
                         hb_strfree( hRes );
                         hb_strfree( hSec );
                      }
@@ -273,7 +273,7 @@ HB_FUNC( WVG_SETGOBJDATA )
                   {
                      DeleteObject( gObj->hFont );
                   }
-                  gObj->hFont        = reinterpret_cast< HFONT >( static_cast< HB_PTRUINT >( hb_parnint( 3 ) ) );
+                  gObj->hFont        = reinterpret_cast<HFONT>(static_cast<HB_PTRUINT>(hb_parnint(3)));
                   gObj->bDestroyFont = HB_FALSE;
                   break;
                case GOBJ_OBJDATA_HPEN:
@@ -281,7 +281,7 @@ HB_FUNC( WVG_SETGOBJDATA )
                   {
                      DeleteObject( gObj->hPen );
                   }
-                  gObj->hPen        = reinterpret_cast< HPEN >( static_cast< HB_PTRUINT >( hb_parnint( 3 ) ) );
+                  gObj->hPen        = reinterpret_cast<HPEN>(static_cast<HB_PTRUINT>(hb_parnint(3)));
                   gObj->bDestroyPen = HB_FALSE;
                   break;
                case GOBJ_OBJDATA_HBRUSH:
@@ -289,13 +289,13 @@ HB_FUNC( WVG_SETGOBJDATA )
                   {
                      DeleteObject( gObj->hBrush );
                   }
-                  gObj->hBrush        = reinterpret_cast< HBRUSH >( static_cast< HB_PTRUINT >( hb_parnint( 3 ) ) );
+                  gObj->hBrush        = reinterpret_cast<HBRUSH>(static_cast<HB_PTRUINT>(hb_parnint(3)));
                   gObj->bDestroyBrush = HB_TRUE;
                   break;
                case GOBJ_OBJDATA_COLORTEXT:
-                  if( HB_ISNUM( 3 ) )
+                  if( HB_ISNUM(3) )
                   {
-                     gObj->crRGBText = static_cast< COLORREF >( static_cast< HB_PTRUINT >( hb_parnint( 3 ) ) );
+                     gObj->crRGBText = static_cast<COLORREF>(static_cast<HB_PTRUINT>(hb_parnint(3)));
                   }
                   else
                   {
@@ -303,7 +303,7 @@ HB_FUNC( WVG_SETGOBJDATA )
                   }
                   break;
                case GOBJ_OBJDATA_COLORBK:
-                  gObj->crRGBBk = static_cast< COLORREF >( static_cast< HB_PTRUINT >( hb_parnint( 3 ) ) );
+                  gObj->crRGBBk = static_cast<COLORREF>(static_cast<HB_PTRUINT>(hb_parnint(3)));
                   break;
                case GOBJ_OBJDATA_BLOCK:
                   if( gObj->bBlock )
@@ -602,18 +602,18 @@ HB_FUNC( WVG_LABEL )
    lf.lfEscapement     = hb_parni( 6 ) * 10;
    lf.lfOrientation    = 0;
    lf.lfWeight         = hb_parni( 12 );
-   lf.lfItalic         = static_cast< BYTE >( hb_parl( 15 ) );
-   lf.lfUnderline      = static_cast< BYTE >( hb_parl( 16 ) );
-   lf.lfStrikeOut      = static_cast< BYTE >( hb_parl( 17 ) );
-   lf.lfCharSet        = static_cast< BYTE >( hb_parnidef( 14, pWVT->CodePage ) );
+   lf.lfItalic         = static_cast<BYTE>(hb_parl(15));
+   lf.lfUnderline      = static_cast<BYTE>(hb_parl(16));
+   lf.lfStrikeOut      = static_cast<BYTE>(hb_parl(17));
+   lf.lfCharSet        = static_cast<BYTE>(hb_parnidef(14, pWVT->CodePage));
    lf.lfOutPrecision   = 0;
    lf.lfClipPrecision  = 0;
-   lf.lfQuality        = static_cast< BYTE >( hb_parnidef( 13, DEFAULT_QUALITY ) );
+   lf.lfQuality        = static_cast<BYTE>(hb_parnidef(13, DEFAULT_QUALITY));
    lf.lfPitchAndFamily = FF_DONTCARE;
    lf.lfHeight         = hb_parnidef( 10, pWVT->fontHeight );
    lf.lfWidth          = hb_parnidef( 11, pWVT->fontWidth < 0 ? -pWVT->fontWidth : pWVT->fontWidth );
 
-   HB_STRNCPY( lf.lfFaceName, ( ! HB_ISCHAR( 9 ) ? pWVT->fontFace : HB_PARSTR( 9, &hText, nullptr ) ), HB_SIZEOFARRAY( lf.lfFaceName ) - 1 );
+   HB_STRNCPY( lf.lfFaceName, ( !HB_ISCHAR(9) ? pWVT->fontFace : HB_PARSTR(9, &hText, nullptr) ), HB_SIZEOFARRAY( lf.lfFaceName ) - 1 );
    hb_strfree( hText );
 
    hFont = CreateFontIndirect( &lf );
@@ -633,11 +633,11 @@ HB_FUNC( WVG_LABEL )
       gObj->aOffset.iBottom = hb_parvni( 3, 3 );
       gObj->aOffset.iRight  = hb_parvni( 3, 4 );
 
-      gObj->lpText = HB_PARSTR( 4, &gObj->hText, nullptr );
+      gObj->lpText = HB_PARSTR(4, &gObj->hText, nullptr);
 
       gObj->iAlign       = hb_parnidef( 5, TA_LEFT );
-      gObj->crRGBText    = static_cast< COLORREF >( hb_parnint( 7 ) );
-      gObj->crRGBBk      = static_cast< COLORREF >( hb_parnint( 8 ) );
+      gObj->crRGBText    = static_cast<COLORREF>(hb_parnint(7));
+      gObj->crRGBBk      = static_cast<COLORREF>(hb_parnint(8));
       gObj->hFont        = hFont;
       gObj->bDestroyFont = HB_TRUE;
 
@@ -664,13 +664,13 @@ HB_FUNC( WVG_LABELEX )
    gObj->aOffset.iBottom = hb_parvni( 3, 3 );
    gObj->aOffset.iRight  = hb_parvni( 3, 4 );
 
-   gObj->lpText = HB_PARSTR( 4, &gObj->hText, nullptr );
+   gObj->lpText = HB_PARSTR(4, &gObj->hText, nullptr);
 
    gObj->iAlign    = hb_parnidef( 5, TA_LEFT );
-   gObj->crRGBText = static_cast< COLORREF >( hb_parnint( 6 ) );
-   gObj->crRGBBk   = static_cast< COLORREF >( hb_parnint( 7 ) );
+   gObj->crRGBText = static_cast<COLORREF>(hb_parnint(6));
+   gObj->crRGBBk   = static_cast<COLORREF>(hb_parnint(7));
 
-   gObj->hFont        = pWVT->pGUI->hUserFonts[ hb_parni( 8 ) - 1 ];
+   gObj->hFont        = pWVT->pGUI->hUserFonts[hb_parni(8) - 1];
    gObj->bDestroyFont = HB_FALSE;
 
    gObj->gObjNext = pWVT->gObjs;
@@ -694,7 +694,7 @@ static void hb_wvg_Label( PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop )
    SetTextColor( pWVT->hdc, gObj->crRGBText );
    SetTextAlign( pWVT->hdc, gObj->iAlign );
 
-   hOldFont = static_cast< HFONT >( SelectObject( pWVT->hdc, gObj->hFont ) );
+   hOldFont = static_cast<HFONT>(SelectObject(pWVT->hdc, gObj->hFont));
 
    ExtTextOut( pWVT->hdc, iLeft, iTop, 0, nullptr, gObj->lpText, lstrlen( gObj->lpText ), nullptr );
 
@@ -716,18 +716,18 @@ HB_FUNC( WVG_LABELEX2 )
    lf.lfEscapement     = hb_parni( 8 ) * 10;
    lf.lfOrientation    = 0;
    lf.lfWeight         = hb_parni( 14 );
-   lf.lfItalic         = static_cast< BYTE >( hb_parl( 17 ) );
-   lf.lfUnderline      = static_cast< BYTE >( hb_parl( 18 ) );
-   lf.lfStrikeOut      = static_cast< BYTE >( hb_parl( 19 ) );
-   lf.lfCharSet        = static_cast< BYTE >( hb_parnidef( 16, pWVT->CodePage ) );
+   lf.lfItalic         = static_cast<BYTE>(hb_parl(17));
+   lf.lfUnderline      = static_cast<BYTE>(hb_parl(18));
+   lf.lfStrikeOut      = static_cast<BYTE>(hb_parl(19));
+   lf.lfCharSet        = static_cast<BYTE>(hb_parnidef(16, pWVT->CodePage));
    lf.lfOutPrecision   = 0;
    lf.lfClipPrecision  = 0;
-   lf.lfQuality        = static_cast< BYTE >( hb_parnidef( 15, DEFAULT_QUALITY ) );
+   lf.lfQuality        = static_cast<BYTE>(hb_parnidef(15, DEFAULT_QUALITY));
    lf.lfPitchAndFamily = FF_DONTCARE;
    lf.lfHeight         = hb_parnidef( 12, pWVT->fontHeight );
    lf.lfWidth          = hb_parnidef( 13, pWVT->fontWidth < 0 ? -pWVT->fontWidth : pWVT->fontWidth );
 
-   HB_STRNCPY( lf.lfFaceName, ( ! HB_ISCHAR( 11 ) ? pWVT->fontFace : HB_PARSTR( 11, &hText, nullptr ) ), HB_SIZEOFARRAY( lf.lfFaceName ) - 1 );
+   HB_STRNCPY( lf.lfFaceName, ( !HB_ISCHAR(11) ? pWVT->fontFace : HB_PARSTR(11, &hText, nullptr) ), HB_SIZEOFARRAY( lf.lfFaceName ) - 1 );
    hb_strfree( hText );
 
    hFont = CreateFontIndirect( &lf );
@@ -747,11 +747,11 @@ HB_FUNC( WVG_LABELEX2 )
       gObj->aOffset.iBottom = hb_parvni( 5, 3 );
       gObj->aOffset.iRight  = hb_parvni( 5, 4 );
 
-      gObj->lpText = HB_PARSTR( 6, &gObj->hText, nullptr );
+      gObj->lpText = HB_PARSTR(6, &gObj->hText, nullptr);
 
       gObj->iAlign       = hb_parnidef( 7, TA_LEFT );
-      gObj->crRGBText    = static_cast< COLORREF >( hb_parnint( 9 ) );
-      gObj->crRGBBk      = static_cast< COLORREF >( hb_parnint( 10 ) );
+      gObj->crRGBText    = static_cast<COLORREF>(hb_parnint(9));
+      gObj->crRGBBk      = static_cast<COLORREF>(hb_parnint(10));
       gObj->hFont        = hFont;
       gObj->bDestroyFont = HB_TRUE;
 
@@ -770,7 +770,7 @@ static void hb_wvg_LabelEx2( PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop
    SetBkColor( pWVT->hdc, gObj->crRGBBk );
    SetTextColor( pWVT->hdc, gObj->crRGBText );
 
-   hOldFont = static_cast< HFONT >( SelectObject( pWVT->hdc, gObj->hFont ) );
+   hOldFont = static_cast<HFONT>(SelectObject(pWVT->hdc, gObj->hFont));
 
    x = iLeft;
 
@@ -831,7 +831,7 @@ HB_FUNC( WVG_OUTLINE )
 
    gObj->iWidth = hb_parni( 6 );             /* iThick */
    gObj->iStyle = hb_parni( 7 );             /* iShape */
-   gObj->crRGB  = static_cast< COLORREF >( hb_parnl( 8 ) );
+   gObj->crRGB  = static_cast<COLORREF>(hb_parnl(8));
 
    if( gObj->iWidth > 0 )
    {
@@ -866,9 +866,9 @@ HB_FUNC( WVG_OUTLINEEX )
    gObj->aOffset.iBottom = hb_parvni( 5, 3 );
    gObj->aOffset.iRight  = hb_parvni( 5, 4 );
 
-   if( pWVT->pGUI->hUserPens[ hb_parni( 6 ) - 1 ] )
+   if( pWVT->pGUI->hUserPens[hb_parni(6) - 1] )
    {
-      gObj->hPen        = pWVT->pGUI->hUserPens[ hb_parni( 6 ) - 1 ];
+      gObj->hPen        = pWVT->pGUI->hUserPens[hb_parni(6) - 1];
       gObj->bDestroyPen = HB_FALSE;
    }
    else
@@ -925,7 +925,7 @@ HB_FUNC( WVG_LINE )
 
    gObj->iStyle = hb_parni( 9 );
    gObj->iWidth = hb_parni( 10 );           /* iThick */
-   gObj->crRGB  = static_cast< COLORREF >( hb_parnl( 11 ) );
+   gObj->crRGB  = static_cast<COLORREF>(hb_parnl(11));
 
    gObj->hPen        = CreatePen( gObj->iStyle, gObj->iWidth, gObj->crRGB );
    gObj->bDestroyPen = HB_TRUE;
@@ -957,7 +957,7 @@ HB_FUNC( WVG_LINEEX )
    gObj->iFormat = hb_parni( 7 );
    gObj->iAlign  = hb_parni( 8 );
 
-   gObj->hPen        = pWVT->pGUI->hUserPens[ hb_parni( 9 ) - 1 ];
+   gObj->hPen        = pWVT->pGUI->hUserPens[hb_parni(9) - 1];
    gObj->bDestroyPen = HB_FALSE;
 
    gObj->gObjNext = pWVT->gObjs;
@@ -1018,7 +1018,7 @@ static void hb_wvg_Line( PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, in
    }
 
    hPen    = gObj->hPen;
-   hOldPen = static_cast< HPEN >( SelectObject( hdc, gObj->hPen ) );
+   hOldPen = static_cast<HPEN>(SelectObject(hdc, gObj->hPen));
 
    switch( gObj->iFormat )
    {
@@ -1112,8 +1112,8 @@ HB_FUNC( WVG_ELLIPSE )
 
 static void hb_wvg_Ellipse( PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int iRight, int iBottom )
 {
-   HBRUSH hBrush = static_cast< HBRUSH >( SelectObject( pWVT->hdc, gObj->hBrush ) );
-   HPEN   hPen   = static_cast< HPEN >( SelectObject( pWVT->hdc, gObj->hPen ) );
+   HBRUSH hBrush = static_cast<HBRUSH>(SelectObject(pWVT->hdc, gObj->hBrush));
+   HPEN   hPen   = static_cast<HPEN>(SelectObject(pWVT->hdc, gObj->hPen));
 
    Ellipse( pWVT->hdc, iLeft, iTop, iRight, iBottom );
 
@@ -1150,8 +1150,8 @@ HB_FUNC( WVG_RECTANGLE )
 
 static void hb_wvg_Rectangle( PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int iRight, int iBottom )
 {
-   HBRUSH hBrush = static_cast< HBRUSH >( SelectObject( pWVT->hdc, gObj->hBrush ) );
-   HPEN   hPen   = static_cast< HPEN >( SelectObject( pWVT->hdc, gObj->hPen ) );
+   HBRUSH hBrush = static_cast<HBRUSH>(SelectObject(pWVT->hdc, gObj->hBrush));
+   HPEN   hPen   = static_cast<HPEN>(SelectObject(pWVT->hdc, gObj->hPen));
 
    Rectangle( pWVT->hdc, iLeft, iTop, iRight, iBottom );
 
@@ -1191,8 +1191,8 @@ HB_FUNC( WVG_ROUNDRECT )
 
 static void hb_wvg_RoundRect( PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int iRight, int iBottom )
 {
-   HBRUSH hBrush = static_cast< HBRUSH >( SelectObject( pWVT->hdc, gObj->hBrush ) );
-   HPEN   hPen   = static_cast< HPEN >( SelectObject( pWVT->hdc, gObj->hPen ) );
+   HBRUSH hBrush = static_cast<HBRUSH>(SelectObject(pWVT->hdc, gObj->hBrush));
+   HPEN   hPen   = static_cast<HPEN>(SelectObject(pWVT->hdc, gObj->hPen));
 
    RoundRect( pWVT->hdc, iLeft, iTop, iRight, iBottom, gObj->iWidth, gObj->iHeight );
 
@@ -1203,7 +1203,7 @@ static void hb_wvg_RoundRect( PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTo
 /* wvg_ColorRect( nTop, nLeft, nBottom, nRight, aPxlOff, nRGB ) */
 HB_FUNC( WVG_COLORRECT )
 {
-   HBRUSH hBrush = CreateSolidBrush( static_cast< COLORREF >( hb_parnint( 6 ) ) );
+   HBRUSH hBrush = CreateSolidBrush(static_cast<COLORREF>(hb_parnint(6)));
 
    if( hBrush )
    {
@@ -1259,19 +1259,19 @@ HB_FUNC( WVG_SHADEDRECT )
 
    gObj->iData = hb_parnidef( 6, GRADIENT_FILL_RECT_H );
 
-   gObj->vert[ 0 ].x     = 0;
-   gObj->vert[ 0 ].y     = 0;
-   gObj->vert[ 0 ].Red   = static_cast< COLOR16 >( hb_parvni( 7, 1 ) );
-   gObj->vert[ 0 ].Green = static_cast< COLOR16 >( hb_parvni( 7, 2 ) );
-   gObj->vert[ 0 ].Blue  = static_cast< COLOR16 >( hb_parvni( 7, 3 ) );
-   gObj->vert[ 0 ].Alpha = static_cast< COLOR16 >( hb_parvni( 7, 4 ) );
+   gObj->vert[0].x     = 0;
+   gObj->vert[0].y     = 0;
+   gObj->vert[0].Red   = static_cast<COLOR16>(hb_parvni(7, 1));
+   gObj->vert[0].Green = static_cast<COLOR16>(hb_parvni(7, 2));
+   gObj->vert[0].Blue  = static_cast<COLOR16>(hb_parvni(7, 3));
+   gObj->vert[0].Alpha = static_cast<COLOR16>(hb_parvni(7, 4));
 
-   gObj->vert[ 1 ].x     = 0;
-   gObj->vert[ 1 ].y     = 0;
-   gObj->vert[ 1 ].Red   = static_cast< COLOR16 >( hb_parvni( 8, 1 ) );
-   gObj->vert[ 1 ].Green = static_cast< COLOR16 >( hb_parvni( 8, 2 ) );
-   gObj->vert[ 1 ].Blue  = static_cast< COLOR16 >( hb_parvni( 8, 3 ) );
-   gObj->vert[ 1 ].Alpha = static_cast< COLOR16 >( hb_parvni( 8, 4 ) );
+   gObj->vert[1].x     = 0;
+   gObj->vert[1].y     = 0;
+   gObj->vert[1].Red   = static_cast<COLOR16>(hb_parvni(8, 1));
+   gObj->vert[1].Green = static_cast<COLOR16>(hb_parvni(8, 2));
+   gObj->vert[1].Blue  = static_cast<COLOR16>(hb_parvni(8, 3));
+   gObj->vert[1].Alpha = static_cast<COLOR16>(hb_parvni(8, 4));
 
    gObj->gObjNext = pWVT->gObjs;
    pWVT->gObjs    = gObj;
@@ -1285,13 +1285,13 @@ static void hb_wvg_ShadedRect( PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iT
    gRect.UpperLeft  = 0;
    gRect.LowerRight = 1;
 
-   gObj->vert[ 0 ].x = iLeft;
-   gObj->vert[ 0 ].y = iTop;
+   gObj->vert[0].x = iLeft;
+   gObj->vert[0].y = iTop;
 
-   gObj->vert[ 1 ].x = iRight;
-   gObj->vert[ 1 ].y = iBottom;
+   gObj->vert[1].x = iRight;
+   gObj->vert[1].y = iBottom;
 
-   bGF = static_cast< HB_BOOL >( GradientFill( pWVT->hGuiDC, gObj->vert, 2, &gRect, 1, gObj->iData ) );
+   bGF = static_cast<HB_BOOL>(GradientFill(pWVT->hGuiDC, gObj->vert, 2, &gRect, 1, gObj->iData));
 
    HB_SYMBOL_UNUSED( bGF );
 }
@@ -1316,7 +1316,7 @@ HB_FUNC( WVG_TEXTBOX )
    gObj->aOffset.iBottom = hb_parvni( 5, 3 );
    gObj->aOffset.iRight  = hb_parvni( 5, 4 );
 
-   gObj->lpText = HB_PARSTR( 6, &gObj->hText, nullptr );
+   gObj->lpText = HB_PARSTR(6, &gObj->hText, nullptr);
 
    switch( hb_parni( 7 ) )
    {
@@ -1332,10 +1332,10 @@ HB_FUNC( WVG_TEXTBOX )
    }
    gObj->iAlign = iAlignH;
 
-   gObj->crRGBText = static_cast< COLORREF >( hb_parnint( 9 ) );
-   gObj->crRGBBk   = static_cast< COLORREF >( hb_parnint( 10 ) );
+   gObj->crRGBText = static_cast<COLORREF>(hb_parnint(9));
+   gObj->crRGBBk   = static_cast<COLORREF>(hb_parnint(10));
 
-   gObj->hFont        = reinterpret_cast< HFONT >( static_cast< HB_PTRUINT >( hb_parnint( 11 ) ) );
+   gObj->hFont        = reinterpret_cast<HFONT>(static_cast<HB_PTRUINT>(hb_parnint(11)));
    gObj->bDestroyFont = HB_FALSE;
 
    gObj->gObjNext = pWVT->gObjs;
@@ -1351,7 +1351,7 @@ static void hb_wvg_TextBox( PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop,
 
    SetTextAlign( hdc, TA_TOP | TA_LEFT | TA_NOUPDATECP );
    SetTextColor( hdc, gObj->crRGBText );
-   if( gObj->crRGBBk == static_cast< COLORREF >( 0 ) )
+   if( gObj->crRGBBk == static_cast<COLORREF>(0) )
    {
       SetBkMode( hdc, TRANSPARENT );
    }
@@ -1368,7 +1368,7 @@ static void hb_wvg_TextBox( PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop,
 /* wvg_Picture( nTop, nLeft, nBottom, nRight, aPxlOff, nSlot, lDoNotScale ) --> NIL */
 HB_FUNC( WVG_PICTURE )
 {
-   if( HB_ISNUM( 6 ) && hb_parni( 6 ) <= WVT_PICTURES_MAX )
+   if( HB_ISNUM(6) && hb_parni( 6 ) <= WVT_PICTURES_MAX )
    {
       PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
       HB_GOBJS * gObj = hb_wvg_ObjectNew( pWVT );
@@ -1385,7 +1385,7 @@ HB_FUNC( WVG_PICTURE )
       gObj->aOffset.iBottom = hb_parvni( 5, 3 );
       gObj->aOffset.iRight  = hb_parvni( 5, 4 );
 
-      gObj->pPicture        = pWVT->pGUI->pPicture[ hb_parni( 6 ) - 1 ];
+      gObj->pPicture        = pWVT->pGUI->pPicture[hb_parni(6) - 1];
       gObj->iData           = ( hb_parl( 7 ) ? 1 : 0 );
       gObj->bDestroyPicture = HB_FALSE;
 
@@ -1400,7 +1400,7 @@ HB_FUNC( WVG_PICTURE )
 
 HB_FUNC( WVG_PICTUREEX )
 {
-   if( HB_ISNUM( 6 ) )
+   if( HB_ISNUM(6) )
    {
       PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
       HB_GOBJS * gObj = hb_wvg_ObjectNew( pWVT );
@@ -1417,7 +1417,7 @@ HB_FUNC( WVG_PICTUREEX )
       gObj->aOffset.iBottom = hb_parvni( 5, 3 );
       gObj->aOffset.iRight  = hb_parvni( 5, 4 );
 
-      gObj->pPicture        = reinterpret_cast< IPicture * >( static_cast< HB_PTRUINT >( hb_parnint( 6 ) ) );
+      gObj->pPicture        = reinterpret_cast<IPicture*>(static_cast<HB_PTRUINT>(hb_parnint(6)));
       gObj->iData           = ( hb_parl( 7 ) ? 1 : 0 );
       gObj->bDestroyPicture = HB_FALSE;
 
@@ -1446,16 +1446,16 @@ HB_FUNC( WVG_IMAGE )
    switch( iSource )
    {
       case GOBJ_IMAGESOURCE_SLOT:
-         if( HB_ISNUM( 7 ) && hb_parni( 7 ) <= WVT_PICTURES_MAX )
+         if( HB_ISNUM(7) && hb_parni( 7 ) <= WVT_PICTURES_MAX )
          {
-            iPicture = pWVT->pGUI->pPicture[ hb_parni( 7 ) - 1 ];
+            iPicture = pWVT->pGUI->pPicture[hb_parni(7) - 1];
          }
          break;
       case GOBJ_IMAGESOURCE_RESOURCE:
       {
          void * hPic;
          void * hRes;
-         iPicture = hb_wvt_gtLoadPictureFromResource( HB_PARSTR( 7, &hPic, nullptr ), HB_PARSTR( 8, &hRes, nullptr ) );
+         iPicture = hb_wvt_gtLoadPictureFromResource( HB_PARSTR(7, &hPic, nullptr), HB_PARSTR(8, &hRes, nullptr) );
          hb_strfree( hPic );
          hb_strfree( hRes );
          break;
@@ -1463,7 +1463,7 @@ HB_FUNC( WVG_IMAGE )
       case GOBJ_IMAGESOURCE_FILE:
       {
          void * hPic;
-         iPicture = hb_wvt_gtLoadPicture( HB_PARSTR( 7, &hPic, nullptr ) );
+         iPicture = hb_wvt_gtLoadPicture( HB_PARSTR(7, &hPic, nullptr) );
          hb_strfree( hPic );
          break;
       }
@@ -1532,15 +1532,15 @@ static void hb_wvg_RenderPicture( PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int
 
          if( lHeight > lWidth )
          {
-            iWd = static_cast< int >( static_cast< double >( ht ) * lWidth / lHeight );
+            iWd = static_cast<int>(static_cast<double>(ht) * lWidth / lHeight);
             iWd = HB_MIN( iWd, wd );
-            iHt = static_cast< int >( static_cast< double >( iWd ) * lHeight / lWidth );
+            iHt = static_cast<int>(static_cast<double>(iWd) * lHeight / lWidth);
          }
          else
          {
-            iHt = static_cast< int >( static_cast< double >( wd ) * lHeight / lWidth );
+            iHt = static_cast<int>(static_cast<double>(wd) * lHeight / lWidth);
             iHt = HB_MIN( iHt, ht );
-            iWd = static_cast< int >( static_cast< double >( iHt ) * lWidth / lHeight );
+            iWd = static_cast<int>(static_cast<double>(iHt) * lWidth / lHeight);
          }
          x  += abs( ( iWd - wd ) / 2 );
          y  += abs( ( iHt - ht ) / 2 );
@@ -1595,8 +1595,8 @@ static void hb_wvg_GridVert( PHB_GTWVT pWVT, PHB_ITEM pArray, RECT * uRect )
 
    if( iTabs > 0 )
    {
-      int iTop    = hb_arrayGetNI( pArray, 1 ) * static_cast< int >( pWVT->PTEXTSIZE.y );
-      int iBottom = ( ( hb_arrayGetNI( pArray, 2 ) + 1 ) * static_cast< int >( pWVT->PTEXTSIZE.y ) ) - 1;
+      int iTop    = hb_arrayGetNI( pArray, 1 ) * static_cast<int>(pWVT->PTEXTSIZE.y);
+      int iBottom = ( ( hb_arrayGetNI( pArray, 2 ) + 1 ) * static_cast<int>(pWVT->PTEXTSIZE.y) ) - 1;
 
       if( ( iTop >= uRect->top && iTop <= uRect->bottom ) || ( iBottom >= uRect->top && iBottom <= uRect->bottom ) )
       {
