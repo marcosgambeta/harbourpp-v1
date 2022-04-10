@@ -84,4 +84,4 @@ static const HB_WCHAR s_uniCodes[NUMBER_OF_CHARS] =
    0x0142, 0x00F8, 0x0153, 0x00DF, 0x00FE, 0x00FF, 0xFFFD, 0xFFFD
 };
 
-HB_UNITABLE hb_uniTbl_NEXTSTEP = { HB_CPID_NEXTSTEP, s_uniCodes, nullptr, 0 };
+HB_UNITABLE hb_uniTbl_NEXTSTEP = {HB_CPID_NEXTSTEP, s_uniCodes, nullptr, 0};

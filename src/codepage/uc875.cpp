@@ -84,4 +84,4 @@ static const HB_WCHAR s_uniCodes[NUMBER_OF_CHARS] =
    0x0038, 0x0039, 0x00B3, 0x00A9, 0x001A, 0x001A, 0x00BB, 0x009F
 };
 
-HB_UNITABLE hb_uniTbl_875 = { HB_CPID_875, s_uniCodes, nullptr, 0 };
+HB_UNITABLE hb_uniTbl_875 = {HB_CPID_875, s_uniCodes, nullptr, 0};

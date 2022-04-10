@@ -84,4 +84,4 @@ static const HB_WCHAR s_uniCodes[NUMBER_OF_CHARS] =
    0x00B0, 0x2219, 0x00B7, 0x221A, 0x207F, 0x00B2, 0x00B3, 0x00AF
 };
 
-HB_UNITABLE hb_uniTbl_ATARIST = { HB_CPID_ATARIST, s_uniCodes, nullptr, 0 };
+HB_UNITABLE hb_uniTbl_ATARIST = {HB_CPID_ATARIST, s_uniCodes, nullptr, 0};
