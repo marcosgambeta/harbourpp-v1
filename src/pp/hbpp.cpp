@@ -50,7 +50,7 @@
 
 #define _DEFAULT_ORIGIN_URL  "https://harbour.github.io/"
 
-int hb_verRevision( void )
+int hb_verRevision(void)
 {
    return 0;
 }
@@ -60,68 +60,75 @@ int hb_verRevision( void )
 /*
  * functions to create .c files with rules defined in given PP context
  */
-static int hb_pp_writeTokenCount( PHB_PP_TOKEN pToken )
+static int hb_pp_writeTokenCount(PHB_PP_TOKEN pToken)
 {
    int iToken = 0;
 
    while( pToken )
    {
-      iToken += hb_pp_writeTokenCount( pToken->pMTokens ) + 1;
+      iToken += hb_pp_writeTokenCount(pToken->pMTokens) + 1;
       pToken  = pToken->pNext;
    }
    return iToken;
 }
 
-static void hb_pp_writeToken( FILE * fout, PHB_PP_TOKEN pToken,
-                              const char * szName, int iToken, HB_BOOL fLast )
+static void hb_pp_writeToken(FILE * fout, PHB_PP_TOKEN pToken, const char * szName, int iToken, HB_BOOL fLast)
 {
    while( pToken )
    {
-      int iOptional = hb_pp_writeTokenCount( pToken->pMTokens ), i;
+      int iOptional = hb_pp_writeTokenCount(pToken->pMTokens), i;
 
       i = static_cast<int>(strlen(szName));
       if( pToken->pNext )
+      {
          fprintf(fout, "   { %s +%2d", szName, iToken + iOptional + 1);
+      }
       else
+      {
          fprintf(fout, "   { NULL%*s", i, "");
+      }
       if( iOptional )
+      {
          fprintf(fout, ", %s +%2d", szName, iToken + 1);
+      }
       else
+      {
          fprintf(fout, ", NULL%*s", i, "");
+      }
 
       i = 16 - static_cast<int>(strlen(pToken->value));
       fprintf(fout, ", \"%s\", %*s %2d,%2d, 0x%04x, %u }%s\n",
-               pToken->value,
-               i < 0 ? 0 : i, "",
-               static_cast<int>(pToken->len), static_cast<int>(pToken->spaces),
-               pToken->type | HB_PP_TOKEN_STATIC | HB_PP_TOKEN_PREDEFINED,
-               pToken->index,
-               fLast && !pToken->pNext && iOptional == 0 ? "" : ",");
+              pToken->value,
+              i < 0 ? 0 : i, "",
+              static_cast<int>(pToken->len), static_cast<int>(pToken->spaces),
+              pToken->type | HB_PP_TOKEN_STATIC | HB_PP_TOKEN_PREDEFINED,
+              pToken->index,
+              fLast && !pToken->pNext && iOptional == 0 ? "" : ",");
 
       if( iOptional )
-         hb_pp_writeToken( fout, pToken->pMTokens, szName, iToken + 1,
-                           pToken->pNext == nullptr && fLast );
+      {
+         hb_pp_writeToken(fout, pToken->pMTokens, szName, iToken + 1, pToken->pNext == nullptr && fLast);
+      }
 
       iToken += iOptional + 1;
       pToken  = pToken->pNext;
    }
 }
 
-static void hb_pp_writeTokenList( FILE * fout, PHB_PP_TOKEN pTokenLst, const char * szName )
+static void hb_pp_writeTokenList(FILE * fout, PHB_PP_TOKEN pTokenLst, const char * szName)
 {
    int iTokens;
 
-   iTokens = hb_pp_writeTokenCount( pTokenLst );
+   iTokens = hb_pp_writeTokenCount(pTokenLst);
    if( iTokens )
    {
-      fprintf(fout, "static HB_PP_TOKEN %s[ %d ] = {\n",
-               szName, iTokens);
-      hb_pp_writeToken( fout, pTokenLst, szName, 0, HB_TRUE );
+      fprintf(fout, "static HB_PP_TOKEN %s[ %d ] = {\n", szName, iTokens);
+      hb_pp_writeToken(fout, pTokenLst, szName, 0, HB_TRUE);
       fprintf(fout, "};\n");
    }
 }
 
-static int hb_pp_writeRules( FILE * fout, PHB_PP_RULE pFirst, const char * szName )
+static int hb_pp_writeRules(FILE * fout, PHB_PP_RULE pFirst, const char * szName)
 {
    char szMatch[16], szResult[16];
    HB_ULONG ulRepeatBits, ulBit;
@@ -137,19 +144,18 @@ static int hb_pp_writeRules( FILE * fout, PHB_PP_RULE pFirst, const char * szNam
       if( pRule->pMatch )
       {
          hb_snprintf(szMatch, sizeof(szMatch), "s_%cm%03d", szName[0], iRule);
-         hb_pp_writeTokenList( fout, pRule->pMatch, szMatch );
+         hb_pp_writeTokenList(fout, pRule->pMatch, szMatch);
       }
 
       if( pRule->pResult )
       {
          hb_snprintf(szResult, sizeof(szResult), "s_%cr%03d", szName[0], iRule);
-         hb_pp_writeTokenList( fout, pRule->pResult, szResult );
+         hb_pp_writeTokenList(fout, pRule->pResult, szResult);
       }
       pRule = pRule->pPrev;
    }
 
-   fprintf(fout, "static const HB_PP_DEFRULE s_%s[ %d ] = {\n",
-            szName, iRule);
+   fprintf(fout, "static const HB_PP_DEFRULE s_%s[ %d ] = {\n", szName, iRule);
 
    iRule = 0;
    pRule = pFirst;
@@ -157,41 +163,51 @@ static int hb_pp_writeRules( FILE * fout, PHB_PP_RULE pFirst, const char * szNam
    {
       ++iRule;
       if( pRule->pMatch )
+      {
          hb_snprintf(szMatch, sizeof(szMatch), "s_%cm%03d", szName[0], iRule);
+      }
       else
+      {
          hb_strncpy(szMatch, "NULL   ", sizeof(szMatch) - 1);
+      }
       if( pRule->pResult )
+      {
          hb_snprintf(szResult, sizeof(szResult), "s_%cr%03d", szName[0], iRule);
+      }
       else
+      {
          hb_strncpy(szResult, "NULL   ", sizeof(szResult) - 1);
+      }
 
       ulRepeatBits = 0;
       for( u = 0, ulBit = 1; u < pRule->markers; ++u, ulBit <<= 1 )
       {
          if( pRule->pMarkers[u].canrepeat )
+         {
             ulRepeatBits |= ulBit;
+         }
       }
-      fprintf(fout, "   { %s, %s, %d,%2u, 0x%04lx }%s\n",
-               szMatch, szResult, HB_PP_CMP_MODE(pRule->mode),
-               pRule->markers, ulRepeatBits, pRule->pPrev ? "," : "");
+      fprintf(fout, "   { %s, %s, %d,%2u, 0x%04lx }%s\n", szMatch, szResult, HB_PP_CMP_MODE(pRule->mode), pRule->markers, ulRepeatBits, pRule->pPrev ? "," : "");
       pRule = pRule->pPrev;
    }
    fprintf(fout, "};\n\n");
    return iRule;
 }
 
-static void hb_pp_generateInitFunc( FILE * fout, int iRules,
-                                    const char * szVar, const char * szRule )
+static void hb_pp_generateInitFunc(FILE * fout, int iRules, const char * szVar, const char * szRule)
 {
-   fprintf(fout, "   hb_pp_initRules( &pState->p%s, &pState->i%s, ",
-            szVar, szVar);
+   fprintf(fout, "   hb_pp_initRules( &pState->p%s, &pState->i%s, ", szVar, szVar);
    if( iRules )
+   {
       fprintf(fout, "s_%s, %d );\n", szRule, iRules);
+   }
    else
+   {
       fprintf(fout, "NULL, 0 );\n");
+   }
 }
 
-static void hb_pp_generateRules( FILE * fout, PHB_PP_STATE pState, const char * szPPRuleFuncName )
+static void hb_pp_generateRules(FILE * fout, PHB_PP_STATE pState, const char * szPPRuleFuncName)
 {
    int iDefs = 0, iTrans = 0, iCmds = 0;
 
@@ -205,20 +221,26 @@ static void hb_pp_generateRules( FILE * fout, PHB_PP_STATE pState, const char * 
             " */\n\n#define _HB_PP_INTERNAL\n#include \"hbpp.h\"\n\n");
 
    if( pState->pDefinitions )
-      iDefs = hb_pp_writeRules( fout, pState->pDefinitions, "def" );
+   {
+      iDefs = hb_pp_writeRules(fout, pState->pDefinitions, "def");
+   }
    if( pState->pTranslations )
-      iTrans = hb_pp_writeRules( fout, pState->pTranslations, "trs" );
+   {
+      iTrans = hb_pp_writeRules(fout, pState->pTranslations, "trs");
+   }
    if( pState->pCommands )
-      iCmds = hb_pp_writeRules( fout, pState->pCommands, "cmd" );
+   {
+      iCmds = hb_pp_writeRules(fout, pState->pCommands, "cmd");
+   }
 
    fprintf(fout, "\nvoid %s( PHB_PP_STATE pState )\n{\n", szPPRuleFuncName ? szPPRuleFuncName : "hb_pp_setStdRules");
-   hb_pp_generateInitFunc( fout, iDefs,  "Definitions",  "def" );
-   hb_pp_generateInitFunc( fout, iTrans, "Translations", "trs" );
-   hb_pp_generateInitFunc( fout, iCmds,  "Commands",     "cmd" );
+   hb_pp_generateInitFunc(fout, iDefs,  "Definitions",  "def");
+   hb_pp_generateInitFunc(fout, iTrans, "Translations", "trs");
+   hb_pp_generateInitFunc(fout, iCmds,  "Commands",     "cmd");
    fprintf(fout, "}\n");
 }
 
-static void hb_pp_undefCompilerRules( PHB_PP_STATE pState )
+static void hb_pp_undefCompilerRules(PHB_PP_STATE pState)
 {
    int i;
    PHB_PP_RULE * pRulePtr, pRule;
@@ -237,34 +259,37 @@ static void hb_pp_undefCompilerRules( PHB_PP_STATE pState )
                               nullptr };
 
    for( i = 0; szRules[i]; ++i )
-      hb_pp_delDefine( pState, szRules[i] );
+   {
+      hb_pp_delDefine(pState, szRules[i]);
+   }
 
    pRulePtr = &pState->pDefinitions;
    while( *pRulePtr )
    {
       pRule = *pRulePtr;
-      if( !pRule->pMatch->pNext &&
-          strncmp(pRule->pMatch->value, "__PLATFORM__", 12) == 0 )
+      if( !pRule->pMatch->pNext && strncmp(pRule->pMatch->value, "__PLATFORM__", 12) == 0 )
       {
          *pRulePtr = pRule->pPrev;
-         hb_pp_ruleFree( pRule );
+         hb_pp_ruleFree(pRule);
          pState->iDefinitions--;
       }
       else
+      {
          pRulePtr = &pRule->pPrev;
+      }
    }
 }
 
-static int hb_pp_preprocesfile( PHB_PP_STATE pState, const char * szRuleFile, const char * szPPRuleFuncName )
+static int hb_pp_preprocesfile(PHB_PP_STATE pState, const char * szRuleFile, const char * szPPRuleFuncName)
 {
    int iResult = 0;
    HB_SIZE nLen;
 
-   while( hb_pp_nextLine( pState, &nLen ) != nullptr && nLen )
+   while( hb_pp_nextLine(pState, &nLen) != nullptr && nLen )
    {
       ;
    }
-   
+
    if( szRuleFile )
    {
       FILE * foutr;
@@ -272,13 +297,13 @@ static int hb_pp_preprocesfile( PHB_PP_STATE pState, const char * szRuleFile, co
       foutr = hb_fopen(szRuleFile, "w");
       if( !foutr )
       {
-         perror( szRuleFile );
+         perror(szRuleFile);
          iResult = 1;
       }
       else
       {
-         hb_pp_undefCompilerRules( pState );
-         hb_pp_generateRules( foutr, pState, szPPRuleFuncName );
+         hb_pp_undefCompilerRules(pState);
+         hb_pp_generateRules(foutr, pState, szPPRuleFuncName);
          fclose(foutr);
       }
    }
@@ -287,7 +312,7 @@ static int hb_pp_preprocesfile( PHB_PP_STATE pState, const char * szRuleFile, co
 }
 
 /* NOTE: Caller should free the pointer. */
-static char * hb_pp_escapeString( char * szString )
+static char * hb_pp_escapeString(char * szString)
 {
    char * szResult, ch;
    int iLen;
@@ -301,7 +326,9 @@ static char * hb_pp_escapeString( char * szString )
        *       are part of ANSI C standard
        */
       if( ch == '"' || ch == '\\' || ch == '?' )
+      {
          ++iLen;
+      }
       ++iLen;
    }
    while( ch );
@@ -312,7 +339,9 @@ static char * hb_pp_escapeString( char * szString )
    {
       ch = *szString++;
       if( ch == '"' || ch == '\\' || ch == '?' )
+      {
          szResult[iLen++] = '\\';
+      }
       szResult[iLen++] = ch;
    }
    while( ch );
@@ -320,10 +349,7 @@ static char * hb_pp_escapeString( char * szString )
    return szResult;
 }
 
-static int hb_pp_generateVerInfo( char * szVerFile,
-                                  int iRevID,
-                                  char * szChangeLogID,
-                                  char * szLastEntry )
+static int hb_pp_generateVerInfo(char * szVerFile, int iRevID, char * szChangeLogID, char * szLastEntry)
 {
    int iResult = 0;
    FILE * fout;
@@ -331,7 +357,7 @@ static int hb_pp_generateVerInfo( char * szVerFile,
    fout = hb_fopen(szVerFile, "w");
    if( !fout )
    {
-      perror( szVerFile );
+      perror(szVerFile);
       iResult = 1;
    }
    else
@@ -352,40 +378,40 @@ static int hb_pp_generateVerInfo( char * szVerFile,
 
       if( szChangeLogID )
       {
-         pszEscaped = hb_pp_escapeString( szChangeLogID );
+         pszEscaped = hb_pp_escapeString(szChangeLogID);
          fprintf(fout, "#define HB_VER_CHLID             \"%s\"\n", pszEscaped);
          hb_xfree(pszEscaped);
       }
 
       if( szLastEntry )
       {
-         pszEscaped = hb_pp_escapeString( szLastEntry );
+         pszEscaped = hb_pp_escapeString(szLastEntry);
          fprintf(fout, "#define HB_VER_LENTRY            \"%s\"\n", pszEscaped);
          hb_xfree(pszEscaped);
       }
 
-      pszEnv = hb_getenv( "HB_USER_CFLAGS" );
+      pszEnv = hb_getenv("HB_USER_CFLAGS");
       if( pszEnv )
       {
-         pszEscaped = hb_pp_escapeString( pszEnv );
+         pszEscaped = hb_pp_escapeString(pszEnv);
          fprintf(fout, "#define HB_VER_HB_USER_CFLAGS    \"%s\"\n", pszEscaped);
          hb_xfree(pszEscaped);
          hb_xfree(pszEnv);
       }
 
-      pszEnv = hb_getenv( "HB_USER_LDFLAGS" );
+      pszEnv = hb_getenv("HB_USER_LDFLAGS");
       if( pszEnv )
       {
-         pszEscaped = hb_pp_escapeString( pszEnv );
+         pszEscaped = hb_pp_escapeString(pszEnv);
          fprintf(fout, "#define HB_VER_HB_USER_LDFLAGS   \"%s\"\n", pszEscaped);
          hb_xfree(pszEscaped);
          hb_xfree(pszEnv);
       }
 
-      pszEnv = hb_getenv( "HB_USER_PRGFLAGS" );
+      pszEnv = hb_getenv("HB_USER_PRGFLAGS");
       if( pszEnv )
       {
-         pszEscaped = hb_pp_escapeString( pszEnv );
+         pszEscaped = hb_pp_escapeString(pszEnv);
          fprintf(fout, "#define HB_VER_HB_USER_PRGFLAGS  \"%s\"\n", pszEscaped);
          hb_xfree(pszEscaped);
          hb_xfree(pszEnv);
@@ -394,7 +420,7 @@ static int hb_pp_generateVerInfo( char * szVerFile,
       pszEnv = hb_getenv( "HB_PLATFORM" );
       if( pszEnv )
       {
-         pszEscaped = hb_pp_escapeString( pszEnv );
+         pszEscaped = hb_pp_escapeString(pszEnv);
          fprintf(fout, "#define HB_PLATFORM              \"%s\"\n", pszEscaped);
          hb_xfree(pszEscaped);
          hb_xfree(pszEnv);
@@ -403,7 +429,7 @@ static int hb_pp_generateVerInfo( char * szVerFile,
       pszEnv = hb_getenv( "HB_COMPILER" );
       if( pszEnv )
       {
-         pszEscaped = hb_pp_escapeString( pszEnv );
+         pszEscaped = hb_pp_escapeString(pszEnv);
          fprintf(fout, "#define HB_COMPILER              \"%s\"\n", pszEscaped);
          hb_xfree(pszEscaped);
          hb_xfree(pszEnv);
@@ -415,7 +441,7 @@ static int hb_pp_generateVerInfo( char * szVerFile,
    return iResult;
 }
 
-static char * hb_fsFileFind( const char * pszFileMask )
+static char * hb_fsFileFind(const char * pszFileMask)
 {
    PHB_FFIND ffind;
 
@@ -433,9 +459,7 @@ static char * hb_fsFileFind( const char * pszFileMask )
    return nullptr;
 }
 
-static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
-                                 int iQuiet, int * piRevID,
-                                 char ** pszChangeLogID, char ** pszLastEntry )
+static int hb_pp_parseChangelog(PHB_PP_STATE pState, const char * pszFileName, int iQuiet, int * piRevID, char ** pszChangeLogID, char ** pszLastEntry)
 {
    char * pszFree = nullptr;
    int iResult = 0;
@@ -454,7 +478,9 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
       int i = 0;
 
       if( !pFileName->szPath )
+      {
          pFileName->szPath = "../../../../..";
+      }
 
       pszFileName = s_szNames[i++];
       while( pszFileName )
@@ -482,7 +508,9 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
       }
 
       if( !pszFileName )
+      {
          pszFileName = s_szNames[0];
+      }
    }
 
    hb_xfree(pFileName);
@@ -492,7 +520,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
    {
       if( iQuiet < 2 )
       {
-         perror( pszFileName );
+         perror(pszFileName);
       }
       iResult = 1;
    }
@@ -505,14 +533,18 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
       int iLen;
 
       if( iQuiet == 0 )
+      {
          fprintf(stdout, "Reading ChangeLog file: %s\n", pszFileName);
+      }
 
       *szId = *szLog = '\0';
 
       do
       {
-         if( !fgets( szLine, sizeof(szLine), file_in ) )
+         if( !fgets(szLine, sizeof(szLine), file_in) )
+         {
             break;
+         }
 
          if( !*szId )
          {
@@ -520,7 +552,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
             if( szFrom )
             {
                szFrom += 3;
-               szTo = strchr( szFrom, '$' );
+               szTo = strchr(szFrom, '$');
                if( szTo )
                {
                   /* Is it tarball source package? */
@@ -529,8 +561,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
                      /* we do not have revision number :-( */
                      hb_strncpy(szId, "unknown -1 (source tarball without keyword expanding)", sizeof(szId) - 1);
                   }
-                  else if( szTo - szFrom > 3 && szTo[-1] == ' ' &&
-                           szFrom[0] == ':' && szFrom[1] == ' ' )
+                  else if( szTo - szFrom > 3 && szTo[-1] == ' ' && szFrom[0] == ':' && szFrom[1] == ' ' )
                   {
                      szTo[-1] = '\0';
                      hb_strncpy(szId, szFrom + 2, sizeof(szId) - 1);
@@ -540,15 +571,14 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
          }
          else if( !*szLog )
          {
-            if( szLine[4] == '-' && szLine[7] == '-' &&
-                szLine[10] == ' ' && szLine[13] == ':' )
+            if( szLine[4] == '-' && szLine[7] == '-' && szLine[10] == ' ' && szLine[13] == ':' )
             {
                hb_strncpy(szLog, szLine, sizeof(szLog) - 1);
                iLen = static_cast<int>(strlen(szLog));
                while( iLen-- && HB_ISSPACE(szLog[iLen]) )
                {
                   szLog[iLen] = '\0';
-               }   
+               }
             }
          }
       }
@@ -559,7 +589,9 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
       if( !*szLog )
       {
          if( iQuiet < 2 )
+         {
             fprintf(stderr, "Cannot find valid $" "Id entry in the %s file.\n", pszFileName);
+         }
          iResult = 1;
       }
       else
@@ -571,14 +603,14 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
          iLen = static_cast<int>(strlen(szLine));
          szLine[iLen] = '"';
          szLine[++iLen] = '\0';
-         hb_pp_addDefine( pState, "HB_VER_LENTRY", szLine );
+         hb_pp_addDefine(pState, "HB_VER_LENTRY", szLine);
          *pszLastEntry = hb_strdup(szLog);
 
          hb_strncpy(szLine + 1, szId, sizeof(szLine) - 3);
          iLen = static_cast<int>(strlen(szLine));
          szLine[iLen] = '"';
          szLine[++iLen] = '\0';
-         hb_pp_addDefine( pState, "HB_VER_CHLID", szLine );
+         hb_pp_addDefine(pState, "HB_VER_CHLID", szLine);
          *pszChangeLogID = hb_strdup(szId);
 
          if( strlen(szLog) >= 16 )
@@ -592,21 +624,19 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
                 HB_ISDIGIT(szLog[21]) && HB_ISDIGIT(szLog[22]) &&
                 HB_ISDIGIT(szLog[23]) && HB_ISDIGIT(szLog[24]) )
             {
-               iUTC = ( static_cast<int>(szLog[21] - '0') * 10 +
-                        static_cast<int>(szLog[22] - '0') ) * 60 +
-                        static_cast<int>(szLog[23] - '0') * 10 +
-                        static_cast<int>(szLog[24] - '0');
+               iUTC = (static_cast<int>(szLog[21] - '0') * 10 +
+                       static_cast<int>(szLog[22] - '0') ) * 60 +
+                       static_cast<int>(szLog[23] - '0') * 10 +
+                       static_cast<int>(szLog[24] - '0');
             }
             szLog[16] = '\0';
-            if( iUTC != 0 && hb_timeStampStrGetDT( szLog, &lJulian, &lMilliSec ) )
+            if( iUTC != 0 && hb_timeStampStrGetDT(szLog, &lJulian, &lMilliSec) )
             {
-               hb_timeStampUnpackDT( hb_timeStampPackDT( lJulian, lMilliSec ) -
-                                     static_cast<double>(iUTC) / ( 24 * 60 ),
-                                     &lJulian, &lMilliSec );
+               hb_timeStampUnpackDT(hb_timeStampPackDT(lJulian, lMilliSec) - static_cast<double>(iUTC) / (24 * 60), &lJulian, &lMilliSec);
             }
             if( lJulian && lMilliSec )
             {
-               hb_timeStampStrRawPut( szRevID, lJulian, lMilliSec );
+               hb_timeStampStrRawPut(szRevID, lJulian, lMilliSec);
                memmove(szRevID, szRevID + 2, 10);
             }
             else
@@ -626,19 +656,23 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
 
          }
          else
+         {
             szRevID[0] = '\0';
+         }
 
-         *piRevID = static_cast<int>(hb_strValInt( szRevID, &iLen ));
+         *piRevID = static_cast<int>(hb_strValInt(szRevID, &iLen));
 
-         hb_pp_addDefine( pState, "HB_VER_REVID", szRevID );
+         hb_pp_addDefine(pState, "HB_VER_REVID", szRevID);
 #ifdef HB_LEGACY_LEVEL4
-         hb_pp_addDefine( pState, "HB_VER_SVNID", szRevID );
+         hb_pp_addDefine(pState, "HB_VER_SVNID", szRevID);
 #endif
       }
    }
 
    if( pszFree )
+   {
       hb_xfree(pszFree);
+   }
 
    return iResult;
 }
@@ -646,7 +680,7 @@ static int hb_pp_parseChangelog( PHB_PP_STATE pState, const char * pszFileName,
 /*
  * ppgen only functions
  */
-static void hb_pp_usage( char * szName )
+static void hb_pp_usage(char * szName)
 {
    printf("\n");
    printf("Syntax:  %s <file[.prg]> [options]\n\n", szName);
@@ -663,7 +697,7 @@ static void hb_pp_usage( char * szName )
            "Note:  if neither -o nor -v is specified then -w is default action\n\n");
 }
 
-int main( int argc, char * argv[] )
+int main(int argc, char * argv[])
 {
    char * szFile = nullptr, * szRuleFile = nullptr, * szVerFile = nullptr;
    char * szStdCh = nullptr, * szLogFile = nullptr, * szInclude;
@@ -680,7 +714,7 @@ int main( int argc, char * argv[] )
       szFile = argv[1];
       for( i = 2; szFile && i < argc; i++ )
       {
-         if( !HB_ISOPTSEP( argv[i][0] ) )
+         if( !HB_ISOPTSEP(argv[i][0]) )
             szFile = nullptr;
          else
          {
@@ -689,27 +723,39 @@ int main( int argc, char * argv[] )
                case 'q':
                case 'Q':
                   if( !argv[i][2] )
+                  {
                      iQuiet = 1;
+                  }
                   else if( argv[i][2] == '-' && !argv[i][3] )
+                  {
                      iQuiet = 0;
+                  }
                   else if( argv[i][2] >= '0' && argv[i][2] <= '2' && !argv[i][3] )
+                  {
                      iQuiet = argv[i][2] - '0';
+                  }
                   else
+                  {
                      szFile = nullptr;
+                  }
                   break;
 
                case 'd':
                case 'D':
                   if( !argv[i][2] )
+                  {
                      szFile = nullptr;
+                  }
                   else
                   {
                      char * szDefText = hb_strdup(argv[i] + 2), * szAssign;
 
-                     szAssign = strchr( szDefText, '=' );
+                     szAssign = strchr(szDefText, '=');
                      if( szAssign )
+                     {
                         *szAssign++ = '\0';
-                     hb_pp_addDefine( pState, szDefText, szAssign );
+                     }
+                     hb_pp_addDefine(pState, szDefText, szAssign);
                      hb_xfree(szDefText);
                   }
                   break;
@@ -717,56 +763,82 @@ int main( int argc, char * argv[] )
                case 'e':
                case 'E':
                   if( argv[i][2] )
+                  {
                      szPPRuleFuncName = argv[i] + 2;
+                  }
                   else
+                  {
                      szPPRuleFuncName = nullptr;
+                  }
                   break;
 
                case 'w':
                case 'W':
                   if( argv[i][2] )
+                  {
                      szFile = nullptr;
+                  }
                   else
+                  {
                      fWrite = HB_TRUE;
+                  }
                   break;
 
                case 'c':
                case 'C':
                   fChgLog = HB_TRUE;
                   if( argv[i][2] )
+                  {
                      szLogFile = argv[i] + 2;
+                  }
                   break;
 
                case 'i':
                case 'I':
                   if( argv[i][2] )
-                     hb_pp_addSearchPath( pState, argv[i] + 2, HB_FALSE );
+                  {
+                     hb_pp_addSearchPath(pState, argv[i] + 2, HB_FALSE);
+                  }
                   else
+                  {
                      szFile = nullptr;
+                  }
                   break;
 
                case 'o':
                case 'O':
                   if( argv[i][2] )
+                  {
                      szRuleFile = argv[i] + 2;
+                  }
                   else
+                  {
                      szFile = nullptr;
+                  }
                   break;
 
                case 'v':
                case 'V':
                   if( argv[i][2] )
+                  {
                      szVerFile = argv[i] + 2;
+                  }
                   else
+                  {
                      szFile = nullptr;
+                  }
                   break;
 
                case 'u':
                case 'U':
                   if( argv[i][2] )
+                  {
                      szStdCh = argv[i] + 2;
+                  }
                   else
+                  {
                      szStdCh = nullptr;
+                  }
                   break;
 
                default:
@@ -779,30 +851,35 @@ int main( int argc, char * argv[] )
 
    if( iQuiet < 2 )
    {
-      printf("Harbour++ Preprocessor %d.%d.%d%s\n",
-              HB_VER_MAJOR, HB_VER_MINOR, HB_VER_RELEASE, HB_VER_STATUS);
+      printf("Harbour++ Preprocessor %d.%d.%d%s\n", HB_VER_MAJOR, HB_VER_MINOR, HB_VER_RELEASE, HB_VER_STATUS);
       printf("Copyright (c) 1999-present, %s\n", _DEFAULT_ORIGIN_URL);
    }
 
    if( szFile )
    {
       if( !szRuleFile && !szVerFile )
+      {
          fWrite = HB_TRUE;
+      }
 
-      hb_pp_init( pState, iQuiet != 0, HB_TRUE, 0, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr );
+      hb_pp_init(pState, iQuiet != 0, HB_TRUE, 0, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
 
-      szInclude = hb_getenv( "INCLUDE" );
+      szInclude = hb_getenv("INCLUDE");
       if( szInclude )
       {
          if( szInclude[0] )
-            hb_pp_addSearchPath( pState, szInclude, HB_FALSE );
+         {
+            hb_pp_addSearchPath(pState, szInclude, HB_FALSE);
+         }
          hb_xfree(szInclude);
       }
 
       if( szStdCh )
-         hb_pp_readRules( pState, szStdCh );
+      {
+         hb_pp_readRules(pState, szStdCh);
+      }
 
-      if( hb_pp_inFile( pState, szFile, HB_TRUE, nullptr, HB_TRUE ) )
+      if( hb_pp_inFile(pState, szFile, HB_TRUE, nullptr, HB_TRUE) )
       {
          if( fWrite )
          {
@@ -814,37 +891,49 @@ int main( int argc, char * argv[] )
             hb_fsFNameMerge(szFileName, pFileName);
             hb_xfree(pFileName);
 
-            hb_pp_outFile( pState, szFileName, nullptr );
+            hb_pp_outFile(pState, szFileName, nullptr);
          }
 
          if( fChgLog )
-            iResult = hb_pp_parseChangelog( pState, szLogFile, iQuiet,
-                                            &iRevID, &szChangeLogID, &szLastEntry );
+         {
+            iResult = hb_pp_parseChangelog(pState, szLogFile, iQuiet, &iRevID, &szChangeLogID, &szLastEntry);
+         }
 
          if( iResult == 0 )
-            iResult = hb_pp_preprocesfile( pState, szRuleFile, szPPRuleFuncName );
+         {
+            iResult = hb_pp_preprocesfile(pState, szRuleFile, szPPRuleFuncName);
+         }
 
          if( iResult == 0 && szVerFile )
-            iResult = hb_pp_generateVerInfo( szVerFile, iRevID,
-                                             szChangeLogID, szLastEntry );
+         {
+            iResult = hb_pp_generateVerInfo(szVerFile, iRevID, szChangeLogID, szLastEntry);
+         }
          if( iResult == 0 && hb_pp_errorCount( pState ) > 0 )
+         {
             iResult = 1;
+         }
       }
       else
+      {
          iResult = 1;
+      }
    }
    else
    {
-      hb_pp_usage( argv[0] );
+      hb_pp_usage(argv[0]);
       iResult = 1;
    }
 
    if( szChangeLogID )
+   {
       hb_xfree(szChangeLogID);
+   }
    if( szLastEntry )
+   {
       hb_xfree(szLastEntry);
+   }
 
-   hb_pp_free( pState );
+   hb_pp_free(pState);
 
    return iResult;
 }

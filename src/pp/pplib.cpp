@@ -53,12 +53,10 @@
 
 HB_EXTERN_BEGIN
 
-static void hb_pp_ErrorMessage( void * cargo, const char * const szMsgTable[],
-                                char cPrefix, int iCode,
-                                const char * szParam1, const char * szParam2 )
+static void hb_pp_ErrorMessage(void * cargo, const char * const szMsgTable[], char cPrefix, int iCode, const char * szParam1, const char * szParam2)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_pp_ErrorGen(%p, %p, %c, %d, %s, %s)", cargo, static_cast<const void*>(szMsgTable), cPrefix, iCode, szParam1, szParam2 ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_pp_ErrorGen(%p, %p, %c, %d, %s, %s)", cargo, static_cast<const void*>(szMsgTable), cPrefix, iCode, szParam1, szParam2));
 #endif
 
    HB_SYMBOL_UNUSED(cargo);
@@ -68,24 +66,21 @@ static void hb_pp_ErrorMessage( void * cargo, const char * const szMsgTable[],
    {
       char szMsgBuf[1024];
       PHB_ITEM pError;
-      hb_snprintf(szMsgBuf, sizeof(szMsgBuf), szMsgTable[iCode - 1],
-                   szParam1, szParam2);
-      pError = hb_errRT_New( ES_ERROR, "PP", 1001, static_cast<HB_ERRCODE>(iCode), szMsgBuf,
-                             nullptr, 0, EF_NONE | EF_CANDEFAULT );
-      hb_errLaunch( pError );
-      hb_errRelease( pError );
+      hb_snprintf(szMsgBuf, sizeof(szMsgBuf), szMsgTable[iCode - 1], szParam1, szParam2);
+      pError = hb_errRT_New(ES_ERROR, "PP", 1001, static_cast<HB_ERRCODE>(iCode), szMsgBuf, nullptr, 0, EF_NONE | EF_CANDEFAULT);
+      hb_errLaunch(pError);
+      hb_errRelease(pError);
    }
 }
 
-static void hb_pp_Disp( void * cargo, const char * szMessage )
+static void hb_pp_Disp(void * cargo, const char * szMessage)
 {
    /* ignore stdout messages when PP used as library */
    HB_SYMBOL_UNUSED(cargo);
    HB_SYMBOL_UNUSED(szMessage);
 }
 
-static HB_BOOL hb_pp_CompilerSwitch( void * cargo, const char * szSwitch,
-                                     int * piValue, HB_BOOL fSet )
+static HB_BOOL hb_pp_CompilerSwitch(void * cargo, const char * szSwitch, int * piValue, HB_BOOL fSet)
 {
    /* ignore all compiler switches */
    HB_SYMBOL_UNUSED(cargo);
@@ -97,13 +92,13 @@ static HB_BOOL hb_pp_CompilerSwitch( void * cargo, const char * szSwitch,
 }
 
 /* PP destructor */
-static HB_GARBAGE_FUNC( hb_pp_Destructor )
+static HB_GARBAGE_FUNC(hb_pp_Destructor)
 {
-   PHB_PP_STATE * pStatePtr = ( PHB_PP_STATE * ) Cargo;
+   PHB_PP_STATE * pStatePtr = static_cast<PHB_PP_STATE*>(Cargo);
 
    if( *pStatePtr )
    {
-      hb_pp_free( *pStatePtr );
+      hb_pp_free(*pStatePtr);
       *pStatePtr = nullptr;
    }
 }
@@ -116,7 +111,7 @@ static const HB_GC_FUNCS s_gcPPFuncs =
    hb_gcDummyMark
 };
 
-static void hb_pp_StdRules( PHB_ITEM ppItem )
+static void hb_pp_StdRules(PHB_ITEM ppItem)
 {
    static HB_BOOL s_fInit = HB_TRUE;
    static PHB_DYNS s_pDynSym;
@@ -136,15 +131,18 @@ static void hb_pp_StdRules( PHB_ITEM ppItem )
    }
 }
 
-PHB_PP_STATE hb_pp_Param( int iParam )
+PHB_PP_STATE hb_pp_Param(int iParam)
 {
-   PHB_PP_STATE * pStatePtr =
-      ( PHB_PP_STATE * ) hb_parptrGC( &s_gcPPFuncs, iParam );
+   PHB_PP_STATE * pStatePtr = static_cast<PHB_PP_STATE*>(hb_parptrGC(&s_gcPPFuncs, iParam));
 
    if( pStatePtr )
+   {
       return *pStatePtr;
+   }
    else
+   {
       return nullptr;
+   }
 }
 
 /*
@@ -164,30 +162,35 @@ HB_FUNC( __PP_INIT )
       HB_BOOL fArchDefs = hb_parldef(3, HB_TRUE);
       PHB_ITEM ppItem;
 
-      pStatePtr = ( PHB_PP_STATE * ) hb_gcAllocate( sizeof(PHB_PP_STATE),
-                                                    &s_gcPPFuncs );
+      pStatePtr = static_cast<PHB_PP_STATE*>(hb_gcAllocate(sizeof(PHB_PP_STATE), &s_gcPPFuncs));
       *pStatePtr = pState;
       ppItem = hb_itemPutPtrGC(nullptr, static_cast<void*>(pStatePtr));
 
-      hb_pp_init( pState, HB_TRUE, HB_FALSE, 0, nullptr, nullptr, nullptr,
-                  hb_pp_ErrorMessage, hb_pp_Disp, nullptr, nullptr,
-                  hb_pp_CompilerSwitch );
+      hb_pp_init(pState, HB_TRUE, HB_FALSE, 0, nullptr, nullptr, nullptr, hb_pp_ErrorMessage, hb_pp_Disp, nullptr, nullptr, hb_pp_CompilerSwitch);
 
       if( szPath )
-         hb_pp_addSearchPath( pState, szPath, HB_TRUE );
+      {
+         hb_pp_addSearchPath(pState, szPath, HB_TRUE);
+      }
 
       if( !szStdCh )
-         hb_pp_StdRules( ppItem );
+      {
+         hb_pp_StdRules(ppItem);
+      }
       else if( *szStdCh )
-         hb_pp_readRules( pState, szStdCh );
+      {
+         hb_pp_readRules(pState, szStdCh);
+      }
 
-      hb_pp_initDynDefines( pState, fArchDefs );
-      hb_pp_setStdBase( pState );
+      hb_pp_initDynDefines(pState, fArchDefs);
+      hb_pp_setStdBase(pState);
 
       hb_itemReturnRelease(ppItem);
    }
    else
+   {
       hb_ret();
+   }
 }
 
 /*
@@ -199,7 +202,9 @@ HB_FUNC( __PP_PATH )
    PHB_PP_STATE pState = hb_pp_Param(1);
 
    if( pState )
-      hb_pp_addSearchPath( pState, hb_parc(2), hb_parl(3) );
+   {
+      hb_pp_addSearchPath(pState, hb_parc(2), hb_parl(3));
+   }
 }
 
 /*
@@ -211,7 +216,9 @@ HB_FUNC( __PP_RESET )
    PHB_PP_STATE pState = hb_pp_Param(1);
 
    if( pState )
-      hb_pp_reset( pState );
+   {
+      hb_pp_reset(pState);
+   }
 }
 
 /*
@@ -229,7 +236,7 @@ HB_FUNC( __PP_ADDRULE )
 
       if( szText )
       {
-         while( nLen && ( szText[0] == ' ' || szText[0] == '\t' ) )
+         while( nLen && (szText[0] == ' ' || szText[0] == '\t') )
          {
             ++szText;
             --nLen;
@@ -238,16 +245,18 @@ HB_FUNC( __PP_ADDRULE )
 
       if( szText && nLen && szText[0] == '#' )
       {
-         hb_pp_parseLine( pState, szText, &nLen );
+         hb_pp_parseLine(pState, szText, &nLen);
 
          /* probably for parsing #included files the old code was making
             something like that */
          do
          {
             if( hb_vmRequestQuery() != 0 )
+            {
                return;
+            }
          }
-         while( hb_pp_nextLine( pState, nullptr ) );
+         while( hb_pp_nextLine(pState, nullptr) );
 
          hb_retl(true);
          return;
@@ -270,7 +279,7 @@ HB_FUNC( __PP_PROCESS )
 
       if( nLen )
       {
-         char * szText = hb_pp_parseLine( pState, hb_parc(2), &nLen );
+         char * szText = hb_pp_parseLine(pState, hb_parc(2), &nLen);
          hb_retclen(szText, nLen);
          return;
       }
