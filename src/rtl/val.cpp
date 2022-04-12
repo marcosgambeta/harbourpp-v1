@@ -103,10 +103,10 @@ static void hb_val( HB_BOOL fExt )
 
 HB_FUNC( VAL )
 {
-   hb_val( HB_FALSE );
+   hb_val(false);
 }
 
 HB_FUNC( HB_VAL )
 {
-   hb_val( HB_TRUE );
+   hb_val(true);
 }

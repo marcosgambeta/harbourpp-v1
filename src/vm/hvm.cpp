@@ -447,7 +447,7 @@ static void hb_vmDoInitHelp( void )
 
 HB_BOOL hb_vmIsMt( void )
 {
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_vmThreadIsMain( void * Cargo )
@@ -467,7 +467,7 @@ void hb_vmUnlock( void )
 HB_BOOL hb_vmSuspendThreads( HB_BOOL fWait )
 {
    HB_SYMBOL_UNUSED(fWait);
-   return HB_TRUE;
+   return true;
 }
 
 void hb_vmResumeThreads( void )
@@ -478,7 +478,7 @@ void hb_vmResumeThreads( void )
 HB_BOOL hb_vmThreadRegister( void * Cargo )
 {
    HB_SYMBOL_UNUSED(Cargo);
-   return HB_FALSE;
+   return false;
 }
 
 void hb_vmThreadRelease( void * Cargo )
@@ -514,7 +514,7 @@ static HB_THREAD_NO s_threadNo = 0;
 
 HB_BOOL hb_vmIsMt( void )
 {
-   return HB_TRUE;
+   return true;
 }
 
 static void hb_vmRequestTest( void )
@@ -529,7 +529,7 @@ static void hb_vmRequestTest( void )
          HB_STACK_TLS_PRELOAD
          if( !hb_stackQuitState() )
          {
-            hb_stackSetQuitState( HB_TRUE );
+            hb_stackSetQuitState(true);
             hb_stackSetActionRequest( HB_QUIT_REQUESTED );
          }
       }
@@ -567,7 +567,7 @@ void hb_vmUnlock( void )
                {
                   if( !hb_stackQuitState() )
                   {
-                     hb_stackSetQuitState( HB_TRUE );
+                     hb_stackSetQuitState(true);
                      hb_stackSetActionRequest( HB_QUIT_REQUESTED );
                   }
                }
@@ -599,7 +599,7 @@ void hb_vmLock( void )
                {
                   if( !hb_stackQuitState() )
                   {
-                     hb_stackSetQuitState( HB_TRUE );
+                     hb_stackSetQuitState(true);
                      hb_stackSetActionRequest( HB_QUIT_REQUESTED );
                   }
                }
@@ -634,7 +634,7 @@ void hb_vmLockForce( void )
             {
                if( !hb_stackQuitState() )
                {
-                  hb_stackSetQuitState( HB_TRUE );
+                  hb_stackSetQuitState(true);
                   hb_stackSetActionRequest( HB_QUIT_REQUESTED );
                }
             }
@@ -659,7 +659,7 @@ HB_BOOL hb_vmSuspendThreads( HB_BOOL fWait )
          if( s_iRunningCount <= 0 )
          {
             ++s_iRunningCount;
-            return HB_TRUE;
+            return true;
          }
          if( !fWait )
          {
@@ -678,7 +678,7 @@ HB_BOOL hb_vmSuspendThreads( HB_BOOL fWait )
 
    HB_VM_UNLOCK();
 
-   return HB_FALSE;
+   return false;
 }
 
 /* unblock execution of threads stopped by hb_vmSuspendThreads() */
@@ -771,7 +771,7 @@ HB_BOOL hb_vmThreadIsMain( void * Cargo )
 
    if( !s_fHVMActive || s_main_thread == nullptr )
    {
-      return HB_FALSE;
+      return false;
    }
    else if( Cargo )
    {
@@ -886,7 +886,7 @@ static void hb_vmStackRelease( void )
    HB_VM_LOCK();
 
    fLocked = hb_stackUnlock() == 1;
-   pThItm = hb_vmStackDel( static_cast<PHB_THREADSTATE>(hb_stackList()), HB_FALSE );
+   pThItm = hb_vmStackDel( static_cast<PHB_THREADSTATE>(hb_stackList()), false );
 
    HB_VM_UNLOCK();
 
@@ -929,7 +929,7 @@ HB_BOOL hb_vmThreadRegister( void * Cargo )
 
    HB_VM_UNLOCK();
 
-   return HB_TRUE;
+   return true;
 }
 
 void hb_vmThreadRelease( void * Cargo )
@@ -942,7 +942,7 @@ void hb_vmThreadRelease( void * Cargo )
 
    HB_VM_LOCK();
 
-   pThItm = hb_vmStackDel( static_cast<PHB_THREADSTATE>(Cargo), HB_TRUE );
+   pThItm = hb_vmStackDel( static_cast<PHB_THREADSTATE>(Cargo), true );
    hb_threadCondBroadcast( &s_vmCond );
 
    HB_VM_UNLOCK();
@@ -1025,7 +1025,7 @@ void hb_vmThreadQuit( void )
    HB_STACK_TLS_PRELOAD
    PHB_THREADSTATE pState;
 
-   hb_stackSetQuitState( HB_TRUE );
+   hb_stackSetQuitState(true);
    hb_stackSetActionRequest(0);
 
    pState = static_cast<PHB_THREADSTATE>(hb_stackList());
@@ -1052,10 +1052,10 @@ void hb_vmThreadQuit( void )
    hb_stackSetActionRequest(0);
    hb_rddCloseAll();             /* close all workareas */
    hb_stackRemove(1);          /* clear stack items, leave only initial symbol item */
-   hb_memvarsClear( HB_TRUE );   /* clear all PUBLIC (and PRIVATE if any) variables */
+   hb_memvarsClear(true);   /* clear all PUBLIC (and PRIVATE if any) variables */
    hb_vmSetI18N( nullptr );         /* remove i18n translation table */
 #ifndef HB_NO_DEBUG
-   hb_vmDebuggerExit( HB_FALSE );   /* deactivate debugger */
+   hb_vmDebuggerExit(false);   /* deactivate debugger */
 #endif
    hb_gtRelease( nullptr );
    hb_vmStackRelease();          /* release HVM stack and remove it from linked HVM stacks list */
@@ -1253,8 +1253,8 @@ void hb_vmInit( HB_BOOL bStartMainProc )
    hb_clsDoInit();                     /* initialize Class(y) .prg functions */
 
    hb_vmDoModuleInitFunctions();       /* process AtInit registered functions */
-   hb_vmDoInitFunctions( HB_TRUE );    /* process registered CLIPINIT INIT procedures */
-   hb_vmDoInitFunctions( HB_FALSE );   /* process registered other INIT procedures */
+   hb_vmDoInitFunctions(true);    /* process registered CLIPINIT INIT procedures */
+   hb_vmDoInitFunctions(false);   /* process registered other INIT procedures */
 
    /* Call __SetHelpK() function to redirect K_F1 to HELP() function
     * if it is linked. CA-Cl*pper calls it after INIT PROCEDUREs and
@@ -1362,7 +1362,7 @@ int hb_vmQuit( void )
    /* intentionally here to allow executing object destructors for all
     * cross referenced items before we release classy subsystem
     */
-   hb_gcCollectAll( HB_TRUE );
+   hb_gcCollectAll(true);
 
    /* Clear any pending actions so RDD shutdown process
     * can be cleanly executed
@@ -1370,15 +1370,15 @@ int hb_vmQuit( void )
    hb_stackSetActionRequest(0);
    hb_rddCloseAll();             /* close all workareas */
    hb_rddShutDown();             /* remove all registered RDD drivers */
-   hb_memvarsClear( HB_TRUE );   /* clear all PUBLIC (and PRIVATE if any) variables */
+   hb_memvarsClear(true);   /* clear all PUBLIC (and PRIVATE if any) variables */
    hb_vmSetI18N( nullptr );         /* remove i18n translation table */
    hb_i18n_exit();               /* unregister i18n module */
 
    hb_itemClear(hb_stackReturnItem());
-   hb_gcCollectAll( HB_TRUE );
+   hb_gcCollectAll(true);
 #ifndef HB_NO_DEBUG
    /* deactivate debugger */
-   hb_vmDebuggerExit( HB_TRUE );
+   hb_vmDebuggerExit(true);
 #endif
 
    /* stop executing PCODE (HVM reenter request) */
@@ -1401,7 +1401,7 @@ int hb_vmQuit( void )
    hb_vmReleaseLocalSymbols();      /* releases the local modules linked list */
    hb_dynsymRelease();              /* releases the dynamic symbol table */
    hb_itemClear(hb_stackReturnItem());
-   hb_gcCollectAll( HB_TRUE );
+   hb_gcCollectAll(true);
 
    hb_vmDoModuleQuitFunctions();    /* process AtQuit registered functions */
    hb_vmCleanModuleFunctions();
@@ -4309,7 +4309,7 @@ static void hb_vmEqual( void )
    }
    else if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
-      HB_BOOL fResult = hb_itemStrCmp(pItem1, pItem2, HB_FALSE) == 0;
+      HB_BOOL fResult = hb_itemStrCmp(pItem1, pItem2, false) == 0;
       hb_stackPop();
       hb_itemClear(pItem1);
       pItem1->type = HB_IT_LOGICAL;
@@ -4412,7 +4412,7 @@ static void hb_vmNotEqual( void )
    }
    else if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
-      int i = hb_itemStrCmp(pItem1, pItem2, HB_FALSE);
+      int i = hb_itemStrCmp(pItem1, pItem2, false);
       hb_stackPop();
       hb_itemClear(pItem1);
       pItem1->type = HB_IT_LOGICAL;
@@ -4499,7 +4499,7 @@ static void hb_vmLess( void )
 
    if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
-      int i = hb_itemStrCmp(pItem1, pItem2, HB_FALSE);
+      int i = hb_itemStrCmp(pItem1, pItem2, false);
       hb_stackPop();
       hb_itemClear(pItem1);
       pItem1->type = HB_IT_LOGICAL;
@@ -4569,7 +4569,7 @@ static void hb_vmLessEqual( void )
 
    if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
-      int i = hb_itemStrCmp(pItem1, pItem2, HB_FALSE);
+      int i = hb_itemStrCmp(pItem1, pItem2, false);
       hb_stackPop();
       hb_itemClear(pItem1);
       pItem1->type = HB_IT_LOGICAL;
@@ -4639,7 +4639,7 @@ static void hb_vmGreater( void )
 
    if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
-      int i = hb_itemStrCmp(pItem1, pItem2, HB_FALSE);
+      int i = hb_itemStrCmp(pItem1, pItem2, false);
       hb_stackPop();
       hb_itemClear(pItem1);
       pItem1->type = HB_IT_LOGICAL;
@@ -4709,7 +4709,7 @@ static void hb_vmGreaterEqual( void )
 
    if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
-      int i = hb_itemStrCmp(pItem1, pItem2, HB_FALSE);
+      int i = hb_itemStrCmp(pItem1, pItem2, false);
       hb_stackPop();
       hb_itemClear(pItem1);
       pItem1->type = HB_IT_LOGICAL;
@@ -5284,7 +5284,7 @@ static void hb_vmEnumPrev( void )
          {
             --pEnum->item.asEnum.offset;
             HB_VM_PUSHNIL();
-            hb_vmPushLogical(HB_TRUE);
+            hb_vmPushLogical(true);
             hb_objOperatorCall( HB_OO_OP_ENUMSKIP, hb_stackItemFromTop(-2), pBase, pEnumRef, hb_stackItemFromTop(-1) );
             hb_stackPop();
             if( hb_vmRequestQuery() != 0 || !hb_vmPopLogical() )
@@ -5984,15 +5984,15 @@ static HB_BOOL hb_vmArrayNew( PHB_ITEM pArray, HB_USHORT uiDimension )
          {
             if( !hb_vmArrayNew( pArray->item.asArray.value->pItems + nElements, uiDimension ) )
             {
-               return HB_FALSE;
+               return false;
             }
          }
       }
-      return HB_TRUE;
+      return true;
    }
 
    hb_errRT_BASE( EG_BOUND, 1131, nullptr, hb_langDGetErrorDesc( EG_ARRDIMENSION ), 0 );
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_vmArrayDim( HB_USHORT uiDimensions ) /* generates an uiDimensions Array and initialize those dimensions from the stack values */
@@ -8094,7 +8094,7 @@ static HB_BOOL hb_vmPopLogical( void )
    else
    {
       hb_errRT_BASE( EG_ARG, 1066, nullptr, hb_langDGetErrorDesc( EG_CONDITION ), 1, hb_stackItemFromTop(-1) );
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -8256,7 +8256,7 @@ HB_BOOL hb_vmLockModuleSymbols( void )
 #if defined(HB_MT_VM)
    return !s_pSymbolsMtx || hb_threadMutexLock( s_pSymbolsMtx );
 #else
-   return HB_TRUE;
+   return true;
 #endif /* HB_MT_VM */
 }
 
@@ -8307,7 +8307,7 @@ HB_BOOL hb_vmFindModuleSymbols( PHB_SYMB pSym, PHB_SYMB * pSymbols, HB_USHORT * 
          {
             *pSymbols   = pLastSymbols->pModuleSymbols;
             *puiSymbols = pLastSymbols->uiModuleSymbols;
-            return HB_TRUE;
+            return true;
          }
          pLastSymbols = pLastSymbols->pNext;
       }
@@ -8315,7 +8315,7 @@ HB_BOOL hb_vmFindModuleSymbols( PHB_SYMB pSym, PHB_SYMB * pSymbols, HB_USHORT * 
 
    *pSymbols   = nullptr;
    *puiSymbols = 0;
-   return HB_FALSE;
+   return false;
 }
 
 PHB_SYMB hb_vmFindFuncSym( const char * szFuncName, void * hDynLib )
@@ -8949,7 +8949,7 @@ PHB_SYMB hb_vmProcessSymbols( PHB_SYMB pSymbols, HB_USHORT uiModuleSymbols, cons
 #endif
 
    hb_vmVerifyPCodeVersion( szModuleName, uiPCodeVer );
-   return hb_vmRegisterSymbols( pSymbols, uiModuleSymbols, szModuleName, ulID, s_fCloneSym, s_fCloneSym, HB_FALSE )->pModuleSymbols;
+   return hb_vmRegisterSymbols( pSymbols, uiModuleSymbols, szModuleName, ulID, s_fCloneSym, s_fCloneSym, false )->pModuleSymbols;
 }
 
 PHB_SYMB hb_vmProcessDynLibSymbols( PHB_SYMB pSymbols, HB_USHORT uiModuleSymbols, const char * szModuleName, HB_ULONG ulID, HB_USHORT uiPCodeVer )
@@ -8959,7 +8959,7 @@ PHB_SYMB hb_vmProcessDynLibSymbols( PHB_SYMB pSymbols, HB_USHORT uiModuleSymbols
 #endif
 
    hb_vmVerifyPCodeVersion( szModuleName, uiPCodeVer );
-   return hb_vmRegisterSymbols( pSymbols, uiModuleSymbols, szModuleName, ulID, HB_TRUE, HB_TRUE, HB_FALSE )->pModuleSymbols;
+   return hb_vmRegisterSymbols( pSymbols, uiModuleSymbols, szModuleName, ulID, true, true, false )->pModuleSymbols;
 }
 
 static void hb_vmReleaseLocalSymbols( void )
@@ -9414,7 +9414,7 @@ HB_BOOL hb_vmMsgReference( PHB_ITEM pObject, PHB_DYNS pMessage, PHB_DYNS pAccMsg
    pRefer->item.asExtRef.value = static_cast<void*>(pMsgRef);
    pRefer->item.asExtRef.func = &s_MsgExtRef;
 
-   return HB_TRUE;
+   return true;
 }
 
 /* ------------------------------- */
@@ -9720,7 +9720,7 @@ HB_USHORT hb_vmRequestQuery( void )
    {
       if( !hb_stackQuitState() )
       {
-         hb_stackSetQuitState( HB_TRUE );
+         hb_stackSetQuitState(true);
          hb_stackSetActionRequest( HB_QUIT_REQUESTED );
       }
    }
@@ -9744,7 +9744,7 @@ HB_BOOL hb_vmRequestReenter( void )
 #if defined(HB_MT_VM)
       if( hb_stackId() == nullptr )
       {
-         return HB_FALSE;
+         return false;
       }
       else
       {
@@ -9767,9 +9767,9 @@ HB_BOOL hb_vmRequestReenter( void )
 
       hb_stackSetActionRequest(0);
 
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 void hb_vmRequestRestore( void )
@@ -9895,10 +9895,10 @@ HB_BOOL hb_vmRequestReenterExt( void )
 
       hb_stackSetActionRequest(0);
 
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_vmTryEval( PHB_ITEM * pResult, PHB_ITEM pItem, HB_ULONG ulPCount, ... )
@@ -10015,7 +10015,7 @@ HB_BOOL hb_vmIsReady( void )
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 #else
    return s_fHVMActive;
@@ -10178,13 +10178,13 @@ HB_BOOL hb_xvmSeqEnd( void )
 #endif /* HB_MT_VM */
    if( hb_stackGetActionRequest() & ( HB_ENDPROC_REQUESTED | HB_QUIT_REQUESTED ) )
    {
-      return HB_TRUE;
+      return true;
    }
    else if( hb_stackGetActionRequest() & HB_BREAK_REQUESTED )
    {
       hb_stackSetActionRequest(0);
    }
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_xvmSeqEndTest( void )
@@ -10199,7 +10199,7 @@ HB_BOOL hb_xvmSeqEndTest( void )
 #endif /* HB_MT_VM */
    if( ( hb_stackGetActionRequest() & ( HB_ENDPROC_REQUESTED | HB_BREAK_REQUESTED | HB_QUIT_REQUESTED ) ) != 0 )
    {
-      return HB_TRUE;
+      return true;
    }
 
    /*
@@ -10223,7 +10223,7 @@ HB_BOOL hb_xvmSeqEndTest( void )
    hb_stackDec();
    /* 1) Discard the value returned by BREAK statement */
    hb_stackPop();
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_xvmSeqRecover( void )
@@ -10257,13 +10257,13 @@ HB_BOOL hb_xvmSeqRecover( void )
 #endif /* HB_MT_VM */
    if( hb_stackGetActionRequest() & ( HB_ENDPROC_REQUESTED | HB_QUIT_REQUESTED ) )
    {
-      return HB_TRUE;
+      return true;
    }
    else if( hb_stackGetActionRequest() & HB_BREAK_REQUESTED )
    {
       hb_stackSetActionRequest(0);
    }
-   return HB_FALSE;
+   return false;
 }
 
 void hb_xvmSeqAlways( void )
@@ -10744,7 +10744,7 @@ void hb_xvmPushBlockShort( const HB_BYTE * pCode, PHB_SYMB pSymbols )
    HB_TRACE( HB_TR_DEBUG, ( "hb_xvmPushBlockShort(%p, %p)", static_cast<const void*>(pCode), static_cast<void*>(pSymbols) ) );
 #endif
 
-   hb_vmPushBlockShort(pCode, pSymbols, HB_FALSE);
+   hb_vmPushBlockShort(pCode, pSymbols, false);
 }
 
 void hb_xvmPushBlock( const HB_BYTE * pCode, PHB_SYMB pSymbols )
@@ -10753,7 +10753,7 @@ void hb_xvmPushBlock( const HB_BYTE * pCode, PHB_SYMB pSymbols )
    HB_TRACE( HB_TR_DEBUG, ( "hb_xvmPushBlock(%p, %p)", static_cast<const void*>(pCode), static_cast<void*>(pSymbols) ) );
 #endif
 
-   hb_vmPushBlock(pCode, pSymbols, HB_FALSE);
+   hb_vmPushBlock(pCode, pSymbols, false);
 }
 
 void hb_xvmPushSelf( void )
@@ -13260,7 +13260,7 @@ HB_BOOL hb_dbg_InvokeDebug( HB_BOOL bInvoke )
    return bRequest;
 #else
    HB_SYMBOL_UNUSED(bInvoke);
-   return HB_FALSE;
+   return false;
 #endif
 }
 

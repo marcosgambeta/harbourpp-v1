@@ -360,7 +360,7 @@ static void hb_gt_xwc_SigHandler( int iSig )
       {
          --s_iUpdateCounter;
       }
-      hb_gt_xwc_ProcessMessages( wnd, HB_FALSE );
+      hb_gt_xwc_ProcessMessages( wnd, false );
    }
 }
 
@@ -2321,9 +2321,9 @@ static HB_BOOL hb_gt_xwc_DefineBoxChar( PXWND_DEF wnd, HB_USHORT usCh, XWC_CharT
          case CH_IMG:
             break;
       }
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 /* *********************************************************************** */
@@ -2506,9 +2506,9 @@ static HB_BOOL hb_gt_xwc_GetCharFromInputQueue( PXWND_DEF wnd, int * keyCode )
       }
       *keyCode = wnd->KeyBuff[keyBuffPtr];
       wnd->keyBuffNO--;
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 /* *********************************************************************** */
@@ -2638,7 +2638,7 @@ static void hb_gt_xwc_MotifWmHints( PXWND_DEF wnd )
    memset(&mwmhints, 0, sizeof(mwmhints));
 
    result = XGetWindowProperty( wnd->dpy, wnd->window, s_atomMotifHints,
-                                0, 20, HB_FALSE, s_atomMotifHints,
+                                0, 20, false, s_atomMotifHints,
                                 &actual_type_return, &actual_format_return,
                                 &nitems_return, &bytes_after_return,
                                 &prop_return );
@@ -3251,7 +3251,7 @@ static void hb_gt_xwc_WndProc( PXWND_DEF wnd, XEvent * evt )
                if( nI > 0 )
                {
                   pBuffer[nI] = '\0';
-                  hb_gt_xwc_SetSelection( wnd, pBuffer, nI, HB_FALSE );
+                  hb_gt_xwc_SetSelection( wnd, pBuffer, nI, false );
                }
                else
                {
@@ -4250,11 +4250,11 @@ static HB_BOOL hb_gt_xwc_SetScrBuff( PXWND_DEF wnd, HB_USHORT cols, HB_USHORT ro
          wnd->pCurrScr = static_cast<HB_U32*>(hb_xgrab(cols * rows * sizeof(HB_U32)));
          hb_gt_xwc_InvalidateFull( wnd );
 
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 /* *********************************************************************** */
@@ -4280,9 +4280,9 @@ static HB_BOOL hb_gt_xwc_CreatePixmap( PXWND_DEF wnd )
 
       hb_gt_xwc_InvalidateFull( wnd );
 
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 /* *********************************************************************** */
@@ -4474,7 +4474,7 @@ static HB_BOOL hb_gt_xwc_SetFont( PXWND_DEF wnd, const char * fontFace, int weig
 
    if( xfs == nullptr )
    {
-      return HB_FALSE;
+      return false;
    }
 
    if( wnd->szFontSel )
@@ -4496,7 +4496,7 @@ static HB_BOOL hb_gt_xwc_SetFont( PXWND_DEF wnd, const char * fontFace, int weig
    }
    wnd->xfs = xfs;
 
-   return HB_TRUE;
+   return true;
 }
 
 /* *********************************************************************** */
@@ -4612,7 +4612,7 @@ static void hb_gt_xwc_RequestSelection( PXWND_DEF wnd )
          }
          else
          {
-            hb_gt_xwc_ProcessMessages( wnd, HB_TRUE );
+            hb_gt_xwc_ProcessMessages( wnd, true );
             if( !wnd->ClipboardRcvd && wnd->ClipboardRequest == aRequest )
             {
                HB_ULONG ulTime = hb_gt_xwc_CurrentTime() - ulCurrentTime;
@@ -4716,7 +4716,7 @@ static HB_BOOL hb_gt_xwc_ConnectX( PXWND_DEF wnd, HB_BOOL fExit )
 {
    if( wnd->dpy != nullptr )
    {
-      return HB_TRUE;
+      return true;
    }
 
    /* with nullptr, it gets the DISPLAY environment variable. */
@@ -4733,7 +4733,7 @@ static HB_BOOL hb_gt_xwc_ConnectX( PXWND_DEF wnd, HB_BOOL fExit )
          s_fNoXServer = HB_TRUE;
          hb_errInternal(10001, "Could not connect to X server.", nullptr, nullptr);
       }
-      return HB_FALSE;
+      return false;
    }
 
    HB_XWC_XLIB_LOCK( wnd->dpy );
@@ -4766,7 +4766,7 @@ static HB_BOOL hb_gt_xwc_ConnectX( PXWND_DEF wnd, HB_BOOL fExit )
 
    HB_XWC_XLIB_UNLOCK( wnd->dpy );
 
-   return HB_TRUE;
+   return true;
 }
 
 static void hb_gt_xwc_DissConnectX( PXWND_DEF wnd )
@@ -5020,7 +5020,7 @@ static void hb_gt_xwc_CreateWindow( PXWND_DEF wnd )
 
    if( wnd->fResizable != fResizable || fReset )
    {
-      hb_gt_xwc_ProcessMessages( wnd, HB_TRUE );
+      hb_gt_xwc_ProcessMessages( wnd, true );
       HB_XWC_XLIB_LOCK( wnd->dpy );
       wnd->fResizable = fResizable;
       hb_gt_xwc_MotifWmHints( wnd );
@@ -5037,7 +5037,7 @@ static void hb_gt_xwc_RealRefresh( PXWND_DEF wnd, HB_BOOL fSync )
 {
    if( !wnd->fInit )
    {
-      if( hb_gt_xwc_ConnectX( wnd, HB_TRUE ) )
+      if( hb_gt_xwc_ConnectX( wnd, true ) )
       {
          hb_gt_xwc_CreateWindow( wnd );
          wnd->fInit = HB_TRUE;
@@ -5064,7 +5064,7 @@ static void hb_gt_xwc_LateRefresh( PXWND_DEF wnd )
 {
    if( wnd->fInit )
    {
-      hb_gt_xwc_RealRefresh( wnd, HB_FALSE );
+      hb_gt_xwc_RealRefresh( wnd, false );
    }
 }
 
@@ -5085,7 +5085,7 @@ static void hb_gt_xwc_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 #endif
 
    HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
-   HB_GTSELF_SETFLAG(pGT, HB_GTI_COMPATBUFFER, HB_FALSE);
+   HB_GTSELF_SETFLAG(pGT, HB_GTI_COMPATBUFFER, false);
 
 #if !defined(HB_XWC_XLIB_NEEDLOCKS) && !defined(HB_XWC_XLOCK_OFF)
    if( hb_vmIsMt() )
@@ -5112,12 +5112,12 @@ static void hb_gt_xwc_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
    /* For immediate connection to XSarver and screen Window show */
    #if 0
-   hb_gt_xwc_RealRefresh( wnd, HB_TRUE );
+   hb_gt_xwc_RealRefresh( wnd, true );
    #endif
 
    /* For connection to XSarver only */
    #if 0
-   hb_gt_xwc_ConnectX( wnd, HB_TRUE );
+   hb_gt_xwc_ConnectX( wnd, true );
    #endif
 }
 
@@ -5195,7 +5195,7 @@ static HB_BOOL hb_gt_xwc_SetMode( PHB_GT pGT, int iRow, int iCol )
 
          do
          {
-            hb_gt_xwc_RealRefresh( wnd, HB_TRUE );
+            hb_gt_xwc_RealRefresh( wnd, true );
             if( iCol == wnd->cols && iRow == wnd->rows )
             {
                fResult = HB_TRUE;
@@ -5239,7 +5239,7 @@ static HB_BOOL hb_gt_xwc_GetBlink( PHB_GT pGT )
 
    HB_SYMBOL_UNUSED(pGT);
 
-   return HB_FALSE;
+   return false;
 }
 
 /* *********************************************************************** */
@@ -5272,7 +5272,7 @@ static int hb_gt_xwc_ReadKey( PHB_GT pGT, int iEventMask )
    wnd = HB_GTXWC_GET(pGT);
    hb_gt_xwc_LateRefresh( wnd );
    #if 0
-   hb_gt_xwc_RealRefresh( wnd, HB_FALSE );
+   hb_gt_xwc_RealRefresh( wnd, false );
    #endif
 
    if( hb_gt_xwc_GetCharFromInputQueue( wnd, &c ) )
@@ -5327,7 +5327,7 @@ static HB_BOOL hb_gt_xwc_mouse_IsPresent( PHB_GT pGT )
    PXWND_DEF wnd;
 
    wnd = HB_GTXWC_GET(pGT);
-   hb_gt_xwc_ConnectX( wnd, HB_TRUE );
+   hb_gt_xwc_ConnectX( wnd, true );
    return wnd->mouseNumButtons > 0;
 }
 
@@ -5377,14 +5377,14 @@ static HB_BOOL hb_gt_xwc_mouse_ButtonState( PHB_GT pGT, int iButton )
    PXWND_DEF wnd;
 
    wnd = HB_GTXWC_GET(pGT);
-   hb_gt_xwc_ConnectX( wnd, HB_TRUE );
+   hb_gt_xwc_ConnectX( wnd, true );
    if( iButton >= 0 && iButton < wnd->mouseNumButtons )
    {
       return ( wnd->mouseButtonsState & 1 << iButton ) != 0;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -5399,7 +5399,7 @@ static int hb_gt_xwc_mouse_CountButton( PHB_GT pGT )
    PXWND_DEF wnd;
 
    wnd = HB_GTXWC_GET(pGT);
-   hb_gt_xwc_ConnectX( wnd, HB_TRUE );
+   hb_gt_xwc_ConnectX( wnd, true );
 
    return wnd->mouseNumButtons;
 }
@@ -5443,7 +5443,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          case HB_GTI_ISSCREENPOS:
          case HB_GTI_KBDSUPPORT:
          case HB_GTI_ISGRAPHIC:
-            hb_gt_xwc_ConnectX( wnd, HB_FALSE );
+            hb_gt_xwc_ConnectX( wnd, false );
             break;
 
          case HB_GTI_INPUTFD:
@@ -5455,7 +5455,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          case HB_GTI_DESKTOPROWS:
          case HB_GTI_CLIPBOARDDATA:
          case HB_GTI_FONTSEL:
-            hb_gt_xwc_ConnectX( wnd, HB_TRUE );
+            hb_gt_xwc_ConnectX( wnd, true );
             break;
       }
    }
@@ -5473,7 +5473,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_ISUNICODE:
-         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_TRUE);
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, true);
          break;
 
       case HB_GTI_INPUTFD:
@@ -5650,7 +5650,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             wnd->fDspTitle = HB_TRUE;
             if( wnd->window )
             {
-               hb_gt_xwc_ProcessMessages( wnd, HB_FALSE );
+               hb_gt_xwc_ProcessMessages( wnd, false );
             }
          }
          break;
@@ -5663,14 +5663,14 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
          if( pszClipboardData )
          {
-            hb_gt_xwc_RealRefresh( wnd, HB_FALSE );
-            hb_gt_xwc_SetSelection( wnd, pszClipboardData, nLen, HB_TRUE );
-            hb_gt_xwc_RealRefresh( wnd, HB_FALSE );
+            hb_gt_xwc_RealRefresh( wnd, false );
+            hb_gt_xwc_SetSelection( wnd, pszClipboardData, nLen, true );
+            hb_gt_xwc_RealRefresh( wnd, false );
             hb_strfree(hString);
          }
          else
          {
-            hb_gt_xwc_RealRefresh( wnd, HB_FALSE );
+            hb_gt_xwc_RealRefresh( wnd, false );
             hb_gt_xwc_RequestSelection( wnd );
             pInfo->pResult = hb_itemPutStrLenUTF8( pInfo->pResult, static_cast<char*>(wnd->ClipboardData), wnd->ClipboardSize );
          }
@@ -6107,7 +6107,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                }
                if( HB_GTSELF_DISPCOUNT(pGT) == 0 )
                {
-                  hb_gt_xwc_RealRefresh( wnd, HB_FALSE );
+                  hb_gt_xwc_RealRefresh( wnd, false );
                }
             }
 
@@ -6129,7 +6129,7 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          return HB_GTSUPER_INFO(pGT, iType, pInfo);
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 #define hb_gfx_cord( t, l, b, r, tmp )    \
@@ -6152,7 +6152,7 @@ static int hb_gt_xwc_gfx_Primitive( PHB_GT pGT, int iType, int iTop, int iLeft, 
    wnd = HB_GTXWC_GET(pGT);
    if( !wnd->fInit )
    {
-      hb_gt_xwc_RealRefresh( wnd, HB_TRUE );
+      hb_gt_xwc_RealRefresh( wnd, true );
    }
    HB_GTSELF_REFRESH(pGT);
 
@@ -6316,7 +6316,7 @@ static int hb_gt_xwc_gfx_Primitive( PHB_GT pGT, int iType, int iTop, int iLeft, 
 
    if( HB_GTSELF_DISPCOUNT(pGT) == 0 )
    {
-      hb_gt_xwc_RealRefresh( wnd, HB_FALSE );
+      hb_gt_xwc_RealRefresh( wnd, false );
    }
 
    return iRet;
@@ -6395,7 +6395,7 @@ static void hb_gt_xwc_Refresh( PHB_GT pGT )
 
       if( wnd->fInit || wnd->fData )
       {
-         hb_gt_xwc_RealRefresh( wnd, HB_FALSE );
+         hb_gt_xwc_RealRefresh( wnd, false );
       }
    }
 }
@@ -6428,7 +6428,7 @@ static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 
    pFuncTable->GfxPrimitive               = hb_gt_xwc_gfx_Primitive;
 
-   return HB_TRUE;
+   return true;
 }
 
 /* *********************************************************************** */

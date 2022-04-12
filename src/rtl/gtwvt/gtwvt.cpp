@@ -1776,11 +1776,11 @@ static HB_BOOL hb_gt_wvt_GetCharFromInputQueue( PHB_GTWVT pWVT, int * iKey )
          pWVT->keyPointerOut = 0;
       }
 
-      return HB_TRUE;
+      return true;
    }
 
    *iKey = 0;
-   return HB_FALSE;
+   return false;
 }
 
 #if !defined(UNICODE)
@@ -2200,11 +2200,11 @@ static HB_BOOL hb_gt_wvt_SetWindowSize( PHB_GTWVT pWVT, int iRows, int iCols )
 
       pWVT->ROWS = iRows;
       pWVT->COLS = iCols;
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -2288,11 +2288,11 @@ static HB_BOOL hb_gt_wvt_SetMousePos( PHB_GTWVT pWVT, int iRow, int iCol )
    {
       pWVT->MousePos.y = iRow;
       pWVT->MousePos.x = iCol;
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -2400,7 +2400,7 @@ static void hb_gt_wvt_MouseEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
             pWVT->sRectOld.right  = 0;
             pWVT->sRectOld.bottom = 0;
 
-            hb_gt_wvt_Composited( pWVT, HB_FALSE );
+            hb_gt_wvt_Composited( pWVT, false );
 
             return;
          }
@@ -2492,7 +2492,7 @@ static void hb_gt_wvt_MouseEvent( PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
 #endif
             }
 
-            hb_gt_wvt_Composited( pWVT, HB_TRUE );
+            hb_gt_wvt_Composited( pWVT, true );
             return;
          }
          keyCode = K_LBUTTONUP;
@@ -3186,7 +3186,7 @@ static void hb_gt_wvt_PaintText( PHB_GTWVT pWVT )
          }
 #else
          HB_UCHAR uc;
-         if( !HB_GTSELF_GETSCRUC( pWVT->pGT, iRow, iCol, &iColor, &bAttr, &uc, HB_TRUE ) )
+         if( !HB_GTSELF_GETSCRUC( pWVT->pGT, iRow, iCol, &iColor, &bAttr, &uc, true ) )
          {
             break;
          }
@@ -3441,7 +3441,7 @@ static HB_BOOL hb_gt_wvt_CreateConsoleWindow( PHB_GTWVT pWVT )
       hb_gt_wvt_CreateWindow( pWVT );
       if( pWVT->hWnd )
       {
-         hb_gt_wvt_Composited( pWVT, HB_TRUE );
+         hb_gt_wvt_Composited( pWVT, true );
 
          /* Set icon */
          if( pWVT->hIcon )
@@ -3494,7 +3494,7 @@ static HB_BOOL hb_gt_wvt_CreateConsoleWindow( PHB_GTWVT pWVT )
       }
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 static HB_BOOL hb_gt_wvt_FullScreen( PHB_GT pGT )
@@ -3547,7 +3547,7 @@ static HB_BOOL hb_gt_wvt_FullScreen( PHB_GT pGT )
    if( !pWVT->bFullScreen )
    {
       ShowWindow( pWVT->hWnd, SW_RESTORE );
-      return HB_FALSE;
+      return false;
    }
 
    if( !pWVT->bMaximized )
@@ -3608,7 +3608,7 @@ static HB_BOOL hb_gt_wvt_FullScreen( PHB_GT pGT )
       hb_gt_wvt_FitRows( pWVT );
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 /* ********************************************************************** */
@@ -3793,7 +3793,7 @@ static HB_BOOL hb_gt_wvt_mouse_IsPresent( PHB_GT pGT )
 
    HB_SYMBOL_UNUSED(pGT);
 
-   return HB_TRUE;
+   return true;
 }
 
 static void hb_gt_wvt_mouse_GetPos( PHB_GT pGT, int * piRow, int * piCol )
@@ -3835,7 +3835,7 @@ static HB_BOOL hb_gt_wvt_mouse_ButtonState( PHB_GT pGT, int iButton )
       case 2:
          return ( GetKeyState( VK_MBUTTON ) & 0x8000 ) != 0;
    }
-   return HB_FALSE;
+   return false;
 }
 
 static int hb_gt_wvt_mouse_CountButton( PHB_GT pGT )
@@ -3917,7 +3917,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       case HB_GTI_ISSCREENPOS:
       case HB_GTI_KBDSUPPORT:
       case HB_GTI_ISGRAPHIC:
-         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_TRUE);
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, true);
          break;
 
       case HB_GTI_ONLINE:
@@ -3926,9 +3926,9 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_ISUNICODE:
 #if defined(UNICODE)
-         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_TRUE);
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, true);
 #else
-         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_FALSE);
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, false);
 #endif
          break;
 
@@ -4423,7 +4423,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_SYSMENUADD:
-         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_FALSE);
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, false);
          if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
          {
             iVal = hb_itemGetNI(pInfo->pNewVal);
@@ -4700,7 +4700,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          return HB_GTSUPER_INFO(pGT, iType, pInfo);
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 /* ********************************************************************** */
@@ -4753,7 +4753,7 @@ static int hb_gt_wvt_gfx_Primitive( PHB_GT pGT, int iType, int iTop, int iLeft, 
 
       if( pWVT->bComposited )
       {
-         hb_gt_wvt_Composited( pWVT, HB_FALSE );
+         hb_gt_wvt_Composited( pWVT, false );
       }
 
       switch( iType )
@@ -4953,7 +4953,7 @@ static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 
    pFuncTable->GfxPrimitive         = hb_gt_wvt_gfx_Primitive;
 
-   return HB_TRUE;
+   return true;
 }
 
 /* *********************************************************************** */

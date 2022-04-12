@@ -67,7 +67,7 @@ static HB_BOOL hb_itemIsLess( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE
       /* protection against array resizing by user codeblock */
       if( pBaseArray->nLen <= nItem1 || pBaseArray->nLen <= nItem2 )
       {
-         return HB_FALSE;
+         return false;
       }
 
       hb_vmPushEvalSym();
@@ -88,7 +88,7 @@ static HB_BOOL hb_itemIsLess( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE
 
    if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
    {
-      return hb_itemStrCmp(pItem1, pItem2, HB_FALSE) < 0;
+      return hb_itemStrCmp(pItem1, pItem2, false) < 0;
    }
    else if( HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2) )
    {
@@ -338,7 +338,7 @@ static HB_BOOL hb_arraySortDO( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZ
       }
       return !fBuf1;
    }
-   return HB_TRUE;
+   return true;
 }
 
 static void hb_arraySortStart( PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nStart, HB_SIZE nCount )
@@ -445,11 +445,11 @@ HB_BOOL hb_arraySort( PHB_ITEM pArray, HB_SIZE * pnStart, HB_SIZE * pnCount, PHB
          }
       }
 
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 

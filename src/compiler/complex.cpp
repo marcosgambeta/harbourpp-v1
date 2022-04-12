@@ -300,26 +300,26 @@ static HB_BOOL hb_comp_timeDecode(PHB_PP_TOKEN pTime, long * plTime)
    if( !pTime || HB_PP_TOKEN_TYPE(pTime->type) != HB_PP_TOKEN_NUMBER ||
        hb_compStrToNum(pTime->value, pTime->len, &lHour, &dNumber, &iDec, &iWidth) || lHour < 0 || lHour >= 24 )
    {
-      return HB_FALSE;
+      return false;
    }
 
    pTime = pTime->pNext;
    if( !pTime || HB_PP_TOKEN_TYPE(pTime->type) != HB_PP_TOKEN_SEND )
    {
-      return HB_FALSE;
+      return false;
    }
 
    pTime = pTime->pNext;
    if( !pTime || HB_PP_TOKEN_TYPE(pTime->type) != HB_PP_TOKEN_NUMBER ||
        hb_compStrToNum(pTime->value, pTime->len, &lMinute, &dNumber, &iDec, &iWidth) || lMinute < 0 || lMinute >= 60 )
    {
-      return HB_FALSE;
+      return false;
    }
 
    pTime = pTime->pNext;
    if( !pTime )
    {
-      return HB_FALSE;
+      return false;
    }
 
    if( HB_PP_TOKEN_TYPE(pTime->type) == HB_PP_TOKEN_SEND )
@@ -327,14 +327,14 @@ static HB_BOOL hb_comp_timeDecode(PHB_PP_TOKEN pTime, long * plTime)
       pTime = pTime->pNext;
       if( !pTime || HB_PP_TOKEN_TYPE(pTime->type) != HB_PP_TOKEN_NUMBER )
       {
-         return HB_FALSE;
+         return false;
       }
 
       if( hb_compStrToNum(pTime->value, pTime->len, &lMilliSec, &dNumber, &iDec, &iWidth) )
       {
          if( dNumber < 0.0 || dNumber >= 60.0 )
          {
-            return HB_FALSE;
+            return false;
          }
          lMilliSec = static_cast<HB_MAXINT>(dNumber * 1000 + 0.05 / HB_MILLISECS_PER_DAY);
          if( lMilliSec == 60000 )
@@ -344,7 +344,7 @@ static HB_BOOL hb_comp_timeDecode(PHB_PP_TOKEN pTime, long * plTime)
       }
       else if( lMilliSec < 0 || lMilliSec >= 60 )
       {
-         return HB_FALSE;
+         return false;
       }
       else
       {
@@ -379,12 +379,12 @@ static HB_BOOL hb_comp_timeDecode(PHB_PP_TOKEN pTime, long * plTime)
 
    if( !pTime || HB_PP_TOKEN_TYPE(pTime->type) != HB_PP_TOKEN_RIGHT_CB )
    {
-      return HB_FALSE;
+      return false;
    }
 
    *plTime = static_cast<long>((lHour * 60 + lMinute) * 60000 + lMilliSec);
 
-   return HB_TRUE;
+   return true;
 }
 
 static int hb_comp_dayTimeDecode(PHB_COMP_LEX pLex, PHB_PP_TOKEN pToken, YYSTYPE * yylval_ptr)
@@ -1279,14 +1279,14 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
 
             case AS_TYPE:
             {
-               int iAs = hb_comp_asType(pToken->pNext, HB_FALSE);
+               int iAs = hb_comp_asType(pToken->pNext, false);
                if( iAs )
                {
                   pLex->iState = DECLARE_TYPE;
                   pToken = hb_pp_tokenGet(pLex->pPP);
                   if( iAs == AS_ARRAY && pToken->pNext && HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_KEYWORD && hb_stricmp("OF", pToken->pNext->value) == 0 )
                   {
-                     int iAsArray = hb_comp_asType(pToken->pNext->pNext, HB_TRUE);
+                     int iAsArray = hb_comp_asType(pToken->pNext->pNext, true);
                      if( iAsArray )
                      {
                         hb_pp_tokenGet(pLex->pPP);
@@ -1386,7 +1386,7 @@ void hb_compParserRun(HB_COMP_DECL)
          }
          if( iToken == DOIDENT )
          {
-            hb_compModuleAdd(HB_COMP_PARAM, yylval.string, HB_FALSE);
+            hb_compModuleAdd(HB_COMP_PARAM, yylval.string, false);
          }
          else if( iToken == PROCREQ )
          {
@@ -1426,7 +1426,7 @@ void hb_compParserRun(HB_COMP_DECL)
                   {
                      szFile = hb_compIdentifierNew(HB_COMP_PARAM, hb_xstrcpy(nullptr, szFile, szExt, nullptr), HB_IDENT_FREE);
                   }
-                  hb_compModuleAdd(HB_COMP_PARAM, szFile, HB_FALSE);
+                  hb_compModuleAdd(HB_COMP_PARAM, szFile, false);
                }
             }
          }

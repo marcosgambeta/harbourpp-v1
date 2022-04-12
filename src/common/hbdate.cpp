@@ -374,12 +374,12 @@ HB_BOOL hb_dateDecWeek(long lJulian, int * piYear, int * piWeek, int * piDay)
       hb_dateDecode(lJulian, piYear, &iMonth, &iDay);
       *piWeek = (lJulian - hb_dateEncode(*piYear, 1, 1)) / 7 + 1;
 
-      return HB_TRUE;
+      return true;
    }
 
    *piYear = *piWeek = *piDay = 0;
 
-   return HB_FALSE;
+   return false;
 }
 
 long hb_dateEncWeek(int iYear, int iWeek, int iDay)

@@ -116,7 +116,7 @@ static HB_BOOL hb_errGetNumCode( int * piValue, const char * szOperation )
       if( !pItem )
       {
          *piValue = 0;
-         return HB_FALSE;
+         return false;
       }
 
       if( !HB_IS_NUMERIC(pItem) )
@@ -128,7 +128,7 @@ static HB_BOOL hb_errGetNumCode( int * piValue, const char * szOperation )
       hb_itemRelease(pItem);
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 HB_FUNC_STATIC( CARGO )

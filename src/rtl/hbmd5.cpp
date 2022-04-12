@@ -411,9 +411,9 @@ HB_BOOL hb_md5file( const char * pszFileName, char * digest )
       hb_md5val( md5.accum, digest );
       hb_xfree(readbuf);
 
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 HB_FUNC( HB_MD5 )  /* Considered insecure. Use SHA256 or higher instead. */

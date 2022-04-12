@@ -115,7 +115,7 @@ HB_BOOL hb_lppSend( PHB_LPP pSocket, const void * data, HB_SIZE len, HB_MAXINT t
       if( lSend == -1 )
       {
          pSocket->iError = hb_socketGetError();
-         return HB_FALSE;
+         return false;
       }
       pSocket->nSendPos += lSend;
       if( pSocket->nSendPos == pSocket->nSendLen )
@@ -123,12 +123,12 @@ HB_BOOL hb_lppSend( PHB_LPP pSocket, const void * data, HB_SIZE len, HB_MAXINT t
          hb_xfree(pSocket->pSendBuffer);
          pSocket->pSendBuffer = nullptr;
          pSocket->iError      = 0;
-         return HB_TRUE;
+         return true;
       }
       if( ( timeout = hb_timerTest( timeout, &timer ) ) == 0 )
       {
          pSocket->iError = HB_SOCKET_ERR_TIMEOUT;
-         return HB_FALSE;
+         return false;
       }
    }
 }
@@ -156,20 +156,20 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
          if( lRecv == -1 )
          {
             pSocket->iError = hb_socketGetError();
-            return HB_FALSE;
+            return false;
          }
          else if( lRecv == 0 )
          {
             /* peer closed connection */
             pSocket->iError = 0;
-            return HB_FALSE;
+            return false;
          }
 
          pSocket->nRecvLen += lRecv;
          if( pSocket->nRecvLen < 4 )
          {
             pSocket->iError = HB_SOCKET_ERR_TIMEOUT;
-            return HB_FALSE;
+            return false;
          }
 
          pSocket->nRecvSize = HB_GET_UINT32( pSocket->pRecvBuffer );
@@ -180,7 +180,7 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
             pSocket->iError = HB_LPP_ERR_TOOLARGE;
             hb_xfree(pSocket->pRecvBuffer);
             pSocket->pRecvBuffer = nullptr;
-            return HB_FALSE;
+            return false;
          }
 
          pSocket->nRecvLen     = 0;
@@ -204,13 +204,13 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
       if( lRecv == -1 )
       {
          pSocket->iError = hb_socketGetError();
-         return HB_FALSE;
+         return false;
       }
       else if( lRecv == 0 )
       {
          /* peer closed connection */
          pSocket->iError = 0;
-         return HB_FALSE;
+         return false;
       }
 
       pSocket->nRecvLen += lRecv;
@@ -220,12 +220,12 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
          *len  = pSocket->nRecvLen;
          pSocket->pRecvBuffer = nullptr;
          pSocket->iError      = 0;
-         return HB_TRUE;
+         return true;
       }
       if( ( timeout = hb_timerTest( timeout, &timer ) ) == 0 )
       {
          pSocket->iError = HB_SOCKET_ERR_TIMEOUT;
-         return HB_FALSE;
+         return false;
       }
    }
 }

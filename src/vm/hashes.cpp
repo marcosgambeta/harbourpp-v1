@@ -199,11 +199,11 @@ static int hb_hashItemCmp( PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags )
          }
          else if( iFlags & HB_HASH_IGNORECASE )
          {
-            return hb_itemStrICmp(pKey1, pKey2, HB_TRUE);
+            return hb_itemStrICmp(pKey1, pKey2, true);
          }
          else
          {
-            return hb_itemStrCmp(pKey1, pKey2, HB_TRUE);
+            return hb_itemStrCmp(pKey1, pKey2, true);
          }
       }
       else
@@ -356,7 +356,7 @@ static HB_BOOL hb_hashFind( PHB_BASEHASH pBaseHash, PHB_ITEM pKey, HB_SIZE * pnP
       if( i == 0 )
       {
          *pnPos = pBaseHash->pnPos ? pBaseHash->pnPos[nMiddle] : nMiddle;
-         return HB_TRUE;
+         return true;
       }
       else if( i < 0 )
       {
@@ -369,7 +369,7 @@ static HB_BOOL hb_hashFind( PHB_BASEHASH pBaseHash, PHB_ITEM pKey, HB_SIZE * pnP
    }
 
    *pnPos = nLeft;
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_hashResize( PHB_BASEHASH pBaseHash, HB_SIZE nNewSize )
@@ -490,10 +490,10 @@ static HB_BOOL hb_hashNewValue( PHB_BASEHASH pBaseHash, PHB_ITEM pKey, PHB_ITEM 
       hb_itemCopy(&pBaseHash->pPairs[nPos].key, pKey);
       hb_itemCopyFromRef(&pBaseHash->pPairs[nPos].value, pValue);
 
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_hashNewPair( PHB_BASEHASH pBaseHash, PHB_ITEM * pKeyPtr, PHB_ITEM * pValPtr )
@@ -692,11 +692,11 @@ HB_BOOL hb_hashAllocNewPair( PHB_ITEM pHash, PHB_ITEM * pKeyPtr, PHB_ITEM * pVal
    if( HB_IS_HASH(pHash) )
    {
       hb_hashNewPair( pHash->item.asHash.value, pKeyPtr, pValPtr );
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -754,7 +754,7 @@ PHB_ITEM hb_hashGetCItemPtr( PHB_ITEM pHash, const char * pszKey )
        * safe to use hb_itemPutCConst()
        */
       PHB_ITEM pKey = hb_itemPutCConst(hb_stackAllocItem(), pszKey);
-      PHB_ITEM pDest = hb_hashValuePtr( pHash->item.asHash.value, pKey, HB_FALSE );
+      PHB_ITEM pDest = hb_hashValuePtr( pHash->item.asHash.value, pKey, false );
       hb_stackPop();
       if( pDest )
       {
@@ -836,7 +836,7 @@ HB_BOOL hb_hashScan( PHB_ITEM pHash, PHB_ITEM pKey, HB_SIZE * pnPos )
             {
                *pnPos = nPos + 1;
             }
-            return HB_TRUE;
+            return true;
          }
       }
       else if( HB_IS_HASH(pKey) && pKey->item.asHash.value->nLen == 1 )
@@ -852,7 +852,7 @@ HB_BOOL hb_hashScan( PHB_ITEM pHash, PHB_ITEM pKey, HB_SIZE * pnPos )
                {
                   *pnPos = nPos + 1;
                }
-               return HB_TRUE;
+               return true;
             }
          }
       }
@@ -861,7 +861,7 @@ HB_BOOL hb_hashScan( PHB_ITEM pHash, PHB_ITEM pKey, HB_SIZE * pnPos )
    {
       *pnPos = 0;
    }
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_hashScanSoft( PHB_ITEM pHash, PHB_ITEM pKey, HB_SIZE * pnPos )
@@ -879,7 +879,7 @@ HB_BOOL hb_hashScanSoft( PHB_ITEM pHash, PHB_ITEM pKey, HB_SIZE * pnPos )
          {
             *pnPos = nPos + 1;
          }
-         return HB_TRUE;
+         return true;
       }
       else
       {
@@ -891,14 +891,14 @@ HB_BOOL hb_hashScanSoft( PHB_ITEM pHash, PHB_ITEM pKey, HB_SIZE * pnPos )
             }
             *pnPos = nPos;
          }
-         return HB_FALSE;
+         return false;
       }
    }
    if( pnPos )
    {
       *pnPos = 0;
    }
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_hashClear( PHB_ITEM pHash )
@@ -939,10 +939,10 @@ HB_BOOL hb_hashClear( PHB_ITEM pHash )
             }
          }
       }
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_hashDel( PHB_ITEM pHash, PHB_ITEM pKey )
@@ -959,11 +959,11 @@ HB_BOOL hb_hashDel( PHB_ITEM pHash, PHB_ITEM pKey )
       if( hb_hashFind( pBaseHash, pKey, &nPos ) )
       {
          hb_hashDelPair( pBaseHash, nPos );
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_hashRemove( PHB_ITEM pHash, PHB_ITEM pItem )
@@ -977,7 +977,7 @@ HB_BOOL hb_hashRemove( PHB_ITEM pHash, PHB_ITEM pItem )
       if( HB_IS_HASHKEY(pItem) )
       {
          hb_hashDel( pHash, pItem );
-         return HB_TRUE;
+         return true;
       }
       else if( HB_IS_ARRAY(pItem) )
       {
@@ -987,7 +987,7 @@ HB_BOOL hb_hashRemove( PHB_ITEM pHash, PHB_ITEM pItem )
          {
             hb_hashDel( pHash, pKey );
          }
-         return HB_TRUE;
+         return true;
       }
       else if( HB_IS_HASH(pItem) )
       {
@@ -1003,10 +1003,10 @@ HB_BOOL hb_hashRemove( PHB_ITEM pHash, PHB_ITEM pItem )
                hb_hashDel( pHash, &pItem->item.asHash.value->pPairs[nLen++].key );
             }
          }
-         return HB_TRUE;
+         return true;
       }
    }
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_hashAdd( PHB_ITEM pHash, PHB_ITEM pKey, PHB_ITEM pValue )
@@ -1017,7 +1017,7 @@ HB_BOOL hb_hashAdd( PHB_ITEM pHash, PHB_ITEM pKey, PHB_ITEM pValue )
 
    if( HB_IS_HASH(pHash) && HB_IS_HASHKEY(pKey) )
    {
-      PHB_ITEM pDest = hb_hashValuePtr( pHash->item.asHash.value, pKey, HB_TRUE );
+      PHB_ITEM pDest = hb_hashValuePtr( pHash->item.asHash.value, pKey, true );
       if( pDest )
       {
          if( HB_IS_BYREF(pDest) )
@@ -1032,11 +1032,11 @@ HB_BOOL hb_hashAdd( PHB_ITEM pHash, PHB_ITEM pKey, PHB_ITEM pValue )
          {
             hb_itemSetNil(pDest);
          }
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_hashAddNew( PHB_ITEM pHash, PHB_ITEM pKey, PHB_ITEM pValue )
@@ -1051,7 +1051,7 @@ HB_BOOL hb_hashAddNew( PHB_ITEM pHash, PHB_ITEM pKey, PHB_ITEM pValue )
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -1097,11 +1097,11 @@ HB_BOOL hb_hashDelAt( PHB_ITEM pHash, HB_SIZE nPos )
    if( HB_IS_HASH(pHash) && nPos > 0 && nPos <= pHash->item.asHash.value->nLen )
    {
       hb_hashDelPair( pHash->item.asHash.value, nPos - 1 );
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 

@@ -377,7 +377,7 @@ void hb_xexit(void)
 
 HB_BOOL hb_xtraced(void)
 {
-   return HB_FALSE;
+   return false;
 }
 
 /* NOTE: Use as minimal calls from here, as possible.
@@ -451,7 +451,7 @@ HB_BOOL hb_cdpCharEq(PHB_CODEPAGE cdp, const char * szText1, HB_SIZE nLen1, HB_S
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -466,7 +466,7 @@ HB_BOOL hb_cdpCharCaseEq(PHB_CODEPAGE cdp, const char * szText1, HB_SIZE nLen1, 
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 

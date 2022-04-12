@@ -224,7 +224,7 @@ void * hb_gcAllocRaw( HB_SIZE nSize, const HB_GC_FUNCS * pFuncs )
    if( s_ulBlocks > s_ulBlocksCheck )
    {
       HB_GC_UNLOCK();
-      hb_gcCollectAll( HB_TRUE );
+      hb_gcCollectAll(true);
       HB_GC_LOCK();
       pAlloc->used = s_uUsedFlag;
    }
@@ -580,7 +580,7 @@ void hb_gcItemRef( PHB_ITEM pItem )
 void hb_gcCollect( void )
 {
    /* TODO: decrease the amount of time spend collecting */
-   hb_gcCollectAll( HB_FALSE );
+   hb_gcCollectAll(false);
 }
 
 /* Check all memory block if they can be released
@@ -803,7 +803,7 @@ HB_FUNC( HB_GCALL )
     */
    hb_ret();
 
-   hb_gcCollectAll( hb_parldef(1, HB_TRUE) );
+   hb_gcCollectAll( hb_parldef(1, true) );
 }
 
 #ifdef HB_GC_AUTO

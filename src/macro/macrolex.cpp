@@ -81,10 +81,10 @@ HB_BOOL hb_macroLexNew(PHB_MACRO pMacro)
       (static_cast<PHB_MACRO_LEX>(pMacro->pLex))->nSrc = 0;
       (static_cast<PHB_MACRO_LEX>(pMacro->pLex))->quote = HB_TRUE;
       (static_cast<PHB_MACRO_LEX>(pMacro->pLex))->pDst = (static_cast<PHB_MACRO_LEX>(pMacro->pLex))->pBuffer;
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 void hb_macroLexDelete(PHB_MACRO pMacro)

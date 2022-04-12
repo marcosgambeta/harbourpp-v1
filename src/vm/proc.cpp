@@ -60,14 +60,14 @@ HB_FUNC( HB_METHODNAME )
 {
    char szName[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
 
-   hb_retc(hb_procname(hb_parni(1) + 1, szName, HB_TRUE));
+   hb_retc(hb_procname(hb_parni(1) + 1, szName, true));
 }
 
 HB_FUNC( PROCNAME )
 {
    char szName[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
 
-   hb_retc(hb_procname(hb_parni(1) + 1, szName, HB_FALSE));
+   hb_retc(hb_procname(hb_parni(1) + 1, szName, false));
 }
 
 HB_FUNC( PROCLINE )
@@ -286,7 +286,7 @@ HB_BOOL hb_procinfo( int iLevel, char * szName, HB_USHORT * puiLine, char * szFi
          }
       }
 
-      return HB_TRUE;
+      return true;
    }
 
    if( szName )
@@ -302,5 +302,5 @@ HB_BOOL hb_procinfo( int iLevel, char * szName, HB_USHORT * puiLine, char * szFi
       szFile[0] = '\0';
    }
 
-   return HB_FALSE;
+   return false;
 }

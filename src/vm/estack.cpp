@@ -139,7 +139,7 @@
 
 #  define hb_stack_alloc()
 #  define hb_stack_dealloc()
-#  define hb_stack_ready()    ( HB_TRUE )
+#  define hb_stack_ready()    (true)
 
 #endif /* HB_MT_VM */
 
@@ -1411,7 +1411,7 @@ static HB_DYNS_FUNC( hb_stackMemvarScan )
       hb_gcItemRef( pMemvar );
    }
 
-   return HB_TRUE;
+   return true;
 }
 #endif
 

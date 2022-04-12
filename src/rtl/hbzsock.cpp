@@ -378,7 +378,7 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
    {
       if( pZ->sock )
       {
-         s_sockexFlush( pSock, HB_MAX(15000, pSock->iAutoFlush), HB_TRUE );
+         s_sockexFlush( pSock, HB_MAX(15000, pSock->iAutoFlush), true );
       }
 
       if( pZ->fDecompressIn )
@@ -415,7 +415,7 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
    }
    /* call hb_sockexRawClear() with fClose = HB_FALSE because
       hb_sockexClose() already closed real socket */
-   hb_sockexRawClear( pSock, HB_FALSE );
+   hb_sockexRawClear( pSock, false );
    hb_xfree(pSock);
 
    return iResult;
@@ -433,7 +433,7 @@ static PHB_SOCKEX s_sockexNew( HB_SOCKET sd, PHB_ITEM pParams )
       pSockNew = s_sockexNext( pSock, pParams );
       if( pSockNew == nullptr )
       {
-         hb_sockexClose( pSock, HB_FALSE );
+         hb_sockexClose( pSock, false );
       }
    }
 
@@ -593,7 +593,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
          }
          else
          {
-            s_sockexClose( pSockNew, HB_FALSE );
+            s_sockexClose( pSockNew, false );
             pSockNew = nullptr;
          }
       }

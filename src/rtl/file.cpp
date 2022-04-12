@@ -58,10 +58,10 @@ HB_BOOL hb_fsFile( const char * pszFileName )
    if( (ffind = hb_fsFindFirst(pszFileName, HB_FA_ALL)) != nullptr )
    {
       hb_fsFindClose(ffind);
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_fsIsDirectory( const char * pszFileName )

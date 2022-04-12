@@ -88,7 +88,7 @@ static HB_BOOL hb_pp_CompilerSwitch(void * cargo, const char * szSwitch, int * p
    HB_SYMBOL_UNUSED(piValue);
    HB_SYMBOL_UNUSED(fSet);
 
-   return HB_FALSE;
+   return false;
 }
 
 /* PP destructor */
@@ -159,18 +159,18 @@ HB_FUNC( __PP_INIT )
    {
       PHB_PP_STATE * pStatePtr;
       const char * szPath = hb_parc(1), * szStdCh = hb_parc(2);
-      HB_BOOL fArchDefs = hb_parldef(3, HB_TRUE);
+      HB_BOOL fArchDefs = hb_parldef(3, true);
       PHB_ITEM ppItem;
 
       pStatePtr = static_cast<PHB_PP_STATE*>(hb_gcAllocate(sizeof(PHB_PP_STATE), &s_gcPPFuncs));
       *pStatePtr = pState;
       ppItem = hb_itemPutPtrGC(nullptr, static_cast<void*>(pStatePtr));
 
-      hb_pp_init(pState, HB_TRUE, HB_FALSE, 0, nullptr, nullptr, nullptr, hb_pp_ErrorMessage, hb_pp_Disp, nullptr, nullptr, hb_pp_CompilerSwitch);
+      hb_pp_init(pState, true, false, 0, nullptr, nullptr, nullptr, hb_pp_ErrorMessage, hb_pp_Disp, nullptr, nullptr, hb_pp_CompilerSwitch);
 
       if( szPath )
       {
-         hb_pp_addSearchPath(pState, szPath, HB_TRUE);
+         hb_pp_addSearchPath(pState, szPath, true);
       }
 
       if( !szStdCh )

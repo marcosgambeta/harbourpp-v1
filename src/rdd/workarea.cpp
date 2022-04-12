@@ -862,7 +862,7 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
       case DBI_ISFLOCK:
       case DBI_SHARED:
       case DBI_TRANSREC:
-         hb_itemPutL(pItem, HB_FALSE);
+         hb_itemPutL(pItem, false);
          break;
 
       /*
@@ -975,7 +975,7 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
          }
          if( ulRecNo == 0 )
          {
-            hb_itemPutL(pItem, HB_FALSE);
+            hb_itemPutL(pItem, false);
          }
          else if( SELF_RECCOUNT( pArea, &ulRecCount ) != HB_SUCCESS )
          {
@@ -992,7 +992,7 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
          break;
 
       case DBI_RM_SUPPORTED:
-         hb_itemPutL(pItem, HB_FALSE);
+         hb_itemPutL(pItem, false);
          break;
 
       case DBI_DB_VERSION:
@@ -1495,7 +1495,7 @@ static HB_ERRCODE hb_waTransRec( AREAP pArea, LPDBTRANSINFO pTransInfo )
       }
 
       /* Append a new record */
-      errCode = SELF_APPEND( pTransInfo->lpaDest, HB_TRUE );
+      errCode = SELF_APPEND( pTransInfo->lpaDest, true );
       if( errCode != HB_SUCCESS )
       {
          return errCode;
@@ -1524,7 +1524,7 @@ static HB_ERRCODE hb_waTransRec( AREAP pArea, LPDBTRANSINFO pTransInfo )
       }
 
       /* Append a new record */
-      errCode = SELF_APPEND( pTransInfo->lpaDest, HB_TRUE );
+      errCode = SELF_APPEND( pTransInfo->lpaDest, true );
       if( errCode != HB_SUCCESS )
       {
          return errCode;
@@ -1751,7 +1751,7 @@ static HB_ERRCODE hb_waRelEval( AREAP pArea, LPDBRELINFO pRelInfo )
                   }
                   if( errCode == HB_SUCCESS )
                   {
-                     errCode = SELF_SEEK( pArea, HB_FALSE, pResult, HB_FALSE );
+                     errCode = SELF_SEEK( pArea, false, pResult, false );
                   }
                }
                else
@@ -2147,7 +2147,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
       case RDDI_SORTRECNO:
       case RDDI_MULTIKEY:
       case RDDI_BLOB_SUPPORT:
-         hb_itemPutL(pItem, HB_FALSE);
+         hb_itemPutL(pItem, false);
          break;
 
       case RDDI_CONNECTION:
@@ -2897,7 +2897,7 @@ HB_BOOL hb_rddIsDerivedFrom( HB_USHORT uiRddID, HB_USHORT uiSuperRddID )
 {
    if( uiRddID == uiSuperRddID )
    {
-      return HB_TRUE;
+      return true;
    }
 
    while( uiRddID < s_uiRddCount )
@@ -2905,10 +2905,10 @@ HB_BOOL hb_rddIsDerivedFrom( HB_USHORT uiRddID, HB_USHORT uiSuperRddID )
       uiRddID = s_RddList[uiRddID]->rddSuperID;
       if( uiRddID == uiSuperRddID )
       {
-         return HB_TRUE;
+         return true;
       }
    }
-   return HB_FALSE;
+   return false;
 }
 
 /* extend the size of RDD nodes buffer to given value to avoid later

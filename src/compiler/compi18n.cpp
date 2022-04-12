@@ -298,7 +298,7 @@ HB_BOOL hb_compI18nSave(HB_COMP_DECL, HB_BOOL fFinal)
    pI18n = HB_COMP_PARAM->pI18n;
    if( !pI18n )
    {
-      return HB_FALSE;
+      return false;
    }
 
    FileName.szPath = FileName.szName = FileName.szExtension = FileName.szDrive = nullptr;
@@ -337,7 +337,7 @@ HB_BOOL hb_compI18nSave(HB_COMP_DECL, HB_BOOL fFinal)
       /* The exact file name was given generate single .pot file for
        * all compiled .prg files in final phase.
        */
-      return HB_FALSE;
+      return false;
    }
 
    if( !FileName.szExtension )
@@ -352,7 +352,7 @@ HB_BOOL hb_compI18nSave(HB_COMP_DECL, HB_BOOL fFinal)
    if( !file )
    {
       hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CREATE_OUTPUT, szFileName, nullptr);
-      return HB_FALSE;
+      return false;
    }
 
    szText = hb_verHarbour();
@@ -398,5 +398,5 @@ HB_BOOL hb_compI18nSave(HB_COMP_DECL, HB_BOOL fFinal)
    }
 
    fclose(file);
-   return HB_TRUE;
+   return true;
 }

@@ -519,7 +519,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
       pSockNew = s_sockexNew( pSock->sd, pParams );
       if( pSockNew )
       {
-         hb_sockexClose( pSock, HB_FALSE );
+         hb_sockexClose( pSock, false );
       }
    }
 
@@ -534,7 +534,7 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
    {
       if( pSock->sd != HB_NO_SOCKET )
       {
-         hb_znetFlush( HB_ZNET_GET( pSock ), pSock->sd, HB_MAX(15000, pSock->iAutoFlush), HB_TRUE );
+         hb_znetFlush( HB_ZNET_GET( pSock ), pSock->sd, HB_MAX(15000, pSock->iAutoFlush), true );
       }
       hb_znetClose( HB_ZNET_GET( pSock ) );
    }

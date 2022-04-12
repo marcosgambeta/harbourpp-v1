@@ -64,11 +64,11 @@ HB_BOOL hb_evalNew( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
       pEvalInfo->pItems[0] = pItem;
       pEvalInfo->paramCount = 0;
 
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -95,11 +95,11 @@ HB_BOOL hb_evalPutParam( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
    {
       pEvalInfo->pItems[++pEvalInfo->paramCount] = pItem;
 
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -188,11 +188,11 @@ HB_BOOL hb_evalRelease( PHB_EVALINFO pEvalInfo )
 
       pEvalInfo->paramCount = 0;
 
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -621,13 +621,13 @@ HB_BOOL hb_execFromArray( PHB_ITEM pParam )
             hb_vmProc(static_cast<HB_USHORT>(iPCount));
          }
 
-         return HB_TRUE;
+         return true;
       }
    }
 
    hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 
-   return HB_FALSE;
+   return false;
 }
 
 /* hb_ExecMsg( <sFuncSym>, <object>, [<params,...>] ) --> <xResult>

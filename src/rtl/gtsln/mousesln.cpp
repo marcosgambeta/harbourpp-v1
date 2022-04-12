@@ -84,7 +84,7 @@ static HB_BOOL GetGpmEvent( Gpm_Event * Evt )
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 #endif
 
@@ -103,12 +103,12 @@ static HB_BOOL GetXtermEvent( int * Btn, int * Col, int * Row )
          if( SLang_input_pending(0) > 0 )
          {
             *Row = SLang_getkey() - 0x21;
-            return HB_TRUE;
+            return true;
          }
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 /* *********************************************************************** */
@@ -531,7 +531,7 @@ HB_BOOL hb_gt_sln_mouse_ButtonState( PHB_GT pGT, int iButton )
          return ( s_usMouseState & M_BUTTON_MIDDLE ) != 0;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 /* *********************************************************************** */

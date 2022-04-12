@@ -313,13 +313,13 @@ static HB_BOOL s_hb_winVerifyVersionInit(void)
 
 static void s_hb_winVerInit(void)
 {
-   s_fWin10    = hb_iswinver(10, 0, 0, HB_TRUE);
-   s_fWin81    = hb_iswinver(6, 3, 0, HB_TRUE);
-   s_fWin8     = hb_iswinver(6, 2, 0, HB_TRUE);
-   s_fWin7     = hb_iswinver(6, 1, 0, HB_TRUE);
-   s_fWinVista = hb_iswinver(6, 0, 0, HB_TRUE);
-   s_fWin2K3   = hb_iswinver(5, 2, VER_NT_SERVER, HB_TRUE) || hb_iswinver(5, 2, VER_NT_DOMAIN_CONTROLLER, HB_TRUE);
-   s_fWin2K    = hb_iswinver(5, 0, 0, HB_TRUE);
+   s_fWin10    = hb_iswinver(10, 0, 0, true);
+   s_fWin81    = hb_iswinver(6, 3, 0, true);
+   s_fWin8     = hb_iswinver(6, 2, 0, true);
+   s_fWin7     = hb_iswinver(6, 1, 0, true);
+   s_fWinVista = hb_iswinver(6, 0, 0, true);
+   s_fWin2K3   = hb_iswinver(5, 2, VER_NT_SERVER, true) || hb_iswinver(5, 2, VER_NT_DOMAIN_CONTROLLER, true);
+   s_fWin2K    = hb_iswinver(5, 0, 0, true);
 
 #if !(defined(HB_OS_WIN_64) || (defined(_MSC_VER) && _MSC_VER > 1310))
    {
@@ -430,7 +430,7 @@ char * hb_verPlatform(void)
 
       if( pszName[0] == '\0' )
       {
-         if( hb_iswinver(11, 0, 0, HB_TRUE) )
+         if( hb_iswinver(11, 0, 0, true) )
          {
             osvi.dwMajorVersion = 11;
             osvi.dwMinorVersion = 0;
@@ -440,7 +440,7 @@ char * hb_verPlatform(void)
          {
             osvi.dwMajorVersion = 10;
             osvi.dwMinorVersion = 0;
-            if( hb_iswinver(10, 0, VER_NT_WORKSTATION, HB_FALSE) )
+            if( hb_iswinver(10, 0, VER_NT_WORKSTATION, false) )
             {
                pszName = " 10";
             }
@@ -453,7 +453,7 @@ char * hb_verPlatform(void)
          {
             osvi.dwMajorVersion = 6;
             osvi.dwMinorVersion = 3;
-            if( hb_iswinver(6, 3, VER_NT_WORKSTATION, HB_FALSE) )
+            if( hb_iswinver(6, 3, VER_NT_WORKSTATION, false) )
             {
                pszName = " 8.1";
             }
@@ -468,7 +468,7 @@ char * hb_verPlatform(void)
             {
                osvi.dwMajorVersion = 6;
                osvi.dwMinorVersion = 2;
-               if( hb_iswinver(6, 2, VER_NT_WORKSTATION, HB_FALSE) )
+               if( hb_iswinver(6, 2, VER_NT_WORKSTATION, false) )
                {
                   pszName = " 8";
                }
@@ -477,11 +477,11 @@ char * hb_verPlatform(void)
                   pszName = " Server 2012";
                }
             }
-            else if( hb_iswinver(6, 1, 0, HB_FALSE) )
+            else if( hb_iswinver(6, 1, 0, false) )
             {
                osvi.dwMajorVersion = 6;
                osvi.dwMinorVersion = 1;
-               if( hb_iswinver(6, 1, VER_NT_WORKSTATION, HB_FALSE) )
+               if( hb_iswinver(6, 1, VER_NT_WORKSTATION, false) )
                {
                   pszName = " 7";
                }
@@ -494,7 +494,7 @@ char * hb_verPlatform(void)
             {
                osvi.dwMajorVersion = 6;
                osvi.dwMinorVersion = 0;
-               if( hb_iswinver(6, 0, VER_NT_WORKSTATION, HB_FALSE) )
+               if( hb_iswinver(6, 0, VER_NT_WORKSTATION, false) )
                {
                   pszName = " Vista";
                }
@@ -504,11 +504,11 @@ char * hb_verPlatform(void)
                }
             }
          }
-         else if( hb_iswinver(5, 2, 0, HB_FALSE) )
+         else if( hb_iswinver(5, 2, 0, false) )
          {
             osvi.dwMajorVersion = 5;
             osvi.dwMinorVersion = 2;
-            if( hb_iswinver(5, 2, VER_NT_WORKSTATION, HB_FALSE) )
+            if( hb_iswinver(5, 2, VER_NT_WORKSTATION, false) )
             {
                pszName = " XP x64";
             }
@@ -521,7 +521,7 @@ char * hb_verPlatform(void)
                pszName = " Server 2003";
             }
          }
-         else if( hb_iswinver(5, 1, 0, HB_FALSE) )
+         else if( hb_iswinver(5, 1, 0, false) )
          {
             osvi.dwMajorVersion = 5;
             osvi.dwMinorVersion = 1;
@@ -547,7 +547,7 @@ char * hb_verPlatform(void)
       {
          for( int tmp = 5; tmp > 0; --tmp )
          {
-            if( hb_iswinsp(tmp, HB_TRUE) )
+            if( hb_iswinsp(tmp, true) )
             {
                char szServicePack[8];
                hb_snprintf(szServicePack, sizeof(szServicePack), " SP%u", tmp);
@@ -608,10 +608,10 @@ HB_BOOL hb_iswinver(int iMajor, int iMinor, int iType, HB_BOOL fOrUpper)
             minor version and the service pack major and minor versions."
          However, Wine (as of 1.7.53) breaks on this. Since native Windows
          apparently doesn't care, we're not doing it for now.
-         Wine (emulating Windows 7) will erroneously return HB_FALSE from
+         Wine (emulating Windows 7) will erroneously return false from
          these calls:
-           hb_iswinver(6, 1, 0, HB_FALSE);
-           hb_iswinver(6, 1, VER_NT_WORKSTATION, HB_FALSE);
+           hb_iswinver(6, 1, 0, false);
+           hb_iswinver(6, 1, VER_NT_WORKSTATION, false);
          Removing the Service Pack check, or changing HB_FALSE to HB_TRUE
          in above calls, both fixes the problem. [vszakats] */
 #if defined(__HB_DISABLE_WINE_VERIFYVERSIONINFO_BUG_WORKAROUND)
@@ -636,7 +636,7 @@ HB_BOOL hb_iswinver(int iMajor, int iMinor, int iType, HB_BOOL fOrUpper)
    HB_SYMBOL_UNUSED(iType);
    HB_SYMBOL_UNUSED(fOrUpper);
 #endif
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_iswinsp(int iServicePackMajor, HB_BOOL fOrUpper)
@@ -659,7 +659,7 @@ HB_BOOL hb_iswinsp(int iServicePackMajor, HB_BOOL fOrUpper)
    HB_SYMBOL_UNUSED(iServicePackMajor);
    HB_SYMBOL_UNUSED(fOrUpper);
 #endif
-   return HB_FALSE;
+   return false;
 }
 
 int hb_iswine(void)
@@ -684,7 +684,7 @@ HB_BOOL hb_iswin10(void)
    }
    return s_fWin10;
 #else
-   return HB_FALSE;
+   return false;
 #endif
 }
 
@@ -697,7 +697,7 @@ HB_BOOL hb_iswin81(void)
    }
    return s_fWin81;
 #else
-   return HB_FALSE;
+   return false;
 #endif
 }
 
@@ -710,7 +710,7 @@ HB_BOOL hb_iswin8(void)
    }
    return s_fWin8;
 #else
-   return HB_FALSE;
+   return false;
 #endif
 }
 
@@ -723,7 +723,7 @@ HB_BOOL hb_iswin7(void)
    }
    return s_fWin7;
 #else
-   return HB_FALSE;
+   return false;
 #endif
 }
 
@@ -736,7 +736,7 @@ HB_BOOL hb_iswinvista(void)
    }
    return s_fWinVista;
 #else
-   return HB_FALSE;
+   return false;
 #endif
 }
 
@@ -749,7 +749,7 @@ HB_BOOL hb_iswin2k3(void)
    }
    return s_fWin2K3;
 #else
-   return HB_FALSE;
+   return false;
 #endif
 }
 
@@ -762,7 +762,7 @@ HB_BOOL hb_iswin2k(void)
    }
    return s_fWin2K;
 #else
-   return HB_FALSE;
+   return false;
 #endif
 }
 
@@ -794,7 +794,7 @@ int hb_iswin9x(void)
 
 HB_BOOL hb_iswince(void)
 {
-   return HB_FALSE;
+   return false;
 }
 
 /* NOTE: The caller must free the returned buffer. [vszakats] */

@@ -117,9 +117,9 @@ static HB_BOOL hb_gt_tpl_SetMode( PHB_GT pGT, int iRows, int iCols )
    HB_SYMBOL_UNUSED(iRows);
    HB_SYMBOL_UNUSED(iCols);
 
-   /* TODO: if possible change the size of the screen and return HB_TRUE */
+   /* TODO: if possible change the size of the screen and return true */
 
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_gt_tpl_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
@@ -172,7 +172,7 @@ static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
    pFuncTable->Redraw  = hb_gt_tpl_Redraw;
    pFuncTable->Refresh = hb_gt_tpl_Refresh;
 
-   return HB_TRUE;
+   return true;
 }
 
 /* *********************************************************************** */

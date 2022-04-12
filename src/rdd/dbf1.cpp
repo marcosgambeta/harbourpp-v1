@@ -519,7 +519,7 @@ static void hb_dbfSetBlankRecord( DBFAREAP pArea, int iType )
          }
          else if( bNext == HB_BLANK_AUTOINC )
          {
-            HB_MAXINT nValue = hb_dbfNextValueGet( pArea, uiCount, HB_TRUE );
+            HB_MAXINT nValue = hb_dbfNextValueGet( pArea, uiCount, true );
             if( pField->uiType == HB_FT_INTEGER || pField->uiType == HB_FT_AUTOINC )
             {
                if( pField->uiDec )
@@ -724,13 +724,13 @@ static HB_BOOL hb_dbfReadRecord( DBFAREAP pArea )
 
    if( !pArea->pRecord )
    {
-      return HB_FALSE;
+      return false;
    }
 
    if( !pArea->fPositioned )
    {
       pArea->fValidBuffer = HB_TRUE;
-      return HB_TRUE;
+      return true;
    }
 
    if( pArea->ulRecNo > pArea->ulRecCount )
@@ -744,7 +744,7 @@ static HB_BOOL hb_dbfReadRecord( DBFAREAP pArea )
       if( pArea->ulRecNo > pArea->ulRecCount )
       {
          pArea->area.fEof = pArea->fValidBuffer = HB_TRUE;
-         return HB_TRUE;
+         return true;
       }
    }
 
@@ -756,18 +756,18 @@ static HB_BOOL hb_dbfReadRecord( DBFAREAP pArea )
        static_cast<HB_SIZE>(pArea->uiRecordLen) )
    {
       hb_dbfErrorRT( pArea, EG_READ, EDBF_READ, pArea->szDataFileName, hb_fsError(), 0, nullptr );
-      return HB_FALSE;
+      return false;
    }
 
    if( SELF_GETREC( &pArea->area, nullptr ) == HB_FAILURE )
    {
-      return HB_FALSE;
+      return false;
    }
 
    /* Set flags */
    pArea->fValidBuffer = pArea->fPositioned = HB_TRUE;
    pArea->fDeleted = pArea->pRecord[0] == '*';
-   return HB_TRUE;
+   return true;
 }
 
 /*
@@ -781,12 +781,12 @@ static HB_BOOL hb_dbfWriteRecord( DBFAREAP pArea )
 
    if( SELF_PUTREC( &pArea->area, nullptr ) == HB_FAILURE )
    {
-      return HB_FALSE;
+      return false;
    }
 
    pArea->fRecordChanged = HB_FALSE;
    pArea->fDataFlush = HB_TRUE;
-   return HB_TRUE;
+   return true;
 }
 
 /*
@@ -889,7 +889,7 @@ static void hb_dbfTableCrypt( DBFAREAP pArea, PHB_ITEM pPasswd, HB_BOOL fEncrypt
 
          pOldCryptKey = pArea->pCryptKey;
          pArea->pCryptKey = nullptr;
-         hb_dbfPasswordSet( pArea, pPasswd, HB_FALSE );
+         hb_dbfPasswordSet( pArea, pPasswd, false );
          pNewCryptKey = pArea->pCryptKey;
          if( !fEncrypt )
          {
@@ -1179,12 +1179,12 @@ static HB_BOOL hb_dbfIsLocked( DBFAREAP pArea, HB_ULONG ulRecNo )
    {
       if( pArea->pLocksPos[ulCount - 1] == ulRecNo )
       {
-         return HB_TRUE;
+         return true;
       }
       ulCount--;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 /*
@@ -1499,9 +1499,9 @@ HB_BOOL hb_dbfLockIdxGetData( HB_BYTE bScheme, PHB_DBFLOCKDATA pLockData )
 
       default:
          pLockData->offset = pLockData->size = 0;
-         return HB_FALSE;
+         return false;
    }
-   return HB_TRUE;
+   return true;
 }
 
 static HB_BOOL hb_dbfLockIdxRepeatFail( DBFAREAP pArea, PHB_DBFLOCKDATA pLockData )
@@ -1511,7 +1511,7 @@ static HB_BOOL hb_dbfLockIdxRepeatFail( DBFAREAP pArea, PHB_DBFLOCKDATA pLockDat
 
    /* TODO: call special error handler (LOCKHANDLER) here */
 
-   return HB_TRUE;
+   return true;
 }
 
 /*
@@ -1529,7 +1529,7 @@ HB_BOOL hb_dbfLockIdxFile( DBFAREAP pArea, PHB_FILE pFile, int iType, HB_BOOL fL
       case FL_LOCK:
          if( !hb_dbfLockIdxGetData( pArea->bLockType, pLockData ) )
          {
-            return HB_FALSE;
+            return false;
          }
 
          if( pLockData->size && ( iType & FLX_SHARED ) != 0 )
@@ -1572,7 +1572,7 @@ HB_BOOL hb_dbfLockIdxFile( DBFAREAP pArea, PHB_FILE pFile, int iType, HB_BOOL fL
                      break;
                   }
                }
-               return HB_TRUE;
+               return true;
             }
             if( ( iType & FLX_WAIT ) == 0 )
             {
@@ -1611,10 +1611,10 @@ HB_BOOL hb_dbfLockIdxFile( DBFAREAP pArea, PHB_FILE pFile, int iType, HB_BOOL fL
             pLockData->offset = pLockData->size =
             pLockData->next = pLockData->tolock = 0;
             pLockData->type = 0;
-            return HB_TRUE;
+            return true;
          }
    }
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_dbfLockIdxWrite( DBFAREAP pArea, PHB_FILE pFile, PHB_DBFLOCKDATA pLockData )
@@ -1626,14 +1626,14 @@ HB_BOOL hb_dbfLockIdxWrite( DBFAREAP pArea, PHB_FILE pFile, PHB_DBFLOCKDATA pLoc
       {
          if( !hb_dbfLockIdxRepeatFail( pArea, pLockData ) )
          {
-            return HB_FALSE;
+            return false;
          }
          hb_releaseCPU();
       }
       pLockData->next = pLockData->tolock;
       pLockData->tolock = 0;
    }
-   return HB_TRUE;
+   return true;
 }
 
 /*
@@ -3506,7 +3506,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
       hb_xfree(pFileName);
    }
 
-   pItem = hb_itemPutL(pItem, HB_FALSE);
+   pItem = hb_itemPutL(pItem, false);
    fRawBlob = SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_BLOB_SUPPORT, pCreateInfo->ulConnection, pItem ) == HB_SUCCESS && hb_itemGetL(pItem);
 
    if( pArea->bLockType == 0 )
@@ -3811,7 +3811,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
             pThisField->bLen = static_cast<HB_BYTE>(uiLen);
             pThisField->bDec = static_cast<HB_BYTE>(uiLen >> 8);
             pArea->uiRecordLen += uiLen;
-            hb_dbfAllocNullFlag( pArea, uiCount, HB_TRUE );
+            hb_dbfAllocNullFlag( pArea, uiCount, true );
             break;
 
          case HB_FT_TIME:
@@ -3876,7 +3876,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
 
       if( ( pField->uiFlags & HB_FF_NULLABLE ) != 0 )
       {
-         hb_dbfAllocNullFlag( pArea, uiCount, HB_FALSE );
+         hb_dbfAllocNullFlag( pArea, uiCount, false );
       }
 
       pThisField++;
@@ -3943,7 +3943,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
    pItem = hb_itemNew(nullptr);
    if( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_PENDINGPASSWORD, pCreateInfo->ulConnection, pItem ) == HB_SUCCESS )
    {
-      if( hb_dbfPasswordSet( pArea, pItem, HB_FALSE ) )
+      if( hb_dbfPasswordSet( pArea, pItem, false ) )
       {
          pArea->fTableEncrypted = HB_TRUE;
       }
@@ -3953,7 +3953,7 @@ static HB_ERRCODE hb_dbfCreate( DBFAREAP pArea, LPDBOPENINFO pCreateInfo )
       hb_itemClear(pItem);
       if( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_PASSWORD, pCreateInfo->ulConnection, pItem ) == HB_SUCCESS )
       {
-         if( hb_dbfPasswordSet( pArea, pItem, HB_FALSE ) )
+         if( hb_dbfPasswordSet( pArea, pItem, false ) )
          {
             pArea->fTableEncrypted = HB_TRUE;
          }
@@ -4037,7 +4037,7 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
    {
       case DBI_ISDBF:
       case DBI_CANPUTREC:
-         hb_itemPutL(pItem, HB_TRUE);
+         hb_itemPutL(pItem, true);
          break;
 
       case DBI_GETHEADERSIZE:
@@ -4158,12 +4158,12 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
          break;
 
       case DBI_DECRYPT:
-         hb_dbfTableCrypt( pArea, pItem, HB_FALSE );
+         hb_dbfTableCrypt( pArea, pItem, false );
          hb_itemPutL(pItem, !pArea->fTableEncrypted);
          break;
 
       case DBI_ENCRYPT:
-         hb_dbfTableCrypt( pArea, pItem, HB_TRUE );
+         hb_dbfTableCrypt( pArea, pItem, true );
          hb_itemPutL(pItem, pArea->fTableEncrypted);
          break;
 
@@ -4249,7 +4249,7 @@ static HB_ERRCODE hb_dbfInfo( DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
          break;
 
       case DBI_PASSWORD:
-         hb_dbfPasswordSet( pArea, pItem, HB_FALSE );
+         hb_dbfPasswordSet( pArea, pItem, false );
          break;
 
       case DBI_TRIGGER:
@@ -4360,7 +4360,7 @@ static HB_ERRCODE hb_dbfFieldInfo( DBFAREAP pArea, HB_USHORT uiIndex, HB_USHORT 
             }
             else
             {
-               nValue = hb_dbfNextValueGet( pArea, uiIndex - 1, HB_FALSE );
+               nValue = hb_dbfNextValueGet( pArea, uiIndex - 1, false );
             }
 
             if( fLck )
@@ -5097,7 +5097,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
             {
                dbFieldInfo.uiFlags |= HB_FF_BINARY & pField->bFieldFlags;
             }
-            hb_dbfAllocNullFlag( pArea, uiCount, HB_TRUE );
+            hb_dbfAllocNullFlag( pArea, uiCount, true );
             break;
 
          case 'V':
@@ -5107,7 +5107,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
                #if 0
                dbFieldInfo.uiFlags &= ~HB_FF_BINARY;
                #endif
-               hb_dbfAllocNullFlag( pArea, uiCount, HB_TRUE );
+               hb_dbfAllocNullFlag( pArea, uiCount, true );
             }
             else
             {
@@ -5195,7 +5195,7 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
       {
          if( ( dbFieldInfo.uiFlags & HB_FF_NULLABLE ) != 0 )
          {
-            hb_dbfAllocNullFlag( pArea, uiCount, HB_FALSE );
+            hb_dbfAllocNullFlag( pArea, uiCount, false );
          }
          /* Add field */
          errCode = SELF_ADDFIELD( &pArea->area, &dbFieldInfo );
@@ -5229,14 +5229,14 @@ static HB_ERRCODE hb_dbfOpen( DBFAREAP pArea, LPDBOPENINFO pOpenInfo )
    pItem = hb_itemNew(nullptr);
    if( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_PENDINGPASSWORD, pOpenInfo->ulConnection, pItem ) == HB_SUCCESS )
    {
-      hb_dbfPasswordSet( pArea, pItem, HB_FALSE );
+      hb_dbfPasswordSet( pArea, pItem, false );
    }
    else
    {
       hb_itemClear(pItem);
       if( SELF_RDDINFO( SELF_RDDNODE( &pArea->area ), RDDI_PASSWORD, pOpenInfo->ulConnection, pItem ) == HB_SUCCESS )
       {
-         hb_dbfPasswordSet( pArea, pItem, HB_FALSE );
+         hb_dbfPasswordSet( pArea, pItem, false );
       }
    }
    hb_itemRelease(pItem);
@@ -5489,7 +5489,7 @@ static HB_ERRCODE hb_dbfTransCond( DBFAREAP pArea, LPDBTRANSINFO pTransInfo )
       }
       else
       {
-         PHB_ITEM pPutRec = hb_itemPutL(nullptr, HB_FALSE);
+         PHB_ITEM pPutRec = hb_itemPutL(nullptr, false);
          if( SELF_INFO( pTransInfo->lpaDest, DBI_CANPUTREC, pPutRec ) != HB_SUCCESS )
          {
             hb_itemRelease(pPutRec);
@@ -5722,11 +5722,11 @@ static int hb_dbfSortCmp( LPDBSORTREC pSortRec, PHB_ITEM pValue1, PHB_ITEM pValu
          }
          else if( uiFlags & SF_CASE )
          {
-            i = hb_itemStrICmp(pItem1, pItem2, HB_TRUE);
+            i = hb_itemStrICmp(pItem1, pItem2, true);
          }
          else
          {
-            i = hb_itemStrCmp(pItem1, pItem2, HB_TRUE);
+            i = hb_itemStrCmp(pItem1, pItem2, true);
          }
       }
       else if( HB_IS_DATETIME(pItem1) )
@@ -5806,7 +5806,7 @@ static HB_BOOL hb_dbfSortQSort( LPDBSORTREC pSortRec, HB_SORTIDX * pSrc, HB_SORT
       }
       return !f1;
    }
-   return HB_TRUE;
+   return true;
 }
 
 static HB_DBRECNO * hb_dbfSortSort( LPDBSORTREC pSortRec )
@@ -6706,10 +6706,10 @@ static HB_ERRCODE hb_dbfLock( DBFAREAP pArea, LPDBLOCKINFO pLockInfo )
       switch( pLockInfo->uiMethod )
       {
          case DBLM_EXCLUSIVE:
-            return hb_dbfLockRecord( pArea, 0, &pLockInfo->fResult, HB_TRUE );
+            return hb_dbfLockRecord( pArea, 0, &pLockInfo->fResult, true );
 
          case DBLM_MULTIPLE:
-            return hb_dbfLockRecord( pArea, hb_itemGetNL(pLockInfo->itmRecID), &pLockInfo->fResult, HB_FALSE );
+            return hb_dbfLockRecord( pArea, hb_itemGetNL(pLockInfo->itmRecID), &pLockInfo->fResult, false );
 
          case DBLM_FILE:
             return hb_dbfLockFile( pArea, &pLockInfo->fResult );
@@ -7536,7 +7536,7 @@ static HB_ERRCODE hb_dbfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
       case RDDI_ISDBF:
       case RDDI_CANPUTREC:
       case RDDI_LOCAL:
-         hb_itemPutL(pItem, HB_TRUE);
+         hb_itemPutL(pItem, true);
          break;
 
       case RDDI_TABLEEXT:

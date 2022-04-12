@@ -312,7 +312,7 @@ HB_BOOL hb_mathGetError( HB_MATH_EXCEPTION * phb_exc, const char * szFunc, doubl
    switch( errno )
    {
       case 0:
-         return HB_FALSE;
+         return false;
       case EDOM:
       case ERANGE:
 #   if defined(EOVERFLOW)
@@ -376,7 +376,7 @@ HB_BOOL hb_mathGetError( HB_MATH_EXCEPTION * phb_exc, const char * szFunc, doubl
          ( *mathHandler )( phb_exc );
       }
    }
-   return HB_TRUE;
+   return true;
 #else
    HB_SYMBOL_UNUSED(dResult);
    HB_SYMBOL_UNUSED(arg1);
@@ -391,7 +391,7 @@ HB_BOOL hb_mathGetError( HB_MATH_EXCEPTION * phb_exc, const char * szFunc, doubl
 #  else
 
    HB_SYMBOL_UNUSED(phb_exc);
-   return HB_FALSE;
+   return false;
 
 #  endif
 

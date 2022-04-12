@@ -271,8 +271,8 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
       {
          if( !GetTempPath( HB_PATH_MAX, lpTempDir ) )
          {
-            hb_fsSetIOError(HB_FALSE, 0);
-            return HB_FALSE;
+            hb_fsSetIOError(false, 0);
+            return false;
          }
          lpTempDir[HB_PATH_MAX - 1] = TEXT( '\0' );
          lpDir = lpTempDir;
@@ -378,17 +378,17 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
    {
       char * pszTempDirEnv = hb_getenv( "TMPDIR" );
 
-      if( fsGetTempDirByCase( pszTempDir, pszTempDirEnv, HB_FALSE ) )
+      if( fsGetTempDirByCase( pszTempDir, pszTempDirEnv, false ) )
       {
          nResult = 0;
       }
 #ifdef P_tmpdir
-      else if( fsGetTempDirByCase( pszTempDir, P_tmpdir, HB_TRUE ) )
+      else if( fsGetTempDirByCase( pszTempDir, P_tmpdir, true ) )
       {
          nResult = 0;
       }
 #endif
-      else if( fsGetTempDirByCase( pszTempDir, "/tmp", HB_TRUE ) )
+      else if( fsGetTempDirByCase( pszTempDir, "/tmp", true ) )
       {
          nResult = 0;
       }
@@ -421,7 +421,7 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
 
          if( pszTempDirEnv )
          {
-            if( fsGetTempDirByCase( pszTempDir, pszTempDirEnv, HB_FALSE ) )
+            if( fsGetTempDirByCase( pszTempDir, pszTempDirEnv, false ) )
             {
                nResult = 0;
             }

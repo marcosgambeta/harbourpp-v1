@@ -64,7 +64,7 @@ static HB_STRIP_FUNC(hb_p_line)
    {
       case HB_P_LINE:
       case HB_P_MODULENAME:
-         hb_compNOOPfill(pFunc, nPCodePos, 3, HB_FALSE, HB_FALSE);
+         hb_compNOOPfill(pFunc, nPCodePos, 3, false, false);
          break;
       default:
          if( !(static_cast<PHB_COMP>(cargo))->fDebugInfo )
@@ -84,7 +84,7 @@ static HB_STRIP_FUNC(hb_p_line)
             }
             if( nNewPos != nPCodePos && pFunc->pCode[nNewPos] == HB_P_LINE )
             {
-               hb_compNOOPfill(pFunc, nPCodePos, 3, HB_FALSE, HB_FALSE);
+               hb_compNOOPfill(pFunc, nPCodePos, 3, false, false);
             }
          }
    }

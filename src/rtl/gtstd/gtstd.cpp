@@ -458,7 +458,7 @@ static HB_BOOL hb_gt_std_IsColor( PHB_GT pGT )
 
    HB_SYMBOL_UNUSED(pGT);
 
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_gt_std_Tone( PHB_GT pGT, double dFrequency, double dDuration )
@@ -768,14 +768,14 @@ static HB_BOOL hb_gt_std_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
    {
       case HB_GTI_ISSCREENPOS:
       case HB_GTI_KBDSUPPORT:
-         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_TRUE);
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, true);
          break;
 
       default:
          return HB_GTSUPER_INFO(pGT, iType, pInfo);
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
@@ -799,7 +799,7 @@ static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 
    pFuncTable->ReadKey                    = hb_gt_std_ReadKey;
 
-   return HB_TRUE;
+   return true;
 }
 
 /* *********************************************************************** */

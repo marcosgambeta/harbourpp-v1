@@ -431,7 +431,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
       if( tmp == SL_KEY_MOU )
       {
          hb_gt_sln_mouse_ProcessTerminalEvent();
-         return hb_gt_sln_mouse_Inkey( iEventMask, HB_FALSE );
+         return hb_gt_sln_mouse_Inkey( iEventMask, false );
       }
 
       tmp = hb_sln_FindKeyTranslation( tmp );

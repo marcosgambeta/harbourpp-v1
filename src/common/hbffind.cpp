@@ -684,11 +684,11 @@ HB_BOOL hb_fsFindNext(PHB_FFIND ffind)
             ((ffind->attrmask & HB_FA_LABEL    ) == 0 && (ffind->attr & HB_FA_LABEL    ) != 0) ||
             ((ffind->attrmask & HB_FA_DIRECTORY) == 0 && (ffind->attr & HB_FA_DIRECTORY) != 0)) )
       {
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 void hb_fsFindClose(PHB_FFIND ffind)

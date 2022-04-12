@@ -59,7 +59,7 @@ HB_BOOL hb_strMatchRegExp( const char * szString, const char * szPattern )
    if( pRegEx )
    {
       HB_BOOL fMatch;
-      fMatch = hb_regexMatch( pRegEx, szString, strlen(szString), HB_TRUE );
+      fMatch = hb_regexMatch( pRegEx, szString, strlen(szString), true );
       hb_regexFree( pRegEx );
       return fMatch;
    }

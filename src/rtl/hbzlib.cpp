@@ -146,7 +146,7 @@ static int s_zlibCompress2( char ** pDstPtr, HB_SIZE * pnDst, const char * pSrc,
 
 static int s_zlibCompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nSrc, int level )
 {
-   return s_zlibCompress2( &pDst, pnDst, pSrc, nSrc, HB_FALSE, level );
+   return s_zlibCompress2( &pDst, pnDst, pSrc, nSrc, false, level );
 }
 
 static HB_SIZE s_zlibUncompressedSize( const char * szSrc, HB_SIZE nLen, int * piResult )
@@ -335,7 +335,7 @@ HB_FUNC( HB_ZCOMPRESS )
 
          if( pDest || fAlloc )
          {
-            iResult = s_zlibCompress2( &pDest, &nDstLen, szData, nLen, HB_FALSE, hb_parnidef(4, Z_DEFAULT_COMPRESSION) );
+            iResult = s_zlibCompress2( &pDest, &nDstLen, szData, nLen, false, hb_parnidef(4, Z_DEFAULT_COMPRESSION) );
             if( !pBuffer )
             {
                if( iResult == Z_OK )
@@ -510,7 +510,7 @@ HB_FUNC( HB_GZCOMPRESS )
 
          if( pDest || fAlloc )
          {
-            iResult = s_zlibCompress2( &pDest, &nDstLen, szData, nLen, HB_TRUE, hb_parnidef(4, Z_DEFAULT_COMPRESSION) );
+            iResult = s_zlibCompress2( &pDest, &nDstLen, szData, nLen, true, hb_parnidef(4, Z_DEFAULT_COMPRESSION) );
             if( !pBuffer )
             {
                if( iResult == Z_OK )

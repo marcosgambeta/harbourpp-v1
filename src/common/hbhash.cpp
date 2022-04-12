@@ -192,7 +192,7 @@ HB_BOOL hb_hashTableAdd(PHB_HASH_TABLE pTable, const void * pKey, const void * p
    }
    ++pTable->nCount;
 
-   return HB_TRUE;
+   return true;
 }
 
 /* return the pointer to item's value or nullptr if not found
@@ -235,7 +235,7 @@ HB_BOOL hb_hashTableDel(PHB_HASH_TABLE pTable, const void * pKey)
    nKey = (pTable->pKeyFunc)(pTable, pKey, nullptr);
    if( nKey > pTable->nTableSize )
    {
-      return HB_FALSE;
+      return false;
    }
 
    pItem = pTable->pItems[nKey];

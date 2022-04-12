@@ -171,7 +171,7 @@ HB_BOOL hb_setenv(const char * szName, const char * szValue)
 {
    if( szName == nullptr )
    {
-      return HB_FALSE;
+      return false;
    }
 
 #if defined(HB_OS_WIN)
@@ -225,7 +225,7 @@ HB_BOOL hb_setenv(const char * szName, const char * szValue)
 
    HB_SYMBOL_UNUSED(szValue);
 
-   return HB_FALSE;
+   return false;
 
 #else
    /* please add support for other C compilers
@@ -238,7 +238,7 @@ HB_BOOL hb_setenv(const char * szName, const char * szValue)
 
    HB_SYMBOL_UNUSED(szValue);
 
-   return HB_FALSE;
+   return false;
 
 #endif
 }

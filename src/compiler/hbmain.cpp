@@ -164,7 +164,7 @@ int hb_compMainExt(int argc, const char * const argv[], HB_BYTE ** pBufPtr, HB_S
 
    if( iFileCount > 0 && iStatus == EXIT_SUCCESS )
    {
-      hb_compI18nSave(HB_COMP_PARAM, HB_TRUE);
+      hb_compI18nSave(HB_COMP_PARAM, true);
 
       if( pBufPtr && pnSize && iStatus == EXIT_SUCCESS )
       {
@@ -263,7 +263,7 @@ static int hb_compReadClpFile(HB_COMP_DECL, const char * szClpFile)
             szFile[i] = '\0';
             if( i > 0 )
             {
-               hb_compModuleAdd(HB_COMP_PARAM, hb_compIdentifierNew(HB_COMP_PARAM, szFile, HB_IDENT_COPY), HB_TRUE);
+               hb_compModuleAdd(HB_COMP_PARAM, hb_compIdentifierNew(HB_COMP_PARAM, szFile, HB_IDENT_COPY), true);
             }
             i = 0;
             while( ch != EOF && ch != '\n' )
@@ -407,7 +407,7 @@ void hb_compVariableAdd(HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarTy
        (HB_COMP_PARAM->iVarScope == HB_VSCOMP_LOCAL ||
          HB_COMP_PARAM->iVarScope == (HB_VSCOMP_PRIVATE | HB_VSCOMP_PARAMETER)) )
    {
-      if( HB_COMP_PARAM->iStartProc == 2 && pFunc->szName[0] && hb_compRegisterFunc(HB_COMP_PARAM, pFunc, HB_FALSE) )
+      if( HB_COMP_PARAM->iStartProc == 2 && pFunc->szName[0] && hb_compRegisterFunc(HB_COMP_PARAM, pFunc, false) )
       {
          pFunc->funFlags &= ~HB_FUNF_FILE_DECL;
       }
@@ -1552,7 +1552,7 @@ static void hb_compOptimizeJumps(HB_COMP_DECL)
                case HB_P_JUMPNEAR:
                   if( static_cast<signed char>(pCode[nJumpAddr + 1]) == 2 )
                   {
-                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 2, HB_FALSE, HB_FALSE);
+                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 2, false, false);
                   }
                   break;
 
@@ -1560,7 +1560,7 @@ static void hb_compOptimizeJumps(HB_COMP_DECL)
                case HB_P_JUMPTRUENEAR:
                   if( static_cast<signed char>(pCode[nJumpAddr + 1]) == 2 )
                   {
-                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 2, HB_TRUE, HB_FALSE);
+                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 2, true, false);
                   }
                   break;
 
@@ -1568,12 +1568,12 @@ static void hb_compOptimizeJumps(HB_COMP_DECL)
                   nOffset = HB_PCODE_MKSHORT(&pCode[nJumpAddr + 1]);
                   if( nOffset == 3 )
                   {
-                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 3, HB_FALSE, HB_FALSE);
+                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 3, false, false);
                   }
                   else if( HB_LIM_INT8(nOffset) )
                   {
                      pCode[nJumpAddr] = HB_P_JUMPNEAR;
-                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr + 2, 1, HB_FALSE, HB_FALSE);
+                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr + 2, 1, false, false);
                   }
                   break;
 
@@ -1581,12 +1581,12 @@ static void hb_compOptimizeJumps(HB_COMP_DECL)
                   nOffset = HB_PCODE_MKSHORT(&pCode[nJumpAddr + 1]);
                   if( nOffset == 3 )
                   {
-                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 3, HB_TRUE, HB_FALSE);
+                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 3, true, false);
                   }
                   else if( HB_LIM_INT8(nOffset) )
                   {
                      pCode[nJumpAddr] = HB_P_JUMPFALSENEAR;
-                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr + 2, 1, HB_FALSE, HB_FALSE);
+                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr + 2, 1, false, false);
                   }
                   break;
 
@@ -1594,12 +1594,12 @@ static void hb_compOptimizeJumps(HB_COMP_DECL)
                   nOffset = HB_PCODE_MKSHORT(&pCode[nJumpAddr + 1]);
                   if( nOffset == 3 )
                   {
-                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 3, HB_TRUE, HB_FALSE);
+                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 3, true, false);
                   }
                   else if( HB_LIM_INT8(nOffset) )
                   {
                      pCode[nJumpAddr] = HB_P_JUMPTRUENEAR;
-                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr + 2, 1, HB_FALSE, HB_FALSE);
+                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr + 2, 1, false, false);
                   }
                   break;
 
@@ -1607,19 +1607,19 @@ static void hb_compOptimizeJumps(HB_COMP_DECL)
                   nOffset = HB_PCODE_MKINT24(&pCode[nJumpAddr + 1]);
                   if( nOffset == 4 )
                   {
-                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 4, HB_FALSE, HB_FALSE);
+                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 4, false, false);
                   }
                   else if( iPass > 0 && HB_LIM_INT16(nOffset) )
                   {
                      if( HB_LIM_INT8(nOffset) )
                      {
                         pCode[nJumpAddr] = HB_P_JUMPNEAR;
-                        hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr + 2, 2, HB_FALSE, HB_FALSE);
+                        hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr + 2, 2, false, false);
                      }
                      else
                      {
                         pCode[nJumpAddr] = HB_P_JUMP;
-                        hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr + 3, 1, HB_FALSE, HB_FALSE);
+                        hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr + 3, 1, false, false);
                      }
                   }
                   break;
@@ -1628,19 +1628,19 @@ static void hb_compOptimizeJumps(HB_COMP_DECL)
                   nOffset = HB_PCODE_MKINT24(&pCode[nJumpAddr + 1]);
                   if( nOffset == 4 )
                   {
-                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 4, HB_TRUE, HB_FALSE);
+                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 4, true, false);
                   }
                   else if( iPass > 0 && HB_LIM_INT16(nOffset) )
                   {
                      if( HB_LIM_INT8(nOffset) )
                      {
                         pCode[nJumpAddr] = HB_P_JUMPFALSENEAR;
-                        hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr + 2, 2, HB_FALSE, HB_FALSE);
+                        hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr + 2, 2, false, false);
                      }
                      else
                      {
                         pCode[nJumpAddr] = HB_P_JUMPFALSE;
-                        hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr + 3, 1, HB_FALSE, HB_FALSE);
+                        hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr + 3, 1, false, false);
                      }
                   }
                   break;
@@ -1649,19 +1649,19 @@ static void hb_compOptimizeJumps(HB_COMP_DECL)
                   nOffset = HB_PCODE_MKINT24(&pCode[nJumpAddr + 1]);
                   if( nOffset == 4 )
                   {
-                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 4, HB_TRUE, HB_FALSE);
+                     hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr, 4, true, false);
                   }
                   else if( iPass > 0 && HB_LIM_INT16(nOffset) )
                   {
                      if( HB_LIM_INT8(nOffset) )
                      {
                         pCode[nJumpAddr] = HB_P_JUMPTRUENEAR;
-                        hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr + 2, 2, HB_FALSE, HB_FALSE);
+                        hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr + 2, 2, false, false);
                      }
                      else
                      {
                         pCode[nJumpAddr] = HB_P_JUMPTRUE;
-                        hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr + 3, 1, HB_FALSE, HB_FALSE);
+                        hb_compNOOPfill(HB_COMP_PARAM->functions.pLast, nJumpAddr + 3, 1, false, false);
                      }
                   }
                   break;
@@ -2375,11 +2375,11 @@ static HB_BOOL hb_compCheckReservedNames(HB_COMP_DECL, const char * szFunName, H
       {
          hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_FUNC_RESERVED, szFunction, szFunName);
       }
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -2402,9 +2402,9 @@ static HB_BOOL hb_compRegisterFunc(HB_COMP_DECL, PHB_HFUNC pFunc, HB_BOOL fError
       }
       pSym->cScope |= pFunc->cScope | HB_FS_LOCAL;
       pSym->pFunc = pFunc;
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 /*
@@ -2440,7 +2440,7 @@ void hb_compFunctionAdd(HB_COMP_DECL, const char * szFunName, HB_SYMBOLSCOPE cSc
 
    if( (iType & HB_FUNF_FILE_DECL) == 0 )
    {
-      hb_compRegisterFunc(HB_COMP_PARAM, pFunc, HB_TRUE);
+      hb_compRegisterFunc(HB_COMP_PARAM, pFunc, true);
    }
 
    if( (iType & (HB_FUNF_FILE_DECL | HB_FUNF_FILE_FIRST)) != 0 )
@@ -2480,9 +2480,9 @@ static void hb_compAnnounce(HB_COMP_DECL, const char * szFunName)
    /* check for reserved name
     * NOTE: Clipper doesn't check for it
     */
-   hb_compCheckReservedNames(HB_COMP_PARAM, szFunName, HB_TRUE);
+   hb_compCheckReservedNames(HB_COMP_PARAM, szFunName, true);
 
-   pFunc = hb_compFunctionFind(HB_COMP_PARAM, szFunName, HB_FALSE);
+   pFunc = hb_compFunctionFind(HB_COMP_PARAM, szFunName, false);
    if( pFunc )
    {
       /* there is a function/procedure defined already - ANNOUNCEd procedure
@@ -2718,7 +2718,7 @@ void hb_compStatmentStart(HB_COMP_DECL)
 
       if( ( pFunc->funFlags & HB_FUNF_FILE_DECL ) != 0 )
       {
-         if( HB_COMP_PARAM->iStartProc == 2 && pFunc->szName[0] && hb_compRegisterFunc(HB_COMP_PARAM, pFunc, HB_FALSE) )
+         if( HB_COMP_PARAM->iStartProc == 2 && pFunc->szName[0] && hb_compRegisterFunc(HB_COMP_PARAM, pFunc, false) )
          {
             pFunc->funFlags &= ~HB_FUNF_FILE_DECL;
          }
@@ -3559,7 +3559,7 @@ static void hb_compRemovePCODE(HB_COMP_DECL, HB_SIZE nPos, HB_SIZE nCount, HB_BO
        * is enabled by replacing it with HB_P_NOOP opcodes - which
        * will be later eliminated and jump data updated.
        */
-      hb_compNOOPfill(pFunc, nPos, nCount, HB_FALSE, HB_TRUE);
+      hb_compNOOPfill(pFunc, nPos, nCount, false, true);
    }
    else
    {
@@ -3617,11 +3617,11 @@ HB_BOOL hb_compHasJump(PHB_HFUNC pFunc, HB_SIZE nPos)
       }
       if( nJumpAddr == nPos )
       {
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 /* Generate the opcode to open BEGIN/END sequence
@@ -3712,7 +3712,7 @@ void hb_compSequenceFinish(HB_COMP_DECL, HB_SIZE nStartPos, HB_SIZE nEndPos,
       if( HB_COMP_PARAM->functions.pLast->nPCodePos - nAlways == 5 && !HB_COMP_PARAM->fDebugInfo )
       {
          /* remove HB_P_ALWAYSBEGIN and HB_P_ALWAYSEND opcodes */
-         hb_compRemovePCODE(HB_COMP_PARAM, nAlways, 5, HB_TRUE);
+         hb_compRemovePCODE(HB_COMP_PARAM, nAlways, 5, true);
          /* remove HB_P_SEQALWAYS opcode */
          hb_compRemovePCODE(HB_COMP_PARAM, nStartPos - 4, 4, fCanMove);
       }
@@ -4596,7 +4596,7 @@ static int hb_compCompile(HB_COMP_DECL, const char * szPrg, const char * szBuffe
       }
       else
       {
-         hb_compModuleAdd(HB_COMP_PARAM, hb_compIdentifierNew(HB_COMP_PARAM, szPrg, HB_IDENT_COPY), HB_TRUE);
+         hb_compModuleAdd(HB_COMP_PARAM, hb_compIdentifierNew(HB_COMP_PARAM, szPrg, HB_IDENT_COPY), true);
       }
    }
 
@@ -4650,7 +4650,7 @@ static int hb_compCompile(HB_COMP_DECL, const char * szPrg, const char * szBuffe
             break;
          }
       }
-      else if( !hb_pp_inFile(HB_COMP_PARAM->pLex->pPP, szFileName, HB_FALSE, nullptr, HB_FALSE) )
+      else if( !hb_pp_inFile(HB_COMP_PARAM->pLex->pPP, szFileName, false, nullptr, false) )
       {
          hb_snprintf(buffer, sizeof(buffer), "Cannot open %s, assumed external\n", szFileName);
          hb_compOutErr(HB_COMP_PARAM, buffer);
@@ -4931,7 +4931,7 @@ static int hb_compCompile(HB_COMP_DECL, const char * szPrg, const char * szBuffe
 
       if( fGenCode && HB_COMP_PARAM->iErrorCount == 0 )
       {
-         if( hb_compI18nSave(HB_COMP_PARAM, HB_FALSE) )
+         if( hb_compI18nSave(HB_COMP_PARAM, false) )
          {
             hb_compI18nFree(HB_COMP_PARAM);
          }

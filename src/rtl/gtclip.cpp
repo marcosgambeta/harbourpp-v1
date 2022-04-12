@@ -84,7 +84,7 @@ HB_BOOL hb_gt_setClipboard( const char * szClipData, HB_SIZE nLen )
 
    hb_threadLeaveCriticalSection( &s_clipMtx );
 
-   return HB_TRUE;
+   return true;
 }
 
 HB_BOOL hb_gt_getClipboard( char ** pszClipData, HB_SIZE * pnLen )

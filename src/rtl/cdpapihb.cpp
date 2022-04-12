@@ -357,7 +357,7 @@ HB_FUNC( HB_UTF8AT )
       }
       else
       {
-         hb_retns(hb_cdpUTF8StringAt(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), hb_itemGetCPtr(pText), nTextLength, nStart, nEnd, HB_FALSE));
+         hb_retns(hb_cdpUTF8StringAt(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), hb_itemGetCPtr(pText), nTextLength, nStart, nEnd, false));
       }
    }
    else
@@ -389,7 +389,7 @@ HB_FUNC( HB_UTF8RAT )
       }
       else
       {
-         hb_retns(hb_cdpUTF8StringAt(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), hb_itemGetCPtr(pText), nTextLength, nStart, nEnd, HB_TRUE));
+         hb_retns(hb_cdpUTF8StringAt(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), hb_itemGetCPtr(pText), nTextLength, nStart, nEnd, true));
       }
    }
    else

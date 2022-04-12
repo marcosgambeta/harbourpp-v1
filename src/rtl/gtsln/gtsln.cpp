@@ -687,7 +687,7 @@ static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
             hb_sln_colorTrans();
             if( !hb_sln_Is_Unicode )
             {
-               hb_sln_setCharTrans(pGT, HB_TRUE);
+               hb_sln_setCharTrans(pGT, true);
                hb_sln_setKeyTrans(pGT);
             }
 
@@ -721,11 +721,11 @@ static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    hb_gt_sln_mouse_Init();
    HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
    HB_GTSELF_RESIZE(pGT, SLtt_Screen_Rows, SLtt_Screen_Cols);
-   HB_GTSELF_SETFLAG(pGT, HB_GTI_COMPATBUFFER, HB_FALSE);
+   HB_GTSELF_SETFLAG(pGT, HB_GTI_COMPATBUFFER, false);
    HB_GTSELF_SETFLAG(pGT, HB_GTI_STDOUTCON, s_fStdOutTTY);
    HB_GTSELF_SETFLAG(pGT, HB_GTI_STDERRCON, s_fStdErrTTY && (s_fStdOutTTY || s_fStdInTTY));
 
-   HB_GTSELF_SETBLINK(pGT, HB_TRUE);
+   HB_GTSELF_SETBLINK(pGT, true);
    HB_GTSELF_SETPOS(pGT, SLsmg_get_row(), SLsmg_get_column());
 }
 
@@ -772,7 +772,7 @@ static HB_BOOL hb_gt_sln_SetMode( PHB_GT pGT, int iRows, int iCols )
    HB_SYMBOL_UNUSED(iCols);
 
    /* TODO: How to change the size of the screen? */
-   return HB_FALSE;
+   return false;
 }
 
 /* *********************************************************************** */
@@ -917,7 +917,7 @@ static HB_BOOL hb_gt_sln_PreExt( PHB_GT pGT )
 #if defined(HB_HAS_GPM)
    hb_gt_sln_mouse_FixTrash();
 #endif
-   return HB_TRUE;
+   return true;
 }
 
 /* *********************************************************************** */
@@ -926,7 +926,7 @@ static HB_BOOL hb_gt_sln_PostExt( PHB_GT pGT )
 {
    HB_SYMBOL_UNUSED(pGT);
 
-   return HB_TRUE;
+   return true;
 }
 
 /* *********************************************************************** */
@@ -941,7 +941,7 @@ static HB_BOOL hb_gt_sln_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
    {
       case HB_GTI_ISSCREENPOS:
       case HB_GTI_KBDSUPPORT:
-         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_TRUE);
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, true);
          break;
 
       case HB_GTI_ISUNICODE:
@@ -958,7 +958,7 @@ static HB_BOOL hb_gt_sln_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          return HB_GTSUPER_INFO(pGT, iType, pInfo);
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 
@@ -972,9 +972,9 @@ static HB_BOOL hb_gt_sln_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const c
       {
          hb_sln_setCharTrans(pGT, fBox);
       }
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 /* *********************************************************************** */
@@ -987,9 +987,9 @@ static HB_BOOL hb_gt_sln_SetKeyCP( PHB_GT pGT, const char * pszTermCDP, const ch
       {
          hb_sln_setKeyTrans(pGT);
       }
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 /* *********************************************************************** */
@@ -1033,7 +1033,7 @@ static void hb_gt_sln_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
          HB_UCHAR uc;
          while( iSize-- > 0 )
          {
-            if( !HB_GTSELF_GETSCRUC(pGT, iRow, iCol, &iColor, &bAttr, &uc, HB_FALSE) )
+            if( !HB_GTSELF_GETSCRUC(pGT, iRow, iCol, &iColor, &bAttr, &uc, false) )
             {
                break;
             }
@@ -1105,7 +1105,7 @@ static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
    pFuncTable->MouseButtonState           = hb_gt_sln_mouse_ButtonState;
    pFuncTable->MouseCountButton           = hb_gt_sln_mouse_CountButton;
 
-   return HB_TRUE;
+   return true;
 }
 
 /* *********************************************************************** */

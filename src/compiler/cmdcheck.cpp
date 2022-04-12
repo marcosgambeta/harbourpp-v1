@@ -129,7 +129,7 @@ static void hb_compChkIgnoredInfo(HB_COMP_DECL, const char * szSwitch)
 
 static char * hb_compChkOptionDup(const char * szSwitch)
 {
-   return hb_strupr(hb_strndup(szSwitch, hb_compChkOptionLen(szSwitch, HB_TRUE)));
+   return hb_strupr(hb_strndup(szSwitch, hb_compChkOptionLen(szSwitch, true)));
 }
 
 static const char * hb_compChkOptionGet(const char * szSwitch, char ** pszResult, HB_BOOL fEnv)
@@ -177,12 +177,12 @@ static const char * hb_compChkOptionAddPath(HB_COMP_DECL, const char * szSwitch,
       if( szSwitch[nLen] != '\0' )
       {
          char * szVal = hb_strndup(szSwitch, nLen);
-         hb_pp_addSearchPath(HB_COMP_PARAM->pLex->pPP, szSwitch, HB_FALSE);
+         hb_pp_addSearchPath(HB_COMP_PARAM->pLex->pPP, szSwitch, false);
          hb_xfree(szVal);
       }
       else
       {
-         hb_pp_addSearchPath(HB_COMP_PARAM->pLex->pPP, szSwitch, HB_FALSE);
+         hb_pp_addSearchPath(HB_COMP_PARAM->pLex->pPP, szSwitch, false);
       }
    }
    return szSwitch + nLen;
@@ -264,7 +264,7 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, H
          }
 
          case 'D':
-            szSwPtr = hb_compChkAddDefine(HB_COMP_PARAM, szSwPtr + 1, HB_TRUE, fEnv);
+            szSwPtr = hb_compChkAddDefine(HB_COMP_PARAM, szSwPtr + 1, true, fEnv);
             break;
 
          case 'E':
@@ -370,7 +370,7 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, H
                   }
                   else
                   {
-                     hb_setSetTrimFileName(HB_TRUE);
+                     hb_setSetTrimFileName(true);
                   }
             }
             break;
@@ -809,7 +809,7 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, H
                }
                else
                {
-                  szSwPtr = hb_compChkAddDefine(HB_COMP_PARAM, szSwPtr + 6, HB_FALSE, fEnv);
+                  szSwPtr = hb_compChkAddDefine(HB_COMP_PARAM, szSwPtr + 6, false, fEnv);
                }
                break;
             }
@@ -905,7 +905,7 @@ void hb_compChkCommandLine(HB_COMP_DECL, int argc, const char * const argv[])
       {
          do
          {
-            szSwitch = hb_compChkParseSwitch(HB_COMP_PARAM, szSwitch, HB_FALSE);
+            szSwitch = hb_compChkParseSwitch(HB_COMP_PARAM, szSwitch, false);
          }
          while( *szSwitch != '\0' );
       }
@@ -939,7 +939,7 @@ void hb_compChkEnvironment(HB_COMP_DECL)
          }
          if( *szSwitch )
          {
-            szSwitch = hb_compChkParseSwitch(HB_COMP_PARAM, szSwitch, HB_TRUE);
+            szSwitch = hb_compChkParseSwitch(HB_COMP_PARAM, szSwitch, true);
          }
       }
       hb_xfree(szEnvCMD);
@@ -954,7 +954,7 @@ void hb_compChkAddIncPaths(HB_COMP_DECL)
    {
       if( szInclude[0] != '\0' )
       {
-         hb_pp_addSearchPath(HB_COMP_PARAM->pLex->pPP, szInclude, HB_FALSE);
+         hb_pp_addSearchPath(HB_COMP_PARAM->pLex->pPP, szInclude, false);
       }
       hb_xfree(szInclude);
    }

@@ -776,7 +776,7 @@ static HB_BOOL hb_gt_pca_Suspend( PHB_GT pGT )
 #endif
    /* Enable line wrap when cursor set after last column */
    hb_gt_pca_AnsiSetAutoMargin(1);
-   return HB_TRUE;
+   return true;
 }
 
 static HB_BOOL hb_gt_pca_Resume( PHB_GT pGT )
@@ -794,7 +794,7 @@ static HB_BOOL hb_gt_pca_Resume( PHB_GT pGT )
 #endif
    hb_gt_pca_AnsiInit();
 
-   return HB_TRUE;
+   return true;
 }
 
 static HB_BOOL hb_gt_pca_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const char * pszHostCDP, HB_BOOL fBox )
@@ -810,7 +810,7 @@ static HB_BOOL hb_gt_pca_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const c
       s_fDispTrans = s_cdpTerm && s_cdpHost && s_cdpTerm != s_cdpHost;
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 static void hb_gt_pca_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
@@ -928,14 +928,14 @@ static HB_BOOL hb_gt_pca_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
    {
       case HB_GTI_ISSCREENPOS:
       case HB_GTI_KBDSUPPORT:
-         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_TRUE);
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, true);
          break;
 
       default:
          return HB_GTSUPER_INFO(pGT, iType, pInfo);
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 
@@ -959,7 +959,7 @@ static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 
    pFuncTable->ReadKey                    = hb_gt_pca_ReadKey;
 
-   return HB_TRUE;
+   return true;
 }
 
 /* *********************************************************************** */

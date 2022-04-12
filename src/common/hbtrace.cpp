@@ -144,11 +144,11 @@ HB_BOOL hb_tracefile(const char * szFile)
             fclose(s_fp);
          }
          s_fp = fp;
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 int hb_traceflush(int new_flush)

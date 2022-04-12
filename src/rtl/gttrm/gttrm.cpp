@@ -1751,7 +1751,7 @@ static HB_BOOL hb_gt_trm_XtermSetMode( PHB_GTTRM pTerm, int * piRows, int * piCo
 
    hb_gt_trm_getSize( pTerm, piRows, piCols );
 
-   return HB_TRUE;
+   return true;
 }
 
 static void hb_gt_trm_XtermSetAttributes( PHB_GTTRM pTerm, int iAttr )
@@ -2078,7 +2078,7 @@ static HB_BOOL hb_gt_trm_BsdGetCursorPos( PHB_GTTRM pTerm, int * iRow, int * iCo
       *iRow = *iCol = -1;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_gt_trm_BsdSetCursorStyle( PHB_GTTRM pTerm, int iStyle )
@@ -2460,7 +2460,7 @@ static HB_BOOL hb_gt_trm_AnsiSetMode( PHB_GTTRM pTerm, int * piRows, int * piCol
       return hb_gt_trm_XtermSetMode( pTerm, piRows, piCols );
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_gt_trm_AnsiBell( PHB_GTTRM pTerm )
@@ -2578,11 +2578,11 @@ static HB_BOOL hb_trm_isUTF8( PHB_GTTRM pTerm )
 
    if( hb_trm_Param( "UTF8", nullptr ) || hb_trm_Param( "UTF-8", nullptr ) )
    {
-      return HB_TRUE;
+      return true;
    }
    else if( hb_trm_Param( "ISO", nullptr ) )
    {
-      return HB_FALSE;
+      return false;
    }
    else if( pTerm->fPosAnswer )
    {
@@ -2592,17 +2592,17 @@ static HB_BOOL hb_trm_isUTF8( PHB_GTTRM pTerm )
    szLang = getenv( "LANG" );
    if( szLang && strstr(szLang, "UTF-8") != nullptr )
    {
-      return HB_TRUE;
+      return true;
    }
 
 #ifdef IUTF8
    if( ( pTerm->curr_TIO.c_iflag & IUTF8 ) != 0 )
    {
-      return HB_TRUE;
+      return true;
    }
 #endif
 
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_gt_trm_PutStr( PHB_GTTRM pTerm, int iRow, int iCol, int iAttr, const char * pStr, int iLen, int iChars )
@@ -3712,7 +3712,7 @@ static void hb_gt_trm_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
    HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
    HB_GTSELF_RESIZE(pGT, iRows, iCols);
-   HB_GTSELF_SETFLAG(pGT, HB_GTI_COMPATBUFFER, HB_FALSE);
+   HB_GTSELF_SETFLAG(pGT, HB_GTI_COMPATBUFFER, false);
    HB_GTSELF_SETFLAG(pGT, HB_GTI_REDRAWMAX, 8);
    HB_GTSELF_SETFLAG(pGT, HB_GTI_STDOUTCON, pTerm->fStdoutTTY);
    HB_GTSELF_SETFLAG(pGT, HB_GTI_STDERRCON, pTerm->fStderrTTY && pTerm->fOutTTY);
@@ -3738,7 +3738,7 @@ static void hb_gt_trm_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 #endif
       hb_gt_trm_SetDispTrans( pTerm, 0 );
    }
-   HB_GTSELF_SETBLINK(pGT, HB_TRUE);
+   HB_GTSELF_SETBLINK(pGT, true);
    if( pTerm->fOutTTY )
    {
       HB_GTSELF_SEMICOLD(pGT);
@@ -4004,7 +4004,7 @@ static HB_BOOL hb_gt_trm_Suspend( PHB_GT pGT )
 #endif
    /* Enable line wrap when cursor set after last column */
    pTerm->SetTermMode( pTerm, 1 );
-   return HB_TRUE;
+   return true;
 }
 
 static HB_BOOL hb_gt_trm_Resume( PHB_GT pGT )
@@ -4035,7 +4035,7 @@ static HB_BOOL hb_gt_trm_Resume( PHB_GT pGT )
 
    HB_GTSELF_REFRESH(pGT);
 
-   return HB_TRUE;
+   return true;
 }
 
 static void hb_gt_trm_Scroll( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, int iColor, HB_USHORT usChar, int iRows, int iCols )
@@ -4084,10 +4084,10 @@ static HB_BOOL hb_gt_trm_SetMode( PHB_GT pGT, int iRows, int iCols )
       if( pTerm->SetMode( pTerm, &iRows, &iCols ) )
       {
          HB_GTSELF_RESIZE(pGT, iRows, iCols);
-         return HB_TRUE;
+         return true;
       }
    }
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_gt_trm_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
@@ -4141,9 +4141,9 @@ static HB_BOOL hb_gt_trm_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const c
       {
          hb_gt_trm_SetDispTrans( HB_GTTRM_GET(pGT), fBox ? 1 : 0 );
       }
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 #ifndef HB_GT_UNICODE_BUF
@@ -4159,9 +4159,9 @@ static HB_BOOL hb_gt_trm_SetKeyCP( PHB_GT pGT, const char * pszTermCDP, const ch
       {
          hb_gt_trm_SetKeyTrans( HB_GTTRM_GET(pGT) );
       }
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 #endif
 
@@ -4205,7 +4205,7 @@ static void hb_gt_trm_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
       else
       {
          HB_UCHAR uc;
-         if( !HB_GTSELF_GETSCRUC(pGT, iRow, iCol + iChars, &iColor, &bAttr, &uc, HB_FALSE) )
+         if( !HB_GTSELF_GETSCRUC(pGT, iRow, iCol + iChars, &iColor, &bAttr, &uc, false) )
          {
             break;
          }
@@ -4348,7 +4348,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
    {
       case HB_GTI_ISSCREENPOS:
       case HB_GTI_KBDSUPPORT:
-         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_TRUE);
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, true);
          break;
 
       case HB_GTI_ISUNICODE:
@@ -4502,7 +4502,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          return HB_GTSUPER_INFO(pGT, iType, pInfo);
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
@@ -4539,7 +4539,7 @@ static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
    pFuncTable->MouseButtonState           = hb_gt_trm_mouse_ButtonState;
    pFuncTable->MouseCountButton           = hb_gt_trm_mouse_CountButton;
 
-   return HB_TRUE;
+   return true;
 }
 
 /* *********************************************************************** */

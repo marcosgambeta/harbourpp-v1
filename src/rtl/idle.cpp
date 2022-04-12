@@ -105,7 +105,7 @@ void hb_idleState( void )
       {
          if( pIdleData->fCollectGarbage )
          {
-            hb_gcCollectAll( HB_FALSE );
+            hb_gcCollectAll(false);
             pIdleData->fCollectGarbage = HB_FALSE;
          }
 

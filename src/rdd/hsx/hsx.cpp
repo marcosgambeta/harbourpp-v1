@@ -1803,7 +1803,7 @@ static int hb_hsxIndex( const char * szFile, PHB_ITEM pExpr, int iKeySize, int i
             {
                break;
             }
-            iRetVal = hb_hsxAdd( iHandle, &ulNewRec, nullptr, HB_FALSE );
+            iRetVal = hb_hsxAdd( iHandle, &ulNewRec, nullptr, false );
             if( iRetVal != HSX_SUCCESS )
             {
                break;

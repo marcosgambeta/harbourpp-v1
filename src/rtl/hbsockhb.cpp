@@ -239,7 +239,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
       pSockNew = s_sockexNew( pSock->sd, pParams );
       if( pSockNew )
       {
-         hb_sockexClose( pSock, HB_FALSE );
+         hb_sockexClose( pSock, false );
       }
    }
 
@@ -318,11 +318,11 @@ static HB_BOOL s_socketaddrParam( int iParam, void ** pAddr, unsigned int * puiL
 
    if( pItem && hb_socketAddrFromItem( pAddr, puiLen, pItem ) )
    {
-      return HB_TRUE;
+      return true;
    }
 
    hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   return HB_FALSE;
+   return false;
 }
 
 static HB_SOCKET s_socketSelectCallback( PHB_ITEM pItem )
@@ -374,7 +374,7 @@ static HB_GARBAGE_FUNC( hb_socket_destructor )
 
    if( *pSockPtr )
    {
-      hb_sockexClose( *pSockPtr, HB_TRUE );
+      hb_sockexClose( *pSockPtr, true );
       *pSockPtr = nullptr;
    }
 }
@@ -420,7 +420,7 @@ void hb_socketItemClear( PHB_ITEM pItem )
 
    if( pSockPtr && *pSockPtr )
    {
-      hb_sockexClose( *pSockPtr, HB_FALSE );
+      hb_sockexClose( *pSockPtr, false );
       *pSockPtr = nullptr;
    }
 }
@@ -474,12 +474,12 @@ HB_BOOL hb_sockexItemReplace( PHB_ITEM pItem, PHB_SOCKEX pSock )
    {
       if( *pSockPtr )
       {
-         hb_sockexClose( *pSockPtr, HB_FALSE );
+         hb_sockexClose( *pSockPtr, false );
       }
       *pSockPtr = pSock;
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_sockexItemSetFilter( PHB_ITEM pItem, const char * pszFilter, PHB_ITEM pParams )
@@ -492,7 +492,7 @@ HB_BOOL hb_sockexItemSetFilter( PHB_ITEM pItem, const char * pszFilter, PHB_ITEM
 
       if( pszFilter == nullptr ? pSock->pFilter == &s_sockFilter : !hb_stricmp( pSock->pFilter->pszName, pszFilter ) )
       {
-         return HB_TRUE;
+         return true;
       }
       else
       {
@@ -501,11 +501,11 @@ HB_BOOL hb_sockexItemSetFilter( PHB_ITEM pItem, const char * pszFilter, PHB_ITEM
          if( pSockNew )
          {
             *pSockPtr = pSockNew;
-            return HB_TRUE;
+            return true;
          }
       }
    }
-   return HB_FALSE;
+   return false;
 }
 
 static int s_socket_filter_find( const char * pszFilter )
@@ -611,7 +611,7 @@ PHB_SOCKEX hb_sockexNew( HB_SOCKET sd, const char * pszFilter, PHB_ITEM pParams 
          {
             if( pSock )
             {
-               hb_sockexClose( pSock, HB_FALSE );
+               hb_sockexClose( pSock, false );
                pSock = nullptr;
             }
             break;
@@ -674,7 +674,7 @@ long hb_sockexWrite( PHB_SOCKEX pSock, const void * data, long len, HB_MAXINT ti
       {
          timeout = HB_MAX(timeout, pSock->iAutoFlush);
       }
-      hb_sockexFlush( pSock, timeout, HB_FALSE );
+      hb_sockexFlush( pSock, timeout, false );
    }
    return len;
 }
@@ -717,7 +717,7 @@ int hb_sockexSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
       for( nPos = 1; nPos <= nLen; ++nPos )
       {
          pSock = hb_sockexItemGet( hb_arrayGetItemPtr(pArrayRD, nPos) );
-         if( pSock && pSock->pFilter->CanRead( pSock, HB_TRUE, 0 ) > 0 )
+         if( pSock && pSock->pFilter->CanRead( pSock, true, 0 ) > 0 )
          {
             ++nRead;
             if( fSetRD && nRead != nPos )
@@ -733,7 +733,7 @@ int hb_sockexSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
       for( nPos = 1; nPos <= nLen; ++nPos )
       {
          pSock = hb_sockexItemGet( hb_arrayGetItemPtr(pArrayWR, nPos) );
-         if( pSock && pSock->pFilter->CanWrite( pSock, HB_TRUE, 0 ) > 0 )
+         if( pSock && pSock->pFilter->CanWrite( pSock, true, 0 ) > 0 )
          {
             ++nWrite;
             if( fSetWR && nWrite != nPos )
@@ -1026,7 +1026,7 @@ HB_FUNC( HB_SOCKETCLOSE )
    if( pSock )
    {
       hb_sockexItemClear( hb_param(1, HB_IT_POINTER) );
-      hb_retl(hb_sockexClose(pSock, HB_TRUE) == 0);
+      hb_retl(hb_sockexClose(pSock, true) == 0);
    }
 }
 
@@ -1077,7 +1077,7 @@ HB_FUNC( HB_SOCKETACCEPT )
 
       if( socketaccept != HB_NO_SOCKET )
       {
-         hb_sockexSetShutDown( hb_sockexItemGet( hb_socketItemPut( hb_stackReturnItem(), socketaccept ) ), HB_TRUE );
+         hb_sockexSetShutDown( hb_sockexItemGet( hb_socketItemPut( hb_stackReturnItem(), socketaccept ) ), true );
       }
       else
       {
@@ -1117,7 +1117,7 @@ HB_FUNC( HB_SOCKETCONNECT )
 
       if( fResult )
       {
-         hb_sockexSetShutDown( hb_sockexItemGet( hb_param(1, HB_IT_POINTER) ), HB_TRUE );
+         hb_sockexSetShutDown( hb_sockexItemGet( hb_param(1, HB_IT_POINTER) ), true );
       }
       hb_retl(fResult);
       hb_xfree(addr);
@@ -1385,7 +1385,7 @@ HB_FUNC( HB_SOCKETSELECTREAD )
 
    if( pSock )
    {
-      hb_retni(hb_sockexCanRead(pSock, HB_FALSE, hb_parnintdef(2, -1)));
+      hb_retni(hb_sockexCanRead(pSock, false, hb_parnintdef(2, -1)));
    }
 }
 
@@ -1395,7 +1395,7 @@ HB_FUNC( HB_SOCKETSELECTWRITE )
 
    if( pSock )
    {
-      hb_retni(hb_sockexCanWrite(pSock, HB_FALSE, hb_parnintdef(2, -1)));
+      hb_retni(hb_sockexCanWrite(pSock, false, hb_parnintdef(2, -1)));
    }
 }
 

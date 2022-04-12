@@ -175,9 +175,9 @@ HB_BOOL hb_compFunCallCheck(HB_COMP_DECL, const char * szFuncCall, int iArgs)
 
          hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CHECKING_ARGS, szFuncCall, szMsg);
 
-         return HB_FALSE;
+         return false;
       }
    }
 
-   return HB_TRUE;
+   return true;
 }

@@ -55,13 +55,13 @@ static HB_CDP_GET_FUNC(UTF16LE_get)
    {
       *wc = HB_GET_LE_UINT16(&pSrc[*pnIndex]);
       *pnIndex += 2;
-      return HB_TRUE;
+      return true;
    }
    else
    {
       *wc = 0;
    }
-   return HB_FALSE;
+   return false;
 }
 
 static HB_CDP_PUT_FUNC(UTF16LE_put)
@@ -72,9 +72,9 @@ static HB_CDP_PUT_FUNC(UTF16LE_put)
    {
       HB_PUT_LE_UINT16(&pDst[*pnIndex], wc);
       *pnIndex += 2;
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 static HB_CDP_LEN_FUNC(UTF16LE_len)

@@ -129,11 +129,11 @@ static HB_BOOL hb_hrbReadValue( const char * szBody, HB_SIZE nBodySize, HB_SIZE 
 
       if( *pulValue <= 0x00FFFFFFUL )
       {
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 /* ReadId
@@ -545,7 +545,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
          pHrbBody->pModuleSymbols = hb_vmRegisterSymbols( pHrbBody->pSymRead,
                         static_cast<HB_USHORT>(pHrbBody->ulSymbols),
                         szFileName ? szFileName : "pcode.hrb", 0,
-                        HB_TRUE, HB_FALSE, usBind == HB_HRB_BIND_OVERLOAD );
+                        true, false, usBind == HB_HRB_BIND_OVERLOAD );
 
          if( pHrbBody->pModuleSymbols->pModuleSymbols != pSymRead )
          {

@@ -504,7 +504,7 @@ static HB_BOOL hb_i18n_headercheck( const char * pBuffer, HB_SIZE nLen )
 {
    if( nLen < HB_I18N_HEADER_SIZE )
    {
-      return HB_FALSE;
+      return false;
    }
 
    nLen -= HB_I18N_HEADER_SIZE;
@@ -1039,7 +1039,7 @@ HB_FUNC( HB_I18N_CODEPAGE )
    PHB_I18N_TRANS pI18N;
    int iParam = 1;
 
-   pI18N = hb_i18n_param( &iParam, HB_TRUE );
+   pI18N = hb_i18n_param( &iParam, true );
 
    if( pI18N )
    {
@@ -1056,7 +1056,7 @@ HB_FUNC( HB_I18N_PLURALFORM )
    PHB_I18N_TRANS pI18N;
    int iParam = 1;
 
-   pI18N = hb_i18n_param( &iParam, HB_TRUE );
+   pI18N = hb_i18n_param( &iParam, true );
    if( pI18N )
    {
       PHB_ITEM pOldForm = hb_itemNew(nullptr);
@@ -1084,7 +1084,7 @@ HB_FUNC( HB_I18N_DESCRIPTION )
    PHB_I18N_TRANS pI18N;
    int iParam = 1;
 
-   pI18N = hb_i18n_param( &iParam, HB_TRUE );
+   pI18N = hb_i18n_param( &iParam, true );
    if( pI18N )
    {
       PHB_ITEM pNewDescript = hb_param(iParam, HB_IT_STRING);
@@ -1106,7 +1106,7 @@ HB_FUNC( HB_I18N_ADDTEXT )
    PHB_I18N_TRANS pI18N;
    int iParam = 1;
 
-   pI18N = hb_i18n_param( &iParam, HB_FALSE );
+   pI18N = hb_i18n_param( &iParam, false );
    if( pI18N )
    {
       PHB_ITEM pMsgID = hb_param(iParam, HB_IT_STRING);
@@ -1157,7 +1157,7 @@ HB_FUNC( HB_I18N_SET )
       else
       {
          int iParam = 1;
-         PHB_I18N_TRANS pI18N = hb_i18n_param( &iParam, HB_FALSE );
+         PHB_I18N_TRANS pI18N = hb_i18n_param( &iParam, false );
          if( pI18N )
          {
             hb_vmSetI18N( hb_i18n_alloc( pI18N ) );
@@ -1177,7 +1177,7 @@ HB_FUNC( HB_I18N_SAVETABLE )
    PHB_I18N_TRANS pI18N;
    int iParam = 1;
 
-   pI18N = hb_i18n_param( &iParam, HB_TRUE );
+   pI18N = hb_i18n_param( &iParam, true );
    if( pI18N )
    {
       hb_itemReturnRelease(hb_i18n_serialize( pI18N ));
@@ -1231,7 +1231,7 @@ HB_FUNC( __I18N_HASHTABLE )
    {
       int iParam = 1;
 
-      pI18N = hb_i18n_param( &iParam, HB_TRUE );
+      pI18N = hb_i18n_param( &iParam, true );
       if( pI18N )
       {
          hb_itemReturn(pI18N->table);

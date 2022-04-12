@@ -104,7 +104,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
       if( hb_vmLockModuleSymbols() )
       {
          /* use stack address as first level marker */
-         hb_vmBeginSymbolGroup( static_cast<void*>(hb_stackId()), HB_TRUE );
+         hb_vmBeginSymbolGroup( static_cast<void*>(hb_stackId()), true );
 #if defined(HB_OS_WIN)
          {
             void * hFileName;

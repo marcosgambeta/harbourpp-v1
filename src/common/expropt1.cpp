@@ -1315,7 +1315,7 @@ HB_BOOL hb_compExprListTypeCheck(PHB_EXPR pExpr, HB_EXPRTYPE ExprType)
 
       return pExpr == nullptr;
    }
-   return HB_FALSE;
+   return false;
 }
 
 /* Return a number of parameters passed to function or method

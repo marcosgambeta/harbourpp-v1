@@ -446,7 +446,7 @@ HB_FUNC( SX_TURBOAREA )
       }
       if( SELF_INFO( pArea, DBI_DIRTYREAD, pItem ) != HB_SUCCESS )
       {
-         hb_itemPutL(pItem, HB_FALSE);
+         hb_itemPutL(pItem, false);
       }
       hb_itemReturnRelease(pItem);
    }
@@ -482,7 +482,7 @@ HB_FUNC( SX_SETTURBO )
       }
       if( SELF_RDDINFO( pRDDNode, RDDI_DIRTYREAD, 0, pItem ) != HB_SUCCESS )
       {
-         hb_itemPutL(pItem, HB_FALSE);
+         hb_itemPutL(pItem, false);
       }
       hb_itemReturnRelease(pItem);
    }

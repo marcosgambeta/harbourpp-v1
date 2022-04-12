@@ -165,7 +165,7 @@ static HB_BOOL hb_mlInit( PHB_MLC_INFO pMLC, int iParAdd )
       pMLC->nLen = hb_parclen(1);
 
       pMLC->nTabSize = hb_parnsdef(3 + iParAdd, 4);
-      pMLC->fWordWrap = hb_parldef(4 + iParAdd, HB_TRUE);
+      pMLC->fWordWrap = hb_parldef(4 + iParAdd, true);
 
 #ifdef HB_CLP_STRICT
       if( pMLC->nLineLength > 254 )
@@ -189,10 +189,10 @@ static HB_BOOL hb_mlInit( PHB_MLC_INFO pMLC, int iParAdd )
       }
 
       hb_mlGetEOLs( pMLC, 5 + iParAdd );
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_mlExit( PHB_MLC_INFO pMLC )
@@ -231,7 +231,7 @@ static HB_SIZE hb_mlGetLine( PHB_MLC_INFO pMLC )
 
    if( pMLC->nOffset >= pMLC->nLen )
    {
-      return HB_FALSE;
+      return false;
    }
 
    while( pMLC->nOffset < pMLC->nLen )
@@ -345,7 +345,7 @@ static HB_SIZE hb_mlGetLine( PHB_MLC_INFO pMLC )
       pMLC->nCol = pMLC->nLineLength;
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 /* MemoLine( <cString>, [ <nLineLength>=79 ],
@@ -379,7 +379,7 @@ HB_FUNC( MEMOLINE )
 
          if( nLine == 0 )
          {
-            HB_BOOL fPad = hb_parldef(7, HB_TRUE);
+            HB_BOOL fPad = hb_parldef(7, true);
             HB_SIZE nIndex, nSize, nCol;
 
             nIndex = MLC.nOffset;
@@ -648,7 +648,7 @@ HB_FUNC( HB_MLEVAL )
       HB_SIZE nLen = hb_parclen(1);
       HB_SIZE nTabSize = hb_parnsdef(4, 4);
       HB_SIZE nPos = hb_parns(6) - 1;
-      HB_BOOL fWordWrap = hb_parldef(5, HB_TRUE);
+      HB_BOOL fWordWrap = hb_parldef(5, true);
       PHB_CODEPAGE cdp = hb_vmCDP();
       PHB_ITEM pLineItem = nullptr, pSoftItem = nullptr;
       HB_BOOL fSoftCR, fEOL;
@@ -800,7 +800,7 @@ HB_FUNC( HB_MLEVAL )
       {
          ++nLines;
          pLineItem = hb_itemPutC(pLineItem, nullptr);
-         pSoftItem = hb_itemPutL(pSoftItem, HB_FALSE);
+         pSoftItem = hb_itemPutL(pSoftItem, false);
          hb_vmEvalBlockV( pBlock, 2, pLineItem, pSoftItem );
       }
 

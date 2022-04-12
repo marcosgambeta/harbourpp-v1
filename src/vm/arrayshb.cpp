@@ -281,7 +281,7 @@ HB_FUNC( ASCAN )
       HB_SIZE nStart = hb_parns(3);
       HB_SIZE nCount = hb_parns(4);
 
-      hb_retns(hb_arrayScan(pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr, HB_FALSE));
+      hb_retns(hb_arrayScan(pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr, false));
    }
    else
    {

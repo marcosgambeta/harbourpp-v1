@@ -103,16 +103,16 @@ static HB_BOOL hb_usrPushMethod( PHB_ITEM pMethods, HB_USHORT uiMethod )
       {
          hb_vmPush(pItem);
          hb_vmPushNil();
-         return HB_TRUE;
+         return true;
       }
       else if( HB_IS_BLOCK(pItem) )
       {
          hb_vmPushEvalSym();
          hb_vmPush(pItem);
-         return HB_TRUE;
+         return true;
       }
    }
-   return HB_FALSE;
+   return false;
 }
 
 static HB_ERRCODE hb_usrReturn( void )
@@ -222,9 +222,9 @@ static HB_BOOL hb_usrItemToFieldInfo( PHB_ITEM pItem, LPDBFIELDINFO pFieldInfo )
       pFieldInfo->uiTypeExtended = static_cast<HB_USHORT>(hb_arrayGetNI(pItem, UR_FI_TYPEEXT));
       pFieldInfo->uiLen          = static_cast<HB_USHORT>(hb_arrayGetNI(pItem, UR_FI_LEN));
       pFieldInfo->uiDec          = static_cast<HB_USHORT>(hb_arrayGetNI(pItem, UR_FI_DEC));
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 static PHB_ITEM hb_usrOpenInfoToItem( LPDBOPENINFO pOpenInfo )
@@ -268,9 +268,9 @@ static HB_BOOL hb_usrItemToOpenInfo( PHB_ITEM pItem, LPDBOPENINFO pOpenInfo )
       pOpenInfo->cdpId        = hb_usrArrayGetCPtr( pItem, UR_OI_CDPID );
       pOpenInfo->ulConnection = hb_arrayGetNL(pItem, UR_OI_CONNECT);
       pOpenInfo->lpdbHeader   = hb_arrayGetPtr(pItem, UR_OI_HEADER);
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 static PHB_ITEM hb_usrFilterInfoToItem( LPDBFILTERINFO pFilterInfo )
@@ -302,9 +302,9 @@ static HB_BOOL hb_usrItemToFilterInfo( PHB_ITEM pItem, LPDBFILTERINFO pFilterInf
       pFilterInfo->fFilter      = hb_arrayGetL(pItem, UR_FRI_ACTIVE);
       pFilterInfo->fOptimized   = hb_arrayGetL(pItem, UR_FRI_OPTIMIZED);
       pFilterInfo->lpvCargo     = hb_arrayGetPtr(pItem, UR_FRI_CARGO);
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 static PHB_ITEM hb_usrRelInfoToItem( LPDBRELINFO pRelInfo )
@@ -340,9 +340,9 @@ static HB_BOOL hb_usrItemToRelInfo( PHB_ITEM pItem, LPDBRELINFO pRelInfo )
       pRelInfo->lpaParent   = hb_usrGetAreaPointer( hb_arrayGetNI(pItem, UR_RI_PARENT) );
       pRelInfo->lpaChild    = hb_usrGetAreaPointer( hb_arrayGetNI(pItem, UR_RI_CHILD) );
       pRelInfo->lpdbriNext  = ( LPDBRELINFO ) hb_arrayGetPtr(pItem, UR_RI_NEXT);
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 static PHB_ITEM hb_usrLockInfoToItem( LPDBLOCKINFO pLockInfo )
@@ -367,9 +367,9 @@ static HB_BOOL hb_usrItemToLockInfo( PHB_ITEM pItem, LPDBLOCKINFO pLockInfo )
       pLockInfo->itmRecID = hb_usrArrayGet( pItem, UR_LI_RECORD, HB_IT_ANY );
       pLockInfo->uiMethod = static_cast<HB_USHORT>(hb_arrayGetNI(pItem, UR_LI_METHOD));
       pLockInfo->fResult  = static_cast<HB_USHORT>(hb_arrayGetL(pItem, UR_LI_RESULT));
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 static PHB_ITEM hb_usrScopeInfoToItem( LPDBSCOPEINFO pScopeInfo )
@@ -430,9 +430,9 @@ static HB_BOOL hb_usrItemToScopeInfo( PHB_ITEM pItem, LPDBSCOPEINFO pScopeInfo )
       pScopeInfo->fIgnoreDuplicates = hb_arrayGetL(pItem, UR_SI_IGNOREDUPS);
       pScopeInfo->fBackward         = hb_arrayGetL(pItem, UR_SI_BACKWARD);
       pScopeInfo->fOptimized        = hb_arrayGetL(pItem, UR_SI_OPTIMIZED);
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 static PHB_ITEM hb_usrEvalInfoToItem( LPDBEVALINFO pEvalInfo )
@@ -463,7 +463,7 @@ static HB_BOOL hb_usrItemToEvalInfo( PHB_ITEM pItem, LPDBEVALINFO pEvalInfo )
       pEvalInfo->abBlock  = hb_usrArrayGet( pItem, UR_EI_CEXPR, HB_IT_ANY );
       return hb_usrItemToScopeInfo( hb_arrayGetItemPtr(pItem, UR_EI_SCOPE), &pEvalInfo->dbsci );
    }
-   return HB_FALSE;
+   return false;
 }
 
 static PHB_ITEM hb_usrTransInfoToItem( LPDBTRANSINFO pTransInfo )
@@ -528,10 +528,10 @@ static HB_BOOL hb_usrItemToTransInfo( PHB_ITEM pItem, LPDBTRANSINFO pTransInfo )
          {
             pTransInfo->lpTransItems = nullptr;
          }
-         return HB_TRUE;
+         return true;
       }
    }
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_usrTransInfoFree( LPDBTRANSINFO pTransInfo )
@@ -598,10 +598,10 @@ static HB_BOOL hb_usrItemToSortInfo( PHB_ITEM pItem, LPDBSORTINFO pSortInfo )
          {
             pSortInfo->lpdbsItem = nullptr;
          }
-         return HB_TRUE;
+         return true;
       }
    }
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_usrSortInfoFree( LPDBSORTINFO pSortInfo )
@@ -653,9 +653,9 @@ static HB_BOOL hb_usrItemToOrderInfo( PHB_ITEM pItem, LPDBORDERINFO pOrderInfo )
       pOrderInfo->itmResult   = hb_usrArrayGet( pItem, UR_ORI_RESULT, HB_IT_ANY );
       pOrderInfo->itmNewVal   = hb_usrArrayGet( pItem, UR_ORI_NEWVAL, HB_IT_ANY );
       pOrderInfo->fAllTags    = hb_arrayGetL(pItem, UR_ORI_ALLTAGS);
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 static PHB_ITEM hb_usrOrderCondInfoToItem( LPDBORDERCONDINFO pOrderCondInfo )
@@ -738,9 +738,9 @@ static HB_BOOL hb_usrItemToOrderCondInfo( PHB_ITEM pItem, LPDBORDERCONDINFO pOrd
       pOrderCondInfo->fTemporary    = hb_arrayGetL(pItem, UR_ORC_TEMPORARY);
       pOrderCondInfo->fExclusive    = hb_arrayGetL(pItem, UR_ORC_EXCLUSIVE);
       pOrderCondInfo->lpvCargo      = hb_arrayGetPtr(pItem, UR_ORC_CARGO);
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_usrOrderCondFree( LPDBORDERCONDINFO pOrderCondInfo )
@@ -856,7 +856,7 @@ static HB_BOOL hb_usrItemToOrderCreateInfo( PHB_ITEM pItem, LPDBORDERCREATEINFO 
          if( !hb_usrItemToOrderCondInfo( pCond, pOrderCondInfo ) )
          {
             hb_xfree(pOrderCondInfo);
-            return HB_FALSE;
+            return false;
          }
          pOrderCreateInfo->lpdbOrdCondInfo = pOrderCondInfo;
       }
@@ -872,9 +872,9 @@ static HB_BOOL hb_usrItemToOrderCreateInfo( PHB_ITEM pItem, LPDBORDERCREATEINFO 
       pOrderCreateInfo->itmCobExpr  = hb_usrArrayGet( pItem, UR_ORCR_BKEY, HB_IT_ANY );
       pOrderCreateInfo->abExpr      = hb_usrArrayGet( pItem, UR_ORCR_CKEY, HB_IT_ANY );
 
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_usrOrderCreateFree( LPDBORDERCREATEINFO pOrderCreateInfo )
@@ -1969,7 +1969,7 @@ static HB_ERRCODE hb_usrPackRec( AREAP pArea, HB_ULONG ulRecNo, HB_BOOL * pWritt
    int nOffset;
 
    nOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
-   hb_vmPushLogical(HB_TRUE);
+   hb_vmPushLogical(true);
    if( !hb_usrPushMethod( SELF_USRNODE( pArea )->pMethods, UR_PACKREC ) )
    {
       hb_stackPop();

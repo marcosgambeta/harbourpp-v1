@@ -510,7 +510,7 @@ static HB_BOOL hb_clsDictRealloc( PCLASS pClass )
    pClass->pMethods = pNewMethods;
 #endif
 
-   return HB_TRUE;
+   return true;
 }
 
 static void hb_clsDictInit( PCLASS pClass, HB_SYMCNT uiHashKey )
@@ -648,10 +648,10 @@ static HB_BOOL hb_clsCanClearMethod( PMETHOD pMethod, HB_BOOL fError )
       {
          hb_errRT_BASE( EG_ARG, 3000, "Cannot delete supercast messages", HB_ERR_FUNCNAME, 0 );
       }
-      return HB_FALSE;
+      return false;
    }
 #endif
-   return HB_TRUE;
+   return true;
 }
 
 static void hb_clsFreeMsg( PCLASS pClass, PHB_DYNS pMsg )
@@ -671,7 +671,7 @@ static void hb_clsFreeMsg( PCLASS pClass, PHB_DYNS pMsg )
    {
       if( *puiMsgIdx && pClass->pMethods[*puiMsgIdx].pMessage == pMsg )
       {
-         if( hb_clsCanClearMethod( &pClass->pMethods[*puiMsgIdx], HB_TRUE ) )
+         if( hb_clsCanClearMethod( &pClass->pMethods[*puiMsgIdx], true ) )
          {
             memset(&pClass->pMethods[*puiMsgIdx], 0, sizeof(METHOD));
             *puiMsgIdx = 0;
@@ -695,7 +695,7 @@ static void hb_clsFreeMsg( PCLASS pClass, PHB_DYNS pMsg )
    {
       if( pMethod->pMessage == pMsg )
       {
-         if( hb_clsCanClearMethod( pMethod, HB_TRUE ) )
+         if( hb_clsCanClearMethod( pMethod, true ) )
          {
             /* Move messages */
             while( --uiBucket )
@@ -723,10 +723,10 @@ static HB_BOOL hb_clsHasParentClass( PCLASS pClass, HB_USHORT uiParentCls )
    {
       if( pClass->pSuperClasses[--uiCount].uiClass == uiParentCls )
       {
-         return HB_TRUE;
+         return true;
       }
    }
-   return HB_FALSE;
+   return false;
 
    /* alternative method but can give wrong results
     * if user overloads super casting method, [druzus].
@@ -886,7 +886,7 @@ static HB_BOOL hb_clsUpdateHiddenMessages( PMETHOD pSrcMethod, PMETHOD pDstMetho
    PMETHOD pNewMethod = pSrcMethod;
 
    if( !pDstMethod->pMessage ||
-       ( hb_clsCanClearMethod( pDstMethod, HB_FALSE ) && pDstMethod->uiPrevCls != pDstMethod->uiSprClass &&
+       ( hb_clsCanClearMethod( pDstMethod, false ) && pDstMethod->uiPrevCls != pDstMethod->uiSprClass &&
          ( pDstMethod->uiScope & HB_OO_CLSTP_HIDDEN ) && ( pDstMethod->uiScope & HB_OO_CLSTP_NONVIRTUAL ) ) )
    {
       while( pNewMethod && pNewMethod->uiPrevCls != pNewMethod->uiSprClass &&
@@ -894,7 +894,7 @@ static HB_BOOL hb_clsUpdateHiddenMessages( PMETHOD pSrcMethod, PMETHOD pDstMetho
       {
          pNewMethod = hb_clsFindMsg( s_pClasses[pNewMethod->uiPrevCls], pNewMethod->pMessage );
       }
-      if( pNewMethod && pNewMethod != pSrcMethod && !( pNewMethod->uiScope & HB_OO_CLSTP_HIDDEN ) && hb_clsCanClearMethod( pDstMethod, HB_FALSE ) )
+      if( pNewMethod && pNewMethod != pSrcMethod && !( pNewMethod->uiScope & HB_OO_CLSTP_HIDDEN ) && hb_clsCanClearMethod( pDstMethod, false ) )
       {
          HB_USHORT uiPrevCls = pDstMethod->uiPrevCls, uiPrevMth = pDstMethod->uiPrevMth;
          PHB_SYMB pFuncSym;
@@ -935,11 +935,11 @@ static HB_BOOL hb_clsUpdateHiddenMessages( PMETHOD pSrcMethod, PMETHOD pDstMetho
             }
             pDstMethod->uiData = uiData;
          }
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_clsAddSuperClass( PCLASS pClass, HB_USHORT uiSuperCls, HB_USHORT uiOffset )
@@ -1069,7 +1069,7 @@ static void hb_clsCopyClass( PCLASS pClsDst, PCLASS pClsSrc )
       pClsDst->pSuperClasses = static_cast<PHB_CLSCAST>(hb_xgrab(pClsSrc->uiSuperClasses * sizeof(HB_CLSCAST)));
       memcpy(pClsDst->pSuperClasses, pClsSrc->pSuperClasses, pClsSrc->uiSuperClasses * sizeof(HB_CLSCAST));
    }
-   hb_clsDefineSuperClass( pClsDst, pClsSrc->uiClass, HB_FALSE );
+   hb_clsDefineSuperClass( pClsDst, pClsSrc->uiClass, false );
 
    pMethod = pClsDst->pMethods;
    do
@@ -1092,18 +1092,18 @@ static HB_BOOL hb_clsIsFriendSymbol( PCLASS pClass, PHB_SYMB pSym )
 
    if( pSym >= pClass->pFriendModule && pSym < pClass->pFriendModule + pClass->uiFriendModule )
    {
-      return HB_TRUE;
+      return true;
    }
 
    for( HB_USHORT uiCount = 0; uiCount < pClass->uiFriendSyms; ++uiCount )
    {
       if( pClass->pFriendSyms[uiCount] == pSym )
       {
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_clsAddFriendSymbol( PCLASS pClass, PHB_SYMB pSym )
@@ -1376,7 +1376,7 @@ HB_BOOL hb_clsIsParent( HB_USHORT uiClass, const char * szParentName )
 
       if( strcmp(pClass->szName, szParentName) == 0 )
       {
-         return HB_TRUE;
+         return true;
       }
       else
       {
@@ -1389,7 +1389,7 @@ HB_BOOL hb_clsIsParent( HB_USHORT uiClass, const char * szParentName )
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_USHORT hb_objGetClass( PHB_ITEM pItem )
@@ -2476,7 +2476,7 @@ HB_BOOL hb_objGetVarRef( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 /* Check if class has object destructors */
@@ -2488,7 +2488,7 @@ HB_BOOL hb_clsHasDestructor( HB_USHORT uiClass )
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -2620,11 +2620,11 @@ HB_BOOL hb_objHasOperator( PHB_ITEM pObject, HB_USHORT uiOperator )
       return ( s_pClasses[uiClass]->nOpFlags & ( 1 << uiOperator ) ) != 0;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 /* Call object operator. If pMsgArg is nullptr then operator is unary.
- * Function return HB_TRUE when object class overloads given operator
+ * Function return true when object class overloads given operator
  * and HB_FALSE otherwise. [druzus]
  */
 HB_BOOL hb_objOperatorCall( HB_USHORT uiOperator, PHB_ITEM pResult, PHB_ITEM pObject, PHB_ITEM pMsgArg1, PHB_ITEM pMsgArg2 )
@@ -2659,12 +2659,12 @@ HB_BOOL hb_objOperatorCall( HB_USHORT uiOperator, PHB_ITEM pResult, PHB_ITEM pOb
 
       /* store the return value */
       hb_itemMove(pResult, hb_stackReturnItem());
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
-/* return HB_TRUE if object has a given message */
+/* return true if object has a given message */
 HB_BOOL hb_objHasMessage( PHB_ITEM pObject, PHB_DYNS pMessage )
 {
    return hb_objGetMethod( pObject, pMessage->pSymbol, nullptr ) != nullptr;
@@ -2691,7 +2691,7 @@ HB_BOOL hb_objHasMsg( PHB_ITEM pObject, const char * szString )
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -3147,7 +3147,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
 
       if( pClass->fLocked )
       {
-         return HB_FALSE;
+         return false;
       }
 
       if( !( uiScope & ( HB_OO_CLSTP_EXPORTED | HB_OO_CLSTP_PROTECTED | HB_OO_CLSTP_HIDDEN ) ) )
@@ -3358,7 +3358,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
       if( !fOK )
       {
          hb_errRT_BASE( EG_ARG, 3000, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-         return HB_FALSE;
+         return false;
       }
 
       pNewMeth = hb_clsAllocMsg( pClass, pMessage );
@@ -3385,9 +3385,9 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
 
          uiPrevCls = pNewMeth->uiPrevCls;
          uiPrevMth = pNewMeth->uiPrevMth;
-         if( !hb_clsCanClearMethod( pNewMeth, HB_TRUE ) )
+         if( !hb_clsCanClearMethod( pNewMeth, true ) )
          {
-            return HB_FALSE;
+            return false;
          }
 
          memset(pNewMeth, 0, sizeof(METHOD));
@@ -3411,7 +3411,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
 
          case HB_OO_MSG_ASSIGN:
 
-            pNewMeth->uiScope = hb_clsUpdateScope( uiScope, HB_TRUE );
+            pNewMeth->uiScope = hb_clsUpdateScope( uiScope, true );
             /* Class(y) does not allow to write to HIDDEN+READONLY
                instance variables, [druzus] */
             if( pNewMeth->uiScope & HB_OO_CLSTP_READONLY && pNewMeth->uiScope & HB_OO_CLSTP_HIDDEN )
@@ -3429,7 +3429,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
 
          case HB_OO_MSG_ACCESS:
 
-            pNewMeth->uiScope = hb_clsUpdateScope( uiScope, HB_FALSE );
+            pNewMeth->uiScope = hb_clsUpdateScope( uiScope, false );
             pNewMeth->uiData = uiIndex;
             pNewMeth->uiOffset = pClass->uiDataFirst;
             hb_clsAddInitValue( pClass, pInit, HB_OO_MSG_DATA, pNewMeth->uiData, pNewMeth->uiOffset, uiClass );
@@ -3440,7 +3440,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
 
             pNewMeth->uiData = uiIndex;
             pNewMeth->itemType = hb_clsGetItemType( pInit, 0 );
-            pNewMeth->uiScope = hb_clsUpdateScope( uiScope, HB_TRUE );
+            pNewMeth->uiScope = hb_clsUpdateScope( uiScope, true );
             /* Class(y) does not allow to write to HIDDEN+READONLY
                instance variables, [druzus] */
             if( pNewMeth->uiScope & HB_OO_CLSTP_READONLY && pNewMeth->uiScope & HB_OO_CLSTP_HIDDEN )
@@ -3467,7 +3467,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
 
          case HB_OO_MSG_CLSACCESS:
 
-            pNewMeth->uiScope = hb_clsUpdateScope( uiScope, HB_FALSE );
+            pNewMeth->uiScope = hb_clsUpdateScope( uiScope, false );
             pNewMeth->uiData = uiIndex;
             if( pNewMeth->uiScope & HB_OO_CLSTP_SHARED )
             {
@@ -3582,7 +3582,7 @@ static HB_BOOL hb_clsAddMsg( HB_USHORT uiClass, const char * szMessage, HB_USHOR
       }
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 /* __clsAddMsg( <hClass>, <cMessage>, <pFunction>, <nType>, [xInit], <uiScope>, [xType] )
@@ -3771,9 +3771,9 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas, PHB_ITE
             /* Copy super class handles */
             for( HB_USHORT uiCount = 0; uiCount < pSprCls->uiSuperClasses; ++uiCount )
             {
-               hb_clsDefineSuperClass( pNewCls, pSprCls->pSuperClasses[uiCount].uiClass, HB_TRUE );
+               hb_clsDefineSuperClass( pNewCls, pSprCls->pSuperClasses[uiCount].uiClass, true );
             }
-            hb_clsDefineSuperClass( pNewCls, uiSuperCls, HB_TRUE );
+            hb_clsDefineSuperClass( pNewCls, uiSuperCls, true );
 
             /* Copy instance area init data */
             if( pSprCls->uiInitDatas )
@@ -3809,7 +3809,7 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas, PHB_ITE
 
                   /* Ok, this bucket is empty */
                   if( pMethod->pMessage == nullptr ||
-                      ( hb_clsCanClearMethod( pMethod, HB_FALSE ) &&
+                      ( hb_clsCanClearMethod( pMethod, false ) &&
                         ( pMethod->pFuncSym == &s___msgVirtual ||
                           ( s_uiObjectClass != 0 &&
                             pMethod->uiSprClass == s_uiObjectClass ) ) ) )
@@ -3904,7 +3904,7 @@ static HB_USHORT hb_clsNew( const char * szClassName, HB_USHORT uiDatas, PHB_ITE
 
    /* add self class casting */
    pNewCls->uiDataFirst = pNewCls->uiDatas;
-   hb_clsDefineSuperClass( pNewCls, pNewCls->uiClass, HB_FALSE );
+   hb_clsDefineSuperClass( pNewCls, pNewCls->uiClass, false );
    pNewCls->uiDatas += uiDatas;
    if( pNewCls->uiMutexOffset )
    {
@@ -5690,7 +5690,7 @@ HB_FUNC( __OBJGETIVARS )
 {
    PHB_ITEM pObject = hb_param(1, HB_IT_OBJECT);
    HB_USHORT uiScope = static_cast<HB_USHORT>(hb_parni(2));
-   HB_BOOL fChanged = hb_parldef(3, HB_TRUE);
+   HB_BOOL fChanged = hb_parldef(3, true);
 
    hb_itemReturnRelease(hb_objGetIVars( pObject, uiScope, fChanged ));
 }
@@ -6036,7 +6036,7 @@ HB_FUNC_TRANSLATE( HB_SETCLSHANDLE, __OBJSETCLASSHANDLE )
 /* Harbour equivalent for Clipper internal __mdCreate() */
 HB_USHORT hb_clsCreate( HB_USHORT usSize, const char * szClassName )
 {
-   return hb_clsNew( szClassName, usSize, nullptr, nullptr, HB_FALSE );
+   return hb_clsNew( szClassName, usSize, nullptr, nullptr, false );
 }
 
 /* Harbour equivalent for Clipper internal __mdAdd() */

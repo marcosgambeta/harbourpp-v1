@@ -55,7 +55,7 @@ static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszFileName);
 
-   return HB_FALSE;
+   return false;
 }
 
 static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, char * pRetPath )
@@ -66,7 +66,7 @@ static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, ch
 
    hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
-   return HB_FALSE;
+   return false;
 }
 
 static HB_BOOL s_fileDelete( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
@@ -76,7 +76,7 @@ static HB_BOOL s_fileDelete( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 
    hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
-   return HB_FALSE;
+   return false;
 }
 
 static HB_BOOL s_fileRename( PHB_FILE_FUNCS pFuncs, const char * pszName, const char * pszNewName )
@@ -87,7 +87,7 @@ static HB_BOOL s_fileRename( PHB_FILE_FUNCS pFuncs, const char * pszName, const 
 
    hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
-   return HB_FALSE;
+   return false;
 }
 
 static HB_BOOL s_fileCopy( PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const char * pszDstFile )
@@ -104,7 +104,7 @@ static HB_BOOL s_fileDirExists( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
 
    hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
-   return HB_FALSE;
+   return false;
 }
 
 static HB_BOOL s_fileDirMake( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
@@ -114,7 +114,7 @@ static HB_BOOL s_fileDirMake( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
 
    hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
-   return HB_FALSE;
+   return false;
 }
 
 static HB_BOOL s_fileDirRemove( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
@@ -124,7 +124,7 @@ static HB_BOOL s_fileDirRemove( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
 
    hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
-   return HB_FALSE;
+   return false;
 }
 
 static double s_fileDirSpace( PHB_FILE_FUNCS pFuncs, const char * pszDirName, HB_USHORT uiType )
@@ -158,7 +158,7 @@ static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, l
 
    hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
-   return HB_FALSE;
+   return false;
 }
 
 static HB_BOOL s_fileTimeSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long lJulian, long lMillisec )
@@ -170,7 +170,7 @@ static HB_BOOL s_fileTimeSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, l
 
    hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
-   return HB_FALSE;
+   return false;
 }
 
 static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR * pnAttr )
@@ -181,7 +181,7 @@ static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, H
 
    hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
-   return HB_FALSE;
+   return false;
 }
 
 static HB_BOOL s_fileAttrSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR nAttr )
@@ -192,7 +192,7 @@ static HB_BOOL s_fileAttrSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, H
 
    hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
-   return HB_FALSE;
+   return false;
 }
 
 static HB_BOOL s_fileLink( PHB_FILE_FUNCS pFuncs, const char * pszExisting, const char * pszNewName )
@@ -203,7 +203,7 @@ static HB_BOOL s_fileLink( PHB_FILE_FUNCS pFuncs, const char * pszExisting, cons
 
    hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
-   return HB_FALSE;
+   return false;
 }
 
 static HB_BOOL s_fileLinkSym( PHB_FILE_FUNCS pFuncs, const char * pszTarget, const char * pszNewName )
@@ -214,7 +214,7 @@ static HB_BOOL s_fileLinkSym( PHB_FILE_FUNCS pFuncs, const char * pszTarget, con
 
    hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
-   return HB_FALSE;
+   return false;
 }
 
 static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
@@ -258,7 +258,7 @@ static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, i
 
    hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
-   return HB_FALSE;
+   return false;
 }
 
 static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType )
@@ -328,7 +328,7 @@ static HB_BOOL s_fileTruncAt( PHB_FILE pFile, HB_FOFFSET nOffset )
 
    hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
-   return HB_FALSE;
+   return false;
 }
 
 static HB_FOFFSET s_fileSeek( PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFlags )
@@ -357,7 +357,7 @@ static HB_BOOL s_fileEof( PHB_FILE pFile )
 
    hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
-   return HB_TRUE;
+   return true;
 }
 
 static void s_fileFlush( PHB_FILE pFile, HB_BOOL fDirty )
@@ -383,7 +383,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
 
    hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
-   return HB_FALSE;
+   return false;
 }
 
 static HB_FHANDLE s_fileHandle( PHB_FILE pFile )

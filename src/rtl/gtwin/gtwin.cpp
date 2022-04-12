@@ -684,7 +684,7 @@ static HB_BOOL hb_gt_win_SetPalette( HB_BOOL bSet, COLORREF * colors )
       }
    }
 
-   return HB_FALSE;
+   return false;
 #endif
 }
 
@@ -858,18 +858,18 @@ static void hb_gt_win_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
    SetConsoleMode( s_HInput, s_fMouseEnable ? ENABLE_MOUSE_INPUT : 0x0000 );
 
-   s_fClosable = s_fOldClosable = hb_gt_win_SetCloseButton( HB_FALSE, HB_FALSE );
+   s_fClosable = s_fOldClosable = hb_gt_win_SetCloseButton( false, false );
    s_fResetColors = HB_FALSE;
 
    HB_GTSELF_SETFLAG(pGT, HB_GTI_REDRAWMAX, 4);
 
    if( hb_fsIsDevice(hFilenoStdout) )
    {
-      HB_GTSELF_SETFLAG(pGT, HB_GTI_STDOUTCON, HB_TRUE);
+      HB_GTSELF_SETFLAG(pGT, HB_GTI_STDOUTCON, true);
    }
    if( hb_fsIsDevice(hFilenoStderr) )
    {
-      HB_GTSELF_SETFLAG(pGT, HB_GTI_STDERRCON, HB_TRUE);
+      HB_GTSELF_SETFLAG(pGT, HB_GTI_STDERRCON, true);
    }
 }
 
@@ -883,10 +883,10 @@ static void hb_gt_win_Exit( PHB_GT pGT )
 
    HB_GTSELF_REFRESH(pGT);
 
-   hb_gt_win_SetCloseButton( HB_TRUE, s_fOldClosable );
+   hb_gt_win_SetCloseButton( true, s_fOldClosable );
    if( s_fResetColors )
    {
-      hb_gt_win_SetPalette( HB_TRUE, s_colorsOld );
+      hb_gt_win_SetPalette( true, s_colorsOld );
    }
 
    if( s_pCharInfoScreen )
@@ -1056,7 +1056,7 @@ static HB_BOOL hb_gt_win_PostExt( PHB_GT pGT )
    {
       hb_gt_win_xInitScreenParam(pGT);
    }
-   return HB_TRUE;
+   return true;
 }
 
 /* *********************************************************************** */
@@ -1075,7 +1075,7 @@ static HB_BOOL hb_gt_win_Suspend( PHB_GT pGT )
       SetConsoleMode( s_HInput, s_dwimode );
    }
    s_fSuspend = HB_TRUE;
-   return HB_TRUE;
+   return true;
 }
 
 static HB_BOOL hb_gt_win_Resume( PHB_GT pGT )
@@ -1093,7 +1093,7 @@ static HB_BOOL hb_gt_win_Resume( PHB_GT pGT )
       hb_gt_win_xSetCursorStyle();
    }
    s_fSuspend = HB_FALSE;
-   return HB_TRUE;
+   return true;
 }
 
 /* *********************************************************************** */
@@ -1965,11 +1965,11 @@ static HB_BOOL hb_gt_win_IsFullScreen( void )
    {
       if( dwModeFlags & CONSOLE_FULLSCREEN_HARDWARE )
       {
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 /* *********************************************************************** */
@@ -1985,7 +1985,7 @@ static HB_BOOL hb_gt_win_FullScreen( HB_BOOL bFullScreen )
       return !SetConsoleDisplayMode( s_HOutput, CONSOLE_WINDOWED_MODE, nullptr );
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 /* *********************************************************************** */
@@ -2012,14 +2012,14 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_ISSCREENPOS:
       case HB_GTI_KBDSUPPORT:
-         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_TRUE);
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, true);
          break;
 
       case HB_GTI_ISUNICODE:
 #if defined(UNICODE)
-         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_TRUE);
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, true);
 #else
-         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_FALSE);
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, false);
 #endif
          break;
 
@@ -2059,7 +2059,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             HB_BOOL fNewValue = hb_itemGetL(pInfo->pNewVal);
             if( fNewValue != s_fClosable )
             {
-               hb_gt_win_SetCloseButton( HB_TRUE, fNewValue );
+               hb_gt_win_SetCloseButton( true, fNewValue );
                s_fClosable = fNewValue;
             }
          }
@@ -2073,13 +2073,13 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             if( iVal >= 0 && iVal <= 2 && ( s_fClosable ? ( iVal != 0 ) : ( iVal == 0 ) ) )
             {
                s_fClosable = iVal == 0;
-               hb_gt_win_SetCloseButton( HB_TRUE, s_fClosable );
+               hb_gt_win_SetCloseButton( true, s_fClosable );
             }
          }
          break;
 
       case HB_GTI_RESIZABLE:
-         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_FALSE);
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, false);
          break;
 
       case HB_GTI_RESIZEMODE:
@@ -2098,14 +2098,14 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             if( iIndex >= 0 && iIndex < 16 )
             {
                COLORREF colors[16];
-               HB_BOOL fGet = hb_gt_win_SetPalette( HB_FALSE, colors );
+               HB_BOOL fGet = hb_gt_win_SetPalette( false, colors );
 
                pInfo->pResult = hb_itemPutNL(pInfo->pResult, colors[iIndex]);
 
                if( fGet && ( hb_itemType(pInfo->pNewVal2) & HB_IT_NUMERIC ) )
                {
                   colors[iIndex] = hb_itemGetNL(pInfo->pNewVal2);
-                  hb_gt_win_SetPalette( HB_TRUE, colors );
+                  hb_gt_win_SetPalette( true, colors );
                }
             }
          }
@@ -2119,7 +2119,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                pInfo->pResult = hb_itemNew(nullptr);
             }
 
-            hb_gt_win_SetPalette( HB_FALSE, colors );
+            hb_gt_win_SetPalette( false, colors );
 
             hb_arrayNew(pInfo->pResult, 16);
             for( i = 0; i < 16; i++ )
@@ -2136,7 +2136,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                      colors[i] = hb_arrayGetNL(pInfo->pNewVal, i + 1);
                   }
 
-                  hb_gt_win_SetPalette( HB_TRUE, colors );
+                  hb_gt_win_SetPalette( true, colors );
                }
             }
          }
@@ -2230,7 +2230,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          return HB_GTSUPER_INFO(pGT, iType, pInfo);
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 /* *********************************************************************** */
@@ -2317,7 +2317,7 @@ static void hb_gt_win_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
          s_pCharInfoScreen[i].Char.UnicodeChar = hb_cdpGetU16Ctrl( usChar );
 #else
          HB_UCHAR uc;
-         if( !HB_GTSELF_GETSCRUC(pGT, iRow, iCol++, &iColor, &bAttr, &uc, HB_TRUE) )
+         if( !HB_GTSELF_GETSCRUC(pGT, iRow, iCol++, &iColor, &bAttr, &uc, true) )
          {
             break;
          }
@@ -2389,7 +2389,7 @@ static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
    pFuncTable->MouseButtonState           = hb_gt_win_mouse_ButtonState;
    pFuncTable->MouseCountButton           = hb_gt_win_mouse_CountButton;
 
-   return HB_TRUE;
+   return true;
 }
 
 /* *********************************************************************** */

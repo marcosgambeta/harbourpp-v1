@@ -323,7 +323,7 @@ static HB_BOOL hb_gt_gui_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          return HB_GTSUPER_INFO(pGT, iType, pInfo);
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 /* *********************************************************************** */
@@ -341,7 +341,7 @@ static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
    pFuncTable->Alert                      = hb_gt_gui_Alert;
 #endif
 
-   return HB_TRUE;
+   return true;
 }
 
 /* *********************************************************************** */

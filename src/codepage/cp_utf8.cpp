@@ -72,15 +72,15 @@ static HB_CDP_GET_FUNC(UTF8_get)
       if( n == 0 )
       {
          *pnIndex = nIndex;
-         return HB_TRUE;
+         return true;
       }
    }
    if( n != 0 )
    {
       *pnIndex = nIndex;
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 static HB_CDP_PUT_FUNC(UTF8_put)
@@ -93,9 +93,9 @@ static HB_CDP_PUT_FUNC(UTF8_put)
    {
       hb_cdpU16CharToUTF8(&pDst[*pnIndex], wc);
       *pnIndex += i;
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 static HB_CDP_LEN_FUNC(UTF8_len)

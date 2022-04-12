@@ -234,11 +234,11 @@ HB_BOOL hb_strMatchWild(const char * szString, const char * szPattern)
 
    if( cdp && HB_CDP_ISCHARIDX(cdp) )
    {
-      return hb_strMatchWildCDP(szString, szPattern, HB_FALSE, HB_FALSE, HB_FALSE, cdp);
+      return hb_strMatchWildCDP(szString, szPattern, false, false, false, cdp);
    }
    else
    {
-      return hb_strMatchWildRaw(szString, szPattern, HB_FALSE, HB_FALSE, HB_FALSE);
+      return hb_strMatchWildRaw(szString, szPattern, false, false, false);
    }
 }
 
@@ -248,11 +248,11 @@ HB_BOOL hb_strMatchWildExact(const char * szString, const char * szPattern)
 
    if( cdp && HB_CDP_ISCHARIDX(cdp) )
    {
-      return hb_strMatchWildCDP(szString, szPattern, HB_TRUE, HB_FALSE, HB_FALSE, cdp);
+      return hb_strMatchWildCDP(szString, szPattern, true, false, false, cdp);
    }
    else
    {
-      return hb_strMatchWildRaw(szString, szPattern, HB_TRUE, HB_FALSE, HB_FALSE);
+      return hb_strMatchWildRaw(szString, szPattern, true, false, false);
    }
 }
 
@@ -262,11 +262,11 @@ HB_BOOL hb_strMatchCaseWildExact(const char * szString, const char * szPattern)
 
    if( cdp && HB_CDP_ISCHARIDX(cdp) )
    {
-      return hb_strMatchWildCDP(szString, szPattern, HB_TRUE, HB_TRUE, HB_FALSE, cdp);
+      return hb_strMatchWildCDP(szString, szPattern, true, true, false, cdp);
    }
    else
    {
-      return hb_strMatchWildRaw(szString, szPattern, HB_TRUE, HB_TRUE, HB_FALSE);
+      return hb_strMatchWildRaw(szString, szPattern, true, true, false);
    }
 }
 
@@ -283,11 +283,11 @@ HB_BOOL hb_strMatchFile(const char * szString, const char * szPattern)
 
    if( cdp && HB_CDP_ISCHARIDX(cdp) )
    {
-      return hb_strMatchWildCDP(szString, szPattern, HB_TRUE, HB_TRUE, HB_TRUE, cdp);
+      return hb_strMatchWildCDP(szString, szPattern, true, true, true, cdp);
    }
    else
    {
-      return hb_strMatchWildRaw(szString, szPattern, HB_TRUE, HB_TRUE, HB_TRUE);
+      return hb_strMatchWildRaw(szString, szPattern, true, true, true);
    }
 #else
    return hb_strMatchCaseWildExact(szString, szPattern);

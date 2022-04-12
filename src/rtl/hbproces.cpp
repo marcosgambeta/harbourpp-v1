@@ -306,7 +306,7 @@ static int hb_fsProcessExec( const char * pszFileName, HB_FHANDLE hStdin, HB_FHA
       }
       else
       {
-         hb_fsSetIOError(HB_FALSE, 0);
+         hb_fsSetIOError(false, 0);
       }
    }
 #else
@@ -1307,7 +1307,7 @@ int hb_fsProcessRun( const char * pszFileName,
          hb_fsClose(hStderr);
       }
 
-      iResult = hb_fsProcessValue(hProcess, HB_TRUE);
+      iResult = hb_fsProcessValue(hProcess, true);
 
 #elif defined(HB_OS_UNIX)
 
@@ -1562,7 +1562,7 @@ int hb_fsProcessRun( const char * pszFileName,
          hb_fsClose(hStderr);
       }
 
-      iResult = hb_fsProcessValue(hProcess, HB_TRUE);
+      iResult = hb_fsProcessValue(hProcess, true);
 
 #else
 

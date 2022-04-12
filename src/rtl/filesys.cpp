@@ -736,7 +736,7 @@ int hb_fsCanRead( HB_FHANDLE hFileHandle, HB_MAXINT nTimeOut )
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsCanRead(%p, %" PFHL "d)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), nTimeOut ) );
 #endif
 
-   return hb_fsCanAccess(hFileHandle, nTimeOut, HB_TRUE);
+   return hb_fsCanAccess(hFileHandle, nTimeOut, true);
 }
 
 int hb_fsCanWrite( HB_FHANDLE hFileHandle, HB_MAXINT nTimeOut )
@@ -745,7 +745,7 @@ int hb_fsCanWrite( HB_FHANDLE hFileHandle, HB_MAXINT nTimeOut )
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsCanWrite(%p, %" PFHL "d)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), nTimeOut ) );
 #endif
 
-   return hb_fsCanAccess(hFileHandle, nTimeOut, HB_FALSE);
+   return hb_fsCanAccess(hFileHandle, nTimeOut, false);
 }
 
 int hb_fsPoll( PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut )
@@ -1248,7 +1248,7 @@ HB_BOOL hb_fsPipeUnblock( HB_FHANDLE hPipeHandle )
       int iTODO; /* TODO: for given platform */
       HB_SYMBOL_UNUSED(hPipeHandle);
       hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
-      return HB_FALSE;
+      return false;
    }
 #endif
 }
@@ -1409,7 +1409,7 @@ HB_SIZE hb_fsPipeWrite( HB_FHANDLE hPipeHandle, const void * buffer, HB_SIZE nSi
    }
    else
    {
-      hb_fsSetIOError(HB_FALSE, 0);
+      hb_fsSetIOError(false, 0);
       nWritten = static_cast<HB_SIZE>(FS_ERROR);
    }
 }
@@ -1429,7 +1429,7 @@ HB_SIZE hb_fsPipeWrite( HB_FHANDLE hPipeHandle, const void * buffer, HB_SIZE nSi
       }
       if( iResult == -1 )
       {
-         hb_fsSetIOError(HB_FALSE, 0);
+         hb_fsSetIOError(false, 0);
          nWritten = static_cast<HB_SIZE>(FS_ERROR);
       }
       else
@@ -1505,7 +1505,7 @@ HB_FHANDLE hb_fsOpenEx( const char * pszFileName, HB_USHORT uiFlags, HB_FATTR nA
 
       lpFileName = HB_FSNAMECONV(pszFileName, &lpFree);
 
-      convert_open_flags( HB_FALSE, nAttr, uiFlags, &dwMode, &dwShare, &dwCreat, &dwAttr );
+      convert_open_flags( false, nAttr, uiFlags, &dwMode, &dwShare, &dwCreat, &dwAttr );
 
       hb_vmUnlock();
       hFile = CreateFile( lpFileName, dwMode, dwShare, nullptr, dwCreat, dwAttr, nullptr );
@@ -1527,7 +1527,7 @@ HB_FHANDLE hb_fsOpenEx( const char * pszFileName, HB_USHORT uiFlags, HB_FATTR nA
 
       pszFileName = hb_fsNameConv(pszFileName, &pszFree);
 
-      convert_open_flags( HB_FALSE, nAttr, uiFlags, &flags, &mode, &share, &attr );
+      convert_open_flags( false, nAttr, uiFlags, &flags, &mode, &share, &attr );
 
       hb_vmUnlock();
 
@@ -2508,7 +2508,7 @@ HB_SIZE hb_fsReadAt( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount, HB_FO
       ulOffsetLow = SetFilePointer( DosToWinHandle( hFileHandle ), ulOffsetLow, reinterpret_cast<PLONG>(&ulOffsetHigh), SEEK_SET );
       if( ulOffsetLow == static_cast<ULONG>(INVALID_SET_FILE_POINTER) && GetLastError() != NO_ERROR )
       {
-         hb_fsSetIOError(HB_FALSE, 0);
+         hb_fsSetIOError(false, 0);
          nRead = 0;
       }
       else
@@ -2541,7 +2541,7 @@ HB_SIZE hb_fsReadAt( HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount, HB_FO
 #  endif
       if( nPos == static_cast<HB_FOFFSET>(-1) )
       {
-         hb_fsSetIOError(HB_FALSE, 0);
+         hb_fsSetIOError(false, 0);
          nRead = 0;
       }
       else
@@ -2639,7 +2639,7 @@ HB_SIZE hb_fsWriteAt( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCount
       ulOffsetLow = SetFilePointer( DosToWinHandle( hFileHandle ), ulOffsetLow, reinterpret_cast<PLONG>(&ulOffsetHigh), SEEK_SET );
       if( ulOffsetLow == static_cast<ULONG>(INVALID_SET_FILE_POINTER) && GetLastError() != NO_ERROR )
       {
-         hb_fsSetIOError(HB_FALSE, 0);
+         hb_fsSetIOError(false, 0);
          nWritten = 0;
       }
       else
@@ -2672,7 +2672,7 @@ HB_SIZE hb_fsWriteAt( HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCount
 #  endif
       if( nPos == static_cast<HB_FOFFSET>(-1) )
       {
-         hb_fsSetIOError(HB_FALSE, 0);
+         hb_fsSetIOError(false, 0);
          nWritten = 0;
       }
       else
@@ -4363,14 +4363,14 @@ const char * hb_fsNameConv( const char * pszFileName, char ** pszFree )
          if( pFileName->szName )
          {
             nLen = strlen(pFileName->szName);
-            nLen = hb_strRTrimLen( pFileName->szName, nLen, HB_FALSE );
+            nLen = hb_strRTrimLen( pFileName->szName, nLen, false );
             pFileName->szName = hb_strLTrim( pFileName->szName, &nLen );
             ( const_cast<char*>(pFileName->szName) )[nLen] = '\0';
          }
          if( pFileName->szExtension )
          {
             nLen = strlen(pFileName->szExtension);
-            nLen = hb_strRTrimLen( pFileName->szExtension, nLen, HB_FALSE );
+            nLen = hb_strRTrimLen( pFileName->szExtension, nLen, false );
             pFileName->szExtension = hb_strLTrim( pFileName->szExtension, &nLen );
             ( const_cast<char*>(pFileName->szExtension) )[nLen] = '\0';
          }
@@ -4522,14 +4522,14 @@ HB_WCHAR * hb_fsNameConvU16( const char * pszFileName )
          if( pFileName->szName )
          {
             nLen = strlen(pFileName->szName);
-            nLen = hb_strRTrimLen( pFileName->szName, nLen, HB_FALSE );
+            nLen = hb_strRTrimLen( pFileName->szName, nLen, false );
             pFileName->szName = hb_strLTrim( pFileName->szName, &nLen );
             ( const_cast<char*>(pFileName->szName) )[nLen] = '\0';
          }
          if( pFileName->szExtension )
          {
             nLen = strlen(pFileName->szExtension);
-            nLen = hb_strRTrimLen( pFileName->szExtension, nLen, HB_FALSE );
+            nLen = hb_strRTrimLen( pFileName->szExtension, nLen, false );
             pFileName->szExtension = hb_strLTrim( pFileName->szExtension, &nLen );
             ( const_cast<char*>(pFileName->szExtension) )[nLen] = '\0';
          }

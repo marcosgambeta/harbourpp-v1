@@ -1019,7 +1019,7 @@ void hb_xRefInc( void * pMem )
    HB_ATOM_INC( HB_COUNTER_PTR( pMem ) );
 }
 
-/* decrement reference counter, return HB_TRUE when 0 reached */
+/* decrement reference counter, return true when 0 reached */
 #undef hb_xRefDec
 HB_BOOL hb_xRefDec( void * pMem )
 {
@@ -1571,9 +1571,9 @@ HB_SIZE hb_xquery( int iMode )
 HB_BOOL hb_xtraced( void )
 {
 #if HB_TR_LEVEL >= HB_TR_DEBUG
-   return HB_TRUE;
+   return true;
 #else
-   return HB_FALSE;
+   return false;
 #endif
 }
 

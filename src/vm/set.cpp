@@ -619,7 +619,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
          pResult = hb_itemPutC(pResult, pSet->HB_SET_ALTFILE);
          if( pArg1 && HB_IS_STRING(pArg1) )
          {
-            open_handle( pSet, hb_itemGetCPtr(pArg1), set_logical( pArg2, HB_FALSE ), HB_SET_ALTFILE );
+            open_handle( pSet, hb_itemGetCPtr(pArg1), set_logical( pArg2, false ), HB_SET_ALTFILE );
          }
          break;
       case HB_SET_AUTOPEN:
@@ -691,11 +691,11 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
       case HB_SET_CURSOR:
          if( pArg1 != nullptr && HB_IS_NUMERIC(pArg1) )
          {
-            pResult = hb_itemPutNI(pResult, hb_conSetCursor( HB_TRUE, hb_itemGetNI(pArg1) ));
+            pResult = hb_itemPutNI(pResult, hb_conSetCursor( true, hb_itemGetNI(pArg1) ));
          }
          else
          {
-            pResult = hb_itemPutNI(pResult, hb_conSetCursor( HB_FALSE, 0 ));
+            pResult = hb_itemPutNI(pResult, hb_conSetCursor( false, 0 ));
          }
          break;
       case HB_SET_DATEFORMAT:
@@ -863,7 +863,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
          pResult = hb_itemPutC(pResult, pSet->HB_SET_EXTRAFILE);
          if( pArg1 && HB_IS_STRING(pArg1) )
          {
-            open_handle( pSet, hb_itemGetCPtr(pArg1), set_logical( pArg2, HB_FALSE ), HB_SET_EXTRAFILE );
+            open_handle( pSet, hb_itemGetCPtr(pArg1), set_logical( pArg2, false ), HB_SET_EXTRAFILE );
          }
          break;
       case HB_SET_FIXED:
@@ -992,7 +992,7 @@ PHB_ITEM hb_setGetItem( HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pA
          pResult = hb_itemPutC(pResult, pSet->HB_SET_PRINTFILE);
          if( pArg1 && HB_IS_STRING(pArg1) )
          {
-            open_handle( pSet, hb_itemGetCPtr(pArg1), set_logical( pArg2, HB_FALSE ), HB_SET_PRINTFILE );
+            open_handle( pSet, hb_itemGetCPtr(pArg1), set_logical( pArg2, false ), HB_SET_PRINTFILE );
             /* With SET PRINTER TO or Set( _SET_PRINTFILE, "" ) are expected to activate the default printer [jarabal] */
             if( pSet->HB_SET_PRINTFILE == nullptr )
             {
@@ -1390,7 +1390,7 @@ void hb_setInitialize( PHB_SET_STRUCT pSet )
    #if 0
    pSet->HB_SET_DEBUG = HB_FALSE;
    #endif
-   pSet->HB_SET_DEBUG = hb_dynsymFind("__DBGENTRY") ? HB_TRUE : HB_FALSE;
+   pSet->HB_SET_DEBUG = hb_dynsymFind("__DBGENTRY") ? true : false;
    pSet->HB_SET_DECIMALS = 2;
    pSet->HB_SET_DEFAULT = hb_strdup("");
    pSet->HB_SET_DELETED = HB_FALSE;
@@ -1713,7 +1713,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
              */
             if( HB_IS_STRING(pItem) || HB_IS_NIL(pItem) )
             {
-               open_handle( pSet, hb_itemGetCPtr(pItem), HB_FALSE, set_specifier );
+               open_handle( pSet, hb_itemGetCPtr(pItem), false, set_specifier );
                fResult = HB_TRUE;
                if( set_specifier == HB_SET_PRINTFILE && pSet->HB_SET_PRINTFILE == nullptr )
                {
@@ -2016,7 +2016,7 @@ HB_BOOL hb_setSetItem( HB_set_enum set_specifier, PHB_ITEM pItem )
          case HB_SET_CURSOR:
             if( HB_IS_NUMERIC(pItem) )
             {
-               hb_conSetCursor( HB_TRUE, hb_itemGetNI(pItem) );
+               hb_conSetCursor( true, hb_itemGetNI(pItem) );
                fResult = HB_TRUE;
             }
             break;
@@ -2367,7 +2367,7 @@ HB_BOOL hb_setSetItem2( HB_set_enum set_specifier, PHB_ITEM pItem1, PHB_ITEM pIt
 
                hb_setListenerNotify( set_specifier, HB_SET_LISTENER_BEFORE );
 
-               open_handle( pSet, hb_itemGetCPtr(pItem1), set_logical( pItem2, HB_FALSE ), set_specifier );
+               open_handle( pSet, hb_itemGetCPtr(pItem1), set_logical( pItem2, false ), set_specifier );
                fResult = HB_TRUE;
                if( set_specifier == HB_SET_PRINTFILE && pSet->HB_SET_PRINTFILE == nullptr )
                {
@@ -2502,7 +2502,7 @@ HB_BOOL hb_setGetL( HB_set_enum set_specifier )
    }
 
    hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, 0 );
-   return HB_FALSE;
+   return false;
 }
 
 const char * hb_setGetCPtr( HB_set_enum set_specifier )
@@ -3171,7 +3171,7 @@ HB_BOOL hb_osUseCP( void )
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 const char * hb_osEncodeCP( const char * szName, char ** pszFree, HB_SIZE * pnSize )
@@ -3435,7 +3435,7 @@ PHB_FILE hb_setGetPrinterHandle( int iType )
 
    if( pSet->hb_set_printhan == nullptr && pSet->HB_SET_PRINTFILE )
    {
-      open_handle( pSet, pSet->HB_SET_PRINTFILE, HB_FALSE, HB_SET_PRINTFILE );
+      open_handle( pSet, pSet->HB_SET_PRINTFILE, false, HB_SET_PRINTFILE );
    }
 
    return pSet->hb_set_printhan;

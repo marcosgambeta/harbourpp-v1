@@ -98,11 +98,11 @@ static HB_BOOL hb_sxOrdParam( LPDBORDERINFO pInfo )
          pInfo->atomBagName = hb_param(2, HB_IT_NUMERIC);
          if( hb_parni(2) <= 0 )
          {
-            return HB_FALSE;
+            return false;
          }
       }
    }
-   return HB_TRUE;
+   return true;
 }
 
 HB_FUNC( SX_TAGORDER )
@@ -183,7 +183,7 @@ HB_FUNC( SX_FREEZE )
       if( hb_sxOrdParam( &Info ) )
       {
          HB_BOOL fResult = HB_FALSE;
-         Info.itmNewVal = hb_itemPutL(nullptr, HB_TRUE);
+         Info.itmNewVal = hb_itemPutL(nullptr, true);
          Info.itmResult = hb_itemNew(nullptr);
          if( SELF_ORDINFO( pArea, DBOI_CUSTOM, &Info ) == HB_SUCCESS )
          {
@@ -207,7 +207,7 @@ HB_FUNC( SX_WARM )
       if( hb_sxOrdParam( &Info ) )
       {
          HB_BOOL fResult = HB_FALSE;
-         Info.itmNewVal = hb_itemPutL(nullptr, HB_FALSE);
+         Info.itmNewVal = hb_itemPutL(nullptr, false);
          Info.itmResult = hb_itemNew(nullptr);
          if( SELF_ORDINFO( pArea, DBOI_CHGONLY, &Info ) == HB_SUCCESS )
          {
@@ -231,7 +231,7 @@ HB_FUNC( SX_CHILL )
       if( hb_sxOrdParam( &Info ) )
       {
          HB_BOOL fResult = HB_FALSE;
-         Info.itmNewVal = hb_itemPutL(nullptr, HB_TRUE);
+         Info.itmNewVal = hb_itemPutL(nullptr, true);
          Info.itmResult = hb_itemNew(nullptr);
          if( SELF_ORDINFO( pArea, DBOI_CHGONLY, &Info ) == HB_SUCCESS )
          {
@@ -516,7 +516,7 @@ HB_FUNC( SX_KEYADD )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmResult = hb_itemPutL(nullptr, HB_FALSE);
+         Info.itmResult = hb_itemPutL(nullptr, false);
          Info.itmNewVal = hb_param(3, HB_IT_ANY);
          SELF_ORDINFO( pArea, DBOI_KEYADD, &Info );
          fResult = hb_itemGetL(Info.itmResult);
@@ -536,7 +536,7 @@ HB_FUNC( SX_KEYDROP )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmResult = hb_itemPutL(nullptr, HB_FALSE);
+         Info.itmResult = hb_itemPutL(nullptr, false);
          Info.itmNewVal = hb_param(3, HB_IT_ANY);
          SELF_ORDINFO( pArea, DBOI_KEYDELETE, &Info );
          fResult = hb_itemGetL(Info.itmResult);
@@ -666,7 +666,7 @@ HB_FUNC( SX_SEEKLAST )
       PHB_ITEM pKey = hb_param(1, HB_IT_ANY);
       HB_BOOL bSoftSeek = hb_parl(2);
 
-      if( SELF_SEEK( pArea, bSoftSeek, pKey, HB_TRUE ) == HB_SUCCESS )
+      if( SELF_SEEK( pArea, bSoftSeek, pKey, true ) == HB_SUCCESS )
       {
          if( SELF_FOUND( pArea, &fFound ) != HB_SUCCESS )
          {
@@ -686,7 +686,7 @@ HB_FUNC( SX_TAGUNIQUE )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmResult = hb_itemPutL(nullptr, HB_FALSE);
+         Info.itmResult = hb_itemPutL(nullptr, false);
          SELF_ORDINFO( pArea, DBOI_UNIQUE, &Info );
          hb_itemReturnRelease(Info.itmResult);
       }
@@ -760,8 +760,8 @@ HB_FUNC( SX_ROXLOCK )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmNewVal = hb_itemPutL(nullptr, HB_TRUE);
-         Info.itmResult = hb_itemPutL(nullptr, HB_FALSE);
+         Info.itmNewVal = hb_itemPutL(nullptr, true);
+         Info.itmResult = hb_itemPutL(nullptr, false);
          if( SELF_ORDINFO( pArea, DBOI_READLOCK, &Info ) == HB_SUCCESS )
          {
             fLocked = hb_itemGetL(Info.itmResult);
@@ -782,8 +782,8 @@ HB_FUNC( SX_ROXUNLOCK )
       DBORDERINFO Info;
       if( hb_sxOrdParam( &Info ) )
       {
-         Info.itmNewVal = hb_itemPutL(nullptr, HB_FALSE);
-         Info.itmResult = hb_itemPutL(nullptr, HB_FALSE);
+         Info.itmNewVal = hb_itemPutL(nullptr, false);
+         Info.itmResult = hb_itemPutL(nullptr, false);
          SELF_ORDINFO( pArea, DBOI_READLOCK, &Info );
          hb_itemRelease(Info.itmNewVal);
          hb_itemRelease(Info.itmResult);
@@ -829,14 +829,14 @@ HB_FUNC( SX_ISROXLOCK )
          }
          if( !fLocked )
          {
-            Info.itmNewVal = hb_itemPutL(nullptr, HB_TRUE);
+            Info.itmNewVal = hb_itemPutL(nullptr, true);
             if( SELF_ORDINFO( pArea, DBOI_READLOCK, &Info ) == HB_SUCCESS )
             {
                fLocked = hb_itemGetL(Info.itmResult);
             }
             if( fLocked )
             {
-               hb_itemPutL(Info.itmNewVal, HB_FALSE);
+               hb_itemPutL(Info.itmNewVal, false);
                SELF_ORDINFO( pArea, DBOI_READLOCK, &Info );
             }
             hb_itemRelease(Info.itmNewVal);

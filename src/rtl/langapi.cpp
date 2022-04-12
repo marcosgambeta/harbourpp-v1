@@ -274,7 +274,7 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
 
    if( !szNewId || *szNewId == 0 || !lang || !cdpIn || !cdpOut || cdpIn == cdpOut )
    {
-      return HB_FALSE;
+      return false;
    }
 
    memset(&trans, 0, sizeof(trans));
@@ -332,11 +332,11 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
    {
       pBase->lang   = reinterpret_cast<PHB_LANG>(buffer);
       pBase->buffer = static_cast<void*>(buffer);
-      return HB_TRUE;
+      return true;
    }
 
    hb_xfree(buffer);
-   return HB_FALSE;
+   return false;
 }
 
 void hb_langReleaseAll( void )
@@ -364,11 +364,11 @@ HB_BOOL hb_langRegister( PHB_LANG lang )
       if( pBase && pBase->lang == nullptr )
       {
          pBase->lang = lang;
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 PHB_LANG hb_langFind( const char * pszID )

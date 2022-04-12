@@ -62,11 +62,11 @@ static HB_BOOL hb_compExprHasMacro(const char * szText, HB_SIZE nLen, HB_COMP_DE
       {
          if( !HB_SUPPORT_HARBOUR || (nLen && (*szText == '_' || (*szText >= 'A' && *szText <= 'Z') || (*szText >= 'a' && *szText <= 'z'))) )
          {
-            return HB_TRUE;
+            return true;
          }
       }
    }
-   return HB_FALSE;
+   return false;
 }
 
 static PHB_EXPR hb_compExprReducePlusStrings(PHB_EXPR pLeft, PHB_EXPR pRight, HB_COMP_DECL)
@@ -636,7 +636,7 @@ static HB_BOOL hb_compExprReducePlusNums(PHB_EXPR pSelf, PHB_EXPR pAdd)
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 
    switch( pNum->value.asNum.NumType & pAdd->value.asNum.NumType )
@@ -682,7 +682,7 @@ static HB_BOOL hb_compExprReducePlusNums(PHB_EXPR pSelf, PHB_EXPR pAdd)
          break;
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 PHB_EXPR hb_compExprReducePlus(PHB_EXPR pSelf, HB_COMP_DECL)
@@ -1983,11 +1983,11 @@ HB_BOOL hb_compExprReduceAT(PHB_EXPR pSelf, HB_COMP_DECL)
 
       memcpy(pSelf, pReduced, sizeof(HB_EXPR));
       HB_COMP_EXPR_CLEAR(pReduced);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -2054,10 +2054,10 @@ HB_BOOL hb_compExprReduceCHR(PHB_EXPR pSelf, HB_COMP_DECL)
       HB_COMP_EXPR_FREE(pSelf->value.asFunCall.pFunName);
       memcpy(pSelf, pExpr, sizeof(HB_EXPR));
       HB_COMP_EXPR_CLEAR(pExpr);
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_compExprReduceBCHAR(PHB_EXPR pSelf, HB_COMP_DECL)
@@ -2079,10 +2079,10 @@ HB_BOOL hb_compExprReduceBCHAR(PHB_EXPR pSelf, HB_COMP_DECL)
       HB_COMP_EXPR_FREE(pSelf->value.asFunCall.pFunName);
       memcpy(pSelf, pExpr, sizeof(HB_EXPR));
       HB_COMP_EXPR_CLEAR(pExpr);
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_compExprReduceLEN(PHB_EXPR pSelf, HB_COMP_DECL)
@@ -2099,9 +2099,9 @@ HB_BOOL hb_compExprReduceLEN(PHB_EXPR pSelf, HB_COMP_DECL)
       HB_COMP_EXPR_FREE(pSelf->value.asFunCall.pFunName);
       memcpy(pSelf, pExpr, sizeof(HB_EXPR));
       HB_COMP_EXPR_CLEAR(pExpr);
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_compExprReduceEMPTY(PHB_EXPR pSelf, HB_COMP_DECL)
@@ -2164,9 +2164,9 @@ HB_BOOL hb_compExprReduceEMPTY(PHB_EXPR pSelf, HB_COMP_DECL)
       HB_COMP_EXPR_FREE(pSelf->value.asFunCall.pFunName);
       memcpy(pSelf, pExpr, sizeof(HB_EXPR));
       HB_COMP_EXPR_CLEAR(pExpr);
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_compExprReduceASC(PHB_EXPR pSelf, HB_COMP_DECL)
@@ -2181,9 +2181,9 @@ HB_BOOL hb_compExprReduceASC(PHB_EXPR pSelf, HB_COMP_DECL)
       HB_COMP_EXPR_FREE(pSelf->value.asFunCall.pFunName);
       memcpy(pSelf, pExpr, sizeof(HB_EXPR));
       HB_COMP_EXPR_CLEAR(pExpr);
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_compExprReduceBCODE(PHB_EXPR pSelf, HB_COMP_DECL)
@@ -2198,9 +2198,9 @@ HB_BOOL hb_compExprReduceBCODE(PHB_EXPR pSelf, HB_COMP_DECL)
       HB_COMP_EXPR_FREE(pSelf->value.asFunCall.pFunName);
       memcpy(pSelf, pExpr, sizeof(HB_EXPR));
       HB_COMP_EXPR_CLEAR(pExpr);
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_compExprReduceINT(PHB_EXPR pSelf, HB_COMP_DECL)
@@ -2232,9 +2232,9 @@ HB_BOOL hb_compExprReduceINT(PHB_EXPR pSelf, HB_COMP_DECL)
       HB_COMP_EXPR_FREE(pSelf->value.asFunCall.pFunName);
       memcpy(pSelf, pExpr, sizeof(HB_EXPR));
       HB_COMP_EXPR_CLEAR(pExpr);
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_compExprReduceSTOT(PHB_EXPR pSelf, HB_USHORT usCount, HB_COMP_DECL)
@@ -2264,10 +2264,10 @@ HB_BOOL hb_compExprReduceSTOT(PHB_EXPR pSelf, HB_USHORT usCount, HB_COMP_DECL)
       HB_COMP_EXPR_FREE(pSelf->value.asFunCall.pFunName);
       memcpy(pSelf, pExpr, sizeof(HB_EXPR));
       HB_COMP_EXPR_CLEAR(pExpr);
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_compExprReduceSTOD(PHB_EXPR pSelf, HB_USHORT usCount, HB_COMP_DECL)
@@ -2294,10 +2294,10 @@ HB_BOOL hb_compExprReduceSTOD(PHB_EXPR pSelf, HB_USHORT usCount, HB_COMP_DECL)
       HB_COMP_EXPR_FREE(pSelf->value.asFunCall.pFunName);
       memcpy(pSelf, pExpr, sizeof(HB_EXPR));
       HB_COMP_EXPR_CLEAR(pExpr);
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_compExprReduceDTOS(PHB_EXPR pSelf, HB_COMP_DECL)
@@ -2309,15 +2309,15 @@ HB_BOOL hb_compExprReduceDTOS(PHB_EXPR pSelf, HB_COMP_DECL)
    {
       char szBuffer[9];
       char * szDate = static_cast<char*>(memcpy(hb_xgrab(9), hb_dateDecStr(szBuffer, static_cast<long>(pArg->value.asDate.lDate)), 9));
-      PHB_EXPR pExpr = hb_compExprNewString(szDate, 8, HB_TRUE, HB_COMP_PARAM);
+      PHB_EXPR pExpr = hb_compExprNewString(szDate, 8, true, HB_COMP_PARAM);
       HB_COMP_EXPR_FREE(pParms);
       HB_COMP_EXPR_FREE(pSelf->value.asFunCall.pFunName);
       memcpy(pSelf, pExpr, sizeof(HB_EXPR));
       HB_COMP_EXPR_CLEAR(pExpr);
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_compExprReduceCTOD(PHB_EXPR pSelf, HB_COMP_DECL)
@@ -2332,10 +2332,10 @@ HB_BOOL hb_compExprReduceCTOD(PHB_EXPR pSelf, HB_COMP_DECL)
       HB_COMP_EXPR_FREE(pSelf->value.asFunCall.pFunName);
       memcpy(pSelf, pExpr, sizeof(HB_EXPR));
       HB_COMP_EXPR_CLEAR(pExpr);
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_compExprReduceUPPER(PHB_EXPR pSelf, HB_COMP_DECL)
@@ -2418,11 +2418,11 @@ HB_BOOL hb_compExprReduceUPPER(PHB_EXPR pSelf, HB_COMP_DECL)
          memcpy(pSelf, pExpr, sizeof(HB_EXPR));
          HB_COMP_EXPR_CLEAR(pExpr);
 
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_compExprReduceMIN(PHB_EXPR pSelf, HB_COMP_DECL)
@@ -2502,10 +2502,10 @@ HB_BOOL hb_compExprReduceMIN(PHB_EXPR pSelf, HB_COMP_DECL)
       HB_COMP_EXPR_FREE(pSelf->value.asFunCall.pFunName);
       memcpy(pSelf, pExpr, sizeof(HB_EXPR));
       HB_COMP_EXPR_CLEAR(pExpr);
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_compExprReduceMAX(PHB_EXPR pSelf, HB_COMP_DECL)
@@ -2586,10 +2586,10 @@ HB_BOOL hb_compExprReduceMAX(PHB_EXPR pSelf, HB_COMP_DECL)
       HB_COMP_EXPR_FREE(pSelf->value.asFunCall.pFunName);
       memcpy(pSelf, pExpr, sizeof(HB_EXPR));
       HB_COMP_EXPR_CLEAR(pExpr);
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_compExprReduceBitFunc(PHB_EXPR pSelf, HB_MAXINT nResult, HB_BOOL fBool, HB_COMP_DECL)
@@ -2601,5 +2601,5 @@ HB_BOOL hb_compExprReduceBitFunc(PHB_EXPR pSelf, HB_MAXINT nResult, HB_BOOL fBoo
    HB_COMP_EXPR_FREE(pSelf->value.asFunCall.pFunName);
    memcpy(pSelf, pExpr, sizeof(HB_EXPR));
    HB_COMP_EXPR_CLEAR(pExpr);
-   return HB_TRUE;
+   return true;
 }

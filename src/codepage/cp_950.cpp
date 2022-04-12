@@ -62,7 +62,7 @@ static HB_CDP_GET_FUNC(CP950_get)
          if( *wc )
          {
             (*pnIndex)++;
-            return HB_TRUE;
+            return true;
          }
       }
       *wc = cdp->uniTable->uniCodes[uc];
@@ -70,9 +70,9 @@ static HB_CDP_GET_FUNC(CP950_get)
       {
          *wc = uc;
       }
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 static HB_CDP_PUT_FUNC(CP950_put)
@@ -87,7 +87,7 @@ static HB_CDP_PUT_FUNC(CP950_put)
          {
             HB_PUT_BE_UINT16(&pDst[(*pnIndex)], b5);
             *pnIndex += 2;
-            return HB_TRUE;
+            return true;
          }
       }
       else
@@ -105,10 +105,10 @@ static HB_CDP_PUT_FUNC(CP950_put)
          {
             pDst[(*pnIndex)++] = wc >= 0x100 ? '?' : static_cast<HB_UCHAR>(wc);
          }
-         return HB_TRUE;
+         return true;
       }
    }
-   return HB_FALSE;
+   return false;
 }
 
 static HB_CDP_LEN_FUNC(CP950_len)

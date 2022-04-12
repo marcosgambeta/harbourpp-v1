@@ -105,7 +105,7 @@ HB_FUNC( __KEYBOARD )
 
    if( HB_ISCHAR(1) )
    {
-      hb_inkeySetText( hb_parc(1), hb_parclen(1), HB_FALSE );
+      hb_inkeySetText( hb_parc(1), hb_parclen(1), false );
    }
 }
 
@@ -122,7 +122,7 @@ HB_FUNC( HB_KEYPUT )
    }
    else if( HB_ISCHAR(1) )
    {
-      hb_inkeySetTextKeys( hb_parc(1), hb_parclen(1), HB_FALSE );
+      hb_inkeySetTextKeys( hb_parc(1), hb_parclen(1), false );
    }
    else if( HB_ISARRAY(1) )
    {
@@ -139,7 +139,7 @@ HB_FUNC( HB_KEYPUT )
          }
          else if( type & HB_IT_STRING )
          {
-            hb_inkeySetTextKeys( hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), HB_FALSE );
+            hb_inkeySetTextKeys( hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), false );
          }
       }
    }
@@ -153,7 +153,7 @@ HB_FUNC( HB_KEYINS )
    }
    else if( HB_ISCHAR(1) )
    {
-      hb_inkeySetTextKeys( hb_parc(1), hb_parclen(1), HB_TRUE );
+      hb_inkeySetTextKeys( hb_parc(1), hb_parclen(1), true );
    }
    else if( HB_ISARRAY(1) )
    {
@@ -170,7 +170,7 @@ HB_FUNC( HB_KEYINS )
          }
          else if( type & HB_IT_STRING )
          {
-            hb_inkeySetTextKeys( hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), HB_TRUE );
+            hb_inkeySetTextKeys( hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), true );
          }
       }
    }

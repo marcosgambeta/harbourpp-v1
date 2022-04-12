@@ -133,7 +133,7 @@ HB_FUNC( RTRIM )
       const char * szText = hb_itemGetCPtr(pText);
 
       nSrc = hb_itemGetCLen(pText);
-      nLen = hb_strRTrimLen( szText, nSrc, HB_FALSE );
+      nLen = hb_strRTrimLen( szText, nSrc, false );
 
       if( nLen == nSrc )
       {
@@ -168,7 +168,7 @@ HB_FUNC( ALLTRIM )
       const char * szText = hb_itemGetCPtr(pText);
 
       nSrc = hb_itemGetCLen(pText);
-      nLen = hb_strRTrimLen( szText, nSrc, HB_FALSE );
+      nLen = hb_strRTrimLen( szText, nSrc, false );
       szText = hb_strLTrim( szText, &nLen );
 
       if( nLen == nSrc )

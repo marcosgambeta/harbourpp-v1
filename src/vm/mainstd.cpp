@@ -61,6 +61,6 @@ int main( int argc, char * argv[] )
 #endif
 
    hb_cmdargInit( argc, argv );
-   hb_vmInit( HB_TRUE );
+   hb_vmInit(true);
    return hb_vmQuit();
 }

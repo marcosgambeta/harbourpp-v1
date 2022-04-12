@@ -917,7 +917,7 @@ static HB_DYNS_FUNC( hb_memvarClear )
       hb_memvarDetachDynSym( pDynSymbol, nullptr );
    }
 
-   return HB_TRUE;
+   return true;
 }
 #endif
 
@@ -958,7 +958,7 @@ static HB_DYNS_FUNC( hb_memvarCountPublics )
       ( *( static_cast<int*>(Cargo) ) )++;
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 static HB_SIZE hb_memvarGetBaseOffset( int iProcLevel )
@@ -1098,7 +1098,7 @@ static HB_DYNS_FUNC( hb_memvarCountVisible )
          pMVInfo->pDyns[pMVInfo->nCount++] = pDynSymbol;
       }
    }
-   return HB_TRUE;
+   return true;
 }
 
 PHB_ITEM hb_memvarSaveInArray( int iScope, HB_BOOL fCopy )
@@ -1330,7 +1330,7 @@ HB_FUNC( __MVSCOPE )
 
 HB_FUNC( __MVCLEAR )
 {
-   hb_memvarsClear( HB_FALSE );
+   hb_memvarsClear(false);
 }
 
 HB_FUNC( __MVDBGINFO )
@@ -1602,7 +1602,7 @@ static HB_DYNS_FUNC( hb_memvarSave )
          }
       }
    }
-   return HB_TRUE;
+   return true;
 }
 
 HB_FUNC( __MVSAVE )
@@ -1701,7 +1701,7 @@ HB_FUNC( __MVRESTORE )
 
       if( !bAdditive )
       {
-         hb_memvarsClear( HB_FALSE );
+         hb_memvarsClear(false);
       }
 
       /* Open .mem file */
@@ -1734,7 +1734,7 @@ HB_FUNC( __MVRESTORE )
          bIncludeMask = HB_TRUE;
 #else
          pszMask = hb_memvarGetMask(3);
-         bIncludeMask = hb_parldef(4, HB_TRUE);
+         bIncludeMask = hb_parldef(4, true);
 #endif
 
          while( hb_fileRead( fhnd, buffer, HB_MEM_REC_LEN, -1 ) == HB_MEM_REC_LEN )

@@ -118,10 +118,10 @@ HB_BOOL hb_itemParamStore( HB_USHORT uiParam, PHB_ITEM pItem )
       {
          hb_itemSetNil(hb_itemUnRef(pDest));
       }
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_itemParamStoreForward( HB_USHORT uiParam, PHB_ITEM pItem )
@@ -143,10 +143,10 @@ HB_BOOL hb_itemParamStoreForward( HB_USHORT uiParam, PHB_ITEM pItem )
       {
          hb_itemSetNil(hb_itemUnRef(pDest));
       }
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_itemParamStoreRelease( HB_USHORT uiParam, PHB_ITEM pItem )
@@ -169,10 +169,10 @@ HB_BOOL hb_itemParamStoreRelease( HB_USHORT uiParam, PHB_ITEM pItem )
       {
          hb_itemSetNil(hb_itemUnRef(pDest));
       }
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_USHORT hb_itemPCount( void )
@@ -195,11 +195,11 @@ HB_BOOL hb_itemRelease( PHB_ITEM pItem )
    if( pItem )
    {
       hb_gcGripDrop(pItem);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -597,11 +597,11 @@ HB_BOOL hb_itemFreeC( char * szText )
    {
       hb_xfree(szText);
 
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -733,12 +733,12 @@ HB_BOOL hb_itemGetTDT( PHB_ITEM pItem, long * plJulian, long * plMilliSec )
    {
       *plJulian = pItem->item.asDateTime.julian;
       *plMilliSec = pItem->item.asDateTime.time;
-      return HB_TRUE;
+      return true;
    }
    else
    {
       *plJulian = *plMilliSec = 0;
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -768,7 +768,7 @@ HB_BOOL hb_itemGetL(PHB_ITEM pItem)
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_itemGetLX( PHB_ITEM pItem )
@@ -801,11 +801,11 @@ HB_BOOL hb_itemGetLX( PHB_ITEM pItem )
       }
       else
       {
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 double hb_itemGetND( PHB_ITEM pItem )
@@ -2694,10 +2694,10 @@ HB_BOOL hb_itemGetWriteCL( PHB_ITEM pItem, char ** pszValue, HB_SIZE * pnLen )
          hb_itemUnShareString(pItem);
          *pnLen = pItem->item.asString.length;
          *pszValue = pItem->item.asString.value;
-         return HB_TRUE;
+         return true;
       }
    }
-   return HB_FALSE;
+   return false;
 }
 
 /* Internal API, not standard Clipper */
@@ -3356,14 +3356,14 @@ HB_BOOL hb_itemStrBuf( char * szResult, PHB_ITEM pNumber, int iSize, int iDec )
    if( iPos < 0 )
    {
       memset(szResult, '*', iSize);
-      return HB_FALSE;
+      return false;
    }
    else if( iDot > 0 )
    {
       szResult[iDot] = '.';
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 /* converts a numeric to a string with optional width & precision.

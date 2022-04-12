@@ -180,7 +180,7 @@ HB_BOOL hb_extIsNil( int iParam )
    }
    else
    {
-      return HB_TRUE;
+      return true;
    }
 
    if( HB_IS_BYREF(pItem) )
@@ -209,7 +209,7 @@ HB_BOOL hb_extIsArray( int iParam )
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 
    if( HB_IS_BYREF(pItem) )
@@ -238,7 +238,7 @@ HB_BOOL hb_extIsObject( int iParam )
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 
    if( HB_IS_BYREF(pItem) )
@@ -495,11 +495,11 @@ HB_BOOL hb_partdt( long * plJulian, long * plMilliSec, int iParam )
       {
          *plJulian = pItem->item.asDateTime.julian;
          *plMilliSec = pItem->item.asDateTime.time;
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 int  hb_parl( int iParam )
@@ -1283,7 +1283,7 @@ HB_BOOL hb_parvtdt( long * plJulian, long * plMilliSec, int iParam, ... )
       {
          *plJulian = pItem->item.asDateTime.julian;
          *plMilliSec = pItem->item.asDateTime.time;
-         return HB_TRUE;
+         return true;
       }
       else if( HB_IS_ARRAY(pItem) )
       {
@@ -1298,7 +1298,7 @@ HB_BOOL hb_parvtdt( long * plJulian, long * plMilliSec, int iParam, ... )
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 int  hb_parvl( int iParam, ... )
@@ -1887,7 +1887,7 @@ void hb_retl( int iLogical )
 
    HB_STACK_TLS_PRELOAD
 
-   hb_itemPutL(hb_stackReturnItem(), iLogical ? HB_TRUE : HB_FALSE);
+   hb_itemPutL(hb_stackReturnItem(), iLogical ? true : false);
 }
 
 #undef hb_retnd
@@ -2290,7 +2290,7 @@ int hb_storl( int iLogical, int iParam )
 
    if( iParam == -1 )
    {
-      hb_itemPutL(hb_stackReturnItem(), iLogical ? HB_TRUE : HB_FALSE);
+      hb_itemPutL(hb_stackReturnItem(), iLogical ? true : false);
       return 1;
    }
    else if( iParam >= 0 && iParam <= hb_pcount() )
@@ -2299,7 +2299,7 @@ int hb_storl( int iLogical, int iParam )
 
       if( HB_IS_BYREF(pItem) )
       {
-         hb_itemPutL(hb_itemUnRef(pItem), iLogical ? HB_TRUE : HB_FALSE);
+         hb_itemPutL(hb_itemUnRef(pItem), iLogical ? true : false);
          return 1;
       }
    }
@@ -2813,13 +2813,13 @@ int hb_storvl( int iLogical, int iParam, ... )
          int iRetVal;
          va_list va;
          va_start( va, iParam );
-         iRetVal = hb_arraySetL(pItem, va_arg( va, HB_SIZE ), iLogical ? HB_TRUE : HB_FALSE) ? 1 : 0;
+         iRetVal = hb_arraySetL(pItem, va_arg( va, HB_SIZE ), iLogical ? true : false) ? 1 : 0;
          va_end( va );
          return iRetVal;
       }
       else if( bByRef || iParam == -1 )
       {
-         hb_itemPutL(pItem, iLogical ? HB_TRUE : HB_FALSE);
+         hb_itemPutL(pItem, iLogical ? true : false);
          return 1;
       }
    }

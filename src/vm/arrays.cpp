@@ -187,7 +187,7 @@ HB_BOOL hb_arrayNew( PHB_ITEM pItem, HB_SIZE nLen ) /* creates a new array */
    pItem->type = HB_IT_ARRAY;
    pItem->item.asArray.value = pBaseArray;
 
-   return HB_TRUE;
+   return true;
 }
 
 void hb_arraySwap( PHB_ITEM pArray1, PHB_ITEM pArray2 )
@@ -284,11 +284,11 @@ HB_BOOL hb_arraySize( PHB_ITEM pArray, HB_SIZE nLen )
          pBaseArray->nLen = nLen;
       }
 
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -320,7 +320,7 @@ HB_BOOL hb_arrayIsObject( PHB_ITEM pArray )
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -381,11 +381,11 @@ HB_BOOL hb_arrayAdd( PHB_ITEM pArray, PHB_ITEM pValue )
          pBaseArray = static_cast<PHB_BASEARRAY>(pArray->item.asArray.value);
          hb_itemCopy(pBaseArray->pItems + ( pBaseArray->nLen - 1 ), pValue);
 
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_arrayAddForward( PHB_ITEM pArray, PHB_ITEM pValue )
@@ -404,11 +404,11 @@ HB_BOOL hb_arrayAddForward( PHB_ITEM pArray, PHB_ITEM pValue )
          pBaseArray = static_cast<PHB_BASEARRAY>(pArray->item.asArray.value);
          hb_itemMove(pBaseArray->pItems + ( pBaseArray->nLen - 1 ), pValue);
 
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_arrayDel( PHB_ITEM pArray, HB_SIZE nIndex )
@@ -437,11 +437,11 @@ HB_BOOL hb_arrayDel( PHB_ITEM pArray, HB_SIZE nIndex )
             }
          }
 
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_arrayIns( PHB_ITEM pArray, HB_SIZE nIndex )
@@ -470,11 +470,11 @@ HB_BOOL hb_arrayIns( PHB_ITEM pArray, HB_SIZE nIndex )
             }
          }
 
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_arraySet( PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem )
@@ -486,11 +486,11 @@ HB_BOOL hb_arraySet( PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem )
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemCopy(pArray->item.asArray.value->pItems + ( nIndex - 1 ), pItem);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -503,12 +503,12 @@ HB_BOOL hb_arraySetForward( PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem )
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemMove(pArray->item.asArray.value->pItems + ( nIndex - 1 ), pItem);
-      return HB_TRUE;
+      return true;
    }
    else
    {
       hb_itemClear(pItem);
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -521,12 +521,12 @@ HB_BOOL hb_arrayGet( PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem )
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemCopy(pItem, pArray->item.asArray.value->pItems + ( nIndex - 1 ));
-      return HB_TRUE;
+      return true;
    }
    else
    {
       hb_itemSetNil(pItem);
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -550,12 +550,12 @@ HB_BOOL hb_arrayGetItemRef( PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem )
       pItem->item.asRefer.BasePtr.array = pArray->item.asArray.value;
       pItem->item.asRefer.value = nIndex - 1;
       pItem->item.asRefer.offset = 0;
-      return HB_TRUE;
+      return true;
    }
    else
    {
       hb_itemSetNil(pItem);
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -644,7 +644,7 @@ HB_BOOL hb_arrayGetTDT( PHB_ITEM pArray, HB_SIZE nIndex, long * plJulian, long *
    else
    {
       *plJulian = *plMilliSec = 0;
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -660,7 +660,7 @@ HB_BOOL hb_arrayGetL( PHB_ITEM pArray, HB_SIZE nIndex )
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -899,11 +899,11 @@ HB_BOOL hb_arraySetDS( PHB_ITEM pArray, HB_SIZE nIndex, const char * szDate )
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutDS(pArray->item.asArray.value->pItems + nIndex - 1, szDate);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -916,11 +916,11 @@ HB_BOOL hb_arraySetDL( PHB_ITEM pArray, HB_SIZE nIndex, long lDate )
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutDL(pArray->item.asArray.value->pItems + nIndex - 1, lDate);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -933,11 +933,11 @@ HB_BOOL hb_arraySetTD( PHB_ITEM pArray, HB_SIZE nIndex, double dTimeStamp )
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutTD(pArray->item.asArray.value->pItems + nIndex - 1, dTimeStamp);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -950,11 +950,11 @@ HB_BOOL hb_arraySetTDT( PHB_ITEM pArray, HB_SIZE nIndex, long lJulian, long lMil
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutTDT(pArray->item.asArray.value->pItems + nIndex - 1, lJulian, lMilliSec);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -967,11 +967,11 @@ HB_BOOL hb_arraySetL( PHB_ITEM pArray, HB_SIZE nIndex, HB_BOOL fValue )
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutL(pArray->item.asArray.value->pItems + nIndex - 1, fValue);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -984,11 +984,11 @@ HB_BOOL hb_arraySetNI( PHB_ITEM pArray, HB_SIZE nIndex, int iNumber )
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutNI(pArray->item.asArray.value->pItems + nIndex - 1, iNumber);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -1001,11 +1001,11 @@ HB_BOOL hb_arraySetNL( PHB_ITEM pArray, HB_SIZE nIndex, long lNumber )
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutNL(pArray->item.asArray.value->pItems + nIndex - 1, lNumber);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -1018,11 +1018,11 @@ HB_BOOL hb_arraySetNS( PHB_ITEM pArray, HB_SIZE nIndex, HB_ISIZ nNumber )
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutNS(pArray->item.asArray.value->pItems + nIndex - 1, nNumber);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -1036,11 +1036,11 @@ HB_BOOL hb_arraySetNLL( PHB_ITEM pArray, HB_SIZE nIndex, HB_LONGLONG llNumber )
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutNLL(pArray->item.asArray.value->pItems + nIndex - 1, llNumber);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 #endif
@@ -1054,11 +1054,11 @@ HB_BOOL hb_arraySetNInt( PHB_ITEM pArray, HB_SIZE nIndex, HB_MAXINT nNumber )
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutNInt(pArray->item.asArray.value->pItems + nIndex - 1, nNumber);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -1071,11 +1071,11 @@ HB_BOOL hb_arraySetND( PHB_ITEM pArray, HB_SIZE nIndex, double dNumber )
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutND(pArray->item.asArray.value->pItems + nIndex - 1, dNumber);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -1088,11 +1088,11 @@ HB_BOOL hb_arraySetC( PHB_ITEM pArray, HB_SIZE nIndex, const char * szText )
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutC(pArray->item.asArray.value->pItems + nIndex - 1, szText);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -1105,11 +1105,11 @@ HB_BOOL hb_arraySetCL( PHB_ITEM pArray, HB_SIZE nIndex, const char * szText, HB_
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutCL(pArray->item.asArray.value->pItems + nIndex - 1, szText, nLen);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -1122,11 +1122,11 @@ HB_BOOL hb_arraySetCPtr( PHB_ITEM pArray, HB_SIZE nIndex, char * szText )
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutCPtr(pArray->item.asArray.value->pItems + nIndex - 1, szText);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -1139,11 +1139,11 @@ HB_BOOL hb_arraySetCLPtr( PHB_ITEM pArray, HB_SIZE nIndex, char * szText, HB_SIZ
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutCLPtr(pArray->item.asArray.value->pItems + nIndex - 1, szText, nLen);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -1156,11 +1156,11 @@ HB_BOOL hb_arraySetCConst( PHB_ITEM pArray, HB_SIZE nIndex, const char * szText 
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutCConst(pArray->item.asArray.value->pItems + nIndex - 1, szText);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -1173,11 +1173,11 @@ HB_BOOL hb_arraySetPtr( PHB_ITEM pArray, HB_SIZE nIndex, void * pValue )
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutPtr(pArray->item.asArray.value->pItems + nIndex - 1, pValue);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -1190,11 +1190,11 @@ HB_BOOL hb_arraySetPtrGC( PHB_ITEM pArray, HB_SIZE nIndex, void * pValue )
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutPtrGC(pArray->item.asArray.value->pItems + nIndex - 1, pValue);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -1207,11 +1207,11 @@ HB_BOOL hb_arraySetSymbol( PHB_ITEM pArray, HB_SIZE nIndex, PHB_SYMB pSymbol )
    if( HB_IS_ARRAY(pArray) && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen )
    {
       hb_itemPutSymbol(pArray->item.asArray.value->pItems + nIndex - 1, pSymbol);
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -1232,12 +1232,12 @@ HB_BOOL hb_arrayLast( PHB_ITEM pArray, PHB_ITEM pResult )
          hb_itemSetNil(pResult);
       }
 
-      return HB_TRUE;
+      return true;
    }
 
    hb_itemSetNil(pResult);
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_BOOL hb_arrayFill( PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE * pnStart, HB_SIZE * pnCount )
@@ -1279,11 +1279,11 @@ HB_BOOL hb_arrayFill( PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE * pnStart, HB_SI
          }
       }
 
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -1745,11 +1745,11 @@ HB_BOOL hb_arrayEval( PHB_ITEM pArray, PHB_ITEM bBlock, HB_SIZE * pnStart, HB_SI
          }
       }
 
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -1838,11 +1838,11 @@ HB_BOOL hb_arrayCopy( PHB_ITEM pSrcArray, PHB_ITEM pDstArray, HB_SIZE * pnStart,
          }
       }
 
-      return HB_TRUE;
+      return true;
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 }
 
@@ -1904,7 +1904,7 @@ static HB_BOOL hb_nestedCloneFind( PHB_NESTED_CLONED pClonedList, void * pValue,
       else
       {
          hb_itemCopy(pDest, pRef[nMiddle].pDest);
-         return HB_TRUE;
+         return true;
       }
       nMiddle = ( nFirst + nLast ) >> 1;
    }
@@ -1925,7 +1925,7 @@ static HB_BOOL hb_nestedCloneFind( PHB_NESTED_CLONED pClonedList, void * pValue,
    pRef->value = pValue;
    pRef->pDest = pDest;
 
-   return HB_FALSE;
+   return false;
 }
 
 void hb_nestedCloneDo( PHB_ITEM pDstItem, PHB_ITEM pSrcItem, PHB_NESTED_CLONED pClonedList )

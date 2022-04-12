@@ -556,7 +556,7 @@ void hb_compCodeTraceMarkDead(HB_COMP_DECL, PHB_HFUNC pFunc)
             bLastCode = pFunc->pCode[nPos];
             if( nCount )
             {
-               hb_compNOOPfill(pFunc, nPos - nCount, nCount, HB_FALSE, HB_TRUE);
+               hb_compNOOPfill(pFunc, nPos - nCount, nCount, false, true);
                nCount = 0;
             }
          }
@@ -581,7 +581,7 @@ void hb_compCodeTraceMarkDead(HB_COMP_DECL, PHB_HFUNC pFunc)
             pFunc->pCode[nPos - nCount] = pFunc->pCode[nPos - 1];
             pFunc->nPCodePos = pFunc->nPCodeSize = nPos - nCount + 1;
           */
-         hb_compNOOPfill(pFunc, nPos - nCount, nCount, HB_FALSE, HB_TRUE);
+         hb_compNOOPfill(pFunc, nPos - nCount, nCount, false, true);
       }
    }
 

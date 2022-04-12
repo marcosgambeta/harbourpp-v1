@@ -307,7 +307,7 @@ char * hb_fsLinkRead( const char * pszFile )
 
             if( hFile == INVALID_HANDLE_VALUE )
             {
-               hb_fsSetIOError(HB_FALSE, 0);
+               hb_fsSetIOError(false, 0);
             }
             else
             {
@@ -322,7 +322,7 @@ char * hb_fsLinkRead( const char * pszFile )
                      pszLink = HB_OSSTRDUP( lpLink );
                   }
 
-                  hb_fsSetIOError(HB_TRUE, 0);
+                  hb_fsSetIOError(true, 0);
                }
                else
                {

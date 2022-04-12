@@ -669,7 +669,7 @@ HB_ERRCODE hb_rddOpenTable( const char * szFileName, const char * szDriver,
 
    /* Clipper clears NETERR flag before parameter validation, [druzus]
     */
-   hb_rddSetNetErr( HB_FALSE );
+   hb_rddSetNetErr(false);
 
    /* Now check parameters, first RDD name.
     * Clipper seems to make something like:
@@ -846,7 +846,7 @@ HB_ERRCODE hb_rddCreateTableTemp( const char * szDriver, const char * szAlias, c
    pInfo.ulConnection = ulConnection;
    pInfo.lpdbHeader = nullptr;
 
-   pItem = hb_itemPutL(nullptr, HB_TRUE);
+   pItem = hb_itemPutL(nullptr, true);
    errCode = SELF_INFO( pArea, DBI_ISTEMPORARY, pItem );
    hb_itemRelease(pItem);
 
@@ -1224,7 +1224,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
       errCode = hb_dbTransStruct( pArea, nullptr, &dbTransInfo, &pStruct, pFields );
       if( errCode == HB_SUCCESS )
       {
-         errCode = hb_rddCreateTable( szFileName, szDriver, 0, "", HB_TRUE, szCpId, ulConnection, pStruct, pDelim );
+         errCode = hb_rddCreateTable( szFileName, szDriver, 0, "", true, szCpId, ulConnection, pStruct, pDelim );
          if( errCode == HB_SUCCESS )
          {
             dbTransInfo.lpaDest = lpaClose = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1256,7 +1256,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
 
          if( errCode == HB_SUCCESS )
          {
-            errCode = hb_rddOpenTable( szFileName, szDriver, 0, "", HB_TRUE, HB_TRUE, szCpId, ulConnection, pStruct, pDelim );
+            errCode = hb_rddOpenTable( szFileName, szDriver, 0, "", true, true, szCpId, ulConnection, pStruct, pDelim );
             if( errCode == HB_SUCCESS )
             {
                lpaClose = dbTransInfo.lpaSource = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1265,7 +1265,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
       }
       else
       {
-         errCode = hb_rddOpenTable( szFileName, szDriver, 0, "", HB_TRUE, HB_TRUE, szCpId, ulConnection, nullptr, pDelim );
+         errCode = hb_rddOpenTable( szFileName, szDriver, 0, "", true, true, szCpId, ulConnection, nullptr, pDelim );
          if( errCode == HB_SUCCESS )
          {
             lpaClose = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());

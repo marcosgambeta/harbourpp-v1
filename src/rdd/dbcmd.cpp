@@ -290,11 +290,11 @@ HB_FUNC( DBAPPEND )
 
    if( pArea )
    {
-      HB_BOOL bUnLockAll = hb_parldef(1, HB_TRUE);
+      HB_BOOL bUnLockAll = hb_parldef(1, true);
       HB_ERRCODE errCode;
 
       /* Clipper clears NETERR flag before APPEND */
-      hb_rddSetNetErr( HB_FALSE );
+      hb_rddSetNetErr(false);
       errCode = SELF_APPEND( pArea, bUnLockAll );
       hb_retl(errCode == HB_SUCCESS);
    }
@@ -522,7 +522,7 @@ HB_FUNC( __DBOPENSDF )
 
    errCode = hb_rddOpenTable( szFileName, szDriver,
                               fCurrArea ? static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber()) : 0,
-                              szAlias, HB_TRUE, HB_TRUE,
+                              szAlias, true, true,
                               szCpId, ulConnection,
                               pStruct, pDelim );
 
@@ -636,7 +636,7 @@ HB_FUNC( __DBLOCATE )
 
       if( SELF_SETLOCATE( pArea, &dbScopeInfo ) == HB_SUCCESS )
       {
-         SELF_LOCATE( pArea, HB_FALSE );
+         SELF_LOCATE( pArea, false );
       }
    }
    else
@@ -668,7 +668,7 @@ HB_FUNC( __DBCONTINUE )
 
    if( pArea )
    {
-      SELF_LOCATE( pArea, HB_TRUE );
+      SELF_LOCATE( pArea, true );
    }
    else
    {
@@ -1370,7 +1370,7 @@ HB_FUNC( ORDCONDSET )
       pItem = hb_param(2, HB_IT_BLOCK);
       lpdbOrdCondInfo->itmCobFor = pItem ? hb_itemNew(pItem) : nullptr;
 
-      lpdbOrdCondInfo->fAll = hb_parldef(3, HB_TRUE);
+      lpdbOrdCondInfo->fAll = hb_parldef(3, true);
 
       lpdbOrdCondInfo->abWhile = hb_parclen(17) > 0 ? hb_strdup(hb_parc(17)) : nullptr;
       pItem = hb_param(4, HB_IT_BLOCK);
@@ -1603,7 +1603,7 @@ HB_FUNC( ORDLISTADD )
       HB_ERRCODE errCode;
 
       /* Clipper clears NETERR flag when index is open */
-      hb_rddSetNetErr( HB_FALSE );
+      hb_rddSetNetErr(false);
 
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
       pOrderInfo.atomBagName = hb_param(1, HB_IT_STRING);
@@ -2318,7 +2318,7 @@ HB_FUNC( __DBCOPY )
               hb_parc(8),                     /* RDD */
               hb_parnl(9),                    /* connection */
               hb_param(2, HB_IT_ARRAY),       /* Fields */
-              HB_TRUE,                        /* Export? */
+              true,                           /* Export? */
               hb_param(3, HB_IT_BLOCK),       /* cobFor */
               nullptr,                        /* lpStrFor */
               hb_param(4, HB_IT_BLOCK),       /* cobWhile */

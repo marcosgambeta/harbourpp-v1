@@ -498,7 +498,7 @@ HB_BOOL hb_cmdargIsInternal( const char * szArg, int * piLen )
          *piLen = 5;
       }
 
-      return HB_TRUE;
+      return true;
    }
    else if( strlen(szArg) >= 2 && szArg[0] == '/' && szArg[1] == '/' )
    {
@@ -507,10 +507,10 @@ HB_BOOL hb_cmdargIsInternal( const char * szArg, int * piLen )
          *piLen = 2;
       }
 
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
@@ -650,14 +650,14 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
 
 HB_BOOL hb_cmdargCheck( const char * pszName )
 {
-   return hb_cmdargGet( pszName, HB_FALSE ) != nullptr;
+   return hb_cmdargGet( pszName, false ) != nullptr;
 }
 
 /* NOTE: Pointer must be freed with hb_xfree() if not nullptr */
 
 char * hb_cmdargString( const char * pszName )
 {
-   return hb_cmdargGet( pszName, HB_TRUE );
+   return hb_cmdargGet( pszName, true );
 }
 
 int hb_cmdargNum( const char * pszName )
@@ -668,7 +668,7 @@ int hb_cmdargNum( const char * pszName )
 
    char * pszValue;
 
-   pszValue = hb_cmdargGet( pszName, HB_TRUE );
+   pszValue = hb_cmdargGet( pszName, true );
    if( pszValue )
    {
       int iValue = atoi( pszValue );

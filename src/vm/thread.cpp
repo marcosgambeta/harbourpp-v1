@@ -366,7 +366,7 @@ static HB_BOOL _hb_thread_cond_signal( HB_COND_T * cond )
       while( pWaiting != cond->waiters );
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 static HB_BOOL _hb_thread_cond_broadcast( HB_COND_T * cond )
@@ -388,7 +388,7 @@ static HB_BOOL _hb_thread_cond_broadcast( HB_COND_T * cond )
       while( pWaiting != cond->waiters );
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 static HB_BOOL _hb_thread_cond_wait( HB_COND_T * cond, HB_RAWCRITICAL_T * critical, HB_ULONG ulMillisec )
@@ -549,12 +549,12 @@ HB_BOOL hb_threadCondSignal( HB_COND_T * cond )
 #if !defined(HB_MT_VM)
 
    HB_SYMBOL_UNUSED(cond);
-   return HB_FALSE;
+   return false;
 
 #elif defined(HB_TASK_THREAD)
 
    HB_COND_SIGNAL( *cond );
-   return HB_TRUE;
+   return true;
 
 #elif defined(HB_PTHREAD_API)
 
@@ -585,7 +585,7 @@ HB_BOOL hb_threadCondSignal( HB_COND_T * cond )
    }
    HB_CRITICAL_UNLOCK( cond->critical.value );
 
-   return HB_TRUE;
+   return true;
 
 #endif
 }
@@ -595,12 +595,12 @@ HB_BOOL hb_threadCondBroadcast( HB_COND_T * cond )
 #if !defined(HB_MT_VM)
 
    HB_SYMBOL_UNUSED(cond);
-   return HB_FALSE;
+   return false;
 
 #elif defined(HB_TASK_THREAD)
 
    HB_COND_SIGNALN( *cond, 0 );
-   return HB_TRUE;
+   return true;
 
 #elif defined(HB_PTHREAD_API)
 
@@ -631,7 +631,7 @@ HB_BOOL hb_threadCondBroadcast( HB_COND_T * cond )
    }
    HB_CRITICAL_UNLOCK( cond->critical.value );
 
-   return HB_TRUE;
+   return true;
 
 #endif
 }
@@ -642,7 +642,7 @@ HB_BOOL hb_threadCondWait( HB_COND_T * cond, HB_CRITICAL_T * mutex )
 
    HB_SYMBOL_UNUSED(cond);
    HB_SYMBOL_UNUSED(mutex);
-   return HB_FALSE;
+   return false;
 
 #elif defined(HB_TASK_THREAD)
 
@@ -705,7 +705,7 @@ HB_BOOL hb_threadCondTimedWait( HB_COND_T * cond, HB_CRITICAL_T * mutex, HB_ULON
    HB_SYMBOL_UNUSED(cond);
    HB_SYMBOL_UNUSED(mutex);
    HB_SYMBOL_UNUSED(ulMilliSec);
-   return HB_FALSE;
+   return false;
 
 #elif defined(HB_TASK_THREAD)
 
@@ -804,7 +804,7 @@ HB_BOOL hb_threadJoin( HB_THREAD_HANDLE th_h )
 {
 #if !defined(HB_MT_VM)
    HB_SYMBOL_UNUSED(th_h);
-   return HB_FALSE;
+   return false;
 #elif defined(HB_TASK_THREAD)
    return hb_taskJoin( th_h, HB_TASK_INFINITE_WAIT, nullptr ) != 0;
 #elif defined(HB_PTHREAD_API)
@@ -813,12 +813,12 @@ HB_BOOL hb_threadJoin( HB_THREAD_HANDLE th_h )
    if( WaitForSingleObject( th_h, INFINITE ) != WAIT_FAILED )
    {
       CloseHandle( th_h );
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 #else
    { int iTODO_MT; }
-   return HB_FALSE;
+   return false;
 #endif
 }
 
@@ -826,17 +826,17 @@ HB_BOOL hb_threadDetach( HB_THREAD_HANDLE th_h )
 {
 #if !defined(HB_MT_VM)
    HB_SYMBOL_UNUSED(th_h);
-   return HB_FALSE;
+   return false;
 #elif defined(HB_TASK_THREAD)
    hb_taskDetach( th_h );
-   return HB_TRUE;
+   return true;
 #elif defined(HB_PTHREAD_API)
    return pthread_detach( th_h ) == 0;
 #elif defined(HB_OS_WIN)
    return CloseHandle( th_h ) != 0;
 #else
    { int iTODO_MT; }
-   return HB_FALSE;
+   return false;
 #endif
 }
 
@@ -1640,16 +1640,16 @@ HB_FUNC( HB_THREADONCE )
             {
                if( pAction )
                {
-                  hb_storl(HB_FALSE, 1);
+                  hb_storl(false, 1);
                   hb_vmEvalBlock( pAction );
                }
-               hb_storl(HB_TRUE, 1);
+               hb_storl(true, 1);
                fFirstCall = HB_TRUE;
             }
             hb_threadMutexUnlock( s_pOnceMutex );
          }
 #else
-         hb_storl(HB_TRUE, 1);
+         hb_storl(true, 1);
          fFirstCall = HB_TRUE;
          if( pAction )
          {
@@ -2718,7 +2718,7 @@ HB_FUNC( HB_MUTEXNOTIFY )
 
    if( pItem )
    {
-      hb_threadMutexNotify( pItem, hb_param(2, HB_IT_ANY), HB_FALSE );
+      hb_threadMutexNotify( pItem, hb_param(2, HB_IT_ANY), false );
    }
 }
 
@@ -2728,7 +2728,7 @@ HB_FUNC( HB_MUTEXNOTIFYALL )
 
    if( pItem )
    {
-      hb_threadMutexNotify( pItem, hb_param(2, HB_IT_ANY), HB_TRUE );
+      hb_threadMutexNotify( pItem, hb_param(2, HB_IT_ANY), true );
    }
 }
 
@@ -2749,11 +2749,11 @@ HB_FUNC( HB_MUTEXSUBSCRIBE )
          {
             ulMilliSec = static_cast<HB_ULONG>(dTimeOut * 1000);
          }
-         pResult = hb_threadMutexTimedSubscribe( pItem, ulMilliSec, HB_FALSE );
+         pResult = hb_threadMutexTimedSubscribe( pItem, ulMilliSec, false );
       }
       else
       {
-         pResult = hb_threadMutexSubscribe( pItem, HB_FALSE );
+         pResult = hb_threadMutexSubscribe( pItem, false );
       }
 
       if( pResult )
@@ -2786,11 +2786,11 @@ HB_FUNC( HB_MUTEXSUBSCRIBENOW )
          {
             ulMilliSec = static_cast<HB_ULONG>(dTimeOut * 1000);
          }
-         pResult = hb_threadMutexTimedSubscribe( pItem, ulMilliSec, HB_TRUE );
+         pResult = hb_threadMutexTimedSubscribe( pItem, ulMilliSec, true );
       }
       else
       {
-         pResult = hb_threadMutexSubscribe( pItem, HB_TRUE );
+         pResult = hb_threadMutexSubscribe( pItem, true );
       }
 
       if( pResult )

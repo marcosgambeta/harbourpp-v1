@@ -121,7 +121,7 @@ static void hb_gt_cgi_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    hb_fsSetDevMode(pGTCGI->hStdout, FD_BINARY);
 
    HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
-   HB_GTSELF_SETFLAG(pGT, HB_GTI_STDOUTCON, HB_TRUE);
+   HB_GTSELF_SETFLAG(pGT, HB_GTI_STDOUTCON, true);
 }
 
 static void hb_gt_cgi_Exit( PHB_GT pGT )
@@ -180,7 +180,7 @@ static HB_BOOL hb_gt_cgi_IsColor( PHB_GT pGT )
 
    HB_SYMBOL_UNUSED(pGT);
 
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_gt_cgi_Bell( PHB_GT pGT )
@@ -489,7 +489,7 @@ static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
 
    pFuncTable->ReadKey                    = hb_gt_cgi_ReadKey;
 
-   return HB_TRUE;
+   return true;
 }
 
 /* *********************************************************************** */

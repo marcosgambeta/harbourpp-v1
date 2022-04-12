@@ -345,7 +345,7 @@ static HB_BOOL hb_itemSerialValueRef( PHB_REF_LIST pRefList, void * value, HB_SI
    if( ( pRef = hb_itemSerialValueFind( pRefList, value, &nPos ) ) != nullptr )
    {
       pRef->iRefs = 1;
-      return HB_TRUE;
+      return true;
    }
 
    pRef = hb_itemSerialRefNew( pRefList, nPos );
@@ -355,7 +355,7 @@ static HB_BOOL hb_itemSerialValueRef( PHB_REF_LIST pRefList, void * value, HB_SI
    pRef->iRefs = 0;
    pRef->iType = 0;
 
-   return HB_FALSE;
+   return false;
 }
 
 /* used between hb_itemSerialSize() and hb_serializeItem() */
@@ -394,7 +394,7 @@ static HB_BOOL hb_itemSerialValueOffset( PHB_REF_LIST pRefList, void * value, HB
    }
 
    *pnRef = HB_SERIAL_DUMMYOFFSET;
-   return HB_FALSE;
+   return false;
 }
 
 /* used by hb_deserializeTest()
@@ -406,7 +406,7 @@ static HB_BOOL hb_itemSerialOffsetRef( PHB_REF_LIST pRefList, HB_SIZE nOffset )
 
    if( hb_itemSerialOffsetFind( pRefList, nOffset, 0, &nPos ) != nullptr )
    {
-      return HB_TRUE;
+      return true;
    }
 
    pRef = hb_itemSerialRefNew( pRefList, nPos );
@@ -416,7 +416,7 @@ static HB_BOOL hb_itemSerialOffsetRef( PHB_REF_LIST pRefList, HB_SIZE nOffset )
    pRef->iRefs = 0;
    pRef->iType = 0;
 
-   return HB_FALSE;
+   return false;
 }
 
 /* used by hb_deserializeTest() for HB_SERIAL_XHB_R */
@@ -1033,7 +1033,7 @@ static HB_BOOL hb_deserializeTest( const HB_UCHAR ** pBufferPtr, HB_SIZE * pnSiz
 
    if( nSize == 0 )
    {
-      return HB_FALSE;
+      return false;
    }
 
    switch( *pBuffer++ )
@@ -1097,7 +1097,7 @@ static HB_BOOL hb_deserializeTest( const HB_UCHAR ** pBufferPtr, HB_SIZE * pnSiz
       case HB_SERIAL_ARRAYREF8:
          if( hb_itemSerialOffsetRef( pRefList, nOffset ) )
          {
-            return HB_FALSE;
+            return false;
          }
          /* fallthrough */
       case HB_SERIAL_ARRAY8:
@@ -1114,7 +1114,7 @@ static HB_BOOL hb_deserializeTest( const HB_UCHAR ** pBufferPtr, HB_SIZE * pnSiz
       case HB_SERIAL_ARRAYREF16:
          if( hb_itemSerialOffsetRef( pRefList, nOffset ) )
          {
-            return HB_FALSE;
+            return false;
          }
          /* fallthrough */
       case HB_SERIAL_ARRAY16:
@@ -1131,7 +1131,7 @@ static HB_BOOL hb_deserializeTest( const HB_UCHAR ** pBufferPtr, HB_SIZE * pnSiz
       case HB_SERIAL_ARRAYREF32:
          if( hb_itemSerialOffsetRef( pRefList, nOffset ) )
          {
-            return HB_FALSE;
+            return false;
          }
          /* fallthrough */
       case HB_SERIAL_ARRAY32:
@@ -1148,7 +1148,7 @@ static HB_BOOL hb_deserializeTest( const HB_UCHAR ** pBufferPtr, HB_SIZE * pnSiz
       case HB_SERIAL_HASHREF8:
          if( hb_itemSerialOffsetRef( pRefList, nOffset ) )
          {
-            return HB_FALSE;
+            return false;
          }
          /* fallthrough */
       case HB_SERIAL_HASH8:
@@ -1165,7 +1165,7 @@ static HB_BOOL hb_deserializeTest( const HB_UCHAR ** pBufferPtr, HB_SIZE * pnSiz
       case HB_SERIAL_HASHREF16:
          if( hb_itemSerialOffsetRef( pRefList, nOffset ) )
          {
-            return HB_FALSE;
+            return false;
          }
          /* fallthrough */
       case HB_SERIAL_HASH16:
@@ -1182,7 +1182,7 @@ static HB_BOOL hb_deserializeTest( const HB_UCHAR ** pBufferPtr, HB_SIZE * pnSiz
       case HB_SERIAL_HASHREF32:
          if( hb_itemSerialOffsetRef( pRefList, nOffset ) )
          {
-            return HB_FALSE;
+            return false;
          }
          /* fallthrough */
       case HB_SERIAL_HASH32:
@@ -1199,7 +1199,7 @@ static HB_BOOL hb_deserializeTest( const HB_UCHAR ** pBufferPtr, HB_SIZE * pnSiz
       case HB_SERIAL_REF:
          if( !hb_itemSerialOffsetRef( pRefList, HB_GET_LE_UINT32( pBuffer ) ) )
          {
-            return HB_FALSE;
+            return false;
          }
          nSize = 5;
          break;
@@ -1341,7 +1341,7 @@ static HB_BOOL hb_deserializeTest( const HB_UCHAR ** pBufferPtr, HB_SIZE * pnSiz
 
    if( nSize > *pnSize )
    {
-      return HB_FALSE;
+      return false;
    }
 
    *pnSize -= nSize;
@@ -1353,13 +1353,13 @@ static HB_BOOL hb_deserializeTest( const HB_UCHAR ** pBufferPtr, HB_SIZE * pnSiz
       nSize = *pnSize;
       if( !hb_deserializeTest( pBufferPtr, pnSize, nOffset, pRefList ) )
       {
-         return HB_FALSE;
+         return false;
       }
       nSize -= *pnSize;
       --nLen;
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 static HB_SIZE hb_deserializeHash( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut, const HB_UCHAR * pBuffer, HB_SIZE nOffset, HB_SIZE nLen, PHB_REF_LIST pRefList )
@@ -1424,11 +1424,11 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
          break;
 
       case HB_SERIAL_TRUE:
-         hb_itemPutL(pItem, HB_TRUE);
+         hb_itemPutL(pItem, true);
          break;
 
       case HB_SERIAL_FALSE:
-         hb_itemPutL(pItem, HB_FALSE);
+         hb_itemPutL(pItem, false);
          break;
 
       case HB_SERIAL_ZERO:
@@ -1826,7 +1826,7 @@ static HB_SIZE hb_deserializeItem( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
             hb_vmPushDynSym(hb_dynsymGetCase("LOADFROMTEXT"));
             hb_vmPush(hb_stackReturnItem());
             hb_vmPush(pItem);
-            hb_vmPushLogical(HB_TRUE);
+            hb_vmPushLogical(true);
             hb_itemMove(pItem, hb_stackReturnItem());
             hb_vmSend(2);
             hb_vmRequestRestore();

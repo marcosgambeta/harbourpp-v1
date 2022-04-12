@@ -548,7 +548,7 @@ void hb_dbgEntry( int nMode, int nLine, const char * szName, int nIndex, PHB_ITE
             if( info->aBreak[i].szFunction &&
                 !strcmp(info->aBreak[i].szFunction, szProcName) )
             {
-               hb_dbg_InvokeDebug( HB_TRUE );
+               hb_dbg_InvokeDebug(true);
                break;
             }
          }
@@ -579,7 +579,7 @@ void hb_dbgEntry( int nMode, int nLine, const char * szName, int nIndex, PHB_ITE
             HB_BOOL bOldClsScope;
             PHB_ITEM xValue;
 
-            bOldClsScope = hb_clsSetScope( HB_FALSE );
+            bOldClsScope = hb_clsSetScope(false);
             xValue = hb_dbgEval( info, &info->aWatch[tp->nIndex], nullptr );
             hb_clsSetScope( bOldClsScope );
 
@@ -613,7 +613,7 @@ void hb_dbgEntry( int nMode, int nLine, const char * szName, int nIndex, PHB_ITE
 
          if( i >= info->nTracePoints &&
              ( hb_dbgIsBreakPoint( info, pTop->szModule, nLine ) >= 0 ||
-               hb_dbg_InvokeDebug( HB_FALSE ) ||
+               hb_dbg_InvokeDebug(false) ||
                ( info->pFunInvoke && info->pFunInvoke() ) ) )
          {
             info->bTraceOver = HB_FALSE;
@@ -1128,7 +1128,7 @@ static HB_BOOL hb_dbgEqual( PHB_ITEM pItem1, PHB_ITEM pItem2 )
 {
    if( HB_ITEM_TYPE( pItem1 ) != HB_ITEM_TYPE( pItem2 ) )
    {
-      return HB_FALSE;
+      return false;
    }
    if( HB_IS_NIL(pItem1) )
    {
@@ -1148,7 +1148,7 @@ static HB_BOOL hb_dbgEqual( PHB_ITEM pItem1, PHB_ITEM pItem2 )
    }
    if( HB_IS_STRING(pItem1) )
    {
-      return !hb_itemStrCmp(pItem1, pItem2, HB_TRUE);
+      return !hb_itemStrCmp(pItem1, pItem2, true);
    }
    if( HB_IS_NUMINT(pItem1) )
    {
@@ -1174,7 +1174,7 @@ static HB_BOOL hb_dbgEqual( PHB_ITEM pItem1, PHB_ITEM pItem2 )
    {
       return hb_hashId( pItem1 ) == hb_hashId( pItem2 );
    }
-   return HB_FALSE;
+   return false;
 }
 
 static PHB_ITEM hb_dbgEval( HB_DEBUGINFO * info, HB_WATCHPOINT * watch, HB_BOOL * valid )
@@ -2037,12 +2037,12 @@ HB_FUNC( __DBGGETEXPRVALUE )
 
       if( pItem )
       {
-         hb_storl(HB_TRUE, 3);
+         hb_storl(true, 3);
          hb_itemReturnRelease(pItem);
       }
       else
       {
-         hb_storl(HB_FALSE, 3);
+         hb_storl(false, 3);
       }
    }
 }

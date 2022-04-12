@@ -86,12 +86,12 @@ static void hb_memoread( HB_BOOL bHandleEOF )
 
 HB_FUNC( HB_MEMOREAD )
 {
-   hb_memoread( HB_FALSE );
+   hb_memoread(false);
 }
 
 HB_FUNC( MEMOREAD )
 {
-   hb_memoread( HB_TRUE );
+   hb_memoread(true);
 }
 
 static HB_BOOL hb_memowrit( HB_BOOL bHandleEOF )
@@ -146,5 +146,5 @@ HB_FUNC( HB_MEMOWRIT )
 
 HB_FUNC( MEMOWRIT )
 {
-   hb_retl(hb_memowrit(HB_TRUE));
+   hb_retl(hb_memowrit(true));
 }

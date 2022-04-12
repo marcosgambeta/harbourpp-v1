@@ -242,9 +242,9 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
       /* an "M" field or the other, might be a "V" in SixDriver */
       default:
          /* We do not want MEMO contents */
-         return HB_FALSE;
+         return false;
    }
-   return HB_TRUE;
+   return true;
 }
 
 /* Export DBF content to a SQL script file */

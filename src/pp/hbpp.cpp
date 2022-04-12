@@ -123,7 +123,7 @@ static void hb_pp_writeTokenList(FILE * fout, PHB_PP_TOKEN pTokenLst, const char
    if( iTokens )
    {
       fprintf(fout, "static HB_PP_TOKEN %s[ %d ] = {\n", szName, iTokens);
-      hb_pp_writeToken(fout, pTokenLst, szName, 0, HB_TRUE);
+      hb_pp_writeToken(fout, pTokenLst, szName, 0, true);
       fprintf(fout, "};\n");
    }
 }
@@ -797,7 +797,7 @@ int main(int argc, char * argv[])
                case 'I':
                   if( argv[i][2] )
                   {
-                     hb_pp_addSearchPath(pState, argv[i] + 2, HB_FALSE);
+                     hb_pp_addSearchPath(pState, argv[i] + 2, false);
                   }
                   else
                   {
@@ -862,14 +862,14 @@ int main(int argc, char * argv[])
          fWrite = HB_TRUE;
       }
 
-      hb_pp_init(pState, iQuiet != 0, HB_TRUE, 0, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
+      hb_pp_init(pState, iQuiet != 0, true, 0, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
 
       szInclude = hb_getenv("INCLUDE");
       if( szInclude )
       {
          if( szInclude[0] )
          {
-            hb_pp_addSearchPath(pState, szInclude, HB_FALSE);
+            hb_pp_addSearchPath(pState, szInclude, false);
          }
          hb_xfree(szInclude);
       }
@@ -879,7 +879,7 @@ int main(int argc, char * argv[])
          hb_pp_readRules(pState, szStdCh);
       }
 
-      if( hb_pp_inFile(pState, szFile, HB_TRUE, nullptr, HB_TRUE) )
+      if( hb_pp_inFile(pState, szFile, true, nullptr, true) )
       {
          if( fWrite )
          {

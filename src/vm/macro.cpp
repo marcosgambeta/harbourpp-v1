@@ -990,7 +990,7 @@ HB_FUNC( MEMVARBLOCK )
          if( pVarSym && hb_dynsymIsMemvar(pVarSym) )
          {
             HB_STACK_TLS_PRELOAD
-            hb_macroSetGetBlock( pVarSym, hb_stackReturnItem(), 0, HB_TRUE );
+            hb_macroSetGetBlock( pVarSym, hb_stackReturnItem(), 0, true );
          }
       }
    }
@@ -1033,7 +1033,7 @@ HB_FUNC( FIELDBLOCK )
          if( pFieldSym )
          {
             HB_STACK_TLS_PRELOAD
-            hb_macroSetGetBlock( pFieldSym, hb_stackReturnItem(), 0, HB_FALSE );
+            hb_macroSetGetBlock( pFieldSym, hb_stackReturnItem(), 0, false );
          }
       }
    }
@@ -1060,7 +1060,7 @@ HB_FUNC( FIELDWBLOCK )
          if( pFieldSym )
          {
             HB_STACK_TLS_PRELOAD
-            hb_macroSetGetBlock( pFieldSym, hb_stackReturnItem(), iWorkArea, HB_FALSE );
+            hb_macroSetGetBlock( pFieldSym, hb_stackReturnItem(), iWorkArea, false );
          }
       }
    }
@@ -1355,13 +1355,13 @@ HB_BOOL hb_macroIsValidMacroText( const char * szText, HB_SIZE nLen )
             char ch = *szText;
             if( ( ch >= 'A' && ch <= 'Z' ) || ( ch >= 'a' && ch <= 'z' ) || ch == '_' )
             {
-               return HB_TRUE;
+               return true;
             }
          }
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_SIZE hb_macroGenJump( HB_ISIZ nOffset, HB_COMP_DECL )
@@ -1685,7 +1685,7 @@ void hb_macroGenPopAliasedVar( const char * szVarName, HB_BOOL bPushAliasValue, 
          else
          {
             /* database alias */
-            hb_macroGenPushSymbol( szAlias, HB_FALSE, HB_COMP_PARAM );
+            hb_macroGenPushSymbol( szAlias, false, HB_COMP_PARAM );
             hb_macroMemvarGenPCode( HB_P_MPOPALIASEDFIELD, szVarName, HB_COMP_PARAM );
          }
       }
@@ -1779,7 +1779,7 @@ void hb_macroGenPushAliasedVar( const char * szVarName, HB_BOOL bPushAliasValue,
          else
          {
             /* database alias */
-            hb_macroGenPushSymbol( szAlias, HB_FALSE, HB_COMP_PARAM );
+            hb_macroGenPushSymbol( szAlias, false, HB_COMP_PARAM );
             hb_macroMemvarGenPCode( HB_P_MPUSHALIASEDFIELD, szVarName, HB_COMP_PARAM );
          }
       }
@@ -1831,7 +1831,7 @@ void hb_macroGenPushFunSym( const char * szFunName, int iFlags, HB_COMP_DECL )
    {
       HB_MACRO_DATA->status |= HB_MACRO_UDF; /* this is used in hb_macroGetType */
    }
-   hb_macroGenPushSymbol( szFunName, HB_TRUE, HB_COMP_PARAM );
+   hb_macroGenPushSymbol( szFunName, true, HB_COMP_PARAM );
 }
 
 void hb_macroGenPushFunCall( const char * szFunName, int iFlags, HB_COMP_DECL )
@@ -1842,7 +1842,7 @@ void hb_macroGenPushFunCall( const char * szFunName, int iFlags, HB_COMP_DECL )
 
 void hb_macroGenPushFunRef( const char * szFunName, HB_COMP_DECL )
 {
-   hb_macroGenPushSymbol( szFunName, HB_TRUE, HB_COMP_PARAM );
+   hb_macroGenPushSymbol( szFunName, true, HB_COMP_PARAM );
 }
 
 /* generates the pcode to push a string on the virtual machine stack */

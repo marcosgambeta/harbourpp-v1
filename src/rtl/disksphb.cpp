@@ -237,11 +237,11 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
                dSpace = static_cast<double>(sf.f_blocks) * static_cast<double>(sf.f_bsize);
                break;
          }
-         hb_fsSetIOError(HB_TRUE, 0);
+         hb_fsSetIOError(true, 0);
       }
       else
       {
-         hb_fsSetIOError(HB_FALSE, 0);
+         hb_fsSetIOError(false, 0);
       }
 
       if( pszFree )

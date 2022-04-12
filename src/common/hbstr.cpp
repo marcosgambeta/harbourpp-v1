@@ -141,11 +141,11 @@ HB_BOOL hb_strEmpty(const char * szText, HB_SIZE nLen)
 
       if( !HB_ISSPACE(c) )
       {
-         return HB_FALSE;
+         return false;
       }
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 char * hb_strupr(char * pszText)
@@ -836,7 +836,7 @@ HB_BOOL hb_compStrToNum(const char * szNum, HB_SIZE nLen, HB_MAXINT * plVal, dou
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_compStrToNum( %s, %" HB_PFS "u, %p, %p, %p, %p)", szNum, nLen, static_cast<void*>(plVal), static_cast<void*>(pdVal), static_cast<void*>(piDec), static_cast<void*>(piWidth)));
 #endif
-   return hb_str2number(HB_TRUE, szNum, nLen, plVal, pdVal, piDec, piWidth);
+   return hb_str2number(true, szNum, nLen, plVal, pdVal, piDec, piWidth);
 }
 
 HB_BOOL hb_valStrnToNum(const char * szNum, HB_SIZE nLen, HB_MAXINT * plVal, double * pdVal, int * piDec, int * piWidth)
@@ -844,7 +844,7 @@ HB_BOOL hb_valStrnToNum(const char * szNum, HB_SIZE nLen, HB_MAXINT * plVal, dou
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_valStrnToNum( %s, %" HB_PFS "u, %p, %p, %p, %p)", szNum, nLen, static_cast<void*>(plVal), static_cast<void*>(pdVal), static_cast<void*>(piDec), static_cast<void*>(piWidth)));
 #endif
-   return hb_str2number(HB_FALSE, szNum, nLen, plVal, pdVal, piDec, piWidth);
+   return hb_str2number(false, szNum, nLen, plVal, pdVal, piDec, piWidth);
 }
 
 HB_BOOL hb_strToNum(const char * szNum, HB_MAXINT * plVal, double * pdVal)
@@ -852,7 +852,7 @@ HB_BOOL hb_strToNum(const char * szNum, HB_MAXINT * plVal, double * pdVal)
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_strToNum(%s, %p, %p)", szNum, static_cast<void*>(plVal), static_cast<void*>(pdVal)));
 #endif
-   return hb_str2number(HB_FALSE, szNum, strlen(szNum), plVal, pdVal, nullptr, nullptr);
+   return hb_str2number(false, szNum, strlen(szNum), plVal, pdVal, nullptr, nullptr);
 }
 
 HB_BOOL hb_strnToNum(const char * szNum, HB_SIZE nLen, HB_MAXINT * plVal, double * pdVal)
@@ -860,7 +860,7 @@ HB_BOOL hb_strnToNum(const char * szNum, HB_SIZE nLen, HB_MAXINT * plVal, double
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_strnToNum(%.*s, %" HB_PFS "u, %p, %p)", static_cast<int>(nLen), szNum, nLen, static_cast<void*>(plVal), static_cast<void*>(pdVal)));
 #endif
-   return hb_str2number(HB_FALSE, szNum, nLen, plVal, pdVal, nullptr, nullptr);
+   return hb_str2number(false, szNum, nLen, plVal, pdVal, nullptr, nullptr);
 }
 
 /* returns the numeric value of a character string representation of a number */
@@ -873,7 +873,7 @@ double hb_strVal(const char * szText, HB_SIZE nLen)
    HB_MAXINT lVal;
    double    dVal;
 
-   if( !hb_str2number(HB_FALSE, szText, nLen, &lVal, &dVal, nullptr, nullptr))
+   if( !hb_str2number(false, szText, nLen, &lVal, &dVal, nullptr, nullptr))
    {
       dVal = static_cast<double>(lVal);
    }
@@ -889,7 +889,7 @@ HB_MAXINT hb_strValInt(const char * szText, int * iOverflow)
    HB_MAXINT lVal;
    double    dVal;
 
-   if( hb_str2number(HB_TRUE, szText, strlen(szText), &lVal, &dVal, nullptr, nullptr) )
+   if( hb_str2number(true, szText, strlen(szText), &lVal, &dVal, nullptr, nullptr) )
    {
       *iOverflow = 1;
       return 0;

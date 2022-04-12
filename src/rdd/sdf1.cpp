@@ -495,10 +495,10 @@ static HB_ERRCODE hb_sdfGetValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             case 't':
             case 'Y':
             case 'y':
-               hb_itemPutL(pItem, HB_TRUE);
+               hb_itemPutL(pItem, true);
                break;
             default:
-               hb_itemPutL(pItem, HB_FALSE);
+               hb_itemPutL(pItem, false);
                break;
          }
          break;
@@ -771,7 +771,7 @@ static HB_ERRCODE hb_sdfTrans( SDFAREAP pArea, LPDBTRANSINFO pTransInfo )
       }
       else
       {
-         PHB_ITEM pPutRec = hb_itemPutL(nullptr, HB_FALSE);
+         PHB_ITEM pPutRec = hb_itemPutL(nullptr, false);
          if( SELF_INFO( pTransInfo->lpaDest, DBI_CANPUTREC, pPutRec ) != HB_SUCCESS )
          {
             hb_itemRelease(pPutRec);
@@ -1399,7 +1399,7 @@ static HB_ERRCODE hb_sdfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
    {
       case RDDI_CANPUTREC:
       case RDDI_LOCAL:
-         hb_itemPutL(pItem, HB_TRUE);
+         hb_itemPutL(pItem, true);
          break;
 
       case RDDI_TABLEEXT:

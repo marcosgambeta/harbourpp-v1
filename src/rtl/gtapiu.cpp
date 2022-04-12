@@ -65,7 +65,7 @@ HB_BOOL hb_gtWFlash( void )
 {
    /* TODO: */
 
-   return HB_FALSE;
+   return false;
 }
 
 void hb_gtWApp( HB_GT_WND ** wnd )
@@ -97,7 +97,7 @@ HB_BOOL hb_gtWVis( HB_GT_WND * wnd, HB_USHORT iStatus ) /* USHORT in CA-Cl*pper 
    HB_SYMBOL_UNUSED(wnd);
    HB_SYMBOL_UNUSED(iStatus);
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_ERRCODE hb_gtSLR( HB_GT_SLR * pSLR ) /* System-Level Request */

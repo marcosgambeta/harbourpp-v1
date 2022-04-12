@@ -305,10 +305,10 @@ static HB_BOOL hb_gt_def_CheckPos( PHB_GT pGT, int iRow, int iCol, long * plInde
          {
             *plIndex = static_cast<long>(iRow) * iWidth + iCol;
          }
-         return HB_TRUE;
+         return true;
       }
    }
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_gt_def_GetPos( PHB_GT pGT, int * piRow, int * piCol )
@@ -783,7 +783,7 @@ static HB_BOOL hb_gt_def_PreExt( PHB_GT pGT )
    }
    pGT->iExtCount++;
 
-   return HB_TRUE;
+   return true;
 }
 
 static HB_BOOL hb_gt_def_PostExt( PHB_GT pGT )
@@ -793,7 +793,7 @@ static HB_BOOL hb_gt_def_PostExt( PHB_GT pGT )
       pGT->iExtCount--;
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 static HB_BOOL hb_gt_def_Suspend( PHB_GT pGT )
@@ -892,9 +892,9 @@ static HB_BOOL hb_gt_def_GetChar( PHB_GT pGT, int iRow, int iCol, int * piColor,
       *pusChar = pGT->screenBuffer[lIndex].c.usChar;
       *piColor = pGT->screenBuffer[lIndex].c.bColor;
       *pbAttr  = pGT->screenBuffer[lIndex].c.bAttr;
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 static HB_BOOL hb_gt_def_GetUC( PHB_GT pGT, int iRow, int iCol, int * piColor, HB_BYTE * pbAttr, HB_UCHAR * puChar, HB_BOOL fTerm )
@@ -935,9 +935,9 @@ static HB_BOOL hb_gt_def_GetUC( PHB_GT pGT, int iRow, int iCol, int * piColor, H
          }
       }
       *puChar = uc;
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 static HB_BOOL hb_gt_def_PutChar( PHB_GT pGT, int iRow, int iCol, int iColor, HB_BYTE bAttr, HB_USHORT usChar )
@@ -951,9 +951,9 @@ static HB_BOOL hb_gt_def_PutChar( PHB_GT pGT, int iRow, int iCol, int iColor, HB
       pGT->screenBuffer[lIndex].c.bAttr  = bAttr;
       pGT->pLines[iRow] = HB_TRUE;
       pGT->fRefresh = HB_TRUE;
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 static int hb_gt_def_PutText( PHB_GT pGT, int iRow, int iCol, int iColor, const char * szText, HB_SIZE nLen )
@@ -1972,10 +1972,10 @@ static HB_BOOL hb_gt_def_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const c
       pGT->cdpHost = hb_cdpFindExt( pszHostCDP );
       pGT->cdpBox  = fBox ? pGT->cdpHost : hb_cdpFind( "EN" );
       pGT->fDispTrans = pGT->cdpTerm && pGT->cdpHost && pGT->cdpTerm != pGT->cdpHost;
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 static HB_BOOL hb_gt_def_SetKeyCP( PHB_GT pGT, const char * pszTermCDP, const char * pszHostCDP )
@@ -1992,10 +1992,10 @@ static HB_BOOL hb_gt_def_SetKeyCP( PHB_GT pGT, const char * pszTermCDP, const ch
    if( pszTermCDP )
    {
       pGT->cdpIn = hb_cdpFindExt( pszTermCDP );
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_gt_def_SetBlock( PHB_ITEM * pItemPtr, PHB_GT_INFO pInfo )
@@ -2038,7 +2038,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       case HB_GTI_ISCTWIN:
       case HB_GTI_ISMULTIWIN:
       case HB_GTI_ISUNICODE:
-         pInfo->pResult = hb_itemPutL(pInfo->pResult, HB_FALSE);
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, false);
          break;
 
       case HB_GTI_KBDSHIFTS:
@@ -2238,10 +2238,10 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       default:
-         return HB_FALSE;
+         return false;
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 static int hb_gt_def_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int iClrNorm, int iClrHigh, double dDelay )
@@ -2495,7 +2495,7 @@ static int hb_gt_def_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
             }
             HB_GTSELF_REFRESH(pGT);
 
-            iKey = fKeyBoard ? HB_GTSELF_INKEYGET(pGT, HB_TRUE, dDelay, INKEY_ALL) : 0;
+            iKey = fKeyBoard ? HB_GTSELF_INKEYGET(pGT, true, dDelay, INKEY_ALL) : 0;
 
             if( iKey == K_ESC )
             {
@@ -2611,7 +2611,7 @@ static int hb_gt_def_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
          nChar = 0;
          while( iRet == 0 )
          {
-            iKey = fKeyBoard ? HB_GTSELF_INKEYGET(pGT, HB_TRUE, dDelay, INKEY_ALL) : 0;
+            iKey = fKeyBoard ? HB_GTSELF_INKEYGET(pGT, true, dDelay, INKEY_ALL) : 0;
             if( iKey == 0 )
             {
                iRet = 1;
@@ -2745,10 +2745,10 @@ static HB_BOOL hb_gt_def_Resize( PHB_GT pGT, int iRows, int iCols )
          }
       }
 
-      return HB_TRUE;
+      return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_gt_def_GetSize( PHB_GT pGT, int * piRows, int  * piCols )
@@ -3170,16 +3170,16 @@ static HB_BOOL hb_gt_def_InkeyNextCheck( PHB_GT pGT, int iEventMask, int * iKey 
    }
    else
    {
-      return HB_FALSE;
+      return false;
    }
 
    if( *iKey == 0 )
    {
       hb_gt_def_InkeyPop(pGT);
-      return HB_FALSE;
+      return false;
    }
 
-   return HB_TRUE;
+   return true;
 }
 
 /* helper internal function */
@@ -3505,7 +3505,7 @@ static void hb_gt_def_MouseExit( PHB_GT pGT )
 static HB_BOOL hb_gt_def_MouseIsPresent( PHB_GT pGT )
 {
    HB_SYMBOL_UNUSED(pGT);
-   return HB_FALSE;
+   return false;
 }
 
 static void hb_gt_def_MouseShow( PHB_GT pGT )
@@ -3666,7 +3666,7 @@ static HB_BOOL hb_gt_def_MouseButtonState( PHB_GT pGT, int iButton )
    HB_SYMBOL_UNUSED(pGT);
    HB_SYMBOL_UNUSED(iButton);
 
-   return HB_FALSE;
+   return false;
 }
 
 static HB_BOOL hb_gt_def_MouseButtonPressed( PHB_GT pGT, int iButton, int * piRow, int * piCol )
@@ -3676,7 +3676,7 @@ static HB_BOOL hb_gt_def_MouseButtonPressed( PHB_GT pGT, int iButton, int * piRo
    HB_SYMBOL_UNUSED(piRow);
    HB_SYMBOL_UNUSED(piCol);
 
-   return HB_FALSE;
+   return false;
 }
 
 static HB_BOOL hb_gt_def_MouseButtonReleased( PHB_GT pGT, int iButton, int * piRow, int * piCol )
@@ -3686,7 +3686,7 @@ static HB_BOOL hb_gt_def_MouseButtonReleased( PHB_GT pGT, int iButton, int * piR
    HB_SYMBOL_UNUSED(piRow);
    HB_SYMBOL_UNUSED(piCol);
 
-   return HB_FALSE;
+   return false;
 }
 
 static int hb_gt_def_MouseReadKey( PHB_GT pGT, int iEventMask )
@@ -4129,9 +4129,9 @@ HB_BOOL hb_gtRegister( const HB_GT_INIT * gtInit )
          *gtInit->pGtId = s_iGtCount;
       }
       s_gtInit[s_iGtCount++] = gtInit;
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 PHB_GT hb_gtLoad( const char * szGtName, PHB_GT pGT, PHB_GT_FUNCS pSuperTable )
@@ -4336,26 +4336,26 @@ static HB_BOOL hb_gtTryInit( const char * szGtName, HB_BOOL fFree )
 
 void hb_gtStartupInit( void )
 {
-   if( hb_gtTryInit( hb_cmdargString( "GT" ), HB_TRUE ) )
+   if( hb_gtTryInit( hb_cmdargString( "GT" ), true ) )
    {
       return;
    }
-   if( hb_gtTryInit( hb_getenv( "HB_GT" ), HB_TRUE ) )
+   if( hb_gtTryInit( hb_getenv( "HB_GT" ), true ) )
    {
       return;
    }
-   if( hb_gtTryInit( hb_gt_FindDefault(), HB_FALSE ) )
+   if( hb_gtTryInit( hb_gt_FindDefault(), false ) )
    {
       return;
    }
-   if( hb_gtTryInit( s_szNameDefault, HB_FALSE ) )
+   if( hb_gtTryInit( s_szNameDefault, false ) )
    {
       return;
    }
 
    if( hb_dynsymFind("HB_GT_NUL") ) /* GTNUL was explicitly REQUESTed */
    {
-      if( hb_gtTryInit( "NUL", HB_FALSE ) )
+      if( hb_gtTryInit( "NUL", false ) )
       {
          return;
       }

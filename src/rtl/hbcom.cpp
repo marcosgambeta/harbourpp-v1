@@ -1347,7 +1347,7 @@ int hb_comDiscardChar( int iPort, int iChar )
             }
             if( tcsetattr( pCom->fd, TCSANOW, &tio ) == -1 )
             {
-               hb_comSetOsError( pCom, HB_TRUE );
+               hb_comSetOsError( pCom, true );
                iResult = -1;
             }
          }
@@ -1781,11 +1781,11 @@ int hb_comInputCount( int iPort )
       if( ClearCommError( pCom->hComm, nullptr, &comStat ) )
       {
          iCount = comStat.cbInQue;
-         hb_comSetOsError( pCom, HB_FALSE );
+         hb_comSetOsError( pCom, false );
       }
       else
       {
-         hb_comSetOsError( pCom, HB_TRUE );
+         hb_comSetOsError( pCom, true );
       }
    }
    else
@@ -1808,11 +1808,11 @@ int hb_comOutputCount( int iPort )
       if( ClearCommError( pCom->hComm, nullptr, &comStat ) )
       {
          iCount = comStat.cbOutQue;
-         hb_comSetOsError( pCom, HB_FALSE );
+         hb_comSetOsError( pCom, false );
       }
       else
       {
-         hb_comSetOsError( pCom, HB_TRUE );
+         hb_comSetOsError( pCom, true );
       }
    }
    else
@@ -2363,7 +2363,7 @@ long hb_comSend( int iPort, const void * data, long len, HB_MAXINT timeout )
       }
       else
       {
-         hb_comSetOsError( pCom, HB_TRUE );
+         hb_comSetOsError( pCom, true );
       }
 
       hb_vmLock();
@@ -2405,7 +2405,7 @@ long hb_comRecv( int iPort, void * data, long len, HB_MAXINT timeout )
       }
       else
       {
-         hb_comSetOsError( pCom, HB_TRUE );
+         hb_comSetOsError( pCom, true );
       }
 
       hb_vmLock();
