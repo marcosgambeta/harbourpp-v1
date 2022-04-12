@@ -49,7 +49,7 @@
 
 #define HB_LABEL_FUNC(func)  HB_PCODE_FUNC(func, PHB_LABEL_INFO)
 typedef HB_LABEL_FUNC(HB_LABEL_FUNC_);
-typedef HB_LABEL_FUNC_ * PHB_LABEL_FUNC;
+using PHB_LABEL_FUNC = HB_LABEL_FUNC_ *;
 
 /*
  * jump functions

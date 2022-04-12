@@ -50,7 +50,7 @@
 
 #define HB_GENC_FUNC(func)   HB_PCODE_FUNC(func, PHB_LABEL_INFO)
 typedef HB_GENC_FUNC(HB_GENC_FUNC_);
-typedef HB_GENC_FUNC_ * PHB_GENC_FUNC;
+using PHB_GENC_FUNC = HB_GENC_FUNC_ *;
 
 #define HB_GENC_GETLABEL(l)  ((l) < pFunc->nPCodePos ? cargo->pnLabels[(l)] : 0)
 

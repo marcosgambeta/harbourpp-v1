@@ -30,17 +30,19 @@ static void hb_compGenCFunc(FILE * yyc, const char * cDecor, const char * szName
 static void hb_writeEndInit(HB_COMP_DECL, FILE * yyc, const char * szModulname, const char * szSourceFile);
 
 /* helper structure to pass information */
-typedef struct HB_stru_genc_info
+struct HB_stru_genc_info
 {
    HB_COMP_DECL;
    FILE *  yyc;
    HB_BOOL bVerbose;
    HB_SIZE nEndBlockPos;
-} HB_GENC_INFO, * PHB_GENC_INFO;
+};
+using HB_GENC_INFO = HB_stru_genc_info;
+using PHB_GENC_INFO = HB_GENC_INFO *;
 
 #define HB_GENC_FUNC(func)  HB_PCODE_FUNC(func, PHB_GENC_INFO)
 typedef HB_GENC_FUNC(HB_GENC_FUNC_);
-typedef HB_GENC_FUNC_ * PHB_GENC_FUNC;
+using PHB_GENC_FUNC = HB_GENC_FUNC_ *;
 
 static void hb_compDumpFindCFunc(HB_COMP_DECL)
 {

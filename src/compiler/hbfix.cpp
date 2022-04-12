@@ -58,7 +58,7 @@ using PHB_FIX_INFO = HB_FIX_INFO *;
 
 #define HB_FIX_FUNC(func)  HB_PCODE_FUNC(func, PHB_FIX_INFO)
 typedef HB_FIX_FUNC(HB_FIX_FUNC_);
-typedef HB_FIX_FUNC_ * PHB_FIX_FUNC;
+using PHB_FIX_FUNC = HB_FIX_FUNC_ *;
 
 static HB_FIX_FUNC(hb_p_pushblock)
 {

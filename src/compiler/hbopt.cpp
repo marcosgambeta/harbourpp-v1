@@ -50,7 +50,7 @@
 
 #define HB_OPT_FUNC(func)  HB_PCODE_FUNC(func, void *)
 typedef HB_OPT_FUNC(HB_OPT_FUNC_);
-typedef HB_OPT_FUNC_ * PHB_OPT_FUNC;
+using PHB_OPT_FUNC = HB_OPT_FUNC_ *;
 
 static HB_OPT_FUNC(hb_p_poplocal)
 {
@@ -950,11 +950,13 @@ void hb_compOptimizePCode(HB_COMP_DECL, PHB_HFUNC pFunc)
 #define OPT_LOCAL_FLAG_POPSELF  16
 #define OPT_LOCAL_FLAG_CHANGE   32
 
-typedef struct
+struct HB_OPT_LOCAL
 {
    HB_SHORT isNumber;
    HB_BYTE  bFlags;
-} HB_OPT_LOCAL, * PHB_OPT_LOCAL;
+};
+
+using PHB_OPT_LOCAL = HB_OPT_LOCAL *;
 
 static HB_BOOL hb_compIsJump(HB_BYTE bPCode)
 {
