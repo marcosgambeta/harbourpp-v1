@@ -66,6 +66,7 @@ HB_EXTERN_BEGIN
 
 
 /* items types and type checking macros */
+/* NOTA: mantido para compatibilidade */
 #define HB_IT_NIL       0x00000
 #define HB_IT_POINTER   0x00001
 #define HB_IT_INTEGER   0x00002
@@ -97,6 +98,49 @@ HB_EXTERN_BEGIN
 #define HB_IT_GCITEM    ( HB_IT_BLOCK | HB_IT_ARRAY | HB_IT_HASH | HB_IT_POINTER | HB_IT_BYREF )
 #define HB_IT_EVALITEM  ( HB_IT_BLOCK | HB_IT_SYMBOL )
 #define HB_IT_HASHKEY   ( HB_IT_INTEGER | HB_IT_LONG | HB_IT_DOUBLE | HB_IT_DATE | HB_IT_TIMESTAMP | HB_IT_STRING | HB_IT_POINTER )
+
+#if defined(__cplusplus)
+namespace Harbour
+{
+   namespace Item
+   {
+      enum Type
+      {
+         NIL       = 0x00000,
+         POINTER   = 0x00001,
+         INTEGER   = 0x00002,
+         HASH      = 0x00004,
+         LONG      = 0x00008,
+         DOUBLE    = 0x00010,
+         DATE      = 0x00020,
+         TIMESTAMP = 0x00040,
+         LOGICAL   = 0x00080,
+         SYMBOL    = 0x00100,
+         ALIAS     = 0x00200,
+         STRING    = 0x00400,
+         MEMOFLAG  = 0x00800,
+         MEMO      = ( MEMOFLAG | STRING ),
+         BLOCK     = 0x01000,
+         BYREF     = 0x02000,
+         MEMVAR    = 0x04000,
+         ARRAY     = 0x08000,
+         ENUM      = 0x10000,
+         EXTREF    = 0x20000,
+         DEFAULT   = 0x40000,
+         RECOVER   = 0x80000,
+         OBJECT    = ARRAY,
+         NUMERIC   = ( INTEGER | LONG | DOUBLE ),
+         NUMINT    = ( INTEGER | LONG ),
+         DATETIME  = ( DATE | TIMESTAMP ),
+         ANY       = 0xFFFFFFFF,
+         COMPLEX   = ( BLOCK | ARRAY | HASH | POINTER | /* HB_IT_MEMVAR | HB_IT_ENUM | HB_IT_EXTREF |*/ BYREF | STRING ),
+         GCITEM    = ( BLOCK | ARRAY | HASH | POINTER | BYREF ),
+         EVALITEM  = ( BLOCK | SYMBOL ),
+         HASHKEY   = ( INTEGER | LONG | DOUBLE | DATE | TIMESTAMP | STRING | POINTER )
+      };
+   }
+}
+#endif
 
 #if 0
 
