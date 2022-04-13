@@ -50,7 +50,7 @@
 
 HB_FUNC( ABS )
 {
-   PHB_ITEM pNumber = hb_param(1, HB_IT_NUMERIC);
+   PHB_ITEM pNumber = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pNumber )
    {

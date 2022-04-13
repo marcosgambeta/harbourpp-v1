@@ -585,7 +585,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
 
 HB_FUNC( HB_STRFORMAT )
 {
-   PHB_ITEM pFormat = hb_param(1, HB_IT_STRING);
+   PHB_ITEM pFormat = hb_param(1, Harbour::Item::STRING);
 
    if( pFormat )
    {
@@ -597,7 +597,7 @@ HB_FUNC( HB_STRFORMAT )
          pItemArray = static_cast<PHB_ITEM*>(hb_xgrab((iParams - 1) * sizeof(PHB_ITEM)));
          for( int i = 1; i < iParams; i++ )
          {
-            pItemArray[i - 1] = hb_param(i + 1, HB_IT_ANY);
+            pItemArray[i - 1] = hb_param(i + 1, Harbour::Item::ANY);
          }
       }
 

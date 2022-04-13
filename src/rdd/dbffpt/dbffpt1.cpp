@@ -1130,7 +1130,7 @@ static HB_ULONG hb_fptCountSMTItemLength( FPTAREAP pArea, PHB_ITEM pItem, HB_ULO
 
    switch( hb_itemType(pItem) )
    {
-      case HB_IT_ARRAY: /* HB_IT_OBJECT == HB_IT_ARRAY */
+      case Harbour::Item::ARRAY: /* Harbour::Item::OBJECT == Harbour::Item::ARRAY */
          ( *pulArrayCount )++;
          ulSize = 3;
          ulLen = static_cast<HB_ULONGCAST>(hb_arrayLen(pItem));
@@ -1143,8 +1143,8 @@ static HB_ULONG hb_fptCountSMTItemLength( FPTAREAP pArea, PHB_ITEM pItem, HB_ULO
             ulSize += hb_fptCountSMTItemLength( pArea, hb_arrayGetItemPtr(pItem, u), pulArrayCount, iTrans );
          }
          break;
-      case HB_IT_MEMO:
-      case HB_IT_STRING:
+      case Harbour::Item::MEMO:
+      case Harbour::Item::STRING:
          if( iTrans == FPT_TRANS_UNICODE )
          {
             ulLen = static_cast<HB_ULONGCAST>(hb_itemCopyStrU16( pItem, HB_CDP_ENDIAN_LITTLE, nullptr, 0xFFFF )) * sizeof(HB_WCHAR);
@@ -1166,15 +1166,15 @@ static HB_ULONG hb_fptCountSMTItemLength( FPTAREAP pArea, PHB_ITEM pItem, HB_ULO
          }
          ulSize = ulLen + 3;
          break;
-      case HB_IT_LOGICAL:
+      case Harbour::Item::LOGICAL:
          ulSize = 2;
          break;
-      case HB_IT_DATE:
-      case HB_IT_TIMESTAMP:
+      case Harbour::Item::DATE:
+      case Harbour::Item::TIMESTAMP:
          ulSize = 5;
          break;
-      case HB_IT_INTEGER:
-      case HB_IT_LONG:
+      case Harbour::Item::INTEGER:
+      case Harbour::Item::LONG:
       {
          HB_MAXINT iVal = hb_itemGetNInt(pItem);
          if( HB_LIM_INT32(iVal) )
@@ -1184,10 +1184,10 @@ static HB_ULONG hb_fptCountSMTItemLength( FPTAREAP pArea, PHB_ITEM pItem, HB_ULO
          }
       }
       /* fallthrough */
-      case HB_IT_DOUBLE:
+      case Harbour::Item::DOUBLE:
          ulSize = 11;
          break;
-      case HB_IT_NIL:
+      case Harbour::Item::NIL:
       default:
          ulSize = 1;
    }
@@ -1268,7 +1268,7 @@ static void hb_fptStoreSMTItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBufP
 
    switch( hb_itemType(pItem) )
    {
-      case HB_IT_ARRAY:
+      case Harbour::Item::ARRAY:
          *( *bBufPtr )++ = SMT_IT_ARRAY;
          ulLen = static_cast<HB_ULONGCAST>(hb_arrayLen(pItem));
          if( ulLen > 0xFFFF )
@@ -1283,8 +1283,8 @@ static void hb_fptStoreSMTItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBufP
          }
          break;
 
-      case HB_IT_STRING:
-      case HB_IT_MEMO:
+      case Harbour::Item::STRING:
+      case Harbour::Item::MEMO:
          *( *bBufPtr )++ = SMT_IT_CHAR;
          if( iTrans == FPT_TRANS_UNICODE )
          {
@@ -1318,8 +1318,8 @@ static void hb_fptStoreSMTItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBufP
          *bBufPtr += ulLen + 2;
          break;
 
-      case HB_IT_INTEGER:
-      case HB_IT_LONG:
+      case Harbour::Item::INTEGER:
+      case Harbour::Item::LONG:
       {
          HB_MAXINT iVal = hb_itemGetNInt(pItem);
          if( HB_LIM_INT32(iVal) )
@@ -1331,7 +1331,7 @@ static void hb_fptStoreSMTItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBufP
          }
       }
       /* fallthrough */
-      case HB_IT_DOUBLE:
+      case Harbour::Item::DOUBLE:
       {
          double dVal = hb_itemGetND(pItem);
          int iWidth, iDec;
@@ -1347,8 +1347,8 @@ static void hb_fptStoreSMTItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBufP
          *bBufPtr += 8;
          break;
       }
-      case HB_IT_DATE:
-      case HB_IT_TIMESTAMP:
+      case Harbour::Item::DATE:
+      case Harbour::Item::TIMESTAMP:
       {
          HB_LONG lVal;
          *( *bBufPtr )++ = SMT_IT_DATE;
@@ -1357,12 +1357,12 @@ static void hb_fptStoreSMTItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBufP
          *bBufPtr += 4;
          break;
       }
-      case HB_IT_LOGICAL:
+      case Harbour::Item::LOGICAL:
          *( *bBufPtr )++ = SMT_IT_LOGICAL;
          *( *bBufPtr )++ = hb_itemGetL(pItem) ? 1 : 0;
          break;
 
-      case HB_IT_NIL:
+      case Harbour::Item::NIL:
       default:
          *( *bBufPtr )++ = SMT_IT_NIL;
          break;
@@ -1638,7 +1638,7 @@ static HB_ULONG hb_fptCountSixItemLength( FPTAREAP pArea, PHB_ITEM pItem, HB_ULO
 
    switch( hb_itemType(pItem) )
    {
-      case HB_IT_ARRAY: /* HB_IT_OBJECT == HB_IT_ARRAY */
+      case Harbour::Item::ARRAY: /* Harbour::Item::OBJECT == Harbour::Item::ARRAY */
          ( *pulArrayCount )++;
          ulSize = SIX_ITEM_BUFSIZE;
          ulLen = static_cast<HB_ULONGCAST>(hb_arrayLen(pItem));
@@ -1652,8 +1652,8 @@ static HB_ULONG hb_fptCountSixItemLength( FPTAREAP pArea, PHB_ITEM pItem, HB_ULO
             ulSize += hb_fptCountSixItemLength( pArea, hb_arrayGetItemPtr(pItem, u), pulArrayCount, iTrans );
          }
          break;
-      case HB_IT_MEMO:
-      case HB_IT_STRING:
+      case Harbour::Item::MEMO:
+      case Harbour::Item::STRING:
          ulSize = SIX_ITEM_BUFSIZE;
          /* only 2 bytes (HB_SHORT) for SIX compatibility */
          u = pArea->uiMemoVersion == DB_MEMOVER_SIX ? 0xFFFF : ULONG_MAX;
@@ -1678,12 +1678,12 @@ static HB_ULONG hb_fptCountSixItemLength( FPTAREAP pArea, PHB_ITEM pItem, HB_ULO
          }
          ulSize += ulLen;
          break;
-      case HB_IT_INTEGER:
-      case HB_IT_LONG:
-      case HB_IT_DOUBLE:
-      case HB_IT_DATE:
-      case HB_IT_TIMESTAMP:
-      case HB_IT_LOGICAL:
+      case Harbour::Item::INTEGER:
+      case Harbour::Item::LONG:
+      case Harbour::Item::DOUBLE:
+      case Harbour::Item::DATE:
+      case Harbour::Item::TIMESTAMP:
+      case Harbour::Item::LOGICAL:
       default:
          ulSize = SIX_ITEM_BUFSIZE;
    }
@@ -1702,7 +1702,7 @@ static HB_ULONG hb_fptStoreSixItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** b
    ulSize = SIX_ITEM_BUFSIZE;
    switch( hb_itemType(pItem) )
    {
-      case HB_IT_ARRAY: /* HB_IT_OBJECT == HB_IT_ARRAY */
+      case Harbour::Item::ARRAY: /* Harbour::Item::OBJECT == Harbour::Item::ARRAY */
          HB_PUT_LE_UINT16(&(*bBufPtr)[0], FPTIT_SIX_ARRAY);
          ulLen = static_cast<HB_ULONGCAST>(hb_arrayLen(pItem));
          if( pArea->uiMemoVersion == DB_MEMOVER_SIX )
@@ -1718,8 +1718,8 @@ static HB_ULONG hb_fptStoreSixItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** b
          }
          break;
 
-      case HB_IT_INTEGER:
-      case HB_IT_LONG:
+      case Harbour::Item::INTEGER:
+      case Harbour::Item::LONG:
       {
          HB_MAXINT iVal = hb_itemGetNInt(pItem);
          hb_itemGetNLen(pItem, &iWidth, &iDec);
@@ -1741,7 +1741,7 @@ static HB_ULONG hb_fptStoreSixItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** b
          }
          break;
       }
-      case HB_IT_DOUBLE:
+      case Harbour::Item::DOUBLE:
       {
          double dVal = hb_itemGetND(pItem);
          hb_itemGetNLen(pItem, &iWidth, &iDec);
@@ -1752,8 +1752,8 @@ static HB_ULONG hb_fptStoreSixItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** b
          *bBufPtr += SIX_ITEM_BUFSIZE;
          break;
       }
-      case HB_IT_DATE:
-      case HB_IT_TIMESTAMP:
+      case Harbour::Item::DATE:
+      case Harbour::Item::TIMESTAMP:
       {
          HB_LONG lVal = hb_itemGetDL(pItem);
          HB_PUT_LE_UINT16(&(*bBufPtr)[0], FPTIT_SIX_LDATE);
@@ -1761,14 +1761,14 @@ static HB_ULONG hb_fptStoreSixItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** b
          *bBufPtr += SIX_ITEM_BUFSIZE;
          break;
       }
-      case HB_IT_LOGICAL:
+      case Harbour::Item::LOGICAL:
          HB_PUT_LE_UINT16(&(*bBufPtr)[0], FPTIT_SIX_LOG);
          (*bBufPtr)[6] = hb_itemGetL(pItem) ? 1 : 0;
          *bBufPtr += SIX_ITEM_BUFSIZE;
          break;
 
-      case HB_IT_STRING:
-      case HB_IT_MEMO:
+      case Harbour::Item::STRING:
+      case Harbour::Item::MEMO:
          HB_PUT_LE_UINT16(&(*bBufPtr)[0], FPTIT_SIX_CHAR);
          /* only 2 bytes (HB_SHORT) for SIX compatibility */
          u = pArea->uiMemoVersion == DB_MEMOVER_SIX ? 0xFFFF : ULONG_MAX;
@@ -1928,7 +1928,7 @@ static HB_ULONG hb_fptCountFlexItemLength( FPTAREAP pArea, PHB_ITEM pItem, HB_UL
 
    switch( hb_itemType(pItem) )
    {
-      case HB_IT_ARRAY:
+      case Harbour::Item::ARRAY:
          ( *pulArrayCount )++;
          ulSize += 2;
          ulLen = hb_arrayLen(pItem) & 0xFFFF;
@@ -1937,8 +1937,8 @@ static HB_ULONG hb_fptCountFlexItemLength( FPTAREAP pArea, PHB_ITEM pItem, HB_UL
             ulSize += hb_fptCountFlexItemLength( pArea, hb_arrayGetItemPtr(pItem, u), pulArrayCount, iTrans );
          }
          break;
-      case HB_IT_MEMO:
-      case HB_IT_STRING:
+      case Harbour::Item::MEMO:
+      case Harbour::Item::STRING:
          if( iTrans == FPT_TRANS_UNICODE )
          {
             ulLen = static_cast<HB_ULONGCAST>(hb_itemCopyStrU16( pItem, HB_CDP_ENDIAN_LITTLE, nullptr, 0xFFFF )) * sizeof(HB_WCHAR);
@@ -1963,16 +1963,16 @@ static HB_ULONG hb_fptCountFlexItemLength( FPTAREAP pArea, PHB_ITEM pItem, HB_UL
             ulSize += ulLen + 2;
          }
          break;
-      case HB_IT_DATE:
-      case HB_IT_TIMESTAMP:
+      case Harbour::Item::DATE:
+      case Harbour::Item::TIMESTAMP:
          ulSize += 4;
          break;
-      case HB_IT_INTEGER:
-      case HB_IT_LONG:
+      case Harbour::Item::INTEGER:
+      case Harbour::Item::LONG:
          iVal = hb_itemGetNInt(pItem);
          ulSize += ( HB_LIM_INT8(iVal) ? 2 : ( HB_LIM_INT16(iVal) ? 3 : ( HB_LIM_INT32(iVal) ? 5 : 10 ) ) );
          break;
-      case HB_IT_DOUBLE:
+      case Harbour::Item::DOUBLE:
          ulSize += 10;
          break;
    }
@@ -1989,7 +1989,7 @@ static void hb_fptStoreFlexItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBuf
 
    switch( hb_itemType(pItem) )
    {
-      case HB_IT_ARRAY:
+      case Harbour::Item::ARRAY:
          ulLen = hb_arrayLen(pItem) & 0xFFFF;
          *( *bBufPtr )++ = FPTIT_FLEXAR_ARAY;
          HB_PUT_LE_UINT16(*bBufPtr, static_cast<HB_USHORT>(ulLen));
@@ -1999,8 +1999,8 @@ static void hb_fptStoreFlexItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBuf
             hb_fptStoreFlexItem( pArea, hb_arrayGetItemPtr(pItem, u), bBufPtr, iTrans );
          }
          break;
-      case HB_IT_MEMO:
-      case HB_IT_STRING:
+      case Harbour::Item::MEMO:
+      case Harbour::Item::STRING:
          ulLen = static_cast<HB_ULONGCAST>(hb_itemGetCLen(pItem));
          if( ulLen == 0 )
          {
@@ -2034,8 +2034,8 @@ static void hb_fptStoreFlexItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBuf
             *bBufPtr += ulLen + 2;
          }
          break;
-      case HB_IT_DATE:
-      case HB_IT_TIMESTAMP:
+      case Harbour::Item::DATE:
+      case Harbour::Item::TIMESTAMP:
       {
          HB_LONG lVal;
          *( *bBufPtr )++ = FPTIT_FLEXAR_DATEJ;
@@ -2044,8 +2044,8 @@ static void hb_fptStoreFlexItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBuf
          *bBufPtr += 4;
          break;
       }
-      case HB_IT_INTEGER:
-      case HB_IT_LONG:
+      case Harbour::Item::INTEGER:
+      case Harbour::Item::LONG:
       {
          HB_MAXINT iVal = hb_itemGetNInt(pItem);
          hb_itemGetNLen(pItem, &iWidth, &iDec);
@@ -2079,7 +2079,7 @@ static void hb_fptStoreFlexItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBuf
          }
          break;
       }
-      case HB_IT_DOUBLE:
+      case Harbour::Item::DOUBLE:
       {
          double dVal = hb_itemGetND(pItem);
          hb_itemGetNLen(pItem, &iWidth, &iDec);
@@ -2094,10 +2094,10 @@ static void hb_fptStoreFlexItem( FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBuf
          *bBufPtr += 8;
          break;
       }
-      case HB_IT_LOGICAL:
+      case Harbour::Item::LOGICAL:
          *( *bBufPtr )++ = hb_itemGetL(pItem) ? FPTIT_FLEXAR_TRUE : FPTIT_FLEXAR_FALSE;
          break;
-      case HB_IT_NIL:
+      case Harbour::Item::NIL:
       default:
          *( *bBufPtr )++ = FPTIT_FLEXAR_NIL;
    }
@@ -3188,7 +3188,7 @@ static HB_ERRCODE hb_fptPutMemo( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
    {
       switch( hb_itemType(pItem) )
       {
-         case HB_IT_ARRAY:
+         case Harbour::Item::ARRAY:
             ulType = FPTIT_FLEX_ARRAY;
             ulSize = hb_fptCountFlexItemLength( pArea, pItem, &ulArrayCount, iTrans ) - 1;
             if( ulSize > 0 )
@@ -3198,24 +3198,24 @@ static HB_ERRCODE hb_fptPutMemo( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
                bBufPtr = bBufAlloc + 1; /* FLEX doesn't store the first byte of array ID */
             }
             break;
-         case HB_IT_NIL:
+         case Harbour::Item::NIL:
             ulType = FPTIT_FLEX_NIL;
             ulSize = 0;
             break;
-         case HB_IT_LOGICAL:
+         case Harbour::Item::LOGICAL:
             ulType = hb_itemGetL(pItem) ? FPTIT_FLEX_TRUE : FPTIT_FLEX_FALSE;
             ulSize = 0;
             break;
-         case HB_IT_DATE:
-         case HB_IT_TIMESTAMP:
+         case Harbour::Item::DATE:
+         case Harbour::Item::TIMESTAMP:
             ulType = FPTIT_FLEX_LDATE;
             ulSize = 4;
             lVal = hb_itemGetDL(pItem);
             HB_PUT_LE_UINT32(itmBuffer, lVal);
             bBufPtr = itmBuffer;
             break;
-         case HB_IT_INTEGER:
-         case HB_IT_LONG:
+         case Harbour::Item::INTEGER:
+         case Harbour::Item::LONG:
             iVal = hb_itemGetNInt(pItem);
             if( HB_LIM_INT8(iVal) )
             {
@@ -3247,7 +3247,7 @@ static HB_ERRCODE hb_fptPutMemo( FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
                bBufPtr = itmBuffer;
             }
             break;
-         case HB_IT_DOUBLE:
+         case Harbour::Item::DOUBLE:
          {
             double d = hb_itemGetND(pItem);
             ulType = FPTIT_FLEX_DOUBLE;

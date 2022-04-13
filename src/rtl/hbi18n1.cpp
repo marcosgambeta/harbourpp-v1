@@ -909,7 +909,7 @@ PHB_ITEM hb_i18n_ngettext( PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext )
          pTable = pMsg && HB_IS_STRING(pMsg) ? hb_hashGetItemPtr( pTable, pMsg, 0 ) : nullptr;
          if( pTable )
          {
-            if( HB_IS_STRING(pTable) || ( HB_IS_ARRAY(pTable) && ( hb_arrayGetType(pTable, 1) & HB_IT_STRING ) != 0 ) )
+            if( HB_IS_STRING(pTable) || ( HB_IS_ARRAY(pTable) && ( hb_arrayGetType(pTable, 1) & Harbour::Item::STRING ) != 0 ) )
             {
                pMsgID = pTable;
                cdpage = pI18N->cdpage;
@@ -938,7 +938,7 @@ PHB_ITEM hb_i18n_ngettext( PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext )
          lIndex = hb_i18n_pluralindex( iPluralForm, pNum );
       }
 
-      if( lIndex < 1 || ( lIndex != 1 && ( hb_arrayGetType(pMsgID, lIndex) & HB_IT_STRING ) == 0 ) )
+      if( lIndex < 1 || ( lIndex != 1 && ( hb_arrayGetType(pMsgID, lIndex) & Harbour::Item::STRING ) == 0 ) )
       {
          lIndex = 1;
       }
@@ -979,8 +979,8 @@ PHB_ITEM hb_i18n_ngettext( PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext )
 
 HB_FUNC( HB_I18N_GETTEXT )
 {
-   PHB_ITEM pMsgID = hb_param(1, HB_IT_STRING);
-   PHB_ITEM pContext = hb_param(2, HB_IT_STRING);
+   PHB_ITEM pMsgID = hb_param(1, Harbour::Item::STRING);
+   PHB_ITEM pContext = hb_param(2, Harbour::Item::STRING);
 
    if( pMsgID )
    {
@@ -999,9 +999,9 @@ HB_FUNC( HB_I18N_GETTEXT )
 
 HB_FUNC( HB_I18N_NGETTEXT )
 {
-   PHB_ITEM pNum = hb_param(1, HB_IT_NUMERIC);
-   PHB_ITEM pMsgID = hb_param(2, HB_IT_STRING | HB_IT_ARRAY);
-   PHB_ITEM pContext = hb_param(3, HB_IT_STRING);
+   PHB_ITEM pNum = hb_param(1, Harbour::Item::NUMERIC);
+   PHB_ITEM pMsgID = hb_param(2, Harbour::Item::STRING | Harbour::Item::ARRAY);
+   PHB_ITEM pContext = hb_param(3, Harbour::Item::STRING);
 
    if( !pNum )
    {
@@ -1060,7 +1060,7 @@ HB_FUNC( HB_I18N_PLURALFORM )
    if( pI18N )
    {
       PHB_ITEM pOldForm = hb_itemNew(nullptr);
-      PHB_ITEM pForm = hb_param(iParam, HB_IT_STRING | HB_IT_EVALITEM);
+      PHB_ITEM pForm = hb_param(iParam, Harbour::Item::STRING | Harbour::Item::EVALITEM);
       HB_BOOL fBase = hb_parl(iParam + 1);
 
       if( hb_i18n_getpluralform( pI18N, pOldForm, fBase ) )
@@ -1087,7 +1087,7 @@ HB_FUNC( HB_I18N_DESCRIPTION )
    pI18N = hb_i18n_param( &iParam, true );
    if( pI18N )
    {
-      PHB_ITEM pNewDescript = hb_param(iParam, HB_IT_STRING);
+      PHB_ITEM pNewDescript = hb_param(iParam, Harbour::Item::STRING);
 
       hb_retc(hb_i18n_description(pI18N, nullptr));
       if( pNewDescript )
@@ -1109,9 +1109,9 @@ HB_FUNC( HB_I18N_ADDTEXT )
    pI18N = hb_i18n_param( &iParam, false );
    if( pI18N )
    {
-      PHB_ITEM pMsgID = hb_param(iParam, HB_IT_STRING);
-      PHB_ITEM pTrans = hb_param(iParam + 1, HB_IT_STRING | HB_IT_ARRAY);
-      PHB_ITEM pContext = hb_param(iParam + 2, HB_IT_STRING);
+      PHB_ITEM pMsgID = hb_param(iParam, Harbour::Item::STRING);
+      PHB_ITEM pTrans = hb_param(iParam + 1, Harbour::Item::STRING | Harbour::Item::ARRAY);
+      PHB_ITEM pContext = hb_param(iParam + 2, Harbour::Item::STRING);
 
       if( pMsgID && pTrans )
       {
@@ -1186,7 +1186,7 @@ HB_FUNC( HB_I18N_SAVETABLE )
 
 HB_FUNC( HB_I18N_RESTORETABLE )
 {
-   PHB_ITEM pItem = hb_param(1, HB_IT_STRING);
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
    if( pItem )
    {
@@ -1212,7 +1212,7 @@ HB_FUNC( HB_I18N_CHECK )
 HB_FUNC( __I18N_HASHTABLE )
 {
    PHB_I18N_TRANS pI18N;
-   PHB_ITEM pTable = hb_param(1, HB_IT_HASH);
+   PHB_ITEM pTable = hb_param(1, Harbour::Item::HASH);
 
    if( pTable )
    {

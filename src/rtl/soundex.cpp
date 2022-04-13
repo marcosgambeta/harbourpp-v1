@@ -51,7 +51,7 @@
 
 HB_FUNC( SOUNDEX )
 {
-   PHB_ITEM pString = hb_param(1, HB_IT_STRING);
+   PHB_ITEM pString = hb_param(1, Harbour::Item::STRING);
    char szResult[SOUNDEX_LEN_MAX + 1];
 
    /* NOTE: The result will always be a zero terminated string without any

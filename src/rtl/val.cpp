@@ -51,7 +51,7 @@
 /* returns the numeric value of a character string representation of a number */
 static void hb_val( HB_BOOL fExt )
 {
-   PHB_ITEM pText = hb_param(1, HB_IT_STRING);
+   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText )
    {

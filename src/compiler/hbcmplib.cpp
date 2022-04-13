@@ -132,7 +132,7 @@ static void hb_compGenArgList(int iFirst, int iLast, int * pArgC, const char ***
    if( pIncItem && pOpenFunc )
    {
       *pOpenFunc = nullptr;
-      *pIncItem = hb_param(iFirst, HB_IT_HASH);
+      *pIncItem = hb_param(iFirst, Harbour::Item::HASH);
       if( *pIncItem )
       {
          ++iFirst;
@@ -142,7 +142,7 @@ static void hb_compGenArgList(int iFirst, int iLast, int * pArgC, const char ***
 
    for( i = iFirst; i <= iLast; ++i )
    {
-      pParam = hb_param(i, HB_IT_ARRAY | HB_IT_STRING);
+      pParam = hb_param(i, Harbour::Item::ARRAY | Harbour::Item::STRING);
       if( pParam )
       {
          if( HB_IS_ARRAY(pParam) )
@@ -152,7 +152,7 @@ static void hb_compGenArgList(int iFirst, int iLast, int * pArgC, const char ***
             {
                do
                {
-                  if( hb_arrayGetType(pParam, nPos) & HB_IT_STRING )
+                  if( hb_arrayGetType(pParam, nPos) & Harbour::Item::STRING )
                   {
                      ++argc;
                   }
@@ -171,7 +171,7 @@ static void hb_compGenArgList(int iFirst, int iLast, int * pArgC, const char ***
    argc = 0;
    for( i = iFirst; i <= iLast; ++i )
    {
-      pParam = hb_param(i, HB_IT_ARRAY | HB_IT_STRING);
+      pParam = hb_param(i, Harbour::Item::ARRAY | Harbour::Item::STRING);
       if( pParam )
       {
          if( HB_IS_ARRAY(pParam) )
@@ -179,7 +179,7 @@ static void hb_compGenArgList(int iFirst, int iLast, int * pArgC, const char ***
             HB_SIZE nLen = hb_arrayLen(pParam);
             for( HB_SIZE nPos = 1; nPos <= nLen; ++nPos )
             {
-               if( hb_arrayGetType(pParam, nPos) & HB_IT_STRING )
+               if( hb_arrayGetType(pParam, nPos) & Harbour::Item::STRING )
                {
                   argv[argc++] = hb_arrayGetCPtr(pParam, nPos);
                }

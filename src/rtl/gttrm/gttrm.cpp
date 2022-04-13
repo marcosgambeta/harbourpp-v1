@@ -4372,7 +4372,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_ESCDELAY:
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, pTerm->esc_delay);
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC )
          {
             pTerm->esc_delay = hb_itemGetNI(pInfo->pNewVal);
          }
@@ -4391,7 +4391,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_ADDKEYMAP:
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_ARRAY )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY )
          {
             iVal = hb_arrayGetNI(pInfo->pNewVal, 1);
             szVal = hb_arrayGetCPtr(pInfo->pNewVal, 2);
@@ -4413,7 +4413,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 #else
             pInfo->pResult = hb_itemPutStr(pInfo->pResult, pTerm->cdpTerm, pTerm->szTitle);
 #endif
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING )
          {
             if( pTerm->fUTF8 )
             {
@@ -4461,13 +4461,13 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_PALETTE:
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC )
          {
             iVal = hb_itemGetNI(pInfo->pNewVal);
             if( iVal >= 0 && iVal < 16 )
             {
                pInfo->pResult = hb_itemPutNI(pInfo->pResult, pTerm->colors[iVal]);
-               if( hb_itemType(pInfo->pNewVal2) & HB_IT_NUMERIC )
+               if( hb_itemType(pInfo->pNewVal2) & Harbour::Item::NUMERIC )
                {
                   pTerm->colors[iVal] = hb_itemGetNI(pInfo->pNewVal2);
                   hb_gt_trm_SetPalette( pTerm, iVal, iVal );
@@ -4486,7 +4486,7 @@ static HB_BOOL hb_gt_trm_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             {
                hb_arraySetNI(pInfo->pResult, iVal + 1, pTerm->colors[iVal]);
             }
-            if( hb_itemType(pInfo->pNewVal) & HB_IT_ARRAY && hb_arrayLen(pInfo->pNewVal) == 16 )
+            if( hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY && hb_arrayLen(pInfo->pNewVal) == 16 )
             {
                for( iVal = 0; iVal < 16; iVal++ )
                {

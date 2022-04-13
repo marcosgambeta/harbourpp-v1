@@ -289,7 +289,7 @@ static HB_BOOL hb_gt_gui_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
    {
 #if defined(HB_OS_WIN)
       case HB_GTI_CLIPBOARDDATA:
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING )
          {
 #if defined(UNICODE)
             hb_gt_winapi_setClipboard( CF_UNICODETEXT, pInfo->pNewVal );
@@ -313,7 +313,7 @@ static HB_BOOL hb_gt_gui_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_KBDSHIFTS:
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_winapi_getKbdState());
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC )
          {
             hb_gt_winapi_setKbdState( hb_itemGetNI(pInfo->pNewVal) );
          }

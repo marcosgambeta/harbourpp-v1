@@ -2059,7 +2059,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_COMPATBUFFER:
          pInfo->pResult = hb_itemPutL(pInfo->pResult, pGT->fVgaCell);
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_LOGICAL )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL )
          {
             pGT->fVgaCell = hb_itemGetL(pInfo->pNewVal);
          }
@@ -2067,7 +2067,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_REDRAWMAX:
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, pGT->iRedrawMax);
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC )
          {
             pGT->iRedrawMax = hb_itemGetNI(pInfo->pNewVal);
          }
@@ -2075,7 +2075,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_BOXCP:
          pInfo->pResult = hb_itemPutC(pInfo->pResult, pGT->cdpBox ? pGT->cdpBox->id : nullptr);
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING )
          {
             if( hb_itemGetCLen(pInfo->pNewVal) > 0 )
             {
@@ -2147,7 +2147,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
       }
       case HB_GTI_SETWIN:  /* restore screen buffer, cursor shape and position */
-         if( ( hb_itemType(pInfo->pNewVal) & HB_IT_ARRAY ) && hb_arrayLen(pInfo->pNewVal) == 7 )
+         if( ( hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY ) && hb_arrayLen(pInfo->pNewVal) == 7 )
          {
             HB_GTSELF_DISPBEGIN(pGT);
             if( hb_arrayGetCLen(pInfo->pNewVal, 6) > 0 )
@@ -2164,7 +2164,7 @@ static HB_BOOL hb_gt_def_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_CLIPBOARDDATA:
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING )
          {
             /* set new Clipboard value */
             hb_gt_setClipboard( hb_itemGetCPtr(pInfo->pNewVal), hb_itemGetCLen(pInfo->pNewVal) );

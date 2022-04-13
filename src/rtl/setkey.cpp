@@ -226,7 +226,7 @@ HB_FUNC( SETKEY )
       else
       {
          /* Set a SETKEY value */
-         sk_add( &sk_data->sk_list, true, iKeyCode, hb_param(2, HB_IT_EVALITEM), nullptr );
+         sk_add( &sk_data->sk_list, true, iKeyCode, hb_param(2, Harbour::Item::EVALITEM), nullptr );
       }
    }
 }
@@ -268,7 +268,7 @@ HB_FUNC( HB_SETKEY )
       else
       {
          /* Set a SETKEY value */
-         sk_add( &sk_data->sk_list, true, iKeyCode, hb_param(2, HB_IT_EVALITEM), hb_param(3, HB_IT_EVALITEM) );
+         sk_add( &sk_data->sk_list, true, iKeyCode, hb_param(2, Harbour::Item::EVALITEM), hb_param(3, Harbour::Item::EVALITEM) );
       }
    }
 }
@@ -277,13 +277,13 @@ HB_FUNC( HB_SETKEY )
 
 HB_FUNC( HB_SETKEYARRAY )
 {
-   PHB_ITEM pKeyCodeArray = hb_param(1, HB_IT_ARRAY);
-   PHB_ITEM pAction = hb_param(2, HB_IT_EVALITEM);
+   PHB_ITEM pKeyCodeArray = hb_param(1, Harbour::Item::ARRAY);
+   PHB_ITEM pAction = hb_param(2, Harbour::Item::EVALITEM);
 
    if( pKeyCodeArray && pAction )
    {
       PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
-      PHB_ITEM pIsActive = hb_param(3, HB_IT_EVALITEM);
+      PHB_ITEM pIsActive = hb_param(3, Harbour::Item::EVALITEM);
       HB_SIZE nLen = hb_arrayLen(pKeyCodeArray);
       HB_SIZE nPos;
 
@@ -296,7 +296,7 @@ HB_FUNC( HB_SETKEYARRAY )
 
 HB_FUNC( HB_SETKEYGET )
 {
-   PHB_ITEM pKeyCode = hb_param(1, HB_IT_NUMERIC);
+   PHB_ITEM pKeyCode = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pKeyCode )
    {
@@ -350,7 +350,7 @@ HB_FUNC( HB_SETKEYSAVE )
    hb_itemRelease(pKeyElements);
    hb_itemReturnRelease(pKeys);
 
-   pParam = hb_param(1, HB_IT_ANY);
+   pParam = hb_param(1, Harbour::Item::ANY);
    if( pParam )
    {
       hb_setkeyRelease( sk_data ); /* destroy the internal list */

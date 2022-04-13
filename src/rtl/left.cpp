@@ -54,7 +54,7 @@
 
 HB_FUNC( LEFT )
 {
-   PHB_ITEM pText = hb_param(1, HB_IT_STRING);
+   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText && HB_ISNUM(2) )
    {
@@ -92,8 +92,8 @@ HB_FUNC( LEFT )
 
 HB_FUNC( HB_LEFTEQ )
 {
-   PHB_ITEM pItem1 = hb_param(1, HB_IT_STRING);
-   PHB_ITEM pItem2 = hb_param(2, HB_IT_STRING);
+   PHB_ITEM pItem1 = hb_param(1, Harbour::Item::STRING);
+   PHB_ITEM pItem2 = hb_param(2, Harbour::Item::STRING);
 
    if( pItem1 && pItem2 )
    {
@@ -107,8 +107,8 @@ HB_FUNC( HB_LEFTEQ )
 
 HB_FUNC( HB_LEFTEQI )
 {
-   PHB_ITEM pItem1 = hb_param(1, HB_IT_STRING);
-   PHB_ITEM pItem2 = hb_param(2, HB_IT_STRING);
+   PHB_ITEM pItem1 = hb_param(1, Harbour::Item::STRING);
+   PHB_ITEM pItem2 = hb_param(2, Harbour::Item::STRING);
 
    if( pItem1 && pItem2 )
    {

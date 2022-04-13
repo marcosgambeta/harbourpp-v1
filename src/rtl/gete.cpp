@@ -50,7 +50,7 @@
 
 HB_FUNC( GETENV )
 {
-   PHB_ITEM pName = hb_param(1, HB_IT_STRING);
+   PHB_ITEM pName = hb_param(1, Harbour::Item::STRING);
 
    if( pName && hb_pcount() == 1 )
    {
@@ -97,7 +97,7 @@ HB_FUNC_TRANSLATE( GETE, GETENV )
 
 HB_FUNC( HB_GETENV )
 {
-   PHB_ITEM pName = hb_param(1, HB_IT_STRING);
+   PHB_ITEM pName = hb_param(1, Harbour::Item::STRING);
 
    if( pName )
    {

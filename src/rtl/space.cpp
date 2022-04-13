@@ -52,7 +52,7 @@
 
 HB_FUNC( SPACE )
 {
-   PHB_ITEM pItem = hb_param(1, HB_IT_NUMERIC);
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pItem )
    {

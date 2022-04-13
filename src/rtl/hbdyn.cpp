@@ -72,25 +72,25 @@ static int hb_hbtoctype( int iHarbourType )
 {
    switch( iHarbourType )
    {
-      case HB_IT_NIL:
+      case Harbour::Item::NIL:
          return HB_DYN_CTYPE_VOID;
 
-      case HB_IT_LOGICAL:
+      case Harbour::Item::LOGICAL:
          return HB_DYN_CTYPE_BOOL;
 
-      case HB_IT_INTEGER:
-      case HB_IT_LONG:
-      case HB_IT_DATE:
+      case Harbour::Item::INTEGER:
+      case Harbour::Item::LONG:
+      case Harbour::Item::DATE:
          return HB_DYN_CTYPE_LONG;
 
-      case HB_IT_DOUBLE:
+      case Harbour::Item::DOUBLE:
          return HB_DYN_CTYPE_DOUBLE;
 
-      case HB_IT_STRING:
-      case HB_IT_MEMO:
+      case Harbour::Item::STRING:
+      case Harbour::Item::MEMO:
          return HB_DYN_CTYPE_CHAR_PTR;
 
-      case HB_IT_POINTER:
+      case Harbour::Item::POINTER:
          return HB_DYN_CTYPE_VOID_PTR;
    }
 
@@ -980,7 +980,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
 
          for( tmp = 0; tmp < iParams; ++tmp )
          {
-            PHB_ITEM pParam = hb_param(iFirst + tmp, HB_IT_ANY);
+            PHB_ITEM pParam = hb_param(iFirst + tmp, Harbour::Item::ANY);
 
             if( piArgFlags )
             {
@@ -1106,7 +1106,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
 
          for( tmp = 0; tmp < iParams; ++tmp )
          {
-            PHB_ITEM pParam = hb_param(iFirst + tmp, HB_IT_ANY);
+            PHB_ITEM pParam = hb_param(iFirst + tmp, Harbour::Item::ANY);
 
             HB_U32 r1;
             HB_U32 r2;

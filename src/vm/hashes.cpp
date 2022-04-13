@@ -395,8 +395,8 @@ static void hb_hashResize( PHB_BASEHASH pBaseHash, HB_SIZE nNewSize )
 
       do
       {
-         pBaseHash->pPairs[pBaseHash->nSize].key.type = HB_IT_NIL;
-         pBaseHash->pPairs[pBaseHash->nSize].value.type = HB_IT_NIL;
+         pBaseHash->pPairs[pBaseHash->nSize].key.type = Harbour::Item::NIL;
+         pBaseHash->pPairs[pBaseHash->nSize].value.type = Harbour::Item::NIL;
       }
       while( ++pBaseHash->nSize < nNewSize );
    }
@@ -448,8 +448,8 @@ static PHB_ITEM hb_hashValuePtr( PHB_BASEHASH pBaseHash, PHB_ITEM pKey, HB_BOOL 
       else if( nPos < pBaseHash->nLen )
       {
          memmove(pBaseHash->pPairs + nPos + 1, pBaseHash->pPairs + nPos, (pBaseHash->nLen - nPos) * sizeof(HB_HASHPAIR));
-         pBaseHash->pPairs[nPos].key.type = HB_IT_NIL;
-         pBaseHash->pPairs[nPos].value.type = HB_IT_NIL;
+         pBaseHash->pPairs[nPos].key.type = Harbour::Item::NIL;
+         pBaseHash->pPairs[nPos].value.type = Harbour::Item::NIL;
       }
 
       pBaseHash->nLen++;
@@ -482,8 +482,8 @@ static HB_BOOL hb_hashNewValue( PHB_BASEHASH pBaseHash, PHB_ITEM pKey, PHB_ITEM 
       else if( nPos < pBaseHash->nLen )
       {
          memmove(pBaseHash->pPairs + nPos + 1, pBaseHash->pPairs + nPos, (pBaseHash->nLen - nPos) * sizeof(HB_HASHPAIR));
-         pBaseHash->pPairs[nPos].key.type = HB_IT_NIL;
-         pBaseHash->pPairs[nPos].value.type = HB_IT_NIL;
+         pBaseHash->pPairs[nPos].key.type = Harbour::Item::NIL;
+         pBaseHash->pPairs[nPos].value.type = Harbour::Item::NIL;
       }
 
       pBaseHash->nLen++;
@@ -649,7 +649,7 @@ PHB_ITEM hb_hashNew( PHB_ITEM pItem )
    pBaseHash->iFlags   = HB_HASH_FLAG_DEFAULT;
    pBaseHash->pDefault = nullptr;
 
-   pItem->type = HB_IT_HASH;
+   pItem->type = Harbour::Item::HASH;
    pItem->item.asHash.value = pBaseHash;
 
    return pItem;

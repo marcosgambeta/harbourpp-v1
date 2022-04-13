@@ -49,59 +49,59 @@
 
 HB_FUNC( EMPTY )
 {
-   PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
    long lDate, lTime;
    PHB_SYMB pSym;
 
    switch( hb_itemType(pItem) )
    {
-      case HB_IT_ARRAY:
+      case Harbour::Item::ARRAY:
          hb_retl(hb_arrayLen(pItem) == 0);
          break;
 
-      case HB_IT_HASH:
+      case Harbour::Item::HASH:
          hb_retl(hb_hashLen(pItem) == 0);
          break;
 
-      case HB_IT_STRING:
-      case HB_IT_MEMO:
+      case Harbour::Item::STRING:
+      case Harbour::Item::MEMO:
          hb_retl(hb_strEmpty(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem)));
          break;
 
-      case HB_IT_INTEGER:
+      case Harbour::Item::INTEGER:
          hb_retl(hb_itemGetNI(pItem) == 0);
          break;
 
-      case HB_IT_LONG:
+      case Harbour::Item::LONG:
          hb_retl(hb_itemGetNInt(pItem) == 0);
          break;
 
-      case HB_IT_DOUBLE:
+      case Harbour::Item::DOUBLE:
          hb_retl(hb_itemGetND(pItem) == 0.0);
          break;
 
-      case HB_IT_DATE:
+      case Harbour::Item::DATE:
          hb_retl(hb_itemGetDL(pItem) == 0);
          break;
 
-      case HB_IT_TIMESTAMP:
+      case Harbour::Item::TIMESTAMP:
          hb_itemGetTDT(pItem, &lDate, &lTime);
          hb_retl(lDate == 0 && lTime == 0);
          break;
 
-      case HB_IT_LOGICAL:
+      case Harbour::Item::LOGICAL:
          hb_retl(!hb_itemGetL(pItem));
          break;
 
-      case HB_IT_BLOCK:
+      case Harbour::Item::BLOCK:
          hb_retl(false);
          break;
 
-      case HB_IT_POINTER:
+      case Harbour::Item::POINTER:
          hb_retl(hb_itemGetPtr(pItem) == nullptr);
          break;
 
-      case HB_IT_SYMBOL:
+      case Harbour::Item::SYMBOL:
          pSym = hb_itemGetSymbol(pItem);
          if( pSym && ( pSym->scope.value & HB_FS_DEFERRED ) && \
              pSym->pDynSym )

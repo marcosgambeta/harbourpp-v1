@@ -237,7 +237,7 @@ HB_FUNC( SX_RLOCK )
 
    if( pArea )
    {
-      PHB_ITEM pRecords = hb_param(1, HB_IT_ARRAY);
+      PHB_ITEM pRecords = hb_param(1, Harbour::Item::ARRAY);
       DBLOCKINFO dbLockInfo;
       dbLockInfo.fResult = HB_FALSE;
       dbLockInfo.uiMethod = DBLM_MULTIPLE;
@@ -254,7 +254,7 @@ HB_FUNC( SX_RLOCK )
       }
       else
       {
-         dbLockInfo.itmRecID = hb_param(1, HB_IT_ANY);
+         dbLockInfo.itmRecID = hb_param(1, Harbour::Item::ANY);
          SELF_LOCK( pArea, &dbLockInfo );
          fResult = dbLockInfo.fResult;
       }
@@ -276,7 +276,7 @@ HB_FUNC( SX_UNLOCK )
 
    if( pArea )
    {
-      PHB_ITEM pRecords = hb_param(1, HB_IT_ARRAY);
+      PHB_ITEM pRecords = hb_param(1, Harbour::Item::ARRAY);
       if( pRecords )
       {
          HB_SIZE nLen = hb_arrayLen(pRecords);
@@ -287,7 +287,7 @@ HB_FUNC( SX_UNLOCK )
       }
       else
       {
-         SELF_UNLOCK( pArea, hb_param(1, HB_IT_ANY) );
+         SELF_UNLOCK( pArea, hb_param(1, Harbour::Item::ANY) );
       }
    }
 }
@@ -425,7 +425,7 @@ HB_FUNC( SX_MEMOPACK )
       int iPCount = hb_pcount();
       for( int i = 1; i <= iPCount; ++i )
       {
-         hb_arraySet(pItem, i, hb_param(i, HB_IT_ANY));
+         hb_arraySet(pItem, i, hb_param(i, Harbour::Item::ANY));
       }
       fResult = SELF_INFO( pArea, DBI_MEMOPACK, pItem ) == HB_SUCCESS;
       hb_itemRelease(pItem);

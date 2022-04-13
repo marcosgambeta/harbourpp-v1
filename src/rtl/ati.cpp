@@ -86,8 +86,8 @@ static HB_SIZE s_strAtI( PHB_CODEPAGE cdp, const char * szSub, HB_SIZE nSubLen, 
 
 HB_FUNC( HB_ATI )
 {
-   PHB_ITEM pSub  = hb_param(1, HB_IT_STRING);
-   PHB_ITEM pText = hb_param(2, HB_IT_STRING);
+   PHB_ITEM pSub  = hb_param(1, Harbour::Item::STRING);
+   PHB_ITEM pText = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSub )
    {

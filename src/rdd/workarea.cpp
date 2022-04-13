@@ -2159,7 +2159,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
 
       case RDDI_STRICTREAD:
          fResult = hb_setGetStrictRead();
-         if( hb_itemType(pItem) & HB_IT_LOGICAL )
+         if( hb_itemType(pItem) & Harbour::Item::LOGICAL )
          {
             hb_setSetItem( HB_SET_STRICTREAD, pItem );
          }
@@ -2167,7 +2167,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          break;
       case RDDI_OPTIMIZE:
          fResult = hb_setGetOptimize();
-         if( hb_itemType(pItem) & HB_IT_LOGICAL )
+         if( hb_itemType(pItem) & Harbour::Item::LOGICAL )
          {
             hb_setSetItem( HB_SET_OPTIMIZE, pItem );
          }
@@ -2175,7 +2175,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          break;
       case RDDI_FORCEOPT:
          fResult = hb_setGetForceOpt();
-         if( hb_itemType(pItem) & HB_IT_LOGICAL )
+         if( hb_itemType(pItem) & Harbour::Item::LOGICAL )
          {
             hb_setSetItem( HB_SET_FORCEOPT, pItem );
          }
@@ -2183,7 +2183,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          break;
       case RDDI_AUTOOPEN:
          fResult = hb_setGetAutOpen();
-         if( hb_itemType(pItem) & HB_IT_LOGICAL )
+         if( hb_itemType(pItem) & Harbour::Item::LOGICAL )
          {
             hb_setSetItem( HB_SET_AUTOPEN, pItem );
          }
@@ -2191,7 +2191,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          break;
       case RDDI_AUTOORDER:
          iResult = hb_setGetAutOrder();
-         if( hb_itemType(pItem) & HB_IT_NUMERIC )
+         if( hb_itemType(pItem) & Harbour::Item::NUMERIC )
          {
             hb_setSetItem( HB_SET_AUTORDER, pItem );
          }
@@ -2199,7 +2199,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          break;
       case RDDI_AUTOSHARE:
          fResult = hb_setGetAutoShare();
-         if( hb_itemType(pItem) & HB_IT_LOGICAL )
+         if( hb_itemType(pItem) & Harbour::Item::LOGICAL )
          {
             hb_setSetItem( HB_SET_AUTOSHARE, pItem );
          }
@@ -2207,7 +2207,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          break;
       case RDDI_LOCKSCHEME:
          iResult = hb_setGetDBFLockScheme();
-         if( hb_itemType(pItem) & HB_IT_NUMERIC )
+         if( hb_itemType(pItem) & Harbour::Item::NUMERIC )
          {
             hb_setSetItem( HB_SET_DBFLOCKSCHEME, pItem );
          }
@@ -2215,7 +2215,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          break;
       case RDDI_MEMOBLOCKSIZE:
          iResult = hb_setGetMBlockSize();
-         if( hb_itemType(pItem) & HB_IT_NUMERIC )
+         if( hb_itemType(pItem) & Harbour::Item::NUMERIC )
          {
             hb_setSetItem( HB_SET_MBLOCKSIZE, pItem );
          }
@@ -2225,7 +2225,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
       {
          const char * szExt = hb_setGetMFileExt();
          char * szResult = szExt ? hb_strdup(szExt) : nullptr;
-         if( hb_itemType(pItem) & HB_IT_STRING )
+         if( hb_itemType(pItem) & Harbour::Item::STRING )
          {
             hb_setSetItem( HB_SET_MFILEEXT, pItem );
          }

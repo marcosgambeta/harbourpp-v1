@@ -752,7 +752,7 @@ HB_FUNC( HB_SOCKETNEWZNET )
 
       if( HB_ISHASH(2) )
       {
-         pSock = hb_sockexNew( sd, s_sockFilter.pszName, hb_param(2, HB_IT_ANY) );
+         pSock = hb_sockexNew( sd, s_sockFilter.pszName, hb_param(2, Harbour::Item::ANY) );
       }
       else
       {
@@ -766,8 +766,8 @@ HB_FUNC( HB_SOCKETNEWZNET )
 
       if( pSock )
       {
-         hb_socketItemClear( hb_param(1, HB_IT_POINTER) );
-         hb_sockexItemPut( hb_param(-1, HB_IT_ANY), pSock );
+         hb_socketItemClear( hb_param(1, Harbour::Item::POINTER) );
+         hb_sockexItemPut( hb_param(-1, Harbour::Item::ANY), pSock );
       }
    }
 }

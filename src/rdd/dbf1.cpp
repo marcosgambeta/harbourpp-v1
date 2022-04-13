@@ -5362,8 +5362,8 @@ static HB_ERRCODE hb_dbfPack( DBFAREAP pArea )
     */
    if( pArea->area.valResult && HB_IS_ARRAY(pArea->area.valResult) &&
        hb_arrayLen(pArea->area.valResult) == 2 &&
-       ( hb_arrayGetType(pArea->area.valResult, 1) & HB_IT_BLOCK ) != 0 &&
-       ( hb_arrayGetType(pArea->area.valResult, 2) & HB_IT_NUMERIC ) != 0 )
+       ( hb_arrayGetType(pArea->area.valResult, 1) & Harbour::Item::BLOCK ) != 0 &&
+       ( hb_arrayGetType(pArea->area.valResult, 2) & Harbour::Item::NUMERIC ) != 0 )
    {
       pBlock = hb_itemNew(nullptr);
       hb_arrayGet(pArea->area.valResult, 1, pBlock);

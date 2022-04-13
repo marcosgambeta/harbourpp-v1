@@ -1009,7 +1009,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
    {
       return HB_FAILURE;
    }
-   if( hb_itemType(pFields) & HB_IT_ARRAY )
+   if( hb_itemType(pFields) & Harbour::Item::ARRAY )
    {
       uiFields = static_cast<HB_USHORT>(hb_arrayLen(pFields));
       if( uiFields )

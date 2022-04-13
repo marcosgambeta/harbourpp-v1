@@ -53,7 +53,7 @@
 /* NOTE: Do() as a function is a Harbour extension. [vszakats] */
 
 /* NOTE: use hb_stackItemFromBase(uiParam) instead of
- *       hb_param(uiParam, HB_IT_ANY) to keep references to
+ *       hb_param(uiParam, Harbour::Item::ANY) to keep references to
  *       parameters passed by refeence. [druzus]
  */
 
@@ -64,7 +64,7 @@ HB_FUNC( DO )
 
    if( uiPCount > 0 )
    {
-      PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
+      PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
 
       if( HB_IS_STRING(pItem) )
       {

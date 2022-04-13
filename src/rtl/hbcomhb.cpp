@@ -223,7 +223,7 @@ HB_FUNC( HB_COMSETERROR )
 
 HB_FUNC( HB_COMRECV )
 {
-   PHB_ITEM pItem = hb_param(2, HB_IT_STRING);
+   PHB_ITEM pItem = hb_param(2, Harbour::Item::STRING);
    char * pBuffer;
    HB_SIZE nLen;
 

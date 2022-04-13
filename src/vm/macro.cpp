@@ -878,7 +878,7 @@ static void hb_macroBlock( const char * szString, PHB_ITEM pItem )
       }
 
       pItem->item.asBlock.value = hb_codeblockMacroNew( pMacro->pCodeInfo->pCode, pMacro->pCodeInfo->nPCodePos );
-      pItem->type = HB_IT_BLOCK;
+      pItem->type = Harbour::Item::BLOCK;
       pItem->item.asBlock.paramcnt = 0;
       pItem->item.asBlock.lineno = 0;
       pItem->item.asBlock.hclass = 0;
@@ -962,7 +962,7 @@ static void hb_macroSetGetBlock( PHB_DYNS pVarSym, PHB_ITEM pItem, int iWorkArea
       hb_itemClear(pItem);
    }
    pItem->item.asBlock.value = hb_codeblockMacroNew( byBuf, i );
-   pItem->type = HB_IT_BLOCK;
+   pItem->type = Harbour::Item::BLOCK;
    pItem->item.asBlock.paramcnt = 1;
    pItem->item.asBlock.lineno = 0;
    pItem->item.asBlock.hclass = 0;
@@ -1307,7 +1307,7 @@ HB_FUNC( HB_SETMACRO )
          case HB_SM_SHORTCUTS:
             /* enable/disable support for shortcut logical operators */
             hb_retl(hb_macroFlags() & flags);
-            pValue = hb_param(2, HB_IT_LOGICAL);
+            pValue = hb_param(2, Harbour::Item::LOGICAL);
             if( pValue )
             {
                hb_macroSetMacro( hb_itemGetL(pValue), flags );

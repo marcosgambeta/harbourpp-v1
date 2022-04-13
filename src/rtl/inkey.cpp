@@ -126,18 +126,18 @@ HB_FUNC( HB_KEYPUT )
    }
    else if( HB_ISARRAY(1) )
    {
-      PHB_ITEM pArray = hb_param(1, HB_IT_ARRAY);
+      PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
       HB_SIZE nElements = hb_arrayLen(pArray);
 
       for( HB_SIZE nIndex = 1; nIndex <= nElements; ++nIndex )
       {
          HB_TYPE type = hb_arrayGetType(pArray, nIndex);
 
-         if( type & HB_IT_NUMERIC )
+         if( type & Harbour::Item::NUMERIC )
          {
             hb_inkeyPut( hb_arrayGetNI(pArray, nIndex) );
          }
-         else if( type & HB_IT_STRING )
+         else if( type & Harbour::Item::STRING )
          {
             hb_inkeySetTextKeys( hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), false );
          }
@@ -157,18 +157,18 @@ HB_FUNC( HB_KEYINS )
    }
    else if( HB_ISARRAY(1) )
    {
-      PHB_ITEM pArray = hb_param(1, HB_IT_ARRAY);
+      PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
       HB_SIZE nElements = hb_arrayLen(pArray);
 
       for( HB_SIZE nIndex = 1; nIndex <= nElements; ++nIndex )
       {
          HB_TYPE type = hb_arrayGetType(pArray, nIndex);
 
-         if( type & HB_IT_NUMERIC )
+         if( type & Harbour::Item::NUMERIC )
          {
             hb_inkeyIns( hb_arrayGetNI(pArray, nIndex) );
          }
-         else if( type & HB_IT_STRING )
+         else if( type & Harbour::Item::STRING )
          {
             hb_inkeySetTextKeys( hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), true );
          }

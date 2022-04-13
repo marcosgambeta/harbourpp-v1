@@ -1947,8 +1947,8 @@ static int hb_hsxFilter( int iHandle, const char * pSeek, HB_SIZE nSeek, PHB_ITE
 HB_FUNC( HS_CREATE )
 {
    hb_retni(hb_hsxCreate(hb_parc(1), hb_parni(2), hb_parni(3),
-                         hb_param(4, HB_IT_LOGICAL) == nullptr || hb_parl(4),
-                         hb_parni(5), hb_param(6, HB_IT_ANY)));
+                         hb_param(4, Harbour::Item::LOGICAL) == nullptr || hb_parl(4),
+                         hb_parni(5), hb_param(6, Harbour::Item::ANY)));
 }
 
 /* hs_Open( <cFile>, <nBufSize>, <nOpenMode> )
@@ -1956,14 +1956,14 @@ HB_FUNC( HS_CREATE )
    Opens an existing HiPer-SEEK index file */
 HB_FUNC( HS_OPEN )
 {
-   hb_retni(hb_hsxOpen(hb_parc(1), hb_parni(2), hb_param(3, HB_IT_NUMERIC) ? hb_parni(3) : HSXDEFOPENMODE));
+   hb_retni(hb_hsxOpen(hb_parc(1), hb_parni(2), hb_param(3, Harbour::Item::NUMERIC) ? hb_parni(3) : HSXDEFOPENMODE));
 }
 
 /* hs_Close( <hIndex> ) --> nVal = 1 (OK), nVal < 0 (ERROR CODE)
    Closes a previously opened HiPer-SEEK index file */
 HB_FUNC( HS_CLOSE )
 {
-   if( hb_param(1, HB_IT_NUMERIC) )
+   if( hb_param(1, Harbour::Item::NUMERIC) )
    {
       hb_retni(hb_hsxDestroy(hb_parni(1)));
    }
@@ -1978,10 +1978,10 @@ HB_FUNC( HS_CLOSE )
    Creates and populates a new HiPer-SEEK index */
 HB_FUNC( HS_INDEX )
 {
-   hb_retni(hb_hsxIndex(hb_parc(1), hb_param(2, HB_IT_ANY), hb_parni(3),
-                        hb_param(4, HB_IT_NUMERIC) ? hb_parni(4) : HSXDEFOPENMODE,
+   hb_retni(hb_hsxIndex(hb_parc(1), hb_param(2, Harbour::Item::ANY), hb_parni(3),
+                        hb_param(4, Harbour::Item::NUMERIC) ? hb_parni(4) : HSXDEFOPENMODE,
                         hb_parni(5),
-                        hb_param(6, HB_IT_LOGICAL) == nullptr || hb_parl(6),
+                        hb_param(6, Harbour::Item::LOGICAL) == nullptr || hb_parl(6),
                         hb_parni(7)));
 }
 
@@ -1989,12 +1989,12 @@ HB_FUNC( HS_INDEX )
    Adds a text string entry to a HiPer-SEEK index file */
 HB_FUNC( HS_ADD )
 {
-   if( hb_param(1, HB_IT_NUMERIC) )
+   if( hb_param(1, Harbour::Item::NUMERIC) )
    {
       HB_ULONG ulRecNo;
       int iRetVal;
 
-      iRetVal = hb_hsxAdd( hb_parni(1), &ulRecNo, hb_param(2, HB_IT_BLOCK | HB_IT_STRING), hb_parl(3) );
+      iRetVal = hb_hsxAdd( hb_parni(1), &ulRecNo, hb_param(2, Harbour::Item::BLOCK | Harbour::Item::STRING), hb_parl(3) );
 
       if( iRetVal == HSX_SUCCESS )
       {
@@ -2015,9 +2015,9 @@ HB_FUNC( HS_ADD )
    Replaces current HiPer-SEEK index entry with a new value */
 HB_FUNC( HS_REPLACE )
 {
-   if( hb_param(1, HB_IT_NUMERIC) && hb_param(3, HB_IT_NUMERIC) )
+   if( hb_param(1, Harbour::Item::NUMERIC) && hb_param(3, Harbour::Item::NUMERIC) )
    {
-      hb_retni(hb_hsxReplace(hb_parni(1), hb_parnl(3), hb_param(2, HB_IT_BLOCK | HB_IT_STRING), hb_parl(4)));
+      hb_retni(hb_hsxReplace(hb_parni(1), hb_parnl(3), hb_param(2, Harbour::Item::BLOCK | Harbour::Item::STRING), hb_parl(4)));
    }
    else
    {
@@ -2029,7 +2029,7 @@ HB_FUNC( HS_REPLACE )
    Determines if a HiPer-SEEK record is marked as deleted */
 HB_FUNC( HS_IFDEL )
 {
-   if( hb_param(1, HB_IT_NUMERIC) && hb_param(2, HB_IT_NUMERIC) )
+   if( hb_param(1, Harbour::Item::NUMERIC) && hb_param(2, Harbour::Item::NUMERIC) )
    {
       hb_retni(hb_hsxIfDel(hb_parni(1), hb_parnl(2)));
    }
@@ -2043,7 +2043,7 @@ HB_FUNC( HS_IFDEL )
    Deletes specifed index record from HiPer-SEEK index file */
 HB_FUNC( HS_DELETE )
 {
-   if( hb_param(1, HB_IT_NUMERIC) && hb_param(2, HB_IT_NUMERIC) )
+   if( hb_param(1, Harbour::Item::NUMERIC) && hb_param(2, Harbour::Item::NUMERIC) )
    {
       hb_retni(hb_hsxDelete(hb_parni(1), hb_parnl(2)));
    }
@@ -2057,7 +2057,7 @@ HB_FUNC( HS_DELETE )
    Unmarks the specified HiPer-SEEK record as being deleted */
 HB_FUNC( HS_UNDELETE )
 {
-   if( hb_param(1, HB_IT_NUMERIC) && hb_param(2, HB_IT_NUMERIC) )
+   if( hb_param(1, Harbour::Item::NUMERIC) && hb_param(2, Harbour::Item::NUMERIC) )
    {
       hb_retni(hb_hsxUnDelete(hb_parni(1), hb_parnl(2)));
    }
@@ -2071,7 +2071,7 @@ HB_FUNC( HS_UNDELETE )
    Returns the number of entries in a HiPer-SEEK index */
 HB_FUNC( HS_KEYCOUNT )
 {
-   if( hb_param(1, HB_IT_NUMERIC) )
+   if( hb_param(1, Harbour::Item::NUMERIC) )
    {
       LPHSXINFO pHSX = hb_hsxGetPointer( hb_parni(1) );
 
@@ -2102,7 +2102,7 @@ HB_FUNC( HS_SET )
    const char * pStr = hb_parc(2);
    int iRetVal = HSX_BADPARMS;
 
-   if( pStr && hb_param(1, HB_IT_NUMERIC) )
+   if( pStr && hb_param(1, Harbour::Item::NUMERIC) )
    {
       iRetVal = hb_hsxSeekSet( hb_parni(1), pStr, hb_parclen(2) );
    }
@@ -2124,7 +2124,7 @@ HB_FUNC( HS_FILTER )
    {
       if( nLen > 0 )
       {
-         iHandle = hb_hsxOpen( hb_parc(1), hb_parni(4), hb_param(5, HB_IT_NUMERIC) ? hb_parni(5) : HSXDEFOPENMODE );
+         iHandle = hb_hsxOpen( hb_parc(1), hb_parni(4), hb_param(5, Harbour::Item::NUMERIC) ? hb_parni(5) : HSXDEFOPENMODE );
          if( iHandle >= 0 )
          {
             fNew = HB_TRUE;
@@ -2135,7 +2135,7 @@ HB_FUNC( HS_FILTER )
          }
       }
    }
-   else if( hb_param(1, HB_IT_NUMERIC) )
+   else if( hb_param(1, Harbour::Item::NUMERIC) )
    {
       LPHSXINFO pHSX = hb_hsxGetPointer( hb_parni(1) );
 
@@ -2194,13 +2194,13 @@ HB_FUNC( HS_FILTER )
                {
                   ++nPos2;
                }
-               iResult = hb_hsxFilter( iHandle, &szText[nPos1], nPos2 - nPos1, hb_param(3, HB_IT_ANY), HSX_VERIFY_PHRASE );
+               iResult = hb_hsxFilter( iHandle, &szText[nPos1], nPos2 - nPos1, hb_param(3, Harbour::Item::ANY), HSX_VERIFY_PHRASE );
                nPos1 = nPos2;
             }
          }
          else
          {
-            iResult = hb_hsxFilter( iHandle, szText, nLen, hb_param(3, HB_IT_ANY), HSX_VERIFY_PHRASE );
+            iResult = hb_hsxFilter( iHandle, szText, nLen, hb_param(3, Harbour::Item::ANY), HSX_VERIFY_PHRASE );
          }
       }
       if( iResult == HSX_SUCCESS )
@@ -2244,7 +2244,7 @@ HB_FUNC( HS_NEXT )
    HB_ULONG ulRecNo = 0;
    int iRetVal = HSX_BADPARMS;
 
-   if( hb_param(1, HB_IT_NUMERIC) )
+   if( hb_param(1, Harbour::Item::NUMERIC) )
    {
       iRetVal = hb_hsxNext( hb_parni(1), &ulRecNo );
    }
@@ -2265,10 +2265,10 @@ HB_FUNC( HS_NEXT )
    Verifies hs_Next() hit against code block expression */
 HB_FUNC( HS_VERIFY )
 {
-   if( hb_param(1, HB_IT_NUMERIC) )
+   if( hb_param(1, Harbour::Item::NUMERIC) )
    {
       int iHandle = hb_parni(1);
-      PHB_ITEM pExpr = hb_param(2, HB_IT_BLOCK);
+      PHB_ITEM pExpr = hb_param(2, Harbour::Item::BLOCK);
       const char * szText = nullptr;
       HB_SIZE nLen = 0;
       LPHSXINFO pHSX;
@@ -2285,7 +2285,7 @@ HB_FUNC( HS_VERIFY )
       }
       else
       {
-         pExpr = hb_param(2, HB_IT_STRING);
+         pExpr = hb_param(2, Harbour::Item::STRING);
          if( !pExpr && pHSX->pKeyItem )
          {
             pExpr = hb_vmEvalBlockOrMacro( pHSX->pKeyItem );
@@ -2301,14 +2301,14 @@ HB_FUNC( HS_VERIFY )
    }
    else
    {
-      PHB_ITEM pExpr = hb_param(1, HB_IT_BLOCK);
+      PHB_ITEM pExpr = hb_param(1, Harbour::Item::BLOCK);
       const char * szSub = hb_parc(2), * szText = nullptr;
       HB_SIZE nSub = hb_parclen(2), nLen = 0;
       HB_BOOL fIgnoreCase = hb_parl(3);
 
       if( nSub )
       {
-         pExpr = pExpr ? hb_vmEvalBlockOrMacro( pExpr ) : hb_param(2, HB_IT_STRING);
+         pExpr = pExpr ? hb_vmEvalBlockOrMacro( pExpr ) : hb_param(2, Harbour::Item::STRING);
 
          if( pExpr )
          {

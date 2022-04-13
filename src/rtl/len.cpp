@@ -52,7 +52,7 @@
 
 HB_FUNC( LEN )
 {
-   PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
 
    /* NOTE: Double safety to ensure that a parameter was really passed,
             compiler checks this, but a direct hb_vmDo() call

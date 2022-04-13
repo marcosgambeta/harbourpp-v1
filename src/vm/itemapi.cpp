@@ -83,9 +83,9 @@ PHB_ITEM hb_itemParam( HB_USHORT uiParam )
 #endif
 
 #if 0
-   return hb_itemNew(hb_param(uiParam, HB_IT_ANY));
+   return hb_itemNew(hb_param(uiParam, Harbour::Item::ANY));
 #endif
-   return hb_gcGripGet(hb_param(uiParam, HB_IT_ANY));
+   return hb_gcGripGet(hb_param(uiParam, Harbour::Item::ANY));
 }
 
 /* Internal Item API. Use this with care. */
@@ -105,7 +105,7 @@ HB_BOOL hb_itemParamStore( HB_USHORT uiParam, PHB_ITEM pItem )
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemParamStore(%hu, %p)", uiParam, static_cast<void*>(pItem) ) );
 #endif
 
-   if( hb_param(uiParam, HB_IT_BYREF) )
+   if( hb_param(uiParam, Harbour::Item::BYREF) )
    {
       HB_STACK_TLS_PRELOAD
       PHB_ITEM pDest = hb_stackItemFromBase(uiParam);
@@ -130,7 +130,7 @@ HB_BOOL hb_itemParamStoreForward( HB_USHORT uiParam, PHB_ITEM pItem )
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemParamStoreForward(%hu, %p)", uiParam, static_cast<void*>(pItem) ) );
 #endif
 
-   if( hb_param(uiParam, HB_IT_BYREF) )
+   if( hb_param(uiParam, Harbour::Item::BYREF) )
    {
       HB_STACK_TLS_PRELOAD
       PHB_ITEM pDest = hb_stackItemFromBase(uiParam);
@@ -155,7 +155,7 @@ HB_BOOL hb_itemParamStoreRelease( HB_USHORT uiParam, PHB_ITEM pItem )
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemParamStoreRelease(%hu, %p)", uiParam, static_cast<void*>(pItem) ) );
 #endif
 
-   if( hb_param(uiParam, HB_IT_BYREF) )
+   if( hb_param(uiParam, Harbour::Item::BYREF) )
    {
       HB_STACK_TLS_PRELOAD
       PHB_ITEM pDest = hb_stackItemFromBase(uiParam);
@@ -300,7 +300,7 @@ PHB_ITEM hb_itemPutC( PHB_ITEM pItem, const char * szText )
       pItem = hb_itemNew(nullptr);
    }
 
-   pItem->type = HB_IT_STRING;
+   pItem->type = Harbour::Item::STRING;
    pItem->item.asString.value     = const_cast<char*>(szText);
    pItem->item.asString.length    = nLen;
    pItem->item.asString.allocated = nAlloc;
@@ -345,7 +345,7 @@ PHB_ITEM hb_itemPutCL( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
             trash if the szText buffer is nullptr, at least with hb_retclen().
             [vszakats] */
 
-   pItem->type = HB_IT_STRING;
+   pItem->type = Harbour::Item::STRING;
    pItem->item.asString.value     = szValue;
    pItem->item.asString.length    = nLen;
    pItem->item.asString.allocated = nAlloc;
@@ -375,7 +375,7 @@ PHB_ITEM hb_itemPutCConst( PHB_ITEM pItem, const char * szText )
 
    nLen = szText ? strlen(szText) : 0;
 
-   pItem->type = HB_IT_STRING;
+   pItem->type = Harbour::Item::STRING;
    pItem->item.asString.length = nLen;
    pItem->item.asString.allocated = 0;
    pItem->item.asString.value = const_cast<char*>(( nLen > 1 ? szText : hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0] ));
@@ -401,7 +401,7 @@ PHB_ITEM hb_itemPutCLConst( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
       pItem = hb_itemNew(nullptr);
    }
 
-   pItem->type = HB_IT_STRING;
+   pItem->type = Harbour::Item::STRING;
    pItem->item.asString.length = nLen;
    pItem->item.asString.allocated = 0;
 
@@ -443,7 +443,7 @@ PHB_ITEM hb_itemPutCPtr( PHB_ITEM pItem, char * szText )
 
    nLen = szText ? strlen(szText) : 0;
 
-   pItem->type = HB_IT_STRING;
+   pItem->type = Harbour::Item::STRING;
    pItem->item.asString.length = nLen;
    if( nLen <= 1 )
    {
@@ -481,7 +481,7 @@ PHB_ITEM hb_itemPutCLPtr( PHB_ITEM pItem, char * szText, HB_SIZE nLen )
       pItem = hb_itemNew(nullptr);
    }
 
-   pItem->type = HB_IT_STRING;
+   pItem->type = Harbour::Item::STRING;
    pItem->item.asString.length = nLen;
    if( nLen <= 1 )
    {
@@ -503,7 +503,7 @@ void hb_itemSetCMemo( PHB_ITEM pItem )
 {
    if( pItem && HB_IS_STRING(pItem) )
    {
-      pItem->type |= HB_IT_MEMOFLAG;
+      pItem->type |= Harbour::Item::MEMOFLAG;
    }
 }
 
@@ -1070,7 +1070,7 @@ PHB_ITEM hb_itemPutDS( PHB_ITEM pItem, const char * szDate )
       pItem = hb_itemNew(nullptr);
    }
 
-   pItem->type = HB_IT_DATE;
+   pItem->type = Harbour::Item::DATE;
    pItem->item.asDateTime.julian = hb_dateEncStr( szDate );
    pItem->item.asDateTime.time = 0;
 
@@ -1095,7 +1095,7 @@ PHB_ITEM hb_itemPutD( PHB_ITEM pItem, int iYear, int iMonth, int iDay )
       pItem = hb_itemNew(nullptr);
    }
 
-   pItem->type = HB_IT_DATE;
+   pItem->type = Harbour::Item::DATE;
    pItem->item.asDateTime.julian = hb_dateEncode( iYear, iMonth, iDay );
    pItem->item.asDateTime.time = 0;
 
@@ -1120,7 +1120,7 @@ PHB_ITEM hb_itemPutDL( PHB_ITEM pItem, long lJulian )
       pItem = hb_itemNew(nullptr);
    }
 
-   pItem->type = HB_IT_DATE;
+   pItem->type = Harbour::Item::DATE;
    pItem->item.asDateTime.julian = lJulian;
    pItem->item.asDateTime.time = 0;
 
@@ -1145,7 +1145,7 @@ PHB_ITEM hb_itemPutTS( PHB_ITEM pItem, const char * szDateTime )
       pItem = hb_itemNew(nullptr);
    }
 
-   pItem->type = HB_IT_TIMESTAMP;
+   pItem->type = Harbour::Item::TIMESTAMP;
    hb_timeStampStrRawGet( szDateTime, &pItem->item.asDateTime.julian, &pItem->item.asDateTime.time );
 
    return pItem;
@@ -1172,7 +1172,7 @@ PHB_ITEM hb_itemPutTD( PHB_ITEM pItem, double dTimeStamp )
    }
 
    hb_timeStampUnpackDT( dTimeStamp, &lJulian, &lMilliSec );
-   pItem->type = HB_IT_TIMESTAMP;
+   pItem->type = Harbour::Item::TIMESTAMP;
    pItem->item.asDateTime.julian = lJulian;
    pItem->item.asDateTime.time = lMilliSec;
 
@@ -1197,7 +1197,7 @@ PHB_ITEM hb_itemPutTDT( PHB_ITEM pItem, long lJulian, long lMilliSec )
       pItem = hb_itemNew(nullptr);
    }
 
-   pItem->type = HB_IT_TIMESTAMP;
+   pItem->type = Harbour::Item::TIMESTAMP;
    pItem->item.asDateTime.julian = lJulian;
    pItem->item.asDateTime.time = lMilliSec;
 
@@ -1222,7 +1222,7 @@ PHB_ITEM hb_itemPutL( PHB_ITEM pItem, HB_BOOL bValue )
       pItem = hb_itemNew(nullptr);
    }
 
-   pItem->type = HB_IT_LOGICAL;
+   pItem->type = Harbour::Item::LOGICAL;
    pItem->item.asLogical.value = bValue;
 
    return pItem;
@@ -1248,7 +1248,7 @@ PHB_ITEM hb_itemPutND( PHB_ITEM pItem, double dNumber )
       pItem = hb_itemNew(nullptr);
    }
 
-   pItem->type = HB_IT_DOUBLE;
+   pItem->type = Harbour::Item::DOUBLE;
    pItem->item.asDouble.length = HB_DBL_LENGTH( dNumber );
    pItem->item.asDouble.decimal = static_cast<HB_USHORT>(hb_stackSetStruct()->HB_SET_DECIMALS);
    pItem->item.asDouble.value = dNumber;
@@ -1274,7 +1274,7 @@ PHB_ITEM hb_itemPutNI( PHB_ITEM pItem, int iNumber )
       pItem = hb_itemNew(nullptr);
    }
 
-   pItem->type = HB_IT_INTEGER;
+   pItem->type = Harbour::Item::INTEGER;
    pItem->item.asInteger.value = iNumber;
    pItem->item.asInteger.length = HB_INT_LENGTH( iNumber );
 
@@ -1323,21 +1323,21 @@ PHB_ITEM hb_itemPutNS( PHB_ITEM pItem, HB_ISIZ nNumber )
    }
 
 #if HB_SIZE_MAX <= HB_VMUINT_MAX
-   pItem->type = HB_IT_INTEGER;
+   pItem->type = Harbour::Item::INTEGER;
    pItem->item.asInteger.value = nNumber;
    /* EXP limit used intentionally */
    pItem->item.asInteger.length = HB_INT_EXPLENGTH( nNumber );
 #else
    if( HB_LIM_INT( nNumber ) )
    {
-      pItem->type = HB_IT_INTEGER;
+      pItem->type = Harbour::Item::INTEGER;
       pItem->item.asInteger.value = static_cast<int>(nNumber);
       /* EXP limit used intentionally */
       pItem->item.asInteger.length = HB_INT_EXPLENGTH( nNumber );
    }
    else
    {
-      pItem->type = HB_IT_LONG;
+      pItem->type = Harbour::Item::LONG;
       pItem->item.asLong.value = nNumber;
       pItem->item.asLong.length = HB_LONG_LENGTH( nNumber );
    }
@@ -1366,11 +1366,11 @@ PHB_ITEM hb_itemPutNLL( PHB_ITEM pItem, HB_LONGLONG llNumber )
    }
 
 #if HB_VMLONG_MAX >= LONGLONG_MAX
-   pItem->type = HB_IT_LONG;
+   pItem->type = Harbour::Item::LONG;
    pItem->item.asLong.value = static_cast<HB_MAXINT>(llNumber);
    pItem->item.asLong.length = HB_LONG_LENGTH( llNumber );
 #else
-   pItem->type = HB_IT_DOUBLE;
+   pItem->type = Harbour::Item::DOUBLE;
    pItem->item.asDouble.value = static_cast<double>(llNumber);
    pItem->item.asDouble.length = HB_DBL_LENGTH( pItem->item.asDouble.value );
    pItem->item.asDouble.decimal = 0;
@@ -1399,14 +1399,14 @@ PHB_ITEM hb_itemPutNInt( PHB_ITEM pItem, HB_MAXINT nNumber )
 
    if( HB_LIM_INT( nNumber ) )
    {
-      pItem->type = HB_IT_INTEGER;
+      pItem->type = Harbour::Item::INTEGER;
       pItem->item.asInteger.value = static_cast<int>(nNumber);
       /* EXP limit used intentionally */
       pItem->item.asInteger.length = HB_INT_EXPLENGTH( nNumber );
    }
    else
    {
-      pItem->type = HB_IT_LONG;
+      pItem->type = Harbour::Item::LONG;
       pItem->item.asLong.value = nNumber;
       pItem->item.asLong.length = HB_LONG_LENGTH( nNumber );
    }
@@ -1493,7 +1493,7 @@ PHB_ITEM hb_itemPutNDLen( PHB_ITEM pItem, double dNumber, int iWidth, int iDec )
       iDec = hb_stackSetStruct()->HB_SET_DECIMALS;
    }
 
-   pItem->type = HB_IT_DOUBLE;
+   pItem->type = Harbour::Item::DOUBLE;
    pItem->item.asDouble.length = static_cast<HB_USHORT>(iWidth);
    pItem->item.asDouble.decimal = static_cast<HB_USHORT>(iDec);
    pItem->item.asDouble.value = dNumber;
@@ -1519,7 +1519,7 @@ PHB_ITEM hb_itemPutNDDec( PHB_ITEM pItem, double dNumber, int iDec )
       pItem = hb_itemNew(nullptr);
    }
 
-   pItem->type = HB_IT_DOUBLE;
+   pItem->type = Harbour::Item::DOUBLE;
    pItem->item.asDouble.length = HB_DBL_LENGTH( dNumber );
 
    if( iDec == HB_DEFAULT_DECIMALS )
@@ -1586,7 +1586,7 @@ PHB_ITEM hb_itemPutNILen( PHB_ITEM pItem, int iNumber, int iWidth )
       iWidth = HB_INT_LENGTH( iNumber );
    }
 
-   pItem->type = HB_IT_INTEGER;
+   pItem->type = Harbour::Item::INTEGER;
    pItem->item.asInteger.length = static_cast<HB_USHORT>(iWidth);
    pItem->item.asInteger.value = iNumber;
 
@@ -1617,7 +1617,7 @@ PHB_ITEM hb_itemPutNLLen( PHB_ITEM pItem, long lNumber, int iWidth )
       iWidth = HB_INT_LENGTH( lNumber );
    }
 
-   pItem->type = HB_IT_INTEGER;
+   pItem->type = Harbour::Item::INTEGER;
    pItem->item.asInteger.value = static_cast<int>(lNumber);
    pItem->item.asInteger.length = static_cast<HB_USHORT>(iWidth);
 #else
@@ -1626,7 +1626,7 @@ PHB_ITEM hb_itemPutNLLen( PHB_ITEM pItem, long lNumber, int iWidth )
       iWidth = HB_LONG_LENGTH( lNumber );
    }
 
-   pItem->type = HB_IT_LONG;
+   pItem->type = Harbour::Item::LONG;
    pItem->item.asLong.value = static_cast<HB_MAXINT>(lNumber);
    pItem->item.asLong.length = iWidth;
 #endif
@@ -1659,11 +1659,11 @@ PHB_ITEM hb_itemPutNLLLen( PHB_ITEM pItem, HB_LONGLONG llNumber, int iWidth )
       iWidth = HB_LONG_LENGTH( llNumber );
    }
 
-   pItem->type = HB_IT_LONG;
+   pItem->type = Harbour::Item::LONG;
    pItem->item.asLong.value = static_cast<HB_MAXINT>(llNumber);
    pItem->item.asLong.length = static_cast<HB_USHORT>(iWidth);
 #else
-   pItem->type = HB_IT_DOUBLE;
+   pItem->type = Harbour::Item::DOUBLE;
    pItem->item.asDouble.value = static_cast<double>(llNumber);
    if( iWidth <= 0 || iWidth >= HB_DEFAULT_WIDTH )
    {
@@ -1683,7 +1683,7 @@ PHB_ITEM hb_itemPutNumType( PHB_ITEM pItem, double dNumber, int iDec, int iType1
    HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutNumType( %p, %lf, %d, %i, %i)", static_cast<void*>(pItem), dNumber, iDec, iType1, iType2 ) );
 #endif
 
-   if( iDec || iType1 & HB_IT_DOUBLE || iType2 & HB_IT_DOUBLE )
+   if( iDec || iType1 & Harbour::Item::DOUBLE || iType2 & Harbour::Item::DOUBLE )
    {
       return hb_itemPutNDDec(pItem, dNumber, iDec);
    }
@@ -1723,7 +1723,7 @@ PHB_ITEM hb_itemPutPtr( PHB_ITEM pItem, void * pValue )
       pItem = hb_itemNew(nullptr);
    }
 
-   pItem->type = HB_IT_POINTER;
+   pItem->type = Harbour::Item::POINTER;
    pItem->item.asPointer.value = pValue;
    pItem->item.asPointer.collect =
    pItem->item.asPointer.single = HB_FALSE;
@@ -1749,7 +1749,7 @@ PHB_ITEM hb_itemPutPtrGC( PHB_ITEM pItem, void * pValue )
       pItem = hb_itemNew(nullptr);
    }
 
-   pItem->type = HB_IT_POINTER;
+   pItem->type = Harbour::Item::POINTER;
    pItem->item.asPointer.value = pValue;
    pItem->item.asPointer.collect = HB_TRUE;
    pItem->item.asPointer.single = HB_FALSE;
@@ -1777,7 +1777,7 @@ PHB_ITEM hb_itemPutPtrRawGC( PHB_ITEM pItem, void * pValue )
       pItem = hb_itemNew(nullptr);
    }
 
-   pItem->type = HB_IT_POINTER;
+   pItem->type = Harbour::Item::POINTER;
    pItem->item.asPointer.value = pValue;
    pItem->item.asPointer.collect = HB_TRUE;
    pItem->item.asPointer.single = HB_FALSE;
@@ -1803,7 +1803,7 @@ PHB_ITEM hb_itemPutSymbol( PHB_ITEM pItem, PHB_SYMB pSym )
       pItem = hb_itemNew(nullptr);
    }
 
-   pItem->type = HB_IT_SYMBOL;
+   pItem->type = Harbour::Item::SYMBOL;
    pItem->item.asSymbol.value        = pSym;
    pItem->item.asSymbol.stackstate   = nullptr;
    pItem->item.asSymbol.paramcnt     =
@@ -1904,7 +1904,7 @@ HB_TYPE hb_itemType( PHB_ITEM pItem )
    }
    else
    {
-      return HB_IT_NIL;
+      return Harbour::Item::NIL;
    }
 }
 
@@ -1918,39 +1918,39 @@ const char * hb_itemTypeStr( PHB_ITEM pItem )
    {
       switch( HB_ITEM_TYPE(pItem) )
       {
-         case HB_IT_ARRAY:
+         case Harbour::Item::ARRAY:
             return hb_arrayIsObject(pItem) ? "O" : "A";
 
-         case HB_IT_BLOCK:
+         case Harbour::Item::BLOCK:
             return "B";
 
-         case HB_IT_DATE:
+         case Harbour::Item::DATE:
             return "D";
 
-         case HB_IT_TIMESTAMP:
+         case Harbour::Item::TIMESTAMP:
             return "T";
 
-         case HB_IT_LOGICAL:
+         case Harbour::Item::LOGICAL:
             return "L";
 
-         case HB_IT_INTEGER:
-         case HB_IT_LONG:
-         case HB_IT_DOUBLE:
+         case Harbour::Item::INTEGER:
+         case Harbour::Item::LONG:
+         case Harbour::Item::DOUBLE:
             return "N";
 
-         case HB_IT_STRING:
+         case Harbour::Item::STRING:
             return "C";
 
-         case HB_IT_MEMO:
+         case Harbour::Item::MEMO:
             return "M";
 
-         case HB_IT_HASH:
+         case Harbour::Item::HASH:
             return "H";
 
-         case HB_IT_POINTER:
+         case Harbour::Item::POINTER:
             return "P";
 
-         case HB_IT_SYMBOL:
+         case Harbour::Item::SYMBOL:
             return "S";
       }
    }
@@ -1977,35 +1977,35 @@ static HB_IT_BASIC s_hb_itemTypeBasic( PHB_ITEM pItem )
 {
    switch( HB_ITEM_TYPE(pItem) )
    {
-      case HB_IT_ARRAY:
+      case Harbour::Item::ARRAY:
          return hb_arrayIsObject(pItem) ? HB_IT_O : HB_IT_A;
 
-      case HB_IT_BLOCK:
+      case Harbour::Item::BLOCK:
          return HB_IT_B;
 
-      case HB_IT_DATE:
-      case HB_IT_TIMESTAMP:
+      case Harbour::Item::DATE:
+      case Harbour::Item::TIMESTAMP:
          return HB_IT_T;
 
-      case HB_IT_LOGICAL:
+      case Harbour::Item::LOGICAL:
          return HB_IT_L;
 
-      case HB_IT_INTEGER:
-      case HB_IT_LONG:
-      case HB_IT_DOUBLE:
+      case Harbour::Item::INTEGER:
+      case Harbour::Item::LONG:
+      case Harbour::Item::DOUBLE:
          return HB_IT_N;
 
-      case HB_IT_STRING:
-      case HB_IT_MEMO:
+      case Harbour::Item::STRING:
+      case Harbour::Item::MEMO:
          return HB_IT_C;
 
-      case HB_IT_HASH:
+      case Harbour::Item::HASH:
          return HB_IT_H;
 
-      case HB_IT_POINTER:
+      case Harbour::Item::POINTER:
          return HB_IT_P;
 
-      case HB_IT_SYMBOL:
+      case Harbour::Item::SYMBOL:
          return HB_IT_S;
    }
 
@@ -2031,7 +2031,7 @@ void hb_itemInit( PHB_ITEM pItem )
 
    if( pItem )
    {
-      pItem->type = HB_IT_NIL;
+      pItem->type = Harbour::Item::NIL;
    }
 }
 
@@ -2044,39 +2044,39 @@ void hb_itemClear( PHB_ITEM pItem )
    HB_TYPE type;
 
    type = HB_ITEM_TYPERAW(pItem);
-   pItem->type = HB_IT_NIL;
+   pItem->type = Harbour::Item::NIL;
 
    /* GCLOCK enter */
-   if( type & HB_IT_STRING )
+   if( type & Harbour::Item::STRING )
    {
       if( pItem->item.asString.allocated )
       {
          hb_xRefFree( pItem->item.asString.value );
       }
    }
-   else if( type & HB_IT_ARRAY )
+   else if( type & Harbour::Item::ARRAY )
    {
       hb_gcRefFree( pItem->item.asArray.value );
    }
-   else if( type & HB_IT_BLOCK )
+   else if( type & Harbour::Item::BLOCK )
    {
       hb_gcRefFree( pItem->item.asBlock.value );
    }
-   else if( type & HB_IT_HASH )
+   else if( type & Harbour::Item::HASH )
    {
       hb_gcRefFree( pItem->item.asHash.value );
    }
-   else if( type & HB_IT_BYREF )
+   else if( type & Harbour::Item::BYREF )
    {
-      if( type & HB_IT_MEMVAR )
+      if( type & Harbour::Item::MEMVAR )
       {
          hb_memvarValueDecRef( pItem->item.asMemvar.value );
       }
-      else if( type & HB_IT_ENUM )     /* FOR EACH control variable */
+      else if( type & Harbour::Item::ENUM )     /* FOR EACH control variable */
       {
          hb_vmEnumRelease( pItem->item.asEnum.basePtr, pItem->item.asEnum.valuePtr );
       }
-      else if( type & HB_IT_EXTREF )
+      else if( type & Harbour::Item::EXTREF )
       {
          pItem->item.asExtRef.func->clear( pItem->item.asExtRef.value );
       }
@@ -2085,7 +2085,7 @@ void hb_itemClear( PHB_ITEM pItem )
          hb_gcRefFree( pItem->item.asRefer.BasePtr.array );
       }
    }
-   else if( type & HB_IT_POINTER )
+   else if( type & Harbour::Item::POINTER )
    {
       if( pItem->item.asPointer.collect )
       {
@@ -2114,7 +2114,7 @@ void hb_itemCopy( PHB_ITEM pDest, PHB_ITEM pSource )
    }
 
    hb_itemRawCpy(pDest, pSource);
-   pDest->type &= ~HB_IT_DEFAULT;
+   pDest->type &= ~Harbour::Item::DEFAULT;
 
    if( HB_IS_COMPLEX(pSource) )
    {
@@ -2146,7 +2146,7 @@ void hb_itemCopy( PHB_ITEM pDest, PHB_ITEM pSource )
          }
          else if( HB_IS_ENUM(pSource) )    /* enumerators cannot be copied */
          {
-            pDest->type = HB_IT_NIL;
+            pDest->type = Harbour::Item::NIL;
          }
          else if( HB_IS_EXTREF(pSource) )
          {
@@ -2258,8 +2258,8 @@ void hb_itemMove( PHB_ITEM pDest, PHB_ITEM pSource )
 
    /* GCLOCK enter */
    hb_itemRawCpy(pDest, pSource);
-   pDest->type &= ~HB_IT_DEFAULT;
-   pSource->type = HB_IT_NIL;
+   pDest->type &= ~Harbour::Item::DEFAULT;
+   pSource->type = Harbour::Item::NIL;
    /* GCLOCK leave */
 }
 
@@ -2292,8 +2292,8 @@ void hb_itemMoveRef( PHB_ITEM pDest, PHB_ITEM pSource )
 
    /* GCLOCK enter */
    hb_itemRawCpy(pDest, pSource);
-   pDest->type &= ~HB_IT_DEFAULT;
-   pSource->type = HB_IT_NIL;
+   pDest->type &= ~Harbour::Item::DEFAULT;
+   pSource->type = Harbour::Item::NIL;
    /* GCLOCK leave */
 }
 
@@ -2344,8 +2344,8 @@ void hb_itemMoveToRef( PHB_ITEM pDest, PHB_ITEM pSource )
 
    /* GCLOCK enter */
    hb_itemRawCpy(pDest, pSource);
-   pDest->type &= ~HB_IT_DEFAULT;
-   pSource->type = HB_IT_NIL;
+   pDest->type &= ~Harbour::Item::DEFAULT;
+   pSource->type = Harbour::Item::NIL;
    /* GCLOCK leave */
 }
 
@@ -2389,8 +2389,8 @@ void hb_itemSwap( PHB_ITEM pItem1, PHB_ITEM pItem2 )
    hb_itemRawCpy(&temp, pItem2);
    hb_itemRawCpy(pItem2, pItem1);
    hb_itemRawCpy(pItem1, &temp);
-   pItem1->type &= ~HB_IT_DEFAULT;
-   pItem2->type &= ~HB_IT_DEFAULT;
+   pItem1->type &= ~Harbour::Item::DEFAULT;
+   pItem2->type &= ~Harbour::Item::DEFAULT;
    /* GCLOCK leave */
 }
 
@@ -2623,7 +2623,7 @@ PHB_ITEM hb_itemReSizeString( PHB_ITEM pItem, HB_SIZE nSize )
       pItem->item.asString.length = nSize;
       pItem->item.asString.value[nSize] = '\0';
    }
-   pItem->type &= ~HB_IT_DEFAULT;
+   pItem->type &= ~Harbour::Item::DEFAULT;
 
    return pItem;
 }
@@ -2650,7 +2650,7 @@ PHB_ITEM hb_itemUnShareString( PHB_ITEM pItem )
       pItem->item.asString.value = szText;
       pItem->item.asString.allocated = nLen;
    }
-   pItem->type &= ~HB_IT_DEFAULT;
+   pItem->type &= ~Harbour::Item::DEFAULT;
 
    return pItem;
 }
@@ -3454,14 +3454,14 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
 
    switch( HB_ITEM_TYPE(pItem) )
    {
-      case HB_IT_STRING:
-      case HB_IT_MEMO:
+      case Harbour::Item::STRING:
+      case Harbour::Item::MEMO:
          buffer = const_cast<char*>(hb_itemGetCPtr(pItem));
          * nLen = hb_itemGetCLen(pItem);
          * bFreeReq = HB_FALSE;
          break;
 
-      case HB_IT_DATE:
+      case Harbour::Item::DATE:
       {
          HB_STACK_TLS_PRELOAD
          char szDate[9];
@@ -3475,7 +3475,7 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
          break;
       }
 
-      case HB_IT_TIMESTAMP:
+      case Harbour::Item::TIMESTAMP:
       {
          HB_STACK_TLS_PRELOAD
          char szDateTime[27];
@@ -3492,9 +3492,9 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
          break;
       }
 
-      case HB_IT_DOUBLE:
-      case HB_IT_INTEGER:
-      case HB_IT_LONG:
+      case Harbour::Item::DOUBLE:
+      case Harbour::Item::INTEGER:
+      case Harbour::Item::LONG:
       {
          HB_STACK_TLS_PRELOAD
          if( hb_stackSetStruct()->HB_SET_FIXED )
@@ -3521,19 +3521,19 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
          }
          break;
       }
-      case HB_IT_NIL:
+      case Harbour::Item::NIL:
          buffer = const_cast<char*>("NIL");
          *nLen = 3;
          *bFreeReq = HB_FALSE;
          break;
 
-      case HB_IT_LOGICAL:
+      case Harbour::Item::LOGICAL:
          buffer = const_cast<char*>(hb_itemGetL(pItem) ? ".T." : ".F.");
          *nLen = 3;
          *bFreeReq = HB_FALSE;
          break;
 
-      case HB_IT_SYMBOL:
+      case Harbour::Item::SYMBOL:
          *bFreeReq = HB_TRUE;
          *nLen = strlen(hb_itemGetSymbol(pItem)->szName) + 3;
          buffer = static_cast<char*>(hb_xgrab(*nLen + 1));
@@ -3544,7 +3544,7 @@ char * hb_itemString( PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq )
          buffer[*nLen] = '\0';
          break;
 
-      case HB_IT_POINTER:
+      case Harbour::Item::POINTER:
       {
          int size = ( sizeof(void*) << 1 ) + 3; /* n bytes for address + 0x + \0 */
          HB_PTRUINT addr = reinterpret_cast<HB_PTRUINT>(hb_itemGetPtr(pItem));
@@ -3587,15 +3587,15 @@ char * hb_itemPadConv( PHB_ITEM pItem, HB_SIZE * pnSize, HB_BOOL * bFreeReq )
    {
       switch( HB_ITEM_TYPE(pItem) )
       {
-         case HB_IT_STRING:
-         case HB_IT_MEMO:
-         case HB_IT_DATE:
-         case HB_IT_TIMESTAMP:
+         case Harbour::Item::STRING:
+         case Harbour::Item::MEMO:
+         case Harbour::Item::DATE:
+         case Harbour::Item::TIMESTAMP:
             return hb_itemString(pItem, pnSize, bFreeReq);
 
-         case HB_IT_DOUBLE:
-         case HB_IT_INTEGER:
-         case HB_IT_LONG:
+         case Harbour::Item::DOUBLE:
+         case Harbour::Item::INTEGER:
+         case Harbour::Item::LONG:
          {
             int i;
             char * buffer = hb_itemString(pItem, pnSize, bFreeReq);

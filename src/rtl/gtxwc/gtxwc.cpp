@@ -5982,16 +5982,16 @@ static HB_BOOL hb_gt_xwc_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          if( wnd->window && pInfo->pNewVal &&
              ( ( HB_IS_ARRAY(pInfo->pNewVal) &&
                  hb_arrayLen(pInfo->pNewVal) == static_cast<HB_SIZE>
-                 ( ( hb_arrayGetType(pInfo->pNewVal, 4) & HB_IT_NUMERIC ) ? 4 : 3 ) ) ||
+                 ( ( hb_arrayGetType(pInfo->pNewVal, 4) & Harbour::Item::NUMERIC ) ? 4 : 3 ) ) ||
                HB_IS_STRING(pInfo->pNewVal) ) )
          {
             XImage * xImage = nullptr;
             XWC_RECT rx;
 
             /* { pBitmap, iWidth, iHeight [, iDepth] } */
-            if( ( hb_arrayGetType(pInfo->pNewVal, 1) & ( HB_IT_POINTER | HB_IT_STRING ) ) &&
-                ( hb_arrayGetType(pInfo->pNewVal, 2) & HB_IT_NUMERIC ) &&
-                ( hb_arrayGetType(pInfo->pNewVal, 3) & HB_IT_NUMERIC ) )
+            if( ( hb_arrayGetType(pInfo->pNewVal, 1) & ( Harbour::Item::POINTER | Harbour::Item::STRING ) ) &&
+                ( hb_arrayGetType(pInfo->pNewVal, 2) & Harbour::Item::NUMERIC ) &&
+                ( hb_arrayGetType(pInfo->pNewVal, 3) & Harbour::Item::NUMERIC ) )
             {
                HB_SIZE nSize = hb_arrayGetCLen(pInfo->pNewVal, 1);
                int iWidth  = hb_arrayGetNI(pInfo->pNewVal, 2);

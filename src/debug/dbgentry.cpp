@@ -2187,5 +2187,5 @@ HB_FUNC( __DBGMODULEMATCH )
 
 HB_FUNC( __DBGSENDMSG )
 {
-   hb_dbg_objSendMessage( hb_parnl(1), hb_param(2, HB_IT_ANY), hb_param(3, HB_IT_ANY), 4 );
+   hb_dbg_objSendMessage( hb_parnl(1), hb_param(2, Harbour::Item::ANY), hb_param(3, Harbour::Item::ANY), 4 );
 }

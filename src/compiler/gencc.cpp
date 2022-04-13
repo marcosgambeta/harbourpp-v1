@@ -1817,12 +1817,12 @@ static HB_GENC_FUNC(hb_p_switch)
                "\t\ttype = hb_itemType(pSwitch);\n");
       if( fStr )
       {
-         fprintf(cargo->yyc, "\t\tpszText = ( type & HB_IT_STRING ) ? hb_itemGetCPtr(pSwitch) : nullptr;\n");
+         fprintf(cargo->yyc, "\t\tpszText = ( type & Harbour::Item::STRING ) ? hb_itemGetCPtr(pSwitch) : nullptr;\n");
          fprintf(cargo->yyc, "\t\tnLen = pszText ? hb_itemGetCLen(pSwitch) : 0;\n");
       }
       if( fNum )
       {
-         fprintf(cargo->yyc, "\t\tlVal = ( type & HB_IT_NUMINT ) ? hb_itemGetNL(pSwitch) : 0;\n\n");
+         fprintf(cargo->yyc, "\t\tlVal = ( type & Harbour::Item::NUMINT ) ? hb_itemGetNL(pSwitch) : 0;\n\n");
       }
    }
 
@@ -1832,7 +1832,7 @@ static HB_GENC_FUNC(hb_p_switch)
       switch( pFunc->pCode[nPCodePos] )
       {
          case HB_P_PUSHLONG:
-            fprintf(cargo->yyc, "\t\tif( ( type & HB_IT_NUMINT ) != 0 && lVal == %ldL )\n", HB_PCODE_MKLONG(&pFunc->pCode[nPCodePos + 1]));
+            fprintf(cargo->yyc, "\t\tif( ( type & Harbour::Item::NUMINT ) != 0 && lVal == %ldL )\n", HB_PCODE_MKLONG(&pFunc->pCode[nPCodePos + 1]));
             nPCodePos += 5;
             break;
          case HB_P_PUSHSTRSHORT:

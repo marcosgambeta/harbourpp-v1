@@ -50,7 +50,7 @@
 
 HB_FUNC( HB_ASCIIUPPER )
 {
-   PHB_ITEM pText = hb_param(1, HB_IT_STRING);
+   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText )
    {
@@ -82,7 +82,7 @@ HB_FUNC( HB_ASCIIUPPER )
 
 HB_FUNC( HB_ASCIILOWER )
 {
-   PHB_ITEM pText = hb_param(1, HB_IT_STRING);
+   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText )
    {

@@ -50,7 +50,7 @@
 
 HB_FUNC( HB_VALTOSTR )
 {
-   PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem )
    {

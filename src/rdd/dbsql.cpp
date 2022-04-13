@@ -138,8 +138,8 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
 {
    switch( hb_itemType(pValue) )
    {
-      case HB_IT_STRING:
-      case HB_IT_MEMO:
+      case Harbour::Item::STRING:
+      case Harbour::Item::MEMO:
       {
          HB_SIZE nLen = hb_itemGetCLen(pValue);
          HB_SIZE nCnt = 0;
@@ -173,7 +173,7 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
          break;
       }
 
-      case HB_IT_DATE:
+      case Harbour::Item::DATE:
       {
          char szDate[9];
 
@@ -195,7 +195,7 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
          break;
       }
 
-      case HB_IT_TIMESTAMP:
+      case Harbour::Item::TIMESTAMP:
       {
          long lDate, lTime;
          char szDateTime[24];
@@ -208,15 +208,15 @@ static HB_BOOL hb_exportBufSqlVar( PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const 
          break;
       }
 
-      case HB_IT_LOGICAL:
+      case Harbour::Item::LOGICAL:
          hb_addStrToFBuffer( pFileBuf, szDelim );
          hb_addToFBuffer( pFileBuf, hb_itemGetL(pValue) ? 'Y' : 'N' );
          hb_addStrToFBuffer( pFileBuf, szDelim );
          break;
 
-      case HB_IT_INTEGER:
-      case HB_IT_LONG:
-      case HB_IT_DOUBLE:
+      case Harbour::Item::INTEGER:
+      case Harbour::Item::LONG:
+      case Harbour::Item::DOUBLE:
       {
          char szResult[HB_MAX_DOUBLE_LENGTH];
          int iSize, iWidth, iDec;
@@ -395,11 +395,11 @@ HB_FUNC( __DBSQL )
       HB_BOOL fExport         = hb_parl(1);
       const char * szFileName = hb_parc(2);
       const char * szTable    = hb_parc(3);
-      PHB_ITEM pFields        = hb_param(4, HB_IT_ARRAY);
-      PHB_ITEM pFor           = hb_param(5, HB_IT_BLOCK);
-      PHB_ITEM pWhile         = hb_param(6, HB_IT_BLOCK);
-      PHB_ITEM pNext          = hb_param(7, HB_IT_NUMERIC);
-      PHB_ITEM pRecord        = HB_ISNIL(8) ? nullptr : hb_param(8, HB_IT_ANY);
+      PHB_ITEM pFields        = hb_param(4, Harbour::Item::ARRAY);
+      PHB_ITEM pFor           = hb_param(5, Harbour::Item::BLOCK);
+      PHB_ITEM pWhile         = hb_param(6, Harbour::Item::BLOCK);
+      PHB_ITEM pNext          = hb_param(7, Harbour::Item::NUMERIC);
+      PHB_ITEM pRecord        = HB_ISNIL(8) ? nullptr : hb_param(8, Harbour::Item::ANY);
       HB_BOOL fRest           = pWhile != nullptr || hb_parl(9);
       HB_BOOL fAppend         = hb_parl(10);
       HB_BOOL fInsert         = hb_parl(11);

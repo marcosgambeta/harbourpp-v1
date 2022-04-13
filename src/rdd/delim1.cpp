@@ -1189,7 +1189,7 @@ static HB_ERRCODE hb_delimInfo( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
          break;
       }
       case DBI_SETDELIMITER:
-         if( hb_itemType(pItem) & HB_IT_STRING )
+         if( hb_itemType(pItem) & Harbour::Item::STRING )
          {
             const char * szDelim = hb_itemGetCPtr(pItem);
 
@@ -1224,11 +1224,11 @@ static HB_ERRCODE hb_delimInfo( DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
           *    COPY TO test DELIMITED WITH ({"","|"})
           */
 #ifndef HB_CLP_STRICT
-         else if( hb_itemType(pItem) & HB_IT_ARRAY )
+         else if( hb_itemType(pItem) & Harbour::Item::ARRAY )
          {
             char cSeparator;
 
-            if( hb_arrayGetType(pItem, 1) & HB_IT_STRING )
+            if( hb_arrayGetType(pItem, 1) & Harbour::Item::STRING )
             {
                pArea->cDelim = *hb_arrayGetCPtr(pItem, 1);
             }

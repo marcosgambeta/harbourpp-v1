@@ -60,7 +60,7 @@ HB_FUNC( SETPOS )  /* Sets the screen position */
    /* NOTE: Both C5.2e and C5.3 does that, but it's only documented
             in C5.3. C5.2 documentation says it would return NIL.
             [vszakats] */
-   hb_itemReturn(hb_param(1, HB_IT_ANY));
+   hb_itemReturn(hb_param(1, Harbour::Item::ANY));
 #endif
 }
 

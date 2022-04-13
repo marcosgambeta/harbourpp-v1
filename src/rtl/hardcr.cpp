@@ -91,7 +91,7 @@ static char * hb_strHardCR( char * pszString, HB_SIZE nStringLen )
 
 HB_FUNC( HARDCR )
 {
-   PHB_ITEM pString = hb_param(1, HB_IT_STRING);
+   PHB_ITEM pString = hb_param(1, Harbour::Item::STRING);
 
    if( pString )
    {

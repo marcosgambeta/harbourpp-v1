@@ -54,8 +54,8 @@
 
 HB_FUNC( HB_AT )
 {
-   PHB_ITEM pSub  = hb_param(1, HB_IT_STRING);
-   PHB_ITEM pText = hb_param(2, HB_IT_STRING);
+   PHB_ITEM pSub  = hb_param(1, Harbour::Item::STRING);
+   PHB_ITEM pText = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSub )
    {
@@ -135,8 +135,8 @@ HB_FUNC( HB_AT )
 
 HB_FUNC( AT )
 {
-   PHB_ITEM pSub  = hb_param(1, HB_IT_STRING);
-   PHB_ITEM pText = hb_param(2, HB_IT_STRING);
+   PHB_ITEM pSub  = hb_param(1, Harbour::Item::STRING);
+   PHB_ITEM pText = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSub )
    {

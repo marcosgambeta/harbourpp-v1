@@ -175,7 +175,7 @@ PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer, HB_USHORT uiLocals, cons
        * evaluation of this codeblock
        */
       pLocals = static_cast<PHB_ITEM>(hb_xgrab((uiLocals + 1) * sizeof(HB_ITEM)));
-      pLocals[0].type = HB_IT_NIL;
+      pLocals[0].type = Harbour::Item::NIL;
 
       do
       {

@@ -2000,7 +2000,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
    {
       case HB_GTI_ISFULLSCREEN:
          pInfo->pResult = hb_itemPutL(pInfo->pResult, hb_gt_win_IsFullScreen());
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_LOGICAL )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL )
          {
             HB_BOOL fNewValue = hb_itemGetL(pInfo->pNewVal);
             if( hb_itemGetL(pInfo->pResult) != fNewValue )
@@ -2028,7 +2028,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          UINT uiCodePage = GetConsoleCP();
          UINT uiCodePageNew = hb_itemGetNI(pInfo->pNewVal);
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, uiCodePage);
-         if( ( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC ) && uiCodePageNew != uiCodePage )
+         if( ( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC ) && uiCodePageNew != uiCodePage )
          {
             SetConsoleCP( uiCodePageNew );
             SetConsoleOutputCP( uiCodePageNew );
@@ -2043,7 +2043,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
          dwLen = GetConsoleTitle( buff, HB_SIZEOFARRAY( buff ) );
          pInfo->pResult = HB_ITEMPUTSTRLEN(pInfo->pResult, buff, dwLen);
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING )
          {
             void * hTitle;
             SetConsoleTitle( HB_ITEMGETSTR( pInfo->pNewVal, &hTitle, nullptr ) );
@@ -2054,7 +2054,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_CLOSABLE:
          pInfo->pResult = hb_itemPutL(pInfo->pResult, s_fClosable);
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_LOGICAL )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL )
          {
             HB_BOOL fNewValue = hb_itemGetL(pInfo->pNewVal);
             if( fNewValue != s_fClosable )
@@ -2067,7 +2067,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_CLOSEMODE:
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, s_fClosable ? 0 : 2);
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC )
          {
             int iVal = hb_itemGetNI(pInfo->pNewVal);
             if( iVal >= 0 && iVal <= 2 && ( s_fClosable ? ( iVal != 0 ) : ( iVal == 0 ) ) )
@@ -2091,7 +2091,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_PALETTE:
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC )
          {
             int iIndex = hb_itemGetNI(pInfo->pNewVal);
 
@@ -2102,7 +2102,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
                pInfo->pResult = hb_itemPutNL(pInfo->pResult, colors[iIndex]);
 
-               if( fGet && ( hb_itemType(pInfo->pNewVal2) & HB_IT_NUMERIC ) )
+               if( fGet && ( hb_itemType(pInfo->pNewVal2) & Harbour::Item::NUMERIC ) )
                {
                   colors[iIndex] = hb_itemGetNL(pInfo->pNewVal2);
                   hb_gt_win_SetPalette( true, colors );
@@ -2127,7 +2127,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                hb_arraySetNL(pInfo->pResult, i + 1, colors[i]);
             }
 
-            if( hb_itemType(pInfo->pNewVal) & HB_IT_ARRAY )
+            if( hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY )
             {
                if( hb_arrayLen(pInfo->pNewVal) == 16 )
                {
@@ -2170,7 +2170,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_KBDSHIFTS:
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_win_getKbdState());
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC )
          {
             hb_gt_winapi_setKbdState( hb_itemGetNI(pInfo->pNewVal) );
          }
@@ -2178,7 +2178,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_KBDSPECIAL:
          pInfo->pResult = hb_itemPutL(pInfo->pResult, s_fSpecialKeyHandling);
-         if( s_fWin9x && hb_itemType(pInfo->pNewVal) & HB_IT_LOGICAL )
+         if( s_fWin9x && hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL )
          {
             s_fSpecialKeyHandling = hb_itemGetL(pInfo->pNewVal);
          }
@@ -2186,7 +2186,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_KBDALT:
          pInfo->pResult = hb_itemPutL(pInfo->pResult, s_fAltKeyHandling);
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_LOGICAL )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL )
          {
             s_fAltKeyHandling = hb_itemGetL(pInfo->pNewVal);
          }
@@ -2194,7 +2194,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_MOUSESTATUS:
          pInfo->pResult = hb_itemPutL(pInfo->pResult, s_fMouseEnable);
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_LOGICAL )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL )
          {
             s_fMouseEnable = hb_itemGetL(pInfo->pNewVal);
             SetConsoleMode( s_HInput, s_fMouseEnable ? ENABLE_MOUSE_INPUT : 0x0000 );
@@ -2202,7 +2202,7 @@ static HB_BOOL hb_gt_win_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_CLIPBOARDDATA:
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING )
 #if defined(UNICODE)
             hb_gt_winapi_setClipboard( CF_UNICODETEXT, pInfo->pNewVal );
 #else

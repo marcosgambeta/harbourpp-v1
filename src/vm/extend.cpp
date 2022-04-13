@@ -68,16 +68,16 @@ PHB_ITEM hb_param( int iParam, long lMask )
    {
       PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( pItem->type & HB_IT_BYREF )
+      if( pItem->type & Harbour::Item::BYREF )
       {
          pItem = hb_itemUnRef(pItem);
-         if( static_cast<HB_TYPE>(lMask) == HB_IT_BYREF )
+         if( static_cast<HB_TYPE>(lMask) == Harbour::Item::BYREF )
          {
             return pItem;
          }
       }
 
-      if( ( pItem->type & static_cast<HB_TYPE>(lMask) ) || static_cast<HB_TYPE>(lMask) == HB_IT_ANY )
+      if( ( pItem->type & static_cast<HB_TYPE>(lMask) ) || static_cast<HB_TYPE>(lMask) == Harbour::Item::ANY )
       {
          return pItem;
       }
@@ -90,7 +90,7 @@ PHB_ITEM hb_paramError( int iParam )
 {
    static HB_ITEM s_NIL;
 
-   PHB_ITEM pParam = hb_param(iParam, HB_IT_ANY);
+   PHB_ITEM pParam = hb_param(iParam, Harbour::Item::ANY);
 
    if( pParam == nullptr )
    {
@@ -120,7 +120,7 @@ HB_ULONG hb_parinfo( int iParam )
          PHB_ITEM pItem = ( iParam == -1 ) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
          HB_TYPE uiType = HB_ITEM_TYPE(pItem);
 
-         if( uiType & HB_IT_BYREF )
+         if( uiType & Harbour::Item::BYREF )
          {
             uiType |= HB_ITEM_TYPE( hb_itemUnRef(pItem) );
          }
@@ -142,7 +142,7 @@ HB_SIZE hb_parinfa( int iParamNum, HB_SIZE nArrayIndex )
 
    PHB_ITEM pArray;
 
-   pArray = hb_param(iParamNum, HB_IT_ARRAY);
+   pArray = hb_param(iParamNum, Harbour::Item::ARRAY);
 
    if( pArray )
    {

@@ -58,13 +58,13 @@ HB_FUNC( AFIELDS )
 {
    HB_USHORT uiFields, uiCount;
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   PHB_ITEM pName = hb_param(1, HB_IT_ARRAY);
-   PHB_ITEM pType = hb_param(2, HB_IT_ARRAY);
-   PHB_ITEM pLen = hb_param(3, HB_IT_ARRAY);
-   PHB_ITEM pDec = hb_param(4, HB_IT_ARRAY);
+   PHB_ITEM pName = hb_param(1, Harbour::Item::ARRAY);
+   PHB_ITEM pType = hb_param(2, Harbour::Item::ARRAY);
+   PHB_ITEM pLen = hb_param(3, Harbour::Item::ARRAY);
+   PHB_ITEM pDec = hb_param(4, Harbour::Item::ARRAY);
 
 #ifdef DBS_FLAG
-   PHB_ITEM pFlags = hb_param(5, HB_IT_ARRAY);
+   PHB_ITEM pFlags = hb_param(5, Harbour::Item::ARRAY);
 #else
    PHB_ITEM pFlags = nullptr;
 #endif
@@ -203,42 +203,42 @@ HB_FUNC( DBEVAL )
    {
       DBEVALINFO pEvalInfo;
       memset(&pEvalInfo, 0, sizeof(pEvalInfo));
-      pEvalInfo.itmBlock = hb_param(1, HB_IT_BLOCK);
+      pEvalInfo.itmBlock = hb_param(1, Harbour::Item::BLOCK);
       if( !pEvalInfo.itmBlock )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
          return;
       }
 
-      pEvalInfo.dbsci.itmCobFor = hb_param(2, HB_IT_BLOCK);
+      pEvalInfo.dbsci.itmCobFor = hb_param(2, Harbour::Item::BLOCK);
       if( !pEvalInfo.dbsci.itmCobFor && !HB_ISNIL(2) )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
          return;
       }
 
-      pEvalInfo.dbsci.itmCobWhile = hb_param(3, HB_IT_BLOCK);
+      pEvalInfo.dbsci.itmCobWhile = hb_param(3, Harbour::Item::BLOCK);
       if( !pEvalInfo.dbsci.itmCobWhile && !HB_ISNIL(3) )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
          return;
       }
 
-      pEvalInfo.dbsci.lNext = hb_param(4, HB_IT_NUMERIC);
+      pEvalInfo.dbsci.lNext = hb_param(4, Harbour::Item::NUMERIC);
       if( !pEvalInfo.dbsci.lNext && !HB_ISNIL(4) )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
          return;
       }
 
-      pEvalInfo.dbsci.itmRecID = hb_param(5, HB_IT_NUMERIC);
+      pEvalInfo.dbsci.itmRecID = hb_param(5, Harbour::Item::NUMERIC);
       if( !pEvalInfo.dbsci.itmRecID && !HB_ISNIL(5) )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
          return;
       }
 
-      pEvalInfo.dbsci.fRest = hb_param(6, HB_IT_LOGICAL);
+      pEvalInfo.dbsci.fRest = hb_param(6, Harbour::Item::LOGICAL);
       if( !pEvalInfo.dbsci.fRest && !HB_ISNIL(6) )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
@@ -357,12 +357,12 @@ HB_FUNC( DBCREATE )
     */
 
    szFileName = hb_parc(1);
-   pStruct = hb_param(2, HB_IT_ARRAY);
+   pStruct = hb_param(2, Harbour::Item::ARRAY);
    szDriver = hb_parc(3);
    fKeepOpen = HB_ISLOG(4);
    fCurrArea = fKeepOpen && !hb_parl(4);
    szAlias = hb_parc(5);
-   pDelim = hb_param(6, HB_IT_ANY);
+   pDelim = hb_param(6, Harbour::Item::ANY);
    szCpId = hb_parc(7);
    ulConnection = hb_parnl(8);
 
@@ -390,10 +390,10 @@ HB_FUNC( DBCREATE )
 
       /* Validate items types of fields */
       if( hb_arrayLen(pFieldDesc) < 4 ||
-          !( hb_arrayGetType(pFieldDesc, 1) & HB_IT_STRING ) ||
-          !( hb_arrayGetType(pFieldDesc, 2) & HB_IT_STRING ) ||
-          !( hb_arrayGetType(pFieldDesc, 3) & HB_IT_NUMERIC ) ||
-          !( hb_arrayGetType(pFieldDesc, 4) & HB_IT_NUMERIC ) )
+          !( hb_arrayGetType(pFieldDesc, 1) & Harbour::Item::STRING ) ||
+          !( hb_arrayGetType(pFieldDesc, 2) & Harbour::Item::STRING ) ||
+          !( hb_arrayGetType(pFieldDesc, 3) & Harbour::Item::NUMERIC ) ||
+          !( hb_arrayGetType(pFieldDesc, 4) & Harbour::Item::NUMERIC ) )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
          return;
@@ -418,7 +418,7 @@ HB_FUNC( HB_DBCREATETEMP )
    HB_ULONG ulConnection;
 
    szAlias = hb_parc(1);
-   pStruct = hb_param(2, HB_IT_ARRAY);
+   pStruct = hb_param(2, Harbour::Item::ARRAY);
    szDriver = hb_parc(3);
    szCpId = hb_parc(4);
    ulConnection = hb_parnl(5);
@@ -447,10 +447,10 @@ HB_FUNC( HB_DBCREATETEMP )
 
       /* Validate items types of fields */
       if( hb_arrayLen(pFieldDesc) < 4 ||
-          !( hb_arrayGetType(pFieldDesc, 1) & HB_IT_STRING ) ||
-          !( hb_arrayGetType(pFieldDesc, 2) & HB_IT_STRING ) ||
-          !( hb_arrayGetType(pFieldDesc, 3) & HB_IT_NUMERIC ) ||
-          !( hb_arrayGetType(pFieldDesc, 4) & HB_IT_NUMERIC ) )
+          !( hb_arrayGetType(pFieldDesc, 1) & Harbour::Item::STRING ) ||
+          !( hb_arrayGetType(pFieldDesc, 2) & Harbour::Item::STRING ) ||
+          !( hb_arrayGetType(pFieldDesc, 3) & Harbour::Item::NUMERIC ) ||
+          !( hb_arrayGetType(pFieldDesc, 4) & Harbour::Item::NUMERIC ) )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
          return;
@@ -488,12 +488,12 @@ HB_FUNC( __DBOPENSDF )
     */
 
    szFileName = hb_parc(1);
-   pStruct = hb_param(2, HB_IT_ARRAY);
+   pStruct = hb_param(2, Harbour::Item::ARRAY);
    szDriver = hb_parc(3);
    fKeepOpen = HB_ISLOG(4);
    fCurrArea = fKeepOpen && !hb_parl(4);
    szAlias = hb_parc(5);
-   pDelim = hb_param(6, HB_IT_ANY);
+   pDelim = hb_param(6, Harbour::Item::ANY);
    szCpId = hb_parc(7);
    ulConnection = hb_parnl(8);
 
@@ -510,10 +510,10 @@ HB_FUNC( __DBOPENSDF )
 
       /* Validate items types of fields */
       if( hb_arrayLen(pFieldDesc) < 4 ||
-          !( hb_arrayGetType(pFieldDesc, 1) & HB_IT_STRING ) ||
-          !( hb_arrayGetType(pFieldDesc, 2) & HB_IT_STRING ) ||
-          !( hb_arrayGetType(pFieldDesc, 3) & HB_IT_NUMERIC ) ||
-          !( hb_arrayGetType(pFieldDesc, 4) & HB_IT_NUMERIC ) )
+          !( hb_arrayGetType(pFieldDesc, 1) & Harbour::Item::STRING ) ||
+          !( hb_arrayGetType(pFieldDesc, 2) & Harbour::Item::STRING ) ||
+          !( hb_arrayGetType(pFieldDesc, 3) & Harbour::Item::NUMERIC ) ||
+          !( hb_arrayGetType(pFieldDesc, 4) & Harbour::Item::NUMERIC ) )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
          return;
@@ -582,7 +582,7 @@ HB_FUNC( DBGOTO )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
+      PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
       if( !pItem )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_NOVAR, nullptr, HB_ERR_FUNCNAME );
@@ -620,13 +620,13 @@ HB_FUNC( __DBLOCATE )
    {
       DBSCOPEINFO dbScopeInfo;
 
-      dbScopeInfo.itmCobFor   = hb_param(1, HB_IT_BLOCK);
+      dbScopeInfo.itmCobFor   = hb_param(1, Harbour::Item::BLOCK);
       dbScopeInfo.lpstrFor    = nullptr;
-      dbScopeInfo.itmCobWhile = hb_param(2, HB_IT_BLOCK);
+      dbScopeInfo.itmCobWhile = hb_param(2, Harbour::Item::BLOCK);
       dbScopeInfo.lpstrWhile  = nullptr;
-      dbScopeInfo.lNext       = hb_param(3, HB_IT_NUMERIC);
-      dbScopeInfo.itmRecID    = hb_param(4, HB_IT_NUMERIC);
-      dbScopeInfo.fRest       = hb_param(5, HB_IT_LOGICAL);
+      dbScopeInfo.lNext       = hb_param(3, Harbour::Item::NUMERIC);
+      dbScopeInfo.itmRecID    = hb_param(4, Harbour::Item::NUMERIC);
+      dbScopeInfo.fRest       = hb_param(5, Harbour::Item::LOGICAL);
 
       dbScopeInfo.fIgnoreFilter     = HB_TRUE;
       dbScopeInfo.fIncludeDeleted   = HB_TRUE;
@@ -651,7 +651,7 @@ HB_FUNC( __DBSETLOCATE )
 
    if( pArea )
    {
-      PHB_ITEM pLocate = hb_param(1, HB_IT_BLOCK);
+      PHB_ITEM pLocate = hb_param(1, Harbour::Item::BLOCK);
       if( pLocate )
       {
          DBSCOPEINFO pScopeInfo;
@@ -686,14 +686,14 @@ HB_FUNC( __DBPACK )
        * Additional feature: __dbPack( [<bBlock>, [<nEvery>] )
        * Code Block to execute for every record.
        */
-      PHB_ITEM pBlock = hb_param(1, HB_IT_BLOCK);
+      PHB_ITEM pBlock = hb_param(1, Harbour::Item::BLOCK);
       if( pBlock )
       {
          PHB_ITEM pEvery;
          hb_itemRelease(pArea->valResult);
          pArea->valResult = hb_itemArrayNew(2);
          hb_arraySet(pArea->valResult, 1, pBlock);
-         pEvery = hb_param(2, HB_IT_NUMERIC);
+         pEvery = hb_param(2, Harbour::Item::NUMERIC);
          if( pEvery )
          {
             hb_arraySet(pArea->valResult, 2, pEvery);
@@ -734,7 +734,7 @@ HB_FUNC( DBRLOCK )
    {
       DBLOCKINFO dbLockInfo;
       dbLockInfo.fResult = HB_FALSE;
-      dbLockInfo.itmRecID = hb_param(1, HB_IT_ANY);
+      dbLockInfo.itmRecID = hb_param(1, Harbour::Item::ANY);
       if( !dbLockInfo.itmRecID || HB_ISNIL(1) )
       {
          dbLockInfo.uiMethod = DBLM_EXCLUSIVE;
@@ -774,7 +774,7 @@ HB_FUNC( DBRUNLOCK )
 
    if( pArea )
    {
-      SELF_UNLOCK( pArea, hb_param(1, HB_IT_ANY) );
+      SELF_UNLOCK( pArea, hb_param(1, Harbour::Item::ANY) );
    }
    else
    {
@@ -790,7 +790,7 @@ HB_FUNC( DBSEEK )
    {
       if( !HB_ISNIL(1) )
       {
-         PHB_ITEM pKey = hb_param(1, HB_IT_ANY);
+         PHB_ITEM pKey = hb_param(1, Harbour::Item::ANY);
          HB_BOOL bSoftSeek = HB_ISLOG(2) ? ( HB_BOOL ) hb_parl(2) : hb_setGetSoftSeek();
          HB_BOOL bFindLast = hb_parl(3) /* HB_EXTENSION */, fFound = HB_FALSE;
          if( SELF_SEEK( pArea, bSoftSeek, pKey, bFindLast ) == HB_SUCCESS )
@@ -849,7 +849,7 @@ HB_FUNC( __DBSETFOUND )
 
    if( pArea )
    {
-      PHB_ITEM pFound = hb_param(1, HB_IT_LOGICAL);
+      PHB_ITEM pFound = hb_param(1, Harbour::Item::LOGICAL);
       if( pFound )
       {
          pArea->fFound = hb_itemGetL(pFound);
@@ -866,8 +866,8 @@ HB_FUNC( DBSETFILTER )
       PHB_ITEM pBlock, pText;
       DBFILTERINFO pFilterInfo;
 
-      pBlock = hb_param(1, HB_IT_BLOCK);
-      pText = hb_param(2, HB_IT_STRING);
+      pBlock = hb_param(1, Harbour::Item::BLOCK);
+      pText = hb_param(2, Harbour::Item::STRING);
       /* Cl*pper allows to set text filter without codeblock. In local
          RDDs it effectively does nothing and only dbFilter() returns it
          but RDDs with automatic filter optimization like CL53/DBFCDX /
@@ -1151,7 +1151,7 @@ HB_FUNC( FIELDPUT )
 
       if( uiIndex > 0 )
       {
-         PHB_ITEM pItem = hb_param(2, HB_IT_ANY);
+         PHB_ITEM pItem = hb_param(2, Harbour::Item::ANY);
          if( pItem && !HB_IS_NIL(pItem) )
          {
             if( SELF_PUTVALUE( pArea, uiIndex, pItem ) == HB_SUCCESS )
@@ -1326,7 +1326,7 @@ HB_FUNC( ORDBAGNAME )
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
 
-      pOrderInfo.itmOrder = hb_param(1, HB_IT_ANY);
+      pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
       if( pOrderInfo.itmOrder && !HB_IS_STRING(pOrderInfo.itmOrder) )
       {
          if( HB_IS_NIL(pOrderInfo.itmOrder) )
@@ -1367,22 +1367,22 @@ HB_FUNC( ORDCONDSET )
 
       lpdbOrdCondInfo = static_cast<LPDBORDERCONDINFO>(hb_xgrab(sizeof(DBORDERCONDINFO)));
       lpdbOrdCondInfo->abFor = hb_parclen(1) > 0 ? hb_strdup(hb_parc(1)) : nullptr;
-      pItem = hb_param(2, HB_IT_BLOCK);
+      pItem = hb_param(2, Harbour::Item::BLOCK);
       lpdbOrdCondInfo->itmCobFor = pItem ? hb_itemNew(pItem) : nullptr;
 
       lpdbOrdCondInfo->fAll = hb_parldef(3, true);
 
       lpdbOrdCondInfo->abWhile = hb_parclen(17) > 0 ? hb_strdup(hb_parc(17)) : nullptr;
-      pItem = hb_param(4, HB_IT_BLOCK);
+      pItem = hb_param(4, Harbour::Item::BLOCK);
       lpdbOrdCondInfo->itmCobWhile = pItem ? hb_itemNew(pItem) : nullptr;
 
-      pItem = hb_param(5, HB_IT_BLOCK);
+      pItem = hb_param(5, Harbour::Item::BLOCK);
       lpdbOrdCondInfo->itmCobEval = pItem ? hb_itemNew(pItem) : nullptr;
 
       lpdbOrdCondInfo->lStep         = hb_parnl(6);
-      lpdbOrdCondInfo->itmStartRecID = HB_ISNIL(7) ? nullptr : hb_itemNew(hb_param(7, HB_IT_ANY));
+      lpdbOrdCondInfo->itmStartRecID = HB_ISNIL(7) ? nullptr : hb_itemNew(hb_param(7, Harbour::Item::ANY));
       lpdbOrdCondInfo->lNextCount    = hb_parnl(8);
-      lpdbOrdCondInfo->itmRecID      = HB_ISNIL(9) ? nullptr : hb_itemNew(hb_param(9, HB_IT_ANY));
+      lpdbOrdCondInfo->itmRecID      = HB_ISNIL(9) ? nullptr : hb_itemNew(hb_param(9, Harbour::Item::ANY));
       lpdbOrdCondInfo->fRest         = hb_parl(10);
       lpdbOrdCondInfo->fDescending   = hb_parl(11);
       /* 12th parameter is always nil in CL5.3, in CL5.2 it's compound flag */
@@ -1447,7 +1447,7 @@ HB_FUNC( ORDCREATE )
       dbOrderInfo.atomBagName = hb_parcx(2);
       dbOrderInfo.itmOrder = nullptr;
       dbOrderInfo.fUnique = HB_ISLOG(5) ? ( HB_BOOL ) hb_parl(5) : hb_setGetUnique();
-      dbOrderInfo.abExpr = hb_param(3, HB_IT_STRING);
+      dbOrderInfo.abExpr = hb_param(3, Harbour::Item::STRING);
       if( ( ( dbOrderInfo.abBagName == nullptr || dbOrderInfo.abBagName[0] == 0 ) &&
             ( dbOrderInfo.atomBagName == nullptr || dbOrderInfo.atomBagName[0] == 0 ) ) ||
           !dbOrderInfo.abExpr )
@@ -1455,11 +1455,11 @@ HB_FUNC( ORDCREATE )
          hb_errRT_DBCMD( EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
          return;
       }
-      dbOrderInfo.itmCobExpr = hb_param(4, HB_IT_BLOCK);
+      dbOrderInfo.itmCobExpr = hb_param(4, Harbour::Item::BLOCK);
 
       dbConstrInfo.abConstrName = hb_parc(6);
       dbConstrInfo.abTargetName = hb_parc(7);
-      dbConstrInfo.itmRelationKey = hb_param(8, HB_IT_ARRAY);
+      dbConstrInfo.itmRelationKey = hb_param(8, Harbour::Item::ARRAY);
       if( dbConstrInfo.abConstrName && dbConstrInfo.abTargetName && dbConstrInfo.itmRelationKey )
       {
          dbConstrInfo.fEnabled = hb_parl(9);
@@ -1486,7 +1486,7 @@ HB_FUNC( ORDBAGCLEAR )
    {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.atomBagName = hb_param(1, HB_IT_STRING | HB_IT_NUMERIC);
+      pOrderInfo.atomBagName = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
       hb_retl(SELF_ORDLSTDELETE(pArea, &pOrderInfo) == HB_SUCCESS);
    }
    else
@@ -1503,8 +1503,8 @@ HB_FUNC( ORDDESTROY )
    {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.itmOrder = hb_param(1, HB_IT_STRING | HB_IT_NUMERIC);
-      pOrderInfo.atomBagName = hb_param(2, HB_IT_STRING);
+      pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
+      pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       hb_retl(SELF_ORDDESTROY(pArea, &pOrderInfo) == HB_SUCCESS);
    }
    else
@@ -1520,7 +1520,7 @@ HB_FUNC( ORDFOR )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      pOrderInfo.itmOrder = hb_param(1, HB_IT_ANY);
+      pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
       if( pOrderInfo.itmOrder && !HB_IS_STRING(pOrderInfo.itmOrder) )
       {
          if( HB_IS_NIL(pOrderInfo.itmOrder) )
@@ -1540,8 +1540,8 @@ HB_FUNC( ORDFOR )
             return;
          }
       }
-      pOrderInfo.atomBagName = hb_param(2, HB_IT_STRING);
-      pOrderInfo.itmNewVal = hb_param(3, HB_IT_STRING);
+      pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
+      pOrderInfo.itmNewVal = hb_param(3, Harbour::Item::STRING);
       pOrderInfo.itmResult = hb_itemPutC(nullptr, nullptr);
       pOrderInfo.itmCobExpr = nullptr;
       pOrderInfo.fAllTags = HB_FALSE;
@@ -1562,7 +1562,7 @@ HB_FUNC( ORDKEY )
    {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.itmOrder = hb_param(1, HB_IT_ANY);
+      pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
       if( pOrderInfo.itmOrder && !HB_IS_STRING(pOrderInfo.itmOrder) )
       {
          if( HB_IS_NIL(pOrderInfo.itmOrder) )
@@ -1582,7 +1582,7 @@ HB_FUNC( ORDKEY )
             return;
          }
       }
-      pOrderInfo.atomBagName = hb_param(2, HB_IT_STRING);
+      pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       pOrderInfo.itmResult = hb_itemPutC(nullptr, nullptr);
       SELF_ORDINFO( pArea, DBOI_EXPRESSION, &pOrderInfo );
       hb_itemReturnRelease(pOrderInfo.itmResult);
@@ -1606,8 +1606,8 @@ HB_FUNC( ORDLISTADD )
       hb_rddSetNetErr(false);
 
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.atomBagName = hb_param(1, HB_IT_STRING);
-      pOrderInfo.itmOrder    = hb_param(2, HB_IT_STRING);
+      pOrderInfo.atomBagName = hb_param(1, Harbour::Item::STRING);
+      pOrderInfo.itmOrder    = hb_param(2, Harbour::Item::STRING);
 
       if( !pOrderInfo.atomBagName )
       {
@@ -1675,7 +1675,7 @@ HB_FUNC( ORDNAME )
    {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.itmOrder = hb_param(1, HB_IT_ANY);
+      pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
       if( pOrderInfo.itmOrder )
       {
          if( HB_IS_NIL(pOrderInfo.itmOrder) )
@@ -1696,7 +1696,7 @@ HB_FUNC( ORDNAME )
          }
       }
 
-      pOrderInfo.atomBagName = hb_param(2, HB_IT_STRING);
+      pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       pOrderInfo.itmResult   = hb_itemPutC(nullptr, nullptr);
       SELF_ORDINFO( pArea, DBOI_NAME, &pOrderInfo );
       hb_itemReturnRelease(pOrderInfo.itmResult);
@@ -1715,8 +1715,8 @@ HB_FUNC( ORDNUMBER )
    {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.itmOrder = hb_param(1, HB_IT_STRING);
-      pOrderInfo.atomBagName = hb_param(2, HB_IT_STRING);
+      pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING);
+      pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       if( !( pOrderInfo.itmOrder || HB_ISNIL(1) ) || !( pOrderInfo.atomBagName || HB_ISNIL(2) ) )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
@@ -1740,8 +1740,8 @@ HB_FUNC( ORDSETFOCUS )
    {
       DBORDERINFO pInfo;
       memset(&pInfo, 0, sizeof(pInfo));
-      pInfo.itmOrder = hb_param(1, HB_IT_STRING | HB_IT_NUMERIC);
-      pInfo.atomBagName = hb_param(2, HB_IT_STRING);
+      pInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
+      pInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       pInfo.itmResult = hb_itemPutC(nullptr, nullptr);
       SELF_ORDLSTFOCUS( pArea, &pInfo );
       hb_itemReturnRelease(pInfo.itmResult);
@@ -1926,7 +1926,7 @@ HB_FUNC( ORDSCOPE )
          if( hb_pcount() > 1 && !HB_ISNIL(2) )
          {
             uiAction = DBOI_SCOPESET;
-            pInfo.itmNewVal = hb_param(2, HB_IT_ANY);
+            pInfo.itmNewVal = hb_param(2, Harbour::Item::ANY);
          }
          else
          {
@@ -1944,7 +1944,7 @@ HB_FUNC( ORDSCOPE )
             }
             else
             {
-               pInfo.itmNewVal = hb_param(2, HB_IT_ANY);
+               pInfo.itmNewVal = hb_param(2, Harbour::Item::ANY);
             }
          }
       }
@@ -2009,7 +2009,7 @@ HB_FUNC( DBSETRELATION )
       AREAP pChildArea;
       HB_AREANO uiChildArea;
 
-      if( hb_pcount() < 2 || hb_param(1, HB_IT_NUMERIC | HB_IT_STRING) == nullptr || !( HB_ISNIL(4) || HB_ISLOG(4) ) )
+      if( hb_pcount() < 2 || hb_param(1, Harbour::Item::NUMERIC | Harbour::Item::STRING) == nullptr || !( HB_ISNIL(4) || HB_ISLOG(4) ) )
       {
          hb_errRT_DBCMD( EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
          return;
@@ -2040,8 +2040,8 @@ HB_FUNC( DBSETRELATION )
          return;
       }
 
-      dbRelations.itmCobExpr = hb_itemNew(hb_param(2, HB_IT_BLOCK));
-      dbRelations.abKey = hb_itemNew(hb_param(3, HB_IT_STRING));
+      dbRelations.itmCobExpr = hb_itemNew(hb_param(2, Harbour::Item::BLOCK));
+      dbRelations.abKey = hb_itemNew(hb_param(3, Harbour::Item::STRING));
       dbRelations.isScoped = hb_parl(4);
       dbRelations.isOptimized = HB_FALSE;
       dbRelations.lpaChild = pChildArea;
@@ -2070,9 +2070,9 @@ HB_FUNC( __DBARRANGE )
    {
       DBSORTINFO dbSortInfo;
       /* structure with fields copied copied from source WorkArea */
-      PHB_ITEM pStruct = hb_param(2, HB_IT_ARRAY);
+      PHB_ITEM pStruct = hb_param(2, Harbour::Item::ARRAY);
       /* array with sorted fields in source WorkArea */
-      PHB_ITEM pFields = hb_param(8, HB_IT_ARRAY);
+      PHB_ITEM pFields = hb_param(8, Harbour::Item::ARRAY);
 
       memset(&dbSortInfo, 0, sizeof(dbSortInfo));
       errCode = hb_dbTransStruct( pSrcArea, pDstArea, &dbSortInfo.dbtri, nullptr, pStruct );
@@ -2080,13 +2080,13 @@ HB_FUNC( __DBARRANGE )
       {
          PHB_ITEM pTransItm;
 
-         dbSortInfo.dbtri.dbsci.itmCobFor   = hb_param(3, HB_IT_BLOCK);
+         dbSortInfo.dbtri.dbsci.itmCobFor   = hb_param(3, Harbour::Item::BLOCK);
          dbSortInfo.dbtri.dbsci.lpstrFor    = nullptr;
-         dbSortInfo.dbtri.dbsci.itmCobWhile = hb_param(4, HB_IT_BLOCK);
+         dbSortInfo.dbtri.dbsci.itmCobWhile = hb_param(4, Harbour::Item::BLOCK);
          dbSortInfo.dbtri.dbsci.lpstrWhile  = nullptr;
-         dbSortInfo.dbtri.dbsci.lNext       = hb_param(5, HB_IT_NUMERIC);
-         dbSortInfo.dbtri.dbsci.itmRecID    = HB_ISNIL(6) ? nullptr : hb_param(6, HB_IT_ANY);
-         dbSortInfo.dbtri.dbsci.fRest       = hb_param(7, HB_IT_LOGICAL);
+         dbSortInfo.dbtri.dbsci.lNext       = hb_param(5, Harbour::Item::NUMERIC);
+         dbSortInfo.dbtri.dbsci.itmRecID    = HB_ISNIL(6) ? nullptr : hb_param(6, Harbour::Item::ANY);
+         dbSortInfo.dbtri.dbsci.fRest       = hb_param(7, Harbour::Item::LOGICAL);
 
          dbSortInfo.dbtri.dbsci.fIgnoreFilter     =
          dbSortInfo.dbtri.dbsci.fLast             =
@@ -2206,7 +2206,7 @@ HB_FUNC( __DBTRANS )
       if( pSrcArea && pDstArea )
       {
          DBTRANSINFO dbTransInfo;
-         PHB_ITEM pFields = hb_param(2, HB_IT_ARRAY);
+         PHB_ITEM pFields = hb_param(2, Harbour::Item::ARRAY);
          HB_ERRCODE errCode;
 
          memset(&dbTransInfo, 0, sizeof(dbTransInfo));
@@ -2217,13 +2217,13 @@ HB_FUNC( __DBTRANS )
 
             hb_rddSelectWorkAreaNumber( dbTransInfo.lpaSource->uiArea );
 
-            dbTransInfo.dbsci.itmCobFor   = hb_param(3, HB_IT_BLOCK);
+            dbTransInfo.dbsci.itmCobFor   = hb_param(3, Harbour::Item::BLOCK);
             dbTransInfo.dbsci.lpstrFor    = nullptr;
-            dbTransInfo.dbsci.itmCobWhile = hb_param(4, HB_IT_BLOCK);
+            dbTransInfo.dbsci.itmCobWhile = hb_param(4, Harbour::Item::BLOCK);
             dbTransInfo.dbsci.lpstrWhile  = nullptr;
-            dbTransInfo.dbsci.lNext       = hb_param(5, HB_IT_NUMERIC);
-            dbTransInfo.dbsci.itmRecID    = HB_ISNIL(6) ? nullptr : hb_param(6, HB_IT_ANY);
-            dbTransInfo.dbsci.fRest       = hb_param(7, HB_IT_LOGICAL);
+            dbTransInfo.dbsci.lNext       = hb_param(5, Harbour::Item::NUMERIC);
+            dbTransInfo.dbsci.itmRecID    = HB_ISNIL(6) ? nullptr : hb_param(6, Harbour::Item::ANY);
+            dbTransInfo.dbsci.fRest       = hb_param(7, Harbour::Item::LOGICAL);
 
             dbTransInfo.dbsci.fIgnoreFilter     =
             dbTransInfo.dbsci.fLast             =
@@ -2285,17 +2285,17 @@ HB_FUNC( __DBAPP )
               hb_parc(1),                     /* file name */
               hb_parc(8),                     /* RDD */
               hb_parnl(9),                    /* connection */
-              hb_param(2, HB_IT_ARRAY),       /* Fields */
+              hb_param(2, Harbour::Item::ARRAY),       /* Fields */
               HB_FALSE,                       /* Export? */
-              hb_param(3, HB_IT_BLOCK),       /* cobFor */
+              hb_param(3, Harbour::Item::BLOCK),       /* cobFor */
               nullptr,                        /* lpStrFor */
-              hb_param(4, HB_IT_BLOCK),       /* cobWhile */
+              hb_param(4, Harbour::Item::BLOCK),       /* cobWhile */
               nullptr,                        /* lpStrWhile */
-              hb_param(5, HB_IT_NUMERIC),     /* Next */
-              HB_ISNIL(6) ? nullptr : hb_param(6, HB_IT_ANY), /* RecID */
-              hb_param(7, HB_IT_LOGICAL),     /* Rest */
+              hb_param(5, Harbour::Item::NUMERIC),     /* Next */
+              HB_ISNIL(6) ? nullptr : hb_param(6, Harbour::Item::ANY), /* RecID */
+              hb_param(7, Harbour::Item::LOGICAL),     /* Rest */
               hb_parc(10),                    /* Codepage */
-              hb_param(11, HB_IT_ANY)));      /* Delimiter */
+              hb_param(11, Harbour::Item::ANY)));      /* Delimiter */
    }
    else
    {
@@ -2314,20 +2314,20 @@ HB_FUNC( __DBCOPY )
    if( pArea )
    {
       hb_retl(HB_SUCCESS == hb_rddTransRecords(pArea,
-              hb_parc(1),                     /* file name */
-              hb_parc(8),                     /* RDD */
-              hb_parnl(9),                    /* connection */
-              hb_param(2, HB_IT_ARRAY),       /* Fields */
-              true,                           /* Export? */
-              hb_param(3, HB_IT_BLOCK),       /* cobFor */
-              nullptr,                        /* lpStrFor */
-              hb_param(4, HB_IT_BLOCK),       /* cobWhile */
-              nullptr,                        /* lpStrWhile */
-              hb_param(5, HB_IT_NUMERIC),     /* Next */
-              HB_ISNIL(6) ? nullptr : hb_param(6, HB_IT_ANY), /* RecID */
-              hb_param(7, HB_IT_LOGICAL),     /* Rest */
-              hb_parc(10),                    /* Codepage */
-              hb_param(11, HB_IT_ANY)));      /* Delimiter */
+              hb_parc(1),                                              /* file name */
+              hb_parc(8),                                              /* RDD */
+              hb_parnl(9),                                             /* connection */
+              hb_param(2, Harbour::Item::ARRAY),                       /* Fields */
+              true,                                                    /* Export? */
+              hb_param(3, Harbour::Item::BLOCK),                       /* cobFor */
+              nullptr,                                                 /* lpStrFor */
+              hb_param(4, Harbour::Item::BLOCK),                       /* cobWhile */
+              nullptr,                                                 /* lpStrWhile */
+              hb_param(5, Harbour::Item::NUMERIC),                              /* Next */
+              HB_ISNIL(6) ? nullptr : hb_param(6, Harbour::Item::ANY), /* RecID */
+              hb_param(7, Harbour::Item::LOGICAL),                     /* Rest */
+              hb_parc(10),                                             /* Codepage */
+              hb_param(11, Harbour::Item::ANY)));                      /* Delimiter */
    }
    else
    {
@@ -2362,7 +2362,7 @@ HB_FUNC( HB_RDDINFO )
    ulConnection = hb_parnl(4);
 
    pRDDNode = hb_rddFindNode( szDriver, &uiRddID );  /* find the RDDNODE */
-   pIndex = hb_param(1, HB_IT_NUMERIC);
+   pIndex = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pRDDNode && pIndex )
    {
@@ -2399,7 +2399,7 @@ HB_FUNC( HB_DBDROP )
 
    if( pRDDNode )
    {
-      hb_retl(SELF_DROP(pRDDNode, hb_param(1, HB_IT_STRING), hb_param(2, HB_IT_STRING), ulConnection) == HB_SUCCESS);
+      hb_retl(SELF_DROP(pRDDNode, hb_param(1, Harbour::Item::STRING), hb_param(2, Harbour::Item::STRING), ulConnection) == HB_SUCCESS);
    }
    else
    {
@@ -2429,7 +2429,7 @@ HB_FUNC( HB_DBEXISTS )
    }
    if( pRDDNode )
    {
-      hb_retl(SELF_EXISTS(pRDDNode, hb_param(1, HB_IT_STRING), hb_param(2, HB_IT_STRING), ulConnection) == HB_SUCCESS);
+      hb_retl(SELF_EXISTS(pRDDNode, hb_param(1, Harbour::Item::STRING), hb_param(2, Harbour::Item::STRING), ulConnection) == HB_SUCCESS);
    }
    else
    {
@@ -2459,9 +2459,9 @@ HB_FUNC( HB_DBRENAME )
       }
    }
 
-   pTable = hb_param(1, HB_IT_STRING);
-   pIndex = hb_param(2, HB_IT_STRING);
-   pNewName = hb_param(3, HB_IT_STRING);
+   pTable = hb_param(1, Harbour::Item::STRING);
+   pIndex = hb_param(2, Harbour::Item::STRING);
+   pNewName = hb_param(3, Harbour::Item::STRING);
    if( pIndex && !pNewName )
    {
       pNewName = pIndex;
@@ -2582,7 +2582,7 @@ HB_FUNC( HB_FIELDTYPE )
 
 HB_FUNC( HB_WAEVAL )
 {
-   PHB_ITEM pBlock = hb_param(1, HB_IT_BLOCK);
+   PHB_ITEM pBlock = hb_param(1, Harbour::Item::BLOCK);
 
    if( pBlock )
    {

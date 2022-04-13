@@ -2795,7 +2795,7 @@ static HB_BOOL hb_gt_crs_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
          case HB_GTI_ESCDELAY:
             pInfo->pResult = hb_itemPutNI(pInfo->pResult, s_ioBase->esc_delay);
-            if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
+            if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC )
                s_ioBase->esc_delay = hb_itemGetNI(pInfo->pNewVal);
             break;
 

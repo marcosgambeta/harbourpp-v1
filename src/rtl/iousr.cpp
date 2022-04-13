@@ -722,7 +722,7 @@ typedef HB_BOOL ( * HB_FILE_FUNC )( PHB_FILE_FUNCS pFuncs, const char * );
 /* IOUSR_Register( <aMethods>, <cPrefix> ) */
 HB_FUNC( IOUSR_REGISTER )
 {
-   PHB_ITEM pMthItm = hb_param(1, HB_IT_ARRAY);
+   PHB_ITEM pMthItm = hb_param(1, Harbour::Item::ARRAY);
    const char * pszPrefix = hb_parc(2);
 
    if( pMthItm && pszPrefix && *pszPrefix )

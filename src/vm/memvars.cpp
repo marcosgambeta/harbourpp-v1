@@ -93,7 +93,7 @@ static PHB_ITEM hb_memvarValueNew( void )
    PHB_ITEM pMemvar;
 
    pMemvar = static_cast<PHB_ITEM>(hb_xgrab(sizeof(HB_ITEM)));
-   pMemvar->type = HB_IT_NIL;
+   pMemvar->type = Harbour::Item::NIL;
 
    return pMemvar;
 }
@@ -199,9 +199,9 @@ PHB_ITEM hb_memvarDetachLocal( PHB_ITEM pLocal )
       PHB_ITEM pMemvar = hb_memvarValueNew();
 
       hb_itemRawCpy(pMemvar, pLocal);
-      pMemvar->type &= ~HB_IT_DEFAULT;
+      pMemvar->type &= ~Harbour::Item::DEFAULT;
 
-      pLocal->type = HB_IT_BYREF | HB_IT_MEMVAR;
+      pLocal->type = Harbour::Item::BYREF | Harbour::Item::MEMVAR;
       pLocal->item.asMemvar.value = pMemvar;
    }
 
@@ -290,7 +290,7 @@ static void hb_memvarAddPrivate( PHB_DYNS pDynSym, PHB_ITEM pValue )
    {
       hb_itemCopy(pMemvar, pValue);
       /* Remove MEMOFLAG if exists (assignment from field). */
-      pMemvar->type &= ~HB_IT_MEMOFLAG;
+      pMemvar->type &= ~Harbour::Item::MEMOFLAG;
    }
 }
 
@@ -398,7 +398,7 @@ void hb_memvarSetValue( PHB_SYMB pMemvarSymb, PHB_ITEM pItem )
          /* value is already created */
          hb_itemCopyToRef(pMemvar, pItem);
          /* Remove MEMOFLAG if exists (assignment from field). */
-         pMemvar->type &= ~HB_IT_MEMOFLAG;
+         pMemvar->type &= ~Harbour::Item::MEMOFLAG;
       }
       else
       {
@@ -507,7 +507,7 @@ void hb_memvarGetRefer( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
          else
          {
             /* value is already created */
-            pItem->type = HB_IT_BYREF | HB_IT_MEMVAR;
+            pItem->type = Harbour::Item::BYREF | Harbour::Item::MEMVAR;
             pItem->item.asMemvar.value = pMemvar;
             hb_xRefInc( pMemvar );
          }
@@ -534,7 +534,7 @@ void hb_memvarGetRefer( PHB_ITEM pItem, PHB_SYMB pMemvarSymb )
                else
                {
                   /* value is already created */
-                  pItem->type = HB_IT_BYREF | HB_IT_MEMVAR;
+                  pItem->type = Harbour::Item::BYREF | Harbour::Item::MEMVAR;
                   pItem->item.asMemvar.value = pMemvar;
                   hb_xRefInc( pMemvar );
                }
@@ -676,7 +676,7 @@ char * hb_memvarGetStrValuePtr( char * szVarName, HB_SIZE * pnLen )
  * This function creates a value for memvar variable
  *
  * pMemvar - an item that stores the name of variable - it can be either
- *          the HB_IT_SYMBOL (if created by PUBLIC statement) or HB_IT_STRING
+ *          the Harbour::Item::SYMBOL (if created by PUBLIC statement) or Harbour::Item::STRING
  *          (if created by direct call to __mvPublic() function)
  * iScope - the scope of created variable - if a variable with the same name
  *          exists already then it's value is hidden by new variable with
@@ -738,13 +738,13 @@ static void hb_memvarCreateFromDynSymbol( PHB_DYNS pDynVar, int iScope, PHB_ITEM
          {
             hb_itemCopy(pMemvar, pValue);
             /* Remove MEMOFLAG if exists (assignment from field). */
-            pMemvar->type &= ~HB_IT_MEMOFLAG;
+            pMemvar->type &= ~Harbour::Item::MEMOFLAG;
          }
          else
          {
             /* new PUBLIC variable - initialize it to .F.
              */
-            pMemvar->type = HB_IT_LOGICAL;
+            pMemvar->type = Harbour::Item::LOGICAL;
 
             /* NOTE: PUBLIC variables named CLIPPER and HARBOUR are initialized
                      to .T., this is normal Clipper behaviour. [vszakats] */
@@ -1145,7 +1145,7 @@ PHB_ITEM hb_memvarSaveInArray( int iScope, HB_BOOL fCopy )
             }
             else
             {
-               pItem->type = HB_IT_BYREF | HB_IT_MEMVAR;
+               pItem->type = Harbour::Item::BYREF | Harbour::Item::MEMVAR;
                pItem->item.asMemvar.value = pMemvar;
                hb_xRefInc( pMemvar );
             }
@@ -1202,7 +1202,7 @@ HB_FUNC( __MVPUBLIC )
    {
       for( int i = 1; i <= iCount; i++ )
       {
-         PHB_ITEM pMemvar = hb_param(i, HB_IT_ANY);
+         PHB_ITEM pMemvar = hb_param(i, Harbour::Item::ANY);
 
          if( pMemvar )
          {
@@ -1236,7 +1236,7 @@ HB_FUNC( __MVPRIVATE )
       hb_memvarResetPrivatesBase();
       for( int i = 1; i <= iCount; i++ )
       {
-         PHB_ITEM pMemvar = hb_param(i, HB_IT_ANY);
+         PHB_ITEM pMemvar = hb_param(i, Harbour::Item::ANY);
 
          if( pMemvar )
          {
@@ -1270,7 +1270,7 @@ HB_FUNC( __MVXRELEASE )
    {
       for( int i = 1; i <= iCount; i++ )
       {
-         PHB_ITEM pMemvar = hb_param(i, HB_IT_ANY);
+         PHB_ITEM pMemvar = hb_param(i, Harbour::Item::ANY);
 
          if( pMemvar )
          {
@@ -1317,7 +1317,7 @@ HB_FUNC( __MVSCOPE )
 
    if( hb_pcount() )
    {
-      PHB_ITEM pVarName = hb_param(1, HB_IT_STRING);
+      PHB_ITEM pVarName = hb_param(1, Harbour::Item::STRING);
 
       if( pVarName )
       {
@@ -1374,7 +1374,7 @@ HB_FUNC( __MVEXIST )
 
 HB_FUNC( __MVGET )
 {
-   PHB_ITEM pName = hb_param(1, HB_IT_STRING);
+   PHB_ITEM pName = hb_param(1, Harbour::Item::STRING);
 
    if( pName )
    {
@@ -1426,7 +1426,7 @@ HB_FUNC( __MVGET )
 
 HB_FUNC( __MVGETDEF )
 {
-   PHB_ITEM pName = hb_param(1, HB_IT_STRING);
+   PHB_ITEM pName = hb_param(1, Harbour::Item::STRING);
 
    if( pName )
    {
@@ -1440,7 +1440,7 @@ HB_FUNC( __MVGETDEF )
       }
       else if( hb_pcount() >= 2 )
       {
-         hb_itemReturn(hb_param(2, HB_IT_ANY));
+         hb_itemReturn(hb_param(2, Harbour::Item::ANY));
       }
    }
    else
@@ -1451,7 +1451,7 @@ HB_FUNC( __MVGETDEF )
 
 HB_FUNC( __MVPUT )
 {
-   PHB_ITEM pName = hb_param(1, HB_IT_STRING);
+   PHB_ITEM pName = hb_param(1, Harbour::Item::STRING);
    PHB_ITEM pValue = hb_paramError(2);
 
    if( pName )

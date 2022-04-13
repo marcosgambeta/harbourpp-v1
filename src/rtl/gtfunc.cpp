@@ -106,8 +106,8 @@ HB_FUNC( HB_GTINFO )
    {
       HB_GT_INFO gtInfo;
 
-      gtInfo.pNewVal  = hb_param(2, HB_IT_ANY);
-      gtInfo.pNewVal2 = hb_param(3, HB_IT_ANY);
+      gtInfo.pNewVal  = hb_param(2, Harbour::Item::ANY);
+      gtInfo.pNewVal2 = hb_param(3, Harbour::Item::ANY);
       gtInfo.pResult  = nullptr;
 
       hb_gtInfo( hb_parni(1), &gtInfo );
@@ -129,8 +129,8 @@ HB_FUNC( HB_GTVERSION )
 
 HB_FUNC( HB_GTALERT )
 {
-   hb_retni(hb_gtAlert(hb_param(1, HB_IT_ANY),
-                       hb_param(2, HB_IT_ANY),
+   hb_retni(hb_gtAlert(hb_param(1, Harbour::Item::ANY),
+                       hb_param(2, Harbour::Item::ANY),
                        HB_ISCHAR(3) ? hb_gtColorToN(hb_parc(3)) : hb_parni(3) /* iClrNorm */,
                        HB_ISCHAR(4) ? hb_gtColorToN(hb_parc(4)) : hb_parni(4) /* iClrHigh */,
                        hb_parnd(5)));

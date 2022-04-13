@@ -214,11 +214,11 @@ HB_FUNC( HB_LIBLOAD )
       pArgs = hb_itemArrayNew(iPCount - 1);
       for( int i = 2; i <= iPCount; ++i )
       {
-         hb_arraySet(pArgs, i, hb_param(i, HB_IT_ANY));
+         hb_arraySet(pArgs, i, hb_param(i, Harbour::Item::ANY));
       }
    }
 
-   hb_itemReturnRelease(hb_libLoad( hb_param(1, HB_IT_ANY), pArgs ));
+   hb_itemReturnRelease(hb_libLoad( hb_param(1, Harbour::Item::ANY), pArgs ));
 
    if( pArgs )
    {
@@ -228,7 +228,7 @@ HB_FUNC( HB_LIBLOAD )
 
 HB_FUNC( HB_LIBFREE )
 {
-   hb_retl(hb_libFree(hb_param(1, HB_IT_ANY)));
+   hb_retl(hb_libFree(hb_param(1, Harbour::Item::ANY)));
 }
 
 HB_FUNC( HB_LIBERROR )
@@ -249,7 +249,7 @@ HB_FUNC( HB_LIBGETFUNSYM )
 
    if( szFuncName )
    {
-      void * hDynLib = hb_libHandle( hb_param(1, HB_IT_ANY) );
+      void * hDynLib = hb_libHandle( hb_param(1, Harbour::Item::ANY) );
 
       if( hDynLib )
       {

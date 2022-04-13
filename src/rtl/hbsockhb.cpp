@@ -314,7 +314,7 @@ int hb_sockexRegister( const HB_SOCKET_FILTER * pFilter )
 
 static HB_BOOL s_socketaddrParam( int iParam, void ** pAddr, unsigned int * puiLen )
 {
-   PHB_ITEM pItem = hb_param(iParam, HB_IT_ARRAY);
+   PHB_ITEM pItem = hb_param(iParam, Harbour::Item::ARRAY);
 
    if( pItem && hb_socketAddrFromItem( pAddr, puiLen, pItem ) )
    {
@@ -1025,7 +1025,7 @@ HB_FUNC( HB_SOCKETCLOSE )
 
    if( pSock )
    {
-      hb_sockexItemClear( hb_param(1, HB_IT_POINTER) );
+      hb_sockexItemClear( hb_param(1, Harbour::Item::POINTER) );
       hb_retl(hb_sockexClose(pSock, true) == 0);
    }
 }
@@ -1117,7 +1117,7 @@ HB_FUNC( HB_SOCKETCONNECT )
 
       if( fResult )
       {
-         hb_sockexSetShutDown( hb_sockexItemGet( hb_param(1, HB_IT_POINTER) ), true );
+         hb_sockexSetShutDown( hb_sockexItemGet( hb_param(1, Harbour::Item::POINTER) ), true );
       }
       hb_retl(fResult);
       hb_xfree(addr);
@@ -1191,7 +1191,7 @@ HB_FUNC( HB_SOCKETRECV )
 
    if( pSock )
    {
-      PHB_ITEM pItem = hb_param(2, HB_IT_STRING);
+      PHB_ITEM pItem = hb_param(2, Harbour::Item::STRING);
       char * pBuffer;
       HB_SIZE nLen;
 
@@ -1221,7 +1221,7 @@ HB_FUNC( HB_SOCKETRECVFROM )
 
    if( socket != HB_NO_SOCKET )
    {
-      PHB_ITEM pItem = hb_param(2, HB_IT_STRING);
+      PHB_ITEM pItem = hb_param(2, Harbour::Item::STRING);
       char * pBuffer;
       HB_SIZE nLen;
 
@@ -1412,9 +1412,9 @@ HB_FUNC( HB_SOCKETSELECTWRITEEX )
 HB_FUNC( HB_SOCKETSELECT )
 {
    s_socket_init();
-   hb_retni(hb_sockexSelect(hb_param(1, HB_IT_ARRAY), hb_parl(2),
-                            hb_param(3, HB_IT_ARRAY), hb_parl(4),
-                            hb_param(5, HB_IT_ARRAY), hb_parl(6),
+   hb_retni(hb_sockexSelect(hb_param(1, Harbour::Item::ARRAY), hb_parl(2),
+                            hb_param(3, Harbour::Item::ARRAY), hb_parl(4),
+                            hb_param(5, Harbour::Item::ARRAY), hb_parl(6),
                             hb_parnintdef(7, -1), s_socketSelectCallback));
 }
 
@@ -1558,9 +1558,9 @@ HB_FUNC( HB_SOCKETGETFD )
 
 HB_FUNC( HB_SOCKETSETFILTER )
 {
-   PHB_ITEM pItem = hb_param(1, HB_IT_POINTER);
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::POINTER);
 
-   if( hb_sockexItemSetFilter( pItem, hb_parc(2), hb_param(3, HB_IT_ANY) ) )
+   if( hb_sockexItemSetFilter( pItem, hb_parc(2), hb_param(3, Harbour::Item::ANY) ) )
    {
       hb_itemReturn(pItem);
    }
@@ -1586,7 +1586,7 @@ HB_FUNC( HB_SOCKETREAD )
 
    if( pSock )
    {
-      PHB_ITEM pItem = hb_param(2, HB_IT_STRING);
+      PHB_ITEM pItem = hb_param(2, Harbour::Item::STRING);
       char * pBuffer;
       HB_SIZE nLen;
 

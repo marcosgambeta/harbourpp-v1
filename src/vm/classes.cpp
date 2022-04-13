@@ -2056,7 +2056,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
                hb_itemPutNS(hb_stackReturnItem(), pEnum->item.asEnum.offset);
                if( hb_pcount() > 0 && HB_ISNUM(1) )
                {
-                  pEnum->item.asEnum.offset = hb_itemGetNS(hb_param(1, HB_IT_ANY));
+                  pEnum->item.asEnum.offset = hb_itemGetNS(hb_param(1, Harbour::Item::ANY));
                }
                return &s___msgEnumIndex;
             }
@@ -2201,7 +2201,7 @@ PHB_SYMB hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE p
             hb_stackPop();
             if( pDest )
             {
-               PHB_ITEM pValue = hb_param(1, HB_IT_ANY);
+               PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY);
                hb_itemCopyFromRef(pDest, pValue);
                hb_itemReturn(pValue);
                return &s___msgVirtual;
@@ -2968,116 +2968,116 @@ static HB_TYPE hb_clsGetItemType( PHB_ITEM pItem, HB_TYPE nDefault )
             case 'c':
                if( hb_strnicmp( hb_itemGetCPtr(pItem), "code", 4 ) == 0 )
                {
-                  return HB_IT_BLOCK;
+                  return Harbour::Item::BLOCK;
                }
                /* fallthrough */
             case '\0':
-               return HB_IT_STRING;
+               return Harbour::Item::STRING;
 
             case 'S':
             case 's':
                if( hb_strnicmp( hb_itemGetCPtr(pItem), "str", 3 ) == 0 )
                {
-                  return HB_IT_STRING;
+                  return Harbour::Item::STRING;
                }
                else
                {
-                  return HB_IT_SYMBOL;
+                  return Harbour::Item::SYMBOL;
                }
 
             case 'B':
             case 'b':
-               return HB_IT_BLOCK;
+               return Harbour::Item::BLOCK;
 
             case 'D':
             case 'd':
                if( hb_strnicmp( hb_itemGetCPtr(pItem), "datet", 5 ) == 0 )
                {
-                  return HB_IT_TIMESTAMP;
+                  return Harbour::Item::TIMESTAMP;
                }
                else
                {
-                  return HB_IT_DATE;
+                  return Harbour::Item::DATE;
                }
 
             case 'T':
             case 't':
-               return HB_IT_TIMESTAMP;
+               return Harbour::Item::TIMESTAMP;
 
             case 'L':
             case 'l':
-               return HB_IT_LOGICAL;
+               return Harbour::Item::LOGICAL;
 
             case 'I':
             case 'i':
-               return HB_IT_NUMINT;
+               return Harbour::Item::NUMINT;
 
             case 'N':
             case 'n':
                if( hb_stricmp( hb_itemGetCPtr(pItem), "nil" ) == 0 )
                {
-                  return HB_IT_NIL;
+                  return Harbour::Item::NIL;
                }
                else
                {
-                  return HB_IT_NUMERIC;
+                  return Harbour::Item::NUMERIC;
                }
 
             case 'A':
             case 'a':
-               return HB_IT_ARRAY;
+               return Harbour::Item::ARRAY;
 
             case 'P':
             case 'p':
-               return HB_IT_POINTER;
+               return Harbour::Item::POINTER;
 
             case 'H':
             case 'h':
-               return HB_IT_HASH;
+               return Harbour::Item::HASH;
          }
       }
       else if( HB_IS_ARRAY(pItem) )
       {
          if( pItem->item.asArray.value->uiClass == 0 )
          {
-            return HB_IT_ARRAY;
+            return Harbour::Item::ARRAY;
          }
       }
       else if( HB_IS_NUMINT(pItem) )
       {
-         return HB_IT_NUMINT;
+         return Harbour::Item::NUMINT;
       }
       else if( HB_IS_NUMERIC(pItem) )
       {
-         return HB_IT_NUMERIC;
+         return Harbour::Item::NUMERIC;
       }
       else if( HB_IS_DATE(pItem) )
       {
-         return HB_IT_DATE;
+         return Harbour::Item::DATE;
       }
       else if( HB_IS_TIMESTAMP(pItem) )
       {
-         return HB_IT_TIMESTAMP;
+         return Harbour::Item::TIMESTAMP;
       }
       else if( HB_IS_LOGICAL(pItem) )
       {
-         return HB_IT_LOGICAL;
+         return Harbour::Item::LOGICAL;
       }
       else if( HB_IS_BLOCK(pItem) )
       {
-         return HB_IT_BLOCK;
+         return Harbour::Item::BLOCK;
       }
       else if( HB_IS_POINTER(pItem) )
       {
-         return HB_IT_POINTER;
+         return Harbour::Item::POINTER;
       }
       else if( HB_IS_SYMBOL(pItem) )
       {
-         return HB_IT_SYMBOL;
+         return Harbour::Item::SYMBOL;
       }
       else if( HB_IS_NIL(pItem) )
       {
-         return HB_IT_NIL;
+         return Harbour::Item::NIL;
       }
    }
 
@@ -3645,8 +3645,8 @@ HB_FUNC( __CLSADDMSG )
    {
       HB_USHORT nType     = static_cast<HB_USHORT>(hb_parni(4));
       HB_USHORT uiScope   = static_cast<HB_USHORT>(hb_parni(6));
-      PHB_ITEM  pFunction = hb_param(3, HB_IT_ANY);
-      PHB_ITEM  pInit     = hb_param(5, HB_IT_ANY);
+      PHB_ITEM  pFunction = hb_param(3, Harbour::Item::ANY);
+      PHB_ITEM  pInit     = hb_param(5, Harbour::Item::ANY);
 
       if( nType == HB_OO_MSG_DATA )
       {
@@ -3659,7 +3659,7 @@ HB_FUNC( __CLSADDMSG )
       /* to make xHarbour users happy ;-) */
       else if( nType == HB_OO_MSG_PROPERTY || nType == HB_OO_MSG_CLASSPROPERTY )
       {
-         PHB_ITEM pType = hb_param(7, HB_IT_ANY);
+         PHB_ITEM pType = hb_param(7, Harbour::Item::ANY);
          char szAssign[HB_SYMBOL_NAME_LEN + 1];
          int iLen = static_cast<int>(hb_parclen(2));
          if( iLen >= HB_SYMBOL_NAME_LEN )
@@ -3936,21 +3936,21 @@ HB_FUNC( __CLSNEW )
 
    szClassName = hb_parc(1);
 
-   pDatas = hb_param(2, HB_IT_ANY);
+   pDatas = hb_param(2, Harbour::Item::ANY);
 
-   pSuperArray = hb_param(3, HB_IT_ANY);
+   pSuperArray = hb_param(3, Harbour::Item::ANY);
    if( pSuperArray && HB_IS_NIL(pSuperArray) )
    {
       pSuperArray = nullptr;
    }
 
-   pClassFunc = hb_param(4, HB_IT_ANY);
+   pClassFunc = hb_param(4, Harbour::Item::ANY);
    if( pClassFunc && HB_IS_NIL(pClassFunc) )
    {
       pClassFunc = nullptr;
    }
 
-   pModFriend = hb_param(5, HB_IT_ANY);
+   pModFriend = hb_param(5, Harbour::Item::ANY);
    if( pModFriend && HB_IS_NIL(pModFriend) )
    {
       pModFriend = nullptr;
@@ -3987,7 +3987,7 @@ HB_FUNC( __CLSADDFRIEND )
 
       if( !pClass->fLocked )
       {
-         PHB_SYMB pSym = hb_vmGetRealFuncSym( hb_itemGetSymbol(hb_param(2, HB_IT_SYMBOL)) );
+         PHB_SYMB pSym = hb_vmGetRealFuncSym( hb_itemGetSymbol(hb_param(2, Harbour::Item::SYMBOL)) );
          if( pSym )
          {
             hb_clsAddFriendSymbol( pClass, pSym );
@@ -4006,7 +4006,7 @@ HB_FUNC( __CLSADDFRIEND )
 HB_FUNC( __CLSDELMSG )
 {
    HB_USHORT uiClass = static_cast<HB_USHORT>(hb_parni(1));
-   PHB_ITEM pString = hb_param(2, HB_IT_STRING);
+   PHB_ITEM pString = hb_param(2, Harbour::Item::STRING);
 
    if( uiClass && uiClass <= s_uiClasses && pString && !s_pClasses[uiClass]->fLocked )
    {
@@ -4120,7 +4120,7 @@ HB_FUNC( __CLSLOCK )
 HB_FUNC( __CLSMODMSG )
 {
    HB_USHORT uiClass = static_cast<HB_USHORT>(hb_parni(1));
-   PHB_ITEM pString = hb_param(2, HB_IT_STRING);
+   PHB_ITEM pString = hb_param(2, Harbour::Item::STRING);
 
    if( uiClass && uiClass <= s_uiClasses && pString && !s_pClasses[uiClass]->fLocked )
    {
@@ -4181,7 +4181,7 @@ HB_FUNC( __CLSMODMSG )
             }
             else
             {
-               PHB_ITEM pBlock = hb_param(3, HB_IT_BLOCK);
+               PHB_ITEM pBlock = hb_param(3, Harbour::Item::BLOCK);
                if( pBlock )
                {
                   if( pFuncSym == &s___msgEvalInline && pMethod->uiSprClass == uiClass )
@@ -4196,7 +4196,7 @@ HB_FUNC( __CLSMODMSG )
                }
                else
                {
-                  pFuncSym = hb_objGetFuncSym( hb_param(3, HB_IT_ANY) );
+                  pFuncSym = hb_objGetFuncSym( hb_param(3, Harbour::Item::ANY) );
                   if( pFuncSym )
                   {
                      pMethod->pFuncSym = pFuncSym;
@@ -4220,7 +4220,7 @@ HB_FUNC( __CLSMODMSG )
 HB_FUNC( __OBJGETCLSNAME )
 {
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pObject = hb_param(1, HB_IT_OBJECT);
+   PHB_ITEM pObject = hb_param(1, Harbour::Item::OBJECT);
    HB_USHORT uiClass;
 
    if( pObject )
@@ -4241,12 +4241,12 @@ HB_FUNC( __OBJGETCLSNAME )
  */
 HB_FUNC( __OBJHASMSG )
 {
-   PHB_DYNS pMessage = hb_objGetMsgSym( hb_param(2, HB_IT_ANY) );
+   PHB_DYNS pMessage = hb_objGetMsgSym( hb_param(2, Harbour::Item::ANY) );
 
    if( pMessage )
    {
       HB_STACK_TLS_PRELOAD
-      hb_retl(hb_objHasMessage(hb_param(1, HB_IT_ANY), pMessage) );
+      hb_retl(hb_objHasMessage(hb_param(1, Harbour::Item::ANY), pMessage) );
    }
    else
    {
@@ -4260,12 +4260,12 @@ HB_FUNC( __OBJHASMSG )
  */
 HB_FUNC( __OBJHASMSGASSIGNED )
 {
-   PHB_DYNS pMessage = hb_objGetMsgSym( hb_param(2, HB_IT_ANY) );
+   PHB_DYNS pMessage = hb_objGetMsgSym( hb_param(2, Harbour::Item::ANY) );
 
    if( pMessage )
    {
       HB_STACK_TLS_PRELOAD
-      PHB_SYMB pExecSym = hb_objGetMethod( hb_param(1, HB_IT_ANY), pMessage->pSymbol, nullptr );
+      PHB_SYMB pExecSym = hb_objGetMethod( hb_param(1, Harbour::Item::ANY), pMessage->pSymbol, nullptr );
       hb_retl(pExecSym && pExecSym != &s___msgVirtual);
    }
    else
@@ -4280,7 +4280,7 @@ HB_FUNC( __OBJHASMSGASSIGNED )
  */
 HB_FUNC( __OBJSENDMSG )
 {
-   PHB_DYNS pMessage = hb_objGetMsgSym( hb_param(2, HB_IT_ANY) );
+   PHB_DYNS pMessage = hb_objGetMsgSym( hb_param(2, Harbour::Item::ANY) );
 
    if( pMessage )
    {
@@ -4288,7 +4288,7 @@ HB_FUNC( __OBJSENDMSG )
       HB_USHORT uiPCount = hb_pcount();
 
       hb_vmPushSymbol(pMessage->pSymbol);     /* Push message symbol */
-      hb_vmPush(hb_param(1, HB_IT_ANY));    /* Push object */
+      hb_vmPush(hb_param(1, Harbour::Item::ANY));    /* Push object */
 
       for( HB_USHORT uiParam = 3; uiParam <= uiPCount; ++uiParam )    /* Push arguments on stack */
       {
@@ -4310,7 +4310,7 @@ HB_FUNC( __OBJSENDMSG )
 HB_FUNC( __OBJCLONE )
 {
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pObject = hb_param(1, HB_IT_OBJECT);
+   PHB_ITEM pObject = hb_param(1, Harbour::Item::OBJECT);
 
    if( pObject )
    {
@@ -4329,7 +4329,7 @@ HB_FUNC( __OBJCLONE )
 HB_FUNC( __CLSINSTSUPER )
 {
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_param(1, HB_IT_STRING | HB_IT_SYMBOL);
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING | Harbour::Item::SYMBOL);
    HB_USHORT uiClassH = 0, uiClass;
    PHB_SYMB pClassFuncSym = nullptr;
    char szDesc[128];
@@ -4436,52 +4436,52 @@ HB_FUNC( __CLSASSOCTYPE )
 {
    HB_STACK_TLS_PRELOAD
    HB_USHORT uiClass = static_cast<HB_USHORT>(hb_parni(1));
-   PHB_ITEM pType = hb_param(2, HB_IT_ANY);
+   PHB_ITEM pType = hb_param(2, Harbour::Item::ANY);
    HB_BOOL fResult = HB_FALSE;
 
    if( uiClass && uiClass <= s_uiClasses && pType )
    {
-      HB_TYPE nType = hb_clsGetItemType( pType, HB_IT_ANY );
+      HB_TYPE nType = hb_clsGetItemType( pType, Harbour::Item::ANY );
 
       if( s_pClasses[uiClass]->uiDatas )
       {
          hb_errRT_BASE( EG_ARG, 3005, "Scalar class can not contain instance variables", HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       }
-      else if( nType != HB_IT_ANY )
+      else if( nType != Harbour::Item::ANY )
       {
          switch( nType )
          {
-            case HB_IT_ARRAY:
+            case Harbour::Item::ARRAY:
                s_uiArrayClass = uiClass;
                break;
-            case HB_IT_BLOCK:
+            case Harbour::Item::BLOCK:
                s_uiBlockClass = uiClass;
                break;
-            case HB_IT_STRING:
+            case Harbour::Item::STRING:
                s_uiCharacterClass = uiClass;
                break;
-            case HB_IT_DATE:
+            case Harbour::Item::DATE:
                s_uiDateClass = uiClass;
                break;
-            case HB_IT_TIMESTAMP:
+            case Harbour::Item::TIMESTAMP:
                s_uiTimeStampClass = uiClass;
                break;
-            case HB_IT_HASH:
+            case Harbour::Item::HASH:
                s_uiHashClass = uiClass;
                break;
-            case HB_IT_LOGICAL:
+            case Harbour::Item::LOGICAL:
                s_uiLogicalClass = uiClass;
                break;
-            case HB_IT_NIL:
+            case Harbour::Item::NIL:
                s_uiNilClass = uiClass;
                break;
-            case HB_IT_NUMERIC:
+            case Harbour::Item::NUMERIC:
                s_uiNumericClass = uiClass;
                break;
-            case HB_IT_SYMBOL:
+            case Harbour::Item::SYMBOL:
                s_uiSymbolClass = uiClass;
                break;
-            case HB_IT_POINTER:
+            case Harbour::Item::POINTER:
                s_uiPointerClass = uiClass;
                break;
             default:
@@ -4687,7 +4687,7 @@ HB_FUNC( __SENDER )
 HB_FUNC( __CLSSYNCSIGNAL )
 {
 #if defined(HB_MT_VM)
-   hb_threadMutexSyncSignal( hb_param(1, HB_IT_ANY) );
+   hb_threadMutexSyncSignal( hb_param(1, Harbour::Item::ANY) );
 #endif /* HB_MT_VM */
 }
 
@@ -4742,7 +4742,7 @@ HB_FUNC( __CLSSYNCWAIT )
       }
    }
 
-   hb_retl(hb_threadMutexSyncWait(hb_param(1, HB_IT_ANY), ulMilliSec, pMutex));
+   hb_retl(hb_threadMutexSyncWait(hb_param(1, Harbour::Item::ANY), ulMilliSec, pMutex));
 #endif /* HB_MT_VM */
 }
 
@@ -4753,7 +4753,7 @@ HB_FUNC( __CLSSYNCWAIT )
 HB_FUNC( __CLASSH )
 {
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pObject = hb_param(1, HB_IT_ANY);
+   PHB_ITEM pObject = hb_param(1, Harbour::Item::ANY);
 
    hb_retni(pObject ? hb_objGetClassH(pObject) : 0);
 }
@@ -4936,7 +4936,7 @@ HB_FUNC_STATIC( msgClassParent )
    HB_USHORT uiClass;
 
    uiClass = hb_stackBaseItem()->item.asSymbol.stackstate->uiClass;
-   pItemParam = hb_param(1, HB_IT_ANY);
+   pItemParam = hb_param(1, Harbour::Item::ANY);
 
    if( pItemParam && uiClass && uiClass <= s_uiClasses )
    {
@@ -4988,7 +4988,7 @@ HB_FUNC_STATIC( msgEvalInline )
 HB_FUNC_STATIC( msgPerform )
 {
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem )
    {
@@ -5237,7 +5237,7 @@ HB_FUNC_STATIC( msgSetClsData )
    HB_STACK_TLS_PRELOAD
    PCLASS pClass   = s_pClasses[hb_stackBaseItem()->item.asSymbol.stackstate->uiClass];
    PMETHOD pMethod = pClass->pMethods + hb_stackBaseItem()->item.asSymbol.stackstate->uiMethod;
-   PHB_ITEM pReturn = hb_param(1, HB_IT_ANY);
+   PHB_ITEM pReturn = hb_param(1, Harbour::Item::ANY);
 
    if( !pReturn )
    {
@@ -5247,7 +5247,7 @@ HB_FUNC_STATIC( msgSetClsData )
    {
       if( pMethod->itemType && !( pMethod->itemType & HB_ITEM_TYPERAW( pReturn ) ) )
       {
-         if( pMethod->itemType == HB_IT_NUMINT && HB_IS_NUMERIC(pReturn) )
+         if( pMethod->itemType == Harbour::Item::NUMINT && HB_IS_NUMERIC(pReturn) )
          {
             hb_itemPutNInt(pReturn, hb_itemGetNInt(pReturn));
          }
@@ -5285,7 +5285,7 @@ HB_FUNC_STATIC( msgSetShrData )
    HB_STACK_TLS_PRELOAD
    PCLASS pClass   = s_pClasses[hb_stackBaseItem()->item.asSymbol.stackstate->uiClass];
    PMETHOD pMethod = pClass->pMethods + hb_stackBaseItem()->item.asSymbol.stackstate->uiMethod;
-   PHB_ITEM pReturn = hb_param(1, HB_IT_ANY);
+   PHB_ITEM pReturn = hb_param(1, Harbour::Item::ANY);
 
    if( !pReturn )
    {
@@ -5295,7 +5295,7 @@ HB_FUNC_STATIC( msgSetShrData )
    {
       if( pMethod->itemType && !( pMethod->itemType & HB_ITEM_TYPERAW( pReturn ) ) )
       {
-         if( pMethod->itemType == HB_IT_NUMINT && HB_IS_NUMERIC(pReturn) )
+         if( pMethod->itemType == Harbour::Item::NUMINT && HB_IS_NUMERIC(pReturn) )
          {
             hb_itemPutNInt(pReturn, hb_itemGetNInt(pReturn));
          }
@@ -5352,7 +5352,7 @@ HB_FUNC_STATIC( msgSetData )
 
    if( HB_IS_ARRAY(pObject) )
    {
-      PHB_ITEM pReturn     = hb_param(1, HB_IT_ANY);
+      PHB_ITEM pReturn     = hb_param(1, Harbour::Item::ANY);
       HB_USHORT uiObjClass = pObject->item.asArray.value->uiClass;
       HB_USHORT uiClass    = hb_stackBaseItem()->item.asSymbol.stackstate->uiClass;
       PCLASS pClass        = s_pClasses[uiClass];
@@ -5376,7 +5376,7 @@ HB_FUNC_STATIC( msgSetData )
       {
          if( pMethod->itemType && !( pMethod->itemType & HB_ITEM_TYPERAW( pReturn ) ) )
          {
-            if( pMethod->itemType == HB_IT_NUMINT && HB_IS_NUMERIC(pReturn) )
+            if( pMethod->itemType == Harbour::Item::NUMINT && HB_IS_NUMERIC(pReturn) )
             {
                hb_itemPutNInt(pReturn, hb_itemGetNInt(pReturn));
             }
@@ -5688,7 +5688,7 @@ static void hb_objSetIVars( PHB_ITEM pObject, PHB_ITEM pArray )
  */
 HB_FUNC( __OBJGETIVARS )
 {
-   PHB_ITEM pObject = hb_param(1, HB_IT_OBJECT);
+   PHB_ITEM pObject = hb_param(1, Harbour::Item::OBJECT);
    HB_USHORT uiScope = static_cast<HB_USHORT>(hb_parni(2));
    HB_BOOL fChanged = hb_parldef(3, true);
 
@@ -5700,8 +5700,8 @@ HB_FUNC( __OBJGETIVARS )
  */
 HB_FUNC( __OBJSETIVARS )
 {
-   PHB_ITEM pObject = hb_param(1, HB_IT_ANY);
-   PHB_ITEM pArray = hb_param(2, HB_IT_ARRAY);
+   PHB_ITEM pObject = hb_param(1, Harbour::Item::ANY);
+   PHB_ITEM pArray = hb_param(2, Harbour::Item::ARRAY);
 
    if( pObject && pArray )
    {
@@ -5742,8 +5742,8 @@ HB_FUNC( __OBJSETIVARS )
  */
 HB_FUNC( __OBJRESTOREIVARS )
 {
-   PHB_ITEM pArray = hb_param(1, HB_IT_ARRAY);
-   PHB_ITEM pClass = hb_param(2, HB_IT_NUMERIC | HB_IT_STRING | HB_IT_SYMBOL);
+   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+   PHB_ITEM pClass = hb_param(2, Harbour::Item::NUMERIC | Harbour::Item::STRING | Harbour::Item::SYMBOL);
 
    if( pClass && pArray && pArray->item.asArray.value->uiClass == 0 )
    {
@@ -5889,7 +5889,7 @@ HB_FUNC( __CLSGETANCESTORS )
  */
 HB_FUNC( __CLSMSGTYPE )
 {
-   PHB_DYNS pMessage = hb_objGetMsgSym( hb_param(2, HB_IT_ANY) );
+   PHB_DYNS pMessage = hb_objGetMsgSym( hb_param(2, Harbour::Item::ANY) );
 
    if( pMessage )
    {
@@ -5944,7 +5944,7 @@ HB_FUNC( __CLSPREALLOCATE )
 HB_FUNC( __CLSLOCKDEF )
 {
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pClsItm = hb_param(1, HB_IT_BYREF);
+   PHB_ITEM pClsItm = hb_param(1, Harbour::Item::BYREF);
    HB_BOOL fLocked = HB_FALSE;
 
    if( pClsItm && HB_IS_NIL(pClsItm) )
@@ -5967,7 +5967,7 @@ HB_FUNC( __CLSLOCKDEF )
 /* __clsUnlockDef( @<clsItem>, <clsDef> ) */
 HB_FUNC( __CLSUNLOCKDEF )
 {
-   PHB_ITEM pClsDst = hb_param(1, HB_IT_BYREF), pClsSrc = hb_param(2, HB_IT_ANY);
+   PHB_ITEM pClsDst = hb_param(1, Harbour::Item::BYREF), pClsSrc = hb_param(2, Harbour::Item::ANY);
 
    if( pClsDst && pClsSrc && HB_IS_NIL(pClsDst) && !HB_ISBYREF(2) )
    {
@@ -5988,7 +5988,7 @@ HB_FUNC( __CLSUNLOCKDEF )
  */
 HB_FUNC( __OBJSETCLASS )
 {
-   PHB_ITEM pObject = hb_param(1, HB_IT_ARRAY);
+   PHB_ITEM pObject = hb_param(1, Harbour::Item::ARRAY);
 
    if( pObject && pObject->item.asArray.value->uiClass == 0 )
    {
@@ -6012,7 +6012,7 @@ HB_FUNC( __OBJSETCLASS )
 HB_FUNC( __OBJSETCLASSHANDLE )
 {
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pObject = hb_param(1, HB_IT_OBJECT);
+   PHB_ITEM pObject = hb_param(1, Harbour::Item::OBJECT);
    HB_USHORT uiPrevClassHandle = 0;
 
    if( pObject )

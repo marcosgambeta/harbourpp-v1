@@ -58,7 +58,7 @@ HB_FUNC( FKMAX )
 
 HB_FUNC( FKLABEL )
 {
-   PHB_ITEM pPar1 = hb_param(1, HB_IT_NUMERIC);
+   PHB_ITEM pPar1 = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pPar1 )
    {

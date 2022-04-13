@@ -297,8 +297,8 @@ static HB_BOOL hb_usrItemToFilterInfo( PHB_ITEM pItem, LPDBFILTERINFO pFilterInf
 {
    if( pItem && hb_arrayLen(pItem) == UR_FRI_SIZE )
    {
-      pFilterInfo->itmCobExpr   = hb_usrArrayGet( pItem, UR_FRI_BEXPR, HB_IT_ANY );
-      pFilterInfo->abFilterText = hb_usrArrayGet( pItem, UR_FRI_CEXPR, HB_IT_ANY );
+      pFilterInfo->itmCobExpr   = hb_usrArrayGet( pItem, UR_FRI_BEXPR, Harbour::Item::ANY );
+      pFilterInfo->abFilterText = hb_usrArrayGet( pItem, UR_FRI_CEXPR, Harbour::Item::ANY );
       pFilterInfo->fFilter      = hb_arrayGetL(pItem, UR_FRI_ACTIVE);
       pFilterInfo->fOptimized   = hb_arrayGetL(pItem, UR_FRI_OPTIMIZED);
       pFilterInfo->lpvCargo     = hb_arrayGetPtr(pItem, UR_FRI_CARGO);
@@ -333,8 +333,8 @@ static HB_BOOL hb_usrItemToRelInfo( PHB_ITEM pItem, LPDBRELINFO pRelInfo )
 {
    if( pItem && hb_arrayLen(pItem) == UR_RI_SIZE )
    {
-      pRelInfo->itmCobExpr  = hb_usrArrayGet( pItem, UR_RI_BEXPR, HB_IT_ANY );
-      pRelInfo->abKey       = hb_usrArrayGet( pItem, UR_RI_CEXPR, HB_IT_ANY );
+      pRelInfo->itmCobExpr  = hb_usrArrayGet( pItem, UR_RI_BEXPR, Harbour::Item::ANY );
+      pRelInfo->abKey       = hb_usrArrayGet( pItem, UR_RI_CEXPR, Harbour::Item::ANY );
       pRelInfo->isScoped    = hb_arrayGetL(pItem, UR_RI_SCOPED);
       pRelInfo->isOptimized = hb_arrayGetL(pItem, UR_RI_OPTIMIZED);
       pRelInfo->lpaParent   = hb_usrGetAreaPointer( hb_arrayGetNI(pItem, UR_RI_PARENT) );
@@ -364,7 +364,7 @@ static HB_BOOL hb_usrItemToLockInfo( PHB_ITEM pItem, LPDBLOCKINFO pLockInfo )
 {
    if( pItem && hb_arrayLen(pItem) == UR_LI_SIZE )
    {
-      pLockInfo->itmRecID = hb_usrArrayGet( pItem, UR_LI_RECORD, HB_IT_ANY );
+      pLockInfo->itmRecID = hb_usrArrayGet( pItem, UR_LI_RECORD, Harbour::Item::ANY );
       pLockInfo->uiMethod = static_cast<HB_USHORT>(hb_arrayGetNI(pItem, UR_LI_METHOD));
       pLockInfo->fResult  = static_cast<HB_USHORT>(hb_arrayGetL(pItem, UR_LI_RESULT));
       return true;
@@ -417,13 +417,13 @@ static HB_BOOL hb_usrItemToScopeInfo( PHB_ITEM pItem, LPDBSCOPEINFO pScopeInfo )
 {
    if( pItem && hb_arrayLen(pItem) == UR_SI_SIZE )
    {
-      pScopeInfo->itmCobFor         = hb_usrArrayGet( pItem, UR_SI_BFOR, HB_IT_ANY );
-      pScopeInfo->lpstrFor          = hb_usrArrayGet( pItem, UR_SI_CFOR, HB_IT_ANY );
-      pScopeInfo->itmCobWhile       = hb_usrArrayGet( pItem, UR_SI_BWHILE, HB_IT_ANY );
-      pScopeInfo->lpstrWhile        = hb_usrArrayGet( pItem, UR_SI_CWHILE, HB_IT_ANY );
-      pScopeInfo->lNext             = hb_usrArrayGet( pItem, UR_SI_NEXT, HB_IT_ANY );
-      pScopeInfo->itmRecID          = hb_usrArrayGet( pItem, UR_SI_RECORD, HB_IT_ANY );
-      pScopeInfo->fRest             = hb_usrArrayGet( pItem, UR_SI_REST, HB_IT_ANY );
+      pScopeInfo->itmCobFor         = hb_usrArrayGet( pItem, UR_SI_BFOR, Harbour::Item::ANY );
+      pScopeInfo->lpstrFor          = hb_usrArrayGet( pItem, UR_SI_CFOR, Harbour::Item::ANY );
+      pScopeInfo->itmCobWhile       = hb_usrArrayGet( pItem, UR_SI_BWHILE, Harbour::Item::ANY );
+      pScopeInfo->lpstrWhile        = hb_usrArrayGet( pItem, UR_SI_CWHILE, Harbour::Item::ANY );
+      pScopeInfo->lNext             = hb_usrArrayGet( pItem, UR_SI_NEXT, Harbour::Item::ANY );
+      pScopeInfo->itmRecID          = hb_usrArrayGet( pItem, UR_SI_RECORD, Harbour::Item::ANY );
+      pScopeInfo->fRest             = hb_usrArrayGet( pItem, UR_SI_REST, Harbour::Item::ANY );
       pScopeInfo->fIgnoreFilter     = hb_arrayGetL(pItem, UR_SI_IGNOREFILTER);
       pScopeInfo->fIncludeDeleted   = hb_arrayGetL(pItem, UR_SI_INCLUDEDELETED);
       pScopeInfo->fLast             = hb_arrayGetL(pItem, UR_SI_LAST);
@@ -459,8 +459,8 @@ static HB_BOOL hb_usrItemToEvalInfo( PHB_ITEM pItem, LPDBEVALINFO pEvalInfo )
 {
    if( pItem && hb_arrayLen(pItem) == UR_EI_SIZE )
    {
-      pEvalInfo->itmBlock = hb_usrArrayGet( pItem, UR_EI_BLOCK, HB_IT_ANY );
-      pEvalInfo->abBlock  = hb_usrArrayGet( pItem, UR_EI_CEXPR, HB_IT_ANY );
+      pEvalInfo->itmBlock = hb_usrArrayGet( pItem, UR_EI_BLOCK, Harbour::Item::ANY );
+      pEvalInfo->abBlock  = hb_usrArrayGet( pItem, UR_EI_CEXPR, Harbour::Item::ANY );
       return hb_usrItemToScopeInfo( hb_arrayGetItemPtr(pItem, UR_EI_SCOPE), &pEvalInfo->dbsci );
    }
    return false;
@@ -647,11 +647,11 @@ static HB_BOOL hb_usrItemToOrderInfo( PHB_ITEM pItem, LPDBORDERINFO pOrderInfo )
 {
    if( pItem && hb_arrayLen(pItem) == UR_ORI_SIZE )
    {
-      pOrderInfo->atomBagName = hb_usrArrayGet( pItem, UR_ORI_BAG, HB_IT_ANY );
-      pOrderInfo->itmOrder    = hb_usrArrayGet( pItem, UR_ORI_TAG, HB_IT_ANY );
-      pOrderInfo->itmCobExpr  = hb_usrArrayGet( pItem, UR_ORI_BLOCK, HB_IT_ANY );
-      pOrderInfo->itmResult   = hb_usrArrayGet( pItem, UR_ORI_RESULT, HB_IT_ANY );
-      pOrderInfo->itmNewVal   = hb_usrArrayGet( pItem, UR_ORI_NEWVAL, HB_IT_ANY );
+      pOrderInfo->atomBagName = hb_usrArrayGet( pItem, UR_ORI_BAG, Harbour::Item::ANY );
+      pOrderInfo->itmOrder    = hb_usrArrayGet( pItem, UR_ORI_TAG, Harbour::Item::ANY );
+      pOrderInfo->itmCobExpr  = hb_usrArrayGet( pItem, UR_ORI_BLOCK, Harbour::Item::ANY );
+      pOrderInfo->itmResult   = hb_usrArrayGet( pItem, UR_ORI_RESULT, Harbour::Item::ANY );
+      pOrderInfo->itmNewVal   = hb_usrArrayGet( pItem, UR_ORI_NEWVAL, Harbour::Item::ANY );
       pOrderInfo->fAllTags    = hb_arrayGetL(pItem, UR_ORI_ALLTAGS);
       return true;
    }
@@ -718,13 +718,13 @@ static HB_BOOL hb_usrItemToOrderCondInfo( PHB_ITEM pItem, LPDBORDERCONDINFO pOrd
       pOrderCondInfo->fActive       = hb_arrayGetL(pItem, UR_ORC_ACTIVE);
       pOrderCondInfo->abFor         = hb_arrayGetC(pItem, UR_ORC_CFOR);
       pOrderCondInfo->abWhile       = hb_arrayGetC(pItem, UR_ORC_CWHILE);
-      pOrderCondInfo->itmCobFor     = hb_usrArrayGet( pItem, UR_ORC_BFOR, HB_IT_ANY );
-      pOrderCondInfo->itmCobWhile   = hb_usrArrayGet( pItem, UR_ORC_BWHILE, HB_IT_ANY );
-      pOrderCondInfo->itmCobEval    = hb_usrArrayGet( pItem, UR_ORC_BEVAL, HB_IT_ANY );
+      pOrderCondInfo->itmCobFor     = hb_usrArrayGet( pItem, UR_ORC_BFOR, Harbour::Item::ANY );
+      pOrderCondInfo->itmCobWhile   = hb_usrArrayGet( pItem, UR_ORC_BWHILE, Harbour::Item::ANY );
+      pOrderCondInfo->itmCobEval    = hb_usrArrayGet( pItem, UR_ORC_BEVAL, Harbour::Item::ANY );
       pOrderCondInfo->lStep         = hb_arrayGetNL(pItem, UR_ORC_STEP);
-      pOrderCondInfo->itmStartRecID = hb_usrArrayGet( pItem, UR_ORC_STARTREC, HB_IT_ANY );
+      pOrderCondInfo->itmStartRecID = hb_usrArrayGet( pItem, UR_ORC_STARTREC, Harbour::Item::ANY );
       pOrderCondInfo->lNextCount    = hb_arrayGetNL(pItem, UR_ORC_NEXT);
-      pOrderCondInfo->itmRecID      = hb_usrArrayGet( pItem, UR_ORC_RECORD, HB_IT_ANY );
+      pOrderCondInfo->itmRecID      = hb_usrArrayGet( pItem, UR_ORC_RECORD, Harbour::Item::ANY );
       pOrderCondInfo->fRest         = hb_arrayGetL(pItem, UR_ORC_REST);
       pOrderCondInfo->fDescending   = hb_arrayGetL(pItem, UR_ORC_DESCEND);
       pOrderCondInfo->fScoped       = hb_arrayGetL(pItem, UR_ORC_SCOPED);
@@ -867,10 +867,10 @@ static HB_BOOL hb_usrItemToOrderCreateInfo( PHB_ITEM pItem, LPDBORDERCREATEINFO 
 
       pOrderCreateInfo->abBagName   = hb_usrArrayGetCPtr( pItem, UR_ORCR_BAGNAME );
       pOrderCreateInfo->atomBagName = hb_usrArrayGetCPtr( pItem, UR_ORCR_TAGNAME );
-      pOrderCreateInfo->itmOrder    = hb_usrArrayGet( pItem, UR_ORCR_ORDER, HB_IT_ANY );
+      pOrderCreateInfo->itmOrder    = hb_usrArrayGet( pItem, UR_ORCR_ORDER, Harbour::Item::ANY );
       pOrderCreateInfo->fUnique     = hb_arrayGetL(pItem, UR_ORCR_UNIQUE);
-      pOrderCreateInfo->itmCobExpr  = hb_usrArrayGet( pItem, UR_ORCR_BKEY, HB_IT_ANY );
-      pOrderCreateInfo->abExpr      = hb_usrArrayGet( pItem, UR_ORCR_CKEY, HB_IT_ANY );
+      pOrderCreateInfo->itmCobExpr  = hb_usrArrayGet( pItem, UR_ORCR_BKEY, Harbour::Item::ANY );
+      pOrderCreateInfo->abExpr      = hb_usrArrayGet( pItem, UR_ORCR_CKEY, Harbour::Item::ANY );
 
       return true;
    }
@@ -3395,7 +3395,7 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
    uiRddID = hb_parni(4);
 #endif
    szSuperRDD = hb_parc(5);
-   pMethods = hb_param(6, HB_IT_ARRAY);
+   pMethods = hb_param(6, Harbour::Item::ARRAY);
    puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(7));
 
    if( puiCount && pSelfTable && pSuperTable && pMethods )
@@ -3448,7 +3448,7 @@ HB_FUNC( USRRDD_RDDDATA )
       hb_itemReturn(pItem);
       if( hb_pcount() >= 2 )
       {
-         hb_itemCopy(pItem, hb_param(2, HB_IT_ANY));
+         hb_itemCopy(pItem, hb_param(2, Harbour::Item::ANY));
       }
    }
 }
@@ -3505,7 +3505,7 @@ HB_FUNC( USRRDD_AREADATA )
       hb_itemReturn(pItem);
       if( hb_pcount() >= 2 )
       {
-         hb_itemCopy(pItem, hb_param(2, HB_IT_ANY));
+         hb_itemCopy(pItem, hb_param(2, Harbour::Item::ANY));
       }
    }
 }
@@ -3533,7 +3533,7 @@ HB_FUNC( USRRDD_AREARESULT )
       hb_itemReturn(pArea->valResult);
       if( hb_pcount() >= 2 )
       {
-         hb_itemCopy(pArea->valResult, hb_param(2, HB_IT_ANY));
+         hb_itemCopy(pArea->valResult, hb_param(2, Harbour::Item::ANY));
       }
    }
 }
@@ -3823,7 +3823,7 @@ HB_FUNC_UR_SUPER( GOTOID )
 
    if( pArea )
    {
-      hb_retni(SUPER_GOTOID(pArea, hb_param(2, HB_IT_ANY)));
+      hb_retni(SUPER_GOTOID(pArea, hb_param(2, Harbour::Item::ANY)));
    }
 }
 
@@ -3833,7 +3833,7 @@ HB_FUNC_UR_SUPER( SEEK )
 
    if( pArea )
    {
-      hb_retni(SUPER_SEEK(pArea, hb_parl(2), hb_param(3, HB_IT_ANY), hb_parl(4)));
+      hb_retni(SUPER_SEEK(pArea, hb_parl(2), hb_param(3, Harbour::Item::ANY), hb_parl(4)));
    }
 }
 
@@ -3888,7 +3888,7 @@ HB_FUNC_UR_SUPER( ADDFIELD )
    {
       DBFIELDINFO dbFieldInfo;
 
-      if( hb_usrItemToFieldInfo( hb_param(2, HB_IT_ARRAY), &dbFieldInfo ) )
+      if( hb_usrItemToFieldInfo( hb_param(2, Harbour::Item::ARRAY), &dbFieldInfo ) )
       {
          hb_retni(SUPER_ADDFIELD(pArea, &dbFieldInfo));
       }
@@ -3908,7 +3908,7 @@ HB_FUNC_UR_SUPER( FIELDDISPLAY )
    {
       DBFIELDINFO dbFieldInfo;
 
-      if( hb_usrItemToFieldInfo( hb_param(2, HB_IT_ARRAY), &dbFieldInfo ) )
+      if( hb_usrItemToFieldInfo( hb_param(2, Harbour::Item::ARRAY), &dbFieldInfo ) )
       {
          hb_retni(SUPER_FIELDDISPLAY(pArea, &dbFieldInfo));
       }
@@ -4048,7 +4048,7 @@ HB_FUNC_UR_SUPER( GETVALUE )
 
    if( pArea )
    {
-      hb_retni(SUPER_GETVALUE(pArea, static_cast<HB_USHORT>(hb_parni(2)), hb_param(3, HB_IT_ANY)));
+      hb_retni(SUPER_GETVALUE(pArea, static_cast<HB_USHORT>(hb_parni(2)), hb_param(3, Harbour::Item::ANY)));
    }
 }
 
@@ -4058,7 +4058,7 @@ HB_FUNC_UR_SUPER( PUTVALUE )
 
    if( pArea )
    {
-      hb_retni(SUPER_PUTVALUE(pArea, static_cast<HB_USHORT>(hb_parni(2)), hb_param(3, HB_IT_ANY)));
+      hb_retni(SUPER_PUTVALUE(pArea, static_cast<HB_USHORT>(hb_parni(2)), hb_param(3, Harbour::Item::ANY)));
    }
 }
 
@@ -4094,7 +4094,7 @@ HB_FUNC_UR_SUPER( RECINFO )
 
    if( pArea )
    {
-      hb_retni(SUPER_RECINFO(pArea, hb_param(2, HB_IT_ANY), static_cast<HB_USHORT>(hb_parni(3)), hb_param(4, HB_IT_ANY)));
+      hb_retni(SUPER_RECINFO(pArea, hb_param(2, Harbour::Item::ANY), static_cast<HB_USHORT>(hb_parni(3)), hb_param(4, Harbour::Item::ANY)));
    }
 }
 
@@ -4117,7 +4117,7 @@ HB_FUNC_UR_SUPER( RECID )
 
    if( pArea )
    {
-      hb_retni(SUPER_RECID(pArea, hb_param(2, HB_IT_ANY)));
+      hb_retni(SUPER_RECID(pArea, hb_param(2, Harbour::Item::ANY)));
    }
 }
 
@@ -4127,7 +4127,7 @@ HB_FUNC_UR_SUPER( FIELDINFO )
 
    if( pArea )
    {
-      hb_retni(SUPER_FIELDINFO(pArea, static_cast<HB_USHORT>(hb_parni(2)), static_cast<HB_USHORT>(hb_parni(3)), hb_param(4, HB_IT_ANY)));
+      hb_retni(SUPER_FIELDINFO(pArea, static_cast<HB_USHORT>(hb_parni(2)), static_cast<HB_USHORT>(hb_parni(3)), hb_param(4, Harbour::Item::ANY)));
    }
 }
 
@@ -4137,7 +4137,7 @@ HB_FUNC_UR_SUPER( CREATEFIELDS )
 
    if( pArea )
    {
-      hb_retni(SUPER_CREATEFIELDS(pArea, hb_param(2, HB_IT_ANY)));
+      hb_retni(SUPER_CREATEFIELDS(pArea, hb_param(2, Harbour::Item::ANY)));
    }
 }
 
@@ -4182,7 +4182,7 @@ HB_FUNC_UR_SUPER( CREATE )
    {
       DBOPENINFO dbOpenInfo;
 
-      if( hb_usrItemToOpenInfo( hb_param(2, HB_IT_ARRAY), &dbOpenInfo ) )
+      if( hb_usrItemToOpenInfo( hb_param(2, Harbour::Item::ARRAY), &dbOpenInfo ) )
       {
          hb_retni(SUPER_CREATE(pArea, &dbOpenInfo));
       }
@@ -4202,7 +4202,7 @@ HB_FUNC_UR_SUPER( OPEN )
    {
       DBOPENINFO dbOpenInfo;
 
-      if( hb_usrItemToOpenInfo( hb_param(2, HB_IT_ARRAY), &dbOpenInfo ) )
+      if( hb_usrItemToOpenInfo( hb_param(2, Harbour::Item::ARRAY), &dbOpenInfo ) )
       {
          hb_retni(SUPER_OPEN(pArea, &dbOpenInfo));
       }
@@ -4220,7 +4220,7 @@ HB_FUNC_UR_SUPER( INFO )
 
    if( pArea )
    {
-      hb_retni(SUPER_INFO(pArea, static_cast<HB_USHORT>(hb_parni(2)), hb_param(3, HB_IT_ANY)));
+      hb_retni(SUPER_INFO(pArea, static_cast<HB_USHORT>(hb_parni(2)), hb_param(3, Harbour::Item::ANY)));
    }
 }
 
@@ -4232,7 +4232,7 @@ HB_FUNC_UR_SUPER( DBEVAL )
    {
       DBEVALINFO dbEvalInfo;
 
-      if( hb_usrItemToEvalInfo( hb_param(2, HB_IT_ARRAY), &dbEvalInfo ) )
+      if( hb_usrItemToEvalInfo( hb_param(2, Harbour::Item::ARRAY), &dbEvalInfo ) )
       {
          hb_retni(SUPER_DBEVAL(pArea, &dbEvalInfo));
       }
@@ -4275,7 +4275,7 @@ HB_FUNC_UR_SUPER( SORT )
    {
       DBSORTINFO dbSortInfo;
 
-      if( hb_usrItemToSortInfo( hb_param(2, HB_IT_ARRAY), &dbSortInfo ) )
+      if( hb_usrItemToSortInfo( hb_param(2, Harbour::Item::ARRAY), &dbSortInfo ) )
       {
          hb_retni(SUPER_SORT(pArea, &dbSortInfo));
          hb_usrSortInfoFree( &dbSortInfo );
@@ -4296,7 +4296,7 @@ HB_FUNC_UR_SUPER( TRANS )
    {
       DBTRANSINFO dbTransInfo;
 
-      if( hb_usrItemToTransInfo( hb_param(2, HB_IT_ARRAY), &dbTransInfo ) )
+      if( hb_usrItemToTransInfo( hb_param(2, Harbour::Item::ARRAY), &dbTransInfo ) )
       {
          hb_retni(SUPER_TRANS(pArea, &dbTransInfo));
          hb_usrTransInfoFree( &dbTransInfo );
@@ -4317,7 +4317,7 @@ HB_FUNC_UR_SUPER( TRANSREC )
    {
       DBTRANSINFO dbTransInfo;
 
-      if( hb_usrItemToTransInfo( hb_param(2, HB_IT_ARRAY), &dbTransInfo ) )
+      if( hb_usrItemToTransInfo( hb_param(2, Harbour::Item::ARRAY), &dbTransInfo ) )
       {
          hb_retni(SUPER_TRANSREC(pArea, &dbTransInfo));
          hb_usrTransInfoFree( &dbTransInfo );
@@ -4348,7 +4348,7 @@ HB_FUNC_UR_SUPER( CHILDEND )
    {
       DBRELINFO dbRelInfo;
 
-      if( hb_usrItemToRelInfo( hb_param(2, HB_IT_ARRAY), &dbRelInfo ) )
+      if( hb_usrItemToRelInfo( hb_param(2, Harbour::Item::ARRAY), &dbRelInfo ) )
       {
          hb_retni(SUPER_CHILDEND(pArea, &dbRelInfo));
       }
@@ -4368,7 +4368,7 @@ HB_FUNC_UR_SUPER( CHILDSTART )
    {
       DBRELINFO dbRelInfo;
 
-      if( hb_usrItemToRelInfo( hb_param(2, HB_IT_ARRAY), &dbRelInfo ) )
+      if( hb_usrItemToRelInfo( hb_param(2, Harbour::Item::ARRAY), &dbRelInfo ) )
       {
          hb_retni(SUPER_CHILDSTART(pArea, &dbRelInfo));
       }
@@ -4388,7 +4388,7 @@ HB_FUNC_UR_SUPER( CHILDSYNC )
    {
       DBRELINFO dbRelInfo;
 
-      if( hb_usrItemToRelInfo( hb_param(2, HB_IT_ARRAY), &dbRelInfo ) )
+      if( hb_usrItemToRelInfo( hb_param(2, Harbour::Item::ARRAY), &dbRelInfo ) )
       {
          hb_retni(SUPER_CHILDSYNC(pArea, &dbRelInfo));
       }
@@ -4451,7 +4451,7 @@ HB_FUNC_UR_SUPER( RELEVAL )
    {
       DBRELINFO dbRelInfo;
 
-      if( hb_usrItemToRelInfo( hb_param(2, HB_IT_ARRAY), &dbRelInfo ) )
+      if( hb_usrItemToRelInfo( hb_param(2, Harbour::Item::ARRAY), &dbRelInfo ) )
       {
          hb_retni(SUPER_RELEVAL(pArea, &dbRelInfo));
       }
@@ -4469,7 +4469,7 @@ HB_FUNC_UR_SUPER( RELTEXT )
 
    if( pArea )
    {
-      hb_retni(SUPER_RELTEXT(pArea, static_cast<HB_USHORT>(hb_parni(2)), hb_param(3, HB_IT_ANY)));
+      hb_retni(SUPER_RELTEXT(pArea, static_cast<HB_USHORT>(hb_parni(2)), hb_param(3, Harbour::Item::ANY)));
    }
 }
 
@@ -4481,7 +4481,7 @@ HB_FUNC_UR_SUPER( SETREL )
    {
       DBRELINFO dbRelInfo;
 
-      if( hb_usrItemToRelInfo( hb_param(2, HB_IT_ARRAY), &dbRelInfo ) )
+      if( hb_usrItemToRelInfo( hb_param(2, Harbour::Item::ARRAY), &dbRelInfo ) )
       {
          hb_retni(SUPER_SETREL(pArea, &dbRelInfo));
       }
@@ -4500,7 +4500,7 @@ HB_FUNC_UR_SUPER( ORDLSTADD )
    if( pArea )
    {
       DBORDERINFO dbOrderInfo;
-      PHB_ITEM pItem = hb_param(2, HB_IT_ARRAY);
+      PHB_ITEM pItem = hb_param(2, Harbour::Item::ARRAY);
 
       if( hb_usrItemToOrderInfo( pItem, &dbOrderInfo ) )
       {
@@ -4532,7 +4532,7 @@ HB_FUNC_UR_SUPER( ORDLSTDELETE )
    if( pArea )
    {
       DBORDERINFO dbOrderInfo;
-      PHB_ITEM pItem = hb_param(2, HB_IT_ARRAY);
+      PHB_ITEM pItem = hb_param(2, Harbour::Item::ARRAY);
 
       if( hb_usrItemToOrderInfo( pItem, &dbOrderInfo ) )
       {
@@ -4554,7 +4554,7 @@ HB_FUNC_UR_SUPER( ORDLSTFOCUS )
    if( pArea )
    {
       DBORDERINFO dbOrderInfo;
-      PHB_ITEM pItem = hb_param(2, HB_IT_ARRAY);
+      PHB_ITEM pItem = hb_param(2, Harbour::Item::ARRAY);
 
       if( hb_usrItemToOrderInfo( pItem, &dbOrderInfo ) )
       {
@@ -4585,7 +4585,7 @@ HB_FUNC_UR_SUPER( ORDSETCOND )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_param(2, HB_IT_ANY);
+      PHB_ITEM pItem = hb_param(2, Harbour::Item::ANY);
 
       if( pItem && HB_IS_NIL(pItem) )
       {
@@ -4616,7 +4616,7 @@ HB_FUNC_UR_SUPER( ORDCREATE )
    if( pArea )
    {
       DBORDERCREATEINFO dbOrderCreateInfo;
-      PHB_ITEM pItem = hb_param(2, HB_IT_ARRAY);
+      PHB_ITEM pItem = hb_param(2, Harbour::Item::ARRAY);
 
       if( hb_usrItemToOrderCreateInfo( pItem, &dbOrderCreateInfo ) )
       {
@@ -4638,7 +4638,7 @@ HB_FUNC_UR_SUPER( ORDDESTROY )
    if( pArea )
    {
       DBORDERINFO dbOrderInfo;
-      PHB_ITEM pItem = hb_param(2, HB_IT_ARRAY);
+      PHB_ITEM pItem = hb_param(2, Harbour::Item::ARRAY);
 
       if( hb_usrItemToOrderInfo( pItem, &dbOrderInfo ) )
       {
@@ -4660,7 +4660,7 @@ HB_FUNC_UR_SUPER( ORDINFO )
    if( pArea )
    {
       DBORDERINFO dbOrderInfo;
-      PHB_ITEM pItem = hb_param(3, HB_IT_ARRAY);
+      PHB_ITEM pItem = hb_param(3, Harbour::Item::ARRAY);
 
       if( hb_usrItemToOrderInfo( pItem, &dbOrderInfo ) )
       {
@@ -4711,7 +4711,7 @@ HB_FUNC_UR_SUPER( FILTERTEXT )
 
    if( pArea )
    {
-      hb_retni(SUPER_FILTERTEXT(pArea, hb_param(2, HB_IT_ANY)));
+      hb_retni(SUPER_FILTERTEXT(pArea, hb_param(2, Harbour::Item::ANY)));
    }
 }
 
@@ -4723,7 +4723,7 @@ HB_FUNC_UR_SUPER( SETFILTER )
    {
       DBFILTERINFO dbFilterInfo;
 
-      if( hb_usrItemToFilterInfo( hb_param(2, HB_IT_ARRAY), &dbFilterInfo ) )
+      if( hb_usrItemToFilterInfo( hb_param(2, Harbour::Item::ARRAY), &dbFilterInfo ) )
       {
          hb_retni(SUPER_SETFILTER(pArea, &dbFilterInfo));
       }
@@ -4743,7 +4743,7 @@ HB_FUNC_UR_SUPER( SETLOCATE )
    {
       DBSCOPEINFO dbScopeInfo;
 
-      if( hb_usrItemToScopeInfo( hb_param(2, HB_IT_ARRAY), &dbScopeInfo ) )
+      if( hb_usrItemToScopeInfo( hb_param(2, Harbour::Item::ARRAY), &dbScopeInfo ) )
       {
          hb_retni(SUPER_SETLOCATE(pArea, &dbScopeInfo));
       }
@@ -4789,7 +4789,7 @@ HB_FUNC_UR_SUPER( ERROR )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_param(2, HB_IT_OBJECT);
+      PHB_ITEM pItem = hb_param(2, Harbour::Item::OBJECT);
 
       if( pItem )
       {
@@ -4811,7 +4811,7 @@ HB_FUNC_UR_SUPER( EVALBLOCK )
 
    if( pArea )
    {
-      PHB_ITEM pItem = hb_param(2, HB_IT_BLOCK);
+      PHB_ITEM pItem = hb_param(2, Harbour::Item::BLOCK);
 
       if( pItem )
       {
@@ -4842,7 +4842,7 @@ HB_FUNC_UR_SUPER( LOCK )
    if( pArea )
    {
       DBLOCKINFO dbLockInfo;
-      PHB_ITEM pItem = hb_param(2, HB_IT_ARRAY);
+      PHB_ITEM pItem = hb_param(2, Harbour::Item::ARRAY);
 
       if( hb_usrItemToLockInfo( pItem, &dbLockInfo ) )
       {
@@ -4863,7 +4863,7 @@ HB_FUNC_UR_SUPER( UNLOCK )
 
    if( pArea )
    {
-      hb_retni(SUPER_UNLOCK(pArea, hb_param(2, HB_IT_ANY)));
+      hb_retni(SUPER_UNLOCK(pArea, hb_param(2, Harbour::Item::ANY)));
    }
 }
 
@@ -4885,7 +4885,7 @@ HB_FUNC_UR_SUPER( CREATEMEMFILE )
    {
       DBOPENINFO dbOpenInfo;
 
-      if( hb_usrItemToOpenInfo( hb_param(2, HB_IT_ARRAY), &dbOpenInfo ) )
+      if( hb_usrItemToOpenInfo( hb_param(2, Harbour::Item::ARRAY), &dbOpenInfo ) )
       {
          hb_retni(SUPER_CREATEMEMFILE(pArea, &dbOpenInfo));
       }
@@ -4905,7 +4905,7 @@ HB_FUNC_UR_SUPER( OPENMEMFILE )
    {
       DBOPENINFO dbOpenInfo;
 
-      if( hb_usrItemToOpenInfo( hb_param(2, HB_IT_ARRAY), &dbOpenInfo ) )
+      if( hb_usrItemToOpenInfo( hb_param(2, Harbour::Item::ARRAY), &dbOpenInfo ) )
       {
          hb_retni(SUPER_OPENMEMFILE(pArea, &dbOpenInfo));
       }
@@ -4963,7 +4963,7 @@ HB_FUNC_UR_SUPER( DROP )
 
    if( pRDD )
    {
-      hb_retni(SUPER_DROP(pRDD, hb_param(2, HB_IT_ANY), hb_param(3, HB_IT_ANY), hb_parnl(4)));
+      hb_retni(SUPER_DROP(pRDD, hb_param(2, Harbour::Item::ANY), hb_param(3, Harbour::Item::ANY), hb_parnl(4)));
    }
 }
 
@@ -4973,7 +4973,7 @@ HB_FUNC_UR_SUPER( EXISTS )
 
    if( pRDD )
    {
-      hb_retni(SUPER_EXISTS(pRDD, hb_param(2, HB_IT_ANY), hb_param(3, HB_IT_ANY), hb_parnl(4)));
+      hb_retni(SUPER_EXISTS(pRDD, hb_param(2, Harbour::Item::ANY), hb_param(3, Harbour::Item::ANY), hb_parnl(4)));
    }
 }
 
@@ -4983,7 +4983,7 @@ HB_FUNC_UR_SUPER( RENAME )
 
    if( pRDD )
    {
-      hb_retni(SUPER_RENAME(pRDD, hb_param(2, HB_IT_ANY), hb_param(3, HB_IT_ANY), hb_param(4, HB_IT_ANY), hb_parnl(5)));
+      hb_retni(SUPER_RENAME(pRDD, hb_param(2, Harbour::Item::ANY), hb_param(3, Harbour::Item::ANY), hb_param(4, Harbour::Item::ANY), hb_parnl(5)));
    }
 }
 
@@ -4993,6 +4993,6 @@ HB_FUNC_UR_SUPER( RDDINFO )
 
    if( pRDD )
    {
-      hb_retni(SUPER_RDDINFO(pRDD, static_cast<HB_USHORT>(hb_parni(2)), hb_parnl(3), hb_param(4, HB_IT_ANY)));
+      hb_retni(SUPER_RDDINFO(pRDD, static_cast<HB_USHORT>(hb_parni(2)), hb_parnl(3), hb_param(4, Harbour::Item::ANY)));
    }
 }

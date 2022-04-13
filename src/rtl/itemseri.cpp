@@ -336,7 +336,7 @@ static PHB_REF_ITEM hb_itemSerialRefNew( PHB_REF_LIST pRefList, HB_SIZE nPos )
    return pRef;
 }
 
-/* used by hb_itemSerialSize() for HB_IT_ARRAY and HB_IT_HASH */
+/* used by hb_itemSerialSize() for Harbour::Item::ARRAY and Harbour::Item::HASH */
 static HB_BOOL hb_itemSerialValueRef( PHB_REF_LIST pRefList, void * value, HB_SIZE nOffset )
 {
    PHB_REF_ITEM pRef;
@@ -381,7 +381,7 @@ static void hb_itemSerialUnusedFree( PHB_REF_LIST pRefList )
    }
 }
 
-/* used by hb_serializeItem() for HB_IT_ARRAY and HB_IT_HASH */
+/* used by hb_serializeItem() for Harbour::Item::ARRAY and Harbour::Item::HASH */
 static HB_BOOL hb_itemSerialValueOffset( PHB_REF_LIST pRefList, void * value, HB_SIZE nOffset, HB_SIZE * pnRef )
 {
    PHB_REF_ITEM pRef;
@@ -509,21 +509,21 @@ static HB_SIZE hb_itemSerialSize( PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn
 
    switch( hb_itemType(pItem) )
    {
-      case HB_IT_NIL:
-      case HB_IT_LOGICAL:
+      case Harbour::Item::NIL:
+      case Harbour::Item::LOGICAL:
          nSize = 1;
          break;
 
-      case HB_IT_DATE:
+      case Harbour::Item::DATE:
          nSize = 4;
          break;
 
-      case HB_IT_TIMESTAMP:
+      case Harbour::Item::TIMESTAMP:
          nSize = 9;
          break;
 
-      case HB_IT_INTEGER:
-      case HB_IT_LONG:
+      case Harbour::Item::INTEGER:
+      case Harbour::Item::LONG:
          lVal = hb_itemGetNInt(pItem);
          if( lVal == 0 )
          {
@@ -555,7 +555,7 @@ static HB_SIZE hb_itemSerialSize( PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn
          }
          break;
 
-      case HB_IT_DOUBLE:
+      case Harbour::Item::DOUBLE:
          if( iFlags & HB_SERIALIZE_NUMSIZE )
          {
             nSize = 11;
@@ -566,12 +566,12 @@ static HB_SIZE hb_itemSerialSize( PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn
          }
          break;
 
-      case HB_IT_SYMBOL:
+      case Harbour::Item::SYMBOL:
          nSize = 2 + strlen(hb_itemGetSymbol(pItem)->szName);
          break;
 
-      case HB_IT_STRING:
-      case HB_IT_MEMO:
+      case Harbour::Item::STRING:
+      case Harbour::Item::MEMO:
          szVal = hb_itemGetCPtr(pItem);
          nLen = hb_itemGetCLen(pItem);
          if( nLen == 0 )
@@ -602,7 +602,7 @@ static HB_SIZE hb_itemSerialSize( PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn
          }
          break;
 
-      case HB_IT_ARRAY:
+      case Harbour::Item::ARRAY:
          nSize = 0;
          uiClass = hb_objGetClass(pItem);
          if( uiClass )
@@ -640,7 +640,7 @@ static HB_SIZE hb_itemSerialSize( PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn
          }
          break;
 
-      case HB_IT_HASH:
+      case Harbour::Item::HASH:
          if( ( iFlags & HB_SERIALIZE_IGNOREREF ) == 0 && hb_hashRefs(pItem) > 1 && hb_itemSerialValueRef( pRefList, hb_hashId(pItem), nOffset ) )
          {
             nSize = 5;
@@ -708,22 +708,22 @@ static HB_SIZE hb_serializeItem( PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cd
 
    switch( hb_itemType(pItem) )
    {
-      case HB_IT_NIL:
+      case Harbour::Item::NIL:
          pBuffer[nOffset++] = HB_SERIAL_NIL;
          break;
 
-      case HB_IT_LOGICAL:
+      case Harbour::Item::LOGICAL:
          pBuffer[nOffset++] = hb_itemGetL(pItem) ? HB_SERIAL_TRUE : HB_SERIAL_FALSE;
          break;
 
-      case HB_IT_DATE:
+      case Harbour::Item::DATE:
          pBuffer[nOffset++] = HB_SERIAL_DATE;
          l = hb_itemGetDL(pItem);
          HB_PUT_LE_UINT24(&pBuffer[nOffset], l);
          nOffset += 3;
          break;
 
-      case HB_IT_TIMESTAMP:
+      case Harbour::Item::TIMESTAMP:
          pBuffer[nOffset++] = HB_SERIAL_TIMESTAMP;
          hb_itemGetTDT(pItem, &l, &l2);
          HB_PUT_LE_UINT32(&pBuffer[nOffset], l);
@@ -732,8 +732,8 @@ static HB_SIZE hb_serializeItem( PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cd
          nOffset += 4;
          break;
 
-      case HB_IT_INTEGER:
-      case HB_IT_LONG:
+      case Harbour::Item::INTEGER:
+      case Harbour::Item::LONG:
          lVal = hb_itemGetNInt(pItem);
          if( iFlags & HB_SERIALIZE_NUMSIZE )
          {
@@ -804,7 +804,7 @@ static HB_SIZE hb_serializeItem( PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cd
          }
          break;
 
-      case HB_IT_DOUBLE:
+      case Harbour::Item::DOUBLE:
          d = hb_itemGetND(pItem);
          if( iFlags & HB_SERIALIZE_NUMSIZE )
          {
@@ -827,7 +827,7 @@ static HB_SIZE hb_serializeItem( PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cd
          }
          break;
 
-      case HB_IT_SYMBOL:
+      case Harbour::Item::SYMBOL:
          szVal = hb_itemGetSymbol(pItem)->szName;
          nLen = strlen(szVal);
          if( nLen > 0xFF )
@@ -840,8 +840,8 @@ static HB_SIZE hb_serializeItem( PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cd
          nOffset += nLen;
          break;
 
-      case HB_IT_STRING:
-      case HB_IT_MEMO:
+      case Harbour::Item::STRING:
+      case Harbour::Item::MEMO:
          szVal = hb_itemGetCPtr(pItem);
          nLen = hb_itemGetCLen(pItem);
          if( nLen == 0 )
@@ -917,7 +917,7 @@ static HB_SIZE hb_serializeItem( PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cd
          }
          break;
 
-      case HB_IT_ARRAY:
+      case Harbour::Item::ARRAY:
          nRef = HB_SERIAL_DUMMYOFFSET;
          if( hb_arrayRefs(pItem) > 1 && hb_itemSerialValueOffset( pRefList, hb_arrayId(pItem), nOffset, &nRef ) )
          {
@@ -967,7 +967,7 @@ static HB_SIZE hb_serializeItem( PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cd
          }
          break;
 
-      case HB_IT_HASH:
+      case Harbour::Item::HASH:
          nRef = HB_SERIAL_DUMMYOFFSET;
          if( hb_hashRefs(pItem) > 1 && hb_itemSerialValueOffset( pRefList, hb_hashId(pItem), nOffset, &nRef ) )
          {
@@ -1925,7 +1925,7 @@ PHB_ITEM hb_itemDeserialize( const char ** pBufferPtr, HB_SIZE * pnSize )
 
 HB_FUNC( HB_SERIALIZE )
 {
-   PHB_ITEM pItem = hb_param(1, HB_IT_ANY);
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem )
    {
@@ -1957,7 +1957,7 @@ HB_FUNC( HB_SERIALIZE )
 
 HB_FUNC( HB_DESERIALIZE )
 {
-   PHB_ITEM pParam = hb_param(1, HB_IT_BYREF);
+   PHB_ITEM pParam = hb_param(1, Harbour::Item::BYREF);
    HB_SIZE nSize = hb_parclen(1);
 
    if( nSize )

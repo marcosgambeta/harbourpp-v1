@@ -63,8 +63,8 @@ HB_FUNC( ORDKEYCOUNT )
    {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.itmOrder = hb_param(1, HB_IT_STRING | HB_IT_NUMERIC);
-      pOrderInfo.atomBagName = hb_param(2, HB_IT_STRING);
+      pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
+      pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       /* Either or both may be NIL */
 
       pOrderInfo.itmResult = hb_itemPutNL(nullptr, 0);
@@ -85,8 +85,8 @@ HB_FUNC( ORDKEYNO )
    {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.itmOrder = hb_param(1, HB_IT_STRING | HB_IT_NUMERIC);
-      pOrderInfo.atomBagName = hb_param(2, HB_IT_STRING);
+      pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
+      pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       /* Either or both may be NIL */
       pOrderInfo.itmNewVal = nullptr;
       pOrderInfo.itmResult = hb_itemPutNL(nullptr, 0);
@@ -107,7 +107,7 @@ HB_FUNC( ORDKEYGOTO )
    {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.itmNewVal = hb_param(1, HB_IT_NUMERIC);
+      pOrderInfo.itmNewVal = hb_param(1, Harbour::Item::NUMERIC);
       pOrderInfo.itmResult = hb_itemPutL(nullptr, false);
       SELF_ORDINFO( pArea, DBOI_POSITION, &pOrderInfo );
       hb_itemReturnRelease(pOrderInfo.itmResult);
@@ -126,7 +126,7 @@ HB_FUNC( ORDKEYRELPOS )
    {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.itmNewVal = hb_param(1, HB_IT_NUMERIC);
+      pOrderInfo.itmNewVal = hb_param(1, Harbour::Item::NUMERIC);
       pOrderInfo.itmResult = hb_itemPutNI(nullptr, 0);
       SELF_ORDINFO( pArea, DBOI_RELKEYPOS, &pOrderInfo );
       hb_itemReturnRelease(pOrderInfo.itmResult);
@@ -145,7 +145,7 @@ HB_FUNC( ORDFINDREC )
    {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.itmNewVal = hb_param(1, HB_IT_NUMERIC);
+      pOrderInfo.itmNewVal = hb_param(1, Harbour::Item::NUMERIC);
       pOrderInfo.itmResult = hb_itemPutL(nullptr, false);
       SELF_ORDINFO( pArea, hb_parl(2) ? DBOI_FINDRECCONT : DBOI_FINDREC, &pOrderInfo );
       hb_itemReturnRelease(pOrderInfo.itmResult);
@@ -178,7 +178,7 @@ HB_FUNC( ORDSKIPUNIQUE )
    {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.itmNewVal = hb_param(1, HB_IT_ANY);
+      pOrderInfo.itmNewVal = hb_param(1, Harbour::Item::ANY);
       pOrderInfo.itmResult = hb_itemPutL(nullptr, false);
       SELF_ORDINFO( pArea, DBOI_SKIPUNIQUE, &pOrderInfo );
       hb_itemReturnRelease(pOrderInfo.itmResult);
@@ -215,10 +215,10 @@ HB_FUNC( ORDKEYADD )
    {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.itmOrder = hb_param(1, HB_IT_STRING | HB_IT_NUMERIC);
-      pOrderInfo.atomBagName = hb_param(2, HB_IT_STRING);
+      pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
+      pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       /* Either or both may be NIL */
-      pOrderInfo.itmNewVal = hb_param(3, HB_IT_ANY);
+      pOrderInfo.itmNewVal = hb_param(3, Harbour::Item::ANY);
       pOrderInfo.itmResult = hb_itemPutNL(nullptr, 0);
       SELF_ORDINFO( pArea, DBOI_KEYADD, &pOrderInfo );
       hb_itemReturnRelease(pOrderInfo.itmResult);
@@ -237,10 +237,10 @@ HB_FUNC( ORDKEYDEL )
    {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.itmOrder = hb_param(1, HB_IT_STRING | HB_IT_NUMERIC);
-      pOrderInfo.atomBagName = hb_param(2, HB_IT_STRING);
+      pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
+      pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       /* Either or both may be NIL */
-      pOrderInfo.itmNewVal = hb_param(3, HB_IT_ANY);
+      pOrderInfo.itmNewVal = hb_param(3, Harbour::Item::ANY);
       pOrderInfo.itmResult = hb_itemPutNL(nullptr, 0);
       SELF_ORDINFO( pArea, DBOI_KEYDELETE, &pOrderInfo );
       hb_itemReturnRelease(pOrderInfo.itmResult);
@@ -259,10 +259,10 @@ HB_FUNC( ORDDESCEND )
    {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.itmOrder = hb_param(1, HB_IT_STRING | HB_IT_NUMERIC);
-      pOrderInfo.atomBagName = hb_param(2, HB_IT_STRING);
+      pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
+      pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       /* Either or both may be NIL */
-      pOrderInfo.itmNewVal = hb_param(3, HB_IT_LOGICAL);
+      pOrderInfo.itmNewVal = hb_param(3, Harbour::Item::LOGICAL);
       pOrderInfo.itmResult = hb_itemPutL(nullptr, false);
       SELF_ORDINFO( pArea, DBOI_ISDESC, &pOrderInfo );
       hb_itemReturnRelease(pOrderInfo.itmResult);
@@ -281,10 +281,10 @@ HB_FUNC( ORDISUNIQUE )
    {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.itmOrder = hb_param(1, HB_IT_STRING | HB_IT_NUMERIC);
-      pOrderInfo.atomBagName = hb_param(2, HB_IT_STRING);
+      pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
+      pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       /* Harbour extension: NewVal to set/reset unique flag */
-      pOrderInfo.itmNewVal = hb_param(3, HB_IT_LOGICAL);
+      pOrderInfo.itmNewVal = hb_param(3, Harbour::Item::LOGICAL);
       pOrderInfo.itmResult = hb_itemPutL(nullptr, false);
       SELF_ORDINFO( pArea, DBOI_UNIQUE, &pOrderInfo );
       hb_itemReturnRelease(pOrderInfo.itmResult);
@@ -303,10 +303,10 @@ HB_FUNC( ORDCUSTOM )
    {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
-      pOrderInfo.itmOrder = hb_param(1, HB_IT_STRING | HB_IT_NUMERIC);
-      pOrderInfo.atomBagName = hb_param(2, HB_IT_STRING);
+      pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
+      pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       /* Either or both may be NIL */
-      pOrderInfo.itmNewVal = hb_param(3, HB_IT_LOGICAL);
+      pOrderInfo.itmNewVal = hb_param(3, Harbour::Item::LOGICAL);
       pOrderInfo.itmResult = hb_itemPutL(nullptr, false);
       SELF_ORDINFO( pArea, DBOI_CUSTOM, &pOrderInfo );
       hb_itemReturnRelease(pOrderInfo.itmResult);
@@ -325,7 +325,7 @@ HB_FUNC( DBINFO )
    {
       PHB_ITEM pIndex;
 
-      pIndex = hb_param(1, HB_IT_NUMERIC);
+      pIndex = hb_param(1, Harbour::Item::NUMERIC);
       if( pIndex )
       {
          PHB_ITEM pInfo = hb_itemParam(2);
@@ -350,16 +350,16 @@ HB_FUNC( DBORDERINFO )
 
    if( pArea )
    {
-      PHB_ITEM pType = hb_param(1, HB_IT_NUMERIC);
+      PHB_ITEM pType = hb_param(1, Harbour::Item::NUMERIC);
       if( pType )
       {
          DBORDERINFO pOrderInfo;
 
          /* atomBagName may be NIL */
-         pOrderInfo.atomBagName = hb_param(2, HB_IT_STRING | HB_IT_NUMERIC);
-         pOrderInfo.itmOrder = hb_param(3, HB_IT_STRING | HB_IT_NUMERIC);
+         pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING | Harbour::Item::NUMERIC);
+         pOrderInfo.itmOrder = hb_param(3, Harbour::Item::STRING | Harbour::Item::NUMERIC);
 
-         pOrderInfo.itmNewVal  = hb_param(4, HB_IT_ANY);
+         pOrderInfo.itmNewVal  = hb_param(4, Harbour::Item::ANY);
          pOrderInfo.itmResult  = hb_itemNew(nullptr);
          pOrderInfo.itmCobExpr = nullptr;
          pOrderInfo.fAllTags   = HB_FALSE;
@@ -386,11 +386,11 @@ HB_FUNC( DBFIELDINFO )
       HB_USHORT uiFields, uiIndex;
       PHB_ITEM pType;
 
-      pType = hb_param(1, HB_IT_NUMERIC);
+      pType = hb_param(1, Harbour::Item::NUMERIC);
       uiIndex = static_cast<HB_FIELDNO>(hb_parni(2));
       if( pType && SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS && uiIndex > 0 && uiIndex <= uiFields )
       {
-         PHB_ITEM pInfo = hb_itemNew(hb_param(3, HB_IT_ANY));
+         PHB_ITEM pInfo = hb_itemNew(hb_param(3, Harbour::Item::ANY));
 
          SELF_FIELDINFO( pArea, uiIndex, static_cast<HB_USHORT>(hb_itemGetNI(pType)), pInfo );
          hb_itemReturnRelease(pInfo);
@@ -414,8 +414,8 @@ HB_FUNC( DBRECORDINFO )
    {
       PHB_ITEM pType, pRecNo;
 
-      pType = hb_param(1, HB_IT_NUMERIC);
-      pRecNo = hb_param(2, HB_IT_ANY);
+      pType = hb_param(1, Harbour::Item::NUMERIC);
+      pRecNo = hb_param(2, Harbour::Item::ANY);
       if( pType )
       {
          PHB_ITEM pInfo = hb_itemParam(3);
@@ -454,7 +454,7 @@ HB_FUNC( DBFILEGET )
          uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
       }
 
-      pMode = hb_param(3, HB_IT_NUMERIC);
+      pMode = hb_param(3, Harbour::Item::NUMERIC);
       if( uiIndex > 0 && pMode && hb_parclen(2) > 0 && SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS && uiIndex <= uiFields )
       {
          hb_retl(SELF_GETVALUEFILE(pArea, uiIndex, hb_parc(2), static_cast<HB_USHORT>(hb_itemGetNI(pMode))) == HB_SUCCESS);

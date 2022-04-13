@@ -95,7 +95,7 @@ HB_FUNC( ORDWILDSEEK )
          }
          if( !fFound && errCode == HB_SUCCESS )
          {
-            OrderInfo.itmNewVal = hb_param(1, HB_IT_STRING);
+            OrderInfo.itmNewVal = hb_param(1, Harbour::Item::STRING);
             if( SELF_ORDINFO( pArea, fBack ? DBOI_SKIPWILDBACK : DBOI_SKIPWILD, &OrderInfo ) == HB_SUCCESS )
             {
                fFound = hb_itemGetL(OrderInfo.itmResult);

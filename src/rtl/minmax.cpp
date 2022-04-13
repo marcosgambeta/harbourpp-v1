@@ -52,8 +52,8 @@
 /* NOTE: CA-Cl*pper returns 1st item when they are equal [druzus] */
 HB_FUNC( MAX )
 {
-   PHB_ITEM p1 = hb_param(1, HB_IT_ANY);
-   PHB_ITEM p2 = hb_param(2, HB_IT_ANY);
+   PHB_ITEM p1 = hb_param(1, Harbour::Item::ANY);
+   PHB_ITEM p2 = hb_param(2, Harbour::Item::ANY);
 
    if( p1 && p2 )
    {
@@ -127,8 +127,8 @@ HB_FUNC( MAX )
 /* NOTE: CA-Cl*pper returns 1st item when they are equal [druzus] */
 HB_FUNC( MIN )
 {
-   PHB_ITEM p1 = hb_param(1, HB_IT_ANY);
-   PHB_ITEM p2 = hb_param(2, HB_IT_ANY);
+   PHB_ITEM p1 = hb_param(1, Harbour::Item::ANY);
+   PHB_ITEM p2 = hb_param(2, Harbour::Item::ANY);
 
    if( p1 && p2 )
    {
