@@ -264,7 +264,7 @@ HB_FUNC( WVT_SETTOOLTIP )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    TOOLINFO ti;
-   POINT    xy = { 0, 0 };
+   POINT    xy = {0, 0};
    int      iTop, iLeft, iBottom, iRight;
 
    if( !_s->bToolTipActive )
@@ -324,7 +324,7 @@ HB_FUNC( WVT_SETTOOLTIPMARGIN )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   RECT rc = { 0, 0, 0, 0 };
+   RECT rc = {0, 0, 0, 0};
 
    rc.left   = hb_parni(2);
    rc.top    = hb_parni(1);
@@ -440,7 +440,7 @@ HB_FUNC( WVT_SETMOUSEPOS )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   POINT xy = { 0, 0 };
+   POINT xy = {0, 0};
 
    xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
 
@@ -570,7 +570,7 @@ HB_FUNC( WVT_SETMOUSEMOVE )
 HB_FUNC( WVT_GETXYFROMROWCOL )
 {
    PHB_ITEM info = hb_itemArrayNew(2);
-   POINT    xy   = { 0, 0 };
+   POINT    xy   = {0, 0};
 
    xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
 
@@ -605,9 +605,9 @@ HB_FUNC( WVT_SETMENU )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   RECT wi = { 0, 0, 0, 0 };
-   RECT ci = { 0, 0, 0, 0 };
-   RECT rc = { 0, 0, 0, 0 };
+   RECT wi = {0, 0, 0, 0};
+   RECT ci = {0, 0, 0, 0};
+   RECT rc = {0, 0, 0, 0};
    int  height, width;
 
    SetMenu(_s->hWnd, reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(1))));
@@ -729,8 +729,8 @@ HB_FUNC( WVT_INVALIDATERECT )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   RECT  rc = { 0, 0, 0, 0 };
-   POINT xy = { 0, 0 };
+   RECT  rc = {0, 0, 0, 0};
+   POINT xy = {0, 0};
 
    xy        = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
    rc.top    = xy.y;
@@ -752,7 +752,7 @@ HB_FUNC( WVT_CLIENTTOSCREEN )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    PHB_ITEM info = hb_itemArrayNew(2);
-   POINT    xy   = { 0, 0 };
+   POINT    xy   = {0, 0};
 
    xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
 
@@ -766,7 +766,7 @@ HB_FUNC( WVT_CLIENTTOSCREEN )
 
 HB_FUNC( WVT_GETCURSORPOS )
 {
-   POINT    xy   = { 0, 0 };
+   POINT    xy   = {0, 0};
    PHB_ITEM info = hb_itemArrayNew(2);
 
    GetCursorPos(&xy);
@@ -781,7 +781,7 @@ HB_FUNC( WVT_TRACKPOPUPMENU )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   POINT xy = { 0, 0 };
+   POINT xy = {0, 0};
 
    GetCursorPos(&xy);
 
@@ -803,7 +803,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   PHB_ITEM pFirst = hb_param(3, HB_IT_ANY);
+   PHB_ITEM pFirst = hb_param(3, Harbour::Item::ANY);
    PHB_ITEM pFunc  = nullptr;
    PHB_DYNS pExecSym;
    HWND     hDlg  = 0;
@@ -833,7 +833,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
       pFunc = hb_itemNew(pFirst);
       iType = 2;
    }
-   else if( hb_itemType(pFirst) == HB_IT_STRING )
+   else if( hb_itemType(pFirst) == Harbour::Item::STRING )
    {
       pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
       if( pExecSym )
@@ -926,7 +926,7 @@ HB_FUNC( WVT_CREATEDIALOGMODAL )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   PHB_ITEM   pFirst = hb_param(3, HB_IT_ANY);
+   PHB_ITEM   pFirst = hb_param(3, Harbour::Item::ANY);
    PHB_ITEM   pFunc  = nullptr;
    PHB_DYNS   pExecSym;
    int        iIndex;
@@ -960,7 +960,7 @@ HB_FUNC( WVT_CREATEDIALOGMODAL )
       _s->pFuncModal[iIndex] = pFunc;
       _s->iTypeModal[iIndex] = 2;
    }
-   else if( hb_itemType(pFirst) == HB_IT_STRING )
+   else if( hb_itemType(pFirst) == Harbour::Item::STRING )
    {
       pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
       if( pExecSym )
@@ -1044,7 +1044,7 @@ HB_FUNC( WVT__MAKEDLGTEMPLATE )
    *p++ = static_cast<short>(0);                 /* Menu (ignored for now.) */
    *p++ = static_cast<short>(0x00);              /* Class also ignored      */
 
-   if( hb_parinfa(1, 11) == HB_IT_STRING )
+   if( hb_parinfa(1, 11) == Harbour::Item::STRING )
    {
       nchar = nCopyAnsiToWideChar(p, static_cast<LPCSTR>(hb_parvc(1, 11)));
       p    += nchar;
@@ -1086,7 +1086,7 @@ HB_FUNC( WVT__MAKEDLGTEMPLATE )
       *p++ = LOWORD(hb_parvnl(9, i));    /* id          */
       *p++ = HIWORD(hb_parvnl(9, i));    /* id          */
 
-      if( hb_parinfa(10, i) == HB_IT_STRING )
+      if( hb_parinfa(10, i) == Harbour::Item::STRING )
       {
          nchar = nCopyAnsiToWideChar(p, static_cast<LPCSTR>(hb_parvc(10, i)));   /* class */
          p    += nchar;
@@ -1097,7 +1097,7 @@ HB_FUNC( WVT__MAKEDLGTEMPLATE )
          *p++ = static_cast<WORD>(hb_parvni(10, i));
       }
 
-      if( hb_parinfa(11, i) == HB_IT_STRING )
+      if( hb_parinfa(11, i) == Harbour::Item::STRING )
       {
          nchar = nCopyAnsiToWideChar(p, static_cast<LPCSTR>(hb_parvc(11, i)));   /*  text  */
          p    += nchar;
@@ -1243,9 +1243,9 @@ HB_BOOL wvt_Array2Rect(PHB_ITEM aRect, RECT * rc)
       rc->top    = hb_arrayGetNL(aRect, 2);
       rc->right  = hb_arrayGetNL(aRect, 3);
       rc->bottom = hb_arrayGetNL(aRect, 4);
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 PHB_ITEM wvt_Rect2Array(RECT * rc)
@@ -1266,9 +1266,9 @@ HB_BOOL wvt_Array2Point(PHB_ITEM aPoint, POINT * pt)
    {
       pt->x = hb_arrayGetNL(aPoint, 1);
       pt->y = hb_arrayGetNL(aPoint, 2);
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 PHB_ITEM wvt_Point2Array(POINT * pt)
@@ -1287,9 +1287,9 @@ HB_BOOL wvt_Array2Size(PHB_ITEM aSize, SIZE * siz)
    {
       siz->cx = hb_arrayGetNL(aSize, 1);
       siz->cy = hb_arrayGetNL(aSize, 2);
-      return HB_TRUE;
+      return true;
    }
-   return HB_FALSE;
+   return false;
 }
 
 PHB_ITEM wvt_Size2Array(SIZE * siz)

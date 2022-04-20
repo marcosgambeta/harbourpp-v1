@@ -345,19 +345,21 @@ static HBITMAP hPrepareBitmap(LPCTSTR szBitmap, UINT uiBitmap, int iExpWidth, in
                      hBitmap2 = CreateCompatibleBitmap(hdcSource, iExpWidth, iExpHeight);
                      SelectObject(hdcTarget, hBitmap2);
 
-                     bResult = StretchBlt(
-                        hdcTarget,                       /* handle to destination DC                 */
-                        0,                               /* x-coord of destination upper-left corner */
-                        0,                               /* y-coord of destination upper-left corner */
-                        iExpWidth,                       /* width of destination rectangle           */
-                        iExpHeight,                      /* height of destination rectangle          */
-                        hdcSource,                       /* handle to source DC                      */
-                        0,                               /* x-coord of source upper-left corner      */
-                        0,                               /* y-coord of source upper-left corner      */
-                        iWidth,                          /* width of source rectangle                */
-                        iHeight,                         /* height of source rectangle               */
-                        SRCCOPY                          /* raster operation code                    */
-                        );
+                     /*
+                     [1] handle to destination DC
+                     [2] x-coord of destination upper-left corner
+                     [3] y-coord of destination upper-left corner
+                     [4] width of destination rectangle
+                     [5] height of destination rectangle
+                     [6] handle to source DC
+                     [7] x-coord of source upper-left corner
+                     [8] y-coord of source upper-left corner
+                     [9] width of source rectangle
+                     [10] height of source rectangle
+                     [11] raster operation code
+                     */
+
+                     bResult = StretchBlt(hdcTarget, 0, 0, iExpWidth, iExpHeight, hdcSource, 0, 0, iWidth, iHeight, SRCCOPY);
 
                      if( !bResult )
                      {
@@ -386,13 +388,7 @@ static HBITMAP hPrepareBitmap(LPCTSTR szBitmap, UINT uiBitmap, int iExpWidth, in
       {
          UINT uiOptions = bMap3Dcolors ? LR_LOADMAP3DCOLORS : LR_DEFAULTCOLOR;
 
-         hBitmap = static_cast<HBITMAP>(LoadImage(
-            static_cast<HINSTANCE>(wvg_hInstance()),
-            szBitmap,
-            IMAGE_BITMAP,
-            iExpWidth,
-            iExpHeight,
-            uiOptions));
+         hBitmap = static_cast<HBITMAP>(LoadImage(static_cast<HINSTANCE>(wvg_hInstance()), szBitmap, IMAGE_BITMAP, iExpWidth, iExpHeight, uiOptions));
 
          if( hBitmap == nullptr )
          {
@@ -407,13 +403,9 @@ static HBITMAP hPrepareBitmap(LPCTSTR szBitmap, UINT uiBitmap, int iExpWidth, in
 
          hb_snprintf(szResname, sizeof(szResname), "?%u", uiBitmap);
 
-         hBitmap = static_cast<HBITMAP>(LoadImage(
-            static_cast<HINSTANCE>(wvg_hInstance()),
+         hBitmap = static_cast<HBITMAP>(LoadImage(static_cast<HINSTANCE>(wvg_hInstance()),
             static_cast<LPCTSTR>(MAKEINTRESOURCE(static_cast<WORD>(uiBitmap))),
-            IMAGE_BITMAP,
-            iExpWidth,
-            iExpHeight,
-            uiOptions));
+            IMAGE_BITMAP, iExpWidth, iExpHeight, uiOptions));
          if( hBitmap == nullptr )
          {
             return nullptr;
@@ -475,7 +467,7 @@ HB_FUNC( WVG_STATUSBARCREATEPANEL )
       {
          int  ptArray[WIN_STATUSBAR_MAX_PARTS];
          int  iParts;
-         RECT rc = { 0, 0, 0, 0 };
+         RECT rc = {0, 0, 0, 0};
          int  width;
 
          iParts = static_cast<int>(SendMessage(hWndSB, SB_GETPARTS, static_cast<WPARAM>(WIN_STATUSBAR_MAX_PARTS), reinterpret_cast<LPARAM>(static_cast<LPINT>(ptArray))));
@@ -498,7 +490,7 @@ HB_FUNC( WVG_STATUSBARCREATEPANEL )
       }
       case -1:
       {
-         RECT rc = { 0, 0, 0, 0 };
+         RECT rc = {0, 0, 0, 0};
          int  ptArray[WIN_STATUSBAR_MAX_PARTS];
 
          if( GetClientRect(hWndSB, &rc) )
@@ -659,7 +651,6 @@ HB_FUNC( WVG_TREEVIEW_GETSELECTIONINFO )
    }
 }
 
-
 /*
  *   hItem := Wvg_TreeView_AddItem( oItem:hTree, hParent, oItem:Caption )
  */
@@ -818,7 +809,7 @@ BOOL CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LPARAM
    }
    if( binit )
    {
-      return HB_TRUE;
+      return true;
    }
 
    return bret;
@@ -886,7 +877,7 @@ HB_FUNC( WVG_CHOOSEFONT )
    cf.Flags = Flags;
    cf.rgbColors = RGB(0, 0, 0);
 
-   cf.lCustData = reinterpret_cast<HB_PTRUINT>(hb_param(2, HB_IT_BLOCK));
+   cf.lCustData = reinterpret_cast<HB_PTRUINT>(hb_param(2, Harbour::Item::BLOCK));
    cf.lpfnHook = reinterpret_cast<LPCFHOOKPROC>(WvgDialogProcChooseFont);
 
    cf.lpTemplateName = static_cast<LPTSTR>(nullptr);
@@ -898,7 +889,7 @@ HB_FUNC( WVG_CHOOSEFONT )
 
    if( ChooseFont(&cf) )
    {
-      PHB_ITEM aFont = wvg_logfontTOarray(&lf, HB_FALSE);
+      PHB_ITEM aFont = wvg_logfontTOarray(&lf, false);
       PHB_ITEM aInfo = hb_itemNew(nullptr);
 
       hb_arrayNew(aInfo, 4);
@@ -922,7 +913,7 @@ HB_FUNC( WVG_CHOOSEFONT_GETLOGFONT )
 
    SendMessage(wvg_parhwnd(1), WM_CHOOSEFONT_GETLOGFONT, static_cast<WPARAM>(0), reinterpret_cast<LPARAM>(&lf));
 
-   aFont = wvg_logfontTOarray(&lf, HB_FALSE);
+   aFont = wvg_logfontTOarray(&lf, false);
 
    hb_itemReturnRelease(aFont);
 }
@@ -935,7 +926,7 @@ HB_FUNC( WVG_FONTCREATE )
 
    memset(&lf, 0, sizeof(lf));
 
-   aFont = hb_param(1, HB_IT_ARRAY);
+   aFont = hb_param(1, Harbour::Item::ARRAY);
    if( aFont )
    {
       HB_ITEMCOPYSTR(hb_arrayGetItemPtr(aFont, 1), lf.lfFaceName, HB_SIZEOFARRAY(lf.lfFaceName) - 1);
@@ -959,12 +950,12 @@ HB_FUNC( WVG_FONTCREATE )
 
    if( hFont )
    {
-      aFont = wvg_logfontTOarray(&lf, HB_FALSE);
+      aFont = wvg_logfontTOarray(&lf, false);
       hb_arraySetNInt(aFont, 15, reinterpret_cast<HB_PTRUINT>(hFont));
    }
    else
    {
-      aFont = wvg_logfontTOarray(&lf, HB_TRUE);
+      aFont = wvg_logfontTOarray(&lf, true);
    }
 
    hb_itemReturnRelease(aFont);
@@ -1131,7 +1122,7 @@ LRESULT CALLBACK ControlWindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPAR
 
    if( pBlock )
    {
-      if( hb_itemType(pBlock) == HB_IT_POINTER )
+      if( hb_itemType(pBlock) == Harbour::Item::POINTER )
       {
          hb_vmPushSymbol(hb_dynsymSymbol((static_cast<PHB_SYMB>(pBlock))->pDynSym));
          hb_vmPushNil();
@@ -1156,7 +1147,7 @@ HB_FUNC( WVG_SETWINDOWPROCBLOCK )
 {
    WNDPROC oldProc;
    HWND hWnd = hbwapi_par_raw_HWND(1);
-   PHB_ITEM pBlock = hb_itemNew(hb_param(2, HB_IT_BLOCK));
+   PHB_ITEM pBlock = hb_itemNew(hb_param(2, Harbour::Item::BLOCK));
 
    SetProp(hWnd, TEXT("BLOCKCALLBACK"), pBlock);
 

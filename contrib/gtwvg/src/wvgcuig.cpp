@@ -87,7 +87,7 @@ static PHB_GOBJS hb_wvg_ObjectNew(PHB_GTWVT pWVT)
 
 static void hb_wvg_RefreshRect(PHB_GTWVT pWVT, PHB_GOBJS gObj)
 {
-   RECT rc = { 0, 0, 0, 0 };
+   RECT rc = {0, 0, 0, 0};
 
    /* Calculate the region occupied +- 3 pixels as most controls are outside of designated area */
    rc.top    = (pWVT->PTEXTSIZE.y * gObj->iTop) + gObj->aOffset.iTop - 3;
@@ -310,7 +310,7 @@ HB_FUNC( WVG_SETGOBJDATA )
                   {
                      hb_itemRelease(gObj->bBlock);
                   }
-                  gObj->bBlock = hb_itemNew(hb_param(3, HB_IT_BLOCK));
+                  gObj->bBlock = hb_itemNew(hb_param(3, Harbour::Item::BLOCK));
                   break;
                default:
                   bSuccess = HB_FALSE;
@@ -764,8 +764,8 @@ static void hb_wvg_LabelEx2(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop,
 {
    HFONT hOldFont;
    int   x, y, iAlignV, iAlignH;
-   SIZE  sz = { 0, 0 };
-   RECT  rect = { 0, 0, 0, 0 };
+   SIZE  sz = {0, 0};
+   RECT  rect = {0, 0, 0, 0};
 
    SetBkColor(pWVT->hdc, gObj->crRGBBk);
    SetTextColor(pWVT->hdc, gObj->crRGBText);
@@ -1232,7 +1232,7 @@ HB_FUNC( WVG_COLORRECT )
 
 static void hb_wvg_ColorRect(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int iRight, int iBottom)
 {
-   RECT rc = { 0, 0, 0, 0 };
+   RECT rc = {0, 0, 0, 0};
 
    SetRect(&rc, iLeft, iTop, iRight, iBottom);
    FillRect(pWVT->hGuiDC, &rc, gObj->hBrush);
@@ -1280,7 +1280,7 @@ HB_FUNC( WVG_SHADEDRECT )
 static void hb_wvg_ShadedRect(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int iRight, int iBottom)
 {
    HB_BOOL       bGF;
-   GRADIENT_RECT gRect = { 0, 0 };
+   GRADIENT_RECT gRect = {0, 0};
 
    gRect.UpperLeft  = 0;
    gRect.LowerRight = 1;
@@ -1344,7 +1344,7 @@ HB_FUNC( WVG_TEXTBOX )
 
 static void hb_wvg_TextBox(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int iRight, int iBottom)
 {
-   RECT rc  = { 0, 0, 0, 0 };
+   RECT rc  = {0, 0, 0, 0};
    HDC  hdc = pWVT->hGuiDC;
 
    SetRect(&rc, iLeft, iTop, iRight, iBottom);
@@ -1511,7 +1511,7 @@ static void hb_wvg_RenderPicture(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int 
    LONG       lWidth, lHeight;
    int        xe, ye, x, y, wd, ht;
    HRGN       hrgn1;
-   POINT      lpp     = { 0, 0 };
+   POINT      lpp     = {0, 0};
 
    HDC        hdc      = pWVT->hGuiDC;
    IPicture * iPicture = gObj->pPicture;
@@ -1580,14 +1580,14 @@ HB_FUNC( WVG_OBJECT )
    gObj->iObjType = GOBJ_OBJTYPE_OBJECT;
 
    gObj->iData  = hb_parni(1);        /* Object to be executed */
-   gObj->bBlock = hb_itemNew(hb_param(2, HB_IT_BLOCK));
+   gObj->bBlock = hb_itemNew(hb_param(2, Harbour::Item::BLOCK));
 
    gObj->gObjNext = pWVT->gObjs;
    pWVT->gObjs    = gObj;
 }
 
 /* wvg_Object( GOBJ_OBJTYPE_GRIDVERT, {|| { nTop, nBottom, aCols, nCols, aPxlOff } } )
-                                                 aPxlOff[ 1 ] and aPxlOff[ 3 ] used */
+                                                 aPxlOff[1] and aPxlOff[3] used */
 static void hb_wvg_GridVert(PHB_GTWVT pWVT, PHB_ITEM pArray, RECT * uRect)
 {
    PHB_ITEM pCols = hb_arrayGetItemPtr(pArray, 3);
@@ -1687,7 +1687,7 @@ void hb_gt_wvt_PaintGObjects(PHB_GTWVT pWVT, RECT * uRect)
                hb_vmPush(gObj->bBlock);
                hb_vmSend(0);
 
-               pArray = hb_param(-1, HB_IT_ARRAY);
+               pArray = hb_param(-1, Harbour::Item::ARRAY);
 
                if( pArray && hb_arrayLen(pArray) >= 3 )
                {

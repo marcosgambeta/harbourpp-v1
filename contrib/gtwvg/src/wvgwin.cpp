@@ -81,7 +81,7 @@
 #define wvg_parcolor(n)     static_cast<COLORREF>(static_cast<HB_PTRUINT>(hb_parnint(n)))
 
 // TODO: C++ cast
-#define wvg_rethandle(n)    hb_retnint( ( HB_PTRUINT ) n )
+#define wvg_rethandle(n)    hb_retnint(( HB_PTRUINT ) n)
 
 #if defined(__BORLANDC__) && !defined(HB_ARCH_64BIT)
     #undef MAKELONG
@@ -121,7 +121,7 @@ HB_FUNC( WVG_SENDMESSAGE )
 
 HB_FUNC( WVG_SENDDLGITEMMESSAGE )
 {
-   PHB_ITEM pText = hb_param(5, HB_IT_STRING);
+   PHB_ITEM pText = hb_param(5, Harbour::Item::STRING);
    char *   cText = nullptr;
    HB_ISIZ  iLen  = 0;
 
@@ -223,11 +223,14 @@ HB_FUNC( WVG_GETDLGITEMTEXT )
    LPTSTR cText = static_cast<LPTSTR>(hb_xgrab(iLen * sizeof(TCHAR)));
    UINT   iResult;
 
-   iResult = GetDlgItemText(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))),   /* handle of dialog box */
-                            hb_parni(2),                             /* identifier of control      */
-                            cText,                                     /* address of buffer for text */
-                            iLen                                       /* maximum size of string     */
-                            );
+   /*
+   [1] handle of dialog box
+   [2] identifier of control
+   [3] address of buffer for text
+   [4] maximum size of string
+   */
+
+   iResult = GetDlgItemText(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))), hb_parni(2), cText, iLen);
 
    cText[iResult] = '\0';
    HB_RETSTR(cText);
@@ -247,11 +250,14 @@ HB_FUNC( WVG_ISDLGBUTTONCHECKED )
 
 HB_FUNC( WVG_CHECKRADIOBUTTON )
 {
-   hb_retl(CheckRadioButton(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))),  /* handle of dialog box */
-                            hb_parni(2),                            /* identifier of first radio button in group */
-                            hb_parni(3),                            /* identifier of last radio button in group  */
-                            hb_parni(4)                             /* identifier of radio button to select      */
-                            ));
+   /*
+   [1] handle of dialog box
+   [2] identifier of first radio button in group
+   [3] identifier of last radio button in group
+   [4] identifier of radio button to select
+   */
+
+   hb_retl(CheckRadioButton(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))), hb_parni(2), hb_parni(3), hb_parni(4)));
 }
 
 HB_FUNC( WVG_GETDLGITEM )
@@ -274,7 +280,7 @@ HB_FUNC( WVG_INVALIDATERECT )
 {
    if( HB_ISARRAY(2) )
    {
-      RECT rc = { 0, 0, 0, 0 };
+      RECT rc = {0, 0, 0, 0};
 
       rc.left   = hb_parvni(2, 1);
       rc.top    = hb_parvni(2, 2);
@@ -365,7 +371,7 @@ HB_FUNC( WVG_LOADIMAGE )
 
 HB_FUNC( WVG_GETCLIENTRECT )
 {
-   RECT     rc   = { 0, 0, 0, 0 };
+   RECT     rc   = {0, 0, 0, 0};
    PHB_ITEM info = hb_itemArrayNew(4);
 
    GetClientRect(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))), &rc);
@@ -402,7 +408,7 @@ HB_FUNC( WVG_RELEASEDC )
 
 HB_FUNC( WVG_CREATEBRUSH )
 {
-   LOGBRUSH lb = { 0, 0, 0 };
+   LOGBRUSH lb = {0, 0, 0};
 
    lb.lbStyle = hb_parni(1);
    lb.lbColor = static_cast<COLORREF>(hb_parnldef(2, RGB(0, 0, 0)));
@@ -415,7 +421,7 @@ HB_FUNC( WVG_CREATEBRUSH )
  */
 HB_FUNC( WVG_DRAWTEXT )
 {
-   RECT    rc = { 0, 0, 0, 0 };
+   RECT    rc = {0, 0, 0, 0};
    void *  hBuffer;
    LPCTSTR lpBuffer = HB_PARSTR(2, &hBuffer, nullptr);
 
@@ -501,7 +507,7 @@ HB_FUNC( WVG_DESTROYWINDOW )
 HB_FUNC( WVG_CLIENTTOSCREEN )
 {
    POINT    Point;
-   PHB_ITEM pArray = hb_param(2, HB_IT_ARRAY);
+   PHB_ITEM pArray = hb_param(2, Harbour::Item::ARRAY);
 
    if( wvt_Array2Point(pArray, &Point) )
    {
@@ -524,7 +530,7 @@ HB_FUNC( WVG_CLIENTTOSCREEN )
 HB_FUNC( WVG_SCREENTOCLIENT )
 {
    POINT    Point;
-   PHB_ITEM pArray = hb_param(2, HB_IT_ARRAY);
+   PHB_ITEM pArray = hb_param(2, Harbour::Item::ARRAY);
 
    if( wvt_Array2Point(pArray, &Point) )
    {
@@ -567,7 +573,7 @@ HB_FUNC( WVG_TRACKPOPUPMENU )
    int   y      = hb_parni(4);
    HWND  hWnd   = HB_ISNUM(5) ? reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(5))) : GetActiveWindow();
 
-   POINT xy = { 0, 0 };
+   POINT xy = {0, 0};
 
    if( !HB_ISNUM(3) )
    {
@@ -639,8 +645,8 @@ HB_FUNC( WVG_SETMENU )
 
    #if 1
    HB_BOOL bSet;
-   RECT    wi = { 0, 0, 0, 0 };
-   RECT    ci = { 0, 0, 0, 0 };
+   RECT    wi = {0, 0, 0, 0};
+   RECT    ci = {0, 0, 0, 0};
    int     height, width;
 
    bSet = SetMenu(hWnd, reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(2))));
