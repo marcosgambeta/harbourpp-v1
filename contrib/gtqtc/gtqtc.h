@@ -100,25 +100,25 @@
 #define QTC_DEFAULT_FONT_ATTRIBUTE 0
 #define QTC_DEFAULT_FONT_NAME      "Courier New"
 
-#define BLACK                 qRgb( 0x00, 0x00, 0x00 )
-#define BLUE                  qRgb( 0x00, 0x00, 0xAA )
-#define GREEN                 qRgb( 0x00, 0xAA, 0x00 )
-#define CYAN                  qRgb( 0x00, 0xAA, 0xAA )
-#define RED                   qRgb( 0xAA, 0x00, 0x00 )
-#define MAGENTA               qRgb( 0xAA, 0x00, 0xAA )
-#define BROWN                 qRgb( 0xAA, 0x55, 0x00 )
-#define LIGHT_GRAY            qRgb( 0xAA, 0xAA, 0xAA )
-#define GRAY                  qRgb( 0x55, 0x55, 0x55 )
-#define BRIGHT_BLUE           qRgb( 0x55, 0x55, 0xFF )
-#define BRIGHT_GREEN          qRgb( 0x55, 0xFF, 0x55 )
-#define BRIGHT_CYAN           qRgb( 0x55, 0xFF, 0xFF )
-#define BRIGHT_RED            qRgb( 0xFF, 0x55, 0x55 )
-#define BRIGHT_MAGENTA        qRgb( 0xFF, 0x55, 0xFF )
-#define YELLOW                qRgb( 0xFF, 0xFF, 0x55 )
-#define WHITE                 qRgb( 0xFF, 0xFF, 0xFF )
+#define BLACK                 qRgb(0x00, 0x00, 0x00)
+#define BLUE                  qRgb(0x00, 0x00, 0xAA)
+#define GREEN                 qRgb(0x00, 0xAA, 0x00)
+#define CYAN                  qRgb(0x00, 0xAA, 0xAA)
+#define RED                   qRgb(0xAA, 0x00, 0x00)
+#define MAGENTA               qRgb(0xAA, 0x00, 0xAA)
+#define BROWN                 qRgb(0xAA, 0x55, 0x00)
+#define LIGHT_GRAY            qRgb(0xAA, 0xAA, 0xAA)
+#define GRAY                  qRgb(0x55, 0x55, 0x55)
+#define BRIGHT_BLUE           qRgb(0x55, 0x55, 0xFF)
+#define BRIGHT_GREEN          qRgb(0x55, 0xFF, 0x55)
+#define BRIGHT_CYAN           qRgb(0x55, 0xFF, 0xFF)
+#define BRIGHT_RED            qRgb(0xFF, 0x55, 0x55)
+#define BRIGHT_MAGENTA        qRgb(0xFF, 0x55, 0xFF)
+#define YELLOW                qRgb(0xFF, 0xFF, 0x55)
+#define WHITE                 qRgb(0xFF, 0xFF, 0xFF)
 
-#define QTC_RGB2NUM( r )      ( qRed(r) | (qGreen(r)<<8) | (qBlue(r)<<16) )
-#define QTC_NUM2RGB( c )      qRgb( (c)&0xFF, (((c)>>8)&0xFF), (((c)>>16)&0xFF) )
+#define QTC_RGB2NUM(r)      (qRed(r) | (qGreen(r)<<8) | (qBlue(r)<<16))
+#define QTC_NUM2RGB(c)      qRgb((c)&0xFF, (((c)>>8)&0xFF), (((c)>>16)&0xFF))
 
 /* Box char unicode values */
 #define HB_BOXCH_ARROW_R            0x0010 /* ARROW RIGHT */
@@ -158,7 +158,6 @@
 #define HB_BOXCH_SNG_HOR            0x2500 /* BOX DRAWINGS LIGHT HORIZONTAL (Single Horizontal bar) */
 #define HB_BOXCH_SNG_VRT            0x2502 /* BOX DRAWINGS LIGHT VERTICAL (Single Vertical bar) */
 
-
 #define HB_BOXCH_SNG_L_DBL_T        0x2552 /* BOX DRAWINGS DOWN SINGLE AND RIGHT DOUBLE (Single left double top angle) */
 #define HB_BOXCH_SNG_T_DBL_D        0x2565 /* BOX DRAWINGS DOWN DOUBLE AND HORIZONTAL SINGLE (Single top with double junction down) */
 #define HB_BOXCH_SNG_R_DBL_T        0x2556 /* BOX DRAWINGS DOWN DOUBLE AND LEFT SINGLE (Single right double top angle) */
@@ -170,7 +169,6 @@
 #define HB_BOXCH_SNG_V_DBL_L        0x255E /* BOX DRAWINGS VERTICAL SINGLE AND RIGHT DOUBLE (Single Vertical double left junction) */
 #define HB_BOXCH_SNG_V_DBL_R        0x2561 /* BOX DRAWINGS VERTICAL SINGLE AND LEFT DOUBLE (Single vertical double right junction) */
 #define HB_BOXCH_SNG_DBL_CRS        0x256A /* BOX DRAWINGS VERTICAL SINGLE AND HORIZONTAL DOUBLE (Single cross (double horizontal) */
-
 
 #define HB_BOXCH_DBL_L_SNG_T        0x2553 /* BOX DRAWINGS DOWN DOUBLE AND RIGHT SINGLE (Double left single top angle) */
 #define HB_BOXCH_DBL_T_SNG_D        0x2564 /* BOX DRAWINGS DOWN SINGLE AND HORIZONTAL DOUBLE (Double top single junction down) */
@@ -263,19 +261,19 @@
 #define HB_BOXCH_RC_MIN             0xE040
 #define HB_BOXCH_RC_MAX             0xE076
 
-#define HB_BOXCH_TRANS_COUNT        ( HB_BOXCH_CHR_BASE + ( HB_BOXCH_BOX_MAX - HB_BOXCH_BOX_MIN + 1 ) + ( HB_BOXCH_RC_MAX - HB_BOXCH_RC_MIN + 1 ) )
+#define HB_BOXCH_TRANS_COUNT        (HB_BOXCH_CHR_BASE + (HB_BOXCH_BOX_MAX - HB_BOXCH_BOX_MIN + 1) + (HB_BOXCH_RC_MAX - HB_BOXCH_RC_MIN + 1))
 #define HB_BOXCH_TRANS_MAX          0xFF
 
 class QTCWindow;
 
-typedef struct
+struct HB_GTQTC
 {
    PHB_GT      pGT;                          /* core GT pointer */
 
    QTCWindow * qWnd;                         /* console window */
    QEventLoop* qEventLoop;                   /* event loop used by this window */
 
-   QRgb        colors[ 16 ];                 /* RGB values for 16 console colors */
+   QRgb        colors[16];                   /* RGB values for 16 console colors */
 
    QChar *     textLine;                     /* buffer for text line */
 
@@ -288,13 +286,15 @@ typedef struct
    int         marginLeft;                   /* left margin in fullscreen and maximized modes */
    int         marginTop;                    /* top margin in fullscreen and maximized modes */
 
-   HB_BOOL     cursorVisible;                /* cursor visibility flag updated by timer */
+   bool        cursorVisible;                /* cursor visibility flag updated by timer */
+   // TOCHECK: porque HB_BOOL ?
    HB_BOOL     cursorType;                   /* current cursor type selected by programmer */
    int         cursorCol;                    /* current cursor position (column) */
    int         cursorRow;                    /* current cursor position (row) */
    int         cursorSize;                   /* cursor size in pixels */
    int         cursorOffset;                 /* cursor offset in character cell */
 
+   // TOCHECK: porque HB_BOOL ?
    HB_BOOL     lastCursorType;               /* previous cursor type */
    int         lastCursorCol;                /* previous cursor position (column) */
    int         lastCursorRow;                /* previous cursor position (row) */
@@ -304,7 +304,7 @@ typedef struct
    int         mouseCol;                     /* the last mouse row position in window */
    int         mouseRow;                     /* the last mouse col position in window */
 
-   int         keyBuffer[ QTC_KEY_QUEUE_SIZE ]; /* Array to hold the characters & events */
+   int         keyBuffer[QTC_KEY_QUEUE_SIZE]; /* Array to hold the characters & events */
    int         keyHead;                      /* Offset into key array for character to be placed */
    int         keyTail;                      /* Offset into key array of next character to read */
    int         keyLast;                      /* last inkey code position in buffer */
@@ -318,34 +318,34 @@ typedef struct
    int         fontAttribute;                /* font attribute: HB_GTI_FONTA_* */
    QString *   fontName;                     /* requested font name */
 
-   QBitmap *   boxImage[ HB_BOXCH_TRANS_MAX ];   /* bitmaps with box drawing characters */
-   HB_UCHAR    boxIndex[ HB_BOXCH_TRANS_COUNT ]; /* indexes to bitmap array */
+   QBitmap *   boxImage[HB_BOXCH_TRANS_MAX];   /* bitmaps with box drawing characters */
+   HB_UCHAR    boxIndex[HB_BOXCH_TRANS_COUNT]; /* indexes to bitmap array */
    int         boxCount;                         /* number of defined box characters */
 
    QIcon *     qIcon;                        /* application icon */
    QString *   wndTitle;                     /* window title */
 
-   HB_BOOL     fAltEnter;                    /* ALT+ENTER switch between fullscreen mode */
-   HB_BOOL     fResizable;                   /* enable/disable window resizing */
-   HB_BOOL     fResizeInc;                   /* enable/disable resize progression */
-   HB_BOOL     fMaximized;                   /* enter/leave maximize mode */
-   HB_BOOL     fMinimized;                   /* enter/leave maximize (e.g. as icon in TaskBar) mode */
-   HB_BOOL     fFullScreen;                  /* enable/disable fullscreen mode */
-   HB_BOOL     fSelectCopy;                  /* allow marking texts by mouse left button with shift */
-   HB_BOOL     fRepaint;                     /* force internal image repainting */
+   bool        fAltEnter;                    /* ALT+ENTER switch between fullscreen mode */
+   bool        fResizable;                   /* enable/disable window resizing */
+   bool        fResizeInc;                   /* enable/disable resize progression */
+   bool        fMaximized;                   /* enter/leave maximize mode */
+   bool        fMinimized;                   /* enter/leave maximize (e.g. as icon in TaskBar) mode */
+   bool        fFullScreen;                  /* enable/disable fullscreen mode */
+   bool        fSelectCopy;                  /* allow marking texts by mouse left button with shift */
+   bool        fRepaint;                     /* force internal image repainting */
 
    int         iResizeMode;                  /* Sets the resizing mode either to FONT or ROWS */
    int         iCloseMode;                   /* ==0 accept ALT+F4 and/or [x] button as CTRL+BREAK, >=1 generate HB_K_CLOSE, ==2 disable [x] */
-}
-HB_GTQTC, * PHB_GTQTC;
+};
 
+using PHB_GTQTC = HB_GTQTC *;
 
 class QTConsole : public QWidget
 {
    Q_OBJECT
 
 public:
-   QTConsole( PHB_GTQTC pStructQTC, QWidget *parnt = 0 );
+   QTConsole(PHB_GTQTC pStructQTC, QWidget *parnt = nullptr);
    virtual ~QTConsole();
 
    PHB_GTQTC      pQTC;
@@ -359,35 +359,34 @@ public:
    QRect          selectRect;
 
    void resetWindowSize();
-   void setFontSize( int iFH, int iFW );
+   void setFontSize(int iFH, int iFW);
    void setImageSize();
    void copySelection();
-   void repaintChars( const QRect & rect );
+   void repaintChars(const QRect & rect);
 
 protected:
-   void inputMethodEvent( QInputMethodEvent * evt );
-   void keyPressEvent( QKeyEvent * evt );
-   void keyReleaseEvent( QKeyEvent * evt );
-   void mousePressEvent( QMouseEvent * evt );
-   void mouseMoveEvent( QMouseEvent * evt );
-   void mouseReleaseEvent( QMouseEvent * evt );
-   void mouseDoubleClickEvent( QMouseEvent * evt );
-   void paintEvent( QPaintEvent * evt );
-   void resizeEvent( QResizeEvent * evt );
-   void wheelEvent( QWheelEvent * evt );
-   void timerEvent( QTimerEvent * evt );
-   void focusInEvent( QFocusEvent * evt );
-   void focusOutEvent( QFocusEvent * evt );
-   bool event( QEvent * evt );
+   void inputMethodEvent(QInputMethodEvent * evt);
+   void keyPressEvent(QKeyEvent * evt);
+   void keyReleaseEvent(QKeyEvent * evt);
+   void mousePressEvent(QMouseEvent * evt);
+   void mouseMoveEvent(QMouseEvent * evt);
+   void mouseReleaseEvent(QMouseEvent * evt);
+   void mouseDoubleClickEvent(QMouseEvent * evt);
+   void paintEvent(QPaintEvent * evt);
+   void resizeEvent(QResizeEvent * evt);
+   void wheelEvent(QWheelEvent * evt);
+   void timerEvent(QTimerEvent * evt);
+   void focusInEvent(QFocusEvent * evt);
+   void focusOutEvent(QFocusEvent * evt);
+   bool event(QEvent * evt);
 };
-
 
 class QTCWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    QTCWindow( PHB_GTQTC pQTC );
+    QTCWindow(PHB_GTQTC pQTC);
     virtual ~QTCWindow();
 
     QTConsole * qConsole;
@@ -395,7 +394,7 @@ public:
     void setResizing();
 
 protected:
-    void closeEvent( QCloseEvent * evt );
+    void closeEvent(QCloseEvent * evt);
 };
 
 #endif /* HB_QTC_H_ */
