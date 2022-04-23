@@ -113,9 +113,9 @@ static SDDNODE s_pgsqldd = {
 
 static void hb_pgsqldd_init( void * cargo )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
 
-   if( ! hb_sddRegister( &s_pgsqldd ) )
+   if( !hb_sddRegister( &s_pgsqldd ) )
       hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
 }
 
@@ -137,10 +137,10 @@ HB_CALL_ON_STARTUP_BEGIN( _hb_sddpostgre_init_ )
 hb_vmAtInit( hb_pgsqldd_init, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_sddpostgre_init_ )
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
    #pragma startup sddpostgre__InitSymbols
    #pragma startup _hb_sddpostgre_init_
-#elif defined( HB_DATASEG_STARTUP )
+#elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY  \
    HB_DATASEG_FUNC( sddpostgre__InitSymbols ) \
    HB_DATASEG_FUNC( _hb_sddpostgre_init_ )
@@ -156,7 +156,7 @@ static HB_USHORT hb_errRT_PostgreSQLDD( HB_ERRCODE errGenCode, HB_ERRCODE errSub
 
    pError   = hb_errRT_New( ES_ERROR, "SDDPG", errGenCode, errSubCode, szDescription, szOperation, errOsCode, EF_NONE );
    uiAction = hb_errLaunch( pError );
-   hb_itemRelease( pError );
+   hb_itemRelease(pError);
    return uiAction;
 }
 
@@ -168,13 +168,13 @@ static HB_ERRCODE pgsqlConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    ConnStatusType status;
    const char *   pszHost;
 
-   pszHost = hb_arrayGetCPtr( pItem, 2 );
+   pszHost = hb_arrayGetCPtr(pItem, 2);
    if( pszHost && ( strncmp( pszHost, "postgresql://", 13 ) == 0 || strchr( pszHost, '=' ) ) )
       pConn = PQconnectdb( pszHost );
    else
-      pConn = PQsetdbLogin( pszHost, hb_arrayGetCPtr( pItem, 6 ), hb_arrayGetCPtr( pItem, 7 ), hb_arrayGetCPtr( pItem, 8 ), hb_arrayGetCPtr( pItem, 5 ), hb_arrayGetCPtr( pItem, 3 ), hb_arrayGetCPtr( pItem, 4 ) );
+      pConn = PQsetdbLogin(pszHost, hb_arrayGetCPtr(pItem, 6), hb_arrayGetCPtr(pItem, 7), hb_arrayGetCPtr(pItem, 8), hb_arrayGetCPtr(pItem, 5), hb_arrayGetCPtr(pItem, 3), hb_arrayGetCPtr(pItem, 4));
 
-   if( ! pConn )   /* Low memory, etc */
+   if( !pConn )   /* Low memory, etc */
    {
       /* TODO: error */
       return HB_FAILURE;
@@ -186,7 +186,7 @@ static HB_ERRCODE pgsqlConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
       PQfinish( pConn );
       return HB_FAILURE;
    }
-   pConnection->pSDDConn = hb_xgrab( sizeof( SDDCONN ) );
+   pConnection->pSDDConn = hb_xgrab(sizeof(SDDCONN));
    ( ( SDDCONN * ) pConnection->pSDDConn )->pConn = pConn;
    return HB_SUCCESS;
 }
@@ -195,7 +195,7 @@ static HB_ERRCODE pgsqlConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 static HB_ERRCODE pgsqlDisconnect( SQLDDCONNECTION * pConnection )
 {
    PQfinish( ( ( SDDCONN * ) pConnection->pSDDConn )->pConn );
-   hb_xfree( pConnection->pSDDConn );
+   hb_xfree(pConnection->pSDDConn);
    return HB_SUCCESS;
 }
 
@@ -208,17 +208,17 @@ static HB_ERRCODE pgsqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    ExecStatusType status;
    unsigned long  ulAffectedRows;
 
-   pResult = PQexec( pConn, hb_itemGetCPtr( pItem ) );
-   if( ! pResult )
+   pResult = PQexec( pConn, hb_itemGetCPtr(pItem) );
+   if( !pResult )
    {
-      hb_rddsqlSetError( 1, PQerrorMessage( pConn ), hb_itemGetCPtr( pItem ), nullptr, 0 );
+      hb_rddsqlSetError(1, PQerrorMessage(pConn), hb_itemGetCPtr(pItem), nullptr, 0);
       return HB_FAILURE;
    }
 
    status = PQresultStatus( pResult );
    if( status != PGRES_TUPLES_OK && status != PGRES_COMMAND_OK )
    {
-      hb_rddsqlSetError( status, PQresultErrorMessage( pResult ), hb_itemGetCPtr( pItem ), nullptr, 0 );
+      hb_rddsqlSetError( status, PQresultErrorMessage( pResult ), hb_itemGetCPtr(pItem), nullptr, 0 );
       return HB_FAILURE;
    }
 
@@ -228,7 +228,7 @@ static HB_ERRCODE pgsqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    else
       ulAffectedRows = static_cast< unsigned long >( atol( PQcmdTuples( pResult ) ) );
 
-   hb_rddsqlSetError( 0, nullptr, hb_itemGetCPtr( pItem ), nullptr, ulAffectedRows );
+   hb_rddsqlSetError(0, nullptr, hb_itemGetCPtr(pItem), nullptr, ulAffectedRows);
    PQclear( pResult );
    return HB_SUCCESS;
 }
@@ -244,11 +244,11 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
    HB_USHORT      uiFields, uiCount;
    HB_BOOL        bError;
 
-   pArea->pSDDData = memset( hb_xgrab( sizeof( SDDDATA ) ), 0, sizeof( SDDDATA ) );
+   pArea->pSDDData = memset(hb_xgrab(sizeof(SDDDATA)), 0, sizeof(SDDDATA));
    pSDDData        = ( SDDDATA * ) pArea->pSDDData;
 
    pResult = PQexec( pConn, pArea->szQuery );
-   if( ! pResult )
+   if( !pResult )
    {
       hb_errRT_PostgreSQLDD( EG_OPEN, ESQLDD_LOWMEMORY, "Query failed", nullptr, 0 );  /* Low memory, etc */
       return HB_FAILURE;
@@ -268,14 +268,14 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
    SELF_SETFIELDEXTENT( &pArea->area, uiFields );
 
    pItemEof = hb_itemArrayNew( uiFields );
-   pItem    = hb_itemNew( nullptr );
+   pItem    = hb_itemNew(nullptr);
 
    bError = HB_FALSE;
    for( uiCount = 0; uiCount < uiFields; uiCount++ )
    {
       DBFIELDINFO dbFieldInfo;
 
-      memset( &dbFieldInfo, 0, sizeof( dbFieldInfo ) );
+      memset( &dbFieldInfo, 0, sizeof(dbFieldInfo) );
       dbFieldInfo.atomName = PQfname( pResult, static_cast< int >( uiCount ) );
 
       switch( PQftype( pResult, static_cast< int >( uiCount ) ) )
@@ -389,7 +389,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
       HB_TRACE( HB_TR_ALWAYS, ( "field:%s type=%d size=%d format=%d mod=%d err=%d", dbFieldInfo.atomName, PQftype( pResult, static_cast< int >( uiCount ) ), PQfsize( pResult, uiCount ), PQfformat( pResult, uiCount ), PQfmod( pResult, uiCount ), bError ) );
 #endif
 
-      if( ! bError )
+      if( !bError )
       {
          switch( dbFieldInfo.uiType )
          {
@@ -397,12 +397,12 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
             {
                char * pStr;
 
-               pStr = static_cast< char * >( hb_xgrab( dbFieldInfo.uiLen + 1 ) );
+               pStr = static_cast<char*>(hb_xgrab(dbFieldInfo.uiLen + 1));
                memset( pStr, ' ', dbFieldInfo.uiLen );
-               pStr[ dbFieldInfo.uiLen ] = '\0';
+               pStr[dbFieldInfo.uiLen] = '\0';
 
                hb_itemPutCL( pItem, pStr, dbFieldInfo.uiLen );
-               hb_xfree( pStr );
+               hb_xfree(pStr);
                break;
             }
             case HB_FT_MEMO:
@@ -423,7 +423,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
                break;
 
             case HB_FT_LOGICAL:
-               hb_itemPutL( pItem, HB_FALSE );
+               hb_itemPutL( pItem, false );
                break;
 
             case HB_FT_DATE:
@@ -439,11 +439,11 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
          hb_arraySetForward( pItemEof, uiCount + 1, pItem );
 
 #if 0
-         if( dbFieldInfo.uiType == HB_IT_DOUBLE || dbFieldInfo.uiType == HB_IT_INTEGER )
-            dbFieldInfo.uiType = HB_IT_LONG;
+         if( dbFieldInfo.uiType == Harbour::Item::DOUBLE || dbFieldInfo.uiType == Harbour::Item::INTEGER )
+            dbFieldInfo.uiType = Harbour::Item::LONG;
 #endif
 
-         if( ! bError )
+         if( !bError )
             bError = ( SELF_ADDFIELD( &pArea->area, &dbFieldInfo ) == HB_FAILURE );
       }
 
@@ -451,12 +451,12 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
          break;
    }
 
-   hb_itemRelease( pItem );
+   hb_itemRelease(pItem);
 
    if( bError )
    {
       hb_itemClear( pItemEof );
-      hb_itemRelease( pItemEof );
+      hb_itemRelease(pItemEof);
       hb_errRT_PostgreSQLDD( EG_CORRUPTION, ESQLDD_INVALIDFIELD, "Invalid field type", pArea->szQuery, 0 );
       return HB_FAILURE;
    }
@@ -464,12 +464,12 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
    pArea->ulRecCount = static_cast< HB_ULONG >( PQntuples( pResult ) );
    pArea->ulRecMax   = pArea->ulRecCount + 1;
 
-   pArea->pRow      = static_cast< void ** >( hb_xgrab( ( pArea->ulRecCount + 1 ) * sizeof( void * ) ) );
-   pArea->pRowFlags = static_cast< HB_BYTE * >( hb_xgrabz( ( pArea->ulRecCount + 1 ) * sizeof( HB_BYTE ) ) );
+   pArea->pRow      = static_cast<void**>(hb_xgrab((pArea->ulRecCount + 1) * sizeof(void*)));
+   pArea->pRowFlags = static_cast<HB_BYTE*>(hb_xgrabz((pArea->ulRecCount + 1) * sizeof(HB_BYTE)));
 
-   pArea->pRow[ 0 ]      = pItemEof;
-   pArea->pRowFlags[ 0 ] = SQLDD_FLAG_CACHED;
-   pArea->fFetched       = HB_TRUE;
+   pArea->pRow[0] = pItemEof;
+   pArea->pRowFlags[0] = SQLDD_FLAG_CACHED;
+   pArea->fFetched = HB_TRUE;
 
    return HB_SUCCESS;
 }
@@ -484,7 +484,7 @@ static HB_ERRCODE pgsqlClose( SQLBASEAREAP pArea )
       if( pSDDData->pResult )
          PQclear( pSDDData->pResult );
 
-      hb_xfree( pSDDData );
+      hb_xfree(pSDDData);
       pArea->pSDDData = nullptr;
    }
    return HB_SUCCESS;
@@ -544,22 +544,22 @@ static HB_ERRCODE pgsqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          break;
 
       case HB_FT_LOGICAL:
-         hb_itemPutL( pItem, pValue[ 0 ] == 'T' || pValue[ 0 ] == 'Y' );
+         hb_itemPutL( pItem, pValue[0] == 'T' || pValue[0] == 'Y' );
          break;
 
       case HB_FT_DATE:
       {
-         char szDate[ 9 ];
+         char szDate[9];
 
-         szDate[ 0 ] = pValue[ 0 ];
-         szDate[ 1 ] = pValue[ 1 ];
-         szDate[ 2 ] = pValue[ 2 ];
-         szDate[ 3 ] = pValue[ 3 ];
-         szDate[ 4 ] = pValue[ 5 ];
-         szDate[ 5 ] = pValue[ 6 ];
-         szDate[ 6 ] = pValue[ 8 ];
-         szDate[ 7 ] = pValue[ 9 ];
-         szDate[ 8 ] = '\0';
+         szDate[0] = pValue[0];
+         szDate[1] = pValue[1];
+         szDate[2] = pValue[2];
+         szDate[3] = pValue[3];
+         szDate[4] = pValue[5];
+         szDate[5] = pValue[6];
+         szDate[6] = pValue[8];
+         szDate[7] = pValue[9];
+         szDate[8] = '\0';
          hb_itemPutDS( pItem, szDate );
          break;
       }
@@ -576,7 +576,7 @@ static HB_ERRCODE pgsqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
       hb_errPutDescription( pError, hb_langDGetErrorDesc( EG_DATATYPE ) );
       hb_errPutSubCode( pError, EDBF_DATATYPE );
       SELF_ERROR( &pArea->area, pError );
-      hb_itemRelease( pError );
+      hb_itemRelease(pError);
       return HB_FAILURE;
    }
    return HB_SUCCESS;

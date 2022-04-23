@@ -71,7 +71,7 @@
 typedef struct _MIXKEY
 {
    HB_ULONG rec;
-   HB_BYTE  val[ 1 ];
+   HB_BYTE  val[1];
 } MIXKEY, * PMIXKEY;
 
 typedef struct _MIXTAG
@@ -156,7 +156,7 @@ static HB_ERRCODE hb_adsUpdateAreaFlags( ADSXAREAP pArea )
    pArea->adsarea.area.fEof = u16Eof != 0;
    pArea->adsarea.area.fFound = u16Found != 0;
 
-   pArea->adsarea.fPositioned = ! pArea->adsarea.area.fBof && ! pArea->adsarea.area.fEof;
+   pArea->adsarea.fPositioned = !pArea->adsarea.area.fBof && !pArea->adsarea.area.fEof;
 
    return HB_SUCCESS;
 }
@@ -167,21 +167,21 @@ static PMIXKEY mixKeyNew( PHB_ITEM pItem, HB_ULONG ulRecNo, HB_BYTE bType, HB_US
 {
    PMIXKEY pKey;
    double  dbl;
-   HB_BYTE buf[ 8 ];
+   HB_BYTE buf[8];
 
-   pKey = static_cast< PMIXKEY >( hb_xgrab( sizeof( HB_ULONG ) + uiLen ) );
+   pKey = static_cast<PMIXKEY>(hb_xgrab(sizeof(HB_ULONG) + uiLen));
    pKey->rec = ulRecNo;
 
    switch( bType )
    {
       case 'C':
       {
-         HB_SIZE nLen = hb_itemGetCLen( pItem );
+         HB_SIZE nLen = hb_itemGetCLen(pItem);
          if( nLen > static_cast< HB_SIZE >( uiLen ) )
          {
             nLen = uiLen;
          }
-         memcpy( pKey->val, hb_itemGetCPtr( pItem ), nLen );
+         memcpy( pKey->val, hb_itemGetCPtr(pItem), nLen );
          if( nLen < static_cast< HB_SIZE >( uiLen ) )
          {
             memset( pKey->val + nLen, ' ', static_cast< HB_SIZE >( uiLen ) - nLen );
@@ -189,7 +189,7 @@ static PMIXKEY mixKeyNew( PHB_ITEM pItem, HB_ULONG ulRecNo, HB_BYTE bType, HB_US
          break;
       }
       case 'N':
-         dbl = hb_itemGetND( pItem );
+         dbl = hb_itemGetND(pItem);
          HB_DBL2ORD( &dbl, buf );
          memcpy( pKey->val, buf, 8 );
          break;
@@ -201,7 +201,7 @@ static PMIXKEY mixKeyNew( PHB_ITEM pItem, HB_ULONG ulRecNo, HB_BYTE bType, HB_US
          break;
 
       case 'L':
-         pKey->val[ 0 ] = static_cast< HB_BYTE >( hb_itemGetL( pItem ) ? 'T' : 'F' );
+         pKey->val[0] = static_cast<HB_BYTE>(hb_itemGetL(pItem) ? 'T' : 'F');
          break;
 
       default:
@@ -259,7 +259,7 @@ static HB_BOOL mixEvalCond( PHB_ITEM pCondItem, ADSXAREAP pArea )
       }
    }
 
-   fRet = hb_itemGetL( hb_vmEvalBlockOrMacro( pCondItem ) );
+   fRet = hb_itemGetL(hb_vmEvalBlockOrMacro(pCondItem));
 
    if( iCurrArea )
    {
@@ -271,7 +271,7 @@ static HB_BOOL mixEvalCond( PHB_ITEM pCondItem, ADSXAREAP pArea )
 
 static void mixKeyFree( PMIXKEY pKey )
 {
-   hb_xfree( pKey );
+   hb_xfree(pKey);
 }
 
 static int mixQSortCompare( PMIXKEY p1, PMIXKEY p2, HB_USHORT uiLen, PHB_CODEPAGE pCodepage )
@@ -324,22 +324,22 @@ static void mixQSort( PMIXKEY * pKeys, HB_ULONG left, HB_ULONG right, HB_USHORT 
    l = left;
    r = right;
 
-   x = pKeys[ ( l + r ) / 2 ];
+   x = pKeys[( l + r ) / 2];
 
    do
    {
-      while( mixQSortCompare( x, pKeys[ l ], uiLen, pCodepage ) > 0 )
+      while( mixQSortCompare( x, pKeys[l], uiLen, pCodepage ) > 0 )
       {
          l++;
       }
-      while( mixQSortCompare( pKeys[ r ], x, uiLen, pCodepage ) > 0 )
+      while( mixQSortCompare( pKeys[r], x, uiLen, pCodepage ) > 0 )
       {
          r--;
       }
 
       if( l < r )
       {
-         h = pKeys[ l ];  pKeys[ l ] = pKeys[ r ];  pKeys[ r ] = h;
+         h = pKeys[l];  pKeys[l] = pKeys[r];  pKeys[r] = h;
          l++;  r--;
       }
    }
@@ -361,7 +361,7 @@ static PMIXKEY mixFindKeyLen( PMIXTAG pTag, PMIXKEY pKey, HB_USHORT uiLen, HB_UL
    HB_ULONG l, r;
    int      i = 1;
 
-   if( ! pTag->ulRecCount )
+   if( !pTag->ulRecCount )
    {
       if( ulKeyPos )
       {
@@ -375,7 +375,7 @@ static PMIXKEY mixFindKeyLen( PMIXTAG pTag, PMIXKEY pKey, HB_USHORT uiLen, HB_UL
 
    while( l < r )
    {
-      i = mixQSortCompare( pTag->pKeys[ ( l + r ) / 2 ], pKey, uiLen, pTag->pCodepage );
+      i = mixQSortCompare( pTag->pKeys[( l + r ) / 2], pKey, uiLen, pTag->pCodepage );
 
       if( i < 0 )
       {
@@ -393,7 +393,7 @@ static PMIXKEY mixFindKeyLen( PMIXTAG pTag, PMIXKEY pKey, HB_USHORT uiLen, HB_UL
 
    if( i )
    {
-      i = mixQSortCompare( pTag->pKeys[ l ], pKey, uiLen, pTag->pCodepage );
+      i = mixQSortCompare( pTag->pKeys[l], pKey, uiLen, pTag->pCodepage );
       if( i < 0 )
       {
          l++;
@@ -405,7 +405,7 @@ static PMIXKEY mixFindKeyLen( PMIXTAG pTag, PMIXKEY pKey, HB_USHORT uiLen, HB_UL
       *ulKeyPos = l;
    }
 
-   return i ? nullptr : pTag->pKeys[ l ];
+   return i ? nullptr : pTag->pKeys[l];
 }
 
 static PMIXKEY mixFindKey( PMIXTAG pTag, PMIXKEY pKey, HB_ULONG * ulKeyPos )
@@ -415,7 +415,7 @@ static PMIXKEY mixFindKey( PMIXTAG pTag, PMIXKEY pKey, HB_ULONG * ulKeyPos )
 
 static int mixCompareKey( PMIXTAG pTag, HB_ULONG ulKeyPos, PMIXKEY pKey, HB_USHORT uiLen )
 {
-   return mixQSortCompare( pTag->pKeys[ ulKeyPos ], pKey, uiLen, pTag->pCodepage );
+   return mixQSortCompare( pTag->pKeys[ulKeyPos], pKey, uiLen, pTag->pCodepage );
 }
 
 static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM pKeyItem, PHB_ITEM pForItem, PHB_ITEM pWhileItem,
@@ -430,13 +430,13 @@ static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM
    PHB_ITEM            pItem, pEvalItem = nullptr;
 
 
-   pTag = static_cast< PMIXTAG >( hb_xgrabz( sizeof( MIXTAG ) ) );
+   pTag = static_cast<PMIXTAG>(hb_xgrabz(sizeof(MIXTAG)));
 
-   pTag->szName = static_cast< char * >( hb_xgrab( MIX_MAXTAGNAMELEN + 1 ) );
+   pTag->szName = static_cast<char*>(hb_xgrab(MIX_MAXTAGNAMELEN + 1));
    hb_strncpyUpperTrim( pTag->szName, szTagName, MIX_MAXTAGNAMELEN );
 
-   pTag->szKeyExpr = static_cast< char * >( hb_xgrab( hb_itemGetCLen( pKeyExpr ) + 1 ) );
-   hb_strncpyTrim( pTag->szKeyExpr, hb_itemGetCPtr( pKeyExpr ), hb_itemGetCLen( pKeyExpr ) );
+   pTag->szKeyExpr = static_cast<char*>(hb_xgrab(hb_itemGetCLen(pKeyExpr) + 1));
+   hb_strncpyTrim( pTag->szKeyExpr, hb_itemGetCPtr(pKeyExpr), hb_itemGetCLen(pKeyExpr) );
 
    /* TODO: for expression */
    pTag->szForExpr = nullptr;
@@ -447,12 +447,12 @@ static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM
    pTag->uiLen    = uiLen;
 
    /* Use national support */
-   if( bType == 'C' && pArea->adsarea.area.cdPage && ! HB_CDP_ISBINSORT( pArea->adsarea.area.cdPage ) )
+   if( bType == 'C' && pArea->adsarea.area.cdPage && !HB_CDP_ISBINSORT( pArea->adsarea.area.cdPage ) )
    {
       pTag->pCodepage = pArea->adsarea.area.cdPage;
    }
 
-   pTag->pKeys    = static_cast< PMIXKEY * >( hb_xgrab( sizeof( PMIXKEY ) * MIX_KEYPOOLFIRST ) );
+   pTag->pKeys    = static_cast<PMIXKEY*>(hb_xgrab(sizeof(PMIXKEY) * MIX_KEYPOOLFIRST));
    pTag->ulRecMax = MIX_KEYPOOLFIRST;
 
    ulStartRec = 0;
@@ -463,7 +463,7 @@ static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM
       lStep = pOrdCondInfo->lStep;
    }
 
-   if( ! pOrdCondInfo || pOrdCondInfo->fAll )
+   if( !pOrdCondInfo || pOrdCondInfo->fAll )
    {
       pArea->adsarea.hOrdCurrent = 0;
    }
@@ -471,7 +471,7 @@ static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM
    {
       if( pOrdCondInfo->itmRecID )
       {
-         ulStartRec = hb_itemGetNL( pOrdCondInfo->itmRecID );
+         ulStartRec = hb_itemGetNL(pOrdCondInfo->itmRecID);
       }
 
       if( ulStartRec )
@@ -482,10 +482,10 @@ static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM
       {
          if( pOrdCondInfo->itmStartRecID )
          {
-            ulStartRec = hb_itemGetNL( pOrdCondInfo->itmStartRecID );
+            ulStartRec = hb_itemGetNL(pOrdCondInfo->itmStartRecID);
          }
 
-         if( ! ulStartRec )
+         if( !ulStartRec )
          {
             ulStartRec = pArea->adsarea.ulRecNo;
          }
@@ -495,7 +495,7 @@ static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM
             ulNextCount = pOrdCondInfo->lNextCount;
          }
       }
-      else if( ! pOrdCondInfo->fUseCurrent )
+      else if( !pOrdCondInfo->fUseCurrent )
       {
          pArea->adsarea.hOrdCurrent = 0;
       }
@@ -513,7 +513,7 @@ static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM
    }
    hb_adsUpdateAreaFlags( pArea );
 
-   while( ! pArea->adsarea.area.fEof )
+   while( !pArea->adsarea.area.fEof )
    {
       SELF_RECNO( &pArea->adsarea.area, &ulRec );
       SELF_GOTO( &pArea->adsarea.area, ulRec );
@@ -523,7 +523,7 @@ static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM
          if( lStep >= pOrdCondInfo->lStep )
          {
             lStep = 0;
-            if( ! mixEvalCond( pEvalItem, nullptr ) )
+            if( !mixEvalCond( pEvalItem, nullptr ) )
             {
                break;
             }
@@ -531,7 +531,7 @@ static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM
          ++lStep;
       }
 
-      if( pWhileItem && ! mixEvalCond( pWhileItem, nullptr ) )
+      if( pWhileItem && !mixEvalCond( pWhileItem, nullptr ) )
       {
          break;
       }
@@ -544,18 +544,18 @@ static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM
 
          if( pTag->ulRecCount == pTag->ulRecMax )
          {
-            pTag->pKeys = static_cast< PMIXKEY * >( hb_xrealloc( pTag->pKeys, sizeof( PMIXKEY ) * ( pTag->ulRecMax + MIX_KEYPOOLRESIZE ) ) );
+            pTag->pKeys = static_cast< PMIXKEY * >( hb_xrealloc( pTag->pKeys, sizeof(PMIXKEY) * ( pTag->ulRecMax + MIX_KEYPOOLRESIZE ) ) );
             pTag->ulRecMax += MIX_KEYPOOLRESIZE;
          }
 
-         pTag->pKeys[ pTag->ulRecCount ] = pKey;
+         pTag->pKeys[pTag->ulRecCount] = pKey;
          pTag->ulRecCount++;
       }
 
       if( ulNextCount )
       {
          ulNextCount--;
-         if( ! ulNextCount )
+         if( !ulNextCount )
          {
             break;
          }
@@ -576,11 +576,11 @@ static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM
 
 static void mixTagDestroy( PMIXTAG pTag )
 {
-   hb_xfree( pTag->szName );
-   hb_xfree( pTag->szKeyExpr );
+   hb_xfree(pTag->szName);
+   hb_xfree(pTag->szKeyExpr);
    if( pTag->szForExpr )
    {
-      hb_xfree( pTag->szForExpr );
+      hb_xfree(pTag->szForExpr);
    }
 
    if( pTag->pKeyItem )
@@ -595,23 +595,23 @@ static void mixTagDestroy( PMIXTAG pTag )
 
    for( HB_ULONG ul = 0; ul < pTag->ulRecCount; ul++ )
    {
-      mixKeyFree( pTag->pKeys[ ul ] );
+      mixKeyFree( pTag->pKeys[ul] );
    }
 
-   hb_xfree( pTag->pKeys );
+   hb_xfree(pTag->pKeys);
 
-   hb_xfree( pTag );
+   hb_xfree(pTag);
 }
 
 static PMIXTAG mixFindTag( ADSXAREAP pArea, PHB_ITEM pOrder )
 {
    PMIXTAG pTag;
 
-   if( HB_IS_NUMBER( pOrder ) )
+   if( HB_IS_NUMBER(pOrder) )
    {
       UNSIGNED16 usOrder = 0, usFind;
 
-      usFind = static_cast< UNSIGNED16 >( hb_itemGetNI( pOrder ) );
+      usFind = static_cast< UNSIGNED16 >( hb_itemGetNI(pOrder) );
 
       AdsGetNumIndexes( pArea->adsarea.hTable, &usOrder );
       usOrder++;
@@ -623,9 +623,9 @@ static PMIXTAG mixFindTag( ADSXAREAP pArea, PHB_ITEM pOrder )
    }
    else
    {
-      char szTag[ MIX_MAXTAGNAMELEN + 1 ];
+      char szTag[MIX_MAXTAGNAMELEN + 1];
 
-      hb_strncpyUpperTrim( szTag, hb_itemGetCPtr( pOrder ), MIX_MAXTAGNAMELEN );
+      hb_strncpyUpperTrim( szTag, hb_itemGetCPtr(pOrder), MIX_MAXTAGNAMELEN );
       pTag = pArea->pTagList;
       while( pTag && hb_stricmp( szTag, pTag->szName ) )
       {
@@ -643,7 +643,7 @@ static PMIXUPDATE mixUpdateCreate( ADSXAREAP pArea )
    int        iTag;
 
    pTag = pArea->pTagList;
-   if( ! pArea->adsarea.fPositioned || ! pTag )
+   if( !pArea->adsarea.fPositioned || !pTag )
    {
       return nullptr;
    }
@@ -655,7 +655,7 @@ static PMIXUPDATE mixUpdateCreate( ADSXAREAP pArea )
       iTag++;
    }
 
-   pUpdate = static_cast< PMIXUPDATE >( hb_xgrab( sizeof( MIXUPDATE ) * iTag ) );
+   pUpdate = static_cast<PMIXUPDATE>(hb_xgrab(sizeof(MIXUPDATE) * iTag));
    pTag = pArea->pTagList;
    iTag = 0;
    while( pTag )
@@ -663,7 +663,7 @@ static PMIXUPDATE mixUpdateCreate( ADSXAREAP pArea )
       PMIXKEY  pKey = mixKeyEval( pTag, pArea );
       HB_ULONG ulKeyPos;
 
-      pUpdate[ iTag ] = mixFindKey( pTag, pKey, &ulKeyPos ) ? ulKeyPos : static_cast< HB_ULONG >( -1 );
+      pUpdate[iTag] = mixFindKey( pTag, pKey, &ulKeyPos ) ? ulKeyPos : static_cast< HB_ULONG >( -1 );
       mixKeyFree( pKey );
 
       pTag = pTag->pNext;
@@ -678,14 +678,14 @@ static void mixUpdateDestroy( ADSXAREAP pArea, PMIXUPDATE pUpdate, int fUpdate )
    PMIXTAG pTag = pArea->pTagList;
    int     iTag;
 
-   if( ! pUpdate )
+   if( !pUpdate )
    {
       return;
    }
 
-   if( ! fUpdate )
+   if( !fUpdate )
    {
-      hb_xfree( pUpdate );
+      hb_xfree(pUpdate);
       return;
    }
 
@@ -693,7 +693,7 @@ static void mixUpdateDestroy( ADSXAREAP pArea, PMIXUPDATE pUpdate, int fUpdate )
    while( pTag )
    {
       HB_BOOL bFor = pTag->pForItem == nullptr || mixEvalCond( pTag->pForItem, pArea );
-      if( pUpdate[ iTag ] == static_cast< HB_ULONG >( -1 ) )
+      if( pUpdate[iTag] == static_cast< HB_ULONG >( -1 ) )
       {
          if( bFor )
          {
@@ -704,14 +704,14 @@ static void mixUpdateDestroy( ADSXAREAP pArea, PMIXUPDATE pUpdate, int fUpdate )
             /* insert key into index */
             if( pTag->ulRecCount == pTag->ulRecMax )
             {
-               pTag->pKeys = static_cast< PMIXKEY* >( hb_xrealloc( pTag->pKeys, sizeof( PMIXKEY ) * ( pTag->ulRecMax + MIX_KEYPOOLRESIZE ) ) );
+               pTag->pKeys = static_cast< PMIXKEY* >( hb_xrealloc( pTag->pKeys, sizeof(PMIXKEY) * ( pTag->ulRecMax + MIX_KEYPOOLRESIZE ) ) );
                pTag->ulRecMax += MIX_KEYPOOLRESIZE;
             }
             if( ulKeyPos < pTag->ulRecCount )
             {
-               memmove( pTag->pKeys + ulKeyPos + 1, pTag->pKeys + ulKeyPos, ( pTag->ulRecCount - ulKeyPos ) * sizeof( PMIXKEY ) );
+               memmove( pTag->pKeys + ulKeyPos + 1, pTag->pKeys + ulKeyPos, ( pTag->ulRecCount - ulKeyPos ) * sizeof(PMIXKEY) );
             }
-            pTag->pKeys[ ulKeyPos ] = pKey;
+            pTag->pKeys[ulKeyPos] = pKey;
             pTag->ulRecCount++;
          }
       }
@@ -720,28 +720,28 @@ static void mixUpdateDestroy( ADSXAREAP pArea, PMIXUPDATE pUpdate, int fUpdate )
          PMIXKEY pKey = mixKeyEval( pTag, pArea );
          if( bFor )
          {
-            if( mixCompareKey( pTag, pUpdate[ iTag ], pKey, pTag->uiLen ) != 0 )
+            if( mixCompareKey( pTag, pUpdate[iTag], pKey, pTag->uiLen ) != 0 )
             {
                HB_ULONG ulKeyPos;
-               mixKeyFree( pTag->pKeys[ pUpdate[ iTag ] ] );
+               mixKeyFree( pTag->pKeys[pUpdate[iTag]] );
                mixFindKey( pTag, pKey, &ulKeyPos );
-               if( ulKeyPos == pUpdate[ iTag ] || ulKeyPos == pUpdate[ iTag ] + 1 )
+               if( ulKeyPos == pUpdate[iTag] || ulKeyPos == pUpdate[iTag] + 1 )
                {
                   /* assign new key in same position */
-                  pTag->pKeys[ pUpdate[ iTag ] ] = pKey;
+                  pTag->pKeys[pUpdate[iTag]] = pKey;
                }
                else
                {
                   /* move keys and assign new key to new position */
-                  if( ulKeyPos < pUpdate[ iTag ] )
+                  if( ulKeyPos < pUpdate[iTag] )
                   {
-                     memmove( pTag->pKeys + ulKeyPos + 1, pTag->pKeys + ulKeyPos, ( pUpdate[ iTag ] - ulKeyPos ) * sizeof( PMIXKEY ) );
-                     pTag->pKeys[ ulKeyPos ] = pKey;
+                     memmove( pTag->pKeys + ulKeyPos + 1, pTag->pKeys + ulKeyPos, ( pUpdate[iTag] - ulKeyPos ) * sizeof(PMIXKEY) );
+                     pTag->pKeys[ulKeyPos] = pKey;
                   }
                   else
                   {
-                     memmove( pTag->pKeys + pUpdate[ iTag ], pTag->pKeys + pUpdate[ iTag ] + 1, ( ulKeyPos - pUpdate[ iTag ] - 1 ) * sizeof( PMIXKEY ) );
-                     pTag->pKeys[ ulKeyPos - 1 ] = pKey;
+                     memmove( pTag->pKeys + pUpdate[iTag], pTag->pKeys + pUpdate[iTag] + 1, ( ulKeyPos - pUpdate[iTag] - 1 ) * sizeof(PMIXKEY) );
+                     pTag->pKeys[ulKeyPos - 1] = pKey;
                   }
                }
             }
@@ -754,14 +754,14 @@ static void mixUpdateDestroy( ADSXAREAP pArea, PMIXUPDATE pUpdate, int fUpdate )
          {
             /* delete key */
             mixKeyFree( pKey );
-            memmove( pTag->pKeys + pUpdate[ iTag ], pTag->pKeys + pUpdate[ iTag ] + 1, ( pTag->ulRecCount - pUpdate[ iTag ] ) * sizeof( PMIXKEY ) );
+            memmove( pTag->pKeys + pUpdate[iTag], pTag->pKeys + pUpdate[iTag] + 1, ( pTag->ulRecCount - pUpdate[iTag] ) * sizeof(PMIXKEY) );
             pTag->ulRecCount--;
          }
       }
       pTag = pTag->pNext;
       iTag++;
    }
-   hb_xfree( pUpdate );
+   hb_xfree(pUpdate);
 }
 
 /* ADSX RDD METHODS */
@@ -773,14 +773,14 @@ static HB_ERRCODE adsxGoBottom( ADSXAREAP pArea )
 
    pTag = pArea->pTagCurrent;
 
-   if( ! pTag )
+   if( !pTag )
    {
       return SUPER_GOBOTTOM( &pArea->adsarea.area );
    }
 
    if( pTag->ulRecCount > 0 )
    {
-      ulRecNo = pTag->pKeys[ pTag->ulRecCount - 1 ]->rec;
+      ulRecNo = pTag->pKeys[pTag->ulRecCount - 1]->rec;
    }
    else
    {
@@ -802,14 +802,14 @@ static HB_ERRCODE adsxGoTop( ADSXAREAP pArea )
 
    pTag = pArea->pTagCurrent;
 
-   if( ! pTag )
+   if( !pTag )
    {
       return SUPER_GOTOP( &pArea->adsarea.area );
    }
 
    if( pTag->ulRecCount > 0 )
    {
-      ulRecNo = pTag->pKeys[ 0 ]->rec;
+      ulRecNo = pTag->pKeys[0]->rec;
    }
    else
    {
@@ -832,7 +832,7 @@ static HB_ERRCODE adsxSeek( ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, H
    HB_ERRCODE errCode;
    HB_BOOL    fFound = HB_FALSE;
 
-   if( ! pArea->pTagCurrent )
+   if( !pArea->pTagCurrent )
    {
       return SUPER_SEEK( &pArea->adsarea.area, bSoftSeek, pKey, bFindLast );
    }
@@ -843,7 +843,7 @@ static HB_ERRCODE adsxSeek( ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, H
 
    if( pArea->pTagCurrent->bType == 'C' )
    {
-      HB_SIZE nLen = hb_itemGetCLen( pKey );
+      HB_SIZE nLen = hb_itemGetCLen(pKey);
       if( nLen < static_cast< HB_SIZE >( uiLen ) )
       {
          uiLen = static_cast< HB_USHORT >( nLen );
@@ -861,12 +861,12 @@ static HB_ERRCODE adsxSeek( ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, H
    {
       if( ulKeyPos > 0 && mixCompareKey( pArea->pTagCurrent, ulKeyPos - 1, pMixKey, uiLen ) == -1 )
       {
-         ulRecNo = pArea->pTagCurrent->pKeys[ ulKeyPos - 1 ]->rec;
+         ulRecNo = pArea->pTagCurrent->pKeys[ulKeyPos - 1]->rec;
          fFound  = HB_TRUE;
       }
       else if( ulKeyPos < pArea->pTagCurrent->ulRecCount )
       {
-         ulRecNo = pArea->pTagCurrent->pKeys[ ulKeyPos ]->rec;
+         ulRecNo = pArea->pTagCurrent->pKeys[ulKeyPos]->rec;
          fFound  = HB_FALSE;
       }
    }
@@ -874,7 +874,7 @@ static HB_ERRCODE adsxSeek( ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, H
    {
       if( ulKeyPos < pArea->pTagCurrent->ulRecCount )
       {
-         ulRecNo = pArea->pTagCurrent->pKeys[ ulKeyPos ]->rec;
+         ulRecNo = pArea->pTagCurrent->pKeys[ulKeyPos]->rec;
          fFound = mixCompareKey( pArea->pTagCurrent, ulKeyPos, pMixKey, uiLen ) == 1;
       }
    }
@@ -888,7 +888,7 @@ static HB_ERRCODE adsxSeek( ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, H
    pArea->adsarea.area.fEof = ulRecNo == 0;
    pArea->adsarea.area.fBof = HB_FALSE;
    pArea->adsarea.area.fFound = fFound;
-   pArea->adsarea.fPositioned = ! pArea->adsarea.area.fEof;
+   pArea->adsarea.fPositioned = !pArea->adsarea.area.fEof;
    return errCode;
 }
 
@@ -898,7 +898,7 @@ static HB_ERRCODE adsxSkip( ADSXAREAP pArea, HB_LONG lToSkip )
    HB_ULONG   ulKeyPos;
    HB_ERRCODE errCode = HB_SUCCESS;
 
-   if( ! pArea->pTagCurrent || lToSkip == 0 )
+   if( !pArea->pTagCurrent || lToSkip == 0 )
    {
       return SUPER_SKIP( &pArea->adsarea.area, lToSkip );
    }
@@ -913,7 +913,7 @@ static HB_ERRCODE adsxSkip( ADSXAREAP pArea, HB_LONG lToSkip )
 
    if( lToSkip > 0 )
    {
-      if( ! pArea->adsarea.fPositioned )
+      if( !pArea->adsarea.fPositioned )
       {
          errCode = SELF_GOTO( &pArea->adsarea.area, pArea->adsarea.ulRecNo );
       }
@@ -928,7 +928,7 @@ static HB_ERRCODE adsxSkip( ADSXAREAP pArea, HB_LONG lToSkip )
           pArea->pTagCurrent->ulRecCount > static_cast< HB_ULONG >( lToSkip ) &&
           ulKeyPos < pArea->pTagCurrent->ulRecCount - static_cast< HB_ULONG >( lToSkip ) )
       {
-         if( SELF_GOTO( &pArea->adsarea.area, pArea->pTagCurrent->pKeys[ ulKeyPos + lToSkip ]->rec ) == HB_FAILURE )
+         if( SELF_GOTO( &pArea->adsarea.area, pArea->pTagCurrent->pKeys[ulKeyPos + lToSkip]->rec ) == HB_FAILURE )
          {
             errCode = HB_FAILURE;
          }
@@ -948,7 +948,7 @@ static HB_ERRCODE adsxSkip( ADSXAREAP pArea, HB_LONG lToSkip )
    }
    else
    {
-      if( ! pArea->adsarea.fPositioned )
+      if( !pArea->adsarea.fPositioned )
       {
          errCode = SELF_GOBOTTOM( &pArea->adsarea.area );
          pArea->adsarea.area.fBottom = HB_FALSE;
@@ -965,7 +965,7 @@ static HB_ERRCODE adsxSkip( ADSXAREAP pArea, HB_LONG lToSkip )
           pArea->pTagCurrent->ulRecCount >= static_cast< HB_ULONG >( -lToSkip ) &&
           ulKeyPos >= static_cast< HB_ULONG >( -lToSkip ) )
       {
-         if( SELF_GOTO( &pArea->adsarea.area, pArea->pTagCurrent->pKeys[ ulKeyPos + lToSkip ]->rec ) == HB_FAILURE )
+         if( SELF_GOTO( &pArea->adsarea.area, pArea->pTagCurrent->pKeys[ulKeyPos + lToSkip]->rec ) == HB_FAILURE )
          {
             errCode = HB_FAILURE;
          }
@@ -1020,7 +1020,7 @@ static HB_ERRCODE adsxCreate( ADSXAREAP pArea, LPDBOPENINFO pCreateInfo )
       if( pCreateInfo->cdpId )
       {
          pArea->adsarea.area.cdPage = hb_cdpFind( pCreateInfo->cdpId );
-         if( ! pArea->adsarea.area.cdPage )
+         if( !pArea->adsarea.area.cdPage )
          {
             pArea->adsarea.area.cdPage = hb_vmCDP();
          }
@@ -1071,7 +1071,7 @@ static HB_ERRCODE adsxOpen( ADSXAREAP pArea, LPDBOPENINFO pOpenInfo )
       if( pOpenInfo->cdpId )
       {
          pArea->adsarea.area.cdPage = hb_cdpFind( pOpenInfo->cdpId );
-         if( ! pArea->adsarea.area.cdPage )
+         if( !pArea->adsarea.area.cdPage )
          {
             pArea->adsarea.area.cdPage = hb_vmCDP();
          }
@@ -1087,9 +1087,9 @@ static HB_ERRCODE adsxOpen( ADSXAREAP pArea, LPDBOPENINFO pOpenInfo )
 
 static HB_ERRCODE adsxStructSize( ADSXAREAP pArea, HB_USHORT * StructSize )
 {
-   HB_SYMBOL_UNUSED( pArea );
+   HB_SYMBOL_UNUSED(pArea);
 
-   *StructSize = sizeof( ADSXAREA );
+   *StructSize = sizeof(ADSXAREA);
    return HB_SUCCESS;
 }
 
@@ -1183,7 +1183,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
 
    /* Test key expression */
    bValidExpr = 0;
-   AdsIsExprValid( pArea->adsarea.hTable, static_cast< UNSIGNED8 * >( const_cast< char *>( hb_itemGetCPtr( pOrderInfo->abExpr ) ) ), &bValidExpr );
+   AdsIsExprValid( pArea->adsarea.hTable, static_cast< UNSIGNED8 * >( const_cast< char *>( hb_itemGetCPtr(pOrderInfo->abExpr) ) ), &bValidExpr );
    bKeyADS = bValidExpr;
 
    if( pArea->adsarea.area.lpdbOrdCondInfo )
@@ -1222,8 +1222,8 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
    {
       /* We can use server side indexing to filter records. This improves speed */
       UNSIGNED32 u32RetVal;
-      UNSIGNED8  szKeyExpr[ 1024 ];
-      UNSIGNED16 usLen = sizeof( szKeyExpr );
+      UNSIGNED8  szKeyExpr[1024];
+      UNSIGNED16 usLen = sizeof(szKeyExpr);
 
       if( pArea->adsarea.area.lpdbOrdCondInfo->fUseCurrent && pArea->adsarea.hOrdCurrent )
       {
@@ -1231,7 +1231,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       }
       else
       {
-         szKeyExpr[ 0 ] = '\0';
+         szKeyExpr[0] = '\0';
       }
 
 #if ADS_LIB_VERSION >= 610
@@ -1239,7 +1239,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          pArea->adsarea.area.lpdbOrdCondInfo->fUseCurrent ? pArea->adsarea.hOrdCurrent : pArea->adsarea.hTable,
          static_cast< UNSIGNED8 * >( HB_UNCONST( pOrderInfo->abBagName ) ),
          static_cast< UNSIGNED8 * >( HB_UNCONST( pOrderInfo->atomBagName ) ),
-         szKeyExpr[ 0 ] ? szKeyExpr : reinterpret_cast< UNSIGNED8 * >( const_cast< char * >( "1" ) ),
+         szKeyExpr[0] ? szKeyExpr : reinterpret_cast< UNSIGNED8 * >( const_cast< char * >( "1" ) ),
          bForADS ? reinterpret_cast< UNSIGNED8 * >( pArea->adsarea.area.lpdbOrdCondInfo->abFor ) : nullptr,
          bWhileADS ? reinterpret_cast< UNSIGNED8 * >( pArea->adsarea.area.lpdbOrdCondInfo->abWhile ) : nullptr,
          ADS_COMPOUND, ADS_DEFAULT, &hIndex );
@@ -1248,7 +1248,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          pArea->adsarea.area.lpdbOrdCondInfo->fUseCurrent ? pArea->adsarea.hOrdCurrent : pArea->adsarea.hTable,
          static_cast< UNSIGNED8 * >( HB_UNCONST( pOrderInfo->abBagName ) ),
          static_cast< UNSIGNED8 * >( HB_UNCONST( pOrderInfo->atomBagName ) ),
-         szKeyExpr[ 0 ] ? szKeyExpr : reinterpret_cast<  UNSIGNED8 * >( const_cast< char * >( "1" ) ),
+         szKeyExpr[0] ? szKeyExpr : reinterpret_cast<  UNSIGNED8 * >( const_cast< char * >( "1" ) ),
          bForADS ? static_cast< UNSIGNED8 * >( pArea->adsarea.area.lpdbOrdCondInfo->abFor ) : nullptr,
          bWhileADS ? static_cast< UNSIGNED8 * >( pArea->adsarea.area.lpdbOrdCondInfo->abWhile ) : nullptr,
          ADS_COMPOUND, &hIndex );
@@ -1265,16 +1265,16 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       /* If while condition is already used, remove it from OrdCondInfo */
       if( bWhileADS && pArea->adsarea.area.lpdbOrdCondInfo->abWhile )
       {
-         hb_xfree( pArea->adsarea.area.lpdbOrdCondInfo->abWhile );
+         hb_xfree(pArea->adsarea.area.lpdbOrdCondInfo->abWhile);
          pArea->adsarea.area.lpdbOrdCondInfo->abWhile = nullptr;
          if( pArea->adsarea.area.lpdbOrdCondInfo->itmCobWhile )
          {
-            hb_itemRelease( pArea->adsarea.area.lpdbOrdCondInfo->itmCobWhile );
+            hb_itemRelease(pArea->adsarea.area.lpdbOrdCondInfo->itmCobWhile);
             pArea->adsarea.area.lpdbOrdCondInfo->itmCobWhile = nullptr;
          }
          if( pArea->adsarea.area.lpdbOrdCondInfo->itmStartRecID )
          {
-            hb_itemRelease( pArea->adsarea.area.lpdbOrdCondInfo->itmStartRecID );
+            hb_itemRelease(pArea->adsarea.area.lpdbOrdCondInfo->itmStartRecID);
             pArea->adsarea.area.lpdbOrdCondInfo->itmStartRecID = nullptr;
          }
          pArea->adsarea.area.lpdbOrdCondInfo->fRest = HB_FALSE;
@@ -1284,11 +1284,11 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
    /* Obtain key codeblock */
    if( pOrderInfo->itmCobExpr )
    {
-      pKeyItem = hb_itemNew( pOrderInfo->itmCobExpr );
+      pKeyItem = hb_itemNew(pOrderInfo->itmCobExpr);
    }
    else
    {
-      if( SELF_COMPILE( &pArea->adsarea.area, hb_itemGetCPtr( pOrderInfo->abExpr ) ) == HB_FAILURE )
+      if( SELF_COMPILE( &pArea->adsarea.area, hb_itemGetCPtr(pOrderInfo->abExpr) ) == HB_FAILURE )
       {
          if( hIndex )
          {
@@ -1319,29 +1319,29 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
 
    switch( hb_itemType( pResult ) )
    {
-      case HB_IT_STRING:
-      case HB_IT_MEMO:
+      case Harbour::Item::STRING:
+      case Harbour::Item::MEMO:
          bType = 'C';
-         uiLen = static_cast< HB_USHORT >( hb_itemGetCLen( pResult ) );
+         uiLen = static_cast< HB_USHORT >( hb_itemGetCLen(pResult) );
          if( uiLen > MIX_MAXKEYLEN )
          {
             uiLen = MIX_MAXKEYLEN;
          }
          break;
 
-      case HB_IT_INTEGER:
-      case HB_IT_LONG:
-      case HB_IT_DOUBLE:
+      case Harbour::Item::INTEGER:
+      case Harbour::Item::LONG:
+      case Harbour::Item::DOUBLE:
          bType = 'N';
          uiLen = 8;
          break;
 
-      case HB_IT_DATE:
+      case Harbour::Item::DATE:
          bType = 'D';
          uiLen = 8;
          break;
 
-      case HB_IT_LOGICAL:
+      case Harbour::Item::LOGICAL:
          bType = 'L';
          uiLen = 1;
          break;
@@ -1350,7 +1350,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          bType = 'U';
          uiLen = 0;
    }
-   hb_itemRelease( pResult );
+   hb_itemRelease(pResult);
 
    if( bType == 'U' || uiLen == 0 )
    {
@@ -1369,7 +1369,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       /* Obtain FOR codeblock */
       if( pArea->adsarea.area.lpdbOrdCondInfo->itmCobFor )
       {
-         pForItem = hb_itemNew( pArea->adsarea.area.lpdbOrdCondInfo->itmCobFor );
+         pForItem = hb_itemNew(pArea->adsarea.area.lpdbOrdCondInfo->itmCobFor);
       }
       else if( pArea->adsarea.area.lpdbOrdCondInfo->abFor )
       {
@@ -1390,7 +1390,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       /* Obtain WHILE codeblock */
       if( pArea->adsarea.area.lpdbOrdCondInfo->itmCobWhile )
       {
-         pWhileItem = hb_itemNew( pArea->adsarea.area.lpdbOrdCondInfo->itmCobWhile );
+         pWhileItem = hb_itemNew(pArea->adsarea.area.lpdbOrdCondInfo->itmCobWhile);
       }
       else if( pArea->adsarea.area.lpdbOrdCondInfo->abWhile )
       {
@@ -1431,13 +1431,13 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          SELF_GOTO( &pArea->adsarea.area, ulRecNo );
          return HB_FAILURE;
       }
-      if( hb_itemType( pArea->adsarea.area.valResult ) != HB_IT_LOGICAL )
+      if( hb_itemType( pArea->adsarea.area.valResult ) != Harbour::Item::LOGICAL )
       {
          if( hIndex )
          {
             AdsDeleteIndex( hIndex );
          }
-         hb_itemRelease( pArea->adsarea.area.valResult );
+         hb_itemRelease(pArea->adsarea.area.valResult);
          pArea->adsarea.area.valResult = 0;
          hb_vmDestroyBlockOrMacro( pKeyItem );
          hb_vmDestroyBlockOrMacro( pForItem );
@@ -1449,7 +1449,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          hb_mixErrorRT( pArea, EG_DATATYPE, EDBF_INVALIDFOR, nullptr, 0, 0 );
          return HB_FAILURE;
       }
-      hb_itemRelease( pArea->adsarea.area.valResult );
+      hb_itemRelease(pArea->adsarea.area.valResult);
       pArea->adsarea.area.valResult = nullptr;
    }
 
@@ -1552,12 +1552,12 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
    {
       if( pOrderInfo->itmOrder )
       {
-         if( HB_IS_STRING( pOrderInfo->itmOrder ) )
+         if( HB_IS_STRING(pOrderInfo->itmOrder) )
          {
             pTag = pArea->pTagList;
             while( pTag )
             {
-               if( ! hb_stricmp( hb_itemGetCPtr( pOrderInfo->itmOrder ), pTag->szName ) )
+               if( !hb_stricmp( hb_itemGetCPtr(pOrderInfo->itmOrder), pTag->szName ) )
                {
                   break;
                }
@@ -1565,9 +1565,9 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
                pTag = pTag->pNext;
             }
          }
-         else if( HB_IS_NUMERIC( pOrderInfo->itmOrder ) )
+         else if( HB_IS_NUMERIC(pOrderInfo->itmOrder) )
          {
-            UNSIGNED16 usOrder = 0, usSearch = static_cast< UNSIGNED16 >( hb_itemGetNI( pOrderInfo->itmOrder ) );
+            UNSIGNED16 usOrder = 0, usSearch = static_cast< UNSIGNED16 >( hb_itemGetNI(pOrderInfo->itmOrder) );
 
             AdsGetNumIndexes( pArea->adsarea.hTable, &usOrder );
 
@@ -1584,7 +1584,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          }
       }
 
-      if( ! pTag )
+      if( !pTag )
       {
          return SUPER_ORDINFO( &pArea->adsarea.area, uiIndex, pOrderInfo );
       }
@@ -1605,11 +1605,11 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          break;
 
       case DBOI_ISDESC:
-         pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, HB_FALSE );
+         pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, false );
          break;
 
       case DBOI_UNIQUE:
-         pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, HB_FALSE );
+         pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, false );
          break;
 
       case DBOI_KEYTYPE:
@@ -1627,11 +1627,11 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
 
          pItem = hb_vmEvalBlockOrMacro( pTag->pKeyItem );
          hb_cdpSelect( pCodepage );
-         if( ! pOrderInfo->itmResult )
+         if( !pOrderInfo->itmResult )
          {
-            pOrderInfo->itmResult = hb_itemNew( nullptr );
+            pOrderInfo->itmResult = hb_itemNew(nullptr);
          }
-         hb_itemMove( pOrderInfo->itmResult, pItem );
+         hb_itemMove(pOrderInfo->itmResult, pItem);
          break;
       }
       case DBOI_KEYCOUNT:
@@ -1642,25 +1642,25 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       case DBOI_POSITION:
       case DBOI_RECNO:
       case DBOI_KEYNORAW:
-         if( uiIndex == DBOI_POSITION && pOrderInfo->itmNewVal && HB_IS_NUMERIC( pOrderInfo->itmNewVal ) )
+         if( uiIndex == DBOI_POSITION && pOrderInfo->itmNewVal && HB_IS_NUMERIC(pOrderInfo->itmNewVal) )
          {
             HB_ULONG ulPos;
 
-            ulPos = hb_itemGetNL( pOrderInfo->itmNewVal );
+            ulPos = hb_itemGetNL(pOrderInfo->itmNewVal);
 
             if( ulPos > 0 && ulPos <= pTag->ulRecCount )
             {
-               SELF_GOTO( &pArea->adsarea.area, pTag->pKeys[ ulPos - 1 ]->rec );
+               SELF_GOTO( &pArea->adsarea.area, pTag->pKeys[ulPos - 1]->rec );
             }
 
-            pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, ! pArea->adsarea.area.fEof );
+            pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, !pArea->adsarea.area.fEof );
          }
          else
          {
             PMIXKEY  pKey;
             HB_ULONG ulKeyPos;
 
-            if( ! pArea->adsarea.fPositioned )
+            if( !pArea->adsarea.fPositioned )
             {
                SELF_GOTO( &pArea->adsarea.area, pArea->adsarea.ulRecNo );
             }
@@ -1677,25 +1677,25 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          break;
 
       case DBOI_RELKEYPOS:
-         if( pOrderInfo->itmNewVal && HB_IS_NUMERIC( pOrderInfo->itmNewVal ) )
+         if( pOrderInfo->itmNewVal && HB_IS_NUMERIC(pOrderInfo->itmNewVal) )
          {
             HB_ULONG ulPos;
 
-            ulPos = static_cast< HB_ULONG >( hb_itemGetND( pOrderInfo->itmNewVal ) * static_cast< double >( pTag->ulRecCount ) );
+            ulPos = static_cast<HB_ULONG>(hb_itemGetND(pOrderInfo->itmNewVal) * static_cast<double>(pTag->ulRecCount));
 
             if( ulPos > 0 && ulPos <= pTag->ulRecCount )
             {
-               SELF_GOTO( &pArea->adsarea.area, pTag->pKeys[ ulPos - 1 ]->rec );
+               SELF_GOTO( &pArea->adsarea.area, pTag->pKeys[ulPos - 1]->rec );
             }
 
-            pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, ! pArea->adsarea.area.fEof );
+            pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, !pArea->adsarea.area.fEof );
          }
          else
          {
             PMIXKEY  pKey;
             HB_ULONG ulKeyPos;
 
-            if( ! pArea->adsarea.fPositioned )
+            if( !pArea->adsarea.fPositioned )
             {
                SELF_GOTO( &pArea->adsarea.area, pArea->adsarea.ulRecNo );
             }
@@ -1706,7 +1706,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
 
             pKey = mixKeyEval( pTag, pArea );
 
-            if( ! mixFindKey( pTag, pKey, &ulKeyPos ) )
+            if( !mixFindKey( pTag, pKey, &ulKeyPos ) )
             {
                ulKeyPos = 0;
             }
@@ -1766,7 +1766,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       }
 
       case DBOI_CUSTOM:
-         pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, HB_FALSE );
+         pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, false );
          break;
 
       case DBOI_OPTLEVEL:
@@ -1774,15 +1774,15 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          break;
 
       case DBOI_KEYADD:
-         pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, HB_FALSE );
+         pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, false );
          break;
 
       case DBOI_KEYDELETE:
-         pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, HB_FALSE );
+         pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, false );
          break;
 
       case DBOI_AUTOOPEN:
-         pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, HB_FALSE );
+         pOrderInfo->itmResult = hb_itemPutL( pOrderInfo->itmResult, false );
          break;
 
       default:
@@ -1898,10 +1898,10 @@ static void adsxRegisterRDD( HB_USHORT * pusRddId, const char * szRddName )
    RDDFUNCS * pTable;
    HB_USHORT * puiCount, * puiSuperRddId, uiRddId;
 
-   puiCount = static_cast< HB_USHORT * >( hb_parptr( 1 ) );
-   pTable = static_cast< RDDFUNCS * >( hb_parptr( 2 ) );
-   uiRddId = static_cast< HB_USHORT >( hb_parni( 4 ) );
-   puiSuperRddId = static_cast< HB_USHORT * >( hb_parptr( 5 ) );
+   puiCount = static_cast< HB_USHORT * >( hb_parptr(1) );
+   pTable = static_cast< RDDFUNCS * >( hb_parptr(2) );
+   uiRddId = static_cast< HB_USHORT >( hb_parni(4) );
+   puiSuperRddId = static_cast< HB_USHORT * >( hb_parptr(5) );
 
    if( pTable )
    {
@@ -1917,11 +1917,11 @@ static void adsxRegisterRDD( HB_USHORT * pusRddId, const char * szRddName )
       {
          *pusRddId = uiRddId;
       }
-      hb_retni( errCode );
+      hb_retni(errCode);
    }
    else
    {
-      hb_retni( HB_FAILURE );
+      hb_retni(HB_FAILURE);
    }
 }
 
@@ -1962,7 +1962,7 @@ HB_FUNC_EXTERN( ADSCDX );
 
 static void hb_adsxRddInit( void * cargo )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
 
    if( hb_rddRegister( "ADSX",    RDT_FULL ) > 1 ||
        hb_rddRegister( "ADSNTXX", RDT_FULL ) > 1 ||
@@ -2015,10 +2015,10 @@ HB_CALL_ON_STARTUP_BEGIN( _hb_adsx_rdd_init_ )
    hb_vmAtInit( hb_adsxRddInit, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_adsx_rdd_init_ )
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
    #pragma startup adsx1__InitSymbols
    #pragma startup _hb_adsx_rdd_init_
-#elif defined( HB_DATASEG_STARTUP )
+#elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY    HB_DATASEG_FUNC( adsx1__InitSymbols ) \
                               HB_DATASEG_FUNC( _hb_adsx_rdd_init_ )
    #include "hbiniseg.h"
