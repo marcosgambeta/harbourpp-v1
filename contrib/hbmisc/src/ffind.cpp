@@ -48,7 +48,7 @@
 
 static HB_GARBAGE_FUNC( PHB_FFIND_release )
 {
-   void ** ph = static_cast< void ** >( Cargo );
+   void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -69,26 +69,26 @@ static const HB_GC_FUNCS s_gcPHB_FFIND_funcs =
 
 static PHB_FFIND PHB_FFIND_par( int iParam )
 {
-   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcPHB_FFIND_funcs, iParam ) );
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcPHB_FFIND_funcs, iParam));
 
    return ph ? ( PHB_FFIND ) *ph : nullptr;
 }
 
 HB_FUNC( FILEFINDFIRST )
 {
-   const char * pszFileName = hb_parc( 1 );
+   const char * pszFileName = hb_parc(1);
 
-   if( pszFileName && HB_ISBYREF( 2 ) )
+   if( pszFileName && HB_ISBYREF(2) )
    {
-      void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof( PHB_FFIND ), &s_gcPHB_FFIND_funcs ) );
+      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(PHB_FFIND), &s_gcPHB_FFIND_funcs));
 
-      PHB_FFIND ffind = hb_fsFindFirst( pszFileName, hb_parnldef( 3, HB_FA_ALL ) );
+      PHB_FFIND ffind = hb_fsFindFirst( pszFileName, hb_parnldef(3, HB_FA_ALL) );
 
-      *ph = static_cast< void * >( ffind );
+      *ph = static_cast<void*>(ffind);
 
       hb_storptrGC( ph, 2 );
 
-      hb_retl( ffind != nullptr );
+      hb_retl(ffind != nullptr);
    }
    else
       hb_retl(false);
@@ -96,42 +96,42 @@ HB_FUNC( FILEFINDFIRST )
 
 HB_FUNC( FILEFINDNEXT )
 {
-   PHB_FFIND ffind = PHB_FFIND_par( 1 );
+   PHB_FFIND ffind = PHB_FFIND_par(1);
 
-   hb_retl( ffind && hb_fsFindNext( ffind ) );
+   hb_retl(ffind && hb_fsFindNext(ffind));
 }
 
 HB_FUNC( FILEFINDNAME )
 {
-   PHB_FFIND ffind = PHB_FFIND_par( 1 );
+   PHB_FFIND ffind = PHB_FFIND_par(1);
 
-   hb_retc( ffind ? ffind->szName : nullptr );
+   hb_retc(ffind ? ffind->szName : nullptr);
 }
 
 HB_FUNC( FILEFINDATTR )
 {
-   PHB_FFIND ffind = PHB_FFIND_par( 1 );
+   PHB_FFIND ffind = PHB_FFIND_par(1);
 
-   hb_retnl( ffind ? ffind->attr : 0 );
+   hb_retnl(ffind ? ffind->attr : 0);
 }
 
 HB_FUNC( FILEFINDSIZE )
 {
-   PHB_FFIND ffind = PHB_FFIND_par( 1 );
+   PHB_FFIND ffind = PHB_FFIND_par(1);
 
-   hb_retnint( ffind ? ffind->size : 0 );
+   hb_retnint(ffind ? ffind->size : 0);
 }
 
 HB_FUNC( FILEFINDDATE )
 {
-   PHB_FFIND ffind = PHB_FFIND_par( 1 );
+   PHB_FFIND ffind = PHB_FFIND_par(1);
 
    hb_retds( ffind ? ffind->szDate : nullptr );
 }
 
 HB_FUNC( FILEFINDTIME )
 {
-   PHB_FFIND ffind = PHB_FFIND_par( 1 );
+   PHB_FFIND ffind = PHB_FFIND_par(1);
 
-   hb_retc( ffind ? ffind->szTime : nullptr );
+   hb_retc(ffind ? ffind->szTime : nullptr);
 }

@@ -52,8 +52,7 @@
 #include "hbapilng.h"
 #include "hbdate.h"
 
-static const int s_daysinmonth[ 12 ] =
-   { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+static const int s_daysinmonth[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 static HB_BOOL hb_isleapyear( int iYear )
 {
@@ -71,8 +70,7 @@ static int hb_daysinmonth( int iYear, int iMonth )
 #endif
 
    if( iMonth > 0 && iMonth < 13 )
-      return s_daysinmonth[ iMonth - 1 ] +
-             ( ( iMonth == 2 && hb_isleapyear( iYear ) ) ? 1 : 0 );
+      return s_daysinmonth[iMonth - 1] + ((iMonth == 2 && hb_isleapyear(iYear)) ? 1 : 0);
    else
       return 0;
 }
@@ -95,7 +93,7 @@ static int hb_doy( int iYear, int iMonth, int iDay )
 static int hb_woy( long lDate, HB_BOOL fISO )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_woy(%ld, %d)", lDate, static_cast< int >( fISO ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_woy(%ld, %d)", lDate, static_cast<int>(fISO) ) );
 #endif
 
    int iYear, iMonth, iDay;
@@ -103,44 +101,43 @@ static int hb_woy( long lDate, HB_BOOL fISO )
    hb_dateDecode( lDate, &iYear, &iMonth, &iDay );
 
    if( fISO )
-      hb_dateDecode( lDate + 3 - ( hb_dateDOW( iYear, iMonth, iDay ) + 5 ) % 7,
-                     &iYear, &iMonth, &iDay );
+      hb_dateDecode( lDate + 3 - ( hb_dateDOW( iYear, iMonth, iDay ) + 5 ) % 7, &iYear, &iMonth, &iDay );
 
    return ( hb_doy( iYear, iMonth, iDay ) - 1 ) / 7 + 1;
 }
 
 HB_FUNC( AMONTHS )
 {
-   PHB_ITEM pReturn = hb_itemArrayNew( 12 );  /* Create array */
+   PHB_ITEM pReturn = hb_itemArrayNew(12);  /* Create array */
    int      i;
 
    for( i = 0; i < 12; ++i )
       hb_arraySetC( pReturn, i + 1, hb_langDGetItem( HB_LANG_ITEM_BASE_MONTH + i ) );
 
-   hb_itemReturnRelease( pReturn );
+   hb_itemReturnRelease(pReturn);
 }
 
 HB_FUNC( ADAYS )
 {
-   PHB_ITEM pReturn = hb_itemArrayNew( 7 );  /* Create array */
+   PHB_ITEM pReturn = hb_itemArrayNew(7);  /* Create array */
    int      i;
 
    for( i = 0; i < 7; ++i )
       hb_arraySetC( pReturn, i + 1, hb_langDGetItem( HB_LANG_ITEM_BASE_DAY + i ) );
 
-   hb_itemReturnRelease( pReturn );
+   hb_itemReturnRelease(pReturn);
 }
 
 HB_FUNC( ISLEAPYEAR )
 {
-   PHB_ITEM pDate = hb_param( 1, HB_IT_DATETIME );
+   PHB_ITEM pDate = hb_param(1, Harbour::Item::DATETIME);
 
    if( pDate )
    {
       int iYear, iMonth, iDay;
 
       hb_dateDecode( hb_itemGetDL( pDate ), &iYear, &iMonth, &iDay );
-      hb_retl( hb_isleapyear( iYear ) );
+      hb_retl(hb_isleapyear(iYear));
    }
    else
       hb_retl(false);
@@ -148,23 +145,22 @@ HB_FUNC( ISLEAPYEAR )
 
 HB_FUNC( HBMISC_DAYSINMONTH )
 {
-   PHB_ITEM pDate = hb_param( 1, HB_IT_DATETIME );
+   PHB_ITEM pDate = hb_param(1, Harbour::Item::DATETIME);
 
    if( pDate )
    {
       int iYear, iMonth, iDay;
 
       hb_dateDecode( hb_itemGetDL( pDate ), &iYear, &iMonth, &iDay );
-      hb_retni( hb_daysinmonth( iYear, iMonth ) );
+      hb_retni(hb_daysinmonth(iYear, iMonth));
    }
    else
-      hb_retni( 0 );
+      hb_retni(0);
 }
 
 HB_FUNC( WOY )
 {
-   PHB_ITEM pDate = hb_param( 1, HB_IT_DATETIME );
+   PHB_ITEM pDate = hb_param(1, Harbour::Item::DATETIME);
 
-   hb_retni( pDate == nullptr ? 0 :
-             hb_woy( hb_itemGetDL( pDate ), hb_parldef( 2, HB_TRUE ) ) );
+   hb_retni(pDate == nullptr ? 0 : hb_woy(hb_itemGetDL(pDate), hb_parldef(2, true)));
 }

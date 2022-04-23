@@ -57,16 +57,16 @@ HB_FUNC( BUBBLEBABBLEENCODE )
    static const char * s_szConsonants = "bcdfghklmnprstvzx";
    static const char * s_szVowels     = "aeiouy";
 
-   const char * pszInput  = hb_parcx( 1 );
-   HB_ISIZ      nInputLen = hb_parclen( 1 );
-   char *       pszResult = static_cast< char * >( hb_xgrab( nInputLen * 3 + 6 ) );
+   const char * pszInput  = hb_parcx(1);
+   HB_ISIZ      nInputLen = hb_parclen(1);
+   char *       pszResult = static_cast<char*>(hb_xgrab(nInputLen * 3 + 6));
 
    HB_ISIZ nPos = 0;
    HB_ISIZ i;
 
    int iSeed = 1;
 
-   pszResult[ nPos++ ] = 'x';
+   pszResult[nPos++] = 'x';
 
    for( i = 0;; i += 2 )
    {
@@ -75,31 +75,31 @@ HB_FUNC( BUBBLEBABBLEENCODE )
 
       if( i >= nInputLen )
       {
-         pszResult[ nPos++ ] = s_szVowels[ iSeed % 6 ];
-         pszResult[ nPos++ ] = s_szConsonants[ 16 ];
-         pszResult[ nPos++ ] = s_szVowels[ iSeed / 6 ];
+         pszResult[nPos++] = s_szVowels[iSeed % 6];
+         pszResult[nPos++] = s_szConsonants[16];
+         pszResult[nPos++] = s_szVowels[iSeed / 6];
          break;
       }
 
-      byte1 = pszInput[ i ];
+      byte1 = pszInput[i];
 
-      pszResult[ nPos++ ] = s_szVowels[ ( ( ( byte1 >> 6 ) & 3 ) + iSeed ) % 6 ];
-      pszResult[ nPos++ ] = s_szConsonants[ ( byte1 >> 2 ) & 15 ];
-      pszResult[ nPos++ ] = s_szVowels[ ( ( byte1 & 3 ) + ( iSeed / 6 ) ) % 6 ];
+      pszResult[nPos++] = s_szVowels[(((byte1 >> 6) & 3) + iSeed) % 6];
+      pszResult[nPos++] = s_szConsonants[(byte1 >> 2) & 15];
+      pszResult[nPos++] = s_szVowels[((byte1 & 3) + (iSeed / 6)) % 6];
 
       if( i + 1 >= nInputLen )
          break;
 
-      byte2 = pszInput[ i + 1 ];
+      byte2 = pszInput[i + 1];
 
-      pszResult[ nPos++ ] = s_szConsonants[ ( byte2 >> 4 ) & 15 ];
-      pszResult[ nPos++ ] = '-';
-      pszResult[ nPos++ ] = s_szConsonants[ byte2 & 15 ];
+      pszResult[nPos++] = s_szConsonants[(byte2 >> 4) & 15];
+      pszResult[nPos++] = '-';
+      pszResult[nPos++] = s_szConsonants[byte2 & 15];
 
       iSeed = ( iSeed * 5 + byte1 * 7 + byte2 ) % 36;
    }
 
-   pszResult[ nPos++ ] = 'x';
+   pszResult[nPos++] = 'x';
 
    hb_retclen_buffer( pszResult, nPos );
 }

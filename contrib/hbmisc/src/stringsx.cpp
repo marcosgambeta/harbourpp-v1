@@ -9,7 +9,7 @@ static const char * hb_strtoken( const char * szText,
                                  HB_ISIZ * pnLen )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strtoken(%s, %" HB_PFS "d, %" HB_PFS "d, %d, %p)", szText, nText, nIndex, static_cast< int >( cDelimiter ), static_cast< void * >( pnLen ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_strtoken(%s, %" HB_PFS "d, %" HB_PFS "d, %d, %p)", szText, nText, nIndex, static_cast<int>(cDelimiter), static_cast<void*>(pnLen) ) );
 #endif
 
    HB_ISIZ nStart;
@@ -22,22 +22,22 @@ static const char * hb_strtoken( const char * szText,
 
       if( cDelimiter != ' ' )
       {
-         if( szText[ nStart ] == cDelimiter )
+         if( szText[nStart] == cDelimiter )
             nStart++;
       }
       else
       {
-         while( nStart < nText && szText[ nStart ] == cDelimiter )
+         while( nStart < nText && szText[nStart] == cDelimiter )
          {
             nStart++;
          }   
       }
 
-      if( nStart < nText && szText[ nStart ] != cDelimiter )
+      if( nStart < nText && szText[nStart] != cDelimiter )
       {
          nEnd = nStart + 1;
 
-         while( nEnd < nText && szText[ nEnd ] != cDelimiter )
+         while( nEnd < nText && szText[nEnd] != cDelimiter )
          {
             nEnd++;
          }   
@@ -63,50 +63,50 @@ static const char * hb_strtoken( const char * szText,
 HB_FUNC( STRTOKEN )
 {
    const char * szText;
-   HB_ISIZ      nIndex     = hb_parns( 2 );
-   char         cDelimiter = *hb_parc( 3 );
+   HB_ISIZ      nIndex     = hb_parns(2);
+   char         cDelimiter = *hb_parc(3);
    HB_ISIZ      nLen;
 
-   if( ! cDelimiter )
+   if( !cDelimiter )
       cDelimiter = ' ';
 
-   szText = hb_strtoken( hb_parc( 1 ), hb_parclen( 1 ), nIndex, cDelimiter, &nLen );
+   szText = hb_strtoken( hb_parc(1), hb_parclen(1), nIndex, cDelimiter, &nLen );
 
    hb_storns( nLen, 4 );
-   hb_retclen( szText, nLen );
+   hb_retclen(szText, nLen);
 }
 
 /* debug function to dump the ASCII values of an entire string */
 HB_FUNC( STRDUMP )
 {
-   const char * szText = hb_parc( 1 );
-   HB_ISIZ      i, nLength = hb_parclen( 1 );
+   const char * szText = hb_parc(1);
+   HB_ISIZ      i, nLength = hb_parclen(1);
 
    for( i = 0; i < nLength; i++ )
-      printf( "%d ", szText[ i ] );
+      printf( "%d ", szText[i] );
    printf( "\n" );
 }
 
 HB_FUNC( ROT13 )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      const char * szText = hb_parc( 1 );
-      HB_SIZE      i, nLen = hb_parclen( 1 );
-      char *       szResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
+      const char * szText = hb_parc(1);
+      HB_SIZE      i, nLen = hb_parclen(1);
+      char *       szResult = static_cast<char*>(hb_xgrab(nLen + 1));
 
       for( i = 0; i < nLen; i++ )
       {
-         char c = szText[ i ];
+         char c = szText[i];
          if( ( c >= 'A' && c <= 'M' ) || ( c >= 'a' && c <= 'm' ) )
             c += 13;
          else if( ( c >= 'N' && c <= 'Z' ) || ( c >= 'n' && c <= 'z' ) )
             c -= 13;
 
-         szResult[ i ] = c;
+         szResult[i] = c;
       }
-      hb_retclen( szResult, nLen );
-      hb_xfree( szResult );
+      hb_retclen(szResult, nLen);
+      hb_xfree(szResult);
    }
    else
       hb_retc_null();

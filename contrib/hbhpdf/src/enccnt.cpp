@@ -47,5 +47,5 @@
 /* HPDF_UseCNTEncodings( hDoc ) --> hStatus */
 HB_FUNC( HPDF_USECNTENCODINGS )
 {
-   hb_retnl( static_cast< long >( HPDF_UseCNTEncodings( hb_HPDF_Doc_par( 1 ) ) ) );
+   hb_retnl(static_cast<long>(HPDF_UseCNTEncodings(hb_HPDF_Doc_par(1))));
 }

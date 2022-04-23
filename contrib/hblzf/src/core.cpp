@@ -51,7 +51,7 @@
 #include "lzf.h"
 #include "lzfP.h"
 
-#if ! AVOID_ERRNO
+#if !AVOID_ERRNO
 #  include <errno.h>
 #endif
 
@@ -59,26 +59,26 @@
 
 static HB_SIZE hb_lzf_compressbound( HB_SIZE nLen )
 {
-   HB_SIZE nBuffSize = static_cast< HB_SIZE >( nLen * 1.04 + 1 );
+   HB_SIZE nBuffSize = static_cast<HB_SIZE>(nLen * 1.04 + 1);
 
    return ( nBuffSize >= 32 ) ? nBuffSize : 32;
 }
 
 HB_FUNC( HB_LZF_COMPRESSBOUND )
 {
-   if( HB_ISCHAR( 1 ) || HB_ISNUM( 1 ) )
+   if( HB_ISCHAR(1) || HB_ISNUM(1) )
    {
-      HB_SIZE nLen = HB_ISCHAR( 1 ) ? hb_parclen( 1 ) : static_cast< HB_SIZE >( hb_parns( 1 ) );
+      HB_SIZE nLen = HB_ISCHAR(1) ? hb_parclen(1) : static_cast<HB_SIZE>(hb_parns(1));
       hb_retns( hb_lzf_compressbound( nLen ) );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 /* Return a LZF_VERSION, API version */
 HB_FUNC( HB_LZF_VERSION )
 {
-   hb_retni( LZF_VERSION );
+   hb_retni(LZF_VERSION);
 }
 
 /* Return if LZF was optimized for speed (or for compression) */
@@ -94,94 +94,92 @@ HB_FUNC( HB_LZF_OPTIMIZED_FOR_SPEED )
 /* Return a string compressed with LZF */
 HB_FUNC( HB_LZF_COMPRESS )
 {
-   PHB_ITEM pArg = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pArg = hb_param(1, Harbour::Item::STRING);
 
    if( pArg )
    {
-      HB_SIZE in_len = hb_itemGetCLen( pArg );
+      HB_SIZE in_len = hb_itemGetCLen(pArg);
 
       if( in_len )
       {
-         PHB_ITEM     pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : nullptr;
-         const char * in_data = hb_itemGetCPtr( pArg );
+         PHB_ITEM     pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
+         const char * in_data = hb_itemGetCPtr(pArg);
          char *       out_data;
          HB_SIZE      out_len;
 
          if( pBuffer )
          {
-            if( ! hb_itemGetWriteCL( pBuffer, &out_data, &out_len ) )
+            if( !hb_itemGetWriteCL( pBuffer, &out_data, &out_len ) )
                out_data = nullptr;
          }
          else
          {
-            out_len = ( HB_ISNUM( 2 ) && hb_parns( 2 ) >= 0 ) ?
-                      static_cast< HB_SIZE >( hb_parns( 2 ) ) :
-                      hb_lzf_compressbound( in_len );
+            out_len = (HB_ISNUM(2) && hb_parns(2) >= 0) ? static_cast<HB_SIZE>(hb_parns(2)) : hb_lzf_compressbound(in_len);
 
-            out_data = static_cast< char * >( hb_xalloc( out_len + 1 ) );
+            out_data = static_cast<char*>(hb_xalloc(out_len + 1));
          }
 
          if( out_data )
          {
-            unsigned int uiResult = lzf_compress( in_data, static_cast< unsigned int >( in_len ), out_data, static_cast< unsigned int >( out_len ) );
+            unsigned int uiResult = lzf_compress(in_data, static_cast<unsigned int>(in_len), out_data, static_cast<unsigned int>(out_len));
 
             if( uiResult != 0 )
             {
                if( pBuffer )
-                  hb_retclen( out_data, uiResult );
+                  hb_retclen(out_data, uiResult);
                else
                   hb_retclen_buffer( out_data, uiResult );
 
-               hb_storni( HB_LZF_OK, 3 );
+               hb_storni(HB_LZF_OK, 3);
             }
             else
             {
-               if( ! pBuffer )
-                  hb_xfree( out_data );
+               if( !pBuffer )
+                  hb_xfree(out_data);
 
-               hb_storni( HB_LZF_BUF_ERROR, 3 );
+               hb_storni(HB_LZF_BUF_ERROR, 3);
             }
          }
          else
-            hb_storni( HB_LZF_MEM_ERROR, 3 );
+            hb_storni(HB_LZF_MEM_ERROR, 3);
       }
       else
       {
          hb_retc_null();
-         hb_storni( HB_LZF_OK, 3 );
+         hb_storni(HB_LZF_OK, 3);
       }
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 /* Return a string decompressed with LZF */
 HB_FUNC( HB_LZF_DECOMPRESS )
 {
-   PHB_ITEM pArg = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pArg = hb_param(1, Harbour::Item::STRING);
 
    if( pArg )
    {
-      HB_SIZE in_len = hb_itemGetCLen( pArg );
+      HB_SIZE in_len = hb_itemGetCLen(pArg);
 
       if( in_len )
       {
-         PHB_ITEM     pBuffer = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : nullptr;
-         const char * in_data = hb_itemGetCPtr( pArg );
+         PHB_ITEM     pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
+         const char * in_data = hb_itemGetCPtr(pArg);
          char *       buffer;
          HB_SIZE      buffer_size;
 
          if( pBuffer )
          {
-            if( ! hb_itemGetWriteCL( pBuffer, &buffer, &buffer_size ) )
+            if( !hb_itemGetWriteCL( pBuffer, &buffer, &buffer_size ) )
                buffer = nullptr;
          }
          else
          {
-            buffer_size = ( HB_ISNUM( 2 ) && hb_parns( 2 ) >= 0 ) ?
-                          hb_parns( 2 ) : HB_LZF_DEFAULT_BUFFSIZE;
+            buffer_size = ( HB_ISNUM(2) && hb_parns(2) >= 0 ) ?
+                          hb_parns(2) : HB_LZF_DEFAULT_BUFFSIZE;
 
-            buffer = static_cast< char * >( hb_xalloc( buffer_size + 1 ) );
+            buffer = static_cast<char*>(hb_xalloc(buffer_size + 1));
          }
 
          if( buffer && buffer_size )
@@ -191,47 +189,47 @@ HB_FUNC( HB_LZF_DECOMPRESS )
             do
             {
                buffer_size <<= 1;
-               buffer        = static_cast< char * >( hb_xrealloc( buffer, buffer_size + 1 ) );
+               buffer        = static_cast<char*>(hb_xrealloc(buffer, buffer_size + 1));
 
-               uiResult = lzf_decompress( in_data, static_cast< unsigned int >( in_len ), buffer, static_cast< unsigned int >( buffer_size ) );
+               uiResult = lzf_decompress(in_data, static_cast<unsigned int>(in_len), buffer, static_cast<unsigned int>(buffer_size));
             }
             while( uiResult == 0
-#if ! AVOID_ERRNO
+#if !AVOID_ERRNO
                    && errno == E2BIG
 #endif
                    );
 
             if( uiResult == 0 )
             {
-#if ! AVOID_ERRNO
+#if !AVOID_ERRNO
                if( errno == EINVAL )
-                  hb_storni( HB_LZF_DATA_CORRUPTED, 3 );
+                  hb_storni(HB_LZF_DATA_CORRUPTED, 3);
                else
 #endif
-               hb_storni( HB_LZF_OK, 3 );
+               hb_storni(HB_LZF_OK, 3);
 
-               if( ! pBuffer )
-                  hb_xfree( buffer );
+               if( !pBuffer )
+                  hb_xfree(buffer);
             }
             else
             {
                if( pBuffer )
-                  hb_retclen( buffer, uiResult );
+                  hb_retclen(buffer, uiResult);
                else
                   hb_retclen_buffer( buffer, uiResult );
 
-               hb_storni( HB_LZF_OK, 3 );
+               hb_storni(HB_LZF_OK, 3);
             }
          }
          else
-            hb_storni( buffer_size ? HB_LZF_BUF_ERROR : HB_LZF_MEM_ERROR, 3 );
+            hb_storni(buffer_size ? HB_LZF_BUF_ERROR : HB_LZF_MEM_ERROR, 3);
       }
       else
       {
          hb_retc_null();
-         hb_storni( HB_LZF_OK, 3 );
+         hb_storni(HB_LZF_OK, 3);
       }
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

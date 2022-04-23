@@ -60,9 +60,9 @@ static lzo_uint hb_lzo_compressbound( lzo_uint nLen )
 
 HB_FUNC( HB_LZO_COMPRESSBOUND )
 {
-   if( HB_ISCHAR( 1 ) || HB_ISNUM( 1 ) )
+   if( HB_ISCHAR(1) || HB_ISNUM(1) )
    {
-      HB_SIZE nLen = HB_ISCHAR( 1 ) ? hb_parclen( 1 ) : static_cast< HB_SIZE >( hb_parns( 1 ) );
+      HB_SIZE nLen = HB_ISCHAR(1) ? hb_parclen(1) : static_cast<HB_SIZE>(hb_parns(1));
 
       hb_retns( hb_lzo_compressbound( nLen ) );
    }
@@ -74,7 +74,7 @@ HB_FUNC( HB_LZO_COMPRESSBOUND )
 
 static void hb_mlzo_init( void * cargo )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
 
    if( lzo_init() != LZO_E_OK )
       hb_errInternal( HB_EI_VMBADSTARTUP /* FIXME: ? */, nullptr, nullptr, nullptr );
@@ -84,9 +84,9 @@ HB_CALL_ON_STARTUP_BEGIN( _hb_mlzo_init_ )
 hb_vmAtInit( hb_mlzo_init, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_mlzo_init_ )
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_mlzo_init_
-#elif defined( HB_DATASEG_STARTUP )
+#elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY  HB_DATASEG_FUNC( _hb_mlzo_init_ )
    #include "hbiniseg.h"
 #endif
@@ -108,18 +108,17 @@ HB_CALL_ON_STARTUP_END( _hb_mlzo_init_ )
 
 HB_FUNC( HB_LZO1X_1_COMPRESS )
 {
-   const char * src = hb_parcx( 1 );
+   const char * src = hb_parcx(1);
 
    if( src )
    {
-      lzo_uint  src_len = ( lzo_uint ) hb_parclen( 1 );
+      lzo_uint  src_len = ( lzo_uint ) hb_parclen(1);
       lzo_bytep dst     = nullptr;
 
       if( src_len > 0 )
-         dst = ( lzo_bytep ) hb_xalloc( HB_MAX( hb_lzo_compressbound( src_len ),
-                                                static_cast< HB_SIZE >( hb_parns( 2 ) ) ) );
+         dst = ( lzo_bytep ) hb_xalloc(HB_MAX(hb_lzo_compressbound(src_len), static_cast<HB_SIZE>(hb_parns(2))));
       if( dst == nullptr )
-         hb_storni( LZO_E_OUT_OF_MEMORY, 3 );  /* out of memory */
+         hb_storni(LZO_E_OUT_OF_MEMORY, 3);  /* out of memory */
       else
       {
          lzo_uint  dst_len;
@@ -134,24 +133,24 @@ HB_FUNC( HB_LZO1X_1_COMPRESS )
          else
          {
             r = lzo1x_1_compress( reinterpret_cast< const lzo_bytep >( src ), src_len, dst, &dst_len, wrkmem );
-            hb_xfree( wrkmem );
+            hb_xfree(wrkmem);
          }
 
-         hb_storni( r, 3 );
+         hb_storni(r, 3);
 
          if( r == LZO_E_OK )
          {
             hb_storns( dst_len, 2 );
 
             if( dst_len >= src_len )
-               hb_storni( LZO_E_NOT_COMPRESSIBLE, 3 );  /* incompressible data */
+               hb_storni(LZO_E_NOT_COMPRESSIBLE, 3);  /* incompressible data */
             else
             {
                hb_retclen_buffer( reinterpret_cast< char * >( dst ), dst_len );
                return;
             }
          }
-         hb_xfree( dst );
+         hb_xfree(dst);
       }
       hb_retc_null();
    }
@@ -168,24 +167,24 @@ HB_FUNC( HB_LZO1X_1_COMPRESS )
 
 HB_FUNC( HB_LZO1X_DECOMPRESS )
 {
-   const char * src = hb_parcx( 1 );
+   const char * src = hb_parcx(1);
 
    if( src )
    {
-      lzo_uint  src_len = ( lzo_uint ) hb_parclen( 1 );
+      lzo_uint  src_len = ( lzo_uint ) hb_parclen(1);
       lzo_bytep dst     = nullptr;
       lzo_uint  dst_len;
 
-      if( hb_parns( 2 ) > 0 )
-         dst = ( lzo_bytep ) hb_xalloc( hb_parns( 2 ) );
+      if( hb_parns(2) > 0 )
+         dst = ( lzo_bytep ) hb_xalloc( hb_parns(2) );
 
       if( dst == nullptr )
-         hb_storni( LZO_E_OUT_OF_MEMORY, 3 );  /* out of memory */
+         hb_storni(LZO_E_OUT_OF_MEMORY, 3);  /* out of memory */
       else
       {
          int r = lzo1x_decompress( reinterpret_cast< const lzo_bytep >( src ), src_len, dst, &dst_len, nullptr );
 
-         hb_storni( r, 3 );
+         hb_storni(r, 3);
 
          if( r == LZO_E_OK )
          {
@@ -193,7 +192,7 @@ HB_FUNC( HB_LZO1X_DECOMPRESS )
             hb_retclen_buffer( reinterpret_cast< char * >( dst ), dst_len );
             return;
          }
-         hb_xfree( dst );
+         hb_xfree(dst);
       }
       hb_retc_null();
    }
@@ -203,24 +202,24 @@ HB_FUNC( HB_LZO1X_DECOMPRESS )
 
 HB_FUNC( HB_LZO1X_DECOMPRESS_SAFE )
 {
-   const char * src = hb_parcx( 1 );
+   const char * src = hb_parcx(1);
 
    if( src )
    {
-      lzo_uint  src_len = ( lzo_uint ) hb_parclen( 1 );
+      lzo_uint  src_len = ( lzo_uint ) hb_parclen(1);
       lzo_bytep dst     = nullptr;
-      lzo_uint  dst_len = ( lzo_uint ) hb_parns( 2 );
+      lzo_uint  dst_len = ( lzo_uint ) hb_parns(2);
 
       if( dst_len > 0 )
          dst = ( lzo_bytep ) hb_xalloc( dst_len );
 
       if( dst == nullptr )
-         hb_storni( LZO_E_OUT_OF_MEMORY, 3 );  /* out of memory */
+         hb_storni(LZO_E_OUT_OF_MEMORY, 3);  /* out of memory */
       else
       {
          int r = lzo1x_decompress_safe( reinterpret_cast< const lzo_bytep >( src ), src_len, dst, &dst_len, nullptr );
 
-         hb_storni( r, 3 );
+         hb_storni(r, 3);
 
          if( r == LZO_E_OK )
          {
@@ -228,7 +227,7 @@ HB_FUNC( HB_LZO1X_DECOMPRESS_SAFE )
             hb_retclen_buffer( reinterpret_cast< char * >( dst ), dst_len );
             return;
          }
-         hb_xfree( dst );
+         hb_xfree(dst);
       }
       hb_retc_null();
    }
@@ -240,27 +239,27 @@ HB_FUNC( HB_LZO1X_DECOMPRESS_SAFE )
 
 HB_FUNC( LZO_VERSION )
 {
-   hb_retni( lzo_version() );
+   hb_retni(lzo_version());
 }
 
 HB_FUNC( LZO_VERSION_STRING )
 {
-   hb_retc( lzo_version_string() );
+   hb_retc(lzo_version_string());
 }
 
 HB_FUNC( LZO_VERSION_DATE )
 {
-   hb_retc( lzo_version_date() );
+   hb_retc(lzo_version_date());
 }
 
 /* Checksum functions */
 
 HB_FUNC( LZO_ADLER32 )
 {
-   const char * src = hb_parc( 1 );
+   const char * src = hb_parc(1);
 
    if( src )
-      hb_retnint( static_cast< HB_MAXINT >( hb_adler32( 1, src, hb_parclen( 1 ) ) ) );
+      hb_retnint(static_cast<HB_MAXINT>(hb_adler32(1, src, hb_parclen(1))));
    else
       hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

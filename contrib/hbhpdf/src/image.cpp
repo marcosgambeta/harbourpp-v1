@@ -47,13 +47,13 @@
 /* HPDF_LoadPngImageFromFile( hDoc, cPNGFileName ) --> hImage */
 HB_FUNC( HPDF_LOADPNGIMAGEFROMFILE )
 {
-   hb_retptr( static_cast< void * >( HPDF_LoadPngImageFromFile( hb_HPDF_Doc_par( 1 ), hb_parc( 2 ) ) ) );
+   hb_retptr(static_cast<void*>(HPDF_LoadPngImageFromFile(hb_HPDF_Doc_par(1), hb_parc(2))));
 }
 
 /* HPDF_LoadPngImageFromFile2( hDoc, cPNGFileName ) --> hImage */
 HB_FUNC( HPDF_LOADPNGIMAGEFROMFILE2 )
 {
-   hb_retptr( static_cast< void * >( HPDF_LoadPngImageFromFile2( hb_HPDF_Doc_par( 1 ), hb_parc( 2 ) ) ) );
+   hb_retptr(static_cast<void*>(HPDF_LoadPngImageFromFile2(hb_HPDF_Doc_par(1), hb_parc(2))));
 }
 
 /* HPDF_LoadRawImageFromFile( hDoc, cImageFileName, nWidth, nHeight, nColorSpace ) --> hImage
@@ -64,19 +64,19 @@ HB_FUNC( HPDF_LOADPNGIMAGEFROMFILE2 )
  */
 HB_FUNC( HPDF_LOADRAWIMAGEFROMFILE )
 {
-   hb_retptr( static_cast< void * >( HPDF_LoadRawImageFromFile( hb_HPDF_Doc_par( 1 ), hb_parc( 2 ), hb_parni( 3 ), hb_parni( 4 ), static_cast< HPDF_ColorSpace >( hb_parni( 5 ) ) ) ) );
+   hb_retptr(static_cast<void*>(HPDF_LoadRawImageFromFile(hb_HPDF_Doc_par(1), hb_parc(2), hb_parni(3), hb_parni(4), static_cast<HPDF_ColorSpace>(hb_parni(5)))));
 }
 
 /* HPDF_LoadRawImageFromMem( hDoc, cBuffer, nWidth, nHeight, nColorSpace, nBitsPerComponents ) --> hImage */
 HB_FUNC( HPDF_LOADRAWIMAGEFROMMEM )
 {
-   hb_retptr( static_cast< void * >( HPDF_LoadRawImageFromMem( hb_HPDF_Doc_par( 1 ), reinterpret_cast< const HPDF_BYTE * >( hb_parc( 2 ) ), hb_parni( 3 ), hb_parni( 4 ), static_cast< HPDF_ColorSpace >( hb_parni( 5 ) ), hb_parni( 6 ) ) ) );
+   hb_retptr(static_cast<void*>(HPDF_LoadRawImageFromMem(hb_HPDF_Doc_par(1), reinterpret_cast<const HPDF_BYTE*>(hb_parc(2)), hb_parni(3), hb_parni(4), static_cast<HPDF_ColorSpace>(hb_parni(5)), hb_parni(6))));
 }
 
 /* HPDF_LoadJpegImageFromFile( hDoc, cHPEGFileName ) --> hImage */
 HB_FUNC( HPDF_LOADJPEGIMAGEFROMFILE )
 {
-   hb_retptr( static_cast< void * >( HPDF_LoadJpegImageFromFile( hb_HPDF_Doc_par( 1 ), hb_parc( 2 ) ) ) );
+   hb_retptr(static_cast<void*>(HPDF_LoadJpegImageFromFile(hb_HPDF_Doc_par(1), hb_parc(2))));
 }
 
 /* HPDF_EXPORT(HPDF_Image)
@@ -86,13 +86,11 @@ HB_FUNC( HPDF_LOADJPEGIMAGEFROMFILE )
  */
 HB_FUNC( HPDF_LOADPNGIMAGEFROMMEM )
 {
-#if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retptr( static_cast< HPDF_Image >( HPDF_LoadPngImageFromMem( hb_HPDF_Doc_par( 1 ),
-                                          reinterpret_cast< const HPDF_BYTE * >( hb_parcx( 2 ) ),
-                                          static_cast< HPDF_UINT >( hb_parclen( 2 ) ) ) ) );
+#if HB_HPDF_VERS(2, 2, 0)
+   hb_retptr(static_cast<HPDF_Image>(HPDF_LoadPngImageFromMem(hb_HPDF_Doc_par(1), reinterpret_cast<const HPDF_BYTE*>(hb_parcx(2)), static_cast<HPDF_UINT>(hb_parclen(2)))));
 #else
-   hb_storc( nullptr, 2 );
-   hb_retptr( nullptr );
+   hb_storc(nullptr, 2);
+   hb_retptr(nullptr);
 #endif
 }
 /* HPDF_EXPORT(HPDF_Image)
@@ -102,13 +100,11 @@ HB_FUNC( HPDF_LOADPNGIMAGEFROMMEM )
  */
 HB_FUNC( HPDF_LOADJPEGIMAGEFROMMEM )
 {
-#if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retptr( static_cast< HPDF_Image >( HPDF_LoadJpegImageFromMem( hb_HPDF_Doc_par( 1 ),
-                                          reinterpret_cast< const HPDF_BYTE * >( hb_parcx( 2 ) ),
-                                          static_cast< HPDF_UINT >( hb_parclen( 2 ) ) ) ) );
+#if HB_HPDF_VERS(2, 2, 0)
+   hb_retptr(static_cast<HPDF_Image>(HPDF_LoadJpegImageFromMem(hb_HPDF_Doc_par(1), reinterpret_cast<const HPDF_BYTE*>(hb_parcx(2)), static_cast<HPDF_UINT>(hb_parclen(2)))));
 #else
-   hb_storc( nullptr, 2 );
-   hb_retptr( nullptr );
+   hb_storc(nullptr, 2);
+   hb_retptr(nullptr);
 #endif
 }
 
@@ -116,42 +112,42 @@ HB_FUNC( HPDF_LOADJPEGIMAGEFROMMEM )
 HB_FUNC( HPDF_IMAGE_GETSIZE )
 {
    HPDF_Point pt;
-   PHB_ITEM   info = hb_itemArrayNew( 2 );
+   PHB_ITEM   info = hb_itemArrayNew(2);
 
-   pt = HPDF_Image_GetSize( static_cast< HPDF_Image >( hb_parptr( 1 ) ) );
+   pt = HPDF_Image_GetSize( static_cast<HPDF_Image>(hb_parptr(1)) );
 
    hb_arraySetND( info, 1, pt.x );
    hb_arraySetND( info, 2, pt.y );
 
-   hb_itemReturnRelease( info );
+   hb_itemReturnRelease(info);
 }
 
 /* HPDF_Image_GetWidth( hImage ) --> nWidth */
 HB_FUNC( HPDF_IMAGE_GETWIDTH )
 {
-   hb_retni( HPDF_Image_GetWidth( static_cast< HPDF_Image >( hb_parptr( 1 ) ) ) );
+   hb_retni(HPDF_Image_GetWidth(static_cast<HPDF_Image>(hb_parptr(1))));
 }
 
 /* HPDF_Image_GetHeight( hImage ) --> nHeight */
 HB_FUNC( HPDF_IMAGE_GETHEIGHT )
 {
-   hb_retni( HPDF_Image_GetHeight( static_cast< HPDF_Image >( hb_parptr( 1 ) ) ) );
+   hb_retni(HPDF_Image_GetHeight(static_cast<HPDF_Image>(hb_parptr(1))));
 }
 
 /* HPDF_Image_GetBitsPerComponent( hImage ) --> nBitsPerComponent */
 HB_FUNC( HPDF_IMAGE_GETBITSPERCOMPONENT )
 {
-   hb_retni( HPDF_Image_GetBitsPerComponent( static_cast< HPDF_Image >( hb_parptr( 1 ) ) ) );
+   hb_retni(HPDF_Image_GetBitsPerComponent(static_cast<HPDF_Image>(hb_parptr(1))));
 }
 
 /* HPDF_Image_GetColorSpace( hImage ) --> nColorSpace */
 HB_FUNC( HPDF_IMAGE_GETCOLORSPACE )
 {
-   HPDF_Image image = static_cast< HPDF_Image >( hb_parptr( 1 ) );
+   HPDF_Image image = static_cast<HPDF_Image>(hb_parptr(1));
 
    if( image )
    {
-      hb_retc( HPDF_Image_GetColorSpace( image ) );
+      hb_retc(HPDF_Image_GetColorSpace(image));
    }
    else
    {
@@ -162,19 +158,13 @@ HB_FUNC( HPDF_IMAGE_GETCOLORSPACE )
 /* HPDF_Image_SetColorMask( hImage, nRGB_R_Min, nRGB_R_Max, nRGB_G_Min, nRGB_G_Max, nRGB_B_Min, nRGB_B_Max ) */
 HB_FUNC( HPDF_IMAGE_SETCOLORMASK )
 {
-   hb_retnl( static_cast< long >( HPDF_Image_SetColorMask( static_cast< HPDF_Image >( hb_parptr( 1 ) ),
-                                               hb_parni( 2 ),
-                                               hb_parni( 3 ),
-                                               hb_parni( 4 ),
-                                               hb_parni( 5 ),
-                                               hb_parni( 6 ),
-                                               hb_parni( 7 ) ) ) );
+   hb_retnl(static_cast<long>(HPDF_Image_SetColorMask(static_cast<HPDF_Image>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7))));
 }
 
 /* HPDF_Image_SetMaskImage( hImage, hImageMask ) --> hStatus */
 HB_FUNC( HPDF_IMAGE_SETMASKIMAGE )
 {
-   hb_retnl( static_cast< long >( HPDF_Image_SetMaskImage( static_cast< HPDF_Image >( hb_parptr( 1 ) ), static_cast< HPDF_Image >( hb_parptr( 2 ) ) ) ) );
+   hb_retnl(static_cast<long>(HPDF_Image_SetMaskImage(static_cast<HPDF_Image>(hb_parptr(1)), static_cast<HPDF_Image>(hb_parptr(2)))));
 }
 
 /* HPDF_EXPORT(HPDF_STATUS)
@@ -183,9 +173,9 @@ HB_FUNC( HPDF_IMAGE_SETMASKIMAGE )
  */
 HB_FUNC( HPDF_IMAGE_ADDSMASK )
 {
-#if HB_HPDF_VERS( 2, 2, 0 )
-   hb_retnl( static_cast< long >( HPDF_Image_AddSMask( static_cast< HPDF_Image >( hb_parptr( 1 ) ), static_cast< HPDF_Image >( hb_parptr( 2 ) ) ) ) );
+#if HB_HPDF_VERS(2, 2, 0)
+   hb_retnl(static_cast<long>(HPDF_Image_AddSMask(static_cast<HPDF_Image>(hb_parptr(1)), static_cast<HPDF_Image>(hb_parptr(2)))));
 #else
-   hb_retnl( HB_HPDF_NOTSUPPORTED );
+   hb_retnl(HB_HPDF_NOTSUPPORTED);
 #endif
 }

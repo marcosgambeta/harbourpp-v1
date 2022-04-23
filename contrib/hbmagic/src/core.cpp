@@ -51,7 +51,7 @@
 
 static HB_GARBAGE_FUNC( magic_gc_close )
 {
-   void ** ph = static_cast< void ** >( Cargo );
+   void ** ph = static_cast<void**>(Cargo);
 
    if( ph && *ph )
    {
@@ -67,95 +67,95 @@ static const HB_GC_FUNCS s_gcmagic_gcfuncs = {
 
 static magic_t magic_par( int iParam )
 {
-   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcmagic_gcfuncs, iParam ) );
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcmagic_gcfuncs, iParam));
 
    return ph ? ( magic_t ) *ph : nullptr;
 }
 
 HB_FUNC( MAGIC_OPEN )
 {
-   void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof( magic_t ), &s_gcmagic_gcfuncs ) );
+   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(magic_t), &s_gcmagic_gcfuncs));
 
-   *ph = magic_open( hb_parnidef( 1, MAGIC_NONE ) );
-   hb_retptrGC( ph );
+   *ph = magic_open(hb_parnidef(1, MAGIC_NONE));
+   hb_retptrGC(ph);
 }
 
 HB_FUNC( MAGIC_ERROR )
 {
-   magic_t m = magic_par( 1 );
+   magic_t m = magic_par(1);
 
    if( m )
-      hb_retc( magic_error( m ) );
+      hb_retc(magic_error(m));
    else
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( MAGIC_ERRNO )
 {
-   magic_t m = magic_par( 1 );
+   magic_t m = magic_par(1);
 
    if( m )
-      hb_retni( magic_errno( m ) );
+      hb_retni(magic_errno(m));
    else
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( MAGIC_FILE )
 {
-   magic_t m = magic_par( 1 );
+   magic_t m = magic_par(1);
 
    if( m )
-      hb_retc( magic_file( m, hb_parc( 2 ) ) );
+      hb_retc(magic_file(m, hb_parc(2)));
    else
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( MAGIC_BUFFER )
 {
-   magic_t m = magic_par( 1 );
+   magic_t m = magic_par(1);
 
    if( m )
-      hb_retc( magic_buffer( m, hb_parc( 2 ), hb_parclen( 2 ) ) );
+      hb_retc(magic_buffer(m, hb_parc(2), hb_parclen(2)));
    else
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( MAGIC_SETFLAGS )
 {
-   magic_t m = magic_par( 1 );
+   magic_t m = magic_par(1);
 
    if( m )
-      hb_retni( magic_setflags( m, hb_parni( 2 ) ) );
+      hb_retni(magic_setflags(m, hb_parni(2)));
    else
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( MAGIC_CHECK )
 {
-   magic_t m = magic_par( 1 );
+   magic_t m = magic_par(1);
 
    if( m )
-      hb_retni( magic_check( m, hb_parc( 2 ) ) );
+      hb_retni(magic_check(m, hb_parc(2)));
    else
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( MAGIC_COMPILE )
 {
-   magic_t m = magic_par( 1 );
+   magic_t m = magic_par(1);
 
    if( m )
-      hb_retni( magic_compile( m, hb_parc( 2 ) ) );
+      hb_retni(magic_compile(m, hb_parc(2)));
    else
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( MAGIC_LOAD )
 {
-   magic_t m = magic_par( 1 );
+   magic_t m = magic_par(1);
 
    if( m )
-      hb_retni( magic_load( m, hb_parc( 2 ) ) );
+      hb_retni(magic_load(m, hb_parc(2)));
    else
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

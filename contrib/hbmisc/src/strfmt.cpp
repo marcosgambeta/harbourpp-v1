@@ -67,8 +67,8 @@ HB_FUNC( STRFORMAT )
 
    if( nParNum >= 1 )
    {
-      const char * pszMask  = hb_parcx( 1 );
-      HB_SIZE      nMaskLen = hb_parclen( 1 );
+      const char * pszMask  = hb_parcx(1);
+      HB_SIZE      nMaskLen = hb_parclen(1);
       HB_SIZE      nMaskPos;
       int          nPos;
 
@@ -76,9 +76,9 @@ HB_FUNC( STRFORMAT )
       char *  pszRetVal;
       char *  pszRetValSave;
 
-      STRPAR strpar[ HB_STRFORMAT_PARNUM_MAX_ ];
+      STRPAR strpar[HB_STRFORMAT_PARNUM_MAX_];
 
-      memset( strpar, 0, sizeof( strpar ) );
+      memset( strpar, 0, sizeof(strpar) );
 
       nParNum--;
 
@@ -89,23 +89,23 @@ HB_FUNC( STRFORMAT )
       nRetValLen = 0;
       for( nMaskPos = 0; nMaskPos < nMaskLen; nMaskPos++ )
       {
-         if( pszMask[ nMaskPos ] == '%' )
+         if( pszMask[nMaskPos] == '%' )
          {
             nMaskPos++;
 
-            if( pszMask[ nMaskPos ] == '%' )
+            if( pszMask[nMaskPos] == '%' )
                nRetValLen++;
-            else if( pszMask[ nMaskPos ] >= '1' && pszMask[ nMaskPos ] <= static_cast< int >( nParNum + '0' ) )
+            else if( pszMask[nMaskPos] >= '1' && pszMask[nMaskPos] <= static_cast<int>(nParNum + '0') )
             {
-               nPos = pszMask[ nMaskPos ] - '1';
+               nPos = pszMask[nMaskPos] - '1';
 
-               strpar[ nPos ].raw = hb_itemString( hb_param( POS_TO_PAR( nPos ), HB_IT_ANY ), &strpar[ nPos ].nLen, &strpar[ nPos ].bFreeReq );
+               strpar[nPos].raw = hb_itemString( hb_param(POS_TO_PAR(nPos), Harbour::Item::ANY), &strpar[nPos].nLen, &strpar[nPos].bFreeReq );
 
                /* AllTrim() */
-               strpar[ nPos ].nLen   = hb_strRTrimLen( strpar[ nPos ].raw, strpar[ nPos ].nLen, HB_FALSE );
-               strpar[ nPos ].buffer = hb_strLTrim( strpar[ nPos ].raw, &strpar[ nPos ].nLen );
+               strpar[nPos].nLen   = hb_strRTrimLen( strpar[nPos].raw, strpar[nPos].nLen, false );
+               strpar[nPos].buffer = hb_strLTrim( strpar[nPos].raw, &strpar[nPos].nLen );
 
-               nRetValLen += strpar[ nPos ].nLen;
+               nRetValLen += strpar[nPos].nLen;
             }
          }
          else
@@ -113,25 +113,25 @@ HB_FUNC( STRFORMAT )
       }
 
       /* Assemble return value */
-      pszRetVal = pszRetValSave = static_cast< char * >( hb_xgrab( nRetValLen + 1 ) );
+      pszRetVal = pszRetValSave = static_cast<char*>(hb_xgrab(nRetValLen + 1));
       for( nMaskPos = 0; nMaskPos < nMaskLen; nMaskPos++ )
       {
-         if( pszMask[ nMaskPos ] == '%' )
+         if( pszMask[nMaskPos] == '%' )
          {
             nMaskPos++;
 
-            if( pszMask[ nMaskPos ] == '%' )
-               *pszRetVal++ = pszMask[ nMaskPos ];
-            else if( pszMask[ nMaskPos ] >= '1' && pszMask[ nMaskPos ] <= static_cast< int >( nParNum + '0' ) )
+            if( pszMask[nMaskPos] == '%' )
+               *pszRetVal++ = pszMask[nMaskPos];
+            else if( pszMask[nMaskPos] >= '1' && pszMask[nMaskPos] <= static_cast<int>(nParNum + '0') )
             {
-               nPos = pszMask[ nMaskPos ] - '1';
+               nPos = pszMask[nMaskPos] - '1';
 
-               memcpy( pszRetVal, strpar[ nPos ].buffer, strpar[ nPos ].nLen );
-               pszRetVal += strpar[ nPos ].nLen;
+               memcpy( pszRetVal, strpar[nPos].buffer, strpar[nPos].nLen );
+               pszRetVal += strpar[nPos].nLen;
             }
          }
          else
-            *pszRetVal++ = pszMask[ nMaskPos ];
+            *pszRetVal++ = pszMask[nMaskPos];
       }
 
       hb_retclen_buffer( pszRetValSave, nRetValLen );
@@ -139,8 +139,8 @@ HB_FUNC( STRFORMAT )
       /* Free parameter buffers */
       for( nPos = 0; nPos < HB_STRFORMAT_PARNUM_MAX_; nPos++ )
       {
-         if( strpar[ nPos ].raw && strpar[ nPos ].bFreeReq )
-            hb_xfree( strpar[ nPos ].raw );
+         if( strpar[nPos].raw && strpar[nPos].bFreeReq )
+            hb_xfree(strpar[nPos].raw);
       }
    }
    else
