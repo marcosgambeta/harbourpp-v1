@@ -53,7 +53,7 @@ char * hb_openssl_strdup( const char * pszText )
    char * pszDup;
    size_t len = strlen( pszText ) + 1;
 
-   pszDup = static_cast< char * >( OPENSSL_malloc( len ) );
+   pszDup = static_cast<char*>(OPENSSL_malloc(len));
    memcpy( pszDup, pszText, len );
 
    return pszDup;
@@ -76,7 +76,7 @@ HB_FUNC( ERR_LOAD_EVP_STRINGS )
 
 HB_FUNC( EVP_PKEY_FREE )
 {
-   EVP_PKEY * key = static_cast< EVP_PKEY * >( hb_parptr( 1 ) );
+   EVP_PKEY * key = static_cast<EVP_PKEY*>(hb_parptr(1));
 
    if( key )
    {
@@ -90,25 +90,25 @@ HB_FUNC( EVP_PKEY_FREE )
 
 HB_FUNC( EVP_BYTESTOKEY )
 {
-   const EVP_CIPHER * cipher = hb_EVP_CIPHER_par( 1 );
-   const EVP_MD *     md     = hb_EVP_MD_par( 2 );
+   const EVP_CIPHER * cipher = hb_EVP_CIPHER_par(1);
+   const EVP_MD *     md     = hb_EVP_MD_par(2);
 
-   if( cipher && md && ( ! HB_ISCHAR( 3 ) || hb_parclen( 3 ) == 8 ) )
+   if( cipher && md && ( !HB_ISCHAR(3) || hb_parclen(3) == 8 ) )
    {
-      unsigned char key[ EVP_MAX_KEY_LENGTH ];
-      unsigned char iv[ EVP_MAX_IV_LENGTH ];
+      unsigned char key[EVP_MAX_KEY_LENGTH];
+      unsigned char iv[EVP_MAX_IV_LENGTH];
 
-      hb_retni( EVP_BytesToKey( cipher,
-                                static_cast< HB_SSL_CONST EVP_MD * >( md ),
-                                reinterpret_cast< HB_SSL_CONST unsigned char * >( hb_parc( 3 ) ) /* salt */,
-                                reinterpret_cast< HB_SSL_CONST unsigned char * >( hb_parcx( 4 ) ) /* data */,
-                                static_cast< int >( hb_parclen( 4 ) ),
-                                hb_parni( 5 ) /* count */,
-                                key,
-                                iv ) );
+      hb_retni(EVP_BytesToKey(cipher,
+                              static_cast<HB_SSL_CONST EVP_MD*>(md),
+                              reinterpret_cast<HB_SSL_CONST unsigned char*>(hb_parc(3)) /* salt */,
+                              reinterpret_cast<HB_SSL_CONST unsigned char*>(hb_parcx(4)) /* data */,
+                              static_cast<int>(hb_parclen(4)),
+                              hb_parni(5) /* count */,
+                              key,
+                              iv));
 
-      hb_storc( reinterpret_cast< char * >( key ), 6 );
-      hb_storc( reinterpret_cast< char * >( iv ), 7 );
+      hb_storc(reinterpret_cast<char*>(key), 6);
+      hb_storc(reinterpret_cast<char*>(iv), 7);
    }
    else
    {

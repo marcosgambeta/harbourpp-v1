@@ -55,11 +55,11 @@
 #include "hbstack.h"
 
 #define K_STRING    0
-#define K_LIST      ( ! K_STRING )
+#define K_LIST      ( !K_STRING )
 
-#define CR          ( static_cast< char >( 13 ) )
-#define LF          ( static_cast< char >( 10 ) )
-#define FEOF        ( static_cast< char >( 26 ) )
+#define CR          ( static_cast< char >(13) )
+#define LF          ( static_cast< char >(10) )
+#define FEOF        ( static_cast< char >(26) )
 
 #define BUFFERSIZE  4096         /* maximum size of the file buffer */
 #define MAXLINE     255          /* default maximum size of a line  */
@@ -85,7 +85,7 @@ typedef struct
    int        colinc;            /* col increment amount                */
    HB_BOOL    bBrowse;           /* browse flag                         */
    HB_BOOL    bRefresh;          /* HB_TRUE means refresh screen        */
-   int        keylist[ 24 ];     /* terminate key list                  */
+   int        keylist[24];       /* terminate key list                  */
    int        keytype;           /* K_STRING or K_LIST                  */
 
    HB_BOOL    bIsAllocated;      /* if buffers were allocated           */
@@ -95,7 +95,7 @@ typedef struct
    int        iCellSize;         /* size of one buffer cell             */
 } FT_DISPC, * PFT_DISPC;
 
-static HB_TSD_NEW( s_dispc, sizeof( FT_DISPC ), nullptr, nullptr );
+static HB_TSD_NEW( s_dispc, sizeof(FT_DISPC), nullptr, nullptr );
 
 /* prototypes */
 
@@ -203,7 +203,7 @@ static void buff_align( PFT_DISPC dispc )
       i = dispc->bufftop;                 /* start at the top of the file and scan */
       /* forward until a CR is reached.        */
 
-      while( dispc->buffer[ i ] != CR && i < dispc->buffbot )
+      while( dispc->buffer[i] != CR && i < dispc->buffbot )
       {
          i++;
       }
@@ -233,7 +233,7 @@ static void buff_align( PFT_DISPC dispc )
       i = dispc->buffbot;               /* point the end of the buffer to a valid */
       /* complete text line.                    */
 
-      while( dispc->buffer[ i ] != CR && i > dispc->bufftop )
+      while( dispc->buffer[i] != CR && i > dispc->bufftop )
       {
          i--;
       }
@@ -259,7 +259,7 @@ static void win_align( PFT_DISPC dispc )
 
    while( dispc->winbot < dispc->buffbot && i < dispc->height )
    {
-      if( dispc->buffer[ dispc->winbot ] == CR )
+      if( dispc->buffer[dispc->winbot] == CR )
       {
          i++;
       }
@@ -269,7 +269,7 @@ static void win_align( PFT_DISPC dispc )
    if( i < dispc->height )             /* if there is not a full window,       */
    {
       /* then retrofit winbot to the end of a line */
-      while( dispc->buffer[ dispc->winbot ] != LF && dispc->winbot > dispc->bufftop )
+      while( dispc->buffer[dispc->winbot] != LF && dispc->winbot > dispc->bufftop )
       {
          dispc->winbot--;
       }
@@ -279,7 +279,7 @@ static void win_align( PFT_DISPC dispc )
 
       while( dispc->wintop > dispc->bufftop && i <= dispc->height )
       {
-         if( dispc->buffer[ dispc->wintop ] == LF )
+         if( dispc->buffer[dispc->wintop] == LF )
          {
             i++;
          }
@@ -321,28 +321,28 @@ static void disp_update( PFT_DISPC dispc, int offset )
 
       /* copy string to temp buffer */
 
-      for( i = 0; dispc->buffer[ offset ] != CR && offset <= dispc->winbot; offset++ )
+      for( i = 0; dispc->buffer[offset] != CR && offset <= dispc->winbot; offset++ )
       {
          if( i <= dispc->maxlin )
          {
-            if( dispc->buffer[ offset ] == '\t' )              /* check for a tab   */
+            if( dispc->buffer[offset] == '\t' )              /* check for a tab   */
             {
-               dispc->lbuff[ i++ ] = ' ';                      /* pad with spaces   */
+               dispc->lbuff[i++] = ' ';                      /* pad with spaces   */
                while( i % TABSET && i <= dispc->maxlin )       /* until tab stop    */
                {                                               /* is reached or EOL */
-                  dispc->lbuff[ i++ ] = ' ';
+                  dispc->lbuff[i++] = ' ';
                }
             }
             else
             {
-               dispc->lbuff[ i++ ] = dispc->buffer[ offset ];
+               dispc->lbuff[i++] = dispc->buffer[offset];
             }
          }
       }
 
       for(; i <= dispc->maxlin; i++ )          /* fill out with spaces */
       {
-         dispc->lbuff[ i ] = ' ';
+         dispc->lbuff[i] = ' ';
       }
 
       /* place the proper characters onto the screen */
@@ -351,7 +351,7 @@ static void disp_update( PFT_DISPC dispc, int offset )
       {
          HB_UCHAR * vmem = dispc->vseg + pos + ( col * dispc->iCellSize );
 
-         *vmem = dispc->lbuff[ i++ ];
+         *vmem = dispc->lbuff[i++];
       }
 
       line   += 1;
@@ -375,14 +375,14 @@ static void winup( PFT_DISPC dispc )
    dispc->bRefresh = HB_TRUE;
    k = dispc->wintop - 3;
 
-   while( dispc->buffer[ k ] != CR && k > dispc->bufftop )
+   while( dispc->buffer[k] != CR && k > dispc->bufftop )
    {
       k--;
    }
 
    if( k >= dispc->bufftop )
    {
-      if( dispc->buffer[ k ] == CR )
+      if( dispc->buffer[k] == CR )
       {
          k += 2;
       }
@@ -390,7 +390,7 @@ static void winup( PFT_DISPC dispc )
       dispc->wintop = k;
       k = dispc->winbot - 3;
 
-      while( dispc->buffer[ k ] != CR )
+      while( dispc->buffer[k] != CR )
       {
          k--;
       }
@@ -430,7 +430,7 @@ static void windown( PFT_DISPC dispc )
    dispc->bRefresh = HB_TRUE;
    k = dispc->winbot;
 
-   while( dispc->buffer[ k ] != CR && k <= dispc->buffbot )
+   while( dispc->buffer[k] != CR && k <= dispc->buffbot )
    {
       k++;
    }
@@ -441,7 +441,7 @@ static void windown( PFT_DISPC dispc )
       dispc->winbot = k;
       k = dispc->wintop;
 
-      while( dispc->buffer[ k ] != CR )
+      while( dispc->buffer[k] != CR )
       {
          k++;
       }
@@ -550,15 +550,15 @@ HB_FUNC( _FT_DFINIT )
 
    rval = 0;
 
-   dispc->sline = hb_parni( 2 );                            /* top row of window   */
-   dispc->scol  = hb_parni( 3 );                            /* left col            */
-   dispc->eline = hb_parni( 4 );                            /* bottom row          */
-   dispc->ecol  = hb_parni( 5 );                            /* right col           */
+   dispc->sline = hb_parni(2);                            /* top row of window   */
+   dispc->scol  = hb_parni(3);                            /* left col            */
+   dispc->eline = hb_parni(4);                            /* bottom row          */
+   dispc->ecol  = hb_parni(5);                            /* right col           */
 
    dispc->width  = dispc->ecol - dispc->scol;               /* calc width of window  */
    dispc->height = dispc->eline - dispc->sline + 1;         /* calc height of window */
 
-   hb_gtRectSize( 0, 0, 0, 0, &nSize );
+   hb_gtRectSize(0, 0, 0, 0, &nSize);
 
    dispc->iCellSize = static_cast< int >( nSize );
 
@@ -569,68 +569,68 @@ HB_FUNC( _FT_DFINIT )
       hb_gtSave( dispc->sline, dispc->scol, dispc->eline, dispc->ecol, dispc->vseg );
    }
 
-   dispc->maxlin   = hb_parni( 12 );
-   dispc->buffsize = hb_parns( 13 );                                    /* yes - load value */
+   dispc->maxlin   = hb_parni(12);
+   dispc->buffsize = hb_parns(13);                                    /* yes - load value */
 
    dispc->buffer = static_cast< char * >( hb_xalloc( dispc->buffsize ) );             /* allocate memory */
    dispc->lbuff  = static_cast< char * >( hb_xalloc( dispc->maxlin + 1 ) );           /* for buffers */
 
-   dispc->bIsAllocated = ! ( dispc->buffer == nullptr || dispc->lbuff == nullptr || dispc->vseg == nullptr );
+   dispc->bIsAllocated = !( dispc->buffer == nullptr || dispc->lbuff == nullptr || dispc->vseg == nullptr );
    /* memory allocated? */
-   if( ! dispc->bIsAllocated )
+   if( !dispc->bIsAllocated )
    {
       rval = 8;                     /* return error code 8 (memory) */
       if( dispc->buffer != nullptr )
       {
-         hb_xfree( dispc->buffer );
+         hb_xfree(dispc->buffer);
       }
       if( dispc->lbuff != nullptr )
       {
-         hb_xfree( dispc->lbuff );
+         hb_xfree(dispc->lbuff);
       }
       if( dispc->vseg != nullptr )
       {
-         hb_xfree( dispc->vseg );
+         hb_xfree(dispc->vseg);
       }
    }
    else                                                     /* get parameters            */
    {
-      dispc->infile = hb_numToHandle( hb_parnint( 1 ) );    /* file handle               */
-      j = hb_parni( 6 );                                    /* starting line value       */
-      dispc->norm   = hb_parni( 7 );                        /* normal color attribute    */
-      dispc->hlight = hb_parni( 8 );                        /* highlight color attribute */
+      dispc->infile = hb_numToHandle( hb_parnint(1) );    /* file handle               */
+      j = hb_parni(6);                                    /* starting line value       */
+      dispc->norm   = hb_parni(7);                        /* normal color attribute    */
+      dispc->hlight = hb_parni(8);                        /* highlight color attribute */
 
-      if( HB_ISARRAY( 9 ) )
+      if( HB_ISARRAY(9) )
       {
          dispc->keytype = K_LIST;
-         dispc->kcount  = hb_parinfa( 9, 0 );
+         dispc->kcount  = hb_parinfa(9, 0);
          if( dispc->kcount > 24 )
          {
             dispc->kcount = 24;
          }
          for( i = 1; i <= dispc->kcount; i++ )
          {
-            dispc->keylist[ i - 1 ] = hb_parvni( 9, i );  /* get exit key list */
+            dispc->keylist[i - 1] = hb_parvni(9, i);  /* get exit key list */
          }
       }
       else
       {
-         const char * pszKeys = hb_parcx( 9 );
+         const char * pszKeys = hb_parcx(9);
          dispc->keytype = K_STRING;
-         dispc->kcount  = hb_parclen( 9 );
+         dispc->kcount  = hb_parclen(9);
          if( dispc->kcount > 24 )
          {
             dispc->kcount = 24;
          }
          for( i = 1; i <= dispc->kcount; i++ )
          {
-            dispc->keylist[ i - 1 ] = pszKeys[ i - 1 ];  /* get exit key list */
+            dispc->keylist[i - 1] = pszKeys[i - 1];  /* get exit key list */
          }
       }
 
-      dispc->bBrowse = hb_parl( 10 );              /* get browse flag   */
+      dispc->bBrowse = hb_parl(10);              /* get browse flag   */
 
-      dispc->colinc = hb_parni( 11 );              /* column skip value */
+      dispc->colinc = hb_parni(11);              /* column skip value */
 
       dispc->bufftop    = 0;                       /* init buffer top pointer      */
       dispc->buffbot    = dispc->buffsize;         /* init buffer bottom pointer   */
@@ -674,7 +674,7 @@ HB_FUNC( _FT_DFINIT )
       hb_gtRest( dispc->sline, dispc->scol, dispc->eline, dispc->ecol, dispc->vseg );
    }
 
-   hb_retni( rval );
+   hb_retni(rval);
 }
 
 HB_FUNC( _FT_DFCLOS )
@@ -685,15 +685,15 @@ HB_FUNC( _FT_DFCLOS )
    {
       if( dispc->buffer != nullptr )
       {
-         hb_xfree( dispc->buffer );                /* free up allocated buffer memory */
+         hb_xfree(dispc->buffer);                /* free up allocated buffer memory */
       }
       if( dispc->lbuff != nullptr )
       {
-         hb_xfree( dispc->lbuff );
+         hb_xfree(dispc->lbuff);
       }
       if( dispc->vseg != nullptr )
       {
-         hb_xfree( dispc->vseg );
+         hb_xfree(dispc->vseg);
       }
    }
 }
@@ -703,7 +703,7 @@ HB_FUNC( FT_DISPFILE )
    PFT_DISPC dispc = static_cast< PFT_DISPC >( hb_stackGetTSD( &s_dispc ) );
 
    int     i;
-   char    rval[ 2 ];
+   char    rval[2];
    HB_BOOL bDone;
 
    int ch;
@@ -736,7 +736,7 @@ HB_FUNC( FT_DISPFILE )
 
          /* if not browse, highlight the current line */
 
-         if( ! dispc->bBrowse )
+         if( !dispc->bBrowse )
          {
             chattr( dispc, 0, dispc->winrow - dispc->sline, dispc->width, dispc->hlight );
          }
@@ -745,11 +745,11 @@ HB_FUNC( FT_DISPFILE )
 
          hb_gtSetPos( dispc->winrow, dispc->scol );
 
-         ch = hb_inkey( HB_TRUE, 0.0, INKEY_ALL );
+         ch = hb_inkey( true, 0.0, INKEY_ALL );
 
          /* if not browse, then un-highlight current line */
 
-         if( ! dispc->bBrowse )
+         if( !dispc->bBrowse )
          {
             chattr( dispc, 0, dispc->winrow - dispc->sline, dispc->width, dispc->norm );
          }
@@ -890,14 +890,14 @@ HB_FUNC( FT_DISPFILE )
 
                for( i = 0; i < dispc->kcount; i++ )
                {
-                  if( dispc->keylist[ i ] == ch )
+                  if( dispc->keylist[i] == ch )
                   {
                      bDone = HB_TRUE;
                   }
                }
          }
       }
-      while( ! bDone );
+      while( !bDone );
    }
    else
    {
@@ -910,12 +910,12 @@ HB_FUNC( FT_DISPFILE )
 
    if( dispc->keytype == K_STRING )
    {
-      rval[ 0 ] = static_cast< char >( ch );
-      rval[ 1 ] = '\0';
-      hb_retc( rval );
+      rval[0] = static_cast< char >( ch );
+      rval[1] = '\0';
+      hb_retc(rval);
    }
    else
    {
-      hb_retni( ch );
+      hb_retni(ch);
    }
 }

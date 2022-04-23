@@ -62,9 +62,9 @@ HB_FUNC( FT_MGETSENS )
    iVert   = 0;
    iDouble = 0;
 
-   hb_storni( iHoriz, 1 );
-   hb_storni( iVert, 2 );
-   hb_storni( iDouble, 3 );
+   hb_storni(iHoriz, 1);
+   hb_storni(iVert, 2);
+   hb_storni(iDouble, 3);
 }
 
 HB_FUNC( FT_MCONOFF )
@@ -83,11 +83,11 @@ HB_FUNC( FT_MBUTPRS )
    inButton = 0;
    iStatus  = 0;
 
-   hb_storni( inButton, 2 );
-   hb_storni( inX, 3 );
-   hb_storni( inY, 4 );
+   hb_storni(inButton, 2);
+   hb_storni(inX, 3);
+   hb_storni(inY, 4);
 
-   hb_retni( iStatus );
+   hb_retni(iStatus);
 }
 
 HB_FUNC( FT_MBUTREL )
@@ -102,11 +102,11 @@ HB_FUNC( FT_MBUTREL )
    inButton = 0;
    iStatus  = 0;
 
-   hb_storni( inButton, 2 );
-   hb_storni( inX, 3 );
-   hb_storni( inY, 4 );
+   hb_storni(inButton, 2);
+   hb_storni(inX, 3);
+   hb_storni(inY, 4);
 
-   hb_retni( iStatus );
+   hb_retni(iStatus);
 }
 
 HB_FUNC( FT_MDEFCRS )

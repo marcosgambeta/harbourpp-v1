@@ -48,5 +48,5 @@
 
 HB_FUNC( POSIX_GETPID )
 {
-   hb_retnint( getpid() );
+   hb_retnint(getpid());
 }

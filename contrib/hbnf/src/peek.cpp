@@ -27,7 +27,7 @@
 
 HB_FUNC( FT_PEEK )
 {
-   hb_retni( -1 );
+   hb_retni(-1);
 }
 
 HB_FUNC( FT_POKE )
@@ -37,7 +37,7 @@ HB_FUNC( FT_POKE )
 
 HB_FUNC( FT_INP )
 {
-   hb_retni( 0 );
+   hb_retni(0);
 }
 
 HB_FUNC( FT_OUTP )

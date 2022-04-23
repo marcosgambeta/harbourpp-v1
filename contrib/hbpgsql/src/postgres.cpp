@@ -76,15 +76,15 @@ void hb_PGconn_ret( PGconn * p )
 {
    if( p )
    {
-      void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof( PGconn * ), &s_gcPGconnFuncs ) );
+      void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof(PGconn*), &s_gcPGconnFuncs ) );
 
       *ph = p;
 
-      hb_retptrGC( ph );
+      hb_retptrGC(ph);
    }
    else
    {
-      hb_retptr( nullptr );
+      hb_retptr(nullptr);
    }
 }
 
@@ -120,15 +120,15 @@ void hb_PGresult_ret( PGresult * p )
 {
    if( p )
    {
-      void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof( PGresult * ), &s_gcPGresultFuncs ) );
+      void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof(PGresult*), &s_gcPGresultFuncs ) );
 
       *ph = p;
 
-      hb_retptrGC( ph );
+      hb_retptrGC(ph);
    }
    else
    {
-      hb_retptr( nullptr );
+      hb_retptr(nullptr);
    }
 }
 
@@ -166,15 +166,15 @@ static void hb_PGcancel_ret( PGcancel * p )
 {
    if( p )
    {
-      void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof( PGcancel * ), &s_gcPGcancelFuncs ) );
+      void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof(PGcancel*), &s_gcPGcancelFuncs ) );
 
       *ph = p;
 
-      hb_retptrGC( ph );
+      hb_retptrGC(ph);
    }
    else
    {
-      hb_retptr( nullptr );
+      hb_retptr(nullptr);
    }
 }
 
@@ -214,15 +214,15 @@ static void hb_FILE_ret( FILE * p )
 {
    if( p )
    {
-      void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof( FILE * ), &s_gcFILEFuncs ) );
+      void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof(FILE*), &s_gcFILEFuncs ) );
 
       *ph = p;
 
-      hb_retptrGC( ph );
+      hb_retptrGC(ph);
    }
    else
    {
-      hb_retptr( nullptr );
+      hb_retptr(nullptr);
    }
 }
 
@@ -241,9 +241,9 @@ static FILE * hb_FILE_par( int iParam )
 
 HB_FUNC( PQCONNECTDB )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      hb_PGconn_ret( PQconnectdb( hb_parc( 1 ) ) );
+      hb_PGconn_ret( PQconnectdb( hb_parc(1) ) );
    }
    else
    {
@@ -254,18 +254,18 @@ HB_FUNC( PQCONNECTDB )
 /* NOTE: Deprecated */
 HB_FUNC( PQSETDBLOGIN )
 {
-   hb_PGconn_ret( PQsetdbLogin( hb_parcx( 1 ) /* pghost */,
-                                hb_parcx( 2 ) /* pgport */,
-                                hb_parcx( 3 ) /* pgoptions */,
-                                hb_parcx( 4 ) /* pgtty */,
-                                hb_parcx( 5 ) /* dbName */,
-                                hb_parcx( 6 ) /* login */,
-                                hb_parcx( 7 ) /* pwd */ ) );
+   hb_PGconn_ret( PQsetdbLogin( hb_parcx(1) /* pghost */,
+                                hb_parcx(2) /* pgport */,
+                                hb_parcx(3) /* pgoptions */,
+                                hb_parcx(4) /* pgtty */,
+                                hb_parcx(5) /* dbName */,
+                                hb_parcx(6) /* login */,
+                                hb_parcx(7) /* pwd */ ) );
 }
 
 HB_FUNC( PQRESET )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
@@ -279,11 +279,11 @@ HB_FUNC( PQRESET )
 
 HB_FUNC( PQPROTOCOLVERSION )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retni( PQprotocolVersion( conn ) );
+      hb_retni(PQprotocolVersion(conn));
    }
    else
    {
@@ -293,11 +293,11 @@ HB_FUNC( PQPROTOCOLVERSION )
 
 HB_FUNC( PQCLIENTENCODING )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retni( PQclientEncoding( conn ) );
+      hb_retni(PQclientEncoding(conn));
    }
    else
    {
@@ -307,11 +307,11 @@ HB_FUNC( PQCLIENTENCODING )
 
 HB_FUNC( PQSETCLIENTENCODING )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retni( PQsetClientEncoding( conn, hb_parcx( 2 ) ) );
+      hb_retni(PQsetClientEncoding(conn, hb_parcx(2)));
    }
    else
    {
@@ -321,11 +321,11 @@ HB_FUNC( PQSETCLIENTENCODING )
 
 HB_FUNC( PQDB )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retc( PQdb( conn ) );
+      hb_retc(PQdb(conn));
    }
    else
    {
@@ -335,11 +335,11 @@ HB_FUNC( PQDB )
 
 HB_FUNC( PQUSER )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retc( PQuser( conn ) );
+      hb_retc(PQuser(conn));
    }
    else
    {
@@ -349,11 +349,11 @@ HB_FUNC( PQUSER )
 
 HB_FUNC( PQPASS )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retc( PQpass( conn ) );
+      hb_retc(PQpass(conn));
    }
    else
    {
@@ -363,11 +363,11 @@ HB_FUNC( PQPASS )
 
 HB_FUNC( PQHOST )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retc( PQhost( conn ) );
+      hb_retc(PQhost(conn));
    }
    else
    {
@@ -377,11 +377,11 @@ HB_FUNC( PQHOST )
 
 HB_FUNC( PQPORT )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retc( PQport( conn ) );
+      hb_retc(PQport(conn));
    }
    else
    {
@@ -391,11 +391,11 @@ HB_FUNC( PQPORT )
 
 HB_FUNC( PQTTY )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retc( PQtty( conn ) );
+      hb_retc(PQtty(conn));
    }
    else
    {
@@ -405,11 +405,11 @@ HB_FUNC( PQTTY )
 
 HB_FUNC( PQOPTIONS )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retc( PQoptions( conn ) );
+      hb_retc(PQoptions(conn));
    }
    else
    {
@@ -419,11 +419,11 @@ HB_FUNC( PQOPTIONS )
 
 HB_FUNC( PQTRANSACTIONSTATUS )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retni( PQtransactionStatus( conn ) );
+      hb_retni(PQtransactionStatus(conn));
    }
    else
    {
@@ -433,11 +433,11 @@ HB_FUNC( PQTRANSACTIONSTATUS )
 
 HB_FUNC( PQERRORMESSAGE )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retc( PQerrorMessage( conn ) );
+      hb_retc(PQerrorMessage(conn));
    }
    else
    {
@@ -447,11 +447,11 @@ HB_FUNC( PQERRORMESSAGE )
 
 HB_FUNC( PQSTATUS )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retni( PQstatus( conn ) );
+      hb_retni(PQstatus(conn));
    }
    else
    {
@@ -465,11 +465,11 @@ HB_FUNC( PQSTATUS )
 
 HB_FUNC( PQEXEC )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_PGresult_ret( PQexec( conn, hb_parcx( 2 ) ) );
+      hb_PGresult_ret( PQexec( conn, hb_parcx(2) ) );
    }
    else
    {
@@ -479,23 +479,23 @@ HB_FUNC( PQEXEC )
 
 HB_FUNC( PQEXECPARAMS )
 {
-   PGconn * conn   = hb_PGconn_par( 1 );
-   PHB_ITEM aParam = hb_param( 3, HB_IT_ARRAY );
+   PGconn * conn   = hb_PGconn_par(1);
+   PHB_ITEM aParam = hb_param(3, Harbour::Item::ARRAY);
 
    if( conn && aParam )
    {
-      int n = static_cast< int >( hb_arrayLen( aParam ) );
+      int n = static_cast< int >( hb_arrayLen(aParam) );
 
-      const char ** paramvalues = static_cast< const char ** >( hb_xgrab( sizeof( char * ) * n ) );
+      const char ** paramvalues = static_cast<const char**>(hb_xgrab(sizeof(char*) * n));
 
       for( int i = 0; i < n; ++i )
       {
-         paramvalues[ i ] = hb_arrayGetCPtr( aParam, i + 1 );
+         paramvalues[i] = hb_arrayGetCPtr(aParam, i + 1);
       }
 
-      hb_PGresult_ret( PQexecParams( conn, hb_parcx( 2 ), n, nullptr, paramvalues, nullptr, nullptr, 1 ) );
+      hb_PGresult_ret( PQexecParams( conn, hb_parcx(2), n, nullptr, paramvalues, nullptr, nullptr, 1 ) );
 
-      hb_xfree( static_cast< void * >( paramvalues ) );
+      hb_xfree(static_cast<void*>(paramvalues));
    }
    else
    {
@@ -505,7 +505,7 @@ HB_FUNC( PQEXECPARAMS )
 
 HB_FUNC( PQFCOUNT )  /* not a direct wrapper */
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
@@ -516,7 +516,7 @@ HB_FUNC( PQFCOUNT )  /* not a direct wrapper */
          nFields = PQnfields( res );
       }
 
-      hb_retni( nFields );
+      hb_retni(nFields);
    }
    else
    {
@@ -526,7 +526,7 @@ HB_FUNC( PQFCOUNT )  /* not a direct wrapper */
 
 HB_FUNC( PQLASTREC )  /* not a direct wrapper */
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
@@ -537,7 +537,7 @@ HB_FUNC( PQLASTREC )  /* not a direct wrapper */
          nRows = PQntuples( res );
       }
 
-      hb_retni( nRows );
+      hb_retni(nRows);
    }
    else
    {
@@ -547,18 +547,18 @@ HB_FUNC( PQLASTREC )  /* not a direct wrapper */
 
 HB_FUNC( PQGETVALUE )
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
       if( PQresultStatus( res ) == PGRES_TUPLES_OK )
       {
-         int nRow = hb_parni( 2 ) - 1;
-         int nCol = hb_parni( 3 ) - 1;
+         int nRow = hb_parni(2) - 1;
+         int nCol = hb_parni(3) - 1;
 
-         if( ! PQgetisnull( res, nRow, nCol ) )
+         if( !PQgetisnull( res, nRow, nCol ) )
          {
-            hb_retc( PQgetvalue( res, nRow, nCol ) );
+            hb_retc(PQgetvalue(res, nRow, nCol));
          }
          else
          {
@@ -578,7 +578,7 @@ HB_FUNC( PQGETVALUE )
 
 HB_FUNC( PQGETLENGTH )
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
@@ -586,13 +586,13 @@ HB_FUNC( PQGETLENGTH )
 
       if( PQresultStatus( res ) == PGRES_TUPLES_OK )
       {
-         int nRow = hb_parni( 2 ) - 1;
-         int nCol = hb_parni( 3 ) - 1;
+         int nRow = hb_parni(2) - 1;
+         int nCol = hb_parni(3) - 1;
 
          result = PQgetlength( res, nRow, nCol );
       }
 
-      hb_retni( result );
+      hb_retni(result);
    }
    else
    {
@@ -611,7 +611,7 @@ HB_FUNC( PQGETLENGTH )
 
 HB_FUNC( PQMETADATA )  /* not a direct wrapper */
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
@@ -622,7 +622,7 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
 
          for( int i = 0; i < nFields; i++ )
          {
-            char buf[ 256 ];
+            char buf[256];
             int  typemod = PQfmod( res, i );
             int  length  = 0;
             int  decimal = 0;
@@ -636,12 +636,12 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
                   {
                      length = static_cast< int >( typemod );
                   }
-                  hb_strncpy( buf, "bit", sizeof( buf ) - 1 );
+                  hb_strncpy( buf, "bit", sizeof(buf) - 1 );
                   break;
 
                case BOOLOID:
                   length = 1;
-                  hb_strncpy( buf, "boolean", sizeof( buf ) - 1 );
+                  hb_strncpy( buf, "boolean", sizeof(buf) - 1 );
                   break;
 
                case BPCHAROID:
@@ -649,48 +649,48 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
                   {
                      length = static_cast< int >( typemod - VARHDRSZ );
                   }
-                  hb_strncpy( buf, "character", sizeof( buf ) - 1 );
+                  hb_strncpy( buf, "character", sizeof(buf) - 1 );
                   break;
 
                case FLOAT4OID:
-                  hb_strncpy( buf, "real", sizeof( buf ) - 1 );
+                  hb_strncpy( buf, "real", sizeof(buf) - 1 );
                   break;
 
                case FLOAT8OID:
-                  hb_strncpy( buf, "double precision", sizeof( buf ) - 1 );
+                  hb_strncpy( buf, "double precision", sizeof(buf) - 1 );
                   break;
 
                case INT2OID:
-                  hb_strncpy( buf, "smallint", sizeof( buf ) - 1 );
+                  hb_strncpy( buf, "smallint", sizeof(buf) - 1 );
                   break;
 
                case INT4OID:
-                  hb_strncpy( buf, "integer", sizeof( buf ) - 1 );
+                  hb_strncpy( buf, "integer", sizeof(buf) - 1 );
                   break;
 
                case INT8OID:
                case OIDOID:
-                  hb_strncpy( buf, "bigint", sizeof( buf ) - 1 );
+                  hb_strncpy( buf, "bigint", sizeof(buf) - 1 );
                   break;
 
                case NUMERICOID:
                   length  = ( ( typemod - VARHDRSZ ) >> 16 ) & 0xffff;
                   decimal = ( typemod - VARHDRSZ ) & 0xffff;
-                  hb_strncpy( buf, "numeric", sizeof( buf ) - 1 );
+                  hb_strncpy( buf, "numeric", sizeof(buf) - 1 );
                   break;
 
                case DATEOID:
-                  hb_strncpy( buf, "date", sizeof( buf ) - 1 );
+                  hb_strncpy( buf, "date", sizeof(buf) - 1 );
                   break;
 
                case TIMEOID:
                case TIMETZOID:
-                  hb_strncpy( buf, "timezone", sizeof( buf ) - 1 );
+                  hb_strncpy( buf, "timezone", sizeof(buf) - 1 );
                   break;
 
                case TIMESTAMPOID:
                case TIMESTAMPTZOID:
-                  hb_strncpy( buf, "timestamp", sizeof( buf ) - 1 );
+                  hb_strncpy( buf, "timestamp", sizeof(buf) - 1 );
                   break;
 
                case VARBITOID:
@@ -698,7 +698,7 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
                   {
                      length = static_cast< int >( typemod );
                   }
-                  hb_strncpy( buf, "bit varying", sizeof( buf ) - 1 );
+                  hb_strncpy( buf, "bit varying", sizeof(buf) - 1 );
                   break;
 
                case VARCHAROID:
@@ -706,37 +706,37 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
                   {
                      length = static_cast< int >( typemod - VARHDRSZ );
                   }
-                  hb_strncpy( buf, "character varying", sizeof( buf ) - 1 );
+                  hb_strncpy( buf, "character varying", sizeof(buf) - 1 );
                   break;
 
                case TEXTOID:
-                  hb_strncpy( buf, "text", sizeof( buf ) - 1 );
+                  hb_strncpy( buf, "text", sizeof(buf) - 1 );
                   break;
 
                case CASHOID:
-                  hb_strncpy( buf, "money", sizeof( buf ) - 1 );
+                  hb_strncpy( buf, "money", sizeof(buf) - 1 );
                   break;
 
                default:
-                  hb_strncpy( buf, "not supported", sizeof( buf ) - 1 );
+                  hb_strncpy( buf, "not supported", sizeof(buf) - 1 );
                   break;
             }
 
-            pField = hb_arrayGetItemPtr( pResult, i + 1 );
-            hb_arrayNew( pField, HBPG_META_LEN_ );
-            hb_arraySetC(  pField, HBPG_META_FIELDNAME, PQfname( res, i ) );
-            hb_arraySetC(  pField, HBPG_META_FIELDTYPE, buf );
-            hb_arraySetNI( pField, HBPG_META_FIELDLEN, length );
-            hb_arraySetNI( pField, HBPG_META_FIELDDEC, decimal );
-            hb_arraySetNL( pField, HBPG_META_TABLE, PQftable( res, i ) );
-            hb_arraySetNI( pField, HBPG_META_TABLECOL, PQftablecol( res, i ) );
+            pField = hb_arrayGetItemPtr(pResult, i + 1);
+            hb_arrayNew(pField, HBPG_META_LEN);
+            hb_arraySetC(pField, HBPG_META_FIELDNAME, PQfname(res, i));
+            hb_arraySetC(pField, HBPG_META_FIELDTYPE, buf);
+            hb_arraySetNI(pField, HBPG_META_FIELDLEN, length);
+            hb_arraySetNI(pField, HBPG_META_FIELDDEC, decimal);
+            hb_arraySetNL(pField, HBPG_META_TABLE, PQftable(res, i));
+            hb_arraySetNI(pField, HBPG_META_TABLECOL, PQftablecol(res, i));
          }
 
-         hb_itemReturnRelease( pResult );
+         hb_itemReturnRelease(pResult);
       }
       else
       {
-         hb_reta( 0 );
+         hb_reta(0);
       }
    }
    else
@@ -747,7 +747,7 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
 
 HB_FUNC( PQRESULT2ARRAY )  /* not a direct wrapper */
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
@@ -760,19 +760,19 @@ HB_FUNC( PQRESULT2ARRAY )  /* not a direct wrapper */
 
          for( int nRow = 0; nRow < nRows; nRow++ )
          {
-            PHB_ITEM pRow = hb_arrayGetItemPtr( pResult, nRow + 1 );
-            hb_arrayNew( pRow, nCols );
+            PHB_ITEM pRow = hb_arrayGetItemPtr(pResult, nRow + 1);
+            hb_arrayNew(pRow, nCols);
             for( int nCol = 0; nCol < nCols; nCol++ )
             {
                hb_arraySetC( pRow, nCol + 1, PQgetvalue( res, nRow, nCol ) );
             }
          }
 
-         hb_itemReturnRelease( pResult );
+         hb_itemReturnRelease(pResult);
       }
       else
       {
-         hb_reta( 0 );
+         hb_reta(0);
       }
    }
    else
@@ -783,11 +783,11 @@ HB_FUNC( PQRESULT2ARRAY )  /* not a direct wrapper */
 
 HB_FUNC( PQRESULTERRORMESSAGE )
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
-      hb_retc( PQresultErrorMessage( res ) );
+      hb_retc(PQresultErrorMessage(res));
    }
    else
    {
@@ -797,11 +797,11 @@ HB_FUNC( PQRESULTERRORMESSAGE )
 
 HB_FUNC( PQRESULTSTATUS )
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
-      hb_retni( PQresultStatus( res ) );
+      hb_retni(PQresultStatus(res));
    }
    else
    {
@@ -811,11 +811,11 @@ HB_FUNC( PQRESULTSTATUS )
 
 HB_FUNC( PQCMDSTATUS )
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
-      hb_retc( PQcmdStatus( res ) );
+      hb_retc(PQcmdStatus(res));
    }
    else
    {
@@ -825,11 +825,11 @@ HB_FUNC( PQCMDSTATUS )
 
 HB_FUNC( PQCMDTUPLES )
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
-      hb_retc( PQcmdTuples( res ) );
+      hb_retc(PQcmdTuples(res));
    }
    else
    {
@@ -839,9 +839,9 @@ HB_FUNC( PQCMDTUPLES )
 
 HB_FUNC( PQESCAPESTRING )
 {
-   const char * source = hb_parcx( 1 );
+   const char * source = hb_parcx(1);
    HB_SIZE      size   = strlen( source );
-   char *       dest   = static_cast< char * >( hb_xgrab( size * 2 + 1 ) );
+   char *       dest   = static_cast<char*>(hb_xgrab(size * 2 + 1));
 
    PQescapeString( dest, source, static_cast< size_t >( size ) );
 
@@ -850,12 +850,12 @@ HB_FUNC( PQESCAPESTRING )
 
 HB_FUNC( PQESCAPEBYTEA ) /* deprecated */
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      size_t from_length = static_cast< size_t >( hb_parclen( 1 ) );
+      size_t from_length = static_cast< size_t >( hb_parclen(1) );
       size_t to_length   = from_length * 5 + 1;
-      unsigned char * to = PQescapeBytea( reinterpret_cast< const unsigned char * >( hb_parc( 1 ) ), from_length, &to_length );
-      hb_retclen( reinterpret_cast< char * >( to ), static_cast< HB_SIZE >( to_length ) );
+      unsigned char * to = PQescapeBytea( reinterpret_cast< const unsigned char * >( hb_parc(1) ), from_length, &to_length );
+      hb_retclen(reinterpret_cast<char*>(to), static_cast<HB_SIZE>(to_length));
       PQfreemem( to );
    }
    else
@@ -866,11 +866,11 @@ HB_FUNC( PQESCAPEBYTEA ) /* deprecated */
 
 HB_FUNC( PQUNESCAPEBYTEA )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
       size_t to_length;
-      unsigned char * from = PQunescapeBytea( reinterpret_cast< const unsigned char * >( hb_parc( 1 ) ), &to_length );
-      hb_retclen( reinterpret_cast< char * >( from ), static_cast< HB_SIZE >( to_length ) );
+      unsigned char * from = PQunescapeBytea( reinterpret_cast< const unsigned char * >( hb_parc(1) ), &to_length );
+      hb_retclen(reinterpret_cast<char*>(from), static_cast<HB_SIZE>(to_length));
       PQfreemem( from );
    }
    else
@@ -881,11 +881,11 @@ HB_FUNC( PQUNESCAPEBYTEA )
 
 HB_FUNC( PQOIDVALUE )
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
-      hb_retnl( static_cast< Oid >( PQoidValue( res ) ) );
+      hb_retnl(static_cast<Oid>(PQoidValue(res)));
    }
    else
    {
@@ -895,11 +895,11 @@ HB_FUNC( PQOIDVALUE )
 
 HB_FUNC( PQOIDSTATUS )
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
-      hb_retc( PQoidStatus( res ) );
+      hb_retc(PQoidStatus(res));
    }
    else
    {
@@ -909,11 +909,11 @@ HB_FUNC( PQOIDSTATUS )
 
 HB_FUNC( PQBINARYTUPLES )
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
-      hb_retl( PQbinaryTuples( res ) );
+      hb_retl(PQbinaryTuples(res));
    }
    else
    {
@@ -923,11 +923,11 @@ HB_FUNC( PQBINARYTUPLES )
 
 HB_FUNC( PQFTABLE )
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
-      hb_retnl( static_cast< Oid >( PQftable( res, hb_parni( 2 ) - 1 ) ) );
+      hb_retnl(static_cast<Oid>(PQftable(res, hb_parni(2) - 1)));
    }
    else
    {
@@ -937,11 +937,11 @@ HB_FUNC( PQFTABLE )
 
 HB_FUNC( PQFTYPE )
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
-      hb_retnl( static_cast< Oid >( PQftype( res, hb_parni( 2 ) - 1 ) ) );
+      hb_retnl(static_cast<Oid>(PQftype(res, hb_parni(2) - 1)));
    }
    else
    {
@@ -951,11 +951,11 @@ HB_FUNC( PQFTYPE )
 
 HB_FUNC( PQFNAME )
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
-      hb_retc( PQfname( res, hb_parni( 2 ) - 1 ) );
+      hb_retc(PQfname(res, hb_parni(2) - 1));
    }
    else
    {
@@ -965,11 +965,11 @@ HB_FUNC( PQFNAME )
 
 HB_FUNC( PQFMOD )
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
-      hb_retni( PQfmod( res, hb_parni( 2 ) - 1 ) );
+      hb_retni(PQfmod(res, hb_parni(2) - 1));
    }
    else
    {
@@ -979,11 +979,11 @@ HB_FUNC( PQFMOD )
 
 HB_FUNC( PQFSIZE )
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
-      hb_retni( PQfsize( res, hb_parni( 2 ) - 1 ) );
+      hb_retni(PQfsize(res, hb_parni(2) - 1));
    }
    else
    {
@@ -993,11 +993,11 @@ HB_FUNC( PQFSIZE )
 
 HB_FUNC( PQGETISNULL )
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
-      hb_retl( PQgetisnull( res, hb_parni( 2 ) - 1, hb_parni( 3 ) - 1 ) );
+      hb_retl(PQgetisnull(res, hb_parni(2) - 1, hb_parni(3) - 1));
    }
    else
    {
@@ -1007,11 +1007,11 @@ HB_FUNC( PQGETISNULL )
 
 HB_FUNC( PQFNUMBER )
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
-      hb_retni( PQfnumber( res, hb_parcx( 2 ) ) + 1 );
+      hb_retni(PQfnumber(res, hb_parcx(2)) + 1);
    }
    else
    {
@@ -1021,11 +1021,11 @@ HB_FUNC( PQFNUMBER )
 
 HB_FUNC( PQNTUPLES )
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
-      hb_retnl( PQntuples( res ) );
+      hb_retnl(PQntuples(res));
    }
    else
    {
@@ -1035,11 +1035,11 @@ HB_FUNC( PQNTUPLES )
 
 HB_FUNC( PQNFIELDS )
 {
-   PGresult * res = hb_PGresult_par( 1 );
+   PGresult * res = hb_PGresult_par(1);
 
    if( res )
    {
-      hb_retnl( PQnfields( res ) );
+      hb_retnl(PQnfields(res));
    }
    else
    {
@@ -1053,11 +1053,11 @@ HB_FUNC( PQNFIELDS )
 
 HB_FUNC( PQSENDQUERY )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retl( PQsendQuery( conn, hb_parcx( 2 ) ) ? HB_TRUE : HB_FALSE );
+      hb_retl(PQsendQuery(conn, hb_parcx(2) ) ? true : false);
    }
    else
    {
@@ -1067,7 +1067,7 @@ HB_FUNC( PQSENDQUERY )
 
 HB_FUNC( PQGETRESULT )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
@@ -1081,11 +1081,11 @@ HB_FUNC( PQGETRESULT )
 
 HB_FUNC( PQCONSUMEINPUT )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retl( PQconsumeInput( conn ) );
+      hb_retl(PQconsumeInput(conn));
    }
    else
    {
@@ -1095,11 +1095,11 @@ HB_FUNC( PQCONSUMEINPUT )
 
 HB_FUNC( PQISBUSY )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retl( PQisBusy( conn ) ? HB_TRUE : HB_FALSE );
+      hb_retl(PQisBusy(conn) ? true : false );
    }
    else
    {
@@ -1109,11 +1109,11 @@ HB_FUNC( PQISBUSY )
 
 HB_FUNC( PQREQUESTCANCEL ) /* deprecated */
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retl( PQrequestCancel( conn ) ? HB_TRUE : HB_FALSE );
+      hb_retl(PQrequestCancel(conn) ? true : false);
    }
    else
    {
@@ -1123,11 +1123,11 @@ HB_FUNC( PQREQUESTCANCEL ) /* deprecated */
 
 HB_FUNC( PQFLUSH )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retni( PQflush( conn ) );
+      hb_retni(PQflush(conn));
    }
    else
    {
@@ -1137,11 +1137,11 @@ HB_FUNC( PQFLUSH )
 
 HB_FUNC( PQSETNONBLOCKING )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retl( PQsetnonblocking( conn, hb_parl( 2 ) ) );
+      hb_retl(PQsetnonblocking(conn, hb_parl(2)));
    }
    else
    {
@@ -1151,11 +1151,11 @@ HB_FUNC( PQSETNONBLOCKING )
 
 HB_FUNC( PQISNONBLOCKING )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retl( PQisnonblocking( conn ) );
+      hb_retl(PQisnonblocking(conn));
    }
    else
    {
@@ -1170,17 +1170,17 @@ HB_FUNC( PQISNONBLOCKING )
 HB_FUNC( PQTRACECREATE )  /* not a direct wrapper */
 {
 #ifdef NODLL
-   hb_FILE_ret( fopen( hb_parcx( 1 ), "w+b" ) );
+   hb_FILE_ret( fopen( hb_parcx(1), "w+b" ) );
 #else
-   hb_retptr( nullptr );
+   hb_retptr(nullptr);
 #endif
 }
 
 HB_FUNC( PQTRACE )
 {
 #ifdef NODLL
-   PGconn * conn   = hb_PGconn_par( 1 );
-   FILE *   trfile = hb_FILE_par( 2 );
+   PGconn * conn   = hb_PGconn_par(1);
+   FILE *   trfile = hb_FILE_par(2);
 
    if( conn && trfile )
    {
@@ -1195,7 +1195,7 @@ HB_FUNC( PQTRACE )
 
 HB_FUNC( PQUNTRACE )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
@@ -1213,11 +1213,11 @@ HB_FUNC( PQUNTRACE )
  */
 HB_FUNC( PQSETERRORVERBOSITY )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retni( static_cast< PGVerbosity >( PQsetErrorVerbosity( conn, static_cast< PGVerbosity >( hb_parni( 2 ) ) ) ) );
+      hb_retni(static_cast<PGVerbosity>(PQsetErrorVerbosity(conn, static_cast<PGVerbosity>(hb_parni(2)))));
    }
    else
    {
@@ -1231,11 +1231,11 @@ HB_FUNC( PQSETERRORVERBOSITY )
 
 HB_FUNC( LO_IMPORT )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retni( lo_import( conn, hb_parcx( 2 ) ) );
+      hb_retni(lo_import(conn, hb_parcx(2)));
    }
    else
    {
@@ -1245,11 +1245,11 @@ HB_FUNC( LO_IMPORT )
 
 HB_FUNC( LO_EXPORT )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retl( lo_export( conn, static_cast< Oid >( hb_parnl( 2 ) ), hb_parcx( 3 ) ) == 1 );
+      hb_retl(lo_export(conn, static_cast<Oid>(hb_parnl(2)), hb_parcx(3)) == 1);
    }
    else
    {
@@ -1259,11 +1259,11 @@ HB_FUNC( LO_EXPORT )
 
 HB_FUNC( LO_UNLINK )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retl( lo_unlink( conn, static_cast< Oid >( hb_parnl( 2 ) ) ) == 1 );
+      hb_retl(lo_unlink(conn, static_cast<Oid>(hb_parnl(2))) == 1);
    }
    else
    {
@@ -1274,25 +1274,25 @@ HB_FUNC( LO_UNLINK )
 HB_FUNC( PQSERVERVERSION )
 {
 #if PG_VERSION_NUM >= 80000
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retni( PQserverVersion( conn ) );
+      hb_retni(PQserverVersion(conn));
    }
    else
    {
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
 #else
-   hb_retni( 0 );
+   hb_retni(0);
 #endif
 }
 
 HB_FUNC( PQGETCANCEL )
 {
 #if PG_VERSION_NUM >= 80000
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
@@ -1303,24 +1303,24 @@ HB_FUNC( PQGETCANCEL )
       hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    }
 #else
-   hb_retptr( nullptr );
+   hb_retptr(nullptr);
 #endif
 }
 
 HB_FUNC( PQCANCEL )
 {
 #if PG_VERSION_NUM >= 80000
-   PGcancel * cancel = hb_PGcancel_par( 1 );
+   PGcancel * cancel = hb_PGcancel_par(1);
 
    if( cancel )
    {
-      char errbuf[ 256 ];
+      char errbuf[256];
 
-      errbuf[ 0 ] = '\0';
+      errbuf[0] = '\0';
 
-      hb_retl( PQcancel( cancel, errbuf, sizeof( errbuf ) - 1 ) == 1 );
+      hb_retl(PQcancel(cancel, errbuf, sizeof(errbuf) - 1) == 1);
 
-      hb_storc( errbuf, 2 );
+      hb_storc(errbuf, 2);
    }
    else
    {
@@ -1328,22 +1328,22 @@ HB_FUNC( PQCANCEL )
    }
 #else
    hb_retl(false);
-   hb_storc( nullptr, 2 );
+   hb_storc(nullptr, 2);
 #endif
 }
 
 HB_FUNC( PQESCAPEBYTEACONN )
 {
 #if PG_VERSION_NUM >= 80000
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
-   if( conn && HB_ISCHAR( 2 ) )
+   if( conn && HB_ISCHAR(2) )
    {
-      size_t from_length = hb_parclen( 2 );
+      size_t from_length = hb_parclen(2);
       size_t to_length   = from_length * 5 + 1;
 
-      unsigned char * to = PQescapeByteaConn( conn, reinterpret_cast< unsigned const char * >( hb_parc( 2 ) ), from_length, &to_length );
-      hb_retclen( reinterpret_cast< char * >( to ), static_cast< HB_SIZE >( to_length ) );
+      unsigned char * to = PQescapeByteaConn( conn, reinterpret_cast< unsigned const char * >( hb_parc(2) ), from_length, &to_length );
+      hb_retclen(reinterpret_cast<char*>(to), static_cast<HB_SIZE>(to_length));
       PQfreemem( to );
    }
    else
@@ -1357,11 +1357,11 @@ HB_FUNC( PQESCAPEBYTEACONN )
 
 HB_FUNC( PQPREPARE )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_PGresult_ret( PQprepare( conn, hb_parcx( 2 ), hb_parcx( 3 ), hb_parni( 4 ), nullptr ) );
+      hb_PGresult_ret( PQprepare( conn, hb_parcx(2), hb_parcx(3), hb_parni(4), nullptr ) );
    }
    else
    {
@@ -1371,23 +1371,23 @@ HB_FUNC( PQPREPARE )
 
 HB_FUNC( PQEXECPREPARED )
 {
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      PHB_ITEM aParam = hb_param( 3, HB_IT_ARRAY );
-      HB_SIZE  n      = hb_arrayLen( aParam );
+      PHB_ITEM aParam = hb_param(3, Harbour::Item::ARRAY);
+      HB_SIZE  n      = hb_arrayLen(aParam);
 
-      const char ** paramvalues = static_cast< const char ** >( hb_xgrab( sizeof( char * ) * n ) );
+      const char ** paramvalues = static_cast<const char**>(hb_xgrab(sizeof(char*) * n));
 
       for( HB_SIZE i = 0; i < n; ++i )
       {
-         paramvalues[ i ] = hb_arrayGetCPtr( aParam, i + 1 );
+         paramvalues[i] = hb_arrayGetCPtr(aParam, i + 1);
       }
 
-      hb_PGresult_ret( PQexecPrepared( conn, hb_parcx( 2 ), static_cast< int >( n ), static_cast< const char * const * >( paramvalues ), nullptr, nullptr, 1 ) );
+      hb_PGresult_ret( PQexecPrepared( conn, hb_parcx(2), static_cast< int >( n ), static_cast< const char * const * >( paramvalues ), nullptr, nullptr, 1 ) );
 
-      hb_xfree( static_cast< void * >( paramvalues ) );
+      hb_xfree(static_cast<void*>(paramvalues));
    }
    else
    {
@@ -1398,11 +1398,11 @@ HB_FUNC( PQEXECPREPARED )
 HB_FUNC( PQPUTCOPYDATA )
 {
 #if PG_VERSION_NUM >= 80000
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retni( PQputCopyData( conn, hb_parcx( 2 ), static_cast< int >( hb_parclen( 2 ) ) ) );
+      hb_retni(PQputCopyData(conn, hb_parcx(2), static_cast<int>(hb_parclen(2))));
    }
    else
    {
@@ -1416,11 +1416,11 @@ HB_FUNC( PQPUTCOPYDATA )
 HB_FUNC( PQPUTCOPYEND )
 {
 #if PG_VERSION_NUM >= 80000
-   PGconn * conn = hb_PGconn_par( 1 );
+   PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retni( PQputCopyEnd( conn, nullptr ) );
+      hb_retni(PQputCopyEnd(conn, nullptr));
    }
    else
    {

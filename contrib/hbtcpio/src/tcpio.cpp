@@ -71,7 +71,7 @@ static PHB_FILE s_fileNew( PHB_SOCKEX sock, HB_MAXINT timeout );
 
 static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_strnicmp( pszFileName, FILE_PREFIX, FILE_PREFIX_LEN ) == 0;
 }
@@ -87,15 +87,15 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
    int iPort = 0;
    HB_MAXINT timeout = -1;
 
-   HB_SYMBOL_UNUSED( pFuncs );
-   HB_SYMBOL_UNUSED( pszDefExt );
-   HB_SYMBOL_UNUSED( pPaths );
+   HB_SYMBOL_UNUSED(pFuncs);
+   HB_SYMBOL_UNUSED(pszDefExt);
+   HB_SYMBOL_UNUSED(pPaths);
 
    if( ( ptr = strchr( pszHost, ':' ) ) != nullptr && ptr != pszHost )
    {
       nLen = ptr - pszHost;
       ++ptr;
-      while( HB_ISDIGIT( * ptr ) )
+      while( HB_ISDIGIT(* ptr) )
       {
          iPort = iPort * 10 + ( * ptr++ - '0' );
       }
@@ -103,7 +103,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
       if( * ptr == ':' )
       {
          ++ptr;
-         while( HB_ISDIGIT( * ptr ) )
+         while( HB_ISDIGIT(* ptr) )
          {
             timeout = HB_MAX( timeout, 0 ) * 10 + ( * ptr++ - '0' );
          }   
@@ -121,7 +121,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
 
       pszAddr = hb_strndup( pszHost, nLen );
       pszIpAddr = hb_socketResolveAddr( pszAddr, HB_SOCKET_AF_INET );
-      hb_xfree( pszAddr );
+      hb_xfree(pszAddr);
 
       if( pszIpAddr )
       {
@@ -133,7 +133,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
 
             if( hb_socketInetAddr( &pSockAddr, &uiLen, pszIpAddr, iPort ) )
             {
-               hb_socketSetKeepAlive( sd, HB_TRUE );
+               hb_socketSetKeepAlive( sd, true );
                if( hb_socketConnect( sd, pSockAddr, uiLen, timeout ) == 0 )
                {
                   PHB_SOCKEX sock;
@@ -150,13 +150,13 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
                   sock = hb_sockexNew( sd, nullptr, nullptr );
                   if( sock )
                   {
-                     hb_sockexSetShutDown( sock, HB_TRUE );
-                     hb_sockexSetAutoFlush( sock, HB_TRUE );
+                     hb_sockexSetShutDown( sock, true );
+                     hb_sockexSetAutoFlush( sock, true );
                      pFile = s_fileNew( sock, timeout );
                      sd = HB_NO_SOCKET;
                   }
                }
-               hb_xfree( pSockAddr );
+               hb_xfree(pSockAddr);
             }
             if( sd != HB_NO_SOCKET )
             {
@@ -164,7 +164,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
                hb_socketClose( sd );
             }
          }
-         hb_xfree( pszIpAddr );
+         hb_xfree(pszIpAddr);
       }
       if( errcode == 0 && pFile == nullptr )
          errcode = hb_socketGetError();
@@ -180,7 +180,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
       if( pFile == nullptr )
       {
          hb_errPutOsCode( pError, errcode );
-         hb_errPutGenCode( pError, static_cast< HB_ERRCODE >( EG_OPEN ) );
+         hb_errPutGenCode( pError, static_cast<HB_ERRCODE>(EG_OPEN) );
       }
    }
 
@@ -189,9 +189,9 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
 
 static void s_fileClose( PHB_FILE pFile )
 {
-   hb_sockexClose( pFile->sock, HB_TRUE );
+   hb_sockexClose( pFile->sock, true );
    hb_fsSetError( hb_socketGetError() );
-   hb_xfree( pFile );
+   hb_xfree(pFile);
 }
 
 static HB_SIZE s_fileRead( PHB_FILE pFile, void * data,
@@ -200,9 +200,9 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data,
    HB_ERRCODE errcode = 0;
    long lRead = 0;
 
-   if( ! pFile->fEof )
+   if( !pFile->fEof )
    {
-      lRead = nSize > LONG_MAX ? LONG_MAX : static_cast< long >( nSize );
+      lRead = nSize > LONG_MAX ? LONG_MAX : static_cast<long>(nSize);
       if( timeout == -1 )
          timeout = pFile->timeout;
       lRead = hb_sockexRead( pFile->sock, data, lRead, timeout );
@@ -232,7 +232,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data,
 static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data,
                             HB_SIZE nSize, HB_MAXINT timeout )
 {
-   long lSent = nSize > LONG_MAX ? LONG_MAX : static_cast< long >( nSize );
+   long lSent = nSize > LONG_MAX ? LONG_MAX : static_cast<long>(nSize);
    HB_ERRCODE errcode;
 
    if( timeout == -1 )
@@ -258,15 +258,15 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data,
 
 static HB_BOOL s_fileEof( PHB_FILE pFile )
 {
-   hb_fsSetError( 0 );
+   hb_fsSetError(0);
    return pFile->fEof;
 }
 
 static void s_fileFlush( PHB_FILE pFile, HB_BOOL fDirty )
 {
-   HB_SYMBOL_UNUSED( fDirty );
+   HB_SYMBOL_UNUSED(fDirty);
 
-   hb_sockexFlush( pFile->sock, pFile->timeout, HB_FALSE );
+   hb_sockexFlush( pFile->sock, pFile->timeout, false );
 }
 
 static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
@@ -277,18 +277,18 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
       {
          HB_MAXINT timeout = pFile->timeout;
 
-         if( HB_IS_NUMERIC( pValue ) )
+         if( HB_IS_NUMERIC(pValue) )
             pFile->timeout = hb_itemGetNInt( pValue );
          hb_itemPutNInt( pValue, timeout );
-         return HB_TRUE;
+         return true;
       }
       case HB_VF_SHUTDOWN:
       {
          HB_SOCKET sd = hb_sockexGetHandle( pFile->sock );
 
-         if( HB_IS_NUMERIC( pValue ) && sd != HB_NO_SOCKET )
+         if( HB_IS_NUMERIC(pValue) && sd != HB_NO_SOCKET )
          {
-            switch( hb_itemGetNI( pValue ) )
+            switch( hb_itemGetNI(pValue) )
             {
                case FO_READ:
                   hb_socketShutdown( sd, HB_SOCKET_SHUT_RD );
@@ -302,24 +302,24 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
             }
          }
          hb_itemClear( pValue );
-         return HB_TRUE;
+         return true;
       }
       case HB_VF_RDHANDLE:
       case HB_VF_WRHANDLE:
-         hb_itemPutNInt( pValue, ( HB_NHANDLE ) hb_sockexGetHandle( pFile->sock ) );
-         return HB_TRUE;
+         hb_itemPutNInt( pValue, static_cast<HB_NHANDLE>(hb_sockexGetHandle(pFile->sock)) );
+         return true;
 
       case HB_VF_IONAME:
          hb_itemPutC( pValue, FILE_PREFIX );
-         return HB_TRUE;
+         return true;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 static HB_FHANDLE s_fileHandle( PHB_FILE pFile )
 {
-   return ( HB_FHANDLE ) ( pFile ? hb_sockexGetHandle( pFile->sock ) : HB_NO_SOCKET );
+   return static_cast<HB_FHANDLE>( pFile ? hb_sockexGetHandle( pFile->sock ) : HB_NO_SOCKET );
 }
 
 static HB_FILE_FUNCS s_fileFuncs =
@@ -366,7 +366,7 @@ static HB_FILE_FUNCS s_fileFuncs =
 
 static PHB_FILE s_fileNew( PHB_SOCKEX sock, HB_MAXINT timeout )
 {
-   PHB_FILE pFile = static_cast< PHB_FILE >( hb_xgrab( sizeof( HB_FILE ) ) );
+   PHB_FILE pFile = static_cast<PHB_FILE>(hb_xgrab(sizeof(HB_FILE)));
 
    pFile->pFuncs  = &s_fileFuncs;
    pFile->sock    = sock;
@@ -383,13 +383,13 @@ static PHB_FILE hb_fileFromSocket( PHB_SOCKEX sock, HB_MAXINT timeout )
 
 HB_FUNC( HB_VFFROMSOCKET )
 {
-   PHB_SOCKEX sock = hb_sockexParam( 1 );
-   PHB_FILE pFile = hb_fileFromSocket( sock, hb_parnintdef( 2, -1 ) );
+   PHB_SOCKEX sock = hb_sockexParam(1);
+   PHB_FILE pFile = hb_fileFromSocket( sock, hb_parnintdef(2, -1) );
 
    if( pFile )
    {
-      hb_sockexItemClear( hb_param( 1, HB_IT_POINTER ) );
-      hb_fileItemPut( hb_param( -1, HB_IT_ANY ), pFile );
+      hb_sockexItemClear( hb_param(1, Harbour::Item::POINTER) );
+      hb_fileItemPut( hb_param(-1, Harbour::Item::ANY), pFile );
    }
 }
 
@@ -400,9 +400,9 @@ HB_CALL_ON_STARTUP_BEGIN( _hb_file_tcpio_init_ )
    hb_fileRegisterPart( &s_fileFuncs );
 HB_CALL_ON_STARTUP_END( _hb_file_tcpio_init_ )
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_file_tcpio_init_
-#elif defined( HB_DATASEG_STARTUP )
+#elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY  HB_DATASEG_FUNC( _hb_file_tcpio_init_ )
    #include "hbiniseg.h"
 #endif

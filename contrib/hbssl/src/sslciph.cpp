@@ -48,13 +48,13 @@
 
 HB_FUNC( SSL_CIPHER_DESCRIPTION )
 {
-   if( HB_ISPOINTER( 1 ) )
+   if( HB_ISPOINTER(1) )
    {
-      char buffer[ 128 ];
+      char buffer[128];
 
-      buffer[ 0 ] = '\0';
+      buffer[0] = '\0';
 
-      hb_retc( hb_parptr( 1 ) ? SSL_CIPHER_description( static_cast< SSL_CIPHER * >( hb_parptr( 1 ) ), buffer, sizeof( buffer ) ) : nullptr );
+      hb_retc(hb_parptr(1) ? SSL_CIPHER_description(static_cast<SSL_CIPHER*>(hb_parptr(1)), buffer, sizeof(buffer)) : nullptr);
    }
    else
    {
@@ -64,13 +64,13 @@ HB_FUNC( SSL_CIPHER_DESCRIPTION )
 
 HB_FUNC( SSL_CIPHER_GET_BITS )
 {
-   if( HB_ISPOINTER( 1 ) )
+   if( HB_ISPOINTER(1) )
    {
       int alg_bits = 0;
 
-      hb_retni( hb_parptr( 1 ) ? SSL_CIPHER_get_bits( static_cast< SSL_CIPHER * >( hb_parptr( 1 ) ), &alg_bits ) : 0 );
+      hb_retni(hb_parptr(1) ? SSL_CIPHER_get_bits(static_cast<SSL_CIPHER*>(hb_parptr(1)), &alg_bits) : 0);
 
-      hb_storni( alg_bits, 2 );
+      hb_storni(alg_bits, 2);
    }
    else
    {
@@ -80,9 +80,9 @@ HB_FUNC( SSL_CIPHER_GET_BITS )
 
 HB_FUNC( SSL_CIPHER_GET_NAME )
 {
-   if( HB_ISPOINTER( 1 ) )
+   if( HB_ISPOINTER(1) )
    {
-      hb_retc( hb_parptr( 1 ) ? SSL_CIPHER_get_name( static_cast< SSL_CIPHER * >( hb_parptr( 1 ) ) ) : nullptr );
+      hb_retc(hb_parptr(1) ? SSL_CIPHER_get_name(static_cast<SSL_CIPHER*>(hb_parptr(1))) : nullptr);
    }
    else
    {
@@ -92,9 +92,9 @@ HB_FUNC( SSL_CIPHER_GET_NAME )
 
 HB_FUNC( SSL_CIPHER_GET_VERSION )
 {
-   if( HB_ISPOINTER( 1 ) )
+   if( HB_ISPOINTER(1) )
    {
-      hb_retc( hb_parptr( 1 ) ? SSL_CIPHER_get_version( static_cast< SSL_CIPHER * >( hb_parptr( 1 ) ) ) : nullptr );
+      hb_retc(hb_parptr(1) ? SSL_CIPHER_get_version(static_cast<SSL_CIPHER*>(hb_parptr(1))) : nullptr);
    }
    else
    {

@@ -32,30 +32,30 @@ HB_FUNC( FT_NUMLOCK )
    int        iState = 0;
    HB_GT_INFO gtInfo;
 
-   memset( &gtInfo, 0, sizeof( gtInfo ) );
+   memset( &gtInfo, 0, sizeof(gtInfo) );
    hb_gtInfo( HB_GTI_KBDSHIFTS, &gtInfo );
    if( gtInfo.pResult )
    {
-      iState         = hb_itemGetNI( gtInfo.pResult );
+      iState         = hb_itemGetNI(gtInfo.pResult);
       gtInfo.pNewVal = gtInfo.pResult;
       gtInfo.pResult = nullptr;
    }
 
-   if( HB_ISLOG( 1 ) )
+   if( HB_ISLOG(1) )
    {
-      int iNewState = hb_parl( 1 ) ? ( iState | HB_GTI_KBD_NUMLOCK ) : ( iState & ~HB_GTI_KBD_NUMLOCK );
+      int iNewState = hb_parl(1) ? ( iState | HB_GTI_KBD_NUMLOCK ) : ( iState & ~HB_GTI_KBD_NUMLOCK );
       gtInfo.pNewVal = hb_itemPutNI( gtInfo.pNewVal, iNewState );
       hb_gtInfo( HB_GTI_KBDSHIFTS, &gtInfo );
    }
 
    if( gtInfo.pNewVal )
    {
-      hb_itemRelease( gtInfo.pNewVal );
+      hb_itemRelease(gtInfo.pNewVal);
    }
    if( gtInfo.pResult )
    {
-      hb_itemRelease( gtInfo.pResult );
+      hb_itemRelease(gtInfo.pResult);
    }
 
-   hb_retl( ( iState & HB_GTI_KBD_NUMLOCK ) != 0 );
+   hb_retl((iState & HB_GTI_KBD_NUMLOCK) != 0);
 }

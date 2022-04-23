@@ -121,8 +121,8 @@ typedef struct _HB_CONCLI
    int                 level;
    int                 strategy;
    int                 passlen;
-   char                passwd[ NETIO_PASSWD_MAX ];
-   char                server[ 1 ];
+   char                passwd[NETIO_PASSWD_MAX];
+   char                server[1];
 }
 HB_CONCLI, * PHB_CONCLI;
 
@@ -141,8 +141,8 @@ typedef struct
    int  level;
    int  strategy;
    int  passlen;
-   char server[ NETIO_SERVERNAME_MAX ];
-   char passwd[ NETIO_PASSWD_MAX ];
+   char server[NETIO_SERVERNAME_MAX];
+   char passwd[NETIO_PASSWD_MAX];
 } HB_CONDATA, * PHB_CONDATA;
 
 /* MT macros */
@@ -150,7 +150,7 @@ typedef struct
 #define HB_NETIO_UNLOCK()  hb_threadLeaveCriticalSection( &s_netioMtx )
 static HB_CRITICAL_NEW( s_netioMtx );
 
-static HB_TSD_NEW( s_conData, sizeof( HB_CONDATA ), nullptr, nullptr );
+static HB_TSD_NEW( s_conData, sizeof(HB_CONDATA), nullptr, nullptr );
 
 static PHB_CONCLI s_connections = nullptr;
 
@@ -171,21 +171,18 @@ static HB_BOOL s_fInit = HB_TRUE;
 
 static const HB_FILE_FUNCS * s_fileMethods( void );
 
-static void hb_errRT_NETIO( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode,
-                            HB_ERRCODE errOsCode, const char * szDescription,
-                            const char * szOperation )
+static void hb_errRT_NETIO( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, HB_ERRCODE errOsCode, const char * szDescription, const char * szOperation )
 {
    PHB_ITEM pError;
 
-   pError = hb_errRT_New( ES_ERROR, "NETIO", errGenCode, errSubCode,
-                          szDescription, szOperation, errOsCode, EF_NONE );
+   pError = hb_errRT_New( ES_ERROR, "NETIO", errGenCode, errSubCode, szDescription, szOperation, errOsCode, EF_NONE );
    hb_errLaunch( pError );
-   hb_itemRelease( pError );
+   hb_itemRelease(pError);
 }
 
 static long s_fileRecvAll( PHB_CONCLI conn, void * buffer, long len )
 {
-   HB_BYTE * ptr = ( HB_BYTE * ) buffer;
+   HB_BYTE * ptr = static_cast<HB_BYTE*>(buffer);
    long lRead = 0, l;
    HB_MAXINT timeout = conn->timeout;
    HB_MAXUINT timer = hb_timerInit( timeout );
@@ -206,7 +203,7 @@ static long s_fileRecvAll( PHB_CONCLI conn, void * buffer, long len )
 
 static long s_fileRecvTest( PHB_CONCLI conn, void * buffer, long len )
 {
-   HB_BYTE * ptr = ( HB_BYTE * ) buffer;
+   HB_BYTE * ptr = static_cast<HB_BYTE*>(buffer);
    long lRead = 0, l;
    HB_MAXINT timeout = 0;
 
@@ -260,7 +257,7 @@ static PHB_SRVDATA s_fileFindSrvData( PHB_CONCLI conn, int iStreamID, int iType 
 
 static int s_fileNewSrvData( PHB_CONCLI conn, int iType )
 {
-   PHB_SRVDATA pSrvData = static_cast< PHB_SRVDATA >( hb_xgrabz( sizeof( HB_SRVDATA ) ) );
+   PHB_SRVDATA pSrvData = static_cast<PHB_SRVDATA>(hb_xgrabz(sizeof(HB_SRVDATA)));
 
    pSrvData->id = s_fileGenSrvDataID( conn );
    pSrvData->type = iType;
@@ -269,7 +266,7 @@ static int s_fileNewSrvData( PHB_CONCLI conn, int iType )
    else if( iType == NETIO_SRVDATA )
       pSrvData->maxsize = 0x10000;
    pSrvData->next = conn->srvdata;
-   if( ! conn->srvdata )
+   if( !conn->srvdata )
       hb_atomic_inc( &conn->used );
    conn->srvdata = pSrvData;
    return pSrvData->id;
@@ -286,23 +283,23 @@ static HB_BOOL s_fileCloseSrvData( PHB_CONCLI conn, int iStreamID )
          PHB_SRVDATA pSrvData = *pSrvDataPtr;
          *pSrvDataPtr = pSrvData->next;
          if( pSrvData->array )
-            hb_itemRelease( pSrvData->array );
+            hb_itemRelease(pSrvData->array);
          if( pSrvData->data )
-            hb_xfree( pSrvData->data );
-         hb_xfree( pSrvData );
-         if( ! conn->srvdata )
+            hb_xfree(pSrvData->data);
+         hb_xfree(pSrvData);
+         if( !conn->srvdata )
             hb_atomic_dec( &conn->used );
-         return HB_TRUE;
+         return true;
       }
       pSrvDataPtr = &( *pSrvDataPtr )->next;
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 static HB_BOOL s_fileRecvSrvData( PHB_CONCLI conn, long len, int iStreamID, int iType )
 {
-   char * buffer = static_cast< char * >( hb_xgrab( len ) );
+   char * buffer = static_cast<char*>(hb_xgrab(len));
    HB_BOOL fResult = HB_FALSE;
 
    if( s_fileRecvAll( conn, buffer, len ) == len )
@@ -324,16 +321,16 @@ static HB_BOOL s_fileRecvSrvData( PHB_CONCLI conn, long len, int iStreamID, int 
                   if( nSize == 0 )
                   {
                      if( pSrvData->array == nullptr )
-                        pSrvData->array = hb_itemArrayNew( 0 );
-                     if( hb_arrayLen( pSrvData->array ) < pSrvData->maxsize )
+                        pSrvData->array = hb_itemArrayNew(0);
+                     if( hb_arrayLen(pSrvData->array) < pSrvData->maxsize )
                         hb_arrayAddForward( pSrvData->array, pItem );
                   }
-                  hb_itemRelease( pItem );
+                  hb_itemRelease(pItem);
                }
             }
             else if( iType == NETIO_SRVDATA )
             {
-               long lmax = static_cast< long >( pSrvData->maxsize - pSrvData->size );
+               long lmax = static_cast<long>(pSrvData->maxsize - pSrvData->size);
 
                if( len > lmax )
                   len = lmax;
@@ -342,8 +339,7 @@ static HB_BOOL s_fileRecvSrvData( PHB_CONCLI conn, long len, int iStreamID, int 
                   pSrvData->bufsize = ( pSrvData->size + len ) << 1;
                   if( pSrvData->bufsize > pSrvData->maxsize )
                      pSrvData->bufsize = pSrvData->maxsize;
-                  pSrvData->data = static_cast< char * >( hb_xrealloc( pSrvData->data,
-                                                           pSrvData->bufsize ) );
+                  pSrvData->data = static_cast<char*>(hb_xrealloc(pSrvData->data, pSrvData->bufsize));
                }
                memcpy( pSrvData->data + pSrvData->size, buffer, len );
                pSrvData->size += len;
@@ -357,16 +353,14 @@ static HB_BOOL s_fileRecvSrvData( PHB_CONCLI conn, long len, int iStreamID, int 
       conn->errcode = hb_socketGetError();
       hb_errRT_NETIO( EG_READ, 1001, conn->errcode, nullptr, HB_ERR_FUNCNAME );
    }
-   hb_xfree( buffer );
+   hb_xfree(buffer);
 
    return fResult;
 }
 
-static HB_BOOL s_fileSendMsg( PHB_CONCLI conn, HB_BYTE * msgbuf,
-                              const void * data, long len,
-                              HB_BOOL fWait, HB_BOOL fNoError )
+static HB_BOOL s_fileSendMsg( PHB_CONCLI conn, HB_BYTE * msgbuf, const void * data, long len, HB_BOOL fWait, HB_BOOL fNoError )
 {
-   HB_BYTE buffer[ 2048 ];
+   HB_BYTE buffer[2048];
    HB_BYTE * msg, * ptr = nullptr;
    HB_LONG lSent = 0, l;
    HB_BOOL fResult = HB_FALSE;
@@ -379,8 +373,8 @@ static HB_BOOL s_fileSendMsg( PHB_CONCLI conn, HB_BYTE * msgbuf,
    else
    {
       len += NETIO_MSGLEN;
-      if( len > static_cast< long >( sizeof( buffer ) ) )
-         msg = ptr = static_cast< HB_BYTE * >( hb_xgrab( len ) );
+      if( len > static_cast<long>(sizeof(buffer)) )
+         msg = ptr = static_cast<HB_BYTE*>(hb_xgrab(len));
       else
          msg = buffer;
       memcpy( msg, msgbuf, NETIO_MSGLEN );
@@ -396,14 +390,14 @@ static HB_BOOL s_fileSendMsg( PHB_CONCLI conn, HB_BYTE * msgbuf,
    }
 
    if( ptr )
-      hb_xfree( ptr );
+      hb_xfree(ptr);
 
    if( lSent == len )
    {
-      if( hb_sockexFlush( conn->sock, conn->timeout, HB_FALSE ) != 0 )
+      if( hb_sockexFlush( conn->sock, conn->timeout, false ) != 0 )
       {
          conn->errcode = hb_socketGetError();
-         if( ! fNoError )
+         if( !fNoError )
             hb_errRT_NETIO( EG_WRITE, 1002, conn->errcode, nullptr, HB_ERR_FUNCNAME );
       }
       else if( fWait )
@@ -417,7 +411,7 @@ static HB_BOOL s_fileSendMsg( PHB_CONCLI conn, HB_BYTE * msgbuf,
             if( s_fileRecvAll( conn, msgbuf, NETIO_MSGLEN ) != NETIO_MSGLEN )
             {
                conn->errcode = hb_socketGetError();
-               if( ! fNoError )
+               if( !fNoError )
                   hb_errRT_NETIO( EG_READ, 1003, conn->errcode, nullptr, HB_ERR_FUNCNAME );
                break;
             }
@@ -426,12 +420,12 @@ static HB_BOOL s_fileSendMsg( PHB_CONCLI conn, HB_BYTE * msgbuf,
 
             if( iResult == NETIO_SRVITEM || iResult == NETIO_SRVDATA )
             {
-               int iStreamID = HB_GET_LE_UINT32( &msgbuf[ 4 ] );
+               int iStreamID = HB_GET_LE_UINT32( &msgbuf[4] );
 
-               len = HB_GET_LE_INT32( &msgbuf[ 8 ] );
+               len = HB_GET_LE_INT32( &msgbuf[8] );
                if( len > 0 )
                {
-                  if( ! s_fileRecvSrvData( conn, len, iStreamID, iResult ) )
+                  if( !s_fileRecvSrvData( conn, len, iStreamID, iResult ) )
                      break;
                }
             }
@@ -439,13 +433,13 @@ static HB_BOOL s_fileSendMsg( PHB_CONCLI conn, HB_BYTE * msgbuf,
             {
                if( iResult == NETIO_ERROR )
                {
-                  conn->errcode = static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 4 ] ) );
+                  conn->errcode = static_cast<HB_ERRCODE>(HB_GET_LE_UINT32(&msgbuf[4]));
                   hb_fsSetError( conn->errcode );
                }
                else if( iResult != iMsg )
                {
                   conn->errcode = NETIO_ERR_UNKNOWN_COMMAND;
-                  if( ! fNoError )
+                  if( !fNoError )
                      hb_errRT_NETIO( EG_UNSUPPORTED, 1004, 0, nullptr, HB_ERR_FUNCNAME );
                }
                else
@@ -460,7 +454,7 @@ static HB_BOOL s_fileSendMsg( PHB_CONCLI conn, HB_BYTE * msgbuf,
    else
    {
       conn->errcode = hb_socketGetError();
-      if( ! fNoError )
+      if( !fNoError )
          hb_errRT_NETIO( EG_WRITE, 1005, conn->errcode, nullptr, HB_ERR_FUNCNAME );
    }
 
@@ -469,7 +463,7 @@ static HB_BOOL s_fileSendMsg( PHB_CONCLI conn, HB_BYTE * msgbuf,
 
 static HB_BOOL s_fileProcessData( PHB_CONCLI conn )
 {
-   HB_BYTE msgbuf[ NETIO_MSGLEN ];
+   HB_BYTE msgbuf[NETIO_MSGLEN];
    HB_BOOL fResult = HB_TRUE;
    int iMsg, iStreamID;
 
@@ -482,11 +476,11 @@ static HB_BOOL s_fileProcessData( PHB_CONCLI conn )
          iMsg = HB_GET_LE_INT32( msgbuf );
          if( iMsg == NETIO_SRVITEM || iMsg == NETIO_SRVDATA )
          {
-            iStreamID = HB_GET_LE_INT32( &msgbuf[ 4 ] );
-            len = HB_GET_LE_INT32( &msgbuf[ 8 ] );
+            iStreamID = HB_GET_LE_INT32( &msgbuf[4] );
+            len = HB_GET_LE_INT32( &msgbuf[8] );
             if( len > 0 )
             {
-               if( ! s_fileRecvSrvData( conn, len, iStreamID, iMsg ) )
+               if( !s_fileRecvSrvData( conn, len, iStreamID, iMsg ) )
                {
                   fResult = HB_FALSE;
                   break;
@@ -495,7 +489,7 @@ static HB_BOOL s_fileProcessData( PHB_CONCLI conn )
          }
          else if( iMsg == NETIO_ERROR )
          {
-            conn->errcode = static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 4 ] ) );
+            conn->errcode = static_cast<HB_ERRCODE>(HB_GET_LE_UINT32(&msgbuf[4]));
             hb_fsSetError( conn->errcode );
          }
          else if( iMsg != NETIO_SYNC )
@@ -524,37 +518,34 @@ static HB_BOOL s_fileProcessData( PHB_CONCLI conn )
 static void s_fileConFree( PHB_CONCLI conn )
 {
    if( conn->sock )
-      hb_sockexClose( conn->sock, HB_TRUE );
+      hb_sockexClose( conn->sock, true );
    while( conn->srvdata )
    {
       PHB_SRVDATA pSrvData = conn->srvdata;
       conn->srvdata = pSrvData->next;
       if( pSrvData->array )
-         hb_itemRelease( pSrvData->array );
+         hb_itemRelease(pSrvData->array);
       if( pSrvData->data )
-         hb_xfree( pSrvData->data );
-      hb_xfree( pSrvData );
+         hb_xfree(pSrvData->data);
+      hb_xfree(pSrvData);
    }
    if( conn->mutex )
-      hb_itemRelease( conn->mutex );
+      hb_itemRelease(conn->mutex);
    if( conn->path )
    {
       hb_atomic_dec( &s_pathCount );
-      hb_xfree( conn->path );
+      hb_xfree(conn->path);
    }
-   hb_xfree( conn );
+   hb_xfree(conn);
 }
 
-static PHB_CONCLI s_fileConNew( HB_SOCKET sd, const char * pszServer,
-                                int iPort, int iTimeOut,
-                                const char * pszPasswd, int iPassLen,
-                                int iLevel, int iStrategy )
+static PHB_CONCLI s_fileConNew( HB_SOCKET sd, const char * pszServer, int iPort, int iTimeOut, const char * pszPasswd, int iPassLen, int iLevel, int iStrategy )
 {
    PHB_CONCLI conn;
    int iLen;
 
-   iLen = static_cast< int >( strlen( pszServer ) );
-   conn = static_cast< PHB_CONCLI >( hb_xgrab( sizeof( HB_CONCLI ) + iLen ) );
+   iLen = static_cast<int>(strlen(pszServer));
+   conn = static_cast<PHB_CONCLI>(hb_xgrab(sizeof(HB_CONCLI) + iLen));
    hb_atomic_set( &conn->used, 1 );
    hb_atomic_set( &conn->usrcount, 0 );
    conn->mutex = hb_threadMutexCreate();
@@ -574,8 +565,7 @@ static PHB_CONCLI s_fileConNew( HB_SOCKET sd, const char * pszServer,
    if( iLevel == HB_ZLIB_COMPRESSION_DISABLE )
       conn->sock = hb_sockexNew( sd, nullptr, nullptr );
    else
-      conn->sock = hb_sockexNewZNet( sd, pszPasswd, iPassLen,
-                                     iLevel, iStrategy );
+      conn->sock = hb_sockexNewZNet( sd, pszPasswd, iPassLen, iLevel, iStrategy );
 
    if( conn->sock == nullptr )
    {
@@ -583,7 +573,7 @@ static PHB_CONCLI s_fileConNew( HB_SOCKET sd, const char * pszServer,
       conn = nullptr;
    }
    else
-      hb_sockexSetShutDown( conn->sock, HB_TRUE );
+      hb_sockexSetShutDown( conn->sock, true );
 
    return conn;
 }
@@ -683,7 +673,7 @@ static void s_fileUsrConnect( PHB_CONCLI conn )
 
 static HB_BOOL s_fileConLock( PHB_CONCLI conn )
 {
-   return ! conn->mutex || hb_threadMutexLock( conn->mutex );
+   return !conn->mutex || hb_threadMutexLock( conn->mutex );
 }
 
 static void s_fileConUnlock( PHB_CONCLI conn )
@@ -704,7 +694,7 @@ static PHB_CONCLI s_fileNameConFind( const char ** pFileName, HB_BOOL fLock )
       {
          if( conn->path )
          {
-            int iLen = static_cast< int >( strlen( conn->path ) );
+            int iLen = static_cast<int>(strlen(conn->path));
 #ifdef HB_OS_UNIX
             if( strncmp( *pFileName, conn->path, iLen ) == 0 )
 #else
@@ -726,10 +716,9 @@ static PHB_CONCLI s_fileNameConFind( const char ** pFileName, HB_BOOL fLock )
 }
 
 
-static void s_fileGetConnParam( const char ** pszServer, int * piPort, int * piTimeOut,
-                                const char ** pszPasswd, int * piPassLen )
+static void s_fileGetConnParam( const char ** pszServer, int * piPort, int * piTimeOut, const char ** pszPasswd, int * piPassLen )
 {
-   PHB_CONDATA pConData = ( PHB_CONDATA ) hb_stackTestTSD( &s_conData );
+   PHB_CONDATA pConData = static_cast<PHB_CONDATA>(hb_stackTestTSD(&s_conData));
 
 
    if( pConData == nullptr )
@@ -748,15 +737,12 @@ static void s_fileGetConnParam( const char ** pszServer, int * piPort, int * piT
    }
 }
 
-static const char * s_fileDecode( const char * pszFileName,
-                                  char * buffer, const char ** pServer,
-                                  int * piPort, int * piTimeOut,
-                                  const char ** pPasswd, int * piPassLen,
-                                  int * piLevel, int * piStrategy )
+static const char * s_fileDecode( const char * pszFileName, char * buffer, const char ** pServer, int * piPort, int * piTimeOut,
+                                  const char ** pPasswd, int * piPassLen, int * piLevel, int * piStrategy )
 {
-   HB_SYMBOL_UNUSED( piTimeOut );
-   HB_SYMBOL_UNUSED( piLevel );
-   HB_SYMBOL_UNUSED( piStrategy );
+   HB_SYMBOL_UNUSED(piTimeOut);
+   HB_SYMBOL_UNUSED(piLevel);
+   HB_SYMBOL_UNUSED(piStrategy);
 
    if( pszFileName )
    {
@@ -770,27 +756,26 @@ static const char * s_fileDecode( const char * pszFileName,
        */
       const char * psz, * pth = nullptr;
 
-      if( ( pszFileName[ 0 ] == '/' || pszFileName[ 0 ] == '\\' ) &&
-          pszFileName[ 0 ] == pszFileName[ 1 ] )
+      if( ( pszFileName[0] == '/' || pszFileName[0] == '\\' ) && pszFileName[0] == pszFileName[1] )
       {
          pszFileName += 2;
          pth = strchr( pszFileName, '/' );
          psz = strchr( pszFileName, '\\' );
-         if( ! pth || ( psz && psz < pth ) )
+         if( !pth || ( psz && psz < pth ) )
          {
             pth = psz;
-            if( ! pth )
+            if( !pth )
                pth = pszFileName + strlen( pszFileName );
          }
       }
 
       psz = strchr( pszFileName, ':' );
-      if( pth && ( ! psz || pth < psz ) )
+      if( pth && ( !psz || pth < psz ) )
          psz = pth;
 
       if( psz )
       {
-         int iLen = static_cast< int >( psz - pszFileName );
+         int iLen = static_cast<int>(psz - pszFileName);
 
          if( pth || iLen == 0 || iLen > 1 )
          {
@@ -802,17 +787,17 @@ static const char * s_fileDecode( const char * pszFileName,
                *pServer = buffer;
             }
             pszFileName = psz + 1;
-            if( ! pth || psz < pth )
+            if( !pth || psz < pth )
             {
-               char port_buf[ 10 ], c;
+               char port_buf[10], c;
 
                iLen = 0;
-               while( HB_ISDIGIT( pszFileName[ iLen ] ) && iLen < ( int ) sizeof( port_buf ) - 1 )
+               while( HB_ISDIGIT(pszFileName[iLen]) && iLen < ( int ) sizeof(port_buf) - 1 )
                {
-                  port_buf[ iLen ] = pszFileName[ iLen ];
+                  port_buf[iLen] = pszFileName[iLen];
                   ++iLen;
                }
-               c = pszFileName[ iLen ];
+               c = pszFileName[iLen];
                if( c == ':' || c == '/' || c == '\\' )
                {
                   if( iLen > 0 )
@@ -820,24 +805,24 @@ static const char * s_fileDecode( const char * pszFileName,
                      int iOverflow;
                      HB_MAXINT llPort;
 
-                     port_buf[ iLen ] = '\0';
+                     port_buf[iLen] = '\0';
                      llPort = hb_strValInt( port_buf, &iOverflow );
 
-                     if( ! iOverflow && llPort > 0 && llPort < 0x10000 )
+                     if( !iOverflow && llPort > 0 && llPort < 0x10000 )
                      {
                         pszFileName += iLen;
-                        *piPort = static_cast< int >( llPort );
+                        *piPort = static_cast<int>(llPort);
                      }
                   }
                   if( c == ':' )
                   {
                      ++pszFileName;
                      iLen = 0;
-                     while( pszFileName[ iLen ] && pszFileName[ iLen ] != ':' )
+                     while( pszFileName[iLen] && pszFileName[iLen] != ':' )
                      {
                         ++iLen;
                      }
-                     if( pszFileName[ iLen ] == ':' )
+                     if( pszFileName[iLen] == ':' )
                      {
                         if( pPasswd )
                            *pPasswd = pszFileName;
@@ -857,19 +842,18 @@ static const char * s_fileDecode( const char * pszFileName,
    return pszFileName;
 }
 
-static PHB_CONCLI s_fileConnCheck( PHB_CONCLI conn, const char ** pFileName,
-                                   HB_BOOL fDefault, HB_BOOL * pfResult )
+static PHB_CONCLI s_fileConnCheck( PHB_CONCLI conn, const char ** pFileName, HB_BOOL fDefault, HB_BOOL * pfResult )
 {
    const char * pszFileName = *pFileName;
 
    *pfResult = HB_TRUE;
    if( hb_strnicmp( pszFileName, NETIO_FILE_PREFIX, NETIO_FILE_PREFIX_LEN ) == 0 )
    {
-      char server[ NETIO_SERVERNAME_MAX ];
+      char server[NETIO_SERVERNAME_MAX];
       const char * pszServer = nullptr;
       int iPort = 0;
 
-      if( ! fDefault )
+      if( !fDefault )
       {
          pszServer = conn->server;
          iPort = conn->port;
@@ -877,9 +861,7 @@ static PHB_CONCLI s_fileConnCheck( PHB_CONCLI conn, const char ** pFileName,
       else
          s_fileGetConnParam( &pszServer, &iPort, nullptr, nullptr, nullptr );
 
-      pszFileName = s_fileDecode( pszFileName + NETIO_FILE_PREFIX_LEN, server,
-                                  &pszServer, &iPort, nullptr,
-                                  nullptr, nullptr, nullptr, nullptr );
+      pszFileName = s_fileDecode( pszFileName + NETIO_FILE_PREFIX_LEN, server, &pszServer, &iPort, nullptr, nullptr, nullptr, nullptr, nullptr );
       if( iPort != conn->port )
          *pfResult = HB_FALSE;
       else
@@ -893,7 +875,7 @@ static PHB_CONCLI s_fileConnCheck( PHB_CONCLI conn, const char ** pFileName,
                conn = nullptr;
             }
             if( pszIpAddres )
-               hb_xfree( pszIpAddres );
+               hb_xfree(pszIpAddres);
          }
          if( conn )
             *pFileName = pszFileName;
@@ -905,7 +887,7 @@ static PHB_CONCLI s_fileConnCheck( PHB_CONCLI conn, const char ** pFileName,
       HB_NETIO_LOCK();
       if( conn->path )
       {
-         int iLen = static_cast< int >( strlen( conn->path ) );
+         int iLen = static_cast<int>(strlen(conn->path));
 #ifdef HB_OS_UNIX
          if( strncmp( *pFileName, conn->path, iLen ) == 0 )
 #else
@@ -921,11 +903,8 @@ static PHB_CONCLI s_fileConnCheck( PHB_CONCLI conn, const char ** pFileName,
    return nullptr;
 }
 
-static PHB_CONCLI s_fileConnect( const char ** pFileName,
-                                 const char * pszServer,
-                                 int iPort, int iTimeOut, HB_BOOL fNoError,
-                                 const char * pszPasswd, int iPassLen,
-                                 int iLevel, int iStrategy )
+static PHB_CONCLI s_fileConnect( const char ** pFileName, const char * pszServer, int iPort, int iTimeOut, HB_BOOL fNoError,
+                                 const char * pszPasswd, int iPassLen, int iLevel, int iStrategy )
 {
    PHB_CONCLI conn = nullptr;
 
@@ -934,20 +913,18 @@ static PHB_CONCLI s_fileConnect( const char ** pFileName,
       if( hb_strnicmp( *pFileName, NETIO_FILE_PREFIX, NETIO_FILE_PREFIX_LEN ) == 0 )
          *pFileName += NETIO_FILE_PREFIX_LEN;
       else
-         conn = s_fileNameConFind( pFileName, HB_TRUE );
+         conn = s_fileNameConFind( pFileName, true );
    }
 
    if( conn == nullptr )
    {
-      char server[ NETIO_SERVERNAME_MAX ];
+      char server[NETIO_SERVERNAME_MAX];
       char * pszIpAddres;
 
       s_fileGetConnParam( &pszServer, &iPort, &iTimeOut, &pszPasswd, &iPassLen );
 
       if( pFileName )
-         *pFileName = s_fileDecode( *pFileName, server,
-                                    &pszServer, &iPort, &iTimeOut,
-                                    &pszPasswd, &iPassLen, &iLevel, &iStrategy );
+         *pFileName = s_fileDecode( *pFileName, server, &pszServer, &iPort, &iTimeOut, &pszPasswd, &iPassLen, &iLevel, &iStrategy );
 
       if( iLevel == HB_ZLIB_COMPRESSION_DISABLE && iPassLen )
          iLevel = HB_ZLIB_COMPRESSION_DEFAULT;
@@ -967,24 +944,21 @@ static PHB_CONCLI s_fileConnect( const char ** pFileName,
 
             if( hb_socketInetAddr( &pSockAddr, &uiLen, pszIpAddres, iPort ) )
             {
-               hb_socketSetKeepAlive( sd, HB_TRUE );
+               hb_socketSetKeepAlive( sd, true );
                if( hb_socketConnect( sd, pSockAddr, uiLen, iTimeOut ) == 0 )
                {
-                  hb_socketSetNoDelay( sd, HB_TRUE );
-                  conn = s_fileConNew( sd, pszIpAddres, iPort, iTimeOut,
-                                       pszPasswd, iPassLen, iLevel, iStrategy );
+                  hb_socketSetNoDelay( sd, true );
+                  conn = s_fileConNew( sd, pszIpAddres, iPort, iTimeOut, pszPasswd, iPassLen, iLevel, iStrategy );
                   if( conn )
                   {
-                     HB_BYTE msgbuf[ NETIO_MSGLEN ];
+                     HB_BYTE msgbuf[NETIO_MSGLEN];
                      HB_U16 len = ( HB_U16 ) strlen( NETIO_LOGINSTRID );
 
-                     HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_LOGIN );
-                     HB_PUT_LE_UINT16( &msgbuf[ 4 ], len );
-                     memset( msgbuf + 6, '\0', sizeof( msgbuf ) - 6 );
+                     HB_PUT_LE_UINT32( &msgbuf[0], NETIO_LOGIN );
+                     HB_PUT_LE_UINT16( &msgbuf[4], len );
+                     memset( msgbuf + 6, '\0', sizeof(msgbuf) - 6 );
 
-                     if( ! s_fileSendMsg( conn, msgbuf, NETIO_LOGINSTRID, len,
-                                          HB_TRUE, fNoError ) ||
-                         HB_GET_LE_UINT32( &msgbuf[ 4 ] ) != NETIO_CONNECTED )
+                     if( !s_fileSendMsg( conn, msgbuf, NETIO_LOGINSTRID, len, true, fNoError ) || HB_GET_LE_UINT32( &msgbuf[4] ) != NETIO_CONNECTED )
                      {
                         s_fileConFree( conn );
                         conn = nullptr;
@@ -995,13 +969,13 @@ static PHB_CONCLI s_fileConnect( const char ** pFileName,
                      sd = HB_NO_SOCKET;
                   }
                }
-               hb_xfree( pSockAddr );
+               hb_xfree(pSockAddr);
             }
             if( sd != HB_NO_SOCKET )
                hb_socketClose( sd );
          }
       }
-      hb_xfree( pszIpAddres );
+      hb_xfree(pszIpAddres);
    }
 
    if( conn != nullptr && s_defaultInit )
@@ -1009,8 +983,7 @@ static PHB_CONCLI s_fileConnect( const char ** pFileName,
       HB_NETIO_LOCK();
       if( s_defaultInit )
       {
-         hb_strncpy( s_defaultConn.server, conn->server,
-                     sizeof( s_defaultConn.server ) - 1 );
+         hb_strncpy( s_defaultConn.server, conn->server, sizeof(s_defaultConn.server) - 1 );
          s_defaultConn.port = iPort;
          s_defaultConn.timeout = iTimeOut;
          s_defaultConn.level = iLevel;
@@ -1028,7 +1001,7 @@ static PHB_CONCLI s_fileConnect( const char ** pFileName,
 
 static void s_netio_exit( void * cargo )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
 
    while( s_connections )
    {
@@ -1037,7 +1010,7 @@ static void s_netio_exit( void * cargo )
       s_fileConFree( conn );
    }
 
-   if( ! s_fInit )
+   if( !s_fInit )
    {
       hb_socketCleanup();
       s_fInit = HB_TRUE;
@@ -1046,7 +1019,7 @@ static void s_netio_exit( void * cargo )
 
 static void s_netio_init( void * cargo )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
 
    if( s_fInit )
    {
@@ -1062,18 +1035,18 @@ static void s_netio_init( void * cargo )
  */
 HB_FUNC( NETIO_DECODE )
 {
-   char server[ NETIO_SERVERNAME_MAX ];
-   const char * pszFullName = hb_parc( 1 );
+   char server[NETIO_SERVERNAME_MAX];
+   const char * pszFullName = hb_parc(1);
    const char * pszServer, * pszPasswd, * pszFile;
    int iPort, iTimeOut, iPassLen, iLevel, iStrategy;
 
-   pszServer = hb_parc( 2 );
-   iPort = hb_parni( 3 );
-   iTimeOut = hb_parni( 4 );
-   pszPasswd = hb_parc( 5 );
-   iPassLen = static_cast< int >( hb_parclen( 5 ) );
-   iLevel = hb_parnidef( 6, HB_ZLIB_COMPRESSION_DISABLE );
-   iStrategy = hb_parnidef( 7, HB_ZLIB_STRATEGY_DEFAULT );
+   pszServer = hb_parc(2);
+   iPort = hb_parni(3);
+   iTimeOut = hb_parni(4);
+   pszPasswd = hb_parc(5);
+   iPassLen = static_cast<int>(hb_parclen(5));
+   iLevel = hb_parnidef(6, HB_ZLIB_COMPRESSION_DISABLE);
+   iStrategy = hb_parnidef(7, HB_ZLIB_STRATEGY_DEFAULT);
 
    s_fileGetConnParam( &pszServer, &iPort, &iTimeOut, &pszPasswd, &iPassLen );
 
@@ -1081,9 +1054,7 @@ HB_FUNC( NETIO_DECODE )
    {
       if( hb_strnicmp( pszFullName, NETIO_FILE_PREFIX, NETIO_FILE_PREFIX_LEN ) == 0 )
          pszFullName += NETIO_FILE_PREFIX_LEN;
-      pszFile = s_fileDecode( pszFullName, server,
-                              &pszServer, &iPort, &iTimeOut,
-                              &pszPasswd, &iPassLen, &iLevel, &iStrategy );
+      pszFile = s_fileDecode( pszFullName, server, &pszServer, &iPort, &iTimeOut, &pszPasswd, &iPassLen, &iLevel, &iStrategy );
    }
    else
       pszFile = nullptr;
@@ -1091,19 +1062,19 @@ HB_FUNC( NETIO_DECODE )
    if( iLevel == HB_ZLIB_COMPRESSION_DISABLE && iPassLen )
       iLevel = HB_ZLIB_COMPRESSION_DEFAULT;
 
-   hb_storc( pszServer, 2 );
-   hb_storni( iPort, 3 );
-   hb_storni( iTimeOut, 4 );
-   hb_storclen( pszPasswd, iPassLen, 5 );
-   hb_storni( iLevel, 6 );
-   hb_storni( iStrategy, 7 );
+   hb_storc(pszServer, 2);
+   hb_storni(iPort, 3);
+   hb_storni(iTimeOut, 4);
+   hb_storclen(pszPasswd, iPassLen, 5);
+   hb_storni(iLevel, 6);
+   hb_storni(iStrategy, 7);
    if( pszFile != pszFullName )
       /* the order is important and 1st parameter
        * should be assigned at the end
        */
-      hb_storc( pszFile, 1 );
+      hb_storc(pszFile, 1);
 
-   hb_retl( pszFile != pszFullName );
+   hb_retl(pszFile != pszFullName);
 }
 
 /* netio_Connect( [<cServer>], [<nPort>], [<nTimeOut>], ;
@@ -1111,13 +1082,13 @@ HB_FUNC( NETIO_DECODE )
  */
 HB_FUNC( NETIO_CONNECT )
 {
-   const char * pszServer = hb_parc( 1 ),
-              * pszPasswd = hb_parc( 4 );
-   int iPort = hb_parni( 2 ),
-       iTimeOut = hb_parni( 3 ),
-       iPassLen = static_cast< int >( hb_parclen( 4 ) ),
-       iLevel = hb_parnidef( 5, HB_ZLIB_COMPRESSION_DISABLE ),
-       iStrategy = hb_parnidef( 6, HB_ZLIB_STRATEGY_DEFAULT );
+   const char * pszServer = hb_parc(1),
+              * pszPasswd = hb_parc(4);
+   int iPort = hb_parni(2),
+       iTimeOut = hb_parni(3),
+       iPassLen = static_cast<int>(hb_parclen(4)),
+       iLevel = hb_parnidef(5, HB_ZLIB_COMPRESSION_DISABLE),
+       iStrategy = hb_parnidef(6, HB_ZLIB_STRATEGY_DEFAULT);
    PHB_CONCLI conn;
 
    if( iPassLen > NETIO_PASSWD_MAX )
@@ -1125,15 +1096,14 @@ HB_FUNC( NETIO_CONNECT )
 
    s_netio_init( nullptr );
 
-   conn = s_fileConnect( nullptr, pszServer, iPort, iTimeOut, HB_TRUE,
-                         pszPasswd, iPassLen, iLevel, iStrategy );
+   conn = s_fileConnect( nullptr, pszServer, iPort, iTimeOut, true, pszPasswd, iPassLen, iLevel, iStrategy );
    if( conn )
    {
-      PHB_CONDATA pConData = ( PHB_CONDATA ) hb_stackGetTSD( &s_conData );
+      PHB_CONDATA pConData = static_cast<PHB_CONDATA>(hb_stackGetTSD(&s_conData));
 
       pConData->timeout = conn->timeout;
       pConData->port = conn->port;
-      hb_strncpy( pConData->server, conn->server, sizeof( pConData->server ) - 1 );
+      hb_strncpy( pConData->server, conn->server, sizeof(pConData->server) - 1 );
       pConData->level = conn->level;
       pConData->strategy = conn->strategy;
       pConData->passlen = conn->passlen;
@@ -1143,12 +1113,12 @@ HB_FUNC( NETIO_CONNECT )
       s_fileUsrConnect( conn );
    }
 
-   hb_retl( conn != nullptr );
+   hb_retl(conn != nullptr);
 }
 
 static HB_GARBAGE_FUNC( s_concli_destructor )
 {
-   PHB_CONCLI * conn_ptr = ( PHB_CONCLI * ) Cargo;
+   PHB_CONCLI * conn_ptr = static_cast<PHB_CONCLI*>(Cargo);
 
    if( *conn_ptr )
    {
@@ -1165,8 +1135,7 @@ static const HB_GC_FUNCS s_gcConCliFuncs =
 
 static PHB_CONCLI s_connParam( int iParam )
 {
-   PHB_CONCLI * conn_ptr = ( PHB_CONCLI * )
-                           hb_parptrGC( &s_gcConCliFuncs, iParam );
+   PHB_CONCLI * conn_ptr = static_cast<PHB_CONCLI*>(hb_parptrGC(&s_gcConCliFuncs, iParam));
 
    if( conn_ptr )
    {
@@ -1186,13 +1155,13 @@ static PHB_CONCLI s_connParam( int iParam )
  */
 HB_FUNC( NETIO_GETCONNECTION )
 {
-   const char * pszServer = hb_parc( 1 ),
-              * pszPasswd = hb_parc( 4 );
-   int iPort = hb_parni( 2 ),
-       iTimeOut = hb_parni( 3 ),
-       iPassLen = static_cast< int >( hb_parclen( 4 ) ),
-       iLevel = hb_parnidef( 5, HB_ZLIB_COMPRESSION_DISABLE ),
-       iStrategy = hb_parnidef( 6, HB_ZLIB_STRATEGY_DEFAULT );
+   const char * pszServer = hb_parc(1),
+              * pszPasswd = hb_parc(4);
+   int iPort = hb_parni(2),
+       iTimeOut = hb_parni(3),
+       iPassLen = static_cast<int>(hb_parclen(4)),
+       iLevel = hb_parnidef(5, HB_ZLIB_COMPRESSION_DISABLE),
+       iStrategy = hb_parnidef(6, HB_ZLIB_STRATEGY_DEFAULT);
    PHB_CONCLI conn;
 
    if( iPassLen > NETIO_PASSWD_MAX )
@@ -1200,14 +1169,12 @@ HB_FUNC( NETIO_GETCONNECTION )
 
    s_netio_init( nullptr );
 
-   conn = s_fileConnect( nullptr, pszServer, iPort, iTimeOut, HB_TRUE,
-                         pszPasswd, iPassLen, iLevel, iStrategy );
+   conn = s_fileConnect( nullptr, pszServer, iPort, iTimeOut, true, pszPasswd, iPassLen, iLevel, iStrategy );
    if( conn )
    {
-      PHB_CONCLI * conn_ptr = ( PHB_CONCLI * ) hb_gcAllocate( sizeof( PHB_CONCLI ),
-                                                              &s_gcConCliFuncs );
+      PHB_CONCLI * conn_ptr = static_cast<PHB_CONCLI*>(hb_gcAllocate(sizeof(PHB_CONCLI), &s_gcConCliFuncs));
       *conn_ptr = conn;
-      hb_retptrGC( conn_ptr );
+      hb_retptrGC(conn_ptr);
    }
 }
 
@@ -1215,9 +1182,9 @@ HB_FUNC( NETIO_GETCONNECTION )
  */
 HB_FUNC( NETIO_DISCONNECT )
 {
-   const char * pszServer = hb_parc( 1 );
+   const char * pszServer = hb_parc(1);
    char * pszIpAddres;
-   int iPort = hb_parni( 2 );
+   int iPort = hb_parni(2);
    HB_BOOL fDisconnected = HB_FALSE;
 
    s_fileGetConnParam( &pszServer, &iPort, nullptr, nullptr, nullptr );
@@ -1225,41 +1192,41 @@ HB_FUNC( NETIO_DISCONNECT )
    if( pszIpAddres != nullptr )
    {
       fDisconnected = s_fileUsrDisconnect( pszIpAddres, iPort );
-      hb_xfree( pszIpAddres );
+      hb_xfree(pszIpAddres);
    }
-   hb_retl( fDisconnected );
+   hb_retl(fDisconnected);
 }
 
 /* netio_TimeOut( <pConnection> [, <nTimeOut>] ) --> [<nTimeOut>]
  */
 HB_FUNC( NETIO_TIMEOUT )
 {
-   PHB_CONCLI conn = s_connParam( 1 );
+   PHB_CONCLI conn = s_connParam(1);
 
    if( conn )
    {
       if( s_fileConLock( conn ) )
       {
-         hb_retni( conn->timeout );
-         if( HB_ISNUM( 2 ) )
-            conn->timeout = hb_parni( 2 );
+         hb_retni(conn->timeout);
+         if( HB_ISNUM(2) )
+            conn->timeout = hb_parni(2);
          s_fileConUnlock( conn );
       }
       s_fileConClose( conn );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 HB_FUNC( NETIO_SETPATH )
 {
-   PHB_CONCLI conn = s_connParam( 1 );
+   PHB_CONCLI conn = s_connParam(1);
 
    if( conn )
    {
       if( s_fileConLock( conn ) )
       {
-         const char * pszNewPath = hb_parc( 2 );
+         const char * pszNewPath = hb_parc(2);
          char * pszSetPath = nullptr, * pszOldPath = nullptr;
 
          if( pszNewPath && *pszNewPath )
@@ -1289,7 +1256,7 @@ HB_FUNC( NETIO_SETPATH )
       s_fileConClose( conn );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 static const char * s_netio_params( int iParam, int iMsg, const char * pszName, HB_U32 * pSize, char ** pFree )
@@ -1302,18 +1269,18 @@ static const char * s_netio_params( int iParam, int iMsg, const char * pszName, 
 
    while( ++iParam <= iPCount )
    {
-      char * itmData = hb_itemSerialize( hb_param( iParam, HB_IT_ANY ), HB_SERIALIZE_NUMSIZE, &itmSize );
+      char * itmData = hb_itemSerialize( hb_param(iParam, Harbour::Item::ANY), HB_SERIALIZE_NUMSIZE, &itmSize );
       if( data == nullptr )
-         data = static_cast< char * >( memcpy( hb_xgrab( size + itmSize ), pszName, size ) );
+         data = static_cast<char*>(memcpy(hb_xgrab(size + itmSize), pszName, size));
       else
-         data = static_cast< char * >( hb_xrealloc( data, size + itmSize ) );
+         data = static_cast<char*>(hb_xrealloc(data, size + itmSize));
       memcpy( data + size, itmData, itmSize );
       size += itmSize;
-      hb_xfree( itmData );
+      hb_xfree(itmData);
    }
 
    *pFree = data;
-   *pSize = ( HB_U32 ) size;
+   *pSize = static_cast<HB_U32>(size);
 
    return data ? data : pszName;
 }
@@ -1325,42 +1292,40 @@ static HB_BOOL s_netio_procexec( int iMsg, int iType )
    PHB_CONCLI conn;
    int iParam = 1;
 
-   conn = s_connParam( 1 );
+   conn = s_connParam(1);
    if( conn )
       ++iParam;
-   pszProcName = hb_parc( iParam );
+   pszProcName = hb_parc(iParam);
    if( pszProcName )
    {
-      if( ! conn )
-         conn = s_fileConnect( &pszProcName, nullptr, 0, 0, HB_FALSE,
-                               nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
+      if( !conn )
+         conn = s_fileConnect(&pszProcName, nullptr, 0, 0, false, nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0);
       if( conn )
       {
          if( s_fileConLock( conn ) )
          {
-            HB_BYTE msgbuf[ NETIO_MSGLEN ];
+            HB_BYTE msgbuf[NETIO_MSGLEN];
             const char * data;
             char * buffer;
             HB_U32 size;
             int iStreamID = 0;
 
             data = s_netio_params( iParam, iMsg, pszProcName, &size, &buffer );
-            HB_PUT_LE_UINT32( &msgbuf[ 0 ], iMsg );
-            HB_PUT_LE_UINT32( &msgbuf[ 4 ], size );
+            HB_PUT_LE_UINT32( &msgbuf[0], iMsg );
+            HB_PUT_LE_UINT32( &msgbuf[4], size );
             if( iMsg == NETIO_FUNCCTRL )
             {
                iStreamID = s_fileNewSrvData( conn, iType );
-               HB_PUT_LE_UINT32( &msgbuf[ 8 ], iStreamID );
-               HB_PUT_LE_UINT32( &msgbuf[ 12 ], iType );
-               memset( msgbuf + 16, '\0', sizeof( msgbuf ) - 16 );
+               HB_PUT_LE_UINT32( &msgbuf[8], iStreamID );
+               HB_PUT_LE_UINT32( &msgbuf[12], iType );
+               memset( msgbuf + 16, '\0', sizeof(msgbuf) - 16 );
             }
             else
-               memset( msgbuf + 8, '\0', sizeof( msgbuf ) - 8 );
-            fResult = s_fileSendMsg( conn, msgbuf, data, size,
-                                     iMsg != NETIO_PROC, HB_FALSE );
+               memset( msgbuf + 8, '\0', sizeof(msgbuf) - 8 );
+            fResult = s_fileSendMsg( conn, msgbuf, data, size, iMsg != NETIO_PROC, false );
             if( fResult && ( iMsg == NETIO_FUNC || iMsg == NETIO_FUNCCTRL ) )
             {
-               HB_SIZE nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] );
+               HB_SIZE nResult = HB_GET_LE_UINT32( &msgbuf[4] );
 
                if( nResult > 0 )
                {
@@ -1369,12 +1334,12 @@ static HB_BOOL s_netio_procexec( int iMsg, int iType )
 
                   if( nResult > size && buffer )
                   {
-                     hb_xfree( buffer );
+                     hb_xfree(buffer);
                      buffer = nullptr;
                   }
                   if( buffer == nullptr )
-                     buffer = static_cast< char * >( hb_xgrab( nResult ) );
-                  nRecv = s_fileRecvAll( conn, buffer, static_cast< long >( nResult ) );
+                     buffer = static_cast<char*>(hb_xgrab(nResult));
+                  nRecv = s_fileRecvAll( conn, buffer, static_cast<long>(nResult) );
                   if( nResult == nRecv )
                   {
                      data = buffer;
@@ -1384,12 +1349,12 @@ static HB_BOOL s_netio_procexec( int iMsg, int iType )
                   {
                      if( iMsg == NETIO_FUNCCTRL )
                      {
-                        if( iStreamID == hb_itemGetNI( pItem ) )
+                        if( iStreamID == hb_itemGetNI(pItem) )
                            iStreamID = 0;
                         else
                            hb_itemPutNI( pItem, -1 );
                      }
-                     hb_itemReturnRelease( pItem );
+                     hb_itemReturnRelease(pItem);
                   }
                   else
                   {
@@ -1407,7 +1372,7 @@ static HB_BOOL s_netio_procexec( int iMsg, int iType )
             if( iStreamID != 0 )
                s_fileCloseSrvData( conn, iStreamID );
             if( buffer )
-               hb_xfree( buffer );
+               hb_xfree(buffer);
             s_fileConUnlock( conn );
          }
       }
@@ -1425,7 +1390,7 @@ static HB_BOOL s_netio_procexec( int iMsg, int iType )
  */
 HB_FUNC( NETIO_PROCEXISTS )
 {
-   hb_retl( s_netio_procexec( NETIO_PROCIS, 0 ) );
+   hb_retl(s_netio_procexec(NETIO_PROCIS, 0));
 }
 
 /* execute function/procedure on server the side,
@@ -1435,7 +1400,7 @@ HB_FUNC( NETIO_PROCEXISTS )
  */
 HB_FUNC( NETIO_PROCEXEC )
 {
-   hb_retl( s_netio_procexec( NETIO_PROC, 0 ) );
+   hb_retl(s_netio_procexec(NETIO_PROC, 0));
 }
 
 /* execute function/procedure on the server side and wait for
@@ -1445,7 +1410,7 @@ HB_FUNC( NETIO_PROCEXEC )
  */
 HB_FUNC( NETIO_PROCEXECW )
 {
-   hb_retl( s_netio_procexec( NETIO_PROCW, 0 ) );
+   hb_retl(s_netio_procexec(NETIO_PROCW, 0));
 }
 
 /* execute function on the server side and wait for its return value:
@@ -1495,20 +1460,20 @@ HB_FUNC( NETIO_OPENITEMSTREAM )
 
 static PHB_CONCLI s_netio_getConn( void )
 {
-   PHB_CONCLI conn = s_connParam( 2 );
+   PHB_CONCLI conn = s_connParam(2);
 
-   if( ! conn )
+   if( !conn )
    {
-      const char * pszServer = hb_parc( 2 );
+      const char * pszServer = hb_parc(2);
       char * pszIpAddres;
-      int iPort = hb_parni( 3 );
+      int iPort = hb_parni(3);
 
       s_fileGetConnParam( &pszServer, &iPort, nullptr, nullptr, nullptr );
       pszIpAddres = hb_socketResolveAddr( pszServer, HB_SOCKET_AF_INET );
       if( pszIpAddres != nullptr )
       {
          conn = s_fileConFind( pszIpAddres, iPort );
-         hb_xfree( pszIpAddres );
+         hb_xfree(pszIpAddres);
       }
    }
 
@@ -1522,7 +1487,7 @@ static PHB_CONCLI s_netio_getConn( void )
  */
 HB_FUNC( NETIO_CLOSESTREAM )
 {
-   int iStreamID = hb_parni( 1 );
+   int iStreamID = hb_parni(1);
    HB_BOOL fResult = HB_FALSE;
 
    if( iStreamID )
@@ -1536,19 +1501,19 @@ HB_FUNC( NETIO_CLOSESTREAM )
             fResult = s_fileCloseSrvData( conn, iStreamID );
             if( fResult )
             {
-               HB_BYTE msgbuf[ NETIO_MSGLEN ];
+               HB_BYTE msgbuf[NETIO_MSGLEN];
 
-               HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_SRVCLOSE );
-               HB_PUT_LE_UINT32( &msgbuf[ 4 ], iStreamID );
-               memset( msgbuf + 8, '\0', sizeof( msgbuf ) - 8 );
-               s_fileSendMsg( conn, msgbuf, nullptr, 0, HB_TRUE, HB_FALSE );
+               HB_PUT_LE_UINT32( &msgbuf[0], NETIO_SRVCLOSE );
+               HB_PUT_LE_UINT32( &msgbuf[4], iStreamID );
+               memset( msgbuf + 8, '\0', sizeof(msgbuf) - 8 );
+               s_fileSendMsg( conn, msgbuf, nullptr, 0, true, false );
             }
             s_fileConUnlock( conn );
          }
          s_fileConClose( conn );
       }
    }
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 /* retrieve data sent from the server by cominication stream
@@ -1558,7 +1523,7 @@ HB_FUNC( NETIO_CLOSESTREAM )
  */
 HB_FUNC( NETIO_GETDATA )
 {
-   int iStreamID = hb_parni( 1 );
+   int iStreamID = hb_parni(1);
 
    if( iStreamID )
    {
@@ -1578,14 +1543,14 @@ HB_FUNC( NETIO_GETDATA )
                      if( pSrvData->array )
                      {
                         hb_itemReturnForward( pSrvData->array );
-                        hb_arrayNew( pSrvData->array, 0 );
+                        hb_arrayNew(pSrvData->array, 0);
                      }
                      else
-                        hb_reta( 0 );
+                        hb_reta(0);
                   }
                   else if( pSrvData->type == NETIO_SRVDATA )
                   {
-                     hb_retclen( pSrvData->data, pSrvData->size );
+                     hb_retclen(pSrvData->data, pSrvData->size);
                      pSrvData->size = 0;
                   }
                }
@@ -1601,10 +1566,9 @@ HB_FUNC( NETIO_GETDATA )
  */
 static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 {
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
-   return hb_strnicmp( pszFileName, NETIO_FILE_PREFIX, NETIO_FILE_PREFIX_LEN ) == 0 ||
-          s_fileNameConFind( &pszFileName, HB_FALSE ) != nullptr;
+   return hb_strnicmp( pszFileName, NETIO_FILE_PREFIX, NETIO_FILE_PREFIX_LEN ) == 0 || s_fileNameConFind( &pszFileName, false ) != nullptr;
 }
 
 static HB_BOOL s_fileDirExists( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
@@ -1612,21 +1576,20 @@ static HB_BOOL s_fileDirExists( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
    HB_BOOL fResult = HB_FALSE;
    PHB_CONCLI conn;
 
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
-   conn = s_fileConnect( &pszDirName, nullptr, 0, 0, HB_FALSE,
-                         nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
+   conn = s_fileConnect( &pszDirName, nullptr, 0, 0, false, nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
    if( conn )
    {
       if( s_fileConLock( conn ) )
       {
-         HB_BYTE msgbuf[ NETIO_MSGLEN ];
-         HB_U16 len = ( HB_U16 ) strlen( pszDirName );
+         HB_BYTE msgbuf[NETIO_MSGLEN];
+         HB_U16 len = static_cast<HB_U16>(strlen(pszDirName));
 
-         HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_DIREXISTS );
-         HB_PUT_LE_UINT16( &msgbuf[ 4 ], len );
-         memset( msgbuf + 6, '\0', sizeof( msgbuf ) - 6 );
-         fResult = s_fileSendMsg( conn, msgbuf, pszDirName, len, HB_TRUE, HB_FALSE );
+         HB_PUT_LE_UINT32( &msgbuf[0], NETIO_DIREXISTS );
+         HB_PUT_LE_UINT16( &msgbuf[4], len );
+         memset( msgbuf + 6, '\0', sizeof(msgbuf) - 6 );
+         fResult = s_fileSendMsg( conn, msgbuf, pszDirName, len, true, false );
          s_fileConUnlock( conn );
       }
       s_fileConClose( conn );
@@ -1640,21 +1603,20 @@ static HB_BOOL s_fileDirMake( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
    HB_BOOL fResult = HB_FALSE;
    PHB_CONCLI conn;
 
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
-   conn = s_fileConnect( &pszDirName, nullptr, 0, 0, HB_FALSE,
-                         nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
+   conn = s_fileConnect( &pszDirName, nullptr, 0, 0, false, nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
    if( conn )
    {
       if( s_fileConLock( conn ) )
       {
-         HB_BYTE msgbuf[ NETIO_MSGLEN ];
-         HB_U16 len = ( HB_U16 ) strlen( pszDirName );
+         HB_BYTE msgbuf[NETIO_MSGLEN];
+         HB_U16 len = static_cast<HB_U16>(strlen(pszDirName));
 
-         HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_DIRMAKE );
-         HB_PUT_LE_UINT16( &msgbuf[ 4 ], len );
-         memset( msgbuf + 6, '\0', sizeof( msgbuf ) - 6 );
-         fResult = s_fileSendMsg( conn, msgbuf, pszDirName, len, HB_TRUE, HB_FALSE );
+         HB_PUT_LE_UINT32( &msgbuf[0], NETIO_DIRMAKE );
+         HB_PUT_LE_UINT16( &msgbuf[4], len );
+         memset( msgbuf + 6, '\0', sizeof(msgbuf) - 6 );
+         fResult = s_fileSendMsg( conn, msgbuf, pszDirName, len, true, false );
          s_fileConUnlock( conn );
       }
       s_fileConClose( conn );
@@ -1668,21 +1630,20 @@ static HB_BOOL s_fileDirRemove( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
    HB_BOOL fResult = HB_FALSE;
    PHB_CONCLI conn;
 
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
-   conn = s_fileConnect( &pszDirName, nullptr, 0, 0, HB_FALSE,
-                         nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
+   conn = s_fileConnect( &pszDirName, nullptr, 0, 0, false, nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
    if( conn )
    {
       if( s_fileConLock( conn ) )
       {
-         HB_BYTE msgbuf[ NETIO_MSGLEN ];
-         HB_U16 len = ( HB_U16 ) strlen( pszDirName );
+         HB_BYTE msgbuf[NETIO_MSGLEN];
+         HB_U16 len = static_cast<HB_U16>(strlen(pszDirName));
 
-         HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_DIRREMOVE );
-         HB_PUT_LE_UINT16( &msgbuf[ 4 ], len );
-         memset( msgbuf + 6, '\0', sizeof( msgbuf ) - 6 );
-         fResult = s_fileSendMsg( conn, msgbuf, pszDirName, len, HB_TRUE, HB_FALSE );
+         HB_PUT_LE_UINT32( &msgbuf[0], NETIO_DIRREMOVE );
+         HB_PUT_LE_UINT16( &msgbuf[4], len );
+         memset( msgbuf + 6, '\0', sizeof(msgbuf) - 6 );
+         fResult = s_fileSendMsg( conn, msgbuf, pszDirName, len, true, false );
          s_fileConUnlock( conn );
       }
       s_fileConClose( conn );
@@ -1696,25 +1657,24 @@ static double s_fileDirSpace( PHB_FILE_FUNCS pFuncs, const char * pszDirName, HB
    double dResult = 0.0;
    PHB_CONCLI conn;
 
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
-   conn = s_fileConnect( &pszDirName, nullptr, 0, 0, HB_FALSE,
-                         nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
+   conn = s_fileConnect( &pszDirName, nullptr, 0, 0, false, nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
    if( conn )
    {
       if( s_fileConLock( conn ) )
       {
-         HB_BYTE msgbuf[ NETIO_MSGLEN ];
-         HB_U16 len = ( HB_U16 ) strlen( pszDirName );
+         HB_BYTE msgbuf[NETIO_MSGLEN];
+         HB_U16 len = static_cast<HB_U16>(strlen(pszDirName));
 
-         HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_DIRSPACE );
-         HB_PUT_LE_UINT16( &msgbuf[ 4 ], len );
-         HB_PUT_LE_UINT16( &msgbuf[ 6 ], uiType );
-         memset( msgbuf + 8, '\0', sizeof( msgbuf ) - 8 );
-         if( s_fileSendMsg( conn, msgbuf, pszDirName, len, HB_TRUE, HB_FALSE ) )
+         HB_PUT_LE_UINT32( &msgbuf[0], NETIO_DIRSPACE );
+         HB_PUT_LE_UINT16( &msgbuf[4], len );
+         HB_PUT_LE_UINT16( &msgbuf[6], uiType );
+         memset( msgbuf + 8, '\0', sizeof(msgbuf) - 8 );
+         if( s_fileSendMsg( conn, msgbuf, pszDirName, len, true, false ) )
          {
-            dResult = static_cast< double >( HB_GET_LE_UINT64( &msgbuf[ 4 ] ) );
-            hb_fsSetError( static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 12 ] ) ) );
+            dResult = static_cast<double>(HB_GET_LE_UINT64(&msgbuf[4]));
+            hb_fsSetError( static_cast<HB_ERRCODE>(HB_GET_LE_UINT32(&msgbuf[12])) );
          }
          s_fileConUnlock( conn );
       }
@@ -1729,45 +1689,44 @@ static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec,
    PHB_ITEM pDirArray = nullptr;
    PHB_CONCLI conn;
 
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
-   conn = s_fileConnect( &pszDirSpec, nullptr, 0, 0, HB_FALSE,
-                         nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
+   conn = s_fileConnect( &pszDirSpec, nullptr, 0, 0, false, nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
    if( conn )
    {
       if( s_fileConLock( conn ) )
       {
-         HB_BYTE msgbuf[ NETIO_MSGLEN ];
-         HB_U16 len1 = ( HB_U16 ) ( pszDirSpec ? strlen( pszDirSpec ) : 0 );
-         HB_U16 len2 = ( HB_U16 ) ( pszAttr ? strlen( pszAttr ) : 0 );
+         HB_BYTE msgbuf[NETIO_MSGLEN];
+         HB_U16 len1 = static_cast<HB_U16>( pszDirSpec ? strlen( pszDirSpec ) : 0 );
+         HB_U16 len2 = static_cast<HB_U16>( pszAttr ? strlen( pszAttr ) : 0 );
          HB_BYTE * pBuffer = nullptr;
 
          if( len1 + len2 > 0 )
          {
-            pBuffer = static_cast< HB_BYTE * >( hb_xgrab( len1 + len2 ) );
+            pBuffer = static_cast<HB_BYTE*>(hb_xgrab(len1 + len2));
             if( len1 )
                memcpy( pBuffer, pszDirSpec, len1 );
             if( len2 )
                memcpy( pBuffer + len1, pszAttr, len2 );
          }
-         HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_DIRECTORY );
-         HB_PUT_LE_UINT16( &msgbuf[ 4 ], len1 );
-         HB_PUT_LE_UINT16( &msgbuf[ 6 ], len2 );
-         memset( msgbuf + 8, '\0', sizeof( msgbuf ) - 8 );
-         if( s_fileSendMsg( conn, msgbuf, pBuffer, len1 + len2, HB_TRUE, HB_FALSE ) )
+         HB_PUT_LE_UINT32( &msgbuf[0], NETIO_DIRECTORY );
+         HB_PUT_LE_UINT16( &msgbuf[4], len1 );
+         HB_PUT_LE_UINT16( &msgbuf[6], len2 );
+         memset( msgbuf + 8, '\0', sizeof(msgbuf) - 8 );
+         if( s_fileSendMsg( conn, msgbuf, pBuffer, len1 + len2, true, false ) )
          {
-            HB_ERRCODE errCode = static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 8 ] ) );
-            HB_SIZE nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] ), nRecv = 0;
+            HB_ERRCODE errCode = static_cast<HB_ERRCODE>(HB_GET_LE_UINT32(&msgbuf[8]));
+            HB_SIZE nResult = HB_GET_LE_UINT32( &msgbuf[4] ), nRecv = 0;
 
             if( nResult > 0 )
             {
-               char * buffer = static_cast< char * >( hb_xgrab( nResult ) );
+               char * buffer = static_cast<char*>(hb_xgrab(nResult));
                const char * data = buffer;
 
-               nRecv = s_fileRecvAll( conn, buffer, static_cast< long >( nResult ) );
+               nRecv = s_fileRecvAll( conn, buffer, static_cast<long>(nResult) );
                if( nRecv == nResult )
                   pDirArray = hb_itemDeserialize( &data, &nResult );
-               hb_xfree( buffer );
+               hb_xfree(buffer);
             }
             hb_fsSetError( errCode );
             if( pDirArray == nullptr )
@@ -1783,14 +1742,14 @@ static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec,
             }
          }
          if( pBuffer )
-            hb_xfree( pBuffer );
+            hb_xfree(pBuffer);
          s_fileConUnlock( conn );
       }
       s_fileConClose( conn );
    }
 
    if( pDirArray == nullptr )
-      pDirArray = hb_itemArrayNew( 0 );
+      pDirArray = hb_itemArrayNew(0);
 
    return pDirArray;
 }
@@ -1800,24 +1759,23 @@ static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, ch
    HB_BOOL fResult = HB_FALSE;
    PHB_CONCLI conn;
 
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
    if( pRetPath )
       hb_strncpy( pRetPath, pszFileName, HB_PATH_MAX - 1 );
 
-   conn = s_fileConnect( &pszFileName, nullptr, 0, 0, HB_FALSE,
-                         nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
+   conn = s_fileConnect( &pszFileName, nullptr, 0, 0, false, nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
    if( conn )
    {
       if( s_fileConLock( conn ) )
       {
-         HB_BYTE msgbuf[ NETIO_MSGLEN ];
-         HB_U16 len = ( HB_U16 ) strlen( pszFileName );
+         HB_BYTE msgbuf[NETIO_MSGLEN];
+         HB_U16 len = static_cast<HB_U16>(strlen(pszFileName));
 
-         HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_EXISTS );
-         HB_PUT_LE_UINT16( &msgbuf[ 4 ], len );
-         memset( msgbuf + 6, '\0', sizeof( msgbuf ) - 6 );
-         fResult = s_fileSendMsg( conn, msgbuf, pszFileName, len, HB_TRUE, HB_FALSE );
+         HB_PUT_LE_UINT32( &msgbuf[0], NETIO_EXISTS );
+         HB_PUT_LE_UINT16( &msgbuf[4], len );
+         memset( msgbuf + 6, '\0', sizeof(msgbuf) - 6 );
+         fResult = s_fileSendMsg( conn, msgbuf, pszFileName, len, true, false );
          s_fileConUnlock( conn );
       }
       s_fileConClose( conn );
@@ -1831,21 +1789,20 @@ static HB_BOOL s_fileDelete( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
    HB_BOOL fResult = HB_FALSE;
    PHB_CONCLI conn;
 
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
-   conn = s_fileConnect( &pszFileName, nullptr, 0, 0, HB_FALSE,
-                         nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
+   conn = s_fileConnect( &pszFileName, nullptr, 0, 0, false, nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
    if( conn )
    {
       if( s_fileConLock( conn ) )
       {
-         HB_BYTE msgbuf[ NETIO_MSGLEN ];
-         HB_U16 len = ( HB_U16 ) strlen( pszFileName );
+         HB_BYTE msgbuf[NETIO_MSGLEN];
+         HB_U16 len = static_cast<HB_U16>(strlen(pszFileName));
 
-         HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_DELETE );
-         HB_PUT_LE_UINT16( &msgbuf[ 4 ], len );
-         memset( msgbuf + 6, '\0', sizeof( msgbuf ) - 6 );
-         fResult = s_fileSendMsg( conn, msgbuf, pszFileName, len, HB_TRUE, HB_FALSE );
+         HB_PUT_LE_UINT32( &msgbuf[0], NETIO_DELETE );
+         HB_PUT_LE_UINT16( &msgbuf[4], len );
+         memset( msgbuf + 6, '\0', sizeof(msgbuf) - 6 );
+         fResult = s_fileSendMsg( conn, msgbuf, pszFileName, len, true, false );
          s_fileConUnlock( conn );
       }
       s_fileConClose( conn );
@@ -1859,34 +1816,32 @@ static HB_BOOL s_fileRename( PHB_FILE_FUNCS pFuncs, const char * pszFileName, co
    HB_BOOL fResult = HB_FALSE;
    PHB_CONCLI conn;
 
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
-   conn = s_fileConnect( &pszFileName, nullptr, 0, 0, HB_FALSE,
-                         nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
+   conn = s_fileConnect( &pszFileName, nullptr, 0, 0, false, nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
    if( conn )
    {
-      s_fileConnCheck( conn, &pszNewName, HB_FALSE, &fResult );
-      if( ! fResult )
+      s_fileConnCheck( conn, &pszNewName, false, &fResult );
+      if( !fResult )
       {
          conn->errcode = 2;
          hb_fsSetError( conn->errcode );
       }
       else if( s_fileConLock( conn ) )
       {
-         HB_BYTE msgbuf[ NETIO_MSGLEN ];
-         HB_U16 len1 = ( HB_U16 ) strlen( pszFileName );
-         HB_U16 len2 = ( HB_U16 ) strlen( pszNewName );
-         HB_BYTE * pBuffer = static_cast< HB_BYTE * >( hb_xgrab( len1 + len2 ) );
+         HB_BYTE msgbuf[NETIO_MSGLEN];
+         HB_U16 len1 = static_cast<HB_U16>(strlen(pszFileName));
+         HB_U16 len2 = static_cast<HB_U16>(strlen(pszNewName));
+         HB_BYTE * pBuffer = static_cast<HB_BYTE*>(hb_xgrab(len1 + len2));
 
          memcpy( pBuffer, pszFileName, len1 );
          memcpy( pBuffer + len1, pszNewName, len2 );
-         HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_RENAME );
-         HB_PUT_LE_UINT16( &msgbuf[ 4 ], len1 );
-         HB_PUT_LE_UINT16( &msgbuf[ 6 ], len2 );
-         memset( msgbuf + 8, '\0', sizeof( msgbuf ) - 8 );
-         fResult = s_fileSendMsg( conn, msgbuf, pBuffer, len1 + len2,
-                                  HB_TRUE, HB_FALSE );
-         hb_xfree( pBuffer );
+         HB_PUT_LE_UINT32( &msgbuf[0], NETIO_RENAME );
+         HB_PUT_LE_UINT16( &msgbuf[4], len1 );
+         HB_PUT_LE_UINT16( &msgbuf[6], len2 );
+         memset( msgbuf + 8, '\0', sizeof(msgbuf) - 8 );
+         fResult = s_fileSendMsg( conn, msgbuf, pBuffer, len1 + len2, true, false );
+         hb_xfree(pBuffer);
          s_fileConUnlock( conn );
       }
       s_fileConClose( conn );
@@ -1901,31 +1856,29 @@ static HB_BOOL s_fileCopy( PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const
    const char * pszSource = pszSrcFile;
    PHB_CONCLI conn;
 
-   if( ! s_fileAccept( pFuncs, pszDstFile ) )
+   if( !s_fileAccept( pFuncs, pszDstFile ) )
       return hb_fsCopy( pszSrcFile, pszDstFile );
 
-   conn = s_fileConnect( &pszSource, nullptr, 0, 0, HB_FALSE,
-                         nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
+   conn = s_fileConnect( &pszSource, nullptr, 0, 0, false, nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
    if( conn )
    {
-      if( s_fileConnCheck( conn, &pszDstFile, HB_FALSE, &fResult ) == nullptr )
+      if( s_fileConnCheck( conn, &pszDstFile, false, &fResult ) == nullptr )
          fResult = hb_fsCopy( pszSrcFile, pszDstFile );
       else if( s_fileConLock( conn ) )
       {
-         HB_BYTE msgbuf[ NETIO_MSGLEN ];
-         HB_U16 len1 = ( HB_U16 ) strlen( pszSource );
-         HB_U16 len2 = ( HB_U16 ) strlen( pszDstFile );
-         HB_BYTE * pBuffer = static_cast< HB_BYTE * >( hb_xgrab( len1 + len2 ) );
+         HB_BYTE msgbuf[NETIO_MSGLEN];
+         HB_U16 len1 = static_cast<HB_U16>(strlen(pszSource));
+         HB_U16 len2 = static_cast<HB_U16>(strlen(pszDstFile));
+         HB_BYTE * pBuffer = static_cast<HB_BYTE*>(hb_xgrab(len1 + len2));
 
          memcpy( pBuffer, pszSource, len1 );
          memcpy( pBuffer + len1, pszDstFile, len2 );
-         HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_COPY );
-         HB_PUT_LE_UINT16( &msgbuf[ 4 ], len1 );
-         HB_PUT_LE_UINT16( &msgbuf[ 6 ], len2 );
-         memset( msgbuf + 8, '\0', sizeof( msgbuf ) - 8 );
-         fResult = s_fileSendMsg( conn, msgbuf, pBuffer, len1 + len2,
-                                  HB_TRUE, HB_FALSE );
-         hb_xfree( pBuffer );
+         HB_PUT_LE_UINT32( &msgbuf[0], NETIO_COPY );
+         HB_PUT_LE_UINT16( &msgbuf[4], len1 );
+         HB_PUT_LE_UINT16( &msgbuf[6], len2 );
+         memset( msgbuf + 8, '\0', sizeof(msgbuf) - 8 );
+         fResult = s_fileSendMsg( conn, msgbuf, pBuffer, len1 + len2, true, false );
+         hb_xfree(pBuffer);
          s_fileConUnlock( conn );
       }
       s_fileConClose( conn );
@@ -1939,23 +1892,22 @@ static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, H
    HB_BOOL fResult = HB_FALSE;
    PHB_CONCLI conn;
 
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
-   conn = s_fileConnect( &pszFileName, nullptr, 0, 0, HB_FALSE,
-                         nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
+   conn = s_fileConnect( &pszFileName, nullptr, 0, 0, false, nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
    if( conn )
    {
       if( s_fileConLock( conn ) )
       {
-         HB_BYTE msgbuf[ NETIO_MSGLEN ];
-         HB_U16 len = ( HB_U16 ) strlen( pszFileName );
+         HB_BYTE msgbuf[NETIO_MSGLEN];
+         HB_U16 len = static_cast<HB_U16>(strlen(pszFileName));
 
-         HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_ATTRGET );
-         HB_PUT_LE_UINT16( &msgbuf[ 4 ], len );
-         memset( msgbuf + 6, '\0', sizeof( msgbuf ) - 6 );
-         if( s_fileSendMsg( conn, msgbuf, pszFileName, len, HB_TRUE, HB_FALSE ) )
+         HB_PUT_LE_UINT32( &msgbuf[0], NETIO_ATTRGET );
+         HB_PUT_LE_UINT16( &msgbuf[4], len );
+         memset( msgbuf + 6, '\0', sizeof(msgbuf) - 6 );
+         if( s_fileSendMsg( conn, msgbuf, pszFileName, len, true, false ) )
          {
-            * pulAttr = HB_GET_LE_UINT32( &msgbuf[ 4 ] );
+            * pulAttr = HB_GET_LE_UINT32( &msgbuf[4] );
             fResult = HB_TRUE;
          }
          s_fileConUnlock( conn );
@@ -1971,22 +1923,21 @@ static HB_BOOL s_fileAttrSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, H
    HB_BOOL fResult = HB_FALSE;
    PHB_CONCLI conn;
 
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
-   conn = s_fileConnect( &pszFileName, nullptr, 0, 0, HB_FALSE,
-                         nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
+   conn = s_fileConnect( &pszFileName, nullptr, 0, 0, false, nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
    if( conn )
    {
       if( s_fileConLock( conn ) )
       {
-         HB_BYTE msgbuf[ NETIO_MSGLEN ];
-         HB_U16 len = ( HB_U16 ) strlen( pszFileName );
+         HB_BYTE msgbuf[NETIO_MSGLEN];
+         HB_U16 len = static_cast<HB_U16>(strlen(pszFileName));
 
-         HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_ATTRSET );
-         HB_PUT_LE_UINT16( &msgbuf[ 4 ], len );
-         HB_PUT_LE_UINT32( &msgbuf[ 6 ], ulAttr );
-         memset( msgbuf + 10, '\0', sizeof( msgbuf ) - 10 );
-         fResult = s_fileSendMsg( conn, msgbuf, pszFileName, len, HB_TRUE, HB_FALSE );
+         HB_PUT_LE_UINT32( &msgbuf[0], NETIO_ATTRSET );
+         HB_PUT_LE_UINT16( &msgbuf[4], len );
+         HB_PUT_LE_UINT32( &msgbuf[6], ulAttr );
+         memset( msgbuf + 10, '\0', sizeof(msgbuf) - 10 );
+         fResult = s_fileSendMsg( conn, msgbuf, pszFileName, len, true, false );
          s_fileConUnlock( conn );
       }
       s_fileConClose( conn );
@@ -2000,24 +1951,23 @@ static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, l
    HB_BOOL fResult = HB_FALSE;
    PHB_CONCLI conn;
 
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
-   conn = s_fileConnect( &pszFileName, nullptr, 0, 0, HB_FALSE,
-                         nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
+   conn = s_fileConnect( &pszFileName, nullptr, 0, 0, false, nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
    if( conn )
    {
       if( s_fileConLock( conn ) )
       {
-         HB_BYTE msgbuf[ NETIO_MSGLEN ];
-         HB_U16 len = ( HB_U16 ) strlen( pszFileName );
+         HB_BYTE msgbuf[NETIO_MSGLEN];
+         HB_U16 len = static_cast<HB_U16>(strlen(pszFileName));
 
-         HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_FTIMEGET );
-         HB_PUT_LE_UINT16( &msgbuf[ 4 ], len );
-         memset( msgbuf + 6, '\0', sizeof( msgbuf ) - 6 );
-         if( s_fileSendMsg( conn, msgbuf, pszFileName, len, HB_TRUE, HB_FALSE ) )
+         HB_PUT_LE_UINT32( &msgbuf[0], NETIO_FTIMEGET );
+         HB_PUT_LE_UINT16( &msgbuf[4], len );
+         memset( msgbuf + 6, '\0', sizeof(msgbuf) - 6 );
+         if( s_fileSendMsg( conn, msgbuf, pszFileName, len, true, false ) )
          {
-            * plJulian   = HB_GET_LE_UINT32( &msgbuf[ 4 ] );
-            * plMillisec = HB_GET_LE_UINT32( &msgbuf[ 8 ] );
+            * plJulian   = HB_GET_LE_UINT32( &msgbuf[4] );
+            * plMillisec = HB_GET_LE_UINT32( &msgbuf[8] );
             fResult = HB_TRUE;
          }
          s_fileConUnlock( conn );
@@ -2033,23 +1983,22 @@ static HB_BOOL s_fileTimeSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, l
    HB_BOOL fResult = HB_FALSE;
    PHB_CONCLI conn;
 
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
-   conn = s_fileConnect( &pszFileName, nullptr, 0, 0, HB_FALSE,
-                         nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
+   conn = s_fileConnect( &pszFileName, nullptr, 0, 0, false, nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
    if( conn )
    {
       if( s_fileConLock( conn ) )
       {
-         HB_BYTE msgbuf[ NETIO_MSGLEN ];
-         HB_U16 len = ( HB_U16 ) strlen( pszFileName );
+         HB_BYTE msgbuf[NETIO_MSGLEN];
+         HB_U16 len = static_cast<HB_U16>(strlen(pszFileName));
 
-         HB_PUT_LE_UINT32( &msgbuf[  0 ], NETIO_FTIMESET );
-         HB_PUT_LE_UINT16( &msgbuf[  4 ], len );
-         HB_PUT_LE_UINT32( &msgbuf[  6 ], lJulian );
-         HB_PUT_LE_UINT32( &msgbuf[ 10 ], lMillisec );
-         memset( msgbuf + 14, '\0', sizeof( msgbuf ) - 14 );
-         fResult = s_fileSendMsg( conn, msgbuf, pszFileName, len, HB_TRUE, HB_FALSE );
+         HB_PUT_LE_UINT32( &msgbuf[0], NETIO_FTIMESET );
+         HB_PUT_LE_UINT16( &msgbuf[4], len );
+         HB_PUT_LE_UINT32( &msgbuf[6], lJulian );
+         HB_PUT_LE_UINT32( &msgbuf[10], lMillisec );
+         memset( msgbuf + 14, '\0', sizeof(msgbuf) - 14 );
+         fResult = s_fileSendMsg( conn, msgbuf, pszFileName, len, true, false );
          s_fileConUnlock( conn );
       }
       s_fileConClose( conn );
@@ -2063,34 +2012,32 @@ static HB_BOOL s_fileLink( PHB_FILE_FUNCS pFuncs, const char * pszExisting, cons
    HB_BOOL fResult = HB_FALSE;
    PHB_CONCLI conn;
 
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
-   conn = s_fileConnect( &pszExisting, nullptr, 0, 0, HB_FALSE,
-                         nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
+   conn = s_fileConnect( &pszExisting, nullptr, 0, 0, false, nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
    if( conn )
    {
-      s_fileConnCheck( conn, &pszNewName, HB_FALSE, &fResult );
-      if( ! fResult )
+      s_fileConnCheck( conn, &pszNewName, false, &fResult );
+      if( !fResult )
       {
          conn->errcode = 2;
          hb_fsSetError( conn->errcode );
       }
       else if( s_fileConLock( conn ) )
       {
-         HB_BYTE msgbuf[ NETIO_MSGLEN ];
-         HB_U16 len1 = ( HB_U16 ) strlen( pszExisting );
-         HB_U16 len2 = ( HB_U16 ) strlen( pszNewName );
-         HB_BYTE * pBuffer = static_cast< HB_BYTE * >( hb_xgrab( len1 + len2 ) );
+         HB_BYTE msgbuf[NETIO_MSGLEN];
+         HB_U16 len1 = static_cast<HB_U16>(strlen(pszExisting));
+         HB_U16 len2 = static_cast<HB_U16>(strlen(pszNewName));
+         HB_BYTE * pBuffer = static_cast<HB_BYTE*>(hb_xgrab(len1 + len2));
 
          memcpy( pBuffer, pszExisting, len1 );
          memcpy( pBuffer + len1, pszNewName, len2 );
-         HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_LINK );
-         HB_PUT_LE_UINT16( &msgbuf[ 4 ], len1 );
-         HB_PUT_LE_UINT16( &msgbuf[ 6 ], len2 );
-         memset( msgbuf + 8, '\0', sizeof( msgbuf ) - 8 );
-         fResult = s_fileSendMsg( conn, msgbuf, pBuffer, len1 + len2,
-                                  HB_TRUE, HB_FALSE );
-         hb_xfree( pBuffer );
+         HB_PUT_LE_UINT32( &msgbuf[0], NETIO_LINK );
+         HB_PUT_LE_UINT16( &msgbuf[4], len1 );
+         HB_PUT_LE_UINT16( &msgbuf[6], len2 );
+         memset( msgbuf + 8, '\0', sizeof(msgbuf) - 8 );
+         fResult = s_fileSendMsg( conn, msgbuf, pBuffer, len1 + len2, true, false );
+         hb_xfree(pBuffer);
          s_fileConUnlock( conn );
       }
       s_fileConClose( conn );
@@ -2104,34 +2051,32 @@ static HB_BOOL s_fileLinkSym( PHB_FILE_FUNCS pFuncs, const char * pszTarget, con
    HB_BOOL fResult = HB_FALSE;
    PHB_CONCLI conn;
 
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
-   conn = s_fileConnect( &pszTarget, nullptr, 0, 0, HB_FALSE,
-                         nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
+   conn = s_fileConnect( &pszTarget, nullptr, 0, 0, false, nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
    if( conn )
    {
-      s_fileConnCheck( conn, &pszNewName, HB_FALSE, &fResult );
-      if( ! fResult )
+      s_fileConnCheck( conn, &pszNewName, false, &fResult );
+      if( !fResult )
       {
          conn->errcode = 2;
          hb_fsSetError( conn->errcode );
       }
       else if( s_fileConLock( conn ) )
       {
-         HB_BYTE msgbuf[ NETIO_MSGLEN ];
-         HB_U16 len1 = ( HB_U16 ) strlen( pszTarget );
-         HB_U16 len2 = ( HB_U16 ) strlen( pszNewName );
-         HB_BYTE * pBuffer = static_cast< HB_BYTE * >( hb_xgrab( len1 + len2 ) );
+         HB_BYTE msgbuf[NETIO_MSGLEN];
+         HB_U16 len1 = static_cast<HB_U16>(strlen(pszTarget));
+         HB_U16 len2 = static_cast<HB_U16>(strlen(pszNewName));
+         HB_BYTE * pBuffer = static_cast<HB_BYTE*>(hb_xgrab(len1 + len2));
 
          memcpy( pBuffer, pszTarget, len1 );
          memcpy( pBuffer + len1, pszNewName, len2 );
-         HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_LINKSYM );
-         HB_PUT_LE_UINT16( &msgbuf[ 4 ], len1 );
-         HB_PUT_LE_UINT16( &msgbuf[ 6 ], len2 );
-         memset( msgbuf + 8, '\0', sizeof( msgbuf ) - 8 );
-         fResult = s_fileSendMsg( conn, msgbuf, pBuffer, len1 + len2,
-                                  HB_TRUE, HB_FALSE );
-         hb_xfree( pBuffer );
+         HB_PUT_LE_UINT32( &msgbuf[0], NETIO_LINKSYM );
+         HB_PUT_LE_UINT16( &msgbuf[4], len1 );
+         HB_PUT_LE_UINT16( &msgbuf[6], len2 );
+         memset( msgbuf + 8, '\0', sizeof(msgbuf) - 8 );
+         fResult = s_fileSendMsg( conn, msgbuf, pBuffer, len1 + len2, true, false );
+         hb_xfree(pBuffer);
          s_fileConUnlock( conn );
       }
       s_fileConClose( conn );
@@ -2145,36 +2090,35 @@ static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
    char * pszResult = nullptr;
    PHB_CONCLI conn;
 
-   HB_SYMBOL_UNUSED( pFuncs );
+   HB_SYMBOL_UNUSED(pFuncs);
 
-   conn = s_fileConnect( &pszFileName, nullptr, 0, 0, HB_FALSE,
-                         nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
+   conn = s_fileConnect( &pszFileName, nullptr, 0, 0, false, nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
    if( conn )
    {
       if( s_fileConLock( conn ) )
       {
-         HB_BYTE msgbuf[ NETIO_MSGLEN ];
-         HB_U16 len = ( HB_U16 ) strlen( pszFileName );
+         HB_BYTE msgbuf[NETIO_MSGLEN];
+         HB_U16 len = static_cast<HB_U16>(strlen(pszFileName));
 
-         HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_LINKREAD );
-         HB_PUT_LE_UINT16( &msgbuf[ 4 ], len );
-         memset( msgbuf + 6, '\0', sizeof( msgbuf ) - 6 );
-         if( s_fileSendMsg( conn, msgbuf, pszFileName, len, HB_TRUE, HB_FALSE ) )
+         HB_PUT_LE_UINT32( &msgbuf[0], NETIO_LINKREAD );
+         HB_PUT_LE_UINT16( &msgbuf[4], len );
+         memset( msgbuf + 6, '\0', sizeof(msgbuf) - 6 );
+         if( s_fileSendMsg( conn, msgbuf, pszFileName, len, true, false ) )
          {
-            HB_SIZE nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] ), nRecv = 0;
-            HB_ERRCODE errCode = static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 8 ] ) );
+            HB_SIZE nResult = HB_GET_LE_UINT32( &msgbuf[4] ), nRecv = 0;
+            HB_ERRCODE errCode = static_cast<HB_ERRCODE>(HB_GET_LE_UINT32(&msgbuf[8]));
 
             if( nResult > 0 )
             {
-               pszResult = static_cast< char * >( hb_xgrab( nResult + 1 ) );
-               nRecv = s_fileRecvAll( conn, pszResult, static_cast< long >( nResult ) );
+               pszResult = static_cast<char*>(hb_xgrab(nResult + 1));
+               nRecv = s_fileRecvAll( conn, pszResult, static_cast<long>(nResult) );
                if( nRecv != nResult )
                {
-                  hb_xfree( pszResult );
+                  hb_xfree(pszResult);
                   pszResult = nullptr;
                }
                else
-                  pszResult[ nResult ] = '\0';
+                  pszResult[nResult] = '\0';
             }
             if( nRecv != nResult )
             {
@@ -2191,58 +2135,53 @@ static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
    return pszResult;
 }
 
-static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName,
-                            const char * pDefExt, HB_FATTR nExFlags,
-                            const char * pPaths, PHB_ITEM pError )
+static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, const char * pDefExt, HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError )
 {
    PHB_FILE pFile = nullptr;
    PHB_CONCLI conn;
    const char * pszFile = pszFileName;
 
-   HB_SYMBOL_UNUSED( pFuncs );
-   HB_SYMBOL_UNUSED( pPaths );
+   HB_SYMBOL_UNUSED(pFuncs);
+   HB_SYMBOL_UNUSED(pPaths);
 
-   conn = s_fileConnect( &pszFile, nullptr, 0, 0, HB_FALSE,
-                         nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
+   conn = s_fileConnect( &pszFile, nullptr, 0, 0, false, nullptr, 0, HB_ZLIB_COMPRESSION_DISABLE, 0 );
    if( conn )
    {
       if( s_fileConLock( conn ) )
       {
-         HB_BYTE msgbuf[ NETIO_MSGLEN ];
-         HB_U16 len = ( HB_U16 ) strlen( pszFile );
+         HB_BYTE msgbuf[NETIO_MSGLEN];
+         HB_U16 len = static_cast<HB_U16>(strlen(pszFile));
 
          if( nExFlags & 0xFFFF0000 )
          {
-            HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_OPEN2 );
-            HB_PUT_LE_UINT16( &msgbuf[ 4 ], len );
-            HB_PUT_LE_UINT32( &msgbuf[ 6 ], nExFlags );
-            memset( msgbuf + 10, '\0', sizeof( msgbuf ) - 10 );
+            HB_PUT_LE_UINT32( &msgbuf[0], NETIO_OPEN2 );
+            HB_PUT_LE_UINT16( &msgbuf[4], len );
+            HB_PUT_LE_UINT32( &msgbuf[6], nExFlags );
+            memset( msgbuf + 10, '\0', sizeof(msgbuf) - 10 );
             if( pDefExt )
-               hb_strncpy( reinterpret_cast< char * >( &msgbuf[ 10 ] ),
-                           static_cast< const char * >( pDefExt ), sizeof( msgbuf ) - 11 );
+               hb_strncpy( reinterpret_cast<char*>(&msgbuf[10]), static_cast<const char*>(pDefExt), sizeof(msgbuf) - 11 );
          }
          else
          {
-            HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_OPEN );
-            HB_PUT_LE_UINT16( &msgbuf[ 4 ], len );
-            HB_PUT_LE_UINT16( &msgbuf[ 6 ], ( HB_U16 ) nExFlags );
-            memset( msgbuf + 8, '\0', sizeof( msgbuf ) - 8 );
+            HB_PUT_LE_UINT32( &msgbuf[0], NETIO_OPEN );
+            HB_PUT_LE_UINT16( &msgbuf[4], len );
+            HB_PUT_LE_UINT16( &msgbuf[6], ( HB_U16 ) nExFlags );
+            memset( msgbuf + 8, '\0', sizeof(msgbuf) - 8 );
             if( pDefExt )
-               hb_strncpy( reinterpret_cast< char * >( &msgbuf[ 8 ] ),
-                           static_cast< const char * >( pDefExt ), sizeof( msgbuf ) - 9 );
+               hb_strncpy( reinterpret_cast<char*>(&msgbuf[8]), static_cast<const char*>(pDefExt), sizeof(msgbuf) - 9 );
          }
 
-         if( s_fileSendMsg( conn, msgbuf, pszFile, len, HB_TRUE, HB_FALSE ) )
+         if( s_fileSendMsg( conn, msgbuf, pszFile, len, true, false ) )
          {
-            pFile = static_cast< PHB_FILE >( hb_xgrab( sizeof( HB_FILE ) ) );
+            pFile = static_cast<PHB_FILE>(hb_xgrab(sizeof(HB_FILE)));
             pFile->pFuncs = s_fileMethods();
             pFile->conn = conn;
-            pFile->fd = HB_GET_LE_UINT16( &msgbuf[ 4 ] );
+            pFile->fd = HB_GET_LE_UINT16( &msgbuf[4] );
          }
          s_fileConUnlock( conn );
       }
 
-      if( ! pFile )
+      if( !pFile )
          s_fileConClose( conn );
    }
 
@@ -2252,7 +2191,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName,
       if( pFile == nullptr )
       {
          hb_errPutOsCode( pError, hb_fsError() );
-         hb_errPutGenCode( pError, static_cast< HB_ERRCODE >( ( nExFlags & FXO_TRUNCATE ) ? EG_CREATE : EG_OPEN ) );
+         hb_errPutGenCode( pError, static_cast<HB_ERRCODE>((nExFlags & FXO_TRUNCATE) ? EG_CREATE : EG_OPEN) );
       }
    }
 
@@ -2263,64 +2202,62 @@ static void s_fileClose( PHB_FILE pFile )
 {
    if( s_fileConLock( pFile->conn ) )
    {
-      HB_BYTE msgbuf[ NETIO_MSGLEN ];
+      HB_BYTE msgbuf[NETIO_MSGLEN];
 
-      HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_CLOSE );
-      HB_PUT_LE_UINT16( &msgbuf[ 4 ], pFile->fd );
-      memset( msgbuf + 6, '\0', sizeof( msgbuf ) - 6 );
-      s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, HB_TRUE, HB_FALSE );
+      HB_PUT_LE_UINT32( &msgbuf[0], NETIO_CLOSE );
+      HB_PUT_LE_UINT16( &msgbuf[4], pFile->fd );
+      memset( msgbuf + 6, '\0', sizeof(msgbuf) - 6 );
+      s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, true, false );
       s_fileConUnlock( pFile->conn );
    }
    s_fileConClose( pFile->conn );
-   hb_xfree( pFile );
+   hb_xfree(pFile);
 }
 
-static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET ulLen,
-                           int iType )
+static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET ulLen, int iType )
 {
    HB_BOOL fResult = HB_FALSE;
 
    if( s_fileConLock( pFile->conn ) )
    {
-      HB_BYTE msgbuf[ NETIO_MSGLEN ];
+      HB_BYTE msgbuf[NETIO_MSGLEN];
       HB_BOOL fUnLock = ( iType & FL_MASK ) == FL_UNLOCK;
 
-      HB_PUT_LE_UINT32( &msgbuf[  0 ], fUnLock ? NETIO_UNLOCK : NETIO_LOCK );
-      HB_PUT_LE_UINT16( &msgbuf[  4 ], pFile->fd );
-      HB_PUT_LE_UINT64( &msgbuf[  6 ], ulStart );
-      HB_PUT_LE_UINT64( &msgbuf[ 14 ], ulLen );
-      HB_PUT_LE_UINT16( &msgbuf[ 22 ], static_cast< HB_USHORT >( iType ) );
+      HB_PUT_LE_UINT32( &msgbuf[0], fUnLock ? NETIO_UNLOCK : NETIO_LOCK );
+      HB_PUT_LE_UINT16( &msgbuf[4], pFile->fd );
+      HB_PUT_LE_UINT64( &msgbuf[6], ulStart );
+      HB_PUT_LE_UINT64( &msgbuf[14], ulLen );
+      HB_PUT_LE_UINT16( &msgbuf[22], static_cast<HB_USHORT>(iType) );
 #if NETIO_MSGLEN > 24
-      memset( msgbuf + 24, '\0', sizeof( msgbuf ) - 24 );
+      memset( msgbuf + 24, '\0', sizeof(msgbuf) - 24 );
 #endif
 
-      fResult = s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, ! fUnLock, HB_FALSE );
+      fResult = s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, !fUnLock, false );
       s_fileConUnlock( pFile->conn );
    }
 
    return fResult;
 }
 
-static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET ulLen,
-                           int iType )
+static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET ulLen, int iType )
 {
    int iResult = -1;
 
    if( s_fileConLock( pFile->conn ) )
    {
-      HB_BYTE msgbuf[ NETIO_MSGLEN ];
+      HB_BYTE msgbuf[NETIO_MSGLEN];
 
-      HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_TESTLOCK );
-      HB_PUT_LE_UINT16( &msgbuf[ 4 ], pFile->fd );
-      HB_PUT_LE_UINT64( &msgbuf[ 6 ], ulStart );
-      HB_PUT_LE_UINT64( &msgbuf[ 14 ], ulLen );
-      HB_PUT_LE_UINT16( &msgbuf[ 22 ], static_cast< HB_USHORT >( iType ) );
+      HB_PUT_LE_UINT32( &msgbuf[0], NETIO_TESTLOCK );
+      HB_PUT_LE_UINT16( &msgbuf[4], pFile->fd );
+      HB_PUT_LE_UINT64( &msgbuf[6], ulStart );
+      HB_PUT_LE_UINT64( &msgbuf[14], ulLen );
+      HB_PUT_LE_UINT16( &msgbuf[22], static_cast<HB_USHORT>(iType) );
 #if NETIO_MSGLEN > 24
-      memset( msgbuf + 24, '\0', sizeof( msgbuf ) - 24 );
+      memset( msgbuf + 24, '\0', sizeof(msgbuf) - 24 );
 #endif
 
-      if( s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, HB_TRUE, HB_FALSE ) )
-         iResult = HB_GET_LE_INT32( &msgbuf[ 4 ] );
+      if( s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, true, false ) )
+         iResult = HB_GET_LE_INT32( &msgbuf[4] );
 
       s_fileConUnlock( pFile->conn );
    }
@@ -2328,26 +2265,25 @@ static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET ulStart, HB_FOFFSET ulLen,
    return iResult;
 }
 
-static HB_SIZE s_fileRead( PHB_FILE pFile, void * data, HB_SIZE nSize,
-                           HB_MAXINT timeout )
+static HB_SIZE s_fileRead( PHB_FILE pFile, void * data, HB_SIZE nSize, HB_MAXINT timeout )
 {
    HB_SIZE nResult = 0;
 
    if( s_fileConLock( pFile->conn ) )
    {
-      HB_BYTE msgbuf[ NETIO_MSGLEN ];
+      HB_BYTE msgbuf[NETIO_MSGLEN];
 
-      HB_PUT_LE_UINT32( &msgbuf[  0 ], NETIO_READ );
-      HB_PUT_LE_UINT16( &msgbuf[  4 ], pFile->fd );
-      HB_PUT_LE_UINT32( &msgbuf[  6 ], nSize );
-      HB_PUT_LE_UINT64( &msgbuf[ 10 ], timeout );
-      memset( msgbuf + 18, '\0', sizeof( msgbuf ) - 18 );
+      HB_PUT_LE_UINT32( &msgbuf[0], NETIO_READ );
+      HB_PUT_LE_UINT16( &msgbuf[4], pFile->fd );
+      HB_PUT_LE_UINT32( &msgbuf[6], nSize );
+      HB_PUT_LE_UINT64( &msgbuf[10], timeout );
+      memset( msgbuf + 18, '\0', sizeof(msgbuf) - 18 );
 
-      if( s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, HB_TRUE, HB_FALSE ) )
+      if( s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, true, false ) )
       {
-         HB_ERRCODE errCode = static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 8 ] ) );
-         nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] );
-         if( nResult > 0 && nResult != static_cast< HB_SIZE >( FS_ERROR ) )
+         HB_ERRCODE errCode = static_cast<HB_ERRCODE>(HB_GET_LE_UINT32(&msgbuf[8]));
+         nResult = HB_GET_LE_UINT32( &msgbuf[4] );
+         if( nResult > 0 && nResult != static_cast<HB_SIZE>(FS_ERROR) )
          {
             if( nResult > nSize ) /* error, it should not happen, enemy attack? */
             {
@@ -2355,7 +2291,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data, HB_SIZE nSize,
                hb_errRT_NETIO( EG_DATAWIDTH, 1011, 0, nullptr, HB_ERR_FUNCNAME );
                nResult = 0;
             }
-            else if( s_fileRecvAll( pFile->conn, data, static_cast< long >( nResult ) ) != static_cast< long >( nResult ) )
+            else if( s_fileRecvAll( pFile->conn, data, static_cast<long>(nResult) ) != static_cast<long>(nResult) )
             {
                pFile->conn->errcode = hb_socketGetError();
                errCode = NETIO_ERR_READ;
@@ -2370,25 +2306,24 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data, HB_SIZE nSize,
    return nResult;
 }
 
-static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data, HB_SIZE nSize,
-                            HB_MAXINT timeout )
+static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data, HB_SIZE nSize, HB_MAXINT timeout )
 {
    HB_SIZE nResult = 0;
 
    if( s_fileConLock( pFile->conn ) )
    {
-      HB_BYTE msgbuf[ NETIO_MSGLEN ];
+      HB_BYTE msgbuf[NETIO_MSGLEN];
 
-      HB_PUT_LE_UINT32( &msgbuf[  0 ], NETIO_WRITE );
-      HB_PUT_LE_UINT16( &msgbuf[  4 ], pFile->fd );
-      HB_PUT_LE_UINT32( &msgbuf[  6 ], static_cast< long >( nSize ) );
-      HB_PUT_LE_UINT64( &msgbuf[ 10 ], timeout );
-      memset( msgbuf + 18, '\0', sizeof( msgbuf ) - 18 );
+      HB_PUT_LE_UINT32( &msgbuf[0], NETIO_WRITE );
+      HB_PUT_LE_UINT16( &msgbuf[4], pFile->fd );
+      HB_PUT_LE_UINT32( &msgbuf[6], static_cast<long>(nSize) );
+      HB_PUT_LE_UINT64( &msgbuf[10], timeout );
+      memset( msgbuf + 18, '\0', sizeof(msgbuf) - 18 );
 
-      if( s_fileSendMsg( pFile->conn, msgbuf, data, static_cast< long >( nSize ), HB_TRUE, HB_FALSE ) )
+      if( s_fileSendMsg( pFile->conn, msgbuf, data, static_cast<long>(nSize), true, false ) )
       {
-         nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] );
-         hb_fsSetError( static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 8 ] ) ) );
+         nResult = HB_GET_LE_UINT32( &msgbuf[4] );
+         hb_fsSetError( static_cast<HB_ERRCODE>(HB_GET_LE_UINT32(&msgbuf[8])) );
       }
       s_fileConUnlock( pFile->conn );
    }
@@ -2396,26 +2331,25 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data, HB_SIZE nSize,
    return nResult;
 }
 
-static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * data, HB_SIZE nSize,
-                             HB_FOFFSET llOffset )
+static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * data, HB_SIZE nSize, HB_FOFFSET llOffset )
 {
    HB_SIZE nResult = 0;
 
    if( s_fileConLock( pFile->conn ) )
    {
-      HB_BYTE msgbuf[ NETIO_MSGLEN ];
+      HB_BYTE msgbuf[NETIO_MSGLEN];
 
-      HB_PUT_LE_UINT32( &msgbuf[  0 ], NETIO_READAT );
-      HB_PUT_LE_UINT16( &msgbuf[  4 ], pFile->fd );
-      HB_PUT_LE_UINT32( &msgbuf[  6 ], nSize );
-      HB_PUT_LE_UINT64( &msgbuf[ 10 ], llOffset );
-      memset( msgbuf + 18, '\0', sizeof( msgbuf ) - 18 );
+      HB_PUT_LE_UINT32( &msgbuf[0], NETIO_READAT );
+      HB_PUT_LE_UINT16( &msgbuf[4], pFile->fd );
+      HB_PUT_LE_UINT32( &msgbuf[6], nSize );
+      HB_PUT_LE_UINT64( &msgbuf[10], llOffset );
+      memset( msgbuf + 18, '\0', sizeof(msgbuf) - 18 );
 
-      if( s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, HB_TRUE, HB_FALSE ) )
+      if( s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, true, false ) )
       {
-         HB_ERRCODE errCode = static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 8 ] ) );
-         nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] );
-         if( nResult > 0 && nResult != static_cast< HB_SIZE >( FS_ERROR ) )
+         HB_ERRCODE errCode = static_cast<HB_ERRCODE>(HB_GET_LE_UINT32(&msgbuf[8]));
+         nResult = HB_GET_LE_UINT32( &msgbuf[4] );
+         if( nResult > 0 && nResult != static_cast<HB_SIZE>(FS_ERROR) )
          {
             if( nResult > nSize ) /* error, it should not happen, enemy attack? */
             {
@@ -2423,7 +2357,7 @@ static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * data, HB_SIZE nSize,
                hb_errRT_NETIO( EG_DATAWIDTH, 1009, 0, nullptr, HB_ERR_FUNCNAME );
                nResult = 0;
             }
-            else if( s_fileRecvAll( pFile->conn, data, static_cast< long >( nResult ) ) != static_cast< long >( nResult ) )
+            else if( s_fileRecvAll( pFile->conn, data, static_cast<long>(nResult) ) != static_cast<long>(nResult) )
             {
                pFile->conn->errcode = hb_socketGetError();
                errCode = NETIO_ERR_READ;
@@ -2438,25 +2372,24 @@ static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * data, HB_SIZE nSize,
    return nResult;
 }
 
-static HB_SIZE s_fileWriteAt( PHB_FILE pFile, const void * data, HB_SIZE nSize,
-                              HB_FOFFSET llOffset )
+static HB_SIZE s_fileWriteAt( PHB_FILE pFile, const void * data, HB_SIZE nSize, HB_FOFFSET llOffset )
 {
    HB_SIZE nResult = 0;
 
    if( s_fileConLock( pFile->conn ) )
    {
-      HB_BYTE msgbuf[ NETIO_MSGLEN ];
+      HB_BYTE msgbuf[NETIO_MSGLEN];
 
-      HB_PUT_LE_UINT32( &msgbuf[  0 ], NETIO_WRITEAT );
-      HB_PUT_LE_UINT16( &msgbuf[  4 ], pFile->fd );
-      HB_PUT_LE_UINT32( &msgbuf[  6 ], static_cast< long >( nSize ) );
-      HB_PUT_LE_UINT64( &msgbuf[ 10 ], llOffset );
-      memset( msgbuf + 18, '\0', sizeof( msgbuf ) - 18 );
+      HB_PUT_LE_UINT32( &msgbuf[0], NETIO_WRITEAT );
+      HB_PUT_LE_UINT16( &msgbuf[4], pFile->fd );
+      HB_PUT_LE_UINT32( &msgbuf[6], static_cast<long>(nSize) );
+      HB_PUT_LE_UINT64( &msgbuf[10], llOffset );
+      memset( msgbuf + 18, '\0', sizeof(msgbuf) - 18 );
 
-      if( s_fileSendMsg( pFile->conn, msgbuf, data, static_cast< long >( nSize ), HB_TRUE, HB_FALSE ) )
+      if( s_fileSendMsg( pFile->conn, msgbuf, data, static_cast<long>(nSize), true, false ) )
       {
-         nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] );
-         hb_fsSetError( static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 8 ] ) ) );
+         nResult = HB_GET_LE_UINT32( &msgbuf[4] );
+         hb_fsSetError( static_cast<HB_ERRCODE>(HB_GET_LE_UINT32(&msgbuf[8])) );
       }
       s_fileConUnlock( pFile->conn );
    }
@@ -2470,14 +2403,14 @@ static HB_BOOL s_fileTruncAt( PHB_FILE pFile, HB_FOFFSET llOffset )
 
    if( s_fileConLock( pFile->conn ) )
    {
-      HB_BYTE msgbuf[ NETIO_MSGLEN ];
+      HB_BYTE msgbuf[NETIO_MSGLEN];
 
-      HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_TRUNC );
-      HB_PUT_LE_UINT16( &msgbuf[ 4 ], pFile->fd );
-      HB_PUT_LE_UINT64( &msgbuf[ 6 ], llOffset );
-      memset( msgbuf + 14, '\0', sizeof( msgbuf ) - 14 );
+      HB_PUT_LE_UINT32( &msgbuf[0], NETIO_TRUNC );
+      HB_PUT_LE_UINT16( &msgbuf[4], pFile->fd );
+      HB_PUT_LE_UINT64( &msgbuf[6], llOffset );
+      memset( msgbuf + 14, '\0', sizeof(msgbuf) - 14 );
 
-      fResult = s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, HB_TRUE, HB_FALSE );
+      fResult = s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, true, false );
       s_fileConUnlock( pFile->conn );
    }
 
@@ -2490,18 +2423,18 @@ static HB_FOFFSET s_fileSeek( PHB_FILE pFile, HB_FOFFSET llOffset, HB_USHORT uiF
 
    if( s_fileConLock( pFile->conn ) )
    {
-      HB_BYTE msgbuf[ NETIO_MSGLEN ];
+      HB_BYTE msgbuf[NETIO_MSGLEN];
 
-      HB_PUT_LE_UINT32( &msgbuf[  0 ], NETIO_SEEK );
-      HB_PUT_LE_UINT16( &msgbuf[  4 ], pFile->fd );
-      HB_PUT_LE_UINT64( &msgbuf[  6 ], llOffset );
-      HB_PUT_LE_UINT16( &msgbuf[ 14 ], uiFlags );
-      memset( msgbuf + 16, '\0', sizeof( msgbuf ) - 16 );
+      HB_PUT_LE_UINT32( &msgbuf[0], NETIO_SEEK );
+      HB_PUT_LE_UINT16( &msgbuf[4], pFile->fd );
+      HB_PUT_LE_UINT64( &msgbuf[6], llOffset );
+      HB_PUT_LE_UINT16( &msgbuf[14], uiFlags );
+      memset( msgbuf + 16, '\0', sizeof(msgbuf) - 16 );
 
-      if( s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, HB_TRUE, HB_FALSE ) )
+      if( s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, true, false ) )
       {
-         llResult = HB_GET_LE_UINT64( &msgbuf[ 4 ] );
-         hb_fsSetError( static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 12 ] ) ) );
+         llResult = HB_GET_LE_UINT64( &msgbuf[4] );
+         hb_fsSetError( static_cast<HB_ERRCODE>(HB_GET_LE_UINT32(&msgbuf[12])) );
       }
       s_fileConUnlock( pFile->conn );
    }
@@ -2515,16 +2448,16 @@ static HB_FOFFSET s_fileSize( PHB_FILE pFile )
 
    if( s_fileConLock( pFile->conn ) )
    {
-      HB_BYTE msgbuf[ NETIO_MSGLEN ];
+      HB_BYTE msgbuf[NETIO_MSGLEN];
 
       HB_PUT_LE_UINT32( msgbuf, NETIO_SIZE );
-      HB_PUT_LE_UINT16( &msgbuf[ 4 ], pFile->fd );
-      memset( msgbuf + 6, '\0', sizeof( msgbuf ) - 6 );
+      HB_PUT_LE_UINT16( &msgbuf[4], pFile->fd );
+      memset( msgbuf + 6, '\0', sizeof(msgbuf) - 6 );
 
-      if( s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, HB_TRUE, HB_FALSE ) )
+      if( s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, true, false ) )
       {
-         llOffset = HB_GET_LE_UINT64( &msgbuf[ 4 ] );
-         hb_fsSetError( static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 12 ] ) ) );
+         llOffset = HB_GET_LE_UINT64( &msgbuf[4] );
+         hb_fsSetError( static_cast<HB_ERRCODE>(HB_GET_LE_UINT32(&msgbuf[12])) );
       }
       s_fileConUnlock( pFile->conn );
    }
@@ -2538,16 +2471,16 @@ static HB_BOOL s_fileEof( PHB_FILE pFile )
 
    if( s_fileConLock( pFile->conn ) )
    {
-      HB_BYTE msgbuf[ NETIO_MSGLEN ];
+      HB_BYTE msgbuf[NETIO_MSGLEN];
 
       HB_PUT_LE_UINT32( msgbuf, NETIO_EOF );
-      HB_PUT_LE_UINT16( &msgbuf[ 4 ], pFile->fd );
-      memset( msgbuf + 6, '\0', sizeof( msgbuf ) - 6 );
+      HB_PUT_LE_UINT16( &msgbuf[4], pFile->fd );
+      memset( msgbuf + 6, '\0', sizeof(msgbuf) - 6 );
 
-      if( s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, HB_TRUE, HB_FALSE ) )
+      if( s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, true, false ) )
       {
-         fEof = HB_GET_LE_UINT16( &msgbuf[ 4 ] ) != 0;
-         hb_fsSetError( static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 8 ] ) ) );
+         fEof = HB_GET_LE_UINT16( &msgbuf[4] ) != 0;
+         hb_fsSetError( static_cast<HB_ERRCODE>(HB_GET_LE_UINT32(&msgbuf[8])) );
       }
       s_fileConUnlock( pFile->conn );
    }
@@ -2557,21 +2490,21 @@ static HB_BOOL s_fileEof( PHB_FILE pFile )
 
 static void s_fileFlush( PHB_FILE pFile, HB_BOOL fDirty )
 {
-   HB_SYMBOL_UNUSED( pFile );
-   HB_SYMBOL_UNUSED( fDirty );
+   HB_SYMBOL_UNUSED(pFile);
+   HB_SYMBOL_UNUSED(fDirty);
 }
 
 static void s_fileCommit( PHB_FILE pFile )
 {
    if( s_fileConLock( pFile->conn ) )
    {
-      HB_BYTE msgbuf[ NETIO_MSGLEN ];
+      HB_BYTE msgbuf[NETIO_MSGLEN];
 
       HB_PUT_LE_UINT32( msgbuf, NETIO_COMMIT );
-      HB_PUT_LE_UINT16( &msgbuf[ 4 ], pFile->fd );
-      memset( msgbuf + 6, '\0', sizeof( msgbuf ) - 6 );
+      HB_PUT_LE_UINT16( &msgbuf[4], pFile->fd );
+      memset( msgbuf + 6, '\0', sizeof(msgbuf) - 6 );
 
-      s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, HB_FALSE, HB_FALSE );
+      s_fileSendMsg( pFile->conn, msgbuf, nullptr, 0, false, false );
       s_fileConUnlock( pFile->conn );
    }
 }
@@ -2582,46 +2515,46 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
 
    if( s_fileConLock( pFile->conn ) )
    {
-      HB_BYTE msgbuf[ NETIO_MSGLEN ];
+      HB_BYTE msgbuf[NETIO_MSGLEN];
       HB_SIZE itmSize = 0;
       char * itmData = nullptr;
 
       if( pValue )
          itmData = hb_itemSerialize( pValue, HB_SERIALIZE_NUMSIZE, &itmSize );
 
-      HB_PUT_LE_UINT32( &msgbuf[ 0 ], NETIO_CONFIGURE );
-      HB_PUT_LE_UINT16( &msgbuf[ 4 ], pFile->fd );
-      HB_PUT_LE_UINT32( &msgbuf[ 6 ], itmSize );
-      HB_PUT_LE_UINT32( &msgbuf[ 10 ], iIndex );
-      memset( msgbuf + 14, '\0', sizeof( msgbuf ) - 14 );
+      HB_PUT_LE_UINT32( &msgbuf[0], NETIO_CONFIGURE );
+      HB_PUT_LE_UINT16( &msgbuf[4], pFile->fd );
+      HB_PUT_LE_UINT32( &msgbuf[6], itmSize );
+      HB_PUT_LE_UINT32( &msgbuf[10], iIndex );
+      memset( msgbuf + 14, '\0', sizeof(msgbuf) - 14 );
 
       hb_itemClear( pValue );
 
-      if( s_fileSendMsg( pFile->conn, msgbuf, itmData, static_cast< long >( itmSize ), HB_TRUE, HB_FALSE ) )
+      if( s_fileSendMsg( pFile->conn, msgbuf, itmData, static_cast<long>(itmSize), true, false ) )
       {
-         HB_ERRCODE errCode = static_cast< HB_ERRCODE >( HB_GET_LE_UINT32( &msgbuf[ 12 ] ) );
-         HB_SIZE nResult = HB_GET_LE_UINT32( &msgbuf[ 4 ] ), nRecv = 0;
+         HB_ERRCODE errCode = static_cast<HB_ERRCODE>(HB_GET_LE_UINT32(&msgbuf[12]));
+         HB_SIZE nResult = HB_GET_LE_UINT32( &msgbuf[4] ), nRecv = 0;
 
-         fResult = HB_GET_LE_UINT32( &msgbuf[ 8 ] ) != 0;
+         fResult = HB_GET_LE_UINT32( &msgbuf[8] ) != 0;
          if( nResult > 0 )
          {
-            char * buffer = static_cast< char * >( hb_xgrab( nResult ) );
+            char * buffer = static_cast<char*>(hb_xgrab(nResult));
             const char * data = buffer;
 
-            nRecv = s_fileRecvAll( pFile->conn, buffer, static_cast< long >( nResult ) );
+            nRecv = s_fileRecvAll( pFile->conn, buffer, static_cast<long>(nResult) );
             if( nRecv == nResult && pValue )
             {
                PHB_ITEM pResult = hb_itemDeserialize( &data, &nResult );
 
                if( pResult )
                {
-                  hb_itemMove( pValue, pResult );
-                  hb_itemRelease( pResult );
+                  hb_itemMove(pValue, pResult);
+                  hb_itemRelease(pResult);
                   if( iIndex == HB_VF_IONAME )
-                     hb_itemPutCPtr( pValue, hb_xstrcpy( nullptr, NETIO_FILE_PREFIX, hb_itemGetCPtr( pValue ), nullptr ) );
+                     hb_itemPutCPtr( pValue, hb_xstrcpy( nullptr, NETIO_FILE_PREFIX, hb_itemGetCPtr(pValue), nullptr ) );
                }
             }
-            hb_xfree( buffer );
+            hb_xfree(buffer);
          }
          hb_fsSetError( errCode );
          if( nRecv != nResult )
@@ -2632,7 +2565,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
          }
       }
       if( itmData )
-         hb_xfree( itmData );
+         hb_xfree(itmData);
       s_fileConUnlock( pFile->conn );
    }
 
@@ -2694,15 +2627,15 @@ static const HB_FILE_FUNCS * s_fileMethods( void )
 /* set HB_NETIO_STARTUP_INIT macro if you want to register NETIO client
  * automatically at application startup
  */
-#if defined( HB_NETIO_STARTUP_INIT )
+#if defined(HB_NETIO_STARTUP_INIT)
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_file_netio_init_ )
    hb_vmAtInit( s_netio_init, nullptr );
 HB_CALL_ON_STARTUP_END( _hb_file_netio_init_ )
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_file_netio_init_
-#elif defined( HB_DATASEG_STARTUP )
+#elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY  HB_DATASEG_FUNC( _hb_file_netio_init_ )
    #include "hbiniseg.h"
 #endif

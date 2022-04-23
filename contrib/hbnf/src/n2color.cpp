@@ -26,13 +26,13 @@
 
 HB_FUNC( FT_N2COLOR )
 {
-   int iColor = hb_parnidef( 1, -1 );
+   int iColor = hb_parnidef(1, -1);
 
    if( iColor >= 0x00 && iColor <= 0xff )
    {
-      char szColorString[ 10 ];
+      char szColorString[10];
       hb_gtColorsToString( &iColor, 1, szColorString, 10 );
-      hb_retc( szColorString );
+      hb_retc(szColorString);
    }
    else
    {

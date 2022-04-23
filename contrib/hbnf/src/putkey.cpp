@@ -33,11 +33,11 @@ HB_FUNC( FT_PUTKEY )
 {
    HB_BOOL lSuccess = HB_FALSE;
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
-      hb_inkeyPut( hb_parni( 1 ) );
+      hb_inkeyPut( hb_parni(1) );
       lSuccess = HB_TRUE;
    }
 
-   hb_retl( lSuccess );
+   hb_retl(lSuccess);
 }

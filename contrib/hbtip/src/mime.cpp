@@ -540,11 +540,11 @@ static const EXT_MIME_ENTRY s_extMimeTable[] =
 static const char * s_findExtMimeType( const char * szFileExt )
 {
    HB_UINT uiFirst = 0, uiLast = HB_SIZEOFARRAY( s_extMimeTable );
-   char szExt[ 16 ];
+   char szExt[16];
 
    if( *szFileExt == '.' )
       ++szFileExt;
-   hb_strncpyLower( szExt, szFileExt, sizeof( szExt ) - 1 );
+   hb_strncpyLower( szExt, szFileExt, sizeof(szExt) - 1 );
 
    do
    {
@@ -552,12 +552,12 @@ static const char * s_findExtMimeType( const char * szFileExt )
       int i;
 
       uiMiddle = ( uiFirst + uiLast ) >> 1;
-      i = strcmp( szExt, s_extMimeTable[ uiMiddle ].pattern );
+      i = strcmp( szExt, s_extMimeTable[uiMiddle].pattern );
       if( i == 0 )
       {
-         if( s_extMimeTable[ uiMiddle ].flags == MIME_FLAG_CASEINSENS ||
+         if( s_extMimeTable[uiMiddle].flags == MIME_FLAG_CASEINSENS ||
              strcmp( szExt, szFileExt ) == 0 )
-            return s_extMimeTable[ uiMiddle ].mime_type;
+            return s_extMimeTable[uiMiddle].mime_type;
          break;
       }
       else if( i < 0 )
@@ -583,8 +583,8 @@ static const char * s_findMimeStringInTree( const char * cData, HB_SIZE nLen, in
    /* trim spaces if required */
    while( nPos < nLen &&
           ( ( ( elem->flags & MIME_FLAG_TRIMSPACES ) != 0 && (
-                 cData[ nPos ] == ' ' || cData[ nPos ] == '\r' || cData[ nPos ] == '\n' ) ) ||
-            ( ( elem->flags & MIME_FLAG_TRIMTABS ) != 0 && cData[ nPos ] == '\t' ) ) )
+                 cData[nPos] == ' ' || cData[nPos] == '\r' || cData[nPos] == '\n' ) ) ||
+            ( ( elem->flags & MIME_FLAG_TRIMTABS ) != 0 && cData[nPos] == '\t' ) ) )
    {
       nPos++;
    }
@@ -593,7 +593,7 @@ static const char * s_findMimeStringInTree( const char * cData, HB_SIZE nLen, in
    {
       if( ( elem->flags & MIME_FLAG_CASEINSENS ) != 0 )
       {
-         if( ( *elem->pattern == 0 && cData[ nPos ] == 0 ) || hb_strnicmp( cData + nPos, elem->pattern, nDataLen ) == 0 )
+         if( ( *elem->pattern == 0 && cData[nPos] == 0 ) || hb_strnicmp( cData + nPos, elem->pattern, nDataLen ) == 0 )
          {
             /* is this the begin of a match tree? */
             if( elem->next != 0 )
@@ -604,7 +604,7 @@ static const char * s_findMimeStringInTree( const char * cData, HB_SIZE nLen, in
       }
       else
       {
-         if( ( *elem->pattern == 0 && cData[ nPos ] == 0 ) || strncmp( cData + nPos, elem->pattern, nDataLen ) == 0 )
+         if( ( *elem->pattern == 0 && cData[nPos] == 0 ) || strncmp( cData + nPos, elem->pattern, nDataLen ) == 0 )
          {
             if( elem->next != 0 )
                return s_findMimeStringInTree( cData, nLen, iElem + elem->next );
@@ -629,7 +629,7 @@ static const char * s_findStringMimeType( const char * cData, HB_SIZE nLen )
    {
       const MIME_ENTRY * elem = s_mimeTable + uiCount;
       HB_SIZE nPos     = elem->pos;
-      HB_SIZE nDataLen = static_cast< HB_SIZE >( strlen( elem->pattern ) );
+      HB_SIZE nDataLen = static_cast<HB_SIZE>(strlen(elem->pattern));
 
       if( ( elem->flags & MIME_FLAG_CONTINUE ) != 0 )
          continue;
@@ -637,8 +637,8 @@ static const char * s_findStringMimeType( const char * cData, HB_SIZE nLen )
       /* trim spaces if required */
       while( nPos < nLen &&
              ( ( ( elem->flags & MIME_FLAG_TRIMSPACES ) != 0 && (
-                    cData[ nPos ] == ' ' || cData[ nPos ] == '\r' || cData[ nPos ] == '\n' ) ) ||
-               ( ( elem->flags & MIME_FLAG_TRIMTABS ) != 0 && cData[ nPos ] == '\t' ) ) )
+                    cData[nPos] == ' ' || cData[nPos] == '\r' || cData[nPos] == '\n' ) ) ||
+               ( ( elem->flags & MIME_FLAG_TRIMTABS ) != 0 && cData[nPos] == '\t' ) ) )
       {
          nPos++;
       }
@@ -651,7 +651,7 @@ static const char * s_findStringMimeType( const char * cData, HB_SIZE nLen )
 
       if( ( elem->flags & MIME_FLAG_CASEINSENS ) != 0 )
       {
-         if( ( *elem->pattern == 0 && cData[ nPos ] == 0 ) || hb_strnicmp( cData + nPos, elem->pattern, nDataLen ) == 0 )
+         if( ( *elem->pattern == 0 && cData[nPos] == 0 ) || hb_strnicmp( cData + nPos, elem->pattern, nDataLen ) == 0 )
          {
             /* is this the begin of a match tree? */
             if( elem->next != 0 )
@@ -662,7 +662,7 @@ static const char * s_findStringMimeType( const char * cData, HB_SIZE nLen )
       }
       else
       {
-         if( ( *elem->pattern == 0 && cData[ nPos ] == 0 ) || strncmp( cData + nPos, elem->pattern, nDataLen ) == 0 )
+         if( ( *elem->pattern == 0 && cData[nPos] == 0 ) || strncmp( cData + nPos, elem->pattern, nDataLen ) == 0 )
          {
             if( elem->next != 0 )
                return s_findMimeStringInTree( cData, nLen, uiCount + elem->next );
@@ -676,10 +676,10 @@ static const char * s_findStringMimeType( const char * cData, HB_SIZE nLen )
 
 static const char * s_findFileMimeType( PHB_FILE fileIn )
 {
-   char buf[ 512 ];
+   char buf[512];
 
    HB_FOFFSET nPos = hb_fileSeek( fileIn, 0, FS_RELATIVE );
-   HB_SIZE    nLen = hb_fileResult( hb_fileReadAt( fileIn, buf, sizeof( buf ), 0 ) );
+   HB_SIZE    nLen = hb_fileResult( hb_fileReadAt( fileIn, buf, sizeof(buf), 0 ) );
 
    if( nLen > 0 )
    {
@@ -692,62 +692,62 @@ static const char * s_findFileMimeType( PHB_FILE fileIn )
 
 HB_FUNC( TIP_MIMETYPE )
 {
-   PHB_ITEM pData = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pData = hb_param(1, Harbour::Item::STRING);
 
    if( pData )
    {
-      const char * magic_type = s_findStringMimeType( hb_itemGetCPtr( pData ), hb_itemGetCLen( pData ) );
+      const char * magic_type = s_findStringMimeType( hb_itemGetCPtr(pData), hb_itemGetCLen(pData) );
 
       if( magic_type )
          hb_retc_const( magic_type );
-      else if( HB_ISCHAR( 2 ) )
-         hb_retc( hb_parc( 2 ) );
+      else if( HB_ISCHAR(2) )
+         hb_retc(hb_parc(2));
       else
          hb_retc_const( "unknown" );  /* FIXME: change to "application/unknown" */
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 HB_FUNC( TIP_FILENAMEMIMETYPE )
 {
-   const char * fname = hb_parc( 1 );
+   const char * fname = hb_parc(1);
 
    if( fname )
    {
       PHB_FNAME pFileName = hb_fsFNameSplit( fname );
       const char * ext_type = pFileName->szExtension ? s_findExtMimeType( pFileName->szExtension ) : nullptr;
-      hb_xfree( pFileName );
+      hb_xfree(pFileName);
 
       if( ext_type )
          hb_retc_const( ext_type );
-      else if( HB_ISCHAR( 2 ) )
-         hb_retc( hb_parc( 2 ) );
+      else if( HB_ISCHAR(2) )
+         hb_retc(hb_parc(2));
       else
          hb_retc_const( "unknown" );  /* FIXME: change to "application/unknown" */
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 HB_FUNC( TIP_FILEMIMETYPE )
 {
-   PHB_ITEM pFile = hb_param( 1, HB_IT_STRING | HB_IT_POINTER | HB_IT_NUMERIC );
+   PHB_ITEM pFile = hb_param(1, Harbour::Item::STRING | Harbour::Item::POINTER | Harbour::Item::NUMERIC);
 
    if( pFile )
    {
       const char * ext_type   = nullptr;
       const char * magic_type = nullptr;
 
-      if( HB_IS_STRING( pFile ) )
+      if( HB_IS_STRING(pFile) )
       {
-         const char * fname = hb_itemGetCPtr( pFile );
+         const char * fname = hb_itemGetCPtr(pFile);
 
          PHB_FNAME pFileName = hb_fsFNameSplit( fname );
          PHB_FILE fileIn;
 
          ext_type = pFileName->szExtension ? s_findExtMimeType( pFileName->szExtension ) : nullptr;
-         hb_xfree( pFileName );
+         hb_xfree(pFileName);
 
          if( ( fileIn = hb_fileExtOpen( fname, nullptr,
                                         FO_READ | FO_SHARED | FO_PRIVATE |
@@ -771,11 +771,11 @@ HB_FUNC( TIP_FILEMIMETYPE )
          hb_retc_const( magic_type );
       else if( ext_type )
          hb_retc_const( ext_type );
-      else if( HB_ISCHAR( 2 ) )
-         hb_retc( hb_parc( 2 ) );
+      else if( HB_ISCHAR(2) )
+         hb_retc(hb_parc(2));
       else
          hb_retc_const( "unknown" );  /* FIXME: change to "application/unknown" */
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

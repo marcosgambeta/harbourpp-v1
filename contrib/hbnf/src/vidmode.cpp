@@ -81,5 +81,5 @@ HB_FUNC( FT_GETMODE )
 
    iMode = 0;
 
-   hb_retni( iMode );
+   hb_retni(iMode);
 }

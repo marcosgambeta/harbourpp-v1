@@ -39,28 +39,28 @@ HB_FUNC( UNIX_DAEMON )
    {
       case -1:
          hb_posix_save_errno();
-         hb_retni( -1 );
+         hb_retni(-1);
          return;
       case 0:
          break;
       default:
          hb_vmRequestQuit();
-         exit( 0 );
+         exit(0);
    }
 
    if( setsid() == -1 )
    {
       hb_posix_save_errno();
-      hb_retni( -1 );
+      hb_retni(-1);
       return;
    }
 
-   if( ! HB_PARLUNIX( 1 ) && chdir( "/" ) == -1 )
+   if( !HB_PARLUNIX(1) && chdir( "/" ) == -1 )
    {
       /* fallthrough */
    }
 
-   if( ! HB_PARLUNIX( 2 ) && ( fd = open( "/dev/null", O_RDWR ) ) != -1 )
+   if( !HB_PARLUNIX(2) && ( fd = open( "/dev/null", O_RDWR ) ) != -1 )
    {
       ( void ) dup2( fd, STDIN_FILENO );
       ( void ) dup2( fd, STDOUT_FILENO );
@@ -69,7 +69,7 @@ HB_FUNC( UNIX_DAEMON )
          ( void ) close( fd );
    }
 
-   hb_posix_set_errno( 0 );
+   hb_posix_set_errno(0);
 
-   hb_retni( 0 );
+   hb_retni(0);
 }

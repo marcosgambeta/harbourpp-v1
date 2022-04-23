@@ -51,15 +51,15 @@
 
 HB_FUNC( HB_SSL_READ_ALL )
 {
-   if( hb_SSL_is( 1 ) )
+   if( hb_SSL_is(1) )
    {
-      SSL * ssl = hb_SSL_par( 1 );
+      SSL * ssl = hb_SSL_par(1);
 
       if( ssl )
       {
-         int iMax        = hb_parnidef( 3, INT_MAX );
-         int iTimeout    = hb_parnidef( 4, -1 );
-         int iBufferSize = hb_parnidef( 5, 80 );
+         int iMax        = hb_parnidef(3, INT_MAX);
+         int iTimeout    = hb_parnidef(4, -1);
+         int iBufferSize = hb_parnidef(5, 80);
 
          int    iPos       = 0;
          int    iAllocated = 0;
@@ -67,11 +67,11 @@ HB_FUNC( HB_SSL_READ_ALL )
 
          for( ;; )
          {
-            char buffer[ 1 ];
+            char buffer[1];
             int  iLen;
             int  sd = SSL_get_rfd( ssl );
 
-            if( SSL_pending( ssl ) || ( sd >= 0 && hb_socketSelectRead( static_cast< HB_SOCKET >( sd ), iTimeout ) ) )
+            if( SSL_pending( ssl ) || ( sd >= 0 && hb_socketSelectRead( static_cast<HB_SOCKET>(sd), iTimeout ) ) )
             {
                iLen = SSL_read( ssl, buffer, 1 );
 
@@ -89,21 +89,21 @@ HB_FUNC( HB_SSL_READ_ALL )
             {
                if( retval )
                {
-                  hb_xfree( retval );
+                  hb_xfree(retval);
                }
 
-               hb_storc( nullptr, 2 );
-               hb_retni( iLen );
+               hb_storc(nullptr, 2);
+               hb_retni(iLen);
                return;
             }
 
             if( iPos == iAllocated )
             {
                iAllocated += iBufferSize;
-               retval      = static_cast< char * >( hb_xrealloc( retval, iAllocated ) );
+               retval      = static_cast<char*>(hb_xrealloc(retval, iAllocated));
             }
 
-            retval[ iPos++ ] = buffer[ 0 ];
+            retval[iPos++] = buffer[0];
 
             if( iPos == iMax )
             {
@@ -113,17 +113,17 @@ HB_FUNC( HB_SSL_READ_ALL )
 
          if( retval )
          {
-            if( ! hb_storclen_buffer( retval, iPos, 2 ) )
+            if( !hb_storclen_buffer( retval, iPos, 2 ) )
             {
-               hb_xfree( retval );
+               hb_xfree(retval);
             }
          }
          else
          {
-            hb_storc( nullptr, 2 );
+            hb_storc(nullptr, 2);
          }
 
-         hb_retni( iPos );
+         hb_retni(iPos);
       }
    }
    else
@@ -134,15 +134,15 @@ HB_FUNC( HB_SSL_READ_ALL )
 
 HB_FUNC( HB_SSL_READ_LINE )
 {
-   if( hb_SSL_is( 1 ) )
+   if( hb_SSL_is(1) )
    {
-      SSL * ssl = hb_SSL_par( 1 );
+      SSL * ssl = hb_SSL_par(1);
 
       if( ssl )
       {
-         int iMax        = hb_parnidef( 3, INT_MAX );
-         int iTimeout    = hb_parnidef( 4, -1 );
-         int iBufferSize = hb_parnidef( 5, 80 );
+         int iMax        = hb_parnidef(3, INT_MAX);
+         int iTimeout    = hb_parnidef(4, -1);
+         int iBufferSize = hb_parnidef(5, 80);
 
          int    iPos       = 0;
          int    iAllocated = 0;
@@ -150,11 +150,11 @@ HB_FUNC( HB_SSL_READ_LINE )
 
          for( ;; )
          {
-            char buffer[ 1 ];
+            char buffer[1];
             int  iLen;
             int  sd = SSL_get_rfd( ssl );
 
-            if( SSL_pending( ssl ) || ( sd >= 0 && hb_socketSelectRead( static_cast< HB_SOCKET >( sd ), iTimeout ) ) )
+            if( SSL_pending( ssl ) || ( sd >= 0 && hb_socketSelectRead( static_cast<HB_SOCKET>(sd), iTimeout ) ) )
             {
                iLen = SSL_read( ssl, buffer, 1 );
 
@@ -172,18 +172,18 @@ HB_FUNC( HB_SSL_READ_LINE )
             {
                if( retval )
                {
-                  hb_xfree( retval );
+                  hb_xfree(retval);
                }
 
-               hb_storc( nullptr, 2 );
-               hb_retni( iLen );
+               hb_storc(nullptr, 2);
+               hb_retni(iLen);
                return;
             }
-            else if( buffer[ 0 ] == '\r' )
+            else if( buffer[0] == '\r' )
             {
                continue;
             }
-            else if( buffer[ 0 ] == '\n' )
+            else if( buffer[0] == '\n' )
             {
                break;
             }
@@ -191,10 +191,10 @@ HB_FUNC( HB_SSL_READ_LINE )
             if( iPos == iAllocated )
             {
                iAllocated += iBufferSize;
-               retval      = static_cast< char * >( hb_xrealloc( retval, iAllocated ) );
+               retval      = static_cast<char*>(hb_xrealloc(retval, iAllocated));
             }
 
-            retval[ iPos++ ] = buffer[ 0 ];
+            retval[iPos++] = buffer[0];
 
             if( iPos == iMax )
             {
@@ -204,17 +204,17 @@ HB_FUNC( HB_SSL_READ_LINE )
 
          if( retval )
          {
-            if( ! hb_storclen_buffer( retval, iPos, 2 ) )
+            if( !hb_storclen_buffer( retval, iPos, 2 ) )
             {
-               hb_xfree( retval );
+               hb_xfree(retval);
             }
          }
          else
          {
-            hb_storc( nullptr, 2 );
+            hb_storc(nullptr, 2);
          }
 
-         hb_retni( iPos );
+         hb_retni(iPos);
       }
    }
    else

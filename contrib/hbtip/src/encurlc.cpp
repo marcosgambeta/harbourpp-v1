@@ -50,27 +50,27 @@
 
 HB_FUNC( TIP_URLENCODE )
 {
-   const char * pszData = hb_parc( 1 );
+   const char * pszData = hb_parc(1);
 
    if( pszData )
    {
-      HB_ISIZ nLen = hb_parclen( 1 );
+      HB_ISIZ nLen = hb_parclen(1);
 
       if( nLen )
       {
-         HB_BOOL bComplete = hb_parldef( 2, HB_TRUE );
+         HB_BOOL bComplete = hb_parldef(2, true);
          HB_ISIZ nPos = 0, nPosRet = 0;
 
          /* Giving maximum final length possible */
-         char * pszRet = static_cast< char * >( hb_xgrab( nLen * 3 + 1 ) );
+         char * pszRet = static_cast<char*>(hb_xgrab(nLen * 3 + 1));
 
          while( nPos < nLen )
          {
-            char cElem = pszData[ nPos ];
+            char cElem = pszData[nPos];
 
             if( cElem == ' ' )
             {
-               pszRet[ nPosRet ] = '+';
+               pszRet[nPosRet] = '+';
             }
             else if( ( cElem >= 'A' && cElem <= 'Z' ) ||
                      ( cElem >= 'a' && cElem <= 'z' ) ||
@@ -78,20 +78,20 @@ HB_FUNC( TIP_URLENCODE )
                      cElem == '.' || cElem == ',' || cElem == '&' ||
                      cElem == '/' || cElem == ';' || cElem == '_' )
             {
-               pszRet[ nPosRet ] = cElem;
+               pszRet[nPosRet] = cElem;
             }
-            else if( ! bComplete && ( cElem == ':' || cElem == '?' || cElem == '=' ) )
+            else if( !bComplete && ( cElem == ':' || cElem == '?' || cElem == '=' ) )
             {
-               pszRet[ nPosRet ] = cElem;
+               pszRet[nPosRet] = cElem;
             }
             else /* encode! */
             {
                HB_UINT uiVal;
-               pszRet[ nPosRet++ ] = '%';
-               uiVal = ( static_cast< HB_UCHAR >( cElem ) ) >> 4;
-               pszRet[ nPosRet++ ] = static_cast< char >( ( uiVal < 10 ? '0' : 'A' - 10 ) + uiVal );
-               uiVal = ( static_cast< HB_UCHAR >( cElem ) ) & 0x0F;
-               pszRet[ nPosRet ] = static_cast< char >( ( uiVal < 10 ? '0' : 'A' - 10 ) + uiVal );
+               pszRet[nPosRet++] = '%';
+               uiVal = (static_cast<HB_UCHAR>(cElem)) >> 4;
+               pszRet[nPosRet++] = static_cast<char>((uiVal < 10 ? '0' : 'A' - 10) + uiVal);
+               uiVal = (static_cast<HB_UCHAR>(cElem)) & 0x0F;
+               pszRet[nPosRet] = static_cast<char>((uiVal < 10 ? '0' : 'A' - 10) + uiVal);
             }
 
             nPosRet++;
@@ -104,38 +104,38 @@ HB_FUNC( TIP_URLENCODE )
          hb_retc_null();
    }
    else
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError( 1 ) );
+      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError(1) );
 }
 
 HB_FUNC( TIP_URLDECODE )
 {
-   const char * pszData = hb_parc( 1 );
+   const char * pszData = hb_parc(1);
 
    if( pszData )
    {
-      HB_ISIZ nLen = hb_parclen( 1 );
+      HB_ISIZ nLen = hb_parclen(1);
 
       if( nLen )
       {
          HB_ISIZ nPos = 0, nPosRet = 0;
 
          /* maximum possible length */
-         char * pszRet = static_cast< char * >( hb_xgrab( nLen ) );
+         char * pszRet = static_cast<char*>(hb_xgrab(nLen));
 
          while( nPos < nLen )
          {
-            char cElem = pszData[ nPos ];
+            char cElem = pszData[nPos];
 
-            if( cElem == '%' && HB_ISXDIGIT( pszData[ nPos + 1 ] ) && HB_ISXDIGIT( pszData[ nPos + 2 ] ) )
+            if( cElem == '%' && HB_ISXDIGIT( pszData[nPos + 1] ) && HB_ISXDIGIT( pszData[nPos + 2] ) )
             {
-               cElem = pszData[ ++nPos ];
-               pszRet[ nPosRet ]  = cElem - ( cElem >= 'a' ? 'a' - 10 : ( cElem >= 'A' ? 'A' - 10 : '0' ) );
-               pszRet[ nPosRet ] <<= 4;
-               cElem = pszData[ ++nPos ];
-               pszRet[ nPosRet ] |= cElem - ( cElem >= 'a' ? 'a' - 10 : ( cElem >= 'A' ? 'A' - 10 : '0' ) );
+               cElem = pszData[++nPos];
+               pszRet[nPosRet]  = cElem - ( cElem >= 'a' ? 'a' - 10 : ( cElem >= 'A' ? 'A' - 10 : '0' ) );
+               pszRet[nPosRet] <<= 4;
+               cElem = pszData[++nPos];
+               pszRet[nPosRet] |= cElem - ( cElem >= 'a' ? 'a' - 10 : ( cElem >= 'A' ? 'A' - 10 : '0' ) );
             }
             else
-               pszRet[ nPosRet ] = cElem == '+' ? ' ' : cElem;
+               pszRet[nPosRet] = cElem == '+' ? ' ' : cElem;
 
             nPos++;
             nPosRet++;
@@ -143,11 +143,11 @@ HB_FUNC( TIP_URLDECODE )
 
          /* this function also adds a zero */
          /* hopefully reduce the size of pszRet */
-         hb_retclen_buffer( static_cast< char * >( hb_xrealloc( pszRet, nPosRet + 1 ) ), nPosRet );
+         hb_retclen_buffer( static_cast<char*>(hb_xrealloc(pszRet, nPosRet + 1)), nPosRet );
       }
       else
          hb_retc_null();
    }
    else
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError( 1 ) );
+      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError(1) );
 }

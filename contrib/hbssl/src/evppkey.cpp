@@ -85,11 +85,11 @@ EVP_PKEY * hb_EVP_PKEY_par( int iParam )
 
 void hb_EVP_PKEY_ret( EVP_PKEY * pkey )
 {
-   void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof( EVP_PKEY * ), &s_gcEVP_PKEY_funcs ) );
+   void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof(EVP_PKEY*), &s_gcEVP_PKEY_funcs ) );
 
    *ph = pkey;
 
-   hb_retptrGC( ph );
+   hb_retptrGC(ph);
 }
 
 HB_FUNC( EVP_PKEY_NEW )
@@ -99,18 +99,18 @@ HB_FUNC( EVP_PKEY_NEW )
 
 HB_FUNC( EVP_PKEY_TYPE )
 {
-   hb_retni( EVP_PKEY_type( hb_parni( 1 ) ) );
+   hb_retni(EVP_PKEY_type(hb_parni(1)));
 }
 
 HB_FUNC( EVP_PKEY_SIZE )
 {
-   if( hb_EVP_PKEY_is( 1 ) )
+   if( hb_EVP_PKEY_is(1) )
    {
-      EVP_PKEY * pkey = hb_EVP_PKEY_par( 1 );
+      EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
 
       if( pkey )
       {
-         hb_retni( EVP_PKEY_size( pkey ) );
+         hb_retni(EVP_PKEY_size(pkey));
       }
    }
    else
@@ -121,13 +121,13 @@ HB_FUNC( EVP_PKEY_SIZE )
 
 HB_FUNC( EVP_PKEY_BITS )
 {
-   if( hb_EVP_PKEY_is( 1 ) )
+   if( hb_EVP_PKEY_is(1) )
    {
-      EVP_PKEY * pkey = hb_EVP_PKEY_par( 1 );
+      EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
 
       if( pkey )
       {
-         hb_retni( EVP_PKEY_bits( pkey ) );
+         hb_retni(EVP_PKEY_bits(pkey));
       }
    }
    else
@@ -138,14 +138,14 @@ HB_FUNC( EVP_PKEY_BITS )
 
 HB_FUNC( EVP_PKEY_ASSIGN )
 {
-   if( hb_EVP_PKEY_is( 1 ) )
+   if( hb_EVP_PKEY_is(1) )
    {
-      EVP_PKEY * pkey = hb_EVP_PKEY_par( 1 );
+      EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
 
       if( pkey )
       {
          /* QUESTION: Is hb_openssl_strdup() okay here? [vszakats] */
-         hb_retni( EVP_PKEY_assign( pkey, hb_parni( 2 ), hb_openssl_strdup( hb_parcx( 3 ) ) ) );
+         hb_retni(EVP_PKEY_assign(pkey, hb_parni(2), hb_openssl_strdup(hb_parcx(3))));
       }
    }
    else
@@ -157,14 +157,14 @@ HB_FUNC( EVP_PKEY_ASSIGN )
 HB_FUNC( EVP_PKEY_ASSIGN_RSA )
 {
 #ifndef OPENSSL_NO_RSA
-   if( hb_EVP_PKEY_is( 1 ) && HB_ISPOINTER( 2 ) )
+   if( hb_EVP_PKEY_is(1) && HB_ISPOINTER(2) )
    {
-      EVP_PKEY * pkey = hb_EVP_PKEY_par( 1 );
-      RSA *      key  = static_cast< RSA * >( hb_parptr( 2 ) );
+      EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
+      RSA *      key  = static_cast< RSA * >( hb_parptr(2) );
 
       if( pkey && key )
       {
-         hb_retni( EVP_PKEY_assign_RSA( pkey, key ) );
+         hb_retni(EVP_PKEY_assign_RSA(pkey, key));
       }
    }
    else
@@ -179,14 +179,14 @@ HB_FUNC( EVP_PKEY_ASSIGN_RSA )
 HB_FUNC( EVP_PKEY_ASSIGN_DSA )
 {
 #ifndef OPENSSL_NO_DSA
-   if( hb_EVP_PKEY_is( 1 ) && HB_ISPOINTER( 2 ) )
+   if( hb_EVP_PKEY_is(1) && HB_ISPOINTER(2) )
    {
-      EVP_PKEY * pkey = hb_EVP_PKEY_par( 1 );
-      DSA *      key  = static_cast< DSA * >( hb_parptr( 2 ) );
+      EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
+      DSA *      key  = static_cast< DSA * >( hb_parptr(2) );
 
       if( pkey && key )
       {
-         hb_retni( EVP_PKEY_assign_DSA( pkey, key ) );
+         hb_retni(EVP_PKEY_assign_DSA(pkey, key));
       }
    }
    else
@@ -201,14 +201,14 @@ HB_FUNC( EVP_PKEY_ASSIGN_DSA )
 HB_FUNC( EVP_PKEY_ASSIGN_DH )
 {
 #ifndef OPENSSL_NO_RSA
-   if( hb_EVP_PKEY_is( 1 ) && HB_ISPOINTER( 2 ) )
+   if( hb_EVP_PKEY_is(1) && HB_ISPOINTER(2) )
    {
-      EVP_PKEY * pkey = hb_EVP_PKEY_par( 1 );
-      DH *       key  = static_cast< DH * >( hb_parptr( 2 ) );
+      EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
+      DH *       key  = static_cast< DH * >( hb_parptr(2) );
 
       if( pkey && key )
       {
-         hb_retni( EVP_PKEY_assign_DH( pkey, key ) );
+         hb_retni(EVP_PKEY_assign_DH(pkey, key));
       }
    }
    else

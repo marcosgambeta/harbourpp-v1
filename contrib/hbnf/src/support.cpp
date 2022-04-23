@@ -53,7 +53,7 @@ HB_FUNC( _FT_NWKSTAT )
 
    iConnect = 0;
 
-   hb_retni( iConnect );
+   hb_retni(iConnect);
 }
 
 HB_FUNC( _FT_TEMPFIL )
@@ -64,15 +64,15 @@ HB_FUNC( _FT_TEMPFIL )
 
    nax    = 0;
    iflags = 0;
-   cPath  = hb_parcx( 1 );
+   cPath  = hb_parcx(1);
 
-   PHB_ITEM pArray = hb_itemArrayNew( 3 );
+   PHB_ITEM pArray = hb_itemArrayNew(3);
 
-   hb_arraySetNI( pArray, 1, nax );
-   hb_arraySetC(  pArray, 2, cPath );
-   hb_arraySetNI( pArray, 3, iflags );
+   hb_arraySetNI(pArray, 1, nax);
+   hb_arraySetC(pArray, 2, cPath);
+   hb_arraySetNI(pArray, 3, iflags);
 
-   hb_itemReturnRelease( pArray );
+   hb_itemReturnRelease(pArray);
 }
 
 HB_FUNC( FT_REBOOT )

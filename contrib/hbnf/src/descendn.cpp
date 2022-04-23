@@ -21,51 +21,51 @@
 
 HB_FUNC( FT_DESCEND )
 {
-   PHB_ITEM iP     = hb_itemParam( 1 );
+   PHB_ITEM iP     = hb_itemParam(1);
    HB_TYPE  uiType = hb_itemType( iP );
 
    PHB_ITEM iR = nullptr;
 
-   if( ( uiType & HB_IT_NUMERIC ) && ( uiType & HB_IT_DOUBLE ) )
+   if( ( uiType & Harbour::Item::NUMERIC ) && ( uiType & Harbour::Item::DOUBLE ) )
    {
-      iR = hb_itemPutND( nullptr, 0 - hb_itemGetND( iP ) );
+      iR = hb_itemPutND( nullptr, 0 - hb_itemGetND(iP) );
    }
-   else if( uiType & HB_IT_NUMERIC )
+   else if( uiType & Harbour::Item::NUMERIC )
    {
-      iR = hb_itemPutNL( nullptr, 0 - hb_itemGetNL( iP ) );
+      iR = hb_itemPutNL( nullptr, 0 - hb_itemGetNL(iP) );
    }
-   else if( uiType & HB_IT_DATE )
+   else if( uiType & Harbour::Item::DATE )
    {
-      iR = hb_itemPutNL( nullptr, 0x4FD4C0L - hb_itemGetNL( iP ) );
+      iR = hb_itemPutNL( nullptr, 0x4FD4C0L - hb_itemGetNL(iP) );
    }
-   else if( uiType & HB_IT_TIMESTAMP )
+   else if( uiType & Harbour::Item::TIMESTAMP )
    {
       iR = hb_itemPutND( nullptr, 0x4FD4C0L - hb_itemGetTD( iP ) );
    }
-   else if( uiType & HB_IT_LOGICAL )
+   else if( uiType & Harbour::Item::LOGICAL )
    {
-      iR = hb_itemPutL( 0, ( hb_itemGetL( iP ) > 0 ) ? 0 : 1 );
+      iR = hb_itemPutL(0, (hb_itemGetL(iP) > 0) ? 0 : 1);
    }
-   else if( uiType & HB_IT_STRING )
+   else if( uiType & Harbour::Item::STRING )
    {
       HB_SIZE uiLen = hb_itemSize( iP );
 
-      char * pDescend = static_cast< char * >( hb_xgrab( uiLen ) );
+      char * pDescend = static_cast<char*>(hb_xgrab(uiLen));
 
       hb_itemCopyC( iP, pDescend, uiLen );
 
       for( HB_SIZE n = 0; n < uiLen; n++ )
       {
-         pDescend[ n ] = static_cast< char >( 0 ) - pDescend[ n ];
+         pDescend[n] = static_cast<char>(0) - pDescend[n];
       }
 
       iR = hb_itemPutCL( nullptr, pDescend, uiLen );
 
-      hb_xfree( pDescend );
+      hb_xfree(pDescend);
    }
 
-   hb_itemReturn( iR );
+   hb_itemReturn(iR);
 
-   hb_itemRelease( iP );
-   hb_itemRelease( iR );
+   hb_itemRelease(iP);
+   hb_itemRelease(iR);
 }

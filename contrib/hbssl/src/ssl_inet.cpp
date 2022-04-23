@@ -69,47 +69,47 @@ static void hb_inetCloseSSL( PHB_ZNETSTREAM pStream )
 
 static long hb_inetFlushSSL( PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT timeout, HB_BOOL fSync )
 {
-   HB_SYMBOL_UNUSED( pStream );
-   HB_SYMBOL_UNUSED( sd );
-   HB_SYMBOL_UNUSED( timeout );
-   HB_SYMBOL_UNUSED( fSync );
+   HB_SYMBOL_UNUSED(pStream);
+   HB_SYMBOL_UNUSED(sd);
+   HB_SYMBOL_UNUSED(timeout);
+   HB_SYMBOL_UNUSED(fSync);
 
    return 0;
 }
 
 static int hb_inetErrorSSL( PHB_ZNETSTREAM pStream )
 {
-   HB_SYMBOL_UNUSED( pStream );
+   HB_SYMBOL_UNUSED(pStream);
 
    return hb_socketGetError();
 }
 
 static const char * hb_inetErrStrSSL( PHB_ZNETSTREAM pStream, int iError )
 {
-   HB_SYMBOL_UNUSED( pStream );
+   HB_SYMBOL_UNUSED(pStream);
 
    return hb_ssl_socketErrorStr( iError );
 }
 
 static void hb_inetStartSSL( HB_BOOL fServer )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_POINTER );
-   HB_SOCKET sd = hb_znetInetFD( pItem, HB_TRUE );
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::POINTER);
+   HB_SOCKET sd = hb_znetInetFD( pItem, true );
 
    if( sd != HB_NO_SOCKET )
    {
-      if( hb_SSL_is( 2 ) )
+      if( hb_SSL_is(2) )
       {
          int iResult = -2;
-         SSL * ssl = hb_SSL_par( 2 );
+         SSL * ssl = hb_SSL_par(2);
 
          if( ssl )
          {
-            HB_MAXINT timeout = HB_ISNUM( 3 ) ? hb_parnint( 3 ) : hb_znetInetTimeout( pItem, HB_FALSE );
-            PHB_SSLSTREAM pStream = hb_ssl_socketNew( sd, ssl, fServer, timeout, hb_param( 2, HB_IT_POINTER ), &iResult );
+            HB_MAXINT timeout = HB_ISNUM(3) ? hb_parnint(3) : hb_znetInetTimeout( pItem, false );
+            PHB_SSLSTREAM pStream = hb_ssl_socketNew( sd, ssl, fServer, timeout, hb_param(2, Harbour::Item::POINTER), &iResult );
             if( pStream )
             {
-               if( ! hb_znetInetInitialize( pItem, reinterpret_cast< PHB_ZNETSTREAM >( pStream ),
+               if( !hb_znetInetInitialize( pItem, reinterpret_cast< PHB_ZNETSTREAM >( pStream ),
                                             hb_inetReadSSL, hb_inetWriteSSL,
                                             hb_inetFlushSSL, hb_inetCloseSSL,
                                             hb_inetErrorSSL, hb_inetErrStrSSL ) )
@@ -119,7 +119,7 @@ static void hb_inetStartSSL( HB_BOOL fServer )
                }
             }
          }
-         hb_retni( iResult );
+         hb_retni(iResult);
       }
       else
       {
@@ -131,11 +131,11 @@ static void hb_inetStartSSL( HB_BOOL fServer )
 /* hb_inetSSL_connect( <pSocket>, <pSSL> [, <nTimeout> ] ) */
 HB_FUNC( HB_INETSSL_CONNECT )
 {
-   hb_inetStartSSL( HB_FALSE );
+   hb_inetStartSSL(false);
 }
 
 /* hb_inetSSL_accept( <pSocket>, <pSSL> [, <nTimeout> ] ) */
 HB_FUNC( HB_INETSSL_ACCEPT )
 {
-   hb_inetStartSSL( HB_TRUE );
+   hb_inetStartSSL(true);
 }

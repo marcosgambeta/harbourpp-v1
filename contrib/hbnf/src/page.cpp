@@ -52,7 +52,7 @@ HB_FUNC( FT_GETVPG )
 
    iPage = 0;
 
-   hb_retni( iPage );
+   hb_retni(iPage);
 }
 
 HB_FUNC( FT_SETVPG )

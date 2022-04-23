@@ -66,13 +66,13 @@ static int hb_ssl_pem_password_cb( char * buf, int size, int rwflag, void * user
    if( size > 0 && userdata && hb_vmRequestReenter() )
    {
       hb_vmPushEvalSym();
-      hb_vmPush( static_cast< PHB_ITEM >( userdata ) );
-      hb_vmPushLogical( rwflag );
-      hb_vmSend( 1 );
+      hb_vmPush(static_cast<PHB_ITEM>(userdata));
+      hb_vmPushLogical(rwflag);
+      hb_vmSend(1);
 
-      buf[ 0 ] = '\0';
+      buf[0] = '\0';
 
-      retsize = static_cast< int >( hb_parclen( -1 ) );
+      retsize = static_cast<int>(hb_parclen(-1));
 
       if( retsize > 0 )
       {
@@ -81,7 +81,7 @@ static int hb_ssl_pem_password_cb( char * buf, int size, int rwflag, void * user
             retsize = size;
          }
 
-         memcpy( buf, hb_parc( -1 ), retsize );
+         memcpy( buf, hb_parc(-1), retsize );
       }
 
       hb_vmRequestRestore();
@@ -102,17 +102,17 @@ static void hb_PEM_read_bio( PEM_READ_BIO * func, HB_PEM_TYPES type )
 {
    BIO * bio;
 
-   if( hb_BIO_is( 1 ) )
+   if( hb_BIO_is(1) )
    {
-      bio = hb_BIO_par( 1 );
+      bio = hb_BIO_par(1);
    }
-   else if( HB_ISCHAR( 1 ) )
+   else if( HB_ISCHAR(1) )
    {
-      bio = BIO_new_file( hb_parc( 1 ), "r" );
+      bio = BIO_new_file( hb_parc(1), "r" );
    }
-   else if( HB_ISNUM( 1 ) )
+   else if( HB_ISNUM(1) )
    {
-      bio = BIO_new_fd( hb_parni( 1 ), BIO_NOCLOSE );
+      bio = BIO_new_fd( hb_parni(1), BIO_NOCLOSE );
    }
    else
    {
@@ -121,7 +121,7 @@ static void hb_PEM_read_bio( PEM_READ_BIO * func, HB_PEM_TYPES type )
 
    if( bio )
    {
-      PHB_ITEM pPassCallback = hb_param( 2, HB_IT_EVALITEM );
+      PHB_ITEM pPassCallback = hb_param(2, Harbour::Item::EVALITEM);
       pem_password_cb * cb;
       void * cargo, * result;
 
@@ -133,7 +133,7 @@ static void hb_PEM_read_bio( PEM_READ_BIO * func, HB_PEM_TYPES type )
       else
       {
          cb = nullptr;
-         cargo = const_cast< char * >( hb_parc( 2 ) );  /* NOTE: Discarding 'const' qualifier, OpenSSL will memcpy() it */
+         cargo = const_cast< char * >( hb_parc(2) );  /* NOTE: Discarding 'const' qualifier, OpenSSL will memcpy() it */
       }
 
       result = ( *func )( bio, nullptr, cb, cargo );
@@ -143,22 +143,22 @@ static void hb_PEM_read_bio( PEM_READ_BIO * func, HB_PEM_TYPES type )
          switch( type )
          {
             case hb_PEM_X509:
-               hb_X509_ret( ( X509 * ) result, HB_TRUE );
+               hb_X509_ret( ( X509 * ) result, true );
                break;
             case hb_PEM_EVP_PKEY:
                hb_EVP_PKEY_ret( ( EVP_PKEY * ) result );
                break;
             case hb_PEM_ANY:
-               hb_retptr( nullptr );
+               hb_retptr(nullptr);
                break;
          }
       }
       else
       {
-         hb_retptr( nullptr );
+         hb_retptr(nullptr);
       }
 
-      if( ! hb_BIO_is( 1 ) )
+      if( !hb_BIO_is(1) )
       {
          BIO_free( bio );
       }

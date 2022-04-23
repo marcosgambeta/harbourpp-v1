@@ -52,5 +52,5 @@ HB_FUNC( FT_ISSHARE )
 
    iShare = 0;
 
-   hb_retni( iShare );
+   hb_retni(iShare);
 }

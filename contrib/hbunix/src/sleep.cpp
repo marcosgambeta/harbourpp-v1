@@ -48,5 +48,5 @@
 
 HB_FUNC( POSIX_SLEEP )
 {
-   hb_retnint( sleep( static_cast< unsigned >( hb_parnint( 1 ) ) ) );
+   hb_retnint(sleep(static_cast<unsigned>(hb_parnint(1))));
 }

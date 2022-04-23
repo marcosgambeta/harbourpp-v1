@@ -48,11 +48,11 @@
 
 HB_FUNC( POSIX_CHDIR )
 {
-   if( chdir( hb_parcx( 1 ) ) == -1 )
+   if( chdir( hb_parcx(1) ) == -1 )
    {
       hb_posix_save_errno();
-      hb_retni( -1 );
+      hb_retni(-1);
    }
    else
-      hb_retni( 0 );
+      hb_retni(0);
 }

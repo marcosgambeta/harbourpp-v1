@@ -56,33 +56,33 @@ static HB_BOOL _ftIsAlpha( char c )
 
 HB_FUNC( FT_PROPER )
 {
-   HB_ISIZ      iLen = hb_parclen( 1 );
-   const char * cStr = hb_parc( 1 );
+   HB_ISIZ      iLen = hb_parclen(1);
+   const char * cStr = hb_parc(1);
    char *       cDst = nullptr;
    HB_ISIZ      i;
    HB_BOOL      fCap = HB_TRUE;
 
-   hb_storc( nullptr, 1 );
+   hb_storc(nullptr, 1);
 
    for( i = 0; i < iLen; i++ )
    {
-      if( _ftIsAlpha( cStr[ i ] ) )
+      if( _ftIsAlpha( cStr[i] ) )
       {
-         if( ! cDst )
+         if( !cDst )
          {
-            cDst = static_cast< char * >( hb_xgrab( iLen + 1 ) );
+            cDst = static_cast<char*>(hb_xgrab(iLen + 1));
             memcpy( cDst, cStr, iLen + 1 );
          }
          if( fCap )
          {
-            cDst[ i ] = _ftToUpper( cDst[ i ] );
+            cDst[i] = _ftToUpper( cDst[i] );
          }
          else
          {
-            cDst[ i ] = _ftToLower( cDst[ i ] );
+            cDst[i] = _ftToLower( cDst[i] );
          }
       }
-      fCap = ( cStr[ i ] == ' ' || cStr[ i ] == '-' || cStr[ i ] == '\'' );
+      fCap = ( cStr[i] == ' ' || cStr[i] == '-' || cStr[i] == '\'' );
    }
 
    /* Find "Mc" */
@@ -90,9 +90,9 @@ HB_FUNC( FT_PROPER )
    {
       for( i = 0; i < iLen - 2; i++ )
       {
-         if( cStr[ i ] == 'M' && cStr[ i + 1 ] == 'c' )
+         if( cStr[i] == 'M' && cStr[i + 1] == 'c' )
          {
-            cDst[ i + 2 ] = _ftToUpper( cDst[ i + 2 ] );
+            cDst[i + 2] = _ftToUpper( cDst[i + 2] );
          }
       }
    }
@@ -103,6 +103,6 @@ HB_FUNC( FT_PROPER )
    }
    else
    {
-      hb_retclen( cStr, iLen );
+      hb_retclen(cStr, iLen);
    }
 }

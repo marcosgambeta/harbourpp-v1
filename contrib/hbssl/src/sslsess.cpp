@@ -48,13 +48,13 @@
 
 static HB_GARBAGE_FUNC( SSL_SESSION_release )
 {
-   void ** ph = static_cast< void ** >( Cargo );
+   void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
-      SSL_SESSION_free( static_cast< SSL_SESSION * >( *ph ) );
+      SSL_SESSION_free( static_cast<SSL_SESSION*>(*ph) );
 
       /* set pointer to nullptr just in case */
       *ph = nullptr;
@@ -74,33 +74,33 @@ HB_BOOL hb_SSL_SESSION_is( int iParam )
 
 SSL_SESSION * hb_SSL_SESSION_par( int iParam )
 {
-   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcSSL_SESSION_funcs, iParam ) );
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcSSL_SESSION_funcs, iParam));
 
-   return ph ? static_cast< SSL_SESSION * >( *ph ) : nullptr;
+   return ph ? static_cast<SSL_SESSION*>(*ph) : nullptr;
 }
 
 HB_FUNC( SSL_SESSION_NEW )
 {
-   void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof( SSL_SESSION * ), &s_gcSSL_SESSION_funcs ) );
+   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(SSL_SESSION*), &s_gcSSL_SESSION_funcs));
 
    SSL_SESSION * session = SSL_SESSION_new();
 
-   *ph = static_cast< void * >( session );
+   *ph = static_cast<void*>(session);
 
-   hb_retptrGC( ph );
+   hb_retptrGC(ph);
 }
 
 HB_FUNC( SSL_SESSION_CMP )
 {
-   if( hb_SSL_SESSION_is( 1 ) && hb_SSL_SESSION_is( 2 ) )
+   if( hb_SSL_SESSION_is(1) && hb_SSL_SESSION_is(2) )
    {
 #if OPENSSL_VERSION_NUMBER < 0x10000000L
-      SSL_SESSION * session1 = hb_SSL_SESSION_par( 1 );
-      SSL_SESSION * session2 = hb_SSL_SESSION_par( 2 );
+      SSL_SESSION * session1 = hb_SSL_SESSION_par(1);
+      SSL_SESSION * session2 = hb_SSL_SESSION_par(2);
 
       if( session1 && session2 )
       {
-         hb_retni( SSL_SESSION_cmp( session1, session2 ) );
+         hb_retni(SSL_SESSION_cmp(session1, session2));
       }
 #endif
    }
@@ -112,13 +112,13 @@ HB_FUNC( SSL_SESSION_CMP )
 
 HB_FUNC( SSL_SESSION_SET_TIME )
 {
-   if( hb_SSL_SESSION_is( 1 ) )
+   if( hb_SSL_SESSION_is(1) )
    {
-      SSL_SESSION * session = hb_SSL_SESSION_par( 1 );
+      SSL_SESSION * session = hb_SSL_SESSION_par(1);
 
       if( session )
       {
-         hb_retnl( SSL_SESSION_set_time( session, hb_parnl( 2 ) ) );
+         hb_retnl(SSL_SESSION_set_time(session, hb_parnl(2)));
       }
    }
    else
@@ -129,13 +129,13 @@ HB_FUNC( SSL_SESSION_SET_TIME )
 
 HB_FUNC( SSL_SESSION_SET_TIMEOUT )
 {
-   if( hb_SSL_SESSION_is( 1 ) )
+   if( hb_SSL_SESSION_is(1) )
    {
-      SSL_SESSION * session = hb_SSL_SESSION_par( 1 );
+      SSL_SESSION * session = hb_SSL_SESSION_par(1);
 
       if( session )
       {
-         hb_retnl( SSL_SESSION_set_timeout( session, hb_parnl( 2 ) ) );
+         hb_retnl(SSL_SESSION_set_timeout(session, hb_parnl(2)));
       }
    }
    else
@@ -146,13 +146,13 @@ HB_FUNC( SSL_SESSION_SET_TIMEOUT )
 
 HB_FUNC( SSL_SESSION_GET_TIME )
 {
-   if( hb_SSL_SESSION_is( 1 ) )
+   if( hb_SSL_SESSION_is(1) )
    {
-      SSL_SESSION * session = hb_SSL_SESSION_par( 1 );
+      SSL_SESSION * session = hb_SSL_SESSION_par(1);
 
       if( session )
       {
-         hb_retnl( SSL_SESSION_get_time( session ) );
+         hb_retnl(SSL_SESSION_get_time(session));
       }
    }
    else
@@ -163,13 +163,13 @@ HB_FUNC( SSL_SESSION_GET_TIME )
 
 HB_FUNC( SSL_SESSION_GET_TIMEOUT )
 {
-   if( hb_SSL_SESSION_is( 1 ) )
+   if( hb_SSL_SESSION_is(1) )
    {
-      SSL_SESSION * session = hb_SSL_SESSION_par( 1 );
+      SSL_SESSION * session = hb_SSL_SESSION_par(1);
 
       if( session )
       {
-         hb_retnl( SSL_SESSION_get_timeout( session ) );
+         hb_retnl(SSL_SESSION_get_timeout(session));
       }
    }
    else
@@ -180,14 +180,14 @@ HB_FUNC( SSL_SESSION_GET_TIMEOUT )
 
 HB_FUNC( SSL_SESSION_HASH )
 {
-   if( hb_SSL_SESSION_is( 1 ) )
+   if( hb_SSL_SESSION_is(1) )
    {
 #if OPENSSL_VERSION_NUMBER < 0x10000000L
-      SSL_SESSION * session = hb_SSL_SESSION_par( 1 );
+      SSL_SESSION * session = hb_SSL_SESSION_par(1);
 
       if( session )
       {
-         hb_retnl( SSL_SESSION_hash( session ) );
+         hb_retnl(SSL_SESSION_hash(session));
       }
 #endif
    }

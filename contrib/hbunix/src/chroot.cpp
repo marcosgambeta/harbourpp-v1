@@ -48,16 +48,16 @@
 
 HB_FUNC( UNIX_CHROOT )
 {
-   if( chroot( hb_parcx( 1 ) ) == -1 )
+   if( chroot( hb_parcx(1) ) == -1 )
    {
       hb_posix_save_errno();
-      hb_retni( -1 );
+      hb_retni(-1);
    }
    else if( chdir( "/" ) == -1 )
    {
       hb_posix_save_errno();
-      hb_retni( -1 );
+      hb_retni(-1);
    }
    else
-      hb_retni( 0 );
+      hb_retni(0);
 }

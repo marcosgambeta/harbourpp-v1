@@ -25,15 +25,15 @@
 #include "hbapi.h"
 #include "hbapiitm.h"
 
-#if defined( HB_OS_UNIX ) && ! defined( HB_OS_IOS )
+#if defined(HB_OS_UNIX) && !defined(HB_OS_IOS)
 #  include <unistd.h>
-#  if defined( HB_OS_DARWIN )
+#  if defined(HB_OS_DARWIN)
 #     include <crt_externs.h>
 #     define environ  ( *_NSGetEnviron() )
-#  elif ! defined( __WATCOMC__ )
+#  elif !defined(__WATCOMC__)
       extern char ** environ;
 #  endif
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
 #  include "hbwinuni.h"
 #  include <windows.h>
 #endif
@@ -45,31 +45,31 @@
 
 HB_FUNC( FT_GETE )
 {
-#if ( defined( HB_OS_UNIX ) && ! defined( HB_OS_IOS ) )
+#if (defined(HB_OS_UNIX) && !defined(HB_OS_IOS))
    {
       char * buffer = nullptr;
       int    x;
       int    buffsize = 0;
-      int    rettype  = HB_ISARRAY( 1 ) ? ARRAYTYPE : ( HB_ISCHAR( 1 ) && HB_ISBYREF( 1 ) ? CHARTYPE : NORETURN );
+      int    rettype  = HB_ISARRAY(1) ? ARRAYTYPE : ( HB_ISCHAR(1) && HB_ISBYREF(1) ? CHARTYPE : NORETURN );
 
       /* scan strings first and add up total size */
       if( rettype == CHARTYPE )
       {
-         for( x = 0; environ[ x ]; x++ )
+         for( x = 0; environ[x]; x++ )
          {
             /* add length of this string plus 2 for the crlf */
-            buffsize += ( strlen( environ[ x ] ) + 2 );
+            buffsize += ( strlen( environ[x] ) + 2 );
          }
          /* add 1 more byte for final nul character */
          buffsize++;
          /* now allocate that much memory and make sure 1st byte is a nul */
-         buffer      = static_cast< char * >( hb_xgrab( buffsize + 1 ) );
-         buffer[ 0 ] = '\0';
+         buffer      = static_cast<char*>(hb_xgrab(buffsize + 1));
+         buffer[0] = '\0';
       }
 
-      for( x = 0; environ[ x ]; x++ )
+      for( x = 0; environ[x]; x++ )
       {
-         if( ! environ[ x ] )
+         if( !environ[x] )
          {
             /* null string, we're done */
             break;
@@ -78,36 +78,36 @@ HB_FUNC( FT_GETE )
          if( rettype == CHARTYPE )
          {
             /* tack string onto end of buffer */
-            hb_strncat( buffer, environ[ x ], buffsize );
+            hb_strncat( buffer, environ[x], buffsize );
             /* add crlf at end of each string */
             hb_strncat( buffer, CRLF, buffsize );
          }
          else if( rettype == ARRAYTYPE )
          {
             /* store string to next array element */
-            hb_storvc( environ[ x ], 1, x + 1 );
+            hb_storvc( environ[x], 1, x + 1 );
          }
       }
 
       if( rettype == CHARTYPE )
       {
          /* return buffer to app and free memory */
-         if( ! hb_storclen_buffer( buffer, strlen( buffer ), 1 ) )
+         if( !hb_storclen_buffer( buffer, strlen( buffer ), 1 ) )
          {
-            hb_xfree( buffer );
+            hb_xfree(buffer);
          }
       }
 
       /* return number of strings found */
-      hb_retni( x );
+      hb_retni(x);
    }
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
    {
       LPTCH    lpEnviron = GetEnvironmentStrings(), lpEnv;
       LPTSTR   lpResult  = nullptr, lpDst;
       HB_SIZE  nSize     = 0, nCount = 0;
       PHB_ITEM pArray    = nullptr;
-      int      rettype   = HB_ISARRAY( 1 ) ? ARRAYTYPE : ( HB_ISCHAR( 1 ) && HB_ISBYREF( 1 ) ? CHARTYPE : NORETURN );
+      int      rettype   = HB_ISARRAY(1) ? ARRAYTYPE : ( HB_ISCHAR(1) && HB_ISBYREF(1) ? CHARTYPE : NORETURN );
 
       if( lpEnviron )
       {
@@ -123,12 +123,12 @@ HB_FUNC( FT_GETE )
             }
             if( nSize > 0 )
             {
-               lpResult = static_cast< LPTSTR >( hb_xgrab( ( nSize + 1 ) * sizeof( TCHAR ) ) );
+               lpResult = static_cast<LPTSTR>(hb_xgrab((nSize + 1) * sizeof(TCHAR)));
             }
          }
          else if( rettype == ARRAYTYPE )
          {
-            pArray = hb_param( 1, HB_IT_ARRAY );
+            pArray = hb_param(1, Harbour::Item::ARRAY);
          }
 
          for( lpEnv = lpEnviron, lpDst = lpResult; *lpEnv; lpEnv++ )
@@ -147,7 +147,7 @@ HB_FUNC( FT_GETE )
             else if( rettype == ARRAYTYPE )
             {
                nSize = 0;
-               while( lpEnv[ ++nSize ] )
+               while( lpEnv[++nSize] )
                {
                   ;
                }
@@ -161,25 +161,25 @@ HB_FUNC( FT_GETE )
          if( rettype == CHARTYPE )
          {
             PHB_ITEM pItem = HB_ITEMPUTSTRLEN( nullptr, lpResult, nSize );
-            if( ! hb_itemParamStoreRelease( 1, pItem ) )
+            if( !hb_itemParamStoreRelease(1, pItem) )
             {
-               hb_itemRelease( pItem );
+               hb_itemRelease(pItem);
             }
-            hb_xfree( lpResult );
+            hb_xfree(lpResult);
          }
       }
       else if( rettype == CHARTYPE )
       {
-         hb_storc( nullptr, 1 );
+         hb_storc(nullptr, 1);
       }
 
       hb_retns( nCount );
    }
 #else
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      hb_storc( nullptr, 1 );
+      hb_storc(nullptr, 1);
    }
-   hb_retni( 0 );
+   hb_retni(0);
 #endif
 }

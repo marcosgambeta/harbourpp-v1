@@ -55,7 +55,7 @@ HB_FUNC( ERR_LOAD_CRYPTO_STRINGS )
 
 HB_FUNC( ERR_PRINT_ERRORS )
 {
-   BIO * bio = hb_BIO_par( 1 );
+   BIO * bio = hb_BIO_par(1);
 
    if( bio )
    {
@@ -69,47 +69,47 @@ HB_FUNC( ERR_PRINT_ERRORS )
 
 HB_FUNC( ERR_GET_ERROR )
 {
-   hb_retnint( ERR_get_error() );
+   hb_retnint(ERR_get_error());
 }
 
 HB_FUNC( ERR_PEEK_ERROR )
 {
-   hb_retnint( ERR_peek_error() );
+   hb_retnint(ERR_peek_error());
 }
 
 HB_FUNC( ERR_PEEK_LAST_ERROR )
 {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
-   hb_retnint( ERR_peek_last_error() );
+   hb_retnint(ERR_peek_last_error());
 #else
-   hb_retnint( -1 );
+   hb_retnint(-1);
 #endif
 }
 
 HB_FUNC( ERR_ERROR_STRING )
 {
-   char buffer[ 120 + 1 ];
+   char buffer[120 + 1];
 
-   buffer[ 0 ] = '\0';
+   buffer[0] = '\0';
 
-   ERR_error_string_n( static_cast< unsigned long >( hb_parnint( 1 ) ), buffer, sizeof( buffer ) );
+   ERR_error_string_n( static_cast<unsigned long>(hb_parnint(1)), buffer, sizeof(buffer) );
 
-   hb_retc( buffer );
+   hb_retc(buffer);
 }
 
 HB_FUNC( ERR_LIB_ERROR_STRING )
 {
-   hb_retc( ERR_lib_error_string( static_cast< unsigned long >( hb_parnint( 1 ) ) ) );
+   hb_retc(ERR_lib_error_string(static_cast<unsigned long>(hb_parnint(1))));
 }
 
 HB_FUNC( ERR_FUNC_ERROR_STRING )
 {
-   hb_retc( ERR_lib_error_string( static_cast< unsigned long >( hb_parnint( 1 ) ) ) );
+   hb_retc(ERR_lib_error_string(static_cast<unsigned long>(hb_parnint(1))));
 }
 
 HB_FUNC( ERR_REASON_ERROR_STRING )
 {
-   hb_retc( ERR_lib_error_string( static_cast< unsigned long >( hb_parnint( 1 ) ) ) );
+   hb_retc(ERR_lib_error_string(static_cast<unsigned long>(hb_parnint(1))));
 }
 
 HB_FUNC( ERR_GET_ERROR_LINE )
@@ -117,10 +117,10 @@ HB_FUNC( ERR_GET_ERROR_LINE )
    const char * file = nullptr;
    int          line = 0;
 
-   hb_retnint( ERR_get_error_line( &file, &line ) );
+   hb_retnint(ERR_get_error_line(&file, &line));
 
-   hb_storc( file, 1 );
-   hb_storni( line, 2 );
+   hb_storc(file, 1);
+   hb_storni(line, 2);
 }
 
 HB_FUNC( ERR_PEEK_ERROR_LINE )
@@ -128,10 +128,10 @@ HB_FUNC( ERR_PEEK_ERROR_LINE )
    const char * file = nullptr;
    int          line = 0;
 
-   hb_retnint( ERR_peek_error_line( &file, &line ) );
+   hb_retnint(ERR_peek_error_line(&file, &line));
 
-   hb_storc( file, 1 );
-   hb_storni( line, 2 );
+   hb_storc(file, 1);
+   hb_storni(line, 2);
 }
 
 HB_FUNC( ERR_PEEK_LAST_ERROR_LINE )
@@ -140,15 +140,15 @@ HB_FUNC( ERR_PEEK_LAST_ERROR_LINE )
    const char * file = nullptr;
    int          line = 0;
 
-   hb_retnint( ERR_peek_last_error_line( &file, &line ) );
+   hb_retnint(ERR_peek_last_error_line(&file, &line));
 
-   hb_storc( file, 1 );
-   hb_storni( line, 2 );
+   hb_storc(file, 1);
+   hb_storni(line, 2);
 #else
-   hb_retnint( -1 );
+   hb_retnint(-1);
 
-   hb_storc( nullptr, 1 );
-   hb_storni( 0, 2 );
+   hb_storc(nullptr, 1);
+   hb_storni(0, 2);
 #endif
 }
 
@@ -159,12 +159,12 @@ HB_FUNC( ERR_GET_ERROR_LINE_DATA )
    const char * data  = nullptr;
    int          flags = 0;
 
-   hb_retnint( ERR_get_error_line_data( &file, &line, &data, &flags ) );
+   hb_retnint(ERR_get_error_line_data(&file, &line, &data, &flags));
 
-   hb_storc( file, 1 );
-   hb_storni( line, 2 );
-   hb_storc( data, 3 );
-   hb_storni( flags, 4 );
+   hb_storc(file, 1);
+   hb_storni(line, 2);
+   hb_storc(data, 3);
+   hb_storni(flags, 4);
 }
 
 HB_FUNC( ERR_PEEK_ERROR_LINE_DATA )
@@ -174,12 +174,12 @@ HB_FUNC( ERR_PEEK_ERROR_LINE_DATA )
    const char * data  = nullptr;
    int          flags = 0;
 
-   hb_retnint( ERR_peek_error_line_data( &file, &line, &data, &flags ) );
+   hb_retnint(ERR_peek_error_line_data(&file, &line, &data, &flags));
 
-   hb_storc( file, 1 );
-   hb_storni( line, 2 );
-   hb_storc( data, 3 );
-   hb_storni( flags, 4 );
+   hb_storc(file, 1);
+   hb_storni(line, 2);
+   hb_storc(data, 3);
+   hb_storni(flags, 4);
 }
 
 HB_FUNC( ERR_PEEK_LAST_ERROR_LINE_DATA )
@@ -190,19 +190,19 @@ HB_FUNC( ERR_PEEK_LAST_ERROR_LINE_DATA )
    const char * data  = nullptr;
    int          flags = 0;
 
-   hb_retnint( ERR_peek_last_error_line_data( &file, &line, &data, &flags ) );
+   hb_retnint(ERR_peek_last_error_line_data(&file, &line, &data, &flags));
 
-   hb_storc( file, 1 );
-   hb_storni( line, 2 );
-   hb_storc( data, 3 );
-   hb_storni( flags, 4 );
+   hb_storc(file, 1);
+   hb_storni(line, 2);
+   hb_storc(data, 3);
+   hb_storni(flags, 4);
 #else
-   hb_retnint( -1 );
+   hb_retnint(-1);
 
-   hb_storc( nullptr, 1 );
-   hb_storni( 0, 2 );
-   hb_storc( nullptr, 3 );
-   hb_storni( 0, 4 );
+   hb_storc(nullptr, 1);
+   hb_storni(0, 2);
+   hb_storc(nullptr, 3);
+   hb_storni(0, 4);
 #endif
 }
 
