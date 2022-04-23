@@ -66,11 +66,11 @@ static HB_SIZE hb_AtSkipStrings( const char * szSub, HB_SIZE nSubLen, const char
 
       while( nPos < nLen && nSubPos < nSubLen )
       {
-         if( szText[ nPos + 1 ] == '"' && ( szText[ nPos ] == 'e' || szText[ nPos ] == 'E' ) )
+         if( szText[nPos + 1] == '"' && ( szText[nPos] == 'e' || szText[nPos] == 'E' ) )
          {
             nPos++;
 
-            while( ++nPos < nLen && ( szText[ nPos ] != '"' || szText[ nPos - 1 ] == '\\' ) )
+            while( ++nPos < nLen && ( szText[nPos] != '"' || szText[nPos - 1] == '\\' ) )
             {
                /* Skip. */
             }
@@ -80,9 +80,9 @@ static HB_SIZE hb_AtSkipStrings( const char * szSub, HB_SIZE nSubLen, const char
             continue;
          }
 
-         if( szText[ nPos ] == '"' && szSub[ 0 ] != '"' )
+         if( szText[nPos] == '"' && szSub[0] != '"' )
          {
-            while( ++nPos < nLen && szText[ nPos ] != '"' )
+            while( ++nPos < nLen && szText[nPos] != '"' )
             {
                /* Skip. */
             }
@@ -92,9 +92,9 @@ static HB_SIZE hb_AtSkipStrings( const char * szSub, HB_SIZE nSubLen, const char
             continue;
          }
 
-         if( szText[ nPos ] == '\'' && szSub[ 0 ] != '\'' )
+         if( szText[nPos] == '\'' && szSub[0] != '\'' )
          {
-            while( ++nPos < nLen && szText[ nPos ] != '\'' )
+            while( ++nPos < nLen && szText[nPos] != '\'' )
             {
                /* Skip. */
             }
@@ -104,11 +104,11 @@ static HB_SIZE hb_AtSkipStrings( const char * szSub, HB_SIZE nSubLen, const char
             continue;
          }
 
-         if( szText[ nPos ] == '[' && szSub[ 0 ] != '[' )
+         if( szText[nPos] == '[' && szSub[0] != '[' )
          {
-            if( ! ( HB_ISALPHA( static_cast< HB_BYTE >( cLastChar ) ) || HB_ISDIGIT( static_cast< HB_BYTE >( cLastChar ) ) || strchr( "])}_.", cLastChar ) ) )
+            if( !( HB_ISALPHA(static_cast<HB_BYTE>(cLastChar)) || HB_ISDIGIT(static_cast<HB_BYTE>(cLastChar)) || strchr( "])}_.", cLastChar ) ) )
             {
-               while( ++nPos < nLen && szText[ nPos ] != ']' )
+               while( ++nPos < nLen && szText[nPos] != ']' )
                {
                   /* Skip. */
                }
@@ -119,7 +119,7 @@ static HB_SIZE hb_AtSkipStrings( const char * szSub, HB_SIZE nSubLen, const char
             }
          }
 
-         if( szText[ nPos ] == szSub[ nSubPos ] )
+         if( szText[nPos] == szSub[nSubPos] )
          {
             nSubPos++;
             nPos++;
@@ -133,7 +133,7 @@ static HB_SIZE hb_AtSkipStrings( const char * szSub, HB_SIZE nSubLen, const char
          }
          else
          {
-            cLastChar = szText[ nPos ];
+            cLastChar = szText[nPos];
             nPos++;
          }
       }
@@ -146,19 +146,19 @@ static HB_SIZE hb_AtSkipStrings( const char * szSub, HB_SIZE nSubLen, const char
 
 HB_FUNC( ATSKIPSTRINGS ) /* cFind, cWhere, nStart */
 {
-   PHB_ITEM pFind = hb_param( 1, HB_IT_STRING ), pWhere = hb_param( 2, HB_IT_STRING );
+   PHB_ITEM pFind = hb_param(1, Harbour::Item::STRING), pWhere = hb_param(2, Harbour::Item::STRING);
 
    if( pFind && pWhere )
    {
-      HB_SIZE nStart = hb_parns( 3 );
+      HB_SIZE nStart = hb_parns(3);
 
       if( nStart > 0 )
          nStart--;
 
-      if( nStart < hb_itemGetCLen( pWhere ) )
+      if( nStart < hb_itemGetCLen(pWhere) )
       {
-         HB_SIZE nRet = hb_AtSkipStrings( hb_itemGetCPtr( pFind ), hb_itemGetCLen( pFind ),
-                                          hb_itemGetCPtr( pWhere ) + nStart, hb_itemGetCLen( pWhere ) - nStart );
+         HB_SIZE nRet = hb_AtSkipStrings( hb_itemGetCPtr(pFind), hb_itemGetCLen(pFind),
+                                          hb_itemGetCPtr(pWhere) + nStart, hb_itemGetCLen(pWhere) - nStart );
 
          if( nRet )
          {
@@ -168,20 +168,20 @@ HB_FUNC( ATSKIPSTRINGS ) /* cFind, cWhere, nStart */
       }
    }
 
-   hb_retns( 0 );
+   hb_retns(0);
 }
 
 /* Case insensitive At() function */
 HB_FUNC( ATI )
 {
-   PHB_ITEM pSub  = hb_param( 1, HB_IT_STRING );
-   PHB_ITEM pText = hb_param( 2, HB_IT_STRING );
+   PHB_ITEM pSub  = hb_param(1, Harbour::Item::STRING);
+   PHB_ITEM pText = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSub )
    {
-      PHB_ITEM pStart = hb_param( 3, HB_IT_NUMERIC );
-      PHB_ITEM pEnd   = hb_param( 4, HB_IT_NUMERIC );
-      HB_ISIZ  nLen   = hb_itemGetCLen( pText );
+      PHB_ITEM pStart = hb_param(3, Harbour::Item::NUMERIC);
+      PHB_ITEM pEnd   = hb_param(4, Harbour::Item::NUMERIC);
+      HB_ISIZ  nLen   = hb_itemGetCLen(pText);
       HB_ISIZ  nStart = pStart ? hb_itemGetNS( pStart ) : 1;
       HB_ISIZ  nEnd   = pEnd ? hb_itemGetNS( pEnd ) : nLen;
 
@@ -201,14 +201,13 @@ HB_FUNC( ATI )
 
       /* Stop searching if starting past beyond end. */
       if( nStart >= nEnd )
-         hb_retns( 0 );
+         hb_retns(0);
       else
       {
-         HB_SIZE nPos = hb_strAtI( hb_itemGetCPtr( pSub ), hb_itemGetCLen( pSub ),
-                                   hb_itemGetCPtr( pText ) + nStart, nEnd - nStart );
+         HB_SIZE nPos = hb_strAtI(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), hb_itemGetCPtr(pText) + nStart, nEnd - nStart);
          hb_retns( nPos ? nPos + nStart : 0 );
       }
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1108, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1108, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

@@ -67,14 +67,14 @@ void hb_ToOutDebug( const char * sTraceMsg, ... )
 {
    if( sTraceMsg && s_bToOutputDebug )
    {
-      char    buffer[ 1024 ];
+      char    buffer[1024];
       va_list ap;
 
       va_start( ap, sTraceMsg );
-      hb_vsnprintf( buffer, sizeof( buffer ), sTraceMsg, ap );
+      hb_vsnprintf( buffer, sizeof(buffer), sTraceMsg, ap );
       va_end( ap );
 
-      hb_OutDebug( static_cast< const char * >( buffer ), strlen( buffer ) );
+      hb_OutDebug( static_cast<const char*>(buffer), strlen( buffer ) );
    }
 }
 

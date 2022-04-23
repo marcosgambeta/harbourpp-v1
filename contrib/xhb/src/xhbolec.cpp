@@ -46,7 +46,7 @@
 
 #include "hbapi.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 #include "hbwin.h"
 #include "hbwinole.h"
@@ -57,8 +57,7 @@ HB_FUNC_TRANSLATE( OLE2TXTERROR , WIN_OLEERRORTEXT )
 HB_FUNC( __OLEPDISP )
 {
    hb_oleInit();
-   hb_oleItemPut( hb_param( -1, HB_IT_ANY ),
-                  ( IDispatch * ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) );
+   hb_oleItemPut( hb_param(-1, Harbour::Item::ANY), ( IDispatch * ) static_cast<HB_PTRUINT>(hb_parnint(1)) );
 }
 
 #else

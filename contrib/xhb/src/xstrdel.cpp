@@ -49,23 +49,23 @@
 /* replaces characters in a string */
 HB_FUNC( STRDEL )
 {
-   if( HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) )
+   if( HB_ISCHAR(1) && HB_ISCHAR(2) )
    {
-      const char * szText = hb_parcx( 1 );
-      HB_SIZE      nText  = hb_parclen( 1 );
-      HB_SIZE      nDel   = hb_parclen( 2 );
+      const char * szText = hb_parcx(1);
+      HB_SIZE      nText  = hb_parclen(1);
+      HB_SIZE      nDel   = hb_parclen(2);
 
       if( nDel > 0 && nText > 0 )
       {
-         const char * szDel    = hb_parcx( 2 );
+         const char * szDel    = hb_parcx(2);
          HB_SIZE      nPosTxt  = 0;
          HB_SIZE      nResult  = 0;
          HB_SIZE      nPosDel  = 0;
-         char *       szResult = static_cast< char * >( hb_xgrab( nText + 1 ) );
+         char *       szResult = static_cast<char*>(hb_xgrab(nText + 1));
 
          for(; ( nPosDel < nText && nPosDel < nDel ); nPosDel++ )
          {
-            if( szDel[ nPosDel ] != ' ' )
+            if( szDel[nPosDel] != ' ' )
             {
                hb_xmemcpy( szResult + nResult, szText + nPosTxt, nPosDel - nPosTxt );
                nResult += nPosDel - nPosTxt;
@@ -75,11 +75,11 @@ HB_FUNC( STRDEL )
          hb_xmemcpy( szResult + nResult, szText + nPosTxt, nText - nPosTxt );
          nResult += nText - nPosTxt;
 
-         szResult[ nResult ] = '\0';
+         szResult[nResult] = '\0';
          hb_retclen_buffer( szResult, nResult );
       }
       else
-         hb_retc( szText );
+         hb_retc(szText);
    }
    else
       hb_retc_null();

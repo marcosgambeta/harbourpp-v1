@@ -50,7 +50,7 @@
 #include "hbstack.h"
 #include "hbthread.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    #include <windows.h>
 #endif
 
@@ -65,39 +65,39 @@ LONG WINAPI PRGUnhandledExceptionFilter( EXCEPTION_POINTERS * ExceptionInfo )
       HB_ITEM  Exception;
       PHB_DYNS pDyn = hb_dynsymFind( "HB_CSTRUCTURE" );
 
-      Exception.type = HB_IT_NIL;
+      Exception.type = Harbour::Item::NIL;
 
       if( pDyn )
       {
-         hb_vmPushSymbol( pDyn->pSymbol );
+         hb_vmPushSymbol(pDyn->pSymbol);
          hb_vmPushNil();
-         hb_itemPushStaticString( "EXCEPTION_POINTERS", 18 );
-         hb_vmPushLong( 8 );
-         hb_vmDo( 2 );
+         hb_itemPushStaticString("EXCEPTION_POINTERS", 18);
+         hb_vmPushLong(8);
+         hb_vmDo(2);
 
-         if( hb_stackReturnItem()->type == HB_IT_OBJECT )
+         if( hb_stackReturnItem()->type == Harbour::Item::OBJECT )
          {
             HB_ITEM_NEW( Buffer );
             HB_ITEM Adopt;
 
-            hb_itemMove( &Exception, hb_stackReturnItem() );
+            hb_itemMove(&Exception, hb_stackReturnItem());
 
-            hb_itemPutCLStatic( &Buffer, static_cast< char * >( ExceptionInfo ), sizeof( EXCEPTION_POINTERS ) );
+            hb_itemPutCLStatic( &Buffer, static_cast<char*>(ExceptionInfo), sizeof(EXCEPTION_POINTERS) );
 
-            Adopt.type = HB_IT_LOGICAL;
+            Adopt.type = Harbour::Item::LOGICAL;
             Adopt.item.asLogical.value = HB_FALSE;
 
-            hb_objSendMsg( &Exception, "Buffer", 2, &Buffer, &Adopt );
+            hb_objSendMsg(&Exception, "Buffer", 2, &Buffer, &Adopt);
          }
       }
 
-      hb_vmPushSymbol( s_xHbFunc );
+      hb_vmPushSymbol(s_xHbFunc);
       hb_vmPushNil();
-      hb_itemPushForward( &Exception );
-      hb_vmDo( 1 );
+      hb_itemPushForward(&Exception);
+      hb_vmDo(1);
    }
 
-   return hb_itemGetNL( hb_stackReturnItem() );
+   return hb_itemGetNL(hb_stackReturnItem());
 }
 
 #endif
@@ -107,12 +107,12 @@ HB_FUNC( SETUNHANDLEDEXCEPTIONFILTER )
 #if 0
    LPTOP_LEVEL_EXCEPTION_FILTER pDefaultHandler;
 
-   s_xHbFunc = ( PHB_SYMB ) hb_parptr( 1 );
+   s_xHbFunc = static_cast<PHB_SYMB>(hb_parptr(1));
 
    pDefaultHandler = SetUnhandledExceptionFilter( PRGUnhandledExceptionFilter );
 
-   hb_retptr( pDefaultHandler );
+   hb_retptr(pDefaultHandler);
 #endif
    /* Dummy in Harbour */
-   hb_retnl( 0 );
+   hb_retnl(0);
 }

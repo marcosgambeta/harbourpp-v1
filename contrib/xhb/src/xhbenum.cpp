@@ -56,7 +56,7 @@ HB_FUNC( HB_ENUMINDEX )
    while( --nFuncOffset > 0 )
    {
       PHB_ITEM pItem = hb_stackItem( nFuncOffset );
-      if( HB_IS_ENUM( pItem ) )
+      if( HB_IS_ENUM(pItem) )
       {
          nIndex = pItem->item.asEnum.offset;
          break;

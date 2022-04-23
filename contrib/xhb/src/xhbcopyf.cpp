@@ -50,7 +50,7 @@
 #include "hbapiitm.h"
 #include "hbvm.h"
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    #include <sys/stat.h>
    #include <unistd.h>
 #endif
@@ -60,7 +60,7 @@
 static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest, PHB_ITEM pBlock )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_copyfile(%s, %s, %p)", pszSource, pszDest, static_cast< void * >( pBlock ) ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_copyfile(%s, %s, %p)", pszSource, pszDest, static_cast<void*>(pBlock) ) );
 #endif
 
    HB_BOOL bRetVal = HB_FALSE;
@@ -84,7 +84,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest, PHB_IT
 
    if( pError )
    {
-      hb_itemRelease( pError );
+      hb_itemRelease(pError);
       pError = nullptr;
    }
 
@@ -109,7 +109,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest, PHB_IT
 
       if( pError )
       {
-         hb_itemRelease( pError );
+         hb_itemRelease(pError);
          pError = nullptr;
       }
 
@@ -119,19 +119,19 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest, PHB_IT
          HB_UCHAR * buffer;
          HB_SIZE nRead;
 
-         buffer = static_cast< HB_UCHAR * >( hb_xgrab( BUFFER_SIZE ) );
+         buffer = static_cast<HB_UCHAR*>(hb_xgrab(BUFFER_SIZE));
          bRetVal = HB_TRUE;
-         if( pBlock && HB_IS_EVALITEM( pBlock ) )
-            pCount = hb_itemNew( nullptr );
+         if( pBlock && HB_IS_EVALITEM(pBlock) )
+            pCount = hb_itemNew(nullptr);
 
-         while( ( nRead = hb_fileRead( pSource, buffer, BUFFER_SIZE, -1 ) ) != 0 && nRead != static_cast< HB_SIZE >( FS_ERROR ) )
+         while( ( nRead = hb_fileRead( pSource, buffer, BUFFER_SIZE, -1 ) ) != 0 && nRead != static_cast<HB_SIZE>(FS_ERROR) )
          {
             HB_SIZE nWritten = 0;
 
             while( nWritten < nRead )
             {
                HB_SIZE nDone = hb_fileWrite( pDest, buffer + nWritten, nRead - nWritten, -1 );
-               if( nDone != static_cast< HB_SIZE >( FS_ERROR ) )
+               if( nDone != static_cast<HB_SIZE>(FS_ERROR) )
                   nWritten += nDone;
                if( nWritten < nRead )
                {
@@ -149,12 +149,12 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest, PHB_IT
          }
 
          if( pError )
-            hb_itemRelease( pError );
+            hb_itemRelease(pError);
 
          if( pCount )
-            hb_itemRelease( pCount );
+            hb_itemRelease(pCount);
 
-         hb_xfree( buffer );
+         hb_xfree(buffer);
 
          hb_fileClose( pDest );
       }
@@ -180,12 +180,12 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest, PHB_IT
 
 HB_FUNC( XHB_COPYFILE )
 {
-   const char * szSource = hb_parc( 1 );
-   const char * szDest = hb_parc( 2 );
+   const char * szSource = hb_parc(1);
+   const char * szDest = hb_parc(2);
 
    if( szSource && szDest )
    {
-      if( ! hb_copyfile( szSource, szDest, hb_param( 3, HB_IT_EVALITEM ) ) )
+      if( !hb_copyfile( szSource, szDest, hb_param(3, Harbour::Item::EVALITEM) ) )
          hb_retl(false);
    }
    else

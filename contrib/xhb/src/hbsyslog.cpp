@@ -49,15 +49,13 @@
 
 #include "hblogdef.ch"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 #  include <windows.h>
 
 static HANDLE s_RegHandle;
 
-#elif defined( HB_OS_UNIX ) && \
-   ! defined( HB_OS_VXWORKS ) && \
-   ! defined( HB_OS_SYMBIAN )
+#elif defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS) && !defined(HB_OS_SYMBIAN)
 
 #  include <syslog.h>
 
@@ -65,7 +63,7 @@ static HANDLE s_RegHandle;
 
 HB_FUNC( HB_SYSLOGOPEN )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 #  if ( WINVER >= 0x0400 )
 
@@ -74,8 +72,8 @@ HB_FUNC( HB_SYSLOGOPEN )
    if( hb_iswinnt() )
    {
       void * hSourceName;
-      s_RegHandle = RegisterEventSource( nullptr, HB_PARSTRDEF( 1, &hSourceName, nullptr ) );
-      hb_strfree( hSourceName );
+      s_RegHandle = RegisterEventSource(nullptr, HB_PARSTRDEF(1, &hSourceName, nullptr));
+      hb_strfree(hSourceName);
       hb_retl(true);
    }
    else
@@ -85,8 +83,8 @@ HB_FUNC( HB_SYSLOGOPEN )
    hb_retl(false);
 #  endif
 
-#elif defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
-   openlog( hb_parcx( 1 ), LOG_NDELAY | LOG_NOWAIT | LOG_PID, LOG_USER );
+#elif defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS)
+   openlog( hb_parcx(1), LOG_NDELAY | LOG_NOWAIT | LOG_PID, LOG_USER );
    hb_retl(true);
 #else
    hb_retl(false);
@@ -95,7 +93,7 @@ HB_FUNC( HB_SYSLOGOPEN )
 
 HB_FUNC( HB_SYSLOGCLOSE )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 #  if ( WINVER >= 0x0400 )
 
@@ -110,7 +108,7 @@ HB_FUNC( HB_SYSLOGCLOSE )
    hb_retl(false);
 #  endif
 
-#elif defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
+#elif defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS)
    closelog();
    hb_retl(true);
 #else
@@ -120,15 +118,15 @@ HB_FUNC( HB_SYSLOGCLOSE )
 
 HB_FUNC( HB_SYSLOGMESSAGE )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 #  if ( WINVER >= 0x0400 )
    if( hb_iswinnt() )
    {
       WORD    logval;
       void *  hMsg;
-      LPCTSTR lpMsg = HB_PARSTRDEF( 1, &hMsg, nullptr );
-      switch( hb_parni( 2 ) )
+      LPCTSTR lpMsg = HB_PARSTRDEF(1, &hMsg, nullptr);
+      switch( hb_parni(2) )
       {
          case HB_LOG_CRITICAL: logval = EVENTLOG_ERROR_TYPE; break;
          case HB_LOG_ERROR:    logval = EVENTLOG_ERROR_TYPE; break;
@@ -136,18 +134,18 @@ HB_FUNC( HB_SYSLOGMESSAGE )
          case HB_LOG_INFO:     logval = EVENTLOG_INFORMATION_TYPE; break;
          default:              logval = EVENTLOG_AUDIT_SUCCESS;
       }
-      hb_retl( ReportEvent( s_RegHandle,             /* event log handle */
-                            logval,                  /* event type */
-                            0,                       /* category zero */
-                            static_cast< DWORD >( hb_parnl( 3 ) ), /* event identifier */
-                            nullptr,                    /* no user security identifier */
-                            1,                       /* one substitution string */
-                            0,                       /* no data */
-                            &lpMsg,                  /* pointer to string array */
-                            nullptr                     /* pointer to data */
-                            ) ? HB_TRUE : HB_FALSE );
+      hb_retl(ReportEvent(s_RegHandle,             /* event log handle */
+                          logval,                  /* event type */
+                          0,                       /* category zero */
+                          static_cast<DWORD>(hb_parnl(3)), /* event identifier */
+                          nullptr,                    /* no user security identifier */
+                          1,                       /* one substitution string */
+                          0,                       /* no data */
+                          &lpMsg,                  /* pointer to string array */
+                          nullptr                     /* pointer to data */
+                          ) ? true : false);
 
-      hb_strfree( hMsg );
+      hb_strfree(hMsg);
    }
    else
       hb_retl(false);
@@ -155,13 +153,11 @@ HB_FUNC( HB_SYSLOGMESSAGE )
    hb_retl(false);
 #  endif
 
-#elif defined( HB_OS_UNIX ) && \
-   ! defined( HB_OS_VXWORKS ) && \
-   ! defined( HB_OS_SYMBIAN )
+#elif defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS) && !defined(HB_OS_SYMBIAN)
 
    int logval;
 
-   switch( hb_parni( 2 ) )
+   switch( hb_parni(2) )
    {
       case HB_LOG_CRITICAL: logval = LOG_CRIT; break;
       case HB_LOG_ERROR:    logval = LOG_ERR; break;
@@ -170,7 +166,7 @@ HB_FUNC( HB_SYSLOGMESSAGE )
       default:              logval = LOG_DEBUG;
    }
 
-   syslog( logval, "[%lX]: %s", hb_parnl( 3 ), hb_parcx( 1 ) );
+   syslog( logval, "[%lX]: %s", hb_parnl(3), hb_parcx(1) );
    hb_retl(true);
 #else
    hb_retl(false);

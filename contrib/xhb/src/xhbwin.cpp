@@ -50,7 +50,7 @@
 
 #include "hbapi.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 #include "hbwinuni.h"
 #include <windows.h>
@@ -64,13 +64,12 @@ HB_FUNC( MESSAGEBOX )
 {
    void * hStr1;
    void * hStr2;
-   HWND hWnd = HB_ISNUM( 1 ) ? ( HWND ) static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) :
-                               ( HWND ) hb_parptr( 1 );
+   HWND hWnd = HB_ISNUM(1) ? reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))) : static_cast<HWND>(hb_parptr(1));
 
-   hb_retni( MessageBox( hWnd, HB_PARSTR( 2, &hStr1, nullptr ), HB_PARSTR( 3, &hStr2, nullptr ), hb_parni( 4 ) ) );
+   hb_retni(MessageBox(hWnd, HB_PARSTR(2, &hStr1, nullptr), HB_PARSTR(3, &hStr2, nullptr), hb_parni(4)));
 
-   hb_strfree( hStr1 );
-   hb_strfree( hStr2 );
+   hb_strfree(hStr1);
+   hb_strfree(hStr2);
 }
 
 #else

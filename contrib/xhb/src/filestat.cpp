@@ -49,33 +49,33 @@
 #include "hbdate.h"
 #include "hbapierr.h"
 
-#if ! defined( _LARGEFILE64_SOURCE )
+#if !defined(_LARGEFILE64_SOURCE)
 #  define _LARGEFILE64_SOURCE  1
 #endif
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    #include <unistd.h>
    #include <sys/types.h>
    #include <time.h>
    #include <sys/types.h>
    #include <sys/stat.h>
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
    #include <windows.h>
-   #if ! defined( INVALID_FILE_ATTRIBUTES )
-      #define INVALID_FILE_ATTRIBUTES  ( static_cast< DWORD >( -1 ) )
+   #if !defined(INVALID_FILE_ATTRIBUTES)
+      #define INVALID_FILE_ATTRIBUTES  (static_cast<DWORD>(-1))
    #endif
    #include "hbwinuni.h"
 #endif
 
-#if ! defined( HB_USE_LARGEFILE64 ) && defined( HB_OS_UNIX )
-   #if defined( __USE_LARGEFILE64 )
+#if !defined(HB_USE_LARGEFILE64) && defined(HB_OS_UNIX)
+   #if defined(__USE_LARGEFILE64)
       /*
        * The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
        * defined and effectively enables lseek64()/flock64()/ftruncate64()
        * functions on 32-bit machines.
        */
       #define HB_USE_LARGEFILE64
-   #elif defined( HB_OS_UNIX ) && defined( O_LARGEFILE )
+   #elif defined(HB_OS_UNIX) && defined(O_LARGEFILE)
       #define HB_USE_LARGEFILE64
    #endif
 #endif
@@ -83,32 +83,31 @@
 HB_FUNC( FILESTATS )
 {
    HB_BOOL    fResult = HB_FALSE;
-   char       szAttr[ 21 ];
+   char       szAttr[21];
    HB_FOFFSET llSize = 0;
    long       lcDate = 0, lcTime = 0, lmDate = 0, lmTime = 0;
 
    /* Parameter checking */
-   if( hb_parclen( 1 ) == 0 )
+   if( hb_parclen(1) == 0 )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1,
-                            hb_paramError( 1 ) );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError(1));
       return;
    }
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    {
-#  if defined( HB_USE_LARGEFILE64 )
+#  if defined(HB_USE_LARGEFILE64)
       struct stat64 statbuf;
-      if( stat64( hb_parc( 1 ), &statbuf ) == 0 )
+      if( stat64( hb_parc(1), &statbuf ) == 0 )
 #  else
       struct stat statbuf;
-      if( stat( hb_parc( 1 ), &statbuf ) == 0 )
+      if( stat( hb_parc(1), &statbuf ) == 0 )
 #  endif
       {
          /* determine if we can read/write/execute the file */
          HB_FATTR usAttr, ushbAttr = 0;
          time_t   ftime;
-#if defined( HB_HAS_LOCALTIME_R )
+#if defined(HB_HAS_LOCALTIME_R)
          struct tm tms;
 #endif
          struct tm * ptms;
@@ -169,10 +168,10 @@ HB_FUNC( FILESTATS )
          else if( S_ISREG( statbuf.st_mode ) && ushbAttr == 0 )
             ushbAttr |= HB_FA_ARCHIVE;
 
-         llSize = static_cast< HB_FOFFSET >( statbuf.st_size );
+         llSize = static_cast<HB_FOFFSET>(statbuf.st_size);
 
          ftime = statbuf.st_mtime;
-#if defined( HB_HAS_LOCALTIME_R )
+#if defined(HB_HAS_LOCALTIME_R)
          ptms = localtime_r( &ftime, &tms );
 #else
          ptms = localtime( &ftime );
@@ -183,7 +182,7 @@ HB_FUNC( FILESTATS )
          lcTime = ptms->tm_hour * 3600 + ptms->tm_min * 60 + ptms->tm_sec;
 
          ftime = statbuf.st_atime;
-#if defined( HB_HAS_LOCALTIME_R )
+#if defined(HB_HAS_LOCALTIME_R)
          ptms = localtime_r( &ftime, &tms );
 #else
          ptms = localtime( &ftime );
@@ -198,11 +197,11 @@ HB_FUNC( FILESTATS )
       }
    }
 
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
 
    {
       void *  hFileName;
-      LPCTSTR lpFileName = HB_PARSTR( 1, &hFileName, nullptr );
+      LPCTSTR lpFileName = HB_PARSTR(1, &hFileName, nullptr);
       DWORD   dwAttribs;
       WIN32_FIND_DATA ffind;
       FILETIME        filetime;
@@ -223,7 +222,7 @@ HB_FUNC( FILESTATS )
             FindClose( hFind );
 
             /* get file times and work them out */
-            llSize = static_cast< HB_FOFFSET >( ffind.nFileSizeLow ) + ( static_cast< HB_FOFFSET >( ffind.nFileSizeHigh ) << 32 );
+            llSize = static_cast<HB_FOFFSET>(ffind.nFileSizeLow) + (static_cast<HB_FOFFSET>(ffind.nFileSizeHigh) << 32);
 
             if( FileTimeToLocalFileTime( &ffind.ftCreationTime, &filetime ) &&
                 FileTimeToSystemTime( &filetime, &time ) )
@@ -233,7 +232,7 @@ HB_FUNC( FILESTATS )
             }
             else
             {
-               lcDate = hb_dateEncode( 0, 0, 0 );
+               lcDate = hb_dateEncode(0, 0, 0);
                lcTime = 0;
             }
 
@@ -245,33 +244,33 @@ HB_FUNC( FILESTATS )
             }
             else
             {
-               lcDate = hb_dateEncode( 0, 0, 0 );
+               lcDate = hb_dateEncode(0, 0, 0);
                lcTime = 0;
             }
             fResult = HB_TRUE;
          }
       }
-      hb_strfree( hFileName );
+      hb_strfree(hFileName);
    }
 
 #else
 
    /* Generic algorithm based on find-first */
    {
-      PHB_FFIND findinfo = hb_fsFindFirst( hb_parc( 1 ), HB_FA_ALL );
+      PHB_FFIND findinfo = hb_fsFindFirst( hb_parc(1), HB_FA_ALL );
 
       if( findinfo )
       {
          hb_fsAttrDecode( findinfo->attr, szAttr );
-         llSize = static_cast< HB_FOFFSET >( findinfo->size );
+         llSize = static_cast<HB_FOFFSET>(findinfo->size);
          lcDate = findinfo->lDate;
-         lcTime = ( findinfo->szTime[ 0 ] - '0' ) * 36000 +
-                  ( findinfo->szTime[ 1 ] - '0' ) * 3600 +
-                  ( findinfo->szTime[ 3 ] - '0' ) * 600 +
-                  ( findinfo->szTime[ 4 ] - '0' ) * 60 +
-                  ( findinfo->szTime[ 6 ] - '0' ) * 10 +
-                  ( findinfo->szTime[ 7 ] - '0' );
-         lmDate = hb_dateEncode( 0, 0, 0 );
+         lcTime = ( findinfo->szTime[0] - '0' ) * 36000 +
+                  ( findinfo->szTime[1] - '0' ) * 3600 +
+                  ( findinfo->szTime[3] - '0' ) * 600 +
+                  ( findinfo->szTime[4] - '0' ) * 60 +
+                  ( findinfo->szTime[6] - '0' ) * 10 +
+                  ( findinfo->szTime[7] - '0' );
+         lmDate = hb_dateEncode(0, 0, 0);
          lmTime = 0;
          hb_fsFindClose( findinfo );
          fResult = HB_TRUE;
@@ -284,12 +283,12 @@ HB_FUNC( FILESTATS )
 
    if( fResult )
    {
-      hb_storc( szAttr, 2 );
-      hb_stornint( llSize, 3 );
-      hb_stordl( lcDate, 4 );
-      hb_stornint( lcTime, 5 );
-      hb_stordl( lmDate, 6 );
-      hb_stornint( lmTime, 7 );
+      hb_storc(szAttr, 2);
+      hb_stornint(llSize, 3);
+      hb_stordl(lcDate, 4);
+      hb_stornint(lcTime, 5);
+      hb_stordl(lmDate, 6);
+      hb_stornint(lmTime, 7);
 
       hb_retl(true);
    }

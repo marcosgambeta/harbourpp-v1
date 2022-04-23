@@ -54,24 +54,24 @@
 
 HB_FUNC( XHB_RTRIM )
 {
-   PHB_ITEM pText = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText )
    {
       HB_SIZE      nLen, nSrc;
-      const char * szText = hb_itemGetCPtr( pText );
+      const char * szText = hb_itemGetCPtr(pText);
 
-      nSrc = hb_itemGetCLen( pText );
-      nLen = hb_strRTrimLen( szText, nSrc, hb_parl( 2 ) );
+      nSrc = hb_itemGetCLen(pText);
+      nLen = hb_strRTrimLen( szText, nSrc, hb_parl(2) );
 
       if( nLen == nSrc )
-         hb_itemReturn( pText );
+         hb_itemReturn(pText);
       else
-         hb_retclen( szText, nLen );
+         hb_retclen(szText, nLen);
    }
    else
       /* NOTE: "TRIM" is correct here [vszakats] */
-      hb_errRT_BASE_SubstR( EG_ARG, 1100, nullptr, "TRIM", HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1100, nullptr, "TRIM", HB_ERR_ARGS_BASEPARAMS);
 }
 
 /* synonym for xhb_RTrim() */
@@ -83,29 +83,29 @@ HB_FUNC_TRANSLATE( XHB_TRIM, XHB_RTRIM )
 
 HB_FUNC( XHB_ALLTRIM )
 {
-   PHB_ITEM pText = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText )
    {
       HB_SIZE      nLen, nSrc;
-      const char * szText = hb_itemGetCPtr( pText );
+      const char * szText = hb_itemGetCPtr(pText);
 
-      nSrc   = hb_itemGetCLen( pText );
-      nLen   = hb_strRTrimLen( szText, nSrc, hb_parl( 2 ) );
+      nSrc   = hb_itemGetCLen(pText);
+      nLen   = hb_strRTrimLen( szText, nSrc, hb_parl(2) );
       szText = hb_strLTrim( szText, &nLen );
 
       if( nLen == nSrc )
-         hb_itemReturn( pText );
+         hb_itemReturn(pText);
       else
-         hb_retclen( szText, nLen );
+         hb_retclen(szText, nLen);
    }
    else
 #ifdef HB_COMPAT_C53
       /* NOTE: This runtime error appeared in CA-Cl*pper 5.3 [vszakats] */
 #ifdef HB_CLP_STRICT
-      hb_errRT_BASE_SubstR( EG_ARG, 2022, nullptr, "ALLTRIM", 0 );
+      hb_errRT_BASE_SubstR(EG_ARG, 2022, nullptr, "ALLTRIM", 0);
 #else
-      hb_errRT_BASE_SubstR( EG_ARG, 2022, nullptr, "ALLTRIM", HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 2022, nullptr, "ALLTRIM", HB_ERR_ARGS_BASEPARAMS);
 #endif
 #else
       hb_retc_null();

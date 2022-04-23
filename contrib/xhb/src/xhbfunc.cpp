@@ -62,33 +62,33 @@
 
 HB_FUNC( HB_POINTER2STRING )
 {
-   PHB_ITEM pPointer = hb_param( 1, HB_IT_ANY );
-   PHB_ITEM pLen     = hb_param( 2, HB_IT_NUMERIC );
+   PHB_ITEM pPointer = hb_param(1, Harbour::Item::ANY);
+   PHB_ITEM pLen     = hb_param(2, Harbour::Item::NUMERIC);
 
-   if( HB_IS_POINTER( pPointer ) && pLen )
-      hb_retclen_const( static_cast< char * >( hb_itemGetPtr( pPointer ) ), hb_itemGetNS( pLen ) );
-   else if( HB_IS_INTEGER( pPointer ) && pLen )
-      hb_retclen_const( static_cast< char * >( hb_itemGetNI( pPointer ) ), hb_itemGetNS( pLen ) );
-   else if( HB_IS_LONG( pPointer ) && pLen )
-      hb_retclen_const( static_cast< char * >( hb_itemGetNL( pPointer ) ), hb_itemGetNS( pLen ) );
+   if( HB_IS_POINTER(pPointer) && pLen )
+      hb_retclen_const( static_cast<char*>(hb_itemGetPtr(pPointer)), hb_itemGetNS( pLen ) );
+   else if( HB_IS_INTEGER(pPointer) && pLen )
+      hb_retclen_const( static_cast<char*>(hb_itemGetNI(pPointer)), hb_itemGetNS( pLen ) );
+   else if( HB_IS_LONG(pPointer) && pLen )
+      hb_retclen_const( static_cast<char*>(hb_itemGetNL(pPointer)), hb_itemGetNS( pLen ) );
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, 2, hb_paramError( 1 ), hb_paramError( 2 ) );
+      hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, 2, hb_paramError(1), hb_paramError(2));
 }
 
 HB_FUNC( HB_STRING2POINTER )
 {
-   PHB_ITEM pString = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pString = hb_param(1, Harbour::Item::STRING);
 
    if( pString )
-      hb_retptr( static_cast< void * >( hb_itemGetCPtr( pString ) ) );
+      hb_retptr(static_cast<void*>(hb_itemGetCPtr(pString)));
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError( 1 ) );
+      hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError(1));
 }
 
 #endif
 
 /* xHarbour really returns:
- *       hb_retc( hb_cmdargARGVN( 0 ) );
+ *       hb_retc(hb_cmdargARGVN(0));
  * probably typo - replicated here by hb_ProgName()
  */
 HB_FUNC_TRANSLATE( HB_CMDARGARGV, HB_PROGNAME )
@@ -96,46 +96,46 @@ HB_FUNC_TRANSLATE( HB_CMDARGARGV, HB_PROGNAME )
 
 HB_FUNC( HB_VMMODE )
 {
-#if   defined( HB_NO_PROFILER ) && defined( HB_NO_TRACE ) && ! defined( HB_GUI )
-   hb_retni( 2 ); /* optimized for console applications */
-#elif defined( HB_NO_PROFILER ) && defined( HB_NO_TRACE ) && defined( HB_GUI )
-   hb_retni( 1 ); /* optimized for GUI applications */
+#if   defined(HB_NO_PROFILER) && defined(HB_NO_TRACE) && !defined(HB_GUI)
+   hb_retni(2); /* optimized for console applications */
+#elif defined(HB_NO_PROFILER) && defined(HB_NO_TRACE) && defined(HB_GUI)
+   hb_retni(1); /* optimized for GUI applications */
 #else
-   hb_retni( 0 ); /* no optimization */
+   hb_retni(0); /* no optimization */
 #endif
 }
 
 HB_FUNC( XHB__KEYBOARD )
 {
    /* Clear the typeahead buffer without reallocating the keyboard buffer */
-   if( ! hb_parl( 2 ) )
+   if( !hb_parl(2) )
       hb_inkeyReset();
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
-      hb_inkeyPut( hb_parni( 1 ) );
+      hb_inkeyPut( hb_parni(1) );
    }
-   else if( HB_ISCHAR( 1 ) )
+   else if( HB_ISCHAR(1) )
    {
-      hb_inkeySetText( hb_parc( 1 ), hb_parclen( 1 ), HB_FALSE );
+      hb_inkeySetText( hb_parc(1), hb_parclen(1), false );
    }
-   else if( HB_ISARRAY( 1 ) )
+   else if( HB_ISARRAY(1) )
    {
-      PHB_ITEM pArray = hb_param( 1, HB_IT_ARRAY );
+      PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
       HB_SIZE  nIndex;
-      HB_SIZE  nElements = hb_arrayLen( pArray );
+      HB_SIZE  nElements = hb_arrayLen(pArray);
 
       for( nIndex = 1; nIndex <= nElements; nIndex++ )
       {
-         PHB_ITEM pItem = hb_arrayGetItemPtr( pArray, nIndex );
+         PHB_ITEM pItem = hb_arrayGetItemPtr(pArray, nIndex);
 
-         if( HB_IS_NUMBER( pItem ) )
+         if( HB_IS_NUMBER(pItem) )
          {
-            hb_inkeyPut( hb_itemGetNI( pItem ) );
+            hb_inkeyPut( hb_itemGetNI(pItem) );
          }
-         else if( HB_IS_STRING( pItem ) )
+         else if( HB_IS_STRING(pItem) )
          {
-            hb_inkeySetText( hb_itemGetCPtr( pItem ), hb_itemGetCLen( pItem ), HB_FALSE );
+            hb_inkeySetText( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), false );
          }
       }
    }
@@ -143,39 +143,39 @@ HB_FUNC( XHB__KEYBOARD )
 
 HB_FUNC( HB_CREATELEN8 )
 {
-   char      buffer[ 8 ];
+   char      buffer[8];
    HB_MAXINT nValue;
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
-      nValue = hb_parnint( 1 );
+      nValue = hb_parnint(1);
       HB_PUT_LE_UINT64( buffer, nValue );
-      hb_retclen( buffer, 8 );
+      hb_retclen(buffer, 8);
    }
-   else if( HB_ISBYREF( 1 ) && HB_ISNUM( 2 ) )
+   else if( HB_ISBYREF(1) && HB_ISNUM(2) )
    {
-      nValue = hb_parnint( 2 );
+      nValue = hb_parnint(2);
       HB_PUT_LE_UINT64( buffer, nValue );
-      hb_storclen( buffer, 8, 1 );
+      hb_storclen(buffer, 8, 1);
    }
 }
 
 HB_FUNC( HB_GETLEN8 )
 {
-   const char * buffer = hb_parc( 1 );
+   const char * buffer = hb_parc(1);
 
-   if( buffer && hb_parclen( 1 ) >= 8 )
-      hb_retnint( HB_GET_LE_UINT64( buffer ) );
+   if( buffer && hb_parclen(1) >= 8 )
+      hb_retnint(HB_GET_LE_UINT64(buffer));
    else
-      hb_retni( -1 );
+      hb_retni(-1);
 }
 
 HB_FUNC( HB_DESERIALBEGIN )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
    if( pItem )
-      hb_itemReturn( pItem );
+      hb_itemReturn(pItem);
 }
 
 HB_FUNC_TRANSLATE( HB_DESERIALNEXT, HB_DESERIALIZE )
@@ -186,9 +186,9 @@ HB_FUNC( HB_F_EOF )
 {
    HB_ERRCODE uiError = 6;
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
-      hb_retl( hb_fsEof( hb_numToHandle( hb_parnint( 1 ) ) ) );
+      hb_retl(hb_fsEof(hb_numToHandle(hb_parnint(1))));
       uiError = hb_fsError();
    }
    else
@@ -200,14 +200,14 @@ HB_FUNC( HB_F_EOF )
 HB_FUNC( CURDIRX )
 {
    HB_ERRCODE uiErrorOld = hb_fsError();
-   char *     pbyBuffer  = static_cast< char * >( hb_xgrab( HB_PATH_MAX ) );
-   PHB_ITEM   pDrv       = hb_param( 1, HB_IT_STRING );
+   char *     pbyBuffer  = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
+   PHB_ITEM   pDrv       = hb_param(1, Harbour::Item::STRING);
    int        iCurDrv    = hb_fsCurDrv();
    int        iDrv;
 
-   if( pDrv && hb_parclen( 1 ) > 0 )
+   if( pDrv && hb_parclen(1) > 0 )
    {
-      iDrv = static_cast< int >( HB_TOUPPER( *hb_itemGetCPtr( pDrv ) ) - 'A' );
+      iDrv = static_cast<int>(HB_TOUPPER(*hb_itemGetCPtr(pDrv)) - 'A');
       if( iDrv != iCurDrv )
          hb_fsChDrv( iDrv );
    }
@@ -229,45 +229,44 @@ HB_FUNC_TRANSLATE( CSTR, HB_CSTR )
 
 HB_FUNC( HB_ARRAYID )  /* for debugging: returns the array's "address" so dual references to same array can be seen */
 {
-   PHB_ITEM pArray = hb_param( 1, HB_IT_ARRAY );
+   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
 
-   hb_retptr( pArray ? hb_arrayId( pArray ) : nullptr );
+   hb_retptr(pArray ? hb_arrayId(pArray) : nullptr);
 }
 
 HB_FUNC( HB_HASHID )  /* for debugging: returns the array's "address" so dual references to same array can be seen */
 {
-   PHB_ITEM pHash = hb_param( 1, HB_IT_HASH );
+   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
 
-   hb_retptr( pHash ? hb_hashId( pHash ) : nullptr );
+   hb_retptr(pHash ? hb_hashId(pHash) : nullptr);
 }
 
 HB_FUNC( __SENDRAWMSG )
 {
-   hb_dbg_objSendMessage( 0, hb_param( 1, HB_IT_ANY ),
-                          hb_param( 2, HB_IT_ANY ), 3 );
+   hb_dbg_objSendMessage(0, hb_param(1, Harbour::Item::ANY), hb_param(2, Harbour::Item::ANY), 3);
 }
 
 HB_FUNC( HB_EXEC )
 {
-   if( HB_ISSYMBOL( 1 ) )
+   if( HB_ISSYMBOL(1) )
    {
       HB_BOOL fSend   = HB_FALSE;
       int     iParams = hb_pcount() - 1;
 
       if( iParams >= 1 )
       {
-         fSend = iParams > 1 && ! HB_IS_NIL( hb_param( 2, HB_IT_ANY ) );
+         fSend = iParams > 1 && !HB_IS_NIL(hb_param(2, Harbour::Item::ANY));
          iParams--;
       }
       else
          hb_vmPushNil();
       if( fSend )
-         hb_vmSend( static_cast< HB_USHORT >( iParams ) );
+         hb_vmSend( static_cast<HB_USHORT>(iParams) );
       else
-         hb_vmDo( static_cast< HB_USHORT >( iParams ) );
+         hb_vmDo( static_cast<HB_USHORT>(iParams) );
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 HB_FUNC_EXTERN( HB_USERNAME );
@@ -275,7 +274,7 @@ HB_FUNC_EXTERN( NETNAME );
 
 HB_FUNC( XHB_NETNAME )
 {
-   if( hb_parni( 1 ) == 1 )
+   if( hb_parni(1) == 1 )
       HB_FUNC_EXEC( HB_USERNAME );
    else
       HB_FUNC_EXEC( NETNAME );
@@ -286,19 +285,19 @@ HB_FUNC_EXTERN( MEMOWRIT );
 
 HB_FUNC( XHB_MEMOWRIT )
 {
-   if( HB_ISLOG( 3 ) && ! hb_parl( 3 ) )
+   if( HB_ISLOG(3) && !hb_parl(3) )
       HB_FUNC_EXEC( HB_MEMOWRIT );
    else
       HB_FUNC_EXEC( MEMOWRIT );
 }
 
-#if ! defined( HB_LEGACY_LEVEL4 )
+#if !defined(HB_LEGACY_LEVEL4)
 
-#if defined( HB_OS_UNIX ) && ! defined( HB_EOL_CRLF )
-   static const char s_szCrLf[ CRLF_BUFFER_LEN ] = { HB_CHAR_LF, 0 };
+#if defined(HB_OS_UNIX) && !defined(HB_EOL_CRLF)
+   static const char s_szCrLf[CRLF_BUFFER_LEN] = { HB_CHAR_LF, 0 };
    static const int  s_iCrLfLen = 1;
 #else
-   static const char s_szCrLf[ CRLF_BUFFER_LEN ] = { HB_CHAR_CR, HB_CHAR_LF, 0 };
+   static const char s_szCrLf[CRLF_BUFFER_LEN] = { HB_CHAR_CR, HB_CHAR_LF, 0 };
    static const int  s_iCrLfLen = 2;
 #endif
 
@@ -320,9 +319,9 @@ HB_FUNC( HB_ISBYREF )
 {
    if( hb_pcount() )
    {
-      PHB_ITEM pItem = hb_stackItemFromBase( 1 );
-      if( HB_IS_BYREF( pItem ) )
-         hb_retl( HB_IS_BYREF( hb_itemUnRefOnce( pItem ) ) );
+      PHB_ITEM pItem = hb_stackItemFromBase(1);
+      if( HB_IS_BYREF(pItem) )
+         hb_retl(HB_IS_BYREF(hb_itemUnRefOnce(pItem)));
    }
 }
 

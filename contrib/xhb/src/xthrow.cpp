@@ -50,13 +50,13 @@
 
 HB_FUNC( THROW )
 {
-   PHB_ITEM pError = hb_param( 1, HB_IT_ANY );
+   PHB_ITEM pError = hb_param(1, Harbour::Item::ANY);
 
-   if( pError && HB_IS_OBJECT( pError ) )
+   if( pError && HB_IS_OBJECT(pError) )
    {
       PHB_ITEM pResult = hb_errLaunchSubst( pError );
       if( pResult )
-         hb_itemReturnRelease( pResult );
+         hb_itemReturnRelease(pResult);
    }
    else
       hb_errRT_BASE( EG_ARG, 9101, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );

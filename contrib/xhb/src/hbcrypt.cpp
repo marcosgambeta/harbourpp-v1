@@ -127,7 +127,7 @@ void nxs_scramble(
    const unsigned char * key, HB_SIZE keylen,
    unsigned char * cipher )
 {
-   HB_ISIZ scramble[ NXS_MAX_KEYLEN ];
+   HB_ISIZ scramble[NXS_MAX_KEYLEN];
    HB_SIZE len;
 
    if( keylen > NXS_MAX_KEYLEN )
@@ -161,7 +161,7 @@ void nxs_partial_scramble(
    kpos = 0;
    while( pos + kpos < len )
    {
-      cipher[ pos + scramble[ kpos ] ] = source[ pos + kpos ];
+      cipher[pos + scramble[kpos]] = source[pos + kpos];
       kpos++;
       if( kpos >= static_cast< HB_USHORT >( keylen ) )
       {
@@ -176,7 +176,7 @@ void nxs_unscramble(
    unsigned char * cipher, HB_SIZE cipherlen,
    const unsigned char * key, HB_SIZE keylen )
 {
-   HB_ISIZ scramble[ NXS_MAX_KEYLEN ];
+   HB_ISIZ scramble[NXS_MAX_KEYLEN];
    HB_SIZE len;
 
    if( keylen > NXS_MAX_KEYLEN )
@@ -205,13 +205,13 @@ void nxs_partial_unscramble(
 {
    HB_SIZE       pos;
    HB_USHORT     kpos;
-   unsigned char buf[ NXS_MAX_KEYLEN ];
+   unsigned char buf[NXS_MAX_KEYLEN];
 
    pos  = 0;
    kpos = 0;
    while( pos + kpos < len )
    {
-      buf[ kpos ] = cipher[ pos + scramble[ kpos ] ];
+      buf[kpos] = cipher[pos + scramble[kpos]];
       kpos++;
       if( kpos >= static_cast< HB_USHORT >( keylen ) )
       {
@@ -232,25 +232,25 @@ void nxs_xorcode(
    HB_USHORT     keypos = 0;
    unsigned char c_bitrest;
 
-   c_bitrest = cipher[ 0 ] >> 5;
+   c_bitrest = cipher[0] >> 5;
 
    while( pos < cipherlen )
    {
-      cipher[ pos ] <<= 3;
+      cipher[pos] <<= 3;
 
       if( keypos == static_cast< HB_USHORT >( keylen ) - 1 || pos == cipherlen - 1 )
-         cipher[ pos ] |= c_bitrest;
+         cipher[pos] |= c_bitrest;
       else
-         cipher[ pos ] |= cipher[ pos + 1 ] >> 5;
+         cipher[pos] |= cipher[pos + 1] >> 5;
 
-      cipher[ pos ] ^= key[ keypos ];
+      cipher[pos] ^= key[keypos];
       keypos++;
       pos++;
 
       if( keypos == static_cast< HB_USHORT >( keylen ) )
       {
          keypos    = 0;
-         c_bitrest = cipher[ pos ] >> 5;
+         c_bitrest = cipher[pos] >> 5;
       }
    }
 }
@@ -267,17 +267,17 @@ void nxs_xordecode(
    if( keylen > cipherlen - pos )
       keylen = static_cast< HB_USHORT >( cipherlen - pos );
 
-   c_bitleft = ( cipher[ keylen - 1 ] ^ key[ keylen - 1 ] ) << 5;
+   c_bitleft = ( cipher[keylen - 1] ^ key[keylen - 1] ) << 5;
 
    while( pos < cipherlen )
    {
       unsigned char c_bitrest;
 
-      cipher[ pos ] ^= key[ keypos ];
+      cipher[pos] ^= key[keypos];
 
-      c_bitrest       = cipher[ pos ] << 5;
-      cipher[ pos ] >>= 3;
-      cipher[ pos ]  |= c_bitleft;
+      c_bitrest       = cipher[pos] << 5;
+      cipher[pos] >>= 3;
+      cipher[pos]  |= c_bitleft;
       c_bitleft       = c_bitrest;
 
       keypos++;
@@ -290,7 +290,7 @@ void nxs_xordecode(
          if( keylen > cipherlen - pos )
             keylen = static_cast< HB_USHORT >( cipherlen - pos );
 
-         c_bitleft = ( cipher[ pos + keylen - 1 ] ^ key[ keylen - 1 ] ) << 5;
+         c_bitleft = ( cipher[pos + keylen - 1] ^ key[keylen - 1] ) << 5;
       }
    }
 }
@@ -305,9 +305,9 @@ void nxs_xorcyclic(
    HB_U32  crc1l, crc2l, crc3l;
 
    /* Build the cyclic key seed */
-   crc1 = keylen >= 2 ? hb_adler32( 0, reinterpret_cast< const char * >( key ) + 0, keylen - 2 ) : 1;
-   crc2 = keylen >= 4 ? hb_adler32( 0, reinterpret_cast< const char * >( key ) + 2, keylen - 4 ) : 1;
-   crc3 = keylen >= 2 ? hb_adler32( 0, reinterpret_cast< const char * >( key ) + 1, keylen - 2 ) : 1;
+   crc1 = keylen >= 2 ? hb_adler32(0, reinterpret_cast<const char*>(key) + 0, keylen - 2) : 1;
+   crc2 = keylen >= 4 ? hb_adler32(0, reinterpret_cast<const char*>(key) + 2, keylen - 4) : 1;
+   crc3 = keylen >= 2 ? hb_adler32(0, reinterpret_cast<const char*>(key) + 1, keylen - 2) : 1;
 
    crc1l = crc1 = nxs_cyclic_sequence( crc1 );
    crc2l = crc2 = nxs_cyclic_sequence( crc2 );
@@ -318,17 +318,17 @@ void nxs_xorcyclic(
       if( crcpos < 4 )
       {
          /* this ensures portability across platforms */
-         cipher[ pos ] ^= static_cast< unsigned char >( crc1l % 256 );
+         cipher[pos] ^= static_cast< unsigned char >( crc1l % 256 );
          crc1l         /= 256L;
       }
       else if( crcpos < 8 )
       {
-         cipher[ pos ] ^= static_cast< unsigned char >( crc2l % 256 );
+         cipher[pos] ^= static_cast< unsigned char >( crc2l % 256 );
          crc2l         /= 256L;
       }
       else
       {
-         cipher[ pos ] ^= static_cast< unsigned char >( crc3l % 256 );
+         cipher[pos] ^= static_cast< unsigned char >( crc3l % 256 );
          crc3l         /= 256L;
       }
       crcpos++;
@@ -359,17 +359,17 @@ void nxs_make_scramble( HB_ISIZ * scramble, const unsigned char * key, HB_SIZE k
    HB_SIZE i, j, tmp;
 
    for( i = 0; i < keylen; ++i )
-      scramble[ i ] = i;
+      scramble[i] = i;
 
    for( i = 0; i < keylen; ++i )
    {
       for( j = i + 1; j < keylen; ++j )
       {
-         if( key[ scramble[ j ] ] < key[ scramble[ i ] ] )
+         if( key[scramble[j]] < key[scramble[i]] )
          {
-            tmp = scramble[ j ];
-            scramble[ j ] = scramble[ i ];
-            scramble[ i ] = tmp;
+            tmp = scramble[j];
+            scramble[j] = scramble[i];
+            scramble[i] = tmp;
             j = i;
          }
       }
@@ -386,17 +386,17 @@ void nxs_make_scramble( HB_ISIZ * scramble, const unsigned char * key, HB_SIZE k
  */
 HB_FUNC( HB_CRYPT )
 {
-   PHB_ITEM pSource = hb_param( 1, HB_IT_ANY );
-   PHB_ITEM pKey    = hb_param( 2, HB_IT_ANY );
+   PHB_ITEM pSource = hb_param(1, Harbour::Item::ANY);
+   PHB_ITEM pKey    = hb_param(2, Harbour::Item::ANY);
 
-   unsigned char * cRes = static_cast< unsigned char * >( hb_xgrab( hb_itemGetCLen( pSource ) + 8 ) );
+   unsigned char * cRes = static_cast<unsigned char*>(hb_xgrab(hb_itemGetCLen(pSource) + 8));
 
    nxs_crypt(
-      reinterpret_cast< const unsigned char * >( hb_itemGetCPtr( pSource ) ), hb_itemGetCLen( pSource ),
-      reinterpret_cast< const unsigned char * >( hb_itemGetCPtr( pKey ) ), hb_itemGetCLen( pKey ),
+      reinterpret_cast< const unsigned char * >( hb_itemGetCPtr(pSource) ), hb_itemGetCLen(pSource),
+      reinterpret_cast< const unsigned char * >( hb_itemGetCPtr(pKey) ), hb_itemGetCLen(pKey),
       cRes );
 
-   hb_retclen_buffer( reinterpret_cast< char * >( cRes ), hb_itemGetCLen( pSource ) );
+   hb_retclen_buffer( reinterpret_cast< char * >( cRes ), hb_itemGetCLen(pSource) );
 }
 
 /* Decrypt a text using a key
@@ -405,15 +405,15 @@ HB_FUNC( HB_CRYPT )
  */
 HB_FUNC( HB_DECRYPT )
 {
-   PHB_ITEM pSource = hb_param( 1, HB_IT_ANY );
-   PHB_ITEM pKey    = hb_param( 2, HB_IT_ANY );
+   PHB_ITEM pSource = hb_param(1, Harbour::Item::ANY);
+   PHB_ITEM pKey    = hb_param(2, Harbour::Item::ANY);
 
-   unsigned char * cRes = static_cast< unsigned char * >( hb_xgrab( hb_itemGetCLen( pSource ) + 8 ) );
+   unsigned char * cRes = static_cast<unsigned char*>(hb_xgrab(hb_itemGetCLen(pSource) + 8));
 
    nxs_decrypt(
-      reinterpret_cast< const unsigned char * >( hb_itemGetCPtr( pSource ) ), hb_itemGetCLen( pSource ),
-      reinterpret_cast< const unsigned char * >( hb_itemGetCPtr( pKey ) ), hb_itemGetCLen( pKey ),
+      reinterpret_cast< const unsigned char * >( hb_itemGetCPtr(pSource) ), hb_itemGetCLen(pSource),
+      reinterpret_cast< const unsigned char * >( hb_itemGetCPtr(pKey) ), hb_itemGetCLen(pKey),
       cRes );
 
-   hb_retclen_buffer( reinterpret_cast< char * >( cRes ), hb_itemGetCLen( pSource ) );
+   hb_retclen_buffer( reinterpret_cast< char * >( cRes ), hb_itemGetCLen(pSource) );
 }

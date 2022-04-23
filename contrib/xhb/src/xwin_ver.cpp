@@ -46,7 +46,7 @@
 
 #include "hbapi.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 HB_FUNC_TRANSLATE( OS_VERSIONINFO         , WIN_OSVERSIONINFO    )
 HB_FUNC_TRANSLATE( OS_ISWINNT             , WIN_OSISNT           )

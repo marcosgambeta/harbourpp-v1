@@ -78,12 +78,12 @@ static HB_ULONG hb_hextonum( const char * cHex )
 
 static HB_LONG __getparam( int iParam )
 {
-   const char * szHexNum = hb_parc( iParam );
+   const char * szHexNum = hb_parc(iParam);
 
    if( szHexNum )
-      return static_cast< HB_LONG >( hb_hextonum( szHexNum ) );
+      return static_cast<HB_LONG>(hb_hextonum(szHexNum));
    else
-      return hb_parnl( iParam );
+      return hb_parnl(iParam);
 }
 
 static HB_LONG __numand( HB_LONG lNum1, HB_LONG lNum2 )
@@ -103,30 +103,29 @@ static HB_LONG __numxor( HB_LONG lNum1, HB_LONG lNum2 )
 
 static HB_LONG __numnot( HB_LONG lNum1, HB_LONG lNum2 )
 {
-   HB_SYMBOL_UNUSED( lNum2 );
+   HB_SYMBOL_UNUSED(lNum2);
 
    return ~lNum1;
 }
 
 static void sizeofbits( HB_USHORT * pusBytes, HB_LONG * plPattern, HB_LONG * plTestMSB )
 {
-   *pusBytes = ( HB_ISNIL( 1 ) || hb_parni( 1 ) == 0 ) ?
-               sizeof( int ) * 8 : static_cast< HB_USHORT >( hb_parni( 1 ) );
+   *pusBytes = ( HB_ISNIL(1) || hb_parni(1) == 0 ) ? sizeof(int) * 8 : static_cast<HB_USHORT>(hb_parni(1));
 
-   if( *pusBytes > sizeof( HB_LONG ) * 8 )
-      *pusBytes = *pusBytes % ( sizeof( HB_LONG ) * 8 );
+   if( *pusBytes > sizeof(HB_LONG) * 8 )
+      *pusBytes = *pusBytes % ( sizeof(HB_LONG) * 8 );
 
-   *plPattern = ( *pusBytes == ( sizeof( HB_LONG ) * 8 ) ) ? 0 : static_cast< HB_LONG >( ULONG_MAX << *pusBytes );
+   *plPattern = ( *pusBytes == ( sizeof(HB_LONG) * 8 ) ) ? 0 : static_cast<HB_LONG>(ULONG_MAX << *pusBytes);
 
-   *plTestMSB = ( *pusBytes == 0 ) ? 0 : ( 1 << ( *pusBytes - 1 ) );
+   *plTestMSB = (*pusBytes == 0) ? 0 : (1 << (*pusBytes - 1));
 }
 
 static HB_LONG __numfun( int iPCount, HB_LONG ( * operation )( HB_LONG wNum1, HB_LONG wNum2 ), HB_BOOL * pbOk )
 {
-   if( ( HB_ISNUM( 1 ) || HB_ISNIL( 1 ) ) &&
-       ( HB_ISNUM( 2 ) || HB_ISCHAR( 2 ) ) )
+   if( ( HB_ISNUM(1) || HB_ISNIL(1) ) &&
+       ( HB_ISNUM(2) || HB_ISCHAR(2) ) )
    {
-      HB_LONG   lNum1 = __getparam( 2 );
+      HB_LONG   lNum1 = __getparam(2);
       HB_LONG   lNumOp = 0;
       HB_LONG   lPattern, lTestMSB;
       HB_USHORT usBytes;
@@ -167,7 +166,7 @@ HB_FUNC( NUMANDX )
    HB_LONG lNumOp = __numfun( hb_pcount(), __numand, &bOk );
 
    if( bOk )
-      hb_retnl( lNumOp );
+      hb_retnl(lNumOp);
 }
 
 HB_FUNC( NUMORX )
@@ -176,36 +175,36 @@ HB_FUNC( NUMORX )
    HB_LONG lNumOp = __numfun( hb_pcount(), __numor, &bOk );
 
    if( bOk )
-      hb_retnl( lNumOp );
+      hb_retnl(lNumOp);
 }
 
 HB_FUNC( NUMXORX )
 {
    HB_BOOL bOk;
-   HB_LONG lNumOp = __numfun( 3, __numxor, &bOk );
+   HB_LONG lNumOp = __numfun(3, __numxor, &bOk);
 
    if( bOk )
-      hb_retnl( lNumOp );
+      hb_retnl(lNumOp);
 }
 
 HB_FUNC( NUMNOTX )
 {
    HB_BOOL bOk;
-   HB_LONG lNumOp = __numfun( 2, __numnot, &bOk );
+   HB_LONG lNumOp = __numfun(2, __numnot, &bOk);
 
    if( bOk )
-      hb_retnl( lNumOp );
+      hb_retnl(lNumOp);
 }
 
 HB_FUNC( NUMROLX )
 {
-   if( HB_ISNUM( 2 ) || HB_ISCHAR( 2 ) )
+   if( HB_ISNUM(2) || HB_ISCHAR(2) )
    {
       HB_LONG   lNum1, lNumBak, lPattern, lTestRol;
       HB_USHORT usBytes, usFor, usNum2;
 
-      lNum1  = __getparam( 2 );                /* Number to do ROL */
-      usNum2 = static_cast< HB_USHORT >( __getparam( 3 ) );  /* Iterations */
+      lNum1  = __getparam(2);                /* Number to do ROL */
+      usNum2 = static_cast<HB_USHORT>(__getparam(3));  /* Iterations */
 
       sizeofbits( &usBytes, &lPattern, &lTestRol );
 
@@ -224,18 +223,18 @@ HB_FUNC( NUMROLX )
             lNum1 <<= 1;
       }
 
-      hb_retnl( ( lNum1 & ~lPattern ) | lNumBak );  /* Set the section not ROLed */
+      hb_retnl((lNum1 & ~lPattern) | lNumBak);  /* Set the section not ROLed */
    }
 }
 
 HB_FUNC( NUMMIRRX )
 {
-   if( HB_ISNUM( 2 ) || HB_ISCHAR( 2 ) )
+   if( HB_ISNUM(2) || HB_ISCHAR(2) )
    {
       HB_LONG   lNum1, lPattern, lTestMSB, lNumBak, lMirror = 0;
       HB_USHORT usBytes, usFor;
 
-      lNum1 = __getparam( 2 );
+      lNum1 = __getparam(2);
 
       sizeofbits( &usBytes, &lPattern, &lTestMSB );
 
@@ -254,6 +253,6 @@ HB_FUNC( NUMMIRRX )
          lNum1 >>= 1;
       }
 
-      hb_retnl( ( lMirror & ~lPattern ) | lNumBak );
+      hb_retnl((lMirror & ~lPattern) | lNumBak);
    }
 }

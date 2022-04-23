@@ -109,15 +109,15 @@ static int hb_inkeyKeyXHB( int iKey )
 
 HB_FUNC( XHB_KEYTRANS )
 {
-   hb_retni( hb_inkeyKeyXHB( hb_parni( 1 ) ) );
+   hb_retni(hb_inkeyKeyXHB(hb_parni(1)));
 }
 
 HB_FUNC( XHB_INKEY )
 {
    int iPCount = hb_pcount(), iKey;
 
-   iKey = hb_inkey( iPCount == 1 || ( iPCount > 1 && HB_ISNUM( 1 ) ), hb_parnd( 1 ),
-                    hb_parnidef( 2, hb_setGetEventMask() ) | HB_INKEY_EXT );
+   iKey = hb_inkey( iPCount == 1 || ( iPCount > 1 && HB_ISNUM(1) ), hb_parnd(1),
+                    hb_parnidef(2, hb_setGetEventMask()) | HB_INKEY_EXT );
 
-   hb_retni( hb_inkeyKeyXHB( iKey ) );
+   hb_retni(hb_inkeyKeyXHB(iKey));
 }

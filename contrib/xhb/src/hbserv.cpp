@@ -55,17 +55,15 @@
 
 #include <stdio.h>
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    #include <windows.h>
 #endif
 
 /* These targets cannot compile this module */
-#if ! defined( HB_OS_DARWIN_5 ) && \
-   ! defined( HB_OS_WIN_64 ) && \
-   ! defined( __HAIKU__ )
+#if !defined(HB_OS_DARWIN_5) && !defined(HB_OS_WIN_64) && !defined(__HAIKU__)
 /* TODO: Haiku will supposedly do this later on, read /boot/develop/headers/posix/signal.h */
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
 #include <sys/types.h>
 #include <unistd.h>
 #include <signal.h>
@@ -103,11 +101,11 @@ static int s_translateSignal( HB_UINT sig, HB_UINT subsig );
  * signals, both from kernel or from users.
  */
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
 
 /* TODO: Register the old signal action to allow graceful fallback */
 #if 0
-static struct sigaction s_aOldAction[ SIGUSR2 + 1 ];
+static struct sigaction s_aOldAction[SIGUSR2 + 1];
 #endif
 
 /* Implementation of the signal translation table */
@@ -131,20 +129,20 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
    HB_UINT  uiSig;
    HB_SIZE  nPos;
 
-   HB_SYMBOL_UNUSED( v );
+   HB_SYMBOL_UNUSED(v);
 
    /* let's find the right signal handler. */
    hb_threadEnterCriticalSectionGC( &s_ServiceMutex );
 
    /* avoid working if PRG signal handling has been disabled */
-   if( ! bSignalEnabled )
+   if( !bSignalEnabled )
    {
       hb_threadLeaveCriticalSection( &s_ServiceMutex );
       return;
    }
 
    bSignalEnabled = HB_FALSE;
-   nPos = hb_arrayLen( sp_hooks );
+   nPos = hb_arrayLen(sp_hooks);
    /* subsig not necessary */
    uiSig = static_cast< HB_UINT >( s_translateSignal( static_cast< HB_UINT >( sig ), 0 ) );
 
@@ -153,7 +151,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
       PHB_ITEM pFunction;
       HB_UINT  uiMask;
 
-      pFunction = hb_arrayGetItemPtr( sp_hooks, nPos );
+      pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
       uiMask    = static_cast< HB_UINT >( hb_arrayGetNI( pFunction, 1 ) );
       if( uiMask & uiSig )
       {
@@ -163,36 +161,36 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
          /* we don't unlock the mutex now, even if it is
             a little dangerous. But we are in a signal hander...
             for now just 2 parameters */
-         pExecArray = hb_itemArrayNew( 3 );
-         hb_arraySet( pExecArray, 1, hb_arrayGetItemPtr( pFunction, 2 ) );
-         hb_arraySetNI( pExecArray, 2, uiSig );
+         pExecArray = hb_itemArrayNew(3);
+         hb_arraySet(pExecArray, 1, hb_arrayGetItemPtr(pFunction, 2));
+         hb_arraySetNI(pExecArray, 2, uiSig);
 
          /* the third parameter is an array: */
 
-         pRet = hb_arrayGetItemPtr( pExecArray, 3 );
-         #if defined( HB_OS_BSD )
-         hb_arrayNew( pRet, info ? 6 : 1 );
+         pRet = hb_arrayGetItemPtr(pExecArray, 3);
+         #if defined(HB_OS_BSD)
+         hb_arrayNew(pRet, info ? 6 : 1);
          #else
-         hb_arrayNew( pRet, 6 );
+         hb_arrayNew(pRet, 6);
          #endif
-         hb_arraySetNI( pRet, HB_SERVICE_OSSIGNAL, sig );
-         #if defined( HB_OS_BSD )
+         hb_arraySetNI(pRet, HB_SERVICE_OSSIGNAL, sig);
+         #if defined(HB_OS_BSD)
          if( info )
          #endif
          {
-            hb_arraySetNI( pRet, HB_SERVICE_OSSUBSIG, info->si_code );
-            #if ! defined( HB_OS_VXWORKS )
-            hb_arraySetNI( pRet, HB_SERVICE_OSERROR, info->si_errno );
-            hb_arraySetPtr( pRet, HB_SERVICE_ADDRESS, static_cast< void * >( info->si_addr ) );
-            hb_arraySetNI( pRet, HB_SERVICE_PROCESS, info->si_pid );
-            hb_arraySetNI( pRet, HB_SERVICE_UID, info->si_uid );
+            hb_arraySetNI(pRet, HB_SERVICE_OSSUBSIG, info->si_code);
+            #if !defined(HB_OS_VXWORKS)
+            hb_arraySetNI(pRet, HB_SERVICE_OSERROR, info->si_errno);
+            hb_arraySetPtr(pRet, HB_SERVICE_ADDRESS, static_cast<void*>(info->si_addr));
+            hb_arraySetNI(pRet, HB_SERVICE_PROCESS, info->si_pid);
+            hb_arraySetNI(pRet, HB_SERVICE_UID, info->si_uid);
             #endif
          }
 
          pRet = hb_itemDo( pExecArray, 0 );
-         iRet = hb_itemGetNI( pRet );
-         hb_itemRelease( pRet );
-         hb_itemRelease( pExecArray );
+         iRet = hb_itemGetNI(pRet);
+         hb_itemRelease(pRet);
+         hb_itemRelease(pExecArray);
 
          switch( iRet )
          {
@@ -214,7 +212,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
                   This solution is rude, while the other would allow clean VM termination...
                   but it works.
                 */
-               exit( 0 );
+               exit(0);
          }
       }
       nPos--;
@@ -228,10 +226,10 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
    #if 0
    if( uiSig != HB_SIGNAL_UNKNOWN )
    {
-      if( sa_oldAction[ sig ].sa_flags & SA_SIGINFO )
-         sa_oldAction[ sig ].sa_sigaction( sig, info, v );
+      if( sa_oldAction[sig].sa_flags & SA_SIGINFO )
+         sa_oldAction[sig].sa_sigaction( sig, info, v );
       else
-         sa_oldAction[ sig ].sa_handler( sig );
+         sa_oldAction[sig].sa_handler( sig );
    }
    #endif
 }
@@ -239,7 +237,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
 /* 2003 - <maurilio.longo@libero.it>
    to fix as soon as thread support is ready on OS/2
  */
-#if defined( HB_THREAD_SUPPORT )
+#if defined(HB_THREAD_SUPPORT)
 static void * s_signalListener( void * my_stack )
 {
    static HB_BOOL bFirst = HB_TRUE;
@@ -247,7 +245,7 @@ static void * s_signalListener( void * my_stack )
    sigset_t   passall;
    HB_STACK * pStack = ( HB_STACK * ) my_stack;
 
-#if defined( HB_OS_BSD )
+#if defined(HB_OS_BSD)
    int sig;
 #else
    siginfo_t sinfo;
@@ -302,7 +300,7 @@ static void * s_signalListener( void * my_stack )
          ATM we don't care very much about signal handling during
          termination: no handler is set for them, so the DFL
          action is taken (and that should be fine). */
-#if defined( HB_OS_BSD )
+#if defined(HB_OS_BSD)
       sigwait( &passall, &sig );
 #else
       sigwaitinfo( &passall, &sinfo );
@@ -310,14 +308,14 @@ static void * s_signalListener( void * my_stack )
 
       /* lock stack before passing the ball to VM. */
       HB_STACK_LOCK;
-#if defined( HB_OS_BSD )
+#if defined(HB_OS_BSD)
       s_signalHandler( sig, nullptr, nullptr );
 #else
       s_signalHandler( sinfo.si_signo, &sinfo, nullptr );
 #endif
    }
 
-   pthread_cleanup_pop( 1 );
+   pthread_cleanup_pop(1);
    return 0;
 }
 #endif
@@ -390,14 +388,14 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
    hb_threadEnterCriticalSectionGC( &s_ServiceMutex );
 
    /* avoid working if PRG signal handling has been disabled */
-   if( ! bSignalEnabled )
+   if( !bSignalEnabled )
    {
       hb_threadLeaveCriticalSection( &s_ServiceMutex );
       return EXCEPTION_EXECUTE_HANDLER;
    }
 
    bSignalEnabled = HB_FALSE;
-   nPos = hb_arrayLen( sp_hooks );
+   nPos = hb_arrayLen(sp_hooks);
    /* subsig not necessary */
    uiSig = static_cast< HB_UINT >( s_translateSignal( static_cast< HB_UINT >( type ), static_cast< HB_UINT >( sig ) ) );
 
@@ -406,7 +404,7 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
       PHB_ITEM pFunction;
       HB_UINT  uiMask;
 
-      pFunction = hb_arrayGetItemPtr( sp_hooks, nPos );
+      pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
       uiMask    = static_cast< HB_UINT >( hb_arrayGetNI( pFunction, 1 ) );
       if( ( uiMask & uiSig ) == uiSig )
       {
@@ -416,9 +414,9 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
          /* we don't unlock the mutex now, even if it is
             a little dangerous. But we are in a signal hander...
             for now just 2 parameters */
-         pExecArray = hb_itemArrayNew( 3 );
-         hb_arraySetForward( pExecArray, 1, hb_arrayGetItemPtr( pFunction, 2 ) );
-         hb_arraySetNI( pExecArray, 2, uiSig );
+         pExecArray = hb_itemArrayNew(3);
+         hb_arraySetForward( pExecArray, 1, hb_arrayGetItemPtr(pFunction, 2) );
+         hb_arraySetNI(pExecArray, 2, uiSig);
 
          /* the third parameter is an array:
           * 1: low-level signal
@@ -429,13 +427,13 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
           * 6: UID of the riser
           */
 
-         pRet = hb_arrayGetItemPtr( pExecArray, 3 );
-         hb_arrayNew( pRet, 6 );
+         pRet = hb_arrayGetItemPtr(pExecArray, 3);
+         hb_arrayNew(pRet, 6);
 
-         hb_arraySetNI( pRet, HB_SERVICE_OSSIGNAL, type );
-         hb_arraySetNI( pRet, HB_SERVICE_OSSUBSIG, sig );
+         hb_arraySetNI(pRet, HB_SERVICE_OSSIGNAL, type);
+         hb_arraySetNI(pRet, HB_SERVICE_OSSUBSIG, sig);
          /* could be meaningless, but does not matter here */
-         hb_arraySetNI( pRet, HB_SERVICE_OSERROR, GetLastError() );
+         hb_arraySetNI(pRet, HB_SERVICE_OSERROR, GetLastError());
 
          if( type == 0 ) /* exception */
             hb_arraySetPtr( pRet, HB_SERVICE_ADDRESS, static_cast< void * >( exc->ExceptionAddress ) );
@@ -443,14 +441,14 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
             hb_arraySetPtr( pRet, HB_SERVICE_ADDRESS, nullptr );
 
          /* TODO: */
-         hb_arraySetNI( pRet, HB_SERVICE_PROCESS, GetCurrentThreadId() );
+         hb_arraySetNI(pRet, HB_SERVICE_PROCESS, GetCurrentThreadId());
          /* TODO: */
-         hb_arraySetNI( pRet, HB_SERVICE_UID, 0 );
+         hb_arraySetNI(pRet, HB_SERVICE_UID, 0);
 
          pRet = hb_itemDo( pExecArray, 0 );
-         iRet = hb_itemGetNI( pRet );
-         hb_itemRelease( pRet );
-         hb_itemRelease( pExecArray );
+         iRet = hb_itemGetNI(pRet);
+         hb_itemRelease(pRet);
+         hb_itemRelease(pExecArray);
 
          switch( iRet )
          {
@@ -465,7 +463,7 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
                hb_vmRequestQuit();
 #ifndef HB_THREAD_SUPPORT
                hb_vmQuit();
-               exit( 0 );
+               exit(0);
 #else
                hb_threadCancelInternal();
 #endif
@@ -481,7 +479,7 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
 
 static LRESULT CALLBACK s_exceptionFilter( PEXCEPTION_POINTERS exInfo )
 {
-   return s_signalHandler( 0, exInfo->ExceptionRecord->ExceptionCode, exInfo->ExceptionRecord );
+   return s_signalHandler(0, exInfo->ExceptionRecord->ExceptionCode, exInfo->ExceptionRecord);
 }
 
 static LRESULT CALLBACK s_MsgFilterFunc( int nCode, WPARAM wParam, LPARAM lParam )
@@ -502,7 +500,7 @@ static LRESULT CALLBACK s_MsgFilterFunc( int nCode, WPARAM wParam, LPARAM lParam
       case WM_QUIT:
          /* we'll ignore the request here.
             the application must still receive the message */
-         s_signalHandler( 1, msg->message, nullptr );
+         s_signalHandler(1, msg->message, nullptr);
    }
 
    /* return next hook anyway */
@@ -528,7 +526,7 @@ BOOL WINAPI s_ConsoleHandlerRoutine( DWORD dwCtrlType )
    }
 #endif
 
-   s_signalHandler( 2, dwCtrlType, nullptr );
+   s_signalHandler(2, dwCtrlType, nullptr);
 
 #ifdef HB_THREAD_SUPPORT
    if( pStack )
@@ -551,10 +549,10 @@ BOOL WINAPI s_ConsoleHandlerRoutine( DWORD dwCtrlType )
 
 static void s_serviceSetHBSig( void )
 {
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    struct sigaction act;
 
-#if defined( HB_THREAD_SUPPORT )
+#if defined(HB_THREAD_SUPPORT)
    sigset_t blockall;
    /* set signal mask */
    sigemptyset( &blockall );
@@ -574,7 +572,7 @@ static void s_serviceSetHBSig( void )
 
    /* to avoid problems with differ sigaction structures and uninitialized
       fields */
-   memset( &act, 0, sizeof( act ) );
+   memset( &act, 0, sizeof(act) );
 
    /* using more descriptive sa_action instead of sa_handler */
    act.sa_handler   = nullptr;            /* if act.sa.. is a union, we just clean this */
@@ -650,12 +648,12 @@ static int s_translateSignal( HB_UINT sig, HB_UINT subsig )
 {
    int i = 0;
 
-   while( s_sigTable[ i ].sig != 0 || s_sigTable[ i ].subsig != 0 || s_sigTable[ i ].translated != 0 )
+   while( s_sigTable[i].sig != 0 || s_sigTable[i].subsig != 0 || s_sigTable[i].translated != 0 )
    {
-      if( s_sigTable[ i ].sig == sig &&
-          ( s_sigTable[ i ].subsig == subsig || s_sigTable[ i ].subsig == 0 ) )
+      if( s_sigTable[i].sig == sig &&
+          ( s_sigTable[i].subsig == subsig || s_sigTable[i].subsig == 0 ) )
       {
-         return s_sigTable[ i ].translated;
+         return s_sigTable[i].translated;
       }
       i++;
    }
@@ -664,7 +662,7 @@ static int s_translateSignal( HB_UINT sig, HB_UINT subsig )
 
 static void hb_service_exit( void * cargo )
 {
-   HB_SYMBOL_UNUSED( cargo );
+   HB_SYMBOL_UNUSED(cargo);
 
    hb_serviceExit();
 }
@@ -675,20 +673,20 @@ static void hb_service_exit( void * cargo )
 
 static void s_signalHandlersInit()
 {
-#if defined( HB_THREAD_SUPPORT ) && ( defined( HB_OS_UNIX ) || defined( HB_OS_UNIX ) )
+#if defined(HB_THREAD_SUPPORT) && (defined(HB_OS_UNIX) || defined(HB_OS_UNIX))
    pthread_t  res;
    HB_STACK * pStack;
 
    s_serviceSetHBSig();
 
-   pStack = hb_threadCreateStack( 0 );
+   pStack = hb_threadCreateStack(0);
    pthread_create( &res, nullptr, s_signalListener, pStack );
 #else
    s_serviceSetHBSig();
 #endif
 
-   sp_hooks = hb_itemNew( nullptr );
-   hb_arrayNew( sp_hooks, 0 );
+   sp_hooks = hb_itemNew(nullptr);
+   hb_arrayNew(sp_hooks, 0);
    hb_vmAtQuit( hb_service_exit, nullptr );
 }
 
@@ -710,15 +708,15 @@ HB_FUNC( HB_STARTSERVICE )
    if( iCount > 2 || ( sp_hooks == nullptr && iCount > 1 ) )
    {
       /* TODO: Right error code here */
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, "Service must be started before starting threads", nullptr, 0 );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, "Service must be started before starting threads", nullptr, 0);
       return;
    }
    #endif
 
-   #if defined( HB_OS_UNIX ) && ! defined( HB_OS_VXWORKS )
+   #if defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS)
    {
       /* Iconic? */
-      if( hb_parl( 1 ) )
+      if( hb_parl(1) )
       {
          int pid = fork();
 
@@ -743,7 +741,7 @@ HB_FUNC( HB_STARTSERVICE )
 
    /* in windows, we just detach from console */
    #ifdef HB_OS_WIN
-   if( hb_parl( 1 ) )
+   if( hb_parl(1) )
       FreeConsole();
    #endif
 
@@ -771,7 +769,7 @@ void hb_serviceExit( void )
    {
       /* reset default signal handling */
       s_serviceSetDflSig();
-      hb_itemRelease( sp_hooks );
+      hb_itemRelease(sp_hooks);
       sp_hooks = nullptr;
    }
 }
@@ -783,7 +781,7 @@ void hb_serviceExit( void )
  */
 HB_FUNC( HB_ISSERVICE )
 {
-   hb_retl( sb_isService );
+   hb_retl(sb_isService);
 }
 
 /**
@@ -801,31 +799,28 @@ HB_FUNC( HB_SERVICELOOP )
    /* This is just here to trigger our internal hook routine, if the
       final application does not any message handling.
     */
-   if( ! PeekMessage( &msg, nullptr, WM_QUIT, WM_QUIT, PM_REMOVE ) )
+   if( !PeekMessage( &msg, nullptr, WM_QUIT, WM_QUIT, PM_REMOVE ) )
    {
       PeekMessage( &msg, nullptr, WM_USER, WM_USER + 3, PM_REMOVE );
    }
 #endif
 
-   hb_gcCollectAll( HB_FALSE );
+   hb_gcCollectAll(false);
 }
 
 HB_FUNC( HB_PUSHSIGNALHANDLER )
 {
-   int      iMask = hb_parni( 1 );
-   PHB_ITEM pFunc = hb_param( 2, HB_IT_ANY ), pHandEntry;
+   int      iMask = hb_parni(1);
+   PHB_ITEM pFunc = hb_param(2, Harbour::Item::ANY), pHandEntry;
 
-   if( pFunc == nullptr || iMask == 0 ||
-       ( ! HB_IS_POINTER( pFunc ) && ! HB_IS_STRING( pFunc ) && ! HB_IS_BLOCK( pFunc ) )
-       )
+   if( pFunc == nullptr || iMask == 0 || (!HB_IS_POINTER(pFunc) && !HB_IS_STRING(pFunc) && !HB_IS_BLOCK(pFunc)) )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, "Wrong parameter count/type", nullptr,
-                            2, hb_param( 1, HB_IT_ANY ), hb_param( 2, HB_IT_ANY ) );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, "Wrong parameter count/type", nullptr, 2, hb_param(1, Harbour::Item::ANY), hb_param(2, Harbour::Item::ANY));
       return;
    }
 
-   pHandEntry = hb_itemArrayNew( 2 );
-   hb_arraySetNI( pHandEntry, 1, iMask );
+   pHandEntry = hb_itemArrayNew(2);
+   hb_arraySetNI(pHandEntry, 1, iMask);
    hb_arraySet( pHandEntry, 2, pFunc );
 
    /* if the hook is not initialized, initialize it */
@@ -838,7 +833,7 @@ HB_FUNC( HB_PUSHSIGNALHANDLER )
 
    hb_threadLeaveCriticalSection( &s_ServiceMutex );
 
-   hb_itemRelease( pHandEntry );
+   hb_itemRelease(pHandEntry);
 }
 
 
@@ -850,16 +845,16 @@ HB_FUNC( HB_POPSIGNALHANDLER )
    {
       hb_threadEnterCriticalSectionGC( &s_ServiceMutex );
 
-      nLen = hb_arrayLen( sp_hooks );
+      nLen = hb_arrayLen(sp_hooks);
       if( nLen > 0 )
       {
          hb_arrayDel( sp_hooks, nLen );
          hb_arrayDel( sp_hooks, nLen - 1 );
          hb_arraySize( sp_hooks, nLen - 2 );
          hb_retl(true);
-         if( hb_arrayLen( sp_hooks ) == 0 )
+         if( hb_arrayLen(sp_hooks) == 0 )
          {
-            hb_itemRelease( sp_hooks );
+            hb_itemRelease(sp_hooks);
             sp_hooks = nullptr;              /* So it can be reinitilized */
          }
       }
@@ -879,16 +874,16 @@ HB_FUNC( HB_POPSIGNALHANDLER )
  */
 HB_FUNC( HB_SIGNALDESC )
 {
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
 
-   int iSig    = hb_parni( 1 );
-   int iSubSig = hb_parni( 2 );
+   int iSig    = hb_parni(1);
+   int iSubSig = hb_parni(2);
 
    switch( iSig )
    {
       case SIGSEGV: switch( iSubSig )
          {
-         #if ! defined( HB_OS_BSD )
+         #if !defined(HB_OS_BSD)
             case SEGV_MAPERR: hb_retc_const( "Segmentation fault: address not mapped to object" ); return;
             case SEGV_ACCERR: hb_retc_const( "Segmentation fault: invalid permissions for mapped object" ); return;
          #endif
@@ -897,7 +892,7 @@ HB_FUNC( HB_SIGNALDESC )
 
       case SIGILL: switch( iSubSig )
          {
-         #if ! defined( HB_OS_BSD )
+         #if !defined(HB_OS_BSD)
             case ILL_ILLOPC: hb_retc_const( "Illegal operation: illegal opcode" ); return;
             case ILL_ILLOPN: hb_retc_const( "Illegal operation: illegal operand" ); return;
             case ILL_ILLADR: hb_retc_const( "Illegal operation: illegal addressing mode" ); return;
@@ -912,7 +907,7 @@ HB_FUNC( HB_SIGNALDESC )
 
       case SIGFPE: switch( iSubSig )
          {
-         #if ! defined( HB_OS_DARWIN )
+         #if !defined(HB_OS_DARWIN)
             case FPE_INTDIV: hb_retc_const( "Floating point: integer divide by zero" ); return;
             case FPE_INTOVF: hb_retc_const( "Floating point: integer overflow" ); return;
          #endif
@@ -920,10 +915,10 @@ HB_FUNC( HB_SIGNALDESC )
             case FPE_FLTOVF: hb_retc_const( "Floating point: floating point overflow" ); return;
             case FPE_FLTUND: hb_retc_const( "Floating point: floating point underflow" ); return;
             case FPE_FLTRES: hb_retc_const( "Floating point: floating point inexact result" ); return;
-         #if ! defined( HB_OS_VXWORKS )
+         #if !defined(HB_OS_VXWORKS)
             case FPE_FLTINV: hb_retc_const( "Floating point: floating point invalid operation" ); return;
          #endif
-         #if ! defined( HB_OS_DARWIN )
+         #if !defined(HB_OS_DARWIN)
             case FPE_FLTSUB: hb_retc_const( "Floating point: subscript out of range" ); return;
          #endif
             default: hb_retc_const( "Floating point" ); return;
@@ -962,13 +957,13 @@ HB_FUNC( HB_SIGNALDESC )
          return;
    }
 
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
 
-   int iSig    = hb_parni( 1 );
+   int iSig    = hb_parni(1);
 
    if( iSig == 0 ) /* exception */
    {
-      DWORD dwSubSig = static_cast< DWORD >( hb_parnl( 2 ) );
+      DWORD dwSubSig = static_cast< DWORD >( hb_parnl(2) );
 
       switch( dwSubSig )
       {

@@ -46,7 +46,7 @@
 
 #include "hbapi.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 HB_FUNC_TRANSLATE( QUERYREGISTRY , WIN_REGQUERY )
 HB_FUNC_TRANSLATE( GETREGISTRY   , WIN_REGGET   )

@@ -65,24 +65,24 @@
 #undef tolower
 #undef toupper
 
-#define isalnum( c )     ( __dj_ctype_flags[ static_cast< unsigned char >( c ) + 1 ] & __dj_ISALNUM )
-#define isalpha( c )     ( __dj_ctype_flags[ static_cast< unsigned char >( c ) + 1 ] & __dj_ISALPHA )
-#define iscntrl( c )     ( __dj_ctype_flags[ static_cast< unsigned char >( c ) + 1 ] & __dj_ISCNTRL )
-#define isdigit( c )     ( __dj_ctype_flags[ static_cast< unsigned char >( c ) + 1 ] & __dj_ISDIGIT )
-#define isgraph( c )     ( __dj_ctype_flags[ static_cast< unsigned char >( c ) + 1 ] & __dj_ISGRAPH )
-#define islower( c )     ( __dj_ctype_flags[ static_cast< unsigned char >( c ) + 1 ] & __dj_ISLOWER )
-#define isprint( c )     ( __dj_ctype_flags[ static_cast< unsigned char >( c ) + 1 ] & __dj_ISPRINT )
-#define ispunct( c )     ( __dj_ctype_flags[ static_cast< unsigned char >( c ) + 1 ] & __dj_ISPUNCT )
-#define isspace( c )     ( __dj_ctype_flags[ static_cast< unsigned char >( c ) + 1 ] & __dj_ISSPACE )
-#define isupper( c )     ( __dj_ctype_flags[ static_cast< unsigned char >( c ) + 1 ] & __dj_ISUPPER )
-#define isxdigit( c )    ( __dj_ctype_flags[ static_cast< unsigned char >( c ) + 1 ] & __dj_ISXDIGIT )
+#define isalnum( c )     ( __dj_ctype_flags[static_cast< unsigned char >( c ) + 1] & __dj_ISALNUM )
+#define isalpha( c )     ( __dj_ctype_flags[static_cast< unsigned char >( c ) + 1] & __dj_ISALPHA )
+#define iscntrl( c )     ( __dj_ctype_flags[static_cast< unsigned char >( c ) + 1] & __dj_ISCNTRL )
+#define isdigit( c )     ( __dj_ctype_flags[static_cast< unsigned char >( c ) + 1] & __dj_ISDIGIT )
+#define isgraph( c )     ( __dj_ctype_flags[static_cast< unsigned char >( c ) + 1] & __dj_ISGRAPH )
+#define islower( c )     ( __dj_ctype_flags[static_cast< unsigned char >( c ) + 1] & __dj_ISLOWER )
+#define isprint( c )     ( __dj_ctype_flags[static_cast< unsigned char >( c ) + 1] & __dj_ISPRINT )
+#define ispunct( c )     ( __dj_ctype_flags[static_cast< unsigned char >( c ) + 1] & __dj_ISPUNCT )
+#define isspace( c )     ( __dj_ctype_flags[static_cast< unsigned char >( c ) + 1] & __dj_ISSPACE )
+#define isupper( c )     ( __dj_ctype_flags[static_cast< unsigned char >( c ) + 1] & __dj_ISUPPER )
+#define isxdigit( c )    ( __dj_ctype_flags[static_cast< unsigned char >( c ) + 1] & __dj_ISXDIGIT )
 
-#define tolower( c )     ( __dj_ctype_tolower[ static_cast< unsigned char >( c ) + 1 ] )
-#define toupper( c )     ( __dj_ctype_toupper[ static_cast< unsigned char >( c ) + 1 ] )
+#define tolower( c )     ( __dj_ctype_tolower[static_cast< unsigned char >( c ) + 1] )
+#define toupper( c )     ( __dj_ctype_toupper[static_cast< unsigned char >( c ) + 1] )
 
 #endif /* __dj_include_inline_ctype_ha_ */
 
-#if ! defined( isascii )
+#if !defined(isascii)
    #define isascii( c )  ( static_cast< unsigned >( c ) <= 0x7F )
 #endif
 
@@ -90,10 +90,10 @@
 
 HB_FUNC( ISALNUM )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
 
    if( szString != nullptr )
-      hb_retl( HB_ISALNUM( static_cast< HB_BYTE >( *szString ) ) );
+      hb_retl(HB_ISALNUM(static_cast<HB_BYTE>(*szString)));
    else
       hb_retl(false);
 }
@@ -105,10 +105,10 @@ HB_FUNC( ISALNUM )
 
 HB_FUNC( ISSPACE )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
 
    if( szString != nullptr )
-      hb_retl( HB_ISSPACE( static_cast< HB_BYTE >( *szString ) ) );
+      hb_retl(HB_ISSPACE(static_cast<HB_BYTE>(*szString)));
    else
       hb_retl(false);
 }
@@ -119,9 +119,9 @@ HB_FUNC( ISSPACE )
 
 HB_FUNC( ISXDIGIT )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
 
-   hb_retl( szString && HB_ISXDIGIT( static_cast< HB_BYTE >( *szString ) ) );
+   hb_retl(szString && HB_ISXDIGIT(static_cast<HB_BYTE>(*szString)));
 }
 
 /* determines if first char of a string is a control character;
@@ -130,9 +130,9 @@ HB_FUNC( ISXDIGIT )
 
 HB_FUNC( ISCNTRL )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
 
-   hb_retl( szString && iscntrl( static_cast< HB_BYTE >( *szString ) ) );
+   hb_retl(szString && iscntrl(static_cast<HB_BYTE>(*szString)));
 }
 
 /* determines if first char of a string is a printable character.
@@ -141,9 +141,9 @@ HB_FUNC( ISCNTRL )
 
 HB_FUNC( ISGRAPH )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
 
-   hb_retl( szString && isgraph( static_cast< HB_BYTE >( *szString ) ) );
+   hb_retl(szString && isgraph(static_cast<HB_BYTE>(*szString)));
 }
 
 /* determines if first char of a string is a printable character.
@@ -153,9 +153,9 @@ HB_FUNC( ISGRAPH )
 
 HB_FUNC( ISPRINT )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
 
-   hb_retl( szString && isprint( static_cast< HB_BYTE >( *szString ) ) );
+   hb_retl(szString && isprint(static_cast<HB_BYTE>(*szString)));
 }
 
 /* determines if first char of a string is a punctuation character.
@@ -165,9 +165,9 @@ HB_FUNC( ISPRINT )
 
 HB_FUNC( ISPUNCT )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
 
-   hb_retl( szString && ispunct( static_cast< HB_BYTE >( *szString ) ) );
+   hb_retl(szString && ispunct(static_cast<HB_BYTE>(*szString)));
 }
 
 /* determines if first char of a string is a member of the 7-bit ASCII
@@ -176,7 +176,7 @@ HB_FUNC( ISPUNCT )
 
 HB_FUNC( ISASCII )
 {
-   const char * szString = hb_parc( 1 );
+   const char * szString = hb_parc(1);
 
-   hb_retl( szString && isascii( static_cast< HB_BYTE >( *szString ) ) );
+   hb_retl(szString && isascii(static_cast<HB_BYTE>(*szString)));
 }

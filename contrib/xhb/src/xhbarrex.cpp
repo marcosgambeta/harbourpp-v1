@@ -50,27 +50,27 @@
 /* ASizeAlloc( <array>, <num> ) --> <array> - Set the pre-alloc step. */
 HB_FUNC( ASIZEALLOC )
 {
-   PHB_ITEM pArray    = hb_param( 1, HB_IT_ARRAY );
-   PHB_ITEM pPreAlloc = hb_param( 2, HB_IT_NUMERIC );
+   PHB_ITEM pArray    = hb_param(1, Harbour::Item::ARRAY);
+   PHB_ITEM pPreAlloc = hb_param(2, Harbour::Item::NUMERIC);
 
    if( pArray && pPreAlloc )
    {
       /* do nothing Harbour uses dynamically updated preallocation size */
-      hb_itemReturn( pArray );
+      hb_itemReturn(pArray);
    }
 }
 
 /* ALenAlloc( <array> ) --> <num> - Get the pre-alloc step. */
 HB_FUNC( ALENALLOC )
 {
-   PHB_ITEM pArray = hb_param( 1, HB_IT_ARRAY );
+   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
 
    if( pArray )
    {
       /* Harbour uses dynamically updated preallocation size
        * let's approximate some value
        */
-      HB_SIZE nLen = hb_arrayLen( pArray );
+      HB_SIZE nLen = hb_arrayLen(pArray);
       nLen = ( nLen >> 1 ) + 1;
       hb_retns( nLen );
    }
