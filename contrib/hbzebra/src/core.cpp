@@ -51,9 +51,9 @@
 
 PHB_BITBUFFER hb_bitbuffer_create( void )
 {
-   PHB_BITBUFFER pBitBuffer = static_cast< PHB_BITBUFFER >( hb_xgrab( sizeof( HB_BITBUFFER ) ) );
+   PHB_BITBUFFER pBitBuffer = static_cast<PHB_BITBUFFER>(hb_xgrab(sizeof(HB_BITBUFFER)));
 
-   hb_xmemset( pBitBuffer, 0, sizeof( HB_BITBUFFER ) );
+   hb_xmemset( pBitBuffer, 0, sizeof(HB_BITBUFFER) );
    return pBitBuffer;
 }
 
@@ -61,9 +61,9 @@ void hb_bitbuffer_destroy( PHB_BITBUFFER pBitBuffer )
 {
    if( pBitBuffer->pBuffer )
    {
-      hb_xfree( pBitBuffer->pBuffer );
+      hb_xfree(pBitBuffer->pBuffer);
    }
-   hb_xfree( pBitBuffer );
+   hb_xfree(pBitBuffer);
 }
 
 HB_SIZE hb_bitbuffer_len( PHB_BITBUFFER pBitBuffer )
@@ -78,7 +78,7 @@ unsigned char * hb_bitbuffer_buffer( PHB_BITBUFFER pBitBuffer )
 
 HB_BOOL hb_bitbuffer_get( PHB_BITBUFFER pBitBuffer, HB_SIZE nPos )
 {
-   return nPos > pBitBuffer->nLen ? HB_FALSE : ( ( pBitBuffer->pBuffer[ nPos >> 3 ] >> ( nPos & 7 ) ) & 1 );
+   return nPos > pBitBuffer->nLen ? HB_FALSE : ( ( pBitBuffer->pBuffer[nPos >> 3] >> ( nPos & 7 ) ) & 1 );
 }
 
 void hb_bitbuffer_set( PHB_BITBUFFER pBitBuffer, HB_SIZE nPos, HB_BOOL fValue )
@@ -97,7 +97,7 @@ void hb_bitbuffer_set( PHB_BITBUFFER pBitBuffer, HB_SIZE nPos, HB_BOOL fValue )
    }
    else
    {
-      *( pBitBuffer->pBuffer + ( nPos >> 3 ) ) &= ~( 1 << ( nPos & 0x7 ) );
+      *( pBitBuffer->pBuffer + ( nPos >> 3 ) ) &= ~(1 << (nPos & 0x7));
    }
 
    if( pBitBuffer->nLen <= nPos )
@@ -131,15 +131,15 @@ void hb_bitbuffer_cat_int( PHB_BITBUFFER pBitBuffer, int iValue, int iLen )
       pBitBuffer->nAlloc = nNewAlloc;
    }
 
-   if( static_cast< unsigned int >( iLen ) > sizeof( int ) * 8 )
+   if( static_cast< unsigned int >( iLen ) > sizeof(int) * 8 )
    {
-      iLen = sizeof( int ) * 8;
+      iLen = sizeof(int) * 8;
    }
 
    /* TODO: optimize */
    for( i = 0; i < iLen; i++ )
    {
-      hb_bitbuffer_set( pBitBuffer, pBitBuffer->nLen, iValue & ( 1 << i ) );
+      hb_bitbuffer_set( pBitBuffer, pBitBuffer->nLen, iValue & (1 << i) );
    }
 }
 
@@ -153,15 +153,15 @@ void hb_bitbuffer_cat_int_rev( PHB_BITBUFFER pBitBuffer, int iValue, int iLen )
       pBitBuffer->nAlloc = nNewAlloc;
    }
 
-   if( static_cast< unsigned int >( iLen ) > sizeof( int ) * 8 )
+   if( static_cast< unsigned int >( iLen ) > sizeof(int) * 8 )
    {
-      iLen = sizeof( int ) * 8;
+      iLen = sizeof(int) * 8;
    }
 
    /* TODO: optimize */
    for( int i = iLen - 1; i >= 0; i-- )
    {
-      hb_bitbuffer_set( pBitBuffer, pBitBuffer->nLen, iValue & ( 1 << i ) );
+      hb_bitbuffer_set( pBitBuffer, pBitBuffer->nLen, iValue & (1 << i) );
    }
 }
 
@@ -193,7 +193,7 @@ PHB_ZEBRA hb_zebraItemGet( PHB_ITEM pItem )
 
 PHB_ITEM hb_zebraItemPut( PHB_ITEM pItem, PHB_ZEBRA pZebra )
 {
-   PHB_ZEBRA * ppZebra = static_cast< PHB_ZEBRA * >( hb_gcAllocate( sizeof( PHB_ZEBRA ), &s_gcZebraFuncs ) );
+   PHB_ZEBRA * ppZebra = static_cast< PHB_ZEBRA * >( hb_gcAllocate( sizeof(PHB_ZEBRA), &s_gcZebraFuncs ) );
 
    *ppZebra = pZebra;
    return hb_itemPutPtrGC( pItem, ppZebra );
@@ -231,9 +231,9 @@ void hb_zebra_ret( PHB_ZEBRA pZebra )
 
 PHB_ZEBRA hb_zebra_create( void )
 {
-   PHB_ZEBRA pZebra = static_cast< PHB_ZEBRA >( hb_xgrab( sizeof( HB_ZEBRA ) ) );
+   PHB_ZEBRA pZebra = static_cast<PHB_ZEBRA>(hb_xgrab(sizeof(HB_ZEBRA)));
 
-   hb_xmemset( pZebra, 0, sizeof( HB_ZEBRA ) );
+   hb_xmemset( pZebra, 0, sizeof(HB_ZEBRA) );
    return pZebra;
 }
 
@@ -241,42 +241,42 @@ void hb_zebra_destroy( PHB_ZEBRA pZebra )
 {
    if( pZebra->szCode )
    {
-      hb_xfree( pZebra->szCode );
+      hb_xfree(pZebra->szCode);
    }
    if( pZebra->pBits )
    {
       hb_bitbuffer_destroy( pZebra->pBits );
    }
-   hb_xfree( pZebra );
+   hb_xfree(pZebra);
 }
 
 HB_FUNC( HB_ZEBRA_DESTROY )
 {
-   PHB_ZEBRA pZebra = hb_zebra_param( 1 );
+   PHB_ZEBRA pZebra = hb_zebra_param(1);
 
    if( pZebra )
    {
-      hb_zebraItemClear( hb_param( 1, HB_IT_POINTER ) );
+      hb_zebraItemClear( hb_param(1, Harbour::Item::POINTER) );
       hb_zebra_destroy( pZebra );
    }
 }
 
 HB_FUNC( HB_ZEBRA_GETERROR )
 {
-   PHB_ZEBRA pZebra = hb_zebra_param( 1 );
+   PHB_ZEBRA pZebra = hb_zebra_param(1);
 
    if( pZebra )
    {
-      hb_retni( pZebra->iError );
+      hb_retni(pZebra->iError);
    }
 }
 
 HB_FUNC( HB_ZEBRA_GETCODE )
 {
-   PHB_ZEBRA pZebra = hb_zebra_param( 1 );
+   PHB_ZEBRA pZebra = hb_zebra_param(1);
 
    if( pZebra )
    {
-      hb_retc( pZebra->szCode );
+      hb_retc(pZebra->szCode);
    }
 }

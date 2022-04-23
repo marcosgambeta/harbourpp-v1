@@ -53,15 +53,15 @@ HB_FUNC( WIN_UUIDCREATESTRING )
 {
    RPC_STATUS lRPCStatus = HB_RPC_S_ERROR;
 
-   typedef RPC_STATUS ( RPC_ENTRY * _HB_UUIDCREATE )( UUID * );
-   typedef RPC_STATUS ( RPC_ENTRY * _HB_UUIDTOSTRING )( UUID *, unsigned char ** );
-   typedef RPC_STATUS ( RPC_ENTRY * _HB_RPCSTRINGFREE )( unsigned char ** );
+   using _HB_UUIDCREATE = RPC_STATUS(RPC_ENTRY *)(UUID *);
+   using _HB_UUIDTOSTRING = RPC_STATUS(RPC_ENTRY *)(UUID *, unsigned char **);
+   using _HB_RPCSTRINGFREE = RPC_STATUS(RPC_ENTRY *)(unsigned char **);
 
    static _HB_UUIDCREATE    s_pUuidCreate    = nullptr;
    static _HB_UUIDTOSTRING  s_pUuidToString  = nullptr;
    static _HB_RPCSTRINGFREE s_pRpcStringFree = nullptr;
 
-   if( ! s_pUuidCreate )
+   if( !s_pUuidCreate )
    {
       HMODULE hRpcrt4 = GetModuleHandle( TEXT( "rpcrt4.dll" ) );
 
@@ -76,17 +76,17 @@ HB_FUNC( WIN_UUIDCREATESTRING )
       TCHAR * tszUuid = nullptr;
       UUID    uuid;
 
-      memset( &uuid, 0, sizeof( UUID ) );
+      memset( &uuid, 0, sizeof(UUID) );
 
       lRPCStatus = s_pUuidCreate( &uuid );
 
-      s_pUuidToString( &uuid, static_cast< unsigned char ** >( static_cast< void * >( &tszUuid ) ) );
+      s_pUuidToString( &uuid, static_cast<unsigned char**>(static_cast<void*>(&tszUuid)) );
 
       if( tszUuid != nullptr )
       {
          HB_RETSTR( tszUuid );
 
-         s_pRpcStringFree( static_cast< unsigned char ** >( static_cast< void * >( &tszUuid ) ) );
+         s_pRpcStringFree( static_cast<unsigned char**>(static_cast<void*>(&tszUuid)) );
       }
       else
       {
@@ -98,5 +98,5 @@ HB_FUNC( WIN_UUIDCREATESTRING )
       hb_retc_null();
    }
 
-   hb_stornl( lRPCStatus, 1 );
+   hb_stornl(lRPCStatus, 1);
 }

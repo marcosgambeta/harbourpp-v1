@@ -58,27 +58,27 @@ static HB_BOOL hb_IsLegacyDevice( const char * pszPrinterName )
 {
    static const char * s_pszPrnDev[] = { "lpt1", "lpt2", "lpt3", "lpt4", "lpt5", "lpt6", "com1", "com2", "com3", "com4", nullptr };
 
-   for( int i = 0; s_pszPrnDev[ i ]; ++i )
+   for( int i = 0; s_pszPrnDev[i]; ++i )
    {
-      if( hb_strnicmp( pszPrinterName, s_pszPrnDev[ i ], strlen( s_pszPrnDev[ i ] ) ) == 0 )
+      if( hb_strnicmp( pszPrinterName, s_pszPrnDev[i], strlen( s_pszPrnDev[i] ) ) == 0 )
       {
-         return HB_TRUE;
+         return true;
       }
    }
 
-   return HB_FALSE;
+   return false;
 }
 
 HB_FUNC( WIN_PRINTEREXISTS )
 {
    HB_BOOL bResult = HB_FALSE;
 
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      const char * pszPrinterName = hb_parc( 1 );
+      const char * pszPrinterName = hb_parc(1);
 
       /* Don't bother with test if '\' in string */
-      if( ! strchr( pszPrinterName, HB_OS_PATH_LIST_SEP_CHR ) && ! hb_IsLegacyDevice( pszPrinterName ) )
+      if( !strchr( pszPrinterName, HB_OS_PATH_LIST_SEP_CHR ) && !hb_IsLegacyDevice( pszPrinterName ) )
       {
          DWORD dwNeeded = 0, dwReturned = 0;
 
@@ -86,27 +86,27 @@ HB_FUNC( WIN_PRINTEREXISTS )
          if( dwNeeded )
          {
             PRINTER_INFO_5 * pPrinterEnumBak;
-            PRINTER_INFO_5 * pPrinterEnum = pPrinterEnumBak = static_cast< PRINTER_INFO_5 * >( hb_xgrabz( dwNeeded ) );
+            PRINTER_INFO_5 * pPrinterEnum = pPrinterEnumBak = static_cast<PRINTER_INFO_5*>(hb_xgrabz(dwNeeded));
 
             if( EnumPrinters( _ENUMPRN_FLAGS_, nullptr, 5, reinterpret_cast< LPBYTE >( pPrinterEnum ), dwNeeded, &dwNeeded, &dwReturned ) )
             {
-               PHB_ITEM pTemp = hb_itemNew( nullptr );
+               PHB_ITEM pTemp = hb_itemNew(nullptr);
 
-               for( DWORD i = 0; ! bResult && i < dwReturned; ++i, ++pPrinterEnum )
+               for( DWORD i = 0; !bResult && i < dwReturned; ++i, ++pPrinterEnum )
                {
                   HB_ITEMPUTSTR( pTemp, pPrinterEnum->pPrinterName );
-                  bResult = ( strcmp( pszPrinterName, hb_itemGetCPtr( pTemp ) ) == 0 );
+                  bResult = ( strcmp( pszPrinterName, hb_itemGetCPtr(pTemp) ) == 0 );
                }
 
-               hb_itemRelease( pTemp );
+               hb_itemRelease(pTemp);
             }
 
-            hb_xfree( pPrinterEnumBak );
+            hb_xfree(pPrinterEnumBak);
          }
       }
    }
 
-   hb_retl( bResult );
+   hb_retl(bResult);
 }
 
 static void hb_GetDefaultPrinter( PHB_ITEM pPrinterName )
@@ -117,7 +117,7 @@ static void hb_GetDefaultPrinter( PHB_ITEM pPrinterName )
 
    if( hb_iswin2k() )  /* Windows 2000 or later */
    {
-      typedef BOOL( WINAPI * DEFPRINTER ) ( LPTSTR, LPDWORD );
+      using DEFPRINTER = BOOL(WINAPI *)(LPTSTR, LPDWORD);
       HMODULE hWinSpool = hbwapi_LoadLibrarySystem( TEXT( "winspool.drv" ) );
 
       if( hWinSpool )
@@ -126,7 +126,7 @@ static void hb_GetDefaultPrinter( PHB_ITEM pPrinterName )
 
          if( fnGetDefaultPrinter )
          {
-            TCHAR lpPrinterName[ 256 ];
+            TCHAR lpPrinterName[256];
             DWORD dwSize = HB_SIZEOFARRAY( lpPrinterName ) - 1;
 
             bResult = ( *fnGetDefaultPrinter )( lpPrinterName, &dwSize );
@@ -138,20 +138,20 @@ static void hb_GetDefaultPrinter( PHB_ITEM pPrinterName )
       }
    }
 
-   if( ! bResult ) /* Win9x and Windows NT 4.0 or earlier & 2000+ if necessary for some reason i.e. dll could not load! */
+   if( !bResult ) /* Win9x and Windows NT 4.0 or earlier & 2000+ if necessary for some reason i.e. dll could not load! */
    {
-      TCHAR lpPrinterName[ 256 ];
+      TCHAR lpPrinterName[256];
 
       DWORD dwSize = GetProfileString( TEXT( "windows" ), TEXT( "device" ), TEXT( "" ), lpPrinterName, static_cast< DWORD >( HB_SIZEOFARRAY( lpPrinterName ) ) - 1 );
 
       if( dwSize && dwSize < HB_SIZEOFARRAY( lpPrinterName ) )
       {
          dwSize = 0;
-         while( lpPrinterName[ dwSize ] != '\0' && lpPrinterName[ dwSize ] != ',' )
+         while( lpPrinterName[dwSize] != '\0' && lpPrinterName[dwSize] != ',' )
          {
             dwSize++;
          }
-         lpPrinterName[ dwSize ] = '\0';
+         lpPrinterName[dwSize] = '\0';
 
          bResult = HB_TRUE;
 
@@ -159,7 +159,7 @@ static void hb_GetDefaultPrinter( PHB_ITEM pPrinterName )
       }
    }
 
-   if( ! bResult && hb_iswin9x() )
+   if( !bResult && hb_iswin9x() )
    {
       /* This option should never be required but is included because of this article
             https://support.microsoft.com/kb/246772
@@ -176,25 +176,25 @@ static void hb_GetDefaultPrinter( PHB_ITEM pPrinterName )
       EnumPrinters( PRINTER_ENUM_DEFAULT, nullptr, 2, nullptr, 0, &dwNeeded, &dwReturned );
       if( dwNeeded )
       {
-         PRINTER_INFO_2 * pPrinterInfo = static_cast< PRINTER_INFO_2 * >( hb_xgrabz( dwNeeded ) );
+         PRINTER_INFO_2 * pPrinterInfo = static_cast<PRINTER_INFO_2*>(hb_xgrabz(dwNeeded));
 
          if( EnumPrinters( PRINTER_ENUM_DEFAULT, nullptr, 2, ( LPBYTE ) pPrinterInfo, dwNeeded, &dwNeeded, &dwReturned ) && dwReturned )
          {
             HB_ITEMPUTSTR( pPrinterName, pPrinterInfo->pPrinterName );
          }
 
-         hb_xfree( pPrinterInfo );
+         hb_xfree(pPrinterInfo);
       }
    }
 }
 
 HB_FUNC( WIN_PRINTERGETDEFAULT )
 {
-   PHB_ITEM pPrinterName = hb_itemNew( nullptr );
+   PHB_ITEM pPrinterName = hb_itemNew(nullptr);
 
    hb_GetDefaultPrinter( pPrinterName );
 
-   hb_itemReturnRelease( pPrinterName );
+   hb_itemReturnRelease(pPrinterName);
 }
 
 static HB_BOOL hb_GetJobs( HANDLE hPrinter, JOB_INFO_2 ** ppJobInfo, DWORD * pdwJobs )
@@ -205,7 +205,7 @@ static HB_BOOL hb_GetJobs( HANDLE hPrinter, JOB_INFO_2 ** ppJobInfo, DWORD * pdw
    GetPrinter( hPrinter, 2, nullptr, 0, &dwNeeded );
    if( dwNeeded )
    {
-      PRINTER_INFO_2 * pPrinterInfo = static_cast< PRINTER_INFO_2 * >( hb_xgrabz( dwNeeded ) );
+      PRINTER_INFO_2 * pPrinterInfo = static_cast<PRINTER_INFO_2*>(hb_xgrabz(dwNeeded));
       DWORD dwUsed = 0;
 
       if( GetPrinter( hPrinter, 2, reinterpret_cast< LPBYTE >( pPrinterInfo ), dwNeeded, &dwUsed ) )
@@ -215,7 +215,7 @@ static HB_BOOL hb_GetJobs( HANDLE hPrinter, JOB_INFO_2 ** ppJobInfo, DWORD * pdw
          EnumJobs( hPrinter, 0, pPrinterInfo->cJobs, 2, nullptr, 0, &dwNeeded, &dwReturned );
          if( dwNeeded )
          {
-            JOB_INFO_2 * pJobInfo = static_cast< JOB_INFO_2 * >( hb_xgrabz( dwNeeded ) );
+            JOB_INFO_2 * pJobInfo = static_cast<JOB_INFO_2*>(hb_xgrabz(dwNeeded));
 
             if( EnumJobs( hPrinter, 0, dwReturned, 2, reinterpret_cast< LPBYTE >( pJobInfo ), dwNeeded, &dwUsed, &dwReturned ) )
             {
@@ -225,11 +225,11 @@ static HB_BOOL hb_GetJobs( HANDLE hPrinter, JOB_INFO_2 ** ppJobInfo, DWORD * pdw
             }
             else
             {
-               hb_xfree( pJobInfo );
+               hb_xfree(pJobInfo);
             }
          }
       }
-      hb_xfree( pPrinterInfo );
+      hb_xfree(pPrinterInfo);
    }
 
    return bResult;
@@ -239,14 +239,14 @@ HB_FUNC( WIN_PRINTERSTATUS )
 {
    long nStatus = HB_WIN_PRINTER_STATUS_ERROR;
 
-   PHB_ITEM pPrinterName = hb_itemParam( 1 );
+   PHB_ITEM pPrinterName = hb_itemParam(1);
 
-   if( hb_itemGetCLen( pPrinterName ) == 0 )
+   if( hb_itemGetCLen(pPrinterName) == 0 )
    {
       hb_GetDefaultPrinter( pPrinterName );
    }
 
-   if( hb_itemGetCLen( pPrinterName ) > 0 )
+   if( hb_itemGetCLen(pPrinterName) > 0 )
    {
       void * hPrinterName;
       LPCTSTR lpPrinterName = HB_ITEMGETSTR( pPrinterName, &hPrinterName, nullptr );
@@ -259,14 +259,14 @@ HB_FUNC( WIN_PRINTERSTATUS )
          GetPrinter( hPrinter, 2, nullptr, 0, &dwNeeded );
          if( dwNeeded )
          {
-            PRINTER_INFO_2 * pPrinterInfo = static_cast< PRINTER_INFO_2 * >( hb_xgrabz( dwNeeded ) );
+            PRINTER_INFO_2 * pPrinterInfo = static_cast<PRINTER_INFO_2*>(hb_xgrabz(dwNeeded));
 
             if( GetPrinter( hPrinter, 2, ( LPBYTE ) pPrinterInfo, dwNeeded, &dwNeeded ) )
             {
                nStatus = static_cast< long >( pPrinterInfo->Status );
             }
 
-            hb_xfree( pPrinterInfo );
+            hb_xfree(pPrinterInfo);
          }
 
          if( nStatus == 0 )
@@ -278,36 +278,36 @@ HB_FUNC( WIN_PRINTERSTATUS )
             {
                for( DWORD i = 0; nStatus == 0 && i < dwJobs; ++i )
                {
-                  if( pJobs[ i ].Status & JOB_STATUS_ERROR )
+                  if( pJobs[i].Status & JOB_STATUS_ERROR )
                   {
                      nStatus = -20;
                   }
-                  else if( pJobs[ i ].Status & JOB_STATUS_OFFLINE )
+                  else if( pJobs[i].Status & JOB_STATUS_OFFLINE )
                   {
                      nStatus = -21;
                   }
-                  else if( pJobs[ i ].Status & JOB_STATUS_PAPEROUT )
+                  else if( pJobs[i].Status & JOB_STATUS_PAPEROUT )
                   {
                      nStatus = -22;
                   }
-                  else if( pJobs[ i ].Status & JOB_STATUS_BLOCKED_DEVQ )
+                  else if( pJobs[i].Status & JOB_STATUS_BLOCKED_DEVQ )
                   {
                      nStatus = -23;
                   }
                }
-               hb_xfree( pJobs );
+               hb_xfree(pJobs);
             }
          }
 
          ClosePrinter( hPrinter );
       }
 
-      hb_strfree( hPrinterName );
+      hb_strfree(hPrinterName);
    }
 
-   hb_itemRelease( pPrinterName );
+   hb_itemRelease(pPrinterName);
 
-   hb_retnl( nStatus );
+   hb_retnl(nStatus);
 }
 
 HB_FUNC( WIN_PRINTERPORTTONAME )
@@ -315,7 +315,7 @@ HB_FUNC( WIN_PRINTERPORTTONAME )
    /* Set default return value */
    hb_retc_null();
 
-   if( hb_parclen( 1 ) > 0 )
+   if( hb_parclen(1) > 0 )
    {
       DWORD dwNeeded = 0, dwReturned = 0;
 
@@ -323,26 +323,26 @@ HB_FUNC( WIN_PRINTERPORTTONAME )
       if( dwNeeded )
       {
          PRINTER_INFO_5 * pPrinterEnumBak;
-         PRINTER_INFO_5 * pPrinterEnum = pPrinterEnumBak = static_cast< PRINTER_INFO_5 * >( hb_xgrabz( dwNeeded ) );
+         PRINTER_INFO_5 * pPrinterEnum = pPrinterEnumBak = static_cast<PRINTER_INFO_5*>(hb_xgrabz(dwNeeded));
 
          if( EnumPrinters( _ENUMPRN_FLAGS_, nullptr, 5, reinterpret_cast< LPBYTE >( pPrinterEnum ), dwNeeded, &dwNeeded, &dwReturned ) )
          {
-            const char * pszPortNameFind = hb_parc( 1 );
-            HB_BOOL bSubStr = hb_parl( 2 );
+            const char * pszPortNameFind = hb_parc(1);
+            HB_BOOL bSubStr = hb_parl(2);
             HB_BOOL bFound = HB_FALSE;
-            PHB_ITEM pTemp = hb_itemNew( nullptr );
+            PHB_ITEM pTemp = hb_itemNew(nullptr);
 
-            for( DWORD i = 0; i < dwReturned && ! bFound; ++i, ++pPrinterEnum )
+            for( DWORD i = 0; i < dwReturned && !bFound; ++i, ++pPrinterEnum )
             {
                HB_ITEMPUTSTR( pTemp, pPrinterEnum->pPortName );
 
                if( bSubStr )
                {
-                  bFound = ( hb_strnicmp( hb_itemGetCPtr( pTemp ), pszPortNameFind, strlen( pszPortNameFind ) ) == 0 );
+                  bFound = ( hb_strnicmp( hb_itemGetCPtr(pTemp), pszPortNameFind, strlen( pszPortNameFind ) ) == 0 );
                }
                else
                {
-                  bFound = ( hb_stricmp( hb_itemGetCPtr( pTemp ), pszPortNameFind ) == 0 );
+                  bFound = ( hb_stricmp( hb_itemGetCPtr(pTemp), pszPortNameFind ) == 0 );
                }
 
                if( bFound )
@@ -351,34 +351,34 @@ HB_FUNC( WIN_PRINTERPORTTONAME )
                }
             }
 
-            hb_itemRelease( pTemp );
+            hb_itemRelease(pTemp);
          }
 
-         hb_xfree( pPrinterEnumBak );
+         hb_xfree(pPrinterEnumBak);
       }
    }
 }
 
-#define HB_PRINT_BUFFER_SIZE  ( 32 * 1024 )
+#define HB_PRINT_BUFFER_SIZE  (32 * 1024)
 
 HB_FUNC( WIN_PRINTFILERAW )
 {
    HB_ISIZ nResult = -1;
 
-   if( HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) )
+   if( HB_ISCHAR(1) && HB_ISCHAR(2) )
    {
-      const char * pszFileName = hb_parc( 2 );
+      const char * pszFileName = hb_parc(2);
 
       HANDLE hPrinter;
       void * hDeviceName;
-      LPCTSTR lpDeviceName = HB_PARSTR( 1, &hDeviceName, nullptr );
+      LPCTSTR lpDeviceName = HB_PARSTR(1, &hDeviceName, nullptr);
 
       if( OpenPrinter( const_cast< LPTSTR >( lpDeviceName ), &hPrinter, nullptr ) != 0 )
       {
          void * hDocName;
          DOC_INFO_1 DocInfo;
 
-         DocInfo.pDocName = const_cast< LPTSTR >( HB_PARSTR( HB_ISCHAR( 3 ) ? 3 : 2, &hDocName, nullptr ) );
+         DocInfo.pDocName = const_cast< LPTSTR >( HB_PARSTR( HB_ISCHAR(3) ? 3 : 2, &hDocName, nullptr ) );
          DocInfo.pOutputFile = nullptr;
          DocInfo.pDatatype = const_cast< LPTSTR >( TEXT( "RAW" ) );
 
@@ -389,7 +389,7 @@ HB_FUNC( WIN_PRINTFILERAW )
                PHB_FILE pFile = hb_fileExtOpen( pszFileName, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK, nullptr, nullptr );
                if( pFile != nullptr )
                {
-                  HB_BYTE * pbyBuffer = static_cast< HB_BYTE * >( hb_xgrab( HB_PRINT_BUFFER_SIZE ) );
+                  HB_BYTE * pbyBuffer = static_cast<HB_BYTE*>(hb_xgrab(HB_PRINT_BUFFER_SIZE));
                   HB_SIZE nRead;
 
                   nResult = 1;
@@ -400,7 +400,7 @@ HB_FUNC( WIN_PRINTFILERAW )
                      while( nWritten < nRead )
                      {
                         DWORD dwWritten = 0;
-                        if( ! WritePrinter( hPrinter, &pbyBuffer[ nWritten ], static_cast< DWORD >( nRead - nWritten ), &dwWritten ) )
+                        if( !WritePrinter( hPrinter, &pbyBuffer[nWritten], static_cast< DWORD >( nRead - nWritten ), &dwWritten ) )
                         {
                            nResult = -7;
                            break;
@@ -420,7 +420,7 @@ HB_FUNC( WIN_PRINTFILERAW )
                   hbwapi_SetLastError( GetLastError() );
 
                   hb_fileClose( pFile );
-                  hb_xfree( pbyBuffer );
+                  hb_xfree(pbyBuffer);
                }
                else
                {
@@ -442,14 +442,14 @@ HB_FUNC( WIN_PRINTFILERAW )
             nResult = -3;
          }
          ClosePrinter( hPrinter );
-         hb_strfree( hDocName );
+         hb_strfree(hDocName);
       }
       else
       {
          hbwapi_SetLastError( GetLastError() );
          nResult = -2;
       }
-      hb_strfree( hDeviceName );
+      hb_strfree(hDeviceName);
    }
 
    hb_retns( nResult );
@@ -459,18 +459,18 @@ HB_FUNC( WIN_PRINTDATARAW )
 {
    HB_ISIZ nResult = -1;
 
-   if( HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) )
+   if( HB_ISCHAR(1) && HB_ISCHAR(2) )
    {
       HANDLE hPrinter;
       void * hDeviceName;
-      LPCTSTR lpDeviceName = HB_PARSTR( 1, &hDeviceName, nullptr );
+      LPCTSTR lpDeviceName = HB_PARSTR(1, &hDeviceName, nullptr);
 
       if( OpenPrinter( const_cast< LPTSTR >( lpDeviceName ), &hPrinter, nullptr ) != 0 )
       {
          void * hDocName;
          DOC_INFO_1 DocInfo;
 
-         DocInfo.pDocName = const_cast< LPTSTR >( HB_PARSTR( 3, &hDocName, nullptr ) );
+         DocInfo.pDocName = const_cast< LPTSTR >( HB_PARSTR(3, &hDocName, nullptr) );
          DocInfo.pOutputFile = nullptr;
          DocInfo.pDatatype = const_cast< LPTSTR >( TEXT( "RAW" ) );
          if( DocInfo.pDocName == nullptr )
@@ -482,14 +482,14 @@ HB_FUNC( WIN_PRINTDATARAW )
          {
             if( StartPagePrinter( hPrinter ) != 0 )
             {
-               HB_BYTE * pbData = reinterpret_cast< HB_BYTE * >( const_cast< char * >( hb_parc( 2 ) ) );
-               HB_SIZE nLen = hb_parclen( 2 );
+               HB_BYTE * pbData = reinterpret_cast< HB_BYTE * >( const_cast< char * >( hb_parc(2) ) );
+               HB_SIZE nLen = hb_parclen(2);
 
                nResult = 0;
                while( static_cast< HB_SIZE >( nResult ) < nLen )
                {
                   DWORD dwWritten = 0;
-                  if( ! WritePrinter( hPrinter, &pbData[ nResult ], static_cast< DWORD >( nLen - nResult ), &dwWritten ) || dwWritten == 0 )
+                  if( !WritePrinter( hPrinter, &pbData[nResult], static_cast< DWORD >( nLen - nResult ), &dwWritten ) || dwWritten == 0 )
                   {
                      break;
                   }
@@ -511,14 +511,14 @@ HB_FUNC( WIN_PRINTDATARAW )
             nResult = -3;
          }
          ClosePrinter( hPrinter );
-         hb_strfree( hDocName );
+         hb_strfree(hDocName);
       }
       else
       {
          hbwapi_SetLastError( GetLastError() );
          nResult = -2;
       }
-      hb_strfree( hDeviceName );
+      hb_strfree(hDeviceName);
    }
 
    hb_retns( nResult );
@@ -526,25 +526,25 @@ HB_FUNC( WIN_PRINTDATARAW )
 
 HB_FUNC( WIN_PRINTERLIST )
 {
-   PHB_ITEM pPrinterArray = hb_itemArrayNew( 0 );
+   PHB_ITEM pPrinterArray = hb_itemArrayNew(0);
 
-   HB_BOOL bPrinterNamesOnly = ! hb_parl( 1 );
-   HB_BOOL bLocalPrintersOnly = hb_parl( 2 );
+   HB_BOOL bPrinterNamesOnly = !hb_parl(1);
+   HB_BOOL bLocalPrintersOnly = hb_parl(2);
    DWORD dwNeeded = 0, dwReturned = 0;
 
    EnumPrinters( _ENUMPRN_FLAGS_, nullptr, 5, nullptr, 0, &dwNeeded, &dwReturned );
    if( dwNeeded )
    {
       PRINTER_INFO_5 * pPrinterEnumBak;
-      PRINTER_INFO_5 * pPrinterEnum = pPrinterEnumBak = static_cast< PRINTER_INFO_5 * >( hb_xgrabz( dwNeeded ) );
+      PRINTER_INFO_5 * pPrinterEnum = pPrinterEnumBak = static_cast<PRINTER_INFO_5*>(hb_xgrabz(dwNeeded));
 
       if( EnumPrinters( _ENUMPRN_FLAGS_, nullptr, 5, reinterpret_cast< LPBYTE >( pPrinterEnum ), dwNeeded, &dwNeeded, &dwReturned ) )
       {
-         PHB_ITEM pTempItem = hb_itemNew( nullptr );
+         PHB_ITEM pTempItem = hb_itemNew(nullptr);
 
          for( DWORD i = 0; i < dwReturned; ++i, ++pPrinterEnum )
          {
-            if( ! bLocalPrintersOnly || pPrinterEnum->Attributes & PRINTER_ATTRIBUTE_LOCAL )
+            if( !bLocalPrintersOnly || pPrinterEnum->Attributes & PRINTER_ATTRIBUTE_LOCAL )
             {
                if( bPrinterNamesOnly )
                {
@@ -559,12 +559,12 @@ HB_FUNC( WIN_PRINTERLIST )
                      GetPrinter( hPrinter, 2, nullptr, 0, &dwNeeded );
                      if( dwNeeded )
                      {
-                        hb_arrayNew( pTempItem, HB_WINPRN_LEN_ );
+                        hb_arrayNew(pTempItem, HB_WINPRN_LEN_);
 
                         HB_ARRAYSETSTR( pTempItem, HB_WINPRN_NAME, pPrinterEnum->pPrinterName );
 
                         {
-                           PRINTER_INFO_2 * pPrinterInfo2 = static_cast< PRINTER_INFO_2 * >( hb_xgrabz( dwNeeded ) );
+                           PRINTER_INFO_2 * pPrinterInfo2 = static_cast<PRINTER_INFO_2*>(hb_xgrabz(dwNeeded));
 
                            if( GetPrinter( hPrinter, 2, reinterpret_cast< LPBYTE >( pPrinterInfo2 ), dwNeeded, &dwNeeded ) )
                            {
@@ -581,7 +581,7 @@ HB_FUNC( WIN_PRINTERLIST )
                               hb_arraySetC( pTempItem, HB_WINPRN_SERVER, nullptr );
                            }
 
-                           hb_xfree( pPrinterInfo2 );
+                           hb_xfree(pPrinterInfo2);
                         }
 
                         if( pPrinterEnum->Attributes & PRINTER_ATTRIBUTE_LOCAL )
@@ -605,10 +605,10 @@ HB_FUNC( WIN_PRINTERLIST )
             }
          }
 
-         hb_itemRelease( pTempItem );
+         hb_itemRelease(pTempItem);
       }
-      hb_xfree( pPrinterEnumBak );
+      hb_xfree(pPrinterEnumBak);
    }
 
-   hb_itemReturnRelease( pPrinterArray );
+   hb_itemReturnRelease(pPrinterArray);
 }

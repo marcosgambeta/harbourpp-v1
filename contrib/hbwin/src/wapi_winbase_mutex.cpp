@@ -48,11 +48,11 @@
 
 static HB_GARBAGE_FUNC( hbwapi_mutex_release )
 {
-   void ** ph = static_cast< void ** >( Cargo );
+   void ** ph = static_cast<void**>(Cargo);
 
    if( ph && *ph )
    {
-      CloseHandle( static_cast< HANDLE >( *ph ) );
+      CloseHandle( static_cast<HANDLE>(*ph) );
       *ph = nullptr;
    }
 }
@@ -67,52 +67,52 @@ static void hbwapi_mutex_ret( HANDLE hMutex )
 {
    if( hMutex )
    {
-      void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof( HANDLE * ), &s_gc_hbwapi_mutex_funcs ) );
+      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(HANDLE*), &s_gc_hbwapi_mutex_funcs));
 
       *ph = hMutex;
-      hb_retptrGC( ph );
+      hb_retptrGC(ph);
    }
    else
    {
-      hb_retptr( nullptr );
+      hb_retptr(nullptr);
    }
 }
 
 static HANDLE hbwapi_mutex_par( int iParam )
 {
-   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gc_hbwapi_mutex_funcs, iParam ) );
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gc_hbwapi_mutex_funcs, iParam));
 
-   return ph ? static_cast< HANDLE >( *ph ) : nullptr;
+   return ph ? static_cast<HANDLE>(*ph) : nullptr;
 }
 
 /* HANDLE WINAPI CreateMutex( LPSECURITY_ATTRIBUTES lpMutexAttributes, BOOL bInitialOwner, LPCTSTR lpName ) */
 HB_FUNC( WAPI_CREATEMUTEX )
 {
    void * hName;
-   HANDLE hMutex = CreateMutex( static_cast< LPSECURITY_ATTRIBUTES >( hb_parptr( 1 ) ), hb_parl( 2 ), HB_PARSTR( 3, &hName, nullptr ) );
+   HANDLE hMutex = CreateMutex( static_cast<LPSECURITY_ATTRIBUTES>(hb_parptr(1)), hb_parl(2), HB_PARSTR(3, &hName, nullptr) );
 
    hbwapi_SetLastError( GetLastError() );
    hbwapi_mutex_ret( hMutex );
 
-   hb_strfree( hName );
+   hb_strfree(hName);
 }
 
 /* HANDLE WINAPI OpenMutex( DWORD dwDesiredAccess, BOOL bInheritHandle, LPCTSTR lpName ) */
 HB_FUNC( WAPI_OPENMUTEX )
 {
    void * hName;
-   HANDLE hMutex = OpenMutex( hb_parnl( 1 ), hb_parl( 2 ), HB_PARSTR( 3, &hName, nullptr ) );
+   HANDLE hMutex = OpenMutex( hb_parnl(1), hb_parl(2), HB_PARSTR(3, &hName, nullptr) );
 
    hbwapi_SetLastError( GetLastError() );
    hbwapi_mutex_ret( hMutex );
 
-   hb_strfree( hName );
+   hb_strfree(hName);
 }
 
 /* BOOL WINAPI ReleaseMutex( HANDLE hMutex ) */
 HB_FUNC( WAPI_RELEASEMUTEX )
 {
-   HANDLE hMutex = hbwapi_mutex_par( 1 );
+   HANDLE hMutex = hbwapi_mutex_par(1);
 
    if( hMutex )
    {

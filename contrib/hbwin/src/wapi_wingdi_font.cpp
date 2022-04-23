@@ -54,8 +54,8 @@ HB_FUNC( WAPI_ADDFONTRESOURCE )
 {
    void * hFileName;
 
-   hb_retni( AddFontResource( HB_PARSTRDEF( 1, &hFileName, nullptr ) ) );
-   hb_strfree( hFileName );
+   hb_retni(AddFontResource(HB_PARSTRDEF(1, &hFileName, nullptr)));
+   hb_strfree(hFileName);
 }
 
 /*
@@ -66,8 +66,8 @@ HB_FUNC( WAPI_REMOVEFONTRESOURCE )
 {
    void * hFileName;
 
-   hb_retni( RemoveFontResource( HB_PARSTRDEF( 1, &hFileName, nullptr ) ) );
-   hb_strfree( hFileName );
+   hb_retni(RemoveFontResource(HB_PARSTRDEF(1, &hFileName, nullptr)));
+   hb_strfree(hFileName);
 }
 
 /*
@@ -78,8 +78,8 @@ HB_FUNC( WAPI_ADDFONTRESOURCEEX )
 {
    void * hFileName;
 
-   hb_retni( AddFontResourceEx( HB_PARSTRDEF( 1, &hFileName, nullptr ), static_cast< DWORD >( hb_parnl( 2 ) ), nullptr ) );
-   hb_strfree( hFileName );
+   hb_retni(AddFontResourceEx(HB_PARSTRDEF(1, &hFileName, nullptr), static_cast<DWORD>(hb_parnl(2)), nullptr));
+   hb_strfree(hFileName);
 }
 
 /*
@@ -90,6 +90,6 @@ HB_FUNC( WAPI_REMOVEFONTRESOURCEEX )
 {
    void * hFileName;
 
-   hb_retni( RemoveFontResourceEx( HB_PARSTRDEF( 1, &hFileName, nullptr ), static_cast< DWORD >( hb_parnl( 2 ) ), nullptr ) );
-   hb_strfree( hFileName );
+   hb_retni(RemoveFontResourceEx(HB_PARSTRDEF(1, &hFileName, nullptr), static_cast<DWORD>(hb_parnl(2)), nullptr));
+   hb_strfree(hFileName);
 }

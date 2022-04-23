@@ -81,7 +81,7 @@ static int _codabar_charno( char ch )
       const char * ptr = strchr( s_symbols, ch );
       if( ptr && *ptr )
       {
-         return static_cast< int >( ptr - s_symbols + 10 );
+         return static_cast<int>(ptr - s_symbols + 10);
       }
    }
    return -1;
@@ -98,7 +98,7 @@ static void _codabar_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fL
          hb_bitbuffer_cat_int( pBits, ( i & 1 ) ? 0 : 31, ( code & 1 ) ? 5 : 2 );
          code >>= 1;
       }
-      if( ! fLast )
+      if( !fLast )
       {
          hb_bitbuffer_cat_int( pBits, 0, 2 );
       }
@@ -110,7 +110,7 @@ static void _codabar_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fL
          hb_bitbuffer_cat_int( pBits, ( i & 1 ) ? 0 : 31, ( code & 1 ) ? 3 : 1 );
          code >>= 1;
       }
-      if( ! fLast )
+      if( !fLast )
       {
          hb_bitbuffer_cat_int( pBits, 0, 1 );
       }
@@ -122,7 +122,7 @@ static void _codabar_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fL
          hb_bitbuffer_cat_int( pBits, ( i & 1 ) ? 0 : 31, ( code & 1 ) ? 2 : 1 );
          code >>= 1;
       }
-      if( ! fLast )
+      if( !fLast )
       {
          hb_bitbuffer_cat_int( pBits, 0, 1 );
       }
@@ -132,14 +132,14 @@ static void _codabar_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fL
 PHB_ZEBRA hb_zebra_create_codabar( const char * szCode, HB_SIZE nLen, int iFlags )
 {
    PHB_ZEBRA     pZebra;
-   unsigned int  i, iLen = static_cast< unsigned int >( nLen );
+   unsigned int  i, iLen = static_cast<unsigned int>(nLen);
 
    pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_CODABAR;
 
    for( i = 0; i < iLen; i++ )
    {
-      int j = _codabar_charno( szCode[ i ] );
+      int j = _codabar_charno( szCode[i] );
 
       if( j < 0 || ( j >= 16 && i != 0 && i != iLen - 1 ) )
       {
@@ -148,27 +148,27 @@ PHB_ZEBRA hb_zebra_create_codabar( const char * szCode, HB_SIZE nLen, int iFlags
       }
    }
 
-   pZebra->szCode = static_cast< char * >( hb_xgrab( iLen + 1 ) );
+   pZebra->szCode = static_cast<char*>(hb_xgrab(iLen + 1));
    hb_xmemcpy( pZebra->szCode, szCode, iLen );
-   pZebra->szCode[ iLen ] = '\0';
+   pZebra->szCode[iLen] = '\0';
    szCode = pZebra->szCode;
 
    pZebra->pBits = hb_bitbuffer_create();
 
-   if( iLen == 0 || _codabar_charno( static_cast< int >( szCode[ 0 ] ) ) < 16 )
+   if( iLen == 0 || _codabar_charno( static_cast<int>(szCode[0]) ) < 16 )
    {
-      _codabar_add( pZebra->pBits, s_code[ _codabar_charno( 'A' ) ], iFlags, HB_FALSE );  /* Default start A */
+      _codabar_add( pZebra->pBits, s_code[_codabar_charno( 'A' )], iFlags, false );  /* Default start A */
    }
 
    for( i = 0; i < iLen; i++ )
    {
-      int no = _codabar_charno( szCode[ i ] );
-      _codabar_add( pZebra->pBits, s_code[ no ], iFlags, i > 0 && no >= 16 );
+      int no = _codabar_charno( szCode[i] );
+      _codabar_add( pZebra->pBits, s_code[no], iFlags, i > 0 && no >= 16 );
    }
 
-   if( iLen == 0 || _codabar_charno( szCode[ i - 1 ] ) < 16 )
+   if( iLen == 0 || _codabar_charno( szCode[i - 1] ) < 16 )
    {
-      _codabar_add( pZebra->pBits, s_code[ _codabar_charno( 'B' ) ], iFlags, HB_TRUE );  /* Default stop B */
+      _codabar_add( pZebra->pBits, s_code[_codabar_charno( 'B' )], iFlags, true );  /* Default stop B */
    }
 
    return pZebra;
@@ -176,11 +176,11 @@ PHB_ZEBRA hb_zebra_create_codabar( const char * szCode, HB_SIZE nLen, int iFlags
 
 HB_FUNC( HB_ZEBRA_CREATE_CODABAR )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
    if( pItem )
    {
-      hb_zebra_ret( hb_zebra_create_codabar( hb_itemGetCPtr( pItem ), hb_itemGetCLen( pItem ), hb_parni( 2 ) ) );
+      hb_zebra_ret( hb_zebra_create_codabar( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2) ) );
    }
    else
    {

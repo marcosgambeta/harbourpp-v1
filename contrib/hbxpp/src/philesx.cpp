@@ -50,14 +50,14 @@
 
 HB_FUNC( CURDRIVE )
 {
-#if defined( HB_OS_HAS_DRIVE_LETTER )
-   char szCurDrive[ 1 ];
+#if defined(HB_OS_HAS_DRIVE_LETTER)
+   char szCurDrive[1];
    const char * szDrive;
 
-   szCurDrive[ 0 ] = ( static_cast< char >( hb_fsCurDrv() ) ) + 'A';
-   hb_retclen( szCurDrive, 1 );
+   szCurDrive[0] = (static_cast<char>(hb_fsCurDrv())) + 'A';
+   hb_retclen(szCurDrive, 1);
 
-   szDrive = hb_parc( 1 );
+   szDrive = hb_parc(1);
    if( szDrive )
    {
       int iDrive = -1;

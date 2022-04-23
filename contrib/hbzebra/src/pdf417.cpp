@@ -82,7 +82,7 @@
 #define MAX_ROW_COUNT       90
 #define MAX_CODEWORD_COUNT  928
 
-static const short s_code[ 3 ][ 929 ] = {
+static const short s_code[3][929] = {
    {
       0x03AB, 0x0F57, 0x3EAF, 0x072B, 0x1E57, 0x7CAF, 0x0315, 0x0E2B,
       0x0615, 0x020A, 0x0C15, 0x040A, 0x03B5, 0x0F6B, 0x3ED7, 0x0735,
@@ -750,11 +750,11 @@ static int _pdf417_encode_byte( const char * szCode, int iLen, int * pCW, int iP
 
    if( iLen % 6 == 0 )
    {
-      pCW[ iPos++ ] = LATCH_BYTE_FULL;
+      pCW[iPos++] = LATCH_BYTE_FULL;
    }
    else
    {
-      pCW[ iPos++ ] = LATCH_BYTE;
+      pCW[iPos++] = LATCH_BYTE;
    }
 
    i = 0;
@@ -762,31 +762,31 @@ static int _pdf417_encode_byte( const char * szCode, int iLen, int * pCW, int iP
    {
       if( iLen - i >= 6 )
       {
-         ill =  static_cast< unsigned char >( szCode[ i++ ] );
+         ill =  static_cast< unsigned char >( szCode[i++] );
          ill <<= 8;
-         ill += static_cast< unsigned char >( szCode[ i++ ] );
+         ill += static_cast< unsigned char >( szCode[i++] );
          ill <<= 8;
-         ill += static_cast< unsigned char >( szCode[ i++ ] );
+         ill += static_cast< unsigned char >( szCode[i++] );
          ill <<= 8;
-         ill += static_cast< unsigned char >( szCode[ i++ ] );
+         ill += static_cast< unsigned char >( szCode[i++] );
          ill <<= 8;
-         ill += static_cast< unsigned char >( szCode[ i++ ] );
+         ill += static_cast< unsigned char >( szCode[i++] );
          ill <<= 8;
-         ill += static_cast< unsigned char >( szCode[ i++ ] );
+         ill += static_cast< unsigned char >( szCode[i++] );
 
          if( iPos + 5 > MAX_CODEWORD_COUNT )
          {
             return -1;
          }
 
-         pCW[ iPos + 4 ] = ill % 900;
+         pCW[iPos + 4] = ill % 900;
          ill /= 900;
-         pCW[ iPos + 3 ] = ill % 900;
+         pCW[iPos + 3] = ill % 900;
          ill /= 900;
-         pCW[ iPos + 2 ] = ill % 900;
+         pCW[iPos + 2] = ill % 900;
          ill /= 900;
-         pCW[ iPos + 1 ] = ill % 900;
-         pCW[ iPos     ] = static_cast< int >( ill / 900 );
+         pCW[iPos + 1] = ill % 900;
+         pCW[iPos] = static_cast< int >( ill / 900 );
          iPos += 5;
       }
       else
@@ -798,7 +798,7 @@ static int _pdf417_encode_byte( const char * szCode, int iLen, int * pCW, int iP
 
          for( ; i < iLen; i++ )
          {
-            pCW[ iPos++ ] = szCode[ i ];
+            pCW[iPos++] = szCode[i];
          }
       }
    }
@@ -819,7 +819,7 @@ static int _pdf417_encode_text_add( int * pCW, int iPos, int * i1, int * i2, int
       {
          return -1;
       }
-      pCW[ iPos++ ] = *i1 * 30 + *i2;
+      pCW[iPos++] = *i1 * 30 + *i2;
       *i1 = -1;
       *i2 = -1;
    }
@@ -839,14 +839,14 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
    for( int i = 0; i < iLen; i++ )
    {
 #if 0
-      HB_TRACE( HB_TR_DEBUG, ( "submode=%d char=%c", iSubMode, szCode[ i ] ) );
+      HB_TRACE( HB_TR_DEBUG, ( "submode=%d char=%c", iSubMode, szCode[i] ) );
 #endif
       if( iSubMode == SUBMODE_UPPER )
       {
-         if( ( no = _pdf417_upperno( szCode[ i ] ) ) != -1 )
+         if( ( no = _pdf417_upperno( szCode[i] ) ) != -1 )
          {
          }
-         else if( ( no = _pdf417_lowerno( szCode[ i ] ) ) != -1 )
+         else if( ( no = _pdf417_lowerno( szCode[i] ) ) != -1 )
          {
             iPos = _pdf417_encode_text_add( pCW, iPos, &i1, &i2, 27 /* UPPER->LOWER */ );
             if( iPos == -1 )
@@ -856,7 +856,7 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
 
             iSubMode = SUBMODE_LOWER;
          }
-         else if( ( no = _pdf417_mixedno( szCode[ i ] ) ) != -1 )
+         else if( ( no = _pdf417_mixedno( szCode[i] ) ) != -1 )
          {
             iPos = _pdf417_encode_text_add( pCW, iPos, &i1, &i2, 28 /* UPPER->MIXED */ );
             if( iPos == -1 )
@@ -866,11 +866,11 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
 
             iSubMode = SUBMODE_MIXED;
          }
-         else /* if( ( no = _pdf417_punctno( szCode[ i ] ) ) != -1 ) */
+         else /* if( ( no = _pdf417_punctno( szCode[i] ) ) != -1 ) */
          {
-            no = _pdf417_punctno( szCode[ i ] );
+            no = _pdf417_punctno( szCode[i] );
 
-            for( j = i + 1; j < iLen && _pdf417_punctno( szCode[ j ] ) != -1 && _pdf417_mixedno( szCode[ j ] ) == -1; j++ )
+            for( j = i + 1; j < iLen && _pdf417_punctno( szCode[j] ) != -1 && _pdf417_mixedno( szCode[j] ) == -1; j++ )
             {
                ;
             }
@@ -903,12 +903,12 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
       }
       else if( iSubMode == SUBMODE_LOWER )
       {
-         if( ( no = _pdf417_lowerno( szCode[ i ] ) ) != -1 )
+         if( ( no = _pdf417_lowerno( szCode[i] ) ) != -1 )
          {
          }
-         else if( ( no = _pdf417_upperno( szCode[ i ] ) ) != -1 )
+         else if( ( no = _pdf417_upperno( szCode[i] ) ) != -1 )
          {
-            for( j = i + 1; j < iLen && _pdf417_upperno( szCode[ j ] ) != -1 && szCode[ j ] != ' '; j++ )
+            for( j = i + 1; j < iLen && _pdf417_upperno( szCode[j] ) != -1 && szCode[j] != ' '; j++ )
             {
                ;
             }
@@ -938,7 +938,7 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
                }
             }
          }
-         else if( ( no = _pdf417_mixedno( szCode[ i ] ) ) != -1 )
+         else if( ( no = _pdf417_mixedno( szCode[i] ) ) != -1 )
          {
             iPos = _pdf417_encode_text_add( pCW, iPos, &i1, &i2, 28 /* LOWER->MIXED */ );
             if( iPos == -1 )
@@ -948,11 +948,11 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
 
             iSubMode = SUBMODE_MIXED;
          }
-         else /* if( ( no = _pdf417_punctno( szCode[ i ] ) ) != -1 ) */
+         else /* if( ( no = _pdf417_punctno( szCode[i] ) ) != -1 ) */
          {
-            no = _pdf417_punctno( szCode[ i ] );
+            no = _pdf417_punctno( szCode[i] );
 
-            for( j = i + 1; j < iLen && _pdf417_punctno( szCode[ j ] ) != -1 && _pdf417_mixedno( szCode[ j ] ) == -1; j++ )
+            for( j = i + 1; j < iLen && _pdf417_punctno( szCode[j] ) != -1 && _pdf417_mixedno( szCode[j] ) == -1; j++ )
             {
                ;
             }
@@ -985,10 +985,10 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
       }
       else if( iSubMode == SUBMODE_MIXED )
       {
-         if( ( no = _pdf417_mixedno( szCode[ i ] ) ) != -1 )
+         if( ( no = _pdf417_mixedno( szCode[i] ) ) != -1 )
          {
          }
-         else if( ( no = _pdf417_upperno( szCode[ i ] ) ) != -1 )
+         else if( ( no = _pdf417_upperno( szCode[i] ) ) != -1 )
          {
             iPos = _pdf417_encode_text_add( pCW, iPos, &i1, &i2, 28 /* MIXED->UPPER */ );
             if( iPos == -1 )
@@ -998,7 +998,7 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
 
             iSubMode = SUBMODE_UPPER;
          }
-         else if( ( no = _pdf417_lowerno( szCode[ i ] ) ) != -1 )
+         else if( ( no = _pdf417_lowerno( szCode[i] ) ) != -1 )
          {
             iPos = _pdf417_encode_text_add( pCW, iPos, &i1, &i2, 27 /* MIXED->LOWER */ );
             if( iPos == -1 )
@@ -1008,11 +1008,11 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
 
             iSubMode = SUBMODE_LOWER;
          }
-         else /* if( ( no = _pdf417_punctno( szCode[ i ] ) ) != -1 ) */
+         else /* if( ( no = _pdf417_punctno( szCode[i] ) ) != -1 ) */
          {
-            no = _pdf417_punctno( szCode[ i ] );
+            no = _pdf417_punctno( szCode[i] );
 
-            for( j = i + 1; j < iLen && _pdf417_punctno( szCode[ j ] ) != -1 && _pdf417_mixedno( szCode[ j ] ) == -1; j++ )
+            for( j = i + 1; j < iLen && _pdf417_punctno( szCode[j] ) != -1 && _pdf417_mixedno( szCode[j] ) == -1; j++ )
             {
                ;
             }
@@ -1039,10 +1039,10 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
       }
       else /* if( iSubMode == SUBMODE_PUNCT ) */
       {
-         if( ( no = _pdf417_punctno( szCode[ i ] ) ) != -1 )
+         if( ( no = _pdf417_punctno( szCode[i] ) ) != -1 )
          {
          }
-         else if( ( no = _pdf417_upperno( szCode[ i ] ) ) != -1 )
+         else if( ( no = _pdf417_upperno( szCode[i] ) ) != -1 )
          {
             iPos = _pdf417_encode_text_add( pCW, iPos, &i1, &i2, 29 /* PUNCT->UPPER */ );
             if( iPos == -1 )
@@ -1052,7 +1052,7 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
 
             iSubMode = SUBMODE_UPPER;
          }
-         else if( ( no = _pdf417_lowerno( szCode[ i ] ) ) != -1 )
+         else if( ( no = _pdf417_lowerno( szCode[i] ) ) != -1 )
          {
             iPos = _pdf417_encode_text_add( pCW, iPos, &i1, &i2, 29 /* PUNCT->UPPER */ );
             if( iPos == -1 )
@@ -1068,9 +1068,9 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
 
             iSubMode = SUBMODE_LOWER;
          }
-         else /* if( ( no = _pdf417_mixedno( szCode[ i ] ) ) != -1 ) */
+         else /* if( ( no = _pdf417_mixedno( szCode[i] ) ) != -1 ) */
          {
-            no = _pdf417_mixedno( szCode[ i ] );
+            no = _pdf417_mixedno( szCode[i] );
             iPos = _pdf417_encode_text_add( pCW, iPos, &i1, &i2, 29 /* PUNCT->UPPER */ );
             if( iPos == -1 )
             {
@@ -1138,17 +1138,17 @@ static int _pdf417_encode_numeric( const char * szCode, int iLen, int * pCW, int
          return -1;
       }
 
-      pCW[ iPos++ ] = LATCH_NUMERIC;
+      pCW[iPos++] = LATCH_NUMERIC;
       ill = 1;
       for( j = 0; j < k; j++ )
       {
          ill *= 10;
-         ill += szCode[ i++ ] - '0';
+         ill += szCode[i++] - '0';
       }
       k = k / 3 + 1;
       for( j = k - 1; j >= 0; j-- )
       {
-         pCW[ iPos + j ] = ill % 900;
+         pCW[iPos + j] = ill % 900;
          ill /= 900;
       }
       iPos += k;
@@ -1172,14 +1172,14 @@ static int _pdf417_encode( const char * szCode, int iLen, int * pCW )
    {
       if( iMode == LATCH_TEXT )
       {
-         if( _pdf417_isdigit( szCode[ i ] ) )
+         if( _pdf417_isdigit( szCode[i] ) )
          {
             /*
                Digit in text mode uses 0.5 CW, in numeric mode 0.3409 CW.
                To save 2 CW + average remaining space in text mode we must
                have 2.5 / (0.5-0.3409) = 15.71 digits
              */
-            for( j = i + 1; j < iLen && _pdf417_isdigit( szCode[ j ] ); j++ )
+            for( j = i + 1; j < iLen && _pdf417_isdigit( szCode[j] ); j++ )
             {
                ;
             }
@@ -1195,7 +1195,7 @@ static int _pdf417_encode( const char * szCode, int iLen, int * pCW )
                iStart = i;
             }
          }
-         else if( ! _pdf417_isalpha( szCode[ i ] ) )
+         else if( !_pdf417_isalpha( szCode[i] ) )
          {
             iPos = _pdf417_encode_text( szCode + iStart, i - iStart, pCW, iPos );
             if( iPos == -1 || iPos >= MAX_CODEWORD_COUNT - 2 )
@@ -1204,7 +1204,7 @@ static int _pdf417_encode( const char * szCode, int iLen, int * pCW )
             }
 
             /* Switch if we have 3 or more non-alphanumeric values */
-            for( j = i + 1; j < iLen && ! _pdf417_isalpha( szCode[ j ] ); j++ )
+            for( j = i + 1; j < iLen && !_pdf417_isalpha( szCode[j] ); j++ )
             {
                ;
             }
@@ -1215,16 +1215,16 @@ static int _pdf417_encode( const char * szCode, int iLen, int * pCW )
             }
             else
             {
-               pCW[ iPos++ ] = SHIFT_BYTE;
-               pCW[ iPos++ ] = szCode[ i ];
+               pCW[iPos++] = SHIFT_BYTE;
+               pCW[iPos++] = szCode[i];
             }
          }
       }
       else if( iMode == LATCH_BYTE )
       {
-         if( _pdf417_isdigit( szCode[ i ] ) )
+         if( _pdf417_isdigit( szCode[i] ) )
          {
-            for( j = i + 1; j < iLen && _pdf417_isdigit( szCode[ i ] ); j++ )
+            for( j = i + 1; j < iLen && _pdf417_isdigit( szCode[i] ); j++ )
             {
                ;
             }
@@ -1239,9 +1239,9 @@ static int _pdf417_encode( const char * szCode, int iLen, int * pCW )
                iStart = i;
             }
          }
-         if( iMode == LATCH_BYTE && _pdf417_isalpha( szCode[ i ] ) )
+         if( iMode == LATCH_BYTE && _pdf417_isalpha( szCode[i] ) )
          {
-            for( j = i + 1; j < iLen && _pdf417_isdigit( szCode[ i ] ); j++ )
+            for( j = i + 1; j < iLen && _pdf417_isdigit( szCode[i] ); j++ )
             {
                ;
             }
@@ -1259,10 +1259,10 @@ static int _pdf417_encode( const char * szCode, int iLen, int * pCW )
       }
       else /* if( iMode == LATCH_NUMERIC ) */
       {
-         if( _pdf417_isdigit( szCode[ i ] ) )
+         if( _pdf417_isdigit( szCode[i] ) )
          {
          }
-         else if( ! _pdf417_isalpha( szCode[ i ] ) )
+         else if( !_pdf417_isalpha( szCode[i] ) )
          {
             iPos = _pdf417_encode_numeric( szCode + iStart, i - iStart, pCW, iPos );
             if( iPos == -1 || iPos >= MAX_CODEWORD_COUNT - 2 )
@@ -1270,7 +1270,7 @@ static int _pdf417_encode( const char * szCode, int iLen, int * pCW )
                return -1;
             }
 
-            for( j = i + 1; j < iLen && ! _pdf417_isalpha( szCode[ j ] ); j++ )
+            for( j = i + 1; j < iLen && !_pdf417_isalpha( szCode[j] ); j++ )
             {
                ;
             }
@@ -1281,14 +1281,14 @@ static int _pdf417_encode( const char * szCode, int iLen, int * pCW )
             }
             else
             {
-               for( j = i + 2; j < iLen && _pdf417_isdigit( szCode[ j ] ); j++ )
+               for( j = i + 2; j < iLen && _pdf417_isdigit( szCode[j] ); j++ )
                {
                   ;
                }
                if( j - i >= 16 )
                {
-                  pCW[ iPos++ ] = SHIFT_BYTE;
-                  pCW[ iPos++ ] = szCode[ i ];
+                  pCW[iPos++] = SHIFT_BYTE;
+                  pCW[iPos++] = szCode[i];
                }
                else
                {
@@ -1297,7 +1297,7 @@ static int _pdf417_encode( const char * szCode, int iLen, int * pCW )
                }
             }
          }
-         else /* if( _pdf417_isalpha( szCode[ i ] ) ) */
+         else /* if( _pdf417_isalpha( szCode[i] ) ) */
          {
             iPos = _pdf417_encode_numeric( szCode + iStart, i - iStart, pCW, iPos );
             if( iPos == -1 || iPos >= MAX_CODEWORD_COUNT - 2 )
@@ -1367,36 +1367,36 @@ static void _pdf417_reed_solomon( int * pCW, int iLen, int iLevel )
 
    for( i = 0; i < iECLen; i++ )
    {
-      pEC[ i ] = 0;
+      pEC[i] = 0;
    }
 
    for( i = 0; i < iLen; i++ )
    {
-      int iM = ( pCW[ i ] + pEC[ iECLen - 1 ] ) % 929;
+      int iM = ( pCW[i] + pEC[iECLen - 1] ) % 929;
       for( j = iECLen - 1; j >= 0; j-- )
       {
          if( j )
          {
-            pEC[ j ] = ( pEC[ j - 1 ] + 929 - ( iM * coef[ j ] ) % 929 ) % 929;
+            pEC[j] = ( pEC[j - 1] + 929 - ( iM * coef[j] ) % 929 ) % 929;
          }
          else
          {
-            pEC[ j ] = ( 929 - ( iM * coef[ j ] ) % 929 ) % 929;
+            pEC[j] = (929 - (iM * coef[j]) % 929) % 929;
          }
       }
    }
    for( i = 0; i < iECLen; i++ )
    {
-      if( pEC[ i ] )
+      if( pEC[i] )
       {
-         pEC[ i ] = 929 - pEC[ i ];
+         pEC[i] = 929 - pEC[i];
       }
    }
    for( i = 0; i < iECLen / 2; i++ )
    {
-      j = pEC[ i ];
-      pEC[ i ] = pEC[ iECLen - 1 - i ];
-      pEC[ iECLen - 1 - i ] = j;
+      j = pEC[i];
+      pEC[i] = pEC[iECLen - 1 - i];
+      pEC[iECLen - 1 - i] = j;
    }
 }
 
@@ -1409,11 +1409,11 @@ PHB_ZEBRA hb_zebra_create_pdf417( const char * szCode, HB_SIZE nLen, int iFlags,
    pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_PDF417;
 
-   pCW = static_cast< int * >( hb_xgrab( sizeof( int ) * MAX_CODEWORD_COUNT ) );
+   pCW = static_cast<int*>(hb_xgrab(sizeof(int) * MAX_CODEWORD_COUNT));
    iDataCount = _pdf417_encode( szCode, iLen, pCW );
    if( iDataCount == -1 )
    {
-      hb_xfree( pCW );
+      hb_xfree(pCW);
       pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
       return pZebra;
    }
@@ -1442,7 +1442,7 @@ PHB_ZEBRA hb_zebra_create_pdf417( const char * szCode, HB_SIZE nLen, int iFlags,
 
    if( iDataCount + _pdf417_ec_size( iLevel ) > MAX_CODEWORD_COUNT )
    {
-      hb_xfree( pCW );
+      hb_xfree(pCW);
       pZebra->iError = HB_ZEBRA_ERROR_TOOLARGE;
       return pZebra;
    }
@@ -1485,17 +1485,17 @@ PHB_ZEBRA hb_zebra_create_pdf417( const char * szCode, HB_SIZE nLen, int iFlags,
    iCount = iRowCount * iColCount;
    if( iRowCount > MAX_ROW_COUNT || iCount > MAX_CODEWORD_COUNT )
    {
-      hb_xfree( pCW );
+      hb_xfree(pCW);
       pZebra->iError = HB_ZEBRA_ERROR_ARGUMENT;
       return pZebra;
    }
 
-   pCW[ 0 ] = iCount - _pdf417_ec_size( iLevel );
+   pCW[0] = iCount - _pdf417_ec_size( iLevel );
 
    /* Padding */
    for( ; iDataCount < iCount - _pdf417_ec_size( iLevel ); iDataCount++ )
    {
-      pCW[ iDataCount ] = LATCH_TEXT;
+      pCW[iDataCount] = LATCH_TEXT;
    }
 
    /* Reed-Solomon error correction */
@@ -1511,7 +1511,7 @@ PHB_ZEBRA hb_zebra_create_pdf417( const char * szCode, HB_SIZE nLen, int iFlags,
    for( i = 0; i < iCount; i++ )
    {
 #if 0
-      HB_TRACE( HB_TR_DEBUG, ( "%d", pCW[ i ] ) );
+      HB_TRACE( HB_TR_DEBUG, ( "%d", pCW[i] ) );
 #endif
    }
 
@@ -1519,13 +1519,13 @@ PHB_ZEBRA hb_zebra_create_pdf417( const char * szCode, HB_SIZE nLen, int iFlags,
    {
       hb_bitbuffer_cat_int( pZebra->pBits, CODE_START, 17 );
       hb_bitbuffer_cat_int( pZebra->pBits, 1, 1 );
-      hb_bitbuffer_cat_int( pZebra->pBits, s_code[ i % 3 ][ _pdf417_left_codeword( i, iRowCount, iColCount, iLevel ) ], 15 );
+      hb_bitbuffer_cat_int( pZebra->pBits, s_code[i % 3][_pdf417_left_codeword( i, iRowCount, iColCount, iLevel )], 15 );
       hb_bitbuffer_cat_int( pZebra->pBits, 0, 1 );
 
       for( j = 0; j < iColCount; j++ )
       {
          hb_bitbuffer_cat_int( pZebra->pBits, 1, 1 );
-         hb_bitbuffer_cat_int( pZebra->pBits, s_code[ i % 3 ][ pCW[ i * iColCount + j ] ], 15 );
+         hb_bitbuffer_cat_int( pZebra->pBits, s_code[i % 3][pCW[i * iColCount + j]], 15 );
          hb_bitbuffer_cat_int( pZebra->pBits, 0, 1 );
       }
 
@@ -1536,22 +1536,22 @@ PHB_ZEBRA hb_zebra_create_pdf417( const char * szCode, HB_SIZE nLen, int iFlags,
       else
       {
          hb_bitbuffer_cat_int( pZebra->pBits, 1, 1 );
-         hb_bitbuffer_cat_int( pZebra->pBits, s_code[ i % 3 ][ _pdf417_right_codeword( i, iRowCount, iColCount, iLevel ) ], 15 );
+         hb_bitbuffer_cat_int( pZebra->pBits, s_code[i % 3][_pdf417_right_codeword( i, iRowCount, iColCount, iLevel )], 15 );
          hb_bitbuffer_cat_int( pZebra->pBits, 0, 1 );
          hb_bitbuffer_cat_int( pZebra->pBits, CODE_STOP, 18 );
       }
    }
-   hb_xfree( pCW );
+   hb_xfree(pCW);
    return pZebra;
 }
 
 HB_FUNC( HB_ZEBRA_CREATE_PDF417 )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
    if( pItem )
    {
-      hb_zebra_ret( hb_zebra_create_pdf417( hb_itemGetCPtr( pItem ), hb_itemGetCLen( pItem ), hb_parni( 2 ), hb_parni( 3 ) ) );
+      hb_zebra_ret( hb_zebra_create_pdf417( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2), hb_parni(3) ) );
    }
    else
    {

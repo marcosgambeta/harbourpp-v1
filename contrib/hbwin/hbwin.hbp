@@ -30,7 +30,6 @@ src\axcore.cpp
 src\mapi.cpp
 src\oemansi.cpp
 src\olecore.cpp
-src\oleuuid.cpp{watcom}
 src\hbolesrv.cpp
 src\wapi_alloc.cpp
 src\wapi_commctrl.cpp

@@ -60,7 +60,7 @@
 #define HB_ERR_MEMSTRU_WRONG_MEMSTRU_BLOCK  4002
 #define HB_ERR_MEMSTRU_DESTROYED            4003
 
-#define XDLT_STD_BLKSIZE                    ( 1024 * 8 )
+#define XDLT_STD_BLKSIZE                    (1024 * 8)
 #define XDLT_MAX_LINE_SIZE                  80
 
 static PHB_ITEM hb_mmf_itemPut( PHB_ITEM pItem, void * pMemAddr, int iType );
@@ -90,11 +90,11 @@ static HB_GARBAGE_FUNC( hb_mmf_destructor )
       if( pStructHolder->hb_mmf->mmf )
       {
          xdl_free_mmfile( pStructHolder->hb_mmf->mmf );
-         hb_xfree( pStructHolder->hb_mmf->mmf );
+         hb_xfree(pStructHolder->hb_mmf->mmf);
 
          pStructHolder->hb_mmf->mmf = nullptr;
       }
-      hb_xfree( pStructHolder->hb_mmf );
+      hb_xfree(pStructHolder->hb_mmf);
       pStructHolder->hb_mmf = nullptr;
    }
 }
@@ -111,14 +111,13 @@ static PHB_ITEM hb_mmf_itemPut( PHB_ITEM pItem, void * pMemAddr, int iType )
 
    if( pItem )
    {
-      if( HB_IS_COMPLEX( pItem ) )
+      if( HB_IS_COMPLEX(pItem) )
          hb_itemClear( pItem );
    }
    else
-      pItem = hb_itemNew( pItem );
+      pItem = hb_itemNew(pItem);
 
-   pStructHolder = ( PHB_MMF_HOLDER ) hb_gcAllocate( sizeof( HB_MMF_HOLDER ),
-                                                     &s_gc_xdiffFuncs );
+   pStructHolder = ( PHB_MMF_HOLDER ) hb_gcAllocate( sizeof(HB_MMF_HOLDER), &s_gc_xdiffFuncs );
    pStructHolder->hb_mmf = ( HB_MMF * ) pMemAddr;
    pStructHolder->type   = iType;
 
@@ -127,23 +126,22 @@ static PHB_ITEM hb_mmf_itemPut( PHB_ITEM pItem, void * pMemAddr, int iType )
 
 static void * hb_mmf_itemGet( PHB_ITEM pItem, int iType, HB_BOOL fError )
 {
-   PHB_MMF_HOLDER pStructHolder = ( PHB_MMF_HOLDER ) hb_itemGetPtrGC( pItem,
-                                                                      &s_gc_xdiffFuncs );
+   PHB_MMF_HOLDER pStructHolder = ( PHB_MMF_HOLDER ) hb_itemGetPtrGC( pItem, &s_gc_xdiffFuncs );
    int iError = 0;
 
-   HB_SYMBOL_UNUSED( iError );
+   HB_SYMBOL_UNUSED(iError);
 
-   if( ! pStructHolder )
+   if( !pStructHolder )
       iError = HB_ERR_MEMSTRU_NOT_MEM_BLOCK;
    else if( pStructHolder->type != iType )
       iError = HB_ERR_MEMSTRU_WRONG_MEMSTRU_BLOCK;
-   else if( ! pStructHolder->hb_mmf )
+   else if( !pStructHolder->hb_mmf )
       iError = HB_ERR_MEMSTRU_DESTROYED;
    else
       return pStructHolder->hb_mmf;
 
    if( fError )
-      hb_errRT_BASE_SubstR( EG_ARG, iError, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, iError, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 
    return nullptr;
 }
@@ -155,33 +153,32 @@ static void hb_mmf_ret( void * pMemAddr, int iType )
 
 static void * hb_mmf_param( int iParam, int iType, HB_BOOL fError )
 {
-   return hb_mmf_itemGet( hb_param( iParam, HB_IT_POINTER ), iType, fError );
+   return hb_mmf_itemGet( hb_param(iParam, Harbour::Item::POINTER), iType, fError );
 }
 
 /* int xdl_init_mmfile(mmfile_t *mmf, long bsize, unsigned long flags) */
 
 HB_FUNC( XDL_INIT_MMFILE )
 {
-   mmfile_t * mmf = static_cast< mmfile_t * >( hb_xgrab( sizeof( mmfile_t ) ) );
+   mmfile_t * mmf = static_cast<mmfile_t*>(hb_xgrab(sizeof(mmfile_t)));
 
-   if( xdl_init_mmfile( mmf,
-                        hb_parnldef( 1, XDLT_STD_BLKSIZE ), static_cast< unsigned long >( hb_parnl( 3 ) ) ) == 0 )
+   if( xdl_init_mmfile( mmf, hb_parnldef(1, XDLT_STD_BLKSIZE), static_cast< unsigned long >( hb_parnl(3) ) ) == 0 )
    {
       HB_MMF * phb_mmf;
 
-      phb_mmf = static_cast< HB_MMF * >( hb_xgrab( sizeof( HB_MMF ) ) );
-      hb_xmemset( phb_mmf, 0, sizeof( HB_MMF ) );
+      phb_mmf = static_cast<HB_MMF*>(hb_xgrab(sizeof(HB_MMF)));
+      hb_xmemset( phb_mmf, 0, sizeof(HB_MMF) );
       phb_mmf->mmf = mmf;
       hb_mmf_ret( phb_mmf, HB_MMF_SIGN );
    }
    else
-      hb_xfree( mmf );
+      hb_xfree(mmf);
 }
 
 #if 0
 HB_FUNC( XDL_FREE_MMFILE )
 {
-   HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param( 1, HB_MMF_SIGN, HB_TRUE );
+   HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
 
    if( phb_mmf && phb_mmf->mmf )
    {
@@ -189,7 +186,7 @@ HB_FUNC( XDL_FREE_MMFILE )
       phb_mmf->mmf = nullptr;
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 #endif
 
@@ -197,47 +194,47 @@ HB_FUNC( XDL_FREE_MMFILE )
 
 HB_FUNC( XDL_MMFILE_ISCOMPACT )
 {
-   HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param( 1, HB_MMF_SIGN, HB_TRUE );
+   HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
 
    if( phb_mmf && phb_mmf->mmf )
-      hb_retl( xdl_mmfile_iscompact( phb_mmf->mmf ) );
+      hb_retl(xdl_mmfile_iscompact(phb_mmf->mmf));
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 /* int xdl_seek_mmfile(mmfile_t *mmf, long off) */
 
 HB_FUNC( XDL_SEEK_MMFILE )
 {
-   HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param( 1, HB_MMF_SIGN, HB_TRUE );
+   HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
 
    if( phb_mmf && phb_mmf->mmf )
-      hb_retni( xdl_seek_mmfile( phb_mmf->mmf, hb_parnldef( 2, 0 ) ) );
+      hb_retni(xdl_seek_mmfile(phb_mmf->mmf, hb_parnldef(2, 0)));
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 /* long xdl_read_mmfile(mmfile_t *mmf, void *data, long size) */
 
 HB_FUNC( XDL_READ_MMFILE )
 {
-   HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param( 1, HB_MMF_SIGN, HB_TRUE );
+   HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
 
    if( phb_mmf && phb_mmf->mmf )
    {
-      PHB_ITEM pData = HB_ISBYREF( 2 ) ? hb_param( 2, HB_IT_STRING ) : nullptr;
+      PHB_ITEM pData = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
       char *   data;
       HB_SIZE  size;
 
       if( pData )
       {
-         if( ! hb_itemGetWriteCL( pData, &data, &size ) )
+         if( !hb_itemGetWriteCL( pData, &data, &size ) )
             data = nullptr;
       }
       else
       {
-         size = ( HB_ISNUM( 3 ) && hb_parns( 3 ) >= 0 ) ?
-                hb_parns( 3 ) : xdl_mmfile_size( phb_mmf->mmf );
+         size = ( HB_ISNUM(3) && hb_parns(3) >= 0 ) ?
+                hb_parns(3) : xdl_mmfile_size( phb_mmf->mmf );
 
          data = static_cast< char * >( hb_xalloc( size + 1 ) );
       }
@@ -249,14 +246,14 @@ HB_FUNC( XDL_READ_MMFILE )
          if( lResult == -1 )
          {
             hb_retc_null();
-            hb_stornl( -1, 4 );
+            hb_stornl(-1, 4);
          }
          else
          {
-            hb_stornl( lResult, 4 );
+            hb_stornl(lResult, 4);
 
             if( pData )
-               hb_retclen( data, lResult );
+               hb_retclen(data, lResult);
             else
                hb_retclen_buffer( data, lResult );
          }
@@ -264,35 +261,35 @@ HB_FUNC( XDL_READ_MMFILE )
       else
       {
          hb_retc_null();
-         hb_stornl( -1, 4 );
+         hb_stornl(-1, 4);
       }
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 /* long xdl_write_mmfile(mmfile_t *mmf, void const *data, long size) */
 
 HB_FUNC( XDL_WRITE_MMFILE )
 {
-   HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param( 1, HB_MMF_SIGN, HB_TRUE );
+   HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
 
    if( phb_mmf && phb_mmf->mmf )
    {
-      if( HB_ISCHAR( 2 ) )
+      if( HB_ISCHAR(2) )
       {
-         long lSize = static_cast< long >( hb_parclen( 2 ) );
+         long lSize = static_cast< long >( hb_parclen(2) );
 
          if( hb_pcount() > 2 )
-            lSize = hb_parnldef( 3, lSize );
+            lSize = hb_parnldef(3, lSize);
 
-         hb_retnl( xdl_write_mmfile( phb_mmf->mmf, hb_parcx( 2 ), lSize ) );
+         hb_retnl(xdl_write_mmfile(phb_mmf->mmf, hb_parcx(2), lSize));
       }
       else
-         hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 /*
@@ -307,25 +304,25 @@ HB_FUNC( XDL_WRITE_MMFILE )
 
 HB_FUNC( XDL_MMFILE_SIZE )
 {
-   HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param( 1, HB_MMF_SIGN, HB_TRUE );
+   HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
 
    if( phb_mmf && phb_mmf->mmf )
-      hb_retnl( xdl_mmfile_size( phb_mmf->mmf ) );
+      hb_retnl(xdl_mmfile_size(phb_mmf->mmf));
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 /* int xdl_mmfile_cmp(mmfile_t *mmf1, mmfile_t *mmf2) */
 
 HB_FUNC( XDL_MMFILE_CMP )
 {
-   HB_MMF * phb_mmf1 = ( HB_MMF * ) hb_mmf_param( 1, HB_MMF_SIGN, HB_TRUE );
-   HB_MMF * phb_mmf2 = ( HB_MMF * ) hb_mmf_param( 2, HB_MMF_SIGN, HB_TRUE );
+   HB_MMF * phb_mmf1 = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
+   HB_MMF * phb_mmf2 = ( HB_MMF * ) hb_mmf_param(2, HB_MMF_SIGN, true);
 
    if( phb_mmf1 && phb_mmf1->mmf && phb_mmf2 && phb_mmf2->mmf )
-      hb_retl( xdl_mmfile_cmp( phb_mmf1->mmf, phb_mmf2->mmf ) == 0 );
+      hb_retl(xdl_mmfile_cmp(phb_mmf1->mmf, phb_mmf2->mmf) == 0);
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 /*
@@ -334,32 +331,31 @@ HB_FUNC( XDL_MMFILE_CMP )
 
 HB_FUNC( XDL_MMFILE_COMPACT )
 {
-   HB_MMF *   phb_mmfo = ( HB_MMF * ) hb_mmf_param( 1, HB_MMF_SIGN, HB_TRUE );
-   mmfile_t * mmfc     = static_cast< mmfile_t * >( hb_xgrab( sizeof( mmfile_t ) ) );
+   HB_MMF *   phb_mmfo = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
+   mmfile_t * mmfc     = static_cast<mmfile_t*>(hb_xgrab(sizeof(mmfile_t)));
 
-   if( xdl_mmfile_compact( phb_mmfo->mmf, mmfc, hb_parnldef( 1, XDLT_STD_BLKSIZE ),
-                           static_cast< unsigned long >( hb_parnl( 3 ) ) ) == 0 )
+   if( xdl_mmfile_compact( phb_mmfo->mmf, mmfc, hb_parnldef(1, XDLT_STD_BLKSIZE), static_cast< unsigned long >( hb_parnl(3) ) ) == 0 )
    {
       HB_MMF * phb_mmf;
 
-      phb_mmf = static_cast< HB_MMF * >( hb_xgrab( sizeof( HB_MMF ) ) );
-      hb_xmemset( phb_mmf, 0, sizeof( HB_MMF ) );
+      phb_mmf = static_cast<HB_MMF*>(hb_xgrab(sizeof(HB_MMF)));
+      hb_xmemset( phb_mmf, 0, sizeof(HB_MMF) );
       phb_mmf->mmf = mmfc;
       hb_mmf_ret( phb_mmf, HB_MMF_SIGN );
 
-      hb_stornl( 0, 4 );
+      hb_stornl(0, 4);
    }
    else
    {
-      hb_xfree( mmfc );
-      hb_stornl( -1, 4 );
+      hb_xfree(mmfc);
+      hb_stornl(-1, 4);
    }
 }
 
 /* callbacks */
 
-#define hb_ptrToHandle( p )   ( ( HB_FHANDLE ) ( HB_PTRUINT ) ( p ) )
-#define hb_parHandlePtr( n )  ( ( void * ) ( HB_PTRUINT ) hb_numToHandle( hb_parnint( n ) ) )
+#define hb_ptrToHandle(p)   static_cast<HB_FHANDLE>(reinterpret_cast<HB_PTRUINT>(p))
+#define hb_parHandlePtr(n)  reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hb_numToHandle(hb_parnint(n))))
 
 static int xdlt_outf( void * priv, mmbuffer_t * mb, int nbuf )
 {
@@ -367,7 +363,7 @@ static int xdlt_outf( void * priv, mmbuffer_t * mb, int nbuf )
 
    for( i = 0; i < nbuf; i++ )
    {
-      hb_fsWriteLarge( hb_ptrToHandle( priv ), mb[ i ].ptr, static_cast< HB_SIZE >( mb[ i ].size ) );
+      hb_fsWriteLarge( hb_ptrToHandle( priv ), mb[i].ptr, static_cast< HB_SIZE >( mb[i].size ) );
 
       if( hb_fsError() != 0 )
          return -1;
@@ -385,10 +381,10 @@ static int xdlt_outb( void * priv, mmbuffer_t * mb, int nbuf )
       int i;
 
       hb_vmPushEvalSym();
-      hb_vmPush( pCallback );
+      hb_vmPush(pCallback);
 
       for( i = 0; i < nbuf; i++ )
-         hb_vmPushString( static_cast< const char * >( mb[ i ].ptr ), mb[ i ].size );
+         hb_vmPushString(static_cast<const char*>(mb[i].ptr), mb[i].size);
 
       hb_vmSend( static_cast< HB_USHORT >( nbuf ) );
       iResult = hb_parnidef( -1, 0 );
@@ -405,8 +401,8 @@ static int xdlt_outb( void * priv, mmbuffer_t * mb, int nbuf )
 
 HB_FUNC( XDL_DIFF )
 {
-   HB_MMF * phb_mmf1 = ( HB_MMF * ) hb_mmf_param( 1, HB_MMF_SIGN, HB_TRUE );
-   HB_MMF * phb_mmf2 = ( HB_MMF * ) hb_mmf_param( 2, HB_MMF_SIGN, HB_TRUE );
+   HB_MMF * phb_mmf1 = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
+   HB_MMF * phb_mmf2 = ( HB_MMF * ) hb_mmf_param(2, HB_MMF_SIGN, true);
 
    if( phb_mmf1 && phb_mmf1->mmf && phb_mmf2 && phb_mmf2->mmf )
    {
@@ -414,60 +410,60 @@ HB_FUNC( XDL_DIFF )
       xdemitconf_t xecfg;
       xdemitcb_t   ecb;
 
-      xpp.flags    = static_cast< unsigned long >( hb_parnldef( 3, 0 ) );
-      xecfg.ctxlen = hb_parnldef( 4, 3 );
+      xpp.flags    = static_cast< unsigned long >( hb_parnldef(3, 0) );
+      xecfg.ctxlen = hb_parnldef(4, 3);
 
-      if( HB_ISNUM( 5 ) )
+      if( HB_ISNUM(5) )
       {
-         ecb.priv = hb_parHandlePtr( 5 );
+         ecb.priv = hb_parHandlePtr(5);
          ecb.outf = xdlt_outf;
 
-         hb_retni( xdl_diff( phb_mmf1->mmf, phb_mmf2->mmf, &xpp, &xecfg, &ecb ) );
+         hb_retni(xdl_diff(phb_mmf1->mmf, phb_mmf2->mmf, &xpp, &xecfg, &ecb));
       }
-      else if( HB_ISBLOCK( 5 ) || HB_ISSYMBOL( 5 ) )
+      else if( HB_ISBLOCK(5) || HB_ISSYMBOL(5) )
       {
-         PHB_ITEM pCallback = hb_param( 5, HB_IT_BLOCK | HB_IT_SYMBOL );
+         PHB_ITEM pCallback = hb_param(5, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
          ecb.priv = static_cast< void * >( pCallback );
          ecb.outf = xdlt_outb;
 
-         hb_retni( xdl_diff( phb_mmf1->mmf, phb_mmf2->mmf, &xpp, &xecfg, &ecb ) );
+         hb_retni(xdl_diff(phb_mmf1->mmf, phb_mmf2->mmf, &xpp, &xecfg, &ecb));
       }
       else
-         hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 /* int xdl_patch(mmfile_t *mmf, mmfile_t *mmfp, int mode, xdemitcb_t *ecb, xdemitcb_t *rjecb) */
 
 HB_FUNC( XDL_PATCH )
 {
-   HB_MMF * phb_mmf1 = ( HB_MMF * ) hb_mmf_param( 1, HB_MMF_SIGN, HB_TRUE );
-   HB_MMF * phb_mmf2 = ( HB_MMF * ) hb_mmf_param( 2, HB_MMF_SIGN, HB_TRUE );
+   HB_MMF * phb_mmf1 = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
+   HB_MMF * phb_mmf2 = ( HB_MMF * ) hb_mmf_param(2, HB_MMF_SIGN, true);
 
    if( phb_mmf1 && phb_mmf1->mmf && phb_mmf2 && phb_mmf2->mmf )
    {
-      if( HB_ISNUM( 4 ) && HB_ISNUM( 5 ) )
+      if( HB_ISNUM(4) && HB_ISNUM(5) )
       {
-         int        mode = hb_parnidef( 3, XDL_PATCH_NORMAL );
+         int        mode = hb_parnidef(3, XDL_PATCH_NORMAL);
          xdemitcb_t ecb;
          xdemitcb_t rjecb;
 
-         ecb.priv = hb_parHandlePtr( 4 );
+         ecb.priv = hb_parHandlePtr(4);
          ecb.outf = xdlt_outf;
 
-         rjecb.priv = hb_parHandlePtr( 5 );
+         rjecb.priv = hb_parHandlePtr(5);
          rjecb.outf = xdlt_outf;
 
-         hb_retni( xdl_patch( phb_mmf1->mmf, phb_mmf2->mmf, mode, &ecb, &rjecb ) );
+         hb_retni(xdl_patch(phb_mmf1->mmf, phb_mmf2->mmf, mode, &ecb, &rjecb));
       }
       else
-         hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 /*
@@ -479,37 +475,37 @@ HB_FUNC( XDL_PATCH )
 
 HB_FUNC( XDL_BDIFF )
 {
-   HB_MMF * phb_mmf1 = ( HB_MMF * ) hb_mmf_param( 1, HB_MMF_SIGN, HB_TRUE );
-   HB_MMF * phb_mmf2 = ( HB_MMF * ) hb_mmf_param( 2, HB_MMF_SIGN, HB_TRUE );
+   HB_MMF * phb_mmf1 = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
+   HB_MMF * phb_mmf2 = ( HB_MMF * ) hb_mmf_param(2, HB_MMF_SIGN, true);
 
    if( phb_mmf1 && phb_mmf1->mmf && phb_mmf2 && phb_mmf2->mmf )
    {
       bdiffparam_t bdp;
       xdemitcb_t   ecb;
 
-      bdp.bsize = hb_parnldef( 3, 32 ); /* from 16 to 64 */
+      bdp.bsize = hb_parnldef(3, 32); /* from 16 to 64 */
 
-      if( HB_ISNUM( 4 ) )
+      if( HB_ISNUM(4) )
       {
-         ecb.priv = hb_parHandlePtr( 4 );
+         ecb.priv = hb_parHandlePtr(4);
          ecb.outf = xdlt_outf;
 
-         hb_retni( xdl_bdiff( phb_mmf1->mmf, phb_mmf2->mmf, &bdp, &ecb ) );
+         hb_retni(xdl_bdiff(phb_mmf1->mmf, phb_mmf2->mmf, &bdp, &ecb));
       }
-      else if( HB_ISBLOCK( 4 ) || HB_ISSYMBOL( 4 ) )
+      else if( HB_ISBLOCK(4) || HB_ISSYMBOL(4) )
       {
-         PHB_ITEM pCallback = hb_param( 4, HB_IT_BLOCK | HB_IT_SYMBOL );
+         PHB_ITEM pCallback = hb_param(4, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
          ecb.priv = static_cast< void * >( pCallback );
          ecb.outf = xdlt_outb;
 
-         hb_retni( xdl_bdiff( phb_mmf1->mmf, phb_mmf2->mmf, &bdp, &ecb ) );
+         hb_retni(xdl_bdiff(phb_mmf1->mmf, phb_mmf2->mmf, &bdp, &ecb));
       }
       else
-         hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 /*
@@ -520,99 +516,99 @@ HB_FUNC( XDL_BDIFF )
 
 HB_FUNC( XDL_RABDIFF )
 {
-   HB_MMF * phb_mmf1 = ( HB_MMF * ) hb_mmf_param( 1, HB_MMF_SIGN, HB_TRUE );
-   HB_MMF * phb_mmf2 = ( HB_MMF * ) hb_mmf_param( 2, HB_MMF_SIGN, HB_TRUE );
+   HB_MMF * phb_mmf1 = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
+   HB_MMF * phb_mmf2 = ( HB_MMF * ) hb_mmf_param(2, HB_MMF_SIGN, true);
 
    if( phb_mmf1 && phb_mmf1->mmf && phb_mmf2 && phb_mmf2->mmf )
    {
       xdemitcb_t ecb;
 
-      if( HB_ISNUM( 3 ) )
+      if( HB_ISNUM(3) )
       {
-         ecb.priv = hb_parHandlePtr( 3 );
+         ecb.priv = hb_parHandlePtr(3);
          ecb.outf = xdlt_outf;
 
-         hb_retni( xdl_rabdiff( phb_mmf1->mmf, phb_mmf2->mmf, &ecb ) );
+         hb_retni(xdl_rabdiff(phb_mmf1->mmf, phb_mmf2->mmf, &ecb));
       }
-      else if( HB_ISBLOCK( 3 ) || HB_ISSYMBOL( 3 ) )
+      else if( HB_ISBLOCK(3) || HB_ISSYMBOL(3) )
       {
-         PHB_ITEM pCallback = hb_param( 3, HB_IT_BLOCK | HB_IT_SYMBOL );
+         PHB_ITEM pCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
          ecb.priv = static_cast< void * >( pCallback );
          ecb.outf = xdlt_outb;
 
-         hb_retni( xdl_rabdiff( phb_mmf1->mmf, phb_mmf2->mmf, &ecb ) );
+         hb_retni(xdl_rabdiff(phb_mmf1->mmf, phb_mmf2->mmf, &ecb));
       }
       else
-         hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 /* int xdl_bpatch(mmfile_t *mmf, mmfile_t *mmfp, xdemitcb_t *ecb) */
 
 HB_FUNC( XDL_BPATCH )
 {
-   HB_MMF * phb_mmf1 = ( HB_MMF * ) hb_mmf_param( 1, HB_MMF_SIGN, HB_TRUE );
-   HB_MMF * phb_mmf2 = ( HB_MMF * ) hb_mmf_param( 2, HB_MMF_SIGN, HB_TRUE );
+   HB_MMF * phb_mmf1 = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
+   HB_MMF * phb_mmf2 = ( HB_MMF * ) hb_mmf_param(2, HB_MMF_SIGN, true);
 
    if( phb_mmf1 && phb_mmf1->mmf && phb_mmf2 && phb_mmf2->mmf )
    {
       xdemitcb_t ecb;
 
-      if( HB_ISNUM( 3 ) )
+      if( HB_ISNUM(3) )
       {
-         ecb.priv = hb_parHandlePtr( 3 );
+         ecb.priv = hb_parHandlePtr(3);
          ecb.outf = xdlt_outf;
 
-         hb_retni( xdl_bpatch( phb_mmf1->mmf, phb_mmf2->mmf, &ecb ) );
+         hb_retni(xdl_bpatch(phb_mmf1->mmf, phb_mmf2->mmf, &ecb));
       }
-      else if( HB_ISBLOCK( 3 ) || HB_ISSYMBOL( 3 ) )
+      else if( HB_ISBLOCK(3) || HB_ISSYMBOL(3) )
       {
-         PHB_ITEM pCallback = hb_param( 3, HB_IT_BLOCK | HB_IT_SYMBOL );
+         PHB_ITEM pCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
          ecb.priv = static_cast< void * >( pCallback );
          ecb.outf = xdlt_outb;
 
-         hb_retni( xdl_bpatch( phb_mmf1->mmf, phb_mmf2->mmf, &ecb ) );
+         hb_retni(xdl_bpatch(phb_mmf1->mmf, phb_mmf2->mmf, &ecb));
       }
       else
-         hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 /* long xdl_bdiff_tgsize(mmfile_t *mmfp) */
 
 HB_FUNC( XDL_BDIFF_TGSIZE )
 {
-   HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param( 1, HB_MMF_SIGN, HB_TRUE );
+   HB_MMF * phb_mmf = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
 
    if( phb_mmf && phb_mmf->mmf )
-      hb_retnl( xdl_bdiff_tgsize( phb_mmf->mmf ) );
+      hb_retnl(xdl_bdiff_tgsize(phb_mmf->mmf));
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 static void * wf_malloc( void * priv, unsigned int size )
 {
-   HB_SYMBOL_UNUSED( priv );
+   HB_SYMBOL_UNUSED(priv);
 
-   return hb_xgrab( size );
+   return hb_xgrab(size);
 }
 
 static void wf_free( void * priv, void * ptr )
 {
-   HB_SYMBOL_UNUSED( priv );
+   HB_SYMBOL_UNUSED(priv);
 
-   hb_xfree( ptr );
+   hb_xfree(ptr);
 }
 
 static void * wf_realloc( void * priv, void * ptr, unsigned int size )
 {
-   HB_SYMBOL_UNUSED( priv );
+   HB_SYMBOL_UNUSED(priv);
 
    return hb_xrealloc( ptr, size );
 }
@@ -632,9 +628,9 @@ HB_CALL_ON_STARTUP_BEGIN( _xdiff_init_ )
 xdiff_init();
 HB_CALL_ON_STARTUP_END( _xdiff_init_ )
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
    #pragma startup _xdiff_init_
-#elif defined( HB_DATASEG_STARTUP )
+#elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY  HB_DATASEG_FUNC( _xdiff_init_ )
    #include "hbiniseg.h"
 #endif

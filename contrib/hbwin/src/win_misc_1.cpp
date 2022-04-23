@@ -64,9 +64,7 @@ HB_FUNC( WIN_LOADRESOURCE )
       void * hName;
       void * hType;
 
-      HRSRC hRes = FindResource( static_cast< HMODULE >( hInstance ),
-                                 HB_PARSTRDEF( 1, &hName, nullptr ),
-                                 HB_PARSTRDEF( 2, &hType, nullptr ) );
+      HRSRC hRes = FindResource(static_cast<HMODULE>(hInstance), HB_PARSTRDEF(1, &hName, nullptr), HB_PARSTRDEF(2, &hType, nullptr));
 
       if( hRes )
       {
@@ -78,13 +76,13 @@ HB_FUNC( WIN_LOADRESOURCE )
 
             if( pMem )
             {
-               hb_retclen( static_cast< char * >( pMem ), SizeofResource( nullptr, hRes ) );
+               hb_retclen(static_cast<char*>(pMem), SizeofResource(nullptr, hRes));
             }
          }
       }
 
-      hb_strfree( hName );
-      hb_strfree( hType );
+      hb_strfree(hName);
+      hb_strfree(hType);
    }
 }
 
@@ -96,15 +94,15 @@ HB_FUNC( WIN_GETCOMMANDLINEPARAM )
 
    /* Skip application path */
    pos = 0;
-   while( lpCmdLine[ pos ] && ( fQuote || ! HB_ISSPACE( lpCmdLine[ pos ] ) ) )
+   while( lpCmdLine[pos] && ( fQuote || !HB_ISSPACE( lpCmdLine[pos] ) ) )
    {
-      if( lpCmdLine[ pos ] == '"' )
+      if( lpCmdLine[pos] == '"' )
       {
-         fQuote = ! fQuote;
+         fQuote = !fQuote;
       }
       pos++;
    }
-   while( HB_ISSPACE( lpCmdLine[ pos ] ) )
+   while( HB_ISSPACE( lpCmdLine[pos] ) )
    {
       pos++;
    }
@@ -114,22 +112,22 @@ HB_FUNC( WIN_GETCOMMANDLINEPARAM )
 
 HB_FUNC( WIN_ANSITOWIDE )
 {
-   HB_SIZE nLen = hb_parclen( 1 );
-   LPCSTR lpSrcMB = hb_parcx( 1 );
+   HB_SIZE nLen = hb_parclen(1);
+   LPCSTR lpSrcMB = hb_parcx(1);
    DWORD dwLength = MultiByteToWideChar( CP_ACP, 0, lpSrcMB, static_cast< int >( nLen ), nullptr, 0 );
-   LPWSTR lpDstWide = static_cast< LPWSTR >( hb_xgrab( ( dwLength + 1 ) * sizeof( wchar_t ) ) );
+   LPWSTR lpDstWide = static_cast<LPWSTR>(hb_xgrab((dwLength + 1) * sizeof(wchar_t)));
 
    MultiByteToWideChar( CP_ACP, 0, lpSrcMB, static_cast< int >( nLen ), lpDstWide, dwLength + 1 );
 
-   hb_retclen_buffer( reinterpret_cast< char * >( lpDstWide ), static_cast< HB_SIZE >( dwLength * sizeof( wchar_t ) ) );
+   hb_retclen_buffer( reinterpret_cast< char * >( lpDstWide ), static_cast< HB_SIZE >( dwLength * sizeof(wchar_t) ) );
 }
 
 HB_FUNC( WIN_WIDETOANSI )
 {
-   HB_SIZE nLen = hb_parclen( 1 );
-   LPCWSTR lpSrcWide = reinterpret_cast< LPCWSTR >( hb_parcx( 1 ) );
+   HB_SIZE nLen = hb_parclen(1);
+   LPCWSTR lpSrcWide = reinterpret_cast< LPCWSTR >( hb_parcx(1) );
    DWORD dwLength = WideCharToMultiByte( CP_ACP, 0, lpSrcWide, static_cast< int >( nLen ), nullptr, 0, nullptr, nullptr );
-   LPSTR lpDstMB = static_cast< LPSTR >( hb_xgrab( dwLength + 1 ) );
+   LPSTR lpDstMB = static_cast<LPSTR>(hb_xgrab(dwLength + 1));
 
    WideCharToMultiByte( CP_ACP, 0, lpSrcWide, static_cast< int >( nLen ), lpDstMB, dwLength + 1, nullptr, nullptr );
 
@@ -138,7 +136,7 @@ HB_FUNC( WIN_WIDETOANSI )
 
 HB_FUNC( WIN_UNICODE )
 {
-#if defined( UNICODE )
+#if defined(UNICODE)
    hb_retl(true);
 #else
    hb_retl(false);
@@ -147,12 +145,12 @@ HB_FUNC( WIN_UNICODE )
 
 HB_FUNC( WIN_N2P )
 {
-   hb_retptr( reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hb_parnint( 1 ) ) ) );
+   hb_retptr(reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hb_parnint(1))));
 }
 
 HB_FUNC( WIN_P2N )
 {
-   hb_retnint( reinterpret_cast< HB_PTRUINT >( hb_parptr( 1 ) ) );
+   hb_retnint(reinterpret_cast<HB_PTRUINT>(hb_parptr(1)));
 }
 
 HB_FUNC( WIN_HINSTANCE )
@@ -161,7 +159,7 @@ HB_FUNC( WIN_HINSTANCE )
 
    hb_winmainArgGet( &hInstance, nullptr, nullptr );
 
-   hb_retptr( hInstance );
+   hb_retptr(hInstance);
 }
 
 HB_FUNC( WIN_HPREVINSTANCE )
@@ -170,7 +168,7 @@ HB_FUNC( WIN_HPREVINSTANCE )
 
    hb_winmainArgGet( nullptr, &hPrevInstance, nullptr );
 
-   hb_retptr( hPrevInstance );
+   hb_retptr(hPrevInstance);
 }
 
 HB_FUNC( WIN_NCMDSHOW )
@@ -179,29 +177,29 @@ HB_FUNC( WIN_NCMDSHOW )
 
    hb_winmainArgGet( nullptr, nullptr, &nCmdShow );
 
-   hb_retni( nCmdShow );
+   hb_retni(nCmdShow);
 }
 
 HB_FUNC( WIN_LOWORD )
 {
-   hb_retni( static_cast< int >( LOWORD( static_cast< DWORD >( hb_parnl( 1 ) ) ) ) );
+   hb_retni(static_cast<int>(LOWORD(static_cast<DWORD>(hb_parnl(1)))));
 }
 
 HB_FUNC( WIN_HIWORD )
 {
-   hb_retni( static_cast< int >( HIWORD( static_cast< DWORD >( hb_parnl( 1 ) ) ) ) );
+   hb_retni(static_cast<int>(HIWORD(static_cast<DWORD>(hb_parnl(1)))));
 }
 
 HB_FUNC( WIN_SYSREFRESH )
 {
-   DWORD dwMsec = static_cast< DWORD >( hb_parnl( 1 ) );
+   DWORD dwMsec = static_cast< DWORD >( hb_parnl(1) );
 
    HANDLE hDummyEvent = CreateEvent( nullptr, FALSE, FALSE, nullptr );
 
    /* Begin the operation and continue until it is complete
       or until the user clicks the mouse or presses a key. */
 
-   if( MsgWaitForMultipleObjects( 1, &hDummyEvent, FALSE, ( dwMsec == 0 ? INFINITE : dwMsec ), QS_ALLINPUT | QS_ALLPOSTMESSAGE ) == WAIT_OBJECT_0 + 1 )
+   if( MsgWaitForMultipleObjects(1, &hDummyEvent, FALSE, (dwMsec == 0 ? INFINITE : dwMsec), QS_ALLINPUT | QS_ALLPOSTMESSAGE ) == WAIT_OBJECT_0 + 1 )
    {
       MSG msg;
 
@@ -211,11 +209,11 @@ HB_FUNC( WIN_SYSREFRESH )
          {
             case WM_CLOSE:
                CloseHandle( hDummyEvent );
-               hb_retni( 1 );
+               hb_retni(1);
                return;
             case WM_QUIT:
                CloseHandle( hDummyEvent );
-               hb_retnint( msg.wParam );
+               hb_retnint(msg.wParam);
                return;
 #if 0
             case WM_LBUTTONDOWN:
@@ -235,7 +233,7 @@ HB_FUNC( WIN_SYSREFRESH )
    }
 
    CloseHandle( hDummyEvent );
-   hb_retni( 0 );
+   hb_retni(0);
 }
 
 HB_FUNC( WIN_QPCOUNTER2SEC )
@@ -245,12 +243,12 @@ HB_FUNC( WIN_QPCOUNTER2SEC )
    if( s_dFrequence == 0 )
    {
       LARGE_INTEGER frequency;
-      if( ! QueryPerformanceFrequency( &frequency ) )
+      if( !QueryPerformanceFrequency( &frequency ) )
       {
-         hb_retnd( 0 );
+         hb_retnd(0);
          return;
       }
       s_dFrequence = static_cast< HB_MAXDBL >( HBWAPI_GET_LARGEUINT( frequency ) );
    }
-   hb_retnd( static_cast< double >( static_cast< HB_MAXDBL >( hb_parnint( 1 ) ) / static_cast< HB_MAXDBL >( s_dFrequence ) ) );
+   hb_retnd(static_cast<double>(static_cast<HB_MAXDBL>(hb_parnint(1)) / static_cast<HB_MAXDBL>(s_dFrequence)));
 }

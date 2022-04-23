@@ -51,9 +51,9 @@ static char _msi_checksum( const char * szCode )
    int j = 1, sum = 0;
 
    /* Luhn algorithm */
-   for( int i = static_cast< int >( strlen( szCode ) ) - 1; i >= 0; i-- )
+   for( int i = static_cast<int>(strlen(szCode)) - 1; i >= 0; i-- )
    {
-      int k = ( szCode[ i ] - '0' ) * ( j ? 2 : 1 );
+      int k = ( szCode[i] - '0' ) * ( j ? 2 : 1 );
       if( k > 9 )
       {
          k -= 9;
@@ -62,29 +62,29 @@ static char _msi_checksum( const char * szCode )
       j = 1 - j;
    }
    sum %= 10;
-   return static_cast< char >( '0' + ( sum ? 10 - sum : 0 ) );
+   return static_cast<char>('0' + (sum ? 10 - sum : 0));
 }
 
 PHB_ZEBRA hb_zebra_create_msi( const char * szCode, HB_SIZE nLen, int iFlags )
 {
    PHB_ZEBRA  pZebra;
-   int        i, j, iN, iW, iLen = static_cast< int >( nLen );
+   int        i, j, iN, iW, iLen = static_cast<int>(nLen);
 
    pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_MSI;
 
    for( i = 0; i < iLen; i++ )
    {
-      if( szCode[ i ] < '0' || szCode[ i ] > '9' )
+      if( szCode[i] < '0' || szCode[i] > '9' )
       {
          pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
          return pZebra;
       }
    }
 
-   pZebra->szCode = static_cast< char * >( hb_xgrab( iLen + 1 ) );
+   pZebra->szCode = static_cast<char*>(hb_xgrab(iLen + 1));
    hb_xmemcpy( pZebra->szCode, szCode, iLen );
-   pZebra->szCode[ iLen ] = '\0';
+   pZebra->szCode[iLen] = '\0';
    szCode = pZebra->szCode;
 
    pZebra->pBits = hb_bitbuffer_create();
@@ -110,7 +110,7 @@ PHB_ZEBRA hb_zebra_create_msi( const char * szCode, HB_SIZE nLen, int iFlags )
    hb_bitbuffer_cat_int( pZebra->pBits,  0, iN );
    for( i = 0; i < iLen; i++ )
    {
-      char code = szCode[ i ] - '0';
+      char code = szCode[i] - '0';
       for( j = 0; j < 4; j++ )
       {
          if( code & 8 )
@@ -154,11 +154,11 @@ PHB_ZEBRA hb_zebra_create_msi( const char * szCode, HB_SIZE nLen, int iFlags )
 
 HB_FUNC( HB_ZEBRA_CREATE_MSI )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
    if( pItem )
    {
-      hb_zebra_ret( hb_zebra_create_msi( hb_itemGetCPtr( pItem ), hb_itemGetCLen( pItem ), hb_parni( 2 ) ) );
+      hb_zebra_ret( hb_zebra_create_msi( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2) ) );
    }
    else
    {

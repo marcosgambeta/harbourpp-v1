@@ -55,17 +55,17 @@ HB_FUNC( WAPI_SHELLEXECUTE )
    void * hParameters;
    void * hDirectory;
 
-   hb_retnint( reinterpret_cast< HB_PTRUINT >( ShellExecute( static_cast< HWND >( hb_parptr( 1 ) ),
-                                            HB_PARSTR( 2, &hOperation, nullptr ), /* edit, explore, open, print, play?, properties? */
-                                            HB_PARSTRDEF( 3, &hFile, nullptr ),
-                                            HB_PARSTR( 4, &hParameters, nullptr ),
-                                            HB_PARSTR( 5, &hDirectory, nullptr ),
-                                            hb_parnidef( 6, SW_SHOWNORMAL ) /* nShowCmd */ ) ) );
+   hb_retnint(reinterpret_cast<HB_PTRUINT>(ShellExecute(static_cast<HWND>(hb_parptr(1)),
+                                           HB_PARSTR(2, &hOperation, nullptr), /* edit, explore, open, print, play?, properties? */
+                                           HB_PARSTRDEF(3, &hFile, nullptr),
+                                           HB_PARSTR(4, &hParameters, nullptr),
+                                           HB_PARSTR(5, &hDirectory, nullptr),
+                                           hb_parnidef(6, SW_SHOWNORMAL) /* nShowCmd */)));
 
-   hb_strfree( hOperation );
-   hb_strfree( hFile );
-   hb_strfree( hParameters );
-   hb_strfree( hDirectory );
+   hb_strfree(hOperation);
+   hb_strfree(hFile);
+   hb_strfree(hParameters);
+   hb_strfree(hDirectory);
 }
 
 /* Code by Antonino Perricone */
@@ -79,49 +79,49 @@ HB_FUNC( WAPI_SHELLEXECUTE_WAIT )
    BOOL retVal;
    MSG msg;
    SHELLEXECUTEINFO ShExecInfo;
-   memset( &ShExecInfo, 0, sizeof( ShExecInfo ) );
+   memset(&ShExecInfo, 0, sizeof(ShExecInfo));
    ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
    ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
-   ShExecInfo.hwnd = static_cast< HWND >( hb_parptr( 1 ) );
-   ShExecInfo.lpVerb = HB_PARSTR( 2, &hOperation, nullptr );
-   ShExecInfo.lpFile = HB_PARSTRDEF( 3, &hFile, nullptr );
-   ShExecInfo.lpParameters =  HB_PARSTR( 4, &hParameters, nullptr );
-   ShExecInfo.lpDirectory = HB_PARSTR( 5, &hDirectory, nullptr );
-   ShExecInfo.nShow = hb_parnidef( 6, SW_SHOWNORMAL );
+   ShExecInfo.hwnd = static_cast<HWND>(hb_parptr(1));
+   ShExecInfo.lpVerb = HB_PARSTR(2, &hOperation, nullptr);
+   ShExecInfo.lpFile = HB_PARSTRDEF(3, &hFile, nullptr);
+   ShExecInfo.lpParameters =  HB_PARSTR(4, &hParameters, nullptr);
+   ShExecInfo.lpDirectory = HB_PARSTR(5, &hDirectory, nullptr);
+   ShExecInfo.nShow = hb_parnidef(6, SW_SHOWNORMAL);
    ShExecInfo.hInstApp = nullptr;
    retVal = ShellExecuteEx(&ShExecInfo);
-   hb_retl( retVal );
-   while( WaitForSingleObject(ShExecInfo.hProcess,1000) != WAIT_OBJECT_0 )
+   hb_retl(retVal);
+   while( WaitForSingleObject(ShExecInfo.hProcess, 1000) != WAIT_OBJECT_0 )
    {
-      while( PeekMessage( &msg, static_cast< HWND >( nullptr ), 0, 0, PM_REMOVE ) )
+      while( PeekMessage(&msg, static_cast<HWND>(nullptr), 0, 0, PM_REMOVE) )
       {
-         TranslateMessage( &msg );
-         DispatchMessage( &msg );
+         TranslateMessage(&msg);
+         DispatchMessage(&msg);
       }
    }
-   hb_strfree( hOperation  );
-   hb_strfree( hFile       );
-   hb_strfree( hParameters );
-   hb_strfree( hDirectory  );
+   hb_strfree(hOperation);
+   hb_strfree(hFile);
+   hb_strfree(hParameters);
+   hb_strfree(hDirectory);
 }
 
 HB_FUNC( WAPI_ISUSERANADMIN )
 {
    BOOL bResult = FALSE;
 
-   HMODULE hLib = hbwapi_LoadLibrarySystem( TEXT( "shell32.dll" ) );
+   HMODULE hLib = hbwapi_LoadLibrarySystem(TEXT("shell32.dll"));
 
    if( hLib )
    {
-      typedef int ( WINAPI * ISUSERANADMIN )( void );
-      ISUSERANADMIN pIsUserAnAdmin = reinterpret_cast< ISUSERANADMIN >( HB_WINAPI_GETPROCADDRESS( hLib, "IsUserAnAdmin" ) );
+      using ISUSERANADMIN = int(WINAPI *)(void);
+      ISUSERANADMIN pIsUserAnAdmin = reinterpret_cast<ISUSERANADMIN>(HB_WINAPI_GETPROCADDRESS(hLib, "IsUserAnAdmin"));
       if( pIsUserAnAdmin )
       {
-         bResult = ( pIsUserAnAdmin )();
+         bResult = (pIsUserAnAdmin)();
       }
 
-      FreeLibrary( hLib );
+      FreeLibrary(hLib);
    }
 
-   hb_retl( bResult );
+   hb_retl(bResult);
 }

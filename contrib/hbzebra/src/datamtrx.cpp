@@ -84,7 +84,7 @@ typedef struct
    int iBlockErrorSize;
 } DATAMATRIX_SIZE, * PDATAMATRIX_SIZE;
 
-static const DATAMATRIX_SIZE s_size[ SIZE_COUNT ] = {
+static const DATAMATRIX_SIZE s_size[SIZE_COUNT] = {
    { 10,  10,  10,  10,    3,    3,    5 },
    { 12,  12,  12,  12,    5,    5,    7 },
    {  8,  18,   8,  18,    5,    5,    7 },
@@ -127,19 +127,19 @@ static int _datamatrix_encode( const char * szCode, int iLen, unsigned char * pC
 
    for( int i = 0; i < iLen; i++ )
    {
-      if( _datamatrix_isdigit( szCode[ i ] ) && i < iLen - 1 && _datamatrix_isdigit( szCode[ i + 1 ] ) )
+      if( _datamatrix_isdigit( szCode[i] ) && i < iLen - 1 && _datamatrix_isdigit( szCode[i + 1] ) )
       {
-         pCW[ iPos++ ] = static_cast< unsigned char >( ( szCode[ i ] - '0' ) * 10 + szCode[ i + 1 ] - '0' + PAIR_OF_DIGITS );
+         pCW[iPos++] = static_cast< unsigned char >( ( szCode[i] - '0' ) * 10 + szCode[i + 1] - '0' + PAIR_OF_DIGITS );
          i++;
       }
-      else if( static_cast< unsigned char >( szCode[ i ] ) <= 127 )
+      else if( static_cast< unsigned char >( szCode[i] ) <= 127 )
       {
-         pCW[ iPos++ ] = static_cast< unsigned char >( szCode[ i ] ) + 1;
+         pCW[iPos++] = static_cast< unsigned char >( szCode[i] ) + 1;
       }
       else
       {
-         pCW[ iPos++ ] = SHIFT_EXTENDED_ASCII;
-         pCW[ iPos++ ] = static_cast< unsigned char >( szCode[ i ] ) - 127;
+         pCW[iPos++] = SHIFT_EXTENDED_ASCII;
+         pCW[iPos++] = static_cast< unsigned char >( szCode[i] ) - 127;
       }
    }
    return iPos;
@@ -151,31 +151,31 @@ static void _reed_solomon_encode( unsigned char * pData, int iDataLen, unsigned 
 
    for( i = 0; i < iECLen; i++ )
    {
-      pEC[ i ] = 0;
+      pEC[i] = 0;
    }
 
    for( i = 0; i < iDataLen; i++ )
    {
-      unsigned char iM = pData[ i ] ^ pEC[ iECLen - 1 ];
+      unsigned char iM = pData[i] ^ pEC[iECLen - 1];
 
       for( j = iECLen - 1; j > 0; j-- )
       {
-         if( iM && pPoly[ j ] )
+         if( iM && pPoly[j] )
          {
-            pEC[ j ] = static_cast< unsigned char >( pEC[ j - 1 ] ^ pExp[ ( pLog[ iM ] + pLog[ pPoly[ j ] ] ) % iMod ] );
+            pEC[j] = static_cast< unsigned char >( pEC[j - 1] ^ pExp[( pLog[iM] + pLog[pPoly[j]] ) % iMod] );
          }
          else
          {
-            pEC[ j ] = pEC[ j - 1 ];
+            pEC[j] = pEC[j - 1];
          }
       }
-      if( iM && pPoly[ 0 ] )
+      if( iM && pPoly[0] )
       {
-         pEC[ 0 ] = static_cast< unsigned char >( pExp[ ( pLog[ iM ] + pLog[ pPoly[ 0 ] ] ) % iMod ] );
+         pEC[0] = static_cast< unsigned char >( pExp[( pLog[iM] + pLog[pPoly[0]] ) % iMod] );
       }
       else
       {
-         pEC[ 0 ] = 0;
+         pEC[0] = 0;
       }
    }
 }
@@ -194,16 +194,16 @@ static void _datamatrix_reed_solomon( unsigned char * pData, const DATAMATRIX_SI
       j >>= 1;
    }
 
-   iMod = ( 1 << iBits ) - 1;
-   pExp = static_cast< int * >( hb_xgrab( sizeof( int ) * iMod ) );          /* exponent function */
-   pLog = static_cast< int * >( hb_xgrab( sizeof( int ) * ( iMod + 1 ) ) );  /* logarithm function */
+   iMod = (1 << iBits) - 1;
+   pExp = static_cast<int*>(hb_xgrab(sizeof(int) * iMod));          /* exponent function */
+   pLog = static_cast<int*>(hb_xgrab(sizeof(int) * (iMod + 1)));  /* logarithm function */
    j = 1;
    for( i = 0; i < iMod; i++ )
    {
-      pExp[ i ] = j;
-      pLog[ j ] = i;
+      pExp[i] = j;
+      pLog[j] = i;
       j <<= 1;
-      if( j & ( 1 << iBits ) )
+      if( j & (1 << iBits) )
       {
          j ^= iPoly;
       }
@@ -213,21 +213,21 @@ static void _datamatrix_reed_solomon( unsigned char * pData, const DATAMATRIX_SI
    iECLen = pSize->iBlockErrorSize;
    iIndex = 1;
 
-   pPoly = static_cast< int * >( hb_xgrab( sizeof( int ) * ( iECLen + 1 ) ) );
-   pPoly[ 0 ] = 1;
+   pPoly = static_cast<int*>(hb_xgrab(sizeof(int) * (iECLen + 1)));
+   pPoly[0] = 1;
    for( i = 1; i <= iECLen; i++ )
    {
-      pPoly[ i ] = 1;
+      pPoly[i] = 1;
       for( j = i - 1; j > 0; j-- )
       {
-         if( pPoly[ j ] )
+         if( pPoly[j] )
          {
-            pPoly[ j ] = pExp[ ( pLog[ pPoly[ j ] ] + iIndex ) % iMod ];
+            pPoly[j] = pExp[( pLog[pPoly[j]] + iIndex ) % iMod];
          }
 
-         pPoly[ j ] ^= pPoly[ j - 1 ];
+         pPoly[j] ^= pPoly[j - 1];
       }
-      pPoly[ 0 ] = pExp[ ( pLog[ pPoly[ 0 ] ] + iIndex ) % iMod ];
+      pPoly[0] = pExp[( pLog[pPoly[0]] + iIndex ) % iMod];
       iIndex++;
    }
 
@@ -236,13 +236,13 @@ static void _datamatrix_reed_solomon( unsigned char * pData, const DATAMATRIX_SI
    iBlocks = ( pSize->iDataSize + 2 ) / pSize->iBlockSize;
    for( i = 0; i < iBlocks; i++ )
    {
-      unsigned char  data[ 256 ], ecc[ 80 ];
+      unsigned char  data[256], ecc[80];
       int   k = 0;
 
       /* Copy to temporary buffer */
       for( j = i; j < pSize->iDataSize; j += iBlocks )
       {
-         data[ k++ ] = pData[ j ];
+         data[k++] = pData[j];
       }
 
       /* Calculate Reed-Solomon ECC for one block */
@@ -252,13 +252,13 @@ static void _datamatrix_reed_solomon( unsigned char * pData, const DATAMATRIX_SI
       k = pSize->iBlockErrorSize;
       for( j = i; j < pSize->iBlockErrorSize * iBlocks; j += iBlocks )
       {
-         pData[ pSize->iDataSize + j ] = ecc[ --k ];
+         pData[pSize->iDataSize + j] = ecc[--k];
       }
    }
 
-   hb_xfree( pExp );
-   hb_xfree( pLog );
-   hb_xfree( pPoly );
+   hb_xfree(pExp);
+   hb_xfree(pLog);
+   hb_xfree(pPoly);
 }
 
 static void _datamatrix_place_bit( int * pArr, int iPRow, int iPCol, int iR, int iC, int iValue )
@@ -273,7 +273,7 @@ static void _datamatrix_place_bit( int * pArr, int iPRow, int iPCol, int iR, int
       iC += iPCol;
       iR += 4 - ( ( iPCol + 4 ) % 8 );
    }
-   pArr[ iR * iPCol + iC ] = iValue;
+   pArr[iR * iPCol + iC] = iValue;
 }
 
 static void _datamatrix_place( int * pArr, int iPRow, int iPCol, int iR, int iC, int iIndex )
@@ -345,8 +345,8 @@ static void _datamatrix_do_placement( PHB_BITBUFFER pBits, unsigned char * pCW, 
    iPRow = pSize->iRow - 2 * ( pSize->iRow / pSize->iRegionRow );
    iPCol = pSize->iCol - 2 * ( pSize->iCol / pSize->iRegionCol );
 
-   pArr = static_cast< int * >( hb_xgrab( sizeof( int ) * iPCol * iPRow ) );
-   hb_xmemset( pArr, 0, sizeof( int ) * iPCol * iPRow );
+   pArr = static_cast<int*>(hb_xgrab(sizeof(int) * iPCol * iPRow));
+   hb_xmemset( pArr, 0, sizeof(int) * iPCol * iPRow );
 
    /* Generate placement index array */
 
@@ -374,7 +374,7 @@ static void _datamatrix_do_placement( PHB_BITBUFFER pBits, unsigned char * pCW, 
 
       do
       {
-         if( iR < iPRow && iC >= 0 && pArr[ iR * iPCol + iC ] == 0 )
+         if( iR < iPRow && iC >= 0 && pArr[iR * iPCol + iC] == 0 )
          {
             _datamatrix_place( pArr, iPRow, iPCol, iR, iC, i++ );
          }
@@ -388,7 +388,7 @@ static void _datamatrix_do_placement( PHB_BITBUFFER pBits, unsigned char * pCW, 
 
       do
       {
-         if( iR >= 0 && iC < iPCol && pArr[ iR * iPCol + iC ] == 0 )
+         if( iR >= 0 && iC < iPCol && pArr[iR * iPCol + iC] == 0 )
          {
             _datamatrix_place( pArr, iPRow, iPCol, iR, iC, i++ );
          }
@@ -402,9 +402,9 @@ static void _datamatrix_do_placement( PHB_BITBUFFER pBits, unsigned char * pCW, 
    }
    while( iR < iPRow || iC < iPCol );
 
-   if( pArr[ iPRow * iPCol - 1 ] == 0 )
+   if( pArr[iPRow * iPCol - 1] == 0 )
    {
-      pArr[ iPRow * iPCol - 1 ] = pArr[ iPRow * iPCol - iPCol - 2 ] = 1;
+      pArr[iPRow * iPCol - 1] = pArr[iPRow * iPCol - iPCol - 2] = 1;
    }
 
    /* Place codewords */
@@ -413,16 +413,14 @@ static void _datamatrix_do_placement( PHB_BITBUFFER pBits, unsigned char * pCW, 
    {
       for( iC = 0; iC < iPCol; iC++ )
       {
-         i = pArr[ iR * iPCol + iC ];
-         if( i == 1 || ( i > 7 && ( pCW[ ( i >> 3 ) - 1 ] & ( 1 << ( i & 7 ) ) ) ) )
+         i = pArr[iR * iPCol + iC];
+         if( i == 1 || (i > 7 && (pCW[(i >> 3) - 1] & (1 << (i & 7)))) )
          {
-            hb_bitbuffer_set( pBits,
-                              ( 1 + iR + 2 * ( iR / ( pSize->iRegionRow - 2 ) ) ) * pSize->iCol +
-                              ( 1 + iC + 2 * ( iC / ( pSize->iRegionCol - 2 ) ) ), 1 );
+            hb_bitbuffer_set(pBits, (1 + iR + 2 * (iR / (pSize->iRegionRow - 2))) * pSize->iCol + (1 + iC + 2 * (iC / (pSize->iRegionCol - 2))), 1);
          }
       }
    }
-   hb_xfree( pArr );
+   hb_xfree(pArr);
 }
 
 PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFlags )
@@ -441,7 +439,7 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
       return pZebra;
    }
 
-   pCW = static_cast< unsigned char * >( hb_xgrab( sizeof( char ) * iLen * 2 ) );
+   pCW = static_cast<unsigned char*>(hb_xgrab(sizeof(char) * iLen * 2));
    iDataCount = _datamatrix_encode( szCode, iLen, pCW );
 
    if( iDataCount > 3116 )
@@ -453,10 +451,10 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
    pSize = nullptr;
    for( i = 0; i < SIZE_COUNT; i++ )
    {
-      if( s_size[ i ].iDataSize >= iDataCount )
+      if( s_size[i].iDataSize >= iDataCount )
       {
-         if( ( ( iFlags & HB_ZEBRA_FLAG_DATAMATRIX_SQUARE )    && s_size[ i ].iRow == s_size[ i ].iCol ) ||
-             ( ( iFlags & HB_ZEBRA_FLAG_DATAMATRIX_RECTANGLE ) && s_size[ i ].iRow != s_size[ i ].iCol ) ||
+         if( ( ( iFlags & HB_ZEBRA_FLAG_DATAMATRIX_SQUARE )    && s_size[i].iRow == s_size[i].iCol ) ||
+             ( ( iFlags & HB_ZEBRA_FLAG_DATAMATRIX_RECTANGLE ) && s_size[i].iRow != s_size[i].iCol ) ||
              ( iFlags & ( HB_ZEBRA_FLAG_DATAMATRIX_SQUARE | HB_ZEBRA_FLAG_DATAMATRIX_RECTANGLE ) ) == 0 )
          {
             pSize = s_size + i;
@@ -464,9 +462,9 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
          }
       }
    }
-   if( ! pSize )
+   if( !pSize )
    {
-      hb_xfree( pCW );
+      hb_xfree(pCW);
       pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
       return pZebra;
    }
@@ -476,7 +474,7 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
    pCW = static_cast< unsigned char * >( hb_xrealloc( pCW, pSize->iDataSize + iErrorSize ) );
    for( i = iDataCount; i < pSize->iDataSize; i++ )
    {
-      pCW[ i ] = PADDING;
+      pCW[i] = PADDING;
    }
 
    /* Reed-Solomon error correction */
@@ -486,7 +484,7 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
    for( i = 0; i < pSize->iDataSize + iErrorSize; i++ )
    {
 #if 0
-      HB_TRACE( HB_TR_ALWAYS, ( "cw=%d", pCW[ i ] ) );
+      HB_TRACE( HB_TR_ALWAYS, ( "cw=%d", pCW[i] ) );
 #endif
    }
 #endif
@@ -526,17 +524,17 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
    /* And now the most crazy part - placement */
    _datamatrix_do_placement( pZebra->pBits, pCW, pSize );
 
-   hb_xfree( pCW );
+   hb_xfree(pCW);
    return pZebra;
 }
 
 HB_FUNC( HB_ZEBRA_CREATE_DATAMATRIX )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
    if( pItem )
    {
-      hb_zebra_ret( hb_zebra_create_datamatrix( hb_itemGetCPtr( pItem ), hb_itemGetCLen( pItem ), hb_parni( 2 ) ) );
+      hb_zebra_ret( hb_zebra_create_datamatrix( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2) ) );
    }
    else
    {

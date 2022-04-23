@@ -54,34 +54,33 @@
  * in Xbase++ compatibility mode where negative indexes are used to access
  * data from tail
  */
-#define XHB_IS_VALID_INDEX( idx, max )  ( ( static_cast< HB_ISIZ >( idx ) < 0 ? ( idx ) += ( max ) + 1 : ( idx ) ) > 0 && static_cast< HB_SIZE >( idx ) <= ( max ) )
+#define XHB_IS_VALID_INDEX( idx, max )  ( ( static_cast<HB_ISIZ>(idx) < 0 ? ( idx ) += ( max ) + 1 : ( idx ) ) > 0 && static_cast<HB_SIZE>(idx) <= ( max ) )
 
 HB_FUNC( XPP_INDEX )
 {
    PHB_ITEM pSelf  = hb_stackSelfItem();
-   PHB_ITEM pIndex = hb_param( 1, HB_IT_ANY );
+   PHB_ITEM pIndex = hb_param(1, Harbour::Item::ANY);
 
    if( hb_pcount() == 2 ) /* ASSIGN */
    {
-      PHB_ITEM pValue = hb_param( 2, HB_IT_ANY );
-      if( HB_IS_NUMERIC( pIndex ) )
+      PHB_ITEM pValue = hb_param(2, Harbour::Item::ANY);
+      if( HB_IS_NUMERIC(pIndex) )
       {
          HB_SIZE nIndex = hb_itemGetNS( pIndex );
-         if( HB_IS_ARRAY( pSelf ) )
+         if( HB_IS_ARRAY(pSelf) )
          {
-            HB_SIZE nLen = hb_arrayLen( pSelf );
+            HB_SIZE nLen = hb_arrayLen(pSelf);
             if( XHB_IS_VALID_INDEX( nIndex, nLen ) )
-               hb_itemMoveRef( hb_arrayGetItemPtr( pSelf, nIndex ), pValue );
+               hb_itemMoveRef(hb_arrayGetItemPtr(pSelf, nIndex), pValue);
             else
                hb_errRT_BASE( EG_BOUND, 1012, "Error in array index", hb_langDGetErrorDesc( EG_ARRASSIGN ), 1, pIndex );
          }
-         else if( HB_IS_STRING( pSelf ) )
+         else if( HB_IS_STRING(pSelf) )
          {
-            HB_SIZE nLen = hb_itemGetCLen( pSelf );
+            HB_SIZE nLen = hb_itemGetCLen(pSelf);
             if( XHB_IS_VALID_INDEX( nIndex, nLen ) )
             {
-               char cValue = HB_IS_STRING( pValue ) ? hb_itemGetCPtr( pValue )[ 0 ] :
-                             static_cast< char >( hb_itemGetNI( pValue ) );
+               char cValue = HB_IS_STRING(pValue) ? hb_itemGetCPtr(pValue)[0] : static_cast<char>(hb_itemGetNI(pValue));
                if( nLen == 1 )
                   hb_itemPutCL( pSelf, &cValue, 1 );
                else
@@ -89,7 +88,7 @@ HB_FUNC( XPP_INDEX )
                   char * pszText;
                   if( hb_itemGetWriteCL( pSelf, &pszText, &nLen ) &&
                       nIndex < nLen )
-                     pszText[ nIndex - 1 ] = cValue;
+                     pszText[nIndex - 1] = cValue;
                }
             }
             else
@@ -101,26 +100,26 @@ HB_FUNC( XPP_INDEX )
       else
          hb_errRT_BASE( EG_ARG, 1069, nullptr, hb_langDGetErrorDesc( EG_ARRASSIGN ), 1, pIndex );  /* TODO: Emulate exact XPP error msg */
 
-      hb_itemReturn( pSelf );
+      hb_itemReturn(pSelf);
    }
    else /* ACCESS */
    {
-      if( HB_IS_NUMERIC( pIndex ) )
+      if( HB_IS_NUMERIC(pIndex) )
       {
          HB_SIZE nIndex = hb_itemGetNS( pIndex );
-         if( HB_IS_ARRAY( pSelf ) )
+         if( HB_IS_ARRAY(pSelf) )
          {
-            HB_SIZE nLen = hb_arrayLen( pSelf );
+            HB_SIZE nLen = hb_arrayLen(pSelf);
             if( XHB_IS_VALID_INDEX( nIndex, nLen ) )
-               hb_itemReturn( hb_arrayGetItemPtr( pSelf, nIndex ) );
+               hb_itemReturn(hb_arrayGetItemPtr(pSelf, nIndex));
             else
                hb_errRT_BASE( EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pSelf, pIndex );  /* TODO: Emulate exact XPP error msg */
          }
-         else if( HB_IS_STRING( pSelf ) )
+         else if( HB_IS_STRING(pSelf) )
          {
-            HB_SIZE nLen = hb_itemGetCLen( pSelf );
+            HB_SIZE nLen = hb_itemGetCLen(pSelf);
             if( XHB_IS_VALID_INDEX( nIndex, nLen ) )
-               hb_retclen( hb_itemGetCPtr( pSelf ) + nIndex - 1, 1 );
+               hb_retclen(hb_itemGetCPtr(pSelf) + nIndex - 1, 1);
             else
                hb_errRT_BASE( EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pSelf, pIndex );  /* TODO: Emulate exact XPP error msg */
          }
@@ -131,7 +130,7 @@ HB_FUNC( XPP_INDEX )
       {
          PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1068, nullptr, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pSelf, pIndex ); /* TODO: Emulate exact XPP error msg */
          if( pResult )
-            hb_itemReturnRelease( pResult );
+            hb_itemReturnRelease(pResult);
       }
    }
 }
@@ -139,16 +138,16 @@ HB_FUNC( XPP_INDEX )
 HB_FUNC( XPP_INCLUDE )
 {
    PHB_ITEM pSelf = hb_stackSelfItem();
-   PHB_ITEM pKey  = hb_param( 1, HB_IT_ANY );
+   PHB_ITEM pKey  = hb_param(1, Harbour::Item::ANY);
 
-   if( HB_IS_ARRAY( pSelf ) )
+   if( HB_IS_ARRAY(pSelf) )
    {
-      hb_retl( hb_arrayScan( pSelf, pKey, nullptr, nullptr, HB_FALSE ) != 0 );
+      hb_retl(hb_arrayScan(pSelf, pKey, nullptr, nullptr, false) != 0);
    }
    else
    {
       PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1109, nullptr, "$", 2, pKey, pSelf );
       if( pResult )
-         hb_itemReturnRelease( pResult );
+         hb_itemReturnRelease(pResult);
    }
 }

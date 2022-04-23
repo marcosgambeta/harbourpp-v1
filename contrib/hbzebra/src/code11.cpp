@@ -85,7 +85,7 @@ static void _code11_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fLa
          hb_bitbuffer_cat_int( pBits, ( i & 1 ) ? 0 : 31, ( code & 1 ) ? 5 : 2 );
          code >>= 1;
       }
-      if( ! fLast )
+      if( !fLast )
       {
          hb_bitbuffer_cat_int( pBits, 0, 2 );
       }
@@ -97,7 +97,7 @@ static void _code11_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fLa
          hb_bitbuffer_cat_int( pBits, ( i & 1 ) ? 0 : 31, ( code & 1 ) ? 3 : 1 );
          code >>= 1;
       }
-      if( ! fLast )
+      if( !fLast )
       {
          hb_bitbuffer_cat_int( pBits, 0, 1 );
       }
@@ -109,7 +109,7 @@ static void _code11_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fLa
          hb_bitbuffer_cat_int( pBits, ( i & 1 ) ? 0 : 31, ( code & 1 ) ? 2 : 1 );
          code >>= 1;
       }
-      if( ! fLast )
+      if( !fLast )
       {
          hb_bitbuffer_cat_int( pBits, 0, 1 );
       }
@@ -119,58 +119,58 @@ static void _code11_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fLa
 PHB_ZEBRA hb_zebra_create_code11( const char * szCode, HB_SIZE nLen, int iFlags )
 {
    PHB_ZEBRA     pZebra;
-   unsigned int  csum, ksum, i, iLen = static_cast< unsigned int >( nLen );
+   unsigned int  csum, ksum, i, iLen = static_cast<unsigned int>(nLen);
 
    pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_CODE11;
 
    for( i = 0; i < iLen; i++ )
    {
-      if( _code11_charno( szCode[ i ] ) < 0 )
+      if( _code11_charno( szCode[i] ) < 0 )
       {
          pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
          return pZebra;
       }
    }
 
-   pZebra->szCode = static_cast< char * >( hb_xgrab( iLen + 1 ) );
+   pZebra->szCode = static_cast<char*>(hb_xgrab(iLen + 1));
    hb_xmemcpy( pZebra->szCode, szCode, iLen );
-   pZebra->szCode[ iLen ] = '\0';
+   pZebra->szCode[iLen] = '\0';
    szCode = pZebra->szCode;
 
    pZebra->pBits = hb_bitbuffer_create();
 
-   _code11_add( pZebra->pBits, s_code[ 11 ], iFlags, HB_FALSE );  /* start */
+   _code11_add( pZebra->pBits, s_code[11], iFlags, false );  /* start */
 
    csum = ksum = 0;
    for( i = 0; i < iLen; i++ )
    {
-      int no = _code11_charno( szCode[ i ] );
-      _code11_add( pZebra->pBits, s_code[ no ], iFlags, HB_FALSE );
+      int no = _code11_charno( szCode[i] );
+      _code11_add( pZebra->pBits, s_code[no], iFlags, false );
       ksum += ( ( ( iLen + 1 - i ) % 9 ) ? ( iLen + 1 - i ) % 9 : 9 ) * no;
       csum += ( ( ( iLen - i ) % 10 ) ? ( iLen - i ) % 10 : 10 ) * no;
    }
 
    /* checksum */
-   _code11_add( pZebra->pBits, s_code[ csum % 11 ], iFlags, HB_FALSE );
+   _code11_add( pZebra->pBits, s_code[csum % 11], iFlags, false );
    if( iFlags & HB_ZEBRA_FLAG_CHECKSUM )
    {
       ksum += csum % 11;
-      _code11_add( pZebra->pBits, s_code[ ksum % 11 ], iFlags, HB_FALSE );
+      _code11_add( pZebra->pBits, s_code[ksum % 11], iFlags, false );
    }
 
-   _code11_add( pZebra->pBits, s_code[ 11 ], iFlags, HB_TRUE );  /* stop */
+   _code11_add( pZebra->pBits, s_code[11], iFlags, true );  /* stop */
 
    return pZebra;
 }
 
 HB_FUNC( HB_ZEBRA_CREATE_CODE11 )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
    if( pItem )
    {
-      hb_zebra_ret( hb_zebra_create_code11( hb_itemGetCPtr( pItem ), hb_itemGetCLen( pItem ), hb_parni( 2 ) ) );
+      hb_zebra_ret( hb_zebra_create_code11( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2) ) );
    }
    else
    {

@@ -57,7 +57,7 @@ int hb_zebra_draw( PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void * cargo, 
    HB_BOOL fLastBit;
    int     i, iCol = pZebra->iCol;
 
-   HB_SYMBOL_UNUSED( iFlags );
+   HB_SYMBOL_UNUSED(iFlags);
 
    if( pZebra->iError != 0 )
    {
@@ -113,15 +113,15 @@ int hb_zebra_draw( PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void * cargo, 
 
 static void hb_zebra_draw_codeblock_callback( void * pDrawBlock, double dX, double dY, double dWidth, double dHeight )
 {
-   if( pDrawBlock && HB_IS_BLOCK( pDrawBlock ) && hb_vmRequestReenter() )
+   if( pDrawBlock && HB_IS_BLOCK(pDrawBlock) && hb_vmRequestReenter() )
    {
       hb_vmPushEvalSym();
-      hb_vmPush( static_cast< PHB_ITEM >( pDrawBlock ) );
-      hb_vmPushDouble( dX, HB_DEFAULT_DECIMALS );
-      hb_vmPushDouble( dY, HB_DEFAULT_DECIMALS );
-      hb_vmPushDouble( dWidth, HB_DEFAULT_DECIMALS );
-      hb_vmPushDouble( dHeight, HB_DEFAULT_DECIMALS );
-      hb_vmSend( 4 );
+      hb_vmPush(static_cast<PHB_ITEM>(pDrawBlock));
+      hb_vmPushDouble(dX, HB_DEFAULT_DECIMALS);
+      hb_vmPushDouble(dY, HB_DEFAULT_DECIMALS);
+      hb_vmPushDouble(dWidth, HB_DEFAULT_DECIMALS);
+      hb_vmPushDouble(dHeight, HB_DEFAULT_DECIMALS);
+      hb_vmSend(4);
       hb_vmRequestRestore();
    }
 }
@@ -133,14 +133,14 @@ int hb_zebra_draw_codeblock( PHB_ZEBRA pZebra, PHB_ITEM pDrawBlock, double dX, d
 
 HB_FUNC( HB_ZEBRA_DRAW )
 {
-   PHB_ZEBRA pZebra = hb_zebra_param( 1 );
+   PHB_ZEBRA pZebra = hb_zebra_param(1);
 
    if( pZebra )
    {
-      PHB_ITEM pDrawBlock = hb_param( 2, HB_IT_BLOCK );
+      PHB_ITEM pDrawBlock = hb_param(2, Harbour::Item::BLOCK);
       if( pDrawBlock )
       {
-         hb_retni( hb_zebra_draw_codeblock( pZebra, pDrawBlock, hb_parnd( 3 ), hb_parnd( 4 ), hb_parnd( 5 ), hb_parnd( 6 ), hb_parni( 7 ) ) );
+         hb_retni(hb_zebra_draw_codeblock(pZebra, pDrawBlock, hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6), hb_parni(7)));
       }
       else
       {

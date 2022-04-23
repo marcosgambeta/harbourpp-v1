@@ -50,32 +50,32 @@
 
 HB_FUNC( NUMBUTTONS )
 {
-   hb_retni( hb_mouseCountButton() );
+   hb_retni(hb_mouseCountButton());
 }
 
 HB_FUNC( SETMOUSE )
 {
    HB_BOOL fRow, fCol;
 
-   hb_retl( hb_mouseGetCursor() );
+   hb_retl(hb_mouseGetCursor());
 
-   if( HB_ISLOG( 1 ) )
-      hb_mouseSetCursor( hb_parl( 1 ) );
+   if( HB_ISLOG(1) )
+      hb_mouseSetCursor( hb_parl(1) );
 
-   fRow = HB_ISNUM( 2 );
-   fCol = HB_ISNUM( 3 );
+   fRow = HB_ISNUM(2);
+   fCol = HB_ISNUM(3);
 
    if( fRow || fCol )
    {
       int iRow = 0, iCol = 0;
 
-      if( ! fRow || ! fCol )
+      if( !fRow || !fCol )
          hb_mouseGetPos( &iRow, &iCol );
 
       if( fRow )
-         iRow = hb_parni( 2 );
+         iRow = hb_parni(2);
       if( fCol )
-         iCol = hb_parni( 3 );
+         iCol = hb_parni(3);
 
       hb_mouseSetPos( iRow, iCol );
    }

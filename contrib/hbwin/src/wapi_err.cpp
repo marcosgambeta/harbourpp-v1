@@ -47,23 +47,25 @@
 #include "hbwapi.h"
 #include "hbstack.h"
 
-typedef struct
+struct HB_WAPIERRDATA
 {
    DWORD dwLastError;
-} HB_WAPIERRDATA, * PHB_WAPIERRDATA;
+};
 
-static HB_TSD_NEW( s_wapierrData, sizeof( HB_WAPIERRDATA ), nullptr, nullptr );
+using PHB_WAPIERRDATA = HB_WAPIERRDATA *;
 
-void hbwapi_SetLastError( DWORD dwLastError )
+static HB_TSD_NEW(s_wapierrData, sizeof(HB_WAPIERRDATA), nullptr, nullptr);
+
+void hbwapi_SetLastError(DWORD dwLastError)
 {
-   PHB_WAPIERRDATA pWinErrData = static_cast< PHB_WAPIERRDATA >( hb_stackGetTSD( &s_wapierrData ) );
+   PHB_WAPIERRDATA pWinErrData = static_cast<PHB_WAPIERRDATA>(hb_stackGetTSD(&s_wapierrData));
 
    pWinErrData->dwLastError = dwLastError;
 }
 
-DWORD hbwapi_GetLastError( void )
+DWORD hbwapi_GetLastError(void)
 {
-   PHB_WAPIERRDATA pWinErrData = static_cast< PHB_WAPIERRDATA >( hb_stackGetTSD( &s_wapierrData ) );
+   PHB_WAPIERRDATA pWinErrData = static_cast<PHB_WAPIERRDATA>(hb_stackGetTSD(&s_wapierrData));
 
    return pWinErrData->dwLastError;
 }

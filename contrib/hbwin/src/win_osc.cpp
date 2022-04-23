@@ -50,92 +50,92 @@
 
 HB_FUNC( WIN_OSISNT )
 {
-   hb_retl( hb_iswinnt() != 0 );
+   hb_retl(hb_iswinnt() != 0);
 }
 
 HB_FUNC( WIN_OSISNT351 )
 {
-   hb_retl( hb_iswinnt() == 3 );
+   hb_retl(hb_iswinnt() == 3);
 }
 
 HB_FUNC( WIN_OSISNT4 )
 {
-   hb_retl( hb_iswinnt() == 4 );
+   hb_retl(hb_iswinnt() == 4);
 }
 
 HB_FUNC( WIN_OSIS2000 )
 {
-   hb_retl( hb_iswinver( 5, 0, 0, HB_FALSE ) );
+   hb_retl(hb_iswinver(5, 0, 0, false));
 }
 
 HB_FUNC( WIN_OSIS2000ORUPPER )
 {
-   hb_retl( hb_iswin2k() );
+   hb_retl(hb_iswin2k());
 }
 
 HB_FUNC( WIN_OSISXP )
 {
-   hb_retl( hb_iswinver( 5, 1, 0, HB_FALSE ) );
+   hb_retl(hb_iswinver(5, 1, 0, false));
 }
 
 HB_FUNC( WIN_OSISWINXPORUPPER )
 {
-   hb_retl( hb_iswinver( 5, 1, 0, HB_TRUE ) );
+   hb_retl(hb_iswinver(5, 1, 0, true));
 }
 
 HB_FUNC( WIN_OSIS2003 )
 {
-   hb_retl( hb_iswinver( 5, 2, 0, HB_FALSE ) );
+   hb_retl(hb_iswinver(5, 2, 0, false));
 }
 
 HB_FUNC( WIN_OSISVISTA )
 {
-   hb_retl( hb_iswinver( 6, 0, 0, HB_FALSE ) );
+   hb_retl(hb_iswinver(6, 0, 0, false));
 }
 
 HB_FUNC( WIN_OSISVISTAORUPPER )
 {
-   hb_retl( hb_iswinvista() );
+   hb_retl(hb_iswinvista());
 }
 
 HB_FUNC( WIN_OSIS7 )
 {
-   hb_retl( hb_iswinver( 6, 1, 0, HB_FALSE ) );
+   hb_retl(hb_iswinver(6, 1, 0, false));
 }
 
 HB_FUNC( WIN_OSIS8 )
 {
-   hb_retl( hb_iswinver( 6, 2, 0, HB_FALSE ) );
+   hb_retl(hb_iswinver(6, 2, 0, false));
 }
 
 HB_FUNC( WIN_OSIS81 )
 {
-   hb_retl( hb_iswinver( 6, 3, 0, HB_FALSE ) );
+   hb_retl(hb_iswinver(6, 3, 0, false));
 }
 
 HB_FUNC( WIN_OSIS10 )
 {
-   hb_retl( hb_iswinver( 10, 0, 0, HB_FALSE ) );
+   hb_retl(hb_iswinver(10, 0, 0, false));
 }
 
 HB_FUNC( WIN_OSIS9X )
 {
-   hb_retl( hb_iswin9x() );
+   hb_retl(hb_iswin9x());
 }
 
 HB_FUNC( WIN_OSIS95 )
 {
-   hb_retl( hb_iswin9x() == 5 );
+   hb_retl(hb_iswin9x() == 5);
 }
 
 HB_FUNC( WIN_OSIS98 )
 {
-   hb_retl( hb_iswin9x() == 8 );
+   hb_retl(hb_iswin9x() == 8);
 }
 
 HB_FUNC( WIN_OSISME )
 {
-   hb_retl( hb_iswin9x() == 9 );
+   hb_retl(hb_iswin9x() == 9);
 }
 
 HB_FUNC( WIN_OSISTSCLIENT )
@@ -145,12 +145,12 @@ HB_FUNC( WIN_OSISTSCLIENT )
       #define SM_REMOTESESSION  0x1000
    #endif
 
-   hb_retl( GetSystemMetrics( SM_REMOTESESSION ) != 0 );
+   hb_retl(GetSystemMetrics(SM_REMOTESESSION) != 0);
 }
 
 HB_FUNC( WIN_OSVERSIONINFO )
 {
-   PHB_ITEM pArray = hb_itemArrayNew( 5 );
+   PHB_ITEM pArray = hb_itemArrayNew(5);
 
    int iMajor = 4;
    int iMinor = 0;
@@ -171,12 +171,12 @@ HB_FUNC( WIN_OSVERSIONINFO )
       { 5, 1 },
       { 5, 0 } };
 
-   for( int pos = 0; pos < static_cast< int >( HB_SIZEOFARRAY( s_vers ) ); ++pos )
+   for( int pos = 0; pos < static_cast<int>(HB_SIZEOFARRAY(s_vers)); ++pos )
    {
-      if( hb_iswinver( s_vers[ pos ].iMajor, s_vers[ pos ].iMinor, 0, ( pos == 0 ) ) )
+      if( hb_iswinver( s_vers[pos].iMajor, s_vers[pos].iMinor, 0, ( pos == 0 ) ) )
       {
-         iMajor = s_vers[ pos ].iMajor;
-         iMinor = s_vers[ pos ].iMinor;
+         iMajor = s_vers[pos].iMajor;
+         iMinor = s_vers[pos].iMinor;
          break;
       }
    }
@@ -191,15 +191,15 @@ HB_FUNC( WIN_OSVERSIONINFO )
    {
       for( int tmp = 5; tmp > 0; --tmp )
       {
-         if( hb_iswinsp( tmp, HB_TRUE ) )
+         if( hb_iswinsp( tmp, true ) )
          {
-            char szServicePack[ 8 ];
-            hb_snprintf( szServicePack, sizeof( szServicePack ), "SP%u", tmp );
+            char szServicePack[8];
+            hb_snprintf( szServicePack, sizeof(szServicePack), "SP%u", tmp );
             hb_arraySetC( pArray, 5, szServicePack );
             break;
          }
       }
    }
 
-   hb_itemReturnRelease( pArray );
+   hb_itemReturnRelease(pArray);
 }

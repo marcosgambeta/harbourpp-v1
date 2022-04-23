@@ -53,7 +53,7 @@ static SERVICE_STATUS        s_ServiceStatus;
 static SERVICE_STATUS_HANDLE s_hStatus;
 static PHB_ITEM              s_pHarbourEntryFunc = nullptr;
 static PHB_ITEM              s_pHarbourControlFunc = nullptr;
-static TCHAR                 s_lpServiceName[ 256 ];
+static TCHAR                 s_lpServiceName[256];
 
 /* Control handler function */
 static VOID WINAPI hbwin_SvcControlHandler( DWORD fdwControl )
@@ -63,9 +63,9 @@ static VOID WINAPI hbwin_SvcControlHandler( DWORD fdwControl )
       if( hb_vmRequestReenterExt() )
       {
          hb_vmPushEvalSym();
-         hb_vmPush( s_pHarbourControlFunc );
-         hb_vmPushNumInt( static_cast< HB_MAXINT >( fdwControl ) );
-         hb_vmSend( 1 );
+         hb_vmPush(s_pHarbourControlFunc);
+         hb_vmPushNumInt(static_cast<HB_MAXINT>(fdwControl));
+         hb_vmSend(1);
          hb_vmRequestRestore();
       }
       else
@@ -116,7 +116,7 @@ static VOID WINAPI hbwin_SvcMainFunction( DWORD dwArgc, LPTSTR * lpszArgv )
          {
             int iArgCount = 0;
 
-            if( ! s_pHarbourControlFunc )
+            if( !s_pHarbourControlFunc )
             {
                /* We report the running status to SCM. */
                s_ServiceStatus.dwCurrentState = SERVICE_RUNNING;
@@ -124,14 +124,14 @@ static VOID WINAPI hbwin_SvcMainFunction( DWORD dwArgc, LPTSTR * lpszArgv )
             }
 
             hb_vmPushEvalSym();
-            hb_vmPush( s_pHarbourEntryFunc );
+            hb_vmPush(s_pHarbourEntryFunc);
 
             for( DWORD i = 1; i < dwArgc; ++i )
             {
                PHB_ITEM pItem = hb_stackAllocItem();
 
-               HB_ITEMPUTSTR( pItem, lpszArgv[ i ] );
-               if( hb_cmdargIsInternal( hb_itemGetCPtr( pItem ), nullptr ) )
+               HB_ITEMPUTSTR( pItem, lpszArgv[i] );
+               if( hb_cmdargIsInternal( hb_itemGetCPtr(pItem), nullptr ) )
                {
                   hb_stackPop();
                }
@@ -169,25 +169,25 @@ static VOID WINAPI hbwin_SvcMainFunction( DWORD dwArgc, LPTSTR * lpszArgv )
 
 HB_FUNC( WIN_SERVICEGETSTATUS )
 {
-   hb_retnint( s_ServiceStatus.dwCurrentState );
+   hb_retnint(s_ServiceStatus.dwCurrentState);
 }
 
 HB_FUNC( WIN_SERVICESETSTATUS )
 {
    HB_BOOL bRetVal;
-   s_ServiceStatus.dwCurrentState = static_cast< DWORD >( hb_parnl( 1 ) );
+   s_ServiceStatus.dwCurrentState = static_cast< DWORD >( hb_parnl(1) );
    bRetVal = static_cast< HB_BOOL >( SetServiceStatus( s_hStatus, &s_ServiceStatus ) );
    hbwapi_SetLastError( GetLastError() );
-   hb_retl( bRetVal );
+   hb_retl(bRetVal);
 }
 
 HB_FUNC( WIN_SERVICESETEXITCODE )
 {
    HB_BOOL bRetVal;
-   s_ServiceStatus.dwWin32ExitCode = static_cast< DWORD >( hb_parnl( 1 ) );
+   s_ServiceStatus.dwWin32ExitCode = static_cast< DWORD >( hb_parnl(1) );
    bRetVal = static_cast< HB_BOOL >( SetServiceStatus( s_hStatus, &s_ServiceStatus ) );
    hbwapi_SetLastError( GetLastError() );
-   hb_retl( bRetVal );
+   hb_retl(bRetVal);
 }
 
 HB_FUNC( WIN_SERVICESTOP )
@@ -196,7 +196,7 @@ HB_FUNC( WIN_SERVICESTOP )
    s_ServiceStatus.dwCurrentState = SERVICE_STOPPED;
    bRetVal = static_cast< HB_BOOL >( SetServiceStatus( s_hStatus, &s_ServiceStatus ) );
    hbwapi_SetLastError( GetLastError() );
-   hb_retl( bRetVal );
+   hb_retl(bRetVal);
 }
 
 HB_FUNC( WIN_SERVICESTART )
@@ -205,43 +205,43 @@ HB_FUNC( WIN_SERVICESTART )
 
    PHB_ITEM pEntryFunc;
 
-   SERVICE_TABLE_ENTRY lpServiceTable[ 2 ];
+   SERVICE_TABLE_ENTRY lpServiceTable[2];
 
-   HB_ITEMCOPYSTR( hb_param( 1, HB_IT_STRING ), s_lpServiceName, HB_SIZEOFARRAY( s_lpServiceName ) );
+   HB_ITEMCOPYSTR( hb_param(1, Harbour::Item::STRING), s_lpServiceName, HB_SIZEOFARRAY( s_lpServiceName ) );
 
    if( s_pHarbourEntryFunc )
    {
-      hb_itemRelease( s_pHarbourEntryFunc );
+      hb_itemRelease(s_pHarbourEntryFunc);
       s_pHarbourEntryFunc = nullptr;
    }
 
-   pEntryFunc = hb_param( 2, HB_IT_EVALITEM );
+   pEntryFunc = hb_param(2, Harbour::Item::EVALITEM);
 
    if( pEntryFunc )
    {
-      s_pHarbourEntryFunc = hb_itemNew( pEntryFunc );
+      s_pHarbourEntryFunc = hb_itemNew(pEntryFunc);
    }
 
    if( s_pHarbourControlFunc )
    {
-      hb_itemRelease( s_pHarbourControlFunc );
+      hb_itemRelease(s_pHarbourControlFunc);
       s_pHarbourControlFunc = nullptr;
    }
 
-   pEntryFunc = hb_param( 3, HB_IT_EVALITEM );
+   pEntryFunc = hb_param(3, Harbour::Item::EVALITEM);
 
    if( pEntryFunc )
    {
-      s_pHarbourControlFunc = hb_itemNew( pEntryFunc );
+      s_pHarbourControlFunc = hb_itemNew(pEntryFunc);
    }
 
-   lpServiceTable[ 0 ].lpServiceName = s_lpServiceName;
-   lpServiceTable[ 0 ].lpServiceProc = ( LPSERVICE_MAIN_FUNCTION ) hbwin_SvcMainFunction;
+   lpServiceTable[0].lpServiceName = s_lpServiceName;
+   lpServiceTable[0].lpServiceProc = ( LPSERVICE_MAIN_FUNCTION ) hbwin_SvcMainFunction;
 
-   lpServiceTable[ 1 ].lpServiceName = nullptr;
-   lpServiceTable[ 1 ].lpServiceProc = nullptr;
+   lpServiceTable[1].lpServiceName = nullptr;
+   lpServiceTable[1].lpServiceProc = nullptr;
 
    bRetVal = static_cast< HB_BOOL >( StartServiceCtrlDispatcher( lpServiceTable ) );
    hbwapi_SetLastError( GetLastError() );
-   hb_retl( bRetVal );
+   hb_retl(bRetVal);
 }
