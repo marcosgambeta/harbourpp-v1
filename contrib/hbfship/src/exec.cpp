@@ -1,6 +1,6 @@
 /*
  * FlagShip compatible functions
- *    ExecName( [ <lFullPath> ] ) --> <cName>
+ *    ExecName( [<lFullPath>] ) --> <cName>
  *    ExecPIDNum() --> <nPID>
  *
  * Copyright 2011 Przemyslaw Czerpak <druzus@acn.waw.pl>
@@ -49,10 +49,10 @@
 #include "hbapi.h"
 #include "hbapifs.h"
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
 #  include <sys/types.h>
 #  include <unistd.h>
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
 #  include <windows.h>
 #endif
 
@@ -62,19 +62,16 @@ HB_FUNC( EXECNAME )
 
    if( pszBaseName )
    {
-      if( ! hb_parl( 1 ) )
+      if( !hb_parl(1) )
       {
          PHB_FNAME pFileName = hb_fsFNameSplit( pszBaseName );
 
          if( pFileName->szPath )
          {
-            hb_xfree( pszBaseName );
-            pszBaseName = hb_xstrcpy( nullptr,
-                                      pFileName->szName,
-                                      pFileName->szExtension,
-                                      nullptr );
+            hb_xfree(pszBaseName);
+            pszBaseName = hb_xstrcpy( nullptr, pFileName->szName, pFileName->szExtension, nullptr );
          }
-         hb_xfree( pFileName );
+         hb_xfree(pFileName);
       }
 
       hb_retc_buffer( pszBaseName );
@@ -85,9 +82,9 @@ HB_FUNC( EXECNAME )
 
 HB_FUNC( EXECPIDNUM )
 {
-#if defined( HB_OS_WIN )
-   hb_retnint( GetCurrentProcessId() );
+#if defined(HB_OS_WIN)
+   hb_retnint(GetCurrentProcessId());
 #else
-   hb_retnint( getpid() );
+   hb_retnint(getpid());
 #endif
 }

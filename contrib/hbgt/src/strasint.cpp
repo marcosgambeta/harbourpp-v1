@@ -21,9 +21,9 @@ int _GT_Internal_StringAsInt( char * String, HB_ISIZ Start, HB_ISIZ End )
 
    for( Digit = End; Digit >= Start; Digit-- )
    {
-      if( HB_ISDIGIT( String[ Digit ] ) )
+      if( HB_ISDIGIT(String[Digit]) )
       {
-         Value   += ( String[ Digit ] - '0' ) * Decimal;
+         Value   += ( String[Digit] - '0' ) * Decimal;
          Decimal *= 10;
       }
    }

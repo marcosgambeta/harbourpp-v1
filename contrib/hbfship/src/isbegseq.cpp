@@ -54,5 +54,5 @@
 
 HB_FUNC( ISBEGSEQ )
 {
-   hb_retl( hb_stackGetRecoverBase() != 0 );
+   hb_retl(hb_stackGetRecoverBase() != 0);
 }

@@ -63,8 +63,8 @@
 
 #include "hbcurl.ch"
 
-#define HB_CURL_OPT_BOOL( n )      ( HB_ISLOG( n ) ? static_cast< long >( hb_parl( n ) ) : hb_parnldef( n, 1 ) )
-#define HB_CURL_OPT_LARGENUM( n )  ( static_cast< curl_off_t >( hb_parnint( n ) ) )
+#define HB_CURL_OPT_BOOL( n )      ( HB_ISLOG( n ) ? static_cast<long>(hb_parl(n)) : hb_parnldef( n, 1 ) )
+#define HB_CURL_OPT_LARGENUM( n )  ( static_cast<curl_off_t>(hb_parnint(n)) )
 
 /* NOTE: Harbour requires libcurl 7.17.0 or upper.
          This was the version where curl_easy_setopt() started to
@@ -81,8 +81,8 @@
 #endif
 
 /* Fall back to return simple error if special abort signal is not available. */
-#if ! defined( CURL_READFUNC_ABORT ) /* Introduced in LIBCURL_VERSION_NUM >= 0x070C01 */
-   #define CURL_READFUNC_ABORT  ( static_cast< size_t >( -1 ) )
+#if !defined(CURL_READFUNC_ABORT) /* Introduced in LIBCURL_VERSION_NUM >= 0x070C01 */
+   #define CURL_READFUNC_ABORT  ( static_cast<size_t>(-1) )
 #endif
 
 typedef struct _HB_CURL
@@ -134,15 +134,15 @@ typedef struct _HB_CURL
 static HB_HASH_FUNC( hb_curl_HashKey )    /* HB_SIZE func( const void * Value, const void * Cargo ) */
 {
    HB_SIZE      ulSum  = 0;
-   const char * szName = static_cast< const char * >( Value );
+   const char * szName = static_cast<const char*>(Value);
 
    while( *szName )
    {
       ulSum += *szName++;
    }
 
-   HB_SYMBOL_UNUSED( HashPtr );
-   HB_SYMBOL_UNUSED( Cargo );
+   HB_SYMBOL_UNUSED(HashPtr);
+   HB_SYMBOL_UNUSED(Cargo);
 
    return ulSum % HB_CURL_HASH_TABLE_SIZE;
 }
@@ -150,17 +150,17 @@ static HB_HASH_FUNC( hb_curl_HashKey )    /* HB_SIZE func( const void * Value, c
 /* deletes a string */
 static HB_HASH_FUNC( hb_curl_HashDel )
 {
-   hb_xfree( static_cast< void * >( Value ) );
-   HB_SYMBOL_UNUSED( HashPtr );
-   HB_SYMBOL_UNUSED( Cargo );
+   hb_xfree(static_cast<void*>(Value));
+   HB_SYMBOL_UNUSED(HashPtr);
+   HB_SYMBOL_UNUSED(Cargo);
    return 1;
 }
 
 /* compares two strings */
 static HB_HASH_FUNC( hb_curl_HashCmp )
 {
-   HB_SYMBOL_UNUSED( HashPtr );
-   return strcmp( static_cast< const char * >( Value ), static_cast< const char * >( Cargo ) );
+   HB_SYMBOL_UNUSED(HashPtr);
+   return strcmp( static_cast<const char*>(Value), static_cast<const char*>(Cargo) );
 }
 
 static const char * hb_curl_StrHashNew( PHB_CURL hb_curl, const char * szValue )
@@ -169,13 +169,13 @@ static const char * hb_curl_StrHashNew( PHB_CURL hb_curl, const char * szValue )
    {
       char * szHash;
 
-      if( ! hb_curl->pHash )
+      if( !hb_curl->pHash )
       {
          hb_curl->pHash = hb_hashTableCreate( HB_CURL_HASH_TABLE_SIZE, hb_curl_HashKey, hb_curl_HashDel, hb_curl_HashCmp );
       }
 
-      szHash = static_cast< char * >( hb_hashTableFind( hb_curl->pHash, szValue ) );
-      if( ! szHash )
+      szHash = static_cast<char*>(hb_hashTableFind(hb_curl->pHash, szValue));
+      if( !szHash )
       {
          szHash = hb_strdup( szValue );
          hb_hashTableAdd( hb_curl->pHash, szHash, szHash );
@@ -201,20 +201,20 @@ static const char * hb_curl_StrHashNew( PHB_CURL hb_curl, const char * szValue )
 
 static void * hb_curl_xgrab( size_t size )
 {
-   return size > 0 ? hb_xgrab( size ) : nullptr;
+   return size > 0 ? hb_xgrab(size) : nullptr;
 }
 
 static void hb_curl_xfree( void * p )
 {
    if( p )
    {
-      hb_xfree( p );
+      hb_xfree(p);
    }
 }
 
 static void * hb_curl_xrealloc( void * p, size_t size )
 {
-   return size > 0 ? ( p ? hb_xrealloc( p, size ) : hb_xgrab( size ) ) : nullptr;
+   return size > 0 ? ( p ? hb_xrealloc( p, size ) : hb_xgrab(size) ) : nullptr;
 }
 
 static char * hb_curl_strdup( const char * s )
@@ -225,7 +225,7 @@ static char * hb_curl_strdup( const char * s )
 static void * hb_curl_calloc( size_t nelem, size_t elsize )
 {
    size_t size = nelem * elsize;
-   void * ptr  = hb_xgrab( size );
+   void * ptr  = hb_xgrab(size);
 
    memset( ptr, '\0', size );
 
@@ -235,14 +235,9 @@ static void * hb_curl_calloc( size_t nelem, size_t elsize )
 HB_FUNC( CURL_GLOBAL_INIT )
 {
 #if LIBCURL_VERSION_NUM >= 0x070A08 /* Not documented. GUESS. */
-   hb_retnl( static_cast< long >( curl_global_init_mem( hb_parnldef( 1, CURL_GLOBAL_ALL ),
-                                                        hb_curl_xgrab,
-                                                        hb_curl_xfree,
-                                                        hb_curl_xrealloc,
-                                                        hb_curl_strdup,
-                                                        hb_curl_calloc ) ) );
+   hb_retnl(static_cast<long>(curl_global_init_mem(hb_parnldef(1, CURL_GLOBAL_ALL), hb_curl_xgrab, hb_curl_xfree, hb_curl_xrealloc, hb_curl_strdup, hb_curl_calloc)));
 #else
-   hb_retnl( static_cast< long >( curl_global_init_mem( hb_parnldef( 1, CURL_GLOBAL_ALL ) ) ) );
+   hb_retnl(static_cast<long>(curl_global_init_mem(hb_parnldef(1, CURL_GLOBAL_ALL))));
 #endif
 }
 
@@ -256,17 +251,17 @@ HB_FUNC( CURL_GLOBAL_CLEANUP )
 
 static size_t hb_curl_read_dummy_callback( void * buffer, size_t size, size_t nmemb, void * Cargo )
 {
-   HB_SYMBOL_UNUSED( buffer );
-   HB_SYMBOL_UNUSED( size );
-   HB_SYMBOL_UNUSED( nmemb );
-   HB_SYMBOL_UNUSED( Cargo );
+   HB_SYMBOL_UNUSED(buffer);
+   HB_SYMBOL_UNUSED(size);
+   HB_SYMBOL_UNUSED(nmemb);
+   HB_SYMBOL_UNUSED(Cargo);
 
    return 0;
 }
 
 static size_t hb_curl_read_file_callback( void * buffer, size_t size, size_t nmemb, void * Cargo )
 {
-   PHB_CURL hb_curl = static_cast< PHB_CURL >( Cargo );
+   PHB_CURL hb_curl = static_cast<PHB_CURL>(Cargo);
 
    if( hb_curl )
    {
@@ -278,21 +273,21 @@ static size_t hb_curl_read_file_callback( void * buffer, size_t size, size_t nme
 
          if( hb_curl->ul_handle == FS_ERROR )
          {
-            return static_cast< size_t >( -1 );
+            return static_cast<size_t>(-1);
          }
       }
 
-      ret = static_cast< size_t >( hb_fsReadLarge( hb_curl->ul_handle, buffer, size * nmemb ) );
+      ret = static_cast<size_t>(hb_fsReadLarge(hb_curl->ul_handle, buffer, size * nmemb));
 
       return hb_fsError() ? CURL_READFUNC_ABORT : ret;
    }
 
-   return static_cast< size_t >( -1 );
+   return static_cast<size_t>(-1);
 }
 
 static size_t hb_curl_read_fhandle_callback( void * buffer, size_t size, size_t nmemb, void * Cargo )
 {
-   PHB_CURL hb_curl = static_cast< PHB_CURL >( Cargo );
+   PHB_CURL hb_curl = static_cast<PHB_CURL>(Cargo);
 
    if( hb_curl )
    {
@@ -300,20 +295,20 @@ static size_t hb_curl_read_fhandle_callback( void * buffer, size_t size, size_t 
 
       if( hb_curl->ul_handle == FS_ERROR )
       {
-         return static_cast< size_t >( -1 );
+         return static_cast<size_t>(-1);
       }
 
-      ret = static_cast< size_t >( hb_fsReadLarge( hb_curl->ul_handle, buffer, size * nmemb ) );
+      ret = static_cast<size_t>(hb_fsReadLarge(hb_curl->ul_handle, buffer, size * nmemb));
 
       return hb_fsError() ? CURL_READFUNC_ABORT : ret;
    }
 
-   return static_cast< size_t >( -1 );
+   return static_cast<size_t>(-1);
 }
 
 static size_t hb_curl_read_buff_callback( void * buffer, size_t size, size_t nmemb, void * Cargo )
 {
-   PHB_CURL hb_curl = static_cast< PHB_CURL >( Cargo );
+   PHB_CURL hb_curl = static_cast<PHB_CURL>(Cargo);
 
    if( hb_curl )
    {
@@ -332,12 +327,12 @@ static size_t hb_curl_read_buff_callback( void * buffer, size_t size, size_t nme
       return nTodo;
    }
 
-   return static_cast< size_t >( -1 );
+   return static_cast<size_t>(-1);
 }
 
 static size_t hb_curl_write_file_callback( void * buffer, size_t size, size_t nmemb, void * Cargo )
 {
-   PHB_CURL hb_curl = static_cast< PHB_CURL >( Cargo );
+   PHB_CURL hb_curl = static_cast<PHB_CURL>(Cargo);
 
    if( hb_curl )
    {
@@ -347,31 +342,31 @@ static size_t hb_curl_write_file_callback( void * buffer, size_t size, size_t nm
 
          if( hb_curl->dl_handle == FS_ERROR )
          {
-            return static_cast< size_t >( -1 );
+            return static_cast<size_t>(-1);
          }
       }
 
       return hb_fsWriteLarge( hb_curl->dl_handle, buffer, size * nmemb );
    }
 
-   return static_cast< size_t >( -1 );
+   return static_cast<size_t>(-1);
 }
 
 static size_t hb_curl_write_fhandle_callback( void * buffer, size_t size, size_t nmemb, void * Cargo )
 {
-   PHB_CURL hb_curl = static_cast< PHB_CURL >( Cargo );
+   PHB_CURL hb_curl = static_cast<PHB_CURL>(Cargo);
 
    if( hb_curl )
    {
       if( hb_curl->dl_handle == FS_ERROR )
       {
-         return static_cast< size_t >( -1 );
+         return static_cast<size_t>(-1);
       }
 
       return hb_fsWriteLarge( hb_curl->dl_handle, buffer, size * nmemb );
    }
 
-   return static_cast< size_t >( -1 );
+   return static_cast<size_t>(-1);
 }
 
 #define HB_CURL_DL_BUFF_SIZE_INIT  ( CURL_MAX_WRITE_SIZE * 4 )
@@ -379,7 +374,7 @@ static size_t hb_curl_write_fhandle_callback( void * buffer, size_t size, size_t
 
 static size_t hb_curl_write_buff_callback( void * buffer, size_t size, size_t nmemb, void * Cargo )
 {
-   PHB_CURL hb_curl = static_cast< PHB_CURL >( Cargo );
+   PHB_CURL hb_curl = static_cast<PHB_CURL>(Cargo);
 
    if( hb_curl )
    {
@@ -389,7 +384,7 @@ static size_t hb_curl_write_buff_callback( void * buffer, size_t size, size_t nm
       if( nTodo > nLeft )
       {
          hb_curl->dl_len += HB_CURL_DL_BUFF_SIZE_INCR;
-         hb_curl->dl_ptr  = static_cast< unsigned char * >( hb_xrealloc( hb_curl->dl_ptr, hb_curl->dl_len ) );
+         hb_curl->dl_ptr  = static_cast<unsigned char*>(hb_xrealloc(hb_curl->dl_ptr, hb_curl->dl_len));
       }
 
       hb_xmemcpy( hb_curl->dl_ptr + hb_curl->dl_pos, buffer, nTodo );
@@ -399,7 +394,7 @@ static size_t hb_curl_write_buff_callback( void * buffer, size_t size, size_t nm
       return nTodo;
    }
 
-   return static_cast< size_t >( -1 );
+   return static_cast<size_t>(-1);
 }
 
 static int hb_curl_progress_callback( void * Cargo, double dltotal, double dlnow, double ultotal, double ulnow )
@@ -409,12 +404,12 @@ static int hb_curl_progress_callback( void * Cargo, double dltotal, double dlnow
       if( hb_vmRequestReenter() )
       {
          hb_vmPushEvalSym();
-         hb_vmPush( static_cast< PHB_ITEM >( Cargo ) );
-         hb_vmPushDouble( ulnow > 0 ? ulnow : dlnow, HB_DEFAULT_DECIMALS );
-         hb_vmPushDouble( ultotal > 0 ? ultotal : dltotal, HB_DEFAULT_DECIMALS );
-         hb_vmSend( 2 );
+         hb_vmPush(static_cast<PHB_ITEM>(Cargo));
+         hb_vmPushDouble(ulnow > 0 ? ulnow : dlnow, HB_DEFAULT_DECIMALS);
+         hb_vmPushDouble(ultotal > 0 ? ultotal : dltotal, HB_DEFAULT_DECIMALS);
+         hb_vmSend(2);
 
-         if( hb_parl( -1 ) )
+         if( hb_parl(-1) )
          {
             return 1;  /* Abort */
          }
@@ -451,7 +446,7 @@ static void hb_curl_file_ul_free( PHB_CURL hb_curl )
 {
    if( hb_curl && hb_curl->ul_name )
    {
-      hb_xfree( hb_curl->ul_name );
+      hb_xfree(hb_curl->ul_name);
       hb_curl->ul_name = nullptr;
 
       if( hb_curl->ul_handle != FS_ERROR )
@@ -466,7 +461,7 @@ static void hb_curl_file_dl_free( PHB_CURL hb_curl )
 {
    if( hb_curl && hb_curl->dl_name )
    {
-      hb_xfree( hb_curl->dl_name );
+      hb_xfree(hb_curl->dl_name);
       hb_curl->dl_name = nullptr;
 
       if( hb_curl->dl_handle != FS_ERROR )
@@ -481,7 +476,7 @@ static void hb_curl_buff_ul_free( PHB_CURL hb_curl )
 {
    if( hb_curl && hb_curl->ul_ptr )
    {
-      hb_xfree( hb_curl->ul_ptr );
+      hb_xfree(hb_curl->ul_ptr);
       hb_curl->ul_ptr = nullptr;
       hb_curl->ul_len = 0;
       hb_curl->ul_pos = 0;
@@ -492,7 +487,7 @@ static void hb_curl_buff_dl_free( PHB_CURL hb_curl )
 {
    if( hb_curl && hb_curl->dl_ptr )
    {
-      hb_xfree( hb_curl->dl_ptr );
+      hb_xfree(hb_curl->dl_ptr);
       hb_curl->dl_ptr = nullptr;
       hb_curl->dl_len = 0;
       hb_curl->dl_pos = 0;
@@ -542,7 +537,7 @@ static void PHB_CURL_free( PHB_CURL hb_curl, HB_BOOL bFree )
 
    if( hb_curl->pProgressCallback )
    {
-      hb_itemRelease( hb_curl->pProgressCallback );
+      hb_itemRelease(hb_curl->pProgressCallback);
       hb_curl->pProgressCallback = nullptr;
    }
 
@@ -555,7 +550,7 @@ static void PHB_CURL_free( PHB_CURL hb_curl, HB_BOOL bFree )
    if( bFree )
    {
       curl_easy_cleanup( hb_curl->curl );
-      hb_xfree( hb_curl );
+      hb_xfree(hb_curl);
    }
 #if LIBCURL_VERSION_NUM >= 0x070C01
    else
@@ -574,9 +569,9 @@ static PHB_CURL PHB_CURL_create( CURL * from )
 
    if( curl )
    {
-      PHB_CURL hb_curl = static_cast< PHB_CURL >( hb_xgrab( sizeof( HB_CURL ) ) );
+      PHB_CURL hb_curl = static_cast<PHB_CURL>(hb_xgrab(sizeof(HB_CURL)));
 
-      memset( hb_curl, 0, sizeof( HB_CURL ) );
+      memset( hb_curl, 0, sizeof(HB_CURL) );
       hb_curl->curl = curl;
 
       return hb_curl;
@@ -589,20 +584,20 @@ static PHB_CURL PHB_CURL_create( CURL * from )
 
 static HB_GARBAGE_FUNC( PHB_CURL_release )
 {
-   PHB_CURL * hb_curl_ptr = static_cast< PHB_CURL * >( Cargo );
+   PHB_CURL * hb_curl_ptr = static_cast<PHB_CURL*>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( hb_curl_ptr && *hb_curl_ptr )
    {
       /* Destroy the object */
-      PHB_CURL_free( *hb_curl_ptr, HB_TRUE );
+      PHB_CURL_free( *hb_curl_ptr, true );
       *hb_curl_ptr = nullptr;
    }
 }
 
 static HB_GARBAGE_FUNC( PHB_CURL_mark )
 {
-   PHB_CURL * hb_curl_ptr = static_cast< PHB_CURL * >( Cargo );
+   PHB_CURL * hb_curl_ptr = static_cast<PHB_CURL*>(Cargo);
 
    if( hb_curl_ptr && *hb_curl_ptr )
    {
@@ -623,11 +618,11 @@ static const HB_GC_FUNCS s_gcCURLFuncs =
 
 static void PHB_CURL_ret( PHB_CURL from )
 {
-   void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof( PHB_CURL ), &s_gcCURLFuncs ) );
+   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(PHB_CURL), &s_gcCURLFuncs));
 
    *ph = PHB_CURL_create( from );
 
-   hb_retptrGC( ph );
+   hb_retptrGC(ph);
 }
 
 static void * PHB_CURL_is( int iParam )
@@ -637,9 +632,9 @@ static void * PHB_CURL_is( int iParam )
 
 static PHB_CURL PHB_CURL_par( int iParam )
 {
-   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcCURLFuncs, iParam ) );
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcCURLFuncs, iParam));
 
-   return ph ? static_cast< PHB_CURL >( *ph ) : nullptr;
+   return ph ? static_cast<PHB_CURL>(*ph) : nullptr;
 }
 
 /* Harbour interface */
@@ -652,9 +647,9 @@ HB_FUNC( CURL_EASY_INIT )
 
 HB_FUNC( CURL_EASY_DUPLICATE )
 {
-   if( PHB_CURL_is( 1 ) )
+   if( PHB_CURL_is(1) )
    {
-      PHB_CURL_ret( PHB_CURL_par( 1 ) );
+      PHB_CURL_ret( PHB_CURL_par(1) );
    }
    else
    {
@@ -664,14 +659,14 @@ HB_FUNC( CURL_EASY_DUPLICATE )
 
 HB_FUNC( CURL_EASY_CLEANUP )
 {
-   if( PHB_CURL_is( 1 ) )
+   if( PHB_CURL_is(1) )
    {
-      void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcCURLFuncs, 1 ) );
+      void ** ph = static_cast<void**>(hb_parptrGC(&s_gcCURLFuncs, 1));
 
       if( ph && *ph )
       {
          /* Destroy the object */
-         PHB_CURL_free( static_cast< PHB_CURL >( *ph ), HB_TRUE );
+         PHB_CURL_free( static_cast<PHB_CURL>(*ph), true );
          *ph = nullptr;
       }
    }
@@ -683,13 +678,13 @@ HB_FUNC( CURL_EASY_CLEANUP )
 
 HB_FUNC( CURL_EASY_RESET )
 {
-   if( PHB_CURL_is( 1 ) )
+   if( PHB_CURL_is(1) )
    {
-      PHB_CURL hb_curl = PHB_CURL_par( 1 );
+      PHB_CURL hb_curl = PHB_CURL_par(1);
 
       if( hb_curl )
       {
-         PHB_CURL_free( hb_curl, HB_FALSE );
+         PHB_CURL_free( hb_curl, false );
       }
    }
    else
@@ -700,14 +695,14 @@ HB_FUNC( CURL_EASY_RESET )
 
 HB_FUNC( CURL_EASY_PAUSE )
 {
-   if( PHB_CURL_is( 1 ) )
+   if( PHB_CURL_is(1) )
    {
 #if LIBCURL_VERSION_NUM >= 0x071200
-      PHB_CURL hb_curl = PHB_CURL_par( 1 );
+      PHB_CURL hb_curl = PHB_CURL_par(1);
 
-      hb_retnl( hb_curl ? static_cast< long >( curl_easy_pause( hb_curl->curl, hb_parni( 2 ) ) ) : HB_CURLE_ERROR );
+      hb_retnl(hb_curl ? static_cast<long>(curl_easy_pause(hb_curl->curl, hb_parni(2))) : HB_CURLE_ERROR);
 #else
-      hb_retnl( HB_CURLE_ERROR );
+      hb_retnl(HB_CURLE_ERROR);
 #endif
    }
    else
@@ -718,11 +713,11 @@ HB_FUNC( CURL_EASY_PAUSE )
 
 HB_FUNC( CURL_EASY_PERFORM )
 {
-   if( PHB_CURL_is( 1 ) )
+   if( PHB_CURL_is(1) )
    {
-      PHB_CURL hb_curl = PHB_CURL_par( 1 );
+      PHB_CURL hb_curl = PHB_CURL_par(1);
 
-      hb_retnl( hb_curl ? static_cast< long >( curl_easy_perform( hb_curl->curl ) ) : HB_CURLE_ERROR );
+      hb_retnl(hb_curl ? static_cast<long>(curl_easy_perform(hb_curl->curl)) : HB_CURLE_ERROR);
    }
    else
    {
@@ -733,22 +728,22 @@ HB_FUNC( CURL_EASY_PERFORM )
 /* NOTE: curl_easy_send( curl, cBuffer, @nSentBytes ) -> nResult */
 HB_FUNC( CURL_EASY_SEND )
 {
-   if( PHB_CURL_is( 1 ) )
+   if( PHB_CURL_is(1) )
    {
-      CURLcode res = static_cast< CURLcode >( HB_CURLE_ERROR );
+      CURLcode res = static_cast<CURLcode>(HB_CURLE_ERROR);
 #if LIBCURL_VERSION_NUM >= 0x071202
-      PHB_CURL hb_curl = PHB_CURL_par( 1 );
+      PHB_CURL hb_curl = PHB_CURL_par(1);
 
       if( hb_curl )
       {
          size_t size = 0;
 
-         res = curl_easy_send( hb_curl->curl, hb_parcx( 2 ), static_cast< size_t >( hb_parclen( 2 ) ), &size );
+         res = curl_easy_send( hb_curl->curl, hb_parcx(2), static_cast<size_t>(hb_parclen(2)), &size );
 
          hb_storns( size, 3 );
       }
 #endif
-      hb_retnl( static_cast< long >( res ) );
+      hb_retnl(static_cast<long>(res));
    }
    else
    {
@@ -759,15 +754,15 @@ HB_FUNC( CURL_EASY_SEND )
 /* NOTE: curl_easy_recv( curl, @cBuffer ) -> nResult */
 HB_FUNC( CURL_EASY_RECV )
 {
-   if( PHB_CURL_is( 1 ) )
+   if( PHB_CURL_is(1) )
    {
-      CURLcode res = static_cast< CURLcode >( HB_CURLE_ERROR );
+      CURLcode res = static_cast<CURLcode>(HB_CURLE_ERROR);
 #if LIBCURL_VERSION_NUM >= 0x071202
-      PHB_CURL hb_curl = PHB_CURL_par( 1 );
+      PHB_CURL hb_curl = PHB_CURL_par(1);
 
       if( hb_curl )
       {
-         size_t size = static_cast< size_t >( hb_parclen( 2 ) );
+         size_t size = static_cast<size_t>(hb_parclen(2));
          void * buffer;
 
          if( size < 1024 )
@@ -775,17 +770,17 @@ HB_FUNC( CURL_EASY_RECV )
             size = 1024;
          }
 
-         buffer = hb_xgrab( size + 1 );
+         buffer = hb_xgrab(size + 1);
 
          res = curl_easy_recv( hb_curl->curl, buffer, size, &size );
 
-         if( ! hb_storclen_buffer( static_cast< char * >( buffer ), size, 2 ) )
+         if( !hb_storclen_buffer( static_cast<char*>(buffer), size, 2 ) )
          {
-            hb_xfree( buffer );
+            hb_xfree(buffer);
          }
       }
 #endif
-      hb_retnl( static_cast< long >( res ) );
+      hb_retnl(static_cast<long>(res));
    }
    else
    {
@@ -795,34 +790,34 @@ HB_FUNC( CURL_EASY_RECV )
 
 HB_FUNC( CURL_EASY_SETOPT )
 {
-   if( PHB_CURL_is( 1 ) && HB_ISNUM( 2 ) )
+   if( PHB_CURL_is(1) && HB_ISNUM(2) )
    {
-      PHB_CURL hb_curl = PHB_CURL_par( 1 );
-      CURLcode res     = static_cast< CURLcode >( HB_CURLE_ERROR );
+      PHB_CURL hb_curl = PHB_CURL_par(1);
+      CURLcode res     = static_cast<CURLcode>(HB_CURLE_ERROR);
 
       if( hb_curl )
       {
-         switch( hb_parni( 2 ) )
+         switch( hb_parni(2) )
          {
             /* Behavior */
 
             case HB_CURLOPT_VERBOSE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_VERBOSE, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_VERBOSE, HB_CURL_OPT_BOOL(3) );
                break;
             case HB_CURLOPT_HEADER:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_HEADER, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_HEADER, HB_CURL_OPT_BOOL(3) );
                break;
             case HB_CURLOPT_NOPROGRESS:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_NOPROGRESS, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_NOPROGRESS, HB_CURL_OPT_BOOL(3) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x070A00
             case HB_CURLOPT_NOSIGNAL:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_NOSIGNAL, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_NOSIGNAL, HB_CURL_OPT_BOOL(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071500
             case HB_CURLOPT_WILDCARDMATCH:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_WILDCARDMATCH, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_WILDCARDMATCH, HB_CURL_OPT_BOOL(3) );
                break;
 #endif
 
@@ -863,213 +858,213 @@ HB_FUNC( CURL_EASY_SETOPT )
             /* HB_CURLOPT_STDERR */
 
             case HB_CURLOPT_FAILONERROR:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FAILONERROR, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FAILONERROR, HB_CURL_OPT_BOOL(3) );
                break;
 
             /* Network */
 
             /* This is the only option that must be set before curl_easy_perform() is called. */
             case HB_CURLOPT_URL:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_URL, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_URL, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_PROXY:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_PROXYPORT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXYPORT, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXYPORT, hb_parnl(3) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x070A00
             case HB_CURLOPT_PROXYTYPE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXYTYPE, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXYTYPE, hb_parnl(3) );
                break;
 #endif
             case HB_CURLOPT_HTTPPROXYTUNNEL:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_HTTPPROXYTUNNEL, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_HTTPPROXYTUNNEL, HB_CURL_OPT_BOOL(3) );
                break;
 /*
          case HB_CURLOPT_SOCKS5_RESOLVE_LOCAL:
-            res = curl_easy_setopt( hb_curl->curl, CURLOPT_SOCKS5_RESOLVE_LOCAL, HB_CURL_OPT_BOOL( 3 ) );
+            res = curl_easy_setopt( hb_curl->curl, CURLOPT_SOCKS5_RESOLVE_LOCAL, HB_CURL_OPT_BOOL(3) );
             break;
  */
             case HB_CURLOPT_INTERFACE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_INTERFACE, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_INTERFACE, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x070F02
             case HB_CURLOPT_LOCALPORT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_LOCALPORT, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_LOCALPORT, hb_parnl(3) );
                break;
             case HB_CURLOPT_LOCALPORTRANGE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_LOCALPORTRANGE, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_LOCALPORTRANGE, hb_parnl(3) );
                break;
 #endif
             case HB_CURLOPT_DNS_CACHE_TIMEOUT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_DNS_CACHE_TIMEOUT, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_DNS_CACHE_TIMEOUT, hb_parnl(3) );
                break;
             case HB_CURLOPT_DNS_USE_GLOBAL_CACHE: /* OBSOLETE */
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_DNS_USE_GLOBAL_CACHE, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_DNS_USE_GLOBAL_CACHE, HB_CURL_OPT_BOOL(3) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x070A00
             case HB_CURLOPT_BUFFERSIZE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_BUFFERSIZE, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_BUFFERSIZE, hb_parnl(3) );
                break;
 #endif
             case HB_CURLOPT_PORT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PORT, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PORT, hb_parnl(3) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x070A08 /* Not documented. GUESS. */
             case HB_CURLOPT_TCP_NODELAY:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TCP_NODELAY, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TCP_NODELAY, HB_CURL_OPT_BOOL(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071300
             case HB_CURLOPT_ADDRESS_SCOPE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_ADDRESS_SCOPE, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_ADDRESS_SCOPE, hb_parnl(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071304
             case HB_CURLOPT_PROTOCOLS:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROTOCOLS, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROTOCOLS, hb_parnl(3) );
                break;
             case HB_CURLOPT_REDIR_PROTOCOLS:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_REDIR_PROTOCOLS, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_REDIR_PROTOCOLS, hb_parnl(3) );
                break;
             case HB_CURLOPT_NOPROXY:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_NOPROXY, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_NOPROXY, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_SOCKS5_GSSAPI_SERVICE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SOCKS5_GSSAPI_SERVICE, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SOCKS5_GSSAPI_SERVICE, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_SOCKS5_GSSAPI_NEC:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SOCKS5_GSSAPI_NEC, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SOCKS5_GSSAPI_NEC, HB_CURL_OPT_BOOL(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071900
             case HB_CURLOPT_TCP_KEEPALIVE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TCP_KEEPALIVE, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TCP_KEEPALIVE, hb_parnl(3) );
                break;
             case HB_CURLOPT_TCP_KEEPIDLE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TCP_KEEPIDLE, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TCP_KEEPIDLE, hb_parnl(3) );
                break;
             case HB_CURLOPT_TCP_KEEPINTVL:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TCP_KEEPINTVL, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TCP_KEEPINTVL, hb_parnl(3) );
                break;
 #endif
 
             /* Names and passwords options (Authentication) */
 
             case HB_CURLOPT_NETRC:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_NETRC, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_NETRC, hb_parnl(3) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x070A09
             case HB_CURLOPT_NETRC_FILE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_NETRC_FILE, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_NETRC_FILE, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
 #endif
             case HB_CURLOPT_USERPWD:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_USERPWD, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_USERPWD, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x071301
             case HB_CURLOPT_USERNAME:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_USERNAME, hb_parc( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_USERNAME, hb_parc(3) );
                break;
             case HB_CURLOPT_PASSWORD:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PASSWORD, hb_parc( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PASSWORD, hb_parc(3) );
                break;
 #endif
             case HB_CURLOPT_PROXYUSERPWD:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXYUSERPWD, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXYUSERPWD, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x071301
             case HB_CURLOPT_PROXYUSERNAME:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXYUSERNAME, hb_parc( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXYUSERNAME, hb_parc(3) );
                break;
             case HB_CURLOPT_PROXYPASSWORD:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXYPASSWORD, hb_parc( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXYPASSWORD, hb_parc(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A06
             case HB_CURLOPT_HTTPAUTH:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_HTTPAUTH, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_HTTPAUTH, hb_parnl(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A07
             case HB_CURLOPT_PROXYAUTH:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXYAUTH, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXYAUTH, hb_parnl(3) );
                break;
 #endif
 
             /* HTTP options */
 
             case HB_CURLOPT_AUTOREFERER:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_AUTOREFERER, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_AUTOREFERER, HB_CURL_OPT_BOOL(3) );
                break;
             case HB_CURLOPT_ACCEPT_ENCODING:
 #if LIBCURL_VERSION_NUM >= 0x071506
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_ACCEPT_ENCODING, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_ACCEPT_ENCODING, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
 #else
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_ENCODING, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_ENCODING, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
 #endif
                break;
 #if LIBCURL_VERSION_NUM >= 0x071506
             case HB_CURLOPT_TRANSFER_ENCODING:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TRANSFER_ENCODING, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TRANSFER_ENCODING, hb_parnl(3) );
                break;
 #endif
             case HB_CURLOPT_FOLLOWLOCATION:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FOLLOWLOCATION, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FOLLOWLOCATION, HB_CURL_OPT_BOOL(3) );
                break;
             case HB_CURLOPT_UNRESTRICTED_AUTH:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_UNRESTRICTED_AUTH, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_UNRESTRICTED_AUTH, HB_CURL_OPT_BOOL(3) );
                break;
             case HB_CURLOPT_MAXREDIRS:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_MAXREDIRS, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_MAXREDIRS, hb_parnl(3) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x071101
             case HB_CURLOPT_POSTREDIR:
 #if LIBCURL_VERSION_NUM >= 0x071301
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_POSTREDIR, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_POSTREDIR, HB_CURL_OPT_BOOL(3) );
 #else
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_POST301, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_POST301, HB_CURL_OPT_BOOL(3) );
 #endif
                break;
 #endif
             case HB_CURLOPT_PUT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PUT, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PUT, HB_CURL_OPT_BOOL(3) );
                break;
             case HB_CURLOPT_POST:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_POST, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_POST, HB_CURL_OPT_BOOL(3) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x071101
             case HB_CURLOPT_POSTFIELDS:
             case HB_CURLOPT_COPYPOSTFIELDS:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_COPYPOSTFIELDS, hb_parc( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_COPYPOSTFIELDS, hb_parc(3) );
                break;
 #endif
             case HB_CURLOPT_POSTFIELDSIZE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_POSTFIELDSIZE, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_POSTFIELDSIZE, hb_parnl(3) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x070B01
             case HB_CURLOPT_POSTFIELDSIZE_LARGE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_POSTFIELDSIZE_LARGE, HB_CURL_OPT_LARGENUM( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_POSTFIELDSIZE_LARGE, HB_CURL_OPT_LARGENUM(3) );
                break;
 #endif
             case HB_CURLOPT_HTTPPOST:
             {
-               PHB_ITEM pArray = hb_param( 3, HB_IT_ARRAY );
+               PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
 
                if( pArray )
                {
-                  HB_SIZE nLen = hb_arrayLen( pArray );
+                  HB_SIZE nLen = hb_arrayLen(pArray);
 
                   for( HB_SIZE nPos = 0; nPos < nLen; ++nPos )
                   {
-                     PHB_ITEM pSubArray = hb_arrayGetItemPtr( pArray, nPos + 1 );
+                     PHB_ITEM pSubArray = hb_arrayGetItemPtr(pArray, nPos + 1);
 
                      curl_formadd( &hb_curl->pHTTPPOST_First,
                                    &hb_curl->pHTTPPOST_Last,
-                                   CURLFORM_COPYNAME, hb_arrayGetCPtr( pSubArray, 1 ),
+                                   CURLFORM_COPYNAME, hb_arrayGetCPtr(pSubArray, 1),
                                    CURLFORM_NAMELENGTH, hb_arrayGetCLen( pSubArray, 1 ),
-                                   CURLFORM_FILE, hb_curl_StrHash( hb_curl, hb_arrayGetCPtr( pSubArray, 2 ) ),
+                                   CURLFORM_FILE, hb_curl_StrHash( hb_curl, hb_arrayGetCPtr(pSubArray, 2) ),
                                    CURLFORM_END );
                   }
 
@@ -1078,25 +1073,25 @@ HB_FUNC( CURL_EASY_SETOPT )
             }
             break;
             case HB_CURLOPT_REFERER:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_REFERER, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_REFERER, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_USERAGENT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_USERAGENT, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_USERAGENT, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_HTTPHEADER:
             {
-               PHB_ITEM pArray = hb_param( 3, HB_IT_ARRAY );
+               PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
 
                curl_easy_setopt( hb_curl->curl, CURLOPT_HTTPHEADER, nullptr );
                hb_curl_slist_free( &hb_curl->pHTTPHEADER );
 
                if( pArray )
                {
-                  HB_SIZE nLen = hb_arrayLen( pArray );
+                  HB_SIZE nLen = hb_arrayLen(pArray);
 
                   for( HB_SIZE nPos = 0; nPos < nLen; ++nPos )
                   {
-                     hb_curl->pHTTPHEADER = curl_slist_append( hb_curl->pHTTPHEADER, hb_arrayGetCPtr( pArray, nPos + 1 ) );
+                     hb_curl->pHTTPHEADER = curl_slist_append( hb_curl->pHTTPHEADER, hb_arrayGetCPtr(pArray, nPos + 1) );
                   }
 
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_HTTPHEADER, hb_curl->pHTTPHEADER );
@@ -1106,18 +1101,18 @@ HB_FUNC( CURL_EASY_SETOPT )
 #if LIBCURL_VERSION_NUM >= 0x070A03
             case HB_CURLOPT_HTTP200ALIASES:
             {
-               PHB_ITEM pArray = hb_param( 3, HB_IT_ARRAY );
+               PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
 
                curl_easy_setopt( hb_curl->curl, CURLOPT_HTTP200ALIASES, nullptr );
                hb_curl_slist_free( &hb_curl->pHTTP200ALIASES );
 
                if( pArray )
                {
-                  HB_SIZE nLen = hb_arrayLen( pArray );
+                  HB_SIZE nLen = hb_arrayLen(pArray);
 
                   for( HB_SIZE nPos = 0; nPos < nLen; ++nPos )
                   {
-                     hb_curl->pHTTP200ALIASES = curl_slist_append( hb_curl->pHTTP200ALIASES, hb_arrayGetCPtr( pArray, nPos + 1 ) );
+                     hb_curl->pHTTP200ALIASES = curl_slist_append( hb_curl->pHTTP200ALIASES, hb_arrayGetCPtr(pArray, nPos + 1) );
                   }
 
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_HTTP200ALIASES, hb_curl->pHTTP200ALIASES );
@@ -1126,39 +1121,39 @@ HB_FUNC( CURL_EASY_SETOPT )
             break;
 #endif
             case HB_CURLOPT_COOKIE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_COOKIE, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_COOKIE, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_COOKIEFILE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_COOKIEFILE, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_COOKIEFILE, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_COOKIEJAR:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_COOKIEJAR, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_COOKIEJAR, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_COOKIESESSION:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_COOKIESESSION, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_COOKIESESSION, HB_CURL_OPT_BOOL(3) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x070E01
             case HB_CURLOPT_COOKIELIST:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_COOKIELIST, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_COOKIELIST, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
 #endif
             case HB_CURLOPT_HTTPGET:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_HTTPGET, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_HTTPGET, HB_CURL_OPT_BOOL(3) );
                break;
             case HB_CURLOPT_HTTP_VERSION:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_HTTP_VERSION, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_HTTP_VERSION, hb_parnl(3) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x070E01
             case HB_CURLOPT_IGNORE_CONTENT_LENGTH:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_IGNORE_CONTENT_LENGTH, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_IGNORE_CONTENT_LENGTH, HB_CURL_OPT_BOOL(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071002
             case HB_CURLOPT_HTTP_CONTENT_DECODING:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_HTTP_CONTENT_DECODING, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_HTTP_CONTENT_DECODING, HB_CURL_OPT_BOOL(3) );
                break;
             case HB_CURLOPT_HTTP_TRANSFER_DECODING:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_HTTP_TRANSFER_DECODING, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_HTTP_TRANSFER_DECODING, HB_CURL_OPT_BOOL(3) );
                break;
 #endif
 
@@ -1166,22 +1161,22 @@ HB_FUNC( CURL_EASY_SETOPT )
 
 #if LIBCURL_VERSION_NUM >= 0x071400
             case HB_CURLOPT_MAIL_FROM:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_MAIL_FROM, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_MAIL_FROM, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_MAIL_RCPT:
             {
-               PHB_ITEM pArray = hb_param( 3, HB_IT_ARRAY );
+               PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
 
                curl_easy_setopt( hb_curl->curl, CURLOPT_MAIL_RCPT, nullptr );
                hb_curl_slist_free( &hb_curl->pMAIL_RCPT );
 
                if( pArray )
                {
-                  HB_SIZE nLen = hb_arrayLen( pArray );
+                  HB_SIZE nLen = hb_arrayLen(pArray);
 
                   for( HB_SIZE nPos = 0; nPos < nLen; ++nPos )
                   {
-                     hb_curl->pMAIL_RCPT = curl_slist_append( hb_curl->pMAIL_RCPT, hb_arrayGetCPtr( pArray, nPos + 1 ) );
+                     hb_curl->pMAIL_RCPT = curl_slist_append( hb_curl->pMAIL_RCPT, hb_arrayGetCPtr(pArray, nPos + 1) );
                   }
 
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_MAIL_RCPT, hb_curl->pMAIL_RCPT );
@@ -1191,7 +1186,7 @@ HB_FUNC( CURL_EASY_SETOPT )
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071900
             case HB_CURLOPT_MAIL_AUTH:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_MAIL_AUTH, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_MAIL_AUTH, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
 #endif
 
@@ -1199,29 +1194,29 @@ HB_FUNC( CURL_EASY_SETOPT )
 
 #if LIBCURL_VERSION_NUM >= 0x071304
             case HB_CURLOPT_TFTP_BLKSIZE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TFTP_BLKSIZE, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TFTP_BLKSIZE, hb_parnl(3) );
                break;
 #endif
 
             /* FTP options */
 
             case HB_CURLOPT_FTPPORT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTPPORT, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTPPORT, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_QUOTE:
             {
-               PHB_ITEM pArray = hb_param( 3, HB_IT_ARRAY );
+               PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
 
                curl_easy_setopt( hb_curl->curl, CURLOPT_QUOTE, nullptr );
                hb_curl_slist_free( &hb_curl->pQUOTE );
 
                if( pArray )
                {
-                  HB_SIZE nLen = hb_arrayLen( pArray );
+                  HB_SIZE nLen = hb_arrayLen(pArray);
 
                   for( HB_SIZE nPos = 0; nPos < nLen; ++nPos )
                   {
-                     hb_curl->pQUOTE = curl_slist_append( hb_curl->pQUOTE, hb_arrayGetCPtr( pArray, nPos + 1 ) );
+                     hb_curl->pQUOTE = curl_slist_append( hb_curl->pQUOTE, hb_arrayGetCPtr(pArray, nPos + 1) );
                   }
 
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_QUOTE, hb_curl->pQUOTE );
@@ -1230,18 +1225,18 @@ HB_FUNC( CURL_EASY_SETOPT )
             break;
             case HB_CURLOPT_POSTQUOTE:
             {
-               PHB_ITEM pArray = hb_param( 3, HB_IT_ARRAY );
+               PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
 
                curl_easy_setopt( hb_curl->curl, CURLOPT_POSTQUOTE, nullptr );
                hb_curl_slist_free( &hb_curl->pPOSTQUOTE );
 
                if( pArray )
                {
-                  HB_SIZE nLen = hb_arrayLen( pArray );
+                  HB_SIZE nLen = hb_arrayLen(pArray);
 
                   for( HB_SIZE nPos = 0; nPos < nLen; ++nPos )
                   {
-                     hb_curl->pPOSTQUOTE = curl_slist_append( hb_curl->pPOSTQUOTE, hb_arrayGetCPtr( pArray, nPos + 1 ) );
+                     hb_curl->pPOSTQUOTE = curl_slist_append( hb_curl->pPOSTQUOTE, hb_arrayGetCPtr(pArray, nPos + 1) );
                   }
 
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_POSTQUOTE, hb_curl->pPOSTQUOTE );
@@ -1250,18 +1245,18 @@ HB_FUNC( CURL_EASY_SETOPT )
             break;
             case HB_CURLOPT_PREQUOTE:
             {
-               PHB_ITEM pArray = hb_param( 3, HB_IT_ARRAY );
+               PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
 
                curl_easy_setopt( hb_curl->curl, CURLOPT_PREQUOTE, nullptr );
                hb_curl_slist_free( &hb_curl->pPREQUOTE );
 
                if( pArray )
                {
-                  HB_SIZE nLen = hb_arrayLen( pArray );
+                  HB_SIZE nLen = hb_arrayLen(pArray);
 
                   for( HB_SIZE nPos = 0; nPos < nLen; ++nPos )
                   {
-                     hb_curl->pQUOTE = curl_slist_append( hb_curl->pPREQUOTE, hb_arrayGetCPtr( pArray, nPos + 1 ) );
+                     hb_curl->pQUOTE = curl_slist_append( hb_curl->pPREQUOTE, hb_arrayGetCPtr(pArray, nPos + 1) );
                   }
 
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_PREQUOTE, hb_curl->pPREQUOTE );
@@ -1270,76 +1265,76 @@ HB_FUNC( CURL_EASY_SETOPT )
             break;
             case HB_CURLOPT_DIRLISTONLY: /* HB_CURLOPT_FTPLISTONLY */
 #if LIBCURL_VERSION_NUM > 0x071004
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_DIRLISTONLY, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_DIRLISTONLY, HB_CURL_OPT_BOOL(3) );
 #else
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTPLISTONLY, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTPLISTONLY, HB_CURL_OPT_BOOL(3) );
 #endif
                break;
             case HB_CURLOPT_APPEND: /* HB_CURLOPT_FTPAPPEND */
 #if LIBCURL_VERSION_NUM > 0x071004
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_APPEND, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_APPEND, HB_CURL_OPT_BOOL(3) );
 #else
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTPAPPEND, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTPAPPEND, HB_CURL_OPT_BOOL(3) );
 #endif
                break;
 #if LIBCURL_VERSION_NUM >= 0x070A05
             case HB_CURLOPT_FTP_USE_EPRT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_USE_EPRT, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_USE_EPRT, HB_CURL_OPT_BOOL(3) );
                break;
 #endif
             case HB_CURLOPT_FTP_USE_EPSV:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_USE_EPSV, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_USE_EPSV, HB_CURL_OPT_BOOL(3) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x071400
             case HB_CURLOPT_FTP_USE_PRET:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_USE_PRET, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_USE_PRET, HB_CURL_OPT_BOOL(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A07
             case HB_CURLOPT_FTP_CREATE_MISSING_DIRS:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_CREATE_MISSING_DIRS, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_CREATE_MISSING_DIRS, HB_CURL_OPT_BOOL(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A08
             case HB_CURLOPT_FTP_RESPONSE_TIMEOUT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_RESPONSE_TIMEOUT, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_RESPONSE_TIMEOUT, hb_parnl(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070F05
             case HB_CURLOPT_FTP_ALTERNATIVE_TO_USER:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_ALTERNATIVE_TO_USER, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_ALTERNATIVE_TO_USER, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070E02
             case HB_CURLOPT_FTP_SKIP_PASV_IP:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_SKIP_PASV_IP, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_SKIP_PASV_IP, HB_CURL_OPT_BOOL(3) );
                break;
 #endif
             case HB_CURLOPT_USE_SSL:
 #if LIBCURL_VERSION_NUM > 0x071004
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_USE_SSL, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_USE_SSL, hb_parnl(3) );
 #elif LIBCURL_VERSION_NUM >= 0x070B00
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_SSL, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_SSL, hb_parnl(3) );
 #endif
                break;
 #if LIBCURL_VERSION_NUM >= 0x070C02
             case HB_CURLOPT_FTPSSLAUTH:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTPSSLAUTH, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTPSSLAUTH, hb_parnl(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071001
             case HB_CURLOPT_FTP_SSL_CCC:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_SSL_CCC, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_SSL_CCC, hb_parnl(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070D00
             case HB_CURLOPT_FTP_ACCOUNT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_ACCOUNT, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_ACCOUNT, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070F01
             case HB_CURLOPT_FTP_FILEMETHOD:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_FILEMETHOD, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FTP_FILEMETHOD, hb_parnl(3) );
                break;
 #endif
 
@@ -1347,158 +1342,158 @@ HB_FUNC( CURL_EASY_SETOPT )
 
 #if LIBCURL_VERSION_NUM >= 0x071400
             case HB_CURLOPT_RTSP_REQUEST:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RTSP_REQUEST, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RTSP_REQUEST, hb_parnl(3) );
                break;
             case HB_CURLOPT_RTSP_SESSION_ID:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RTSP_SESSION_ID, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RTSP_SESSION_ID, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_RTSP_STREAM_URI:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RTSP_STREAM_URI, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RTSP_STREAM_URI, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_RTSP_TRANSPORT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RTSP_TRANSPORT, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RTSP_TRANSPORT, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_RTSP_CLIENT_CSEQ:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RTSP_CLIENT_CSEQ, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RTSP_CLIENT_CSEQ, hb_parnl(3) );
                break;
             case HB_CURLOPT_RTSP_SERVER_CSEQ:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RTSP_SERVER_CSEQ, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RTSP_SERVER_CSEQ, hb_parnl(3) );
                break;
 #endif
 
             /* Protocol */
 
             case HB_CURLOPT_TRANSFERTEXT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TRANSFERTEXT, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TRANSFERTEXT, HB_CURL_OPT_BOOL(3) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x071200
             case HB_CURLOPT_PROXY_TRANSFER_MODE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_TRANSFER_MODE, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_TRANSFER_MODE, HB_CURL_OPT_BOOL(3) );
                break;
 #endif
             case HB_CURLOPT_CRLF:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CRLF, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CRLF, HB_CURL_OPT_BOOL(3) );
                break;
             case HB_CURLOPT_RANGE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RANGE, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RANGE, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_RESUME_FROM:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RESUME_FROM, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RESUME_FROM, hb_parnl(3) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x070B00
             case HB_CURLOPT_RESUME_FROM_LARGE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RESUME_FROM_LARGE, HB_CURL_OPT_LARGENUM( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RESUME_FROM_LARGE, HB_CURL_OPT_LARGENUM(3) );
                break;
 #endif
             case HB_CURLOPT_CUSTOMREQUEST:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CUSTOMREQUEST, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CUSTOMREQUEST, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_FILETIME:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FILETIME, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FILETIME, hb_parnl(3) );
                break;
             case HB_CURLOPT_NOBODY:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_NOBODY, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_NOBODY, HB_CURL_OPT_BOOL(3) );
                break;
             case HB_CURLOPT_INFILESIZE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_INFILESIZE, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_INFILESIZE, hb_parnl(3) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x070B00
             case HB_CURLOPT_INFILESIZE_LARGE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_INFILESIZE_LARGE, HB_CURL_OPT_LARGENUM( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_INFILESIZE_LARGE, HB_CURL_OPT_LARGENUM(3) );
                break;
 #endif
             case HB_CURLOPT_UPLOAD:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_UPLOAD, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_UPLOAD, HB_CURL_OPT_BOOL(3) );
                break;
             case HB_CURLOPT_DOWNLOAD: /* Harbour extension */
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_UPLOAD, ! HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_UPLOAD, !HB_CURL_OPT_BOOL(3) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x070A08 /* Not documented. GUESS. */
             case HB_CURLOPT_MAXFILESIZE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_MAXFILESIZE, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_MAXFILESIZE, hb_parnl(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070B00
             case HB_CURLOPT_MAXFILESIZE_LARGE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_MAXFILESIZE_LARGE, HB_CURL_OPT_LARGENUM( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_MAXFILESIZE_LARGE, HB_CURL_OPT_LARGENUM(3) );
                break;
 #endif
             case HB_CURLOPT_TIMECONDITION:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TIMECONDITION, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TIMECONDITION, hb_parnl(3) );
                break;
             case HB_CURLOPT_TIMEVALUE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TIMEVALUE, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TIMEVALUE, hb_parnl(3) );
                break;
 
             /* Connection */
 
             case HB_CURLOPT_TIMEOUT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TIMEOUT, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TIMEOUT, hb_parnl(3) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x071002
             case HB_CURLOPT_TIMEOUT_MS:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TIMEOUT_MS, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_TIMEOUT_MS, hb_parnl(3) );
                break;
 #endif
             case HB_CURLOPT_LOW_SPEED_LIMIT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_LOW_SPEED_LIMIT, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_LOW_SPEED_LIMIT, hb_parnl(3) );
                break;
             case HB_CURLOPT_LOW_SPEED_TIME:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_LOW_SPEED_TIME, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_LOW_SPEED_TIME, hb_parnl(3) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x070F05
             case HB_CURLOPT_MAX_SEND_SPEED_LARGE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_MAX_SEND_SPEED_LARGE, HB_CURL_OPT_LARGENUM( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_MAX_SEND_SPEED_LARGE, HB_CURL_OPT_LARGENUM(3) );
                break;
             case HB_CURLOPT_MAX_RECV_SPEED_LARGE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_MAX_RECV_SPEED_LARGE, HB_CURL_OPT_LARGENUM( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_MAX_RECV_SPEED_LARGE, HB_CURL_OPT_LARGENUM(3) );
                break;
 #endif
             case HB_CURLOPT_MAXCONNECTS:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_MAXCONNECTS, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_MAXCONNECTS, hb_parnl(3) );
                break;
             case HB_CURLOPT_CLOSEPOLICY: /* OBSOLETE, does nothing. */
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CLOSEPOLICY, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CLOSEPOLICY, hb_parnl(3) );
                break;
             case HB_CURLOPT_FRESH_CONNECT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FRESH_CONNECT, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FRESH_CONNECT, HB_CURL_OPT_BOOL(3) );
                break;
             case HB_CURLOPT_FORBID_REUSE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FORBID_REUSE, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_FORBID_REUSE, HB_CURL_OPT_BOOL(3) );
                break;
             case HB_CURLOPT_CONNECTTIMEOUT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CONNECTTIMEOUT, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CONNECTTIMEOUT, hb_parnl(3) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x071002
             case HB_CURLOPT_CONNECTTIMEOUT_MS:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CONNECTTIMEOUT_MS, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CONNECTTIMEOUT_MS, hb_parnl(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A08 /* Not documented. GUESS. */
             case HB_CURLOPT_IPRESOLVE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_IPRESOLVE, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_IPRESOLVE, hb_parnl(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070F02
             case HB_CURLOPT_CONNECT_ONLY:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CONNECT_ONLY, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CONNECT_ONLY, HB_CURL_OPT_BOOL(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071503
             case HB_CURLOPT_RESOLVE:
             {
-               PHB_ITEM pArray = hb_param( 3, HB_IT_ARRAY );
+               PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
 
                curl_easy_setopt( hb_curl->curl, CURLOPT_RESOLVE, nullptr );
                hb_curl_slist_free( &hb_curl->pRESOLVE );
 
                if( pArray )
                {
-                  HB_SIZE nLen = hb_arrayLen( pArray );
+                  HB_SIZE nLen = hb_arrayLen(pArray);
 
                   for( HB_SIZE nPos = 0; nPos < nLen; ++nPos )
                   {
-                     hb_curl->pRESOLVE = curl_slist_append( hb_curl->pRESOLVE, hb_arrayGetCPtr( pArray, nPos + 1 ) );
+                     hb_curl->pRESOLVE = curl_slist_append( hb_curl->pRESOLVE, hb_arrayGetCPtr(pArray, nPos + 1) );
                   }
 
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_RESOLVE, hb_curl->pRESOLVE );
@@ -1508,99 +1503,99 @@ HB_FUNC( CURL_EASY_SETOPT )
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071800
             case HB_CURLOPT_DNS_SERVERS:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_DNS_SERVERS, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_DNS_SERVERS, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_ACCEPTTIMEOUT_MS:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_ACCEPTTIMEOUT_MS, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_ACCEPTTIMEOUT_MS, hb_parnl(3) );
                break;
 #endif
 
             /* SSL and Security */
 
             case HB_CURLOPT_SSLCERT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSLCERT, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSLCERT, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
 #if LIBCURL_VERSION_NUM >= 0x070903
             case HB_CURLOPT_SSLCERTTYPE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSLCERTTYPE, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSLCERTTYPE, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
 #endif
             case HB_CURLOPT_SSLKEY:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSLKEY, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSLKEY, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_SSLKEYTYPE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSLKEYTYPE, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSLKEYTYPE, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_KEYPASSWD:
 #if LIBCURL_VERSION_NUM > 0x071004
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_KEYPASSWD, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_KEYPASSWD, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
 #elif LIBCURL_VERSION_NUM > 0x070902
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSLKEYPASSWD, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSLKEYPASSWD, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
 #else
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSLCERTPASSWD, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSLCERTPASSWD, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
 #endif
                break;
             case HB_CURLOPT_SSLENGINE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSLENGINE, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSLENGINE, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_SSLENGINE_DEFAULT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSLENGINE_DEFAULT, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSLENGINE_DEFAULT, hb_parnl(3) );
                break;
             case HB_CURLOPT_SSLVERSION:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSLVERSION, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSLVERSION, hb_parnl(3) );
                break;
             case HB_CURLOPT_SSL_VERIFYPEER:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSL_VERIFYPEER, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSL_VERIFYPEER, HB_CURL_OPT_BOOL(3) );
                break;
             case HB_CURLOPT_CAINFO:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CAINFO, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CAINFO, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_CAPATH:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CAPATH, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CAPATH, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_RANDOM_FILE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RANDOM_FILE, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_RANDOM_FILE, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_EGDSOCKET:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_EGDSOCKET, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_EGDSOCKET, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_SSL_VERIFYHOST:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSL_VERIFYHOST, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSL_VERIFYHOST, hb_parnl(3) );
                break;
             case HB_CURLOPT_SSL_CIPHER_LIST:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSL_CIPHER_LIST, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSL_CIPHER_LIST, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_SSL_SESSIONID_CACHE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSL_VERIFYHOST, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSL_VERIFYHOST, HB_CURL_OPT_BOOL(3) );
                break;
             case HB_CURLOPT_KRBLEVEL: /* HB_CURLOPT_KRB4LEVEL */
 #if LIBCURL_VERSION_NUM > 0x071003
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_KRBLEVEL, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_KRBLEVEL, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
 #else
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_KRB4LEVEL, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_KRB4LEVEL, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
 #endif
                break;
 #if LIBCURL_VERSION_NUM >= 0x071300
             case HB_CURLOPT_CRLFILE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CRLFILE, hb_parc( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CRLFILE, hb_parc(3) );
                break;
             case HB_CURLOPT_ISSUERCERT:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_ISSUERCERT, hb_parc( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_ISSUERCERT, hb_parc(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071301
             case HB_CURLOPT_CERTINFO:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CERTINFO, HB_CURL_OPT_BOOL( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_CERTINFO, HB_CURL_OPT_BOOL(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071600
             case HB_CURLOPT_GSSAPI_DELEGATION:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_GSSAPI_DELEGATION, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_GSSAPI_DELEGATION, hb_parnl(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071900
             case HB_CURLOPT_SSL_OPTIONS:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSL_OPTIONS, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSL_OPTIONS, hb_parnl(3) );
                break;
 #endif
 
@@ -1608,25 +1603,25 @@ HB_FUNC( CURL_EASY_SETOPT )
 
 #if LIBCURL_VERSION_NUM >= 0x071001
             case HB_CURLOPT_SSH_AUTH_TYPES:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSH_AUTH_TYPES, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSH_AUTH_TYPES, hb_parnl(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071101
             case HB_CURLOPT_SSH_HOST_PUBLIC_KEY_MD5:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSH_HOST_PUBLIC_KEY_MD5, hb_parc( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSH_HOST_PUBLIC_KEY_MD5, hb_parc(3) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071001
             case HB_CURLOPT_SSH_PUBLIC_KEYFILE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSH_PUBLIC_KEYFILE, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSH_PUBLIC_KEYFILE, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
             case HB_CURLOPT_SSH_PRIVATE_KEYFILE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSH_PRIVATE_KEYFILE, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSH_PRIVATE_KEYFILE, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071306
             case HB_CURLOPT_SSH_KNOWNHOSTS:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSH_KNOWNHOSTS, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_SSH_KNOWNHOSTS, hb_curl_StrHash( hb_curl, hb_parc(3) ) );
                break;
 #endif
 
@@ -1634,7 +1629,7 @@ HB_FUNC( CURL_EASY_SETOPT )
 
 #if LIBCURL_VERSION_NUM >= 0x070A03
             case HB_CURLOPT_PRIVATE:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PRIVATE, hb_parptr( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PRIVATE, hb_parptr(3) );
                break;
 #endif
 
@@ -1642,10 +1637,10 @@ HB_FUNC( CURL_EASY_SETOPT )
 
 #if LIBCURL_VERSION_NUM >= 0x071004
             case HB_CURLOPT_NEW_FILE_PERMS:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_NEW_FILE_PERMS, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_NEW_FILE_PERMS, hb_parnl(3) );
                break;
             case HB_CURLOPT_NEW_DIRECTORY_PERMS:
-               res = curl_easy_setopt( hb_curl->curl, CURLOPT_NEW_DIRECTORY_PERMS, hb_parnl( 3 ) );
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_NEW_DIRECTORY_PERMS, hb_parnl(3) );
                break;
 #endif
 
@@ -1653,18 +1648,18 @@ HB_FUNC( CURL_EASY_SETOPT )
 
             case HB_CURLOPT_TELNETOPTIONS:
             {
-               PHB_ITEM pArray = hb_param( 3, HB_IT_ARRAY );
+               PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
 
                curl_easy_setopt( hb_curl->curl, CURLOPT_TELNETOPTIONS, nullptr );
                hb_curl_slist_free( &hb_curl->pTELNETOPTIONS );
 
                if( pArray )
                {
-                  HB_SIZE nLen = hb_arrayLen( pArray );
+                  HB_SIZE nLen = hb_arrayLen(pArray);
 
                   for( HB_SIZE nPos = 0; nPos < nLen; ++nPos )
                   {
-                     hb_curl->pTELNETOPTIONS = curl_slist_append( hb_curl->pTELNETOPTIONS, hb_arrayGetCPtr( pArray, nPos + 1 ) );
+                     hb_curl->pTELNETOPTIONS = curl_slist_append( hb_curl->pTELNETOPTIONS, hb_arrayGetCPtr(pArray, nPos + 1) );
                   }
 
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_TELNETOPTIONS, hb_curl->pTELNETOPTIONS );
@@ -1680,20 +1675,20 @@ HB_FUNC( CURL_EASY_SETOPT )
 
             case HB_CURLOPT_PROGRESSBLOCK:
             {
-               PHB_ITEM pProgressCallback = hb_param( 3, HB_IT_BLOCK | HB_IT_SYMBOL );
+               PHB_ITEM pProgressCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
                if( hb_curl->pProgressCallback )
                {
                   curl_easy_setopt( hb_curl->curl, CURLOPT_PROGRESSFUNCTION, nullptr );
                   curl_easy_setopt( hb_curl->curl, CURLOPT_PROGRESSDATA, nullptr );
 
-                  hb_itemRelease( hb_curl->pProgressCallback );
+                  hb_itemRelease(hb_curl->pProgressCallback);
                   hb_curl->pProgressCallback = nullptr;
                }
 
                if( pProgressCallback )
                {
-                  hb_curl->pProgressCallback = hb_itemNew( pProgressCallback );
+                  hb_curl->pProgressCallback = hb_itemNew(pProgressCallback);
                   /* unlock the item so GC will not mark them as used */
                   hb_gcUnlock( hb_curl->pProgressCallback );
 
@@ -1706,9 +1701,9 @@ HB_FUNC( CURL_EASY_SETOPT )
             case HB_CURLOPT_UL_FILE_SETUP:
                hb_curl_file_ul_free( hb_curl );
 
-               if( HB_ISCHAR( 3 ) )
+               if( HB_ISCHAR(3) )
                {
-                  hb_curl->ul_name   = hb_strdup( hb_parc( 3 ) );
+                  hb_curl->ul_name   = hb_strdup( hb_parc(3) );
                   hb_curl->ul_handle = FS_ERROR;
 
                   curl_easy_setopt( hb_curl->curl, CURLOPT_READFUNCTION, hb_curl_read_file_callback );
@@ -1719,10 +1714,10 @@ HB_FUNC( CURL_EASY_SETOPT )
             case HB_CURLOPT_UL_FHANDLE_SETUP:
                hb_curl_file_ul_free( hb_curl );
 
-               if( HB_ISNUM( 3 ) )
+               if( HB_ISNUM(3) )
                {
                   hb_curl->ul_name   = nullptr;
-                  hb_curl->ul_handle = hb_numToHandle( hb_parnint( 3 ) );
+                  hb_curl->ul_handle = hb_numToHandle( hb_parnint(3) );
 
                   curl_easy_setopt( hb_curl->curl, CURLOPT_READFUNCTION, hb_curl_read_fhandle_callback );
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_READDATA, hb_curl );
@@ -1737,9 +1732,9 @@ HB_FUNC( CURL_EASY_SETOPT )
             case HB_CURLOPT_DL_FILE_SETUP:
                hb_curl_file_dl_free( hb_curl );
 
-               if( HB_ISCHAR( 3 ) )
+               if( HB_ISCHAR(3) )
                {
-                  hb_curl->dl_name   = hb_strdup( hb_parc( 3 ) );
+                  hb_curl->dl_name   = hb_strdup( hb_parc(3) );
                   hb_curl->dl_handle = FS_ERROR;
 
                   curl_easy_setopt( hb_curl->curl, CURLOPT_WRITEFUNCTION, hb_curl_write_file_callback );
@@ -1750,10 +1745,10 @@ HB_FUNC( CURL_EASY_SETOPT )
             case HB_CURLOPT_DL_FHANDLE_SETUP:
                hb_curl_file_dl_free( hb_curl );
 
-               if( HB_ISNUM( 3 ) )
+               if( HB_ISNUM(3) )
                {
                   hb_curl->dl_name   = nullptr;
-                  hb_curl->dl_handle = hb_numToHandle( hb_parnint( 3 ) );
+                  hb_curl->dl_handle = hb_numToHandle( hb_parnint(3) );
 
                   curl_easy_setopt( hb_curl->curl, CURLOPT_WRITEFUNCTION, hb_curl_write_fhandle_callback );
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_WRITEDATA, hb_curl );
@@ -1768,13 +1763,13 @@ HB_FUNC( CURL_EASY_SETOPT )
             case HB_CURLOPT_UL_BUFF_SETUP:
                hb_curl_buff_ul_free( hb_curl );
 
-               if( HB_ISCHAR( 3 ) )
+               if( HB_ISCHAR(3) )
                {
                   hb_curl->ul_pos = 0;
-                  hb_curl->ul_len = hb_parclen( 3 );
-                  hb_curl->ul_ptr = static_cast< unsigned char * >( hb_xgrab( hb_curl->ul_len ) );
+                  hb_curl->ul_len = hb_parclen(3);
+                  hb_curl->ul_ptr = static_cast<unsigned char*>(hb_xgrab(hb_curl->ul_len));
 
-                  hb_xmemcpy( hb_curl->ul_ptr, hb_parc( 3 ), hb_curl->ul_len );
+                  hb_xmemcpy( hb_curl->ul_ptr, hb_parc(3), hb_curl->ul_len );
 
                   curl_easy_setopt( hb_curl->curl, CURLOPT_READFUNCTION, hb_curl_read_buff_callback );
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_READDATA, hb_curl );
@@ -1785,15 +1780,15 @@ HB_FUNC( CURL_EASY_SETOPT )
                hb_curl_buff_dl_free( hb_curl );
 
                hb_curl->dl_pos = 0;
-               hb_curl->dl_len = hb_parnldef( 3, HB_CURL_DL_BUFF_SIZE_INIT );
-               hb_curl->dl_ptr = static_cast< unsigned char * >( hb_xgrab( hb_curl->dl_len ) );
+               hb_curl->dl_len = hb_parnldef(3, HB_CURL_DL_BUFF_SIZE_INIT);
+               hb_curl->dl_ptr = static_cast<unsigned char*>(hb_xgrab(hb_curl->dl_len));
 
                curl_easy_setopt( hb_curl->curl, CURLOPT_WRITEFUNCTION, hb_curl_write_buff_callback );
                res = curl_easy_setopt( hb_curl->curl, CURLOPT_WRITEDATA, hb_curl );
                break;
 
             case HB_CURLOPT_DL_BUFF_GET:
-               hb_storclen( reinterpret_cast< char * >( hb_curl->dl_ptr ), hb_curl->dl_pos, 3 );
+               hb_storclen(reinterpret_cast<char*>(hb_curl->dl_ptr), hb_curl->dl_pos, 3);
                if( hb_curl->dl_ptr )
                {
                   res = CURLE_OK;
@@ -1810,7 +1805,7 @@ HB_FUNC( CURL_EASY_SETOPT )
          }
       }
 
-      hb_retnl( static_cast< long >( res ) );
+      hb_retnl(static_cast<long>(res));
    }
    else
    {
@@ -1821,13 +1816,13 @@ HB_FUNC( CURL_EASY_SETOPT )
 /* Harbour extension. */
 HB_FUNC( CURL_EASY_DL_BUFF_GET )
 {
-   if( PHB_CURL_is( 1 ) )
+   if( PHB_CURL_is(1) )
    {
-      PHB_CURL hb_curl = PHB_CURL_par( 1 );
+      PHB_CURL hb_curl = PHB_CURL_par(1);
 
       if( hb_curl )
       {
-         hb_retclen( reinterpret_cast< char * >( hb_curl->dl_ptr ), hb_curl->dl_pos );
+         hb_retclen(reinterpret_cast<char*>(hb_curl->dl_ptr), hb_curl->dl_pos);
       }
       else
       {
@@ -1847,15 +1842,15 @@ HB_FUNC( CURL_EASY_DL_BUFF_GET )
 #define HB_CURL_INFO_TYPE_DOUBLE   4
 #define HB_CURL_INFO_TYPE_SLIST    5
 
-#define HB_CURL_EASY_GETINFO( hb_curl, n, p )  ( hb_curl ? curl_easy_getinfo( hb_curl->curl, n, p ) : static_cast< CURLcode >( HB_CURLE_ERROR ) )
+#define HB_CURL_EASY_GETINFO( hb_curl, n, p )  ( hb_curl ? curl_easy_getinfo( hb_curl->curl, n, p ) : static_cast<CURLcode>(HB_CURLE_ERROR) )
 
 /* NOTE: curl_easy_getinfo( curl, x, @nError ) -> xValue */
 HB_FUNC( CURL_EASY_GETINFO )
 {
-   if( PHB_CURL_is( 1 ) && HB_ISNUM( 2 ) )
+   if( PHB_CURL_is(1) && HB_ISNUM(2) )
    {
-      PHB_CURL hb_curl = PHB_CURL_par( 1 );
-      CURLcode res     = static_cast< CURLcode >( HB_CURLE_ERROR );
+      PHB_CURL hb_curl = PHB_CURL_par(1);
+      CURLcode res     = static_cast<CURLcode>(HB_CURLE_ERROR);
 
       int type = HB_CURL_INFO_TYPE_INVALID;
 
@@ -1865,7 +1860,7 @@ HB_FUNC( CURL_EASY_GETINFO )
       struct curl_slist * ret_slist = nullptr;
       double ret_double = 0.0;
 
-      switch( hb_parni( 2 ) )
+      switch( hb_parni(2) )
       {
          case HB_CURLINFO_EFFECTIVE_URL:
             res  = HB_CURL_EASY_GETINFO( hb_curl, CURLINFO_EFFECTIVE_URL, &ret_string );
@@ -2092,16 +2087,16 @@ HB_FUNC( CURL_EASY_GETINFO )
       switch( type )
       {
          case HB_CURL_INFO_TYPE_STR:
-            hb_retc( ret_string );
+            hb_retc(ret_string);
             break;
          case HB_CURL_INFO_TYPE_PTR:
-            hb_retptr( ret_ptr );
+            hb_retptr(ret_ptr);
             break;
          case HB_CURL_INFO_TYPE_LONG:
-            hb_retnl( ret_long );
+            hb_retnl(ret_long);
             break;
          case HB_CURL_INFO_TYPE_DOUBLE:
-            hb_retnd( ret_double );
+            hb_retnd(ret_double);
             break;
          case HB_CURL_INFO_TYPE_SLIST:
             if( ret_slist )
@@ -2123,18 +2118,18 @@ HB_FUNC( CURL_EASY_GETINFO )
                   hb_arraySetC( pArray, nCount++, walk_ret_slist->data );
                   walk_ret_slist = walk_ret_slist->next;
                }
-               hb_itemReturnRelease( pArray );
+               hb_itemReturnRelease(pArray);
 
                curl_slist_free_all( ret_slist );
             }
             else
             {
-               hb_reta( 0 );
+               hb_reta(0);
             }
             break;
       }
 
-      hb_stornl( static_cast< long >( res ), 3 );
+      hb_stornl(static_cast<long>(res), 3);
    }
    else
    {
@@ -2144,15 +2139,15 @@ HB_FUNC( CURL_EASY_GETINFO )
 
 HB_FUNC( CURL_EASY_ESCAPE )
 {
-   if( PHB_CURL_is( 1 ) )
+   if( PHB_CURL_is(1) )
    {
 #if LIBCURL_VERSION_NUM >= 0x070F04
-      PHB_CURL hb_curl = PHB_CURL_par( 1 );
+      PHB_CURL hb_curl = PHB_CURL_par(1);
 
       if( hb_curl )
       {
-         char * buffer = curl_easy_escape( hb_curl->curl, hb_parcx( 2 ), static_cast< int >( hb_parclen( 2 ) ) );
-         hb_retc( buffer );
+         char * buffer = curl_easy_escape( hb_curl->curl, hb_parcx(2), static_cast<int>(hb_parclen(2)) );
+         hb_retc(buffer);
          curl_free( buffer );
       }
       else
@@ -2167,16 +2162,16 @@ HB_FUNC( CURL_EASY_ESCAPE )
 
 HB_FUNC( CURL_EASY_UNESCAPE )
 {
-   if( PHB_CURL_is( 1 ) )
+   if( PHB_CURL_is(1) )
    {
 #if LIBCURL_VERSION_NUM >= 0x070F04
-      PHB_CURL hb_curl = PHB_CURL_par( 1 );
+      PHB_CURL hb_curl = PHB_CURL_par(1);
 
       if( hb_curl )
       {
          int    nLen   = 0;
-         char * buffer = curl_easy_unescape( hb_curl->curl, hb_parcx( 2 ), static_cast< int >( hb_parclen( 2 ) ), &nLen );
-         hb_retclen( buffer, nLen );
+         char * buffer = curl_easy_unescape( hb_curl->curl, hb_parcx(2), static_cast<int>(hb_parclen(2)), &nLen );
+         hb_retclen(buffer, nLen);
          curl_free( buffer );
       }
       else
@@ -2194,7 +2189,7 @@ HB_FUNC( CURL_EASY_UNESCAPE )
 
 HB_FUNC( CURL_VERSION )
 {
-   hb_retc( curl_version() );
+   hb_retc(curl_version());
 }
 
 HB_FUNC( CURL_VERSION_INFO )
@@ -2203,37 +2198,37 @@ HB_FUNC( CURL_VERSION_INFO )
 
    if( data )
    {
-      PHB_ITEM pArray = hb_itemArrayNew( 13 );
+      PHB_ITEM pArray = hb_itemArrayNew(13);
 
-      hb_arraySetC(  pArray, 1, data->version );                      /* LIBCURL_VERSION */
-      hb_arraySetNI( pArray, 2, data->version_num );                  /* LIBCURL_VERSION_NUM */
-      hb_arraySetC(  pArray, 3, data->host );                         /* OS/host/cpu/machine when configured */
-      hb_arraySetNI( pArray, 4, data->features );                     /* bitmask, see defines below */
-      hb_arraySetC(  pArray, 5, data->ssl_version );                  /* human readable string */
-      hb_arraySetNI( pArray, 6, data->ssl_version_num );              /* not used anymore, always 0 */
-      hb_arraySetC(  pArray, 7, data->libz_version );                 /* human readable string */
-#if defined( CURLVERSION_SECOND )
-      hb_arraySetC(  pArray, 9, data->age >= CURLVERSION_SECOND ? data->ares : nullptr );
-      hb_arraySetNI( pArray, 10, data->age >= CURLVERSION_SECOND ? data->ares_num : 0 );
+      hb_arraySetC(pArray, 1, data->version);                      /* LIBCURL_VERSION */
+      hb_arraySetNI(pArray, 2, data->version_num);                  /* LIBCURL_VERSION_NUM */
+      hb_arraySetC(pArray, 3, data->host);                         /* OS/host/cpu/machine when configured */
+      hb_arraySetNI(pArray, 4, data->features);                     /* bitmask, see defines below */
+      hb_arraySetC(pArray, 5, data->ssl_version);                  /* human readable string */
+      hb_arraySetNI(pArray, 6, data->ssl_version_num);              /* not used anymore, always 0 */
+      hb_arraySetC(pArray, 7, data->libz_version);                 /* human readable string */
+#if defined(CURLVERSION_SECOND)
+      hb_arraySetC(pArray, 9, data->age >= CURLVERSION_SECOND ? data->ares : nullptr);
+      hb_arraySetNI(pArray, 10, data->age >= CURLVERSION_SECOND ? data->ares_num : 0);
 #else
-      hb_arraySetC(  pArray, 9, nullptr );
-      hb_arraySetNI( pArray, 10, 0 );
+      hb_arraySetC(pArray, 9, nullptr);
+      hb_arraySetNI(pArray, 10, 0);
 #endif
-#if defined( CURLVERSION_THIRD )
-      hb_arraySetC(  pArray, 11, data->age >= CURLVERSION_THIRD ? data->libidn : nullptr );
+#if defined(CURLVERSION_THIRD)
+      hb_arraySetC(pArray, 11, data->age >= CURLVERSION_THIRD ? data->libidn : nullptr);
 #else
-      hb_arraySetC(  pArray, 11, nullptr );
+      hb_arraySetC(pArray, 11, nullptr);
 #endif
-#if defined( CURLVERSION_FOURTH )
-      hb_arraySetNI( pArray, 12, data->age >= CURLVERSION_FOURTH ? data->iconv_ver_num : 0 ); /* Same as '_libiconv_version' if built with HAVE_ICONV */
+#if defined(CURLVERSION_FOURTH)
+      hb_arraySetNI(pArray, 12, data->age >= CURLVERSION_FOURTH ? data->iconv_ver_num : 0); /* Same as '_libiconv_version' if built with HAVE_ICONV */
 #else
-      hb_arraySetNI( pArray, 12, 0 );
+      hb_arraySetNI(pArray, 12, 0);
 #endif
 /* Just a guess. It's not documented in which libcurl version this member got added. */
-#if defined( CURLVERSION_FOURTH ) && LIBCURL_VERSION_NUM >= 0x071001
-      hb_arraySetC(  pArray, 13, data->age >= CURLVERSION_FOURTH ? data->libssh_version : nullptr ); /* human readable string */
+#if defined(CURLVERSION_FOURTH) && LIBCURL_VERSION_NUM >= 0x071001
+      hb_arraySetC(pArray, 13, data->age >= CURLVERSION_FOURTH ? data->libssh_version : nullptr); /* human readable string */
 #else
-      hb_arraySetC(  pArray, 13, nullptr );
+      hb_arraySetC(pArray, 13, nullptr);
 #endif
       {
          PHB_ITEM pProtocols;
@@ -2245,8 +2240,8 @@ HB_FUNC( CURL_VERSION_INFO )
             nCount++;
          }
 
-         pProtocols = hb_arrayGetItemPtr( pArray, 8 );
-         hb_arrayNew( pProtocols, nCount );
+         pProtocols = hb_arrayGetItemPtr(pArray, 8);
+         hb_arrayNew(pProtocols, nCount);
 
          for( prot = data->protocols, nCount = 1; *prot; prot++ )
          {
@@ -2254,19 +2249,19 @@ HB_FUNC( CURL_VERSION_INFO )
          }
       }
 
-      hb_itemReturnRelease( pArray );
+      hb_itemReturnRelease(pArray);
    }
    else
    {
-      hb_reta( 0 );
+      hb_reta(0);
    }
 }
 
 HB_FUNC( CURL_EASY_STRERROR )
 {
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
 #if LIBCURL_VERSION_NUM >= 0x070C00
-      hb_retc( curl_easy_strerror( static_cast< CURLcode >( hb_parnl( 1 ) ) ) );
+      hb_retc(curl_easy_strerror(static_cast<CURLcode>(hb_parnl(1))));
 #else
       hb_retc_null();
 #endif
@@ -2279,9 +2274,9 @@ HB_FUNC( CURL_EASY_STRERROR )
 /* NOTE: This returns the number of seconds since January 1st 1970 in the UTC time zone. */
 HB_FUNC( CURL_GETDATE )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      hb_retnint( static_cast< HB_MAXINT >( curl_getdate( hb_parc( 1 ), nullptr ) ) );
+      hb_retnint(static_cast<HB_MAXINT>(curl_getdate(hb_parc(1), nullptr)));
    }
    else
    {
@@ -2294,10 +2289,10 @@ HB_FUNC( CURL_GETDATE )
 /* NOTE: Obsolete, superceded by curl_easy_escape() */
 HB_FUNC( CURL_ESCAPE )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      char * buffer = curl_escape( hb_parc( 1 ), static_cast< int >( hb_parclen( 1 ) ) );
-      hb_retc( buffer );
+      char * buffer = curl_escape( hb_parc(1), static_cast<int>(hb_parclen(1)) );
+      hb_retc(buffer);
       curl_free( buffer );
    }
    else
@@ -2309,10 +2304,10 @@ HB_FUNC( CURL_ESCAPE )
 /* NOTE: Obsolete, superceded by curl_easy_unescape() */
 HB_FUNC( CURL_UNESCAPE )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      char * buffer = curl_unescape( hb_parc( 1 ), static_cast< int >( hb_parclen( 1 ) ) );
-      hb_retc( buffer );
+      char * buffer = curl_unescape( hb_parc(1), static_cast<int>(hb_parclen(1)) );
+      hb_retc(buffer);
       curl_free( buffer );
    }
    else

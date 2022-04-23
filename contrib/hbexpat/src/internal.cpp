@@ -50,7 +50,7 @@
 
 HB_FUNC( __HB_XML_CDPU16MAP )
 {
-   PHB_CODEPAGE cdp = hb_cdpFindExt( hb_parc( 1 ) );
+   PHB_CODEPAGE cdp = hb_cdpFindExt( hb_parc(1) );
 
    if( cdp )
    {
@@ -61,10 +61,10 @@ HB_FUNC( __HB_XML_CDPU16MAP )
 
       for( unsigned int tmp = 0; tmp <= UCHAR_MAX; ++tmp )
       {
-         hb_arraySetNI( pMap, tmp + 1, hb_cdpGetU16( cdp, static_cast< HB_UCHAR >( tmp ) ) );
+         hb_arraySetNI(pMap, tmp + 1, hb_cdpGetU16(cdp, static_cast<HB_UCHAR>(tmp)));
       }
 
-      hb_itemReturnRelease( pMap );
+      hb_itemReturnRelease(pMap);
    }
    else
    {

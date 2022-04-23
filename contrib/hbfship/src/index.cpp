@@ -52,23 +52,23 @@
 
 HB_FUNC( INDEXCOUNT )
 {
-   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmResult = hb_itemPutNI( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_ORDERCOUNT, &pOrderInfo );
-      hb_itemReturnRelease( pOrderInfo.itmResult );
+      hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
-      hb_retni( 0 );
+      hb_retni(0);
 }
 
 HB_FUNC( INDEXNAMES )
 {
-   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -76,10 +76,10 @@ HB_FUNC( INDEXNAMES )
       PHB_ITEM    pArray;
       int         iSize, i;
 
-      memset( &pOrderInfo, 0, sizeof( pOrderInfo ) );
+      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
       pOrderInfo.itmResult = hb_itemPutNI( nullptr, 0 );
       SELF_ORDINFO( pArea, DBOI_ORDERCOUNT, &pOrderInfo );
-      iSize = hb_itemGetNI( pOrderInfo.itmResult );
+      iSize = hb_itemGetNI(pOrderInfo.itmResult);
 
       pArray = hb_itemArrayNew( iSize );
       for( i = 1; i <= iSize; ++i )
@@ -90,10 +90,10 @@ HB_FUNC( INDEXNAMES )
             break;
          hb_arraySet( pArray, i, pOrderInfo.itmResult );
       }
-      hb_itemRelease( pOrderInfo.itmOrder );
-      hb_itemRelease( pOrderInfo.itmResult );
-      hb_itemReturnRelease( pArray );
+      hb_itemRelease(pOrderInfo.itmOrder);
+      hb_itemRelease(pOrderInfo.itmResult);
+      hb_itemReturnRelease(pArray);
    }
    else
-      hb_reta( 0 );
+      hb_reta(0);
 }

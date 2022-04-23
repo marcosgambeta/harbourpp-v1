@@ -51,14 +51,14 @@
 
 HB_FUNC( CUPSGETDEFAULT )
 {
-   hb_retc( cupsGetDefault() );
+   hb_retc(cupsGetDefault());
 }
 
 HB_FUNC( CUPSGETDESTS )
 {
    cups_dest_t * dest_list;
    int      num_dests = cupsGetDests( &dest_list );
-   PHB_ITEM pArray    = hb_itemArrayNew( static_cast< HB_SIZE >( num_dests ) );
+   PHB_ITEM pArray    = hb_itemArrayNew( static_cast<HB_SIZE>(num_dests) );
 
    if( num_dests > 0 )
    {
@@ -71,12 +71,12 @@ HB_FUNC( CUPSGETDESTS )
       cupsFreeDests( num_dests, desk_list_bak );
    }
 
-   hb_itemReturnRelease( pArray );
+   hb_itemReturnRelease(pArray);
 }
 
 HB_FUNC( CUPSPRINTFILE )
 {
-   PHB_ITEM pOptions = hb_param( 4, HB_IT_HASH | HB_IT_ARRAY );
+   PHB_ITEM pOptions = hb_param(4, Harbour::Item::HASH | Harbour::Item::ARRAY);
 
    int num_options         = 0;
    cups_option_t * options = nullptr;
@@ -85,22 +85,22 @@ HB_FUNC( CUPSPRINTFILE )
    {
       HB_SIZE tmp;
 
-      if( HB_IS_HASH( pOptions ) )
+      if( HB_IS_HASH(pOptions) )
       {
          for( tmp = 1; tmp <= hb_hashLen( pOptions ); ++tmp )
          {
             PHB_ITEM pKey = hb_hashGetKeyAt( pOptions, tmp );
             PHB_ITEM pVal = hb_hashGetValueAt( pOptions, tmp );
 
-            if( pKey && HB_IS_STRING( pKey ) && pVal )
-               num_options = cupsAddOption( hb_itemGetCPtr( pKey ), hb_itemGetCPtr( pVal ), num_options, &options );
+            if( pKey && HB_IS_STRING(pKey) && pVal )
+               num_options = cupsAddOption( hb_itemGetCPtr(pKey), hb_itemGetCPtr(pVal), num_options, &options );
          }
       }
-      else if( HB_IS_ARRAY( pOptions ) )
+      else if( HB_IS_ARRAY(pOptions) )
       {
-         for( tmp = 1; tmp <= hb_arrayLen( pOptions ); ++tmp )
+         for( tmp = 1; tmp <= hb_arrayLen(pOptions); ++tmp )
          {
-            const char * pszOption = hb_arrayGetCPtr( pOptions, tmp );
+            const char * pszOption = hb_arrayGetCPtr(pOptions, tmp);
 
             if( pszOption )
                num_options = cupsParseOptions( pszOption, num_options, &options );
@@ -108,11 +108,7 @@ HB_FUNC( CUPSPRINTFILE )
       }
    }
 
-   hb_retni( cupsPrintFile( hb_parcx( 1 ) /* printername */,
-                            hb_parcx( 2 ) /* filename */,
-                            hb_parcx( 3 ) /* title */,
-                            num_options,
-                            options ) );
+   hb_retni(cupsPrintFile(hb_parcx(1) /* printername */, hb_parcx(2) /* filename */, hb_parcx(3) /* title */, num_options, options));
 
    cupsFreeOptions( num_options, options );
 }

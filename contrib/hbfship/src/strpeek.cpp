@@ -52,38 +52,38 @@
 
 HB_FUNC( STRPEEK )
 {
-   PHB_ITEM pText = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText && HB_ISNUM( 2 ) )
+   if( pText && HB_ISNUM(2) )
    {
-      HB_SIZE nPos = hb_parns( 2 );
+      HB_SIZE nPos = hb_parns(2);
 
-      if( nPos > 0 && nPos <= hb_itemGetCLen( pText ) )
-         hb_retni( static_cast< unsigned char >( hb_itemGetCPtr( pText )[ nPos - 1 ] ) );
+      if( nPos > 0 && nPos <= hb_itemGetCLen(pText) )
+         hb_retni(static_cast<unsigned char>(hb_itemGetCPtr(pText)[nPos - 1]));
       else
-         hb_retni( 0 );
+         hb_retni(0);
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 
 HB_FUNC( STRPOKE )
 {
-   PHB_ITEM pText = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
+   if( pText && HB_ISNUM(2) && HB_ISNUM(3) )
    {
-      HB_SIZE nPos = hb_parns( 2 ), nLen;
+      HB_SIZE nPos = hb_parns(2), nLen;
       char *  pszText;
 
       if( nPos > 0 && hb_itemGetWriteCL( pText, &pszText, &nLen ) &&
           nPos <= nLen )
       {
-         pszText[ nPos - 1 ] = static_cast< char >( hb_parni( 3 ) & 0xff );
+         pszText[nPos - 1] = static_cast<char>(hb_parni(3) & 0xff);
       }
-      hb_itemReturn( pText );
+      hb_itemReturn(pText);
    }
    else
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

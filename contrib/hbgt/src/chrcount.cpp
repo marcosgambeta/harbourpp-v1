@@ -10,11 +10,11 @@
 
 HB_FUNC( GT_CHRCOUNT )
 {
-   if( HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) )
+   if( HB_ISCHAR(1) && HB_ISCHAR(2) )
    {
-      const char * s1  = hb_parc( 1 );
-      const char * s2  = hb_parc( 2 );
-      HB_ISIZ      len = hb_parclen( 2 );
+      const char * s1  = hb_parc(1);
+      const char * s2  = hb_parc(2);
+      HB_ISIZ      len = hb_parclen(2);
       HB_ISIZ      count, pos2;
 
       /* loop through s2 matching passed character (s1) with

@@ -20,21 +20,21 @@
 
 HB_FUNC( GT_NEWFLAG )
 {
-   unsigned FlagCount = static_cast< unsigned >( hb_parnidef( 1, 1 ) );
+   unsigned FlagCount = static_cast<unsigned>(hb_parnidef(1, 1));
 
    if( FlagCount > 0 )
    {
       char *   FlagString;
-      unsigned ByteCount = static_cast< unsigned >( ( FlagCount / 8 ) + 1 );
+      unsigned ByteCount = static_cast<unsigned>((FlagCount / 8) + 1);
       unsigned Byte;
 
-      if( ! ( FlagCount % 8 ) )
+      if( !( FlagCount % 8 ) )
          --ByteCount;
-      FlagString = static_cast< char * >( hb_xgrab( ByteCount ) );
+      FlagString = static_cast<char*>(hb_xgrab(ByteCount));
       for( Byte = 0; Byte < ByteCount; Byte++ )
-         FlagString[ Byte ] = 0;
-      hb_retclen( FlagString, ByteCount );
-      hb_xfree( FlagString );
+         FlagString[Byte] = 0;
+      hb_retclen(FlagString, ByteCount);
+      hb_xfree(FlagString);
    }
    else
       hb_retc_null();
@@ -42,32 +42,32 @@ HB_FUNC( GT_NEWFLAG )
 
 HB_FUNC( GT_SETFLAG )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      char *   FlagString = hb_itemGetC( hb_param( 1, HB_IT_STRING ) );
-      unsigned StartBit   = hb_parnidef( 2, 1 );
-      unsigned EndBit     = hb_parnidef( 3, 1 );
+      char *   FlagString = hb_itemGetC(hb_param(1, Harbour::Item::STRING));
+      unsigned StartBit   = hb_parnidef(2, 1);
+      unsigned EndBit     = hb_parnidef(3, 1);
 
       EndBit = HB_MAX( StartBit, EndBit );
 
-      if( StartBit > 0 && EndBit <= ( hb_parclen( 1 ) * 8 ) )
+      if( StartBit > 0 && EndBit <= ( hb_parclen(1) * 8 ) )
       {
          unsigned BitCount;
 
          for( BitCount = StartBit; BitCount <= EndBit; BitCount++ )
          {
             unsigned BitPointer  = BitCount % 8;
-            unsigned BytePointer = static_cast< unsigned >( BitCount / 8 );
+            unsigned BytePointer = static_cast<unsigned>(BitCount / 8);
 
-            if( ! BitPointer )
+            if( !BitPointer )
             {
                BitPointer = 8;
                --BytePointer;
             }
-            FlagString[ BytePointer ] |= 1 << ( BitPointer - 1 );
+            FlagString[BytePointer] |= 1 << ( BitPointer - 1 );
          }
       }
-      hb_retclen_buffer( FlagString, hb_parclen( 1 ) );
+      hb_retclen_buffer( FlagString, hb_parclen(1) );
    }
    else
       hb_retc_null();
@@ -75,32 +75,32 @@ HB_FUNC( GT_SETFLAG )
 
 HB_FUNC( GT_CLRFLAG )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      char *   FlagString = hb_itemGetC( hb_param( 1, HB_IT_STRING ) );
-      unsigned StartBit   = hb_parnidef( 2, 1 );
-      unsigned EndBit     = hb_parnidef( 3, 1 );
+      char *   FlagString = hb_itemGetC(hb_param(1, Harbour::Item::STRING));
+      unsigned StartBit   = hb_parnidef(2, 1);
+      unsigned EndBit     = hb_parnidef(3, 1);
 
       EndBit = HB_MAX( StartBit, EndBit );
 
-      if( StartBit > 0 && EndBit <= ( hb_parclen( 1 ) * 8 ) )
+      if( StartBit > 0 && EndBit <= ( hb_parclen(1) * 8 ) )
       {
          unsigned BitCount;
 
          for( BitCount = StartBit; BitCount <= EndBit; BitCount++ )
          {
             unsigned BitPointer  = BitCount % 8;
-            unsigned BytePointer = static_cast< unsigned >( BitCount / 8 );
+            unsigned BytePointer = static_cast<unsigned>(BitCount / 8);
 
-            if( ! BitPointer )
+            if( !BitPointer )
             {
                BitPointer = 8;
                --BytePointer;
             }
-            FlagString[ BytePointer ] &= 0xff - ( 1 << ( BitPointer - 1 ) );
+            FlagString[BytePointer] &= 0xff - (1 << (BitPointer - 1));
          }
       }
-      hb_retclen_buffer( FlagString, hb_parclen( 1 ) );
+      hb_retclen_buffer( FlagString, hb_parclen(1) );
    }
    else
       hb_retc_null();
@@ -110,25 +110,25 @@ HB_FUNC( GT_ISFLAG )
 {
    HB_BOOL FlagStatus = HB_FALSE;
 
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      unsigned Bit = hb_parnidef( 2, 1 );
+      unsigned Bit = hb_parnidef(2, 1);
 
-      if( Bit > 0 && Bit <= ( hb_parclen( 1 ) * 8 ) )
+      if( Bit > 0 && Bit <= ( hb_parclen(1) * 8 ) )
       {
-         const char * FlagString = hb_parc( 1 );
+         const char * FlagString = hb_parc(1);
 
          unsigned BitPointer  = Bit % 8;
-         unsigned BytePointer = static_cast< unsigned >( Bit / 8 );
+         unsigned BytePointer = static_cast<unsigned>(Bit / 8);
 
-         if( ! BitPointer )
+         if( !BitPointer )
          {
             BitPointer = 8;
             --BytePointer;
          }
-         FlagStatus = FlagString[ BytePointer ] & ( 1 << ( BitPointer - 1 ) );
+         FlagStatus = FlagString[BytePointer] & (1 << (BitPointer - 1));
       }
    }
 
-   hb_retl( FlagStatus );
+   hb_retl(FlagStatus);
 }

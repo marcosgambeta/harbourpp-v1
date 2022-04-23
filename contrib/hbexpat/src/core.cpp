@@ -75,7 +75,7 @@
 
 #include "hbexpat.ch"
 
-#if defined( HB_OS_DARWIN ) && defined( __clang__ )
+#if defined(HB_OS_DARWIN) && defined(__clang__)
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wunguarded-availability"
 #endif
@@ -108,7 +108,7 @@
 struct _HB_EXPAT
 {
    XML_Parser parser;
-   PHB_ITEM   pVar[ _VAR_LEN_ ];
+   PHB_ITEM   pVar[_VAR_LEN_];
 };
 
 using HB_EXPAT = _HB_EXPAT;
@@ -118,13 +118,13 @@ using PHB_EXPAT = _HB_EXPAT *;
 #define HB_EXPAT_SETHANDLER( _nameu_, _name_ ) \
    HB_FUNC( XML_SET##_nameu_ ) \
    { \
-      PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 ); \
+      PHB_EXPAT hb_expat = PHB_EXPAT_par(1); \
          \
       if( hb_expat ) \
       { \
-         hb_expat_setvar( hb_expat, _VAR_b##_name_, hb_param( 2, HB_IT_EVALITEM ) ); \
+         hb_expat_setvar( hb_expat, _VAR_b##_name_, hb_param(2, Harbour::Item::EVALITEM) ); \
          \
-         XML_Set##_name_/* do not delete this */ ( hb_expat->parser, hb_expat->pVar[ _VAR_b##_name_ ] ? hb_expat_##_name_ : nullptr ); \
+         XML_Set##_name_/* do not delete this */ ( hb_expat->parser, hb_expat->pVar[_VAR_b##_name_] ? hb_expat_##_name_ : nullptr ); \
          \
          hb_ret(); \
       } \
@@ -136,20 +136,20 @@ using PHB_EXPAT = _HB_EXPAT *;
 
 static void * XMLCALL hb_expat_xgrab( size_t size )
 {
-   return size > 0 ? hb_xgrab( size ) : nullptr;
+   return size > 0 ? hb_xgrab(size) : nullptr;
 }
 
 static void XMLCALL hb_expat_xfree( void * p )
 {
    if( p )
    {
-      hb_xfree( p );
+      hb_xfree(p);
    }
 }
 
 static void * XMLCALL hb_expat_xrealloc( void * p, size_t size )
 {
-   return size > 0 ? ( p ? hb_xrealloc( p, size ) : hb_xgrab( size ) ) : nullptr;
+   return size > 0 ? ( p ? hb_xrealloc( p, size ) : hb_xgrab(size) ) : nullptr;
 }
 
 /* --- Callbacks --- */
@@ -158,16 +158,16 @@ static void * XMLCALL hb_expat_xrealloc( void * p, size_t size )
 
 static void hb_expat_hnd_void( int nHnd, void * userdata )
 {
-   PHB_EXPAT hb_expat = static_cast< PHB_EXPAT >( userdata );
+   PHB_EXPAT hb_expat = static_cast<PHB_EXPAT>(userdata);
 
-   if( hb_expat && hb_expat->pVar[ nHnd ] )
+   if( hb_expat && hb_expat->pVar[nHnd] )
    {
       if( hb_vmRequestReenter() )
       {
          hb_vmPushEvalSym();
-         hb_vmPush( hb_expat->pVar[ nHnd ] );
-         hb_vmPush( hb_expat->pVar[ _VAR_xUserData ] );
-         hb_vmSend( 1 );
+         hb_vmPush(hb_expat->pVar[nHnd]);
+         hb_vmPush(hb_expat->pVar[_VAR_xUserData]);
+         hb_vmSend(1);
 
          hb_vmRequestRestore();
       }
@@ -176,19 +176,19 @@ static void hb_expat_hnd_void( int nHnd, void * userdata )
 
 static void hb_expat_hnd_C( int nHnd, void * userdata, const XML_Char * par1 )
 {
-   PHB_EXPAT hb_expat = static_cast< PHB_EXPAT >( userdata );
+   PHB_EXPAT hb_expat = static_cast<PHB_EXPAT>(userdata);
 
-   if( hb_expat && hb_expat->pVar[ nHnd ] )
+   if( hb_expat && hb_expat->pVar[nHnd] )
    {
       if( hb_vmRequestReenter() )
       {
-         PHB_ITEM pUserData = hb_itemNew( hb_expat->pVar[ _VAR_xUserData ] );
+         PHB_ITEM pUserData = hb_itemNew(hb_expat->pVar[_VAR_xUserData]);
          PHB_ITEM pPar1     = hb_itemPutStrUTF8( nullptr, par1 );
 
-         hb_evalBlock( hb_expat->pVar[ nHnd ], pUserData, pPar1, nullptr );
+         hb_evalBlock( hb_expat->pVar[nHnd], pUserData, pPar1, nullptr );
 
-         hb_itemRelease( pPar1 );
-         hb_itemRelease( pUserData );
+         hb_itemRelease(pPar1);
+         hb_itemRelease(pUserData);
 
          hb_vmRequestRestore();
       }
@@ -197,19 +197,19 @@ static void hb_expat_hnd_C( int nHnd, void * userdata, const XML_Char * par1 )
 
 static void hb_expat_hnd_CLen( int nHnd, void * userdata, const XML_Char * par1, int par1len )
 {
-   PHB_EXPAT hb_expat = static_cast< PHB_EXPAT >( userdata );
+   PHB_EXPAT hb_expat = static_cast<PHB_EXPAT>(userdata);
 
-   if( hb_expat && hb_expat->pVar[ nHnd ] )
+   if( hb_expat && hb_expat->pVar[nHnd] )
    {
       if( hb_vmRequestReenter() )
       {
-         PHB_ITEM pUserData = hb_itemNew( hb_expat->pVar[ _VAR_xUserData ] );
+         PHB_ITEM pUserData = hb_itemNew(hb_expat->pVar[_VAR_xUserData]);
          PHB_ITEM pPar1     = hb_itemPutStrLenUTF8( nullptr, par1, par1len );
 
-         hb_evalBlock( hb_expat->pVar[ nHnd ], pUserData, pPar1, nullptr );
+         hb_evalBlock( hb_expat->pVar[nHnd], pUserData, pPar1, nullptr );
 
-         hb_itemRelease( pPar1 );
-         hb_itemRelease( pUserData );
+         hb_itemRelease(pPar1);
+         hb_itemRelease(pUserData);
 
          hb_vmRequestRestore();
       }
@@ -220,51 +220,51 @@ static void hb_expat_hnd_CLen( int nHnd, void * userdata, const XML_Char * par1,
 
 static void XMLCALL hb_expat_StartElementHandler( void * userdata, const XML_Char * name, const XML_Char ** atts )
 {
-   PHB_EXPAT hb_expat = static_cast< PHB_EXPAT >( userdata );
+   PHB_EXPAT hb_expat = static_cast<PHB_EXPAT>(userdata);
 
-   if( hb_expat && hb_expat->pVar[ _VAR_bStartElementHandler ] )
+   if( hb_expat && hb_expat->pVar[_VAR_bStartElementHandler] )
    {
       if( hb_vmRequestReenter() )
       {
-         PHB_ITEM pUserData = hb_itemNew( hb_expat->pVar[ _VAR_xUserData ] );
+         PHB_ITEM pUserData = hb_itemNew(hb_expat->pVar[_VAR_xUserData]);
          PHB_ITEM pElement  = hb_itemPutStrUTF8( nullptr, name );
          PHB_ITEM pAttr;
 
          if( atts )
          {
-            PHB_ITEM pTempItem = hb_itemNew( nullptr );
+            PHB_ITEM pTempItem = hb_itemNew(nullptr);
             HB_ISIZ  nPos;
             HB_ISIZ  nLen = 0;
 
-            for( nPos = 0; atts[ nPos ]; nPos += 2 )
+            for( nPos = 0; atts[nPos]; nPos += 2 )
             {
                ++nLen;
             }
 
             pAttr = hb_itemArrayNew( nLen );
 
-            for( nPos = 0; atts[ nPos ]; nPos += 2 )
+            for( nPos = 0; atts[nPos]; nPos += 2 )
             {
-               hb_arrayNew( pTempItem, 2 );
+               hb_arrayNew(pTempItem, 2);
 
-               hb_arraySetStrUTF8( pTempItem, 1, atts[ nPos ] );
-               hb_arraySetStrUTF8( pTempItem, 2, atts[ nPos + 1 ] );
+               hb_arraySetStrUTF8( pTempItem, 1, atts[nPos] );
+               hb_arraySetStrUTF8( pTempItem, 2, atts[nPos + 1] );
 
                hb_arraySetForward( pAttr, ( nPos >> 1 ) + 1, pTempItem );
             }
 
-            hb_itemRelease( pTempItem );
+            hb_itemRelease(pTempItem);
          }
          else
          {
-            pAttr = hb_itemArrayNew( 0 );
+            pAttr = hb_itemArrayNew(0);
          }
 
-         hb_evalBlock( hb_expat->pVar[ _VAR_bStartElementHandler ], pUserData, pElement, pAttr, nullptr );
+         hb_evalBlock( hb_expat->pVar[_VAR_bStartElementHandler], pUserData, pElement, pAttr, nullptr );
 
-         hb_itemRelease( pAttr );
-         hb_itemRelease( pElement );
-         hb_itemRelease( pUserData );
+         hb_itemRelease(pAttr);
+         hb_itemRelease(pElement);
+         hb_itemRelease(pUserData);
 
          hb_vmRequestRestore();
       }
@@ -283,21 +283,21 @@ static void XMLCALL hb_expat_CharacterDataHandler( void * userdata, const XML_Ch
 
 static void XMLCALL hb_expat_ProcessingInstructionHandler( void * userdata, const XML_Char * target, const XML_Char * data )
 {
-   PHB_EXPAT hb_expat = static_cast< PHB_EXPAT >( userdata );
+   PHB_EXPAT hb_expat = static_cast<PHB_EXPAT>(userdata);
 
-   if( hb_expat && hb_expat->pVar[ _VAR_bProcessingInstructionHandler ] )
+   if( hb_expat && hb_expat->pVar[_VAR_bProcessingInstructionHandler] )
    {
       if( hb_vmRequestReenter() )
       {
-         PHB_ITEM pUserData = hb_itemNew( hb_expat->pVar[ _VAR_xUserData ] );
+         PHB_ITEM pUserData = hb_itemNew(hb_expat->pVar[_VAR_xUserData]);
          PHB_ITEM pTarget   = hb_itemPutStrUTF8( nullptr, target );
          PHB_ITEM pData     = hb_itemPutStrUTF8( nullptr, data );
 
-         hb_evalBlock( hb_expat->pVar[ _VAR_bProcessingInstructionHandler ], pUserData, pTarget, pData, nullptr );
+         hb_evalBlock( hb_expat->pVar[_VAR_bProcessingInstructionHandler], pUserData, pTarget, pData, nullptr );
 
-         hb_itemRelease( pData );
-         hb_itemRelease( pTarget );
-         hb_itemRelease( pUserData );
+         hb_itemRelease(pData);
+         hb_itemRelease(pTarget);
+         hb_itemRelease(pUserData);
 
          hb_vmRequestRestore();
       }
@@ -331,21 +331,21 @@ static void XMLCALL hb_expat_DefaultHandlerExpand( void * userdata, const XML_Ch
 
 static void XMLCALL hb_expat_SkippedEntityHandler( void * userdata, const XML_Char * entityName, int is_parameter_entity )
 {
-   PHB_EXPAT hb_expat = static_cast< PHB_EXPAT >( userdata );
+   PHB_EXPAT hb_expat = static_cast<PHB_EXPAT>(userdata);
 
-   if( hb_expat && hb_expat->pVar[ _VAR_bSkippedEntityHandler ] )
+   if( hb_expat && hb_expat->pVar[_VAR_bSkippedEntityHandler] )
    {
       if( hb_vmRequestReenter() )
       {
-         PHB_ITEM pUserData = hb_itemNew( hb_expat->pVar[ _VAR_xUserData ] );
+         PHB_ITEM pUserData = hb_itemNew(hb_expat->pVar[_VAR_xUserData]);
          PHB_ITEM pPar1     = hb_itemPutStrUTF8( nullptr, entityName );
          PHB_ITEM pPar2     = hb_itemPutL( nullptr, is_parameter_entity );
 
-         hb_evalBlock( hb_expat->pVar[ _VAR_bSkippedEntityHandler ], pUserData, pPar1, pPar2, nullptr );
+         hb_evalBlock( hb_expat->pVar[_VAR_bSkippedEntityHandler], pUserData, pPar1, pPar2, nullptr );
 
-         hb_itemRelease( pPar2 );
-         hb_itemRelease( pPar1 );
-         hb_itemRelease( pUserData );
+         hb_itemRelease(pPar2);
+         hb_itemRelease(pPar1);
+         hb_itemRelease(pUserData);
 
          hb_vmRequestRestore();
       }
@@ -354,20 +354,20 @@ static void XMLCALL hb_expat_SkippedEntityHandler( void * userdata, const XML_Ch
 
 static int XMLCALL hb_expat_UnknownEncodingHandler( void * userdata, const XML_Char * name, XML_Encoding * info )
 {
-   PHB_EXPAT hb_expat = static_cast< PHB_EXPAT >( userdata );
+   PHB_EXPAT hb_expat = static_cast<PHB_EXPAT>(userdata);
    int       iResult  = XML_STATUS_ERROR;
 
-   if( hb_expat && hb_expat->pVar[ _VAR_bUnknownEncodingHandler ] )
+   if( hb_expat && hb_expat->pVar[_VAR_bUnknownEncodingHandler] )
    {
       if( hb_vmRequestReenter() )
       {
-         PHB_ITEM pEncData = hb_itemNew( hb_expat->pVar[ _VAR_xEncodingHandlerData ] );
+         PHB_ITEM pEncData = hb_itemNew(hb_expat->pVar[_VAR_xEncodingHandlerData]);
          PHB_ITEM pPar1    = hb_itemPutStrUTF8( nullptr, name );
          PHB_ITEM pPar2    = hb_itemArrayNew( HB_SIZEOFARRAY( info->map ) );
 
-         hb_evalBlock( hb_expat->pVar[ _VAR_bUnknownEncodingHandler ], pEncData, pPar1, pPar2, nullptr );
+         hb_evalBlock( hb_expat->pVar[_VAR_bUnknownEncodingHandler], pEncData, pPar1, pPar2, nullptr );
 
-         iResult = hb_parni( -1 );
+         iResult = hb_parni(-1);
 
          if( iResult == XML_STATUS_OK )
          {
@@ -375,7 +375,7 @@ static int XMLCALL hb_expat_UnknownEncodingHandler( void * userdata, const XML_C
 
             for( nPos = 0; nPos < HB_SIZEOFARRAY( info->map ); ++nPos )
             {
-               info->map[ nPos ] = hb_arrayGetNI( pPar2, nPos + 1 );
+               info->map[nPos] = hb_arrayGetNI( pPar2, nPos + 1 );
             }
 
             /* NOTE: Not supported by wrapper layer yet. */
@@ -384,9 +384,9 @@ static int XMLCALL hb_expat_UnknownEncodingHandler( void * userdata, const XML_C
             info->release = nullptr;
          }
 
-         hb_itemRelease( pPar2 );
-         hb_itemRelease( pPar1 );
-         hb_itemRelease( pEncData );
+         hb_itemRelease(pPar2);
+         hb_itemRelease(pPar1);
+         hb_itemRelease(pEncData);
 
          hb_vmRequestRestore();
       }
@@ -397,21 +397,21 @@ static int XMLCALL hb_expat_UnknownEncodingHandler( void * userdata, const XML_C
 
 static void XMLCALL hb_expat_StartNamespaceDeclHandler( void * userdata, const XML_Char * prefix, const XML_Char * uri )
 {
-   PHB_EXPAT hb_expat = static_cast< PHB_EXPAT >( userdata );
+   PHB_EXPAT hb_expat = static_cast<PHB_EXPAT>(userdata);
 
-   if( hb_expat && hb_expat->pVar[ _VAR_bStartNamespaceDeclHandler ] )
+   if( hb_expat && hb_expat->pVar[_VAR_bStartNamespaceDeclHandler] )
    {
       if( hb_vmRequestReenter() )
       {
-         PHB_ITEM pUserData = hb_itemNew( hb_expat->pVar[ _VAR_xUserData ] );
+         PHB_ITEM pUserData = hb_itemNew(hb_expat->pVar[_VAR_xUserData]);
          PHB_ITEM pPar1     = hb_itemPutStrUTF8( nullptr, prefix );
          PHB_ITEM pPar2     = hb_itemPutStrUTF8( nullptr, uri );
 
-         hb_evalBlock( hb_expat->pVar[ _VAR_bStartNamespaceDeclHandler ], pUserData, pPar1, pPar2, nullptr );
+         hb_evalBlock( hb_expat->pVar[_VAR_bStartNamespaceDeclHandler], pUserData, pPar1, pPar2, nullptr );
 
-         hb_itemRelease( pPar2 );
-         hb_itemRelease( pPar1 );
-         hb_itemRelease( pUserData );
+         hb_itemRelease(pPar2);
+         hb_itemRelease(pPar1);
+         hb_itemRelease(pUserData);
 
          hb_vmRequestRestore();
       }
@@ -425,23 +425,23 @@ static void XMLCALL hb_expat_EndNamespaceDeclHandler( void * userdata, const XML
 
 static void XMLCALL hb_expat_XmlDeclHandler( void * userdata, const XML_Char * version, const XML_Char * encoding, int standalone )
 {
-   PHB_EXPAT hb_expat = static_cast< PHB_EXPAT >( userdata );
+   PHB_EXPAT hb_expat = static_cast<PHB_EXPAT>(userdata);
 
-   if( hb_expat && hb_expat->pVar[ _VAR_bXmlDeclHandler ] )
+   if( hb_expat && hb_expat->pVar[_VAR_bXmlDeclHandler] )
    {
       if( hb_vmRequestReenter() )
       {
-         PHB_ITEM pUserData = hb_itemNew( hb_expat->pVar[ _VAR_xUserData ] );
-         PHB_ITEM pPar1     = version ? hb_itemPutStrUTF8( nullptr, version ) : hb_itemNew( nullptr );
-         PHB_ITEM pPar2     = encoding ? hb_itemPutStrUTF8( nullptr, encoding ) : hb_itemNew( nullptr );
+         PHB_ITEM pUserData = hb_itemNew(hb_expat->pVar[_VAR_xUserData]);
+         PHB_ITEM pPar1     = version ? hb_itemPutStrUTF8( nullptr, version ) : hb_itemNew(nullptr);
+         PHB_ITEM pPar2     = encoding ? hb_itemPutStrUTF8( nullptr, encoding ) : hb_itemNew(nullptr);
          PHB_ITEM pPar3     = hb_itemPutNI( nullptr, standalone );
 
-         hb_evalBlock( hb_expat->pVar[ _VAR_bXmlDeclHandler ], pUserData, pPar1, pPar2, pPar3, nullptr );
+         hb_evalBlock( hb_expat->pVar[_VAR_bXmlDeclHandler], pUserData, pPar1, pPar2, pPar3, nullptr );
 
-         hb_itemRelease( pPar3 );
-         hb_itemRelease( pPar2 );
-         hb_itemRelease( pPar1 );
-         hb_itemRelease( pUserData );
+         hb_itemRelease(pPar3);
+         hb_itemRelease(pPar2);
+         hb_itemRelease(pPar1);
+         hb_itemRelease(pUserData);
 
          hb_vmRequestRestore();
       }
@@ -450,25 +450,25 @@ static void XMLCALL hb_expat_XmlDeclHandler( void * userdata, const XML_Char * v
 
 static void XMLCALL hb_expat_StartDoctypeDeclHandler( void * userdata, const XML_Char * doctypeName, const XML_Char * sysid, const XML_Char * pubid, int has_internal_subset )
 {
-   PHB_EXPAT hb_expat = static_cast< PHB_EXPAT >( userdata );
+   PHB_EXPAT hb_expat = static_cast<PHB_EXPAT>(userdata);
 
-   if( hb_expat && hb_expat->pVar[ _VAR_bStartDoctypeDeclHandler ] )
+   if( hb_expat && hb_expat->pVar[_VAR_bStartDoctypeDeclHandler] )
    {
       if( hb_vmRequestReenter() )
       {
-         PHB_ITEM pUserData = hb_itemNew( hb_expat->pVar[ _VAR_xUserData ] );
+         PHB_ITEM pUserData = hb_itemNew(hb_expat->pVar[_VAR_xUserData]);
          PHB_ITEM pPar1     = hb_itemPutStrUTF8( nullptr, doctypeName );
-         PHB_ITEM pPar2     = sysid ? hb_itemPutStrUTF8( nullptr, sysid ) : hb_itemNew( nullptr );
-         PHB_ITEM pPar3     = pubid ? hb_itemPutStrUTF8( nullptr, pubid ) : hb_itemNew( nullptr );
+         PHB_ITEM pPar2     = sysid ? hb_itemPutStrUTF8( nullptr, sysid ) : hb_itemNew(nullptr);
+         PHB_ITEM pPar3     = pubid ? hb_itemPutStrUTF8( nullptr, pubid ) : hb_itemNew(nullptr);
          PHB_ITEM pPar4     = hb_itemPutL( nullptr, has_internal_subset );
 
-         hb_evalBlock( hb_expat->pVar[ _VAR_bStartDoctypeDeclHandler ], pUserData, pPar1, pPar2, pPar3, pPar4, nullptr );
+         hb_evalBlock( hb_expat->pVar[_VAR_bStartDoctypeDeclHandler], pUserData, pPar1, pPar2, pPar3, pPar4, nullptr );
 
-         hb_itemRelease( pPar4 );
-         hb_itemRelease( pPar3 );
-         hb_itemRelease( pPar2 );
-         hb_itemRelease( pPar1 );
-         hb_itemRelease( pUserData );
+         hb_itemRelease(pPar4);
+         hb_itemRelease(pPar3);
+         hb_itemRelease(pPar2);
+         hb_itemRelease(pPar1);
+         hb_itemRelease(pUserData);
 
          hb_vmRequestRestore();
       }
@@ -482,27 +482,27 @@ static void XMLCALL hb_expat_EndDoctypeDeclHandler( void * userdata )
 
 static void XMLCALL hb_expat_AttlistDeclHandler( void * userdata, const XML_Char * elname, const XML_Char * attname, const XML_Char * att_type, const XML_Char * dflt, int isrequired )
 {
-   PHB_EXPAT hb_expat = static_cast< PHB_EXPAT >( userdata );
+   PHB_EXPAT hb_expat = static_cast<PHB_EXPAT>(userdata);
 
-   if( hb_expat && hb_expat->pVar[ _VAR_bAttlistDeclHandler ] )
+   if( hb_expat && hb_expat->pVar[_VAR_bAttlistDeclHandler] )
    {
       if( hb_vmRequestReenter() )
       {
-         PHB_ITEM pUserData = hb_itemNew( hb_expat->pVar[ _VAR_xUserData ] );
+         PHB_ITEM pUserData = hb_itemNew(hb_expat->pVar[_VAR_xUserData]);
          PHB_ITEM pPar1     = hb_itemPutStrUTF8( nullptr, elname );
          PHB_ITEM pPar2     = hb_itemPutStrUTF8( nullptr, attname );
          PHB_ITEM pPar3     = hb_itemPutStrUTF8( nullptr, att_type );
-         PHB_ITEM pPar4     = dflt ? hb_itemPutStrUTF8( nullptr, dflt ) : hb_itemNew( nullptr );
+         PHB_ITEM pPar4     = dflt ? hb_itemPutStrUTF8( nullptr, dflt ) : hb_itemNew(nullptr);
          PHB_ITEM pPar5     = hb_itemPutL( nullptr, isrequired );
 
-         hb_evalBlock( hb_expat->pVar[ _VAR_bAttlistDeclHandler ], pUserData, pPar1, pPar2, pPar3, pPar4, pPar5, nullptr );
+         hb_evalBlock( hb_expat->pVar[_VAR_bAttlistDeclHandler], pUserData, pPar1, pPar2, pPar3, pPar4, pPar5, nullptr );
 
-         hb_itemRelease( pPar5 );
-         hb_itemRelease( pPar4 );
-         hb_itemRelease( pPar3 );
-         hb_itemRelease( pPar2 );
-         hb_itemRelease( pPar1 );
-         hb_itemRelease( pUserData );
+         hb_itemRelease(pPar5);
+         hb_itemRelease(pPar4);
+         hb_itemRelease(pPar3);
+         hb_itemRelease(pPar2);
+         hb_itemRelease(pPar1);
+         hb_itemRelease(pUserData);
 
          hb_vmRequestRestore();
       }
@@ -511,31 +511,31 @@ static void XMLCALL hb_expat_AttlistDeclHandler( void * userdata, const XML_Char
 
 static void XMLCALL hb_expat_EntityDeclHandler( void * userdata, const XML_Char * entityName, int is_parameter_entity, const XML_Char * value, int value_length, const XML_Char * base, const XML_Char * systemId, const XML_Char * publicId, const XML_Char * notationName )
 {
-   PHB_EXPAT hb_expat = static_cast< PHB_EXPAT >( userdata );
+   PHB_EXPAT hb_expat = static_cast<PHB_EXPAT>(userdata);
 
-   if( hb_expat && hb_expat->pVar[ _VAR_bEntityDeclHandler ] )
+   if( hb_expat && hb_expat->pVar[_VAR_bEntityDeclHandler] )
    {
       if( hb_vmRequestReenter() )
       {
-         PHB_ITEM pUserData = hb_itemNew( hb_expat->pVar[ _VAR_xUserData ] );
+         PHB_ITEM pUserData = hb_itemNew(hb_expat->pVar[_VAR_xUserData]);
          PHB_ITEM pPar1     = hb_itemPutStrUTF8( nullptr, entityName );
          PHB_ITEM pPar2     = hb_itemPutL( nullptr, is_parameter_entity );
-         PHB_ITEM pPar3     = value ? hb_itemPutStrLenUTF8( nullptr, value, value_length ) : hb_itemNew( nullptr );
-         PHB_ITEM pPar4     = base ? hb_itemPutStrUTF8( nullptr, base ) : hb_itemNew( nullptr );
-         PHB_ITEM pPar5     = systemId ? hb_itemPutStrUTF8( nullptr, systemId ) : hb_itemNew( nullptr );
-         PHB_ITEM pPar6     = publicId ? hb_itemPutStrUTF8( nullptr, publicId ) : hb_itemNew( nullptr );
-         PHB_ITEM pPar7     = notationName ? hb_itemPutStrUTF8( nullptr, notationName ) : hb_itemNew( nullptr );
+         PHB_ITEM pPar3     = value ? hb_itemPutStrLenUTF8( nullptr, value, value_length ) : hb_itemNew(nullptr);
+         PHB_ITEM pPar4     = base ? hb_itemPutStrUTF8( nullptr, base ) : hb_itemNew(nullptr);
+         PHB_ITEM pPar5     = systemId ? hb_itemPutStrUTF8( nullptr, systemId ) : hb_itemNew(nullptr);
+         PHB_ITEM pPar6     = publicId ? hb_itemPutStrUTF8( nullptr, publicId ) : hb_itemNew(nullptr);
+         PHB_ITEM pPar7     = notationName ? hb_itemPutStrUTF8( nullptr, notationName ) : hb_itemNew(nullptr);
 
-         hb_evalBlock( hb_expat->pVar[ _VAR_bEntityDeclHandler ], pUserData, pPar1, pPar2, pPar3, pPar4, pPar5, pPar6, pPar7, nullptr );
+         hb_evalBlock( hb_expat->pVar[_VAR_bEntityDeclHandler], pUserData, pPar1, pPar2, pPar3, pPar4, pPar5, pPar6, pPar7, nullptr );
 
-         hb_itemRelease( pPar7 );
-         hb_itemRelease( pPar6 );
-         hb_itemRelease( pPar5 );
-         hb_itemRelease( pPar4 );
-         hb_itemRelease( pPar3 );
-         hb_itemRelease( pPar2 );
-         hb_itemRelease( pPar1 );
-         hb_itemRelease( pUserData );
+         hb_itemRelease(pPar7);
+         hb_itemRelease(pPar6);
+         hb_itemRelease(pPar5);
+         hb_itemRelease(pPar4);
+         hb_itemRelease(pPar3);
+         hb_itemRelease(pPar2);
+         hb_itemRelease(pPar1);
+         hb_itemRelease(pUserData);
 
          hb_vmRequestRestore();
       }
@@ -545,27 +545,27 @@ static void XMLCALL hb_expat_EntityDeclHandler( void * userdata, const XML_Char 
 #if 0
 static void XMLCALL hb_expat_UnparsedEntityDeclHandler( void * userdata, const XML_Char * entityName, const XML_Char * base, const XML_Char * systemId, const XML_Char * publicId, const XML_Char * notationName )
 {
-   PHB_EXPAT hb_expat = static_cast< PHB_EXPAT >( userdata );
+   PHB_EXPAT hb_expat = static_cast<PHB_EXPAT>(userdata);
 
-   if( hb_expat && hb_expat->pVar[ _VAR_bUnparsedEntityDeclHandler ] )
+   if( hb_expat && hb_expat->pVar[_VAR_bUnparsedEntityDeclHandler] )
    {
       if( hb_vmRequestReenter() )
       {
-         PHB_ITEM pUserData = hb_itemNew( hb_expat->pVar[ _VAR_xUserData ] );
+         PHB_ITEM pUserData = hb_itemNew(hb_expat->pVar[_VAR_xUserData]);
          PHB_ITEM pPar1     = hb_itemPutStrUTF8( nullptr, entityName );
          PHB_ITEM pPar2     = hb_itemPutStrUTF8( nullptr, base );
          PHB_ITEM pPar3     = hb_itemPutStrUTF8( nullptr, systemId );
          PHB_ITEM pPar4     = hb_itemPutStrUTF8( nullptr, publicId );
          PHB_ITEM pPar5     = hb_itemPutStrUTF8( nullptr, notationName );
 
-         hb_evalBlock( hb_expat->pVar[ _VAR_bUnparsedEntityDeclHandler ], pUserData, pPar1, pPar2, pPar3, pPar4, pPar5, nullptr );
+         hb_evalBlock( hb_expat->pVar[_VAR_bUnparsedEntityDeclHandler], pUserData, pPar1, pPar2, pPar3, pPar4, pPar5, nullptr );
 
-         hb_itemRelease( pPar5 );
-         hb_itemRelease( pPar4 );
-         hb_itemRelease( pPar3 );
-         hb_itemRelease( pPar2 );
-         hb_itemRelease( pPar1 );
-         hb_itemRelease( pUserData );
+         hb_itemRelease(pPar5);
+         hb_itemRelease(pPar4);
+         hb_itemRelease(pPar3);
+         hb_itemRelease(pPar2);
+         hb_itemRelease(pPar1);
+         hb_itemRelease(pUserData);
 
          hb_vmRequestRestore();
       }
@@ -575,25 +575,25 @@ static void XMLCALL hb_expat_UnparsedEntityDeclHandler( void * userdata, const X
 
 static void XMLCALL hb_expat_NotationDeclHandler( void * userdata, const XML_Char * notationName, const XML_Char * base, const XML_Char * systemId, const XML_Char * publicId )
 {
-   PHB_EXPAT hb_expat = static_cast< PHB_EXPAT >( userdata );
+   PHB_EXPAT hb_expat = static_cast<PHB_EXPAT>(userdata);
 
-   if( hb_expat && hb_expat->pVar[ _VAR_bNotationDeclHandler ] )
+   if( hb_expat && hb_expat->pVar[_VAR_bNotationDeclHandler] )
    {
       if( hb_vmRequestReenter() )
       {
-         PHB_ITEM pUserData = hb_itemNew( hb_expat->pVar[ _VAR_xUserData ] );
+         PHB_ITEM pUserData = hb_itemNew(hb_expat->pVar[_VAR_xUserData]);
          PHB_ITEM pPar1     = hb_itemPutStrUTF8( nullptr, notationName );
-         PHB_ITEM pPar2     = base ? hb_itemPutStrUTF8( nullptr, base ) : hb_itemNew( nullptr );
-         PHB_ITEM pPar3     = systemId ? hb_itemPutStrUTF8( nullptr, systemId ) : hb_itemNew( nullptr );
-         PHB_ITEM pPar4     = publicId ? hb_itemPutStrUTF8( nullptr, publicId ) : hb_itemNew( nullptr );
+         PHB_ITEM pPar2     = base ? hb_itemPutStrUTF8( nullptr, base ) : hb_itemNew(nullptr);
+         PHB_ITEM pPar3     = systemId ? hb_itemPutStrUTF8( nullptr, systemId ) : hb_itemNew(nullptr);
+         PHB_ITEM pPar4     = publicId ? hb_itemPutStrUTF8( nullptr, publicId ) : hb_itemNew(nullptr);
 
-         hb_evalBlock( hb_expat->pVar[ _VAR_bNotationDeclHandler ], pUserData, pPar1, pPar2, pPar3, pPar4, nullptr );
+         hb_evalBlock( hb_expat->pVar[_VAR_bNotationDeclHandler], pUserData, pPar1, pPar2, pPar3, pPar4, nullptr );
 
-         hb_itemRelease( pPar4 );
-         hb_itemRelease( pPar3 );
-         hb_itemRelease( pPar2 );
-         hb_itemRelease( pPar1 );
-         hb_itemRelease( pUserData );
+         hb_itemRelease(pPar4);
+         hb_itemRelease(pPar3);
+         hb_itemRelease(pPar2);
+         hb_itemRelease(pPar1);
+         hb_itemRelease(pUserData);
 
          hb_vmRequestRestore();
       }
@@ -602,20 +602,20 @@ static void XMLCALL hb_expat_NotationDeclHandler( void * userdata, const XML_Cha
 
 static int XMLCALL hb_expat_NotStandaloneHandler( void * userdata )
 {
-   PHB_EXPAT hb_expat = static_cast< PHB_EXPAT >( userdata );
+   PHB_EXPAT hb_expat = static_cast<PHB_EXPAT>(userdata);
 
    int iResult = XML_STATUS_ERROR;
 
-   if( hb_expat && hb_expat->pVar[ _VAR_bNotStandaloneHandler ] )
+   if( hb_expat && hb_expat->pVar[_VAR_bNotStandaloneHandler] )
    {
       if( hb_vmRequestReenter() )
       {
          hb_vmPushEvalSym();
-         hb_vmPush( hb_expat->pVar[ _VAR_bNotStandaloneHandler ] );
-         hb_vmPush( hb_expat->pVar[ _VAR_xUserData ] );
-         hb_vmSend( 1 );
+         hb_vmPush(hb_expat->pVar[_VAR_bNotStandaloneHandler]);
+         hb_vmPush(hb_expat->pVar[_VAR_xUserData]);
+         hb_vmSend(1);
 
-         iResult = hb_parni( -1 );
+         iResult = hb_parni(-1);
 
          hb_vmRequestRestore();
       }
@@ -630,10 +630,10 @@ static void PHB_EXPAT_free( PHB_EXPAT hb_expat, HB_BOOL bFree )
 {
    for( unsigned int tmp = 0; tmp < HB_SIZEOFARRAY( hb_expat->pVar ); ++tmp )
    {
-      if( hb_expat->pVar[ tmp ] )
+      if( hb_expat->pVar[tmp] )
       {
-         hb_itemRelease( hb_expat->pVar[ tmp ] );
-         hb_expat->pVar[ tmp ] = nullptr;
+         hb_itemRelease(hb_expat->pVar[tmp]);
+         hb_expat->pVar[tmp] = nullptr;
       }
    }
 
@@ -641,26 +641,26 @@ static void PHB_EXPAT_free( PHB_EXPAT hb_expat, HB_BOOL bFree )
    {
       XML_SetUserData( hb_expat->parser, nullptr );
       XML_ParserFree( hb_expat->parser );
-      hb_xfree( hb_expat );
+      hb_xfree(hb_expat);
    }
 }
 
 static HB_GARBAGE_FUNC( PHB_EXPAT_release )
 {
-   PHB_EXPAT * hb_expat_ptr = static_cast< PHB_EXPAT * >( Cargo );
+   PHB_EXPAT * hb_expat_ptr = static_cast<PHB_EXPAT*>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( hb_expat_ptr && *hb_expat_ptr )
    {
       /* Destroy the object */
-      PHB_EXPAT_free( *hb_expat_ptr, HB_TRUE );
+      PHB_EXPAT_free( *hb_expat_ptr, true );
       *hb_expat_ptr = nullptr;
    }
 }
 
 static HB_GARBAGE_FUNC( PHB_EXPAT_mark )
 {
-   PHB_EXPAT * hb_expat_ptr = static_cast< PHB_EXPAT * >( Cargo );
+   PHB_EXPAT * hb_expat_ptr = static_cast<PHB_EXPAT*>(Cargo);
 
    if( hb_expat_ptr && *hb_expat_ptr )
    {
@@ -668,9 +668,9 @@ static HB_GARBAGE_FUNC( PHB_EXPAT_mark )
 
       for( unsigned int tmp = 0; tmp < HB_SIZEOFARRAY( hb_expat->pVar ); ++tmp )
       {
-         if( hb_expat->pVar[ tmp ] )
+         if( hb_expat->pVar[tmp] )
          {
-            hb_gcMark( hb_expat->pVar[ tmp ] );
+            hb_gcMark( hb_expat->pVar[tmp] );
          }
       }
    }
@@ -684,24 +684,24 @@ static const HB_GC_FUNCS s_gcEXPATFuncs =
 
 static PHB_EXPAT PHB_EXPAT_par( int iParam )
 {
-   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcEXPATFuncs, iParam ) );
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcEXPATFuncs, iParam));
 
-   return ph ? static_cast< PHB_EXPAT >( *ph ) : nullptr;
+   return ph ? static_cast<PHB_EXPAT>(*ph) : nullptr;
 }
 
 static void hb_expat_setvar( PHB_EXPAT hb_expat, int iHandler, PHB_ITEM pBlock )
 {
-   if( hb_expat->pVar[ iHandler ] )
+   if( hb_expat->pVar[iHandler] )
    {
-      hb_itemRelease( hb_expat->pVar[ iHandler ] );
-      hb_expat->pVar[ iHandler ] = nullptr;
+      hb_itemRelease(hb_expat->pVar[iHandler]);
+      hb_expat->pVar[iHandler] = nullptr;
    }
 
    if( pBlock )
    {
-      hb_expat->pVar[ iHandler ] = hb_itemNew( pBlock );
+      hb_expat->pVar[iHandler] = hb_itemNew(pBlock);
       /* unlock the item so GC will not mark them as used */
-      hb_gcUnlock( hb_expat->pVar[ iHandler ] );
+      hb_gcUnlock( hb_expat->pVar[iHandler] );
    }
 }
 
@@ -709,7 +709,7 @@ static void hb_expat_setvar( PHB_EXPAT hb_expat, int iHandler, PHB_ITEM pBlock )
 
 HB_FUNC( XML_PARSERCREATE )
 {
-   void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof( PHB_EXPAT ), &s_gcEXPATFuncs ) );
+   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(PHB_EXPAT), &s_gcEXPATFuncs));
 
    XML_Parser parser;
    XML_Memory_Handling_Suite ms;
@@ -721,14 +721,14 @@ HB_FUNC( XML_PARSERCREATE )
    ms.realloc_fcn = hb_expat_xrealloc;
    ms.free_fcn    = hb_expat_xfree;
 
-   parser = XML_ParserCreate_MM( hb_parstr_utf8( 1, &hEncoding, nullptr ), &ms, hb_parstr_utf8( 2, &hSep, nullptr ) );
+   parser = XML_ParserCreate_MM( hb_parstr_utf8(1, &hEncoding, nullptr), &ms, hb_parstr_utf8(2, &hSep, nullptr) );
 
-   hb_strfree( hSep );
-   hb_strfree( hEncoding );
+   hb_strfree(hSep);
+   hb_strfree(hEncoding);
 
    if( parser )
    {
-      PHB_EXPAT hb_expat = static_cast< PHB_EXPAT >( hb_xgrabz( sizeof( HB_EXPAT ) ) );
+      PHB_EXPAT hb_expat = static_cast<PHB_EXPAT>(hb_xgrabz(sizeof(HB_EXPAT)));
 
       hb_expat->parser = parser;
 
@@ -741,22 +741,22 @@ HB_FUNC( XML_PARSERCREATE )
       *ph = nullptr;
    }
 
-   hb_retptrGC( ph );
+   hb_retptrGC(ph);
 }
 
 HB_FUNC( XML_PARSERRESET )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
       void * hEncoding;
 
-      PHB_EXPAT_free( hb_expat, HB_FALSE );
+      PHB_EXPAT_free( hb_expat, false );
 
-      XML_ParserReset( hb_expat->parser, hb_parstr_utf8( 1, &hEncoding, nullptr ) );
+      XML_ParserReset( hb_expat->parser, hb_parstr_utf8(1, &hEncoding, nullptr) );
 
-      hb_strfree( hEncoding );
+      hb_strfree(hEncoding);
    }
    else
    {
@@ -764,7 +764,7 @@ HB_FUNC( XML_PARSERRESET )
    }
 }
 
-#if defined( HB_LEGACY_LEVEL5 )
+#if defined(HB_LEGACY_LEVEL5)
 HB_FUNC( XML_PARSERFREE )
 {
 }
@@ -772,11 +772,11 @@ HB_FUNC( XML_PARSERFREE )
 
 HB_FUNC( XML_SETUSERDATA )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
-      hb_expat_setvar( hb_expat, _VAR_xUserData, hb_param( 2, HB_IT_ANY ) );
+      hb_expat_setvar( hb_expat, _VAR_xUserData, hb_param(2, Harbour::Item::ANY) );
 
       hb_ret();
    }
@@ -788,11 +788,11 @@ HB_FUNC( XML_SETUSERDATA )
 
 HB_FUNC( XML_GETUSERDATA )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
-      hb_itemReturnRelease( hb_itemNew( hb_expat->pVar[ _VAR_xUserData ] ) );
+      hb_itemReturnRelease(hb_itemNew(hb_expat->pVar[_VAR_xUserData]));
    }
    else
    {
@@ -802,16 +802,16 @@ HB_FUNC( XML_GETUSERDATA )
 
 HB_FUNC( XML_SETELEMENTHANDLER )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
-      hb_expat_setvar( hb_expat, _VAR_bStartElementHandler, hb_param( 2, HB_IT_EVALITEM ) );
-      hb_expat_setvar( hb_expat, _VAR_bEndElementHandler, hb_param( 3, HB_IT_EVALITEM ) );
+      hb_expat_setvar( hb_expat, _VAR_bStartElementHandler, hb_param(2, Harbour::Item::EVALITEM) );
+      hb_expat_setvar( hb_expat, _VAR_bEndElementHandler, hb_param(3, Harbour::Item::EVALITEM) );
 
       XML_SetElementHandler( hb_expat->parser,
-                             hb_expat->pVar[ _VAR_bStartElementHandler ] ? hb_expat_StartElementHandler : nullptr,
-                             hb_expat->pVar[ _VAR_bEndElementHandler ] ? hb_expat_EndElementHandler : nullptr );
+                             hb_expat->pVar[_VAR_bStartElementHandler] ? hb_expat_StartElementHandler : nullptr,
+                             hb_expat->pVar[_VAR_bEndElementHandler] ? hb_expat_EndElementHandler : nullptr );
 
       hb_ret();
    }
@@ -823,16 +823,16 @@ HB_FUNC( XML_SETELEMENTHANDLER )
 
 HB_FUNC( XML_SETCDATASECTIONHANDLER )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
-      hb_expat_setvar( hb_expat, _VAR_bStartCdataSectionHandler, hb_param( 2, HB_IT_EVALITEM ) );
-      hb_expat_setvar( hb_expat, _VAR_bEndCdataSectionHandler, hb_param( 3, HB_IT_EVALITEM ) );
+      hb_expat_setvar( hb_expat, _VAR_bStartCdataSectionHandler, hb_param(2, Harbour::Item::EVALITEM) );
+      hb_expat_setvar( hb_expat, _VAR_bEndCdataSectionHandler, hb_param(3, Harbour::Item::EVALITEM) );
 
       XML_SetCdataSectionHandler( hb_expat->parser,
-                                  hb_expat->pVar[ _VAR_bStartCdataSectionHandler ] ? hb_expat_StartCdataSectionHandler : nullptr,
-                                  hb_expat->pVar[ _VAR_bEndCdataSectionHandler ] ? hb_expat_EndCdataSectionHandler : nullptr );
+                                  hb_expat->pVar[_VAR_bStartCdataSectionHandler] ? hb_expat_StartCdataSectionHandler : nullptr,
+                                  hb_expat->pVar[_VAR_bEndCdataSectionHandler] ? hb_expat_EndCdataSectionHandler : nullptr );
 
       hb_ret();
    }
@@ -844,16 +844,16 @@ HB_FUNC( XML_SETCDATASECTIONHANDLER )
 
 HB_FUNC( XML_SETNAMESPACEDECLHANDLER )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
-      hb_expat_setvar( hb_expat, _VAR_bStartNamespaceDeclHandler, hb_param( 2, HB_IT_EVALITEM ) );
-      hb_expat_setvar( hb_expat, _VAR_bEndNamespaceDeclHandler, hb_param( 3, HB_IT_EVALITEM ) );
+      hb_expat_setvar( hb_expat, _VAR_bStartNamespaceDeclHandler, hb_param(2, Harbour::Item::EVALITEM) );
+      hb_expat_setvar( hb_expat, _VAR_bEndNamespaceDeclHandler, hb_param(3, Harbour::Item::EVALITEM) );
 
       XML_SetNamespaceDeclHandler( hb_expat->parser,
-                                   hb_expat->pVar[ _VAR_bStartNamespaceDeclHandler ] ? hb_expat_StartNamespaceDeclHandler : nullptr,
-                                   hb_expat->pVar[ _VAR_bEndNamespaceDeclHandler ] ? hb_expat_EndNamespaceDeclHandler : nullptr );
+                                   hb_expat->pVar[_VAR_bStartNamespaceDeclHandler] ? hb_expat_StartNamespaceDeclHandler : nullptr,
+                                   hb_expat->pVar[_VAR_bEndNamespaceDeclHandler] ? hb_expat_EndNamespaceDeclHandler : nullptr );
 
       hb_ret();
    }
@@ -865,16 +865,14 @@ HB_FUNC( XML_SETNAMESPACEDECLHANDLER )
 
 HB_FUNC( XML_SETUNKNOWNENCODINGHANDLER )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
-      hb_expat_setvar( hb_expat, _VAR_bUnknownEncodingHandler, hb_param( 2, HB_IT_EVALITEM ) );
-      hb_expat_setvar( hb_expat, _VAR_xEncodingHandlerData, hb_param( 3, HB_IT_ANY ) );
+      hb_expat_setvar( hb_expat, _VAR_bUnknownEncodingHandler, hb_param(2, Harbour::Item::EVALITEM) );
+      hb_expat_setvar( hb_expat, _VAR_xEncodingHandlerData, hb_param(3, Harbour::Item::ANY) );
 
-      XML_SetUnknownEncodingHandler( hb_expat->parser,
-                                     hb_expat->pVar[ _VAR_bUnknownEncodingHandler ] ? hb_expat_UnknownEncodingHandler : nullptr,
-                                     hb_expat );
+      XML_SetUnknownEncodingHandler(hb_expat->parser, hb_expat->pVar[_VAR_bUnknownEncodingHandler] ? hb_expat_UnknownEncodingHandler : nullptr, hb_expat);
 
       hb_ret();
    }
@@ -886,11 +884,11 @@ HB_FUNC( XML_SETUNKNOWNENCODINGHANDLER )
 
 HB_FUNC( XML_PARSE )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
-      hb_retni( XML_Parse( hb_expat->parser, hb_parcx( 2 ), static_cast< int >( hb_parclen( 2 ) ), static_cast< int >( hb_parl( 3 ) ) ) );
+      hb_retni(XML_Parse(hb_expat->parser, hb_parcx(2), static_cast<int>(hb_parclen(2)), static_cast<int>(hb_parl(3))));
    }
    else
    {
@@ -900,11 +898,11 @@ HB_FUNC( XML_PARSE )
 
 HB_FUNC( XML_GETERRORCODE )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
-      hb_retni( static_cast< int >( XML_GetErrorCode( hb_expat->parser ) ) );
+      hb_retni(static_cast<int>(XML_GetErrorCode(hb_expat->parser)));
    }
    else
    {
@@ -914,12 +912,12 @@ HB_FUNC( XML_GETERRORCODE )
 
 HB_FUNC( XML_ERRORSTRING )
 {
-   hb_retc( XML_ErrorString( static_cast< enum XML_Error >( hb_parni( 1 ) ) ) );
+   hb_retc(XML_ErrorString(static_cast<enum XML_Error>(hb_parni(1))));
 }
 
 HB_FUNC( XML_GETCURRENTBYTEINDEX )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
@@ -933,7 +931,7 @@ HB_FUNC( XML_GETCURRENTBYTEINDEX )
 
 HB_FUNC( XML_GETCURRENTLINENUMBER )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
@@ -947,7 +945,7 @@ HB_FUNC( XML_GETCURRENTLINENUMBER )
 
 HB_FUNC( XML_GETCURRENTCOLUMNNUMBER )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
@@ -961,11 +959,11 @@ HB_FUNC( XML_GETCURRENTCOLUMNNUMBER )
 
 HB_FUNC( XML_GETCURRENTBYTECOUNT )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
-      hb_retni( XML_GetCurrentByteCount( hb_expat->parser ) );
+      hb_retni(XML_GetCurrentByteCount(hb_expat->parser));
    }
    else
    {
@@ -975,15 +973,15 @@ HB_FUNC( XML_GETCURRENTBYTECOUNT )
 
 HB_FUNC( XML_SETBASE )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
       void * hBase;
 
-      hb_retni( static_cast< int >( XML_SetBase( hb_expat->parser, hb_parstr_utf8( 1, &hBase, nullptr ) ) ) );
+      hb_retni(static_cast<int>(XML_SetBase(hb_expat->parser, hb_parstr_utf8(1, &hBase, nullptr))));
 
-      hb_strfree( hBase );
+      hb_strfree(hBase);
    }
    else
    {
@@ -993,7 +991,7 @@ HB_FUNC( XML_SETBASE )
 
 HB_FUNC( XML_GETBASE )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
@@ -1007,11 +1005,11 @@ HB_FUNC( XML_GETBASE )
 
 HB_FUNC( XML_GETSPECIFIEDATTRIBUTECOUNT )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
-      hb_retni( XML_GetSpecifiedAttributeCount( hb_expat->parser ) );
+      hb_retni(XML_GetSpecifiedAttributeCount(hb_expat->parser));
    }
    else
    {
@@ -1021,11 +1019,11 @@ HB_FUNC( XML_GETSPECIFIEDATTRIBUTECOUNT )
 
 HB_FUNC( XML_GETIDATTRIBUTEINDEX )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
-      hb_retni( XML_GetIdAttributeIndex( hb_expat->parser ) );
+      hb_retni(XML_GetIdAttributeIndex(hb_expat->parser));
    }
    else
    {
@@ -1035,15 +1033,15 @@ HB_FUNC( XML_GETIDATTRIBUTEINDEX )
 
 HB_FUNC( XML_SETENCODING )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
       void * hEncoding;
 
-      hb_retni( static_cast< int >( XML_SetEncoding( hb_expat->parser, hb_parstr_utf8( 1, &hEncoding, nullptr ) ) ) );
+      hb_retni(static_cast<int>(XML_SetEncoding(hb_expat->parser, hb_parstr_utf8(1, &hEncoding, nullptr))));
 
-      hb_strfree( hEncoding );
+      hb_strfree(hEncoding);
    }
    else
    {
@@ -1053,11 +1051,11 @@ HB_FUNC( XML_SETENCODING )
 
 HB_FUNC( XML_SETPARAMENTITYPARSING )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
-      hb_retni( XML_SetParamEntityParsing( hb_expat->parser, static_cast< enum XML_ParamEntityParsing >( hb_parni( 2 ) ) ) );
+      hb_retni(XML_SetParamEntityParsing(hb_expat->parser, static_cast<enum XML_ParamEntityParsing>(hb_parni(2))));
    }
    else
    {
@@ -1067,11 +1065,11 @@ HB_FUNC( XML_SETPARAMENTITYPARSING )
 
 HB_FUNC( XML_USEFOREIGNDTD )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
-      hb_retni( static_cast< int >( XML_UseForeignDTD( hb_expat->parser, static_cast< XML_Bool >( hb_parl( 2 ) ) ) ) );
+      hb_retni(static_cast<int>(XML_UseForeignDTD(hb_expat->parser, static_cast<XML_Bool>(hb_parl(2)))));
    }
    else
    {
@@ -1081,11 +1079,11 @@ HB_FUNC( XML_USEFOREIGNDTD )
 
 HB_FUNC( XML_SETRETURNNSTRIPLET )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
-      XML_SetReturnNSTriplet( hb_expat->parser, hb_parni( 2 ) );
+      XML_SetReturnNSTriplet( hb_expat->parser, hb_parni(2) );
 
       hb_ret();
    }
@@ -1097,7 +1095,7 @@ HB_FUNC( XML_SETRETURNNSTRIPLET )
 
 HB_FUNC( XML_DEFAULTCURRENT )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
@@ -1113,14 +1111,14 @@ HB_FUNC( XML_DEFAULTCURRENT )
 
 HB_FUNC( XML_STOPPARSER )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
-#if HB_EXPAT_VERS( 1, 95, 8 )
-      hb_retni( static_cast< int >( XML_StopParser( hb_expat->parser, static_cast< XML_Bool >( hb_parl( 2 ) ) ) ) );
+#if HB_EXPAT_VERS(1, 95, 8)
+      hb_retni(static_cast<int>(XML_StopParser(hb_expat->parser, static_cast<XML_Bool>(hb_parl(2)))));
 #else
-      hb_retni( HB_XML_ERROR_NOT_IMPLEMENTED_ );
+      hb_retni(HB_XML_ERROR_NOT_IMPLEMENTED_);
 #endif
    }
    else
@@ -1131,14 +1129,14 @@ HB_FUNC( XML_STOPPARSER )
 
 HB_FUNC( XML_RESUMEPARSER )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
-#if HB_EXPAT_VERS( 1, 95, 8 )
-      hb_retni( static_cast< int >( XML_ResumeParser( hb_expat->parser ) ) );
+#if HB_EXPAT_VERS(1, 95, 8)
+      hb_retni(static_cast<int>(XML_ResumeParser(hb_expat->parser)));
 #else
-      hb_retni( HB_XML_ERROR_NOT_IMPLEMENTED_ );
+      hb_retni(HB_XML_ERROR_NOT_IMPLEMENTED_);
 #endif
    }
    else
@@ -1149,20 +1147,20 @@ HB_FUNC( XML_RESUMEPARSER )
 
 HB_FUNC( XML_GETPARSINGSTATUS )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
-#if HB_EXPAT_VERS( 1, 95, 8 )
+#if HB_EXPAT_VERS(1, 95, 8)
       XML_ParsingStatus status;
 
       XML_GetParsingStatus( hb_expat->parser, &status );
 
-      hb_storni( static_cast< int >( status.parsing ), 2 );
-      hb_storl( static_cast< HB_BOOL >( status.finalBuffer ), 3 );
+      hb_storni(static_cast<int>(status.parsing), 2);
+      hb_storl(static_cast<HB_BOOL>(status.finalBuffer), 3);
 #else
-      hb_storni( -1, 2 );
-      hb_storl( HB_FALSE, 3 );
+      hb_storni(-1, 2);
+      hb_storl(false, 3);
 #endif
    }
    else
@@ -1173,14 +1171,14 @@ HB_FUNC( XML_GETPARSINGSTATUS )
 
 HB_FUNC( XML_SETHASHSALT )
 {
-   PHB_EXPAT hb_expat = PHB_EXPAT_par( 1 );
+   PHB_EXPAT hb_expat = PHB_EXPAT_par(1);
 
    if( hb_expat )
    {
-#if HB_EXPAT_VERS( 2, 1, 0 )
-      hb_retni( XML_SetHashSalt( hb_expat->parser, static_cast< unsigned long >( hb_parnint( 2 ) ) ) );
+#if HB_EXPAT_VERS(2, 1, 0)
+      hb_retni(XML_SetHashSalt(hb_expat->parser, static_cast<unsigned long>(hb_parnint(2))));
 #else
-      hb_retni( 0 );
+      hb_retni(0);
 #endif
    }
    else
@@ -1191,23 +1189,23 @@ HB_FUNC( XML_SETHASHSALT )
 
 HB_FUNC( XML_EXPATVERSION )
 {
-   hb_retc( XML_ExpatVersion() );
+   hb_retc(XML_ExpatVersion());
 }
 
 HB_FUNC( XML_EXPATVERSIONINFO )
 {
    XML_Expat_Version var = XML_ExpatVersionInfo();
 
-   hb_storni( var.major, 1 );
-   hb_storni( var.minor, 2 );
-   hb_storni( var.micro, 3 );
+   hb_storni(var.major, 1);
+   hb_storni(var.minor, 2);
+   hb_storni(var.micro, 3);
 }
 
 HB_FUNC( HB_XML_EXPATVERSIONINFO )
 {
-   hb_storni( XML_MAJOR_VERSION, 1 );
-   hb_storni( XML_MINOR_VERSION, 2 );
-   hb_storni( XML_MICRO_VERSION, 3 );
+   hb_storni(XML_MAJOR_VERSION, 1);
+   hb_storni(XML_MINOR_VERSION, 2);
+   hb_storni(XML_MICRO_VERSION, 3);
 }
 
 HB_EXPAT_SETHANDLER( STARTELEMENTHANDLER         , StartElementHandler          )

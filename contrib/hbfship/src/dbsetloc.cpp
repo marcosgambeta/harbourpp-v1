@@ -50,22 +50,22 @@
 
 HB_FUNC( DBSETLOCATE )
 {
-   AREAP   pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP   pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_BOOL fSet  = HB_FALSE;
 
    if( pArea )
    {
-      PHB_ITEM pLocate = hb_param( 1, HB_IT_BLOCK );
+      PHB_ITEM pLocate = hb_param(1, Harbour::Item::BLOCK);
       if( pLocate )
       {
          DBSCOPEINFO pScopeInfo;
-         memset( &pScopeInfo, 0, sizeof( pScopeInfo ) );
+         memset( &pScopeInfo, 0, sizeof(pScopeInfo) );
          pScopeInfo.itmCobFor = pLocate;
          fSet = SELF_SETLOCATE( pArea, &pScopeInfo ) == HB_SUCCESS;
       }
    }
 
-   hb_retl( fSet );
+   hb_retl(fSet);
 }
 
 HB_FUNC_TRANSLATE( DBSETLOCATEBLOCK, DBSETLOCATE )

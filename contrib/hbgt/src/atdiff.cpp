@@ -10,11 +10,11 @@
 
 HB_FUNC( GT_ATDIFF )
 {
-   if( HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) )
+   if( HB_ISCHAR(1) && HB_ISCHAR(2) )
    {
-      const char * s1  = hb_parc( 1 );
-      const char * s2  = hb_parc( 2 );
-      HB_ISIZ      len = hb_parclen( 2 );
+      const char * s1  = hb_parc(1);
+      const char * s2  = hb_parc(2);
+      HB_ISIZ      len = hb_parclen(2);
       HB_ISIZ      pos;
 
       /* loop through comparing both strings
@@ -25,7 +25,7 @@ HB_FUNC( GT_ATDIFF )
          pos++;
 
       if( pos > len )  /* strings match exactly */
-         hb_retns( 0 );
+         hb_retns(0);
       else
          hb_retns( pos );
    }

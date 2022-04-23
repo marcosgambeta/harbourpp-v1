@@ -49,5 +49,5 @@
 
 HB_FUNC( USERSMAX )
 {
-   hb_retni( 1024 );
+   hb_retni(1024);
 }

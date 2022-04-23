@@ -46,7 +46,7 @@
 
 #include "hbapi.h"
 
-#if defined( HB_OS_WIN ) && ! defined( _Windows )
+#if defined(HB_OS_WIN) && !defined(_Windows)
 #  define _Windows
 #  include <windows.h>
 #  define GSDLLEXPORT  __declspec( dllimport )
@@ -56,29 +56,29 @@
 #include "iapi.h"
 
 /* Workaround to build with pre-9.18 versions */
-#if defined( e_Quit )
+#if defined(e_Quit)
 #  define gs_error_Quit  e_Quit
 #endif
 
 HB_FUNC( HB_GS )
 {
    HB_BOOL  bResult = HB_FALSE;
-   PHB_ITEM pParam  = hb_param( 1, HB_IT_ARRAY );
+   PHB_ITEM pParam  = hb_param(1, Harbour::Item::ARRAY);
 
    if( pParam )
    {
       void *  minst;
       int     pos;
       int     code, code1;
-      int     gsargc = static_cast< int >( hb_arrayLen( pParam ) ) + 1;
-      char ** gsargv = static_cast< char ** >( hb_xgrab( gsargc * sizeof( const char * ) ) );
+      int     gsargc = static_cast<int>(hb_arrayLen(pParam)) + 1;
+      char ** gsargv = static_cast<char**>(hb_xgrab(gsargc * sizeof(const char*)));
 
-      gsargv[ 0 ] = const_cast< char * >( "hbgs" ); /* actual value doesn't matter */
+      gsargv[0] = const_cast< char * >( "hbgs" ); /* actual value doesn't matter */
 
       for( pos = 1; pos < gsargc; ++pos )
       {
-         const char * pszParam = hb_arrayGetCPtr( pParam, pos );
-         gsargv[ pos ] = const_cast< char * >( pszParam ? pszParam : "" );
+         const char * pszParam = hb_arrayGetCPtr(pParam, pos);
+         gsargv[pos] = const_cast< char * >( pszParam ? pszParam : "" );
       }
 
       code = gsapi_new_instance( &minst, nullptr );
@@ -96,28 +96,28 @@ HB_FUNC( HB_GS )
       }
    }
 
-   hb_retl( bResult );
+   hb_retl(bResult);
 }
 
 HB_FUNC( HB_GSAPI_REVISION )
 {
    gsapi_revision_t r;
-   int result = gsapi_revision( &r, sizeof( r ) );
+   int result = gsapi_revision( &r, sizeof(r) );
 
    if( result == 0 )
    {
-      hb_storc( r.product, 1 );
-      hb_storc( r.copyright, 2 );
-      hb_stornl( r.revision, 3 );
-      hb_stornl( r.revisiondate, 4 );
+      hb_storc(r.product, 1);
+      hb_storc(r.copyright, 2);
+      hb_stornl(r.revision, 3);
+      hb_stornl(r.revisiondate, 4);
    }
    else
    {
-      hb_storc( nullptr, 1 );
-      hb_storc( nullptr, 2 );
-      hb_stornl( 0, 3 );
-      hb_stornl( 0, 4 );
+      hb_storc(nullptr, 1);
+      hb_storc(nullptr, 2);
+      hb_stornl(0, 3);
+      hb_stornl(0, 4);
    }
 
-   hb_retni( result );
+   hb_retni(result);
 }
