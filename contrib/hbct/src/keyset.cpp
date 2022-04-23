@@ -53,32 +53,32 @@ static void SetGet( int iFlag )
    int iState = 0;
    HB_GT_INFO gtInfo;
 
-   memset( &gtInfo, 0, sizeof( gtInfo ) );
+   memset( &gtInfo, 0, sizeof(gtInfo) );
 
    hb_gtInfo( HB_GTI_KBDSHIFTS, &gtInfo );
    if( gtInfo.pResult )
    {
-      iState = hb_itemGetNI( gtInfo.pResult );
+      iState = hb_itemGetNI(gtInfo.pResult);
       gtInfo.pNewVal = gtInfo.pResult;
       gtInfo.pResult = nullptr;
    }
 
-   if( HB_ISLOG( 1 ) )
+   if( HB_ISLOG(1) )
    {
-      gtInfo.pNewVal = hb_itemPutNI( gtInfo.pNewVal, hb_parl( 1 ) ? ( iState | iFlag ) : ( iState & ~iFlag ) );
+      gtInfo.pNewVal = hb_itemPutNI( gtInfo.pNewVal, hb_parl(1) ? ( iState | iFlag ) : ( iState & ~iFlag ) );
       hb_gtInfo( HB_GTI_KBDSHIFTS, &gtInfo );
    }
 
    if( gtInfo.pNewVal )
    {
-      hb_itemRelease( gtInfo.pNewVal );
+      hb_itemRelease(gtInfo.pNewVal);
    }
    if( gtInfo.pResult )
    {
-      hb_itemRelease( gtInfo.pResult );
+      hb_itemRelease(gtInfo.pResult);
    }
 
-   hb_retl( ( iState & iFlag ) != 0 );
+   hb_retl((iState & iFlag) != 0);
 }
 
 HB_FUNC( KSETINS )

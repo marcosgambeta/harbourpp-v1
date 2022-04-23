@@ -59,21 +59,21 @@ HB_BOOL hbamf_is_cls_externalizable( HB_USHORT uiClass )
 
    if( uiClass && pSymbol )
    {
-      PHB_ITEM pRetCopy = hb_itemNew( nullptr );
+      PHB_ITEM pRetCopy = hb_itemNew(nullptr);
 
-      hb_itemMove( pRetCopy, hb_stackReturnItem() );
+      hb_itemMove(pRetCopy, hb_stackReturnItem());
 
-      hb_vmPushDynSym( pSymbol );
+      hb_vmPushDynSym(pSymbol);
       hb_vmPushNil();
-      hb_vmPushInteger( uiClass );
-      hb_vmPushString( "EXTERNALIZABLE", 14 );
-      hb_vmDo( 2 );
+      hb_vmPushInteger(uiClass);
+      hb_vmPushString("EXTERNALIZABLE", 14);
+      hb_vmDo(2);
 
-      if( hb_itemGetNI( hb_stackReturnItem() ) == HB_OO_MSG_CLASSDATA )
+      if( hb_itemGetNI(hb_stackReturnItem()) == HB_OO_MSG_CLASSDATA )
          result = HB_TRUE;
 
-      hb_itemMove( hb_stackReturnItem(), pRetCopy );
-      hb_itemRelease( pRetCopy );
+      hb_itemMove(hb_stackReturnItem(), pRetCopy);
+      hb_itemRelease(pRetCopy);
    }
 
    return result;

@@ -63,13 +63,13 @@ static const HB_ERRCODE sulErrorSubcodes[] =
 static void do_replace( int iSwitch )
 {
    /* suppressing return value ? */
-   int iNoRet = ct_getref() && HB_ISBYREF( 1 );
+   int iNoRet = ct_getref() && HB_ISBYREF(1);
 
    /* param check */
-   if( HB_ISCHAR( 1 ) && ( hb_parclen( 2 ) > 0 || HB_ISNUM( 2 ) ) )
+   if( HB_ISCHAR(1) && ( hb_parclen(2) > 0 || HB_ISNUM(2) ) )
    {
-      const char * pcString = hb_parc( 1 );
-      HB_SIZE sStrLen = hb_parclen( 1 );
+      const char * pcString = hb_parc(1);
+      HB_SIZE sStrLen = hb_parclen(1);
       char * pcRet, * pc;
       char cSearch, cReplace;
 
@@ -86,29 +86,29 @@ static void do_replace( int iSwitch )
          return;
       }
 
-      if( HB_ISNUM( 2 ) )
+      if( HB_ISNUM(2) )
       {
-         cReplace = static_cast< char >( hb_parnl( 2 ) % 256 );
+         cReplace = static_cast<char>(hb_parnl(2) % 256);
       }
       else
       {
-         cReplace = *( static_cast< const char * >( hb_parc( 2 ) ) );
+         cReplace = *(static_cast<const char*>(hb_parc(2)));
       }
 
-      if( hb_parclen( 3 ) > 0 )
+      if( hb_parclen(3) > 0 )
       {
-         cSearch = *( static_cast< const char * >( hb_parc( 3 ) ) );
+         cSearch = *(static_cast<const char *>(hb_parc(3)));
       }
-      else if( HB_ISNUM( 3 ) )
+      else if( HB_ISNUM(3) )
       {
-         cSearch = static_cast< char >( hb_parnl( 3 ) % 256 );
+         cSearch = static_cast<char>(hb_parnl(3) % 256);
       }
       else
       {
          cSearch = 0x20;
       }
 
-      pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
+      pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
       hb_xmemcpy( pcRet, pcString, sStrLen );
 
       if( iSwitch != DO_REPLACE_REPLRIGHT )
@@ -131,11 +131,11 @@ static void do_replace( int iSwitch )
          }
       }
 
-      hb_storclen( pcRet, sStrLen, 1 );
+      hb_storclen(pcRet, sStrLen, 1);
 
       if( iNoRet )
       {
-         hb_xfree( pcRet );
+         hb_xfree(pcRet);
          hb_ret();
       }
       else
@@ -150,15 +150,12 @@ static void do_replace( int iSwitch )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  sulErrorSubcodes[ iSwitch ],
-                                  nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, sulErrorSubcodes[iSwitch], nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else if( iNoRet )
       {

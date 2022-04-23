@@ -54,26 +54,26 @@
  */
 HB_FUNC( COM_DOSCON )
 {
-   HB_SIZE nLen = hb_parclen( 1 );
+   HB_SIZE nLen = hb_parclen(1);
 
    if( nLen > 0 )
    {
-      if( HB_ISNUM( 2 ) || HB_ISNUM( 3 ) )
+      if( HB_ISNUM(2) || HB_ISNUM(3) )
       {
          int iRow, iCol;
 
          hb_gtGetPos( &iRow, &iCol );
-         if( HB_ISNUM( 2 ) )
+         if( HB_ISNUM(2) )
          {
-            iRow = hb_parni( 1 );
+            iRow = hb_parni(1);
          }
-         if( HB_ISNUM( 3 ) )
+         if( HB_ISNUM(3) )
          {
-            iCol = hb_parni( 2 );
+            iCol = hb_parni(2);
          }
          hb_gtSetPos( iRow, iCol );
       }
-      hb_gtWriteCon( hb_parc( 1 ), nLen );
+      hb_gtWriteCon( hb_parc(1), nLen );
    }
    hb_retc_null();
 }
@@ -82,12 +82,12 @@ HB_FUNC( COM_DOSCON )
  */
 HB_FUNC( COM_CRC )
 {
-   HB_MAXUINT crc = hb_parnint( 2 );
-   const char * szString = hb_parc( 1 );
+   HB_MAXUINT crc = hb_parnint(2);
+   const char * szString = hb_parc(1);
 
    if( szString )
    {
-      HB_MAXUINT nPolynomial = static_cast< HB_MAXUINT >( hb_parnint( 3 ) );
+      HB_MAXUINT nPolynomial = static_cast<HB_MAXUINT>(hb_parnint(3));
 
       if( nPolynomial == 0 )
       {
@@ -103,9 +103,9 @@ HB_FUNC( COM_CRC )
        *       so for most common usage it should be binary compatible
        *       with CT3. [druzus]
        */
-      crc = hb_crcct( crc, szString, hb_parclen( 1 ), nPolynomial );
+      crc = hb_crcct( crc, szString, hb_parclen(1), nPolynomial );
    }
-   hb_retnint( crc );
+   hb_retnint(crc);
 }
 
 static char s_xmoblock_sum( const char * szData, HB_SIZE nLen )
@@ -114,9 +114,9 @@ static char s_xmoblock_sum( const char * szData, HB_SIZE nLen )
 
    while( nLen-- )
    {
-      uc += ( unsigned char ) *szData++;
+      uc += static_cast<unsigned char>(*szData++);
    }
-   return static_cast< char >( uc );
+   return static_cast<char>(uc);
 }
 
 /* XMoBlock( <cString>, <nBlockNumber>, [<lCRC>], [<nMode>] ) --> <cXModemBlock>
@@ -129,21 +129,21 @@ HB_FUNC( XMOBLOCK )
    int iBlock;
    HB_BOOL fCRC;
 
-   szData = hb_parc( 1 );
-   nLen = hb_parclen( 1 );
-   iBlock = hb_parni( 2 );
-   fCRC = hb_parl( 3 );
-   nSize = hb_parni( 4 ) == 2 ? 1024 : 128;
+   szData = hb_parc(1);
+   nLen = hb_parclen(1);
+   iBlock = hb_parni(2);
+   fCRC = hb_parl(3);
+   nSize = hb_parni(4) == 2 ? 1024 : 128;
 
    iBlock &= 0xFF;
    if( nLen > nSize )
    {
       nLen = nSize;
    }
-   pszBlock = static_cast< char * >( hb_xgrab( nSize + ( fCRC ? 6 : 5 ) ) );
-   pszBlock[ 0 ] = nSize == 128 ? 1 : 2;
-   pszBlock[ 1 ] = static_cast< char >( iBlock );
-   pszBlock[ 2 ] = static_cast< char >( 0xFF - iBlock );
+   pszBlock = static_cast<char*>(hb_xgrab(nSize + (fCRC ? 6 : 5)));
+   pszBlock[0] = nSize == 128 ? 1 : 2;
+   pszBlock[1] = static_cast<char>(iBlock);
+   pszBlock[2] = static_cast<char>(0xFF - iBlock);
    if( szData )
    {
       memcpy( pszBlock + 3, szData, nLen );
@@ -154,13 +154,13 @@ HB_FUNC( XMOBLOCK )
    }
    if( fCRC )
    {
-      HB_U16 crc = ( HB_U16 ) hb_crcct( 0, pszBlock + 3, nSize, 0x11021 );
-      HB_PUT_BE_UINT16( &pszBlock[ 3 + nSize ], crc );
+      HB_U16 crc = ( HB_U16 ) hb_crcct(0, pszBlock + 3, nSize, 0x11021);
+      HB_PUT_BE_UINT16( &pszBlock[3 + nSize], crc );
       nSize += 5;
    }
    else
    {
-      pszBlock[ 3 + nSize ] = s_xmoblock_sum( szData, nLen );
+      pszBlock[3 + nSize] = s_xmoblock_sum( szData, nLen );
       nSize += 4;
    }
    hb_retclen_buffer( pszBlock, nSize );
@@ -170,13 +170,13 @@ HB_FUNC( XMOBLOCK )
  */
 HB_FUNC( XMOCHECK )
 {
-   HB_SIZE nLen = hb_parclen( 1 );
+   HB_SIZE nLen = hb_parclen(1);
    int iResult = -1;
 
    if( nLen >= 132 )
    {
-      const char * szBlock = hb_parc( 1 );
-      HB_BOOL fCRC = hb_parl( 2 );
+      const char * szBlock = hb_parc(1);
+      HB_BOOL fCRC = hb_parl(2);
       HB_SIZE nSize;
 
       if( *szBlock == 0x01 )
@@ -191,22 +191,22 @@ HB_FUNC( XMOCHECK )
       {
          nSize = nLen;
       }
-      if( nLen == nSize + ( fCRC ? 5 : 4 ) && static_cast< unsigned char >( szBlock[ 1 ] ) + static_cast< unsigned char >( szBlock[ 2 ] ) == 0xFF )
+      if( nLen == nSize + ( fCRC ? 5 : 4 ) && static_cast<unsigned char>(szBlock[1]) + static_cast<unsigned char>(szBlock[2]) == 0xFF )
       {
-         if( fCRC ? hb_crcct( 0, szBlock + 3, nSize + 2, 0x11021 ) == 0 : s_xmoblock_sum( szBlock + 3, nSize ) == szBlock[ 3 + nSize ] )
+         if( fCRC ? hb_crcct(0, szBlock + 3, nSize + 2, 0x11021) == 0 : s_xmoblock_sum( szBlock + 3, nSize ) == szBlock[3 + nSize] )
          {
-            iResult = static_cast< unsigned char >( szBlock[ 1 ] );
+            iResult = static_cast<unsigned char>(szBlock[1]);
          }
       }
    }
-   hb_retni( iResult );
+   hb_retni(iResult);
 }
 
 /* ZeroInsert( <cString> ) --> <cDataBlock>
  */
 HB_FUNC( ZEROINSERT )
 {
-   PHB_ITEM pString = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pString = hb_param(1, Harbour::Item::STRING);
 
    if( pString )
    {
@@ -215,14 +215,14 @@ HB_FUNC( ZEROINSERT )
       unsigned int uiVal;
       int i;
 
-      szText = hb_itemGetCPtr( pString );
-      nLen = hb_itemGetCLen( pString );
+      szText = hb_itemGetCPtr(pString);
+      nLen = hb_itemGetCLen(pString);
       uiVal = 0;
       nBits = 0;
       /* NOTE: trailing zero accessed intentionally */
       for( n = 0; n <= nLen; ++n )
       {
-         uiVal |= static_cast< unsigned char >( szText[ n ] );
+         uiVal |= static_cast<unsigned char>(szText[n]);
          for( i = 0; i < 8; ++i )
          {
             if( ( uiVal & 0xF800 ) == 0xF800 )
@@ -236,14 +236,14 @@ HB_FUNC( ZEROINSERT )
       if( nBits )
       {
          HB_SIZE nDest = nLen + ( ( nBits + 7 ) >> 3 );
-         char * pszDest = static_cast< char * >( hb_xgrab( nDest + 1 ) );
+         char * pszDest = static_cast<char*>(hb_xgrab(nDest + 1));
          unsigned char c = 0;
          int j;
 
          nBits = n = 0;
          i = 1;
          j = 8;
-         uiVal = static_cast< unsigned char >( szText[ n ] );
+         uiVal = static_cast<unsigned char>(szText[n]);
          uiVal <<= 8;
          while( nBits < nDest )
          {
@@ -251,7 +251,7 @@ HB_FUNC( ZEROINSERT )
             {
                if( ++n < nLen )
                {
-                  uiVal |= static_cast< unsigned char >( szText[ n ] );
+                  uiVal |= static_cast<unsigned char>(szText[n]);
                   i = 8;
                }
             }
@@ -260,7 +260,7 @@ HB_FUNC( ZEROINSERT )
                c = ( c << 1 ) | 1;
                if( --j == 0 )
                {
-                  pszDest[ nBits++ ] = c;
+                  pszDest[nBits++] = c;
                   j = 8;
                }
                uiVal &= 0xF7FF;
@@ -272,7 +272,7 @@ HB_FUNC( ZEROINSERT )
             }
             if( --j == 0 )
             {
-               pszDest[ nBits++ ] = c;
+               pszDest[nBits++] = c;
                j = 8;
             }
             uiVal <<= 1;
@@ -282,7 +282,7 @@ HB_FUNC( ZEROINSERT )
       }
       else
       {
-         hb_itemReturn( pString );
+         hb_itemReturn(pString);
       }
    }
    else
@@ -295,7 +295,7 @@ HB_FUNC( ZEROINSERT )
  */
 HB_FUNC( ZEROREMOVE )
 {
-   PHB_ITEM pString = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pString = hb_param(1, Harbour::Item::STRING);
 
    if( pString )
    {
@@ -304,15 +304,15 @@ HB_FUNC( ZEROREMOVE )
       int i, j, l;
       unsigned char ucVal;
 
-      szText = hb_itemGetCPtr( pString );
-      nLen = hb_itemGetCLen( pString );
+      szText = hb_itemGetCPtr(pString);
+      nLen = hb_itemGetCLen(pString);
       j = 8;
       l = 0;
       ucVal = 0;
 
       for( n = nDest = nBits = 0; n < nLen; ++n )
       {
-         unsigned char c = szText[ n ];
+         unsigned char c = szText[n];
 
          for( i = 0; i < 8; ++i )
          {
@@ -354,8 +354,8 @@ HB_FUNC( ZEROREMOVE )
 
       /* NOTE: CT3 decodes some wrong CCITT strings which does not have
        *       trailing 0 instead of returning empty string "", i.e.:
-       *          ? Len( ZeroRemove( Chr( 31 ) ) )
-       *          ? Len( ZeroRemove( Chr( 31 ) + Chr( 31 ) ) )
+       *          ? Len( ZeroRemove( Chr(31) ) )
+       *          ? Len( ZeroRemove( Chr(31) + Chr(31) ) )
        *       this implementation fixed this bug but if you need strict
        *       CT3 behavior for compatibility in some broken code then
        *       you can disable this fix setting HB_CT3_ZEROREMOVE_BUG
@@ -377,14 +377,14 @@ HB_FUNC( ZEROREMOVE )
       }
       else if( nBits )
       {
-         char * pszDest = static_cast< char * >( hb_xgrab( nDest + 1 ) );
+         char * pszDest = static_cast<char*>(hb_xgrab(nDest + 1));
 
          j = 8;
          l = 0;
          ucVal = 0;
          for( n = nDest = 0; n < nLen; ++n )
          {
-            unsigned char c = szText[ n ];
+            unsigned char c = szText[n];
 
             for( i = 0; i < 8; ++i )
             {
@@ -406,7 +406,7 @@ HB_FUNC( ZEROREMOVE )
                   }
                   if( --j == 0 )
                   {
-                     pszDest[ nDest++ ] = ucVal;
+                     pszDest[nDest++] = ucVal;
                      j = 8;
                   }
                }
@@ -418,7 +418,7 @@ HB_FUNC( ZEROREMOVE )
       }
       else
       {
-         hb_itemReturn( pString );
+         hb_itemReturn(pString);
       }
    }
    else

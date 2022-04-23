@@ -51,58 +51,58 @@
 
 HB_FUNC( BLANK )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
-   HB_BOOL bRef = HB_ISBYREF( 1 );
-   HB_BOOL bRet = ! ct_getref();
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   HB_BOOL bRef = HB_ISBYREF(1);
+   HB_BOOL bRet = !ct_getref();
 
-   if( ! pItem )
+   if( !pItem )
    {
       if( bRet )
       {
          hb_retl(false);
       }
    }
-   else if( HB_IS_TIMESTAMP( pItem ) )
+   else if( HB_IS_TIMESTAMP(pItem) )
    {
       if( bRef )
       {
-         hb_stortdt( 0, 0, 1 );
+         hb_stortdt(0, 0, 1);
       }
       if( bRet )
       {
-         hb_rettdt( 0, 0 );
+         hb_rettdt(0, 0);
       }
    }
-   else if( HB_IS_DATE( pItem ) )
+   else if( HB_IS_DATE(pItem) )
    {
       if( bRef )
       {
-         hb_stordl( 0, 1 );
+         hb_stordl(0, 1);
       }
       if( bRet )
       {
-         hb_retdl( 0 );
+         hb_retdl(0);
       }
    }
-   else if( HB_IS_NUMBER( pItem ) )
+   else if( HB_IS_NUMBER(pItem) )
    {
       if( bRef )
       {
-         hb_stornl( 0, 1 );
+         hb_stornl(0, 1);
       }
       if( bRet )
       {
-         hb_retnl( 0 );
+         hb_retnl(0);
       }
    }
-   else if( HB_IS_STRING( pItem ) )
+   else if( HB_IS_STRING(pItem) )
    {
-      PHB_ITEM pMode = hb_param( 2, HB_IT_LOGICAL );
+      PHB_ITEM pMode = hb_param(2, Harbour::Item::LOGICAL);
 
-      if( pMode && hb_itemGetL( pMode ) )
+      if( pMode && hb_itemGetL(pMode) )
       {
-         HB_SIZE nLen = hb_itemGetCLen( pItem );
-         char * szResult = static_cast< char * >( hb_xgrab( nLen + 1 ) );
+         HB_SIZE nLen = hb_itemGetCLen(pItem);
+         char * szResult = static_cast<char*>(hb_xgrab(nLen + 1));
 
          if( nLen > 0 )
          {
@@ -110,7 +110,7 @@ HB_FUNC( BLANK )
          }
          if( bRef )
          {
-            hb_storclen( szResult, nLen, 1 );
+            hb_storclen(szResult, nLen, 1);
          }
          if( bRet )
          {
@@ -118,14 +118,14 @@ HB_FUNC( BLANK )
          }
          else
          {
-            hb_xfree( szResult );
+            hb_xfree(szResult);
          }
       }
       else
       {
          if( bRef )
          {
-            hb_storc( nullptr, 1 );
+            hb_storc(nullptr, 1);
          }
          if( bRet )
          {
@@ -133,7 +133,7 @@ HB_FUNC( BLANK )
          }
       }
    }
-   else if( HB_IS_ARRAY( pItem ) )
+   else if( HB_IS_ARRAY(pItem) )
    {
       if( bRef )
       {
@@ -141,14 +141,14 @@ HB_FUNC( BLANK )
       }
       if( bRet )
       {
-         hb_reta( 0 );
+         hb_reta(0);
       }
    }
-   else if( HB_IS_LOGICAL( pItem ) )
+   else if( HB_IS_LOGICAL(pItem) )
    {
       if( bRef )
       {
-         hb_storl( HB_FALSE, 1 );
+         hb_storl(false, 1);
       }
       if( bRet )
       {
@@ -162,7 +162,7 @@ HB_FUNC( BLANK )
          hb_retl(false);
       }
    }
-   if( ! bRet )
+   if( !bRet )
    {
       hb_ret();
    }

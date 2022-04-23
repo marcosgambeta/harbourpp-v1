@@ -49,18 +49,18 @@
 
 HB_FUNC( ASCIISUM )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      const char * pcString = hb_parc( 1 );
-      HB_SIZE sStrSize = hb_parclen( 1 );
+      const char * pcString = hb_parc(1);
+      HB_SIZE sStrSize = hb_parclen(1);
       HB_MAXUINT ulResult = 0;
 
       for( HB_SIZE sPos = 0; sPos < sStrSize; sPos++ )
       {
-         ulResult += static_cast< HB_MAXUINT >( pcString[ sPos ] );
+         ulResult += static_cast<HB_MAXUINT>(pcString[sPos]);
       }
 
-      hb_retnint( ulResult );
+      hb_retnint(ulResult);
    }
    else
    {
@@ -69,18 +69,16 @@ HB_FUNC( ASCIISUM )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_ASCIISUM, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ASCIISUM, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {
-         hb_retnint( 0 );
+         hb_retnint(0);
       }
    }
 }

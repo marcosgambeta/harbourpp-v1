@@ -55,21 +55,21 @@
 static void do_count( int iSwitch )
 {
    /* param check */
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      const char * pcString = hb_parc( 1 );
-      HB_SIZE sStrLen = hb_parclen( 1 );
+      const char * pcString = hb_parc(1);
+      HB_SIZE sStrLen = hb_parclen(1);
       HB_SIZE sRetVal;
       const char * pc;
       char cSearch;
 
-      if( hb_parclen( 2 ) > 0 )
+      if( hb_parclen(2) > 0 )
       {
-         cSearch = *( hb_parc( 2 ) );
+         cSearch = *( hb_parc(2) );
       }
-      else if( HB_ISNUM( 2 ) )
+      else if( HB_ISNUM(2) )
       {
-         cSearch = static_cast< char >( hb_parnl( 2 ) % 256 );
+         cSearch = static_cast<char>(hb_parnl(2) % 256);
       }
       else
       {
@@ -108,7 +108,7 @@ static void do_count( int iSwitch )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
                                   iSwitch == DO_COUNT_COUNTLEFT ?
                                   CT_ERROR_COUNTLEFT : CT_ERROR_COUNTRIGHT,
                                   nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
@@ -117,11 +117,11 @@ static void do_count( int iSwitch )
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {
-         hb_retns( 0 );
+         hb_retns(0);
       }
    }
 }

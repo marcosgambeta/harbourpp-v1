@@ -57,11 +57,11 @@
 
 HB_FUNC( FV )
 {
-   if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
+   if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) )
    {
-      double dPayment = hb_parnd( 1 );
-      double dRate = hb_parnd( 2 );
-      double dTime = hb_parnd( 3 );
+      double dPayment = hb_parnd(1);
+      double dRate = hb_parnd(2);
+      double dTime = hb_parnd(3);
       double dResult;
 
       if( dRate == 0.0 )
@@ -85,7 +85,7 @@ HB_FUNC( FV )
          dResult = dPayment * ( dResult - 1.0 ) / dRate;
       }
 
-      hb_retnd( dResult );
+      hb_retnd(dResult);
    }
    else
    {
@@ -94,29 +94,27 @@ HB_FUNC( FV )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_FV, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_FV, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {
-         hb_retnd( 0.0 );
+         hb_retnd(0.0);
       }
    }
 }
 
 HB_FUNC( PV )
 {
-   if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
+   if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) )
    {
-      double dPayment = hb_parnd( 1 );
-      double dRate = hb_parnd( 2 );
-      double dTime = hb_parnd( 3 );
+      double dPayment = hb_parnd(1);
+      double dRate = hb_parnd(2);
+      double dTime = hb_parnd(3);
       double dResult;
 
       if( dRate == 0.0 )
@@ -137,10 +135,10 @@ HB_FUNC( PV )
             dResult = hb_exc.handled ? hb_exc.retval : 0.0;
          }
 
-         dResult = dPayment * ( 1.0 - dResult ) / dRate;
+         dResult = dPayment * (1.0 - dResult) / dRate;
       }
 
-      hb_retnd( dResult );
+      hb_retnd(dResult);
    }
    else
    {
@@ -149,29 +147,27 @@ HB_FUNC( PV )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_PV, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_PV, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {
-         hb_retnd( 0.0 );
+         hb_retnd(0.0);
       }
    }
 }
 
 HB_FUNC( PAYMENT )
 {
-   if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
+   if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) )
    {
-      double dCapital = hb_parnd( 1 );
-      double dRate = hb_parnd( 2 );
-      double dTime = hb_parnd( 3 );
+      double dCapital = hb_parnd(1);
+      double dRate = hb_parnd(2);
+      double dTime = hb_parnd(3);
       double dResult;
 
       if( dRate == 0.0 )
@@ -192,10 +188,10 @@ HB_FUNC( PAYMENT )
             dResult = hb_exc.handled ? hb_exc.retval : 0.0;
          }
 
-         dResult = dCapital * dRate / ( 1.0 - dResult );
+         dResult = dCapital * dRate / (1.0 - dResult);
       }
 
-      hb_retnd( dResult );
+      hb_retnd(dResult);
    }
    else
    {
@@ -204,29 +200,27 @@ HB_FUNC( PAYMENT )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_PAYMENT, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_PAYMENT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {
-         hb_retnd( 0.0 );
+         hb_retnd(0.0);
       }
    }
 }
 
 HB_FUNC( PERIODS )
 {
-   if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
+   if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) )
    {
-      double dCapital = hb_parnd( 1 );
-      double dPayment = hb_parnd( 2 );
-      double dRate = hb_parnd( 3 );
+      double dCapital = hb_parnd(1);
+      double dPayment = hb_parnd(2);
+      double dRate = hb_parnd(3);
       double dResult;
 
       if( dPayment <= dCapital * dRate )
@@ -267,7 +261,7 @@ HB_FUNC( PERIODS )
          }
       }
 
-      hb_retnd( dResult );
+      hb_retnd(dResult);
    }
    else
    {
@@ -276,29 +270,27 @@ HB_FUNC( PERIODS )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_PERIODS, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_PERIODS, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {
-         hb_retnd( 0.0 );
+         hb_retnd(0.0);
       }
    }
 }
 
 HB_FUNC( RATE )
 {
-   if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) && HB_ISNUM( 3 ) )
+   if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) )
    {
-      double dCapital = hb_parnd( 1 );
-      double dPayment = hb_parnd( 2 );
-      double dTime = hb_parnd( 3 );
+      double dCapital = hb_parnd(1);
+      double dPayment = hb_parnd(2);
+      double dTime = hb_parnd(3);
       double dEpsilon = 0.00001;        /* minimal to consider 2 numbers as equal */
       double dScale = 1.0;      /* fractional step */
       double j = 1.0;           /* index */
@@ -312,7 +304,7 @@ HB_FUNC( RATE )
          HB_MATH_EXCEPTION hb_exc;
          double dBase;
 
-         r = j * 0.000833333;   /* j * ( 0.01 / 12.0)  mensual's rate */
+         r = j * 0.000833333;   /* j * (0.01 / 12.0)  mensual's rate */
 
          /* replace Payment() function overhead */
 
@@ -343,7 +335,7 @@ HB_FUNC( RATE )
          }
       }
 
-      hb_retnd( j * 0.000833333 );      /* return as mensual's rate */
+      hb_retnd(j * 0.000833333);      /* return as mensual's rate */
    }
    else
    {
@@ -352,18 +344,16 @@ HB_FUNC( RATE )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_RATE, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_RATE, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {
-         hb_retnd( 0.0 );
+         hb_retnd(0.0);
       }
    }
 }

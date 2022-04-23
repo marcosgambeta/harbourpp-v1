@@ -49,16 +49,16 @@
 
 HB_FUNC( CHARRELA )
 {
-   if( HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) && HB_ISCHAR( 3 ) && HB_ISCHAR( 4 ) )
+   if( HB_ISCHAR(1) && HB_ISCHAR(2) && HB_ISCHAR(3) && HB_ISCHAR(4) )
    {
-      const char * pcStringToMatch1 = hb_parc( 1 );
-      HB_SIZE sStrToMatchLen1 = hb_parclen( 1 );
-      const char * pcString1 = hb_parc( 2 );
-      HB_SIZE sStrLen1 = hb_parclen( 2 );
-      const char * pcStringToMatch2 = hb_parc( 3 );
-      HB_SIZE sStrToMatchLen2 = hb_parclen( 3 );
-      const char * pcString2 = hb_parc( 4 );
-      HB_SIZE sStrLen2 = hb_parclen( 4 );
+      const char * pcStringToMatch1 = hb_parc(1);
+      HB_SIZE sStrToMatchLen1 = hb_parclen(1);
+      const char * pcString1 = hb_parc(2);
+      HB_SIZE sStrLen1 = hb_parclen(2);
+      const char * pcStringToMatch2 = hb_parc(3);
+      HB_SIZE sStrToMatchLen2 = hb_parclen(3);
+      const char * pcString2 = hb_parc(4);
+      HB_SIZE sStrLen2 = hb_parclen(4);
 
       const char * pc1, * pc2;
       HB_SIZE sOffset1, sOffset2;
@@ -67,7 +67,7 @@ HB_FUNC( CHARRELA )
       /* check for empty strings */
       if( sStrToMatchLen1 == 0 || sStrToMatchLen2 == 0 )
       {
-         hb_retns( 0 );
+         hb_retns(0);
          return;
       }
 
@@ -107,7 +107,7 @@ HB_FUNC( CHARRELA )
          }
       }
 
-      hb_retns( 0 );
+      hb_retns(0);
    }
    else
    {
@@ -116,38 +116,38 @@ HB_FUNC( CHARRELA )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
                                   CT_ERROR_CHARRELA, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {
-         hb_retns( 0 );
+         hb_retns(0);
       }
    }
 }
 
 HB_FUNC( CHARRELREP )
 {
-   int iNoRet = ct_getref() && HB_ISBYREF( 4 );
+   int iNoRet = ct_getref() && HB_ISBYREF(4);
 
-   if( HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) && HB_ISCHAR( 3 ) && HB_ISCHAR( 4 ) && HB_ISCHAR( 5 ) )
+   if( HB_ISCHAR(1) && HB_ISCHAR(2) && HB_ISCHAR(3) && HB_ISCHAR(4) && HB_ISCHAR(5) )
    {
-      const char * pcStringToMatch1 = hb_parc( 1 );
-      HB_SIZE sStrToMatchLen1 = hb_parclen( 1 );
-      const char * pcString1 = hb_parc( 2 );
-      HB_SIZE sStrLen1 = hb_parclen( 2 );
-      const char * pcStringToMatch2 = hb_parc( 3 );
-      HB_SIZE sStrToMatchLen2 = hb_parclen( 3 );
-      const char * pcString2 = hb_parc( 4 );
-      HB_SIZE sStrLen2 = hb_parclen( 4 );
-      const char * pcReplace = hb_parc( 5 );
-      HB_SIZE sReplaceLen = hb_parclen( 5 );
+      const char * pcStringToMatch1 = hb_parc(1);
+      HB_SIZE sStrToMatchLen1 = hb_parclen(1);
+      const char * pcString1 = hb_parc(2);
+      HB_SIZE sStrLen1 = hb_parclen(2);
+      const char * pcStringToMatch2 = hb_parc(3);
+      HB_SIZE sStrToMatchLen2 = hb_parclen(3);
+      const char * pcString2 = hb_parc(4);
+      HB_SIZE sStrLen2 = hb_parclen(4);
+      const char * pcReplace = hb_parc(5);
+      HB_SIZE sReplaceLen = hb_parclen(5);
       char * pcRet;
       const char * pc1, * pc2;
       HB_SIZE sOffset1, sOffset2;
@@ -162,12 +162,12 @@ HB_FUNC( CHARRELREP )
          }
          else
          {
-            hb_retclen( pcString2, sStrLen2 );
+            hb_retclen(pcString2, sStrLen2);
          }
          return;
       }
 
-      pcRet = static_cast< char * >( hb_xgrab( sStrLen2 + 1 ) );
+      pcRet = static_cast<char*>(hb_xgrab(sStrLen2 + 1));
       hb_xmemcpy( pcRet, pcString2, sStrLen2 );
 
       sOffset1 = 0;
@@ -223,11 +223,11 @@ HB_FUNC( CHARRELREP )
          }
       }
 
-      hb_storclen( pcRet, sStrLen2, 4 );
+      hb_storclen(pcRet, sStrLen2, 4);
 
       if( iNoRet )
       {
-         hb_xfree( pcRet );
+         hb_xfree(pcRet);
          hb_ret();
       }
       else
@@ -242,14 +242,14 @@ HB_FUNC( CHARRELREP )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
                                   CT_ERROR_CHARRELREP, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else if( iNoRet )
       {

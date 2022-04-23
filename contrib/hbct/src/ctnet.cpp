@@ -60,7 +60,7 @@
  * Return true if a current local printer set by SET PRINTER TO was connected to a
  * network printer.
  *
- * NetRedir( cLocalDevice, cSharedDevice, [ cPassword ], [ lShowError] ) --> lSuccess
+ * NetRedir( cLocalDevice, cSharedDevice, [cPassword], [lShowError] ) --> lSuccess
  * Return true if <cLocalDevice> was connected to <cSharedDevice> with <cPassword>, if any.
  *
  * NetRmtname( cLocalDevice ) --> cSharedName
@@ -84,15 +84,15 @@
 #include "hbapierr.h"
 #include "hbwinuni.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    #include <windows.h>
    #include <winnetwk.h>
 #endif
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 static HB_BOOL hb_IsNetShared( const char * szLocalDevice )
 {
-   TCHAR lpRemoteDevice[ HB_PATH_MAX ];
+   TCHAR lpRemoteDevice[HB_PATH_MAX];
    LPCTSTR lpLocalDevice;
    LPTSTR lpFree;
    DWORD dwLen = HB_SIZEOFARRAY( lpRemoteDevice );
@@ -104,7 +104,7 @@ static HB_BOOL hb_IsNetShared( const char * szLocalDevice )
    hb_vmLock();
    if( lpFree )
    {
-      hb_xfree( lpFree );
+      hb_xfree(lpFree);
    }
 
    return dwResult == NO_ERROR;
@@ -113,16 +113,16 @@ static HB_BOOL hb_IsNetShared( const char * szLocalDevice )
 
 HB_FUNC( NETCANCEL )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    void * hDevice;
 
-   DWORD dwResult = WNetCancelConnection( HB_PARSTRDEF( 1, &hDevice, nullptr ), TRUE );  /* FALSE = fail if exist open files or print jobs. */
+   DWORD dwResult = WNetCancelConnection( HB_PARSTRDEF(1, &hDevice, nullptr), TRUE );  /* FALSE = fail if exist open files or print jobs. */
 
-   hb_strfree( hDevice );
+   hb_strfree(hDevice);
    /* TRUE = force cancel connection even if exist
     *        open files or print jobs.
     */
-   hb_retl( dwResult == NO_ERROR );
+   hb_retl(dwResult == NO_ERROR);
 #else
    hb_retl(false);
 #endif
@@ -130,14 +130,14 @@ HB_FUNC( NETCANCEL )
 
 HB_FUNC( NETPRINTER )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    const char * cPrn = hb_setGetCPtr( HB_SET_PRINTFILE );  /* query default local printer port. */
 
-   if( ! cPrn || ! *cPrn || hb_stricmp( cPrn, "PRN" ) == 0 )
+   if( !cPrn || !*cPrn || hb_stricmp( cPrn, "PRN" ) == 0 )
    {
       cPrn = "LPT1";
    }
-   hb_retl( hb_IsNetShared( cPrn ) );
+   hb_retl(hb_IsNetShared(cPrn));
 #else
    hb_retl(false);
 #endif
@@ -145,18 +145,18 @@ HB_FUNC( NETPRINTER )
 
 HB_FUNC( NETDISK )
 {
-#if defined( HB_OS_WIN )
-   const char * pszDrive = hb_parc( 1 );
+#if defined(HB_OS_WIN)
+   const char * pszDrive = hb_parc(1);
 
    if( pszDrive )
    {
-      char szDrive[ 3 ];
+      char szDrive[3];
 
-      szDrive[ 0 ] = pszDrive[ 0 ];
-      szDrive[ 1 ] = ':';
-      szDrive[ 2 ] = '\0';
+      szDrive[0] = pszDrive[0];
+      szDrive[1] = ':';
+      szDrive[2] = '\0';
 
-      hb_retl( hb_IsNetShared( szDrive ) );
+      hb_retl(hb_IsNetShared(szDrive));
    }
    else
 #endif
@@ -165,20 +165,18 @@ HB_FUNC( NETDISK )
 
 HB_FUNC( NETREDIR )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    void * hLocalDev;
    void * hSharedRes;
    void * hPassword;
 
-   DWORD dwResult = WNetAddConnection( HB_PARSTRDEF( 2, &hSharedRes, nullptr ),
-                                       HB_PARSTR( 3, &hPassword, nullptr ),
-                                       HB_PARSTRDEF( 1, &hLocalDev, nullptr ) );
+   DWORD dwResult = WNetAddConnection(HB_PARSTRDEF(2, &hSharedRes, nullptr), HB_PARSTR(3, &hPassword, nullptr), HB_PARSTRDEF(1, &hLocalDev, nullptr));
 
-   hb_strfree( hLocalDev  );
-   hb_strfree( hSharedRes );
-   hb_strfree( hPassword  );
+   hb_strfree(hLocalDev);
+   hb_strfree(hSharedRes);
+   hb_strfree(hPassword);
 
-   hb_retl( dwResult == NO_ERROR );
+   hb_retl(dwResult == NO_ERROR);
 #else
    hb_retl(false);
 #endif
@@ -186,19 +184,19 @@ HB_FUNC( NETREDIR )
 
 HB_FUNC( NETRMTNAME )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    void * hLocalDev;
 
-   TCHAR lpRemoteDevice[ 128 ];
+   TCHAR lpRemoteDevice[128];
    DWORD dwLen = HB_SIZEOFARRAY( lpRemoteDevice );
    DWORD dwSize = 0;
-   LPCTSTR lpLocalName = HB_PARSTRDEF( 1, &hLocalDev, nullptr );
+   LPCTSTR lpLocalName = HB_PARSTRDEF(1, &hLocalDev, nullptr);
 
    if( WNetGetConnection( lpLocalName, lpRemoteDevice, &dwSize ) == ERROR_MORE_DATA )
    {
       if( dwSize > 0 && dwSize <= dwLen && WNetGetConnection( lpLocalName, lpRemoteDevice, &dwSize ) == NO_ERROR )
       {
-         HB_RETSTRLEN( lpRemoteDevice, static_cast< HB_SIZE >( dwSize - 1 ) );
+         HB_RETSTRLEN( lpRemoteDevice, static_cast<HB_SIZE>(dwSize - 1) );
       }
       else
       {
@@ -210,7 +208,7 @@ HB_FUNC( NETRMTNAME )
       hb_retc_null();
    }
 
-   hb_strfree( hLocalDev );
+   hb_strfree(hLocalDev);
 #else
    hb_retc_null();
 #endif
@@ -218,9 +216,9 @@ HB_FUNC( NETRMTNAME )
 
 HB_FUNC( NETWORK )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    DWORD dwResult;
-   TCHAR lpProviderName[ 128 ];
+   TCHAR lpProviderName[128];
    DWORD dwLen = HB_SIZEOFARRAY( lpProviderName );
 
    dwResult = WNetGetProviderName( WNNC_NET_MSNET, lpProviderName, &dwLen );
@@ -235,7 +233,7 @@ HB_FUNC( NETWORK )
       }
    }
 
-   hb_retl( dwResult == NO_ERROR );
+   hb_retl(dwResult == NO_ERROR);
 #else
    hb_retl(false);
 #endif
@@ -243,11 +241,11 @@ HB_FUNC( NETWORK )
 
 HB_FUNC( NNETWORK )
 {
-#if defined( HB_OS_WIN )
-   TCHAR lpProviderName[ 128 ];
+#if defined(HB_OS_WIN)
+   TCHAR lpProviderName[128];
    DWORD dwLen = HB_SIZEOFARRAY( lpProviderName );
 
-   hb_retl( WNetGetProviderName( WNNC_NET_NETWARE, lpProviderName, &dwLen ) == NO_ERROR );
+   hb_retl(WNetGetProviderName(WNNC_NET_NETWARE, lpProviderName, &dwLen) == NO_ERROR);
 #else
    hb_retl(false);
 #endif

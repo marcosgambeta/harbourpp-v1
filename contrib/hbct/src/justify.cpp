@@ -54,12 +54,12 @@
 /* helper function for the Just*() functions */
 static void do_justify( int iSwitch )
 {
-   int iNoRet = ct_getref() && HB_ISBYREF( 1 );
+   int iNoRet = ct_getref() && HB_ISBYREF(1);
 
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      const char * pcString = hb_parc( 1 );
-      HB_SIZE sStrLen = hb_parclen( 1 );
+      const char * pcString = hb_parc(1);
+      HB_SIZE sStrLen = hb_parclen(1);
       char cJustChar;
       const char * pc;
       char * pcRet, * pcw;
@@ -78,20 +78,20 @@ static void do_justify( int iSwitch )
          return;
       }
 
-      if( hb_parclen( 2 ) > 0 )
+      if( hb_parclen(2) > 0 )
       {
-         cJustChar = *( hb_parc( 2 ) );
+         cJustChar = *( hb_parc(2) );
       }
-      else if( HB_ISNUM( 2 ) )
+      else if( HB_ISNUM(2) )
       {
-         cJustChar = static_cast< char >( hb_parnl( 2 ) % 256 );
+         cJustChar = static_cast<char>(hb_parnl(2) % 256);
       }
       else
       {
          cJustChar = 0x20;
       }
 
-      pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
+      pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
 
       switch( iSwitch )
       {
@@ -131,12 +131,12 @@ static void do_justify( int iSwitch )
             break;
       }
 
-      hb_storclen( pcRet, sStrLen, 1 );
+      hb_storclen(pcRet, sStrLen, 1);
 
       if( iNoRet )
       {
          hb_ret();
-         hb_xfree( pcRet );
+         hb_xfree(pcRet);
       }
       else
       {
@@ -150,7 +150,7 @@ static void do_justify( int iSwitch )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
                                   iSwitch == DO_JUSTIFY_JUSTLEFT ?
                                   CT_ERROR_JUSTLEFT : CT_ERROR_JUSTRIGHT,
                                   nullptr, HB_ERR_FUNCNAME, 0,
@@ -159,7 +159,7 @@ static void do_justify( int iSwitch )
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else if( iNoRet )
       {

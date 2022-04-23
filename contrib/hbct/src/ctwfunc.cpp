@@ -55,11 +55,11 @@ static int hb_ctColorParam( int iParam, int iDefault )
 
    if( HB_ISNUM( iParam ) )
    {
-      iColor = hb_parni( iParam );
+      iColor = hb_parni(iParam);
    }
-   else if( hb_parclen( iParam ) > 0 )
+   else if( hb_parclen(iParam) > 0 )
    {
-      iColor = hb_gtColorToN( hb_parc( iParam ) );
+      iColor = hb_gtColorToN( hb_parc(iParam) );
       if( iColor == -1 )
       {
          iColor = iDefault;
@@ -75,17 +75,17 @@ static int hb_ctColorParam( int iParam, int iDefault )
 
 HB_FUNC( CTWINIT )
 {
-   hb_retl( hb_ctwInit() );
+   hb_retl(hb_ctwInit());
 }
 
 HB_FUNC( GETCLEARA )
 {
-   hb_retni( hb_gtGetClearColor() );
+   hb_retni(hb_gtGetClearColor());
 }
 
 HB_FUNC( SETCLEARA )
 {
-   int iColor = hb_ctColorParam( 1, -1 );
+   int iColor = hb_ctColorParam(1, -1);
 
    if( iColor >= 0 )
    {
@@ -99,19 +99,19 @@ HB_FUNC( SETCLEARB )
 {
    HB_USHORT usNew;
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
-      int iChar = hb_parni( 1 );
+      int iChar = hb_parni(1);
       PHB_CODEPAGE cdp = hb_vmCDP();
-      if( ! HB_CDP_ISCHARUNI( cdp ) )
+      if( !HB_CDP_ISCHARUNI( cdp ) )
       {
-         iChar = hb_cdpGetU16( cdp, static_cast< HB_UCHAR >( iChar ) );
+         iChar = hb_cdpGetU16( cdp, static_cast<HB_UCHAR>(iChar) );
       }
-      usNew = static_cast< HB_USHORT >( iChar );
+      usNew = static_cast<HB_USHORT>(iChar);
    }
-   else if( HB_ISCHAR( 1 ) )
+   else if( HB_ISCHAR(1) )
    {
-      usNew = hb_cdpTextGetU16( hb_vmCDP(), hb_parc( 1 ), hb_parclen( 1 ) );
+      usNew = hb_cdpTextGetU16( hb_vmCDP(), hb_parc(1), hb_parclen(1) );
    }
    else
    {
@@ -128,7 +128,7 @@ HB_FUNC( GETCLEARB )
    int iChar = hb_gtGetClearChar();
    PHB_CODEPAGE cdp = hb_vmCDP();
 
-   if( ! HB_CDP_ISCHARUNI( cdp ) )
+   if( !HB_CDP_ISCHARUNI( cdp ) )
    {
       HB_UCHAR uc = hb_cdpGetUC( cdp, ( HB_WCHAR ) iChar, 0 );
       if( uc )
@@ -137,39 +137,39 @@ HB_FUNC( GETCLEARB )
       }
    }
 
-   hb_retni( iChar );
+   hb_retni(iChar);
 }
 
 HB_FUNC( WSETSHADOW )
 {
-   hb_retni( hb_ctwSetShadowAttr( hb_ctColorParam( 1, HB_CTW_SHADOW_UNDEF ) ) );
+   hb_retni(hb_ctwSetShadowAttr(hb_ctColorParam(1, HB_CTW_SHADOW_UNDEF)));
 }
 
 HB_FUNC( WSETMOVE )
 {
-   hb_retl( hb_ctwSetMoveMode( hb_parldef( 1, -1 ) ) != 0 );
+   hb_retl(hb_ctwSetMoveMode(hb_parldef(1, -1)) != 0);
 }
 
 HB_FUNC( WSTEP )
 {
-   if( HB_ISNUM( 1 ) && HB_ISNUM( 2 ) )
+   if( HB_ISNUM(1) && HB_ISNUM(2) )
    {
-      hb_retni( hb_ctwSetMoveStep( hb_parni( 1 ), hb_parni( 2 ) ) );
+      hb_retni(hb_ctwSetMoveStep(hb_parni(1), hb_parni(2)));
    }
    else
    {
-      hb_retni( -1 );
+      hb_retni(-1);
    }
 }
 
 HB_FUNC( WMODE )
 {
-   hb_retni( hb_ctwSetBorderMode( hb_parldef( 1, -1 ), hb_parldef( 2, -1 ), hb_parldef( 3, -1 ), hb_parldef( 4, -1 ) ) );
+   hb_retni(hb_ctwSetBorderMode(hb_parldef(1, -1), hb_parldef(2, -1), hb_parldef(3, -1), hb_parldef(4, -1)));
 }
 
 HB_FUNC( WBOARD )
 {
-   hb_retni( hb_ctwSetWindowBoard( hb_parni( 1 ), hb_parni( 2 ), HB_ISNUM( 3 ) ? hb_parni( 3 ) : hb_gtMaxRow(), HB_ISNUM( 4 ) ? hb_parni( 4 ) : hb_gtMaxCol() ) );
+   hb_retni(hb_ctwSetWindowBoard(hb_parni(1), hb_parni(2), HB_ISNUM(3) ? hb_parni(3) : hb_gtMaxRow(), HB_ISNUM(4) ? hb_parni(4) : hb_gtMaxCol()));
 }
 
 HB_FUNC( WOPEN )
@@ -177,34 +177,34 @@ HB_FUNC( WOPEN )
    int iColor;
 
    /* 6th (color) and 7th (lVisible) parameters are Harbour extensions */
-   iColor = hb_ctColorParam( 6, -1 );   /* Harbour extension */ /* HB_EXTENSION */
-   hb_retni( hb_ctwCreateWindow( hb_parni( 1 ), hb_parni( 2 ), hb_parni( 3 ), hb_parni( 4 ), hb_parl( 5 ), iColor, hb_parldef( 7, HB_TRUE ) ) ); /* HB_EXTENSION */
+   iColor = hb_ctColorParam(6, -1);   /* Harbour extension */ /* HB_EXTENSION */
+   hb_retni(hb_ctwCreateWindow(hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parl(5), iColor, hb_parldef(7, true))); /* HB_EXTENSION */
 }
 
 HB_FUNC( WCLOSE )
 {
    /* 1st parameter (window handle) is Harbour extension */
-   hb_retni( hb_ctwCloseWindow( HB_ISNUM( 1 ) ? hb_parni( 1 ) : /* HB_EXTENSION */ hb_ctwCurrentWindow() ) );
+   hb_retni(hb_ctwCloseWindow(HB_ISNUM(1) ? hb_parni(1) : /* HB_EXTENSION */ hb_ctwCurrentWindow()));
 }
 
 HB_FUNC( WACLOSE )
 {
-   hb_retni( hb_ctwCloseAllWindows() );
+   hb_retni(hb_ctwCloseAllWindows());
 }
 
 HB_FUNC( WSELECT )  /* 2nd parameter (fBringToTop) is Harbour extension */
 {
-   hb_retni( HB_ISNUM( 1 ) ? hb_ctwSelectWindow( hb_parni( 1 ), hb_parldef( 2, HB_TRUE ) ) : /* HB_EXTENSION */ hb_ctwCurrentWindow() );
+   hb_retni(HB_ISNUM(1) ? hb_ctwSelectWindow(hb_parni(1), hb_parldef(2, true)) : /* HB_EXTENSION */ hb_ctwCurrentWindow());
 }
 
 HB_FUNC( WNUM )
 {
-   hb_retni( hb_ctwMaxWindow() );
+   hb_retni(hb_ctwMaxWindow());
 }
 
 HB_FUNC( WBOX )
 {
-   static const HB_WCHAR s_pWBoxFrames[ 16 ][ 9 ] = {
+   static const HB_WCHAR s_pWBoxFrames[16][9] = {
       HB_B_DOUBLE_W,          /* 0  WB_DOUBLE_CLEAR */
       HB_B_SINGLE_W,          /* 1  WB_SINGLE_CLEAR */
       HB_B_DOUBLE_SINGLE_W,   /* 2  WB_DOUBLE_SINGLE_CLEAR */
@@ -226,39 +226,39 @@ HB_FUNC( WBOX )
       HB_B_FULL_W
    };                         /* 15 WB_FULL */
 
-   HB_WCHAR szBoxBuf[ 10 ], wc;
-   const char * pszBoxFrame = hb_parc( 1 );
+   HB_WCHAR szBoxBuf[10], wc;
+   const char * pszBoxFrame = hb_parc(1);
    int iColor;
 
    if( pszBoxFrame )
    {
-      HB_SIZE nLen = hb_parclen( 1 ), nIndex = 0, nSize = 0;
+      HB_SIZE nLen = hb_parclen(1), nIndex = 0, nSize = 0;
       PHB_CODEPAGE cdp = hb_gtBoxCP();
 
       while( nSize < HB_SIZEOFARRAY( szBoxBuf ) - 1 && HB_CDPCHAR_GET( cdp, pszBoxFrame, nLen, &nIndex, &wc ) )
       {
-         szBoxBuf[ nSize++ ] = wc;
+         szBoxBuf[nSize++] = wc;
       }
-      szBoxBuf[ nSize ] = 0;
+      szBoxBuf[nSize] = 0;
    }
    else
    {
-      int iFrame = hb_parni( 1 );
+      int iFrame = hb_parni(1);
 
       if( iFrame < 0 || iFrame > 15 )
       {
          iFrame = 0;
       }
-      memcpy( szBoxBuf, s_pWBoxFrames[ iFrame ], 9 * sizeof( HB_WCHAR ) );
+      memcpy( szBoxBuf, s_pWBoxFrames[iFrame], 9 * sizeof(HB_WCHAR) );
       if( ( iFrame & 4 ) == 0 )
       {
-         szBoxBuf[ 8 ] = hb_gtGetClearChar();
+         szBoxBuf[8] = hb_gtGetClearChar();
       }
-      szBoxBuf[ 9 ] = '\0';
+      szBoxBuf[9] = '\0';
    }
 
-   iColor = hb_ctColorParam( 2, -1 );   /* Harbour extension */ /* HB_EXTENSION */
-   hb_retni( hb_ctwAddWindowBox( hb_ctwCurrentWindow(), szBoxBuf, iColor ) );
+   iColor = hb_ctColorParam(2, -1); /* Harbour extension */ /* HB_EXTENSION */
+   hb_retni(hb_ctwAddWindowBox(hb_ctwCurrentWindow(), szBoxBuf, iColor));
 }
 
 HB_FUNC( WFORMAT )
@@ -268,7 +268,7 @@ HB_FUNC( WFORMAT )
 
    if( hb_pcount() == 0 )
    {
-      hb_ctwGetFormatCords( iWindow, HB_TRUE, &iTop, &iLeft, &iBottom, &iRight );
+      hb_ctwGetFormatCords( iWindow, true, &iTop, &iLeft, &iBottom, &iRight );
       iTop    = -iTop;
       iLeft   = -iLeft;
       iBottom = -iBottom;
@@ -276,98 +276,98 @@ HB_FUNC( WFORMAT )
    }
    else
    {
-      iTop    = hb_parni( 1 );
-      iLeft   = hb_parni( 2 );
-      iBottom = hb_parni( 3 );
-      iRight  = hb_parni( 4 );
+      iTop    = hb_parni(1);
+      iLeft   = hb_parni(2);
+      iBottom = hb_parni(3);
+      iRight  = hb_parni(4);
    }
-   hb_retni( hb_ctwChangeMargins( iWindow, iTop, iLeft, iBottom, iRight ) );
+   hb_retni(hb_ctwChangeMargins(iWindow, iTop, iLeft, iBottom, iRight));
 }
 
 HB_FUNC( WROW )
 {
    int iTop, iLeft, iBottom, iRight;
 
-   hb_ctwGetWindowCords( hb_ctwCurrentWindow(), hb_parl( 1 ), &iTop, &iLeft, &iBottom, &iRight );
-   hb_retni( iTop );
+   hb_ctwGetWindowCords( hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight );
+   hb_retni(iTop);
 }
 
 HB_FUNC( WCOL )
 {
    int iTop, iLeft, iBottom, iRight;
 
-   hb_ctwGetWindowCords( hb_ctwCurrentWindow(), hb_parl( 1 ), &iTop, &iLeft, &iBottom, &iRight );
-   hb_retni( iLeft );
+   hb_ctwGetWindowCords( hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight );
+   hb_retni(iLeft);
 }
 
 HB_FUNC( WLASTROW )
 {
    int iTop, iLeft, iBottom, iRight;
 
-   hb_ctwGetWindowCords( hb_ctwCurrentWindow(), hb_parl( 1 ), &iTop, &iLeft, &iBottom, &iRight );
-   hb_retni( iBottom );
+   hb_ctwGetWindowCords( hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight );
+   hb_retni(iBottom);
 }
 
 HB_FUNC( WLASTCOL )
 {
    int iTop, iLeft, iBottom, iRight;
 
-   hb_ctwGetWindowCords( hb_ctwCurrentWindow(), hb_parl( 1 ), &iTop, &iLeft, &iBottom, &iRight );
-   hb_retni( iRight );
+   hb_ctwGetWindowCords( hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight );
+   hb_retni(iRight);
 }
 
 HB_FUNC( WFROW )
 {
    int iTop, iLeft, iBottom, iRight;
 
-   hb_ctwGetFormatCords( hb_ctwCurrentWindow(), hb_parl( 1 ), &iTop, &iLeft, &iBottom, &iRight );
-   hb_retni( iTop );
+   hb_ctwGetFormatCords( hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight );
+   hb_retni(iTop);
 }
 
 HB_FUNC( WFCOL )
 {
    int iTop, iLeft, iBottom, iRight;
 
-   hb_ctwGetFormatCords( hb_ctwCurrentWindow(), hb_parl( 1 ), &iTop, &iLeft, &iBottom, &iRight );
-   hb_retni( iLeft );
+   hb_ctwGetFormatCords( hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight );
+   hb_retni(iLeft);
 }
 
 HB_FUNC( WFLASTROW )
 {
    int iTop, iLeft, iBottom, iRight;
 
-   hb_ctwGetFormatCords( hb_ctwCurrentWindow(), hb_parl( 1 ), &iTop, &iLeft, &iBottom, &iRight );
-   hb_retni( iBottom );
+   hb_ctwGetFormatCords( hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight );
+   hb_retni(iBottom);
 }
 
 HB_FUNC( WFLASTCOL )
 {
    int iTop, iLeft, iBottom, iRight;
 
-   hb_ctwGetFormatCords( hb_ctwCurrentWindow(), hb_parl( 1 ), &iTop, &iLeft, &iBottom, &iRight );
-   hb_retni( iRight );
+   hb_ctwGetFormatCords( hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight );
+   hb_retni(iRight);
 }
 
 HB_FUNC( WCENTER )
 {
-   hb_retni( hb_ctwCenterWindow( hb_ctwCurrentWindow(), hb_parl( 1 ) ) );
+   hb_retni(hb_ctwCenterWindow(hb_ctwCurrentWindow(), hb_parl(1)));
 }
 
 HB_FUNC( WMOVE )
 {
-   hb_retni( hb_ctwMoveWindow( hb_ctwCurrentWindow(), hb_parni( 1 ), hb_parni( 2 ) ) );
+   hb_retni(hb_ctwMoveWindow(hb_ctwCurrentWindow(), hb_parni(1), hb_parni(2)));
 }
 
 HB_FUNC( CTWLASTKEY )
 {
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
-      int iNewKey = hb_parni( 1 );
-      hb_retni( hb_ctwLastKey( &iNewKey ) );
+      int iNewKey = hb_parni(1);
+      hb_retni(hb_ctwLastKey(&iNewKey));
    }
    else
    {
-      hb_retni( hb_ctwLastKey( nullptr ) );
+      hb_retni(hb_ctwLastKey(nullptr));
    }
 }
 
@@ -376,29 +376,29 @@ HB_FUNC( CTWLASTKEY )
 
 HB_FUNC( HBCT_MAXROW ) /* Return the maximum screen/window row number (zero origin) */
 {
-   if( hb_parl( 1 ) )
+   if( hb_parl(1) )
    {
       int iRows, iCols;
       hb_gtScrDim( &iRows, &iCols );
-      hb_retni( iRows - 1 );
+      hb_retni(iRows - 1);
    }
    else
    {
-      hb_retni( hb_gtMaxRow() );
+      hb_retni(hb_gtMaxRow());
    }
 }
 
 HB_FUNC( HBCT_MAXCOL ) /* Return the maximum screen/window column number (zero origin) */
 {
-   if( hb_parl( 1 ) )
+   if( hb_parl(1) )
    {
       int iRows, iCols;
       hb_gtScrDim( &iRows, &iCols );
-      hb_retni( iCols - 1 );
+      hb_retni(iCols - 1);
    }
    else
    {
-      hb_retni( hb_gtMaxCol() );
+      hb_retni(hb_gtMaxCol());
    }
 }
 
@@ -413,7 +413,7 @@ HB_FUNC( HBCT_MAXCOL ) /* Return the maximum screen/window column number (zero o
  */
 HB_FUNC( WALIAS )
 {
-   int iWindow = hb_parnidef( 1, -1 );
+   int iWindow = hb_parnidef(1, -1);
 
    /* 255 is original CT3 limit,
     * Harbour CTWIN does not have such internal limits
@@ -427,7 +427,7 @@ HB_FUNC( WALIAS )
       iWindow = -1;
    }
 
-   hb_retni( iWindow );
+   hb_retni(iWindow);
 }
 
 /*
@@ -452,25 +452,25 @@ HB_FUNC( WLIST )
    }
    else if( iWindows == 0 )
    {
-      hb_retclen( "\000", 1 );
+      hb_retclen("\000", 1);
    }
    else
    {
-      char * pszWindows = static_cast< char * >( hb_xgrab( iWindows + 2 ) );
+      char * pszWindows = static_cast<char*>(hb_xgrab(iWindows + 2));
 
       iFrom = 0;
       if( hb_ctwCurrentWindow() == 0 )
       {
-         pszWindows[ iWindows ] = 0;
+         pszWindows[iWindows] = 0;
       }
       else
       {
-         pszWindows[ iFrom++ ] = 0;
+         pszWindows[iFrom++] = 0;
       }
 
       for( int i = 0; i < iWindows; ++i )
       {
-         pszWindows[ iFrom + i ] = static_cast< char >( piStack[ i ] );
+         pszWindows[iFrom + i] = static_cast<char>(piStack[i]);
       }
 
       hb_retclen_buffer( pszWindows, iWindows + 1 );
@@ -484,20 +484,20 @@ HB_FUNC_TRANSLATE( _WSTACK, WLIST )
 
 HB_FUNC( WHIDE ) /* HB_EXTENSION */
 {
-   hb_ctwVisible( HB_ISNUM( 1 ) ? hb_parni( 1 ) : hb_ctwCurrentWindow(), HB_CTW_HIDDEN );
+   hb_ctwVisible( HB_ISNUM(1) ? hb_parni(1) : hb_ctwCurrentWindow(), HB_CTW_HIDDEN );
 }
 
 HB_FUNC( WSHOW ) /* HB_EXTENSION */
 {
-   hb_ctwVisible( HB_ISNUM( 1 ) ? hb_parni( 1 ) : hb_ctwCurrentWindow(), HB_CTW_VISIBLE );
+   hb_ctwVisible( HB_ISNUM(1) ? hb_parni(1) : hb_ctwCurrentWindow(), HB_CTW_VISIBLE );
 }
 
 HB_FUNC( WSHADOW ) /* HB_EXTENSION */
 {
-   hb_retni( hb_ctwSetWindowShadow( hb_ctwCurrentWindow(), hb_parnidef( 1, HB_CTW_SHADOW_UNDEF ) /* nAttr */ ) );
+   hb_retni(hb_ctwSetWindowShadow(hb_ctwCurrentWindow(), hb_parnidef(1, HB_CTW_SHADOW_UNDEF) /* nAttr */));
 }
 
 HB_FUNC( WLEVEL ) /* HB_EXTENSION */
 {
-   hb_retni( hb_ctwSetWindowLevel( hb_ctwCurrentWindow(), hb_parnidef( 1, HB_CTW_UNDEF ) /* nLevel */ ) );
+   hb_retni(hb_ctwSetWindowLevel(hb_ctwCurrentWindow(), hb_parnidef(1, HB_CTW_UNDEF) /* nLevel */));
 }

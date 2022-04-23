@@ -52,7 +52,7 @@
 
 HB_FUNC( CHARPIX )
 {
-   hb_retni( 0 );
+   hb_retni(0);
 }
 
 HB_FUNC( VGAPALETTE )
@@ -68,14 +68,14 @@ HB_FUNC( VGAPALETTE )
       return;
    }
 
-   color_string = hb_parc( 1 );
+   color_string = hb_parc(1);
    if( color_string )
    {
       attr = hb_gtColorToN( color_string );
    }
-   else if( HB_ISNUM( 1 ) )
+   else if( HB_ISNUM(1) )
    {
-      attr = hb_parni( 1 );
+      attr = hb_parni(1);
    }
    else
    {
@@ -89,13 +89,13 @@ HB_FUNC( VGAPALETTE )
       return;
    }
 
-   red = static_cast< char >( hb_parni( 2 ) );
-   green = static_cast< char >( hb_parni( 3 ) );
-   blue = static_cast< char >( hb_parni( 4 ) );
+   red = static_cast<char>(hb_parni(2));
+   green = static_cast<char>(hb_parni(3));
+   blue = static_cast<char>(hb_parni(4));
 
-   HB_SYMBOL_UNUSED( blue );
-   HB_SYMBOL_UNUSED( green );
-   HB_SYMBOL_UNUSED( red );
+   HB_SYMBOL_UNUSED(blue);
+   HB_SYMBOL_UNUSED(green);
+   HB_SYMBOL_UNUSED(red);
    hb_retl(false);
 }
 
@@ -105,33 +105,33 @@ HB_FUNC( VIDEOTYPE )
 
 HB_FUNC( SETFONT )
 {
-   const char * font = hb_parcx( 1 );
-   unsigned len = static_cast< unsigned >( hb_parclen( 1 ) );
-   int area = hb_parni( 2 );
+   const char * font = hb_parcx(1);
+   unsigned len = static_cast<unsigned>(hb_parclen(1));
+   int area = hb_parni(2);
    int offset = 0;
    int count = 256;
    int height = 16;
 
-   if( ! area )
+   if( !area )
    {
       area = 1;
    }
-   if( HB_ISNUM( 3 ) )
+   if( HB_ISNUM(3) )
    {
-      offset = hb_parni( 3 );
+      offset = hb_parni(3);
    }
-   if( HB_ISNUM( 4 ) )
+   if( HB_ISNUM(4) )
    {
-      count = hb_parni( 4 );
+      count = hb_parni(4);
    }
-   if( HB_ISLOG( 3 ) && hb_parl( 3 ) && count != 0 )
+   if( HB_ISLOG(3) && hb_parl(3) && count != 0 )
    {
       height = len / count;
    }
 
-   HB_SYMBOL_UNUSED( font );
-   HB_SYMBOL_UNUSED( height );
-   HB_SYMBOL_UNUSED( offset );
-   HB_SYMBOL_UNUSED( area );
-   hb_retni( -2 );
+   HB_SYMBOL_UNUSED(font);
+   HB_SYMBOL_UNUSED(height);
+   HB_SYMBOL_UNUSED(offset);
+   HB_SYMBOL_UNUSED(area);
+   hb_retni(-2);
 }

@@ -48,15 +48,15 @@
 
 HB_FUNC( CAIRO_STATUS_TO_STRING )
 {
-   hb_retc( cairo_status_to_string( static_cast< cairo_status_t >( hb_parni( 1 ) ) ) );
+   hb_retc(cairo_status_to_string(static_cast<cairo_status_t>(hb_parni(1))));
 }
 
 HB_FUNC( CAIRO_VERSION )
 {
-   hb_retni( cairo_version() );
+   hb_retni(cairo_version());
 }
 
 HB_FUNC( CAIRO_VERSION_STRING )
 {
-   hb_retc( cairo_version_string() );
+   hb_retc(cairo_version_string());
 }

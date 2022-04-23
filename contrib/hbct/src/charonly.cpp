@@ -61,12 +61,12 @@
 static void do_charonly( int iSwitch )
 {
    /* param check */
-   if( HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) )
+   if( HB_ISCHAR(1) && HB_ISCHAR(2) )
    {
-      const char * pcString = hb_parc( 2 );
-      HB_SIZE sStrLen = hb_parclen( 2 );
-      const char * pcOnlySet = hb_parc( 1 );
-      HB_SIZE sOnlySetLen = hb_parclen( 1 );
+      const char * pcString = hb_parc(2);
+      HB_SIZE sStrLen = hb_parclen(2);
+      const char * pcOnlySet = hb_parc(1);
+      HB_SIZE sOnlySetLen = hb_parclen(1);
       char * pcRet;
       HB_SIZE sRetStrLen = 0;
       int iShift;
@@ -92,7 +92,7 @@ static void do_charonly( int iSwitch )
             }
             if( sOnlySetLen == 0 )
             {
-               hb_retclen( pcString, sStrLen );
+               hb_retclen(pcString, sStrLen);
                return;
             }
             break;
@@ -107,7 +107,7 @@ static void do_charonly( int iSwitch )
          iShift = 1;
       }
 
-      pcRet = static_cast< char * >( hb_xgrab( sStrLen ) );
+      pcRet = static_cast<char*>(hb_xgrab(sStrLen));
 
       for( const char * pcSub = pcString; pcSub < pcString + sStrLen + 1 - iShift; pcSub += iShift )
       {
@@ -118,7 +118,7 @@ static void do_charonly( int iSwitch )
          {
             for( pc = pcSub; pc < pcSub + iShift; pc++ )
             {
-               pcRet[ sRetStrLen++ ] = *pc;
+               pcRet[sRetStrLen++] = *pc;
             }
          }
       }
@@ -126,11 +126,11 @@ static void do_charonly( int iSwitch )
       /* copy last character if string length is odd */
       if( iShift == 2 && sStrLen % 2 == 1 )
       {
-         pcRet[ sRetStrLen++ ] = pcString[ sStrLen - 1 ];
+         pcRet[sRetStrLen++] = pcString[sStrLen - 1];
       }
 
-      hb_retclen( pcRet, sRetStrLen );
-      hb_xfree( pcRet );
+      hb_retclen(pcRet, sRetStrLen);
+      hb_xfree(pcRet);
    }
    else
    {
@@ -159,14 +159,14 @@ static void do_charonly( int iSwitch )
                iError = CT_ERROR_WORDREM;
                break;
          }
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, iError,
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, iError,
                                   nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                   HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {

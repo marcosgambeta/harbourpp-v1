@@ -58,25 +58,25 @@ HB_FUNC( DBFSIZE )
    HB_MAXINT llSize = 0;
    AREAP pArea;
 
-   if( ( pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() ) ) != nullptr )
+   if( ( pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer()) ) != nullptr )
    {
-      PHB_ITEM pSize = hb_itemNew( nullptr );
+      PHB_ITEM pSize = hb_itemNew(nullptr);
 
       if( SELF_INFO( pArea, DBI_GETHEADERSIZE, pSize ) == HB_SUCCESS )
       {
-         llSize = hb_itemGetNL( pSize ) + 1;
+         llSize = hb_itemGetNL(pSize) + 1;
          if( SELF_INFO( pArea, DBI_GETRECSIZE, pSize ) == HB_SUCCESS )
          {
             HB_ULONG ulRecSize, ulRecCount;
-            ulRecSize = hb_itemGetNL( pSize );
+            ulRecSize = hb_itemGetNL(pSize);
             if( SELF_RECCOUNT( pArea, &ulRecCount ) == HB_SUCCESS )
             {
-               llSize += static_cast< HB_MAXINT >( ulRecCount ) * ulRecSize;
+               llSize += static_cast<HB_MAXINT>(ulRecCount) * ulRecSize;
             }
          }
       }
-      hb_itemRelease( pSize );
+      hb_itemRelease(pSize);
    }
 
-   hb_retnint( llSize );
+   hb_retnint(llSize);
 }

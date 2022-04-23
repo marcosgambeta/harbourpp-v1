@@ -54,34 +54,34 @@
 #define DO_ASCPOS_VALPOS  1
 
 /* helper function */
-static void do_ascpos( int iSwitch )
+static void do_ascpos(int iSwitch)
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      HB_SIZE sStrSize = hb_parclen( 1 );
-      const HB_BYTE * pcString = reinterpret_cast< const HB_BYTE * >( hb_parc( 1 ) );
-      HB_SIZE sPos = hb_parnsdef( 2, sStrSize );
+      HB_SIZE sStrSize = hb_parclen(1);
+      const HB_BYTE * pcString = reinterpret_cast<const HB_BYTE*>(hb_parc(1));
+      HB_SIZE sPos = hb_parnsdef(2, sStrSize);
 
       if( sPos == 0 || sPos > sStrSize )
       {
-         hb_retni( 0 );
+         hb_retni(0);
       }
       else
       {
          if( iSwitch == DO_ASCPOS_VALPOS )
          {
-            if( HB_ISDIGIT( static_cast< HB_UCHAR >( pcString[ sPos - 1 ] ) ) )
+            if( HB_ISDIGIT(static_cast<HB_UCHAR>(pcString[sPos - 1])) )
             {
-               hb_retni( pcString[ sPos - 1 ] - '0' );
+               hb_retni(pcString[sPos - 1] - '0');
             }
             else
             {
-               hb_retni( 0 );
+               hb_retni(0);
             }
          }
          else
          {
-            hb_retni( pcString[ sPos - 1 ] );
+            hb_retni(pcString[sPos - 1]);
          }
       }
    }
@@ -92,30 +92,28 @@ static void do_ascpos( int iSwitch )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  iSwitch == DO_ASCPOS_VALPOS ?
-                                  CT_ERROR_VALPOS : CT_ERROR_ASCPOS, nullptr,
-                                  HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
-                                  HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+                                 iSwitch == DO_ASCPOS_VALPOS ? CT_ERROR_VALPOS : CT_ERROR_ASCPOS,
+                                 nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {
-         hb_retni( 0 );
+         hb_retni(0);
       }
    }
 }
 
 HB_FUNC( ASCPOS )
 {
-   do_ascpos( DO_ASCPOS_ASCPOS );
+   do_ascpos(DO_ASCPOS_ASCPOS);
 }
 
 HB_FUNC( VALPOS )
 {
-   do_ascpos( DO_ASCPOS_VALPOS );
+   do_ascpos(DO_ASCPOS_VALPOS);
 }

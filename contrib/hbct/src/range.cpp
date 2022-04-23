@@ -49,37 +49,37 @@
 
 HB_FUNC( RANGEREM )
 {
-   if( ( hb_parclen( 1 ) > 0 || HB_ISNUM( 1 ) ) && ( hb_parclen( 2 ) > 0 || HB_ISNUM( 2 ) ) && HB_ISCHAR( 3 ) )
+   if( ( hb_parclen(1) > 0 || HB_ISNUM(1) ) && ( hb_parclen(2) > 0 || HB_ISNUM(2) ) && HB_ISCHAR(3) )
    {
-      const char * pcString = hb_parc( 3 );
-      HB_SIZE sStrLen = hb_parclen( 3 );
+      const char * pcString = hb_parc(3);
+      HB_SIZE sStrLen = hb_parclen(3);
       char * pcRet;
       const unsigned char * pc;
       unsigned char ucChar1, ucChar2;
       HB_SIZE sRetIndex;
       int iMode;
 
-      if( HB_ISCHAR( 1 ) )
+      if( HB_ISCHAR(1) )
       {
-         ucChar1 = *( reinterpret_cast< const unsigned char * >( hb_parc( 1 ) ) );
+         ucChar1 = *( reinterpret_cast< const unsigned char * >( hb_parc(1) ) );
       }
       else
       {
-         ucChar1 = static_cast< unsigned char >( hb_parni( 1 ) % 256 );
+         ucChar1 = static_cast<unsigned char>(hb_parni(1) % 256);
       }
 
-      if( HB_ISCHAR( 2 ) )
+      if( HB_ISCHAR(2) )
       {
-         ucChar2 = *( reinterpret_cast< const unsigned char * >( hb_parc( 2 ) ) );
+         ucChar2 = *( reinterpret_cast< const unsigned char * >( hb_parc(2) ) );
       }
       else
       {
-         ucChar2 = static_cast< unsigned char >( hb_parni( 2 ) % 256 );
+         ucChar2 = static_cast<unsigned char>(hb_parni(2) % 256);
       }
 
       iMode = ( ucChar2 < ucChar1 );
 
-      pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
+      pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
       sRetIndex = 0;
       for( pc = reinterpret_cast< const unsigned char * >( pcString ); pc < reinterpret_cast< const unsigned char * >( pcString ) + sStrLen; pc++ )
       {
@@ -94,15 +94,15 @@ HB_FUNC( RANGEREM )
             iBool &= ( ( *pc ) <= ucChar2 );
          }
 
-         if( ! iBool )
+         if( !iBool )
          {
             *( pcRet + sRetIndex ) = *pc;
             sRetIndex++;
          }
       }
 
-      hb_retclen( pcRet, sRetIndex );
-      hb_xfree( pcRet );
+      hb_retclen(pcRet, sRetIndex);
+      hb_xfree(pcRet);
    }
    else
    {
@@ -111,18 +111,16 @@ HB_FUNC( RANGEREM )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_RANGEREM, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_RANGEREM, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
-      else if( HB_ISCHAR( 3 ) )
+      else if( HB_ISCHAR(3) )
       {
-         hb_retclen( hb_parc( 3 ), hb_parclen( 3 ) );
+         hb_retclen(hb_parc(3), hb_parclen(3));
       }
       else
       {
@@ -133,48 +131,48 @@ HB_FUNC( RANGEREM )
 
 HB_FUNC( RANGEREPL )
 {
-   int iNoRef = ct_getref() && HB_ISBYREF( 3 );
+   int iNoRef = ct_getref() && HB_ISBYREF(3);
 
-   if( ( hb_parclen( 1 ) > 0 || HB_ISNUM( 1 ) ) && ( hb_parclen( 2 ) > 0 || HB_ISNUM( 2 ) ) && HB_ISCHAR( 3 ) && ( hb_parclen( 4 ) > 0 || HB_ISNUM( 4 ) ) )
+   if( ( hb_parclen(1) > 0 || HB_ISNUM(1) ) && ( hb_parclen(2) > 0 || HB_ISNUM(2) ) && HB_ISCHAR(3) && ( hb_parclen(4) > 0 || HB_ISNUM(4) ) )
    {
-      const char * pcString = hb_parc( 3 );
-      HB_SIZE sStrLen = hb_parclen( 3 );
+      const char * pcString = hb_parc(3);
+      HB_SIZE sStrLen = hb_parclen(3);
       char * pcRet;
       const unsigned char * pc;
       unsigned char ucChar1, ucChar2, ucReplace;
       HB_SIZE sRetIndex;
       int iMode;
 
-      if( HB_ISCHAR( 1 ) )
+      if( HB_ISCHAR(1) )
       {
-         ucChar1 = *( reinterpret_cast< const unsigned char * >( hb_parc( 1 ) ) );
+         ucChar1 = *( reinterpret_cast< const unsigned char * >( hb_parc(1) ) );
       }
       else
       {
-         ucChar1 = static_cast< unsigned char >( hb_parni( 1 ) % 256 );
+         ucChar1 = static_cast<unsigned char>(hb_parni(1) % 256);
       }
 
-      if( HB_ISCHAR( 2 ) )
+      if( HB_ISCHAR(2) )
       {
-         ucChar2 = *( reinterpret_cast< const unsigned char * >( hb_parc( 2 ) ) );
+         ucChar2 = *( reinterpret_cast< const unsigned char * >( hb_parc(2) ) );
       }
       else
       {
-         ucChar2 = static_cast< unsigned char >( hb_parni( 2 ) % 256 );
+         ucChar2 = static_cast<unsigned char>(hb_parni(2) % 256);
       }
 
-      if( HB_ISCHAR( 4 ) )
+      if( HB_ISCHAR(4) )
       {
-         ucReplace = *( reinterpret_cast< const unsigned char * >( hb_parc( 4 ) ) );
+         ucReplace = *( reinterpret_cast< const unsigned char * >( hb_parc(4) ) );
       }
       else
       {
-         ucReplace = static_cast< unsigned char >( hb_parni( 4 ) % 256 );
+         ucReplace = static_cast<unsigned char>(hb_parni(4) % 256);
       }
 
       iMode = ( ucChar2 < ucChar1 );
 
-      pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
+      pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
       sRetIndex = 0;
       for( pc = reinterpret_cast< const unsigned char * >( pcString ); pc < reinterpret_cast< const unsigned char * >( pcString ) + sStrLen; pc++ )
       {
@@ -201,7 +199,7 @@ HB_FUNC( RANGEREPL )
          }
       }
 
-      hb_storclen( pcRet, sStrLen, 3 );
+      hb_storclen(pcRet, sStrLen, 3);
 
       if( iNoRef )
       {
@@ -212,10 +210,10 @@ HB_FUNC( RANGEREPL )
       }
       else
       {
-         hb_retclen( pcRet, sStrLen );
+         hb_retclen(pcRet, sStrLen);
       }
 
-      hb_xfree( pcRet );
+      hb_xfree(pcRet);
    }
    else
    {
@@ -224,22 +222,20 @@ HB_FUNC( RANGEREPL )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_RANGEREPL, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_RANGEREPL, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else if( iNoRef )
       {
          hb_ret();
       }
-      else if( HB_ISCHAR( 3 ) )
+      else if( HB_ISCHAR(3) )
       {
-         hb_retclen( hb_parc( 3 ), hb_parclen( 3 ) );
+         hb_retclen(hb_parc(3), hb_parclen(3));
       }
       else
       {

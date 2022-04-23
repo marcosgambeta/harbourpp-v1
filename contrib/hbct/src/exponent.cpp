@@ -58,29 +58,29 @@ HB_FUNC( MANTISSA )
    union
    {
       double value;
-      char string[ sizeof( double ) ];
+      char string[sizeof(double)];
    } xConvert;
 
-   xConvert.value = hb_parnd( 1 );
+   xConvert.value = hb_parnd(1);
 
    if( xConvert.value != 0 )
    {
-      xConvert.string[ 6 ] |= 0xF0;
-      xConvert.string[ 7 ] |= 0x3F;
-      xConvert.string[ 7 ] &= 0xBF;
+      xConvert.string[6] |= 0xF0;
+      xConvert.string[7] |= 0x3F;
+      xConvert.string[7] &= 0xBF;
    }
 
-   hb_retnd( xConvert.value );
+   hb_retnd(xConvert.value);
 
 #else
 
    double dValue;
 
-   dValue = hb_parnd( 1 );
+   dValue = hb_parnd(1);
 
    if( dValue == 0.0 )
    {
-      hb_retnd( 0.0 );
+      hb_retnd(0.0);
       return;
    }
 
@@ -98,7 +98,7 @@ HB_FUNC( MANTISSA )
          dValue /= 2.0;
       }   
    }
-   hb_retnd( dValue );
+   hb_retnd(dValue);
 
 #endif
 }
@@ -112,31 +112,31 @@ HB_FUNC( EXPONENT )
    union
    {
       double value;
-      char string[ sizeof( double ) ];
+      char string[sizeof(double)];
    } xConvert;
 
-   xConvert.value = hb_parnd( 1 );
+   xConvert.value = hb_parnd(1);
 
    if( xConvert.value != 0 )
    {
-      iExponent = static_cast< int >( xConvert.string[ 7 ] & 0x07F );
+      iExponent = static_cast<int>(xConvert.string[7] & 0x07F);
       iExponent = iExponent << 4;
-      iExponent += static_cast< int >( ( xConvert.string[ 6 ] & 0xF0 ) >> 4 );
+      iExponent += static_cast<int>((xConvert.string[6] & 0xF0) >> 4);
       iExponent -= 1023;
    }
 
-   hb_retni( iExponent );
+   hb_retni(iExponent);
 
 #else
 
    int iExponent = 0;
    double dValue;
 
-   dValue = hb_parnd( 1 );
+   dValue = hb_parnd(1);
 
    if( dValue == 0.0 )
    {
-      hb_retni( 0 );
+      hb_retni(0);
       return;
    }
 
@@ -156,7 +156,7 @@ HB_FUNC( EXPONENT )
          iExponent++;
       }
    }
-   hb_retni( iExponent );
+   hb_retni(iExponent);
 
 #endif
 }

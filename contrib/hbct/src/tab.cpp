@@ -49,10 +49,10 @@
 
 HB_FUNC( TABEXPAND )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      const char * pcString = hb_parc( 1 );
-      HB_SIZE sStrLen = hb_parclen( 1 );
+      const char * pcString = hb_parc(1);
+      HB_SIZE sStrLen = hb_parclen(1);
       char * pcRet;
       HB_SIZE sRetLen;
       HB_SIZE sTabWidth = 0;
@@ -63,32 +63,32 @@ HB_FUNC( TABEXPAND )
       HB_SIZE sIndex, sLineIndex;
       HB_SIZE sTabCnt = 0;
 
-      if( HB_ISNUM( 2 ) )
+      if( HB_ISNUM(2) )
       {
-         sTabWidth = hb_parns( 2 );
+         sTabWidth = hb_parns(2);
       }
-      if( static_cast< HB_ISIZ >( sTabWidth ) <= 0 )
+      if( static_cast<HB_ISIZ>(sTabWidth) <= 0 )
       {
          sTabWidth = 8;
       }
 
-      if( HB_ISNUM( 3 ) )
+      if( HB_ISNUM(3) )
       {
-         cFill = static_cast< char >( hb_parnl( 3 ) % 256 );
+         cFill = static_cast<char>(hb_parnl(3) % 256);
       }
-      else if( hb_parclen( 3 ) > 0 )
+      else if( hb_parclen(3) > 0 )
       {
-         cFill = hb_parc( 3 )[ 0 ];
+         cFill = hb_parc(3)[0];
       }
       else
       {
          cFill = 0x20;
       }
 
-      if( HB_ISCHAR( 4 ) && hb_parclen( 4 ) > 0 )
+      if( HB_ISCHAR(4) && hb_parclen(4) > 0 )
       {
-         pcNewLine = hb_parc( 4 );
-         sNewLineLen = hb_parclen( 4 );
+         pcNewLine = hb_parc(4);
+         sNewLineLen = hb_parclen(4);
       }
       else
       {
@@ -108,20 +108,20 @@ HB_FUNC( TABEXPAND )
          cCR = 13;
       }
 
-      if( HB_ISNUM( 5 ) )
+      if( HB_ISNUM(5) )
       {
-         cTab = static_cast< char >( hb_parnl( 5 ) % 256 );
+         cTab = static_cast<char>(hb_parnl(5) % 256);
       }
-      else if( hb_parclen( 5 ) > 0 )
+      else if( hb_parclen(5) > 0 )
       {
-         cTab = hb_parc( 5 )[ 0 ];
+         cTab = hb_parc(5)[0];
       }
       else
       {
          cTab = 0x09;
       }
 
-      iIgnore141 = hb_parldef( 6, 0 );
+      iIgnore141 = hb_parldef(6, 0);
 
       /* estimate maximum return length by assuming that EVERY tab char
          can be replaced by at most <nTabWidth> characters */
@@ -134,10 +134,10 @@ HB_FUNC( TABEXPAND )
       }
       if( sTabCnt == 0 )
       {
-         hb_retclen( pcString, sStrLen );
+         hb_retclen(pcString, sStrLen);
          return;
       }
-      pcRet = static_cast< char * >( hb_xgrab( sStrLen + ( sTabCnt * ( sTabWidth - 1 ) ) ) );
+      pcRet = static_cast<char*>(hb_xgrab(sStrLen + (sTabCnt * (sTabWidth - 1))));
 
       /* now copy the string */
       sIndex = 0;
@@ -145,7 +145,7 @@ HB_FUNC( TABEXPAND )
       sLineIndex = 0;
       while( sTabCnt > 0 )
       {
-         char cChar = static_cast< char >( *( pcString + sIndex ) );
+         char cChar = static_cast<char>(*(pcString + sIndex));
 
          if( cChar == cTab )
          {
@@ -205,8 +205,8 @@ HB_FUNC( TABEXPAND )
       /* copy rest */
       hb_xmemcpy( pcRet + sRetLen, pcString + sIndex, sStrLen - sIndex );
       sRetLen += sStrLen - sIndex;
-      hb_retclen( pcRet, sRetLen );
-      hb_xfree( pcRet );
+      hb_retclen(pcRet, sRetLen);
+      hb_xfree(pcRet);
    }
    else
    {
@@ -215,14 +215,12 @@ HB_FUNC( TABEXPAND )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_TABEXPAND, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TABEXPAND, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {
@@ -233,10 +231,10 @@ HB_FUNC( TABEXPAND )
 
 HB_FUNC( TABPACK )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      const char * pcString = hb_parc( 1 );
-      HB_SIZE sStrLen = hb_parclen( 1 );
+      const char * pcString = hb_parc(1);
+      HB_SIZE sStrLen = hb_parclen(1);
       char * pcRet;
       HB_SIZE sRetLen;
       HB_SIZE sTabWidth = 0;
@@ -246,32 +244,32 @@ HB_FUNC( TABPACK )
       int iIgnore141;
       HB_SIZE sIndex, sTabIndex, sFillCount;
 
-      if( HB_ISNUM( 2 ) )
+      if( HB_ISNUM(2) )
       {
-         sTabWidth = hb_parns( 2 );
+         sTabWidth = hb_parns(2);
       }
-      if( static_cast< HB_ISIZ >( sTabWidth ) <= 0 )
+      if( static_cast<HB_ISIZ>(sTabWidth) <= 0 )
       {
          sTabWidth = 8;
       }
 
-      if( HB_ISNUM( 3 ) )
+      if( HB_ISNUM(3) )
       {
-         cFill = static_cast< char >( hb_parnl( 3 ) % 256 );
+         cFill = static_cast<char>(hb_parnl(3) % 256);
       }
-      else if( hb_parclen( 3 ) > 0 )
+      else if( hb_parclen(3) > 0 )
       {
-         cFill = hb_parc( 3 )[ 0 ];
+         cFill = hb_parc(3)[0];
       }
       else
       {
          cFill = 0x20;
       }
 
-      sNewLineLen = hb_parclen( 4 );
+      sNewLineLen = hb_parclen(4);
       if( sNewLineLen > 0 )
       {
-         pcNewLine = hb_parc( 4 );
+         pcNewLine = hb_parc(4);
       }
       else
       {
@@ -287,20 +285,20 @@ HB_FUNC( TABPACK )
          cCR = 13;
       }
 
-      if( HB_ISNUM( 5 ) )
+      if( HB_ISNUM(5) )
       {
-         cTab = static_cast< char >( hb_parnl( 5 ) % 256 );
+         cTab = static_cast<char>(hb_parnl(5) % 256);
       }
-      else if( hb_parclen( 5 ) > 0 )
+      else if( hb_parclen(5) > 0 )
       {
-         cTab = hb_parc( 5 )[ 0 ];
+         cTab = hb_parc(5)[0];
       }
       else
       {
          cTab = 0x09;
       }
 
-      iIgnore141 = hb_parldef( 6, 0 );
+      iIgnore141 = hb_parldef(6, 0);
 
       if( sStrLen == 0 )
       {
@@ -309,7 +307,7 @@ HB_FUNC( TABPACK )
       }
       /* estimate maximum return length by assuming that there's
          nothing to pack */
-      pcRet = static_cast< char * >( hb_xgrab( sStrLen ) );
+      pcRet = static_cast<char*>(hb_xgrab(sStrLen));
 
       /* now copy the string */
       sIndex = 0;
@@ -319,7 +317,7 @@ HB_FUNC( TABPACK )
 
       while( sIndex < sStrLen )
       {
-         char cChar = static_cast< char >( *( pcString + sIndex ) );
+         char cChar = static_cast<char>(*(pcString + sIndex));
 
          if( cChar == cFill )
          {
@@ -348,7 +346,7 @@ HB_FUNC( TABPACK )
             sTabIndex = 0;
             sIndex++;
          }
-         else if( cChar == HB_CHAR_SOFT1 && ! iIgnore141 )
+         else if( cChar == HB_CHAR_SOFT1 && !iIgnore141 )
          {
             /* soft carriage return */
 
@@ -420,8 +418,8 @@ HB_FUNC( TABPACK )
          *( pcRet + sRetLen ) = cFill;
          sRetLen++;
       }
-      hb_retclen( pcRet, sRetLen );
-      hb_xfree( pcRet );
+      hb_retclen(pcRet, sRetLen);
+      hb_xfree(pcRet);
    }
    else
    {
@@ -430,14 +428,12 @@ HB_FUNC( TABPACK )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_TABPACK, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TABPACK, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {

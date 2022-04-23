@@ -57,7 +57,7 @@
 #include "hbdate.h"
 #include "hbstack.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 #  include <windows.h>
 #endif
 #include <time.h>
@@ -73,24 +73,24 @@ using PCT_DATE = CT_DATE *;
 
 static void s_ct_date_init( void * cargo )
 {
-   PCT_DATE ct_date = static_cast< PCT_DATE >( cargo );
+   PCT_DATE ct_date = static_cast<PCT_DATE>(cargo);
 
    ct_date->dTimeSet     = 0;
    ct_date->dTimeCounter = 0;
 }
 
-static HB_TSD_NEW( s_ct_date, sizeof( CT_DATE ), s_ct_date_init, nullptr );
+static HB_TSD_NEW( s_ct_date, sizeof(CT_DATE), s_ct_date_init, nullptr );
 
 HB_FUNC( WAITPERIOD )
 {
-   PCT_DATE ct_date = static_cast< PCT_DATE >( hb_stackGetTSD( &s_ct_date ) );
+   PCT_DATE ct_date = static_cast<PCT_DATE>(hb_stackGetTSD(&s_ct_date));
 
    double d = hb_dateSeconds();
 
    if( hb_pcount() > 0 )
    {
       ct_date->dTimeSet     = d;
-      ct_date->dTimeCounter = d + hb_parnd( 1 ) / 100.0;
+      ct_date->dTimeCounter = d + hb_parnd(1) / 100.0;
    }
 
    if( d < ct_date->dTimeSet )
@@ -98,7 +98,7 @@ HB_FUNC( WAITPERIOD )
       d += 86400.0;
    }
 
-   hb_retl( d < ct_date->dTimeCounter );
+   hb_retl(d < ct_date->dTimeCounter);
 }
 
 static HB_BOOL _hb_timeValid( const char * szTime, HB_SIZE nLen, int * piDecode )
@@ -114,16 +114,16 @@ static HB_BOOL _hb_timeValid( const char * szTime, HB_SIZE nLen, int * piDecode 
       fValid = HB_TRUE;
       for( nPos = 0; fValid && nPos < nLen; ++nPos )
       {
-         fValid = nPos % 3 == 2 ? szTime[ nPos ] == ':' : ( szTime[ nPos ] >= '0' && szTime[ nPos ] <= '9' );
+         fValid = nPos % 3 == 2 ? szTime[nPos] == ':' : ( szTime[nPos] >= '0' && szTime[nPos] <= '9' );
       }
       for( nPos = 0, i = 0; fValid && nPos < nLen; nPos += 3, ++i )
       {
          int iVal;
-         iVal   = 10 * ( szTime[ nPos ] - '0' ) + ( szTime[ nPos + 1 ] - '0' );
-         fValid = iVal <= sc_iMax[ i ];
+         iVal   = 10 * ( szTime[nPos] - '0' ) + ( szTime[nPos + 1] - '0' );
+         fValid = iVal <= sc_iMax[i];
          if( piDecode )
          {
-            piDecode[ i ] = iVal;
+            piDecode[i] = iVal;
          }
       }
    }
@@ -133,44 +133,44 @@ static HB_BOOL _hb_timeValid( const char * szTime, HB_SIZE nLen, int * piDecode 
 
 HB_FUNC( TIMEVALID )
 {
-   hb_retl( _hb_timeValid( hb_parc( 1 ), hb_parclen( 1 ), nullptr ) );
+   hb_retl(_hb_timeValid(hb_parc(1), hb_parclen(1), nullptr));
 }
 
 HB_FUNC( SETTIME )
 {
    HB_BOOL fResult = HB_FALSE;
-   int     iTime[ 4 ];
+   int     iTime[4];
 
-   iTime[ 0 ] = iTime[ 1 ] = iTime[ 2 ] = iTime[ 3 ] = 0;
-   if( _hb_timeValid( hb_parc( 1 ), hb_parclen( 1 ), iTime ) )
+   iTime[0] = iTime[1] = iTime[2] = iTime[3] = 0;
+   if( _hb_timeValid( hb_parc(1), hb_parclen(1), iTime ) )
    {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
       SYSTEMTIME st;
       GetLocalTime( &st );
-      st.wHour         = static_cast< WORD >( iTime[ 0 ] );
-      st.wMinute       = static_cast< WORD >( iTime[ 1 ] );
-      st.wSecond       = static_cast< WORD >( iTime[ 2 ] );
-      st.wMilliseconds = static_cast< WORD >( iTime[ 3 ] ) * 10;
+      st.wHour         = static_cast<WORD>(iTime[0]);
+      st.wMinute       = static_cast<WORD>(iTime[1]);
+      st.wSecond       = static_cast<WORD>(iTime[2]);
+      st.wMilliseconds = static_cast<WORD>(iTime[3]) * 10;
       fResult = SetLocalTime( &st );
-#elif defined( HB_OS_LINUX ) && ! defined( HB_OS_ANDROID )
+#elif defined(HB_OS_LINUX) && !defined(HB_OS_ANDROID)
       /* stime() exists only in SVr4, SVID, X/OPEN and Linux */
       HB_ULONG lNewTime;
       time_t   tm;
 
-      lNewTime = iTime[ 0 ] * 3600 + iTime[ 1 ] * 60 + iTime[ 2 ];
+      lNewTime = iTime[0] * 3600 + iTime[1] * 60 + iTime[2];
       tm       = time( nullptr );
       tm      += lNewTime - ( tm % 86400 );
       fResult  = stime( &tm ) == 0;
 #endif
    }
 
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 HB_FUNC( SETDATE )
 {
    HB_BOOL fResult = HB_FALSE;
-   long    lDate   = hb_pardl( 1 );
+   long    lDate   = hb_pardl(1);
 
    if( lDate )
    {
@@ -179,20 +179,20 @@ HB_FUNC( SETDATE )
       hb_dateDecode( lDate, &iYear, &iMonth, &iDay );
       if( iYear >= 1970 )
       {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
          SYSTEMTIME st;
          GetLocalTime( &st );
-         st.wYear      = static_cast< WORD >( iYear );
-         st.wMonth     = static_cast< WORD >( iMonth );
-         st.wDay       = static_cast< WORD >( iDay );
-         st.wDayOfWeek = static_cast< WORD >( hb_dateJulianDOW( lDate ) );
+         st.wYear      = static_cast<WORD>(iYear);
+         st.wMonth     = static_cast<WORD>(iMonth);
+         st.wDay       = static_cast<WORD>(iDay);
+         st.wDayOfWeek = static_cast<WORD>(hb_dateJulianDOW(lDate));
          fResult       = SetLocalTime( &st );
-#elif defined( HB_OS_LINUX ) && ! defined( HB_OS_ANDROID )
+#elif defined(HB_OS_LINUX) && !defined(HB_OS_ANDROID)
          /* stime() exists only in SVr4, SVID, X/OPEN and Linux */
          long   lNewDate;
          time_t tm;
 
-         lNewDate = lDate - hb_dateEncode( 1970, 1, 1 );
+         lNewDate = lDate - hb_dateEncode(1970, 1, 1);
          tm       = time( nullptr );
          tm       = lNewDate * 86400 + ( tm % 86400 );
          fResult  = stime( &tm ) == 0;
@@ -200,5 +200,5 @@ HB_FUNC( SETDATE )
       }
    }
 
-   hb_retl( fResult );
+   hb_retl(fResult);
 }

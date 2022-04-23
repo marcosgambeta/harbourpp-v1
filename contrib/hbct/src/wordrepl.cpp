@@ -50,23 +50,23 @@
 HB_FUNC( WORDREPL )
 {
    /* suppressing return value ? */
-   int iNoRet = ct_getref() && HB_ISBYREF( 2 );
+   int iNoRet = ct_getref() && HB_ISBYREF(2);
    int iMultiPass = ct_getatmupa();
 
    HB_SIZE sSearchLen, sReplaceLen;
 
    /* param check */
-   if( ( sSearchLen = hb_parclen( 1 ) ) / 2 > 0 && HB_ISCHAR( 2 ) && ( sReplaceLen = hb_parclen( 3 ) ) / 2 > 0 )
+   if( ( sSearchLen = hb_parclen(1) ) / 2 > 0 && HB_ISCHAR(2) && ( sReplaceLen = hb_parclen(3) ) / 2 > 0 )
    {
       /* get parameters */
-      const char * pcSearch = hb_parc( 1 );
-      const char * pcString = hb_parc( 2 );
-      HB_SIZE sStrLen = hb_parclen( 2 );
-      const char * pcReplace = hb_parc( 3 );
-      int iMode = hb_parldef( 4, 0 );
+      const char * pcSearch = hb_parc(1);
+      const char * pcString = hb_parc(2);
+      HB_SIZE sStrLen = hb_parclen(2);
+      const char * pcReplace = hb_parc(3);
+      int iMode = hb_parldef(4, 0);
       char * pcRet;
 
-      pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
+      pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
       hb_xmemcpy( pcRet, pcString, sStrLen );
 
       for( HB_SIZE sIndex = 0; sIndex < ( sSearchLen & 0xFFFFFFFE ); sIndex += 2 )
@@ -119,12 +119,12 @@ HB_FUNC( WORDREPL )
       }
 
       /* return string */
-      hb_storclen( pcRet, sStrLen, 2 );
+      hb_storclen(pcRet, sStrLen, 2);
 
       if( iNoRet )
       {
          hb_retl(false);
-         hb_xfree( pcRet );
+         hb_xfree(pcRet);
       }
       else
       {
@@ -138,22 +138,22 @@ HB_FUNC( WORDREPL )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
                                   CT_ERROR_WORDREPL, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else if( iNoRet )
       {
          hb_retl(false);
       }
-      else if( HB_ISCHAR( 2 ) )
+      else if( HB_ISCHAR(2) )
       {
-         hb_retclen( hb_parc( 2 ), hb_parclen( 2 ) );
+         hb_retclen(hb_parc(2), hb_parclen(2));
       }
       else
       {

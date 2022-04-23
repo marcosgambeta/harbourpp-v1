@@ -51,47 +51,47 @@
 
 HB_FUNC( PRINTSTAT )
 {
-   HB_USHORT uiPort = static_cast< HB_USHORT >( hb_parnidef( 1, 1 ) );
+   HB_USHORT uiPort = static_cast<HB_USHORT>(hb_parnidef(1, 1));
    int Status = 0;
 
-   HB_SYMBOL_UNUSED( uiPort );
+   HB_SYMBOL_UNUSED(uiPort);
 
-   hb_retni( Status );
+   hb_retni(Status);
 }
 
 HB_FUNC( PRINTREADY )
 {
-   char szLPT[ 8 ];
+   char szLPT[8];
 
-   hb_snprintf( szLPT, sizeof( szLPT ), "LPT%hu", static_cast< HB_USHORT >( hb_parnidef( 1, 1 ) ) );
+   hb_snprintf( szLPT, sizeof(szLPT), "LPT%hu", static_cast<HB_USHORT>(hb_parnidef(1, 1)));
 
-   hb_retl( hb_printerIsReady( szLPT ) );
+   hb_retl(hb_printerIsReady(szLPT));
 }
 
 HB_FUNC( PRINTSEND )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
-   char szChr[ 2 ] = { ' ', '\0' };
-   char szPort[ 5 ] = { 'l', 'p', 't', '1', '\0' };
+   char szChr[2] = { ' ', '\0' };
+   char szPort[5] = { 'l', 'p', 't', '1', '\0' };
    const char * szStr = nullptr;
    HB_SIZE nLen = 0, nRet = 0;
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
-      szChr[ 0 ] = static_cast< char >( hb_parni( 1 ) );
+      szChr[0] = static_cast<char>(hb_parni(1));
       szStr = szChr;
       nLen = 1;
    }
-   else if( HB_ISCHAR( 1 ) )
+   else if( HB_ISCHAR(1) )
    {
-      szStr = hb_parc( 1 );
-      nLen = hb_parclen( 1 );
+      szStr = hb_parc(1);
+      nLen = hb_parclen(1);
    }
 
-   if( HB_ISNUM( 2 ) )
+   if( HB_ISNUM(2) )
    {
-      szPort[ 3 ] = static_cast< char >( hb_parni( 2 ) ) + '0';
+      szPort[3] = static_cast<char>(hb_parni(2)) + '0';
    }
 
    if( nLen )
@@ -107,7 +107,7 @@ HB_FUNC( PRINTSEND )
 
 #else
 
-   hb_retns( 0 );
+   hb_retns(0);
 
 #endif
 }

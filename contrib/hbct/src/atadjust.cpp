@@ -49,13 +49,13 @@
 
 HB_FUNC( ATADJUST )
 {
-   if( HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) && HB_ISNUM( 3 ) )
+   if( HB_ISCHAR(1) && HB_ISCHAR(2) && HB_ISNUM(3) )
    {
-      const char * pcStringToMatch = hb_parc( 1 );
-      HB_SIZE sStrToMatchLen = hb_parclen( 1 );
-      const char * pcString = hb_parc( 2 );
-      HB_SIZE sStrLen = hb_parclen( 2 );
-      HB_SIZE sAdjustPosition = hb_parns( 3 );
+      const char * pcStringToMatch = hb_parc(1);
+      HB_SIZE sStrToMatchLen = hb_parclen(1);
+      const char * pcString = hb_parc(2);
+      HB_SIZE sStrLen = hb_parclen(2);
+      HB_SIZE sAdjustPosition = hb_parns(3);
 
       int iMultiPass = ct_getatmupa();
       int iAtLike = ct_getatlike();
@@ -69,7 +69,7 @@ HB_FUNC( ATADJUST )
       HB_SIZE sRetStrLen;
 
       /* eventually ignore some characters */
-      sIgnore = hb_parnsdef( 5, 0 );
+      sIgnore = hb_parnsdef(5, 0);
 
       if( sIgnore >= sStrLen )
       {
@@ -77,11 +77,10 @@ HB_FUNC( ATADJUST )
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
          {
-            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_ATADJUST, nullptr, HB_ERR_FUNCNAME, 0,
-                      EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+            ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ATADJUST, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
          }
 
-         hb_retclen( pcString, sStrLen );
+         hb_retclen(pcString, sStrLen);
          return;
       }
       else
@@ -97,11 +96,10 @@ HB_FUNC( ATADJUST )
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
          {
-            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_ATADJUST, nullptr, HB_ERR_FUNCNAME, 0,
-                      EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+            ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ATADJUST, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
          }
 
-         hb_retclen( pcString, sStrLen );
+         hb_retclen(pcString, sStrLen);
          return;
       }
       else
@@ -110,7 +108,7 @@ HB_FUNC( ATADJUST )
       }
 
       /* nth match or last match ? */
-      if( HB_ISNUM( 4 ) && ( nCounter = hb_parns( 4 ) ) != 0 )
+      if( HB_ISNUM(4) && (nCounter = hb_parns(4)) != 0 )
       {
          /* find the <nCounter>th match */
          const char * pcSubStr;
@@ -125,11 +123,11 @@ HB_FUNC( ATADJUST )
             switch( iAtLike )
             {
                case CT_SETATLIKE_EXACT:
-                  pc = ct_at_exact_forward( pcSubStr, sSubStrLen, pcStringToMatch, sStrToMatchLen, &sMatchStrLen );
+                  pc = ct_at_exact_forward(pcSubStr, sSubStrLen, pcStringToMatch, sStrToMatchLen, &sMatchStrLen);
                   break;
 
                case CT_SETATLIKE_WILDCARD:
-                  pc = ct_at_wildcard_forward( pcSubStr, sSubStrLen, pcStringToMatch, sStrToMatchLen, cAtLike, &sMatchStrLen );
+                  pc = ct_at_wildcard_forward(pcSubStr, sSubStrLen, pcStringToMatch, sStrToMatchLen, cAtLike, &sMatchStrLen);
                   break;
 
                default:
@@ -140,7 +138,7 @@ HB_FUNC( ATADJUST )
             {
                /* no match found; if this happens at this point,
                   there are no <nCounter> matches, so return */
-               hb_retclen( pcString, sStrLen );
+               hb_retclen(pcString, sStrLen);
                return;
             }
 
@@ -153,7 +151,7 @@ HB_FUNC( ATADJUST )
             {
                pcSubStr = pc + sMatchStrLen;
             }
-            sSubStrLen = sStrLen - ( pcSubStr - pcString );
+            sSubStrLen = sStrLen - (pcSubStr - pcString);
          }
       }
       else
@@ -162,11 +160,11 @@ HB_FUNC( ATADJUST )
          switch( iAtLike )
          {
             case CT_SETATLIKE_EXACT:
-               pc = ct_at_exact_backward( pcString, sStrLen, pcStringToMatch, sStrToMatchLen, &sMatchStrLen );
+               pc = ct_at_exact_backward(pcString, sStrLen, pcStringToMatch, sStrToMatchLen, &sMatchStrLen);
                break;
 
             case CT_SETATLIKE_WILDCARD:
-               pc = ct_at_wildcard_backward( pcString, sStrLen, pcStringToMatch, sStrToMatchLen, cAtLike, &sMatchStrLen );
+               pc = ct_at_wildcard_backward(pcString, sStrLen, pcStringToMatch, sStrToMatchLen, cAtLike, &sMatchStrLen);
                break;
 
             default:
@@ -176,26 +174,26 @@ HB_FUNC( ATADJUST )
          if( pc == nullptr )
          {
             /* no matches found */
-            hb_retclen( pcString, sStrLen );
+            hb_retclen(pcString, sStrLen);
             return;
          }
       }
 
       /* adjust string */
-      if( HB_ISCHAR( 6 ) )
+      if( HB_ISCHAR(6) )
       {
-         if( hb_parclen( 6 ) > 0 )
+         if( hb_parclen(6) > 0 )
          {
-            cFillChar = *( hb_parc( 6 ) );
+            cFillChar = *(hb_parc(6));
          }
          else
          {
             cFillChar = 0x20;
          }
       }
-      else if( HB_ISNUM( 6 ) )
+      else if( HB_ISNUM(6) )
       {
-         cFillChar = static_cast< char >( hb_parnl( 6 ) % 256 );
+         cFillChar = static_cast<char>(hb_parnl(6) % 256);
       }
       else
       {
@@ -206,7 +204,7 @@ HB_FUNC( ATADJUST )
       if( pc == pcString + sAdjustPosition )
       {
          /* do nothing */
-         hb_retclen( pcString, sStrLen );
+         hb_retclen(pcString, sStrLen);
       }
       else
       {
@@ -219,51 +217,51 @@ HB_FUNC( ATADJUST )
                if( *pcCheckFill != cFillChar )
                {
                   /* no -> return string unchanged */
-                  hb_retclen( pcString, sStrLen );
+                  hb_retclen(pcString, sStrLen);
                   return;
                }
             }
 
             /* ok -> calculate new string size */
-            sRetStrLen = sStrLen - ( pc - ( pcString + sAdjustPosition ) );
-            pcRetStr = static_cast< char * >( hb_xgrab( sRetStrLen + 1 ) );
+            sRetStrLen = sStrLen - (pc - (pcString + sAdjustPosition));
+            pcRetStr = static_cast<char*>(hb_xgrab(sRetStrLen + 1));
 
             /* copy first portion of string */
             if( sAdjustPosition > 0 )
             {
-               hb_xmemcpy( pcRetStr, pcString, sAdjustPosition );
+               hb_xmemcpy(pcRetStr, pcString, sAdjustPosition);
             }
 
             /* copy second portion of string */
             if( sRetStrLen > sAdjustPosition )
             {
-               hb_xmemcpy( pcRetStr + sAdjustPosition, pc, sRetStrLen - sAdjustPosition );
+               hb_xmemcpy(pcRetStr + sAdjustPosition, pc, sRetStrLen - sAdjustPosition);
             }
 
-            hb_retclen_buffer( pcRetStr, sRetStrLen );
+            hb_retclen_buffer(pcRetStr, sRetStrLen);
          }
          else
          {
             /* adjust to right */
-            sRetStrLen = sStrLen + ( pcString + sAdjustPosition ) - pc;
-            pcRetStr = static_cast< char * >( hb_xgrab( sRetStrLen + 1 ) );
+            sRetStrLen = sStrLen + (pcString + sAdjustPosition) - pc;
+            pcRetStr = static_cast<char*>(hb_xgrab(sRetStrLen + 1));
 
             /* copy first portion of string */
             if( pc > pcString )
             {
-               hb_xmemcpy( pcRetStr, pcString, pc - pcString );
+               hb_xmemcpy(pcRetStr, pcString, pc - pcString);
             }
 
             /* fill characters */
-            hb_xmemset( pcRetStr + ( pc - pcString ), cFillChar, sAdjustPosition - ( pc - pcString ) );
+            hb_xmemset(pcRetStr + (pc - pcString), cFillChar, sAdjustPosition - (pc - pcString));
 
             /* copy second portion of string */
             if( sRetStrLen > sAdjustPosition )
             {
-               hb_xmemcpy( pcRetStr + sAdjustPosition, pc, sRetStrLen - sAdjustPosition );
+               hb_xmemcpy(pcRetStr + sAdjustPosition, pc, sRetStrLen - sAdjustPosition);
             }
 
-            hb_retclen_buffer( pcRetStr, sRetStrLen );
+            hb_retclen_buffer(pcRetStr, sRetStrLen);
          }
       }
    }
@@ -274,18 +272,16 @@ HB_FUNC( ATADJUST )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_ATADJUST, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ATADJUST, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
-      else if( HB_ISCHAR( 2 ) )
+      else if( HB_ISCHAR(2) )
       {
-         hb_retclen( hb_parc( 2 ), hb_parclen( 2 ) );
+         hb_retclen(hb_parc(2), hb_parclen(2));
       }
       else
       {

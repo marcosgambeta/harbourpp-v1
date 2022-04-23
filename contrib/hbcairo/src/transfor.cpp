@@ -50,7 +50,7 @@
 
 HB_FUNC( CAIRO_GET_MATRIX )
 {
-   cairo_t * pCairo = hb_cairo_param( 1 );
+   cairo_t * pCairo = hb_cairo_param(1);
 
    if( pCairo )
    {
@@ -58,19 +58,19 @@ HB_FUNC( CAIRO_GET_MATRIX )
       cairo_matrix_t m;
 
       cairo_get_matrix( pCairo, &m );
-      hb_arrayNew( pItem, 6 );
-      hb_arraySetND( pItem, 1, m.xx );
-      hb_arraySetND( pItem, 2, m.yx );
-      hb_arraySetND( pItem, 3, m.xy );
-      hb_arraySetND( pItem, 4, m.yy );
-      hb_arraySetND( pItem, 5, m.x0 );
-      hb_arraySetND( pItem, 6, m.y0 );
+      hb_arrayNew(pItem, 6);
+      hb_arraySetND(pItem, 1, m.xx);
+      hb_arraySetND(pItem, 2, m.yx);
+      hb_arraySetND(pItem, 3, m.xy);
+      hb_arraySetND(pItem, 4, m.yy);
+      hb_arraySetND(pItem, 5, m.x0);
+      hb_arraySetND(pItem, 6, m.y0);
    }
 }
 
 HB_FUNC( CAIRO_IDENTITY_MATRIX )
 {
-   cairo_t * pCairo = hb_cairo_param( 1 );
+   cairo_t * pCairo = hb_cairo_param(1);
 
    if( pCairo )
    {
@@ -80,22 +80,22 @@ HB_FUNC( CAIRO_IDENTITY_MATRIX )
 
 HB_FUNC( CAIRO_ROTATE )
 {
-   cairo_t * pCairo = hb_cairo_param( 1 );
+   cairo_t * pCairo = hb_cairo_param(1);
 
    if( pCairo )
    {
-      cairo_rotate( pCairo, hb_parnd( 2 ) );
+      cairo_rotate( pCairo, hb_parnd(2) );
    }
 }
 
 HB_FUNC( CAIRO_SET_MATRIX )
 {
-   cairo_t * pCairo = hb_cairo_param( 1 );
+   cairo_t * pCairo = hb_cairo_param(1);
 
    if( pCairo )
    {
       PHB_ITEM pItem;
-      if( ( pItem = hb_param( 2, HB_IT_ARRAY ) ) != nullptr && hb_arrayLen( pItem ) == 6 )
+      if( ( pItem = hb_param(2, Harbour::Item::ARRAY) ) != nullptr && hb_arrayLen(pItem) == 6 )
       {
          cairo_matrix_t m;
 
@@ -116,22 +116,22 @@ HB_FUNC( CAIRO_SET_MATRIX )
 
 HB_FUNC( CAIRO_SCALE )
 {
-   cairo_t * pCairo = hb_cairo_param( 1 );
+   cairo_t * pCairo = hb_cairo_param(1);
 
    if( pCairo )
    {
-      cairo_scale( pCairo, hb_parnd( 2 ), hb_parnd( 3 ) );
+      cairo_scale( pCairo, hb_parnd(2), hb_parnd(3) );
    }
 }
 
 HB_FUNC( CAIRO_TRANSFORM )
 {
-   cairo_t * pCairo = hb_cairo_param( 1 );
+   cairo_t * pCairo = hb_cairo_param(1);
 
    if( pCairo )
    {
       PHB_ITEM pItem;
-      if( ( pItem = hb_param( 2, HB_IT_ARRAY ) ) != nullptr && hb_arrayLen( pItem ) == 6 )
+      if( ( pItem = hb_param(2, Harbour::Item::ARRAY) ) != nullptr && hb_arrayLen(pItem) == 6 )
       {
          cairo_matrix_t m;
 
@@ -152,10 +152,10 @@ HB_FUNC( CAIRO_TRANSFORM )
 
 HB_FUNC( CAIRO_TRANSLATE )
 {
-   cairo_t * pCairo = hb_cairo_param( 1 );
+   cairo_t * pCairo = hb_cairo_param(1);
 
    if( pCairo )
    {
-      cairo_translate( pCairo, hb_parnd( 2 ), hb_parnd( 3 ) );
+      cairo_translate( pCairo, hb_parnd(2), hb_parnd(3) );
    }
 }

@@ -54,23 +54,23 @@
 /* helper function for the pad functions */
 static void do_pad( int iSwitch )
 {
-   if( HB_ISCHAR( 1 ) && HB_ISNUM( 2 ) )
+   if( HB_ISCHAR(1) && HB_ISNUM(2) )
    {
-      const char * pcString = hb_parc( 1 );
-      HB_SIZE sStrLen = hb_parclen( 1 );
+      const char * pcString = hb_parc(1);
+      HB_SIZE sStrLen = hb_parclen(1);
       char * pcRet, * pc;
       HB_ISIZ nRetLen;
       HB_SIZE sRetLen;
       char cFill;
 
-      nRetLen = hb_parns( 2 );
+      nRetLen = hb_parns(2);
       if( nRetLen <= 0 )
       {
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
          {
-            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
+            ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
                       iSwitch == DO_PAD_PADLEFT ?
                       CT_ERROR_PADLEFT : CT_ERROR_PADRIGHT, nullptr,
                       HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
@@ -80,22 +80,22 @@ static void do_pad( int iSwitch )
          hb_retc_null();
          return;
       }
-      sRetLen = static_cast< HB_SIZE >( nRetLen );
+      sRetLen = static_cast<HB_SIZE>(nRetLen);
 
-      if( hb_parclen( 3 ) > 0 )
+      if( hb_parclen(3) > 0 )
       {
-         cFill = *( hb_parc( 3 ) );
+         cFill = *( hb_parc(3) );
       }
-      else if( HB_ISNUM( 3 ) )
+      else if( HB_ISNUM(3) )
       {
-         cFill = static_cast< char >( hb_parnl( 3 ) % 256 );
+         cFill = static_cast<char>(hb_parnl(3) % 256);
       }
       else
       {
          cFill = 0x20;
       }
 
-      pcRet = static_cast< char * >( hb_xgrab( sRetLen + 1 ) );
+      pcRet = static_cast<char*>(hb_xgrab(sRetLen + 1));
 
       if( iSwitch == DO_PAD_PADLEFT )
       {
@@ -134,7 +134,7 @@ static void do_pad( int iSwitch )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
                                   iSwitch == DO_PAD_PADLEFT ?
                                   CT_ERROR_PADLEFT : CT_ERROR_PADRIGHT, nullptr,
                                   HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
@@ -143,7 +143,7 @@ static void do_pad( int iSwitch )
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {

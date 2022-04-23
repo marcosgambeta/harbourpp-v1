@@ -53,9 +53,9 @@ HB_FUNC( INVERTATTR )
 {
    int iAttr;
 
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      iAttr = hb_gtColorToN( hb_parc( 1 ) );
+      iAttr = hb_gtColorToN( hb_parc(1) );
       if( iAttr == -1 )
       {
          iAttr = 0;
@@ -63,42 +63,42 @@ HB_FUNC( INVERTATTR )
    }
    else
    {
-      iAttr = hb_parni( 1 );
+      iAttr = hb_parni(1);
    }
 
-   hb_retni( ( iAttr & 0x88 ) | ( ( iAttr & 0x07 ) << 4 ) | ( ( iAttr >> 4 ) & 0x07 ) );
+   hb_retni((iAttr & 0x88) | ((iAttr & 0x07) << 4) | ((iAttr >> 4) & 0x07));
 }
 
 HB_FUNC( COLORTON )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      int iColor = hb_gtColorToN( hb_parc( 1 ) );
-      hb_retni( iColor == -1 ? 0 : iColor );
+      int iColor = hb_gtColorToN( hb_parc(1) );
+      hb_retni(iColor == -1 ? 0 : iColor);
    }
    else
    {
-      hb_retni( hb_parni( 1 ) );
+      hb_retni(hb_parni(1));
    }
 }
 
 HB_FUNC( NTOCOLOR )
 {
-   int iColor = hb_parnidef( 1, -1 );
+   int iColor = hb_parnidef(1, -1);
 
    if( iColor >= 0x00 && iColor <= 0xff )
    {
-      char szColorString[ 10 ];
+      char szColorString[10];
 
-      if( hb_parl( 2 ) )
+      if( hb_parl(2) )
       {
-         hb_gtColorsToString( &iColor, 1, szColorString, sizeof( szColorString ) );
+         hb_gtColorsToString( &iColor, 1, szColorString, sizeof(szColorString) );
       }
       else
       {
-         hb_snprintf( szColorString, sizeof( szColorString ), "%02d/%02d", iColor & 0x0f, iColor >> 4 );
+         hb_snprintf( szColorString, sizeof(szColorString), "%02d/%02d", iColor & 0x0f, iColor >> 4 );
       }
-      hb_retc( szColorString );
+      hb_retc(szColorString);
    }
    else
    {

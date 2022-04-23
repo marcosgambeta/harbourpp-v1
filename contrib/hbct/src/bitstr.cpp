@@ -49,31 +49,31 @@
 
 HB_FUNC( CTOBIT )
 {
-   HB_SIZE nString = hb_parclen( 1 );
+   HB_SIZE nString = hb_parclen(1);
    int iResult = 0;
 
    if( nString > 0 )
    {
-      HB_SIZE nPattern = hb_parclen( 2 );
+      HB_SIZE nPattern = hb_parclen(2);
 
       if( nPattern >= 1 && nPattern <= 16 )
       {
-         const char * pszString = hb_parc( 1 ), * pszPattern = hb_parc( 2 );
+         const char * pszString = hb_parc(1), * pszPattern = hb_parc(2);
 
          for( HB_SIZE n = 0; n < nString; ++n )
          {
-            char c = pszString[ n ];
+            char c = pszString[n];
             int i = 0;
 
             do
             {
-               if( pszPattern[ i ] == c )
+               if( pszPattern[i] == c )
                {
-                  iResult |= 1 << ( static_cast< int >( nPattern ) - i - 1 );
+                  iResult |= 1 << ( static_cast<int>(nPattern) - i - 1 );
                   break;
                }
             }
-            while( ++i < static_cast< int >( nPattern ) );
+            while( ++i < static_cast<int>(nPattern) );
          }
       }
       else
@@ -81,31 +81,31 @@ HB_FUNC( CTOBIT )
          iResult = -1;
       }
    }
-   hb_retni( iResult );
+   hb_retni(iResult);
 }
 
 HB_FUNC( BITTOC )
 {
-   HB_SIZE nPattern = hb_parclen( 2 );
+   HB_SIZE nPattern = hb_parclen(2);
 
    if( nPattern >= 1 && nPattern <= 16 )
    {
-      const char * pszPattern = hb_parc( 2 );
-      char szBuffer[ 16 ];
-      char * pszResult = &szBuffer[ sizeof( szBuffer ) ];
+      const char * pszPattern = hb_parc(2);
+      char szBuffer[16];
+      char * pszResult = &szBuffer[sizeof(szBuffer)];
       int iValue, iLen = 0;
 
-      iValue = hb_parnidef( 1, -1 );
+      iValue = hb_parnidef(1, -1);
       if( iValue > 0xFFFF || iValue < 0 )
       {
          iValue = 0;
       }
 
-      if( hb_parl( 3 ) )
+      if( hb_parl(3) )
       {
          while( nPattern-- > 0 )
          {
-            *--pszResult = ( iValue & 1 ) ? pszPattern[ nPattern ] : ' ';
+            *--pszResult = ( iValue & 1 ) ? pszPattern[nPattern] : ' ';
             ++iLen;
             iValue >>= 1;
          }
@@ -116,13 +116,13 @@ HB_FUNC( BITTOC )
          {
             if( iValue & 1 )
             {
-               *--pszResult = pszPattern[ nPattern ];
+               *--pszResult = pszPattern[nPattern];
                ++iLen;
             }
             iValue >>= 1;
          }
       }
-      hb_retclen( pszResult, iLen );
+      hb_retclen(pszResult, iLen);
    }
    else
    {

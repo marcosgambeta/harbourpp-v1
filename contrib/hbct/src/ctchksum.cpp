@@ -48,14 +48,14 @@
 
 HB_FUNC( CHECKSUM )
 {
-   const HB_UCHAR * pbyString = reinterpret_cast< const HB_UCHAR * >( hb_parc( 1 ) );
-   HB_SIZE nLen = hb_parclen( 1 );
+   const HB_UCHAR * pbyString = reinterpret_cast< const HB_UCHAR * >( hb_parc(1) );
+   HB_SIZE nLen = hb_parclen(1);
    HB_U32 u32Result = 0;
 
    for( HB_SIZE nPos = 0; nPos < nLen; nPos++ )
    {
-      u32Result += pbyString[ nPos ] | ( pbyString[ nPos + 1 ] << 8 );
+      u32Result += pbyString[nPos] | ( pbyString[nPos + 1] << 8 );
    }
 
-   hb_retnint( static_cast< HB_U32 >( ( u32Result & 0x00FFFFFF ) | ( ( nLen & 0xFF ) << 24 ) ) );
+   hb_retnint(static_cast<HB_U32>((u32Result & 0x00FFFFFF) | ((nLen & 0xFF) << 24)));
 }

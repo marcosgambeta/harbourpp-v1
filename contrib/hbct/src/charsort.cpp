@@ -59,7 +59,7 @@ struct CT_CHARSORT
 
 using PCT_CHARSORT = CT_CHARSORT *;
 
-static HB_TSD_NEW( s_charsort, sizeof( CT_CHARSORT ), nullptr, nullptr );
+static HB_TSD_NEW( s_charsort, sizeof(CT_CHARSORT), nullptr, nullptr );
 
 /* qsort function */
 #ifdef __IBMCPP__
@@ -69,11 +69,9 @@ static int
 #endif
 _hb_do_sortascend( const void * p1, const void * p2 )
 {
-   PCT_CHARSORT charsort = static_cast< PCT_CHARSORT >( hb_stackGetTSD( &s_charsort ) );
+   PCT_CHARSORT charsort = static_cast<PCT_CHARSORT>(hb_stackGetTSD(&s_charsort));
 
-   return strncmp( static_cast< const char * >( p1 ) + charsort->sElementPos,
-                   static_cast< const char * >( p2 ) + charsort->sElementPos,
-                   charsort->sCompareLen );
+   return strncmp( static_cast<const char*>(p1) + charsort->sElementPos, static_cast<const char*>(p2) + charsort->sElementPos, charsort->sCompareLen );
 }
 
 #ifdef __IBMCPP__
@@ -83,35 +81,33 @@ static int
 #endif
 _hb_do_sortdescend( const void * p1, const void * p2 )
 {
-   PCT_CHARSORT charsort = static_cast< PCT_CHARSORT >( hb_stackGetTSD( &s_charsort ) );
+   PCT_CHARSORT charsort = static_cast<PCT_CHARSORT>(hb_stackGetTSD(&s_charsort));
 
-   return -strncmp( static_cast< const char * >( p1 ) + charsort->sElementPos,
-                    static_cast< const char * >( p2 ) + charsort->sElementPos,
-                    charsort->sCompareLen );
+   return -strncmp( static_cast<const char*>(p1) + charsort->sElementPos, static_cast<const char*>(p2) + charsort->sElementPos, charsort->sCompareLen );
 }
 
 HB_FUNC( CHARSORT )
 {
    /* suppressing return value ? */
-   int iNoRet = ct_getref() && HB_ISBYREF( 1 );
+   int iNoRet = ct_getref() && HB_ISBYREF(1);
 
    /* param check I */
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      PCT_CHARSORT charsort = static_cast< PCT_CHARSORT >( hb_stackGetTSD( &s_charsort ) );
+      PCT_CHARSORT charsort = static_cast<PCT_CHARSORT>(hb_stackGetTSD(&s_charsort));
 
       /* get parameters */
-      const char * pcString = hb_parc( 1 );
+      const char * pcString = hb_parc(1);
 
       char *  pcRet;
-      HB_SIZE sStrLen     = hb_parclen( 1 );
-      HB_SIZE sElementLen = hb_parnsdef( 2, 1 );
-      HB_SIZE sIgnore     = hb_parnsdef( 4, 0 );
-      HB_SIZE sSortLen    = hb_parnsdef( 6, sStrLen - sIgnore );
-      int     iDescend    = hb_parldef( 7, 0 );
+      HB_SIZE sStrLen     = hb_parclen(1);
+      HB_SIZE sElementLen = hb_parnsdef(2, 1);
+      HB_SIZE sIgnore     = hb_parnsdef(4, 0);
+      HB_SIZE sSortLen    = hb_parnsdef(6, sStrLen - sIgnore);
+      int     iDescend    = hb_parldef(7, 0);
 
-      charsort->sCompareLen = hb_parnsdef( 3, sElementLen );
-      charsort->sElementPos = hb_parnsdef( 5, 0 );
+      charsort->sCompareLen = hb_parnsdef(3, sElementLen);
+      charsort->sElementPos = hb_parnsdef(5, 0);
 
       /* param check II */
       if( sElementLen == 0 || charsort->sCompareLen > sElementLen || sIgnore + sElementLen > sStrLen ||
@@ -121,9 +117,7 @@ HB_FUNC( CHARSORT )
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
          {
-            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CHARSORT,
-                      nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
-                      HB_ERR_ARGS_BASEPARAMS );
+            ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSORT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
          }
 
          if( iNoRet )
@@ -137,7 +131,7 @@ HB_FUNC( CHARSORT )
          return;
       }
 
-      pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
+      pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
       hb_xmemcpy( pcRet, pcString, sStrLen );
 
       if( iDescend )
@@ -150,12 +144,12 @@ HB_FUNC( CHARSORT )
       }
 
       /* return string */
-      hb_storclen( pcRet, sStrLen, 1 );
+      hb_storclen(pcRet, sStrLen, 1);
 
       if( iNoRet )
       {
          hb_retl(false);
-         hb_xfree( pcRet );
+         hb_xfree(pcRet);
       }
       else
       {
@@ -169,14 +163,12 @@ HB_FUNC( CHARSORT )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_CHARSORT, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSORT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else if( iNoRet )
       {

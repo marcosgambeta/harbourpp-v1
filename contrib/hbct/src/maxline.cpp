@@ -50,16 +50,16 @@ HB_FUNC( MAXLINE )
 {
    HB_ISIZ nLength = 0;
 
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      const char * pcString = hb_parc( 1 );
+      const char * pcString = hb_parc(1);
       const char * pBuffer;
-      HB_ISIZ nStrLen = hb_parclen( 1 );
+      HB_ISIZ nStrLen = hb_parclen(1);
 
       while( nStrLen > 0 )
       {
-         pBuffer = static_cast< char * >( const_cast< void * >( memchr( pcString, 13, nStrLen ) ) );
-         if( ! pBuffer )
+         pBuffer = static_cast<char*>(const_cast<void*>(memchr(pcString, 13, nStrLen)));
+         if( !pBuffer )
          {
             pBuffer = pcString + nStrLen;
          }

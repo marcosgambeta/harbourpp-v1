@@ -51,28 +51,28 @@
 
 HB_FUNC( CRYPT )
 {
-   HB_SIZE nCryptLen = hb_parclen( 2 );
+   HB_SIZE nCryptLen = hb_parclen(2);
 
    if( nCryptLen >= 2 )
    {
-      const HB_BYTE * pbyCrypt = reinterpret_cast< const HB_BYTE * >( hb_parc( 2 ) );
+      const HB_BYTE * pbyCrypt = reinterpret_cast< const HB_BYTE * >( hb_parc(2) );
       HB_SIZE nCryptPos = 0;
 
-      const HB_BYTE * pbyString = reinterpret_cast< const HB_BYTE * >( hb_parc( 1 ) );
-      HB_SIZE nStringLen = hb_parclen( 1 );
+      const HB_BYTE * pbyString = reinterpret_cast< const HB_BYTE * >( hb_parc(1) );
+      HB_SIZE nStringLen = hb_parclen(1);
 
-      HB_BYTE * pbyResult = static_cast< HB_BYTE * >( hb_xgrab( nStringLen + 1 ) );
+      HB_BYTE * pbyResult = static_cast<HB_BYTE*>(hb_xgrab(nStringLen + 1));
 
       HB_USHORT uiCount2 =
-         ( ( static_cast< HB_USHORT >( pbyCrypt[ nCryptPos ] + static_cast< HB_USHORT >( pbyCrypt[ nCryptPos + 1 ] * 256 ) ) ) &
-           0xFFFF ) ^ ( static_cast< HB_USHORT >( nCryptLen ) & 0xFFFF );
+         ((static_cast<HB_USHORT>(pbyCrypt[nCryptPos] + static_cast<HB_USHORT>(pbyCrypt[nCryptPos + 1] * 256))) &
+           0xFFFF) ^ (static_cast<HB_USHORT>(nCryptLen) & 0xFFFF);
       HB_USHORT uiCount1 = 0xAAAA;
 
       for( HB_SIZE nStringPos = 0; nStringPos < nStringLen; )
       {
          HB_USHORT uiTmpCount1 = uiCount1;
          HB_USHORT uiTmpCount2 = uiCount2;
-         HB_BYTE byte = pbyString[ nStringPos ] ^ pbyCrypt[ nCryptPos++ ];
+         HB_BYTE byte = pbyString[nStringPos] ^ pbyCrypt[nCryptPos++];
          HB_USHORT tmp;
 
          uiTmpCount2 = HB_MKUSHORT( ( HB_LOBYTE( uiTmpCount2 ) ^ HB_HIBYTE( uiTmpCount2 ) ), HB_HIBYTE( uiTmpCount2 ) );
@@ -116,7 +116,7 @@ HB_FUNC( CRYPT )
 
          uiCount1 = uiTmpCount1;
 
-         pbyResult[ nStringPos++ ] = byte ^ HB_LOBYTE( uiTmpCount1 );
+         pbyResult[nStringPos++] = byte ^ HB_LOBYTE( uiTmpCount1 );
 
          if( nCryptPos == nCryptLen )
          {

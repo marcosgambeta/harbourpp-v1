@@ -49,12 +49,12 @@
 
 HB_FUNC( NUMAT )
 {
-   if( HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) )
+   if( HB_ISCHAR(1) && HB_ISCHAR(2) )
    {
-      const char * pcStringToMatch = hb_parc( 1 );
-      HB_SIZE sStrToMatchLen = hb_parclen( 1 );
-      const char * pcString = hb_parc( 2 );
-      HB_SIZE sStrLen = hb_parclen( 2 );
+      const char * pcStringToMatch = hb_parc(1);
+      HB_SIZE sStrToMatchLen = hb_parclen(1);
+      const char * pcString = hb_parc(2);
+      HB_SIZE sStrLen = hb_parclen(2);
       int iMultiPass = ct_getatmupa();
       int iAtLike = ct_getatlike();
       char cAtLike = ct_getatlikechar();
@@ -63,7 +63,7 @@ HB_FUNC( NUMAT )
       const char * pc, * pcSubStr;
 
       /* eventually ignore some characters */
-      sIgnore = hb_parnsdef( 3, 0 );
+      sIgnore = hb_parnsdef(3, 0);
 
       if( sIgnore >= sStrLen )
       {
@@ -71,11 +71,10 @@ HB_FUNC( NUMAT )
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
          {
-            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_NUMAT, nullptr,
-                      HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+            ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_NUMAT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
          }
 
-         hb_retni( 0 );
+         hb_retni(0);
          return;
       }
       else
@@ -125,18 +124,16 @@ HB_FUNC( NUMAT )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_NUMAT, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_NUMAT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {
-         hb_retni( 0 );
+         hb_retni(0);
       }
    }
 }

@@ -51,7 +51,7 @@
 #include "hbapifs.h"
 
 #define SINGLEBUF  32768
-#define MAXLEN     ( 16 * 1024 * 1024 )
+#define MAXLEN     (16 * 1024 * 1024)
 
 static int s_nCount = 0;
 
@@ -70,10 +70,10 @@ static void countCheck( int n )
 
 HB_FUNC( AMFSTDIO_READ )
 {
-   char *     pszStrIn     = static_cast< char * >( hb_xgrab( SINGLEBUF ) );
-   char *     pszLenPrefix = static_cast< char * >( hb_xgrab( 5 ) );
+   char *     pszStrIn     = static_cast<char*>(hb_xgrab(SINGLEBUF));
+   char *     pszLenPrefix = static_cast<char*>(hb_xgrab(5));
    #if 0
-   char *     pszBuf;      = static_cast< char * >( hb_xgrab( SINGLEBUF ) );
+   char *     pszBuf;      = static_cast<char*>(hb_xgrab(SINGLEBUF));
    #endif
    char *     pszBuf;
    char *     pszTmp = pszLenPrefix;
@@ -86,7 +86,7 @@ HB_FUNC( AMFSTDIO_READ )
    while( nTotal < 4 )
    {
       nToRead = ( s_nCount + 4 - nTotal > SINGLEBUF ? SINGLEBUF - s_nCount : 4 - nTotal );
-      nBytes  = hb_fsRead( hStdIn, pszStrIn, static_cast< HB_USHORT >( nToRead ) );
+      nBytes  = hb_fsRead( hStdIn, pszStrIn, static_cast<HB_USHORT>(nToRead));
 
       countCheck( nBytes );
 
@@ -95,7 +95,7 @@ HB_FUNC( AMFSTDIO_READ )
       pszTmp  = pszLenPrefix + nTotal;
    }
 
-   pszLenPrefix[ 4 ] = '\0';
+   pszLenPrefix[4] = '\0';
    nLen = HB_GET_LE_UINT32( pszLenPrefix );
 
    if( nLen >= MAXLEN )
@@ -105,7 +105,7 @@ HB_FUNC( AMFSTDIO_READ )
    }
 
    nTotal = 0;
-   pszBuf = static_cast< char * >( hb_xgrab( nLen + 1 ) );
+   pszBuf = static_cast<char*>(hb_xgrab(nLen + 1));
    pszTmp = pszBuf;
 
    while( nTotal < nLen )
@@ -120,7 +120,7 @@ HB_FUNC( AMFSTDIO_READ )
       else
          nToRead = ( s_nCount + nLen - nTotal > SINGLEBUF ? SINGLEBUF - s_nCount : nLen - nTotal );
 
-      nBytes = hb_fsRead( hStdIn, pszStrIn, static_cast< HB_USHORT >( nToRead ) );
+      nBytes = hb_fsRead( hStdIn, pszStrIn, static_cast<HB_USHORT>(nToRead));
 
       countCheck( nBytes );
 
@@ -129,7 +129,7 @@ HB_FUNC( AMFSTDIO_READ )
       pszTmp  = pszBuf + nTotal;
    }
 
-   hb_xfree( pszStrIn );
-   hb_xfree( pszLenPrefix );
+   hb_xfree(pszStrIn);
+   hb_xfree(pszLenPrefix);
    hb_retclen_buffer( pszBuf, nLen );
 }

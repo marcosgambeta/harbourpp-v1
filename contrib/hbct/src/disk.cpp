@@ -54,31 +54,31 @@
 #include "ctstrfil.h"
 #include "hbwinuni.h"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 #  include <windows.h>
 #endif
 
 HB_FUNC( DIRMAKE )
 {
-   if( hb_fsMkDir( hb_parcx( 1 ) ) )
+   if( hb_fsMkDir(hb_parcx(1)) )
    {
-      hb_retni( 0 );
+      hb_retni(0);
    }
    else
    {
-      hb_retnint( -static_cast< HB_MAXINT >( hb_fsOsError() ) );
+      hb_retnint(-static_cast<HB_MAXINT>(hb_fsOsError()));
    }
 }
 
 HB_FUNC( DIRNAME )
 {
-   char * pbyBuffer = static_cast< char * >( hb_xgrab( HB_PATH_MAX ) );
-   const char * pszDrive = hb_parc( 1 );
+   char * pbyBuffer = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
+   const char * pszDrive = hb_parc(1);
    int iDrive = 0;
 
    if( pszDrive )
    {
-      HB_UCHAR uc = static_cast< HB_UCHAR >( *pszDrive );
+      HB_UCHAR uc = static_cast<HB_UCHAR>(*pszDrive);
       /* some network drivers (f.e. NETX from Novell NetWare) allow
        * to create drives after 'Z' letter.
        */
@@ -91,7 +91,7 @@ HB_FUNC( DIRNAME )
          iDrive = uc - ( 'a' - 1 );
       }
    }
-   pbyBuffer[ 0 ] = HB_OS_PATH_DELIM_CHR;
+   pbyBuffer[0] = HB_OS_PATH_DELIM_CHR;
    hb_fsCurDirBuff( iDrive, pbyBuffer + 1, HB_PATH_MAX - 1 );
 
    hb_retc_buffer( pbyBuffer );
@@ -99,14 +99,14 @@ HB_FUNC( DIRNAME )
 
 HB_FUNC( DRIVETYPE )
 {
-#if defined( HB_OS_WIN )
-   HB_SIZE nSize = hb_parclen( 1 ) + 2;  /* allow space for '\0' & ":\" */
-   char * pszDrive = static_cast< char * >( hb_xgrab( nSize + 1 ) );
+#if defined(HB_OS_WIN)
+   HB_SIZE nSize = hb_parclen(1) + 2;  /* allow space for '\0' & ":\" */
+   char * pszDrive = static_cast<char*>(hb_xgrab(nSize + 1));
    LPCTSTR lpDrive;
    LPTSTR lpFree;
    UINT uiType;
 
-   hb_strncpy( pszDrive, hb_parcx( 1 ), nSize );
+   hb_strncpy( pszDrive, hb_parcx(1), nSize );
 
    if( strstr( pszDrive, ":" ) == nullptr )
    {
@@ -124,9 +124,9 @@ HB_FUNC( DRIVETYPE )
    hb_vmLock();
    if( lpFree )
    {
-      hb_xfree( lpFree );
+      hb_xfree(lpFree);
    }
-   hb_xfree( pszDrive );
+   hb_xfree(pszDrive);
 
    switch( uiType )
    {
@@ -149,20 +149,20 @@ HB_FUNC( DRIVETYPE )
          uiType = 9;           /* Unknown Drive - xHarbour extension */ /* HB_EXTENSION */
          break;
    }
-   hb_retni( uiType );
+   hb_retni(uiType);
 #else
-   hb_retni( 9 );
+   hb_retni(9);
 #endif
 }
 
 HB_FUNC( NUMDISKL )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    /* LASTDRIVE does not affect Windows apps, they always have 26 letters avail */
-   hb_retni( 26 );
+   hb_retni(26);
 #else
    /* For Unix, return the most harmless value... or not? */
-   hb_retni( 1 );
+   hb_retni(1);
 #endif
 }
 
@@ -186,28 +186,28 @@ HB_FUNC( VOLUME )
 {
    HB_BOOL bReturn = HB_FALSE;
 
-#if defined( HB_OS_WIN )
-   if( ! ct_getsafety() )
+#if defined(HB_OS_WIN)
+   if( !ct_getsafety() )
    {
       const char * pszRoot = nullptr;
       const char * pszVolName = nullptr;
-      char szRootBuf[ 4 ], szVolNameBuf[ 12 ];
+      char szRootBuf[4], szVolNameBuf[12];
       LPCTSTR lpRoot, lpVolName;
       LPTSTR lpRootFree = nullptr, lpVolNameFree = nullptr;
 
-      if( hb_parclen( 1 ) > 0 )
+      if( hb_parclen(1) > 0 )
       {
-         PHB_FNAME fname = hb_fsFNameSplit( hb_parc( 1 ) );
+         PHB_FNAME fname = hb_fsFNameSplit( hb_parc(1) );
 
          if( fname->szPath )
          {
-            pszRoot = hb_strncpy( szRootBuf, fname->szPath, sizeof( szRootBuf ) - 1 );
+            pszRoot = hb_strncpy( szRootBuf, fname->szPath, sizeof(szRootBuf) - 1 );
          }
          if( fname->szName )
          {
-            pszVolName = hb_strncpy( szVolNameBuf, fname->szName, sizeof( szVolNameBuf ) - 1 );
+            pszVolName = hb_strncpy( szVolNameBuf, fname->szName, sizeof(szVolNameBuf) - 1 );
          }
-         hb_xfree( fname );
+         hb_xfree(fname);
       }
 
       lpRoot = pszRoot ? HB_FSNAMECONV( pszRoot, &lpRootFree ) : nullptr;
@@ -217,15 +217,15 @@ HB_FUNC( VOLUME )
       hb_vmLock();
       if( lpRootFree )
       {
-         hb_xfree( lpRootFree );
+         hb_xfree(lpRootFree);
       }
       if( lpVolNameFree )
       {
-         hb_xfree( lpVolNameFree );
+         hb_xfree(lpVolNameFree);
       }
    }
 #endif
-   hb_retl( bReturn );
+   hb_retl(bReturn);
 }
 
 /*
@@ -242,11 +242,11 @@ HB_FUNC( VOLUME )
 
 HB_FUNC( VOLSERIAL )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    DWORD dwSerial = 0;
    void * hDrive;
    HB_SIZE nLen;
-   LPCTSTR lpRootPath = HB_PARSTR( 1, &hDrive, &nLen );
+   LPCTSTR lpRootPath = HB_PARSTR(1, &hDrive, &nLen);
 
    if( GetVolumeInformation( nLen > 0 ? lpRootPath : nullptr, /* RootPathName */
                              nullptr,      /* VolumeName */
@@ -257,35 +257,35 @@ HB_FUNC( VOLSERIAL )
                              nullptr,      /* FileSystemName */
                              0 ) )      /* FileSystemSize */
    {
-      hb_retnint( dwSerial );
+      hb_retnint(dwSerial);
    }
    else
    {
-      hb_retni( -1 );
+      hb_retni(-1);
    }
 
-   hb_strfree( hDrive );
+   hb_strfree(hDrive);
 #else
-   hb_retni( -1 );
+   hb_retni(-1);
 #endif
 }
 
 HB_FUNC( TRUENAME )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
       void * hFile;
-      TCHAR buffer[ MAX_PATH + 1 ];
+      TCHAR buffer[MAX_PATH + 1];
 
-      buffer[ 0 ] = buffer[ MAX_PATH ] = TEXT( '\0' );
+      buffer[0] = buffer[MAX_PATH] = TEXT( '\0' );
 
-      GetFullPathName( HB_PARSTR( 1, &hFile, nullptr ), HB_SIZEOFARRAY( buffer ) - 1, buffer, nullptr );
+      GetFullPathName(HB_PARSTR(1, &hFile, nullptr), HB_SIZEOFARRAY(buffer) - 1, buffer, nullptr);
 
       HB_RETSTR( buffer );
-      hb_strfree( hFile );
+      hb_strfree(hFile);
 #else
-      hb_retc( hb_parc( 1 ) );
+      hb_retc(hb_parc(1));
 #endif
    }
    else

@@ -54,8 +54,8 @@
 
 HB_FUNC( CTON )
 {
-   const char * szNumber = hb_parc( 1 );
-   int iBase = hb_parnidef( 2, 10 );
+   const char * szNumber = hb_parc(1);
+   int iBase = hb_parnidef(2, 10);
 
    if( szNumber && iBase >= 2 && iBase <= 36 )
    {
@@ -63,7 +63,7 @@ HB_FUNC( CTON )
 #ifdef HB_CT3_STRICT32
       nMax = UINT32_MAX;
 #else
-      HB_BOOL fStrict = HB_ISLOG( 3 );
+      HB_BOOL fStrict = HB_ISLOG(3);
       if( fStrict )
       {
          nMax = UINT32_MAX;
@@ -76,7 +76,7 @@ HB_FUNC( CTON )
 
       for( ;; )
       {
-         int iDigit = static_cast< HB_UCHAR >( *szNumber++ );
+         int iDigit = static_cast<HB_UCHAR>(*szNumber++);
          if( iDigit >= '0' && iDigit <= '9' )
          {
             iDigit -= '0';
@@ -107,59 +107,59 @@ HB_FUNC( CTON )
 
 #ifdef HB_CT3_STRICT32
       /* test shows that this is exact CT3 behavior */
-      if( static_cast< HB_I32 >( nValue ) >= 0 || hb_parl( 3 ) )
+      if( static_cast<HB_I32>(nValue) >= 0 || hb_parl(3) )
       {
-         hb_retnl( static_cast< HB_I32 >( nValue ) );
+         hb_retnl(static_cast<HB_I32>(nValue));
       }
       else
       {
-         hb_retnd( static_cast< HB_U32 >( nValue ) );
+         hb_retnd(static_cast<HB_U32>(nValue));
       }
 #else
       if( fStrict )
       {
-         if( hb_parl( 3 ) )
+         if( hb_parl(3) )
          {
-            hb_retnint( static_cast< HB_I32 >( nValue ) );
+            hb_retnint(static_cast<HB_I32>(nValue));
          }
          else
          {
-            hb_retnint( static_cast< HB_U32 >( nValue ) );
+            hb_retnint(static_cast<HB_U32>(nValue));
          }
       }
-      else if( static_cast< HB_MAXINT >( nValue ) < 0 )
+      else if( static_cast<HB_MAXINT>(nValue) < 0 )
       {
-         hb_retnd( static_cast< double >( nValue ) );
+         hb_retnd(static_cast<double>(nValue));
       }
       else
       {
-         hb_retnint( nValue );
+         hb_retnint(nValue);
       }
 #endif
    }
    else
    {
-      hb_retni( 0 );
+      hb_retni(0);
    }
 }
 
 HB_FUNC( NTOC )
 {
-   char szBuffer[ 256 ], * pszResult = nullptr;
+   char szBuffer[256], * pszResult = nullptr;
    HB_MAXINT nValue = 0;
-   int iBase = hb_parnidef( 2, 10 ), iLen = hb_parni( 3 );
+   int iBase = hb_parnidef(2, 10), iLen = hb_parni(3);
 
-   if( iLen < 0 || iLen > static_cast< int >( sizeof( szBuffer ) ) )
+   if( iLen < 0 || iLen > static_cast<int>(sizeof(szBuffer)) )
    {
-      iLen = sizeof( szBuffer );
+      iLen = sizeof(szBuffer);
    }
 
-   if( iBase >= 2 && iBase <= 36 && ct_numParam( 1, &nValue ) )
+   if( iBase >= 2 && iBase <= 36 && ct_numParam(1, &nValue) )
    {
-      HB_MAXUINT uValue = static_cast< HB_MAXUINT >( nValue );
+      HB_MAXUINT uValue = static_cast<HB_MAXUINT>(nValue);
       int i;
 
-      i = iLen == 0 ? static_cast< int >( sizeof( szBuffer ) ) : iLen;
+      i = iLen == 0 ? static_cast<int>(sizeof(szBuffer)) : iLen;
       do
       {
          if( --i < 0 )
@@ -171,7 +171,7 @@ HB_FUNC( NTOC )
             int iDigit = uValue % iBase;
             uValue /= iBase;
             iDigit += iDigit < 10 ? '0' : ( 'A' - 10 );
-            szBuffer[ i ] = static_cast< char >( iDigit );
+            szBuffer[i] = static_cast<char>(iDigit);
          }
       }
       while( uValue != 0 );
@@ -180,19 +180,19 @@ HB_FUNC( NTOC )
       {
          if( iLen == 0 )
          {
-            iLen = sizeof( szBuffer ) - i;
+            iLen = sizeof(szBuffer) - i;
          }
          else
          {
-            const char * szPad = hb_parc( 4 );
-            char cPad = szPad ? szPad[ 0 ] : static_cast< char >( hb_parnidef( 4, ' ' ) );
+            const char * szPad = hb_parc(4);
+            char cPad = szPad ? szPad[0] : static_cast<char>(hb_parnidef(4, ' '));
 
             while( i > 0 )
             {
-               szBuffer[ --i ] = cPad;
+               szBuffer[--i] = cPad;
             }
          }
-         pszResult = &szBuffer[ i ];
+         pszResult = &szBuffer[i];
       }
    }
    if( pszResult == nullptr )
@@ -204,5 +204,5 @@ HB_FUNC( NTOC )
       memset( szBuffer, '*', iLen );
       pszResult = szBuffer;
    }
-   hb_retclen( pszResult, iLen );
+   hb_retclen(pszResult, iLen);
 }

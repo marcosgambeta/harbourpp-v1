@@ -51,29 +51,29 @@
 
 HB_FUNC( SAYDOWN )
 {
-   HB_SIZE nLen = hb_parclen( 1 );
+   HB_SIZE nLen = hb_parclen(1);
 
    if( nLen )
    {
       int iRow, iCol, iMaxRow, iMaxCol;
-      long lDelay = hb_parnldef( 2, 4 );
+      long lDelay = hb_parnldef(2, 4);
 
       hb_gtGetPos( &iRow, &iCol );
-      if( HB_ISNUM( 3 ) )
+      if( HB_ISNUM(3) )
       {
-         iRow = hb_parni( 3 );
+         iRow = hb_parni(3);
       }
-      if( HB_ISNUM( 4 ) )
+      if( HB_ISNUM(4) )
       {
-         iCol = hb_parni( 4 );
+         iCol = hb_parni(4);
       }
       iMaxRow = hb_gtMaxRow();
       iMaxCol = hb_gtMaxCol();
 
       if( iRow >= 0 && iCol >= 0 && iRow <= iMaxRow && iCol <= iMaxCol )
       {
-         const char * szText = hb_parc( 1 );
-         HB_SIZE nTextLen = hb_parclen( 1 );
+         const char * szText = hb_parc(1);
+         HB_SIZE nTextLen = hb_parclen(1);
 
          HB_WCHAR wc;
          PHB_CODEPAGE cdp = hb_gtHostCP();
@@ -81,9 +81,9 @@ HB_FUNC( SAYDOWN )
 
          int iColor = hb_gtGetCurrColor();
 
-         if( nLen > static_cast< HB_SIZE >( iMaxRow - iRow + 1 ) )
+         if( nLen > static_cast<HB_SIZE>(iMaxRow - iRow + 1) )
          {
-            nLen = static_cast< HB_SIZE >( iMaxRow - iRow + 1 );
+            nLen = static_cast<HB_SIZE>(iMaxRow - iRow + 1);
          }
 
          hb_gtBeginWrite();
@@ -101,7 +101,7 @@ HB_FUNC( SAYDOWN )
             if( lDelay )
             {
                hb_gtEndWrite();
-               hb_idleSleep( static_cast< double >( lDelay ) / 1000 );
+               hb_idleSleep( static_cast<double>(lDelay) / 1000 );
                hb_gtBeginWrite();
             }
          }
@@ -116,27 +116,27 @@ HB_FUNC( SAYSPREAD )
 {
    HB_SIZE nLen;
    void * hText;
-   const HB_WCHAR * pwText = hb_parstr_u16( 1, HB_CDP_ENDIAN_NATIVE, &hText, &nLen );
+   const HB_WCHAR * pwText = hb_parstr_u16(1, HB_CDP_ENDIAN_NATIVE, &hText, &nLen);
 
    if( nLen )
    {
       int iRow, iCol, iMaxRow, iMaxCol;
       long lDelay;
 
-      lDelay = hb_parnldef( 2, 4 );
+      lDelay = hb_parnldef(2, 4);
 
       iMaxRow = hb_gtMaxRow();
       iMaxCol = hb_gtMaxCol();
       hb_gtGetPos( &iRow, &iCol );
-      if( HB_ISNUM( 3 ) )
+      if( HB_ISNUM(3) )
       {
-         iRow = hb_parni( 3 );
+         iRow = hb_parni(3);
       }
       else
       {
          hb_gtGetPos( &iRow, &iCol );
       }
-      iCol = HB_ISNUM( 4 ) ? hb_parni( 4 ) : ( iMaxCol >> 1 );
+      iCol = HB_ISNUM(4) ? hb_parni(4) : ( iMaxCol >> 1 );
 
       if( iRow >= 0 && iCol >= 0 && iRow <= iMaxRow && iCol <= iMaxCol )
       {
@@ -145,7 +145,7 @@ HB_FUNC( SAYSPREAD )
 
          nPos = nLen >> 1;
          nLen = nLen & 1;
-         if( ! nLen )
+         if( !nLen )
          {
             nLen = 2;
             --nPos;
@@ -154,15 +154,15 @@ HB_FUNC( SAYSPREAD )
          hb_gtBeginWrite();
          do
          {
-            for( HB_SIZE nPos2 = 0; nPos2 < nLen && iCol + static_cast< int >( nPos2 ) <= iMaxCol; ++nPos2 )
+            for( HB_SIZE nPos2 = 0; nPos2 < nLen && iCol + static_cast<int>(nPos2) <= iMaxCol; ++nPos2 )
             {
-               hb_gtPutChar( iRow, iCol + static_cast< int >( nPos2 ), iColor, 0, pwText[ nPos + nPos2 ] );
+               hb_gtPutChar( iRow, iCol + static_cast<int>(nPos2), iColor, 0, pwText[nPos + nPos2] );
             }
             nLen += 2;
             if( lDelay )
             {
                hb_gtEndWrite();
-               hb_idleSleep( static_cast< double >( lDelay ) / 1000 );
+               hb_idleSleep( static_cast<double>(lDelay) / 1000 );
                hb_gtBeginWrite();
             }
          }
@@ -171,7 +171,7 @@ HB_FUNC( SAYSPREAD )
          hb_gtEndWrite();
       }
    }
-   hb_strfree( hText );
+   hb_strfree(hText);
 
    hb_retc_null();
 }
@@ -180,7 +180,7 @@ HB_FUNC( SAYMOVEIN )
 {
    HB_SIZE nLen;
    void * hText;
-   const HB_WCHAR * pwText = hb_parstr_u16( 1, HB_CDP_ENDIAN_NATIVE, &hText, &nLen );
+   const HB_WCHAR * pwText = hb_parstr_u16(1, HB_CDP_ENDIAN_NATIVE, &hText, &nLen);
 
    if( nLen )
    {
@@ -188,19 +188,19 @@ HB_FUNC( SAYMOVEIN )
       long lDelay;
       HB_BOOL fBack;
 
-      lDelay = hb_parnldef( 2, 4 );
-      fBack = hb_parl( 5 );
+      lDelay = hb_parnldef(2, 4);
+      fBack = hb_parl(5);
 
       iMaxRow = hb_gtMaxRow();
       iMaxCol = hb_gtMaxCol();
       hb_gtGetPos( &iRow, &iCol );
-      if( HB_ISNUM( 3 ) )
+      if( HB_ISNUM(3) )
       {
-         iRow = hb_parni( 3 );
+         iRow = hb_parni(3);
       }
-      if( HB_ISNUM( 4 ) )
+      if( HB_ISNUM(4) )
       {
-         iCol = hb_parni( 4 );
+         iCol = hb_parni(4);
       }
 
       if( iRow >= 0 && iCol >= 0 && iRow <= iMaxRow && iCol <= iMaxCol )
@@ -209,14 +209,14 @@ HB_FUNC( SAYMOVEIN )
          int iColor = hb_gtGetCurrColor();
          int iNewCol;
 
-         iNewCol = iCol + static_cast< int >( nLen );
+         iNewCol = iCol + static_cast<int>(nLen);
          if( fBack )
          {
-            iCol += static_cast< int >( nLen ) - 1;
+            iCol += static_cast<int>(nLen) - 1;
          }
          else
          {
-            pwText += static_cast< int >( nLen ) - 1;
+            pwText += static_cast<int>(nLen) - 1;
          }
          nChars = 1;
 
@@ -231,7 +231,7 @@ HB_FUNC( SAYMOVEIN )
                {
                   for( nPos = 0; nPos < nChars; ++nPos )
                   {
-                     hb_gtPutChar( iRow, iCol + static_cast< int >( nPos ), iColor, 0, pwText[ nPos ] );
+                     hb_gtPutChar( iRow, iCol + static_cast<int>(nPos), iColor, 0, pwText[nPos] );
                   }
                }
                --iCol;
@@ -240,11 +240,11 @@ HB_FUNC( SAYMOVEIN )
             {
                for( nPos = 0; nPos < nChars; ++nPos )
                {
-                  hb_gtPutChar( iRow, iCol + static_cast< int >( nPos ), iColor, 0, pwText[ nPos ] );
+                  hb_gtPutChar( iRow, iCol + static_cast<int>(nPos), iColor, 0, pwText[nPos] );
                }
                --pwText;
             }
-            if( static_cast< int >( nChars ) + iCol <= iMaxCol )
+            if( static_cast<int>(nChars) + iCol <= iMaxCol )
             {
                ++nChars;
             }
@@ -252,7 +252,7 @@ HB_FUNC( SAYMOVEIN )
             if( lDelay )
             {
                hb_gtEndWrite();
-               hb_idleSleep( static_cast< double >( lDelay ) / 1000 );
+               hb_idleSleep( static_cast<double>(lDelay) / 1000 );
                hb_gtBeginWrite();
             }
          }
@@ -261,7 +261,7 @@ HB_FUNC( SAYMOVEIN )
          hb_gtEndWrite();
       }
    }
-   hb_strfree( hText );
+   hb_strfree(hText);
 
    hb_retc_null();
 }
@@ -270,34 +270,34 @@ HB_FUNC( CLEARSLOW )  /* TODO: Unicode support */
 {
    int iMaxRow = hb_gtMaxRow();
    int iMaxCol = hb_gtMaxCol();
-   long lDelay = hb_parnl( 1 );
-   int iTop    = hb_parni( 2 );
-   int iLeft   = hb_parni( 3 );
-   int iBottom = hb_parnidef( 4, iMaxRow );
-   int iRight  = hb_parnidef( 5, iMaxCol );
+   long lDelay = hb_parnl(1);
+   int iTop    = hb_parni(2);
+   int iLeft   = hb_parni(3);
+   int iBottom = hb_parnidef(4, iMaxRow);
+   int iRight  = hb_parnidef(5, iMaxCol);
    HB_UCHAR ucChar;
 
-   if( HB_ISNUM( 6 ) )
+   if( HB_ISNUM(6) )
    {
-      ucChar = static_cast< HB_UCHAR >( hb_parni( 6 ) );
+      ucChar = static_cast<HB_UCHAR>(hb_parni(6));
    }
-   else if( HB_ISCHAR( 6 ) )
+   else if( HB_ISCHAR(6) )
    {
-      ucChar = static_cast< HB_UCHAR >( hb_parc( 6 )[ 0 ] );
+      ucChar = static_cast<HB_UCHAR>(hb_parc(6)[0]);
    }
    else
    {
-      ucChar = static_cast< HB_UCHAR >( hb_gtGetClearChar() );
+      ucChar = static_cast<HB_UCHAR>(hb_gtGetClearChar());
    }
 
    if( iTop >= 0 && iLeft >= 0 && iTop <= iBottom && iLeft <= iRight )
    {
-      char pszFrame[ 2 ];
+      char pszFrame[2];
       int iColor = hb_gtGetCurrColor();
       double dX, dY, dXX, dYY;
 
-      pszFrame[ 0 ] = static_cast< char >( ucChar );
-      pszFrame[ 1 ] = '\0';
+      pszFrame[0] = static_cast<char>(ucChar);
+      pszFrame[1] = '\0';
 
       dX = iRight - iLeft + 1;
       dY = iBottom - iTop + 1;
@@ -320,7 +320,7 @@ HB_FUNC( CLEARSLOW )  /* TODO: Unicode support */
          if( lDelay )
          {
             hb_gtEndWrite();
-            hb_idleSleep( static_cast< double >( lDelay ) / 1000 );
+            hb_idleSleep( static_cast<double>(lDelay) / 1000 );
             hb_gtBeginWrite();
          }
 
@@ -366,17 +366,17 @@ HB_FUNC( SCREENSTR )  /* TODO: Unicode support */
    HB_SIZE nCount = HB_SIZE_MAX;
 
    hb_gtGetPos( &iRow, &iCol );
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
-      iRow = hb_parni( 1 );
+      iRow = hb_parni(1);
    }
-   if( HB_ISNUM( 2 ) )
+   if( HB_ISNUM(2) )
    {
-      iCol = hb_parni( 2 );
+      iCol = hb_parni(2);
    }
-   if( HB_ISNUM( 3 ) )
+   if( HB_ISNUM(3) )
    {
-      nCount = hb_parns( 3 );
+      nCount = hb_parns(3);
    }
    iMaxRow = hb_gtMaxRow();
    iMaxCol = hb_gtMaxCol();
@@ -384,14 +384,14 @@ HB_FUNC( SCREENSTR )  /* TODO: Unicode support */
    if( iRow >= 0 && iRow <= iMaxRow && iCol >= 0 && iCol <= iMaxCol && nCount )
    {
       char * szText;
-      HB_SIZE nSize = static_cast< HB_SIZE >( iMaxRow - iRow + 1 ) * ( iMaxCol - iCol + 1 );
+      HB_SIZE nSize = static_cast<HB_SIZE>(iMaxRow - iRow + 1) * (iMaxCol - iCol + 1);
       if( nSize > nCount )
       {
          nSize = nCount;
       }
       nCount = nSize;
       nSize <<= 1;
-      szText = pBuffer = static_cast< char * >( hb_xgrab( nSize + 1 ) );
+      szText = pBuffer = static_cast<char*>(hb_xgrab(nSize + 1));
       do
       {
          int iC = iCol;
@@ -401,8 +401,8 @@ HB_FUNC( SCREENSTR )  /* TODO: Unicode support */
             HB_BYTE bAttr;
             HB_USHORT usChar;
             hb_gtGetChar( iRow, iC, &iColor, &bAttr, &usChar );
-            *szText++ = static_cast< char >( usChar );
-            *szText++ = static_cast< char >( iColor );
+            *szText++ = static_cast<char>(usChar);
+            *szText++ = static_cast<char>(iColor);
          }
          while( --nCount && ++iC <= iMaxCol );
       }
@@ -418,7 +418,7 @@ HB_FUNC( SCREENSTR )  /* TODO: Unicode support */
 
 HB_FUNC( STRSCREEN )  /* TODO: Unicode support */
 {
-   HB_SIZE nLen = hb_parclen( 1 );
+   HB_SIZE nLen = hb_parclen(1);
 
    if( nLen & 1 )
    {
@@ -427,17 +427,17 @@ HB_FUNC( STRSCREEN )  /* TODO: Unicode support */
 
    if( nLen )
    {
-      const char * szText = hb_parc( 1 );
+      const char * szText = hb_parc(1);
       int iRow, iCol, iMaxRow, iMaxCol;
 
       hb_gtGetPos( &iRow, &iCol );
-      if( HB_ISNUM( 2 ) )
+      if( HB_ISNUM(2) )
       {
-         iRow = hb_parni( 2 );
+         iRow = hb_parni(2);
       }
-      if( HB_ISNUM( 3 ) )
+      if( HB_ISNUM(3) )
       {
-         iCol = hb_parni( 3 );
+         iCol = hb_parni(3);
       }
       iMaxRow = hb_gtMaxRow();
       iMaxCol = hb_gtMaxCol();
@@ -450,8 +450,8 @@ HB_FUNC( STRSCREEN )  /* TODO: Unicode support */
             int iC = iCol;
             do
             {
-               HB_USHORT usChar = static_cast< HB_UCHAR >( *szText++ );
-               int iColor = static_cast< HB_UCHAR >( *szText++ );
+               HB_USHORT usChar = static_cast<HB_UCHAR>(*szText++);
+               int iColor = static_cast<HB_UCHAR>(*szText++);
                hb_gtPutChar( iRow, iC, iColor, 0, usChar );
                nLen -= 2;
             }
@@ -469,17 +469,17 @@ HB_FUNC( __HBCT_DSPTIME )  /* Helper function for ShowTime() */
 {
    int iRow, iCol;
    int iColor, iLen;
-   char szTime[ 10 ];
+   char szTime[10];
 
-   iRow = hb_parni( 1 );
-   iCol = hb_parni( 2 );
-   if( HB_ISNUM( 4 ) )
+   iRow = hb_parni(1);
+   iCol = hb_parni(2);
+   if( HB_ISNUM(4) )
    {
-      iColor = hb_parni( 4 );
+      iColor = hb_parni(4);
    }
-   else if( HB_ISCHAR( 4 ) )
+   else if( HB_ISCHAR(4) )
    {
-      iColor = hb_gtColorToN( hb_parc( 4 ) );
+      iColor = hb_gtColorToN( hb_parc(4) );
       if( iColor == -1 )
       {
          iColor = 0;
@@ -493,18 +493,18 @@ HB_FUNC( __HBCT_DSPTIME )  /* Helper function for ShowTime() */
    hb_dateTimeStr( szTime );
    iLen = 8;
 
-   if( hb_parl( 3 ) )
+   if( hb_parl(3) )
    {
       iLen -= 3;
    }
 
-   if( hb_parl( 5 ) )
+   if( hb_parl(5) )
    {
-      int iHour = ( szTime[ 0 ] - '0' ) * 10 + ( szTime[ 1 ] - '0' );
+      int iHour = ( szTime[0] - '0' ) * 10 + ( szTime[1] - '0' );
 
-      if( hb_parl( 6 ) )
+      if( hb_parl(6) )
       {
-         szTime[ iLen++ ] = iHour >= 12 ? 'p' : 'a';
+         szTime[iLen++] = iHour >= 12 ? 'p' : 'a';
       }
       if( iHour > 12 )
       {
@@ -514,13 +514,13 @@ HB_FUNC( __HBCT_DSPTIME )  /* Helper function for ShowTime() */
       {
          iHour = 12;
       }
-      szTime[ 0 ] = static_cast< char >( iHour / 10 ) + '0';
-      szTime[ 1 ] = static_cast< char >( iHour % 10 ) + '0';
+      szTime[0] = static_cast<char>(iHour / 10) + '0';
+      szTime[1] = static_cast<char>(iHour % 10) + '0';
    }
 
-   if( szTime[ 0 ] == '0' )
+   if( szTime[0] == '0' )
    {
-      szTime[ 0 ] = ' ';
+      szTime[0] = ' ';
    }
 
    hb_gtPutText( iRow, iCol, szTime, iLen, iColor );

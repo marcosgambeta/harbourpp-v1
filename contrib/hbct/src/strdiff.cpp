@@ -63,7 +63,7 @@ static int min3( int a, int b, int c )
 HB_FUNC( STRDIFF )
 {
    /* param check */
-   if( HB_ISCHAR( 1 ) || HB_ISCHAR( 2 ) )
+   if( HB_ISCHAR(1) || HB_ISCHAR(2) )
    {
       /* get parameters */
       const char * pcStr1, * pcStr2;
@@ -74,10 +74,10 @@ HB_FUNC( STRDIFF )
       int *        piPenalty;
       HB_SIZE      sRowCnt, sColCnt;
 
-      if( HB_ISCHAR( 1 ) )
+      if( HB_ISCHAR(1) )
       {
-         pcStr1   = hb_parc( 1 );
-         sStrLen1 = hb_parclen( 1 );
+         pcStr1   = hb_parc(1);
+         sStrLen1 = hb_parclen(1);
       }
       else
       {
@@ -85,10 +85,10 @@ HB_FUNC( STRDIFF )
          sStrLen1 = 0;
       }
 
-      if( HB_ISCHAR( 2 ) )
+      if( HB_ISCHAR(2) )
       {
-         pcStr2   = hb_parc( 2 );
-         sStrLen2 = hb_parclen( 2 );
+         pcStr2   = hb_parc(2);
+         sStrLen2 = hb_parclen(2);
       }
       else
       {
@@ -97,33 +97,32 @@ HB_FUNC( STRDIFF )
       }
 
       /* check for memory consumption */
-      if( ( static_cast< double >( sStrLen1 ) + 1.0 ) *
-          ( static_cast< double >( sStrLen2 ) + 1.0 ) *
-          ( static_cast< double >( sizeof( int ) ) ) >= static_cast< double >( UINT_MAX ) )
+      if( ( static_cast<double>(sStrLen1) + 1.0 ) *
+          ( static_cast<double>(sStrLen2) + 1.0 ) *
+          ( static_cast<double>(sizeof(int)) ) >= static_cast<double>(UINT_MAX) )
       {
          int iArgErrorMode = ct_getargerrormode();
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
          {
-            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_STRDIFF, nullptr,
-                      HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+            ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_STRDIFF, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
          }
 
-         hb_retni( -1 );
+         hb_retni(-1);
          return;
       }
 
       /* get penalty points */
-      iReplace = hb_parnidef( 3, 3 );
-      iDelete = hb_parnidef( 4, 6 );
-      iInsert = hb_parnidef( 5, 1 );
+      iReplace = hb_parnidef(3, 3);
+      iDelete = hb_parnidef(4, 6);
+      iInsert = hb_parnidef(5, 1);
 
-      piPenalty = static_cast< int * >( hb_xgrab( ( sStrLen1 + 1 ) * ( sStrLen2 + 1 ) * sizeof( int ) ) );
+      piPenalty = static_cast<int*>(hb_xgrab((sStrLen1 + 1) * (sStrLen2 + 1) * sizeof(int)));
 
-      MATRIXELEMENT( 0, 0 ) = 0;
+      MATRIXELEMENT(0, 0) = 0;
       for( sColCnt = 0; sColCnt <= sStrLen2 - 1; sColCnt++ )
       {
-         MATRIXELEMENT( 0, sColCnt + 1 ) = MATRIXELEMENT( 0, sColCnt ) + iInsert;
+         MATRIXELEMENT(0, sColCnt + 1) = MATRIXELEMENT(0, sColCnt) + iInsert;
       }
 
       for( sRowCnt = 0; sRowCnt <= sStrLen1 - 1; sRowCnt++ )
@@ -133,8 +132,8 @@ HB_FUNC( STRDIFF )
          {
             int iReplaceCost;
 
-            if( pcStr1[ sRowCnt ] == pcStr2[ sColCnt ] || ( iAtLike == CT_SETATLIKE_WILDCARD &&
-                  ( pcStr1[ sRowCnt ] == cAtLike || pcStr2[ sColCnt ] == cAtLike ) ) )
+            if( pcStr1[sRowCnt] == pcStr2[sColCnt] || ( iAtLike == CT_SETATLIKE_WILDCARD &&
+                  ( pcStr1[sRowCnt] == cAtLike || pcStr2[sColCnt] == cAtLike ) ) )
             {
                iReplaceCost = 0;
             }
@@ -150,8 +149,8 @@ HB_FUNC( STRDIFF )
          }
       }
 
-      hb_retni( MATRIXELEMENT( sStrLen1, sStrLen2 ) );
-      hb_xfree( piPenalty );
+      hb_retni(MATRIXELEMENT(sStrLen1, sStrLen2));
+      hb_xfree(piPenalty);
    }
    else
    {
@@ -160,18 +159,16 @@ HB_FUNC( STRDIFF )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_STRDIFF, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_STRDIFF, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {
-         hb_retni( 0 );
+         hb_retni(0);
       }
    }
 }

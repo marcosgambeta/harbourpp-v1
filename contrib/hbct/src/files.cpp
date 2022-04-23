@@ -59,7 +59,7 @@
 #include "hb_io.h"
 #include "ctdisk.ch"
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
 #  include <sys/types.h>
 #  include <utime.h>
 #  include <unistd.h>
@@ -76,7 +76,7 @@ using PHB_FFDATA = HB_FFDATA *;
 
 static void hb_fileFindRelease( void * cargo )
 {
-   PHB_FFDATA pFFData = static_cast< PHB_FFDATA >( cargo );
+   PHB_FFDATA pFFData = static_cast<PHB_FFDATA>(cargo);
 
    if( pFFData->ffind )
    {
@@ -84,9 +84,9 @@ static void hb_fileFindRelease( void * cargo )
    }
 }
 
-static HB_TSD_NEW( s_FFData, sizeof( HB_FFDATA ), nullptr, hb_fileFindRelease );
+static HB_TSD_NEW( s_FFData, sizeof(HB_FFDATA), nullptr, hb_fileFindRelease );
 
-#define HB_GET_FFDATA()  ( static_cast< PHB_FFDATA >( hb_stackGetTSD( &s_FFData ) ) )
+#define HB_GET_FFDATA()  (static_cast<PHB_FFDATA>(hb_stackGetTSD(&s_FFData)))
 
 /* limit attributes to DOS ones for code portability */
 #define HB_FF_ATTR( ff ) ( ( ff )->attr & 0xFF )
@@ -97,7 +97,7 @@ static PHB_FFIND _hb_fileStart( HB_BOOL fNext, HB_BOOL fAny )
 
    if( hb_pcount() > 0 )
    {
-      const char * szFile = hb_parc( 1 );
+      const char * szFile = hb_parc(1);
 
       if( pFFData->ffind )
       {
@@ -109,12 +109,12 @@ static PHB_FFIND _hb_fileStart( HB_BOOL fNext, HB_BOOL fAny )
       {
          HB_FATTR ulAttr;
 
-         ulAttr = static_cast< HB_FATTR >( hb_parnldef( 2, fAny ? HB_FA_ANY : HB_FA_ALL ) );
-         pFFData->ulAttr = hb_parl( 3 ) ? ulAttr : 0;
+         ulAttr = static_cast<HB_FATTR>(hb_parnldef(2, fAny ? HB_FA_ANY : HB_FA_ALL));
+         pFFData->ulAttr = hb_parl(3) ? ulAttr : 0;
          pFFData->ffind  = hb_fsFindFirst( szFile, ulAttr );
          while( pFFData->ffind && pFFData->ulAttr && HB_FF_ATTR( pFFData->ffind ) != pFFData->ulAttr )
          {
-            if( ! hb_fsFindNext( pFFData->ffind ) )
+            if( !hb_fsFindNext( pFFData->ffind ) )
             {
                hb_fsFindClose( pFFData->ffind );
                pFFData->ffind = nullptr;
@@ -126,7 +126,7 @@ static PHB_FFIND _hb_fileStart( HB_BOOL fNext, HB_BOOL fAny )
    {
       do
       {
-         if( ! hb_fsFindNext( pFFData->ffind ) )
+         if( !hb_fsFindNext( pFFData->ffind ) )
          {
             hb_fsFindClose( pFFData->ffind );
             pFFData->ffind = nullptr;
@@ -141,44 +141,44 @@ static PHB_FFIND _hb_fileStart( HB_BOOL fNext, HB_BOOL fAny )
 
 HB_FUNC( FILESEEK )
 {
-   PHB_FFIND ffind = _hb_fileStart( HB_TRUE, HB_FALSE );
+   PHB_FFIND ffind = _hb_fileStart( true, false );
 
-   hb_retc( ffind ? ffind->szName : nullptr );
+   hb_retc(ffind ? ffind->szName : nullptr);
 }
 
 HB_FUNC( FILEATTR )
 {
-   PHB_FFIND ffind = _hb_fileStart( HB_FALSE, HB_TRUE );
+   PHB_FFIND ffind = _hb_fileStart( false, true );
 
-   hb_retni( ffind ? HB_FF_ATTR( ffind ) : 0 );
+   hb_retni(ffind ? HB_FF_ATTR(ffind) : 0);
 }
 
 HB_FUNC( FILESIZE )
 {
-   PHB_FFIND ffind = _hb_fileStart( HB_FALSE, HB_FALSE );
+   PHB_FFIND ffind = _hb_fileStart( false, false );
 
-   hb_retnint( ffind ? ffind->size : -1 );
+   hb_retnint(ffind ? ffind->size : -1);
 }
 
 HB_FUNC( FILEDATE )
 {
-   PHB_FFIND ffind = _hb_fileStart( HB_FALSE, HB_FALSE );
+   PHB_FFIND ffind = _hb_fileStart( false, false );
 
    hb_retdl( ffind ? ffind->lDate : 0 );
 }
 
 HB_FUNC( FILETIME )
 {
-   PHB_FFIND ffind = _hb_fileStart( HB_FALSE, HB_FALSE );
+   PHB_FFIND ffind = _hb_fileStart( false, false );
 
-   hb_retc( ffind ? ffind->szTime : nullptr );
+   hb_retc(ffind ? ffind->szTime : nullptr);
 }
 
 HB_FUNC( SETFATTR )
 {
    int iResult;
 
-   if( hb_fsSetAttr( hb_parcx( 1 ), hb_parnldef( 2, HB_FA_ARCHIVE ) ) )
+   if( hb_fsSetAttr( hb_parcx(1), hb_parnldef(2, HB_FA_ARCHIVE) ) )
    {
       iResult = 0;
    }
@@ -187,19 +187,19 @@ HB_FUNC( SETFATTR )
       iResult = -1;
    }
 
-   hb_retni( iResult );
+   hb_retni(iResult);
 }
 
 HB_FUNC( SETFDATI )
 {
-   const char * szFile = hb_parc( 1 );
+   const char * szFile = hb_parc(1);
    HB_BOOL fResult = HB_FALSE;
 
    if( szFile && *szFile )
    {
       long lJulian, lMillisec;
 
-      if( HB_ISTIMESTAMP( 1 ) )
+      if( HB_ISTIMESTAMP(1) )
       {
          hb_partdt( &lJulian, &lMillisec, 1 );
       }
@@ -207,21 +207,21 @@ HB_FUNC( SETFDATI )
       {
          PHB_ITEM pDate, pTime;
 
-         pDate = hb_param( 2, HB_IT_DATE );
+         pDate = hb_param(2, Harbour::Item::DATE);
          if( pDate )
          {
-            pTime = hb_param( 3, HB_IT_STRING );
+            pTime = hb_param(3, Harbour::Item::STRING);
          }
          else
          {
-            pTime = hb_param( 2, HB_IT_STRING );
-            pDate = hb_param( 3, HB_IT_DATE );
+            pTime = hb_param(2, Harbour::Item::STRING);
+            pDate = hb_param(3, Harbour::Item::DATE);
          }
          lJulian = pDate ? hb_itemGetDL( pDate ) : -1;
          if( pTime )
          {
             int hour = 0, minute = 0, second = 0, msec = 0;
-            hb_timeStrGet( hb_itemGetCPtr( pTime ), &hour, &minute, &second, &msec );
+            hb_timeStrGet( hb_itemGetCPtr(pTime), &hour, &minute, &second, &msec );
             lMillisec = hb_timeEncode( hour, minute, second, msec );
          }
          else
@@ -232,17 +232,17 @@ HB_FUNC( SETFDATI )
       fResult = hb_fsSetFileTime( szFile, lJulian, lMillisec );
    }
 
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 HB_FUNC( FILEDELETE )
 {
-   const char * pszDirSpec = hb_parc( 1 );
+   const char * pszDirSpec = hb_parc(1);
    HB_BOOL fResult = HB_FALSE;
 
    if( pszDirSpec )
    {
-      HB_FATTR nAttr = hb_parnldef( 2, HB_FA_ALL );
+      HB_FATTR nAttr = hb_parnldef(2, HB_FA_ALL);
       PHB_FFIND ffind;
 
       /* In CT3 this function does not remove directories */
@@ -257,7 +257,7 @@ HB_FUNC( FILEDELETE )
 
          do
          {
-            char szPath[ HB_PATH_MAX ];
+            char szPath[HB_PATH_MAX];
 
             pFilepath->szName = ffind->szName;
             hb_fsFNameMerge( szPath, pFilepath );
@@ -280,31 +280,31 @@ HB_FUNC( FILEDELETE )
          }
          while( hb_fsFindNext( ffind ) );
 
-         hb_xfree( pFilepath );
+         hb_xfree(pFilepath);
          hb_fsFindClose( ffind );
       }
    }
 
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
 HB_FUNC( FILEMOVE )
 {
-   hb_retnint( hb_fsRename( hb_parcx( 1 ), hb_parcx( 2 ) ) ? 0 : -static_cast< HB_MAXINT >( hb_fsOsError() ) );
+   hb_retnint(hb_fsRename(hb_parcx(1), hb_parcx(2)) ? 0 : -static_cast<HB_MAXINT>(hb_fsOsError()));
 }
 
 HB_FUNC_TRANSLATE( RENAMEFILE, FILEMOVE )
 
 HB_FUNC( DELETEFILE )
 {
-   hb_retnint( hb_fsDelete( hb_parcx( 1 ) ) ? 0 : -static_cast< HB_MAXINT >( hb_fsOsError() ) );
+   hb_retnint(hb_fsDelete(hb_parcx(1)) ? 0 : -static_cast<HB_MAXINT>(hb_fsOsError()));
 }
 
 HB_FUNC( FILESMAX )
 {
-#if defined( _SC_OPEN_MAX )
-   hb_retnl( sysconf( _SC_OPEN_MAX ) );
+#if defined(_SC_OPEN_MAX)
+   hb_retnl(sysconf(_SC_OPEN_MAX));
 #else
-   hb_retni( -1 );
+   hb_retni(-1);
 #endif
 }

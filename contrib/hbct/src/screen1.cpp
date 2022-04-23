@@ -58,13 +58,13 @@ HB_FUNC( SCREENATTR )
    HB_USHORT usChar;
 
    hb_gtGetPos( &iRow, &iCol );
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
-      iRow = hb_parni( 1 );
+      iRow = hb_parni(1);
    }
-   if( HB_ISNUM( 2 ) )
+   if( HB_ISNUM(2) )
    {
-      iCol = hb_parni( 2 );
+      iCol = hb_parni(2);
    }
 
    if( hb_gtGetChar( iRow, iCol, &iColor, &bAttr, &usChar ) != HB_SUCCESS )
@@ -72,18 +72,18 @@ HB_FUNC( SCREENATTR )
       iColor = 0;
    }
 
-   hb_retni( iColor );
+   hb_retni(iColor);
 }
 
 HB_FUNC( SCREENMIX )
 {
-   HB_SIZE nLen = hb_parclen( 1 );
+   HB_SIZE nLen = hb_parclen(1);
 
    if( nLen )
    {
-      const char * szText = hb_parc( 1 );
+      const char * szText = hb_parc(1);
       const char * szAttr;
-      HB_SIZE nAttr = hb_parclen( 2 );
+      HB_SIZE nAttr = hb_parclen(2);
       int iRow, iCol;
 
       if( nAttr == 0 )
@@ -93,17 +93,17 @@ HB_FUNC( SCREENMIX )
       }
       else
       {
-         szAttr = hb_parc( 2 );
+         szAttr = hb_parc(2);
       }
 
       hb_gtGetPos( &iRow, &iCol );
-      if( HB_ISNUM( 3 ) )
+      if( HB_ISNUM(3) )
       {
-         iRow = hb_parni( 3 );
+         iRow = hb_parni(3);
       }
-      if( HB_ISNUM( 4 ) )
+      if( HB_ISNUM(4) )
       {
-         iCol = hb_parni( 4 );
+         iCol = hb_parni(4);
       }
 
       if( iRow >= 0 && iCol >= 0 && iRow <= hb_gtMaxRow() && iCol <= hb_gtMaxCol() )
@@ -130,7 +130,7 @@ HB_FUNC( SCREENMIX )
             }
             else if( HB_CDPCHAR_GET( cdp, szText, nLen, &nIndex, &wc ) )
             {
-               hb_gtPutChar( iRow, i++, static_cast< HB_UCHAR >( szAttr[ ul ] ), 0, wc );
+               hb_gtPutChar( iRow, i++, static_cast<HB_UCHAR>(szAttr[ul]), 0, wc );
             }
             else
             {
@@ -150,21 +150,21 @@ HB_FUNC( SCREENMIX )
 
 HB_FUNC( SAYSCREEN )
 {
-   HB_SIZE nLen = hb_parclen( 1 );
+   HB_SIZE nLen = hb_parclen(1);
 
    if( nLen )
    {
-      const char * szText = hb_parc( 1 );
+      const char * szText = hb_parc(1);
       int iRow, iCol;
 
       hb_gtGetPos( &iRow, &iCol );
-      if( HB_ISNUM( 2 ) )
+      if( HB_ISNUM(2) )
       {
-         iRow = hb_parni( 2 );
+         iRow = hb_parni(2);
       }
-      if( HB_ISNUM( 3 ) )
+      if( HB_ISNUM(3) )
       {
-         iCol = hb_parni( 3 );
+         iCol = hb_parni(3);
       }
 
       if( iRow >= 0 && iCol >= 0 && iRow <= hb_gtMaxRow() && iCol <= hb_gtMaxCol() )
@@ -212,17 +212,17 @@ static HB_BOOL hb_ctGetWinCord( int * piTop, int * piLeft, int * piBottom, int *
 
    hb_gtGetPos( piTop, piLeft );
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
-      *piTop = hb_parni( 1 );
+      *piTop = hb_parni(1);
    }
-   if( HB_ISNUM( 2 ) )
+   if( HB_ISNUM(2) )
    {
-      *piLeft   = hb_parni( 2 );
+      *piLeft   = hb_parni(2);
    }
-   if( HB_ISNUM( 3 ) )
+   if( HB_ISNUM(3) )
    {
-      *piBottom = hb_parni( 3 );
+      *piBottom = hb_parni(3);
       if( *piBottom > iMaxRow )
       {
          *piBottom = iMaxRow;
@@ -232,9 +232,9 @@ static HB_BOOL hb_ctGetWinCord( int * piTop, int * piLeft, int * piBottom, int *
    {
       *piBottom = iMaxRow;
    }
-   if( HB_ISNUM( 4 ) )
+   if( HB_ISNUM(4) )
    {
-      *piRight = hb_parni( 4 );
+      *piRight = hb_parni(4);
       if( *piRight > iMaxCol )
       {
          *piRight = iMaxCol;
@@ -254,15 +254,15 @@ static int hb_ctGetClearChar( int iParam )
 
    if( HB_ISNUM( iParam ) )
    {
-      iChar = hb_parni( iParam );
+      iChar = hb_parni(iParam);
    }
    else if( HB_ISCHAR( iParam ) )
    {
-      iChar = static_cast< HB_UCHAR >( hb_parc( iParam )[ 0 ] );
+      iChar = static_cast<HB_UCHAR>(hb_parc(iParam)[0]);
    }
    else
    {
-      iChar = static_cast< int >( hb_gtGetClearChar() );
+      iChar = static_cast<int>(hb_gtGetClearChar());
    }
 
    return iChar;
@@ -274,11 +274,11 @@ static int hb_ctGetClearColor( int iParam )
 
    if( HB_ISNUM( iParam ) )
    {
-      iColor = hb_parni( iParam );
+      iColor = hb_parni(iParam);
    }
    else if( HB_ISCHAR( iParam ) )
    {
-      iColor = hb_gtColorToN( hb_parc( iParam ) );
+      iColor = hb_gtColorToN( hb_parc(iParam) );
       if( iColor == -1 )
       {
          iColor = 0;
@@ -300,8 +300,8 @@ HB_FUNC( CLEARWIN )
    {
       int iColor, iChar;
 
-      iColor = hb_ctGetClearColor( 5 );
-      iChar = hb_ctGetClearChar( 6 );
+      iColor = hb_ctGetClearColor(5);
+      iChar = hb_ctGetClearChar(6);
 
       hb_gtScrollEx( iTop, iLeft, iBottom, iRight, iColor, iChar, 0, 0 );
    }
@@ -346,28 +346,28 @@ HB_FUNC( UNTEXTWIN )
    {
       HB_USHORT usRepl, usInit, usEnd;
 
-      usRepl = static_cast< HB_USHORT >( hb_ctGetClearChar( 5 ) );
+      usRepl = static_cast<HB_USHORT>(hb_ctGetClearChar(5));
 
-      if( HB_ISNUM( 6 ) )
+      if( HB_ISNUM(6) )
       {
-         usInit = static_cast< HB_USHORT >( hb_parni( 6 ) );
+         usInit = static_cast<HB_USHORT>(hb_parni(6));
       }
-      else if( hb_parclen( 6 ) > 0 )
+      else if( hb_parclen(6) > 0 )
       {
-         usInit = static_cast< HB_UCHAR >( hb_parc( 6 )[ 0 ] );
+         usInit = static_cast<HB_UCHAR>(hb_parc(6)[0]);
       }
       else
       {
          usInit = 176;
       }
 
-      if( HB_ISNUM( 7 ) )
+      if( HB_ISNUM(7) )
       {
-         usEnd = static_cast< HB_USHORT >( hb_parni( 7 ) );
+         usEnd = static_cast<HB_USHORT>(hb_parni(7));
       }
-      else if( hb_parclen( 7 ) > 0 )
+      else if( hb_parclen(7) > 0 )
       {
-         usEnd = static_cast< HB_UCHAR >( hb_parc( 7 )[ 0 ] );
+         usEnd = static_cast<HB_UCHAR>(hb_parc(7)[0]);
       }
       else
       {
@@ -408,15 +408,15 @@ HB_FUNC( CHARWIN )
       HB_USHORT usNewChar, usOldChar = 0;
       HB_BOOL fAll = HB_FALSE;
 
-      usNewChar = static_cast< HB_USHORT >( hb_ctGetClearChar( 5 ) );
+      usNewChar = static_cast<HB_USHORT>(hb_ctGetClearChar(5));
 
-      if( HB_ISNUM( 6 ) )
+      if( HB_ISNUM(6) )
       {
-         usOldChar = static_cast< HB_USHORT >( hb_parni( 6 ) );
+         usOldChar = static_cast<HB_USHORT>(hb_parni(6));
       }
-      else if( hb_parclen( 6 ) > 0 )
+      else if( hb_parclen(6) > 0 )
       {
-         usOldChar = static_cast< HB_UCHAR >( hb_parc( 6 )[ 0 ] );
+         usOldChar = static_cast<HB_UCHAR>(hb_parc(6)[0]);
       }
       else
       {
@@ -457,11 +457,11 @@ HB_FUNC( COLORWIN )
       int iNewColor, iOldColor = 0;
       HB_BOOL fAll = HB_FALSE;
 
-      iNewColor = hb_ctGetClearColor( 5 );
+      iNewColor = hb_ctGetClearColor(5);
 
-      if( HB_ISNUM( 6 ) || HB_ISCHAR( 6 ) )
+      if( HB_ISNUM(6) || HB_ISCHAR(6) )
       {
-         iOldColor = hb_ctGetClearColor( 6 );
+         iOldColor = hb_ctGetClearColor(6);
       }
       else
       {
@@ -501,8 +501,8 @@ HB_FUNC( SCREENTEXT )  /* HB_EXTENSION */
    {
       char * pBuffer;
       char * szText;
-      HB_SIZE nSize = static_cast< HB_SIZE >( iBottom - iTop + 1 ) * ( iRight - iLeft + 1 );
-      szText = pBuffer = static_cast< char * >( hb_xgrab( nSize + 1 ) );
+      HB_SIZE nSize = static_cast<HB_SIZE>(iBottom - iTop + 1) * (iRight - iLeft + 1);
+      szText = pBuffer = static_cast<char*>(hb_xgrab(nSize + 1));
       while( iTop <= iBottom )
       {
          int iCol = iLeft;
@@ -512,7 +512,7 @@ HB_FUNC( SCREENTEXT )  /* HB_EXTENSION */
             HB_BYTE bAttr;
             HB_USHORT usChar;
             hb_gtGetChar( iTop, iCol, &iColor, &bAttr, &usChar );
-            *szText++ = static_cast< char >( usChar );
+            *szText++ = static_cast<char>(usChar);
             ++iCol;
          }
          ++iTop;
@@ -533,11 +533,11 @@ HB_FUNC( COLORREPL )
    int iNewColor, iOldColor = 0;
    HB_BOOL fAll = HB_FALSE;
 
-   iNewColor = hb_ctGetClearColor( 1 );
+   iNewColor = hb_ctGetClearColor(1);
 
-   if( HB_ISNUM( 2 ) || HB_ISCHAR( 2 ) )
+   if( HB_ISNUM(2) || HB_ISCHAR(2) )
    {
-      iOldColor = hb_ctGetClearColor( 2 );
+      iOldColor = hb_ctGetClearColor(2);
    }
    else
    {

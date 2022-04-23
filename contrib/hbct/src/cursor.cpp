@@ -57,18 +57,18 @@ HB_FUNC( SAVECURSOR )
 #ifdef HB_CLP_STRICT
    iCursor = ( iCursor != 0 );
 #endif
-   hb_retnl( static_cast< long >( iCol ) | ( iRow << 8 ) | ( iCursor << 16 ) );
+   hb_retnl(static_cast<long>(iCol) | (iRow << 8) | (iCursor << 16));
 }
 
 HB_FUNC( RESTCURSOR )
 {
-   long lCursor = hb_parnl( 1 );
+   long lCursor = hb_parnl(1);
 
-   hb_gtSetPos( static_cast< int >( ( lCursor >> 8 ) & 0xFF ), static_cast< int >( lCursor & 0xFF ) );
+   hb_gtSetPos( static_cast<int>((lCursor >> 8) & 0xFF), static_cast<int>(lCursor & 0xFF) );
 #ifdef HB_CLP_STRICT
-   hb_gtSetCursor( static_cast< int >( ( lCursor >> 16 ) & 0x01 ) );
+   hb_gtSetCursor( static_cast<int>((lCursor >> 16) & 0x01));
 #else
-   hb_gtSetCursor( static_cast< int >( ( lCursor >> 16 ) & 0xFF ) );
+   hb_gtSetCursor( static_cast<int>((lCursor >> 16) & 0xFF));
 #endif
 
    hb_retc_null();

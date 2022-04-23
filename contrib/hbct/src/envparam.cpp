@@ -46,22 +46,22 @@
 
 #include "hbapi.h"
 
-#if defined( HB_OS_UNIX ) && ! defined( HB_OS_IOS )
+#if defined(HB_OS_UNIX) && !defined(HB_OS_IOS)
 #  include <unistd.h>
-#  if defined( HB_OS_DARWIN )
+#  if defined(HB_OS_DARWIN)
 #     include <crt_externs.h>
 #     define environ  ( *_NSGetEnviron() )
 #  else
       extern char ** environ;
 #  endif
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
 #  include "hbwinuni.h"
 #  include <windows.h>
 #endif
 
 HB_FUNC( ENVPARAM )
 {
-#if ( defined( HB_OS_UNIX ) && ! defined( HB_OS_IOS ) )
+#if (defined(HB_OS_UNIX) && !defined(HB_OS_IOS))
    char * const * pEnviron = environ, * const * pEnv;
    char * pResult = nullptr, * pDst;
 
@@ -76,7 +76,7 @@ HB_FUNC( ENVPARAM )
 
       if( nSize > 0 )
       {
-         pResult = static_cast< char * >( hb_xgrab( ( nSize + 1 ) * sizeof( char ) ) );
+         pResult = static_cast<char*>(hb_xgrab((nSize + 1) * sizeof(char)));
          for( pEnv = pEnviron, pDst = pResult; *pEnv; pEnv++ )
          {
             HB_SIZE n = strlen( *pEnv );
@@ -97,7 +97,7 @@ HB_FUNC( ENVPARAM )
    {
       hb_retc_null();
    }
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
    LPTCH lpEnviron = GetEnvironmentStrings(), lpEnv;
    LPTSTR lpResult = nullptr;
    HB_SIZE nSize = 0;
@@ -116,7 +116,7 @@ HB_FUNC( ENVPARAM )
       {
          LPTSTR lpDst;
 
-         lpResult = static_cast< LPTSTR >( hb_xgrab( ( nSize + 1 ) * sizeof( TCHAR ) ) );
+         lpResult = static_cast<LPTSTR>(hb_xgrab((nSize + 1) * sizeof(TCHAR)));
          for( lpEnv = lpEnviron, lpDst = lpResult; *lpEnv; lpEnv++ )
          {
             do
@@ -135,7 +135,7 @@ HB_FUNC( ENVPARAM )
    if( lpResult )
    {
       HB_RETSTRLEN( lpResult, nSize );
-      hb_xfree( lpResult );
+      hb_xfree(lpResult);
    }
    else
    {

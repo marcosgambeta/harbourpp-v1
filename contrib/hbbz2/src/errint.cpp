@@ -58,5 +58,5 @@ extern HB_EXPORT void bz_internal_error( int errcode );
 
 void bz_internal_error( int errcode )
 {
-   hb_errInternal( static_cast< HB_ERRCODE >( errcode ), "libbzip2", nullptr, nullptr );
+   hb_errInternal( static_cast<HB_ERRCODE>(errcode), "libbzip2", nullptr, nullptr );
 }

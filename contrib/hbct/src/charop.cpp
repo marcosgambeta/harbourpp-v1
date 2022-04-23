@@ -56,13 +56,13 @@
 void ct_charop( int iMode )
 {
    /* suppressing return value ? */
-   int iNoRet = ct_getref() && HB_ISBYREF( 1 );
+   int iNoRet = ct_getref() && HB_ISBYREF(1);
 
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      HB_SIZE sStrLen = hb_parclen( 1 );
+      HB_SIZE sStrLen = hb_parclen(1);
       HB_SIZE sPos;
-      const unsigned char * pucString = reinterpret_cast< const unsigned char * >( hb_parc( 1 ) );
+      const unsigned char * pucString = reinterpret_cast< const unsigned char * >( hb_parc(1) );
       unsigned char * pucResult;
 
       if( sStrLen == 0 )
@@ -78,7 +78,7 @@ void ct_charop( int iMode )
          return;
       }
 
-      pucResult = static_cast< unsigned char * >( hb_xgrab( sStrLen + 1 ) );
+      pucResult = static_cast<unsigned char*>(hb_xgrab(sStrLen + 1));
 
       switch( iMode )
       {
@@ -86,14 +86,14 @@ void ct_charop( int iMode )
          case CT_CHAROP_CHARNOT:
             for( sPos = 0; sPos < sStrLen; ++sPos )
             {
-               pucResult[ sPos ] = ~pucString[ sPos ];
+               pucResult[sPos] = ~pucString[sPos];
             }
             break;
 
          /* SHL */
          case CT_CHAROP_CHARSHL:
          {
-            int iSHL = hb_parni( 2 ) % 8;   /* defaults to 0 */
+            int iSHL = hb_parni(2) % 8;   /* defaults to 0 */
 
             if( iSHL == 0 )
             {
@@ -103,7 +103,7 @@ void ct_charop( int iMode )
             {
                for( sPos = 0; sPos < sStrLen; ++sPos )
                {
-                  pucResult[ sPos ] = pucString[ sPos ] << iSHL;
+                  pucResult[sPos] = pucString[sPos] << iSHL;
                }
             }
             break;
@@ -112,7 +112,7 @@ void ct_charop( int iMode )
          /* SHR */
          case CT_CHAROP_CHARSHR:
          {
-            int iSHR = hb_parni( 2 ) % 8;   /* defaults to 0 */
+            int iSHR = hb_parni(2) % 8;   /* defaults to 0 */
 
             if( iSHR == 0 )
             {
@@ -122,7 +122,7 @@ void ct_charop( int iMode )
             {
                for( sPos = 0; sPos < sStrLen; ++sPos )
                {
-                  pucResult[ sPos ] = pucString[ sPos ] >> iSHR;
+                  pucResult[sPos] = pucString[sPos] >> iSHR;
                }
             }
             break;
@@ -131,7 +131,7 @@ void ct_charop( int iMode )
          /* RLL */
          case CT_CHAROP_CHARRLL:
          {
-            int iRLL = hb_parni( 2 ) % 8;   /* defaults to 0 */
+            int iRLL = hb_parni(2) % 8;   /* defaults to 0 */
 
             hb_xmemcpy( pucResult, pucString, sStrLen );
 
@@ -141,14 +141,14 @@ void ct_charop( int iMode )
                {
                   for( int iRLLCnt = 0; iRLLCnt < iRLL; iRLLCnt++ )
                   {
-                     if( pucResult[ sPos ] & 0x80 )  /* most left bit set -> roll over */
+                     if( pucResult[sPos] & 0x80 )  /* most left bit set -> roll over */
                      {
-                        pucResult[ sPos ] <<= 1;
-                        pucResult[ sPos ] |= 0x01;
+                        pucResult[sPos] <<= 1;
+                        pucResult[sPos] |= 0x01;
                      }
                      else
                      {
-                        pucResult[ sPos ] <<= 1;
+                        pucResult[sPos] <<= 1;
                      }
                   }
                }
@@ -159,7 +159,7 @@ void ct_charop( int iMode )
          /* RLR */
          case CT_CHAROP_CHARRLR:
          {
-            int iRLR = hb_parni( 2 ) % 8;   /* defaults to 0 */
+            int iRLR = hb_parni(2) % 8;   /* defaults to 0 */
 
             hb_xmemcpy( pucResult, pucString, sStrLen );
 
@@ -169,14 +169,14 @@ void ct_charop( int iMode )
                {
                   for( int iRLRCnt = 0; iRLRCnt < iRLR; iRLRCnt++ )
                   {
-                     if( pucResult[ sPos ] & 0x01 )  /* most right bit set -> roll over */
+                     if( pucResult[sPos] & 0x01 )  /* most right bit set -> roll over */
                      {
-                        pucResult[ sPos ] >>= 1;
-                        pucResult[ sPos ] |= 0x80;
+                        pucResult[sPos] >>= 1;
+                        pucResult[sPos] |= 0x80;
                      }
                      else
                      {
-                        pucResult[ sPos ] >>= 1;
+                        pucResult[sPos] >>= 1;
                      }
                   }
                }
@@ -187,14 +187,14 @@ void ct_charop( int iMode )
          /* ADD */
          case CT_CHAROP_CHARADD:
 
-            if( HB_ISCHAR( 2 ) )
+            if( HB_ISCHAR(2) )
             {
-               const char * pucString2 = hb_parc( 2 );
-               HB_SIZE sStrLen2 = hb_parclen( 2 );
+               const char * pucString2 = hb_parc(2);
+               HB_SIZE sStrLen2 = hb_parclen(2);
 
                for( sPos = 0; sPos < sStrLen; ++sPos )
                {
-                  pucResult[ sPos ] = static_cast< char >( pucString[ sPos ] + pucString2[ sStrLen2 ? ( sPos % sStrLen2 ) : 0 ] );
+                  pucResult[sPos] = static_cast<char>(pucString[sPos] + pucString2[sStrLen2 ? (sPos % sStrLen2) : 0]);
                }
             }
             else
@@ -203,9 +203,7 @@ void ct_charop( int iMode )
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
                {
-                  ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CHARADD,
-                            nullptr, HB_ERR_FUNCNAME, 0,
-                            EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+                  ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARADD, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
                }
 
                hb_xmemcpy( pucResult, pucString, sStrLen );
@@ -215,14 +213,14 @@ void ct_charop( int iMode )
          /* SUB */
          case CT_CHAROP_CHARSUB:
 
-            if( HB_ISCHAR( 2 ) )
+            if( HB_ISCHAR(2) )
             {
-               const char * pucString2 = hb_parc( 2 );
-               HB_SIZE sStrLen2 = hb_parclen( 2 );
+               const char * pucString2 = hb_parc(2);
+               HB_SIZE sStrLen2 = hb_parclen(2);
 
                for( sPos = 0; sPos < sStrLen; ++sPos )
                {
-                  pucResult[ sPos ] = static_cast< char >( pucString[ sPos ] - pucString2[ sStrLen2 ? ( sPos % sStrLen2 ) : 0 ] );
+                  pucResult[sPos] = static_cast<char>(pucString[sPos] - pucString2[sStrLen2 ? (sPos % sStrLen2) : 0]);
                }
             }
             else
@@ -231,9 +229,7 @@ void ct_charop( int iMode )
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
                {
-                  ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CHARSUB,
-                            nullptr, HB_ERR_FUNCNAME, 0,
-                            EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+                  ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSUB, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
                }
 
                hb_xmemcpy( pucResult, pucString, sStrLen );
@@ -243,14 +239,14 @@ void ct_charop( int iMode )
          /* AND */
          case CT_CHAROP_CHARAND:
 
-            if( HB_ISCHAR( 2 ) )
+            if( HB_ISCHAR(2) )
             {
-               const char * pucString2 = hb_parc( 2 );
-               HB_SIZE sStrLen2 = hb_parclen( 2 );
+               const char * pucString2 = hb_parc(2);
+               HB_SIZE sStrLen2 = hb_parclen(2);
 
                for( sPos = 0; sPos < sStrLen; ++sPos )
                {
-                  pucResult[ sPos ] = static_cast< char >( pucString[ sPos ] & pucString2[ sStrLen2 ? ( sPos % sStrLen2 ) : 0 ] );
+                  pucResult[sPos] = static_cast<char>(pucString[sPos] & pucString2[sStrLen2 ? (sPos % sStrLen2) : 0]);
                }
             }
             else
@@ -259,8 +255,7 @@ void ct_charop( int iMode )
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
                {
-                  ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CHARAND, nullptr, HB_ERR_FUNCNAME, 0,
-                            EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+                  ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARAND, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
                }
 
                hb_xmemcpy( pucResult, pucString, sStrLen );
@@ -270,14 +265,14 @@ void ct_charop( int iMode )
          /* OR */
          case CT_CHAROP_CHAROR:
 
-            if( HB_ISCHAR( 2 ) )
+            if( HB_ISCHAR(2) )
             {
-               const char * pucString2 = hb_parc( 2 );
-               HB_SIZE sStrLen2 = hb_parclen( 2 );
+               const char * pucString2 = hb_parc(2);
+               HB_SIZE sStrLen2 = hb_parclen(2);
 
                for( sPos = 0; sPos < sStrLen; ++sPos )
                {
-                  pucResult[ sPos ] = static_cast< char >( pucString[ sPos ] | pucString2[ sStrLen2 ? ( sPos % sStrLen2 ) : 0 ] );
+                  pucResult[sPos] = static_cast<char>(pucString[sPos] | pucString2[sStrLen2 ? (sPos % sStrLen2) : 0]);
                }
             }
             else
@@ -286,8 +281,7 @@ void ct_charop( int iMode )
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
                {
-                  ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CHAROR, nullptr, HB_ERR_FUNCNAME, 0,
-                            EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+                  ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHAROR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
                }
 
                hb_xmemcpy( pucResult, pucString, sStrLen );
@@ -297,14 +291,14 @@ void ct_charop( int iMode )
          /* XOR */
          case CT_CHAROP_CHARXOR:
 
-            if( HB_ISCHAR( 2 ) )
+            if( HB_ISCHAR(2) )
             {
-               const char * pucString2 = hb_parc( 2 );
-               HB_SIZE sStrLen2 = hb_parclen( 2 );
+               const char * pucString2 = hb_parc(2);
+               HB_SIZE sStrLen2 = hb_parclen(2);
 
                for( sPos = 0; sPos < sStrLen; ++sPos )
                {
-                  pucResult[ sPos ] = static_cast< char >( pucString[ sPos ] ^ pucString2[ sStrLen2 ? ( sPos % sStrLen2 ) : 0 ] );
+                  pucResult[sPos] = static_cast<char>(pucString[sPos] ^ pucString2[sStrLen2 ? (sPos % sStrLen2) : 0]);
                }
             }
             else
@@ -313,8 +307,7 @@ void ct_charop( int iMode )
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
                {
-                  ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CHARXOR, nullptr, HB_ERR_FUNCNAME, 0,
-                            EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+                  ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARXOR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
                }
 
                hb_xmemcpy( pucResult, pucString, sStrLen );
@@ -322,11 +315,11 @@ void ct_charop( int iMode )
             break;
       }
 
-      hb_storclen( reinterpret_cast< char * >( pucResult ), sStrLen, 1 );
+      hb_storclen(reinterpret_cast<char*>(pucResult), sStrLen, 1);
 
       if( iNoRet )
       {
-         hb_xfree( pucResult );
+         hb_xfree(pucResult);
       }
       else
       {
@@ -384,14 +377,12 @@ void ct_charop( int iMode )
                iError = CT_ERROR_CHARRLR;
                break;
          }
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, iError,
-                                  nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
-                                  HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, iError, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {

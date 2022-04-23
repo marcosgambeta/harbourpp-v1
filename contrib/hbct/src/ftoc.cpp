@@ -48,23 +48,23 @@
 
 HB_FUNC( FTOC )
 {
-   char buf[ sizeof( double ) ];
-   double d = hb_parnd( 1 );
+   char buf[sizeof(double)];
+   double d = hb_parnd(1);
 
    HB_PUT_LE_DOUBLE( buf, d );
-   hb_retclen( buf, sizeof( buf ) );
+   hb_retclen(buf, sizeof(buf));
 }
 
 HB_FUNC( CTOF )
 {
-   if( hb_parclen( 1 ) >= sizeof( double ) )
+   if( hb_parclen(1) >= sizeof(double) )
    {
-      const char * buf = hb_parc( 1 );
+      const char * buf = hb_parc(1);
 
-      hb_retnd( HB_GET_LE_DOUBLE( buf ) );
+      hb_retnd(HB_GET_LE_DOUBLE(buf));
    }
    else
    {
-      hb_retnd( 0.0 );
+      hb_retnd(0.0);
    }
 }

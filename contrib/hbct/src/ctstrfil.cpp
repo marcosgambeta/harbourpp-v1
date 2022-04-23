@@ -74,11 +74,11 @@ HB_FATTR ct_getfcreate( void )
 
 HB_FUNC( SETFCREATE )
 {
-   hb_retnl( ct_getfcreate() );
+   hb_retnl(ct_getfcreate());
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
-      ct_setfcreate( hb_parnl( 1 ) );
+      ct_setfcreate( hb_parnl(1) );
    }
 }
 
@@ -102,11 +102,11 @@ HB_BOOL ct_getsafety( void )
 
 HB_FUNC( CSETSAFETY )
 {
-   hb_retl( ct_getsafety() );
+   hb_retl(ct_getsafety());
 
-   if( HB_ISLOG( 1 ) )
+   if( HB_ISLOG(1) )
    {
-      ct_setsafety( hb_parl( 1 ) );
+      ct_setsafety( hb_parl(1) );
    }
 }
 
@@ -122,7 +122,7 @@ static HB_SIZE ct_StrFile( const char * pFileName, const char * pcStr, HB_SIZE n
       hFile = hb_fsOpen( pFileName, FO_READWRITE );
       bOpen = HB_TRUE;
    }
-   else if( ! bFile || ! ct_getsafety() )
+   else if( !bFile || !ct_getsafety() )
    {
       hFile = hb_fsCreate( pFileName, ct_getfcreate() );
    }
@@ -155,52 +155,52 @@ static HB_SIZE ct_StrFile( const char * pFileName, const char * pcStr, HB_SIZE n
 
 HB_FUNC( STRFILE )
 {
-   if( HB_ISCHAR( 1 ) && HB_ISCHAR( 2 ) )
+   if( HB_ISCHAR(1) && HB_ISCHAR(2) )
    {
-      hb_retns( ct_StrFile( hb_parc( 2 ), hb_parc( 1 ), hb_parclen( 1 ), hb_parl( 3 ), static_cast< HB_FOFFSET >( hb_parnint( 4 ) ), hb_parl( 5 ) ) );
+      hb_retns( ct_StrFile( hb_parc(2), hb_parc(1), hb_parclen(1), hb_parl(3), static_cast<HB_FOFFSET>(hb_parnint(4)), hb_parl(5) ) );
    }
    else
    {
-      hb_retns( 0 );
+      hb_retns(0);
    }
 }
 
 HB_FUNC( FILESTR )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      HB_FHANDLE hFile = hb_fsOpen( hb_parc( 1 ), FO_READ );
+      HB_FHANDLE hFile = hb_fsOpen( hb_parc(1), FO_READ );
 
       if( hFile != FS_ERROR )
       {
          HB_FOFFSET nFileSize = hb_fsSeekLarge( hFile, 0, FS_END );
-         HB_FOFFSET nPos = hb_fsSeekLarge( hFile, static_cast< HB_FOFFSET >( hb_parnint( 3 ) ), FS_SET );
+         HB_FOFFSET nPos = hb_fsSeekLarge( hFile, static_cast<HB_FOFFSET>(hb_parnint(3)), FS_SET );
          HB_ISIZ nLength;
          char * pcResult, * pCtrlZ;
-         HB_BOOL bCtrlZ = hb_parl( 4 );
+         HB_BOOL bCtrlZ = hb_parl(4);
 
-         if( HB_ISNUM( 2 ) )
+         if( HB_ISNUM(2) )
          {
-            nLength = hb_parns( 2 );
-            if( nLength > static_cast< HB_ISIZ >( nFileSize - nPos ) )
+            nLength = hb_parns(2);
+            if( nLength > static_cast<HB_ISIZ>(nFileSize - nPos) )
             {
-               nLength = static_cast< HB_ISIZ >( nFileSize - nPos );
+               nLength = static_cast<HB_ISIZ>(nFileSize - nPos);
             }
          }
          else
          {
-            nLength = static_cast< HB_ISIZ >( nFileSize - nPos );
+            nLength = static_cast<HB_ISIZ>(nFileSize - nPos);
          }
 
-         pcResult = static_cast< char * >( hb_xgrab( nLength + 1 ) );
+         pcResult = static_cast<char*>(hb_xgrab(nLength + 1));
          if( nLength > 0 )
          {
-            nLength = hb_fsReadLarge( hFile, pcResult, static_cast< HB_SIZE >( nLength ) );
+            nLength = hb_fsReadLarge( hFile, pcResult, static_cast<HB_SIZE>(nLength) );
          }
 
          if( bCtrlZ )
          {
-            pCtrlZ = static_cast< char * >( memchr( pcResult, 26, nLength ) );
+            pCtrlZ = static_cast<char*>(memchr(pcResult, 26, nLength));
             if( pCtrlZ )
             {
                nLength = pCtrlZ - pcResult;
@@ -223,30 +223,30 @@ HB_FUNC( FILESTR )
 
 HB_FUNC( SCREENFILE )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
       char * pBuffer;
       HB_SIZE nSize;
 
-      hb_gtRectSize( 0, 0, hb_gtMaxRow(), hb_gtMaxCol(), &nSize );
-      pBuffer = static_cast< char * >( hb_xgrab( nSize ) );
+      hb_gtRectSize(0, 0, hb_gtMaxRow(), hb_gtMaxCol(), &nSize);
+      pBuffer = static_cast<char*>(hb_xgrab(nSize));
 
-      hb_gtSave( 0, 0, hb_gtMaxRow(), hb_gtMaxCol(), pBuffer );
+      hb_gtSave(0, 0, hb_gtMaxRow(), hb_gtMaxCol(), pBuffer);
 
-      hb_retns( ct_StrFile( hb_parc( 1 ), pBuffer, nSize, hb_parl( 2 ), static_cast< HB_FOFFSET >( hb_parnint( 3 ) ), hb_parl( 4 ) ) );
-      hb_xfree( pBuffer );
+      hb_retns( ct_StrFile( hb_parc(1), pBuffer, nSize, hb_parl(2), static_cast<HB_FOFFSET>(hb_parnint(3)), hb_parl(4) ) );
+      hb_xfree(pBuffer);
    }
    else
    {
-      hb_retns( 0 );
+      hb_retns(0);
    }
 }
 
 HB_FUNC( FILESCREEN )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      HB_FHANDLE hFile = hb_fsOpen( hb_parc( 1 ), FO_READ );
+      HB_FHANDLE hFile = hb_fsOpen( hb_parc(1), FO_READ );
 
       if( hFile != FS_ERROR )
       {
@@ -254,29 +254,29 @@ HB_FUNC( FILESCREEN )
          HB_SIZE nSize;
          HB_SIZE nLength;
 
-         if( HB_ISNUM( 2 ) )
+         if( HB_ISNUM(2) )
          {
-            hb_fsSeekLarge( hFile, static_cast< HB_FOFFSET >( hb_parnint( 2 ) ), FS_SET );
+            hb_fsSeekLarge( hFile, static_cast<HB_FOFFSET>(hb_parnint(2)), FS_SET );
          }
 
-         hb_gtRectSize( 0, 0, hb_gtMaxRow(), hb_gtMaxCol(), &nSize );
-         pBuffer = static_cast< char * >( hb_xgrab( nSize ) );
+         hb_gtRectSize(0, 0, hb_gtMaxRow(), hb_gtMaxCol(), &nSize);
+         pBuffer = static_cast<char*>(hb_xgrab(nSize));
 
          nLength = hb_fsReadLarge( hFile, pBuffer, nSize );
-         hb_gtRest( 0, 0, hb_gtMaxRow(), hb_gtMaxCol(), pBuffer );
+         hb_gtRest(0, 0, hb_gtMaxRow(), hb_gtMaxCol(), pBuffer);
 
-         hb_xfree( pBuffer );
+         hb_xfree(pBuffer);
 
          hb_fsClose( hFile );
          hb_retns( nLength );
       }
       else
       {
-         hb_retns( 0 );
+         hb_retns(0);
       }
    }
    else
    {
-      hb_retns( 0 );
+      hb_retns(0);
    }
 }

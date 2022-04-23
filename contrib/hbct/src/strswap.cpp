@@ -52,24 +52,24 @@ HB_FUNC( STRSWAP )
    HB_SIZE sStrLen1, sStrLen2;
 
    /* param check */
-   if( ( sStrLen1 = hb_parclen( 1 ) ) > 0 && ( sStrLen2 = hb_parclen( 2 ) ) > 0 )
+   if( ( sStrLen1 = hb_parclen(1) ) > 0 && ( sStrLen2 = hb_parclen(2) ) > 0 )
    {
       /* get parameters */
-      const char * pcString1 = hb_parc( 1 );
-      const char * pcString2 = hb_parc( 2 );
+      const char * pcString1 = hb_parc(1);
+      const char * pcString2 = hb_parc(2);
       char * pcRet1 = nullptr, * pcRet2 = nullptr;
       int iChange1, iChange2;
       HB_SIZE sIndex, sCmpLen;
 
-      if( ( iChange1 = HB_ISBYREF( 1 ) ) != 0 )
+      if( ( iChange1 = HB_ISBYREF(1) ) != 0 )
       {
-         pcRet1 = static_cast< char * >( hb_xgrab( sStrLen1 ) );
+         pcRet1 = static_cast<char*>(hb_xgrab(sStrLen1));
          hb_xmemcpy( pcRet1, pcString1, sStrLen1 );
       }
 
-      if( ( iChange2 = HB_ISBYREF( 2 ) ) != 0 )
+      if( ( iChange2 = HB_ISBYREF(2) ) != 0 )
       {
-         pcRet2 = static_cast< char * >( hb_xgrab( sStrLen2 ) );
+         pcRet2 = static_cast<char*>(hb_xgrab(sStrLen2));
          hb_xmemcpy( pcRet2, pcString2, sStrLen2 );
       }
 
@@ -94,14 +94,14 @@ HB_FUNC( STRSWAP )
       /* strings */
       if( iChange1 )
       {
-         hb_storclen( pcRet1, sStrLen1, 1 );
-         hb_xfree( pcRet1 );
+         hb_storclen(pcRet1, sStrLen1, 1);
+         hb_xfree(pcRet1);
       }
 
       if( iChange2 )
       {
-         hb_storclen( pcRet2, sStrLen2, 2 );
-         hb_xfree( pcRet2 );
+         hb_storclen(pcRet2, sStrLen2, 2);
+         hb_xfree(pcRet2);
       }
 
       hb_retc_null();
@@ -113,14 +113,14 @@ HB_FUNC( STRSWAP )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
                                   CT_ERROR_STRSWAP, nullptr, HB_ERR_FUNCNAME, 0,
                                   EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {

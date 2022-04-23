@@ -58,13 +58,13 @@
 static void do_charswap( int iSwitch )
 {
    /* suppress return value ? */
-   int iNoRet = ct_getref() && HB_ISBYREF( 1 );
+   int iNoRet = ct_getref() && HB_ISBYREF(1);
 
    /* param check */
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
-      const char * pcString = hb_parc( 1 );
-      HB_SIZE sStrLen = hb_parclen( 1 );
+      const char * pcString = hb_parc(1);
+      HB_SIZE sStrLen = hb_parclen(1);
       char * pcRet;
       HB_SIZE sRetIndex = 0;
       int iShift, iMod;
@@ -86,7 +86,7 @@ static void do_charswap( int iSwitch )
       if( iSwitch == DO_CHARSWAP_WORDSWAP )
       {
          iShift = 4;
-         if( hb_parl( 2 ) )
+         if( hb_parl(2) )
          {
             iSwitch = DO_CHARSWAP_WORDSWAP_CHARSWAP;
          }
@@ -96,26 +96,26 @@ static void do_charswap( int iSwitch )
          iShift = 2;
       }
 
-      pcRet = static_cast< char * >( hb_xgrab( sStrLen ) );
+      pcRet = static_cast<char*>(hb_xgrab(sStrLen));
 
       for( pcSub = pcString; pcSub < pcString + sStrLen + 1 - iShift; pcSub += iShift )
       {
          switch( iSwitch )
          {
             case DO_CHARSWAP_WORDSWAP:
-               pcRet[ sRetIndex++ ] = pcSub[ 2 ];
-               pcRet[ sRetIndex++ ] = pcSub[ 3 ];
-               pcRet[ sRetIndex++ ] = pcSub[ 0 ];
-               pcRet[ sRetIndex++ ] = pcSub[ 1 ];
+               pcRet[sRetIndex++] = pcSub[2];
+               pcRet[sRetIndex++] = pcSub[3];
+               pcRet[sRetIndex++] = pcSub[0];
+               pcRet[sRetIndex++] = pcSub[1];
                break;
 
             case DO_CHARSWAP_WORDSWAP_CHARSWAP:
-               pcRet[ sRetIndex++ ] = pcSub[ 3 ];
-               pcRet[ sRetIndex++ ] = pcSub[ 2 ];
+               pcRet[sRetIndex++] = pcSub[3];
+               pcRet[sRetIndex++] = pcSub[2];
                /* fallthrough */
             case DO_CHARSWAP_CHARSWAP:
-               pcRet[ sRetIndex++ ] = pcSub[ 1 ];
-               pcRet[ sRetIndex++ ] = pcSub[ 0 ];
+               pcRet[sRetIndex++] = pcSub[1];
+               pcRet[sRetIndex++] = pcSub[0];
          }
       }
 
@@ -131,11 +131,11 @@ static void do_charswap( int iSwitch )
 
       for( pcSub = pcString + sStrLen - iMod; pcSub < pcString + sStrLen; pcSub++ )
       {
-         pcRet[ sRetIndex++ ] = *pcSub;
+         pcRet[sRetIndex++] = *pcSub;
       }
 
       /* return string */
-      hb_storclen( pcRet, sRetIndex, 1 );
+      hb_storclen(pcRet, sRetIndex, 1);
 
       if( iNoRet )
       {
@@ -143,9 +143,9 @@ static void do_charswap( int iSwitch )
       }
       else
       {
-         hb_retclen( pcRet, sRetIndex );
+         hb_retclen(pcRet, sRetIndex);
       }
-      hb_xfree( pcRet );
+      hb_xfree(pcRet);
    }
    else
    {
@@ -156,14 +156,14 @@ static void do_charswap( int iSwitch )
       {
          if( iSwitch == DO_CHARSWAP_CHARSWAP )
          {
-            pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
+            pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
                                      CT_ERROR_CHARSWAP,
                                      nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                      HB_ERR_ARGS_BASEPARAMS );
          }
          else
          {
-            pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
+            pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
                                      CT_ERROR_WORDSWAP,
                                      nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
                                      HB_ERR_ARGS_BASEPARAMS );
@@ -172,7 +172,7 @@ static void do_charswap( int iSwitch )
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else if( iNoRet )
       {

@@ -55,13 +55,13 @@
 
 HB_FUNC( CELSIUS )
 {
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
-      double dInput = hb_parnd( 1 );
+      double dInput = hb_parnd(1);
       double dResult;
 
-      dResult = ( 5.0 / 9.0 ) * ( dInput - 32.0 );
-      hb_retnd( dResult );
+      dResult = (5.0 / 9.0) * (dInput - 32.0);
+      hb_retnd(dResult);
    }
    else
    {
@@ -70,31 +70,29 @@ HB_FUNC( CELSIUS )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_CELSIUS, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CELSIUS, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {
-         hb_retnd( 0.0 );
+         hb_retnd(0.0);
       }
    }
 }
 
 HB_FUNC( FAHRENHEIT )
 {
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
-      double dInput = hb_parnd( 1 );
+      double dInput = hb_parnd(1);
       double dResult;
 
-      dResult = ( ( 9.0 / 5.0 ) * dInput ) + 32.0;
-      hb_retnd( dResult );
+      dResult = ((9.0 / 5.0) * dInput) + 32.0;
+      hb_retnd(dResult);
    }
    else
    {
@@ -103,30 +101,28 @@ HB_FUNC( FAHRENHEIT )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_FAHRENHEIT, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_FAHRENHEIT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else
       {
-         hb_retnd( 0.0 );
+         hb_retnd(0.0);
       }
    }
 }
 
 HB_FUNC( INFINITY )
 {
-   if( hb_parl( 1 ) )
+   if( hb_parl(1) )
    {
-      hb_retnd( DBL_MAX );
+      hb_retnd(DBL_MAX);
    }
    else
    {
-      hb_retnd( 93786976294838206460.00 );
+      hb_retnd(93786976294838206460.00);
    }
 }

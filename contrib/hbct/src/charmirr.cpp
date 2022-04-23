@@ -50,16 +50,16 @@
 HB_FUNC( CHARMIRR )
 {
    /* suppressing return value ? */
-   int iNoRet = ct_getref() && HB_ISBYREF( 1 );
+   int iNoRet = ct_getref() && HB_ISBYREF(1);
 
    /* param check */
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
 
-      const char * pcString = hb_parc( 1 ), * pc1;
-      HB_SIZE sStrLen = hb_parclen( 1 );
+      const char * pcString = hb_parc(1), * pc1;
+      HB_SIZE sStrLen = hb_parclen(1);
       char * pcRet, * pc2;
-      int iDontMirrorSpaces = hb_parldef( 2, 0 );
+      int iDontMirrorSpaces = hb_parldef(2, 0);
 
       if( sStrLen == 0 )
       {
@@ -67,8 +67,7 @@ HB_FUNC( CHARMIRR )
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
          {
-            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CHARMIRR, nullptr,
-                      HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+            ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARMIRR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
          }
 
          if( iNoRet )
@@ -82,7 +81,7 @@ HB_FUNC( CHARMIRR )
          return;
       }
 
-      pcRet = static_cast< char * >( hb_xgrab( sStrLen + 1 ) );
+      pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
 
       pc1 = pcString + sStrLen - 1;
       if( iDontMirrorSpaces )
@@ -104,12 +103,12 @@ HB_FUNC( CHARMIRR )
       }
 
       /* return string */
-      hb_storclen( pcRet, sStrLen, 1 );
+      hb_storclen(pcRet, sStrLen, 1);
 
       if( iNoRet )
       {
          hb_retl(false);
-         hb_xfree( pcRet );
+         hb_xfree(pcRet);
       }
       else
       {
@@ -123,14 +122,12 @@ HB_FUNC( CHARMIRR )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG,
-                                  CT_ERROR_CHARMIRR, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARMIRR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
       }
 
       if( pSubst != nullptr )
       {
-         hb_itemReturnRelease( pSubst );
+         hb_itemReturnRelease(pSubst);
       }
       else if( iNoRet )
       {

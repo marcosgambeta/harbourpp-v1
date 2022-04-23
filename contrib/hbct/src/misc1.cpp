@@ -48,35 +48,35 @@
 
 HB_FUNC( XTOC )
 {
-   PHB_ITEM pItem = hb_param( 1, HB_IT_ANY );
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem )
    {
-      if( HB_IS_DATE( pItem ) )
+      if( HB_IS_DATE(pItem) )
       {
-         char szDate[ 9 ];
-         hb_retc( hb_itemGetDS( pItem, szDate ) );
+         char szDate[9];
+         hb_retc(hb_itemGetDS(pItem, szDate));
       }
-      else if( HB_IS_TIMESTAMP( pItem ) )
+      else if( HB_IS_TIMESTAMP(pItem) )
       {
-         char szDateTime[ 18 ];
-         hb_retc( hb_itemGetTS( pItem, szDateTime ) );
+         char szDateTime[18];
+         hb_retc(hb_itemGetTS(pItem, szDateTime));
       }
-      else if( HB_IS_NUMERIC( pItem ) )
+      else if( HB_IS_NUMERIC(pItem) )
       {
-         char buf[ sizeof( double ) ];
-         double d = hb_parnd( 1 );
+         char buf[sizeof(double)];
+         double d = hb_parnd(1);
 
          HB_PUT_LE_DOUBLE( buf, d );
-         hb_retclen( buf, sizeof( buf ) );
+         hb_retclen(buf, sizeof(buf));
       }
-      else if( HB_IS_LOGICAL( pItem ) )
+      else if( HB_IS_LOGICAL(pItem) )
       {
-         hb_retclen( hb_itemGetL( pItem ) ? "T" : "F", 1 );
+         hb_retclen(hb_itemGetL(pItem) ? "T" : "F", 1);
       }
       else
       {
-         hb_itemReturn( pItem );
+         hb_itemReturn(pItem);
       }
    }
 }

@@ -52,51 +52,51 @@
 /* helper function for the list function */
 void ct_charlist( int iMode )
 {
-   const char * pcString = hb_parc( 1 );
-   HB_SIZE sStrLen = hb_parclen( 1 );
+   const char * pcString = hb_parc(1);
+   HB_SIZE sStrLen = hb_parclen(1);
    HB_SIZE sCnt;
 
    if( iMode == CT_CHARLIST_CHARHIST )
    {
-      HB_SIZE asCharCnt[ UCHAR_MAX ];
+      HB_SIZE asCharCnt[UCHAR_MAX];
       PHB_ITEM pArray = hb_itemArrayNew( HB_SIZEOFARRAY( asCharCnt ) );
 
       for( sCnt = 0; sCnt < HB_SIZEOFARRAY( asCharCnt ); ++sCnt )
       {
-         asCharCnt[ sCnt ] = 0;
+         asCharCnt[sCnt] = 0;
       }
 
       for( sCnt = 0; sCnt < sStrLen; ++sCnt )
       {
-         asCharCnt[ static_cast< HB_UCHAR >( pcString[ sCnt ] ) ]++;
+         asCharCnt[static_cast<HB_UCHAR>(pcString[sCnt])]++;
       }
 
       for( sCnt = 0; sCnt < HB_SIZEOFARRAY( asCharCnt ); ++sCnt )
       {
-         hb_arraySetNS( pArray, sCnt + 1, asCharCnt[ sCnt ] );
+         hb_arraySetNS( pArray, sCnt + 1, asCharCnt[sCnt] );
       }
 
-      hb_itemReturnRelease( pArray );
+      hb_itemReturnRelease(pArray);
    }
    else
    {
-      char acCharCnt[ UCHAR_MAX ];
+      char acCharCnt[UCHAR_MAX];
       HB_SIZE sRetStrLen = 0;
 
       if( iMode == CT_CHARLIST_CHARLIST )
       {
-         char acMark[ UCHAR_MAX ];
+         char acMark[UCHAR_MAX];
 
-         memset( acMark, 0, sizeof( acMark ) );
+         memset( acMark, 0, sizeof(acMark) );
 
          for( sCnt = 0; sCnt < sStrLen; ++sCnt )
          {
-            HB_UCHAR uc = static_cast< HB_UCHAR >( pcString[ sCnt ] );
+            HB_UCHAR uc = static_cast<HB_UCHAR>(pcString[sCnt]);
 
-            if( acMark[ uc ] == 0 )
+            if( acMark[uc] == 0 )
             {
-               acCharCnt[ sRetStrLen++ ] = uc;
-               acMark[ uc ] = 1;
+               acCharCnt[sRetStrLen++] = uc;
+               acMark[uc] = 1;
             }
          }
       }
@@ -106,18 +106,18 @@ void ct_charlist( int iMode )
 
          for( sCnt = 0; sCnt < sStrLen; ++sCnt )
          {
-            acCharCnt[ static_cast< HB_UCHAR >( pcString[ sCnt ] ) ] = 1;
+            acCharCnt[static_cast<HB_UCHAR>(pcString[sCnt])] = 1;
          }
 
          for( sCnt = 0; sCnt < HB_SIZEOFARRAY( acCharCnt ); ++sCnt )
          {
-            if( acCharCnt[ sCnt ] == cScan )
+            if( acCharCnt[sCnt] == cScan )
             {
-               acCharCnt[ sRetStrLen++ ] = static_cast< HB_UCHAR >( sCnt );
+               acCharCnt[sRetStrLen++] = static_cast<HB_UCHAR>(sCnt);
             }
          }
       }
-      hb_retclen( acCharCnt, sRetStrLen );
+      hb_retclen(acCharCnt, sRetStrLen);
    }
 }
 

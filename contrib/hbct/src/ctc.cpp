@@ -103,13 +103,13 @@ HB_USHORT ct_error( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errS
    if( pArray )
    {
       /* Assign the new array to the object data item. */
-      hb_vmPushSymbol( hb_dynsymGetSymbol( "_ARGS" ) );
-      hb_vmPush( pError );
-      hb_vmPush( pArray );
-      hb_vmSend( 1 );
+      hb_vmPushSymbol(hb_dynsymGetSymbol("_ARGS"));
+      hb_vmPush(pError);
+      hb_vmPush(pArray);
+      hb_vmSend(1);
 
       /* Release the Array. */
-      hb_itemRelease( pArray );
+      hb_itemRelease(pArray);
    }
 
    /* launch error codeblock */
@@ -174,13 +174,13 @@ PHB_ITEM ct_error_subst( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE
    if( pArray )
    {
       /* Assign the new array to the object data item. */
-      hb_vmPushSymbol( hb_dynsymGetSymbol( "_ARGS" ) );
-      hb_vmPush( pError );
-      hb_vmPush( pArray );
-      hb_vmSend( 1 );
+      hb_vmPushSymbol(hb_dynsymGetSymbol("_ARGS"));
+      hb_vmPush(pError);
+      hb_vmPush(pArray);
+      hb_vmSend(1);
 
       /* Release the Array. */
-      hb_itemRelease( pArray );
+      hb_itemRelease(pArray);
    }
 
    /* launch error codeblock */
@@ -213,11 +213,11 @@ int ct_getargerrormode( void )
 
 HB_FUNC( CSETARGERR )
 {
-   hb_retni( ct_getargerrormode() );
+   hb_retni(ct_getargerrormode());
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
-      int iNewMode = hb_parni( 1 );
+      int iNewMode = hb_parni(1);
 
       if( iNewMode == CT_ARGERR_WHOCARES ||
           iNewMode == CT_ARGERR_WARNING ||
@@ -225,7 +225,7 @@ HB_FUNC( CSETARGERR )
           iNewMode == CT_ARGERR_CATASTROPHIC ||
           iNewMode == CT_ARGERR_IGNORE )
       {
-         ct_setargerrormode( hb_parni( 1 ) );
+         ct_setargerrormode( hb_parni(1) );
       }
       else
       {
@@ -233,8 +233,7 @@ HB_FUNC( CSETARGERR )
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
          {
-            ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CSETARGERR,
-                      nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+            ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETARGERR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
          }
       }
    }
@@ -244,8 +243,7 @@ HB_FUNC( CSETARGERR )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         ct_error( static_cast< HB_USHORT >( iArgErrorMode ), EG_ARG, CT_ERROR_CSETARGERR, nullptr,
-                   HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+         ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETARGERR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
       }
    }
 }
@@ -263,7 +261,7 @@ HB_FUNC( CTCINIT )
       iSuccess |= ct_math_init();
       s_initialized = iSuccess;
    }
-   hb_retl( s_initialized );
+   hb_retl(s_initialized);
 }
 
 HB_FUNC( CTCEXIT )
