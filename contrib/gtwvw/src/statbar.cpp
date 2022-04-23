@@ -544,7 +544,7 @@ HB_FUNC( WVW_XBCREATE )
       SetScrollRange(hWndXB, SB_CTL, 0, 99, FALSE);
       SetScrollPos(hWndXB, SB_CTL, 0, TRUE);
 
-      AddControlHandle(usWinNum, WVW_CONTROL_SCROLLBAR, hWndXB, uiXBid, static_cast<PHB_ITEM>(hb_param(6, HB_IT_BLOCK)), rXB, rOffXB, static_cast<byte>(iStyle));
+      AddControlHandle(usWinNum, WVW_CONTROL_SCROLLBAR, hWndXB, uiXBid, static_cast<PHB_ITEM>(hb_param(6, Harbour::Item::BLOCK)), rXB, rOffXB, static_cast<byte>(iStyle));
 
       OldProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hWndXB, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(hb_gt_wvwXBProc)));
 

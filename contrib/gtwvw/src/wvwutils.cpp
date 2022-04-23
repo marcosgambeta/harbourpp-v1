@@ -88,7 +88,7 @@ HB_FUNC( WIN_SENDMESSAGE )
 HB_FUNC( WIN_SENDDLGITEMMESSAGE )
 {
    char * cText;
-   PHB_ITEM pText = hb_param(5, HB_IT_STRING);
+   PHB_ITEM pText = hb_param(5, Harbour::Item::STRING);
 
    if( pText )
    {
@@ -292,8 +292,7 @@ HB_FUNC( WIN_GETCLIENTRECT )
 /* sorry, not supported in GTWVW
    HB_FUNC( WIN_DRAWIMAGE )
    {
-   hb_retl( hb_wvt_DrawImage( ( HDC ) hb_parni(1), hb_parni(2), hb_parni(3),
-                                   hb_parni(4), hb_parni(5), hb_parc(6) ) );
+   hb_retl(hb_wvt_DrawImage( ( HDC ) hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parc(6) ));
    }
  */
 
@@ -364,7 +363,7 @@ HB_FUNC( WVW_GBCREATE )
    iOffRight  = !HB_ISNIL(9) ? hb_parvni(9, 4) : +1;
 
    uiPBid = ButtonCreate(usWinNum, usTop, usLeft, usBottom, usRight, lpszCaption,
-                         szBitmap, uiBitmap, hb_param(8, HB_IT_BLOCK),
+                         szBitmap, uiBitmap, hb_param(8, Harbour::Item::BLOCK),
                          iOffTop, iOffLeft, iOffBottom, iOffRight,
                          dStretch, bMap3Dcolors,
                          BS_TEXT | BS_GROUPBOX | WS_CHILD | WS_OVERLAPPED | WS_VISIBLE);
@@ -402,7 +401,7 @@ HB_FUNC( WVW_RBCREATE )
    iOffRight  = !HB_ISNIL(9) ? hb_parvni(9, 4) : +2;
 
    uiPBid = ButtonCreate(usWinNum, usTop, usLeft, usBottom, usRight, lpszCaption,
-                         szBitmap, uiBitmap, hb_param(8, HB_IT_BLOCK),
+                         szBitmap, uiBitmap, hb_param(8, Harbour::Item::BLOCK),
                          iOffTop, iOffLeft, iOffBottom, iOffRight,
                          dStretch, bMap3Dcolors,
                          BS_AUTORADIOBUTTON /*| WS_GROUP*/);
@@ -673,7 +672,7 @@ HB_FUNC( ADDTOOLTIPEX ) /* changed by MAG */
  */
 HB_FUNC( CREATEIMAGELIST )
 {
-   PHB_ITEM   pArray = hb_param(1, HB_IT_ARRAY);
+   PHB_ITEM   pArray = hb_param(1, Harbour::Item::ARRAY);
    UINT       flags  = HB_ISNIL(5) ? ILC_COLOR : hb_parni(5);
    HIMAGELIST himl;
    ULONG      ulLen = hb_arrayLen(pArray);
@@ -760,7 +759,7 @@ HB_FUNC( LOADBITMAP )
    {
       if( !HB_ISNIL(2) && hb_parl(2) )
       {
-/*               hb_retnl( (LONG) LoadBitmap( GetModuleHandle( NULL ),  MAKEINTRESOURCE(hb_parnl(1) )) ); */
+/*               hb_retnl((LONG) LoadBitmap( GetModuleHandle( NULL ),  MAKEINTRESOURCE(hb_parnl(1) ))); */
          HB_RETHANDLE(LoadBitmap(nullptr, reinterpret_cast<LPCTSTR>(hb_parnl(1))));
       }
       else
@@ -782,7 +781,7 @@ HB_FUNC( LOADBITMAPEX )
    {
       if( !HB_ISNIL(3) && hb_parl(3) )
       {
-/*               hb_retnl( (LONG) LoadBitmap( h,  MAKEINTRESOURCE(hb_parnl(2) )) ); */
+/*               hb_retnl((LONG) LoadBitmap( h,  MAKEINTRESOURCE(hb_parnl(2) ))); */
          HB_RETHANDLE(LoadBitmap(h, reinterpret_cast<LPCTSTR>(hb_parnl(3))));
       }
       else
@@ -1070,7 +1069,7 @@ HB_FUNC( SELECTFONT )
    CHOOSEFONT cf;
    LOGFONT    lf;
    HFONT      hfont;
-   PHB_ITEM   pObj = HB_ISNIL(1) ? nullptr : hb_param(1, HB_IT_OBJECT);
+   PHB_ITEM   pObj = HB_ISNIL(1) ? nullptr : hb_param(1, Harbour::Item::OBJECT);
    /* PHB_ITEM temp1; */
    PHB_ITEM aMetr = hb_itemArrayNew(9);
 
@@ -1145,7 +1144,7 @@ HB_FUNC( TOOLBARADDBUTTONS )
 
    HWND hWndCtrl = reinterpret_cast<HWND>(HB_PARHANDLE(2));
    /* HWND hToolTip = ( HWND ) hb_parnl(5) ; */
-   PHB_ITEM   pArray   = hb_param(3, HB_IT_ARRAY);
+   PHB_ITEM   pArray   = hb_param(3, Harbour::Item::ARRAY);
    int        iButtons = hb_parni(4);
    TBBUTTON * tb       = static_cast<struct _TBBUTTON*>(hb_xgrab(iButtons * sizeof(TBBUTTON)));
    PHB_ITEM   pTemp;
@@ -1971,7 +1970,7 @@ HB_FUNC( WVW_SETPEN )
 }
 
 /*                                                                   */
-/*   wvw_SetBrush( nStyle, nColor, [ nHatch ] )                      */
+/*   wvw_SetBrush( nStyle, nColor, [nHatch] )                        */
 /*                                                                   */
 
 /* IMPORTANT: in prev release this functions has nWinNum parameter
@@ -2050,7 +2049,7 @@ HB_FUNC( WVW__MAKEDLGTEMPLATE )
    *p++ = static_cast<short>(0);
    *p++ = static_cast<short>(0x00);
 
-   if( hb_parinfa(1, 11) == HB_IT_STRING )
+   if( hb_parinfa(1, 11) == Harbour::Item::STRING )
    {
       nchar = nCopyAnsiToWideChar(p, TEXT(const_cast<char*>(hb_parvcx(1, 11))));
       p    += nchar;
@@ -2092,7 +2091,7 @@ HB_FUNC( WVW__MAKEDLGTEMPLATE )
       *p++ = LOWORD(hb_parvnl(9, i));
       *p++ = HIWORD(hb_parvnl(9, i));
 
-      if( hb_parinfa(10, i) == HB_IT_STRING )
+      if( hb_parinfa(10, i) == Harbour::Item::STRING )
       {
          nchar = nCopyAnsiToWideChar(p, TEXT(const_cast<char*>(hb_parvcx(10, i))));
          p    += nchar;
@@ -2103,7 +2102,7 @@ HB_FUNC( WVW__MAKEDLGTEMPLATE )
          *p++ = static_cast<WORD>(hb_parvni(10, i));
       }
 
-      if( hb_parinfa(11, i) == HB_IT_STRING )
+      if( hb_parinfa(11, i) == Harbour::Item::STRING )
       {
          nchar = nCopyAnsiToWideChar(p, const_cast<LPSTR>(hb_parvcx(11, i)));
          p    += nchar;
@@ -2165,7 +2164,7 @@ HB_FUNC( WVW_UPDATEWINDOW )
 
 HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
 {
-   PHB_ITEM   pFirst = hb_param(3, HB_IT_ANY);
+   PHB_ITEM   pFirst = hb_param(3, Harbour::Item::ANY);
    PHB_ITEM   pFunc  = nullptr;
    PHB_DYNS   pExecSym;
    WVW_DATA * p    = hb_getWvwData();
@@ -2197,7 +2196,7 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
       pFunc = hb_itemNew(pFirst);
       iType = 2;
    }
-   //else if( HB_IS_STRING( pFirst ) == HB_IT_STRING )
+   //else if( HB_IS_STRING(pFirst) == Harbour::Item::STRING )
    else if( HB_IS_STRING(pFirst) )
    {
       pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
@@ -2281,7 +2280,7 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
 
 HB_FUNC( WVW_CREATEDIALOGMODAL )
 {
-   PHB_ITEM   pFirst = hb_param(3, HB_IT_ANY);
+   PHB_ITEM   pFirst = hb_param(3, Harbour::Item::ANY);
    PHB_ITEM   pFunc  = nullptr;
    PHB_DYNS   pExecSym;
    WVW_DATA * p = hb_getWvwData();
@@ -2316,7 +2315,7 @@ HB_FUNC( WVW_CREATEDIALOGMODAL )
       p->s_sApp->pFuncModal[iIndex] = pFunc;
       p->s_sApp->iTypeModal[iIndex] = 2;
    }
-   //else if( HB_IS_STRING( pFirst ) == HB_IT_STRING )
+   //else if( HB_IS_STRING(pFirst) == Harbour::Item::STRING )
    else if( HB_IS_STRING(pFirst) )
    {
       pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));

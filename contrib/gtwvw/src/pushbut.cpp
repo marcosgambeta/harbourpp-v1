@@ -70,9 +70,9 @@
  *
  * lMap3Dcolors: defaults to .F.
  *          if .T. the following color mapping will be performed:
- *             RGB( 192, 192, 192 ) --> COLOR_3DFACE   ("transparent")
- *             RGB( 128, 128, 128 ) --> COLOR_3DSHADOW
- *             RGB( 223, 223, 223 ) --> COLOR_3DLIGHT
+ *             RGB(192, 192, 192) --> COLOR_3DFACE   ("transparent")
+ *             RGB(128, 128, 128) --> COLOR_3DSHADOW
+ *             RGB(223, 223, 223) --> COLOR_3DLIGHT
  *          This might be desirable to have transparent effect.
  *          LIMITATION: this will work on 256 colored bitmaps only
  *
@@ -116,7 +116,7 @@ HB_FUNC( WVW_PBCREATE )
    iOffRight  = !HB_ISNIL(9) ? hb_parvni(9, 4) : +2;
 
    uiPBid = ButtonCreate(usWinNum, usTop, usLeft, usBottom, usRight, lpszCaption,
-                         szBitmap, uiBitmap, hb_param(8, HB_IT_BLOCK),
+                         szBitmap, uiBitmap, hb_param(8, Harbour::Item::BLOCK),
                          iOffTop, iOffLeft, iOffBottom, iOffRight,
                          dStretch, bMap3Dcolors,
                          BS_PUSHBUTTON);
@@ -242,7 +242,7 @@ HB_FUNC( WVW_PBSETCODEBLOCK )
    WVW_DATA *     pData        = hb_getWvwData();
    UINT           uiPBid       = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
    CONTROL_DATA * pcd          = GetControlData(usWinNum, WVW_CONTROL_PUSHBUTTON, nullptr, uiPBid);
-   PHB_ITEM       phiCodeBlock = hb_param(3, HB_IT_BLOCK);
+   PHB_ITEM       phiCodeBlock = hb_param(3, Harbour::Item::BLOCK);
    BOOL           bOldSetting  = pData->s_bRecurseCBlock;
 
    if( !phiCodeBlock || pcd == nullptr || pcd->bBusy )
@@ -447,7 +447,7 @@ HB_FUNC( WVW_CBCREATE )
           usLeft       = static_cast<USHORT>(hb_parni(3)),
           usBottom     = usTop,
           usRight      = usLeft + usWidth - 1;
-   USHORT usNumElement = static_cast<USHORT>(HB_ISARRAY(5) ? hb_arrayLen(hb_param(5, HB_IT_ARRAY)) : 0);
+   USHORT usNumElement = static_cast<USHORT>(HB_ISARRAY(5) ? hb_arrayLen(hb_param(5, Harbour::Item::ARRAY)) : 0);
    USHORT usListLines  = static_cast<USHORT>(HB_ISNUM(7) ? hb_parni(7) : 3);
    BYTE   byCharHeight = hb_wvw_LineHeight(pWindowData);
 
@@ -563,7 +563,7 @@ HB_FUNC( WVW_CBCREATE )
 
       rOffXB.bottom = iOffBottom; rOffXB.right = iOffRight;
 
-      AddControlHandle(usWinNum, WVW_CONTROL_COMBOBOX, hWndCB, uiCBid, static_cast<PHB_ITEM>(hb_param(6, HB_IT_BLOCK)), rXB, rOffXB, static_cast<byte>(bKbdType));
+      AddControlHandle(usWinNum, WVW_CONTROL_COMBOBOX, hWndCB, uiCBid, static_cast<PHB_ITEM>(hb_param(6, Harbour::Item::BLOCK)), rXB, rOffXB, static_cast<byte>(bKbdType));
 
       OldProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hWndCB, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(hb_gt_wvwCBProc)));
 
@@ -699,7 +699,7 @@ HB_FUNC( WVW_CBSETCODEBLOCK )
 
    UINT uiCBid        = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
    CONTROL_DATA * pcd = GetControlData(usWinNum, WVW_CONTROL_COMBOBOX, nullptr, uiCBid);
-   PHB_ITEM       phiCodeBlock = hb_param(3, HB_IT_BLOCK);
+   PHB_ITEM       phiCodeBlock = hb_param(3, Harbour::Item::BLOCK);
    WVW_DATA *     pData        = hb_getWvwData();
    BOOL bOldSetting = pData->s_bRecurseCBlock;
 

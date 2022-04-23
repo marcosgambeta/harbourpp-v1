@@ -1257,7 +1257,7 @@ HB_FUNC( WVG_SHADEDRECT )
    gObj->aOffset.iBottom = hb_parvni(5, 3);
    gObj->aOffset.iRight  = hb_parvni(5, 4);
 
-   gObj->iData = hb_parnidef( 6, GRADIENT_FILL_RECT_H );
+   gObj->iData = hb_parnidef(6, GRADIENT_FILL_RECT_H);
 
    gObj->vert[0].x     = 0;
    gObj->vert[0].y     = 0;

@@ -1223,11 +1223,11 @@ static BOOL hb_gt_wvwGetCharFromInputQueue(int * c)
 
  * c = 0;
 
-   iNextPos = ( s_pWvwData->s_pWindows[ s_pWvwData->s_usNumWindows-1 ]->keyPointerOut >= WVW_CHAR_QUEUE_SIZE - 1 ) ? 0 : s_pWvwData->s_pWindows[ s_pWvwData->s_usNumWindows-1 ]->keyPointerOut+1 ;
-   if ( iNextPos != s_pWvwData->s_pWindows[ s_pWvwData->s_usNumWindows-1 ]->keyPointerIn )
+   iNextPos = ( s_pWvwData->s_pWindows[s_pWvwData->s_usNumWindows-1]->keyPointerOut >= WVW_CHAR_QUEUE_SIZE - 1 ) ? 0 : s_pWvwData->s_pWindows[s_pWvwData->s_usNumWindows-1]->keyPointerOut+1 ;
+   if ( iNextPos != s_pWvwData->s_pWindows[s_pWvwData->s_usNumWindows-1]->keyPointerIn )
    {
- * c = s_pWvwData->s_pWindows[ s_pWvwData->s_usNumWindows-1 ]->Keys[ iNextPos ] ;
-    s_pWvwData->s_pWindows[ s_pWvwData->s_usNumWindows-1 ]->keyPointerOut = iNextPos ;
+ * c = s_pWvwData->s_pWindows[s_pWvwData->s_usNumWindows-1]->Keys[iNextPos] ;
+    s_pWvwData->s_pWindows[s_pWvwData->s_usNumWindows-1]->keyPointerOut = iNextPos ;
     bRet =  TRUE;
    }
    return( bRet );
@@ -1468,7 +1468,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_FONTNAME:
          pInfo->pResult = hb_itemPutC(pInfo->pResult, pWindowData->fontFace);
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING ) /* TODO: macro ? */
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING ) /* TODO: macro ? */
          {
             hb_strncpy(pWindowData->fontFace, hb_itemGetCPtr(pInfo->pNewVal), LF_FACESIZE - 1);
          }
@@ -1501,7 +1501,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
                break;
          }
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, iVal);
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC )
          {
             /* store font status for next operation on fontsize */
             switch( hb_itemGetNI(pInfo->pNewVal) )
@@ -1538,7 +1538,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
                break;
          }
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, iVal);
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC )
          {
             switch( hb_itemGetNI(pInfo->pNewVal) )
             {
@@ -1639,7 +1639,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
       }
       case HB_GTI_WINTITLE:
          pInfo->pResult = hb_gt_wvw_GetWindowTitle(s_pWvwData->s_usCurWindow, pInfo->pResult);
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING )
          {
             void * hWindowTitle;
             hb_gt_wvwSetWindowTitle(s_pWvwData->s_usCurWindow, HB_ITEMGETSTR(pInfo->pNewVal, &hWindowTitle, nullptr));
@@ -1658,7 +1658,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
       case HB_GTI_ICONFILE:
       {
          HICON hIcon = nullptr;
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING )
          {
             void * hImageName;
             hIcon = static_cast<HICON>(hb_gt_wvwSetWindowIconFromFile(s_pWvwData->s_usCurWindow, HB_ITEMGETSTR(pInfo->pNewVal, &hImageName, nullptr)));
@@ -1671,12 +1671,12 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
       case HB_GTI_ICONRES:
       {
          HICON hIcon = nullptr;
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING )
          {
             LPSTR lpIcon = const_cast<LPSTR>(hb_itemGetCPtr(pInfo->pNewVal));
             hIcon = static_cast<HICON>(hb_gt_wvwSetWindowIcon(s_pWvwData->s_usCurWindow, 0, static_cast<char*>(lpIcon)));
          }
-         else if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
+         else if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC )
          {
             hIcon = static_cast<HICON>(hb_gt_wvwSetWindowIcon(s_pWvwData->s_usCurWindow, hb_itemGetNI(pInfo->pNewVal), nullptr));
          }
@@ -1695,15 +1695,15 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_KBDSHIFTS:
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_winapi_getKbdState());
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC )
          {
             hb_gt_winapi_setKbdState(hb_itemGetNI(pInfo->pNewVal));
          }
          break;
 
       case HB_GTI_CLIPBOARDDATA:
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_STRING )
-#if defined( UNICODE )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING )
+#if defined(UNICODE)
             hb_gt_winapi_setClipboard(CF_UNICODETEXT, pInfo->pNewVal);
 #else
             hb_gt_winapi_setClipboard(pWindowData->CodePage == OEM_CHARSET ? CF_OEMTEXT : CF_TEXT, pInfo->pNewVal);
@@ -1714,7 +1714,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
             {
                pInfo->pResult = hb_itemNew(nullptr);
             }
-#if defined( UNICODE )
+#if defined(UNICODE)
             hb_gt_winapi_getClipboard(CF_UNICODETEXT, pInfo->pResult);
 #else
             hb_gt_winapi_getClipboard(pWindowData->CodePage == OEM_CHARSET ? CF_OEMTEXT : CF_TEXT, pInfo->pResult);
@@ -1724,7 +1724,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_CURSORBLINKRATE:
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, GetCaretBlinkTime());
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC )
          {
             SetCaretBlinkTime(hb_itemGetNI(pInfo->pNewVal));
          }
@@ -1757,7 +1757,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
       }
 
       case HB_GTI_PALETTE:
-         if( hb_itemType(pInfo->pNewVal) & HB_IT_NUMERIC )
+         if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC )
          {
             int iIndex = hb_itemGetNI(pInfo->pNewVal);
 
@@ -1765,7 +1765,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
             {
                pInfo->pResult = hb_itemPutNL(pInfo->pResult, _COLORS[iIndex - 1]);
 
-               if( hb_itemType(pInfo->pNewVal2) & HB_IT_NUMERIC )
+               if( hb_itemType(pInfo->pNewVal2) & Harbour::Item::NUMERIC )
                {
                   _COLORS[iIndex - 1] = hb_itemGetNL(pInfo->pNewVal2);
                }
@@ -1784,7 +1784,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
                hb_itemPutNL(hb_arrayGetItemPtr(pInfo->pResult, i), _COLORS[i - 1]);
             }
 
-            if( hb_itemType(pInfo->pNewVal) & HB_IT_ARRAY )
+            if( hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY )
             {
                if( hb_arrayLen(pInfo->pNewVal) == 16 )
                {
@@ -2004,27 +2004,27 @@ BOOL CALLBACK hb_gt_wvwDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPAR
 
             /*
 
-               if (s_pWvwData->s_sApp->pFunc[ iIndex ]->type == HB_IT_BLOCK)
+               if (s_pWvwData->s_sApp->pFunc[iIndex]->type == Harbour::Item::BLOCK)
                {
                HB_ITEM hihDlg, himessage, hiwParam, hilParam;
                PHB_ITEM pReturn;
 
-               hihDlg.type = HB_IT_NIL;
+               hihDlg.type = Harbour::Item::NIL;
                hb_itemPutNL( &hihDlg, (ULONG) hDlg );
 
-               himessage.type = HB_IT_NIL;
+               himessage.type = Harbour::Item::NIL;
                hb_itemPutNL( &himessage, (ULONG) message );
 
-               hiwParam.type = HB_IT_NIL;
+               hiwParam.type = Harbour::Item::NIL;
                hb_itemPutNL( &hiwParam, (ULONG) wParam );
 
-               hilParam.type = HB_IT_NIL;
+               hilParam.type = Harbour::Item::NIL;
                hb_itemPutNL( &hilParam, (ULONG) lParam );
 
-               pReturn = hb_itemDo( (PHB_ITEM) s_pWvwData->s_sApp->pFunc[ iIndex ], 4, &hihDlg, &himessage, &hiwParam, &hilParam );
+               pReturn = hb_itemDo( (PHB_ITEM) s_pWvwData->s_sApp->pFunc[iIndex], 4, &hihDlg, &himessage, &hiwParam, &hilParam );
 
-               bReturn = hb_itemGetNL( pReturn );
-               hb_itemRelease( pReturn );
+               bReturn = hb_itemGetNL(pReturn);
+               hb_itemRelease(pReturn);
 
                }
              */
@@ -2145,26 +2145,26 @@ BOOL CALLBACK hb_gt_wvwDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPAR
          case 2:
             /* eval the codeblock */
             /*
-               if (s_pWvwData->s_sApp->pFuncModal[ iIndex ]->type == HB_IT_BLOCK )
+               if (s_pWvwData->s_sApp->pFuncModal[iIndex]->type == Harbour::Item::BLOCK )
                {
                HB_ITEM hihDlg, himessage, hiwParam, hilParam;
                PHB_ITEM pReturn;
 
-               hihDlg.type = HB_IT_NIL;
+               hihDlg.type = Harbour::Item::NIL;
                hb_itemPutNL( &hihDlg, (ULONG) hDlg );
 
-               himessage.type = HB_IT_NIL;
+               himessage.type = Harbour::Item::NIL;
                hb_itemPutNL( &himessage, (ULONG) message );
 
-               hiwParam.type = HB_IT_NIL;
+               hiwParam.type = Harbour::Item::NIL;
                hb_itemPutNL( &hiwParam, (ULONG) wParam );
 
-               hilParam.type = HB_IT_NIL;
+               hilParam.type = Harbour::Item::NIL;
                hb_itemPutNL( &hilParam, (ULONG) lParam );
 
-               pReturn = hb_itemDo( (PHB_ITEM) s_pWvwData->s_sApp->pFuncModal[ iIndex ], 4, &hihDlg, &himessage, &hiwParam, &hilParam );
-               bReturn = hb_itemGetNL( pReturn );
-               hb_itemRelease( pReturn );
+               pReturn = hb_itemDo( (PHB_ITEM) s_pWvwData->s_sApp->pFuncModal[iIndex], 4, &hihDlg, &himessage, &hiwParam, &hilParam );
+               bReturn = hb_itemGetNL(pReturn);
+               hb_itemRelease(pReturn);
                }
              */
             if( HB_IS_BLOCK(pFunc) )
@@ -2271,7 +2271,7 @@ static void hb_gt_wvwCreateObjects(UINT usWinNum)
    s_pWvwData->s_sApp->diagonalBrush = CreateBrushIndirect(&lb);
 
    lb.lbStyle = BS_SOLID;
-   lb.lbColor = 0;                          /* RGB( 0,0,0 ); */
+   lb.lbColor = 0;                          /* RGB(0, 0, 0); */
    lb.lbHatch = 0;
    s_pWvwData->s_sApp->solidBrush = CreateBrushIndirect(&lb);
 
@@ -2638,11 +2638,11 @@ static void xUserPaintNow(UINT usWinNum)
          hb_vmPushInteger(static_cast<int>(usWinNum));
 
          /* follow WVT convention to not passing coordinates anymore
-            hb_vmPushInteger( ( int ) (rpaint.top)  );
-            hb_vmPushInteger( ( int ) (rpaint.left)  );
-            hb_vmPushInteger( ( int ) (rpaint.bottom)  );
-            hb_vmPushInteger( ( int ) (rpaint.right)  );
-            hb_vmDo( 5 );
+            hb_vmPushInteger(static_cast<int>(rpaint.top));
+            hb_vmPushInteger(static_cast<int>(rpaint.left));
+            hb_vmPushInteger(static_cast<int>(rpaint.bottom));
+            hb_vmPushInteger(static_cast<int>(rpaint.right));
+            hb_vmDo(5);
           */
 
          hb_vmDo(1);
@@ -2946,10 +2946,10 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
             /*
                WVT uses global vars as follows:
 
-               _s.rowStart = max( 0, rcRect.top-1 );
-               _s.rowStop  = min( _s.ROWS, rcRect.bottom+1 );
-               _s.colStart = max( 0, rcRect.left -1 );
-               _s.colStop  = min( _s.COLS, rcRect.right+1 );
+               _s.rowStart = max(0, rcRect.top - 1);
+               _s.rowStop  = min(_s.ROWS, rcRect.bottom + 1);
+               _s.colStart = max(0, rcRect.left - 1);
+               _s.colStop  = min(_s.COLS, rcRect.right + 1);
 
                WVW can't do that way, because we use TIMER method to repaint
                WVW's pending repaint rect is stored in rPaintPending
@@ -8447,7 +8447,7 @@ HB_FUNC( WVW_PASTEFROMCLIPBOARD )
          {
             hb_gt_wvwAddCharToInputQueue(static_cast<int>(lptstr[ul]));
          }
-         /*TraceLog( NULL, "Value %i\n", ( int ) lptstr[ ul ] );   */
+         /*TraceLog( NULL, "Value %i\n", ( int ) lptstr[ul] );   */
          GlobalUnlock(hglb);
       }
    }

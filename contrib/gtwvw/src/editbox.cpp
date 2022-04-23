@@ -225,7 +225,7 @@ HB_FUNC( WVW_EBCREATE )
       rOffXB.top    = iOffTop;     rOffXB.left = iOffLeft;
       rOffXB.bottom = iOffBottom; rOffXB.right = iOffRight;
 
-      AddControlHandle(usWinNum, WVW_CONTROL_EDITBOX, hWndEB, uiEBid, static_cast<PHB_ITEM>(hb_param(7, HB_IT_BLOCK)), rXB, rOffXB, static_cast<byte>(bEBType));
+      AddControlHandle(usWinNum, WVW_CONTROL_EDITBOX, hWndEB, uiEBid, static_cast<PHB_ITEM>(hb_param(7, Harbour::Item::BLOCK)), rXB, rOffXB, static_cast<byte>(bEBType));
 
       OldProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hWndEB, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(hb_gt_wvwEBProc)));
 
@@ -392,7 +392,7 @@ HB_FUNC( WVW_EBSETCODEBLOCK )
    UINT uiEBid                 = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
    CONTROL_DATA * pcd          = GetControlData(usWinNum, WVW_CONTROL_EDITBOX, nullptr, uiEBid);
    WVW_DATA *     pData        = hb_getWvwData();
-   PHB_ITEM       phiCodeBlock = hb_param(3, HB_IT_BLOCK);
+   PHB_ITEM       phiCodeBlock = hb_param(3, Harbour::Item::BLOCK);
    BOOL bOldSetting            = pData->s_bRecurseCBlock;
 
    if( !phiCodeBlock || pcd == nullptr || pcd->bBusy )
@@ -511,8 +511,8 @@ HB_FUNC( WVW_EBISMULTILINE )
  *             insert soft line break character (CR+CR+LF) at wordwrap positions
  *             can be usefull to convert the text to MEMO format
  *             eg. converting editbox's softbreaks into memoline softbreak:
- *                cStr := wvw_ebGetText( NIL, nEBid, .T. )
- *                cStr := StrTran( cStr, CR + CR + LF, Chr( 141 ) + LF )
+ *                cStr := wvw_ebGetText(NIL, nEBid, .T.)
+ *                cStr := StrTran(cStr, CR + CR + LF, Chr(141) + LF)
  *
  * returns "" in case of error (eg. nEBid not valid)
  */

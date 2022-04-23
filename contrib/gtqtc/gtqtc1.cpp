@@ -1432,7 +1432,7 @@ static void hb_gt_qtc_free(PHB_GTQTC pQTC)
 
    if( pQTC->textLine )
    {
-      hb_xfree( pQTC->textLine );
+      hb_xfree(pQTC->textLine);
    }
 
    delete pQTC;

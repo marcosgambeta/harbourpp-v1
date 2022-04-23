@@ -67,9 +67,9 @@
  *               (default is 1)
  * lMap3Dcolors: defaults to .F.
  *           if .T. the following color mapping will be performed:
- *              RGB( 192, 192, 192 ) --> COLOR_3DFACE   ("transparent")
- *              RGB( 128, 128, 128 ) --> COLOR_3DSHADOW
- *              RGB( 223, 223, 223 ) --> COLOR_3DLIGHT
+ *              RGB(192, 192, 192) --> COLOR_3DFACE   ("transparent")
+ *              RGB(128, 128, 128) --> COLOR_3DSHADOW
+ *              RGB(223, 223, 223) --> COLOR_3DLIGHT
  *           This might be desirable to have transparent effect.
  *           LIMITATION: this will work on 256 colored bitmaps only
  *
@@ -113,7 +113,7 @@ HB_FUNC( WVW_CXCREATE )
    iOffRight  = !HB_ISNIL(9) ? hb_parvni(9, 4) : +2;
 
    uiPBid = ButtonCreate(usWinNum, usTop, usLeft, usBottom, usRight, lpszCaption,
-                         szBitmap, uiBitmap, hb_param(8, HB_IT_BLOCK),
+                         szBitmap, uiBitmap, hb_param(8, Harbour::Item::BLOCK),
                          iOffTop, iOffLeft, iOffBottom, iOffRight,
                          dStretch, bMap3Dcolors,
                          BS_AUTOCHECKBOX);
@@ -226,7 +226,7 @@ HB_FUNC( WVW_CXSETCODEBLOCK )
    WVW_DATA *     pData        = hb_getWvwData();
    UINT           uiCXid       = static_cast<UINT>(HB_ISNIL(2) ? 0  : hb_parni(2));
    CONTROL_DATA * pcd          = GetControlData(usWinNum, WVW_CONTROL_CHECKBOX, nullptr, uiCXid);
-   PHB_ITEM       phiCodeBlock = hb_param(3, HB_IT_BLOCK);
+   PHB_ITEM       phiCodeBlock = hb_param(3, Harbour::Item::BLOCK);
    BOOL           bOldSetting  = pData->s_bRecurseCBlock;
 
    if( !phiCodeBlock || pcd == nullptr || pcd->bBusy )

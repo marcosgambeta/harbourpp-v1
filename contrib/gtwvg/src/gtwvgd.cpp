@@ -354,7 +354,7 @@ static void hb_gt_wvt_Free(PHB_GTWVT pWVT)
       DestroyWindow(pWVT->hWnd);
    }
 
-   delete pWVT; // hb_xfree( pWVT );
+   delete pWVT;
 
    HB_WVT_UNLOCK();
 }
@@ -909,7 +909,7 @@ static HB_BOOL hb_gt_wvt_FitSize(PHB_GTWVT pWVT)
 
          if( width <= maxWidth && height <= maxHeight && tm.tmAveCharWidth >= 3 && tm.tmHeight >= 4 )
          {
-#if !defined( UNICODE )
+#if !defined(UNICODE)
             if( pWVT->hFontBox && pWVT->hFontBox != pWVT->hFont )
             {
                DeleteObject(pWVT->hFontBox);
