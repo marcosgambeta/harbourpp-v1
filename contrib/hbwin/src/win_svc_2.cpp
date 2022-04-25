@@ -57,7 +57,7 @@ HB_FUNC( WIN_SERVICEINSTALL )
 
    if( lpPath == nullptr )
    {
-      if( GetModuleFileName( nullptr, lpPathBuffer, HB_SIZEOFARRAY( lpPathBuffer ) ) )
+      if( GetModuleFileName(nullptr, lpPathBuffer, HB_SIZEOFARRAY(lpPathBuffer)) )
       {
          lpPath = lpPathBuffer;
       }
@@ -69,7 +69,7 @@ HB_FUNC( WIN_SERVICEINSTALL )
 
    if( lpPath )
    {
-      SC_HANDLE schSCM = OpenSCManager( nullptr, nullptr, SC_MANAGER_ALL_ACCESS );
+      SC_HANDLE schSCM = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
 
       if( schSCM )
       {
@@ -130,7 +130,7 @@ HB_FUNC( WIN_SERVICEDELETE )
 {
    HB_BOOL bRetVal = HB_FALSE;
 
-   SC_HANDLE schSCM = OpenSCManager( nullptr, nullptr, SC_MANAGER_ALL_ACCESS );
+   SC_HANDLE schSCM = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
 
    if( schSCM )
    {
@@ -178,7 +178,7 @@ HB_FUNC( WIN_SERVICECONTROL )
 {
    HB_BOOL bRetVal = HB_FALSE;
 
-   SC_HANDLE schSCM = OpenSCManager( nullptr, nullptr, SC_MANAGER_ALL_ACCESS );
+   SC_HANDLE schSCM = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
 
    if( schSCM )
    {
@@ -189,7 +189,7 @@ HB_FUNC( WIN_SERVICECONTROL )
       if( schSrv )
       {
          SERVICE_STATUS ssStatus;
-         memset( &ssStatus, 0, sizeof(ssStatus) );
+         memset(&ssStatus, 0, sizeof(ssStatus));
          bRetVal = static_cast<HB_BOOL>(ControlService(schSrv, static_cast<DWORD>(hb_parnl(2)), &ssStatus));
          hbwapi_SetLastError( GetLastError() );
 
@@ -215,7 +215,7 @@ HB_FUNC( WIN_SERVICERUN )
 {
    HB_BOOL bRetVal = HB_FALSE;
 
-   SC_HANDLE schSCM = OpenSCManager( nullptr, nullptr, SC_MANAGER_ALL_ACCESS );
+   SC_HANDLE schSCM = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
 
    if( schSCM )
    {
@@ -237,7 +237,7 @@ HB_FUNC( WIN_SERVICERUN )
 
             for( pos = 0; pos < dwArgs; ++pos )
             {
-               lpArgs[pos] = HB_PARSTRDEF( pos + 2, &hArgs[pos], nullptr );
+               lpArgs[pos] = HB_PARSTRDEF(pos + 2, &hArgs[pos], nullptr);
             }
          }
          else

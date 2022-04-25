@@ -68,10 +68,10 @@ HB_FUNC( CONVTOOEMCP )
 
       MultiByteToWideChar( CP_ACP, MB_PRECOMPOSED, pszSrc, nLen, pszWide, nWideLen );
 
-      nLen   = WideCharToMultiByte( CP_OEMCP, 0, pszWide, nWideLen, nullptr, 0, nullptr, nullptr );
+      nLen   = WideCharToMultiByte(CP_OEMCP, 0, pszWide, nWideLen, nullptr, 0, nullptr, nullptr);
       pszDst = static_cast<char*>(hb_xgrab(nLen + 1));
 
-      WideCharToMultiByte( CP_OEMCP, 0, pszWide, nWideLen, pszDst, nLen, nullptr, nullptr );
+      WideCharToMultiByte(CP_OEMCP, 0, pszWide, nWideLen, pszDst, nLen, nullptr, nullptr);
 
       hb_xfree(pszWide);
       hb_retclen_buffer( pszDst, nLen );
@@ -100,10 +100,10 @@ HB_FUNC( CONVTOANSICP )
 
       MultiByteToWideChar( CP_OEMCP, MB_PRECOMPOSED, pszSrc, nLen, pszWide, nWideLen );
 
-      nLen   = WideCharToMultiByte( CP_ACP, 0, pszWide, nWideLen, nullptr, 0, nullptr, nullptr );
+      nLen   = WideCharToMultiByte(CP_ACP, 0, pszWide, nWideLen, nullptr, 0, nullptr, nullptr);
       pszDst = static_cast<char*>(hb_xgrab(nLen + 1));
 
-      WideCharToMultiByte( CP_ACP, 0, pszWide, nWideLen, pszDst, nLen, nullptr, nullptr );
+      WideCharToMultiByte(CP_ACP, 0, pszWide, nWideLen, pszDst, nLen, nullptr, nullptr);
 
       hb_xfree(pszWide);
       hb_retclen_buffer( pszDst, nLen );

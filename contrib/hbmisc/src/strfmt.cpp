@@ -78,7 +78,7 @@ HB_FUNC( STRFORMAT )
 
       STRPAR strpar[HB_STRFORMAT_PARNUM_MAX_];
 
-      memset( strpar, 0, sizeof(strpar) );
+      memset(strpar, 0, sizeof(strpar));
 
       nParNum--;
 
@@ -126,7 +126,7 @@ HB_FUNC( STRFORMAT )
             {
                nPos = pszMask[nMaskPos] - '1';
 
-               memcpy( pszRetVal, strpar[nPos].buffer, strpar[nPos].nLen );
+               memcpy(pszRetVal, strpar[nPos].buffer, strpar[nPos].nLen);
                pszRetVal += strpar[nPos].nLen;
             }
          }

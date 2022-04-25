@@ -89,8 +89,8 @@ HB_FUNC( CUPSPRINTFILE )
       {
          for( tmp = 1; tmp <= hb_hashLen( pOptions ); ++tmp )
          {
-            PHB_ITEM pKey = hb_hashGetKeyAt( pOptions, tmp );
-            PHB_ITEM pVal = hb_hashGetValueAt( pOptions, tmp );
+            PHB_ITEM pKey = hb_hashGetKeyAt(pOptions, tmp);
+            PHB_ITEM pVal = hb_hashGetValueAt(pOptions, tmp);
 
             if( pKey && HB_IS_STRING(pKey) && pVal )
                num_options = cupsAddOption( hb_itemGetCPtr(pKey), hb_itemGetCPtr(pVal), num_options, &options );

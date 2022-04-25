@@ -587,7 +587,7 @@ static int _pdf417_isdigit( char ch  )
 
 static int _pdf417_isalpha( char ch  )
 {
-   return ( ' ' <= ch && static_cast< unsigned char >( ch ) <= 127 ) || ch == '\t' || ch == '\n' || ch == '\r';
+   return ( ' ' <= ch && static_cast<unsigned char>(ch) <= 127 ) || ch == '\t' || ch == '\n' || ch == '\r';
 }
 
 static int _pdf417_upperno( char ch  )
@@ -762,17 +762,17 @@ static int _pdf417_encode_byte( const char * szCode, int iLen, int * pCW, int iP
    {
       if( iLen - i >= 6 )
       {
-         ill =  static_cast< unsigned char >( szCode[i++] );
+         ill =  static_cast<unsigned char>(szCode[i++]);
          ill <<= 8;
-         ill += static_cast< unsigned char >( szCode[i++] );
+         ill += static_cast<unsigned char>(szCode[i++]);
          ill <<= 8;
-         ill += static_cast< unsigned char >( szCode[i++] );
+         ill += static_cast<unsigned char>(szCode[i++]);
          ill <<= 8;
-         ill += static_cast< unsigned char >( szCode[i++] );
+         ill += static_cast<unsigned char>(szCode[i++]);
          ill <<= 8;
-         ill += static_cast< unsigned char >( szCode[i++] );
+         ill += static_cast<unsigned char>(szCode[i++]);
          ill <<= 8;
-         ill += static_cast< unsigned char >( szCode[i++] );
+         ill += static_cast<unsigned char>(szCode[i++]);
 
          if( iPos + 5 > MAX_CODEWORD_COUNT )
          {
@@ -786,7 +786,7 @@ static int _pdf417_encode_byte( const char * szCode, int iLen, int * pCW, int iP
          pCW[iPos + 2] = ill % 900;
          ill /= 900;
          pCW[iPos + 1] = ill % 900;
-         pCW[iPos] = static_cast< int >( ill / 900 );
+         pCW[iPos] = static_cast<int>(ill / 900);
          iPos += 5;
       }
       else
@@ -843,10 +843,10 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
 #endif
       if( iSubMode == SUBMODE_UPPER )
       {
-         if( ( no = _pdf417_upperno( szCode[i] ) ) != -1 )
+         if( (no = _pdf417_upperno(szCode[i])) != -1 )
          {
          }
-         else if( ( no = _pdf417_lowerno( szCode[i] ) ) != -1 )
+         else if( (no = _pdf417_lowerno(szCode[i])) != -1 )
          {
             iPos = _pdf417_encode_text_add( pCW, iPos, &i1, &i2, 27 /* UPPER->LOWER */ );
             if( iPos == -1 )
@@ -856,7 +856,7 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
 
             iSubMode = SUBMODE_LOWER;
          }
-         else if( ( no = _pdf417_mixedno( szCode[i] ) ) != -1 )
+         else if( (no = _pdf417_mixedno(szCode[i])) != -1 )
          {
             iPos = _pdf417_encode_text_add( pCW, iPos, &i1, &i2, 28 /* UPPER->MIXED */ );
             if( iPos == -1 )
@@ -866,7 +866,7 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
 
             iSubMode = SUBMODE_MIXED;
          }
-         else /* if( ( no = _pdf417_punctno( szCode[i] ) ) != -1 ) */
+         else /* if( (no = _pdf417_punctno(szCode[i])) != -1 ) */
          {
             no = _pdf417_punctno( szCode[i] );
 
@@ -903,10 +903,10 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
       }
       else if( iSubMode == SUBMODE_LOWER )
       {
-         if( ( no = _pdf417_lowerno( szCode[i] ) ) != -1 )
+         if( (no = _pdf417_lowerno(szCode[i])) != -1 )
          {
          }
-         else if( ( no = _pdf417_upperno( szCode[i] ) ) != -1 )
+         else if( (no = _pdf417_upperno(szCode[i])) != -1 )
          {
             for( j = i + 1; j < iLen && _pdf417_upperno( szCode[j] ) != -1 && szCode[j] != ' '; j++ )
             {
@@ -938,7 +938,7 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
                }
             }
          }
-         else if( ( no = _pdf417_mixedno( szCode[i] ) ) != -1 )
+         else if( (no = _pdf417_mixedno(szCode[i])) != -1 )
          {
             iPos = _pdf417_encode_text_add( pCW, iPos, &i1, &i2, 28 /* LOWER->MIXED */ );
             if( iPos == -1 )
@@ -948,7 +948,7 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
 
             iSubMode = SUBMODE_MIXED;
          }
-         else /* if( ( no = _pdf417_punctno( szCode[i] ) ) != -1 ) */
+         else /* if( (no = _pdf417_punctno(szCode[i])) != -1 ) */
          {
             no = _pdf417_punctno( szCode[i] );
 
@@ -985,10 +985,10 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
       }
       else if( iSubMode == SUBMODE_MIXED )
       {
-         if( ( no = _pdf417_mixedno( szCode[i] ) ) != -1 )
+         if( (no = _pdf417_mixedno(szCode[i])) != -1 )
          {
          }
-         else if( ( no = _pdf417_upperno( szCode[i] ) ) != -1 )
+         else if( (no = _pdf417_upperno(szCode[i])) != -1 )
          {
             iPos = _pdf417_encode_text_add( pCW, iPos, &i1, &i2, 28 /* MIXED->UPPER */ );
             if( iPos == -1 )
@@ -998,7 +998,7 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
 
             iSubMode = SUBMODE_UPPER;
          }
-         else if( ( no = _pdf417_lowerno( szCode[i] ) ) != -1 )
+         else if( (no = _pdf417_lowerno(szCode[i])) != -1 )
          {
             iPos = _pdf417_encode_text_add( pCW, iPos, &i1, &i2, 27 /* MIXED->LOWER */ );
             if( iPos == -1 )
@@ -1008,7 +1008,7 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
 
             iSubMode = SUBMODE_LOWER;
          }
-         else /* if( ( no = _pdf417_punctno( szCode[i] ) ) != -1 ) */
+         else /* if( (no = _pdf417_punctno(szCode[i])) != -1 ) */
          {
             no = _pdf417_punctno( szCode[i] );
 
@@ -1039,10 +1039,10 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
       }
       else /* if( iSubMode == SUBMODE_PUNCT ) */
       {
-         if( ( no = _pdf417_punctno( szCode[i] ) ) != -1 )
+         if( (no = _pdf417_punctno(szCode[i])) != -1 )
          {
          }
-         else if( ( no = _pdf417_upperno( szCode[i] ) ) != -1 )
+         else if( (no = _pdf417_upperno(szCode[i])) != -1 )
          {
             iPos = _pdf417_encode_text_add( pCW, iPos, &i1, &i2, 29 /* PUNCT->UPPER */ );
             if( iPos == -1 )
@@ -1052,7 +1052,7 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
 
             iSubMode = SUBMODE_UPPER;
          }
-         else if( ( no = _pdf417_lowerno( szCode[i] ) ) != -1 )
+         else if( (no = _pdf417_lowerno(szCode[i])) != -1 )
          {
             iPos = _pdf417_encode_text_add( pCW, iPos, &i1, &i2, 29 /* PUNCT->UPPER */ );
             if( iPos == -1 )
@@ -1068,7 +1068,7 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
 
             iSubMode = SUBMODE_LOWER;
          }
-         else /* if( ( no = _pdf417_mixedno( szCode[i] ) ) != -1 ) */
+         else /* if( (no = _pdf417_mixedno(szCode[i])) != -1 ) */
          {
             no = _pdf417_mixedno( szCode[i] );
             iPos = _pdf417_encode_text_add( pCW, iPos, &i1, &i2, 29 /* PUNCT->UPPER */ );
@@ -1404,7 +1404,7 @@ PHB_ZEBRA hb_zebra_create_pdf417( const char * szCode, HB_SIZE nLen, int iFlags,
 {
    PHB_ZEBRA  pZebra;
    int *      pCW;
-   int        i, j, iLevel, iRowCount, iDataCount, iCount, iLen = static_cast< int >( nLen );
+   int        i, j, iLevel, iRowCount, iDataCount, iCount, iLen = static_cast<int>(nLen);
 
    pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_PDF417;
@@ -1457,7 +1457,7 @@ PHB_ZEBRA hb_zebra_create_pdf417( const char * szCode, HB_SIZE nLen, int iFlags,
 #if 0
          HB_TRACE( HB_TR_DEBUG, ( "iDataCount=%d iRowCount=%d iColCount=%d", iDataCount, iRowCount, iColCount ) );
 #endif
-         if( ( _pdf417_width( iColCount, iFlags ) < iRowCount * 3 * 2 || iColCount == 1 ) &&
+         if( (_pdf417_width(iColCount, iFlags) < iRowCount * 3 * 2 || iColCount == 1) &&
              iColCount <= MAX_COL_COUNT &&
              iColCount * iRowCount <= MAX_CODEWORD_COUNT ) /* This should solve 928 (= 29 columns * 32 rows) problem */
          {

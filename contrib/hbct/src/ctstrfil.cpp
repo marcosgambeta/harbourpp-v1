@@ -143,7 +143,7 @@ static HB_SIZE ct_StrFile( const char * pFileName, const char * pcStr, HB_SIZE n
       }
 
       nWrite = hb_fsWriteLarge( hFile, pcStr, nLen );
-      if( ( nWrite == nLen ) && bOpen && bTrunc )
+      if( (nWrite == nLen) && bOpen && bTrunc )
       {
          hb_fsWrite( hFile, nullptr, 0 );
       }

@@ -91,7 +91,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
    HB_SYMBOL_UNUSED(pszDefExt);
    HB_SYMBOL_UNUSED(pPaths);
 
-   if( ( ptr = strchr( pszHost, ':' ) ) != nullptr && ptr != pszHost )
+   if( (ptr = strchr(pszHost, ':')) != nullptr && ptr != pszHost )
    {
       nLen = ptr - pszHost;
       ++ptr;
@@ -147,7 +147,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
                         hb_socketShutdown( sd, HB_SOCKET_SHUT_RD );
                         break;
                   }
-                  sock = hb_sockexNew( sd, nullptr, nullptr );
+                  sock = hb_sockexNew(sd, nullptr, nullptr);
                   if( sock )
                   {
                      hb_sockexSetShutDown( sock, true );
@@ -310,7 +310,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
          return true;
 
       case HB_VF_IONAME:
-         hb_itemPutC( pValue, FILE_PREFIX );
+         hb_itemPutC(pValue, FILE_PREFIX);
          return true;
    }
 

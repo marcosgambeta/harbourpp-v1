@@ -259,7 +259,7 @@ static TOKEN_ENVIRONMENT sTokGet( int iParam, HB_BOOL fReadOnly )
          nLen = hb_parclen(iParam);
          if( nLen >= sizeof(TOKEN_POSITION) * 2 )
          {
-            TOKEN_ENVIRONMENT env = reinterpret_cast< TOKEN_ENVIRONMENT >( const_cast< char *>( hb_parc(iParam) ) );
+            TOKEN_ENVIRONMENT env = reinterpret_cast<TOKEN_ENVIRONMENT>(const_cast<char*>(hb_parc(iParam)));
 
             if( sTokEnvGetSize( env ) == nLen )
             {
@@ -279,7 +279,7 @@ static int sTokSave( TOKEN_ENVIRONMENT sTokenEnvironment, int iParam )
 {
    if( iParam != 0 && HB_ISBYREF( iParam ) )
    {
-      if( !hb_storclen_buffer( reinterpret_cast< char * >( sTokenEnvironment ), sTokEnvGetSize( sTokenEnvironment ), iParam ) )
+      if( !hb_storclen_buffer(reinterpret_cast<char*>(sTokenEnvironment), sTokEnvGetSize(sTokenEnvironment), iParam) )
       {
          sTokEnvDel( sTokenEnvironment );
          return 0;
@@ -333,7 +333,7 @@ HB_FUNC( TOKENINIT )
       }
 
       /* allocate new token environment */
-      if( ( sTokenEnvironment = sTokEnvNew() ) == nullptr )
+      if( (sTokenEnvironment = sTokEnvNew()) == nullptr )
       {
          int iArgErrorMode = ct_getargerrormode();
 
@@ -594,7 +594,7 @@ HB_FUNC( TOKENEXIT )
 
    if( sTokenEnvironment != nullptr )
    {
-      sTokSet( nullptr );
+      sTokSet(nullptr);
       hb_retl(true);
    }
    else

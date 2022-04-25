@@ -122,8 +122,7 @@ static void sizeofbits( HB_USHORT * pusBytes, HB_LONG * plPattern, HB_LONG * plT
 
 static HB_LONG __numfun( int iPCount, HB_LONG ( * operation )( HB_LONG wNum1, HB_LONG wNum2 ), HB_BOOL * pbOk )
 {
-   if( ( HB_ISNUM(1) || HB_ISNIL(1) ) &&
-       ( HB_ISNUM(2) || HB_ISCHAR(2) ) )
+   if( (HB_ISNUM(1) || HB_ISNIL(1)) && (HB_ISNUM(2) || HB_ISCHAR(2)) )
    {
       HB_LONG   lNum1 = __getparam(2);
       HB_LONG   lNumOp = 0;

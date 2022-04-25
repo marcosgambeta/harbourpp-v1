@@ -83,7 +83,7 @@ static void s_xhb_bitOper( int iOper )
 
       if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
       {
-         if( ( nLen1 | nLen2 ) != 0 )
+         if( (nLen1 | nLen2) != 0 )
          {
             const char * pStr1 = hb_itemGetCPtr(pItem1),
                        * pStr2 = hb_itemGetCPtr(pItem2);
@@ -161,7 +161,7 @@ static void s_xhb_bitOper( int iOper )
          return;
       }
 
-      if( ( HB_IS_NUMERIC(pItem1) || nLen1 == 1 ) && HB_IS_STRING(pItem2) )
+      if( (HB_IS_NUMERIC(pItem1) || nLen1 == 1) && HB_IS_STRING(pItem2) )
       {
          const char * pStr = hb_itemGetCPtr(pItem2);
          int iVal = nLen1 == 1 ? hb_itemGetCPtr(pItem1)[0] : hb_itemGetNI(pItem1);

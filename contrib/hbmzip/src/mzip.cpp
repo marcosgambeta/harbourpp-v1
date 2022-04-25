@@ -73,7 +73,7 @@
 #elif defined(HB_OS_WIN)
    #include <windows.h>
    #if !defined(INVALID_FILE_ATTRIBUTES)
-      #define INVALID_FILE_ATTRIBUTES  ( static_cast< DWORD >( -1 ) )
+      #define INVALID_FILE_ATTRIBUTES  ( static_cast<DWORD>(-1) )
    #endif
    #include "hbwinuni.h"
 #endif
@@ -108,11 +108,11 @@ static int _version_made_by( HB_BOOL fUnicode )
 
 static HB_GARBAGE_FUNC( hb_zipfile_destructor )
 {
-   zipFile * phZip = static_cast< zipFile * >( Cargo );
+   zipFile * phZip = static_cast<zipFile*>(Cargo);
 
    if( *phZip )
    {
-      zipClose( *phZip, nullptr );
+      zipClose(*phZip, nullptr);
       *phZip = nullptr;
    }
 }
@@ -125,7 +125,7 @@ static const HB_GC_FUNCS s_gcZipFileFuncs =
 
 static zipFile hb_zipfileParam( int iParam )
 {
-   zipFile * phZip = static_cast< zipFile * >( hb_parptrGC( &s_gcZipFileFuncs, iParam ) );
+   zipFile * phZip = static_cast<zipFile*>(hb_parptrGC(&s_gcZipFileFuncs, iParam));
 
    if( phZip && *phZip )
    {
@@ -138,7 +138,7 @@ static zipFile hb_zipfileParam( int iParam )
 
 static HB_GARBAGE_FUNC( hb_unzipfile_destructor )
 {
-   unzFile * phUnzip = static_cast< unzFile * >( Cargo );
+   unzFile * phUnzip = static_cast<unzFile*>(Cargo);
 
    if( *phUnzip )
    {
@@ -155,7 +155,7 @@ static const HB_GC_FUNCS s_gcUnZipFileFuncs =
 
 static unzFile hb_unzipfileParam( int iParam )
 {
-   unzFile * phUnzip = static_cast< unzFile * >( hb_parptrGC( &s_gcUnZipFileFuncs, iParam ) );
+   unzFile * phUnzip = static_cast<unzFile*>(hb_parptrGC(&s_gcUnZipFileFuncs, iParam));
 
    if( phUnzip && *phUnzip )
    {
@@ -198,12 +198,12 @@ static HB_FATTR hb_translateExtAttr( const char * szFileName, HB_FATTR ulExtAttr
 {
    int iLen;
 
-   iLen = static_cast< int >( strlen( szFileName ) );
-   if( ( iLen > 4 && ( hb_stricmp( szFileName + iLen - 4, ".exe" ) == 0 ||
-                       hb_stricmp( szFileName + iLen - 4, ".com" ) == 0 ||
-                       hb_stricmp( szFileName + iLen - 4, ".bat" ) == 0 ||
-                       hb_stricmp( szFileName + iLen - 4, ".cmd" ) == 0 ) ) ||
-       ( iLen > 3 && hb_stricmp( szFileName + iLen - 3, ".sh" ) == 0 ) )
+   iLen = static_cast<int>(strlen(szFileName));
+   if( (iLen > 4 && (hb_stricmp(szFileName + iLen - 4, ".exe") == 0 ||
+                     hb_stricmp(szFileName + iLen - 4, ".com") == 0 ||
+                     hb_stricmp(szFileName + iLen - 4, ".bat") == 0 ||
+                     hb_stricmp(szFileName + iLen - 4, ".cmd") == 0)) ||
+       (iLen > 3 && hb_stricmp(szFileName + iLen - 3, ".sh") == 0) )
    {
       ulExtAttr |= 0x00490000; /* --x--x--x */
    }
@@ -238,7 +238,7 @@ HB_FUNC( HB_ZIPOPEN )
    {
       const char * pszGlobalComment = nullptr;
       char *       pszFree;
-      zipFile      hZip = zipOpen2( hb_fsNameConv( szFileName, &pszFree ), hb_parnidef(2, APPEND_STATUS_CREATE), &pszGlobalComment, nullptr );
+      zipFile      hZip = zipOpen2(hb_fsNameConv(szFileName, &pszFree), hb_parnidef(2, APPEND_STATUS_CREATE), &pszGlobalComment, nullptr);
 
       if( pszFree )
       {
@@ -247,7 +247,7 @@ HB_FUNC( HB_ZIPOPEN )
 
       if( hZip )
       {
-         zipFile * phZip = static_cast< zipFile * >( hb_gcAllocate( sizeof(zipFile), &s_gcZipFileFuncs ) );
+         zipFile * phZip = static_cast<zipFile*>(hb_gcAllocate(sizeof(zipFile), &s_gcZipFileFuncs));
 
          *phZip = hZip;
          hb_retptrGC(phZip);
@@ -267,7 +267,7 @@ HB_FUNC( HB_ZIPOPEN )
 /* hb_zipClose( hZip, [cGlobalComment] ) --> nError */
 HB_FUNC( HB_ZIPCLOSE )
 {
-   zipFile * phZip = static_cast< zipFile * >( hb_parptrGC( &s_gcZipFileFuncs, 1 ) );
+   zipFile * phZip = static_cast<zipFile*>(hb_parptrGC(&s_gcZipFileFuncs, 1));
 
    if( phZip && *phZip )
    {
@@ -309,7 +309,7 @@ HB_FUNC( HB_ZIPFILECREATE )
 
          zip_fileinfo zfi;
 
-         memset( &zfi, 0, sizeof(zfi) );
+         memset(&zfi, 0, sizeof(zfi));
 
          if( HB_ISTIMESTAMP(3) )
          {
@@ -334,7 +334,7 @@ HB_FUNC( HB_ZIPFILECREATE )
          zfi.internal_fa = hb_parnl(5);
          zfi.external_fa = hb_parnl(6);
 #if !defined(HB_OS_UNIX)
-         if( ( zfi.external_fa & 0xFFFF0000 ) == 0 )
+         if( (zfi.external_fa & 0xFFFF0000) == 0 )
          {
             zfi.external_fa = hb_translateExtAttr( szZipName, zfi.external_fa );
          }
@@ -428,7 +428,7 @@ HB_FUNC( HB_UNZIPOPEN )
 
       if( hUnzip )
       {
-         unzFile * phUnzip = static_cast< unzFile * >( hb_gcAllocate( sizeof(unzFile), &s_gcUnZipFileFuncs ) );
+         unzFile * phUnzip = static_cast<unzFile*>(hb_gcAllocate(sizeof(unzFile), &s_gcUnZipFileFuncs));
 
          *phUnzip = hUnzip;
          hb_retptrGC(phUnzip);
@@ -443,7 +443,7 @@ HB_FUNC( HB_UNZIPOPEN )
 /* hb_unzipClose( hUnzip ) --> nError */
 HB_FUNC( HB_UNZIPCLOSE )
 {
-   unzFile * phUnzip = static_cast< unzFile * >( hb_parptrGC( &s_gcUnZipFileFuncs, 1 ) );
+   unzFile * phUnzip = static_cast<unzFile*>(hb_parptrGC(&s_gcUnZipFileFuncs, 1));
 
    if( phUnzip && *phUnzip )
    {
@@ -674,7 +674,7 @@ HB_FUNC( HB_UNZIPFILEREAD )
             }
          }
 
-         hb_retns( unzReadCurrentFile( hUnzip, buffer, static_cast< unsigned >( nSize ) ) );
+         hb_retns(unzReadCurrentFile(hUnzip, buffer, static_cast<unsigned>(nSize)));
       }
    }
    else
@@ -713,9 +713,9 @@ static HB_BOOL hb_zipGetFileInfoFromHandle( PHB_FILE pFile, HB_U32 * pulCRC, HB_
       do
       {
          nRead = hb_fileRead( pFile, pString, HB_Z_IOBUF_SIZE, -1 );
-         if( nRead > 0 && nRead != static_cast< HB_SIZE >( FS_ERROR ) )
+         if( nRead > 0 && nRead != static_cast<HB_SIZE>(FS_ERROR) )
          {
-            ulCRC = crc32( ulCRC, pString, static_cast< uInt >( nRead ) );
+            ulCRC = crc32( ulCRC, pString, static_cast<uInt>(nRead) );
             if( fText )
             {
                for( HB_SIZE u = 0; u < nRead; ++u )
@@ -759,7 +759,7 @@ static HB_BOOL hb_zipGetFileInfo( const char * pszFileName, HB_U32 * pulCRC, HB_
    PHB_FILE pFile;
    HB_BOOL  fResult;
 
-   pFile = hb_fileExtOpen( pszFileName, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK, nullptr, nullptr );
+   pFile = hb_fileExtOpen(pszFileName, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK, nullptr, nullptr);
    fResult = hb_zipGetFileInfoFromHandle( pFile, pulCRC, pfText );
    if( pFile != nullptr )
    {
@@ -777,7 +777,7 @@ HB_FUNC( HB_ZIPFILECRC32 )
    if( szFileName )
    {
       HB_U32 ulCRC = 0;
-      if( !hb_zipGetFileInfo( szFileName, &ulCRC, nullptr ) )
+      if( !hb_zipGetFileInfo(szFileName, &ulCRC, nullptr) )
       {
          ulCRC = 0;
       }
@@ -806,7 +806,7 @@ static int hb_zipStoreFile( zipFile hZip, int iParamFileName, int iParamZipName,
    char *       szZipName;
    const char * szComment;
 
-   memset( &zfi, 0, sizeof(zfi) );
+   memset(&zfi, 0, sizeof(zfi));
    fError    = HB_FALSE;
    ulExtAttr = 0;
 
@@ -954,8 +954,8 @@ static int hb_zipStoreFile( zipFile hZip, int iParamFileName, int iParamZipName,
 
    if( fUnicode )
    {
-      szZipName = hb_strdup( hb_parstr_utf8( iParamZipName, &hZipName, nullptr ) );
-      szComment = hb_parstr_utf8( iParamComment, &hComment, nullptr );
+      szZipName = hb_strdup(hb_parstr_utf8(iParamZipName, &hZipName, nullptr));
+      szComment = hb_parstr_utf8(iParamComment, &hComment, nullptr);
       flags    |= _ZIP_FLAG_UNICODE;
    }
    else
@@ -1009,7 +1009,7 @@ static int hb_zipStoreFile( zipFile hZip, int iParamFileName, int iParamZipName,
    }
    else
    {
-      pFile = hb_fileExtOpen( szFileName, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK, nullptr, nullptr );
+      pFile = hb_fileExtOpen(szFileName, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK, nullptr, nullptr);
       if( pFile != nullptr )
       {
 #if defined(HB_OS_WIN)
@@ -1018,7 +1018,7 @@ static int hb_zipStoreFile( zipFile hZip, int iParamFileName, int iParamZipName,
             FILETIME   ftutc, ft;
             SYSTEMTIME st;
 
-            if( GetFileTime( reinterpret_cast< HANDLE >( hb_fileHandle( pFile ) ), nullptr, nullptr, &ftutc ) &&
+            if( GetFileTime( reinterpret_cast<HANDLE>(hb_fileHandle(pFile) ), nullptr, nullptr, &ftutc ) &&
                 FileTimeToLocalFileTime( &ftutc, &ft ) &&
                 FileTimeToSystemTime( &ft, &st ) )
             {
@@ -1047,9 +1047,9 @@ static int hb_zipStoreFile( zipFile hZip, int iParamFileName, int iParamZipName,
          {
             char * pString = static_cast<char*>(hb_xgrab(HB_Z_IOBUF_SIZE));
 
-            while( ( nLen = hb_fileRead( pFile, pString, HB_Z_IOBUF_SIZE, -1 ) ) > 0 && nLen != static_cast< HB_SIZE >( FS_ERROR ) )
+            while( ( nLen = hb_fileRead( pFile, pString, HB_Z_IOBUF_SIZE, -1 ) ) > 0 && nLen != static_cast<HB_SIZE>(FS_ERROR) )
             {
-               zipWriteInFileInZip( hZip, pString, static_cast< unsigned >( nLen ) );
+               zipWriteInFileInZip( hZip, pString, static_cast<unsigned>(nLen) );
             }
 
             hb_xfree(pString);
@@ -1115,8 +1115,8 @@ static int hb_zipStoreFileHandle( zipFile hZip, PHB_FILE pFile, int iParamZipNam
 
    if( fUnicode )
    {
-      szZipName = hb_strdup( hb_parstr_utf8( iParamZipName, &hZipName, nullptr ) );
-      szComment = hb_parstr_utf8( iParamComment, &hComment, nullptr );
+      szZipName = hb_strdup(hb_parstr_utf8(iParamZipName, &hZipName, nullptr));
+      szComment = hb_parstr_utf8(iParamComment, &hComment, nullptr);
       flags    |= _ZIP_FLAG_UNICODE;
    }
    else
@@ -1136,7 +1136,7 @@ static int hb_zipStoreFileHandle( zipFile hZip, PHB_FILE pFile, int iParamZipNam
       }
    }
 
-   memset( &zfi, 0, sizeof(zfi) );
+   memset(&zfi, 0, sizeof(zfi));
 
    zfi.external_fa      = 0x81B60020;
    zfi.tmz_date.tm_sec  = 0;
@@ -1165,9 +1165,9 @@ static int hb_zipStoreFileHandle( zipFile hZip, PHB_FILE pFile, int iParamZipNam
    {
       char * pString = static_cast<char*>(hb_xgrab(HB_Z_IOBUF_SIZE));
       hb_fileSeek( pFile, 0, FS_SET );
-      while( ( nLen = hb_fileRead( pFile, pString, HB_Z_IOBUF_SIZE, -1 ) ) > 0 && nLen != static_cast< HB_SIZE >( FS_ERROR ) )
+      while( ( nLen = hb_fileRead( pFile, pString, HB_Z_IOBUF_SIZE, -1 ) ) > 0 && nLen != static_cast<HB_SIZE>(FS_ERROR) )
       {
-         zipWriteInFileInZip( hZip, pString, static_cast< unsigned >( nLen ) );
+         zipWriteInFileInZip( hZip, pString, static_cast<unsigned>(nLen) );
       }
       hb_xfree(pString);
 
@@ -1245,7 +1245,7 @@ static int hb_unzipExtractCurrentFile( unzFile hUnzip, const char * szFileName, 
 
       if( fUnicode )
       {
-         PHB_ITEM pTemp = hb_itemPutStrUTF8( nullptr, szNameRaw );
+         PHB_ITEM pTemp = hb_itemPutStrUTF8(nullptr, szNameRaw);
 
          szName = hb_strdup( hb_itemGetCPtr(pTemp) );
 
@@ -1268,7 +1268,7 @@ static int hb_unzipExtractCurrentFile( unzFile hUnzip, const char * szFileName, 
       char cSep = szName[nPos];
 
       /* allow both path separators, ignore terminating path separator */
-      if( ( cSep == '\\' || cSep == '/' ) && nPos < nLen - 1 )
+      if( (cSep == '\\' || cSep == '/') && nPos < nLen - 1 )
       {
          szName[nPos] = '\0';
          hb_fileDirMake( szName );
@@ -1286,14 +1286,14 @@ static int hb_unzipExtractCurrentFile( unzFile hUnzip, const char * szFileName, 
    }
    else
    {
-      pFile = hb_fileExtOpen( szName, nullptr, FO_READWRITE | FO_EXCLUSIVE | FO_PRIVATE | FXO_TRUNCATE | FXO_SHARELOCK, nullptr, nullptr );
+      pFile = hb_fileExtOpen(szName, nullptr, FO_READWRITE | FO_EXCLUSIVE | FO_PRIVATE | FXO_TRUNCATE | FXO_SHARELOCK, nullptr, nullptr);
       if( pFile != nullptr )
       {
          char * pString = static_cast<char*>(hb_xgrab(HB_Z_IOBUF_SIZE));
 
          while( ( iResult = unzReadCurrentFile( hUnzip, pString, HB_Z_IOBUF_SIZE ) ) > 0 )
          {
-            if( hb_fileWrite( pFile, pString, static_cast< HB_SIZE >( iResult ), -1 ) != static_cast< HB_SIZE >( iResult ) )
+            if( hb_fileWrite( pFile, pString, static_cast<HB_SIZE>(iResult), -1 ) != static_cast<HB_SIZE>(iResult) )
             {
                break;
             }
@@ -1307,17 +1307,17 @@ static int hb_unzipExtractCurrentFile( unzFile hUnzip, const char * szFileName, 
             FILETIME   ftutc, ft;
             SYSTEMTIME st;
 
-            st.wSecond       = static_cast< WORD >( ufi.tmu_date.tm_sec );
-            st.wMinute       = static_cast< WORD >( ufi.tmu_date.tm_min );
-            st.wHour         = static_cast< WORD >( ufi.tmu_date.tm_hour );
-            st.wDay          = static_cast< WORD >( ufi.tmu_date.tm_mday );
-            st.wMonth        = static_cast< WORD >( ufi.tmu_date.tm_mon ) + 1;
-            st.wYear         = static_cast< WORD >( ufi.tmu_date.tm_year );
+            st.wSecond       = static_cast<WORD>(ufi.tmu_date.tm_sec);
+            st.wMinute       = static_cast<WORD>(ufi.tmu_date.tm_min);
+            st.wHour         = static_cast<WORD>(ufi.tmu_date.tm_hour);
+            st.wDay          = static_cast<WORD>(ufi.tmu_date.tm_mday);
+            st.wMonth        = static_cast<WORD>(ufi.tmu_date.tm_mon) + 1;
+            st.wYear         = static_cast<WORD>(ufi.tmu_date.tm_year);
             st.wMilliseconds = 0;
 
             if( SystemTimeToFileTime( &st, &ft ) && LocalFileTimeToFileTime( &ft, &ftutc ) )
             {
-               SetFileTime( reinterpret_cast< HANDLE >( hb_fileHandle( pFile ) ), &ftutc, &ftutc, &ftutc );
+               SetFileTime( reinterpret_cast<HANDLE>(hb_fileHandle(pFile) ), &ftutc, &ftutc, &ftutc );
             }
          }
 #endif
@@ -1337,7 +1337,7 @@ static int hb_unzipExtractCurrentFile( unzFile hUnzip, const char * szFileName, 
       LPTSTR  lpFileNameFree;
       LPCTSTR lpFileName = HB_FSNAMECONV( szName, &lpFileNameFree );
 
-      SetFileAttributes( static_cast< LPCTSTR >( lpFileName ), ufi.external_fa & 0xFF );
+      SetFileAttributes( static_cast<LPCTSTR>(lpFileName), ufi.external_fa & 0xFF );
 
       if( lpFileNameFree )
       {
@@ -1356,7 +1356,7 @@ static int hb_unzipExtractCurrentFile( unzFile hUnzip, const char * szFileName, 
 
       HB_FATTR ulAttr = ufi.external_fa;
 
-      if( ( ulAttr & 0xFFFF0000 ) == 0 )
+      if( (ulAttr & 0xFFFF0000) == 0 )
       {
          ulAttr = hb_translateExtAttr( szName, ulAttr );
       }
@@ -1371,7 +1371,7 @@ static int hb_unzipExtractCurrentFile( unzFile hUnzip, const char * szFileName, 
                       ( ( ulAttr & 0x00400000 ) ? S_IXUSR : 0 ) |
                       ( ( ulAttr & 0x00800000 ) ? S_IWUSR : 0 ) |
                       ( ( ulAttr & 0x01000000 ) ? S_IRUSR : 0 ) );
-      memset( &st, 0, sizeof(st) );
+      memset(&st, 0, sizeof(st));
 
       st.tm_sec  = ufi.tmu_date.tm_sec;
       st.tm_min  = ufi.tmu_date.tm_min;
@@ -1400,7 +1400,7 @@ static int hb_unzipExtractCurrentFile( unzFile hUnzip, const char * szFileName, 
       hb_fileTimeSet( szName, lJulian, lMillisec );
 
 #if defined(HB_OS_UNIX)
-      if( ( ulAttr & 0xFFFF0000 ) == 0 )
+      if( (ulAttr & 0xFFFF0000) == 0 )
       {
          ulAttr = hb_translateExtAttr( szName, ulAttr );
       }
@@ -1456,7 +1456,7 @@ static int hb_unzipExtractCurrentFileToHandle( unzFile hUnzip, PHB_FILE pFile, c
 
       while( ( iResult = unzReadCurrentFile( hUnzip, pString, HB_Z_IOBUF_SIZE ) ) > 0 )
       {
-         if( hb_fileWrite( pFile, pString, static_cast< HB_SIZE >( iResult ), -1 ) != static_cast< HB_SIZE >( iResult ) )
+         if( hb_fileWrite( pFile, pString, static_cast<HB_SIZE>(iResult), -1 ) != static_cast<HB_SIZE>(iResult) )
          {
             break;
          }
@@ -1470,17 +1470,17 @@ static int hb_unzipExtractCurrentFileToHandle( unzFile hUnzip, PHB_FILE pFile, c
          FILETIME   ftutc, ft;
          SYSTEMTIME st;
 
-         st.wSecond       = static_cast< WORD >( ufi.tmu_date.tm_sec );
-         st.wMinute       = static_cast< WORD >( ufi.tmu_date.tm_min );
-         st.wHour         = static_cast< WORD >( ufi.tmu_date.tm_hour );
-         st.wDay          = static_cast< WORD >( ufi.tmu_date.tm_mday );
-         st.wMonth        = static_cast< WORD >( ufi.tmu_date.tm_mon ) + 1;
-         st.wYear         = static_cast< WORD >( ufi.tmu_date.tm_year );
+         st.wSecond       = static_cast<WORD>(ufi.tmu_date.tm_sec);
+         st.wMinute       = static_cast<WORD>(ufi.tmu_date.tm_min);
+         st.wHour         = static_cast<WORD>(ufi.tmu_date.tm_hour);
+         st.wDay          = static_cast<WORD>(ufi.tmu_date.tm_mday);
+         st.wMonth        = static_cast<WORD>(ufi.tmu_date.tm_mon) + 1;
+         st.wYear         = static_cast<WORD>(ufi.tmu_date.tm_year);
          st.wMilliseconds = 0;
 
          if( SystemTimeToFileTime( &st, &ft ) && LocalFileTimeToFileTime( &ft, &ftutc ) )
          {
-            SetFileTime( reinterpret_cast< HANDLE >( hb_fileHandle( pFile ) ), &ftutc, &ftutc, &ftutc );
+            SetFileTime( reinterpret_cast<HANDLE>(hb_fileHandle(pFile)), &ftutc, &ftutc, &ftutc );
          }
       }
 #endif
@@ -1569,7 +1569,7 @@ static int hb_zipDeleteFile( const char * szZipFile, const char * szFileMask )
       if( ugi.size_comment > 0 )
       {
          pszGlobalComment = static_cast<char*>(hb_xgrab(ugi.size_comment + 1));
-         if( static_cast< uLong >( unzGetGlobalComment( hUnzip, pszGlobalComment, ugi.size_comment ) ) != ugi.size_comment )
+         if( static_cast<uLong>(unzGetGlobalComment(hUnzip, pszGlobalComment, ugi.size_comment)) != ugi.size_comment )
          {
             iResult = UNZ_ERRNO;
          }
@@ -1640,8 +1640,8 @@ static int hb_zipDeleteFile( const char * szZipFile, const char * szFileMask )
 
          fUnicode = ( ufi.flag & _ZIP_FLAG_UNICODE ) != 0;
 
-         memset( &zfi, 0, sizeof(zfi) );
-         memcpy( &zfi.tmz_date, &ufi.tmu_date, sizeof(tm_unz) );
+         memset(&zfi, 0, sizeof(zfi));
+         memcpy(&zfi.tmz_date, &ufi.tmu_date, sizeof(tm_unz));
          zfi.dosDate     = ufi.dosDate;
          zfi.internal_fa = ufi.internal_fa;
          zfi.external_fa = ufi.external_fa;
@@ -1663,7 +1663,7 @@ static int hb_zipDeleteFile( const char * szZipFile, const char * szFileMask )
             while( ulLeft > 0 )
             {
                int iRead = HB_MIN( ulLeft, HB_Z_IOBUF_SIZE );
-               iResult = unzReadCurrentFile( hUnzip, static_cast< voidp >( buffer ), iRead );
+               iResult = unzReadCurrentFile( hUnzip, static_cast<voidp>(buffer), iRead );
                if( iResult < 0 )
                {
                   break;
@@ -1673,7 +1673,7 @@ static int hb_zipDeleteFile( const char * szZipFile, const char * szFileMask )
                   iResult = UNZ_ERRNO;
                   break;
                }
-               iResult = zipWriteInFileInZip( hZip, static_cast< voidp >( buffer ), iRead );
+               iResult = zipWriteInFileInZip( hZip, static_cast<voidp>(buffer), iRead );
                if( iResult != UNZ_OK )
                {
                   break;
@@ -1743,7 +1743,7 @@ static int hb_zipDeleteFile( const char * szZipFile, const char * szFileMask )
 
    if( iResult != UNZ_OK )
    {
-      zipClose( hZip, nullptr );
+      zipClose(hZip, nullptr);
    }
    else
    {

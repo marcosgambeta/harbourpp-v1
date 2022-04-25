@@ -110,7 +110,7 @@ HB_FUNC( DLLCALL )
    {
       if( HB_IS_STRING(pLibrary) )
       {
-         pLibraryHandle = hb_libLoad( pLibrary, nullptr );
+         pLibraryHandle = hb_libLoad(pLibrary, nullptr);
          if( pLibraryHandle )
             bFreeLibrary = HB_TRUE;
       }
@@ -124,11 +124,11 @@ HB_FUNC( DLLCALL )
       int    iFuncFlags   = 0;
       void * pFunctionPtr = hb_libSymAddr( pLibraryHandle, hb_parcx(3) );
 
-      if( ( iXPPFlags & DLL_CDECL ) != 0 )
+      if( (iXPPFlags & DLL_CDECL) != 0 )
          iFuncFlags |= HB_DYN_CALLCONV_CDECL;
-      if( ( iXPPFlags & DLL_STDCALL ) != 0 )
+      if( (iXPPFlags & DLL_STDCALL) != 0 )
          iFuncFlags |= HB_DYN_CALLCONV_STDCALL;
-      if( ( iXPPFlags & DLL_SYSTEM ) != 0 )
+      if( (iXPPFlags & DLL_SYSTEM) != 0 )
          iFuncFlags |= HB_DYN_CALLCONV_SYSCALL;
 
       hb_dynCall( iFuncFlags,
@@ -156,7 +156,7 @@ HB_FUNC( DLLPREPARECALL )
    {
       if( HB_IS_STRING(pLibrary) )
       {
-         pLibraryHandle = hb_libLoad( pLibrary, nullptr );
+         pLibraryHandle = hb_libLoad(pLibrary, nullptr);
          if( pLibraryHandle )
             bFreeLibrary = HB_TRUE;
       }
@@ -173,11 +173,11 @@ HB_FUNC( DLLPREPARECALL )
          int iXPPFlags = hb_parni(2), iFuncFlags = 0;
          PHB_DLLEXEC xec;
 
-         if( ( iXPPFlags & DLL_CDECL ) != 0 )
+         if( (iXPPFlags & DLL_CDECL) != 0 )
             iFuncFlags |= HB_DYN_CALLCONV_CDECL;
-         if( ( iXPPFlags & DLL_STDCALL ) != 0 )
+         if( (iXPPFlags & DLL_STDCALL) != 0 )
             iFuncFlags |= HB_DYN_CALLCONV_STDCALL;
-         if( ( iXPPFlags & DLL_SYSTEM ) != 0 )
+         if( (iXPPFlags & DLL_SYSTEM) != 0 )
             iFuncFlags |= HB_DYN_CALLCONV_SYSCALL;
 
          if( !bFreeLibrary )

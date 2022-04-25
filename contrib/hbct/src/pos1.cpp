@@ -95,7 +95,7 @@ static void do_pos1( int iSwitch )
          iParamShift += 2;
       }
 
-      pcString = reinterpret_cast< const unsigned char * >( hb_parc(iParamShift + 1) );
+      pcString = reinterpret_cast<const unsigned char*>(hb_parc(iParamShift + 1));
       sStrLen = hb_parclen(iParamShift + 1);
 
       iMode = hb_parldef(iParamShift + 2, 0);
@@ -124,7 +124,7 @@ static void do_pos1( int iSwitch )
                break;
          }
 
-         if( ( iMode && !iDoRet ) || ( !iMode && iDoRet ) )
+         if( (iMode && !iDoRet) || (!iMode && iDoRet) )
          {
             hb_retns( puc - pcString + 1 );
             return;

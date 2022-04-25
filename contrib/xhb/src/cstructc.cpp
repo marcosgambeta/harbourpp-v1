@@ -55,16 +55,16 @@
 #include "hbset.h"
 #include "hbctypes.ch"
 
-static PHB_ITEM hb_itemPutCRaw( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
+static PHB_ITEM hb_itemPutCRaw(PHB_ITEM pItem, const char * szText, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutCRaw(%p, %s, %" HB_PFS "u)", static_cast< void * >( pItem ), szText, nLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutCRaw(%p, %s, %" HB_PFS "u)", static_cast<void*>(pItem), szText, nLen ) );
 #endif
 
    if( pItem )
    {
       if( HB_IS_COMPLEX(pItem) )
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
    }
    else
       pItem = hb_itemNew(nullptr);
@@ -77,23 +77,23 @@ static PHB_ITEM hb_itemPutCRaw( PHB_ITEM pItem, const char * szText, HB_SIZE nLe
    }
    pItem->type = Harbour::Item::STRING;
    pItem->item.asString.length    = nLen;
-   pItem->item.asString.value     = const_cast< char * >( szText );
+   pItem->item.asString.value     = const_cast<char*>(szText);
    pItem->item.asString.allocated = nLen;
 
    return pItem;
 }
 
 #undef hb_itemPutCRawStatic
-static PHB_ITEM hb_itemPutCRawStatic( PHB_ITEM pItem, const char * szText, HB_SIZE nLen )
+static PHB_ITEM hb_itemPutCRawStatic(PHB_ITEM pItem, const char * szText, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutCRawStatic(%p, %s, %" HB_PFS "u)", static_cast< void * >( pItem ), szText, nLen ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_itemPutCRawStatic(%p, %s, %" HB_PFS "u)", static_cast<void*>(pItem), szText, nLen ) );
 #endif
 
    if( pItem )
    {
       if( HB_IS_COMPLEX(pItem) )
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
    }
    else
       pItem = hb_itemNew(nullptr);
@@ -101,7 +101,7 @@ static PHB_ITEM hb_itemPutCRawStatic( PHB_ITEM pItem, const char * szText, HB_SI
    pItem->type = Harbour::Item::STRING;
    pItem->item.asString.allocated = 0;
    pItem->item.asString.length    = nLen;
-   pItem->item.asString.value     = const_cast< char * >( szText );
+   pItem->item.asString.value     = const_cast<char*>(szText);
 
    return pItem;
 }
@@ -133,7 +133,7 @@ static HB_UINT SizeOfCStructure( PHB_ITEM aDef, HB_UINT uiAlign )
 
    for( nIndex = 0; nIndex < nLen; nIndex++ )
    {
-      if( ( pBaseDef->pItems + nIndex )->type != Harbour::Item::INTEGER )
+      if( (pBaseDef->pItems + nIndex)->type != Harbour::Item::INTEGER )
       {
          hb_errRT_BASE( EG_ARG, 2023, nullptr, "SizeOfCStructure", 1, hb_paramError(1) );
          return 0;
@@ -202,13 +202,13 @@ static HB_UINT SizeOfCStructure( PHB_ITEM aDef, HB_UINT uiAlign )
             break;
 
          default:
-            if( ( pBaseDef->pItems + nIndex )->item.asInteger.value >= CTYPE_STRUCTURE_PTR )
+            if( (pBaseDef->pItems + nIndex)->item.asInteger.value >= CTYPE_STRUCTURE_PTR )
             {
                uiMemberSize = sizeof(void*);
             }
-            else if( ( pBaseDef->pItems + nIndex )->item.asInteger.value >= CTYPE_STRUCTURE )
+            else if( (pBaseDef->pItems + nIndex)->item.asInteger.value >= CTYPE_STRUCTURE )
             {
-               PHB_ITEM pID        = hb_itemPutNI( nullptr, ( pBaseDef->pItems + nIndex )->item.asInteger.value );
+               PHB_ITEM pID        = hb_itemPutNI(nullptr, (pBaseDef->pItems + nIndex)->item.asInteger.value);
                PHB_ITEM pStructure = hb_itemDoC( "HB_CSTRUCTUREFROMID", 1, pID );
 
                hb_itemRelease(pID);
@@ -216,7 +216,7 @@ static HB_UINT SizeOfCStructure( PHB_ITEM aDef, HB_UINT uiAlign )
                if( HB_IS_OBJECT(pStructure) )
                {
                   hb_objSendMsg(pStructure, "SizeOf", 0);
-                  uiMemberSize = static_cast< HB_UINT >( hb_parns( -1 ) );
+                  uiMemberSize = static_cast<HB_UINT>(hb_parns(-1));
                   hb_itemRelease(pStructure);
                }
                else
@@ -237,7 +237,7 @@ static HB_UINT SizeOfCStructure( PHB_ITEM aDef, HB_UINT uiAlign )
       {
          uiPad = ( ( uiMemberSize < uiAlign ) ? uiMemberSize : uiAlign );
 
-         if( ( cShift = static_cast< HB_BYTE >( uiSize % uiPad ) ) > 0 )
+         if( (cShift = static_cast<HB_BYTE>(uiSize % uiPad)) > 0 )
             uiSize += uiPad - cShift;
       }
 
@@ -248,7 +248,7 @@ static HB_UINT SizeOfCStructure( PHB_ITEM aDef, HB_UINT uiAlign )
       #endif
    }
 
-   if( ( cShift = static_cast< HB_BYTE >( uiSize % uiAlign ) ) > 0 )
+   if( (cShift = static_cast<HB_BYTE>(uiSize % uiAlign)) > 0 )
       uiSize += uiAlign - cShift;
 
    #if 0
@@ -268,7 +268,7 @@ HB_FUNC( HB_SIZEOFCSTRUCTURE )
       HB_UINT  uiAlign;
 
       if( pAlign )
-         uiAlign = static_cast< HB_BYTE >( pAlign->item.asInteger.value );
+         uiAlign = static_cast<HB_BYTE>(pAlign->item.asInteger.value);
       else
          uiAlign = 8;
 
@@ -306,7 +306,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
       {
          case CTYPE_CHAR:          /* char */
          case CTYPE_UNSIGNED_CHAR: /* unsigned char */
-            if( ( pBaseVar->pItems + nIndex )->type && !HB_IS_NUMERIC(pBaseVar->pItems + nIndex) )
+            if( (pBaseVar->pItems + nIndex)->type && !HB_IS_NUMERIC(pBaseVar->pItems + nIndex) )
             {
                hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError(1), hb_paramError(2), hb_paramError(3) );
                return nullptr;
@@ -317,10 +317,10 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
          case CTYPE_CHAR_PTR:          /* char * */
          case CTYPE_UNSIGNED_CHAR_PTR: /* unsigned char * */
-            if( ( pBaseVar->pItems + nIndex )->type &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::STRING &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::POINTER &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::LONG )
+            if( (pBaseVar->pItems + nIndex)->type &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::STRING &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::POINTER &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::LONG )
             {
                hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError(1), hb_paramError(2), hb_paramError(3) );
                return nullptr;
@@ -337,9 +337,9 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
          case CTYPE_SHORT_PTR:          /* short * */
          case CTYPE_UNSIGNED_SHORT_PTR: /* unsigned short * */
-            if( ( pBaseVar->pItems + nIndex )->type &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::POINTER &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::LONG )
+            if( (pBaseVar->pItems + nIndex)->type &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::POINTER &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::LONG )
             {
                hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError(1), hb_paramError(2), hb_paramError(3) );
                return nullptr;
@@ -356,9 +356,9 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
          case CTYPE_INT_PTR:          /* int * */
          case CTYPE_UNSIGNED_INT_PTR: /* unsigned int * */
-            if( ( pBaseVar->pItems + nIndex )->type &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::POINTER &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::LONG )
+            if( (pBaseVar->pItems + nIndex)->type &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::POINTER &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::LONG )
             {
                hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError(1), hb_paramError(2), hb_paramError(3) );
                return nullptr;
@@ -375,9 +375,9 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
          case CTYPE_LONG_PTR:          /* long * */
          case CTYPE_UNSIGNED_LONG_PTR: /* unsigned long * */
-            if( ( pBaseVar->pItems + nIndex )->type &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::POINTER &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::LONG )
+            if( (pBaseVar->pItems + nIndex)->type &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::POINTER &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::LONG )
             {
                hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError(1), hb_paramError(2), hb_paramError(3) );
                return nullptr;
@@ -387,7 +387,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             break;
 
          case CTYPE_FLOAT:  /* float */
-            if( ( pBaseVar->pItems + nIndex )->type && ( pBaseVar->pItems + nIndex )->type != Harbour::Item::DOUBLE )
+            if( (pBaseVar->pItems + nIndex)->type && (pBaseVar->pItems + nIndex)->type != Harbour::Item::DOUBLE )
             {
                hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError(1), hb_paramError(2), hb_paramError(3) );
                return nullptr;
@@ -397,10 +397,10 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             break;
 
          case CTYPE_FLOAT_PTR:  /* float * */
-            if( ( pBaseVar->pItems + nIndex )->type &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::DOUBLE &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::POINTER &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::LONG )
+            if( (pBaseVar->pItems + nIndex)->type &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::DOUBLE &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::POINTER &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::LONG )
             {
                hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError(1), hb_paramError(2), hb_paramError(3) );
                return nullptr;
@@ -410,8 +410,8 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             break;
 
          case CTYPE_DOUBLE:  /* double */
-            if( ( pBaseVar->pItems + nIndex )->type &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::DOUBLE )
+            if( (pBaseVar->pItems + nIndex)->type &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::DOUBLE )
             {
                hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError(1), hb_paramError(2), hb_paramError(3) );
                return nullptr;
@@ -421,10 +421,10 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             break;
 
          case CTYPE_DOUBLE_PTR:  /* double * */
-            if( ( pBaseVar->pItems + nIndex )->type &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::DOUBLE &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::POINTER &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::LONG )
+            if( (pBaseVar->pItems + nIndex)->type &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::DOUBLE &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::POINTER &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::LONG )
             {
                hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError(1), hb_paramError(2), hb_paramError(3) );
                return nullptr;
@@ -434,10 +434,10 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             break;
 
          case CTYPE_VOID_PTR:  /* void * (pointer) */
-            if( ( pBaseVar->pItems + nIndex )->type &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::POINTER &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::LONG &&
-                ( pBaseVar->pItems + nIndex )->type != Harbour::Item::STRING )
+            if( (pBaseVar->pItems + nIndex)->type &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::POINTER &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::LONG &&
+                (pBaseVar->pItems + nIndex)->type != Harbour::Item::STRING )
             {
                hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError(1), hb_paramError(2), hb_paramError(3) );
                return nullptr;
@@ -447,13 +447,13 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             break;
 
          default:
-            if( ( pBaseDef->pItems + nIndex )->item.asInteger.value >= CTYPE_STRUCTURE_PTR )
+            if( (pBaseDef->pItems + nIndex)->item.asInteger.value >= CTYPE_STRUCTURE_PTR )
             {
                uiMemberSize = sizeof(void*);
             }
-            else if( ( pBaseDef->pItems + nIndex )->item.asInteger.value >= CTYPE_STRUCTURE )
+            else if( (pBaseDef->pItems + nIndex)->item.asInteger.value >= CTYPE_STRUCTURE )
             {
-               PHB_ITEM pID        = hb_itemPutNI( nullptr, ( pBaseDef->pItems + nIndex )->item.asInteger.value );
+               PHB_ITEM pID        = hb_itemPutNI(nullptr, (pBaseDef->pItems + nIndex)->item.asInteger.value);
                PHB_ITEM pStructure = hb_itemDoC( "HB_CSTRUCTUREFROMID", 1, pID );
 
                hb_itemRelease(pID);
@@ -461,7 +461,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                if( HB_IS_OBJECT(pStructure) )
                {
                   hb_objSendMsg(pStructure, "SizeOf", 0);
-                  uiMemberSize = static_cast< HB_UINT >( hb_parns( -1 ) );
+                  uiMemberSize = static_cast<HB_UINT>(hb_parns(-1));
                   hb_itemRelease(pStructure);
                }
                else
@@ -482,7 +482,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
       {
          HB_UINT uiPad = ( ( uiMemberSize < uiAlign ) ? uiMemberSize : uiAlign );
 
-         if( ( cShift = static_cast< HB_BYTE >( uiOffset % uiPad ) ) > 0 )
+         if( (cShift = static_cast<HB_BYTE>(uiOffset % uiPad)) > 0 )
             uiOffset += uiPad - cShift;
       }
 
@@ -493,14 +493,14 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
       switch( ( pBaseDef->pItems + nIndex )->item.asInteger.value )
       {
          case CTYPE_CHAR:  /* char */
-            if( ( pBaseVar->pItems + nIndex )->type )
-               *( reinterpret_cast< char * >( Buffer + uiOffset ) ) = static_cast< char >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+            if( (pBaseVar->pItems + nIndex)->type )
+               *( reinterpret_cast<char*>(Buffer + uiOffset) ) = static_cast<char>((pBaseVar->pItems + nIndex)->item.asInteger.value);
             else
-               *( reinterpret_cast< char * >( Buffer + uiOffset ) ) = 0;
+               *( reinterpret_cast<char*>(Buffer + uiOffset) ) = 0;
             break;
 
          case CTYPE_UNSIGNED_CHAR:  /* unsigned char */
-            if( ( pBaseVar->pItems + nIndex )->type )
+            if( (pBaseVar->pItems + nIndex)->type )
                *(static_cast<HB_BYTE*>(Buffer + uiOffset)) = static_cast<HB_BYTE>((pBaseVar->pItems + nIndex)->item.asInteger.value);
             else
                *(static_cast<HB_BYTE*>(Buffer + uiOffset)) = 0;
@@ -514,15 +514,15 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
                   break;
 
                case Harbour::Item::POINTER:
-                  *( ( char ** ) ( Buffer + uiOffset ) ) = static_cast< char * >( ( pBaseVar->pItems + nIndex )->item.asPointer.value );
+                  *( ( char ** ) ( Buffer + uiOffset ) ) = static_cast<char*>((pBaseVar->pItems + nIndex)->item.asPointer.value);
                   break;
 #if UINT_MAX == ULONG_MAX
                case Harbour::Item::INTEGER:
-                  *( ( char ** ) ( Buffer + uiOffset ) ) = reinterpret_cast< char * >( static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asInteger.value ) );
+                  *( ( char ** ) ( Buffer + uiOffset ) ) = reinterpret_cast<char*>(static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asInteger.value));
                   break;
 #endif
                case Harbour::Item::LONG:
-                  *( ( char ** ) ( Buffer + uiOffset ) ) = reinterpret_cast< char * >( static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asLong.value ) );
+                  *( ( char ** ) ( Buffer + uiOffset ) ) = reinterpret_cast<char*>(static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asLong.value));
                   break;
 
                default:
@@ -558,13 +558,13 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             break;
 
          case CTYPE_SHORT:  /* short */
-            if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::INTEGER )
-               *( ( short * ) ( Buffer + uiOffset ) ) = static_cast< short >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
-            else if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::LONG )
-               *( ( short * ) ( Buffer + uiOffset ) ) = static_cast< short >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
-            else if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::DOUBLE )
-               *( ( short * ) ( Buffer + uiOffset ) ) = static_cast< short >( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
-            else if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::NIL )
+            if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::INTEGER )
+               *( ( short * ) ( Buffer + uiOffset ) ) = static_cast<short>((pBaseVar->pItems + nIndex)->item.asInteger.value);
+            else if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::LONG )
+               *( ( short * ) ( Buffer + uiOffset ) ) = static_cast<short>((pBaseVar->pItems + nIndex)->item.asLong.value);
+            else if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::DOUBLE )
+               *( ( short * ) ( Buffer + uiOffset ) ) = static_cast<short>((pBaseVar->pItems + nIndex)->item.asDouble.value);
+            else if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::NIL )
                *( ( short * ) ( Buffer + uiOffset ) ) = 0;
             else
             {
@@ -574,13 +574,13 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             break;
 
          case CTYPE_UNSIGNED_SHORT:  /* unsigned short */
-            if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::INTEGER )
-               *( ( unsigned short * ) ( Buffer + uiOffset ) ) = static_cast< unsigned short >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
-            else if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::LONG )
-               *( ( unsigned short * ) ( Buffer + uiOffset ) ) = static_cast< unsigned short >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
-            else if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::DOUBLE )
-               *( ( unsigned short * ) ( Buffer + uiOffset ) ) = static_cast< unsigned short >( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
-            else if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::NIL )
+            if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::INTEGER )
+               *( ( unsigned short * ) ( Buffer + uiOffset ) ) = static_cast<unsigned short>((pBaseVar->pItems + nIndex)->item.asInteger.value);
+            else if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::LONG )
+               *( ( unsigned short * ) ( Buffer + uiOffset ) ) = static_cast<unsigned short>((pBaseVar->pItems + nIndex)->item.asLong.value);
+            else if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::DOUBLE )
+               *( ( unsigned short * ) ( Buffer + uiOffset ) ) = static_cast<unsigned short>((pBaseVar->pItems + nIndex)->item.asDouble.value);
+            else if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::NIL )
                *( ( unsigned short * ) ( Buffer + uiOffset ) ) = 0;
             else
             {
@@ -598,11 +598,11 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
 #if UINT_MAX == ULONG_MAX
                case Harbour::Item::INTEGER:
-                  *( ( short ** ) ( Buffer + uiOffset ) ) = ( short * ) static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+                  *( ( short ** ) ( Buffer + uiOffset ) ) = ( short * ) static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asInteger.value);
                   break;
 #endif
                case Harbour::Item::LONG:
-                  *( ( short ** ) ( Buffer + uiOffset ) ) = ( short * ) static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
+                  *( ( short ** ) ( Buffer + uiOffset ) ) = ( short * ) static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asLong.value);
                   break;
 
                default:
@@ -620,11 +620,11 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
 #if UINT_MAX == ULONG_MAX
                case Harbour::Item::INTEGER:
-                  *( ( unsigned short ** ) ( Buffer + uiOffset ) ) = ( unsigned short * ) static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+                  *( ( unsigned short ** ) ( Buffer + uiOffset ) ) = ( unsigned short * ) static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asInteger.value);
                   break;
 #endif
                case Harbour::Item::LONG:
-                  *( ( unsigned short ** ) ( Buffer + uiOffset ) ) = ( unsigned short * ) static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
+                  *( ( unsigned short ** ) ( Buffer + uiOffset ) ) = ( unsigned short * ) static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asLong.value);
                   break;
 
                default:
@@ -634,13 +634,13 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             break;
 
          case CTYPE_INT:  /* int */
-            if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::INTEGER )
-               *( ( int * ) ( Buffer + uiOffset ) ) = static_cast< int >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
-            else if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::LONG )
-               *( ( int * ) ( Buffer + uiOffset ) ) = static_cast< int >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
-            else if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::DOUBLE )
-               *( ( int * ) ( Buffer + uiOffset ) ) = static_cast< int >( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
-            else if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::NIL )
+            if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::INTEGER )
+               *( ( int * ) ( Buffer + uiOffset ) ) = static_cast<int>((pBaseVar->pItems + nIndex)->item.asInteger.value);
+            else if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::LONG )
+               *( ( int * ) ( Buffer + uiOffset ) ) = static_cast<int>((pBaseVar->pItems + nIndex)->item.asLong.value);
+            else if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::DOUBLE )
+               *( ( int * ) ( Buffer + uiOffset ) ) = static_cast<int>((pBaseVar->pItems + nIndex)->item.asDouble.value);
+            else if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::NIL )
                *( ( int * ) ( Buffer + uiOffset ) ) = 0;
             else
             {
@@ -650,13 +650,13 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             break;
 
          case CTYPE_UNSIGNED_INT:  /* unsigned int */
-            if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::INTEGER )
-               *( ( unsigned int * ) ( Buffer + uiOffset ) ) = static_cast< unsigned int >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
-            else if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::LONG )
-               *( ( unsigned int * ) ( Buffer + uiOffset ) ) = static_cast< unsigned int >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
-            else if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::DOUBLE )
-               *( ( unsigned int * ) ( Buffer + uiOffset ) ) = static_cast< unsigned int >( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
-            else if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::NIL )
+            if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::INTEGER )
+               *( ( unsigned int * ) ( Buffer + uiOffset ) ) = static_cast<unsigned int>((pBaseVar->pItems + nIndex)->item.asInteger.value);
+            else if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::LONG )
+               *( ( unsigned int * ) ( Buffer + uiOffset ) ) = static_cast<unsigned int>((pBaseVar->pItems + nIndex)->item.asLong.value);
+            else if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::DOUBLE )
+               *( ( unsigned int * ) ( Buffer + uiOffset ) ) = static_cast<unsigned int>((pBaseVar->pItems + nIndex)->item.asDouble.value);
+            else if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::NIL )
                *( ( unsigned int * ) ( Buffer + uiOffset ) ) = 0;
             else
             {
@@ -675,11 +675,11 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
 #if UINT_MAX == ULONG_MAX
                case Harbour::Item::INTEGER:
-                  *( ( int ** ) ( Buffer + uiOffset ) ) = ( int * ) static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+                  *( ( int ** ) ( Buffer + uiOffset ) ) = ( int * ) static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asInteger.value);
                   break;
 #endif
                case Harbour::Item::LONG:
-                  *( ( int ** ) ( Buffer + uiOffset ) ) = ( int * ) static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
+                  *( ( int ** ) ( Buffer + uiOffset ) ) = ( int * ) static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asLong.value);
                   break;
 
                default:
@@ -697,11 +697,11 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
 #if UINT_MAX == ULONG_MAX
                case Harbour::Item::INTEGER:
-                  *( ( unsigned int ** ) ( Buffer + uiOffset ) ) = ( unsigned int * ) static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+                  *( ( unsigned int ** ) ( Buffer + uiOffset ) ) = ( unsigned int * ) static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asInteger.value);
                   break;
 #endif
                case Harbour::Item::LONG:
-                  *( ( unsigned int ** ) ( Buffer + uiOffset ) ) = ( unsigned int * ) static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
+                  *( ( unsigned int ** ) ( Buffer + uiOffset ) ) = ( unsigned int * ) static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asLong.value);
                   break;
 
                default:
@@ -711,13 +711,13 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             break;
 
          case CTYPE_LONG:  /* long */
-            if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::INTEGER )
-               *( ( long * ) ( Buffer + uiOffset ) ) = static_cast< long >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
-            else if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::LONG )
-               *( ( long * ) ( Buffer + uiOffset ) ) = static_cast< long >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
-            else if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::DOUBLE )
-               *( ( long * ) ( Buffer + uiOffset ) ) = static_cast< long >( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
-            else if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::NIL )
+            if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::INTEGER )
+               *( ( long * ) ( Buffer + uiOffset ) ) = static_cast<long>((pBaseVar->pItems + nIndex)->item.asInteger.value);
+            else if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::LONG )
+               *( ( long * ) ( Buffer + uiOffset ) ) = static_cast<long>((pBaseVar->pItems + nIndex)->item.asLong.value);
+            else if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::DOUBLE )
+               *( ( long * ) ( Buffer + uiOffset ) ) = static_cast<long>((pBaseVar->pItems + nIndex)->item.asDouble.value);
+            else if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::NIL )
                *( ( long * ) ( Buffer + uiOffset ) ) = 0;
             else
             {
@@ -727,13 +727,13 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             break;
 
          case CTYPE_UNSIGNED_LONG:  /* unsigned long */
-            if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::INTEGER )
-               *( ( unsigned long * ) ( Buffer + uiOffset ) ) = static_cast< unsigned long >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
-            else if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::LONG )
-               *( ( unsigned long * ) ( Buffer + uiOffset ) ) = static_cast< unsigned long >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
-            else if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::DOUBLE )
-               *( ( unsigned long * ) ( Buffer + uiOffset ) ) = static_cast< unsigned long >( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
-            else if( ( pBaseVar->pItems + nIndex )->type == Harbour::Item::NIL )
+            if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::INTEGER )
+               *( ( unsigned long * ) ( Buffer + uiOffset ) ) = static_cast<unsigned long>((pBaseVar->pItems + nIndex)->item.asInteger.value);
+            else if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::LONG )
+               *( ( unsigned long * ) ( Buffer + uiOffset ) ) = static_cast<unsigned long>((pBaseVar->pItems + nIndex)->item.asLong.value);
+            else if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::DOUBLE )
+               *( ( unsigned long * ) ( Buffer + uiOffset ) ) = static_cast<unsigned long>((pBaseVar->pItems + nIndex)->item.asDouble.value);
+            else if( (pBaseVar->pItems + nIndex)->type == Harbour::Item::NIL )
                *( ( unsigned long * ) ( Buffer + uiOffset ) ) = 0;
             else
             {
@@ -751,11 +751,11 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
 #if UINT_MAX == ULONG_MAX
                case Harbour::Item::INTEGER:
-                  *( ( long ** ) ( Buffer + uiOffset ) ) = ( long * ) static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+                  *( ( long ** ) ( Buffer + uiOffset ) ) = ( long * ) static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asInteger.value);
                   break;
 #endif
                case Harbour::Item::LONG:
-                  *( ( long ** ) ( Buffer + uiOffset ) ) = ( long * ) static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
+                  *( ( long ** ) ( Buffer + uiOffset ) ) = ( long * ) static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asLong.value);
                   break;
 
                default:
@@ -768,16 +768,16 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             switch( ( pBaseVar->pItems + nIndex )->type )
             {
                case Harbour::Item::POINTER:
-                  *( ( unsigned long ** ) ( Buffer + uiOffset ) ) = ( unsigned long * ) ( ( pBaseVar->pItems + nIndex )->item.asPointer.value );
+                  *( ( unsigned long ** ) ( Buffer + uiOffset ) ) = static_cast<unsigned long*>((pBaseVar->pItems + nIndex)->item.asPointer.value);
                   break;
 
 #if UINT_MAX == ULONG_MAX
                case Harbour::Item::INTEGER:
-                  *( ( unsigned long ** ) ( Buffer + uiOffset ) ) = ( unsigned long * ) static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+                  *( ( unsigned long ** ) ( Buffer + uiOffset ) ) = reinterpret_cast<unsigned long*>(static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asInteger.value));
                   break;
 #endif
                case Harbour::Item::LONG:
-                  *( ( unsigned long ** ) ( Buffer + uiOffset ) ) = ( unsigned long * ) static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
+                  *( ( unsigned long ** ) ( Buffer + uiOffset ) ) = reinterpret_cast<unsigned long*>(static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asLong.value));
                   break;
 
                default:
@@ -787,8 +787,8 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             break;
 
          case CTYPE_FLOAT:  /* float */
-            if( ( pBaseVar->pItems + nIndex )->type )
-               *( ( float * ) ( Buffer + uiOffset ) ) = static_cast< float >( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
+            if( (pBaseVar->pItems + nIndex)->type )
+               *( ( float * ) ( Buffer + uiOffset ) ) = static_cast<float>((pBaseVar->pItems + nIndex)->item.asDouble.value);
             else
                *( ( float * ) ( Buffer + uiOffset ) ) = 0;
             break;
@@ -797,21 +797,21 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             switch( ( pBaseVar->pItems + nIndex )->type )
             {
                case Harbour::Item::POINTER:
-                  *( ( float ** ) ( Buffer + uiOffset ) ) = ( float * ) ( ( pBaseVar->pItems + nIndex )->item.asPointer.value );
+                  *( ( float ** ) ( Buffer + uiOffset ) ) = static_cast<float*>((pBaseVar->pItems + nIndex)->item.asPointer.value);
                   break;
 
 #if UINT_MAX == ULONG_MAX
                case Harbour::Item::INTEGER:
-                  *( ( float ** ) ( Buffer + uiOffset ) ) = ( float * ) static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+                  *( ( float ** ) ( Buffer + uiOffset ) ) = reinterpret_cast<float*>(static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asInteger.value));
                   break;
 #endif
                case Harbour::Item::LONG:
-                  *( ( float ** ) ( Buffer + uiOffset ) ) = ( float * ) static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
+                  *( ( float ** ) ( Buffer + uiOffset ) ) = reinterpret_cast<float*>(static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asLong.value));
                   break;
 
                /* Is this correct??? IMHO It's a bug */
                case Harbour::Item::DOUBLE:
-                  **( ( float ** ) ( Buffer + uiOffset ) ) = static_cast< float >( ( pBaseVar->pItems + nIndex )->item.asDouble.value );
+                  **( ( float ** ) ( Buffer + uiOffset ) ) = static_cast<float>((pBaseVar->pItems + nIndex)->item.asDouble.value);
                   break;
 
                default:
@@ -821,7 +821,7 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             break;
 
          case CTYPE_DOUBLE:  /* double */
-            if( ( pBaseVar->pItems + nIndex )->type )
+            if( (pBaseVar->pItems + nIndex)->type )
                *( ( double * ) ( Buffer + uiOffset ) ) = ( pBaseVar->pItems + nIndex )->item.asDouble.value;
             else
                *( ( double * ) ( Buffer + uiOffset ) ) = 0;
@@ -831,16 +831,16 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             switch( ( pBaseVar->pItems + nIndex )->type )
             {
                case Harbour::Item::POINTER:
-                  *( ( double ** ) ( Buffer + uiOffset ) ) = ( double * ) ( ( pBaseVar->pItems + nIndex )->item.asPointer.value );
+                  *( ( double ** ) ( Buffer + uiOffset ) ) = static_cast<double*>((pBaseVar->pItems + nIndex)->item.asPointer.value);
                   break;
 
 #if UINT_MAX == ULONG_MAX
                case Harbour::Item::INTEGER:
-                  *( ( double ** ) ( Buffer + uiOffset ) ) = ( double * ) static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asInteger.value );
+                  *( ( double ** ) ( Buffer + uiOffset ) ) = reinterpret_cast<double*>(static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asInteger.value));
                   break;
 #endif
                case Harbour::Item::LONG:
-                  *( ( double ** ) ( Buffer + uiOffset ) ) = ( double * ) static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asLong.value );
+                  *( ( double ** ) ( Buffer + uiOffset ) ) = reinterpret_cast<double*>(static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asLong.value));
                   break;
 
                /* Is this correct??? IMHO It's a bug */
@@ -858,51 +858,51 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
             switch( ( pBaseVar->pItems + nIndex )->type )
             {
                case Harbour::Item::POINTER:
-                  *( reinterpret_cast< void ** >( Buffer + uiOffset ) ) = static_cast< void * >( ( pBaseVar->pItems + nIndex )->item.asPointer.value );
+                  *(reinterpret_cast<void**>(Buffer + uiOffset)) = static_cast<void*>((pBaseVar->pItems + nIndex)->item.asPointer.value);
                   break;
 
 #if UINT_MAX == ULONG_MAX
                case Harbour::Item::INTEGER:
-                  *( reinterpret_cast< void ** >( Buffer + uiOffset ) ) = reinterpret_cast< void * >( static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asInteger.value ) );
+                  *(reinterpret_cast<void**>(Buffer + uiOffset)) = reinterpret_cast<void*>(static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asInteger.value));
                   break;
 #endif
                case Harbour::Item::LONG:
-                  *( reinterpret_cast< void ** >( Buffer + uiOffset ) ) = reinterpret_cast< void * >( static_cast< HB_PTRUINT >( ( pBaseVar->pItems + nIndex )->item.asLong.value ) );
+                  *(reinterpret_cast<void**>(Buffer + uiOffset)) = reinterpret_cast<void*>(static_cast<HB_PTRUINT>((pBaseVar->pItems + nIndex)->item.asLong.value));
                   break;
 
                default:
-                  *( reinterpret_cast< void ** >( Buffer + uiOffset ) ) = nullptr;
+                  *(reinterpret_cast<void**>(Buffer + uiOffset)) = nullptr;
                   break;
             }
             break;
 
          default:
-            if( ( pBaseDef->pItems + nIndex )->item.asInteger.value > CTYPE_STRUCTURE )
+            if( (pBaseDef->pItems + nIndex)->item.asInteger.value > CTYPE_STRUCTURE )
             {
                PHB_ITEM pStructure = pBaseVar->pItems + nIndex;
 
                if( HB_IS_LONG(pStructure) )
                {
-                  if( ( pBaseDef->pItems + nIndex )->item.asInteger.value > CTYPE_STRUCTURE_PTR )
-                     *( reinterpret_cast< void ** >( Buffer + uiOffset ) ) = reinterpret_cast< void * >( static_cast< HB_PTRUINT >( pStructure->item.asLong.value ) );
+                  if( (pBaseDef->pItems + nIndex)->item.asInteger.value > CTYPE_STRUCTURE_PTR )
+                     *(reinterpret_cast<void**>(Buffer + uiOffset)) = reinterpret_cast<void*>(static_cast<HB_PTRUINT>(pStructure->item.asLong.value));
                   else
-                     memcpy( static_cast< void * >( Buffer + uiOffset ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( pStructure->item.asLong.value ) ), uiMemberSize );
+                     memcpy(static_cast<void*>(Buffer + uiOffset), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(pStructure->item.asLong.value)), uiMemberSize);
                }
 #if UINT_MAX == ULONG_MAX
                else if( HB_IS_INTEGER(pStructure) )
                {
-                  if( ( pBaseDef->pItems + nIndex )->item.asInteger.value > CTYPE_STRUCTURE_PTR )
-                     *( reinterpret_cast< void ** >( Buffer + uiOffset ) ) = reinterpret_cast< void * >( static_cast< HB_PTRUINT >( pStructure->item.asInteger.value ) );
+                  if( (pBaseDef->pItems + nIndex)->item.asInteger.value > CTYPE_STRUCTURE_PTR )
+                     *(reinterpret_cast<void**>(Buffer + uiOffset)) = reinterpret_cast<void*>(static_cast<HB_PTRUINT>(pStructure->item.asInteger.value));
                   else
-                     memcpy( static_cast< void * >( Buffer + uiOffset ), reinterpret_cast< void * >( static_cast< HB_PTRUINT >( pStructure->item.asInteger.value ) ), uiMemberSize );
+                     memcpy(static_cast<void*>(Buffer + uiOffset), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(pStructure->item.asInteger.value)), uiMemberSize);
                }
 #endif
                else if( HB_IS_NIL(pStructure) )
                {
-                  if( ( pBaseDef->pItems + nIndex )->item.asInteger.value > CTYPE_STRUCTURE_PTR )
-                     *( reinterpret_cast< void ** >( Buffer + uiOffset ) ) = nullptr;
+                  if( (pBaseDef->pItems + nIndex)->item.asInteger.value > CTYPE_STRUCTURE_PTR )
+                     *(reinterpret_cast<void**>(Buffer + uiOffset)) = nullptr;
                   else
-                     memset( static_cast< void * >( Buffer + uiOffset ), 0, uiMemberSize );
+                     memset(static_cast<void*>(Buffer + uiOffset), 0, uiMemberSize);
                }
                else if( strncmp( hb_objGetClsName( pStructure ), "C Structure", 11 ) == 0 )
                {
@@ -911,10 +911,10 @@ static HB_BYTE * ArrayToStructure( PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign
 
                   hb_objSendMsg(pStructure, "VALUE", 0);
 
-                  if( ( pBaseDef->pItems + nIndex )->item.asInteger.value > CTYPE_STRUCTURE_PTR )
-                     *( reinterpret_cast< void ** >( Buffer + uiOffset ) ) = static_cast< void * >( pInternalBuffer->item.asString.value );
+                  if( (pBaseDef->pItems + nIndex)->item.asInteger.value > CTYPE_STRUCTURE_PTR )
+                     *(reinterpret_cast<void**>(Buffer + uiOffset)) = static_cast<void*>(pInternalBuffer->item.asString.value);
                   else
-                     memcpy( static_cast< void * >( Buffer + uiOffset ), static_cast< void * >( pInternalBuffer->item.asString.value ), uiMemberSize );
+                     memcpy(static_cast<void*>(Buffer + uiOffset), static_cast<void*>(pInternalBuffer->item.asString.value), uiMemberSize);
                }
                else
                   hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError(1), hb_paramError(2), hb_paramError(3) );
@@ -946,13 +946,13 @@ HB_FUNC( HB_ARRAYTOSTRUCTURE )
       HB_BYTE * Buffer;
 
       if( pAlign )
-         uiAlign = static_cast< HB_BYTE >( pAlign->item.asInteger.value );
+         uiAlign = static_cast<HB_BYTE>(pAlign->item.asInteger.value);
       else
          uiAlign = 8;
 
       Buffer = ArrayToStructure( aVar, aDef, uiAlign, &uiSize );
 
-      hb_retclen_buffer( reinterpret_cast< char * >( Buffer ), uiSize );
+      hb_retclen_buffer(reinterpret_cast<char*>(Buffer), uiSize);
    }
    else
       hb_errRT_BASE( EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError(1), hb_paramError(2), hb_paramError(3) );
@@ -971,7 +971,7 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
    PHB_BASEARRAY pBaseVar;
 
    #if 0
-   TraceLog( nullptr, "StructureToArray(%p, %p, %u, %i) ->%u\n", static_cast< const void * >( Buffer ), static_cast< void * >( aDef ), uiAlign, bAdoptNested, nLen );
+   TraceLog(nullptr, "StructureToArray(%p, %p, %u, %i) ->%u\n", static_cast<const void*>(Buffer), static_cast<void*>(aDef), uiAlign, bAdoptNested, nLen);
    #endif
 
    #if 0
@@ -1045,13 +1045,13 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
             break;
 
          default:
-            if( ( pBaseDef->pItems + nIndex )->item.asInteger.value > CTYPE_STRUCTURE_PTR )
+            if( (pBaseDef->pItems + nIndex)->item.asInteger.value > CTYPE_STRUCTURE_PTR )
             {
                uiMemberSize = sizeof(void*);
             }
-            else if( ( pBaseDef->pItems + nIndex )->item.asInteger.value > CTYPE_STRUCTURE )
+            else if( (pBaseDef->pItems + nIndex)->item.asInteger.value > CTYPE_STRUCTURE )
             {
-               PHB_ITEM pID        = hb_itemPutNI( nullptr, ( pBaseDef->pItems + nIndex )->item.asInteger.value );
+               PHB_ITEM pID        = hb_itemPutNI(nullptr, (pBaseDef->pItems + nIndex)->item.asInteger.value);
                PHB_ITEM pStructure = hb_itemDoC( "HB_CSTRUCTUREFROMID", 1, pID );
 
                hb_itemRelease(pID);
@@ -1059,7 +1059,7 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
                if( HB_IS_OBJECT(pStructure) )
                {
                   hb_objSendMsg(pStructure, "SizeOf", 0);
-                  uiMemberSize = static_cast< HB_UINT >( hb_parns( -1 ) );
+                  uiMemberSize = static_cast<HB_UINT>(hb_parns(-1));
                   hb_itemRelease(pStructure);
                }
                else
@@ -1080,53 +1080,53 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
       {
          HB_UINT uiPad = ( ( uiMemberSize < uiAlign ) ? uiMemberSize : uiAlign );
 
-         if( ( cShift = static_cast< HB_BYTE >( uiOffset % uiPad ) ) > 0 )
+         if( (cShift = static_cast<HB_BYTE>(uiOffset % uiPad)) > 0 )
             uiOffset += uiPad - cShift;
 
          #if 0
-         TraceLog( nullptr, "* Size: %i Offset: %i Pad: %i\n", uiMemberSize, uiOffset, uiPad );
+         TraceLog(nullptr, "* Size: %i Offset: %i Pad: %i\n", uiMemberSize, uiOffset, uiPad);
          #endif
       }
       else
       {
          #if 0
-         TraceLog( nullptr, "* Size: %i Offset: %i\n", uiMemberSize, uiOffset );
+         TraceLog(nullptr, "* Size: %i Offset: %i\n", uiMemberSize, uiOffset);
          #endif
       }
 
-      if( ( uiOffset + uiMemberSize ) > nBufferLen )
+      if( (uiOffset + uiMemberSize) > nBufferLen )
          break;
 
       switch( ( pBaseDef->pItems + nIndex )->item.asInteger.value )
       {
          case CTYPE_CHAR:  /* char */
-            hb_itemPutNI( pBaseVar->pItems + nIndex, ( int ) *( reinterpret_cast< char * >( Buffer + uiOffset ) ) );
+            hb_itemPutNI(pBaseVar->pItems + nIndex, ( int ) *(reinterpret_cast<char*>(Buffer + uiOffset)));
             break;
 
          case CTYPE_UNSIGNED_CHAR:  /* unsigned char */
-            hb_itemPutNI( pBaseVar->pItems + nIndex, ( int ) *(static_cast<HB_BYTE*>(Buffer + uiOffset)) );
+            hb_itemPutNI(pBaseVar->pItems + nIndex, ( int ) *(static_cast<HB_BYTE*>(Buffer + uiOffset)));
             break;
 
          case CTYPE_CHAR_PTR:  /* char * */
             if( HB_IS_STRING(pBaseVar->pItems + nIndex) && ( pBaseVar->pItems + nIndex )->item.asString.value == *( ( char ** ) ( Buffer + uiOffset ) ) )
             {
                #if 0
-               TraceLog( nullptr, "IDENTICAL: %s\n", *( ( char ** ) ( Buffer + uiOffset ) ) );
+               TraceLog(nullptr, "IDENTICAL: %s\n", *(static_cast<char**>(Buffer + uiOffset)));
                #endif
             }
             else if( !bAdoptNested )
             {
                #if 0
-               TraceLog( nullptr, "Static: %s\n", *( ( char ** ) ( Buffer + uiOffset ) ) );
+               TraceLog(nullptr, "Static: %s\n", *(static_cast<char**>(Buffer + uiOffset)));
                #endif
                hb_itemPutCConst( pBaseVar->pItems + nIndex, *( ( char ** ) ( Buffer + uiOffset ) ) );
             }
             else
             {
                #if 0
-               TraceLog( nullptr, "Adopt: %s\n", *( ( char ** ) ( Buffer + uiOffset ) ) );
+               TraceLog(nullptr, "Adopt: %s\n", *(static_cast<char**>(Buffer + uiOffset)));
                #endif
-               hb_itemPutC( pBaseVar->pItems + nIndex, *( ( char ** ) ( Buffer + uiOffset ) ) );
+               hb_itemPutC(pBaseVar->pItems + nIndex, *(reinterpret_cast<char**>(Buffer + uiOffset)));
             }
             break;
 
@@ -1134,85 +1134,85 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
             if( HB_IS_STRING(pBaseVar->pItems + nIndex) && ( pBaseVar->pItems + nIndex )->item.asString.value == *( ( char ** ) ( Buffer + uiOffset ) ) )
             {
                #if 0
-               TraceLog( nullptr, "IDENTICAL: %s\n", *( ( char ** ) ( Buffer + uiOffset ) ) );
+               TraceLog(nullptr, "IDENTICAL: %s\n", *(static_cast<char**>(Buffer + uiOffset)));
                #endif
             }
             else if( !bAdoptNested )
             {
                #if 0
-               TraceLog( nullptr, "Static: %s\n", *( ( char ** ) ( Buffer + uiOffset ) ) );
+               TraceLog(nullptr, "Static: %s\n", *(static_cast<char**>(Buffer + uiOffset)));
                #endif
                hb_itemPutCConst( pBaseVar->pItems + nIndex, *( ( char ** ) ( Buffer + uiOffset ) ) );
             }
             else
             {
                #if 0
-               TraceLog( nullptr, "Adopt: %s\n", *( ( char ** ) ( Buffer + uiOffset ) ) );
+               TraceLog(nullptr, "Adopt: %s\n", *(static_cast<char**>(Buffer + uiOffset)));
                #endif
-               hb_itemPutC( pBaseVar->pItems + nIndex, *( ( char ** ) ( Buffer + uiOffset ) ) );
+               hb_itemPutC(pBaseVar->pItems + nIndex, *(reinterpret_cast<char**>(Buffer + uiOffset)));
             }
             break;
 
          case CTYPE_SHORT:  /* short */
-            hb_itemPutNI( pBaseVar->pItems + nIndex, *( ( short * ) ( Buffer + uiOffset ) ) );
+            hb_itemPutNI(pBaseVar->pItems + nIndex, *( ( short * ) ( Buffer + uiOffset ) ));
             break;
 
          case CTYPE_UNSIGNED_SHORT:  /* unsigned short */
-            hb_itemPutNI( pBaseVar->pItems + nIndex, static_cast< short >( *( ( unsigned short * ) ( Buffer + uiOffset ) ) ) );
+            hb_itemPutNI(pBaseVar->pItems + nIndex, static_cast<short>(*(reinterpret_cast<unsigned short*>(Buffer + uiOffset))));
             break;
 
          case CTYPE_SHORT_PTR:          /* short * */
          case CTYPE_UNSIGNED_SHORT_PTR: /* unsigned short * */
-            hb_itemPutPtr( pBaseVar->pItems + nIndex, static_cast< void * >( Buffer + uiOffset ) );
+            hb_itemPutPtr(pBaseVar->pItems + nIndex, static_cast<void*>(Buffer + uiOffset));
             break;
 
          case CTYPE_INT:  /* int */
-            hb_itemPutNI( pBaseVar->pItems + nIndex, *( ( int * ) ( Buffer + uiOffset ) ) );
+            hb_itemPutNI(pBaseVar->pItems + nIndex, *(reinterpret_cast<int*>(Buffer + uiOffset)));
             break;
 
          case CTYPE_UNSIGNED_INT:  /* unsigned int */
-            hb_itemPutNI( pBaseVar->pItems + nIndex, ( int ) *( ( unsigned int * ) ( Buffer + uiOffset ) ) );
+            hb_itemPutNI(pBaseVar->pItems + nIndex, static_cast<int>(*(reinterpret_cast<unsigned int*>(Buffer + uiOffset))));
             break;
 
          case CTYPE_INT_PTR:          /* int * */
          case CTYPE_UNSIGNED_INT_PTR: /* unsigned int * */
-            hb_itemPutPtr( pBaseVar->pItems + nIndex, static_cast< void * >( Buffer + uiOffset ) );
+            hb_itemPutPtr(pBaseVar->pItems + nIndex, static_cast<void*>(Buffer + uiOffset) );
             break;
 
          case CTYPE_LONG:  /* long */
-            hb_itemPutNL( pBaseVar->pItems + nIndex, *( ( long * ) ( Buffer + uiOffset ) ) );
+            hb_itemPutNL(pBaseVar->pItems + nIndex, *(reinterpret_cast<long*>(Buffer + uiOffset)));
             break;
 
          case CTYPE_UNSIGNED_LONG:  /* unsigned long */
-            hb_itemPutNL( pBaseVar->pItems + nIndex, static_cast< long >( *( ( unsigned long * ) ( Buffer + uiOffset ) ) ) );
+            hb_itemPutNL(pBaseVar->pItems + nIndex, static_cast<long>(*(reinterpret_cast<unsigned long*>(Buffer + uiOffset))));
             break;
 
          case CTYPE_LONG_PTR:          /* long * */
          case CTYPE_UNSIGNED_LONG_PTR: /* unsigned long * */
-            hb_itemPutPtr( pBaseVar->pItems + nIndex, static_cast< void * >( Buffer + uiOffset ) );
+            hb_itemPutPtr(pBaseVar->pItems + nIndex, static_cast<void*>(Buffer + uiOffset));
             break;
 
          case CTYPE_FLOAT:  /* float */
-            hb_itemPutND( pBaseVar->pItems + nIndex, static_cast< double >( *( ( float * ) ( Buffer + uiOffset ) ) ) );
+            hb_itemPutND(pBaseVar->pItems + nIndex, static_cast<double>(*(reinterpret_cast<float*>(Buffer + uiOffset))));
             break;
 
          case CTYPE_FLOAT_PTR:  /* float * */
-            hb_itemPutPtr( pBaseVar->pItems + nIndex, static_cast< void * >( Buffer + uiOffset ) );
+            hb_itemPutPtr(pBaseVar->pItems + nIndex, static_cast<void*>(Buffer + uiOffset));
             break;
 
          case CTYPE_DOUBLE:  /* double */
-            hb_itemPutND( pBaseVar->pItems + nIndex, *( ( double * ) ( Buffer + uiOffset ) ) );
+            hb_itemPutND(pBaseVar->pItems + nIndex, *(reinterpret_cast<double*>(Buffer + uiOffset)));
             break;
 
          case CTYPE_DOUBLE_PTR: /* double * */
          case CTYPE_VOID_PTR:   /* void * */
-            hb_itemPutPtr( pBaseVar->pItems + nIndex, static_cast< void * >( Buffer + uiOffset ) );
+            hb_itemPutPtr(pBaseVar->pItems + nIndex, static_cast<void*>(Buffer + uiOffset));
             break;
 
          default:
          {
             HB_UINT  uiNestedSize /*, uiNestedAlign */;
-            PHB_ITEM pID        = hb_itemPutNI( nullptr, ( pBaseDef->pItems + nIndex )->item.asInteger.value );
+            PHB_ITEM pID        = hb_itemPutNI(nullptr, (pBaseDef->pItems + nIndex)->item.asInteger.value);
             PHB_ITEM pStructure = hb_itemDoC( "HB_CSTRUCTUREFROMID", 1, pID );
 
             hb_itemRelease(pID);
@@ -1226,13 +1226,13 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
 
             hb_objSendMsg(pStructure, "NALIGN", 0);
             hb_objSendMsg(pStructure, "SizeOf", 0);
-            uiNestedSize = static_cast< HB_UINT >( hb_parns( -1 ) );
+            uiNestedSize = static_cast<HB_UINT>(hb_parns(-1));
 
             #if 0
-            TraceLog( nullptr, "* NestedSize: %i Offset: %i\n", uiNestedSize, uiOffset );
+            TraceLog(nullptr, "* NestedSize: %i Offset: %i\n", uiNestedSize, uiOffset);
             #endif
 
-            if( ( pBaseDef->pItems + nIndex )->item.asInteger.value > CTYPE_STRUCTURE_PTR )
+            if( (pBaseDef->pItems + nIndex)->item.asInteger.value > CTYPE_STRUCTURE_PTR )
             {
                #if 0
                printf( "Offset %i Pointer: %p\n", uiOffset, *( char ** ) ( (long ** )( Buffer + uiOffset ) ) );
@@ -1268,15 +1268,15 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
                Adopt.item.asLogical.value = bAdoptNested;
 
                #if 0
-               TraceLog( nullptr, "Before Devalue\n" );
+               TraceLog(nullptr, "Before Devalue\n");
                #endif
 
-               hb_itemPutCRawStatic( pInternalBuffer, reinterpret_cast< char * >( static_cast< HB_BYTE * >( Buffer + uiOffset ) ), uiNestedSize );
+               hb_itemPutCRawStatic( pInternalBuffer, reinterpret_cast<char*>(static_cast<HB_BYTE*>(Buffer + uiOffset)), uiNestedSize );
 
                hb_objSendMsg(pStructure, "DEVALUE", 1, &Adopt);
 
                #if 0
-               TraceLog( nullptr, "After Devalue\n" );
+               TraceLog(nullptr, "After Devalue\n");
                #endif
             }
 
@@ -1289,7 +1289,7 @@ static PHB_ITEM StructureToArray( HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM
       uiOffset += uiMemberSize;
 
       #if 0
-      TraceLog( nullptr, "AFTER Size: %i Offset: %i\n", uiMemberSize, uiOffset );
+      TraceLog(nullptr, "AFTER Size: %i Offset: %i\n", uiMemberSize, uiOffset);
       #endif
    }
 
@@ -1311,7 +1311,7 @@ HB_FUNC( HB_STRUCTURETOARRAY )
       HB_BOOL   bAdopt;
 
       if( pAlign )
-         uiAlign = static_cast< HB_BYTE >( pAlign->item.asInteger.value );
+         uiAlign = static_cast<HB_BYTE>(pAlign->item.asInteger.value);
       else
          uiAlign = 8;
 
@@ -1362,10 +1362,10 @@ HB_FUNC( __CSTR_COPYTO )
       s_pVALUE = hb_dynsymGetCase( "VALUE" );
 
    if( HB_IS_LONG(pTarget) )
-      pPointer = reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hb_itemGetNInt( pTarget ) ) );
+      pPointer = reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hb_itemGetNInt(pTarget)));
 #if UINT_MAX == ULONG_MAX
    else if( HB_IS_INTEGER(pTarget) )
-      pPointer = reinterpret_cast< void * >( static_cast< HB_PTRUINT >( hb_itemGetNInt( pTarget ) ) );
+      pPointer = reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hb_itemGetNInt(pTarget)));
 #endif
    else if( HB_IS_POINTER(pTarget) )
       pPointer = hb_itemGetPtr( pTarget );
@@ -1380,5 +1380,5 @@ HB_FUNC( __CSTR_COPYTO )
    hb_vmPush(pStructure);
    hb_vmSend(0);
 
-   memcpy( pPointer, hb_parc(-1), hb_arrayGetNI( pStructure, hb_arrayLen(pStructure) - 2 ) );
+   memcpy(pPointer, hb_parc(-1), hb_arrayGetNI(pStructure, hb_arrayLen(pStructure) - 2));
 }

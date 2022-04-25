@@ -64,7 +64,7 @@ HB_FUNC( WAPI_GETCURRENTTHREAD )
 
 HB_FUNC( WAPI_WAITFORSINGLEOBJECT )
 {
-   DWORD dwResult = WaitForSingleObject( hbwapi_par_raw_HANDLE(1), static_cast< DWORD >( hb_parnl(2) ) );
+   DWORD dwResult = WaitForSingleObject( hbwapi_par_raw_HANDLE(1), static_cast<DWORD>(hb_parnl(2)) );
 
    hbwapi_SetLastError( GetLastError() );
    hb_retnl(dwResult);
@@ -75,7 +75,7 @@ HB_FUNC( WAPI_WAITFORSINGLEOBJECTEX )
    DWORD dwResult;
    DWORD dwLastError;
 
-   dwResult = WaitForSingleObjectEx( hbwapi_par_raw_HANDLE(1), static_cast< DWORD >( hb_parnl(2) ), hb_parl(3) );
+   dwResult = WaitForSingleObjectEx( hbwapi_par_raw_HANDLE(1), static_cast<DWORD>(hb_parnl(2)), hb_parl(3) );
    dwLastError = GetLastError();
 
    hbwapi_SetLastError( dwLastError );
@@ -97,7 +97,7 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTS )
          handles[nPos] = hb_arrayGetPtr( pArray, nPos + 1 );
       }
 
-      dwResult = WaitForMultipleObjects( nCount, handles, hb_parl(3), static_cast< DWORD >( hb_parnl(4) ) );
+      dwResult = WaitForMultipleObjects( nCount, handles, hb_parl(3), static_cast<DWORD>(hb_parnl(4)) );
 
       hbwapi_SetLastError( GetLastError() );
       hb_retnl(dwResult);
@@ -125,7 +125,7 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTSEX )
          handles[nPos] = hb_arrayGetPtr( pArray, nPos + 1 );
       }
 
-      dwResult = WaitForMultipleObjectsEx( nCount, handles, hb_parl(3), static_cast< DWORD >( hb_parnl(4) ), hb_parl(5) );
+      dwResult = WaitForMultipleObjectsEx( nCount, handles, hb_parl(3), static_cast<DWORD>(hb_parnl(4)), hb_parl(5) );
 
       hbwapi_SetLastError( GetLastError() );
       hb_retnl(dwResult);
@@ -145,8 +145,8 @@ HB_FUNC( WAPI_SETPROCESSWORKINGSETSIZE )
 
    bResult = SetProcessWorkingSetSize(
       hbwapi_par_raw_HANDLE(1) /* hProcess */,
-      static_cast< SIZE_T >( hb_parnint(2) ) /* dwMinimumWorkingSetSize */,
-      static_cast< SIZE_T >( hb_parnint(3) ) /* dwMaximumWorkingSetSize */ );
+      static_cast<SIZE_T>(hb_parnint(2)) /* dwMinimumWorkingSetSize */,
+      static_cast<SIZE_T>(hb_parnint(3)) /* dwMaximumWorkingSetSize */ );
    dwLastError = GetLastError();
 
    hbwapi_SetLastError( dwLastError );
@@ -155,7 +155,7 @@ HB_FUNC( WAPI_SETPROCESSWORKINGSETSIZE )
 
 HB_FUNC( WAPI_SETLASTERROR )
 {
-   DWORD dwLastError = static_cast< DWORD >( hb_parnl(1) );
+   DWORD dwLastError = static_cast<DWORD>(hb_parnl(1));
 
    SetLastError( dwLastError );
    hbwapi_SetLastError( dwLastError );
@@ -179,7 +179,7 @@ HB_FUNC( WAPI_LOADLIBRARY )
 
 HB_FUNC( WAPI_FREELIBRARY )
 {
-   BOOL bResult = FreeLibrary( static_cast< HMODULE >( hb_parptr(1) ) );
+   BOOL bResult = FreeLibrary(static_cast<HMODULE>(hb_parptr(1)));
 
    hbwapi_SetLastError( GetLastError() );
    hbwapi_ret_L( bResult );
@@ -189,9 +189,7 @@ HB_FUNC( WAPI_GETPROCADDRESS )
 {
    FARPROC pProc;
    DWORD dwLastError;
-   pProc = GetProcAddress( static_cast< HMODULE >( hb_parptr(1) ),
-                           HB_ISCHAR(2) ? hb_parc(2) :
-                           reinterpret_cast< LPCSTR >( static_cast< HB_PTRUINT >( hb_parnint(2) ) ) );
+   pProc = GetProcAddress(static_cast<HMODULE>(hb_parptr(1)), HB_ISCHAR(2) ? hb_parc(2) : reinterpret_cast<LPCSTR>(static_cast<HB_PTRUINT>(hb_parnint(2))));
    dwLastError = GetLastError();
    hbwapi_SetLastError( dwLastError );
    hb_retptr(reinterpret_cast<void*>(reinterpret_cast<HB_PTRUINT>(pProc)));
@@ -227,18 +225,18 @@ static void s_getPathName( _HB_GETPATHNAME getPathName )
       if( HB_ISBYREF(2) )
       {
          TCHAR buffer[HB_PATH_MAX];
-         DWORD cchBuffer = static_cast< DWORD >( HB_SIZEOFARRAY( buffer ) );
+         DWORD cchBuffer = static_cast<DWORD>(HB_SIZEOFARRAY(buffer));
          LPTSTR lpszShortPath = buffer;
          HB_BOOL fSize = HB_ISNUM(3);
 
          if( fSize )    /* the size of buffer is limited by user */
          {
-            cchBuffer = static_cast< DWORD >( hb_parnl(3) );
+            cchBuffer = static_cast<DWORD>(hb_parnl(3));
             if( cchBuffer == 0 )
             {
                lpszShortPath = nullptr;
             }
-            else if( cchBuffer > static_cast< DWORD >( HB_SIZEOFARRAY( buffer ) ) )
+            else if( cchBuffer > static_cast<DWORD>(HB_SIZEOFARRAY(buffer)) )
             {
                lpszShortPath = static_cast<LPTSTR>(hb_xgrab(cchBuffer * sizeof(TCHAR)));
             }
@@ -279,7 +277,7 @@ HB_FUNC( WAPI_GETLONGPATHNAME )
 
    if( !s_getPathNameAddr )
    {
-      s_getPathNameAddr = reinterpret_cast< _HB_GETPATHNAME >( HB_WINAPI_GETPROCADDRESST( GetModuleHandle( HB_WINAPI_KERNEL32_DLL() ), "GetLongPathName" ) );
+      s_getPathNameAddr = reinterpret_cast<_HB_GETPATHNAME>(HB_WINAPI_GETPROCADDRESST(GetModuleHandle(HB_WINAPI_KERNEL32_DLL()), "GetLongPathName"));
 
       if( !s_getPathNameAddr )
       {
@@ -291,7 +289,7 @@ HB_FUNC( WAPI_GETLONGPATHNAME )
 
 HB_FUNC( WAPI_GETSYSTEMDIRECTORY )
 {
-   UINT nLen = GetSystemDirectory( nullptr, 0 );
+   UINT nLen = GetSystemDirectory(nullptr, 0);
 
    if( nLen )
    {
@@ -313,7 +311,7 @@ HB_FUNC( WAPI_GETSYSTEMDIRECTORY )
 
 HB_FUNC( WAPI_GETWINDOWSDIRECTORY )
 {
-   UINT nLen = GetWindowsDirectory( nullptr, 0 );
+   UINT nLen = GetWindowsDirectory(nullptr, 0);
 
    if( nLen )
    {

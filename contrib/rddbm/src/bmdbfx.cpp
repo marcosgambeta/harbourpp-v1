@@ -65,7 +65,7 @@
  */
 HB_FUNC( BM_DBSEEKWILD )
 {
-   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea )
    {
@@ -91,7 +91,7 @@ HB_FUNC( BM_DBSEEKWILD )
             fCont = HB_FALSE;
          }
 
-         memset( &OrderInfo, 0, sizeof(OrderInfo) );
+         memset(&OrderInfo, 0, sizeof(OrderInfo));
          OrderInfo.itmResult = hb_itemNew(nullptr);
 
          errCode = SELF_ORDINFO( pArea, DBOI_NUMBER, &OrderInfo );
@@ -102,7 +102,7 @@ HB_FUNC( BM_DBSEEKWILD )
          {
             HB_BOOL fUnlock;
             OrderInfo.itmNewVal = OrderInfo.itmResult;
-            hb_itemPutL( OrderInfo.itmNewVal, true );
+            hb_itemPutL(OrderInfo.itmNewVal, true);
             if( SELF_ORDINFO( pArea, DBOI_READLOCK, &OrderInfo ) == HB_SUCCESS )
                fUnlock = hb_itemGetL(OrderInfo.itmResult);
             else
@@ -152,7 +152,7 @@ HB_FUNC( BM_DBSEEKWILD )
             if( fUnlock )
             {
                OrderInfo.itmNewVal = OrderInfo.itmResult;
-               hb_itemPutL( OrderInfo.itmNewVal, false );
+               hb_itemPutL(OrderInfo.itmNewVal, false);
                SELF_ORDINFO( pArea, DBOI_READLOCK, &OrderInfo );
             }
          }
@@ -191,12 +191,12 @@ typedef struct
 #define BM_BYTESIZE( n )   ( ( ( ( n ) + 31 ) >> 5 ) * sizeof(HB_U32) )
 
 #define BM_SETREC( p, r )  \
-   do { if( ( r ) > 0 && ( r ) <= ( p )->maxrec ) \
+   do { if( (r) > 0 && (r) <= (p)->maxrec ) \
            ( p )->map[( ( r ) - 1 ) >> 5] |= ( 1 << ( ( ( r ) - 1 ) & 0x1f ) ); \
    } while( 0 )
 
 #define BM_CLRREC( p, r )  \
-   do { if( ( r ) > 0 && ( r ) <= ( p )->maxrec ) \
+   do { if( (r) > 0 && (r) <= (p)->maxrec ) \
            ( p )->map[( ( r ) - 1 ) >> 5] &= ~( 1 << ( ( ( r ) - 1 ) & 0x1f ) ); \
    } while( 0 )
 
@@ -232,7 +232,7 @@ static void hb_bmResetFilterOpt( AREAP pArea )
 {
    DBORDERINFO OrderInfo;
 
-   memset( &OrderInfo, 0, sizeof(OrderInfo) );
+   memset(&OrderInfo, 0, sizeof(OrderInfo));
    SELF_ORDINFO( pArea, DBOI_RESETPOS, &OrderInfo );
    if( OrderInfo.itmResult )
       hb_itemRelease(OrderInfo.itmResult);
@@ -267,7 +267,7 @@ static HB_BOOL hb_bmCheckRecordFilter( AREAP pArea, HB_ULONG ulRecNo )
 
 static AREAP hb_bmGetCurrentWorkArea( void )
 {
-   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( !pArea )
       hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
@@ -336,7 +336,7 @@ HB_FUNC( BM_DBGETFILTERARRAY )
                      if( nBits & 1 )
                      {
                         if( hb_bmCheckRecordFilter( pArea, ulRec ) )
-                           hb_arrayAddForward( pArray, hb_itemPutNL( pItem, ulRec ) );
+                           hb_arrayAddForward( pArray, hb_itemPutNL(pItem, ulRec) );
                      }
                      nBits >>= 1;
                   }
@@ -376,7 +376,7 @@ HB_FUNC( BM_DBSETFILTERARRAY )
 
                for( nPos = hb_arrayLen(pArray); nPos; nPos-- )
                {
-                  HB_ULONG ulRec = static_cast< HB_ULONG >( hb_arrayGetNL( pArray, nPos ) );
+                  HB_ULONG ulRec = static_cast<HB_ULONG>(hb_arrayGetNL(pArray, nPos));
                   BM_SETREC( pBM, ulRec );
                }
             }
@@ -403,7 +403,7 @@ HB_FUNC( BM_DBSETFILTERARRAYADD )
 
             for( nPos = hb_arrayLen(pArray); nPos; nPos-- )
             {
-               HB_ULONG ulRec = static_cast< HB_ULONG >( hb_arrayGetNL( pArray, nPos ) );
+               HB_ULONG ulRec = static_cast<HB_ULONG>(hb_arrayGetNL(pArray, nPos));
                BM_SETREC( pBM, ulRec );
             }
             hb_bmResetFilterOpt( pArea );
@@ -430,7 +430,7 @@ HB_FUNC( BM_DBSETFILTERARRAYDEL )
 
             for( nPos = hb_arrayLen(pArray); nPos; nPos-- )
             {
-               HB_ULONG ulRec = static_cast< HB_ULONG >( hb_arrayGetNL( pArray, nPos ) );
+               HB_ULONG ulRec = static_cast<HB_ULONG>(hb_arrayGetNL(pArray, nPos));
                BM_CLRREC( pBM, ulRec );
             }
             hb_bmResetFilterOpt( pArea );
@@ -472,8 +472,8 @@ static HB_BOOL hb_bmEvalFilter( AREAP pArea, HB_BOOL fUpdate )
                  nOldSize = sizeof(BM_FILTER) + BM_BYTESIZE( pBM->maxrec );
          if( nSize > nOldSize )
          {
-            pArea->dbfi.lpvCargo = pBM = static_cast< PBM_FILTER >( hb_xrealloc( pBM, nSize ) );
-            memset( reinterpret_cast<HB_BYTE*>(pBM) + nOldSize, 0xFF, nSize - nOldSize );
+            pArea->dbfi.lpvCargo = pBM = static_cast<PBM_FILTER>(hb_xrealloc(pBM, nSize));
+            memset(reinterpret_cast<HB_BYTE*>(pBM) + nOldSize, 0xFF, nSize - nOldSize);
          }
          pBM->maxrec = static_cast<HB_U32>(ulRecNo);
       }
@@ -534,7 +534,7 @@ static HB_ERRCODE hb_bmCountScope( AREAP pArea, void * pPtr, HB_LONG * plRec )
    {
       PBM_FILTER pBM = BM_GETFILTER( pArea );
 
-      if( pBM && pArea->dbfi.fFilter && !BM_GETREC( pBM, static_cast< HB_ULONG >( *plRec ) ) )
+      if( pBM && pArea->dbfi.fFilter && !BM_GETREC( pBM, static_cast<HB_ULONG>(*plRec)) )
          *plRec = 0;
 
       return HB_SUCCESS;
@@ -726,14 +726,14 @@ static void hb_bmGetFuncTable( const char * szSuper )
    RDDFUNCS * pTable, * pSuperTable;
    HB_USHORT * puiCount, uiRddId, * puiSuperRddId;
 
-   puiCount = static_cast< HB_USHORT * >( hb_parptr(1) );
-   pTable = static_cast< RDDFUNCS * >( hb_parptr(2) );
-   pSuperTable = static_cast< RDDFUNCS * >( hb_parptr(3) );
-   uiRddId = static_cast< HB_USHORT >( hb_parni(4) );
-   puiSuperRddId = static_cast< HB_USHORT * >( hb_parptr(5) );
+   puiCount = static_cast<HB_USHORT*>(hb_parptr(1));
+   pTable = static_cast<RDDFUNCS*>(hb_parptr(2));
+   pSuperTable = static_cast<RDDFUNCS*>(hb_parptr(3));
+   uiRddId = static_cast<HB_USHORT>(hb_parni(4));
+   puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(5));
 
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "BM%s_GETFUNCTABLE(%p, %p, %p, %hu, %p)", szSuper, static_cast< void * >( puiCount ), pTable, pSuperTable, uiRddId, puiSuperRddId ) );
+   HB_TRACE( HB_TR_DEBUG, ( "BM%s_GETFUNCTABLE(%p, %p, %p, %hu, %p)", szSuper, static_cast<void*>(puiCount), pTable, pSuperTable, uiRddId, puiSuperRddId ) );
 #endif
 
    if( puiCount && pTable && pSuperTable && puiSuperRddId )
@@ -778,7 +778,7 @@ static void hb_bmRddInit( void * cargo )
    }
 
    if( fError )
-      hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
 }
 
 HB_FUNC( _BMDBF ) { ; }
@@ -793,7 +793,7 @@ HB_INIT_SYMBOLS_BEGIN( _hb_bm_InitSymbols_ )
 HB_INIT_SYMBOLS_END( _hb_bm_InitSymbols_ )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_bm_rdd_init_ )
-   hb_vmAtInit( hb_bmRddInit, nullptr );
+   hb_vmAtInit(hb_bmRddInit, nullptr);
 HB_CALL_ON_STARTUP_END( _hb_bm_rdd_init_ )
 
 #if defined(HB_PRAGMA_STARTUP)

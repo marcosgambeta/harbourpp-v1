@@ -57,20 +57,20 @@ HB_FUNC( WIN_PRINTDLGDC )
 {
    PRINTDLG pd;
 
-   memset( &pd, 0, sizeof(pd) );
+   memset(&pd, 0, sizeof(pd));
 
    pd.lStructSize = sizeof(pd);
    pd.hwndOwner = GetActiveWindow();
    pd.Flags = PD_RETURNDC | PD_USEDEVMODECOPIESANDCOLLATE;
-   pd.nFromPage = static_cast< WORD >( hb_parnidef(2, 1) );
-   pd.nToPage = static_cast< WORD >( hb_parnidef(3, 1) );
-   pd.nCopies = static_cast< WORD >( hb_parnidef(4, 1) );
+   pd.nFromPage = static_cast<WORD>(hb_parnidef(2, 1));
+   pd.nToPage = static_cast<WORD>(hb_parnidef(3, 1));
+   pd.nCopies = static_cast<WORD>(hb_parnidef(4, 1));
 
    if( PrintDlg( &pd ) )
    {
       if( pd.hDevNames )
       {
-         LPDEVNAMES lpdn = static_cast< LPDEVNAMES >( GlobalLock( pd.hDevNames ) );
+         LPDEVNAMES lpdn = static_cast<LPDEVNAMES>(GlobalLock(pd.hDevNames));
          HB_STORSTR(reinterpret_cast<LPCTSTR>(lpdn) + lpdn->wDeviceOffset, 1);
          GlobalUnlock( pd.hDevNames );
          GlobalFree( pd.hDevNames );
@@ -160,11 +160,11 @@ static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
       }
       else
       {
-         nLen = HB_ITEMCOPYSTR( pItem, nullptr, 0 );
+         nLen = HB_ITEMCOPYSTR(pItem, nullptr, 0);
          if( nLen )
          {
             lpStr = static_cast<LPTSTR>(hb_xgrab((nLen * 2 + 3) * sizeof(TCHAR)));
-            HB_ITEMCOPYSTR( pItem, lpStr, nLen + 1 );
+            HB_ITEMCOPYSTR(pItem, lpStr, nLen + 1);
             for( n = n1 = 0; n < nLen; ++n )
             {
                if( lpStr[n] == 0 )
@@ -178,7 +178,7 @@ static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
             }
             if( n1 == 0 )
             {
-               HB_ITEMCOPYSTR( pItem, lpStr + nLen + 1, nLen + 1 );
+               HB_ITEMCOPYSTR(pItem, lpStr + nLen + 1, nLen + 1);
                lpStr[nLen * 2 + 2] = 0;
                dwMaxIndex = 1;
             }
@@ -189,9 +189,9 @@ static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
                   lpStr[n + 1] = 0;
                   ++n1;
                }
-               if( ( n1 & 1 ) == 0 )
+               if( (n1 & 1) == 0 )
                {
-                  dwMaxIndex = static_cast< DWORD >( n1 );
+                  dwMaxIndex = static_cast<DWORD>(n1);
                }
                else
                {
@@ -224,14 +224,14 @@ static void s_GetFileName( HB_BOOL fSave )
    LPTSTR lpstrFilter;
    OPENFILENAME ofn;
 
-   memset( &ofn, 0, sizeof(ofn) );
+   memset(&ofn, 0, sizeof(ofn));
 #if defined(OPENFILENAME_SIZE_VERSION_400)
    ofn.lStructSize = OPENFILENAME_SIZE_VERSION_400;
 #else
    ofn.lStructSize = sizeof(ofn);
 #endif
    ofn.hwndOwner = GetActiveWindow();
-   ofn.hInstance = GetModuleHandle( nullptr );
+   ofn.hInstance = GetModuleHandle(nullptr);
 
    ofn.nFilterIndex     = hbwapi_par_DWORD(6);
    ofn.lpstrFilter      = lpstrFilter = s_dialogPairs(5, &ofn.nFilterIndex);

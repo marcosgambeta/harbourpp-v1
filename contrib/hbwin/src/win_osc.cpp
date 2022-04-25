@@ -181,11 +181,11 @@ HB_FUNC( WIN_OSVERSIONINFO )
       }
    }
 
-   hb_arraySetNL( pArray, 1, iMajor );
-   hb_arraySetNL( pArray, 2, iMinor );
-   hb_arraySetNL( pArray, 3, 0 );
-   hb_arraySetNL( pArray, 4, hb_iswinnt() ? VER_PLATFORM_WIN32_NT : VER_PLATFORM_WIN32_WINDOWS );
-   hb_arraySetC( pArray, 5, nullptr );
+   hb_arraySetNL(pArray, 1, iMajor);
+   hb_arraySetNL(pArray, 2, iMinor);
+   hb_arraySetNL(pArray, 3, 0);
+   hb_arraySetNL(pArray, 4, hb_iswinnt() ? VER_PLATFORM_WIN32_NT : VER_PLATFORM_WIN32_WINDOWS);
+   hb_arraySetC(pArray, 5, nullptr);
 
    if( hb_iswin2k() )
    {

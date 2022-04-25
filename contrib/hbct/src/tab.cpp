@@ -178,10 +178,9 @@ HB_FUNC( TABEXPAND )
          else if( cChar == cCR )
          {
             /* newline string ? */
-            if( sNewLineLen > 0 && sIndex + sNewLineLen <= sStrLen &&
-                ct_at_exact_forward( pcString + sIndex, sNewLineLen, pcNewLine, sNewLineLen, nullptr ) == pcString + sIndex )
+            if( sNewLineLen > 0 && sIndex + sNewLineLen <= sStrLen && ct_at_exact_forward(pcString + sIndex, sNewLineLen, pcNewLine, sNewLineLen, nullptr) == pcString + sIndex )
             {
-               hb_xmemcpy( pcRet + sRetLen, pcString + sIndex, sNewLineLen );
+               hb_xmemcpy(pcRet + sRetLen, pcString + sIndex, sNewLineLen);
                sRetLen += sNewLineLen;
                sIndex += sNewLineLen;
                sLineIndex = 0;
@@ -203,7 +202,7 @@ HB_FUNC( TABEXPAND )
          }
       }
       /* copy rest */
-      hb_xmemcpy( pcRet + sRetLen, pcString + sIndex, sStrLen - sIndex );
+      hb_xmemcpy(pcRet + sRetLen, pcString + sIndex, sStrLen - sIndex);
       sRetLen += sStrLen - sIndex;
       hb_retclen(pcRet, sRetLen);
       hb_xfree(pcRet);
@@ -365,8 +364,7 @@ HB_FUNC( TABPACK )
          else if( cChar == cCR )
          {
             /* newline string ? */
-            if( sNewLineLen > 0 && sIndex + sNewLineLen <= sStrLen &&
-                ct_at_exact_forward( pcString + sIndex, sNewLineLen, pcNewLine, sNewLineLen, nullptr ) == pcString + sIndex )
+            if( sNewLineLen > 0 && sIndex + sNewLineLen <= sStrLen && ct_at_exact_forward(pcString + sIndex, sNewLineLen, pcNewLine, sNewLineLen, nullptr) == pcString + sIndex )
             {
                /* eventually not enough fill chars to fill a tab,
                   so copy them verbatim */
@@ -375,7 +373,7 @@ HB_FUNC( TABPACK )
                   *( pcRet + sRetLen ) = cFill;
                   sRetLen++;
                }
-               hb_xmemcpy( pcRet + sRetLen, pcString + sIndex, sNewLineLen );
+               hb_xmemcpy(pcRet + sRetLen, pcString + sIndex, sNewLineLen);
                sRetLen += sNewLineLen;
                sIndex += sNewLineLen;
                sTabIndex = 0;

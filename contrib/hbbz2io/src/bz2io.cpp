@@ -173,7 +173,7 @@ static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
-   return s_bz2io_name( pszFileName, nullptr ) != pszFileName;
+   return s_bz2io_name(pszFileName, nullptr) != pszFileName;
 }
 
 static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, char * pRetPath )
@@ -183,7 +183,7 @@ static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, ch
 
    HB_SYMBOL_UNUSED(pFuncs);
 
-   pszName = s_bz2io_name( pszFileName, nullptr );
+   pszName = s_bz2io_name(pszFileName, nullptr);
    if( pRetPath )
    {
       char * pszNameBuf = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
@@ -191,12 +191,12 @@ static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, ch
 
       fResult = hb_fileExists( pszName, pszNameBuf );
       if( pRetPath != pszFileName )
-         memcpy( pRetPath, pszFileName, iPref );
+         memcpy(pRetPath, pszFileName, iPref);
       hb_strncpy( pRetPath + iPref, pszNameBuf, HB_PATH_MAX - 1 - iPref );
       hb_xfree(pszNameBuf);
    }
    else
-      fResult = hb_fileExists( pszName, nullptr );
+      fResult = hb_fileExists(pszName, nullptr);
 
    return fResult;
 }
@@ -205,14 +205,14 @@ static HB_BOOL s_fileDelete( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
-   return hb_fileDelete( s_bz2io_name( pszFileName, nullptr ) );
+   return hb_fileDelete(s_bz2io_name(pszFileName, nullptr));
 }
 
 static HB_BOOL s_fileRename( PHB_FILE_FUNCS pFuncs, const char * pszName, const char * pszNewName )
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
-   return hb_fileRename( s_bz2io_name( pszName, nullptr ), s_bz2io_name( pszNewName, nullptr ) );
+   return hb_fileRename(s_bz2io_name(pszName, nullptr), s_bz2io_name(pszNewName, nullptr));
 }
 
 static HB_BOOL s_fileCopy( PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const char * pszDstFile )
@@ -233,84 +233,84 @@ static HB_BOOL s_fileDirExists( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
-   return hb_fileDirExists( s_bz2io_name( pszDirName, nullptr ) );
+   return hb_fileDirExists(s_bz2io_name(pszDirName, nullptr));
 }
 
 static HB_BOOL s_fileDirMake( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
-   return hb_fileDirMake( s_bz2io_name( pszDirName, nullptr ) );
+   return hb_fileDirMake(s_bz2io_name(pszDirName, nullptr));
 }
 
 static HB_BOOL s_fileDirRemove( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
-   return hb_fileDirRemove( s_bz2io_name( pszDirName, nullptr ) );
+   return hb_fileDirRemove(s_bz2io_name(pszDirName, nullptr));
 }
 
 static double s_fileDirSpace( PHB_FILE_FUNCS pFuncs, const char * pszDirName, HB_USHORT uiType )
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
-   return hb_fileDirSpace( s_bz2io_name( pszDirName, nullptr ), uiType );
+   return hb_fileDirSpace(s_bz2io_name(pszDirName, nullptr), uiType);
 }
 
 static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec, const char * pszAttr )
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
-   return hb_fileDirectory( s_bz2io_name( pszDirSpec, nullptr ), pszAttr );
+   return hb_fileDirectory(s_bz2io_name(pszDirSpec, nullptr), pszAttr);
 }
 
 static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long * plJulian, long * plMillisec )
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
-   return hb_fileTimeGet( s_bz2io_name( pszFileName, nullptr ), plJulian, plMillisec );
+   return hb_fileTimeGet(s_bz2io_name(pszFileName, nullptr), plJulian, plMillisec);
 }
 
 static HB_BOOL s_fileTimeSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long lJulian, long lMillisec )
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
-   return hb_fileTimeSet( s_bz2io_name( pszFileName, nullptr ), lJulian, lMillisec );
+   return hb_fileTimeSet(s_bz2io_name(pszFileName, nullptr), lJulian, lMillisec);
 }
 
 static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR * pnAttr )
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
-   return hb_fileAttrGet( s_bz2io_name( pszFileName, nullptr ), pnAttr );
+   return hb_fileAttrGet(s_bz2io_name(pszFileName, nullptr), pnAttr);
 }
 
 static HB_BOOL s_fileAttrSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR nAttr )
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
-   return hb_fileAttrSet( s_bz2io_name( pszFileName, nullptr ), nAttr );
+   return hb_fileAttrSet(s_bz2io_name(pszFileName, nullptr), nAttr);
 }
 
 static HB_BOOL s_fileLink( PHB_FILE_FUNCS pFuncs, const char * pszExisting, const char * pszNewName )
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
-   return hb_fileLink( s_bz2io_name( pszExisting, nullptr ), s_bz2io_name( pszNewName, nullptr ) );
+   return hb_fileLink(s_bz2io_name(pszExisting, nullptr), s_bz2io_name(pszNewName, nullptr));
 }
 
 static HB_BOOL s_fileLinkSym( PHB_FILE_FUNCS pFuncs, const char * pszTarget, const char * pszNewName )
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
-   return hb_fileLinkSym( s_bz2io_name( pszTarget, nullptr ), s_bz2io_name( pszNewName, nullptr ) );
+   return hb_fileLinkSym(s_bz2io_name(pszTarget, nullptr), s_bz2io_name(pszNewName, nullptr));
 }
 
 static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
-   return hb_fileLinkRead( s_bz2io_name( pszFileName, nullptr ) );
+   return hb_fileLinkRead(s_bz2io_name(pszFileName, nullptr));
 }
 
 static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, const char * pszDefExt, HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError )
@@ -323,15 +323,15 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, con
 
    HB_SYMBOL_UNUSED(pFuncs);
 
-   if( ( nExFlags & FXO_COPYNAME ) != 0 )
+   if( (nExFlags & FXO_COPYNAME) != 0 )
       pszName = pszNameBuf = hb_strncpy( static_cast<char*>(hb_xgrab(HB_PATH_MAX)), pszName, HB_PATH_MAX - 1 );
 
    pFile = hb_fileExtOpen( pszName, pszDefExt, nExFlags, pPaths, pError );
 
-   if( ( nExFlags & FXO_COPYNAME ) != 0 )
+   if( (nExFlags & FXO_COPYNAME) != 0 )
    {
       if( pFile )
-         hb_strncpy( const_cast< char * >( pszFileName + iPref ), pszNameBuf, HB_PATH_MAX - 1 - iPref );
+         hb_strncpy( const_cast<char*>(pszFileName + iPref), pszNameBuf, HB_PATH_MAX - 1 - iPref );
       hb_xfree(pszNameBuf);
    }
 #if 0
@@ -424,7 +424,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXI
             nResult = _PHB_FILE->pFuncs->Read( _PHB_FILE, pFile->buffer, HB_BZ2_BUFSIZE, pFile->bz2.avail_out ? nTimeout : 0 );
             if( nResult == 0 || nResult == static_cast<HB_SIZE>(- 1) )
                break;
-            pFile->bz2.next_in = reinterpret_cast< char * >( pFile->buffer );
+            pFile->bz2.next_in = reinterpret_cast<char*>(pFile->buffer);
             pFile->bz2.avail_in = static_cast<unsigned int>(nResult);
          }
       }
@@ -454,7 +454,7 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * buffer, HB_SIZE nSize, 
 
       if( !pFile->fInited )
       {
-         pFile->bz2.next_out  = reinterpret_cast< char * >( pFile->buffer );
+         pFile->bz2.next_out  = reinterpret_cast<char*>(pFile->buffer);
          pFile->bz2.avail_out = HB_BZ2_BUFSIZE;
          err = BZ2_bzCompressInit( &pFile->bz2, pFile->iBlockSize, 0, 0 );
          if( err != BZ_OK )
@@ -536,7 +536,7 @@ static HB_BOOL s_fileTruncAt( PHB_FILE pFile, HB_FOFFSET nOffset )
 
 static HB_FOFFSET s_fileSeek( PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFlags )
 {
-   if( ( uiFlags == FS_SET && nOffset == pFile->seek_pos ) || ( uiFlags == FS_RELATIVE && nOffset == 0 ) )
+   if( (uiFlags == FS_SET && nOffset == pFile->seek_pos) || (uiFlags == FS_RELATIVE && nOffset == 0) )
       hb_fsSetError(0);
    else
       hb_fsSetError(25); /* 'Seek Error' */
@@ -597,7 +597,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
          return true;
       }
       case HB_VF_SHUTDOWN:
-         hb_itemPutNI( pValue, pFile->iMode );
+         hb_itemPutNI(pValue, pFile->iMode);
          return true;
 
       case HB_VF_RDHANDLE:
@@ -615,7 +615,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
             if( *pszNext == '\0' )
                pszNext = nullptr;
          }
-         hb_itemPutCPtr( pValue, hb_xstrcpy( nullptr, "BZ:", pszNext, nullptr ) );
+         hb_itemPutCPtr(pValue, hb_xstrcpy(nullptr, "BZ:", pszNext, nullptr));
          return true;
       }
 

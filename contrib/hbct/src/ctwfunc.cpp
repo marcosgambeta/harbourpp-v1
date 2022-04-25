@@ -249,8 +249,8 @@ HB_FUNC( WBOX )
       {
          iFrame = 0;
       }
-      memcpy( szBoxBuf, s_pWBoxFrames[iFrame], 9 * sizeof(HB_WCHAR) );
-      if( ( iFrame & 4 ) == 0 )
+      memcpy(szBoxBuf, s_pWBoxFrames[iFrame], 9 * sizeof(HB_WCHAR));
+      if( (iFrame & 4) == 0 )
       {
          szBoxBuf[8] = hb_gtGetClearChar();
       }

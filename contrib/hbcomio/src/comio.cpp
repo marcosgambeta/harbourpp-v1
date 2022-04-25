@@ -404,7 +404,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
                   break;
             }
          }
-         hb_itemPutNI( pValue, iMode );
+         hb_itemPutNI(pValue, iMode);
          return true;
       }
       case HB_VF_RDHANDLE:
@@ -413,7 +413,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
          return true;
 
       case HB_VF_IONAME:
-         hb_itemPutC( pValue, "COM:" );
+         hb_itemPutC(pValue, "COM:");
          return true;
    }
 

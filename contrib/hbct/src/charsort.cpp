@@ -59,7 +59,7 @@ struct CT_CHARSORT
 
 using PCT_CHARSORT = CT_CHARSORT *;
 
-static HB_TSD_NEW( s_charsort, sizeof(CT_CHARSORT), nullptr, nullptr );
+static HB_TSD_NEW(s_charsort, sizeof(CT_CHARSORT), nullptr, nullptr);
 
 /* qsort function */
 #ifdef __IBMCPP__
@@ -132,7 +132,7 @@ HB_FUNC( CHARSORT )
       }
 
       pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
-      hb_xmemcpy( pcRet, pcString, sStrLen );
+      hb_xmemcpy(pcRet, pcString, sStrLen);
 
       if( iDescend )
       {

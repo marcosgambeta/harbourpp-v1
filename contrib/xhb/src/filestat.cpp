@@ -137,29 +137,28 @@ HB_FUNC( FILESTATS )
          }
 
          /* Standard characters */
-         if( ( usAttr & 4 ) == 0 ) /* Hidden (cannot read) */
+         if( (usAttr & 4) == 0 ) /* Hidden (cannot read) */
             ushbAttr |= HB_FA_HIDDEN;
 
-         if( ( usAttr & 2 ) == 0 ) /* read only (cannot write) */
+         if( (usAttr & 2) == 0 ) /* read only (cannot write) */
             ushbAttr |= HB_FA_READONLY;
 
-         if( ( usAttr & 1 ) == 1 ) /* executable? (xbit) */
+         if( (usAttr & 1) == 1 ) /* executable? (xbit) */
             ushbAttr |= HB_FA_SYSTEM;
 
          /* Extension characters */
 
-         if( ( statbuf.st_mode & S_IFLNK ) == S_IFLNK )
+         if( (statbuf.st_mode & S_IFLNK) == S_IFLNK )
             *pszAttr++ = 'Z';  /* xHarbour extension */
 
-         if( ( statbuf.st_mode & S_IFSOCK ) == S_IFSOCK )
+         if( (statbuf.st_mode & S_IFSOCK) == S_IFSOCK )
             *pszAttr++ = 'K';  /* xHarbour extension */
 
          /* device */
-         if( ( statbuf.st_mode & S_IFBLK ) == S_IFBLK ||
-             ( statbuf.st_mode & S_IFCHR ) == S_IFCHR )
+         if( (statbuf.st_mode & S_IFBLK) == S_IFBLK || (statbuf.st_mode & S_IFCHR) == S_IFCHR )
             ushbAttr |= HB_FA_DEVICE;  /* xHarbour extension */
 
-         if( ( statbuf.st_mode & S_IFIFO ) == S_IFIFO )
+         if( (statbuf.st_mode & S_IFIFO) == S_IFIFO )
             *pszAttr++ = 'Y';  /* xHarbour extension */
 
          if( S_ISDIR( statbuf.st_mode ) )

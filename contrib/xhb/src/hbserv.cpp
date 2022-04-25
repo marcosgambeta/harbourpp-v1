@@ -144,7 +144,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
    bSignalEnabled = HB_FALSE;
    nPos = hb_arrayLen(sp_hooks);
    /* subsig not necessary */
-   uiSig = static_cast< HB_UINT >( s_translateSignal( static_cast< HB_UINT >( sig ), 0 ) );
+   uiSig = static_cast<HB_UINT>(s_translateSignal(static_cast<HB_UINT>(sig), 0));
 
    while( nPos > 0 )
    {
@@ -152,7 +152,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
       HB_UINT  uiMask;
 
       pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
-      uiMask    = static_cast< HB_UINT >( hb_arrayGetNI( pFunction, 1 ) );
+      uiMask    = static_cast<HB_UINT>(hb_arrayGetNI(pFunction, 1));
       if( uiMask & uiSig )
       {
          PHB_ITEM pExecArray, pRet;
@@ -276,9 +276,9 @@ static void * s_signalListener( void * my_stack )
    sigaddset( &passall, SIGUSR2 );
    sigaddset( &passall, SIGHUP );
 
-   pthread_cleanup_push( hb_threadTerminator, my_stack );
-   pthread_setcanceltype( PTHREAD_CANCEL_DEFERRED, nullptr );
-   pthread_setcancelstate( PTHREAD_CANCEL_ENABLE, nullptr );
+   pthread_cleanup_push(hb_threadTerminator, my_stack);
+   pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, nullptr);
+   pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, nullptr);
 
    for( ;; )
    {
@@ -290,7 +290,7 @@ static void * s_signalListener( void * my_stack )
          and just once (doing it twice would be useless). */
       if( bFirst )
       {
-         pthread_sigmask( SIG_SETMASK, &passall, nullptr );
+         pthread_sigmask(SIG_SETMASK, &passall, nullptr);
          bFirst = HB_FALSE;
       }
 
@@ -309,9 +309,9 @@ static void * s_signalListener( void * my_stack )
       /* lock stack before passing the ball to VM. */
       HB_STACK_LOCK;
 #if defined(HB_OS_BSD)
-      s_signalHandler( sig, nullptr, nullptr );
+      s_signalHandler(sig, nullptr, nullptr);
 #else
-      s_signalHandler( sinfo.si_signo, &sinfo, nullptr );
+      s_signalHandler(sinfo.si_signo, &sinfo, nullptr);
 #endif
    }
 
@@ -397,7 +397,7 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
    bSignalEnabled = HB_FALSE;
    nPos = hb_arrayLen(sp_hooks);
    /* subsig not necessary */
-   uiSig = static_cast< HB_UINT >( s_translateSignal( static_cast< HB_UINT >( type ), static_cast< HB_UINT >( sig ) ) );
+   uiSig = static_cast<HB_UINT>(s_translateSignal(static_cast<HB_UINT>(type), static_cast<HB_UINT>(sig)));
 
    while( nPos > 0 )
    {
@@ -405,8 +405,8 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
       HB_UINT  uiMask;
 
       pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
-      uiMask    = static_cast< HB_UINT >( hb_arrayGetNI( pFunction, 1 ) );
-      if( ( uiMask & uiSig ) == uiSig )
+      uiMask    = static_cast<HB_UINT>(hb_arrayGetNI(pFunction, 1));
+      if( (uiMask & uiSig) == uiSig )
       {
          PHB_ITEM pExecArray, pRet;
          int      iRet;
@@ -436,9 +436,9 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
          hb_arraySetNI(pRet, HB_SERVICE_OSERROR, GetLastError());
 
          if( type == 0 ) /* exception */
-            hb_arraySetPtr( pRet, HB_SERVICE_ADDRESS, static_cast< void * >( exc->ExceptionAddress ) );
+            hb_arraySetPtr(pRet, HB_SERVICE_ADDRESS, static_cast<void*>(exc->ExceptionAddress));
          else
-            hb_arraySetPtr( pRet, HB_SERVICE_ADDRESS, nullptr );
+            hb_arraySetPtr(pRet, HB_SERVICE_ADDRESS, nullptr);
 
          /* TODO: */
          hb_arraySetNI(pRet, HB_SERVICE_PROCESS, GetCurrentThreadId());
@@ -518,11 +518,11 @@ BOOL WINAPI s_ConsoleHandlerRoutine( DWORD dwCtrlType )
 
    /* we need a new stack: this is NOT an hb thread. */
 
-   if( TlsGetValue( hb_dwCurrentStack ) == 0 )
+   if( TlsGetValue(hb_dwCurrentStack) == 0 )
    {
-      pStack       = hb_threadCreateStack( GetCurrentThreadId() );
+      pStack       = hb_threadCreateStack(GetCurrentThreadId());
       pStack->th_h = GetCurrentThread();
-      TlsSetValue( hb_dwCurrentStack, static_cast< void * >( pStack ) );
+      TlsSetValue(hb_dwCurrentStack, static_cast<void*>(pStack));
    }
 #endif
 
@@ -567,12 +567,12 @@ static void s_serviceSetHBSig( void )
    sigaddset( &blockall, SIGUSR2 );
    sigaddset( &blockall, SIGHUP );
 
-   pthread_sigmask( SIG_SETMASK, &blockall, nullptr );
+   pthread_sigmask(SIG_SETMASK, &blockall, nullptr);
 #endif
 
    /* to avoid problems with differ sigaction structures and uninitialized
       fields */
-   memset( &act, 0, sizeof(act) );
+   memset(&act, 0, sizeof(act));
 
    /* using more descriptive sa_action instead of sa_handler */
    act.sa_handler   = nullptr;            /* if act.sa.. is a union, we just clean this */
@@ -585,15 +585,15 @@ static void s_serviceSetHBSig( void )
 
    act.sa_flags = SA_NOCLDSTOP | SA_SIGINFO;
 
-   sigaction( SIGHUP, &act, nullptr );
-   sigaction( SIGQUIT, &act, nullptr );
-   sigaction( SIGILL, &act, nullptr );
-   sigaction( SIGABRT, &act, nullptr );
-   sigaction( SIGFPE, &act, nullptr );
-   sigaction( SIGSEGV, &act, nullptr );
-   sigaction( SIGTERM, &act, nullptr );
-   sigaction( SIGUSR1, &act, nullptr );
-   sigaction( SIGUSR2, &act, nullptr );
+   sigaction(SIGHUP, &act, nullptr);
+   sigaction(SIGQUIT, &act, nullptr);
+   sigaction(SIGILL, &act, nullptr);
+   sigaction(SIGABRT, &act, nullptr);
+   sigaction(SIGFPE, &act, nullptr);
+   sigaction(SIGSEGV, &act, nullptr);
+   sigaction(SIGTERM, &act, nullptr);
+   sigaction(SIGUSR1, &act, nullptr);
+   sigaction(SIGUSR2, &act, nullptr);
 
    /* IGNORE pipe */
    signal( SIGPIPE, SIG_IGN );
@@ -629,7 +629,7 @@ static void s_serviceSetDflSig( void )
 #endif
 
 #ifdef HB_OS_WIN
-   SetUnhandledExceptionFilter( nullptr );
+   SetUnhandledExceptionFilter(nullptr);
    if( s_hMsgHook != nullptr )
    {
       UnhookWindowsHookEx( s_hMsgHook );
@@ -687,7 +687,7 @@ static void s_signalHandlersInit()
 
    sp_hooks = hb_itemNew(nullptr);
    hb_arrayNew(sp_hooks, 0);
-   hb_vmAtQuit( hb_service_exit, nullptr );
+   hb_vmAtQuit(hb_service_exit, nullptr);
 }
 
 /**
@@ -729,7 +729,7 @@ HB_FUNC( HB_STARTSERVICE )
    #ifdef HB_THREAD_TLS_KEYWORD
          hb_thread_stack = &hb_stackMT;
    #else
-         pthread_setspecific( hb_pkCurrentStack, static_cast< void * >( &hb_stackMT ) );
+         pthread_setspecific( hb_pkCurrentStack, static_cast<void*>(&hb_stackMT) );
    #endif
 #endif
       }
@@ -963,7 +963,7 @@ HB_FUNC( HB_SIGNALDESC )
 
    if( iSig == 0 ) /* exception */
    {
-      DWORD dwSubSig = static_cast< DWORD >( hb_parnl(2) );
+      DWORD dwSubSig = static_cast<DWORD>(hb_parnl(2));
 
       switch( dwSubSig )
       {

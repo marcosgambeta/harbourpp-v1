@@ -79,7 +79,7 @@ static HB_BOOL addToContext( pgCopyContext * context, const char c )
 
       context->position = 0;
    }
-   context->buffer[context->position++] = static_cast< HB_BYTE >( c );
+   context->buffer[context->position++] = static_cast<HB_BYTE>(c);
 
    return true;
 }
@@ -123,7 +123,7 @@ static HB_BOOL addStrnToContext( pgCopyContext * context, const char * str, HB_S
 
          context->position = 0;
       }
-      context->buffer[context->position++] = static_cast< HB_BYTE >( str[nSize++] );
+      context->buffer[context->position++] = static_cast<HB_BYTE>(str[nSize++]);
    }
 
    return true;
@@ -154,7 +154,7 @@ static HB_BOOL exportBufSqlVar( pgCopyContext * context, PHB_ITEM pValue, const 
 
          while( *szVal && nCnt++ < nLen )
          {
-            if( static_cast< HB_UCHAR >( *szVal ) >= 32 )
+            if( static_cast<HB_UCHAR>(*szVal) >= 32 )
             {
                /* if( *szVal == *szDelim || *szVal == *szEsc || *szVal == *szQuote )
                   we don't need to escape delim in CSV mode,
@@ -262,7 +262,7 @@ static HB_BOOL exportBufSqlVar( pgCopyContext * context, PHB_ITEM pValue, const 
 HB_FUNC( HB_PQCOPYFROMWA )
 {
 #if PG_VERSION_NUM >= 80000
-   AREAP pArea = static_cast< AREAP >( hb_rddGetCurrentWorkAreaPointer() );
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    PGconn * pConn = hb_PGconn_par(1);
 
    if( pConn == nullptr )
@@ -299,7 +299,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
       pItem = hb_itemNew(nullptr);
 
       context = static_cast<pgCopyContext*>(hb_xgrab(sizeof(pgCopyContext)));
-      memset( context, 0, sizeof(pgCopyContext) );
+      memset(context, 0, sizeof(pgCopyContext));
 
       context->buffer     = static_cast<char*>(hb_xgrab(sizeof(char) * nBufLen * 1400));
       context->position   = 0;
@@ -314,7 +314,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
          szFields      = static_cast<char*>(hb_xgrab(sizeof(char) * 2));
          szFields[0] = '(';
          szFields[1] = '\0';
-         uiFieldCopy   = static_cast< HB_USHORT >( hb_arrayLen(pFields) );
+         uiFieldCopy   = static_cast<HB_USHORT>(hb_arrayLen(pFields));
 
          for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ )
          {
@@ -323,12 +323,12 @@ HB_FUNC( HB_PQCOPYFROMWA )
             {
                int iPos = hb_rddFieldIndex( pArea, szFieldName );
 
-               szTmp = hb_xstrcpy( nullptr, szFields, szFieldName, nullptr );
+               szTmp = hb_xstrcpy(nullptr, szFields, szFieldName, nullptr);
                hb_xfree(szFields);
                szFields = szTmp;
                if( uiIter != uiFieldCopy )
                {
-                  szTmp = hb_xstrcpy( nullptr, szFields, sc_szDelim, nullptr );
+                  szTmp = hb_xstrcpy(nullptr, szFields, sc_szDelim, nullptr);
                   hb_xfree(szFields);
                   szFields = szTmp;
                }
@@ -347,18 +347,18 @@ HB_FUNC( HB_PQCOPYFROMWA )
                uiFieldCopy--;
             }
          }
-         szTmp = hb_xstrcpy( nullptr, szFields, ")", nullptr );
+         szTmp = hb_xstrcpy(nullptr, szFields, ")", nullptr);
          hb_xfree(szFields);
          szFields = szTmp;
       }
 
       if( szFields )
       {
-         szInit = hb_xstrcpy( nullptr, "COPY ", szTable, " ", szFields, " FROM STDIN WITH DELIMITER '", sc_szDelim, "' CSV  QUOTE AS '", sc_szQuote, "' ESCAPE AS '", sc_szEsc, "'", nullptr );
+         szInit = hb_xstrcpy(nullptr, "COPY ", szTable, " ", szFields, " FROM STDIN WITH DELIMITER '", sc_szDelim, "' CSV  QUOTE AS '", sc_szQuote, "' ESCAPE AS '", sc_szEsc, "'", nullptr);
          hb_xfree(szFields);
       }
       else
-         szInit = hb_xstrcpy( nullptr, "COPY ", szTable, " FROM STDIN WITH DELIMITER '", sc_szDelim, "' CSV  QUOTE AS '", sc_szQuote, "' ESCAPE AS '", sc_szEsc, "'", nullptr );
+         szInit = hb_xstrcpy(nullptr, "COPY ", szTable, " FROM STDIN WITH DELIMITER '", sc_szDelim, "' CSV  QUOTE AS '", sc_szQuote, "' ESCAPE AS '", sc_szEsc, "'", nullptr);
 
       HB_VM_UNLOCK();
       pgResult = PQexec( context->connection, szInit );
@@ -396,7 +396,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
             {
                for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ )
                {
-                  if( SELF_GETVALUE( pArea, static_cast< HB_USHORT >( hb_arrayGetNI( pFields, uiIter ) ), pItem ) != HB_SUCCESS ||
+                  if( SELF_GETVALUE( pArea, static_cast<HB_USHORT>(hb_arrayGetNI(pFields, uiIter)), pItem ) != HB_SUCCESS ||
                       !exportBufSqlVar( context, pItem, sc_szQuote, sc_szEsc ) ||
                       !addStrToContext( context, uiIter == uiFields ? "\n" : sc_szDelim ) )
                   {
@@ -422,8 +422,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
       HB_VM_UNLOCK();
       if( bFail )
          PQputCopyEnd( context->connection, "export buffer problems" );
-      else if( PQputCopyData( context->connection, context->buffer, context->position ) == -1 ||
-               PQputCopyEnd( context->connection, nullptr ) == -1 )
+      else if( PQputCopyData(context->connection, context->buffer, context->position) == -1 || PQputCopyEnd(context->connection, nullptr) == -1 )
          bFail = HB_TRUE;
       else
       {

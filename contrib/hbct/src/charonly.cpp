@@ -111,7 +111,7 @@ static void do_charonly( int iSwitch )
 
       for( const char * pcSub = pcString; pcSub < pcString + sStrLen + 1 - iShift; pcSub += iShift )
       {
-         const char * pc = ct_at_exact_forward( pcOnlySet, sOnlySetLen, pcSub, iShift, nullptr );
+         const char * pc = ct_at_exact_forward(pcOnlySet, sOnlySetLen, pcSub, iShift, nullptr);
          HB_BOOL fBool = ( pc != nullptr && ( ( pc - pcOnlySet ) % iShift ) == 0 );
          if( fBool ? iSwitch == DO_CHARONLY_CHARONLY || iSwitch == DO_CHARONLY_WORDONLY
                    : iSwitch == DO_CHARONLY_CHARREM  || iSwitch == DO_CHARONLY_WORDREM )

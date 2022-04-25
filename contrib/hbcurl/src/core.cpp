@@ -227,7 +227,7 @@ static void * hb_curl_calloc( size_t nelem, size_t elsize )
    size_t size = nelem * elsize;
    void * ptr  = hb_xgrab(size);
 
-   memset( ptr, '\0', size );
+   memset(ptr, '\0', size);
 
    return ptr;
 }
@@ -320,7 +320,7 @@ static size_t hb_curl_read_buff_callback( void * buffer, size_t size, size_t nme
          nTodo = nLeft;
       }
 
-      hb_xmemcpy( buffer, hb_curl->ul_ptr + hb_curl->ul_pos, nTodo );
+      hb_xmemcpy(buffer, hb_curl->ul_ptr + hb_curl->ul_pos, nTodo);
 
       hb_curl->ul_pos += nTodo;
 
@@ -387,7 +387,7 @@ static size_t hb_curl_write_buff_callback( void * buffer, size_t size, size_t nm
          hb_curl->dl_ptr  = static_cast<unsigned char*>(hb_xrealloc(hb_curl->dl_ptr, hb_curl->dl_len));
       }
 
-      hb_xmemcpy( hb_curl->dl_ptr + hb_curl->dl_pos, buffer, nTodo );
+      hb_xmemcpy(hb_curl->dl_ptr + hb_curl->dl_pos, buffer, nTodo);
 
       hb_curl->dl_pos += nTodo;
 
@@ -499,23 +499,23 @@ static void hb_curl_buff_dl_free( PHB_CURL hb_curl )
 
 static void PHB_CURL_free( PHB_CURL hb_curl, HB_BOOL bFree )
 {
-   curl_easy_setopt( hb_curl->curl, CURLOPT_READFUNCTION, nullptr );
-   curl_easy_setopt( hb_curl->curl, CURLOPT_READDATA, nullptr );
-   curl_easy_setopt( hb_curl->curl, CURLOPT_WRITEFUNCTION, nullptr );
-   curl_easy_setopt( hb_curl->curl, CURLOPT_WRITEDATA, nullptr );
-   curl_easy_setopt( hb_curl->curl, CURLOPT_PROGRESSFUNCTION, nullptr );
-   curl_easy_setopt( hb_curl->curl, CURLOPT_PROGRESSDATA, nullptr );
+   curl_easy_setopt(hb_curl->curl, CURLOPT_READFUNCTION, nullptr);
+   curl_easy_setopt(hb_curl->curl, CURLOPT_READDATA, nullptr);
+   curl_easy_setopt(hb_curl->curl, CURLOPT_WRITEFUNCTION, nullptr);
+   curl_easy_setopt(hb_curl->curl, CURLOPT_WRITEDATA, nullptr);
+   curl_easy_setopt(hb_curl->curl, CURLOPT_PROGRESSFUNCTION, nullptr);
+   curl_easy_setopt(hb_curl->curl, CURLOPT_PROGRESSDATA, nullptr);
 
    /* Some extra safety. Set these to nullptr, before freeing their pointers. */
-   curl_easy_setopt( hb_curl->curl, CURLOPT_HTTPPOST, nullptr );
-   curl_easy_setopt( hb_curl->curl, CURLOPT_HTTPHEADER, nullptr );
-   curl_easy_setopt( hb_curl->curl, CURLOPT_HTTP200ALIASES, nullptr );
-   curl_easy_setopt( hb_curl->curl, CURLOPT_QUOTE, nullptr );
-   curl_easy_setopt( hb_curl->curl, CURLOPT_POSTQUOTE, nullptr );
-   curl_easy_setopt( hb_curl->curl, CURLOPT_PREQUOTE, nullptr );
-   curl_easy_setopt( hb_curl->curl, CURLOPT_TELNETOPTIONS, nullptr );
+   curl_easy_setopt(hb_curl->curl, CURLOPT_HTTPPOST, nullptr);
+   curl_easy_setopt(hb_curl->curl, CURLOPT_HTTPHEADER, nullptr);
+   curl_easy_setopt(hb_curl->curl, CURLOPT_HTTP200ALIASES, nullptr);
+   curl_easy_setopt(hb_curl->curl, CURLOPT_QUOTE, nullptr);
+   curl_easy_setopt(hb_curl->curl, CURLOPT_POSTQUOTE, nullptr);
+   curl_easy_setopt(hb_curl->curl, CURLOPT_PREQUOTE, nullptr);
+   curl_easy_setopt(hb_curl->curl, CURLOPT_TELNETOPTIONS, nullptr);
 #if LIBCURL_VERSION_NUM >= 0x071400
-   curl_easy_setopt( hb_curl->curl, CURLOPT_MAIL_RCPT, nullptr );
+   curl_easy_setopt(hb_curl->curl, CURLOPT_MAIL_RCPT, nullptr);
 #endif
 
    hb_curl_form_free( &hb_curl->pHTTPPOST_First );
@@ -571,7 +571,7 @@ static PHB_CURL PHB_CURL_create( CURL * from )
    {
       PHB_CURL hb_curl = static_cast<PHB_CURL>(hb_xgrab(sizeof(HB_CURL)));
 
-      memset( hb_curl, 0, sizeof(HB_CURL) );
+      memset(hb_curl, 0, sizeof(HB_CURL));
       hb_curl->curl = curl;
 
       return hb_curl;
@@ -642,7 +642,7 @@ static PHB_CURL PHB_CURL_par( int iParam )
 
 HB_FUNC( CURL_EASY_INIT )
 {
-   PHB_CURL_ret( nullptr );
+   PHB_CURL_ret(nullptr);
 }
 
 HB_FUNC( CURL_EASY_DUPLICATE )
@@ -1082,7 +1082,7 @@ HB_FUNC( CURL_EASY_SETOPT )
             {
                PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
 
-               curl_easy_setopt( hb_curl->curl, CURLOPT_HTTPHEADER, nullptr );
+               curl_easy_setopt(hb_curl->curl, CURLOPT_HTTPHEADER, nullptr);
                hb_curl_slist_free( &hb_curl->pHTTPHEADER );
 
                if( pArray )
@@ -1103,7 +1103,7 @@ HB_FUNC( CURL_EASY_SETOPT )
             {
                PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
 
-               curl_easy_setopt( hb_curl->curl, CURLOPT_HTTP200ALIASES, nullptr );
+               curl_easy_setopt(hb_curl->curl, CURLOPT_HTTP200ALIASES, nullptr);
                hb_curl_slist_free( &hb_curl->pHTTP200ALIASES );
 
                if( pArray )
@@ -1167,7 +1167,7 @@ HB_FUNC( CURL_EASY_SETOPT )
             {
                PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
 
-               curl_easy_setopt( hb_curl->curl, CURLOPT_MAIL_RCPT, nullptr );
+               curl_easy_setopt(hb_curl->curl, CURLOPT_MAIL_RCPT, nullptr);
                hb_curl_slist_free( &hb_curl->pMAIL_RCPT );
 
                if( pArray )
@@ -1207,7 +1207,7 @@ HB_FUNC( CURL_EASY_SETOPT )
             {
                PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
 
-               curl_easy_setopt( hb_curl->curl, CURLOPT_QUOTE, nullptr );
+               curl_easy_setopt(hb_curl->curl, CURLOPT_QUOTE, nullptr);
                hb_curl_slist_free( &hb_curl->pQUOTE );
 
                if( pArray )
@@ -1227,7 +1227,7 @@ HB_FUNC( CURL_EASY_SETOPT )
             {
                PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
 
-               curl_easy_setopt( hb_curl->curl, CURLOPT_POSTQUOTE, nullptr );
+               curl_easy_setopt(hb_curl->curl, CURLOPT_POSTQUOTE, nullptr);
                hb_curl_slist_free( &hb_curl->pPOSTQUOTE );
 
                if( pArray )
@@ -1247,7 +1247,7 @@ HB_FUNC( CURL_EASY_SETOPT )
             {
                PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
 
-               curl_easy_setopt( hb_curl->curl, CURLOPT_PREQUOTE, nullptr );
+               curl_easy_setopt(hb_curl->curl, CURLOPT_PREQUOTE, nullptr);
                hb_curl_slist_free( &hb_curl->pPREQUOTE );
 
                if( pArray )
@@ -1484,7 +1484,7 @@ HB_FUNC( CURL_EASY_SETOPT )
             {
                PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
 
-               curl_easy_setopt( hb_curl->curl, CURLOPT_RESOLVE, nullptr );
+               curl_easy_setopt(hb_curl->curl, CURLOPT_RESOLVE, nullptr);
                hb_curl_slist_free( &hb_curl->pRESOLVE );
 
                if( pArray )
@@ -1650,7 +1650,7 @@ HB_FUNC( CURL_EASY_SETOPT )
             {
                PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
 
-               curl_easy_setopt( hb_curl->curl, CURLOPT_TELNETOPTIONS, nullptr );
+               curl_easy_setopt(hb_curl->curl, CURLOPT_TELNETOPTIONS, nullptr);
                hb_curl_slist_free( &hb_curl->pTELNETOPTIONS );
 
                if( pArray )
@@ -1679,8 +1679,8 @@ HB_FUNC( CURL_EASY_SETOPT )
 
                if( hb_curl->pProgressCallback )
                {
-                  curl_easy_setopt( hb_curl->curl, CURLOPT_PROGRESSFUNCTION, nullptr );
-                  curl_easy_setopt( hb_curl->curl, CURLOPT_PROGRESSDATA, nullptr );
+                  curl_easy_setopt(hb_curl->curl, CURLOPT_PROGRESSFUNCTION, nullptr);
+                  curl_easy_setopt(hb_curl->curl, CURLOPT_PROGRESSDATA, nullptr);
 
                   hb_itemRelease(hb_curl->pProgressCallback);
                   hb_curl->pProgressCallback = nullptr;
@@ -1769,7 +1769,7 @@ HB_FUNC( CURL_EASY_SETOPT )
                   hb_curl->ul_len = hb_parclen(3);
                   hb_curl->ul_ptr = static_cast<unsigned char*>(hb_xgrab(hb_curl->ul_len));
 
-                  hb_xmemcpy( hb_curl->ul_ptr, hb_parc(3), hb_curl->ul_len );
+                  hb_xmemcpy(hb_curl->ul_ptr, hb_parc(3), hb_curl->ul_len);
 
                   curl_easy_setopt( hb_curl->curl, CURLOPT_READFUNCTION, hb_curl_read_buff_callback );
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_READDATA, hb_curl );

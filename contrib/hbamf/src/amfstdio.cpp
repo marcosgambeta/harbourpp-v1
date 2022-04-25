@@ -90,13 +90,13 @@ HB_FUNC( AMFSTDIO_READ )
 
       countCheck( nBytes );
 
-      memcpy( pszTmp, pszStrIn, nBytes );
+      memcpy(pszTmp, pszStrIn, nBytes);
       nTotal += nBytes;
       pszTmp  = pszLenPrefix + nTotal;
    }
 
    pszLenPrefix[4] = '\0';
-   nLen = HB_GET_LE_UINT32( pszLenPrefix );
+   nLen = HB_GET_LE_UINT32(pszLenPrefix);
 
    if( nLen >= MAXLEN )
    {
@@ -124,7 +124,7 @@ HB_FUNC( AMFSTDIO_READ )
 
       countCheck( nBytes );
 
-      memcpy( pszTmp, pszStrIn, nBytes );
+      memcpy(pszTmp, pszStrIn, nBytes);
       nTotal += nBytes;
       pszTmp  = pszBuf + nTotal;
    }

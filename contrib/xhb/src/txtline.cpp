@@ -54,8 +54,8 @@ static void hb_readLine( const char * szText, HB_SIZE nTextLen, HB_SIZE nLineLen
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_readLine(%p, %" HB_PFS "u, %" HB_PFS "u, %" HB_PFS "u, %d, %p, %p, %" HB_PFS "u, %p, %p, %p, %p)",
-             static_cast< const void * >( szText ), nTextLen, nLineLen, nTabLen, bWrap, static_cast< const void * >( pTerm ),
-             static_cast< void * >( pnTermSizes ), nTerms, static_cast< void * >( pbFound ), static_cast< void * >( pbEOF ), static_cast< void * >( pnEnd ), static_cast< void * >( pnEndOffset ) ) );
+             static_cast<const void*>(szText), nTextLen, nLineLen, nTabLen, bWrap, static_cast<const void*>(pTerm),
+             static_cast<void*>(pnTermSizes), nTerms, static_cast<void*>(pbFound), static_cast<void*>(pbEOF), static_cast<void*>(pnEnd), static_cast<void*>(pnEndOffset) ) );
 #endif
 
    HB_SIZE nPosTerm, nPosition;
@@ -174,7 +174,7 @@ static HB_ISIZ hb_tabexpand( const char * szString, char * szRet, HB_ISIZ nEnd, 
    {
       if( szString[nPos] == HB_CHAR_HT )
          nSpAdded += ( nTabLen > 0 ? nTabLen - ( ( nPos + nSpAdded ) % nTabLen ) - 1 : 0 );
-      else if( ( nPos < nEnd && szString[nPos] == HB_CHAR_SOFT1 && szString[nPos + 1] == HB_CHAR_SOFT2 ) || szString[nPos] == HB_CHAR_LF )
+      else if( (nPos < nEnd && szString[nPos] == HB_CHAR_SOFT1 && szString[nPos + 1] == HB_CHAR_SOFT2) || szString[nPos] == HB_CHAR_LF )
          nSpAdded--;
       else
          *( szRet + nPos + nSpAdded ) = *( szString + nPos );
@@ -205,7 +205,7 @@ HB_FUNC( HB_TABEXPAND )
       char * szRet;
       nSize = nStrLen + nTabCount * ( nTabLen - 1 );
       szRet = static_cast<char*>(hb_xgrab(nSize + 1));
-      memset( szRet, ' ', nSize );
+      memset(szRet, ' ', nSize);
       nStrLen = hb_tabexpand( szText, szRet, nStrLen, nTabLen );
       hb_retclen_buffer( szRet, nStrLen );
    }
@@ -244,12 +244,12 @@ HB_FUNC( HB_READLINE )
       if( !hb_setGetCPtr( HB_SET_EOL ) )
       {
          PHB_ITEM pEOL = hb_itemNew(nullptr);
-         hb_itemPutC( pEOL, hb_conNewLine() );
+         hb_itemPutC(pEOL, hb_conNewLine());
          hb_setSetItem( HB_SET_EOL, pEOL );
          hb_itemRelease(pEOL);
       }
 
-      pTerm1       = hb_itemPutC( nullptr, hb_setGetCPtr( HB_SET_EOL ) );
+      pTerm1       = hb_itemPutC(nullptr, hb_setGetCPtr(HB_SET_EOL));
       bAlloc_Term1 = HB_TRUE;
    }
    else

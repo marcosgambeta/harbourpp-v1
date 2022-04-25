@@ -137,7 +137,7 @@ static PHB_ITEM hb_gdImageItemNew( gdImagePtr im )
 
    *ptr = im;
 
-   return hb_itemPutPtrGC( nullptr, static_cast<void*>(ptr) );
+   return hb_itemPutPtrGC(nullptr, static_cast<void*>(ptr));
 }
 #endif
 
@@ -201,7 +201,7 @@ static PHB_ITEM hb_gdFontItemNew( gdFontPtr font )
 
    *ptr = font;
 
-   return hb_itemPutPtrGC( nullptr, static_cast<void*>(ptr) );
+   return hb_itemPutPtrGC(nullptr, static_cast<void*>(ptr));
 }
 #endif
 
@@ -219,7 +219,7 @@ static void * LoadImageFromFile( const char * szFile, int * sz )
    void *     iptr;
    HB_FHANDLE fhandle;
 
-   if( ( fhandle = hb_fsOpen( szFile, FO_READ ) ) != FS_ERROR )
+   if( (fhandle = hb_fsOpen(szFile, FO_READ)) != FS_ERROR )
    {
       /* get lenght */
       *sz = static_cast<int>(hb_fsSeek(fhandle, 0, FS_END));
@@ -251,7 +251,7 @@ static void SaveImageToFile( const char * szFile, const void * iptr, int sz )
 {
    HB_FHANDLE fhandle;
 
-   if( ( fhandle = hb_fsCreate( szFile, FC_NORMAL ) ) != FS_ERROR )
+   if( (fhandle = hb_fsCreate(szFile, FC_NORMAL)) != FS_ERROR )
    {
       /* Write Image */
       SaveImageToHandle( fhandle, iptr, sz );
@@ -1435,7 +1435,7 @@ HB_FUNC_TRANSLATE( GDIMAGECHARUP, GDIMAGESTRINGUP )
 /* implementation: cError := gdImageStringFTEx( im, aRect, int fg, cFontname, nPtSize, nAngle, x, y, cString, nLinespacing, nCharmap, nResolution ) */
 HB_FUNC( GDIMAGESTRINGFTEX )
 {
-   if( ( HB_ISNIL(1) || hb_isGdImage(1) ) && HB_ISARRAY(2) && HB_ISNUM(3) && HB_ISCHAR(4) && HB_ISNUM(5) && HB_ISNUM(6) && HB_ISNUM(7) && HB_ISNUM(8) && HB_ISCHAR(9) )
+   if( (HB_ISNIL(1) || hb_isGdImage(1)) && HB_ISARRAY(2) && HB_ISNUM(3) && HB_ISCHAR(4) && HB_ISNUM(5) && HB_ISNUM(6) && HB_ISNUM(7) && HB_ISNUM(8) && HB_ISCHAR(9) )
    {
       gdImagePtr im = hb_parGdImage(1);
 
@@ -1496,9 +1496,7 @@ HB_FUNC( GDIMAGESTRINGFTEX )
       }
 
       /* Write string */
-      err = gdImageStringFTEx( im, &aRect[0], fgcolor, const_cast< char * >( fontname ),
-                               ptsize, angle, x, y, const_cast< char * >( string ),
-                               ( flags != 0 ? &extra : nullptr ) );
+      err = gdImageStringFTEx(im, &aRect[0], fgcolor, const_cast<char*>(fontname), ptsize, angle, x, y, const_cast<char*>(string), (flags != 0 ? &extra : nullptr));
       if( !err )
       {
          /* Save in array the correct text rectangle dimensions */
@@ -2035,7 +2033,7 @@ static void AddImageToFile( const char * szFile, const void * iptr, int sz )
 {
    HB_FHANDLE fhandle;
 
-   if( ( fhandle = hb_fsOpen( szFile, FO_READWRITE ) ) != FS_ERROR )
+   if( (fhandle = hb_fsOpen(szFile, FO_READWRITE)) != FS_ERROR )
    {
       /* move to end of file */
       hb_fsSeek( fhandle, 0, FS_END );

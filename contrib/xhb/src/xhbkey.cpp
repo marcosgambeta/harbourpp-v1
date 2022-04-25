@@ -61,8 +61,7 @@ static int hb_inkeyKeyXHB( int iKey )
 
       if( HB_INKEY_ISKEY( iKey ) )
       {
-         if( ( iFlags & ( HB_KF_SHIFT | HB_KF_CTRL | HB_KF_ALT ) ) == HB_KF_SHIFT &&
-             iValue >= 0 && iValue < 32 )
+         if( (iFlags & (HB_KF_SHIFT | HB_KF_CTRL | HB_KF_ALT)) == HB_KF_SHIFT && iValue >= 0 && iValue < 32 )
          {
             switch( iValue )
             {
@@ -91,11 +90,9 @@ static int hb_inkeyKeyXHB( int iKey )
             }
          }
       }
-      if( HB_INKEY_ISKEY( iKey ) ||
-          HB_INKEY_ISCHAR( iKey ) ||
-          HB_INKEY_ISUNICODE( iKey ) )
+      if( HB_INKEY_ISKEY(iKey) || HB_INKEY_ISCHAR(iKey) || HB_INKEY_ISUNICODE(iKey) )
       {
-         if( ( iFlags & ( HB_KF_CTRL | HB_KF_ALT ) ) == HB_KF_CTRL )
+         if( (iFlags & (HB_KF_CTRL | HB_KF_ALT)) == HB_KF_CTRL )
          {
             if( iValue >= 'A' && iValue <= 'Z' )
                return 512 + ( iValue - 'A' ) + 1;

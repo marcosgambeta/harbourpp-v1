@@ -53,7 +53,7 @@ PHB_BITBUFFER hb_bitbuffer_create( void )
 {
    PHB_BITBUFFER pBitBuffer = static_cast<PHB_BITBUFFER>(hb_xgrab(sizeof(HB_BITBUFFER)));
 
-   hb_xmemset( pBitBuffer, 0, sizeof(HB_BITBUFFER) );
+   hb_xmemset(pBitBuffer, 0, sizeof(HB_BITBUFFER));
    return pBitBuffer;
 }
 
@@ -86,8 +86,8 @@ void hb_bitbuffer_set( PHB_BITBUFFER pBitBuffer, HB_SIZE nPos, HB_BOOL fValue )
    if( pBitBuffer->nAlloc * 8 <= nPos )
    {
       HB_SIZE nNewAlloc = ( ( pBitBuffer->nAlloc >> 1 ) + nPos + 8 ) / 8;
-      pBitBuffer->pBuffer = static_cast< unsigned char * >( hb_xrealloc( pBitBuffer->pBuffer, nNewAlloc ) );
-      hb_xmemset( pBitBuffer->pBuffer + pBitBuffer->nAlloc, 0, nNewAlloc - pBitBuffer->nAlloc );
+      pBitBuffer->pBuffer = static_cast<unsigned char*>(hb_xrealloc(pBitBuffer->pBuffer, nNewAlloc));
+      hb_xmemset(pBitBuffer->pBuffer + pBitBuffer->nAlloc, 0, nNewAlloc - pBitBuffer->nAlloc);
       pBitBuffer->nAlloc = nNewAlloc;
    }
 
@@ -111,8 +111,8 @@ void hb_bitbuffer_not( PHB_BITBUFFER pBitBuffer, HB_SIZE nPos )
    if( pBitBuffer->nAlloc * 8 <= nPos )
    {
       HB_SIZE nNewAlloc = ( ( pBitBuffer->nAlloc >> 1 ) + nPos + 8 ) / 8;
-      pBitBuffer->pBuffer = static_cast< unsigned char * >( hb_xrealloc( pBitBuffer->pBuffer, nNewAlloc ) );
-      hb_xmemset( pBitBuffer->pBuffer + pBitBuffer->nAlloc, 0, nNewAlloc - pBitBuffer->nAlloc );
+      pBitBuffer->pBuffer = static_cast<unsigned char*>(hb_xrealloc(pBitBuffer->pBuffer, nNewAlloc));
+      hb_xmemset(pBitBuffer->pBuffer + pBitBuffer->nAlloc, 0, nNewAlloc - pBitBuffer->nAlloc);
       pBitBuffer->nAlloc = nNewAlloc;
    }
 
@@ -123,15 +123,15 @@ void hb_bitbuffer_cat_int( PHB_BITBUFFER pBitBuffer, int iValue, int iLen )
 {
    int i;
 
-   if( ( pBitBuffer->nLen + iLen ) >= pBitBuffer->nAlloc * 8 )
+   if( (pBitBuffer->nLen + iLen) >= pBitBuffer->nAlloc * 8 )
    {
       HB_SIZE nNewAlloc = pBitBuffer->nAlloc + ( ( pBitBuffer->nAlloc >> 1 ) + iLen + 7 ) / 8;
-      pBitBuffer->pBuffer = static_cast< unsigned char * >( hb_xrealloc( pBitBuffer->pBuffer, nNewAlloc ) );
-      hb_xmemset( pBitBuffer->pBuffer + pBitBuffer->nAlloc, 0, nNewAlloc - pBitBuffer->nAlloc );
+      pBitBuffer->pBuffer = static_cast<unsigned char*>(hb_xrealloc(pBitBuffer->pBuffer, nNewAlloc));
+      hb_xmemset(pBitBuffer->pBuffer + pBitBuffer->nAlloc, 0, nNewAlloc - pBitBuffer->nAlloc);
       pBitBuffer->nAlloc = nNewAlloc;
    }
 
-   if( static_cast< unsigned int >( iLen ) > sizeof(int) * 8 )
+   if( static_cast<unsigned int>(iLen) > sizeof(int) * 8 )
    {
       iLen = sizeof(int) * 8;
    }
@@ -145,15 +145,15 @@ void hb_bitbuffer_cat_int( PHB_BITBUFFER pBitBuffer, int iValue, int iLen )
 
 void hb_bitbuffer_cat_int_rev( PHB_BITBUFFER pBitBuffer, int iValue, int iLen )
 {
-   if( ( pBitBuffer->nLen + iLen ) >= pBitBuffer->nAlloc * 8 )
+   if( (pBitBuffer->nLen + iLen) >= pBitBuffer->nAlloc * 8 )
    {
       HB_SIZE nNewAlloc = pBitBuffer->nAlloc + ( ( pBitBuffer->nAlloc >> 1 ) + iLen + 7 ) / 8;
-      pBitBuffer->pBuffer = static_cast< unsigned char * >( hb_xrealloc( pBitBuffer->pBuffer, nNewAlloc ) );
-      hb_xmemset( pBitBuffer->pBuffer + pBitBuffer->nAlloc, 0, nNewAlloc - pBitBuffer->nAlloc );
+      pBitBuffer->pBuffer = static_cast<unsigned char*>(hb_xrealloc(pBitBuffer->pBuffer, nNewAlloc));
+      hb_xmemset(pBitBuffer->pBuffer + pBitBuffer->nAlloc, 0, nNewAlloc - pBitBuffer->nAlloc);
       pBitBuffer->nAlloc = nNewAlloc;
    }
 
-   if( static_cast< unsigned int >( iLen ) > sizeof(int) * 8 )
+   if( static_cast<unsigned int>(iLen) > sizeof(int) * 8 )
    {
       iLen = sizeof(int) * 8;
    }
@@ -169,7 +169,7 @@ void hb_bitbuffer_cat_int_rev( PHB_BITBUFFER pBitBuffer, int iValue, int iLen )
 
 static HB_GARBAGE_FUNC( hb_zebra_destructor )
 {
-   PHB_ZEBRA * ppZebra = static_cast< PHB_ZEBRA * >( Cargo );
+   PHB_ZEBRA * ppZebra = static_cast<PHB_ZEBRA*>(Cargo);
 
    if( *ppZebra )
    {
@@ -184,24 +184,24 @@ static const HB_GC_FUNCS s_gcZebraFuncs =
    hb_gcDummyMark
 };
 
-PHB_ZEBRA hb_zebraItemGet( PHB_ITEM pItem )
+PHB_ZEBRA hb_zebraItemGet(PHB_ITEM pItem)
 {
-   PHB_ZEBRA * ppZebra = static_cast< PHB_ZEBRA * >( hb_itemGetPtrGC( pItem, &s_gcZebraFuncs ) );
+   PHB_ZEBRA * ppZebra = static_cast<PHB_ZEBRA*>(hb_itemGetPtrGC(pItem, &s_gcZebraFuncs));
 
    return ppZebra ? *ppZebra : nullptr;
 }
 
-PHB_ITEM hb_zebraItemPut( PHB_ITEM pItem, PHB_ZEBRA pZebra )
+PHB_ITEM hb_zebraItemPut(PHB_ITEM pItem, PHB_ZEBRA pZebra)
 {
-   PHB_ZEBRA * ppZebra = static_cast< PHB_ZEBRA * >( hb_gcAllocate( sizeof(PHB_ZEBRA), &s_gcZebraFuncs ) );
+   PHB_ZEBRA * ppZebra = static_cast<PHB_ZEBRA*>(hb_gcAllocate(sizeof(PHB_ZEBRA), &s_gcZebraFuncs));
 
    *ppZebra = pZebra;
-   return hb_itemPutPtrGC( pItem, ppZebra );
+   return hb_itemPutPtrGC(pItem, ppZebra);
 }
 
-void hb_zebraItemClear( PHB_ITEM pItem )
+void hb_zebraItemClear(PHB_ITEM pItem)
 {
-   PHB_ZEBRA * ppZebra = static_cast< PHB_ZEBRA * >( hb_itemGetPtrGC( pItem, &s_gcZebraFuncs ) );
+   PHB_ZEBRA * ppZebra = static_cast<PHB_ZEBRA*>(hb_itemGetPtrGC(pItem, &s_gcZebraFuncs));
 
    if( ppZebra )
    {
@@ -211,7 +211,7 @@ void hb_zebraItemClear( PHB_ITEM pItem )
 
 PHB_ZEBRA hb_zebra_param( int iParam )
 {
-   PHB_ZEBRA * ppZebra = static_cast< PHB_ZEBRA * >( hb_parptrGC( &s_gcZebraFuncs, iParam ) );
+   PHB_ZEBRA * ppZebra = static_cast<PHB_ZEBRA*>(hb_parptrGC(&s_gcZebraFuncs, iParam));
 
    if( ppZebra && *ppZebra )
    {
@@ -233,7 +233,7 @@ PHB_ZEBRA hb_zebra_create( void )
 {
    PHB_ZEBRA pZebra = static_cast<PHB_ZEBRA>(hb_xgrab(sizeof(HB_ZEBRA)));
 
-   hb_xmemset( pZebra, 0, sizeof(HB_ZEBRA) );
+   hb_xmemset(pZebra, 0, sizeof(HB_ZEBRA));
    return pZebra;
 }
 

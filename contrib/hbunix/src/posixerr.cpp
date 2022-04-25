@@ -53,7 +53,7 @@ typedef struct
    int iErrNo;
 } HB_POSIXERRDATA, * PHB_POSIXERRDATA;
 
-static HB_TSD_NEW( s_posix_errno, sizeof(HB_POSIXERRDATA), nullptr, nullptr );
+static HB_TSD_NEW(s_posix_errno, sizeof(HB_POSIXERRDATA), nullptr, nullptr);
 
 #define HB_POSIX_ERRNO  ( ( PHB_POSIXERRDATA ) hb_stackGetTSD( &s_posix_errno ) )
 

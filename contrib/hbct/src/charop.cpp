@@ -62,7 +62,7 @@ void ct_charop( int iMode )
    {
       HB_SIZE sStrLen = hb_parclen(1);
       HB_SIZE sPos;
-      const unsigned char * pucString = reinterpret_cast< const unsigned char * >( hb_parc(1) );
+      const unsigned char * pucString = reinterpret_cast<const unsigned char *>(hb_parc(1));
       unsigned char * pucResult;
 
       if( sStrLen == 0 )
@@ -97,7 +97,7 @@ void ct_charop( int iMode )
 
             if( iSHL == 0 )
             {
-               hb_xmemcpy( pucResult, pucString, sStrLen );
+               hb_xmemcpy(pucResult, pucString, sStrLen);
             }
             else
             {
@@ -116,7 +116,7 @@ void ct_charop( int iMode )
 
             if( iSHR == 0 )
             {
-               hb_xmemcpy( pucResult, pucString, sStrLen );
+               hb_xmemcpy(pucResult, pucString, sStrLen);
             }
             else
             {
@@ -133,7 +133,7 @@ void ct_charop( int iMode )
          {
             int iRLL = hb_parni(2) % 8;   /* defaults to 0 */
 
-            hb_xmemcpy( pucResult, pucString, sStrLen );
+            hb_xmemcpy(pucResult, pucString, sStrLen);
 
             if( iRLL != 0 )
             {
@@ -161,7 +161,7 @@ void ct_charop( int iMode )
          {
             int iRLR = hb_parni(2) % 8;   /* defaults to 0 */
 
-            hb_xmemcpy( pucResult, pucString, sStrLen );
+            hb_xmemcpy(pucResult, pucString, sStrLen);
 
             if( iRLR != 0 )
             {
@@ -206,7 +206,7 @@ void ct_charop( int iMode )
                   ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARADD, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
                }
 
-               hb_xmemcpy( pucResult, pucString, sStrLen );
+               hb_xmemcpy(pucResult, pucString, sStrLen);
             }
             break;
 
@@ -232,7 +232,7 @@ void ct_charop( int iMode )
                   ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSUB, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
                }
 
-               hb_xmemcpy( pucResult, pucString, sStrLen );
+               hb_xmemcpy(pucResult, pucString, sStrLen);
             }
             break;
 
@@ -258,7 +258,7 @@ void ct_charop( int iMode )
                   ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARAND, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
                }
 
-               hb_xmemcpy( pucResult, pucString, sStrLen );
+               hb_xmemcpy(pucResult, pucString, sStrLen);
             }
             break;
 
@@ -284,7 +284,7 @@ void ct_charop( int iMode )
                   ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHAROR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
                }
 
-               hb_xmemcpy( pucResult, pucString, sStrLen );
+               hb_xmemcpy(pucResult, pucString, sStrLen);
             }
             break;
 
@@ -310,7 +310,7 @@ void ct_charop( int iMode )
                   ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARXOR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
                }
 
-               hb_xmemcpy( pucResult, pucString, sStrLen );
+               hb_xmemcpy(pucResult, pucString, sStrLen);
             }
             break;
       }
@@ -323,7 +323,7 @@ void ct_charop( int iMode )
       }
       else
       {
-         hb_retclen_buffer( reinterpret_cast< char * >( pucResult ), sStrLen );
+         hb_retclen_buffer( reinterpret_cast<char*>(pucResult), sStrLen );
       }
    }
    else

@@ -33,7 +33,7 @@ typedef struct
 static HB_BOOL amf3_getItem( amfContext * context, PHB_ITEM pItem );
 extern HB_BOOL hbamf_is_cls_externalizable( HB_USHORT uiClass );
 
-static PHB_ITEM hbamf_cls_externalizable_instance( PHB_ITEM pClassFuncStr )
+static PHB_ITEM hbamf_cls_externalizable_instance(PHB_ITEM pClassFuncStr)
 {
    PHB_DYNS pSymbol = hb_dynsymGet( hb_itemGetCPtr(pClassFuncStr) );
 
@@ -118,7 +118,7 @@ static HB_BOOL amfX_decode_double( amfContext * context, double * val )
 
    /* AMF transmitted double is always in network byte order */
 #ifdef HB_BIG_ENDIAN
-   memcpy( val, bytes, 8 );
+   memcpy(val, bytes, 8);
 #else
    /* Flip endianness */
    c_val[0] = bytes[7];
@@ -129,7 +129,7 @@ static HB_BOOL amfX_decode_double( amfContext * context, double * val )
    c_val[5] = bytes[2];
    c_val[6] = bytes[1];
    c_val[7] = bytes[0];
-   memcpy( val, c_val, 8 );
+   memcpy(val, c_val, 8);
 #endif
 
    return true;
@@ -182,15 +182,15 @@ static HB_BOOL amf3_decode_int( amfContext * context, int * iVal )
 
 #if 0
 
-static HB_BOOL amf3_decode_reference( PHB_ITEM pHash, int val, PHB_ITEM pRefItem )
+static HB_BOOL amf3_decode_reference(PHB_ITEM pHash, int val, PHB_ITEM pRefItem)
 {
    /* Check for index reference */
-   if( ( val & REFERENCE_BIT ) == 0 )
+   if( (val & REFERENCE_BIT) == 0 )
    {
       PHB_ITEM pKey = hb_itemNew(nullptr);
-      hb_itemPutNI( pKey, val >> 1 );
+      hb_itemPutNI(pKey, val >> 1);
 
-      pRefItem = hb_hashGetItemPtr( pHash, pKey, 0 );
+      pRefItem = hb_hashGetItemPtr(pHash, pKey, 0);
 
       hb_itemRelease(pKey);
       return true;
@@ -201,18 +201,18 @@ static HB_BOOL amf3_decode_reference( PHB_ITEM pHash, int val, PHB_ITEM pRefItem
 
 #endif
 
-static PHB_ITEM amf3_decode_reference( PHB_ITEM pHash, int val )
+static PHB_ITEM amf3_decode_reference(PHB_ITEM pHash, int val)
 {
    /* Check for index reference */
-   if( ( val & REFERENCE_BIT ) == 0 )
+   if( (val & REFERENCE_BIT) == 0 )
    {
       PHB_ITEM pKey = hb_itemNew(nullptr);
       PHB_ITEM pRefItem;
-      hb_itemPutNI( pKey, val >> 1 );
+      hb_itemPutNI(pKey, val >> 1);
 
-      pRefItem = hb_hashGetItemPtr( pHash, pKey, 0 );
+      pRefItem = hb_hashGetItemPtr(pHash, pKey, 0);
       if( !pRefItem )
-         hb_itemPutL( pRefItem, false );
+         hb_itemPutL(pRefItem, false);
 
       hb_itemRelease(pKey);
       return pRefItem;
@@ -221,7 +221,7 @@ static PHB_ITEM amf3_decode_reference( PHB_ITEM pHash, int val )
    return nullptr;
 }
 
-static void amf3_add_reference( PHB_ITEM pHash, PHB_ITEM pItem )
+static void amf3_add_reference(PHB_ITEM pHash, PHB_ITEM pItem)
 {
    HB_SIZE  iRef = hb_hashLen( pHash );
    PHB_ITEM pKey = hb_itemNew(nullptr);
@@ -243,7 +243,7 @@ static HB_BOOL amfX_decode_string( amfContext * context, PHB_ITEM pItem, unsigne
    if( !str )
       return false;
 
-   hb_itemPutStrLenUTF8( pItem, str, string_size );
+   hb_itemPutStrLenUTF8(pItem, str, string_size);
    return true;
 }
 
@@ -260,7 +260,7 @@ static HB_BOOL amf3_deserialize_string( amfContext * context, PHB_ITEM pItem )
    /* Check for null string */
    if( header == EMPTY_STRING_TYPE )
    {
-      hb_itemPutC( pItem, nullptr );
+      hb_itemPutC(pItem, nullptr);
       return true;
    }
 
@@ -320,7 +320,7 @@ static HB_BOOL amf3_decode_dynamic_dict( amfContext * context, PHB_ITEM pItem )
          return false;
       }
 
-      result = hb_hashAdd( pItem, pKey, pValue );
+      result = hb_hashAdd(pItem, pKey, pValue);
       hb_itemRelease(pKey);
       hb_itemRelease(pValue);
       if( !result )
@@ -345,9 +345,9 @@ static HB_BOOL decode_dynamic_array_AMF3( amfContext * context, PHB_ITEM pItem, 
          if( amf3_getItem( context, pValue ) )
          {
             PHB_ITEM pKey = hb_itemNew(nullptr);
-            hb_itemPutNI( pKey, i );
+            hb_itemPutNI(pKey, i);
 
-            if( hb_hashAdd( pItem, pKey, pValue ) )
+            if( hb_hashAdd(pItem, pKey, pValue) )
                lRet = HB_TRUE;
 
             hb_itemRelease(pKey);
@@ -369,7 +369,7 @@ static HB_BOOL decode_dynamic_array_AMF3( amfContext * context, PHB_ITEM pItem, 
 
          if( amf3_getItem( context, pValue ) )
          {
-            if( hb_arraySet( pItem, i + 1, pValue ) )
+            if( hb_arraySet(pItem, i + 1, pValue) )
                lRet = HB_TRUE;
          }
 
@@ -439,8 +439,8 @@ static HB_BOOL amf3_deserialize_array( amfContext * context, PHB_ITEM pItem, HB_
    else
    {
       context->position--;
-      hb_hashNew( pItem );
-      hb_hashPreallocate( pItem, array_len );
+      hb_hashNew(pItem);
+      hb_hashPreallocate(pItem, array_len);
 
       if( !amf3_decode_dynamic_dict( context, pItem ) )
          return false;
@@ -481,7 +481,7 @@ static HB_BOOL amf3_decode_epoch( amfContext * context, PHB_ITEM pItem )
    if( !amfX_decode_double( context, &epoch_millisecs ) )
       return false;
 
-   hb_itemPutTD( pItem, ( epoch_millisecs + 210866803200000.4 ) / HB_MILLISECS_PER_DAY );
+   hb_itemPutTD(pItem, (epoch_millisecs + 210866803200000.4 ) / HB_MILLISECS_PER_DAY);
 
    return true;
 }
@@ -529,7 +529,7 @@ static HB_BOOL amf3_decode_byte_array( amfContext * context, PHB_ITEM pItem, int
    if( !str )
       return false;
 
-   hb_itemPutStrLen( pItem, hb_vmCDP(), str, byte_len );
+   hb_itemPutStrLen(pItem, hb_vmCDP(), str, byte_len);
    return true;
 }
 
@@ -581,19 +581,19 @@ static PHB_ITEM class_def_from_classname( /* amfContext * context, */ PHB_ITEM p
    hb_strUpper( pszBuffer, nLen );
 
    /* get Harbour's class id/handle */
-   uiClass = hb_clsFindClass( pszBuffer, nullptr );
+   uiClass = hb_clsFindClass(pszBuffer, nullptr);
 
    hb_strfree(pszBuffer);
 
    #if 0
-   uiClass = hb_objGetClass( pItem );
+   uiClass = hb_objGetClass(pItem);
    #endif
    if( !uiClass )
       return nullptr;
 
-   pClass = hb_hashNew( nullptr );
+   pClass = hb_hashNew(nullptr);
 
-   pKey   = hb_itemPutC( nullptr, "CLASS_DEF" );
+   pKey   = hb_itemPutC(nullptr, "CLASS_DEF");
    pValue = hb_itemNew(nullptr);
    if( !hb_hashAdd( pClass, pKey, pValue ) )
    {
@@ -605,8 +605,8 @@ static PHB_ITEM class_def_from_classname( /* amfContext * context, */ PHB_ITEM p
    hb_itemRelease(pKey);
    hb_itemRelease(pValue);
 
-   pKey   = hb_itemPutC( nullptr, "alias" );
-   pValue = hb_itemPutC( nullptr, hb_clsName( uiClass ) );
+   pKey   = hb_itemPutC(nullptr, "alias");
+   pValue = hb_itemPutC(nullptr, hb_clsName(uiClass));
    if( !hb_hashAdd( pClass, pKey, pValue ) )
    {
       hb_itemRelease(pKey);
@@ -619,7 +619,7 @@ static PHB_ITEM class_def_from_classname( /* amfContext * context, */ PHB_ITEM p
 
    if( hbamf_is_cls_externalizable( uiClass ) )
    {
-      pKey   = hb_itemPutC( nullptr, "EXTERNALIZABLE_CLASS_DEF" );
+      pKey   = hb_itemPutC(nullptr, "EXTERNALIZABLE_CLASS_DEF");
       pValue = hb_itemNew(nullptr);
       if( !hb_hashAdd( pClass, pKey, pValue ) )
       {
@@ -678,7 +678,7 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
 
    if( pMappedClassDef )
    {
-      pKey = hb_itemPutC( nullptr, "class_def" );  /* hb_itemNew(nullptr); */
+      pKey = hb_itemPutC(nullptr, "class_def");  /* hb_itemNew(nullptr); */
 
       if( !hb_hashAdd( pClass, pKey, pMappedClassDef ) )
       {
@@ -688,8 +688,8 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
       }
       hb_itemRelease(pKey);
 
-      pKey = hb_itemPutC( nullptr, "EXTERNALIZABLE_CLASS_DEF" );
-      if( hb_hashScan( pMappedClassDef, pKey, nullptr ) )
+      pKey = hb_itemPutC(nullptr, "EXTERNALIZABLE_CLASS_DEF");
+      if( hb_hashScan(pMappedClassDef, pKey, nullptr) )
       {
          /* There is nothing else we need to do
             with externalizable ClassDefs */
@@ -703,7 +703,7 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
       hb_itemRelease(pMappedClassDef);
    }
 
-   if( ( header & 0x07FFFFFF ) == EXTERNALIZABLE )
+   if( (header & 0x07FFFFFF) == EXTERNALIZABLE )
    {
       /* If the class is externalizable, but the ClassDef isn't,
          we have a big problem, because we don't know how to read
@@ -716,8 +716,8 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
 
 
    /* Set dynamic flag */
-   pKey   = hb_itemPutC( nullptr, "dynamic" );
-   pValue = hb_itemPutL( nullptr, ( header & DYNAMIC ) == DYNAMIC );
+   pKey   = hb_itemPutC(nullptr, "dynamic");
+   pValue = hb_itemPutL(nullptr, (header & DYNAMIC) == DYNAMIC);
    if( !hb_hashAdd( pClass, pKey, pValue ) )
    {
       hb_itemRelease(pKey);
@@ -754,7 +754,7 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
    }
 
    /* Set decoded attrs onto ClassDef */
-   pKey = hb_itemPutC( nullptr, "static_attrs" );
+   pKey = hb_itemPutC(nullptr, "static_attrs");
    if( !hb_hashAdd( pClass, pKey, pAttrs ) )
    {
       hb_itemRelease(pKey);
@@ -812,7 +812,7 @@ static HB_BOOL amf3_decode_obj_attrs( amfContext * context, PHB_ITEM pHash, PHB_
    /* Put decoded attributes into pHash */
 
    /* Decode static attrs */
-   pArray = hb_hashGetCItemPtr( pClass, "static_attrs" );
+   pArray = hb_hashGetCItemPtr(pClass, "static_attrs");
    if( !pArray )
       return false;
 
@@ -849,7 +849,7 @@ static HB_BOOL amf3_decode_obj_attrs( amfContext * context, PHB_ITEM pHash, PHB_
    }
 
    /* Decode dynamic attrs */
-   pValue = hb_hashGetCItemPtr( pClass, "dynamic" );
+   pValue = hb_hashGetCItemPtr(pClass, "dynamic");
    if( !pValue )
       return false;
 
@@ -874,7 +874,7 @@ static HB_BOOL amf3_decode_anon_obj( amfContext * context, PHB_ITEM pItem, PHB_I
       object before decoding it. ?????? */
 
    /* we (Harbourers) are supplying already initialized hash to next function */
-   if( hb_arrayGet( pItem, OBJAMF_VAR_HASH, pAnonHash ) )
+   if( hb_arrayGet(pItem, OBJAMF_VAR_HASH, pAnonHash) )
       result = amf3_decode_obj_attrs( context, pAnonHash, pClass );
 
    hb_itemRelease(pAnonHash);
@@ -967,15 +967,15 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
       return false;
    }
 
-   pMappedClassDef = hb_hashGetCItemPtr( pClass, "class_def" );
+   pMappedClassDef = hb_hashGetCItemPtr(pClass, "class_def");
    if( !pMappedClassDef )
    {
       /* Anonymous obj. */
       obj_type = 0;
    }
-   else if( hb_hashGetCItemPos( pMappedClassDef, "EXTERNALIZABLE_CLASS_DEF" ) != 0 )
+   else if( hb_hashGetCItemPos(pMappedClassDef, "EXTERNALIZABLE_CLASS_DEF") != 0 )
    {
-      if( hb_hashGetCItemPos( pMappedClassDef, "ARRAY_COLLECTION_CLASS_DEF" ) != 0 )
+      if( hb_hashGetCItemPos(pMappedClassDef, "ARRAY_COLLECTION_CLASS_DEF") != 0 )
       {
          hb_itemRelease(pClass);
 
@@ -985,7 +985,7 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
          return amf3_deserialize_array( context, pItem, true );
       }
 
-      if( hb_hashGetCItemPos( pMappedClassDef, "OBJECT_PROXY_CLASS_DEF" ) != 0 )
+      if( hb_hashGetCItemPos(pMappedClassDef, "OBJECT_PROXY_CLASS_DEF") != 0 )
       {
          hb_itemRelease(pClass);
 
@@ -1007,15 +1007,15 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
       hb_arrayNew(pItem, OBJAMF_VAR_COUNT);
       /* performance FIXME, cache class id (in context maybe)
          to not scan all classes by name every time */
-      hb_objSetClass( pItem, "AMF_OBJ", "AMF_OBJ" );
-      pValue = hb_itemPutNI( nullptr, OBJAMF_VER );
-      hb_arraySet( pItem, OBJAMF_VAR_VER, pValue );
+      hb_objSetClass(pItem, "AMF_OBJ", "AMF_OBJ");
+      pValue = hb_itemPutNI(nullptr, OBJAMF_VER);
+      hb_arraySet(pItem, OBJAMF_VAR_VER, pValue);
       hb_itemRelease(pValue);
-      pValue = hb_itemPutC( nullptr, "ANONYMOUS" );
-      hb_arraySet( pItem, OBJAMF_VAR_NAME, pValue );
+      pValue = hb_itemPutC(nullptr, "ANONYMOUS");
+      hb_arraySet(pItem, OBJAMF_VAR_NAME, pValue);
       hb_itemRelease(pValue);
-      pValue = hb_hashNew( nullptr );
-      hb_arraySet( pItem, OBJAMF_VAR_HASH, pValue );
+      pValue = hb_hashNew(nullptr);
+      hb_arraySet(pItem, OBJAMF_VAR_HASH, pValue);
       hb_itemRelease(pValue);
    }
    else if( obj_type == 1 )
@@ -1024,7 +1024,7 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
          and the object should not do anything dangerous, because it could
          be instantiated on clients request */
 
-      pValue = hb_hashGetCItemPtr( pMappedClassDef, "alias" );
+      pValue = hb_hashGetCItemPtr(pMappedClassDef, "alias");
 
       if( !pValue )
       {
@@ -1046,7 +1046,7 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
    {
       /* Create obj_val for all typed objects. */
 #if 0
-      obj_val = PyObject_CallMethod( class_def, "getInstance", nullptr );
+      obj_val = PyObject_CallMethod(class_def, "getInstance", nullptr);
 #endif
    }
 
@@ -1144,12 +1144,12 @@ static HB_BOOL amf3_getItem( amfContext * context, PHB_ITEM pItem )
          break;
 
       case FALSE_TYPE:
-         hb_itemPutL( pItem, false );
+         hb_itemPutL(pItem, false);
          lRet = HB_TRUE;
          break;
 
       case TRUE_TYPE:
-         hb_itemPutL( pItem, true );
+         hb_itemPutL(pItem, true);
          lRet = HB_TRUE;
          break;
 
@@ -1157,7 +1157,7 @@ static HB_BOOL amf3_getItem( amfContext * context, PHB_ITEM pItem )
       {
          int iVal;
          if( amf3_decode_int( context, &iVal ) )
-            hb_itemPutNI( pItem, iVal );
+            hb_itemPutNI(pItem, iVal);
          else
             lRet = HB_FALSE;
       }
@@ -1167,7 +1167,7 @@ static HB_BOOL amf3_getItem( amfContext * context, PHB_ITEM pItem )
       {
          double dVal;
          if( amfX_decode_double( context, &dVal ) )
-            hb_itemPutND( pItem, dVal );
+            hb_itemPutND(pItem, dVal);
          else
             lRet = HB_FALSE;
       }
@@ -1236,14 +1236,14 @@ HB_FUNC( AMF3_DECODE )
       return;
 
    context = static_cast<amfContext*>(hb_xgrab(sizeof(amfContext)));
-   memset( context, 0, sizeof(amfContext) );
+   memset(context, 0, sizeof(amfContext));
 
    context->cBuf          = szBuffer;
    context->position      = 0;
    context->length        = hb_parclen(1);
-   context->obj_ref       = hb_hashNew( nullptr );
-   context->str_ref       = hb_hashNew( nullptr );
-   context->class_ref     = hb_hashNew( nullptr );
+   context->obj_ref       = hb_hashNew(nullptr);
+   context->str_ref       = hb_hashNew(nullptr);
+   context->class_ref     = hb_hashNew(nullptr);
    context->conv_function = pFuncSym;
 
    amf3_getItem( context, pItem );

@@ -70,8 +70,7 @@ HB_FUNC( TIP_TIMESTAMP )
 
       /* For compatibility, Seconds() value */
       if( HB_ISNUM(2) )
-         hb_timeDecode( static_cast< long >( hb_parnd(2) * 1000 ),
-                        &iHour, &iMinute, &iSecond, &iMSec );
+         hb_timeDecode(static_cast<long>(hb_parnd(2) * 1000), &iHour, &iMinute, &iSecond, &iMSec);
       else
          iHour = iMinute = iSecond = 0;
    }
@@ -86,8 +85,8 @@ HB_FUNC( TIP_TIMESTAMP )
                 s_days[hb_dateDOW(iYear, iMonth, iDay) - 1],
                 iDay, s_months[iMonth - 1], iYear,
                 iHour, iMinute, iSecond,
-                static_cast< int >( lOffset / 3600 ),
-                static_cast< int >( ( lOffset % 3600 ) / 60 ) );
+                static_cast<int>(lOffset / 3600),
+                static_cast<int>((lOffset % 3600) / 60));
 
    hb_retc(szRet);
 }
@@ -115,7 +114,7 @@ HB_FUNC( TIP_HTMLSPECIALCHARS )
 
          while( nPos < nLen )
          {
-            HB_BYTE cElem = static_cast< HB_BYTE >( pszData[nPos] );
+            HB_BYTE cElem = static_cast<HB_BYTE>(pszData[nPos]);
 
             if( cElem == '&' )
             {
@@ -183,7 +182,7 @@ HB_FUNC( TIP_HTMLSPECIALCHARS )
             nPos++;
          }
 
-         hb_retclen_buffer( static_cast< char * >( hb_xrealloc( pszRet, nPosRet + 1 ) ), nPosRet );
+         hb_retclen_buffer(static_cast<char*>(hb_xrealloc(pszRet, nPosRet + 1)), nPosRet);
       }
       else
          hb_retc_null();
@@ -220,7 +219,7 @@ HB_FUNC( TIP_JSONSPECIALCHARS )
 
          while( nPos < nLen )
          {
-            HB_BYTE cElem = static_cast< HB_BYTE >( pszData[nPos] );
+            HB_BYTE cElem = static_cast<HB_BYTE>(pszData[nPos]);
 
             if( cElem == '"' )
             {
@@ -270,7 +269,7 @@ HB_FUNC( TIP_JSONSPECIALCHARS )
             nPos++;
          }
 
-         hb_retclen_buffer( static_cast< char * >( hb_xrealloc( pszRet, nPosRet + 1 ) ), nPosRet );
+         hb_retclen_buffer(static_cast<char*>(hb_xrealloc(pszRet, nPosRet + 1)), nPosRet);
       }
       else
          hb_retc_null();

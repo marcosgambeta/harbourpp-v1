@@ -221,7 +221,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
                   break;
             }
          }
-         hb_itemPutNI( pValue, iMode );
+         hb_itemPutNI(pValue, iMode);
          return true;
       }
       case HB_VF_RDHANDLE:
@@ -233,7 +233,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
          return true;
 
       case HB_VF_IONAME:
-         hb_itemPutC( pValue, FILE_PREFIX );
+         hb_itemPutC(pValue, FILE_PREFIX);
          return true;
    }
 
@@ -328,8 +328,7 @@ static PHB_FILE hb_fileProcessOpen( const char * pszCommand, HB_FATTR nMode,
          return nullptr;
    }
 
-   hProcess = hb_fsProcessOpen( pszCommand, phStdIn, phStdOut, nullptr,
-                                fDetach, nullptr );
+   hProcess = hb_fsProcessOpen(pszCommand, phStdIn, phStdOut, nullptr, fDetach, nullptr);
    return hProcess != FS_ERROR ? s_fileNew( hProcess, hPipeRD, hPipeWR, timeout ) : nullptr;
 }
 

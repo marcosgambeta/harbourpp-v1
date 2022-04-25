@@ -133,7 +133,7 @@ HB_FUNC( FBCREATEDB )
                    "CREATE DATABASE '%s' USER '%s' PASSWORD '%s' PAGE_SIZE = %i DEFAULT CHARACTER SET %s",
                    db_name, user, pass, page, charset );
 
-      if( isc_dsql_execute_immediate( status, &newdb, &trans, 0, create_db, dialect, nullptr ) )
+      if( isc_dsql_execute_immediate(status, &newdb, &trans, 0, create_db, dialect, nullptr) )
       {
          hb_retnl(isc_sqlcode(status));
       }
@@ -231,7 +231,7 @@ HB_FUNC( FBSTARTTRANSACTION )
       isc_tr_handle    trans = static_cast<isc_tr_handle>(0);
       ISC_STATUS_ARRAY status;
 
-      if( isc_start_transaction( status, &trans, 1, &db, 0, nullptr ) )
+      if( isc_start_transaction(status, &trans, 1, &db, 0, nullptr) )
       {
          hb_retnl(isc_sqlcode(status));
       }
@@ -248,7 +248,7 @@ HB_FUNC( FBSTARTTRANSACTION )
 
 HB_FUNC( FBCOMMIT )
 {
-   isc_tr_handle trans = reinterpret_cast< isc_tr_handle >( reinterpret_cast< HB_PTRUINT >( hb_parptr(1) ) );
+   isc_tr_handle trans = reinterpret_cast<isc_tr_handle>(reinterpret_cast<HB_PTRUINT>(hb_parptr(1)));
 
    if( trans )
    {
@@ -271,7 +271,7 @@ HB_FUNC( FBCOMMIT )
 
 HB_FUNC( FBROLLBACK )
 {
-   isc_tr_handle trans = reinterpret_cast< isc_tr_handle >( reinterpret_cast< HB_PTRUINT >( hb_parptr(1) ) );
+   isc_tr_handle trans = reinterpret_cast<isc_tr_handle>(reinterpret_cast<HB_PTRUINT>(hb_parptr(1)));
 
    if( trans )
    {
@@ -306,18 +306,18 @@ HB_FUNC( FBEXECUTE )
 
       if( HB_ISPOINTER(4) )
       {
-         trans = reinterpret_cast< isc_tr_handle >( reinterpret_cast< HB_PTRUINT >( hb_parptr(4) ) );
+         trans = reinterpret_cast<isc_tr_handle>(reinterpret_cast<HB_PTRUINT>(hb_parptr(4)));
       }
       else
       {
-         if( isc_start_transaction( status, &trans, 1, &db, 0, nullptr ) )
+         if( isc_start_transaction(status, &trans, 1, &db, 0, nullptr) )
          {
             hb_retnl(isc_sqlcode(status));
             return;
          }
       }
 
-      if( isc_dsql_execute_immediate( status, &db, &trans, 0, exec_str, dialect, nullptr ) )
+      if( isc_dsql_execute_immediate(status, &db, &trans, 0, exec_str, dialect, nullptr) )
       {
          if( !HB_ISPOINTER(4) )
          {
@@ -366,9 +366,9 @@ HB_FUNC( FBQUERY )
 
       if( HB_ISPOINTER(4) )
       {
-         trans = reinterpret_cast< isc_tr_handle >( reinterpret_cast< HB_PTRUINT >( hb_parptr(4) ) );
+         trans = reinterpret_cast<isc_tr_handle>(reinterpret_cast<HB_PTRUINT>(hb_parptr(4)));
       }
-      else if( isc_start_transaction( status, &trans, 1, &db, 0, nullptr ) )
+      else if( isc_start_transaction(status, &trans, 1, &db, 0, nullptr) )
       {
          hb_retnl(isc_sqlcode(status));
          return;
@@ -469,7 +469,7 @@ HB_FUNC( FBQUERY )
       if( !sqlda->sqld )
       {
          /* Execute and commit non-select querys */
-         if( isc_dsql_execute( status, &trans, &stmt, dialect, nullptr ) )
+         if( isc_dsql_execute(status, &trans, &stmt, dialect, nullptr) )
          {
             hb_itemRelease(aNew);
             hb_retnl(isc_sqlcode(status));
@@ -488,17 +488,17 @@ HB_FUNC( FBQUERY )
 
       qry_handle = hb_itemArrayNew(6);
 
-      hb_arraySetPtr( qry_handle, 1, reinterpret_cast< void * >( reinterpret_cast< HB_PTRUINT >( stmt ) ) );
-      hb_arraySetPtr( qry_handle, 2, reinterpret_cast< void * >( reinterpret_cast< HB_PTRUINT >( sqlda ) ) );
+      hb_arraySetPtr(qry_handle, 1, reinterpret_cast<void*>(reinterpret_cast<HB_PTRUINT>(stmt)));
+      hb_arraySetPtr(qry_handle, 2, reinterpret_cast<void*>(reinterpret_cast<HB_PTRUINT>(sqlda)));
 
       if( !HB_ISPOINTER(4) )
       {
-         hb_arraySetPtr( qry_handle, 3, reinterpret_cast< void * >( reinterpret_cast< HB_PTRUINT >( trans ) ) );
+         hb_arraySetPtr(qry_handle, 3, reinterpret_cast<void*>(reinterpret_cast<HB_PTRUINT>(trans)));
       }
 
       hb_arraySetNL(qry_handle, 4, static_cast<long>(num_cols));
       hb_arraySetNI(qry_handle, 5, static_cast<int>(dialect));
-      hb_arraySetForward( qry_handle, 6, aNew );
+      hb_arraySetForward(qry_handle, 6, aNew);
 
       hb_itemReturnRelease(qry_handle);
       hb_itemRelease(aNew);
@@ -515,7 +515,7 @@ HB_FUNC( FBFETCH )
 
    if( aParam )
    {
-      isc_stmt_handle  stmt  = reinterpret_cast< isc_stmt_handle >( reinterpret_cast< HB_PTRUINT >( hb_itemGetPtr( hb_itemArrayGet( aParam, 1 ) ) ) );
+      isc_stmt_handle  stmt  = reinterpret_cast<isc_stmt_handle>(reinterpret_cast<HB_PTRUINT>(hb_itemGetPtr(hb_itemArrayGet(aParam, 1))));
       XSQLDA *         sqlda = static_cast<XSQLDA*>(hb_itemGetPtr(hb_itemArrayGet(aParam, 2)));
       ISC_STATUS_ARRAY status;
       unsigned short   dialect = static_cast<unsigned short>(hb_itemGetNI(hb_itemArrayGet(aParam, 5)));
@@ -535,9 +535,9 @@ HB_FUNC( FBFREE )
 
    if( aParam )
    {
-      isc_stmt_handle  stmt  = reinterpret_cast< isc_stmt_handle >( reinterpret_cast< HB_PTRUINT >( hb_itemGetPtr( hb_itemArrayGet( aParam, 1 ) ) ) );
+      isc_stmt_handle  stmt  = reinterpret_cast<isc_stmt_handle>(reinterpret_cast<HB_PTRUINT>(hb_itemGetPtr(hb_itemArrayGet(aParam, 1))));
       XSQLDA *         sqlda = static_cast<XSQLDA*>(hb_itemGetPtr(hb_itemArrayGet(aParam, 2)));
-      isc_tr_handle    trans = reinterpret_cast< isc_tr_handle >( reinterpret_cast< HB_PTRUINT >( hb_itemGetPtr( hb_itemArrayGet( aParam, 3 ) ) ) );
+      isc_tr_handle    trans = reinterpret_cast<isc_tr_handle>(reinterpret_cast<HB_PTRUINT>(hb_itemGetPtr(hb_itemArrayGet(aParam, 3))));
       ISC_STATUS_ARRAY status;
 
       if( isc_dsql_free_statement( status, &stmt, DSQL_drop ) )
@@ -586,7 +586,7 @@ HB_FUNC( FBGETDATA )
 
       var = sqlda->sqlvar + pos;
 
-      if( ( var->sqltype & 1 ) && ( *var->sqlind < 0 ) )
+      if( (var->sqltype & 1) && (*var->sqlind < 0) )
       {
          hb_ret(); /* null field */
       }
@@ -606,7 +606,7 @@ HB_FUNC( FBGETDATA )
                break;
 
             case SQL_TIMESTAMP:
-               isc_decode_timestamp( reinterpret_cast< ISC_TIMESTAMP * >( var->sqldata ), &times );
+               isc_decode_timestamp(reinterpret_cast<ISC_TIMESTAMP*>(var->sqldata), &times);
                hb_snprintf( date_s, sizeof(date_s), "%04d-%02d-%02d %02d:%02d:%02d.%04d",
                             times.tm_year + 1900,
                             times.tm_mon + 1,
@@ -621,7 +621,7 @@ HB_FUNC( FBGETDATA )
                break;
 
             case SQL_TYPE_DATE:
-               isc_decode_sql_date( reinterpret_cast< ISC_DATE * >( var->sqldata ), &times );
+               isc_decode_sql_date(reinterpret_cast<ISC_DATE*>(var->sqldata), &times);
                hb_snprintf( date_s, sizeof(date_s), "%04d-%02d-%02d", times.tm_year + 1900, times.tm_mon + 1, times.tm_mday );
                hb_snprintf( data, sizeof(data), "%*s ", 8, date_s );
 
@@ -629,7 +629,7 @@ HB_FUNC( FBGETDATA )
                break;
 
             case SQL_TYPE_TIME:
-               isc_decode_sql_time( reinterpret_cast< ISC_TIME * >( var->sqldata ), &times );
+               isc_decode_sql_time(reinterpret_cast<ISC_TIME*>(var->sqldata), &times);
                hb_snprintf( date_s, sizeof(date_s), "%02d:%02d:%02d.%04d",
                             times.tm_hour,
                             times.tm_min,
@@ -642,7 +642,7 @@ HB_FUNC( FBGETDATA )
 
             case SQL_BLOB:
             {
-               ISC_QUAD * blob_id = reinterpret_cast< ISC_QUAD * >( var->sqldata );
+               ISC_QUAD * blob_id = reinterpret_cast<ISC_QUAD*>(var->sqldata);
                hb_retptr(static_cast<void*>(blob_id));
                break;
             }
@@ -696,7 +696,7 @@ HB_FUNC( FBGETDATA )
                                   -dscale,
                                   static_cast<ISC_INT64>(value) % tens );
                   }
-                  else if( ( value / tens ) != 0 )
+                  else if( (value / tens) != 0 )
                   {
                      hb_snprintf( data, sizeof(data), "%*" ISC_INT64_FORMAT "d.%0*" ISC_INT64_FORMAT "d",
                                   field_width - 1 + dscale,
@@ -726,12 +726,12 @@ HB_FUNC( FBGETDATA )
                break;
             }
             case SQL_FLOAT:
-               hb_snprintf( data, sizeof(data), "%15g ", *reinterpret_cast< float * >( var->sqldata ) );
+               hb_snprintf(data, sizeof(data), "%15g ", *reinterpret_cast<float*>(var->sqldata));
                hb_retc(data);
                break;
 
             case SQL_DOUBLE:
-               hb_snprintf( data, sizeof(data), "%24f ", *reinterpret_cast< double * >( var->sqldata ) );
+               hb_snprintf(data, sizeof(data), "%24f ", *reinterpret_cast<double*>(var->sqldata));
                hb_retc(data);
                break;
 
@@ -759,27 +759,25 @@ HB_FUNC( FBGETBLOB )
 
       if( HB_ISPOINTER(3) )
       {
-         trans = reinterpret_cast< isc_tr_handle >( reinterpret_cast< HB_PTRUINT >( hb_parptr(3) ) );
+         trans = reinterpret_cast<isc_tr_handle>(reinterpret_cast<HB_PTRUINT>(hb_parptr(3)));
       }
       else
       {
-         if( isc_start_transaction( status, &trans, 1, &db, 0, nullptr ) )
+         if( isc_start_transaction(status, &trans, 1, &db, 0, nullptr) )
          {
             hb_retnl(isc_sqlcode(status));
             return;
          }
       }
 
-      if( isc_open_blob2( status, &db, &trans, &blob_handle, blob_id, 0, nullptr ) )
+      if( isc_open_blob2(status, &db, &trans, &blob_handle, blob_id, 0, nullptr) )
       {
          hb_retnl(isc_sqlcode(status));
          return;
       }
 
       /* Get blob segments and their lengths and print each segment. */
-      blob_stat = isc_get_segment( status, &blob_handle,
-                                   reinterpret_cast< unsigned short * >( &blob_seg_len ),
-                                   sizeof(blob_segment), blob_segment );
+      blob_stat = isc_get_segment(status, &blob_handle, reinterpret_cast<unsigned short*>(&blob_seg_len), sizeof(blob_segment), blob_segment);
 
       if( blob_stat == 0 || status[1] == isc_segment )
       {
@@ -792,7 +790,7 @@ HB_FUNC( FBGETBLOB )
 
             hb_snprintf( p, sizeof(p), "%*.*s", blob_seg_len, blob_seg_len, blob_segment );
 
-            temp = hb_itemPutC( nullptr, p );
+            temp = hb_itemPutC(nullptr, p);
             hb_arrayAdd( aNew, temp );
             hb_itemRelease(temp);
 

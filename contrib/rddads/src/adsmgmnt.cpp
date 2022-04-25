@@ -98,14 +98,14 @@ HB_FUNC( ADSMGGETINSTALLINFO )
    if( AdsMgGetInstallInfo( s_hMgmtHandle, &stInstallInfo, &usStructSize ) == AE_SUCCESS )
    {
       hb_reta(8);
-      hb_storvnl( stInstallInfo.ulUserOption                , -1, 1 );  /* User option purchased */
-      hb_storvc( reinterpret_cast< char * >( stInstallInfo.aucRegisteredOwner ), -1, 2 );  /* Registered owner */
-      hb_storvc( reinterpret_cast< char * >( stInstallInfo.aucVersionStr )     , -1, 3 );  /* Advantage version */
-      hb_storvc( reinterpret_cast< char * >( stInstallInfo.aucInstallDate )    , -1, 4 );  /* Install date string */
-      hb_storvc( reinterpret_cast< char * >( stInstallInfo.aucOemCharName )    , -1, 5 );  /* OEM char language */
-      hb_storvc( reinterpret_cast< char * >( stInstallInfo.aucAnsiCharName )   , -1, 6 );  /* ANSI char language */
-      hb_storvc( reinterpret_cast< char * >( stInstallInfo.aucEvalExpireDate ) , -1, 7 );  /* Eval expiration date */
-      hb_storvc( reinterpret_cast< char * >( stInstallInfo.aucSerialNumber )   , -1, 8 );  /* Serial number string */
+      hb_storvnl(stInstallInfo.ulUserOption, -1, 1);                                /* User option purchased */
+      hb_storvc(reinterpret_cast<char*>(stInstallInfo.aucRegisteredOwner), -1, 2);  /* Registered owner */
+      hb_storvc(reinterpret_cast<char*>(stInstallInfo.aucVersionStr), -1, 3);       /* Advantage version */
+      hb_storvc(reinterpret_cast<char*>(stInstallInfo.aucInstallDate), -1, 4);      /* Install date string */
+      hb_storvc(reinterpret_cast<char*>(stInstallInfo.aucOemCharName), -1, 5);      /* OEM char language */
+      hb_storvc(reinterpret_cast<char*>(stInstallInfo.aucAnsiCharName), -1, 6);     /* ANSI char language */
+      hb_storvc(reinterpret_cast<char*>(stInstallInfo.aucEvalExpireDate), -1, 7);   /* Eval expiration date */
+      hb_storvc(reinterpret_cast<char*>(stInstallInfo.aucSerialNumber), -1, 8);     /* Serial number string */
    }
    else
    {
@@ -317,9 +317,9 @@ HB_FUNC( ADSMGGETCONFIGINFO )
             hb_storvni(0, -1, 17); /* reserved */
             hb_storvni(0, -1, 18); /* reserved */
 #endif
-            hb_storvc( reinterpret_cast< char * >( stConfigValues.aucErrorLog )   , -1, 19 );  /* error log path */
-            hb_storvc( reinterpret_cast< char * >( stConfigValues.aucSemaphore )  , -1, 20 );  /* semaphore file path */
-            hb_storvc( reinterpret_cast< char * >( stConfigValues.aucTransaction ), -1, 21 );  /* TPS log file path */
+            hb_storvc(reinterpret_cast<char*>(stConfigValues.aucErrorLog), -1, 19);    /* error log path */
+            hb_storvc(reinterpret_cast<char*>(stConfigValues.aucSemaphore), -1, 20);   /* semaphore file path */
+            hb_storvc(reinterpret_cast<char*>(stConfigValues.aucTransaction), -1, 21); /* TPS log file path */
             hb_storvni( stConfigValues.ucReserved3             , -1, 22 );  /* reserved */
             hb_storvni( stConfigValues.ucReserved4             , -1, 23 );  /* reserved */
             hb_storvnl( stConfigValues.usSendIPPort            , -1, 24 );  /* NT Service IP send port # */
@@ -378,12 +378,12 @@ HB_FUNC( ADSMGGETCONFIGINFO )
 /* Return array of connected users */
 HB_FUNC( ADSMGGETUSERNAMES )
 {
-   UNSIGNED16 usArrayLen = static_cast< UNSIGNED16 >( hb_parnidef(2, 2000) ); /* needed for array memory allocation; caller can set with 2nd arg */
+   UNSIGNED16 usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(2, 2000)); /* needed for array memory allocation; caller can set with 2nd arg */
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_USER_INFO);
    ADS_MGMT_USER_INFO * pastUserInfo = static_cast<ADS_MGMT_USER_INFO*>(hb_xgrab(sizeof(ADS_MGMT_USER_INFO) * usArrayLen));
 
    if( AdsMgGetUserNames( s_hMgmtHandle,
-                          static_cast< UNSIGNED8 * >( const_cast< char *>( hb_parc(1) ) ) /* pucFileName */,
+                          static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucFileName */,
                           pastUserInfo,
                           &usArrayLen,
                           &usStructSize ) == AE_SUCCESS )
@@ -395,24 +395,24 @@ HB_FUNC( ADSMGGETUSERNAMES )
          PHB_ITEM pArrayItm = hb_arrayGetItemPtr(pArray, ulCount);
          hb_arrayNew(pArrayItm, 6);
 
-         hb_arraySetC(  pArrayItm, 1, reinterpret_cast< char * >( pastUserInfo[ulCount - 1].aucUserName ) );
-         hb_arraySetNL( pArrayItm, 2,            pastUserInfo[ulCount - 1].usConnNumber );
+         hb_arraySetC(pArrayItm, 1, reinterpret_cast<char*>(pastUserInfo[ulCount - 1].aucUserName));
+         hb_arraySetNL(pArrayItm, 2, pastUserInfo[ulCount - 1].usConnNumber);
 #if ADS_LIB_VERSION >= 600
-         hb_arraySetC(  pArrayItm, 3, reinterpret_cast< char * >( pastUserInfo[ulCount - 1].aucAddress ) );
+         hb_arraySetC(pArrayItm, 3, reinterpret_cast<char*>(pastUserInfo[ulCount - 1].aucAddress));
 #else
-         hb_arraySetC(  pArrayItm, 3, nullptr );
+         hb_arraySetC(pArrayItm, 3, nullptr);
 #endif
 #if ADS_LIB_VERSION >= 800
-         hb_arraySetC(  pArrayItm, 4, reinterpret_cast< char * >( pastUserInfo[ulCount - 1].aucAuthUserName ) );
-         hb_arraySetC(  pArrayItm, 5, reinterpret_cast< char * >( pastUserInfo[ulCount - 1].aucOSUserLoginName ) );
+         hb_arraySetC(pArrayItm, 4, reinterpret_cast<char*>(pastUserInfo[ulCount - 1].aucAuthUserName));
+         hb_arraySetC(pArrayItm, 5, reinterpret_cast<char*>(pastUserInfo[ulCount - 1].aucOSUserLoginName));
 #else
-         hb_arraySetC(  pArrayItm, 4, nullptr );
-         hb_arraySetC(  pArrayItm, 5, nullptr );
+         hb_arraySetC(pArrayItm, 4, nullptr);
+         hb_arraySetC(pArrayItm, 5, nullptr);
 #endif
 #if ADS_LIB_VERSION >= 810
-         hb_arraySetC(  pArrayItm, 6, reinterpret_cast< char * >( pastUserInfo[ulCount - 1].aucTSAddress ) );
+         hb_arraySetC(pArrayItm, 6, reinterpret_cast<char*>(pastUserInfo[ulCount - 1].aucTSAddress));
 #else
-         hb_arraySetC(  pArrayItm, 6, nullptr );
+         hb_arraySetC(pArrayItm, 6, nullptr);
 #endif
       }
       hb_itemReturnRelease(pArray);
@@ -452,21 +452,21 @@ HB_FUNC( ADSMGGETLOCKOWNER )
    ADS_MGMT_USER_INFO * pstUserInfo = static_cast<ADS_MGMT_USER_INFO*>(hb_xgrab(sizeof(ADS_MGMT_USER_INFO)));
 
    if( AdsMgGetLockOwner( s_hMgmtHandle,
-                          static_cast< UNSIGNED8 * >( const_cast< char *>( hb_parcx(1) ) ) /* pucTableName */,
-                          static_cast< UNSIGNED32 >( hb_parnl(2) ) /* ulRecordNumber */,
+                          static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucTableName */,
+                          static_cast<UNSIGNED32>(hb_parnl(2)) /* ulRecordNumber */,
                           pstUserInfo,
                           &usStructSize,
                           &pusLockType ) == AE_SUCCESS )
    {
       hb_reta(5);
-      hb_storvc( reinterpret_cast< char * >( pstUserInfo->aucUserName ), -1, 1 );       /* Machine name under NT */
-      hb_storvnl( static_cast< UNSIGNED16 >( pstUserInfo->usConnNumber ), -1, 2 ); /* NetWare conn # (NLM only) */
+      hb_storvc( reinterpret_cast<char*>(pstUserInfo->aucUserName), -1, 1);       /* Machine name under NT */
+      hb_storvnl( static_cast<UNSIGNED16>(pstUserInfo->usConnNumber), -1, 2); /* NetWare conn # (NLM only) */
 #if ADS_LIB_VERSION >= 600
-      hb_storvc( reinterpret_cast< char * >( pstUserInfo->aucAuthUserName ), -1, 3 );   /* logon name with Data Dictionary */
-      hb_storvc( reinterpret_cast< char * >( pstUserInfo->aucAddress ), -1, 4 );        /* IP address */
+      hb_storvc( reinterpret_cast<char*>(pstUserInfo->aucAuthUserName), -1, 3);   /* logon name with Data Dictionary */
+      hb_storvc( reinterpret_cast<char*>(pstUserInfo->aucAddress), -1, 4);        /* IP address */
 #else
-      hb_storvc( nullptr, -1, 3 );                                      /* logon name with Data Dictionary */
-      hb_storvc( nullptr, -1, 4 );                                      /* IP address */
+      hb_storvc(nullptr, -1, 3);                                      /* logon name with Data Dictionary */
+      hb_storvc(nullptr, -1, 4);                                      /* IP address */
 #endif
       hb_storvnl( pusLockType, -1, 5 );                              /* type of lock */
    }
@@ -491,13 +491,13 @@ HB_FUNC( ADSMGGETLOCKOWNER )
          info, see AdsMgGetOpenTables2(). */
 HB_FUNC( ADSMGGETOPENTABLES ) /* nMaxNumberOfFilesToReturn, cUserName, nConnection */
 {
-   UNSIGNED16 usArrayLen = static_cast< UNSIGNED16 >( hb_parnidef(1, 300) );
+   UNSIGNED16 usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 300));
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_TABLE_INFO);
    ADS_MGMT_TABLE_INFO * astOpenTableInfo = static_cast<ADS_MGMT_TABLE_INFO*>(hb_xgrab(sizeof(ADS_MGMT_TABLE_INFO) * usArrayLen));
 
    if( AdsMgGetOpenTables( s_hMgmtHandle,
-                           static_cast< UNSIGNED8 * >( hb_parclen(2) > 0 ? const_cast< char *>( hb_parc(2) ) : nullptr ) /* pucUserName */,
-                           static_cast< UNSIGNED16 >( hb_parni(3) ) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(3) only valid for NetWare so don't default to current, only take a passed value */
+                           static_cast<UNSIGNED8*>(hb_parclen(2) > 0 ? const_cast<char*>(hb_parc(2)) : nullptr) /* pucUserName */,
+                           static_cast<UNSIGNED16>(hb_parni(3)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(3) only valid for NetWare so don't default to current, only take a passed value */
                            astOpenTableInfo,
                            &usArrayLen,
                            &usStructSize ) == AE_SUCCESS )
@@ -506,7 +506,7 @@ HB_FUNC( ADSMGGETOPENTABLES ) /* nMaxNumberOfFilesToReturn, cUserName, nConnecti
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ )
       {
-         hb_arraySetC( pArray, static_cast< HB_ULONG >( ulCount ), reinterpret_cast< char * >( astOpenTableInfo[ulCount - 1].aucTableName ) );
+         hb_arraySetC( pArray, static_cast<HB_ULONG>(ulCount), reinterpret_cast<char*>(astOpenTableInfo[ulCount - 1].aucTableName) );
       }
 
       hb_itemReturnRelease(pArray);
@@ -530,13 +530,13 @@ HB_FUNC( ADSMGGETOPENTABLES ) /* nMaxNumberOfFilesToReturn, cUserName, nConnecti
 
 HB_FUNC( ADSMGGETOPENTABLES2 ) /* nMaxNumberOfFilesToReturn, cUserName, nConnection */
 {
-   UNSIGNED16 usArrayLen = static_cast< UNSIGNED16 >( hb_parnidef(1, 300) );
+   UNSIGNED16 usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 300));
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_TABLE_INFO);
    ADS_MGMT_TABLE_INFO * astOpenTableInfo = static_cast<ADS_MGMT_TABLE_INFO*>(hb_xgrab(sizeof(ADS_MGMT_TABLE_INFO) * usArrayLen));
 
    if( AdsMgGetOpenTables( s_hMgmtHandle,
-                           static_cast< UNSIGNED8 * >( hb_parclen(2) > 0 ? const_cast< char *>( hb_parc(2) ) : nullptr ) /* pucUserName */,
-                           static_cast< UNSIGNED16 >( hb_parni(3) ) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(3) only valid for NetWare so don't default to current, only take a passed value */
+                           static_cast<UNSIGNED8*>(hb_parclen(2) > 0 ? const_cast<char*>(hb_parc(2)) : nullptr) /* pucUserName */,
+                           static_cast<UNSIGNED16>(hb_parni(3)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(3) only valid for NetWare so don't default to current, only take a passed value */
                            astOpenTableInfo,
                            &usArrayLen,
                            &usStructSize ) == AE_SUCCESS )
@@ -573,14 +573,14 @@ HB_FUNC( ADSMGGETOPENTABLES2 ) /* nMaxNumberOfFilesToReturn, cUserName, nConnect
 
 HB_FUNC( ADSMGGETOPENINDEXES ) /* nMaxNumberOfFilesToReturn, cTableName, cUserName, nConnection */
 {
-   UNSIGNED16 usArrayLen = static_cast< UNSIGNED16 >( hb_parnidef(1, 300) );
+   UNSIGNED16 usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 300));
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_INDEX_INFO);
    ADS_MGMT_INDEX_INFO * astOpenIndexInfo = static_cast<ADS_MGMT_INDEX_INFO*>(hb_xgrab(sizeof(ADS_MGMT_INDEX_INFO) * usArrayLen));
 
    if( AdsMgGetOpenIndexes( s_hMgmtHandle,
-                            static_cast< UNSIGNED8 * >( hb_parclen(2) > 0 ? const_cast< char *>( hb_parc(2) ) : nullptr ) /* pucTableName */, /* fully qualified path to that table */
-                            static_cast< UNSIGNED8 * >( hb_parclen(3) > 0 ? const_cast< char *>( hb_parc(3) ) : nullptr ) /* pucUserName */,
-                            static_cast< UNSIGNED16 >( hb_parni(4) ) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(4) only valid for NetWare so don't default to current, only take a passed value */
+                            static_cast<UNSIGNED8*>(hb_parclen(2) > 0 ? const_cast<char*>(hb_parc(2)) : nullptr) /* pucTableName */, /* fully qualified path to that table */
+                            static_cast<UNSIGNED8*>(hb_parclen(3) > 0 ? const_cast<char*>(hb_parc(3)) : nullptr) /* pucUserName */,
+                            static_cast<UNSIGNED16>(hb_parni(4)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(4) only valid for NetWare so don't default to current, only take a passed value */
                             astOpenIndexInfo,
                             &usArrayLen,
                             &usStructSize ) == AE_SUCCESS )
@@ -589,7 +589,7 @@ HB_FUNC( ADSMGGETOPENINDEXES ) /* nMaxNumberOfFilesToReturn, cTableName, cUserNa
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ )
       {
-         hb_arraySetC( pArray, static_cast< HB_ULONG >( ulCount ), reinterpret_cast< char * >( astOpenIndexInfo[ulCount - 1].aucIndexName ) );
+         hb_arraySetC( pArray, static_cast<HB_ULONG>(ulCount), reinterpret_cast<char*>(astOpenIndexInfo[ulCount - 1].aucIndexName) );
       }
 
       hb_itemReturnRelease(pArray);
@@ -613,14 +613,14 @@ HB_FUNC( ADSMGGETOPENINDEXES ) /* nMaxNumberOfFilesToReturn, cTableName, cUserNa
 
 HB_FUNC( ADSMGGETLOCKS )
 {
-   UNSIGNED16 usArrayLen = static_cast< UNSIGNED16 >( hb_parnidef(1, 2000) );
+   UNSIGNED16 usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 2000));
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_RECORD_INFO);
    ADS_MGMT_RECORD_INFO * astRecordInfo = static_cast<ADS_MGMT_RECORD_INFO*>(hb_xgrab(sizeof(ADS_MGMT_RECORD_INFO) * usArrayLen));
 
    if( AdsMgGetLocks( s_hMgmtHandle,
-                      static_cast< UNSIGNED8 * >( hb_parclen(2) > 0 ? const_cast< char *>( hb_parc(2) ) : nullptr ) /* pucTableName */, /* fully qualified path to that table */
-                      static_cast< UNSIGNED8 * >( hb_parclen(3) > 0 ? const_cast< char *>( hb_parc(3) ) : nullptr ) /* pucUserName */,
-                      static_cast< UNSIGNED16 >( hb_parni(4) ) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(4) only valid for NetWare so don't default to current, only take a passed value */
+                      static_cast<UNSIGNED8*>(hb_parclen(2) > 0 ? const_cast<char*>(hb_parc(2)) : nullptr) /* pucTableName */, /* fully qualified path to that table */
+                      static_cast<UNSIGNED8*>(hb_parclen(3) > 0 ? const_cast<char*>(hb_parc(3)) : nullptr) /* pucUserName */,
+                      static_cast<UNSIGNED16>(hb_parni(4)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(4) only valid for NetWare so don't default to current, only take a passed value */
                       astRecordInfo,
                       &usArrayLen,
                       &usStructSize ) == AE_SUCCESS )
@@ -629,7 +629,7 @@ HB_FUNC( ADSMGGETLOCKS )
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ )
       {
-         hb_arraySetNL( pArray, static_cast< HB_ULONG >( ulCount ), astRecordInfo[ulCount - 1].ulRecordNumber );
+         hb_arraySetNL( pArray, static_cast<HB_ULONG>(ulCount), astRecordInfo[ulCount - 1].ulRecordNumber );
       }
 
       hb_itemReturnRelease(pArray);
@@ -653,7 +653,7 @@ HB_FUNC( ADSMGGETLOCKS )
 
 HB_FUNC( ADSMGGETWORKERTHREADACTIVITY )
 {
-   UNSIGNED16 usArrayLen = static_cast< UNSIGNED16 >( hb_parnidef(1, 2000) );
+   UNSIGNED16 usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 2000));
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_THREAD_ACTIVITY);
    ADS_MGMT_THREAD_ACTIVITY * astWorkerThreadActivity = static_cast<ADS_MGMT_THREAD_ACTIVITY*>(hb_xgrab(sizeof(ADS_MGMT_THREAD_ACTIVITY) * usArrayLen));
 

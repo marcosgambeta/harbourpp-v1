@@ -104,7 +104,7 @@ static void do_justify( int iSwitch )
                pc++;
             }
 
-            hb_xmemcpy( pcRet, pcString + sJustOffset, sStrLen - sJustOffset );
+            hb_xmemcpy(pcRet, pcString + sJustOffset, sStrLen - sJustOffset);
 
             for( pcw = pcRet + sStrLen - sJustOffset; pcw < pcRet + sStrLen; pcw++ )
             {
@@ -127,7 +127,7 @@ static void do_justify( int iSwitch )
                *pcw = cJustChar;
             }
 
-            hb_xmemcpy( pcRet + sJustOffset, pcString, sStrLen - sJustOffset );
+            hb_xmemcpy(pcRet + sJustOffset, pcString, sStrLen - sJustOffset);
             break;
       }
 

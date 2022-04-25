@@ -149,13 +149,13 @@ HB_FUNC( HB_CREATELEN8 )
    if( HB_ISNUM(1) )
    {
       nValue = hb_parnint(1);
-      HB_PUT_LE_UINT64( buffer, nValue );
+      HB_PUT_LE_UINT64(buffer, nValue);
       hb_retclen(buffer, 8);
    }
    else if( HB_ISBYREF(1) && HB_ISNUM(2) )
    {
       nValue = hb_parnint(2);
-      HB_PUT_LE_UINT64( buffer, nValue );
+      HB_PUT_LE_UINT64(buffer, nValue);
       hb_storclen(buffer, 8, 1);
    }
 }

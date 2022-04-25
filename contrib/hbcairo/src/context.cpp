@@ -144,7 +144,7 @@ HB_FUNC( CAIRO_GET_DASH )
       pItem = hb_itemArrayNew( static_cast<HB_SIZE>(iCount) );
       for( int i = 0; i < iCount; i++ )
       {
-         hb_arraySetND( pItem, static_cast<HB_SIZE>(i) + 1, pDashes[i] );
+         hb_arraySetND(pItem, static_cast<HB_SIZE>(i) + 1, pDashes[i]);
       }
       hb_xfree(pDashes);
       hb_itemParamStoreForward(2, pItem);
@@ -240,7 +240,7 @@ HB_FUNC( CAIRO_SET_DASH )
    {
       PHB_ITEM pItem;
 
-      if( ( pItem = hb_param(2, Harbour::Item::ARRAY) ) != nullptr )
+      if( (pItem = hb_param(2, Harbour::Item::ARRAY)) != nullptr )
       {
          int      iCount = static_cast<int>(hb_arrayLen(pItem));
          double * pDashes = nullptr;
@@ -252,7 +252,7 @@ HB_FUNC( CAIRO_SET_DASH )
 
          for( int i = 0; i < iCount; i++ )
          {
-            pDashes[i] = hb_arrayGetND( pItem, static_cast<HB_SIZE>(i) + 1 );
+            pDashes[i] = hb_arrayGetND(pItem, static_cast<HB_SIZE>(i) + 1);
          }
          cairo_set_dash( pCairo, pDashes, iCount, hb_parnd(3) );
 

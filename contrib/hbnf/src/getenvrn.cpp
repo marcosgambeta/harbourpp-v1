@@ -160,7 +160,7 @@ HB_FUNC( FT_GETE )
 
          if( rettype == CHARTYPE )
          {
-            PHB_ITEM pItem = HB_ITEMPUTSTRLEN( nullptr, lpResult, nSize );
+            PHB_ITEM pItem = HB_ITEMPUTSTRLEN(nullptr, lpResult, nSize);
             if( !hb_itemParamStoreRelease(1, pItem) )
             {
                hb_itemRelease(pItem);

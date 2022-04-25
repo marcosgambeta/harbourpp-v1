@@ -55,7 +55,7 @@ HB_FUNC( WORDTOCHAR )
    iMultiPass = ct_getatmupa();
 
    /* param check */
-   if( ( sSearchLen = hb_parclen(1) ) / 2 > 0 && ( sStrLen = hb_parclen(2) ) / 2 > 0 && ( sReplaceLen = hb_parclen(3) ) > 0 )
+   if( (sSearchLen = hb_parclen(1)) / 2 > 0 && (sStrLen = hb_parclen(2)) / 2 > 0 && (sReplaceLen = hb_parclen(3)) > 0 )
    {
       /* get parameters */
       const char * pcSearch = hb_parc(1);

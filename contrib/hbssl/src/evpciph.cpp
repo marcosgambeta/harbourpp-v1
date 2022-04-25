@@ -57,16 +57,16 @@ HB_FUNC( OPENSSL_ADD_ALL_CIPHERS )
 
 static HB_GARBAGE_FUNC( EVP_CIPHER_CTX_release )
 {
-   void ** ph = static_cast< void ** >( Cargo );
+   void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
-      EVP_CIPHER_CTX_free( static_cast< EVP_CIPHER_CTX * >( *ph ) );
+      EVP_CIPHER_CTX_free(static_cast<EVP_CIPHER_CTX*>(*ph));
 #else
       /* Cleanup the object */
-      EVP_CIPHER_CTX_cleanup( static_cast< EVP_CIPHER_CTX * >( *ph ) );
+      EVP_CIPHER_CTX_cleanup(static_cast<EVP_CIPHER_CTX*>(*ph));
       /* Destroy the object */
       hb_xfree(*ph);
 #endif
@@ -89,9 +89,9 @@ static HB_BOOL hb_EVP_CIPHER_CTX_is( int iParam )
 
 static EVP_CIPHER_CTX * hb_EVP_CIPHER_CTX_par( int iParam )
 {
-   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcEVP_CIPHER_CTX_funcs, iParam ) );
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcEVP_CIPHER_CTX_funcs, iParam));
 
-   return ph ? static_cast< EVP_CIPHER_CTX * >( *ph ) : nullptr;
+   return ph ? static_cast<EVP_CIPHER_CTX*>(*ph) : nullptr;
 }
 
 HB_BOOL hb_EVP_CIPHER_is( int iParam )
@@ -488,7 +488,7 @@ HB_FUNC( EVP_CIPHER_TYPE )
 
 HB_FUNC( EVP_CIPHER_CTX_NEW )
 {
-   void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof(EVP_CIPHER_CTX*), &s_gcEVP_CIPHER_CTX_funcs ) );
+   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(EVP_CIPHER_CTX*), &s_gcEVP_CIPHER_CTX_funcs));
    EVP_CIPHER_CTX * ctx;
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
@@ -678,7 +678,7 @@ HB_FUNC( EVP_ENCRYPTUPDATE )
 
       if( ctx )
       {
-         int size = static_cast< int >( hb_parclen(3) ) + EVP_CIPHER_CTX_block_size( ctx ) - 1;
+         int size = static_cast<int>(hb_parclen(3)) + EVP_CIPHER_CTX_block_size(ctx) - 1;
          unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
 
          hb_retni(EVP_EncryptUpdate(ctx,
@@ -689,7 +689,7 @@ HB_FUNC( EVP_ENCRYPTUPDATE )
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
             {
                hb_xfree(buffer);
             }
@@ -722,7 +722,7 @@ HB_FUNC( EVP_ENCRYPTFINAL )
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
             {
                hb_xfree(buffer);
             }
@@ -756,7 +756,7 @@ HB_FUNC( EVP_ENCRYPTFINAL_EX )
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
             {
                hb_xfree(buffer);
             }
@@ -835,7 +835,7 @@ HB_FUNC( EVP_DECRYPTUPDATE )
 
       if( ctx )
       {
-         int size = static_cast< int >( hb_parclen(3) ) + EVP_CIPHER_CTX_block_size( ctx );
+         int size = static_cast<int>(hb_parclen(3)) + EVP_CIPHER_CTX_block_size(ctx);
          unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
 
          hb_retni(EVP_DecryptUpdate(ctx,
@@ -846,7 +846,7 @@ HB_FUNC( EVP_DECRYPTUPDATE )
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
             {
                hb_xfree(buffer);
             }
@@ -879,7 +879,7 @@ HB_FUNC( EVP_DECRYPTFINAL )
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
             {
                hb_xfree(buffer);
             }
@@ -913,7 +913,7 @@ HB_FUNC( EVP_DECRYPTFINAL_EX )
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
             {
                hb_xfree(buffer);
             }
@@ -994,7 +994,7 @@ HB_FUNC( EVP_CIPHERUPDATE )
 
       if( ctx )
       {
-         int size = static_cast< int >( hb_parclen(3) ) + EVP_CIPHER_CTX_block_size( ctx ) - 1;
+         int size = static_cast<int>(hb_parclen(3)) + EVP_CIPHER_CTX_block_size(ctx) - 1;
          unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
 
          hb_retni(EVP_CipherUpdate(ctx,
@@ -1005,7 +1005,7 @@ HB_FUNC( EVP_CIPHERUPDATE )
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
             {
                hb_xfree(buffer);
             }
@@ -1038,7 +1038,7 @@ HB_FUNC( EVP_CIPHERFINAL )
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
             {
                hb_xfree(buffer);
             }
@@ -1072,7 +1072,7 @@ HB_FUNC( EVP_CIPHERFINAL_EX )
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
             {
                hb_xfree(buffer);
             }
@@ -1114,7 +1114,7 @@ HB_FUNC( EVP_SEALINIT )
          }
          else if( HB_ISPOINTER(5) )
          {
-            if( ( pkey1 = static_cast< EVP_PKEY * >( hb_parptr(5) ) ) != nullptr )
+            if( (pkey1 = static_cast<EVP_PKEY*>(hb_parptr(5))) != nullptr )
             {
                npubk = 1;
             }
@@ -1133,7 +1133,7 @@ HB_FUNC( EVP_SEALINIT )
 
             for( tmp = 0; tmp < npubk; tmp++ )
             {
-               pubk[tmp] = pkey1 ? pkey1 : static_cast< EVP_PKEY * >( hb_arrayGetPtr( pArray, tmp + 1 ) );
+               pubk[tmp] = pkey1 ? pkey1 : static_cast<EVP_PKEY*>(hb_arrayGetPtr(pArray, tmp + 1));
                ek[tmp]   = static_cast<unsigned char*>(hb_xgrab(EVP_PKEY_size(pubk[tmp]) + 1));
                ekl[tmp]  = 0;
             }
@@ -1144,7 +1144,7 @@ HB_FUNC( EVP_SEALINIT )
 
             for( tmp = 0; tmp < npubk; tmp++ )
             {
-               hb_arraySetCLPtr( pPKEY, tmp + 1, reinterpret_cast< char * >( ek[tmp] ), ekl[tmp] );
+               hb_arraySetCLPtr(pPKEY, tmp + 1, reinterpret_cast<char*>(ek[tmp]), ekl[tmp]);
             }
 
             hb_itemParamStoreForward(3, pPKEY);
@@ -1152,7 +1152,7 @@ HB_FUNC( EVP_SEALINIT )
 
             if( iv )
             {
-               if( !hb_storclen_buffer( reinterpret_cast< char * >( iv ), ivl, 4 ) )
+               if( !hb_storclen_buffer(reinterpret_cast<char*>(iv), ivl, 4) )
                {
                   hb_xfree(iv);
                }
@@ -1182,14 +1182,14 @@ HB_FUNC( EVP_SEALUPDATE )
 
       if( ctx )
       {
-         int size = static_cast< int >( hb_parclen(3) ) + EVP_CIPHER_CTX_block_size( ctx ) - 1;
+         int size = static_cast<int>(hb_parclen(3)) + EVP_CIPHER_CTX_block_size(ctx) - 1;
          unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
 
          hb_retni(EVP_SealUpdate(ctx, buffer, &size, reinterpret_cast<HB_SSL_CONST unsigned char*>(hb_parcx(3)), static_cast<int>(hb_parclen(3))));
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
             {
                hb_xfree(buffer);
             }
@@ -1227,7 +1227,7 @@ HB_FUNC( EVP_SEALFINAL )
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
             {
                hb_xfree(buffer);
             }
@@ -1252,7 +1252,7 @@ HB_FUNC( EVP_OPENINIT )
    if( hb_EVP_CIPHER_CTX_is(1) && cipher )
    {
       EVP_CIPHER_CTX * ctx  = hb_EVP_CIPHER_CTX_par(1);
-      EVP_PKEY *       priv = static_cast< EVP_PKEY * >( hb_parptr(5) );
+      EVP_PKEY *       priv = static_cast<EVP_PKEY*>(hb_parptr(5));
 
       if( ctx && priv )
       {
@@ -1278,18 +1278,14 @@ HB_FUNC( EVP_OPENUPDATE )
 
       if( ctx )
       {
-         int size = static_cast< int >( hb_parclen(3) ) + EVP_CIPHER_CTX_block_size( ctx ) - 1;
+         int size = static_cast<int>(hb_parclen(3)) + EVP_CIPHER_CTX_block_size(ctx) - 1;
          unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
 
-         hb_retni(EVP_OpenUpdate(ctx,
-                                 buffer,
-                                 &size,
-                                 reinterpret_cast<HB_SSL_CONST unsigned char*>(hb_parcx(3)),
-                                 static_cast<int>(hb_parclen(3))));
+         hb_retni(EVP_OpenUpdate(ctx, buffer, &size, reinterpret_cast<HB_SSL_CONST unsigned char*>(hb_parcx(3)), static_cast<int>(hb_parclen(3))));
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
             {
                hb_xfree(buffer);
             }
@@ -1322,7 +1318,7 @@ HB_FUNC( EVP_OPENFINAL )
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
             {
                hb_xfree(buffer);
             }

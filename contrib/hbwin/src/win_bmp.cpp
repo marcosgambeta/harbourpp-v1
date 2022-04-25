@@ -96,7 +96,7 @@ HB_FUNC( WIN_BITMAPTYPE )
 HB_FUNC( WIN_LOADBITMAPFILE )
 {
    HB_SIZE nSize;
-   char * pBuffer = reinterpret_cast< char * >( hb_fileLoad( hb_parcx(1), HB_MAX_BMP_SIZE, &nSize ) );
+   char * pBuffer = reinterpret_cast<char*>(hb_fileLoad(hb_parcx(1), HB_MAX_BMP_SIZE, &nSize));
 
    if( pBuffer )
    {
@@ -144,10 +144,10 @@ static int hbwin_bitmapIsSupported( HDC hDC, int iType, const void * pImgBuf, HB
       {
          int iRes = iType = ( iType == HB_WIN_BITMAP_JPEG ? CHECKJPEGFORMAT : CHECKPNGFORMAT );
 
-         iRes = ExtEscape( hDC, QUERYESCSUPPORT, sizeof(iRes), reinterpret_cast< LPCSTR >( &iRes ), 0, 0 );
+         iRes = ExtEscape( hDC, QUERYESCSUPPORT, sizeof(iRes), reinterpret_cast<LPCSTR>(&iRes), 0, 0 );
          if( iRes > 0 )
          {
-            if( ExtEscape( hDC, iType, static_cast<int>(nSize), static_cast<LPCSTR>(pImgBuf), sizeof(iRes), reinterpret_cast< LPSTR >( &iRes ) ) > 0 )
+            if( ExtEscape( hDC, iType, static_cast<int>(nSize), static_cast<LPCSTR>(pImgBuf), sizeof(iRes), reinterpret_cast<LPSTR>(&iRes) ) > 0 )
             {
                if( iRes == 1 )
                {
@@ -189,7 +189,7 @@ HB_FUNC( WIN_DRAWBITMAP )
    BYTE * pBits = nullptr;
    HDC hDC = hbwapi_par_HDC(1);
    HB_SIZE nSize = hb_parclen(2);
-   BITMAPFILEHEADER * pbmfh = reinterpret_cast< BITMAPFILEHEADER * >( const_cast< char * >( hb_parc(2) ) );
+   BITMAPFILEHEADER * pbmfh = reinterpret_cast<BITMAPFILEHEADER*>(const_cast<char*>(hb_parc(2)));
    int iType = hbwin_bitmapType( pbmfh, nSize );
 
    /* FIXME: No check is done on 2nd parameter which is a large security hole
@@ -202,14 +202,14 @@ HB_FUNC( WIN_DRAWBITMAP )
 
       if( iType == HB_WIN_BITMAP_BMP )
       {
-         pbmi  = reinterpret_cast< BITMAPINFO * >( pbmfh + 1 );
-         pBits = reinterpret_cast< BYTE * >( pbmfh ) + pbmfh->bfOffBits;
+         pbmi  = reinterpret_cast<BITMAPINFO*>(pbmfh + 1);
+         pBits = reinterpret_cast<BYTE*>(pbmfh) + pbmfh->bfOffBits;
 
          /* Remember there are 2 types of BitMap File */
          if( pbmi->bmiHeader.biSize == sizeof(BITMAPCOREHEADER) )
          {
-            iWidth  = ( reinterpret_cast< BITMAPCOREHEADER * >( pbmi ) )->bcWidth;
-            iHeight = ( reinterpret_cast< BITMAPCOREHEADER * >( pbmi ) )->bcHeight;
+            iWidth  = (reinterpret_cast<BITMAPCOREHEADER*>(pbmi))->bcWidth;
+            iHeight = (reinterpret_cast<BITMAPCOREHEADER*>(pbmi))->bcHeight;
          }
          else
          {
@@ -221,7 +221,7 @@ HB_FUNC( WIN_DRAWBITMAP )
       {
          BITMAPINFO bmi;
 
-         memset( &bmi, 0, sizeof(bmi) );
+         memset(&bmi, 0, sizeof(bmi));
          bmi.bmiHeader.biSize        = sizeof(BITMAPINFO);
          bmi.bmiHeader.biWidth       = iWidth;
          bmi.bmiHeader.biHeight      = -iHeight; /* top-down image */
@@ -230,7 +230,7 @@ HB_FUNC( WIN_DRAWBITMAP )
          bmi.bmiHeader.biCompression = ( iType == HB_WIN_BITMAP_JPEG ? BI_JPEG : BI_PNG );
          bmi.bmiHeader.biSizeImage   = static_cast<DWORD>(nSize);
          pbmi = &bmi;
-         pBits = reinterpret_cast< BYTE * >( pbmfh );
+         pBits = reinterpret_cast<BYTE*>(pbmfh);
       }
 
       if( pbmi && pBits )

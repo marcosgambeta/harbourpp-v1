@@ -591,9 +591,9 @@ static const char * s_findMimeStringInTree( const char * cData, HB_SIZE nLen, in
 
    if( nPos < nLen && ( nLen - nPos ) >= nDataLen )
    {
-      if( ( elem->flags & MIME_FLAG_CASEINSENS ) != 0 )
+      if( (elem->flags & MIME_FLAG_CASEINSENS) != 0 )
       {
-         if( ( *elem->pattern == 0 && cData[nPos] == 0 ) || hb_strnicmp( cData + nPos, elem->pattern, nDataLen ) == 0 )
+         if( (*elem->pattern == 0 && cData[nPos] == 0) || hb_strnicmp(cData + nPos, elem->pattern, nDataLen) == 0 )
          {
             /* is this the begin of a match tree? */
             if( elem->next != 0 )
@@ -604,7 +604,7 @@ static const char * s_findMimeStringInTree( const char * cData, HB_SIZE nLen, in
       }
       else
       {
-         if( ( *elem->pattern == 0 && cData[nPos] == 0 ) || strncmp( cData + nPos, elem->pattern, nDataLen ) == 0 )
+         if( (*elem->pattern == 0 && cData[nPos] == 0) || strncmp(cData + nPos, elem->pattern, nDataLen) == 0 )
          {
             if( elem->next != 0 )
                return s_findMimeStringInTree( cData, nLen, iElem + elem->next );
@@ -631,7 +631,7 @@ static const char * s_findStringMimeType( const char * cData, HB_SIZE nLen )
       HB_SIZE nPos     = elem->pos;
       HB_SIZE nDataLen = static_cast<HB_SIZE>(strlen(elem->pattern));
 
-      if( ( elem->flags & MIME_FLAG_CONTINUE ) != 0 )
+      if( (elem->flags & MIME_FLAG_CONTINUE) != 0 )
          continue;
 
       /* trim spaces if required */
@@ -649,9 +649,9 @@ static const char * s_findStringMimeType( const char * cData, HB_SIZE nLen )
       if( nLen - nPos < nDataLen )
          continue;
 
-      if( ( elem->flags & MIME_FLAG_CASEINSENS ) != 0 )
+      if( (elem->flags & MIME_FLAG_CASEINSENS) != 0 )
       {
-         if( ( *elem->pattern == 0 && cData[nPos] == 0 ) || hb_strnicmp( cData + nPos, elem->pattern, nDataLen ) == 0 )
+         if( (*elem->pattern == 0 && cData[nPos] == 0) || hb_strnicmp(cData + nPos, elem->pattern, nDataLen) == 0 )
          {
             /* is this the begin of a match tree? */
             if( elem->next != 0 )
@@ -662,7 +662,7 @@ static const char * s_findStringMimeType( const char * cData, HB_SIZE nLen )
       }
       else
       {
-         if( ( *elem->pattern == 0 && cData[nPos] == 0 ) || strncmp( cData + nPos, elem->pattern, nDataLen ) == 0 )
+         if( (*elem->pattern == 0 && cData[nPos] == 0) || strncmp(cData + nPos, elem->pattern, nDataLen) == 0 )
          {
             if( elem->next != 0 )
                return s_findMimeStringInTree( cData, nLen, uiCount + elem->next );
@@ -749,10 +749,7 @@ HB_FUNC( TIP_FILEMIMETYPE )
          ext_type = pFileName->szExtension ? s_findExtMimeType( pFileName->szExtension ) : nullptr;
          hb_xfree(pFileName);
 
-         if( ( fileIn = hb_fileExtOpen( fname, nullptr,
-                                        FO_READ | FO_SHARED | FO_PRIVATE |
-                                        FXO_SHARELOCK,
-                                        nullptr, nullptr ) ) != nullptr )
+         if( (fileIn = hb_fileExtOpen(fname, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK, nullptr, nullptr)) != nullptr )
          {
             magic_type = s_findFileMimeType( fileIn );
             hb_fileClose( fileIn );

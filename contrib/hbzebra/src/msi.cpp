@@ -83,7 +83,7 @@ PHB_ZEBRA hb_zebra_create_msi( const char * szCode, HB_SIZE nLen, int iFlags )
    }
 
    pZebra->szCode = static_cast<char*>(hb_xgrab(iLen + 1));
-   hb_xmemcpy( pZebra->szCode, szCode, iLen );
+   hb_xmemcpy(pZebra->szCode, szCode, iLen);
    pZebra->szCode[iLen] = '\0';
    szCode = pZebra->szCode;
 

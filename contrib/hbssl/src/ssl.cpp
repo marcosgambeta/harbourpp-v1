@@ -186,7 +186,7 @@ typedef struct _HB_SSL
 
 static HB_GARBAGE_FUNC( PHB_SSL_release )
 {
-   PHB_SSL hb_ssl = static_cast< PHB_SSL >( Cargo );
+   PHB_SSL hb_ssl = static_cast<PHB_SSL>(Cargo);
 
    if( hb_ssl )
    {
@@ -207,7 +207,7 @@ static HB_GARBAGE_FUNC( PHB_SSL_release )
 
 static HB_GARBAGE_FUNC( PHB_SSL_mark )
 {
-   PHB_SSL hb_ssl = static_cast< PHB_SSL >( Cargo );
+   PHB_SSL hb_ssl = static_cast<PHB_SSL>(Cargo);
 
    if( hb_ssl )
    {
@@ -226,28 +226,28 @@ static const HB_GC_FUNCS s_gcSSL_funcs =
 
 HB_BOOL hb_SSL_is( int iParam )
 {
-   PHB_SSL hb_ssl = static_cast< PHB_SSL >( hb_parptrGC( &s_gcSSL_funcs, iParam ) );
+   PHB_SSL hb_ssl = static_cast<PHB_SSL>(hb_parptrGC(&s_gcSSL_funcs, iParam));
 
    return hb_ssl && hb_ssl->ssl;
 }
 
 static PHB_SSL hb_SSL_par_raw( int iParam )
 {
-   PHB_SSL hb_ssl = static_cast< PHB_SSL >( hb_parptrGC( &s_gcSSL_funcs, iParam ) );
+   PHB_SSL hb_ssl = static_cast<PHB_SSL>(hb_parptrGC(&s_gcSSL_funcs, iParam));
 
    return hb_ssl;
 }
 
 SSL * hb_SSL_par( int iParam )
 {
-   PHB_SSL hb_ssl = static_cast< PHB_SSL >( hb_parptrGC( &s_gcSSL_funcs, iParam ) );
+   PHB_SSL hb_ssl = static_cast<PHB_SSL>(hb_parptrGC(&s_gcSSL_funcs, iParam));
 
    return hb_ssl ? hb_ssl->ssl : nullptr;
 }
 
-SSL * hb_SSL_itemGet( PHB_ITEM pItem )
+SSL * hb_SSL_itemGet(PHB_ITEM pItem)
 {
-   PHB_SSL hb_ssl = static_cast< PHB_SSL >( hb_itemGetPtrGC( pItem, &s_gcSSL_funcs ) );
+   PHB_SSL hb_ssl = static_cast<PHB_SSL>(hb_itemGetPtrGC(pItem, &s_gcSSL_funcs));
 
    return hb_ssl ? hb_ssl->ssl : nullptr;
 }
@@ -260,9 +260,9 @@ HB_FUNC( SSL_NEW )
 
       if( ctx )
       {
-         PHB_SSL hb_ssl = static_cast< PHB_SSL >( hb_gcAllocate( sizeof(HB_SSL), &s_gcSSL_funcs ) );
+         PHB_SSL hb_ssl = static_cast<PHB_SSL>(hb_gcAllocate(sizeof(HB_SSL), &s_gcSSL_funcs));
 
-         memset( hb_ssl, 0, sizeof(HB_SSL) );
+         memset(hb_ssl, 0, sizeof(HB_SSL));
          hb_ssl->ssl = SSL_new( ctx );
 
          hb_retptrGC(hb_ssl);
@@ -282,9 +282,9 @@ HB_FUNC( SSL_DUP )
 
       if( ssl_par )
       {
-         PHB_SSL hb_ssl = static_cast< PHB_SSL >( hb_gcAllocate( sizeof(HB_SSL), &s_gcSSL_funcs ) );
+         PHB_SSL hb_ssl = static_cast<PHB_SSL>(hb_gcAllocate(sizeof(HB_SSL), &s_gcSSL_funcs));
 
-         memset( hb_ssl, 0, sizeof(HB_SSL) );
+         memset(hb_ssl, 0, sizeof(HB_SSL));
 
          hb_ssl->ssl = SSL_dup( ssl_par );
 
@@ -697,17 +697,17 @@ HB_FUNC( SSL_READ )
          HB_SIZE  nLen;
          int      nRead = 0;
 
-         if( pItem && HB_ISBYREF(2) && hb_itemGetWriteCL( pItem, &pBuffer, &nLen ) )
+         if( pItem && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen) )
          {
             if( HB_ISNUM(3) )
             {
                nRead = hb_parni(3);
-               if( nRead >= 0 && nRead < static_cast< int >( nLen ) )
+               if( nRead >= 0 && nRead < static_cast<int>(nLen) )
                {
                   nLen = nRead;
                }
             }
-            nRead = nLen >= INT_MAX ? INT_MAX : static_cast< int >( nLen );
+            nRead = nLen >= INT_MAX ? INT_MAX : static_cast<int>(nLen);
 
             nRead = SSL_read( ssl, pBuffer, nRead );
          }
@@ -734,17 +734,17 @@ HB_FUNC( SSL_PEEK )
          HB_SIZE  nLen;
          int      nRead = 0;
 
-         if( pItem && HB_ISBYREF(2) && hb_itemGetWriteCL( pItem, &pBuffer, &nLen ) )
+         if( pItem && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen) )
          {
             if( HB_ISNUM(3) )
             {
                nRead = hb_parni(3);
-               if( nRead >= 0 && nRead < static_cast< int >( nLen ) )
+               if( nRead >= 0 && nRead < static_cast<int>(nLen) )
                {
                   nLen = nRead;
                }
             }
-            nRead = nLen >= INT_MAX ? INT_MAX : static_cast< int >( nLen );
+            nRead = nLen >= INT_MAX ? INT_MAX : static_cast<int>(nLen);
 
             nRead = SSL_peek( ssl, pBuffer, nRead );
          }
@@ -788,7 +788,7 @@ HB_FUNC( SSL_WRITE )
 
          if( HB_ISNUM(3) )
          {
-            HB_SIZE nWrite = static_cast< HB_SIZE >( hb_parnl(3) );
+            HB_SIZE nWrite = static_cast<HB_SIZE>(hb_parnl(3));
             if( nWrite < nLen )
             {
                nLen = nWrite;
@@ -1562,7 +1562,7 @@ HB_FUNC( SSL_SET_OPTIONS )
 
       if( ssl )
       {
-         SSL_set_options( ssl, static_cast< unsigned long >( hb_parnl(2) ) );
+         SSL_set_options(ssl, static_cast<unsigned long>(hb_parnl(2)));
       }
    }
    else
@@ -1579,7 +1579,7 @@ HB_FUNC( SSL_SET_VERIFY )
 
       if( ssl )
       {
-         SSL_set_verify( ssl, hb_parni(2), nullptr );
+         SSL_set_verify(ssl, hb_parni(2), nullptr);
       }
    }
    else
@@ -2040,7 +2040,7 @@ HB_FUNC( SSL_SET_MSG_CALLBACK )
 
          if( hb_ssl->pCallbackArg )
          {
-            SSL_set_msg_callback_arg( hb_ssl->ssl, nullptr );
+            SSL_set_msg_callback_arg(hb_ssl->ssl, nullptr);
             hb_itemRelease(hb_ssl->pCallbackArg);
             hb_ssl->pCallbackArg = nullptr;
          }
@@ -2054,7 +2054,7 @@ HB_FUNC( SSL_SET_MSG_CALLBACK )
          }
          else
          {
-            SSL_set_msg_callback( hb_ssl->ssl, nullptr );
+            SSL_set_msg_callback(hb_ssl->ssl, nullptr);
          }
 #endif
       }

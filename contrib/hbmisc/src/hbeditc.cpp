@@ -195,7 +195,7 @@ HB_FUNC( ED_NEW )
 
    pEd->escape = static_cast<char>(hb_parni(4));
    pEd->begin  = static_cast<char*>(hb_xgrab(bufferSize + 100));
-   memset( pEd->begin, '\0', bufferSize );
+   memset(pEd->begin, '\0', bufferSize);
 
    New( pEd, tab, ll, bufferSize );
 
@@ -288,7 +288,7 @@ static void AddText( PHB_EDITOR pEd, const char * adres )
       dlold = 0;  /* if current text buffer contains CRLF only then discard it */
 
    /* TODO: add reallocation of text buffer */
-   if( ( dl + dlold ) <= ( pEd->buffer_size - 10 ) )
+   if( (dl + dlold) <= (pEd->buffer_size - 10) )
    {
       /* there is enough room in text buffer */
       hb_strncpy( pEd->begin + dlold, adres, dl );
@@ -415,7 +415,7 @@ static HB_ISIZ InsText( PHB_EDITOR pEd, char * adres, HB_ISIZ line )
       else
          off = 0;
 
-      if( ( dl + dl1 ) < ( pEd->buffer_size - 10 ) )
+      if( (dl + dl1) < (pEd->buffer_size - 10) )
       {
          /* there is enough free room in text buffer */
          if( adres[dl - 1] != '\n' && adres[dl - 2] != '\r' )
@@ -452,7 +452,7 @@ static HB_ISIZ InsText( PHB_EDITOR pEd, char * adres, HB_ISIZ line )
          pEd->text_length += 2;
       }
 
-      if( ( off + dl ) == pEd->text_length )
+      if( (off + dl) == pEd->text_length )
          pEd->begin[pEd->text_length] = '\0';
       pEd->text_length = strlen( pEd->begin );
 
@@ -771,7 +771,7 @@ HB_FUNC( ED_GETNEXT )
 /* Resets text buffer */
 static void KillText( PHB_EDITOR pEd )
 {
-   memset( pEd->begin, '\0', pEd->buffer_size );
+   memset(pEd->begin, '\0', pEd->buffer_size);
    pEd->first_line = pEd->last_line = 0;
 }
 
@@ -960,7 +960,7 @@ HB_FUNC( ED_STABILIZE )
             }
 
             /* fill the rest of the row with spaces */
-            if( ( nLen - nEscLen ) < width )
+            if( (nLen - nEscLen) < width )
                hb_gtRepChar( nTop, static_cast<int>(pEd->left + nLen - nEscLen), ' ', width - nLen + nEscLen );
          }
          else
@@ -1040,7 +1040,7 @@ static void Down( PHB_EDITOR pEd )
       if( j >= 0 )
          pEd->current_line = j;
 
-      if( ( ( ++pEd->cursor_row ) + pEd->top ) > pEd->bottom )
+      if( ((++pEd->cursor_row) + pEd->top) > pEd->bottom )
       {
          /* attempt to move to the line that was not visible yet */
          pEd->stabil = 1;          /* only one line needs to be redisplayed */
@@ -1100,7 +1100,7 @@ static void Up( PHB_EDITOR pEd )
       pEd->active--;
       Clear( pEd, pEd->current_line, &nEsc );
       pEd->current_line = jj;
-      if( ( ( --pEd->cursor_row ) + pEd->top ) < pEd->top )
+      if( ((--pEd->cursor_row) + pEd->top) < pEd->top )
       {
          int j, i;
          HB_ISIZ tmp;
@@ -1454,14 +1454,14 @@ static void Right( PHB_EDITOR pEd )
 {
    if( pEd->cursor_col < ( pEd->right - pEd->left ) )  /* inside the window */
    {
-      if( ( pEd->first_col + pEd->cursor_col ) < pEd->line_length )
+      if( (pEd->first_col + pEd->cursor_col) < pEd->line_length )
          pEd->cursor_col++;
       /* else no wrap allowed */
    }
    else
    {
       /* scroll text to the right no more then the maximal line length */
-      if( ( ++pEd->first_col + pEd->cursor_col ) > pEd->line_length )
+      if( (++pEd->first_col + pEd->cursor_col) > pEd->line_length )
          pEd->first_col--;
 
       pEd->fStable        = HB_FALSE;
@@ -1534,7 +1534,7 @@ static void End( PHB_EDITOR pEd )
       pEd->dir            = _STABILIZE_DOWN;
       pEd->current_stabil = 0;
    }
-   else if( ( ll - pEd->first_col ) > ( pEd->right - pEd->left ) )
+   else if( (ll - pEd->first_col) > (pEd->right - pEd->left) )
    {
       /* scroll text to the right */
       pEd->cursor_col     = pEd->right - pEd->left;
@@ -1693,8 +1693,7 @@ HB_FUNC( ED_DELCHAR )
       HB_ISIZ j;
       HB_ISIZ rdl;
 
-      if( ( pEd->cursor_col + pEd->first_col ) >=
-          GetLineLength( pEd, pEd->current_line, &rdl ) )
+      if( (pEd->cursor_col + pEd->first_col) >= GetLineLength(pEd, pEd->current_line, &rdl) )
       {
          /* The cursor is positioned after the last non-space character */
          j = Next( pEd, pEd->current_line );
@@ -1715,8 +1714,7 @@ HB_FUNC( ED_DELCHAR )
       else
       {
          /* The cursor is inside the line or at the last character */
-         if( ( pEd->cursor_col + pEd->first_col ) <
-             GetLineLength( pEd, pEd->current_line, &rdl ) )
+         if( (pEd->cursor_col + pEd->first_col) < GetLineLength(pEd, pEd->current_line, &rdl) )
             DelChar( pEd );   /* inside a line */
          else  /* at the last character */
          {
@@ -1744,8 +1742,7 @@ static void BackSpace( PHB_EDITOR pEd, HB_BOOL fInsert )
 
    if( fInsert )
    {
-      if( ( ccc = pEd->cursor_col + pEd->first_col ) >
-          GetLineLength( pEd, pEd->current_line, &rdl ) )
+      if( (ccc = pEd->cursor_col + pEd->first_col) > GetLineLength(pEd, pEd->current_line, &rdl) )
          fInsert = HB_FALSE;  /* cursor is scrolled after the last character in the line - just move the cursor left */
    }
 
@@ -1757,7 +1754,7 @@ static void BackSpace( PHB_EDITOR pEd, HB_BOOL fInsert )
       /* in destructive mode */
       *tmp  = '\0';
       *tmp1 = '\0';
-      if( ( ccc = pEd->cursor_col + pEd->first_col ) > 0 )
+      if( (ccc = pEd->cursor_col + pEd->first_col) > 0 )
       {
          /* inside the line */
          MoveText( pEd, pEd->current_line + ccc, pEd->current_line + ccc - 1,
@@ -1782,7 +1779,7 @@ static void BackSpace( PHB_EDITOR pEd, HB_BOOL fInsert )
 
          /* find the first space in current line (the new line will
             be wrapped eventually at this position) */
-         if( ( w = strchr( tmp, ' ' ) ) != 0 )
+         if( (w = strchr(tmp, ' ')) != 0 )
             ww = w - tmp;
          else
             ww = nLen + rdl;
@@ -1797,7 +1794,7 @@ static void BackSpace( PHB_EDITOR pEd, HB_BOOL fInsert )
          /* the lines can be joined
             the sum of whole length of these lines is smaller then maximal allowed
             or there is a space where the line can be wrapped */
-         if( ( ww + kk + rdl - 1 ) < pEd->line_length )
+         if( (ww + kk + rdl - 1) < pEd->line_length )
          {
             kk = GetLineLength( pEd, pEd->current_line, &rdl );
             j  = pEd->current_line + kk + rdl;
@@ -1903,7 +1900,7 @@ static void NextWord( PHB_EDITOR pEd )
       *tmp = '\0';
       hb_strncpy( tmp, pEd->begin + pEd->current_line + ccc,
                   nLen - pEd->cursor_col - pEd->first_col );
-      if( ( adr = strchr( tmp, ' ' ) ) == nullptr )
+      if( (adr = strchr(tmp, ' ')) == nullptr )
       {
          GotoNextNonEmptyLine( pEd );
          if( !pEd->fStable )
@@ -1960,7 +1957,7 @@ static void PreviousWord( PHB_EDITOR pEd )
    if( nLen < ( pEd->cursor_col + pEd->first_col ) )
       End( pEd );
 
-   if( ( pEd->first_col + pEd->cursor_col ) == 0 )
+   if( (pEd->first_col + pEd->cursor_col) == 0 )
    {
       Up( pEd );
       End( pEd );
@@ -2078,7 +2075,7 @@ static HB_BOOL format_line( PHB_EDITOR pEd, char Karetka, HB_ISIZ LineDl )
       pEd->begin[j + 1] = '\n';
       pEd->line_number++;
 
-      if( ( pEd->cursor_col + pEd->first_col ) >= podz )
+      if( (pEd->cursor_col + pEd->first_col) >= podz )
       {
          HB_ISIZ i;
          Home( pEd );
@@ -2111,7 +2108,7 @@ static HB_BOOL AppendChar( PHB_EDITOR pEd, char znak, char podz )
    /* the cursor is positioned 'diff' columns after the last character
       in the line - fill the gap with spaces before appending the character */
    MoveText( pEd, iPos, iPos + diff + 1, pEd->buffer_size - 1 - iPos - diff );
-   memset( pEd->begin + ( pEd->current_line + nLen ), ' ', diff );
+   memset(pEd->begin + (pEd->current_line + nLen), ' ', diff);
 
    /* move the CRLF characters after the appended character */
    cNew    = pEd->begin + iPos + diff;
@@ -2141,7 +2138,7 @@ static HB_BOOL AppendChar( PHB_EDITOR pEd, char znak, char podz )
 /* Checks if there is enough free room in the text buffer */
 static HB_BOOL Check_length( PHB_EDITOR pEd, HB_ISIZ iRequested )
 {
-   if( ( pEd->text_length + iRequested ) <= ( pEd->buffer_size - 8 ) )
+   if( (pEd->text_length + iRequested) <= (pEd->buffer_size - 8) )
       return true;
    else
       return false;
@@ -2222,7 +2219,7 @@ static void PutChar( PHB_EDITOR pEd, HB_BOOL fInsert, char znak )
 
    if( !jj )
    {
-      if( ( pEd->cursor_col + pEd->first_col ) > ( pEd->right - pEd->left ) )
+      if( (pEd->cursor_col + pEd->first_col) > (pEd->right - pEd->left) )
          jj = HB_TRUE;
    }
 
@@ -2317,8 +2314,7 @@ static void DelLine( PHB_EDITOR pEd )
       pEd->begin[pEd->current_line + 0] = '\r';
       pEd->begin[pEd->current_line + 1] = '\n';
       pEd->begin[pEd->current_line + 2] = '\0';
-      memset( pEd->begin + pEd->current_line + 2, '\0',
-              pEd->buffer_size - strlen( pEd->begin ) );
+      memset(pEd->begin + pEd->current_line + 2, '\0', pEd->buffer_size - strlen(pEd->begin));
 
       pEd->last_display = pEd->last_line;
       pEd->stabil       = 1;
@@ -2359,8 +2355,7 @@ HB_FUNC( ED_DELWORD )
       {
          HB_ISIZ rdl;
 
-         if( ( pEd->cursor_col + pEd->first_col ) <
-             GetLineLength( pEd, pEd->current_line, &rdl ) )
+         if( (pEd->cursor_col + pEd->first_col) < GetLineLength(pEd, pEd->current_line, &rdl) )
          {
             HB_ISIZ pos1, pos2;
             HB_ISIZ cc, fc;
@@ -2400,7 +2395,7 @@ HB_FUNC( ED_DELWORD )
          }
          else
          {
-            if( ( GetLineLength( pEd, pEd->current_line, &rdl ) ) == 0 )
+            if( (GetLineLength(pEd, pEd->current_line, &rdl)) == 0 )
             {
                DelLine( pEd );
                Home( pEd );
@@ -2440,10 +2435,9 @@ static void Return( PHB_EDITOR pEd, HB_BOOL fInsert )
          else
          {
             HB_ISIZ ii;
-            if( ( pEd->first_col + pEd->cursor_col ) > nLen + 1 )
+            if( (pEd->first_col + pEd->cursor_col) > nLen + 1 )
                End( pEd );
-            ii = pEd->current_line + pEd->first_col +
-                 pEd->cursor_col;
+            ii = pEd->current_line + pEd->first_col + pEd->cursor_col;
             MoveText( pEd, ii, ii + 2, pEd->buffer_size - ii - 2 );
 
             pEd->begin[ii + 0] = '\r';

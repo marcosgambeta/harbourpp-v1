@@ -55,7 +55,7 @@ HB_FUNC( CHARREPL )
    HB_SIZE sSearchLen, sReplaceLen;
 
    /* param check */
-   if( ( sSearchLen = hb_parclen(1) ) > 0 && HB_ISCHAR(2) && ( sReplaceLen = hb_parclen(3) ) > 0 )
+   if( (sSearchLen = hb_parclen(1)) > 0 && HB_ISCHAR(2) && (sReplaceLen = hb_parclen(3)) > 0 )
    {
       /* get parameters */
       const char * pcSearch = hb_parc(1);
@@ -80,7 +80,7 @@ HB_FUNC( CHARREPL )
       }
 
       pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
-      hb_xmemcpy( pcRet, pcString, sStrLen );
+      hb_xmemcpy(pcRet, pcString, sStrLen);
 
       for( HB_SIZE sIndex = 0; sIndex < sSearchLen; sIndex++ )
       {
@@ -108,7 +108,7 @@ HB_FUNC( CHARREPL )
          {
             /* multiple replacements: searching & replacing in pcRet */
             char * pcw = pcRet;
-            while( ( pcw = const_cast< char * >( ct_at_exact_forward( pcw, sStrLen - ( pcw - pcRet ), pcSearch + sIndex, 1, &sMatchStrLen ) ) ) != nullptr )
+            while( (pcw = const_cast<char*>(ct_at_exact_forward(pcw, sStrLen - (pcw - pcRet), pcSearch + sIndex, 1, &sMatchStrLen))) != nullptr )
             {
                *pcw++ = *( pcReplace + sReplIndex );
             }

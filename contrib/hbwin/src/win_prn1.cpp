@@ -166,12 +166,12 @@ HB_FUNC( WIN_TEXTOUT )
 
          if( HB_ISNUM(7) )
          {
-            SetTextAlign( static_cast< HDC >( hDC ), TA_NOUPDATECP | hb_parni(7) );
+            SetTextAlign( static_cast<HDC>(hDC), TA_NOUPDATECP | hb_parni(7) );
          }
 
          if( iWidth < 0 && nLen < 1024 )
          {
-            int n = static_cast< int >( nLen ), aFixed[1024];
+            int n = static_cast<int>(nLen), aFixed[1024];
 
             iWidth = -iWidth;
 
@@ -180,15 +180,15 @@ HB_FUNC( WIN_TEXTOUT )
                aFixed[--n] = iWidth;
             }
 
-            if( ExtTextOut( hDC, iRow, iCol, 0, nullptr, lpData, static_cast< UINT >( nLen ), aFixed ) )
+            if( ExtTextOut( hDC, iRow, iCol, 0, nullptr, lpData, static_cast<UINT>(nLen), aFixed ) )
             {
-               lResult = static_cast< long >( nLen * iWidth );
+               lResult = static_cast<long>(nLen * iWidth);
             }
          }
-         else if( ExtTextOut( hDC, iRow, iCol, 0, nullptr, lpData, static_cast< UINT >( nLen ), nullptr ) )
+         else if( ExtTextOut(hDC, iRow, iCol, 0, nullptr, lpData, static_cast<UINT>(nLen), nullptr) )
          {
-            GetTextExtentPoint32( hDC, lpData, static_cast< int >( nLen ), &sSize ); /* Get the length of the text in device size */
-            lResult = static_cast< long >( sSize.cx ); /* return the width so we can update the current pen position (::PosY) */
+            GetTextExtentPoint32( hDC, lpData, static_cast<int>(nLen), &sSize ); /* Get the length of the text in device size */
+            lResult = static_cast<long>(sSize.cx); /* return the width so we can update the current pen position (::PosY) */
          }
       }
 
@@ -220,15 +220,15 @@ HB_FUNC( WIN_GETTEXTSIZE )
       {
          SIZE sSize;
 
-         GetTextExtentPoint32( hDC, lpData, static_cast< int >( nLen ), &sSize );  /* Get the length of the text in device size */
+         GetTextExtentPoint32( hDC, lpData, static_cast<int>(nLen), &sSize );  /* Get the length of the text in device size */
 
          if( hb_parldef(4, true) )
          {
-            lResult = static_cast< long >( sSize.cx );  /* return the width */
+            lResult = static_cast<long>(sSize.cx);  /* return the width */
          }
          else
          {
-            lResult = static_cast< long >( sSize.cy );  /* return the height */
+            lResult = static_cast<long>(sSize.cy);  /* return the height */
          }
       }
 
@@ -250,11 +250,11 @@ HB_FUNC( WIN_GETCHARSIZE )
       GetTextMetrics( hDC, &tm );
       if( hb_parl(2) )
       {
-         lResult = static_cast< long >( tm.tmHeight );
+         lResult = static_cast<long>(tm.tmHeight);
       }
       else
       {
-         lResult = static_cast< long >( tm.tmAveCharWidth );
+         lResult = static_cast<long>(tm.tmAveCharWidth);
       }
    }
 
@@ -336,7 +336,7 @@ HB_FUNC( WIN_CREATEFONT )
          nLen = LF_FACESIZE - 1;
       }
 
-      memcpy( lf.lfFaceName, pfFaceName, nLen * sizeof(TCHAR) );
+      memcpy(lf.lfFaceName, pfFaceName, nLen * sizeof(TCHAR));
       lf.lfFaceName[nLen] = TEXT( '\0' );
 
       hb_strfree(hfFaceName);
@@ -393,7 +393,7 @@ HB_FUNC( WIN_SETDOCUMENTPROPERTIES )
       void * hDeviceName;
       LPCTSTR lpDeviceName = HB_PARSTR(2, &hDeviceName, nullptr);
 
-      if( OpenPrinter( const_cast< LPTSTR >( lpDeviceName ), &hPrinter, nullptr ) )
+      if( OpenPrinter(const_cast<LPTSTR>(lpDeviceName), &hPrinter, nullptr) )
       {
          LONG lSize = DocumentProperties(0, hPrinter, const_cast<LPTSTR>(lpDeviceName), nullptr, nullptr, 0);
 
@@ -412,46 +412,46 @@ HB_FUNC( WIN_SETDOCUMENTPROPERTIES )
                              HB_ISBYREF(7) || HB_ISBYREF(8) ||
                              HB_ISBYREF(9) || HB_ISBYREF(10);
 
-               if( ( iProp = hb_parni(3) ) != 0 )      /* [2007-02-22] don't change if 0 */
+               if( (iProp = hb_parni(3)) != 0 )      /* [2007-02-22] don't change if 0 */
                {
-                  pDevMode->dmPaperSize = static_cast< short >( iProp );
+                  pDevMode->dmPaperSize = static_cast<short>(iProp);
                   dmFields |= DM_PAPERSIZE;
                }
 
                if( HB_ISLOG(4) )
                {
-                  pDevMode->dmOrientation = static_cast< short >( hb_parl(4) ? DMORIENT_LANDSCAPE : DMORIENT_PORTRAIT );
+                  pDevMode->dmOrientation = static_cast<short>(hb_parl(4) ? DMORIENT_LANDSCAPE : DMORIENT_PORTRAIT);
                   dmFields |= DM_ORIENTATION;
                }
 
-               if( ( iProp = hb_parni(5) ) > 0 )
+               if( (iProp = hb_parni(5)) > 0 )
                {
-                  pDevMode->dmCopies = static_cast< short >( iProp );
+                  pDevMode->dmCopies = static_cast<short>(iProp);
                   dmFields |= DM_COPIES;
                }
 
-               if( ( iProp = hb_parni(6) ) != 0 )      /* [2007-02-22] don't change if 0 */
+               if( (iProp = hb_parni(6)) != 0 )      /* [2007-02-22] don't change if 0 */
                {
-                  pDevMode->dmDefaultSource = static_cast< short >( iProp );
+                  pDevMode->dmDefaultSource = static_cast<short>(iProp);
                   dmFields |= DM_DEFAULTSOURCE;
                }
 
-               if( ( iProp = hb_parni(7) ) != 0 )      /* [2007-02-22] don't change if 0 */
+               if( (iProp = hb_parni(7)) != 0 )      /* [2007-02-22] don't change if 0 */
                {
-                  pDevMode->dmDuplex = static_cast< short >( iProp );
+                  pDevMode->dmDuplex = static_cast<short>(iProp);
                   dmFields |= DM_DUPLEX;
                }
 
-               if( ( iProp = hb_parni(8) ) != 0 )      /* [2007-02-22] don't change if 0 */
+               if( (iProp = hb_parni(8)) != 0 )      /* [2007-02-22] don't change if 0 */
                {
-                  pDevMode->dmPrintQuality = static_cast< short >( iProp );
+                  pDevMode->dmPrintQuality = static_cast<short>(iProp);
                   dmFields |= DM_PRINTQUALITY;
                }
 
                if( pDevMode->dmPaperSize == DMPAPER_USER && ( iProp = hb_parni(9) ) > 0 && ( iProp2 = hb_parni(10) ) > 0 )
                {
-                  pDevMode->dmPaperLength = static_cast< short >( iProp );
-                  pDevMode->dmPaperWidth = static_cast< short >( iProp2 );
+                  pDevMode->dmPaperLength = static_cast<short>(iProp);
+                  pDevMode->dmPaperWidth = static_cast<short>(iProp2);
                   dmFields |= DM_PAPERLENGTH | DM_PAPERWIDTH;
                }
 
@@ -498,7 +498,7 @@ HB_FUNC( WIN_GETDOCUMENTPROPERTIES )
    void * hDeviceName;
    LPCTSTR lpDeviceName = HB_PARSTR(1, &hDeviceName, nullptr);
 
-   if( OpenPrinter( const_cast< LPTSTR >( lpDeviceName ), &hPrinter, nullptr ) )
+   if( OpenPrinter(const_cast<LPTSTR>(lpDeviceName), &hPrinter, nullptr) )
    {
       LONG lSize = DocumentProperties(0, hPrinter, const_cast<LPTSTR>(lpDeviceName), nullptr, nullptr, 0);
 
@@ -538,7 +538,7 @@ static int CALLBACK FontEnumCallBack( LOGFONT * lplf, TEXTMETRIC * lpntm, DWORD 
    hb_arraySetL(pSubItems, 2, (lplf->lfPitchAndFamily & FIXED_PITCH) != 0);
    hb_arraySetL(pSubItems, 3, (dwFontType & TRUETYPE_FONTTYPE) != 0);
    hb_arraySetNL(pSubItems, 4, lpntm->tmCharSet);
-   hb_arrayAddForward( static_cast< PHB_ITEM >( pArray ), pSubItems );
+   hb_arrayAddForward( static_cast<PHB_ITEM>(pArray), pSubItems );
 
    hb_itemRelease(pSubItems);
 
@@ -553,14 +553,14 @@ HB_FUNC( WIN_ENUMFONTS )
 
    if( fNullDC )
    {
-      hDC = GetDC( nullptr );
+      hDC = GetDC(nullptr);
    }
 
-   EnumFonts( hDC, static_cast< LPCTSTR >( nullptr ), reinterpret_cast< FONTENUMPROC >( FontEnumCallBack ), reinterpret_cast< LPARAM >( pArray ) );
+   EnumFonts( hDC, static_cast<LPCTSTR>(nullptr), reinterpret_cast<FONTENUMPROC>(FontEnumCallBack), reinterpret_cast<LPARAM>(pArray) );
 
    if( fNullDC )
    {
-      ReleaseDC( nullptr, hDC );
+      ReleaseDC(nullptr, hDC);
    }
 
    hb_itemReturnRelease(pArray);
@@ -573,7 +573,7 @@ HB_FUNC( WIN_ENUMFONTFAMILIES )
    HB_BOOL fNullDC = ( !hDC );
    LOGFONT Logfont;
 
-   memset( &Logfont, 0, sizeof(Logfont) );
+   memset(&Logfont, 0, sizeof(Logfont));
 
    Logfont.lfCharSet = static_cast<BYTE>(hb_parnidef(1, DEFAULT_CHARSET));
    if( HB_ISCHAR(2) )
@@ -585,14 +585,14 @@ HB_FUNC( WIN_ENUMFONTFAMILIES )
 
    if( fNullDC )
    {
-      hDC = GetDC( nullptr );
+      hDC = GetDC(nullptr);
    }
 
-   EnumFontFamiliesEx( hDC, &Logfont, reinterpret_cast< FONTENUMPROC >( FontEnumCallBack ), reinterpret_cast< LPARAM >( pArray ), 0 );
+   EnumFontFamiliesEx( hDC, &Logfont, reinterpret_cast<FONTENUMPROC>(FontEnumCallBack), reinterpret_cast<LPARAM>(pArray), 0 );
 
    if( fNullDC )
    {
-      ReleaseDC( nullptr, hDC );
+      ReleaseDC(nullptr, hDC);
    }
 
    hb_itemReturnRelease(pArray);
@@ -615,7 +615,7 @@ HB_FUNC( WIN_SETCOLOR )
 
       if( HB_ISNUM(3) )
       {
-         SetBkColor( hDC, static_cast< COLORREF >( hb_parnl(3) ) );
+         SetBkColor( hDC, static_cast<COLORREF>(hb_parnl(3)) );
       }
 
       if( HB_ISNUM(4) )
@@ -643,9 +643,7 @@ HB_FUNC( WIN_SETPEN )
       }
       else
       {
-         hPen = CreatePen( hb_parni(2),                /* pen style */
-                           hb_parni(3),                /* pen width */
-                           static_cast< COLORREF >( hb_parnl(4) ) ); /* pen color */
+         hPen = CreatePen(hb_parni(2) /* pen style */, hb_parni(3) /* pen width */,  static_cast<COLORREF>(hb_parnl(4)) /* pen color */);
 
          hbwapi_ret_HPEN( hPen );
       }
@@ -668,7 +666,7 @@ HB_FUNC( WIN_FILLRECT )
 
    if( hDC )
    {
-      HBRUSH hBrush = CreateSolidBrush( static_cast< COLORREF >( hb_parnl(6) ) );
+      HBRUSH hBrush = CreateSolidBrush( static_cast<COLORREF>(hb_parnl(6)) );
       RECT rct;
 
       rct.left   = hb_parnl(2);

@@ -78,7 +78,7 @@ static void s_ct_token_init( void * cargo )
    ct_token->iPostSeparator = -1;
 }
 
-static HB_TSD_NEW( s_ct_token, sizeof(CT_TOKEN), s_ct_token_init, nullptr );
+static HB_TSD_NEW(s_ct_token, sizeof(CT_TOKEN), s_ct_token_init, nullptr);
 
 /* defines */
 #define DO_TOKEN1_TOKEN       0
@@ -176,7 +176,7 @@ static void do_token1( int iSwitch )
          }
          sRetStrLen = sStrLen;
          pcRet = static_cast<char*>(hb_xgrab(sRetStrLen + 1));
-         hb_xmemcpy( pcRet, pcString, sRetStrLen );
+         hb_xmemcpy(pcRet, pcString, sRetStrLen);
       }
 
       /* find the <nTokenCounter>th token */

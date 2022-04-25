@@ -69,7 +69,7 @@ static void s_ct_str_init( void * cargo )
    ct_str->cAtLikeChar = '?';
 }
 
-static HB_TSD_NEW( s_ct_str, sizeof(CT_STR), s_ct_str_init, nullptr );
+static HB_TSD_NEW(s_ct_str, sizeof(CT_STR), s_ct_str_init, nullptr);
 
 /* -------------- */
 /* initialization */

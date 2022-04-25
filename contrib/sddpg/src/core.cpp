@@ -116,12 +116,12 @@ static void hb_pgsqldd_init( void * cargo )
    HB_SYMBOL_UNUSED(cargo);
 
    if( !hb_sddRegister( &s_pgsqldd ) )
-      hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
 }
 
 HB_FUNC( HB_SDDPG_REGISTER )
 {
-   hb_pgsqldd_init( nullptr );
+   hb_pgsqldd_init(nullptr);
 }
 
 /* force SQLBASE linking */
@@ -134,7 +134,7 @@ HB_INIT_SYMBOLS_BEGIN( sddpostgre__InitSymbols )
 HB_INIT_SYMBOLS_END( sddpostgre__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_sddpostgre_init_ )
-hb_vmAtInit( hb_pgsqldd_init, nullptr );
+hb_vmAtInit(hb_pgsqldd_init, nullptr);
 HB_CALL_ON_STARTUP_END( _hb_sddpostgre_init_ )
 
 #if defined(HB_PRAGMA_STARTUP)
@@ -224,9 +224,9 @@ static HB_ERRCODE pgsqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 
    iTuples = PQntuples( pResult );
    if( iTuples > 0 )
-      ulAffectedRows = static_cast< unsigned long >( iTuples );
+      ulAffectedRows = static_cast<unsigned long>(iTuples);
    else
-      ulAffectedRows = static_cast< unsigned long >( atol( PQcmdTuples( pResult ) ) );
+      ulAffectedRows = static_cast<unsigned long>(atol(PQcmdTuples(pResult)));
 
    hb_rddsqlSetError(0, nullptr, hb_itemGetCPtr(pItem), nullptr, ulAffectedRows);
    PQclear( pResult );
@@ -257,14 +257,14 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
    status = PQresultStatus( pResult );
    if( status != PGRES_TUPLES_OK && status != PGRES_COMMAND_OK )
    {
-      hb_errRT_PostgreSQLDD( EG_OPEN, ESQLDD_INVALIDQUERY, PQresultErrorMessage( pResult ), pArea->szQuery, static_cast< HB_ERRCODE >( status ) );
+      hb_errRT_PostgreSQLDD( EG_OPEN, ESQLDD_INVALIDQUERY, PQresultErrorMessage( pResult ), pArea->szQuery, static_cast<HB_ERRCODE>(status) );
       PQclear( pResult );
       return HB_FAILURE;
    }
 
    pSDDData->pResult = pResult;
 
-   uiFields = static_cast< HB_USHORT >( PQnfields( pResult ) );
+   uiFields = static_cast<HB_USHORT>(PQnfields(pResult));
    SELF_SETFIELDEXTENT( &pArea->area, uiFields );
 
    pItemEof = hb_itemArrayNew( uiFields );
@@ -275,15 +275,15 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
    {
       DBFIELDINFO dbFieldInfo;
 
-      memset( &dbFieldInfo, 0, sizeof(dbFieldInfo) );
-      dbFieldInfo.atomName = PQfname( pResult, static_cast< int >( uiCount ) );
+      memset(&dbFieldInfo, 0, sizeof(dbFieldInfo));
+      dbFieldInfo.atomName = PQfname( pResult, static_cast<int>(uiCount) );
 
-      switch( PQftype( pResult, static_cast< int >( uiCount ) ) )
+      switch( PQftype(pResult, static_cast<int>(uiCount)) )
       {
          case BPCHAROID:
          case VARCHAROID:
             dbFieldInfo.uiType = HB_FT_STRING;
-            dbFieldInfo.uiLen  = static_cast< HB_USHORT >( PQfmod( pResult, uiCount ) ) - 4;
+            dbFieldInfo.uiLen  = static_cast<HB_USHORT>(PQfmod(pResult, uiCount)) - 4;
             break;
 
          case TEXTOID:
@@ -349,7 +349,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
          case BITOID:
          case VARBITOID:
             dbFieldInfo.uiType = HB_FT_STRING;
-            dbFieldInfo.uiLen  = static_cast< HB_USHORT >( PQfsize( pResult, uiCount ) );
+            dbFieldInfo.uiLen  = static_cast<HB_USHORT>(PQfsize(pResult, uiCount));
             break;
 
          case TIMEOID:
@@ -386,7 +386,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
             break;
       }
 #if 0
-      HB_TRACE( HB_TR_ALWAYS, ( "field:%s type=%d size=%d format=%d mod=%d err=%d", dbFieldInfo.atomName, PQftype( pResult, static_cast< int >( uiCount ) ), PQfsize( pResult, uiCount ), PQfformat( pResult, uiCount ), PQfmod( pResult, uiCount ), bError ) );
+      HB_TRACE( HB_TR_ALWAYS, ( "field:%s type=%d size=%d format=%d mod=%d err=%d", dbFieldInfo.atomName, PQftype(pResult, static_cast<int>(uiCount)), PQfsize( pResult, uiCount ), PQfformat( pResult, uiCount ), PQfmod( pResult, uiCount ), bError ) );
 #endif
 
       if( !bError )
@@ -398,40 +398,40 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
                char * pStr;
 
                pStr = static_cast<char*>(hb_xgrab(dbFieldInfo.uiLen + 1));
-               memset( pStr, ' ', dbFieldInfo.uiLen );
+               memset(pStr, ' ', dbFieldInfo.uiLen);
                pStr[dbFieldInfo.uiLen] = '\0';
 
-               hb_itemPutCL( pItem, pStr, dbFieldInfo.uiLen );
+               hb_itemPutCL(pItem, pStr, dbFieldInfo.uiLen);
                hb_xfree(pStr);
                break;
             }
             case HB_FT_MEMO:
-               hb_itemPutC( pItem, nullptr );
-               hb_itemSetCMemo( pItem );
+               hb_itemPutC(pItem, nullptr);
+               hb_itemSetCMemo(pItem);
                break;
 
             case HB_FT_INTEGER:
-               hb_itemPutNI( pItem, 0 );
+               hb_itemPutNI(pItem, 0);
                break;
 
             case HB_FT_LONG:
-               hb_itemPutNL( pItem, 0 );
+               hb_itemPutNL(pItem, 0);
                break;
 
             case HB_FT_DOUBLE:
-               hb_itemPutND( pItem, 0.0 );
+               hb_itemPutND(pItem, 0.0);
                break;
 
             case HB_FT_LOGICAL:
-               hb_itemPutL( pItem, false );
+               hb_itemPutL(pItem, false);
                break;
 
             case HB_FT_DATE:
-               hb_itemPutDS( pItem, nullptr );
+               hb_itemPutDS(pItem, nullptr);
                break;
 
             default:
-               hb_itemClear( pItem );
+               hb_itemClear(pItem);
                bError = HB_TRUE;
                break;
          }
@@ -461,7 +461,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
       return HB_FAILURE;
    }
 
-   pArea->ulRecCount = static_cast< HB_ULONG >( PQntuples( pResult ) );
+   pArea->ulRecCount = static_cast<HB_ULONG>(PQntuples(pResult));
    pArea->ulRecMax   = pArea->ulRecCount + 1;
 
    pArea->pRow      = static_cast<void**>(hb_xgrab((pArea->ulRecCount + 1) * sizeof(void*)));
@@ -505,46 +505,43 @@ static HB_ERRCODE pgsqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
 
    if( PQgetisnull( pSDDData->pResult, pArea->ulRecNo - 1, uiIndex ) )
    {
-      hb_itemClear( pItem );
+      hb_itemClear(pItem);
       /* FIXME: it breaks defined field type */
       return HB_SUCCESS;
    }
 
    pValue = PQgetvalue( pSDDData->pResult, pArea->ulRecNo - 1, uiIndex );
-   nLen   = static_cast< HB_SIZE >( PQgetlength( pSDDData->pResult, pArea->ulRecNo - 1, uiIndex ) );
+   nLen   = static_cast<HB_SIZE>(PQgetlength(pSDDData->pResult, pArea->ulRecNo - 1, uiIndex));
 
 #if 0
-   HB_TRACE( HB_TR_ALWAYS, ( "fieldget recno=%d index=%d value=%s len=%d", dbFieldInfo.atomName, PQftype( pResult, static_cast< int >( uiCount ) ), pArea->ulRecNo, uiIndex, pValue, nLen ) );
+   HB_TRACE( HB_TR_ALWAYS, ( "fieldget recno=%d index=%d value=%s len=%d", dbFieldInfo.atomName, PQftype(pResult, static_cast<int>(uiCount)), pArea->ulRecNo, uiIndex, pValue, nLen ) );
 #endif
 
    switch( pField->uiType )
    {
       case HB_FT_STRING:
-         hb_itemPutCL( pItem, pValue, nLen );
+         hb_itemPutCL(pItem, pValue, nLen);
          break;
 
       case HB_FT_MEMO:
-         hb_itemPutCL( pItem, pValue, nLen );
-         hb_itemSetCMemo( pItem );
+         hb_itemPutCL(pItem, pValue, nLen);
+         hb_itemSetCMemo(pItem);
          break;
 
       case HB_FT_INTEGER:
       case HB_FT_LONG:
       case HB_FT_DOUBLE:
          if( pField->uiDec )
-            hb_itemPutNDLen( pItem, atof( pValue ),
-                             static_cast< int >( pField->uiLen ) - ( static_cast< int >( pField->uiDec ) + 1 ),
-                             static_cast< int >( pField->uiDec ) );
+            hb_itemPutNDLen(pItem, atof(pValue), static_cast<int>(pField->uiLen) - (static_cast<int>(pField->uiDec) + 1), static_cast<int>(pField->uiDec));
          else
          if( pField->uiLen > 9 )
-            hb_itemPutNDLen( pItem, atof( pValue ),
-                             static_cast< int >( pField->uiLen ), static_cast< int >( pField->uiDec ) );
+            hb_itemPutNDLen(pItem, atof(pValue), static_cast<int>(pField->uiLen), static_cast<int>(pField->uiDec));
          else
-            hb_itemPutNLLen( pItem, atol( pValue ), static_cast< int >( pField->uiLen ) );
+            hb_itemPutNLLen(pItem, atol(pValue), static_cast<int>(pField->uiLen));
          break;
 
       case HB_FT_LOGICAL:
-         hb_itemPutL( pItem, pValue[0] == 'T' || pValue[0] == 'Y' );
+         hb_itemPutL(pItem, pValue[0] == 'T' || pValue[0] == 'Y');
          break;
 
       case HB_FT_DATE:
@@ -560,7 +557,7 @@ static HB_ERRCODE pgsqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          szDate[6] = pValue[8];
          szDate[7] = pValue[9];
          szDate[8] = '\0';
-         hb_itemPutDS( pItem, szDate );
+         hb_itemPutDS(pItem, szDate);
          break;
       }
 

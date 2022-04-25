@@ -115,8 +115,7 @@ static void debugInit( void )
       {
          if( iFifoResult != EEXIST )
          {
-            s_iXtermPid = execlp( "xterm", "xterm", "-T", szDebugTitle, "-e",
-                                  "cat", szDebugName, nullptr );
+            s_iXtermPid = execlp("xterm", "xterm", "-T", szDebugTitle, "-e", "cat", szDebugName, nullptr);
 
             if( s_iXtermPid <= 0 )
             {
@@ -134,7 +133,7 @@ static void debugInit( void )
 
 #endif
 
-HB_BOOL hb_OutDebugName( PHB_ITEM pName )
+HB_BOOL hb_OutDebugName(PHB_ITEM pName)
 {
    HB_BOOL bRet;
 

@@ -102,7 +102,7 @@ static void hb_sqlt3dd_init( void * cargo )
 #endif
 
    if( !hb_sddRegister( &s_sqlt3dd ) )
-      hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
 }
 
 static void hb_sqlt3dd_exit( void * cargo )
@@ -116,7 +116,7 @@ static void hb_sqlt3dd_exit( void * cargo )
 
 HB_FUNC( HB_SDDSQLITE3_REGISTER )
 {
-   hb_sqlt3dd_init( nullptr );
+   hb_sqlt3dd_init(nullptr);
 }
 
 /* force SQLBASE linking */
@@ -129,8 +129,8 @@ HB_INIT_SYMBOLS_BEGIN( sqlt3dd__InitSymbols )
 HB_INIT_SYMBOLS_END( sqlt3dd__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_sqlt3dd_init_ )
-hb_vmAtInit( hb_sqlt3dd_init, nullptr );
-hb_vmAtExit( hb_sqlt3dd_exit, nullptr );
+hb_vmAtInit(hb_sqlt3dd_init, nullptr);
+hb_vmAtExit(hb_sqlt3dd_exit, nullptr);
 HB_CALL_ON_STARTUP_END( _hb_sqlt3dd_init_ )
 
 #if defined(HB_PRAGMA_STARTUP)
@@ -163,7 +163,7 @@ static char * sqlite3GetError( sqlite3 * pDb, HB_ERRCODE * pErrCode )
 
    if( pDb )
    {
-      PHB_ITEM pRet = S_HB_ITEMPUTSTR( nullptr, sqlite3_errmsg( pDb ) );
+      PHB_ITEM pRet = S_HB_ITEMPUTSTR(nullptr, sqlite3_errmsg(pDb));
       szRet = hb_strdup( hb_itemGetCPtr(pRet) );
       hb_itemRelease(pRet);
 
@@ -176,7 +176,7 @@ static char * sqlite3GetError( sqlite3 * pDb, HB_ERRCODE * pErrCode )
    }
 
    if( pErrCode )
-      *pErrCode = static_cast< HB_ERRCODE >( iNativeErr );
+      *pErrCode = static_cast<HB_ERRCODE>(iNativeErr);
 
    return szRet;
 }
@@ -262,13 +262,13 @@ static void sqlite3DeclStru( sqlite3_stmt * st, HB_USHORT uiIndex, HB_USHORT * p
        * try some really stupid guesswork on schema...
        */
 
-      if( ( nAt = hb_strAt( "(", 1, szDeclType, nLen ) ) > 0 )
+      if( (nAt = hb_strAt("(", 1, szDeclType, nLen)) > 0 )
       {
          if( puiLen )
          {
             iRetLen = hb_strValInt( szDeclType + nAt, &iOverflow );
             if( !puiDec || ( iRetLen > 0 && iRetLen < 100 ) )
-               * puiLen = static_cast< HB_USHORT >( iRetLen );
+               * puiLen = static_cast<HB_USHORT>(iRetLen);
          }
 
          if( !puiDec )
@@ -279,15 +279,15 @@ static void sqlite3DeclStru( sqlite3_stmt * st, HB_USHORT uiIndex, HB_USHORT * p
          else if( puiLen &&
                   ( nAt = hb_strAt( ",", 1, szDeclType + nAt, nLen - nAt - 1 ) ) > 0 )
          {
-            if( ( iRetLen = hb_strValInt( szDeclType + nAt, &iOverflow ) ) > 0 )
+            if( (iRetLen = hb_strValInt(szDeclType + nAt, &iOverflow)) > 0 )
             {
-               * puiDec = static_cast< HB_USHORT >( HB_MIN( * puiLen - 1, iRetLen ) );
+               * puiDec = static_cast<HB_USHORT>(HB_MIN(*puiLen - 1, iRetLen));
 
                /* SQL column declaration doesn't include space for
                 * decimal separator, while xBase stores it.
                 */
 
-               * puiLen = static_cast< HB_USHORT >( ++iRetLen );
+               * puiLen = static_cast<HB_USHORT>(++iRetLen);
             }
             else if( iRetLen == 0 )
                * puiDec = 0;
@@ -303,7 +303,7 @@ static HB_ERRCODE sqlite3Connect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem 
    sqlite3 * db;
    void *    hConn;
 
-   if( sqlite3_open( S_HB_ARRAYGETSTR( pItem, 2, &hConn, nullptr ), &db ) == SQLITE_OK )
+   if( sqlite3_open(S_HB_ARRAYGETSTR(pItem, 2, &hConn, nullptr), &db) == SQLITE_OK )
    {
       pConnection->pSDDConn = hb_xgrab(sizeof(SDDCONN));
       ( ( SDDCONN * ) pConnection->pSDDConn )->pDb = db;
@@ -336,7 +336,7 @@ static HB_ERRCODE sqlite3Execute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem 
    char **    pResult   = nullptr;
    char *     pszErrMsg = nullptr;
 
-   if( sqlite3_get_table( pDb, S_HB_ITEMGETSTR( pItem, &hStatement, nullptr ), &pResult, &iRow, &iCol, &pszErrMsg ) != SQLITE_OK )
+   if( sqlite3_get_table(pDb, S_HB_ITEMGETSTR(pItem, &hStatement, nullptr), &pResult, &iRow, &iCol, &pszErrMsg) != SQLITE_OK )
    {
       hb_strfree(hStatement);
       hb_xfree(sqlite3GetError(pDb, &errCode));
@@ -372,13 +372,13 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
    pArea->pSDDData = memset(hb_xgrab(sizeof(SDDDATA)), 0, sizeof(SDDDATA));
    pSDDData        = ( SDDDATA * ) pArea->pSDDData;
 
-   pItem    = hb_itemPutC( nullptr, pArea->szQuery );
-   pszQuery = S_HB_ITEMGETSTR( pItem, &hQuery, &nQueryLen );
+   pItem    = hb_itemPutC(nullptr, pArea->szQuery);
+   pszQuery = S_HB_ITEMGETSTR(pItem, &hQuery, &nQueryLen);
 
 #if SQLITE_VERSION_NUMBER >= 3020000
-   result = sqlite3_prepare_v3( pDb, pszQuery, static_cast< int >( nQueryLen ), 0, &st, nullptr );
+   result = sqlite3_prepare_v3(pDb, pszQuery, static_cast<int>(nQueryLen), 0, &st, nullptr);
 #else
-   result = sqlite3_prepare_v2( pDb, pszQuery, static_cast< int >( nQueryLen ), &st, nullptr );
+   result = sqlite3_prepare_v2(pDb, pszQuery, static_cast<int>(nQueryLen), &st, nullptr);
 #endif
 
    if( result != SQLITE_OK )
@@ -397,7 +397,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
       hb_itemRelease(pItem);
    }
 
-   if( ( iStatus = sqlite3_step( st ) ) == SQLITE_DONE )
+   if( (iStatus = sqlite3_step(st)) == SQLITE_DONE )
       pArea->fFetched = HB_TRUE;
    else if( iStatus != SQLITE_ROW )
    {
@@ -408,7 +408,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
       return HB_FAILURE;
    }
 
-   uiFields = static_cast< HB_USHORT >( sqlite3_column_count( st ) );
+   uiFields = static_cast<HB_USHORT>(sqlite3_column_count(st));
    SELF_SETFIELDEXTENT( &pArea->area, uiFields );
 
    errCode = 0;
@@ -420,12 +420,12 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
 #ifdef HB_SQLT3_FIELDNAME_STRICT
       HB_SIZE nPos;
 #endif
-      memset( &dbFieldInfo, 0, sizeof(dbFieldInfo) );
+      memset(&dbFieldInfo, 0, sizeof(dbFieldInfo));
       pName = S_HB_ITEMPUTSTR( pName, sqlite3_column_name( st, uiIndex ) );
 
 #ifdef HB_SQLT3_FIELDNAME_STRICT
       /* WA->T.FIELD syntax is not valid, but FieldPos("t.field") is OK */
-      if( ( nPos = hb_strAt( ".", 1, hb_itemGetCPtr(pName), hb_itemGetCLen(pName) ) ) != 0 )
+      if( (nPos = hb_strAt(".", 1, hb_itemGetCPtr(pName), hb_itemGetCLen(pName))) != 0 )
          dbFieldInfo.atomName = hb_itemGetCPtr(pName) + nPos;
       else
 #endif
@@ -444,8 +444,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
       {
          case HB_FT_STRING:
          {
-            HB_SIZE nSize = hb_cdpUTF8StringLength( reinterpret_cast< const char * >( sqlite3_column_text( st, uiIndex ) ),
-                                                    sqlite3_column_bytes( st, uiIndex ) );
+            HB_SIZE nSize = hb_cdpUTF8StringLength(reinterpret_cast<const char*>(sqlite3_column_text(st, uiIndex)), sqlite3_column_bytes(st, uiIndex));
 
             /* sqlite3_column_bytes() returns variable lengths for UTF-8
                strings - *_bytes16() UTF-16 could do that too, but not
@@ -456,42 +455,42 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
             HB_USHORT uiRetLen = 10;
 
 #ifdef HB_SQLT3_MAP_DECLARED_EMULATED
-            sqlite3DeclStru( st, uiIndex, &uiRetLen, nullptr );
+            sqlite3DeclStru(st, uiIndex, &uiRetLen, nullptr);
 #endif
-            dbFieldInfo.uiLen = static_cast< HB_USHORT >( HB_MAX( nSize, uiRetLen ) );
+            dbFieldInfo.uiLen = static_cast<HB_USHORT>(HB_MAX(nSize, uiRetLen));
             pStr = static_cast<char*>(hb_xgrab(static_cast<HB_SIZE>(dbFieldInfo.uiLen) + 1));
-            memset( pStr, ' ', dbFieldInfo.uiLen );
-            hb_itemPutCLPtr( pItem, pStr, dbFieldInfo.uiLen );
+            memset(pStr, ' ', dbFieldInfo.uiLen);
+            hb_itemPutCLPtr(pItem, pStr, dbFieldInfo.uiLen);
             break;
          }
          case HB_FT_BLOB:
             dbFieldInfo.uiLen = 4;
-            hb_itemPutC( pItem, nullptr );
+            hb_itemPutC(pItem, nullptr);
             break;
 
          case HB_FT_INTEGER:
             dbFieldInfo.uiLen = 8;
-            hb_itemPutNInt( pItem, 0 );
+            hb_itemPutNInt(pItem, 0);
             break;
 
          case HB_FT_LONG:
             dbFieldInfo.uiLen = 20;
-            dbFieldInfo.uiDec = static_cast< HB_USHORT >( hb_setGetDecimals() );
+            dbFieldInfo.uiDec = static_cast<HB_USHORT>(hb_setGetDecimals());
 #ifdef HB_SQLT3_MAP_DECLARED_EMULATED
             sqlite3DeclStru( st, uiIndex, &dbFieldInfo.uiLen, &dbFieldInfo.uiDec );
 #endif
-            hb_itemPutNDDec( pItem, 0.0, dbFieldInfo.uiDec );
+            hb_itemPutNDDec(pItem, 0.0, dbFieldInfo.uiDec);
             break;
 
 #ifdef HB_SQLT3_MAP_DECLARED_EMULATED
          case HB_FT_DATE:
             dbFieldInfo.uiLen = 8;
-            hb_itemPutDS( pItem, nullptr );
+            hb_itemPutDS(pItem, nullptr);
             break;
 
          case HB_FT_TIMESTAMP:
             dbFieldInfo.uiLen = 8;
-            hb_itemPutTDT( pItem, 0, 0 );
+            hb_itemPutTDT(pItem, 0, 0);
             break;
 #endif
 
@@ -586,16 +585,16 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
          switch( uiType )
          {
             case HB_FT_STRING:
-               pItem = S_HB_ITEMPUTSTR( nullptr, reinterpret_cast< const char * >( sqlite3_column_text( st, ui ) ) );
+               pItem = S_HB_ITEMPUTSTR(nullptr, reinterpret_cast<const char*>(sqlite3_column_text(st, ui)));
                break;
 
             case HB_FT_INTEGER:
 #if HB_VMLONG_MAX > INT32_MAX && !defined(HB_LONG_LONG_OFF)
-               pItem = hb_itemPutNInt( nullptr, sqlite3_column_int64( st, ui ) );
+               pItem = hb_itemPutNInt(nullptr, sqlite3_column_int64(st, ui));
                break;
 #endif
             case HB_FT_LONG:
-               pItem = hb_itemPutNDDec( nullptr, sqlite3_column_double( st, ui ), pField->uiDec );
+               pItem = hb_itemPutNDDec(nullptr, sqlite3_column_double(st, ui), pField->uiDec);
                break;
 
 #ifdef HB_SQLT3_MAP_DECLARED_EMULATED
@@ -603,7 +602,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                if( sqlite3_column_bytes( st, ui ) >= 10 )
                {
                   char szDate[9];
-                  const char * pValue = static_cast< const char * >( sqlite3_column_text( st, ui ) );
+                  const char * pValue = static_cast<const char*>(sqlite3_column_text(st, ui));
 
                   szDate[0] = pValue[0];
                   szDate[1] = pValue[1];
@@ -614,10 +613,10 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                   szDate[6] = pValue[8];
                   szDate[7] = pValue[9];
                   szDate[8] = '\0';
-                  pItem = hb_itemPutDS( nullptr, szDate );
+                  pItem = hb_itemPutDS(nullptr, szDate);
                }
                else if( sqlite3_column_bytes( st, ui ) == 8 )
-                  pItem = hb_itemPutDS( nullptr, static_cast< const char * >( sqlite3_column_text( st, ui ) ) );
+                  pItem = hb_itemPutDS(nullptr, static_cast<const char*>(sqlite3_column_text(st, ui)));
 
                break;
 
@@ -625,15 +624,15 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                if( sqlite3_column_bytes( st, ui ) >= 10 )
                {
                   long lDate, lTime;
-                  const char * pValue = static_cast< const char * >( sqlite3_column_text( st, ui ) );
+                  const char * pValue = static_cast<const char*>(sqlite3_column_text(st, ui));
 
                   hb_timeStampStrGetDT( pValue, &lDate, &lTime );
-                  pItem = hb_itemPutTDT( nullptr, lDate, lTime );
+                  pItem = hb_itemPutTDT(nullptr, lDate, lTime);
                   break;
                }
 #endif
             case HB_FT_BLOB:
-               pItem = hb_itemPutCL( nullptr, static_cast< const char * >( sqlite3_column_blob( st, ui ) ), sqlite3_column_bytes( st, ui ) );
+               pItem = hb_itemPutCL(nullptr, static_cast<const char*>(sqlite3_column_blob(st, ui)), sqlite3_column_bytes(st, ui));
                break;
          }
 
@@ -645,8 +644,8 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
       }
       if( pArea->ulRecCount + 1 >= pArea->ulRecMax )
       {
-         pArea->pRow      = static_cast< void ** >( hb_xrealloc( pArea->pRow, ( pArea->ulRecMax + SQLDD_ROWSET_RESIZE ) * sizeof(void*) ) );
-         pArea->pRowFlags = static_cast< HB_BYTE * >( hb_xrealloc( pArea->pRowFlags, ( pArea->ulRecMax + SQLDD_ROWSET_RESIZE ) * sizeof(HB_BYTE) ) );
+         pArea->pRow      = static_cast<void**>(hb_xrealloc(pArea->pRow, (pArea->ulRecMax + SQLDD_ROWSET_RESIZE) * sizeof(void*)));
+         pArea->pRowFlags = static_cast<HB_BYTE*>(hb_xrealloc(pArea->pRowFlags, (pArea->ulRecMax + SQLDD_ROWSET_RESIZE) * sizeof(HB_BYTE)));
          pArea->ulRecMax += SQLDD_ROWSET_RESIZE;
       }
 

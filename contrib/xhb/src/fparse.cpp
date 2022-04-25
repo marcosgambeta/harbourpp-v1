@@ -69,7 +69,7 @@
 /* adjustable, but this should be sufficient in normal situation */
 #define MAX_READ  4096
 
-static void hb_ParseLine( PHB_ITEM pReturn, const char * szText, int iDelimiter, int * iWord )
+static void hb_ParseLine(PHB_ITEM pReturn, const char * szText, int iDelimiter, int * iWord)
 {
    if( szText )
    {
@@ -101,7 +101,7 @@ static void hb_ParseLine( PHB_ITEM pReturn, const char * szText, int iDelimiter,
          {
             HB_ISIZ ui = 0;
 
-            hb_xmemset( szResult, ' ', nLen + 1 );
+            hb_xmemset(szResult, ' ', nLen + 1);
 
             /* an '"' found, loop until the next one is found */
             if( szText[i] == '"' )
@@ -130,7 +130,7 @@ static void hb_ParseLine( PHB_ITEM pReturn, const char * szText, int iDelimiter,
                   }
                }
                word_count++;
-               hb_arrayAddForward( pReturn, hb_itemPutC( pTemp, szResult ) );
+               hb_arrayAddForward(pReturn, hb_itemPutC(pTemp, szResult));
             }
             /* delimiter found */
             else if( szText[i] == iDelimiter )
@@ -170,7 +170,7 @@ static void hb_ParseLine( PHB_ITEM pReturn, const char * szText, int iDelimiter,
                }
                word_count++;
                szResult[ui + 1] = '\0';
-               hb_arrayAddForward( pReturn, hb_itemPutC( pTemp, szResult ) );
+               hb_arrayAddForward(pReturn, hb_itemPutC(pTemp, szResult));
             }
             else
             {
@@ -212,7 +212,7 @@ static void hb_ParseLine( PHB_ITEM pReturn, const char * szText, int iDelimiter,
                }
                word_count++;
                szResult[ui + 1] = '\0';
-               hb_arrayAddForward( pReturn, hb_itemPutC( pTemp, szResult ) );
+               hb_arrayAddForward(pReturn, hb_itemPutC(pTemp, szResult));
             }
 
             i++;
@@ -223,7 +223,7 @@ static void hb_ParseLine( PHB_ITEM pReturn, const char * szText, int iDelimiter,
          if( szText[nLen - 1] == iDelimiter )
          {
             word_count++;
-            hb_arrayAddForward( pReturn, hb_itemPutC( pTemp, nullptr ) );
+            hb_arrayAddForward(pReturn, hb_itemPutC(pTemp, nullptr));
          }
 
          /* store number of words */
@@ -250,9 +250,9 @@ static char ** hb_tokensplit( const char * string, HB_BYTE delimiter, int iCharC
 
    while( *string )
    {
-      if( static_cast< HB_BYTE >( *string ) == delimiter )
+      if( static_cast<HB_BYTE>(*string) == delimiter )
       {
-         while( static_cast< HB_BYTE >( *string ) == delimiter )
+         while( static_cast<HB_BYTE>(*string) == delimiter )
          {
             string++;
          }
@@ -295,7 +295,7 @@ static HB_BOOL file_read( FILE * stream, char * string, int * iCharCount )
 {
    int cnbr = 0;
 
-   memset( string, ' ', MAX_READ );
+   memset(string, ' ', MAX_READ);
 
    for( ;; )
    {
@@ -310,7 +310,7 @@ static HB_BOOL file_read( FILE * stream, char * string, int * iCharCount )
       else
       {
          if( cnbr < MAX_READ && ch != '\r' )
-            string[cnbr++] = static_cast< char >( ch );
+            string[cnbr++] = static_cast<char>(ch);
       }
 
       if( cnbr >= MAX_READ )
@@ -357,7 +357,7 @@ HB_FUNC( FPARSE )
    }
 
    /* default delimiter to comma */
-   nByte = pDelim ? static_cast< HB_BYTE >( hb_itemGetCPtr(pDelim)[0] ) : static_cast< HB_BYTE >( ',' );
+   nByte = pDelim ? static_cast<HB_BYTE>(hb_itemGetCPtr(pDelim)[0]) : static_cast<HB_BYTE>(',');
 
    /* the main array */
    pArray = hb_itemArrayNew(0);
@@ -379,7 +379,7 @@ HB_FUNC( FPARSE )
 
       /* add parsed text to array */
       for( iToken = 0; tokens[iToken]; iToken++ )
-         hb_arraySetC( pItem, iToken + 1, tokens[iToken] );
+         hb_arraySetC(pItem, iToken + 1, tokens[iToken]);
 
       /* add array containing parsed text to main array */
       hb_arrayAddForward( pArray, pItem );
@@ -434,7 +434,7 @@ HB_FUNC( FPARSEEX )
    }
 
    /* default delimiter to comma */
-   nByte = pDelim ? static_cast< HB_BYTE >( hb_itemGetCPtr(pDelim)[0] ) : static_cast< HB_BYTE >( ',' );
+   nByte = pDelim ? static_cast<HB_BYTE>(hb_itemGetCPtr(pDelim)[0]) : static_cast<HB_BYTE>(',');
 
    /* the main array */
    pArray    = hb_itemArrayNew(0);
@@ -632,7 +632,7 @@ HB_FUNC( FPARSELINE )
    {
       const char * szDelim = hb_parc(2);
       int          iWords  = 0;
-      hb_ParseLine( pArray, szText, szDelim ? static_cast< unsigned char >( *szDelim ) : ',', &iWords );
+      hb_ParseLine( pArray, szText, szDelim ? static_cast<unsigned char>(*szDelim) : ',', &iWords);
       nWords = iWords;
    }
 

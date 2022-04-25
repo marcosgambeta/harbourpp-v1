@@ -324,7 +324,7 @@ HB_FUNC( RATE )
             j -= dScale;
             dScale = dScale * 0.10;
 
-            if( ( dAux - dPayment ) < dEpsilon )
+            if( (dAux - dPayment) < dEpsilon )
             {
                break;
             }

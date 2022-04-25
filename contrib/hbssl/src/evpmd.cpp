@@ -62,16 +62,16 @@ HB_FUNC( OPENSSL_ADD_ALL_DIGESTS )
 
 static HB_GARBAGE_FUNC( EVP_MD_CTX_release )
 {
-   void ** ph = static_cast< void ** >( Cargo );
+   void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
 #if defined(LIBRESSL_VERSION_NUMBER)
-      EVP_MD_CTX_destroy( static_cast< EVP_MD_CTX * >( *ph ) );
+      EVP_MD_CTX_destroy( static_cast<EVP_MD_CTX*>(*ph) );
 #elif OPENSSL_VERSION_NUMBER >= 0x00907000L
-      EVP_MD_CTX_free( static_cast< EVP_MD_CTX * >( *ph ) );
+      EVP_MD_CTX_free( static_cast<EVP_MD_CTX*>(*ph) );
 #else
       hb_xfree(*ph);
 #endif
@@ -94,9 +94,9 @@ static HB_BOOL hb_EVP_MD_CTX_is( int iParam )
 
 static EVP_MD_CTX * hb_EVP_MD_CTX_par( int iParam )
 {
-   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcEVP_MD_CTX_funcs, iParam ) );
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcEVP_MD_CTX_funcs, iParam));
 
-   return ph ? static_cast< EVP_MD_CTX * >( *ph ) : nullptr;
+   return ph ? static_cast<EVP_MD_CTX*>(*ph) : nullptr;
 }
 
 HB_BOOL hb_EVP_MD_is( int iParam )
@@ -269,7 +269,7 @@ HB_FUNC( EVP_MD_BLOCK_SIZE )
 
 HB_FUNC( EVP_MD_CTX_NEW )
 {
-   void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof(EVP_MD_CTX*), &s_gcEVP_MD_CTX_funcs ) );
+   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(EVP_MD_CTX*), &s_gcEVP_MD_CTX_funcs));
    EVP_MD_CTX * ctx;
 
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L && !defined(LIBRESSL_VERSION_NUMBER)
@@ -459,7 +459,7 @@ HB_FUNC( EVP_DIGESTFINAL )
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), static_cast< HB_SIZE >( size ), 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), static_cast<HB_SIZE>(size), 2) )
             {
                hb_xfree(buffer);
             }
@@ -493,7 +493,7 @@ HB_FUNC( EVP_DIGESTFINAL_EX )
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), static_cast< HB_SIZE >( size ), 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), static_cast<HB_SIZE>(size), 2) )
             {
                hb_xfree(buffer);
             }
@@ -565,7 +565,7 @@ HB_FUNC( EVP_SIGNUPDATE )
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni(EVP_SignUpdate(ctx, hb_parcx(2), static_cast<size_t>(hb_parclen(2))));
 #else
-         EVP_SignUpdate( ctx, hb_parcx(2), static_cast< size_t >( hb_parclen(2) ) );
+         EVP_SignUpdate( ctx, hb_parcx(2), static_cast<size_t>(hb_parclen(2)) );
          hb_retni(1);
 #endif
       }
@@ -591,7 +591,7 @@ HB_FUNC( EVP_SIGNFINAL )
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), static_cast< HB_SIZE >( size ), 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), static_cast<HB_SIZE>(size), 2) )
             {
                hb_xfree(buffer);
             }
@@ -667,7 +667,7 @@ HB_FUNC( EVP_VERIFYUPDATE )
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni(EVP_VerifyUpdate(ctx, hb_parcx(2), static_cast<size_t>(hb_parclen(2))));
 #else
-         EVP_VerifyUpdate( ctx, hb_parcx(2), static_cast< size_t >( hb_parclen(2) ) );
+         EVP_VerifyUpdate( ctx, hb_parcx(2), static_cast<size_t>(hb_parclen(2)) );
          hb_retni(1);
 #endif
       }

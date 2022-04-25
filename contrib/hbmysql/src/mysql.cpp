@@ -166,7 +166,7 @@ HB_FUNC( MYSQL_REAL_CONNECT ) /* MYSQL * mysql_real_connect( MYSQL *, char * hos
    unsigned int port  = static_cast<unsigned int>(hb_parnidef(4, MYSQL_PORT));
    unsigned int flags = static_cast<unsigned int>(hb_parnidef(5, 0));
 
-   if( ( mysql = mysql_init( static_cast<MYSQL*>(nullptr) ) ) != nullptr )
+   if( (mysql = mysql_init(static_cast<MYSQL*>(nullptr))) != nullptr )
    {
       /* from 3.22.x of MySQL there is a new parameter in mysql_real_connect() call, that is char * db
          which is not used here */
@@ -185,7 +185,7 @@ HB_FUNC( MYSQL_REAL_CONNECT ) /* MYSQL * mysql_real_connect( MYSQL *, char * hos
       hb_retptr(nullptr);
    }
 #else
-   hb_MYSQL_ret( mysql_real_connect( nullptr, szHost, szUser, szPass, 0, nullptr, 0 ) );
+   hb_MYSQL_ret(mysql_real_connect(nullptr, szHost, szUser, szPass, 0, nullptr, 0));
 #endif
 }
 
@@ -443,7 +443,7 @@ HB_FUNC( MYSQL_LIST_FIELDS ) /* MYSQL_RES * mysql_list_fields( MYSQL *, char * )
 
    if( mysql )
    {
-      hb_MYSQL_RES_ret( mysql_list_fields( mysql, hb_parc(2), nullptr ) );
+      hb_MYSQL_RES_ret(mysql_list_fields(mysql, hb_parc(2), nullptr));
    }
    else
    {
@@ -485,7 +485,7 @@ HB_FUNC( MYSQL_LIST_DBS ) /* MYSQL_RES * mysql_list_dbs( MYSQL *, char * wild );
 
    if( mysql )
    {
-      MYSQL_RES * mresult = mysql_list_dbs( mysql, nullptr );
+      MYSQL_RES * mresult = mysql_list_dbs(mysql, nullptr);
       HB_SIZE     nr      = static_cast<HB_SIZE>(mysql_num_rows(mresult));
       PHB_ITEM    aDBs    = hb_itemArrayNew( nr );
 

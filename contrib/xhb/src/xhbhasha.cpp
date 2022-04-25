@@ -72,9 +72,9 @@ static void s_errRT_hashAA( void )
    hb_errRT_BASE( EG_ARG, 1123, "Is not a Hash with Associative Array compatibility", HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
-static HB_BOOL s_isHashAA( PHB_ITEM pHash )
+static HB_BOOL s_isHashAA(PHB_ITEM pHash)
 {
-   return ( hb_hashGetFlags( pHash ) & HB_HASH_KEEPORDER ) != 0;
+   return ( hb_hashGetFlags(pHash) & HB_HASH_KEEPORDER ) != 0;
 }
 
 /* haAGetKeyAt( <hValue>, <nPos> ) --> <value> */
@@ -89,7 +89,7 @@ HB_FUNC( HAAGETKEYAT )
       s_errRT_hashAA();
    else
    {
-      PHB_ITEM pItem = hb_hashGetKeyAt( pHash, hb_itemGetNS( pPos ) );
+      PHB_ITEM pItem = hb_hashGetKeyAt(pHash, hb_itemGetNS(pPos));
       if( pItem )
          hb_itemReturn(pItem);
       else
@@ -109,7 +109,7 @@ HB_FUNC( HAAGETVALUEAT )
       s_errRT_hashAA();
    else
    {
-      PHB_ITEM pItem = hb_hashGetValueAt( pHash, hb_itemGetNS( pPos ) );
+      PHB_ITEM pItem = hb_hashGetValueAt(pHash, hb_itemGetNS(pPos));
       if( pItem )
          hb_itemReturn(pItem);
       else
@@ -130,7 +130,7 @@ HB_FUNC( HAASETVALUEAT )
       s_errRT_hashAA();
    else
    {
-      PHB_ITEM pItem = hb_hashGetValueAt( pHash, hb_itemGetNS( pPos ) );
+      PHB_ITEM pItem = hb_hashGetValueAt(pHash, hb_itemGetNS(pPos));
       if( pItem )
          hb_itemCopy(pItem, pValue);
       else

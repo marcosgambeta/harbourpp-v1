@@ -55,7 +55,7 @@
 static char * hb_fsReadLine( HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const char ** pTerm, HB_ISIZ * pnTermSizes, HB_ISIZ nTerms, HB_BOOL * pbFound, HB_BOOL * pbEOF )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsReadLine(%p, %" HB_PFS "d, %p, %p, %" HB_PFS "d, %p, %p)", static_cast< void * >( static_cast< HB_PTRUINT >( hFileHandle ) ), *plBuffLen, pTerm, pnTermSizes, nTerms, pbFound, pbEOF ) );
+   HB_TRACE( HB_TR_DEBUG, ( "hb_fsReadLine(%p, %" HB_PFS "d, %p, %p, %" HB_PFS "d, %p, %p)", static_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), *plBuffLen, pTerm, pnTermSizes, nTerms, pbFound, pbEOF ) );
 #endif
 
    HB_ISIZ nPosTerm = 0, nPos, nPosition;
@@ -80,7 +80,7 @@ static char * hb_fsReadLine( HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const 
       {
          /* pBuff can be enlarged to hold the line as needed.. */
          nSize    = ( *plBuffLen * ( nTries + 1 ) ) + 1;
-         pBuff    = static_cast< char * >( hb_xrealloc( pBuff, nSize ) );
+         pBuff    = static_cast<char*>(hb_xrealloc(pBuff, nSize));
          nOffset += nRead;
       }
 
@@ -167,7 +167,7 @@ HB_FUNC( HB_FREADLINE )
    HB_ISIZ       i, nTerms;
    HB_BOOL       bFound, bEOF;
 
-   if( ( !HB_ISBYREF(2) ) || ( !HB_ISNUM(1) ) )
+   if( (!HB_ISBYREF(2)) || (!HB_ISNUM(1)) )
    {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 4, hb_paramError(1), hb_paramError(2), hb_paramError(3), hb_paramError(4));
       return;

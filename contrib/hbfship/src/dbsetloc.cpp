@@ -59,7 +59,7 @@ HB_FUNC( DBSETLOCATE )
       if( pLocate )
       {
          DBSCOPEINFO pScopeInfo;
-         memset( &pScopeInfo, 0, sizeof(pScopeInfo) );
+         memset(&pScopeInfo, 0, sizeof(pScopeInfo));
          pScopeInfo.itmCobFor = pLocate;
          fSet = SELF_SETLOCATE( pArea, &pScopeInfo ) == HB_SUCCESS;
       }

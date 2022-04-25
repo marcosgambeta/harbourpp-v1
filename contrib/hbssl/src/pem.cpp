@@ -81,7 +81,7 @@ static int hb_ssl_pem_password_cb( char * buf, int size, int rwflag, void * user
             retsize = size;
          }
 
-         memcpy( buf, hb_parc(-1), retsize );
+         memcpy(buf, hb_parc(-1), retsize);
       }
 
       hb_vmRequestRestore();
@@ -133,7 +133,7 @@ static void hb_PEM_read_bio( PEM_READ_BIO * func, HB_PEM_TYPES type )
       else
       {
          cb = nullptr;
-         cargo = const_cast< char * >( hb_parc(2) );  /* NOTE: Discarding 'const' qualifier, OpenSSL will memcpy() it */
+         cargo = const_cast<char*>(hb_parc(2));  /* NOTE: Discarding 'const' qualifier, OpenSSL will memcpy() it */
       }
 
       result = ( *func )( bio, nullptr, cb, cargo );

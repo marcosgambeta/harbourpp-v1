@@ -35,7 +35,7 @@ HB_FUNC( FT_CAPLOCK )
    int        iState = 0;
    HB_GT_INFO gtInfo;
 
-   memset( &gtInfo, 0, sizeof(gtInfo) );
+   memset(&gtInfo, 0, sizeof(gtInfo));
    hb_gtInfo( HB_GTI_KBDSHIFTS, &gtInfo );
    if( gtInfo.pResult )
    {
@@ -47,7 +47,7 @@ HB_FUNC( FT_CAPLOCK )
    if( HB_ISLOG(1) )
    {
       int iNewState = hb_parl(1) ? ( iState | HB_GTI_KBD_CAPSLOCK ) : ( iState & ~HB_GTI_KBD_CAPSLOCK );
-      gtInfo.pNewVal = hb_itemPutNI( gtInfo.pNewVal, iNewState );
+      gtInfo.pNewVal = hb_itemPutNI(gtInfo.pNewVal, iNewState);
       hb_gtInfo( HB_GTI_KBDSHIFTS, &gtInfo );
    }
 

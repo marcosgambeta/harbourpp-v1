@@ -159,7 +159,7 @@ HB_FUNC( HPDF_READFROMSTREAM )
 
    hb_retnl(static_cast<long>(HPDF_ReadFromStream(hb_HPDF_Doc_par(1), buffer, &size)));
 
-   if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+   if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
    {
       hb_xfree(buffer);
    }
@@ -349,7 +349,7 @@ HB_FUNC( HPDF_SETINFODATEATTR )
 {
    HPDF_Date date;
 
-   memset( &date, 0, sizeof(date) );
+   memset(&date, 0, sizeof(date));
 
    date.year    = hb_parvni(3, 1);
    date.month   = hb_parvni(3, 2);
@@ -1421,7 +1421,7 @@ HB_FUNC( HPDF_GETCONTENTS )
 
    hb_retnl(static_cast<long>(HPDF_GetContents(hb_HPDF_Doc_par(1), buffer, &size)));
 
-   if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+   if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
    {
       hb_xfree(buffer);
    }

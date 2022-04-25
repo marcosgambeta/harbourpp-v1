@@ -248,7 +248,7 @@ HB_FUNC( FILEDELETE )
       /* In CT3 this function does not remove directories */
       nAttr &= ~HB_FA_DIRECTORY;
 
-      if( ( ffind = hb_fsFindFirst( pszDirSpec, nAttr ) ) != nullptr )
+      if( (ffind = hb_fsFindFirst(pszDirSpec, nAttr)) != nullptr )
       {
          PHB_FNAME pFilepath;
 

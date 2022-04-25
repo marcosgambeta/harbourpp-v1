@@ -55,10 +55,10 @@ HB_FUNC( CRYPT )
 
    if( nCryptLen >= 2 )
    {
-      const HB_BYTE * pbyCrypt = reinterpret_cast< const HB_BYTE * >( hb_parc(2) );
+      const HB_BYTE * pbyCrypt = reinterpret_cast<const HB_BYTE*>(hb_parc(2));
       HB_SIZE nCryptPos = 0;
 
-      const HB_BYTE * pbyString = reinterpret_cast< const HB_BYTE * >( hb_parc(1) );
+      const HB_BYTE * pbyString = reinterpret_cast<const HB_BYTE*>(hb_parc(1));
       HB_SIZE nStringLen = hb_parclen(1);
 
       HB_BYTE * pbyResult = static_cast<HB_BYTE*>(hb_xgrab(nStringLen + 1));
@@ -124,7 +124,7 @@ HB_FUNC( CRYPT )
          }
       }
 
-      hb_retclen_buffer( reinterpret_cast< char * >( pbyResult ), nStringLen );
+      hb_retclen_buffer(reinterpret_cast<char*>(pbyResult), nStringLen);
    }
    else
    {

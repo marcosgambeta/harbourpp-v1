@@ -74,7 +74,7 @@ HB_FUNC( FILTER )
 
    if( pArea )
    {
-      PHB_ITEM pFilter = hb_itemPutC( nullptr, nullptr );
+      PHB_ITEM pFilter = hb_itemPutC(nullptr, nullptr);
       SELF_FILTERTEXT( pArea, pFilter );
       hb_itemReturnRelease(pFilter);
    }
@@ -89,11 +89,11 @@ HB_FUNC( NDX )
    if( pArea )
    {
       DBORDERINFO pOrderInfo;
-      memset( &pOrderInfo, 0, sizeof(pOrderInfo) );
+      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::NUMERIC);
       if( hb_itemGetNI(pOrderInfo.itmOrder) == 0 )
          pOrderInfo.itmOrder = nullptr;
-      pOrderInfo.itmResult   = hb_itemPutC( nullptr, nullptr );
+      pOrderInfo.itmResult   = hb_itemPutC(nullptr, nullptr);
       SELF_ORDINFO( pArea, DBOI_NAME, &pOrderInfo );
       hb_itemReturnRelease(pOrderInfo.itmResult);
    }
@@ -107,7 +107,7 @@ HB_FUNC( RELATION )
 
    if( pArea )
    {
-      PHB_ITEM pRelExpr = hb_itemPutC( nullptr, nullptr );
+      PHB_ITEM pRelExpr = hb_itemPutC(nullptr, nullptr);
       HB_USHORT uiRelNo = static_cast<HB_USHORT>(hb_parni(1));
       SELF_RELTEXT( pArea, uiRelNo ? uiRelNo : 1, pRelExpr );
       hb_itemReturnRelease(pRelExpr);
@@ -127,8 +127,8 @@ HB_FUNC( FSIZE )
 
       if( HB_ISNIL(1) )
          uiIndex = 1;
-      else if( ( szField = hb_parc(1) ) != nullptr )
-         uiIndex = hb_rddFieldIndex( pArea, szField );
+      else if( (szField = hb_parc(1)) != nullptr )
+         uiIndex = hb_rddFieldIndex(pArea, szField);
       else
          uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
 
@@ -170,7 +170,7 @@ HB_FUNC( __FOX_SEEK )
          if( pTag )
          {
             DBORDERINFO pInfo;
-            memset( &pInfo, 0, sizeof(pInfo) );
+            memset(&pInfo, 0, sizeof(pInfo));
             pInfo.itmOrder = pTag;
             pInfo.itmResult = hb_itemNew(nullptr);
             errCode = SELF_ORDLSTFOCUS( pArea, &pInfo );

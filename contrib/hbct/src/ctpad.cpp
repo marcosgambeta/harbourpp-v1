@@ -106,16 +106,16 @@ static void do_pad( int iSwitch )
             {
                *pc = cFill;
             }
-            hb_xmemcpy( pcRet + ( sRetLen - sStrLen ), pcString, sStrLen );
+            hb_xmemcpy(pcRet + (sRetLen - sStrLen), pcString, sStrLen);
          }
          else
          {
-            hb_xmemcpy( pcRet, pcString + ( sStrLen - sRetLen ), sRetLen );
+            hb_xmemcpy(pcRet, pcString + (sStrLen - sRetLen), sRetLen);
          }
       }
       else
       {
-         hb_xmemcpy( pcRet, pcString, ( sRetLen < sStrLen ? sRetLen : sStrLen ) );
+         hb_xmemcpy(pcRet, pcString, (sRetLen < sStrLen ? sRetLen : sStrLen));
          if( sRetLen > sStrLen )
          {
             /* fill with cFill */

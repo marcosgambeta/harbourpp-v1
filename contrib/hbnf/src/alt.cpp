@@ -36,7 +36,7 @@ HB_FUNC( FT_ALT )
 {
    HB_GT_INFO gtInfo;
 
-   memset( &gtInfo, 0, sizeof(gtInfo) );
+   memset(&gtInfo, 0, sizeof(gtInfo));
    hb_gtInfo( HB_GTI_KBDSHIFTS, &gtInfo );
    hb_retl((hb_itemGetNI(gtInfo.pResult) & HB_GTI_KBD_ALT) != 0);
    if( gtInfo.pResult )

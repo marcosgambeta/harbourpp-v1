@@ -61,13 +61,13 @@
 
 static HB_GARBAGE_FUNC( SSL_CTX_release )
 {
-   void ** ph = static_cast< void ** >( Cargo );
+   void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
-      SSL_CTX_free( static_cast< SSL_CTX * >( *ph ) );
+      SSL_CTX_free(static_cast<SSL_CTX*>(*ph));
 
       /* set pointer to nullptr just in case */
       *ph = nullptr;
@@ -87,16 +87,16 @@ HB_BOOL hb_SSL_CTX_is( int iParam )
 
 SSL_CTX * hb_SSL_CTX_par( int iParam )
 {
-   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcSSL_CTX_funcs, iParam ) );
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcSSL_CTX_funcs, iParam));
 
-   return ph ? static_cast< SSL_CTX * >( *ph ) : nullptr;
+   return ph ? static_cast<SSL_CTX*>(*ph) : nullptr;
 }
 
-SSL_CTX * hb_SSL_CTX_itemGet( PHB_ITEM pItem )
+SSL_CTX * hb_SSL_CTX_itemGet(PHB_ITEM pItem)
 {
-   void ** ph = static_cast< void ** >( hb_itemGetPtrGC( pItem, &s_gcSSL_CTX_funcs ) );
+   void ** ph = static_cast<void**>(hb_itemGetPtrGC(pItem, &s_gcSSL_CTX_funcs));
 
-   return ph ? static_cast< SSL_CTX * >( *ph ) : nullptr;
+   return ph ? static_cast<SSL_CTX*>(*ph) : nullptr;
 }
 
 const SSL_METHOD * hb_ssl_method_id_to_ptr( int n )
@@ -133,15 +133,15 @@ const SSL_METHOD * hb_ssl_method_id_to_ptr( int n )
 
 HB_FUNC( SSL_CTX_NEW )
 {
-   void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof(SSL_CTX*), &s_gcSSL_CTX_funcs ) );
+   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(SSL_CTX*), &s_gcSSL_CTX_funcs));
 
 #if OPENSSL_VERSION_NUMBER < 0x10000000L
-   SSL_CTX * ctx = SSL_CTX_new( static_cast< SSL_METHOD * >( hb_ssl_method_id_to_ptr( hb_parnidef(1, HB_SSL_CTX_NEW_METHOD_DEFAULT) ) ) );
+   SSL_CTX * ctx = SSL_CTX_new(static_cast<SSL_METHOD*>(hb_ssl_method_id_to_ptr(hb_parnidef(1, HB_SSL_CTX_NEW_METHOD_DEFAULT))));
 #else
-   SSL_CTX * ctx = SSL_CTX_new( hb_ssl_method_id_to_ptr( hb_parnidef(1, HB_SSL_CTX_NEW_METHOD_DEFAULT) ) );
+   SSL_CTX * ctx = SSL_CTX_new(hb_ssl_method_id_to_ptr(hb_parnidef(1, HB_SSL_CTX_NEW_METHOD_DEFAULT)));
 #endif
 
-   *ph = static_cast< void * >( ctx );
+   *ph = static_cast<void*>(ctx);
 
    hb_retptrGC(ph);
 }
@@ -653,7 +653,7 @@ HB_FUNC( SSL_CTX_SET_OPTIONS )
 
       if( ctx )
       {
-         SSL_CTX_set_options( ctx, static_cast< unsigned long >( hb_parnl(2) ) );
+         SSL_CTX_set_options(ctx, static_cast<unsigned long>(hb_parnl(2)));
       }
    }
    else

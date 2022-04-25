@@ -87,7 +87,7 @@ void ct_charlist( int iMode )
       {
          char acMark[UCHAR_MAX];
 
-         memset( acMark, 0, sizeof(acMark) );
+         memset(acMark, 0, sizeof(acMark));
 
          for( sCnt = 0; sCnt < sStrLen; ++sCnt )
          {

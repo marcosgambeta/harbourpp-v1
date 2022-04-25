@@ -26,21 +26,21 @@ HB_FUNC( FT_DESCEND )
 
    PHB_ITEM iR = nullptr;
 
-   if( ( uiType & Harbour::Item::NUMERIC ) && ( uiType & Harbour::Item::DOUBLE ) )
+   if( (uiType & Harbour::Item::NUMERIC) && (uiType & Harbour::Item::DOUBLE) )
    {
-      iR = hb_itemPutND( nullptr, 0 - hb_itemGetND(iP) );
+      iR = hb_itemPutND(nullptr, 0 - hb_itemGetND(iP));
    }
    else if( uiType & Harbour::Item::NUMERIC )
    {
-      iR = hb_itemPutNL( nullptr, 0 - hb_itemGetNL(iP) );
+      iR = hb_itemPutNL(nullptr, 0 - hb_itemGetNL(iP));
    }
    else if( uiType & Harbour::Item::DATE )
    {
-      iR = hb_itemPutNL( nullptr, 0x4FD4C0L - hb_itemGetNL(iP) );
+      iR = hb_itemPutNL(nullptr, 0x4FD4C0L - hb_itemGetNL(iP));
    }
    else if( uiType & Harbour::Item::TIMESTAMP )
    {
-      iR = hb_itemPutND( nullptr, 0x4FD4C0L - hb_itemGetTD( iP ) );
+      iR = hb_itemPutND(nullptr, 0x4FD4C0L - hb_itemGetTD(iP));
    }
    else if( uiType & Harbour::Item::LOGICAL )
    {
@@ -59,7 +59,7 @@ HB_FUNC( FT_DESCEND )
          pDescend[n] = static_cast<char>(0) - pDescend[n];
       }
 
-      iR = hb_itemPutCL( nullptr, pDescend, uiLen );
+      iR = hb_itemPutCL(nullptr, pDescend, uiLen);
 
       hb_xfree(pDescend);
    }

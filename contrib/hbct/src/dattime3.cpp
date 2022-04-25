@@ -79,7 +79,7 @@ static void s_ct_date_init( void * cargo )
    ct_date->dTimeCounter = 0;
 }
 
-static HB_TSD_NEW( s_ct_date, sizeof(CT_DATE), s_ct_date_init, nullptr );
+static HB_TSD_NEW(s_ct_date, sizeof(CT_DATE), s_ct_date_init, nullptr);
 
 HB_FUNC( WAITPERIOD )
 {
@@ -158,7 +158,7 @@ HB_FUNC( SETTIME )
       time_t   tm;
 
       lNewTime = iTime[0] * 3600 + iTime[1] * 60 + iTime[2];
-      tm       = time( nullptr );
+      tm       = time(nullptr);
       tm      += lNewTime - ( tm % 86400 );
       fResult  = stime( &tm ) == 0;
 #endif
@@ -193,7 +193,7 @@ HB_FUNC( SETDATE )
          time_t tm;
 
          lNewDate = lDate - hb_dateEncode(1970, 1, 1);
-         tm       = time( nullptr );
+         tm       = time(nullptr);
          tm       = lNewDate * 86400 + ( tm % 86400 );
          fResult  = stime( &tm ) == 0;
 #endif

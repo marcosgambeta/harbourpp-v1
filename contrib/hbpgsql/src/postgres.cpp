@@ -53,13 +53,13 @@
 
 static HB_GARBAGE_FUNC( PGconn_release )
 {
-   void ** ph = static_cast< void ** >( Cargo );
+   void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
-      PQfinish( static_cast< PGconn * >( *ph ) );
+      PQfinish( static_cast<PGconn*>(*ph) );
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -76,7 +76,7 @@ void hb_PGconn_ret( PGconn * p )
 {
    if( p )
    {
-      void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof(PGconn*), &s_gcPGconnFuncs ) );
+      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(PGconn*), &s_gcPGconnFuncs));
 
       *ph = p;
 
@@ -90,20 +90,20 @@ void hb_PGconn_ret( PGconn * p )
 
 PGconn * hb_PGconn_par( int iParam )
 {
-   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcPGconnFuncs, iParam ) );
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcPGconnFuncs, iParam));
 
-   return ph ? static_cast< PGconn * >( *ph ) : nullptr;
+   return ph ? static_cast<PGconn*>(*ph) : nullptr;
 }
 
 static HB_GARBAGE_FUNC( PGresult_release )
 {
-   void ** ph = static_cast< void ** >( Cargo );
+   void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
-      PQclear( static_cast< PGresult * >( *ph ) );
+      PQclear( static_cast<PGresult*>(*ph) );
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -120,7 +120,7 @@ void hb_PGresult_ret( PGresult * p )
 {
    if( p )
    {
-      void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof(PGresult*), &s_gcPGresultFuncs ) );
+      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(PGresult*), &s_gcPGresultFuncs));
 
       *ph = p;
 
@@ -134,22 +134,22 @@ void hb_PGresult_ret( PGresult * p )
 
 PGresult * hb_PGresult_par( int iParam )
 {
-   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcPGresultFuncs, iParam ) );
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcPGresultFuncs, iParam));
 
-   return ph ? static_cast< PGresult * >( *ph ) : nullptr;
+   return ph ? static_cast<PGresult*>(*ph) : nullptr;
 }
 
 #if PG_VERSION_NUM >= 80000
 
 static HB_GARBAGE_FUNC( PGcancel_release )
 {
-   void ** ph = static_cast< void ** >( Cargo );
+   void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
-      PQfreeCancel( static_cast< PGcancel * >( *ph ) );
+      PQfreeCancel( static_cast<PGcancel*>(*ph) );
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -166,7 +166,7 @@ static void hb_PGcancel_ret( PGcancel * p )
 {
    if( p )
    {
-      void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof(PGcancel*), &s_gcPGcancelFuncs ) );
+      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(PGcancel*), &s_gcPGcancelFuncs));
 
       *ph = p;
 
@@ -180,9 +180,9 @@ static void hb_PGcancel_ret( PGcancel * p )
 
 static PGcancel * hb_PGcancel_par( int iParam )
 {
-   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcPGcancelFuncs, iParam ) );
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcPGcancelFuncs, iParam));
 
-   return ph ? static_cast< PGcancel * >( *ph ) : nullptr;
+   return ph ? static_cast<PGcancel*>(*ph) : nullptr;
 }
 
 #endif
@@ -191,13 +191,13 @@ static PGcancel * hb_PGcancel_par( int iParam )
 
 static HB_GARBAGE_FUNC( FILE_release )
 {
-   void ** ph = static_cast< void ** >( Cargo );
+   void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
-      fclose( static_cast< FILE * >( *ph ) );
+      fclose( static_cast<FILE*>(*ph) );
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -214,7 +214,7 @@ static void hb_FILE_ret( FILE * p )
 {
    if( p )
    {
-      void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof(FILE*), &s_gcFILEFuncs ) );
+      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(FILE*), &s_gcFILEFuncs));
 
       *ph = p;
 
@@ -228,9 +228,9 @@ static void hb_FILE_ret( FILE * p )
 
 static FILE * hb_FILE_par( int iParam )
 {
-   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcFILEFuncs, iParam ) );
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcFILEFuncs, iParam));
 
-   return ph ? static_cast< FILE * >( *ph ) : nullptr;
+   return ph ? static_cast<FILE*>(*ph) : nullptr;
 }
 
 #endif
@@ -484,7 +484,7 @@ HB_FUNC( PQEXECPARAMS )
 
    if( conn && aParam )
    {
-      int n = static_cast< int >( hb_arrayLen(aParam) );
+      int n = static_cast<int>(hb_arrayLen(aParam));
 
       const char ** paramvalues = static_cast<const char**>(hb_xgrab(sizeof(char*) * n));
 
@@ -634,7 +634,7 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
                case BITOID:
                   if( typemod >= 0 )
                   {
-                     length = static_cast< int >( typemod );
+                     length = static_cast<int>(typemod);
                   }
                   hb_strncpy( buf, "bit", sizeof(buf) - 1 );
                   break;
@@ -647,7 +647,7 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
                case BPCHAROID:
                   if( typemod >= 0 )
                   {
-                     length = static_cast< int >( typemod - VARHDRSZ );
+                     length = static_cast<int>(typemod - VARHDRSZ);
                   }
                   hb_strncpy( buf, "character", sizeof(buf) - 1 );
                   break;
@@ -696,7 +696,7 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
                case VARBITOID:
                   if( typemod >= 0 )
                   {
-                     length = static_cast< int >( typemod );
+                     length = static_cast<int>(typemod);
                   }
                   hb_strncpy( buf, "bit varying", sizeof(buf) - 1 );
                   break;
@@ -704,7 +704,7 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
                case VARCHAROID:
                   if( typemod >= 0 )
                   {
-                     length = static_cast< int >( typemod - VARHDRSZ );
+                     length = static_cast<int>(typemod - VARHDRSZ);
                   }
                   hb_strncpy( buf, "character varying", sizeof(buf) - 1 );
                   break;
@@ -843,7 +843,7 @@ HB_FUNC( PQESCAPESTRING )
    HB_SIZE      size   = strlen( source );
    char *       dest   = static_cast<char*>(hb_xgrab(size * 2 + 1));
 
-   PQescapeString( dest, source, static_cast< size_t >( size ) );
+   PQescapeString( dest, source, static_cast<size_t>(size) );
 
    hb_retc_buffer( dest );
 }
@@ -852,9 +852,9 @@ HB_FUNC( PQESCAPEBYTEA ) /* deprecated */
 {
    if( HB_ISCHAR(1) )
    {
-      size_t from_length = static_cast< size_t >( hb_parclen(1) );
+      size_t from_length = static_cast<size_t>(hb_parclen(1));
       size_t to_length   = from_length * 5 + 1;
-      unsigned char * to = PQescapeBytea( reinterpret_cast< const unsigned char * >( hb_parc(1) ), from_length, &to_length );
+      unsigned char * to = PQescapeBytea( reinterpret_cast<const unsigned char*>(hb_parc(1)), from_length, &to_length );
       hb_retclen(reinterpret_cast<char*>(to), static_cast<HB_SIZE>(to_length));
       PQfreemem( to );
    }
@@ -869,7 +869,7 @@ HB_FUNC( PQUNESCAPEBYTEA )
    if( HB_ISCHAR(1) )
    {
       size_t to_length;
-      unsigned char * from = PQunescapeBytea( reinterpret_cast< const unsigned char * >( hb_parc(1) ), &to_length );
+      unsigned char * from = PQunescapeBytea( reinterpret_cast<const unsigned char*>(hb_parc(1)), &to_length );
       hb_retclen(reinterpret_cast<char*>(from), static_cast<HB_SIZE>(to_length));
       PQfreemem( from );
    }
@@ -1342,7 +1342,7 @@ HB_FUNC( PQESCAPEBYTEACONN )
       size_t from_length = hb_parclen(2);
       size_t to_length   = from_length * 5 + 1;
 
-      unsigned char * to = PQescapeByteaConn( conn, reinterpret_cast< unsigned const char * >( hb_parc(2) ), from_length, &to_length );
+      unsigned char * to = PQescapeByteaConn( conn, reinterpret_cast<unsigned const char*>(hb_parc(2)), from_length, &to_length );
       hb_retclen(reinterpret_cast<char*>(to), static_cast<HB_SIZE>(to_length));
       PQfreemem( to );
    }
@@ -1361,7 +1361,7 @@ HB_FUNC( PQPREPARE )
 
    if( conn )
    {
-      hb_PGresult_ret( PQprepare( conn, hb_parcx(2), hb_parcx(3), hb_parni(4), nullptr ) );
+      hb_PGresult_ret(PQprepare(conn, hb_parcx(2), hb_parcx(3), hb_parni(4), nullptr));
    }
    else
    {
@@ -1385,7 +1385,7 @@ HB_FUNC( PQEXECPREPARED )
          paramvalues[i] = hb_arrayGetCPtr(aParam, i + 1);
       }
 
-      hb_PGresult_ret( PQexecPrepared( conn, hb_parcx(2), static_cast< int >( n ), static_cast< const char * const * >( paramvalues ), nullptr, nullptr, 1 ) );
+      hb_PGresult_ret( PQexecPrepared( conn, hb_parcx(2), static_cast<int>(n), static_cast<const char* const*>(paramvalues), nullptr, nullptr, 1 ) );
 
       hb_xfree(static_cast<void*>(paramvalues));
    }

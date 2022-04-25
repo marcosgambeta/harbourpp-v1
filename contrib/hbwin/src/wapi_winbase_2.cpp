@@ -71,12 +71,12 @@ HB_FUNC( WAPI_FORMATMESSAGE )
    DWORD dwRetVal;
    DWORD dwFlags;
 
-   dwFlags = static_cast< DWORD >( hb_parnldef(1, FORMAT_MESSAGE_FROM_SYSTEM) );
+   dwFlags = static_cast<DWORD>(hb_parnldef(1, FORMAT_MESSAGE_FROM_SYSTEM));
 
    if( HB_ISBYREF(5) )
    {
       nSize = hb_parns(6);
-      if( ( dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER ) == 0 )
+      if( (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER) == 0 )
       {
          if( nSize == 0 && !HB_ISNUM(6) )
          {
@@ -94,20 +94,20 @@ HB_FUNC( WAPI_FORMATMESSAGE )
    }
    else
    {
-      dwFlags = static_cast< DWORD >( ~FORMAT_MESSAGE_ALLOCATE_BUFFER );
+      dwFlags = static_cast<DWORD>(~FORMAT_MESSAGE_ALLOCATE_BUFFER);
    }
 
    if( dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER )
    {
-      lpBuffer = reinterpret_cast< LPTSTR >( &lpAllocBuff );
+      lpBuffer = reinterpret_cast<LPTSTR>(&lpAllocBuff);
    }
 
    dwRetVal = FormatMessage( dwFlags,
-                             HB_ISCHAR(2) ? static_cast< LPCVOID >( HB_PARSTR(2, &hSource, nullptr) ) : hb_parptr(2),
-                             HB_ISNUM(3) ? static_cast< DWORD >( hb_parnl(3) ) : hbwapi_GetLastError() /* dwMessageId */,
-                             static_cast< DWORD >( hb_parnldef(4, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT)) ) /* dwLanguageId */,
+                             HB_ISCHAR(2) ? static_cast<LPCVOID>(HB_PARSTR(2, &hSource, nullptr)) : hb_parptr(2),
+                             HB_ISNUM(3) ? static_cast<DWORD>(hb_parnl(3)) : hbwapi_GetLastError() /* dwMessageId */,
+                             static_cast<DWORD>(hb_parnldef(4, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT))) /* dwLanguageId */,
                              lpBuffer,
-                             static_cast< DWORD >( nSize ),
+                             static_cast<DWORD>(nSize),
                              nullptr /* TODO: Add support for this parameter. */ );
 
    hbwapi_SetLastError( GetLastError() );
@@ -142,7 +142,7 @@ HB_FUNC( WAPI_FORMATMESSAGE )
 /* VOID WINAPI Sleep( __in DWORD dwMilliseconds ); */
 HB_FUNC( WAPI_SLEEP )
 {
-   Sleep( static_cast< DWORD >( hb_parnl(1) ) );
+   Sleep( static_cast<DWORD>(hb_parnl(1)) );
 }
 
 HB_FUNC( WAPI_OUTPUTDEBUGSTRING )
@@ -173,7 +173,7 @@ HB_FUNC( WAPI_QUERYDOSDEVICE )
       {
          if( !lpTargetPath[++dwPos] )
          {
-            pItem = HB_ITEMPUTSTRLEN( pItem, lpTargetPath + dwStart, dwPos - dwStart - 1 );
+            pItem = HB_ITEMPUTSTRLEN(pItem, lpTargetPath + dwStart, dwPos - dwStart - 1);
             hb_arrayAdd( pArray, pItem );
             dwStart = ++dwPos;
          }

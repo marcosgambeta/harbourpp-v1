@@ -71,16 +71,16 @@ typedef struct
    HB_BOOL  bActive;       /* task is active ? */
 } HB_BACKGROUNDTASK, * PHB_BACKGROUNDTASK;
 
-extern void     hb_backgroundRunSingle( HB_ULONG ulID );                                  /* run a single background routine */
-extern void     hb_backgroundRunForced( void );                                           /* run all background routines also if them are not active*/
-extern void     hb_backgroundRun( void );                                                 /* run all background routines but only if them are active*/
-extern void     hb_backgroundReset( void );                                               /* reset internal counter */
-extern void     hb_backgroundShutDown( void );                                            /* closes all background tasks */
-extern HB_ULONG hb_backgroundAddFunc( PHB_ITEM pBlock, int nMillisec, HB_BOOL bActive );  /* Adds a codeblock or an executable array */
-extern PHB_ITEM hb_backgroundDelFunc( HB_ULONG ulID );                                    /* Deletes a prevuiously added task */
-extern PHB_BACKGROUNDTASK hb_backgroundFind( HB_ULONG ulID );
-extern HB_BOOL  hb_backgroundActive( HB_ULONG ulID, HB_BOOL bActive );
-extern int      hb_backgroundTime( HB_ULONG ulID, int nMillisec );
+extern void     hb_backgroundRunSingle(HB_ULONG ulID);                                  /* run a single background routine */
+extern void     hb_backgroundRunForced(void);                                           /* run all background routines also if them are not active*/
+extern void     hb_backgroundRun(void);                                                 /* run all background routines but only if them are active*/
+extern void     hb_backgroundReset(void);                                               /* reset internal counter */
+extern void     hb_backgroundShutDown(void);                                            /* closes all background tasks */
+extern HB_ULONG hb_backgroundAddFunc(PHB_ITEM pBlock, int nMillisec, HB_BOOL bActive);  /* Adds a codeblock or an executable array */
+extern PHB_ITEM hb_backgroundDelFunc(HB_ULONG ulID);                                    /* Deletes a prevuiously added task */
+extern PHB_BACKGROUNDTASK hb_backgroundFind(HB_ULONG ulID);
+extern HB_BOOL  hb_backgroundActive(HB_ULONG ulID, HB_BOOL bActive);
+extern int      hb_backgroundTime(HB_ULONG ulID, int nMillisec);
 
 HB_EXTERN_END
 
@@ -116,7 +116,7 @@ static HB_USHORT s_uiBackgroundMaxTask = 0;
 
 /* ------------------------  C  LEVEL ------------------------------ */
 
-HB_ULONG hb_backgroundAddFunc( PHB_ITEM pBlock, int nMillisec, HB_BOOL bActive )
+HB_ULONG hb_backgroundAddFunc(PHB_ITEM pBlock, int nMillisec, HB_BOOL bActive)
 {
    PHB_BACKGROUNDTASK pBkgTask;
 

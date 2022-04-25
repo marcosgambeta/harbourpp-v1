@@ -91,7 +91,7 @@ HB_FUNC( COMPLEMENT )
          double dValue;
 
          dValue = hb_itemGetND(pItem);
-         hb_itemGetNLen( pItem, &iWidth, &iDec );
+         hb_itemGetNLen(pItem, &iWidth, &iDec);
          hb_retndlen( -dValue, iWidth, iDec );
       }
       else if( HB_IS_LOGICAL(pItem) )

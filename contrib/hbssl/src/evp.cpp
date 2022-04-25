@@ -54,7 +54,7 @@ char * hb_openssl_strdup( const char * pszText )
    size_t len = strlen( pszText ) + 1;
 
    pszDup = static_cast<char*>(OPENSSL_malloc(len));
-   memcpy( pszDup, pszText, len );
+   memcpy(pszDup, pszText, len);
 
    return pszDup;
 }

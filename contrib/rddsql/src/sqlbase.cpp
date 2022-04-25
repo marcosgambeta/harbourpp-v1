@@ -147,7 +147,7 @@ static HB_ERRCODE sddConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 {
    HB_SYMBOL_UNUSED(pConnection);
    HB_SYMBOL_UNUSED(pItem);
-   hb_errRT_SQLBASE( EG_UNSUPPORTED, ESQLDD_NULLSDD, nullptr, nullptr );
+   hb_errRT_SQLBASE(EG_UNSUPPORTED, ESQLDD_NULLSDD, nullptr, nullptr);
    return HB_FAILURE;
 }
 
@@ -155,7 +155,7 @@ static HB_ERRCODE sddConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 static HB_ERRCODE sddDisconnect( SQLDDCONNECTION * pConnection )
 {
    HB_SYMBOL_UNUSED(pConnection);
-   hb_errRT_SQLBASE( EG_UNSUPPORTED, ESQLDD_NULLSDD, nullptr, nullptr );
+   hb_errRT_SQLBASE(EG_UNSUPPORTED, ESQLDD_NULLSDD, nullptr, nullptr);
    return HB_FAILURE;
 }
 
@@ -164,7 +164,7 @@ static HB_ERRCODE sddExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 {
    HB_SYMBOL_UNUSED(pConnection);
    HB_SYMBOL_UNUSED(pItem);
-   hb_errRT_SQLBASE( EG_UNSUPPORTED, ESQLDD_NULLSDD, nullptr, nullptr );
+   hb_errRT_SQLBASE(EG_UNSUPPORTED, ESQLDD_NULLSDD, nullptr, nullptr);
    return HB_FAILURE;
 }
 
@@ -172,7 +172,7 @@ static HB_ERRCODE sddExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 static HB_ERRCODE sddOpen( SQLBASEAREAP pArea )
 {
    HB_SYMBOL_UNUSED(pArea);
-   hb_errRT_SQLBASE( EG_UNSUPPORTED, ESQLDD_NULLSDD, nullptr, nullptr );
+   hb_errRT_SQLBASE(EG_UNSUPPORTED, ESQLDD_NULLSDD, nullptr, nullptr);
    return HB_FAILURE;
 }
 
@@ -209,7 +209,7 @@ static HB_ERRCODE sddGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM p
    HB_SYMBOL_UNUSED(pArea);
    HB_SYMBOL_UNUSED(uiIndex);
    HB_SYMBOL_UNUSED(pItem);
-   hb_errRT_SQLBASE( EG_UNSUPPORTED, ESQLDD_NULLSDD, nullptr, nullptr );
+   hb_errRT_SQLBASE(EG_UNSUPPORTED, ESQLDD_NULLSDD, nullptr, nullptr);
    return HB_FAILURE;
 }
 
@@ -219,7 +219,7 @@ static HB_ERRCODE sddGetVarLen( SQLBASEAREAP pArea, HB_USHORT uiIndex, HB_ULONG 
    HB_SYMBOL_UNUSED(pArea);
    HB_SYMBOL_UNUSED(uiIndex);
    HB_SYMBOL_UNUSED(pLength);
-   hb_errRT_SQLBASE( EG_UNSUPPORTED, ESQLDD_NULLSDD, nullptr, nullptr );
+   hb_errRT_SQLBASE(EG_UNSUPPORTED, ESQLDD_NULLSDD, nullptr, nullptr);
    return HB_SUCCESS;
 }
 
@@ -271,7 +271,7 @@ static HB_ERRCODE sqlbaseGoBottom( SQLBASEAREAP pArea )
       return HB_FAILURE;
 
 
-   if( !pArea->fFetched && pArea->pSDD->GoTo( pArea, static_cast< HB_ULONG >( -1 ) ) == HB_FAILURE )
+   if( !pArea->fFetched && pArea->pSDD->GoTo( pArea, static_cast<HB_ULONG>(-1) ) == HB_FAILURE )
       return HB_FAILURE;
 
    pArea->area.fTop    = HB_FALSE;
@@ -396,7 +396,7 @@ static HB_ERRCODE sqlbaseSkipRaw( SQLBASEAREAP pArea, HB_LONG lToSkip )
       pArea->area.fBof = bBof;
       pArea->area.fEof = bEof;
    }
-   else if( lToSkip < 0 && static_cast< HB_ULONG >( -lToSkip ) >= pArea->ulRecNo )
+   else if( lToSkip < 0 && static_cast<HB_ULONG>(-lToSkip) >= pArea->ulRecNo )
    {
       errCode = SELF_GOTO( &pArea->area, 1 );
       pArea->area.fBof = HB_TRUE;
@@ -421,8 +421,8 @@ static HB_ERRCODE sqlbaseAppend( SQLBASEAREAP pArea, HB_BOOL bUnLockAll )
 
    if( pArea->ulRecCount + 1 >= pArea->ulRecMax )
    {
-      pArea->pRow      = static_cast< void ** >( hb_xrealloc( pArea->pRow, ( pArea->ulRecMax + SQLDD_ROWSET_RESIZE ) * sizeof(void*) ) );
-      pArea->pRowFlags = static_cast< HB_BYTE * >( hb_xrealloc( pArea->pRowFlags, ( pArea->ulRecMax + SQLDD_ROWSET_RESIZE ) * sizeof(HB_BYTE) ) );
+      pArea->pRow      = static_cast<void**>(hb_xrealloc(pArea->pRow, (pArea->ulRecMax + SQLDD_ROWSET_RESIZE) * sizeof(void*)));
+      pArea->pRowFlags = static_cast<HB_BYTE*>(hb_xrealloc(pArea->pRowFlags, (pArea->ulRecMax + SQLDD_ROWSET_RESIZE) * sizeof(HB_BYTE)));
       pArea->ulRecMax += SQLDD_ROWSET_RESIZE;
    }
 
@@ -461,7 +461,7 @@ static HB_ERRCODE sqlbaseGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_IT
 
    if( pArea->bRecordFlags & SQLDD_FLAG_CACHED )
    {
-      hb_arrayGet( static_cast< PHB_ITEM >( pArea->pRecord ), uiIndex, pItem );
+      hb_arrayGet(static_cast<PHB_ITEM>(pArea->pRecord), uiIndex, pItem);
       return HB_SUCCESS;
    }
    return pArea->pSDD->GetValue( pArea, uiIndex, pItem );
@@ -533,16 +533,14 @@ static HB_ERRCODE sqlbasePutValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_IT
    errCode = HB_SUCCESS;
    pField  = pArea->area.lpFields + ( uiIndex - 1 );
 
-   if( ( ( HB_IS_MEMO(pItem) || HB_IS_STRING(pItem) ) && ( pField->uiType == HB_FT_STRING || pField->uiType == HB_FT_MEMO ) ) ||
-       ( HB_IS_DATE(pItem) && pField->uiType == HB_FT_DATE ) ||
-       ( HB_IS_TIMESTAMP(pItem) && pField->uiType == HB_FT_TIMESTAMP ) ||
-       ( HB_IS_NUMBER(pItem) && ( pField->uiType == HB_FT_INTEGER || pField->uiType == HB_FT_LONG ||
-                                    pField->uiType == HB_FT_FLOAT || pField->uiType == HB_FT_DOUBLE ) ) ||
-       ( HB_IS_LOGICAL(pItem) && pField->uiType == HB_FT_LOGICAL ) ||
-       pField->uiType == HB_FT_ANY ||
-       HB_IS_NIL(pItem) )
+   if( ((HB_IS_MEMO(pItem) || HB_IS_STRING(pItem) ) && (pField->uiType == HB_FT_STRING || pField->uiType == HB_FT_MEMO)) ||
+       (HB_IS_DATE(pItem) && pField->uiType == HB_FT_DATE) ||
+       (HB_IS_TIMESTAMP(pItem) && pField->uiType == HB_FT_TIMESTAMP) ||
+       (HB_IS_NUMBER(pItem) && (pField->uiType == HB_FT_INTEGER || pField->uiType == HB_FT_LONG || pField->uiType == HB_FT_FLOAT || pField->uiType == HB_FT_DOUBLE)) ||
+       (HB_IS_LOGICAL(pItem) && pField->uiType == HB_FT_LOGICAL) ||
+       pField->uiType == HB_FT_ANY || HB_IS_NIL(pItem) )
    {
-      hb_arraySet( static_cast< PHB_ITEM >( pArea->pRecord ), uiIndex, pItem );
+      hb_arraySet(static_cast<PHB_ITEM>(pArea->pRecord), uiIndex, pItem);
    }
    else
    {
@@ -551,7 +549,7 @@ static HB_ERRCODE sqlbasePutValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_IT
       pError = hb_errNew();
       hb_errPutGenCode( pError, EG_DATATYPE );
       hb_errPutDescription( pError, hb_langDGetErrorDesc( EG_DATATYPE ) );
-      hb_errPutOperation( pError, hb_dynsymName( static_cast< PHB_DYNS >( pField->sym ) ) );
+      hb_errPutOperation( pError, hb_dynsymName( static_cast<PHB_DYNS>(pField->sym) ) );
       hb_errPutSubCode( pError, errCode );
       hb_errPutFlags( pError, EF_CANDEFAULT );
       errCode = SELF_ERROR( &pArea->area, pError );
@@ -613,8 +611,8 @@ static HB_ERRCODE sqlbaseZap( SQLBASEAREAP pArea )
    pArea->ulRecCount = 0;
    pArea->ulRecNo = 0;
 
-   pArea->pRow = static_cast< void ** >( hb_xrealloc( pArea->pRow, SQLDD_ROWSET_RESIZE * sizeof(void*) ) );
-   pArea->pRowFlags = static_cast< HB_BYTE * >( hb_xrealloc( pArea->pRowFlags, SQLDD_ROWSET_RESIZE * sizeof(HB_BYTE) ) );
+   pArea->pRow = static_cast<void**>(hb_xrealloc(pArea->pRow, SQLDD_ROWSET_RESIZE * sizeof(void*)));
+   pArea->pRowFlags = static_cast<HB_BYTE*>(hb_xrealloc(pArea->pRowFlags, SQLDD_ROWSET_RESIZE * sizeof(HB_BYTE)));
    pArea->ulRecMax = SQLDD_ROWSET_RESIZE;
 
    pArea->fFetched = HB_TRUE;
@@ -677,7 +675,7 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
    if( pArea->ulConnection > s_ulConnectionCount ||
        ( pArea->ulConnection && !s_pConnection[pArea->ulConnection - 1] ) )
    {
-      hb_errRT_SQLBASE( EG_OPEN, ESQLDD_NOTCONNECTED, "Not connected", nullptr );
+      hb_errRT_SQLBASE(EG_OPEN, ESQLDD_NOTCONNECTED, "Not connected", nullptr);
       return HB_FAILURE;
    }
 
@@ -704,46 +702,46 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
             char * pStr;
 
             pStr = static_cast<char*>(hb_xgrab(pField->uiLen + 1));
-            memset( pStr, ' ', pField->uiLen );
+            memset(pStr, ' ', pField->uiLen);
             pStr[pField->uiLen] = '\0';
 
-            pItem = hb_itemPutCL( nullptr, pStr, pField->uiLen );
+            pItem = hb_itemPutCL(nullptr, pStr, pField->uiLen);
             hb_xfree(pStr);
             break;
          }
 
          case HB_FT_MEMO:
-            pItem = hb_itemPutC( nullptr, nullptr );
+            pItem = hb_itemPutC(nullptr, nullptr);
             break;
 
          case HB_FT_INTEGER:
             if( pField->uiDec )
-               pItem = hb_itemPutND( nullptr, 0.0 );
+               pItem = hb_itemPutND(nullptr, 0.0);
             else
-               pItem = hb_itemPutNI( nullptr, 0 );
+               pItem = hb_itemPutNI(nullptr, 0);
             break;
 
          case HB_FT_LONG:
             if( pField->uiDec )
-               pItem = hb_itemPutND( nullptr, 0.0 );
+               pItem = hb_itemPutND(nullptr, 0.0);
             else
-               pItem = hb_itemPutNL( nullptr, 0 );
+               pItem = hb_itemPutNL(nullptr, 0);
             break;
 
          case HB_FT_FLOAT:
-            pItem = hb_itemPutND( nullptr, 0.0 );
+            pItem = hb_itemPutND(nullptr, 0.0);
             break;
 
          case HB_FT_DOUBLE:
-            pItem = hb_itemPutND( nullptr, 0.0 );
+            pItem = hb_itemPutND(nullptr, 0.0);
             break;
 
          case HB_FT_DATE:
-            pItem = hb_itemPutDS( nullptr, nullptr );
+            pItem = hb_itemPutDS(nullptr, nullptr);
             break;
 
          case HB_FT_LOGICAL:
-            pItem = hb_itemPutL( nullptr, false );
+            pItem = hb_itemPutL(nullptr, false);
             break;
 
          default:
@@ -763,7 +761,7 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
    {
       hb_itemClear( pItemEof );
       hb_itemRelease(pItemEof);
-      hb_errRT_SQLBASE( EG_CORRUPTION, ESQLDD_INVALIDFIELD, "Invalid field type", nullptr );
+      hb_errRT_SQLBASE(EG_CORRUPTION, ESQLDD_INVALIDFIELD, "Invalid field type", nullptr);
       SELF_CLOSE( &pArea->area );
       return HB_FAILURE;
    }
@@ -793,7 +791,7 @@ static HB_ERRCODE sqlbaseInfo( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM p
    switch( uiIndex )
    {
       case DBI_QUERY:
-         hb_itemPutC( pItem, pArea->szQuery );
+         hb_itemPutC(pItem, pArea->szQuery);
          break;
 
       default:
@@ -813,7 +811,7 @@ static HB_ERRCODE sqlbaseOpen( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
    if( pArea->ulConnection == 0 || pArea->ulConnection > s_ulConnectionCount ||
        !s_pConnection[pArea->ulConnection - 1] )
    {
-      hb_errRT_SQLBASE( EG_OPEN, ESQLDD_NOTCONNECTED, "Not connected", nullptr );
+      hb_errRT_SQLBASE(EG_OPEN, ESQLDD_NOTCONNECTED, "Not connected", nullptr);
       return HB_FAILURE;
    }
 
@@ -977,17 +975,17 @@ static HB_ERRCODE sqlbaseRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
    switch( uiIndex )
    {
       case RDDI_REMOTE:
-         hb_itemPutL( pItem, true );
+         hb_itemPutL(pItem, true);
          break;
 
       case RDDI_CONNECTION:
       {
          HB_ULONG ulNewConnection = 0;
 
-         if( hb_itemType( pItem ) & Harbour::Item::NUMERIC )
+         if( hb_itemType(pItem) & Harbour::Item::NUMERIC )
             ulNewConnection = hb_itemGetNL(pItem);
 
-         hb_itemPutNL( pItem, ulConnect ? ulConnect : s_ulConnectionCurrent );
+         hb_itemPutNL(pItem, ulConnect ? ulConnect : s_ulConnectionCurrent);
 
          if( ulNewConnection )
             s_ulConnectionCurrent = ulNewConnection;
@@ -995,11 +993,11 @@ static HB_ERRCODE sqlbaseRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
       }
 
       case RDDI_ISDBF:
-         hb_itemPutL( pItem, false );
+         hb_itemPutL(pItem, false);
          break;
 
       case RDDI_CANPUTREC:
-         hb_itemPutL( pItem, true );
+         hb_itemPutL(pItem, true);
          break;
 
       case RDDI_CONNECT:
@@ -1040,7 +1038,7 @@ static HB_ERRCODE sqlbaseRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
                else
                   s_pConnection = static_cast<SQLDDCONNECTION**>(hb_xgrab(sizeof(SQLDDCONNECTION*) * CONNECTION_LIST_EXPAND));
 
-               memset( s_pConnection + s_ulConnectionCount, 0, sizeof(SQLDDCONNECTION*) * CONNECTION_LIST_EXPAND );
+               memset(s_pConnection + s_ulConnectionCount, 0, sizeof(SQLDDCONNECTION*) * CONNECTION_LIST_EXPAND);
                ul = s_ulConnectionCount;
                s_ulConnectionCount += CONNECTION_LIST_EXPAND;
             }
@@ -1054,7 +1052,7 @@ static HB_ERRCODE sqlbaseRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
             ul = 0;
          }
 
-         hb_itemPutNI( pItem, ul );
+         hb_itemPutNI(pItem, ul);
          break;
       }
 
@@ -1067,31 +1065,31 @@ static HB_ERRCODE sqlbaseRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
             if( s_ulConnectionCurrent == ulConn )
                s_ulConnectionCurrent = 0;
 
-            hb_itemPutL( pItem, true );
+            hb_itemPutL(pItem, true);
             return HB_SUCCESS;
          }
-         hb_itemPutL( pItem, false );
+         hb_itemPutL(pItem, false);
          return HB_SUCCESS;
 
       case RDDI_EXECUTE:
          hb_rddsqlSetError(0, nullptr, nullptr, nullptr, 0);
          if( pConn )
-            hb_itemPutL( pItem, pConn->pSDD->Execute( pConn, pItem ) == HB_SUCCESS );
+            hb_itemPutL(pItem, pConn->pSDD->Execute(pConn, pItem) == HB_SUCCESS);
          else
-            hb_itemPutL( pItem, false );
+            hb_itemPutL(pItem, false);
 
          return HB_SUCCESS;
 
       case RDDI_ERROR:
-         hb_itemPutC( pItem, s_szError );
+         hb_itemPutC(pItem, s_szError);
          return HB_SUCCESS;
 
       case RDDI_ERRORNO:
-         hb_itemPutNI( pItem, s_errCode );
+         hb_itemPutNI(pItem, s_errCode);
          return HB_SUCCESS;
 
       case RDDI_QUERY:
-         hb_itemPutC( pItem, s_szQuery );
+         hb_itemPutC(pItem, s_szQuery);
          return HB_SUCCESS;
 
       case RDDI_INSERTID:
@@ -1099,7 +1097,7 @@ static HB_ERRCODE sqlbaseRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
          return HB_SUCCESS;
 
       case RDDI_AFFECTEDROWS:
-         hb_itemPutNInt( pItem, s_ulAffectedRows );
+         hb_itemPutNInt(pItem, s_ulAffectedRows);
          return HB_SUCCESS;
 
 #if 0
@@ -1231,9 +1229,9 @@ HB_FUNC_STATIC( SQLBASE_GETFUNCTABLE )
    RDDFUNCS *  pTable;
    HB_USHORT * puiCount, uiRddId;
 
-   puiCount = static_cast< HB_USHORT * >( hb_parptr(1) );
-   pTable   = static_cast< RDDFUNCS * >( hb_parptr(2) );
-   uiRddId  = static_cast< HB_USHORT >( hb_parni(4) );
+   puiCount = static_cast<HB_USHORT*>(hb_parptr(1));
+   pTable   = static_cast<RDDFUNCS*>(hb_parptr(2));
+   uiRddId  = static_cast<HB_USHORT>(hb_parni(4));
 
    if( pTable )
    {
@@ -1242,7 +1240,7 @@ HB_FUNC_STATIC( SQLBASE_GETFUNCTABLE )
       if( puiCount )
          *puiCount = RDDFUNCSCOUNT;
 
-      errCode = hb_rddInheritEx( pTable, &sqlbaseTable, &sqlbaseSuper, nullptr, nullptr );
+      errCode = hb_rddInheritEx(pTable, &sqlbaseTable, &sqlbaseSuper, nullptr, nullptr);
       if( errCode == HB_SUCCESS )
          s_rddidSQLBASE = uiRddId;
 
@@ -1257,7 +1255,7 @@ static void hb_sqlbaseInit( void * cargo )
    HB_SYMBOL_UNUSED(cargo);
 
    if( hb_rddRegister( "SQLBASE", RDT_FULL ) > 1 )
-      hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
 }
 
 HB_INIT_SYMBOLS_BEGIN( sqlbase__InitSymbols )
@@ -1268,7 +1266,7 @@ HB_INIT_SYMBOLS_BEGIN( sqlbase__InitSymbols )
 HB_INIT_SYMBOLS_END( sqlbase__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_sqlbase_init_ )
-hb_vmAtInit( hb_sqlbaseInit, nullptr );
+hb_vmAtInit(hb_sqlbaseInit, nullptr);
 HB_CALL_ON_STARTUP_END( _hb_sqlbase_init_ )
 
 #if defined(HB_PRAGMA_STARTUP)

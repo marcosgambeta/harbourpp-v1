@@ -80,7 +80,7 @@ HB_FUNC( ENVPARAM )
          for( pEnv = pEnviron, pDst = pResult; *pEnv; pEnv++ )
          {
             HB_SIZE n = strlen( *pEnv );
-            memcpy( pDst, *pEnv, n );
+            memcpy(pDst, *pEnv, n);
             pDst += n;
             *pDst++ = '\r';
             *pDst++ = '\n';
@@ -91,7 +91,7 @@ HB_FUNC( ENVPARAM )
 
    if( pResult )
    {
-      hb_retc_buffer( const_cast< char * >( hb_osDecodeCP( pResult, nullptr, nullptr ) ) );
+      hb_retc_buffer(const_cast<char*>(hb_osDecodeCP(pResult, nullptr, nullptr)));
    }
    else
    {

@@ -63,8 +63,8 @@
 #define XDLT_STD_BLKSIZE                    (1024 * 8)
 #define XDLT_MAX_LINE_SIZE                  80
 
-static PHB_ITEM hb_mmf_itemPut( PHB_ITEM pItem, void * pMemAddr, int iType );
-static void *   hb_mmf_itemGet( PHB_ITEM pItem, int iType, HB_BOOL fError );
+static PHB_ITEM hb_mmf_itemPut(PHB_ITEM pItem, void * pMemAddr, int iType);
+static void *   hb_mmf_itemGet(PHB_ITEM pItem, int iType, HB_BOOL fError);
 static void     hb_mmf_ret( void * pMemAddr, int iType );
 static void *   hb_mmf_param( int iParam, int iType, HB_BOOL fError );
 
@@ -105,14 +105,14 @@ static const HB_GC_FUNCS s_gc_xdiffFuncs =
    hb_gcDummyMark
 };
 
-static PHB_ITEM hb_mmf_itemPut( PHB_ITEM pItem, void * pMemAddr, int iType )
+static PHB_ITEM hb_mmf_itemPut(PHB_ITEM pItem, void * pMemAddr, int iType)
 {
    PHB_MMF_HOLDER pStructHolder;
 
    if( pItem )
    {
       if( HB_IS_COMPLEX(pItem) )
-         hb_itemClear( pItem );
+         hb_itemClear(pItem);
    }
    else
       pItem = hb_itemNew(pItem);
@@ -121,12 +121,12 @@ static PHB_ITEM hb_mmf_itemPut( PHB_ITEM pItem, void * pMemAddr, int iType )
    pStructHolder->hb_mmf = ( HB_MMF * ) pMemAddr;
    pStructHolder->type   = iType;
 
-   return hb_itemPutPtrGC( pItem, pStructHolder );
+   return hb_itemPutPtrGC(pItem, pStructHolder);
 }
 
-static void * hb_mmf_itemGet( PHB_ITEM pItem, int iType, HB_BOOL fError )
+static void * hb_mmf_itemGet(PHB_ITEM pItem, int iType, HB_BOOL fError)
 {
-   PHB_MMF_HOLDER pStructHolder = ( PHB_MMF_HOLDER ) hb_itemGetPtrGC( pItem, &s_gc_xdiffFuncs );
+   PHB_MMF_HOLDER pStructHolder = ( PHB_MMF_HOLDER ) hb_itemGetPtrGC(pItem, &s_gc_xdiffFuncs);
    int iError = 0;
 
    HB_SYMBOL_UNUSED(iError);
@@ -162,12 +162,12 @@ HB_FUNC( XDL_INIT_MMFILE )
 {
    mmfile_t * mmf = static_cast<mmfile_t*>(hb_xgrab(sizeof(mmfile_t)));
 
-   if( xdl_init_mmfile( mmf, hb_parnldef(1, XDLT_STD_BLKSIZE), static_cast< unsigned long >( hb_parnl(3) ) ) == 0 )
+   if( xdl_init_mmfile( mmf, hb_parnldef(1, XDLT_STD_BLKSIZE), static_cast<unsigned long>(hb_parnl(3)) ) == 0 )
    {
       HB_MMF * phb_mmf;
 
       phb_mmf = static_cast<HB_MMF*>(hb_xgrab(sizeof(HB_MMF)));
-      hb_xmemset( phb_mmf, 0, sizeof(HB_MMF) );
+      hb_xmemset(phb_mmf, 0, sizeof(HB_MMF));
       phb_mmf->mmf = mmf;
       hb_mmf_ret( phb_mmf, HB_MMF_SIGN );
    }
@@ -236,12 +236,12 @@ HB_FUNC( XDL_READ_MMFILE )
          size = ( HB_ISNUM(3) && hb_parns(3) >= 0 ) ?
                 hb_parns(3) : xdl_mmfile_size( phb_mmf->mmf );
 
-         data = static_cast< char * >( hb_xalloc( size + 1 ) );
+         data = static_cast<char*>(hb_xalloc(size + 1));
       }
 
       if( data && size )
       {
-         long lResult = xdl_read_mmfile( phb_mmf->mmf, data, static_cast< long >( size ) );
+         long lResult = xdl_read_mmfile( phb_mmf->mmf, data, static_cast<long>(size) );
 
          if( lResult == -1 )
          {
@@ -278,7 +278,7 @@ HB_FUNC( XDL_WRITE_MMFILE )
    {
       if( HB_ISCHAR(2) )
       {
-         long lSize = static_cast< long >( hb_parclen(2) );
+         long lSize = static_cast<long>(hb_parclen(2));
 
          if( hb_pcount() > 2 )
             lSize = hb_parnldef(3, lSize);
@@ -334,12 +334,12 @@ HB_FUNC( XDL_MMFILE_COMPACT )
    HB_MMF *   phb_mmfo = ( HB_MMF * ) hb_mmf_param(1, HB_MMF_SIGN, true);
    mmfile_t * mmfc     = static_cast<mmfile_t*>(hb_xgrab(sizeof(mmfile_t)));
 
-   if( xdl_mmfile_compact( phb_mmfo->mmf, mmfc, hb_parnldef(1, XDLT_STD_BLKSIZE), static_cast< unsigned long >( hb_parnl(3) ) ) == 0 )
+   if( xdl_mmfile_compact( phb_mmfo->mmf, mmfc, hb_parnldef(1, XDLT_STD_BLKSIZE), static_cast<unsigned long>(hb_parnl(3)) ) == 0 )
    {
       HB_MMF * phb_mmf;
 
       phb_mmf = static_cast<HB_MMF*>(hb_xgrab(sizeof(HB_MMF)));
-      hb_xmemset( phb_mmf, 0, sizeof(HB_MMF) );
+      hb_xmemset(phb_mmf, 0, sizeof(HB_MMF));
       phb_mmf->mmf = mmfc;
       hb_mmf_ret( phb_mmf, HB_MMF_SIGN );
 
@@ -363,7 +363,7 @@ static int xdlt_outf( void * priv, mmbuffer_t * mb, int nbuf )
 
    for( i = 0; i < nbuf; i++ )
    {
-      hb_fsWriteLarge( hb_ptrToHandle( priv ), mb[i].ptr, static_cast< HB_SIZE >( mb[i].size ) );
+      hb_fsWriteLarge( hb_ptrToHandle( priv ), mb[i].ptr, static_cast<HB_SIZE>(mb[i].size) );
 
       if( hb_fsError() != 0 )
          return -1;
@@ -373,7 +373,7 @@ static int xdlt_outf( void * priv, mmbuffer_t * mb, int nbuf )
 
 static int xdlt_outb( void * priv, mmbuffer_t * mb, int nbuf )
 {
-   PHB_ITEM pCallback = static_cast< PHB_ITEM >( priv );
+   PHB_ITEM pCallback = static_cast<PHB_ITEM>(priv);
 
    if( pCallback && hb_vmRequestReenter() )
    {
@@ -386,7 +386,7 @@ static int xdlt_outb( void * priv, mmbuffer_t * mb, int nbuf )
       for( i = 0; i < nbuf; i++ )
          hb_vmPushString(static_cast<const char*>(mb[i].ptr), mb[i].size);
 
-      hb_vmSend( static_cast< HB_USHORT >( nbuf ) );
+      hb_vmSend(static_cast<HB_USHORT>(nbuf));
       iResult = hb_parnidef( -1, 0 );
 
       hb_vmRequestRestore();
@@ -410,7 +410,7 @@ HB_FUNC( XDL_DIFF )
       xdemitconf_t xecfg;
       xdemitcb_t   ecb;
 
-      xpp.flags    = static_cast< unsigned long >( hb_parnldef(3, 0) );
+      xpp.flags    = static_cast<unsigned long>(hb_parnldef(3, 0));
       xecfg.ctxlen = hb_parnldef(4, 3);
 
       if( HB_ISNUM(5) )
@@ -424,7 +424,7 @@ HB_FUNC( XDL_DIFF )
       {
          PHB_ITEM pCallback = hb_param(5, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
-         ecb.priv = static_cast< void * >( pCallback );
+         ecb.priv = static_cast<void*>(pCallback);
          ecb.outf = xdlt_outb;
 
          hb_retni(xdl_diff(phb_mmf1->mmf, phb_mmf2->mmf, &xpp, &xecfg, &ecb));
@@ -496,7 +496,7 @@ HB_FUNC( XDL_BDIFF )
       {
          PHB_ITEM pCallback = hb_param(4, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
-         ecb.priv = static_cast< void * >( pCallback );
+         ecb.priv = static_cast<void*>(pCallback);
          ecb.outf = xdlt_outb;
 
          hb_retni(xdl_bdiff(phb_mmf1->mmf, phb_mmf2->mmf, &bdp, &ecb));
@@ -534,7 +534,7 @@ HB_FUNC( XDL_RABDIFF )
       {
          PHB_ITEM pCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
-         ecb.priv = static_cast< void * >( pCallback );
+         ecb.priv = static_cast<void*>(pCallback);
          ecb.outf = xdlt_outb;
 
          hb_retni(xdl_rabdiff(phb_mmf1->mmf, phb_mmf2->mmf, &ecb));
@@ -568,7 +568,7 @@ HB_FUNC( XDL_BPATCH )
       {
          PHB_ITEM pCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
-         ecb.priv = static_cast< void * >( pCallback );
+         ecb.priv = static_cast<void*>(pCallback);
          ecb.outf = xdlt_outb;
 
          hb_retni(xdl_bpatch(phb_mmf1->mmf, phb_mmf2->mmf, &ecb));

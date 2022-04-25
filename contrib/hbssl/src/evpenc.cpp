@@ -52,13 +52,13 @@
 
 static HB_GARBAGE_FUNC( EVP_ENCODE_CTX_release )
 {
-   void ** ph = static_cast< void ** >( Cargo );
+   void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
-      EVP_ENCODE_CTX_free( static_cast< EVP_ENCODE_CTX * >( *ph ) );
+      EVP_ENCODE_CTX_free(static_cast<EVP_ENCODE_CTX*>(*ph));
 #else
       /* Destroy the object */
       hb_xfree(*ph);
@@ -82,14 +82,14 @@ static HB_BOOL hb_EVP_ENCODE_CTX_is( int iParam )
 
 static EVP_ENCODE_CTX * hb_EVP_ENCODE_CTX_par( int iParam )
 {
-   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcEVP_ENCODE_CTX_funcs, iParam ) );
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcEVP_ENCODE_CTX_funcs, iParam));
 
-   return ph ? static_cast< EVP_ENCODE_CTX * >( *ph ) : nullptr;
+   return ph ? static_cast<EVP_ENCODE_CTX*>(*ph) : nullptr;
 }
 
 HB_FUNC( EVP_ENCODE_CTX_NEW )
 {
-   void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof(EVP_ENCODE_CTX*), &s_gcEVP_ENCODE_CTX_funcs ) );
+   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(EVP_ENCODE_CTX*), &s_gcEVP_ENCODE_CTX_funcs));
    EVP_ENCODE_CTX * ctx;
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
@@ -135,24 +135,16 @@ HB_FUNC( EVP_ENCODEUPDATE )
          int result;
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
-         result = EVP_EncodeUpdate( ctx,
-                           buffer,
-                           &size,
-                           reinterpret_cast< HB_SSL_CONST unsigned char * >( hb_parcx(3) ),
-                           static_cast< int >( hb_parclen(3) ) );
+         result = EVP_EncodeUpdate(ctx, buffer, &size, reinterpret_cast<HB_SSL_CONST unsigned char*>(hb_parcx(3)), static_cast<int>(hb_parclen(3)));
 #else
-         EVP_EncodeUpdate( ctx,
-                           buffer,
-                           &size,
-                           static_cast< HB_SSL_CONST unsigned char * >( hb_parcx(3) ),
-                           static_cast< int >( hb_parclen(3) ) );
+         EVP_EncodeUpdate(ctx, buffer, &size, static_cast<HB_SSL_CONST unsigned char*>(hb_parcx(3)), static_cast<int>(hb_parclen(3)));
          result = 1;  /* Success */
 #endif
          hb_retni(result);
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
             {
                hb_xfree(buffer);
             }
@@ -185,7 +177,7 @@ HB_FUNC( EVP_ENCODEFINAL )
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
             {
                hb_xfree(buffer);
             }
@@ -231,15 +223,11 @@ HB_FUNC( EVP_DECODEUPDATE )
          int size = 512;
          unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
 
-         EVP_DecodeUpdate( ctx,
-                           buffer,
-                           &size,
-                           reinterpret_cast< HB_SSL_CONST unsigned char * >( hb_parcx(3) ),
-                           static_cast< int >( hb_parclen(3) ) );
+         EVP_DecodeUpdate(ctx, buffer, &size, reinterpret_cast<HB_SSL_CONST unsigned char*>(hb_parcx(3)), static_cast<int>(hb_parclen(3)));
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
             {
                hb_xfree(buffer);
             }
@@ -272,7 +260,7 @@ HB_FUNC( EVP_DECODEFINAL )
 
          if( size > 0 )
          {
-            if( !hb_storclen_buffer( reinterpret_cast< char * >( buffer ), size, 2 ) )
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
             {
                hb_xfree(buffer);
             }

@@ -98,9 +98,9 @@ HB_FUNC( ROT13 )
       for( i = 0; i < nLen; i++ )
       {
          char c = szText[i];
-         if( ( c >= 'A' && c <= 'M' ) || ( c >= 'a' && c <= 'm' ) )
+         if( (c >= 'A' && c <= 'M') || (c >= 'a' && c <= 'm') )
             c += 13;
-         else if( ( c >= 'N' && c <= 'Z' ) || ( c >= 'n' && c <= 'z' ) )
+         else if( (c >= 'N' && c <= 'Z') || (c >= 'n' && c <= 'z') )
             c -= 13;
 
          szResult[i] = c;

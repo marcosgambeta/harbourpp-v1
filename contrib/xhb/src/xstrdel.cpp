@@ -67,12 +67,12 @@ HB_FUNC( STRDEL )
          {
             if( szDel[nPosDel] != ' ' )
             {
-               hb_xmemcpy( szResult + nResult, szText + nPosTxt, nPosDel - nPosTxt );
+               hb_xmemcpy(szResult + nResult, szText + nPosTxt, nPosDel - nPosTxt);
                nResult += nPosDel - nPosTxt;
                nPosTxt  = nPosDel + 1;
             }
          }
-         hb_xmemcpy( szResult + nResult, szText + nPosTxt, nText - nPosTxt );
+         hb_xmemcpy(szResult + nResult, szText + nPosTxt, nText - nPosTxt);
          nResult += nText - nPosTxt;
 
          szResult[nResult] = '\0';

@@ -361,15 +361,15 @@ static int _qr_check_version_table( void )
 
       for( iL = 0; iL < 4; iL++ )
       {
-         uiSumE = static_cast< unsigned int >( pQRVersion->level[iL].block[0].uiCount ) * ( pQRVersion->level[iL].block[0].uiECC ) +
-                  static_cast< unsigned int >( pQRVersion->level[iL].block[1].uiCount ) * ( pQRVersion->level[iL].block[1].uiECC );
+         uiSumE = static_cast<unsigned int>(pQRVersion->level[iL].block[0].uiCount) * ( pQRVersion->level[iL].block[0].uiECC ) +
+                  static_cast<unsigned int>(pQRVersion->level[iL].block[1].uiCount) * ( pQRVersion->level[iL].block[1].uiECC );
          if( uiSumE != pQRVersion->level[iL].uiECC )
          {
             return iV + 10000 + ( iL + 1 ) * 1000;
          }
 
-         uiSumD = static_cast< unsigned int >( pQRVersion->level[iL].block[0].uiCount ) * ( pQRVersion->level[iL].block[0].uiData ) +
-                  static_cast< unsigned int >( pQRVersion->level[iL].block[1].uiCount ) * ( pQRVersion->level[iL].block[1].uiData );
+         uiSumD = static_cast<unsigned int>(pQRVersion->level[iL].block[0].uiCount) * ( pQRVersion->level[iL].block[0].uiData ) +
+                  static_cast<unsigned int>(pQRVersion->level[iL].block[1].uiCount) * ( pQRVersion->level[iL].block[1].uiData );
          if( uiSumD + uiSumE != pQRVersion->uiTotal )
          {
             return iV + 20000 + ( iL + 1 ) * 1000;
@@ -497,11 +497,9 @@ static int _qr_fixed( int iVersion, int iRow, int iCol )
       const unsigned char * pj = s_align[iVersion - 1];
       for( ; *pj; pj++ )
       {
-         if( iRow - 2 <= static_cast< int >( *pi ) && static_cast< int >( *pi ) <= iRow + 2 &&
-             iCol - 2 <= static_cast< int >( *pj ) && static_cast< int >( *pj ) <= iCol + 2 )
+         if( iRow - 2 <= static_cast<int>(*pi) && static_cast<int>(*pi) <= iRow + 2 && iCol - 2 <= static_cast<int>(*pj) && static_cast<int>(*pj) <= iCol + 2 )
          {
-            if( ( *pi == 6 && static_cast< int >( *pj ) > iLength - 10 ) ||
-                ( static_cast< int >( *pi ) > iLength - 10 && *pj == 6 ) )
+            if( (*pi == 6 && static_cast<int>(*pj) > iLength - 10) || (static_cast<int>(*pi) > iLength - 10 && *pj == 6) )
             {
                break;
             }
@@ -535,12 +533,12 @@ static PHB_BITBUFFER _qr_interlace( PHB_BITBUFFER pData, unsigned char * pECC, i
    pDataBuf = hb_bitbuffer_buffer( pData );
 
    uiDst = 0;
-   for( uiPos = 0; uiPos < static_cast< unsigned int >( pLevel->block[0].uiData ) || uiPos < static_cast< unsigned int >( pLevel->block[1].uiData ); uiPos++ )
+   for( uiPos = 0; uiPos < static_cast<unsigned int>(pLevel->block[0].uiData) || uiPos < static_cast<unsigned int>(pLevel->block[1].uiData); uiPos++ )
    {
       uiSrc = 0;
-      for( uiBlock = 0; uiBlock < static_cast< unsigned int >( pLevel->block[0].uiCount ); uiBlock++ )
+      for( uiBlock = 0; uiBlock < static_cast<unsigned int>(pLevel->block[0].uiCount); uiBlock++ )
       {
-         if( uiPos < static_cast< unsigned int >( pLevel->block[0].uiData ) )
+         if( uiPos < static_cast<unsigned int>(pLevel->block[0].uiData) )
          {
             pRetBuf[uiDst++] = pDataBuf[uiPos + uiSrc];
          }
@@ -548,7 +546,7 @@ static PHB_BITBUFFER _qr_interlace( PHB_BITBUFFER pData, unsigned char * pECC, i
       }
       if( pLevel->block[1].uiCount )
       {
-         for( uiBlock = 0; uiBlock < static_cast< unsigned int >( pLevel->block[1].uiCount ); uiBlock++ )
+         for( uiBlock = 0; uiBlock < static_cast<unsigned int>(pLevel->block[1].uiCount); uiBlock++ )
          {
             pRetBuf[uiDst++] = pDataBuf[uiPos + uiSrc];
             uiSrc += pLevel->block[1].uiData;
@@ -556,12 +554,12 @@ static PHB_BITBUFFER _qr_interlace( PHB_BITBUFFER pData, unsigned char * pECC, i
       }
    }
 
-   for( uiPos = 0; uiPos < static_cast< unsigned int >( pLevel->block[0].uiECC ); uiPos++ )
+   for( uiPos = 0; uiPos < static_cast<unsigned int>(pLevel->block[0].uiECC); uiPos++ )
    {
       uiSrc = 0;
-      for( uiBlock = 0; uiBlock < static_cast< unsigned int >( pLevel->block[0].uiCount ); uiBlock++ )
+      for( uiBlock = 0; uiBlock < static_cast<unsigned int>(pLevel->block[0].uiCount); uiBlock++ )
       {
-         if( uiPos < static_cast< unsigned int >( pLevel->block[0].uiECC ) )
+         if( uiPos < static_cast<unsigned int>(pLevel->block[0].uiECC) )
          {
             pRetBuf[uiDst++] = s_rev[pECC[uiPos + uiSrc]];
          }
@@ -569,7 +567,7 @@ static PHB_BITBUFFER _qr_interlace( PHB_BITBUFFER pData, unsigned char * pECC, i
       }
       if( pLevel->block[1].uiCount )
       {
-         for( uiBlock = 0; uiBlock < static_cast< unsigned int >( pLevel->block[1].uiCount ); uiBlock++ )
+         for( uiBlock = 0; uiBlock < static_cast<unsigned int>(pLevel->block[1].uiCount); uiBlock++ )
          {
             pRetBuf[uiDst++] = s_rev[pECC[uiPos + uiSrc]];
             uiSrc += pLevel->block[1].uiECC;
@@ -588,7 +586,7 @@ static PHB_BITBUFFER _qr_interlace( PHB_BITBUFFER pData, unsigned char * pECC, i
    for( uiPos = 0; uiPos < pVersion->uiTotal; uiPos++ )
    {
 #if 0
-      HB_TRACE( HB_TR_ALWAYS, ( "interlaced:%3d %02X", static_cast< int >( s_rev[static_cast<unsigned char>(pRetBuf[uiPos])] ), static_cast< int >( s_rev[static_cast<unsigned char>(pRetBuf[uiPos])] ) ) );
+      HB_TRACE(HB_TR_ALWAYS, ("interlaced:%3d %02X", static_cast<int>(s_rev[static_cast<unsigned char>(pRetBuf[uiPos])]), static_cast<int>(s_rev[static_cast<unsigned char>(pRetBuf[uiPos])])));
 #endif
    }
 #endif
@@ -662,7 +660,7 @@ static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pDa
       if( '0' <= ch && ch <= '9' )
       {
       }
-      else if( ( 'A' <= ch && ch <= 'Z' ) || ch == ' ' || ch == '$' || ch == '%' || ch == '*' || ch == '+' || ch == '-' || ch == '.' || ch == '/' || ch == ':' )
+      else if( ('A' <= ch && ch <= 'Z') || ch == ' ' || ch == '$' || ch == '%' || ch == '*' || ch == '+' || ch == '-' || ch == '.' || ch == '/' || ch == ':' )
       {
          iMode = 2;
       }
@@ -694,7 +692,7 @@ static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pDa
    iVersion = 0; /* to pacify warning */
    for( i = 1; i <= 40; i++ )
    {
-      iDataLen = static_cast< int >( s_version[i - 1].uiTotal - s_version[i - 1].level[iLevel].uiECC );
+      iDataLen = static_cast<int>(s_version[i - 1].uiTotal - s_version[i - 1].level[iLevel].uiECC);
       if( iDataLen * 8 >= iLen + _qr_cci_len( i, iMode ) )
       {
          iVersion = i;
@@ -714,23 +712,23 @@ static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pDa
 
    /* Encode */
    hb_bitbuffer_cat_int_rev( pData, iMode, 4 );
-   hb_bitbuffer_cat_int_rev( pData, static_cast< int >( nSize ), _qr_cci_len( iVersion, iMode ) );
+   hb_bitbuffer_cat_int_rev( pData, static_cast<int>(nSize), _qr_cci_len( iVersion, iMode ) );
    if( iMode == 1 )
    {
       for( n = 0; n + 2 < nSize; n += 3 )
       {
-         hb_bitbuffer_cat_int_rev( pData, 100 * static_cast< int >( static_cast< unsigned char >( szCode[n] - '0' ) ) +
-                                           10 * static_cast< int >( static_cast< unsigned char >( szCode[n + 1] - '0' ) ) +
-                                                static_cast< int >( static_cast< unsigned char >( szCode[n + 2] - '0' ) ), 10 );
+         hb_bitbuffer_cat_int_rev(pData, 100 * static_cast<int>(static_cast<unsigned char>(szCode[n] - '0')) +
+                                         10 * static_cast<int>(static_cast<unsigned char>(szCode[n + 1] - '0')) +
+                                         static_cast<int>(static_cast<unsigned char>(szCode[n + 2] - '0')), 10);
       }
       if( n + 1 == nSize )
       {
-         hb_bitbuffer_cat_int_rev( pData, static_cast< int >( static_cast< unsigned char >( szCode[n] - '0' ) ), 4 );
+         hb_bitbuffer_cat_int_rev(pData, static_cast<int>(static_cast<unsigned char>(szCode[n] - '0')), 4);
       }
       else
       {
-         hb_bitbuffer_cat_int_rev( pData, 10 * static_cast< int >( static_cast< unsigned char >( szCode[n] - '0' ) ) +
-                                               static_cast< int >( static_cast< unsigned char >( szCode[n + 1] - '0' ) ), 7 );
+         hb_bitbuffer_cat_int_rev(pData, 10 * static_cast<int>(static_cast<unsigned char>(szCode[n] - '0')) +
+                                         static_cast<int>(static_cast<unsigned char>(szCode[n + 1] - '0')), 7);
       }
    }
    else if( iMode == 2 )
@@ -748,12 +746,12 @@ static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pDa
    {
       for( n = 0; n < nSize; n++ )
       {
-         hb_bitbuffer_cat_int_rev( pData, static_cast< int >( static_cast< unsigned char >( szCode[n] ) ), 8 );
+         hb_bitbuffer_cat_int_rev( pData, static_cast<int>(static_cast<unsigned char>(szCode[n])), 8 );
       }
    }
 
    /* Terminator */
-   if( iDataLen * 8 >= static_cast< int >( hb_bitbuffer_len( pData ) ) + 4 )
+   if( iDataLen * 8 >= static_cast<int>(hb_bitbuffer_len(pData)) + 4 )
    {
       hb_bitbuffer_cat_int_rev( pData, 0, 4 );
    }
@@ -798,7 +796,7 @@ static void _reed_solomon_encode( unsigned char * pData, int iDataLen, unsigned 
       {
          if( iM && pPoly[j] )
          {
-            pECC[j] = static_cast< unsigned char >( pECC[j - 1] ^ pExp[( pLog[iM] + pLog[pPoly[j]] ) % iMod] );
+            pECC[j] = static_cast<unsigned char>(pECC[j - 1] ^ pExp[( pLog[iM] + pLog[pPoly[j]]) % iMod]);
          }
          else
          {
@@ -807,7 +805,7 @@ static void _reed_solomon_encode( unsigned char * pData, int iDataLen, unsigned 
       }
       if( iM && pPoly[0] )
       {
-         pECC[0] = static_cast< unsigned char >( pExp[( pLog[iM] + pLog[pPoly[0]] ) % iMod] );
+         pECC[0] = static_cast<unsigned char>(pExp[(pLog[iM] + pLog[pPoly[0]]) % iMod]);
       }
       else
       {
@@ -921,7 +919,7 @@ static unsigned char * _qr_checksum( PHB_BITBUFFER pData, int iVersion, int iLev
    for( i = 0; i < iECCLen; i++ )
    {
 #if 0
-      HB_TRACE( HB_TR_ALWAYS, ( "ecc:%3d %02X", static_cast< int >( static_cast< unsigned char >( pECC[i] ) ), static_cast< int >( static_cast< unsigned char >( pECC[i] ) ) ) );
+      HB_TRACE( HB_TR_ALWAYS, ( "ecc:%3d %02X", static_cast<int>(static_cast<unsigned char>(pECC[i])), static_cast<int>(static_cast<unsigned char>(pECC[i])) ) );
 #endif
    }
 #endif
@@ -977,7 +975,7 @@ static void _qr_draw( PHB_BITBUFFER pBits, PHB_BITBUFFER pCWBits, int iVersion )
       const unsigned char * pj = s_align[iVersion - 1];
       for( ; *pj; pj++ )
       {
-         if( ( *pi > 10 && *pi < iLength - 10 ) || ( *pj > 10 && *pj < iLength - 10 ) || ( *pi > 10 && *pj > 10 ) )
+         if( (*pi > 10 && *pi < iLength - 10) || (*pj > 10 && *pj < iLength - 10) || (*pi > 10 && *pj > 10) )
          {
             hb_bitbuffer_set( pBits, iLength * *pi + *pj - 1, 0 );
             hb_bitbuffer_set( pBits, iLength * *pi + *pj + 1, 0 );

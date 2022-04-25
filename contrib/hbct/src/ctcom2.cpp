@@ -146,16 +146,16 @@ HB_FUNC( XMOBLOCK )
    pszBlock[2] = static_cast<char>(0xFF - iBlock);
    if( szData )
    {
-      memcpy( pszBlock + 3, szData, nLen );
+      memcpy(pszBlock + 3, szData, nLen);
    }
    if( nLen < nSize )
    {
-      memset( pszBlock + nLen + 3, 0, nSize - nLen );
+      memset(pszBlock + nLen + 3, 0, nSize - nLen);
    }
    if( fCRC )
    {
-      HB_U16 crc = ( HB_U16 ) hb_crcct(0, pszBlock + 3, nSize, 0x11021);
-      HB_PUT_BE_UINT16( &pszBlock[3 + nSize], crc );
+      HB_U16 crc = static_cast<HB_U16>(hb_crcct(0, pszBlock + 3, nSize, 0x11021));
+      HB_PUT_BE_UINT16(&pszBlock[3 + nSize], crc);
       nSize += 5;
    }
    else
@@ -225,7 +225,7 @@ HB_FUNC( ZEROINSERT )
          uiVal |= static_cast<unsigned char>(szText[n]);
          for( i = 0; i < 8; ++i )
          {
-            if( ( uiVal & 0xF800 ) == 0xF800 )
+            if( (uiVal & 0xF800) == 0xF800 )
             {
                uiVal &= 0xF7FF;
                ++nBits;
@@ -255,7 +255,7 @@ HB_FUNC( ZEROINSERT )
                   i = 8;
                }
             }
-            if( ( uiVal & 0xF800 ) == 0xF800 )
+            if( (uiVal & 0xF800) == 0xF800 )
             {
                c = ( c << 1 ) | 1;
                if( --j == 0 )

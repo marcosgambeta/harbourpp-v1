@@ -97,7 +97,7 @@ static HB_BOOL hb_ExportVar( HB_FHANDLE handle, PHB_ITEM pValue, const char * cD
          if( cdp )
             hb_cdpnDupLen( szStrEsc, strlen( szStrEsc ), hb_vmCDP(), cdp );
 
-         szString = hb_xstrcpy( nullptr, cDelim, szStrEsc, cDelim, nullptr );
+         szString = hb_xstrcpy(nullptr, cDelim, szStrEsc, cDelim, nullptr);
 
          /* FWrite( handle, szString ) */
          hb_fsWriteLarge( handle, szString, strlen( szString ) );
@@ -126,7 +126,7 @@ static HB_BOOL hb_ExportVar( HB_FHANDLE handle, PHB_ITEM pValue, const char * cD
       case Harbour::Item::LONG:
       case Harbour::Item::DOUBLE:
       {
-         char * szResult = hb_itemStr( pValue, nullptr, nullptr );
+         char * szResult = hb_itemStr(pValue, nullptr, nullptr);
 
          if( szResult )
          {

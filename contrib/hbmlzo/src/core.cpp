@@ -77,11 +77,11 @@ static void hb_mlzo_init( void * cargo )
    HB_SYMBOL_UNUSED(cargo);
 
    if( lzo_init() != LZO_E_OK )
-      hb_errInternal( HB_EI_VMBADSTARTUP /* FIXME: ? */, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_VMBADSTARTUP /* FIXME: ? */, nullptr, nullptr, nullptr);
 }
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_mlzo_init_ )
-hb_vmAtInit( hb_mlzo_init, nullptr );
+hb_vmAtInit(hb_mlzo_init, nullptr);
 HB_CALL_ON_STARTUP_END( _hb_mlzo_init_ )
 
 #if defined(HB_PRAGMA_STARTUP)
@@ -132,7 +132,7 @@ HB_FUNC( HB_LZO1X_1_COMPRESS )
          }
          else
          {
-            r = lzo1x_1_compress( reinterpret_cast< const lzo_bytep >( src ), src_len, dst, &dst_len, wrkmem );
+            r = lzo1x_1_compress( reinterpret_cast<const lzo_bytep>(src), src_len, dst, &dst_len, wrkmem );
             hb_xfree(wrkmem);
          }
 
@@ -146,7 +146,7 @@ HB_FUNC( HB_LZO1X_1_COMPRESS )
                hb_storni(LZO_E_NOT_COMPRESSIBLE, 3);  /* incompressible data */
             else
             {
-               hb_retclen_buffer( reinterpret_cast< char * >( dst ), dst_len );
+               hb_retclen_buffer(reinterpret_cast<char*>(dst), dst_len);
                return;
             }
          }
@@ -182,14 +182,14 @@ HB_FUNC( HB_LZO1X_DECOMPRESS )
          hb_storni(LZO_E_OUT_OF_MEMORY, 3);  /* out of memory */
       else
       {
-         int r = lzo1x_decompress( reinterpret_cast< const lzo_bytep >( src ), src_len, dst, &dst_len, nullptr );
+         int r = lzo1x_decompress(reinterpret_cast<const lzo_bytep>(src), src_len, dst, &dst_len, nullptr);
 
          hb_storni(r, 3);
 
          if( r == LZO_E_OK )
          {
             hb_storns( dst_len, 2 );
-            hb_retclen_buffer( reinterpret_cast< char * >( dst ), dst_len );
+            hb_retclen_buffer(reinterpret_cast<char*>(dst), dst_len);
             return;
          }
          hb_xfree(dst);
@@ -217,14 +217,14 @@ HB_FUNC( HB_LZO1X_DECOMPRESS_SAFE )
          hb_storni(LZO_E_OUT_OF_MEMORY, 3);  /* out of memory */
       else
       {
-         int r = lzo1x_decompress_safe( reinterpret_cast< const lzo_bytep >( src ), src_len, dst, &dst_len, nullptr );
+         int r = lzo1x_decompress_safe(reinterpret_cast<const lzo_bytep>(src), src_len, dst, &dst_len, nullptr);
 
          hb_storni(r, 3);
 
          if( r == LZO_E_OK )
          {
             hb_storns( dst_len, 2 );
-            hb_retclen_buffer( reinterpret_cast< char * >( dst ), dst_len );
+            hb_retclen_buffer(reinterpret_cast<char*>(dst), dst_len);
             return;
          }
          hb_xfree(dst);

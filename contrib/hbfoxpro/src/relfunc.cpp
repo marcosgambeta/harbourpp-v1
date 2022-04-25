@@ -55,8 +55,8 @@ HB_FUNC( BETWEEN )
       PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
       int iResult1, iResult2;
 
-      if( hb_itemCompare( pItem, hb_param(2, Harbour::Item::ANY), false, &iResult1 ) &&
-          hb_itemCompare( pItem, hb_param(3, Harbour::Item::ANY), false, &iResult2 ) )
+      if( hb_itemCompare(pItem, hb_param(2, Harbour::Item::ANY), false, &iResult1) &&
+          hb_itemCompare(pItem, hb_param(3, Harbour::Item::ANY), false, &iResult2) )
          fResult = iResult1 >= 0 && iResult2 <= 0;
    }
    hb_retl(fResult);

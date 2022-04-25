@@ -125,11 +125,9 @@ static void hb_error_cb_var_release( void * cargo )
       hb_itemRelease(pError_cb->error_cb);
 }
 
-static HB_TSD_NEW( s_cbs_var, sizeof(HB_CBS_VAR), hb_cbs_var_init, nullptr );
-static HB_TSD_NEW( s_custom_cbs_var, sizeof(HB_CUSTOM_CBS_VAR), hb_custom_cbs_var_init,
-                   hb_custom_cbs_var_release );
-static HB_TSD_NEW( s_error_cb_var, sizeof(HB_ERROR_CB_VAR), hb_error_cb_var_init,
-                   hb_error_cb_var_release );
+static HB_TSD_NEW(s_cbs_var, sizeof(HB_CBS_VAR), hb_cbs_var_init, nullptr);
+static HB_TSD_NEW(s_custom_cbs_var, sizeof(HB_CUSTOM_CBS_VAR), hb_custom_cbs_var_init, hb_custom_cbs_var_release);
+static HB_TSD_NEW(s_error_cb_var, sizeof(HB_ERROR_CB_VAR), hb_error_cb_var_init, hb_error_cb_var_release);
 
 /* mxml_node_t * support */
 
@@ -144,9 +142,9 @@ static void hbmxml_release( mxml_node_t * node )
        * be extracted yet but there is not destructor for userData
        * in MXML library so we have no choice :-( [druzus]
        */
-      if( ( user_data = mxmlGetUserData( node ) ) != nullptr )
+      if( (user_data = mxmlGetUserData(node)) != nullptr )
       {
-         mxmlSetUserData( node, nullptr );
+         mxmlSetUserData(node, nullptr);
          hb_itemRelease(static_cast<PHB_ITEM>(user_data));
       }
    }
@@ -1009,7 +1007,7 @@ HB_FUNC( MXMLNEWXML )
       hb_strfree(hVersion);
    }
    else
-      node = mxmlNewXML( nullptr );
+      node = mxmlNewXML(nullptr);
 
    mxml_node_ret( node, 1 );
 }
@@ -1275,7 +1273,7 @@ static const char * save_cb( mxml_node_t * node, int where )
          hb_vmPushInteger(where);
          hb_vmSend(2);
 
-         pszResult = hb_itemGetStrUTF8( hb_param(-1, Harbour::Item::ANY), &pCbs->hText, nullptr );
+         pszResult = hb_itemGetStrUTF8(hb_param(-1, Harbour::Item::ANY), &pCbs->hText, nullptr);
 
          hb_vmRequestRestore();
 
@@ -1465,7 +1463,7 @@ static void error_cb( const char * pszErrorMsg )
       {
          hb_vmPushEvalSym();
          hb_vmPush(pCallback);
-         hb_itemPutC( hb_stackAllocItem(), pszErrorMsg );
+         hb_itemPutC(hb_stackAllocItem(), pszErrorMsg);
 
          hb_vmSend(1);
          hb_vmRequestRestore();
@@ -1497,7 +1495,7 @@ HB_FUNC( MXMLSETERRORCALLBACK )
          pError_cb->error_cb = nullptr;
       }
 
-      mxmlSetErrorCallback( nullptr );
+      mxmlSetErrorCallback(nullptr);
    }
 }
 
@@ -1721,7 +1719,7 @@ static int custom_load_cb( mxml_node_t * node, const char * data )
          hb_vmPushEvalSym();
          hb_vmPush(pCallback);
          mxml_node_push( node, 0 );
-         hb_itemPutC( hb_stackAllocItem(), data );
+         hb_itemPutC(hb_stackAllocItem(), data);
 
          hb_vmSend(2);
 
@@ -1756,8 +1754,8 @@ static char * custom_save_cb( mxml_node_t * node )
 
          hb_vmSend(1);
 
-         pszText   = hb_parstr_utf8( -1, &hText, nullptr );
-         pszResult = pszText ? strdup( pszText ) : nullptr;
+         pszText   = hb_parstr_utf8(-1, &hText, nullptr);
+         pszResult = pszText ? strdup(pszText) : nullptr;
          hb_strfree(hText);
 
          hb_vmRequestRestore();
@@ -1806,7 +1804,7 @@ HB_FUNC( MXMLSETCUSTOMHANDLERS )
          }
       }
 
-      mxmlSetCustomHandlers( nullptr, nullptr );
+      mxmlSetCustomHandlers(nullptr, nullptr);
    }
 }
 

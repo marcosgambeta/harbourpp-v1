@@ -241,8 +241,8 @@ static void hb_ctw_ClearMap( PHB_GTCTW pCTW )
    HB_SIZE nSize;
 
    nSize = static_cast<HB_SIZE>(pCTW->iMapHeight) * pCTW->iMapWidth * sizeof(int);
-   memset( pCTW->pWindowMap, 0, nSize );
-   memset( pCTW->pShadowMap, 0, nSize );
+   memset(pCTW->pWindowMap, 0, nSize);
+   memset(pCTW->pShadowMap, 0, nSize);
 }
 
 static void hb_ctw_TouchLines( PHB_GTCTW pCTW, int iFrom, int iTo )
@@ -690,7 +690,7 @@ static int hb_ctw_SetWindowShadow( PHB_GTCTW pCTW, int iWindow, int iAttr )
       PHB_CT_WND pWnd = pCTW->windows[iWindow];
 
       iResult = pWnd->iShadowAttr;
-      if( ( iAttr >= 0 || iAttr == HB_CTW_SHADOW_OFF || iAttr == HB_CTW_SHADOW_EXT || iAttr == HB_CTW_SHADOW_EXT2 ) && pWnd->iShadowAttr != iAttr )
+      if( (iAttr >= 0 || iAttr == HB_CTW_SHADOW_OFF || iAttr == HB_CTW_SHADOW_EXT || iAttr == HB_CTW_SHADOW_EXT2) && pWnd->iShadowAttr != iAttr )
       {
          pWnd->iShadowAttr = iAttr;
          if( !pWnd->fHidden )
@@ -816,7 +816,7 @@ static int hb_ctw_CreateWindow( PHB_GTCTW pCTW, int iTop, int iLeft, int iBottom
    }
 
    pWnd = static_cast<PHB_CT_WND>(hb_xgrab(sizeof(HB_CT_WND)));
-   memset( pWnd, 0, sizeof(HB_CT_WND) );
+   memset(pWnd, 0, sizeof(HB_CT_WND));
 
    pWnd->fHidden = !fVisible;
    pWnd->iLevel = HB_CTW_DEFAULT;
@@ -1051,10 +1051,10 @@ static int hb_ctw_MoveWindow( PHB_GTCTW pCTW, int iWindow, int iRow, int iCol )
 
       if( pWnd )
       {
-         if( ( iRow + ( pCTW->fBoardTop ? pWnd->iHeight : 0 ) >= pCTW->iBoardTop ) &&
-             ( iRow + ( pCTW->fBoardBottom ? 0 : pWnd->iHeight ) <= pCTW->iBoardBottom + 1 ) &&
-             ( iCol + ( pCTW->fBoardLeft ? pWnd->iWidth : 0 ) >= pCTW->iBoardLeft ) &&
-             ( iCol + ( pCTW->fBoardRight ? 0 : pWnd->iWidth ) <= pCTW->iBoardRight + 1 ) )
+         if( (iRow + (pCTW->fBoardTop ? pWnd->iHeight : 0) >= pCTW->iBoardTop) &&
+             (iRow + (pCTW->fBoardBottom ? 0 : pWnd->iHeight) <= pCTW->iBoardBottom + 1) &&
+             (iCol + (pCTW->fBoardLeft ? pWnd->iWidth : 0) >= pCTW->iBoardLeft) &&
+             (iCol + (pCTW->fBoardRight ? 0 : pWnd->iWidth) <= pCTW->iBoardRight + 1) )
          {
             pWnd->iFirstRow = iRow;
             pWnd->iFirstCol = iCol;
@@ -1082,19 +1082,19 @@ static int hb_ctw_ChangeMargins( PHB_GTCTW pCTW, int iWindow, int iTop, int iLef
 
       if( pWnd )
       {
-         if( ( iTop += pWnd->iTopMargin ) < 0 )
+         if( (iTop += pWnd->iTopMargin) < 0 )
          {
             iTop = 0;
          }
-         if( ( iLeft += pWnd->iLeftMargin ) < 0 )
+         if( (iLeft += pWnd->iLeftMargin) < 0 )
          {
             iLeft = 0;
          }
-         if( ( iBottom += pWnd->iBottomMargin ) < 0 )
+         if( (iBottom += pWnd->iBottomMargin) < 0 )
          {
             iBottom = 0;
          }
-         if( ( iRight += pWnd->iRightMargin ) < 0 )
+         if( (iRight += pWnd->iRightMargin) < 0 )
          {
             iRight = 0;
          }
@@ -1338,7 +1338,7 @@ static void hb_ctw_Init( PHB_GTCTW pCTW )
    pCTW->iHorizontalStep = 5;
 
    /* initialize thread local storage for current window number */
-   HB_TSD_INIT( &pCTW->TSD, sizeof(HB_CTWDATA), nullptr, nullptr );
+   HB_TSD_INIT(&pCTW->TSD, sizeof(HB_CTWDATA), nullptr, nullptr);
 
    HB_GTSELF_GETSIZE( pCTW->pGT, &pCTW->iMapHeight, &pCTW->iMapWidth );
 
@@ -1368,7 +1368,7 @@ static PHB_GTCTW hb_ctw_base( void )
       {
          PHB_GTCTW pCTW = static_cast<PHB_GTCTW>(hb_xgrab(sizeof(HB_GTCTW)));
 
-         memset( pCTW, 0, sizeof(HB_GTCTW) );
+         memset(pCTW, 0, sizeof(HB_GTCTW));
          HB_GTLOCAL( pGT ) = pCTW;
          pCTW->pGT = pGT;
 
@@ -2015,7 +2015,7 @@ static void hb_ctw_gt_GetColorData( PHB_GT pGT, int ** pColorsPtr, int * piColor
       PHB_CT_WND pWnd = pCTW->windows[iWindow];
 
       *pColorsPtr = static_cast<int*>(hb_xgrab(pWnd->iColorCount * sizeof(int)));
-      memcpy( *pColorsPtr, pWnd->piColors, pWnd->iColorCount * sizeof(int) );
+      memcpy(*pColorsPtr, pWnd->piColors, pWnd->iColorCount * sizeof(int));
       *piColorCount = pWnd->iColorCount;
       *piColorIndex = pWnd->iColorIndex;
    }
@@ -2110,15 +2110,15 @@ static HB_BOOL hb_ctw_gt_GetScrChar( PHB_GT pGT, int iRow, int iCol, int * piCol
       }
       else if( pWnd->iShadowAttr == HB_CTW_SHADOW_EXT || pWnd->iShadowAttr == HB_CTW_SHADOW_EXT2 )
       {
-         if( ( *piColor & 0x80 ) == 0 )
+         if( (*piColor & 0x80) == 0 )
          {
             *piColor &= 0x0F;
          }
-         if( ( *piColor & 0x08 ) == 0 )
+         if( (*piColor & 0x08) == 0 )
          {
             *piColor &= 0xF0;
          }
-         if( ( *piColor &= 0x77 ) == 0 || ( iShadow & HB_CTW_SHADOW_MASK ) )
+         if( (*piColor &= 0x77) == 0 || (iShadow & HB_CTW_SHADOW_MASK) )
          {
             *piColor = 0x07;
          }
@@ -2339,7 +2339,7 @@ static HB_BOOL hb_ctw_gt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
    switch( iType )
    {
       case HB_GTI_ISCTWIN:
-         pInfo->pResult = hb_itemPutL( pInfo->pResult, true );
+         pInfo->pResult = hb_itemPutL(pInfo->pResult, true);
          break;
 
       case HB_GTI_NEWWIN:
@@ -2411,7 +2411,7 @@ static int hb_ctw_gt_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
       else
       {
          HB_GT_INFO gtInfo;
-         memset( &gtInfo, 0, sizeof(gtInfo) );
+         memset(&gtInfo, 0, sizeof(gtInfo));
          HB_GTSELF_INFO( pGT, HB_GTI_ISSCREENPOS, &gtInfo );
          fScreen = gtInfo.pResult && hb_itemGetL(gtInfo.pResult);
          HB_GTSELF_INFO( pGT, HB_GTI_KBDSUPPORT, &gtInfo );
@@ -2605,7 +2605,7 @@ static int hb_ctw_gt_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
                }
             }
 #endif
-            else if( ( nChar = hb_inkeyKeyString( iKey, szKey, sizeof(szKey) ) ) > 0 )
+            else if( (nChar = hb_inkeyKeyString(iKey, szKey, sizeof(szKey))) > 0 )
             {
                PHB_CODEPAGE cdp = hb_vmCDP();
                for( i = 1; i <= iOptions; ++i )

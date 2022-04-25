@@ -30,7 +30,7 @@ PHB_IRMMAP hb_irmMapAlloc( HB_ULONG ulSize )
    pMap->ulSize  = ulSize;
    pMap->ulAlloc = ( ulSize + 7 ) & ~7UL;
    pMap->pBits   = static_cast<HB_BYTE*>(hb_xgrab(pMap->ulAlloc >> 3));
-   memset( pMap->pBits, 0, pMap->ulAlloc >> 3 );
+   memset(pMap->pBits, 0, pMap->ulAlloc >> 3);
    return pMap;
 }
 
@@ -77,7 +77,7 @@ HB_ULONG hb_irmMapNext( PHB_IRMMAP pMap, HB_ULONG ulRecNo )
    /* test the first byte */
    while( ulRecNo < ulNext )
    {
-      if( ( pMap->pBits[ulRecNo >> 3] >> ( ulRecNo & 7 ) ) & 1 )
+      if( (pMap->pBits[ulRecNo >> 3] >> (ulRecNo & 7)) & 1 )
          return ulRecNo + 1;
       ulRecNo++;
    }
@@ -88,7 +88,7 @@ HB_ULONG hb_irmMapNext( PHB_IRMMAP pMap, HB_ULONG ulRecNo )
       {
          while( ulRecNo < pMap->ulSize )
          {
-            if( ( pMap->pBits[ulRecNo >> 3] >> ( ulRecNo & 7 ) ) & 1 )
+            if( (pMap->pBits[ulRecNo >> 3] >> (ulRecNo & 7)) & 1 )
                return ulRecNo + 1;
             ulRecNo++;
          }
@@ -178,7 +178,7 @@ static void hb_irmMapMarkCallback( HB_ULONG ulRecNo, unsigned char * pKey, unsig
  *    ">=", tag, bag, value                   ordKeyVal() >= value
  *    "<=<=", tag, bag, value1, value2        value1 <= ordKeyVal() <= value2
  */
-PHB_IRMMAP hb_irmExecute( PHB_ITEM pItem )
+PHB_IRMMAP hb_irmExecute(PHB_ITEM pItem)
 {
    const char * szOper;
 
@@ -188,7 +188,7 @@ PHB_IRMMAP hb_irmExecute( PHB_ITEM pItem )
       PHB_IRMMAP pMap;
 
       /* Expression operators */
-      if( ( !strcmp( szOper, "&" ) || !strcmp( szOper, "|" ) ) && ( ulLen = static_cast<HB_ULONG>(hb_arrayLen(pItem)) ) > 1 )
+      if( (!strcmp(szOper, "&") || !strcmp(szOper, "|")) && (ulLen = static_cast<HB_ULONG>(hb_arrayLen(pItem))) > 1 )
       {
          HB_ULONG     ul, ul2;
          PHB_IRMMAP * pMapArray;
@@ -219,10 +219,10 @@ PHB_IRMMAP hb_irmExecute( PHB_ITEM pItem )
          return pMap;
       }
       /* Filter operators */
-      else if( ( !strcmp( szOper, "=" ) && ( hb_arrayLen(pItem) == 4 ) ) ||
-               ( !strcmp( szOper, "<=" ) && ( hb_arrayLen(pItem) == 4 ) ) ||
-               ( !strcmp( szOper, ">=" ) && ( hb_arrayLen(pItem) == 4 ) ) ||
-               ( !strcmp( szOper, "<=<=" ) && ( hb_arrayLen(pItem) == 5 ) ) )
+      else if( (!strcmp(szOper, "=") && (hb_arrayLen(pItem) == 4)) ||
+               (!strcmp(szOper, "<=") && (hb_arrayLen(pItem) == 4)) ||
+               (!strcmp(szOper, ">=") && (hb_arrayLen(pItem) == 4)) ||
+               (!strcmp(szOper, "<=<=") && (hb_arrayLen(pItem) == 5)) )
       {
          AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
          if( pArea )
@@ -236,7 +236,7 @@ PHB_IRMMAP hb_irmExecute( PHB_ITEM pItem )
             dboi.atomBagName = hb_arrayGetItemPtr(pItem, 3);
             dboi.itmResult   = hb_itemNew(nullptr);
             dboi.itmNewVal   = hb_itemArrayNew( DBRMI_SIZE );
-            hb_arraySetPtr( dboi.itmNewVal, DBRMI_FUNCTION, reinterpret_cast< void * >( hb_irmMapMarkCallback ) );
+            hb_arraySetPtr( dboi.itmNewVal, DBRMI_FUNCTION, reinterpret_cast<void*>(hb_irmMapMarkCallback) );
             hb_arraySetPtr( dboi.itmNewVal, DBRMI_PARAM, static_cast<void*>(pMap) );
             if( !strcmp( szOper, "=" ) )
             {

@@ -59,12 +59,12 @@ static BOOL CALLBACK wapi_DialogFuncProc( HWND hDlg, UINT message, WPARAM wParam
 
    if( message == WM_INITDIALOG && lParam )
    {
-      pSymbol = reinterpret_cast< PHB_SYMB >( lParam );
-      SetWindowLongPtr( hDlg, GWLP_USERDATA, reinterpret_cast< LONG_PTR >( pSymbol ) );
+      pSymbol = reinterpret_cast<PHB_SYMB>(lParam);
+      SetWindowLongPtr( hDlg, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pSymbol) );
    }
    else
    {
-      pSymbol = reinterpret_cast< PHB_SYMB >( GetWindowLongPtr( hDlg, GWLP_USERDATA ) );
+      pSymbol = reinterpret_cast<PHB_SYMB>(GetWindowLongPtr(hDlg, GWLP_USERDATA));
    }
 
    if( pSymbol )
@@ -98,8 +98,8 @@ HB_FUNC( WAPI_DIALOGBOXPARAM )
       hbwapi_par_raw_HINSTANCE(1),                                            /* hInstance */
       static_cast<LPCTSTR>(MAKEINTRESOURCE(hbwapi_par_INT(2))),         /* lpTemplate */
       hbwapi_par_raw_HWND(3),                                                 /* hWndParent */
-      reinterpret_cast< DLGPROC >( wapi_DialogFuncProc ),                            /* lpDialogFunc */
-      reinterpret_cast< LPARAM >( hb_itemGetSymbol(hb_param(4, Harbour::Item::SYMBOL)) )  /* dwInitParam */
+      reinterpret_cast<DLGPROC>(wapi_DialogFuncProc),                            /* lpDialogFunc */
+      reinterpret_cast<LPARAM>(hb_itemGetSymbol(hb_param(4, Harbour::Item::SYMBOL)))  /* dwInitParam */
       );
 
    hbwapi_SetLastError( GetLastError() );

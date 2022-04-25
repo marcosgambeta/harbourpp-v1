@@ -106,7 +106,7 @@ static VOID WINAPI hbwin_SvcMainFunction( DWORD dwArgc, LPTSTR * lpszArgv )
    s_ServiceStatus.dwCheckPoint              = 0;
    s_ServiceStatus.dwWaitHint                = 0;
 
-   s_hStatus = RegisterServiceCtrlHandler( s_lpServiceName, static_cast< LPHANDLER_FUNCTION >( hbwin_SvcControlHandler ) );
+   s_hStatus = RegisterServiceCtrlHandler( s_lpServiceName, static_cast<LPHANDLER_FUNCTION>(hbwin_SvcControlHandler) );
 
    if( s_hStatus != ( SERVICE_STATUS_HANDLE ) 0 )
    {
@@ -130,8 +130,8 @@ static VOID WINAPI hbwin_SvcMainFunction( DWORD dwArgc, LPTSTR * lpszArgv )
             {
                PHB_ITEM pItem = hb_stackAllocItem();
 
-               HB_ITEMPUTSTR( pItem, lpszArgv[i] );
-               if( hb_cmdargIsInternal( hb_itemGetCPtr(pItem), nullptr ) )
+               HB_ITEMPUTSTR(pItem, lpszArgv[i]);
+               if( hb_cmdargIsInternal(hb_itemGetCPtr(pItem), nullptr) )
                {
                   hb_stackPop();
                }
@@ -141,7 +141,7 @@ static VOID WINAPI hbwin_SvcMainFunction( DWORD dwArgc, LPTSTR * lpszArgv )
                }
             }
 
-            hb_vmSend( static_cast< HB_USHORT >( iArgCount ) );
+            hb_vmSend( static_cast<HB_USHORT>(iArgCount) );
 
             hb_vmRequestRestore();
          }
@@ -175,8 +175,8 @@ HB_FUNC( WIN_SERVICEGETSTATUS )
 HB_FUNC( WIN_SERVICESETSTATUS )
 {
    HB_BOOL bRetVal;
-   s_ServiceStatus.dwCurrentState = static_cast< DWORD >( hb_parnl(1) );
-   bRetVal = static_cast< HB_BOOL >( SetServiceStatus( s_hStatus, &s_ServiceStatus ) );
+   s_ServiceStatus.dwCurrentState = static_cast<DWORD>(hb_parnl(1));
+   bRetVal = static_cast<HB_BOOL>(SetServiceStatus(s_hStatus, &s_ServiceStatus));
    hbwapi_SetLastError( GetLastError() );
    hb_retl(bRetVal);
 }
@@ -184,8 +184,8 @@ HB_FUNC( WIN_SERVICESETSTATUS )
 HB_FUNC( WIN_SERVICESETEXITCODE )
 {
    HB_BOOL bRetVal;
-   s_ServiceStatus.dwWin32ExitCode = static_cast< DWORD >( hb_parnl(1) );
-   bRetVal = static_cast< HB_BOOL >( SetServiceStatus( s_hStatus, &s_ServiceStatus ) );
+   s_ServiceStatus.dwWin32ExitCode = static_cast<DWORD>(hb_parnl(1));
+   bRetVal = static_cast<HB_BOOL>(SetServiceStatus(s_hStatus, &s_ServiceStatus));
    hbwapi_SetLastError( GetLastError() );
    hb_retl(bRetVal);
 }
@@ -194,7 +194,7 @@ HB_FUNC( WIN_SERVICESTOP )
 {
    HB_BOOL bRetVal;
    s_ServiceStatus.dwCurrentState = SERVICE_STOPPED;
-   bRetVal = static_cast< HB_BOOL >( SetServiceStatus( s_hStatus, &s_ServiceStatus ) );
+   bRetVal = static_cast<HB_BOOL>(SetServiceStatus(s_hStatus, &s_ServiceStatus));
    hbwapi_SetLastError( GetLastError() );
    hb_retl(bRetVal);
 }
@@ -241,7 +241,7 @@ HB_FUNC( WIN_SERVICESTART )
    lpServiceTable[1].lpServiceName = nullptr;
    lpServiceTable[1].lpServiceProc = nullptr;
 
-   bRetVal = static_cast< HB_BOOL >( StartServiceCtrlDispatcher( lpServiceTable ) );
+   bRetVal = static_cast<HB_BOOL>(StartServiceCtrlDispatcher(lpServiceTable));
    hbwapi_SetLastError( GetLastError() );
    hb_retl(bRetVal);
 }

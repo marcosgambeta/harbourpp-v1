@@ -82,7 +82,7 @@ static void PHB_BIO_free( PHB_BIO hb_bio )
 static HB_GARBAGE_FUNC( HB_BIO_Destructor )
 {
    /* Retrieve image pointer holder */
-   HB_BIO ** ptr = static_cast< HB_BIO ** >( Cargo );
+   HB_BIO ** ptr = static_cast<HB_BIO**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( *ptr )
@@ -102,21 +102,21 @@ static const HB_GC_FUNCS s_gcBIOFuncs =
 
 BIO * hb_BIO_par( int iParam )
 {
-   HB_BIO ** ptr = static_cast< HB_BIO ** >( hb_parptrGC( &s_gcBIOFuncs, iParam ) );
+   HB_BIO ** ptr = static_cast<HB_BIO**>(hb_parptrGC(&s_gcBIOFuncs, iParam));
 
    return ptr ? ( *ptr )->bio : nullptr;
 }
 
 HB_BOOL hb_BIO_is( int iParam )
 {
-   HB_BIO ** ptr = static_cast< HB_BIO ** >( hb_parptrGC( &s_gcBIOFuncs, iParam ) );
+   HB_BIO ** ptr = static_cast<HB_BIO**>(hb_parptrGC(&s_gcBIOFuncs, iParam));
 
    return ptr && ( *ptr )->bio;
 }
 
 static void hb_BIO_ret( BIO * bio, void * hStrRef )
 {
-   HB_BIO ** ptr = static_cast< HB_BIO ** >( hb_gcAllocate( sizeof(HB_BIO*), &s_gcBIOFuncs ) );
+   HB_BIO ** ptr = static_cast<HB_BIO**>(hb_gcAllocate(sizeof(HB_BIO*), &s_gcBIOFuncs));
 
    *ptr = PHB_BIO_create( bio, hStrRef );
 
@@ -214,7 +214,7 @@ HB_FUNC( BIO_NEW )
 {
    if( hb_BIO_METHOD_is(1) )
    {
-      hb_BIO_ret( BIO_new( hb_BIO_METHOD_par(1) ), nullptr );
+      hb_BIO_ret(BIO_new(hb_BIO_METHOD_par(1)), nullptr);
    }
    else
    {
@@ -584,7 +584,7 @@ HB_FUNC( BIO_NEW_SOCKET )
 {
    if( HB_ISNUM(1) )
    {
-      hb_BIO_ret( BIO_new_socket( hb_parni(1), hb_parnidef(2, BIO_NOCLOSE) ), nullptr );
+      hb_BIO_ret(BIO_new_socket(hb_parni(1), hb_parnidef(2, BIO_NOCLOSE)), nullptr);
    }
    else
    {
@@ -597,7 +597,7 @@ HB_FUNC( BIO_NEW_DGRAM )
 #ifndef OPENSSL_NO_DGRAM
    if( HB_ISNUM(1) )
    {
-      hb_BIO_ret( BIO_new_dgram( hb_parni(1), hb_parnidef(2, BIO_NOCLOSE) ), nullptr );
+      hb_BIO_ret(BIO_new_dgram(hb_parni(1), hb_parnidef(2, BIO_NOCLOSE)), nullptr);
    }
    else
    {
@@ -612,7 +612,7 @@ HB_FUNC( BIO_NEW_FD )
 {
    if( HB_ISNUM(1) )
    {
-      hb_BIO_ret( BIO_new_fd( hb_parnl(1), hb_parnidef(2, BIO_NOCLOSE) ), nullptr );
+      hb_BIO_ret(BIO_new_fd(hb_parnl(1), hb_parnidef(2, BIO_NOCLOSE)), nullptr);
    }
    else
    {
@@ -624,7 +624,7 @@ HB_FUNC( BIO_NEW_FILE )
 {
    if( HB_ISCHAR(1) )
    {
-      hb_BIO_ret( BIO_new_file( hb_parc(1), hb_parcx(2) ), nullptr );
+      hb_BIO_ret(BIO_new_file(hb_parc(1), hb_parcx(2)), nullptr);
    }
    else
    {
@@ -642,7 +642,7 @@ HB_FUNC( BIO_NEW_MEM_BUF )
       HB_SIZE nLen;
       const char * pszBuffer = hb_itemGetCRef( pBuffer, &hStrRef, &nLen );
 
-      hb_BIO_ret( BIO_new_mem_buf( const_cast< char * >( pszBuffer ), static_cast< int >( nLen ) ), hStrRef );
+      hb_BIO_ret(BIO_new_mem_buf(const_cast<char*>(pszBuffer), static_cast<int>(nLen)), hStrRef);
    }
    else
    {
@@ -656,7 +656,7 @@ HB_FUNC( BIO_READ )
 
    if( bio )
    {
-      int size = HB_ISNUM(3) ? hb_parni(3) : static_cast< int >( hb_parclen(2) );
+      int size = HB_ISNUM(3) ? hb_parni(3) : static_cast<int>(hb_parclen(2));
 
       if( size > 0 )
       {
@@ -687,7 +687,7 @@ HB_FUNC( BIO_GETS )
 
    if( bio )
    {
-      int size = HB_ISNUM(3) ? hb_parni(3) : static_cast< int >( hb_parclen(2) );
+      int size = HB_ISNUM(3) ? hb_parni(3) : static_cast<int>(hb_parclen(2));
 
       if( size > 0 )
       {
@@ -718,7 +718,7 @@ HB_FUNC( BIO_WRITE )
 
    if( bio )
    {
-      int size = static_cast< int >( hb_parclen(2) );
+      int size = static_cast<int>(hb_parclen(2));
 
       if( HB_ISNUM(3) )
       {
@@ -753,11 +753,11 @@ HB_FUNC( BIO_PUTS )
 
 HB_FUNC( BIO_FREE )
 {
-   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcBIOFuncs, 1 ) );
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcBIOFuncs, 1));
 
    if( ph )
    {
-      BIO * bio = static_cast< BIO * >( *ph );
+      BIO * bio = static_cast<BIO*>(*ph);
       *ph = nullptr;
       hb_retni(bio ? BIO_free(bio) : 0);
    }
@@ -777,10 +777,10 @@ HB_FUNC( BIO_NEW_CONNECT )
    if( HB_ISCHAR(1) )
    {
 #if OPENSSL_VERSION_NUMBER >= 0x10002000L && !defined(LIBRESSL_VERSION_NUMBER)
-      hb_BIO_ret( BIO_new_connect( hb_parc(1) ), nullptr );
+      hb_BIO_ret(BIO_new_connect(hb_parc(1)), nullptr);
 #else
       /* NOTE: Discarding 'const', OpenSSL will strdup() */
-      hb_BIO_ret( BIO_new_connect( const_cast< char * >( hb_parc(1) ) ), nullptr );
+      hb_BIO_ret(BIO_new_connect(const_cast<char*>(hb_parc(1))), nullptr);
 #endif
    }
    else
@@ -794,10 +794,10 @@ HB_FUNC( BIO_NEW_ACCEPT )
    if( HB_ISCHAR(1) )
    {
 #if OPENSSL_VERSION_NUMBER >= 0x10002000L && !defined(LIBRESSL_VERSION_NUMBER)
-      hb_BIO_ret( BIO_new_accept( hb_parc(1) ), nullptr );
+      hb_BIO_ret(BIO_new_accept(hb_parc(1)), nullptr);
 #else
       /* NOTE: Discarding 'const', OpenSSL will strdup() */
-      hb_BIO_ret( BIO_new_accept( const_cast< char * >( hb_parc(1) ) ), nullptr );
+      hb_BIO_ret(BIO_new_accept(const_cast<char*>(hb_parc(1))), nullptr);
 #endif
    }
    else
@@ -997,7 +997,7 @@ HB_FUNC( ERR_LOAD_BIO_STRINGS )
 #define BIO_get_proxy_header( b, skp )        BIO_ctrl( b, BIO_C_GET_PROXY_PARAM, 0, ( char * ) skp )
 #define BIO_get_proxies( b, pxy_p )           BIO_ctrl( b, BIO_C_GET_PROXY_PARAM, 1, ( char * ) ( pxy_p ) )
 #define BIO_get_url( b, url )                 BIO_ctrl( b, BIO_C_GET_PROXY_PARAM, 2, ( char * ) ( url ) )
-#define BIO_get_no_connect_return( b )        BIO_ctrl( b, BIO_C_GET_PROXY_PARAM, 5, nullptr )
+#define BIO_get_no_connect_return( b )        BIO_ctrl(b, BIO_C_GET_PROXY_PARAM, 5, nullptr)
 
 #define BIO_set_fp( b, fp, c )                BIO_ctrl( b, BIO_C_SET_FILE_PTR, c, ( char * ) fp )
 #define BIO_get_fp( b, fpp )                  BIO_ctrl( b, BIO_C_GET_FILE_PTR, 0, ( char * ) fpp )

@@ -2010,16 +2010,16 @@ BOOL CALLBACK hb_gt_wvwDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPAR
                PHB_ITEM pReturn;
 
                hihDlg.type = Harbour::Item::NIL;
-               hb_itemPutNL( &hihDlg, (ULONG) hDlg );
+               hb_itemPutNL(&hihDlg, (ULONG) hDlg);
 
                himessage.type = Harbour::Item::NIL;
-               hb_itemPutNL( &himessage, (ULONG) message );
+               hb_itemPutNL(&himessage, (ULONG) message);
 
                hiwParam.type = Harbour::Item::NIL;
-               hb_itemPutNL( &hiwParam, (ULONG) wParam );
+               hb_itemPutNL(&hiwParam, (ULONG) wParam);
 
                hilParam.type = Harbour::Item::NIL;
-               hb_itemPutNL( &hilParam, (ULONG) lParam );
+               hb_itemPutNL(&hilParam, (ULONG) lParam);
 
                pReturn = hb_itemDo( (PHB_ITEM) s_pWvwData->s_sApp->pFunc[iIndex], 4, &hihDlg, &himessage, &hiwParam, &hilParam );
 
@@ -2151,16 +2151,16 @@ BOOL CALLBACK hb_gt_wvwDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPAR
                PHB_ITEM pReturn;
 
                hihDlg.type = Harbour::Item::NIL;
-               hb_itemPutNL( &hihDlg, (ULONG) hDlg );
+               hb_itemPutNL(&hihDlg, (ULONG) hDlg);
 
                himessage.type = Harbour::Item::NIL;
-               hb_itemPutNL( &himessage, (ULONG) message );
+               hb_itemPutNL(&himessage, (ULONG) message);
 
                hiwParam.type = Harbour::Item::NIL;
-               hb_itemPutNL( &hiwParam, (ULONG) wParam );
+               hb_itemPutNL(&hiwParam, (ULONG) wParam);
 
                hilParam.type = Harbour::Item::NIL;
-               hb_itemPutNL( &hilParam, (ULONG) lParam );
+               hb_itemPutNL(&hilParam, (ULONG) lParam);
 
                pReturn = hb_itemDo( (PHB_ITEM) s_pWvwData->s_sApp->pFuncModal[iIndex], 4, &hihDlg, &himessage, &hiwParam, &hilParam );
                bReturn = hb_itemGetNL(pReturn);

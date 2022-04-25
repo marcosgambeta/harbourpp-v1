@@ -327,7 +327,7 @@ PHB_ZEBRA hb_zebra_create_code128( const char * szCode, HB_SIZE nLen, int iFlags
             iCodeLen = 2;
             break;
          }
-         else if( ( j - i >= 4 && ( i == 1 || j == iCodeLen || pCode[j] == SELECT_A || pCode[j] == SELECT_B ) ) || j - i >= 6 )
+         else if( (j - i >= 4 && (i == 1 || j == iCodeLen || pCode[j] == SELECT_A || pCode[j] == SELECT_B)) || j - i >= 6 )
          {
             if( i == 1 )
             {
@@ -361,7 +361,7 @@ PHB_ZEBRA hb_zebra_create_code128( const char * szCode, HB_SIZE nLen, int iFlags
                /* ... X 1 2 3 4 5 6 Y ...  -->  ... X [CodeC] [12] [34] [56] [CodeN] Y ... */
                /* ... X 1 2 3 4 5 6 7 Y ...  -->  ... X 1 [CodeC] [23] [45] [67] [CodeN] Y ... */
 
-               if( ( j - i ) & 1 )
+               if( (j - i) & 1 )
                {
                   /* digit count is odd */
                   i++;

@@ -168,7 +168,7 @@ HB_FUNC( CHARRELREP )
       }
 
       pcRet = static_cast<char*>(hb_xgrab(sStrLen2 + 1));
-      hb_xmemcpy( pcRet, pcString2, sStrLen2 );
+      hb_xmemcpy(pcRet, pcString2, sStrLen2);
 
       sOffset1 = 0;
       sOffset2 = 0;
@@ -189,7 +189,7 @@ HB_FUNC( CHARRELREP )
                for( HB_SIZE sCurr = 1; sCurr <= sStrToMatchLen1; sCurr++ )
                {
                   /* check if pcString2 is long enough */
-                  if( ( pc2 - pcString2 ) + sCurr >= sStrLen2 )
+                  if( (pc2 - pcString2) + sCurr >= sStrLen2 )
                   {
                      HB_SIZE sStr2Offset, sReplOffset;
 

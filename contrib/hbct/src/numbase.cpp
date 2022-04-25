@@ -201,7 +201,7 @@ HB_FUNC( NTOC )
       {
          iLen = 1;
       }
-      memset( szBuffer, '*', iLen );
+      memset(szBuffer, '*', iLen);
       pszResult = szBuffer;
    }
    hb_retclen(pszResult, iLen);

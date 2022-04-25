@@ -60,9 +60,9 @@ HB_FUNC( BIN2U )
       {
          const char * pszString = hb_itemGetCPtr(pItem);
          if( nLen >= 3 )
-            uiResult = HB_GET_LE_UINT32( pszString );
+            uiResult = HB_GET_LE_UINT32(pszString);
          else
-            uiResult = HB_GET_LE_UINT16( pszString );
+            uiResult = HB_GET_LE_UINT16(pszString);
       }
    }
    hb_retnint(uiResult);
@@ -70,19 +70,19 @@ HB_FUNC( BIN2U )
 
 HB_FUNC( U2BIN )
 {
-   char   szResult[4];
+   char szResult[4];
    HB_U32 uiValue = static_cast<HB_U32>(hb_parnint(1));
 
-   HB_PUT_LE_UINT32( szResult, uiValue );
+   HB_PUT_LE_UINT32(szResult, uiValue);
    hb_retclen(szResult, 4);
 }
 
 HB_FUNC( W2BIN )
 {
-   char   szResult[2];
-   HB_U16 uiValue = ( HB_U16 ) hb_parni(1);
+   char szResult[2];
+   HB_U16 uiValue = static_cast<HB_U16>(hb_parni(1));
 
-   HB_PUT_LE_UINT16( szResult, uiValue );
+   HB_PUT_LE_UINT16(szResult, uiValue);
    hb_retclen(szResult, 2);
 }
 

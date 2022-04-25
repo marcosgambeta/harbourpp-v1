@@ -73,15 +73,15 @@ HB_FUNC( HB_GS )
       int     gsargc = static_cast<int>(hb_arrayLen(pParam)) + 1;
       char ** gsargv = static_cast<char**>(hb_xgrab(gsargc * sizeof(const char*)));
 
-      gsargv[0] = const_cast< char * >( "hbgs" ); /* actual value doesn't matter */
+      gsargv[0] = const_cast<char*>("hbgs"); /* actual value doesn't matter */
 
       for( pos = 1; pos < gsargc; ++pos )
       {
          const char * pszParam = hb_arrayGetCPtr(pParam, pos);
-         gsargv[pos] = const_cast< char * >( pszParam ? pszParam : "" );
+         gsargv[pos] = const_cast<char*>(pszParam ? pszParam : "");
       }
 
-      code = gsapi_new_instance( &minst, nullptr );
+      code = gsapi_new_instance(&minst, nullptr);
       if( code >= 0 )
       {
          code  = gsapi_init_with_args( minst, gsargc, gsargv );

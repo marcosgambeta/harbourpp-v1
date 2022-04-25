@@ -72,9 +72,9 @@ HB_FUNC( TIP_URLENCODE )
             {
                pszRet[nPosRet] = '+';
             }
-            else if( ( cElem >= 'A' && cElem <= 'Z' ) ||
-                     ( cElem >= 'a' && cElem <= 'z' ) ||
-                     ( cElem >= '0' && cElem <= '9' ) ||
+            else if( (cElem >= 'A' && cElem <= 'Z') ||
+                     (cElem >= 'a' && cElem <= 'z') ||
+                     (cElem >= '0' && cElem <= '9') ||
                      cElem == '.' || cElem == ',' || cElem == '&' ||
                      cElem == '/' || cElem == ';' || cElem == '_' )
             {

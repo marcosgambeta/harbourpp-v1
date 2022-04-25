@@ -66,19 +66,19 @@ static const HB_GC_FUNCS s_gcPatternFuncs =
    hb_gcDummyMark
 };
 
-cairo_pattern_t * hb_cairoPatternItemGet( PHB_ITEM pItem )
+cairo_pattern_t * hb_cairoPatternItemGet(PHB_ITEM pItem)
 {
    cairo_pattern_t ** ppPattern = static_cast<cairo_pattern_t**>(hb_itemGetPtrGC(pItem, &s_gcPatternFuncs));
 
    return ppPattern ? *ppPattern : nullptr;
 }
 
-PHB_ITEM hb_cairoPatternItemPut( PHB_ITEM pItem, cairo_pattern_t * pPattern )
+PHB_ITEM hb_cairoPatternItemPut(PHB_ITEM pItem, cairo_pattern_t * pPattern)
 {
    cairo_pattern_t ** ppPattern = static_cast<cairo_pattern_t**>(hb_gcAllocate(sizeof(cairo_pattern_t*), &s_gcPatternFuncs));
 
    *ppPattern = pPattern;
-   return hb_itemPutPtrGC( pItem, ppPattern );
+   return hb_itemPutPtrGC(pItem, ppPattern);
 }
 
 cairo_pattern_t * hb_cairo_pattern_param( int iParam )

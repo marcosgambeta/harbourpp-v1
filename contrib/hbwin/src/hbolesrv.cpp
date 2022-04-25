@@ -394,9 +394,7 @@ static HRESULT STDMETHODCALLTYPE Invoke(IDispatch * lpThis, DISPID dispid, REFII
              ((wFlags & DISPATCH_PROPERTYGET) != 0 && pParams->cArgs == 0) ||
              ((wFlags & DISPATCH_PROPERTYPUT) != 0 && pParams->cArgs == 1) )
          {
-            fResult = hb_oleDispInvoke(nullptr, pAction,
-                                       hb_hashGetKeyAt(s_pMsgHash, static_cast<HB_SIZE>(dispid)),
-                                       pParams, pVarResult, s_objItemToVariant, uiClass);
+            fResult = hb_oleDispInvoke(nullptr, pAction, hb_hashGetKeyAt(s_pMsgHash, static_cast<HB_SIZE>(dispid)), pParams, pVarResult, s_objItemToVariant, uiClass);
          }
       }
       else if( HB_IS_HASH(pAction) )

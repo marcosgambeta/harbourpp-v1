@@ -106,7 +106,7 @@ HB_FUNC( BLANK )
 
          if( nLen > 0 )
          {
-            hb_xmemset( szResult, ' ', nLen );
+            hb_xmemset(szResult, ' ', nLen);
          }
          if( bRef )
          {
@@ -137,7 +137,7 @@ HB_FUNC( BLANK )
    {
       if( bRef )
       {
-         hb_arraySize( pItem, 0 );
+         hb_arraySize(pItem, 0);
       }
       if( bRet )
       {

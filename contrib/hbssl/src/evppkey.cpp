@@ -52,13 +52,13 @@
 
 static HB_GARBAGE_FUNC( EVP_PKEY_release )
 {
-   void ** ph = static_cast< void ** >( Cargo );
+   void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
-      EVP_PKEY_free( static_cast< EVP_PKEY * >( *ph ) );
+      EVP_PKEY_free( static_cast<EVP_PKEY*>(*ph) );
 
       /* set pointer to nullptr just in case */
       *ph = nullptr;
@@ -78,14 +78,14 @@ HB_BOOL hb_EVP_PKEY_is( int iParam )
 
 EVP_PKEY * hb_EVP_PKEY_par( int iParam )
 {
-   void ** ph = static_cast< void ** >( hb_parptrGC( &s_gcEVP_PKEY_funcs, iParam ) );
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcEVP_PKEY_funcs, iParam));
 
-   return ph ? static_cast< EVP_PKEY * >( *ph ) : nullptr;
+   return ph ? static_cast<EVP_PKEY*>(*ph) : nullptr;
 }
 
 void hb_EVP_PKEY_ret( EVP_PKEY * pkey )
 {
-   void ** ph = static_cast< void ** >( hb_gcAllocate( sizeof(EVP_PKEY*), &s_gcEVP_PKEY_funcs ) );
+   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(EVP_PKEY*), &s_gcEVP_PKEY_funcs));
 
    *ph = pkey;
 
@@ -160,7 +160,7 @@ HB_FUNC( EVP_PKEY_ASSIGN_RSA )
    if( hb_EVP_PKEY_is(1) && HB_ISPOINTER(2) )
    {
       EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
-      RSA *      key  = static_cast< RSA * >( hb_parptr(2) );
+      RSA *      key  = static_cast<RSA*>(hb_parptr(2));
 
       if( pkey && key )
       {
@@ -182,7 +182,7 @@ HB_FUNC( EVP_PKEY_ASSIGN_DSA )
    if( hb_EVP_PKEY_is(1) && HB_ISPOINTER(2) )
    {
       EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
-      DSA *      key  = static_cast< DSA * >( hb_parptr(2) );
+      DSA *      key  = static_cast<DSA*>(hb_parptr(2));
 
       if( pkey && key )
       {
@@ -204,7 +204,7 @@ HB_FUNC( EVP_PKEY_ASSIGN_DH )
    if( hb_EVP_PKEY_is(1) && HB_ISPOINTER(2) )
    {
       EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
-      DH *       key  = static_cast< DH * >( hb_parptr(2) );
+      DH *       key  = static_cast<DH*>(hb_parptr(2));
 
       if( pkey && key )
       {

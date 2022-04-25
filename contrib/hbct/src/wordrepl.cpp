@@ -56,7 +56,7 @@ HB_FUNC( WORDREPL )
    HB_SIZE sSearchLen, sReplaceLen;
 
    /* param check */
-   if( ( sSearchLen = hb_parclen(1) ) / 2 > 0 && HB_ISCHAR(2) && ( sReplaceLen = hb_parclen(3) ) / 2 > 0 )
+   if( (sSearchLen = hb_parclen(1)) / 2 > 0 && HB_ISCHAR(2) && ( sReplaceLen = hb_parclen(3) ) / 2 > 0 )
    {
       /* get parameters */
       const char * pcSearch = hb_parc(1);
@@ -67,7 +67,7 @@ HB_FUNC( WORDREPL )
       char * pcRet;
 
       pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
-      hb_xmemcpy( pcRet, pcString, sStrLen );
+      hb_xmemcpy(pcRet, pcString, sStrLen);
 
       for( HB_SIZE sIndex = 0; sIndex < ( sSearchLen & 0xFFFFFFFE ); sIndex += 2 )
       {
@@ -102,7 +102,7 @@ HB_FUNC( WORDREPL )
             else
             {
                /* replace only if pc is an even position */
-               if( ( ( pc - pcString ) % 2 ) == 0 )
+               if( ((pc - pcString) % 2) == 0 )
                {
                   *( pcRet + ( pc - pcString ) )     = *( pcReplace + sReplIndex );
                   *( pcRet + ( pc - pcString ) + 1 ) = *( pcReplace + sReplIndex + 1 );

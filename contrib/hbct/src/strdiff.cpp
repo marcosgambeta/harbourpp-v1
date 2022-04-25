@@ -97,9 +97,7 @@ HB_FUNC( STRDIFF )
       }
 
       /* check for memory consumption */
-      if( ( static_cast<double>(sStrLen1) + 1.0 ) *
-          ( static_cast<double>(sStrLen2) + 1.0 ) *
-          ( static_cast<double>(sizeof(int)) ) >= static_cast<double>(UINT_MAX) )
+      if( (static_cast<double>(sStrLen1) + 1.0) * (static_cast<double>(sStrLen2) + 1.0) * (static_cast<double>(sizeof(int))) >= static_cast<double>(UINT_MAX) )
       {
          int iArgErrorMode = ct_getargerrormode();
 

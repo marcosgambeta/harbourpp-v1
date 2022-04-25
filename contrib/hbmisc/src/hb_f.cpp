@@ -66,16 +66,16 @@ typedef struct
 
 static void s_fttext_init_init( void * cargo )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) cargo;
+   PFT_TEXT ft_text = static_cast<PFT_TEXT>(cargo);
 
    ft_text->area = 0;
 }
 
-static HB_TSD_NEW( s_fttext, sizeof(FT_TEXT), s_fttext_init_init, nullptr );
+static HB_TSD_NEW(s_fttext, sizeof(FT_TEXT), s_fttext_init_init, nullptr);
 
 HB_FUNC( HB_FUSE )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_fttext );
+   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    if( HB_ISCHAR(1) )
    {
@@ -102,7 +102,7 @@ HB_FUNC( HB_FUSE )
 
 HB_FUNC( HB_FRECNO )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_fttext );
+   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    hb_retnl(ft_text->recno[ft_text->area]);
 }
@@ -128,14 +128,13 @@ static long hb_hbfskip( PFT_TEXT ft_text, char * buffer, HB_SIZE bufsize, int re
 
          for( x = 0; x < read_len; ++x )
          {
-            if( ( ( *( buffer + x ) == 13 ) && ( *( buffer + x + 1 ) == 10 ) ) ||
-                ( ( *( buffer + x ) == 10 ) && ( *( buffer + x + 1 ) == 13 ) ) )
+            if( ((*(buffer + x) == 13) && (*(buffer + x + 1) == 10)) || ((*(buffer + x) == 10) && (*(buffer + x + 1) == 13)) )
             {
                break;
             }
          }
 
-         if( ( ft_text->offset[ft_text->area] + x + 2 ) < ft_text->lastbyte[ft_text->area] )
+         if( (ft_text->offset[ft_text->area] + x + 2) < ft_text->lastbyte[ft_text->area] )
          {
             ft_text->isEof[ft_text->area]   = HB_FALSE;
             ft_text->offset[ft_text->area] += ( x + 2 );
@@ -150,7 +149,7 @@ static long hb_hbfskip( PFT_TEXT ft_text, char * buffer, HB_SIZE bufsize, int re
       recs = -recs;
       ft_text->isEof[ft_text->area] = HB_FALSE;
 
-      if( ( ft_text->recno[ft_text->area] - recs ) < 1 )
+      if( (ft_text->recno[ft_text->area] - recs) < 1 )
          return 1;
 
       for( y = recs; y > 0; --y )
@@ -170,8 +169,7 @@ static long hb_hbfskip( PFT_TEXT ft_text, char * buffer, HB_SIZE bufsize, int re
 
          for( x = read_len - 4; x >= 0; --x )
          {
-            if( ( ( *( buffer + x ) == 13 ) && ( *( buffer + x + 1 ) == 10 ) ) ||
-                ( ( *( buffer + x ) == 10 ) && ( *( buffer + x + 1 ) == 13 ) ) )
+            if( ((*(buffer + x) == 13) && (*(buffer + x + 1) == 10)) || ((*(buffer + x) == 10) && (*(buffer + x + 1) == 13)) )
                break;
          }
          if( x < 0 )
@@ -192,7 +190,7 @@ static long hb_hbfskip( PFT_TEXT ft_text, char * buffer, HB_SIZE bufsize, int re
 
 HB_FUNC( HB_FSKIP )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_fttext );
+   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    char * buffer = static_cast<char*>(hb_xgrab(_B_SIZE));
 
@@ -203,7 +201,7 @@ HB_FUNC( HB_FSKIP )
 
 HB_FUNC( HB_FREADLN )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_fttext );
+   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    char * buffer = static_cast<char*>(hb_xgrab(_B_SIZE));
 
@@ -216,9 +214,9 @@ HB_FUNC( HB_FREADLN )
 
    for( x = 0; x < _B_SIZE; ++x )
    {
-      if( ( ( *( buffer + x ) == 13 ) && ( *( buffer + x + 1 ) == 10 ) ) ||
-          ( ( *( buffer + x ) == 10 ) && ( *( buffer + x + 1 ) == 13 ) ) ||
-          ( *( buffer + x ) == 26 ) || x >= read )
+      if( ((*(buffer + x) == 13) && (*(buffer + x + 1) == 10)) ||
+          ((*(buffer + x) == 10) && (*(buffer + x + 1) == 13)) ||
+          (*(buffer + x) == 26) || x >= read )
          break;
    }
 
@@ -229,7 +227,7 @@ HB_FUNC( HB_FREADLN )
 
 HB_FUNC( HB_FATEOF )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_fttext );
+   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    hb_retl(ft_text->isEof[ft_text->area]);
 }
@@ -240,7 +238,7 @@ HB_FUNC_TRANSLATE( HB_FEOF, HB_FATEOF )
 
 HB_FUNC( HB_FGOTO )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_fttext );
+   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    char * buffer = static_cast<char*>(hb_xgrab(_B_SIZE));
 
@@ -272,7 +270,7 @@ HB_FUNC( HB_FGOTO )
 
 HB_FUNC( HB_FGOBOTTOM )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_fttext );
+   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    if( ft_text->last_rec[ft_text->area] != 0 )
    {
@@ -296,9 +294,9 @@ HB_FUNC( HB_FGOBOTTOM )
 
          for( x = 0; x < len; ++x )
          {
-            if( ( ( *( buffer + x ) == 13 ) && ( *( buffer + x + 1 ) == 10 ) ) ||
-                ( ( *( buffer + x ) == 10 ) && ( *( buffer + x + 1 ) == 13 ) ) ||
-                ( x - loc > _B_SIZE ) )
+            if( ((*(buffer + x) == 13) && (*(buffer + x + 1) == 10)) ||
+                ((*(buffer + x) == 10) && (*(buffer + x + 1) == 13)) ||
+                (x - loc > _B_SIZE) )
             {
                last = ft_text->offset[ft_text->area] + loc;
                ft_text->recno[ft_text->area]++;
@@ -320,7 +318,7 @@ HB_FUNC( HB_FGOBOTTOM )
 
 HB_FUNC( HB_FGOTOP )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_fttext );
+   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    ft_text->offset[ft_text->area] = 0;
    ft_text->recno[ft_text->area] = 1;
@@ -329,7 +327,7 @@ HB_FUNC( HB_FGOTOP )
 
 HB_FUNC( HB_FLASTREC )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_fttext );
+   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    long       old_rec;
    HB_FOFFSET old_offset;
@@ -349,7 +347,7 @@ HB_FUNC( HB_FLASTREC )
 
 HB_FUNC( HB_FSELECT )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_fttext );
+   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    hb_retni(ft_text->area + 1);
 
@@ -364,7 +362,7 @@ HB_FUNC( HB_FSELECT )
 
 HB_FUNC( HB_FINFO )  /* used for debugging */
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_fttext );
+   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    hb_reta(6);
    hb_storvni( ft_text->area + 1, -1, 1 );
@@ -392,7 +390,7 @@ HB_FUNC( HB_FINFO )  /* used for debugging */
  */
 HB_FUNC( HB_FREADANDSKIP )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_fttext );
+   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    char * buffer = static_cast<char*>(hb_xgrab(_B_SIZE));
 
@@ -418,8 +416,8 @@ HB_FUNC( HB_FREADANDSKIP )
          continue;
       }
 
-      if( ( ( *( buffer + x ) == 13 ) && x < read - 1 && ( *( buffer + x + 1 ) == 10 ) ) ||
-          ( ( *( buffer + x ) == 10 ) && x < read - 1 && ( *( buffer + x + 1 ) == 13 ) ) )
+      if( ((*(buffer + x) == 13) && x < read - 1 && (*(buffer + x + 1) == 10)) ||
+          ((*(buffer + x) == 10) && x < read - 1 && (*(buffer + x + 1) == 13)) )
       {
          x       += 2;
          bHasCRLF = HB_TRUE;

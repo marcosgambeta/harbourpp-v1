@@ -126,10 +126,10 @@ static void hb_ocidd_init( void * cargo )
 {
    HB_SYMBOL_UNUSED(cargo);
 
-   if( !OCI_Initialize( nullptr, nullptr, OCI_ENV_DEFAULT | OCI_ENV_CONTEXT | OCI_ENV_THREADED ) )
+   if( !OCI_Initialize(nullptr, nullptr, OCI_ENV_DEFAULT | OCI_ENV_CONTEXT | OCI_ENV_THREADED) )
       hb_errInternal(8000, nullptr, nullptr, nullptr);
    else if( !hb_sddRegister( &s_ocidd ) )
-      hb_errInternal( HB_EI_RDDINVALID, nullptr, nullptr, nullptr );
+      hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
 }
 
 static void hb_ocidd_exit( void * cargo )
@@ -141,7 +141,7 @@ static void hb_ocidd_exit( void * cargo )
 
 HB_FUNC( HB_SDDOCI_REGISTER )
 {
-   hb_ocidd_init( nullptr );
+   hb_ocidd_init(nullptr);
 }
 
 /* force SQLBASE linking */
@@ -154,8 +154,8 @@ HB_INIT_SYMBOLS_BEGIN( ocidd__InitSymbols )
 HB_INIT_SYMBOLS_END( ocidd__InitSymbols )
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_ocidd_init_ )
-hb_vmAtInit( hb_ocidd_init, nullptr );
-hb_vmAtExit( hb_ocidd_exit, nullptr );
+hb_vmAtInit(hb_ocidd_init, nullptr);
+hb_vmAtExit(hb_ocidd_exit, nullptr);
 HB_CALL_ON_STARTUP_END( _hb_ocidd_init_ )
 
 #if defined(HB_PRAGMA_STARTUP)
@@ -190,7 +190,7 @@ static char * ocilibGetError( HB_ERRCODE * pErrCode )
 
    if( err )
    {
-      PHB_ITEM pRet = M_HB_ITEMPUTSTR( nullptr, OCI_ErrorGetString( err ) );
+      PHB_ITEM pRet = M_HB_ITEMPUTSTR(nullptr, OCI_ErrorGetString(err));
       szRet = hb_strdup( hb_itemGetCPtr(pRet) );
       hb_itemRelease(pRet);
 
@@ -203,7 +203,7 @@ static char * ocilibGetError( HB_ERRCODE * pErrCode )
    }
 
    if( pErrCode )
-      *pErrCode = static_cast< HB_ERRCODE >( iNativeErr );
+      *pErrCode = static_cast<HB_ERRCODE>(iNativeErr);
 
    return szRet;
 }
@@ -217,9 +217,9 @@ static HB_ERRCODE ocilibConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    void * hUser;
    void * hPass;
 
-   cn = OCI_ConnectionCreate( ( mtext * ) M_HB_ARRAYGETSTR( pItem, 2, &hConn, nullptr ),
-                              ( mtext * ) M_HB_ARRAYGETSTR( pItem, 3, &hUser, nullptr ),
-                              ( mtext * ) M_HB_ARRAYGETSTR( pItem, 4, &hPass, nullptr ), OCI_SESSION_DEFAULT );
+   cn = OCI_ConnectionCreate(static_cast<mtext*>(M_HB_ARRAYGETSTR(pItem, 2, &hConn, nullptr)),
+                             static_cast<mtext*>(M_HB_ARRAYGETSTR(pItem, 3, &hUser, nullptr)),
+                             static_cast<mtext*>(M_HB_ARRAYGETSTR(pItem, 4, &hPass, nullptr)), OCI_SESSION_DEFAULT);
 
    hb_strfree(hConn);
    hb_strfree(hUser);
@@ -258,7 +258,7 @@ static HB_ERRCODE ocilibExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
       return HB_FAILURE;
    }
 
-   if( OCI_ExecuteStmt( st, M_HB_ITEMGETSTR( pItem, &hStatement, nullptr ) ) )
+   if( OCI_ExecuteStmt(st, M_HB_ITEMGETSTR(pItem, &hStatement, nullptr)) )
    {
       hb_strfree(hStatement);
 
@@ -300,9 +300,9 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
       return HB_FAILURE;
    }
 
-   pItem = hb_itemPutC( nullptr, pArea->szQuery );
+   pItem = hb_itemPutC(nullptr, pArea->szQuery);
 
-   if( !OCI_ExecuteStmt( st, M_HB_ITEMGETSTR( pItem, &hQuery, nullptr ) ) )
+   if( !OCI_ExecuteStmt(st, M_HB_ITEMGETSTR(pItem, &hQuery, nullptr)) )
    {
       hb_strfree(hQuery);
       hb_itemRelease(pItem);
@@ -320,7 +320,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
 
    rs = OCI_GetResultset( st );
 
-   uiFields = static_cast< HB_USHORT >( OCI_GetColumnCount( rs ) );
+   uiFields = static_cast<HB_USHORT>(OCI_GetColumnCount(rs));
    SELF_SETFIELDEXTENT( &pArea->area, uiFields );
 
    pItemEof = hb_itemArrayNew( uiFields );
@@ -349,27 +349,27 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
       {
          hb_itemRelease(pItemEof);
          hb_itemRelease(pItem);
-         szError = ocilibGetError( nullptr );
+         szError = ocilibGetError(nullptr);
          OCI_StatementFree( st );
          hb_errRT_OCIDD( EG_OPEN, ESQLDD_STMTDESCR + 1001, szError, pArea->szQuery, 0 );
          hb_xfree(szError);
          return HB_FAILURE;
       }
 
-      memset( &dbFieldInfo, 0, sizeof(dbFieldInfo) );
-      pName = D_HB_ITEMPUTSTR( nullptr, OCI_ColumnGetName( col ) );
+      memset(&dbFieldInfo, 0, sizeof(dbFieldInfo));
+      pName = D_HB_ITEMPUTSTR(nullptr, OCI_ColumnGetName(col));
       dbFieldInfo.atomName = hb_itemGetCPtr(pName);
 
       uiDataType = OCI_ColumnGetType( col );
       uiSize     = OCI_ColumnGetSize( col );
       iDec       = OCI_ColumnGetPrecision( col );
-      bNullable  = ( HB_BOOL ) OCI_ColumnGetNullable( col );
+      bNullable  = static_cast<HB_BOOL>(OCI_ColumnGetNullable(col));
 
       if( bNullable )
          dbFieldInfo.uiFlags |= HB_FF_NULLABLE;
 
-      dbFieldInfo.uiLen = static_cast< HB_USHORT >( uiSize );
-      dbFieldInfo.uiDec = static_cast< HB_USHORT >( iDec );
+      dbFieldInfo.uiLen = static_cast<HB_USHORT>(uiSize);
+      dbFieldInfo.uiDec = static_cast<HB_USHORT>(iDec);
 
 #if 0
       HB_TRACE( HB_TR_ALWAYS, ( "field: name=%s type=%d len=%d dec=%d nullable=%d %d %d %d %d", dbFieldInfo.atomName, uiDataType, uiSize, iDec, bNullable, OCI_ColumnGetScale( col ), OCI_ColumnGetPrecision( col ), OCI_ColumnGetFractionalPrecision( col ), OCI_ColumnGetLeadingPrecision( col ) ) );
@@ -385,11 +385,11 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
             dbFieldInfo.uiType = HB_FT_LONG;
             /* For plain 'NUMERIC', precision is zero and scale is -127 */
             if( OCI_ColumnGetPrecision( col ) > 0 )
-               dbFieldInfo.uiLen = static_cast< HB_USHORT >( OCI_ColumnGetPrecision( col ) );
+               dbFieldInfo.uiLen = static_cast<HB_USHORT>(OCI_ColumnGetPrecision(col));
             if( OCI_ColumnGetScale( col ) >= 0 )
-               dbFieldInfo.uiDec = static_cast< HB_USHORT >( OCI_ColumnGetScale( col ) );
+               dbFieldInfo.uiDec = static_cast<HB_USHORT>(OCI_ColumnGetScale(col));
             else
-               dbFieldInfo.uiDec = static_cast< HB_USHORT >( hb_setGetDecimals() );
+               dbFieldInfo.uiDec = static_cast<HB_USHORT>(hb_setGetDecimals());
             break;
 
          case OCI_CDT_LONG:
@@ -411,7 +411,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
             HB_TRACE( HB_TR_ALWAYS, ( "new sql type=%d", uiDataType ) );
 #endif
             bError  = HB_TRUE;
-            errCode = static_cast< HB_ERRCODE >( uiDataType );
+            errCode = static_cast<HB_ERRCODE>(uiDataType);
             break;
       }
 
@@ -422,48 +422,48 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
             case HB_FT_STRING:
             {
                char * pStr = static_cast<char*>(hb_xgrab(static_cast<HB_SIZE>(dbFieldInfo.uiLen) + 1));
-               memset( pStr, ' ', dbFieldInfo.uiLen );
+               memset(pStr, ' ', dbFieldInfo.uiLen);
                pStr[dbFieldInfo.uiLen] = '\0';
 
-               hb_itemPutCLPtr( pItem, pStr, dbFieldInfo.uiLen );
+               hb_itemPutCLPtr(pItem, pStr, dbFieldInfo.uiLen);
                break;
             }
             case HB_FT_MEMO:
             case HB_FT_VARLENGTH:
             case HB_FT_BLOB:
-               hb_itemPutC( pItem, nullptr );
+               hb_itemPutC(pItem, nullptr);
                break;
 
             case HB_FT_INTEGER:
-               hb_itemPutNI( pItem, 0 );
+               hb_itemPutNI(pItem, 0);
                break;
 
             case HB_FT_LONG:
                if( dbFieldInfo.uiDec == 0 )
-                  hb_itemPutNLLen( pItem, 0, dbFieldInfo.uiLen );
+                  hb_itemPutNLLen(pItem, 0, dbFieldInfo.uiLen);
                else
-                  hb_itemPutNDLen( pItem, 0.0, dbFieldInfo.uiLen, dbFieldInfo.uiDec );
+                  hb_itemPutNDLen(pItem, 0.0, dbFieldInfo.uiLen, dbFieldInfo.uiDec);
                break;
 
             case HB_FT_DOUBLE:
-               hb_itemPutNDLen( pItem, 0.0, dbFieldInfo.uiLen, dbFieldInfo.uiDec );
+               hb_itemPutNDLen(pItem, 0.0, dbFieldInfo.uiLen, dbFieldInfo.uiDec);
                break;
 
             case HB_FT_LOGICAL:
-               hb_itemPutL( pItem, false );
+               hb_itemPutL(pItem, false);
                break;
 
             case HB_FT_DATE:
-               hb_itemPutDL( pItem, 0 );
+               hb_itemPutDL(pItem, 0);
                break;
 
             case HB_FT_TIME:
             case HB_FT_TIMESTAMP:
-               hb_itemPutTDT( pItem, 0, 0 );
+               hb_itemPutTDT(pItem, 0, 0);
                break;
 
             default:
-               hb_itemClear( pItem );
+               hb_itemClear(pItem);
                bError = HB_TRUE;
          }
 
@@ -546,16 +546,16 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                if( OCI_IsNull( rs, ui ) )
                {
                   char * pStr = static_cast<char*>(hb_xgrab(static_cast<HB_SIZE>(pField->uiLen) + 1));
-                  memset( pStr, ' ', pField->uiLen );
+                  memset(pStr, ' ', pField->uiLen);
                   pStr[pField->uiLen] = '\0';
 
-                  pItem = hb_itemPutCLPtr( pItem, pStr, pField->uiLen );
+                  pItem = hb_itemPutCLPtr(pItem, pStr, pField->uiLen);
                }
                else
                {
                   const dtext * val;
-                  if( ( val = OCI_GetString( rs, ui ) ) != nullptr )
-                     pItem = D_HB_ITEMPUTSTRLEN( pItem, val, static_cast< HB_SIZE >( dtslen( val ) ) );  /* TODO: Pad it to pField->uiLen size with spaces? */
+                  if( (val = OCI_GetString(rs, ui)) != nullptr )
+                     pItem = D_HB_ITEMPUTSTRLEN(pItem, val, static_cast<HB_SIZE>(dtslen(val)));  /* TODO: Pad it to pField->uiLen size with spaces? */
                }
                break;
 
@@ -563,12 +563,12 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
             case HB_FT_INTEGER:
                if( pField->uiDec == 0 )
 #if HB_VMLONG_MAX == INT32_MAX || defined(HB_LONG_LONG_OFF)
-                  pItem = hb_itemPutNIntLen( pItem, OCI_GetInt( rs, ui ), pField->uiLen );
+                  pItem = hb_itemPutNIntLen(pItem, OCI_GetInt(rs, ui), pField->uiLen);
 #else
-                  pItem = hb_itemPutNIntLen( pItem, OCI_GetBigInt( rs, ui ), pField->uiLen );
+                  pItem = hb_itemPutNIntLen(pItem, OCI_GetBigInt(rs, ui), pField->uiLen);
 #endif
                else
-                  pItem = hb_itemPutNDLen( pItem, OCI_GetDouble( rs, ui ), pField->uiLen, pField->uiDec );
+                  pItem = hb_itemPutNDLen(pItem, OCI_GetDouble(rs, ui), pField->uiLen, pField->uiDec);
                break;
 
             case HB_FT_VARLENGTH:
@@ -579,9 +579,9 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                {
                   unsigned int uiSize = OCI_LongGetSize( val );
                   if( OCI_LongGetType( val ) == OCI_CLONG )
-                     pItem = D_HB_ITEMPUTSTRLEN( pItem, ( D_HB_CHAR * ) OCI_LongGetBuffer( val ), uiSize );
+                     pItem = D_HB_ITEMPUTSTRLEN(pItem, static_cast<D_HB_CHAR*>(OCI_LongGetBuffer(val)), uiSize);
                   else
-                     pItem = hb_itemPutCL( pItem, static_cast< const char * >( OCI_LongGetBuffer( val ) ), uiSize );
+                     pItem = hb_itemPutCL(pItem, static_cast<const char*>(OCI_LongGetBuffer(val)), uiSize);
                }
                break;
             }
@@ -592,7 +592,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
             {
                OCI_Long * val = OCI_GetLong( rs, ui );
                if( val )
-                  pItem = hb_itemPutCL( pItem, static_cast< const char * >( OCI_LongGetBuffer( val ) ), OCI_LongGetSize( val ) );
+                  pItem = hb_itemPutCL(pItem, static_cast<const char*>(OCI_LongGetBuffer(val)), OCI_LongGetSize(val));
                break;
             }
 
@@ -601,7 +601,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
             case HB_FT_FLOAT:
             case HB_FT_DOUBLE:
 
-               pItem = hb_itemPutNDLen( pItem, OCI_GetDouble( rs, ui ), pField->uiLen, pField->uiDec );
+               pItem = hb_itemPutNDLen(pItem, OCI_GetDouble(rs, ui), pField->uiLen, pField->uiDec);
                break;
 
             case HB_FT_DATE:
@@ -609,7 +609,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                OCI_Date * date = OCI_GetDate( rs, ui );
                int        iYear, iMonth, iDay;
                if( date && OCI_DateGetDate( date, &iYear, &iMonth, &iDay ) )
-                  pItem = hb_itemPutD( pItem, iYear, iMonth, iDay );
+                  pItem = hb_itemPutD(pItem, iYear, iMonth, iDay);
                break;
             }
 
@@ -619,8 +619,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                int        iYear, iMonth, iDay, iHour, iMin, iSec;
 
                if( date && OCI_DateGetDateTime( date, &iYear, &iMonth, &iDay, &iHour, &iMin, &iSec ) )
-                  pItem = hb_itemPutTDT( pItem, hb_dateEncode( iYear, iMonth, iDay ),
-                                         hb_timeEncode( iHour, iMin, iSec, 0 ) );
+                  pItem = hb_itemPutTDT(pItem, hb_dateEncode(iYear, iMonth, iDay), hb_timeEncode(iHour, iMin, iSec, 0));
                break;
             }
 
@@ -629,8 +628,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                OCI_Timestamp * ts = OCI_GetTimestamp( rs, ui );
                int iYear, iMonth, iDay, iHour, iMin, iSec, iFSec;
                if( ts && OCI_TimestampGetDateTime( ts, &iYear, &iMonth, &iDay, &iHour, &iMin, &iSec, &iFSec ) )
-                  pItem = hb_itemPutTDT( pItem, hb_dateEncode( iYear, iMonth, iDay ),
-                                         hb_timeEncode( iHour, iMin, iSec, iFSec / 1000000 ) );
+                  pItem = hb_itemPutTDT(pItem, hb_dateEncode(iYear, iMonth, iDay), hb_timeEncode(iHour, iMin, iSec, iFSec / 1000000));
                break;
             }
          }
@@ -642,8 +640,8 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
 
       if( pArea->ulRecCount + 1 >= pArea->ulRecMax )
       {
-         pArea->pRow      = static_cast< void ** >( hb_xrealloc( pArea->pRow, ( pArea->ulRecMax + SQLDD_ROWSET_RESIZE ) * sizeof(void*) ) );
-         pArea->pRowFlags = static_cast< HB_BYTE * >( hb_xrealloc( pArea->pRowFlags, ( pArea->ulRecMax + SQLDD_ROWSET_RESIZE ) * sizeof(HB_BYTE) ) );
+         pArea->pRow      = static_cast<void**>(hb_xrealloc(pArea->pRow, (pArea->ulRecMax + SQLDD_ROWSET_RESIZE) * sizeof(void*)));
+         pArea->pRowFlags = static_cast<HB_BYTE*>(hb_xrealloc(pArea->pRowFlags, (pArea->ulRecMax + SQLDD_ROWSET_RESIZE) * sizeof(HB_BYTE)));
          pArea->ulRecMax += SQLDD_ROWSET_RESIZE;
       }
 

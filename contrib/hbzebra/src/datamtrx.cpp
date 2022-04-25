@@ -129,17 +129,17 @@ static int _datamatrix_encode( const char * szCode, int iLen, unsigned char * pC
    {
       if( _datamatrix_isdigit( szCode[i] ) && i < iLen - 1 && _datamatrix_isdigit( szCode[i + 1] ) )
       {
-         pCW[iPos++] = static_cast< unsigned char >( ( szCode[i] - '0' ) * 10 + szCode[i + 1] - '0' + PAIR_OF_DIGITS );
+         pCW[iPos++] = static_cast<unsigned char>((szCode[i] - '0') * 10 + szCode[i + 1] - '0' + PAIR_OF_DIGITS);
          i++;
       }
-      else if( static_cast< unsigned char >( szCode[i] ) <= 127 )
+      else if( static_cast<unsigned char>(szCode[i]) <= 127 )
       {
-         pCW[iPos++] = static_cast< unsigned char >( szCode[i] ) + 1;
+         pCW[iPos++] = static_cast<unsigned char>(szCode[i]) + 1;
       }
       else
       {
          pCW[iPos++] = SHIFT_EXTENDED_ASCII;
-         pCW[iPos++] = static_cast< unsigned char >( szCode[i] ) - 127;
+         pCW[iPos++] = static_cast<unsigned char>(szCode[i]) - 127;
       }
    }
    return iPos;
@@ -162,7 +162,7 @@ static void _reed_solomon_encode( unsigned char * pData, int iDataLen, unsigned 
       {
          if( iM && pPoly[j] )
          {
-            pEC[j] = static_cast< unsigned char >( pEC[j - 1] ^ pExp[( pLog[iM] + pLog[pPoly[j]] ) % iMod] );
+            pEC[j] = static_cast<unsigned char>(pEC[j - 1] ^ pExp[( pLog[iM] + pLog[pPoly[j]] ) % iMod]);
          }
          else
          {
@@ -171,7 +171,7 @@ static void _reed_solomon_encode( unsigned char * pData, int iDataLen, unsigned 
       }
       if( iM && pPoly[0] )
       {
-         pEC[0] = static_cast< unsigned char >( pExp[( pLog[iM] + pLog[pPoly[0]] ) % iMod] );
+         pEC[0] = static_cast<unsigned char>(pExp[( pLog[iM] + pLog[pPoly[0]]) % iMod]);
       }
       else
       {
@@ -346,7 +346,7 @@ static void _datamatrix_do_placement( PHB_BITBUFFER pBits, unsigned char * pCW, 
    iPCol = pSize->iCol - 2 * ( pSize->iCol / pSize->iRegionCol );
 
    pArr = static_cast<int*>(hb_xgrab(sizeof(int) * iPCol * iPRow));
-   hb_xmemset( pArr, 0, sizeof(int) * iPCol * iPRow );
+   hb_xmemset(pArr, 0, sizeof(int) * iPCol * iPRow);
 
    /* Generate placement index array */
 
@@ -428,7 +428,7 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
    PHB_ZEBRA pZebra;
    const DATAMATRIX_SIZE * pSize;
    unsigned char * pCW;
-   int        i, j, iDataCount, iErrorSize, iLen = static_cast< int >( nLen );
+   int        i, j, iDataCount, iErrorSize, iLen = static_cast<int>(nLen);
 
    pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_DATAMATRIX;
@@ -453,9 +453,9 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
    {
       if( s_size[i].iDataSize >= iDataCount )
       {
-         if( ( ( iFlags & HB_ZEBRA_FLAG_DATAMATRIX_SQUARE )    && s_size[i].iRow == s_size[i].iCol ) ||
-             ( ( iFlags & HB_ZEBRA_FLAG_DATAMATRIX_RECTANGLE ) && s_size[i].iRow != s_size[i].iCol ) ||
-             ( iFlags & ( HB_ZEBRA_FLAG_DATAMATRIX_SQUARE | HB_ZEBRA_FLAG_DATAMATRIX_RECTANGLE ) ) == 0 )
+         if( ((iFlags & HB_ZEBRA_FLAG_DATAMATRIX_SQUARE) && s_size[i].iRow == s_size[i].iCol) ||
+             ((iFlags & HB_ZEBRA_FLAG_DATAMATRIX_RECTANGLE) && s_size[i].iRow != s_size[i].iCol) ||
+             (iFlags & (HB_ZEBRA_FLAG_DATAMATRIX_SQUARE | HB_ZEBRA_FLAG_DATAMATRIX_RECTANGLE)) == 0 )
          {
             pSize = s_size + i;
             break;
@@ -471,7 +471,7 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
 
    iErrorSize = ( pSize->iDataSize + 2 ) / pSize->iBlockSize * pSize->iBlockErrorSize;
 
-   pCW = static_cast< unsigned char * >( hb_xrealloc( pCW, pSize->iDataSize + iErrorSize ) );
+   pCW = static_cast<unsigned char*>(hb_xrealloc(pCW, pSize->iDataSize + iErrorSize));
    for( i = iDataCount; i < pSize->iDataSize; i++ )
    {
       pCW[i] = PADDING;

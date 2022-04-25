@@ -57,9 +57,9 @@
 #define K_STRING    0
 #define K_LIST      ( !K_STRING )
 
-#define CR          ( static_cast< char >(13) )
-#define LF          ( static_cast< char >(10) )
-#define FEOF        ( static_cast< char >(26) )
+#define CR          ( static_cast<char>(13) )
+#define LF          ( static_cast<char>(10) )
+#define FEOF        ( static_cast<char>(26) )
 
 #define BUFFERSIZE  4096         /* maximum size of the file buffer */
 #define MAXLINE     255          /* default maximum size of a line  */
@@ -95,7 +95,7 @@ typedef struct
    int        iCellSize;         /* size of one buffer cell             */
 } FT_DISPC, * PFT_DISPC;
 
-static HB_TSD_NEW( s_dispc, sizeof(FT_DISPC), nullptr, nullptr );
+static HB_TSD_NEW(s_dispc, sizeof(FT_DISPC), nullptr, nullptr);
 
 /* prototypes */
 
@@ -131,7 +131,7 @@ static void chattr( PFT_DISPC dispc, int x, int y, int len, int attr )
 
    for( int i = 0; i <= len; i++, vmem += dispc->iCellSize ) /* write the new attribute value */
    {
-      *vmem = static_cast< char >( attr );
+      *vmem = static_cast<char>(attr);
    }
 }
 
@@ -227,7 +227,7 @@ static void buff_align( PFT_DISPC dispc )
 
       if( dispc->buffoffset + dispc->buffbot > dispc->fsize )
       {
-         dispc->buffbot = static_cast< HB_ISIZ >( dispc->fsize - dispc->buffoffset );
+         dispc->buffbot = static_cast<HB_ISIZ>(dispc->fsize - dispc->buffoffset);
       }
 
       i = dispc->buffbot;               /* point the end of the buffer to a valid */
@@ -408,7 +408,7 @@ static void winup( PFT_DISPC dispc )
       }
 
       dispc->buffoffset = getblock( dispc, j );
-      dispc->wintop     = static_cast< int >( i - dispc->buffoffset );
+      dispc->wintop     = static_cast<int>(i - dispc->buffoffset);
 
       buff_align( dispc );
       win_align( dispc );
@@ -447,7 +447,7 @@ static void windown( PFT_DISPC dispc )
       }
       dispc->wintop = k + 2;
    }
-   else if( ( dispc->buffbot + dispc->buffoffset ) < dispc->fsize && dispc->fsize > dispc->buffsize )
+   else if( (dispc->buffbot + dispc->buffoffset) < dispc->fsize && dispc->fsize > dispc->buffsize )
    {
       i = dispc->buffoffset + dispc->wintop;
       j = i;
@@ -465,7 +465,7 @@ static void windown( PFT_DISPC dispc )
       }
       else
       {
-         dispc->wintop = static_cast< int >( i - dispc->buffoffset );
+         dispc->wintop = static_cast<int>(i - dispc->buffoffset);
       }
 
       buff_align( dispc );
@@ -513,7 +513,7 @@ static void filetop( PFT_DISPC dispc )
    }
 
    dispc->bRefresh = HB_TRUE;
-   dispc->wintop   = static_cast< int >( dispc->buffoffset );
+   dispc->wintop   = static_cast<int>(dispc->buffoffset);
    dispc->winrow   = dispc->sline;
    dispc->wincol   = 0;
 
@@ -524,7 +524,7 @@ static void filetop( PFT_DISPC dispc )
 
 static void filebot( PFT_DISPC dispc )
 {
-   if( ( dispc->buffbot + dispc->buffoffset ) < dispc->fsize && dispc->fsize > dispc->buffsize )
+   if( (dispc->buffbot + dispc->buffoffset) < dispc->fsize && dispc->fsize > dispc->buffsize )
    {
       dispc->buffoffset = getblock( dispc, dispc->fsize + 1 );
 
@@ -532,7 +532,7 @@ static void filebot( PFT_DISPC dispc )
    }
 
    dispc->bRefresh = HB_TRUE;
-   dispc->wintop   = static_cast< int >( dispc->buffbot ) - 3;
+   dispc->wintop   = static_cast<int>(dispc->buffbot) - 3;
    dispc->winrow   = dispc->eline;
    dispc->wincol   = 0;
 
@@ -541,7 +541,7 @@ static void filebot( PFT_DISPC dispc )
 
 HB_FUNC( _FT_DFINIT )
 {
-   PFT_DISPC dispc = static_cast< PFT_DISPC >( hb_stackGetTSD( &s_dispc ) );
+   PFT_DISPC dispc = static_cast<PFT_DISPC>(hb_stackGetTSD(&s_dispc));
 
    int     rval;
    HB_ISIZ j;
@@ -560,10 +560,10 @@ HB_FUNC( _FT_DFINIT )
 
    hb_gtRectSize(0, 0, 0, 0, &nSize);
 
-   dispc->iCellSize = static_cast< int >( nSize );
+   dispc->iCellSize = static_cast<int>(nSize);
 
    hb_gtRectSize( dispc->sline, dispc->scol, dispc->eline, dispc->ecol, &nSize );
-   dispc->vseg = static_cast< HB_UCHAR * >( hb_xalloc( nSize ) );
+   dispc->vseg = static_cast<HB_UCHAR*>(hb_xalloc(nSize));
    if( dispc->vseg != nullptr )
    {
       hb_gtSave( dispc->sline, dispc->scol, dispc->eline, dispc->ecol, dispc->vseg );
@@ -572,8 +572,8 @@ HB_FUNC( _FT_DFINIT )
    dispc->maxlin   = hb_parni(12);
    dispc->buffsize = hb_parns(13);                                    /* yes - load value */
 
-   dispc->buffer = static_cast< char * >( hb_xalloc( dispc->buffsize ) );             /* allocate memory */
-   dispc->lbuff  = static_cast< char * >( hb_xalloc( dispc->maxlin + 1 ) );           /* for buffers */
+   dispc->buffer = static_cast<char*>(hb_xalloc(dispc->buffsize));             /* allocate memory */
+   dispc->lbuff  = static_cast<char*>(hb_xalloc(dispc->maxlin + 1));           /* for buffers */
 
    dispc->bIsAllocated = !( dispc->buffer == nullptr || dispc->lbuff == nullptr || dispc->vseg == nullptr );
    /* memory allocated? */
@@ -652,7 +652,7 @@ HB_FUNC( _FT_DFINIT )
 
       if( dispc->fsize < dispc->buffbot )
       {
-         dispc->buffbot = static_cast< int >( dispc->fsize );           /* then set buffer bottom */
+         dispc->buffbot = static_cast<int>(dispc->fsize);           /* then set buffer bottom */
       }
 
       /* set the current lines buffer offset pointer */
@@ -679,7 +679,7 @@ HB_FUNC( _FT_DFINIT )
 
 HB_FUNC( _FT_DFCLOS )
 {
-   PFT_DISPC dispc = static_cast< PFT_DISPC >( hb_stackGetTSD( &s_dispc ) );
+   PFT_DISPC dispc = static_cast<PFT_DISPC>(hb_stackGetTSD(&s_dispc));
 
    if( dispc->bIsAllocated )
    {
@@ -700,7 +700,7 @@ HB_FUNC( _FT_DFCLOS )
 
 HB_FUNC( FT_DISPFILE )
 {
-   PFT_DISPC dispc = static_cast< PFT_DISPC >( hb_stackGetTSD( &s_dispc ) );
+   PFT_DISPC dispc = static_cast<PFT_DISPC>(hb_stackGetTSD(&s_dispc));
 
    int     i;
    char    rval[2];
@@ -910,7 +910,7 @@ HB_FUNC( FT_DISPFILE )
 
    if( dispc->keytype == K_STRING )
    {
-      rval[0] = static_cast< char >( ch );
+      rval[0] = static_cast<char>(ch);
       rval[1] = '\0';
       hb_retc(rval);
    }
