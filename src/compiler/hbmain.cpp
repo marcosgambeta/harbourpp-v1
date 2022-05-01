@@ -2124,7 +2124,7 @@ static PHB_HINLINE hb_compInlineNew(HB_COMP_DECL, const char * szName, int iLine
    pInline->pCode      = nullptr;
    pInline->nPCodeSize = 0;
    pInline->pNext      = nullptr;
-   pInline->szFileName = hb_compIdentifierNew(HB_COMP_PARAM, hb_pp_fileName( HB_COMP_PARAM->pLex->pPP ), HB_IDENT_COPY);
+   pInline->szFileName = hb_compIdentifierNew(HB_COMP_PARAM, hb_pp_fileName(HB_COMP_PARAM->pLex->pPP), HB_IDENT_COPY);
    pInline->iLine      = iLine;
 
    return pInline;

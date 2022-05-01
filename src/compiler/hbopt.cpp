@@ -1551,7 +1551,7 @@ static void hb_compPCodeEnumRenumberLocals(PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocal
                }
                else
                {
-                  hb_compNOOPfill(pFunc, nPos, hb_compPCodeSize( pFunc, nPos ), false, false);
+                  hb_compNOOPfill(pFunc, nPos, hb_compPCodeSize(pFunc, nPos), false, false);
                }
             }
             break;
@@ -1579,7 +1579,7 @@ static void hb_compPCodeEnumRenumberLocals(PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocal
                }
                else
                {
-                  hb_compNOOPfill(pFunc, nPos, hb_compPCodeSize( pFunc, nPos ), false, false);
+                  hb_compNOOPfill(pFunc, nPos, hb_compPCodeSize(pFunc, nPos), false, false);
                }
             }
             break;
