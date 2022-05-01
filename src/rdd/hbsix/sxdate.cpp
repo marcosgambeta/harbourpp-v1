@@ -62,7 +62,7 @@ char * hb_sxDtoP( char * pDate, long lJulian )
 
    hb_dateDecode( lJulian, &iYear, &iMonth, &iDay );
    lPDate = ( ( ( iYear << 1 ) | ( iMonth >> 3 ) ) << 8 ) | ( ( iMonth & 7 ) << 5 ) | iDay;
-   HB_PUT_BE_UINT24( pDate, lPDate );
+   HB_PUT_BE_UINT24(pDate, lPDate);
 
    return pDate;
 }
@@ -78,7 +78,7 @@ long hb_sxPtoD( const char * pDate )
       int iYear, iMonth, iDay;
       long lPDate;
 
-      lPDate = HB_GET_BE_UINT24( pDate );
+      lPDate = HB_GET_BE_UINT24(pDate);
       iDay = lPDate & 0x1f;
       iMonth = ( lPDate >> 5 ) & 0x0f;
       iYear = ( lPDate >> 9 );

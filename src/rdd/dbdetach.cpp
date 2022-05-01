@@ -67,10 +67,10 @@ HB_FUNC( HB_DBDETACH )
    else if( HB_IS_STRING(pAlias) )
    {
       const char * szAlias = hb_itemGetCPtr(pAlias);
-      hb_rddGetAliasNumber( szAlias, &iArea );
+      hb_rddGetAliasNumber(szAlias, &iArea);
       if( iArea > 0 )
       {
-         pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer( iArea ));
+         pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(iArea));
       }
    }
    else if( HB_IS_NUMBER(pAlias) )
@@ -78,7 +78,7 @@ HB_FUNC( HB_DBDETACH )
       iArea = hb_itemGetNI(pAlias);
       if( iArea > 0 )
       {
-         pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer( iArea ));
+         pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(iArea));
       }
    }
    else
@@ -124,7 +124,7 @@ HB_FUNC( HB_DBREQUEST )
       pArea = hb_rddRequestArea( szAlias, pCargo, fNewArea, ulMilliSec );
       if( pArea )
       {
-         hb_rddSelectWorkAreaNumber( pArea->uiArea );
+         hb_rddSelectWorkAreaNumber(pArea->uiArea);
       }
 
       if( pCargo )

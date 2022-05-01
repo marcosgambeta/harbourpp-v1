@@ -77,16 +77,16 @@ HB_FUNC( ORDWILDSEEK )
          {
             if( fBack )
             {
-               errCode = SELF_GOBOTTOM( pArea );
+               errCode = SELF_GOBOTTOM(pArea);
             }
             else
             {
-               errCode = SELF_GOTOP( pArea );
+               errCode = SELF_GOTOP(pArea);
             }
 
             if( errCode == HB_SUCCESS )
             {
-               errCode = SELF_ORDINFO( pArea, DBOI_KEYVAL, &OrderInfo );
+               errCode = SELF_ORDINFO(pArea, DBOI_KEYVAL, &OrderInfo);
                if( errCode == HB_SUCCESS )
                {
                   fFound = hb_strMatchWild( hb_itemGetCPtr(OrderInfo.itmResult), szPattern );
@@ -96,7 +96,7 @@ HB_FUNC( ORDWILDSEEK )
          if( !fFound && errCode == HB_SUCCESS )
          {
             OrderInfo.itmNewVal = hb_param(1, Harbour::Item::STRING);
-            if( SELF_ORDINFO( pArea, fBack ? DBOI_SKIPWILDBACK : DBOI_SKIPWILD, &OrderInfo ) == HB_SUCCESS )
+            if( SELF_ORDINFO(pArea, fBack ? DBOI_SKIPWILDBACK : DBOI_SKIPWILD, &OrderInfo) == HB_SUCCESS )
             {
                fFound = hb_itemGetL(OrderInfo.itmResult);
             }

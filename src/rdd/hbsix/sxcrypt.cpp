@@ -60,7 +60,7 @@ static HB_U32 hb_sxInitSeed( const char * pKeyVal, HB_U16 * puiKey )
 
    for( int i = 0; i < 7; i++ )
    {
-      ulSeed = ( ( ( ulSeed >> 16 ) + ( ulSeed << 16 ) ) * 17 ) + HB_GET_LE_UINT16( &pKeyVal[i] );
+      ulSeed = ( ( ( ulSeed >> 16 ) + ( ulSeed << 16 ) ) * 17 ) + HB_GET_LE_UINT16(&pKeyVal[i]);
    }
    ulSeed |= 1;
    *puiKey = static_cast<HB_U16>(ulSeed);
@@ -80,7 +80,7 @@ static HB_U32 hb_sxNextSeed( HB_U32 ulSeed, const char * pKeyVal, HB_U16 * puiKe
    uiSeedHi = static_cast<HB_U16>(ulTemp1 + ulTemp2);
    ulSeed   = ( static_cast<HB_U32>(uiSeedHi) << 16 ) + static_cast<HB_U32>(uiSeedLo);
    uiSeedHi |= 1;
-   *puiKey  = uiSeedHi + HB_GET_LE_UINT16( pKeyVal );
+   *puiKey  = uiSeedHi + HB_GET_LE_UINT16(pKeyVal);
    return ulSeed;
 }
 
@@ -142,7 +142,7 @@ static HB_BOOL _hb_sxGetKey( PHB_ITEM pKeyItem, char * pKeyVal )
       if( pArea )
       {
          pItem = hb_itemNew(nullptr);
-         if( SELF_INFO( pArea, DBI_PASSWORD, pItem ) == HB_SUCCESS )
+         if( SELF_INFO(pArea, DBI_PASSWORD, pItem) == HB_SUCCESS )
          {
             pKeyItem = pItem;
          }

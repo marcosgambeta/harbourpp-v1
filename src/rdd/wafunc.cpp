@@ -56,7 +56,7 @@
 /*
  * check if a given name can be used as alias expression
  */
-HB_ERRCODE hb_rddVerifyAliasName( const char * szAlias )
+HB_ERRCODE hb_rddVerifyAliasName(const char * szAlias)
 {
    if( szAlias )
    {
@@ -118,7 +118,7 @@ void * hb_rddNewAreaNode( LPRDDNODE pRddNode, HB_USHORT uiRddID )
       pArea->lprfsHost = &pRddNode->pTable;
       pArea->rddID = uiRddID;
 
-      if( SELF_STRUCTSIZE( pArea, &uiSize ) != HB_SUCCESS )
+      if( SELF_STRUCTSIZE(pArea, &uiSize) != HB_SUCCESS )
       {
          return nullptr;
       }
@@ -141,9 +141,9 @@ void * hb_rddNewAreaNode( LPRDDNODE pRddNode, HB_USHORT uiRddID )
       pArea->rddID = uiRddID;
    }
 
-   if( SELF_NEW( pArea ) != HB_SUCCESS )
+   if( SELF_NEW(pArea) != HB_SUCCESS )
    {
-      SELF_RELEASE( pArea );
+      SELF_RELEASE(pArea);
       return nullptr;
    }
 
@@ -157,7 +157,7 @@ HB_ERRCODE hb_rddGetTempAlias( char * szAliasTmp )
    for( int i = 1; i < 1000; i++ )
    {
       hb_snprintf(szAliasTmp, 11, "__HBTMP%03i", i);
-      if( hb_rddGetAliasNumber( szAliasTmp, &iArea ) != HB_SUCCESS )
+      if( hb_rddGetAliasNumber(szAliasTmp, &iArea) != HB_SUCCESS )
       {
          return HB_SUCCESS;
       }
@@ -178,12 +178,12 @@ void * hb_rddAllocWorkAreaAlias( const char * szAlias, int iArea )
    int iDummyArea;
 
    /* Verify if the alias name is valid symbol */
-   if( hb_rddVerifyAliasName( szAlias ) != HB_SUCCESS )
+   if( hb_rddVerifyAliasName(szAlias) != HB_SUCCESS )
    {
       hb_errRT_DBCMD_Ext( EG_BADALIAS, EDBCMD_BADALIAS, nullptr, szAlias, EF_CANDEFAULT );
    }
    /* Verify if the alias is already in use */
-   else if( hb_rddGetAliasNumber( szAlias, &iDummyArea ) == HB_SUCCESS )
+   else if( hb_rddGetAliasNumber(szAlias, &iDummyArea) == HB_SUCCESS )
    {
       hb_errRT_DBCMD_Ext( EG_DUPALIAS, EDBCMD_DUPALIAS, nullptr, szAlias, EF_CANDEFAULT );
    }
@@ -274,7 +274,7 @@ HB_USHORT hb_rddFieldExpIndex( AREAP pArea, const char * szField )
       int j, l, n;
 
       n = 0;
-      if( SELF_ALIAS( pArea, szAlias ) == HB_SUCCESS )
+      if( SELF_ALIAS(pArea, szAlias) == HB_SUCCESS )
       {
          l = static_cast<int>(strlen(szAlias));
       }
@@ -300,9 +300,9 @@ HB_USHORT hb_rddFieldExpIndex( AREAP pArea, const char * szField )
                ++i;
             }
 
-            if( !( ( i == l && hb_strnicmp( &szField[n], szAlias, l ) == 0 ) ) &&
-                !( i >= 4 && i <= 5 && hb_strnicmp( &szField[n], "FIELD", i ) == 0 ) &&
-                !( i >= 4 && i <= 6 && hb_strnicmp( &szField[n], "_FIELD", i ) == 0 ) )
+            if( !((i == l && hb_strnicmp(&szField[n], szAlias, l) == 0)) &&
+                !(i >= 4 && i <= 5 && hb_strnicmp(&szField[n], "FIELD", i) == 0) &&
+                !(i >= 4 && i <= 6 && hb_strnicmp(&szField[n], "_FIELD", i) == 0) )
             {
                i = 0;
             }
@@ -334,7 +334,7 @@ HB_USHORT hb_rddFieldExpIndex( AREAP pArea, const char * szField )
 /*
  * Find a WorkArea by the alias, return HB_FAILURE if not found
  */
-HB_ERRCODE hb_rddGetAliasNumber( const char * szAlias, int * iArea )
+HB_ERRCODE hb_rddGetAliasNumber(const char * szAlias, int * iArea)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddGetAliasNumber(%s, %p)", szAlias, static_cast<void*>(iArea) ) );
@@ -385,7 +385,7 @@ HB_ERRCODE hb_rddGetAliasNumber( const char * szAlias, int * iArea )
 /*
  * Select a WorkArea by the symbol name.
  */
-HB_ERRCODE hb_rddSelectWorkAreaSymbol( PHB_SYMB pSymAlias )
+HB_ERRCODE hb_rddSelectWorkAreaSymbol(PHB_SYMB pSymAlias)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddSelectWorkAreaSymbol(%p)", static_cast<void*>(pSymAlias) ) );
@@ -399,7 +399,7 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol( PHB_SYMB pSymAlias )
    iArea = static_cast<int>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
    if( iArea )
    {
-      hb_rddSelectWorkAreaNumber( iArea );
+      hb_rddSelectWorkAreaNumber(iArea);
       return HB_SUCCESS;
    }
 
@@ -409,17 +409,17 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol( PHB_SYMB pSymAlias )
    {
       if( szName[0] >= 'A' && szName[0] <= 'K' )
       {
-         hb_rddSelectWorkAreaNumber( szName[0] - 'A' + 1 );
+         hb_rddSelectWorkAreaNumber(szName[0] - 'A' + 1);
          return HB_SUCCESS;
       }
       else if( szName[0] >= 'a' && szName[0] <= 'k' )
       {
-         hb_rddSelectWorkAreaNumber( szName[0] - 'a' + 1 );
+         hb_rddSelectWorkAreaNumber(szName[0] - 'a' + 1);
          return HB_SUCCESS;
       }
       else if( szName[0] == 'M' || szName[0] == 'm' )
       {
-         hb_rddSelectWorkAreaNumber( HB_RDD_MAX_AREA_NUM );
+         hb_rddSelectWorkAreaNumber(HB_RDD_MAX_AREA_NUM);
          return HB_SUCCESS;
       }
    }
@@ -429,19 +429,19 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol( PHB_SYMB pSymAlias )
     * (user created error handler can open a missing database)
     */
 
-   pError = hb_errRT_New( ES_ERROR, nullptr, EG_NOALIAS, EDBCMD_NOALIAS, nullptr, pSymAlias->szName, 0, EF_CANRETRY );
+   pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOALIAS, EDBCMD_NOALIAS, nullptr, pSymAlias->szName, 0, EF_CANRETRY);
    errCode = HB_FAILURE;
 
    do
    {
-      if( hb_errLaunch( pError ) != E_RETRY )
+      if( hb_errLaunch(pError) != E_RETRY )
       {
          break;
       }
       iArea = static_cast<int>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
       if( iArea )
       {
-         hb_rddSelectWorkAreaNumber( iArea );
+         hb_rddSelectWorkAreaNumber(iArea);
          errCode = HB_SUCCESS;
       }
    }
@@ -464,7 +464,7 @@ HB_ERRCODE hb_rddSelectWorkAreaAlias( const char * szAlias )
    HB_ERRCODE errCode;
    int iArea;
 
-   errCode = hb_rddGetAliasNumber( szAlias, &iArea );
+   errCode = hb_rddGetAliasNumber(szAlias, &iArea);
 
    if( errCode == HB_FAILURE )
    {
@@ -472,15 +472,15 @@ HB_ERRCODE hb_rddSelectWorkAreaAlias( const char * szAlias )
        * generate an error with retry possibility
        * (user created error handler can open a missing database)
        */
-      PHB_ITEM pError = hb_errRT_New( ES_ERROR, nullptr, EG_NOALIAS, EDBCMD_NOALIAS, nullptr, szAlias, 0, EF_CANRETRY );
+      PHB_ITEM pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOALIAS, EDBCMD_NOALIAS, nullptr, szAlias, 0, EF_CANRETRY);
 
       do
       {
-         if( hb_errLaunch( pError ) != E_RETRY )
+         if( hb_errLaunch(pError) != E_RETRY )
          {
             break;
          }
-         errCode = hb_rddGetAliasNumber( szAlias, &iArea );
+         errCode = hb_rddGetAliasNumber(szAlias, &iArea);
       }
       while( errCode == HB_FAILURE );
 
@@ -495,7 +495,7 @@ HB_ERRCODE hb_rddSelectWorkAreaAlias( const char * szAlias )
       }
       else
       {
-         errCode = hb_rddSelectWorkAreaNumber( iArea );
+         errCode = hb_rddSelectWorkAreaNumber(iArea);
       }
    }
 
@@ -505,7 +505,7 @@ HB_ERRCODE hb_rddSelectWorkAreaAlias( const char * szAlias )
 /*
  * Obtain the current value of a field.
  */
-HB_ERRCODE hb_rddFieldGet( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
+HB_ERRCODE hb_rddFieldGet(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddFieldGet(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pFieldSymbol) ) );
@@ -524,7 +524,7 @@ HB_ERRCODE hb_rddFieldGet( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
       {
          if( static_cast<PHB_DYNS>(pField->sym) == pDynSym )
          {
-            return SELF_GETVALUE( pArea, uiField, pItem );
+            return SELF_GETVALUE(pArea, uiField, pItem);
          }
          ++uiField;
          pField = pField->lpfNext;
@@ -536,7 +536,7 @@ HB_ERRCODE hb_rddFieldGet( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
 /*
  * Assign a value to a field.
  */
-HB_ERRCODE hb_rddFieldPut( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
+HB_ERRCODE hb_rddFieldPut(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddFieldPut(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pFieldSymbol) ) );
@@ -555,7 +555,7 @@ HB_ERRCODE hb_rddFieldPut( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
       {
          if( static_cast<PHB_DYNS>(pField->sym) == pDynSym )
          {
-            return SELF_PUTVALUE( pArea, uiField, pItem );
+            return SELF_PUTVALUE(pArea, uiField, pItem);
          }
          ++uiField;
          pField = pField->lpfNext;
@@ -567,7 +567,7 @@ HB_ERRCODE hb_rddFieldPut( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
 /*
  * Obtain the current value of a field.
  */
-HB_ERRCODE hb_rddGetFieldValue( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
+HB_ERRCODE hb_rddGetFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddGetFieldValue(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pFieldSymbol) ) );
@@ -575,7 +575,7 @@ HB_ERRCODE hb_rddGetFieldValue( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
 
    HB_ERRCODE errCode;
 
-   errCode = hb_rddFieldGet( pItem, pFieldSymbol );
+   errCode = hb_rddFieldGet(pItem, pFieldSymbol);
 
    if( errCode == HB_FAILURE && hb_vmRequestQuery() == 0 )
    {
@@ -585,12 +585,12 @@ HB_ERRCODE hb_rddGetFieldValue( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
        */
       PHB_ITEM pError;
 
-      pError = hb_errRT_New( ES_ERROR, nullptr, EG_NOVAR, EDBCMD_NOVAR, nullptr, pFieldSymbol->szName, 0, EF_CANRETRY );
+      pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, EDBCMD_NOVAR, nullptr, pFieldSymbol->szName, 0, EF_CANRETRY);
       hb_itemClear(pItem);
 
-      while( hb_errLaunch( pError ) == E_RETRY )
+      while( hb_errLaunch(pError) == E_RETRY )
       {
-         errCode = hb_rddFieldGet( pItem, pFieldSymbol );
+         errCode = hb_rddFieldGet(pItem, pFieldSymbol);
 
          if( errCode == HB_SUCCESS || hb_vmRequestQuery() != 0 )
          {
@@ -606,7 +606,7 @@ HB_ERRCODE hb_rddGetFieldValue( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
 /*
  * Assign a value to a field.
  */
-HB_ERRCODE hb_rddPutFieldValue( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
+HB_ERRCODE hb_rddPutFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddPutFieldValue(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pFieldSymbol) ) );
@@ -614,7 +614,7 @@ HB_ERRCODE hb_rddPutFieldValue( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
 
    HB_ERRCODE errCode;
 
-   errCode = hb_rddFieldPut( pItem, pFieldSymbol );
+   errCode = hb_rddFieldPut(pItem, pFieldSymbol);
 
    if( errCode == HB_FAILURE && hb_vmRequestQuery() == 0 )
    {
@@ -622,11 +622,11 @@ HB_ERRCODE hb_rddPutFieldValue( PHB_ITEM pItem, PHB_SYMB pFieldSymbol )
        * generate an error with retry possibility
        * (user created error handler can make this field accessible)
        */
-      PHB_ITEM pError = hb_errRT_New( ES_ERROR, nullptr, EG_NOVAR, EDBCMD_NOVAR, nullptr, pFieldSymbol->szName, 0, EF_CANRETRY );
+      PHB_ITEM pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, EDBCMD_NOVAR, nullptr, pFieldSymbol->szName, 0, EF_CANRETRY);
 
-      while( hb_errLaunch( pError ) == E_RETRY )
+      while( hb_errLaunch(pError) == E_RETRY )
       {
-         errCode = hb_rddFieldPut( pItem, pFieldSymbol );
+         errCode = hb_rddFieldPut(pItem, pFieldSymbol);
 
          if( errCode == HB_SUCCESS || hb_vmRequestQuery() != 0 )
          {
@@ -658,7 +658,7 @@ HB_ERRCODE hb_rddOpenTable( const char * szFileName, const char * szDriver,
     */
    if( uiArea && uiArea < HB_RDD_MAX_AREA_NUM )
    {
-      hb_rddSelectWorkAreaNumber( uiArea );
+      hb_rddSelectWorkAreaNumber(uiArea);
       hb_rddReleaseCurrentArea();
    }
    else if( hb_rddSelectFirstAvailable() != HB_SUCCESS )
@@ -707,17 +707,17 @@ HB_ERRCODE hb_rddOpenTable( const char * szFileName, const char * szDriver,
    pInfo.ulConnection = ulConnection;
    pInfo.lpdbHeader = nullptr;
 
-   errCode = pStruct ? SELF_CREATEFIELDS( pArea, pStruct ) : HB_SUCCESS;
+   errCode = pStruct ? SELF_CREATEFIELDS(pArea, pStruct) : HB_SUCCESS;
    if( errCode == HB_SUCCESS )
    {
       if( pDelim && !HB_IS_NIL(pDelim) )
       {
-         errCode = SELF_INFO( pArea, DBI_SETDELIMITER, pDelim );
+         errCode = SELF_INFO(pArea, DBI_SETDELIMITER, pDelim);
       }
       if( errCode == HB_SUCCESS )
       {
          /* Open file */
-         errCode = SELF_OPEN( pArea, &pInfo );
+         errCode = SELF_OPEN(pArea, &pInfo);
       }
    }
 
@@ -749,7 +749,7 @@ HB_ERRCODE hb_rddCreateTable( const char * szFileName, const char * szDriver,
    uiPrevArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
 
    /* 0 means chose first available in hb_rddInsertAreaNode() */
-   hb_rddSelectWorkAreaNumber( uiArea );
+   hb_rddSelectWorkAreaNumber(uiArea);
    if( uiArea )
    {
       hb_rddReleaseCurrentArea();
@@ -760,7 +760,7 @@ HB_ERRCODE hb_rddCreateTable( const char * szFileName, const char * szDriver,
    /* Create a new WorkArea node */
    if( !szDriver || !hb_rddInsertAreaNode( szDriver ) )
    {
-      hb_rddSelectWorkAreaNumber( uiPrevArea );
+      hb_rddSelectWorkAreaNumber(uiPrevArea);
       hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       return HB_FAILURE;
    }
@@ -778,7 +778,7 @@ HB_ERRCODE hb_rddCreateTable( const char * szFileName, const char * szDriver,
 
    if( pDelim && !HB_IS_NIL(pDelim) )
    {
-      errCode = SELF_INFO( pArea, DBI_SETDELIMITER, pDelim );
+      errCode = SELF_INFO(pArea, DBI_SETDELIMITER, pDelim);
    }
    else
    {
@@ -787,23 +787,23 @@ HB_ERRCODE hb_rddCreateTable( const char * szFileName, const char * szDriver,
 
    if( errCode == HB_SUCCESS )
    {
-      errCode = SELF_CREATEFIELDS( pArea, pStruct );
+      errCode = SELF_CREATEFIELDS(pArea, pStruct);
       if( errCode == HB_SUCCESS )
       {
-         errCode = SELF_CREATE( pArea, &pInfo );
+         errCode = SELF_CREATE(pArea, &pInfo);
       }
    }
 
    if( !fKeepOpen || errCode != HB_SUCCESS )
    {
       hb_rddReleaseCurrentArea();
-      hb_rddSelectWorkAreaNumber( uiPrevArea );
+      hb_rddSelectWorkAreaNumber(uiPrevArea);
    }
 
    return errCode;
 }
 
-HB_ERRCODE hb_rddCreateTableTemp( const char * szDriver, const char * szAlias, const char * szCpId, HB_ULONG ulConnection, PHB_ITEM pStruct )
+HB_ERRCODE hb_rddCreateTableTemp(const char * szDriver, const char * szAlias, const char * szCpId, HB_ULONG ulConnection, PHB_ITEM pStruct)
 {
    char szDriverBuffer[HB_RDD_MAX_DRIVERNAME_LEN + 1];
    DBOPENINFO pInfo;
@@ -824,13 +824,13 @@ HB_ERRCODE hb_rddCreateTableTemp( const char * szDriver, const char * szAlias, c
    }
    else
    {
-      szDriver = hb_rddDefaultDrv( nullptr );
+      szDriver = hb_rddDefaultDrv(nullptr);
    }
 
    /* Create a new WorkArea node */
    if( !hb_rddInsertAreaNode( szDriver ) )
    {
-      hb_rddSelectWorkAreaNumber( uiPrevArea );
+      hb_rddSelectWorkAreaNumber(uiPrevArea);
       hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
       return HB_FAILURE;
    }
@@ -847,22 +847,22 @@ HB_ERRCODE hb_rddCreateTableTemp( const char * szDriver, const char * szAlias, c
    pInfo.lpdbHeader = nullptr;
 
    pItem = hb_itemPutL(nullptr, true);
-   errCode = SELF_INFO( pArea, DBI_ISTEMPORARY, pItem );
+   errCode = SELF_INFO(pArea, DBI_ISTEMPORARY, pItem);
    hb_itemRelease(pItem);
 
    if( errCode == HB_SUCCESS )
    {
-      errCode = SELF_CREATEFIELDS( pArea, pStruct );
+      errCode = SELF_CREATEFIELDS(pArea, pStruct);
       if( errCode == HB_SUCCESS )
       {
-         errCode = SELF_CREATE( pArea, &pInfo );
+         errCode = SELF_CREATE(pArea, &pInfo);
       }
    }
 
    if( errCode != HB_SUCCESS )
    {
       hb_rddReleaseCurrentArea();
-      hb_rddSelectWorkAreaNumber( uiPrevArea );
+      hb_rddSelectWorkAreaNumber(uiPrevArea);
    }
 
    return errCode;
@@ -884,7 +884,7 @@ static void hb_fldStructure( AREAP pArea, HB_USHORT uiField, HB_USHORT uiSize, P
    hb_arrayNew(pField, uiSize);
    for( HB_USHORT uiCount = 0; uiCount < uiSize; ++uiCount )
    {
-      SELF_FIELDINFO( pArea, uiField, s_uiActions[uiCount], hb_arrayGetItemPtr(pField, uiCount + 1) );
+      SELF_FIELDINFO(pArea, uiField, s_uiActions[uiCount], hb_arrayGetItemPtr(pField, uiCount + 1));
    }
 }
 
@@ -892,7 +892,7 @@ void hb_tblStructure( AREAP pArea, PHB_ITEM pStruct, HB_USHORT uiSize )
 {
    HB_USHORT uiFields;
 
-   if( SELF_FIELDCOUNT( pArea, &uiFields ) == HB_SUCCESS )
+   if( SELF_FIELDCOUNT(pArea, &uiFields) == HB_SUCCESS )
    {
       if( hb_arraySize(pStruct, uiFields) )
       {
@@ -904,7 +904,7 @@ void hb_tblStructure( AREAP pArea, PHB_ITEM pStruct, HB_USHORT uiSize )
    }
 }
 
-static const char * hb_dbTransFieldPos( PHB_ITEM pFields, HB_USHORT uiField )
+static const char * hb_dbTransFieldPos(PHB_ITEM pFields, HB_USHORT uiField)
 {
    const char * szField = nullptr;
    PHB_ITEM pItem;
@@ -936,7 +936,7 @@ static const HB_GC_FUNCS s_gcTransInfo =
    hb_gcDummyMark
 };
 
-PHB_ITEM hb_dbTransInfoPut( PHB_ITEM pItem, LPDBTRANSINFO lpdbTransInfo )
+PHB_ITEM hb_dbTransInfoPut(PHB_ITEM pItem, LPDBTRANSINFO lpdbTransInfo)
 {
    LPDBTRANSINFO * pHolder;
 
@@ -946,7 +946,7 @@ PHB_ITEM hb_dbTransInfoPut( PHB_ITEM pItem, LPDBTRANSINFO lpdbTransInfo )
    return hb_itemPutPtrGC(pItem, pHolder);
 }
 
-LPDBTRANSINFO hb_dbTransInfoGet( PHB_ITEM pItem )
+LPDBTRANSINFO hb_dbTransInfoGet(PHB_ITEM pItem)
 {
    LPDBTRANSINFO * pHolder = static_cast<LPDBTRANSINFO*>(hb_itemGetPtrGC(pItem, &s_gcTransInfo));
 
@@ -962,13 +962,13 @@ HB_ERRCODE hb_dbTransCounters( LPDBTRANSINFO lpdbTransInfo )
    {
       LPDBTRANSITEM lpdbTransItem = &lpdbTransInfo->lpTransItems[uiCount];
 
-      if( SELF_FIELDINFO( lpdbTransInfo->lpaSource, lpdbTransItem->uiSource, DBS_COUNTER, pItem ) == HB_SUCCESS &&
-          SELF_FIELDINFO( lpdbTransInfo->lpaDest, lpdbTransItem->uiDest, DBS_COUNTER, pItem ) == HB_SUCCESS )
+      if( SELF_FIELDINFO(lpdbTransInfo->lpaSource, lpdbTransItem->uiSource, DBS_COUNTER, pItem) == HB_SUCCESS &&
+          SELF_FIELDINFO(lpdbTransInfo->lpaDest, lpdbTransItem->uiDest, DBS_COUNTER, pItem) == HB_SUCCESS )
       {
          hb_itemClear(pItem);
-         if( SELF_FIELDINFO( lpdbTransInfo->lpaSource, lpdbTransItem->uiSource, DBS_STEP, pItem ) == HB_SUCCESS )
+         if( SELF_FIELDINFO(lpdbTransInfo->lpaSource, lpdbTransItem->uiSource, DBS_STEP, pItem) == HB_SUCCESS )
          {
-             SELF_FIELDINFO( lpdbTransInfo->lpaDest, lpdbTransItem->uiDest, DBS_STEP, pItem );
+             SELF_FIELDINFO(lpdbTransInfo->lpaDest, lpdbTransItem->uiDest, DBS_STEP, pItem);
          }
       }
       hb_itemClear(pItem);
@@ -985,7 +985,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
    const char * szField;
    HB_BOOL fAll;
 
-   errCode = SELF_FIELDCOUNT( lpaSource, &uiSizeSrc );
+   errCode = SELF_FIELDCOUNT(lpaSource, &uiSizeSrc);
    if( errCode != HB_SUCCESS )
    {
       return errCode;
@@ -993,7 +993,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
 
    if( lpaDest )
    {
-      errCode = SELF_FIELDCOUNT( lpaDest, &uiSizeDst );
+      errCode = SELF_FIELDCOUNT(lpaDest, &uiSizeDst);
       if( errCode != HB_SUCCESS )
       {
          return errCode;
@@ -1042,7 +1042,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
          uiSize = 0;
          for( uiCount = 1; uiCount <= uiSizeSrc; ++uiCount )
          {
-            if( SELF_FIELDINFO( lpaSource, uiCount, DBS_NAME, pItem ) != HB_SUCCESS )
+            if( SELF_FIELDINFO(lpaSource, uiCount, DBS_NAME, pItem) != HB_SUCCESS )
             {
                uiSize = 0;
                break;
@@ -1090,7 +1090,7 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
       uiSize = 0;
       for( uiCount = 1; uiCount <= uiFields; ++uiCount )
       {
-         szField = hb_dbTransFieldPos( pFields, uiCount );
+         szField = hb_dbTransFieldPos(pFields, uiCount);
          if( szField )
          {
             uiPosSrc = hb_rddFieldExpIndex( lpaSource, szField );
@@ -1140,19 +1140,19 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
        */
       for( uiCount = 1; uiCount <= uiSize; ++uiCount )
       {
-         if( SELF_FIELDINFO( lpaSource, uiCount, DBS_TYPE, pSrcItm ) != HB_SUCCESS ||
-             SELF_FIELDINFO( lpaDest,   uiCount, DBS_TYPE, pDstItm ) != HB_SUCCESS )
+         if( SELF_FIELDINFO(lpaSource, uiCount, DBS_TYPE, pSrcItm) != HB_SUCCESS ||
+             SELF_FIELDINFO(lpaDest,   uiCount, DBS_TYPE, pDstItm) != HB_SUCCESS )
          {
             uiSize = 0;
             break;
          }
-         if( hb_stricmp( hb_itemGetCPtr(pSrcItm), hb_itemGetCPtr(pDstItm) ) != 0 )
+         if( hb_stricmp(hb_itemGetCPtr(pSrcItm), hb_itemGetCPtr(pDstItm)) != 0 )
          {
             fAll = HB_FALSE;
             break;
          }
-         if( SELF_FIELDINFO( lpaSource, uiCount, DBS_LEN, pSrcItm ) != HB_SUCCESS ||
-             SELF_FIELDINFO( lpaDest,   uiCount, DBS_LEN, pDstItm ) != HB_SUCCESS )
+         if( SELF_FIELDINFO(lpaSource, uiCount, DBS_LEN, pSrcItm) != HB_SUCCESS ||
+             SELF_FIELDINFO(lpaDest,   uiCount, DBS_LEN, pDstItm) != HB_SUCCESS )
          {
             uiSize = 0;
             break;
@@ -1162,8 +1162,8 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
             fAll = HB_FALSE;
             break;
          }
-         if( SELF_FIELDINFO( lpaSource, uiCount, DBS_DEC, pSrcItm ) != HB_SUCCESS ||
-             SELF_FIELDINFO( lpaDest,   uiCount, DBS_DEC, pDstItm ) != HB_SUCCESS )
+         if( SELF_FIELDINFO(lpaSource, uiCount, DBS_DEC, pSrcItm) != HB_SUCCESS ||
+             SELF_FIELDINFO(lpaDest,   uiCount, DBS_DEC, pDstItm) != HB_SUCCESS )
          {
             uiSize = 0;
             break;
@@ -1174,8 +1174,8 @@ HB_ERRCODE hb_dbTransStruct( AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbT
             break;
          }
 #ifdef DBS_FLAG
-         if( SELF_FIELDINFO( lpaSource, uiCount, DBS_FLAG, pSrcItm ) != HB_SUCCESS ||
-             SELF_FIELDINFO( lpaDest,   uiCount, DBS_FLAG, pDstItm ) != HB_SUCCESS )
+         if( SELF_FIELDINFO(lpaSource, uiCount, DBS_FLAG, pSrcItm) != HB_SUCCESS ||
+             SELF_FIELDINFO(lpaDest,   uiCount, DBS_FLAG, pDstItm) != HB_SUCCESS )
          {
             uiSize = 0;
             break;
@@ -1233,7 +1233,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
    }
    else
    {
-      LPRDDNODE pRddNode = hb_rddFindNode( szDriver, nullptr );
+      LPRDDNODE pRddNode = hb_rddFindNode(szDriver, nullptr);
 
       if( !pRddNode )
       {
@@ -1283,7 +1283,7 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
    {
       PHB_ITEM pTransItm;
 
-      hb_rddSelectWorkAreaNumber( dbTransInfo.lpaSource->uiArea );
+      hb_rddSelectWorkAreaNumber(dbTransInfo.lpaSource->uiArea);
 
       dbTransInfo.dbsci.itmCobFor   = pCobFor;
       dbTransInfo.dbsci.lpstrFor    = pStrFor;
@@ -1299,17 +1299,17 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
       dbTransInfo.dbsci.fIgnoreDuplicates = HB_FALSE;
       dbTransInfo.dbsci.fBackward         = HB_FALSE;
 
-      pTransItm = hb_dbTransInfoPut( nullptr, &dbTransInfo );
-      errCode = SELF_INFO( dbTransInfo.lpaDest, DBI_TRANSREC, pTransItm );
+      pTransItm = hb_dbTransInfoPut(nullptr, &dbTransInfo);
+      errCode = SELF_INFO(dbTransInfo.lpaDest, DBI_TRANSREC, pTransItm);
       if( errCode == HB_SUCCESS )
       {
-         errCode = dbTransInfo.uiItemCount == 0 ? HB_FAILURE : SELF_TRANS( dbTransInfo.lpaSource, &dbTransInfo );
+         errCode = dbTransInfo.uiItemCount == 0 ? HB_FAILURE : SELF_TRANS(dbTransInfo.lpaSource, &dbTransInfo);
          /* we always call DBI_TRANSREC second time after TRANS() method
           * even if TRANS() failed - it's for RDDs which may need to store
           * pointer to dbTransInfo in first call and then release it and/or
           * clean some structures allocated for transfer operation [druzus]
           */
-         SELF_INFO( dbTransInfo.lpaDest, DBI_TRANSREC, pTransItm );
+         SELF_INFO(dbTransInfo.lpaDest, DBI_TRANSREC, pTransItm);
          if( errCode == HB_SUCCESS && ( dbTransInfo.uiFlags & DBTF_CPYCTR ) )
          {
             errCode = hb_dbTransCounters( &dbTransInfo );
@@ -1324,10 +1324,10 @@ HB_ERRCODE hb_rddTransRecords( AREAP pArea,
    }
    if( lpaClose )
    {
-      hb_rddSelectWorkAreaNumber( lpaClose->uiArea );
+      hb_rddSelectWorkAreaNumber(lpaClose->uiArea);
       hb_rddReleaseCurrentArea();
    }
-   hb_rddSelectWorkAreaNumber( uiPrevArea );
+   hb_rddSelectWorkAreaNumber(uiPrevArea);
 
    return errCode;
 }
@@ -1346,8 +1346,8 @@ static HB_ERRCODE hb_rddCloseParentRel( AREAP pArea, void * pChildArea )
          if( lpdbRelation->lpaChild->uiArea == uiArea )
          {
             /* Clear this relation */
-            hb_rddSelectWorkAreaNumber( lpdbRelation->lpaChild->uiArea );
-            SELF_CHILDEND( lpdbRelation->lpaChild, lpdbRelation );
+            hb_rddSelectWorkAreaNumber(lpdbRelation->lpaChild->uiArea);
+            SELF_CHILDEND(lpdbRelation->lpaChild, lpdbRelation);
             if( lpdbRelation->itmCobExpr )
             {
                hb_itemRelease(lpdbRelation->itmCobExpr);
@@ -1382,8 +1382,8 @@ HB_ERRCODE hb_rddCloseAllParentRelations( AREAP pArea )
    if( pArea->uiParents > 0 )
    {
       HB_USHORT uiArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
-      errCode = hb_rddIterateWorkAreas( hb_rddCloseParentRel, pArea );
-      hb_rddSelectWorkAreaNumber( uiArea );
+      errCode = hb_rddIterateWorkAreas(hb_rddCloseParentRel, pArea);
+      hb_rddSelectWorkAreaNumber(uiArea);
    }
 
    return errCode;
@@ -1393,7 +1393,7 @@ static HB_ERRCODE hb_rddEvalWABlock( AREAP pArea, void * pBlock )
 {
    PHB_ITEM pItem;
 
-   hb_rddSelectWorkAreaNumber( pArea->uiArea );
+   hb_rddSelectWorkAreaNumber(pArea->uiArea);
    pItem = hb_vmEvalBlockOrMacro( static_cast<PHB_ITEM>(pBlock) );
 
    if( hb_vmRequestQuery() != 0 || ( HB_IS_LOGICAL(pItem) && !hb_itemGetL(pItem) ) )
@@ -1417,7 +1417,7 @@ HB_ERRCODE hb_rddEvalWA( PHB_ITEM pBlock )
 
    uiArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
    errCode = hb_rddIterateWorkAreas( hb_rddEvalWABlock, pBlock );
-   hb_rddSelectWorkAreaNumber( uiArea );
+   hb_rddSelectWorkAreaNumber(uiArea);
 
    return errCode;
 }

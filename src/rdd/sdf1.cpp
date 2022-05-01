@@ -102,7 +102,7 @@ static void hb_sdfInitArea( SDFAREAP pArea, char * szFileName )
    pArea->nBufferIndex = pArea->nBufferRead = pArea->nBufferSize;
 }
 
-static void hb_sdfClearRecordBuffer( SDFAREAP pArea )
+static void hb_sdfClearRecordBuffer(SDFAREAP pArea)
 {
    memset(pArea->pRecord, ' ', pArea->uiRecordLen);
 }
@@ -131,7 +131,7 @@ static HB_ERRCODE hb_sdfReadRecord( SDFAREAP pArea )
             memmove(pArea->pBuffer, pArea->pBuffer + pArea->nBufferIndex, nLeft);
          }
          pArea->nBufferIndex = 0;
-         pArea->nBufferRead = hb_fileRead( pArea->pFile, pArea->pBuffer + nLeft, pArea->nBufferSize - nLeft, -1 );
+         pArea->nBufferRead = hb_fileRead(pArea->pFile, pArea->pBuffer + nLeft, pArea->nBufferSize - nLeft, -1);
          if( pArea->nBufferRead == static_cast<HB_SIZE>(FS_ERROR) )
          {
             pArea->nBufferRead = 0;
@@ -237,7 +237,7 @@ static HB_ERRCODE hb_sdfGoTo( SDFAREAP pArea, HB_ULONG ulRecNo )
 /*
  * Position the cursor to a specific, physical identity.
  */
-static HB_ERRCODE hb_sdfGoToId( SDFAREAP pArea, PHB_ITEM pItem )
+static HB_ERRCODE hb_sdfGoToId(SDFAREAP pArea, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfGoToId(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pItem) ) );
@@ -246,11 +246,11 @@ static HB_ERRCODE hb_sdfGoToId( SDFAREAP pArea, PHB_ITEM pItem )
 #ifndef HB_CLP_STRICT
    if( HB_IS_NUMERIC(pItem) )
    {
-      return SELF_GOTO( &pArea->area, hb_itemGetNL(pItem) );
+      return SELF_GOTO(&pArea->area, hb_itemGetNL(pItem));
    }
 #endif
    /* generate RTE */
-   return SUPER_GOTOID( &pArea->area, pItem );
+   return SUPER_GOTOID(&pArea->area, pItem);
 }
 
 /*
@@ -262,7 +262,7 @@ static HB_ERRCODE hb_sdfGoTop( SDFAREAP pArea )
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfGoTop(%p)", static_cast<void*>(pArea) ) );
 #endif
 
-   if( SELF_GOCOLD( &pArea->area ) != HB_SUCCESS )
+   if( SELF_GOCOLD(&pArea->area) != HB_SUCCESS )
    {
       return HB_FAILURE;
    }
@@ -285,7 +285,7 @@ static HB_ERRCODE hb_sdfGoTop( SDFAREAP pArea )
       }
    }
 
-   return SELF_SKIPFILTER( &pArea->area, 1 );
+   return SELF_SKIPFILTER(&pArea->area, 1);
 }
 
 /*
@@ -297,7 +297,7 @@ static HB_ERRCODE hb_sdfSkipRaw( SDFAREAP pArea, HB_LONG lToSkip )
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfSkipRaw(%p,%ld)", static_cast<void*>(pArea), lToSkip ) );
 #endif
 
-   if( SELF_GOCOLD( &pArea->area ) != HB_SUCCESS )
+   if( SELF_GOCOLD(&pArea->area) != HB_SUCCESS )
    {
       return HB_FAILURE;
    }
@@ -332,7 +332,7 @@ static HB_ERRCODE hb_sdfDeleted( SDFAREAP pArea, HB_BOOL * pDeleted )
 /*
  * Obtain number of records in WorkArea.
  */
-static HB_ERRCODE hb_sdfRecCount( SDFAREAP pArea, HB_ULONG * pRecCount )
+static HB_ERRCODE hb_sdfRecCount(SDFAREAP pArea, HB_ULONG * pRecCount)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfRecCount(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRecCount) ) );
@@ -360,7 +360,7 @@ static HB_ERRCODE hb_sdfRecNo( SDFAREAP pArea, HB_ULONG * pulRecNo )
 /*
  * Obtain physical row ID at current WorkArea cursor position.
  */
-static HB_ERRCODE hb_sdfRecId( SDFAREAP pArea, PHB_ITEM pRecNo )
+static HB_ERRCODE hb_sdfRecId(SDFAREAP pArea, PHB_ITEM pRecNo)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfRecId(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRecNo) ) );
@@ -369,7 +369,7 @@ static HB_ERRCODE hb_sdfRecId( SDFAREAP pArea, PHB_ITEM pRecNo )
    HB_ERRCODE errCode;
    HB_ULONG ulRecNo;
 
-   errCode = SELF_RECNO( &pArea->area, &ulRecNo );
+   errCode = SELF_RECNO(&pArea->area, &ulRecNo);
 
 #ifdef HB_CLP_STRICT
    /* this is for strict Clipper compatibility but IMHO Clipper should not
@@ -399,12 +399,12 @@ static HB_ERRCODE hb_sdfAppend( SDFAREAP pArea, HB_BOOL fUnLockAll )
 
    HB_SYMBOL_UNUSED(fUnLockAll);
 
-   if( SELF_GOCOLD( &pArea->area ) != HB_SUCCESS )
+   if( SELF_GOCOLD(&pArea->area) != HB_SUCCESS )
    {
       return HB_FAILURE;
    }
 
-   if( SELF_GOHOT( &pArea->area ) != HB_SUCCESS )
+   if( SELF_GOHOT(&pArea->area) != HB_SUCCESS )
    {
       return HB_FAILURE;
    }
@@ -412,7 +412,7 @@ static HB_ERRCODE hb_sdfAppend( SDFAREAP pArea, HB_BOOL fUnLockAll )
    pArea->ulRecNo = ++pArea->ulRecCount;
    pArea->area.fEof = HB_FALSE;
    pArea->fPositioned = HB_TRUE;
-   hb_sdfClearRecordBuffer( pArea );
+   hb_sdfClearRecordBuffer(pArea);
 
    return HB_SUCCESS;
 }
@@ -435,7 +435,7 @@ static HB_ERRCODE hb_sdfDeleteRec( SDFAREAP pArea )
       pArea->ulRecCount--;
       pArea->area.fEof = HB_TRUE;
       pArea->fPositioned = pArea->fRecordChanged = HB_FALSE;
-      hb_sdfClearRecordBuffer( pArea );
+      hb_sdfClearRecordBuffer(pArea);
    }
 #endif
 
@@ -459,7 +459,7 @@ static HB_ERRCODE hb_sdfRecall( SDFAREAP pArea )
 /*
  * Obtain the current value of a field.
  */
-static HB_ERRCODE hb_sdfGetValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
+static HB_ERRCODE hb_sdfGetValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfGetValue(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem) ) );
@@ -554,11 +554,11 @@ static HB_ERRCODE hb_sdfGetValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
       default:
       {
          PHB_ITEM pError = hb_errNew();
-         hb_errPutGenCode( pError, EG_DATATYPE );
-         hb_errPutDescription( pError, hb_langDGetErrorDesc( EG_DATATYPE ) );
-         hb_errPutOperation( pError, hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)) );
-         hb_errPutSubCode( pError, EDBF_DATATYPE );
-         SELF_ERROR( &pArea->area, pError );
+         hb_errPutGenCode(pError, EG_DATATYPE);
+         hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_DATATYPE));
+         hb_errPutOperation(pError, hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)));
+         hb_errPutSubCode(pError, EDBF_DATATYPE);
+         SELF_ERROR(&pArea->area, pError);
          hb_itemRelease(pError);
          return HB_FAILURE;
       }
@@ -570,7 +570,7 @@ static HB_ERRCODE hb_sdfGetValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
 /*
  * Assign a value to a field.
  */
-static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
+static HB_ERRCODE hb_sdfPutValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfPutValue(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem) ) );
@@ -608,9 +608,9 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
             if( ( pField->uiFlags & HB_FF_BINARY ) == 0 )
             {
                nSize = pField->uiLen;
-               hb_cdpnDup2( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem),
-                            reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex],
-                            &nSize, hb_vmCDP(), pArea->area.cdPage );
+               hb_cdpnDup2(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem),
+                           reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex],
+                           &nSize, hb_vmCDP(), pArea->area.cdPage);
             }
             else
             {
@@ -698,12 +698,12 @@ static HB_ERRCODE hb_sdfPutValue( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pI
       PHB_ITEM pError = hb_errNew();
       HB_ERRCODE errGenCode = errCode == EDBF_DATAWIDTH ? EG_DATAWIDTH : EDBF_DATATYPE;
 
-      hb_errPutGenCode( pError, errGenCode );
-      hb_errPutDescription( pError, hb_langDGetErrorDesc( errGenCode ) );
-      hb_errPutOperation( pError, hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)) );
-      hb_errPutSubCode( pError, errCode );
-      hb_errPutFlags( pError, EF_CANDEFAULT );
-      errCode = SELF_ERROR( &pArea->area, pError );
+      hb_errPutGenCode(pError, errGenCode);
+      hb_errPutDescription(pError, hb_langDGetErrorDesc(errGenCode));
+      hb_errPutOperation(pError, hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)));
+      hb_errPutSubCode(pError, errCode);
+      hb_errPutFlags(pError, EF_CANDEFAULT);
+      errCode = SELF_ERROR(&pArea->area, pError);
       hb_itemRelease(pError);
       return errCode == E_DEFAULT ? HB_SUCCESS : HB_FAILURE;
    }
@@ -772,7 +772,7 @@ static HB_ERRCODE hb_sdfTrans( SDFAREAP pArea, LPDBTRANSINFO pTransInfo )
       else
       {
          PHB_ITEM pPutRec = hb_itemPutL(nullptr, false);
-         if( SELF_INFO( pTransInfo->lpaDest, DBI_CANPUTREC, pPutRec ) != HB_SUCCESS )
+         if( SELF_INFO(pTransInfo->lpaDest, DBI_CANPUTREC, pPutRec) != HB_SUCCESS )
          {
             hb_itemRelease(pPutRec);
             return HB_FAILURE;
@@ -804,16 +804,16 @@ static HB_ERRCODE hb_sdfGoCold( SDFAREAP pArea )
    {
       HB_SIZE nSize = pArea->uiRecordLen + pArea->uiEolLen;
 
-      if( hb_fileWrite( pArea->pFile, pArea->pRecord, nSize, -1 ) != nSize )
+      if( hb_fileWrite(pArea->pFile, pArea->pRecord, nSize, -1) != nSize )
       {
          PHB_ITEM pError = hb_errNew();
 
-         hb_errPutGenCode( pError, EG_WRITE );
-         hb_errPutDescription( pError, hb_langDGetErrorDesc( EG_WRITE ) );
-         hb_errPutSubCode( pError, EDBF_WRITE );
-         hb_errPutOsCode( pError, hb_fsError() );
-         hb_errPutFileName( pError, pArea->szFileName );
-         SELF_ERROR( &pArea->area, pError );
+         hb_errPutGenCode(pError, EG_WRITE);
+         hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_WRITE));
+         hb_errPutSubCode(pError, EDBF_WRITE);
+         hb_errPutOsCode(pError, hb_fsError());
+         hb_errPutFileName(pError, pArea->szFileName);
+         SELF_ERROR(&pArea->area, pError);
          hb_itemRelease(pError);
          return HB_FAILURE;
       }
@@ -835,10 +835,10 @@ static HB_ERRCODE hb_sdfGoHot( SDFAREAP pArea )
    if( pArea->fReadonly )
    {
       PHB_ITEM pError = hb_errNew();
-      hb_errPutGenCode( pError, EG_READONLY );
-      hb_errPutDescription( pError, hb_langDGetErrorDesc( EG_READONLY ) );
-      hb_errPutSubCode( pError, EDBF_READONLY );
-      SELF_ERROR( &pArea->area, pError );
+      hb_errPutGenCode(pError, EG_READONLY);
+      hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_READONLY));
+      hb_errPutSubCode(pError, EDBF_READONLY);
+      SELF_ERROR(&pArea->area, pError);
       hb_itemRelease(pError);
       return HB_FAILURE;
    }
@@ -857,7 +857,7 @@ static HB_ERRCODE hb_sdfFlush( SDFAREAP pArea )
 
    HB_ERRCODE errCode;
 
-   errCode = SELF_GOCOLD( &pArea->area );
+   errCode = SELF_GOCOLD(&pArea->area);
 
    if( pArea->fFlush && hb_setGetHardCommit() )
    {
@@ -871,7 +871,7 @@ static HB_ERRCODE hb_sdfFlush( SDFAREAP pArea )
 /*
  * Retrieve information about the current table/driver.
  */
-static HB_ERRCODE hb_sdfInfo( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
+static HB_ERRCODE hb_sdfInfo(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfInfo(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem) ) );
@@ -930,7 +930,7 @@ static HB_ERRCODE hb_sdfInfo( SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem 
       }
 
       default:
-         return SUPER_INFO( &pArea->area, uiIndex, pItem );
+         return SUPER_INFO(&pArea->area, uiIndex, pItem);
    }
 
    return HB_SUCCESS;
@@ -1101,7 +1101,7 @@ static HB_ERRCODE hb_sdfNewArea( SDFAREAP pArea )
 /*
  * Retrieve the size of the WorkArea structure.
  */
-static HB_ERRCODE hb_sdfStructSize( SDFAREAP pArea, HB_USHORT * uiSize )
+static HB_ERRCODE hb_sdfStructSize(SDFAREAP pArea, HB_USHORT * uiSize)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfStrucSize(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(uiSize) ) );
@@ -1115,7 +1115,7 @@ static HB_ERRCODE hb_sdfStructSize( SDFAREAP pArea, HB_USHORT * uiSize )
 /*
  * Close the table in the WorkArea.
  */
-static HB_ERRCODE hb_sdfClose( SDFAREAP pArea )
+static HB_ERRCODE hb_sdfClose(SDFAREAP pArea)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfClose(%p)", static_cast<void*>(pArea) ) );
@@ -1124,19 +1124,19 @@ static HB_ERRCODE hb_sdfClose( SDFAREAP pArea )
    /* Update record and unlock records */
    if( pArea->pFile )
    {
-      SELF_GOCOLD( &pArea->area );
+      SELF_GOCOLD(&pArea->area);
 
       if( !pArea->fReadonly && hb_setGetEOF() )
       {
-         hb_fileWrite( pArea->pFile, "\032", 1, -1 );
+         hb_fileWrite(pArea->pFile, "\032", 1, -1);
          pArea->fFlush = HB_TRUE;
       }
-      SELF_FLUSH( &pArea->area );
-      hb_fileClose( pArea->pFile );
+      SELF_FLUSH(&pArea->area);
+      hb_fileClose(pArea->pFile);
       pArea->pFile = nullptr;
    }
 
-   SUPER_CLOSE( &pArea->area );
+   SUPER_CLOSE(&pArea->area);
 
    if( pArea->pFieldOffset )
    {
@@ -1170,7 +1170,7 @@ static HB_ERRCODE hb_sdfClose( SDFAREAP pArea )
 /*
  * Create a data store in the specified WorkArea.
  */
-static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
+static HB_ERRCODE hb_sdfCreate(SDFAREAP pArea, LPDBOPENINFO pCreateInfo)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfCreate(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pCreateInfo) ) );
@@ -1202,7 +1202,7 @@ static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
    if( hb_setGetDefExtension() && !pFileName->szExtension )
    {
       PHB_ITEM pItem = hb_itemNew(nullptr);
-      if( SELF_INFO( &pArea->area, DBI_TABLEEXT, pItem ) == HB_SUCCESS )
+      if( SELF_INFO(&pArea->area, DBI_TABLEEXT, pItem) == HB_SUCCESS )
       {
          pFileName->szExtension = hb_itemGetCPtr(pItem);
          hb_fsFNameMerge(szFileName, pFileName);
@@ -1218,23 +1218,23 @@ static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
    /* Try create */
    do
    {
-      pArea->pFile = hb_fileExtOpen( szFileName, nullptr,
-                                     FO_READWRITE | FO_EXCLUSIVE | FXO_TRUNCATE |
-                                     FXO_DEFAULTS | FXO_SHARELOCK | FXO_COPYNAME,
-                                     nullptr, pError );
+      pArea->pFile = hb_fileExtOpen(szFileName, nullptr,
+                                    FO_READWRITE | FO_EXCLUSIVE | FXO_TRUNCATE |
+                                    FXO_DEFAULTS | FXO_SHARELOCK | FXO_COPYNAME,
+                                    nullptr, pError);
       if( !pArea->pFile )
       {
          if( !pError )
          {
             pError = hb_errNew();
-            hb_errPutGenCode( pError, EG_CREATE );
-            hb_errPutSubCode( pError, EDBF_CREATE_DBF );
-            hb_errPutOsCode( pError, hb_fsError() );
-            hb_errPutDescription( pError, hb_langDGetErrorDesc( EG_CREATE ) );
-            hb_errPutFileName( pError, szFileName );
-            hb_errPutFlags( pError, EF_CANRETRY | EF_CANDEFAULT );
+            hb_errPutGenCode(pError, EG_CREATE);
+            hb_errPutSubCode(pError, EDBF_CREATE_DBF);
+            hb_errPutOsCode(pError, hb_fsError());
+            hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_CREATE));
+            hb_errPutFileName(pError, szFileName);
+            hb_errPutFlags(pError, EF_CANRETRY | EF_CANDEFAULT);
          }
-         fRetry = ( SELF_ERROR( &pArea->area, pError ) == E_RETRY );
+         fRetry = ( SELF_ERROR(&pArea->area, pError) == E_RETRY );
       }
       else
       {
@@ -1253,10 +1253,10 @@ static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
       return HB_FAILURE;
    }
 
-   errCode = SUPER_CREATE( &pArea->area, pCreateInfo );
+   errCode = SUPER_CREATE(&pArea->area, pCreateInfo);
    if( errCode != HB_SUCCESS )
    {
-      SELF_CLOSE( &pArea->area );
+      SELF_CLOSE(&pArea->area);
       return errCode;
    }
 
@@ -1264,7 +1264,7 @@ static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
    pArea->ulRecNo = 1;
    pArea->area.fEof = HB_TRUE;
    pArea->fPositioned = HB_FALSE;
-   hb_sdfClearRecordBuffer( pArea );
+   hb_sdfClearRecordBuffer(pArea);
 
    return HB_SUCCESS;
 }
@@ -1272,7 +1272,7 @@ static HB_ERRCODE hb_sdfCreate( SDFAREAP pArea, LPDBOPENINFO pCreateInfo )
 /*
  * Open a data store in the WorkArea.
  */
-static HB_ERRCODE hb_sdfOpen( SDFAREAP pArea, LPDBOPENINFO pOpenInfo )
+static HB_ERRCODE hb_sdfOpen(SDFAREAP pArea, LPDBOPENINFO pOpenInfo)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfOpen(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOpenInfo) ) );
@@ -1309,7 +1309,7 @@ static HB_ERRCODE hb_sdfOpen( SDFAREAP pArea, LPDBOPENINFO pOpenInfo )
    if( hb_setGetDefExtension() && !pFileName->szExtension )
    {
       PHB_ITEM pFileExt = hb_itemNew(nullptr);
-      if( SELF_INFO( &pArea->area, DBI_TABLEEXT, pFileExt ) == HB_SUCCESS )
+      if( SELF_INFO(&pArea->area, DBI_TABLEEXT, pFileExt) == HB_SUCCESS )
       {
          pFileName->szExtension = hb_itemGetCPtr(pFileExt);
          hb_fsFNameMerge(szFileName, pFileName);
@@ -1341,20 +1341,20 @@ static HB_ERRCODE hb_sdfOpen( SDFAREAP pArea, LPDBOPENINFO pOpenInfo )
    /* Try open */
    do
    {
-      pArea->pFile = hb_fileExtOpen( szFileName, nullptr, uiFlags | FXO_DEFAULTS | FXO_SHARELOCK | FXO_COPYNAME, nullptr, pError );
+      pArea->pFile = hb_fileExtOpen(szFileName, nullptr, uiFlags | FXO_DEFAULTS | FXO_SHARELOCK | FXO_COPYNAME, nullptr, pError);
       if( !pArea->pFile )
       {
          if( !pError )
          {
             pError = hb_errNew();
-            hb_errPutGenCode( pError, EG_OPEN );
-            hb_errPutSubCode( pError, EDBF_OPEN_DBF );
-            hb_errPutOsCode( pError, hb_fsError() );
-            hb_errPutDescription( pError, hb_langDGetErrorDesc( EG_OPEN ) );
-            hb_errPutFileName( pError, szFileName );
-            hb_errPutFlags( pError, EF_CANRETRY | EF_CANDEFAULT );
+            hb_errPutGenCode(pError, EG_OPEN);
+            hb_errPutSubCode(pError, EDBF_OPEN_DBF);
+            hb_errPutOsCode(pError, hb_fsError());
+            hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_OPEN));
+            hb_errPutFileName(pError, szFileName);
+            hb_errPutFlags(pError, EF_CANRETRY | EF_CANDEFAULT);
          }
-         fRetry = ( SELF_ERROR( &pArea->area, pError ) == E_RETRY );
+         fRetry = ( SELF_ERROR(&pArea->area, pError) == E_RETRY );
       }
       else
       {
@@ -1373,23 +1373,23 @@ static HB_ERRCODE hb_sdfOpen( SDFAREAP pArea, LPDBOPENINFO pOpenInfo )
       return HB_FAILURE;
    }
 
-   errCode = SUPER_OPEN( &pArea->area, pOpenInfo );
+   errCode = SUPER_OPEN(&pArea->area, pOpenInfo);
    if( errCode != HB_SUCCESS )
    {
-      SELF_CLOSE( &pArea->area );
+      SELF_CLOSE(&pArea->area);
       return HB_FAILURE;
    }
 
    hb_sdfInitArea( pArea, szFileName );
 
    /* Position cursor at the first record */
-   return SELF_GOTOP( &pArea->area );
+   return SELF_GOTOP(&pArea->area);
 }
 
 /*
  * Retrieve information about the current driver.
  */
-static HB_ERRCODE hb_sdfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem )
+static HB_ERRCODE hb_sdfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_sdfRddInfo(%p,%hu,%lu,%p)", static_cast<void*>(pRDD), uiIndex, ulConnect, static_cast<void*>(pItem) ) );
@@ -1407,7 +1407,7 @@ static HB_ERRCODE hb_sdfRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          break;
 
       default:
-         return SUPER_RDDINFO( pRDD, uiIndex, ulConnect, pItem );
+         return SUPER_RDDINFO(pRDD, uiIndex, ulConnect, pItem);
 
    }
 
@@ -1546,24 +1546,24 @@ HB_FUNC_STATIC( SDF_GETFUNCTABLE )
    }
 }
 
-static void hb_sdfRddInit( void * cargo )
+static void hb_sdfRddInit(void * cargo)
 {
    HB_SYMBOL_UNUSED(cargo);
 
-   if( hb_rddRegister( "SDF", RDT_TRANSFER ) > 1 )
+   if( hb_rddRegister("SDF", RDT_TRANSFER) > 1 )
    {
       hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
    }
 }
 
 HB_INIT_SYMBOLS_BEGIN( sdf1__InitSymbols )
-{ "SDF",              {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( SDF )}, nullptr },
-{ "SDF_GETFUNCTABLE", {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( SDF_GETFUNCTABLE )}, nullptr }
+{"SDF",              {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( SDF )}, nullptr},
+{"SDF_GETFUNCTABLE", {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( SDF_GETFUNCTABLE )}, nullptr}
 HB_INIT_SYMBOLS_END( sdf1__InitSymbols )
 
-HB_CALL_ON_STARTUP_BEGIN( _hb_sdf_rdd_init_ )
-   hb_vmAtInit( hb_sdfRddInit, nullptr );
-HB_CALL_ON_STARTUP_END( _hb_sdf_rdd_init_ )
+HB_CALL_ON_STARTUP_BEGIN(_hb_sdf_rdd_init_)
+   hb_vmAtInit(hb_sdfRddInit, nullptr);
+HB_CALL_ON_STARTUP_END(_hb_sdf_rdd_init_)
 
 #if defined(HB_PRAGMA_STARTUP)
    #pragma startup sdf1__InitSymbols

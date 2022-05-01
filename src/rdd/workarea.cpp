@@ -566,7 +566,7 @@ static HB_ERRCODE hb_waCreateFields( AREAP pArea, PHB_ITEM pStruct )
 /*
  * Determine the number of fields in the WorkArea.
  */
-static HB_ERRCODE hb_waFieldCount( AREAP pArea, HB_USHORT * uiFields )
+static HB_ERRCODE hb_waFieldCount(AREAP pArea, HB_USHORT * uiFields)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_waFieldCount(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(uiFields) ) );
@@ -579,7 +579,7 @@ static HB_ERRCODE hb_waFieldCount( AREAP pArea, HB_USHORT * uiFields )
 /*
  * Retrieve information about a field.
  */
-static HB_ERRCODE hb_waFieldInfo( AREAP pArea, HB_USHORT uiIndex, HB_USHORT uiType, PHB_ITEM pItem )
+static HB_ERRCODE hb_waFieldInfo(AREAP pArea, HB_USHORT uiIndex, HB_USHORT uiType, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_waFieldInfo(%p, %hu, %hu, %p)", static_cast<void*>(pArea), uiIndex, uiType, static_cast<void*>(pItem) ) );
@@ -766,7 +766,7 @@ static HB_ERRCODE hb_waFieldInfo( AREAP pArea, HB_USHORT uiIndex, HB_USHORT uiTy
 /*
  * Determine the name associated with a field number.
  */
-static HB_ERRCODE hb_waFieldName( AREAP pArea, HB_USHORT uiIndex, char * szName )
+static HB_ERRCODE hb_waFieldName(AREAP pArea, HB_USHORT uiIndex, char * szName)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_waFieldName(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(szName) ) );
@@ -824,7 +824,7 @@ static HB_ERRCODE hb_waAlias( AREAP pArea, char * szAlias )
 /*
  * Close the table in the WorkArea.
  */
-static HB_ERRCODE hb_waClose( AREAP pArea )
+static HB_ERRCODE hb_waClose(AREAP pArea)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_waClose(%p)", static_cast<void*>(pArea) ) );
@@ -849,7 +849,7 @@ static HB_ERRCODE hb_waClose( AREAP pArea )
 /*
  * Retrieve information about the current driver.
  */
-static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
+static HB_ERRCODE hb_waInfo(AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_waInfo(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem) ) );
@@ -881,7 +881,7 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
          break;
 
       case DBI_LASTUPDATE:
-         hb_itemPutDL( pItem, 0 );
+         hb_itemPutDL(pItem, 0);
          break;
 
       case DBI_GETLOCKARRAY:
@@ -943,7 +943,7 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
       {
          LPRDDNODE pNode = SELF_RDDNODE( pArea );
          hb_itemClear(pItem);
-         return pNode ? SELF_RDDINFO( pNode, RDDI_TABLEEXT, 0, pItem ) : HB_FAILURE;
+         return pNode ? SELF_RDDINFO(pNode, RDDI_TABLEEXT, 0, pItem) : HB_FAILURE;
       }
       case DBI_SCOPEDRELATION:
       {
@@ -977,7 +977,7 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
          {
             hb_itemPutL(pItem, false);
          }
-         else if( SELF_RECCOUNT( pArea, &ulRecCount ) != HB_SUCCESS )
+         else if( SELF_RECCOUNT(pArea, &ulRecCount) != HB_SUCCESS )
          {
             return HB_FAILURE;
          }
@@ -1013,7 +1013,7 @@ static HB_ERRCODE hb_waInfo( AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
  * Retrieve information about the current order that SELF could not.
  * Called by SELF_ORDINFO() if uiIndex is not supported.
  */
-static HB_ERRCODE hb_waOrderInfo( AREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO pInfo )
+static HB_ERRCODE hb_waOrderInfo(AREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO pInfo)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_waOrderInfo(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pInfo) ) );
@@ -1058,14 +1058,14 @@ static HB_ERRCODE hb_waNewArea( AREAP pArea )
  * Open a data store in the WorkArea.
  * Like in Clipper it's also mapped as Create() method at WA level
  */
-static HB_ERRCODE hb_waOpen( AREAP pArea, LPDBOPENINFO pInfo )
+static HB_ERRCODE hb_waOpen(AREAP pArea, LPDBOPENINFO pInfo)
 {
    if( !pArea->atomAlias && pInfo->atomAlias && pInfo->atomAlias[0] )
    {
       pArea->atomAlias = hb_rddAllocWorkAreaAlias( pInfo->atomAlias, static_cast<int>(pInfo->uiArea) );
       if( !pArea->atomAlias )
       {
-         SELF_CLOSE( pArea );
+         SELF_CLOSE(pArea);
          return HB_FAILURE;
       }
    }
@@ -1114,7 +1114,7 @@ static HB_ERRCODE hb_waOrderCondition( AREAP pArea, LPDBORDERCONDINFO param )
 /*
  * Release all references to a WorkArea.
  */
-static HB_ERRCODE hb_waRelease( AREAP pArea )
+static HB_ERRCODE hb_waRelease(AREAP pArea)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_waRelease(%p)", static_cast<void*>(pArea) ) );
@@ -1132,7 +1132,7 @@ static HB_ERRCODE hb_waRelease( AREAP pArea )
    if( pArea->lpdbOrdCondInfo )
    {
       /* intentionally direct call not a method */
-      hb_waOrderCondition( pArea, nullptr );
+      hb_waOrderCondition(pArea, nullptr);
    }
    hb_xfree(pArea);
    return HB_SUCCESS;
@@ -1141,7 +1141,7 @@ static HB_ERRCODE hb_waRelease( AREAP pArea )
 /*
  * Retrieve the size of the WorkArea structure.
  */
-static HB_ERRCODE hb_waStructSize( AREAP pArea, HB_USHORT * uiSize )
+static HB_ERRCODE hb_waStructSize(AREAP pArea, HB_USHORT * uiSize)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_waStrucSize(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(uiSize) ) );
@@ -1155,7 +1155,7 @@ static HB_ERRCODE hb_waStructSize( AREAP pArea, HB_USHORT * uiSize )
 /*
  * Obtain the name of replaceable database driver (RDD) subsystem.
  */
-static HB_ERRCODE hb_waSysName( AREAP pArea, char * pBuffer )
+static HB_ERRCODE hb_waSysName(AREAP pArea, char * pBuffer)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_waSysName(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pBuffer) ) );
@@ -1586,8 +1586,8 @@ static HB_ERRCODE hb_waChildEnd( AREAP pArea, LPDBRELINFO pRelInfo )
       pInfo.atomBagName = nullptr;
       pInfo.itmResult = hb_itemNew(nullptr);
       pInfo.itmNewVal = nullptr;
-      SELF_ORDINFO( pArea, DBOI_SCOPETOPCLEAR, &pInfo );
-      SELF_ORDINFO( pArea, DBOI_SCOPEBOTTOMCLEAR, &pInfo );
+      SELF_ORDINFO(pArea, DBOI_SCOPETOPCLEAR, &pInfo);
+      SELF_ORDINFO(pArea, DBOI_SCOPEBOTTOMCLEAR, &pInfo);
       hb_itemRelease(pInfo.itmResult);
    }
 
@@ -1651,7 +1651,7 @@ static HB_ERRCODE hb_waClearRel( AREAP pArea )
       {
          LPDBRELINFO lpdbRelation = pArea->lpdbRelations;
 
-         hb_rddSelectWorkAreaNumber( lpdbRelation->lpaChild->uiArea );
+         hb_rddSelectWorkAreaNumber(lpdbRelation->lpaChild->uiArea);
          SELF_CHILDEND( lpdbRelation->lpaChild, lpdbRelation );
          pArea->lpdbRelations = lpdbRelation->lpdbriNext;
 
@@ -1667,7 +1667,7 @@ static HB_ERRCODE hb_waClearRel( AREAP pArea )
       }
       while( pArea->lpdbRelations );
 
-      hb_rddSelectWorkAreaNumber( iCurrArea );
+      hb_rddSelectWorkAreaNumber(iCurrArea);
    }
 
    return HB_SUCCESS;
@@ -1733,7 +1733,7 @@ static HB_ERRCODE hb_waRelEval( AREAP pArea, LPDBRELINFO pRelInfo )
             pRelInfo->lpaParent->valResult = nullptr;
             memset(&pInfo, 0, sizeof(pInfo));
             pInfo.itmResult = hb_itemPutNI(nullptr, 0);
-            errCode = SELF_ORDINFO( pArea, DBOI_NUMBER, &pInfo );
+            errCode = SELF_ORDINFO(pArea, DBOI_NUMBER, &pInfo);
 
             if( errCode == HB_SUCCESS )
             {
@@ -1743,10 +1743,10 @@ static HB_ERRCODE hb_waRelEval( AREAP pArea, LPDBRELINFO pRelInfo )
                   if( pRelInfo->isScoped )
                   {
                      pInfo.itmNewVal = pResult;
-                     errCode = SELF_ORDINFO( pArea, DBOI_SCOPETOP, &pInfo );
+                     errCode = SELF_ORDINFO(pArea, DBOI_SCOPETOP, &pInfo);
                      if( errCode == HB_SUCCESS )
                      {
-                        errCode = SELF_ORDINFO( pArea, DBOI_SCOPEBOTTOM, &pInfo );
+                        errCode = SELF_ORDINFO(pArea, DBOI_SCOPEBOTTOM, &pInfo);
                      }
                   }
                   if( errCode == HB_SUCCESS )
@@ -2059,7 +2059,7 @@ static HB_ERRCODE hb_waCompile( AREAP pArea, const char * pExpr )
 /*
  * Raise a runtime error.
  */
-static HB_ERRCODE hb_waError( AREAP pArea, PHB_ITEM pError )
+static HB_ERRCODE hb_waError(AREAP pArea, PHB_ITEM pError)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_waError(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pError) ) );
@@ -2069,15 +2069,15 @@ static HB_ERRCODE hb_waError( AREAP pArea, PHB_ITEM pError )
 
    if( pArea && pArea->lprfsHost->sysName )
    {
-      SELF_SYSNAME( pArea, szRddName );
+      SELF_SYSNAME(pArea, szRddName);
    }
    else
    {
       hb_strncpy(szRddName, "???DRIVER", HB_RDD_MAX_DRIVERNAME_LEN);
    }
-   hb_errPutSeverity( pError, ES_ERROR );
-   hb_errPutSubSystem( pError, szRddName );
-   return hb_errLaunch( pError );
+   hb_errPutSeverity(pError, ES_ERROR);
+   hb_errPutSubSystem(pError, szRddName);
+   return hb_errLaunch(pError);
 }
 
 /*
@@ -2096,12 +2096,12 @@ static HB_ERRCODE hb_waEvalBlock( AREAP pArea, PHB_ITEM pBlock )
    iUsedArea = pArea->uiArea;
    if( iCurrArea != iUsedArea )
    {
-      hb_rddSelectWorkAreaNumber( iUsedArea );
+      hb_rddSelectWorkAreaNumber(iUsedArea);
    }
 
    pItem = hb_vmEvalBlockOrMacro( pBlock );
 
-   if( static_cast<AREAP>(hb_rddGetWorkAreaPointer( iUsedArea )) != pArea )
+   if( static_cast<AREAP>(hb_rddGetWorkAreaPointer(iUsedArea)) != pArea )
    {
       return HB_FAILURE;
    }
@@ -2112,7 +2112,7 @@ static HB_ERRCODE hb_waEvalBlock( AREAP pArea, PHB_ITEM pBlock )
    }
    hb_itemMove(pArea->valResult, pItem);
 
-   hb_rddSelectWorkAreaNumber( iCurrArea );
+   hb_rddSelectWorkAreaNumber(iCurrArea);
 
    return hb_vmRequestQuery() ? HB_FAILURE : HB_SUCCESS;
 }
@@ -2120,7 +2120,7 @@ static HB_ERRCODE hb_waEvalBlock( AREAP pArea, PHB_ITEM pBlock )
 /*
  * RDD info
  */
-static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnection, PHB_ITEM pItem )
+static HB_ERRCODE hb_waRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnection, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddInfo(%p, %hu, %lu, %p)", static_cast<void*>(pRDD), uiIndex, ulConnection, static_cast<void*>(pItem) ) );
@@ -2161,7 +2161,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          fResult = hb_setGetStrictRead();
          if( hb_itemType(pItem) & Harbour::Item::LOGICAL )
          {
-            hb_setSetItem( HB_SET_STRICTREAD, pItem );
+            hb_setSetItem(HB_SET_STRICTREAD, pItem);
          }
          hb_itemPutL(pItem, fResult);
          break;
@@ -2169,7 +2169,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          fResult = hb_setGetOptimize();
          if( hb_itemType(pItem) & Harbour::Item::LOGICAL )
          {
-            hb_setSetItem( HB_SET_OPTIMIZE, pItem );
+            hb_setSetItem(HB_SET_OPTIMIZE, pItem);
          }
          hb_itemPutL(pItem, fResult);
          break;
@@ -2177,7 +2177,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          fResult = hb_setGetForceOpt();
          if( hb_itemType(pItem) & Harbour::Item::LOGICAL )
          {
-            hb_setSetItem( HB_SET_FORCEOPT, pItem );
+            hb_setSetItem(HB_SET_FORCEOPT, pItem);
          }
          hb_itemPutL(pItem, fResult);
          break;
@@ -2185,7 +2185,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          fResult = hb_setGetAutOpen();
          if( hb_itemType(pItem) & Harbour::Item::LOGICAL )
          {
-            hb_setSetItem( HB_SET_AUTOPEN, pItem );
+            hb_setSetItem(HB_SET_AUTOPEN, pItem);
          }
          hb_itemPutL(pItem, fResult);
          break;
@@ -2193,7 +2193,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          iResult = hb_setGetAutOrder();
          if( hb_itemType(pItem) & Harbour::Item::NUMERIC )
          {
-            hb_setSetItem( HB_SET_AUTORDER, pItem );
+            hb_setSetItem(HB_SET_AUTORDER, pItem);
          }
          hb_itemPutNI(pItem, iResult);
          break;
@@ -2201,7 +2201,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          fResult = hb_setGetAutoShare();
          if( hb_itemType(pItem) & Harbour::Item::LOGICAL )
          {
-            hb_setSetItem( HB_SET_AUTOSHARE, pItem );
+            hb_setSetItem(HB_SET_AUTOSHARE, pItem);
          }
          hb_itemPutL(pItem, fResult);
          break;
@@ -2209,7 +2209,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          iResult = hb_setGetDBFLockScheme();
          if( hb_itemType(pItem) & Harbour::Item::NUMERIC )
          {
-            hb_setSetItem( HB_SET_DBFLOCKSCHEME, pItem );
+            hb_setSetItem(HB_SET_DBFLOCKSCHEME, pItem);
          }
          hb_itemPutNI(pItem, iResult);
          break;
@@ -2217,7 +2217,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          iResult = hb_setGetMBlockSize();
          if( hb_itemType(pItem) & Harbour::Item::NUMERIC )
          {
-            hb_setSetItem( HB_SET_MBLOCKSIZE, pItem );
+            hb_setSetItem(HB_SET_MBLOCKSIZE, pItem);
          }
          hb_itemPutNI(pItem, iResult);
          break;
@@ -2227,7 +2227,7 @@ static HB_ERRCODE hb_waRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          char * szResult = szExt ? hb_strdup(szExt) : nullptr;
          if( hb_itemType(pItem) & Harbour::Item::STRING )
          {
-            hb_setSetItem( HB_SET_MFILEEXT, pItem );
+            hb_setSetItem(HB_SET_MFILEEXT, pItem);
          }
          hb_itemPutCPtr(pItem, szResult);
          break;
@@ -2261,9 +2261,9 @@ static HB_ERRCODE hb_waUnsupported( AREAP pArea )
    PHB_ITEM pError;
 
    pError = hb_errNew();
-   hb_errPutGenCode( pError, EG_UNSUPPORTED );
-   hb_errPutDescription( pError, hb_langDGetErrorDesc( EG_UNSUPPORTED ) );
-   SELF_ERROR( pArea, pError );
+   hb_errPutGenCode(pError, EG_UNSUPPORTED);
+   hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_UNSUPPORTED));
+   SELF_ERROR(pArea, pError);
    hb_itemRelease(pError);
 
    return HB_FAILURE;
@@ -2362,12 +2362,12 @@ static HB_ERRCODE hb_waRddUnsupported( LPRDDNODE pRDD )
    PHB_ITEM pError;
 
    pError = hb_errNew();
-   hb_errPutGenCode( pError, EG_UNSUPPORTED );
-   hb_errPutDescription( pError, hb_langDGetErrorDesc( EG_UNSUPPORTED ) );
+   hb_errPutGenCode(pError, EG_UNSUPPORTED);
+   hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_UNSUPPORTED));
 
-   hb_errPutSeverity( pError, ES_ERROR );
-   hb_errPutSubSystem( pError, pRDD->szName );
-   hb_errLaunch( pError );
+   hb_errPutSeverity(pError, ES_ERROR);
+   hb_errPutSubSystem(pError, pRDD->szName);
+   hb_errLaunch(pError);
    hb_itemRelease(pError);
 
    return HB_FAILURE;
@@ -2701,7 +2701,7 @@ void hb_rddSetFileRedirector( HB_RDDACCEPT funcAccept, HB_BOOL fEnable )
 /*
  * Shutdown the RDD system.
  */
-void hb_rddShutDown( void )
+void hb_rddShutDown(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddShutDown()" ) );
@@ -2746,7 +2746,7 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
    HB_USHORT uiFunctions = 0;
    int iResult;
 
-   if( hb_rddFindNode( szDriver, nullptr ) )    /* Duplicated RDD */
+   if( hb_rddFindNode(szDriver, nullptr) )    /* Duplicated RDD */
    {
       return 1;
    }
@@ -2786,7 +2786,7 @@ int hb_rddRegister( const char * szDriver, HB_USHORT uiType )
       /* repeat the test to protect against possible registering RDD by
        *  <szDriver>_GETFUNCTABLE()
        */
-      if( !hb_rddFindNode( szDriver, nullptr ) )    /* Duplicated RDD */
+      if( !hb_rddFindNode(szDriver, nullptr) )    /* Duplicated RDD */
       {
          if( s_uiRddCount == s_uiRddMax )
          {
@@ -2854,7 +2854,7 @@ HB_ERRCODE hb_rddInheritEx( RDDFUNCS * pTable, const RDDFUNCS * pSubTable,
    {
       char szSuperName[HB_RDD_MAX_DRIVERNAME_LEN + 1];
       hb_strncpyUpper( szSuperName, szDrvName, sizeof(szSuperName) - 1 );
-      pRddNode = hb_rddFindNode( szSuperName, nullptr );
+      pRddNode = hb_rddFindNode(szSuperName, nullptr);
 
       if( !pRddNode )
       {
@@ -2890,7 +2890,7 @@ HB_ERRCODE hb_rddInherit( RDDFUNCS * pTable, const RDDFUNCS * pSubTable, RDDFUNC
    HB_TRACE( HB_TR_DEBUG, ( "hb_rddInherit(%p, %p, %p, %s)", static_cast<void*>(pTable), static_cast<const void*>(pSubTable), static_cast<void*>(pSuperTable), szDrvName ) );
 #endif
 
-   return hb_rddInheritEx( pTable, pSubTable, pSuperTable, szDrvName, nullptr );
+   return hb_rddInheritEx(pTable, pSubTable, pSuperTable, szDrvName, nullptr);
 }
 
 HB_BOOL hb_rddIsDerivedFrom( HB_USHORT uiRddID, HB_USHORT uiSuperRddID )
@@ -2934,8 +2934,8 @@ HB_FUNC( __RDDPREALLOCATE )
 }
 
 HB_FUNC_EXTERN( RDDSYS );
-extern void _hb_rddWorkAreaForceLink( void );
-void _hb_rddWorkAreaForceLink( void )
+extern void _hb_rddWorkAreaForceLink(void);
+void _hb_rddWorkAreaForceLink(void)
 {
    HB_FUNC_EXEC( RDDSYS );
 }
