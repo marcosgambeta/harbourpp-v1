@@ -59,7 +59,7 @@ HB_FUNC( INDEXCOUNT )
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
       pOrderInfo.itmResult = hb_itemPutNI(nullptr, 0);
-      SELF_ORDINFO( pArea, DBOI_ORDERCOUNT, &pOrderInfo );
+      SELF_ORDINFO(pArea, DBOI_ORDERCOUNT, &pOrderInfo);
       hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
@@ -78,17 +78,17 @@ HB_FUNC( INDEXNAMES )
 
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
       pOrderInfo.itmResult = hb_itemPutNI(nullptr, 0);
-      SELF_ORDINFO( pArea, DBOI_ORDERCOUNT, &pOrderInfo );
+      SELF_ORDINFO(pArea, DBOI_ORDERCOUNT, &pOrderInfo);
       iSize = hb_itemGetNI(pOrderInfo.itmResult);
 
-      pArray = hb_itemArrayNew( iSize );
+      pArray = hb_itemArrayNew(iSize);
       for( i = 1; i <= iSize; ++i )
       {
          pOrderInfo.itmOrder  = hb_itemPutNI(pOrderInfo.itmOrder, i);
          pOrderInfo.itmResult = hb_itemPutC(pOrderInfo.itmResult, 0);
-         if( SELF_ORDINFO( pArea, DBOI_NAME, &pOrderInfo ) != HB_SUCCESS )
+         if( SELF_ORDINFO(pArea, DBOI_NAME, &pOrderInfo) != HB_SUCCESS )
             break;
-         hb_arraySet( pArray, i, pOrderInfo.itmResult );
+         hb_arraySet(pArray, i, pOrderInfo.itmResult);
       }
       hb_itemRelease(pOrderInfo.itmOrder);
       hb_itemRelease(pOrderInfo.itmResult);

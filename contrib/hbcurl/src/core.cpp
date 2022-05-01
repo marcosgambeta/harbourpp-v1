@@ -346,7 +346,7 @@ static size_t hb_curl_write_file_callback( void * buffer, size_t size, size_t nm
          }
       }
 
-      return hb_fsWriteLarge( hb_curl->dl_handle, buffer, size * nmemb );
+      return hb_fsWriteLarge(hb_curl->dl_handle, buffer, size * nmemb);
    }
 
    return static_cast<size_t>(-1);
@@ -363,7 +363,7 @@ static size_t hb_curl_write_fhandle_callback( void * buffer, size_t size, size_t
          return static_cast<size_t>(-1);
       }
 
-      return hb_fsWriteLarge( hb_curl->dl_handle, buffer, size * nmemb );
+      return hb_fsWriteLarge(hb_curl->dl_handle, buffer, size * nmemb);
    }
 
    return static_cast<size_t>(-1);
@@ -653,7 +653,7 @@ HB_FUNC( CURL_EASY_DUPLICATE )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -672,7 +672,7 @@ HB_FUNC( CURL_EASY_CLEANUP )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -689,7 +689,7 @@ HB_FUNC( CURL_EASY_RESET )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -707,7 +707,7 @@ HB_FUNC( CURL_EASY_PAUSE )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -721,7 +721,7 @@ HB_FUNC( CURL_EASY_PERFORM )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -747,7 +747,7 @@ HB_FUNC( CURL_EASY_SEND )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -784,7 +784,7 @@ HB_FUNC( CURL_EASY_RECV )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -1809,7 +1809,7 @@ HB_FUNC( CURL_EASY_SETOPT )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -1831,7 +1831,7 @@ HB_FUNC( CURL_EASY_DL_BUFF_GET )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -2112,7 +2112,7 @@ HB_FUNC( CURL_EASY_GETINFO )
                }
 
                /* Fill */
-               pArray = hb_itemArrayNew( nCount );
+               pArray = hb_itemArrayNew(nCount);
                for( walk_ret_slist = ret_slist, nCount = 1; walk_ret_slist->next; )
                {
                   hb_arraySetC( pArray, nCount++, walk_ret_slist->data );
@@ -2133,7 +2133,7 @@ HB_FUNC( CURL_EASY_GETINFO )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -2156,7 +2156,7 @@ HB_FUNC( CURL_EASY_ESCAPE )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -2180,7 +2180,7 @@ HB_FUNC( CURL_EASY_UNESCAPE )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -2267,7 +2267,7 @@ HB_FUNC( CURL_EASY_STRERROR )
 #endif
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -2280,7 +2280,7 @@ HB_FUNC( CURL_GETDATE )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -2297,7 +2297,7 @@ HB_FUNC( CURL_ESCAPE )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -2312,6 +2312,6 @@ HB_FUNC( CURL_UNESCAPE )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

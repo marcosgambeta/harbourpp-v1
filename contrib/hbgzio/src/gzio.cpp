@@ -265,28 +265,28 @@ static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec,
    return hb_fileDirectory(s_gzio_name(pszDirSpec, nullptr), pszAttr);
 }
 
-static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long * plJulian, long * plMillisec )
+static HB_BOOL s_fileTimeGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, long * plJulian, long * plMillisec)
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fileTimeGet(s_gzio_name(pszFileName, nullptr), plJulian, plMillisec);
 }
 
-static HB_BOOL s_fileTimeSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long lJulian, long lMillisec )
+static HB_BOOL s_fileTimeSet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, long lJulian, long lMillisec)
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fileTimeSet(s_gzio_name(pszFileName, nullptr), lJulian, lMillisec);
 }
 
-static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR * pnAttr )
+static HB_BOOL s_fileAttrGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR * pnAttr)
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fileAttrGet(s_gzio_name(pszFileName, nullptr), pnAttr);
 }
 
-static HB_BOOL s_fileAttrSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR nAttr )
+static HB_BOOL s_fileAttrSet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR nAttr)
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
@@ -389,7 +389,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize,
          /* decompression - support for formats:
           * -15: raw, 15: ZLIB, 31: GZIP, 47: ZLIB+GZIP
           */
-         err = inflateInit2( &pFile->gz, 47 );
+         err = inflateInit2(&pFile->gz, 47);
          if( err != Z_OK )
          {
             hb_fsSetError( HB_GZIP_ERROR_BASE - err );
@@ -451,8 +451,7 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * buffer, HB_SIZE nSize,
          /* compression format:
           * -15: raw, 15: ZLIB (+6 bytes), 31: GZIP(+18 bytes)
           */
-         err = deflateInit2( &pFile->gz, pFile->iLevel, Z_DEFLATED, 31,
-                             HB_GZIP_MEM_LEVEL, Z_DEFAULT_STRATEGY );
+         err = deflateInit2(&pFile->gz, pFile->iLevel, Z_DEFLATED, 31, HB_GZIP_MEM_LEVEL, Z_DEFAULT_STRATEGY);
          if( err != Z_OK )
          {
             hb_fsSetError( HB_GZIP_ERROR_BASE - err );
@@ -593,8 +592,8 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
          HB_MAXINT nTimeout = pFile->nTimeout;
 
          if( HB_IS_NUMERIC(pValue) )
-            pFile->nTimeout = hb_itemGetNInt( pValue );
-         hb_itemPutNInt( pValue, nTimeout );
+            pFile->nTimeout = hb_itemGetNInt(pValue);
+         hb_itemPutNInt(pValue, nTimeout);
          return true;
       }
       case HB_VF_SHUTDOWN:
@@ -603,7 +602,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
 
       case HB_VF_RDHANDLE:
       case HB_VF_WRHANDLE:
-         hb_itemPutNInt( pValue, _PHB_FILE->pFuncs->Handle( _PHB_FILE ) );
+         hb_itemPutNInt(pValue, _PHB_FILE->pFuncs->Handle(_PHB_FILE));
          return true;
 
       case HB_VF_IONAME:

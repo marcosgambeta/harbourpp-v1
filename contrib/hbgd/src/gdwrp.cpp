@@ -209,7 +209,7 @@ static void * LoadImageFromHandle( HB_FHANDLE fhandle, int sz )
 {
    void * iptr = hb_xgrab(sz);
 
-   hb_fsReadLarge( fhandle, iptr, static_cast<HB_SIZE>(sz) );
+   hb_fsReadLarge(fhandle, iptr, static_cast<HB_SIZE>(sz));
 
    return iptr;
 }
@@ -228,7 +228,7 @@ static void * LoadImageFromFile( const char * szFile, int * sz )
 
       /* Read file */
       iptr = hb_xgrab(*sz);
-      hb_fsReadLarge( fhandle, iptr, static_cast<HB_SIZE>(*sz) );
+      hb_fsReadLarge(fhandle, iptr, static_cast<HB_SIZE>(*sz));
 
       hb_fsClose( fhandle );
    }
@@ -244,7 +244,7 @@ static void * LoadImageFromFile( const char * szFile, int * sz )
 
 static void SaveImageToHandle( HB_FHANDLE fhandle, const void * iptr, int sz )
 {
-   hb_fsWriteLarge( fhandle, iptr, static_cast<HB_SIZE>(sz) );
+   hb_fsWriteLarge(fhandle, iptr, static_cast<HB_SIZE>(sz));
 }
 
 static void SaveImageToFile( const char * szFile, const void * iptr, int sz )

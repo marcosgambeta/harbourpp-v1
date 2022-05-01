@@ -129,7 +129,7 @@ using PHB_EXPAT = _HB_EXPAT *;
          hb_ret(); \
       } \
       else \
-         hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS ); \
+         hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS); \
    }
 
 /* --- Global initialization/de-initialization --- */
@@ -241,14 +241,14 @@ static void XMLCALL hb_expat_StartElementHandler( void * userdata, const XML_Cha
                ++nLen;
             }
 
-            pAttr = hb_itemArrayNew( nLen );
+            pAttr = hb_itemArrayNew(nLen);
 
             for( nPos = 0; atts[nPos]; nPos += 2 )
             {
                hb_arrayNew(pTempItem, 2);
 
-               hb_arraySetStrUTF8( pTempItem, 1, atts[nPos] );
-               hb_arraySetStrUTF8( pTempItem, 2, atts[nPos + 1] );
+               hb_arraySetStrUTF8(pTempItem, 1, atts[nPos]);
+               hb_arraySetStrUTF8(pTempItem, 2, atts[nPos + 1]);
 
                hb_arraySetForward( pAttr, ( nPos >> 1 ) + 1, pTempItem );
             }
@@ -363,7 +363,7 @@ static int XMLCALL hb_expat_UnknownEncodingHandler( void * userdata, const XML_C
       {
          PHB_ITEM pEncData = hb_itemNew(hb_expat->pVar[_VAR_xEncodingHandlerData]);
          PHB_ITEM pPar1    = hb_itemPutStrUTF8(nullptr, name);
-         PHB_ITEM pPar2    = hb_itemArrayNew( HB_SIZEOFARRAY( info->map ) );
+         PHB_ITEM pPar2    = hb_itemArrayNew(HB_SIZEOFARRAY(info->map));
 
          hb_evalBlock(hb_expat->pVar[_VAR_bUnknownEncodingHandler], pEncData, pPar1, pPar2, nullptr);
 
@@ -760,7 +760,7 @@ HB_FUNC( XML_PARSERRESET )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -782,7 +782,7 @@ HB_FUNC( XML_SETUSERDATA )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -796,7 +796,7 @@ HB_FUNC( XML_GETUSERDATA )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -817,7 +817,7 @@ HB_FUNC( XML_SETELEMENTHANDLER )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -838,7 +838,7 @@ HB_FUNC( XML_SETCDATASECTIONHANDLER )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -859,7 +859,7 @@ HB_FUNC( XML_SETNAMESPACEDECLHANDLER )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -878,7 +878,7 @@ HB_FUNC( XML_SETUNKNOWNENCODINGHANDLER )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -892,7 +892,7 @@ HB_FUNC( XML_PARSE )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -906,7 +906,7 @@ HB_FUNC( XML_GETERRORCODE )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -925,7 +925,7 @@ HB_FUNC( XML_GETCURRENTBYTEINDEX )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -939,7 +939,7 @@ HB_FUNC( XML_GETCURRENTLINENUMBER )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -953,7 +953,7 @@ HB_FUNC( XML_GETCURRENTCOLUMNNUMBER )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -967,7 +967,7 @@ HB_FUNC( XML_GETCURRENTBYTECOUNT )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -985,7 +985,7 @@ HB_FUNC( XML_SETBASE )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -995,11 +995,11 @@ HB_FUNC( XML_GETBASE )
 
    if( hb_expat )
    {
-      hb_retstr_utf8( XML_GetBase( hb_expat->parser ) );
+      hb_retstr_utf8(XML_GetBase(hb_expat->parser));
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -1013,7 +1013,7 @@ HB_FUNC( XML_GETSPECIFIEDATTRIBUTECOUNT )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -1027,7 +1027,7 @@ HB_FUNC( XML_GETIDATTRIBUTEINDEX )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -1045,7 +1045,7 @@ HB_FUNC( XML_SETENCODING )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -1059,7 +1059,7 @@ HB_FUNC( XML_SETPARAMENTITYPARSING )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -1073,7 +1073,7 @@ HB_FUNC( XML_USEFOREIGNDTD )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -1089,7 +1089,7 @@ HB_FUNC( XML_SETRETURNNSTRIPLET )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -1105,7 +1105,7 @@ HB_FUNC( XML_DEFAULTCURRENT )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -1123,7 +1123,7 @@ HB_FUNC( XML_STOPPARSER )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -1141,7 +1141,7 @@ HB_FUNC( XML_RESUMEPARSER )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -1165,7 +1165,7 @@ HB_FUNC( XML_GETPARSINGSTATUS )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -1183,7 +1183,7 @@ HB_FUNC( XML_SETHASHSALT )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 

@@ -67,7 +67,7 @@ HB_FUNC( GT_SETFLAG )
             FlagString[BytePointer] |= 1 << ( BitPointer - 1 );
          }
       }
-      hb_retclen_buffer( FlagString, hb_parclen(1) );
+      hb_retclen_buffer(FlagString, hb_parclen(1));
    }
    else
       hb_retc_null();
@@ -100,7 +100,7 @@ HB_FUNC( GT_CLRFLAG )
             FlagString[BytePointer] &= 0xff - (1 << (BitPointer - 1));
          }
       }
-      hb_retclen_buffer( FlagString, hb_parclen(1) );
+      hb_retclen_buffer(FlagString, hb_parclen(1));
    }
    else
       hb_retc_null();

@@ -75,7 +75,7 @@ HB_FUNC( FILTER )
    if( pArea )
    {
       PHB_ITEM pFilter = hb_itemPutC(nullptr, nullptr);
-      SELF_FILTERTEXT( pArea, pFilter );
+      SELF_FILTERTEXT(pArea, pFilter);
       hb_itemReturnRelease(pFilter);
    }
    else
@@ -94,7 +94,7 @@ HB_FUNC( NDX )
       if( hb_itemGetNI(pOrderInfo.itmOrder) == 0 )
          pOrderInfo.itmOrder = nullptr;
       pOrderInfo.itmResult   = hb_itemPutC(nullptr, nullptr);
-      SELF_ORDINFO( pArea, DBOI_NAME, &pOrderInfo );
+      SELF_ORDINFO(pArea, DBOI_NAME, &pOrderInfo);
       hb_itemReturnRelease(pOrderInfo.itmResult);
    }
    else
@@ -109,7 +109,7 @@ HB_FUNC( RELATION )
    {
       PHB_ITEM pRelExpr = hb_itemPutC(nullptr, nullptr);
       HB_USHORT uiRelNo = static_cast<HB_USHORT>(hb_parni(1));
-      SELF_RELTEXT( pArea, uiRelNo ? uiRelNo : 1, pRelExpr );
+      SELF_RELTEXT(pArea, uiRelNo ? uiRelNo : 1, pRelExpr);
       hb_itemReturnRelease(pRelExpr);
    }
    else
@@ -136,7 +136,7 @@ HB_FUNC( FSIZE )
       {
          PHB_ITEM pItem = hb_itemNew(nullptr);
 
-         if( SELF_FIELDINFO( pArea, uiIndex, DBS_LEN, pItem ) == HB_SUCCESS )
+         if( SELF_FIELDINFO(pArea, uiIndex, DBS_LEN, pItem) == HB_SUCCESS )
          {
             hb_itemReturnRelease(pItem);
             return;
@@ -173,15 +173,15 @@ HB_FUNC( __FOX_SEEK )
             memset(&pInfo, 0, sizeof(pInfo));
             pInfo.itmOrder = pTag;
             pInfo.itmResult = hb_itemNew(nullptr);
-            errCode = SELF_ORDLSTFOCUS( pArea, &pInfo );
+            errCode = SELF_ORDLSTFOCUS(pArea, &pInfo);
             hb_itemRelease(pInfo.itmResult);
          }
 
          if( errCode == HB_SUCCESS )
          {
-            if( SELF_SEEK( pArea, fSoftSeek, pKey, fFindLast ) == HB_SUCCESS )
+            if( SELF_SEEK(pArea, fSoftSeek, pKey, fFindLast) == HB_SUCCESS )
             {
-               if( SELF_FOUND( pArea, &fFound ) != HB_SUCCESS )
+               if( SELF_FOUND(pArea, &fFound) != HB_SUCCESS )
                   fFound = HB_FALSE;
             }
          }
@@ -189,8 +189,8 @@ HB_FUNC( __FOX_SEEK )
          hb_retl(fFound);
       }
       else
-         hb_errRT_DBCMD( EG_ARG, EDBCMD_SEEK_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
+         hb_errRT_DBCMD(EG_ARG, EDBCMD_SEEK_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
 }

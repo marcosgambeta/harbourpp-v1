@@ -34,7 +34,7 @@ HB_FUNC( GT_CHARMIX )
             s3[pos3++] = s2[i];
 
       s3[pos3] = '\0';
-      hb_retclen_buffer( s3, l1 + l2 );
+      hb_retclen_buffer(s3, l1 + l2);
    }
    else
       hb_retc_null();

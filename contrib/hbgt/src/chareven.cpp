@@ -22,7 +22,7 @@ HB_FUNC( GT_CHAREVEN )
       for( i = 1; i <= len; i += 2 )
          s2[(i - 1) / 2] = s1[i] & 0x7f;
 
-      hb_retclen_buffer( s2, len / 2 );
+      hb_retclen_buffer(s2, len / 2);
    }
    else
       hb_retc_null();

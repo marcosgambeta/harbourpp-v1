@@ -1203,7 +1203,7 @@ HB_FUNC( FI_CONVERTTO16BITS555 )
 {
    if( hb_FIBITMAP_is(1) )
    {
-      hb_FIBITMAP_ret( FreeImage_ConvertTo16Bits555( hb_FIBITMAP_par(1) ), true );
+      hb_FIBITMAP_ret(FreeImage_ConvertTo16Bits555(hb_FIBITMAP_par(1)), true);
    }
    else
    {
@@ -1215,7 +1215,7 @@ HB_FUNC( FI_CONVERTTO16BITS565 )
 {
    if( hb_FIBITMAP_is(1) )
    {
-      hb_FIBITMAP_ret( FreeImage_ConvertTo16Bits565( hb_FIBITMAP_par(1) ), true );
+      hb_FIBITMAP_ret(FreeImage_ConvertTo16Bits565(hb_FIBITMAP_par(1)), true);
    }
    else
    {
