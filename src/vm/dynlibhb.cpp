@@ -83,7 +83,7 @@ static const HB_GC_FUNCS s_gcDynlibFuncs =
    hb_gcDummyMark
 };
 
-PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
+PHB_ITEM hb_libLoad(PHB_ITEM pLibName, PHB_ITEM pArgs)
 {
    void * hDynLib = nullptr;
 
@@ -109,7 +109,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
          {
             void * hFileName;
 
-            hDynLib = static_cast<void*>(LoadLibrary( HB_ITEMGETSTR( pLibName, &hFileName, nullptr ) ));
+            hDynLib = static_cast<void*>(LoadLibrary(HB_ITEMGETSTR(pLibName, &hFileName, nullptr)));
 
             hb_strfree(hFileName);
          }
@@ -151,7 +151,7 @@ PHB_ITEM hb_libLoad( PHB_ITEM pLibName, PHB_ITEM pArgs )
    return nullptr;
 }
 
-HB_BOOL hb_libFree( PHB_ITEM pDynLib )
+HB_BOOL hb_libFree(PHB_ITEM pDynLib)
 {
    HB_BOOL fResult = HB_FALSE;
    void ** pDynLibPtr = static_cast<void**>(hb_itemGetPtrGC(pDynLib, &s_gcDynlibFuncs));
@@ -218,7 +218,7 @@ HB_FUNC( HB_LIBLOAD )
       }
    }
 
-   hb_itemReturnRelease(hb_libLoad( hb_param(1, Harbour::Item::ANY), pArgs ));
+   hb_itemReturnRelease(hb_libLoad(hb_param(1, Harbour::Item::ANY), pArgs));
 
    if( pArgs )
    {

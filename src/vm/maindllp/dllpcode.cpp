@@ -54,18 +54,18 @@
    #include <windows.h>
 #endif
 
-#define HB_DLL_PREF      TEXT( "harbour" )
-#define HB_DLL_VER       TEXT( "-" ) TEXT( HB_MACRO2STRING( HB_VER_MAJOR ) ) TEXT( HB_MACRO2STRING( HB_VER_MINOR ) )
-#define HB_DLL_EXT       TEXT( ".dll" )
+#define HB_DLL_PREF      TEXT("harbour")
+#define HB_DLL_VER       TEXT("-") TEXT(HB_MACRO2STRING(HB_VER_MAJOR)) TEXT(HB_MACRO2STRING(HB_VER_MINOR))
+#define HB_DLL_EXT       TEXT(".dll")
 
 #define HB_DLL_NAME      HB_DLL_PREF HB_DLL_EXT
 
 #if defined(__BORLANDC__)
-   #define HB_DLL_NAME2  HB_DLL_PREF HB_DLL_VER TEXT( "-bcc" ) HB_DLL_EXT
+   #define HB_DLL_NAME2  HB_DLL_PREF HB_DLL_VER TEXT("-bcc") HB_DLL_EXT
 #elif defined(HB_OS_WIN_64) && defined(HB_CPU_X86_64)
-   #define HB_DLL_NAME2  HB_DLL_PREF HB_DLL_VER TEXT( "-x64" ) HB_DLL_EXT
+   #define HB_DLL_NAME2  HB_DLL_PREF HB_DLL_VER TEXT("-x64") HB_DLL_EXT
 #elif defined(HB_OS_WIN_64) && defined(HB_CPU_IA_64)
-   #define HB_DLL_NAME2  HB_DLL_PREF HB_DLL_VER TEXT( "-ia64" ) HB_DLL_EXT
+   #define HB_DLL_NAME2  HB_DLL_PREF HB_DLL_VER TEXT("-ia64") HB_DLL_EXT
 #else
    #define HB_DLL_NAME2  HB_DLL_PREF HB_DLL_VER HB_DLL_EXT
 #endif
@@ -77,10 +77,7 @@ HB_EXTERN_BEGIN
 #define HB_DLL_MSG_NO_FUNC( func )  \
    do \
    { \
-      MessageBox( nullptr, \
-                  TEXT( "Function '" ) TEXT( func ) TEXT( "' not found!" ), \
-                  TEXT( func ), \
-                  MB_OK | MB_ICONERROR ); \
+      MessageBox(nullptr, TEXT("Function '") TEXT(func) TEXT("' not found!"), TEXT(func), MB_OK | MB_ICONERROR); \
    } while(0)
 
 typedef PHB_FUNC ( *HB_PROC_GET )( const char * szFuncName );
@@ -90,9 +87,7 @@ typedef PHB_SYMB ( *HB_VM_PROCESS_SYMBOLS )
    ( PHB_SYMB pModuleSymbols, HB_USHORT uiModuleSymbols,
    const char * szModuleName, HB_ULONG ulID,
    HB_USHORT uiPcodeVer );
-static PHB_SYMB s_vmProcessSymbols( PHB_SYMB pSymbols, HB_USHORT uiSymbols,
-                                    const char * szModuleName, HB_ULONG ulID,
-                                    HB_USHORT uiPcodeVer );
+static PHB_SYMB s_vmProcessSymbols(PHB_SYMB pSymbols, HB_USHORT uiSymbols, const char * szModuleName, HB_ULONG ulID, HB_USHORT uiPcodeVer);
 static HB_VM_PROCESS_SYMBOLS s_pProcessSymbols = s_vmProcessSymbols;
 
 
@@ -113,7 +108,7 @@ PHB_FUNC hb_dllGetProcAddress( const char * szProcName )
       if( s_hModule == nullptr )
          s_hModule = GetModuleHandle( HB_DLL_NAME2 );
       if( s_hModule == nullptr )
-         s_hModule = GetModuleHandle( nullptr );
+         s_hModule = GetModuleHandle(nullptr);
 
       if( s_hModule != nullptr )
       {
@@ -130,7 +125,7 @@ PHB_FUNC hb_dllGetProcAddress( const char * szProcName )
       }
    }
 
-   return s_pProcGet ? s_pProcGet( szProcName ) : nullptr;
+   return s_pProcGet ? s_pProcGet(szProcName) : nullptr;
 }
 
 

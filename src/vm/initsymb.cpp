@@ -179,7 +179,7 @@ static HB_SYMB symbols[] = {
 
 /* NOTE: The system symbol table with runtime functions HAVE TO be called last */
 
-void hb_vmSymbolInit_RT( void )
+void hb_vmSymbolInit_RT(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_vmSymbolInit_RT()" ) );

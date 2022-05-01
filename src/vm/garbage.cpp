@@ -118,8 +118,8 @@ using PHB_GARBAGE = HB_GARBAGE *;
 #define HB_BLOCK_PTR( p )       ( static_cast<void*>(reinterpret_cast<HB_BYTE*>(p) + HB_GARBAGE_SIZE) )
 
 /* we may use a cache later */
-#define HB_GARBAGE_NEW( nSize )    ( static_cast<PHB_GARBAGE>(hb_xgrab(HB_GARBAGE_SIZE + (nSize))) )
-#define HB_GARBAGE_FREE( pAlloc )   hb_xfree(static_cast<void*>(pAlloc))
+#define HB_GARBAGE_NEW(nSize)    (static_cast<PHB_GARBAGE>(hb_xgrab(HB_GARBAGE_SIZE + (nSize))))
+#define HB_GARBAGE_FREE(pAlloc)   hb_xfree(static_cast<void*>(pAlloc))
 
 /* status of memory block */
 /* flags stored in 'used' slot */
@@ -237,7 +237,7 @@ void * hb_gcAllocRaw( HB_SIZE nSize, const HB_GC_FUNCS * pFuncs )
 }
 
 /* release a memory block allocated with hb_gcAlloc*() */
-void hb_gcFree( void * pBlock )
+void hb_gcFree(void * pBlock)
 {
    if( pBlock )
    {
@@ -258,7 +258,7 @@ void hb_gcFree( void * pBlock )
          }
          HB_GC_UNLOCK();
 
-         HB_GARBAGE_FREE( pAlloc );
+         HB_GARBAGE_FREE(pAlloc);
       }
    }
    else
@@ -282,7 +282,7 @@ void hb_gcRefInc( void * pBlock )
 
 /* decrement reference counter and free the block when 0 reached */
 #undef hb_gcRefFree
-void hb_gcRefFree( void * pBlock )
+void hb_gcRefFree(void * pBlock)
 {
    if( pBlock )
    {
@@ -298,14 +298,14 @@ void hb_gcRefFree( void * pBlock )
             /* execute clean-up function */
             pAlloc->pFuncs->clear( pBlock );
 
-            if( hb_xRefCount( pAlloc ) != 0 )
+            if( hb_xRefCount(pAlloc) != 0 )
             {
                if( pAlloc->used & HB_GC_DELETE )
                {
                   pAlloc->used = s_uUsedFlag;
                   if( hb_vmRequestQuery() == 0 )
                   {
-                     hb_errRT_BASE( EG_DESTRUCTOR, 1301, nullptr, "Reference to freed block", 0 );
+                     hb_errRT_BASE(EG_DESTRUCTOR, 1301, nullptr, "Reference to freed block", 0);
                   }
                }
             }
@@ -322,7 +322,7 @@ void hb_gcRefFree( void * pBlock )
                   HB_GC_AUTO_DEC();
                }
                HB_GC_UNLOCK();
-               HB_GARBAGE_FREE( pAlloc );
+               HB_GARBAGE_FREE(pAlloc);
             }
          }
       }
@@ -335,9 +335,9 @@ void hb_gcRefFree( void * pBlock )
 
 /* return number of references */
 #undef hb_gcRefCount
-HB_COUNTER hb_gcRefCount( void * pBlock )
+HB_COUNTER hb_gcRefCount(void * pBlock)
 {
-   return hb_xRefCount( HB_GC_PTR( pBlock ) );
+   return hb_xRefCount(HB_GC_PTR(pBlock));
 }
 
 HB_GARBAGE_FUNC( hb_gcDummyClear )
@@ -369,7 +369,7 @@ static const HB_GC_FUNCS s_gcGripFuncs =
    hb_gcGripMark
 };
 
-PHB_ITEM hb_gcGripGet( PHB_ITEM pOrigin )
+PHB_ITEM hb_gcGripGet(PHB_ITEM pOrigin)
 {
    PHB_GARBAGE pAlloc = HB_GARBAGE_NEW( sizeof(HB_ITEM) );
    PHB_ITEM pItem = static_cast<PHB_ITEM>(HB_BLOCK_PTR(pAlloc));
@@ -400,7 +400,7 @@ void hb_gcGripDrop( PHB_ITEM pItem )
 /* Lock a memory pointer so it will not be released if stored
    outside of Harbour variables
  */
-void * hb_gcLock( void * pBlock )
+void * hb_gcLock(void * pBlock)
 {
    if( pBlock )
    {
@@ -423,7 +423,7 @@ void * hb_gcLock( void * pBlock )
 /* Unlock a memory pointer so it can be released if there is no
    references inside of Harbour variables
  */
-void * hb_gcUnlock( void * pBlock )
+void * hb_gcUnlock(void * pBlock)
 {
    if( pBlock )
    {
@@ -577,7 +577,7 @@ void hb_gcItemRef( PHB_ITEM pItem )
    /* all other data types don't need the GC */
 }
 
-void hb_gcCollect( void )
+void hb_gcCollect(void)
 {
    /* TODO: decrease the amount of time spend collecting */
    hb_gcCollectAll(false);
@@ -714,7 +714,7 @@ void hb_gcCollectAll( HB_BOOL fForce )
          {
             pDelete = s_pDeletedBlock;
             hb_gcUnlink( &s_pDeletedBlock, pDelete );
-            if( hb_xRefCount( pDelete ) != 0 )
+            if( hb_xRefCount(pDelete) != 0 )
             {
                pDelete->used = s_uUsedFlag;
                pDelete->locked = 0;
@@ -724,12 +724,12 @@ void hb_gcCollectAll( HB_BOOL fForce )
                HB_GC_UNLOCK();
                if( hb_vmRequestQuery() == 0 )
                {
-                  hb_errRT_BASE( EG_DESTRUCTOR, 1302, nullptr, "Reference to freed block", 0 );
+                  hb_errRT_BASE(EG_DESTRUCTOR, 1302, nullptr, "Reference to freed block", 0);
                }
             }
             else
             {
-               HB_GARBAGE_FREE( pDelete );
+               HB_GARBAGE_FREE(pDelete);
             }
          }
          while( s_pDeletedBlock );
@@ -743,7 +743,7 @@ void hb_gcCollectAll( HB_BOOL fForce )
  *         application exit when other threads are destroyed, so it
  *         does not need additional protection code for MT mode, [druzus]
  */
-void hb_gcReleaseAll( void )
+void hb_gcReleaseAll(void)
 {
    if( s_pCurrBlock )
    {
@@ -770,7 +770,7 @@ void hb_gcReleaseAll( void )
          pDelete = s_pCurrBlock;
          hb_gcUnlink( &s_pCurrBlock, pDelete );
          HB_GC_AUTO_DEC();
-         HB_GARBAGE_FREE( pDelete );
+         HB_GARBAGE_FREE(pDelete);
 
       }
       while( s_pCurrBlock );

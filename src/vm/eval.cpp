@@ -52,7 +52,7 @@
 #include "hbapierr.h"
 #include "hbvm.h"
 
-HB_BOOL hb_evalNew( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
+HB_BOOL hb_evalNew(PHB_EVALINFO pEvalInfo, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_evalNew(%p, %p)", static_cast<void*>(pEvalInfo), static_cast<void*>(pItem) ) );
@@ -103,7 +103,7 @@ HB_BOOL hb_evalPutParam( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
    }
 }
 
-PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
+PHB_ITEM hb_evalLaunch(PHB_EVALINFO pEvalInfo)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_evalLaunch(%p)", static_cast<void*>(pEvalInfo) ) );
@@ -172,7 +172,7 @@ PHB_ITEM hb_evalLaunch( PHB_EVALINFO pEvalInfo )
          once and only once before calling hb_evalRelease(). Harbour doesn't
          have these requirements. [vszakats] */
 
-HB_BOOL hb_evalRelease( PHB_EVALINFO pEvalInfo )
+HB_BOOL hb_evalRelease(PHB_EVALINFO pEvalInfo)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_evalRelease(%p)", static_cast<void*>(pEvalInfo) ) );
@@ -331,7 +331,7 @@ PHB_ITEM hb_itemDoC( const char * szFunc, HB_ULONG ulPCount, ... )
  */
 
 /* undocumented Clipper _cEval0() */
-void hb_evalBlock0( PHB_ITEM pCodeBlock )
+void hb_evalBlock0(PHB_ITEM pCodeBlock)
 {
    hb_vmPushEvalSym();
    hb_vmPush(pCodeBlock);
@@ -339,7 +339,7 @@ void hb_evalBlock0( PHB_ITEM pCodeBlock )
 }
 
 /* undocumented Clipper _cEval1() */
-void hb_evalBlock1( PHB_ITEM pCodeBlock, PHB_ITEM pParam )
+void hb_evalBlock1(PHB_ITEM pCodeBlock, PHB_ITEM pParam)
 {
    hb_vmPushEvalSym();
    hb_vmPush(pCodeBlock);
@@ -504,11 +504,9 @@ HB_FUNC( HB_EXECFROMARRAY )
    if( pExecSym )
    {
       pFunc = hb_stackBaseItem();
-      pItem = hb_stackItem( pFunc->item.asSymbol.stackstate->nBaseItem );
-      pFunc->item.asSymbol.stackstate->uiClass =
-      pItem->item.asSymbol.stackstate->uiClass;
-      pFunc->item.asSymbol.stackstate->uiMethod =
-      pItem->item.asSymbol.stackstate->uiMethod;
+      pItem = hb_stackItem(pFunc->item.asSymbol.stackstate->nBaseItem);
+      pFunc->item.asSymbol.stackstate->uiClass = pItem->item.asSymbol.stackstate->uiClass;
+      pFunc->item.asSymbol.stackstate->uiMethod = pItem->item.asSymbol.stackstate->uiMethod;
 
       iPCount = 0;
       hb_vmPushSymbol(pExecSym);

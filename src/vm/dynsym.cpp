@@ -71,7 +71,7 @@ using PHB_SYM_HOLDER = HB_SYM_HOLDER *;
 
 #  include "hbthread.h"
 
-   static HB_CRITICAL_NEW( s_dynsMtx );
+   static HB_CRITICAL_NEW(s_dynsMtx);
 #  define HB_DYNSYM_LOCK()      hb_threadEnterCriticalSection( &s_dynsMtx )
 #  define HB_DYNSYM_UNLOCK()    hb_threadLeaveCriticalSection( &s_dynsMtx )
 
@@ -99,7 +99,7 @@ static HB_SYMCNT   s_uiDynIdxSize = 0;
 /* Insert new symbol into dynamic symbol table.
  * In MT mode caller should protected it by HB_DYNSYM_LOCK()
  */
-static PHB_DYNS hb_dynsymInsert( PHB_SYMB pSymbol, HB_SYMCNT uiPos )
+static PHB_DYNS hb_dynsymInsert(PHB_SYMB pSymbol, HB_SYMCNT uiPos)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymInsert(%p, %u)", static_cast<void*>(pSymbol), uiPos ) );
@@ -135,7 +135,7 @@ static PHB_DYNS hb_dynsymInsert( PHB_SYMB pSymbol, HB_SYMCNT uiPos )
  * If not found set position for insert operation.
  * In MT mode caller should protected it by HB_DYNSYM_LOCK()
  */
-static PHB_DYNS hb_dynsymPos( const char * szName, HB_SYMCNT * puiPos )
+static PHB_DYNS hb_dynsymPos(const char * szName, HB_SYMCNT * puiPos)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymPos(%s, %p)", szName, static_cast<void*>(puiPos) ) );
@@ -175,7 +175,7 @@ static PHB_DYNS hb_dynsymPos( const char * szName, HB_SYMCNT * puiPos )
 /* Create new symbol.
  * In MT mode caller should protected it by HB_DYNSYM_LOCK()
  */
-static PHB_SYMB hb_symbolAlloc( const char * szName )
+static PHB_SYMB hb_symbolAlloc(const char * szName)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_symbolAlloc(%s)", szName ) );
@@ -238,7 +238,7 @@ PHB_DYNS hb_dynsymFind( const char * szName )
 }
 
 /* Create new symbol */
-PHB_SYMB hb_symbolNew( const char * szName )
+PHB_SYMB hb_symbolNew(const char * szName)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_symbolNew(%s)", szName ) );
@@ -248,7 +248,7 @@ PHB_SYMB hb_symbolNew( const char * szName )
 
    HB_DYNSYM_LOCK();
 
-   pSymbol = hb_symbolAlloc( szName );
+   pSymbol = hb_symbolAlloc(szName);
 
    HB_DYNSYM_UNLOCK();
 
@@ -256,7 +256,7 @@ PHB_SYMB hb_symbolNew( const char * szName )
 }
 
 /* creates a new dynamic symbol */
-PHB_DYNS hb_dynsymNew( PHB_SYMB pSymbol )
+PHB_DYNS hb_dynsymNew(PHB_SYMB pSymbol)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymNew(%p)", static_cast<void*>(pSymbol) ) );
@@ -391,7 +391,7 @@ PHB_DYNS hb_dynsymGetCase( const char * szName )
    pDynSym = hb_dynsymPos(szName, &uiPos);
    if( !pDynSym )
    {
-      pDynSym = hb_dynsymInsert(hb_symbolAlloc( szName ), uiPos);
+      pDynSym = hb_dynsymInsert(hb_symbolAlloc(szName), uiPos);
    }
 
    HB_DYNSYM_UNLOCK();
@@ -399,7 +399,7 @@ PHB_DYNS hb_dynsymGetCase( const char * szName )
    return pDynSym;
 }
 
-PHB_DYNS hb_dynsymGet( const char * szName )  /* finds and creates a symbol if not found */
+PHB_DYNS hb_dynsymGet(const char * szName)  /* finds and creates a symbol if not found */
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymGet(%s)", szName ) );
@@ -436,7 +436,7 @@ PHB_DYNS hb_dynsymGet( const char * szName )  /* finds and creates a symbol if n
    return hb_dynsymGetCase(szUprName);
 }
 
-PHB_DYNS hb_dynsymFindName( const char * szName )  /* finds a symbol */
+PHB_DYNS hb_dynsymFindName(const char * szName)  /* finds a symbol */
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymFindName(%s)", szName ) );
@@ -473,7 +473,7 @@ PHB_DYNS hb_dynsymFindName( const char * szName )  /* finds a symbol */
    return hb_dynsymFind(szUprName);
 }
 
-PHB_SYMB hb_dynsymGetSymbol( const char * szName )
+PHB_SYMB hb_dynsymGetSymbol(const char * szName)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymGetSymbol(%s)", szName ) );
@@ -482,7 +482,7 @@ PHB_SYMB hb_dynsymGetSymbol( const char * szName )
    return hb_dynsymGet(szName)->pSymbol;
 }
 
-PHB_SYMB hb_dynsymFindSymbol( const char * szName )
+PHB_SYMB hb_dynsymFindSymbol(const char * szName)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymFindSymbol(%s)", szName ) );
@@ -494,7 +494,7 @@ PHB_SYMB hb_dynsymFindSymbol( const char * szName )
    return pDynSym ? pDynSym->pSymbol : nullptr;
 }
 
-PHB_SYMB hb_dynsymSymbol( PHB_DYNS pDynSym )
+PHB_SYMB hb_dynsymSymbol(PHB_DYNS pDynSym)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymSymbol(%p)", static_cast<void*>(pDynSym) ) );
@@ -503,7 +503,7 @@ PHB_SYMB hb_dynsymSymbol( PHB_DYNS pDynSym )
    return pDynSym->pSymbol;
 }
 
-const char * hb_dynsymName( PHB_DYNS pDynSym )
+const char * hb_dynsymName(PHB_DYNS pDynSym)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymName(%p)", static_cast<void*>(pDynSym) ) );
@@ -582,7 +582,7 @@ static PHB_DYNS hb_dynsymGetByIndex( HB_LONG lIndex )
    return pDynSym;
 }
 
-HB_LONG hb_dynsymCount( void )
+HB_LONG hb_dynsymCount(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymCount()" ) );
@@ -703,7 +703,7 @@ void hb_dynsymProtectEval( PHB_DYNS_FUNC pFunction, void * Cargo )
    HB_DYNSYM_UNLOCK();
 }
 
-void hb_dynsymRelease( void )
+void hb_dynsymRelease(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymRelease()" ) );
@@ -745,7 +745,7 @@ HB_FUNC( __DYNSCOUNT ) /* How much symbols do we have: dsCount = __dynsymCount()
    hb_retnint(s_uiDynSymbols);
 }
 
-HB_FUNC( __DYNSGETNAME ) /* Get name of symbol: cSymbol = __dynsymGetName( dsIndex ) */
+HB_FUNC( __DYNSGETNAME ) /* Get name of symbol: cSymbol = __dynsymGetName(dsIndex) */
 {
    HB_STACK_TLS_PRELOAD
    PHB_DYNS pDynSym = hb_dynsymGetByIndex(hb_parnl(1));
@@ -858,7 +858,7 @@ HB_FUNC( __DYNSP2NAME )
 }
 
 /* internal function used to debug dynamic symbol integrity */
-static int hb_dynsymVerify( void )
+static int hb_dynsymVerify(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_dynsymVerify()" ) );

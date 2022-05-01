@@ -181,28 +181,28 @@
 #     pragma warning( pop )
 #  endif
 #  if defined(HB_FM_DLMT_ALLOC)
-#     define malloc( n )         mspace_malloc( hb_mspace(), ( n ) )
-#     define realloc( p, n )     mspace_realloc( nullptr, ( p ), ( n ) )
-#     define free( p )           mspace_free( nullptr, ( p ) )
+#     define malloc(n)         mspace_malloc(hb_mspace(), (n))
+#     define realloc(p, n)     mspace_realloc(nullptr, (p), (n))
+#     define free(p)           mspace_free(nullptr, (p))
 #  elif defined(USE_DL_PREFIX)
-#     define malloc( n )         dlmalloc( ( n ) )
-#     define realloc( p, n )     dlrealloc( ( p ), ( n ) )
-#     define free( p )           dlfree( ( p ) )
+#     define malloc(n)         dlmalloc((n))
+#     define realloc(p, n)     dlrealloc((p), (n))
+#     define free(p)           dlfree((p))
 #  endif
 #else
 #  undef HB_FM_DLMT_ALLOC
 #  if defined(HB_FM_WIN_ALLOC) && defined(HB_OS_WIN)
 #     if defined(HB_FM_LOCALALLOC)
-#        define malloc( n )      static_cast<void*>(LocalAlloc( LMEM_FIXED, ( n ) ))
-#        define realloc( p, n )  static_cast<void*>(LocalReAlloc( ( HLOCAL ) ( p ), ( n ), LMEM_MOVEABLE ))
-#        define free( p )        LocalFree( ( HLOCAL ) ( p ) )
+#        define malloc(n)      static_cast<void*>(LocalAlloc(LMEM_FIXED, (n)))
+#        define realloc(p, n)  static_cast<void*>(LocalReAlloc(( HLOCAL ) (p), (n), LMEM_MOVEABLE))
+#        define free(p)        LocalFree( ( HLOCAL ) (p) )
 #     else
          static HANDLE s_hProcessHeap = nullptr;
 #        define HB_FM_NEED_INIT
 #        define HB_FM_HEAP_INIT
-#        define malloc( n )      static_cast<void*>(HeapAlloc( s_hProcessHeap, 0, ( n ) ))
-#        define realloc( p, n )  static_cast<void*>(HeapReAlloc( s_hProcessHeap, 0, static_cast<void*>(p), ( n ) ))
-#        define free( p )        HeapFree( s_hProcessHeap, 0, static_cast<void*>(p) )
+#        define malloc(n)      static_cast<void*>(HeapAlloc(s_hProcessHeap, 0, (n)))
+#        define realloc(p, n)  static_cast<void*>(HeapReAlloc(s_hProcessHeap, 0, static_cast<void*>(p), (n)))
+#        define free(p)        HeapFree(s_hProcessHeap, 0, static_cast<void*>(p))
 #     endif
 #  endif
 #endif
@@ -265,9 +265,9 @@ using PHB_MEMINFO = HB_MEMINFO *;
 #define HB_MEMINFO_SIZE       ( s_fStatistic ? sizeof(HB_MEMINFO) + HB_COUNTER_OFFSET : HB_COUNTER_OFFSET )
 #define HB_MEMSIG_SIZE        sizeof(HB_U32)
 
-#define HB_FM_GETSIG( p, n )  HB_GET_UINT32( static_cast<HB_BYTE*>(p) + ( n ) )
-#define HB_FM_SETSIG( p, n )  HB_PUT_UINT32( static_cast<HB_BYTE*>(p) + ( n ), HB_MEMINFO_SIGNATURE )
-#define HB_FM_CLRSIG( p, n )  HB_PUT_UINT32( static_cast<HB_BYTE*>(p) + ( n ), 0 )
+#define HB_FM_GETSIG( p, n )  HB_GET_UINT32(static_cast<HB_BYTE*>(p) + (n))
+#define HB_FM_SETSIG( p, n )  HB_PUT_UINT32(static_cast<HB_BYTE*>(p) + (n), HB_MEMINFO_SIGNATURE)
+#define HB_FM_CLRSIG( p, n )  HB_PUT_UINT32(static_cast<HB_BYTE*>(p) + (n), 0)
 
 #define HB_ALLOC_SIZE( n )    ( ( n ) + ( s_fStatistic ? _HB_MEMINFO_SIZE + HB_MEMSIG_SIZE : HB_COUNTER_OFFSET ) )
 #define HB_FM_PTR( p )        ( static_cast<PHB_MEMINFO>(static_cast<HB_BYTE*>(p) - HB_MEMINFO_SIZE) )
@@ -364,7 +364,7 @@ using PHB_MSPACE = HB_MSPACE *;
 static mspace    s_gm = nullptr;
 static HB_MSPACE s_mspool[HB_MSPACE_COUNT];
 
-static mspace hb_mspace( void )
+static mspace hb_mspace(void)
 {
    PHB_MSPACE pm = static_cast<PHB_MSPACE>(hb_stackAllocator());
 
@@ -381,7 +381,7 @@ static mspace hb_mspace( void )
    return s_gm;
 }
 
-static PHB_MSPACE hb_mspace_alloc( void )
+static PHB_MSPACE hb_mspace_alloc(void)
 {
    if( s_mspool[0].ms == nullptr && s_gm )
    {
@@ -421,7 +421,7 @@ static void * hb_mspace_update( void * pAlloc, int iCount )
    return pAlloc;
 }
 
-static void hb_mspace_cleanup( void )
+static void hb_mspace_cleanup(void)
 {
    s_gm = nullptr;
    for( int i = 0; i < HB_MSPACE_COUNT; ++i )
@@ -437,7 +437,7 @@ static void hb_mspace_cleanup( void )
 
 #elif defined(HB_FM_DL_ALLOC) && defined(USE_DL_PREFIX)
 
-static void dlmalloc_destroy( void )
+static void dlmalloc_destroy(void)
 {
    if( ok_magic( gm ) )
    {
@@ -458,7 +458,7 @@ static void dlmalloc_destroy( void )
 
 #endif
 
-void hb_xinit_thread( void )
+void hb_xinit_thread(void)
 {
 #if defined(HB_FM_DLMT_ALLOC)
    HB_STACK_TLS_PRELOAD
@@ -472,7 +472,7 @@ void hb_xinit_thread( void )
 #endif
 }
 
-void hb_xexit_thread( void )
+void hb_xexit_thread(void)
 {
 #if defined(HB_FM_DLMT_ALLOC)
    HB_STACK_TLS_PRELOAD
@@ -491,7 +491,7 @@ void hb_xexit_thread( void )
 #endif
 }
 
-void hb_xclean( void )
+void hb_xclean(void)
 {
 #if defined(HB_FM_DLMT_ALLOC)
    HB_FM_LOCK();
@@ -519,7 +519,7 @@ void hb_xclean( void )
       if( imax > icount )
       {
          /* balance mspaces between running threads */
-         hb_vmUpdateAllocator( hb_mspace_update, icount );
+         hb_vmUpdateAllocator(hb_mspace_update, icount);
       }
    }
    HB_FM_UNLOCK();
@@ -544,7 +544,7 @@ void hb_xsetfilename( const char * szValue )
 #endif
 }
 
-void hb_xsetinfo( const char * szValue )
+void hb_xsetinfo(const char * szValue)
 {
 #ifdef HB_FM_STATISTICS
    hb_strncpy(s_szInfo, szValue, sizeof(s_szInfo) - 1);
@@ -553,7 +553,7 @@ void hb_xsetinfo( const char * szValue )
 #endif
 }
 
-void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns nullptr on failure */
+void * hb_xalloc(HB_SIZE nSize)         /* allocates fixed memory, returns nullptr on failure */
 {
    PHB_MEMINFO pMem;
 
@@ -606,7 +606,7 @@ void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns nul
       }
       else
       {
-         hb_stackBaseProcInfo( pMem->szProcName, &pMem->uiProcLine );
+         hb_stackBaseProcInfo(pMem->szProcName, &pMem->uiProcLine);
       }
 
       HB_FM_LOCK();
@@ -643,7 +643,7 @@ void * hb_xalloc( HB_SIZE nSize )         /* allocates fixed memory, returns nul
 
       if( s_nMemoryLimConsumed > 0 && s_nMemoryConsumed > s_nMemoryLimConsumed )
       {
-         free( pMem );
+         free(pMem);
          return nullptr;
       }
 
@@ -713,7 +713,7 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
       }
       else
       {
-         hb_stackBaseProcInfo( pMem->szProcName, &pMem->uiProcLine );
+         hb_stackBaseProcInfo(pMem->szProcName, &pMem->uiProcLine);
       }
 
       HB_FM_LOCK();
@@ -766,7 +766,7 @@ void * hb_xgrab( HB_SIZE nSize )         /* allocates fixed memory, exits on fai
    return HB_MEM_PTR( pMem );
 }
 
-void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
+void * hb_xrealloc(void * pMem, HB_SIZE nSize)       /* reallocates memory */
 {
 #if 0
    HB_TRACE_FM( HB_TR_DEBUG, ( "hb_xrealloc(%p, %" HB_PFS "u)", pMem, nSize ) );
@@ -882,7 +882,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
          memset(static_cast<HB_BYTE*>(HB_MEM_PTR(pMem)) + nMemSize, HB_MEMFILER, nSize - nMemSize);
       }
 #  endif
-      free( pMemBlock );
+      free(pMemBlock);
 #endif
    }
    else
@@ -911,7 +911,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
    }
    else if( nSize == 0 )
    {
-      free( HB_FM_PTR( pMem ) );
+      free(HB_FM_PTR(pMem));
       return nullptr;
    }
    else
@@ -925,7 +925,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
          pMem = malloc(HB_ALLOC_SIZE(nSize));
          memcpy(pMem, pMemBlock, HB_ALLOC_SIZE(nSize));
          memset(pMemBlock, HB_MEMFILER, HB_ALLOC_SIZE(nSize));
-         free( pMemBlock );
+         free(pMemBlock);
       }
 #else
       pMem = realloc(HB_FM_PTR(pMem), HB_ALLOC_SIZE(nSize));
@@ -942,7 +942,7 @@ void * hb_xrealloc( void * pMem, HB_SIZE nSize )       /* reallocates memory */
    return HB_MEM_PTR( pMem );
 }
 
-void hb_xfree( void * pMem )            /* frees fixed memory */
+void hb_xfree(void * pMem)            /* frees fixed memory */
 {
 #if 0
    HB_TRACE_FM( HB_TR_DEBUG, ( "hb_xfree(%p)", pMem ) );
@@ -998,11 +998,11 @@ void hb_xfree( void * pMem )            /* frees fixed memory */
 #endif
       }
 
-      free( pMemBlock );
+      free(pMemBlock);
 
 #else
 
-      free( HB_FM_PTR( pMem ) );
+      free(HB_FM_PTR(pMem));
 
 #endif
    }
@@ -1028,7 +1028,7 @@ HB_BOOL hb_xRefDec( void * pMem )
 
 /* decrement reference counter and free the block when 0 reached */
 #undef hb_xRefFree
-void hb_xRefFree( void * pMem )
+void hb_xRefFree(void * pMem)
 {
 #ifdef HB_FM_STATISTICS
 
@@ -1046,7 +1046,7 @@ void hb_xRefFree( void * pMem )
 
    if( HB_ATOM_DEC( HB_COUNTER_PTR( pMem ) ) == 0 )
    {
-      free( HB_FM_PTR( pMem ) );
+      free(HB_FM_PTR(pMem));
    }
 
 #endif
@@ -1054,9 +1054,9 @@ void hb_xRefFree( void * pMem )
 
 /* return number of references */
 #undef hb_xRefCount
-HB_COUNTER hb_xRefCount( void * pMem )
+HB_COUNTER hb_xRefCount(void * pMem)
 {
-   return HB_ATOM_GET( HB_COUNTER_PTR( pMem ) );
+   return HB_ATOM_GET(HB_COUNTER_PTR(pMem));
 }
 
 /* reallocates memory, create copy if reference counter greater then 1 */
@@ -1097,7 +1097,7 @@ void * hb_xRefResize( void * pMem, HB_SIZE nSave, HB_SIZE nSize, HB_SIZE * pnAll
          memcpy(HB_MEM_PTR(pMemNew), pMem, HB_MIN(nSave, nSize));
          if( HB_ATOM_DEC( HB_COUNTER_PTR( pMem ) ) == 0 )
          {
-            free( HB_FM_PTR( pMem ) );
+            free(HB_FM_PTR(pMem));
          }
          *pnAllocated = nSize;
          return HB_MEM_PTR( pMemNew );
@@ -1143,7 +1143,7 @@ HB_SIZE hb_xsize( void * pMem ) /* returns the size of an allocated memory block
 /* NOTE: Debug function, it will always return nullptr when HB_FM_STATISTICS is
          not defined, don't use it for final code */
 
-const char * hb_xinfo( void * pMem, HB_USHORT * puiLine )
+const char * hb_xinfo(void * pMem, HB_USHORT * puiLine)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_xinfo(%p,%p)", pMem, puiLine ) );
@@ -1173,7 +1173,7 @@ const char * hb_xinfo( void * pMem, HB_USHORT * puiLine )
 #endif
 }
 
-void hb_xinit( void ) /* Initialize fixed memory subsystem */
+void hb_xinit(void) /* Initialize fixed memory subsystem */
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_xinit()" ) );
@@ -1194,11 +1194,11 @@ void hb_xinit( void ) /* Initialize fixed memory subsystem */
 
          if( hb_getenv_buffer( "HB_FM_STAT", buffer, sizeof(buffer) ) )
          {
-            if( hb_stricmp( "yes", buffer ) == 0 )
+            if( hb_stricmp("yes", buffer) == 0 )
             {
                s_fStatistic = HB_TRUE;
             }
-            else if( hb_stricmp( "no", buffer ) == 0 )
+            else if( hb_stricmp("no", buffer) == 0 )
             {
                s_fStatistic = HB_FALSE;
             }
@@ -1266,7 +1266,7 @@ static char * hb_mem2str( char * membuffer, void * pMem, HB_SIZE nSize )
 }
 
 #define HB_MAX_MEM2STR_BLOCK  256
-void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
+void hb_xexit(void) /* Deinitialize fixed memory subsystem */
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_xexit()" ) );
@@ -1364,7 +1364,7 @@ void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
 
 #else
 
-void hb_xexit( void ) /* Deinitialize fixed memory subsystem */
+void hb_xexit(void) /* Deinitialize fixed memory subsystem */
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_xexit()" ) );
@@ -1568,7 +1568,7 @@ HB_SIZE hb_xquery( int iMode )
    return nResult;
 }
 
-HB_BOOL hb_xtraced( void )
+HB_BOOL hb_xtraced(void)
 {
 #if HB_TR_LEVEL >= HB_TR_DEBUG
    return true;

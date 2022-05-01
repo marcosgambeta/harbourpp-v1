@@ -96,9 +96,9 @@ HB_FUNC( ARRAY )
          if( hb_parns(iParam) < 0 ) /* || hb_parns(iParam) <= 4096 */
          {
 #ifdef HB_CLP_STRICT
-            hb_errRT_BASE( EG_BOUND, 1131, nullptr, hb_langDGetErrorDesc( EG_ARRDIMENSION ), 0 );
+            hb_errRT_BASE(EG_BOUND, 1131, nullptr, hb_langDGetErrorDesc(EG_ARRDIMENSION), 0);
 #else
-            hb_errRT_BASE( EG_BOUND, 1131, nullptr, hb_langDGetErrorDesc( EG_ARRDIMENSION ), HB_ERR_ARGS_BASEPARAMS );
+            hb_errRT_BASE(EG_BOUND, 1131, nullptr, hb_langDGetErrorDesc(EG_ARRDIMENSION), HB_ERR_ARGS_BASEPARAMS);
 #endif
             bError = HB_TRUE;
             break;
@@ -126,7 +126,7 @@ HB_FUNC( AADD )
       }
       else
       {
-         hb_errRT_BASE( EG_BOUND, 1187, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE(EG_BOUND, 1187, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       }
    }
    else
@@ -154,9 +154,9 @@ HB_FUNC( ASIZE )
    else
    {
 #ifdef HB_CLP_STRICT
-      hb_errRT_BASE( EG_ARG, 2023, nullptr, HB_ERR_FUNCNAME, 0 );
+      hb_errRT_BASE(EG_ARG, 2023, nullptr, HB_ERR_FUNCNAME, 0);
 #else
-      hb_errRT_BASE( EG_ARG, 2023, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2023, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #endif
    }
 #endif
@@ -264,9 +264,9 @@ HB_FUNC( AFILL )
       /* NOTE: In CA-Cl*pper AFill() is written in a manner that it will
                call AEval() to do the job, so the error (if any) will also be
                thrown by AEval().  [vszakats] */
-      hb_errRT_BASE( EG_ARG, 2017, nullptr, "AEVAL", 0 );
+      hb_errRT_BASE(EG_ARG, 2017, nullptr, "AEVAL", 0);
 #else
-      hb_errRT_BASE( EG_ARG, 6004, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 6004, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #endif
    }
 }
@@ -404,7 +404,7 @@ HB_FUNC( AEVAL )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 

@@ -86,7 +86,7 @@ PHB_ITEM hb_param( int iParam, long lMask )
    return nullptr;
 }
 
-PHB_ITEM hb_paramError( int iParam )
+PHB_ITEM hb_paramError(int iParam)
 {
    static HB_ITEM s_NIL;
 
@@ -304,7 +304,7 @@ const char * hb_parcx( int iParam )
    return "";
 }
 
-HB_SIZE hb_parclen( int iParam )
+HB_SIZE hb_parclen(int iParam)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_parclen(%d)", iParam ) );
@@ -922,7 +922,7 @@ void * hb_parptr( int iParam )
    return nullptr;
 }
 
-void * hb_parptrGC( const HB_GC_FUNCS * pFuncs, int iParam )
+void * hb_parptrGC(const HB_GC_FUNCS * pFuncs, int iParam)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_parptrGC(%p,%d)", static_cast<const void*>(pFuncs), iParam ) );
@@ -1026,7 +1026,7 @@ const char * hb_parvcx( int iParam, ... )
    return "";
 }
 
-HB_SIZE hb_parvclen( int iParam, ... )
+HB_SIZE hb_parvclen(int iParam, ...)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_parvclen(%d, ...)", iParam ) );
@@ -1664,7 +1664,7 @@ void * hb_parvptr( int iParam, ... )
    return nullptr;
 }
 
-void * hb_parvptrGC( const HB_GC_FUNCS * pFuncs, int iParam, ... )
+void * hb_parvptrGC(const HB_GC_FUNCS * pFuncs, int iParam, ...)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_parvptrGC(%p,%d, ...)", static_cast<const void*>(pFuncs), iParam ) );
@@ -1709,7 +1709,7 @@ void * hb_parvptrGC( const HB_GC_FUNCS * pFuncs, int iParam, ... )
 }
 
 #undef hb_ret
-void hb_ret( void )
+void hb_ret(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_ret()" ) );
@@ -1745,7 +1745,7 @@ void hb_retc( const char * szText )
 }
 
 #undef hb_retc_null
-void hb_retc_null( void )
+void hb_retc_null(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_retc_null()" ) );
@@ -1769,7 +1769,7 @@ void hb_retc_buffer( char * szText )
 }
 
 #undef hb_retc_const
-void hb_retc_const( const char * szText )
+void hb_retc_const(const char * szText)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_retc_const(%s)", szText ) );
@@ -1781,7 +1781,7 @@ void hb_retc_const( const char * szText )
 }
 
 #undef hb_retclen
-void hb_retclen( const char * szText, HB_SIZE nLen )
+void hb_retclen(const char * szText, HB_SIZE nLen)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_retclen(%.*s, %" HB_PFS "u)", static_cast<int>(nLen), szText, nLen ) );
@@ -1965,7 +1965,7 @@ void hb_retnint( HB_MAXINT nNumber )
 }
 
 #undef hb_retnlen
-void hb_retnlen( double dNumber, int iWidth, int iDec )
+void hb_retnlen(double dNumber, int iWidth, int iDec)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_retnlen(%lf, %d, %d)", dNumber, iWidth, iDec ) );
@@ -1977,7 +1977,7 @@ void hb_retnlen( double dNumber, int iWidth, int iDec )
 }
 
 #undef hb_retndlen
-void hb_retndlen( double dNumber, int iWidth, int iDec )
+void hb_retndlen(double dNumber, int iWidth, int iDec)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_retndlen(%lf, %d, %d)", dNumber, iWidth, iDec ) );
@@ -1989,7 +1989,7 @@ void hb_retndlen( double dNumber, int iWidth, int iDec )
 }
 
 #undef hb_retnilen
-void hb_retnilen( int iNumber, int iWidth )
+void hb_retnilen(int iNumber, int iWidth)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_retnilen(%d, %d)", iNumber, iWidth ) );
@@ -2001,7 +2001,7 @@ void hb_retnilen( int iNumber, int iWidth )
 }
 
 #undef hb_retnllen
-void hb_retnllen( long lNumber, int iWidth )
+void hb_retnllen(long lNumber, int iWidth)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_retnllen(%ld, %d)", lNumber, iWidth ) );
@@ -2014,7 +2014,7 @@ void hb_retnllen( long lNumber, int iWidth )
 
 #ifndef HB_LONG_LONG_OFF
 #undef hb_retnlllen
-void hb_retnlllen( HB_LONGLONG llNumber, int iWidth )
+void hb_retnlllen(HB_LONGLONG llNumber, int iWidth)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_retnlllen(%" PFLL "d, %d)", llNumber, iWidth ) );
@@ -2027,7 +2027,7 @@ void hb_retnlllen( HB_LONGLONG llNumber, int iWidth )
 #endif
 
 #undef hb_retnintlen
-void hb_retnintlen( HB_MAXINT nNumber, int iWidth )
+void hb_retnintlen(HB_MAXINT nNumber, int iWidth)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_retnintlen(%" PFHL "d, %d)", nNumber, iWidth ) );
@@ -2051,7 +2051,7 @@ void hb_retptr( void * pointer )
 }
 
 #undef hb_retptrGC
-void hb_retptrGC( void * pointer )
+void hb_retptrGC(void * pointer)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_retptrGC(%p)", pointer ) );
@@ -2116,7 +2116,7 @@ int hb_storc( const char * szText, int iParam )
    return 0;
 }
 
-int hb_storclen( const char * szText, HB_SIZE nLen, int iParam )
+int hb_storclen(const char * szText, HB_SIZE nLen, int iParam)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_storclen(%.*s, %" HB_PFS "u, %d)", static_cast<int>(nLen), szText, nLen, iParam ) );
@@ -2498,7 +2498,7 @@ int hb_storptr( void * pointer, int iParam )
    return 0;
 }
 
-int hb_storptrGC( void * pointer, int iParam )
+int hb_storptrGC(void * pointer, int iParam)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_storptrGC(%p, %d)", pointer, iParam ) );
@@ -2566,7 +2566,7 @@ int hb_storvc( const char * szText, int iParam, ... )
    return 0;
 }
 
-int hb_storvclen( const char * szText, HB_SIZE nLen, int iParam, ... )
+int hb_storvclen(const char * szText, HB_SIZE nLen, int iParam, ...)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_storvclen(%.*s, %" HB_PFS "u, %d, ...)", static_cast<int>(nLen), szText, nLen, iParam ) );
@@ -3088,7 +3088,7 @@ int hb_storvptr( void * pointer, int iParam, ... )
    return 0;
 }
 
-int hb_storvptrGC( void * pointer, int iParam, ... )
+int hb_storvptrGC(void * pointer, int iParam, ...)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_storvptrGC(%p, %d, ...)", pointer, iParam ) );
@@ -3126,7 +3126,7 @@ int hb_storvptrGC( void * pointer, int iParam, ... )
 }
 
 #undef hb_pcount
-int  hb_pcount( void )
+int  hb_pcount(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_pcount()" ) );

@@ -226,7 +226,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
          for( i = 0; i < 16; i++ )
          {
             /* FIXME: Unsafe function. */
-            if( IsBadReadPtr( pc, 1 ) )
+            if( IsBadReadPtr(pc, 1) )
             {
                break;
             }
@@ -238,7 +238,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
          for( i = 0; i < 16; i++ )
          {
             /* FIXME: Unsafe function. */
-            if( IsBadReadPtr( sc, 4 ) )
+            if( IsBadReadPtr(sc, 4) )
             {
                break;
             }
@@ -251,12 +251,12 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
          eip = pCtx->Eip;
          ebp = reinterpret_cast<unsigned int*>(pCtx->Ebp);
          /* FIXME: Unsafe function. */
-         if( !IsBadWritePtr( ebp, 8 ) )
+         if( !IsBadWritePtr(ebp, 8) )
          {
             for( i = 0; i < 20; i++ )
             {
                /* FIXME: Unsafe function. */
-               if( reinterpret_cast<unsigned int>(ebp) % 4 != 0 || IsBadWritePtr( ebp, 40 ) || reinterpret_cast<unsigned int>(ebp) >= ebp[0] )
+               if( reinterpret_cast<unsigned int>(ebp) % 4 != 0 || IsBadWritePtr(ebp, 40) || reinterpret_cast<unsigned int>(ebp) >= ebp[0] )
                {
                   break;
                }
@@ -282,7 +282,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
                in tlhelp32.dll. Testing shows though, that in Win95, Win95b
                and Win98 they are in kernel32.dll, and tlhelp32.dll doesn't
                exist. [vszakats] */
-      HMODULE hToolhelp = GetModuleHandle( TEXT( "kernel32.dll" ) );
+      HMODULE hToolhelp = GetModuleHandle(TEXT("kernel32.dll"));
 
       if( hToolhelp )
       {
@@ -341,7 +341,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
       }
    }
 
-   hb_errInternalRaw( 6005, "Exception error:%s", errmsg, nullptr );
+   hb_errInternalRaw(6005, "Exception error:%s", errmsg, nullptr);
 
    return hb_cmdargCheck( "BATCH" ) ? EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH;
 }
@@ -390,7 +390,7 @@ static void hb_signalExceptionHandler( int sig, siginfo_t * si, void * ucp )
 
 #endif
 
-void hb_vmSetExceptionHandler( void )
+void hb_vmSetExceptionHandler(void)
 {
 #if defined(HB_OS_WIN)
    {
@@ -404,7 +404,7 @@ void hb_vmSetExceptionHandler( void )
       ss.ss_size = SIGSTKSZ;
       ss.ss_flags = 0;
       /* set alternative stack for SIGSEGV executed on stack overflow */
-      if( sigaltstack( &ss, nullptr ) == 0 )
+      if( sigaltstack(&ss, nullptr) == 0 )
       {
          struct sigaction act;
          int sigs[] = { SIGSEGV, SIGILL, SIGFPE, SIGBUS, 0 };
@@ -423,7 +423,7 @@ void hb_vmSetExceptionHandler( void )
 #endif
 }
 
-void hb_vmUnsetExceptionHandler( void )
+void hb_vmUnsetExceptionHandler(void)
 {
 #if defined(HB_SIGNAL_EXCEPTION_HANDLER)
    {

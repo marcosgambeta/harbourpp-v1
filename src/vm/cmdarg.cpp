@@ -82,10 +82,10 @@ static HANDLE  s_hPrevInstance = 0;
 static int     s_iCmdShow      = 0;
 static HB_BOOL s_WinMainParam  = HB_FALSE;
 
-#define HB_WINARG_ALLOC( n )  HeapAlloc( GetProcessHeap(), 0, ( n ) )
-#define HB_WINARG_FREE( p )   HeapFree( GetProcessHeap(), 0, ( p ) )
+#define HB_WINARG_ALLOC(n)  HeapAlloc(GetProcessHeap(), 0, (n))
+#define HB_WINARG_FREE(p)   HeapFree(GetProcessHeap(), 0, (p))
 
-void hb_winmainArgVBuild( void )
+void hb_winmainArgVBuild(void)
 {
    LPCTSTR lpCmdLine;
    LPTSTR * lpArgV;
@@ -95,12 +95,12 @@ void hb_winmainArgVBuild( void )
 
    /* NOTE: MAX_PATH used intentionally instead of HB_MAX_PATH */
    lpModuleName = static_cast<LPTSTR>(HB_WINARG_ALLOC((MAX_PATH + 1) * sizeof(TCHAR)));
-   nModuleName = GetModuleFileName( nullptr, lpModuleName, MAX_PATH + 1 );
+   nModuleName = GetModuleFileName(nullptr, lpModuleName, MAX_PATH + 1);
    if( nModuleName )
    {
       nModuleName++;
    }
-   HB_WINARG_FREE( lpModuleName );
+   HB_WINARG_FREE(lpModuleName);
 
    lpCmdLine = GetCommandLine();
    lpArgV = nullptr;
@@ -132,7 +132,7 @@ void hb_winmainArgVBuild( void )
 
       while( *lpSrc != 0 )
       {
-         if( *lpSrc == TEXT( '"' ) )
+         if( *lpSrc == TEXT('"') )
          {
             if( lpArg == nullptr )
             {
@@ -217,7 +217,7 @@ void hb_winmainArgVBuild( void )
                because in console apps the name may be truncated
                in some cases, and in GUI apps it's not filled
                at all. [vszakats] */
-      if( GetModuleFileName( nullptr, lpArgV[0], static_cast<DWORD>(nModuleName) ) != 0 )
+      if( GetModuleFileName(nullptr, lpArgV[0], static_cast<DWORD>(nModuleName)) != 0 )
       {
          /* Windows XP does not set trailing 0 if buffer is not large enough [druzus] */
          lpArgV[0][nModuleName - 1] = 0;
@@ -237,14 +237,14 @@ void hb_winmainArgVBuild( void )
          nSize = 0;
          for( iArgC = 0; iArgC < s_argc; ++iArgC )
          {
-            nSize += hb_wctomblen( s_lpArgV[iArgC] ) + 1;
+            nSize += hb_wctomblen(s_lpArgV[iArgC]) + 1;
          }
 
          s_lpArgVStr = static_cast<LPSTR*>(HB_WINARG_ALLOC(s_argc * sizeof(LPSTR) + nSize * sizeof(char)));
          lpStr = reinterpret_cast<LPSTR>(s_lpArgVStr + s_argc);
          for( iArgC = 0; iArgC < s_argc; ++iArgC )
          {
-            nSize = hb_wctomblen( s_lpArgV[iArgC] ) + 1;
+            nSize = hb_wctomblen(s_lpArgV[iArgC]) + 1;
             hb_wcntombcpy( lpStr, s_lpArgV[iArgC], nSize - 1 );
             s_lpArgVStr[iArgC] = lpStr;
             lpStr += nSize;
@@ -257,7 +257,7 @@ void hb_winmainArgVBuild( void )
    }
 }
 
-void hb_winmainArgVFree( void )
+void hb_winmainArgVFree(void)
 {
    if( s_lpArgV )
    {
@@ -268,7 +268,7 @@ void hb_winmainArgVFree( void )
          {
             s_argv = nullptr;
          }
-         HB_WINARG_FREE( s_lpArgVStr );
+         HB_WINARG_FREE(s_lpArgVStr);
          s_lpArgVStr = nullptr;
       }
 #else
@@ -278,7 +278,7 @@ void hb_winmainArgVFree( void )
       }
 #endif
 
-      HB_WINARG_FREE( s_lpArgV );
+      HB_WINARG_FREE(s_lpArgV);
       s_lpArgV = nullptr;
       s_argc = 0;
    }
@@ -292,7 +292,7 @@ void hb_winmainArgInit( void * hInstance, void * hPrevInstance, int iCmdShow )
    s_WinMainParam = HB_TRUE;
 }
 
-HB_BOOL hb_winmainArgGet( void * phInstance, void * phPrevInstance, int * piCmdShow )
+HB_BOOL hb_winmainArgGet(void * phInstance, void * phPrevInstance, int * piCmdShow)
 {
    if( phInstance )
    {
@@ -337,12 +337,12 @@ void hb_cmdargInit( int argc, char * argv[] )
    }
 }
 
-int hb_cmdargARGC( void )
+int hb_cmdargARGC(void)
 {
    return s_argc;
 }
 
-char ** hb_cmdargARGV( void )
+char ** hb_cmdargARGV(void)
 {
    return s_argv;
 }
@@ -365,7 +365,7 @@ static char * hb_cmdargDup( int argc )
    return argc >= 0 && argc < s_argc ? hb_osStrDecode( s_argv[argc] ) : nullptr;
 }
 
-void hb_cmdargUpdate( void )
+void hb_cmdargUpdate(void) 
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargUpdate()" ) );
@@ -456,14 +456,14 @@ void hb_cmdargUpdate( void )
 
 /* places application parameters on the HVM stack */
 
-int hb_cmdargPushArgs( void )
+int hb_cmdargPushArgs(void)
 {
    int iArgCount = 0;
 
    for( int i = 1; i < s_argc; i++ )
    {
       /* Filter out any parameters beginning with //, like //INFO */
-      if( !hb_cmdargIsInternal( s_argv[i], nullptr ) )
+      if( !hb_cmdargIsInternal(s_argv[i], nullptr) )
       {
 #if defined(HB_OS_WIN)
          if( s_lpArgV )
@@ -491,7 +491,7 @@ HB_BOOL hb_cmdargIsInternal( const char * szArg, int * piLen )
    /* NOTE: Not checking for '--' here, as it would filter out
             valid command-line options used by applications. [vszakats] */
 
-   if( hb_strnicmp( szArg, "--hb:", 5 ) == 0 || hb_strnicmp( szArg, "//hb:", 5 ) == 0 )
+   if( hb_strnicmp(szArg, "--hb:", 5) == 0 || hb_strnicmp(szArg, "//hb:", 5) == 0 )
    {
       if( piLen )
       {
@@ -513,7 +513,7 @@ HB_BOOL hb_cmdargIsInternal( const char * szArg, int * piLen )
    return false;
 }
 
-static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
+static char * hb_cmdargGet(const char * pszName, HB_BOOL bRetValue)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargGet(%s, %d)", pszName, static_cast<int>(bRetValue) ) );
@@ -528,7 +528,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
 
    for( i = 1; i < s_argc; i++ )
    {
-      if( hb_cmdargIsInternal( s_argv[i], &iPrefixLen ) && hb_strnicmp( s_argv[i] + iPrefixLen, pszName, strlen(pszName) ) == 0 )
+      if( hb_cmdargIsInternal(s_argv[i], &iPrefixLen) && hb_strnicmp(s_argv[i] + iPrefixLen, pszName, strlen(pszName)) == 0 )
       {
          if( bRetValue )
          {
@@ -537,7 +537,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
             {
                LPCTSTR lpPos = s_lpArgV[i] + iPrefixLen + strlen(pszName);
 
-               if( *lpPos == TEXT( ':' ) )
+               if( *lpPos == TEXT(':') )
                {
                   lpPos++;
                }
@@ -611,7 +611,7 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
          }
 
          /* Check the switch */
-         if( hb_strnicmp( pszNext, pszName, i ) == 0 )
+         if( hb_strnicmp(pszNext, pszName, i) == 0 )
          {
             if( bRetValue )
             {
@@ -650,14 +650,14 @@ static char * hb_cmdargGet( const char * pszName, HB_BOOL bRetValue )
 
 HB_BOOL hb_cmdargCheck( const char * pszName )
 {
-   return hb_cmdargGet( pszName, false ) != nullptr;
+   return hb_cmdargGet(pszName, false) != nullptr;
 }
 
 /* NOTE: Pointer must be freed with hb_xfree() if not nullptr */
 
-char * hb_cmdargString( const char * pszName )
+char * hb_cmdargString(const char * pszName)
 {
-   return hb_cmdargGet( pszName, true );
+   return hb_cmdargGet(pszName, true);
 }
 
 int hb_cmdargNum( const char * pszName )
@@ -668,7 +668,7 @@ int hb_cmdargNum( const char * pszName )
 
    char * pszValue;
 
-   pszValue = hb_cmdargGet( pszName, true );
+   pszValue = hb_cmdargGet(pszName, true);
    if( pszValue )
    {
       int iValue = atoi( pszValue );
@@ -685,14 +685,14 @@ int hb_cmdargNum( const char * pszName )
 
 /* NOTE: Pointer must be freed with hb_xfree() if not nullptr */
 
-char * hb_cmdargProgName( void )
+char * hb_cmdargProgName(void)
 {
    return hb_cmdargDup(0);
 }
 
 /* NOTE: Pointer must be freed with hb_xfree() if not nullptr */
 
-char * hb_cmdargBaseProgName( void )
+char * hb_cmdargBaseProgName(void)
 {
    char * pszProgName, * pszBaseProgName = nullptr;
 
@@ -724,7 +724,7 @@ HB_FUNC( HB_ARGSTRING )
 
    if( pszName )
    {
-      char * pszValue = hb_cmdargString( pszName );
+      char * pszValue = hb_cmdargString(pszName);
 
       if( pszValue )
       {
@@ -770,7 +770,7 @@ HB_FUNC( HB_ARGSHIFT )
    {
       while( iArg < s_argc )
       {
-         if( !hb_cmdargIsInternal( s_argv[iArg], nullptr ) )
+         if( !hb_cmdargIsInternal(s_argv[iArg], nullptr) )
          {
             s_argv[0] = s_argv[iArg];
 #if defined(HB_OS_WIN)
@@ -844,9 +844,9 @@ HB_FUNC( HB_CMDLINE )
             nLen = HB_STRLEN(s_lpArgV[iArg]);
             memcpy(ptr, s_lpArgV[iArg], nLen * sizeof(TCHAR));
             ptr += nLen;
-            *ptr++ = TEXT( ' ' );
+            *ptr++ = TEXT(' ');
          }
-         *--ptr = TEXT( '\0' );
+         *--ptr = TEXT('\0');
 
          /* Convert from OS codepage */
 #if defined(UNICODE)
@@ -887,7 +887,7 @@ HB_FUNC( HB_CMDLINE )
 }
 
 /* Check for command-line internal arguments */
-void hb_cmdargProcess( void )
+void hb_cmdargProcess(void)
 {
 #if 0
    int iHandles;
@@ -938,19 +938,19 @@ void hb_cmdargProcess( void )
 }
 
 /* Source repository revision number */
-int hb_verRevision( void )
+int hb_verRevision(void)
 {
    return HB_VER_REVID;
 }
 
 /* ChangeLog ID string */
-const char * hb_verChangeLogID( void )
+const char * hb_verChangeLogID(void)
 {
    return HB_VER_CHLID;
 }
 
 /* ChangeLog last entry string */
-const char * hb_verChangeLogLastEntry( void )
+const char * hb_verChangeLogLastEntry(void)
 {
    return HB_VER_LENTRY;
 }
@@ -958,19 +958,19 @@ const char * hb_verChangeLogLastEntry( void )
 #if defined(HB_LEGACY_LEVEL4)
 
 /* Source repository revision number */
-int hb_verSvnID( void )
+int hb_verSvnID(void)
 {
    return HB_VER_REVID;
 }
 
 /* ChangeLog ID string */
-const char * hb_verSvnChangeLogID( void )
+const char * hb_verSvnChangeLogID(void)
 {
    return HB_VER_CHLID;
 }
 
 /* ChangeLog last entry string */
-const char * hb_verSvnLastEntry( void )
+const char * hb_verSvnLastEntry(void)
 {
    return HB_VER_LENTRY;
 }
@@ -978,7 +978,7 @@ const char * hb_verSvnLastEntry( void )
 #endif
 
 /* build time C compiler flags in HB_USER_CFLAGS envvar */
-const char * hb_verFlagsC( void )
+const char * hb_verFlagsC(void)
 {
 #ifdef HB_VER_HB_USER_CFLAGS
    return HB_VER_HB_USER_CFLAGS;
@@ -988,7 +988,7 @@ const char * hb_verFlagsC( void )
 }
 
 /* build time linker flags in HB_USER_LDFLAGS envvar */
-const char * hb_verFlagsL( void )
+const char * hb_verFlagsL(void)
 {
 #ifdef HB_VER_HB_USER_LDFLAGS
    return HB_VER_HB_USER_LDFLAGS;
@@ -998,7 +998,7 @@ const char * hb_verFlagsL( void )
 }
 
 /* build time Harbour compiler flags in HB_USER_PRGFLAGS envvar */
-const char * hb_verFlagsPRG( void )
+const char * hb_verFlagsPRG(void)
 {
 #ifdef HB_VER_HB_USER_PRGFLAGS
    return HB_VER_HB_USER_PRGFLAGS;
@@ -1008,7 +1008,7 @@ const char * hb_verFlagsPRG( void )
 }
 
 /* build time Harbour platform setting */
-const char * hb_verHB_PLAT( void )
+const char * hb_verHB_PLAT(void)
 {
 #ifdef HB_PLATFORM
    return HB_PLATFORM;
@@ -1018,7 +1018,7 @@ const char * hb_verHB_PLAT( void )
 }
 
 /* build time Harbour compiler setting */
-const char * hb_verHB_COMP( void )
+const char * hb_verHB_COMP(void)
 {
 #ifdef HB_COMPILER
    return HB_COMPILER;

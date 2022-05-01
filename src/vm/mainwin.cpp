@@ -54,7 +54,9 @@
 
 #if !defined(HB_DYNLIB) && (defined(__MINGW32__))
 HB_EXTERN_BEGIN
-void hb_forceLinkMainWin( void ) {}
+void hb_forceLinkMainWin(void)
+{
+}
 HB_EXTERN_END
 #endif
 

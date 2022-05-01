@@ -206,7 +206,7 @@ static HB_MAXINT hb_taskTimeStop( unsigned long ulMilliSec )
       return static_cast<HB_MAXINT>(ts.tv_sec) * 1000 + ts.tv_nsec / 1000000 + ulMilliSec;
 #elif defined(HB_OS_UNIX)
       struct timeval tv;
-      gettimeofday( &tv, nullptr );
+      gettimeofday(&tv, nullptr);
       return static_cast<HB_MAXINT>(tv.tv_sec) * 1000 + tv.tv_usec / 1000 + ulMilliSec;
 #else
       return static_cast<HB_MAXINT>(clock()) * 1000 / CLOCKS_PER_SEC + ulMilliSec;
@@ -258,7 +258,7 @@ static void hb_taskUnlink( PHB_TASKINFO * pList, PHB_TASKINFO pTask )
    }
 }
 
-static PHB_TASKMTX hb_taskMutexNew( void )
+static PHB_TASKMTX hb_taskMutexNew(void)
 {
    PHB_TASKMTX pMutex;
 
@@ -272,7 +272,7 @@ static PHB_TASKMTX hb_taskMutexNew( void )
    return pMutex;
 }
 
-static PHB_TASKCOND hb_taskCondNew( void )
+static PHB_TASKCOND hb_taskCondNew(void)
 {
    PHB_TASKCOND pCond;
 
@@ -317,7 +317,7 @@ static void hb_taskWakeUp( PHB_TASKINFO pTask )
    }
 }
 
-static PHB_TASKINFO hb_taskSwitchLock( PHB_TASKMTX pMutex )
+static PHB_TASKINFO hb_taskSwitchLock(PHB_TASKMTX pMutex)
 {
    PHB_TASKINFO pTask = pMutex->lockers;
 
@@ -347,7 +347,7 @@ static PHB_TASKINFO hb_taskSwitchLock( PHB_TASKMTX pMutex )
    return pTask;
 }
 
-static void hb_taskFree( PHB_TASKINFO pTask )
+static void hb_taskFree(PHB_TASKINFO pTask)
 {
    hb_taskUnlink( &s_taskList, pTask );
    if( pTask->stack )
@@ -464,7 +464,7 @@ static void hb_taskFinalize( PHB_TASKINFO pTask )
             pTask->locked--;
             pMutex->task = nullptr;
             pMutex->count = 0;
-            hb_taskSwitchLock( pMutex );
+            hb_taskSwitchLock(pMutex);
          }
          pMutex = pMutex->next;
       }
@@ -488,12 +488,12 @@ static void hb_taskFinalize( PHB_TASKINFO pTask )
       }
       else
       {
-         hb_taskFree( pTask );
+         hb_taskFree(pTask);
       }
    }
 }
 
-static void hb_taskRun( void )
+static void hb_taskRun(void)
 {
    /* execute task startup function */
    s_currTask->result = s_currTask->start( s_currTask->cargo );
@@ -504,7 +504,7 @@ static void hb_taskRun( void )
    /* unreachable code */
 }
 
-static PHB_TASKINFO hb_taskNew( long stack_size )
+static PHB_TASKINFO hb_taskNew(long stack_size)
 {
    PHB_TASKINFO pTask;
    HB_PTRUINT new_size;
@@ -542,7 +542,7 @@ static PHB_TASKINFO hb_taskNew( long stack_size )
 }
 
 #if !defined(HB_HAS_UCONTEXT)
-static void hb_taskStart( void )
+static void hb_taskStart(void)
 {
    static jmp_buf context;
 
@@ -563,7 +563,7 @@ static void hb_taskStart( void )
 #endif
 
 /* initialize task switching, create and register main task structure */
-void hb_taskInit( void )
+void hb_taskInit(void)
 {
    if( s_iTaskID == 0 )
    {
@@ -576,12 +576,12 @@ void hb_taskInit( void )
 }
 
 /* uninitialize task switching, release main task structure */
-void hb_taskExit( void )
+void hb_taskExit(void)
 {
    if( s_mainTask )
    {
       s_mainTask->state = TASK_ZOMBIE;
-      hb_taskFree( s_mainTask );
+      hb_taskFree(s_mainTask);
       s_mainTask = s_currTask = nullptr;
       s_iTaskID = 0;
 
@@ -603,13 +603,13 @@ void hb_taskExit( void )
 }
 
 /* return main task pointer */
-void * hb_taskMain( void )
+void * hb_taskMain(void)
 {
    return s_mainTask;
 }
 
 /* return current task pointer */
-void * hb_taskSelf( void )
+void * hb_taskSelf(void)
 {
    return s_currTask;
 }
@@ -621,25 +621,25 @@ int hb_taskID( void * pTask )
 }
 
 /* get current task user data */
-void * hb_taskGetData( void )
+void * hb_taskGetData(void)
 {
    return s_currTask->data;
 }
 
 /* set current task user data */
-void hb_taskSetData( void * pData )
+void hb_taskSetData(void * pData)
 {
    s_currTask->data = pData;
 }
 
 /* get given task user data */
-void * hb_taskRestoreData( void * pTask )
+void * hb_taskRestoreData(void * pTask)
 {
    return ( static_cast<PHB_TASKINFO>(pTask) )->data;
 }
 
 /* set given task user data */
-void hb_taskSaveData( void * pTask, void * pData )
+void hb_taskSaveData(void * pTask, void * pData)
 {
    ( static_cast<PHB_TASKINFO>(pTask) )->data = pData;
 }
@@ -661,7 +661,7 @@ void hb_taskSleep( unsigned long ulMilliSec )
 }
 
 /* switch execution context to next task */
-void hb_taskYield( void )
+void hb_taskYield(void)
 {
    PHB_TASKINFO pTask = s_currTask->pNext;
 
@@ -675,7 +675,7 @@ void hb_taskYield( void )
       {
          PHB_TASKINFO pFree = pTask;
          pTask = pTask->pNext;
-         hb_taskFree( pFree );
+         hb_taskFree(pFree);
       }
       else
       {
@@ -712,7 +712,7 @@ void hb_taskYield( void )
    hb_taskResume( pTask );
 }
 
-void hb_taskSheduler( void )
+void hb_taskSheduler(void)
 {
    /* The cost of accessing time in many systems is huge and causes
     * noticeable slowness so we not use it and switch task very often
@@ -726,7 +726,7 @@ void hb_taskSheduler( void )
 }
 
 /* suspend current task execution */
-void hb_taskSuspend( void )
+void hb_taskSuspend(void)
 {
    s_currTask->state = TASK_SUSPEND;
    /* switch to next active task */
@@ -799,11 +799,11 @@ void hb_taskResume( void * pTaskPtr )
 }
 
 /* create new task */
-void * hb_taskCreate( void * ( *start )( void * ), void * cargo, long stack_size )
+void * hb_taskCreate(void * ( *start )( void * ), void * cargo, long stack_size)
 {
    PHB_TASKINFO pTask;
 
-   pTask = hb_taskNew( stack_size );
+   pTask = hb_taskNew(stack_size);
 
    pTask->start = start;
    pTask->cargo = cargo;
@@ -814,7 +814,7 @@ void * hb_taskCreate( void * ( *start )( void * ), void * cargo, long stack_size
 }
 
 /* destroy given task */
-void hb_taskDestroy( void * pTaskPtr )
+void hb_taskDestroy(void * pTaskPtr)
 {
    PHB_TASKINFO pTask = static_cast<PHB_TASKINFO>(pTaskPtr);
 
@@ -823,7 +823,7 @@ void hb_taskDestroy( void * pTaskPtr )
       pTask->detached = HB_TRUE;
       if( pTask->state == TASK_ZOMBIE || pTask->state == TASK_DONE )
       {
-         hb_taskFree( pTask );
+         hb_taskFree(pTask);
       }
       else
       {
@@ -861,7 +861,7 @@ int hb_taskJoin( void * pTaskPtr, unsigned long ulMilliSec, void ** pResult )
             *pResult = pTask->result;
          }
          pTask->state = TASK_ZOMBIE;
-         hb_taskFree( pTask );
+         hb_taskFree(pTask);
          result = 1;
       }
    }
@@ -888,7 +888,7 @@ void hb_taskQuit( void * result )
 }
 
 /* (try to) lock given mutex */
-int hb_taskLock( void ** pMutexPtr, unsigned long ulMilliSec )
+int hb_taskLock(void ** pMutexPtr, unsigned long ulMilliSec)
 {
    PHB_TASKMTX pMutex;
 
@@ -957,7 +957,7 @@ int hb_taskLock( void ** pMutexPtr, unsigned long ulMilliSec )
 }
 
 /* unlock given mutex */
-void hb_taskUnlock( void ** pMutexPtr )
+void hb_taskUnlock(void ** pMutexPtr)
 {
    PHB_TASKMTX pMutex = static_cast<PHB_TASKMTX>(*pMutexPtr);
 
@@ -967,7 +967,7 @@ void hb_taskUnlock( void ** pMutexPtr )
       {
          pMutex->task = nullptr;
          s_currTask->locked--;
-         if( hb_taskSwitchLock( pMutex ) )
+         if( hb_taskSwitchLock(pMutex) )
          {
             hb_taskYield();
          }
@@ -1012,12 +1012,12 @@ void hb_taskSignal( void ** pCondPtr )
 
       if( pCond->mutex->count == 0 )
       {
-         hb_taskSwitchLock( pCond->mutex );
+         hb_taskSwitchLock(pCond->mutex);
       }
    }
 }
 
-void hb_taskBroadcast( void ** pCondPtr )
+void hb_taskBroadcast(void ** pCondPtr)
 {
    PHB_TASKCOND pCond;
 
@@ -1059,7 +1059,7 @@ void hb_taskBroadcast( void ** pCondPtr )
 
       if( pCond->mutex->count == 0 )
       {
-         hb_taskSwitchLock( pCond->mutex );
+         hb_taskSwitchLock(pCond->mutex);
       }
    }
 }
@@ -1110,11 +1110,11 @@ int hb_taskWait( void ** pCondPtr, void ** pMutexPtr, unsigned long ulMilliSec )
    pMutex->task = nullptr;
    pMutex->count = 0;
    s_currTask->locked--;
-   hb_taskSwitchLock( pMutex );
+   hb_taskSwitchLock(pMutex);
 
    hb_taskSleep( ulMilliSec );
 
-   if( !hb_taskLock( pMutexPtr, HB_TASK_INFINITE_WAIT ) )
+   if( !hb_taskLock(pMutexPtr, HB_TASK_INFINITE_WAIT) )
    {
       hb_errInternal(HB_EI_ERRUNRECOV, "TaskWait: lock fail", nullptr, nullptr);
    }

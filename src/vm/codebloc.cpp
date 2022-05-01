@@ -126,7 +126,7 @@ static const HB_GC_FUNCS s_gcCodeblockFuncs =
  *
  * Note: pLocalPosTable cannot be used if uiLocals is ZERO
  */
-PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer, HB_USHORT uiLocals, const HB_BYTE * pLocalPosTable, PHB_SYMB pSymbols, HB_SIZE nLen )
+PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE * pBuffer, HB_USHORT uiLocals, const HB_BYTE * pLocalPosTable, PHB_SYMB pSymbols, HB_SIZE nLen)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockNew(%p, %hu, %p, %p, %" HB_PFS "u)", static_cast<const void*>(pBuffer), uiLocals, static_cast<const void*>(pLocalPosTable), static_cast<void*>(pSymbols), nLen ) );
@@ -239,7 +239,7 @@ PHB_CODEBLOCK hb_codeblockNew( const HB_BYTE * pBuffer, HB_USHORT uiLocals, cons
    return pCBlock;
 }
 
-PHB_CODEBLOCK hb_codeblockMacroNew( const HB_BYTE * pBuffer, HB_SIZE nLen )
+PHB_CODEBLOCK hb_codeblockMacroNew(const HB_BYTE * pBuffer, HB_SIZE nLen)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockMacroNew(%p, %" HB_PFS "u)", static_cast<const void*>(pBuffer), nLen ) );
@@ -279,7 +279,7 @@ PHB_CODEBLOCK hb_codeblockMacroNew( const HB_BYTE * pBuffer, HB_SIZE nLen )
 }
 
 /* Get local variable referenced in a codeblock */
-PHB_ITEM hb_codeblockGetVar( PHB_ITEM pItem, int iItemPos )
+PHB_ITEM hb_codeblockGetVar(PHB_ITEM pItem, int iItemPos)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockGetVar(%p, %d)", static_cast<void*>(pItem), iItemPos ) );
@@ -302,7 +302,7 @@ PHB_ITEM hb_codeblockGetRef( PHB_CODEBLOCK pCBlock, int iItemPos )
 }
 
 /* retrieves the codeblock unique ID */
-void * hb_codeblockId( PHB_ITEM pItem )
+void * hb_codeblockId(PHB_ITEM pItem)
 {
    if( HB_IS_BLOCK(pItem) )
    {
@@ -319,7 +319,7 @@ HB_COUNTER hb_codeblockRefs( PHB_ITEM pItem )
 {
    if( HB_IS_BLOCK(pItem) )
    {
-      return hb_gcRefCount( pItem->item.asBlock.value );
+      return hb_gcRefCount(pItem->item.asBlock.value);
    }
    else
    {

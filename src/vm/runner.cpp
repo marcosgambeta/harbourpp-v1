@@ -116,7 +116,7 @@ static int hb_hrbReadHead( const char * szBody, HB_SIZE nBodySize, HB_SIZE * pnB
    return HB_PCODE_MKSHORT(pVersion);
 }
 
-static HB_BOOL hb_hrbReadValue( const char * szBody, HB_SIZE nBodySize, HB_SIZE * pnBodyOffset, HB_ULONG * pulValue )
+static HB_BOOL hb_hrbReadValue(const char * szBody, HB_SIZE nBodySize, HB_SIZE * pnBodyOffset, HB_ULONG * pulValue)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_hrbReadValue(%p,%" HB_PFS "u,%p,%p)", static_cast<const void*>(szBody), nBodySize, static_cast<void*>(pnBodyOffset), static_cast<void*>(pulValue) ) );
@@ -138,7 +138,7 @@ static HB_BOOL hb_hrbReadValue( const char * szBody, HB_SIZE nBodySize, HB_SIZE 
 
 /* ReadId
    Read the next (zero terminated) identifier */
-static char * hb_hrbReadId( const char * szBody, HB_SIZE nBodySize, HB_SIZE * pnBodyOffset )
+static char * hb_hrbReadId(const char * szBody, HB_SIZE nBodySize, HB_SIZE * pnBodyOffset)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_hrbReadId(%p,%" HB_PFS "u,%p)", static_cast<const void*>(szBody), nBodySize, static_cast<void*>(pnBodyOffset) ) );
@@ -160,7 +160,7 @@ static char * hb_hrbReadId( const char * szBody, HB_SIZE nBodySize, HB_SIZE * pn
    return hb_strdup(szIdx);
 }
 
-static HB_ULONG hb_hrbFindSymbol( const char * szName, PHB_DYNF pDynFunc, HB_ULONG ulLoaded )
+static HB_ULONG hb_hrbFindSymbol(const char * szName, PHB_DYNF pDynFunc, HB_ULONG ulLoaded)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_hrbFindSymbol(%s, %p, %lu)", szName, static_cast<void*>(pDynFunc), ulLoaded ) );
@@ -284,7 +284,7 @@ static void hb_hrbExit( PHRB_BODY pHrbBody )
    }
 }
 
-static void hb_hrbUnLoad( PHRB_BODY pHrbBody )
+static void hb_hrbUnLoad(PHRB_BODY pHrbBody)
 {
    hb_hrbExit( pHrbBody );
 
@@ -321,7 +321,7 @@ static void hb_hrbUnLoad( PHRB_BODY pHrbBody )
    hb_xfree(pHrbBody);
 }
 
-static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHORT usMode, const char * szFileName )
+static PHRB_BODY hb_hrbLoad(const char * szHrbBody, HB_SIZE nBodySize, HB_USHORT usMode, const char * szFileName)
 {
    PHRB_BODY pHrbBody = nullptr;
 
@@ -342,7 +342,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
 
       if( iVersion == 0 )
       {
-         hb_errRT_BASE( EG_CORRUPTION, 9995, nullptr, HB_ERR_FUNCNAME, 0 );
+         hb_errRT_BASE(EG_CORRUPTION, 9995, nullptr, HB_ERR_FUNCNAME, 0);
          return nullptr;
       }
 
@@ -355,10 +355,10 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
       pHrbBody->pSymRead = nullptr;
       pHrbBody->pDynFunc = nullptr;
       pHrbBody->pModuleSymbols = nullptr;
-      if( !hb_hrbReadValue( szHrbBody, nBodySize, &nBodyOffset, &pHrbBody->ulSymbols ) || pHrbBody->ulSymbols == 0 )
+      if( !hb_hrbReadValue(szHrbBody, nBodySize, &nBodyOffset, &pHrbBody->ulSymbols) || pHrbBody->ulSymbols == 0 )
       {
-         hb_hrbUnLoad( pHrbBody );
-         hb_errRT_BASE( EG_CORRUPTION, 9996, nullptr, HB_ERR_FUNCNAME, 0 );
+         hb_hrbUnLoad(pHrbBody);
+         hb_errRT_BASE(EG_CORRUPTION, 9996, nullptr, HB_ERR_FUNCNAME, 0);
          return nullptr;
       }
 
@@ -379,8 +379,8 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
          nBodyOffset += 2;
          if( nBodyOffset >= nBodySize )
          {
-            hb_hrbUnLoad( pHrbBody );
-            hb_errRT_BASE( EG_CORRUPTION, 9997, nullptr, HB_ERR_FUNCNAME, 0 );
+            hb_hrbUnLoad(pHrbBody);
+            hb_errRT_BASE(EG_CORRUPTION, 9997, nullptr, HB_ERR_FUNCNAME, 0);
             return nullptr;
          }
       }
@@ -409,11 +409,11 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
       }
 
       /* Read number of functions */
-      if( !hb_hrbReadValue( szHrbBody, nBodySize, &nBodyOffset, &pHrbBody->ulFuncs ) )
+      if( !hb_hrbReadValue(szHrbBody, nBodySize, &nBodyOffset, &pHrbBody->ulFuncs) )
       {
          hb_xfree(pSymRead);
-         hb_hrbUnLoad( pHrbBody );
-         hb_errRT_BASE( EG_CORRUPTION, 9997, nullptr, HB_ERR_FUNCNAME, 0 );
+         hb_hrbUnLoad(pHrbBody);
+         hb_errRT_BASE(EG_CORRUPTION, 9997, nullptr, HB_ERR_FUNCNAME, 0);
          return nullptr;
       }
 
@@ -429,14 +429,14 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
             HB_ULONG ulValue;
 
             /* Read name of function */
-            pDynFunc[ul].szName = hb_hrbReadId( szHrbBody, nBodySize, &nBodyOffset );
+            pDynFunc[ul].szName = hb_hrbReadId(szHrbBody, nBodySize, &nBodyOffset);
             if( pDynFunc[ul].szName == nullptr )
             {
                break;
             }
 
             /* Read size of function */
-            if( !hb_hrbReadValue( szHrbBody, nBodySize, &nBodyOffset, &ulValue ) )
+            if( !hb_hrbReadValue(szHrbBody, nBodySize, &nBodyOffset, &ulValue) )
             {
                break;
             }
@@ -460,8 +460,8 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
          if( ul < pHrbBody->ulFuncs )
          {
             hb_xfree(pSymRead);
-            hb_hrbUnLoad( pHrbBody );
-            hb_errRT_BASE( EG_CORRUPTION, 9998, nullptr, HB_ERR_FUNCNAME, 0 );
+            hb_hrbUnLoad(pHrbBody);
+            hb_errRT_BASE(EG_CORRUPTION, 9998, nullptr, HB_ERR_FUNCNAME, 0);
             return nullptr;
          }
       }
@@ -471,7 +471,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
       {
          if( pSymRead[ul].value.pCodeFunc == reinterpret_cast<PHB_PCODEFUNC>(SYM_FUNC) )
          {
-            nPos = hb_hrbFindSymbol( pSymRead[ul].szName, pHrbBody->pDynFunc, pHrbBody->ulFuncs );
+            nPos = hb_hrbFindSymbol(pSymRead[ul].szName, pHrbBody->pDynFunc, pHrbBody->ulFuncs);
 
             if( nPos == SYM_NOT_FOUND )
             {
@@ -516,8 +516,8 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
 
                   hb_strncpy(szName, pSymRead[ul].szName, sizeof(szName) - 1);
                   hb_xfree(pSymRead);
-                  hb_hrbUnLoad( pHrbBody );
-                  hb_errRT_BASE( EG_ARG, 6101, "Unknown or unregistered symbol", szName, 0 );
+                  hb_hrbUnLoad(pHrbBody);
+                  hb_errRT_BASE(EG_ARG, 6101, "Unknown or unregistered symbol", szName, 0);
                   return nullptr;
                }
             }
@@ -574,7 +574,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
       else
       {
          hb_xfree(pSymRead);
-         hb_hrbUnLoad( pHrbBody );
+         hb_hrbUnLoad(pHrbBody);
          pHrbBody = nullptr;
       }
    }
@@ -582,7 +582,7 @@ static PHRB_BODY hb_hrbLoad( const char * szHrbBody, HB_SIZE nBodySize, HB_USHOR
    return pHrbBody;
 }
 
-static PHRB_BODY hb_hrbLoadFromFile( const char * szHrb, HB_USHORT usMode )
+static PHRB_BODY hb_hrbLoadFromFile(const char * szHrb, HB_USHORT usMode)
 {
    PHRB_BODY pHrbBody = nullptr;
    PHB_ITEM pError = nullptr;
@@ -591,11 +591,11 @@ static PHRB_BODY hb_hrbLoadFromFile( const char * szHrb, HB_USHORT usMode )
    /* Open as binary */
    do
    {
-      pFile = hb_fileExtOpen( szHrb, hb_stackSetStruct()->HB_SET_DEFEXTENSIONS ? ".hrb" : nullptr, FO_READ | FXO_SHARELOCK, nullptr, pError );
+      pFile = hb_fileExtOpen(szHrb, hb_stackSetStruct()->HB_SET_DEFEXTENSIONS ? ".hrb" : nullptr, FO_READ | FXO_SHARELOCK, nullptr, pError);
       if( pFile == nullptr )
       {
-         pError = hb_errRT_FileError( pError, nullptr, EG_OPEN, 6102, szHrb );
-         if( hb_errLaunch( pError ) != E_RETRY )
+         pError = hb_errRT_FileError(pError, nullptr, EG_OPEN, 6102, szHrb);
+         if( hb_errLaunch(pError) != E_RETRY )
          {
             break;
          }
@@ -611,18 +611,18 @@ static PHRB_BODY hb_hrbLoadFromFile( const char * szHrb, HB_USHORT usMode )
    if( pFile != nullptr )
    {
       HB_SIZE nBodySize;
-      HB_BYTE * pBuffer = hb_fileLoadData( pFile, 0, &nBodySize );
+      HB_BYTE * pBuffer = hb_fileLoadData(pFile, 0, &nBodySize);
 
-      hb_fileClose( pFile );
+      hb_fileClose(pFile);
 
       if( pBuffer )
       {
-         pHrbBody = hb_hrbLoad( reinterpret_cast<const char*>(pBuffer), nBodySize, usMode, szHrb );
+         pHrbBody = hb_hrbLoad(reinterpret_cast<const char*>(pBuffer), nBodySize, usMode, szHrb);
          hb_xfree(pBuffer);
       }
       else
       {
-         hb_errRT_BASE( EG_CORRUPTION, 9998, nullptr, HB_ERR_FUNCNAME, 0 );
+         hb_errRT_BASE(EG_CORRUPTION, 9998, nullptr, HB_ERR_FUNCNAME, 0);
       }
    }
 
@@ -665,7 +665,7 @@ static HB_GARBAGE_FUNC( hb_hrb_Destructor )
 
    if( *pHrbPtr )
    {
-      hb_hrbUnLoad( *pHrbPtr );
+      hb_hrbUnLoad(*pHrbPtr);
       *pHrbPtr = nullptr;
    }
 }
@@ -678,7 +678,7 @@ static const HB_GC_FUNCS s_gcHrbFuncs =
 
 static PHRB_BODY hb_hrbParam( int iParam )
 {
-   PHRB_BODY * pHrbPtr = static_cast<PHRB_BODY*>(hb_parptrGC( &s_gcHrbFuncs, iParam ));
+   PHRB_BODY * pHrbPtr = static_cast<PHRB_BODY*>(hb_parptrGC(&s_gcHrbFuncs, iParam));
 
    return pHrbPtr ? *pHrbPtr : nullptr;
 }
@@ -688,7 +688,7 @@ static void hb_hrbReturn( PHRB_BODY pHrbBody )
    PHRB_BODY * pHrbPtr = static_cast<PHRB_BODY*>(hb_gcAllocate( sizeof(PHRB_BODY), &s_gcHrbFuncs ));
 
    *pHrbPtr = pHrbBody;
-   hb_retptrGC( pHrbPtr );
+   hb_retptrGC(pHrbPtr);
 }
 
 /*
@@ -721,11 +721,11 @@ HB_FUNC( HB_HRBRUN )
 
       if( hb_hrbCheckSig( fileOrBody, nLen ) != 0 )
       {
-         pHrbBody = hb_hrbLoad( fileOrBody, nLen, usMode, nullptr );
+         pHrbBody = hb_hrbLoad(fileOrBody, nLen, usMode, nullptr);
       }
       else
       {
-         pHrbBody = hb_hrbLoadFromFile( fileOrBody, usMode );
+         pHrbBody = hb_hrbLoadFromFile(fileOrBody, usMode);
       }
 
       if( pHrbBody )
@@ -749,16 +749,16 @@ HB_FUNC( HB_HRBRUN )
             hb_xfree(pParams);
          }
 
-         hb_hrbUnLoad( pHrbBody );
+         hb_hrbUnLoad(pHrbBody);
       }
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 6103, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 6103, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
-/* hb_hrbLoad( [ <nOptions>, ] <cHrb> [, <xparams,...> ] ) */
+/* hb_hrbLoad([ <nOptions>, ] <cHrb> [, <xparams,...> ]) */
 
 HB_FUNC( HB_HRBLOAD )
 {
@@ -781,11 +781,11 @@ HB_FUNC( HB_HRBLOAD )
 
       if( hb_hrbCheckSig( fileOrBody, nLen ) != 0 )
       {
-         pHrbBody = hb_hrbLoad( fileOrBody, nLen, usMode, nullptr );
+         pHrbBody = hb_hrbLoad(fileOrBody, nLen, usMode, nullptr);
       }
       else
       {
-         pHrbBody = hb_hrbLoadFromFile( fileOrBody, usMode );
+         pHrbBody = hb_hrbLoadFromFile(fileOrBody, usMode);
       }
 
       if( pHrbBody )
@@ -813,7 +813,7 @@ HB_FUNC( HB_HRBLOAD )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 9998, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 9998, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -844,13 +844,13 @@ HB_FUNC( HB_HRBDO )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 6104, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 6104, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( HB_HRBUNLOAD )
 {
-   PHRB_BODY * pHrbPtr = static_cast<PHRB_BODY*>(hb_parptrGC( &s_gcHrbFuncs, 1 ));
+   PHRB_BODY * pHrbPtr = static_cast<PHRB_BODY*>(hb_parptrGC(&s_gcHrbFuncs, 1));
 
    if( pHrbPtr )
    {
@@ -859,12 +859,12 @@ HB_FUNC( HB_HRBUNLOAD )
       if( pHrbBody )
       {
          *pHrbPtr = nullptr;
-         hb_hrbUnLoad( pHrbBody );
+         hb_hrbUnLoad(pHrbBody);
       }
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 6105, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 6105, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -880,7 +880,7 @@ HB_FUNC( HB_HRBGETFUNSYM )
 
       for( nPos = 0, pSym = pHrbBody->pSymRead; nPos < pHrbBody->ulSymbols; ++pSym, ++nPos )
       {
-         if( pSym->value.pFunPtr != nullptr && ( pSym->scope.value & HB_FS_INITEXIT ) == 0 && hb_stricmp( szName, pSym->szName ) == 0 )
+         if( pSym->value.pFunPtr != nullptr && ( pSym->scope.value & HB_FS_INITEXIT ) == 0 && hb_stricmp(szName, pSym->szName) == 0 )
          {
             hb_itemPutSymbol(hb_stackReturnItem(), pSym);
             break;
@@ -889,7 +889,7 @@ HB_FUNC( HB_HRBGETFUNSYM )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 6106, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 6106, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -928,7 +928,7 @@ HB_FUNC( HB_HRBGETFUNLIST )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 6107, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 6107, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
