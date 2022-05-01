@@ -73,7 +73,7 @@ HB_FUNC( XPP_INDEX )
             if( XHB_IS_VALID_INDEX( nIndex, nLen ) )
                hb_itemMoveRef(hb_arrayGetItemPtr(pSelf, nIndex), pValue);
             else
-               hb_errRT_BASE( EG_BOUND, 1012, "Error in array index", hb_langDGetErrorDesc( EG_ARRASSIGN ), 1, pIndex );
+               hb_errRT_BASE(EG_BOUND, 1012, "Error in array index", hb_langDGetErrorDesc(EG_ARRASSIGN), 1, pIndex);
          }
          else if( HB_IS_STRING(pSelf) )
          {
@@ -92,13 +92,13 @@ HB_FUNC( XPP_INDEX )
                }
             }
             else
-               hb_errRT_BASE( EG_BOUND, 1012, "Error in array index", hb_langDGetErrorDesc( EG_ARRASSIGN ), 1, pIndex );
+               hb_errRT_BASE(EG_BOUND, 1012, "Error in array index", hb_langDGetErrorDesc(EG_ARRASSIGN), 1, pIndex);
          }
          else
-            hb_errRT_BASE( EG_ARG, 1069, nullptr, hb_langDGetErrorDesc( EG_ARRASSIGN ), 1, pIndex );  /* TODO: Emulate exact XPP error msg */
+            hb_errRT_BASE(EG_ARG, 1069, nullptr, hb_langDGetErrorDesc(EG_ARRASSIGN), 1, pIndex);  /* TODO: Emulate exact XPP error msg */
       }
       else
-         hb_errRT_BASE( EG_ARG, 1069, nullptr, hb_langDGetErrorDesc( EG_ARRASSIGN ), 1, pIndex );  /* TODO: Emulate exact XPP error msg */
+         hb_errRT_BASE(EG_ARG, 1069, nullptr, hb_langDGetErrorDesc(EG_ARRASSIGN), 1, pIndex);  /* TODO: Emulate exact XPP error msg */
 
       hb_itemReturn(pSelf);
    }
@@ -113,7 +113,7 @@ HB_FUNC( XPP_INDEX )
             if( XHB_IS_VALID_INDEX( nIndex, nLen ) )
                hb_itemReturn(hb_arrayGetItemPtr(pSelf, nIndex));
             else
-               hb_errRT_BASE( EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pSelf, pIndex );  /* TODO: Emulate exact XPP error msg */
+               hb_errRT_BASE(EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc(EG_ARRACCESS), 2, pSelf, pIndex);  /* TODO: Emulate exact XPP error msg */
          }
          else if( HB_IS_STRING(pSelf) )
          {
@@ -121,14 +121,14 @@ HB_FUNC( XPP_INDEX )
             if( XHB_IS_VALID_INDEX( nIndex, nLen ) )
                hb_retclen(hb_itemGetCPtr(pSelf) + nIndex - 1, 1);
             else
-               hb_errRT_BASE( EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pSelf, pIndex );  /* TODO: Emulate exact XPP error msg */
+               hb_errRT_BASE(EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc(EG_ARRACCESS), 2, pSelf, pIndex);  /* TODO: Emulate exact XPP error msg */
          }
          else
-            hb_errRT_BASE( EG_ARG, 1068, nullptr, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pSelf, pIndex );  /* TODO: Emulate exact XPP error msg */
+            hb_errRT_BASE(EG_ARG, 1068, nullptr, hb_langDGetErrorDesc(EG_ARRACCESS), 2, pSelf, pIndex);  /* TODO: Emulate exact XPP error msg */
       }
       else
       {
-         PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1068, nullptr, hb_langDGetErrorDesc( EG_ARRACCESS ), 2, pSelf, pIndex ); /* TODO: Emulate exact XPP error msg */
+         PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1068, nullptr, hb_langDGetErrorDesc(EG_ARRACCESS), 2, pSelf, pIndex); /* TODO: Emulate exact XPP error msg */
          if( pResult )
             hb_itemReturnRelease(pResult);
       }
@@ -146,7 +146,7 @@ HB_FUNC( XPP_INCLUDE )
    }
    else
    {
-      PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ARG, 1109, nullptr, "$", 2, pKey, pSelf );
+      PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1109, nullptr, "$", 2, pKey, pSelf);
       if( pResult )
          hb_itemReturnRelease(pResult);
    }

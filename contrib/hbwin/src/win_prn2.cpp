@@ -419,7 +419,7 @@ HB_FUNC( WIN_PRINTFILERAW )
                   }
                   hbwapi_SetLastError( GetLastError() );
 
-                  hb_fileClose( pFile );
+                  hb_fileClose(pFile);
                   hb_xfree(pbyBuffer);
                }
                else

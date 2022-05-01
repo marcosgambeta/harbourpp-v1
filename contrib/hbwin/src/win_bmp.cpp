@@ -113,7 +113,7 @@ HB_FUNC( WIN_LOADBITMAPFILE )
 
    if( pBuffer )
    {
-      hb_retclen_buffer( pBuffer, nSize );
+      hb_retclen_buffer(pBuffer, nSize);
    }
    else
    {

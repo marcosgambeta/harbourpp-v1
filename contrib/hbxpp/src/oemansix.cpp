@@ -74,7 +74,7 @@ HB_FUNC( CONVTOOEMCP )
       WideCharToMultiByte(CP_OEMCP, 0, pszWide, nWideLen, pszDst, nLen, nullptr, nullptr);
 
       hb_xfree(pszWide);
-      hb_retclen_buffer( pszDst, nLen );
+      hb_retclen_buffer(pszDst, nLen);
    }
 #else
       hb_itemReturn(pString);
@@ -106,7 +106,7 @@ HB_FUNC( CONVTOANSICP )
       WideCharToMultiByte(CP_ACP, 0, pszWide, nWideLen, pszDst, nLen, nullptr, nullptr);
 
       hb_xfree(pszWide);
-      hb_retclen_buffer( pszDst, nLen );
+      hb_retclen_buffer(pszDst, nLen);
    }
 #else
       hb_itemReturn(pString);

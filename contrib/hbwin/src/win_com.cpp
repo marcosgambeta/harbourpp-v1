@@ -199,7 +199,7 @@ HB_FUNC( WIN_COMCLOSE )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -228,7 +228,7 @@ HB_FUNC( WIN_COMWRITE )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -264,7 +264,7 @@ HB_FUNC( WIN_COMREAD )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -284,7 +284,7 @@ HB_FUNC( WIN_COMRECV )
       s_PortData[iPort].dwError = 0;
       if( ReadFile(hCommPort, lpBuffer, dwNumberOfBytesToRead, &dwNumberOfBytesRead, nullptr) )
       {
-         hb_retclen_buffer( lpBuffer, dwNumberOfBytesRead );
+         hb_retclen_buffer(lpBuffer, dwNumberOfBytesRead);
          hb_stornl(dwNumberOfBytesRead, 3);
       }
       else
@@ -297,7 +297,7 @@ HB_FUNC( WIN_COMRECV )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -335,7 +335,7 @@ HB_FUNC( WIN_COMSTATUS )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -363,7 +363,7 @@ HB_FUNC( WIN_COMPURGE )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -408,7 +408,7 @@ HB_FUNC( WIN_COMQUEUESTATUS )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -438,7 +438,7 @@ HB_FUNC( WIN_COMSETRTS )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -468,7 +468,7 @@ HB_FUNC( WIN_COMSETDTR )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -527,7 +527,7 @@ HB_FUNC( WIN_COMRTSFLOW )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -586,7 +586,7 @@ HB_FUNC( WIN_COMDTRFLOW )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -634,7 +634,7 @@ HB_FUNC( WIN_COMXONXOFFFLOW )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -734,7 +734,7 @@ HB_FUNC( WIN_COMSETTIMEOUTS )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -759,7 +759,7 @@ HB_FUNC( WIN_COMSETQUEUESIZE )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -781,7 +781,7 @@ HB_FUNC( WIN_COMERRORCLEAR )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -795,7 +795,7 @@ HB_FUNC( WIN_COMERROR )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -809,7 +809,7 @@ HB_FUNC( WIN_COMFUNCLAST )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -933,7 +933,7 @@ HB_FUNC( WIN_COMDEBUGDCB )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 

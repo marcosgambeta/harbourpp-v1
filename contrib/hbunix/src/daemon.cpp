@@ -62,9 +62,9 @@ HB_FUNC( UNIX_DAEMON )
 
    if( !HB_PARLUNIX(2) && ( fd = open( "/dev/null", O_RDWR ) ) != -1 )
    {
-      ( void ) dup2( fd, STDIN_FILENO );
-      ( void ) dup2( fd, STDOUT_FILENO );
-      ( void ) dup2( fd, STDERR_FILENO );
+      ( void ) dup2(fd, STDIN_FILENO);
+      ( void ) dup2(fd, STDOUT_FILENO);
+      ( void ) dup2(fd, STDERR_FILENO);
       if( fd > 2 )
          ( void ) close( fd );
    }

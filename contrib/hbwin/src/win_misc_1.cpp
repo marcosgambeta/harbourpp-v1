@@ -131,7 +131,7 @@ HB_FUNC( WIN_WIDETOANSI )
 
    WideCharToMultiByte(CP_ACP, 0, lpSrcWide, static_cast<int>(nLen), lpDstMB, dwLength + 1, nullptr, nullptr);
 
-   hb_retclen_buffer( lpDstMB, static_cast<HB_SIZE>(dwLength) );
+   hb_retclen_buffer(lpDstMB, static_cast<HB_SIZE>(dwLength));
 }
 
 HB_FUNC( WIN_UNICODE )

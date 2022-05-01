@@ -198,7 +198,7 @@ HB_FUNC( DLLPREPARECALL )
    if( bFreeLibrary )
       hb_libFree( pLibraryHandle );
 
-   hb_errRT_BASE( EG_ARG, 2010, pszErrorText, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE(EG_ARG, 2010, pszErrorText, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 HB_FUNC( DLLEXECUTECALL )

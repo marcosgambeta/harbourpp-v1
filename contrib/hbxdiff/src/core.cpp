@@ -148,12 +148,12 @@ static void * hb_mmf_itemGet(PHB_ITEM pItem, int iType, HB_BOOL fError)
 
 static void hb_mmf_ret( void * pMemAddr, int iType )
 {
-   hb_mmf_itemPut( hb_stackReturnItem(), pMemAddr, iType );
+   hb_mmf_itemPut(hb_stackReturnItem(), pMemAddr, iType);
 }
 
 static void * hb_mmf_param( int iParam, int iType, HB_BOOL fError )
 {
-   return hb_mmf_itemGet( hb_param(iParam, Harbour::Item::POINTER), iType, fError );
+   return hb_mmf_itemGet(hb_param(iParam, Harbour::Item::POINTER), iType, fError);
 }
 
 /* int xdl_init_mmfile(mmfile_t *mmf, long bsize, unsigned long flags) */
@@ -255,7 +255,7 @@ HB_FUNC( XDL_READ_MMFILE )
             if( pData )
                hb_retclen(data, lResult);
             else
-               hb_retclen_buffer( data, lResult );
+               hb_retclen_buffer(data, lResult);
          }
       }
       else
@@ -363,7 +363,7 @@ static int xdlt_outf( void * priv, mmbuffer_t * mb, int nbuf )
 
    for( i = 0; i < nbuf; i++ )
    {
-      hb_fsWriteLarge( hb_ptrToHandle( priv ), mb[i].ptr, static_cast<HB_SIZE>(mb[i].size) );
+      hb_fsWriteLarge(hb_ptrToHandle(priv), mb[i].ptr, static_cast<HB_SIZE>(mb[i].size));
 
       if( hb_fsError() != 0 )
          return -1;
