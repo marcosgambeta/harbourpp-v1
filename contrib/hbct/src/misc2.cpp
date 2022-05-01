@@ -66,7 +66,7 @@ HB_FUNC( COMPLEMENT )
             {
                szBuffer[nPos] = ~szSrc[nPos];
             }
-            hb_retclen_buffer( szBuffer, nLen );
+            hb_retclen_buffer(szBuffer, nLen);
          }
          else
          {

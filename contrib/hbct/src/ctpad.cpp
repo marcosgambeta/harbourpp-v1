@@ -125,7 +125,7 @@ static void do_pad( int iSwitch )
             }
          }
       }
-      hb_retclen_buffer( pcRet, sRetLen );
+      hb_retclen_buffer(pcRet, sRetLen);
    }
    else
    {

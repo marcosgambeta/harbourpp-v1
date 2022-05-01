@@ -105,7 +105,7 @@ HB_FUNC( EXPAND )
             }
             *szPtr++ = szText[nPos];
          }
-         hb_retclen_buffer( szDest, nSize );
+         hb_retclen_buffer(szDest, nSize);
       }
    }
    else

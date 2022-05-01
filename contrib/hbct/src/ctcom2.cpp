@@ -163,7 +163,7 @@ HB_FUNC( XMOBLOCK )
       pszBlock[3 + nSize] = s_xmoblock_sum( szData, nLen );
       nSize += 4;
    }
-   hb_retclen_buffer( pszBlock, nSize );
+   hb_retclen_buffer(pszBlock, nSize);
 }
 
 /* XMoCheck( <cString>, [<lCRC>] ) --> <nBlockNumber>|-1
@@ -278,7 +278,7 @@ HB_FUNC( ZEROINSERT )
             uiVal <<= 1;
          }
 
-         hb_retclen_buffer( pszDest, nDest );
+         hb_retclen_buffer(pszDest, nDest);
       }
       else
       {
@@ -414,7 +414,7 @@ HB_FUNC( ZEROREMOVE )
             }
          }
 
-         hb_retclen_buffer( pszDest, nDest );
+         hb_retclen_buffer(pszDest, nDest);
       }
       else
       {

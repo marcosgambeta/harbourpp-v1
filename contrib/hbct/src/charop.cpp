@@ -323,7 +323,7 @@ void ct_charop( int iMode )
       }
       else
       {
-         hb_retclen_buffer( reinterpret_cast<char*>(pucResult), sStrLen );
+         hb_retclen_buffer(reinterpret_cast<char*>(pucResult), sStrLen);
       }
    }
    else

@@ -88,7 +88,7 @@ static HB_TSD_NEW(s_ct_token, sizeof(CT_TOKEN), s_ct_token_init, nullptr);
 #define DO_TOKEN1_TOKENUPPER  4
 
 /* helper function for the token function group I */
-static void do_token1( int iSwitch )
+static void do_token1(int iSwitch)
 {
    PCT_TOKEN ct_token = static_cast<PCT_TOKEN>(hb_stackGetTSD(&s_ct_token));
 
@@ -256,7 +256,7 @@ static void do_token1( int iSwitch )
                   }
                   else
                   {
-                     hb_retclen_buffer( pcRet, sRetStrLen );
+                     hb_retclen_buffer(pcRet, sRetStrLen);
                   }
                   break;
             }
@@ -381,7 +381,7 @@ static void do_token1( int iSwitch )
             }
             else
             {
-               hb_retclen_buffer( pcRet, sRetStrLen );
+               hb_retclen_buffer(pcRet, sRetStrLen);
             }
             break;
       }
@@ -487,27 +487,27 @@ static void do_token1( int iSwitch )
 
 HB_FUNC( ATTOKEN )
 {
-   do_token1( DO_TOKEN1_ATTOKEN );
+   do_token1(DO_TOKEN1_ATTOKEN);
 }
 
 HB_FUNC( TOKEN )
 {
-   do_token1( DO_TOKEN1_TOKEN );
+   do_token1(DO_TOKEN1_TOKEN);
 }
 
 HB_FUNC( NUMTOKEN )
 {
-   do_token1( DO_TOKEN1_NUMTOKEN );
+   do_token1(DO_TOKEN1_NUMTOKEN);
 }
 
 HB_FUNC( TOKENLOWER )
 {
-   do_token1( DO_TOKEN1_TOKENLOWER );
+   do_token1(DO_TOKEN1_TOKENLOWER);
 }
 
 HB_FUNC( TOKENUPPER )
 {
-   do_token1( DO_TOKEN1_TOKENUPPER );
+   do_token1(DO_TOKEN1_TOKENUPPER);
 }
 
 HB_FUNC( TOKENSEP )

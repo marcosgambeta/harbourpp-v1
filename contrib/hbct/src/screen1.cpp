@@ -517,7 +517,7 @@ HB_FUNC( SCREENTEXT )  /* HB_EXTENSION */
          }
          ++iTop;
       }
-      hb_retclen_buffer( pBuffer, nSize );
+      hb_retclen_buffer(pBuffer, nSize);
    }
    else
    {

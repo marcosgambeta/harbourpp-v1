@@ -125,7 +125,7 @@ HB_FUNC( CHARREPL )
       }
       else
       {
-         hb_retclen_buffer( pcRet, sStrLen );
+         hb_retclen_buffer(pcRet, sStrLen);
       }
    }
    else

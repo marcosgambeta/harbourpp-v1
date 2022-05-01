@@ -114,7 +114,7 @@ HB_FUNC( BLANK )
          }
          if( bRet )
          {
-            hb_retclen_buffer( szResult, nLen );
+            hb_retclen_buffer(szResult, nLen);
          }
          else
          {

@@ -48,7 +48,7 @@
 #include "ct.h"
 #include "hbapigt.h"
 
-static void SetGet( int iFlag )
+static void SetGet(int iFlag)
 {
    int iState = 0;
    HB_GT_INFO gtInfo;
@@ -83,20 +83,20 @@ static void SetGet( int iFlag )
 
 HB_FUNC( KSETINS )
 {
-   SetGet( HB_GTI_KBD_INSERT );
+   SetGet(HB_GTI_KBD_INSERT);
 }
 
 HB_FUNC( KSETCAPS )
 {
-   SetGet( HB_GTI_KBD_CAPSLOCK );
+   SetGet(HB_GTI_KBD_CAPSLOCK);
 }
 
 HB_FUNC( KSETNUM )
 {
-   SetGet( HB_GTI_KBD_NUMLOCK );
+   SetGet(HB_GTI_KBD_NUMLOCK);
 }
 
 HB_FUNC( KSETSCROLL )
 {
-   SetGet( HB_GTI_KBD_SCROLOCK );
+   SetGet(HB_GTI_KBD_SCROLOCK);
 }

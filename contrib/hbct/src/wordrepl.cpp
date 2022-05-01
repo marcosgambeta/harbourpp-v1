@@ -128,7 +128,7 @@ HB_FUNC( WORDREPL )
       }
       else
       {
-         hb_retclen_buffer( pcRet, sStrLen );
+         hb_retclen_buffer(pcRet, sStrLen);
       }
    }
    else

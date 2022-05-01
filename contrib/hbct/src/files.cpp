@@ -89,7 +89,7 @@ static HB_TSD_NEW( s_FFData, sizeof(HB_FFDATA), nullptr, hb_fileFindRelease );
 #define HB_GET_FFDATA()  (static_cast<PHB_FFDATA>(hb_stackGetTSD(&s_FFData)))
 
 /* limit attributes to DOS ones for code portability */
-#define HB_FF_ATTR( ff ) ( ( ff )->attr & 0xFF )
+#define HB_FF_ATTR(ff) ((ff)->attr & 0xFF)
 
 static PHB_FFIND _hb_fileStart( HB_BOOL fNext, HB_BOOL fAny )
 {
@@ -112,7 +112,7 @@ static PHB_FFIND _hb_fileStart( HB_BOOL fNext, HB_BOOL fAny )
          ulAttr = static_cast<HB_FATTR>(hb_parnldef(2, fAny ? HB_FA_ANY : HB_FA_ALL));
          pFFData->ulAttr = hb_parl(3) ? ulAttr : 0;
          pFFData->ffind  = hb_fsFindFirst( szFile, ulAttr );
-         while( pFFData->ffind && pFFData->ulAttr && HB_FF_ATTR( pFFData->ffind ) != pFFData->ulAttr )
+         while( pFFData->ffind && pFFData->ulAttr && HB_FF_ATTR(pFFData->ffind) != pFFData->ulAttr )
          {
             if( !hb_fsFindNext( pFFData->ffind ) )
             {
@@ -133,7 +133,7 @@ static PHB_FFIND _hb_fileStart( HB_BOOL fNext, HB_BOOL fAny )
             break;
          }
       }
-      while( pFFData->ulAttr && HB_FF_ATTR( pFFData->ffind ) != pFFData->ulAttr );
+      while( pFFData->ulAttr && HB_FF_ATTR(pFFData->ffind) != pFFData->ulAttr );
    }
 
    return pFFData->ffind;
@@ -178,7 +178,7 @@ HB_FUNC( SETFATTR )
 {
    int iResult;
 
-   if( hb_fsSetAttr( hb_parcx(1), hb_parnldef(2, HB_FA_ARCHIVE) ) )
+   if( hb_fsSetAttr(hb_parcx(1), hb_parnldef(2, HB_FA_ARCHIVE)) )
    {
       iResult = 0;
    }
@@ -221,7 +221,7 @@ HB_FUNC( SETFDATI )
          if( pTime )
          {
             int hour = 0, minute = 0, second = 0, msec = 0;
-            hb_timeStrGet( hb_itemGetCPtr(pTime), &hour, &minute, &second, &msec );
+            hb_timeStrGet(hb_itemGetCPtr(pTime), &hour, &minute, &second, &msec);
             lMillisec = hb_timeEncode( hour, minute, second, msec );
          }
          else
@@ -266,7 +266,7 @@ HB_FUNC( FILEDELETE )
             {
                if( nAttr & HB_FA_READONLY )
                {
-                  hb_fsSetAttr( szPath, ffind->attr & ~ ( HB_FATTR ) HB_FA_READONLY );
+                  hb_fsSetAttr(szPath, ffind->attr & ~ static_cast<HB_FATTR>(HB_FA_READONLY));
                }
                else
                {

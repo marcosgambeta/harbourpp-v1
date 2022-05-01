@@ -105,13 +105,13 @@ HB_FUNC( SETCLEARB )
       PHB_CODEPAGE cdp = hb_vmCDP();
       if( !HB_CDP_ISCHARUNI( cdp ) )
       {
-         iChar = hb_cdpGetU16( cdp, static_cast<HB_UCHAR>(iChar) );
+         iChar = hb_cdpGetU16(cdp, static_cast<HB_UCHAR>(iChar));
       }
       usNew = static_cast<HB_USHORT>(iChar);
    }
    else if( HB_ISCHAR(1) )
    {
-      usNew = hb_cdpTextGetU16( hb_vmCDP(), hb_parc(1), hb_parclen(1) );
+      usNew = hb_cdpTextGetU16(hb_vmCDP(), hb_parc(1), hb_parclen(1));
    }
    else
    {
@@ -473,7 +473,7 @@ HB_FUNC( WLIST )
          pszWindows[iFrom + i] = static_cast<char>(piStack[i]);
       }
 
-      hb_retclen_buffer( pszWindows, iWindows + 1 );
+      hb_retclen_buffer(pszWindows, iWindows + 1);
    }
 }
 

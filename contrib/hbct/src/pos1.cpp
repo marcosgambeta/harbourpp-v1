@@ -55,7 +55,7 @@
 #define DO_POS1_POSUPPER  3
 
 /* helper function for the Pos*() functions */
-static void do_pos1( int iSwitch )
+static void do_pos1(int iSwitch)
 {
    if( HB_ISCHAR(1) &&                  /* all functions need string as 1st param */
        ( iSwitch != DO_POS1_POSRANGE ||   /* that's the only condition for all functions _except_ PosRange() */
@@ -175,20 +175,20 @@ static void do_pos1( int iSwitch )
 
 HB_FUNC( POSALPHA )
 {
-   do_pos1( DO_POS1_POSALPHA );
+   do_pos1(DO_POS1_POSALPHA);
 }
 
 HB_FUNC( POSLOWER )
 {
-   do_pos1( DO_POS1_POSLOWER );
+   do_pos1(DO_POS1_POSLOWER);
 }
 
 HB_FUNC( POSRANGE )
 {
-   do_pos1( DO_POS1_POSRANGE );
+   do_pos1(DO_POS1_POSRANGE);
 }
 
 HB_FUNC( POSUPPER )
 {
-   do_pos1( DO_POS1_POSUPPER );
+   do_pos1(DO_POS1_POSUPPER);
 }

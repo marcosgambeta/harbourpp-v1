@@ -104,7 +104,7 @@ HB_FUNC( CHARMIX )
          sPos2 %= sLen2;
       }
 
-      hb_retclen_buffer( pcResult, sLen1 * 2 );
+      hb_retclen_buffer(pcResult, sLen1 * 2);
    }
    else
    {

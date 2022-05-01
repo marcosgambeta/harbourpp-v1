@@ -96,7 +96,7 @@ HB_FUNC( POSCHAR )
          }
          else
          {
-            hb_retclen_buffer( pcRet, sStrLen );
+            hb_retclen_buffer(pcRet, sStrLen);
          }
       }
       else
@@ -191,7 +191,7 @@ HB_FUNC( POSDEL )
          hb_xmemcpy(pcRet + sStartPos - 1, pcString + sStartPos - 1 + sDelLen, sStrLen - (sStartPos - 1 + sDelLen));
       }
 
-      hb_retclen_buffer( pcRet, sStrLen - sDelLen );
+      hb_retclen_buffer(pcRet, sStrLen - sDelLen);
    }
    else
    {
@@ -273,7 +273,7 @@ HB_FUNC( POSINS )
             hb_xmemcpy(pcRet + sStartPos - 1 + sInsLen, pcString + sStartPos - 1, sStrLen - (sStartPos - 1));
          }
 
-         hb_retclen_buffer( pcRet, sStrLen + sInsLen );
+         hb_retclen_buffer(pcRet, sStrLen + sInsLen);
       }
       else
       {
@@ -402,7 +402,7 @@ HB_FUNC( POSREPL )
          }
          else
          {
-            hb_retclen_buffer( pcRet, sRetLen );
+            hb_retclen_buffer(pcRet, sRetLen);
          }
       }
       else

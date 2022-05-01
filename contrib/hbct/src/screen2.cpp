@@ -408,7 +408,7 @@ HB_FUNC( SCREENSTR )  /* TODO: Unicode support */
       }
       while( nCount && ++iRow <= iMaxRow );
 
-      hb_retclen_buffer( pBuffer, nSize );
+      hb_retclen_buffer(pBuffer, nSize);
    }
    else
    {

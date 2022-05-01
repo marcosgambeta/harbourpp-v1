@@ -140,7 +140,7 @@ static void do_replace( int iSwitch )
       }
       else
       {
-         hb_retclen_buffer( pcRet, sStrLen );
+         hb_retclen_buffer(pcRet, sStrLen);
       }
    }
    else

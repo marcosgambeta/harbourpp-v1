@@ -309,7 +309,7 @@ HB_FUNC( COM_SOFT_R )
 
    if( HB_ISLOG(2) )
    {
-      hb_comFlowSet( iPort, HB_COM_FL_SOFT | ( hb_parl(2) ? HB_COM_FL_OOFF : HB_COM_FL_OON ) );
+      hb_comFlowSet(iPort, HB_COM_FL_SOFT | (hb_parl(2) ? HB_COM_FL_OOFF : HB_COM_FL_OON));
    }
 
    iMode = hb_comOutputState( iPort );
@@ -495,7 +495,7 @@ HB_FUNC( COM_READ )
    }
    else
    {
-      hb_retclen_buffer( data, lRecv );
+      hb_retclen_buffer(data, lRecv);
    }
 }
 

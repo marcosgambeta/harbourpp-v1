@@ -99,7 +99,7 @@ HB_FUNC( PRINTSEND )
       HB_FHANDLE hFile = hb_fsOpen( szPort, FO_WRITE );
       if( hFile != FS_ERROR )
       {
-         nRet = hb_fsWriteLarge( hFile, szStr, nLen );
+         nRet = hb_fsWriteLarge(hFile, szStr, nLen);
          hb_fsClose( hFile );
       }
    }

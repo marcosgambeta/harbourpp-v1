@@ -50,7 +50,7 @@
 
 #define MATRIXELEMENT( __row, __col )  *( piPenalty + ( ( __row ) * ( sStrLen2 + 1 ) ) + ( __col ) )
 
-static int min3( int a, int b, int c )
+static int min3(int a, int b, int c)
 {
    if( a < b )
    {
@@ -140,10 +140,10 @@ HB_FUNC( STRDIFF )
                iReplaceCost = iReplace;
             }
 
-            MATRIXELEMENT( sRowCnt + 1, sColCnt + 1 ) =
-               min3( MATRIXELEMENT( sRowCnt, sColCnt ) + iReplaceCost,
-                     MATRIXELEMENT( sRowCnt, sColCnt + 1 ) + iDelete,
-                     MATRIXELEMENT( sRowCnt + 1, sColCnt ) + iInsert );
+            MATRIXELEMENT(sRowCnt + 1, sColCnt + 1) =
+               min3(MATRIXELEMENT(sRowCnt, sColCnt) + iReplaceCost,
+                    MATRIXELEMENT(sRowCnt, sColCnt + 1) + iDelete,
+                    MATRIXELEMENT(sRowCnt + 1, sColCnt) + iInsert);
          }
       }
 

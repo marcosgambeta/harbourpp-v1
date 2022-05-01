@@ -229,7 +229,7 @@ static void s_token_exit( void * cargo )
 
 static HB_TSD_NEW( s_token, sizeof(TOKEN_ENVIRONMENT*), nullptr, s_token_exit );
 
-static void sTokSet( TOKEN_ENVIRONMENT env )
+static void sTokSet(TOKEN_ENVIRONMENT env)
 {
    TOKEN_ENVIRONMENT * penv = static_cast<TOKEN_ENVIRONMENT*>(hb_stackGetTSD(&s_token));
 
@@ -243,7 +243,7 @@ static void sTokSet( TOKEN_ENVIRONMENT env )
    }
 }
 
-static TOKEN_ENVIRONMENT sTokGet( int iParam, HB_BOOL fReadOnly )
+static TOKEN_ENVIRONMENT sTokGet(int iParam, HB_BOOL fReadOnly)
 {
    if( iParam < 0 || ( iParam > 0 && HB_ISCHAR( iParam ) ) )
    {
@@ -287,7 +287,7 @@ static int sTokSave( TOKEN_ENVIRONMENT sTokenEnvironment, int iParam )
    }
    else
    {
-      sTokSet( sTokenEnvironment );
+      sTokSet(sTokenEnvironment);
    }
    return 1;
 }
@@ -693,7 +693,7 @@ HB_FUNC( RESTTOKEN )
          hb_retc_null();
       }
 
-      sTokSet( sNewTokEnv );
+      sTokSet(sNewTokEnv);
    }
    else
    {

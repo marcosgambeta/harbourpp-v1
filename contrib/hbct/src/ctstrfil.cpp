@@ -135,14 +135,14 @@ static HB_SIZE ct_StrFile( const char * pFileName, const char * pcStr, HB_SIZE n
    {
       if( nOffset )
       {
-         hb_fsSeekLarge( hFile, nOffset, FS_SET );
+         hb_fsSeekLarge(hFile, nOffset, FS_SET);
       }
       else if( bOpen )
       {
          hb_fsSeek( hFile, 0, FS_END );
       }
 
-      nWrite = hb_fsWriteLarge( hFile, pcStr, nLen );
+      nWrite = hb_fsWriteLarge(hFile, pcStr, nLen);
       if( (nWrite == nLen) && bOpen && bTrunc )
       {
          hb_fsWrite( hFile, nullptr, 0 );
@@ -173,8 +173,8 @@ HB_FUNC( FILESTR )
 
       if( hFile != FS_ERROR )
       {
-         HB_FOFFSET nFileSize = hb_fsSeekLarge( hFile, 0, FS_END );
-         HB_FOFFSET nPos = hb_fsSeekLarge( hFile, static_cast<HB_FOFFSET>(hb_parnint(3)), FS_SET );
+         HB_FOFFSET nFileSize = hb_fsSeekLarge(hFile, 0, FS_END);
+         HB_FOFFSET nPos = hb_fsSeekLarge(hFile, static_cast<HB_FOFFSET>(hb_parnint(3)), FS_SET);
          HB_ISIZ nLength;
          char * pcResult, * pCtrlZ;
          HB_BOOL bCtrlZ = hb_parl(4);
@@ -195,7 +195,7 @@ HB_FUNC( FILESTR )
          pcResult = static_cast<char*>(hb_xgrab(nLength + 1));
          if( nLength > 0 )
          {
-            nLength = hb_fsReadLarge( hFile, pcResult, static_cast<HB_SIZE>(nLength) );
+            nLength = hb_fsReadLarge(hFile, pcResult, static_cast<HB_SIZE>(nLength));
          }
 
          if( bCtrlZ )
@@ -208,7 +208,7 @@ HB_FUNC( FILESTR )
          }
 
          hb_fsClose( hFile );
-         hb_retclen_buffer( pcResult, nLength );
+         hb_retclen_buffer(pcResult, nLength);
       }
       else
       {
@@ -256,13 +256,13 @@ HB_FUNC( FILESCREEN )
 
          if( HB_ISNUM(2) )
          {
-            hb_fsSeekLarge( hFile, static_cast<HB_FOFFSET>(hb_parnint(2)), FS_SET );
+            hb_fsSeekLarge(hFile, static_cast<HB_FOFFSET>(hb_parnint(2)), FS_SET);
          }
 
          hb_gtRectSize(0, 0, hb_gtMaxRow(), hb_gtMaxCol(), &nSize);
          pBuffer = static_cast<char*>(hb_xgrab(nSize));
 
-         nLength = hb_fsReadLarge( hFile, pBuffer, nSize );
+         nLength = hb_fsReadLarge(hFile, pBuffer, nSize);
          hb_gtRest(0, 0, hb_gtMaxRow(), hb_gtMaxCol(), pBuffer);
 
          hb_xfree(pBuffer);

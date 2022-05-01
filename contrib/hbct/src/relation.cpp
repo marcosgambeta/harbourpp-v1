@@ -232,7 +232,7 @@ HB_FUNC( CHARRELREP )
       }
       else
       {
-         hb_retclen_buffer( pcRet, sStrLen2 );
+         hb_retclen_buffer(pcRet, sStrLen2);
       }
    }
    else

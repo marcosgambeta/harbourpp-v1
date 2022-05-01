@@ -90,12 +90,12 @@ HB_USHORT ct_error( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errS
    }
    else
    {
-      pArray = hb_itemArrayNew( ulArgCount );
+      pArray = hb_itemArrayNew(ulArgCount);
 
       va_start( va, ulArgCount );
       for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
       {
-         hb_itemArrayPut( pArray, ulArgPos, va_arg( va, PHB_ITEM ) );
+         hb_itemArrayPut(pArray, ulArgPos, va_arg(va, PHB_ITEM));
       }
       va_end( va );
    }
@@ -161,12 +161,12 @@ PHB_ITEM ct_error_subst( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE
    }
    else
    {
-      pArray = hb_itemArrayNew( ulArgCount );
+      pArray = hb_itemArrayNew(ulArgCount);
 
       va_start( va, ulArgCount );
       for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
       {
-         hb_itemArrayPut( pArray, ulArgPos, va_arg( va, PHB_ITEM ) );
+         hb_itemArrayPut(pArray, ulArgPos, va_arg(va, PHB_ITEM));
       }
       va_end( va );
    }

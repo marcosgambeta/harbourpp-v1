@@ -59,9 +59,9 @@ void ct_charlist( int iMode )
    if( iMode == CT_CHARLIST_CHARHIST )
    {
       HB_SIZE asCharCnt[UCHAR_MAX];
-      PHB_ITEM pArray = hb_itemArrayNew( HB_SIZEOFARRAY( asCharCnt ) );
+      PHB_ITEM pArray = hb_itemArrayNew(HB_SIZEOFARRAY(asCharCnt));
 
-      for( sCnt = 0; sCnt < HB_SIZEOFARRAY( asCharCnt ); ++sCnt )
+      for( sCnt = 0; sCnt < HB_SIZEOFARRAY(asCharCnt); ++sCnt )
       {
          asCharCnt[sCnt] = 0;
       }
@@ -71,9 +71,9 @@ void ct_charlist( int iMode )
          asCharCnt[static_cast<HB_UCHAR>(pcString[sCnt])]++;
       }
 
-      for( sCnt = 0; sCnt < HB_SIZEOFARRAY( asCharCnt ); ++sCnt )
+      for( sCnt = 0; sCnt < HB_SIZEOFARRAY(asCharCnt); ++sCnt )
       {
-         hb_arraySetNS( pArray, sCnt + 1, asCharCnt[sCnt] );
+         hb_arraySetNS(pArray, sCnt + 1, asCharCnt[sCnt]);
       }
 
       hb_itemReturnRelease(pArray);
@@ -109,7 +109,7 @@ void ct_charlist( int iMode )
             acCharCnt[static_cast<HB_UCHAR>(pcString[sCnt])] = 1;
          }
 
-         for( sCnt = 0; sCnt < HB_SIZEOFARRAY( acCharCnt ); ++sCnt )
+         for( sCnt = 0; sCnt < HB_SIZEOFARRAY(acCharCnt); ++sCnt )
          {
             if( acCharCnt[sCnt] == cScan )
             {
@@ -123,10 +123,10 @@ void ct_charlist( int iMode )
 
 HB_FUNC( CHARLIST )
 {
-   ct_charlist( CT_CHARLIST_CHARLIST );
+   ct_charlist(CT_CHARLIST_CHARLIST);
 }
 
 HB_FUNC( CHARNOLIST )
 {
-   ct_charlist( CT_CHARLIST_CHARNOLIST );
+   ct_charlist(CT_CHARLIST_CHARNOLIST);
 }

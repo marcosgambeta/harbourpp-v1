@@ -135,7 +135,7 @@ HB_FUNC( CHARSPREAD )
                   nTokens--;
                }
             }
-            hb_retclen_buffer( szDest, nSize );
+            hb_retclen_buffer(szDest, nSize);
          }
       }
    }

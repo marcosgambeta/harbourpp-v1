@@ -319,7 +319,7 @@ static void hb_ctw_RemapAllWindows( PHB_GTCTW pCTW, int iFrom, HB_BOOL fExpose )
    }
 }
 
-static int hb_ctw_SetShadowAttr( PHB_GTCTW pCTW, int iAttr )
+static int hb_ctw_SetShadowAttr(PHB_GTCTW pCTW, int iAttr)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_ctw_SetShadowAttr(%p,%d)", static_cast<void*>(pCTW), iAttr ) );
@@ -2435,7 +2435,7 @@ static int hb_ctw_gt_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
          int iDspCount, iLines = 0, iTop, iLeft, iBottom, iRight, iPos, iClr, iWnd, iPrevWnd, i;
          HB_SIZE nLen, nOptLen;
          void * hMessage, * hOpt;
-         const HB_WCHAR * szMessageW = hb_itemGetStrU16( pMessage, HB_CDP_ENDIAN_NATIVE, &hMessage, &nLen ), * szOptW;
+         const HB_WCHAR * szMessageW = hb_itemGetStrU16(pMessage, HB_CDP_ENDIAN_NATIVE, &hMessage, &nLen), * szOptW;
 
          ulMaxWidth = iCols - 4;
          while( ulMsg < nLen )
@@ -2466,7 +2466,7 @@ static int hb_ctw_gt_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
          ulCurrWidth = 0;
          for( i = 1; i <= iOptions; ++i )
          {
-            nOptLen = hb_itemCopyStrU16( hb_arrayGetItemPtr(pOptions, i), HB_CDP_ENDIAN_NATIVE, nullptr, 0 );
+            nOptLen = hb_itemCopyStrU16(hb_arrayGetItemPtr(pOptions, i), HB_CDP_ENDIAN_NATIVE, nullptr, 0);
             ulCurrWidth += static_cast<HB_UINT>(nOptLen) + ( i > 1 ? 3 : 0 );
          }
          if( ulCurrWidth > ulWidth )
@@ -2547,7 +2547,7 @@ static int hb_ctw_gt_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
             for( i = 1; i <= iOptions; ++i )
             {
                iClr = i == iPos ? iClrHigh : iClrNorm;
-               szOptW = hb_arrayGetStrU16( pOptions, i, HB_CDP_ENDIAN_NATIVE, &hOpt, &nLen );
+               szOptW = hb_arrayGetStrU16(pOptions, i, HB_CDP_ENDIAN_NATIVE, &hOpt, &nLen);
                HB_GTSELF_PUTTEXTW( pGT, iLines + 1, iMnuCol, iClr, szOptW, nLen );
                hb_strfree(hOpt);
                iMnuCol += static_cast<int>(nLen) + 3;
@@ -2594,7 +2594,7 @@ static int hb_ctw_gt_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
                   iMnuCol = ( ( ulWidth - ulCurrWidth ) >> 1 ) + 1;
                   for( i = 1; i <= iOptions; ++i )
                   {
-                     nLen = hb_itemCopyStrU16( hb_arrayGetItemPtr(pOptions, i), HB_CDP_ENDIAN_NATIVE, nullptr, 0 );
+                     nLen = hb_itemCopyStrU16(hb_arrayGetItemPtr(pOptions, i), HB_CDP_ENDIAN_NATIVE, nullptr, 0);
                      if( iMCol >= iMnuCol && iMCol < iMnuCol + static_cast<int>(nLen) )
                      {
                         iRet = i;
@@ -2730,14 +2730,14 @@ HB_BOOL hb_ctwInit( void )
    return pCTW != nullptr;
 }
 
-int  hb_ctwSetShadowAttr( int iAttr )
+int  hb_ctwSetShadowAttr(int iAttr)
 {
    int iResult = -1;
    PHB_GTCTW pCTW = hb_ctw_base();
 
    if( pCTW )
    {
-      iResult = hb_ctw_SetShadowAttr( pCTW, iAttr );
+      iResult = hb_ctw_SetShadowAttr(pCTW, iAttr);
       hb_gt_BaseFree( pCTW->pGT );
    }
    return iResult;

@@ -404,7 +404,7 @@ HB_FUNC( ATN2 )
       double dResult;
 
       hb_mathResetError( &hb_exc );
-      dResult = atan2( dY, dX );
+      dResult = atan2(dY, dX);
       if( hb_mathGetError( &hb_exc, "ATAN2", dY, dX, dResult ) )
       {
          if( hb_exc.handled )

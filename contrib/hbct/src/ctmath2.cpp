@@ -199,7 +199,7 @@ HB_FUNC( LOG10 )
       double dResult, dArg = hb_parnd(1);
 
       hb_mathResetError( &hb_exc );
-      dResult = log10( dArg );
+      dResult = log10(dArg);
       if( hb_mathGetError( &hb_exc, "LOG10", dArg, 0.0, dResult ) )
       {
          if( hb_exc.handled )
