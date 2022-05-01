@@ -120,7 +120,7 @@ static int _code93_charno( char ch )
    return -1;
 }
 
-PHB_ZEBRA hb_zebra_create_code93( const char * szCode, HB_SIZE nLen, int iFlags )
+PHB_ZEBRA hb_zebra_create_code93(const char * szCode, HB_SIZE nLen, int iFlags)
 {
    PHB_ZEBRA  pZebra;
    int        k, i, j, iLen = static_cast<int>(nLen);
@@ -265,10 +265,10 @@ HB_FUNC( HB_ZEBRA_CREATE_CODE93 )
 
    if( pItem )
    {
-      hb_zebra_ret( hb_zebra_create_code93( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2) ) );
+      hb_zebra_ret(hb_zebra_create_code93(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

@@ -166,7 +166,7 @@ static void _code39_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fLa
    }
 }
 
-PHB_ZEBRA hb_zebra_create_code39( const char * szCode, HB_SIZE nLen, int iFlags )
+PHB_ZEBRA hb_zebra_create_code39(const char * szCode, HB_SIZE nLen, int iFlags)
 {
    PHB_ZEBRA  pZebra;
    int        i, iLen = static_cast<int>(nLen);
@@ -216,10 +216,10 @@ HB_FUNC( HB_ZEBRA_CREATE_CODE39 )
 
    if( pItem )
    {
-      hb_zebra_ret( hb_zebra_create_code39( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2) ) );
+      hb_zebra_ret(hb_zebra_create_code39(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

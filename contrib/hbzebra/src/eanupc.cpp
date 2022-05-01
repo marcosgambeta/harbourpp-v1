@@ -125,7 +125,7 @@ static char _upce_checksum( const char * szCode )
    return _upca_checksum( szExp );
 }
 
-PHB_ZEBRA hb_zebra_create_ean13( const char * szCode, HB_SIZE nLen, int iFlags )
+PHB_ZEBRA hb_zebra_create_ean13(const char * szCode, HB_SIZE nLen, int iFlags)
 {
    PHB_ZEBRA pZebra;
    int       i, iLen = static_cast<int>(nLen);
@@ -198,7 +198,7 @@ PHB_ZEBRA hb_zebra_create_ean13( const char * szCode, HB_SIZE nLen, int iFlags )
    return pZebra;
 }
 
-PHB_ZEBRA hb_zebra_create_ean8( const char * szCode, HB_SIZE nLen, int iFlags )
+PHB_ZEBRA hb_zebra_create_ean8(const char * szCode, HB_SIZE nLen, int iFlags)
 {
    PHB_ZEBRA  pZebra;
    int        i, iLen = static_cast<int>(nLen);
@@ -400,11 +400,11 @@ HB_FUNC( HB_ZEBRA_CREATE_EAN13 )
 
    if( pItem )
    {
-      hb_zebra_ret( hb_zebra_create_ean13( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2) ) );
+      hb_zebra_ret(hb_zebra_create_ean13(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -414,11 +414,11 @@ HB_FUNC( HB_ZEBRA_CREATE_EAN8 )
 
    if( pItem )
    {
-      hb_zebra_ret( hb_zebra_create_ean8( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2) ) );
+      hb_zebra_ret(hb_zebra_create_ean8(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -432,7 +432,7 @@ HB_FUNC( HB_ZEBRA_CREATE_UPCA )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -446,6 +446,6 @@ HB_FUNC( HB_ZEBRA_CREATE_UPCE )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

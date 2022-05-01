@@ -218,13 +218,13 @@ PHB_ZEBRA hb_zebra_param( int iParam )
       return *ppZebra;
    }
 
-   hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    return nullptr;
 }
 
 void hb_zebra_ret( PHB_ZEBRA pZebra )
 {
-   hb_zebraItemPut( hb_stackReturnItem(), pZebra );
+   hb_zebraItemPut(hb_stackReturnItem(), pZebra);
 }
 
 /* --- Zebra --- */
@@ -256,7 +256,7 @@ HB_FUNC( HB_ZEBRA_DESTROY )
 
    if( pZebra )
    {
-      hb_zebraItemClear( hb_param(1, Harbour::Item::POINTER) );
+      hb_zebraItemClear(hb_param(1, Harbour::Item::POINTER));
       hb_zebra_destroy( pZebra );
    }
 }
