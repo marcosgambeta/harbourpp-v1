@@ -79,7 +79,7 @@ HB_FUNC( HPDF_LOADTTFONTFROMFILE )
    }
 }
 
-/* HPDF_LoadTTFontFromFile2( hDoc, cTTFontFileName, nIndexInFile, lEmbed ) --> cFontName */
+/* HPDF_LoadTTFontFromFile2(hDoc, cTTFontFileName, nIndexInFile, lEmbed) --> cFontName */
 HB_FUNC( HPDF_LOADTTFONTFROMFILE2 )
 {
    char *       pszFree;

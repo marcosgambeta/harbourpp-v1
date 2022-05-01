@@ -410,7 +410,7 @@ HB_MEMFS_EXPORT PHB_ITEM hb_memfsDirectory( const char * pszDirSpec, const char 
    }
    HB_MEMFSMT_UNLOCK();
 
-   pDirArray = hb_itemArrayNew( nLen );
+   pDirArray = hb_itemArrayNew(nLen);
    for( ul = 0; static_cast<HB_SIZE>(ul) < nLen; ul++ )
    {
       PHB_ITEM pSubarray = hb_arrayGetItemPtr(pDirArray, ul + 1);
@@ -890,7 +890,7 @@ static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec,
 }
 
 
-static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long * plJulian, long * plMillisec )
+static HB_BOOL s_fileTimeGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, long * plJulian, long * plMillisec)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszFileName);
@@ -900,7 +900,7 @@ static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, l
 }
 
 
-static HB_BOOL s_fileTimeSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long lJulian, long lMillisec )
+static HB_BOOL s_fileTimeSet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, long lJulian, long lMillisec)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszFileName);
@@ -910,7 +910,7 @@ static HB_BOOL s_fileTimeSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, l
 }
 
 
-static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR * pulAttr )
+static HB_BOOL s_fileAttrGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR * pulAttr)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszFileName);
@@ -919,7 +919,7 @@ static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, H
 }
 
 
-static HB_BOOL s_fileAttrSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR ulAttr )
+static HB_BOOL s_fileAttrSet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR ulAttr)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszFileName);

@@ -67,7 +67,7 @@ HB_FUNC( HB_LZO_COMPRESSBOUND )
       hb_retns( hb_lzo_compressbound( nLen ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 /* Library initialization */
@@ -155,7 +155,7 @@ HB_FUNC( HB_LZO1X_1_COMPRESS )
       hb_retc_null();
    }
    else
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 /* Decompression functions */
@@ -197,7 +197,7 @@ HB_FUNC( HB_LZO1X_DECOMPRESS )
       hb_retc_null();
    }
    else
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 HB_FUNC( HB_LZO1X_DECOMPRESS_SAFE )
@@ -232,7 +232,7 @@ HB_FUNC( HB_LZO1X_DECOMPRESS_SAFE )
       hb_retc_null();
    }
    else
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 /* Version functions */
@@ -261,5 +261,5 @@ HB_FUNC( LZO_ADLER32 )
    if( src )
       hb_retnint(static_cast<HB_MAXINT>(hb_adler32(1, src, hb_parclen(1))));
    else
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

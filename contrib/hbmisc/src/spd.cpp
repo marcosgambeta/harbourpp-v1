@@ -208,7 +208,7 @@ HB_FUNC( SQL_SPRINTF )
    {
       cRes = static_cast<char*>(hb_xgrab(ulItmFrm + sizeof(char)));
       memcpy(cRes, cItmFrm, ulItmFrm + sizeof(char));
-      hb_retclen_buffer( cRes, ulItmFrm );
+      hb_retclen_buffer(cRes, ulItmFrm);
    }
    else
    {
@@ -654,6 +654,6 @@ HB_FUNC( SQL_SPRINTF )
             hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError(1));
       }
       else
-         hb_retclen_buffer( cRes, ulResPos );
+         hb_retclen_buffer(cRes, ulResPos);
    }
 }

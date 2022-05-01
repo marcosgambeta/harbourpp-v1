@@ -42,21 +42,21 @@ void hb_irmMapFree( PHB_IRMMAP pMap )
 }
 
 
-int hb_irmMapBitGet( PHB_IRMMAP pMap, HB_ULONG ulRecNo )
+int hb_irmMapBitGet(PHB_IRMMAP pMap, HB_ULONG ulRecNo)
 {
    --ulRecNo;
    return ( pMap->pBits[ulRecNo >> 3] >> ( ulRecNo & 7 ) ) & 1;
 }
 
 
-void hb_irmMapBitSet( PHB_IRMMAP pMap, HB_ULONG ulRecNo )
+void hb_irmMapBitSet(PHB_IRMMAP pMap, HB_ULONG ulRecNo)
 {
    --ulRecNo;
    pMap->pBits[ulRecNo >> 3] |= 1 << ( ulRecNo & 7 );
 }
 
 
-void hb_irmMapBitClear( PHB_IRMMAP pMap, HB_ULONG ulRecNo )
+void hb_irmMapBitClear(PHB_IRMMAP pMap, HB_ULONG ulRecNo)
 {
    --ulRecNo;
    pMap->pBits[ulRecNo >> 3] &= ~(1 << (ulRecNo & 7));
@@ -165,7 +165,7 @@ static void hb_irmMapMarkCallback( HB_ULONG ulRecNo, unsigned char * pKey, unsig
 {
    HB_SYMBOL_UNUSED(pKey);
    HB_SYMBOL_UNUSED(uiLen);
-   hb_irmMapBitSet( ( PHB_IRMMAP ) pMap, ulRecNo );
+   hb_irmMapBitSet(static_cast<PHB_IRMMAP>(pMap), ulRecNo);
 }
 
 /*
@@ -229,34 +229,34 @@ PHB_IRMMAP hb_irmExecute(PHB_ITEM pItem)
          {
             DBORDERINFO dboi;
 
-            SELF_RECCOUNT( pArea, &ulSize );
+            SELF_RECCOUNT(pArea, &ulSize);
             pMap = hb_irmMapAlloc( ulSize );
 
             dboi.itmOrder    = hb_arrayGetItemPtr(pItem, 2);
             dboi.atomBagName = hb_arrayGetItemPtr(pItem, 3);
             dboi.itmResult   = hb_itemNew(nullptr);
-            dboi.itmNewVal   = hb_itemArrayNew( DBRMI_SIZE );
+            dboi.itmNewVal   = hb_itemArrayNew(DBRMI_SIZE);
             hb_arraySetPtr( dboi.itmNewVal, DBRMI_FUNCTION, reinterpret_cast<void*>(hb_irmMapMarkCallback) );
             hb_arraySetPtr( dboi.itmNewVal, DBRMI_PARAM, static_cast<void*>(pMap) );
             if( !strcmp( szOper, "=" ) )
             {
-               hb_arraySet( dboi.itmNewVal, DBRMI_LOVAL, hb_arrayGetItemPtr(pItem, 4) );
-               hb_arraySet( dboi.itmNewVal, DBRMI_HIVAL, hb_arrayGetItemPtr(pItem, 4) );
+               hb_arraySet(dboi.itmNewVal, DBRMI_LOVAL, hb_arrayGetItemPtr(pItem, 4));
+               hb_arraySet(dboi.itmNewVal, DBRMI_HIVAL, hb_arrayGetItemPtr(pItem, 4));
             }
             else if( !strcmp( szOper, "<=" ) )
             {
-               hb_arraySet( dboi.itmNewVal, DBRMI_HIVAL, hb_arrayGetItemPtr(pItem, 4) );
+               hb_arraySet(dboi.itmNewVal, DBRMI_HIVAL, hb_arrayGetItemPtr(pItem, 4));
             }
             else if( !strcmp( szOper, ">=" ) )
             {
-               hb_arraySet( dboi.itmNewVal, DBRMI_LOVAL, hb_arrayGetItemPtr(pItem, 4) );
+               hb_arraySet(dboi.itmNewVal, DBRMI_LOVAL, hb_arrayGetItemPtr(pItem, 4));
             }
             else if( !strcmp( szOper, "<=<=" ) )
             {
-               hb_arraySet( dboi.itmNewVal, DBRMI_LOVAL, hb_arrayGetItemPtr(pItem, 4) );
-               hb_arraySet( dboi.itmNewVal, DBRMI_HIVAL, hb_arrayGetItemPtr(pItem, 5) );
+               hb_arraySet(dboi.itmNewVal, DBRMI_LOVAL, hb_arrayGetItemPtr(pItem, 4));
+               hb_arraySet(dboi.itmNewVal, DBRMI_HIVAL, hb_arrayGetItemPtr(pItem, 5));
             }
-            SELF_ORDINFO( pArea, DBOI_SCOPEEVAL, &dboi );
+            SELF_ORDINFO(pArea, DBOI_SCOPEEVAL, &dboi);
             #if 0
             bitcount ulSize = hb_itemGetNL(dboi.itmResult);
             #endif

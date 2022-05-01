@@ -134,7 +134,7 @@ HB_FUNC( STRFORMAT )
             *pszRetVal++ = pszMask[nMaskPos];
       }
 
-      hb_retclen_buffer( pszRetValSave, nRetValLen );
+      hb_retclen_buffer(pszRetValSave, nRetValLen);
 
       /* Free parameter buffers */
       for( nPos = 0; nPos < HB_STRFORMAT_PARNUM_MAX_; nPos++ )

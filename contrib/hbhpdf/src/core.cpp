@@ -321,7 +321,7 @@ HB_FUNC( HPDF_SETCURRENTENCODER )
    hb_retnl(static_cast<long>(HPDF_SetCurrentEncoder(hb_HPDF_Doc_par(1), hb_parc(2))));
 }
 
-/* HPDF_SetInfoAttr( hDoc, nInfoType, cInfo ) --> hStatus
+/* HPDF_SetInfoAttr(hDoc, nInfoType, cInfo) --> hStatus
        nInfoType ==
    HPDF_INFO_AUTHOR
    HPDF_INFO_CREATOR
@@ -334,13 +334,13 @@ HB_FUNC( HPDF_SETINFOATTR )
    hb_retnl(static_cast<long>(HPDF_SetInfoAttr(hb_HPDF_Doc_par(1), static_cast<HPDF_InfoType>(hb_parni(2)), hb_parc(3))));
 }
 
-/* HPDF_GetInfoAttr( hDoc, nInfoType ) --> cInfo */
+/* HPDF_GetInfoAttr(hDoc, nInfoType) --> cInfo */
 HB_FUNC( HPDF_GETINFOATTR )
 {
    hb_retc(HPDF_GetInfoAttr(hb_HPDF_Doc_par(1), static_cast<HPDF_InfoType>(hb_parni(2))));
 }
 
-/* HPDF_SetInfoDateAttr( hDoc, nInfoType, aDateValues ) --> hStatus
+/* HPDF_SetInfoDateAttr(hDoc, nInfoType, aDateValues) --> hStatus
        nInfoType ==
    HPDF_INFO_CREATION_DATE
    HPDF_INFO_MOD_DATE
@@ -527,7 +527,7 @@ HB_FUNC( HPDF_PAGE_GETCURRENTPOS )
    HPDF_Point pt;
    PHB_ITEM   info = hb_itemArrayNew(2);
 
-   HPDF_Page_GetCurrentPos2( static_cast<HPDF_Page>( hb_parptr(1) ), &pt );
+   HPDF_Page_GetCurrentPos2(static_cast<HPDF_Page>(hb_parptr(1)), &pt);
 
    hb_arraySetND( info, 1, pt.x );
    hb_arraySetND( info, 2, pt.y );
@@ -541,7 +541,7 @@ HB_FUNC( HPDF_PAGE_GETCURRENTTEXTPOS )
    HPDF_Point pt;
    PHB_ITEM   info = hb_itemArrayNew(2);
 
-   HPDF_Page_GetCurrentTextPos2( static_cast<HPDF_Page>( hb_parptr(1) ), &pt );
+   HPDF_Page_GetCurrentTextPos2(static_cast<HPDF_Page>(hb_parptr(1)), &pt);
 
    hb_arraySetND( info, 1, pt.x );
    hb_arraySetND( info, 2, pt.y );
@@ -896,7 +896,7 @@ HB_FUNC( HPDF_PAGE_CURVETO )
                                          static_cast<HPDF_REAL>(hb_parnd(7)))));
 }
 
-/* HPDF_Page_CurveTo2( hPage, nX2, nY2, nX3, nY3 ) --> hStatus */
+/* HPDF_Page_CurveTo2(hPage, nX2, nY2, nX3, nY3) --> hStatus */
 HB_FUNC( HPDF_PAGE_CURVETO2 )
 {
    hb_retnl(static_cast<long>(HPDF_Page_CurveTo2(static_cast<HPDF_Page>(hb_parptr(1)),
@@ -906,7 +906,7 @@ HB_FUNC( HPDF_PAGE_CURVETO2 )
                                           static_cast<HPDF_REAL>(hb_parnd(5)))));
 }
 
-/* HPDF_Page_CurveTo3( hPage, nX1, nY1, nX3, nY3 ) --> hStatus */
+/* HPDF_Page_CurveTo3(hPage, nX1, nY1, nX3, nY3) --> hStatus */
 HB_FUNC( HPDF_PAGE_CURVETO3 )
 {
    hb_retnl(static_cast<long>(HPDF_Page_CurveTo3(static_cast<HPDF_Page>(hb_parptr(1)),
@@ -1066,7 +1066,7 @@ HB_FUNC( HPDF_PAGE_SETTEXTRISE )
    hb_retnl(static_cast<long>(HPDF_Page_SetTextRise(static_cast<HPDF_Page>(hb_parptr(1)), static_cast<HPDF_REAL>(hb_parnd(2)))));
 }
 
-/* HPDF_Page_MoveTextPos2( hPage, nX, nY ) --> hStatus */
+/* HPDF_Page_MoveTextPos2(hPage, nX, nY) --> hStatus */
 HB_FUNC( HPDF_PAGE_MOVETEXTPOS2 )
 {
    hb_retnl(static_cast<long>(HPDF_Page_MoveTextPos2(static_cast<HPDF_Page>(hb_parptr(1)), static_cast<HPDF_REAL>(hb_parnd(2)), static_cast<HPDF_REAL>(hb_parnd(3)))));

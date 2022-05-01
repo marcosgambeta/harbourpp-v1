@@ -214,7 +214,7 @@ HB_FUNC( MYSQL_GET_SERVER_VERSION ) /* long mysql_get_server_version( MYSQL * ) 
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -232,7 +232,7 @@ HB_FUNC( MYSQL_COMMIT ) /* bool mysql_commit( MYSQL * mysql ) */
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -250,7 +250,7 @@ HB_FUNC( MYSQL_ROLLBACK ) /* bool mysql_rollback( MYSQL * mysql ) */
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -264,7 +264,7 @@ HB_FUNC( MYSQL_SELECT_DB ) /* int mysql_select_db( MYSQL *, char * ) */
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -278,7 +278,7 @@ HB_FUNC( MYSQL_QUERY ) /* int mysql_query( MYSQL *, char * ) */
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -292,7 +292,7 @@ HB_FUNC( MYSQL_STORE_RESULT ) /* MYSQL_RES * mysql_store_result( MYSQL * ) */
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -306,7 +306,7 @@ HB_FUNC( MYSQL_USE_RESULT ) /* MYSQL_RES * mysql_use_result( MYSQL * ) */
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -316,9 +316,9 @@ HB_FUNC( MYSQL_FETCH_ROW ) /* MYSQL_ROW * mysql_fetch_row( MYSQL_RES * ) */
 
    if( mresult )
    {
-      unsigned int num_fields = mysql_num_fields( mresult );
-      PHB_ITEM     aRow       = hb_itemArrayNew( num_fields );
-      MYSQL_ROW    mrow       = mysql_fetch_row( mresult );
+      unsigned int num_fields = mysql_num_fields(mresult);
+      PHB_ITEM     aRow       = hb_itemArrayNew(num_fields);
+      MYSQL_ROW    mrow       = mysql_fetch_row(mresult);
 
       if( mrow )
       {
@@ -343,7 +343,7 @@ HB_FUNC( MYSQL_DATA_SEEK ) /* void mysql_data_seek( MYSQL_RES *, unsigned int ) 
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -357,7 +357,7 @@ HB_FUNC( MYSQL_NUM_ROWS ) /* my_ulongulong mysql_num_rows( MYSQL_RES * ) */
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -387,7 +387,7 @@ HB_FUNC( MYSQL_FETCH_FIELD ) /* MYSQL_FIELD * mysql_fetch_field( MYSQL_RES * ) *
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -401,7 +401,7 @@ HB_FUNC( MYSQL_FIELD_SEEK ) /* MYSQL_FIELD_OFFSET mysql_field_seek( MYSQL_RES *,
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -415,7 +415,7 @@ HB_FUNC( MYSQL_NUM_FIELDS ) /* unsigned int mysql_num_fields( MYSQL_RES * ) */
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -433,7 +433,7 @@ HB_FUNC( MYSQL_FIELD_COUNT ) /* unsigned int mysql_field_count( MYSQL * ) */
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -447,7 +447,7 @@ HB_FUNC( MYSQL_LIST_FIELDS ) /* MYSQL_RES * mysql_list_fields( MYSQL *, char * )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -461,7 +461,7 @@ HB_FUNC( MYSQL_ERRNO ) /* unsigned int mysql_errno( MYSQL * mysql ); */
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -475,7 +475,7 @@ HB_FUNC( MYSQL_ERROR ) /* char * mysql_error( MYSQL * ); */
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -487,7 +487,7 @@ HB_FUNC( MYSQL_LIST_DBS ) /* MYSQL_RES * mysql_list_dbs( MYSQL *, char * wild );
    {
       MYSQL_RES * mresult = mysql_list_dbs(mysql, nullptr);
       HB_SIZE     nr      = static_cast<HB_SIZE>(mysql_num_rows(mresult));
-      PHB_ITEM    aDBs    = hb_itemArrayNew( nr );
+      PHB_ITEM    aDBs    = hb_itemArrayNew(nr);
 
       for( HB_SIZE i = 0; i < nr; ++i )
       {
@@ -500,7 +500,7 @@ HB_FUNC( MYSQL_LIST_DBS ) /* MYSQL_RES * mysql_list_dbs( MYSQL *, char * wild );
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -513,7 +513,7 @@ HB_FUNC( MYSQL_LIST_TABLES ) /* MYSQL_RES * mysql_list_tables( MYSQL *, char * w
       const char * cWild   = hb_parc(2);
       MYSQL_RES *  mresult = mysql_list_tables( mysql, cWild );
       long         nr      = static_cast<long>(mysql_num_rows(mresult));
-      PHB_ITEM     aTables = hb_itemArrayNew( nr );
+      PHB_ITEM     aTables = hb_itemArrayNew(nr);
 
       for( long i = 0; i < nr; ++i )
       {
@@ -526,7 +526,7 @@ HB_FUNC( MYSQL_LIST_TABLES ) /* MYSQL_RES * mysql_list_tables( MYSQL *, char * w
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -540,7 +540,7 @@ HB_FUNC( MYSQL_AFFECTED_ROWS )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -554,7 +554,7 @@ HB_FUNC( MYSQL_GET_HOST_INFO )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -568,7 +568,7 @@ HB_FUNC( MYSQL_GET_SERVER_INFO )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -582,7 +582,7 @@ HB_FUNC( MYSQL_INSERT_ID )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -596,7 +596,7 @@ HB_FUNC( MYSQL_PING ) /* int mysql_ping( MYSQL * mysql ) */
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -610,11 +610,11 @@ HB_FUNC( MYSQL_REAL_ESCAPE_STRING ) /* unsigned long STDCALL mysql_real_escape_s
       unsigned long nSize  = static_cast<unsigned long>(hb_parclen(2));
       char *        buffer = static_cast<char*>(hb_xgrab(nSize * 2 + 1));
       nSize = mysql_real_escape_string( mysql, buffer, from, nSize );
-      hb_retclen_buffer( static_cast<char*>(buffer), nSize );
+      hb_retclen_buffer(static_cast<char*>(buffer), nSize);
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -625,7 +625,7 @@ HB_FUNC( MYSQL_ESCAPE_STRING )
    char *        buffer = static_cast<char*>(hb_xgrab(nSize * 2 + 1));
 
    nSize = mysql_escape_string( buffer, from, nSize );
-   hb_retclen_buffer( static_cast<char*>(buffer), nSize );
+   hb_retclen_buffer(static_cast<char*>(buffer), nSize);
 }
 
 static char * filetoBuff( const char * fname, unsigned long * size )
@@ -659,7 +659,7 @@ HB_FUNC( MYSQL_ESCAPE_STRING_FROM_FILE )
    {
       char * buffer = static_cast<char*>(hb_xgrab(nSize * 2 + 1));
       nSize = mysql_escape_string( buffer, from, nSize );
-      hb_retclen_buffer( buffer, nSize );
+      hb_retclen_buffer(buffer, nSize);
       hb_xfree(from);
    }
 }

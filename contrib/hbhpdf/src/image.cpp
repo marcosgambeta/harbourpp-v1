@@ -50,7 +50,7 @@ HB_FUNC( HPDF_LOADPNGIMAGEFROMFILE )
    hb_retptr(static_cast<void*>(HPDF_LoadPngImageFromFile(hb_HPDF_Doc_par(1), hb_parc(2))));
 }
 
-/* HPDF_LoadPngImageFromFile2( hDoc, cPNGFileName ) --> hImage */
+/* HPDF_LoadPngImageFromFile2(hDoc, cPNGFileName) --> hImage */
 HB_FUNC( HPDF_LOADPNGIMAGEFROMFILE2 )
 {
    hb_retptr(static_cast<void*>(HPDF_LoadPngImageFromFile2(hb_HPDF_Doc_par(1), hb_parc(2))));

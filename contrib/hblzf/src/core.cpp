@@ -128,7 +128,7 @@ HB_FUNC( HB_LZF_COMPRESS )
                if( pBuffer )
                   hb_retclen(out_data, uiResult);
                else
-                  hb_retclen_buffer( out_data, uiResult );
+                  hb_retclen_buffer(out_data, uiResult);
 
                hb_storni(HB_LZF_OK, 3);
             }
@@ -216,7 +216,7 @@ HB_FUNC( HB_LZF_DECOMPRESS )
                if( pBuffer )
                   hb_retclen(buffer, uiResult);
                else
-                  hb_retclen_buffer( buffer, uiResult );
+                  hb_retclen_buffer(buffer, uiResult);
 
                hb_storni(HB_LZF_OK, 3);
             }
