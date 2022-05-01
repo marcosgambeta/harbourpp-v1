@@ -1961,7 +1961,7 @@ HB_BOOL hb_compExprReduceAT(PHB_EXPR pSelf, HB_COMP_DECL)
    {
       PHB_EXPR pReduced;
 
-      /* NOTE: CA-Cl*pper has a bug in At( "", cText ) compile time
+      /* NOTE: CA-Cl*pper has a bug in At("", cText) compile time
        *       optimization and always set 1 as result in such cases.
        *       This bug exist only in compiler and CA-Cl*pper macro
        *       compiler does not have optimizer. This bug is replicated
