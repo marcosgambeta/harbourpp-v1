@@ -1907,7 +1907,7 @@ static void mxml_output_func_to_handle( MXML_OUTPUT * out, const char * s, HB_IS
    HB_FHANDLE fh = out->u.hFile;
    HB_ISIZ    olen;
 
-   olen = hb_fsWriteLarge( fh, s, len );
+   olen = hb_fsWriteLarge(fh, s, len);
 
    if( olen < len )
    {
@@ -2050,7 +2050,7 @@ static void mxml_refill_from_handle_func( MXML_REFIL * ref )
    HB_FHANDLE fh = static_cast<HB_FHANDLE>(ref->u.hFile);
    HB_ISIZ    len;
 
-   len = hb_fsReadLarge( fh, ref->buffer, ref->bufsize );
+   len = hb_fsReadLarge(fh, ref->buffer, ref->bufsize);
 
    if( len == -1 )
    {
@@ -2206,7 +2206,7 @@ HB_FUNC( HBXML_DATAREAD )
 
    if( pDoc == nullptr || pParam == nullptr || ( !HB_IS_STRING(pParam) && !HB_IS_NUMERIC(pParam) ) )
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
    }
 
@@ -2236,7 +2236,7 @@ HB_FUNC( HB_XMLERRORDESC )
    if( pNum )
       hb_retc(mxml_error_desc(static_cast<MXML_ERROR_CODE>(hb_itemGetNI(pNum))));
    else
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 /* hbxml_node_to_string( xmlDocument [, nStyle] ) --> cXml | NIL
@@ -2252,7 +2252,7 @@ HB_FUNC( HBXML_NODE_TO_STRING )
 
    if( pNode == nullptr )
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
    }
 
@@ -2284,7 +2284,7 @@ HB_FUNC( HBXML_NODE_WRITE )
 
    if( pNode == nullptr || pHandle == nullptr )
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
    }
 

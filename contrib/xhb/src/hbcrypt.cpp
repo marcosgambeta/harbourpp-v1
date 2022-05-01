@@ -394,7 +394,7 @@ HB_FUNC( HB_CRYPT )
    nxs_crypt(reinterpret_cast<const unsigned char*>(hb_itemGetCPtr(pSource)), hb_itemGetCLen(pSource),
              reinterpret_cast<const unsigned char*>(hb_itemGetCPtr(pKey)), hb_itemGetCLen(pKey), cRes);
 
-   hb_retclen_buffer( reinterpret_cast<char*>(cRes), hb_itemGetCLen(pSource) );
+   hb_retclen_buffer(reinterpret_cast<char*>(cRes), hb_itemGetCLen(pSource));
 }
 
 /* Decrypt a text using a key
@@ -411,5 +411,5 @@ HB_FUNC( HB_DECRYPT )
    nxs_decrypt(reinterpret_cast<const unsigned char*>(hb_itemGetCPtr(pSource)), hb_itemGetCLen(pSource),
                reinterpret_cast<const unsigned char*>(hb_itemGetCPtr(pKey)), hb_itemGetCLen(pKey), cRes);
 
-   hb_retclen_buffer( reinterpret_cast<char*>(cRes), hb_itemGetCLen(pSource) );
+   hb_retclen_buffer(reinterpret_cast<char*>(cRes), hb_itemGetCLen(pSource));
 }

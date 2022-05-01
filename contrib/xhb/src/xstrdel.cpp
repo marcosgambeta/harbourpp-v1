@@ -76,7 +76,7 @@ HB_FUNC( STRDEL )
          nResult += nText - nPosTxt;
 
          szResult[nResult] = '\0';
-         hb_retclen_buffer( szResult, nResult );
+         hb_retclen_buffer(szResult, nResult);
       }
       else
          hb_retc(szText);

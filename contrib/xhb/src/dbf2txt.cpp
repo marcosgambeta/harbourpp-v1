@@ -73,7 +73,9 @@ static char * hb_strescape( const char * szInput, HB_ISIZ nLen, const char * cDe
    while( *szChr && nCnt++ < nLen )
    {
       if( *szChr == *cDelim )
+      {
          *szEscape++ = '\\';
+      }
 
       *szEscape++ = *szChr++;
    }
@@ -83,7 +85,7 @@ static char * hb_strescape( const char * szInput, HB_ISIZ nLen, const char * cDe
 }
 
 /* Export field values to text file */
-static HB_BOOL hb_ExportVar( HB_FHANDLE handle, PHB_ITEM pValue, const char * cDelim, PHB_CODEPAGE cdp )
+static HB_BOOL hb_ExportVar(HB_FHANDLE handle, PHB_ITEM pValue, const char * cDelim, PHB_CODEPAGE cdp)
 {
    switch( hb_itemType( pValue ) )
    {
@@ -95,12 +97,14 @@ static HB_BOOL hb_ExportVar( HB_FHANDLE handle, PHB_ITEM pValue, const char * cD
 
          szStrEsc = hb_strescape(hb_itemGetCPtr(pValue), hb_itemGetCLen(pValue), cDelim);
          if( cdp )
+         {
             hb_cdpnDupLen( szStrEsc, strlen( szStrEsc ), hb_vmCDP(), cdp );
-
+         }
+         
          szString = hb_xstrcpy(nullptr, cDelim, szStrEsc, cDelim, nullptr);
 
          /* FWrite( handle, szString ) */
-         hb_fsWriteLarge( handle, szString, strlen( szString ) );
+         hb_fsWriteLarge(handle, szString, strlen(szString));
 
          /* Orphaned, get rif off it */
          hb_xfree(szStrEsc);
@@ -113,7 +117,7 @@ static HB_BOOL hb_ExportVar( HB_FHANDLE handle, PHB_ITEM pValue, const char * cD
          char * szDate = static_cast<char*>(hb_xgrab(9));
 
          hb_itemGetDS( pValue, szDate );
-         hb_fsWriteLarge( handle, szDate, strlen( szDate ) );
+         hb_fsWriteLarge(handle, szDate, strlen(szDate));
          hb_xfree(szDate);
          break;
       }
@@ -133,7 +137,7 @@ static HB_BOOL hb_ExportVar( HB_FHANDLE handle, PHB_ITEM pValue, const char * cD
             HB_SIZE      nLen      = strlen( szResult );
             const char * szTrimmed = hb_strLTrim( szResult, &nLen );
 
-            hb_fsWriteLarge( handle, szTrimmed, strlen( szTrimmed ) );
+            hb_fsWriteLarge(handle, szTrimmed, strlen(szTrimmed));
             hb_xfree(szResult);
          }
          break;
@@ -175,43 +179,51 @@ HB_FUNC( DBF2TEXT )
 
    if( !pArea )
    {
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
       return;
    }
 
    if( !handle )
    {
-      hb_errRT_DBCMD( EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD(EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       return;
    }
 
    if( cdp && cdp == hb_vmCDP() )
+   {
       cdp = nullptr;
-
+   }
+   
    pTmp = hb_itemNew(nullptr);
 
    if( !cDelim )
+   {
       cDelim = "\"";
+   }
 
    if( cSep )
+   {
       nSepLen = hb_parclen(6);
+   }
    else
    {
       cSep    = ",";
       nSepLen = 1;
    }
 
-   SELF_FIELDCOUNT( pArea, &uiFields );
+   SELF_FIELDCOUNT(pArea, &uiFields);
 
    while( ( nCount == -1 || nCount > 0 ) && ( !pWhile || hb_itemGetL(hb_vmEvalBlock(pWhile)) ) )
    {
       /* WHILE !Bof() .AND. !Eof() */
-      SELF_EOF( pArea, &bEof );
-      SELF_BOF( pArea, &bBof );
+      SELF_EOF(pArea, &bEof);
+      SELF_BOF(pArea, &bBof);
 
       if( bEof || bBof )
+      {
          break;
-
+      }
+      
       /* For condition is met */
       /* if For is nullptr, hb__Eval returns HB_TRUE */
       if( !pFor || hb_itemGetL(hb_vmEvalBlock(pFor)) )
@@ -222,11 +234,13 @@ HB_FUNC( DBF2TEXT )
             for( ui = 1; ui <= uiFields; ui++ )
             {
                if( bWriteSep )
-                  hb_fsWriteLarge( handle, cSep, nSepLen );
-
-               SELF_GETVALUE( pArea, ui, pTmp );
-               bWriteSep = hb_ExportVar( handle, pTmp, cDelim, cdp );
-               hb_itemClear( pTmp );
+               {
+                  hb_fsWriteLarge(handle, cSep, nSepLen);
+               }
+               
+               SELF_GETVALUE(pArea, ui, pTmp);
+               bWriteSep = hb_ExportVar(handle, pTmp, cDelim, cdp);
+               hb_itemClear(pTmp);
             }
          }
          /* Only requested fields are exported here */
@@ -240,33 +254,39 @@ HB_FUNC( DBF2TEXT )
                const char * szFieldName = hb_arrayGetCPtr(pFields, uiItter);
                if( szFieldName )
                {
-                  int iPos = hb_rddFieldIndex( pArea, szFieldName );
+                  int iPos = hb_rddFieldIndex(pArea, szFieldName);
 
                   if( iPos )
                   {
                      if( bWriteSep )
-                        hb_fsWriteLarge( handle, cSep, nSepLen );
+                     {
+                        hb_fsWriteLarge(handle, cSep, nSepLen);
+                     }
 
-                     SELF_GETVALUE( pArea, static_cast<HB_USHORT>(iPos), pTmp );
-                     bWriteSep = hb_ExportVar( handle, pTmp, cDelim, cdp );
-                     hb_itemClear( pTmp );
+                     SELF_GETVALUE(pArea, static_cast<HB_USHORT>(iPos), pTmp);
+                     bWriteSep = hb_ExportVar(handle, pTmp, cDelim, cdp);
+                     hb_itemClear(pTmp);
                   }
                }
             }
          }
-         hb_fsWriteLarge( handle, "\r\n", 2 );
+         hb_fsWriteLarge(handle, "\r\n", 2);
          bWriteSep = HB_FALSE;
       }
 
       if( nCount != -1 )
+      {
          nCount--;
+      }
 
       /* dbSkip() */
-      SELF_SKIP( pArea, 1 );
+      SELF_SKIP(pArea, 1);
    }
 
    /* Writing EOF */
    if( hb_setGetEOF() )
-      hb_fsWriteLarge( handle, "\032", 1 );
+   {
+      hb_fsWriteLarge(handle, "\032", 1);
+   }
    hb_itemRelease(pTmp);
 }

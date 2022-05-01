@@ -85,7 +85,7 @@ static char * hb_fsReadLine( HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const 
       }
 
       /* read from file */
-      nRead = hb_fsReadLarge( hFileHandle, pBuff + nOffset, nSize - nOffset );
+      nRead = hb_fsReadLarge(hFileHandle, pBuff + nOffset, nSize - nOffset);
 
       /* scan the read buffer */
       if( nRead > 0 )
@@ -124,7 +124,7 @@ static char * hb_fsReadLine( HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const 
             pBuff[*plBuffLen] = '\0';
 
             /* Set handle pointer in the end of the line */
-            hb_fsSeekLarge( hFileHandle, ( ( nRead - nPos ) * -1 ) + 1, FS_RELATIVE );
+            hb_fsSeekLarge(hFileHandle, ((nRead - nPos) * -1) + 1, FS_RELATIVE);
 
             return pBuff;
          }

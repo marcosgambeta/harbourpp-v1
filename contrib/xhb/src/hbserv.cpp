@@ -262,19 +262,19 @@ static void * s_signalListener( void * my_stack )
    HB_STACK_LOCK;
 
    /* and now accepts all signals */
-   sigemptyset( &passall );
+   sigemptyset(&passall);
 
    /* and wait for all signals */
-   sigaddset( &passall, SIGHUP );
-   sigaddset( &passall, SIGQUIT );
-   sigaddset( &passall, SIGILL );
-   sigaddset( &passall, SIGABRT );
-   sigaddset( &passall, SIGFPE );
-   sigaddset( &passall, SIGSEGV );
-   sigaddset( &passall, SIGTERM );
-   sigaddset( &passall, SIGUSR1 );
-   sigaddset( &passall, SIGUSR2 );
-   sigaddset( &passall, SIGHUP );
+   sigaddset(&passall, SIGHUP);
+   sigaddset(&passall, SIGQUIT);
+   sigaddset(&passall, SIGILL);
+   sigaddset(&passall, SIGABRT);
+   sigaddset(&passall, SIGFPE);
+   sigaddset(&passall, SIGSEGV);
+   sigaddset(&passall, SIGTERM);
+   sigaddset(&passall, SIGUSR1);
+   sigaddset(&passall, SIGUSR2);
+   sigaddset(&passall, SIGHUP);
 
    pthread_cleanup_push(hb_threadTerminator, my_stack);
    pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, nullptr);
@@ -555,17 +555,17 @@ static void s_serviceSetHBSig( void )
 #if defined(HB_THREAD_SUPPORT)
    sigset_t blockall;
    /* set signal mask */
-   sigemptyset( &blockall );
-   sigaddset( &blockall, SIGHUP );
-   sigaddset( &blockall, SIGQUIT );
-   sigaddset( &blockall, SIGILL );
-   sigaddset( &blockall, SIGABRT );
-   sigaddset( &blockall, SIGFPE );
-   sigaddset( &blockall, SIGSEGV );
-   sigaddset( &blockall, SIGTERM );
-   sigaddset( &blockall, SIGUSR1 );
-   sigaddset( &blockall, SIGUSR2 );
-   sigaddset( &blockall, SIGHUP );
+   sigemptyset(&blockall);
+   sigaddset(&blockall, SIGHUP);
+   sigaddset(&blockall, SIGQUIT);
+   sigaddset(&blockall, SIGILL);
+   sigaddset(&blockall, SIGABRT);
+   sigaddset(&blockall, SIGFPE);
+   sigaddset(&blockall, SIGSEGV);
+   sigaddset(&blockall, SIGTERM);
+   sigaddset(&blockall, SIGUSR1);
+   sigaddset(&blockall, SIGUSR2);
+   sigaddset(&blockall, SIGHUP);
 
    pthread_sigmask(SIG_SETMASK, &blockall, nullptr);
 #endif
@@ -579,7 +579,7 @@ static void s_serviceSetHBSig( void )
    act.sa_sigaction = s_signalHandler; /* this is what matters */
    /* block al signals, we don't want to be interrupted. */
    #if 0
-   sigfillset( &act.sa_mask );
+   sigfillset(&act.sa_mask);
    #endif
 
 
@@ -821,7 +821,7 @@ HB_FUNC( HB_PUSHSIGNALHANDLER )
 
    pHandEntry = hb_itemArrayNew(2);
    hb_arraySetNI(pHandEntry, 1, iMask);
-   hb_arraySet( pHandEntry, 2, pFunc );
+   hb_arraySet(pHandEntry, 2, pFunc);
 
    /* if the hook is not initialized, initialize it */
    if( sp_hooks == nullptr )

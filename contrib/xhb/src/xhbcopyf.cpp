@@ -145,7 +145,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest, PHB_IT
             }
 
             if( pCount )
-               hb_vmEvalBlockV( pBlock, 1, hb_itemPutNInt( pCount, nRead ) );
+               hb_vmEvalBlockV(pBlock, 1, hb_itemPutNInt(pCount, nRead));
          }
 
          if( pError )
@@ -156,20 +156,20 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest, PHB_IT
 
          hb_xfree(buffer);
 
-         hb_fileClose( pDest );
+         hb_fileClose(pDest);
       }
 
-      hb_fileClose( pSource );
+      hb_fileClose(pSource);
 
       if( bRetVal )
       {
          long lJulian, lMillisec;
          HB_FATTR ulAttr;
 
-         if( hb_fileAttrGet( pszSource, &ulAttr ) )
-            hb_fileAttrSet( pszDest, ulAttr );
-         if( hb_fileTimeGet( pszSource, &lJulian, &lMillisec ) )
-            hb_fileTimeSet( pszDest, lJulian, lMillisec );
+         if( hb_fileAttrGet(pszSource, &ulAttr) )
+            hb_fileAttrSet(pszDest, ulAttr);
+         if( hb_fileTimeGet(pszSource, &lJulian, &lMillisec) )
+            hb_fileTimeSet(pszDest, lJulian, lMillisec);
       }
    }
 
@@ -189,5 +189,5 @@ HB_FUNC( XHB_COPYFILE )
          hb_retl(false);
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );  /* NOTE: Undocumented but existing Clipper Run-time error */
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);  /* NOTE: Undocumented but existing Clipper Run-time error */
 }

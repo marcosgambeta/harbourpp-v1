@@ -59,17 +59,17 @@
 
 static void s_errRT_hashArg( void )
 {
-   hb_errRT_BASE( EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE(EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 static void s_errRT_hashBound( void )
 {
-   hb_errRT_BASE( EG_BOUND, 1187, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE(EG_BOUND, 1187, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 static void s_errRT_hashAA( void )
 {
-   hb_errRT_BASE( EG_ARG, 1123, "Is not a Hash with Associative Array compatibility", HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE(EG_ARG, 1123, "Is not a Hash with Associative Array compatibility", HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 static HB_BOOL s_isHashAA(PHB_ITEM pHash)
@@ -193,11 +193,11 @@ HB_FUNC( HGETVAAPOS )
 
    if( pHash )
    {
-      HB_SIZE  n, nLen = hb_hashLen( pHash );
-      PHB_ITEM pArray = hb_itemArrayNew( nLen );
+      HB_SIZE  n, nLen = hb_hashLen(pHash);
+      PHB_ITEM pArray = hb_itemArrayNew(nLen);
 
       for( n = 1; n <= nLen; ++n )
-         hb_arraySetNS( pArray, n, n );
+         hb_arraySetNS(pArray, n, n);
       hb_itemReturnRelease(pArray);
    }
    else

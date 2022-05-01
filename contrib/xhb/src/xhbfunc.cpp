@@ -113,7 +113,7 @@ HB_FUNC( XHB__KEYBOARD )
 
    if( HB_ISNUM(1) )
    {
-      hb_inkeyPut( hb_parni(1) );
+      hb_inkeyPut(hb_parni(1));
    }
    else if( HB_ISCHAR(1) )
    {
@@ -131,7 +131,7 @@ HB_FUNC( XHB__KEYBOARD )
 
          if( HB_IS_NUMBER(pItem) )
          {
-            hb_inkeyPut( hb_itemGetNI(pItem) );
+            hb_inkeyPut(hb_itemGetNI(pItem));
          }
          else if( HB_IS_STRING(pItem) )
          {

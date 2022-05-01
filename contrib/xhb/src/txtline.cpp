@@ -207,7 +207,7 @@ HB_FUNC( HB_TABEXPAND )
       szRet = static_cast<char*>(hb_xgrab(nSize + 1));
       memset(szRet, ' ', nSize);
       nStrLen = hb_tabexpand( szText, szRet, nStrLen, nTabLen );
-      hb_retclen_buffer( szRet, nStrLen );
+      hb_retclen_buffer(szRet, nStrLen);
    }
 }
 
@@ -267,7 +267,7 @@ HB_FUNC( HB_READLINE )
 
       for( i = 0; i < nTerms; i++ )
       {
-         hb_arrayGet( pTerm1, i + 1, pOpt );
+         hb_arrayGet(pTerm1, i + 1, pOpt);
          pTerm[i]       = hb_itemGetCPtr(pOpt);
          pnTermSizes[i] = hb_itemGetCLen(pOpt);
       }

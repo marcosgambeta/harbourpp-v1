@@ -101,7 +101,7 @@ HB_FUNC( XHB_SAVESCREEN )
    pBuffer = hb_xgrab(nSize + 1);
 
    hb_gtSave( iTop, iLeft, iBottom, iRight, pBuffer );
-   hb_retclen_buffer( static_cast<char*>(pBuffer), nSize );
+   hb_retclen_buffer(static_cast<char*>(pBuffer), nSize);
 }
 
 HB_FUNC( XHB_RESTSCREEN )

@@ -107,7 +107,7 @@ static HB_USHORT s_uiBackgroundMaxTask = 0;
 #else
 
 #define s_ulBackgroundID       HB_VM_STACK.ulBackgroundID
-#define s_pBackgroundTasks     ( HB_VM_STACK.pBackgroundTasks )
+#define s_pBackgroundTasks     (HB_VM_STACK.pBackgroundTasks)
 #define s_bIamBackground       HB_VM_STACK.bIamBackground
 #define s_uiBackgroundTask     HB_VM_STACK.uiBackgroundTask
 #define s_uiBackgroundMaxTask  HB_VM_STACK.uiBackgroundMaxTask
@@ -154,7 +154,9 @@ HB_ULONG hb_backgroundAddFunc(PHB_ITEM pBlock, int nMillisec, HB_BOOL bActive)
             {
                iTask++;
                if( s_ulBackgroundID < pBkgTask->ulTaskID )
+               {
                   s_ulBackgroundID = pBkgTask->ulTaskID;
+               }
             }
          }
       }
@@ -164,11 +166,10 @@ HB_ULONG hb_backgroundAddFunc(PHB_ITEM pBlock, int nMillisec, HB_BOOL bActive)
    ++s_uiBackgroundMaxTask;
 
    return pBkgTask->ulTaskID;
-
 }
 
 /* RUN all tasks defined in background state but only if SET BACKGROUND TASKS is ON*/
-void hb_backgroundRun( void )
+void hb_backgroundRun(void)
 {
    PHB_BACKGROUNDTASK pBkgTask;
 
@@ -179,18 +180,16 @@ void hb_backgroundRun( void )
       if( s_uiBackgroundTask < s_uiBackgroundMaxTask )
       {
          double dCurrSeconds = hb_dateSeconds();
-         pBkgTask = ( PHB_BACKGROUNDTASK ) s_pBackgroundTasks[s_uiBackgroundTask];
+         pBkgTask = static_cast<PHB_BACKGROUNDTASK>(s_pBackgroundTasks[s_uiBackgroundTask]);
 
          /* check if hb_dateSeconds() is lower than pBkgTask->dSeconds, if so midnight is reached */
          if( !( pBkgTask->dSeconds ) || dCurrSeconds < pBkgTask->dSeconds )
+         {
             pBkgTask->dSeconds = dCurrSeconds;
+         }
 
          /* Check if a task can run */
-         if( pBkgTask->bActive &&
-             ( pBkgTask->millisec == 0 ||
-               ( ( ( hb_dateSeconds() - pBkgTask->dSeconds ) * 1000 ) >= pBkgTask->millisec )
-             )
-             )
+         if( pBkgTask->bActive && (pBkgTask->millisec == 0 || (((hb_dateSeconds() - pBkgTask->dSeconds) * 1000) >= pBkgTask->millisec)) )
          {
             hb_itemRelease(hb_itemDo(pBkgTask->pTask, 0));
             pBkgTask->dSeconds = hb_dateSeconds();
@@ -199,16 +198,17 @@ void hb_backgroundRun( void )
       }
       else
       {
-         if( s_uiBackgroundMaxTask &&
-             s_uiBackgroundTask == s_uiBackgroundMaxTask )
+         if( s_uiBackgroundMaxTask && s_uiBackgroundTask == s_uiBackgroundMaxTask )
+         {
             s_uiBackgroundTask = 0;
+         }
       }
       s_bIamBackground = HB_FALSE;
    }
 }
 
 /* RUN all tasks also if SET BACKGROUND TASKS is OFF */
-void hb_backgroundRunForced( void )
+void hb_backgroundRunForced(void)
 {
    HB_BOOL bOldSet = s_bEnabled;
 
@@ -220,7 +220,7 @@ void hb_backgroundRunForced( void )
 }
 
 /* RUN only one tasks, intentionally no check if bacground are active is done */
-void hb_backgroundRunSingle( HB_ULONG ulID )
+void hb_backgroundRunSingle(HB_ULONG ulID)
 {
    PHB_BACKGROUNDTASK pBkgTask;
 
@@ -228,23 +228,27 @@ void hb_backgroundRunSingle( HB_ULONG ulID )
    {
       s_bIamBackground = HB_TRUE;
 
-      pBkgTask = hb_backgroundFind( ulID );
+      pBkgTask = hb_backgroundFind(ulID);
       if( pBkgTask )
+      {
          hb_itemRelease(hb_itemDo(pBkgTask->pTask, 0));
+      }
 
       s_bIamBackground = HB_FALSE;
    }
 }
 
 /* reset background counter to 0 */
-void hb_backgroundReset( void )
+void hb_backgroundReset(void)
 {
    if( s_uiBackgroundTask == s_uiBackgroundMaxTask )
+   {
       s_uiBackgroundTask = 0;
+   }
 }
 
 /* close all active background tasks on program exit */
-void hb_backgroundShutDown( void )
+void hb_backgroundShutDown(void)
 {
    if( s_pBackgroundTasks )
    {
@@ -264,7 +268,7 @@ void hb_backgroundShutDown( void )
 }
 
 /* caller have to free return ITEM by hb_itemRelease() if it's not nullptr */
-PHB_ITEM hb_backgroundDelFunc( HB_ULONG ulID )
+PHB_ITEM hb_backgroundDelFunc(HB_ULONG ulID)
 {
    int iTask;
    PHB_BACKGROUNDTASK pBkgTask;
@@ -287,7 +291,7 @@ PHB_ITEM hb_backgroundDelFunc( HB_ULONG ulID )
          {
             if( iTask != s_uiBackgroundMaxTask )
             {
-               memmove( &s_pBackgroundTasks[iTask], &s_pBackgroundTasks[iTask + 1], sizeof(HB_BACKGROUNDTASK) * ( s_uiBackgroundMaxTask - iTask ) );
+               memmove(&s_pBackgroundTasks[iTask], &s_pBackgroundTasks[iTask + 1], sizeof(HB_BACKGROUNDTASK) * (s_uiBackgroundMaxTask - iTask));
             }
             s_pBackgroundTasks = static_cast<PHB_BACKGROUNDTASK*>(hb_xrealloc(s_pBackgroundTasks, sizeof(HB_BACKGROUNDTASK) * s_uiBackgroundMaxTask));
          }
@@ -308,7 +312,7 @@ PHB_ITEM hb_backgroundDelFunc( HB_ULONG ulID )
 }
 
 /* Find a task */
-PHB_BACKGROUNDTASK hb_backgroundFind( HB_ULONG ulID )
+PHB_BACKGROUNDTASK hb_backgroundFind(HB_ULONG ulID)
 {
    int iTask;
    PHB_BACKGROUNDTASK pBkgTask;
@@ -319,7 +323,9 @@ PHB_BACKGROUNDTASK hb_backgroundFind( HB_ULONG ulID )
       pBkgTask = s_pBackgroundTasks[iTask];
 
       if( ulID == pBkgTask->ulTaskID )
+      {
          return pBkgTask;
+      }
 
       ++iTask;
    }
@@ -327,12 +333,12 @@ PHB_BACKGROUNDTASK hb_backgroundFind( HB_ULONG ulID )
 }
 
 /* Set task as active */
-HB_BOOL hb_backgroundActive( HB_ULONG ulID, HB_BOOL bActive )
+HB_BOOL hb_backgroundActive(HB_ULONG ulID, HB_BOOL bActive)
 {
    PHB_BACKGROUNDTASK pBkgTask;
    HB_BOOL bOldState = HB_FALSE;
 
-   pBkgTask = hb_backgroundFind( ulID );
+   pBkgTask = hb_backgroundFind(ulID);
 
    if( pBkgTask )
    {
@@ -344,12 +350,12 @@ HB_BOOL hb_backgroundActive( HB_ULONG ulID, HB_BOOL bActive )
 }
 
 /* Set task time */
-int hb_backgroundTime( HB_ULONG ulID, int nMillisec )
+int hb_backgroundTime(HB_ULONG ulID, int nMillisec)
 {
    PHB_BACKGROUNDTASK pBkgTask;
    int nOldState = 0;
 
-   pBkgTask = hb_backgroundFind( ulID );
+   pBkgTask = hb_backgroundFind(ulID);
 
    if( pBkgTask )
    {
@@ -358,7 +364,6 @@ int hb_backgroundTime( HB_ULONG ulID, int nMillisec )
    }
    return nOldState;
 }
-
 
 /* ------------------------ PRG LEVEL ------------------------------ */
 
@@ -370,10 +375,12 @@ HB_FUNC( HB_BACKGROUNDRUN )
       if( HB_ISNUM(1) )
       {
          /* TODO: access to pointers from harbour code */
-         hb_backgroundRunSingle( hb_parnl(1) );
+         hb_backgroundRunSingle(hb_parnl(1));
       }
       else
+      {
          hb_backgroundRun();
+      }
    }
 }
 
@@ -381,9 +388,13 @@ HB_FUNC( HB_BACKGROUNDRUN )
 HB_FUNC( HB_BACKGROUNDRUNFORCED )
 {
    if( HB_ISNUM(1) )
-      hb_backgroundRunSingle( hb_parnl(1) );
+   {
+      hb_backgroundRunSingle(hb_parnl(1));
+   }
    else
+   {
       hb_backgroundRunForced();
+   }
 }
 
 /* call from user code to reset Background state */
@@ -391,7 +402,6 @@ HB_FUNC( HB_BACKGROUNDRESET )
 {
    hb_backgroundReset();
 }
-
 
 /* add a new background task and return its handle */
 HB_FUNC( HB_BACKGROUNDADD )
@@ -402,11 +412,12 @@ HB_FUNC( HB_BACKGROUNDADD )
 
    if( HB_IS_BLOCK(pBlock) || HB_IS_ARRAY(pBlock) )
    {
-      hb_retnl(hb_backgroundAddFunc(pBlock, (pMillisec == nullptr ? 0 : hb_itemGetNI(pMillisec)), (pActive == nullptr ? HB_TRUE : hb_itemGetL(pActive))
-                                    ));
+      hb_retnl(hb_backgroundAddFunc(pBlock, (pMillisec == nullptr ? 0 : hb_itemGetNI(pMillisec)), (pActive == nullptr ? HB_TRUE : hb_itemGetL(pActive))));
    }
    else
+   {
       hb_retnl(-1);    /* error - a codeblock is required */
+   }
 }
 
 /* Delete a task with given handle and return a codeblock with this task */
@@ -417,11 +428,13 @@ HB_FUNC( HB_BACKGROUNDDEL )
    if( s_pBackgroundTasks && HB_ISNUM(1) )
    {
       /* TODO: access to pointers from harbour code */
-      pItem = hb_backgroundDelFunc( hb_parnl(1) );
+      pItem = hb_backgroundDelFunc(hb_parnl(1));
    }
 
    if( pItem )
+   {
       hb_itemReturnRelease(pItem);  /* return a codeblock */
+   }
 }
 
 /* Set a task as active or not */
@@ -432,7 +445,7 @@ HB_FUNC( HB_BACKGROUNDACTIVE )
    if( s_pBackgroundTasks && HB_ISNUM(1) )
    {
       /* TODO: access to pointers from harbour code */
-      bOldActive = hb_backgroundActive( hb_parnl(1), hb_parldef(2, true) );
+      bOldActive = hb_backgroundActive(hb_parnl(1), hb_parldef(2, true));
    }
 
    hb_retl(bOldActive); /* return old active value */
@@ -447,7 +460,7 @@ HB_FUNC( HB_BACKGROUNDTIME )
    if( s_pBackgroundTasks && HB_ISNUM(1) )
    {
       /* TODO: access to pointers from harbour code */
-      nOldMillisec = hb_backgroundTime( hb_parnl(1), hb_parnidef(2, 1000) );
+      nOldMillisec = hb_backgroundTime(hb_parnl(1), hb_parnidef(2, 1000));
    }
 
    hb_retni(nOldMillisec); /* return old millisecond value */

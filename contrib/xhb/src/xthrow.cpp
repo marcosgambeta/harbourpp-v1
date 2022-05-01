@@ -59,5 +59,5 @@ HB_FUNC( THROW )
          hb_itemReturnRelease(pResult);
    }
    else
-      hb_errRT_BASE( EG_ARG, 9101, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 9101, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

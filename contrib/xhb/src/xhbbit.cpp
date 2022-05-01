@@ -63,8 +63,8 @@ static void s_xhb_bitOper( int iOper )
    {
       if( HB_IS_NUMERIC(pItem1) && ( HB_IS_NUMERIC(pItem2) || nLen2 == 1 ) )
       {
-         HB_MAXINT nVal1 = hb_itemGetNInt( pItem1 ),
-                   nVal2 = nLen2 == 1 ? static_cast<HB_BYTE>(hb_itemGetCPtr(pItem1)[0]) : hb_itemGetNInt( pItem2 );
+         HB_MAXINT nVal1 = hb_itemGetNInt(pItem1),
+                   nVal2 = nLen2 == 1 ? static_cast<HB_BYTE>(hb_itemGetCPtr(pItem1)[0]) : hb_itemGetNInt(pItem2);
          switch( iOper )
          {
             case XHB_AND:
@@ -117,7 +117,7 @@ static void s_xhb_bitOper( int iOper )
                   }
                   break;
             }
-            hb_retclen_buffer( pRet, nLen1 );
+            hb_retclen_buffer(pRet, nLen1);
          }
          else
             hb_itemReturn(pItem1);
@@ -154,7 +154,7 @@ static void s_xhb_bitOper( int iOper )
                   }
                   break;
             }
-            hb_retclen_buffer( pRet, nLen1 );
+            hb_retclen_buffer(pRet, nLen1);
          }
          else
             hb_itemReturn(pItem1);

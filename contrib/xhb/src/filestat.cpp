@@ -98,7 +98,7 @@ HB_FUNC( FILESTATS )
    {
 #  if defined(HB_USE_LARGEFILE64)
       struct stat64 statbuf;
-      if( stat64( hb_parc(1), &statbuf ) == 0 )
+      if( stat64(hb_parc(1), &statbuf) == 0 )
 #  else
       struct stat statbuf;
       if( stat( hb_parc(1), &statbuf ) == 0 )
