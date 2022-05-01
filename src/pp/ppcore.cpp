@@ -5459,7 +5459,7 @@ static void hb_pp_condCompileIf(PHB_PP_STATE pState, PHB_PP_TOKEN pToken)
    /* preprocess all define(s) */
    hb_pp_processCondDefined(pState, pToken->pNext);
    hb_pp_processDefine(pState, &pToken->pNext);
-   hb_pp_conditionPush(pState, hb_pp_calculateValue( pState, pToken->pNext, pState->iCondCompile != 0 ) != 0);
+   hb_pp_conditionPush(pState, hb_pp_calculateValue(pState, pToken->pNext, pState->iCondCompile != 0) != 0);
 }
 
 static void hb_pp_condCompileElif(PHB_PP_STATE pState, PHB_PP_TOKEN pToken)

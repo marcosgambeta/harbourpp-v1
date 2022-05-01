@@ -908,7 +908,7 @@ int main(int argc, char * argv[])
          {
             iResult = hb_pp_generateVerInfo(szVerFile, iRevID, szChangeLogID, szLastEntry);
          }
-         if( iResult == 0 && hb_pp_errorCount( pState ) > 0 )
+         if( iResult == 0 && hb_pp_errorCount(pState) > 0 )
          {
             iResult = 1;
          }
