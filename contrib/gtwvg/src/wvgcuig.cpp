@@ -352,7 +352,7 @@ HB_FUNC( WVG_BOXRAISED )
    pWVT->gObjs    = gObj;
 }
 
-static void hb_wvg_BoxRaised( PHB_GTWVT pWVT, int iLeft, int iTop, int iRight, int iBottom )
+static void hb_wvg_BoxRaised(PHB_GTWVT pWVT, int iLeft, int iTop, int iRight, int iBottom)
 {
    HDC hdc = pWVT->hdc;
    PHB_GUIDATA pGUI = pWVT->pGUI;
@@ -434,7 +434,7 @@ static void hb_wvg_BoxRecessed(PHB_GTWVT pWVT, int iLeft, int iTop, int iRight, 
    LineTo(hdc, iRight + 1, iTop - 1);
 }
 
-/* wvt_BoxGet( nRow, nCol, nWidth ) --> NIL */
+/* wvt_BoxGet(nRow, nCol, nWidth) --> NIL */
 HB_FUNC( WVG_BOXGET )
 {
    PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
@@ -702,10 +702,10 @@ static void hb_wvg_Label(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop)
 }
 
 
-/* wvg_LabelEx2( nTop, nLeft, nBottom, nRight, aPxlOff, cLabel, nAlign,
-                 nEscapement, nTextColor, nBkColor, cFontFace, nFontHeight,
-                 nFontWidth, nFontWeight, nQuality, nCharSet, lItalics,
-                 lUnderline, lStrikeOut ) */
+/* wvg_LabelEx2(nTop, nLeft, nBottom, nRight, aPxlOff, cLabel, nAlign,
+                nEscapement, nTextColor, nBkColor, cFontFace, nFontHeight,
+                nFontWidth, nFontWeight, nQuality, nCharSet, lItalics,
+                lUnderline, lStrikeOut) */
 HB_FUNC( WVG_LABELEX2 )
 {
    PHB_GTWVT pWVT = hb_wvt_gtGetWVT();

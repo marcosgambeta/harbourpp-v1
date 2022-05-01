@@ -35,7 +35,7 @@ extern HB_BOOL hbamf_is_cls_externalizable( HB_USHORT uiClass );
 
 static PHB_ITEM hbamf_cls_externalizable_instance(PHB_ITEM pClassFuncStr)
 {
-   PHB_DYNS pSymbol = hb_dynsymGet( hb_itemGetCPtr(pClassFuncStr) );
+   PHB_DYNS pSymbol = hb_dynsymGet(hb_itemGetCPtr(pClassFuncStr));
 
    if( pSymbol )
    {
@@ -223,15 +223,15 @@ static PHB_ITEM amf3_decode_reference(PHB_ITEM pHash, int val)
 
 static void amf3_add_reference(PHB_ITEM pHash, PHB_ITEM pItem)
 {
-   HB_SIZE  iRef = hb_hashLen( pHash );
+   HB_SIZE  iRef = hb_hashLen(pHash);
    PHB_ITEM pKey = hb_itemNew(nullptr);
 
    /* the reference id in AMF starts from 0, and increase
       sequentially - this means we can also use an array,
       not hash for the purpose */
 
-   hb_itemPutNS( pKey, /* ++ first one was 0 */ iRef );
-   hb_hashAdd( pHash, pKey, pItem );
+   hb_itemPutNS(pKey, /* ++ first one was 0 */ iRef);
+   hb_hashAdd(pHash, pKey, pItem);
 
    hb_itemRelease(pKey);
 }
@@ -265,7 +265,7 @@ static HB_BOOL amf3_deserialize_string( amfContext * context, PHB_ITEM pItem )
    }
 
    /* Check for reference */
-   pRefItem = amf3_decode_reference( pHash, header );
+   pRefItem = amf3_decode_reference(pHash, header);
    if( pRefItem )
    {
       if( HB_IS_LOGICAL(pRefItem) )
@@ -284,7 +284,7 @@ static HB_BOOL amf3_deserialize_string( amfContext * context, PHB_ITEM pItem )
       return false;
 
    /* Adds reference */
-   amf3_add_reference( pHash, pItem );
+   amf3_add_reference(pHash, pItem);
 
    return true;
 }
@@ -329,7 +329,7 @@ static HB_BOOL amf3_decode_dynamic_dict( amfContext * context, PHB_ITEM pItem )
 }
 
 /* Populate an array with values from the buffer. */
-static HB_BOOL decode_dynamic_array_AMF3( amfContext * context, PHB_ITEM pItem, int array_len, HB_BOOL dict )
+static HB_BOOL decode_dynamic_array_AMF3(amfContext * context, PHB_ITEM pItem, int array_len, HB_BOOL dict)
 {
    int     i;
    HB_BOOL lRet;
@@ -397,7 +397,7 @@ static HB_BOOL amf3_deserialize_array( amfContext * context, PHB_ITEM pItem, HB_
       return false;
 
    /* Check for reference */
-   pRefItem = amf3_decode_reference( pHash, header );
+   pRefItem = amf3_decode_reference(pHash, header);
    if( pRefItem )
    {
       if( HB_IS_LOGICAL(pRefItem) )
@@ -412,7 +412,7 @@ static HB_BOOL amf3_deserialize_array( amfContext * context, PHB_ITEM pItem, HB_
       {
          /* Map ArrayCollection idx to ref, since
             it points to the same list. */
-         amf3_add_reference( pHash, pRefItem );
+         amf3_add_reference(pHash, pRefItem);
       }
       /* Copies string from reference hash pRefItem -> pItem */
       hb_itemCopy(pItem, pRefItem);
@@ -448,7 +448,7 @@ static HB_BOOL amf3_deserialize_array( amfContext * context, PHB_ITEM pItem, HB_
       mixed = HB_TRUE;
    }
 
-   amf3_add_reference( pHash, pItem );
+   amf3_add_reference(pHash, pItem);
 
    /* Originally a python comment.
       I don't understand reasons for following,
@@ -464,9 +464,9 @@ static HB_BOOL amf3_deserialize_array( amfContext * context, PHB_ITEM pItem, HB_
     */
 
    if( collection )
-      amf3_add_reference( pHash, pItem );
+      amf3_add_reference(pHash, pItem);
 
-   return decode_dynamic_array_AMF3( context, pItem, array_len, mixed );
+   return decode_dynamic_array_AMF3(context, pItem, array_len, mixed);
 
    #if 0
    return true;
@@ -498,7 +498,7 @@ static HB_BOOL amf3_deserialize_date( amfContext * context, PHB_ITEM pItem )
       return false;
 
    /* Check for reference */
-   pRefItem = amf3_decode_reference( pHash, header );
+   pRefItem = amf3_decode_reference(pHash, header);
    if( pRefItem )
    {
       if( HB_IS_LOGICAL(pRefItem) )
@@ -516,7 +516,7 @@ static HB_BOOL amf3_deserialize_date( amfContext * context, PHB_ITEM pItem )
       return false;
 
    /* Add reference */
-   amf3_add_reference( pHash, pItem );
+   amf3_add_reference(pHash, pItem);
 
    return true;
 }
@@ -545,7 +545,7 @@ static HB_BOOL amf3_deserialize_byte_array( amfContext * context, PHB_ITEM pItem
       return false;
 
    /* Check for reference */
-   pRefItem = amf3_decode_reference( pHash, header );
+   pRefItem = amf3_decode_reference(pHash, header);
    if( pRefItem )
    {
       if( HB_IS_LOGICAL(pRefItem) )
@@ -563,7 +563,7 @@ static HB_BOOL amf3_deserialize_byte_array( amfContext * context, PHB_ITEM pItem
       return false;
 
    /* Add reference */
-   amf3_add_reference( pHash, pItem );
+   amf3_add_reference(pHash, pItem);
 
    return true;
 }
@@ -578,7 +578,7 @@ static PHB_ITEM class_def_from_classname( /* amfContext * context, */ PHB_ITEM p
    char *    pszBuffer = hb_itemGetC(pClassName);
    HB_SIZE   nLen      = hb_itemGetCLen(pClassName);
 
-   hb_strUpper( pszBuffer, nLen );
+   hb_strUpper(pszBuffer, nLen);
 
    /* get Harbour's class id/handle */
    uiClass = hb_clsFindClass(pszBuffer, nullptr);
@@ -595,7 +595,7 @@ static PHB_ITEM class_def_from_classname( /* amfContext * context, */ PHB_ITEM p
 
    pKey   = hb_itemPutC(nullptr, "CLASS_DEF");
    pValue = hb_itemNew(nullptr);
-   if( !hb_hashAdd( pClass, pKey, pValue ) )
+   if( !hb_hashAdd(pClass, pKey, pValue) )
    {
       hb_itemRelease(pKey);
       hb_itemRelease(pValue);
@@ -607,7 +607,7 @@ static PHB_ITEM class_def_from_classname( /* amfContext * context, */ PHB_ITEM p
 
    pKey   = hb_itemPutC(nullptr, "alias");
    pValue = hb_itemPutC(nullptr, hb_clsName(uiClass));
-   if( !hb_hashAdd( pClass, pKey, pValue ) )
+   if( !hb_hashAdd(pClass, pKey, pValue) )
    {
       hb_itemRelease(pKey);
       hb_itemRelease(pValue);
@@ -621,7 +621,7 @@ static PHB_ITEM class_def_from_classname( /* amfContext * context, */ PHB_ITEM p
    {
       pKey   = hb_itemPutC(nullptr, "EXTERNALIZABLE_CLASS_DEF");
       pValue = hb_itemNew(nullptr);
-      if( !hb_hashAdd( pClass, pKey, pValue ) )
+      if( !hb_hashAdd(pClass, pKey, pValue) )
       {
          hb_itemRelease(pKey);
          hb_itemRelease(pValue);
@@ -660,11 +660,11 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
    if( hb_itemGetCLen(pStrAlias) > 0 )
    {
       /* Retrieve a ClassDef from a class alias string. */
-      pMappedClassDef = class_def_from_classname( pStrAlias );
+      pMappedClassDef = class_def_from_classname(pStrAlias);
       if( !pMappedClassDef )
       {
          pMappedClassDef = hb_itemNew(nullptr);
-         hb_hashNew( pMappedClassDef ); /* empty hash emulation for now */
+         hb_hashNew(pMappedClassDef); /* empty hash emulation for now */
       }
 
       /* PyObject_CallMethodObjArgs( context->class_mapper,
@@ -674,13 +674,13 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
 
    /* Create a dict with class def information
       specific to this decode context. */
-   hb_hashNew( pClass );
+   hb_hashNew(pClass);
 
    if( pMappedClassDef )
    {
       pKey = hb_itemPutC(nullptr, "class_def");  /* hb_itemNew(nullptr); */
 
-      if( !hb_hashAdd( pClass, pKey, pMappedClassDef ) )
+      if( !hb_hashAdd(pClass, pKey, pMappedClassDef) )
       {
          hb_itemRelease(pKey);
          hb_itemRelease(pMappedClassDef);
@@ -718,7 +718,7 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
    /* Set dynamic flag */
    pKey   = hb_itemPutC(nullptr, "dynamic");
    pValue = hb_itemPutL(nullptr, (header & DYNAMIC) == DYNAMIC);
-   if( !hb_hashAdd( pClass, pKey, pValue ) )
+   if( !hb_hashAdd(pClass, pKey, pValue) )
    {
       hb_itemRelease(pKey);
       hb_itemRelease(pValue);
@@ -743,7 +743,7 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
       }
 
       /* steals ref to attr_name */
-      if( !hb_arraySet( pAttrs, i + 1, pValue ) )
+      if( !hb_arraySet(pAttrs, i + 1, pValue) )
       {
          hb_itemRelease(pAttrs);
          hb_itemRelease(pValue);
@@ -755,7 +755,7 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
 
    /* Set decoded attrs onto ClassDef */
    pKey = hb_itemPutC(nullptr, "static_attrs");
-   if( !hb_hashAdd( pClass, pKey, pAttrs ) )
+   if( !hb_hashAdd(pClass, pKey, pAttrs) )
    {
       hb_itemRelease(pKey);
       hb_itemRelease(pAttrs);
@@ -778,7 +778,7 @@ static HB_BOOL amf3_deserialize_class_def( amfContext * context, PHB_ITEM pClass
    PHB_ITEM pRefItem;
 
    /* Check for reference */
-   pRefItem = amf3_decode_reference( pHash, header );
+   pRefItem = amf3_decode_reference(pHash, header);
    if( pRefItem )
    {
       if( HB_IS_LOGICAL(pRefItem) )
@@ -796,7 +796,7 @@ static HB_BOOL amf3_deserialize_class_def( amfContext * context, PHB_ITEM pClass
       return false;
 
    /* Add reference to obj */
-   amf3_add_reference( pHash, pClass );
+   amf3_add_reference(pHash, pClass);
 
    return true;
 }
@@ -833,14 +833,14 @@ static HB_BOOL amf3_decode_obj_attrs( amfContext * context, PHB_ITEM pHash, PHB_
       }
 
       pKey = hb_itemNew(nullptr);
-      if( !hb_arrayGet( pArray, i + 1, pKey ) )
+      if( !hb_arrayGet(pArray, i + 1, pKey) )
       {
          hb_itemRelease(pValue);
          hb_itemRelease(pKey);
          return false;
       }
 
-      result = hb_hashAdd( pHash, pKey, pValue );
+      result = hb_hashAdd(pHash, pKey, pValue);
       hb_itemRelease(pValue);
       hb_itemRelease(pKey);
 
@@ -899,7 +899,7 @@ static HB_BOOL amf3_decode_externalizable( amfContext * context, PHB_ITEM pItem 
 
    position = context->cBuf + context->position;
    pStr     = hb_itemNew(nullptr);
-   pStr     = hb_itemPutCLConst( pStr, position, context->length - context->position );
+   pStr     = hb_itemPutCLConst(pStr, position, context->length - context->position);
    pPos     = hb_objSendMsg(pObject, "READEXTERNAL", 1, pStr);
    if( HB_IS_INTEGER(pPos) )
    {
@@ -937,7 +937,7 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
       return false;
 
    /* Check for reference */
-   pRefItem = amf3_decode_reference( pHash, header );
+   pRefItem = amf3_decode_reference(pHash, header);
    if( pRefItem )
    {
       if( HB_IS_LOGICAL(pRefItem) )
@@ -952,7 +952,7 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
       {
          /* Map ObjectProxy idx to ref, since
             it points to the same obj. */
-         amf3_add_reference( pHash, pRefItem );
+         amf3_add_reference(pHash, pRefItem);
       }
 
       /* Copies ByteArray (string) from reference hash pRefItem -> pItem */
@@ -1032,7 +1032,7 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
          return false;
       }
 
-      pValue = hbamf_cls_externalizable_instance( pValue );
+      pValue = hbamf_cls_externalizable_instance(pValue);
       if( !pValue )
       {
          hb_itemRelease(pClass);
@@ -1057,7 +1057,7 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
    }
 
    /* Reference must be added before children (to allow for recursion). */
-   amf3_add_reference( pHash, pItem );
+   amf3_add_reference(pHash, pItem);
 
    if( proxy )
    {
@@ -1067,7 +1067,7 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
          points to the obj and one that points
          to the proxy. */
 
-      amf3_add_reference( pHash, pItem );
+      amf3_add_reference(pHash, pItem);
    }
 
    result = HB_FALSE;
@@ -1085,7 +1085,7 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
    else if( obj_type == 2 )
    {
 #if 0
-      result = decode_typed_obj_AMF3( context, obj_val, class_def_dict );
+      result = decode_typed_obj_AMF3(context, obj_val, class_def_dict);
 #endif
    }
 

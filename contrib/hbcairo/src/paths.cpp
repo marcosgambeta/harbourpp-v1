@@ -49,12 +49,12 @@
 
 HB_FUNC( CAIRO_APPEND_PATH )
 {
-   cairo_t *      pCairo = hb_cairo_param(1);
-   cairo_path_t * pPath  = hb_cairo_path_param(2);
+   cairo_t * pCairo = hb_cairo_param(1);
+   cairo_path_t * pPath = hb_cairo_path_param(2);
 
    if( pCairo && pPath )
    {
-      cairo_append_path( pCairo, pPath );
+      cairo_append_path(pCairo, pPath);
    }
 }
 
@@ -64,7 +64,7 @@ HB_FUNC( CAIRO_ARC )
 
    if( pCairo )
    {
-      cairo_arc( pCairo, hb_parnd(2), hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6) );
+      cairo_arc(pCairo, hb_parnd(2), hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6));
    }
 }
 
@@ -74,7 +74,7 @@ HB_FUNC( CAIRO_ARC_NEGATIVE )
 
    if( pCairo )
    {
-      cairo_arc_negative( pCairo, hb_parnd(2), hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6) );
+      cairo_arc_negative(pCairo, hb_parnd(2), hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6));
    }
 }
 
@@ -84,7 +84,7 @@ HB_FUNC( CAIRO_CLOSE_PATH )
 
    if( pCairo )
    {
-      cairo_close_path( pCairo );
+      cairo_close_path(pCairo);
    }
 }
 
@@ -94,7 +94,7 @@ HB_FUNC( CAIRO_COPY_PATH )
 
    if( pCairo )
    {
-      hb_cairo_path_ret( cairo_copy_path( pCairo ) );
+      hb_cairo_path_ret(cairo_copy_path(pCairo));
    }
 }
 
@@ -104,7 +104,7 @@ HB_FUNC( CAIRO_COPY_PATH_FLAT )
 
    if( pCairo )
    {
-      hb_cairo_path_ret( cairo_copy_path_flat( pCairo ) );
+      hb_cairo_path_ret(cairo_copy_path_flat(pCairo));
    }
 }
 
@@ -114,7 +114,7 @@ HB_FUNC( CAIRO_CURVE_TO )
 
    if( pCairo )
    {
-      cairo_curve_to( pCairo, hb_parnd(2), hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6), hb_parnd(7) );
+      cairo_curve_to(pCairo, hb_parnd(2), hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6), hb_parnd(7));
    }
 }
 
@@ -125,9 +125,9 @@ HB_FUNC( CAIRO_GET_CURRENT_POINT )
    if( pCairo )
    {
       PHB_ITEM pItem = hb_stackReturnItem();
-      double   x, y;
+      double x, y;
       hb_arrayNew(pItem, 2);
-      cairo_get_current_point( pCairo, &x, &y );
+      cairo_get_current_point(pCairo, &x, &y);
       hb_arraySetND(pItem, 1, x);
       hb_arraySetND(pItem, 2, y);
    }
@@ -149,7 +149,7 @@ HB_FUNC( CAIRO_LINE_TO )
 
    if( pCairo )
    {
-      cairo_line_to( pCairo, hb_parnd(2), hb_parnd(3) );
+      cairo_line_to(pCairo, hb_parnd(2), hb_parnd(3));
    }
 }
 
@@ -159,7 +159,7 @@ HB_FUNC( CAIRO_MOVE_TO )
 
    if( pCairo )
    {
-      cairo_move_to( pCairo, hb_parnd(2), hb_parnd(3) );
+      cairo_move_to(pCairo, hb_parnd(2), hb_parnd(3));
    }
 }
 
@@ -169,7 +169,7 @@ HB_FUNC( CAIRO_NEW_PATH )
 
    if( pCairo )
    {
-      cairo_new_path( pCairo );
+      cairo_new_path(pCairo);
    }
 }
 
@@ -180,9 +180,9 @@ HB_FUNC( CAIRO_PATH_EXTENTS )
    if( pCairo )
    {
       PHB_ITEM pItem = hb_stackReturnItem();
-      double   x1, y1, x2, y2;
+      double x1, y1, x2, y2;
 
-      cairo_path_extents( pCairo, &x1, &y1, &x2, &y2 );
+      cairo_path_extents(pCairo, &x1, &y1, &x2, &y2);
       hb_arrayNew(pItem, 4);
       hb_arraySetND(pItem, 1, x1);
       hb_arraySetND(pItem, 2, y1);
@@ -197,7 +197,7 @@ HB_FUNC( CAIRO_RECTANGLE )
 
    if( pCairo )
    {
-      cairo_rectangle( pCairo, hb_parnd(2), hb_parnd(3), hb_parnd(4), hb_parnd(5) );
+      cairo_rectangle(pCairo, hb_parnd(2), hb_parnd(3), hb_parnd(4), hb_parnd(5));
    }
 }
 
@@ -207,7 +207,7 @@ HB_FUNC( CAIRO_REL_CURVE_TO )
 
    if( pCairo )
    {
-      cairo_rel_curve_to( pCairo, hb_parnd(2), hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6), hb_parnd(7) );
+      cairo_rel_curve_to(pCairo, hb_parnd(2), hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6), hb_parnd(7));
    }
 }
 
@@ -217,7 +217,7 @@ HB_FUNC( CAIRO_REL_LINE_TO )
 
    if( pCairo )
    {
-      cairo_rel_line_to( pCairo, hb_parnd(2), hb_parnd(3) );
+      cairo_rel_line_to(pCairo, hb_parnd(2), hb_parnd(3));
    }
 }
 
@@ -227,7 +227,7 @@ HB_FUNC( CAIRO_REL_MOVE_TO )
 
    if( pCairo )
    {
-      cairo_rel_move_to( pCairo, hb_parnd(2), hb_parnd(3) );
+      cairo_rel_move_to(pCairo, hb_parnd(2), hb_parnd(3));
    }
 }
 
@@ -238,7 +238,7 @@ HB_FUNC( CAIRO_TEXT_PATH )
    if( pCairo )
    {
       void * hText;
-      cairo_text_path( pCairo, hb_parstr_utf8(2, &hText, nullptr) );
+      cairo_text_path(pCairo, hb_parstr_utf8(2, &hText, nullptr));
       hb_strfree(hText);
    }
 }

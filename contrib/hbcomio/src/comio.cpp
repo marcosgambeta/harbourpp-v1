@@ -55,34 +55,33 @@
 
 #include "hbapicom.h"
 
-typedef struct _HB_FILE
+struct _HB_FILE
 {
    const HB_FILE_FUNCS * pFuncs;
    int                   port;
    HB_MAXINT             timeout;
    HB_BOOL               fRead;
    HB_BOOL               fWrite;
-} HB_FILE;
+};
 
-static PHB_FILE s_fileNew( int port, HB_MAXINT timeout, HB_BOOL fRead, HB_BOOL fWrite );
+using HB_FILE = _HB_FILE;
 
-static int s_fileGetValue( const char * pszName, int * piLen )
+static PHB_FILE s_fileNew(int port, HB_MAXINT timeout, HB_BOOL fRead, HB_BOOL fWrite);
+
+static int s_fileGetValue(const char * pszName, int * piLen)
 {
    int iLen = 0, iValue = 0;
 
    while( HB_ISDIGIT(pszName[iLen]) )
    {
-      iValue = iValue * 10 + ( pszName[iLen++] - '0' );
+      iValue = iValue * 10 + (pszName[iLen++] - '0');
    }
-   
+
    *piLen = iLen;
    return iValue;
 }
 
-static int s_filePortParams( const char * pszName, HB_MAXINT * pTimeout,
-                             int * piBaud, int * piParity,
-                             int * piSize, int * piStop,
-                             int * piFlow )
+static int s_filePortParams(const char * pszName, HB_MAXINT * pTimeout, int * piBaud, int * piParity, int * piSize, int * piStop, int * piFlow)
 {
    int iPort = 0, iLen, iValue;
 
@@ -92,13 +91,13 @@ static int s_filePortParams( const char * pszName, HB_MAXINT * pTimeout,
    pszName += 3;
    if( *pszName == '$' )
    {
-      const char * pszParams = strchr( pszName, ':' );
+      const char * pszParams = strchr(pszName, ':');
 
       if( pszParams != nullptr && pszParams - pszName > 1 )
       {
-         char * pszPort = hb_strndup( pszName + 1, pszParams - pszName - 1 );
+         char * pszPort = hb_strndup(pszName + 1, pszParams - pszName - 1);
 
-         iPort = hb_comFindPort( pszPort, true );
+         iPort = hb_comFindPort(pszPort, true);
          hb_xfree(pszPort);
          pszName = pszParams;
       }
@@ -107,82 +106,94 @@ static int s_filePortParams( const char * pszName, HB_MAXINT * pTimeout,
    {
       while( HB_ISDIGIT(*pszName) )
       {
-         iPort = iPort * 10 + ( *pszName++ - '0' );
-      }   
+         iPort = iPort * 10 + (*pszName++ - '0');
+      }
    }
 
    while( iPort > 0 && *pszName )
    {
       if( HB_ISDIGIT(*pszName) )
       {
-         iValue = s_fileGetValue( pszName, &iLen );
+         iValue = s_fileGetValue(pszName, &iLen);
          if( iLen == 1 )
          {
             if( iValue >= 1 && iValue <= 2 && *piStop == 0 )
+            {
                *piStop = iValue;
+            }
             else if( iValue >= 5 && iValue <= 8 && *piSize == 0 )
+            {
                *piSize = iValue;
+            }
             else
+            {
                iPort = -1;
+            }
          }
          else if( iLen == 2 && *piStop == 0 && *piSize == 0 )
          {
-            if( pszName[0] >= '1' && pszName[0] <= '2' &&
-                pszName[1] >= '5' && pszName[1] <= '8' )
+            if( pszName[0] >= '1' && pszName[0] <= '2' && pszName[1] >= '5' && pszName[1] <= '8' )
             {
                *piStop = pszName[0] - '0';
                *piSize = pszName[1] - '0';
             }
-            else if( pszName[0] >= '5' && pszName[0] <= '8' &&
-                     pszName[1] >= '1' && pszName[1] <= '2' )
+            else if( pszName[0] >= '5' && pszName[0] <= '8' && pszName[1] >= '1' && pszName[1] <= '2' )
             {
                *piStop = pszName[1] - '0';
                *piSize = pszName[0] - '0';
             }
             else if( *piBaud )
+            {
                iPort = -1;
+            }
             else
+            {
                *piBaud = iValue;
+            }
          }
          else if( *piBaud )
+         {
             iPort = -1;
+         }
          else
+         {
             *piBaud = iValue;
+         }
          pszName += iLen;
       }
       else if( HB_ISALPHA(*pszName) )
       {
-         if( hb_strnicmp( pszName, "RTS", 3 ) == 0 )
+         if( hb_strnicmp(pszName, "RTS", 3) == 0 )
          {
             *piFlow |= HB_COM_FLOW_IRTSCTS;
             pszName += 3;
          }
-         else if( hb_strnicmp( pszName, "CTS", 3 ) == 0 )
+         else if( hb_strnicmp(pszName, "CTS", 3) == 0 )
          {
             *piFlow |= HB_COM_FLOW_ORTSCTS;
             pszName += 3;
          }
-         else if( hb_strnicmp( pszName, "DTR", 3 ) == 0 )
+         else if( hb_strnicmp(pszName, "DTR", 3) == 0 )
          {
             *piFlow |= HB_COM_FLOW_IDTRDSR;
             pszName += 3;
          }
-         else if( hb_strnicmp( pszName, "DSR", 3 ) == 0 )
+         else if( hb_strnicmp(pszName, "DSR", 3) == 0 )
          {
             *piFlow |= HB_COM_FLOW_ODTRDSR;
             pszName += 3;
          }
-         else if( hb_strnicmp( pszName, "DCD", 3 ) == 0 )
+         else if( hb_strnicmp(pszName, "DCD", 3) == 0 )
          {
             *piFlow |= HB_COM_FLOW_DCD;
             pszName += 3;
          }
-         else if( hb_strnicmp( pszName, "XOFF", 4 ) == 0 )
+         else if( hb_strnicmp(pszName, "XOFF", 4) == 0 )
          {
             *piFlow |= HB_COM_FLOW_XOFF;
             pszName += 4;
          }
-         else if( hb_strnicmp( pszName, "XON", 3 ) == 0 )
+         else if( hb_strnicmp(pszName, "XON", 3) == 0 )
          {
             *piFlow |= HB_COM_FLOW_XON;
             pszName += 3;
@@ -210,34 +221,50 @@ static int s_filePortParams( const char * pszName, HB_MAXINT * pTimeout,
             }
          }
          else
+         {
             iPort = -1;
+         }
       }
       else if( *pszName == ':' || *pszName == ',' || *pszName == ' ' )
+      {
          pszName++;
+      }
       else
+      {
          iPort = -1;
+      }
    }
 
    if( *piBaud == 0 )
+   {
       *piBaud = 9600;
+   }
    if( *piParity == 0 )
+   {
       *piParity = 'N';
+   }
    if( *piSize == 0 )
+   {
       *piSize = 8;
+   }
    if( *piStop == 0 )
+   {
       *piStop = 1;
+   }
 
    return iPort;
 }
 
-static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
+static HB_BOOL s_fileAccept(PHB_FILE_FUNCS pFuncs, const char * pszFileName)
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    if( HB_TOUPPER(pszFileName[0]) == 'C' && HB_TOUPPER(pszFileName[1]) == 'O' && HB_TOUPPER(pszFileName[2]) == 'M' )
    {
       if( pszFileName[3] == '$' )
-         return strchr( pszFileName + 4, ':' ) != nullptr;
+      {
+         return strchr(pszFileName + 4, ':') != nullptr;
+      }
       else if( pszFileName[3] >= '1' && pszFileName[3] <= '9' )
       {
          pszFileName += 4;
@@ -251,9 +278,7 @@ static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
    return false;
 }
 
-static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
-                            const char * pszDefExt, HB_FATTR nExFlags,
-                            const char * pPaths, PHB_ITEM pError )
+static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * pszName, const char * pszDefExt, HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError)
 {
    PHB_FILE pFile = nullptr;
    HB_ERRCODE errcode = 0;
@@ -266,15 +291,12 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
    HB_SYMBOL_UNUSED(pPaths);
 
    fRead = fWrite = HB_TRUE;
-   iPort = s_filePortParams( pszName, &timeout,
-                             &iBaud, &iParity, &iSize, &iStop, &iFlow );
+   iPort = s_filePortParams(pszName, &timeout, &iBaud, &iParity, &iSize, &iStop, &iFlow);
    if( iPort > 0 )
    {
-      if( hb_comOpen( iPort ) == 0 &&
-          hb_comInit( iPort, iBaud, iParity, iSize, iStop ) == 0 &&
-          hb_comFlowControl( iPort, nullptr, iFlow ) == 0 )
+      if( hb_comOpen(iPort) == 0 && hb_comInit(iPort, iBaud, iParity, iSize, iStop) == 0 && hb_comFlowControl(iPort, nullptr, iFlow) == 0 )
       {
-         switch( nExFlags & ( FO_READ | FO_WRITE | FO_READWRITE ) )
+         switch( nExFlags & (FO_READ | FO_WRITE | FO_READWRITE) )
          {
             case FO_READ:
                fWrite = HB_FALSE;
@@ -283,38 +305,41 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
                fRead = HB_FALSE;
                break;
          }
-         pFile = s_fileNew( iPort, timeout, fRead, fWrite );
+         pFile = s_fileNew(iPort, timeout, fRead, fWrite);
       }
       else
-         errcode = hb_comGetError( iPort );
+      {
+         errcode = hb_comGetError(iPort);
+      }
    }
    else
+   {
       errcode = HB_COM_ERR_WRONGPORT;
+   }
 
-   hb_fsSetError( errcode );
+   hb_fsSetError(errcode);
 
    if( pError )
    {
-      hb_errPutFileName( pError, pszName );
+      hb_errPutFileName(pError, pszName);
       if( pFile == nullptr )
       {
-         hb_errPutOsCode( pError, errcode );
-         hb_errPutGenCode( pError, static_cast<HB_ERRCODE>(EG_OPEN) );
+         hb_errPutOsCode(pError, errcode);
+         hb_errPutGenCode(pError, static_cast<HB_ERRCODE>(EG_OPEN));
       }
    }
 
    return pFile;
 }
 
-static void s_fileClose( PHB_FILE pFile )
+static void s_fileClose(PHB_FILE pFile)
 {
-   hb_comClose( pFile->port );
-   hb_fsSetError( hb_comGetError( pFile->port ) );
+   hb_comClose(pFile->port);
+   hb_fsSetError(hb_comGetError(pFile->port));
    hb_xfree(pFile);
 }
 
-static HB_SIZE s_fileRead( PHB_FILE pFile, void * data,
-                           HB_SIZE nSize, HB_MAXINT timeout )
+static HB_SIZE s_fileRead(PHB_FILE pFile, void * data, HB_SIZE nSize, HB_MAXINT timeout)
 {
    HB_ERRCODE errcode;
    long lRead = -1;
@@ -323,24 +348,31 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data,
    {
       lRead = nSize > LONG_MAX ? LONG_MAX : static_cast<long>(nSize);
       if( timeout == -1 )
+      {
          timeout = pFile->timeout;
-      lRead = hb_comRecv( pFile->port, data, lRead, timeout );
-      errcode = hb_comGetError( pFile->port );
+      }
+      lRead = hb_comRecv(pFile->port, data, lRead, timeout);
+      errcode = hb_comGetError(pFile->port);
       if( lRead <= 0 && errcode == HB_COM_ERR_TIMEOUT )
+      {
          lRead = 0;
+      }
       else if( lRead == 0 )
+      {
          lRead = -1;
+      }
    }
    else
+   {
       errcode = HB_COM_ERR_ACCESS;
+   }
 
-   hb_fsSetError( errcode );
+   hb_fsSetError(errcode);
 
    return lRead;
 }
 
-static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data,
-                            HB_SIZE nSize, HB_MAXINT timeout )
+static HB_SIZE s_fileWrite(PHB_FILE pFile, const void * data, HB_SIZE nSize, HB_MAXINT timeout)
 {
    HB_ERRCODE errcode;
    long lSent = -1;
@@ -349,23 +381,31 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data,
    {
       lSent = nSize > LONG_MAX ? LONG_MAX : static_cast<long>(nSize);
       if( timeout == -1 )
+      {
          timeout = pFile->timeout;
-      lSent = hb_comSend( pFile->port, data, lSent, timeout );
-      errcode = hb_comGetError( pFile->port );
+      }
+      lSent = hb_comSend(pFile->port, data, lSent, timeout);
+      errcode = hb_comGetError(pFile->port);
       if( lSent <= 0 && errcode == HB_COM_ERR_TIMEOUT )
+      {
          lSent = 0;
+      }
       else if( lSent == 0 )
+      {
          lSent = -1;
+      }
    }
    else
+   {
       errcode = HB_COM_ERR_ACCESS;
+   }
 
-   hb_fsSetError( errcode );
+   hb_fsSetError(errcode);
 
    return lSent;
 }
 
-static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
+static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue)
 {
    switch( iIndex )
    {
@@ -374,20 +414,20 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
          HB_MAXINT timeout = pFile->timeout;
 
          if( HB_IS_NUMERIC(pValue) )
-            pFile->timeout = hb_itemGetNInt( pValue );
-         hb_itemPutNInt( pValue, timeout );
+         {
+            pFile->timeout = hb_itemGetNInt(pValue);
+         }
+         hb_itemPutNInt(pValue, timeout);
          return true;
       }
 
       case HB_VF_PORT:
-         hb_itemPutNInt( pValue, pFile->port );
+         hb_itemPutNInt(pValue, pFile->port);
          return true;
 
       case HB_VF_SHUTDOWN:
       {
-         int iMode = pFile->fRead ?
-                     ( pFile->fWrite ? FO_READWRITE : FO_READ ) :
-                     ( pFile->fWrite ? FO_WRITE : -1 );
+         int iMode = pFile->fRead ? (pFile->fWrite ? FO_READWRITE : FO_READ) : (pFile->fWrite ? FO_WRITE : -1);
 
          if( HB_IS_NUMERIC(pValue) )
          {
@@ -409,7 +449,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
       }
       case HB_VF_RDHANDLE:
       case HB_VF_WRHANDLE:
-         hb_itemPutNInt( pValue, static_cast<HB_NHANDLE>(hb_comGetDeviceHandle(pFile->port)) );
+         hb_itemPutNInt(pValue, static_cast<HB_NHANDLE>(hb_comGetDeviceHandle(pFile->port)));
          return true;
 
       case HB_VF_IONAME:
@@ -420,9 +460,9 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
    return false;
 }
 
-static HB_FHANDLE s_fileHandle( PHB_FILE pFile )
+static HB_FHANDLE s_fileHandle(PHB_FILE pFile)
 {
-   return pFile ? hb_comGetDeviceHandle( pFile->port ) : FS_ERROR;
+   return pFile ? hb_comGetDeviceHandle(pFile->port) : FS_ERROR;
 }
 
 static HB_FILE_FUNCS s_fileFuncs =
@@ -467,7 +507,7 @@ static HB_FILE_FUNCS s_fileFuncs =
    s_fileHandle
 };
 
-static PHB_FILE s_fileNew( int port, HB_MAXINT timeout, HB_BOOL fRead, HB_BOOL fWrite )
+static PHB_FILE s_fileNew(int port, HB_MAXINT timeout, HB_BOOL fRead, HB_BOOL fWrite)
 {
    PHB_FILE pFile = static_cast<PHB_FILE>(hb_xgrab(sizeof(HB_FILE)));
 
@@ -480,16 +520,18 @@ static PHB_FILE s_fileNew( int port, HB_MAXINT timeout, HB_BOOL fRead, HB_BOOL f
    return pFile;
 }
 
-HB_FUNC( HB_COMIO ) { ; }
+HB_FUNC( HB_COMIO )
+{
+   ;
+}
 
-
-HB_CALL_ON_STARTUP_BEGIN( _hb_file_comio_init_ )
-   hb_fileRegisterPart( &s_fileFuncs );
-HB_CALL_ON_STARTUP_END( _hb_file_comio_init_ )
+HB_CALL_ON_STARTUP_BEGIN(_hb_file_comio_init_)
+   hb_fileRegisterPart(&s_fileFuncs);
+HB_CALL_ON_STARTUP_END(_hb_file_comio_init_)
 
 #if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_file_comio_init_
 #elif defined(HB_DATASEG_STARTUP)
-   #define HB_DATASEG_BODY  HB_DATASEG_FUNC( _hb_file_comio_init_ )
+   #define HB_DATASEG_BODY HB_DATASEG_FUNC(_hb_file_comio_init_)
    #include "hbiniseg.h"
 #endif

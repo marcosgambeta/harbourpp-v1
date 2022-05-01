@@ -266,7 +266,7 @@ static int amf3_add_index( amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem 
    {
       PHB_ITEM pKey = hb_itemNew(nullptr);
 
-      _ref_realItemPtr( pKey, pItem );
+      _ref_realItemPtr(pKey, pItem);
       if( !HB_IS_POINTER(pKey) && !HB_IS_DATETIME(pKey) )
       {
          hb_itemRelease(pKey);
@@ -285,7 +285,7 @@ static int amf3_add_index( amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem 
 
       pVal = hb_itemPutNS(nullptr, result);
 
-      if( !hb_hashAdd( pHash, pKey, pVal ) )
+      if( !hb_hashAdd(pHash, pKey, pVal) )
       {
          hb_itemRelease(pKey);
          hb_itemRelease(pVal);
@@ -324,7 +324,7 @@ static int amf3_get_index( amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem 
       HB_SIZE nPos;
       PHB_ITEM pVal;
 
-      _ref_realItemPtr( pKey, pItem );
+      _ref_realItemPtr(pKey, pItem);
       if( !HB_IS_POINTER(pKey) && !HB_IS_DOUBLE(pKey) )
       {
          hb_itemRelease(pKey);
@@ -338,7 +338,7 @@ static int amf3_get_index( amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem 
          if( pVal )
             return static_cast<int>(hb_itemGetNS(pVal));
       }
-      else if( hb_hashScan( pHash, pKey, &nPos ) )
+      else if( hb_hashScan(pHash, pKey, &nPos) )
       {
          hb_itemRelease(pKey);
          return static_cast<int>(nPos - 1);
@@ -693,7 +693,7 @@ static int amf3_encode_class_def( amfContext * context, PHB_ITEM pClass )
 
    for( i = 0; i < static_attr_len; i++ )
    {
-      PHB_ITEM attr_name = hb_itemArrayGet( static_attrs, i );
+      PHB_ITEM attr_name = hb_itemArrayGet(static_attrs, i);
       if( !attr_name )
       {
          /* not needed hb_itemRelease(static_attrs); */
@@ -742,7 +742,7 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
 
    pKey   = hb_itemPutC(nullptr, "CLASS_DEF");
    pValue = hb_itemNew(nullptr);
-   if( !hb_hashAdd( pClass, pKey, pValue ) )
+   if( !hb_hashAdd(pClass, pKey, pValue) )
    {
       hb_itemRelease(pKey);
       hb_itemRelease(pValue);
@@ -754,7 +754,7 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
 
    pKey   = hb_itemPutC(nullptr, "alias");
    pValue = hb_itemPutC(nullptr, hb_clsName(uiClass) );
-   if( !hb_hashAdd( pClass, pKey, pValue ) )
+   if( !hb_hashAdd(pClass, pKey, pValue) )
    {
       hb_itemRelease(pKey);
       hb_itemRelease(pValue);
@@ -768,7 +768,7 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
    {
       pKey   = hb_itemPutC(nullptr, "EXTERNALIZABLE_CLASS_DEF");
       pValue = hb_itemNew(nullptr);
-      if( !hb_hashAdd( pClass, pKey, pValue ) )
+      if( !hb_hashAdd(pClass, pKey, pValue) )
       {
          hb_itemRelease(pKey);
          hb_itemRelease(pValue);
@@ -783,7 +783,7 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
 #if 0
    hb_itemPutC(pKey, "DYNAMIC_CLASS_DEF");
    hb_itemNew(pValue);
-   if( !hb_hashAdd( pClass, pKey, pValue ) )
+   if( !hb_hashAdd(pClass, pKey, pValue) )
    {
       hb_itemRelease(pKey);
       hb_itemRelease(pValue);
@@ -891,7 +891,7 @@ static HB_BOOL amf3_encode_object( amfContext * context, PHB_ITEM pItem )
          return 0;
       }
 
-      int result = encode_AMF3( context, static_attr );
+      int result = encode_AMF3(context, static_attr);
       Py_DECREF( static_attr );
       if( !result )
       {
@@ -912,7 +912,7 @@ static HB_BOOL amf3_encode_object( amfContext * context, PHB_ITEM pItem )
          return 0;
       }
 
-      int result = encode_dynamic_dict_AMF3( context, dynamic_attrs );
+      int result = encode_dynamic_dict_AMF3(context, dynamic_attrs);
       Py_DECREF( dynamic_attrs );
       if( !result )
       {
@@ -1151,7 +1151,7 @@ HB_FUNC( AMF3_FROMWA )
    HB_USHORT    uiFields;
    HB_ULONG     uiRecCount     = 0;
    HB_ULONG     uiRecNo        = 0;
-   HB_BOOL      bNoFieldPassed = ( pFields == nullptr || hb_arrayLen(pFields) == 0 );
+   HB_BOOL      bNoFieldPassed = (pFields == nullptr || hb_arrayLen(pFields) == 0);
    HB_BOOL      bEof  = HB_FALSE;
    AREAP        pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    PHB_ITEM     pItem;
@@ -1168,13 +1168,13 @@ HB_FUNC( AMF3_FROMWA )
    {
       memset(&pInfo, 0, sizeof(pInfo));
       pInfo.itmResult = hb_itemPutNI(nullptr, 0);
-      SELF_ORDINFO( pArea, DBOI_NUMBER, &pInfo );
+      SELF_ORDINFO(pArea, DBOI_NUMBER, &pInfo);
       iOrd = hb_itemGetNI(pInfo.itmResult);
       if( iOrd > 0 )
       {
-         SELF_ORDINFO( pArea, DBOI_KEYCOUNT, &pInfo );
+         SELF_ORDINFO(pArea, DBOI_KEYCOUNT, &pInfo);
          uiRecCount = hb_itemGetNL(pInfo.itmResult);
-         SELF_ORDINFO( pArea, DBOI_POSITION, &pInfo );
+         SELF_ORDINFO(pArea, DBOI_POSITION, &pInfo);
          uiRecNo = hb_itemGetNL(pInfo.itmResult);
 
          hb_itemRelease(pInfo.itmResult);
@@ -1183,10 +1183,10 @@ HB_FUNC( AMF3_FROMWA )
       {
          hb_itemRelease(pInfo.itmResult);
 
-         if( SELF_RECCOUNT( pArea, &uiRecCount ) != HB_SUCCESS )
+         if( SELF_RECCOUNT(pArea, &uiRecCount) != HB_SUCCESS )
             return;
 
-         if( SELF_RECNO( pArea, &uiRecNo ) != HB_SUCCESS )
+         if( SELF_RECNO(pArea, &uiRecNo) != HB_SUCCESS )
             return;
       }
 
@@ -1204,7 +1204,7 @@ HB_FUNC( AMF3_FROMWA )
          uiRecCount = 0;
          while( (nCount == 0 || uiRecCount < nCount) && (!pWhile || hb_itemGetL(hb_vmEvalBlock(pWhile))) )
          {
-            if( SELF_EOF( pArea, &bEof ) != HB_SUCCESS )
+            if( SELF_EOF(pArea, &bEof) != HB_SUCCESS )
                break;
 
             if( bEof )
@@ -1213,7 +1213,7 @@ HB_FUNC( AMF3_FROMWA )
             if( !pFor || hb_itemGetL(hb_vmEvalBlock(pFor)) )
                uiRecCount++;
 
-            if( SELF_SKIP( pArea, 1 ) != HB_SUCCESS )
+            if( SELF_SKIP(pArea, 1) != HB_SUCCESS )
                break;
          }
          nCount = uiRecCount;
@@ -1223,12 +1223,12 @@ HB_FUNC( AMF3_FROMWA )
             memset(&pInfo, 0, sizeof(pInfo));
             pInfo.itmNewVal = hb_itemPutNL(nullptr, uiRecNo);
             pInfo.itmResult = hb_itemPutL(nullptr, false);
-            SELF_ORDINFO( pArea, DBOI_POSITION, &pInfo );
+            SELF_ORDINFO(pArea, DBOI_POSITION, &pInfo);
             hb_itemRelease(pInfo.itmNewVal);
             hb_itemRelease(pInfo.itmResult);
          }
          else
-            SELF_GOTO( pArea, uiRecNo );
+            SELF_GOTO(pArea, uiRecNo);
       }
 
       /* TODO: should be if( writeByte() ), before we make a variant that operates on streams directly */
@@ -1237,7 +1237,7 @@ HB_FUNC( AMF3_FROMWA )
       amf3_encode_int( context, ( ( int ) nCount << 1 ) | REFERENCE_BIT );
       writeByte( context, NULL_TYPE );
 
-      SELF_FIELDCOUNT( pArea, &uiFields );
+      SELF_FIELDCOUNT(pArea, &uiFields);
 
       if( !bNoFieldPassed )
       {
@@ -1248,20 +1248,20 @@ HB_FUNC( AMF3_FROMWA )
             const char * szFieldName = hb_arrayGetCPtr(pFields, uiIter);
             if( szFieldName )
             {
-               int iPos = hb_rddFieldIndex( pArea, szFieldName );
+               int iPos = hb_rddFieldIndex(pArea, szFieldName);
 
                if( iPos )
                {
                   PHB_ITEM pFieldNum = hb_itemPutNI(nullptr, iPos);
-                  hb_itemArrayPut( pFields, uiIter, pFieldNum );
+                  hb_itemArrayPut(pFields, uiIter, pFieldNum);
                   hb_itemRelease(pFieldNum);
                   continue;
                }
             }
 
-            if( hb_arrayDel( pFields, uiIter ) )
+            if( hb_arrayDel(pFields, uiIter) )
             {
-               hb_arraySize( pFields, hb_arrayLen(pFields) - 1 );
+               hb_arraySize(pFields, hb_arrayLen(pFields) - 1);
                uiIter--;
                uiFieldCopy--;
             }
@@ -1280,9 +1280,9 @@ HB_FUNC( AMF3_FROMWA )
                char * szName = static_cast<char*>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
                pField      = hb_itemNew(nullptr);
                szName[0] = '\0';
-               SELF_FIELDNAME( pArea, uiIter, szName );
-               hb_itemPutCPtr( pField, szName );
-               hb_arraySet( pFieldNames, uiIter, pField );
+               SELF_FIELDNAME(pArea, uiIter, szName);
+               hb_itemPutCPtr(pField, szName);
+               hb_arraySet(pFieldNames, uiIter, pField);
                hb_itemRelease(pField);
             }
          }
@@ -1294,9 +1294,9 @@ HB_FUNC( AMF3_FROMWA )
                char * szName = static_cast<char*>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
                pField      = hb_itemNew(nullptr);
                szName[0] = '\0';
-               SELF_FIELDNAME( pArea, static_cast<HB_USHORT>(hb_itemGetNI(hb_arrayGetItemPtr(pFields, uiIter))), szName);
-               hb_itemPutCPtr( pField, szName );
-               hb_arraySet( pFieldNames, uiIter, pField );
+               SELF_FIELDNAME(pArea, static_cast<HB_USHORT>(hb_itemGetNI(hb_arrayGetItemPtr(pFields, uiIter))), szName);
+               hb_itemPutCPtr(pField, szName);
+               hb_arraySet(pFieldNames, uiIter, pField);
                hb_itemRelease(pField);
             }
          }
@@ -1305,7 +1305,7 @@ HB_FUNC( AMF3_FROMWA )
       uiRecCount = 0;
       while( (nCount == 0 || uiRecCount <= nCount) && (!pWhile || hb_itemGetL(hb_vmEvalBlock(pWhile))) )
       {
-         if( SELF_EOF( pArea, &bEof ) != HB_SUCCESS )
+         if( SELF_EOF(pArea, &bEof) != HB_SUCCESS )
             break;
 
          if( bEof )
@@ -1322,7 +1322,7 @@ HB_FUNC( AMF3_FROMWA )
                   writeByte( context, NULL_TYPE );
                   for( uiIter = 1; uiIter <= uiFields; uiIter++ )
                   {
-                     SELF_GETVALUE( pArea, uiIter, pItem );
+                     SELF_GETVALUE(pArea, uiIter, pItem);
                      amf3_encode( context, pItem );
                   }
                }
@@ -1332,7 +1332,7 @@ HB_FUNC( AMF3_FROMWA )
                   writeByte( context, NULL_TYPE );
                   for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ )
                   {
-                     SELF_GETVALUE(pArea, static_cast<HB_USHORT>(hb_itemGetNI(hb_arrayGetItemPtr(pFields, uiIter))) /* hb_arrayGetNI( pFields, uiIter ) */, pItem );
+                     SELF_GETVALUE(pArea, static_cast<HB_USHORT>(hb_itemGetNI(hb_arrayGetItemPtr(pFields, uiIter))) /* hb_arrayGetNI(pFields, uiIter) */, pItem );
                      amf3_encode( context, pItem );
                   }
                }
@@ -1351,7 +1351,7 @@ HB_FUNC( AMF3_FROMWA )
                {
                   for( uiIter = 1; uiIter <= uiFields; uiIter++ )
                   {
-                     SELF_GETVALUE( pArea, uiIter, pValue );
+                     SELF_GETVALUE(pArea, uiIter, pValue);
                      amf3_serialize_string( context, hb_arrayGetItemPtr(pFieldNames, uiIter) );
                      amf3_encode( context, pValue );
                   }
@@ -1360,7 +1360,7 @@ HB_FUNC( AMF3_FROMWA )
                {
                   for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ )
                   {
-                     SELF_GETVALUE( pArea, static_cast<HB_USHORT>(hb_itemGetNI(hb_arrayGetItemPtr(pFields, uiIter))), pValue );
+                     SELF_GETVALUE(pArea, static_cast<HB_USHORT>(hb_itemGetNI(hb_arrayGetItemPtr(pFields, uiIter))), pValue);
                      amf3_serialize_string( context, hb_arrayGetItemPtr(pFieldNames, uiIter) );
                      amf3_encode( context, pValue );
                   }
@@ -1372,7 +1372,7 @@ HB_FUNC( AMF3_FROMWA )
             uiRecCount++;
          }
 
-         if( SELF_SKIP( pArea, 1 ) != HB_SUCCESS )
+         if( SELF_SKIP(pArea, 1) != HB_SUCCESS )
             break;
 
       }
@@ -1384,7 +1384,7 @@ HB_FUNC( AMF3_FROMWA )
 
       context->cBuf = static_cast<char*>(hb_xrealloc(context->cBuf, sizeof(char) * context->position + 1));
 
-      hb_retclen_buffer( context->cBuf, context->position );
+      hb_retclen_buffer(context->cBuf, context->position);
 
       context_release( context, outer_context );
 
@@ -1392,7 +1392,7 @@ HB_FUNC( AMF3_FROMWA )
 
    }
    else
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
 }
 
 HB_FUNC( AMF3_ENCODE )
@@ -1455,6 +1455,6 @@ HB_FUNC( AMF3_ENCODE )
 
    context->cBuf = static_cast<char*>(hb_xrealloc(context->cBuf, sizeof(char) * context->position + 1));
 
-   hb_retclen_buffer( context->cBuf, context->position );
+   hb_retclen_buffer(context->cBuf, context->position);
    hb_xfree(context);
 }

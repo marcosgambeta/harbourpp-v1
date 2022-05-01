@@ -50,7 +50,7 @@
 HB_FUNC( CAIRO_PDF_SURFACE_CREATE )
 {
 #ifdef CAIRO_HAS_PDF_SURFACE
-   hb_cairo_surface_ret( cairo_pdf_surface_create( hb_parc(1), hb_parnd(2), hb_parnd(3) ) );
+   hb_cairo_surface_ret(cairo_pdf_surface_create(hb_parc(1), hb_parnd(2), hb_parnd(3)));
 #else
    hb_retptr(nullptr);
 #endif
@@ -62,7 +62,7 @@ HB_FUNC( CAIRO_PDF_SURFACE_SET_SIZE )
    cairo_surface_t * pSurface = hb_cairo_surface_param(1);
    if( pSurface )
    {
-      cairo_pdf_surface_set_size( pSurface, hb_parnd(2), hb_parnd(3) );
+      cairo_pdf_surface_set_size(pSurface, hb_parnd(2), hb_parnd(3));
    }
 #else
    /* Just paramter validation */

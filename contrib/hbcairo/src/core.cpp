@@ -49,13 +49,13 @@
 #include "hbapierr.h"
 
 /* --- cairo_t * support --- */
-static HB_GARBAGE_FUNC( hb_cairo_destructor )
+static HB_GARBAGE_FUNC(hb_cairo_destructor)
 {
    cairo_t ** ppCairo = static_cast<cairo_t**>(Cargo);
 
    if( *ppCairo )
    {
-      cairo_destroy( *ppCairo );
+      cairo_destroy(*ppCairo);
       *ppCairo = nullptr;
    }
 }
@@ -90,13 +90,13 @@ cairo_t * hb_cairo_param( int iParam )
       return *ppCairo;
    }
 
-   hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    return nullptr;
 }
 
 void hb_cairo_ret( cairo_t * pCairo )
 {
-   hb_cairoItemPut( hb_stackReturnItem(), pCairo );
+   hb_cairoItemPut(hb_stackReturnItem(), pCairo);
 }
 
 HB_FUNC( CAIRO_DESTROY )
@@ -105,23 +105,23 @@ HB_FUNC( CAIRO_DESTROY )
 
    if( ppCairo && *ppCairo )
    {
-      cairo_destroy( *ppCairo );
+      cairo_destroy(*ppCairo);
       *ppCairo = nullptr;
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 /* --- cairo_surface_t * support --- */
-static HB_GARBAGE_FUNC( hb_cairo_surface_destructor )
+static HB_GARBAGE_FUNC(hb_cairo_surface_destructor)
 {
    cairo_surface_t ** ppSurface = static_cast<cairo_surface_t**>(Cargo);
 
    if( *ppSurface )
    {
-      cairo_surface_destroy( *ppSurface );
+      cairo_surface_destroy(*ppSurface);
       *ppSurface = nullptr;
    }
 }
@@ -147,15 +147,15 @@ PHB_ITEM hb_cairoSurfaceItemPut(PHB_ITEM pItem, cairo_surface_t * pSurface)
    return hb_itemPutPtrGC(pItem, ppSurface);
 }
 
-void hb_cairoSurfaceStor( cairo_surface_t * pSurface, int iParam )
+void hb_cairoSurfaceStor(cairo_surface_t * pSurface, int iParam)
 {
    cairo_surface_t ** ppSurface = static_cast<cairo_surface_t**>(hb_gcAllocate(sizeof(cairo_surface_t*), &s_gcSurfaceFuncs));
 
    *ppSurface = pSurface;
-   hb_storptrGC( ppSurface, iParam );
+   hb_storptrGC(ppSurface, iParam);
 }
 
-cairo_surface_t * hb_cairo_surface_param( int iParam )
+cairo_surface_t * hb_cairo_surface_param(int iParam)
 {
    cairo_surface_t ** ppSurface = static_cast<cairo_surface_t**>(hb_parptrGC(&s_gcSurfaceFuncs, iParam));
 
@@ -164,13 +164,13 @@ cairo_surface_t * hb_cairo_surface_param( int iParam )
       return *ppSurface;
    }
 
-   hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    return nullptr;
 }
 
-void hb_cairo_surface_ret( cairo_surface_t * pSurface )
+void hb_cairo_surface_ret(cairo_surface_t * pSurface)
 {
-   hb_cairoSurfaceItemPut( hb_stackReturnItem(), pSurface );
+   hb_cairoSurfaceItemPut(hb_stackReturnItem(), pSurface);
 }
 
 HB_FUNC( CAIRO_SURFACE_DESTROY )
@@ -179,23 +179,23 @@ HB_FUNC( CAIRO_SURFACE_DESTROY )
 
    if( ppSurface && *ppSurface )
    {
-      cairo_surface_destroy( *ppSurface );
+      cairo_surface_destroy(*ppSurface);
       *ppSurface = nullptr;
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 /* --- cairo_path_t * support --- */
-static HB_GARBAGE_FUNC( hb_cairo_path_destructor )
+static HB_GARBAGE_FUNC(hb_cairo_path_destructor)
 {
    cairo_path_t ** ppPath = static_cast<cairo_path_t**>(Cargo);
 
    if( *ppPath )
    {
-      cairo_path_destroy( *ppPath );
+      cairo_path_destroy(*ppPath);
       *ppPath = nullptr;
    }
 }
@@ -221,7 +221,7 @@ PHB_ITEM hb_cairoPathItemPut(PHB_ITEM pItem, cairo_path_t * pPath)
    return hb_itemPutPtrGC(pItem, ppPath);
 }
 
-cairo_path_t * hb_cairo_path_param( int iParam )
+cairo_path_t * hb_cairo_path_param(int iParam)
 {
    cairo_path_t ** ppPath = static_cast<cairo_path_t**>(hb_parptrGC(&s_gcPathFuncs, iParam));
 
@@ -230,13 +230,13 @@ cairo_path_t * hb_cairo_path_param( int iParam )
       return *ppPath;
    }
 
-   hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    return nullptr;
 }
 
-void hb_cairo_path_ret( cairo_path_t * pPath )
+void hb_cairo_path_ret(cairo_path_t * pPath)
 {
-   hb_cairoPathItemPut( hb_stackReturnItem(), pPath );
+   hb_cairoPathItemPut(hb_stackReturnItem(), pPath);
 }
 
 HB_FUNC( CAIRO_PATH_DESTROY )
@@ -245,12 +245,12 @@ HB_FUNC( CAIRO_PATH_DESTROY )
 
    if( ppPath && *ppPath )
    {
-      cairo_path_destroy( *ppPath );
+      cairo_path_destroy(*ppPath);
       *ppPath = nullptr;
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -267,24 +267,24 @@ struct HB_CAIRO_PATH_ITERATOR
 
 using PHB_CAIRO_PATH_ITERATOR = HB_CAIRO_PATH_ITERATOR *;
 
-static HB_GARBAGE_FUNC( hb_cairo_path_iterator_destructor )
+static HB_GARBAGE_FUNC(hb_cairo_path_iterator_destructor)
 {
    PHB_CAIRO_PATH_ITERATOR pIterator = static_cast<PHB_CAIRO_PATH_ITERATOR>(Cargo);
 
    if( pIterator->ppPath )
    {
-      hb_gcRefFree( pIterator->ppPath );
+      hb_gcRefFree(pIterator->ppPath);
       pIterator->ppPath = nullptr;
    }
 }
 
-static HB_GARBAGE_FUNC( hb_cairo_path_iterator_mark )
+static HB_GARBAGE_FUNC(hb_cairo_path_iterator_mark)
 {
    PHB_CAIRO_PATH_ITERATOR pIterator = static_cast<PHB_CAIRO_PATH_ITERATOR>(Cargo);
 
    if( pIterator->ppPath )
    {
-      hb_gcMark( pIterator->ppPath );
+      hb_gcMark(pIterator->ppPath);
    }
 }
 
@@ -302,13 +302,13 @@ HB_FUNC( CAIRO_PATH_ITERATOR_CREATE )
    {
       PHB_CAIRO_PATH_ITERATOR pIterator = static_cast<PHB_CAIRO_PATH_ITERATOR>(hb_gcAllocate(sizeof(HB_CAIRO_PATH_ITERATOR), &s_gcIteratorFuncs));
       pIterator->ppPath = ppPath;
-      hb_gcRefInc( ppPath );
+      hb_gcRefInc(ppPath);
       pIterator->iPos = -1;
-      hb_itemPutPtrGC( hb_stackReturnItem(), pIterator );
+      hb_itemPutPtrGC(hb_stackReturnItem(), pIterator);
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -318,21 +318,21 @@ HB_FUNC( CAIRO_PATH_ITERATOR_DESTROY )
 
    if( pIterator && pIterator->ppPath )
    {
-      hb_gcRefFree( pIterator->ppPath );
+      hb_gcRefFree(pIterator->ppPath);
       pIterator->ppPath = nullptr;
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( CAIRO_PATH_ITERATOR_NEXT )
 {
    PHB_CAIRO_PATH_ITERATOR pIterator = static_cast<PHB_CAIRO_PATH_ITERATOR>(hb_parptrGC(&s_gcIteratorFuncs, 1));
-   cairo_path_t *          pPath;
+   cairo_path_t * pPath;
 
-   if( pIterator && pIterator->ppPath && ( pPath = *( pIterator->ppPath ) ) != nullptr )
+   if( pIterator && pIterator->ppPath && (pPath = *(pIterator->ppPath)) != nullptr )
    {
       /* Skip */
       if( pIterator->iPos == -1 )
@@ -356,24 +356,24 @@ HB_FUNC( CAIRO_PATH_ITERATOR_NEXT )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( CAIRO_PATH_ITERATOR_GET_POINTS )
 {
    PHB_CAIRO_PATH_ITERATOR pIterator = static_cast<PHB_CAIRO_PATH_ITERATOR>(hb_parptrGC(&s_gcIteratorFuncs, 1));
-   cairo_path_t *          pPath;
+   cairo_path_t * pPath;
 
-   if( pIterator && pIterator->ppPath && ( pPath = *( pIterator->ppPath ) ) != nullptr )
+   if( pIterator && pIterator->ppPath && (pPath = *(pIterator->ppPath)) != nullptr )
    {
       if( pIterator->iPos < pPath->num_data && pIterator->iPos != -1 )
       {
          cairo_path_data_t * pData;
          PHB_ITEM pArray;
 
-         pData  = pPath->data + pIterator->iPos;
-         pArray = hb_itemArrayNew( pData->header.length - 1 );
+         pData = pPath->data + pIterator->iPos;
+         pArray = hb_itemArrayNew(pData->header.length - 1);
          for( int i = 1; i < pData->header.length; i++ )
          {
             PHB_ITEM pItem = hb_arrayGetItemPtr(pArray, i);
@@ -390,23 +390,22 @@ HB_FUNC( CAIRO_PATH_ITERATOR_GET_POINTS )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( CAIRO_PATH_ITERATOR_SET_POINTS )
 {
    PHB_CAIRO_PATH_ITERATOR pIterator = static_cast<PHB_CAIRO_PATH_ITERATOR>(hb_parptrGC(&s_gcIteratorFuncs, 1));
-   PHB_ITEM       pArray = hb_param(2, Harbour::Item::ARRAY);
+   PHB_ITEM pArray = hb_param(2, Harbour::Item::ARRAY);
    cairo_path_t * pPath;
 
-   if( pIterator && pIterator->ppPath && ( pPath = *( pIterator->ppPath ) ) != nullptr && pArray )
+   if( pIterator && pIterator->ppPath && (pPath = *(pIterator->ppPath)) != nullptr && pArray )
    {
       HB_SIZE nLen;
 
       nLen = hb_arrayLen(pArray);
-      if( pIterator->iPos < pPath->num_data && pIterator->iPos != -1 &&
-          static_cast<HB_SIZE>(pPath->data[pIterator->iPos].header.length) == nLen + 1 )
+      if( pIterator->iPos < pPath->num_data && pIterator->iPos != -1 && static_cast<HB_SIZE>(pPath->data[pIterator->iPos].header.length) == nLen + 1 )
       {
          cairo_path_data_t * pData;
 
@@ -434,6 +433,6 @@ HB_FUNC( CAIRO_PATH_ITERATOR_SET_POINTS )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

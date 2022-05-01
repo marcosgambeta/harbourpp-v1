@@ -49,13 +49,13 @@
 #include "hbapierr.h"
 
 /* --- cairo_pattern_t * support --- */
-static HB_GARBAGE_FUNC( hb_cairo_pattern_destructor )
+static HB_GARBAGE_FUNC(hb_cairo_pattern_destructor)
 {
    cairo_pattern_t ** ppPattern = static_cast<cairo_pattern_t**>(Cargo);
 
    if( *ppPattern )
    {
-      cairo_pattern_destroy( *ppPattern );
+      cairo_pattern_destroy(*ppPattern);
       *ppPattern = nullptr;
    }
 }
@@ -81,7 +81,7 @@ PHB_ITEM hb_cairoPatternItemPut(PHB_ITEM pItem, cairo_pattern_t * pPattern)
    return hb_itemPutPtrGC(pItem, ppPattern);
 }
 
-cairo_pattern_t * hb_cairo_pattern_param( int iParam )
+cairo_pattern_t * hb_cairo_pattern_param(int iParam)
 {
    cairo_pattern_t ** ppPattern = static_cast<cairo_pattern_t**>(hb_parptrGC(&s_gcPatternFuncs, iParam));
 
@@ -90,13 +90,13 @@ cairo_pattern_t * hb_cairo_pattern_param( int iParam )
       return *ppPattern;
    }
 
-   hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    return nullptr;
 }
 
-void hb_cairo_pattern_ret( cairo_pattern_t * pPattern )
+void hb_cairo_pattern_ret(cairo_pattern_t * pPattern)
 {
-   hb_cairoPatternItemPut( hb_stackReturnItem(), pPattern );
+   hb_cairoPatternItemPut(hb_stackReturnItem(), pPattern);
 }
 
 HB_FUNC( CAIRO_PATTERN_DESTROY )
@@ -105,12 +105,12 @@ HB_FUNC( CAIRO_PATTERN_DESTROY )
 
    if( ppPattern && *ppPattern )
    {
-      cairo_pattern_destroy( *ppPattern );
+      cairo_pattern_destroy(*ppPattern);
       *ppPattern = nullptr;
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -120,7 +120,7 @@ HB_FUNC( CAIRO_PATTERN_ADD_COLOR_STOP_RGB )
 
    if( pPattern )
    {
-      cairo_pattern_add_color_stop_rgb( pPattern, hb_parnd(2), hb_parnd(3), hb_parnd(4), hb_parnd(5) );
+      cairo_pattern_add_color_stop_rgb(pPattern, hb_parnd(2), hb_parnd(3), hb_parnd(4), hb_parnd(5));
    }
 }
 
@@ -130,7 +130,7 @@ HB_FUNC( CAIRO_PATTERN_ADD_COLOR_STOP_RGBA )
 
    if( pPattern )
    {
-      cairo_pattern_add_color_stop_rgba( pPattern, hb_parnd(2), hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6) );
+      cairo_pattern_add_color_stop_rgba(pPattern, hb_parnd(2), hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6));
    }
 }
 
@@ -189,12 +189,12 @@ HB_FUNC( CAIRO_PATTERN_GET_COLOR_STOP_RGBA )
 
 HB_FUNC( CAIRO_PATTERN_CREATE_RGB )
 {
-   hb_cairo_pattern_ret( cairo_pattern_create_rgb( hb_parnd(1), hb_parnd(2), hb_parnd(3) ) );
+   hb_cairo_pattern_ret(cairo_pattern_create_rgb(hb_parnd(1), hb_parnd(2), hb_parnd(3)));
 }
 
 HB_FUNC( CAIRO_PATTERN_CREATE_RGBA )
 {
-   hb_cairo_pattern_ret( cairo_pattern_create_rgba( hb_parnd(1), hb_parnd(2), hb_parnd(3), hb_parnd(3) ) );
+   hb_cairo_pattern_ret(cairo_pattern_create_rgba(hb_parnd(1), hb_parnd(2), hb_parnd(3), hb_parnd(3)));
 }
 
 HB_FUNC( CAIRO_PATTERN_GET_RGBA )
@@ -228,7 +228,7 @@ HB_FUNC( CAIRO_PATTERN_GET_RGBA )
 
 HB_FUNC( CAIRO_PATTERN_CREATE_FOR_SURFACE )
 {
-   hb_cairo_pattern_ret( cairo_pattern_create_for_surface( hb_cairo_surface_param(1) ) );
+   hb_cairo_pattern_ret(cairo_pattern_create_for_surface(hb_cairo_surface_param(1)));
 }
 
 HB_FUNC( CAIRO_PATTERN_GET_SURFACE )
@@ -242,7 +242,7 @@ HB_FUNC( CAIRO_PATTERN_GET_SURFACE )
 
       hb_retni(cairo_pattern_get_surface(pPattern, &pSurface));
 
-      hb_cairoSurfaceStor( pSurface, 2 );
+      hb_cairoSurfaceStor(pSurface, 2);
    }
    else
    {
@@ -256,7 +256,7 @@ HB_FUNC( CAIRO_PATTERN_GET_SURFACE )
 
 HB_FUNC( CAIRO_PATTERN_CREATE_LINEAR )
 {
-   hb_cairo_pattern_ret( cairo_pattern_create_linear( hb_parnd(1), hb_parnd(2), hb_parnd(3), hb_parnd(4) ) );
+   hb_cairo_pattern_ret(cairo_pattern_create_linear(hb_parnd(1), hb_parnd(2), hb_parnd(3), hb_parnd(4)));
 }
 
 HB_FUNC( CAIRO_PATTERN_GET_LINEAR_POINTS )
@@ -290,7 +290,7 @@ HB_FUNC( CAIRO_PATTERN_GET_LINEAR_POINTS )
 
 HB_FUNC( CAIRO_PATTERN_CREATE_RADIAL )
 {
-   hb_cairo_pattern_ret( cairo_pattern_create_radial( hb_parnd(1), hb_parnd(2), hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6) ) );
+   hb_cairo_pattern_ret(cairo_pattern_create_radial(hb_parnd(1), hb_parnd(2), hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6)));
 }
 
 HB_FUNC( CAIRO_PATTERN_GET_RADIAL_CIRCLES )

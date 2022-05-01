@@ -3193,10 +3193,10 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          {
             void * hText;
             HFONT hFont = hb_gt_wvt_GetFont(HB_ARRAYGETSTR(pInfo->pNewVal, 1, &hText, nullptr),
-                                            hb_arrayGetNI( pInfo->pNewVal, 2),
-                                            hb_arrayGetNI( pInfo->pNewVal, 3),
-                                            hb_arrayGetNI( pInfo->pNewVal, 4),
-                                            hb_arrayGetNI( pInfo->pNewVal, 5),
+                                            hb_arrayGetNI(pInfo->pNewVal, 2),
+                                            hb_arrayGetNI(pInfo->pNewVal, 3),
+                                            hb_arrayGetNI(pInfo->pNewVal, 4),
+                                            hb_arrayGetNI(pInfo->pNewVal, 5),
                                             pWVT->CodePage);
             hb_strfree(hText);
 

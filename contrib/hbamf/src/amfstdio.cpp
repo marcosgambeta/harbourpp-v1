@@ -131,5 +131,5 @@ HB_FUNC( AMFSTDIO_READ )
 
    hb_xfree(pszStrIn);
    hb_xfree(pszLenPrefix);
-   hb_retclen_buffer( pszBuf, nLen );
+   hb_retclen_buffer(pszBuf, nLen);
 }

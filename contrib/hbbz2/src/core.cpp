@@ -271,7 +271,7 @@ HB_FUNC( HB_BZ2_COMPRESS )
 
          if( pBuffer )
          {
-            if( !hb_itemGetWriteCL( pBuffer, &pDest, &nDstLen ) )
+            if( !hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) )
                pDest = nullptr;
          }
          else
@@ -286,7 +286,7 @@ HB_FUNC( HB_BZ2_COMPRESS )
             if( !pBuffer )
             {
                if( iResult == BZ_OK )
-                  hb_retclen_buffer( pDest, nDstLen );
+                  hb_retclen_buffer(pDest, nDstLen);
                else
                   hb_xfree(pDest);
             }
@@ -327,7 +327,7 @@ HB_FUNC( HB_BZ2_UNCOMPRESS )
 
          if( pBuffer )
          {
-            if( !hb_itemGetWriteCL( pBuffer, &pDest, &nDstLen ) )
+            if( !hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) )
                iResult = BZ_MEM_ERROR;
          }
          else
@@ -348,7 +348,7 @@ HB_FUNC( HB_BZ2_UNCOMPRESS )
             if( !pBuffer )
             {
                if( iResult == BZ_OK )
-                  hb_retclen_buffer( pDest, nDstLen );
+                  hb_retclen_buffer(pDest, nDstLen);
                else
                   hb_xfree(pDest);
             }

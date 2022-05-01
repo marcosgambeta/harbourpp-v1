@@ -58,7 +58,7 @@ HB_FUNC( CUPSGETDESTS )
 {
    cups_dest_t * dest_list;
    int      num_dests = cupsGetDests( &dest_list );
-   PHB_ITEM pArray    = hb_itemArrayNew( static_cast<HB_SIZE>(num_dests) );
+   PHB_ITEM pArray    = hb_itemArrayNew(static_cast<HB_SIZE>(num_dests));
 
    if( num_dests > 0 )
    {

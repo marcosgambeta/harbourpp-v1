@@ -920,7 +920,7 @@ HB_FUNC( WVT_SETBRUSH )
    }
 }
 
-/* wvt_DrawBoxGet( nRow, nCol, nWidth ) */
+/* wvt_DrawBoxGet(nRow, nCol, nWidth) */
 HB_FUNC( WVT_DRAWBOXGET )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
