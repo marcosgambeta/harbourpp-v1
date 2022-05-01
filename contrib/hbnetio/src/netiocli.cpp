@@ -546,8 +546,8 @@ static PHB_CONCLI s_fileConNew( HB_SOCKET sd, const char * pszServer, int iPort,
 
    iLen = static_cast<int>(strlen(pszServer));
    conn = static_cast<PHB_CONCLI>(hb_xgrab(sizeof(HB_CONCLI) + iLen));
-   hb_atomic_set( &conn->used, 1 );
-   hb_atomic_set( &conn->usrcount, 0 );
+   hb_atomic_set(&conn->used, 1);
+   hb_atomic_set(&conn->usrcount, 0);
    conn->mutex = hb_threadMutexCreate();
    conn->errcode = 0;
    conn->srvdata = nullptr;
@@ -597,7 +597,7 @@ static void s_fileConClose( PHB_CONCLI conn )
    if( hb_atomic_dec( &conn->used ) )
    {
       HB_NETIO_LOCK();
-      if( hb_atomic_get( &conn->used ) == 0 )
+      if( hb_atomic_get(&conn->used) == 0 )
       {
          PHB_CONCLI * connPtr = &s_connections;
          while( *connPtr )
@@ -649,7 +649,7 @@ static HB_BOOL s_fileUsrDisconnect( const char * pszServer, int iPort )
    {
       if( conn->port == iPort && hb_stricmp( conn->server, pszServer ) == 0 )
       {
-         if( hb_atomic_get( &conn->usrcount ) )
+         if( hb_atomic_get(&conn->usrcount) )
          {
             if( hb_atomic_dec( &conn->usrcount ) )
                connClose = conn;
@@ -1887,7 +1887,7 @@ static HB_BOOL s_fileCopy( PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const
    return fResult;
 }
 
-static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR * pulAttr )
+static HB_BOOL s_fileAttrGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR * pulAttr)
 {
    HB_BOOL fResult = HB_FALSE;
    PHB_CONCLI conn;
@@ -1918,7 +1918,7 @@ static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, H
    return fResult;
 }
 
-static HB_BOOL s_fileAttrSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR ulAttr )
+static HB_BOOL s_fileAttrSet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR ulAttr)
 {
    HB_BOOL fResult = HB_FALSE;
    PHB_CONCLI conn;
@@ -1946,7 +1946,7 @@ static HB_BOOL s_fileAttrSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, H
    return fResult;
 }
 
-static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long * plJulian, long * plMillisec )
+static HB_BOOL s_fileTimeGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, long * plJulian, long * plMillisec)
 {
    HB_BOOL fResult = HB_FALSE;
    PHB_CONCLI conn;
@@ -1978,7 +1978,7 @@ static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, l
    return fResult;
 }
 
-static HB_BOOL s_fileTimeSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long lJulian, long lMillisec )
+static HB_BOOL s_fileTimeSet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, long lJulian, long lMillisec)
 {
    HB_BOOL fResult = HB_FALSE;
    PHB_CONCLI conn;
@@ -2528,7 +2528,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
       HB_PUT_LE_UINT32(&msgbuf[10], iIndex);
       memset(msgbuf + 14, '\0', sizeof(msgbuf) - 14);
 
-      hb_itemClear( pValue );
+      hb_itemClear(pValue);
 
       if( s_fileSendMsg( pFile->conn, msgbuf, itmData, static_cast<long>(itmSize), true, false ) )
       {

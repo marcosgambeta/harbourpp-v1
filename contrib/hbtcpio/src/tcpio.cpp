@@ -278,8 +278,8 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
          HB_MAXINT timeout = pFile->timeout;
 
          if( HB_IS_NUMERIC(pValue) )
-            pFile->timeout = hb_itemGetNInt( pValue );
-         hb_itemPutNInt( pValue, timeout );
+            pFile->timeout = hb_itemGetNInt(pValue);
+         hb_itemPutNInt(pValue, timeout);
          return true;
       }
       case HB_VF_SHUTDOWN:
@@ -301,12 +301,12 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
                   break;
             }
          }
-         hb_itemClear( pValue );
+         hb_itemClear(pValue);
          return true;
       }
       case HB_VF_RDHANDLE:
       case HB_VF_WRHANDLE:
-         hb_itemPutNInt( pValue, static_cast<HB_NHANDLE>(hb_sockexGetHandle(pFile->sock)) );
+         hb_itemPutNInt(pValue, static_cast<HB_NHANDLE>(hb_sockexGetHandle(pFile->sock)));
          return true;
 
       case HB_VF_IONAME:
@@ -388,8 +388,8 @@ HB_FUNC( HB_VFFROMSOCKET )
 
    if( pFile )
    {
-      hb_sockexItemClear( hb_param(1, Harbour::Item::POINTER) );
-      hb_fileItemPut( hb_param(-1, Harbour::Item::ANY), pFile );
+      hb_sockexItemClear(hb_param(1, Harbour::Item::POINTER));
+      hb_fileItemPut(hb_param(-1, Harbour::Item::ANY), pFile);
    }
 }
 

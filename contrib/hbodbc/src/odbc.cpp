@@ -109,15 +109,15 @@
 #endif
 
 #if defined(UNICODE)
-   #define O_HB_PARSTR( n, h, len )                 hb_parstr_u16( n, HB_CDP_ENDIAN_NATIVE, h, len )
-   #define O_HB_PARSTRDEF( n, h, len )              hb_wstrnull( hb_parstr_u16( n, HB_CDP_ENDIAN_NATIVE, h, len ) )
-   #define O_HB_STORSTR( str, n )                   hb_storstr_u16( HB_CDP_ENDIAN_NATIVE, str, n )
-   #define O_HB_STORSTRLEN( str, len, n )           hb_storstrlen_u16( HB_CDP_ENDIAN_NATIVE, str, len, n )
-   #define O_HB_ARRAYGETSTR( arr, n, phstr, plen )  hb_arrayGetStrU16( arr, n, HB_CDP_ENDIAN_NATIVE, phstr, plen )
-   #define O_HB_ITEMCOPYSTR( itm, str, len )        hb_itemCopyStrU16( itm, HB_CDP_ENDIAN_NATIVE, str, len )
-   #define O_HB_ITEMGETSTR( itm, phstr, plen )      hb_itemGetStrU16( itm, HB_CDP_ENDIAN_NATIVE, phstr, plen )
-   #define O_HB_ITEMPUTSTR( itm, str )              hb_itemPutStrU16( itm, HB_CDP_ENDIAN_NATIVE, str )
-   #define O_HB_ITEMPUTSTRLEN( itm, str, len )      hb_itemPutStrLenU16( itm, HB_CDP_ENDIAN_NATIVE, str, len )
+   #define O_HB_PARSTR( n, h, len )                 hb_parstr_u16(n, HB_CDP_ENDIAN_NATIVE, h, len)
+   #define O_HB_PARSTRDEF( n, h, len )              hb_wstrnull( hb_parstr_u16(n, HB_CDP_ENDIAN_NATIVE, h, len) )
+   #define O_HB_STORSTR( str, n )                   hb_storstr_u16(HB_CDP_ENDIAN_NATIVE, str, n)
+   #define O_HB_STORSTRLEN( str, len, n )           hb_storstrlen_u16(HB_CDP_ENDIAN_NATIVE, str, len, n)
+   #define O_HB_ARRAYGETSTR( arr, n, phstr, plen )  hb_arrayGetStrU16(arr, n, HB_CDP_ENDIAN_NATIVE, phstr, plen)
+   #define O_HB_ITEMCOPYSTR( itm, str, len )        hb_itemCopyStrU16(itm, HB_CDP_ENDIAN_NATIVE, str, len)
+   #define O_HB_ITEMGETSTR( itm, phstr, plen )      hb_itemGetStrU16(itm, HB_CDP_ENDIAN_NATIVE, phstr, plen)
+   #define O_HB_ITEMPUTSTR( itm, str )              hb_itemPutStrU16(itm, HB_CDP_ENDIAN_NATIVE, str)
+   #define O_HB_ITEMPUTSTRLEN( itm, str, len )      hb_itemPutStrLenU16(itm, HB_CDP_ENDIAN_NATIVE, str, len)
    #define O_HB_CHAR  HB_WCHAR
 #else
    #define O_HB_PARSTR( n, h, len )                 hb_parstr( n, hb_setGetOSCP(), h, len )
@@ -379,7 +379,7 @@ HB_FUNC( SQLALLOCENV )  /* @hEnv --> nRetCode */
 
    if( SQL_SUCCEEDED( result ) )
    {
-      SQLSetEnvAttr( hEnv, SQL_ATTR_ODBC_VERSION, reinterpret_cast<SQLPOINTER>(SQL_OV_ODBC3), SQL_IS_UINTEGER );
+      SQLSetEnvAttr(hEnv, SQL_ATTR_ODBC_VERSION, reinterpret_cast<SQLPOINTER>(SQL_OV_ODBC3), SQL_IS_UINTEGER);
    }
 #else
    result = SQLAllocEnv( &hEnv );
@@ -1298,7 +1298,7 @@ HB_FUNC( HB_ODBCNUMSETLEN )  /* nValue, nSize, nDecimals --> nValue (nSize, nDec
 
    if( pValue != nullptr && HB_IS_NUMINT(pValue) && iDec == 0 )
    {
-      hb_retnintlen( hb_itemGetNInt( pValue ), iLen );
+      hb_retnintlen(hb_itemGetNInt(pValue), iLen);
    }
    else
    {

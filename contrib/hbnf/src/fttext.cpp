@@ -643,7 +643,7 @@ HB_FUNC( FT_FUSE )
    ft_text->error[ft_text->area] = 0;
    if( ft_text->handles[ft_text->area] != nullptr )
    {
-      hb_fileClose( ft_text->handles[ft_text->area] );
+      hb_fileClose(ft_text->handles[ft_text->area]);
       hb_retnint(0);
       ft_text->recno[ft_text->area] = 0;
       ft_text->offset[ft_text->area] = 0;

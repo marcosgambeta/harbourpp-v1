@@ -157,12 +157,12 @@ static HB_FOFFSET getblock( PFT_DISPC dispc, HB_FOFFSET offset )
        the beginning of the file.
     */
 
-   hb_fsSeekLarge( dispc->infile, offset, FS_SET );
+   hb_fsSeekLarge(dispc->infile, offset, FS_SET);
 
    /* read in the file and set the buffer bottom variable equal */
    /*  to the number of bytes actually read in.                 */
 
-   dispc->buffbot = hb_fsReadLarge( dispc->infile, dispc->buffer, dispc->buffsize );
+   dispc->buffbot = hb_fsReadLarge(dispc->infile, dispc->buffer, dispc->buffsize);
 
    /* if a full buffer's worth was not read in, make it full.   */
 
@@ -170,19 +170,19 @@ static HB_FOFFSET getblock( PFT_DISPC dispc, HB_FOFFSET offset )
    {
       if( offset > 0 )
       {
-         hb_fsSeekLarge( dispc->infile, -dispc->buffsize, FS_END );
+         hb_fsSeekLarge(dispc->infile, -dispc->buffsize, FS_END);
       }
       else
       {
-         hb_fsSeekLarge( dispc->infile, dispc->buffsize, FS_SET );
+         hb_fsSeekLarge(dispc->infile, dispc->buffsize, FS_SET);
       }
 
-      dispc->buffbot = hb_fsReadLarge( dispc->infile, dispc->buffer, dispc->buffsize );
+      dispc->buffbot = hb_fsReadLarge(dispc->infile, dispc->buffer, dispc->buffsize);
    }
 
    /* return the actual file position */
 
-   return hb_fsSeekLarge( dispc->infile, 0, FS_RELATIVE ) - dispc->buffbot;
+   return hb_fsSeekLarge(dispc->infile, 0, FS_RELATIVE) - dispc->buffbot;
 }
 
 /*

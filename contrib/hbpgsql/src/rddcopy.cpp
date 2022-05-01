@@ -130,7 +130,7 @@ static HB_BOOL addStrnToContext( pgCopyContext * context, const char * str, HB_S
 }
 
 /* Export field value into the buffer in PG accepted CSV format */
-static HB_BOOL exportBufSqlVar( pgCopyContext * context, PHB_ITEM pValue, const char * szQuote, const char * szEsc )
+static HB_BOOL exportBufSqlVar(pgCopyContext * context, PHB_ITEM pValue, const char * szQuote, const char * szEsc)
 {
    switch( hb_itemType( pValue ) )
    {
@@ -266,9 +266,9 @@ HB_FUNC( HB_PQCOPYFROMWA )
    PGconn * pConn = hb_PGconn_par(1);
 
    if( pConn == nullptr )
-      hb_errRT_BASE( EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    else if( pArea == nullptr )
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    else
    {
       static const char * sc_szQuote = "\"";
@@ -307,7 +307,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
       context->str_trim   = str_rtrim;
       context->connection = pConn;
 
-      SELF_FIELDCOUNT( pArea, &uiFields );
+      SELF_FIELDCOUNT(pArea, &uiFields);
 
       if( !bNoFieldPassed )
       {
@@ -321,7 +321,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
             const char * szFieldName = hb_arrayGetCPtr(pFields, uiIter);
             if( szFieldName )
             {
-               int iPos = hb_rddFieldIndex( pArea, szFieldName );
+               int iPos = hb_rddFieldIndex(pArea, szFieldName);
 
                szTmp = hb_xstrcpy(nullptr, szFields, szFieldName, nullptr);
                hb_xfree(szFields);
@@ -371,7 +371,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
       while( !bFail && ( nCount == 0 || uiRecCount < nCount ) && ( !pWhile || hb_itemGetL(hb_vmEvalBlock(pWhile)) ) )
       {
 
-         if( SELF_EOF( pArea, &bEof ) != HB_SUCCESS )
+         if( SELF_EOF(pArea, &bEof) != HB_SUCCESS )
             break;
 
          if( bEof )
@@ -383,8 +383,8 @@ HB_FUNC( HB_PQCOPYFROMWA )
             {
                for( uiIter = 1; uiIter <= uiFields; uiIter++ )
                {
-                  if( SELF_GETVALUE( pArea, uiIter, pItem ) != HB_SUCCESS ||
-                      !exportBufSqlVar( context, pItem, sc_szQuote, sc_szEsc ) ||
+                  if( SELF_GETVALUE(pArea, uiIter, pItem) != HB_SUCCESS ||
+                      !exportBufSqlVar(context, pItem, sc_szQuote, sc_szEsc) ||
                       !addStrToContext( context, uiIter == uiFields ? "\n" : sc_szDelim ) )
                   {
                      bFail = HB_TRUE;
@@ -396,8 +396,8 @@ HB_FUNC( HB_PQCOPYFROMWA )
             {
                for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ )
                {
-                  if( SELF_GETVALUE( pArea, static_cast<HB_USHORT>(hb_arrayGetNI(pFields, uiIter)), pItem ) != HB_SUCCESS ||
-                      !exportBufSqlVar( context, pItem, sc_szQuote, sc_szEsc ) ||
+                  if( SELF_GETVALUE(pArea, static_cast<HB_USHORT>(hb_arrayGetNI(pFields, uiIter)), pItem) != HB_SUCCESS ||
+                      !exportBufSqlVar(context, pItem, sc_szQuote, sc_szEsc) ||
                       !addStrToContext( context, uiIter == uiFields ? "\n" : sc_szDelim ) )
                   {
                      bFail = HB_TRUE;
@@ -412,7 +412,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
             uiRecCount++;
          }
 
-         if( SELF_SKIP( pArea, 1 ) != HB_SUCCESS )
+         if( SELF_SKIP(pArea, 1) != HB_SUCCESS )
             break;
       }
 

@@ -98,13 +98,13 @@ HB_FUNC( TIP_URLENCODE )
             nPos++;
          }
 
-         hb_retclen_buffer( pszRet, nPosRet );
+         hb_retclen_buffer(pszRet, nPosRet);
       }
       else
          hb_retc_null();
    }
    else
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError(1) );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError(1));
 }
 
 HB_FUNC( TIP_URLDECODE )
@@ -143,11 +143,11 @@ HB_FUNC( TIP_URLDECODE )
 
          /* this function also adds a zero */
          /* hopefully reduce the size of pszRet */
-         hb_retclen_buffer( static_cast<char*>(hb_xrealloc(pszRet, nPosRet + 1)), nPosRet );
+         hb_retclen_buffer(static_cast<char*>(hb_xrealloc(pszRet, nPosRet + 1)), nPosRet);
       }
       else
          hb_retc_null();
    }
    else
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError(1) );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError(1));
 }

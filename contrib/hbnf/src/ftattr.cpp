@@ -70,7 +70,7 @@ HB_FUNC( FT_SAVEATT )
          }
          ++iTop;
       }
-      hb_retclen_buffer( pAttrib, nSize );
+      hb_retclen_buffer(pAttrib, nSize);
    }
    else
    {

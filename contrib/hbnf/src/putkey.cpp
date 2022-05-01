@@ -35,7 +35,7 @@ HB_FUNC( FT_PUTKEY )
 
    if( HB_ISNUM(1) )
    {
-      hb_inkeyPut( hb_parni(1) );
+      hb_inkeyPut(hb_parni(1));
       lSuccess = HB_TRUE;
    }
 

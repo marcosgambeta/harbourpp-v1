@@ -99,7 +99,7 @@ HB_FUNC( FT_PROPER )
 
    if( cDst )
    {
-      hb_retclen_buffer( cDst, iLen );
+      hb_retclen_buffer(cDst, iLen);
    }
    else
    {

@@ -191,8 +191,8 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
          HB_MAXINT timeout = pFile->timeout;
 
          if( HB_IS_NUMERIC(pValue) )
-            pFile->timeout = hb_itemGetNInt( pValue );
-         hb_itemPutNInt( pValue, timeout );
+            pFile->timeout = hb_itemGetNInt(pValue);
+         hb_itemPutNInt(pValue, timeout);
          return true;
       }
       case HB_VF_SHUTDOWN:
@@ -225,11 +225,11 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
          return true;
       }
       case HB_VF_RDHANDLE:
-         hb_itemPutNInt( pValue, static_cast<HB_NHANDLE>(pFile->hPipeRD) );
+         hb_itemPutNInt(pValue, static_cast<HB_NHANDLE>(pFile->hPipeRD));
          return true;
 
       case HB_VF_WRHANDLE:
-         hb_itemPutNInt( pValue, static_cast<HB_NHANDLE>(pFile->hPipeWR) );
+         hb_itemPutNInt(pValue, static_cast<HB_NHANDLE>(pFile->hPipeWR));
          return true;
 
       case HB_VF_IONAME:
@@ -346,7 +346,7 @@ HB_FUNC( HB_VFFROMPIPES )
    HB_FHANDLE hProcess = hb_numToHandle(hb_parnintdef(3, FS_ERROR));
    PHB_FILE pFile = hb_fileFromPipeHandle(hProcess, hPipeRD, hPipeWR, hb_parnintdef(4, -1));
    if( pFile )
-      hb_fileItemPut( hb_param(-1, Harbour::Item::ANY), pFile );
+      hb_fileItemPut(hb_param(-1, Harbour::Item::ANY), pFile);
 }
 
 /* hb_vfOpenProcess( <cCommand>, [<nMode>=FO_READ], [<nTimeout>], [<lDetach>] )
@@ -363,7 +363,7 @@ HB_FUNC( HB_VFOPENPROCESS )
    pFile = hb_fileProcessOpen( pszCommand, nMode, timeout, fDetach );
 
    if( pFile )
-      hb_fileItemPut( hb_param(-1, Harbour::Item::ANY), pFile );
+      hb_fileItemPut(hb_param(-1, Harbour::Item::ANY), pFile);
 }
 
 HB_FUNC( HB_PIPEIO ) { ; }

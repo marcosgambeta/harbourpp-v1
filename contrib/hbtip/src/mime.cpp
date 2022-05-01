@@ -752,14 +752,14 @@ HB_FUNC( TIP_FILEMIMETYPE )
          if( (fileIn = hb_fileExtOpen(fname, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK, nullptr, nullptr)) != nullptr )
          {
             magic_type = s_findFileMimeType( fileIn );
-            hb_fileClose( fileIn );
+            hb_fileClose(fileIn);
          }
       }
-      else if( hb_fileItemGet( pFile ) )
-         magic_type = s_findFileMimeType( hb_fileItemGet( pFile ) );
+      else if( hb_fileItemGet(pFile) )
+         magic_type = s_findFileMimeType(hb_fileItemGet(pFile));
       else
       {
-         PHB_FILE fileIn = hb_fileFromHandle( hb_numToHandle( hb_itemGetNInt( pFile ) ) );
+         PHB_FILE fileIn = hb_fileFromHandle( hb_numToHandle( hb_itemGetNInt(pFile) ) );
          magic_type = s_findFileMimeType( fileIn );
          hb_fileDetach( fileIn );
       }
