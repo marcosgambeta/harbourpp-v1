@@ -232,20 +232,20 @@ static const HB_BLOWFISH s_blowFishInit =
      0xb74e6132, 0xce77e25b, 0x578fdfe3, 0x3ac372e6 }
 };
 
-#define P( n )     bf->P[n]
+#define P(n)     bf->P[n]
 
-#define S1( n )    bf->S1[n]
-#define S2( n )    bf->S2[n]
-#define S3( n )    bf->S3[n]
-#define S4( n )    bf->S4[n]
+#define S1(n)    bf->S1[n]
+#define S2(n)    bf->S2[n]
+#define S3(n)    bf->S3[n]
+#define S4(n)    bf->S4[n]
 
-#define a( x )     ( x >> 24 )
-#define b( x )     ( ( x >> 16 ) & 0xFF )
-#define c( x )     ( ( x >> 8 ) & 0xFF )
-#define d( x )     ( x & 0xFF )
+#define a(x)     (x >> 24)
+#define b(x)     ((x >> 16) & 0xFF)
+#define c(x)     ((x >> 8) & 0xFF)
+#define d(x)     (x & 0xFF)
 
-#define F( x )     ( ( ( S1( a( x ) ) + S2( b( x ) ) ) ^ S3( c( x ) ) ) + S4( d( x ) ) )
-#define R( X, n )  ( F( X ) ^ P( n ) )
+#define F(x)     (((S1(a(x)) + S2(b(x))) ^ S3(c(x))) + S4(d(x)))
+#define R(X, n)  (F(X) ^ P(n))
 
 void hb_blowfishEncrypt( const HB_BLOWFISH * bf, HB_U32 * xl, HB_U32 * xr )
 {

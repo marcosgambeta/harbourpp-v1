@@ -66,7 +66,7 @@ HB_FUNC( FOPEN )
    {
       hb_fsSetFError(0);
       /* NOTE: Undocumented but existing Clipper Run-time error */
-      hb_errRT_BASE( EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -346,9 +346,7 @@ HB_FUNC( HB_CURDRIVE )
       {
          while( hb_fsChDrv(iDrive) != 0 )
          {
-            HB_USHORT uiAction = hb_errRT_BASE_Ext1( EG_OPEN, 6001, nullptr,
-                                                     HB_ERR_FUNCNAME, 0, EF_CANDEFAULT | EF_CANRETRY,
-                                                     HB_ERR_ARGS_BASEPARAMS );
+            HB_USHORT uiAction = hb_errRT_BASE_Ext1(EG_OPEN, 6001, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT | EF_CANRETRY, HB_ERR_ARGS_BASEPARAMS);
             if( uiAction != E_RETRY )
             {
                break;
@@ -487,7 +485,7 @@ HB_FUNC( HB_FSETDATETIME )
       if( HB_ISCHAR(3) )
       {
          int iHour, iMinutes, iSeconds, iMSec;
-         if( hb_timeStrGet( hb_parc(3), &iHour, &iMinutes, &iSeconds, &iMSec ) )
+         if( hb_timeStrGet(hb_parc(3), &iHour, &iMinutes, &iSeconds, &iMSec) )
          {
             lTime = hb_timeEncode( iHour, iMinutes, iSeconds, iMSec );
          }
@@ -565,7 +563,7 @@ HB_FUNC( HB_FISDEVICE )
    hb_fsSetFError(hb_fsError());
 }
 
-/* hb_PRead( <nPipeHandle>, <@cBuffer>, [<nBytes>], [<nTimeOut>] )
+/* hb_PRead(<nPipeHandle>, <@cBuffer>, [<nBytes>], [<nTimeOut>])
       --> <nBytesRead> */
 HB_FUNC( HB_PREAD )
 {
@@ -610,7 +608,7 @@ HB_FUNC( HB_PREAD )
    }
 }
 
-/* hb_PWrite( <nPipeHandle>, <cBuffer>, [<nBytes>], [<nTimeOut>] )
+/* hb_PWrite(<nPipeHandle>, <cBuffer>, [<nBytes>], [<nTimeOut>])
       --> <nBytesWritten> */
 HB_FUNC( HB_PWRITE )
 {
@@ -653,7 +651,7 @@ HB_FUNC( HB_OSERROR )
 
 HB_FUNC( HB_PS )
 {
-   hb_retc_const( HB_OS_PATH_DELIM_CHR_STRING );
+   hb_retc_const(HB_OS_PATH_DELIM_CHR_STRING);
 }
 
 #if defined(HB_LEGACY_LEVEL4)
@@ -661,7 +659,7 @@ HB_FUNC( HB_PS )
 /* Deprecated */
 HB_FUNC( HB_OSPATHSEPARATOR )
 {
-   hb_retc_const( HB_OS_PATH_DELIM_CHR_STRING );
+   hb_retc_const(HB_OS_PATH_DELIM_CHR_STRING);
 }
 
 #endif
@@ -670,19 +668,19 @@ HB_FUNC( HB_OSPATHLISTSEPARATOR )
 {
    static const char s_ret[2] = { HB_OS_PATH_LIST_SEP_CHR, '\0' };
 
-   hb_retc_const( s_ret );
+   hb_retc_const(s_ret);
 }
 
 HB_FUNC( HB_OSPATHDELIMITERS )
 {
-   hb_retc_const( HB_OS_PATH_DELIM_CHR_LIST );
+   hb_retc_const(HB_OS_PATH_DELIM_CHR_LIST);
 }
 
 HB_FUNC( HB_OSDRIVESEPARATOR )
 {
 #ifdef HB_OS_HAS_DRIVE_LETTER
    static const char s_ret[2] = { HB_OS_DRIVE_DELIM_CHR, '\0' };
-   hb_retc_const( s_ret );
+   hb_retc_const(s_ret);
 #else
    hb_retc_null();
 #endif
@@ -690,5 +688,5 @@ HB_FUNC( HB_OSDRIVESEPARATOR )
 
 HB_FUNC( HB_OSFILEMASK )
 {
-   hb_retc_const( HB_OS_ALLFILE_MASK );
+   hb_retc_const(HB_OS_ALLFILE_MASK);
 }

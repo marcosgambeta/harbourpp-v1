@@ -1067,7 +1067,7 @@ HB_FUNC( TRANSFORM )
       }
       else if( HB_IS_LOGICAL(pValue) )
       {
-         hb_retc_const( hb_itemGetL(pValue) ? "T" : "F" );
+         hb_retc_const(hb_itemGetL(pValue) ? "T" : "F");
       }
       else
       {

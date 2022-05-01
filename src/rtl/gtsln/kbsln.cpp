@@ -122,14 +122,14 @@ static int s_iDeadKey = -1;
 HB_BOOL hb_sln_UnderLinuxConsole = HB_FALSE;
 HB_BOOL hb_sln_UnderXterm        = HB_FALSE;
 
-static int hb_sln_try_get_Kbd_State( void );
+static int hb_sln_try_get_Kbd_State(void);
 
 /* key translations tables - notice problems with compilation after changes */
 #include "keytrans.cpp"
 
 /* *********************************************************************** */
 
-static void hb_sln_Init_TermType( void )
+static void hb_sln_Init_TermType(void)
 {
    const char * Env;
 
@@ -144,7 +144,7 @@ static void hb_sln_Init_TermType( void )
 
 /* *********************************************************************** */
 
-static void hb_sln_Init_KeyTranslations( void )
+static void hb_sln_Init_KeyTranslations(void)
 {
    char ch, keyname[SLANG_MAX_KEYMAP_KEY_SEQ + 1];
    int  keynum, i;
@@ -310,7 +310,7 @@ int hb_sln_Init_Terminal( int phase )
 
 /* *********************************************************************** */
 
-int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
+int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_ReadKey(%p,%d)", static_cast<void*>(pGT), static_cast<int>(iEventMask) ) );
@@ -498,7 +498,7 @@ int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask )
 
 /* *********************************************************************** */
 
-static int hb_sln_try_get_Kbd_State( void )
+static int hb_sln_try_get_Kbd_State(void)
 {
 #if defined(__linux__)
    unsigned char modifiers = 6;
@@ -532,7 +532,7 @@ static int hb_sln_try_get_Kbd_State( void )
 
             /* turn a keyboard to a normal mode ( translation mode ) */
             IOcommand = KB_XSCANCODE;
-            ( void ) ioctl( 0, TCSETSC, &IOcommand )
+            ( void ) ioctl( 0, TCSETSC, &IOcommand ) // TODO: C++ cast and ;
          }
       }
       /* keyboard is already in SCANCODE mode */
@@ -557,28 +557,28 @@ static int hb_sln_try_get_Kbd_State( void )
 
 /* *********************************************************************** */
 
-int hb_sln_Shft_Pressed( void )
+int hb_sln_Shft_Pressed(void)
 {
    return ( hb_sln_try_get_Kbd_State() & SHIFT_PRESSED ) != 0;
 }
 
 /* *********************************************************************** */
 
-int hb_sln_Ctrl_Pressed( void )
+int hb_sln_Ctrl_Pressed(void)
 {
    return ( hb_sln_try_get_Kbd_State() & CONTROL_PRESSED ) != 0;
 }
 
 /* *********************************************************************** */
 
-int hb_sln_Alt_Pressed( void )
+int hb_sln_Alt_Pressed(void)
 {
    return ( hb_sln_try_get_Kbd_State() & ALT_PRESSED ) != 0;
 }
 
 /* *********************************************************************** */
 
-int hb_sln_Kbd_State( void )
+int hb_sln_Kbd_State(void)
 {
    return hb_sln_try_get_Kbd_State();
 }

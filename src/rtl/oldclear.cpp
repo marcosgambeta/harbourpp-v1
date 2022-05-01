@@ -52,15 +52,15 @@ HB_FUNC( __ATCLEAR )
 {
    if( hb_pcount() == 4 )
    {
-      hb_gtSetPos( hb_parni(1), hb_parni(2) );
-      hb_gtScroll( hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), 0, 0 );
+      hb_gtSetPos(hb_parni(1), hb_parni(2));
+      hb_gtScroll(hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), 0, 0);
    }
 }
 
 HB_FUNC( __CLEAR )
 {
-   hb_gtScroll( 0, 0, hb_gtMaxRow(), hb_gtMaxCol(), 0, 0 );
-   hb_gtSetPos( 0, 0 );
+   hb_gtScroll(0, 0, hb_gtMaxRow(), hb_gtMaxCol(), 0, 0);
+   hb_gtSetPos(0, 0);
 }
 
 #endif

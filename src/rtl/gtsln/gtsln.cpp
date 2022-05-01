@@ -128,7 +128,7 @@ static void sigwinch_handler( int iSig )
 
 /* *********************************************************************** */
 
-static void hb_sln_colorTrans( void )
+static void hb_sln_colorTrans(void)
 {
    for( int i = 0; i < 256; i++ )
    {
@@ -164,7 +164,7 @@ static void hb_sln_colorTrans( void )
 
 /* *********************************************************************** */
 
-static void hb_sln_setSingleBox( void )
+static void hb_sln_setSingleBox(void)
 {
    /* convert all box chars into Clipper _B_SINBLE */
    s_outputTab[186] = s_outputTab[179];
@@ -209,7 +209,7 @@ static void hb_sln_setSingleBox( void )
 
 /* *********************************************************************** */
 
-static void hb_sln_setACSCtrans( void )
+static void hb_sln_setACSCtrans(void)
 {
    unsigned char * p;
    SLsmg_Char_Type chBoard[3], chArrow[4];
@@ -342,7 +342,7 @@ static void hb_sln_setACSCtrans( void )
 
 /* *********************************************************************** */
 
-static void hb_sln_setCharTrans( PHB_GT pGT, HB_BOOL fBox )
+static void hb_sln_setCharTrans(PHB_GT pGT, HB_BOOL fBox)
 {
 #if !defined(HB_SLN_UNICODE)
    PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP(pGT);
@@ -387,9 +387,9 @@ static void hb_sln_setCharTrans( PHB_GT pGT, HB_BOOL fBox )
          if( hb_cdpIsAlpha( cdpHost, i ) )
          {
 #ifdef HB_SLN_UNICODE
-            int iDst = hb_cdpGetU16Ctrl( hb_cdpGetU16( cdpHost, static_cast<HB_UCHAR>(i) ) );
+            int iDst = hb_cdpGetU16Ctrl(hb_cdpGetU16(cdpHost, static_cast<HB_UCHAR>(i)));
 #else
-            int iDst = hb_cdpTranslateDispChar( i, cdpHost, cdpTerm );
+            int iDst = hb_cdpTranslateDispChar(i, cdpHost, cdpTerm);
 #endif
             HB_SLN_BUILD_RAWCHAR( s_outputTab[i], iDst, 0 );
             if( fBox )
@@ -402,7 +402,7 @@ static void hb_sln_setCharTrans( PHB_GT pGT, HB_BOOL fBox )
 }
 
 /* *********************************************************************** */
-static void hb_sln_setKeyTrans( PHB_GT pGT )
+static void hb_sln_setKeyTrans(PHB_GT pGT)
 {
    PHB_CODEPAGE cdpTerm = HB_GTSELF_INCP(pGT), cdpHost = HB_GTSELF_HOSTCP(pGT);
    const char * p;
@@ -494,7 +494,7 @@ static void hb_sln_SetCursorStyle( int iStyle )
 
 /* *********************************************************************** */
 #ifdef HB_SLN_UTF8
-static int hb_sln_isUTF8( int iStdOut, int iStdIn )
+static int hb_sln_isUTF8(int iStdOut, int iStdIn)
 {
    if( isatty( iStdOut ) && isatty( iStdIn ) )
    {
@@ -581,7 +581,7 @@ static int hb_sln_isUTF8( int iStdOut, int iStdIn )
 /* *********************************************************************** */
 
 /* I think this function should not be void. It should be HB_BOOL */
-static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr )
+static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStderr)) ) );
@@ -619,7 +619,7 @@ static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
          }
 
 #ifdef HB_SLN_UTF8
-         hb_sln_Is_Unicode = SLutf8_enable( hb_sln_isUTF8( SLang_TT_Write_FD, SLang_TT_Read_FD ) );
+         hb_sln_Is_Unicode = SLutf8_enable(hb_sln_isUTF8(SLang_TT_Write_FD, SLang_TT_Read_FD));
 #endif
 #ifdef HB_SLN_UNICODE
          #if 0
@@ -636,7 +636,7 @@ static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
             SLang_Ignore_User_Abort = 1;
 
             /* no default abort processing */
-            SLang_set_abort_signal( nullptr );
+            SLang_set_abort_signal(nullptr);
 
             /* NOTE: this is incompatible with CLIPPER
                but under Unix we should assume cursor is
@@ -731,7 +731,7 @@ static void hb_gt_sln_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
 /* *********************************************************************** */
 
-static void hb_gt_sln_Exit( PHB_GT pGT )
+static void hb_gt_sln_Exit(PHB_GT pGT)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Exit(%p)", static_cast<void*>(pGT) ) );
@@ -761,7 +761,7 @@ static void hb_gt_sln_Exit( PHB_GT pGT )
 
 /* *********************************************************************** */
 
-static HB_BOOL hb_gt_sln_SetMode( PHB_GT pGT, int iRows, int iCols )
+static HB_BOOL hb_gt_sln_SetMode(PHB_GT pGT, int iRows, int iCols)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRows, iCols ) );
@@ -777,7 +777,7 @@ static HB_BOOL hb_gt_sln_SetMode( PHB_GT pGT, int iRows, int iCols )
 
 /* *********************************************************************** */
 
-static HB_BOOL hb_gt_sln_IsColor( PHB_GT pGT )
+static HB_BOOL hb_gt_sln_IsColor(PHB_GT pGT)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_IsColor(%p)", static_cast<void*>(pGT) ) );
@@ -790,7 +790,7 @@ static HB_BOOL hb_gt_sln_IsColor( PHB_GT pGT )
 
 /* *********************************************************************** */
 
-static void hb_gt_sln_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
+static void hb_gt_sln_SetBlink(PHB_GT pGT, HB_BOOL fBlink)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_SetBlink(%p,%d)", static_cast<void*>(pGT), static_cast<int>(fBlink) ) );
@@ -815,7 +815,7 @@ static void hb_gt_sln_SetBlink( PHB_GT pGT, HB_BOOL fBlink )
 
 /* *********************************************************************** */
 
-static void hb_gt_sln_Tone( PHB_GT pGT, double dFrequency, double dDuration )
+static void hb_gt_sln_Tone(PHB_GT pGT, double dFrequency, double dDuration)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration ) );
@@ -850,7 +850,7 @@ static void hb_gt_sln_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 
 /* *********************************************************************** */
 
-static const char * hb_gt_sln_Version( PHB_GT pGT, int iType )
+static const char * hb_gt_sln_Version(PHB_GT pGT, int iType)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Version(%p)", static_cast<void*>(pGT) ) );
@@ -873,7 +873,7 @@ static const char * hb_gt_sln_Version( PHB_GT pGT, int iType )
 
 /* *********************************************************************** */
 
-static HB_BOOL hb_gt_sln_Suspend( PHB_GT pGT )
+static HB_BOOL hb_gt_sln_Suspend(PHB_GT pGT)
 {
    HB_SYMBOL_UNUSED(pGT);
 
@@ -891,7 +891,7 @@ static HB_BOOL hb_gt_sln_Suspend( PHB_GT pGT )
 
 /* *********************************************************************** */
 
-static HB_BOOL hb_gt_sln_Resume( PHB_GT pGT )
+static HB_BOOL hb_gt_sln_Resume(PHB_GT pGT)
 {
    HB_SYMBOL_UNUSED(pGT);
 
@@ -909,7 +909,7 @@ static HB_BOOL hb_gt_sln_Resume( PHB_GT pGT )
 
 /* *********************************************************************** */
 
-static HB_BOOL hb_gt_sln_PreExt( PHB_GT pGT )
+static HB_BOOL hb_gt_sln_PreExt(PHB_GT pGT)
 {
    HB_SYMBOL_UNUSED(pGT);
 
@@ -922,7 +922,7 @@ static HB_BOOL hb_gt_sln_PreExt( PHB_GT pGT )
 
 /* *********************************************************************** */
 
-static HB_BOOL hb_gt_sln_PostExt( PHB_GT pGT )
+static HB_BOOL hb_gt_sln_PostExt(PHB_GT pGT)
 {
    HB_SYMBOL_UNUSED(pGT);
 
@@ -931,7 +931,7 @@ static HB_BOOL hb_gt_sln_PostExt( PHB_GT pGT )
 
 /* *********************************************************************** */
 
-static HB_BOOL hb_gt_sln_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
+static HB_BOOL hb_gt_sln_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo) ) );
@@ -964,7 +964,7 @@ static HB_BOOL hb_gt_sln_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
 /* *********************************************************************** */
 
-static HB_BOOL hb_gt_sln_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const char * pszHostCDP, HB_BOOL fBox )
+static HB_BOOL hb_gt_sln_SetDispCP(PHB_GT pGT, const char * pszTermCDP, const char * pszHostCDP, HB_BOOL fBox)
 {
    if( HB_GTSUPER_SETDISPCP(pGT, pszTermCDP, pszHostCDP, fBox) )
    {
@@ -979,7 +979,7 @@ static HB_BOOL hb_gt_sln_SetDispCP( PHB_GT pGT, const char * pszTermCDP, const c
 
 /* *********************************************************************** */
 
-static HB_BOOL hb_gt_sln_SetKeyCP( PHB_GT pGT, const char * pszTermCDP, const char * pszHostCDP )
+static HB_BOOL hb_gt_sln_SetKeyCP(PHB_GT pGT, const char * pszTermCDP, const char * pszHostCDP)
 {
    if( HB_GTSUPER_SETKEYCP(pGT, pszTermCDP, pszHostCDP) )
    {
@@ -994,7 +994,7 @@ static HB_BOOL hb_gt_sln_SetKeyCP( PHB_GT pGT, const char * pszTermCDP, const ch
 
 /* *********************************************************************** */
 
-static void hb_gt_sln_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
+static void hb_gt_sln_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize ) );
@@ -1024,7 +1024,7 @@ static void hb_gt_sln_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 #else
             SLchar = s_colorTab[static_cast<HB_UCHAR>(iColor)] | SLSMG_BUILD_CHAR( usChar, 0 );
 #endif
-            SLsmg_write_raw( &SLchar, 1 );
+            SLsmg_write_raw(&SLchar, 1);
             ++iCol;
          }
       }
@@ -1039,7 +1039,7 @@ static void hb_gt_sln_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
             }
             SLsmg_gotorc( iRow, iCol );
             HB_SLN_BUILD_CHAR( SLchar, uc, iColor, bAttr );
-            SLsmg_write_raw( &SLchar, 1 );
+            SLsmg_write_raw(&SLchar, 1);
             ++iCol;
          }
       }
@@ -1048,7 +1048,7 @@ static void hb_gt_sln_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
 
 /* *********************************************************************** */
 
-static void hb_gt_sln_Refresh( PHB_GT pGT )
+static void hb_gt_sln_Refresh(PHB_GT pGT)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_Refresh(%p)", static_cast<void*>(pGT) ) );

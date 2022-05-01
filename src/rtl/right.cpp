@@ -71,10 +71,10 @@ HB_FUNC( RIGHT )
             PHB_CODEPAGE cdp = hb_vmCDP();
             if( HB_CDP_ISCHARIDX( cdp ) )
             {
-               HB_SIZE nChars = hb_cdpTextLen( cdp, hb_itemGetCPtr(pText), nText );
+               HB_SIZE nChars = hb_cdpTextLen(cdp, hb_itemGetCPtr(pText), nText);
                if( nChars > static_cast<HB_SIZE>(nLen) )
                {
-                  nLen = nText - hb_cdpTextPos( cdp, hb_itemGetCPtr(pText), nText, nChars - nLen );
+                  nLen = nText - hb_cdpTextPos(cdp, hb_itemGetCPtr(pText), nText, nChars - nLen);
                }
                else
                {

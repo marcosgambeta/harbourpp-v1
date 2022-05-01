@@ -116,9 +116,9 @@ static HB_CRITICAL_NEW( arc4_lock );
 #define _HB_INLINE_
 #endif
 
-static _HB_INLINE_ HB_U8 arc4_getbyte( void );
+static _HB_INLINE_ HB_U8 arc4_getbyte(void);
 
-static _HB_INLINE_ void arc4_init( void )
+static _HB_INLINE_ void arc4_init(void)
 {
    for( int n = 0; n < 256; ++n )
    {
@@ -171,7 +171,7 @@ static HB_ISIZ read_all( int fd, HB_U8 * buf, size_t count )
 #if defined(HB_OS_WIN)
 
 #define TRY_SEED_MS_CRYPTOAPI
-static int arc4_seed_win( void )
+static int arc4_seed_win(void)
 {
    /* This is adapted from Tor's crypto_seed_rng() */
    static int        s_provider_set = 0;
@@ -204,7 +204,7 @@ static int arc4_seed_win( void )
 #if defined(HAVE_DECL_CTL_KERN) && defined(HAVE_DECL_KERN_RANDOM) && defined(HAVE_DECL_RANDOM_UUID)
 
 #define TRY_SEED_SYSCTL_LINUX
-static int arc4_seed_sysctl_linux( void )
+static int arc4_seed_sysctl_linux(void)
 {
    /*
     * Based on code by William Ahern, this function tries to use the
@@ -250,7 +250,7 @@ static int arc4_seed_sysctl_linux( void )
 #if defined(HAVE_DECL_CTL_KERN) && defined(HAVE_DECL_KERN_ARND)
 
 #define TRY_SEED_SYSCTL_BSD
-static int arc4_seed_sysctl_bsd( void )
+static int arc4_seed_sysctl_bsd(void)
 {
    /*
     * Based on code from William Ahern and from OpenBSD, this function
@@ -332,7 +332,7 @@ static _HB_INLINE_ int hex_char_to_int( char c )
    return -1;
 }
 
-static int arc4_seed_proc_sys_kernel_random_uuid( void )
+static int arc4_seed_proc_sys_kernel_random_uuid(void)
 {
    /*
     * Occasionally, somebody will make /proc/sys accessible in a chroot,
@@ -399,10 +399,10 @@ static int arc4_seed_proc_sys_kernel_random_uuid( void )
 #if defined(HB_OS_UNIX)
 
 #define TRY_SEED_URANDOM
-static int arc4_seed_urandom( void )
+static int arc4_seed_urandom(void)
 {
    /* This is adapted from Tor's crypto_seed_rng() */
-   static const char * filenames[] = { "/dev/srandom", "/dev/urandom", "/dev/random", nullptr };
+   static const char * filenames[] = {"/dev/srandom", "/dev/urandom", "/dev/random", nullptr};
 
    for( int i = 0; filenames[i]; ++i )
    {
@@ -434,7 +434,7 @@ static int arc4_seed_urandom( void )
 }
 #endif /* HB_OS_UNIX */
 
-static int arc4_seed_rand( void )
+static int arc4_seed_rand(void)
 {
    HB_U8   buf[ADD_ENTROPY];
 
@@ -451,7 +451,7 @@ static int arc4_seed_rand( void )
    return 0;
 }
 
-static void arc4_seed( void )
+static void arc4_seed(void)
 {
    int ok = 0;
 
@@ -514,7 +514,7 @@ static void arc4_seed( void )
    }
 }
 
-static void arc4_stir( void )
+static void arc4_stir(void)
 {
    if( !rs_initialized )
    {
@@ -544,13 +544,13 @@ static void arc4_stir( void )
     */
    for( int i = 0; i < 12 * 256; i++ )
    {
-      ( void ) arc4_getbyte();
+      ( void ) arc4_getbyte(); // TODO: C++ cast
    }
 
    arc4_count = BYTES_BEFORE_RESEED;
 }
 
-static void arc4_stir_if_needed( void )
+static void arc4_stir_if_needed(void)
 {
 #if defined(NO_PID_CHECK)
    if( arc4_count <= 0 || !rs_initialized )
@@ -568,7 +568,7 @@ static void arc4_stir_if_needed( void )
 #endif
 }
 
-static _HB_INLINE_ HB_U8 arc4_getbyte( void )
+static _HB_INLINE_ HB_U8 arc4_getbyte(void)
 {
    HB_U8 si, sj;
 
@@ -582,7 +582,7 @@ static _HB_INLINE_ HB_U8 arc4_getbyte( void )
    return rs.s[( si + sj ) & 0xff];
 }
 
-static _HB_INLINE_ HB_U32 arc4_getword( void )
+static _HB_INLINE_ HB_U32 arc4_getword(void)
 {
    HB_U32 val;
 
@@ -599,7 +599,7 @@ static _HB_INLINE_ HB_U32 arc4_getword( void )
  * These two are part of the original arc4random API, but Harbour does not
  * make use of either of them.
  */
-void arc4random_stir( void )
+void arc4random_stir(void)
 {
    ARC4_LOCK();
    arc4_stir();
@@ -628,7 +628,7 @@ void arc4random_addrandom( const unsigned char * dat, int datlen )
 }
 #endif
 
-HB_U32 hb_arc4random( void )
+HB_U32 hb_arc4random(void)
 {
    HB_U32 val;
 

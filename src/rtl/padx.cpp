@@ -50,14 +50,14 @@
 #include "hbapicdp.h"
 #include "hbapierr.h"
 
-static HB_SIZE hb_cdpItemLen( PHB_CODEPAGE cdp, PHB_ITEM pItem )
+static HB_SIZE hb_cdpItemLen(PHB_CODEPAGE cdp, PHB_ITEM pItem)
 {
    HB_SIZE nLen = hb_itemGetCLen(pItem);
 
-   return nLen && cdp ? hb_cdpTextLen( cdp, hb_itemGetCPtr(pItem), nLen ) : nLen;
+   return nLen && cdp ? hb_cdpTextLen(cdp, hb_itemGetCPtr(pItem), nLen) : nLen;
 }
 
-static const char * s_hb_padGet( PHB_CODEPAGE cdp, HB_SIZE * pnPad )
+static const char * s_hb_padGet(PHB_CODEPAGE cdp, HB_SIZE * pnPad)
 {
    const char * szPad = hb_parc(3);
 
@@ -68,7 +68,7 @@ static const char * s_hb_padGet( PHB_CODEPAGE cdp, HB_SIZE * pnPad )
    }
    else if( cdp )
    {
-      *pnPad = hb_cdpTextPos( cdp, szPad, hb_parclen(3), 1 );
+      *pnPad = hb_cdpTextPos(cdp, szPad, hb_parclen(3), 1);
       if( *pnPad == 0 )
       {
          szPad = "";
@@ -89,7 +89,7 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
    {
       PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
 
-      if( pItem && HB_IS_STRING(pItem) && static_cast<HB_SIZE>(nLen) == hb_cdpItemLen( cdp, pItem ) )
+      if( pItem && HB_IS_STRING(pItem) && static_cast<HB_SIZE>(nLen) == hb_cdpItemLen(cdp, pItem) )
       {
          hb_itemReturn(pItem);
       }
@@ -111,7 +111,7 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
             if( static_cast<HB_SIZE>(nLen) > nSize )
             {
                HB_SIZE nPad = 0;
-               const char * szPad = s_hb_padGet( cdp, &nPad );
+               const char * szPad = s_hb_padGet(cdp, &nPad);
                char * szResult;
 
                switch( iMode )
@@ -229,7 +229,7 @@ HB_FUNC( PADL )
 
 HB_FUNC( HB_BPADL )
 {
-   s_hb_strPad( HB_PAD_L, nullptr );
+   s_hb_strPad(HB_PAD_L, nullptr);
 }
 
 HB_FUNC( HB_UPADL )
@@ -259,7 +259,7 @@ HB_FUNC( PADR )
 
 HB_FUNC( HB_BPADR )
 {
-   s_hb_strPad( HB_PAD_R, nullptr );
+   s_hb_strPad(HB_PAD_R, nullptr);
 }
 
 HB_FUNC( HB_UPADR )
@@ -289,7 +289,7 @@ HB_FUNC( PADC )
 
 HB_FUNC( HB_BPADC )
 {
-   s_hb_strPad( HB_PAD_C, nullptr );
+   s_hb_strPad(HB_PAD_C, nullptr);
 }
 
 HB_FUNC( HB_UPADC )

@@ -113,7 +113,7 @@ static HB_BOOL GetXtermEvent( int * Btn, int * Col, int * Row )
 
 /* *********************************************************************** */
 
-static void hb_sln_CheckDoubleClick( void )
+static void hb_sln_CheckDoubleClick(void)
 {
    HB_USHORT usNewButtons = ( s_usMouseState & ~s_usLastMouseState ) & M_BUTTON_KEYMASK;
 
@@ -151,7 +151,7 @@ static void hb_sln_CheckDoubleClick( void )
 
 /* *********************************************************************** */
 
-void hb_gt_sln_mouse_ProcessTerminalEvent( void )
+void hb_gt_sln_mouse_ProcessTerminalEvent(void)
 {
    int Btn, Col, Row;
 
@@ -340,7 +340,7 @@ int hb_gt_sln_mouse_Inkey( int iEventMask, HB_BOOL fCheckNew )
 
 /* *********************************************************************** */
 
-void hb_gt_sln_mouse_Init( void )
+void hb_gt_sln_mouse_Init(void)
 {
    if( hb_sln_UnderXterm )
    {
@@ -373,8 +373,8 @@ void hb_gt_sln_mouse_Init( void )
       int iNull, iErr;
 
       iErr = dup( STDERR_FILENO );
-      iNull = open( "/dev/null", O_RDWR );
-      dup2( iNull, STDERR_FILENO );
+      iNull = open("/dev/null", O_RDWR);
+      dup2(iNull, STDERR_FILENO);
       close( iNull );
 #endif
       Conn.eventMask = GPM_MOVE | GPM_UP | GPM_DOWN | GPM_DRAG | GPM_DOUBLE;
@@ -387,7 +387,7 @@ void hb_gt_sln_mouse_Init( void )
       gpm_zerobased = 1;
       gpm_visiblepointer = 1;
 
-      if( Gpm_Open( &Conn, 0 ) >= 0 && gpm_fd >= 0 )
+      if( Gpm_Open(&Conn, 0) >= 0 && gpm_fd >= 0 )
       {
          Gpm_Event Evt;
 
@@ -404,14 +404,14 @@ void hb_gt_sln_mouse_Init( void )
           * so I covered it with this macro, [druzus]
           */
 #ifdef HB_GPM_USE_XTRA
-         s_iMouseButtons = Gpm_GetSnapshot( nullptr );
+         s_iMouseButtons = Gpm_GetSnapshot(nullptr);
 #else
          s_iMouseButtons = 3;
 #endif
          hb_gt_sln_mouse_FixTrash();
       }
 #ifdef HB_GPM_NOICE_DISABLE
-      dup2( iErr, STDERR_FILENO );
+      dup2(iErr, STDERR_FILENO);
       close( iErr );
 #endif
    }
@@ -420,7 +420,7 @@ void hb_gt_sln_mouse_Init( void )
 
 /* *********************************************************************** */
 
-void hb_gt_sln_mouse_Exit( void )
+void hb_gt_sln_mouse_Exit(void)
 {
    if( s_bMousePresent )
    {
@@ -452,7 +452,7 @@ void hb_gt_sln_mouse_Exit( void )
 
 /* *********************************************************************** */
 
-HB_BOOL hb_gt_sln_mouse_IsPresent( PHB_GT pGT )
+HB_BOOL hb_gt_sln_mouse_IsPresent(PHB_GT pGT)
 {
    HB_SYMBOL_UNUSED(pGT);
 
@@ -461,7 +461,7 @@ HB_BOOL hb_gt_sln_mouse_IsPresent( PHB_GT pGT )
 
 /* *********************************************************************** */
 
-void hb_gt_sln_mouse_Show( PHB_GT pGT )
+void hb_gt_sln_mouse_Show(PHB_GT pGT)
 {
    HB_SYMBOL_UNUSED(pGT);
 
@@ -469,14 +469,14 @@ void hb_gt_sln_mouse_Show( PHB_GT pGT )
    gpm_visiblepointer = 1;
    if( hb_sln_UnderLinuxConsole && s_bMousePresent )
    {
-      Gpm_DrawPointer( s_iMouseCol, s_iMouseRow, gpm_consolefd );
+      Gpm_DrawPointer(s_iMouseCol, s_iMouseRow, gpm_consolefd);
    }
 #endif
 }
 
 /* *********************************************************************** */
 
-void hb_gt_sln_mouse_Hide( PHB_GT pGT )
+void hb_gt_sln_mouse_Hide(PHB_GT pGT)
 {
    HB_SYMBOL_UNUSED(pGT);
 
@@ -487,7 +487,7 @@ void hb_gt_sln_mouse_Hide( PHB_GT pGT )
 
 /* *********************************************************************** */
 
-void hb_gt_sln_mouse_GetPos( PHB_GT pGT, int * piRow, int * piCol )
+void hb_gt_sln_mouse_GetPos(PHB_GT pGT, int * piRow, int * piCol)
 {
    HB_SYMBOL_UNUSED(pGT);
 
@@ -497,7 +497,7 @@ void hb_gt_sln_mouse_GetPos( PHB_GT pGT, int * piRow, int * piCol )
 
 /* *********************************************************************** */
 
-void hb_gt_sln_mouse_SetPos( PHB_GT pGT, int iRow, int iCol )
+void hb_gt_sln_mouse_SetPos(PHB_GT pGT, int iRow, int iCol)
 {
    HB_SYMBOL_UNUSED(pGT);
 
@@ -509,7 +509,7 @@ void hb_gt_sln_mouse_SetPos( PHB_GT pGT, int iRow, int iCol )
    {
       if( s_bMousePresent && gpm_visiblepointer )
       {
-         Gpm_DrawPointer( iCol, iRow, gpm_consolefd );
+         Gpm_DrawPointer(iCol, iRow, gpm_consolefd);
       }
    }
 #endif
@@ -517,7 +517,7 @@ void hb_gt_sln_mouse_SetPos( PHB_GT pGT, int iRow, int iCol )
 
 /* *********************************************************************** */
 
-HB_BOOL hb_gt_sln_mouse_ButtonState( PHB_GT pGT, int iButton )
+HB_BOOL hb_gt_sln_mouse_ButtonState(PHB_GT pGT, int iButton)
 {
    HB_SYMBOL_UNUSED(pGT);
 
@@ -536,7 +536,7 @@ HB_BOOL hb_gt_sln_mouse_ButtonState( PHB_GT pGT, int iButton )
 
 /* *********************************************************************** */
 
-int hb_gt_sln_mouse_CountButton( PHB_GT pGT )
+int hb_gt_sln_mouse_CountButton(PHB_GT pGT)
 {
    HB_SYMBOL_UNUSED(pGT);
 
@@ -545,14 +545,14 @@ int hb_gt_sln_mouse_CountButton( PHB_GT pGT )
 
 /* *********************************************************************** */
 
-void hb_gt_sln_mouse_FixTrash( void )
+void hb_gt_sln_mouse_FixTrash(void)
 {
 #if defined(HB_HAS_GPM)
    if( hb_sln_UnderLinuxConsole )
    {
       if( s_bMousePresent && gpm_visiblepointer )
       {
-         Gpm_DrawPointer( s_iMouseCol, s_iMouseRow, gpm_consolefd );
+         Gpm_DrawPointer(s_iMouseCol, s_iMouseRow, gpm_consolefd);
       }
    }
 #endif

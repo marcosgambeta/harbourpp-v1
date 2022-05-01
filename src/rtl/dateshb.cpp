@@ -151,7 +151,7 @@ HB_FUNC( YEAR )
 
       hb_dateDecode( hb_itemGetDL(pDate), &iYear, &iMonth, &iDay );
 
-      hb_retnilen( iYear, 5 );
+      hb_retnilen(iYear, 5);
    }
    else
    {
@@ -169,7 +169,7 @@ HB_FUNC( MONTH )
 
       hb_dateDecode( hb_itemGetDL(pDate), &iYear, &iMonth, &iDay );
 
-      hb_retnilen( iMonth, 3 );
+      hb_retnilen(iMonth, 3);
    }
    else
    {
@@ -187,7 +187,7 @@ HB_FUNC( DAY )
 
       hb_dateDecode( hb_itemGetDL(pDate), &iYear, &iMonth, &iDay );
 
-      hb_retnilen( iDay, 3 );
+      hb_retnilen(iDay, 3);
    }
    else
    {
@@ -201,7 +201,7 @@ HB_FUNC( DOW )
 
    if( pDate )
    {
-      hb_retnilen( hb_dateJulianDOW( hb_itemGetDL(pDate) ), 3 );
+      hb_retnilen(hb_dateJulianDOW(hb_itemGetDL(pDate)), 3);
    }
    else
    {
@@ -244,7 +244,7 @@ HB_FUNC( HB_DATETIME )
    if( hb_pcount() == 0 )
    {
       long lDate, lTime;
-      hb_timeStampGet( &lDate, &lTime );
+      hb_timeStampGet(&lDate, &lTime);
       hb_rettdt( lDate, lTime );
    }
    else
@@ -562,7 +562,7 @@ HB_FUNC( HB_STOT )
    {
       long lDate, lTime;
 
-      hb_timeStampStrRawGet( szDateTime, &lDate, &lTime );
+      hb_timeStampStrRawGet(szDateTime, &lDate, &lTime);
       hb_rettdt( lDate, lTime );
    }
    else
@@ -580,7 +580,7 @@ HB_FUNC( HB_HOUR )
       int iHour, iMinutes, iSeconds, iMSec;
 
       hb_timeDecode( lTime, &iHour, &iMinutes, &iSeconds, &iMSec );
-      hb_retnilen( iHour, 3 );
+      hb_retnilen(iHour, 3);
    }
    else
    {
@@ -597,7 +597,7 @@ HB_FUNC( HB_MINUTE )
       int iHour, iMinutes, iSeconds, iMSec;
 
       hb_timeDecode( lTime, &iHour, &iMinutes, &iSeconds, &iMSec );
-      hb_retnilen( iMinutes, 3 );
+      hb_retnilen(iMinutes, 3);
    }
    else
    {
@@ -614,7 +614,7 @@ HB_FUNC( HB_SEC )
       int iHour, iMinutes, iSeconds, iMSec;
 
       hb_timeDecode( lTime, &iHour, &iMinutes, &iSeconds, &iMSec );
-      hb_retndlen( static_cast<double>(iSeconds * 1000 + iMSec) / 1000, 3, 3 );
+      hb_retndlen(static_cast<double>(iSeconds * 1000 + iMSec) / 1000, 3, 3);
    }
    else
    {
@@ -637,7 +637,7 @@ HB_FUNC( HB_TSTOSTR )
          {
             if( lDate == 0 )
             {
-               hb_retc_const( "00:00" );
+               hb_retc_const("00:00");
             }
             else
             {

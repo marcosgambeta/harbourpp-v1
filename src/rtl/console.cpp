@@ -97,14 +97,14 @@ struct HB_PRNPOS
 
 using PHB_PRNPOS = HB_PRNPOS *;
 
-static HB_TSD_NEW( s_prnPos, sizeof(HB_PRNPOS), nullptr, nullptr );
+static HB_TSD_NEW(s_prnPos, sizeof(HB_PRNPOS), nullptr, nullptr);
 
-static PHB_PRNPOS hb_prnPos( void )
+static PHB_PRNPOS hb_prnPos(void)
 {
    return static_cast<PHB_PRNPOS>(hb_stackGetTSD(&s_prnPos));
 }
 
-void hb_conInit( void )
+void hb_conInit(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_conInit()" ) );
@@ -164,7 +164,7 @@ void hb_conInit( void )
    }
 }
 
-void hb_conRelease( void )
+void hb_conRelease(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_conRelease()" ) );
@@ -187,7 +187,7 @@ void hb_conRelease( void )
    hb_fsSetDevMode(s_hFilenoStderr, FD_TEXT);
 }
 
-const char * hb_conNewLine( void )
+const char * hb_conNewLine(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_conNewLine()" ) );
@@ -198,7 +198,7 @@ const char * hb_conNewLine( void )
 
 HB_FUNC( HB_EOL )
 {
-   hb_retc_const( s_szCrLf );
+   hb_retc_const(s_szCrLf);
 }
 
 #if defined(HB_LEGACY_LEVEL4)
@@ -206,7 +206,7 @@ HB_FUNC( HB_EOL )
 /* Deprecated */
 HB_FUNC( HB_OSNEWLINE )
 {
-   hb_retc_const( s_szCrLf );
+   hb_retc_const(s_szCrLf);
 }
 
 #endif
@@ -264,19 +264,19 @@ void hb_conOutAlt( const char * szStr, HB_SIZE nLen )
    if( hb_setGetAlternate() && ( pFile = hb_setGetAltHan() ) != nullptr )
    {
       /* Print to alternate file if SET ALTERNATE ON and valid alternate file */
-      hb_fileWrite( pFile, szStr, nLen, -1 );
+      hb_fileWrite(pFile, szStr, nLen, -1);
    }
 
    if( ( pFile = hb_setGetExtraHan() ) != nullptr )
    {
       /* Print to extra file if valid alternate file */
-      hb_fileWrite( pFile, szStr, nLen, -1 );
+      hb_fileWrite(pFile, szStr, nLen, -1);
    }
 
    if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_CON ) ) != nullptr )
    {
       /* Print to printer if SET PRINTER ON and valid printer file */
-      hb_fileWrite( pFile, szStr, nLen, -1 );
+      hb_fileWrite(pFile, szStr, nLen, -1);
       hb_prnPos()->col += static_cast<int>(nLen);
    }
 }
@@ -293,13 +293,13 @@ static void hb_conOutDev( const char * szStr, HB_SIZE nLen )
    if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_DEV ) ) != nullptr )
    {
       /* Display to printer if SET DEVICE TO PRINTER and valid printer file */
-      hb_fileWrite( pFile, szStr, nLen, -1 );
+      hb_fileWrite(pFile, szStr, nLen, -1);
       hb_prnPos()->col += static_cast<int>(nLen);
    }
    else
    {
       /* Otherwise, display to console */
-      hb_gtWrite( szStr, nLen );
+      hb_gtWrite(szStr, nLen);
    }
 }
 
@@ -415,13 +415,13 @@ HB_FUNC( QOUT )
          {
             char * pBuf = static_cast<char*>(hb_xgrab(pPrnPos->col));
             memset(pBuf, ' ', pPrnPos->col);
-            hb_fileWrite( pFile, pBuf, static_cast<HB_USHORT>(pPrnPos->col), -1 );
+            hb_fileWrite(pFile, pBuf, static_cast<HB_USHORT>(pPrnPos->col), -1);
             hb_xfree(pBuf);
          }
          else
          {
             memset(buf, ' ', pPrnPos->col);
-            hb_fileWrite( pFile, buf, static_cast<HB_USHORT>(pPrnPos->col), -1 );
+            hb_fileWrite(pFile, buf, static_cast<HB_USHORT>(pPrnPos->col), -1);
          }
       }
    }
@@ -437,7 +437,7 @@ HB_FUNC( __EJECT ) /* Ejects the current page from the printer */
    if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_ANY ) ) != nullptr )
    {
       static const char s_szEop[4] = { 0x0C, 0x0D, 0x00, 0x00 }; /* Buffer is 4 bytes to make CodeGuard happy */
-      hb_fileWrite( pFile, s_szEop, 2, -1 );
+      hb_fileWrite(pFile, s_szEop, 2, -1);
    }
 
    pPrnPos = hb_prnPos();
@@ -454,7 +454,7 @@ HB_FUNC( PCOL ) /* Returns the current printer row position */
    hb_retni(static_cast<int>(hb_prnPos()->col));
 }
 
-static void hb_conDevPos( int iRow, int iCol )
+static void hb_conDevPos(int iRow, int iCol)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_conDevPos(%d, %d)", iRow, iCol ) );
@@ -494,7 +494,7 @@ static void hb_conDevPos( int iRow, int iCol )
             {
                if( iPtr + s_iCrLfLen > static_cast<int>(sizeof(buf)) )
                {
-                  hb_fileWrite( pFile, buf, static_cast<HB_USHORT>(iPtr), -1 );
+                  hb_fileWrite(pFile, buf, static_cast<HB_USHORT>(iPtr), -1);
                   iPtr = 0;
                }
                memcpy(&buf[iPtr], s_szCrLf, s_iCrLfLen);
@@ -513,7 +513,7 @@ static void hb_conDevPos( int iRow, int iCol )
          {
             if( iPtr == static_cast<int>(sizeof(buf)) )
             {
-               hb_fileWrite( pFile, buf, static_cast<HB_USHORT>(iPtr), -1 );
+               hb_fileWrite(pFile, buf, static_cast<HB_USHORT>(iPtr), -1);
                iPtr = 0;
             }
             buf[iPtr++] = ' ';
@@ -522,13 +522,13 @@ static void hb_conDevPos( int iRow, int iCol )
 
          if( iPtr )
          {
-            hb_fileWrite( pFile, buf, static_cast<HB_USHORT>(iPtr), -1 );
+            hb_fileWrite(pFile, buf, static_cast<HB_USHORT>(iPtr), -1);
          }
       }
    }
    else
    {
-      hb_gtSetPos( iRow, iCol );
+      hb_gtSetPos(iRow, iCol);
    }
 }
 
@@ -538,7 +538,7 @@ HB_FUNC( DEVPOS ) /* Sets the screen and/or printer position */
 {
    if( HB_ISNUM(1) && HB_ISNUM(2) )
    {
-      hb_conDevPos( hb_parni(1), hb_parni(2) );
+      hb_conDevPos(hb_parni(1), hb_parni(2));
    }
 
 #if defined(HB_CLP_UNDOC)
@@ -612,7 +612,7 @@ HB_FUNC( DISPOUT ) /* writes a single value to the screen, but is not affected b
 
       pszString = hb_itemStringCon( hb_param(1, Harbour::Item::ANY), &nLen, &bFreeReq );
 
-      hb_gtWrite( pszString, nLen );
+      hb_gtWrite(pszString, nLen);
 
       if( bFreeReq )
       {
@@ -625,7 +625,7 @@ HB_FUNC( DISPOUT ) /* writes a single value to the screen, but is not affected b
    {
       pszString = hb_itemStringCon( hb_param(1, Harbour::Item::ANY), &nLen, &bFreeReq );
 
-      hb_gtWrite( pszString, nLen );
+      hb_gtWrite(pszString, nLen);
 
       if( bFreeReq )
       {
@@ -653,7 +653,7 @@ HB_FUNC( DISPOUTAT )  /* writes a single value to the screen at specific positio
 
       pszString = hb_itemStringCon( hb_param(3, Harbour::Item::ANY), &nLen, &bFreeReq );
 
-      hb_gtWriteAt( hb_parni(1), hb_parni(2), pszString, nLen );
+      hb_gtWriteAt(hb_parni(1), hb_parni(2), pszString, nLen);
 
       if( bFreeReq )
       {
@@ -666,7 +666,7 @@ HB_FUNC( DISPOUTAT )  /* writes a single value to the screen at specific positio
    {
       pszString = hb_itemStringCon( hb_param(3, Harbour::Item::ANY), &nLen, &bFreeReq );
 
-      hb_gtWriteAt( hb_parni(1), hb_parni(2), pszString, nLen );
+      hb_gtWriteAt(hb_parni(1), hb_parni(2), pszString, nLen);
 
       if( bFreeReq )
       {

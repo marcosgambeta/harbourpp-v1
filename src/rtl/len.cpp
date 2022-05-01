@@ -66,7 +66,7 @@ HB_FUNC( LEN )
          PHB_CODEPAGE cdp = hb_vmCDP();
          if( HB_CDP_ISCHARIDX( cdp ) )
          {
-            nLen = hb_cdpTextLen( cdp, hb_itemGetCPtr(pItem), nLen );
+            nLen = hb_cdpTextLen(cdp, hb_itemGetCPtr(pItem), nLen);
          }
          hb_retns(nLen);
          return;

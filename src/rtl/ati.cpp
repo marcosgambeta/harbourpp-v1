@@ -103,7 +103,7 @@ HB_FUNC( HB_ATI )
       }
       else if( HB_CDP_ISCHARIDX( cdp ) )
       {
-         nFrom = hb_cdpTextPos( cdp, pszText, nTextLength, --nStart );
+         nFrom = hb_cdpTextPos(cdp, pszText, nTextLength, --nStart);
       }
       else
       {
@@ -128,7 +128,7 @@ HB_FUNC( HB_ATI )
                nTo -= nStart;
                if( HB_CDP_ISCHARIDX( cdp ) )
                {
-                  nTo = hb_cdpTextPos( cdp, pszText, nTextLength, nTo );
+                  nTo = hb_cdpTextPos(cdp, pszText, nTextLength, nTo);
                }
                if( nTo > nTextLength )
                {

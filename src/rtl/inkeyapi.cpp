@@ -225,7 +225,7 @@ int hb_inkey( HB_BOOL fWait, double dSeconds, int iEventMask )
    return iKey;
 }
 
-void hb_inkeyPut( int iKey )
+void hb_inkeyPut(int iKey)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyPut(%d)", iKey ) );
@@ -241,7 +241,7 @@ void hb_inkeyPut( int iKey )
    }
 }
 
-void hb_inkeyIns( int iKey )
+void hb_inkeyIns(int iKey)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyIns(%d)", iKey ) );
@@ -293,7 +293,7 @@ int hb_inkeyNext( int iEventMask )
    return iKey;
 }
 
-void hb_inkeyPoll( void )
+void hb_inkeyPoll(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyPoll()" ) );
@@ -343,7 +343,7 @@ void hb_inkeySetText( const char * szText, HB_SIZE nLen, HB_BOOL fEol )
    }
 }
 
-void hb_inkeyReset( void )
+void hb_inkeyReset(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyReset()" ) );
@@ -422,7 +422,7 @@ static int s_inkeyTransChar( int iKey, int iFlags, const HB_KEY_VALUE * pKeyVal 
    }
 }
 
-HB_SIZE hb_inkeyKeyString( int iKey, char * buffer, HB_SIZE nSize )
+HB_SIZE hb_inkeyKeyString(int iKey, char * buffer, HB_SIZE nSize)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyKeyString(%d,%p, %" HB_PFS "u)", iKey, static_cast<void*>(buffer), nSize ) );
@@ -432,7 +432,7 @@ HB_SIZE hb_inkeyKeyString( int iKey, char * buffer, HB_SIZE nSize )
 
    if( HB_INKEY_ISUNICODE( iKey ) )
    {
-      nLen = hb_cdpTextPutU16( hb_vmCDP(), buffer, nSize, HB_INKEY_VALUE( iKey ) );
+      nLen = hb_cdpTextPutU16(hb_vmCDP(), buffer, nSize, HB_INKEY_VALUE(iKey));
    }
    else
    {
@@ -458,7 +458,7 @@ HB_SIZE hb_inkeyKeyString( int iKey, char * buffer, HB_SIZE nSize )
       if( iKey >= 32 && iKey <= 255 && iKey != 127 )
       {
          PHB_CODEPAGE cdp = hb_vmCDP();
-         nLen = hb_cdpTextPutU16( cdp, buffer, nSize, hb_cdpGetU16( cdp, static_cast<HB_UCHAR>(iKey) ) );
+         nLen = hb_cdpTextPutU16(cdp, buffer, nSize, hb_cdpGetU16(cdp, static_cast<HB_UCHAR>(iKey)));
       }
    }
    return nLen;

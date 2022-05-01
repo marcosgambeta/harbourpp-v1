@@ -52,7 +52,7 @@
    length of structure before the structure. The latter simple approach
    was used in Length Prefix Protocol (LPP). Protocol can easily be
    described by simple Harbour expression:
-    Bin2L( hb_BLen( cData ) ) + cData
+    Bin2L(hb_BLen(cData)) + cData
 
    Future extensions: Protocol is limited to 4 GiB size for a single LPP
    message. This can be extended in future to use highest bit of length
@@ -61,12 +61,12 @@
 
    Public functions and procedures
    ===============================
-   hb_lppCreate( hSocket ) --> hLPP
-   hb_lppDestroy( hNSTP )
+   hb_lppCreate(hSocket) --> hLPP
+   hb_lppDestroy(hNSTP)
     Destroys only LPP related structures. Socket remains open and
     it is possible to continue data transfers using hb_socket*()
     functions.
-   hb_lppError( hLPP ) --> nError
+   hb_lppError(hLPP) --> nError
     nError value is compatible with Harbour socket error API,
     the only new error code (until now) is HB_LPP_ERROR_TOOLARGE
    hb_lppSetLimit( hLPP, nLimit )
@@ -81,35 +81,35 @@
     packets can be used.
    hb_lppSend( hLPP, cBuf [, nTimeout = FOREVER ] ) --> lSuccess
    hb_lppRecv( hLPP, @cBuf [, nTimeout = FOREVER ] ) --> lSuccess
-   hb_lppSendLen( hLPP ) --> nBytesSent
+   hb_lppSendLen(hLPP) --> nBytesSent
     Useful for drawing progress bars, etc.
-   hb_lppRecvLen( hLPP ) --> nBytesReceived
+   hb_lppRecvLen(hLPP) --> nBytesReceived
     Useful for drawing progress bars, etc.
 
    Sample code
    ===========
    // send sample
-   hLPP := hb_lppCreate( hSocket )
+   hLPP := hb_lppCreate(hSocket)
    DO WHILE !( lI := hb_lppSend( hLPP, cData, nTimeout ) ) .AND. ;
-          hb_lppError( hLPP ) == HB_SOCKET_ERR_TIMEOUT )
-      // draw progress bar using hb_lppSendLen( hLPP )
+          hb_lppError(hLPP) == HB_SOCKET_ERR_TIMEOUT )
+      // draw progress bar using hb_lppSendLen(hLPP)
    ENDDO
-   IF lI  // or hb_lppError( hLPP ) == 0
+   IF lI  // or hb_lppError(hLPP) == 0
       // Sent OK
    ELSE
       // error
    ENDIF
-   hb_hsctpDestroy( hLPP )
+   hb_hsctpDestroy(hLPP)
 
 
    // recv sample
    DO WHILE !( lI := hb_lppRecv( hLPP, @cData, nTimeout ) ) .AND. ;
-          hb_lppError( hLPP ) == HB_SOCKET_ERR_TIMEOUT )
-      // draw progress bar using hb_lppRecvLen( hLPP )
+          hb_lppError(hLPP) == HB_SOCKET_ERR_TIMEOUT )
+      // draw progress bar using hb_lppRecvLen(hLPP)
    ENDDO
    IF lI
       // Rcvd OK, data in cData
-   ELSEIF hb_lppError( hLPP ) == 0
+   ELSEIF hb_lppError(hLPP) == 0
       // remote side shutdown connection
    ELSE
       // error
@@ -134,7 +134,7 @@ static HB_GARBAGE_FUNC( hb_lpp_destructor )
 
    if( pGC->pSocket )
    {
-      hb_lppDestroy( pGC->pSocket );
+      hb_lppDestroy(pGC->pSocket);
       pGC->pSocket = nullptr;
    }
    if( pGC->pItemSocket )
@@ -174,10 +174,10 @@ HB_FUNC( HB_LPPCREATE )
    }
 
    pGC = static_cast<PHB_LPP_GC>(hb_gcAllocate(sizeof(HB_LPP_GC), &s_gcPSocketFuncs));
-   pGC->pSocket = hb_lppCreate( sd );
+   pGC->pSocket = hb_lppCreate(sd);
    pGC->pItemSocket = hb_itemNew(pItem);
-   hb_gcUnlock( pGC->pItemSocket );
-   hb_retptrGC( pGC );
+   hb_gcUnlock(pGC->pItemSocket);
+   hb_retptrGC(pGC);
 }
 
 HB_FUNC( HB_LPPDESTROY )
@@ -190,7 +190,7 @@ HB_FUNC( HB_LPPDESTROY )
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
    }
-   hb_lppDestroy( pGC->pSocket );
+   hb_lppDestroy(pGC->pSocket);
    pGC->pSocket = nullptr;
    hb_itemRelease(pGC->pItemSocket);
    pGC->pItemSocket = nullptr;
@@ -228,7 +228,7 @@ HB_FUNC( HB_LPPSEND )
    PHB_ITEM pData;
 
    pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
-   if( !pGC || !pGC->pSocket || hb_socketItemGet( pGC->pItemSocket ) == HB_NO_SOCKET )
+   if( !pGC || !pGC->pSocket || hb_socketItemGet(pGC->pItemSocket) == HB_NO_SOCKET )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;
@@ -246,7 +246,7 @@ HB_FUNC( HB_LPPRECV )
    HB_SIZE    len;
 
    pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
-   if( !pGC || !pGC->pSocket || hb_socketItemGet( pGC->pItemSocket ) == HB_NO_SOCKET )
+   if( !pGC || !pGC->pSocket || hb_socketItemGet(pGC->pItemSocket) == HB_NO_SOCKET )
    {
       hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return;

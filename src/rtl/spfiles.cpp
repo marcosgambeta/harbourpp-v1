@@ -47,7 +47,7 @@
 #include "hbapifs.h"
 #include "hbset.h"
 
-HB_BOOL hb_spFile( const char * pszFileName, char * pszRetPath )
+HB_BOOL hb_spFile(const char * pszFileName, char * pszRetPath)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_spFile(%s, %p)", pszFileName, static_cast<void*>(pszRetPath) ) );
@@ -191,7 +191,7 @@ HB_BOOL hb_spFileExists( const char * pszFileName, char * pszRetPath )
    return bIsFile;
 }
 
-HB_FHANDLE hb_spOpen( const char * pszFileName, HB_USHORT uiFlags )
+HB_FHANDLE hb_spOpen(const char * pszFileName, HB_USHORT uiFlags)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_spOpen(%p, %hu)", static_cast<const void*>(pszFileName), uiFlags ) );
@@ -199,7 +199,7 @@ HB_FHANDLE hb_spOpen( const char * pszFileName, HB_USHORT uiFlags )
 
    char szPath[HB_PATH_MAX];
 
-   if( hb_spFile( pszFileName, szPath ) )
+   if( hb_spFile(pszFileName, szPath) )
    {
       return hb_fsOpen(szPath, uiFlags);
    }
@@ -209,7 +209,7 @@ HB_FHANDLE hb_spOpen( const char * pszFileName, HB_USHORT uiFlags )
    }
 }
 
-HB_FHANDLE hb_spCreate( const char * pszFileName, HB_FATTR ulAttr )
+HB_FHANDLE hb_spCreate(const char * pszFileName, HB_FATTR ulAttr)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_spCreate(%p, %u)", static_cast<const void*>(pszFileName), ulAttr ) );

@@ -54,7 +54,7 @@
 #include "hbstack.h"
 #include "hbvm.h"
 
-static void hb_inkeySetTextKeys( const char * pszText, HB_SIZE nSize, HB_BOOL fInsert )
+static void hb_inkeySetTextKeys(const char * pszText, HB_SIZE nSize, HB_BOOL fInsert)
 {
    PHB_CODEPAGE cdp = hb_vmCDP();
    HB_SIZE nIndex = 0;
@@ -74,7 +74,7 @@ static void hb_inkeySetTextKeys( const char * pszText, HB_SIZE nSize, HB_BOOL fI
       while( n-- )
       {
          int iKey = keys[n] >= 128 ? HB_INKEY_NEW_UNICODE( keys[n] ) : keys[n];
-         hb_inkeyIns( iKey );
+         hb_inkeyIns(iKey);
       }
       if( nSize > HB_SIZEOFARRAY( buffer ) )
       {
@@ -86,7 +86,7 @@ static void hb_inkeySetTextKeys( const char * pszText, HB_SIZE nSize, HB_BOOL fI
       while( HB_CDPCHAR_GET( cdp, pszText, nSize, &nIndex, &wc ) )
       {
          int iKey = wc >= 128 ? HB_INKEY_NEW_UNICODE( wc ) : wc;
-         hb_inkeyPut( iKey );
+         hb_inkeyPut(iKey);
       }
    }
 }
@@ -118,11 +118,11 @@ HB_FUNC( HB_KEYPUT )
 {
    if( HB_ISNUM(1) )
    {
-      hb_inkeyPut( hb_parni(1) );
+      hb_inkeyPut(hb_parni(1));
    }
    else if( HB_ISCHAR(1) )
    {
-      hb_inkeySetTextKeys( hb_parc(1), hb_parclen(1), false );
+      hb_inkeySetTextKeys(hb_parc(1), hb_parclen(1), false);
    }
    else if( HB_ISARRAY(1) )
    {
@@ -135,11 +135,11 @@ HB_FUNC( HB_KEYPUT )
 
          if( type & Harbour::Item::NUMERIC )
          {
-            hb_inkeyPut( hb_arrayGetNI(pArray, nIndex) );
+            hb_inkeyPut(hb_arrayGetNI(pArray, nIndex));
          }
          else if( type & Harbour::Item::STRING )
          {
-            hb_inkeySetTextKeys( hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), false );
+            hb_inkeySetTextKeys(hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), false);
          }
       }
    }
@@ -149,11 +149,11 @@ HB_FUNC( HB_KEYINS )
 {
    if( HB_ISNUM(1) )
    {
-      hb_inkeyIns( hb_parni(1) );
+      hb_inkeyIns(hb_parni(1));
    }
    else if( HB_ISCHAR(1) )
    {
-      hb_inkeySetTextKeys( hb_parc(1), hb_parclen(1), true );
+      hb_inkeySetTextKeys(hb_parc(1), hb_parclen(1), true);
    }
    else if( HB_ISARRAY(1) )
    {
@@ -166,11 +166,11 @@ HB_FUNC( HB_KEYINS )
 
          if( type & Harbour::Item::NUMERIC )
          {
-            hb_inkeyIns( hb_arrayGetNI(pArray, nIndex) );
+            hb_inkeyIns(hb_arrayGetNI(pArray, nIndex));
          }
          else if( type & Harbour::Item::STRING )
          {
-            hb_inkeySetTextKeys( hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), true );
+            hb_inkeySetTextKeys(hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), true);
          }
       }
    }
@@ -243,7 +243,7 @@ HB_FUNC( HB_KEYCHAR )
    char szKeyChr[HB_MAX_CHAR_LEN];
    HB_SIZE nLen;
 
-   nLen = hb_inkeyKeyString( hb_parni(1), szKeyChr, sizeof(szKeyChr) );
+   nLen = hb_inkeyKeyString(hb_parni(1), szKeyChr, sizeof(szKeyChr));
    hb_retclen(szKeyChr, nLen);
 }
 

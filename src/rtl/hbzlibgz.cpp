@@ -61,7 +61,7 @@ static HB_GARBAGE_FUNC( hb_gz_Destructor )
    if( *gzHolder )
    {
       hb_vmUnlock();
-      gzclose( *gzHolder );
+      gzclose(*gzHolder);
       hb_vmLock();
       *gzHolder = nullptr;
    }
@@ -75,7 +75,7 @@ static const HB_GC_FUNCS s_gcGZFuncs =
 
 static gzFile hb_gzParam( int iParam )
 {
-   gzFile * gzHolder = static_cast<gzFile*>(hb_parptrGC( &s_gcGZFuncs, iParam ));
+   gzFile * gzHolder = static_cast<gzFile*>(hb_parptrGC(&s_gcGZFuncs, iParam));
 
    if( gzHolder && *gzHolder )
    {
@@ -88,7 +88,7 @@ static gzFile hb_gzParam( int iParam )
 #endif
 
 /*
- * hb_gzOpen( <cFile>, <cMode> ) => <pGZipStream> or NIL on Error
+ * hb_gzOpen(<cFile>, <cMode>) => <pGZipStream> or NIL on Error
  */
 HB_FUNC( HB_GZOPEN )
 {
@@ -103,11 +103,11 @@ HB_FUNC( HB_GZOPEN )
       #if defined(HB_OS_WIN) && ZLIB_VERNUM >= 0x1270
       {
          void * hFile;
-         gz = gzopen_w( hb_parstr_u16( 1, HB_CDP_ENDIAN_NATIVE, &hFile, nullptr ), cMode );
+         gz = gzopen_w(hb_parstr_u16(1, HB_CDP_ENDIAN_NATIVE, &hFile, nullptr), cMode);
          hb_strfree(hFile);
       }
       #else
-         gz = gzopen( cFile, cMode );
+         gz = gzopen(cFile, cMode);
       #endif
       hb_vmLock();
 
@@ -115,7 +115,7 @@ HB_FUNC( HB_GZOPEN )
       {
          gzFile * gzHolder = static_cast<gzFile*>(hb_gcAllocate( sizeof(gzFile), &s_gcGZFuncs ));
          *gzHolder = gz;
-         hb_retptrGC( gzHolder );
+         hb_retptrGC(gzHolder);
       }
    }
    else
@@ -126,7 +126,7 @@ HB_FUNC( HB_GZOPEN )
 }
 
 /*
- * hb_gzDOpen( <hFile>, <cMode> ) => <pGZipStream> or NIL on Error
+ * hb_gzDOpen(<hFile>, <cMode>) => <pGZipStream> or NIL on Error
  */
 HB_FUNC( HB_GZDOPEN )
 {
@@ -138,14 +138,14 @@ HB_FUNC( HB_GZDOPEN )
       gzFile gz;
 
       hb_vmUnlock();
-      gz = gzdopen( hb_parni(1), cMode );
+      gz = gzdopen(hb_parni(1), cMode);
       hb_vmLock();
 
       if( gz )
       {
          gzFile * gzHolder = static_cast<gzFile*>(hb_gcAllocate( sizeof(gzFile), &s_gcGZFuncs ));
          *gzHolder = gz;
-         hb_retptrGC( gzHolder );
+         hb_retptrGC(gzHolder);
       }
    }
    else
@@ -156,12 +156,12 @@ HB_FUNC( HB_GZDOPEN )
 }
 
 /*
- * hb_gzClose( <pGZipStream> ) => <nResult>
+ * hb_gzClose(<pGZipStream>) => <nResult>
  */
 HB_FUNC( HB_GZCLOSE )
 {
 #ifndef HB_NO_GZLIB
-   gzFile * gzHolder = static_cast<gzFile*>(hb_parptrGC( &s_gcGZFuncs, 1 ));
+   gzFile * gzHolder = static_cast<gzFile*>(hb_parptrGC(&s_gcGZFuncs, 1));
 
    if( gzHolder )
    {
@@ -171,7 +171,7 @@ HB_FUNC( HB_GZCLOSE )
       *gzHolder = nullptr;
 
       hb_vmUnlock();
-      iResult = gzclose( gz );
+      iResult = gzclose(gz);
       hb_vmLock();
 
       hb_retni(iResult);
@@ -205,7 +205,7 @@ HB_FUNC( HB_GZSETPARAMS )
 }
 
 /*
- * hb_gzRead( <pGZipStream>, <@cData>, [ <nLen> ] ) => <nResult>
+ * hb_gzRead(<pGZipStream>, <@cData>, [ <nLen> ]) => <nResult>
  */
 HB_FUNC( HB_GZREAD )
 {
@@ -231,7 +231,7 @@ HB_FUNC( HB_GZREAD )
          }
 
          hb_vmUnlock();
-         iResult = gzread( gz, szBuffer, static_cast<unsigned>(nLen) );
+         iResult = gzread(gz, szBuffer, static_cast<unsigned>(nLen));
          hb_vmLock();
 
          hb_retni(iResult);
@@ -245,7 +245,7 @@ HB_FUNC( HB_GZREAD )
 }
 
 /*
- * hb_gzWrite( <pGZipStream>, <cData>, [ <nLen> ] ) => <nResult>
+ * hb_gzWrite(<pGZipStream>, <cData>, [ <nLen> ]) => <nResult>
  */
 HB_FUNC( HB_GZWRITE )
 {
@@ -260,9 +260,7 @@ HB_FUNC( HB_GZWRITE )
          int iResult;
 
          hb_vmUnlock();
-         iResult = gzwrite( gz, szData,
-                            HB_ISNUM(3) ? static_cast<unsigned>(hb_parns(3)) :
-                                            static_cast<unsigned>(hb_parclen(2)) );
+         iResult = gzwrite(gz, szData, HB_ISNUM(3) ? static_cast<unsigned>(hb_parns(3)) : static_cast<unsigned>(hb_parclen(2)));
          hb_vmLock();
 
          hb_retni(iResult);
@@ -444,7 +442,7 @@ HB_FUNC( HB_GZFLUSH )
 }
 
 /*
- * hb_gzSeek( <pGZipStream>, <nOffset>, [ <nWhence> ] ) => <nOffset>
+ * hb_gzSeek(<pGZipStream>, <nOffset>, [ <nWhence> ]) => <nOffset>
  */
 HB_FUNC( HB_GZSEEK )
 {
@@ -457,7 +455,7 @@ HB_FUNC( HB_GZSEEK )
          HB_MAXINT nResult;
 
          hb_vmUnlock();
-         nResult = gzseek( gz, ( z_off_t ) hb_parnint(2), hb_parnidef(3, SEEK_SET) );
+         nResult = gzseek(gz, static_cast<z_off_t>(hb_parnint(2)), hb_parnidef(3, SEEK_SET));
          hb_vmLock();
 
          hb_retnint(nResult);
@@ -556,7 +554,7 @@ HB_FUNC( HB_GZDIRECT )
 }
 
 /*
- * hb_gzError( <pGZipStream>, [ <@nError> ] ) => <cError>
+ * hb_gzError(<pGZipStream>, [ <@nError> ]) => <cError>
  */
 HB_FUNC( HB_GZERROR )
 {

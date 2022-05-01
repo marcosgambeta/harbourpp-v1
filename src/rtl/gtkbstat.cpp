@@ -52,7 +52,7 @@
 
 #include <windows.h>
 
-int hb_gt_winapi_getKbdState( void )
+int hb_gt_winapi_getKbdState(void)
 {
    BYTE kbState[256];
    int iKbdState = 0;

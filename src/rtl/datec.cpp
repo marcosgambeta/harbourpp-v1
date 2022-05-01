@@ -63,7 +63,7 @@ const char * hb_dateCMonth( int iMonth )
    HB_TRACE( HB_TR_DEBUG, ( "hb_dateCMonth(%d)", iMonth ) );
 #endif
 
-   return ( iMonth >= 1 && iMonth <= 12 ) ? hb_langDGetItem( HB_LANG_ITEM_BASE_MONTH + iMonth - 1 ) : s_nullStr;
+   return ( iMonth >= 1 && iMonth <= 12 ) ? hb_langDGetItem(HB_LANG_ITEM_BASE_MONTH + iMonth - 1) : s_nullStr;
 }
 
 const char * hb_dateCDOW( int iDay )
@@ -72,7 +72,7 @@ const char * hb_dateCDOW( int iDay )
    HB_TRACE( HB_TR_DEBUG, ( "hb_dateCDOW(%d)", iDay ) );
 #endif
 
-   return ( iDay >= 1 && iDay <= 7 ) ? hb_langDGetItem( HB_LANG_ITEM_BASE_DAY + iDay - 1 ) : s_nullStr;
+   return ( iDay >= 1 && iDay <= 7 ) ? hb_langDGetItem(HB_LANG_ITEM_BASE_DAY + iDay - 1) : s_nullStr;
 }
 
 HB_FUNC( CMONTH )
@@ -83,8 +83,8 @@ HB_FUNC( CMONTH )
    {
       int iYear, iMonth, iDay;
 
-      hb_dateDecode( hb_itemGetDL(pDate), &iYear, &iMonth, &iDay );
-      hb_retc_const( hb_dateCMonth( iMonth ) );
+      hb_dateDecode(hb_itemGetDL(pDate), &iYear, &iMonth, &iDay);
+      hb_retc_const(hb_dateCMonth(iMonth));
    }
    else
    {
@@ -104,8 +104,8 @@ HB_FUNC( CDOW )
       {
          int iYear, iMonth, iDay;
 
-         hb_dateDecode( lDate, &iYear, &iMonth, &iDay );
-         hb_retc_const( hb_dateCDOW( hb_dateDOW( iYear, iMonth, iDay ) ) );
+         hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
+         hb_retc_const(hb_dateCDOW(hb_dateDOW(iYear, iMonth, iDay)));
       }
       else
       {
@@ -124,7 +124,7 @@ HB_FUNC( HB_CDAY )
 
    if( pDay )
    {
-      hb_retc_const( hb_dateCDOW( hb_itemGetNI(pDay) ) );
+      hb_retc_const(hb_dateCDOW(hb_itemGetNI(pDay)));
    }
    else
    {

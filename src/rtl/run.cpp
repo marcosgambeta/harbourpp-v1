@@ -66,12 +66,12 @@ HB_FUNC( __RUN )
    {
 #if defined(HB_OS_WIN)
       LPTSTR lpCommand = HB_CHARDUP( pszCommand );
-      ( void ) HB_WINAPI_SYSTEM( lpCommand );
+      ( void ) HB_WINAPI_SYSTEM( lpCommand ); // TODO: C++ cast
       hb_xfree(lpCommand);
 #else
       char * pszFree = nullptr;
 
-      if( system( hb_osEncodeCP( pszCommand, &pszFree, nullptr ) ) != 0 )
+      if( system(hb_osEncodeCP(pszCommand, &pszFree, nullptr)) != 0 )
       {
       }
 
@@ -85,7 +85,7 @@ HB_FUNC( __RUN )
       {
          /* an error should be generated here !! Something like */
          #if 0
-         hb_errRT_BASE_Ext1( EG_GTRESUME, 6002, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT );
+         hb_errRT_BASE_Ext1(EG_GTRESUME, 6002, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT);
          #endif
       }
    }

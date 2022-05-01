@@ -88,11 +88,11 @@ static void hb_val( HB_BOOL fExt )
 
       if( fDbl )
       {
-         hb_retndlen( dValue, iWidth, iDec );
+         hb_retndlen(dValue, iWidth, iDec);
       }
       else
       {
-         hb_retnintlen( lValue, iWidth );
+         hb_retnintlen(lValue, iWidth);
       }
    }
    else

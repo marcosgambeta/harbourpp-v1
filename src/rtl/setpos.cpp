@@ -53,7 +53,7 @@ HB_FUNC( SETPOS )  /* Sets the screen position */
 {
    if( HB_ISNUM(1) && HB_ISNUM(2) )
    {
-      hb_gtSetPos( hb_parni(1), hb_parni(2) );
+      hb_gtSetPos(hb_parni(1), hb_parni(2));
    }
 
 #if defined(HB_COMPAT_C53) || defined(HB_CLP_UNDOC)
@@ -69,7 +69,7 @@ HB_FUNC( ROW )  /* Return the current screen row position (zero origin) */
    int iRow;
    int iCol;
 
-   hb_gtGetPos( &iRow, &iCol );
+   hb_gtGetPos(&iRow, &iCol);
 
    hb_retni(iRow);
 }
@@ -79,7 +79,7 @@ HB_FUNC( COL )  /* Return the current screen column position (zero origin) */
    int iRow;
    int iCol;
 
-   hb_gtGetPos( &iRow, &iCol );
+   hb_gtGetPos(&iRow, &iCol);
 
    hb_retni(iCol);
 }

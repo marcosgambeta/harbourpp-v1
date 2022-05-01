@@ -66,7 +66,7 @@ const char * hb_strLTrim( const char * szText, HB_SIZE * nLen )
 }
 
 /* return length of szText ignoring trailing white space (or true spaces) */
-HB_SIZE hb_strRTrimLen( const char * szText, HB_SIZE nLen, HB_BOOL bAnySpace )
+HB_SIZE hb_strRTrimLen(const char * szText, HB_SIZE nLen, HB_BOOL bAnySpace)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_strRTrimLen(%s, %" HB_PFS "u, %d)", szText, nLen, static_cast<int>(bAnySpace) ) );
@@ -133,7 +133,7 @@ HB_FUNC( RTRIM )
       const char * szText = hb_itemGetCPtr(pText);
 
       nSrc = hb_itemGetCLen(pText);
-      nLen = hb_strRTrimLen( szText, nSrc, false );
+      nLen = hb_strRTrimLen(szText, nSrc, false);
 
       if( nLen == nSrc )
       {
@@ -168,7 +168,7 @@ HB_FUNC( ALLTRIM )
       const char * szText = hb_itemGetCPtr(pText);
 
       nSrc = hb_itemGetCLen(pText);
-      nLen = hb_strRTrimLen( szText, nSrc, false );
+      nLen = hb_strRTrimLen(szText, nSrc, false);
       szText = hb_strLTrim( szText, &nLen );
 
       if( nLen == nSrc )

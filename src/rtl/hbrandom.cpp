@@ -55,11 +55,11 @@
 #define MODULUS     2147483647 /* DON'T CHANGE THIS VALUE */
 #define MULTIPLIER  48271      /* DON'T CHANGE THIS VALUE */
 
-static HB_TSD_NEW( s_seed, sizeof(HB_I32), nullptr, nullptr );
+static HB_TSD_NEW(s_seed, sizeof(HB_I32), nullptr, nullptr);
 #define SEED_PTR    ( static_cast<HB_I32*>(hb_stackGetTSD(&s_seed)) )
 
 /* Returns a double value between 0 and 1 */
-double hb_random_num( void )
+double hb_random_num(void)
 {
    HB_I32 * seed = SEED_PTR, t;
 

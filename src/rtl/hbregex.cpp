@@ -55,12 +55,12 @@
    static int s_iUTF8Enabled;
 #endif
 
-static void hb_regfree( PHB_REGEX pRegEx )
+static void hb_regfree(PHB_REGEX pRegEx)
 {
 #if defined(HB_HAS_PCRE)
    ( pcre_free )( pRegEx->re_pcre );
 #elif defined(HB_POSIX_REGEX)
-   regfree( &pRegEx->reg );
+   regfree(&pRegEx->reg);
 #else
    HB_SYMBOL_UNUSED(pRegEx);
 #endif
@@ -80,7 +80,7 @@ static int hb_regcomp( PHB_REGEX pRegEx, const char * szRegEx )
                      ( ( pRegEx->iFlags & HBREG_NOTEOL ) ? PCRE_NOTEOL : 0 );
 
    /* use UTF8 in pcre when available and HVM CP is also UTF8. */
-   if( s_iUTF8Enabled && hb_cdpIsUTF8( nullptr ) )
+   if( s_iUTF8Enabled && hb_cdpIsUTF8(nullptr) )
    {
       iCFlags |= PCRE_UTF8;
    }
@@ -107,9 +107,9 @@ static int hb_regexec( PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen, in
 #if defined(HB_HAS_PCRE)
    int iResult, i;
 
-   iResult = pcre_exec( pRegEx->re_pcre, nullptr /* pcre_extra */,
-                        szString, static_cast<int>(nLen), 0 /* startoffset */,
-                        pRegEx->iEFlags, aMatches, HB_REGMATCH_SIZE( iMatches ) );
+   iResult = pcre_exec(pRegEx->re_pcre, nullptr /* pcre_extra */,
+                       szString, static_cast<int>(nLen), 0 /* startoffset */,
+                       pRegEx->iEFlags, aMatches, HB_REGMATCH_SIZE(iMatches));
    if( iResult == 0 )
    {
       for( i = 0; i < iMatches; i++ )
@@ -190,7 +190,7 @@ HB_FUNC( HB_REGEXCOMP )
       if( pRegEx )
       {
          pRegEx->fFree = HB_FALSE;
-         hb_retptrGC( pRegEx );
+         hb_retptrGC(pRegEx);
       }
    }
 }
@@ -206,7 +206,7 @@ HB_FUNC( HB_ATX )
 
    if( pString )
    {
-      PHB_REGEX pRegEx = hb_regexGet( hb_param(1, Harbour::Item::ANY), !hb_parldef(3, true) ? HBREG_ICASE : 0 );
+      PHB_REGEX pRegEx = hb_regexGet(hb_param(1, Harbour::Item::ANY), !hb_parldef(3, true) ? HBREG_ICASE : 0);
 
       if( pRegEx )
       {
@@ -245,7 +245,7 @@ HB_FUNC( HB_ATX )
             nStart = nLen = 0;
          }
 
-         hb_regexFree( pRegEx );
+         hb_regexFree(pRegEx);
 
          hb_storns(nStart, 4);
          hb_storns(nLen, 5);
@@ -278,7 +278,7 @@ static HB_BOOL hb_regex( int iRequest )
       hb_errRT_BASE_SubstR( EG_ARG, 3014, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
       return false;
    }
-   pRegEx = hb_regexGet( hb_param(1, Harbour::Item::ANY), ( !hb_parldef(3, true) ? HBREG_ICASE : 0 ) | ( hb_parl(4) ? HBREG_NEWLINE : 0 ) );
+   pRegEx = hb_regexGet(hb_param(1, Harbour::Item::ANY), (!hb_parldef(3, true) ? HBREG_ICASE : 0) | (hb_parl(4) ? HBREG_NEWLINE : 0));
    if( !pRegEx )
    {
       return false;
@@ -502,7 +502,7 @@ static HB_BOOL hb_regex( int iRequest )
       fResult = HB_TRUE;
    }
 
-   hb_regexFree( pRegEx );
+   hb_regexFree(pRegEx);
    return fResult;
 }
 
@@ -585,7 +585,7 @@ static void * hb_pcre_grab( size_t size )
 {
    return hb_xgrab(size);
 }
-static void hb_pcre_free( void * ptr )
+static void hb_pcre_free(void * ptr)
 {
    hb_xfree(ptr);
 }

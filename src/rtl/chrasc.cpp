@@ -72,7 +72,7 @@ HB_FUNC( CHR )
          char szChar[HB_MAX_CHAR_LEN];
          HB_SIZE nLen;
 
-         nLen = hb_cdpTextPutU16( hb_vmCDP(), szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni(1)) );
+         nLen = hb_cdpTextPutU16(hb_vmCDP(), szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni(1)));
          hb_retclen(szChar, nLen);
       }
       else
@@ -98,7 +98,7 @@ HB_FUNC( ASC )
       PHB_CODEPAGE cdp = hb_vmCDP();
       if( HB_CDP_ISCHARUNI( cdp ) )
       {
-         iChar = hb_cdpTextGetU16( cdp, szValue, hb_parclen(1) );
+         iChar = hb_cdpTextGetU16(cdp, szValue, hb_parclen(1));
       }
       else
       {

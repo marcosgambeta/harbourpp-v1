@@ -47,33 +47,33 @@
 /*
  * hb_socketGetError() --> nSocketError
  * hb_socketGetOSError() --> nOSError
- * hb_socketErrorString( [ nSocketErrror = hb_socketGetError() ], [ hSocket ] ) --> cError
+ * hb_socketErrorString([ nSocketErrror = hb_socketGetError() ], [ hSocket ]) --> cError
  * hb_socketGetSockName( hSocket ) --> aAddr | NIL
  * hb_socketGetPeerName( hSocket ) --> aAddr | NIL
- * hb_socketOpen( [ nDomain = HB_SOCKET_AF_INET ], [ nType = HB_SOCKET_PT_STREAM ], [ nProtocol = 0 ] ) --> hSocket
- * hb_socketClose( hSocket ) --> lSuccess
+ * hb_socketOpen([ nDomain = HB_SOCKET_AF_INET ], [ nType = HB_SOCKET_PT_STREAM ], [ nProtocol = 0 ]) --> hSocket
+ * hb_socketClose(hSocket) --> lSuccess
  * hb_socketShutdown( hSocket, [ nMode = HB_SOCKET_SHUT_RDWR ] ) --> lSuccess
  * hb_socketBind( hSocket, aAddr ) --> lSuccess
  * hb_socketListen( hSocket, [ iQueueLen = 10 ] ) --> lSuccess
  * hb_socketAccept( hSocket, [ @aAddr ], [ nTimeout = FOREVER ] ) --> hConnectionSocket
  * hb_socketConnect( hSocket, aAddr, [ nTimeout = FOREVER ] ) --> lSuccess
- * hb_socketSend( hSocket, cBuffer, [ nLen = Len( cBuffer ) ], [ nFlags = 0 ], [ nTimeout = FOREVER ] ) --> nBytesSent
- * hb_socketSendTo( hSocket, cBuffer, [ nLen = Len( cBuffer ) ], [ nFlags = 0 ], aAddr, [ nTimeout = FOREVER ] ) --> nBytesSent
- * hb_socketRecv( hSocket, @cBuffer, [ nLen = Len( cBuffer ) ], [ nFlags = 0 ], [ nTimeout = FOREVER ] ) --> nBytesRecv
- * hb_socketRecvFrom( hSocket, @cBuffer, [ nLen = Len( cBuffer ) ], [ nFlags = 0 ], @aAddr, [ nTimeout = FOREVER ] ) --> nBytesRecv
+ * hb_socketSend( hSocket, cBuffer, [ nLen = Len(cBuffer) ], [ nFlags = 0 ], [ nTimeout = FOREVER ] ) --> nBytesSent
+ * hb_socketSendTo( hSocket, cBuffer, [ nLen = Len(cBuffer) ], [ nFlags = 0 ], aAddr, [ nTimeout = FOREVER ] ) --> nBytesSent
+ * hb_socketRecv( hSocket, @cBuffer, [ nLen = Len(cBuffer) ], [ nFlags = 0 ], [ nTimeout = FOREVER ] ) --> nBytesRecv
+ * hb_socketRecvFrom( hSocket, @cBuffer, [ nLen = Len(cBuffer) ], [ nFlags = 0 ], @aAddr, [ nTimeout = FOREVER ] ) --> nBytesRecv
  * hb_socketSetBlockingIO( hSocket, lValue ) --> nSuccess
  * hb_socketSetNoDelay( hSocket, lValue ) --> lSuccess
  * hb_socketSetExclusiveAddr( hSocket, lValue ) --> lSuccess
  * hb_socketSetReuseAddr( hSocket, lValue ) --> lSuccess
  * hb_socketSetKeepAlive( hSocket, lValue ) --> lSuccess
- * hb_socketSetBroadcast( hSocket, lValue ) --> lSuccess
- * hb_socketSetSndBufSize( hSocket, nValue ) --> lSuccess
- * hb_socketSetRcvBufSize( hSocket, nValue ) --> lSuccess
- * hb_socketGetSndBufSize( hSocket, @nValue ) --> lSuccess
- * hb_socketGetRcvBufSize( hSocket, @nValue ) --> lSuccess
- * hb_socketSetMulticast( hSocket, [ nFamily = HB_SOCKET_AF_INET ], cAddr ) --> lSuccess
- * hb_socketSelectRead( hSocket, [ nTimeout = FOREVER ] ) --> nRet
- * hb_socketSelectWrite( hSocket, [ nTimeout = FOREVER ] ) --> nRet
+ * hb_socketSetBroadcast(hSocket, lValue) --> lSuccess
+ * hb_socketSetSndBufSize(hSocket, nValue) --> lSuccess
+ * hb_socketSetRcvBufSize(hSocket, nValue) --> lSuccess
+ * hb_socketGetSndBufSize(hSocket, @nValue) --> lSuccess
+ * hb_socketGetRcvBufSize(hSocket, @nValue) --> lSuccess
+ * hb_socketSetMulticast(hSocket, [ nFamily = HB_SOCKET_AF_INET ], cAddr) --> lSuccess
+ * hb_socketSelectRead(hSocket, [ nTimeout = FOREVER ]) --> nRet
+ * hb_socketSelectWrite(hSocket, [ nTimeout = FOREVER ]) --> nRet
  * hb_socketSelectWriteEx( hSocket, [ nTimeout = FOREVER ] ) --> nRet
  * hb_socketSelect( aRead, lSetRead, aWrite, lSetWrite, aExcep, lSetExcep, [ nTimeout = FOREVER ] ) --> nRet
  * hb_socketResolveINetAddr( cAddr, nPort ) --> aAddr | NIL
@@ -84,8 +84,8 @@
  * hb_socketGetFD( hSocket ) --> nFD
  * hb_socketSetFilter( hSocket, cFilterName, [ hSockParams ] ) --> hSocket
  * hb_socketGetFilter( hSocket ) --> cFilterName
- * hb_socketRead( hSocket, @cBuffer, [ nLen = Len( cBuffer ) ], [ nTimeout = FOREVER ] ) --> nBytesRead
- * hb_socketWrite( hSocket, cBuffer, [ nLen = Len( cBuffer ) ], [ nTimeout = FOREVER ] ) --> nBytesWritten
+ * hb_socketRead(hSocket, @cBuffer, [ nLen = Len(cBuffer) ], [ nTimeout = FOREVER ]) --> nBytesRead
+ * hb_socketWrite(hSocket, cBuffer, [ nLen = Len(cBuffer) ], [ nTimeout = FOREVER ]) --> nBytesWritten
  * hb_socketFlush( hSocket, [ nTimeout = FOREVER ], [ lSync ] ) --> nBytesLeft
  * hb_socketAutoFlush( hSocket, [ nNewSetting ] ) --> nPrevSetting
  * hb_socketAutoShutdown( hSocket, [ lNewSetting ] ) --> lPrevSetting
@@ -103,12 +103,12 @@
 static HB_BOOL s_fInit = HB_FALSE;
 
 /* create new extended socket structure */
-static PHB_SOCKEX s_sockexNew( HB_SOCKET sd, PHB_ITEM pParams );
+static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams);
 
 /* destroy extended socket structure */
-static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
+static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
 {
-   int iResult = hb_sockexRawClear( pSock, fClose );
+   int iResult = hb_sockexRawClear(pSock, fClose);
 
    hb_xfree(pSock);
 
@@ -117,7 +117,7 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
 
 /* read data from extended socket, check internal read-ahead
    buffer first */
-static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT timeout )
+static long s_sockexRead(PHB_SOCKEX pSock, void * data, long len, HB_MAXINT timeout)
 {
    long lRead = HB_MIN(pSock->inbuffer, len);
 
@@ -137,18 +137,18 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
    }
    if( pSock->sd == HB_NO_SOCKET )
    {
-      hb_socketSetError( HB_SOCKET_ERR_INVALIDHANDLE );
+      hb_socketSetError(HB_SOCKET_ERR_INVALIDHANDLE);
       return -1;
    }
    return hb_socketRecv( pSock->sd, data, len, 0, timeout );
 }
 
 /* write data to extended socket */
-static long s_sockexWrite( PHB_SOCKEX pSock, const void * data, long len, HB_MAXINT timeout )
+static long s_sockexWrite(PHB_SOCKEX pSock, const void * data, long len, HB_MAXINT timeout)
 {
    if( pSock->sd == HB_NO_SOCKET )
    {
-      hb_socketSetError( HB_SOCKET_ERR_INVALIDHANDLE );
+      hb_socketSetError(HB_SOCKET_ERR_INVALIDHANDLE);
       return -1;
    }
    return hb_socketSend( pSock->sd, data, len, 0, timeout );
@@ -176,7 +176,7 @@ static long s_sockexFlush( PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync )
    any timeout. Such call is executed just before inside
    hb_sockexSelect() just before call to low-level socket select()
    function. */
-static int s_sockexCanRead( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout )
+static int s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
    if( pSock->inbuffer > 0 )
    {
@@ -184,10 +184,10 @@ static int s_sockexCanRead( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout
    }
    else if( pSock->sd == HB_NO_SOCKET )
    {
-      hb_socketSetError( HB_SOCKET_ERR_INVALIDHANDLE );
+      hb_socketSetError(HB_SOCKET_ERR_INVALIDHANDLE);
       return -1;
    }
-   return fBuffer ? 0 : hb_socketSelectRead( pSock->sd, timeout );
+   return fBuffer ? 0 : hb_socketSelectRead(pSock->sd, timeout);
 }
 
 /* check if data can be written to extended socket without any delay,
@@ -199,21 +199,21 @@ static int s_sockexCanRead( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout
    then this functions should return 0. In most of implementations 0
    can be returned in all cases if fBuffer is true. Such behavior will
    reduce number of data buffered and not flushed. */
-static int s_sockexCanWrite( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout )
+static int s_sockexCanWrite(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
    if( pSock->sd == HB_NO_SOCKET )
    {
-      hb_socketSetError( HB_SOCKET_ERR_INVALIDHANDLE );
+      hb_socketSetError(HB_SOCKET_ERR_INVALIDHANDLE);
       return -1;
    }
-   return fBuffer ? 0 : hb_socketSelectWrite( pSock->sd, timeout );
+   return fBuffer ? 0 : hb_socketSelectWrite(pSock->sd, timeout);
 }
 
 /* return socket name, caller is responsible to free the buffer
    it's intentionally non static buffer to allow nested filters
    create complex filter name dynamically, i.e. "zlib|blowfish"
  */
-static char * s_sockexName( PHB_SOCKEX pSock )
+static char * s_sockexName(PHB_SOCKEX pSock)
 {
    return hb_strdup(pSock->pFilter->pszName);
 }
@@ -236,10 +236,10 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
 
    if( pSock )
    {
-      pSockNew = s_sockexNew( pSock->sd, pParams );
+      pSockNew = s_sockexNew(pSock->sd, pParams);
       if( pSockNew )
       {
-         hb_sockexClose( pSock, false );
+         hb_sockexClose(pSock, false);
       }
    }
 
@@ -262,7 +262,7 @@ static const HB_SOCKET_FILTER s_sockFilter =
 };
 
 /* create new extended socket structure */
-static PHB_SOCKEX s_sockexNew( HB_SOCKET sd, PHB_ITEM pParams )
+static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
 {
    PHB_SOCKEX pSock;
 
@@ -293,7 +293,7 @@ int hb_sockexRegister( const HB_SOCKET_FILTER * pFilter )
          {
             return 1;
          }
-         if( hb_stricmp( s_socketFilters[i]->pszName, pFilter->pszName ) == 0 )
+         if( hb_stricmp(s_socketFilters[i]->pszName, pFilter->pszName) == 0 )
          {
             return 2;
          }
@@ -316,7 +316,7 @@ static HB_BOOL s_socketaddrParam( int iParam, void ** pAddr, unsigned int * puiL
 {
    PHB_ITEM pItem = hb_param(iParam, Harbour::Item::ARRAY);
 
-   if( pItem && hb_socketAddrFromItem( pAddr, puiLen, pItem ) )
+   if( pItem && hb_socketAddrFromItem(pAddr, puiLen, pItem) )
    {
       return true;
    }
@@ -350,18 +350,18 @@ static void s_socket_exit( void * cargo )
    }
 }
 
-static void s_socket_init( void )
+static void s_socket_init(void)
 {
    if( !s_fInit )
    {
-      hb_sockexRegister( nullptr );
+      hb_sockexRegister(nullptr);
       hb_socketInit();
-      hb_vmAtQuit( s_socket_exit, nullptr );
+      hb_vmAtQuit(s_socket_exit, nullptr);
       s_fInit = HB_TRUE;
    }
 }
 
-void hb_socketAutoInit( void )
+void hb_socketAutoInit(void)
 {
    s_socket_init();
 }
@@ -374,7 +374,7 @@ static HB_GARBAGE_FUNC( hb_socket_destructor )
 
    if( *pSockPtr )
    {
-      hb_sockexClose( *pSockPtr, true );
+      hb_sockexClose(*pSockPtr, true);
       *pSockPtr = nullptr;
    }
 }
@@ -398,29 +398,29 @@ HB_SOCKET hb_socketParam( int iParam )
    return HB_NO_SOCKET;
 }
 
-HB_SOCKET hb_socketItemGet( PHB_ITEM pItem )
+HB_SOCKET hb_socketItemGet(PHB_ITEM pItem)
 {
    PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>(hb_itemGetPtrGC(pItem, &s_gcSocketFuncs));
 
    return pSockPtr && *pSockPtr ? ( *pSockPtr )->sd : HB_NO_SOCKET;
 }
 
-PHB_ITEM hb_socketItemPut( PHB_ITEM pItem, HB_SOCKET sd )
+PHB_ITEM hb_socketItemPut(PHB_ITEM pItem, HB_SOCKET sd)
 {
    PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>(hb_gcAllocate(sizeof(PHB_SOCKEX), &s_gcSocketFuncs));
 
-   *pSockPtr = hb_sockexNew( sd, nullptr, nullptr );
+   *pSockPtr = hb_sockexNew(sd, nullptr, nullptr);
 
    return hb_itemPutPtrGC(pItem, pSockPtr);
 }
 
-void hb_socketItemClear( PHB_ITEM pItem )
+void hb_socketItemClear(PHB_ITEM pItem)
 {
    PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>(hb_itemGetPtrGC(pItem, &s_gcSocketFuncs));
 
    if( pSockPtr && *pSockPtr )
    {
-      hb_sockexClose( *pSockPtr, false );
+      hb_sockexClose(*pSockPtr, false);
       *pSockPtr = nullptr;
    }
 }
@@ -440,14 +440,14 @@ PHB_SOCKEX hb_sockexParam( int iParam )
    return nullptr;
 }
 
-PHB_SOCKEX hb_sockexItemGet( PHB_ITEM pItem )
+PHB_SOCKEX hb_sockexItemGet(PHB_ITEM pItem)
 {
    PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>(hb_itemGetPtrGC(pItem, &s_gcSocketFuncs));
 
    return pSockPtr ? *pSockPtr : nullptr;
 }
 
-PHB_ITEM hb_sockexItemPut( PHB_ITEM pItem, PHB_SOCKEX pSock )
+PHB_ITEM hb_sockexItemPut(PHB_ITEM pItem, PHB_SOCKEX pSock)
 {
    PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>(hb_gcAllocate(sizeof(PHB_SOCKEX), &s_gcSocketFuncs));
 
@@ -456,7 +456,7 @@ PHB_ITEM hb_sockexItemPut( PHB_ITEM pItem, PHB_SOCKEX pSock )
    return hb_itemPutPtrGC(pItem, pSockPtr);
 }
 
-void hb_sockexItemClear( PHB_ITEM pItem )
+void hb_sockexItemClear(PHB_ITEM pItem)
 {
    PHB_SOCKEX * pSockPtr = static_cast<PHB_SOCKEX*>(hb_itemGetPtrGC(pItem, &s_gcSocketFuncs));
 
@@ -474,7 +474,7 @@ HB_BOOL hb_sockexItemReplace( PHB_ITEM pItem, PHB_SOCKEX pSock )
    {
       if( *pSockPtr )
       {
-         hb_sockexClose( *pSockPtr, false );
+         hb_sockexClose(*pSockPtr, false);
       }
       *pSockPtr = pSock;
       return true;
@@ -490,7 +490,7 @@ HB_BOOL hb_sockexItemSetFilter( PHB_ITEM pItem, const char * pszFilter, PHB_ITEM
    {
       PHB_SOCKEX pSock = *pSockPtr;
 
-      if( pszFilter == nullptr ? pSock->pFilter == &s_sockFilter : !hb_stricmp( pSock->pFilter->pszName, pszFilter ) )
+      if( pszFilter == nullptr ? pSock->pFilter == &s_sockFilter : !hb_stricmp(pSock->pFilter->pszName, pszFilter) )
       {
          return true;
       }
@@ -512,7 +512,7 @@ static int s_socket_filter_find( const char * pszFilter )
 {
    for( int i = 0; i < s_iFilterCount; ++i )
    {
-      if( hb_stricmp( s_socketFilters[i]->pszName, pszFilter ) == 0 )
+      if( hb_stricmp(s_socketFilters[i]->pszName, pszFilter) == 0 )
       {
          return i;
       }
@@ -556,7 +556,7 @@ static const HB_SOCKET_FILTER ** s_socket_getfilters( const char * pszFilter, co
             }
             else if( ptr == pszFilterList && ptr[0] )
             {
-               i = s_socket_filter_find( ptr );
+               i = s_socket_filter_find(ptr);
             }
 
             if( i >= 0 )
@@ -594,7 +594,7 @@ static const HB_SOCKET_FILTER ** s_socket_getfilters( const char * pszFilter, co
    return pFilters;
 }
 
-PHB_SOCKEX hb_sockexNew( HB_SOCKET sd, const char * pszFilter, PHB_ITEM pParams )
+PHB_SOCKEX hb_sockexNew(HB_SOCKET sd, const char * pszFilter, PHB_ITEM pParams)
 {
    const HB_SOCKET_FILTER * pBuffer[16];
    const HB_SOCKET_FILTER ** pFilters;
@@ -606,12 +606,12 @@ PHB_SOCKEX hb_sockexNew( HB_SOCKET sd, const char * pszFilter, PHB_ITEM pParams 
    {
       for( int i = 0; i < iCount; ++i )
       {
-         PHB_SOCKEX pSockNew = pSock == nullptr ? pFilters[i]->New( sd, pParams ) : pFilters[i]->Next( pSock, pParams );
+         PHB_SOCKEX pSockNew = pSock == nullptr ? pFilters[i]->New(sd, pParams) : pFilters[i]->Next( pSock, pParams );
          if( pSockNew == nullptr )
          {
             if( pSock )
             {
-               hb_sockexClose( pSock, false );
+               hb_sockexClose(pSock, false);
                pSock = nullptr;
             }
             break;
@@ -655,19 +655,19 @@ PHB_SOCKEX hb_sockexNext( PHB_SOCKEX pSock, const char * pszFilter, PHB_ITEM pPa
    return pSock;
 }
 
-int hb_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
+int hb_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
 {
-   return pSock->pFilter->Close( pSock, fClose );
+   return pSock->pFilter->Close(pSock, fClose);
 }
 
-long hb_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT timeout )
+long hb_sockexRead(PHB_SOCKEX pSock, void * data, long len, HB_MAXINT timeout)
 {
-   return pSock->pFilter->Read( pSock, data, len, timeout );
+   return pSock->pFilter->Read(pSock, data, len, timeout);
 }
 
-long hb_sockexWrite( PHB_SOCKEX pSock, const void * data, long len, HB_MAXINT timeout )
+long hb_sockexWrite(PHB_SOCKEX pSock, const void * data, long len, HB_MAXINT timeout)
 {
-   len = pSock->pFilter->Write( pSock, data, len, timeout );
+   len = pSock->pFilter->Write(pSock, data, len, timeout);
    if( len >= 0 && pSock->iAutoFlush > 0 )
    {
       if( timeout >= 0 )
@@ -684,19 +684,19 @@ long hb_sockexFlush( PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync )
    return pSock->pFilter->Flush( pSock, timeout, fSync );
 }
 
-int hb_sockexCanRead( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout )
+int hb_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
-   return pSock->pFilter->CanRead( pSock, fBuffer, timeout );
+   return pSock->pFilter->CanRead(pSock, fBuffer, timeout);
 }
 
-int hb_sockexCanWrite( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout )
+int hb_sockexCanWrite(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
-   return pSock->pFilter->CanWrite( pSock, fBuffer, timeout );
+   return pSock->pFilter->CanWrite(pSock, fBuffer, timeout);
 }
 
-char * hb_sockexName( PHB_SOCKEX pSock )
+char * hb_sockexName(PHB_SOCKEX pSock)
 {
-   return pSock->pFilter->Name( pSock );
+   return pSock->pFilter->Name(pSock);
 }
 
 const char * hb_sockexErrorStr( PHB_SOCKEX pSock, int iError )
@@ -716,8 +716,8 @@ int hb_sockexSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
       nLen = hb_arrayLen(pArrayRD);
       for( nPos = 1; nPos <= nLen; ++nPos )
       {
-         pSock = hb_sockexItemGet( hb_arrayGetItemPtr(pArrayRD, nPos) );
-         if( pSock && pSock->pFilter->CanRead( pSock, true, 0 ) > 0 )
+         pSock = hb_sockexItemGet(hb_arrayGetItemPtr(pArrayRD, nPos));
+         if( pSock && pSock->pFilter->CanRead(pSock, true, 0) > 0 )
          {
             ++nRead;
             if( fSetRD && nRead != nPos )
@@ -732,8 +732,8 @@ int hb_sockexSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
       nLen = hb_arrayLen(pArrayWR);
       for( nPos = 1; nPos <= nLen; ++nPos )
       {
-         pSock = hb_sockexItemGet( hb_arrayGetItemPtr(pArrayWR, nPos) );
-         if( pSock && pSock->pFilter->CanWrite( pSock, true, 0 ) > 0 )
+         pSock = hb_sockexItemGet(hb_arrayGetItemPtr(pArrayWR, nPos));
+         if( pSock && pSock->pFilter->CanWrite(pSock, true, 0) > 0 )
          {
             ++nWrite;
             if( fSetWR && nWrite != nPos )
@@ -772,7 +772,7 @@ int hb_sockexSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
    return iResult;
 }
 
-int hb_sockexRawClear( PHB_SOCKEX pSock, HB_BOOL fClose )
+int hb_sockexRawClear(PHB_SOCKEX pSock, HB_BOOL fClose)
 {
    int iResult = 0;
 
@@ -782,7 +782,7 @@ int hb_sockexRawClear( PHB_SOCKEX pSock, HB_BOOL fClose )
       {
          hb_socketShutdown( pSock->sd, HB_SOCKET_SHUT_RDWR );
       }
-      iResult = hb_socketClose( pSock->sd );
+      iResult = hb_socketClose(pSock->sd);
    }
    if( pSock->buffer )
    {
@@ -845,26 +845,26 @@ void hb_socekxParamsGetStd( PHB_ITEM pParams, const void ** pKeydata, int * pKey
    {
       PHB_ITEM pItem;
 
-      if( pKeydata && pKeylen && ( pItem = hb_hashGetCItemPtr( pParams, "key" ) ) != nullptr &&  HB_IS_STRING(pItem) )
+      if( pKeydata && pKeylen && (pItem = hb_hashGetCItemPtr(pParams, "key")) != nullptr &&  HB_IS_STRING(pItem) )
       {
          *pKeydata = hb_itemGetCPtr(pItem);
          *pKeylen  = static_cast<int>(hb_itemGetCLen(pItem));
       }
-      else if( pKeydata && pKeylen && ( pItem = hb_hashGetCItemPtr( pParams, "pass" ) ) != nullptr && HB_IS_STRING(pItem) )
+      else if( pKeydata && pKeylen && (pItem = hb_hashGetCItemPtr(pParams, "pass")) != nullptr && HB_IS_STRING(pItem) )
       {
          *pKeydata = hb_itemGetCPtr(pItem);
          *pKeylen  = static_cast<int>(hb_itemGetCLen(pItem));
       }
-      if( pIV && pIVlen && ( pItem = hb_hashGetCItemPtr( pParams, "iv" ) ) != nullptr && HB_IS_STRING(pItem) )
+      if( pIV && pIVlen && (pItem = hb_hashGetCItemPtr(pParams, "iv")) != nullptr && HB_IS_STRING(pItem) )
       {
          *pIV    = hb_itemGetCPtr(pItem);
          *pIVlen = static_cast<int>(hb_itemGetCLen(pItem));
       }
-      if( pLevel && ( pItem = hb_hashGetCItemPtr( pParams, "zlib" ) ) != nullptr && HB_IS_NUMERIC(pItem) )
+      if( pLevel && (pItem = hb_hashGetCItemPtr(pParams, "zlib")) != nullptr && HB_IS_NUMERIC(pItem) )
       {
          *pLevel = hb_itemGetNI(pItem);
       }
-      if( pStrategy && ( pItem = hb_hashGetCItemPtr( pParams, "zs" ) ) != nullptr && HB_IS_NUMERIC(pItem) )
+      if( pStrategy && (pItem = hb_hashGetCItemPtr(pParams, "zs")) != nullptr && HB_IS_NUMERIC(pItem) )
       {
          *pStrategy = hb_itemGetNI(pItem);
       }
@@ -877,18 +877,18 @@ void hb_socekxParamsInit( PHB_SOCKEX pSock, PHB_ITEM pParams )
    {
       PHB_ITEM pItem;
 
-      if( ( pItem = hb_hashGetCItemPtr( pParams, "readahead" ) ) != nullptr && HB_IS_NUMERIC(pItem) )
+      if( (pItem = hb_hashGetCItemPtr(pParams, "readahead")) != nullptr && HB_IS_NUMERIC(pItem) )
       {
          if( pSock->buffer == nullptr )
          {
             pSock->readahead = hb_itemGetNL(pItem);
          }
       }
-      if( ( pItem = hb_hashGetCItemPtr( pParams, "flush" ) ) != nullptr && HB_IS_NUMERIC(pItem) )
+      if( (pItem = hb_hashGetCItemPtr(pParams, "flush")) != nullptr && HB_IS_NUMERIC(pItem) )
       {
          pSock->iAutoFlush = hb_itemGetNI(pItem);
       }
-      if( ( pItem = hb_hashGetCItemPtr( pParams, "redir" ) ) != nullptr && HB_IS_LOGICAL(pItem) )
+      if( (pItem = hb_hashGetCItemPtr(pParams, "redir")) != nullptr && HB_IS_LOGICAL(pItem) )
       {
          pSock->fRedirAll = hb_itemGetL(pItem);
       }
@@ -954,9 +954,9 @@ HB_FUNC( HB_SOCKETGETSOCKNAME )
       void * addr;
       unsigned int len;
 
-      if( hb_socketGetSockName( socket, &addr, &len ) == 0 )
+      if( hb_socketGetSockName(socket, &addr, &len) == 0 )
       {
-         PHB_ITEM pItem = hb_socketAddrToItem( addr, len );
+         PHB_ITEM pItem = hb_socketAddrToItem(addr, len);
 
          if( addr )
          {
@@ -982,9 +982,9 @@ HB_FUNC( HB_SOCKETGETPEERNAME )
       void * addr;
       unsigned int len;
 
-      if( hb_socketGetPeerName( socket, &addr, &len ) == 0 )
+      if( hb_socketGetPeerName(socket, &addr, &len) == 0 )
       {
-         PHB_ITEM pItem = hb_socketAddrToItem( addr, len );
+         PHB_ITEM pItem = hb_socketAddrToItem(addr, len);
 
          if( addr )
          {
@@ -1009,9 +1009,9 @@ HB_FUNC( HB_SOCKETOPEN )
    int iProtocol = hb_parni(3);
 
    s_socket_init();
-   if( ( socket = hb_socketOpen( iDomain, iType, iProtocol ) ) != HB_NO_SOCKET )
+   if( (socket = hb_socketOpen(iDomain, iType, iProtocol)) != HB_NO_SOCKET )
    {
-      hb_socketItemPut( hb_stackReturnItem(), socket );
+      hb_socketItemPut(hb_stackReturnItem(), socket);
    }
    else
    {
@@ -1025,7 +1025,7 @@ HB_FUNC( HB_SOCKETCLOSE )
 
    if( pSock )
    {
-      hb_sockexItemClear( hb_param(1, Harbour::Item::POINTER) );
+      hb_sockexItemClear(hb_param(1, Harbour::Item::POINTER));
       hb_retl(hb_sockexClose(pSock, true) == 0);
    }
 }
@@ -1077,7 +1077,7 @@ HB_FUNC( HB_SOCKETACCEPT )
 
       if( socketaccept != HB_NO_SOCKET )
       {
-         hb_sockexSetShutDown( hb_sockexItemGet( hb_socketItemPut( hb_stackReturnItem(), socketaccept ) ), true );
+         hb_sockexSetShutDown(hb_sockexItemGet(hb_socketItemPut(hb_stackReturnItem(), socketaccept)), true);
       }
       else
       {
@@ -1087,7 +1087,7 @@ HB_FUNC( HB_SOCKETACCEPT )
       if( HB_ISBYREF(2) )
       {
          PHB_ITEM pItem;
-         if( socketaccept != HB_NO_SOCKET && ( pItem = hb_socketAddrToItem( addr, len ) ) != nullptr )
+         if( socketaccept != HB_NO_SOCKET && (pItem = hb_socketAddrToItem(addr, len)) != nullptr )
          {
             hb_itemParamStoreForward(2, pItem);
             hb_itemRelease(pItem);
@@ -1117,7 +1117,7 @@ HB_FUNC( HB_SOCKETCONNECT )
 
       if( fResult )
       {
-         hb_sockexSetShutDown( hb_sockexItemGet( hb_param(1, Harbour::Item::POINTER) ), true );
+         hb_sockexSetShutDown(hb_sockexItemGet(hb_param(1, Harbour::Item::POINTER)), true);
       }
       hb_retl(fResult);
       hb_xfree(addr);
@@ -1150,7 +1150,7 @@ HB_FUNC( HB_SOCKETSEND )
          {
             pSock->iAutoFlush = 15000;
          }
-         lLen = hb_sockexWrite( pSock, hb_parc(2), lLen, timeout );
+         lLen = hb_sockexWrite(pSock, hb_parc(2), lLen, timeout);
          pSock->iAutoFlush = iAutoFlush;
       }
       else
@@ -1244,7 +1244,7 @@ HB_FUNC( HB_SOCKETRECVFROM )
          {
             PHB_ITEM pAddr;
 
-            if( lRet != -1 && ( pAddr = hb_socketAddrToItem( addr, len ) ) != nullptr )
+            if( lRet != -1 && (pAddr = hb_socketAddrToItem(addr, len)) != nullptr )
             {
                hb_itemParamStoreForward(5, pAddr);
                hb_itemRelease(pAddr);
@@ -1426,7 +1426,7 @@ HB_FUNC( HB_SOCKETRESOLVEINETADDR )
    s_socket_init();
    if( hb_socketResolveInetAddr( &addr, &len, hb_parc(1), hb_parni(2) ) )
    {
-      PHB_ITEM pItem = hb_socketAddrToItem( addr, len );
+      PHB_ITEM pItem = hb_socketAddrToItem(addr, len);
 
       if( addr )
       {
@@ -1465,7 +1465,7 @@ HB_FUNC( HB_SOCKETGETHOSTNAME )
 
    if( s_socketaddrParam( 1, &addr, &len ) )
    {
-      char * szHostName = hb_socketGetHostName( addr, len );
+      char * szHostName = hb_socketGetHostName(addr, len);
 
       if( addr )
       {
@@ -1560,7 +1560,7 @@ HB_FUNC( HB_SOCKETSETFILTER )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::POINTER);
 
-   if( hb_sockexItemSetFilter( pItem, hb_parc(2), hb_param(3, Harbour::Item::ANY) ) )
+   if( hb_sockexItemSetFilter(pItem, hb_parc(2), hb_param(3, Harbour::Item::ANY)) )
    {
       hb_itemReturn(pItem);
    }

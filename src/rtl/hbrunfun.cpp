@@ -72,7 +72,7 @@ HB_FUNC( HB_RUN )
 #else
          char * pszFree = nullptr;
 
-         iResult = system( hb_osEncodeCP( pszCommand, &pszFree, nullptr ) );
+         iResult = system(hb_osEncodeCP(pszCommand, &pszFree, nullptr));
 
          if( pszFree )
          {

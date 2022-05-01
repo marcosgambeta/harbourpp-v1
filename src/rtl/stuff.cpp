@@ -67,13 +67,13 @@ HB_FUNC( STUFF )
       {
          if( nPos )
          {
-            nPos = nPos < 1 ? nLen : hb_cdpTextPos( cdp, szText, nLen, nPos - 1 );
+            nPos = nPos < 1 ? nLen : hb_cdpTextPos(cdp, szText, nLen, nPos - 1);
          }
          if( nDel )
          {
             if( nPos < nLen )
             {
-               nDel = hb_cdpTextPos( cdp, szText + nPos, nLen - nPos, nDel );
+               nDel = hb_cdpTextPos(cdp, szText + nPos, nLen - nPos, nDel);
                if( nDel == 0 )
                {
                   nDel = nLen - nPos;

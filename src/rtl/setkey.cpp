@@ -74,7 +74,7 @@ struct HB_SK_DATA
 
 using PHB_SK_DATA = HB_SK_DATA *;
 
-static void hb_setkeyRelease( void * cargo )
+static void hb_setkeyRelease(void * cargo)
 {
    PHB_SETKEY sk_list = ( static_cast<PHB_SK_DATA>(cargo) )->sk_list;
 
@@ -226,7 +226,7 @@ HB_FUNC( SETKEY )
       else
       {
          /* Set a SETKEY value */
-         sk_add( &sk_data->sk_list, true, iKeyCode, hb_param(2, Harbour::Item::EVALITEM), nullptr );
+         sk_add(&sk_data->sk_list, true, iKeyCode, hb_param(2, Harbour::Item::EVALITEM), nullptr);
       }
    }
 }
@@ -353,7 +353,7 @@ HB_FUNC( HB_SETKEYSAVE )
    pParam = hb_param(1, Harbour::Item::ANY);
    if( pParam )
    {
-      hb_setkeyRelease( sk_data ); /* destroy the internal list */
+      hb_setkeyRelease(sk_data); /* destroy the internal list */
 
       if( HB_IS_ARRAY(pParam) )
       {

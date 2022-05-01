@@ -118,7 +118,7 @@ HB_FUNC( HB_BASE64ENCODE )
       }
       else
       {
-         hb_errRT_BASE( EG_STROVERFLOW, 9999, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE(EG_STROVERFLOW, 9999, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       }   
    }
    else

@@ -66,7 +66,7 @@ HB_FUNC( HB_UTF8TOSTRBOX )
 
          if( cdp )
          {
-            if( hb_cdpIsUTF8( cdp ) )
+            if( hb_cdpIsUTF8(cdp) )
             {
                hb_itemReturn(hb_param(1, Harbour::Item::STRING));
                return;

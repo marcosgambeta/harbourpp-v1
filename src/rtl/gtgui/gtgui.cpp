@@ -92,7 +92,7 @@ static const _HB_BUTTON_ID s_buttons[] =
 
 #define _HB_BUTTON_COUNT  HB_SIZEOFARRAY( s_buttons )
 
-static int hb_gt_gui_optionId( const char * pszOption )
+static int hb_gt_gui_optionId(const char * pszOption)
 {
    if( pszOption )
    {
@@ -112,7 +112,7 @@ static int hb_gt_gui_optionId( const char * pszOption )
       {
          for( int i = 0; i < static_cast<int>(_HB_BUTTON_COUNT); ++i )
          {
-            if( nSize == s_buttons[i].len && hb_strnicmp( s_buttons[i].name, pszOption, nSize ) == 0 )
+            if( nSize == s_buttons[i].len && hb_strnicmp(s_buttons[i].name, pszOption, nSize) == 0 )
             {
                return s_buttons[i].id;
             }
@@ -122,7 +122,7 @@ static int hb_gt_gui_optionId( const char * pszOption )
    return 0;
 }
 
-static int hb_gt_gui_optionPos( int id, int iType, PHB_ITEM pOptions )
+static int hb_gt_gui_optionPos(int id, int iType, PHB_ITEM pOptions)
 {
    int iButton = 0;
 
@@ -166,7 +166,7 @@ static int hb_gt_gui_optionPos( int id, int iType, PHB_ITEM pOptions )
 
       for( int i = 1; i <= iOptions; ++i )
       {
-         id = hb_gt_gui_optionId( hb_arrayGetCPtr(pOptions, i) );
+         id = hb_gt_gui_optionId(hb_arrayGetCPtr(pOptions, i));
          if( iButton == id || ( iOptions == 1 && iType == id ) )
          {
             return i;
@@ -176,10 +176,10 @@ static int hb_gt_gui_optionPos( int id, int iType, PHB_ITEM pOptions )
    return 0;
 }
 
-static int hb_gt_gui_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int iClrNorm, int iClrHigh, double dDelay )
+static int hb_gt_gui_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int iClrNorm, int iClrHigh, double dDelay)
 {
    void * hText;
-   LPCTSTR lpText = HB_ITEMGETSTR( pMessage, &hText, nullptr );
+   LPCTSTR lpText = HB_ITEMGETSTR(pMessage, &hText, nullptr);
    int iRet, iOptions = pOptions ? static_cast<int>(hb_arrayLen(pOptions)) : 0;
 
    if( lpText && iOptions > 0 )
@@ -189,7 +189,7 @@ static int hb_gt_gui_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
 
       for( int i = 1; i <= iOptions; ++i )
       {
-         iType |= hb_gt_gui_optionId( hb_arrayGetCPtr(pOptions, i) );
+         iType |= hb_gt_gui_optionId(hb_arrayGetCPtr(pOptions, i));
       }
 
       switch( iType )
@@ -227,8 +227,8 @@ static int hb_gt_gui_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
             break;
       }
 
-      iRet = MessageBox( nullptr, lpText, TEXT( "" ), uType );
-      iRet = hb_gt_gui_optionPos( iRet, iType, pOptions );
+      iRet = MessageBox(nullptr, lpText, TEXT(""), uType);
+      iRet = hb_gt_gui_optionPos(iRet, iType, pOptions);
    }
    else
    {
@@ -244,7 +244,7 @@ static int hb_gt_gui_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
 
 /* *********************************************************************** */
 
-static const char * hb_gt_gui_Version( PHB_GT pGT, int iType )
+static const char * hb_gt_gui_Version(PHB_GT pGT, int iType)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Version(%p,%d)", static_cast<void*>(pGT), iType ) );
@@ -262,7 +262,7 @@ static const char * hb_gt_gui_Version( PHB_GT pGT, int iType )
 
 /* *********************************************************************** */
 /* dDuration is in 'Ticks' (18.2 per second) */
-static void hb_gt_gui_Tone( PHB_GT pGT, double dFrequency, double dDuration )
+static void hb_gt_gui_Tone(PHB_GT pGT, double dFrequency, double dDuration)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration ) );
@@ -279,7 +279,7 @@ static void hb_gt_gui_Tone( PHB_GT pGT, double dFrequency, double dDuration )
 
 /* *********************************************************************** */
 
-static HB_BOOL hb_gt_gui_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
+static HB_BOOL hb_gt_gui_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo) ) );

@@ -55,7 +55,7 @@ static HB_GT_FUNCS SuperTable;
 #define HB_GTSUPER   ( &SuperTable )
 #define HB_GTID_PTR  ( &s_GtId )
 
-static void hb_gt_tpl_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr )
+static void hb_gt_tpl_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_tpl_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStderr)) ) );
@@ -66,7 +66,7 @@ static void hb_gt_tpl_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
 }
 
-static void hb_gt_tpl_Exit( PHB_GT pGT )
+static void hb_gt_tpl_Exit(PHB_GT pGT)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_tpl_Exit(%p)", static_cast<void*>(pGT) ) );
@@ -78,7 +78,7 @@ static void hb_gt_tpl_Exit( PHB_GT pGT )
 }
 
 
-static int hb_gt_tpl_ReadKey( PHB_GT pGT, int iEventMask )
+static int hb_gt_tpl_ReadKey(PHB_GT pGT, int iEventMask)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_tpl_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask ) );
@@ -93,7 +93,7 @@ static int hb_gt_tpl_ReadKey( PHB_GT pGT, int iEventMask )
    return 0;
 }
 
-static const char * hb_gt_tpl_Version( PHB_GT pGT, int iType )
+static const char * hb_gt_tpl_Version(PHB_GT pGT, int iType)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_tpl_Version(%p,%d)", static_cast<void*>(pGT), iType ) );
@@ -107,7 +107,7 @@ static const char * hb_gt_tpl_Version( PHB_GT pGT, int iType )
    return "Terminal: (template)";
 }
 
-static HB_BOOL hb_gt_tpl_SetMode( PHB_GT pGT, int iRows, int iCols )
+static HB_BOOL hb_gt_tpl_SetMode(PHB_GT pGT, int iRows, int iCols)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_tpl_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRows, iCols ) );
@@ -122,7 +122,7 @@ static HB_BOOL hb_gt_tpl_SetMode( PHB_GT pGT, int iRows, int iCols )
    return false;
 }
 
-static void hb_gt_tpl_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
+static void hb_gt_tpl_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_tpl_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize ) );
@@ -141,7 +141,7 @@ static void hb_gt_tpl_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
    }
 }
 
-static void hb_gt_tpl_Refresh( PHB_GT pGT )
+static void hb_gt_tpl_Refresh(PHB_GT pGT)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_tpl_Refresh(%p)", static_cast<void*>(pGT) ) );

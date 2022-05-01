@@ -108,13 +108,13 @@ struct _HB_FILE
 
 using HB_FILE = _HB_FILE;
 
-static const HB_FILE_FUNCS * s_fileMethods( void );
+static const HB_FILE_FUNCS * s_fileMethods(void);
 #if defined(HB_OS_UNIX)
-   static PHB_FILE hb_fileposNew( PHB_FILE pFile );
+   static PHB_FILE hb_fileposNew(PHB_FILE pFile);
 #endif
 
-static HB_CRITICAL_NEW( s_fileMtx );
-static HB_CRITICAL_NEW( s_lockMtx );
+static HB_CRITICAL_NEW(s_fileMtx);
+static HB_CRITICAL_NEW(s_lockMtx);
 
 static PHB_FILE s_openFiles = nullptr;
 
@@ -153,7 +153,7 @@ static PHB_FILE hb_fileFind( HB_ULONG device, HB_ULONG inode )
    return nullptr;
 }
 
-static PHB_FILE hb_fileNew( HB_FHANDLE hFile, HB_BOOL fShared, int iMode, HB_ULONG device, HB_ULONG inode, HB_BOOL fBind )
+static PHB_FILE hb_fileNew(HB_FHANDLE hFile, HB_BOOL fShared, int iMode, HB_ULONG device, HB_ULONG inode, HB_BOOL fBind)
 {
    PHB_FILE pFile = hb_fileFind( device, inode );
 
@@ -188,7 +188,7 @@ static PHB_FILE hb_fileNew( HB_FHANDLE hFile, HB_BOOL fShared, int iMode, HB_ULO
    return pFile;
 }
 
-static HB_UINT hb_fileFindOffset( PHB_FILE pFile, HB_FOFFSET nOffset )
+static HB_UINT hb_fileFindOffset(PHB_FILE pFile, HB_FOFFSET nOffset)
 {
    HB_UINT uiFirst, uiLast, uiMiddle;
 
@@ -213,7 +213,7 @@ static HB_UINT hb_fileFindOffset( PHB_FILE pFile, HB_FOFFSET nOffset )
    return uiMiddle;
 }
 
-static void hb_fileInsertLock( PHB_FILE pFile, HB_UINT uiPos, HB_FOFFSET nStart, HB_FOFFSET nLen )
+static void hb_fileInsertLock(PHB_FILE pFile, HB_UINT uiPos, HB_FOFFSET nStart, HB_FOFFSET nLen)
 {
    if( pFile->uiLocks == pFile->uiSize )
    {
@@ -227,7 +227,7 @@ static void hb_fileInsertLock( PHB_FILE pFile, HB_UINT uiPos, HB_FOFFSET nStart,
    pFile->uiLocks++;
 }
 
-static void hb_fileDeleteLock( PHB_FILE pFile, HB_UINT uiPos )
+static void hb_fileDeleteLock(PHB_FILE pFile, HB_UINT uiPos)
 {
    pFile->uiLocks--;
    memmove(&pFile->pLocks[uiPos], &pFile->pLocks[uiPos + 1], (pFile->uiLocks - uiPos) * sizeof(HB_FLOCK));
@@ -238,12 +238,12 @@ static void hb_fileDeleteLock( PHB_FILE pFile, HB_UINT uiPos )
    }
 }
 
-static HB_BOOL hb_fileSetLock( PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nStart, HB_FOFFSET nLen )
+static HB_BOOL hb_fileSetLock(PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nStart, HB_FOFFSET nLen)
 {
    HB_BOOL fLJoin, fRJoin;
    HB_UINT uiPos;
 
-   uiPos = hb_fileFindOffset( pFile, nStart );
+   uiPos = hb_fileFindOffset(pFile, nStart);
    fLJoin = fRJoin = HB_FALSE;
    if( uiPos < pFile->uiLocks )
    {
@@ -271,7 +271,7 @@ static HB_BOOL hb_fileSetLock( PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nS
       if( fRJoin )
       {
          pFile->pLocks[uiPos - 1].len += nLen + pFile->pLocks[uiPos].len;
-         hb_fileDeleteLock( pFile, uiPos );
+         hb_fileDeleteLock(pFile, uiPos);
       }
       else
       {
@@ -285,7 +285,7 @@ static HB_BOOL hb_fileSetLock( PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nS
    }
    else
    {
-      hb_fileInsertLock( pFile, uiPos, nStart, nLen );
+      hb_fileInsertLock(pFile, uiPos, nStart, nLen);
    }
 
    if( pFile->shared )
@@ -295,12 +295,12 @@ static HB_BOOL hb_fileSetLock( PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nS
    return true;
 }
 
-static HB_BOOL hb_fileUnlock( PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nStart, HB_FOFFSET nLen )
+static HB_BOOL hb_fileUnlock(PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nStart, HB_FOFFSET nLen)
 {
    HB_BOOL fResult = HB_FALSE;
    HB_UINT uiPos;
 
-   uiPos = hb_fileFindOffset( pFile, nStart );
+   uiPos = hb_fileFindOffset(pFile, nStart);
    if( uiPos < pFile->uiLocks )
    {
       PHB_FLOCK pLock = &pFile->pLocks[uiPos];
@@ -314,7 +314,7 @@ static HB_BOOL hb_fileUnlock( PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nSt
          {
             if( nLen == pLock->len )
             {
-               hb_fileDeleteLock( pFile, uiPos );
+               hb_fileDeleteLock(pFile, uiPos);
             }
             else
             {
@@ -328,7 +328,7 @@ static HB_BOOL hb_fileUnlock( PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nSt
          }
          else
          {
-            hb_fileInsertLock( pFile, uiPos + 1, nStart + nLen, pLock->start + pLock->len - nStart - nLen );
+            hb_fileInsertLock(pFile, uiPos + 1, nStart + nLen, pLock->start + pLock->len - nStart - nLen);
             pLock = &pFile->pLocks[uiPos];
             pLock->len = nStart - pLock->start;
          }
@@ -338,11 +338,11 @@ static HB_BOOL hb_fileUnlock( PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nSt
    return fResult;
 }
 
-static HB_BOOL hb_fileTestLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen )
+static HB_BOOL hb_fileTestLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen)
 {
    HB_UINT uiPos;
 
-   uiPos = hb_fileFindOffset( pFile, nStart );
+   uiPos = hb_fileFindOffset(pFile, nStart);
    if( uiPos < pFile->uiLocks )
    {
       PHB_FLOCK pLock = &pFile->pLocks[uiPos];
@@ -374,14 +374,14 @@ static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, ch
    return pRetPath ? hb_spFileExists( pszFileName, pRetPath ) : hb_fsFileExists(pszFileName);
 }
 
-static HB_BOOL s_fileDelete( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
+static HB_BOOL s_fileDelete(PHB_FILE_FUNCS pFuncs, const char * pszFileName)
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsDelete(pszFileName);
 }
 
-static HB_BOOL s_fileRename( PHB_FILE_FUNCS pFuncs, const char * pszName, const char * pszNewName )
+static HB_BOOL s_fileRename(PHB_FILE_FUNCS pFuncs, const char * pszName, const char * pszNewName)
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
@@ -430,28 +430,28 @@ static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec,
    return hb_fsDirectory(pszDirSpec, pszAttr, true);
 }
 
-static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long * plJulian, long * plMillisec )
+static HB_BOOL s_fileTimeGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, long * plJulian, long * plMillisec)
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsGetFileTime(pszFileName, plJulian, plMillisec);
 }
 
-static HB_BOOL s_fileTimeSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long lJulian, long lMillisec )
+static HB_BOOL s_fileTimeSet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, long lJulian, long lMillisec)
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsSetFileTime(pszFileName, lJulian, lMillisec);
 }
 
-static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR * pnAttr )
+static HB_BOOL s_fileAttrGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR * pnAttr)
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsGetAttr(pszFileName, pnAttr);
 }
 
-static HB_BOOL s_fileAttrSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR nAttr )
+static HB_BOOL s_fileAttrSet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR nAttr)
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
@@ -472,15 +472,14 @@ static HB_BOOL s_fileLinkSym( PHB_FILE_FUNCS pFuncs, const char * pszTarget, con
    return hb_fsLinkSym(pszTarget, pszNewName);
 }
 
-static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
+static char * s_fileLinkRead(PHB_FILE_FUNCS pFuncs, const char * pszFileName)
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsLinkRead(pszFileName);
 }
 
-static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, const char * pDefExt,
-                               HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError )
+static PHB_FILE s_fileExtOpen(PHB_FILE_FUNCS pFuncs, const char * pszFileName, const char * pDefExt, HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError)
 {
    PHB_FILE pFile = nullptr;
 #if defined(HB_OS_UNIX)
@@ -531,9 +530,9 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
    hb_threadEnterCriticalSection( &s_fileMtx );
 
 #  if defined(HB_USE_LARGEFILE64)
-   fResult = stat64( pszFile, &statbuf ) == 0;
+   fResult = stat64(pszFile, &statbuf) == 0;
 #  else
-   fResult = stat( pszFile, &statbuf ) == 0;
+   fResult = stat(pszFile, &statbuf) == 0;
 #  endif
    hb_fsSetIOError(fResult, 0);
 
@@ -582,9 +581,9 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
          hb_threadEnterCriticalSection( &s_fileMtx );
 #else
 #  if defined(HB_USE_LARGEFILE64)
-         if( fstat64( hFile, &statbuf ) == 0 )
+         if( fstat64(hFile, &statbuf) == 0 )
 #  else
-         if( fstat( hFile, &statbuf ) == 0 )
+         if( fstat(hFile, &statbuf) == 0 )
 #  endif
          {
             device = static_cast<HB_ULONG>(statbuf.st_dev);
@@ -600,7 +599,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
          }
 #endif /* HB_OS_UNIX */
 
-         pFile = hb_fileNew( hFile, fShared, iMode, device, inode, true );
+         pFile = hb_fileNew(hFile, fShared, iMode, device, inode, true);
          if( pFile->hFile != hFile )
          {
             if( pFile->mode != FO_READWRITE && iMode == FO_READWRITE )
@@ -668,7 +667,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
    hb_threadLeaveCriticalSection( &s_fileMtx );
    if( pFile && fSeek )
    {
-      pFile = hb_fileposNew( pFile );
+      pFile = hb_fileposNew(pFile);
    }
 #endif
 
@@ -682,11 +681,11 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
    }
    if( pError )
    {
-      hb_errPutFileName( pError, pszFile );
+      hb_errPutFileName(pError, pszFile);
       if( !fResult )
       {
-         hb_errPutOsCode( pError, hb_fsError() );
-         hb_errPutGenCode( pError, static_cast<HB_ERRCODE>(( nExFlags & FXO_TRUNCATE ) ? EG_CREATE : EG_OPEN) );
+         hb_errPutOsCode(pError, hb_fsError());
+         hb_errPutGenCode(pError, static_cast<HB_ERRCODE>((nExFlags & FXO_TRUNCATE) ? EG_CREATE : EG_OPEN));
       }
    }
 
@@ -697,7 +696,7 @@ static PHB_FILE s_fileExtOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, 
    return pFile;
 }
 
-static void s_fileClose( PHB_FILE pFile )
+static void s_fileClose(PHB_FILE pFile)
 {
    hb_vmUnlock();
    hb_fsSetError(0);
@@ -739,7 +738,7 @@ static void s_fileClose( PHB_FILE pFile )
    hb_vmLock();
 }
 
-static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType )
+static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
 {
    HB_BOOL fResult, fLockFS = HB_FALSE;
 
@@ -747,13 +746,13 @@ static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, i
    if( ( iType & FL_MASK ) == FL_UNLOCK )
    {
       hb_threadEnterCriticalSection( &s_lockMtx );
-      fResult = hb_fileUnlock( pFile, &fLockFS, nStart, nLen );
+      fResult = hb_fileUnlock(pFile, &fLockFS, nStart, nLen);
       hb_threadLeaveCriticalSection( &s_lockMtx );
       if( fLockFS )
       {
          hb_fsLockLarge(pFile->hFile, nStart, nLen, static_cast<HB_USHORT>(iType));
          hb_threadEnterCriticalSection( &s_lockMtx );
-         hb_fileUnlock( pFile, nullptr, nStart, nLen );
+         hb_fileUnlock(pFile, nullptr, nStart, nLen);
          hb_threadLeaveCriticalSection( &s_lockMtx );
       }
       else
@@ -764,7 +763,7 @@ static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, i
    else
    {
       hb_threadEnterCriticalSection( &s_lockMtx );
-      fResult = hb_fileSetLock( pFile, &fLockFS, nStart, nLen );
+      fResult = hb_fileSetLock(pFile, &fLockFS, nStart, nLen);
       hb_threadLeaveCriticalSection( &s_lockMtx );
       if( fLockFS )
       {
@@ -782,7 +781,7 @@ static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, i
          if( !fResult )
          {
             hb_threadEnterCriticalSection( &s_lockMtx );
-            hb_fileUnlock( pFile, nullptr, nStart, nLen );
+            hb_fileUnlock(pFile, nullptr, nStart, nLen);
             hb_threadLeaveCriticalSection( &s_lockMtx );
          }
       }
@@ -804,7 +803,7 @@ static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, i
    hb_vmUnlock();
 
    hb_threadEnterCriticalSection( &s_lockMtx );
-   fLocked = hb_fileTestLock( pFile, nStart, nLen );
+   fLocked = hb_fileTestLock(pFile, nStart, nLen);
    hb_threadLeaveCriticalSection( &s_lockMtx );
    if( fLocked )
    {
@@ -824,39 +823,39 @@ static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, i
    return iResult;
 }
 
-static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout )
+static HB_SIZE s_fileRead(PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout)
 {
    HB_SYMBOL_UNUSED(nTimeout);
    return hb_fsReadLarge(pFile->hFile, buffer, nSize);
 }
 
-static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout )
+static HB_SIZE s_fileWrite(PHB_FILE pFile, const void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout)
 {
    HB_SYMBOL_UNUSED(nTimeout);
    return hb_fsWriteLarge(pFile->hFile, buffer, nSize);
 }
 
-static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset )
+static HB_SIZE s_fileReadAt(PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset)
 {
    return hb_fsReadAt(pFile->hFile, buffer, nSize, nOffset);
 }
 
-static HB_SIZE s_fileWriteAt( PHB_FILE pFile, const void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset )
+static HB_SIZE s_fileWriteAt(PHB_FILE pFile, const void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset)
 {
    return hb_fsWriteAt(pFile->hFile, buffer, nSize, nOffset);
 }
 
-static HB_BOOL s_fileTruncAt( PHB_FILE pFile, HB_FOFFSET nOffset )
+static HB_BOOL s_fileTruncAt(PHB_FILE pFile, HB_FOFFSET nOffset)
 {
    return hb_fsTruncAt(pFile->hFile, nOffset);
 }
 
-static HB_FOFFSET s_fileSeek( PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFlags )
+static HB_FOFFSET s_fileSeek(PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFlags)
 {
    return hb_fsSeekLarge(pFile->hFile, nOffset, uiFlags);
 }
 
-static HB_FOFFSET s_fileSize( PHB_FILE pFile )
+static HB_FOFFSET s_fileSize(PHB_FILE pFile)
 {
    return hb_fsGetSize(pFile->hFile);
 }
@@ -896,7 +895,7 @@ static HB_FHANDLE s_fileHandle( PHB_FILE pFile )
    return pFile ? pFile->hFile : FS_ERROR;
 }
 
-static const HB_FILE_FUNCS * s_fileMethods( void )
+static const HB_FILE_FUNCS * s_fileMethods(void)
 {
    /* methods table */
    static const HB_FILE_FUNCS s_fileFuncs =
@@ -958,15 +957,15 @@ using PHB_FILEPOS = HB_FILEPOS *;
 #define _PHB_FILEPOS  ( static_cast<PHB_FILEPOS>(pFilePos) )
 #define _PHB_FILE     _PHB_FILEPOS->pFile
 
-static void s_fileposClose( PHB_FILE pFilePos )
+static void s_fileposClose(PHB_FILE pFilePos)
 {
-   _PHB_FILE->pFuncs->Close( _PHB_FILE );
+   _PHB_FILE->pFuncs->Close(_PHB_FILE);
    hb_xfree(pFilePos);
 }
 
-static HB_BOOL s_fileposLock( PHB_FILE pFilePos, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType )
+static HB_BOOL s_fileposLock(PHB_FILE pFilePos, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
 {
-   return _PHB_FILE->pFuncs->Lock( _PHB_FILE, nStart, nLen, iType );
+   return _PHB_FILE->pFuncs->Lock(_PHB_FILE, nStart, nLen, iType);
 }
 
 static int s_fileposLockTest( PHB_FILE pFilePos, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType )
@@ -974,41 +973,41 @@ static int s_fileposLockTest( PHB_FILE pFilePos, HB_FOFFSET nStart, HB_FOFFSET n
    return _PHB_FILE->pFuncs->LockTest( _PHB_FILE, nStart, nLen, iType );
 }
 
-static HB_SIZE s_fileposRead( PHB_FILE pFilePos, void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout )
+static HB_SIZE s_fileposRead(PHB_FILE pFilePos, void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout)
 {
    HB_SIZE nDone;
 
    HB_SYMBOL_UNUSED(nTimeout);
-   nDone = _PHB_FILE->pFuncs->ReadAt( _PHB_FILE, buffer, nSize, _PHB_FILEPOS->seek_pos );
+   nDone = _PHB_FILE->pFuncs->ReadAt(_PHB_FILE, buffer, nSize, _PHB_FILEPOS->seek_pos);
    _PHB_FILEPOS->seek_pos += nDone;
 
    return nDone;
 }
 
-static HB_SIZE s_fileposWrite( PHB_FILE pFilePos, const void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout )
+static HB_SIZE s_fileposWrite(PHB_FILE pFilePos, const void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout)
 {
    HB_SIZE nDone;
 
    HB_SYMBOL_UNUSED(nTimeout);
-   nDone = _PHB_FILE->pFuncs->WriteAt( _PHB_FILE, buffer, nSize, _PHB_FILEPOS->seek_pos );
+   nDone = _PHB_FILE->pFuncs->WriteAt(_PHB_FILE, buffer, nSize, _PHB_FILEPOS->seek_pos);
    _PHB_FILEPOS->seek_pos += nDone;
 
    return nDone;
 }
 
-static HB_SIZE s_fileposReadAt( PHB_FILE pFilePos, void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset )
+static HB_SIZE s_fileposReadAt(PHB_FILE pFilePos, void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset)
 {
-   return _PHB_FILE->pFuncs->ReadAt( _PHB_FILE, buffer, nSize, nOffset );
+   return _PHB_FILE->pFuncs->ReadAt(_PHB_FILE, buffer, nSize, nOffset);
 }
 
-static HB_SIZE s_fileposWriteAt( PHB_FILE pFilePos, const void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset )
+static HB_SIZE s_fileposWriteAt(PHB_FILE pFilePos, const void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset)
 {
-   return _PHB_FILE->pFuncs->WriteAt( _PHB_FILE, buffer, nSize, nOffset );
+   return _PHB_FILE->pFuncs->WriteAt(_PHB_FILE, buffer, nSize, nOffset);
 }
 
-static HB_BOOL s_fileposTruncAt( PHB_FILE pFilePos, HB_FOFFSET nOffset )
+static HB_BOOL s_fileposTruncAt(PHB_FILE pFilePos, HB_FOFFSET nOffset)
 {
-   if( _PHB_FILE->pFuncs->TruncAt( _PHB_FILE, nOffset ) )
+   if( _PHB_FILE->pFuncs->TruncAt(_PHB_FILE, nOffset) )
    {
       _PHB_FILEPOS->seek_pos = nOffset;
       return true;
@@ -1016,11 +1015,11 @@ static HB_BOOL s_fileposTruncAt( PHB_FILE pFilePos, HB_FOFFSET nOffset )
    return false;
 }
 
-static HB_FOFFSET s_fileposSeek( PHB_FILE pFilePos, HB_FOFFSET nOffset, HB_USHORT uiFlags )
+static HB_FOFFSET s_fileposSeek(PHB_FILE pFilePos, HB_FOFFSET nOffset, HB_USHORT uiFlags)
 {
    if( uiFlags & FS_END )
    {
-      nOffset += pFilePos->pFuncs->Size( pFilePos );
+      nOffset += pFilePos->pFuncs->Size(pFilePos);
    }
    else if( uiFlags & FS_RELATIVE )
    {
@@ -1041,14 +1040,14 @@ static HB_FOFFSET s_fileposSeek( PHB_FILE pFilePos, HB_FOFFSET nOffset, HB_USHOR
    return _PHB_FILEPOS->seek_pos;
 }
 
-static HB_FOFFSET s_fileposSize( PHB_FILE pFilePos )
+static HB_FOFFSET s_fileposSize(PHB_FILE pFilePos)
 {
-   return _PHB_FILE->pFuncs->Size( _PHB_FILE );
+   return _PHB_FILE->pFuncs->Size(_PHB_FILE);
 }
 
 static HB_BOOL s_fileposEof( PHB_FILE pFilePos )
 {
-   return _PHB_FILEPOS->seek_pos >= pFilePos->pFuncs->Size( pFilePos );
+   return _PHB_FILEPOS->seek_pos >= pFilePos->pFuncs->Size(pFilePos);
 }
 
 static void s_fileposFlush( PHB_FILE pFilePos, HB_BOOL fDirty )
@@ -1071,7 +1070,7 @@ static HB_FHANDLE s_fileposHandle( PHB_FILE pFilePos )
    return pFilePos ? _PHB_FILE->pFuncs->Handle( _PHB_FILE ) : FS_ERROR;
 }
 
-static const HB_FILE_FUNCS * s_fileposMethods( void )
+static const HB_FILE_FUNCS * s_fileposMethods(void)
 {
    /* methods table */
    static const HB_FILE_FUNCS s_fileFuncs =
@@ -1119,7 +1118,7 @@ static const HB_FILE_FUNCS * s_fileposMethods( void )
    return &s_fileFuncs;
 }
 
-static PHB_FILE hb_fileposNew( PHB_FILE pFile )
+static PHB_FILE hb_fileposNew(PHB_FILE pFile)
 {
    PHB_FILEPOS pFilePos = static_cast<PHB_FILEPOS>(hb_xgrabz(sizeof(HB_FILEPOS)));
 
@@ -1191,25 +1190,25 @@ HB_BOOL hb_fileExists( const char * pszFileName, char * pRetPath )
    return pRetPath ? hb_spFileExists( pszFileName, pRetPath ) : hb_fsFileExists(pszFileName);
 }
 
-HB_BOOL hb_fileDelete( const char * pszFileName )
+HB_BOOL hb_fileDelete(const char * pszFileName)
 {
    int i = s_fileFindDrv( pszFileName );
 
    if( i >= 0 )
    {
-      return s_pFileTypes[i]->Delete( s_pFileTypes[i], pszFileName );
+      return s_pFileTypes[i]->Delete(s_pFileTypes[i], pszFileName);
    }
 
    return hb_fsDelete(pszFileName);
 }
 
-HB_BOOL hb_fileRename( const char * pszFileName, const char * pszNewName )
+HB_BOOL hb_fileRename(const char * pszFileName, const char * pszNewName)
 {
    int i = s_fileFindDrv( pszFileName );
 
    if( i >= 0 )
    {
-      return s_pFileTypes[i]->Rename( s_pFileTypes[i], pszFileName, pszNewName );
+      return s_pFileTypes[i]->Rename(s_pFileTypes[i], pszFileName, pszNewName);
    }
 
    return hb_fsRename(pszFileName, pszNewName);
@@ -1305,31 +1304,31 @@ PHB_ITEM hb_fileDirectory( const char * pszDirSpec, const char * pszAttr )
    return hb_fsDirectory(pszDirSpec, pszAttr, true);
 }
 
-HB_BOOL hb_fileTimeGet( const char * pszFileName, long * plJulian, long * plMillisec )
+HB_BOOL hb_fileTimeGet(const char * pszFileName, long * plJulian, long * plMillisec)
 {
    int i = s_fileFindDrv( pszFileName );
 
    if( i >= 0 )
    {
-      return s_pFileTypes[i]->TimeGet( s_pFileTypes[i], pszFileName, plJulian, plMillisec );
+      return s_pFileTypes[i]->TimeGet(s_pFileTypes[i], pszFileName, plJulian, plMillisec);
    }
 
    return hb_fsGetFileTime(pszFileName, plJulian, plMillisec);
 }
 
-HB_BOOL hb_fileTimeSet( const char * pszFileName, long lJulian, long lMillisec )
+HB_BOOL hb_fileTimeSet(const char * pszFileName, long lJulian, long lMillisec)
 {
    int i = s_fileFindDrv( pszFileName );
 
    if( i >= 0 )
    {
-      return s_pFileTypes[i]->TimeSet( s_pFileTypes[i], pszFileName, lJulian, lMillisec );
+      return s_pFileTypes[i]->TimeSet(s_pFileTypes[i], pszFileName, lJulian, lMillisec);
    }
 
    return hb_fsSetFileTime(pszFileName, lJulian, lMillisec);
 }
 
-HB_FOFFSET hb_fileSizeGet( const char * pszFileName, HB_BOOL bUseDirEntry )
+HB_FOFFSET hb_fileSizeGet(const char * pszFileName, HB_BOOL bUseDirEntry)
 {
    int i = s_fileFindDrv( pszFileName );
 
@@ -1354,13 +1353,13 @@ HB_FOFFSET hb_fileSizeGet( const char * pszFileName, HB_BOOL bUseDirEntry )
       }
       else
       {
-         PHB_FILE pFile = hb_fileExtOpen( pszFileName, nullptr, FO_READ | FO_COMPAT, nullptr, nullptr );
+         PHB_FILE pFile = hb_fileExtOpen(pszFileName, nullptr, FO_READ | FO_COMPAT, nullptr, nullptr);
          if( pFile )
          {
             HB_ERRCODE uiError;
-            nSize = hb_fileSize( pFile );
+            nSize = hb_fileSize(pFile);
             uiError = hb_fsError();
-            hb_fileClose( pFile );
+            hb_fileClose(pFile);
             hb_fsSetError(uiError);
          }
       }
@@ -1371,23 +1370,23 @@ HB_FOFFSET hb_fileSizeGet( const char * pszFileName, HB_BOOL bUseDirEntry )
    return hb_fsFSize(pszFileName, bUseDirEntry);
 }
 
-HB_BOOL hb_fileAttrGet( const char * pszFileName, HB_FATTR * pulAttr )
+HB_BOOL hb_fileAttrGet(const char * pszFileName, HB_FATTR * pulAttr)
 {
    int i = s_fileFindDrv( pszFileName );
 
    if( i >= 0 )
-      return s_pFileTypes[i]->AttrGet( s_pFileTypes[i], pszFileName, pulAttr );
+      return s_pFileTypes[i]->AttrGet(s_pFileTypes[i], pszFileName, pulAttr);
 
    return hb_fsGetAttr(pszFileName, pulAttr);
 }
 
-HB_BOOL hb_fileAttrSet( const char * pszFileName, HB_FATTR ulAttr )
+HB_BOOL hb_fileAttrSet(const char * pszFileName, HB_FATTR ulAttr)
 {
    int i = s_fileFindDrv( pszFileName );
 
    if( i >= 0 )
    {
-      return s_pFileTypes[i]->AttrSet( s_pFileTypes[i], pszFileName, ulAttr );
+      return s_pFileTypes[i]->AttrSet(s_pFileTypes[i], pszFileName, ulAttr);
    }
 
    return hb_fsSetAttr(pszFileName, ulAttr);
@@ -1417,38 +1416,38 @@ HB_BOOL hb_fileLinkSym( const char * pszTarget, const char * pszNewName )
    return hb_fsLinkSym(pszTarget, pszNewName);
 }
 
-char * hb_fileLinkRead( const char * pszFileName )
+char * hb_fileLinkRead(const char * pszFileName)
 {
    int i = s_fileFindDrv( pszFileName );
 
    if( i >= 0 )
    {
-      return s_pFileTypes[i]->LinkRead( s_pFileTypes[i], pszFileName );
+      return s_pFileTypes[i]->LinkRead(s_pFileTypes[i], pszFileName);
    }
 
    return hb_fsLinkRead(pszFileName);
 }
 
-PHB_FILE hb_fileExtOpen( const char * pszFileName, const char * pDefExt, HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError )
+PHB_FILE hb_fileExtOpen(const char * pszFileName, const char * pDefExt, HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError)
 {
    int i = s_fileFindDrv( pszFileName );
 
    if( i >= 0 )
    {
-      return s_pFileTypes[i]->Open( s_pFileTypes[i], pszFileName, pDefExt, nExFlags, pPaths, pError );
+      return s_pFileTypes[i]->Open(s_pFileTypes[i], pszFileName, pDefExt, nExFlags, pPaths, pError);
    }
 
-   return s_fileExtOpen( nullptr, pszFileName, pDefExt, nExFlags, pPaths, pError );
+   return s_fileExtOpen(nullptr, pszFileName, pDefExt, nExFlags, pPaths, pError);
 }
 
-void hb_fileClose( PHB_FILE pFile )
+void hb_fileClose(PHB_FILE pFile)
 {
-   pFile->pFuncs->Close( pFile );
+   pFile->pFuncs->Close(pFile);
 }
 
-HB_BOOL hb_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType )
+HB_BOOL hb_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
 {
-   return pFile->pFuncs->Lock( pFile, nStart, nLen, iType );
+   return pFile->pFuncs->Lock(pFile, nStart, nLen, iType);
 }
 
 int hb_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType )
@@ -1456,39 +1455,39 @@ int hb_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iTy
    return pFile->pFuncs->LockTest( pFile, nStart, nLen, iType );
 }
 
-HB_SIZE hb_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout )
+HB_SIZE hb_fileRead(PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout)
 {
-   return pFile->pFuncs->Read( pFile, buffer, nSize, nTimeout );
+   return pFile->pFuncs->Read(pFile, buffer, nSize, nTimeout);
 }
 
-HB_SIZE hb_fileWrite( PHB_FILE pFile, const void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout )
+HB_SIZE hb_fileWrite(PHB_FILE pFile, const void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout)
 {
-   return pFile->pFuncs->Write( pFile, buffer, nSize, nTimeout );
+   return pFile->pFuncs->Write(pFile, buffer, nSize, nTimeout);
 }
 
-HB_SIZE hb_fileReadAt( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset )
+HB_SIZE hb_fileReadAt(PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset)
 {
-   return pFile->pFuncs->ReadAt( pFile, buffer, nSize, nOffset );
+   return pFile->pFuncs->ReadAt(pFile, buffer, nSize, nOffset);
 }
 
-HB_SIZE hb_fileWriteAt( PHB_FILE pFile, const void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset )
+HB_SIZE hb_fileWriteAt(PHB_FILE pFile, const void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset)
 {
-   return pFile->pFuncs->WriteAt( pFile, buffer, nSize, nOffset );
+   return pFile->pFuncs->WriteAt(pFile, buffer, nSize, nOffset);
 }
 
-HB_BOOL hb_fileTruncAt( PHB_FILE pFile, HB_FOFFSET nOffset )
+HB_BOOL hb_fileTruncAt(PHB_FILE pFile, HB_FOFFSET nOffset)
 {
-   return pFile->pFuncs->TruncAt( pFile, nOffset );
+   return pFile->pFuncs->TruncAt(pFile, nOffset);
 }
 
-HB_FOFFSET hb_fileSeek( PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFlags )
+HB_FOFFSET hb_fileSeek(PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFlags)
 {
-   return pFile->pFuncs->Seek( pFile, nOffset, uiFlags );
+   return pFile->pFuncs->Seek(pFile, nOffset, uiFlags);
 }
 
-HB_FOFFSET hb_fileSize( PHB_FILE pFile )
+HB_FOFFSET hb_fileSize(PHB_FILE pFile)
 {
-   return pFile->pFuncs->Size( pFile );
+   return pFile->pFuncs->Size(pFile);
 }
 
 HB_BOOL hb_fileEof( PHB_FILE pFile )
@@ -1518,7 +1517,7 @@ HB_FHANDLE hb_fileHandle( PHB_FILE pFile )
 
 /* internal FILE structures only */
 
-PHB_FILE hb_fileCreateTemp( const char * pszDir, const char * pszPrefix, HB_FATTR ulAttr, char * pszName )
+PHB_FILE hb_fileCreateTemp(const char * pszDir, const char * pszPrefix, HB_FATTR ulAttr, char * pszName)
 {
    PHB_FILE pFile = nullptr;
    HB_FHANDLE hFile;
@@ -1526,7 +1525,7 @@ PHB_FILE hb_fileCreateTemp( const char * pszDir, const char * pszPrefix, HB_FATT
    hFile = hb_fsCreateTemp(pszDir, pszPrefix, ulAttr, pszName);
    if( hFile != FS_ERROR )
    {
-      pFile = hb_fileNew( hFile, false, false, 0, 0, false );
+      pFile = hb_fileNew(hFile, false, false, 0, 0, false);
    }
 
    return pFile;
@@ -1540,7 +1539,7 @@ PHB_FILE hb_fileCreateTempEx( char * pszName, const char * pszDir, const char * 
    hFile = hb_fsCreateTempEx(pszName, pszDir, pszPrefix, pszExt, ulAttr);
    if( hFile != FS_ERROR )
    {
-      pFile = hb_fileNew( hFile, false, false, 0, 0, false );
+      pFile = hb_fileNew(hFile, false, false, 0, 0, false);
    }
 
    return pFile;
@@ -1548,7 +1547,7 @@ PHB_FILE hb_fileCreateTempEx( char * pszName, const char * pszDir, const char * 
 
 PHB_FILE hb_fileFromHandle( HB_FHANDLE hFile )
 {
-   return hb_fileNew( hFile, false, false, 0, 0, false );
+   return hb_fileNew(hFile, false, false, 0, 0, false);
 }
 
 HB_BOOL hb_fileDetach( PHB_FILE pFile )
@@ -1558,7 +1557,7 @@ HB_BOOL hb_fileDetach( PHB_FILE pFile )
       if( pFile->pFuncs == s_fileMethods() )
       {
          pFile->hFile = FS_ERROR;
-         s_fileClose( pFile );
+         s_fileClose(pFile);
          return true;
       }
 #if defined(HB_OS_UNIX)
@@ -1567,7 +1566,7 @@ HB_BOOL hb_fileDetach( PHB_FILE pFile )
          PHB_FILEPOS pFilePos = static_cast<PHB_FILEPOS>(pFile);
 
          pFilePos->pFile->hFile = FS_ERROR;
-         s_fileposClose( pFile );
+         s_fileposClose(pFile);
          return true;
       }
 #endif
@@ -1593,12 +1592,12 @@ HB_BOOL hb_fileIsLocal( PHB_FILE pFile )
    return false;
 }
 
-HB_BOOL hb_fileIsLocalName( const char * pszFileName )
+HB_BOOL hb_fileIsLocalName(const char * pszFileName)
 {
    return s_fileFindDrv( pszFileName ) < 0;
 }
 
-PHB_FILE hb_filePOpen( const char * pszFileName, const char * pszMode )
+PHB_FILE hb_filePOpen(const char * pszFileName, const char * pszMode)
 {
    PHB_FILE pFile = nullptr;
    HB_FHANDLE hFile;
@@ -1606,7 +1605,7 @@ PHB_FILE hb_filePOpen( const char * pszFileName, const char * pszMode )
    hFile = hb_fsPOpen(pszFileName, pszMode);
    if( hFile != FS_ERROR )
    {
-      pFile = hb_fileNew( hFile, false, false, 0, 0, false );
+      pFile = hb_fileNew(hFile, false, false, 0, 0, false);
    }
 
    return pFile;
@@ -1619,11 +1618,11 @@ HB_SIZE hb_fileResult( HB_SIZE nSize )
 
 #define HB_FILELOAD_BUFFERSIZE  65536
 
-HB_BYTE * hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE * pnSize )
+HB_BYTE * hb_fileLoadData(PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE * pnSize)
 {
    HB_BYTE * pFileBuf = nullptr;
    HB_SIZE nSize = 0, nRead, nBufSize;
-   HB_FOFFSET nFileSize = hb_fileSize( pFile );
+   HB_FOFFSET nFileSize = hb_fileSize(pFile);
 
    if( nFileSize == FS_ERROR || ( nFileSize == 0 && hb_fsError() != 0 ) )
    {
@@ -1642,7 +1641,7 @@ HB_BYTE * hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE * pnSize )
             }
             pFileBuf = static_cast<HB_BYTE*>(hb_xrealloc(pFileBuf, nBufSize));
          }
-         nRead = hb_fileRead( pFile, pFileBuf + nSize, nBufSize - nSize, -1 );
+         nRead = hb_fileRead(pFile, pFileBuf + nSize, nBufSize - nSize, -1);
          if( nRead == 0 || nRead == static_cast<HB_SIZE>(FS_ERROR) )
          {
             break;
@@ -1661,7 +1660,7 @@ HB_BYTE * hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE * pnSize )
       pFileBuf = static_cast<HB_BYTE*>(hb_xgrab(nBufSize + 1));
       do
       {
-         nRead = hb_fileReadAt( pFile, pFileBuf + nSize, nBufSize - nSize, nSize );
+         nRead = hb_fileReadAt(pFile, pFileBuf + nSize, nBufSize - nSize, nSize);
          if( nRead == 0 || nRead == static_cast<HB_SIZE>(FS_ERROR) )
          {
             break;
@@ -1690,15 +1689,15 @@ HB_BYTE * hb_fileLoadData( PHB_FILE pFile, HB_SIZE nMaxSize, HB_SIZE * pnSize )
    return pFileBuf;
 }
 
-HB_BYTE * hb_fileLoad( const char * pszFileName, HB_SIZE nMaxSize, HB_SIZE * pnSize )
+HB_BYTE * hb_fileLoad(const char * pszFileName, HB_SIZE nMaxSize, HB_SIZE * pnSize)
 {
    HB_BYTE * pFileBuf = nullptr;
-   PHB_FILE pFile = hb_fileExtOpen( pszFileName, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK | FXO_NOSEEKPOS, nullptr, nullptr );
+   PHB_FILE pFile = hb_fileExtOpen(pszFileName, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK | FXO_NOSEEKPOS, nullptr, nullptr);
 
    if( pFile != nullptr )
    {
-      pFileBuf = hb_fileLoadData( pFile, nMaxSize, pnSize );
-      hb_fileClose( pFile );
+      pFileBuf = hb_fileLoadData(pFile, nMaxSize, pnSize);
+      hb_fileClose(pFile);
    }
    else if( pnSize )
    {

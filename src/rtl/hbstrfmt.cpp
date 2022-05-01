@@ -252,7 +252,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                }
                else
                {
-                  hb_itemHexStr( pItem, pStr, *pFmt == 'X' );
+                  hb_itemHexStr(pItem, pStr, *pFmt == 'X');
                }
 
                while( *pStr2 == ' ' )
@@ -601,7 +601,7 @@ HB_FUNC( HB_STRFORMAT )
          }
       }
 
-      hb_itemReturnRelease(hb_strFormat( nullptr, pFormat, iParams - 1, pItemArray ));
+      hb_itemReturnRelease(hb_strFormat(nullptr, pFormat, iParams - 1, pItemArray));
 
       if( iParams > 1 )
       {

@@ -80,7 +80,7 @@ void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * sz
    fStack = hb_stackId() != nullptr;
    fLang = fStack && hb_langID() != nullptr;
 
-   szFile = fStack ? hb_setGetCPtr( HB_SET_HBOUTLOG ) : nullptr;
+   szFile = fStack ? hb_setGetCPtr(HB_SET_HBOUTLOG) : nullptr;
    if( !szFile )
    {
       szFile = "hb_out.log";
@@ -99,7 +99,7 @@ void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * sz
 
       fprintf(hLog, "Application Internal Error - %s\n", hb_cmdargARGVN(0));
       fprintf(hLog, "Terminated at: %04d-%02d-%02d %s\n", iYear, iMonth, iDay, szTime);
-      szInfo = fStack ? hb_setGetCPtr( HB_SET_HBOUTLOGINFO ) : nullptr;
+      szInfo = fStack ? hb_setGetCPtr(HB_SET_HBOUTLOGINFO) : nullptr;
       if( szInfo && *szInfo )
       {
          fprintf(hLog, "Info: %s\n", szInfo);
@@ -109,7 +109,7 @@ void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * sz
    hb_conOutErr(hb_conNewLine(), 0);
    if( fLang )
    {
-      hb_snprintf(buffer, sizeof(buffer), hb_langDGetItem( HB_LANG_ITEM_BASE_ERRINTR ), errCode);
+      hb_snprintf(buffer, sizeof(buffer), hb_langDGetItem(HB_LANG_ITEM_BASE_ERRINTR), errCode);
    }
    else
    {
@@ -124,7 +124,7 @@ void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * sz
 
    if( !szText && fLang )
    {
-      szText = hb_langDGetItem( HB_LANG_ITEM_BASE_ERRINTR + errCode - 9000 );
+      szText = hb_langDGetItem(HB_LANG_ITEM_BASE_ERRINTR + errCode - 9000);
    }
 
    if( szText )

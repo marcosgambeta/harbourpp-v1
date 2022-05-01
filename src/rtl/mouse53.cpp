@@ -81,7 +81,7 @@ HB_FUNC( MROW )
    {
       int iRow, iCol;
 
-      hb_mouseGetPos( &iRow, &iCol );
+      hb_mouseGetPos(&iRow, &iCol);
       hb_retni(iRow);
    }
    else
@@ -96,7 +96,7 @@ HB_FUNC( MCOL )
    {
       int iRow, iCol;
 
-      hb_mouseGetPos( &iRow, &iCol );
+      hb_mouseGetPos(&iRow, &iCol);
       hb_retni(iCol);
    }
    else
@@ -109,7 +109,7 @@ HB_FUNC( MSETPOS )
 {
    if( HB_ISNUM(1) && HB_ISNUM(2) )
    {
-      hb_mouseSetPos( hb_parni(1), hb_parni(2) );
+      hb_mouseSetPos(hb_parni(1), hb_parni(2));
    }   
 }
 

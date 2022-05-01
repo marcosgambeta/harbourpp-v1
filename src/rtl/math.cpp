@@ -118,7 +118,7 @@ static int hb_matherr( HB_MATH_EXCEPTION * pexc )
 
       /* launch error codeblock */
       pMatherrResult = hb_errLaunchSubst( pError );
-      hb_errRelease( pError );
+      hb_errRelease(pError);
 
       if( pMatherrResult )
       {
@@ -182,7 +182,7 @@ static void hb_mathErrDataInit( void * Cargo )
 #endif
 }
 
-static void hb_mathErrDataRelease( void * Cargo )
+static void hb_mathErrDataRelease(void * Cargo)
 {
    PHB_MATHERRDATA pMathErr = static_cast<PHB_MATHERRDATA>(Cargo);
 
@@ -198,7 +198,7 @@ static HB_TSD_NEW( s_mathErrData, sizeof(HB_MATHERRDATA), hb_mathErrDataInit, hb
  */
 
 /* reset math error information */
-void hb_mathResetError( HB_MATH_EXCEPTION * phb_exc )
+void hb_mathResetError(HB_MATH_EXCEPTION * phb_exc)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mathResetError(%p)", static_cast<void*>(phb_exc) ) );
@@ -299,7 +299,7 @@ int matherr( struct exception * err )
 }
 #endif
 
-HB_BOOL hb_mathGetError( HB_MATH_EXCEPTION * phb_exc, const char * szFunc, double arg1, double arg2, double dResult )
+HB_BOOL hb_mathGetError(HB_MATH_EXCEPTION * phb_exc, const char * szFunc, double arg1, double arg2, double dResult)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mathGetError(%p,%s,%lf,%lf,%lf)", static_cast<void*>(phb_exc), szFunc, arg1, arg2, dResult ) );
@@ -428,7 +428,7 @@ int hb_mathSetErrMode( int imode )
 }
 
 /* get error handling mode of hb_matherr() */
-int hb_mathGetErrMode( void )
+int hb_mathGetErrMode(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mathGetErrMode()" ) );
@@ -471,7 +471,7 @@ HB_MATH_HANDLERPROC hb_mathSetHandler( HB_MATH_HANDLERPROC handlerproc )
 }
 
 /* get current harbour-like math error handler */
-HB_MATH_HANDLERPROC hb_mathGetHandler( void )
+HB_MATH_HANDLERPROC hb_mathGetHandler(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mathGetHandler ()" ) );
@@ -652,13 +652,13 @@ HB_FUNC( EXP )
       HB_MATH_EXCEPTION hb_exc;
       double dResult, dArg = hb_parnd(1);
 
-      hb_mathResetError( &hb_exc );
+      hb_mathResetError(&hb_exc);
       dResult = exp( dArg );
-      if( hb_mathGetError( &hb_exc, "EXP", dArg, 0.0, dResult ) )
+      if( hb_mathGetError(&hb_exc, "EXP", dArg, 0.0, dResult) )
       {
          if( hb_exc.handled )
          {
-            hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+            hb_retndlen(hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec);
          }
          else
          {
@@ -666,7 +666,7 @@ HB_FUNC( EXP )
                Clipper compatible as possible */
             if( hb_exc.type == HB_MATH_ERR_OVERFLOW )
             {
-               hb_retndlen( HUGE_VAL, -1, -1 );
+               hb_retndlen(HUGE_VAL, -1, -1);
             }
             else
             {
@@ -694,18 +694,18 @@ HB_FUNC( LOG )
 
       if( dArg <= 0 )
       {
-         hb_retndlen( -HUGE_VAL, -1, -1 );  /* return -infinity */
+         hb_retndlen(-HUGE_VAL, -1, -1);  /* return -infinity */
       }
       else
       {
          double dResult;
-         hb_mathResetError( &hb_exc );
+         hb_mathResetError(&hb_exc);
          dResult = log( dArg );
-         if( hb_mathGetError( &hb_exc, "LOG", dArg, 0.0, dResult ) )
+         if( hb_mathGetError(&hb_exc, "LOG", dArg, 0.0, dResult) )
          {
             if( hb_exc.handled )
             {
-               hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+               hb_retndlen(hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec);
             }
             else
             {
@@ -715,7 +715,7 @@ HB_FUNC( LOG )
                {
                   case HB_MATH_ERR_SING:               /* argument to log was 0.0 */
                   case HB_MATH_ERR_DOMAIN:             /* argument to log was < 0.0 */
-                     hb_retndlen( -HUGE_VAL, -1, -1 ); /* return -infinity */
+                     hb_retndlen(-HUGE_VAL, -1, -1); /* return -infinity */
                      break;
 
                   default:
@@ -750,13 +750,13 @@ HB_FUNC( SQRT )
       else
       {
          double dResult;
-         hb_mathResetError( &hb_exc );
+         hb_mathResetError(&hb_exc);
          dResult = sqrt( dArg );
-         if( hb_mathGetError( &hb_exc, "SQRT", dArg, 0.0, dResult ) )
+         if( hb_mathGetError(&hb_exc, "SQRT", dArg, 0.0, dResult) )
          {
             if( hb_exc.handled )
             {
-               hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+               hb_retndlen(hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec);
             }
             else
             {

@@ -105,7 +105,7 @@ static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_B
 
       if( fTrans )
       {
-         hb_osStrDecode2( pszTempDir, pszName, HB_PATH_MAX - 1 );
+         hb_osStrDecode2(pszTempDir, pszName, HB_PATH_MAX - 1);
       }
       else
       {
@@ -115,12 +115,12 @@ static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_B
       switch( hb_setGetDirCase() )
       {
          case HB_SET_CASE_LOWER:
-            pTmp = hb_cdpnDupLower( hb_vmCDP(), pszName, nullptr );
+            pTmp = hb_cdpnDupLower(hb_vmCDP(), pszName, nullptr);
             fOK = strcmp(pszName, pTmp) == 0;
             hb_xfree(pTmp);
             break;
          case HB_SET_CASE_UPPER:
-            pTmp = hb_cdpnDupUpper( hb_vmCDP(), pszName, nullptr );
+            pTmp = hb_cdpnDupUpper(hb_vmCDP(), pszName, nullptr);
             fOK = strcmp(pszName, pTmp) == 0;
             hb_xfree(pTmp);
             break;
@@ -196,7 +196,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
          {
             hb_strncat(pszName, pszExt, HB_PATH_MAX - 1);
 #if defined(HB_USE_LARGEFILE64)
-            fd = static_cast<HB_FHANDLE>(mkstemps64( pszName, static_cast<int>(strlen(pszExt)) ));
+            fd = static_cast<HB_FHANDLE>(mkstemps64(pszName, static_cast<int>(strlen(pszExt))));
 #else
             fd = static_cast<HB_FHANDLE>(mkstemps( pszName, static_cast<int>(strlen(pszExt)) ));
 #endif
@@ -204,9 +204,9 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
          else
 #endif
 #if defined(HB_USE_LARGEFILE64)
-            fd = static_cast<HB_FHANDLE>(mkstemp64( pszName ));
+            fd = static_cast<HB_FHANDLE>(mkstemp64(pszName));
 #else
-            fd = static_cast<HB_FHANDLE>(mkstemp( pszName ));
+            fd = static_cast<HB_FHANDLE>(mkstemp(pszName));
 #endif
          hb_fsSetIOError(fd != static_cast<HB_FHANDLE>(-1), 0);
          hb_vmLock();
@@ -245,7 +245,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
 /* NOTE: The buffer must be at least HB_PATH_MAX chars long */
 #if !defined(HB_OS_UNIX)
 
-static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char * pszPrefix )
+static HB_BOOL hb_fsTempName(char * pszBuffer, const char * pszDir, const char * pszPrefix)
 {
    HB_BOOL fResult;
 
@@ -274,15 +274,15 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
             hb_fsSetIOError(false, 0);
             return false;
          }
-         lpTempDir[HB_PATH_MAX - 1] = TEXT( '\0' );
+         lpTempDir[HB_PATH_MAX - 1] = TEXT('\0');
          lpDir = lpTempDir;
       }
 
-      fResult = GetTempFileName( lpDir, lpPrefix ? lpPrefix : TEXT( "hb" ), 0, lpBuffer );
+      fResult = GetTempFileName(lpDir, lpPrefix ? lpPrefix : TEXT("hb"), 0, lpBuffer);
 
       if( fResult )
       {
-         HB_OSSTRDUP2( lpBuffer, pszBuffer, HB_PATH_MAX - 1 );
+         HB_OSSTRDUP2(lpBuffer, pszBuffer, HB_PATH_MAX - 1);
       }
 
       if( lpPrefixFree )
@@ -308,7 +308,7 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
 
       if( fResult )
       {
-         hb_osStrDecode2( pTmpBuffer, pszBuffer, HB_PATH_MAX - 1 );
+         hb_osStrDecode2(pTmpBuffer, pszBuffer, HB_PATH_MAX - 1);
       }
       hb_xfree(pTmpBuffer);
    }
@@ -324,7 +324,7 @@ static HB_BOOL hb_fsTempName( char * pszBuffer, const char * pszDir, const char 
 
 /* NOTE: The pszName buffer must be at least HB_PATH_MAX chars long */
 
-HB_FHANDLE hb_fsCreateTemp( const char * pszDir, const char * pszPrefix, HB_FATTR ulAttr, char * pszName )
+HB_FHANDLE hb_fsCreateTemp(const char * pszDir, const char * pszPrefix, HB_FATTR ulAttr, char * pszName)
 {
 #if defined(HB_OS_UNIX)
    return hb_fsCreateTempEx(pszName, pszDir, pszPrefix, nullptr, ulAttr);
@@ -405,13 +405,13 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
       if( GetTempPath( HB_PATH_MAX, lpDir ) )
       {
          nResult = 0;
-         lpDir[HB_PATH_MAX - 1] = TEXT( '\0' );
-         HB_OSSTRDUP2( lpDir, pszTempDir, HB_PATH_MAX - 1 );
+         lpDir[HB_PATH_MAX - 1] = TEXT('\0');
+         HB_OSSTRDUP2(lpDir, pszTempDir, HB_PATH_MAX - 1);
       }
    }
 #else
    {
-      static const char * env_tmp[] = { "TEMP", "TMP", "TMPDIR", nullptr };
+      static const char * env_tmp[] = {"TEMP", "TMP", "TMPDIR", nullptr};
 
       const char ** tmp = env_tmp;
 

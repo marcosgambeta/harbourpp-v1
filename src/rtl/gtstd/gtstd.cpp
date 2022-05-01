@@ -196,7 +196,7 @@ static void hb_gt_std_newLine( PHB_GTSTD pGTSTD )
    hb_gt_std_termOut( pGTSTD, pGTSTD->szCrLf, pGTSTD->nCrLf );
 }
 
-static void hb_gt_std_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr )
+static void hb_gt_std_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStderr)) ) );
@@ -265,7 +265,7 @@ static void hb_gt_std_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
 #if defined(SIGTTOU)
       act.sa_handler = SIG_DFL;
-      sigaction( SIGTTOU, &old, nullptr );
+      sigaction(SIGTTOU, &old, nullptr);
 #endif
       pGTSTD->fRestTTY = s_fRestTTY;
    }
@@ -291,7 +291,7 @@ static void hb_gt_std_Init( PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
    HB_GTSELF_SETFLAG(pGT, HB_GTI_STDERRCON, pGTSTD->fStderrConsole && pGTSTD->fStdoutConsole);
 }
 
-static void hb_gt_std_Exit( PHB_GT pGT )
+static void hb_gt_std_Exit(PHB_GT pGT)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Exit(%p)", static_cast<void*>(pGT) ) );
@@ -343,7 +343,7 @@ static void hb_gt_std_Exit( PHB_GT pGT )
    }
 }
 
-static int hb_gt_std_ReadKey( PHB_GT pGT, int iEventMask )
+static int hb_gt_std_ReadKey(PHB_GT pGT, int iEventMask)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask ) );
@@ -450,7 +450,7 @@ static int hb_gt_std_ReadKey( PHB_GT pGT, int iEventMask )
    return ch;
 }
 
-static HB_BOOL hb_gt_std_IsColor( PHB_GT pGT )
+static HB_BOOL hb_gt_std_IsColor(PHB_GT pGT)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_IsColor(%p)", static_cast<void*>(pGT) ) );
@@ -461,7 +461,7 @@ static HB_BOOL hb_gt_std_IsColor( PHB_GT pGT )
    return false;
 }
 
-static void hb_gt_std_Tone( PHB_GT pGT, double dFrequency, double dDuration )
+static void hb_gt_std_Tone(PHB_GT pGT, double dFrequency, double dDuration)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration ) );
@@ -490,7 +490,7 @@ static void hb_gt_std_Tone( PHB_GT pGT, double dFrequency, double dDuration )
    hb_gtSleep(pGT, dDuration / 18.2);
 }
 
-static void hb_gt_std_Bell( PHB_GT pGT )
+static void hb_gt_std_Bell(PHB_GT pGT)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Bell(%p)", static_cast<void*>(pGT) ) );
@@ -499,7 +499,7 @@ static void hb_gt_std_Bell( PHB_GT pGT )
    hb_gt_std_termOut( HB_GTSTD_GET(pGT), s_szBell, 1 );
 }
 
-static const char * hb_gt_std_Version( PHB_GT pGT, int iType )
+static const char * hb_gt_std_Version(PHB_GT pGT, int iType)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Version(%p,%d)", static_cast<void*>(pGT), iType ) );
@@ -515,7 +515,7 @@ static const char * hb_gt_std_Version( PHB_GT pGT, int iType )
    return "Harbour Terminal: Standard stream console";
 }
 
-static HB_BOOL hb_gt_std_Suspend( PHB_GT pGT )
+static HB_BOOL hb_gt_std_Suspend(PHB_GT pGT)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Suspend(%p)", static_cast<void*>(pGT) ) );
@@ -534,7 +534,7 @@ static HB_BOOL hb_gt_std_Suspend( PHB_GT pGT )
    return HB_GTSUPER_SUSPEND(pGT);
 }
 
-static HB_BOOL hb_gt_std_Resume( PHB_GT pGT )
+static HB_BOOL hb_gt_std_Resume(PHB_GT pGT)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Resume(%p)", static_cast<void*>(pGT) ) );
@@ -552,7 +552,7 @@ static HB_BOOL hb_gt_std_Resume( PHB_GT pGT )
    return HB_GTSUPER_RESUME(pGT);
 }
 
-static void hb_gt_std_Scroll( PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, int iColor, HB_USHORT usChar, int iRows, int iCols )
+static void hb_gt_std_Scroll(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, int iColor, HB_USHORT usChar, int iRows, int iCols)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Scroll(%p,%d,%d,%d,%d,%d,%d,%d,%d)", static_cast<void*>(pGT), iTop, iLeft, iBottom, iRight, iColor, usChar, iRows, iCols ) );
@@ -581,7 +581,7 @@ static void hb_gt_std_Scroll( PHB_GT pGT, int iTop, int iLeft, int iBottom, int 
    }
 }
 
-static void hb_gt_std_DispLine( PHB_GT pGT, int iRow, int iFrom, int iSize )
+static void hb_gt_std_DispLine(PHB_GT pGT, int iRow, int iFrom, int iSize)
 {
    int iColor;
    HB_BYTE bAttr;
@@ -613,7 +613,7 @@ static void hb_gt_std_DispLine( PHB_GT pGT, int iRow, int iFrom, int iSize )
       {
          usChar = '.';
       }
-      nI += hb_cdpTextPutU16( cdpTerm, pGTSTD->sLineBuf + nI, pGTSTD->iLineBufSize - nI, usChar );
+      nI += hb_cdpTextPutU16(cdpTerm, pGTSTD->sLineBuf + nI, pGTSTD->iLineBufSize - nI, usChar);
       if( iAll || usChar != ' ' )
       {
          nLen = nI;
@@ -632,7 +632,7 @@ static void hb_gt_std_DispLine( PHB_GT pGT, int iRow, int iFrom, int iSize )
    }
 }
 
-static void hb_gt_std_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
+static void hb_gt_std_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize ) );
@@ -726,7 +726,7 @@ static void hb_gt_std_Redraw( PHB_GT pGT, int iRow, int iCol, int iSize )
    }
 }
 
-static void hb_gt_std_Refresh( PHB_GT pGT )
+static void hb_gt_std_Refresh(PHB_GT pGT)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Refresh(%p)", static_cast<void*>(pGT) ) );
@@ -758,7 +758,7 @@ static void hb_gt_std_Refresh( PHB_GT pGT )
    }
 }
 
-static HB_BOOL hb_gt_std_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
+static HB_BOOL hb_gt_std_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_gt_std_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo) ) );

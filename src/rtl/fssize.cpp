@@ -75,7 +75,7 @@
 #endif
 
 
-HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
+HB_FOFFSET hb_fsFSize(const char * pszFileName, HB_BOOL bUseDirEntry)
 {
    if( bUseDirEntry )
    {
@@ -85,7 +85,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
 
       if( s_pGetFileAttributesEx == reinterpret_cast<_HB_GETFILEATTRIBUTESEX>(-1) )
       {
-         HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
+         HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
          if( hModule )
          {
             s_pGetFileAttributesEx = reinterpret_cast<_HB_GETFILEATTRIBUTESEX>(HB_WINAPI_GETPROCADDRESST( hModule, "GetFileAttributesEx" ));
@@ -134,7 +134,7 @@ HB_FOFFSET hb_fsFSize( const char * pszFileName, HB_BOOL bUseDirEntry )
       pszFileName = hb_fsNameConv(pszFileName, &pszFree);
       statbuf.st_size = 0;
       hb_vmUnlock();
-      fResult = stat64( pszFileName, &statbuf ) == 0;
+      fResult = stat64(pszFileName, &statbuf) == 0;
       hb_fsSetIOError(fResult, 0);
       hb_vmLock();
       if( pszFree )

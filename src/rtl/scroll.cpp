@@ -213,13 +213,13 @@ HB_FUNC( HB_SCROLL )
          PHB_CODEPAGE cdp = hb_vmCDP();
          if( !HB_CDP_ISCHARUNI( cdp ) )
          {
-            iChar = hb_cdpGetU16( cdp, static_cast<HB_UCHAR>(iChar) );
+            iChar = hb_cdpGetU16(cdp, static_cast<HB_UCHAR>(iChar));
          }
       }
    }
    else if( HB_ISCHAR(8) )
    {
-      iChar = hb_cdpTextGetU16( hb_vmCDP(), hb_parc(8), hb_parclen(8) );
+      iChar = hb_cdpTextGetU16(hb_vmCDP(), hb_parc(8), hb_parclen(8));
    }
    else
    {

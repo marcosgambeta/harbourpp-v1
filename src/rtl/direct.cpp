@@ -127,7 +127,7 @@ PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB
          if( pszDirSpec[nLen] == HB_OS_PATH_DELIM_CHR )
 #endif
          {
-            pszDirSpec = pszFree = hb_xstrcpy( nullptr, pszDirSpec, HB_OS_ALLFILE_MASK, nullptr );
+            pszDirSpec = pszFree = hb_xstrcpy(nullptr, pszDirSpec, HB_OS_ALLFILE_MASK, nullptr);
          }
       }
    }

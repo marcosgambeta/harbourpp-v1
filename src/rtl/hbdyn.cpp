@@ -66,7 +66,7 @@
 
 #define _DYNEXEC_MAXPARAM   15
 
-typedef void ( *PHB_DYNADDR )( void );
+typedef void ( *PHB_DYNADDR )(void);
 
 static int hb_hbtoctype( int iHarbourType )
 {
@@ -193,7 +193,7 @@ static HB_U64 hb_u64par( PHB_ITEM pParam, PHB_DYNARG pArg )
          /* FIXME */
 
       case HB_DYN_CTYPE_DOUBLE:
-         HB_PUT_LE_DOUBLE( ( HB_BYTE * ) &pArg->value.t.n64, hb_itemGetND(pParam) );
+         HB_PUT_LE_DOUBLE(static_cast<HB_BYTE*>(&pArg->value.t.n64), hb_itemGetND(pParam));
          r = pArg->bByRef ? reinterpret_cast<HB_PTRUINT>(&pArg->value.t.n64) : pArg->value.t.n64;
          break;
 
@@ -216,21 +216,21 @@ static HB_U64 hb_u64par( PHB_ITEM pParam, PHB_DYNARG pArg )
             case HB_DYN_ENC_ASCII:
             {
                HB_SIZE nLen;
-               const char * s = hb_itemGetStr( pParam, hb_setGetOSCP(), &pArg->hString, &nLen );
+               const char * s = hb_itemGetStr(pParam, hb_setGetOSCP(), &pArg->hString, &nLen);
                r = reinterpret_cast<HB_PTRUINT>(hb_strunshare(&pArg->hString, s, nLen));
                break;
             }
             case HB_DYN_ENC_UTF8:
             {
                HB_SIZE nLen;
-               const char * s = hb_itemGetStrUTF8( pParam, &pArg->hString, &nLen );
+               const char * s = hb_itemGetStrUTF8(pParam, &pArg->hString, &nLen);
                r = reinterpret_cast<HB_PTRUINT>(hb_strunshare(&pArg->hString, s, nLen));
                break;
             }
             case HB_DYN_ENC_UTF16:
             {
                HB_SIZE nLen;
-               const HB_WCHAR * s = hb_itemGetStrU16( pParam, HB_CDP_ENDIAN_NATIVE, &pArg->hString, &nLen );
+               const HB_WCHAR * s = hb_itemGetStrU16(pParam, HB_CDP_ENDIAN_NATIVE, &pArg->hString, &nLen);
                r = reinterpret_cast<HB_PTRUINT>(hb_wstrunshare(&pArg->hString, s, nLen));
                break;
             }
@@ -360,21 +360,21 @@ static PHB_ITEM hb_u64ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
             case HB_DYN_ENC_UTF8:
                if( nLen == -1 )
                {
-                  hb_itemPutStrUTF8( pItem, reinterpret_cast<const char*>(value.t.n64) );
+                  hb_itemPutStrUTF8(pItem, reinterpret_cast<const char*>(value.t.n64));
                }
                else
                {
-                  hb_itemPutStrLenUTF8( pItem, reinterpret_cast<const char*>(value.t.n64), nLen );
+                  hb_itemPutStrLenUTF8(pItem, reinterpret_cast<const char*>(value.t.n64), nLen);
                }
                break;
             case HB_DYN_ENC_UTF16:
                if( nLen == -1 )
                {
-                  hb_itemPutStrU16( pItem, HB_CDP_ENDIAN_NATIVE, reinterpret_cast<const HB_WCHAR*>(value.t.n64) );
+                  hb_itemPutStrU16(pItem, HB_CDP_ENDIAN_NATIVE, reinterpret_cast<const HB_WCHAR*>(value.t.n64));
                }
                else
                {
-                  hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_NATIVE, reinterpret_cast<const HB_WCHAR*>(value.t.n64), nLen );
+                  hb_itemPutStrLenU16(pItem, HB_CDP_ENDIAN_NATIVE, reinterpret_cast<const HB_WCHAR*>(value.t.n64), nLen);
                }
                break;
             default:
@@ -421,22 +421,22 @@ static PHB_ITEM hb_u64ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
 }
 
 #define HB_DYN_CTYPE_DECL( _ret_, _type_ ) \
-   typedef _ret_ ( *_type_##P00 )( void ); \
-   typedef _ret_ ( *_type_##P01 )( HB_U64 ); \
-   typedef _ret_ ( *_type_##P02 )( HB_U64, HB_U64 ); \
-   typedef _ret_ ( *_type_##P03 )( HB_U64, HB_U64, HB_U64 ); \
-   typedef _ret_ ( *_type_##P04 )( HB_U64, HB_U64, HB_U64, HB_U64 ); \
-   typedef _ret_ ( *_type_##P05 )( HB_U64, HB_U64, HB_U64, HB_U64, HB_U64 ); \
-   typedef _ret_ ( *_type_##P06 )( HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64 ); \
-   typedef _ret_ ( *_type_##P07 )( HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64 ); \
-   typedef _ret_ ( *_type_##P08 )( HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64 ); \
-   typedef _ret_ ( *_type_##P09 )( HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64 ); \
-   typedef _ret_ ( *_type_##P10 )( HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64 ); \
-   typedef _ret_ ( *_type_##P11 )( HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64 ); \
-   typedef _ret_ ( *_type_##P12 )( HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64 ); \
-   typedef _ret_ ( *_type_##P13 )( HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64 ); \
-   typedef _ret_ ( *_type_##P14 )( HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64 ); \
-   typedef _ret_ ( *_type_##P15 )( HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64 )
+   typedef _ret_ ( *_type_##P00 )(void); \
+   typedef _ret_ ( *_type_##P01 )(HB_U64); \
+   typedef _ret_ ( *_type_##P02 )(HB_U64, HB_U64); \
+   typedef _ret_ ( *_type_##P03 )(HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ ( *_type_##P04 )(HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ ( *_type_##P05 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ ( *_type_##P06 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ ( *_type_##P07 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ ( *_type_##P08 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ ( *_type_##P09 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ ( *_type_##P10 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ ( *_type_##P11 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ ( *_type_##P12 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ ( *_type_##P13 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ ( *_type_##P14 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ ( *_type_##P15 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64)
 
 #define HB_DYN_FUN_CALL( pcount, _ret_, _type_ ) \
    do \
@@ -624,21 +624,21 @@ static void hb_u32par( PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r
             case HB_DYN_ENC_ASCII:
             {
                HB_SIZE nLen;
-               const char * s = hb_itemGetStr( pParam, hb_setGetOSCP(), &pArg->hString, &nLen );
+               const char * s = hb_itemGetStr(pParam, hb_setGetOSCP(), &pArg->hString, &nLen);
                *r1 = reinterpret_cast<HB_U32>(hb_strunshare(&pArg->hString, s, nLen));
                break;
             }
             case HB_DYN_ENC_UTF8:
             {
                HB_SIZE nLen;
-               const char * s = hb_itemGetStrUTF8( pParam, &pArg->hString, &nLen );
+               const char * s = hb_itemGetStrUTF8(pParam, &pArg->hString, &nLen);
                *r1 = reinterpret_cast<HB_U32>(hb_strunshare(&pArg->hString, s, nLen));
                break;
             }
             case HB_DYN_ENC_UTF16:
             {
                HB_SIZE nLen;
-               const HB_WCHAR * s = hb_itemGetStrU16( pParam, HB_CDP_ENDIAN_NATIVE, &pArg->hString, &nLen );
+               const HB_WCHAR * s = hb_itemGetStrU16(pParam, HB_CDP_ENDIAN_NATIVE, &pArg->hString, &nLen);
                *r1 = reinterpret_cast<HB_U32>(hb_wstrunshare(&pArg->hString, s, nLen));
                break;
             }
@@ -771,21 +771,21 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
             case HB_DYN_ENC_UTF8:
                if( nLen == -1 )
                {
-                  hb_itemPutStrUTF8( pItem, reinterpret_cast<const char*>(value.t.n32) );
+                  hb_itemPutStrUTF8(pItem, reinterpret_cast<const char*>(value.t.n32));
                }
                else
                {
-                  hb_itemPutStrLenUTF8( pItem, reinterpret_cast<const char*>(value.t.n32), nLen );
+                  hb_itemPutStrLenUTF8(pItem, reinterpret_cast<const char*>(value.t.n32), nLen);
                }
                break;
             case HB_DYN_ENC_UTF16:
                if( nLen == -1 )
                {
-                  hb_itemPutStrU16( pItem, HB_CDP_ENDIAN_NATIVE, reinterpret_cast<const HB_WCHAR*>(value.t.n32) );
+                  hb_itemPutStrU16(pItem, HB_CDP_ENDIAN_NATIVE, reinterpret_cast<const HB_WCHAR*>(value.t.n32));
                }
                else
                {
-                  hb_itemPutStrLenU16( pItem, HB_CDP_ENDIAN_NATIVE, reinterpret_cast<const HB_WCHAR*>(value.t.n32), nLen );
+                  hb_itemPutStrLenU16(pItem, HB_CDP_ENDIAN_NATIVE, reinterpret_cast<const HB_WCHAR*>(value.t.n32), nLen);
                }
                break;
             default:
@@ -832,37 +832,37 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
 }
 
 #define HB_DYN_CTYPE_DECL( ret, abi, _type_ ) \
-   typedef ret ( abi * _type_##P00 )( void ); \
-   typedef ret ( abi * _type_##P01 )( HB_U32 ); \
-   typedef ret ( abi * _type_##P02 )( HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P03 )( HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P04 )( HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P05 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P06 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P07 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P08 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P09 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P10 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P11 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P12 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P13 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P14 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P15 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P16 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P17 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P18 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P19 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P20 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P21 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P22 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P23 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P24 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P25 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P26 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P27 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P28 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P29 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 ); \
-   typedef ret ( abi * _type_##P30 )( HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32 )
+   typedef ret ( abi * _type_##P00 )(void); \
+   typedef ret ( abi * _type_##P01 )(HB_U32); \
+   typedef ret ( abi * _type_##P02 )(HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P03 )(HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P04 )(HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P05 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P06 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P07 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P08 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P09 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P10 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P11 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P12 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P13 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P14 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P15 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P16 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P17 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P18 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P19 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P20 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P21 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P22 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P23 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P24 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P25 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P26 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P27 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P28 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P29 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret ( abi * _type_##P30 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32)
 
 #define HB_DYN_FUN_CALL( pcount, _ret_, _type_ ) \
    do \
@@ -1027,8 +1027,8 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
                PHB_ITEM pItem = hb_itemNew(nullptr);
 
                hb_itemParamStoreForward(static_cast<HB_USHORT>(iFirst + tmp),
-                  hb_u64ret( pItem, pArg[tmp].iType, pArg[tmp].iEncoding, pArg[tmp].value,
-                     ( pArg[tmp].iOptions & HB_DYC_OPT_NULLTERM ) != 0 ? -1 : static_cast<HB_ISIZ>(hb_parclen(iFirst + tmp)) ));
+                  hb_u64ret(pItem, pArg[tmp].iType, pArg[tmp].iEncoding, pArg[tmp].value,
+                     (pArg[tmp].iOptions & HB_DYC_OPT_NULLTERM) != 0 ? -1 : static_cast<HB_ISIZ>(hb_parclen(iFirst + tmp))));
 
                hb_itemRelease(pItem);
             }
@@ -1050,7 +1050,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
       }
       else
       {
-         hb_errRT_BASE( EG_LIMIT, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE(EG_LIMIT, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       }
    }
 #elif defined(HB_ARCH_32BIT)
@@ -1192,8 +1192,8 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
                PHB_ITEM pItem = hb_itemNew(nullptr);
 
                hb_itemParamStoreForward(static_cast<HB_USHORT>(iFirst + tmp),
-                  hb_u32ret( pItem, pArg[tmp].iType, pArg[tmp].iEncoding, pArg[tmp].value,
-                     ( pArg[tmp].iOptions & HB_DYC_OPT_NULLTERM ) != 0 ? -1 : static_cast<HB_ISIZ>(hb_parclen(iFirst + tmp)) ));
+                  hb_u32ret(pItem, pArg[tmp].iType, pArg[tmp].iEncoding, pArg[tmp].value,
+                     (pArg[tmp].iOptions & HB_DYC_OPT_NULLTERM) != 0 ? -1 : static_cast<HB_ISIZ>(hb_parclen(iFirst + tmp))));
 
                hb_itemRelease(pItem);
             }
@@ -1215,7 +1215,7 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
       }
       else
       {
-         hb_errRT_BASE( EG_LIMIT, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE(EG_LIMIT, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       }
    }
 #else

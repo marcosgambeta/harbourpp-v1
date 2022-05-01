@@ -53,7 +53,7 @@ void hb_random_block( void * data, HB_SIZE len )
 }
 
 /* Returns a double value between 0 and 1 */
-double hb_random_num_secure( void )
+double hb_random_num_secure(void)
 {
    return static_cast<double>(hb_arc4random()) / HB_U32_MAX;
 }

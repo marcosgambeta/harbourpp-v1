@@ -57,7 +57,7 @@
 
 /* Try to translate C errno into DOS error code */
 #if !defined(HB_OS_WIN)
-static HB_ERRCODE hb_errnoToDosError( int ErrCode )
+static HB_ERRCODE hb_errnoToDosError(int ErrCode)
 {
    switch( ErrCode )
    {
@@ -118,7 +118,7 @@ static HB_ERRCODE hb_errnoToDosError( int ErrCode )
 
 #else
 
-static HB_ERRCODE hb_WinToDosError( DWORD dwError )
+static HB_ERRCODE hb_WinToDosError(DWORD dwError)
 {
    #ifndef ERROR_PRIVILEGE_NOT_HELD
    #define ERROR_PRIVILEGE_NOT_HELD  1314L
@@ -140,7 +140,7 @@ static HB_ERRCODE hb_WinToDosError( DWORD dwError )
 #endif
 
 /* return FError() code */
-HB_ERRCODE hb_fsGetFError( void )
+HB_ERRCODE hb_fsGetFError(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsGetFError()" ) );
@@ -150,7 +150,7 @@ HB_ERRCODE hb_fsGetFError( void )
 }
 
 /* return DOS error code of last operation */
-HB_ERRCODE hb_fsError( void )
+HB_ERRCODE hb_fsError(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsError()" ) );
@@ -160,7 +160,7 @@ HB_ERRCODE hb_fsError( void )
 }
 
 /* return real error code of last operation */
-HB_ERRCODE hb_fsOsError( void )
+HB_ERRCODE hb_fsOsError(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsOsError()" ) );
@@ -170,7 +170,7 @@ HB_ERRCODE hb_fsOsError( void )
 }
 
 /* set FError() code */
-void hb_fsSetFError( HB_ERRCODE uiError )
+void hb_fsSetFError(HB_ERRCODE uiError)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsSetFError(%u)", uiError ) );
@@ -180,7 +180,7 @@ void hb_fsSetFError( HB_ERRCODE uiError )
 }
 
 /* set DOS error code for last operation */
-void  hb_fsSetError( HB_ERRCODE uiError )
+void  hb_fsSetError(HB_ERRCODE uiError)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsSetError(%u)", uiError ) );
@@ -194,7 +194,7 @@ void  hb_fsSetError( HB_ERRCODE uiError )
 }
 
 /* set error code for last operation */
-void  hb_fsSetIOError( HB_BOOL fResult, HB_USHORT uiOperation )
+void  hb_fsSetIOError(HB_BOOL fResult, HB_USHORT uiOperation)
 {
    HB_ERRCODE uiOsErrorLast, uiErrorLast;
    PHB_IOERRORS pIOErrors;
@@ -211,11 +211,11 @@ void  hb_fsSetIOError( HB_BOOL fResult, HB_USHORT uiOperation )
 #if defined(HB_OS_WIN)
       DWORD dwLastError = GetLastError();
       uiOsErrorLast = static_cast<HB_ERRCODE>(dwLastError);
-      uiErrorLast = hb_WinToDosError( dwLastError );
+      uiErrorLast = hb_WinToDosError(dwLastError);
 #else
       int iErrCode = errno;
       uiOsErrorLast = iErrCode;
-      uiErrorLast = hb_errnoToDosError( iErrCode );
+      uiErrorLast = hb_errnoToDosError(iErrCode);
 #endif
    }
 

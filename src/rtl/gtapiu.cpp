@@ -46,7 +46,7 @@
 
 #include "hbapigt.h"
 
-void hb_gtWCreate( HB_GT_RECT * rect, HB_GT_WND ** wnd )
+void hb_gtWCreate(HB_GT_RECT * rect, HB_GT_WND ** wnd)
 {
    /* TODO: */
 
@@ -54,14 +54,14 @@ void hb_gtWCreate( HB_GT_RECT * rect, HB_GT_WND ** wnd )
    HB_SYMBOL_UNUSED(wnd);
 }
 
-void hb_gtWDestroy( HB_GT_WND * wnd )
+void hb_gtWDestroy(HB_GT_WND * wnd)
 {
    /* TODO: */
 
    HB_SYMBOL_UNUSED(wnd);
 }
 
-HB_BOOL hb_gtWFlash( void )
+HB_BOOL hb_gtWFlash(void)
 {
    /* TODO: */
 
@@ -82,7 +82,7 @@ void hb_gtWCurrent( HB_GT_WND * wnd )
    HB_SYMBOL_UNUSED(wnd);
 }
 
-void hb_gtWPos( HB_GT_WND * wnd, HB_GT_RECT * rect )
+void hb_gtWPos(HB_GT_WND * wnd, HB_GT_RECT * rect)
 {
    /* TODO: */
 
@@ -110,7 +110,7 @@ HB_ERRCODE hb_gtSLR( HB_GT_SLR * pSLR ) /* System-Level Request */
    return HB_FAILURE;
 }
 
-HB_ERRCODE hb_gtModalRead( void * dummy )
+HB_ERRCODE hb_gtModalRead(void * dummy)
 {
    /* TODO: */
 
@@ -119,7 +119,7 @@ HB_ERRCODE hb_gtModalRead( void * dummy )
    return HB_FAILURE;
 }
 
-HB_ERRCODE hb_gtFlushCursor( void )
+HB_ERRCODE hb_gtFlushCursor(void)
 {
    /* TODO: */
 

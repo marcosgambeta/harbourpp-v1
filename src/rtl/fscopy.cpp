@@ -54,22 +54,22 @@ HB_BOOL hb_fsCopy( const char * pszSource, const char * pszDest )
    HB_BOOL fResult = HB_FALSE;
    PHB_FILE pSrcFile;
 
-   if( ( pSrcFile = hb_fileExtOpen( pszSource, nullptr, FO_READ | FO_SHARED | FXO_SHARELOCK, nullptr, nullptr ) ) != nullptr )
+   if( (pSrcFile = hb_fileExtOpen(pszSource, nullptr, FO_READ | FO_SHARED | FXO_SHARELOCK, nullptr, nullptr)) != nullptr )
    {
       PHB_FILE pDstFile;
       HB_ERRCODE errCode;
 
-      if( ( pDstFile = hb_fileExtOpen( pszDest, nullptr, FXO_TRUNCATE | FO_READWRITE | FO_EXCLUSIVE | FXO_SHARELOCK, nullptr, nullptr ) ) != nullptr )
+      if( (pDstFile = hb_fileExtOpen(pszDest, nullptr, FXO_TRUNCATE | FO_READWRITE | FO_EXCLUSIVE | FXO_SHARELOCK, nullptr, nullptr)) != nullptr )
       {
          void * pbyBuffer = hb_xgrab(HB_FSCOPY_BUFFERSIZE);
 
          for( ;; )
          {
             HB_SIZE nBytesRead;
-            if( ( nBytesRead = hb_fileRead( pSrcFile, pbyBuffer, HB_FSCOPY_BUFFERSIZE, -1 ) ) > 0 &&
+            if( (nBytesRead = hb_fileRead(pSrcFile, pbyBuffer, HB_FSCOPY_BUFFERSIZE, -1)) > 0 &&
                 nBytesRead != static_cast<HB_SIZE>(FS_ERROR) )
             {
-               if( nBytesRead != hb_fileWrite( pDstFile, pbyBuffer, nBytesRead, -1 ) )
+               if( nBytesRead != hb_fileWrite(pDstFile, pbyBuffer, nBytesRead, -1) )
                {
                   errCode = hb_fsError();
                   break;
@@ -85,22 +85,22 @@ HB_BOOL hb_fsCopy( const char * pszSource, const char * pszDest )
 
          hb_xfree(pbyBuffer);
 
-         hb_fileClose( pDstFile );
+         hb_fileClose(pDstFile);
       }
       else
       {
          errCode = hb_fsError();
       }
       
-      hb_fileClose( pSrcFile );
+      hb_fileClose(pSrcFile);
 
       if( fResult )
       {
          HB_FATTR ulAttr;
 
-         if( hb_fileAttrGet( pszSource, &ulAttr ) )
+         if( hb_fileAttrGet(pszSource, &ulAttr) )
          {
-            hb_fileAttrSet( pszDest, ulAttr );
+            hb_fileAttrSet(pszDest, ulAttr);
          }   
       }
       hb_fsSetError(errCode);

@@ -64,21 +64,21 @@ HB_FUNC( HB_VERSION )
 {
    switch( hb_parni(1) )
    {
-      case HB_VERSION_URL_BASE:       hb_retc_const( "https://github.com/harbour/core/" ); break;
+      case HB_VERSION_URL_BASE:       hb_retc_const("https://github.com/harbour/core/"); break;
       case HB_VERSION_URL_SOURCE:     hb_retc_null(); break;
       case HB_VERSION_HARBOUR:        hb_retc_buffer(hb_verHarbour()); break;
       case HB_VERSION_COMPILER:       hb_retc_buffer(hb_verCompiler()); break;
       case HB_VERSION_MAJOR:          hb_retni(HB_VER_MAJOR); break;
       case HB_VERSION_MINOR:          hb_retni(HB_VER_MINOR); break;
       case HB_VERSION_RELEASE:        hb_retni(HB_VER_RELEASE); break;
-      case HB_VERSION_STATUS:         hb_retc_const( HB_VER_STATUS ); break;
+      case HB_VERSION_STATUS:         hb_retc_const(HB_VER_STATUS); break;
       case HB_VERSION_REVISION:       hb_retni(hb_verRevision()); break;
-      case HB_VERSION_CHANGELOG_LAST: hb_retc_const( hb_verChangeLogLastEntry() ); break;
-      case HB_VERSION_CHANGELOG_ID:   hb_retc_const( hb_verChangeLogID() ); break;
+      case HB_VERSION_CHANGELOG_LAST: hb_retc_const(hb_verChangeLogLastEntry()); break;
+      case HB_VERSION_CHANGELOG_ID:   hb_retc_const(hb_verChangeLogID()); break;
       case HB_VERSION_PCODE_VER:      hb_retni(HB_PCODE_VER); break;
       case HB_VERSION_PCODE_VER_STR:  hb_retc_buffer(hb_verPCode()); break;
-      case HB_VERSION_BUILD_PLAT:     hb_retc_const( hb_verHB_PLAT() ); break;
-      case HB_VERSION_BUILD_COMP:     hb_retc_const( hb_verHB_COMP() ); break;
+      case HB_VERSION_BUILD_PLAT:     hb_retc_const(hb_verHB_PLAT()); break;
+      case HB_VERSION_BUILD_COMP:     hb_retc_const(hb_verHB_COMP()); break;
       case HB_VERSION_BUILD_DATE_STR: hb_retc_buffer(hb_verBuildDate()); break;
       case HB_VERSION_BUILD_DATE:
       {
@@ -123,9 +123,9 @@ HB_FUNC( HB_VERSION )
          break;
       }
       case HB_VERSION_BUILD_TIMESTAMP_UTC: hb_rettdt( 0, 0 ); break;
-      case HB_VERSION_FLAG_PRG:       hb_retc_const( hb_verFlagsPRG() ); break;
-      case HB_VERSION_FLAG_C:         hb_retc_const( hb_verFlagsC() ); break;
-      case HB_VERSION_FLAG_LINKER:    hb_retc_const( hb_verFlagsL() ); break;
+      case HB_VERSION_FLAG_PRG:       hb_retc_const(hb_verFlagsPRG()); break;
+      case HB_VERSION_FLAG_C:         hb_retc_const(hb_verFlagsC()); break;
+      case HB_VERSION_FLAG_LINKER:    hb_retc_const(hb_verFlagsL()); break;
       case HB_VERSION_OPTIONS:        hb_retc_null(); break;
       case HB_VERSION_BITWIDTH:       hb_retni(static_cast<int>(sizeof(void*)) * 8); break;
       case HB_VERSION_MT:             hb_retl(hb_vmIsMt()); break;
@@ -159,14 +159,14 @@ HB_FUNC( HB_VERSION )
 
       case HB_VERSION_PLATFORM:
       #if defined(HB_OS_WIN)
-         hb_retc_const( "WIN" );
+         hb_retc_const("WIN");
       #else
-         hb_retc_const( hb_verPlatformMacro() );
+         hb_retc_const(hb_verPlatformMacro());
       #endif
          break;
 
       case HB_VERSION_CPU:
-         hb_retc_const( hb_verCPU() );
+         hb_retc_const(hb_verCPU());
          break;
 
       case HB_VERSION_ENDIANNESS:
@@ -185,7 +185,7 @@ HB_FUNC( HB_VERSION )
 
 HB_FUNC( HB_OSCPU )
 {
-   hb_retc_const( hb_verHostCPU() );
+   hb_retc_const(hb_verHostCPU());
 }
 
 HB_FUNC( HB_OSIS64BIT )

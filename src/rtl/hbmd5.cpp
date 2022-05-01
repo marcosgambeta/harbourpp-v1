@@ -54,7 +54,7 @@
 
    PRG functions:
 
-   hb_MD5( <cString> ) --> <cMD5>
+   hb_MD5(<cString>) --> <cMD5>
          Calculates RFC 1321 MD5 digest (128-bit checksum)
       Parameters:
          <cString>   - string variable to calculate MD5
@@ -62,7 +62,7 @@
          ASCII hex MD5 digest as 32-byte string
          empty string on error
 
-   hb_MD5File( <cFileName> ) --> <cMD5>
+   hb_MD5File(<cFileName>) --> <cMD5>
          Calculates RFC 1321 MD5 digest (128-bit checksum) of a file contents
          (file size is limited by OS limits only)
       Parameters:
@@ -143,74 +143,74 @@ static void hb_md5go( MD5_BUF * md5 )
    /* fill buffer */
    for( i = 0, ptr = md5->buf; i < 16; i++, ptr += 4 )
    {
-      X[i] = HB_GET_LE_UINT32( ptr );
+      X[i] = HB_GET_LE_UINT32(ptr);
    }
 
    /* process buffer */
-   PF1( 0, 1, 2, 3,  0,  7,  0 );
-   PF1( 3, 0, 1, 2,  1, 12,  1 );
-   PF1( 2, 3, 0, 1,  2, 17,  2 );
-   PF1( 1, 2, 3, 0,  3, 22,  3 );
-   PF1( 0, 1, 2, 3,  4,  7,  4 );
-   PF1( 3, 0, 1, 2,  5, 12,  5 );
-   PF1( 2, 3, 0, 1,  6, 17,  6 );
-   PF1( 1, 2, 3, 0,  7, 22,  7 );
-   PF1( 0, 1, 2, 3,  8,  7,  8 );
-   PF1( 3, 0, 1, 2,  9, 12,  9 );
-   PF1( 2, 3, 0, 1, 10, 17, 10 );
-   PF1( 1, 2, 3, 0, 11, 22, 11 );
-   PF1( 0, 1, 2, 3, 12,  7, 12 );
-   PF1( 3, 0, 1, 2, 13, 12, 13 );
-   PF1( 2, 3, 0, 1, 14, 17, 14 );
-   PF1( 1, 2, 3, 0, 15, 22, 15 );
-   PF2( 0, 1, 2, 3,  1,  5, 16 );
-   PF2( 3, 0, 1, 2,  6,  9, 17 );
-   PF2( 2, 3, 0, 1, 11, 14, 18 );
-   PF2( 1, 2, 3, 0,  0, 20, 19 );
-   PF2( 0, 1, 2, 3,  5,  5, 20 );
-   PF2( 3, 0, 1, 2, 10,  9, 21 );
-   PF2( 2, 3, 0, 1, 15, 14, 22 );
-   PF2( 1, 2, 3, 0,  4, 20, 23 );
-   PF2( 0, 1, 2, 3,  9,  5, 24 );
-   PF2( 3, 0, 1, 2, 14,  9, 25 );
-   PF2( 2, 3, 0, 1,  3, 14, 26 );
-   PF2( 1, 2, 3, 0,  8, 20, 27 );
-   PF2( 0, 1, 2, 3, 13,  5, 28 );
-   PF2( 3, 0, 1, 2,  2,  9, 29 );
-   PF2( 2, 3, 0, 1,  7, 14, 30 );
-   PF2( 1, 2, 3, 0, 12, 20, 31 );
-   PF3( 0, 1, 2, 3,  5,  4, 32 );
-   PF3( 3, 0, 1, 2,  8, 11, 33 );
-   PF3( 2, 3, 0, 1, 11, 16, 34 );
-   PF3( 1, 2, 3, 0, 14, 23, 35 );
-   PF3( 0, 1, 2, 3,  1,  4, 36 );
-   PF3( 3, 0, 1, 2,  4, 11, 37 );
-   PF3( 2, 3, 0, 1,  7, 16, 38 );
-   PF3( 1, 2, 3, 0, 10, 23, 39 );
-   PF3( 0, 1, 2, 3, 13,  4, 40 );
-   PF3( 3, 0, 1, 2,  0, 11, 41 );
-   PF3( 2, 3, 0, 1,  3, 16, 42 );
-   PF3( 1, 2, 3, 0,  6, 23, 43 );
-   PF3( 0, 1, 2, 3,  9,  4, 44 );
-   PF3( 3, 0, 1, 2, 12, 11, 45 );
-   PF3( 2, 3, 0, 1, 15, 16, 46 );
-   PF3( 1, 2, 3, 0,  2, 23, 47 );
-   PF4( 0, 1, 2, 3,  0,  6, 48 );
-   PF4( 3, 0, 1, 2,  7, 10, 49 );
-   PF4( 2, 3, 0, 1, 14, 15, 50 );
-   PF4( 1, 2, 3, 0,  5, 21, 51 );
-   PF4( 0, 1, 2, 3, 12,  6, 52 );
-   PF4( 3, 0, 1, 2,  3, 10, 53 );
-   PF4( 2, 3, 0, 1, 10, 15, 54 );
-   PF4( 1, 2, 3, 0,  1, 21, 55 );
-   PF4( 0, 1, 2, 3,  8,  6, 56 );
-   PF4( 3, 0, 1, 2, 15, 10, 57 );
-   PF4( 2, 3, 0, 1,  6, 15, 58 );
-   PF4( 1, 2, 3, 0, 13, 21, 59 );
-   PF4( 0, 1, 2, 3,  4,  6, 60 );
-   PF4( 3, 0, 1, 2, 11, 10, 61 );
-   PF4( 2, 3, 0, 1,  2, 15, 62 );
-   PF4( 1, 2, 3, 0,  9, 21, 63 );
+   PF1(0, 1, 2, 3,  0,  7,  0);
+   PF1(3, 0, 1, 2,  1, 12,  1);
+   PF1(2, 3, 0, 1,  2, 17,  2);
+   PF1(1, 2, 3, 0,  3, 22,  3);
+   PF1(0, 1, 2, 3,  4,  7,  4);
+   PF1(3, 0, 1, 2,  5, 12,  5);
+   PF1(2, 3, 0, 1,  6, 17,  6);
+   PF1(1, 2, 3, 0,  7, 22,  7);
+   PF1(0, 1, 2, 3,  8,  7,  8);
+   PF1(3, 0, 1, 2,  9, 12,  9);
+   PF1(2, 3, 0, 1, 10, 17, 10);
+   PF1(1, 2, 3, 0, 11, 22, 11);
+   PF1(0, 1, 2, 3, 12,  7, 12);
+   PF1(3, 0, 1, 2, 13, 12, 13);
+   PF1(2, 3, 0, 1, 14, 17, 14);
+   PF1(1, 2, 3, 0, 15, 22, 15);
+   PF2(0, 1, 2, 3,  1,  5, 16);
+   PF2(3, 0, 1, 2,  6,  9, 17);
+   PF2(2, 3, 0, 1, 11, 14, 18);
+   PF2(1, 2, 3, 0,  0, 20, 19);
+   PF2(0, 1, 2, 3,  5,  5, 20);
+   PF2(3, 0, 1, 2, 10,  9, 21);
+   PF2(2, 3, 0, 1, 15, 14, 22);
+   PF2(1, 2, 3, 0,  4, 20, 23);
+   PF2(0, 1, 2, 3,  9,  5, 24);
+   PF2(3, 0, 1, 2, 14,  9, 25);
+   PF2(2, 3, 0, 1,  3, 14, 26);
+   PF2(1, 2, 3, 0,  8, 20, 27);
+   PF2(0, 1, 2, 3, 13,  5, 28);
+   PF2(3, 0, 1, 2,  2,  9, 29);
+   PF2(2, 3, 0, 1,  7, 14, 30);
+   PF2(1, 2, 3, 0, 12, 20, 31);
+   PF3(0, 1, 2, 3,  5,  4, 32);
+   PF3(3, 0, 1, 2,  8, 11, 33);
+   PF3(2, 3, 0, 1, 11, 16, 34);
+   PF3(1, 2, 3, 0, 14, 23, 35);
+   PF3(0, 1, 2, 3,  1,  4, 36);
+   PF3(3, 0, 1, 2,  4, 11, 37);
+   PF3(2, 3, 0, 1,  7, 16, 38);
+   PF3(1, 2, 3, 0, 10, 23, 39);
+   PF3(0, 1, 2, 3, 13,  4, 40);
+   PF3(3, 0, 1, 2,  0, 11, 41);
+   PF3(2, 3, 0, 1,  3, 16, 42);
+   PF3(1, 2, 3, 0,  6, 23, 43);
+   PF3(0, 1, 2, 3,  9,  4, 44);
+   PF3(3, 0, 1, 2, 12, 11, 45);
+   PF3(2, 3, 0, 1, 15, 16, 46);
+   PF3(1, 2, 3, 0,  2, 23, 47);
+   PF4(0, 1, 2, 3,  0,  6, 48);
+   PF4(3, 0, 1, 2,  7, 10, 49);
+   PF4(2, 3, 0, 1, 14, 15, 50);
+   PF4(1, 2, 3, 0,  5, 21, 51);
+   PF4(0, 1, 2, 3, 12,  6, 52);
+   PF4(3, 0, 1, 2,  3, 10, 53);
+   PF4(2, 3, 0, 1, 10, 15, 54);
+   PF4(1, 2, 3, 0,  1, 21, 55);
+   PF4(0, 1, 2, 3,  8,  6, 56);
+   PF4(3, 0, 1, 2, 15, 10, 57);
+   PF4(2, 3, 0, 1,  6, 15, 58);
+   PF4(1, 2, 3, 0, 13, 21, 59);
+   PF4(0, 1, 2, 3,  4,  6, 60);
+   PF4(3, 0, 1, 2, 11, 10, 61);
+   PF4(2, 3, 0, 1,  2, 15, 62);
+   PF4(1, 2, 3, 0,  9, 21, 63);
 
    /* Update accumulators */
    md5->accum[0] += A[0];
@@ -228,11 +228,11 @@ static void hb_md5accinit( HB_U32 accum[] )
    accum[3] = 0x10325476;
 }
 
-static void hb_md5val( HB_U32 accum[], char * md5val )
+static void hb_md5val(HB_U32 accum[], char * md5val)
 {
-   int i, n;
+   int n;
 
-   for( i = 0; i < 4; i++ )
+   for( int i = 0; i < 4; i++ )
    {
       for( n = 0; n < 4; n++ )
       {
@@ -303,12 +303,12 @@ static void hb_md5_count( const void * data, HB_SIZE nLen, char * digest, const 
       digest   - raw (unformatted) MD5 digest buffer
                  (at least 16 bytes long)
  */
-void hb_md5( const void * data, HB_SIZE nLen, char * digest )
+void hb_md5(const void * data, HB_SIZE nLen, char * digest)
 {
-   hb_md5_count( data, nLen, digest, nullptr );
+   hb_md5_count(data, nLen, digest, nullptr);
 }
 
-void hb_hmac_md5( const void * key, HB_SIZE nKeyLen, const void * message, HB_SIZE nMsgLen, char * digest )
+void hb_hmac_md5(const void * key, HB_SIZE nKeyLen, const void * message, HB_SIZE nMsgLen, char * digest)
 {
    char init_block[64];
    int i;
@@ -320,7 +320,7 @@ void hb_hmac_md5( const void * key, HB_SIZE nKeyLen, const void * message, HB_SI
    }
    else
    {
-      hb_md5( key, nKeyLen, init_block );
+      hb_md5(key, nKeyLen, init_block);
    }
 
    for( i = 0; i < static_cast<int>(sizeof(init_block)); ++i )
@@ -344,9 +344,9 @@ void hb_hmac_md5( const void * key, HB_SIZE nKeyLen, const void * message, HB_SI
       digest   - raw (unformatted) MD5 digest buffer
                  (at least 16 bytes long)
  */
-HB_BOOL hb_md5file( const char * pszFileName, char * digest )
+HB_BOOL hb_md5file(const char * pszFileName, char * digest)
 {
-   PHB_FILE pFile = hb_fileExtOpen( pszFileName, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK | FXO_NOSEEKPOS, nullptr, nullptr );
+   PHB_FILE pFile = hb_fileExtOpen(pszFileName, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK | FXO_NOSEEKPOS, nullptr, nullptr);
    if( pFile != nullptr )
    {
       MD5_BUF md5;
@@ -357,7 +357,7 @@ HB_BOOL hb_md5file( const char * pszFileName, char * digest )
       HB_BYTE * readbuf = static_cast<HB_BYTE*>(hb_xgrab(MAX_FBUF));
 
       hb_md5accinit( md5.accum );
-      n = hb_fileRead( pFile, readbuf, MAX_FBUF, -1 );
+      n = hb_fileRead(pFile, readbuf, MAX_FBUF, -1);
       if( n == static_cast<HB_SIZE>(FS_ERROR) )
       {
          n = 0;
@@ -370,14 +370,14 @@ HB_BOOL hb_md5file( const char * pszFileName, char * digest )
             memcpy(md5.buf, readbuf + ( i << 6 ), 64);
             hb_md5go( &md5 );
          }
-         n = hb_fileRead( pFile, readbuf, MAX_FBUF, -1 );
+         n = hb_fileRead(pFile, readbuf, MAX_FBUF, -1);
          if( n == static_cast<HB_SIZE>(FS_ERROR) )
          {
             n = 0;
          }
          flen += n;
       }
-      hb_fileClose( pFile );
+      hb_fileClose(pFile);
       i = 0;
       while( n > 64 )
       {
@@ -425,7 +425,7 @@ HB_FUNC( HB_MD5 )  /* Considered insecure. Use SHA256 or higher instead. */
       HB_SIZE nLen = hb_parclen(1);
       char dststr[16];
 
-      hb_md5( pszStr, nLen, dststr );
+      hb_md5(pszStr, nLen, dststr);
 
       if( !hb_parl(2) )
       {
@@ -459,7 +459,7 @@ HB_FUNC( HB_MD5FILE )  /* Considered insecure. Use SHA256 or higher instead. */
    const char * pszFileName = hb_parc(1);
    char dststr[16];
 
-   if( pszFileName && hb_md5file( pszFileName, dststr ) )
+   if( pszFileName && hb_md5file(pszFileName, dststr) )
    {
       if( !hb_parl(2) )
       {
@@ -482,7 +482,7 @@ HB_FUNC( HB_HMAC_MD5 )
 {
    char dststr[16];
 
-   hb_hmac_md5( hb_parcx(2), hb_parclen(2), hb_parcx(1), hb_parclen(1), dststr );
+   hb_hmac_md5(hb_parcx(2), hb_parclen(2), hb_parcx(1), hb_parclen(1), dststr);
 
    if( !hb_parl(3) )
    {

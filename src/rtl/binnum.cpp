@@ -59,7 +59,7 @@ HB_FUNC( BIN2W )
       if( nLen )
       {
          const char * pszString = hb_itemGetCPtr(pItem);
-         uiResult = HB_GET_LE_INT16( pszString );
+         uiResult = HB_GET_LE_INT16(pszString);
       }
    }
    hb_retnint(uiResult);
@@ -76,7 +76,7 @@ HB_FUNC( BIN2I )
       if( nLen )
       {
          const char * pszString = hb_itemGetCPtr(pItem);
-         iResult = HB_GET_LE_UINT16( pszString );
+         iResult = HB_GET_LE_UINT16(pszString);
       }
    }
    hb_retnint(iResult);
@@ -95,11 +95,11 @@ HB_FUNC( BIN2L )
          const char * pszString = hb_itemGetCPtr(pItem);
          if( nLen >= 3 )
          {
-            iResult = HB_GET_LE_INT32( pszString );
+            iResult = HB_GET_LE_INT32(pszString);
          }
          else
          {
-            iResult = HB_GET_LE_UINT16( pszString );
+            iResult = HB_GET_LE_UINT16(pszString);
          }
       }
    }

@@ -48,7 +48,7 @@
 #include "hbapiitm.h"
 #include "hbbfish.h"
 
-static const HB_BLOWFISH * hb_bf_keyparam( void )
+static const HB_BLOWFISH * hb_bf_keyparam(void)
 {
    if( hb_parclen(1) == sizeof(HB_BLOWFISH) )
    {
@@ -110,8 +110,8 @@ HB_FUNC( HB_BLOWFISHENCRYPT )
          for( nLen = 0; nLen < nSize; nLen += 8 )
          {
             HB_U32 xl, xr;
-            xl = HB_GET_BE_UINT32( &pszData[nLen] );
-            xr = HB_GET_BE_UINT32( &pszData[nLen + 4] );
+            xl = HB_GET_BE_UINT32(&pszData[nLen]);
+            xr = HB_GET_BE_UINT32(&pszData[nLen + 4]);
             hb_blowfishEncrypt( bf, &xl, &xr );
             HB_PUT_BE_UINT32(&pszData[nLen], xl);
             HB_PUT_BE_UINT32(&pszData[nLen + 4], xr);
@@ -152,8 +152,8 @@ HB_FUNC( HB_BLOWFISHDECRYPT )
          for( nLen = 0; nLen < nSize; nLen += 8 )
          {
             HB_U32 xl, xr;
-            xl = HB_GET_BE_UINT32( &pszSource[nLen] );
-            xr = HB_GET_BE_UINT32( &pszSource[nLen + 4] );
+            xl = HB_GET_BE_UINT32(&pszSource[nLen]);
+            xr = HB_GET_BE_UINT32(&pszSource[nLen + 4]);
             hb_blowfishDecrypt( bf, &xl, &xr );
             HB_PUT_BE_UINT32(&pszData[nLen], xl);
             HB_PUT_BE_UINT32(&pszData[nLen + 4], xr);

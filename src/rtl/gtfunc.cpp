@@ -85,13 +85,13 @@ HB_FUNC( HB_SETTERMCP )
    {
       if( hb_pcount() == 2 && HB_ISLOG(2) )
       {
-         hb_gtSetDispCP( hb_parc(1), nullptr, hb_parl(2) );
-         hb_gtSetKeyCP( hb_parc(1), nullptr );
+         hb_gtSetDispCP(hb_parc(1), nullptr, hb_parl(2));
+         hb_gtSetKeyCP(hb_parc(1), nullptr);
       }
       else
       {
-         hb_gtSetDispCP( hb_parc(1), hb_parc(2), hb_parl(3) );
-         hb_gtSetKeyCP( hb_parc(1), hb_parc(2) );
+         hb_gtSetDispCP(hb_parc(1), hb_parc(2), hb_parl(3));
+         hb_gtSetKeyCP(hb_parc(1), hb_parc(2));
       }
    }
    else if( !( hb_pcount() >= 1 && HB_ISNIL(1) ) )
@@ -110,7 +110,7 @@ HB_FUNC( HB_GTINFO )
       gtInfo.pNewVal2 = hb_param(3, Harbour::Item::ANY);
       gtInfo.pResult  = nullptr;
 
-      hb_gtInfo( hb_parni(1), &gtInfo );
+      hb_gtInfo(hb_parni(1), &gtInfo);
       if( gtInfo.pResult )
       {
          hb_itemReturnRelease(gtInfo.pResult);
@@ -124,7 +124,7 @@ HB_FUNC( HB_GTINFO )
 
 HB_FUNC( HB_GTVERSION )
 {
-   hb_retc_const( hb_gtVersion( hb_parni(1) ) );
+   hb_retc_const(hb_gtVersion(hb_parni(1)));
 }
 
 HB_FUNC( HB_GTALERT )

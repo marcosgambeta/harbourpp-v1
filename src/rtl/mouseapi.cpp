@@ -54,7 +54,7 @@
  */
 /* C callable interface */
 
-HB_BOOL hb_mouseIsPresent( void )
+HB_BOOL hb_mouseIsPresent(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseIsPresent()" ) );
@@ -72,7 +72,7 @@ HB_BOOL hb_mouseIsPresent( void )
    return fPresent;
 }
 
-HB_BOOL hb_mouseGetCursor( void )
+HB_BOOL hb_mouseGetCursor(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseGetCursor()" ) );
@@ -106,7 +106,7 @@ void hb_mouseSetCursor( HB_BOOL fVisible )
    }
 }
 
-int hb_mouseCol( void )
+int hb_mouseCol(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseCol()" ) );
@@ -124,7 +124,7 @@ int hb_mouseCol( void )
    return iCol;
 }
 
-int hb_mouseRow( void )
+int hb_mouseRow(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseRow()" ) );
@@ -142,7 +142,7 @@ int hb_mouseRow( void )
    return iRow;
 }
 
-void hb_mouseGetPos( int * piRow, int * piCol )
+void hb_mouseGetPos(int * piRow, int * piCol)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseGetPos(%p, %p)", static_cast<void*>(piRow), static_cast<void*>(piCol) ) );
@@ -158,7 +158,7 @@ void hb_mouseGetPos( int * piRow, int * piCol )
    }
 }
 
-void hb_mouseSetPos( int iRow, int iCol )
+void hb_mouseSetPos(int iRow, int iCol)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseSetPos(%d, %d)", iRow, iCol ) );
@@ -206,7 +206,7 @@ void hb_mouseGetBounds( int * piTop, int * piLeft, int * piBottom, int * piRight
    }
 }
 
-int hb_mouseStorageSize( void )
+int hb_mouseStorageSize(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseStorageSize()" ) );
@@ -256,7 +256,7 @@ void hb_mouseRestoreState( const void * pBuffer )
    }
 }
 
-int hb_mouseGetDoubleClickSpeed( void )
+int hb_mouseGetDoubleClickSpeed(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseGetDoubleClickSpeed()" ) );
@@ -290,7 +290,7 @@ void hb_mouseSetDoubleClickSpeed( int iSpeed )
    }
 }
 
-int hb_mouseCountButton( void )
+int hb_mouseCountButton(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_mouseCountButton()" ) );

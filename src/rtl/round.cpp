@@ -87,7 +87,7 @@ HB_FUNC( ROUND )
        * applications may be important due to different formatting rules
        * when SET FIXED is ON [druzus]
        */
-      hb_retndlen( hb_numRound( hb_itemGetND(pNumber), iDec ), 0, HB_MAX(iDec, 0) );
+      hb_retndlen(hb_numRound(hb_itemGetND(pNumber), iDec), 0, HB_MAX(iDec, 0));
 #else
       if( iDec == 0 && HB_IS_NUMINT(pNumber) )
       {

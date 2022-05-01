@@ -49,7 +49,7 @@
 #include "hbapiitm.h"
 #include "hbapierr.h"
 
-static void hb_regfree( PHB_REGEX pRegEx )
+static void hb_regfree(PHB_REGEX pRegEx)
 {
    HB_SYMBOL_UNUSED(pRegEx);
 }
@@ -112,14 +112,14 @@ PHB_REGEX hb_regexCompile( const char * szRegEx, HB_SIZE nLen, int iFlags )
 
    if( ( s_reg_comp )( pRegEx, szRegEx ) != 0 )
    {
-      hb_gcFree( pRegEx );
+      hb_gcFree(pRegEx);
       pRegEx = nullptr;
    }
 
    return pRegEx;
 }
 
-PHB_REGEX hb_regexGet( PHB_ITEM pRegExItm, int iFlags )
+PHB_REGEX hb_regexGet(PHB_ITEM pRegExItm, int iFlags)
 {
    PHB_REGEX pRegEx = nullptr;
    HB_BOOL fArgError = HB_TRUE;
@@ -158,12 +158,12 @@ PHB_REGEX hb_regexGet( PHB_ITEM pRegExItm, int iFlags )
    return pRegEx;
 }
 
-void hb_regexFree( PHB_REGEX pRegEx )
+void hb_regexFree(PHB_REGEX pRegEx)
 {
    if( pRegEx && pRegEx->fFree )
    {
       ( s_reg_free )( pRegEx );
-      hb_gcFree( pRegEx );
+      hb_gcFree(pRegEx);
    }
 }
 

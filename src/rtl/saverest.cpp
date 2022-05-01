@@ -104,7 +104,7 @@ HB_FUNC( SAVESCREEN )
    hb_getScreenRange( &iTop, &iBottom, fNoCheck, true );
    hb_getScreenRange( &iLeft, &iRight, fNoCheck, false );
 
-   hb_gtRectSize( iTop, iLeft, iBottom, iRight, &nSize );
+   hb_gtRectSize(iTop, iLeft, iBottom, iRight, &nSize);
    pBuffer = hb_xgrab(nSize + 1);
 
    hb_gtSave( iTop, iLeft, iBottom, iRight, pBuffer );
@@ -125,7 +125,7 @@ HB_FUNC( RESTSCREEN )
       hb_getScreenRange( &iLeft, &iRight, fNoCheck, false );
 
       nLen = hb_parclen(5);
-      hb_gtRectSize( iTop, iLeft, iBottom, iRight, &nSize );
+      hb_gtRectSize(iTop, iLeft, iBottom, iRight, &nSize);
       if( nLen < nSize )
       {
          pBuffer = hb_xgrab(nSize);

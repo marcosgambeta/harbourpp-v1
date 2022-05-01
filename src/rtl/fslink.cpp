@@ -74,7 +74,7 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
 
          if( !s_pCreateHardLink )
          {
-            HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
+            HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
             if( hModule )
             {
                s_pCreateHardLink = reinterpret_cast<_HB_CREATEHARDLINK>(HB_WINAPI_GETPROCADDRESST( hModule, "CreateHardLink" ));
@@ -89,7 +89,7 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
             lpFileName = HB_FSNAMECONV(pszNewFile, &lpFileNameFree);
             lpExistingFileName = HB_FSNAMECONV(pszExisting, &lpExistingFileNameFree);
 
-            fResult = s_pCreateHardLink( lpFileName, lpExistingFileName, nullptr ) != 0;
+            fResult = s_pCreateHardLink(lpFileName, lpExistingFileName, nullptr) != 0;
             hb_fsSetIOError(fResult, 0);
 
             if( lpFileNameFree )
@@ -165,7 +165,7 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
 
          if( !s_pCreateSymbolicLink )
          {
-            HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
+            HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
             if( hModule )
             {
                s_pCreateSymbolicLink = reinterpret_cast<_HB_CREATESYMBOLICLINK>(HB_WINAPI_GETPROCADDRESST( hModule, "CreateSymbolicLink" ));
@@ -242,7 +242,7 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
 }
 
 /* NOTE: Caller must free the pointer, if not nullptr */
-char * hb_fsLinkRead( const char * pszFile )
+char * hb_fsLinkRead(const char * pszFile)
 {
    char * pszLink = nullptr;
 
@@ -277,7 +277,7 @@ char * hb_fsLinkRead( const char * pszFile )
 
          if( !s_pGetFinalPathNameByHandle )
          {
-            HMODULE hModule = GetModuleHandle( TEXT( "kernel32.dll" ) );
+            HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
             if( hModule )
             {
                s_pGetFinalPathNameByHandle = reinterpret_cast<_HB_GETFINALPATHNAMEBYHANDLE>(HB_WINAPI_GETPROCADDRESST( hModule, "GetFinalPathNameByHandle" ));
@@ -297,13 +297,13 @@ char * hb_fsLinkRead( const char * pszFile )
             dwAttr = GetFileAttributes( lpFileName );
             fDir = ( dwAttr != INVALID_FILE_ATTRIBUTES ) && ( dwAttr & FILE_ATTRIBUTE_DIRECTORY );
 
-            hFile = CreateFile( lpFileName,
-                                GENERIC_READ,
-                                FILE_SHARE_READ,
-                                nullptr,
-                                OPEN_EXISTING,
-                                fDir ? ( FILE_ATTRIBUTE_DIRECTORY | FILE_FLAG_BACKUP_SEMANTICS ) : FILE_ATTRIBUTE_NORMAL,
-                                nullptr );
+            hFile = CreateFile(lpFileName,
+                               GENERIC_READ,
+                               FILE_SHARE_READ,
+                               nullptr,
+                               OPEN_EXISTING,
+                               fDir ? (FILE_ATTRIBUTE_DIRECTORY | FILE_FLAG_BACKUP_SEMANTICS) : FILE_ATTRIBUTE_NORMAL,
+                               nullptr);
 
             if( hFile == INVALID_HANDLE_VALUE )
             {
@@ -318,7 +318,7 @@ char * hb_fsLinkRead( const char * pszFile )
                {
                   if( size > 0 )
                   {
-                     lpLink[size] = TEXT( '\0' );
+                     lpLink[size] = TEXT('\0');
                      pszLink = HB_OSSTRDUP( lpLink );
                   }
 
@@ -359,7 +359,7 @@ char * hb_fsLinkRead( const char * pszFile )
          {
             pszLink[size] = '\0';
             /* Convert from OS codepage */
-            pszLink = const_cast<char*>(hb_osDecodeCP( pszLink, nullptr, nullptr ));
+            pszLink = const_cast<char*>(hb_osDecodeCP(pszLink, nullptr, nullptr));
          }
 
          if( pszFileFree )

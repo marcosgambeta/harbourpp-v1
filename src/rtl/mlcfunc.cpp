@@ -482,9 +482,9 @@ HB_FUNC( MEMOLINE )
    }
 }
 
-/* MLCount( <cString>, [ <nLineLength>=79 ],
- *          [ <nTabSize>=4 ], [ <lWrap>=.T. ],
- *          [ <cEOL>|<acEOLs> ] ) --> <nLines>
+/* MLCount(<cString>, [ <nLineLength>=79 ],
+ *         [ <nTabSize>=4 ], [ <lWrap>=.T. ],
+ *         [ <cEOL>|<acEOLs> ]) --> <nLines>
  */
 HB_FUNC( MLCOUNT )
 {
@@ -502,10 +502,10 @@ HB_FUNC( MLCOUNT )
    hb_retns(nLines);
 }
 
-/* MLPos( <cString>, [ <nLineLength>=79 ],
- *        [ <nLineNumber>=1 ],
- *        [ <nTabSize>=4 ], [ <lWrap>=.T. ],
- *        [ <cEOL>|<acEOLs> ] ) --> <nLinePos>
+/* MLPos(<cString>, [ <nLineLength>=79 ],
+ *       [ <nLineNumber>=1 ],
+ *       [ <nTabSize>=4 ], [ <lWrap>=.T. ],
+ *       [ <cEOL>|<acEOLs> ]) --> <nLinePos>
  */
 HB_FUNC( MLPOS )
 {
@@ -529,7 +529,7 @@ HB_FUNC( MLPOS )
             nOffset = MLC.nOffset;
             if( MLC.cdp )
             {
-               nOffset = hb_cdpTextLen( MLC.cdp, MLC.pszString, nOffset );
+               nOffset = hb_cdpTextLen(MLC.cdp, MLC.pszString, nOffset);
             }
             if( MLC.nOffset < MLC.nLen )
             {
@@ -542,10 +542,10 @@ HB_FUNC( MLPOS )
    hb_retns(nOffset);
 }
 
-/* MLCToPos( <cString>, [ <nLineLength>=79 ],
- *           [ <nLine>=1 ], [ <nCol>=0 ],
- *           [ <nTabSize>=4 ], [ <lWrap>=.T. ],
- *           [ <cEOL>|<acEOLs> ] ) --> <nPos>
+/* MLCToPos(<cString>, [ <nLineLength>=79 ],
+ *          [ <nLine>=1 ], [ <nCol>=0 ],
+ *          [ <nTabSize>=4 ], [ <lWrap>=.T. ],
+ *          [ <cEOL>|<acEOLs> ]) --> <nPos>
  */
 HB_FUNC( MLCTOPOS )
 {
@@ -576,7 +576,7 @@ HB_FUNC( MLCTOPOS )
             nOffset = MLC.nOffset;
             if( MLC.cdp )
             {
-               nOffset = hb_cdpTextLen( MLC.cdp, MLC.pszString, nOffset );
+               nOffset = hb_cdpTextLen(MLC.cdp, MLC.pszString, nOffset);
             }
          }
          hb_mlExit( &MLC );

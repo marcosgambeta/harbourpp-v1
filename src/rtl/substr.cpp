@@ -79,15 +79,15 @@ HB_FUNC( SUBSTR )
          {
             if( nFrom < 0 )
             {
-               nFrom += hb_cdpTextLen( cdp, pszText, nSize );
+               nFrom += hb_cdpTextLen(cdp, pszText, nSize);
             }
             if( nFrom > 0 )
             {
-               nFrom = hb_cdpTextPos( cdp, pszText, nSize, nFrom );
+               nFrom = hb_cdpTextPos(cdp, pszText, nSize, nFrom);
                pszText += nFrom;
                nSize -= nFrom;
             }
-            nCount = hb_cdpTextPos( cdp, pszText, nSize, nCount );
+            nCount = hb_cdpTextPos(cdp, pszText, nSize, nCount);
          }
          else
          {

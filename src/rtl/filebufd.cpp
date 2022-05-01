@@ -69,7 +69,7 @@ static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, ch
    return false;
 }
 
-static HB_BOOL s_fileDelete( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
+static HB_BOOL s_fileDelete(PHB_FILE_FUNCS pFuncs, const char * pszFileName)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszFileName);
@@ -149,7 +149,7 @@ static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec,
    return nullptr;
 }
 
-static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long * plJulian, long * plMillisec )
+static HB_BOOL s_fileTimeGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, long * plJulian, long * plMillisec)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszFileName);
@@ -161,7 +161,7 @@ static HB_BOOL s_fileTimeGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, l
    return false;
 }
 
-static HB_BOOL s_fileTimeSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, long lJulian, long lMillisec )
+static HB_BOOL s_fileTimeSet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, long lJulian, long lMillisec)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszFileName);
@@ -173,7 +173,7 @@ static HB_BOOL s_fileTimeSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, l
    return false;
 }
 
-static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR * pnAttr )
+static HB_BOOL s_fileAttrGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR * pnAttr)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszFileName);
@@ -184,7 +184,7 @@ static HB_BOOL s_fileAttrGet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, H
    return false;
 }
 
-static HB_BOOL s_fileAttrSet( PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR nAttr )
+static HB_BOOL s_fileAttrSet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR nAttr)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszFileName);
@@ -217,7 +217,7 @@ static HB_BOOL s_fileLinkSym( PHB_FILE_FUNCS pFuncs, const char * pszTarget, con
    return false;
 }
 
-static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
+static char * s_fileLinkRead(PHB_FILE_FUNCS pFuncs, const char * pszFileName)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszFileName);
@@ -227,7 +227,7 @@ static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
    return nullptr;
 }
 
-static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName, const char * pszDefExt, HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError )
+static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * pszName, const char * pszDefExt, HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszName);
@@ -242,14 +242,14 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName, const c
    return nullptr;
 }
 
-static void s_fileClose( PHB_FILE pFile )
+static void s_fileClose(PHB_FILE pFile)
 {
    HB_SYMBOL_UNUSED(pFile);
 
    hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 }
 
-static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType )
+static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
 {
    HB_SYMBOL_UNUSED(pFile);
    HB_SYMBOL_UNUSED(nStart);
@@ -273,7 +273,7 @@ static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, i
    return -1;
 }
 
-static HB_SIZE s_fileRead( PHB_FILE pFile, void * data, HB_SIZE nSize, HB_MAXINT timeout )
+static HB_SIZE s_fileRead(PHB_FILE pFile, void * data, HB_SIZE nSize, HB_MAXINT timeout)
 {
    HB_SYMBOL_UNUSED(pFile);
    HB_SYMBOL_UNUSED(data);
@@ -285,7 +285,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data, HB_SIZE nSize, HB_MAXINT
    return 0;
 }
 
-static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data, HB_SIZE nSize, HB_MAXINT timeout )
+static HB_SIZE s_fileWrite(PHB_FILE pFile, const void * data, HB_SIZE nSize, HB_MAXINT timeout)
 {
    HB_SYMBOL_UNUSED(pFile);
    HB_SYMBOL_UNUSED(data);
@@ -297,7 +297,7 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data, HB_SIZE nSize, HB
    return 0;
 }
 
-static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset )
+static HB_SIZE s_fileReadAt(PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset)
 {
    HB_SYMBOL_UNUSED(pFile);
    HB_SYMBOL_UNUSED(buffer);
@@ -309,7 +309,7 @@ static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_FO
    return 0;
 }
 
-static HB_SIZE s_fileWriteAt( PHB_FILE pFile, const void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset )
+static HB_SIZE s_fileWriteAt(PHB_FILE pFile, const void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset)
 {
    HB_SYMBOL_UNUSED(pFile);
    HB_SYMBOL_UNUSED(buffer);
@@ -321,7 +321,7 @@ static HB_SIZE s_fileWriteAt( PHB_FILE pFile, const void * buffer, HB_SIZE nSize
    return 0;
 }
 
-static HB_BOOL s_fileTruncAt( PHB_FILE pFile, HB_FOFFSET nOffset )
+static HB_BOOL s_fileTruncAt(PHB_FILE pFile, HB_FOFFSET nOffset)
 {
    HB_SYMBOL_UNUSED(pFile);
    HB_SYMBOL_UNUSED(nOffset);
@@ -331,7 +331,7 @@ static HB_BOOL s_fileTruncAt( PHB_FILE pFile, HB_FOFFSET nOffset )
    return false;
 }
 
-static HB_FOFFSET s_fileSeek( PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFlags )
+static HB_FOFFSET s_fileSeek(PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFlags)
 {
    HB_SYMBOL_UNUSED(pFile);
    HB_SYMBOL_UNUSED(nOffset);
@@ -342,7 +342,7 @@ static HB_FOFFSET s_fileSeek( PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFl
    return 0;
 }
 
-static HB_FOFFSET s_fileSize( PHB_FILE pFile )
+static HB_FOFFSET s_fileSize(PHB_FILE pFile)
 {
    HB_SYMBOL_UNUSED(pFile);
 

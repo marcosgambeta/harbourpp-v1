@@ -57,9 +57,9 @@ HB_FUNC_EXTERN( QOUT );
 
 #ifdef HB_CLP_UNDOC
 
-static HB_TSD_NEW( s_szAcceptResult, ACCEPT_BUFFER_LEN, nullptr, nullptr );
+static HB_TSD_NEW(s_szAcceptResult, ACCEPT_BUFFER_LEN, nullptr, nullptr);
 
-static char * hb_acceptBuffer( void )
+static char * hb_acceptBuffer(void)
 {
    return static_cast<char*>(hb_stackGetTSD(&s_szAcceptResult));
 }
@@ -97,10 +97,10 @@ HB_FUNC( __ACCEPT )
          case K_LEFT:
             if( nLen > 0 )
             {
-               nChar = hb_cdpTextLen( cdp, szAcceptResult, nLen );
+               nChar = hb_cdpTextLen(cdp, szAcceptResult, nLen);
                if( nChar > 0 )
                {
-                  nLen = hb_cdpTextPos( cdp, szAcceptResult, nLen, nChar - 1 );
+                  nLen = hb_cdpTextPos(cdp, szAcceptResult, nLen, nChar - 1);
                }
                else
                {
@@ -118,7 +118,7 @@ HB_FUNC( __ACCEPT )
             break;
 
          default:
-            nChar = hb_inkeyKeyString( input, szKey, sizeof(szKey) );
+            nChar = hb_inkeyKeyString(input, szKey, sizeof(szKey));
             if( nChar > 0 && nLen + nChar < ACCEPT_BUFFER_LEN )
             {
                memcpy(&szAcceptResult[nLen], szKey, nChar);

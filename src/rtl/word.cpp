@@ -59,6 +59,6 @@ HB_FUNC( WORD )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 1091, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 1091, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

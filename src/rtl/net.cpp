@@ -72,16 +72,16 @@
 
 /* NOTE: The caller must free the returned buffer. [vszakats] */
 
-char * hb_netname( void )
+char * hb_netname(void)
 {
 #if defined(HB_OS_WIN)
 
    DWORD dwLen = MAX_COMPUTERNAME_LENGTH + 1;
    TCHAR lpValue[MAX_COMPUTERNAME_LENGTH + 1];
 
-   lpValue[0] = TEXT( '\0' );
-   GetComputerName( lpValue, &dwLen );
-   lpValue[MAX_COMPUTERNAME_LENGTH] = TEXT( '\0' );
+   lpValue[0] = TEXT('\0');
+   GetComputerName(lpValue, &dwLen);
+   lpValue[MAX_COMPUTERNAME_LENGTH] = TEXT('\0');
 
    if( lpValue[0] )
    {
@@ -92,7 +92,7 @@ char * hb_netname( void )
 
    char szValue[MAXGETHOSTNAME + 1];
    szValue[0] = szValue[MAXGETHOSTNAME] = '\0';
-   gethostname( szValue, MAXGETHOSTNAME );
+   gethostname(szValue, MAXGETHOSTNAME);
    if( szValue[0] )
    {
       return hb_osStrDecode( szValue );

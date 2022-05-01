@@ -61,7 +61,7 @@ HB_FUNC( HB_UCHAR )
       char szChar[HB_MAX_CHAR_LEN];
       HB_SIZE nLen;
 
-      nLen = hb_cdpTextPutU16( hb_vmCDP(), szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni(1)) );
+      nLen = hb_cdpTextPutU16(hb_vmCDP(), szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni(1)));
       hb_retclen(szChar, nLen);
    }
    else
@@ -87,7 +87,7 @@ HB_FUNC( HB_BCHAR )
    }
 }
 
-/* hb_UCode( <cText> ) --> <nCode>
+/* hb_UCode(<cText>) --> <nCode>
  * return unicode value of 1st character (not byte) in given string
  */
 HB_FUNC( HB_UCODE )
@@ -104,7 +104,7 @@ HB_FUNC( HB_UCODE )
    }
 }
 
-/* hb_BCode( <cText> ) --> <nCode>
+/* hb_BCode(<cText>) --> <nCode>
  * return value of 1st byte in given string
  */
 HB_FUNC( HB_BCODE )
@@ -121,7 +121,7 @@ HB_FUNC( HB_BCODE )
    }
 }
 
-/* hb_ULen( <cText> ) --> <nChars>
+/* hb_ULen(<cText>) --> <nChars>
  * return string length in characters
  */
 HB_FUNC( HB_ULEN )
@@ -138,7 +138,7 @@ HB_FUNC( HB_ULEN )
    }
 }
 
-/* hb_BLen( <cText> ) --> <nBytes>
+/* hb_BLen(<cText>) --> <nBytes>
  * return string length in bytes
  */
 HB_FUNC( HB_BLEN )
@@ -172,11 +172,11 @@ HB_FUNC( HB_UPEEK )
 
       if( nPos > 0 && nPos <= nLen )
       {
-         nPos = hb_cdpTextPos( cdp, szText, nLen, nPos - 1 );
+         nPos = hb_cdpTextPos(cdp, szText, nLen, nPos - 1);
          nLen -= nPos;
          if( nLen > 0 )
          {
-            wc = hb_cdpTextGetU16( cdp, szText + nPos, nLen );
+            wc = hb_cdpTextGetU16(cdp, szText + nPos, nLen);
          }
       }
 
@@ -223,14 +223,14 @@ HB_FUNC( HB_UPOKE )
 
       if( nPos > 0 && nPos <= nLen )
       {
-         nPos = hb_cdpTextPos( cdp, szText, nLen, nPos - 1 );
+         nPos = hb_cdpTextPos(cdp, szText, nLen, nPos - 1);
          if( nPos < nLen )
          {
             char szChar[HB_MAX_CHAR_LEN], * pszText;
             HB_SIZE nChar, nOldChar;
 
-            nChar = hb_cdpTextPutU16( cdp, szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni(3)) );
-            nOldChar = hb_cdpTextPos( cdp, szText + nPos, nLen - nPos, 1 );
+            nChar = hb_cdpTextPutU16(cdp, szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni(3)));
+            nOldChar = hb_cdpTextPos(cdp, szText + nPos, nLen - nPos, 1);
             if( nChar == nOldChar )
             {
                if( hb_itemGetWriteCL(pText, &pszText, &nLen) && nPos + nChar <= nLen )
@@ -313,15 +313,15 @@ HB_FUNC( HB_USUBSTR )
       {
          if( nFrom < 0 )
          {
-            nFrom += hb_cdpTextLen( cdp, pszText, nSize );
+            nFrom += hb_cdpTextLen(cdp, pszText, nSize);
          }
          if( nFrom > 0 )
          {
-            nFrom = hb_cdpTextPos( cdp, pszText, nSize, nFrom );
+            nFrom = hb_cdpTextPos(cdp, pszText, nSize, nFrom);
             pszText += nFrom;
             nSize -= nFrom;
          }
-         nCount = hb_cdpTextPos( cdp, pszText, nSize, nCount );
+         nCount = hb_cdpTextPos(cdp, pszText, nSize, nCount);
       }
 
       if( nCount > 0 )
@@ -424,7 +424,7 @@ HB_FUNC( HB_ULEFT )
          HB_SIZE nText = hb_itemGetCLen(pText);
          if( static_cast<HB_SIZE>(nLen) < nText )
          {
-            nLen = hb_cdpTextPos( hb_vmCDP(), hb_itemGetCPtr(pText), nText, nLen );
+            nLen = hb_cdpTextPos(hb_vmCDP(), hb_itemGetCPtr(pText), nText, nLen);
          }
          if( static_cast<HB_SIZE>(nLen) >= nText )
          {
@@ -487,10 +487,10 @@ HB_FUNC( HB_URIGHT )
       if( static_cast<HB_SIZE>(nLen) < nText )
       {
          PHB_CODEPAGE cdp = hb_vmCDP();
-         HB_SIZE nChars = hb_cdpTextLen( cdp, hb_itemGetCPtr(pText), nText );
+         HB_SIZE nChars = hb_cdpTextLen(cdp, hb_itemGetCPtr(pText), nText);
          if( nChars > static_cast<HB_SIZE>(nLen) )
          {
-            nLen = nText - hb_cdpTextPos( cdp, hb_itemGetCPtr(pText), nText, nChars - nLen );
+            nLen = nText - hb_cdpTextPos(cdp, hb_itemGetCPtr(pText), nText, nChars - nLen);
          }
          else
          {
@@ -538,7 +538,7 @@ HB_FUNC( HB_BRIGHT )
 }
 
 
-/* hb_UAt( <cSubString>, <cString>, [<nFrom>], [<nTo>] ) --> <nAt>
+/* hb_UAt(<cSubString>, <cString>, [<nFrom>], [<nTo>]) --> <nAt>
  */
 HB_FUNC( HB_UAT )
 {
@@ -559,7 +559,7 @@ HB_FUNC( HB_UAT )
       }
       else
       {
-         nFrom = hb_cdpTextPos( cdp, pszText, nTextLength, --nStart );
+         nFrom = hb_cdpTextPos(cdp, pszText, nTextLength, --nStart);
       }
 
       if( nFrom < nTextLength )
@@ -578,7 +578,7 @@ HB_FUNC( HB_UAT )
             else
             {
                nTo -= nStart;
-               nTo = hb_cdpTextPos( cdp, pszText, nTextLength, nTo );
+               nTo = hb_cdpTextPos(cdp, pszText, nTextLength, nTo);
                if( nTo > nTextLength )
                {
                   nTo = nTextLength;
@@ -592,10 +592,10 @@ HB_FUNC( HB_UAT )
 
          if( nTo > 0 )
          {
-            nPos = hb_strAt( hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), pszText, nTo );
+            nPos = hb_strAt(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), pszText, nTo);
             if( nPos > 0 )
             {
-               nPos = hb_cdpTextLen( cdp, pszText, nPos - 1 ) + 1 + nStart;
+               nPos = hb_cdpTextLen(cdp, pszText, nPos - 1) + 1 + nStart;
             }
          }
       }
@@ -607,7 +607,7 @@ HB_FUNC( HB_UAT )
    }
 }
 
-/* hb_BAt( <cSubString>, <cString>, [<nFrom>], [<nTo>] ) --> <nAt>
+/* hb_BAt(<cSubString>, <cString>, [<nFrom>], [<nTo>]) --> <nAt>
  */
 HB_FUNC( HB_BAT )
 {
@@ -659,7 +659,7 @@ HB_FUNC( HB_BAT )
 
          if( nTo > 0 )
          {
-            nPos = hb_strAt( hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), pszText, nTo );
+            nPos = hb_strAt(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), pszText, nTo);
             if( nPos > 0 )
             {
                nPos += nFrom;
@@ -674,7 +674,7 @@ HB_FUNC( HB_BAT )
    }
 }
 
-/* hb_BRAt( <cSubString>, <cString>, [<nFrom>], [<nTo>] ) --> <nAt>
+/* hb_BRAt(<cSubString>, <cString>, [<nFrom>], [<nTo>]) --> <nAt>
  */
 HB_FUNC( HB_BRAT )
 {
@@ -805,13 +805,13 @@ HB_FUNC( HB_USTUFF )
 
       if( nPos )
       {
-         nPos = nPos < 1 ? nLen : hb_cdpTextPos( cdp, szText, nLen, nPos - 1 );
+         nPos = nPos < 1 ? nLen : hb_cdpTextPos(cdp, szText, nLen, nPos - 1);
       }
       if( nDel )
       {
          if( nPos < nLen )
          {
-            nDel = hb_cdpTextPos( cdp, szText + nPos, nLen - nPos, nDel );
+            nDel = hb_cdpTextPos(cdp, szText + nPos, nLen - nPos, nDel);
             if( nDel == 0 )
             {
                nDel = nLen - nPos;

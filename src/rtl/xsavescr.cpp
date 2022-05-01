@@ -62,7 +62,7 @@ struct HB_SCRDATA
 
 using PHB_SCRDATA = HB_SCRDATA *;
 
-static void hb_xSaveRestRelease( void * cargo )
+static void hb_xSaveRestRelease(void * cargo)
 {
    PHB_SCRDATA pScrData = static_cast<PHB_SCRDATA>(cargo);
 
@@ -79,10 +79,10 @@ HB_FUNC( __XSAVESCREEN )
    PHB_SCRDATA pScrData = static_cast<PHB_SCRDATA>(hb_stackGetTSD(&s_scrData));
    HB_SIZE nSize;
 
-   hb_gtGetPos( &pScrData->row, &pScrData->col );
+   hb_gtGetPos(&pScrData->row, &pScrData->col);
    pScrData->maxrow = hb_gtMaxRow();
    pScrData->maxcol = hb_gtMaxCol();
-   hb_gtRectSize( 0, 0, pScrData->maxrow, pScrData->maxcol, &nSize );
+   hb_gtRectSize(0, 0, pScrData->maxrow, pScrData->maxcol, &nSize);
    if( pScrData->buffer )
    {
       hb_xfree(pScrData->buffer);
@@ -106,6 +106,6 @@ HB_FUNC( __XRESTSCREEN )
       hb_xfree(pScrData->buffer);
       pScrData->buffer = nullptr;
 
-      hb_gtSetPos( pScrData->row, pScrData->col );
+      hb_gtSetPos(pScrData->row, pScrData->col);
    }
 }

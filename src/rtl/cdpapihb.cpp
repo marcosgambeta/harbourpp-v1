@@ -218,7 +218,7 @@ HB_FUNC( HB_UTF8CHR )
       char utf8Char[HB_MAX_CHAR_LEN];
       int iLen;
 
-      iLen = hb_cdpU16CharToUTF8( utf8Char, static_cast<HB_WCHAR>(hb_parni(1)) );
+      iLen = hb_cdpU16CharToUTF8(utf8Char, static_cast<HB_WCHAR>(hb_parni(1)));
       hb_retclen(utf8Char, iLen);
    }
    else
@@ -270,7 +270,7 @@ HB_FUNC( HB_STRTOUTF8 )
 
       if( cdp )
       {
-         if( hb_cdpIsUTF8( cdp ) )
+         if( hb_cdpIsUTF8(cdp) )
          {
             hb_itemReturn(hb_param(1, Harbour::Item::STRING));
             return;
@@ -278,9 +278,9 @@ HB_FUNC( HB_STRTOUTF8 )
          else
          {
             const char * szString = hb_parc(1);
-            nDest = hb_cdpStrAsUTF8Len( cdp, szString, nLen, 0 );
+            nDest = hb_cdpStrAsUTF8Len(cdp, szString, nLen, 0);
             szDest = static_cast<char*>(hb_xgrab(nDest + 1));
-            hb_cdpStrToUTF8( cdp, szString, nLen, szDest, nDest + 1 );
+            hb_cdpStrToUTF8(cdp, szString, nLen, szDest, nDest + 1);
          }
       }
    }
@@ -310,7 +310,7 @@ HB_FUNC( HB_UTF8TOSTR )
 
          if( cdp )
          {
-            if( hb_cdpIsUTF8( cdp ) )
+            if( hb_cdpIsUTF8(cdp) )
             {
                hb_itemReturn(hb_param(1, Harbour::Item::STRING));
                return;
@@ -548,7 +548,7 @@ HB_FUNC( HB_UTF8POKE )
 
          --nPos;
          uc = static_cast<HB_WCHAR>(hb_parni(3));
-         n = hb_cdpUTF8CharSize( uc );
+         n = hb_cdpUTF8CharSize(uc);
          n2 = 0;
          hb_cdpUTF8ToU16NextChar( szString[nPos], &n2, &uc2 );
          ++n2;
@@ -557,7 +557,7 @@ HB_FUNC( HB_UTF8POKE )
             char * szText;
             if( hb_itemGetWriteCL(pText, &szText, &nLen) && nPos + n <= nLen )
             {
-               hb_cdpU16CharToUTF8( &szText[nPos], uc );
+               hb_cdpU16CharToUTF8(&szText[nPos], uc);
             }
             hb_itemReturn(pText);
          }
@@ -566,7 +566,7 @@ HB_FUNC( HB_UTF8POKE )
             char * szResult = static_cast<char*>(hb_xgrab(nLen - n2 + n + 1));
 
             memcpy(szResult, szString, nPos);
-            hb_cdpU16CharToUTF8( &szResult[nPos], uc );
+            hb_cdpU16CharToUTF8(&szResult[nPos], uc);
             memcpy(szResult + nPos + n, szString + nPos + n2, nLen - nPos - n2);
             if( HB_ISBYREF(1) )
             {

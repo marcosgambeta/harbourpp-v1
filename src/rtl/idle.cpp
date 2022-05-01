@@ -65,7 +65,7 @@ struct HB_IDLEDATA
 
 using PHB_IDLEDATA = HB_IDLEDATA *;
 
-static void hb_idleDataRelease( void * Cargo )
+static void hb_idleDataRelease(void * Cargo)
 {
    PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(Cargo);
 
@@ -82,7 +82,7 @@ static void hb_idleDataRelease( void * Cargo )
 
 static HB_TSD_NEW( s_idleData, sizeof(HB_IDLEDATA), nullptr, hb_idleDataRelease );
 
-void hb_releaseCPU( void )
+void hb_releaseCPU(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_releaseCPU()" ) );
@@ -92,7 +92,7 @@ void hb_releaseCPU( void )
 }
 
 /* performs all tasks defined for idle state */
-void hb_idleState( void )
+void hb_idleState(void)
 {
    PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
@@ -124,7 +124,7 @@ void hb_idleState( void )
    }
 }
 
-void hb_idleReset( void )
+void hb_idleReset(void)
 {
    PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 

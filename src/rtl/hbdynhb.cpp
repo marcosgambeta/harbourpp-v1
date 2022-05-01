@@ -76,7 +76,7 @@ HB_FUNC( HB_DYNCALL )
 
                if( HB_IS_STRING(pLibrary) )
                {
-                  pLibraryHandle = hb_libLoad( pLibrary, nullptr );
+                  pLibraryHandle = hb_libLoad(pLibrary, nullptr);
                   if( pLibraryHandle )
                   {
                      bFreeLibrary = HB_TRUE;
@@ -128,6 +128,6 @@ HB_FUNC( HB_DYNCALL )
 
    if( bFreeLibrary )
    {
-      hb_libFree( pLibraryHandle );
+      hb_libFree(pLibraryHandle);
    }
 }

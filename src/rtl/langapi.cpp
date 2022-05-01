@@ -224,9 +224,9 @@ struct HB_LANG_BASE
 
 using PHB_LANG_BASE = HB_LANG_BASE *;
 
-static HB_LANG_BASE s_langList[HB_LANG_MAX_] = { { &s_lang_en, nullptr } };
+static HB_LANG_BASE s_langList[HB_LANG_MAX_] = {{&s_lang_en, nullptr}};
 
-static void hb_langRelease( PHB_LANG_BASE pBase )
+static void hb_langRelease(PHB_LANG_BASE pBase)
 {
    if( pBase->lang )
    {
@@ -249,7 +249,7 @@ static PHB_LANG_BASE hb_langFindBase( const char * pszID )
       {
          if( s_langList[iPos].lang != nullptr )
          {
-            if( hb_stricmp( s_langList[iPos].lang->pItemList[HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID], pszID ) == 0 )
+            if( hb_stricmp(s_langList[iPos].lang->pItemList[HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID], pszID) == 0 )
             {
                return &s_langList[iPos];
             }
@@ -339,7 +339,7 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
    return false;
 }
 
-void hb_langReleaseAll( void )
+void hb_langReleaseAll(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_langReleaseAll()" ) );
@@ -347,7 +347,7 @@ void hb_langReleaseAll( void )
 
    for( int iPos = 0; iPos < HB_LANG_MAX_; iPos++ )
    {
-      hb_langRelease( &s_langList[iPos] );
+      hb_langRelease(&s_langList[iPos]);
    }
 }
 
@@ -395,7 +395,7 @@ PHB_LANG hb_langSelect( PHB_LANG lang )
    langOld = hb_vmLang();
    if( lang )
    {
-      hb_vmSetLang( lang );
+      hb_vmSetLang(lang);
    }
 
    return langOld;
@@ -417,13 +417,13 @@ const char * hb_langSelectID( const char * pszID )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 1303, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 1303, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 
    return pszIDOld;
 }
 
-const char * hb_langGetItem( const char * pszID, int iIndex )
+const char * hb_langGetItem(const char * pszID, int iIndex)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_langGetItem(%s,%i)", pszID, iIndex ) );
@@ -442,18 +442,18 @@ const char * hb_langGetItem( const char * pszID, int iIndex )
    }
 }
 
-const char * hb_langID( void )
+const char * hb_langID(void)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_langID()" ) );
 #endif
 
-   return hb_langGetItem( nullptr, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID );
+   return hb_langGetItem(nullptr, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID);
 }
 
 /* NOTE: Caller must free the pointer. */
 
-char * hb_langName( const char * pszID )
+char * hb_langName(const char * pszID)
 {
    char *   pszName;
    PHB_LANG lang;
@@ -463,9 +463,9 @@ char * hb_langName( const char * pszID )
    {
       pszName = static_cast<char*>(hb_xgrab(128));
       hb_snprintf(pszName, 128, "Harbour Language: %s %s (%s)",
-                   hb_langGetItem( pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID ),
-                   hb_langGetItem( pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_NAME ),
-                   hb_langGetItem( pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_NAMENAT ));
+                   hb_langGetItem(pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID),
+                   hb_langGetItem(pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_NAME),
+                   hb_langGetItem(pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_NAMENAT));
    }
    else
    {
@@ -477,16 +477,16 @@ char * hb_langName( const char * pszID )
 
 /* Compatibility interfaces */
 
-const char * hb_langDGetErrorDesc( int iIndex )
+const char * hb_langDGetErrorDesc(int iIndex)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_langDGetErrorDesc(%i)", iIndex ) );
 #endif
 
-   return hb_langGetItem( nullptr, HB_LANG_ITEM_BASE_ERRDESC + iIndex );
+   return hb_langGetItem(nullptr, HB_LANG_ITEM_BASE_ERRDESC + iIndex);
 }
 
-const char * hb_langDGetItem( int iIndex )
+const char * hb_langDGetItem(int iIndex)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_langDGetItem(%i)", iIndex ) );
@@ -527,17 +527,15 @@ HB_FUNC( HB_LANGNAME )
 
 HB_FUNC( HB_LANGERRMSG )
 {
-   hb_retc_const( hb_langDGetErrorDesc( hb_parnl(1) ) );
+   hb_retc_const(hb_langDGetErrorDesc(hb_parnl(1)));
 }
 
 HB_FUNC( HB_LANGMESSAGE )
 {
-   hb_retc_const( hb_langGetItem( hb_parc(2), hb_parnl(1) ) );
+   hb_retc_const(hb_langGetItem(hb_parc(2), hb_parnl(1)));
 }
 
-/* hb_langNew( <cNewLangId>, <cNewLangCpId>,
- *             <cLangId>, <cLangCpId> ) --> <lOK>
- */
+/* hb_langNew(<cNewLangId>, <cNewLangCpId>, <cLangId>, <cLangCpId>) --> <lOK> */
 HB_FUNC( HB_LANGNEW )
 {
    hb_retl(hb_langTranslate(hb_parc(1), hb_langFind(hb_parc(3)), hb_cdpFindExt(hb_parc(4)), hb_cdpFindExt(hb_parc(2))));

@@ -70,11 +70,11 @@ HB_BOOL hb_printerIsReady( const char * pszPrinterName )
 #endif
       }
 
-      pFile = hb_fileExtOpen( pszPrinterName, nullptr, FXO_APPEND | FO_WRITE | FO_SHARED | FO_PRIVATE, nullptr, nullptr );
+      pFile = hb_fileExtOpen(pszPrinterName, nullptr, FXO_APPEND | FO_WRITE | FO_SHARED | FO_PRIVATE, nullptr, nullptr);
       bIsPrinter = ( pFile != nullptr );
       if( bIsPrinter )
       {
-         hb_fileClose( pFile );
+         hb_fileClose(pFile);
       }
    }
 

@@ -51,7 +51,7 @@
 
 static void hb_md5_init_seed( char * vect, const char * pszKey, int iLen )
 {
-   hb_md5( pszKey, iLen, vect );
+   hb_md5(pszKey, iLen, vect);
 }
 
 static void hb_md5_next_seed( char * vect, const char * pszKey, int iLen )
@@ -60,7 +60,7 @@ static void hb_md5_next_seed( char * vect, const char * pszKey, int iLen )
    {
       vect[i] ^= pszKey[i % iLen];
    }
-   hb_md5( vect, 16, vect );
+   hb_md5(vect, 16, vect);
 }
 
 /* hb_MD5Encrypt( <cText>, <cPasswd> ) --> <cCipher>

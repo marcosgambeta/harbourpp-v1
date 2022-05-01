@@ -56,7 +56,7 @@
 #define _HB_TOK_EOL_DELIM        0x10
 #define _HB_TOK_STRIP_QUOTE      0x20
 
-static HB_SIZE hb_tokenCount( const char * szLine, HB_SIZE nLen, const char * szDelim, HB_SIZE nDelim, int iFlags )
+static HB_SIZE hb_tokenCount(const char * szLine, HB_SIZE nLen, const char * szDelim, HB_SIZE nDelim, int iFlags)
 {
    HB_SIZE nPos = 0, nTokens = 1;
    char cQuote = 0;
@@ -105,7 +105,7 @@ static HB_SIZE hb_tokenCount( const char * szLine, HB_SIZE nLen, const char * sz
    return nTokens;
 }
 
-static const char * hb_tokenGet( const char * szLine, HB_SIZE nLen, const char * szDelim, HB_SIZE * pnDelim, int iFlags, HB_SIZE nToken, HB_SIZE * pnLen )
+static const char * hb_tokenGet(const char * szLine, HB_SIZE nLen, const char * szDelim, HB_SIZE * pnDelim, int iFlags, HB_SIZE nToken, HB_SIZE * pnLen)
 {
    HB_SIZE nPos, nStart, nDelim = *pnDelim;
    char cQuote = 0;
@@ -169,7 +169,7 @@ static const char * hb_tokenGet( const char * szLine, HB_SIZE nLen, const char *
 
 static PHB_ITEM hb_tokenArray( const char * szLine, HB_SIZE nLen, const char * szDelim, HB_SIZE nDelim, int iFlags )
 {
-   HB_SIZE nTokens = hb_tokenCount( szLine, nLen, szDelim, nDelim, iFlags );
+   HB_SIZE nTokens = hb_tokenCount(szLine, nLen, szDelim, nDelim, iFlags);
    PHB_ITEM pArray = hb_itemArrayNew(nTokens);
 
    if( nTokens )
@@ -320,7 +320,7 @@ HB_FUNC( HB_TOKENGET )
 
    if( hb_tokenParam( 3, 0, &szLine, &nLen, &szDelim, &nDelim, &iFlags ) )
    {
-      szLine = hb_tokenGet( szLine, nLen, szDelim, &nDelim, iFlags, hb_parns(2), &nLen );
+      szLine = hb_tokenGet(szLine, nLen, szDelim, &nDelim, iFlags, hb_parns(2), &nLen);
       hb_retclen(szLine, nLen);
    }
    else
@@ -331,7 +331,7 @@ HB_FUNC( HB_TOKENGET )
 
 /* like hb_tokenGet() but returns next token starting from passed position
  * (0 based) inside string, f.e.:
- *    hb_tokenPtr( cString, @nTokPos, Chr(9) ) --> cToken
+ *    hb_tokenPtr(cString, @nTokPos, Chr(9)) --> cToken
  */
 HB_FUNC( HB_TOKENPTR )
 {
@@ -344,7 +344,7 @@ HB_FUNC( HB_TOKENPTR )
       const char * szToken;
       HB_SIZE nSkip, nToken;
 
-      szToken = hb_tokenGet( szLine, nLen, szDelim, &nDelim, iFlags, 1, &nToken );
+      szToken = hb_tokenGet(szLine, nLen, szDelim, &nDelim, iFlags, 1, &nToken);
       if( szToken && nLen > nToken )
       {
          nSkip = szToken - hb_parc(1) + nToken + nDelim;

@@ -71,7 +71,7 @@ HB_FUNC( LEFT )
             PHB_CODEPAGE cdp = hb_vmCDP();
             if( HB_CDP_ISCHARIDX( cdp ) )
             {
-               nLen = hb_cdpTextPos( cdp, hb_itemGetCPtr(pText), nText, nLen );
+               nLen = hb_cdpTextPos(cdp, hb_itemGetCPtr(pText), nText, nLen);
             }   
          }
          if( static_cast<HB_SIZE>(nLen) >= nText )

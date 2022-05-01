@@ -49,7 +49,7 @@
 #include "hbdate.h"
 #include "hblpp.h"
 
-PHB_LPP hb_lppCreate( HB_SOCKET sd )
+PHB_LPP hb_lppCreate(HB_SOCKET sd)
 {
    PHB_LPP pSocket;
 
@@ -59,7 +59,7 @@ PHB_LPP hb_lppCreate( HB_SOCKET sd )
    return pSocket;
 }
 
-void hb_lppDestroy( PHB_LPP pSocket )
+void hb_lppDestroy(PHB_LPP pSocket)
 {
    if( pSocket->pSendBuffer )
    {
@@ -79,7 +79,7 @@ void hb_lppSetLimit( PHB_LPP pSocket, HB_SIZE nLimit )
    pSocket->nLimit = nLimit;
 }
 
-int hb_lppError( PHB_LPP pSocket )
+int hb_lppError(PHB_LPP pSocket)
 {
    return pSocket->iError;
 }
@@ -172,7 +172,7 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
             return false;
          }
 
-         pSocket->nRecvSize = HB_GET_UINT32( pSocket->pRecvBuffer );
+         pSocket->nRecvSize = HB_GET_UINT32(pSocket->pRecvBuffer);
 
          if( pSocket->nLimit && pSocket->nRecvSize > pSocket->nLimit )
          {
@@ -230,12 +230,12 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
    }
 }
 
-HB_SIZE hb_lppSendLen( PHB_LPP pSocket )
+HB_SIZE hb_lppSendLen(PHB_LPP pSocket)
 {
    return pSocket->nSendLen - pSocket->nSendPos;
 }
 
-HB_SIZE hb_lppRecvLen( PHB_LPP pSocket )
+HB_SIZE hb_lppRecvLen(PHB_LPP pSocket)
 {
    return pSocket->nRecvLen;
 }

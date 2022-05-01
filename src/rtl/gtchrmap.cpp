@@ -297,7 +297,7 @@ static int chrmap_parse( FILE * fp, const char * pszTerm, int * nTransTbl, const
    fpos_t pos;
 
    fgetpos( fp, &pos );
-   ( void ) fseek( fp, 0, SEEK_SET );
+   ( void ) fseek( fp, 0, SEEK_SET ); // TODO: C++ cast
 
    while( !feof( fp ) && isTerm < 2 )
    {
@@ -384,7 +384,7 @@ static int chrmap_parse( FILE * fp, const char * pszTerm, int * nTransTbl, const
       }
    }
 
-   ( void ) fsetpos( fp, &pos );
+   ( void ) fsetpos( fp, &pos ); // TODO: C++ cast
 
    return isTerm;
 }
@@ -502,7 +502,7 @@ int main( int argc, char ** argv )
 {
    int piTransTbl[256];
 
-   if( hb_gt_chrmapinit( piTransTbl, nullptr ) == -1 )
+   if( hb_gt_chrmapinit(piTransTbl, nullptr) == -1 )
    {
       printf("cannot init charmap.\n");
       return 1;

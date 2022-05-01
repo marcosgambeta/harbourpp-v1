@@ -102,9 +102,9 @@ HB_FUNC( DISKSPACE )
          }
 
          lpPath[0] = static_cast<TCHAR>(iDrive + 'A' - 1);
-         lpPath[1] = TEXT( ':' );
-         lpPath[2] = TEXT( '\\' );
-         lpPath[3] = TEXT( '\0' );
+         lpPath[1] = TEXT(':');
+         lpPath[2] = TEXT('\\');
+         lpPath[3] = TEXT('\0');
 
          /* NOTE: We need to call this function dynamically to maintain support
                   Win95 first edition. It was introduced in Win95B (aka OSR2) [vszakats] */
@@ -208,7 +208,7 @@ HB_FUNC( DISKSPACE )
 
    if( bError )
    {
-      hb_errRT_BASE_Ext1( EG_OPEN, 2018, nullptr, nullptr, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_Ext1(EG_OPEN, 2018, nullptr, nullptr, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
    }
 
    hb_retnlen(dSpace, -1, 0);

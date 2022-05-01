@@ -65,7 +65,7 @@ HB_FUNC( ABS )
 
          if( iNumber >= 0 )
          {
-            hb_retnilen( iNumber, iWidth );
+            hb_retnilen(iNumber, iWidth);
          }   
 #if -HB_VMINT_MAX > HB_VMINT_MIN
          else if( iNumber < -INT_MAX )
@@ -73,7 +73,7 @@ HB_FUNC( ABS )
 #if HB_VMLONG_MAX > HB_VMINT_MAX
             hb_retnint(-static_cast<HB_MAXINT>(iNumber));
 #else
-            hb_retndlen( -static_cast<double>(iNumber), 0, iDec );
+            hb_retndlen(-static_cast<double>(iNumber), 0, iDec);
 #endif
          }
 #endif
@@ -88,12 +88,12 @@ HB_FUNC( ABS )
 
          if( lNumber >= 0 )
          {
-            hb_retnintlen( lNumber, iWidth );
+            hb_retnintlen(lNumber, iWidth);
          }   
 #if -HB_VMLONG_MAX > HB_VMLONG_MIN
          else if( lNumber < -HB_VMLONG_MAX )
          {
-            hb_retndlen( -static_cast<double>(lNumber), 0, iDec );
+            hb_retndlen(-static_cast<double>(lNumber), 0, iDec);
          }
 #endif
          else
@@ -105,7 +105,7 @@ HB_FUNC( ABS )
       {
          double dNumber = hb_itemGetND(pNumber);
 
-         hb_retndlen( dNumber >= 0.0 ? dNumber : -dNumber, 0, iDec );
+         hb_retndlen(dNumber >= 0.0 ? dNumber : -dNumber, 0, iDec);
       }
    }
    else

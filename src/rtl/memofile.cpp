@@ -59,7 +59,7 @@ static void hb_memoread( HB_BOOL bHandleEOF )
    if( pszFileName )
    {
       HB_SIZE nSize;
-      char * pBuffer = reinterpret_cast<char*>(hb_fileLoad( pszFileName, 0, &nSize ));
+      char * pBuffer = reinterpret_cast<char*>(hb_fileLoad(pszFileName, 0, &nSize));
 
       if( pBuffer )
       {
@@ -102,10 +102,10 @@ static HB_BOOL hb_memowrit( HB_BOOL bHandleEOF )
 
    if( pszFileName && pString )
    {
-      PHB_FILE pFile = hb_fileExtOpen( pszFileName, nullptr,
-                                       FO_READWRITE | FO_EXCLUSIVE | FO_PRIVATE |
-                                       FXO_TRUNCATE | FXO_SHARELOCK,
-                                       nullptr, nullptr );
+      PHB_FILE pFile = hb_fileExtOpen(pszFileName, nullptr,
+                                      FO_READWRITE | FO_EXCLUSIVE | FO_PRIVATE |
+                                      FXO_TRUNCATE | FXO_SHARELOCK,
+                                      nullptr, nullptr);
 
       if( pFile != nullptr )
       {
@@ -114,7 +114,7 @@ static HB_BOOL hb_memowrit( HB_BOOL bHandleEOF )
 
          while( nSize > 0 )
          {
-            HB_SIZE nWritten = hb_fileWrite( pFile, pData, nSize, 0 );
+            HB_SIZE nWritten = hb_fileWrite(pFile, pData, nSize, 0);
             if( nWritten == 0 || nWritten == static_cast<HB_SIZE>(FS_ERROR) )
             {
                break;
@@ -129,10 +129,10 @@ static HB_BOOL hb_memowrit( HB_BOOL bHandleEOF )
          if( bHandleEOF && bRetVal )  /* if true, then write EOF */
          {
             char cEOF = HB_CHAR_EOF;
-            hb_fileWrite( pFile, &cEOF, sizeof(char), -1 );
+            hb_fileWrite(pFile, &cEOF, sizeof(char), -1);
          }
 
-         hb_fileClose( pFile );
+         hb_fileClose(pFile);
       }
    }
 

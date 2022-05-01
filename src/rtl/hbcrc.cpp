@@ -143,7 +143,7 @@ static const HB_U16 crc16_tab[] =
    0x8201, 0x42C0, 0x4380, 0x8341, 0x4100, 0x81C1, 0x8081, 0x4040
 };
 
-HB_U32 hb_crc32( HB_U32 crc, const void * buf, HB_SIZE len )
+HB_U32 hb_crc32(HB_U32 crc, const void * buf, HB_SIZE len)
 {
    crc ^= 0xffffffffL;
    if( buf && len )
@@ -158,7 +158,7 @@ HB_U32 hb_crc32( HB_U32 crc, const void * buf, HB_SIZE len )
    return crc ^ 0xffffffffL;
 }
 
-HB_U16 hb_crc16( HB_U16 crc, const void * buf, HB_SIZE len )
+HB_U16 hb_crc16(HB_U16 crc, const void * buf, HB_SIZE len)
 {
    crc ^= 0xffff;
    if( buf && len )
@@ -269,7 +269,7 @@ HB_FUNC( HB_CRC32 )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -283,7 +283,7 @@ HB_FUNC( HB_CRC16 )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -302,7 +302,7 @@ HB_FUNC( HB_CRC )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -321,6 +321,6 @@ HB_FUNC( HB_CRCCT )
    }
    else
    {
-      hb_errRT_BASE( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

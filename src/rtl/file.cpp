@@ -47,7 +47,7 @@
 #include "hbapi.h"
 #include "hbapifs.h"
 
-HB_BOOL hb_fsFile( const char * pszFileName )
+HB_BOOL hb_fsFile(const char * pszFileName)
 {
 #if 0
    HB_TRACE( HB_TR_DEBUG, ( "hb_fsFile(%s)", pszFileName ) );

@@ -66,7 +66,7 @@ HB_FUNC( SPACE )
                   be as large as ULONG_MAX, and the maximum length that
                   can be specified is LONG_MAX here. [vszakats] */
          #if 0
-         hb_errRT_BASE( EG_STROVERFLOW, 1233, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE(EG_STROVERFLOW, 1233, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
          #endif
 
          hb_xmemset(szResult, ' ', nLen);

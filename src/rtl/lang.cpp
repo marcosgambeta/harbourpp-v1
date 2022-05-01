@@ -289,7 +289,7 @@ HB_FUNC( HB_USERLANG )
          case 0x042A: ietfc = "vi-VN"      ; break;
          default:     ietfc = nullptr         ; break;
       }
-      hb_retc_const( ietfc );
+      hb_retc_const(ietfc);
 #else
       hb_retc_null();
 #endif

@@ -65,7 +65,7 @@ HB_FUNC( HB_STRSHRINK )
 
          if( HB_CDP_ISCHARIDX( cdp ) )
          {
-            nLen = hb_cdpTextLen( cdp, pszText, nText );
+            nLen = hb_cdpTextLen(cdp, pszText, nText);
          }
          else
          {
@@ -76,7 +76,7 @@ HB_FUNC( HB_STRSHRINK )
          {
             if( HB_CDP_ISCHARIDX( cdp ) )
             {
-               nLen = hb_cdpTextPos( cdp, pszText, nText, nLen - nShrinkBy );
+               nLen = hb_cdpTextPos(cdp, pszText, nText, nLen - nShrinkBy);
             }
             else
             {

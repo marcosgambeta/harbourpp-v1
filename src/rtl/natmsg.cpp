@@ -74,7 +74,7 @@ static const char * hb_nationGetMsg( int iMsg )
    HB_TRACE( HB_TR_DEBUG, ( "hb_nationGetMsg(%u)", iMsg ) );
 #endif
 
-   return ( iMsg >= 1 && iMsg <= 13 ) ? hb_langDGetItem( HB_LANG_ITEM_BASE_NATMSG + iMsg - 1 ) : "";
+   return ( iMsg >= 1 && iMsg <= 13 ) ? hb_langDGetItem(HB_LANG_ITEM_BASE_NATMSG + iMsg - 1) : "";
 }
 
 HB_FUNC( __NATISAFFIRM )
@@ -84,7 +84,7 @@ HB_FUNC( __NATISAFFIRM )
 
    if( nLen > 0 )
    {
-      const char * szYesNo = hb_langDGetItem( HB_LANG_ITEM_BASE_NATMSG + _LF_YN - 1 );
+      const char * szYesNo = hb_langDGetItem(HB_LANG_ITEM_BASE_NATMSG + _LF_YN - 1);
       HB_SIZE nStr = 0;
 
       while( szYesNo[nStr] && szYesNo[nStr] != '/' )
@@ -97,11 +97,11 @@ HB_FUNC( __NATISAFFIRM )
          PHB_CODEPAGE cdp = hb_vmCDP();
          if( cdp )
          {
-            fIS = hb_cdpicmp( hb_parc(1), nLen, szYesNo, nStr, cdp, false ) == 0;
+            fIS = hb_cdpicmp(hb_parc(1), nLen, szYesNo, nStr, cdp, false) == 0;
          }
          else
          {
-            fIS = hb_strnicmp( hb_parc(1), szYesNo, nStr ) == 0;
+            fIS = hb_strnicmp(hb_parc(1), szYesNo, nStr) == 0;
          }   
       }
    }
@@ -115,7 +115,7 @@ HB_FUNC( __NATISNEGATIVE )
 
    if( nLen > 0 )
    {
-      const char * szYesNo = hb_langDGetItem( HB_LANG_ITEM_BASE_NATMSG + _LF_YN - 1 );
+      const char * szYesNo = hb_langDGetItem(HB_LANG_ITEM_BASE_NATMSG + _LF_YN - 1);
       HB_SIZE nStr;
 
       while( *szYesNo )
@@ -132,11 +132,11 @@ HB_FUNC( __NATISNEGATIVE )
          PHB_CODEPAGE cdp = hb_vmCDP();
          if( cdp )
          {
-            fIS = hb_cdpicmp( hb_parc(1), nLen, szYesNo, nStr, cdp, false ) == 0;
+            fIS = hb_cdpicmp(hb_parc(1), nLen, szYesNo, nStr, cdp, false) == 0;
          }
          else
          {
-            fIS = hb_strnicmp( hb_parc(1), szYesNo, nStr ) == 0;
+            fIS = hb_strnicmp(hb_parc(1), szYesNo, nStr) == 0;
          }   
       }
    }
@@ -148,11 +148,11 @@ HB_FUNC( __NATMSG )
    if( hb_pcount() == 0 )
    {
       /* TODO: Replace this with Language API call. */
-      hb_retc_const( "Invalid argument" );
+      hb_retc_const("Invalid argument");
    }
    else if( HB_ISNUM(1) )
    {
-      hb_retc_const( hb_nationGetMsg( hb_parni(1) ) );
+      hb_retc_const(hb_nationGetMsg(hb_parni(1)));
    }
    else
    {
@@ -165,5 +165,5 @@ HB_FUNC( __NATMSGVER )
    /* NOTE: CA-Cl*pper 5.2e Intl. will return: "NATMSGS v1.2i x14 19/Mar/93" */
    /* NOTE: CA-Cl*pper 5.3  Intl. will return: "NATMSGS v1.3i x19 06/Mar/95" */
 
-   hb_retc_const( "NATMSGS (Harbour)" );
+   hb_retc_const("NATMSGS (Harbour)");
 }

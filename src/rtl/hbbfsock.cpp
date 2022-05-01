@@ -79,8 +79,8 @@ static void s_bf_hash( const HB_BLOWFISH * bf, HB_BYTE * vect, HB_BYTE * counter
 {
    HB_U32 xl, xr, cl, cr;
 
-   cl = xl = HB_GET_BE_UINT32( &counter[0] );
-   cr = xr = HB_GET_BE_UINT32( &counter[4] );
+   cl = xl = HB_GET_BE_UINT32(&counter[0]);
+   cr = xr = HB_GET_BE_UINT32(&counter[4]);
    ++cr;
    HB_PUT_BE_UINT32(&counter[4], cr);
    if( cr == 0 )
@@ -99,7 +99,7 @@ static long s_bf_send( PHB_SOCKEX_BF pBF, HB_MAXINT timeout )
 
    while( lSent < len )
    {
-      long l = hb_sockexWrite( pBF->sock, pBF->buffer + lSent, len - lSent, timeout );
+      long l = hb_sockexWrite(pBF->sock, pBF->buffer + lSent, len - lSent, timeout);
       if( l <= 0 )
       {
          switch( hb_socketGetError() )
@@ -135,7 +135,7 @@ static long s_bf_send( PHB_SOCKEX_BF pBF, HB_MAXINT timeout )
 
 /* socket filter */
 
-static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT timeout )
+static long s_sockexRead(PHB_SOCKEX pSock, void * data, long len, HB_MAXINT timeout)
 {
    PHB_SOCKEX_BF pBF = HB_BFSOCK_GET( pSock );
    long lRecv;
@@ -155,7 +155,7 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
    }
    else
    {
-      lRecv = hb_sockexRead( pBF->sock, data, len, timeout );
+      lRecv = hb_sockexRead(pBF->sock, data, len, timeout);
       if( lRecv > 0 )
       {
          HB_BYTE * pData = ( HB_BYTE * ) data;
@@ -174,7 +174,7 @@ static long s_sockexRead( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT tim
    return lRecv;
 }
 
-static long s_sockexWrite( PHB_SOCKEX pSock, const void * data, long len, HB_MAXINT timeout )
+static long s_sockexWrite(PHB_SOCKEX pSock, const void * data, long len, HB_MAXINT timeout)
 {
    PHB_SOCKEX_BF pBF = HB_BFSOCK_GET( pSock );
    const HB_BYTE * pData = static_cast<const HB_BYTE*>(data);
@@ -216,24 +216,23 @@ static long s_sockexFlush( PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync )
    return pBF->inbuffer + hb_sockexFlush( pBF->sock, timeout, fSync );
 }
 
-static int s_sockexCanRead( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout )
+static int s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
-   return pSock->inbuffer > 0 ? 1 : hb_sockexCanRead( HB_BFSOCK_GET( pSock )->sock, fBuffer, timeout );
+   return pSock->inbuffer > 0 ? 1 : hb_sockexCanRead(HB_BFSOCK_GET(pSock)->sock, fBuffer, timeout);
 }
 
-static int s_sockexCanWrite( PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout )
+static int s_sockexCanWrite(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
-   return hb_sockexCanWrite( HB_BFSOCK_GET( pSock )->sock, fBuffer, timeout );
+   return hb_sockexCanWrite(HB_BFSOCK_GET(pSock)->sock, fBuffer, timeout);
 }
 
-static char * s_sockexName( PHB_SOCKEX pSock )
+static char * s_sockexName(PHB_SOCKEX pSock)
 {
-   char * pszName = hb_sockexIsRaw( HB_BFSOCK_GET( pSock )->sock ) ? nullptr :
-                    hb_sockexName( HB_BFSOCK_GET( pSock )->sock );
+   char * pszName = hb_sockexIsRaw(HB_BFSOCK_GET(pSock)->sock ) ? nullptr : hb_sockexName(HB_BFSOCK_GET(pSock )->sock);
    if( pszName )
    {
       char * pszFree = pszName;
-      pszName = hb_xstrcpy( nullptr, pSock->pFilter->pszName, "|", pszName, nullptr );
+      pszName = hb_xstrcpy(nullptr, pSock->pFilter->pszName, "|", pszName, nullptr);
       hb_xfree(pszFree);
    }
    else
@@ -249,7 +248,7 @@ static const char * s_sockexErrorStr( PHB_SOCKEX pSock, int iError )
    return hb_sockexErrorStr( HB_BFSOCK_GET( pSock )->sock, iError );
 }
 
-static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
+static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
 {
    PHB_SOCKEX_BF pBF = HB_BFSOCK_GET( pSock );
    int iResult = 0;
@@ -271,14 +270,14 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
          {
             pBF->sock->iAutoFlush = pSock->iAutoFlush;
          }
-         iResult = hb_sockexClose( pBF->sock, fClose );
+         iResult = hb_sockexClose(pBF->sock, fClose);
       }
       memset(pBF, 0, sizeof(*pBF));
       hb_xfree(pBF);
    }
    /* call hb_sockexRawClear() with fClose = HB_FALSE because
       hb_sockexClose() already closed real socket */
-   hb_sockexRawClear( pSock, false );
+   hb_sockexRawClear(pSock, false);
    hb_xfree(pSock);
 
    return iResult;
@@ -286,17 +285,17 @@ static int s_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose )
 
 static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams );
 
-static PHB_SOCKEX s_sockexNew( HB_SOCKET sd, PHB_ITEM pParams )
+static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
 {
    PHB_SOCKEX pSock, pSockNew = nullptr;
 
-   pSock = hb_sockexNew( sd, nullptr, pParams );
+   pSock = hb_sockexNew(sd, nullptr, pParams);
    if( pSock )
    {
       pSockNew = s_sockexNext( pSock, pParams );
       if( pSockNew == nullptr )
       {
-         hb_sockexClose( pSock, false );
+         hb_sockexClose(pSock, false);
       }
    }
 
@@ -327,7 +326,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
       const void * keydata = nullptr, * iv = nullptr;
       int keylen = 0, ivlen = 0;
 
-      hb_socekxParamsGetStd( pParams, &keydata, &keylen, &iv, &ivlen, nullptr, nullptr );
+      hb_socekxParamsGetStd(pParams, &keydata, &keylen, &iv, &ivlen, nullptr, nullptr);
       if( keylen > 0 )
       {
          PHB_SOCKEX_BF pBF = static_cast<PHB_SOCKEX_BF>(hb_xgrabz(sizeof(HB_SOCKEX_BF)));
@@ -372,8 +371,8 @@ HB_FUNC( HB_SOCKETNEWBFSOCK )
       pSock = s_sockexNext( pSock, hb_param(2, Harbour::Item::HASH) );
       if( pSock )
       {
-         hb_sockexItemClear( hb_param(1, Harbour::Item::POINTER) );
-         hb_sockexItemPut( hb_param(-1, Harbour::Item::ANY), pSock );
+         hb_sockexItemClear(hb_param(1, Harbour::Item::POINTER));
+         hb_sockexItemPut(hb_param(-1, Harbour::Item::ANY), pSock);
       }
    }
 }

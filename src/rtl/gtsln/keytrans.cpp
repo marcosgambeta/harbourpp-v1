@@ -384,7 +384,7 @@ static int KeyTranslationTable[][2] =
 #define KeyTranslationTableSize  HB_SIZEOFARRAY( KeyTranslationTable )
 
 /* a very simple sort algorithm */
-static void hb_sln_SortKeyTranslationTable( void )
+static void hb_sln_SortKeyTranslationTable(void)
 {
    for( int i = 0; i < ( static_cast<int>(KeyTranslationTableSize) - 1 ); i++ )
    {
