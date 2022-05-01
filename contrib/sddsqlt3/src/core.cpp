@@ -56,11 +56,11 @@
 
 #include <sqlite3.h>
 
-#define S_HB_ARRAYGETSTR( arr, n, phstr, plen )  hb_arrayGetStrUTF8( arr, n, phstr, plen )
-#define S_HB_ITEMCOPYSTR( itm, str, len )        hb_itemCopyStrUTF8( itm, str, len )
-#define S_HB_ITEMGETSTR( itm, phstr, plen )      hb_itemGetStrUTF8( itm, phstr, plen )
-#define S_HB_ITEMPUTSTR( itm, str )              hb_itemPutStrUTF8( itm, str )
-#define S_HB_ITEMPUTSTRLEN( itm, str, len )      hb_itemPutStrLenUTF8( itm, str, len )
+#define S_HB_ARRAYGETSTR( arr, n, phstr, plen )  hb_arrayGetStrUTF8(arr, n, phstr, plen)
+#define S_HB_ITEMCOPYSTR( itm, str, len )        hb_itemCopyStrUTF8(itm, str, len)
+#define S_HB_ITEMGETSTR( itm, phstr, plen )      hb_itemGetStrUTF8(itm, phstr, plen)
+#define S_HB_ITEMPUTSTR( itm, str )              hb_itemPutStrUTF8(itm, str)
+#define S_HB_ITEMPUTSTRLEN( itm, str, len )      hb_itemPutStrLenUTF8(itm, str, len)
 
 typedef struct
 {
@@ -413,7 +413,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
 
    errCode = 0;
    bError  = HB_FALSE;
-   pItemEof = hb_itemArrayNew( uiFields );
+   pItemEof = hb_itemArrayNew(uiFields);
    for( uiIndex = 0; uiIndex < uiFields; ++uiIndex )
    {
       DBFIELDINFO dbFieldInfo;
@@ -555,7 +555,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
       PHB_ITEM  pArray;
       HB_USHORT ui;
 
-      pArray = hb_itemArrayNew( pArea->area.uiFieldCount );
+      pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
 
       for( ui = 0; ui < pArea->area.uiFieldCount; ++ui )
       {

@@ -229,7 +229,7 @@ static HB_ERRCODE pgsqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
       ulAffectedRows = static_cast<unsigned long>(atol(PQcmdTuples(pResult)));
 
    hb_rddsqlSetError(0, nullptr, hb_itemGetCPtr(pItem), nullptr, ulAffectedRows);
-   PQclear( pResult );
+   PQclear(pResult);
    return HB_SUCCESS;
 }
 
@@ -258,7 +258,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
    if( status != PGRES_TUPLES_OK && status != PGRES_COMMAND_OK )
    {
       hb_errRT_PostgreSQLDD( EG_OPEN, ESQLDD_INVALIDQUERY, PQresultErrorMessage( pResult ), pArea->szQuery, static_cast<HB_ERRCODE>(status) );
-      PQclear( pResult );
+      PQclear(pResult);
       return HB_FAILURE;
    }
 
@@ -267,7 +267,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
    uiFields = static_cast<HB_USHORT>(PQnfields(pResult));
    SELF_SETFIELDEXTENT( &pArea->area, uiFields );
 
-   pItemEof = hb_itemArrayNew( uiFields );
+   pItemEof = hb_itemArrayNew(uiFields);
    pItem    = hb_itemNew(nullptr);
 
    bError = HB_FALSE;
@@ -455,7 +455,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
 
    if( bError )
    {
-      hb_itemClear( pItemEof );
+      hb_itemClear(pItemEof);
       hb_itemRelease(pItemEof);
       hb_errRT_PostgreSQLDD( EG_CORRUPTION, ESQLDD_INVALIDFIELD, "Invalid field type", pArea->szQuery, 0 );
       return HB_FAILURE;
@@ -482,7 +482,7 @@ static HB_ERRCODE pgsqlClose( SQLBASEAREAP pArea )
    if( pSDDData )
    {
       if( pSDDData->pResult )
-         PQclear( pSDDData->pResult );
+         PQclear(pSDDData->pResult);
 
       hb_xfree(pSDDData);
       pArea->pSDDData = nullptr;

@@ -282,7 +282,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
    uiFields = pSqlda->sqld;
    SELF_SETFIELDEXTENT( &pArea->area, uiFields );
 
-   pItemEof = hb_itemArrayNew( uiFields );
+   pItemEof = hb_itemArrayNew(uiFields);
 
    bError = HB_FALSE;
    for( uiCount = 0, pVar = pSqlda->sqlvar; uiCount < uiFields; uiCount++, pVar++ )
@@ -420,7 +420,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
 
    if( bError )
    {
-      hb_itemClear( pItemEof );
+      hb_itemClear(pItemEof);
       hb_itemRelease(pItemEof);
       hb_errRT_FirebirdDD( EG_CORRUPTION, ESQLDD_INVALIDFIELD, "Invalid field type", pArea->szQuery, 0 );
       return HB_FAILURE;
@@ -479,7 +479,7 @@ static HB_ERRCODE fbGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
       {
          PHB_ITEM pItem = nullptr, pArray;
 
-         pArray = hb_itemArrayNew( pArea->area.uiFieldCount );
+         pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
          for( ui = 0; ui < pArea->area.uiFieldCount; ui++ )
          {
             LPFIELD pField;

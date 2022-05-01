@@ -96,7 +96,7 @@ void hb_rddsqlSetError( HB_ERRCODE errCode, const char * szError, const char * s
    if( pItem )
       hb_itemCopy(s_pItemNewID, pItem);
    else
-      hb_itemClear( s_pItemNewID );
+      hb_itemClear(s_pItemNewID);
 
    s_ulAffectedRows = ulAffectedRows;
 }
@@ -271,7 +271,7 @@ static HB_ERRCODE sqlbaseGoBottom( SQLBASEAREAP pArea )
       return HB_FAILURE;
 
 
-   if( !pArea->fFetched && pArea->pSDD->GoTo( pArea, static_cast<HB_ULONG>(-1) ) == HB_FAILURE )
+   if( !pArea->fFetched && pArea->pSDD->GoTo(pArea, static_cast<HB_ULONG>(-1)) == HB_FAILURE )
       return HB_FAILURE;
 
    pArea->area.fTop    = HB_FALSE;
@@ -289,7 +289,7 @@ static HB_ERRCODE sqlbaseGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
    if( SELF_GOCOLD( &pArea->area ) == HB_FAILURE )
       return HB_FAILURE;
 
-   if( pArea->pSDD->GoTo( pArea, ulRecNo ) == HB_FAILURE )
+   if( pArea->pSDD->GoTo(pArea, ulRecNo) == HB_FAILURE )
       return HB_FAILURE;
 
    if( pArea->fPositioned )
@@ -464,7 +464,7 @@ static HB_ERRCODE sqlbaseGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_IT
       hb_arrayGet(static_cast<PHB_ITEM>(pArea->pRecord), uiIndex, pItem);
       return HB_SUCCESS;
    }
-   return pArea->pSDD->GetValue( pArea, uiIndex, pItem );
+   return pArea->pSDD->GetValue(pArea, uiIndex, pItem);
 }
 
 
@@ -473,7 +473,7 @@ static HB_ERRCODE sqlbaseGetVarLen( SQLBASEAREAP pArea, HB_USHORT uiIndex, HB_UL
    /* TODO: should we use this code? */
 #if 0
    if( pArea->area.lpFields[uiIndex].uiType == Harbour::Item::MEMO )
-      return pArea->pSDD->GetVarLen( pArea, uiIndex, pLength );
+      return pArea->pSDD->GetVarLen(pArea, uiIndex, pLength);
 #endif
 
    *pLength = pArea->area.lpFields[uiIndex - 1].uiLen;
@@ -501,7 +501,7 @@ static HB_ERRCODE sqlbaseGoHot( SQLBASEAREAP pArea )
    PHB_ITEM  pArray, pItem;
    HB_USHORT us;
 
-   pArray = hb_itemArrayNew( pArea->area.uiFieldCount );
+   pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
    pItem = hb_itemNew(nullptr);
    for( us = 1; us <= pArea->area.uiFieldCount; us++ )
    {
@@ -593,7 +593,7 @@ static HB_ERRCODE sqlbaseRecId( SQLBASEAREAP pArea, PHB_ITEM pRecNo )
    HB_ULONG   ulRecNo;
 
    errCode = SELF_RECNO( &pArea->area, &ulRecNo );
-   hb_itemPutNInt( pRecNo, ulRecNo );
+   hb_itemPutNInt(pRecNo, ulRecNo);
    return errCode;
 }
 
@@ -688,7 +688,7 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
    else
       pArea->pSDD = &s_sddNull;
 
-   pItemEof = hb_itemArrayNew( pArea->area.uiFieldCount );
+   pItemEof = hb_itemArrayNew(pArea->area.uiFieldCount);
 
    bError = HB_FALSE;
    for( uiCount = 0; uiCount < pArea->area.uiFieldCount; uiCount++ )
@@ -759,7 +759,7 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
 
    if( bError )
    {
-      hb_itemClear( pItemEof );
+      hb_itemClear(pItemEof);
       hb_itemRelease(pItemEof);
       hb_errRT_SQLBASE(EG_CORRUPTION, ESQLDD_INVALIDFIELD, "Invalid field type", nullptr);
       SELF_CLOSE( &pArea->area );

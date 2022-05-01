@@ -82,11 +82,11 @@
 #endif
 
 #if defined(UNICODE)
-   #define O_HB_ARRAYGETSTR( arr, n, phstr, plen )  hb_arrayGetStrU16( arr, n, HB_CDP_ENDIAN_NATIVE, phstr, plen )
-   #define O_HB_ITEMCOPYSTR( itm, str, len )        hb_itemCopyStrU16( itm, HB_CDP_ENDIAN_NATIVE, str, len )
-   #define O_HB_ITEMGETSTR( itm, phstr, plen )      hb_itemGetStrU16( itm, HB_CDP_ENDIAN_NATIVE, phstr, plen )
-   #define O_HB_ITEMPUTSTR( itm, str )              hb_itemPutStrU16( itm, HB_CDP_ENDIAN_NATIVE, str )
-   #define O_HB_ITEMPUTSTRLEN( itm, str, len )      hb_itemPutStrLenU16( itm, HB_CDP_ENDIAN_NATIVE, str, len )
+   #define O_HB_ARRAYGETSTR( arr, n, phstr, plen )  hb_arrayGetStrU16(arr, n, HB_CDP_ENDIAN_NATIVE, phstr, plen)
+   #define O_HB_ITEMCOPYSTR( itm, str, len )        hb_itemCopyStrU16(itm, HB_CDP_ENDIAN_NATIVE, str, len)
+   #define O_HB_ITEMGETSTR( itm, phstr, plen )      hb_itemGetStrU16(itm, HB_CDP_ENDIAN_NATIVE, phstr, plen)
+   #define O_HB_ITEMPUTSTR( itm, str )              hb_itemPutStrU16(itm, HB_CDP_ENDIAN_NATIVE, str)
+   #define O_HB_ITEMPUTSTRLEN( itm, str, len )      hb_itemPutStrLenU16(itm, HB_CDP_ENDIAN_NATIVE, str, len)
    #define O_HB_CHARDUP( str )                      hb_osStrU16Encode( str )
    #define O_HB_OSSTRDUP( str )                     hb_osStrU16Decode( str )
    #define O_HB_STRLEN( str )                       hb_wstrlen( str )
@@ -229,7 +229,7 @@ static HB_ERRCODE odbcConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 #endif
    {
 #if ODBCVER >= 0x0300
-      SQLSetEnvAttr( hEnv, SQL_ATTR_ODBC_VERSION, ( SQLPOINTER ) SQL_OV_ODBC3, SQL_IS_UINTEGER );
+      SQLSetEnvAttr(hEnv, SQL_ATTR_ODBC_VERSION, reinterpret_cast<SQLPOINTER>(SQL_OV_ODBC3), SQL_IS_UINTEGER);
 #endif
 
 #if ODBCVER >= 0x0300
@@ -436,7 +436,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
    uiFields = static_cast<HB_USHORT>(iNameLen);
    SELF_SETFIELDEXTENT( &pArea->area, uiFields );
 
-   pItemEof = hb_itemArrayNew( uiFields );
+   pItemEof = hb_itemArrayNew(uiFields);
    pItem = hb_itemNew(nullptr);
 
 #if 0
@@ -707,7 +707,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
          break;
       }
 
-      pArray = hb_itemArrayNew( pArea->area.uiFieldCount );
+      pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
       pItem  = nullptr;
       for( ui = 1; ui <= pArea->area.uiFieldCount; ui++ )
       {

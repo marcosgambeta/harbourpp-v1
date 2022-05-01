@@ -388,7 +388,7 @@ HB_FUNC( ADSMGGETUSERNAMES )
                           &usArrayLen,
                           &usStructSize ) == AE_SUCCESS )
    {
-      PHB_ITEM pArray = hb_itemArrayNew( usArrayLen );
+      PHB_ITEM pArray = hb_itemArrayNew(usArrayLen);
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ )
       {
@@ -502,7 +502,7 @@ HB_FUNC( ADSMGGETOPENTABLES ) /* nMaxNumberOfFilesToReturn, cUserName, nConnecti
                            &usArrayLen,
                            &usStructSize ) == AE_SUCCESS )
    {
-      PHB_ITEM pArray = hb_itemArrayNew( usArrayLen );
+      PHB_ITEM pArray = hb_itemArrayNew(usArrayLen);
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ )
       {
@@ -541,7 +541,7 @@ HB_FUNC( ADSMGGETOPENTABLES2 ) /* nMaxNumberOfFilesToReturn, cUserName, nConnect
                            &usArrayLen,
                            &usStructSize ) == AE_SUCCESS )
    {
-      PHB_ITEM pArray = hb_itemArrayNew( usArrayLen );
+      PHB_ITEM pArray = hb_itemArrayNew(usArrayLen);
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ )
       {
@@ -585,7 +585,7 @@ HB_FUNC( ADSMGGETOPENINDEXES ) /* nMaxNumberOfFilesToReturn, cTableName, cUserNa
                             &usArrayLen,
                             &usStructSize ) == AE_SUCCESS )
    {
-      PHB_ITEM pArray = hb_itemArrayNew( usArrayLen );
+      PHB_ITEM pArray = hb_itemArrayNew(usArrayLen);
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ )
       {
@@ -625,7 +625,7 @@ HB_FUNC( ADSMGGETLOCKS )
                       &usArrayLen,
                       &usStructSize ) == AE_SUCCESS )
    {
-      PHB_ITEM pArray = hb_itemArrayNew( usArrayLen );
+      PHB_ITEM pArray = hb_itemArrayNew(usArrayLen);
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ )
       {
@@ -659,7 +659,7 @@ HB_FUNC( ADSMGGETWORKERTHREADACTIVITY )
 
    if( AdsMgGetWorkerThreadActivity( s_hMgmtHandle, astWorkerThreadActivity, &usArrayLen, &usStructSize ) == AE_SUCCESS )
    {
-      PHB_ITEM pArray = hb_itemArrayNew( usArrayLen );
+      PHB_ITEM pArray = hb_itemArrayNew(usArrayLen);
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ )
       {

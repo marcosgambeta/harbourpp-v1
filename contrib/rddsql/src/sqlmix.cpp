@@ -191,7 +191,7 @@ static PMIXKEY hb_mixKeyEval( PMIXKEY pKey, PMIXTAG pTag )
    else
       iCurrArea = 0;
 
-   pItem = hb_vmEvalBlockOrMacro( pTag->pKeyItem );
+   pItem = hb_vmEvalBlockOrMacro(pTag->pKeyItem);
 
    pKey = hb_mixKeyPutItem( pKey, pItem, pArea->sqlarea.ulRecNo, pTag );
 
@@ -846,7 +846,7 @@ static PMIXTAG hb_mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_I
 
       if( pForItem == nullptr || hb_mixEvalCond(nullptr, pForItem) )
       {
-         pItem = hb_vmEvalBlockOrMacro( pKeyItem );
+         pItem = hb_vmEvalBlockOrMacro(pKeyItem);
 
          pKey = hb_mixKeyPutItem( pKey, pItem, pArea->sqlarea.ulRecNo, pTag );
          hb_mixTagAddKey( pTag, pKey );
@@ -1152,7 +1152,7 @@ static HB_BOOL hb_mixCheckRecordFilter( SQLMIXAREAP pArea, HB_ULONG ulRecNo )
 
       if( !lResult && pArea->sqlarea.area.dbfi.itmCobExpr )
       {
-         PHB_ITEM pResult = hb_vmEvalBlock( pArea->sqlarea.area.dbfi.itmCobExpr );
+         PHB_ITEM pResult = hb_vmEvalBlock(pArea->sqlarea.area.dbfi.itmCobExpr);
          lResult = HB_IS_LOGICAL(pResult) && !hb_itemGetL(pResult);
       }
    }
@@ -1287,7 +1287,7 @@ static HB_ERRCODE sqlmixSeek( SQLMIXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pIt
 
    if( !pArea->pTag )
    {
-      sqlmixErrorRT( pArea, EG_NOORDER, 1201, nullptr, 0, EF_CANDEFAULT );
+      sqlmixErrorRT(pArea, EG_NOORDER, 1201, nullptr, 0, EF_CANDEFAULT);
       return HB_FAILURE;
    }
    else
@@ -1423,7 +1423,7 @@ static HB_ERRCODE sqlmixGoCold( SQLMIXAREAP pArea )
             PMIXKEY pKey = hb_mixKeyEval(nullptr, pTag);
 
             if( pTag->pForItem != nullptr )
-               fAdd = hb_mixEvalCond( pArea, pTag->pForItem );
+               fAdd = hb_mixEvalCond(pArea, pTag->pForItem);
             else
                fAdd = HB_TRUE;
 
@@ -1475,7 +1475,7 @@ static HB_ERRCODE sqlmixGoHot( SQLMIXAREAP pArea )
       if( !pTag->fCustom )
       {
          pTag->HotKey = hb_mixKeyEval( pTag->HotKey, pTag );
-         pTag->HotFor = pTag->pForItem == nullptr || hb_mixEvalCond( pArea, pTag->pForItem );
+         pTag->HotFor = pTag->pForItem == nullptr || hb_mixEvalCond(pArea, pTag->pForItem);
       }
       pTag = pTag->pNext;
    }
@@ -1514,7 +1514,7 @@ static HB_ERRCODE sqlmixClose( SQLMIXAREAP pArea )
    if( SUPER_CLOSE( &pArea->sqlarea.area ) == HB_FAILURE )
       return HB_FAILURE;
 
-   if( SELF_ORDLSTCLEAR( &pArea->sqlarea.area ) == HB_FAILURE )
+   if( SELF_ORDLSTCLEAR(&pArea->sqlarea.area) == HB_FAILURE )
       return HB_FAILURE;
 
    return HB_SUCCESS;
@@ -1530,7 +1530,7 @@ static HB_ERRCODE sqlmixStructSize( SQLMIXAREAP pArea, HB_USHORT * StructSize )
 }
 
 
-static HB_ERRCODE sqlmixOrderListClear( SQLMIXAREAP pArea )
+static HB_ERRCODE sqlmixOrderListClear(SQLMIXAREAP pArea)
 {
    PMIXTAG pTag;
 
@@ -1551,7 +1551,7 @@ static HB_ERRCODE sqlmixOrderListFocus( SQLMIXAREAP pArea, LPDBORDERINFO pOrderI
       pOrderInfo->itmResult = hb_itemPutC(pOrderInfo->itmResult, pArea->pTag->szName);
 
    if( pOrderInfo->itmOrder )
-      pArea->pTag = hb_mixFindTag( pArea, pOrderInfo->itmOrder );
+      pArea->pTag = hb_mixFindTag(pArea, pOrderInfo->itmOrder);
 
    return pArea->pTag ? HB_SUCCESS : HB_FAILURE;
 }
@@ -1626,7 +1626,7 @@ static HB_ERRCODE sqlmixOrderCreate( SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrd
    {
       hb_vmDestroyBlockOrMacro( pKeyItem );
       SELF_GOTO( &pArea->sqlarea.area, ulRecNo );
-      sqlmixErrorRT( pArea, bType == 'U' ? EG_DATATYPE : EG_DATAWIDTH, 1026, nullptr, 0, 0 );
+      sqlmixErrorRT(pArea, bType == 'U' ? EG_DATATYPE : EG_DATAWIDTH, 1026, nullptr, 0, 0);
       return HB_FAILURE;
    }
 
@@ -1686,7 +1686,7 @@ static HB_ERRCODE sqlmixOrderCreate( SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrd
          if( pWhileItem )
             hb_vmDestroyBlockOrMacro( pWhileItem );
          SELF_GOTO( &pArea->sqlarea.area, ulRecNo );
-         sqlmixErrorRT( pArea, EG_DATATYPE, EDBF_INVALIDFOR, nullptr, 0, 0 );
+         sqlmixErrorRT(pArea, EG_DATATYPE, EDBF_INVALIDFOR, nullptr, 0, 0);
          return HB_FAILURE;
       }
       hb_itemRelease(pArea->sqlarea.area.valResult);
@@ -1697,7 +1697,7 @@ static HB_ERRCODE sqlmixOrderCreate( SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrd
 
    SELF_GOTO( &pArea->sqlarea.area, ulRecNo );
 
-   pTagNew = hb_mixTagCreate( pOrderInfo->atomBagName, pOrderInfo->abExpr, pKeyItem, pForItem, pWhileItem, bType, uiLen, pArea );
+   pTagNew = hb_mixTagCreate(pOrderInfo->atomBagName, pOrderInfo->abExpr, pKeyItem, pForItem, pWhileItem, bType, uiLen, pArea);
 
    if( pWhileItem )
       hb_vmDestroyBlockOrMacro( pWhileItem );
@@ -1747,7 +1747,7 @@ static HB_ERRCODE sqlmixOrderInfo( SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORD
       return HB_FAILURE;
 
    if( pOrderInfo->itmOrder )
-      pTag = hb_mixFindTag( pArea, pOrderInfo->itmOrder );
+      pTag = hb_mixFindTag(pArea, pOrderInfo->itmOrder);
    else
       pTag = pArea->pTag;
 
@@ -1873,7 +1873,7 @@ static HB_ERRCODE sqlmixOrderInfo( SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORD
          /* TODO */
 #if 0
       case DBOI_KEYVAL:
-         hb_itemClear( pOrderInfo->itmResult );
+         hb_itemClear(pOrderInfo->itmResult);
          if( pArea->sqlarea.lpdbPendingRel )
             SELF_FORCEREL( &pArea->sqlarea.area );
          if( pTag && pArea->sqlarea.fPositioned )
@@ -1881,7 +1881,7 @@ static HB_ERRCODE sqlmixOrderInfo( SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORD
             if( pTag->CurKey->rec != pArea->sqlarea.ulRecNo )
             {
                hb_cdxIndexLockRead( pTag->pIndex );
-               hb_cdxCurKeyRefresh( pArea, pTag );
+               hb_cdxCurKeyRefresh(pArea, pTag);
                hb_cdxIndexUnLockRead( pTag->pIndex );
             }
             if( pTag->CurKey->rec == pArea->sqlarea.ulRecNo )
@@ -1906,9 +1906,7 @@ static HB_ERRCODE sqlmixOrderInfo( SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORD
                if( pArea->sqlarea.lpdbPendingRel )
                   SELF_FORCEREL( &pArea->sqlarea.area );
 
-               if( !pArea->sqlarea.fPositioned ||
-                   ( pTag->pForItem &&
-                     !hb_cdxEvalCond( pArea, pTag->pForItem, true ) ) )
+               if( !pArea->sqlarea.fPositioned || (pTag->pForItem && !hb_cdxEvalCond(pArea, pTag->pForItem, true)) )
                   pOrderInfo->itmResult = hb_itemPutL(pOrderInfo->itmResult, false);
                else
                {
@@ -1924,7 +1922,7 @@ static HB_ERRCODE sqlmixOrderInfo( SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORD
                }
             }
             else
-               sqlmixErrorRT( pArea, 0, 1052, nullptr, 0, 0 );
+               sqlmixErrorRT(pArea, 0, 1052, nullptr, 0, 0);
          }
          break;
 
@@ -1954,7 +1952,7 @@ static HB_ERRCODE sqlmixOrderInfo( SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORD
                }
             }
             else
-               sqlmixErrorRT( pArea, 0, 1052, nullptr, 0, 0 );
+               sqlmixErrorRT(pArea, 0, 1052, nullptr, 0, 0);
          }
          break;
 #endif
