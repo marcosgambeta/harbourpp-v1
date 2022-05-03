@@ -104,7 +104,7 @@ static void hb_gt_wvt_RegisterClass(HINSTANCE hInstance)
    wndclass.cbClsExtra    = 0;
    wndclass.cbWndExtra    = 0;
    wndclass.hIcon         = nullptr;
-   wndclass.hbrBackground = nullptr;  /* ( HBRUSH ) ( COLOR_BTNFACE + 1 ); */
+   wndclass.hbrBackground = nullptr;  /* static_cast<HBRUSH>((COLOR_BTNFACE + 1)); */
    wndclass.lpszMenuName  = nullptr;
 #endif
    wndclass.lpszClassName = s_szClassName;
@@ -1190,7 +1190,7 @@ static HWND hb_gt_wvt_CreateWindow(PHB_GTWVT pWVT)
       hWndParent,           /* window parent  */
       nullptr,              /* menu           */
       pWVT->hInstance,      /* instance       */
-      nullptr );            /* lpParam        */
+      nullptr);             /* lpParam        */
 
    ShowWindow(pWVT->hWnd, pWVT->pPP->bVisible ? SW_SHOWNORMAL : SW_HIDE);
    UpdateWindow(pWVT->hWnd);

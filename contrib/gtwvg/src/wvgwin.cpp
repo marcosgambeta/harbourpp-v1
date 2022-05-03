@@ -634,7 +634,7 @@ HB_FUNC( WVG_FINDWINDOW )
 
 HB_FUNC( WVG_SLEEP )
 {
-   Sleep( hb_parni(1) );
+   Sleep(hb_parni(1));
 }
 
 /*                         Menu Manipulations                           */

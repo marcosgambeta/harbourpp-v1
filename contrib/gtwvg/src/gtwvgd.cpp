@@ -155,7 +155,7 @@ static void hb_gt_wvt_RegisterClass(HINSTANCE hInstance)
    wndclass.cbClsExtra    = 0;
    wndclass.cbWndExtra    = 0;
    wndclass.hIcon         = nullptr;
-   wndclass.hbrBackground = nullptr;  /* ( HBRUSH ) ( COLOR_BTNFACE + 1 ); */
+   wndclass.hbrBackground = nullptr;  /* static_cast<HBRUSH>((COLOR_BTNFACE + 1)); */
    wndclass.lpszMenuName  = nullptr;
 #endif
    wndclass.lpszClassName = s_szClassName;
@@ -898,7 +898,7 @@ static HB_BOOL hb_gt_wvt_FitSize(PHB_GTWVT pWVT)
          TEXTMETRIC tm;
 
          hdc       = GetDC(pWVT->hWnd);
-         hOldFont  = static_cast<HFONT>(SelectObject(hdc, hFont) );
+         hOldFont  = static_cast<HFONT>(SelectObject(hdc, hFont));
          SetTextCharacterExtra(hdc, 0);
          GetTextMetrics(hdc, &tm);
          SelectObject(hdc, hOldFont);
@@ -2739,7 +2739,7 @@ static HWND hb_gt_wvt_CreateWindow(PHB_GTWVT pWVT, HB_BOOL bResizable)
       hWndParent,           /* window parent  */
       nullptr,              /* menu           */
       pWVT->hInstance,      /* instance       */
-      static_cast<LPVOID>(pWVT) );    /* lpParam        */
+      static_cast<LPVOID>(pWVT));    /* lpParam        */
 
    return hWnd;
 }

@@ -652,7 +652,7 @@ HB_FUNC( WVG_TREEVIEW_GETSELECTIONINFO )
 }
 
 /*
- *   hItem := Wvg_TreeView_AddItem( oItem:hTree, hParent, oItem:Caption )
+ *   hItem := Wvg_TreeView_AddItem(oItem:hTree, hParent, oItem:Caption)
  */
 HB_FUNC( WVG_TREEVIEW_ADDITEM )
 {
