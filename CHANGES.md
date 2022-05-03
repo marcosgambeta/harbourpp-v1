@@ -13,5 +13,8 @@
 . Suporte para Windows 95/98/ME descontinuado  
 . Suporte para Windows NT/2000 descontinuado  
 . Suporte para Windows CE descontinuado  
+. Suporte para 16-bit descontinuado  
+. Adicionado enumeration Harbour::Item::Type  
+. Adicionado enumeration Harbour::Result  
 
 Este documento é um trabalho em progresso.
