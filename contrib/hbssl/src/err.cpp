@@ -59,7 +59,7 @@ HB_FUNC( ERR_PRINT_ERRORS )
 
    if( bio )
    {
-      ERR_print_errors( bio );
+      ERR_print_errors(bio);
    }
    else
    {
@@ -92,7 +92,7 @@ HB_FUNC( ERR_ERROR_STRING )
 
    buffer[0] = '\0';
 
-   ERR_error_string_n( static_cast<unsigned long>(hb_parnint(1)), buffer, sizeof(buffer) );
+   ERR_error_string_n(static_cast<unsigned long>(hb_parnint(1)), buffer, sizeof(buffer));
 
    hb_retc(buffer);
 }

@@ -70,7 +70,7 @@ static void PHB_BIO_free( PHB_BIO hb_bio )
 {
    if( hb_bio->hStrRef )
    {
-      hb_itemFreeCRef( hb_bio->hStrRef );
+      hb_itemFreeCRef(hb_bio->hStrRef);
    }
 
    hb_xfree(hb_bio);
@@ -87,7 +87,7 @@ static HB_GARBAGE_FUNC( HB_BIO_Destructor )
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( *ptr )
    {
-      PHB_BIO_free( *ptr );
+      PHB_BIO_free(*ptr);
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ptr = nullptr;
@@ -118,7 +118,7 @@ static void hb_BIO_ret( BIO * bio, void * hStrRef )
 {
    HB_BIO ** ptr = static_cast<HB_BIO**>(hb_gcAllocate(sizeof(HB_BIO*), &s_gcBIOFuncs));
 
-   *ptr = PHB_BIO_create( bio, hStrRef );
+   *ptr = PHB_BIO_create(bio, hStrRef);
 
    hb_retptrGC(static_cast<void*>(ptr));
 }
@@ -127,7 +127,7 @@ static void hb_BIO_ret( BIO * bio, void * hStrRef )
 
 static HB_BOOL hb_BIO_METHOD_is( int iParam )
 {
-   return HB_ISCHAR( iParam );
+   return HB_ISCHAR(iParam);
 }
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
@@ -246,7 +246,7 @@ HB_FUNC( BIO_CLEAR_FLAGS )
 
    if( bio )
    {
-      BIO_clear_flags( bio, hb_parni(2) );
+      BIO_clear_flags(bio, hb_parni(2));
    }
    else
    {
@@ -260,7 +260,7 @@ HB_FUNC( BIO_SET_FLAGS )
 
    if( bio )
    {
-      BIO_set_flags( bio, hb_parni(2) );
+      BIO_set_flags(bio, hb_parni(2));
    }
    else
    {
@@ -348,7 +348,7 @@ HB_FUNC( BIO_SET_RETRY_SPECIAL )
 
    if( bio )
    {
-      BIO_set_retry_special( bio );
+      BIO_set_retry_special(bio);
    }
    else
    {
@@ -362,7 +362,7 @@ HB_FUNC( BIO_SET_RETRY_READ )
 
    if( bio )
    {
-      BIO_set_retry_read( bio );
+      BIO_set_retry_read(bio);
    }
    else
    {
@@ -376,7 +376,7 @@ HB_FUNC( BIO_SET_RETRY_WRITE )
 
    if( bio )
    {
-      BIO_set_retry_write( bio );
+      BIO_set_retry_write(bio);
    }
    else
    {
@@ -640,7 +640,7 @@ HB_FUNC( BIO_NEW_MEM_BUF )
    {
       void * hStrRef;
       HB_SIZE nLen;
-      const char * pszBuffer = hb_itemGetCRef( pBuffer, &hStrRef, &nLen );
+      const char * pszBuffer = hb_itemGetCRef(pBuffer, &hStrRef, &nLen);
 
       hb_BIO_ret(BIO_new_mem_buf(const_cast<char*>(pszBuffer), static_cast<int>(nLen)), hStrRef);
    }
@@ -935,7 +935,7 @@ HB_FUNC( BIO_GET_CONN_INT_PORT )
       /* Fix for header regression */
       hb_retnl(BIO_ctrl(bio, BIO_C_GET_CONNECT, 3, nullptr));
 #elif OPENSSL_VERSION_NUMBER >= 0x1010007fL
-      const BIO_ADDR * ba = BIO_get_conn_address( bio );
+      const BIO_ADDR * ba = BIO_get_conn_address(bio);
       hb_retnl(ba ? hb_socketNToHS(BIO_ADDR_rawport(ba)) : 0);
 #else
       hb_retnl(BIO_get_conn_int_port(bio));
@@ -1002,30 +1002,30 @@ HB_FUNC( ERR_LOAD_BIO_STRINGS )
 #define BIO_set_fp( b, fp, c )                BIO_ctrl( b, BIO_C_SET_FILE_PTR, c, ( char * ) fp )
 #define BIO_get_fp( b, fpp )                  BIO_ctrl( b, BIO_C_GET_FILE_PTR, 0, ( char * ) fpp )
 
-int   BIO_indent( BIO * b, int indent, int max );
-long  BIO_ctrl( BIO * bp, int cmd, long larg, void * parg );
-long  BIO_callback_ctrl( BIO * b, int cmd, void ( * fp )( struct bio_st *, int, const char *, int, long, long ) );
-char * BIO_ptr_ctrl( BIO * bp, int cmd, long larg );
-long  BIO_int_ctrl( BIO * bp, int cmd, long larg, int iarg );
-BIO * BIO_push( BIO * b, BIO * append );
-BIO * BIO_pop( BIO * b );
-BIO * BIO_find_type( BIO * b, int bio_type );
-BIO * BIO_next( BIO * b );
-BIO * BIO_get_retry_BIO( BIO * bio, int * reason );
-BIO * BIO_dup_chain( BIO * in );
+int   BIO_indent(BIO * b, int indent, int max);
+long  BIO_ctrl(BIO * bp, int cmd, long larg, void * parg);
+long  BIO_callback_ctrl(BIO * b, int cmd, void (* fp)(struct bio_st *, int, const char *, int, long, long));
+char * BIO_ptr_ctrl(BIO * bp, int cmd, long larg);
+long  BIO_int_ctrl(BIO * bp, int cmd, long larg, int iarg);
+BIO * BIO_push(BIO * b, BIO * append);
+BIO * BIO_pop(BIO * b);
+BIO * BIO_find_type(BIO * b, int bio_type);
+BIO * BIO_next(BIO * b);
+BIO * BIO_get_retry_BIO(BIO * bio, int * reason);
+BIO * BIO_dup_chain(BIO * in);
 
 int BIO_nread0(BIO * bio, char ** buf);
-int BIO_nread( BIO * bio, char ** buf, int num );
+int BIO_nread(BIO * bio, char ** buf, int num);
 int BIO_nwrite0(BIO * bio, char ** buf);
-int BIO_nwrite( BIO * bio, char ** buf, int num );
+int BIO_nwrite(BIO * bio, char ** buf, int num);
 
-BIO_METHOD *   BIO_s_mem( void );
+BIO_METHOD *   BIO_s_mem(void);
 
-BIO_set_mem_eof_return( BIO * b, int v )
-long BIO_get_mem_data( BIO * b, char ** pp )
-BIO_set_mem_buf( BIO * b, BUF_MEM * bm, int c )
-BIO_get_mem_ptr( BIO * b, BUF_MEM * *pp )
+BIO_set_mem_eof_return(BIO * b, int v)
+long BIO_get_mem_data(BIO * b, char ** pp)
+BIO_set_mem_buf(BIO * b, BUF_MEM * bm, int c)
+BIO_get_mem_ptr(BIO * b, BUF_MEM * *pp)
 
-BIO * BIO_new_mem_buf( void * buf, int len );
+BIO * BIO_new_mem_buf(void * buf, int len);
 
 #endif

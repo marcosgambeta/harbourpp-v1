@@ -51,7 +51,7 @@
 char * hb_openssl_strdup( const char * pszText )
 {
    char * pszDup;
-   size_t len = strlen( pszText ) + 1;
+   size_t len = strlen(pszText) + 1;
 
    pszDup = static_cast<char*>(OPENSSL_malloc(len));
    memcpy(pszDup, pszText, len);
@@ -80,7 +80,7 @@ HB_FUNC( EVP_PKEY_FREE )
 
    if( key )
    {
-      EVP_PKEY_free( key );
+      EVP_PKEY_free(key);
    }
    else
    {

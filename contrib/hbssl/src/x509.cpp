@@ -73,7 +73,7 @@ static HB_GARBAGE_FUNC( X509_release )
       /* Destroy the object */
       if( ph->fRelease )
       {
-         X509_free( static_cast<X509*>(ph->pX509) );
+         X509_free(static_cast<X509*>(ph->pX509));
       }
 
       /* set pointer to nullptr just in case */
@@ -151,7 +151,7 @@ HB_FUNC( X509_NAME_ONELINE )
    if( x509_name )
    {
       char buffer[1024];
-      X509_NAME_oneline( x509_name, buffer, sizeof(buffer) );
+      X509_NAME_oneline(x509_name, buffer, sizeof(buffer));
       hb_retc(buffer);
    }
    else

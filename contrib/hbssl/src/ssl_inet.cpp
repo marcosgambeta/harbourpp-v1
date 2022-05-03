@@ -54,17 +54,17 @@
 
 static long hb_inetReadSSL( PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len, HB_MAXINT timeout )
 {
-   return hb_ssl_socketRead( reinterpret_cast<PHB_SSLSTREAM>(pStream), sd, buffer, len, timeout );
+   return hb_ssl_socketRead(reinterpret_cast<PHB_SSLSTREAM>(pStream), sd, buffer, len, timeout);
 }
 
 static long hb_inetWriteSSL( PHB_ZNETSTREAM pStream, HB_SOCKET sd, const void * buffer, long len, HB_MAXINT timeout, long * plast )
 {
-   return hb_ssl_socketWrite( reinterpret_cast<PHB_SSLSTREAM>(pStream), sd, buffer, len, timeout, plast );
+   return hb_ssl_socketWrite(reinterpret_cast<PHB_SSLSTREAM>(pStream), sd, buffer, len, timeout, plast);
 }
 
 static void hb_inetCloseSSL( PHB_ZNETSTREAM pStream )
 {
-   hb_ssl_socketClose( reinterpret_cast<PHB_SSLSTREAM>(pStream) );
+   hb_ssl_socketClose(reinterpret_cast<PHB_SSLSTREAM>(pStream));
 }
 
 static long hb_inetFlushSSL( PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT timeout, HB_BOOL fSync )
@@ -88,7 +88,7 @@ static const char * hb_inetErrStrSSL( PHB_ZNETSTREAM pStream, int iError )
 {
    HB_SYMBOL_UNUSED(pStream);
 
-   return hb_ssl_socketErrorStr( iError );
+   return hb_ssl_socketErrorStr(iError);
 }
 
 static void hb_inetStartSSL( HB_BOOL fServer )
@@ -106,7 +106,7 @@ static void hb_inetStartSSL( HB_BOOL fServer )
          if( ssl )
          {
             HB_MAXINT timeout = HB_ISNUM(3) ? hb_parnint(3) : hb_znetInetTimeout(pItem, false);
-            PHB_SSLSTREAM pStream = hb_ssl_socketNew( sd, ssl, fServer, timeout, hb_param(2, Harbour::Item::POINTER), &iResult );
+            PHB_SSLSTREAM pStream = hb_ssl_socketNew(sd, ssl, fServer, timeout, hb_param(2, Harbour::Item::POINTER), &iResult);
             if( pStream )
             {
                if( !hb_znetInetInitialize(pItem, reinterpret_cast<PHB_ZNETSTREAM>(pStream),

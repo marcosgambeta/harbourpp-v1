@@ -173,7 +173,7 @@ HB_FUNC( OPENSSL_VERSION_NUM )
 #else
    HB_FUNC( SSLEAY_VERSION )
    {
-      HB_FUNC_EXEC( OPENSSL_VERSION );
+      HB_FUNC_EXEC(OPENSSL_VERSION);
    }
 #endif
 HB_FUNC_TRANSLATE( SSLEAY, OPENSSL_VERSION_NUM )
@@ -193,7 +193,7 @@ static HB_GARBAGE_FUNC( PHB_SSL_release )
       /* Destroy the object */
       if( hb_ssl->ssl )
       {
-         SSL_free( hb_ssl->ssl );
+         SSL_free(hb_ssl->ssl);
          hb_ssl->ssl = nullptr;
       }
 
@@ -213,7 +213,7 @@ static HB_GARBAGE_FUNC( PHB_SSL_mark )
    {
       if( hb_ssl->pCallbackArg )
       {
-         hb_gcMark( hb_ssl->pCallbackArg );
+         hb_gcMark(hb_ssl->pCallbackArg);
       }
    }
 }
@@ -263,7 +263,7 @@ HB_FUNC( SSL_NEW )
          PHB_SSL hb_ssl = static_cast<PHB_SSL>(hb_gcAllocate(sizeof(HB_SSL), &s_gcSSL_funcs));
 
          memset(hb_ssl, 0, sizeof(HB_SSL));
-         hb_ssl->ssl = SSL_new( ctx );
+         hb_ssl->ssl = SSL_new(ctx);
 
          hb_retptrGC(hb_ssl);
       }
@@ -286,7 +286,7 @@ HB_FUNC( SSL_DUP )
 
          memset(hb_ssl, 0, sizeof(HB_SSL));
 
-         hb_ssl->ssl = SSL_dup( ssl_par );
+         hb_ssl->ssl = SSL_dup(ssl_par);
 
          hb_retptrGC(hb_ssl);
       }
@@ -322,7 +322,7 @@ HB_FUNC( SSL_CLEAR )
 
       if( ssl )
       {
-         SSL_clear( ssl );
+         SSL_clear(ssl);
       }
    }
    else
@@ -380,7 +380,7 @@ HB_FUNC( SSL_SET_BIO )
 
       if( ssl )
       {
-         SSL_set_bio( ssl, rbio, wbio );
+         SSL_set_bio(ssl, rbio, wbio);
       }
    }
    else
@@ -709,7 +709,7 @@ HB_FUNC( SSL_READ )
             }
             nRead = nLen >= INT_MAX ? INT_MAX : static_cast<int>(nLen);
 
-            nRead = SSL_read( ssl, pBuffer, nRead );
+            nRead = SSL_read(ssl, pBuffer, nRead);
          }
 
          hb_retni(nRead);
@@ -746,7 +746,7 @@ HB_FUNC( SSL_PEEK )
             }
             nRead = nLen >= INT_MAX ? INT_MAX : static_cast<int>(nLen);
 
-            nRead = SSL_peek( ssl, pBuffer, nRead );
+            nRead = SSL_peek(ssl, pBuffer, nRead);
          }
 
          hb_retni(nRead);
@@ -832,9 +832,9 @@ HB_FUNC( SSL_GET_SSL_METHOD )
       if( ssl )
       {
 #if OPENSSL_VERSION_NUMBER < 0x10000000L
-         SSL_METHOD * p = SSL_get_ssl_method( ssl );
+         SSL_METHOD * p = SSL_get_ssl_method(ssl);
 #else
-         const SSL_METHOD * p = SSL_get_ssl_method( ssl );
+         const SSL_METHOD * p = SSL_get_ssl_method(ssl);
 #endif
          int n;
 
@@ -984,7 +984,7 @@ HB_FUNC( SSL_COPY_SESSION_ID )
 
       if( ssl1 && ssl2 )
       {
-         SSL_copy_session_id( ssl1, ssl2 );
+         SSL_copy_session_id(ssl1, ssl2);
       }
    }
    else
@@ -1511,7 +1511,7 @@ HB_FUNC( SSL_SET_ACCEPT_STATE )
 
       if( ssl )
       {
-         SSL_set_accept_state( ssl );
+         SSL_set_accept_state(ssl);
       }
    }
    else
@@ -1528,7 +1528,7 @@ HB_FUNC( SSL_SET_CONNECT_STATE )
 
       if( ssl )
       {
-         SSL_set_connect_state( ssl );
+         SSL_set_connect_state(ssl);
       }
    }
    else
@@ -1596,7 +1596,7 @@ HB_FUNC( SSL_SET_QUIET_SHUTDOWN )
 
       if( ssl )
       {
-         SSL_set_quiet_shutdown( ssl, hb_parni(2) );
+         SSL_set_quiet_shutdown(ssl, hb_parni(2));
       }
    }
    else
@@ -1613,7 +1613,7 @@ HB_FUNC( SSL_SET_READ_AHEAD )
 
       if( ssl )
       {
-         SSL_set_read_ahead( ssl, hb_parni(2) /* yes */ );
+         SSL_set_read_ahead(ssl, hb_parni(2) /* yes */);
       }
    }
    else
@@ -1630,7 +1630,7 @@ HB_FUNC( SSL_SET_SHUTDOWN )
 
       if( ssl )
       {
-         SSL_set_shutdown( ssl, hb_parni(2) /* mode */ );
+         SSL_set_shutdown(ssl, hb_parni(2) /* mode */);
       }
    }
    else
@@ -1647,7 +1647,7 @@ HB_FUNC( SSL_SET_VERIFY_RESULT )
 
       if( ssl )
       {
-         SSL_set_verify_result( ssl, hb_parnl(2) /* arg */ );
+         SSL_set_verify_result(ssl, hb_parnl(2) /* arg */);
       }
    }
    else
@@ -1664,7 +1664,7 @@ HB_FUNC( SSL_SET_MODE )
 
       if( ssl )
       {
-         SSL_set_mode( ssl, hb_parnl(2) );
+         SSL_set_mode(ssl, hb_parnl(2));
       }
    }
    else
@@ -1699,7 +1699,7 @@ HB_FUNC( SSL_SET_MTU )
 
       if( ssl )
       {
-         SSL_set_mtu( ssl, hb_parnl(2) );
+         SSL_set_mtu(ssl, hb_parnl(2));
       }
 #endif
    }
@@ -1717,7 +1717,7 @@ HB_FUNC( SSL_GET_CERTIFICATE )
 
       if( ssl )
       {
-         hb_X509_ret( SSL_get_certificate( ssl ), false );
+         hb_X509_ret(SSL_get_certificate(ssl), false);
       }
    }
    else
@@ -1734,7 +1734,7 @@ HB_FUNC( SSL_GET_PEER_CERTIFICATE )
 
       if( ssl )
       {
-         hb_X509_ret( SSL_get_peer_certificate( ssl ), true );
+         hb_X509_ret(SSL_get_peer_certificate(ssl), true);
       }
    }
    else
@@ -1838,8 +1838,8 @@ HB_FUNC( SSL_GET_CIPHERS )
 
       if( ssl )
       {
-         STACK_OF( SSL_CIPHER ) * stack = SSL_get_ciphers( ssl );
-         int len = sk_SSL_CIPHER_num( stack );
+         STACK_OF(SSL_CIPHER) * stack = SSL_get_ciphers(ssl);
+         int len = sk_SSL_CIPHER_num(stack);
 
          if( len > 0 )
          {
@@ -1847,7 +1847,7 @@ HB_FUNC( SSL_GET_CIPHERS )
 
             for( int tmp = 0; tmp < len; tmp++ )
             {
-               hb_arraySetPtr( pArray, tmp + 1, HB_UNCONST( sk_SSL_CIPHER_value( stack, tmp ) ) );
+               hb_arraySetPtr(pArray, tmp + 1, HB_UNCONST(sk_SSL_CIPHER_value(stack, tmp)));
             }
 
             hb_itemReturnRelease(pArray);
@@ -1872,8 +1872,8 @@ HB_FUNC( SSL_GET_CLIENT_CA_LIST )
 
       if( ssl )
       {
-         STACK_OF( X509_NAME ) * stack = SSL_get_client_CA_list( ssl );
-         int len = sk_X509_NAME_num( stack );
+         STACK_OF(X509_NAME) * stack = SSL_get_client_CA_list(ssl);
+         int len = sk_X509_NAME_num(stack);
 
          if( len > 0 )
          {
@@ -1881,7 +1881,7 @@ HB_FUNC( SSL_GET_CLIENT_CA_LIST )
 
             for( int tmp = 0; tmp < len; tmp++ )
             {
-               hb_arraySetPtr( pArray, tmp + 1, sk_X509_NAME_value( stack, tmp ) );
+               hb_arraySetPtr(pArray, tmp + 1, sk_X509_NAME_value(stack, tmp));
             }
 
             hb_itemReturnRelease(pArray);
@@ -1902,8 +1902,8 @@ HB_FUNC( SSL_LOAD_CLIENT_CA_FILE )
 {
    if( HB_ISCHAR(1) )
    {
-      STACK_OF( X509_NAME ) * stack = SSL_load_client_CA_file( hb_parc(1) );
-      int len = sk_X509_NAME_num( stack );
+      STACK_OF(X509_NAME) * stack = SSL_load_client_CA_file(hb_parc(1));
+      int len = sk_X509_NAME_num(stack);
 
       if( len > 0 )
       {
@@ -1911,7 +1911,7 @@ HB_FUNC( SSL_LOAD_CLIENT_CA_FILE )
 
          for( int tmp = 0; tmp < len; tmp++ )
          {
-            hb_arraySetPtr( pArray, tmp + 1, sk_X509_NAME_value( stack, tmp ) );
+            hb_arraySetPtr(pArray, tmp + 1, sk_X509_NAME_value(stack, tmp));
          }
 
          hb_itemReturnRelease(pArray);
@@ -2048,9 +2048,9 @@ HB_FUNC( SSL_SET_MSG_CALLBACK )
          if( pCallback )
          {
             hb_ssl->pCallbackArg = hb_itemNew(pCallback);
-            SSL_set_msg_callback_arg( hb_ssl->ssl, hb_ssl->pCallbackArg );
-            SSL_set_msg_callback( hb_ssl->ssl, hb_ssl_msg_callback );
-            hb_gcUnlock( hb_ssl->pCallbackArg );
+            SSL_set_msg_callback_arg(hb_ssl->ssl, hb_ssl->pCallbackArg);
+            SSL_set_msg_callback(hb_ssl->ssl, hb_ssl_msg_callback);
+            hb_gcUnlock(hb_ssl->pCallbackArg);
          }
          else
          {
@@ -2067,28 +2067,28 @@ HB_FUNC( SSL_SET_MSG_CALLBACK )
 
 #if 0
 
-void         SSL_set_psk_client_callback( SSL * ssl, unsigned int ( * callback )( SSL * ssl, const char * hint, char * identity, unsigned int max_identity_len, unsigned char * psk, unsigned int max_psk_len ) );
-void         SSL_set_psk_server_callback( SSL * ssl, unsigned int ( * callback )( SSL * ssl, const char * identity, unsigned char * psk, int max_psk_len ) );
+void         SSL_set_psk_client_callback(SSL * ssl, unsigned int (* callback)(SSL * ssl, const char * hint, char * identity, unsigned int max_identity_len, unsigned char * psk, unsigned int max_psk_len));
+void         SSL_set_psk_server_callback(SSL * ssl, unsigned int (* callback)(SSL * ssl, const char * identity, unsigned char * psk, int max_psk_len));
 
-EVP_PKEY *   SSL_get_privatekey( SSL * ssl );
+EVP_PKEY *   SSL_get_privatekey(SSL * ssl);
 
-STACK *      SSL_get_peer_cert_chain( const SSL * ssl );
-int          SSL_use_RSAPrivateKey( SSL * ssl, RSA * rsa );
-void         SSL_set_app_data( SSL * ssl, char * arg );
-int          SSL_set_ex_data( SSL * ssl, int idx, char * arg );
-char *       SSL_get_app_data( SSL * ssl );
-char *       SSL_get_ex_data( ssl, int );
-int          SSL_add_dir_cert_subjects_to_stack( STACK * stack, const char * dir );
-int          SSL_add_file_cert_subjects_to_stack( STACK * stack, const char * file );
-STACK *      SSL_dup_CA_list( STACK * sk );
-SSL_CTX *    SSL_get_SSL_CTX( const SSL * ssl );
-int          SSL_get_ex_data_X509_STORE_CTX_idx( void );
-int          SSL_get_ex_new_index( long argl, char * argp, int ( *new_func ); ( void ), int ( * dup_func )( void ), void ( * free_func )( void ) )
-void( *SSL_get_info_callback( const SSL * ssl ); )()
-SSL_SESSION * SSL_get_session( const SSL * ssl );
-int( *SSL_get_verify_callback( const SSL * ssl ) )( int, X509_STORE_CTX * )
-void         SSL_set_client_CA_list( SSL * ssl, STACK * list );
-void         SSL_set_info_callback( SSL * ssl, void ( *cb ); ( void ) )
-void         SSL_set_verify( SSL * ssl, int mode, int ( *callback ); ( void ) )
+STACK *      SSL_get_peer_cert_chain(const SSL * ssl);
+int          SSL_use_RSAPrivateKey(SSL * ssl, RSA * rsa);
+void         SSL_set_app_data(SSL * ssl, char * arg);
+int          SSL_set_ex_data(SSL * ssl, int idx, char * arg);
+char *       SSL_get_app_data(SSL * ssl);
+char *       SSL_get_ex_data(ssl, int);
+int          SSL_add_dir_cert_subjects_to_stack(STACK * stack, const char * dir);
+int          SSL_add_file_cert_subjects_to_stack(STACK * stack, const char * file);
+STACK *      SSL_dup_CA_list(STACK * sk);
+SSL_CTX *    SSL_get_SSL_CTX(const SSL * ssl);
+int          SSL_get_ex_data_X509_STORE_CTX_idx(void);
+int          SSL_get_ex_new_index(long argl, char * argp, int (*new_func); (void), int (* dup_func)(void), void (* free_func)(void))
+void( *SSL_get_info_callback(const SSL * ssl); )()
+SSL_SESSION * SSL_get_session(const SSL * ssl);
+int(*SSL_get_verify_callback(const SSL * ssl))(int, X509_STORE_CTX *)
+void         SSL_set_client_CA_list(SSL * ssl, STACK * list);
+void         SSL_set_info_callback(SSL * ssl, void (*cb); (void))
+void         SSL_set_verify(SSL * ssl, int mode, int (*callback); (void))
 
 #endif

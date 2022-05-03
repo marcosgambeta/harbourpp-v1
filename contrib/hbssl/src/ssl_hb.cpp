@@ -69,11 +69,11 @@ HB_FUNC( HB_SSL_READ_ALL )
          {
             char buffer[1];
             int  iLen;
-            int  sd = SSL_get_rfd( ssl );
+            int  sd = SSL_get_rfd(ssl);
 
             if( SSL_pending( ssl ) || ( sd >= 0 && hb_socketSelectRead( static_cast<HB_SOCKET>(sd), iTimeout ) ) )
             {
-               iLen = SSL_read( ssl, buffer, 1 );
+               iLen = SSL_read(ssl, buffer, 1);
 
                if( iLen == SSL_ERROR_WANT_READ )
                {
@@ -152,11 +152,11 @@ HB_FUNC( HB_SSL_READ_LINE )
          {
             char buffer[1];
             int  iLen;
-            int  sd = SSL_get_rfd( ssl );
+            int  sd = SSL_get_rfd(ssl);
 
             if( SSL_pending( ssl ) || ( sd >= 0 && hb_socketSelectRead( static_cast<HB_SOCKET>(sd), iTimeout ) ) )
             {
-               iLen = SSL_read( ssl, buffer, 1 );
+               iLen = SSL_read(ssl, buffer, 1);
 
                if( iLen == SSL_ERROR_WANT_READ )
                {

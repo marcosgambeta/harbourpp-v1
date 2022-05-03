@@ -69,9 +69,9 @@ static HB_GARBAGE_FUNC( EVP_MD_CTX_release )
    {
       /* Destroy the object */
 #if defined(LIBRESSL_VERSION_NUMBER)
-      EVP_MD_CTX_destroy( static_cast<EVP_MD_CTX*>(*ph) );
+      EVP_MD_CTX_destroy(static_cast<EVP_MD_CTX*>(*ph));
 #elif OPENSSL_VERSION_NUMBER >= 0x00907000L
-      EVP_MD_CTX_free( static_cast<EVP_MD_CTX*>(*ph) );
+      EVP_MD_CTX_free(static_cast<EVP_MD_CTX*>(*ph));
 #else
       hb_xfree(*ph);
 #endif
@@ -101,16 +101,16 @@ static EVP_MD_CTX * hb_EVP_MD_CTX_par( int iParam )
 
 HB_BOOL hb_EVP_MD_is( int iParam )
 {
-   return HB_ISCHAR( iParam ) || HB_ISNUM( iParam );
+   return HB_ISCHAR(iParam) || HB_ISNUM(iParam);
 }
 
 const EVP_MD * hb_EVP_MD_par( int iParam )
 {
    const EVP_MD * p;
 
-   if( HB_ISCHAR( iParam ) )
+   if( HB_ISCHAR(iParam) )
    {
-      return EVP_get_digestbyname( hb_parc(iParam) );
+      return EVP_get_digestbyname(hb_parc(iParam));
    }
 
    switch( hb_parni(iParam) )
@@ -383,7 +383,7 @@ HB_FUNC( EVP_DIGESTINIT )
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni(EVP_DigestInit(ctx, md));
 #else
-         EVP_DigestInit( ctx, md );
+         EVP_DigestInit(ctx, md);
          hb_retni(1);
 #endif
       }
@@ -428,7 +428,7 @@ HB_FUNC( EVP_DIGESTUPDATE )
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni(EVP_DigestUpdate(ctx, hb_parcx(2), static_cast<size_t>(hb_parclen(2))));
 #else
-         EVP_DigestUpdate( ctx, hb_parcx(2), ( size_t ) hb_parclen(2) );
+         EVP_DigestUpdate(ctx, hb_parcx(2), static_cast<size_t>(hb_parclen(2)));
          hb_retni(1);
 #endif
       }
@@ -453,7 +453,7 @@ HB_FUNC( EVP_DIGESTFINAL )
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni(EVP_DigestFinal(ctx, buffer, &size));
 #else
-         EVP_DigestFinal( ctx, buffer, &size );
+         EVP_DigestFinal(ctx, buffer, &size);
          hb_retni(1);
 #endif
 
@@ -522,7 +522,7 @@ HB_FUNC( EVP_SIGNINIT )
 
       if( ctx )
       {
-         EVP_SignInit( ctx, md );
+         EVP_SignInit(ctx, md);
       }
    }
    else
@@ -565,7 +565,7 @@ HB_FUNC( EVP_SIGNUPDATE )
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni(EVP_SignUpdate(ctx, hb_parcx(2), static_cast<size_t>(hb_parclen(2))));
 #else
-         EVP_SignUpdate( ctx, hb_parcx(2), static_cast<size_t>(hb_parclen(2)) );
+         EVP_SignUpdate(ctx, hb_parcx(2), static_cast<size_t>(hb_parclen(2)));
          hb_retni(1);
 #endif
       }
@@ -622,7 +622,7 @@ HB_FUNC( EVP_VERIFYINIT )
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni(EVP_VerifyInit(ctx, md));
 #else
-         EVP_VerifyInit( ctx, md );
+         EVP_VerifyInit(ctx, md);
          hb_retni(1);
 #endif
       }
@@ -667,7 +667,7 @@ HB_FUNC( EVP_VERIFYUPDATE )
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni(EVP_VerifyUpdate(ctx, hb_parcx(2), static_cast<size_t>(hb_parclen(2))));
 #else
-         EVP_VerifyUpdate( ctx, hb_parcx(2), static_cast<size_t>(hb_parclen(2)) );
+         EVP_VerifyUpdate(ctx, hb_parcx(2), static_cast<size_t>(hb_parclen(2)));
          hb_retni(1);
 #endif
       }

@@ -113,7 +113,7 @@ HB_FUNC( EVP_ENCODEINIT )
 
       if( ctx )
       {
-         EVP_EncodeInit( ctx );
+         EVP_EncodeInit(ctx);
       }
    }
    else
@@ -173,7 +173,7 @@ HB_FUNC( EVP_ENCODEFINAL )
          int size = 512;
          unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
 
-         EVP_EncodeFinal( ctx, buffer, &size );
+         EVP_EncodeFinal(ctx, buffer, &size);
 
          if( size > 0 )
          {
@@ -203,7 +203,7 @@ HB_FUNC( EVP_DECODEINIT )
 
       if( ctx )
       {
-         EVP_DecodeInit( ctx );
+         EVP_DecodeInit(ctx);
       }
    }
    else
@@ -256,7 +256,7 @@ HB_FUNC( EVP_DECODEFINAL )
          int size = 512;
          unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
 
-         EVP_DecodeFinal( ctx, buffer, &size );
+         EVP_DecodeFinal(ctx, buffer, &size);
 
          if( size > 0 )
          {

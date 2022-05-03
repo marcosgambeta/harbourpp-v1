@@ -192,7 +192,7 @@ HB_FUNC( SSL_CTX_SET_TIMEOUT )
 
       if( ctx )
       {
-         SSL_CTX_set_timeout( ctx, hb_parnl(2) );
+         SSL_CTX_set_timeout(ctx, hb_parnl(2));
       }
    }
    else
@@ -209,7 +209,7 @@ HB_FUNC( SSL_CTX_SET_CIPHER_LIST )
 
       if( ctx && hb_parclen(2) <= 255 )
       {
-         SSL_CTX_set_cipher_list( ctx, hb_parcx(2) );
+         SSL_CTX_set_cipher_list(ctx, hb_parcx(2));
       }
    }
    else
@@ -262,7 +262,7 @@ HB_FUNC( SSL_CTX_FLUSH_SESSIONS )
 
       if( ctx )
       {
-         SSL_CTX_flush_sessions( ctx, hb_parnl(2) );
+         SSL_CTX_flush_sessions(ctx, hb_parnl(2));
       }
    }
    else
@@ -296,7 +296,7 @@ HB_FUNC( SSL_CTX_SET_SESSION_CACHE_MODE )
 
       if( ctx )
       {
-         SSL_CTX_set_session_cache_mode( ctx, hb_parni(2) );
+         SSL_CTX_set_session_cache_mode(ctx, hb_parni(2));
       }
    }
    else
@@ -602,7 +602,7 @@ HB_FUNC( SSL_CTX_SESS_SET_CACHE_SIZE )
 
       if( ctx )
       {
-         SSL_CTX_sess_set_cache_size( ctx, hb_parni(2) );
+         SSL_CTX_sess_set_cache_size(ctx, hb_parni(2));
       }
    }
    else
@@ -619,7 +619,7 @@ HB_FUNC( SSL_CTX_SET_DEFAULT_READ_AHEAD )
 
       if( ctx )
       {
-         SSL_CTX_set_default_read_ahead( ctx, hb_parni(2) );
+         SSL_CTX_set_default_read_ahead(ctx, hb_parni(2));
       }
    }
    else
@@ -670,7 +670,7 @@ HB_FUNC( SSL_CTX_SET_QUIET_SHUTDOWN )
 
       if( ctx )
       {
-         SSL_CTX_set_quiet_shutdown( ctx, hb_parni(2) );
+         SSL_CTX_set_quiet_shutdown(ctx, hb_parni(2));
       }
    }
    else
@@ -687,7 +687,7 @@ HB_FUNC( SSL_CTX_SET_MODE )
 
       if( ctx )
       {
-         SSL_CTX_set_mode( ctx, hb_parnl(2) );
+         SSL_CTX_set_mode(ctx, hb_parnl(2));
       }
    }
    else
@@ -758,8 +758,8 @@ HB_FUNC( SSL_CTX_GET_CLIENT_CA_LIST )
       if( ctx )
       {
 #if OPENSSL_VERSION_NUMBER < 0x10000000L || OPENSSL_VERSION_NUMBER >= 0x1000000FL /* NOTE: Compilation error when tried with 1.0.0beta5 */
-         STACK_OF( X509_NAME ) * stack = SSL_CTX_get_client_CA_list( ctx );
-         int len = sk_X509_NAME_num( stack );
+         STACK_OF(X509_NAME) * stack = SSL_CTX_get_client_CA_list(ctx);
+         int len = sk_X509_NAME_num(stack);
 
          if( len > 0 )
          {
@@ -767,7 +767,7 @@ HB_FUNC( SSL_CTX_GET_CLIENT_CA_LIST )
 
             for( int tmp = 0; tmp < len; tmp++ )
             {
-               hb_arraySetPtr( pArray, tmp + 1, sk_X509_NAME_value( stack, tmp ) );
+               hb_arraySetPtr(pArray, tmp + 1, sk_X509_NAME_value(stack, tmp));
             }
 
             hb_itemReturnRelease(pArray);
@@ -988,44 +988,44 @@ HB_FUNC( SSL_CTX_SET_DEFAULT_VERIFY_PATHS )
 #define sk_X509_NAME_push( st, val )  SKM_sk_push( X509_NAME, ( st ), ( val ) )
 #define sk_X509_NAME_free( st )       SKM_sk_free( X509_NAME, ( st ) )
 
-X509_STORE * SSL_CTX_get_cert_store( const SSL_CTX * );
-void SSL_CTX_set_cert_store( SSL_CTX *, X509_STORE * );
-void SSL_CTX_set_cert_store( SSL_CTX * ctx, X509_STORE * cs );
-int  SSL_CTX_use_RSAPrivateKey( SSL_CTX * ctx, RSA * rsa );
-long SSL_CTX_ctrl( SSL_CTX * ctx, int cmd, long larg, char * parg );
+X509_STORE * SSL_CTX_get_cert_store(const SSL_CTX *);
+void SSL_CTX_set_cert_store(SSL_CTX *, X509_STORE *);
+void SSL_CTX_set_cert_store(SSL_CTX * ctx, X509_STORE * cs);
+int  SSL_CTX_use_RSAPrivateKey(SSL_CTX * ctx, RSA * rsa);
+long SSL_CTX_ctrl(SSL_CTX * ctx, int cmd, long larg, char * parg);
 
-void SSL_CTX_set_app_data( SSL_CTX * ctx, void * arg );
-int SSL_CTX_set_ex_data( SSL_CTX * s, int idx, char * arg );
-char * SSL_CTX_get_app_data( ctx );
-char * SSL_CTX_get_ex_data( ctx, int );
+void SSL_CTX_set_app_data(SSL_CTX * ctx, void * arg);
+int SSL_CTX_set_ex_data(SSL_CTX * s, int idx, char * arg);
+char * SSL_CTX_get_app_data(ctx);
+char * SSL_CTX_get_ex_data(ctx, int);
 
-int( *SSL_CTX_get_client_cert_cb( SSL_CTX * ctx ) )( SSL * ssl, X509 * *x509, EVP_PKEY * *pkey );
-int SSL_CTX_get_ex_new_index( long argl, char * argp, int ( *new_func ); ( void ), int ( * dup_func )( void ), void ( * free_func )( void ) )
-void( *SSL_CTX_get_info_callback( SSL_CTX * ctx ) )( SSL * ssl, int cb, int ret );
-int( *SSL_CTX_get_verify_callback( const SSL_CTX * ctx ) )( int ok, X509_STORE_CTX * ctx );
-SSL_SESSION *( *SSL_CTX_sess_get_get_cb( SSL_CTX * ctx ) )( SSL * ssl, unsigned char * data, int len, int * copy );
-int ( *SSL_CTX_sess_get_new_cb( SSL_CTX * ctx )( SSL * ssl, SSL_SESSION * sess );
-void ( *SSL_CTX_sess_get_remove_cb( SSL_CTX * ctx )( SSL_CTX * ctx, SSL_SESSION * sess );
-void SSL_CTX_sess_set_get_cb( SSL_CTX * ctx, SSL_SESSION * ( *cb )( SSL * ssl, unsigned char * data, int len, int * copy ) );
-void SSL_CTX_sess_set_new_cb( SSL_CTX * ctx, int ( * cb )( SSL * ssl, SSL_SESSION * sess ) );
-void SSL_CTX_sess_set_remove_cb( SSL_CTX * ctx, void ( * cb )( SSL_CTX * ctx, SSL_SESSION * sess ) );
-LHASH * SSL_CTX_sessions( SSL_CTX * ctx );
-void SSL_CTX_set_cert_verify_cb( SSL_CTX * ctx, int ( * cb )(), char * arg )
-void SSL_CTX_set_client_CA_list( SSL_CTX * ctx, STACK * list );
-void SSL_CTX_set_client_cert_cb( SSL_CTX * ctx, int ( * cb )( SSL * ssl, X509 ** x509, EVP_PKEY ** pkey ) );
-void SSL_CTX_set_default_passwd_cb( SSL_CTX * ctx, int ( *cb ); ( void ) )
-void SSL_CTX_set_info_callback( SSL_CTX * ctx, void ( * cb )( SSL * ssl, int cb, int ret ) );
-void SSL_CTX_set_msg_callback( SSL_CTX * ctx, void ( * cb )( int write_p, int version, int content_type, const void * buf, size_t len, SSL * ssl, void * arg ) );
-void SSL_CTX_set_msg_callback_arg( SSL_CTX * ctx, void * arg );
-long SSL_CTX_set_tmp_dh( SSL_CTX * ctx, DH * dh );
-long SSL_CTX_set_tmp_dh_callback( SSL_CTX * ctx, DH * ( *cb )( void ) );
-long SSL_CTX_set_tmp_rsa( SSL_CTX * ctx, RSA * rsa );
+int(*SSL_CTX_get_client_cert_cb(SSL_CTX * ctx))(SSL * ssl, X509 * *x509, EVP_PKEY * *pkey);
+int SSL_CTX_get_ex_new_index( long argl, char * argp, int (*new_func); (void), int ( * dup_func )(void), void ( * free_func )(void) )
+void( *SSL_CTX_get_info_callback( SSL_CTX * ctx ) )(SSL * ssl, int cb, int ret);
+int( *SSL_CTX_get_verify_callback( const SSL_CTX * ctx ) )(int ok, X509_STORE_CTX * ctx);
+SSL_SESSION *( *SSL_CTX_sess_get_get_cb( SSL_CTX * ctx ) )(SSL * ssl, unsigned char * data, int len, int * copy);
+int ( *SSL_CTX_sess_get_new_cb( SSL_CTX * ctx )(SSL * ssl, SSL_SESSION * sess);
+void ( *SSL_CTX_sess_get_remove_cb( SSL_CTX * ctx )(SSL_CTX * ctx, SSL_SESSION * sess);
+void SSL_CTX_sess_set_get_cb(SSL_CTX * ctx, SSL_SESSION * ( *cb )(SSL * ssl, unsigned char * data, int len, int * copy));
+void SSL_CTX_sess_set_new_cb(SSL_CTX * ctx, int ( * cb )(SSL * ssl, SSL_SESSION * sess));
+void SSL_CTX_sess_set_remove_cb(SSL_CTX * ctx, void ( * cb )(SSL_CTX * ctx, SSL_SESSION * sess));
+LHASH * SSL_CTX_sessions(SSL_CTX * ctx);
+void SSL_CTX_set_cert_verify_cb(SSL_CTX * ctx, int ( * cb )(), char * arg)
+void SSL_CTX_set_client_CA_list(SSL_CTX * ctx, STACK * list);
+void SSL_CTX_set_client_cert_cb(SSL_CTX * ctx, int ( * cb )(SSL * ssl, X509 ** x509, EVP_PKEY ** pkey));
+void SSL_CTX_set_default_passwd_cb(SSL_CTX * ctx, int (*cb); (void) )
+void SSL_CTX_set_info_callback(SSL_CTX * ctx, void ( * cb )(SSL * ssl, int cb, int ret));
+void SSL_CTX_set_msg_callback(SSL_CTX * ctx, void ( * cb )(int write_p, int version, int content_type, const void * buf, size_t len, SSL * ssl, void * arg));
+void SSL_CTX_set_msg_callback_arg(SSL_CTX * ctx, void * arg);
+long SSL_CTX_set_tmp_dh(SSL_CTX * ctx, DH * dh);
+long SSL_CTX_set_tmp_dh_callback(SSL_CTX * ctx, DH * ( *cb )(void));
+long SSL_CTX_set_tmp_rsa(SSL_CTX * ctx, RSA * rsa);
 /* SSL_CTX_set_tmp_rsa_callback */
-long SSL_CTX_set_tmp_rsa_callback( SSL_CTX * ctx, RSA * ( *cb )( SSL * ssl, int export, int keylength ) );
-long SSL_set_tmp_rsa_callback( SSL * ssl, RSA * ( *cb )( SSL * ssl, int export, int keylength ) );
+long SSL_CTX_set_tmp_rsa_callback(SSL_CTX * ctx, RSA * ( *cb )(SSL * ssl, int export, int keylength));
+long SSL_set_tmp_rsa_callback(SSL * ssl, RSA * ( *cb )(SSL * ssl, int export, int keylength));
 The same as SSL_CTX_set_tmp_rsa_callback, except it operates on an SSL session instead of a context.
-void SSL_CTX_set_verify( SSL_CTX * ctx, int mode, int ( *cb ); ( void ) )
-void SSL_CTX_set_psk_client_callback( SSL_CTX * ctx, unsigned int ( * callback )( SSL * ssl, const char * hint, char * identity, unsigned int max_identity_len, unsigned char * psk, unsigned int max_psk_len ) );
-void SSL_CTX_set_psk_server_callback( SSL_CTX * ctx, unsigned int ( * callback )( SSL * ssl, const char * identity, unsigned char * psk, int max_psk_len ) );
+void SSL_CTX_set_verify(SSL_CTX * ctx, int mode, int (*cb); (void) )
+void SSL_CTX_set_psk_client_callback(SSL_CTX * ctx, unsigned int ( * callback )(SSL * ssl, const char * hint, char * identity, unsigned int max_identity_len, unsigned char * psk, unsigned int max_psk_len));
+void SSL_CTX_set_psk_server_callback(SSL_CTX * ctx, unsigned int ( * callback )(SSL * ssl, const char * identity, unsigned char * psk, int max_psk_len));
 
 #endif
