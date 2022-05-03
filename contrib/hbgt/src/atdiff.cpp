@@ -21,14 +21,14 @@ HB_FUNC( GT_ATDIFF )
          NOTE: pos starts at 1, so as to return a string index
                for Cl*pper */
 
-      for( pos = 1; ( pos <= len ) && ( *s1 == *s2 ); s2++, s1++ )
+      for( pos = 1; (pos <= len) && (*s1 == *s2); s2++, s1++ )
          pos++;
 
       if( pos > len )  /* strings match exactly */
          hb_retns(0);
       else
-         hb_retns( pos );
+         hb_retns(pos);
    }
    else
-      hb_retns( -1 );
+      hb_retns(-1);
 }

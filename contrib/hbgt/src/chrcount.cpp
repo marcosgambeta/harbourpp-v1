@@ -23,8 +23,8 @@ HB_FUNC( GT_CHRCOUNT )
          if( *s1 == *s2 )  /* character matches s1 */
             count++;  /* increment counter */
 
-      hb_retns( count );
+      hb_retns(count);
    }
    else
-      hb_retns( -1 );
+      hb_retns(-1);
 }

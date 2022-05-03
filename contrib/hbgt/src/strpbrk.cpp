@@ -22,7 +22,7 @@ HB_FUNC( GT_STRPBRK )
 
       do
       {
-         for( p2 = 0; ( p2 < l2 ) && ( cset[p2] != string[p1] ); ++p2 )
+         for( p2 = 0; (p2 < l2) && (cset[p2] != string[p1]); ++p2 )
             ;
 
          if( p2 < l2 )

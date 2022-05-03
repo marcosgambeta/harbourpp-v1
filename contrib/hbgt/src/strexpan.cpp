@@ -40,7 +40,7 @@ HB_FUNC( GT_STREXPAND )
       }
       out[p] = '\0';   /* Add terminating NUL */
 
-      hb_retc_buffer( out );
+      hb_retc_buffer(out);
    }
    else
       hb_retc_null();

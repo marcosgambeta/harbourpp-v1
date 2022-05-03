@@ -21,7 +21,7 @@ HB_FUNC( GT_STRCOUNT )
       /* loop through s2 matching passed character (s1) with
          each character of s1 */
 
-      for( count = 0, p2 = 0; p2 <= ( l2 - l1 ); p2++ )
+      for( count = 0, p2 = 0; p2 <= (l2 - l1); p2++ )
       {
          int match = 1;
 
@@ -35,8 +35,8 @@ HB_FUNC( GT_STRCOUNT )
             count++;
       }
 
-      hb_retns( count );
+      hb_retns(count);
    }
    else
-      hb_retns( -1 );
+      hb_retns(-1);
 }

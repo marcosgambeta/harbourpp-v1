@@ -26,8 +26,8 @@ HB_FUNC( GT_STRLEFT )
          if( p2 == l2 )
             break;
       }
-      hb_retns( p1 );
+      hb_retns(p1);
    }
    else
-      hb_retns( -1 );
+      hb_retns(-1);
 }

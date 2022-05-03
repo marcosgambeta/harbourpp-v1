@@ -23,8 +23,8 @@ HB_FUNC( GT_CHRTOTAL )
             if( s1[p1] == s2[p2] )
                count++;  /* increment counter */
 
-      hb_retns( count );
+      hb_retns(count);
    }
    else
-      hb_retns( -1 );
+      hb_retns(-1);
 }

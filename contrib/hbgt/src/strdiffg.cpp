@@ -21,7 +21,7 @@ HB_FUNC( GT_STRDIFF )
          NOTE: pos starts at 1, so as to return a string index
                for Cl*pper */
 
-      for( pos = 1; ( pos <= len ) && ( *s1 == *s2 ); s2++, s1++ )
+      for( pos = 1; (pos <= len) && (*s1 == *s2); s2++, s1++ )
          pos++;
 
       if( pos > len )  /* strings match exactly */

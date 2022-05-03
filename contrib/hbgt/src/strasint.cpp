@@ -12,7 +12,7 @@
 int _GT_Internal_StringAsInt( char * String, HB_ISIZ Start, HB_ISIZ End )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "_GT_Internal_StringAsInt(%s, %" HB_PFS "d, %" HB_PFS "d)", String, Start, End ) );
+   HB_TRACE(HB_TR_DEBUG, ("_GT_Internal_StringAsInt(%s, %" HB_PFS "d, %" HB_PFS "d)", String, Start, End));
 #endif
 
    int     Decimal = 1;

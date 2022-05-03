@@ -48,7 +48,7 @@ HB_FUNC( GT_SETFLAG )
       unsigned StartBit   = hb_parnidef(2, 1);
       unsigned EndBit     = hb_parnidef(3, 1);
 
-      EndBit = HB_MAX( StartBit, EndBit );
+      EndBit = HB_MAX(StartBit, EndBit);
 
       if( StartBit > 0 && EndBit <= ( hb_parclen(1) * 8 ) )
       {
@@ -64,7 +64,7 @@ HB_FUNC( GT_SETFLAG )
                BitPointer = 8;
                --BytePointer;
             }
-            FlagString[BytePointer] |= 1 << ( BitPointer - 1 );
+            FlagString[BytePointer] |= 1 << (BitPointer - 1);
          }
       }
       hb_retclen_buffer(FlagString, hb_parclen(1));
@@ -81,7 +81,7 @@ HB_FUNC( GT_CLRFLAG )
       unsigned StartBit   = hb_parnidef(2, 1);
       unsigned EndBit     = hb_parnidef(3, 1);
 
-      EndBit = HB_MAX( StartBit, EndBit );
+      EndBit = HB_MAX(StartBit, EndBit);
 
       if( StartBit > 0 && EndBit <= ( hb_parclen(1) * 8 ) )
       {
