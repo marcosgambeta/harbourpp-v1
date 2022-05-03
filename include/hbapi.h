@@ -524,6 +524,17 @@ typedef unsigned int HB_ERRCODE;
 #define HB_SUCCESS         0
 #define HB_FAILURE         1
 
+#if defined(__cplusplus)
+namespace Harbour
+{
+   enum Result
+   {
+      SUCCESS = 0,
+      FAILURE = 1
+   };
+}
+#endif
+
 #if defined( _HB_API_INTERNAL_ )
 /* NOTE: Deprecated. Use 'hb_vmPushEvalSym()' instead of 'hb_vmPushSymbol( &hb_symEval )' */
 extern HB_SYMB hb_symEval;
