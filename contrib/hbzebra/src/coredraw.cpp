@@ -48,7 +48,7 @@
 #include "hbzebra.h"
 #include "hbvm.h"
 
-typedef void ( *HB_ZEBRA_CALLBACK )( void * cargo, double dX, double dY, double dWidth, double dHeight );
+typedef void (*HB_ZEBRA_CALLBACK)(void * cargo, double dX, double dY, double dWidth, double dHeight);
 
 int hb_zebra_draw( PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void * cargo, double dX, double dY, double dWidth, double dHeight, int iFlags )
 {
@@ -64,19 +64,19 @@ int hb_zebra_draw( PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void * cargo, 
       return HB_ZEBRA_ERROR_INVALIDZEBRA;
    }
 
-   nLen = hb_bitbuffer_len( pZebra->pBits );
-   fLastBit = hb_bitbuffer_get( pZebra->pBits, 0 );
+   nLen = hb_bitbuffer_len(pZebra->pBits);
+   fLastBit = hb_bitbuffer_get(pZebra->pBits, 0);
    dLast = dX;
    nCount = 0;
    i = 0;
    for( HB_SIZE n = 0; n < nLen; n++ )
    {
-      HB_BOOL fBit = hb_bitbuffer_get( pZebra->pBits, n );
+      HB_BOOL fBit = hb_bitbuffer_get(pZebra->pBits, n);
       if( fBit != fLastBit )
       {
          if( fLastBit && pCallback )
          {
-            pCallback( cargo, dLast, dY, dWidth * nCount, dHeight );
+            pCallback(cargo, dLast, dY, dWidth * nCount, dHeight);
          }
 
          dLast += dWidth * nCount;
@@ -90,7 +90,7 @@ int hb_zebra_draw( PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void * cargo, 
          {
             if( fBit && pCallback )
             {
-               pCallback( cargo, dLast, dY, dWidth * nCount, dHeight );
+               pCallback(cargo, dLast, dY, dWidth * nCount, dHeight);
             }
             nCount = 0;
          }
@@ -99,13 +99,13 @@ int hb_zebra_draw( PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void * cargo, 
          dLast = dX;
          if( n + 1 < nLen )
          {
-            fLastBit = hb_bitbuffer_get( pZebra->pBits, n + 1 );
+            fLastBit = hb_bitbuffer_get(pZebra->pBits, n + 1);
          }
       }
    }
    if( fLastBit && nCount && pCallback )
    {
-      pCallback( cargo, dLast, dY, dWidth * nCount, dHeight );
+      pCallback(cargo, dLast, dY, dWidth * nCount, dHeight);
    }
 
    return 0;
@@ -128,7 +128,7 @@ static void hb_zebra_draw_codeblock_callback( void * pDrawBlock, double dX, doub
 
 int hb_zebra_draw_codeblock( PHB_ZEBRA pZebra, PHB_ITEM pDrawBlock, double dX, double dY, double dWidth, double dHeight, int iFlags )
 {
-   return hb_zebra_draw( pZebra, hb_zebra_draw_codeblock_callback, pDrawBlock, dX, dY, dWidth, dHeight, iFlags );
+   return hb_zebra_draw(pZebra, hb_zebra_draw_codeblock_callback, pDrawBlock, dX, dY, dWidth, dHeight, iFlags);
 }
 
 HB_FUNC( HB_ZEBRA_DRAW )

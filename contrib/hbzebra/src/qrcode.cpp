@@ -350,7 +350,7 @@ static unsigned char * s_align[40] = {
 };
 
 #ifdef DEBUG_CODE
-static int _qr_check_version_table( void )
+static int _qr_check_version_table(void)
 {
    int iL;
    unsigned int uiSumD, uiSumE;
@@ -361,15 +361,15 @@ static int _qr_check_version_table( void )
 
       for( iL = 0; iL < 4; iL++ )
       {
-         uiSumE = static_cast<unsigned int>(pQRVersion->level[iL].block[0].uiCount) * ( pQRVersion->level[iL].block[0].uiECC ) +
-                  static_cast<unsigned int>(pQRVersion->level[iL].block[1].uiCount) * ( pQRVersion->level[iL].block[1].uiECC );
+         uiSumE = static_cast<unsigned int>(pQRVersion->level[iL].block[0].uiCount) * (pQRVersion->level[iL].block[0].uiECC) +
+                  static_cast<unsigned int>(pQRVersion->level[iL].block[1].uiCount) * (pQRVersion->level[iL].block[1].uiECC);
          if( uiSumE != pQRVersion->level[iL].uiECC )
          {
             return iV + 10000 + ( iL + 1 ) * 1000;
          }
 
-         uiSumD = static_cast<unsigned int>(pQRVersion->level[iL].block[0].uiCount) * ( pQRVersion->level[iL].block[0].uiData ) +
-                  static_cast<unsigned int>(pQRVersion->level[iL].block[1].uiCount) * ( pQRVersion->level[iL].block[1].uiData );
+         uiSumD = static_cast<unsigned int>(pQRVersion->level[iL].block[0].uiCount) * (pQRVersion->level[iL].block[0].uiData) +
+                  static_cast<unsigned int>(pQRVersion->level[iL].block[1].uiCount) * (pQRVersion->level[iL].block[1].uiData);
          if( uiSumD + uiSumE != pQRVersion->uiTotal )
          {
             return iV + 20000 + ( iL + 1 ) * 1000;
@@ -431,8 +431,8 @@ static int _qr_format_crc( int iLevel, int iMask )
 {
    int iValue, iRev;
 
-   iRev = ( ( iLevel & 1 ) ? 0 : 2 ) | ( ( iLevel & 2 ) ? 1 : 0 );  /* 0->1, 1->0, 2->3, 3->2 + reverse bits */
-   iRev |= ( ( iMask & 1 ) ? 16 : 0 ) | ( ( iMask & 2 ) ? 8 : 0 ) | ( ( iMask & 4 ) ? 4 : 0 ); /* reverse bits */
+   iRev = ((iLevel & 1) ? 0 : 2) | ((iLevel & 2) ? 1 : 0);  /* 0->1, 1->0, 2->3, 3->2 + reverse bits */
+   iRev |= ((iMask & 1) ? 16 : 0) | ((iMask & 2) ? 8 : 0) | ((iMask & 4) ? 4 : 0); /* reverse bits */
 
    iValue = iRev;
    for( int i = 0; i < 5; i++ )
@@ -467,7 +467,7 @@ static int _qr_versionlength( int iVersion )
 
 static int _qr_fixed( int iVersion, int iRow, int iCol )
 {
-   int iLength = _qr_versionlength( iVersion );
+   int iLength = _qr_versionlength(iVersion);
    const unsigned char * pi;
 
    /* position detection markers and version info */
@@ -521,16 +521,16 @@ static int _qr_fixed( int iVersion, int iRow, int iCol )
 static PHB_BITBUFFER _qr_interlace( PHB_BITBUFFER pData, unsigned char * pECC, int iVersion, int iLevel )
 {
    const QRVERSION * pVersion = &s_version[iVersion - 1];
-   const QRLEVEL * pLevel = &( pVersion->level[iLevel] );
+   const QRLEVEL * pLevel = &(pVersion->level[iLevel]);
    PHB_BITBUFFER pRet;
    HB_BYTE * pDataBuf, * pRetBuf;
    unsigned int uiDst, uiSrc, uiPos, uiBlock;
 
    pRet = hb_bitbuffer_create();
-   hb_bitbuffer_set( pRet, pVersion->uiTotal * 8, false ); /* Allocate */
+   hb_bitbuffer_set(pRet, pVersion->uiTotal * 8, false); /* Allocate */
 
-   pRetBuf = hb_bitbuffer_buffer( pRet );
-   pDataBuf = hb_bitbuffer_buffer( pData );
+   pRetBuf = hb_bitbuffer_buffer(pRet);
+   pDataBuf = hb_bitbuffer_buffer(pData);
 
    uiDst = 0;
    for( uiPos = 0; uiPos < static_cast<unsigned int>(pLevel->block[0].uiData) || uiPos < static_cast<unsigned int>(pLevel->block[1].uiData); uiPos++ )
@@ -579,7 +579,7 @@ static PHB_BITBUFFER _qr_interlace( PHB_BITBUFFER pData, unsigned char * pECC, i
    if( uiDst != pVersion->uiTotal )
    {
 #if 0
-      HB_TRACE( HB_TR_ALWAYS, ( "ERROR!!! uiDst:%d  pVersion->uiTotal:%d", uiDst, pVersion->uiTotal ) );
+      HB_TRACE(HB_TR_ALWAYS, ("ERROR!!! uiDst:%d  pVersion->uiTotal:%d", uiDst, pVersion->uiTotal));
 #endif
    }
 
@@ -633,11 +633,11 @@ static int _qr_cci_len( int iVersion, int iMode ) /* Character Count Indicator *
 {
    if( iMode == 1 )
    {
-      return iVersion <= 9 ? 10 : ( iVersion <= 26 ? 12 : 14 );
+      return iVersion <= 9 ? 10 : (iVersion <= 26 ? 12 : 14);
    }
    if( iMode == 2 )
    {
-      return iVersion <= 9 ? 9 : ( iVersion <= 26 ? 11 : 13 );
+      return iVersion <= 9 ? 9 : (iVersion <= 26 ? 11 : 13);
    }
    if( iMode == 4 )
    {
@@ -674,7 +674,7 @@ static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pDa
    /* Calculate data length in bits */
    if( iMode == 1 )
    {
-      iLen = ( nSize / 3 ) * 10 + ( ( nSize % 3 ) == 0 ? 0 : ( ( nSize % 3 ) == 1 ? 4 : 7 ) );
+      iLen = (nSize / 3) * 10 + ((nSize % 3) == 0 ? 0 : ((nSize % 3) == 1 ? 4 : 7));
    }
    else if( iMode == 2 )
    {
@@ -706,13 +706,13 @@ static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pDa
 
 #ifdef DEBUG_CODE
 #if 0
-   HB_TRACE( HB_TR_ALWAYS, ( "iMode:%d iLen:%" HB_PFS "d iDataLen:%d iVersion:%d", iMode, iLen, iDataLen, iVersion ) );
+   HB_TRACE(HB_TR_ALWAYS, ("iMode:%d iLen:%" HB_PFS "d iDataLen:%d iVersion:%d", iMode, iLen, iDataLen, iVersion));
 #endif
 #endif
 
    /* Encode */
-   hb_bitbuffer_cat_int_rev( pData, iMode, 4 );
-   hb_bitbuffer_cat_int_rev( pData, static_cast<int>(nSize), _qr_cci_len( iVersion, iMode ) );
+   hb_bitbuffer_cat_int_rev(pData, iMode, 4);
+   hb_bitbuffer_cat_int_rev(pData, static_cast<int>(nSize), _qr_cci_len(iVersion, iMode));
    if( iMode == 1 )
    {
       for( n = 0; n + 2 < nSize; n += 3 )
@@ -735,44 +735,44 @@ static int _qr_dataencode( const char * szCode, HB_SIZE nSize, PHB_BITBUFFER pDa
    {
       for( n = 0; n + 1 < nSize; n += 2 )
       {
-         hb_bitbuffer_cat_int_rev( pData, 45 * _qr_alphanumeric_no( szCode[n] ) + _qr_alphanumeric_no( szCode[n + 1] ), 11 );
+         hb_bitbuffer_cat_int_rev(pData, 45 * _qr_alphanumeric_no(szCode[n]) + _qr_alphanumeric_no(szCode[n + 1]), 11);
       }
       if( n != nSize )
       {
-         hb_bitbuffer_cat_int_rev( pData, _qr_alphanumeric_no( szCode[n] ), 6 );
+         hb_bitbuffer_cat_int_rev(pData, _qr_alphanumeric_no(szCode[n]), 6);
       }
    }
    else if( iMode == 4 )
    {
       for( n = 0; n < nSize; n++ )
       {
-         hb_bitbuffer_cat_int_rev( pData, static_cast<int>(static_cast<unsigned char>(szCode[n])), 8 );
+         hb_bitbuffer_cat_int_rev(pData, static_cast<int>(static_cast<unsigned char>(szCode[n])), 8);
       }
    }
 
    /* Terminator */
    if( iDataLen * 8 >= static_cast<int>(hb_bitbuffer_len(pData)) + 4 )
    {
-      hb_bitbuffer_cat_int_rev( pData, 0, 4 );
+      hb_bitbuffer_cat_int_rev(pData, 0, 4);
    }
 
    /* Padding */
    if( hb_bitbuffer_len( pData ) & 7 )
    {
-      hb_bitbuffer_cat_int_rev( pData, 0, 8 - ( hb_bitbuffer_len( pData ) & 7 ) );
+      hb_bitbuffer_cat_int_rev(pData, 0, 8 - (hb_bitbuffer_len(pData) & 7));
    }
 
    iLen = iDataLen - hb_bitbuffer_len( pData ) / 8;
    for( m = 0; m < iLen; m++ )
    {
-      hb_bitbuffer_cat_int_rev( pData, ( m & 1 ) ? 0x11 : 0xEC, 8 );
+      hb_bitbuffer_cat_int_rev(pData, (m & 1) ? 0x11 : 0xEC, 8);
    }
 
 #ifdef DEBUG_CODE
    for( m = 0; m < iDataLen; m++ )
    {
 #if 0
-      HB_TRACE( HB_TR_ALWAYS, ( "data:%3d %02X", s_rev[*( hb_bitbuffer_buffer( pData ) + m )], s_rev[*( hb_bitbuffer_buffer( pData ) + m )] ) );
+      HB_TRACE(HB_TR_ALWAYS, ("data:%3d %02X", s_rev[*(hb_bitbuffer_buffer(pData) + m)], s_rev[*(hb_bitbuffer_buffer(pData) + m)]));
 #endif
    }
 #endif
@@ -817,8 +817,8 @@ static void _reed_solomon_encode( unsigned char * pData, int iDataLen, unsigned 
 static unsigned char * _qr_checksum( PHB_BITBUFFER pData, int iVersion, int iLevel )
 {
    const QRVERSION * pVersion = &s_version[iVersion - 1];
-   const QRLEVEL * pLevel = &( pVersion->level[iLevel] );
-   HB_BYTE * pDataBuf = hb_bitbuffer_buffer( pData );
+   const QRLEVEL * pLevel = &(pVersion->level[iLevel]);
+   HB_BYTE * pDataBuf = hb_bitbuffer_buffer(pData);
    int * pPoly, * pExp, * pLog;
    int i, j, iBits, iMod, iPoly, iECCLen, iIndex;
    unsigned char * pECC, * pECCPtr, ui, ui2;
@@ -874,7 +874,7 @@ static unsigned char * _qr_checksum( PHB_BITBUFFER pData, int iVersion, int iLev
    for( i = 0; i <= iECCLen; i++ )
    {
 #if 0
-      HB_TRACE( HB_TR_ALWAYS, ( "POLY[%3d %02X]:%3d %02X", i, i, pPoly[i], pPoly[i] ) );
+      HB_TRACE(HB_TR_ALWAYS, ("POLY[%3d %02X]:%3d %02X", i, i, pPoly[i], pPoly[i]));
 #endif
    }
 #endif
@@ -886,7 +886,7 @@ static unsigned char * _qr_checksum( PHB_BITBUFFER pData, int iVersion, int iLev
    for( ui = 0; ui < pLevel->block[0].uiCount; ui++ )
    {
       /* Calculate Reed-Solomon ECC for one block */
-      _reed_solomon_encode( pDataBuf, pLevel->block[0].uiData, pECCPtr, iECCLen, pPoly, pExp, pLog, iMod );
+      _reed_solomon_encode(pDataBuf, pLevel->block[0].uiData, pECCPtr, iECCLen, pPoly, pExp, pLog, iMod);
       pDataBuf += pLevel->block[0].uiData;
       for( i = 0; i < iECCLen / 2; i++ )
       {
@@ -899,7 +899,7 @@ static unsigned char * _qr_checksum( PHB_BITBUFFER pData, int iVersion, int iLev
    for( ui = 0; ui < pLevel->block[1].uiCount; ui++ )
    {
       /* Calculate Reed-Solomon ECC for one block */
-      _reed_solomon_encode( pDataBuf, pLevel->block[1].uiData, pECCPtr, iECCLen, pPoly, pExp, pLog, iMod );
+      _reed_solomon_encode(pDataBuf, pLevel->block[1].uiData, pECCPtr, iECCLen, pPoly, pExp, pLog, iMod);
       pDataBuf += pLevel->block[1].uiData;
       for( i = 0; i < iECCLen / 2; i++ )
       {
@@ -915,11 +915,11 @@ static unsigned char * _qr_checksum( PHB_BITBUFFER pData, int iVersion, int iLev
    hb_xfree(pPoly);
 
 #ifdef DEBUG_CODE
-   iECCLen = pLevel->block[0].uiECC * ( pLevel->block[0].uiCount + pLevel->block[1].uiCount );
+   iECCLen = pLevel->block[0].uiECC * (pLevel->block[0].uiCount + pLevel->block[1].uiCount);
    for( i = 0; i < iECCLen; i++ )
    {
 #if 0
-      HB_TRACE( HB_TR_ALWAYS, ( "ecc:%3d %02X", static_cast<int>(static_cast<unsigned char>(pECC[i])), static_cast<int>(static_cast<unsigned char>(pECC[i])) ) );
+      HB_TRACE(HB_TR_ALWAYS, ("ecc:%3d %02X", static_cast<int>(static_cast<unsigned char>(pECC[i])), static_cast<int>(static_cast<unsigned char>(pECC[i]))));
 #endif
    }
 #endif
@@ -933,40 +933,40 @@ static void _qr_draw( PHB_BITBUFFER pBits, PHB_BITBUFFER pCWBits, int iVersion )
 
    HB_SYMBOL_UNUSED(pCWBits);
 
-   iLength = _qr_versionlength( iVersion );
+   iLength = _qr_versionlength(iVersion);
 
    /* draw position detection markers */
    for( i = 0; i < 7; i++ )
    {
-      hb_bitbuffer_set( pBits, i, 1 );
-      hb_bitbuffer_set( pBits, i + 6 * iLength, 1 );
-      hb_bitbuffer_set( pBits, i * iLength, 1 );
-      hb_bitbuffer_set( pBits, i * iLength + 6, 1 );
+      hb_bitbuffer_set(pBits, i, 1);
+      hb_bitbuffer_set(pBits, i + 6 * iLength, 1);
+      hb_bitbuffer_set(pBits, i * iLength, 1);
+      hb_bitbuffer_set(pBits, i * iLength + 6, 1);
 
-      hb_bitbuffer_set( pBits, i + ( iLength - 7 ) * iLength, 1 );
-      hb_bitbuffer_set( pBits, i + ( iLength - 1 ) * iLength, 1 );
-      hb_bitbuffer_set( pBits, ( iLength - 7 + i ) * iLength, 1 );
-      hb_bitbuffer_set( pBits, ( iLength - 7 + i ) * iLength + 6, 1 );
+      hb_bitbuffer_set(pBits, i + (iLength - 7) * iLength, 1);
+      hb_bitbuffer_set(pBits, i + (iLength - 1) * iLength, 1);
+      hb_bitbuffer_set(pBits, (iLength - 7 + i) * iLength, 1);
+      hb_bitbuffer_set(pBits, (iLength - 7 + i) * iLength + 6, 1);
 
-      hb_bitbuffer_set( pBits, iLength - 7 + i, 1 );
-      hb_bitbuffer_set( pBits, iLength - 7 + i + 6 * iLength, 1 );
-      hb_bitbuffer_set( pBits, iLength - 7 + i * iLength, 1 );
-      hb_bitbuffer_set( pBits, iLength - 1 + i * iLength, 1 );
+      hb_bitbuffer_set(pBits, iLength - 7 + i, 1);
+      hb_bitbuffer_set(pBits, iLength - 7 + i + 6 * iLength, 1);
+      hb_bitbuffer_set(pBits, iLength - 7 + i * iLength, 1);
+      hb_bitbuffer_set(pBits, iLength - 1 + i * iLength, 1);
    }
    for( i = 2; i < 5; i++ )
    {
       for( j = 2; j < 5; j++ )
       {
-         hb_bitbuffer_set( pBits, i * iLength + j, 1 );
-         hb_bitbuffer_set( pBits, i * iLength + j + iLength - 7, 1 );
-         hb_bitbuffer_set( pBits, ( i + iLength - 7 ) * iLength + j, 1 );
+         hb_bitbuffer_set(pBits, i * iLength + j, 1);
+         hb_bitbuffer_set(pBits, i * iLength + j + iLength - 7, 1);
+         hb_bitbuffer_set(pBits, (i + iLength - 7) * iLength + j, 1);
       }
    }
    /* draw timing patterns */
    for( i = 8; i < iLength - 8; i += 2 )
    {
-      hb_bitbuffer_set( pBits, i + 6 * iLength, 1 );
-      hb_bitbuffer_set( pBits, i * iLength + 6, 1 );
+      hb_bitbuffer_set(pBits, i + 6 * iLength, 1);
+      hb_bitbuffer_set(pBits, i * iLength + 6, 1);
    }
    /* draw alignment patterns */
    pi = s_align[iVersion - 1];
@@ -977,34 +977,34 @@ static void _qr_draw( PHB_BITBUFFER pBits, PHB_BITBUFFER pCWBits, int iVersion )
       {
          if( (*pi > 10 && *pi < iLength - 10) || (*pj > 10 && *pj < iLength - 10) || (*pi > 10 && *pj > 10) )
          {
-            hb_bitbuffer_set( pBits, iLength * *pi + *pj - 1, 0 );
-            hb_bitbuffer_set( pBits, iLength * *pi + *pj + 1, 0 );
-            hb_bitbuffer_set( pBits, iLength * ( *pi - 1 ) + *pj, 0 );
-            hb_bitbuffer_set( pBits, iLength * ( *pi + 1 ) + *pj, 0 );
+            hb_bitbuffer_set(pBits, iLength * *pi + *pj - 1, 0);
+            hb_bitbuffer_set(pBits, iLength * *pi + *pj + 1, 0);
+            hb_bitbuffer_set(pBits, iLength * (*pi - 1) + *pj, 0);
+            hb_bitbuffer_set(pBits, iLength * (*pi + 1) + *pj, 0);
 
-            hb_bitbuffer_set( pBits, iLength * *pi + *pj, 1 );
-            hb_bitbuffer_set( pBits, iLength * ( *pi - 2 ) + *pj - 2, 1 );
-            hb_bitbuffer_set( pBits, iLength * ( *pi - 2 ) + *pj - 1, 1 );
-            hb_bitbuffer_set( pBits, iLength * ( *pi - 2 ) + *pj    , 1 );
-            hb_bitbuffer_set( pBits, iLength * ( *pi - 2 ) + *pj + 1, 1 );
-            hb_bitbuffer_set( pBits, iLength * ( *pi - 2 ) + *pj + 2, 1 );
-            hb_bitbuffer_set( pBits, ( *pi - 1 ) * iLength + *pj - 2, 1 );
-            hb_bitbuffer_set( pBits, *pi * iLength + *pj - 2, 1 );
-            hb_bitbuffer_set( pBits, ( *pi + 1 ) * iLength + *pj - 2, 1 );
-            hb_bitbuffer_set( pBits, ( *pi - 1 ) * iLength + *pj + 2, 1 );
-            hb_bitbuffer_set( pBits, *pi * iLength + *pj + 2, 1 );
-            hb_bitbuffer_set( pBits, ( *pi + 1 ) * iLength + *pj + 2, 1 );
-            hb_bitbuffer_set( pBits, iLength * ( *pi + 2 ) + *pj - 2, 1 );
-            hb_bitbuffer_set( pBits, iLength * ( *pi + 2 ) + *pj - 1, 1 );
-            hb_bitbuffer_set( pBits, iLength * ( *pi + 2 ) + *pj    , 1 );
-            hb_bitbuffer_set( pBits, iLength * ( *pi + 2 ) + *pj + 1, 1 );
-            hb_bitbuffer_set( pBits, iLength * ( *pi + 2 ) + *pj + 2, 1 );
+            hb_bitbuffer_set(pBits, iLength * *pi + *pj, 1);
+            hb_bitbuffer_set(pBits, iLength * (*pi - 2) + *pj - 2, 1);
+            hb_bitbuffer_set(pBits, iLength * (*pi - 2) + *pj - 1, 1);
+            hb_bitbuffer_set(pBits, iLength * (*pi - 2) + *pj    , 1);
+            hb_bitbuffer_set(pBits, iLength * (*pi - 2) + *pj + 1, 1);
+            hb_bitbuffer_set(pBits, iLength * (*pi - 2) + *pj + 2, 1);
+            hb_bitbuffer_set(pBits, (*pi - 1) * iLength + *pj - 2, 1);
+            hb_bitbuffer_set(pBits, *pi * iLength + *pj - 2, 1);
+            hb_bitbuffer_set(pBits, (*pi + 1) * iLength + *pj - 2, 1);
+            hb_bitbuffer_set(pBits, (*pi - 1) * iLength + *pj + 2, 1);
+            hb_bitbuffer_set(pBits, *pi * iLength + *pj + 2, 1);
+            hb_bitbuffer_set(pBits, (*pi + 1) * iLength + *pj + 2, 1);
+            hb_bitbuffer_set(pBits, iLength * (*pi + 2) + *pj - 2, 1);
+            hb_bitbuffer_set(pBits, iLength * (*pi + 2) + *pj - 1, 1);
+            hb_bitbuffer_set(pBits, iLength * (*pi + 2) + *pj    , 1);
+            hb_bitbuffer_set(pBits, iLength * (*pi + 2) + *pj + 1, 1);
+            hb_bitbuffer_set(pBits, iLength * (*pi + 2) + *pj + 2, 1);
          }
       }
    }
 
    /* Dark module */
-   hb_bitbuffer_set( pBits, 8 + iLength * ( iLength - 8 ), 1 );
+   hb_bitbuffer_set(pBits, 8 + iLength * (iLength - 8), 1);
 
 
    /* Draw data. Note: pCWBits == nullptr is used only for debugging */
@@ -1020,7 +1020,7 @@ static void _qr_draw( PHB_BITBUFFER pBits, PHB_BITBUFFER pCWBits, int iVersion )
       {
          if( !_qr_fixed( iVersion, i, j ) )
          {
-            hb_bitbuffer_set( pBits, i * iLength + j, hb_bitbuffer_get( pCWBits, no++ ) );
+            hb_bitbuffer_set(pBits, i * iLength + j, hb_bitbuffer_get(pCWBits, no++));
          }
 
          if( right )
@@ -1067,23 +1067,23 @@ static void _qr_draw( PHB_BITBUFFER pBits, PHB_BITBUFFER pCWBits, int iVersion )
 
 static int _qr_penalty( PHB_BITBUFFER pBits, int iVersion )
 {
-   int i, j, k, iPenalty = 0, iLen = _qr_versionlength( iVersion );
+   int i, j, k, iPenalty = 0, iLen = _qr_versionlength(iVersion);
    HB_BOOL bBit;
 
    /* 1. Same color modules in row/column */
    for( i = 0; i < iLen; i++ )
    {
       /* Row */
-      HB_BOOL bBitLast = hb_bitbuffer_get( pBits, i * iLen );
+      HB_BOOL bBitLast = hb_bitbuffer_get(pBits, i * iLen);
       k = 1;
       for( j = 1; j < iLen; j++ )
       {
-         bBit = hb_bitbuffer_get( pBits, i * iLen + j );
+         bBit = hb_bitbuffer_get(pBits, i * iLen + j);
          if( bBit != bBitLast )
          {
             if( k >= 5 )
             {
-               iPenalty += 3 + ( k - 5 );
+               iPenalty += 3 + (k - 5);
             }
 
             bBitLast = bBit;
@@ -1096,20 +1096,20 @@ static int _qr_penalty( PHB_BITBUFFER pBits, int iVersion )
       }
       if( k >= 5 )
       {
-         iPenalty = 3 + ( k - 5 );
+         iPenalty = 3 + (k - 5);
       }
 
       /* Col */
-      bBitLast = hb_bitbuffer_get( pBits, i );
+      bBitLast = hb_bitbuffer_get(pBits, i);
       k = 1;
       for( j = 1; j < iLen; j++ )
       {
-         bBit = hb_bitbuffer_get( pBits, i + iLen * j );
+         bBit = hb_bitbuffer_get(pBits, i + iLen * j);
          if( bBit != bBitLast )
          {
             if( k >= 5 )
             {
-               iPenalty += 3 + ( k - 5 );
+               iPenalty += 3 + (k - 5);
             }
 
             bBitLast = bBit;
@@ -1122,7 +1122,7 @@ static int _qr_penalty( PHB_BITBUFFER pBits, int iVersion )
       }
       if( k >= 5 )
       {
-         iPenalty = 3 + ( k - 5 );
+         iPenalty = 3 + (k - 5);
       }
    }
 
@@ -1133,10 +1133,10 @@ static int _qr_penalty( PHB_BITBUFFER pBits, int iVersion )
    {
       for( j = 0; j < iLen - 1; j++ )
       {
-         bBit = hb_bitbuffer_get( pBits, i * iLen + j );
-         if( hb_bitbuffer_get( pBits, i * iLen + j + 1 ) == bBit &&
-             hb_bitbuffer_get( pBits, ( i + 1 ) * iLen + j ) == bBit &&
-             hb_bitbuffer_get( pBits, ( i + 1 ) * iLen + j + 1 ) == bBit )
+         bBit = hb_bitbuffer_get(pBits, i * iLen + j);
+         if( hb_bitbuffer_get(pBits, i * iLen + j + 1) == bBit &&
+             hb_bitbuffer_get(pBits, (i + 1) * iLen + j) == bBit &&
+             hb_bitbuffer_get(pBits, (i + 1) * iLen + j + 1) == bBit )
          {
             iPenalty += 3;
          }
@@ -1184,7 +1184,7 @@ static int _qr_penalty( PHB_BITBUFFER pBits, int iVersion )
          }
       }
    }
-   k = k * 100 / ( iLen * iLen );
+   k = k * 100 / (iLen * iLen);
    if( k < 50 )
    {
       k = 100 - k;
@@ -1196,7 +1196,7 @@ static int _qr_penalty( PHB_BITBUFFER pBits, int iVersion )
 
 static void _qr_mask_pattern( PHB_BITBUFFER pBits, int iVersion, int iMask )
 {
-   int i, j, k = 0, iLen = _qr_versionlength( iVersion );
+   int i, j, k = 0, iLen = _qr_versionlength(iVersion);
 
    for( i = 0; i < iLen; i++ )
    {
@@ -1233,7 +1233,7 @@ static void _qr_mask_pattern( PHB_BITBUFFER pBits, int iVersion, int iMask )
             }
             if( k )
             {
-               hb_bitbuffer_not( pBits, i * iLen + j );
+               hb_bitbuffer_not(pBits, i * iLen + j);
             }
          }
       }
@@ -1248,11 +1248,11 @@ static int _qr_mask( PHB_BITBUFFER pBits, int iVersion )
    {
       int iPenalty;
 
-      _qr_mask_pattern( pBits, iVersion, i );
-      iPenalty = _qr_penalty( pBits, iVersion );
+      _qr_mask_pattern(pBits, iVersion, i);
+      iPenalty = _qr_penalty(pBits, iVersion);
 #ifdef DEBUG_CODE
 #if 0
-      HB_TRACE( HB_TR_ALWAYS, ( "mask:%d penalty:%d", i, iPenalty ) );
+      HB_TRACE(HB_TR_ALWAYS, ("mask:%d penalty:%d", i, iPenalty));
 #endif
 #endif
       if( i == 0 || iPenalty < iPenaltyMin )
@@ -1260,41 +1260,41 @@ static int _qr_mask( PHB_BITBUFFER pBits, int iVersion )
          iPenaltyMin = iPenalty;
          iMaskMin = i;
       }
-      _qr_mask_pattern( pBits, iVersion, i );
+      _qr_mask_pattern(pBits, iVersion, i);
    }
 #ifdef DEBUG_CODE
 #if 0
-   HB_TRACE( HB_TR_ALWAYS, ( "mask:%d", iMaskMin ) );
+   HB_TRACE(HB_TR_ALWAYS, ("mask:%d", iMaskMin));
 #endif
    #if 0
    iMaskMin = 0;
    #endif
 #if 0
-   HB_TRACE( HB_TR_ALWAYS, ( "mask applied:%d", iMaskMin ) );
+   HB_TRACE(HB_TR_ALWAYS, ("mask applied:%d", iMaskMin));
 #endif
 #endif
-   _qr_mask_pattern( pBits, iVersion, iMaskMin );
+   _qr_mask_pattern(pBits, iVersion, iMaskMin);
    return iMaskMin;
 }
 
 static void _qr_draw_version_format( PHB_BITBUFFER pBits, int iVersion, int iLevel, int iMask )
 {
-   int i, iCRC, iLen = _qr_versionlength( iVersion );
+   int i, iCRC, iLen = _qr_versionlength(iVersion);
 
    if( iVersion >= 7 )
    {
-      iCRC = _qr_version_crc( iVersion );
+      iCRC = _qr_version_crc(iVersion);
       for( i = 0; i < 18; i++ )
       {
          if( iCRC & (1 << 17) )
          {
-            hb_bitbuffer_set( pBits, iLen - 11 + ( i % 3 ) + iLen * ( i / 3 ), 1 );
-            hb_bitbuffer_set( pBits, ( iLen - 11 + ( i % 3 ) ) * iLen + ( i / 3 ), 1 );
+            hb_bitbuffer_set(pBits, iLen - 11 + (i % 3) + iLen * (i / 3), 1);
+            hb_bitbuffer_set(pBits, (iLen - 11 + (i % 3)) * iLen + (i / 3), 1);
          }
          iCRC <<= 1;
       }
    }
-   iCRC = _qr_format_crc( iLevel, iMask );
+   iCRC = _qr_format_crc(iLevel, iMask);
    for( i = 0; i < 15; i++ )
    {
       if( iCRC & (1 << 14) )
@@ -1302,21 +1302,21 @@ static void _qr_draw_version_format( PHB_BITBUFFER pBits, int iVersion, int iLev
          /* Top left */
          if( i <= 7 )
          {
-            hb_bitbuffer_set( pBits, ( i + ( i >= 6 ? 1 : 0 ) ) * iLen + 8, 1 );
+            hb_bitbuffer_set(pBits, (i + (i >= 6 ? 1 : 0)) * iLen + 8, 1);
          }
          else
          {
-            hb_bitbuffer_set( pBits, (14 - i) + ( i == 8 ? 1 : 0 ) + iLen * 8, 1 );
+            hb_bitbuffer_set(pBits, (14 - i) + (i == 8 ? 1 : 0) + iLen * 8, 1);
          }
 
          /* Top right and bottom left */
          if( i <= 7 )
          {
-            hb_bitbuffer_set( pBits, iLen - 1 - i + iLen * 8, 1 );
+            hb_bitbuffer_set(pBits, iLen - 1 - i + iLen * 8, 1);
          }
          else
          {
-            hb_bitbuffer_set( pBits, ( iLen - 15 + i ) * iLen + 8, 1 );
+            hb_bitbuffer_set(pBits, (iLen - 15 + i) * iLen + 8, 1);
          }
       }
       iCRC <<= 1;
@@ -1328,7 +1328,7 @@ static void _qr_draw_version_format( PHB_BITBUFFER pBits, int iVersion, int iLev
    {
       for( int j = 0; j < iLen; j++ )
       {
-         hb_bitbuffer_set( pBits, i * iLen + j, _qr_fixed( iVersion, i, j ) );
+         hb_bitbuffer_set(pBits, i * iLen + j, _qr_fixed(iVersion, i, j));
       }
    }
 #endif
@@ -1368,43 +1368,43 @@ PHB_ZEBRA hb_zebra_create_qrcode( const char * szCode, HB_SIZE nLen, int iFlags 
 
 #ifdef DEBUG_CODE
 #if 0
-   HB_TRACE( HB_TR_ALWAYS, ( "qr1 iLevel:%d", iLevel ) );
+   HB_TRACE(HB_TR_ALWAYS, ("qr1 iLevel:%d", iLevel));
 #endif
 #endif
 
    pData = hb_bitbuffer_create();
-   iVersion = _qr_dataencode( szCode, nLen, pData, iLevel );
+   iVersion = _qr_dataencode(szCode, nLen, pData, iLevel);
 
 #ifdef DEBUG_CODE
 #if 0
-   HB_TRACE( HB_TR_ALWAYS, ( "qr3 iVersion:%d", iVersion ) );
+   HB_TRACE(HB_TR_ALWAYS, ("qr3 iVersion:%d", iVersion));
 #endif
 #endif
 
    if( iVersion == 0 )
    {
-      hb_bitbuffer_destroy( pData );
+      hb_bitbuffer_destroy(pData);
       pZebra->iError = HB_ZEBRA_ERROR_TOOLARGE;
       return pZebra;
    }
 
-   pZebra->iCol = _qr_versionlength( iVersion );
+   pZebra->iCol = _qr_versionlength(iVersion);
 
-   pZebra->szCode = hb_strdup( szCode );
+   pZebra->szCode = hb_strdup(szCode);
 
-   pECC = _qr_checksum( pData, iVersion, iLevel );
+   pECC = _qr_checksum(pData, iVersion, iLevel);
 
-   pFinal = _qr_interlace( pData, pECC, iVersion, iLevel );
-   hb_bitbuffer_destroy( pData );
+   pFinal = _qr_interlace(pData, pECC, iVersion, iLevel);
+   hb_bitbuffer_destroy(pData);
    hb_xfree(pECC);
 
    pZebra->pBits = hb_bitbuffer_create();
-   _qr_draw( pZebra->pBits, pFinal, iVersion );
-   hb_bitbuffer_destroy( pFinal );
+   _qr_draw(pZebra->pBits, pFinal, iVersion);
+   hb_bitbuffer_destroy(pFinal);
 
-   iMask = _qr_mask( pZebra->pBits, iVersion );
+   iMask = _qr_mask(pZebra->pBits, iVersion);
 
-   _qr_draw_version_format( pZebra->pBits, iVersion, iLevel, iMask );
+   _qr_draw_version_format(pZebra->pBits, iVersion, iLevel, iMask);
    return pZebra;
 }
 
@@ -1412,9 +1412,9 @@ HB_FUNC( HB_ZEBRA_CREATE_QRCODE )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem )
+   if( pItem != nullptr )
    {
-      hb_zebra_ret( hb_zebra_create_qrcode( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2) ) );
+      hb_zebra_ret(hb_zebra_create_qrcode(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
    }
    else
    {

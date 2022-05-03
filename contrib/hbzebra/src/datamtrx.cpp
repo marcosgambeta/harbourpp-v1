@@ -246,7 +246,7 @@ static void _datamatrix_reed_solomon( unsigned char * pData, const DATAMATRIX_SI
       }
 
       /* Calculate Reed-Solomon ECC for one block */
-      _reed_solomon_encode( data, k, ecc, pSize->iBlockErrorSize, pPoly, pExp, pLog, iMod );
+      _reed_solomon_encode(data, k, ecc, pSize->iBlockErrorSize, pPoly, pExp, pLog, iMod);
 
       /* Copy ECC to codeword array */
       k = pSize->iBlockErrorSize;
@@ -266,74 +266,74 @@ static void _datamatrix_place_bit( int * pArr, int iPRow, int iPCol, int iR, int
    if( iR < 0 )
    {
       iR += iPRow;
-      iC += 4 - ( ( iPRow + 4 ) % 8 );
+      iC += 4 - ((iPRow + 4) % 8);
    }
    if( iC < 0 )
    {
       iC += iPCol;
-      iR += 4 - ( ( iPCol + 4 ) % 8 );
+      iR += 4 - ((iPCol + 4) % 8);
    }
    pArr[iR * iPCol + iC] = iValue;
 }
 
 static void _datamatrix_place( int * pArr, int iPRow, int iPCol, int iR, int iC, int iIndex )
 {
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iR - 2, iC - 2, ( iIndex << 3 ) + 7 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iR - 2, iC - 1, ( iIndex << 3 ) + 6 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iR - 1, iC - 2, ( iIndex << 3 ) + 5 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iR - 1, iC - 1, ( iIndex << 3 ) + 4 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iR - 1, iC - 0, ( iIndex << 3 ) + 3 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iR - 0, iC - 2, ( iIndex << 3 ) + 2 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iR - 0, iC - 1, ( iIndex << 3 ) + 1 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iR - 0, iC - 0, ( iIndex << 3 ) + 0 );
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iR - 2, iC - 2, (iIndex << 3) + 7);
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iR - 2, iC - 1, (iIndex << 3) + 6);
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iR - 1, iC - 2, (iIndex << 3) + 5);
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iR - 1, iC - 1, (iIndex << 3) + 4);
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iR - 1, iC - 0, (iIndex << 3) + 3);
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iR - 0, iC - 2, (iIndex << 3) + 2);
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iR - 0, iC - 1, (iIndex << 3) + 1);
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iR - 0, iC - 0, (iIndex << 3) + 0);
 }
 
 static void _datamatrix_place_a( int * pArr, int iPRow, int iPCol, int iIndex )
 {
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iPRow - 1,         0, ( iIndex << 3 ) + 7 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iPRow - 1,         1, ( iIndex << 3 ) + 6 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iPRow - 1,         2, ( iIndex << 3 ) + 5 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         0, iPCol - 2, ( iIndex << 3 ) + 4 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         0, iPCol - 1, ( iIndex << 3 ) + 3 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         1, iPCol - 1, ( iIndex << 3 ) + 2 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         2, iPCol - 1, ( iIndex << 3 ) + 1 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         3, iPCol - 1, ( iIndex << 3 ) + 0 );
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 1,         0, (iIndex << 3) + 7);
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 1,         1, (iIndex << 3) + 6);
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 1,         2, (iIndex << 3) + 5);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         0, iPCol - 2, (iIndex << 3) + 4);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         0, iPCol - 1, (iIndex << 3) + 3);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         1, iPCol - 1, (iIndex << 3) + 2);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         2, iPCol - 1, (iIndex << 3) + 1);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         3, iPCol - 1, (iIndex << 3) + 0);
 }
 
 static void _datamatrix_place_b( int * pArr, int iPRow, int iPCol, int iIndex )
 {
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iPRow - 3,         0, ( iIndex << 3 ) + 7 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iPRow - 2,         0, ( iIndex << 3 ) + 6 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iPRow - 1,         0, ( iIndex << 3 ) + 5 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         0, iPCol - 4, ( iIndex << 3 ) + 4 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         0, iPCol - 3, ( iIndex << 3 ) + 3 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         0, iPCol - 2, ( iIndex << 3 ) + 2 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         0, iPCol - 1, ( iIndex << 3 ) + 1 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         1, iPCol - 1, ( iIndex << 3 ) + 0 );
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 3,         0, (iIndex << 3) + 7);
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 2,         0, (iIndex << 3) + 6);
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 1,         0, (iIndex << 3) + 5);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         0, iPCol - 4, (iIndex << 3) + 4);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         0, iPCol - 3, (iIndex << 3) + 3);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         0, iPCol - 2, (iIndex << 3) + 2);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         0, iPCol - 1, (iIndex << 3) + 1);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         1, iPCol - 1, (iIndex << 3) + 0);
 }
 
 static void _datamatrix_place_c( int * pArr, int iPRow, int iPCol, int iIndex )
 {
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iPRow - 3,         0, ( iIndex << 3 ) + 7 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iPRow - 2,         0, ( iIndex << 3 ) + 6 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iPRow - 1,         0, ( iIndex << 3 ) + 5 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         0, iPCol - 2, ( iIndex << 3 ) + 4 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         0, iPCol - 1, ( iIndex << 3 ) + 3 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         1, iPCol - 1, ( iIndex << 3 ) + 2 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         2, iPCol - 1, ( iIndex << 3 ) + 1 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         3, iPCol - 1, ( iIndex << 3 ) + 0 );
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 3,         0, (iIndex << 3) + 7);
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 2,         0, (iIndex << 3) + 6);
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 1,         0, (iIndex << 3) + 5);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         0, iPCol - 2, (iIndex << 3) + 4);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         0, iPCol - 1, (iIndex << 3) + 3);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         1, iPCol - 1, (iIndex << 3) + 2);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         2, iPCol - 1, (iIndex << 3) + 1);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         3, iPCol - 1, (iIndex << 3) + 0);
 }
 
 static void _datamatrix_place_d( int * pArr, int iPRow, int iPCol, int iIndex )
 {
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iPRow - 1,         0, ( iIndex << 3 ) + 7 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol, iPRow - 1, iPCol - 1, ( iIndex << 3 ) + 6 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         0, iPCol - 3, ( iIndex << 3 ) + 5 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         0, iPCol - 2, ( iIndex << 3 ) + 4 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         0, iPCol - 1, ( iIndex << 3 ) + 3 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         1, iPCol - 3, ( iIndex << 3 ) + 2 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         1, iPCol - 2, ( iIndex << 3 ) + 1 );
-   _datamatrix_place_bit( pArr, iPRow, iPCol,         1, iPCol - 1, ( iIndex << 3 ) + 0 );
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 1,         0, (iIndex << 3) + 7);
+   _datamatrix_place_bit(pArr, iPRow, iPCol, iPRow - 1, iPCol - 1, (iIndex << 3) + 6);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         0, iPCol - 3, (iIndex << 3) + 5);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         0, iPCol - 2, (iIndex << 3) + 4);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         0, iPCol - 1, (iIndex << 3) + 3);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         1, iPCol - 3, (iIndex << 3) + 2);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         1, iPCol - 2, (iIndex << 3) + 1);
+   _datamatrix_place_bit(pArr, iPRow, iPCol,         1, iPCol - 1, (iIndex << 3) + 0);
 }
 
 static void _datamatrix_do_placement( PHB_BITBUFFER pBits, unsigned char * pCW, const DATAMATRIX_SIZE * pSize )
@@ -342,8 +342,8 @@ static void _datamatrix_do_placement( PHB_BITBUFFER pBits, unsigned char * pCW, 
    int i, iR, iC, iPRow, iPCol;
 
    /* Calculate placement size without L-patterns and clock tracks */
-   iPRow = pSize->iRow - 2 * ( pSize->iRow / pSize->iRegionRow );
-   iPCol = pSize->iCol - 2 * ( pSize->iCol / pSize->iRegionCol );
+   iPRow = pSize->iRow - 2 * (pSize->iRow / pSize->iRegionRow);
+   iPCol = pSize->iCol - 2 * (pSize->iCol / pSize->iRegionCol);
 
    pArr = static_cast<int*>(hb_xgrab(sizeof(int) * iPCol * iPRow));
    hb_xmemset(pArr, 0, sizeof(int) * iPCol * iPRow);
@@ -357,26 +357,26 @@ static void _datamatrix_do_placement( PHB_BITBUFFER pBits, unsigned char * pCW, 
    {
       if( iR == iPRow && iC == 0 )
       {
-         _datamatrix_place_a( pArr, iPRow, iPCol, i++ );
+         _datamatrix_place_a(pArr, iPRow, iPCol, i++);
       }
       if( iR == iPRow - 2 && iC == 0 && iPCol % 4 )
       {
-         _datamatrix_place_b( pArr, iPRow, iPCol, i++ );
+         _datamatrix_place_b(pArr, iPRow, iPCol, i++);
       }
       if( iR == iPRow - 2 && iC == 0 && ( iPCol % 8 ) == 4 )
       {
-         _datamatrix_place_c( pArr, iPRow, iPCol, i++ );
+         _datamatrix_place_c(pArr, iPRow, iPCol, i++);
       }
       if( iR == iPRow + 4 && iC == 2 && ( iPCol % 8 ) == 0  )
       {
-         _datamatrix_place_d( pArr, iPRow, iPCol, i++ );
+         _datamatrix_place_d(pArr, iPRow, iPCol, i++);
       }
 
       do
       {
          if( iR < iPRow && iC >= 0 && pArr[iR * iPCol + iC] == 0 )
          {
-            _datamatrix_place( pArr, iPRow, iPCol, iR, iC, i++ );
+            _datamatrix_place(pArr, iPRow, iPCol, iR, iC, i++);
          }
          iR -= 2;
          iC += 2;
@@ -390,7 +390,7 @@ static void _datamatrix_do_placement( PHB_BITBUFFER pBits, unsigned char * pCW, 
       {
          if( iR >= 0 && iC < iPCol && pArr[iR * iPCol + iC] == 0 )
          {
-            _datamatrix_place( pArr, iPRow, iPCol, iR, iC, i++ );
+            _datamatrix_place(pArr, iPRow, iPCol, iR, iC, i++);
          }
          iR += 2;
          iC -= 2;
@@ -440,7 +440,7 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
    }
 
    pCW = static_cast<unsigned char*>(hb_xgrab(sizeof(char) * iLen * 2));
-   iDataCount = _datamatrix_encode( szCode, iLen, pCW );
+   iDataCount = _datamatrix_encode(szCode, iLen, pCW);
 
    if( iDataCount > 3116 )
    {
@@ -478,51 +478,51 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
    }
 
    /* Reed-Solomon error correction */
-   _datamatrix_reed_solomon( pCW, pSize );
+   _datamatrix_reed_solomon(pCW, pSize);
 
 #if 0
    for( i = 0; i < pSize->iDataSize + iErrorSize; i++ )
    {
 #if 0
-      HB_TRACE( HB_TR_ALWAYS, ( "cw=%d", pCW[i] ) );
+      HB_TRACE(HB_TR_ALWAYS, ("cw=%d", pCW[i]));
 #endif
    }
 #endif
 
    pZebra->iCol = pSize->iCol;
 
-   pZebra->szCode = hb_strdup( szCode );
+   pZebra->szCode = hb_strdup(szCode);
    pZebra->pBits = hb_bitbuffer_create();
 
    /* allocate bitbuffer */
-   hb_bitbuffer_set( pZebra->pBits, pSize->iCol * pSize->iRow - 1, 0 );
+   hb_bitbuffer_set(pZebra->pBits, pSize->iCol * pSize->iRow - 1, 0);
 
    /* Draw L-finder pattern and clock track */
    for( j = 0; j < pSize->iRow; j += pSize->iRegionRow )
    {
       for( i = 0; i < pSize->iCol; i++ )
       {
-         hb_bitbuffer_set( pZebra->pBits, ( j + pSize->iRegionRow - 1 ) * pSize->iCol + i, 1 );
+         hb_bitbuffer_set(pZebra->pBits, (j + pSize->iRegionRow - 1) * pSize->iCol + i, 1);
       }
       for( i = 0; i < pSize->iCol; i += 2 )
       {
-         hb_bitbuffer_set( pZebra->pBits, j * pSize->iCol + i, 1 );
+         hb_bitbuffer_set(pZebra->pBits, j * pSize->iCol + i, 1);
       }
    }
    for( i = 0; i < pSize->iCol; i += pSize->iRegionCol )
    {
       for( j = 1; j < pSize->iRow; j++ )
       {
-         hb_bitbuffer_set( pZebra->pBits, j * pSize->iCol + i, 1 );
+         hb_bitbuffer_set(pZebra->pBits, j * pSize->iCol + i, 1);
       }
       for( j = 1; j < pSize->iRow; j += 2 )
       {
-         hb_bitbuffer_set( pZebra->pBits, j * pSize->iCol + i + pSize->iRegionCol - 1, 1 );
+         hb_bitbuffer_set(pZebra->pBits, j * pSize->iCol + i + pSize->iRegionCol - 1, 1);
       }
    }
 
    /* And now the most crazy part - placement */
-   _datamatrix_do_placement( pZebra->pBits, pCW, pSize );
+   _datamatrix_do_placement(pZebra->pBits, pCW, pSize);
 
    hb_xfree(pCW);
    return pZebra;
@@ -532,9 +532,9 @@ HB_FUNC( HB_ZEBRA_CREATE_DATAMATRIX )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem )
+   if( pItem != nullptr )
    {
-      hb_zebra_ret( hb_zebra_create_datamatrix( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2) ) );
+      hb_zebra_ret(hb_zebra_create_datamatrix(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
    }
    else
    {

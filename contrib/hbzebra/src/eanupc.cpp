@@ -57,7 +57,7 @@ static char _ean13_checksum( const char * szCode )
 
    for( int i = 0; i < 12; i++ )
    {
-      sum += ( szCode[i] - '0' ) * ( ( i & 1 ) ? 3 : 1 );
+      sum += (szCode[i] - '0') * ((i & 1) ? 3 : 1);
    }
    return '0' + (10000 - sum) % 10;
 }
@@ -68,7 +68,7 @@ static char _ean8_checksum( const char * szCode )
 
    for( int i = 0; i < 7; i++ )
    {
-      sum += ( szCode[i] - '0' ) * ( ( i & 1 ) ? 1 : 3 );
+      sum += (szCode[i] - '0') * ((i & 1) ? 1 : 3);
    }
    return '0' + (10000 - sum) % 10;
 }
@@ -79,7 +79,7 @@ static char _upca_checksum( const char * szCode )
 
    for( int i = 0; i < 11; i++ )
    {
-      sum += ( szCode[i] - '0' ) * ( ( i & 1 ) ? 1 : 3 );
+      sum += (szCode[i] - '0') * ((i & 1) ? 1 : 3);
    }
    return '0' + (10000 - sum) % 10;
 }
@@ -122,7 +122,7 @@ static char _upce_checksum( const char * szCode )
       szExp[6] = szExp[7] = szExp[8] = szExp[9] = '0';
       szExp[10] = szCode[5];
    }
-   return _upca_checksum( szExp );
+   return _upca_checksum(szExp);
 }
 
 PHB_ZEBRA hb_zebra_create_ean13(const char * szCode, HB_SIZE nLen, int iFlags)
@@ -154,7 +154,7 @@ PHB_ZEBRA hb_zebra_create_ean13(const char * szCode, HB_SIZE nLen, int iFlags)
    {
       pZebra->szCode = static_cast<char*>(hb_xgrab(14));
       hb_xmemcpy(pZebra->szCode, szCode, 12);
-      pZebra->szCode[12] = _ean13_checksum( szCode );
+      pZebra->szCode[12] = _ean13_checksum(szCode);
       pZebra->szCode[13] = '\0';
    }
    else
@@ -172,28 +172,28 @@ PHB_ZEBRA hb_zebra_create_ean13(const char * szCode, HB_SIZE nLen, int iFlags)
 
    pZebra->pBits = hb_bitbuffer_create();
 
-   hb_bitbuffer_cat_int( pZebra->pBits, 5, 3 );   /* start */
+   hb_bitbuffer_cat_int(pZebra->pBits, 5, 3);   /* start */
 
    for( i = 1; i <= 6; i++ )
    {
       if( s_first[szCode[0] - '0'] & (1 << (i - 1)) )
       {
-         hb_bitbuffer_cat_int( pZebra->pBits, s_gcode[szCode[i] - '0'], 7 );
+         hb_bitbuffer_cat_int(pZebra->pBits, s_gcode[szCode[i] - '0'], 7);
       }
       else
       {
-         hb_bitbuffer_cat_int( pZebra->pBits, s_rcode[szCode[i] - '0'] ^ 0x7F, 7 );
+         hb_bitbuffer_cat_int(pZebra->pBits, s_rcode[szCode[i] - '0'] ^ 0x7F, 7);
       }
    }
 
-   hb_bitbuffer_cat_int( pZebra->pBits, 10, 5 );  /* middle */
+   hb_bitbuffer_cat_int(pZebra->pBits, 10, 5);  /* middle */
 
    for( i = 7; i <= 12; i++ )
    {
-      hb_bitbuffer_cat_int( pZebra->pBits, s_rcode[szCode[i] - '0'], 7 );
+      hb_bitbuffer_cat_int(pZebra->pBits, s_rcode[szCode[i] - '0'], 7);
    }
 
-   hb_bitbuffer_cat_int( pZebra->pBits, 5, 3 );   /* stop */
+   hb_bitbuffer_cat_int(pZebra->pBits, 5, 3);   /* stop */
 
    return pZebra;
 }
@@ -227,7 +227,7 @@ PHB_ZEBRA hb_zebra_create_ean8(const char * szCode, HB_SIZE nLen, int iFlags)
    {
       pZebra->szCode = static_cast<char*>(hb_xgrab(9));
       hb_xmemcpy(pZebra->szCode, szCode, 7);
-      pZebra->szCode[7] = _ean8_checksum( szCode );
+      pZebra->szCode[7] = _ean8_checksum(szCode);
       pZebra->szCode[8] = '\0';
    }
    else
@@ -245,21 +245,21 @@ PHB_ZEBRA hb_zebra_create_ean8(const char * szCode, HB_SIZE nLen, int iFlags)
 
    pZebra->pBits = hb_bitbuffer_create();
 
-   hb_bitbuffer_cat_int( pZebra->pBits, 5, 3 );   /* start */
+   hb_bitbuffer_cat_int(pZebra->pBits, 5, 3);   /* start */
 
    for( i = 0; i < 4; i++ )
    {
-      hb_bitbuffer_cat_int( pZebra->pBits, s_rcode[szCode[i] - '0'] ^ 0x7F, 7 );
+      hb_bitbuffer_cat_int(pZebra->pBits, s_rcode[szCode[i] - '0'] ^ 0x7F, 7);
    }
 
-   hb_bitbuffer_cat_int( pZebra->pBits, 10, 5 );  /* middle */
+   hb_bitbuffer_cat_int(pZebra->pBits, 10, 5);  /* middle */
 
    for( i = 4; i < 8; i++ )
    {
-      hb_bitbuffer_cat_int( pZebra->pBits, s_rcode[szCode[i] - '0'], 7 );
+      hb_bitbuffer_cat_int(pZebra->pBits, s_rcode[szCode[i] - '0'], 7);
    }
 
-   hb_bitbuffer_cat_int( pZebra->pBits, 5, 3 );   /* stop */
+   hb_bitbuffer_cat_int(pZebra->pBits, 5, 3);   /* stop */
    return pZebra;
 }
 
@@ -292,7 +292,7 @@ PHB_ZEBRA hb_zebra_create_upca( const char * szCode, HB_SIZE nLen, int iFlags )
    {
       pZebra->szCode = static_cast<char*>(hb_xgrab(13));
       hb_xmemcpy(pZebra->szCode, szCode, 11);
-      pZebra->szCode[11] = _upca_checksum( szCode );
+      pZebra->szCode[11] = _upca_checksum(szCode);
       pZebra->szCode[12] = '\0';
    }
    else
@@ -310,21 +310,21 @@ PHB_ZEBRA hb_zebra_create_upca( const char * szCode, HB_SIZE nLen, int iFlags )
 
    pZebra->pBits = hb_bitbuffer_create();
 
-   hb_bitbuffer_cat_int( pZebra->pBits, 5, 3 );   /* start */
+   hb_bitbuffer_cat_int(pZebra->pBits, 5, 3);   /* start */
 
    for( i = 0; i < 6; i++ )
    {
-      hb_bitbuffer_cat_int( pZebra->pBits, s_rcode[szCode[i] - '0'] ^ 0x7F, 7 );
+      hb_bitbuffer_cat_int(pZebra->pBits, s_rcode[szCode[i] - '0'] ^ 0x7F, 7);
    }
 
-   hb_bitbuffer_cat_int( pZebra->pBits, 10, 5 );  /* middle */
+   hb_bitbuffer_cat_int(pZebra->pBits, 10, 5);  /* middle */
 
    for( i = 6; i < 12; i++ )
    {
-      hb_bitbuffer_cat_int( pZebra->pBits, s_rcode[szCode[i] - '0'], 7 );
+      hb_bitbuffer_cat_int(pZebra->pBits, s_rcode[szCode[i] - '0'], 7);
    }
 
-   hb_bitbuffer_cat_int( pZebra->pBits, 5, 3 );   /* stop */
+   hb_bitbuffer_cat_int(pZebra->pBits, 5, 3);   /* stop */
    return pZebra;
 }
 
@@ -358,7 +358,7 @@ PHB_ZEBRA hb_zebra_create_upce( const char * szCode, HB_SIZE nLen, int iFlags )
    {
       pZebra->szCode = static_cast<char*>(hb_xgrab(8));
       hb_xmemcpy(pZebra->szCode, szCode, 6);
-      pZebra->szCode[6] = _upce_checksum( szCode );
+      pZebra->szCode[6] = _upce_checksum(szCode);
       pZebra->szCode[7] = '\0';
    }
    else
@@ -377,20 +377,20 @@ PHB_ZEBRA hb_zebra_create_upce( const char * szCode, HB_SIZE nLen, int iFlags )
    sumcode = szCode[6] == '0' ? 0x38 : s_first[szCode[6] - '0'];
    pZebra->pBits = hb_bitbuffer_create();
 
-   hb_bitbuffer_cat_int( pZebra->pBits, 5, 3 );   /* start */
+   hb_bitbuffer_cat_int(pZebra->pBits, 5, 3);   /* start */
 
    for( i = 0; i < 6; i++ )
    {
       if( sumcode & (1 << i) )
       {
-         hb_bitbuffer_cat_int( pZebra->pBits, s_rcode[szCode[i] - '0'] ^ 0x7F, 7 );
+         hb_bitbuffer_cat_int(pZebra->pBits, s_rcode[szCode[i] - '0'] ^ 0x7F, 7);
       }
       else
       {
-         hb_bitbuffer_cat_int( pZebra->pBits, s_gcode[szCode[i] - '0'], 7 );
+         hb_bitbuffer_cat_int(pZebra->pBits, s_gcode[szCode[i] - '0'], 7);
       }
    }
-   hb_bitbuffer_cat_int( pZebra->pBits, 42, 6 );   /* stop */
+   hb_bitbuffer_cat_int(pZebra->pBits, 42, 6);   /* stop */
    return pZebra;
 }
 
@@ -398,7 +398,7 @@ HB_FUNC( HB_ZEBRA_CREATE_EAN13 )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       hb_zebra_ret(hb_zebra_create_ean13(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
    }
@@ -412,7 +412,7 @@ HB_FUNC( HB_ZEBRA_CREATE_EAN8 )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       hb_zebra_ret(hb_zebra_create_ean8(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
    }
@@ -426,9 +426,9 @@ HB_FUNC( HB_ZEBRA_CREATE_UPCA )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem )
+   if( pItem != nullptr )
    {
-      hb_zebra_ret( hb_zebra_create_upca( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2) ) );
+      hb_zebra_ret(hb_zebra_create_upca(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
    }
    else
    {
@@ -440,9 +440,9 @@ HB_FUNC( HB_ZEBRA_CREATE_UPCE )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem )
+   if( pItem != nullptr )
    {
-      hb_zebra_ret( hb_zebra_create_upce( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2) ) );
+      hb_zebra_ret(hb_zebra_create_upce(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
    }
    else
    {

@@ -267,7 +267,7 @@ PHB_ZEBRA hb_zebra_create_code128(const char * szCode, HB_SIZE nLen, int iFlags)
       if you'll change encoder code, digit optimizer can require adjustment also [Mindaugas] */
    for( i = 0; i < iLen; i++ )
    {
-      int iCode = _code128_charno( szCode[i], iCodeSet );
+      int iCode = _code128_charno(szCode[i], iCodeSet);
 
       if( iCode != -1 )
       {
@@ -280,7 +280,7 @@ PHB_ZEBRA hb_zebra_create_code128(const char * szCode, HB_SIZE nLen, int iFlags)
          if( i + 1 < iLen && _code128_charno( szCode[i + 1], iCodeSet == CODESET_A ? CODESET_B : CODESET_A ) == -1 )
          {
             pCode[iCodeLen++] = SHIFT_AB;
-            pCode[iCodeLen++] = _code128_charno( szCode[i], iCodeSet == CODESET_A ? CODESET_B : CODESET_A );
+            pCode[iCodeLen++] = _code128_charno(szCode[i], iCodeSet == CODESET_A ? CODESET_B : CODESET_A);
          }
          else
          {
@@ -294,7 +294,7 @@ PHB_ZEBRA hb_zebra_create_code128(const char * szCode, HB_SIZE nLen, int iFlags)
                iCodeSet = CODESET_A;
                pCode[iCodeLen++] = SELECT_A;
             }
-            pCode[iCodeLen++] = _code128_charno( szCode[i], iCodeSet );
+            pCode[iCodeLen++] = _code128_charno(szCode[i], iCodeSet);
          }
       }
    }
@@ -398,15 +398,15 @@ PHB_ZEBRA hb_zebra_create_code128(const char * szCode, HB_SIZE nLen, int iFlags)
    csum = pCode[0];
    for( i = 0; i < iCodeLen; i++ )
    {
-      hb_bitbuffer_cat_int( pZebra->pBits, s_code[pCode[i]], 11 );
+      hb_bitbuffer_cat_int(pZebra->pBits, s_code[pCode[i]], 11);
       csum += i * pCode[i];
    }
 
    hb_xfree(pCode);
    /* checksum */
-   hb_bitbuffer_cat_int( pZebra->pBits, s_code[csum % 103], 11 );
+   hb_bitbuffer_cat_int(pZebra->pBits, s_code[csum % 103], 11);
 
-   hb_bitbuffer_cat_int( pZebra->pBits, 0x1AE3, 13 );
+   hb_bitbuffer_cat_int(pZebra->pBits, 0x1AE3, 13);
    return pZebra;
 }
 
@@ -414,7 +414,7 @@ HB_FUNC( HB_ZEBRA_CREATE_CODE128 )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       hb_zebra_ret(hb_zebra_create_code128(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
    }

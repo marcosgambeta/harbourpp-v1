@@ -111,7 +111,7 @@ static int _code93_charno( char ch )
    }
    else
    {
-      const char * ptr = strchr( s_symbols, ch );
+      const char * ptr = strchr(s_symbols, ch);
       if( ptr && *ptr )
       {
          return static_cast<int>(ptr - s_symbols + 36);
@@ -162,23 +162,23 @@ PHB_ZEBRA hb_zebra_create_code93(const char * szCode, HB_SIZE nLen, int iFlags)
    pZebra->pBits = hb_bitbuffer_create();
 
    /* start */
-   hb_bitbuffer_cat_int( pZebra->pBits, 1, 1 );
-   hb_bitbuffer_cat_int( pZebra->pBits, s_code[47], 7 );
-   hb_bitbuffer_cat_int( pZebra->pBits, 0, 1 );
+   hb_bitbuffer_cat_int(pZebra->pBits, 1, 1);
+   hb_bitbuffer_cat_int(pZebra->pBits, s_code[47], 7);
+   hb_bitbuffer_cat_int(pZebra->pBits, 0, 1);
 
    csum = 0;
    ksum = 0;
    k++;
    for( i = 0; i < iLen; i++ )
    {
-      int no = _code93_charno( szCode[i] );
+      int no = _code93_charno(szCode[i]);
       if( no >= 0 )
       {
-         hb_bitbuffer_cat_int( pZebra->pBits, 1, 1 );
-         hb_bitbuffer_cat_int( pZebra->pBits, s_code[no], 7 );
-         hb_bitbuffer_cat_int( pZebra->pBits, 0, 1 );
-         ksum += ( ( k % 15 ) ? k % 15 : 15 ) * no; k--;
-         csum += ( ( k % 20 ) ? k % 20 : 20 ) * no;
+         hb_bitbuffer_cat_int(pZebra->pBits, 1, 1);
+         hb_bitbuffer_cat_int(pZebra->pBits, s_code[no], 7);
+         hb_bitbuffer_cat_int(pZebra->pBits, 0, 1);
+         ksum += ((k % 15) ? k % 15 : 15) * no; k--;
+         csum += ((k % 20) ? k % 20 : 20) * no;
       }
       else
       {
@@ -228,33 +228,33 @@ PHB_ZEBRA hb_zebra_create_code93(const char * szCode, HB_SIZE nLen, int iFlags)
             no1 = 44; /* (%) */
             no2 = 32; /* W */
          }
-         hb_bitbuffer_cat_int( pZebra->pBits, 1, 1 );
-         hb_bitbuffer_cat_int( pZebra->pBits, s_code[no1], 7 );
-         hb_bitbuffer_cat_int( pZebra->pBits, 0, 1 );
-         hb_bitbuffer_cat_int( pZebra->pBits, 1, 1 );
-         hb_bitbuffer_cat_int( pZebra->pBits, s_code[no2], 7 );
-         hb_bitbuffer_cat_int( pZebra->pBits, 0, 1 );
-         ksum += ( ( k % 15 ) ? k % 15 : 15 ) * no1; k--;
-         csum += ( ( k % 20 ) ? k % 20 : 20 ) * no1;
-         ksum += ( ( k % 15 ) ? k % 15 : 15 ) * no2; k--;
-         csum += ( ( k % 20 ) ? k % 20 : 20 ) * no2;
+         hb_bitbuffer_cat_int(pZebra->pBits, 1, 1);
+         hb_bitbuffer_cat_int(pZebra->pBits, s_code[no1], 7);
+         hb_bitbuffer_cat_int(pZebra->pBits, 0, 1);
+         hb_bitbuffer_cat_int(pZebra->pBits, 1, 1);
+         hb_bitbuffer_cat_int(pZebra->pBits, s_code[no2], 7);
+         hb_bitbuffer_cat_int(pZebra->pBits, 0, 1);
+         ksum += ((k % 15) ? k % 15 : 15) * no1; k--;
+         csum += ((k % 20) ? k % 20 : 20) * no1;
+         ksum += ((k % 15) ? k % 15 : 15) * no2; k--;
+         csum += ((k % 20) ? k % 20 : 20) * no2;
       }
    }
 
    /* checksum */
-   hb_bitbuffer_cat_int( pZebra->pBits, 1, 1 );
-   hb_bitbuffer_cat_int( pZebra->pBits, s_code[csum % 47], 7 );
-   hb_bitbuffer_cat_int( pZebra->pBits, 0, 1 );
+   hb_bitbuffer_cat_int(pZebra->pBits, 1, 1);
+   hb_bitbuffer_cat_int(pZebra->pBits, s_code[csum % 47], 7);
+   hb_bitbuffer_cat_int(pZebra->pBits, 0, 1);
    ksum += csum % 47;
-   hb_bitbuffer_cat_int( pZebra->pBits, 1, 1 );
-   hb_bitbuffer_cat_int( pZebra->pBits, s_code[ksum % 47], 7 );
-   hb_bitbuffer_cat_int( pZebra->pBits, 0, 1 );
+   hb_bitbuffer_cat_int(pZebra->pBits, 1, 1);
+   hb_bitbuffer_cat_int(pZebra->pBits, s_code[ksum % 47], 7);
+   hb_bitbuffer_cat_int(pZebra->pBits, 0, 1);
 
    /* stop */
-   hb_bitbuffer_cat_int( pZebra->pBits, 1, 1 );
-   hb_bitbuffer_cat_int( pZebra->pBits, s_code[47], 7 );
-   hb_bitbuffer_cat_int( pZebra->pBits, 0, 1 );
-   hb_bitbuffer_cat_int( pZebra->pBits, 1, 1 );
+   hb_bitbuffer_cat_int(pZebra->pBits, 1, 1);
+   hb_bitbuffer_cat_int(pZebra->pBits, s_code[47], 7);
+   hb_bitbuffer_cat_int(pZebra->pBits, 0, 1);
+   hb_bitbuffer_cat_int(pZebra->pBits, 1, 1);
 
    return pZebra;
 }
@@ -263,7 +263,7 @@ HB_FUNC( HB_ZEBRA_CREATE_CODE93 )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       hb_zebra_ret(hb_zebra_create_code93(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
    }

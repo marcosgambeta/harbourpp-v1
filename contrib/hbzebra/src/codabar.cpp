@@ -178,7 +178,7 @@ HB_FUNC( HB_ZEBRA_CREATE_CODABAR )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       hb_zebra_ret(hb_zebra_create_codabar(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
    }
