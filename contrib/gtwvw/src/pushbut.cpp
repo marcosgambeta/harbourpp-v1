@@ -512,8 +512,7 @@ HB_FUNC( WVW_CBCREATE )
       hWndParent,
       reinterpret_cast<HMENU>(uiCBid),
       hb_getWvwData()->hInstance,
-      static_cast<LPVOID>(nullptr)
-      );
+      static_cast<LPVOID>(nullptr));
 
    if( hWndCB )
    {

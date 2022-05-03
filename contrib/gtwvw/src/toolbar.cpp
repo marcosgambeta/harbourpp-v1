@@ -64,7 +64,7 @@ HB_FUNC( WVW_TBCREATE )
    HWND       hWndParent  = pWindowData->hWnd;
    HWND       hWndTB;
    int        iMaxTextRows = static_cast<int>(HB_ISNIL(2) ? 0 : (hb_parl(2) ? 1 : 0));
-/*   DWORD dwStyle = (DWORD) ( HB_ISNIL(3) ? TBSTYLE_FLAT | TBSTYLE_TOOLTIPS : hb_parni(3) ); */
+/*   DWORD dwStyle = static_cast<DWORD>(HB_ISNIL(3) ? TBSTYLE_FLAT | TBSTYLE_TOOLTIPS : hb_parni(3)); */
    DWORD dwStyle = static_cast<DWORD>(HB_ISNIL(3) ? TBSTYLE_ALTDRAG | TBSTYLE_FLAT | TBSTYLE_TOOLTIPS | TBSTYLE_TRANSPARENT | TBSTYLE_WRAPABLE : hb_parnl(3));
 
    int iSystemBitmap = static_cast<int>(HB_ISNIL(4) ? 1 : hb_parni(4));

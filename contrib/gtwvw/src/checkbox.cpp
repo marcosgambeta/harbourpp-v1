@@ -492,8 +492,7 @@ HB_FUNC( WVW_PGCREATE )
       hWndParent,
       reinterpret_cast<HMENU>(uiPGid),
       static_cast<HINSTANCE>(hInstance),
-      static_cast<LPVOID>(nullptr)
-      );
+      static_cast<LPVOID>(nullptr));
 
    if( hWndPG )
    {

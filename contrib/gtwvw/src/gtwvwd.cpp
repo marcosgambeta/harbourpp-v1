@@ -412,7 +412,7 @@ static void hb_gt_wvw_Exit(PHB_GT pGT)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvw_Exit()"));
 #endif
 
-/* void gt_Exit( void ) */
+/* void gt_Exit(void) */
    int i;
    int j;
    WIN_DATA * pWindowData;
@@ -1230,7 +1230,7 @@ static BOOL hb_gt_wvwGetCharFromInputQueue(int * c)
     s_pWvwData->s_pWindows[s_pWvwData->s_usNumWindows-1]->keyPointerOut = iNextPos ;
     bRet =  TRUE;
    }
-   return( bRet );
+   return(bRet);
  */
    if( pWindow->keyPointerOut != pWindow->keyPointerIn )
    {
@@ -2021,7 +2021,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPAR
                hilParam.type = Harbour::Item::NIL;
                hb_itemPutNL(&hilParam, (ULONG) lParam);
 
-               pReturn = hb_itemDo( (PHB_ITEM) s_pWvwData->s_sApp->pFunc[iIndex], 4, &hihDlg, &himessage, &hiwParam, &hilParam );
+               pReturn = hb_itemDo(static_cast<PHB_ITEM>(s_pWvwData->s_sApp->pFunc[iIndex]), 4, &hihDlg, &himessage, &hiwParam, &hilParam);
 
                bReturn = hb_itemGetNL(pReturn);
                hb_itemRelease(pReturn);
@@ -2162,7 +2162,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPAR
                hilParam.type = Harbour::Item::NIL;
                hb_itemPutNL(&hilParam, (ULONG) lParam);
 
-               pReturn = hb_itemDo( (PHB_ITEM) s_pWvwData->s_sApp->pFuncModal[iIndex], 4, &hihDlg, &himessage, &hiwParam, &hilParam );
+               pReturn = hb_itemDo(static_cast<PHB_ITEM>(s_pWvwData->s_sApp->pFuncModal[iIndex]), 4, &hihDlg, &himessage, &hiwParam, &hilParam);
                bReturn = hb_itemGetNL(pReturn);
                hb_itemRelease(pReturn);
                }
@@ -2775,11 +2775,11 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
                int hiwordlParam = (int) HIWORD(lParam);
                HWND hWndCtrl = (HWND) lParam;
 
-               TraceLog( NULL, "debugging: WM_COMMAND is processed?\n" );
-               TraceLog( NULL, "  lowordwParam (control id)=%i\n", lowordwParam );
-               TraceLog( NULL, "  hiwordwParam (notification)=%i\n", hiwordwParam );
-               TraceLog( NULL, "  lowordlParam=%i\n", lowordlParam );
-               TraceLog( NULL, "  hiwordlParam=%i\n", hiwordlParam );
+               TraceLog(NULL, "debugging: WM_COMMAND is processed?\n");
+               TraceLog(NULL, "  lowordwParam (control id)=%i\n", lowordwParam);
+               TraceLog(NULL, "  hiwordwParam (notification)=%i\n", hiwordwParam);
+               TraceLog(NULL, "  lowordlParam=%i\n", lowordlParam);
+               TraceLog(NULL, "  hiwordlParam=%i\n", hiwordlParam);
              */
 
             switch( iEvent )
@@ -2829,11 +2829,11 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
                int hiwordlParam = (int) HIWORD(lParam);
                HWND hWndCtrl = (HWND) lParam;
 
-               TraceLog( NULL, "debugging: WM_COMMAND is processed?\n" );
-               TraceLog( NULL, "  lowordwParam (control id)=%i\n", lowordwParam );
-               TraceLog( NULL, "  hiwordwParam (notification)=%i\n", hiwordwParam );
-               TraceLog( NULL, "  lowordlParam=%i\n", lowordlParam );
-               TraceLog( NULL, "  hiwordlParam=%i\n", hiwordlParam );
+               TraceLog(NULL, "debugging: WM_COMMAND is processed?\n");
+               TraceLog(NULL, "  lowordwParam (control id)=%i\n", lowordwParam);
+               TraceLog(NULL, "  hiwordwParam (notification)=%i\n", hiwordwParam);
+               TraceLog(NULL, "  lowordlParam=%i\n", lowordlParam);
+               TraceLog(NULL, "  hiwordlParam=%i\n", hiwordlParam);
              */
 
             switch( iEvent )
@@ -3624,7 +3624,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
                However, if there is no gtSetCloseHandler, ALT+C effect is not produced as it should.
                So for now I put it back to the old behaviour with the following two lines, until hb_gtHandleClose() is fixed.
              */
-/*         hb_gt_wvwAddCharToInputQueue( HB_BREAK_FLAG ); */
+/*         hb_gt_wvwAddCharToInputQueue(HB_BREAK_FLAG); */
             hb_gt_wvwAddCharToInputQueue(K_ESC);
          }
          else
@@ -3813,14 +3813,14 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
 
             if( pWindowData->cSBColorForeground )
             {
-               /* lSBColorForeground = strtol( s_cSBColorForeground, NULL, 10 ); */
-               SetTextColor(lpDIS->hDC, pWindowData->cSBColorForeground);  /* lSBColorForeground ); */
+               /* lSBColorForeground = strtol(s_cSBColorForeground, NULL, 10); */
+               SetTextColor(lpDIS->hDC, pWindowData->cSBColorForeground);  /* lSBColorForeground); */
             }
 
             if( pWindowData->cSBColorBackground )
             {
-               /* lSBColorBackground = strtol( s_cSBColorBackground, NULL, 10 ); */
-               SetBkColor(lpDIS->hDC, pWindowData->cSBColorBackground);  /* lSBColorBackground ); */
+               /* lSBColorBackground = strtol(s_cSBColorBackground, NULL, 10); */
+               SetBkColor(lpDIS->hDC, pWindowData->cSBColorBackground);  /* lSBColorBackground); */
             }
 
             for( pEnd = ptStr; *pEnd != TEXT('\0'); pEnd++ )
@@ -5380,8 +5380,7 @@ static UINT hb_gt_wvwOpenWindow(LPCTSTR lpszWinName, int iRow1, int iCol1, int i
          MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
          reinterpret_cast<LPTSTR>(&lpMsgBuf),
          0,
-         nullptr
-         );
+         nullptr);
 
       MessageBox(nullptr, static_cast<LPCTSTR>(lpMsgBuf), "WINAPI failed to CreateWindow", MB_ICONERROR);
       LocalFree(lpMsgBuf);
@@ -5471,17 +5470,17 @@ static void hb_gt_wvwCloseWindow(void) /*assume s_pWvwData->s_usNumWindows >= 2 
          (2) do the creation and deletion only when required
        */
       /* 2004-09-23 choose #1 of above option
-         DeleteObject( ( HPEN   ) pWindowData->penWhite );
-         DeleteObject( ( HPEN   ) pWindowData->penWhiteDim );
-         DeleteObject( ( HPEN   ) pWindowData->penBlack );
-         DeleteObject( ( HPEN   ) pWindowData->penDarkGray );
-         DeleteObject( ( HPEN   ) pWindowData->penGray );
-         DeleteObject( ( HPEN   ) pWindowData->penNull );
-         DeleteObject( ( HPEN   ) pWindowData->currentPen );
-         DeleteObject( ( HBRUSH ) pWindowData->currentBrush );
-         DeleteObject( ( HBRUSH ) pWindowData->diagonalBrush );
-         DeleteObject( ( HBRUSH ) pWindowData->solidBrush );
-         DeleteObject( ( HBRUSH ) pWindowData->wvwWhiteBrush );
+         DeleteObject(static_cast<HPEN>(pWindowData->penWhite));
+         DeleteObject(static_cast<HPEN>(pWindowData->penWhiteDim));
+         DeleteObject(static_cast<HPEN>(pWindowData->penBlack));
+         DeleteObject(static_cast<HPEN>(pWindowData->penDarkGray));
+         DeleteObject(static_cast<HPEN>(pWindowData->penGray));
+         DeleteObject(static_cast<HPEN>(pWindowData->penNull));
+         DeleteObject(static_cast<HPEN>(pWindowData->currentPen));
+         DeleteObject(static_cast<HBRUSH>(pWindowData->currentBrush));
+         DeleteObject(static_cast<HBRUSH>(pWindowData->diagonalBrush));
+         DeleteObject(static_cast<HBRUSH>(pWindowData->solidBrush));
+         DeleteObject(static_cast<HBRUSH>(pWindowData->wvwWhiteBrush));
        */
 
       DeleteObject(static_cast<HFONT>(pWindowData->hFont));
@@ -5551,7 +5550,7 @@ static void hb_gt_wvwCloseWindow(void) /*assume s_pWvwData->s_usNumWindows >= 2 
       {
       if (!UnregisterClass( s_pWvwData->szSubWinName,s_pWvwData->hInstance ))
       {
-       MessageBox( NULL, TEXT( "Failed UnregisterClass" ), s_pWvwData->szAppName, MB_ICONERROR );
+       MessageBox(NULL, TEXT("Failed UnregisterClass"), s_pWvwData->szAppName, MB_ICONERROR);
       }
       }
     */
@@ -6229,7 +6228,7 @@ static BOOL  hb_gt_wvw_bSetMode(WIN_DATA * pWindowData, USHORT row, USHORT col)
             }
 
             DeleteObject(hFont);
-            /* HB_GTSELF_REFRESH( hb_gt_Base() ); */
+            /* HB_GTSELF_REFRESH(hb_gt_Base()); */
          }
       }
       else
@@ -6869,8 +6868,8 @@ BOOL hb_gt_wvwDrawImage(UINT usWinNum, int x1, int y1, int wd, int ht, const cha
       }
 
       /* 2006-07-24 canNOT do it this way:
-         pPic->lpVtbl->get_Width( pPic,&lWidth );
-         pPic->lpVtbl->get_Height( pPic,&lHeight );
+         pPic->lpVtbl->get_Width(pPic,&lWidth);
+         pPic->lpVtbl->get_Height(pPic,&lHeight);
          iWidth = (int) lWidth;
          iHeight = (int) lHeight;
        */
@@ -6921,8 +6920,7 @@ BOOL hb_gt_wvwDrawImage(UINT usWinNum, int x1, int y1, int wd, int ht, const cha
          0,                            /* y-coord of source upper-left corner */
          iWidth,                       /* width of source rectangle */
          iHeight,                      /* height of source rectangle */
-         SRCCOPY                       /* raster operation code */
-         );
+         SRCCOPY);                       /* raster operation code */
 
       SetStretchBltMode(hdc, iOldMode);
 
@@ -7225,7 +7223,7 @@ void hb_gt_wvwDrawOutline(UINT usWinNum, int iTop, int iLeft, int iBottom, int i
    LineTo(pWindowData->hdc, iRight, iBottom + 1);
 
 }
-/* BOOL hb_gt_wvw_KeyEvent( message, wParam, lParam  ); */
+/* BOOL hb_gt_wvw_KeyEvent(message, wParam, lParam); */
 
 /*NOTE: are these workable in MULTI_GT ? */
 /* static void gtFnInit( PHB_GT_FUNCS gt_funcs ) */
@@ -8440,14 +8438,14 @@ HB_FUNC( WVW_PASTEFROMCLIPBOARD )
       lptstr = static_cast<LPSTR>(GlobalLock(hglb));
       if( lptstr != nullptr )
       {
-         /*TraceLog( NULL, "Clipboard %s\n", (LPSTR) lptstr );        */
-         /*TraceLog( NULL, "Clipboard size %u\n", GlobalSize(hglb) ); */
+         /*TraceLog(NULL, "Clipboard %s\n", (LPSTR) lptstr);        */
+         /*TraceLog(NULL, "Clipboard size %u\n", GlobalSize(hglb)); */
 
          for( ul = 0; ul < GlobalSize(hglb); ul++ )
          {
             hb_gt_wvwAddCharToInputQueue(static_cast<int>(lptstr[ul]));
          }
-         /*TraceLog( NULL, "Value %i\n", ( int ) lptstr[ul] );   */
+         /*TraceLog(NULL, "Value %i\n", ( int ) lptstr[ul]);   */
          GlobalUnlock(hglb);
       }
    }
@@ -9245,7 +9243,7 @@ static HBITMAP hPrepareBitmap(char * szBitmap, UINT uiBitmap, int iExpWidth, int
                                         CBM_INIT,
                                         PackedDibGetBitsPtr(pPackedDib),
                                         pPackedDib,
-                                        DIB_RGB_COLORS );
+                                        DIB_RGB_COLORS);
 
                if( hBitmap == nullptr )
                {
@@ -9305,8 +9303,7 @@ static HBITMAP hPrepareBitmap(char * szBitmap, UINT uiBitmap, int iExpWidth, int
                   0,                                  /* y-coord of source upper-left corner      */
                   iWidth,                             /* width of source rectangle                */
                   iHeight,                            /* height of source rectangle               */
-                  SRCCOPY                             /* raster operation code                    */
-                  );
+                  SRCCOPY);                           /* raster operation code                    */
 
                if( !bResult )
                {
@@ -10212,8 +10209,7 @@ UINT ButtonCreate(UINT usWinNum, USHORT usTop, USHORT usLeft, USHORT usBottom, U
       hWndParent,                               /* handle to parent window */
       reinterpret_cast<HMENU>(uiPBid),                         /* id for this button control */
       s_pWvwData->hInstance,                    /* instance owning this window */
-      static_cast<LPVOID>(nullptr)                          /* pointer not needed */
-      );
+      static_cast<LPVOID>(nullptr));                          /* pointer not needed */
 
    if( hWndButton )
    {

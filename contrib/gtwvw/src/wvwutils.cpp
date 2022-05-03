@@ -660,7 +660,7 @@ HB_FUNC( ADDTOOLTIPEX ) /* changed by MAG */
    ti.uFlags = TTF_SUBCLASS | TTF_IDISHWND;
    ti.hwnd   = pWindowData->hWnd;
    ti.uId    = static_cast<UINT>(hb_parnl(2));
-/* ti.uId    = ( UINT ) GetDlgItem( hWnd, hb_parni(2) ); */
+/* ti.uId    = ( UINT ) GetDlgItem(hWnd, hb_parni(2)); */
    ti.hinst    = GetModuleHandle(nullptr);
    ti.lpszText = const_cast<LPSTR>(hb_parc(3));
 
@@ -987,8 +987,7 @@ HB_FUNC( SETTEXTCOLOR )
 {
    COLORREF crColor = SetTextColor(
       reinterpret_cast<HDC>(HB_PARHANDLE(1)),          /* handle of device context */
-      static_cast<COLORREF>(hb_parnl(2))         /* text color */
-      );
+      static_cast<COLORREF>(hb_parnl(2)));         /* text color */
 
    hb_retnl(static_cast<LONG>(crColor));
 }
@@ -997,8 +996,7 @@ HB_FUNC( SETBKCOLOR )
 {
    COLORREF crColor = SetBkColor(
       reinterpret_cast<HDC>(HB_PARHANDLE(1)),          /* handle of device context */
-      static_cast<COLORREF>(hb_parnl(2))         /* text color */
-      );
+      static_cast<COLORREF>(hb_parnl(2)));         /* text color */
 
    hb_retnl(static_cast<LONG>(crColor));
 }
@@ -1029,8 +1027,7 @@ HB_FUNC( REDRAWWINDOW )
       reinterpret_cast<HWND>(HB_PARHANDLE(1)),          /* handle of window */
       nullptr,                             /* address of structure with update rectangle */
       nullptr,                             /* handle of update region */
-      static_cast<UINT>(hb_parni(2)) /* array of redraw flags */
-      );
+      static_cast<UINT>(hb_parni(2))); /* array of redraw flags */
 }
 
 /* CreateFont( fontName, nWidth, hHeight [,fnWeight] [,fdwCharSet],
@@ -1059,8 +1056,7 @@ HB_FUNC( CREATEFONT )
       0,                         /* clipping precision */
       0,                         /* output quality */
       0,                         /* pitch and family */
-      static_cast<LPCTSTR>(hb_parc(1))  /* pointer to typeface name string */
-      );
+      static_cast<LPCTSTR>(hb_parc(1)));  /* pointer to typeface name string */
    HB_RETHANDLE(hFont);
 }
 
@@ -1133,8 +1129,7 @@ HB_FUNC( INVALIDATERECT )
    InvalidateRect(
       reinterpret_cast<HWND>(HB_PARHANDLE(1)),         /* handle of window with changed update region */
       (hb_pcount() > 2) ? &rc : nullptr,/* address of rectangle coordinates */
-      hb_parni(2)                       /* erase-background flag */
-      );
+      hb_parni(2));                       /* erase-background flag */
 }
 
 HB_FUNC( TOOLBARADDBUTTONS )
@@ -1166,7 +1161,7 @@ HB_FUNC( TOOLBARADDBUTTONS )
 #if 0
       ulID  = hb_arrayGetNI(pTemp, 1);
 #endif
-      /* bSystem = hb_arrayGetL( pTemp, 9 ); */
+      /* bSystem = hb_arrayGetL(pTemp, 9); */
 
 #if 0
       if( bSystem )
@@ -1949,7 +1944,7 @@ HB_FUNC( WVW_SETPEN )
       /* 20040923, was:
          if ( s_pWvwData->s_pWindows[usWinNum]->currentPen )
          {
-         DeleteObject( (HPEN) s_pWvwData->s_pWindows[usWinNum]->currentPen );
+         DeleteObject(static_cast<HPEN>(s_pWvwData->s_pWindows[usWinNum]->currentPen));
          }
          s_pWvwData->s_pWindows[usWinNum]->currentPen = hPen;
        */
@@ -1999,7 +1994,7 @@ HB_FUNC( WVW_SETBRUSH )
       /* 20040923,was:
          if ( s_pWvwData->s_pWindows[usWinNum]->currentBrush )
          {
-         DeleteObject( (HBRUSH) s_pWvwData->s_pWindows[usWinNum]->currentBrush );
+         DeleteObject(static_cast<HBRUSH>(s_pWvwData->s_pWindows[usWinNum]->currentBrush));
          }
          s_pWvwData->s_pWindows[usWinNum]->currentBrush = hBrush;
        */

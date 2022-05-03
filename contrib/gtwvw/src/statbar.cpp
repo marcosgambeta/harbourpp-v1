@@ -525,8 +525,7 @@ HB_FUNC( WVW_XBCREATE )
       hWndParent,                               /* handle to main window */
       reinterpret_cast<HMENU>(uiXBid),                         /* id for this scroll bar control */
       hb_getWvwData()->hInstance,               /* instance owning this window */
-      static_cast<LPVOID>(nullptr)                       /* pointer not needed */
-      );
+      static_cast<LPVOID>(nullptr));                       /* pointer not needed */
 
    if( hWndXB )
    {

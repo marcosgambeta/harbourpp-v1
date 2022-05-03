@@ -186,7 +186,7 @@ HB_FUNC( WVW_MENUITEM_SETBITMAPS )
 
          if( !hBitmapUnchecked )
          {
-            hBitmapUnchecked = static_cast<HBITMAP>(LoadImage(hb_getWvwData()->hInstance, static_cast<LPCTSTR>(MAKEINTRESOURCE(static_cast<WORD>(hb_parni(4)))), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR ) );
+            hBitmapUnchecked = static_cast<HBITMAP>(LoadImage(hb_getWvwData()->hInstance, static_cast<LPCTSTR>(MAKEINTRESOURCE(static_cast<WORD>(hb_parni(4)))), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR));
             AddBitmapHandle(szResname, hBitmapUnchecked, iWidth, iHeight);
          }
       }
@@ -212,7 +212,7 @@ HB_FUNC( WVW_MENUITEM_SETBITMAPS )
 
          if( !hBitmapChecked )
          {
-            hBitmapChecked = static_cast<HBITMAP>(LoadImage(hb_getWvwData()->hInstance, static_cast<LPCTSTR>(MAKEINTRESOURCE(static_cast<WORD>(hb_parni(5)))), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR ) );
+            hBitmapChecked = static_cast<HBITMAP>(LoadImage(hb_getWvwData()->hInstance, static_cast<LPCTSTR>(MAKEINTRESOURCE(static_cast<WORD>(hb_parni(5)))), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR));
             AddBitmapHandle(szResname, hBitmapChecked, iWidth, iHeight);
          }
       }

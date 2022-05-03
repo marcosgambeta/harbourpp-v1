@@ -189,8 +189,7 @@ HB_FUNC( WVW_EBCREATE )
       hWndParent,
       reinterpret_cast<HMENU>(uiEBid),
       static_cast<HINSTANCE>(hInstance),
-      static_cast<LPVOID>(nullptr)
-      );
+      static_cast<LPVOID>(nullptr));
 
    if( hWndEB )
    {
@@ -758,8 +757,7 @@ HB_FUNC( WVW_STCREATE )
       hWndParent,
       reinterpret_cast<HMENU>(uiCBid),
       static_cast<HINSTANCE>(hInstance),
-      static_cast<LPVOID>(nullptr)
-      );
+      static_cast<LPVOID>(nullptr));
 
    if( hWndCB )
    {
