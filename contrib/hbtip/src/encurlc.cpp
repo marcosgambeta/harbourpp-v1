@@ -129,10 +129,10 @@ HB_FUNC( TIP_URLDECODE )
             if( cElem == '%' && HB_ISXDIGIT( pszData[nPos + 1] ) && HB_ISXDIGIT( pszData[nPos + 2] ) )
             {
                cElem = pszData[++nPos];
-               pszRet[nPosRet]  = cElem - ( cElem >= 'a' ? 'a' - 10 : ( cElem >= 'A' ? 'A' - 10 : '0' ) );
+               pszRet[nPosRet]  = cElem - (cElem >= 'a' ? 'a' - 10 : (cElem >= 'A' ? 'A' - 10 : '0'));
                pszRet[nPosRet] <<= 4;
                cElem = pszData[++nPos];
-               pszRet[nPosRet] |= cElem - ( cElem >= 'a' ? 'a' - 10 : ( cElem >= 'A' ? 'A' - 10 : '0' ) );
+               pszRet[nPosRet] |= cElem - (cElem >= 'a' ? 'a' - 10 : (cElem >= 'A' ? 'A' - 10 : '0'));
             }
             else
                pszRet[nPosRet] = cElem == '+' ? ' ' : cElem;

@@ -21,7 +21,7 @@
  *                     <sFuncSym> | <hValue> | NIL ) --> NIL
  *
  *    netio_SrvStatus( <pConnectionSocket> [, <nStreamID>] ) --> <nStatus>
- *    netio_SrvSendItem( <pConnectionSocket>, <nStreamID>, <xData> )
+ *    netio_SrvSendItem(<pConnectionSocket>, <nStreamID>, <xData>)
  *          --> <lSent>
  *    netio_SrvSendData( <pConnectionSocket>, <nStreamID>, <cData> )
  *          --> <lSent>
@@ -180,7 +180,7 @@ static const char * s_consrvFilePath( char * pszFileName, PHB_CONSRV conn, HB_BO
    return pszFileName;
 }
 
-static HB_ERRCODE s_srvFsError( void )
+static HB_ERRCODE s_srvFsError(void)
 {
    HB_ERRCODE errCode = hb_fsError();
 
@@ -207,7 +207,7 @@ static int s_srvFileNew( PHB_CONSRV conn, PHB_FILE pFile )
    return -1;
 }
 
-static PHB_FILE s_srvFileFree( PHB_CONSRV conn, int iFile )
+static PHB_FILE s_srvFileFree(PHB_CONSRV conn, int iFile)
 {
    if( iFile < NETIO_FILES_MAX && conn->filesCount > 0 )
    {
@@ -237,7 +237,7 @@ static void s_consrv_disconnect( PHB_CONSRV conn )
 {
    if( conn->sock )
    {
-      hb_sockexClose( conn->sock, true );
+      hb_sockexClose(conn->sock, true);
       conn->sock = nullptr;
    }
 }
@@ -260,7 +260,7 @@ static void s_consrv_close( PHB_CONSRV conn )
       hb_itemRelease(conn->mutex);
 
    if( conn->sock )
-      hb_sockexClose( conn->sock, true );
+      hb_sockexClose(conn->sock, true);
 
    while( conn->filesCount > 0 )
    {
@@ -280,22 +280,22 @@ static void s_consrv_close( PHB_CONSRV conn )
 
 static HB_GARBAGE_FUNC( s_consrv_destructor )
 {
-   PHB_CONSRV * conn_ptr = ( PHB_CONSRV * ) Cargo;
+   PHB_CONSRV * conn_ptr = static_cast<PHB_CONSRV*>(Cargo);
 
    if( *conn_ptr )
    {
       PHB_CONSRV conn = *conn_ptr;
       *conn_ptr = nullptr;
-      s_consrv_close( conn );
+      s_consrv_close(conn);
    }
 }
 
 static HB_GARBAGE_FUNC( s_consrv_mark )
 {
-   PHB_CONSRV * conn_ptr = ( PHB_CONSRV * ) Cargo;
+   PHB_CONSRV * conn_ptr = static_cast<PHB_CONSRV*>(Cargo);
 
-   if( *conn_ptr && ( *conn_ptr )->rpcFilter )
-      hb_gcMark( ( *conn_ptr )->rpcFilter );
+   if( *conn_ptr && (*conn_ptr)->rpcFilter )
+      hb_gcMark((*conn_ptr)->rpcFilter);
 }
 
 static const HB_GC_FUNCS s_gcConSrvFuncs =
@@ -306,8 +306,7 @@ static const HB_GC_FUNCS s_gcConSrvFuncs =
 
 static PHB_CONSRV s_consrvParam( int iParam )
 {
-   PHB_CONSRV * conn_ptr = ( PHB_CONSRV * ) hb_parptrGC( &s_gcConSrvFuncs,
-                                                         iParam );
+   PHB_CONSRV * conn_ptr = static_cast<PHB_CONSRV*>(hb_parptrGC(&s_gcConSrvFuncs, iParam));
 
    if( conn_ptr && *conn_ptr )
       return *conn_ptr;
@@ -320,8 +319,7 @@ static void s_consrvRet( PHB_CONSRV conn )
 {
    if( conn )
    {
-      PHB_CONSRV * conn_ptr = ( PHB_CONSRV * ) hb_gcAllocate( sizeof(PHB_CONSRV),
-                                                              &s_gcConSrvFuncs );
+      PHB_CONSRV * conn_ptr = static_cast<PHB_CONSRV*>(hb_gcAllocate(sizeof(PHB_CONSRV), &s_gcConSrvFuncs));
       *conn_ptr = conn;
       hb_retptrGC(conn_ptr);
    }
@@ -331,14 +329,14 @@ static void s_consrvRet( PHB_CONSRV conn )
 
 static PHB_CONSRV s_consrvNew( PHB_SOCKEX sock, const char * szRootPath, HB_BOOL rpc )
 {
-   PHB_CONSRV conn = ( PHB_CONSRV ) memset(hb_xgrab(sizeof(HB_CONSRV)), 0, sizeof(HB_CONSRV));
+   PHB_CONSRV conn = static_cast<PHB_CONSRV>(memset(hb_xgrab(sizeof(HB_CONSRV)), 0, sizeof(HB_CONSRV)));
 
    conn->sock = sock;
    conn->rpc = rpc;
    conn->timeout = -1;
    if( szRootPath )
    {
-      hb_strncpy( conn->rootPath, szRootPath, sizeof(conn->rootPath) - 1 );
+      hb_strncpy(conn->rootPath, szRootPath, sizeof(conn->rootPath) - 1);
       conn->rootPathLen = static_cast<int>(strlen(conn->rootPath));
    }
 
@@ -350,11 +348,11 @@ static HB_BOOL s_srvRecvAll( PHB_CONSRV conn, void * buffer, long len )
    HB_BYTE * ptr = static_cast<HB_BYTE*>(buffer);
    long lRead = 0, l;
    HB_MAXINT timeout = conn->timeout;
-   HB_MAXUINT timer = hb_timerInit( timeout );
+   HB_MAXUINT timer = hb_timerInit(timeout);
 
    while( lRead < len && !conn->stop )
    {
-      l = hb_sockexRead( conn->sock, ptr + lRead, len - lRead, 1000 );
+      l = hb_sockexRead(conn->sock, ptr + lRead, len - lRead, 1000);
       if( l > 0 )
       {
          lRead += l;
@@ -375,14 +373,14 @@ static HB_BOOL s_srvSendAll( PHB_CONSRV conn, void * buffer, long len )
    HB_BYTE * ptr = static_cast<HB_BYTE*>(buffer);
    long lSent = 0;
 
-   if( !conn->mutex || hb_threadMutexLock( conn->mutex ) )
+   if( !conn->mutex || hb_threadMutexLock(conn->mutex) )
    {
       HB_MAXINT timeout = conn->timeout;
-      HB_MAXUINT timer = hb_timerInit( timeout );
+      HB_MAXUINT timer = hb_timerInit(timeout);
 
       while( lSent < len && !conn->stop )
       {
-         long l = hb_sockexWrite( conn->sock, ptr + lSent, len - lSent, 1000 );
+         long l = hb_sockexWrite(conn->sock, ptr + lSent, len - lSent, 1000);
          if( l > 0 )
          {
             lSent += l;
@@ -401,14 +399,14 @@ static HB_BOOL s_srvSendAll( PHB_CONSRV conn, void * buffer, long len )
       }
 
       if( conn->mutex )
-         hb_threadMutexUnlock( conn->mutex );
+         hb_threadMutexUnlock(conn->mutex);
    }
    return lSent == len;
 }
 
 static HB_GARBAGE_FUNC( s_listensd_destructor )
 {
-   PHB_LISTENSD * lsd_ptr = ( PHB_LISTENSD * ) Cargo;
+   PHB_LISTENSD * lsd_ptr = static_cast<PHB_LISTENSD*>(Cargo);
 
    if( *lsd_ptr )
    {
@@ -416,7 +414,7 @@ static HB_GARBAGE_FUNC( s_listensd_destructor )
       *lsd_ptr = nullptr;
       if( lsd->sd != HB_NO_SOCKET )
       {
-         hb_socketClose( lsd->sd );
+         hb_socketClose(lsd->sd);
          lsd->sd = HB_NO_SOCKET;
       }
       hb_xfree(lsd);
@@ -431,8 +429,7 @@ static const HB_GC_FUNCS s_gcListensdFuncs =
 
 static PHB_LISTENSD s_listenParam( int iParam, HB_BOOL fError )
 {
-   PHB_LISTENSD * lsd_ptr = ( PHB_LISTENSD * )
-                            hb_parptrGC( &s_gcListensdFuncs, iParam );
+   PHB_LISTENSD * lsd_ptr = static_cast<PHB_LISTENSD*>(hb_parptrGC(&s_gcListensdFuncs, iParam));
 
    if( lsd_ptr && *lsd_ptr )
       return *lsd_ptr;
@@ -453,9 +450,9 @@ static void s_listenRet( HB_SOCKET sd, const char * szRootPath, HB_BOOL rpc )
       lsd->sd = sd;
       lsd->rpc = rpc;
       if( szRootPath )
-         hb_strncpy( lsd->rootPath, szRootPath, sizeof(lsd->rootPath) - 1 );
+         hb_strncpy(lsd->rootPath, szRootPath, sizeof(lsd->rootPath) - 1);
       else
-         hb_fsBaseDirBuff( lsd->rootPath );
+         hb_fsBaseDirBuff(lsd->rootPath);
       iLen = static_cast<int>(strlen(lsd->rootPath));
       if( iLen > 0 )
       {
@@ -522,7 +519,7 @@ HB_FUNC( NETIO_RPCFILTER )
          if( pHash )
          {
             conn->rpcFilter = hb_itemNew(pHash);
-            hb_gcUnlock( conn->rpcFilter );
+            hb_gcUnlock(conn->rpcFilter);
          }
       }
    }
@@ -582,20 +579,20 @@ HB_FUNC( NETIO_LISTEN )
 
    if( hb_socketInetAddr( &pSockAddr, &uiLen, szAddress, iPort ) )
    {
-      sd = hb_socketOpen( HB_SOCKET_PF_INET, HB_SOCKET_PT_STREAM, 0 );
+      sd = hb_socketOpen(HB_SOCKET_PF_INET, HB_SOCKET_PT_STREAM, 0);
       if( sd != HB_NO_SOCKET )
       {
          if( hb_socketBind( sd, pSockAddr, uiLen ) != 0 ||
              hb_socketListen( sd, 10 ) != 0 )
          {
-            hb_socketClose( sd );
+            hb_socketClose(sd);
             sd = HB_NO_SOCKET;
          }
       }
       hb_xfree(pSockAddr);
    }
 
-   s_listenRet( sd, szRootPath, fRPC );
+   s_listenRet(sd, szRootPath, fRPC);
 }
 
 /* netio_Accept( <pListenSocket>, [<nTimeOut>],
@@ -620,7 +617,7 @@ HB_FUNC( NETIO_ACCEPT )
 
       do
       {
-         connsd = hb_socketAccept( lsd->sd, nullptr, nullptr, timeout < 0 ? 1000 : timeout );
+         connsd = hb_socketAccept(lsd->sd, nullptr, nullptr, timeout < 0 ? 1000 : timeout);
       }
       while( connsd == HB_NO_SOCKET && !lsd->stop && timeout < 0 &&
              hb_socketGetError() == HB_SOCKET_ERR_TIMEOUT &&
@@ -630,22 +627,21 @@ HB_FUNC( NETIO_ACCEPT )
       {
          PHB_SOCKEX sock;
 
-         hb_socketSetKeepAlive( connsd, true );
-         hb_socketSetNoDelay( connsd, true );
+         hb_socketSetKeepAlive(connsd, true);
+         hb_socketSetNoDelay(connsd, true);
 
          if( iLevel == HB_ZLIB_COMPRESSION_DISABLE )
             sock = hb_sockexNew(connsd, nullptr, nullptr);
          else
-            sock = hb_sockexNewZNet( connsd, hb_parc(3), keylen,
-                                     iLevel, iStrategy );
+            sock = hb_sockexNewZNet(connsd, hb_parc(3), keylen, iLevel, iStrategy);
          if( sock != nullptr )
-            conn = s_consrvNew( sock, lsd->rootPath, lsd->rpc );
+            conn = s_consrvNew(sock, lsd->rootPath, lsd->rpc);
          else
-            hb_socketClose( connsd );
+            hb_socketClose(connsd);
       }
    }
 
-   s_consrvRet( conn );
+   s_consrvRet(conn);
 }
 
 /* netio_Compress( <pConnectionSocket>,
@@ -668,10 +664,10 @@ HB_FUNC( NETIO_COMPRESS )
       if( iLevel == HB_ZLIB_COMPRESSION_DISABLE )
          sock = hb_sockexNew(hb_sockexGetHandle(conn->sock), nullptr, nullptr);
       else
-         sock = hb_sockexNewZNet( hb_sockexGetHandle( conn->sock ), hb_parc(2), keylen, iLevel, iStrategy );
+         sock = hb_sockexNewZNet(hb_sockexGetHandle(conn->sock), hb_parc(2), keylen, iLevel, iStrategy);
       if( sock )
       {
-         hb_sockexClose( conn->sock, false );
+         hb_sockexClose(conn->sock, false);
          conn->sock = sock;
       }
    }
@@ -700,7 +696,7 @@ static HB_BOOL s_netio_login_accept( PHB_CONSRV conn )
          }
       }
       if( !conn->login )
-         s_consrv_disconnect( conn );
+         s_consrv_disconnect(conn);
    }
 
    return conn && conn->login;
@@ -849,13 +845,13 @@ HB_FUNC( NETIO_SERVER )
                         HB_SIZE itmSize = 0;
                         char * itmData = nullptr;
                         const char * pszAttr = size2 ? reinterpret_cast<const char*>(msg) : nullptr;
-                        PHB_ITEM pResult = hb_fileDirectory( pszDirSpec, pszAttr );
+                        PHB_ITEM pResult = hb_fileDirectory(pszDirSpec, pszAttr);
 
                         errFsCode = hb_fsError();
 
                         if( pResult )
                         {
-                           itmData = hb_itemSerialize( pResult, HB_SERIALIZE_NUMSIZE, &itmSize );
+                           itmData = hb_itemSerialize(pResult, HB_SERIALIZE_NUMSIZE, &itmSize);
                            hb_itemRelease(pResult);
                         }
 
@@ -904,7 +900,7 @@ HB_FUNC( NETIO_SERVER )
                         errCode = NETIO_ERR_WRONG_FILE_PATH;
                      else
                      {
-                        char * pszTarget = hb_fileLinkRead( pszName );
+                        char * pszTarget = hb_fileLinkRead(pszName);
 
                         errFsCode = hb_fsError();
                         if( pszTarget )
@@ -1085,7 +1081,7 @@ HB_FUNC( NETIO_SERVER )
                            errCode = s_srvFsError();
                         else
                         {
-                           iFileNo = s_srvFileNew( conn, pFile );
+                           iFileNo = s_srvFileNew(conn, pFile);
                            if( iFileNo < 0 )
                            {
                               errCode = NETIO_ERR_FILES_MAX;
@@ -1131,7 +1127,7 @@ HB_FUNC( NETIO_SERVER )
                            const char * data = reinterpret_cast<const char*>(msg);
                            HB_SIZE nSize = size;
 
-                           pValue = hb_itemDeserialize( &data, &nSize );
+                           pValue = hb_itemDeserialize(&data, &nSize);
                            if( !pValue || nSize != 0 )
                               errCode = NETIO_ERR_WRONG_PARAM;
                         }
@@ -1142,7 +1138,7 @@ HB_FUNC( NETIO_SERVER )
 
                            iResult = hb_fileConfigure( pFile, iIndex, pValue ) ? 1 : 0;
                            if( pValue )
-                              itmData = hb_itemSerialize( pValue, HB_SERIALIZE_NUMSIZE, &itmSize );
+                              itmData = hb_itemSerialize(pValue, HB_SERIALIZE_NUMSIZE, &itmSize);
 
                            if( itmSize <= sizeof(buffer) - NETIO_MSGLEN )
                               msg = buffer;
@@ -1246,9 +1242,9 @@ HB_FUNC( NETIO_SERVER )
                      else
                      {
                         if( uiMsg == NETIO_WRITE )
-                           size = static_cast<long>(hb_fileWrite(pFile, msg, size, nTimeout) );
+                           size = static_cast<long>(hb_fileWrite(pFile, msg, size, nTimeout));
                         else
-                           size = static_cast<long>(hb_fileWriteAt(pFile, msg, size, llOffset) );
+                           size = static_cast<long>(hb_fileWriteAt(pFile, msg, size, llOffset));
                         errFsCode = hb_fsError();
                         HB_PUT_LE_UINT32(&msg[0], uiMsg);
                         HB_PUT_LE_UINT32(&msg[4], size);
@@ -1273,14 +1269,14 @@ HB_FUNC( NETIO_SERVER )
                   errCode = NETIO_ERR_WRONG_FILE_HANDLE;
                else if( uiMsg == NETIO_TESTLOCK )
                {
-                  iResult = hb_fileLockTest( pFile, llOffset, llSize, uiFlags );
+                  iResult = hb_fileLockTest(pFile, llOffset, llSize, uiFlags);
                   errFsCode = hb_fsError();
                   HB_PUT_LE_UINT32(&msg[0], uiMsg);
                   HB_PUT_LE_UINT32(&msg[4], iResult);
                   HB_PUT_LE_UINT32(&msg[8], errFsCode);
                   memset(msg + 12, '\0', NETIO_MSGLEN - 4);
                }
-               else if( !hb_fileLock( pFile, llOffset, llSize, uiFlags ) )
+               else if( !hb_fileLock(pFile, llOffset, llSize, uiFlags) )
                   errCode = s_srvFsError();
                else if( !fNoAnswer )
                {
@@ -1313,7 +1309,7 @@ HB_FUNC( NETIO_SERVER )
                   errCode = NETIO_ERR_WRONG_FILE_HANDLE;
                else
                {
-                  llOffset = hb_fileSeek( pFile, llOffset, uiFlags );
+                  llOffset = hb_fileSeek(pFile, llOffset, uiFlags);
                   errFsCode = hb_fsError();
                   HB_PUT_LE_UINT32(&msg[0], NETIO_SEEK);
                   HB_PUT_LE_UINT64(&msg[4], llOffset);
@@ -1329,7 +1325,7 @@ HB_FUNC( NETIO_SERVER )
                   errCode = NETIO_ERR_WRONG_FILE_HANDLE;
                else
                {
-                  llOffset = hb_fileSize( pFile );
+                  llOffset = hb_fileSize(pFile);
                   errFsCode = hb_fsError();
                   HB_PUT_LE_UINT32(&msg[0], NETIO_SIZE);
                   HB_PUT_LE_UINT64(&msg[4], llOffset);
@@ -1358,13 +1354,13 @@ HB_FUNC( NETIO_SERVER )
                iFileNo = HB_GET_LE_UINT16(&msgbuf[4]);
                pFile = s_srvFileGet(conn, iFileNo);
                if( pFile )
-                  hb_fileCommit( pFile );
+                  hb_fileCommit(pFile);
                fNoAnswer = HB_TRUE;
                break;
 
             case NETIO_CLOSE:
                iFileNo = HB_GET_LE_UINT16(&msgbuf[4]);
-               pFile = s_srvFileFree( conn, iFileNo );
+               pFile = s_srvFileFree(conn, iFileNo);
                if( pFile == nullptr )
                   errCode = NETIO_ERR_WRONG_FILE_HANDLE;
                else
@@ -1377,7 +1373,7 @@ HB_FUNC( NETIO_SERVER )
 
             case NETIO_SRVCLOSE:
                iStreamID = HB_GET_LE_INT32(&msgbuf[4]);
-               if( iStreamID && conn->mutex && hb_threadMutexLock( conn->mutex ) )
+               if( iStreamID && conn->mutex && hb_threadMutexLock(conn->mutex) )
                {
                   PHB_CONSTREAM * pStreamPtr = &conn->streams;
                   while( *pStreamPtr )
@@ -1394,7 +1390,7 @@ HB_FUNC( NETIO_SERVER )
                   }
                   else
                      iStreamID = 0;
-                  hb_threadMutexUnlock( conn->mutex );
+                  hb_threadMutexUnlock(conn->mutex);
                }
                else
                   iStreamID = 0;
@@ -1445,8 +1441,8 @@ HB_FUNC( NETIO_SERVER )
                         }
                         else
                         {
-                           pDynSym = hb_dynsymFindName( data );
-                           if( !pDynSym || !hb_dynsymIsFunction( pDynSym ) )
+                           pDynSym = hb_dynsymFindName(data);
+                           if( !pDynSym || !hb_dynsymIsFunction(pDynSym) )
                               errCode = NETIO_ERR_NOT_EXISTS;
                         }
 
@@ -1460,7 +1456,7 @@ HB_FUNC( NETIO_SERVER )
 
                               iStreamID = 0;
                               data += size2;
-                              if( pItem )
+                              if( pItem != nullptr )
                               {
                                  fSend = HB_TRUE;
                                  hb_vmPushEvalSym();
@@ -1494,7 +1490,7 @@ HB_FUNC( NETIO_SERVER )
                                  {
                                     if( conn->mutex == nullptr )
                                        conn->mutex = hb_threadMutexCreate();
-                                    if( hb_threadMutexLock( conn->mutex ) )
+                                    if( hb_threadMutexLock(conn->mutex) )
                                     {
                                        PHB_CONSTREAM stream = static_cast<PHB_CONSTREAM>(hb_xgrab(sizeof(HB_CONSTREAM)));
                                        stream->id = iStreamID;
@@ -1513,7 +1509,7 @@ HB_FUNC( NETIO_SERVER )
                               }
                               while( nSize > 0 && errCode == 0 )
                               {
-                                 pItem = hb_itemDeserialize( &data, &nSize );
+                                 pItem = hb_itemDeserialize(&data, &nSize);
                                  if( !pItem )
                                  {
                                     errCode = NETIO_ERR_WRONG_PARAM;
@@ -1535,14 +1531,14 @@ HB_FUNC( NETIO_SERVER )
                               else
                               {
                                  if( fSend )
-                                    hb_vmSend( uiPCount );
+                                    hb_vmSend(uiPCount);
                                  else
-                                    hb_vmProc( uiPCount );
+                                    hb_vmProc(uiPCount);
                                  if( uiMsg == NETIO_FUNC || uiMsg == NETIO_FUNCCTRL )
                                  {
                                     HB_SIZE itmSize;
                                     PHB_ITEM pResult = hb_stackReturnItem();
-                                    char * itmData = hb_itemSerialize( pResult, HB_SERIALIZE_NUMSIZE, &itmSize );
+                                    char * itmData = hb_itemSerialize(pResult, HB_SERIALIZE_NUMSIZE, &itmSize);
                                     if( itmSize <= sizeof(buffer) - NETIO_MSGLEN )
                                        msg = buffer;
                                     else if( !ptr || itmSize > static_cast<HB_SIZE>(size) - NETIO_MSGLEN )
@@ -1556,7 +1552,7 @@ HB_FUNC( NETIO_SERVER )
                                     len = static_cast<long>(itmSize);
                                     if( iStreamID && hb_itemGetNI(pResult) == iStreamID )
                                     {
-                                       hb_threadMutexUnlock( conn->mutex );
+                                       hb_threadMutexUnlock(conn->mutex);
                                        iStreamID = 0;
                                     }
                                  }
@@ -1571,7 +1567,7 @@ HB_FUNC( NETIO_SERVER )
                                     conn->streams = stream->next;
                                     hb_xfree(stream);
                                  }
-                                 hb_threadMutexUnlock( conn->mutex );
+                                 hb_threadMutexUnlock(conn->mutex);
                               }
                            }
                            else
@@ -1615,7 +1611,7 @@ HB_FUNC( NETIO_SERVER )
          else
             len += NETIO_MSGLEN;
 
-         errCode = !s_srvSendAll( conn, msg, len );
+         errCode = !s_srvSendAll(conn, msg, len);
 
          if( ptr )
             hb_xfree(ptr);
@@ -1633,7 +1629,7 @@ HB_FUNC( NETIO_SERVEDCONNECTION )
    static PHB_DYNS s_pDyns_netio_server = nullptr;
 
    if( s_pDyns_netio_server == nullptr )
-      s_pDyns_netio_server = hb_dynsymGetCase( "NETIO_SERVER" );
+      s_pDyns_netio_server = hb_dynsymGetCase("NETIO_SERVER");
 
    if( s_pDyns_netio_server != nullptr )
    {
@@ -1641,7 +1637,7 @@ HB_FUNC( NETIO_SERVEDCONNECTION )
 
       if( nOffset > 0 )
       {
-         PHB_ITEM pItem = hb_stackItem( nOffset + 2 );
+         PHB_ITEM pItem = hb_stackItem(nOffset + 2);
 
          if( hb_itemGetPtrGC(pItem, &s_gcConSrvFuncs) != nullptr )
             hb_itemReturn(pItem);
@@ -1649,7 +1645,7 @@ HB_FUNC( NETIO_SERVEDCONNECTION )
    }
 }
 
-/* netio_SrvSendItem( <pConnectionSocket>, <nStreamID>, <xData> ) --> <lSent>
+/* netio_SrvSendItem(<pConnectionSocket>, <nStreamID>, <xData>) --> <lSent>
  */
 HB_FUNC( NETIO_SRVSENDITEM )
 {
@@ -1676,7 +1672,7 @@ HB_FUNC( NETIO_SRVSENDITEM )
       hb_xfree(itmData);
 
       lLen += NETIO_MSGLEN;
-      if( hb_threadMutexLock( conn->mutex ) )
+      if( hb_threadMutexLock(conn->mutex) )
       {
          PHB_CONSTREAM stream = conn->streams;
          while( stream )
@@ -1686,8 +1682,8 @@ HB_FUNC( NETIO_SRVSENDITEM )
             stream = stream->next;
          }
          if( stream && stream->type == NETIO_SRVITEM )
-            fResult = s_srvSendAll( conn, msg, lLen );
-         hb_threadMutexUnlock( conn->mutex );
+            fResult = s_srvSendAll(conn, msg, lLen);
+         hb_threadMutexUnlock(conn->mutex);
       }
       hb_xfree(msg);
    }
@@ -1715,7 +1711,7 @@ HB_FUNC( NETIO_SRVSENDDATA )
       memcpy(msg + NETIO_MSGLEN, hb_parc(3), lLen);
 
       lLen += NETIO_MSGLEN;
-      if( hb_threadMutexLock( conn->mutex ) )
+      if( hb_threadMutexLock(conn->mutex) )
       {
          PHB_CONSTREAM stream = conn->streams;
          while( stream )
@@ -1725,8 +1721,8 @@ HB_FUNC( NETIO_SRVSENDDATA )
             stream = stream->next;
          }
          if( stream && stream->type == NETIO_SRVDATA )
-            fResult = s_srvSendAll( conn, msg, lLen );
-         hb_threadMutexUnlock( conn->mutex );
+            fResult = s_srvSendAll(conn, msg, lLen);
+         hb_threadMutexUnlock(conn->mutex);
       }
       hb_xfree(msg);
    }
@@ -1756,7 +1752,7 @@ HB_FUNC( NETIO_SRVSTATUS )
       iStatus = NETIO_SRVSTAT_STOPPED;
    else if( iStreamID != 0 && conn->mutex )
    {
-      if( hb_threadMutexLock( conn->mutex ) )
+      if( hb_threadMutexLock(conn->mutex) )
       {
          PHB_CONSTREAM stream = conn->streams;
          while( stream )
@@ -1768,7 +1764,7 @@ HB_FUNC( NETIO_SRVSTATUS )
             }
             stream = stream->next;
          }
-         hb_threadMutexUnlock( conn->mutex );
+         hb_threadMutexUnlock(conn->mutex);
       }
    }
    else
@@ -1790,9 +1786,9 @@ HB_FUNC( NETIO_SRVSTATUS )
             unsigned int len;
             PHB_ITEM pItem = nullptr;
 
-            if( hb_socketGetPeerName( hb_sockexGetHandle( conn->sock ), &addr, &len ) == 0 )
+            if( hb_socketGetPeerName(hb_sockexGetHandle(conn->sock), &addr, &len) == 0 )
             {
-               pItem = hb_socketAddrToItem( addr, len );
+               pItem = hb_socketAddrToItem(addr, len);
                if( addr )
                   hb_xfree(addr);
             }

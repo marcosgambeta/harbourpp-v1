@@ -55,9 +55,9 @@ typedef struct
 
 static HB_TSD_NEW(s_posix_errno, sizeof(HB_POSIXERRDATA), nullptr, nullptr);
 
-#define HB_POSIX_ERRNO  ( ( PHB_POSIXERRDATA ) hb_stackGetTSD( &s_posix_errno ) )
+#define HB_POSIX_ERRNO  (static_cast<PHB_POSIXERRDATA>(hb_stackGetTSD(&s_posix_errno)))
 
-void hb_posix_save_errno( void )
+void hb_posix_save_errno(void)
 {
    HB_POSIX_ERRNO->iErrNo = errno;
 }
@@ -67,12 +67,12 @@ void hb_posix_set_errno( int iErrNo )
    HB_POSIX_ERRNO->iErrNo = iErrNo;
 }
 
-int hb_posix_get_errno( void )
+int hb_posix_get_errno(void)
 {
    return HB_POSIX_ERRNO->iErrNo;
 }
 
-void hb_posix_param_error( void )
+void hb_posix_param_error(void)
 {
    hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

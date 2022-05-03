@@ -65,10 +65,10 @@
 
 static PHB_ITEM hb_mmf_itemPut(PHB_ITEM pItem, void * pMemAddr, int iType);
 static void *   hb_mmf_itemGet(PHB_ITEM pItem, int iType, HB_BOOL fError);
-static void     hb_mmf_ret( void * pMemAddr, int iType );
-static void *   hb_mmf_param( int iParam, int iType, HB_BOOL fError );
+static void     hb_mmf_ret(void * pMemAddr, int iType);
+static void *   hb_mmf_param(int iParam, int iType, HB_BOOL fError);
 
-static void xdiff_init( void );
+static void xdiff_init(void);
 
 typedef struct
 {
@@ -83,13 +83,13 @@ typedef struct
 
 static HB_GARBAGE_FUNC( hb_mmf_destructor )
 {
-   PHB_MMF_HOLDER pStructHolder = ( PHB_MMF_HOLDER ) Cargo;
+   PHB_MMF_HOLDER pStructHolder = static_cast<PHB_MMF_HOLDER>(Cargo);
 
    if( pStructHolder->hb_mmf )
    {
       if( pStructHolder->hb_mmf->mmf )
       {
-         xdl_free_mmfile( pStructHolder->hb_mmf->mmf );
+         xdl_free_mmfile(pStructHolder->hb_mmf->mmf);
          hb_xfree(pStructHolder->hb_mmf->mmf);
 
          pStructHolder->hb_mmf->mmf = nullptr;
@@ -109,7 +109,7 @@ static PHB_ITEM hb_mmf_itemPut(PHB_ITEM pItem, void * pMemAddr, int iType)
 {
    PHB_MMF_HOLDER pStructHolder;
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       if( HB_IS_COMPLEX(pItem) )
          hb_itemClear(pItem);
@@ -117,16 +117,16 @@ static PHB_ITEM hb_mmf_itemPut(PHB_ITEM pItem, void * pMemAddr, int iType)
    else
       pItem = hb_itemNew(pItem);
 
-   pStructHolder = ( PHB_MMF_HOLDER ) hb_gcAllocate( sizeof(HB_MMF_HOLDER), &s_gc_xdiffFuncs );
+   pStructHolder = static_cast<PHB_MMF_HOLDER>(hb_gcAllocate(sizeof(HB_MMF_HOLDER), &s_gc_xdiffFuncs));
    pStructHolder->hb_mmf = ( HB_MMF * ) pMemAddr;
-   pStructHolder->type   = iType;
+   pStructHolder->type = iType;
 
    return hb_itemPutPtrGC(pItem, pStructHolder);
 }
 
 static void * hb_mmf_itemGet(PHB_ITEM pItem, int iType, HB_BOOL fError)
 {
-   PHB_MMF_HOLDER pStructHolder = ( PHB_MMF_HOLDER ) hb_itemGetPtrGC(pItem, &s_gc_xdiffFuncs);
+   PHB_MMF_HOLDER pStructHolder = static_cast<PHB_MMF_HOLDER>(hb_itemGetPtrGC(pItem, &s_gc_xdiffFuncs));
    int iError = 0;
 
    HB_SYMBOL_UNUSED(iError);
@@ -169,7 +169,7 @@ HB_FUNC( XDL_INIT_MMFILE )
       phb_mmf = static_cast<HB_MMF*>(hb_xgrab(sizeof(HB_MMF)));
       hb_xmemset(phb_mmf, 0, sizeof(HB_MMF));
       phb_mmf->mmf = mmf;
-      hb_mmf_ret( phb_mmf, HB_MMF_SIGN );
+      hb_mmf_ret(phb_mmf, HB_MMF_SIGN);
    }
    else
       hb_xfree(mmf);
@@ -182,7 +182,7 @@ HB_FUNC( XDL_FREE_MMFILE )
 
    if( phb_mmf && phb_mmf->mmf )
    {
-      xdl_free_mmfile( phb_mmf->mmf );
+      xdl_free_mmfile(phb_mmf->mmf);
       phb_mmf->mmf = nullptr;
    }
    else
@@ -233,15 +233,14 @@ HB_FUNC( XDL_READ_MMFILE )
       }
       else
       {
-         size = ( HB_ISNUM(3) && hb_parns(3) >= 0 ) ?
-                hb_parns(3) : xdl_mmfile_size( phb_mmf->mmf );
+         size = (HB_ISNUM(3) && hb_parns(3) >= 0) ? hb_parns(3) : xdl_mmfile_size(phb_mmf->mmf);
 
          data = static_cast<char*>(hb_xalloc(size + 1));
       }
 
       if( data && size )
       {
-         long lResult = xdl_read_mmfile( phb_mmf->mmf, data, static_cast<long>(size) );
+         long lResult = xdl_read_mmfile(phb_mmf->mmf, data, static_cast<long>(size));
 
          if( lResult == -1 )
          {
@@ -341,7 +340,7 @@ HB_FUNC( XDL_MMFILE_COMPACT )
       phb_mmf = static_cast<HB_MMF*>(hb_xgrab(sizeof(HB_MMF)));
       hb_xmemset(phb_mmf, 0, sizeof(HB_MMF));
       phb_mmf->mmf = mmfc;
-      hb_mmf_ret( phb_mmf, HB_MMF_SIGN );
+      hb_mmf_ret(phb_mmf, HB_MMF_SIGN);
 
       hb_stornl(0, 4);
    }
@@ -387,7 +386,7 @@ static int xdlt_outb( void * priv, mmbuffer_t * mb, int nbuf )
          hb_vmPushString(static_cast<const char*>(mb[i].ptr), mb[i].size);
 
       hb_vmSend(static_cast<HB_USHORT>(nbuf));
-      iResult = hb_parnidef( -1, 0 );
+      iResult = hb_parnidef(-1, 0);
 
       hb_vmRequestRestore();
 
@@ -610,18 +609,18 @@ static void * wf_realloc( void * priv, void * ptr, unsigned int size )
 {
    HB_SYMBOL_UNUSED(priv);
 
-   return hb_xrealloc( ptr, size );
+   return hb_xrealloc(ptr, size);
 }
 
-static void xdiff_init( void )
+static void xdiff_init(void)
 {
    memallocator_t malt;
 
-   malt.priv    = nullptr;
-   malt.malloc  = wf_malloc;
-   malt.free    = wf_free;
+   malt.priv = nullptr;
+   malt.malloc = wf_malloc;
+   malt.free = wf_free;
    malt.realloc = wf_realloc;
-   xdl_set_allocator( &malt );
+   xdl_set_allocator(&malt);
 }
 
 HB_CALL_ON_STARTUP_BEGIN( _xdiff_init_ )

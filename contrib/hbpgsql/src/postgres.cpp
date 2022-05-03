@@ -59,7 +59,7 @@ static HB_GARBAGE_FUNC( PGconn_release )
    if( ph && *ph )
    {
       /* Destroy the object */
-      PQfinish( static_cast<PGconn*>(*ph) );
+      PQfinish(static_cast<PGconn*>(*ph));
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -103,7 +103,7 @@ static HB_GARBAGE_FUNC( PGresult_release )
    if( ph && *ph )
    {
       /* Destroy the object */
-      PQclear( static_cast<PGresult*>(*ph) );
+      PQclear(static_cast<PGresult*>(*ph));
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -149,7 +149,7 @@ static HB_GARBAGE_FUNC( PGcancel_release )
    if( ph && *ph )
    {
       /* Destroy the object */
-      PQfreeCancel( static_cast<PGcancel*>(*ph) );
+      PQfreeCancel(static_cast<PGcancel*>(*ph));
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -197,7 +197,7 @@ static HB_GARBAGE_FUNC( FILE_release )
    if( ph && *ph )
    {
       /* Destroy the object */
-      fclose( static_cast<FILE*>(*ph) );
+      fclose(static_cast<FILE*>(*ph));
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -243,7 +243,7 @@ HB_FUNC( PQCONNECTDB )
 {
    if( HB_ISCHAR(1) )
    {
-      hb_PGconn_ret( PQconnectdb( hb_parc(1) ) );
+      hb_PGconn_ret(PQconnectdb(hb_parc(1)));
    }
    else
    {
@@ -254,13 +254,13 @@ HB_FUNC( PQCONNECTDB )
 /* NOTE: Deprecated */
 HB_FUNC( PQSETDBLOGIN )
 {
-   hb_PGconn_ret( PQsetdbLogin( hb_parcx(1) /* pghost */,
-                                hb_parcx(2) /* pgport */,
-                                hb_parcx(3) /* pgoptions */,
-                                hb_parcx(4) /* pgtty */,
-                                hb_parcx(5) /* dbName */,
-                                hb_parcx(6) /* login */,
-                                hb_parcx(7) /* pwd */ ) );
+   hb_PGconn_ret(PQsetdbLogin(hb_parcx(1) /* pghost */,
+                              hb_parcx(2) /* pgport */,
+                              hb_parcx(3) /* pgoptions */,
+                              hb_parcx(4) /* pgtty */,
+                              hb_parcx(5) /* dbName */,
+                              hb_parcx(6) /* login */,
+                              hb_parcx(7) /* pwd */));
 }
 
 HB_FUNC( PQRESET )
@@ -269,7 +269,7 @@ HB_FUNC( PQRESET )
 
    if( conn )
    {
-      PQreset( conn );
+      PQreset(conn);
    }
    else
    {
@@ -469,7 +469,7 @@ HB_FUNC( PQEXEC )
 
    if( conn )
    {
-      hb_PGresult_ret( PQexec( conn, hb_parcx(2) ) );
+      hb_PGresult_ret(PQexec(conn, hb_parcx(2)));
    }
    else
    {
@@ -493,7 +493,7 @@ HB_FUNC( PQEXECPARAMS )
          paramvalues[i] = hb_arrayGetCPtr(aParam, i + 1);
       }
 
-      hb_PGresult_ret( PQexecParams( conn, hb_parcx(2), n, nullptr, paramvalues, nullptr, nullptr, 1 ) );
+      hb_PGresult_ret(PQexecParams(conn, hb_parcx(2), n, nullptr, paramvalues, nullptr, nullptr, 1));
 
       hb_xfree(static_cast<void*>(paramvalues));
    }
@@ -513,7 +513,7 @@ HB_FUNC( PQFCOUNT )  /* not a direct wrapper */
 
       if( PQresultStatus( res ) == PGRES_TUPLES_OK )
       {
-         nFields = PQnfields( res );
+         nFields = PQnfields(res);
       }
 
       hb_retni(nFields);
@@ -534,7 +534,7 @@ HB_FUNC( PQLASTREC )  /* not a direct wrapper */
 
       if( PQresultStatus( res ) == PGRES_TUPLES_OK )
       {
-         nRows = PQntuples( res );
+         nRows = PQntuples(res);
       }
 
       hb_retni(nRows);
@@ -589,7 +589,7 @@ HB_FUNC( PQGETLENGTH )
          int nRow = hb_parni(2) - 1;
          int nCol = hb_parni(3) - 1;
 
-         result = PQgetlength( res, nRow, nCol );
+         result = PQgetlength(res, nRow, nCol);
       }
 
       hb_retni(result);
@@ -623,7 +623,7 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
          for( int i = 0; i < nFields; i++ )
          {
             char buf[256];
-            int  typemod = PQfmod( res, i );
+            int  typemod = PQfmod(res, i);
             int  length  = 0;
             int  decimal = 0;
 
@@ -636,12 +636,12 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
                   {
                      length = static_cast<int>(typemod);
                   }
-                  hb_strncpy( buf, "bit", sizeof(buf) - 1 );
+                  hb_strncpy(buf, "bit", sizeof(buf) - 1);
                   break;
 
                case BOOLOID:
                   length = 1;
-                  hb_strncpy( buf, "boolean", sizeof(buf) - 1 );
+                  hb_strncpy(buf, "boolean", sizeof(buf) - 1);
                   break;
 
                case BPCHAROID:
@@ -649,48 +649,48 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
                   {
                      length = static_cast<int>(typemod - VARHDRSZ);
                   }
-                  hb_strncpy( buf, "character", sizeof(buf) - 1 );
+                  hb_strncpy(buf, "character", sizeof(buf) - 1);
                   break;
 
                case FLOAT4OID:
-                  hb_strncpy( buf, "real", sizeof(buf) - 1 );
+                  hb_strncpy(buf, "real", sizeof(buf) - 1);
                   break;
 
                case FLOAT8OID:
-                  hb_strncpy( buf, "double precision", sizeof(buf) - 1 );
+                  hb_strncpy(buf, "double precision", sizeof(buf) - 1);
                   break;
 
                case INT2OID:
-                  hb_strncpy( buf, "smallint", sizeof(buf) - 1 );
+                  hb_strncpy(buf, "smallint", sizeof(buf) - 1);
                   break;
 
                case INT4OID:
-                  hb_strncpy( buf, "integer", sizeof(buf) - 1 );
+                  hb_strncpy(buf, "integer", sizeof(buf) - 1);
                   break;
 
                case INT8OID:
                case OIDOID:
-                  hb_strncpy( buf, "bigint", sizeof(buf) - 1 );
+                  hb_strncpy(buf, "bigint", sizeof(buf) - 1);
                   break;
 
                case NUMERICOID:
                   length  = ( ( typemod - VARHDRSZ ) >> 16 ) & 0xffff;
                   decimal = ( typemod - VARHDRSZ ) & 0xffff;
-                  hb_strncpy( buf, "numeric", sizeof(buf) - 1 );
+                  hb_strncpy(buf, "numeric", sizeof(buf) - 1);
                   break;
 
                case DATEOID:
-                  hb_strncpy( buf, "date", sizeof(buf) - 1 );
+                  hb_strncpy(buf, "date", sizeof(buf) - 1);
                   break;
 
                case TIMEOID:
                case TIMETZOID:
-                  hb_strncpy( buf, "timezone", sizeof(buf) - 1 );
+                  hb_strncpy(buf, "timezone", sizeof(buf) - 1);
                   break;
 
                case TIMESTAMPOID:
                case TIMESTAMPTZOID:
-                  hb_strncpy( buf, "timestamp", sizeof(buf) - 1 );
+                  hb_strncpy(buf, "timestamp", sizeof(buf) - 1);
                   break;
 
                case VARBITOID:
@@ -698,7 +698,7 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
                   {
                      length = static_cast<int>(typemod);
                   }
-                  hb_strncpy( buf, "bit varying", sizeof(buf) - 1 );
+                  hb_strncpy(buf, "bit varying", sizeof(buf) - 1);
                   break;
 
                case VARCHAROID:
@@ -706,19 +706,19 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
                   {
                      length = static_cast<int>(typemod - VARHDRSZ);
                   }
-                  hb_strncpy( buf, "character varying", sizeof(buf) - 1 );
+                  hb_strncpy(buf, "character varying", sizeof(buf) - 1);
                   break;
 
                case TEXTOID:
-                  hb_strncpy( buf, "text", sizeof(buf) - 1 );
+                  hb_strncpy(buf, "text", sizeof(buf) - 1);
                   break;
 
                case CASHOID:
-                  hb_strncpy( buf, "money", sizeof(buf) - 1 );
+                  hb_strncpy(buf, "money", sizeof(buf) - 1);
                   break;
 
                default:
-                  hb_strncpy( buf, "not supported", sizeof(buf) - 1 );
+                  hb_strncpy(buf, "not supported", sizeof(buf) - 1);
                   break;
             }
 
@@ -753,8 +753,8 @@ HB_FUNC( PQRESULT2ARRAY )  /* not a direct wrapper */
    {
       if( PQresultStatus( res ) == PGRES_TUPLES_OK )
       {
-         int nRows = PQntuples( res );
-         int nCols = PQnfields( res );
+         int nRows = PQntuples(res);
+         int nCols = PQnfields(res);
 
          PHB_ITEM pResult = hb_itemArrayNew(nRows);
 
@@ -764,7 +764,7 @@ HB_FUNC( PQRESULT2ARRAY )  /* not a direct wrapper */
             hb_arrayNew(pRow, nCols);
             for( int nCol = 0; nCol < nCols; nCol++ )
             {
-               hb_arraySetC( pRow, nCol + 1, PQgetvalue( res, nRow, nCol ) );
+               hb_arraySetC(pRow, nCol + 1, PQgetvalue(res, nRow, nCol));
             }
          }
 
@@ -840,12 +840,12 @@ HB_FUNC( PQCMDTUPLES )
 HB_FUNC( PQESCAPESTRING )
 {
    const char * source = hb_parcx(1);
-   HB_SIZE      size   = strlen( source );
+   HB_SIZE      size   = strlen(source);
    char *       dest   = static_cast<char*>(hb_xgrab(size * 2 + 1));
 
-   PQescapeString( dest, source, static_cast<size_t>(size) );
+   PQescapeString(dest, source, static_cast<size_t>(size));
 
-   hb_retc_buffer( dest );
+   hb_retc_buffer(dest);
 }
 
 HB_FUNC( PQESCAPEBYTEA ) /* deprecated */
@@ -854,9 +854,9 @@ HB_FUNC( PQESCAPEBYTEA ) /* deprecated */
    {
       size_t from_length = static_cast<size_t>(hb_parclen(1));
       size_t to_length   = from_length * 5 + 1;
-      unsigned char * to = PQescapeBytea( reinterpret_cast<const unsigned char*>(hb_parc(1)), from_length, &to_length );
+      unsigned char * to = PQescapeBytea(reinterpret_cast<const unsigned char*>(hb_parc(1)), from_length, &to_length);
       hb_retclen(reinterpret_cast<char*>(to), static_cast<HB_SIZE>(to_length));
-      PQfreemem( to );
+      PQfreemem(to);
    }
    else
    {
@@ -869,9 +869,9 @@ HB_FUNC( PQUNESCAPEBYTEA )
    if( HB_ISCHAR(1) )
    {
       size_t to_length;
-      unsigned char * from = PQunescapeBytea( reinterpret_cast<const unsigned char*>(hb_parc(1)), &to_length );
+      unsigned char * from = PQunescapeBytea(reinterpret_cast<const unsigned char*>(hb_parc(1)), &to_length);
       hb_retclen(reinterpret_cast<char*>(from), static_cast<HB_SIZE>(to_length));
-      PQfreemem( from );
+      PQfreemem(from);
    }
    else
    {
@@ -1071,7 +1071,7 @@ HB_FUNC( PQGETRESULT )
 
    if( conn )
    {
-      hb_PGresult_ret( PQgetResult( conn ) );
+      hb_PGresult_ret(PQgetResult(conn));
    }
    else
    {
@@ -1099,7 +1099,7 @@ HB_FUNC( PQISBUSY )
 
    if( conn )
    {
-      hb_retl(PQisBusy(conn) ? true : false );
+      hb_retl(PQisBusy(conn) ? true : false);
    }
    else
    {
@@ -1170,7 +1170,7 @@ HB_FUNC( PQISNONBLOCKING )
 HB_FUNC( PQTRACECREATE )  /* not a direct wrapper */
 {
 #ifdef NODLL
-   hb_FILE_ret( fopen( hb_parcx(1), "w+b" ) );
+   hb_FILE_ret(fopen(hb_parcx(1), "w+b"));
 #else
    hb_retptr(nullptr);
 #endif
@@ -1184,7 +1184,7 @@ HB_FUNC( PQTRACE )
 
    if( conn && trfile )
    {
-      PQtrace( conn, trfile );
+      PQtrace(conn, trfile);
    }
    else
    {
@@ -1199,7 +1199,7 @@ HB_FUNC( PQUNTRACE )
 
    if( conn )
    {
-      PQuntrace( conn );
+      PQuntrace(conn);
    }
    else
    {
@@ -1296,7 +1296,7 @@ HB_FUNC( PQGETCANCEL )
 
    if( conn )
    {
-      hb_PGcancel_ret( PQgetCancel( conn ) );
+      hb_PGcancel_ret(PQgetCancel(conn));
    }
    else
    {
@@ -1342,9 +1342,9 @@ HB_FUNC( PQESCAPEBYTEACONN )
       size_t from_length = hb_parclen(2);
       size_t to_length   = from_length * 5 + 1;
 
-      unsigned char * to = PQescapeByteaConn( conn, reinterpret_cast<unsigned const char*>(hb_parc(2)), from_length, &to_length );
+      unsigned char * to = PQescapeByteaConn(conn, reinterpret_cast<unsigned const char*>(hb_parc(2)), from_length, &to_length);
       hb_retclen(reinterpret_cast<char*>(to), static_cast<HB_SIZE>(to_length));
-      PQfreemem( to );
+      PQfreemem(to);
    }
    else
    {
@@ -1385,7 +1385,7 @@ HB_FUNC( PQEXECPREPARED )
          paramvalues[i] = hb_arrayGetCPtr(aParam, i + 1);
       }
 
-      hb_PGresult_ret( PQexecPrepared( conn, hb_parcx(2), static_cast<int>(n), static_cast<const char* const*>(paramvalues), nullptr, nullptr, 1 ) );
+      hb_PGresult_ret(PQexecPrepared(conn, hb_parcx(2), static_cast<int>(n), static_cast<const char* const*>(paramvalues), nullptr, nullptr, 1));
 
       hb_xfree(static_cast<void*>(paramvalues));
    }
@@ -1436,35 +1436,35 @@ HB_FUNC( PQPUTCOPYEND )
  TODO: Implement Full Large Objects Support
  TODO: Implement Prepared Query handling
 
-extern int lo_open( PGconn * conn, Oid lobjId, int mode );
-extern int lo_close( PGconn * conn, int fd );
-extern int lo_read( PGconn * conn, int fd, char * buf, size_t len );
-extern int lo_write( PGconn * conn, int fd, char * buf, size_t len );
-extern int lo_lseek( PGconn * conn, int fd, int offset, int whence );
-extern Oid lo_creat( PGconn * conn, int mode );
-extern int lo_tell( PGconn * conn, int fd );
+extern int lo_open(PGconn * conn, Oid lobjId, int mode);
+extern int lo_close(PGconn * conn, int fd);
+extern int lo_read(PGconn * conn, int fd, char * buf, size_t len);
+extern int lo_write(PGconn * conn, int fd, char * buf, size_t len);
+extern int lo_lseek(PGconn * conn, int fd, int offset, int whence);
+extern Oid lo_creat(PGconn * conn, int mode);
+extern int lo_tell(PGconn * conn, int fd);
 
-int PQsendQueryParams( PGconn * conn,
-                       const char * command,
-                       int nParams,
-                       const Oid * paramTypes,
-                       const char * const * paramValues,
-                       const int * paramLengths,
-                       const int * paramFormats,
-                       int resultFormat );
+int PQsendQueryParams(PGconn * conn,
+                      const char * command,
+                      int nParams,
+                      const Oid * paramTypes,
+                      const char * const * paramValues,
+                      const int * paramLengths,
+                      const int * paramFormats,
+                      int resultFormat);
 
-int PQsendPrepare( PGconn * conn,
-                   const char * stmtName,
-                   const char * query,
-                   int nParams,
-                   const Oid * paramTypes );
+int PQsendPrepare(PGconn * conn,
+                  const char * stmtName,
+                  const char * query,
+                  int nParams,
+                  const Oid * paramTypes);
 
-int PQsendQueryPrepared( PGconn * conn,
-                         const char * stmtName,
-                         int nParams,
-                         const char * const * paramValues,
-                         const int * paramLengths,
-                         const int * paramFormats,
-                         int resultFormat );
+int PQsendQueryPrepared(PGconn * conn,
+                        const char * stmtName,
+                        int nParams,
+                        const char * const * paramValues,
+                        const int * paramLengths,
+                        const int * paramFormats,
+                        int resultFormat);
 
 #endif

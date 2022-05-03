@@ -109,26 +109,26 @@
 #endif
 
 #if defined(UNICODE)
-   #define O_HB_PARSTR( n, h, len )                 hb_parstr_u16(n, HB_CDP_ENDIAN_NATIVE, h, len)
-   #define O_HB_PARSTRDEF( n, h, len )              hb_wstrnull( hb_parstr_u16(n, HB_CDP_ENDIAN_NATIVE, h, len) )
-   #define O_HB_STORSTR( str, n )                   hb_storstr_u16(HB_CDP_ENDIAN_NATIVE, str, n)
-   #define O_HB_STORSTRLEN( str, len, n )           hb_storstrlen_u16(HB_CDP_ENDIAN_NATIVE, str, len, n)
-   #define O_HB_ARRAYGETSTR( arr, n, phstr, plen )  hb_arrayGetStrU16(arr, n, HB_CDP_ENDIAN_NATIVE, phstr, plen)
-   #define O_HB_ITEMCOPYSTR( itm, str, len )        hb_itemCopyStrU16(itm, HB_CDP_ENDIAN_NATIVE, str, len)
-   #define O_HB_ITEMGETSTR( itm, phstr, plen )      hb_itemGetStrU16(itm, HB_CDP_ENDIAN_NATIVE, phstr, plen)
-   #define O_HB_ITEMPUTSTR( itm, str )              hb_itemPutStrU16(itm, HB_CDP_ENDIAN_NATIVE, str)
-   #define O_HB_ITEMPUTSTRLEN( itm, str, len )      hb_itemPutStrLenU16(itm, HB_CDP_ENDIAN_NATIVE, str, len)
+   #define O_HB_PARSTR(n, h, len)                 hb_parstr_u16(n, HB_CDP_ENDIAN_NATIVE, h, len)
+   #define O_HB_PARSTRDEF(n, h, len)              hb_wstrnull(hb_parstr_u16(n, HB_CDP_ENDIAN_NATIVE, h, len))
+   #define O_HB_STORSTR(str, n)                   hb_storstr_u16(HB_CDP_ENDIAN_NATIVE, str, n)
+   #define O_HB_STORSTRLEN(str, len, n)           hb_storstrlen_u16(HB_CDP_ENDIAN_NATIVE, str, len, n)
+   #define O_HB_ARRAYGETSTR(arr, n, phstr, plen)  hb_arrayGetStrU16(arr, n, HB_CDP_ENDIAN_NATIVE, phstr, plen)
+   #define O_HB_ITEMCOPYSTR(itm, str, len)        hb_itemCopyStrU16(itm, HB_CDP_ENDIAN_NATIVE, str, len)
+   #define O_HB_ITEMGETSTR(itm, phstr, plen)      hb_itemGetStrU16(itm, HB_CDP_ENDIAN_NATIVE, phstr, plen)
+   #define O_HB_ITEMPUTSTR(itm, str)              hb_itemPutStrU16(itm, HB_CDP_ENDIAN_NATIVE, str)
+   #define O_HB_ITEMPUTSTRLEN(itm, str, len)      hb_itemPutStrLenU16(itm, HB_CDP_ENDIAN_NATIVE, str, len)
    #define O_HB_CHAR  HB_WCHAR
 #else
-   #define O_HB_PARSTR( n, h, len )                 hb_parstr( n, hb_setGetOSCP(), h, len )
-   #define O_HB_PARSTRDEF( n, h, len )              hb_strnull( hb_parstr( n, hb_setGetOSCP(), h, len ) )
-   #define O_HB_STORSTR( str, n )                   hb_storstr( hb_setGetOSCP(), str, n )
-   #define O_HB_STORSTRLEN( str, len, n )           hb_storstrlen( hb_setGetOSCP(), str, len, n )
-   #define O_HB_ARRAYGETSTR( arr, n, phstr, plen )  hb_arrayGetStr( arr, n, hb_setGetOSCP(), phstr, plen )
-   #define O_HB_ITEMCOPYSTR( itm, str, len )        hb_itemCopyStr( itm, hb_setGetOSCP(), str, len )
-   #define O_HB_ITEMGETSTR( itm, phstr, plen )      hb_itemGetStr( itm, hb_setGetOSCP(), phstr, plen )
-   #define O_HB_ITEMPUTSTR( itm, str )              hb_itemPutStr( itm, hb_setGetOSCP(), str )
-   #define O_HB_ITEMPUTSTRLEN( itm, str, len )      hb_itemPutStrLen( itm, hb_setGetOSCP(), str, len )
+   #define O_HB_PARSTR(n, h, len)                 hb_parstr(n, hb_setGetOSCP(), h, len)
+   #define O_HB_PARSTRDEF(n, h, len)              hb_strnull(hb_parstr(n, hb_setGetOSCP(), h, len))
+   #define O_HB_STORSTR(str, n)                   hb_storstr(hb_setGetOSCP(), str, n)
+   #define O_HB_STORSTRLEN(str, len, n)           hb_storstrlen(hb_setGetOSCP(), str, len, n)
+   #define O_HB_ARRAYGETSTR(arr, n, phstr, plen)  hb_arrayGetStr(arr, n, hb_setGetOSCP(), phstr, plen)
+   #define O_HB_ITEMCOPYSTR(itm, str, len)        hb_itemCopyStr(itm, hb_setGetOSCP(), str, len)
+   #define O_HB_ITEMGETSTR(itm, phstr, plen)      hb_itemGetStr(itm, hb_setGetOSCP(), phstr, plen)
+   #define O_HB_ITEMPUTSTR(itm, str)              hb_itemPutStr(itm, hb_setGetOSCP(), str)
+   #define O_HB_ITEMPUTSTRLEN(itm, str, len)      hb_itemPutStrLen(itm, hb_setGetOSCP(), str, len)
    #define O_HB_CHAR  char
 #endif
 
@@ -148,9 +148,9 @@ static HB_GARBAGE_FUNC( hb_SQLHENV_Destructor )
    if( pHEnv->hEnv )
    {
 #if ODBCVER >= 0x0300
-      SQLFreeHandle( SQL_HANDLE_ENV, static_cast<SQLHANDLE>(pHEnv->hEnv) );
+      SQLFreeHandle(SQL_HANDLE_ENV, static_cast<SQLHANDLE>(pHEnv->hEnv));
 #else
-      SQLFreeEnv( pHEnv->hEnv );
+      SQLFreeEnv(pHEnv->hEnv);
 #endif
 
       /* set pointer to nullptr to avoid multiple freeing */
@@ -166,11 +166,11 @@ static const HB_GC_FUNCS s_gcSQLHENVFuncs =
 
 static void hb_SQLHENV_stor( SQLHENV hEnv, int iParam )
 {
-   PHB_SQLHENV pHEnv = static_cast<PHB_SQLHENV>(hb_gcAllocate(sizeof(HB_SQLHENV), &s_gcSQLHENVFuncs) );
+   PHB_SQLHENV pHEnv = static_cast<PHB_SQLHENV>(hb_gcAllocate(sizeof(HB_SQLHENV), &s_gcSQLHENVFuncs));
 
    pHEnv->hEnv = hEnv;
 
-   hb_storptrGC( static_cast<void*>(pHEnv), iParam );
+   hb_storptrGC(static_cast<void*>(pHEnv), iParam);
 }
 
 static SQLHENV hb_SQLHENV_par( int iParam )
@@ -199,9 +199,9 @@ static HB_GARBAGE_FUNC( hb_SQLHDBC_Destructor )
    if( pHDbc->hDbc )
    {
 #if ODBCVER >= 0x0300
-      SQLFreeHandle( SQL_HANDLE_DBC, static_cast<SQLHANDLE>(pHDbc->hDbc) );
+      SQLFreeHandle(SQL_HANDLE_DBC, static_cast<SQLHANDLE>(pHDbc->hDbc));
 #else
-      SQLFreeConnect( pHDbc->hDbc );
+      SQLFreeConnect(pHDbc->hDbc);
 #endif
 
       /* set pointer to nullptr to avoid multiple freeing */
@@ -224,7 +224,7 @@ static HB_GARBAGE_FUNC( hb_SQLHDBC_Mark )
    if( pHDbc->pHEnvItm )
    {
       /* mark parent item handler as used */
-      hb_gcMark( pHDbc->pHEnvItm );
+      hb_gcMark(pHDbc->pHEnvItm);
    }
 }
 
@@ -247,10 +247,10 @@ static void hb_SQLHDBC_stor(PHB_ITEM pHEnvItm, SQLHDBC hDbc, int iParam)
    if( pHEnvItm )
    {
       pHDbc->pHEnvItm = hb_itemNew(pHEnvItm);
-      hb_gcUnlock( pHDbc->pHEnvItm );
+      hb_gcUnlock(pHDbc->pHEnvItm);
    }
 
-   hb_storptrGC( static_cast<void*>(pHDbc), iParam );
+   hb_storptrGC(static_cast<void*>(pHDbc), iParam);
 }
 
 static PHB_SQLHDBC hb_SQLHDBC_get(PHB_ITEM pItem)
@@ -260,7 +260,7 @@ static PHB_SQLHDBC hb_SQLHDBC_get(PHB_ITEM pItem)
 
 static HB_BOOL hb_SQLHDBC_check(PHB_ITEM pItem, int conn_counter)
 {
-   if( pItem )
+   if( pItem != nullptr )
    {
       PHB_SQLHDBC pHDbc = hb_SQLHDBC_get(pItem);
 
@@ -274,7 +274,7 @@ static HB_BOOL hb_SQLHDBC_check(PHB_ITEM pItem, int conn_counter)
 
 static SQLHDBC hb_SQLHDBC_par( int iParam )
 {
-   PHB_SQLHDBC pHDbc = hb_SQLHDBC_get( hb_param(iParam, Harbour::Item::POINTER) );
+   PHB_SQLHDBC pHDbc = hb_SQLHDBC_get(hb_param(iParam, Harbour::Item::POINTER));
 
    return pHDbc ? pHDbc->hDbc : nullptr;
 }
@@ -300,9 +300,9 @@ static HB_GARBAGE_FUNC( hb_SQLHSTMT_Destructor )
       if( hb_SQLHDBC_check(  pHStmt->pHDbcItm, pHStmt->conn_counter ) )
       {
 #if ODBCVER >= 0x0300
-         SQLFreeHandle( SQL_HANDLE_STMT, static_cast<SQLHANDLE>(pHStmt->hStmt) );
+         SQLFreeHandle(SQL_HANDLE_STMT, static_cast<SQLHANDLE>(pHStmt->hStmt));
 #else
-         SQLFreeStmt( pHStmt->hStmt, SQL_DROP );
+         SQLFreeStmt(pHStmt->hStmt, SQL_DROP);
 #endif
       }
 
@@ -327,7 +327,7 @@ static HB_GARBAGE_FUNC( hb_SQLHSTMT_Mark )
    if( pHStmt->pHDbcItm )
    {
       /* mark parent item handler as used */
-      hb_gcMark( pHStmt->pHDbcItm );
+      hb_gcMark(pHStmt->pHDbcItm);
    }
 }
 static const HB_GC_FUNCS s_gcSQLHSTMTFuncs =
@@ -349,17 +349,17 @@ static void hb_SQLHSTMT_stor(PHB_ITEM pHDbcItm, SQLHSTMT hStmt, int iParam)
 
    if( pHDbcItm )
    {
-      PHB_SQLHDBC pHDbc = hb_SQLHDBC_get( pHDbcItm );
+      PHB_SQLHDBC pHDbc = hb_SQLHDBC_get(pHDbcItm);
 
       if( pHDbc )
       {
          pHStmt->conn_counter = pHDbc->conn_counter;
          pHStmt->pHDbcItm = hb_itemNew(pHDbcItm);
-         hb_gcUnlock( pHStmt->pHDbcItm );
+         hb_gcUnlock(pHStmt->pHDbcItm);
       }
    }
 
-   hb_storptrGC( static_cast<void*>(pHStmt), iParam );
+   hb_storptrGC(static_cast<void*>(pHStmt), iParam);
 }
 
 static SQLHSTMT hb_SQLHSTMT_par( int iParam )
@@ -375,19 +375,19 @@ HB_FUNC( SQLALLOCENV )  /* @hEnv --> nRetCode */
    SQLRETURN result;
 
 #if ODBCVER >= 0x0300
-   result = SQLAllocHandle( SQL_HANDLE_ENV, SQL_NULL_HANDLE, &hEnv );
+   result = SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &hEnv);
 
    if( SQL_SUCCEEDED( result ) )
    {
       SQLSetEnvAttr(hEnv, SQL_ATTR_ODBC_VERSION, reinterpret_cast<SQLPOINTER>(SQL_OV_ODBC3), SQL_IS_UINTEGER);
    }
 #else
-   result = SQLAllocEnv( &hEnv );
+   result = SQLAllocEnv(&hEnv);
 #endif
 
    hb_retni(result);
 
-   hb_SQLHENV_stor( hEnv, 1 );
+   hb_SQLHENV_stor(hEnv, 1);
 }
 
 HB_FUNC( SQLALLOCCONNECT )  /* hEnv, @hDbc --> nRetCode */
@@ -404,7 +404,7 @@ HB_FUNC( SQLALLOCCONNECT )  /* hEnv, @hDbc --> nRetCode */
       hb_retni(SQLAllocConnect(hEnv, &hDbc));
 #endif
 
-      hb_SQLHDBC_stor( hb_param(1, Harbour::Item::ANY), hDbc, 2 );
+      hb_SQLHDBC_stor(hb_param(1, Harbour::Item::ANY), hDbc, 2);
    }
    else
    {
@@ -427,14 +427,14 @@ HB_FUNC( SQLDRIVERCONNECT )  /* hDbc, @cConnectString --> nRetCode */
 
       buffer[0] = '\0';
 
-      ret = SQLDriverConnect( hDbc,
-                              static_cast<SQLHWND>(nullptr),
-                              cConnStr,
-                              static_cast<SQLSMALLINT>(nConnStr),
-                              static_cast<SQLTCHAR*>(buffer),
-                              static_cast<SQLSMALLINT>(HB_SIZEOFARRAY(buffer)),
-                              static_cast<SQLSMALLINT*>(&iLen),
-                              static_cast<SQLUSMALLINT>(SQL_DRIVER_COMPLETE) );
+      ret = SQLDriverConnect(hDbc,
+                             static_cast<SQLHWND>(nullptr),
+                             cConnStr,
+                             static_cast<SQLSMALLINT>(nConnStr),
+                             static_cast<SQLTCHAR*>(buffer),
+                             static_cast<SQLSMALLINT>(HB_SIZEOFARRAY(buffer)),
+                             static_cast<SQLSMALLINT*>(&iLen),
+                             static_cast<SQLUSMALLINT>(SQL_DRIVER_COMPLETE));
 
       hb_strfree(hConnStr);
 
@@ -482,11 +482,11 @@ HB_FUNC( SQLCONNECT )  /* hDbc, cDSN, cUseName, cPassword --> nRetCode */
 
 HB_FUNC( SQLDISCONNECT )  /* hDbc --> nRetCode */
 {
-   PHB_SQLHDBC pHDbc = hb_SQLHDBC_get( hb_param(1, Harbour::Item::POINTER) );
+   PHB_SQLHDBC pHDbc = hb_SQLHDBC_get(hb_param(1, Harbour::Item::POINTER));
 
    if( pHDbc && pHDbc->hDbc )
    {
-      SQLRETURN result = SQLDisconnect( pHDbc->hDbc );
+      SQLRETURN result = SQLDisconnect(pHDbc->hDbc);
 
       if( SQL_SUCCEEDED( result ) )
       {
@@ -531,7 +531,7 @@ HB_FUNC( SQLALLOCSTMT )  /* hDbc, @hStmt --> nRetCode */
       hb_retni(SQLAllocStmt(hDbc, &hStmt));
 #endif
 
-      hb_SQLHSTMT_stor( hb_param(1, Harbour::Item::ANY), hStmt, 2 );
+      hb_SQLHSTMT_stor(hb_param(1, Harbour::Item::ANY), hStmt, 2);
    }
    else
    {
@@ -647,7 +647,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
             }
             if( val != nullptr )
             {
-               O_HB_STORSTRLEN( val, static_cast<HB_SIZE>(nLen), 5 );
+               O_HB_STORSTRLEN(val, static_cast<HB_SIZE>(nLen), 5);
                hb_xfree(val);
             }
             else
@@ -802,8 +802,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
             TIMESTAMP_STRUCT val = { 0, 0, 0, 0, 0, 0, 0 };
             if( SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_TIMESTAMP, &val, sizeof(val), &nLen ) ) )
             {
-               hb_stortdt( hb_dateEncode( val.year, val.month, val.day ),
-                           hb_timeEncode( val.hour, val.minute, val.second, val.fraction / 1000000 ), 5 );
+               hb_stortdt(hb_dateEncode(val.year, val.month, val.day), hb_timeEncode(val.hour, val.minute, val.second, val.fraction / 1000000), 5);
             }
             else
             {
@@ -873,7 +872,7 @@ HB_FUNC( SQLDESCRIBECOL )  /* hStmt, nCol, @cName, nLen, @nBufferLen, @nDataType
                               static_cast<SQLSMALLINT*>(&iDecimals),
                               static_cast<SQLSMALLINT*>(&iNullable)));
 
-      O_HB_STORSTRLEN( static_cast<O_HB_CHAR*>(buffer), static_cast<HB_SIZE>(iBufLen), 3 );
+      O_HB_STORSTRLEN(static_cast<O_HB_CHAR*>(buffer), static_cast<HB_SIZE>(iBufLen), 3);
       hb_storni(static_cast<int>(iBufLen), 5);
       hb_storni(static_cast<int>(iDataType), 6);
       hb_stornint(nColSize, 7);
@@ -970,7 +969,7 @@ HB_FUNC( SQLERROR )  /* hEnv, hDbc, hStmt, @cErrorClass, @nType, @cErrorMsg */
 
       O_HB_STORSTR(static_cast<O_HB_CHAR*>(buffer), 4);
       hb_stornl(static_cast<long>(lError), 5);
-      O_HB_STORSTRLEN( static_cast<O_HB_CHAR*>(szErrorMsg), iLen, 6 );
+      O_HB_STORSTRLEN(static_cast<O_HB_CHAR*>(szErrorMsg), iLen, 6);
    }
    else
    {
@@ -1021,7 +1020,7 @@ HB_FUNC( SQLGETDIAGREC )  /* nHandleType, hHandle, nRecNumber, @cSQLState, @nErr
 
       O_HB_STORSTR(static_cast<O_HB_CHAR*>(szSQLState), 4);
       hb_stornl(static_cast<long>(lError), 5);
-      O_HB_STORSTRLEN( static_cast<O_HB_CHAR*>(szErrorMsg), iLen, 6 );
+      O_HB_STORSTRLEN(static_cast<O_HB_CHAR*>(szErrorMsg), iLen, 6);
    }
    else
    {
@@ -1282,7 +1281,7 @@ HB_FUNC( HB_ODBCSTOD )
       szHrbDate[6] = szSqlDate[8];
       szHrbDate[7] = szSqlDate[9];
       szHrbDate[8] = '\0';
-      hb_retds( szHrbDate );
+      hb_retds(szHrbDate);
    }
    else
    {
@@ -1302,7 +1301,7 @@ HB_FUNC( HB_ODBCNUMSETLEN )  /* nValue, nSize, nDecimals --> nValue (nSize, nDec
    }
    else
    {
-      hb_retnlen( hb_itemGetND(pValue), iLen, iDec );
+      hb_retnlen(hb_itemGetND(pValue), iLen, iDec);
    }
 }
 

@@ -54,7 +54,7 @@
 #include "hbinit.h"
 
 #define FILE_PREFIX      "PIPE:"
-#define FILE_PREFIX_LEN  strlen( FILE_PREFIX )
+#define FILE_PREFIX_LEN  strlen(FILE_PREFIX)
 
 typedef struct _HB_FILE
 {
@@ -67,8 +67,7 @@ typedef struct _HB_FILE
 }
 HB_FILE;
 
-static PHB_FILE hb_fileProcessOpen( const char * pszCommand, HB_FATTR nMode,
-                                    HB_MAXINT timeout, HB_BOOL fDetach );
+static PHB_FILE hb_fileProcessOpen(const char * pszCommand, HB_FATTR nMode, HB_MAXINT timeout, HB_BOOL fDetach);
 
 static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
 {
@@ -102,7 +101,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
 
       while( HB_ISDIGIT(* ptr) )
       {
-         iValue = iValue * 10 + ( * ptr++ - '0' );
+         iValue = iValue * 10 + (*ptr++ - '0');
       }
       if( * ptr == ':' )
       {
@@ -111,14 +110,14 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
       }
    }
 
-   pFile = hb_fileProcessOpen( pszCommand, nExFlags & ( FO_READ | FO_WRITE | FO_READWRITE ), timeout, false );
+   pFile = hb_fileProcessOpen(pszCommand, nExFlags & (FO_READ | FO_WRITE | FO_READWRITE), timeout, false);
    if( pError )
    {
-      hb_errPutFileName( pError, pszName );
+      hb_errPutFileName(pError, pszName);
       if( pFile == nullptr )
       {
-         hb_errPutOsCode( pError, hb_fsError() );
-         hb_errPutGenCode( pError, static_cast<HB_ERRCODE>(EG_OPEN) );
+         hb_errPutOsCode(pError, hb_fsError());
+         hb_errPutGenCode(pError, static_cast<HB_ERRCODE>(EG_OPEN));
       }
    }
 
@@ -128,16 +127,15 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszName,
 static void s_fileClose( PHB_FILE pFile )
 {
    if( pFile->hPipeRD != FS_ERROR )
-      hb_fsClose( pFile->hPipeRD );
+      hb_fsClose(pFile->hPipeRD);
    if( pFile->hPipeWR != FS_ERROR )
-      hb_fsClose( pFile->hPipeWR );
+      hb_fsClose(pFile->hPipeWR);
    if( pFile->hProcess != FS_ERROR )
-      hb_fsProcessValue( pFile->hProcess, true );
+      hb_fsProcessValue(pFile->hProcess, true);
    hb_xfree(pFile);
 }
 
-static HB_SIZE s_fileRead( PHB_FILE pFile, void * data,
-                           HB_SIZE nSize, HB_MAXINT timeout )
+static HB_SIZE s_fileRead(PHB_FILE pFile, void * data, HB_SIZE nSize, HB_MAXINT timeout)
 {
    HB_SIZE nRead = 0;
 
@@ -148,7 +146,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data,
       if( timeout == -1 )
          timeout = pFile->timeout;
 
-      nRead = hb_fsPipeRead( pFile->hPipeRD, data, nSize, timeout );
+      nRead = hb_fsPipeRead(pFile->hPipeRD, data, nSize, timeout);
       if( nRead == static_cast<HB_SIZE>(-1) )
       {
          pFile->fEof = HB_TRUE;
@@ -171,7 +169,7 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * data,
       if( timeout == -1 )
          timeout = pFile->timeout;
 
-      nWritten = hb_fsPipeWrite( pFile->hPipeWR, data, nSize, timeout );
+      nWritten = hb_fsPipeWrite(pFile->hPipeWR, data, nSize, timeout);
    }
    return nWritten;
 }
@@ -197,9 +195,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
       }
       case HB_VF_SHUTDOWN:
       {
-         int iMode = pFile->hPipeRD != FS_ERROR ?
-                     ( pFile->hPipeWR != FS_ERROR ? FO_READWRITE : FO_READ ) :
-                     ( pFile->hPipeWR != FS_ERROR ? FO_WRITE : -1 );
+         int iMode = pFile->hPipeRD != FS_ERROR ? (pFile->hPipeWR != FS_ERROR ? FO_READWRITE : FO_READ) : (pFile->hPipeWR != FS_ERROR ? FO_WRITE : -1);
 
          if( HB_IS_NUMERIC(pValue) )
          {
@@ -207,17 +203,17 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
             {
                case FO_READ:
                   if( pFile->hPipeRD != FS_ERROR )
-                     hb_fsClose( pFile->hPipeRD );
+                     hb_fsClose(pFile->hPipeRD);
                   break;
                case FO_WRITE:
                   if( pFile->hPipeWR != FS_ERROR )
-                     hb_fsClose( pFile->hPipeWR );
+                     hb_fsClose(pFile->hPipeWR);
                   break;
                case FO_READWRITE:
                   if( pFile->hPipeRD != FS_ERROR )
-                     hb_fsClose( pFile->hPipeRD );
+                     hb_fsClose(pFile->hPipeRD);
                   if( pFile->hPipeWR != FS_ERROR )
-                     hb_fsClose( pFile->hPipeWR );
+                     hb_fsClose(pFile->hPipeWR);
                   break;
             }
          }
@@ -360,7 +356,7 @@ HB_FUNC( HB_VFOPENPROCESS )
    PHB_FILE pFile;
 
    nMode &= FO_READ | FO_WRITE | FO_READWRITE;
-   pFile = hb_fileProcessOpen( pszCommand, nMode, timeout, fDetach );
+   pFile = hb_fileProcessOpen(pszCommand, nMode, timeout, fDetach);
 
    if( pFile )
       hb_fileItemPut(hb_param(-1, Harbour::Item::ANY), pFile);
@@ -368,9 +364,9 @@ HB_FUNC( HB_VFOPENPROCESS )
 
 HB_FUNC( HB_PIPEIO ) { ; }
 
-HB_CALL_ON_STARTUP_BEGIN( _hb_file_pipeio_init_ )
-   hb_fileRegisterPart( &s_fileFuncs );
-HB_CALL_ON_STARTUP_END( _hb_file_pipeio_init_ )
+HB_CALL_ON_STARTUP_BEGIN(_hb_file_pipeio_init_)
+   hb_fileRegisterPart(&s_fileFuncs);
+HB_CALL_ON_STARTUP_END(_hb_file_pipeio_init_)
 
 #if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_file_pipeio_init_

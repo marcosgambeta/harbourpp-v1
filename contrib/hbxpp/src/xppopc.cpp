@@ -66,7 +66,7 @@ HB_FUNC( XPP_INDEX )
       PHB_ITEM pValue = hb_param(2, Harbour::Item::ANY);
       if( HB_IS_NUMERIC(pIndex) )
       {
-         HB_SIZE nIndex = hb_itemGetNS( pIndex );
+         HB_SIZE nIndex = hb_itemGetNS(pIndex);
          if( HB_IS_ARRAY(pSelf) )
          {
             HB_SIZE nLen = hb_arrayLen(pSelf);
@@ -82,7 +82,7 @@ HB_FUNC( XPP_INDEX )
             {
                char cValue = HB_IS_STRING(pValue) ? hb_itemGetCPtr(pValue)[0] : static_cast<char>(hb_itemGetNI(pValue));
                if( nLen == 1 )
-                  hb_itemPutCL( pSelf, &cValue, 1 );
+                  hb_itemPutCL(pSelf, &cValue, 1);
                else
                {
                   char * pszText;
@@ -106,7 +106,7 @@ HB_FUNC( XPP_INDEX )
    {
       if( HB_IS_NUMERIC(pIndex) )
       {
-         HB_SIZE nIndex = hb_itemGetNS( pIndex );
+         HB_SIZE nIndex = hb_itemGetNS(pIndex);
          if( HB_IS_ARRAY(pSelf) )
          {
             HB_SIZE nLen = hb_arrayLen(pSelf);

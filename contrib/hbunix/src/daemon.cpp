@@ -66,7 +66,7 @@ HB_FUNC( UNIX_DAEMON )
       ( void ) dup2(fd, STDOUT_FILENO);
       ( void ) dup2(fd, STDERR_FILENO);
       if( fd > 2 )
-         ( void ) close( fd );
+         ( void ) close(fd);
    }
 
    hb_posix_set_errno(0);

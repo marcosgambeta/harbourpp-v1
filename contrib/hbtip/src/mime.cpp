@@ -539,12 +539,12 @@ static const EXT_MIME_ENTRY s_extMimeTable[] =
 
 static const char * s_findExtMimeType( const char * szFileExt )
 {
-   HB_UINT uiFirst = 0, uiLast = HB_SIZEOFARRAY( s_extMimeTable );
+   HB_UINT uiFirst = 0, uiLast = HB_SIZEOFARRAY(s_extMimeTable);
    char szExt[16];
 
    if( *szFileExt == '.' )
       ++szFileExt;
-   hb_strncpyLower( szExt, szFileExt, sizeof(szExt) - 1 );
+   hb_strncpyLower(szExt, szFileExt, sizeof(szExt) - 1);
 
    do
    {
@@ -552,7 +552,7 @@ static const char * s_findExtMimeType( const char * szFileExt )
       int i;
 
       uiMiddle = ( uiFirst + uiLast ) >> 1;
-      i = strcmp( szExt, s_extMimeTable[uiMiddle].pattern );
+      i = strcmp(szExt, s_extMimeTable[uiMiddle].pattern);
       if( i == 0 )
       {
          if( s_extMimeTable[uiMiddle].flags == MIME_FLAG_CASEINSENS ||
@@ -574,7 +574,7 @@ static const char * s_findMimeStringInTree( const char * cData, HB_SIZE nLen, in
 {
    const MIME_ENTRY * elem = s_mimeTable + iElem;
    HB_SIZE nPos     = elem->pos;
-   HB_SIZE nDataLen = strlen( elem->pattern );
+   HB_SIZE nDataLen = strlen(elem->pattern);
 
    /* allow \0 to be used for matches */
    if( nDataLen == 0 )
@@ -597,7 +597,7 @@ static const char * s_findMimeStringInTree( const char * cData, HB_SIZE nLen, in
          {
             /* is this the begin of a match tree? */
             if( elem->next != 0 )
-               return s_findMimeStringInTree( cData, nLen, iElem + elem->next );
+               return s_findMimeStringInTree(cData, nLen, iElem + elem->next);
             else
                return elem->mime_type;
          }
@@ -607,7 +607,7 @@ static const char * s_findMimeStringInTree( const char * cData, HB_SIZE nLen, in
          if( (*elem->pattern == 0 && cData[nPos] == 0) || strncmp(cData + nPos, elem->pattern, nDataLen) == 0 )
          {
             if( elem->next != 0 )
-               return s_findMimeStringInTree( cData, nLen, iElem + elem->next );
+               return s_findMimeStringInTree(cData, nLen, iElem + elem->next);
             else
                return elem->mime_type;
          }
@@ -616,7 +616,7 @@ static const char * s_findMimeStringInTree( const char * cData, HB_SIZE nLen, in
 
    /* match failed! */
    if( elem->alternate != 0 )
-      return s_findMimeStringInTree( cData, nLen, iElem + elem->alternate );
+      return s_findMimeStringInTree(cData, nLen, iElem + elem->alternate);
 
    return nullptr;  /* give up */
 }
@@ -625,7 +625,7 @@ static const char * s_findStringMimeType( const char * cData, HB_SIZE nLen )
 {
    unsigned int uiCount;
 
-   for( uiCount = 0; uiCount < HB_SIZEOFARRAY( s_mimeTable ); uiCount++ )
+   for( uiCount = 0; uiCount < HB_SIZEOFARRAY(s_mimeTable); uiCount++ )
    {
       const MIME_ENTRY * elem = s_mimeTable + uiCount;
       HB_SIZE nPos     = elem->pos;
@@ -655,7 +655,7 @@ static const char * s_findStringMimeType( const char * cData, HB_SIZE nLen )
          {
             /* is this the begin of a match tree? */
             if( elem->next != 0 )
-               return s_findMimeStringInTree( cData, nLen, uiCount + elem->next );
+               return s_findMimeStringInTree(cData, nLen, uiCount + elem->next);
             else
                return elem->mime_type;
          }
@@ -665,7 +665,7 @@ static const char * s_findStringMimeType( const char * cData, HB_SIZE nLen )
          if( (*elem->pattern == 0 && cData[nPos] == 0) || strncmp(cData + nPos, elem->pattern, nDataLen) == 0 )
          {
             if( elem->next != 0 )
-               return s_findMimeStringInTree( cData, nLen, uiCount + elem->next );
+               return s_findMimeStringInTree(cData, nLen, uiCount + elem->next);
             else
                return elem->mime_type;
          }
@@ -678,13 +678,13 @@ static const char * s_findFileMimeType( PHB_FILE fileIn )
 {
    char buf[512];
 
-   HB_FOFFSET nPos = hb_fileSeek( fileIn, 0, FS_RELATIVE );
-   HB_SIZE    nLen = hb_fileResult( hb_fileReadAt( fileIn, buf, sizeof(buf), 0 ) );
+   HB_FOFFSET nPos = hb_fileSeek(fileIn, 0, FS_RELATIVE);
+   HB_SIZE    nLen = hb_fileResult(hb_fileReadAt(fileIn, buf, sizeof(buf), 0));
 
    if( nLen > 0 )
    {
-      hb_fileSeek( fileIn, nPos, FS_SET );
-      return s_findStringMimeType( buf, nLen );
+      hb_fileSeek(fileIn, nPos, FS_SET);
+      return s_findStringMimeType(buf, nLen);
    }
 
    return nullptr;
@@ -696,14 +696,14 @@ HB_FUNC( TIP_MIMETYPE )
 
    if( pData )
    {
-      const char * magic_type = s_findStringMimeType( hb_itemGetCPtr(pData), hb_itemGetCLen(pData) );
+      const char * magic_type = s_findStringMimeType(hb_itemGetCPtr(pData), hb_itemGetCLen(pData));
 
       if( magic_type )
-         hb_retc_const( magic_type );
+         hb_retc_const(magic_type);
       else if( HB_ISCHAR(2) )
          hb_retc(hb_parc(2));
       else
-         hb_retc_const( "unknown" );  /* FIXME: change to "application/unknown" */
+         hb_retc_const("unknown");  /* FIXME: change to "application/unknown" */
    }
    else
       hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -715,16 +715,16 @@ HB_FUNC( TIP_FILENAMEMIMETYPE )
 
    if( fname )
    {
-      PHB_FNAME pFileName = hb_fsFNameSplit( fname );
+      PHB_FNAME pFileName = hb_fsFNameSplit(fname);
       const char * ext_type = pFileName->szExtension ? s_findExtMimeType( pFileName->szExtension ) : nullptr;
       hb_xfree(pFileName);
 
       if( ext_type )
-         hb_retc_const( ext_type );
+         hb_retc_const(ext_type);
       else if( HB_ISCHAR(2) )
          hb_retc(hb_parc(2));
       else
-         hb_retc_const( "unknown" );  /* FIXME: change to "application/unknown" */
+         hb_retc_const("unknown");  /* FIXME: change to "application/unknown" */
    }
    else
       hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -743,7 +743,7 @@ HB_FUNC( TIP_FILEMIMETYPE )
       {
          const char * fname = hb_itemGetCPtr(pFile);
 
-         PHB_FNAME pFileName = hb_fsFNameSplit( fname );
+         PHB_FNAME pFileName = hb_fsFNameSplit(fname);
          PHB_FILE fileIn;
 
          ext_type = pFileName->szExtension ? s_findExtMimeType( pFileName->szExtension ) : nullptr;
@@ -751,7 +751,7 @@ HB_FUNC( TIP_FILEMIMETYPE )
 
          if( (fileIn = hb_fileExtOpen(fname, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK, nullptr, nullptr)) != nullptr )
          {
-            magic_type = s_findFileMimeType( fileIn );
+            magic_type = s_findFileMimeType(fileIn);
             hb_fileClose(fileIn);
          }
       }
@@ -759,19 +759,19 @@ HB_FUNC( TIP_FILEMIMETYPE )
          magic_type = s_findFileMimeType(hb_fileItemGet(pFile));
       else
       {
-         PHB_FILE fileIn = hb_fileFromHandle( hb_numToHandle( hb_itemGetNInt(pFile) ) );
-         magic_type = s_findFileMimeType( fileIn );
-         hb_fileDetach( fileIn );
+         PHB_FILE fileIn = hb_fileFromHandle(hb_numToHandle(hb_itemGetNInt(pFile)));
+         magic_type = s_findFileMimeType(fileIn);
+         hb_fileDetach(fileIn);
       }
 
       if( magic_type )
-         hb_retc_const( magic_type );
+         hb_retc_const(magic_type);
       else if( ext_type )
-         hb_retc_const( ext_type );
+         hb_retc_const(ext_type);
       else if( HB_ISCHAR(2) )
          hb_retc(hb_parc(2));
       else
-         hb_retc_const( "unknown" );  /* FIXME: change to "application/unknown" */
+         hb_retc_const("unknown");  /* FIXME: change to "application/unknown" */
    }
    else
       hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);

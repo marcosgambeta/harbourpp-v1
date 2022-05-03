@@ -66,7 +66,7 @@ HB_FUNC( TIP_TIMESTAMP )
 
    if( HB_ISDATE(1) )
    {
-      hb_dateDecode( hb_pardl(1), &iYear, &iMonth, &iDay );
+      hb_dateDecode(hb_pardl(1), &iYear, &iMonth, &iDay);
 
       /* For compatibility, Seconds() value */
       if( HB_ISNUM(2) )
@@ -75,11 +75,11 @@ HB_FUNC( TIP_TIMESTAMP )
          iHour = iMinute = iSecond = 0;
    }
    else if( HB_ISDATETIME(1) )
-      hb_timeStampUnpack( hb_partd(1), &iYear, &iMonth, &iDay, &iHour, &iMinute, &iSecond, &iMSec );
+      hb_timeStampUnpack(hb_partd(1), &iYear, &iMonth, &iDay, &iHour, &iMinute, &iSecond, &iMSec);
    else
-      hb_timeStampGetLocal( &iYear, &iMonth, &iDay, &iHour, &iMinute, &iSecond, &iMSec );
+      hb_timeStampGetLocal(&iYear, &iMonth, &iDay, &iHour, &iMinute, &iSecond, &iMSec);
 
-   lOffset = hb_timeStampUTCOffset( iYear, iMonth, iDay, iHour, iMinute, iSecond );
+   lOffset = hb_timeStampUTCOffset(iYear, iMonth, iDay, iHour, iMinute, iSecond);
 
    hb_snprintf( szRet, sizeof(szRet), "%s, %d %s %d %02d:%02d:%02d %+03d%02d",
                 s_days[hb_dateDOW(iYear, iMonth, iDay) - 1],
@@ -193,7 +193,7 @@ HB_FUNC( TIP_HTMLSPECIALCHARS )
 
 HB_FUNC( TIP_CRLF )
 {
-   hb_retc_const( "\r\n" );
+   hb_retc_const("\r\n");
 }
 
 HB_FUNC( TIP_JSONSPECIALCHARS )

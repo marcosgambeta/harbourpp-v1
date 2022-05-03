@@ -181,7 +181,7 @@ static HB_BOOL exportBufSqlVar(pgCopyContext * context, PHB_ITEM pValue, const c
 
          if( !addStrToContext( context, szQuote ) )
             return false;
-         hb_itemGetDS( pValue, szDate );
+         hb_itemGetDS(pValue, szDate);
          if( szDate[0] == ' ' )
          {
             if( !addStrToContext( context, "0100-01-01" ) )
@@ -206,11 +206,11 @@ static HB_BOOL exportBufSqlVar(pgCopyContext * context, PHB_ITEM pValue, const c
          long lDate, lTime;
          char szDateTime[24];
 
-         hb_itemGetTDT( pValue, &lDate, &lTime );
-         hb_timeStampStr( szDateTime, lDate, lTime );
-         if( !addStrToContext( context, szQuote ) ||
-             !addStrToContext( context, szDateTime ) ||
-             !addStrToContext( context, szQuote ) )
+         hb_itemGetTDT(pValue, &lDate, &lTime);
+         hb_timeStampStr(szDateTime, lDate, lTime);
+         if( !addStrToContext(context, szQuote) ||
+             !addStrToContext(context, szDateTime) ||
+             !addStrToContext(context, szQuote) )
             return false;
          break;
       }
@@ -233,20 +233,20 @@ static HB_BOOL exportBufSqlVar(pgCopyContext * context, PHB_ITEM pValue, const c
          char szResult[HB_MAX_DOUBLE_LENGTH];
          int  iSize, iWidth, iDec;
 
-         hb_itemGetNLen( pValue, &iWidth, &iDec );
-         iSize = ( iDec > 0 ? iWidth + 1 + iDec : iWidth );
-         if( hb_itemStrBuf( szResult, pValue, iSize, iDec ) )
+         hb_itemGetNLen(pValue, &iWidth, &iDec);
+         iSize = (iDec > 0 ? iWidth + 1 + iDec : iWidth);
+         if( hb_itemStrBuf(szResult, pValue, iSize, iDec) )
          {
             int iPos = 0;
-            while( iSize && HB_ISSPACE( szResult[iPos] ) )
+            while( iSize && HB_ISSPACE(szResult[iPos]) )
             {
                iPos++;
                iSize--;
             }
-            if( !addStrnToContext( context, &szResult[iPos], iSize ) )
+            if( !addStrnToContext(context, &szResult[iPos], iSize) )
                return false;
          }
-         else if( !addToContext( context, '0' ) )
+         else if( !addToContext(context, '0') )
             return false;
          break;
       }
@@ -284,7 +284,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
       HB_ULONG        nBufLen   = hb_parnldef(8, 1);
       HB_USHORT       uiFields;
       HB_ULONG        uiRecCount = 0;
-      HB_BOOL         bNoFieldPassed = ( pFields == nullptr || hb_arrayLen(pFields) == 0 );
+      HB_BOOL         bNoFieldPassed = (pFields == nullptr || hb_arrayLen(pFields) == 0);
       HB_BOOL         bEof = HB_FALSE;
       PHB_ITEM        pItem;
       HB_USHORT       uiFieldCopy = 0;
@@ -340,9 +340,9 @@ HB_FUNC( HB_PQCOPYFROMWA )
                }
             }
 
-            if( hb_arrayDel( pFields, uiIter ) )
+            if( hb_arrayDel(pFields, uiIter) )
             {
-               hb_arraySize( pFields, hb_arrayLen(pFields) - 1 );
+               hb_arraySize(pFields, hb_arrayLen(pFields) - 1);
                uiIter--;
                uiFieldCopy--;
             }
@@ -361,14 +361,14 @@ HB_FUNC( HB_PQCOPYFROMWA )
          szInit = hb_xstrcpy(nullptr, "COPY ", szTable, " FROM STDIN WITH DELIMITER '", sc_szDelim, "' CSV  QUOTE AS '", sc_szQuote, "' ESCAPE AS '", sc_szEsc, "'", nullptr);
 
       HB_VM_UNLOCK();
-      pgResult = PQexec( context->connection, szInit );
-      if( PQresultStatus( pgResult ) != PGRES_COPY_IN )
+      pgResult = PQexec(context->connection, szInit);
+      if( PQresultStatus(pgResult) != PGRES_COPY_IN )
          bFail = HB_TRUE;
-      PQclear( pgResult );
+      PQclear(pgResult);
       hb_xfree(szInit);
       HB_VM_LOCK();
 
-      while( !bFail && ( nCount == 0 || uiRecCount < nCount ) && ( !pWhile || hb_itemGetL(hb_vmEvalBlock(pWhile)) ) )
+      while( !bFail && (nCount == 0 || uiRecCount < nCount ) && (!pWhile || hb_itemGetL(hb_vmEvalBlock(pWhile))) )
       {
 
          if( SELF_EOF(pArea, &bEof) != HB_SUCCESS )
@@ -421,16 +421,16 @@ HB_FUNC( HB_PQCOPYFROMWA )
 
       HB_VM_UNLOCK();
       if( bFail )
-         PQputCopyEnd( context->connection, "export buffer problems" );
+         PQputCopyEnd(context->connection, "export buffer problems");
       else if( PQputCopyData(context->connection, context->buffer, context->position) == -1 || PQputCopyEnd(context->connection, nullptr) == -1 )
          bFail = HB_TRUE;
       else
       {
          while( ( pgResult = PQgetResult( context->connection ) ) )
          {
-            if( PQresultStatus( pgResult ) != PGRES_COMMAND_OK )
+            if( PQresultStatus(pgResult) != PGRES_COMMAND_OK )
                bFail = HB_TRUE;
-            PQclear( pgResult );
+            PQclear(pgResult);
          }
       }
       HB_VM_LOCK();

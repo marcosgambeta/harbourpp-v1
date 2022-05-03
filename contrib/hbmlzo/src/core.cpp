@@ -55,7 +55,7 @@
 
 static lzo_uint hb_lzo_compressbound( lzo_uint nLen )
 {
-   return ( lzo_uint ) ( nLen + ( nLen / 16 ) + 64 + 3 );
+   return static_cast<lzo_uint>(nLen + (nLen / 16) + 64 + 3);
 }
 
 HB_FUNC( HB_LZO_COMPRESSBOUND )
@@ -64,7 +64,7 @@ HB_FUNC( HB_LZO_COMPRESSBOUND )
    {
       HB_SIZE nLen = HB_ISCHAR(1) ? hb_parclen(1) : static_cast<HB_SIZE>(hb_parns(1));
 
-      hb_retns( hb_lzo_compressbound( nLen ) );
+      hb_retns(hb_lzo_compressbound(nLen));
    }
    else
       hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -94,11 +94,11 @@ HB_CALL_ON_STARTUP_END( _hb_mlzo_init_ )
 /* Compression */
 
 /*
- * int lzo1x_1_compress( const lzo_bytep src,
- *                       lzo_uint  src_len,
- *                       lzo_bytep dst,
- *                       lzo_uintp dst_len,
- *                       lzo_voidp wrkmem );
+ * int lzo1x_1_compress(const lzo_bytep src,
+ *                      lzo_uint  src_len,
+ *                      lzo_bytep dst,
+ *                      lzo_uintp dst_len,
+ *                      lzo_voidp wrkmem);
  *
  * Memory requirements: LZO1X_1_MEM_COMPRESS (64 KiB on 32-bit machines)
  *
@@ -122,7 +122,7 @@ HB_FUNC( HB_LZO1X_1_COMPRESS )
       else
       {
          lzo_uint  dst_len;
-         lzo_voidp wrkmem = ( lzo_voidp ) hb_xalloc( LZO1X_1_MEM_COMPRESS );
+         lzo_voidp wrkmem = static_cast<lzo_voidp>(hb_xalloc(LZO1X_1_MEM_COMPRESS));
          int       r;
 
          if( wrkmem == nullptr )
@@ -132,7 +132,7 @@ HB_FUNC( HB_LZO1X_1_COMPRESS )
          }
          else
          {
-            r = lzo1x_1_compress( reinterpret_cast<const lzo_bytep>(src), src_len, dst, &dst_len, wrkmem );
+            r = lzo1x_1_compress(reinterpret_cast<const lzo_bytep>(src), src_len, dst, &dst_len, wrkmem);
             hb_xfree(wrkmem);
          }
 
@@ -140,7 +140,7 @@ HB_FUNC( HB_LZO1X_1_COMPRESS )
 
          if( r == LZO_E_OK )
          {
-            hb_storns( dst_len, 2 );
+            hb_storns(dst_len, 2);
 
             if( dst_len >= src_len )
                hb_storni(LZO_E_NOT_COMPRESSIBLE, 3);  /* incompressible data */
@@ -176,7 +176,7 @@ HB_FUNC( HB_LZO1X_DECOMPRESS )
       lzo_uint  dst_len;
 
       if( hb_parns(2) > 0 )
-         dst = ( lzo_bytep ) hb_xalloc( hb_parns(2) );
+         dst = static_cast<lzo_bytep>(hb_xalloc(hb_parns(2)));
 
       if( dst == nullptr )
          hb_storni(LZO_E_OUT_OF_MEMORY, 3);  /* out of memory */
@@ -188,7 +188,7 @@ HB_FUNC( HB_LZO1X_DECOMPRESS )
 
          if( r == LZO_E_OK )
          {
-            hb_storns( dst_len, 2 );
+            hb_storns(dst_len, 2);
             hb_retclen_buffer(reinterpret_cast<char*>(dst), dst_len);
             return;
          }
@@ -211,7 +211,7 @@ HB_FUNC( HB_LZO1X_DECOMPRESS_SAFE )
       lzo_uint  dst_len = ( lzo_uint ) hb_parns(2);
 
       if( dst_len > 0 )
-         dst = ( lzo_bytep ) hb_xalloc( dst_len );
+         dst = static_cast<lzo_bytep>(hb_xalloc(dst_len));
 
       if( dst == nullptr )
          hb_storni(LZO_E_OUT_OF_MEMORY, 3);  /* out of memory */
@@ -223,7 +223,7 @@ HB_FUNC( HB_LZO1X_DECOMPRESS_SAFE )
 
          if( r == LZO_E_OK )
          {
-            hb_storns( dst_len, 2 );
+            hb_storns(dst_len, 2);
             hb_retclen_buffer(reinterpret_cast<char*>(dst), dst_len);
             return;
          }

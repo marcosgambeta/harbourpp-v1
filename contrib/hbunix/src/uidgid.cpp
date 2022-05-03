@@ -48,28 +48,28 @@
 
 HB_FUNC( POSIX_GETUID )
 {
-   hb_ret_uid( getuid() );
+   hb_ret_uid(getuid());
 }
 
 HB_FUNC( POSIX_GETEUID )
 {
-   hb_ret_uid( geteuid() );
+   hb_ret_uid(geteuid());
 }
 
 HB_FUNC( POSIX_GETGID )
 {
-   hb_ret_uid( getgid() );
+   hb_ret_uid(getgid());
 }
 
 HB_FUNC( POSIX_GETEGID )
 {
-   hb_ret_uid( getegid() );
+   hb_ret_uid(getegid());
 }
 
 HB_FUNC( POSIX_SETUID )
 {
    if( HB_ISNUM(1) )
-      hb_posix_result( setuid( hb_par_uid(1) ) );
+      hb_posix_result(setuid(hb_par_uid(1)));
    else
       hb_posix_param_error();
 }
@@ -77,7 +77,7 @@ HB_FUNC( POSIX_SETUID )
 HB_FUNC( POSIX_SETEUID )
 {
    if( HB_ISNUM(1) )
-      hb_posix_result( seteuid( hb_par_uid(1) ) );
+      hb_posix_result(seteuid(hb_par_uid(1)));
    else
       hb_posix_param_error();
 }
@@ -85,7 +85,7 @@ HB_FUNC( POSIX_SETEUID )
 HB_FUNC( POSIX_SETGID )
 {
    if( HB_ISNUM(1) )
-      hb_posix_result( setgid( hb_par_uid(1) ) );
+      hb_posix_result(setgid(hb_par_uid(1)));
    else
       hb_posix_param_error();
 }
@@ -93,7 +93,7 @@ HB_FUNC( POSIX_SETGID )
 HB_FUNC( POSIX_SETEGID )
 {
    if( HB_ISNUM(1) )
-      hb_posix_result( setegid( hb_par_uid(1) ) );
+      hb_posix_result(setegid(hb_par_uid(1)));
    else
       hb_posix_param_error();
 }

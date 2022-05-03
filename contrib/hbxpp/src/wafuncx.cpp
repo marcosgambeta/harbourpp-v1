@@ -55,8 +55,8 @@ static HB_ERRCODE s_waList(AREAP pArea, void * Cargo)
    PHB_ITEM pArray = static_cast<PHB_ITEM>(Cargo);
    HB_SIZE  nLen   = hb_arrayLen(pArray) + 1;
 
-   hb_arraySize( pArray, nLen );
-   hb_arraySetC( pArray, nLen, hb_dynsymName( static_cast<PHB_DYNS>(pArea->atomAlias) ) );
+   hb_arraySize(pArray, nLen);
+   hb_arraySetC(pArray, nLen, hb_dynsymName(static_cast<PHB_DYNS>(pArea->atomAlias)));
 
    return HB_SUCCESS;
 }
@@ -70,7 +70,7 @@ HB_FUNC( WORKSPACELIST )
    else
    {
       pArray = hb_itemArrayNew(0);
-      hb_rddIterateWorkAreas( s_waList, pArray );
+      hb_rddIterateWorkAreas(s_waList, pArray);
    }
 
    hb_itemReturnRelease(pArray);

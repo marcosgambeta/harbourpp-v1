@@ -60,7 +60,7 @@ HB_FUNC( SETMOUSE )
    hb_retl(hb_mouseGetCursor());
 
    if( HB_ISLOG(1) )
-      hb_mouseSetCursor( hb_parl(1) );
+      hb_mouseSetCursor(hb_parl(1));
 
    fRow = HB_ISNUM(2);
    fCol = HB_ISNUM(3);
@@ -70,13 +70,13 @@ HB_FUNC( SETMOUSE )
       int iRow = 0, iCol = 0;
 
       if( !fRow || !fCol )
-         hb_mouseGetPos( &iRow, &iCol );
+         hb_mouseGetPos(&iRow, &iCol);
 
       if( fRow )
          iRow = hb_parni(2);
       if( fCol )
          iCol = hb_parni(3);
 
-      hb_mouseSetPos( iRow, iCol );
+      hb_mouseSetPos(iRow, iCol);
    }
 }
