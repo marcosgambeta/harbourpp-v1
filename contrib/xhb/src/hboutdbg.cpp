@@ -76,7 +76,7 @@ static char s_szDebugName[128];
 static int  s_iUseDebugName = 0;
 static int  s_iXtermPid     = 0;
 
-static void debugInit( void )
+static void debugInit(void)
 {
    int       iFifoResult;
    PHB_FNAME pFileName = nullptr;

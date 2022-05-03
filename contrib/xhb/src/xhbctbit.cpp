@@ -139,7 +139,7 @@ static HB_LONG __numfun( int iPCount, HB_LONG ( * operation )( HB_LONG wNum1, HB
 
          for( iFor = 3; iFor <= iPCount; iFor++ )
          {
-            if( HB_ISNUM( iFor ) || HB_ISCHAR( iFor ) )
+            if( HB_ISNUM(iFor) || HB_ISCHAR(iFor) )
                lNumOp = ( *operation )( lNum1, __getparam( iFor ) );  /* Call to operation: AND, OR, XOR */
             else
             {

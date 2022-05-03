@@ -72,6 +72,6 @@ HB_FUNC( ALENALLOC )
        */
       HB_SIZE nLen = hb_arrayLen(pArray);
       nLen = ( nLen >> 1 ) + 1;
-      hb_retns( nLen );
+      hb_retns(nLen);
    }
 }

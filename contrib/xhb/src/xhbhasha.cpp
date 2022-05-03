@@ -57,17 +57,17 @@
 #include "hbapiitm.h"
 #include "hbapierr.h"
 
-static void s_errRT_hashArg( void )
+static void s_errRT_hashArg(void)
 {
    hb_errRT_BASE(EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
-static void s_errRT_hashBound( void )
+static void s_errRT_hashBound(void)
 {
    hb_errRT_BASE(EG_BOUND, 1187, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
-static void s_errRT_hashAA( void )
+static void s_errRT_hashAA(void)
 {
    hb_errRT_BASE(EG_ARG, 1123, "Is not a Hash with Associative Array compatibility", HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
@@ -90,7 +90,7 @@ HB_FUNC( HAAGETKEYAT )
    else
    {
       PHB_ITEM pItem = hb_hashGetKeyAt(pHash, hb_itemGetNS(pPos));
-      if( pItem )
+      if( pItem != nullptr )
          hb_itemReturn(pItem);
       else
          s_errRT_hashBound();
@@ -110,7 +110,7 @@ HB_FUNC( HAAGETVALUEAT )
    else
    {
       PHB_ITEM pItem = hb_hashGetValueAt(pHash, hb_itemGetNS(pPos));
-      if( pItem )
+      if( pItem != nullptr )
          hb_itemReturn(pItem);
       else
          s_errRT_hashBound();
@@ -131,7 +131,7 @@ HB_FUNC( HAASETVALUEAT )
    else
    {
       PHB_ITEM pItem = hb_hashGetValueAt(pHash, hb_itemGetNS(pPos));
-      if( pItem )
+      if( pItem != nullptr )
          hb_itemCopy(pItem, pValue);
       else
          s_errRT_hashBound();
@@ -166,7 +166,7 @@ HB_FUNC( HAAGETPOS )
    {
       HB_SIZE nPos;
       hb_hashScan( pHash, pKey, &nPos );
-      hb_retns( nPos );
+      hb_retns(nPos);
    }
 }
 
@@ -179,8 +179,7 @@ HB_FUNC( HAAGETREALPOS )
    {
       HB_SIZE nPos = hb_parns(2);
 
-      hb_retns( s_isHashAA( pHash ) &&
-                nPos > 0 && nPos <= hb_hashLen( pHash ) ? nPos : 0 );
+      hb_retns(s_isHashAA(pHash) && nPos > 0 && nPos <= hb_hashLen(pHash) ? nPos : 0);
    }
    else
       s_errRT_hashArg();

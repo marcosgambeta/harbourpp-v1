@@ -162,7 +162,7 @@ HB_FUNC( ATSKIPSTRINGS ) /* cFind, cWhere, nStart */
 
          if( nRet )
          {
-            hb_retns( nRet + nStart );
+            hb_retns(nRet + nStart);
             return;
          }
       }
@@ -205,7 +205,7 @@ HB_FUNC( ATI )
       else
       {
          HB_SIZE nPos = hb_strAtI(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), hb_itemGetCPtr(pText) + nStart, nEnd - nStart);
-         hb_retns( nPos ? nPos + nStart : 0 );
+         hb_retns(nPos ? nPos + nStart : 0);
       }
    }
    else

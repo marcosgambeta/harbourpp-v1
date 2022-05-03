@@ -98,7 +98,7 @@ static HB_BOOL hb_ExportVar(HB_FHANDLE handle, PHB_ITEM pValue, const char * cDe
          szStrEsc = hb_strescape(hb_itemGetCPtr(pValue), hb_itemGetCLen(pValue), cDelim);
          if( cdp )
          {
-            hb_cdpnDupLen( szStrEsc, strlen( szStrEsc ), hb_vmCDP(), cdp );
+            hb_cdpnDupLen(szStrEsc, strlen(szStrEsc), hb_vmCDP(), cdp);
          }
          
          szString = hb_xstrcpy(nullptr, cDelim, szStrEsc, cDelim, nullptr);
@@ -116,7 +116,7 @@ static HB_BOOL hb_ExportVar(HB_FHANDLE handle, PHB_ITEM pValue, const char * cDe
       {
          char * szDate = static_cast<char*>(hb_xgrab(9));
 
-         hb_itemGetDS( pValue, szDate );
+         hb_itemGetDS(pValue, szDate);
          hb_fsWriteLarge(handle, szDate, strlen(szDate));
          hb_xfree(szDate);
          break;
@@ -134,8 +134,8 @@ static HB_BOOL hb_ExportVar(HB_FHANDLE handle, PHB_ITEM pValue, const char * cDe
 
          if( szResult )
          {
-            HB_SIZE      nLen      = strlen( szResult );
-            const char * szTrimmed = hb_strLTrim( szResult, &nLen );
+            HB_SIZE      nLen      = strlen(szResult);
+            const char * szTrimmed = hb_strLTrim(szResult, &nLen);
 
             hb_fsWriteLarge(handle, szTrimmed, strlen(szTrimmed));
             hb_xfree(szResult);
@@ -160,7 +160,7 @@ HB_FUNC( DBF2TEXT )
    HB_FHANDLE   handle = static_cast<HB_FHANDLE>(hb_parnint(5));
    const char * cSep   = hb_parc(6);
    int          nCount = hb_parni(7);
-   PHB_CODEPAGE cdp    = hb_cdpFind( hb_parcx(8) );
+   PHB_CODEPAGE cdp    = hb_cdpFind(hb_parcx(8));
 
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
@@ -175,7 +175,7 @@ HB_FUNC( DBF2TEXT )
    HB_BOOL bEof = HB_TRUE;
    HB_BOOL bBof = HB_TRUE;
 
-   HB_BOOL bNoFieldPassed = ( pFields == nullptr || hb_arrayLen(pFields) == 0 );
+   HB_BOOL bNoFieldPassed = (pFields == nullptr || hb_arrayLen(pFields) == 0);
 
    if( !pArea )
    {

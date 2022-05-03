@@ -431,7 +431,7 @@ HB_FUNC( HB_BACKGROUNDDEL )
       pItem = hb_backgroundDelFunc(hb_parnl(1));
    }
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       hb_itemReturnRelease(pItem);  /* return a codeblock */
    }

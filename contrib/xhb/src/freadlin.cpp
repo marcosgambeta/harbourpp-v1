@@ -221,7 +221,7 @@ HB_FUNC( HB_FREADLINE )
 
    if( !hb_storclen_buffer( pBuffer, nSize, 2 ) )
       hb_xfree(pBuffer);
-   hb_retns( bEOF ? -1 : 0 );
+   hb_retns(bEOF ? -1 : 0);
    hb_xfree(static_cast<void*>(Term));
    hb_xfree(pnTermSizes);
 }

@@ -174,7 +174,7 @@ HB_FUNC( HB_DESERIALBEGIN )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem )
+   if( pItem != nullptr )
       hb_itemReturn(pItem);
 }
 
@@ -194,7 +194,7 @@ HB_FUNC( HB_F_EOF )
    else
       hb_retl(true);
 
-   hb_fsSetFError( uiError );
+   hb_fsSetFError(uiError);
 }
 
 HB_FUNC( CURDIRX )
@@ -222,7 +222,7 @@ HB_FUNC( CURDIRX )
 
    hb_fsChDrv( iCurDrv );
 
-   hb_fsSetError( uiErrorOld );
+   hb_fsSetError(uiErrorOld);
 }
 
 HB_FUNC_TRANSLATE( CSTR, HB_CSTR )
@@ -303,12 +303,12 @@ HB_FUNC( XHB_MEMOWRIT )
 
 HB_FUNC( HB_OSNEWLINE )
 {
-   hb_retc_const( s_szCrLf );
+   hb_retc_const(s_szCrLf);
 }
 
 HB_FUNC( HB_OSPATHSEPARATOR )
 {
-   hb_retc_const( HB_OS_PATH_DELIM_CHR_STRING );
+   hb_retc_const(HB_OS_PATH_DELIM_CHR_STRING);
 }
 
 #endif

@@ -245,7 +245,7 @@ HB_FUNC( HB_READLINE )
       {
          PHB_ITEM pEOL = hb_itemNew(nullptr);
          hb_itemPutC(pEOL, hb_conNewLine());
-         hb_setSetItem( HB_SET_EOL, pEOL );
+         hb_setSetItem(HB_SET_EOL, pEOL);
          hb_itemRelease(pEOL);
       }
 

@@ -71,9 +71,9 @@
 
 /* Global definition, valid for all systems */
 
-static void s_serviceSetHBSig( void );
-static void s_serviceSetDflSig( void );
-static void s_signalHandlersInit( void );
+static void s_serviceSetHBSig(void);
+static void s_serviceSetDflSig(void);
+static void s_signalHandlersInit(void);
 
 static PHB_ITEM sp_hooks       = nullptr;
 static HB_BOOL  bSignalEnabled = HB_TRUE;
@@ -328,7 +328,7 @@ static void * s_signalListener( void * my_stack )
  */
 
 #ifdef HB_OS_WIN
-static void s_serviceSetHBSig( void );
+static void s_serviceSetHBSig(void);
 
 /* message filter hook for user generated signals */
 static HHOOK s_hMsgHook = nullptr;
@@ -547,7 +547,7 @@ BOOL WINAPI s_ConsoleHandlerRoutine( DWORD dwCtrlType )
 
 /* Set the signal handlers to our program interceptors. */
 
-static void s_serviceSetHBSig( void )
+static void s_serviceSetHBSig(void)
 {
 #if defined(HB_OS_UNIX)
    struct sigaction act;
@@ -613,7 +613,7 @@ static void s_serviceSetHBSig( void )
 
 /* Reset the signal handlers to the default OS value */
 
-static void s_serviceSetDflSig( void )
+static void s_serviceSetDflSig(void)
 {
 #ifdef HB_OS_UNIX
    signal( SIGHUP, SIG_DFL );
@@ -754,7 +754,7 @@ HB_FUNC( HB_STARTSERVICE )
  * Returns true if the current program is a service, that is if hb_StartService() has
  * Been called. C version useful for internal api
  */
-HB_BOOL hb_isService( void )
+HB_BOOL hb_isService(void)
 {
    return sb_isService;
 }
@@ -763,7 +763,7 @@ HB_BOOL hb_isService( void )
  * Clean up when system exits
  * Called from hb_vmQuit()
  */
-void hb_serviceExit( void )
+void hb_serviceExit(void)
 {
    if( sp_hooks != nullptr )
    {
@@ -884,76 +884,76 @@ HB_FUNC( HB_SIGNALDESC )
       case SIGSEGV: switch( iSubSig )
          {
          #if !defined(HB_OS_BSD)
-            case SEGV_MAPERR: hb_retc_const( "Segmentation fault: address not mapped to object" ); return;
-            case SEGV_ACCERR: hb_retc_const( "Segmentation fault: invalid permissions for mapped object" ); return;
+            case SEGV_MAPERR: hb_retc_const("Segmentation fault: address not mapped to object"); return;
+            case SEGV_ACCERR: hb_retc_const("Segmentation fault: invalid permissions for mapped object"); return;
          #endif
-            default: hb_retc_const( "Segmentation fault" ); return;
+            default: hb_retc_const("Segmentation fault"); return;
          }
 
       case SIGILL: switch( iSubSig )
          {
          #if !defined(HB_OS_BSD)
-            case ILL_ILLOPC: hb_retc_const( "Illegal operation: illegal opcode" ); return;
-            case ILL_ILLOPN: hb_retc_const( "Illegal operation: illegal operand" ); return;
-            case ILL_ILLADR: hb_retc_const( "Illegal operation: illegal addressing mode" ); return;
-            case ILL_ILLTRP: hb_retc_const( "Illegal operation: illegal trap" ); return;
-            case ILL_PRVOPC: hb_retc_const( "Illegal operation: privileged opcode" ); return;
-            case ILL_PRVREG: hb_retc_const( "Illegal operation: privileged register" ); return;
-            case ILL_COPROC: hb_retc_const( "Illegal operation: coprocessor error" ); return;
-            case ILL_BADSTK: hb_retc_const( "Illegal operation: internal stack error" ); return;
+            case ILL_ILLOPC: hb_retc_const("Illegal operation: illegal opcode"); return;
+            case ILL_ILLOPN: hb_retc_const("Illegal operation: illegal operand"); return;
+            case ILL_ILLADR: hb_retc_const("Illegal operation: illegal addressing mode"); return;
+            case ILL_ILLTRP: hb_retc_const("Illegal operation: illegal trap"); return;
+            case ILL_PRVOPC: hb_retc_const("Illegal operation: privileged opcode"); return;
+            case ILL_PRVREG: hb_retc_const("Illegal operation: privileged register"); return;
+            case ILL_COPROC: hb_retc_const("Illegal operation: coprocessor error"); return;
+            case ILL_BADSTK: hb_retc_const("Illegal operation: internal stack error"); return;
          #endif
-            default: hb_retc_const( "Illegal operation" ); return;
+            default: hb_retc_const("Illegal operation"); return;
          }
 
       case SIGFPE: switch( iSubSig )
          {
          #if !defined(HB_OS_DARWIN)
-            case FPE_INTDIV: hb_retc_const( "Floating point: integer divide by zero" ); return;
-            case FPE_INTOVF: hb_retc_const( "Floating point: integer overflow" ); return;
+            case FPE_INTDIV: hb_retc_const("Floating point: integer divide by zero"); return;
+            case FPE_INTOVF: hb_retc_const("Floating point: integer overflow"); return;
          #endif
-            case FPE_FLTDIV: hb_retc_const( "Floating point: floating point divide by zero" ); return;
-            case FPE_FLTOVF: hb_retc_const( "Floating point: floating point overflow" ); return;
-            case FPE_FLTUND: hb_retc_const( "Floating point: floating point underflow" ); return;
-            case FPE_FLTRES: hb_retc_const( "Floating point: floating point inexact result" ); return;
+            case FPE_FLTDIV: hb_retc_const("Floating point: floating point divide by zero"); return;
+            case FPE_FLTOVF: hb_retc_const("Floating point: floating point overflow"); return;
+            case FPE_FLTUND: hb_retc_const("Floating point: floating point underflow"); return;
+            case FPE_FLTRES: hb_retc_const("Floating point: floating point inexact result"); return;
          #if !defined(HB_OS_VXWORKS)
-            case FPE_FLTINV: hb_retc_const( "Floating point: floating point invalid operation" ); return;
+            case FPE_FLTINV: hb_retc_const("Floating point: floating point invalid operation"); return;
          #endif
          #if !defined(HB_OS_DARWIN)
-            case FPE_FLTSUB: hb_retc_const( "Floating point: subscript out of range" ); return;
+            case FPE_FLTSUB: hb_retc_const("Floating point: subscript out of range"); return;
          #endif
-            default: hb_retc_const( "Floating point" ); return;
+            default: hb_retc_const("Floating point"); return;
          }
 
       case SIGQUIT:
-         hb_retc_const( "Quit" );
+         hb_retc_const("Quit");
          return;
 
       case SIGHUP:
-         hb_retc_const( "Update" );
+         hb_retc_const("Update");
          return;
 
       case SIGINT:
-         hb_retc_const( "Interrupt" );
+         hb_retc_const("Interrupt");
          return;
 
       case SIGPIPE:
-         hb_retc_const( "Broken pipe" );
+         hb_retc_const("Broken pipe");
          return;
 
       case SIGTERM:
-         hb_retc_const( "Terminate process" );
+         hb_retc_const("Terminate process");
          return;
 
       case SIGABRT:
-         hb_retc_const( "Abort" );
+         hb_retc_const("Abort");
          return;
 
       case SIGUSR1:
-         hb_retc_const( "User defined" );
+         hb_retc_const("User defined");
          return;
 
       case SIGUSR2:
-         hb_retc_const( "User defined (secondary)" );
+         hb_retc_const("User defined (secondary)");
          return;
    }
 
@@ -968,58 +968,58 @@ HB_FUNC( HB_SIGNALDESC )
       switch( dwSubSig )
       {
          case EXCEPTION_ACCESS_VIOLATION:
-            hb_retc_const( "Memory read/write access violation" ); return;
+            hb_retc_const("Memory read/write access violation"); return;
 
          case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:
-            hb_retc_const( "Array out of bounds" ); return;
+            hb_retc_const("Array out of bounds"); return;
 
          case EXCEPTION_DATATYPE_MISALIGNMENT:
-            hb_retc_const( "Data misaligned" ); return;
+            hb_retc_const("Data misaligned"); return;
 
          case EXCEPTION_FLT_DENORMAL_OPERAND:
-            hb_retc_const( "Denormal operand in Floating-point operation" ); return;
+            hb_retc_const("Denormal operand in Floating-point operation"); return;
 
          case EXCEPTION_FLT_DIVIDE_BY_ZERO:
-            hb_retc_const( "Floating-point division by zero" ); return;
+            hb_retc_const("Floating-point division by zero"); return;
 
          case EXCEPTION_FLT_INEXACT_RESULT:
-            hb_retc_const( "Inexact floating-point operation result" ); return;
+            hb_retc_const("Inexact floating-point operation result"); return;
 
          case EXCEPTION_FLT_INVALID_OPERATION:
-            hb_retc_const( "Invalid floating-point operation" ); return;
+            hb_retc_const("Invalid floating-point operation"); return;
 
          case EXCEPTION_FLT_OVERFLOW:
-            hb_retc_const( "Floating-point numeric overflow" ); return;
+            hb_retc_const("Floating-point numeric overflow"); return;
 
          case EXCEPTION_FLT_STACK_CHECK:
-            hb_retc_const( "Floating-point out of stack" ); return;
+            hb_retc_const("Floating-point out of stack"); return;
 
          case EXCEPTION_FLT_UNDERFLOW:
-            hb_retc_const( "Floating-point numeric underflow" ); return;
+            hb_retc_const("Floating-point numeric underflow"); return;
 
          case EXCEPTION_ILLEGAL_INSTRUCTION:
-            hb_retc_const( "Illegal instruction" ); return;
+            hb_retc_const("Illegal instruction"); return;
 
          case EXCEPTION_IN_PAGE_ERROR:
-            hb_retc_const( "Paging error" ); return;
+            hb_retc_const("Paging error"); return;
 
          case EXCEPTION_INT_DIVIDE_BY_ZERO:
-            hb_retc_const( "Integer division by zero" ); return;
+            hb_retc_const("Integer division by zero"); return;
 
          case EXCEPTION_INT_OVERFLOW:
-            hb_retc_const( "Integer numeric overflow" ); return;
+            hb_retc_const("Integer numeric overflow"); return;
 
          case EXCEPTION_PRIV_INSTRUCTION:
-            hb_retc_const( "Illegal instruction for current machine mode" ); return;
+            hb_retc_const("Illegal instruction for current machine mode"); return;
 
          case EXCEPTION_STACK_OVERFLOW:
-            hb_retc_const( "Stack overflow" ); return;
+            hb_retc_const("Stack overflow"); return;
       }
    }
 
 #endif
 
-   hb_retc_const( "Unrecognized signal" );
+   hb_retc_const("Unrecognized signal");
 }
 
 

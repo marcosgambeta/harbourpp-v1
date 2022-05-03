@@ -75,7 +75,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest, PHB_IT
                                 nullptr, pError );
       if( pSource == nullptr )
       {
-         pError = hb_errRT_FileError( pError, nullptr, EG_OPEN, 2012, pszSource );
+         pError = hb_errRT_FileError(pError, nullptr, EG_OPEN, 2012, pszSource);
          if( hb_errLaunch( pError ) != E_RETRY )
             break;
       }
@@ -100,7 +100,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest, PHB_IT
                                  nullptr, pError );
          if( pDest == nullptr )
          {
-            pError = hb_errRT_FileError( pError, nullptr, EG_CREATE, 2012, pszDest );
+            pError = hb_errRT_FileError(pError, nullptr, EG_CREATE, 2012, pszDest);
             if( hb_errLaunch( pError ) != E_RETRY )
                break;
          }
@@ -135,7 +135,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest, PHB_IT
                   nWritten += nDone;
                if( nWritten < nRead )
                {
-                  pError = hb_errRT_FileError( pError, nullptr, EG_WRITE, 2016, pszDest );
+                  pError = hb_errRT_FileError(pError, nullptr, EG_WRITE, 2016, pszDest);
                   if( hb_errLaunch( pError ) != E_RETRY )
                   {
                      bRetVal = HB_FALSE;

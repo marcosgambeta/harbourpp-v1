@@ -73,7 +73,7 @@ static void hb_ParseLine(PHB_ITEM pReturn, const char * szText, int iDelimiter, 
 {
    if( szText )
    {
-      HB_ISIZ nLen = strlen( szText );
+      HB_ISIZ nLen = strlen(szText);
 
       if( nLen > 0 )
       {
@@ -94,7 +94,7 @@ static void hb_ParseLine(PHB_ITEM pReturn, const char * szText, int iDelimiter, 
 
          szText[nLen] = 0;
 
-         nLen = strlen( szText );
+         nLen = strlen(szText);
 #endif
 
          while( i < nLen )
@@ -281,7 +281,7 @@ static char ** hb_tokensplit( const char * string, HB_BYTE delimiter, int iCharC
    for( word_nbr = 0; word_nbr < word_count; word_nbr++ )
    {
       token_list[word_nbr] = bufptr;
-      bufptr += strlen( bufptr ) + 1;
+      bufptr += strlen(bufptr) + 1;
    }
 
    token_list[word_count] = nullptr;
@@ -516,7 +516,7 @@ HB_FUNC( FWORDCOUNT )
    }
 
    /* return number of words */
-   hb_retns( nWordCount );
+   hb_retns(nWordCount);
 
    /* clean up */
    hb_xfree(string);
@@ -561,7 +561,7 @@ HB_FUNC( FLINECOUNT )
    }
 
    /* return number of lines */
-   hb_retns( nLineCount );
+   hb_retns(nLineCount);
 
    /* clean up */
    fclose( inFile );
@@ -613,7 +613,7 @@ HB_FUNC( FCHARCOUNT )
    }
 
    /* return number of characters */
-   hb_retns( nResult );
+   hb_retns(nResult);
 
    /* clean up */
    fclose( inFile );

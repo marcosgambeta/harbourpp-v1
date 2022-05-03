@@ -1869,13 +1869,13 @@ static MXML_STATUS mxml_output_string_len( MXML_OUTPUT * out, const char * s, HB
 /* Currently not used */
 static MXML_STATUS mxml_output_string( MXML_OUTPUT * out, const char * s )
 {
-   return mxml_output_string_len( out, s, strlen( s ) );
+   return mxml_output_string_len(out, s, strlen(s));
 }
 #endif
 
 static MXML_STATUS mxml_output_string( MXML_OUTPUT * out, const char * s )
 {
-   out->output_func( out, s, strlen( s ) );
+   out->output_func(out, s, strlen(s));
    return out->status;
 }
 
@@ -2143,7 +2143,7 @@ static MXML_STATUS mxml_sgs_append_string_len( MXML_SGS * sgs, const char * s, H
 /* Currently not used */
 static MXML_STATUS mxml_sgs_append_string( MXML_SGS * sgs, char * s )
 {
-   return mxml_sgs_append_string_len( sgs, s, strlen( s ) );
+   return mxml_sgs_append_string_len(sgs, s, strlen(s));
 }
 #endif
 

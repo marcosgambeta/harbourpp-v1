@@ -278,7 +278,7 @@ HB_FUNC( FILESTATS )
 
 #endif
 
-   hb_fsSetIOError( fResult, 0 );
+   hb_fsSetIOError(fResult, 0);
 
    if( fResult )
    {
