@@ -795,7 +795,7 @@ AREAP hb_rddRequestArea( const char * szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea
    hb_threadLeaveCriticalSection( &s_waMtx );
 
    /* attach WA and set alias */
-   if( pArea )
+   if( pArea != nullptr )
    {
       hb_waNodeInsert(hb_stackRDD(), pArea);
       if( pArea->atomAlias )

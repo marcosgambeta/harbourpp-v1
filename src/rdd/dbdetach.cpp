@@ -87,7 +87,7 @@ HB_FUNC( HB_DBDETACH )
       return;
    }
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       hb_retl(hb_rddDetachArea(pArea, pCargo) == HB_SUCCESS);
    }
@@ -122,7 +122,7 @@ HB_FUNC( HB_DBREQUEST )
       }
 
       pArea = hb_rddRequestArea( szAlias, pCargo, fNewArea, ulMilliSec );
-      if( pArea )
+      if( pArea != nullptr )
       {
          hb_rddSelectWorkAreaNumber(pArea->uiArea);
       }

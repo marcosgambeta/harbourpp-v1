@@ -596,7 +596,7 @@ static int hb_hsxCompile( const char * szExpr, PHB_ITEM * pExpr )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    *pExpr = nullptr;
-   if( pArea )
+   if( pArea != nullptr )
    {
       if( SELF_COMPILE(pArea, szExpr) == HB_FAILURE )
       {

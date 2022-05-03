@@ -67,7 +67,7 @@ static HB_BOOL hb_sxSemName(char * szFileName)
    {
       AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-      if( pArea )
+      if( pArea != nullptr )
       {
          DBORDERINFO pOrderInfo;
 

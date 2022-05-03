@@ -60,7 +60,7 @@ HB_FUNC( ORDWILDSEEK )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       const char * szPattern = hb_parc(1);
 

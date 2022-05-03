@@ -514,7 +514,7 @@ HB_ERRCODE hb_rddFieldGet(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
    AREAP pArea;
 
    pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   if( pArea )
+   if( pArea != nullptr )
    {
       HB_USHORT uiField = 1;
       LPFIELD pField = pArea->lpFields;
@@ -545,7 +545,7 @@ HB_ERRCODE hb_rddFieldPut(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
    AREAP pArea;
 
    pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   if( pArea )
+   if( pArea != nullptr )
    {
       HB_USHORT uiField = 1;
       LPFIELD pField = pArea->lpFields;

@@ -71,7 +71,7 @@ HB_FUNC( SX_GETLOCKS )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       PHB_ITEM pList = hb_itemArrayNew(0);
       SELF_INFO(pArea, DBI_GETLOCKARRAY, pList);
@@ -84,7 +84,7 @@ HB_FUNC( SX_ISFLOCKED )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_BOOL fLocked = HB_FALSE;
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       PHB_ITEM pItem = hb_itemNew(nullptr);
       SELF_INFO(pArea, DBI_ISFLOCK, pItem);
@@ -100,7 +100,7 @@ HB_FUNC( SX_ISREADONLY )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_BOOL fReadOnly = HB_FALSE;
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       PHB_ITEM pItem = hb_itemNew(nullptr);
       SELF_INFO(pArea, DBI_ISREADONLY, pItem);
@@ -116,7 +116,7 @@ HB_FUNC( SX_ISSHARED )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_BOOL fShared = HB_FALSE;
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       PHB_ITEM pItem = hb_itemNew(nullptr);
       SELF_INFO(pArea, DBI_SHARED, pItem);
@@ -132,7 +132,7 @@ HB_FUNC( SX_IDTYPE )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    int iType = 0;
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       PHB_ITEM pItem = hb_itemNew(nullptr);
       if( SELF_RECINFO(pArea, nullptr, DBRI_ENCRYPTED, pItem) == HB_SUCCESS )
@@ -150,7 +150,7 @@ HB_FUNC( SX_TABLETYPE )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    int iType = 0;
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       PHB_ITEM pItem = hb_itemNew(nullptr);
       if( SELF_INFO(pArea, DBI_ISENCRYPTED, pItem) == HB_SUCCESS )
@@ -167,7 +167,7 @@ HB_FUNC( SX_TABLENAME )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       PHB_ITEM pList = hb_itemNew(nullptr);
       SELF_INFO(pArea, DBI_FULLPATH, pList);
@@ -215,7 +215,7 @@ HB_FUNC( SX_ROLLBACK )
       pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    }
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       PHB_ITEM pItem = hb_itemNew(nullptr);
       fResult = SELF_INFO(pArea, DBI_ROLLBACK, pItem) == HB_SUCCESS;
@@ -235,7 +235,7 @@ HB_FUNC( SX_RLOCK )
    HB_BOOL fResult = HB_FALSE;
    PHB_ITEM pResult = nullptr;
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       PHB_ITEM pRecords = hb_param(1, Harbour::Item::ARRAY);
       DBLOCKINFO dbLockInfo;
@@ -274,7 +274,7 @@ HB_FUNC( SX_UNLOCK )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       PHB_ITEM pRecords = hb_param(1, Harbour::Item::ARRAY);
       if( pRecords )
@@ -303,7 +303,7 @@ HB_FUNC( SX_SETPASS )
       if( HB_ISCHAR(1) )
       {
          AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-         if( pArea )
+         if( pArea != nullptr )
          {
             pItem = hb_itemParam(1);
             if( SELF_INFO(pArea, DBI_PASSWORD, pItem) == HB_SUCCESS )
@@ -348,7 +348,7 @@ HB_FUNC( SX_SETPASS )
       else if( iPCount == 2 && HB_ISNUM(1) && HB_ISCHAR(2) )
       {
          AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-         if( pArea )
+         if( pArea != nullptr )
          {
             /* Undocumented SIX3 extension */
             switch( hb_parni(1) )
@@ -384,7 +384,7 @@ HB_FUNC( SX_DBFENCRYPT )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_BOOL fResult = HB_FALSE;
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       PHB_ITEM pItem = hb_itemParam(1);
 
@@ -402,7 +402,7 @@ HB_FUNC( SX_DBFDECRYPT )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_BOOL fResult = HB_FALSE;
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       PHB_ITEM pItem = hb_itemParam(1);
       if( SELF_INFO(pArea, DBI_DECRYPT, pItem) == HB_SUCCESS )
@@ -419,7 +419,7 @@ HB_FUNC( SX_MEMOPACK )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_BOOL fResult = HB_FALSE;
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       PHB_ITEM pItem = hb_itemArrayNew(3);
       int iPCount = hb_pcount();
@@ -437,7 +437,7 @@ HB_FUNC( SX_TURBOAREA )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       PHB_ITEM pItem = hb_itemParam(1);
       if( hb_pcount() > 0 && HB_IS_NIL(pItem) )
@@ -501,7 +501,7 @@ HB_FUNC( _SXOPENINIT )
       pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(iArea));
    }
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       LPDBOPENINFO pInfo = nullptr;
       PHB_ITEM pItem = hb_itemNew(nullptr);

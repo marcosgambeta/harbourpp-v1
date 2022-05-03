@@ -139,7 +139,7 @@ static HB_BOOL _hb_sxGetKey( PHB_ITEM pKeyItem, char * pKeyVal )
    {
       AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-      if( pArea )
+      if( pArea != nullptr )
       {
          pItem = hb_itemNew(nullptr);
          if( SELF_INFO(pArea, DBI_PASSWORD, pItem) == HB_SUCCESS )

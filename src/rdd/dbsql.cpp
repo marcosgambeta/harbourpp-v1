@@ -390,7 +390,7 @@ HB_FUNC( __DBSQL )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       HB_BOOL fExport         = hb_parl(1);
       const char * szFileName = hb_parc(2);
