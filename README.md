@@ -10,7 +10,7 @@ Este projeto é um trabalho em progresso.
 
 ## Requisitos
 * Compilador C++
-* Padrão C++11 ou superior (C++14, C++17, ...)
+* Padrão C++11 ou superior (C++14, C++17, C++20, ...)
 
 ## Compilação
 
@@ -44,12 +44,19 @@ win-make install 1>log1.log 2>log2.log
 
 Envie sua mensagem para:
 
-marcosgambeta AT outlook DOT com
+marcosgambeta@outlook.com
 
 Questões sobre o projeto serão respondidas **somente por email**.  
 
-## Mais informações/conteúdo extra
+## Mais informações e conteúdo extra
 
 Siga o blog abaixo para se manter informado:
 
 https://magsoftinfo.com/blog/
+
+## Donativos
+
+O desenvolvimento deste projeto é apoiado por donativos. Se desejar contribuir,
+utilize a chave PIX abaixo:
+
+marcosgambeta@outlook.com
