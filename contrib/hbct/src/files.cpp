@@ -80,11 +80,11 @@ static void hb_fileFindRelease( void * cargo )
 
    if( pFFData->ffind )
    {
-      hb_fsFindClose( pFFData->ffind );
+      hb_fsFindClose(pFFData->ffind);
    }
 }
 
-static HB_TSD_NEW( s_FFData, sizeof(HB_FFDATA), nullptr, hb_fileFindRelease );
+static HB_TSD_NEW(s_FFData, sizeof(HB_FFDATA), nullptr, hb_fileFindRelease);
 
 #define HB_GET_FFDATA()  (static_cast<PHB_FFDATA>(hb_stackGetTSD(&s_FFData)))
 
@@ -101,7 +101,7 @@ static PHB_FFIND _hb_fileStart( HB_BOOL fNext, HB_BOOL fAny )
 
       if( pFFData->ffind )
       {
-         hb_fsFindClose( pFFData->ffind );
+         hb_fsFindClose(pFFData->ffind);
          pFFData->ffind = nullptr;
       }
 
@@ -111,12 +111,12 @@ static PHB_FFIND _hb_fileStart( HB_BOOL fNext, HB_BOOL fAny )
 
          ulAttr = static_cast<HB_FATTR>(hb_parnldef(2, fAny ? HB_FA_ANY : HB_FA_ALL));
          pFFData->ulAttr = hb_parl(3) ? ulAttr : 0;
-         pFFData->ffind  = hb_fsFindFirst( szFile, ulAttr );
+         pFFData->ffind  = hb_fsFindFirst(szFile, ulAttr);
          while( pFFData->ffind && pFFData->ulAttr && HB_FF_ATTR(pFFData->ffind) != pFFData->ulAttr )
          {
             if( !hb_fsFindNext( pFFData->ffind ) )
             {
-               hb_fsFindClose( pFFData->ffind );
+               hb_fsFindClose(pFFData->ffind);
                pFFData->ffind = nullptr;
             }
          }
@@ -126,9 +126,9 @@ static PHB_FFIND _hb_fileStart( HB_BOOL fNext, HB_BOOL fAny )
    {
       do
       {
-         if( !hb_fsFindNext( pFFData->ffind ) )
+         if( !hb_fsFindNext(pFFData->ffind) )
          {
-            hb_fsFindClose( pFFData->ffind );
+            hb_fsFindClose(pFFData->ffind);
             pFFData->ffind = nullptr;
             break;
          }
@@ -141,35 +141,35 @@ static PHB_FFIND _hb_fileStart( HB_BOOL fNext, HB_BOOL fAny )
 
 HB_FUNC( FILESEEK )
 {
-   PHB_FFIND ffind = _hb_fileStart( true, false );
+   PHB_FFIND ffind = _hb_fileStart(true, false);
 
    hb_retc(ffind ? ffind->szName : nullptr);
 }
 
 HB_FUNC( FILEATTR )
 {
-   PHB_FFIND ffind = _hb_fileStart( false, true );
+   PHB_FFIND ffind = _hb_fileStart(false, true);
 
    hb_retni(ffind ? HB_FF_ATTR(ffind) : 0);
 }
 
 HB_FUNC( FILESIZE )
 {
-   PHB_FFIND ffind = _hb_fileStart( false, false );
+   PHB_FFIND ffind = _hb_fileStart(false, false);
 
    hb_retnint(ffind ? ffind->size : -1);
 }
 
 HB_FUNC( FILEDATE )
 {
-   PHB_FFIND ffind = _hb_fileStart( false, false );
+   PHB_FFIND ffind = _hb_fileStart(false, false);
 
-   hb_retdl( ffind ? ffind->lDate : 0 );
+   hb_retdl(ffind ? ffind->lDate : 0);
 }
 
 HB_FUNC( FILETIME )
 {
-   PHB_FFIND ffind = _hb_fileStart( false, false );
+   PHB_FFIND ffind = _hb_fileStart(false, false);
 
    hb_retc(ffind ? ffind->szTime : nullptr);
 }
@@ -201,7 +201,7 @@ HB_FUNC( SETFDATI )
 
       if( HB_ISTIMESTAMP(1) )
       {
-         hb_partdt( &lJulian, &lMillisec, 1 );
+         hb_partdt(&lJulian, &lMillisec, 1);
       }
       else
       {
@@ -222,14 +222,14 @@ HB_FUNC( SETFDATI )
          {
             int hour = 0, minute = 0, second = 0, msec = 0;
             hb_timeStrGet(hb_itemGetCPtr(pTime), &hour, &minute, &second, &msec);
-            lMillisec = hb_timeEncode( hour, minute, second, msec );
+            lMillisec = hb_timeEncode(hour, minute, second, msec);
          }
          else
          {
             lMillisec = -1;
          }
       }
-      fResult = hb_fsSetFileTime( szFile, lJulian, lMillisec );
+      fResult = hb_fsSetFileTime(szFile, lJulian, lMillisec);
    }
 
    hb_retl(fResult);
@@ -252,7 +252,7 @@ HB_FUNC( FILEDELETE )
       {
          PHB_FNAME pFilepath;
 
-         pFilepath = hb_fsFNameSplit( pszDirSpec );
+         pFilepath = hb_fsFNameSplit(pszDirSpec);
          pFilepath->szExtension = nullptr;
 
          do
@@ -260,7 +260,7 @@ HB_FUNC( FILEDELETE )
             char szPath[HB_PATH_MAX];
 
             pFilepath->szName = ffind->szName;
-            hb_fsFNameMerge( szPath, pFilepath );
+            hb_fsFNameMerge(szPath, pFilepath);
 
             if( ffind->attr & HB_FA_READONLY )
             {
@@ -278,10 +278,10 @@ HB_FUNC( FILEDELETE )
                fResult = HB_TRUE;
             }
          }
-         while( hb_fsFindNext( ffind ) );
+         while( hb_fsFindNext(ffind) );
 
          hb_xfree(pFilepath);
-         hb_fsFindClose( ffind );
+         hb_fsFindClose(ffind);
       }
    }
 

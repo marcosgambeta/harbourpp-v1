@@ -114,12 +114,12 @@ static HB_BOOL _hb_timeValid( const char * szTime, HB_SIZE nLen, int * piDecode 
       fValid = HB_TRUE;
       for( nPos = 0; fValid && nPos < nLen; ++nPos )
       {
-         fValid = nPos % 3 == 2 ? szTime[nPos] == ':' : ( szTime[nPos] >= '0' && szTime[nPos] <= '9' );
+         fValid = nPos % 3 == 2 ? szTime[nPos] == ':' : (szTime[nPos] >= '0' && szTime[nPos] <= '9');
       }
       for( nPos = 0, i = 0; fValid && nPos < nLen; nPos += 3, ++i )
       {
          int iVal;
-         iVal   = 10 * ( szTime[nPos] - '0' ) + ( szTime[nPos + 1] - '0' );
+         iVal   = 10 * (szTime[nPos] - '0') + (szTime[nPos + 1] - '0');
          fValid = iVal <= sc_iMax[i];
          if( piDecode )
          {
@@ -146,12 +146,12 @@ HB_FUNC( SETTIME )
    {
 #if defined(HB_OS_WIN)
       SYSTEMTIME st;
-      GetLocalTime( &st );
+      GetLocalTime(&st);
       st.wHour         = static_cast<WORD>(iTime[0]);
       st.wMinute       = static_cast<WORD>(iTime[1]);
       st.wSecond       = static_cast<WORD>(iTime[2]);
       st.wMilliseconds = static_cast<WORD>(iTime[3]) * 10;
-      fResult = SetLocalTime( &st );
+      fResult = SetLocalTime(&st);
 #elif defined(HB_OS_LINUX) && !defined(HB_OS_ANDROID)
       /* stime() exists only in SVr4, SVID, X/OPEN and Linux */
       HB_ULONG lNewTime;
@@ -159,7 +159,7 @@ HB_FUNC( SETTIME )
 
       lNewTime = iTime[0] * 3600 + iTime[1] * 60 + iTime[2];
       tm       = time(nullptr);
-      tm      += lNewTime - ( tm % 86400 );
+      tm      += lNewTime - (tm % 86400);
       fResult  = stime( &tm ) == 0;
 #endif
    }
@@ -176,17 +176,17 @@ HB_FUNC( SETDATE )
    {
       int iYear, iMonth, iDay;
 
-      hb_dateDecode( lDate, &iYear, &iMonth, &iDay );
+      hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
       if( iYear >= 1970 )
       {
 #if defined(HB_OS_WIN)
          SYSTEMTIME st;
-         GetLocalTime( &st );
+         GetLocalTime(&st);
          st.wYear      = static_cast<WORD>(iYear);
          st.wMonth     = static_cast<WORD>(iMonth);
          st.wDay       = static_cast<WORD>(iDay);
          st.wDayOfWeek = static_cast<WORD>(hb_dateJulianDOW(lDate));
-         fResult       = SetLocalTime( &st );
+         fResult       = SetLocalTime(&st);
 #elif defined(HB_OS_LINUX) && !defined(HB_OS_ANDROID)
          /* stime() exists only in SVr4, SVID, X/OPEN and Linux */
          long   lNewDate;
@@ -194,8 +194,8 @@ HB_FUNC( SETDATE )
 
          lNewDate = lDate - hb_dateEncode(1970, 1, 1);
          tm       = time(nullptr);
-         tm       = lNewDate * 86400 + ( tm % 86400 );
-         fResult  = stime( &tm ) == 0;
+         tm       = lNewDate * 86400 + (tm % 86400);
+         fResult  = stime(&tm) == 0;
 #endif
       }
    }

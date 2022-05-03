@@ -90,7 +90,7 @@ static HB_UCHAR * buf_append( HB_UCHAR * buf, HB_SIZE * buf_size, HB_SIZE count,
 {
    if( *buf_len + count > *buf_size )
    {
-      *buf_size = HB_MAX( *buf_len + count, *buf_size + 32768 );
+      *buf_size = HB_MAX(*buf_len + count, *buf_size + 32768);
       buf = static_cast<HB_UCHAR*>(hb_xrealloc(buf, *buf_size));
    }
    memset(buf + *buf_len, c, count);
@@ -123,7 +123,7 @@ HB_FUNC( CHARUNPACK )
             hb_retclen(reinterpret_cast<const char*>(in), len);
             return;
          }
-         out = buf_append( out, &buf_size, in[i + 1], in[i + 2], &out_len );
+         out = buf_append(out, &buf_size, in[i + 1], in[i + 2], &out_len);
       }
       hb_retclen(reinterpret_cast<const char*>(out), out_len);
       hb_xfree(out);

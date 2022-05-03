@@ -96,14 +96,14 @@ HB_FUNC( PRINTSEND )
 
    if( nLen )
    {
-      HB_FHANDLE hFile = hb_fsOpen( szPort, FO_WRITE );
+      HB_FHANDLE hFile = hb_fsOpen(szPort, FO_WRITE);
       if( hFile != FS_ERROR )
       {
          nRet = hb_fsWriteLarge(hFile, szStr, nLen);
-         hb_fsClose( hFile );
+         hb_fsClose(hFile);
       }
    }
-   hb_retns( nRet );
+   hb_retns(nRet);
 
 #else
 

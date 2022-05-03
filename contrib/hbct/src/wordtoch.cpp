@@ -78,7 +78,7 @@ HB_FUNC( WORDTOCHAR )
          const char * pc;
          HB_SIZE sReplIndex;
 
-         *( pcRet + sRetIndex + 1 ) = *( pcString + sIndex + 1 );
+         *(pcRet + sRetIndex + 1) = *(pcString + sIndex + 1);
 
          if( !iNoReplace &&
              ( ( pc = ct_at_exact_forward( pcSearch, sSearchLen, pcRet + sRetIndex, 2, &sMatchStrLen ) ) != nullptr ) &&
@@ -90,7 +90,7 @@ HB_FUNC( WORDTOCHAR )
                sReplIndex = sReplaceLen - 1;
             }
 
-            *( pcRet + sRetIndex ) = *( pcReplace + sReplIndex );
+            *(pcRet + sRetIndex) = *(pcReplace + sReplIndex);
 
             if( !iMultiPass )
             {
@@ -117,9 +117,9 @@ HB_FUNC( WORDTOCHAR )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
-                                  CT_ERROR_WORDTOCHAR, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+                                 CT_ERROR_WORDTOCHAR, nullptr, HB_ERR_FUNCNAME, 0,
+                                 EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )

@@ -144,7 +144,7 @@ static void do_charone( int iSwitch )
                      while( sLen >= 2 && (pc = ct_at_exact_forward(pStart, sLen, pcSub, 2, nullptr)) != 0 && (pc - pcDeleteSet) % 2 == 1 )
                      {
                         pStart = pc + 1;
-                        sLen = sDeleteSetLen - ( pStart - pcDeleteSet );
+                        sLen = sDeleteSetLen - (pStart - pcDeleteSet);
                      }
                      if( pc == nullptr )
                      {
@@ -178,11 +178,11 @@ static void do_charone( int iSwitch )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
-                                  iSwitch == DO_CHARONE_CHARONE ?
-                                  CT_ERROR_CHARONE : CT_ERROR_WORDONE,
-                                  nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
-                                  HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+                                 iSwitch == DO_CHARONE_CHARONE ?
+                                 CT_ERROR_CHARONE : CT_ERROR_WORDONE,
+                                 nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
+                                 HB_ERR_ARGS_BASEPARAMS);
       }
       if( pSubst != nullptr )
       {
@@ -197,10 +197,10 @@ static void do_charone( int iSwitch )
 
 HB_FUNC( CHARONE )
 {
-   do_charone( DO_CHARONE_CHARONE );
+   do_charone(DO_CHARONE_CHARONE);
 }
 
 HB_FUNC( WORDONE )
 {
-   do_charone( DO_CHARONE_WORDONE );
+   do_charone(DO_CHARONE_WORDONE);
 }

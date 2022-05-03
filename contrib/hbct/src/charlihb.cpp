@@ -51,10 +51,10 @@
 
 HB_FUNC( CHARSLIST )  /* HB_EXTENSION */
 {
-   ct_charlist( CT_CHARLIST_CHARSLIST );
+   ct_charlist(CT_CHARLIST_CHARSLIST);
 }
 
 HB_FUNC( CHARHIST )  /* HB_EXTENSION */
 {
-   ct_charlist( CT_CHARLIST_CHARHIST );
+   ct_charlist(CT_CHARLIST_CHARHIST);
 }

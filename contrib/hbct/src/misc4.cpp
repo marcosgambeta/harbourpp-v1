@@ -53,5 +53,5 @@ HB_FUNC( ISAT )
 
 HB_FUNC( TOOLVER )
 {
-   hb_retc_const( "5.20 - 3.0b" );
+   hb_retc_const("5.20 - 3.0b");
 }

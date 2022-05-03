@@ -74,10 +74,10 @@ HB_FUNC( FV )
          HB_MATH_EXCEPTION hb_exc;
          double dBase = 1.0 + dRate;
 
-         hb_mathResetError( &hb_exc );
-         dResult = pow( dBase, dTime );
+         hb_mathResetError(&hb_exc);
+         dResult = pow(dBase, dTime);
 
-         if( hb_mathGetError( &hb_exc, "POW", dBase, dTime, dResult ) )
+         if( hb_mathGetError(&hb_exc, "POW", dBase, dTime, dResult) )
          {
             dResult = hb_exc.handled ? hb_exc.retval : 0.0;
          }
@@ -94,7 +94,7 @@ HB_FUNC( FV )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_FV, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_FV, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )
@@ -127,10 +127,10 @@ HB_FUNC( PV )
          HB_MATH_EXCEPTION hb_exc;
          double dBase = 1.0 + dRate;
 
-         hb_mathResetError( &hb_exc );
-         dResult = pow( dBase, -dTime );
+         hb_mathResetError(&hb_exc);
+         dResult = pow(dBase, -dTime);
 
-         if( hb_mathGetError( &hb_exc, "POW", dBase, -dTime, dResult ) )
+         if( hb_mathGetError(&hb_exc, "POW", dBase, -dTime, dResult) )
          {
             dResult = hb_exc.handled ? hb_exc.retval : 0.0;
          }
@@ -147,7 +147,7 @@ HB_FUNC( PV )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_PV, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_PV, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )
@@ -180,10 +180,10 @@ HB_FUNC( PAYMENT )
          HB_MATH_EXCEPTION hb_exc;
          double dBase = 1.0 + dRate;
 
-         hb_mathResetError( &hb_exc );
-         dResult = pow( dBase, -dTime );
+         hb_mathResetError(&hb_exc);
+         dResult = pow(dBase, -dTime);
 
-         if( hb_mathGetError( &hb_exc, "POW", dBase, -dTime, dResult ) )
+         if( hb_mathGetError(&hb_exc, "POW", dBase, -dTime, dResult) )
          {
             dResult = hb_exc.handled ? hb_exc.retval : 0.0;
          }
@@ -200,7 +200,7 @@ HB_FUNC( PAYMENT )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_PAYMENT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_PAYMENT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )
@@ -238,9 +238,9 @@ HB_FUNC( PERIODS )
          HB_MATH_EXCEPTION hb_exc;
          double dBase = 1.0 + dRate;
 
-         hb_mathResetError( &hb_exc );
-         dResult = log( dBase );
-         if( hb_mathGetError( &hb_exc, "LOG", dBase, 0.0, dResult ) )
+         hb_mathResetError(&hb_exc);
+         dResult = log(dBase);
+         if( hb_mathGetError(&hb_exc, "LOG", dBase, 0.0, dResult) )
          {
             dResult = hb_exc.handled ? hb_exc.retval : 0.0;
          }
@@ -248,11 +248,11 @@ HB_FUNC( PERIODS )
          if( dResult )
          {
             double dResult2;
-            hb_mathResetError( &hb_exc );
-            dBase = 1.0 - ( dCapital * dRate / dPayment );
-            dResult2 = log( dBase );
+            hb_mathResetError(&hb_exc);
+            dBase = 1.0 - (dCapital * dRate / dPayment);
+            dResult2 = log(dBase);
 
-            if( hb_mathGetError( &hb_exc, "LOG", dBase, 0.0, dResult2 ) )
+            if( hb_mathGetError(&hb_exc, "LOG", dBase, 0.0, dResult2) )
             {
                dResult2 = hb_exc.handled ? hb_exc.retval : 0.0;
             }
@@ -270,7 +270,7 @@ HB_FUNC( PERIODS )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_PERIODS, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_PERIODS, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )
@@ -308,16 +308,16 @@ HB_FUNC( RATE )
 
          /* replace Payment() function overhead */
 
-         hb_mathResetError( &hb_exc );
+         hb_mathResetError(&hb_exc);
          dBase = 1.0 + r;
-         dExp = pow( dBase, dTime );
-         if( hb_mathGetError( &hb_exc, "POW", dBase, dTime, dExp ) )
+         dExp = pow(dBase, dTime);
+         if( hb_mathGetError(&hb_exc, "POW", dBase, dTime, dExp) )
          {
             /* TODO: Check if this is a correct default correction value for pow() */
             dExp = hb_exc.handled ? hb_exc.retval : 0.0;
          }
 
-         dAux = dCapital * ( ( dExp * r ) / ( dExp - 1.0 ) );
+         dAux = dCapital * ((dExp * r) / (dExp - 1.0));
 
          if( dAux > dPayment )
          {
@@ -344,7 +344,7 @@ HB_FUNC( RATE )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_RATE, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_RATE, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )

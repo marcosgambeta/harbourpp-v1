@@ -73,7 +73,7 @@ static void do_remove( int iSwitch )
 
       if( hb_parclen(2) > 0 )
       {
-         cSearch = *( hb_parc(2) );
+         cSearch = *(hb_parc(2));
       }
       else if( HB_ISNUM(2) )
       {
@@ -123,10 +123,10 @@ static void do_remove( int iSwitch )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
-                                  sulErrorSubcodes[iSwitch],
-                                  nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+                                 sulErrorSubcodes[iSwitch],
+                                 nullptr, HB_ERR_FUNCNAME, 0,
+                                 EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )
@@ -142,15 +142,15 @@ static void do_remove( int iSwitch )
 
 HB_FUNC( REMALL )
 {
-   do_remove( DO_REMOVE_REMALL );
+   do_remove(DO_REMOVE_REMALL);
 }
 
 HB_FUNC( REMLEFT )
 {
-   do_remove( DO_REMOVE_REMLEFT );
+   do_remove(DO_REMOVE_REMLEFT);
 }
 
 HB_FUNC( REMRIGHT )
 {
-   do_remove( DO_REMOVE_REMRIGHT );
+   do_remove(DO_REMOVE_REMRIGHT);
 }

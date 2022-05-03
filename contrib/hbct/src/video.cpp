@@ -71,7 +71,7 @@ HB_FUNC( VGAPALETTE )
    color_string = hb_parc(1);
    if( color_string )
    {
-      attr = hb_gtColorToN( color_string );
+      attr = hb_gtColorToN(color_string);
    }
    else if( HB_ISNUM(1) )
    {

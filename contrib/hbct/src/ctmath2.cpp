@@ -62,13 +62,13 @@ HB_FUNC( FLOOR )
       HB_MATH_EXCEPTION hb_exc;
       double dResult, dArg = hb_parnd(1);
 
-      hb_mathResetError( &hb_exc );
-      dResult = floor( dArg );
-      if( hb_mathGetError( &hb_exc, "FLOOR", dArg, 0.0, dResult ) )
+      hb_mathResetError(&hb_exc);
+      dResult = floor(dArg);
+      if( hb_mathGetError(&hb_exc, "FLOOR", dArg, 0.0, dResult) )
       {
          if( hb_exc.handled )
          {
-            hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+            hb_retndlen(hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec);
          }
          else
          {
@@ -77,7 +77,7 @@ HB_FUNC( FLOOR )
       }
       else
       {
-         hb_retnlen( dResult, 0, 0 );
+         hb_retnlen(dResult, 0, 0);
       }
    }
    else
@@ -88,7 +88,7 @@ HB_FUNC( FLOOR )
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
          pSubst =
-            ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_FLOOR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+            ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_FLOOR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )
@@ -109,13 +109,13 @@ HB_FUNC( CEILING )
       HB_MATH_EXCEPTION hb_exc;
       double dResult, dArg = hb_parnd(1);
 
-      hb_mathResetError( &hb_exc );
-      dResult = ceil( dArg );
-      if( hb_mathGetError( &hb_exc, "CEIL", dArg, 0.0, dResult ) )
+      hb_mathResetError(&hb_exc);
+      dResult = ceil(dArg);
+      if( hb_mathGetError(&hb_exc, "CEIL", dArg, 0.0, dResult) )
       {
          if( hb_exc.handled )
          {
-            hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+            hb_retndlen(hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec);
          }
          else
          {
@@ -124,7 +124,7 @@ HB_FUNC( CEILING )
       }
       else
       {
-         hb_retnlen( dResult, 0, 0 );
+         hb_retnlen(dResult, 0, 0);
       }
    }
    else
@@ -134,7 +134,7 @@ HB_FUNC( CEILING )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CEILING, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CEILING, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )
@@ -177,7 +177,7 @@ HB_FUNC( SIGN )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SIGN, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SIGN, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )
@@ -198,13 +198,13 @@ HB_FUNC( LOG10 )
       HB_MATH_EXCEPTION hb_exc;
       double dResult, dArg = hb_parnd(1);
 
-      hb_mathResetError( &hb_exc );
+      hb_mathResetError(&hb_exc);
       dResult = log10(dArg);
-      if( hb_mathGetError( &hb_exc, "LOG10", dArg, 0.0, dResult ) )
+      if( hb_mathGetError(&hb_exc, "LOG10", dArg, 0.0, dResult) )
       {
          if( hb_exc.handled )
          {
-            hb_retndlen( hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec );
+            hb_retndlen(hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec);
          }
          else
          {
@@ -213,7 +213,7 @@ HB_FUNC( LOG10 )
             {
                case HB_MATH_ERR_SING:               /* argument to log was 0.0 */
                case HB_MATH_ERR_DOMAIN:             /* argument to log was < 0.0 */
-                  hb_retndlen( -HUGE_VAL, -1, -1 ); /* return -infinity */
+                  hb_retndlen(-HUGE_VAL, -1, -1); /* return -infinity */
                   break;
 
                default:
@@ -234,7 +234,7 @@ HB_FUNC( LOG10 )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_LOG10, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_LOG10, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )
@@ -276,7 +276,7 @@ HB_FUNC( FACT )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_FACT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_FACT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )

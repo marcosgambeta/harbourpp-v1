@@ -77,21 +77,21 @@ HB_FUNC( RANGEREM )
          ucChar2 = static_cast<unsigned char>(hb_parni(2) % 256);
       }
 
-      iMode = ( ucChar2 < ucChar1 );
+      iMode = (ucChar2 < ucChar1);
 
       pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
       sRetIndex = 0;
       for( pc = reinterpret_cast<const unsigned char*>(pcString); pc < reinterpret_cast<const unsigned char*>(pcString) + sStrLen; pc++)
       {
-         int iBool = ( ( *pc ) >= ucChar1 );
+         int iBool = ((*pc) >= ucChar1);
 
          if( iMode )
          {
-            iBool |= ( ( *pc ) <= ucChar2 );
+            iBool |= ((*pc) <= ucChar2);
          }
          else
          {
-            iBool &= ( ( *pc ) <= ucChar2 );
+            iBool &= ((*pc) <= ucChar2);
          }
 
          if( !iBool )
@@ -111,7 +111,7 @@ HB_FUNC( RANGEREM )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_RANGEREM, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_RANGEREM, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )
@@ -170,21 +170,21 @@ HB_FUNC( RANGEREPL )
          ucReplace = static_cast<unsigned char>(hb_parni(4) % 256);
       }
 
-      iMode = ( ucChar2 < ucChar1 );
+      iMode = (ucChar2 < ucChar1);
 
       pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
       sRetIndex = 0;
       for( pc = reinterpret_cast<const unsigned char*>(pcString); pc < reinterpret_cast<const unsigned char*>(pcString) + sStrLen; pc++ )
       {
-         int iBool = ( ( *pc ) >= ucChar1 );
+         int iBool = ((*pc) >= ucChar1);
 
          if( iMode )
          {
-            iBool |= ( ( *pc ) <= ucChar2 );
+            iBool |= ((*pc) <= ucChar2);
          }
          else
          {
-            iBool &= ( ( *pc ) <= ucChar2 );
+            iBool &= ((*pc) <= ucChar2);
          }
 
          if( iBool )
@@ -222,7 +222,7 @@ HB_FUNC( RANGEREPL )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_RANGEREPL, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_RANGEREPL, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )

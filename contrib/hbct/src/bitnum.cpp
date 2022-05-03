@@ -89,7 +89,7 @@ HB_BOOL ct_numParam( int iParam, HB_MAXINT * plNum )
          return true;
       }
    }
-   else if( HB_ISNUM( iParam ) )
+   else if( HB_ISNUM(iParam) )
    {
       *plNum = hb_parnint(iParam);
       return true;
@@ -211,12 +211,12 @@ HB_FUNC( NUMROL )
       {
          HB_USHORT us = static_cast<HB_USHORT>((lValue & 0xff) << (lShift & 0x07));
 
-         lValue = ( lValue & 0xff00 ) | ( us & 0xff ) | ( us >> 8 );
+         lValue = (lValue & 0xff00) | (us & 0xff) | (us >> 8);
       }
       else
       {
-         lValue <<= ( lShift & 0x0f );
-         lValue = ( lValue & 0xffff ) | ( lValue >> 16 );
+         lValue <<= (lShift & 0x0f);
+         lValue = (lValue & 0xffff) | (lValue >> 16);
       }
    }
    else
@@ -371,7 +371,7 @@ HB_FUNC( INTPOS )
 #ifndef HB_LONG_LONG_OFF
          hb_retnint(static_cast<HB_U32>(lValue));
 #else
-         hb_retnlen( static_cast<HB_U32>(lValue), 0, 0 );
+         hb_retnlen(static_cast<HB_U32>(lValue), 0, 0);
 #endif
       }
       else

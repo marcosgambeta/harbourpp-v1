@@ -51,19 +51,19 @@
 /* ---------------- */
 /*  initialization  */
 /* ---------------- */
-int ct_math_init( void )
+int ct_math_init(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_math_init()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_math_init()"));
 #endif
 
    return 1;
 }
 
-int ct_math_exit( void )
+int ct_math_exit(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_math_exit()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_math_exit()"));
 #endif
 
    return 1;
@@ -77,16 +77,16 @@ static int s_iPrecision = 16; /* TODO: make this thread safe */
 void ct_setprecision( int iPrecision )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_setprecision (%i)", iPrecision ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_setprecision (%i)", iPrecision));
 #endif
 
    s_iPrecision = iPrecision;
 }
 
-int ct_getprecision( void )
+int ct_getprecision(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_getprecision()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_getprecision()"));
 #endif
 
    return s_iPrecision;
@@ -98,7 +98,7 @@ HB_FUNC( SETPREC )
 
    if( iPrec >= 1 && iPrec <= 16 )
    {
-      ct_setprecision( iPrec );
+      ct_setprecision(iPrec);
    }
    else
    {
@@ -106,7 +106,7 @@ HB_FUNC( SETPREC )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SETPREC, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+         ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SETPREC, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
    }
    hb_retc_null();
@@ -121,7 +121,7 @@ HB_FUNC( GETPREC )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_GETPREC, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+         ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_GETPREC, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
    }
 }

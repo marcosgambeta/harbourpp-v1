@@ -55,7 +55,7 @@ HB_FUNC( KBDSTAT )
 
    memset(&gtInfo, 0, sizeof(gtInfo));
 
-   hb_gtInfo( HB_GTI_KBDSHIFTS, &gtInfo );
+   hb_gtInfo(HB_GTI_KBDSHIFTS, &gtInfo);
 
    if( gtInfo.pResult )
    {

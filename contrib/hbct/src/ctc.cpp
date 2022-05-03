@@ -57,7 +57,7 @@ HB_USHORT ct_error( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errS
                     HB_ERRCODE errOsCode, HB_USHORT uiFlags, HB_ULONG ulArgCount, ... )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_error(%hu, %d, %d, %s, %s, %d, %hu, %lu)", uiSeverity, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags, ulArgCount ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_error(%hu, %d, %d, %s, %s, %d, %hu, %lu)", uiSeverity, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags, ulArgCount));
 #endif
 
    HB_USHORT uiAction;
@@ -66,7 +66,7 @@ HB_USHORT ct_error( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errS
    PHB_ITEM pArray;
    va_list va;
 
-   pError = hb_errRT_New( uiSeverity, CT_SUBSYSTEM, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags );
+   pError = hb_errRT_New(uiSeverity, CT_SUBSYSTEM, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags);
 
    /* Build the array from the passed arguments. */
    if( ulArgCount == 0 )
@@ -92,12 +92,12 @@ HB_USHORT ct_error( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errS
    {
       pArray = hb_itemArrayNew(ulArgCount);
 
-      va_start( va, ulArgCount );
+      va_start(va, ulArgCount);
       for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
       {
          hb_itemArrayPut(pArray, ulArgPos, va_arg(va, PHB_ITEM));
       }
-      va_end( va );
+      va_end(va);
    }
 
    if( pArray )
@@ -113,10 +113,10 @@ HB_USHORT ct_error( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errS
    }
 
    /* launch error codeblock */
-   uiAction = hb_errLaunch( pError );
+   uiAction = hb_errLaunch(pError);
 
    /* release error codeblock */
-   hb_errRelease( pError );
+   hb_errRelease(pError);
 
    return uiAction;
 }
@@ -128,7 +128,7 @@ PHB_ITEM ct_error_subst( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE
                          HB_ERRCODE errOsCode, HB_USHORT uiFlags, HB_ULONG ulArgCount, ... )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_error_subst(%hu, %d, %d, %s, %s, %d, %hu, %lu)", uiSeverity, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags, ulArgCount ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_error_subst(%hu, %d, %d, %s, %s, %d, %hu, %lu)", uiSeverity, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags, ulArgCount));
 #endif
 
    PHB_ITEM pRetVal;
@@ -137,7 +137,7 @@ PHB_ITEM ct_error_subst( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE
    PHB_ITEM pArray;
    va_list va;
 
-   pError = hb_errRT_New_Subst( uiSeverity, CT_SUBSYSTEM, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags );
+   pError = hb_errRT_New_Subst(uiSeverity, CT_SUBSYSTEM, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags);
 
    /* Build the array from the passed arguments. */
    if( ulArgCount == 0 )
@@ -163,12 +163,12 @@ PHB_ITEM ct_error_subst( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE
    {
       pArray = hb_itemArrayNew(ulArgCount);
 
-      va_start( va, ulArgCount );
+      va_start(va, ulArgCount);
       for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
       {
          hb_itemArrayPut(pArray, ulArgPos, va_arg(va, PHB_ITEM));
       }
-      va_end( va );
+      va_end(va);
    }
 
    if( pArray )
@@ -184,8 +184,8 @@ PHB_ITEM ct_error_subst( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE
    }
 
    /* launch error codeblock */
-   pRetVal = hb_errLaunchSubst( pError );
-   hb_errRelease( pError );
+   pRetVal = hb_errLaunchSubst(pError);
+   hb_errRelease(pError);
 
    return pRetVal;
 }
@@ -196,16 +196,16 @@ static int s_iArgErrMode = CT_ARGERR_IGNORE;
 void ct_setargerrormode( int iMode )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_setargerrormode(%i)", iMode ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_setargerrormode(%i)", iMode));
 #endif
 
    s_iArgErrMode = iMode;
 }
 
-int ct_getargerrormode( void )
+int ct_getargerrormode(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_getargerrormode()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_getargerrormode()"));
 #endif
 
    return s_iArgErrMode;
@@ -225,7 +225,7 @@ HB_FUNC( CSETARGERR )
           iNewMode == CT_ARGERR_CATASTROPHIC ||
           iNewMode == CT_ARGERR_IGNORE )
       {
-         ct_setargerrormode( hb_parni(1) );
+         ct_setargerrormode(hb_parni(1));
       }
       else
       {
@@ -233,7 +233,7 @@ HB_FUNC( CSETARGERR )
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
          {
-            ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETARGERR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+            ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETARGERR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
          }
       }
    }
@@ -243,7 +243,7 @@ HB_FUNC( CSETARGERR )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETARGERR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+         ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETARGERR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
    }
 }

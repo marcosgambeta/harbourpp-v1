@@ -65,7 +65,7 @@ static void do_count( int iSwitch )
 
       if( hb_parclen(2) > 0 )
       {
-         cSearch = *( hb_parc(2) );
+         cSearch = *(hb_parc(2));
       }
       else if( HB_ISNUM(2) )
       {
@@ -99,7 +99,7 @@ static void do_count( int iSwitch )
             break;
       }
 
-      hb_retns( sRetVal );
+      hb_retns(sRetVal);
    }
    else
    {
@@ -108,11 +108,11 @@ static void do_count( int iSwitch )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
-                                  iSwitch == DO_COUNT_COUNTLEFT ?
-                                  CT_ERROR_COUNTLEFT : CT_ERROR_COUNTRIGHT,
-                                  nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
-                                  HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+                                 iSwitch == DO_COUNT_COUNTLEFT ?
+                                 CT_ERROR_COUNTLEFT : CT_ERROR_COUNTRIGHT,
+                                 nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
+                                 HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )
@@ -128,10 +128,10 @@ static void do_count( int iSwitch )
 
 HB_FUNC( COUNTLEFT )
 {
-   do_count( DO_COUNT_COUNTLEFT );
+   do_count(DO_COUNT_COUNTLEFT);
 }
 
 HB_FUNC( COUNTRIGHT )
 {
-   do_count( DO_COUNT_COUNTRIGHT );
+   do_count(DO_COUNT_COUNTRIGHT);
 }

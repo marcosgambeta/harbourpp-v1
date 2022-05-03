@@ -80,7 +80,7 @@ static void do_justify( int iSwitch )
 
       if( hb_parclen(2) > 0 )
       {
-         cJustChar = *( hb_parc(2) );
+         cJustChar = *(hb_parc(2));
       }
       else if( HB_ISNUM(2) )
       {
@@ -150,11 +150,11 @@ static void do_justify( int iSwitch )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
-                                  iSwitch == DO_JUSTIFY_JUSTLEFT ?
-                                  CT_ERROR_JUSTLEFT : CT_ERROR_JUSTRIGHT,
-                                  nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+                                 iSwitch == DO_JUSTIFY_JUSTLEFT ?
+                                 CT_ERROR_JUSTLEFT : CT_ERROR_JUSTRIGHT,
+                                 nullptr, HB_ERR_FUNCNAME, 0,
+                                 EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )
@@ -174,10 +174,10 @@ static void do_justify( int iSwitch )
 
 HB_FUNC( JUSTLEFT )
 {
-   do_justify( DO_JUSTIFY_JUSTLEFT );
+   do_justify(DO_JUSTIFY_JUSTLEFT);
 }
 
 HB_FUNC( JUSTRIGHT )
 {
-   do_justify( DO_JUSTIFY_JUSTRIGHT );
+   do_justify(DO_JUSTIFY_JUSTRIGHT);
 }

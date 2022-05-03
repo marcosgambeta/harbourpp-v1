@@ -301,15 +301,15 @@ static void do_atnum(int iSwitch)
 
 HB_FUNC( AFTERATNUM )
 {
-   do_atnum( DO_ATNUM_AFTERATNUM );
+   do_atnum(DO_ATNUM_AFTERATNUM);
 }
 
 HB_FUNC( BEFORATNUM )
 {
-   do_atnum( DO_ATNUM_BEFORATNUM );
+   do_atnum(DO_ATNUM_BEFORATNUM);
 }
 
 HB_FUNC( ATNUM )
 {
-   do_atnum( DO_ATNUM_ATNUM );
+   do_atnum(DO_ATNUM_ATNUM);
 }

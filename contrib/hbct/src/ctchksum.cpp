@@ -54,7 +54,7 @@ HB_FUNC( CHECKSUM )
 
    for( HB_SIZE nPos = 0; nPos < nLen; nPos++ )
    {
-      u32Result += pbyString[nPos] | ( pbyString[nPos + 1] << 8 );
+      u32Result += pbyString[nPos] | (pbyString[nPos + 1] << 8);
    }
 
    hb_retnint(static_cast<HB_U32>((u32Result & 0x00FFFFFF) | ((nLen & 0xFF) << 24)));

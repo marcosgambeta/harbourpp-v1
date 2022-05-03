@@ -51,7 +51,7 @@ HB_FUNC( COMPLEMENT )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       if( HB_IS_STRING(pItem) )
       {
@@ -92,7 +92,7 @@ HB_FUNC( COMPLEMENT )
 
          dValue = hb_itemGetND(pItem);
          hb_itemGetNLen(pItem, &iWidth, &iDec);
-         hb_retndlen( -dValue, iWidth, iDec );
+         hb_retndlen(-dValue, iWidth, iDec);
       }
       else if( HB_IS_LOGICAL(pItem) )
       {

@@ -100,7 +100,7 @@ HB_FUNC( CHARREPL )
 
             while( ( pc = ct_at_exact_forward( pc, sStrLen - ( pc - pcString ), pcSearch + sIndex, 1, &sMatchStrLen ) ) != nullptr )
             {
-               *( pcRet + ( pc - pcString ) ) = *( pcReplace + sReplIndex );
+               *(pcRet + (pc - pcString)) = *(pcReplace + sReplIndex);
                pc++;
             }
          }
@@ -110,7 +110,7 @@ HB_FUNC( CHARREPL )
             char * pcw = pcRet;
             while( (pcw = const_cast<char*>(ct_at_exact_forward(pcw, sStrLen - (pcw - pcRet), pcSearch + sIndex, 1, &sMatchStrLen))) != nullptr )
             {
-               *pcw++ = *( pcReplace + sReplIndex );
+               *pcw++ = *(pcReplace + sReplIndex);
             }
          }
       }
@@ -135,7 +135,7 @@ HB_FUNC( CHARREPL )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARREPL, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARREPL, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )

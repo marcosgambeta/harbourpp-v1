@@ -71,7 +71,7 @@ HB_FUNC( ENVPARAM )
 
       for( pEnv = pEnviron; *pEnv; pEnv++ )
       {
-         nSize += strlen( *pEnv ) + 2;
+         nSize += strlen(*pEnv) + 2;
       }
 
       if( nSize > 0 )
@@ -79,7 +79,7 @@ HB_FUNC( ENVPARAM )
          pResult = static_cast<char*>(hb_xgrab((nSize + 1) * sizeof(char)));
          for( pEnv = pEnviron, pDst = pResult; *pEnv; pEnv++ )
          {
-            HB_SIZE n = strlen( *pEnv );
+            HB_SIZE n = strlen(*pEnv);
             memcpy(pDst, *pEnv, n);
             pDst += n;
             *pDst++ = '\r';
@@ -129,12 +129,12 @@ HB_FUNC( ENVPARAM )
          }
       }
 
-      FreeEnvironmentStrings( lpEnviron );
+      FreeEnvironmentStrings(lpEnviron);
    }
 
    if( lpResult )
    {
-      HB_RETSTRLEN( lpResult, nSize );
+      HB_RETSTRLEN(lpResult, nSize);
       hb_xfree(lpResult);
    }
    else

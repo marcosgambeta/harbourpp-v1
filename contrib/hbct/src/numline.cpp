@@ -61,7 +61,7 @@ HB_FUNC( NUMLINE )
       {
          const char * pBuffer = static_cast<const char*>(memchr(pcString, HB_CHAR_LF, nStrLen));
 
-         if( !pBuffer || ( pBuffer - pcString ) > nLineLength )
+         if( !pBuffer || (pBuffer - pcString) > nLineLength)
          {
             pBuffer = pcString + nLineLength;
          }
@@ -79,5 +79,5 @@ HB_FUNC( NUMLINE )
       }
    }
 
-   hb_retns( nLines );
+   hb_retns(nLines);
 }

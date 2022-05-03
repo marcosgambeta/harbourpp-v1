@@ -79,7 +79,7 @@ static void do_pos1(int iSwitch)
          }
          else
          {
-            ucChar1 = *( hb_parc(1) );
+            ucChar1 = *(hb_parc(1));
          }
 
          if( hb_parclen(2) == 0 )
@@ -89,7 +89,7 @@ static void do_pos1(int iSwitch)
          }
          else
          {
-            ucChar2 = *( hb_parc(2) );
+            ucChar2 = *(hb_parc(2));
          }
 
          iParamShift += 2;
@@ -116,7 +116,7 @@ static void do_pos1(int iSwitch)
                break;
 
             case DO_POS1_POSRANGE:
-               iDoRet = ( ucChar1 <= *puc && ucChar2 >= *puc );
+               iDoRet = (ucChar1 <= *puc && ucChar2 >= *puc);
                break;
 
             case DO_POS1_POSUPPER:
@@ -126,7 +126,7 @@ static void do_pos1(int iSwitch)
 
          if( (iMode && !iDoRet) || (!iMode && iDoRet) )
          {
-            hb_retns( puc - pcString + 1 );
+            hb_retns(puc - pcString + 1);
             return;
          }
       }
@@ -159,7 +159,7 @@ static void do_pos1(int iSwitch)
                iError = CT_ERROR_POSUPPER;
                break;
          }
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, iError, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, iError, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )

@@ -170,7 +170,7 @@ HB_FUNC( NTOC )
          {
             int iDigit = uValue % iBase;
             uValue /= iBase;
-            iDigit += iDigit < 10 ? '0' : ( 'A' - 10 );
+            iDigit += iDigit < 10 ? '0' : ('A' - 10);
             szBuffer[i] = static_cast<char>(iDigit);
          }
       }

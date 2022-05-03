@@ -74,19 +74,19 @@ static HB_TSD_NEW(s_ct_str, sizeof(CT_STR), s_ct_str_init, nullptr);
 /* -------------- */
 /* initialization */
 /* -------------- */
-int ct_str_init( void )
+int ct_str_init(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ctstr_init()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("ctstr_init()"));
 #endif
 
    return 1;
 }
 
-int ct_str_exit( void )
+int ct_str_exit(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ctstr_exit()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("ctstr_exit()"));
 #endif
 
    return 1;
@@ -96,7 +96,7 @@ int ct_str_exit( void )
 const char * ct_at_exact_forward( const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, HB_SIZE * psMatchStrLen )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_at_exact_forward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcMatch, sMatchLen, static_cast<void*>(psMatchStrLen) ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_at_exact_forward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcMatch, sMatchLen, static_cast<void*>(psMatchStrLen)));
 #endif
 
    HB_SIZE sPos;
@@ -106,7 +106,7 @@ const char * ct_at_exact_forward( const char * pcString, HB_SIZE sStrLen, const 
       return nullptr;
    }
 
-   sPos = hb_strAt( pcMatch, sMatchLen, pcString, sStrLen );
+   sPos = hb_strAt(pcMatch, sMatchLen, pcString, sStrLen);
    if( sPos == 0 )
    {
       return nullptr;
@@ -125,7 +125,7 @@ const char * ct_at_exact_forward( const char * pcString, HB_SIZE sStrLen, const 
 const char * ct_at_exact_backward( const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, HB_SIZE * psMatchStrLen )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_at_exact_backward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcMatch, sMatchLen, static_cast<void*>(psMatchStrLen) ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_at_exact_backward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcMatch, sMatchLen, static_cast<void*>(psMatchStrLen)));
 #endif
 
    HB_SIZE sIndex;
@@ -163,7 +163,7 @@ const char * ct_at_exact_backward( const char * pcString, HB_SIZE sStrLen, const
 const char * ct_at_wildcard_forward( const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, char cWildCard, HB_SIZE * psMatchStrLen )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_at_wildcard_forward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, \'%c\', %p)", pcString, sStrLen, pcMatch, sMatchLen, cWildCard, static_cast<void*>(psMatchStrLen) ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_at_wildcard_forward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, \'%c\', %p)", pcString, sStrLen, pcMatch, sMatchLen, cWildCard, static_cast<void*>(psMatchStrLen)));
 #endif
 
    HB_SIZE sIndex;
@@ -179,7 +179,7 @@ const char * ct_at_wildcard_forward( const char * pcString, HB_SIZE sStrLen, con
    {
       for( sIndex = 0; sIndex < sMatchLen; sIndex++ )
       {
-         char c = *( pcMatch + sIndex );
+         char c = *(pcMatch + sIndex);
 
          if( c != cWildCard && c != *( pcRet + sIndex ) )
          {
@@ -203,7 +203,7 @@ const char * ct_at_wildcard_forward( const char * pcString, HB_SIZE sStrLen, con
 const char * ct_at_wildcard_backward( const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, char cWildCard, HB_SIZE * psMatchStrLen )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_at_wildcard_backward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, \'%c\', %p)", pcString, sStrLen, pcMatch, sMatchLen, cWildCard, static_cast<void*>(psMatchStrLen) ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_at_wildcard_backward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, \'%c\', %p)", pcString, sStrLen, pcMatch, sMatchLen, cWildCard, static_cast<void*>(psMatchStrLen)));
 #endif
 
    HB_SIZE sIndex;
@@ -218,7 +218,7 @@ const char * ct_at_wildcard_backward( const char * pcString, HB_SIZE sStrLen, co
    {
       for( sIndex = 0; sIndex < sMatchLen; sIndex++ )
       {
-         char c = *( pcMatch + sIndex );
+         char c = *(pcMatch + sIndex);
 
          if( c != cWildCard && c != *( pcRet + sIndex ) )
          {
@@ -243,7 +243,7 @@ const char * ct_at_wildcard_backward( const char * pcString, HB_SIZE sStrLen, co
 const char * ct_at_charset_forward( const char * pcString, HB_SIZE sStrLen, const char * pcCharSet, HB_SIZE sCharSetLen, HB_SIZE * psMatchedCharPos )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_at_charset_forward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcCharSet, sCharSetLen, static_cast<void*>(psMatchedCharPos) ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_at_charset_forward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcCharSet, sCharSetLen, static_cast<void*>(psMatchedCharPos)));
 #endif
 
    const char * pcRet, * pcSet, * pcStop1, * pcStop2;
@@ -279,7 +279,7 @@ const char * ct_at_charset_forward( const char * pcString, HB_SIZE sStrLen, cons
 const char * ct_at_charset_backward( const char * pcString, HB_SIZE sStrLen, const char * pcCharSet, HB_SIZE sCharSetLen, HB_SIZE * psMatchedCharPos )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_at_charset_backward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcCharSet, sCharSetLen, static_cast<void*>(psMatchedCharPos) ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_at_charset_backward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcCharSet, sCharSetLen, static_cast<void*>(psMatchedCharPos)));
 #endif
 
    const char * pcRet, * pcSet, * pcStop;
@@ -315,7 +315,7 @@ const char * ct_at_charset_backward( const char * pcString, HB_SIZE sStrLen, con
 void ct_setref( int iNewSwitch )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_setref(%i)", iNewSwitch ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_setref(%i)", iNewSwitch));
 #endif
 
    PCT_STR ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
@@ -323,10 +323,10 @@ void ct_setref( int iNewSwitch )
    ct_str->iRefSwitch = iNewSwitch;
 }
 
-int ct_getref( void )
+int ct_getref(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_getref()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_getref()"));
 #endif
 
    PCT_STR ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
@@ -340,7 +340,7 @@ HB_FUNC( CSETREF )
 
    if( HB_ISLOG(1) )
    {
-      ct_setref( hb_parl(1) );
+      ct_setref(hb_parl(1));
    }
    else if( hb_pcount() > 0 ) /* 1 params, but is not logical ! */
    {
@@ -348,7 +348,7 @@ HB_FUNC( CSETREF )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETREF, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+         ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETREF, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
    }
 }
@@ -358,7 +358,7 @@ HB_FUNC( CSETREF )
 void ct_setatmupa( int iNewSwitch )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_setatmupa(%i)", iNewSwitch ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_setatmupa(%i)", iNewSwitch));
 #endif
 
    PCT_STR ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
@@ -366,10 +366,10 @@ void ct_setatmupa( int iNewSwitch )
    ct_str->iAtMupaSwitch = iNewSwitch;
 }
 
-int ct_getatmupa( void )
+int ct_getatmupa(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_getatmupa()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_getatmupa()"));
 #endif
 
    PCT_STR ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
@@ -383,7 +383,7 @@ HB_FUNC( CSETATMUPA )
 
    if( HB_ISLOG(1) )
    {
-      ct_setatmupa( hb_parl(1) );
+      ct_setatmupa(hb_parl(1));
    }
    else if( hb_pcount() > 0 ) /* 1 params, but is not logical ! */
    {
@@ -391,7 +391,7 @@ HB_FUNC( CSETATMUPA )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETATMUPA, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+         ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETATMUPA, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
    }
 }
@@ -401,7 +401,7 @@ HB_FUNC( CSETATMUPA )
 void ct_setatlike( int iNewMode )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_setatlike(%i)", iNewMode ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_setatlike(%i)", iNewMode));
 #endif
 
    PCT_STR ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
@@ -409,10 +409,10 @@ void ct_setatlike( int iNewMode )
    ct_str->iAtLikeMode = iNewMode;
 }
 
-int ct_getatlike( void )
+int ct_getatlike(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_getatlike()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_getatlike()"));
 #endif
 
    PCT_STR ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
@@ -423,7 +423,7 @@ int ct_getatlike( void )
 void ct_setatlikechar( char cNewChar )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_setatlikechar(\'%c\')", cNewChar ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_setatlikechar(\'%c\')", cNewChar));
 #endif
 
    PCT_STR ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
@@ -431,10 +431,10 @@ void ct_setatlikechar( char cNewChar )
    ct_str->cAtLikeChar = cNewChar;
 }
 
-char ct_getatlikechar( void )
+char ct_getatlikechar(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "ct_getatlikechar()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("ct_getatlikechar()"));
 #endif
 
    PCT_STR ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
@@ -454,7 +454,7 @@ HB_FUNC( SETATLIKE )
 
       if( iNewMode == CT_SETATLIKE_EXACT || iNewMode == CT_SETATLIKE_WILDCARD )
       {
-         ct_setatlike( iNewMode );
+         ct_setatlike(iNewMode);
       }
       else
       {
@@ -462,7 +462,7 @@ HB_FUNC( SETATLIKE )
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
          {
-            ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SETATLIKE, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+            ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SETATLIKE, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
          }
       }
    }
@@ -484,7 +484,7 @@ HB_FUNC( SETATLIKE )
 
          if( hb_parclen(2) > 0 )
          {
-            ct_setatlikechar( *pcNewChar );
+            ct_setatlikechar(*pcNewChar);
          }
       }
    }
@@ -494,7 +494,7 @@ HB_FUNC( SETATLIKE )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SETATLIKE, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+         ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SETATLIKE, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
    }
 }

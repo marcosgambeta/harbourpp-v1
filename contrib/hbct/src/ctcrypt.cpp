@@ -75,11 +75,11 @@ HB_FUNC( CRYPT )
          HB_BYTE byte = pbyString[nStringPos] ^ pbyCrypt[nCryptPos++];
          HB_USHORT tmp;
 
-         uiTmpCount2 = HB_MKUSHORT( ( HB_LOBYTE( uiTmpCount2 ) ^ HB_HIBYTE( uiTmpCount2 ) ), HB_HIBYTE( uiTmpCount2 ) );
+         uiTmpCount2 = HB_MKUSHORT((HB_LOBYTE(uiTmpCount2) ^ HB_HIBYTE(uiTmpCount2)), HB_HIBYTE(uiTmpCount2));
 
-         for( tmp = HB_LOBYTE( uiTmpCount2 ); tmp; tmp-- )
+         for( tmp = HB_LOBYTE(uiTmpCount2); tmp; tmp-- )
          {
-            uiTmpCount2 = ( uiTmpCount2 >> 1 ) | ( ( uiTmpCount2 & 1 ) << 15 );
+            uiTmpCount2 = (uiTmpCount2 >> 1) | ((uiTmpCount2 & 1) << 15);
          }
 
          uiTmpCount2 ^= uiTmpCount1;
@@ -96,27 +96,27 @@ HB_FUNC( CRYPT )
 
             uiTmpCount2--;
 
-            for( tmp = HB_LOBYTE( uiTmpCount2 ); tmp; tmp-- )
+            for( tmp = HB_LOBYTE(uiTmpCount2); tmp; tmp-- )
             {
-               uiTmpCount1 = ( uiTmpCount1 >> 1 ) | ( ( uiTmpCount1 & 1 ) << 15 );
+               uiTmpCount1 = (uiTmpCount1 >> 1) | ((uiTmpCount1 & 1) << 15);
             }
 
-            uiTmpCount1 = HB_MKUSHORT( HB_HIBYTE( uiTmpCount1 ), HB_LOBYTE( uiTmpCount1 ) );
-            uiTmpCount1 = HB_MKUSHORT( ( HB_LOBYTE( uiTmpCount1 ) ^ 0xFF ), HB_HIBYTE( uiTmpCount1 ) );
-            uiTmpCount1 = ( uiTmpCount1 << 1 ) | ( ( uiTmpCount1 & 0x8000 ) >> 15 );
+            uiTmpCount1 = HB_MKUSHORT(HB_HIBYTE(uiTmpCount1), HB_LOBYTE(uiTmpCount1));
+            uiTmpCount1 = HB_MKUSHORT((HB_LOBYTE(uiTmpCount1) ^ 0xFF), HB_HIBYTE(uiTmpCount1));
+            uiTmpCount1 = (uiTmpCount1 << 1) | ((uiTmpCount1 & 0x8000) >> 15);
             uiTmpCount1 ^= 0xAAAA;
 
-            byTmp = HB_LOBYTE( uiTmpCount1 );
-            byTmp = ( byTmp << 1 ) | ( ( byTmp & 0x80 ) >> 7 );
+            byTmp = HB_LOBYTE(uiTmpCount1);
+            byTmp = (byTmp << 1) | ((byTmp & 0x80) >> 7);
 
-            uiTmpCount1 = HB_MKUSHORT( byTmp, HB_HIBYTE( uiTmpCount1 ) );
+            uiTmpCount1 = HB_MKUSHORT(byTmp, HB_HIBYTE(uiTmpCount1));
 
          }
          while( --uiTmpCount2 );
 
          uiCount1 = uiTmpCount1;
 
-         pbyResult[nStringPos++] = byte ^ HB_LOBYTE( uiTmpCount1 );
+         pbyResult[nStringPos++] = byte ^ HB_LOBYTE(uiTmpCount1);
 
          if( nCryptPos == nCryptLen )
          {

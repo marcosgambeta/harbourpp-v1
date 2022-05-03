@@ -79,14 +79,14 @@ HB_FUNC( CHARRELA )
          try a search algorithm alternating between both strings */
       while( sOffset1 < sStrLen1 && sOffset2 < sStrLen2 )
       {
-         pc1 = ct_at_exact_forward( pcStringToMatch1, sStrToMatchLen1, pcString1 + sOffset1, sStrLen1 - sOffset1, &sMatchStrLen );
-         pc2 = ct_at_exact_forward( pcStringToMatch2, sStrToMatchLen2, pcString2 + sOffset2, sStrLen2 - sOffset2, &sMatchStrLen );
+         pc1 = ct_at_exact_forward(pcStringToMatch1, sStrToMatchLen1, pcString1 + sOffset1, sStrLen1 - sOffset1, &sMatchStrLen);
+         pc2 = ct_at_exact_forward(pcStringToMatch2, sStrToMatchLen2, pcString2 + sOffset2, sStrLen2 - sOffset2, &sMatchStrLen);
          if( pc1 != nullptr && pc2 != nullptr )
          {
             if( pc1 - pcString1 == pc2 - pcString2 )
             {
                /* correlation found */
-               hb_retns( ( pc1 - pcString1 ) + 1 );
+               hb_retns((pc1 - pcString1) + 1);
                return;
             }
             else
@@ -116,9 +116,9 @@ HB_FUNC( CHARRELA )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
-                                  CT_ERROR_CHARRELA, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+                                 CT_ERROR_CHARRELA, nullptr, HB_ERR_FUNCNAME, 0,
+                                 EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )
@@ -178,8 +178,8 @@ HB_FUNC( CHARRELREP )
          try a search algorithm alternating between both strings */
       while( sOffset1 < sStrLen1 && sOffset2 < sStrLen2 )
       {
-         pc1 = ct_at_exact_forward( pcStringToMatch1, sStrToMatchLen1, pcString1 + sOffset1, sStrLen1 - sOffset1, &sMatchStrLen );
-         pc2 = ct_at_exact_forward( pcStringToMatch2, sStrToMatchLen2, pcString2 + sOffset2, sStrLen2 - sOffset2, &sMatchStrLen );
+         pc1 = ct_at_exact_forward(pcStringToMatch1, sStrToMatchLen1, pcString1 + sOffset1, sStrLen1 - sOffset1, &sMatchStrLen);
+         pc2 = ct_at_exact_forward(pcStringToMatch2, sStrToMatchLen2, pcString2 + sOffset2, sStrLen2 - sOffset2, &sMatchStrLen);
          if( pc1 != nullptr && pc2 != nullptr )
          {
             if( pc1 - pcString1 == pc2 - pcString2 )
@@ -197,9 +197,9 @@ HB_FUNC( CHARRELREP )
                      sReplOffset = sReplaceLen < sCurr ? sReplaceLen : sCurr;
 
                      /* do the characters in pcString2 and pcStrToMatch2 match ? */
-                     if( *( pc2 + sCurr - 1 ) == *( pcStringToMatch2 + sStr2Offset - 1 ) )
+                     if( *(pc2 + sCurr - 1) == *(pcStringToMatch2 + sStr2Offset - 1) )
                      {
-                        *( pcRet + ( pc2 - pcString2 ) + sCurr - 1 ) = *( pcReplace + sReplOffset - 1 );
+                        *(pcRet + (pc2 - pcString2) + sCurr - 1) = *(pcReplace + sReplOffset - 1);
                      }
                   }
                }
@@ -242,9 +242,9 @@ HB_FUNC( CHARRELREP )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
-                                  CT_ERROR_CHARRELREP, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+                                 CT_ERROR_CHARRELREP, nullptr, HB_ERR_FUNCNAME, 0,
+                                 EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )

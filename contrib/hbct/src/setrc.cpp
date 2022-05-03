@@ -52,13 +52,13 @@ HB_FUNC( SETRC )
 
    if( fRow && fCol )
    {
-      hb_gtSetPos( hb_parni(1), hb_parni(2) );
+      hb_gtSetPos(hb_parni(1), hb_parni(2));
    }
    else
    {
       int iRow, iCol;
-      hb_gtGetPos( &iRow, &iCol );
-      hb_gtSetPos( fRow ? hb_parni(1) : iRow, fCol ? hb_parni(2) : iCol );
+      hb_gtGetPos(&iRow, &iCol);
+      hb_gtSetPos(fRow ? hb_parni(1) : iRow, fCol ? hb_parni(2) : iCol);
    }
 
    hb_retc_null();

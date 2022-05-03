@@ -71,7 +71,7 @@ _hb_do_sortascend( const void * p1, const void * p2 )
 {
    PCT_CHARSORT charsort = static_cast<PCT_CHARSORT>(hb_stackGetTSD(&s_charsort));
 
-   return strncmp( static_cast<const char*>(p1) + charsort->sElementPos, static_cast<const char*>(p2) + charsort->sElementPos, charsort->sCompareLen );
+   return strncmp(static_cast<const char*>(p1) + charsort->sElementPos, static_cast<const char*>(p2) + charsort->sElementPos, charsort->sCompareLen);
 }
 
 #ifdef __IBMCPP__
@@ -83,7 +83,7 @@ _hb_do_sortdescend( const void * p1, const void * p2 )
 {
    PCT_CHARSORT charsort = static_cast<PCT_CHARSORT>(hb_stackGetTSD(&s_charsort));
 
-   return -strncmp( static_cast<const char*>(p1) + charsort->sElementPos, static_cast<const char*>(p2) + charsort->sElementPos, charsort->sCompareLen );
+   return -strncmp(static_cast<const char*>(p1) + charsort->sElementPos, static_cast<const char*>(p2) + charsort->sElementPos, charsort->sCompareLen);
 }
 
 HB_FUNC( CHARSORT )
@@ -117,7 +117,7 @@ HB_FUNC( CHARSORT )
 
          if( iArgErrorMode != CT_ARGERR_IGNORE )
          {
-            ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSORT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+            ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSORT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
          }
 
          if( iNoRet )
@@ -136,11 +136,11 @@ HB_FUNC( CHARSORT )
 
       if( iDescend )
       {
-         qsort( pcRet + sIgnore, ( sSortLen / sElementLen ), sElementLen, _hb_do_sortdescend );
+         qsort(pcRet + sIgnore, (sSortLen / sElementLen), sElementLen, _hb_do_sortdescend);
       }
       else
       {
-         qsort( pcRet + sIgnore, ( sSortLen / sElementLen ), sElementLen, _hb_do_sortascend );
+         qsort(pcRet + sIgnore, (sSortLen / sElementLen), sElementLen, _hb_do_sortascend);
       }
 
       /* return string */
@@ -163,7 +163,7 @@ HB_FUNC( CHARSORT )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSORT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSORT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )

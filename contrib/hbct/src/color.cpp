@@ -55,7 +55,7 @@ HB_FUNC( INVERTATTR )
 
    if( HB_ISCHAR(1) )
    {
-      iAttr = hb_gtColorToN( hb_parc(1) );
+      iAttr = hb_gtColorToN(hb_parc(1));
       if( iAttr == -1 )
       {
          iAttr = 0;
@@ -73,7 +73,7 @@ HB_FUNC( COLORTON )
 {
    if( HB_ISCHAR(1) )
    {
-      int iColor = hb_gtColorToN( hb_parc(1) );
+      int iColor = hb_gtColorToN(hb_parc(1));
       hb_retni(iColor == -1 ? 0 : iColor);
    }
    else
@@ -92,11 +92,11 @@ HB_FUNC( NTOCOLOR )
 
       if( hb_parl(2) )
       {
-         hb_gtColorsToString( &iColor, 1, szColorString, sizeof(szColorString) );
+         hb_gtColorsToString(&iColor, 1, szColorString, sizeof(szColorString));
       }
       else
       {
-         hb_snprintf( szColorString, sizeof(szColorString), "%02d/%02d", iColor & 0x0f, iColor >> 4 );
+         hb_snprintf(szColorString, sizeof(szColorString), "%02d/%02d", iColor & 0x0f, iColor >> 4);
       }
       hb_retc(szColorString);
    }
@@ -108,18 +108,18 @@ HB_FUNC( NTOCOLOR )
 
 HB_FUNC( ENHANCED )
 {
-   hb_gtColorSelect( HB_CLR_ENHANCED );
+   hb_gtColorSelect(HB_CLR_ENHANCED);
    hb_retc_null();
 }
 
 HB_FUNC( STANDARD )
 {
-   hb_gtColorSelect( HB_CLR_STANDARD );
+   hb_gtColorSelect(HB_CLR_STANDARD);
    hb_retc_null();
 }
 
 HB_FUNC( UNSELECTED )
 {
-   hb_gtColorSelect( HB_CLR_UNSELECTED );
+   hb_gtColorSelect(HB_CLR_UNSELECTED);
    hb_retc_null();
 }

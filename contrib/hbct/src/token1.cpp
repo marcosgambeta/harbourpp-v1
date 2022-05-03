@@ -166,7 +166,7 @@ static void do_token1(int iSwitch)
          {
             if( iNoRef )
             {
-               hb_retl(false );
+               hb_retl(false);
             }
             else
             {
@@ -197,7 +197,7 @@ static void do_token1(int iSwitch)
          {
             sSubStrLen -= ( pc - pcSubStr ) + 1;
             pcSubStr = pc + 1;
-            pc = ct_at_charset_forward( pcSubStr, sSubStrLen, pcSeparatorStr, sSeparatorStrLen, &sMatchedPos );
+            pc = ct_at_charset_forward(pcSubStr, sSubStrLen, pcSeparatorStr, sSeparatorStrLen, &sMatchedPos);
             if( iSwitch == DO_TOKEN1_TOKEN )
             {
                ct_token->iPreSeparator = ct_token->iPostSeparator;
@@ -238,7 +238,7 @@ static void do_token1(int iSwitch)
                   break;
                }
                case DO_TOKEN1_NUMTOKEN:
-                  hb_retns( nToken );
+                  hb_retns(nToken);
                   break;
 
                case DO_TOKEN1_ATTOKEN:
@@ -356,13 +356,13 @@ static void do_token1(int iSwitch)
             break;
          }
          case DO_TOKEN1_NUMTOKEN:
-            hb_retns( nToken );
+            hb_retns(nToken);
             break;
 
          case DO_TOKEN1_ATTOKEN:
             if( nTokenCounter == HB_SIZE_MAX || nToken == nTokenCounter )
             {
-               hb_retns( pcSubStr - pcString + 1 );
+               hb_retns(pcSubStr - pcString + 1);
             }
             else
             {
@@ -409,7 +409,7 @@ static void do_token1(int iSwitch)
 
             if( iArgErrorMode != CT_ARGERR_IGNORE )
             {
-               pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKEN, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+               pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKEN, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
             }
 
             if( pSubst != nullptr )
@@ -434,12 +434,12 @@ static void do_token1(int iSwitch)
 
             if( iArgErrorMode != CT_ARGERR_IGNORE )
             {
-               pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
-                                        iSwitch == DO_TOKEN1_TOKENLOWER ?
-                                        CT_ERROR_TOKENLOWER : CT_ERROR_TOKENUPPER,
-                                        nullptr, HB_ERR_FUNCNAME, 0,
-                                        EF_CANSUBSTITUTE,
-                                        HB_ERR_ARGS_BASEPARAMS );
+               pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+                                       iSwitch == DO_TOKEN1_TOKENLOWER ?
+                                       CT_ERROR_TOKENLOWER : CT_ERROR_TOKENUPPER,
+                                       nullptr, HB_ERR_FUNCNAME, 0,
+                                       EF_CANSUBSTITUTE,
+                                       HB_ERR_ARGS_BASEPARAMS);
             }
 
             if( pSubst != nullptr )
@@ -464,11 +464,11 @@ static void do_token1(int iSwitch)
 
             if( iArgErrorMode != CT_ARGERR_IGNORE )
             {
-               pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
-                                        iSwitch == DO_TOKEN1_NUMTOKEN ?
-                                        CT_ERROR_NUMTOKEN : CT_ERROR_ATTOKEN,
-                                        nullptr, HB_ERR_FUNCNAME, 0,
-                                        EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+               pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+                                       iSwitch == DO_TOKEN1_NUMTOKEN ?
+                                       CT_ERROR_NUMTOKEN : CT_ERROR_ATTOKEN,
+                                       nullptr, HB_ERR_FUNCNAME, 0,
+                                       EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
             }
 
             if( pSubst != nullptr )

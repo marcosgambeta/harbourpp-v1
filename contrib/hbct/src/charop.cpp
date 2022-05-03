@@ -203,7 +203,7 @@ void ct_charop( int iMode )
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
                {
-                  ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARADD, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+                  ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARADD, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
                }
 
                hb_xmemcpy(pucResult, pucString, sStrLen);
@@ -229,7 +229,7 @@ void ct_charop( int iMode )
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
                {
-                  ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSUB, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+                  ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSUB, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
                }
 
                hb_xmemcpy(pucResult, pucString, sStrLen);
@@ -255,7 +255,7 @@ void ct_charop( int iMode )
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
                {
-                  ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARAND, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+                  ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARAND, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
                }
 
                hb_xmemcpy(pucResult, pucString, sStrLen);
@@ -281,7 +281,7 @@ void ct_charop( int iMode )
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
                {
-                  ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHAROR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+                  ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHAROR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
                }
 
                hb_xmemcpy(pucResult, pucString, sStrLen);
@@ -307,7 +307,7 @@ void ct_charop( int iMode )
 
                if( iArgErrorMode != CT_ARGERR_IGNORE )
                {
-                  ct_error( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARXOR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS );
+                  ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARXOR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
                }
 
                hb_xmemcpy(pucResult, pucString, sStrLen);
@@ -377,7 +377,7 @@ void ct_charop( int iMode )
                iError = CT_ERROR_CHARRLR;
                break;
          }
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, iError, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, iError, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )
@@ -393,25 +393,25 @@ void ct_charop( int iMode )
 
 HB_FUNC( CHARADD )
 {
-   ct_charop( CT_CHAROP_CHARADD );
+   ct_charop(CT_CHAROP_CHARADD);
 }
 
 HB_FUNC( CHARAND )
 {
-   ct_charop( CT_CHAROP_CHARAND );
+   ct_charop(CT_CHAROP_CHARAND);
 }
 
 HB_FUNC( CHARNOT )
 {
-   ct_charop( CT_CHAROP_CHARNOT );
+   ct_charop(CT_CHAROP_CHARNOT);
 }
 
 HB_FUNC( CHAROR )
 {
-   ct_charop( CT_CHAROP_CHAROR );
+   ct_charop(CT_CHAROP_CHAROR);
 }
 
 HB_FUNC( CHARXOR )
 {
-   ct_charop( CT_CHAROP_CHARXOR );
+   ct_charop(CT_CHAROP_CHARXOR);
 }

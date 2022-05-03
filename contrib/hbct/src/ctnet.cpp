@@ -95,12 +95,12 @@ static HB_BOOL hb_IsNetShared( const char * szLocalDevice )
    TCHAR lpRemoteDevice[HB_PATH_MAX];
    LPCTSTR lpLocalDevice;
    LPTSTR lpFree;
-   DWORD dwLen = HB_SIZEOFARRAY( lpRemoteDevice );
+   DWORD dwLen = HB_SIZEOFARRAY(lpRemoteDevice);
    DWORD dwResult;
 
-   lpLocalDevice = HB_FSNAMECONV( szLocalDevice, &lpFree );
+   lpLocalDevice = HB_FSNAMECONV(szLocalDevice, &lpFree);
    hb_vmUnlock();
-   dwResult = WNetGetConnection( lpLocalDevice, lpRemoteDevice, &dwLen );
+   dwResult = WNetGetConnection(lpLocalDevice, lpRemoteDevice, &dwLen);
    hb_vmLock();
    if( lpFree )
    {
@@ -116,7 +116,7 @@ HB_FUNC( NETCANCEL )
 #if defined(HB_OS_WIN)
    void * hDevice;
 
-   DWORD dwResult = WNetCancelConnection( HB_PARSTRDEF(1, &hDevice, nullptr), TRUE );  /* FALSE = fail if exist open files or print jobs. */
+   DWORD dwResult = WNetCancelConnection(HB_PARSTRDEF(1, &hDevice, nullptr), TRUE);  /* FALSE = fail if exist open files or print jobs. */
 
    hb_strfree(hDevice);
    /* TRUE = force cancel connection even if exist
@@ -131,7 +131,7 @@ HB_FUNC( NETCANCEL )
 HB_FUNC( NETPRINTER )
 {
 #if defined(HB_OS_WIN)
-   const char * cPrn = hb_setGetCPtr( HB_SET_PRINTFILE );  /* query default local printer port. */
+   const char * cPrn = hb_setGetCPtr(HB_SET_PRINTFILE);  /* query default local printer port. */
 
    if( !cPrn || !*cPrn || hb_stricmp( cPrn, "PRN" ) == 0 )
    {
@@ -188,7 +188,7 @@ HB_FUNC( NETRMTNAME )
    void * hLocalDev;
 
    TCHAR lpRemoteDevice[128];
-   DWORD dwLen = HB_SIZEOFARRAY( lpRemoteDevice );
+   DWORD dwLen = HB_SIZEOFARRAY(lpRemoteDevice);
    DWORD dwSize = 0;
    LPCTSTR lpLocalName = HB_PARSTRDEF(1, &hLocalDev, nullptr);
 
@@ -196,7 +196,7 @@ HB_FUNC( NETRMTNAME )
    {
       if( dwSize > 0 && dwSize <= dwLen && WNetGetConnection( lpLocalName, lpRemoteDevice, &dwSize ) == NO_ERROR )
       {
-         HB_RETSTRLEN( lpRemoteDevice, static_cast<HB_SIZE>(dwSize - 1) );
+         HB_RETSTRLEN(lpRemoteDevice, static_cast<HB_SIZE>(dwSize - 1));
       }
       else
       {
@@ -219,17 +219,17 @@ HB_FUNC( NETWORK )
 #if defined(HB_OS_WIN)
    DWORD dwResult;
    TCHAR lpProviderName[128];
-   DWORD dwLen = HB_SIZEOFARRAY( lpProviderName );
+   DWORD dwLen = HB_SIZEOFARRAY(lpProviderName);
 
-   dwResult = WNetGetProviderName( WNNC_NET_MSNET, lpProviderName, &dwLen );
+   dwResult = WNetGetProviderName(WNNC_NET_MSNET, lpProviderName, &dwLen);
 
    if( dwResult != NO_ERROR )
    {
-      dwResult = WNetGetProviderName( WNNC_NET_LANMAN, lpProviderName, &dwLen );
+      dwResult = WNetGetProviderName(WNNC_NET_LANMAN, lpProviderName, &dwLen);
 
       if( dwResult != NO_ERROR )
       {
-         dwResult = WNetGetProviderName( WNNC_NET_NETWARE, lpProviderName, &dwLen );
+         dwResult = WNetGetProviderName(WNNC_NET_NETWARE, lpProviderName, &dwLen);
       }
    }
 
@@ -243,7 +243,7 @@ HB_FUNC( NNETWORK )
 {
 #if defined(HB_OS_WIN)
    TCHAR lpProviderName[128];
-   DWORD dwLen = HB_SIZEOFARRAY( lpProviderName );
+   DWORD dwLen = HB_SIZEOFARRAY(lpProviderName);
 
    hb_retl(WNetGetProviderName(WNNC_NET_NETWARE, lpProviderName, &dwLen) == NO_ERROR);
 #else

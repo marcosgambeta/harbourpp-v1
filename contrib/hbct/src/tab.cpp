@@ -101,7 +101,7 @@ HB_FUNC( TABEXPAND )
       }
       if( sNewLineLen > 0 )
       {
-         cCR = *( pcNewLine );
+         cCR = *(pcNewLine);
       }
       else
       {
@@ -151,7 +151,7 @@ HB_FUNC( TABEXPAND )
          {
             /* tab character */
 
-            for( HB_SIZE sFillIndex = sTabWidth - ( sLineIndex % sTabWidth ); sFillIndex > 0; sFillIndex-- )
+            for( HB_SIZE sFillIndex = sTabWidth - (sLineIndex % sTabWidth); sFillIndex > 0; sFillIndex-- )
             {
                *( pcRet + sRetLen ) = cFill;
                sRetLen++;
@@ -195,7 +195,7 @@ HB_FUNC( TABEXPAND )
          }
          else
          {
-            *( pcRet + sRetLen ) = *( pcString + sIndex );
+            *(pcRet + sRetLen) = *(pcString + sIndex);
             sRetLen++;
             sIndex++;
             sLineIndex++;
@@ -214,7 +214,7 @@ HB_FUNC( TABEXPAND )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TABEXPAND, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TABEXPAND, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )
@@ -273,11 +273,11 @@ HB_FUNC( TABPACK )
       else
       {
          pcNewLine = hb_conNewLine();
-         sNewLineLen = strlen( pcNewLine );
+         sNewLineLen = strlen(pcNewLine);
       }
       if( sNewLineLen > 0 )
       {
-         cCR = *( pcNewLine );
+         cCR = *(pcNewLine);
       }
       else
       {
@@ -400,7 +400,7 @@ HB_FUNC( TABPACK )
                   sTabIndex = 0;
                }
             }
-            *( pcRet + sRetLen ) = *( pcString + sIndex );
+            *(pcRet + sRetLen) = *(pcString + sIndex);
             sRetLen++;
             sIndex++;
             sTabIndex++;
@@ -426,7 +426,7 @@ HB_FUNC( TABPACK )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TABPACK, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TABPACK, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )

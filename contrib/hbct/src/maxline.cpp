@@ -78,5 +78,5 @@ HB_FUNC( MAXLINE )
          pcString = pBuffer;
       }
    }
-   hb_retns( nLength );
+   hb_retns(nLength);
 }

@@ -51,7 +51,7 @@ HB_FUNC( FTOC )
    char buf[sizeof(double)];
    double d = hb_parnd(1);
 
-   HB_PUT_LE_DOUBLE( buf, d );
+   HB_PUT_LE_DOUBLE(buf, d);
    hb_retclen(buf, sizeof(buf));
 }
 

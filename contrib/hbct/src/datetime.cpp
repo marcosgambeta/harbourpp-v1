@@ -56,8 +56,8 @@ HB_FUNC( BOM )
 
    if( HB_ISNIL(1) )
    {
-      hb_dateToday( &iYear, &iMonth, &iDay );
-      lDate = hb_dateEncode( iYear, iMonth, iDay );
+      hb_dateToday(&iYear, &iMonth, &iDay);
+      lDate = hb_dateEncode(iYear, iMonth, iDay);
    }
    else
    {
@@ -66,8 +66,8 @@ HB_FUNC( BOM )
 
    if( lDate != 0 )
    {
-      hb_dateDecode( lDate, &iYear, &iMonth, &iDay );
-      hb_retd( iYear, iMonth, 1 );
+      hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
+      hb_retd(iYear, iMonth, 1);
    }
    else
    {
@@ -82,8 +82,8 @@ HB_FUNC( EOM )
 
    if( HB_ISNIL(1) )
    {
-      hb_dateToday( &iYear, &iMonth, &iDay );
-      lDate = hb_dateEncode( iYear, iMonth, iDay );
+      hb_dateToday(&iYear, &iMonth, &iDay);
+      lDate = hb_dateEncode(iYear, iMonth, iDay);
    }
    else
    {
@@ -92,14 +92,14 @@ HB_FUNC( EOM )
 
    if( lDate != 0 )
    {
-      hb_dateDecode( lDate, &iYear, &iMonth, &iDay );
+      hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
       iMonth++;
       if( iMonth > 12 )
       {
          iMonth = 1;
          iYear++;
       }
-      hb_retdl( hb_dateEncode( iYear, iMonth, 1 ) - 1 );
+      hb_retdl(hb_dateEncode(iYear, iMonth, 1) - 1);
    }
    else
    {
@@ -114,8 +114,8 @@ HB_FUNC( BOQ )
 
    if( HB_ISNIL(1) )
    {
-      hb_dateToday( &iYear, &iMonth, &iDay );
-      lDate = hb_dateEncode( iYear, iMonth, iDay );
+      hb_dateToday(&iYear, &iMonth, &iDay);
+      lDate = hb_dateEncode(iYear, iMonth, iDay);
    }
    else
    {
@@ -124,10 +124,10 @@ HB_FUNC( BOQ )
 
    if( lDate != 0 )
    {
-      hb_dateDecode( lDate, &iYear, &iMonth, &iDay );
-      iMonth -= ( iMonth - 1 ) % 3;
+      hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
+      iMonth -= (iMonth - 1) % 3;
 
-      hb_retd( iYear, iMonth, 1 );
+      hb_retd(iYear, iMonth, 1);
    }
    else
    {
@@ -142,8 +142,8 @@ HB_FUNC( EOQ )
 
    if( HB_ISNIL(1) )
    {
-      hb_dateToday( &iYear, &iMonth, &iDay );
-      lDate = hb_dateEncode( iYear, iMonth, iDay );
+      hb_dateToday(&iYear, &iMonth, &iDay);
+      lDate = hb_dateEncode(iYear, iMonth, iDay);
    }
    else
    {
@@ -152,14 +152,14 @@ HB_FUNC( EOQ )
 
    if( lDate != 0 )
    {
-      hb_dateDecode( lDate, &iYear, &iMonth, &iDay );
-      iMonth += 3 - ( ( iMonth - 1 ) % 3 );
+      hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
+      iMonth += 3 - ((iMonth - 1) % 3);
       if( iMonth > 12 )
       {
          iMonth = 1;
          iYear++;
       }
-      hb_retdl( hb_dateEncode( iYear, iMonth, 1 ) - 1 );
+      hb_retdl(hb_dateEncode(iYear, iMonth, 1) - 1);
    }
    else
    {
@@ -174,8 +174,8 @@ HB_FUNC( BOY )
 
    if( HB_ISNIL(1) )
    {
-      hb_dateToday( &iYear, &iMonth, &iDay );
-      lDate = hb_dateEncode( iYear, iMonth, iDay );
+      hb_dateToday(&iYear, &iMonth, &iDay);
+      lDate = hb_dateEncode(iYear, iMonth, iDay);
    }
    else
    {
@@ -184,8 +184,8 @@ HB_FUNC( BOY )
 
    if( lDate != 0 )
    {
-      hb_dateDecode( lDate, &iYear, &iMonth, &iDay );
-      hb_retd( iYear, 1, 1 );
+      hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
+      hb_retd(iYear, 1, 1);
    }
    else
    {
@@ -200,8 +200,8 @@ HB_FUNC( EOY )
 
    if( HB_ISNIL(1) )
    {
-      hb_dateToday( &iYear, &iMonth, &iDay );
-      lDate = hb_dateEncode( iYear, iMonth, iDay );
+      hb_dateToday(&iYear, &iMonth, &iDay);
+      lDate = hb_dateEncode(iYear, iMonth, iDay);
    }
    else
    {
@@ -210,8 +210,8 @@ HB_FUNC( EOY )
 
    if( lDate != 0 )
    {
-      hb_dateDecode( lDate, &iYear, &iMonth, &iDay );
-      hb_retdl( hb_dateEncode( iYear + 1, 1, 1 ) - 1 );
+      hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
+      hb_retdl(hb_dateEncode(iYear + 1, 1, 1) - 1);
    }
    else
    {
@@ -222,7 +222,7 @@ HB_FUNC( EOY )
 static int hb_wom( int iYear, int iMonth, int iDay )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_wom(%d, %d, %d)", iYear, iMonth, iDay ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_wom(%d, %d, %d)", iYear, iMonth, iDay));
 #endif
 
    int iWom;
@@ -245,8 +245,8 @@ HB_FUNC( WOM )
 
    if( HB_ISNIL(1) )
    {
-      hb_dateToday( &iYear, &iMonth, &iDay );
-      lDate = hb_dateEncode( iYear, iMonth, iDay );
+      hb_dateToday(&iYear, &iMonth, &iDay);
+      lDate = hb_dateEncode(iYear, iMonth, iDay);
    }
    else
    {
@@ -255,7 +255,7 @@ HB_FUNC( WOM )
 
    if( lDate != 0 )
    {
-      hb_dateDecode( lDate, &iYear, &iMonth, &iDay );
+      hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
       hb_retni(hb_wom(iYear, iMonth, iDay));
    }
    else

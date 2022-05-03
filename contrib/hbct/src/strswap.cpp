@@ -73,13 +73,13 @@ HB_FUNC( STRSWAP )
          hb_xmemcpy(pcRet2, pcString2, sStrLen2);
       }
 
-      sCmpLen = ( sStrLen1 < sStrLen2 ? sStrLen1 : sStrLen2 );
+      sCmpLen = (sStrLen1 < sStrLen2 ? sStrLen1 : sStrLen2);
       for( sIndex = 0; sIndex < sCmpLen; sIndex++ )
       {
          if( iChange1 )
          {
-            char cExchange = *( pcString1 + sIndex );
-            *( pcRet1 + sIndex ) = *( pcString2 + sIndex );
+            char cExchange = *(pcString1 + sIndex);
+            *(pcRet1 + sIndex) = *(pcString2 + sIndex);
             if( iChange2 )
             {
                *( pcRet2 + sIndex ) = cExchange;
@@ -87,7 +87,7 @@ HB_FUNC( STRSWAP )
          }
          else if( iChange2 )
          {
-            *( pcRet2 + sIndex ) = *( pcString1 + sIndex );
+            *(pcRet2 + sIndex) = *(pcString1 + sIndex);
          }
       }
 
@@ -113,9 +113,9 @@ HB_FUNC( STRSWAP )
 
       if( iArgErrorMode != CT_ARGERR_IGNORE )
       {
-         pSubst = ct_error_subst( static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
-                                  CT_ERROR_STRSWAP, nullptr, HB_ERR_FUNCNAME, 0,
-                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS );
+         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+                                 CT_ERROR_STRSWAP, nullptr, HB_ERR_FUNCNAME, 0,
+                                 EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
       if( pSubst != nullptr )

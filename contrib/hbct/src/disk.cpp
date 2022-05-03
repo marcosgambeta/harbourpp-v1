@@ -84,17 +84,17 @@ HB_FUNC( DIRNAME )
        */
       if( uc >= 'A' && uc < 'A' + 32 )
       {
-         iDrive = uc - ( 'A' - 1 );
+         iDrive = uc - ('A' - 1);
       }
       else if( uc >= 'a' && uc < 'a' + 32 )
       {
-         iDrive = uc - ( 'a' - 1 );
+         iDrive = uc - ('a' - 1);
       }
    }
    pbyBuffer[0] = HB_OS_PATH_DELIM_CHR;
-   hb_fsCurDirBuff( iDrive, pbyBuffer + 1, HB_PATH_MAX - 1 );
+   hb_fsCurDirBuff(iDrive, pbyBuffer + 1, HB_PATH_MAX - 1);
 
-   hb_retc_buffer( pbyBuffer );
+   hb_retc_buffer(pbyBuffer);
 }
 
 HB_FUNC( DRIVETYPE )
@@ -106,21 +106,21 @@ HB_FUNC( DRIVETYPE )
    LPTSTR lpFree;
    UINT uiType;
 
-   hb_strncpy( pszDrive, hb_parcx(1), nSize );
+   hb_strncpy(pszDrive, hb_parcx(1), nSize);
 
    if( strstr( pszDrive, ":" ) == nullptr )
    {
-      hb_strncat( pszDrive, ":", nSize );
+      hb_strncat(pszDrive, ":", nSize);
    }
 
    if( strstr( pszDrive, "\\" ) == nullptr )
    {
-      hb_strncat( pszDrive, "\\", nSize );
+      hb_strncat(pszDrive, "\\", nSize);
    }
 
-   lpDrive = HB_FSNAMECONV( pszDrive, &lpFree );
+   lpDrive = HB_FSNAMECONV(pszDrive, &lpFree);
    hb_vmUnlock();
-   uiType = GetDriveType( lpDrive );
+   uiType = GetDriveType(lpDrive);
    hb_vmLock();
    if( lpFree )
    {
@@ -197,15 +197,15 @@ HB_FUNC( VOLUME )
 
       if( hb_parclen(1) > 0 )
       {
-         PHB_FNAME fname = hb_fsFNameSplit( hb_parc(1) );
+         PHB_FNAME fname = hb_fsFNameSplit(hb_parc(1));
 
          if( fname->szPath )
          {
-            pszRoot = hb_strncpy( szRootBuf, fname->szPath, sizeof(szRootBuf) - 1 );
+            pszRoot = hb_strncpy(szRootBuf, fname->szPath, sizeof(szRootBuf) - 1);
          }
          if( fname->szName )
          {
-            pszVolName = hb_strncpy( szVolNameBuf, fname->szName, sizeof(szVolNameBuf) - 1 );
+            pszVolName = hb_strncpy(szVolNameBuf, fname->szName, sizeof(szVolNameBuf) - 1);
          }
          hb_xfree(fname);
       }
@@ -278,11 +278,11 @@ HB_FUNC( TRUENAME )
       void * hFile;
       TCHAR buffer[MAX_PATH + 1];
 
-      buffer[0] = buffer[MAX_PATH] = TEXT( '\0' );
+      buffer[0] = buffer[MAX_PATH] = TEXT('\0');
 
       GetFullPathName(HB_PARSTR(1, &hFile, nullptr), HB_SIZEOFARRAY(buffer) - 1, buffer, nullptr);
 
-      HB_RETSTR( buffer );
+      HB_RETSTR(buffer);
       hb_strfree(hFile);
 #else
       hb_retc(hb_parc(1));

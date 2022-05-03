@@ -62,7 +62,7 @@ HB_FUNC( COM_DOSCON )
       {
          int iRow, iCol;
 
-         hb_gtGetPos( &iRow, &iCol );
+         hb_gtGetPos(&iRow, &iCol);
          if( HB_ISNUM(2) )
          {
             iRow = hb_parni(1);
@@ -71,9 +71,9 @@ HB_FUNC( COM_DOSCON )
          {
             iCol = hb_parni(2);
          }
-         hb_gtSetPos( iRow, iCol );
+         hb_gtSetPos(iRow, iCol);
       }
-      hb_gtWriteCon( hb_parc(1), nLen );
+      hb_gtWriteCon(hb_parc(1), nLen);
    }
    hb_retc_null();
 }
@@ -103,7 +103,7 @@ HB_FUNC( COM_CRC )
        *       so for most common usage it should be binary compatible
        *       with CT3. [druzus]
        */
-      crc = hb_crcct( crc, szString, hb_parclen(1), nPolynomial );
+      crc = hb_crcct(crc, szString, hb_parclen(1), nPolynomial);
    }
    hb_retnint(crc);
 }
@@ -160,7 +160,7 @@ HB_FUNC( XMOBLOCK )
    }
    else
    {
-      pszBlock[3 + nSize] = s_xmoblock_sum( szData, nLen );
+      pszBlock[3 + nSize] = s_xmoblock_sum(szData, nLen);
       nSize += 4;
    }
    hb_retclen_buffer(pszBlock, nSize);
@@ -235,7 +235,7 @@ HB_FUNC( ZEROINSERT )
       }
       if( nBits )
       {
-         HB_SIZE nDest = nLen + ( ( nBits + 7 ) >> 3 );
+         HB_SIZE nDest = nLen + ((nBits + 7) >> 3);
          char * pszDest = static_cast<char*>(hb_xgrab(nDest + 1));
          unsigned char c = 0;
          int j;

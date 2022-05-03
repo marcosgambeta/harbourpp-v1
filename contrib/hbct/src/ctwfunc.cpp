@@ -53,13 +53,13 @@ static int hb_ctColorParam( int iParam, int iDefault )
 {
    int iColor;
 
-   if( HB_ISNUM( iParam ) )
+   if( HB_ISNUM(iParam) )
    {
       iColor = hb_parni(iParam);
    }
    else if( hb_parclen(iParam) > 0 )
    {
-      iColor = hb_gtColorToN( hb_parc(iParam) );
+      iColor = hb_gtColorToN(hb_parc(iParam));
       if( iColor == -1 )
       {
          iColor = iDefault;
@@ -89,7 +89,7 @@ HB_FUNC( SETCLEARA )
 
    if( iColor >= 0 )
    {
-      hb_gtSetClearColor( iColor );
+      hb_gtSetClearColor(iColor);
    }
 
    hb_retc_null();
@@ -118,7 +118,7 @@ HB_FUNC( SETCLEARB )
       usNew = ' ';  /* CT uses 255 => U+00A0 in CP437 */
    }
 
-   hb_gtSetClearChar( usNew );
+   hb_gtSetClearChar(usNew);
 
    hb_retc_null();
 }
@@ -130,7 +130,7 @@ HB_FUNC( GETCLEARB )
 
    if( !HB_CDP_ISCHARUNI( cdp ) )
    {
-      HB_UCHAR uc = hb_cdpGetUC( cdp, ( HB_WCHAR ) iChar, 0 );
+      HB_UCHAR uc = hb_cdpGetUC(cdp, static_cast<HB_WCHAR>(iChar), 0);
       if( uc )
       {
          iChar = uc;
@@ -268,7 +268,7 @@ HB_FUNC( WFORMAT )
 
    if( hb_pcount() == 0 )
    {
-      hb_ctwGetFormatCords( iWindow, true, &iTop, &iLeft, &iBottom, &iRight );
+      hb_ctwGetFormatCords(iWindow, true, &iTop, &iLeft, &iBottom, &iRight);
       iTop    = -iTop;
       iLeft   = -iLeft;
       iBottom = -iBottom;
@@ -288,7 +288,7 @@ HB_FUNC( WROW )
 {
    int iTop, iLeft, iBottom, iRight;
 
-   hb_ctwGetWindowCords( hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight );
+   hb_ctwGetWindowCords(hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight);
    hb_retni(iTop);
 }
 
@@ -296,7 +296,7 @@ HB_FUNC( WCOL )
 {
    int iTop, iLeft, iBottom, iRight;
 
-   hb_ctwGetWindowCords( hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight );
+   hb_ctwGetWindowCords(hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight);
    hb_retni(iLeft);
 }
 
@@ -304,7 +304,7 @@ HB_FUNC( WLASTROW )
 {
    int iTop, iLeft, iBottom, iRight;
 
-   hb_ctwGetWindowCords( hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight );
+   hb_ctwGetWindowCords(hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight);
    hb_retni(iBottom);
 }
 
@@ -312,7 +312,7 @@ HB_FUNC( WLASTCOL )
 {
    int iTop, iLeft, iBottom, iRight;
 
-   hb_ctwGetWindowCords( hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight );
+   hb_ctwGetWindowCords(hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight);
    hb_retni(iRight);
 }
 
@@ -320,7 +320,7 @@ HB_FUNC( WFROW )
 {
    int iTop, iLeft, iBottom, iRight;
 
-   hb_ctwGetFormatCords( hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight );
+   hb_ctwGetFormatCords(hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight);
    hb_retni(iTop);
 }
 
@@ -328,7 +328,7 @@ HB_FUNC( WFCOL )
 {
    int iTop, iLeft, iBottom, iRight;
 
-   hb_ctwGetFormatCords( hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight );
+   hb_ctwGetFormatCords(hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight);
    hb_retni(iLeft);
 }
 
@@ -336,7 +336,7 @@ HB_FUNC( WFLASTROW )
 {
    int iTop, iLeft, iBottom, iRight;
 
-   hb_ctwGetFormatCords( hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight );
+   hb_ctwGetFormatCords(hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight);
    hb_retni(iBottom);
 }
 
@@ -344,7 +344,7 @@ HB_FUNC( WFLASTCOL )
 {
    int iTop, iLeft, iBottom, iRight;
 
-   hb_ctwGetFormatCords( hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight );
+   hb_ctwGetFormatCords(hb_ctwCurrentWindow(), hb_parl(1), &iTop, &iLeft, &iBottom, &iRight);
    hb_retni(iRight);
 }
 
@@ -379,7 +379,7 @@ HB_FUNC( HBCT_MAXROW ) /* Return the maximum screen/window row number (zero orig
    if( hb_parl(1) )
    {
       int iRows, iCols;
-      hb_gtScrDim( &iRows, &iCols );
+      hb_gtScrDim(&iRows, &iCols);
       hb_retni(iRows - 1);
    }
    else
@@ -393,7 +393,7 @@ HB_FUNC( HBCT_MAXCOL ) /* Return the maximum screen/window column number (zero o
    if( hb_parl(1) )
    {
       int iRows, iCols;
-      hb_gtScrDim( &iRows, &iCols );
+      hb_gtScrDim(&iRows, &iCols);
       hb_retni(iCols - 1);
    }
    else
@@ -420,7 +420,7 @@ HB_FUNC( WALIAS )
     */
    if( iWindow >= 0 && iWindow <= 255 )
    {
-      iWindow = hb_ctwChangeWindowHandle( iWindow );
+      iWindow = hb_ctwChangeWindowHandle(iWindow);
    }
    else
    {
@@ -445,7 +445,7 @@ HB_FUNC( WLIST )
    const int * piStack;
    int iWindows, iFrom;
 
-   iWindows = hb_ctwGetWindowStack( &piStack );
+   iWindows = hb_ctwGetWindowStack(&piStack);
    if( iWindows < 0 )
    {
       hb_retc_null();
@@ -484,12 +484,12 @@ HB_FUNC_TRANSLATE( _WSTACK, WLIST )
 
 HB_FUNC( WHIDE ) /* HB_EXTENSION */
 {
-   hb_ctwVisible( HB_ISNUM(1) ? hb_parni(1) : hb_ctwCurrentWindow(), HB_CTW_HIDDEN );
+   hb_ctwVisible(HB_ISNUM(1) ? hb_parni(1) : hb_ctwCurrentWindow(), HB_CTW_HIDDEN);
 }
 
 HB_FUNC( WSHOW ) /* HB_EXTENSION */
 {
-   hb_ctwVisible( HB_ISNUM(1) ? hb_parni(1) : hb_ctwCurrentWindow(), HB_CTW_VISIBLE );
+   hb_ctwVisible(HB_ISNUM(1) ? hb_parni(1) : hb_ctwCurrentWindow(), HB_CTW_VISIBLE);
 }
 
 HB_FUNC( WSHADOW ) /* HB_EXTENSION */

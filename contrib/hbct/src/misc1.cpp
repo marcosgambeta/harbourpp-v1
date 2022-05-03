@@ -50,7 +50,7 @@ HB_FUNC( XTOC )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       if( HB_IS_DATE(pItem) )
       {
@@ -67,7 +67,7 @@ HB_FUNC( XTOC )
          char buf[sizeof(double)];
          double d = hb_parnd(1);
 
-         HB_PUT_LE_DOUBLE( buf, d );
+         HB_PUT_LE_DOUBLE(buf, d);
          hb_retclen(buf, sizeof(buf));
       }
       else if( HB_IS_LOGICAL(pItem) )

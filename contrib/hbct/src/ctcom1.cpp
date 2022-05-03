@@ -60,7 +60,7 @@ static int hb_ctComCharParam( int iParam )
          return static_cast<unsigned char>(pszParam[0]);
       }
    }
-   else if( HB_ISNUM( iParam ) )
+   else if( HB_ISNUM(iParam) )
    {
       return static_cast<unsigned char>(hb_parni(iParam));
    }
@@ -117,28 +117,28 @@ HB_FUNC( COM_SFLUSH )
  */
 HB_FUNC( COM_CTS )
 {
-   hb_ctComTestMSR( HB_COM_MSR_CTS );
+   hb_ctComTestMSR(HB_COM_MSR_CTS);
 }
 
 /* com_DCD( <nComPort> ) --> <lDCDActive>
  */
 HB_FUNC( COM_DCD )
 {
-   hb_ctComTestMSR( HB_COM_MSR_DCD );
+   hb_ctComTestMSR(HB_COM_MSR_DCD);
 }
 
 /* com_DSR( <nComPort> ) --> <lDSRActive>
  */
 HB_FUNC( COM_DSR )
 {
-   hb_ctComTestMSR( HB_COM_MSR_DSR );
+   hb_ctComTestMSR(HB_COM_MSR_DSR);
 }
 
 /* com_Ring( <nComPort> ) --> <lActiveRing>
  */
 HB_FUNC( COM_RING )
 {
-   hb_ctComTestMSR( HB_COM_MSR_RI );
+   hb_ctComTestMSR(HB_COM_MSR_RI);
 }
 
 /* com_RTS( <nComPort>, [<lNewRTSStatus>] ) --> <lOldRTSStatus>
@@ -158,7 +158,7 @@ HB_FUNC( COM_RTS )
          iClr = HB_COM_MCR_RTS;
       }
    }
-   hb_comMCR( hb_parni(1), &iMCR, iClr, iSet );
+   hb_comMCR(hb_parni(1), &iMCR, iClr, iSet);
    hb_retl((iMCR & HB_COM_MCR_RTS) != 0);
 }
 
@@ -179,7 +179,7 @@ HB_FUNC( COM_DTR )
          iClr = HB_COM_MCR_DTR;
       }
    }
-   hb_comMCR( hb_parni(1), &iMCR, iClr, iSet );
+   hb_comMCR(hb_parni(1), &iMCR, iClr, iSet);
    hb_retl((iMCR & HB_COM_MCR_DTR) != 0);
 }
 
@@ -251,17 +251,17 @@ HB_FUNC( COM_HARD )
 
    if( hb_comFlowControl( iPort, &iFlow, -1 ) != -1 )
    {
-      iMask = hb_parl(3) ? ( HB_COM_FLOW_IDTRDSR | HB_COM_FLOW_ODTRDSR ) : ( HB_COM_FLOW_IRTSCTS | HB_COM_FLOW_ORTSCTS );
-      fResult = ( iFlow & iMask ) == iMask;
+      iMask = hb_parl(3) ? (HB_COM_FLOW_IDTRDSR | HB_COM_FLOW_ODTRDSR) : (HB_COM_FLOW_IRTSCTS | HB_COM_FLOW_ORTSCTS);
+      fResult = (iFlow & iMask) == iMask;
 
       if( HB_ISLOG(2) )
       {
-         iFlow &= ~( HB_COM_FLOW_IDTRDSR | HB_COM_FLOW_ODTRDSR | HB_COM_FLOW_IRTSCTS | HB_COM_FLOW_ORTSCTS );
+         iFlow &= ~(HB_COM_FLOW_IDTRDSR | HB_COM_FLOW_ODTRDSR | HB_COM_FLOW_IRTSCTS | HB_COM_FLOW_ORTSCTS);
          if( hb_parl(2) )
          {
             iFlow |= iMask;
          }
-         hb_comFlowControl( iPort, nullptr, iFlow );
+         hb_comFlowControl(iPort, nullptr, iFlow);
       }
    }
    hb_retl(fResult);
@@ -277,8 +277,8 @@ HB_FUNC( COM_SOFT )
 
    if( hb_comFlowControl( iPort, &iFlow, -1 ) != -1 )
    {
-      iMask = ( HB_COM_FLOW_XON | HB_COM_FLOW_XOFF );
-      fResult = ( iFlow & iMask ) == iMask;
+      iMask = (HB_COM_FLOW_XON | HB_COM_FLOW_XOFF);
+      fResult = (iFlow & iMask) == iMask;
 
       if( HB_ISLOG(2) )
       {
@@ -290,11 +290,11 @@ HB_FUNC( COM_SOFT )
          {
             iFlow &= ~iMask;
          }
-         hb_comFlowControl( iPort, nullptr, iFlow );
+         hb_comFlowControl(iPort, nullptr, iFlow);
       }
       if( hb_pcount() > 2 )
       {
-         hb_comFlowChars( iPort, hb_ctComCharParam(3), hb_ctComCharParam(4) );
+         hb_comFlowChars(iPort, hb_ctComCharParam(3), hb_ctComCharParam(4));
       }
    }
    hb_retl(fResult);
@@ -312,7 +312,7 @@ HB_FUNC( COM_SOFT_R )
       hb_comFlowSet(iPort, HB_COM_FL_SOFT | (hb_parl(2) ? HB_COM_FL_OOFF : HB_COM_FL_OON));
    }
 
-   iMode = hb_comOutputState( iPort );
+   iMode = hb_comOutputState(iPort);
    if( iMode > 0 )
    {
       fResult = ( iMode & HB_COM_TX_XOFF ) != 0;
@@ -326,7 +326,7 @@ HB_FUNC( COM_SOFT_R )
 HB_FUNC( COM_SOFT_S )
 {
    HB_BOOL fResult = HB_FALSE;
-   int iMode = hb_comInputState( hb_parni(1) );
+   int iMode = hb_comInputState(hb_parni(1));
 
    if( iMode > 0 )
    {
@@ -428,7 +428,7 @@ HB_FUNC( COM_OPEN )
    /* TODO: add support for <nBufferIn> */
    /* TODO: add support for <nBufferOut> */
    /* TODO: add support for <lTrapMode> */
-   hb_comClose( iPort );
+   hb_comClose(iPort);
    hb_retl(hb_comOpen(iPort) != -1);
 }
 
@@ -438,7 +438,7 @@ HB_FUNC( COM_CLOSE )
 {
    int iPort = hb_parni(1);
 
-   hb_comFlush( iPort, HB_COM_IOFLUSH );
+   hb_comFlush(iPort, HB_COM_IOFLUSH);
    hb_retl(hb_comClose(iPort) != -1);
 }
 
@@ -459,7 +459,7 @@ HB_FUNC( COM_READ )
    }
    else
    {
-      lLen = hb_comInputCount( iPort );
+      lLen = hb_comInputCount(iPort);
       if( lLen < static_cast<long>(sizeof(buffer) >> 1) )
       {
          lLen = sizeof(buffer);
@@ -478,7 +478,7 @@ HB_FUNC( COM_READ )
       data = static_cast<char*>(hb_xgrab(lLen + 1));
    }
 
-   lRecv = hb_comRecv( iPort, buffer, lLen, 0 );
+   lRecv = hb_comRecv(iPort, buffer, lLen, 0);
    if( lRecv < 0 )
    {
       lRecv = 0;
@@ -522,7 +522,7 @@ HB_FUNC( COM_SEND )
 
    if( lLen )
    {
-      long lResult = hb_comSend( hb_parni(1), data, lLen, 0 );
+      long lResult = hb_comSend(hb_parni(1), data, lLen, 0);
       if( lResult > 0 )
       {
          lLen -= lResult;
@@ -578,6 +578,6 @@ HB_FUNC( COM_DEVNAME )
    hb_retc(hb_comGetDevice(iPort, buffer, sizeof(buffer)));
    if( szDevName )
    {
-      hb_comSetDevice( iPort, szDevName );
+      hb_comSetDevice(iPort, szDevName);
    }
 }
