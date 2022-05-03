@@ -194,8 +194,8 @@ HB_FUNC( WIN_OSVERSIONINFO )
          if( hb_iswinsp( tmp, true ) )
          {
             char szServicePack[8];
-            hb_snprintf( szServicePack, sizeof(szServicePack), "SP%u", tmp );
-            hb_arraySetC( pArray, 5, szServicePack );
+            hb_snprintf(szServicePack, sizeof(szServicePack), "SP%u", tmp);
+            hb_arraySetC(pArray, 5, szServicePack);
             break;
          }
       }

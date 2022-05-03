@@ -47,8 +47,8 @@
 #include "hbwapi.h"
 
 /*
-int AddFontResourceA( LPCSTR unnamedParam1 );
-int AddFontResourceW( LPCWSTR unnamedParam1 );
+int AddFontResourceA(LPCSTR unnamedParam1);
+int AddFontResourceW(LPCWSTR unnamedParam1);
 */
 HB_FUNC( WAPI_ADDFONTRESOURCE )
 {
@@ -59,8 +59,8 @@ HB_FUNC( WAPI_ADDFONTRESOURCE )
 }
 
 /*
-BOOL RemoveFontResourceA( LPCSTR lpFileName );
-BOOL RemoveFontResourceW( LPCWSTR lpFileName );
+BOOL RemoveFontResourceA(LPCSTR lpFileName);
+BOOL RemoveFontResourceW(LPCWSTR lpFileName);
 */
 HB_FUNC( WAPI_REMOVEFONTRESOURCE )
 {
@@ -71,8 +71,8 @@ HB_FUNC( WAPI_REMOVEFONTRESOURCE )
 }
 
 /*
-int AddFontResourceExA( LPCSTR name, DWORD fl, PVOID res );
-int AddFontResourceExW( LPCWSTR name, DWORD fl, PVOID res );
+int AddFontResourceExA(LPCSTR name, DWORD fl, PVOID res);
+int AddFontResourceExW(LPCWSTR name, DWORD fl, PVOID res);
 */
 HB_FUNC( WAPI_ADDFONTRESOURCEEX )
 {
@@ -83,8 +83,8 @@ HB_FUNC( WAPI_ADDFONTRESOURCEEX )
 }
 
 /*
-BOOL RemoveFontResourceExA( LPCSTR name, DWORD fl, PVOID pdv );
-BOOL RemoveFontResourceExW( LPCWSTR name, DWORD fl, PVOID pdv );
+BOOL RemoveFontResourceExA(LPCSTR name, DWORD fl, PVOID pdv);
+BOOL RemoveFontResourceExW(LPCWSTR name, DWORD fl, PVOID pdv);
 */
 HB_FUNC( WAPI_REMOVEFONTRESOURCEEX )
 {

@@ -629,7 +629,7 @@ HB_FUNC( WAPI_TABCTRL_ADDITEM )
 
    item.mask = TCIF_TEXT | TCIF_IMAGE;
    item.iImage = HB_ISNUM(3) ? hbwapi_par_INT(3) : -1;
-   item.pszText = const_cast<LPTSTR>(HB_PARSTRDEF(2, &hText, nullptr) );
+   item.pszText = const_cast<LPTSTR>(HB_PARSTRDEF(2, &hText, nullptr));
 
    hbwapi_ret_NI(TabCtrl_InsertItem(hbwapi_par_raw_HWND(1), iCount, &item));
 

@@ -56,44 +56,44 @@ HB_FUNC( WAPI_SETWINDOWPOS )
 {
    BOOL bResult = SetWindowPos(hbwapi_par_raw_HWND(1), hbwapi_par_raw_HWND(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), static_cast<UINT>(hb_parnl(7)));
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_L( bResult );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(bResult);
 }
 
 HB_FUNC( WAPI_ISICONIC )
 {
-   hbwapi_ret_L( IsIconic( hbwapi_par_raw_HWND(1) ) );
+   hbwapi_ret_L(IsIconic(hbwapi_par_raw_HWND(1)));
 }
 
 HB_FUNC( WAPI_ISZOOMED )
 {
-   hbwapi_ret_L( IsZoomed( hbwapi_par_raw_HWND(1) ) );
+   hbwapi_ret_L(IsZoomed(hbwapi_par_raw_HWND(1)));
 }
 
 HB_FUNC( WAPI_GETSYSTEMMETRICS )
 {
-   int iResult = GetSystemMetrics( hbwapi_par_INT(1) );
+   int iResult = GetSystemMetrics(hbwapi_par_INT(1));
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_NI( iResult );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_NI(iResult);
 }
 
 HB_FUNC( WAPI_GETKEYSTATE )
 {
-   hbwapi_ret_NI( GetKeyState( hbwapi_par_INT(1) ) );
+   hbwapi_ret_NI(GetKeyState(hbwapi_par_INT(1)));
 }
 
 HB_FUNC( WAPI_GETDESKTOPWINDOW )
 {
-   hbwapi_ret_raw_HWND( GetDesktopWindow() );
+   hbwapi_ret_raw_HWND(GetDesktopWindow());
 }
 
 HB_FUNC( WAPI_MESSAGEBEEP )
 {
-   BOOL bResult = MessageBeep( hbwapi_par_UINT(1) );
+   BOOL bResult = MessageBeep(hbwapi_par_UINT(1));
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_L( bResult );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(bResult);
 }
 
 HB_FUNC( WAPI_FINDWINDOW )
@@ -101,10 +101,10 @@ HB_FUNC( WAPI_FINDWINDOW )
    void * hClassName;
    void * hWindowName;
 
-   HWND hResult = FindWindow( HB_PARSTR(1, &hClassName, nullptr), HB_PARSTR(2, &hWindowName, nullptr) );
+   HWND hResult = FindWindow(HB_PARSTR(1, &hClassName, nullptr), HB_PARSTR(2, &hWindowName, nullptr));
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_raw_HWND( hResult );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_raw_HWND(hResult);
 
    hb_strfree(hClassName);
    hb_strfree(hWindowName);
@@ -127,10 +127,10 @@ HB_FUNC( WAPI_CREATEWINDOWEX )
       hbwapi_par_raw_HWND(9),                                    /* hWndParent, default to HWND_DESKTOP */
       hbwapi_par_raw_HMENU(10),                                  /* hMenu */
       hbwapi_par_raw_HINSTANCE(11),                              /* hInstance */
-      static_cast<LPVOID>(hb_parptr(12)) /* lpParam */ );
+      static_cast<LPVOID>(hb_parptr(12)) /* lpParam */);
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_raw_HWND( hResult );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_raw_HWND(hResult);
 
    hb_strfree(hClassName);
    hb_strfree(hWindowName);
@@ -138,26 +138,26 @@ HB_FUNC( WAPI_CREATEWINDOWEX )
 
 HB_FUNC( WAPI_DESTROYWINDOW )
 {
-   BOOL bResult = DestroyWindow( hbwapi_par_raw_HWND(1) );
+   BOOL bResult = DestroyWindow(hbwapi_par_raw_HWND(1));
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_L( bResult );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(bResult);
 }
 
 HB_FUNC( WAPI_ISWINDOW )
 {
-   BOOL bResult = IsWindow( hbwapi_par_raw_HWND(1) );
+   BOOL bResult = IsWindow(hbwapi_par_raw_HWND(1));
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_L( bResult );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(bResult);
 }
 
 HB_FUNC( WAPI_SHOWWINDOW )
 {
-   BOOL bResult = ShowWindow( hbwapi_par_raw_HWND(1), hb_parni(2) );
+   BOOL bResult = ShowWindow(hbwapi_par_raw_HWND(1), hb_parni(2));
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_L( bResult );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(bResult);
 }
 
 HB_FUNC( WAPI_DRAWTEXT )
@@ -175,7 +175,7 @@ HB_FUNC( WAPI_DRAWTEXT )
 
       hb_strfree(hText);
 
-      hbwapi_stor_RECT( &rect, 3 );
+      hbwapi_stor_RECT(&rect, 3);
    }
    else
    {
@@ -185,21 +185,21 @@ HB_FUNC( WAPI_DRAWTEXT )
 
 /* BEGIN SCROLLBAR MANIPULATION WINAPI FUNCTIONS */
 
-/* BOOL EnableScrollBar( HWND hWnd, UINT wSBflags, UINT wArrows ); */
+/* BOOL EnableScrollBar(HWND hWnd, UINT wSBflags, UINT wArrows); */
 HB_FUNC( WAPI_ENABLESCROLLBAR )
 {
    BOOL bResult;
    DWORD dwLastError;
 
-   bResult = EnableScrollBar( hbwapi_par_raw_HWND(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3) );
+   bResult = EnableScrollBar(hbwapi_par_raw_HWND(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3));
    dwLastError = GetLastError();
 
-   hbwapi_SetLastError( dwLastError );
-   hbwapi_ret_L( bResult );
+   hbwapi_SetLastError(dwLastError);
+   hbwapi_ret_L(bResult);
 }
 
 #if 0
-/* BOOL GetScrollBarInfo( HWND hwnd, LONG idObject, PSCROLLBARINFO psbi ); */
+/* BOOL GetScrollBarInfo(HWND hwnd, LONG idObject, PSCROLLBARINFO psbi); */
 HB_FUNC( WAPI_GETSCROLLBARINFO )
 {
    PSCROLLBARINFO sbi = static_cast<PSCROLLBARINFO>(hbwapi_par_STRUCT(3));
@@ -208,51 +208,51 @@ HB_FUNC( WAPI_GETSCROLLBARINFO )
    memset(&sbi, 0, sizeof(SCROLLBARINFO));
    sbi->cbSize = sizeof(SCROLLBARINFO);
 
-   bSuccess = GetScrollBarInfo( hbwapi_par_raw_HWND(1), hbwapi_par_LONG(2), sbi );
+   bSuccess = GetScrollBarInfo(hbwapi_par_raw_HWND(1), hbwapi_par_LONG(2), sbi);
 
-   hbwapi_SetLastError( GetLastError() );
+   hbwapi_SetLastError(GetLastError());
 
    if( bSuccess )
    {
       hb_storclen(static_cast<char*>(&sbi), sizeof(SCROLLBARINFO), 3);
    }
 
-   hbwapi_ret_L( bSuccess );
+   hbwapi_ret_L(bSuccess);
 }
 #endif
 
-/* BOOL GetScrollInfo( HWND hwnd, int fnBar, LPSCROLLINFO lpsi ); */
+/* BOOL GetScrollInfo(HWND hwnd, int fnBar, LPSCROLLINFO lpsi); */
 HB_FUNC( WAPI_GETSCROLLINFO )
 {
    LPSCROLLINFO si = reinterpret_cast<LPSCROLLINFO>(const_cast<char*>(hbwapi_par_raw_STRUCT(3)));
    BOOL         bSuccess;
 
-   bSuccess = GetScrollInfo( hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), si );
+   bSuccess = GetScrollInfo(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), si);
 
-   hbwapi_SetLastError( GetLastError() );
+   hbwapi_SetLastError(GetLastError());
 
    if( bSuccess )
    {
       hb_storclen(reinterpret_cast<char*>(&si), 3, sizeof(SCROLLINFO));
    }
 
-   hbwapi_ret_L( bSuccess );
+   hbwapi_ret_L(bSuccess);
 }
 
-/* int GetScrollPos( HWND hWnd, int nBar ); */
+/* int GetScrollPos(HWND hWnd, int nBar); */
 HB_FUNC( WAPI_GETSCROLLPOS )
 {
    int iResult;
    DWORD dwLastError;
 
-   iResult = GetScrollPos( hbwapi_par_raw_HWND(1), hbwapi_par_INT(2) );
+   iResult = GetScrollPos(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2));
    dwLastError = GetLastError();
 
-   hbwapi_SetLastError( dwLastError );
-   hbwapi_ret_NI( iResult );
+   hbwapi_SetLastError(dwLastError);
+   hbwapi_ret_NI(iResult);
 }
 
-/* BOOL GetScrollRange( HWND hWnd, int nBar, LPINT lpMinPos, LPINT lpMaxPos ); */
+/* BOOL GetScrollRange(HWND hWnd, int nBar, LPINT lpMinPos, LPINT lpMaxPos); */
 HB_FUNC( WAPI_GETSCROLLRANGE )
 {
    BOOL bSuccess;
@@ -261,7 +261,7 @@ HB_FUNC( WAPI_GETSCROLLRANGE )
    {
       int minPos, maxPos;
 
-      bSuccess = GetScrollRange( hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), &minPos, &maxPos );
+      bSuccess = GetScrollRange(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), &minPos, &maxPos);
 
       dwLastError = GetLastError();
 
@@ -269,39 +269,36 @@ HB_FUNC( WAPI_GETSCROLLRANGE )
       hb_storni(maxPos, 4);
    }
 
-   hbwapi_SetLastError( dwLastError );
-   hbwapi_ret_L( bSuccess );
+   hbwapi_SetLastError(dwLastError);
+   hbwapi_ret_L(bSuccess);
 }
 
 #if 0
-/* BOOL ScrollDC( HDC hDC, int dx, int dy, const RECT * lprcScroll, const RECT * lprcClip,
-                  HRGN hrgnUpdate, LPRECT lprcUpdate ); */
+/* BOOL ScrollDC(HDC hDC, int dx, int dy, const RECT * lprcScroll, const RECT * lprcClip, HRGN hrgnUpdate, LPRECT lprcUpdate); */
 HB_FUNC( WAPI_SCROLLDC )
 {
 }
 
-/* BOOL ScrollWindow( HWND hWnd, int XAmount, int YAmount, const RECT * lpRect,
-                      const RECT * lpClipRect ); */
+/* BOOL ScrollWindow(HWND hWnd, int XAmount, int YAmount, const RECT * lpRect, const RECT * lpClipRect); */
 HB_FUNC( WAPI_SCROLLWINDOW )
 {
 }
 
-/* int ScrollWindowEx( HWND hWnd, int dx, int dy, const RECT * prcScroll, const RECT * prcClip,
-                       HRGN hrgnUpdate, LPRECT prcUpdate, UINT flags ); */
+/* int ScrollWindowEx(HWND hWnd, int dx, int dy, const RECT * prcScroll, const RECT * prcClip, HRGN hrgnUpdate, LPRECT prcUpdate, UINT flags); */
 HB_FUNC( WAPI_SCROLLWINDOWEX )
 {
 }
 #endif
 
-/* int SetScrollInfo( HWND hwnd, int fnBar, LPCSCROLLINFO lpsi, BOOL fRedraw ); */
+/* int SetScrollInfo(HWND hwnd, int fnBar, LPCSCROLLINFO lpsi, BOOL fRedraw); */
 HB_FUNC( WAPI_SETSCROLLINFO )
 {
    LPSCROLLINFO si = reinterpret_cast<LPSCROLLINFO>(const_cast<char*>(hbwapi_par_raw_STRUCT(3)));
 
-   hbwapi_ret_NI(SetScrollInfo(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), si, HB_ISLOG(4) ? hbwapi_par_BOOL(4) : TRUE ));
+   hbwapi_ret_NI(SetScrollInfo(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), si, HB_ISLOG(4) ? hbwapi_par_BOOL(4) : TRUE));
 }
 
-/* int SetScrollPos( HWND hWnd, int nBar, int nPos, BOOL bRedraw ); */
+/* int SetScrollPos(HWND hWnd, int nBar, int nPos, BOOL bRedraw); */
 HB_FUNC( WAPI_SETSCROLLPOS )
 {
    int iResult = SetScrollPos(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), hbwapi_par_INT(3), hbwapi_par_BOOL(4));
@@ -309,7 +306,7 @@ HB_FUNC( WAPI_SETSCROLLPOS )
    hbwapi_ret_NI(iResult);
 }
 
-/* BOOL SetScrollRange( HWND hWnd, int nBar, int nMinPos, int nMaxPos, BOOL bRedraw ); */
+/* BOOL SetScrollRange(HWND hWnd, int nBar, int nMinPos, int nMaxPos, BOOL bRedraw); */
 HB_FUNC( WAPI_SETSCROLLRANGE )
 {
    BOOL bResult = SetScrollRange(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), hbwapi_par_INT(3), hbwapi_par_INT(4), HB_ISLOG(5) ? hbwapi_par_BOOL(5) : TRUE);
@@ -317,7 +314,7 @@ HB_FUNC( WAPI_SETSCROLLRANGE )
    hbwapi_ret_L(bResult);
 }
 
-/* BOOL ShowScrollBar( HWND hWnd, int wBar, BOOL bShow ); */
+/* BOOL ShowScrollBar(HWND hWnd, int wBar, BOOL bShow); */
 HB_FUNC( WAPI_SHOWSCROLLBAR )
 {
    BOOL bResult;
@@ -371,19 +368,19 @@ HB_FUNC( WAPI_LOADIMAGE )
    void * hString = nullptr;
    HANDLE hImage;
 
-   hImage = LoadImage( hbwapi_par_raw_HINSTANCE(1),
-                       HB_ISNUM(2) ? MAKEINTRESOURCE( hbwapi_par_INT(2) ) :
-                       HB_PARSTR(2, &hString, nullptr),
-                       HB_ISNUM(3) ? hbwapi_par_UINT(3) : IMAGE_BITMAP,
-                       hbwapi_par_INT(4),       /* desired width */
-                       hbwapi_par_INT(5),       /* desired height */
-                       hbwapi_par_UINT(6) );    /* load flags */
+   hImage = LoadImage(hbwapi_par_raw_HINSTANCE(1),
+                      HB_ISNUM(2) ? MAKEINTRESOURCE(hbwapi_par_INT(2)) :
+                      HB_PARSTR(2, &hString, nullptr),
+                      HB_ISNUM(3) ? hbwapi_par_UINT(3) : IMAGE_BITMAP,
+                      hbwapi_par_INT(4),       /* desired width */
+                      hbwapi_par_INT(5),       /* desired height */
+                      hbwapi_par_UINT(6));    /* load flags */
 
-   hbwapi_SetLastError( GetLastError() );
+   hbwapi_SetLastError(GetLastError());
 
    hb_strfree(hString);
 
-   hbwapi_ret_raw_HANDLE( hImage );
+   hbwapi_ret_raw_HANDLE(hImage);
 }
 
 /* MENU functions */
@@ -394,58 +391,58 @@ HB_FUNC( WAPI_LOADMENU )
    HMENU hMenu;
 
    hMenu = LoadMenu(hbwapi_par_raw_HINSTANCE(1), HB_ISNUM(2) ? static_cast<LPTSTR>(MAKEINTRESOURCE(hbwapi_par_INT(2))) : HB_PARSTRDEF(2, &hMenuName, nullptr));
-   hbwapi_SetLastError( GetLastError() );
+   hbwapi_SetLastError(GetLastError());
    hb_strfree(hMenuName);
-   hbwapi_ret_raw_HMENU( hMenu );
+   hbwapi_ret_raw_HMENU(hMenu);
 }
 
 HB_FUNC( WAPI_CREATEMENU )
 {
    HMENU hMenu = CreateMenu();
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_raw_HMENU( hMenu );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_raw_HMENU(hMenu);
 }
 
 HB_FUNC( WAPI_CREATEPOPUPMENU )
 {
    HMENU hMenu = CreatePopupMenu();
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_raw_HMENU( hMenu );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_raw_HMENU(hMenu);
 }
 
 HB_FUNC( WAPI_DESTROYMENU )
 {
-   BOOL fResult = DestroyMenu( hbwapi_par_raw_HMENU(1) );
+   BOOL fResult = DestroyMenu(hbwapi_par_raw_HMENU(1));
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_L( fResult );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(fResult);
 }
 
 HB_FUNC( WAPI_GETSYSTEMMENU )
 {
    HWND hWnd = hbwapi_par_raw_HWND(1);
-   HMENU hMenu = GetSystemMenu( hWnd ? hWnd : GetActiveWindow(), hbwapi_par_BOOL(2) );
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_raw_HMENU( hMenu );
+   HMENU hMenu = GetSystemMenu(hWnd ? hWnd : GetActiveWindow(), hbwapi_par_BOOL(2));
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_raw_HMENU(hMenu);
 }
 
 HB_FUNC( WAPI_GETSUBMENU )
 {
-   HMENU hMenu = GetSubMenu( hbwapi_par_raw_HMENU(1), hbwapi_par_INT(2) );
+   HMENU hMenu = GetSubMenu(hbwapi_par_raw_HMENU(1), hbwapi_par_INT(2));
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_raw_HMENU( hMenu );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_raw_HMENU(hMenu);
 }
 
 HB_FUNC( WAPI_DRAWMENUBAR )
 {
    HWND hWnd = hbwapi_par_raw_HWND(1);
-   BOOL fResult = DrawMenuBar( hWnd ? hWnd : GetActiveWindow() );
+   BOOL fResult = DrawMenuBar(hWnd ? hWnd : GetActiveWindow());
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_L( fResult );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(fResult);
 }
 
 HB_FUNC( WAPI_TRACKPOPUPMENU )
@@ -453,39 +450,39 @@ HB_FUNC( WAPI_TRACKPOPUPMENU )
    HWND hWnd = hbwapi_par_raw_HWND(6);
    UINT uiResult;
 
-   uiResult = TrackPopupMenu( hbwapi_par_raw_HMENU(1),       /* hMenu */
-                              hbwapi_par_UINT(2),            /* uFlags */
-                              hbwapi_par_INT(3),             /* x */
-                              hbwapi_par_INT(4),             /* y */
-                              hbwapi_par_INT(5),             /* nReserved */
-                              hWnd ? hWnd : GetActiveWindow(), /* hWnd */
-                              nullptr /* prcRect */ );
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_UINT( uiResult );
+   uiResult = TrackPopupMenu(hbwapi_par_raw_HMENU(1),       /* hMenu */
+                             hbwapi_par_UINT(2),            /* uFlags */
+                             hbwapi_par_INT(3),             /* x */
+                             hbwapi_par_INT(4),             /* y */
+                             hbwapi_par_INT(5),             /* nReserved */
+                             hWnd ? hWnd : GetActiveWindow(), /* hWnd */
+                             nullptr /* prcRect */);
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_UINT(uiResult);
 }
 
 HB_FUNC( WAPI_ENABLEMENUITEM )
 {
    int iResult;
 
-   iResult = EnableMenuItem( hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3) );
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_NI( iResult );
+   iResult = EnableMenuItem(hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3));
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_NI(iResult);
 }
 
 HB_FUNC( WAPI_CHECKMENUITEM )
 {
    DWORD dwResult;
 
-   dwResult = CheckMenuItem( hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3) );
-   hbwapi_SetLastError( GetLastError() );
+   dwResult = CheckMenuItem(hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3));
+   hbwapi_SetLastError(GetLastError());
    if( dwResult == static_cast<DWORD>(-1) )
    {
-      hbwapi_ret_NI( -1 );
+      hbwapi_ret_NI(-1);
    }
    else
    {
-      hbwapi_ret_DWORD( dwResult );
+      hbwapi_ret_DWORD(dwResult);
    }
 }
 
@@ -493,31 +490,31 @@ HB_FUNC( WAPI_CHECKMENURADIOITEM )
 {
    BOOL fResult;
 
-   fResult = CheckMenuRadioItem( hbwapi_par_raw_HMENU(1), /* hMenu */
-                                 hbwapi_par_UINT(2),      /* idFirst */
-                                 hbwapi_par_UINT(3),      /* idLast */
-                                 hbwapi_par_UINT(4),      /* idCheck */
-                                 hbwapi_par_UINT(5) /* uFlags */ );
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_L( fResult );
+   fResult = CheckMenuRadioItem(hbwapi_par_raw_HMENU(1), /* hMenu */
+                                hbwapi_par_UINT(2),      /* idFirst */
+                                hbwapi_par_UINT(3),      /* idLast */
+                                hbwapi_par_UINT(4),      /* idCheck */
+                                hbwapi_par_UINT(5) /* uFlags */);
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(fResult);
 }
 
 HB_FUNC( WAPI_DELETEMENU )
 {
    BOOL fResult;
 
-   fResult = DeleteMenu( hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3) );
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_L( fResult );
+   fResult = DeleteMenu(hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3));
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(fResult);
 }
 
 HB_FUNC( WAPI_REMOVEMENU )
 {
    BOOL fResult;
 
-   fResult = RemoveMenu( hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3) );
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_L( fResult );
+   fResult = RemoveMenu(hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3));
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(fResult);
 }
 
 HB_FUNC( WAPI_INSERTMENU )
@@ -547,9 +544,9 @@ HB_FUNC( WAPI_INSERTMENU )
       lpNewItem = static_cast<LPCTSTR>(hb_parptr(5));
    }
 
-   fResult = InsertMenu( hMenu, uPosition, uFlags, uIDNewItem, lpNewItem );
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_L( fResult );
+   fResult = InsertMenu(hMenu, uPosition, uFlags, uIDNewItem, lpNewItem);
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(fResult);
    hb_strfree(hNewItemStr);
 }
 
@@ -580,9 +577,9 @@ HB_FUNC( WAPI_APPENDMENU )
       lpNewItem = static_cast<LPCTSTR>(hb_parptr(4));
    }
 
-   fResult = AppendMenu( hMenu, uFlags, uIDNewItem, lpNewItem );
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_L( fResult );
+   fResult = AppendMenu(hMenu, uFlags, uIDNewItem, lpNewItem);
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(fResult);
    hb_strfree(hNewItemStr);
 }
 
@@ -600,40 +597,38 @@ HB_FUNC( WAPI_SETMENUITEMINFO )
 
 HB_FUNC( WAPI_ISMENU )
 {
-   hbwapi_ret_L( IsMenu( hbwapi_par_raw_HMENU(1) ) );
+   hbwapi_ret_L(IsMenu(hbwapi_par_raw_HMENU(1)));
 }
 
 HB_FUNC( WAPI_GETMENU )
 {
    HWND hWnd = hbwapi_par_raw_HWND(1);
-   HMENU hMenu = GetMenu( hWnd ? hWnd : GetActiveWindow() );
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_raw_HMENU( hMenu );
+   HMENU hMenu = GetMenu(hWnd ? hWnd : GetActiveWindow());
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_raw_HMENU(hMenu);
 }
 
 HB_FUNC( WAPI_SETMENU )
 {
    HWND hWnd = hbwapi_par_raw_HWND(1);
-   BOOL fResult = SetMenu( hWnd ? hWnd : GetActiveWindow(), hbwapi_par_raw_HMENU(2) );
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_L( fResult );
+   BOOL fResult = SetMenu(hWnd ? hWnd : GetActiveWindow(), hbwapi_par_raw_HMENU(2));
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(fResult);
 }
 
 HB_FUNC( WAPI_GETMENUSTATE )
 {
    UINT uiResult;
 
-   uiResult = GetMenuState( hbwapi_par_raw_HMENU(1),
-                            hbwapi_par_UINT(2),
-                            hbwapi_par_UINT(3) );
-   hbwapi_SetLastError( GetLastError() );
+   uiResult = GetMenuState(hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3));
+   hbwapi_SetLastError(GetLastError());
    if( uiResult == ( UINT ) -1 )
    {
-      hbwapi_ret_NI( -1 );
+      hbwapi_ret_NI(-1);
    }
    else
    {
-      hbwapi_ret_UINT( uiResult );
+      hbwapi_ret_UINT(uiResult);
    }
 }
 
@@ -641,24 +636,24 @@ HB_FUNC( WAPI_GETMENUITEMCOUNT )
 {
    int iResult;
 
-   iResult = GetMenuItemCount( hbwapi_par_raw_HMENU(1) );
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_NI( iResult );
+   iResult = GetMenuItemCount(hbwapi_par_raw_HMENU(1));
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_NI(iResult);
 }
 
 HB_FUNC( WAPI_GETMENUITEMID )
 {
    UINT uiResult;
 
-   uiResult = GetMenuItemID( hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2) );
-   hbwapi_SetLastError( GetLastError() );
+   uiResult = GetMenuItemID(hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2));
+   hbwapi_SetLastError(GetLastError());
    if( uiResult == static_cast<UINT>(-1) )
    {
       hbwapi_ret_NI(-1);
    }
    else
    {
-      hbwapi_ret_UINT( uiResult );
+      hbwapi_ret_UINT(uiResult);
    }
 }
 
@@ -666,24 +661,24 @@ HB_FUNC( WAPI_SETMENUDEFAULTITEM )
 {
    BOOL fResult;
 
-   fResult = SetMenuDefaultItem( hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2), HB_ISNUM(3) ? hbwapi_par_INT(3) : hbwapi_par_BOOL(3) );
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_L( fResult );
+   fResult = SetMenuDefaultItem(hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2), HB_ISNUM(3) ? hbwapi_par_INT(3) : hbwapi_par_BOOL(3));
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(fResult);
 }
 
 HB_FUNC( WAPI_GETMENUDEFAULTITEM )
 {
    UINT uiResult;
 
-   uiResult = GetMenuDefaultItem( hbwapi_par_raw_HMENU(1), HB_ISNUM(2) ? hbwapi_par_INT(2) : hbwapi_par_BOOL(2), hbwapi_par_UINT(3) );
-   hbwapi_SetLastError( GetLastError() );
+   uiResult = GetMenuDefaultItem(hbwapi_par_raw_HMENU(1), HB_ISNUM(2) ? hbwapi_par_INT(2) : hbwapi_par_BOOL(2), hbwapi_par_UINT(3));
+   hbwapi_SetLastError(GetLastError());
    if( uiResult == ( UINT ) -1 )
    {
-      hbwapi_ret_NI( -1 );
+      hbwapi_ret_NI(-1);
    }
    else
    {
-      hbwapi_ret_UINT( uiResult );
+      hbwapi_ret_UINT(uiResult);
    }
 }
 
@@ -706,21 +701,21 @@ HB_FUNC( WAPI_CREATEACCELERATORTABLE )
          lpAccel[i].key   = static_cast<WORD>(hb_arrayGetNI(pAccItem, 2));
          lpAccel[i].cmd   = static_cast<WORD>(hb_arrayGetNI(pAccItem, 3));
       }
-      hAccel = CreateAcceleratorTable( lpAccel, iEntries );
-      hbwapi_SetLastError( GetLastError() );
+      hAccel = CreateAcceleratorTable(lpAccel, iEntries);
+      hbwapi_SetLastError(GetLastError());
       hb_xfree(lpAccel);
    }
    else
    {
-      hbwapi_SetLastError( ERROR_INVALID_PARAMETER );
+      hbwapi_SetLastError(ERROR_INVALID_PARAMETER);
    }   
-   hbwapi_ret_raw_HACCEL( hAccel );
+   hbwapi_ret_raw_HACCEL(hAccel);
 }
 
 HB_FUNC( WAPI_DESTROYACCELERATORTABLE )
 {
-   BOOL fResult = DestroyAcceleratorTable( hbwapi_par_raw_HACCEL(1) );
+   BOOL fResult = DestroyAcceleratorTable(hbwapi_par_raw_HACCEL(1));
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_L( fResult );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(fResult);
 }

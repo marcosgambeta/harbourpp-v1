@@ -131,7 +131,7 @@ static int hb_jpeg_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int *
             return _JPEG_RET_OVERRUN;
          }
 
-         colorspace = *( buffer + nPos ); nPos += 1;
+         colorspace = *(buffer + nPos); nPos += 1;
 
          if( nPos >= nBufferSize )
          {
@@ -154,7 +154,7 @@ static int hb_jpeg_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int *
             return _JPEG_RET_OVERRUN;
          }
 
-         bpc = *( buffer + nPos );
+         bpc = *(buffer + nPos);
 
          break;
       }
@@ -226,7 +226,7 @@ static void hb_png_read_func( png_structp png_ptr, png_bytep data, png_uint_32 l
       data[pos++] = hb_png_read_data->buffer[hb_png_read_data->nPos++];
    }
 
-   hb_png_read_data->bOk = ( length == pos );
+   hb_png_read_data->bOk = (length == pos);
 }
 
 static int hb_png_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int * piHeight, int * piWidth, int * piColorSpace, int * piBPC )
@@ -273,7 +273,7 @@ static int hb_png_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
       return _PNG_RET_ERR_INIT1;
    }
 
-   info_ptr = png_create_info_struct( png_ptr );
+   info_ptr = png_create_info_struct(png_ptr);
    if( !info_ptr )
    {
       png_destroy_read_struct(&png_ptr, static_cast<png_infopp>(nullptr), static_cast<png_infopp>(nullptr));
@@ -285,10 +285,10 @@ static int hb_png_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
    hb_png_read_data.nPos = sizeof(header);
    hb_png_read_data.bOk = HB_TRUE;
 
-   png_set_sig_bytes( png_ptr, sizeof(header) );
+   png_set_sig_bytes(png_ptr, sizeof(header));
    png_set_read_fn(png_ptr, static_cast<void*>(&hb_png_read_data), static_cast<png_rw_ptr>(hb_png_read_func));
 
-   png_read_info( png_ptr, info_ptr );
+   png_read_info(png_ptr, info_ptr);
 
    if( hb_png_read_data.bOk )
    {
@@ -335,7 +335,7 @@ HB_FUNC( WIN_BITMAPDIMENSIONS )
    const void * buffer = hb_parc(1);
    HB_SIZE nSize = hb_parclen(1);
 
-   int iType = hbwin_bitmapType( buffer, nSize );
+   int iType = hbwin_bitmapType(buffer, nSize);
 
    int iHeight = 0;
    int iWidth = 0;
@@ -355,7 +355,7 @@ HB_FUNC( WIN_BITMAPDIMENSIONS )
       else
       {
          iWidth = pbmi->bmiHeader.biWidth;
-         iHeight = abs( pbmi->bmiHeader.biHeight );
+         iHeight = abs(pbmi->bmiHeader.biHeight);
       }
 
       bRetVal = HB_TRUE;

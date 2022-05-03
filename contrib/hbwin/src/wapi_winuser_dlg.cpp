@@ -60,7 +60,7 @@ static BOOL CALLBACK wapi_DialogFuncProc( HWND hDlg, UINT message, WPARAM wParam
    if( message == WM_INITDIALOG && lParam )
    {
       pSymbol = reinterpret_cast<PHB_SYMB>(lParam);
-      SetWindowLongPtr( hDlg, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pSymbol) );
+      SetWindowLongPtr(hDlg, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pSymbol));
    }
    else
    {
@@ -99,19 +99,18 @@ HB_FUNC( WAPI_DIALOGBOXPARAM )
       static_cast<LPCTSTR>(MAKEINTRESOURCE(hbwapi_par_INT(2))),         /* lpTemplate */
       hbwapi_par_raw_HWND(3),                                                 /* hWndParent */
       reinterpret_cast<DLGPROC>(wapi_DialogFuncProc),                            /* lpDialogFunc */
-      reinterpret_cast<LPARAM>(hb_itemGetSymbol(hb_param(4, Harbour::Item::SYMBOL)))  /* dwInitParam */
-      );
+      reinterpret_cast<LPARAM>(hb_itemGetSymbol(hb_param(4, Harbour::Item::SYMBOL))));  /* dwInitParam */
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_NINT( nResult );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_NINT(nResult);
 }
 
 /* Destroys a modal dialog box, causing the system to end any processing for the
    dialog box. */
 HB_FUNC( WAPI_ENDDIALOG )
 {
-   hbwapi_ret_L( EndDialog( hbwapi_par_raw_HWND(1), hbwapi_par_INT(2) ) );
-   hbwapi_SetLastError( GetLastError() );
+   hbwapi_ret_L(EndDialog(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2)));
+   hbwapi_SetLastError(GetLastError());
 }
 
 /* Sets the title or text of a control in a dialog box. */
@@ -120,39 +119,39 @@ HB_FUNC( WAPI_SETDLGITEMTEXT )
    void * hStr;
    int    iResult = SetDlgItemText(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), HB_PARSTR(3, &hStr, nullptr));
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_NI( iResult );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_NI(iResult);
    hb_strfree(hStr);
 }
 
 /* Retrieves the title or text associated with a control in a dialog box. */
 HB_FUNC( WAPI_GETDLGITEMTEXT )
 {
-   HWND    nItem    = GetDlgItem( hbwapi_par_raw_HWND(1), hbwapi_par_INT(2) );
+   HWND    nItem    = GetDlgItem(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2));
    int     nSize    = static_cast<int>(SendMessage(nItem, WM_GETTEXTLENGTH, 0, 0));
    TCHAR * lpResult = static_cast<TCHAR*>(hb_xgrab((nSize + 1) * sizeof(TCHAR)));
 
    UINT nResult = GetDlgItemText(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), lpResult, nSize + 1);
 
-   HB_RETSTRLEN( lpResult, static_cast<HB_SIZE>(nResult) );
-   hbwapi_SetLastError( GetLastError() );
+   HB_RETSTRLEN(lpResult, static_cast<HB_SIZE>(nResult));
+   hbwapi_SetLastError(GetLastError());
    hb_xfree(lpResult);
 }
 
 /* Retrieves a handle to a control in the specified dialog box. */
 HB_FUNC( WAPI_GETDLGITEM )
 {
-   hbwapi_ret_raw_HWND( GetDlgItem( hbwapi_par_raw_HWND(1), hbwapi_par_INT(2) ) );
-   hbwapi_SetLastError( GetLastError() );
+   hbwapi_ret_raw_HWND(GetDlgItem(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2)));
+   hbwapi_SetLastError(GetLastError());
 }
 
 /* Adds a string to a list in a combo box. */
 HB_FUNC( WAPI_COMBOBOX_ADDSTRING )
 {
    void * hStr;
-   int    iResult = ComboBox_AddString( hbwapi_par_raw_HWND(1), HB_PARSTR(2, &hStr, nullptr) );
+   int    iResult = ComboBox_AddString(hbwapi_par_raw_HWND(1), HB_PARSTR(2, &hStr, nullptr));
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_NI( iResult );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_NI(iResult);
    hb_strfree(hStr);
 }

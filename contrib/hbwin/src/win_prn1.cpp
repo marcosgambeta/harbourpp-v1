@@ -58,7 +58,7 @@ HB_FUNC( WIN_CREATEDC )
 
       HDC hDC = CreateDC(TEXT(""), HB_PARSTR(1, &hDevice, nullptr), nullptr, nullptr);
 
-      hbwapi_ret_HDC( hDC );
+      hbwapi_ret_HDC(hDC);
 
       hb_strfree(hDevice);
    }
@@ -83,7 +83,7 @@ HB_FUNC( WIN_STARTDOC )
       sDoc.lpszOutput = nullptr;
       sDoc.lpszDatatype = nullptr;
       sDoc.fwType = 0;
-      bResult = ( StartDoc( hDC, &sDoc ) > 0 );
+      bResult = (StartDoc(hDC, &sDoc) > 0);
 
       hb_strfree(hDocName);
    }
@@ -100,11 +100,11 @@ HB_FUNC( WIN_ENDDOC )
    {
       if( hb_parl(2) )
       {
-         bResult = ( AbortDoc( hDC ) > 0 );
+         bResult = (AbortDoc(hDC) > 0);
       }
       else
       {
-         bResult = ( EndDoc( hDC ) > 0 );
+         bResult = (EndDoc(hDC) > 0);
       }
    }
 
@@ -166,7 +166,7 @@ HB_FUNC( WIN_TEXTOUT )
 
          if( HB_ISNUM(7) )
          {
-            SetTextAlign( static_cast<HDC>(hDC), TA_NOUPDATECP | hb_parni(7) );
+            SetTextAlign(static_cast<HDC>(hDC), TA_NOUPDATECP | hb_parni(7));
          }
 
          if( iWidth < 0 && nLen < 1024 )
@@ -247,7 +247,7 @@ HB_FUNC( WIN_GETCHARSIZE )
    {
       TEXTMETRIC tm;
 
-      GetTextMetrics( hDC, &tm );
+      GetTextMetrics(hDC, &tm);
       if( hb_parl(2) )
       {
          lResult = static_cast<long>(tm.tmHeight);
@@ -303,11 +303,11 @@ HB_FUNC( WIN_CREATEFONT )
          int iMul = hb_parni(4);
          int iDiv = hb_parni(5);
 
-         iHeight = -MulDiv( hb_parni(3), GetDeviceCaps( hDC, LOGPIXELSY ), 72 );
+         iHeight = -MulDiv(hb_parni(3), GetDeviceCaps(hDC, LOGPIXELSY ), 72);
 
          if( iDiv )
          {
-            iWidth = MulDiv( abs( iMul ), GetDeviceCaps( hDC, LOGPIXELSX ), abs( iDiv ) );
+            iWidth = MulDiv(abs(iMul), GetDeviceCaps(hDC, LOGPIXELSX), abs(iDiv));
          }
          else
          {
@@ -337,17 +337,17 @@ HB_FUNC( WIN_CREATEFONT )
       }
 
       memcpy(lf.lfFaceName, pfFaceName, nLen * sizeof(TCHAR));
-      lf.lfFaceName[nLen] = TEXT( '\0' );
+      lf.lfFaceName[nLen] = TEXT('\0');
 
       hb_strfree(hfFaceName);
 
-      hFont = CreateFontIndirect( &lf );
+      hFont = CreateFontIndirect(&lf);
 
-      hbwapi_ret_HFONT( hFont );
+      hbwapi_ret_HFONT(hFont);
 
       if( hFont )
       {
-         SelectObject( hDC, hFont );
+         SelectObject(hDC, hFont);
       }
    }
    else
@@ -364,9 +364,9 @@ HB_FUNC( WIN_GETPRINTERFONTNAME )
    {
       TCHAR tszFontName[128];
 
-      GetTextFace( hDC, HB_SIZEOFARRAY( tszFontName ) - 1, tszFontName );
+      GetTextFace(hDC, HB_SIZEOFARRAY(tszFontName) - 1, tszFontName);
 
-      HB_RETSTR( tszFontName );
+      HB_RETSTR(tszFontName);
    }
    else
    {
@@ -474,14 +474,14 @@ HB_FUNC( WIN_SETDOCUMENTPROPERTIES )
                   hb_storni(pDevMode->dmPaperLength, 9);
                   hb_storni(pDevMode->dmPaperWidth, 10);
 
-                  bResult = ( ResetDC( hDC, pDevMode ) != nullptr );
+                  bResult = (ResetDC(hDC, pDevMode) != nullptr);
                }
             }
 
             hb_xfree(pDevMode);
          }
 
-         ClosePrinter( hPrinter );
+         ClosePrinter(hPrinter);
       }
 
       hb_strfree(hDeviceName);
@@ -522,7 +522,7 @@ HB_FUNC( WIN_GETDOCUMENTPROPERTIES )
          hb_xfree(pDevMode);
       }
 
-      ClosePrinter( hPrinter );
+      ClosePrinter(hPrinter);
    }
 
    hb_strfree(hDeviceName);
@@ -534,11 +534,11 @@ static int CALLBACK FontEnumCallBack( LOGFONT * lplf, TEXTMETRIC * lpntm, DWORD 
 {
    PHB_ITEM pSubItems = hb_itemArrayNew(4);
 
-   HB_ARRAYSETSTR( pSubItems, 1, lplf->lfFaceName );
+   HB_ARRAYSETSTR(pSubItems, 1, lplf->lfFaceName);
    hb_arraySetL(pSubItems, 2, (lplf->lfPitchAndFamily & FIXED_PITCH) != 0);
    hb_arraySetL(pSubItems, 3, (dwFontType & TRUETYPE_FONTTYPE) != 0);
    hb_arraySetNL(pSubItems, 4, lpntm->tmCharSet);
-   hb_arrayAddForward( static_cast<PHB_ITEM>(pArray), pSubItems );
+   hb_arrayAddForward(static_cast<PHB_ITEM>(pArray), pSubItems);
 
    hb_itemRelease(pSubItems);
 
@@ -548,7 +548,7 @@ static int CALLBACK FontEnumCallBack( LOGFONT * lplf, TEXTMETRIC * lpntm, DWORD 
 HB_FUNC( WIN_ENUMFONTS )
 {
    HDC hDC = hbwapi_par_HDC(1);
-   HB_BOOL fNullDC = ( !hDC );
+   HB_BOOL fNullDC = (!hDC);
    PHB_ITEM pArray = hb_itemArrayNew(0);
 
    if( fNullDC )
@@ -556,7 +556,7 @@ HB_FUNC( WIN_ENUMFONTS )
       hDC = GetDC(nullptr);
    }
 
-   EnumFonts( hDC, static_cast<LPCTSTR>(nullptr), reinterpret_cast<FONTENUMPROC>(FontEnumCallBack), reinterpret_cast<LPARAM>(pArray) );
+   EnumFonts(hDC, static_cast<LPCTSTR>(nullptr), reinterpret_cast<FONTENUMPROC>(FontEnumCallBack), reinterpret_cast<LPARAM>(pArray));
 
    if( fNullDC )
    {
@@ -570,7 +570,7 @@ HB_FUNC( WIN_ENUMFONTFAMILIES )
 {
    PHB_ITEM pArray = hb_itemArrayNew(0);
    HDC hDC = hbwapi_par_HDC(1);
-   HB_BOOL fNullDC = ( !hDC );
+   HB_BOOL fNullDC = (!hDC);
    LOGFONT Logfont;
 
    memset(&Logfont, 0, sizeof(Logfont));
@@ -579,7 +579,7 @@ HB_FUNC( WIN_ENUMFONTFAMILIES )
    if( HB_ISCHAR(2) )
    {
       void * hText;
-      HB_STRNCPY( Logfont.lfFaceName, HB_PARSTR(2, &hText, nullptr), HB_SIZEOFARRAY( Logfont.lfFaceName ) - 1 );
+      HB_STRNCPY(Logfont.lfFaceName, HB_PARSTR(2, &hText, nullptr), HB_SIZEOFARRAY(Logfont.lfFaceName) - 1);
       hb_strfree(hText);
    }
 
@@ -588,7 +588,7 @@ HB_FUNC( WIN_ENUMFONTFAMILIES )
       hDC = GetDC(nullptr);
    }
 
-   EnumFontFamiliesEx( hDC, &Logfont, reinterpret_cast<FONTENUMPROC>(FontEnumCallBack), reinterpret_cast<LPARAM>(pArray), 0 );
+   EnumFontFamiliesEx(hDC, &Logfont, reinterpret_cast<FONTENUMPROC>(FontEnumCallBack), reinterpret_cast<LPARAM>(pArray), 0);
 
    if( fNullDC )
    {
@@ -615,12 +615,12 @@ HB_FUNC( WIN_SETCOLOR )
 
       if( HB_ISNUM(3) )
       {
-         SetBkColor( hDC, static_cast<COLORREF>(hb_parnl(3)) );
+         SetBkColor(hDC, static_cast<COLORREF>(hb_parnl(3)));
       }
 
       if( HB_ISNUM(4) )
       {
-         SetTextAlign( hDC, hb_parni(4) );
+         SetTextAlign(hDC, hb_parni(4));
       }
    }
    else
@@ -645,12 +645,12 @@ HB_FUNC( WIN_SETPEN )
       {
          hPen = CreatePen(hb_parni(2) /* pen style */, hb_parni(3) /* pen width */,  static_cast<COLORREF>(hb_parnl(4)) /* pen color */);
 
-         hbwapi_ret_HPEN( hPen );
+         hbwapi_ret_HPEN(hPen);
       }
 
       if( hPen )
       {
-         SelectObject( hDC, hPen );
+         SelectObject(hDC, hPen);
       }
    }
    else
@@ -666,7 +666,7 @@ HB_FUNC( WIN_FILLRECT )
 
    if( hDC )
    {
-      HBRUSH hBrush = CreateSolidBrush( static_cast<COLORREF>(hb_parnl(6)) );
+      HBRUSH hBrush = CreateSolidBrush(static_cast<COLORREF>(hb_parnl(6)));
       RECT rct;
 
       rct.left   = hb_parnl(2);
@@ -679,7 +679,7 @@ HB_FUNC( WIN_FILLRECT )
          fResult = HB_TRUE;
       }
 
-      DeleteObject( hBrush );
+      DeleteObject(hBrush);
    }
    hb_retl(fResult);
 }
@@ -747,11 +747,11 @@ HB_FUNC( WIN_SETBKMODE )
    {
       if( HB_ISNUM(2) )
       {
-         iMode = SetBkMode( hDC, hb_parni(2) );
+         iMode = SetBkMode(hDC, hb_parni(2));
       }
       else
       {
-         iMode = GetBkMode( hDC );
+         iMode = GetBkMode(hDC);
       }
    }
    hb_retni(iMode);

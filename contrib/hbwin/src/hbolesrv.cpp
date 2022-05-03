@@ -412,7 +412,7 @@ static HRESULT STDMETHODCALLTYPE Invoke(IDispatch * lpThis, DISPID dispid, REFII
             pItem = hb_hashGetValueAt(pAction, static_cast<HB_SIZE>(dispid));
          }
 
-         if( pItem )
+         if( pItem != nullptr )
          {
             if( HB_IS_EVALITEM(pItem) )
             {

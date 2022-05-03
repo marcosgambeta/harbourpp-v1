@@ -72,7 +72,7 @@ HB_FUNC( WIN_LOADRESOURCE )
 
          if( hMem )
          {
-            void * pMem = LockResource( hMem );
+            void * pMem = LockResource(hMem);
 
             if( pMem )
             {
@@ -107,17 +107,17 @@ HB_FUNC( WIN_GETCOMMANDLINEPARAM )
       pos++;
    }
 
-   HB_RETSTR( lpCmdLine + pos );
+   HB_RETSTR(lpCmdLine + pos);
 }
 
 HB_FUNC( WIN_ANSITOWIDE )
 {
    HB_SIZE nLen = hb_parclen(1);
    LPCSTR lpSrcMB = hb_parcx(1);
-   DWORD dwLength = MultiByteToWideChar( CP_ACP, 0, lpSrcMB, static_cast<int>(nLen), nullptr, 0 );
+   DWORD dwLength = MultiByteToWideChar(CP_ACP, 0, lpSrcMB, static_cast<int>(nLen), nullptr, 0);
    LPWSTR lpDstWide = static_cast<LPWSTR>(hb_xgrab((dwLength + 1) * sizeof(wchar_t)));
 
-   MultiByteToWideChar( CP_ACP, 0, lpSrcMB, static_cast<int>(nLen), lpDstWide, dwLength + 1 );
+   MultiByteToWideChar(CP_ACP, 0, lpSrcMB, static_cast<int>(nLen), lpDstWide, dwLength + 1);
 
    hb_retclen_buffer(reinterpret_cast<char*>(lpDstWide), static_cast<HB_SIZE>(dwLength * sizeof(wchar_t)));
 }
@@ -208,11 +208,11 @@ HB_FUNC( WIN_SYSREFRESH )
          switch( msg.message )
          {
             case WM_CLOSE:
-               CloseHandle( hDummyEvent );
+               CloseHandle(hDummyEvent);
                hb_retni(1);
                return;
             case WM_QUIT:
-               CloseHandle( hDummyEvent );
+               CloseHandle(hDummyEvent);
                hb_retnint(msg.wParam);
                return;
 #if 0
@@ -226,13 +226,13 @@ HB_FUNC( WIN_SYSREFRESH )
                break;
 #endif
             default:
-               TranslateMessage( &msg );
-               DispatchMessage( &msg );
+               TranslateMessage(&msg);
+               DispatchMessage(&msg);
          }
       }
    }
 
-   CloseHandle( hDummyEvent );
+   CloseHandle(hDummyEvent);
    hb_retni(0);
 }
 

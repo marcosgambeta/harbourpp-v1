@@ -125,7 +125,7 @@ PHB_ITEM hb_oleAxControlNew(PHB_ITEM pItem, HWND hWnd)
    IUnknown *  pUnk  = nullptr;
    IDispatch * pDisp = nullptr;
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       hb_itemClear(pItem);
    }
@@ -493,7 +493,7 @@ static HRESULT _get_default_sink(IDispatch * iDisp, const char * szEvent, IID * 
             hr = HB_VTBL(iTL)->GetTypeInfo(HB_THIS_(iTL) i, &iTI);
             if( hr == S_OK )
             {
-               hr = HB_VTBL(iTI)->GetTypeAttr(HB_THIS_(iTI) & pTypeAttr );
+               hr = HB_VTBL(iTI)->GetTypeAttr(HB_THIS_(iTI) & pTypeAttr);
                if( hr == S_OK )
                {
                   if( pTypeAttr->typekind == TKIND_COCLASS )

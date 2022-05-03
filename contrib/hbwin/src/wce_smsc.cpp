@@ -99,7 +99,7 @@ HB_FUNC( WCE_SMSSENDMESSAGE ) /* cMessage, cNumber */
       hb_strfree(hMessage);
       hb_strfree(hPhoneNumber);
 
-      SmsClose( smshHandle );
+      SmsClose(smshHandle);
    }
 #else
    hb_retnl(-1);

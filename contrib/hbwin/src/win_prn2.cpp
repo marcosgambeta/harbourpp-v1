@@ -60,7 +60,7 @@ static HB_BOOL hb_IsLegacyDevice( const char * pszPrinterName )
 
    for( int i = 0; s_pszPrnDev[i]; ++i )
    {
-      if( hb_strnicmp( pszPrinterName, s_pszPrnDev[i], strlen( s_pszPrnDev[i] ) ) == 0 )
+      if( hb_strnicmp(pszPrinterName, s_pszPrnDev[i], strlen(s_pszPrnDev[i])) == 0 )
       {
          return true;
       }
@@ -82,7 +82,7 @@ HB_FUNC( WIN_PRINTEREXISTS )
       {
          DWORD dwNeeded = 0, dwReturned = 0;
 
-         EnumPrinters( _ENUMPRN_FLAGS_, nullptr, 5, nullptr, 0, &dwNeeded, &dwReturned );
+         EnumPrinters(_ENUMPRN_FLAGS_, nullptr, 5, nullptr, 0, &dwNeeded, &dwReturned);
          if( dwNeeded )
          {
             PRINTER_INFO_5 * pPrinterEnumBak;
@@ -94,8 +94,8 @@ HB_FUNC( WIN_PRINTEREXISTS )
 
                for( DWORD i = 0; !bResult && i < dwReturned; ++i, ++pPrinterEnum )
                {
-                  HB_ITEMPUTSTR( pTemp, pPrinterEnum->pPrinterName );
-                  bResult = ( strcmp( pszPrinterName, hb_itemGetCPtr(pTemp) ) == 0 );
+                  HB_ITEMPUTSTR(pTemp, pPrinterEnum->pPrinterName);
+                  bResult = (strcmp(pszPrinterName, hb_itemGetCPtr(pTemp)) == 0);
                }
 
                hb_itemRelease(pTemp);
@@ -118,7 +118,7 @@ static void hb_GetDefaultPrinter(PHB_ITEM pPrinterName)
    if( hb_iswin2k() )  /* Windows 2000 or later */
    {
       using DEFPRINTER = BOOL(WINAPI *)(LPTSTR, LPDWORD);
-      HMODULE hWinSpool = hbwapi_LoadLibrarySystem( TEXT( "winspool.drv" ) );
+      HMODULE hWinSpool = hbwapi_LoadLibrarySystem(TEXT("winspool.drv"));
 
       if( hWinSpool )
       {
@@ -129,12 +129,12 @@ static void hb_GetDefaultPrinter(PHB_ITEM pPrinterName)
             TCHAR lpPrinterName[256];
             DWORD dwSize = HB_SIZEOFARRAY( lpPrinterName ) - 1;
 
-            bResult = ( *fnGetDefaultPrinter )( lpPrinterName, &dwSize );
+            bResult = (*fnGetDefaultPrinter)(lpPrinterName, &dwSize);
 
-            HB_ITEMPUTSTR( pPrinterName, lpPrinterName );
+            HB_ITEMPUTSTR(pPrinterName, lpPrinterName);
          }
 
-         FreeLibrary( hWinSpool );
+         FreeLibrary(hWinSpool);
       }
    }
 
@@ -142,7 +142,7 @@ static void hb_GetDefaultPrinter(PHB_ITEM pPrinterName)
    {
       TCHAR lpPrinterName[256];
 
-      DWORD dwSize = GetProfileString( TEXT( "windows" ), TEXT( "device" ), TEXT( "" ), lpPrinterName, static_cast<DWORD>(HB_SIZEOFARRAY(lpPrinterName)) - 1 );
+      DWORD dwSize = GetProfileString(TEXT("windows"), TEXT("device"), TEXT(""), lpPrinterName, static_cast<DWORD>(HB_SIZEOFARRAY(lpPrinterName)) - 1);
 
       if( dwSize && dwSize < HB_SIZEOFARRAY( lpPrinterName ) )
       {
@@ -155,7 +155,7 @@ static void hb_GetDefaultPrinter(PHB_ITEM pPrinterName)
 
          bResult = HB_TRUE;
 
-         HB_ITEMPUTSTRLEN( pPrinterName, lpPrinterName, dwSize );
+         HB_ITEMPUTSTRLEN(pPrinterName, lpPrinterName, dwSize);
       }
    }
 
@@ -173,14 +173,14 @@ static void hb_GetDefaultPrinter(PHB_ITEM pPrinterName)
        */
       DWORD dwNeeded = 0, dwReturned = 0;
 
-      EnumPrinters( PRINTER_ENUM_DEFAULT, nullptr, 2, nullptr, 0, &dwNeeded, &dwReturned );
+      EnumPrinters(PRINTER_ENUM_DEFAULT, nullptr, 2, nullptr, 0, &dwNeeded, &dwReturned);
       if( dwNeeded )
       {
          PRINTER_INFO_2 * pPrinterInfo = static_cast<PRINTER_INFO_2*>(hb_xgrabz(dwNeeded));
 
          if( EnumPrinters( PRINTER_ENUM_DEFAULT, nullptr, 2, ( LPBYTE ) pPrinterInfo, dwNeeded, &dwNeeded, &dwReturned ) && dwReturned )
          {
-            HB_ITEMPUTSTR( pPrinterName, pPrinterInfo->pPrinterName );
+            HB_ITEMPUTSTR(pPrinterName, pPrinterInfo->pPrinterName);
          }
 
          hb_xfree(pPrinterInfo);
@@ -192,7 +192,7 @@ HB_FUNC( WIN_PRINTERGETDEFAULT )
 {
    PHB_ITEM pPrinterName = hb_itemNew(nullptr);
 
-   hb_GetDefaultPrinter( pPrinterName );
+   hb_GetDefaultPrinter(pPrinterName);
 
    hb_itemReturnRelease(pPrinterName);
 }
@@ -202,7 +202,7 @@ static HB_BOOL hb_GetJobs( HANDLE hPrinter, JOB_INFO_2 ** ppJobInfo, DWORD * pdw
    HB_BOOL bResult = HB_FALSE;
    DWORD dwNeeded = 0;
 
-   GetPrinter( hPrinter, 2, nullptr, 0, &dwNeeded );
+   GetPrinter(hPrinter, 2, nullptr, 0, &dwNeeded);
    if( dwNeeded )
    {
       PRINTER_INFO_2 * pPrinterInfo = static_cast<PRINTER_INFO_2*>(hb_xgrabz(dwNeeded));
@@ -212,7 +212,7 @@ static HB_BOOL hb_GetJobs( HANDLE hPrinter, JOB_INFO_2 ** ppJobInfo, DWORD * pdw
       {
          DWORD dwReturned = 0;
 
-         EnumJobs( hPrinter, 0, pPrinterInfo->cJobs, 2, nullptr, 0, &dwNeeded, &dwReturned );
+         EnumJobs(hPrinter, 0, pPrinterInfo->cJobs, 2, nullptr, 0, &dwNeeded, &dwReturned);
          if( dwNeeded )
          {
             JOB_INFO_2 * pJobInfo = static_cast<JOB_INFO_2*>(hb_xgrabz(dwNeeded));
@@ -243,7 +243,7 @@ HB_FUNC( WIN_PRINTERSTATUS )
 
    if( hb_itemGetCLen(pPrinterName) == 0 )
    {
-      hb_GetDefaultPrinter( pPrinterName );
+      hb_GetDefaultPrinter(pPrinterName);
    }
 
    if( hb_itemGetCLen(pPrinterName) > 0 )
@@ -256,7 +256,7 @@ HB_FUNC( WIN_PRINTERSTATUS )
       {
          DWORD dwNeeded = 0;
 
-         GetPrinter( hPrinter, 2, nullptr, 0, &dwNeeded );
+         GetPrinter(hPrinter, 2, nullptr, 0, &dwNeeded);
          if( dwNeeded )
          {
             PRINTER_INFO_2 * pPrinterInfo = static_cast<PRINTER_INFO_2*>(hb_xgrabz(dwNeeded));
@@ -299,7 +299,7 @@ HB_FUNC( WIN_PRINTERSTATUS )
             }
          }
 
-         ClosePrinter( hPrinter );
+         ClosePrinter(hPrinter);
       }
 
       hb_strfree(hPrinterName);
@@ -319,7 +319,7 @@ HB_FUNC( WIN_PRINTERPORTTONAME )
    {
       DWORD dwNeeded = 0, dwReturned = 0;
 
-      EnumPrinters( _ENUMPRN_FLAGS_, nullptr, 5, nullptr, 0, &dwNeeded, &dwReturned );
+      EnumPrinters(_ENUMPRN_FLAGS_, nullptr, 5, nullptr, 0, &dwNeeded, &dwReturned);
       if( dwNeeded )
       {
          PRINTER_INFO_5 * pPrinterEnumBak;
@@ -334,20 +334,20 @@ HB_FUNC( WIN_PRINTERPORTTONAME )
 
             for( DWORD i = 0; i < dwReturned && !bFound; ++i, ++pPrinterEnum )
             {
-               HB_ITEMPUTSTR( pTemp, pPrinterEnum->pPortName );
+               HB_ITEMPUTSTR(pTemp, pPrinterEnum->pPortName);
 
                if( bSubStr )
                {
-                  bFound = ( hb_strnicmp( hb_itemGetCPtr(pTemp), pszPortNameFind, strlen( pszPortNameFind ) ) == 0 );
+                  bFound = (hb_strnicmp(hb_itemGetCPtr(pTemp), pszPortNameFind, strlen(pszPortNameFind)) == 0);
                }
                else
                {
-                  bFound = ( hb_stricmp( hb_itemGetCPtr(pTemp), pszPortNameFind ) == 0 );
+                  bFound = (hb_stricmp(hb_itemGetCPtr(pTemp), pszPortNameFind) == 0);
                }
 
                if( bFound )
                {
-                  HB_RETSTR( pPrinterEnum->pPrinterName );
+                  HB_RETSTR(pPrinterEnum->pPrinterName);
                }
             }
 
@@ -417,42 +417,42 @@ HB_FUNC( WIN_PRINTFILERAW )
                         break;
                      }
                   }
-                  hbwapi_SetLastError( GetLastError() );
+                  hbwapi_SetLastError(GetLastError());
 
                   hb_fileClose(pFile);
                   hb_xfree(pbyBuffer);
                }
                else
                {
-                  hbwapi_SetLastError( hb_fsOsError() );
+                  hbwapi_SetLastError(hb_fsOsError());
                   nResult = -6;
                }
-               EndPagePrinter( hPrinter );
+               EndPagePrinter(hPrinter);
             }
             else
             {
-               hbwapi_SetLastError( GetLastError() );
+               hbwapi_SetLastError(GetLastError());
                nResult = -4;
             }
-            EndDocPrinter( hPrinter );
+            EndDocPrinter(hPrinter);
          }
          else
          {
-            hbwapi_SetLastError( GetLastError() );
+            hbwapi_SetLastError(GetLastError());
             nResult = -3;
          }
-         ClosePrinter( hPrinter );
+         ClosePrinter(hPrinter);
          hb_strfree(hDocName);
       }
       else
       {
-         hbwapi_SetLastError( GetLastError() );
+         hbwapi_SetLastError(GetLastError());
          nResult = -2;
       }
       hb_strfree(hDeviceName);
    }
 
-   hb_retns( nResult );
+   hb_retns(nResult);
 }
 
 HB_FUNC( WIN_PRINTDATARAW )
@@ -495,33 +495,33 @@ HB_FUNC( WIN_PRINTDATARAW )
                   }
                   nResult += dwWritten;
                }
-               hbwapi_SetLastError( GetLastError() );
-               EndPagePrinter( hPrinter );
+               hbwapi_SetLastError(GetLastError());
+               EndPagePrinter(hPrinter);
             }
             else
             {
-               hbwapi_SetLastError( GetLastError() );
+               hbwapi_SetLastError(GetLastError());
                nResult = -4;
             }
-            EndDocPrinter( hPrinter );
+            EndDocPrinter(hPrinter);
          }
          else
          {
-            hbwapi_SetLastError( GetLastError() );
+            hbwapi_SetLastError(GetLastError());
             nResult = -3;
          }
-         ClosePrinter( hPrinter );
+         ClosePrinter(hPrinter);
          hb_strfree(hDocName);
       }
       else
       {
-         hbwapi_SetLastError( GetLastError() );
+         hbwapi_SetLastError(GetLastError());
          nResult = -2;
       }
       hb_strfree(hDeviceName);
    }
 
-   hb_retns( nResult );
+   hb_retns(nResult);
 }
 
 HB_FUNC( WIN_PRINTERLIST )
@@ -532,7 +532,7 @@ HB_FUNC( WIN_PRINTERLIST )
    HB_BOOL bLocalPrintersOnly = hb_parl(2);
    DWORD dwNeeded = 0, dwReturned = 0;
 
-   EnumPrinters( _ENUMPRN_FLAGS_, nullptr, 5, nullptr, 0, &dwNeeded, &dwReturned );
+   EnumPrinters(_ENUMPRN_FLAGS_, nullptr, 5, nullptr, 0, &dwNeeded, &dwReturned);
    if( dwNeeded )
    {
       PRINTER_INFO_5 * pPrinterEnumBak;
@@ -548,7 +548,7 @@ HB_FUNC( WIN_PRINTERLIST )
             {
                if( bPrinterNamesOnly )
                {
-                  hb_arrayAddForward( pPrinterArray, HB_ITEMPUTSTR( pTempItem, pPrinterEnum->pPrinterName ) );
+                  hb_arrayAddForward(pPrinterArray, HB_ITEMPUTSTR(pTempItem, pPrinterEnum->pPrinterName));
                }
                else
                {
@@ -556,12 +556,12 @@ HB_FUNC( WIN_PRINTERLIST )
 
                   if( OpenPrinter(pPrinterEnum->pPrinterName, &hPrinter, nullptr) )
                   {
-                     GetPrinter( hPrinter, 2, nullptr, 0, &dwNeeded );
+                     GetPrinter(hPrinter, 2, nullptr, 0, &dwNeeded);
                      if( dwNeeded )
                      {
                         hb_arrayNew(pTempItem, HB_WINPRN_LEN_);
 
-                        HB_ARRAYSETSTR( pTempItem, HB_WINPRN_NAME, pPrinterEnum->pPrinterName );
+                        HB_ARRAYSETSTR(pTempItem, HB_WINPRN_NAME, pPrinterEnum->pPrinterName);
 
                         {
                            PRINTER_INFO_2 * pPrinterInfo2 = static_cast<PRINTER_INFO_2*>(hb_xgrabz(dwNeeded));
@@ -597,9 +597,9 @@ HB_FUNC( WIN_PRINTERLIST )
                            hb_arraySetC(pTempItem, HB_WINPRN_TYPE, nullptr);
                         }
 
-                        hb_arrayAddForward( pPrinterArray, pTempItem );
+                        hb_arrayAddForward(pPrinterArray, pTempItem);
                      }
-                     ClosePrinter( hPrinter );
+                     ClosePrinter(hPrinter);
                   }
                }
             }

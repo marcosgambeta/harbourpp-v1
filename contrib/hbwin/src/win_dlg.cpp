@@ -72,16 +72,16 @@ HB_FUNC( WIN_PRINTDLGDC )
       {
          LPDEVNAMES lpdn = static_cast<LPDEVNAMES>(GlobalLock(pd.hDevNames));
          HB_STORSTR(reinterpret_cast<LPCTSTR>(lpdn) + lpdn->wDeviceOffset, 1);
-         GlobalUnlock( pd.hDevNames );
-         GlobalFree( pd.hDevNames );
+         GlobalUnlock(pd.hDevNames);
+         GlobalFree(pd.hDevNames);
       }
 
       if( pd.hDevMode )
       {
-         GlobalFree( pd.hDevMode );
+         GlobalFree(pd.hDevMode);
       }
 
-      hbwapi_ret_HDC( pd.hDC );
+      hbwapi_ret_HDC(pd.hDC);
    }
    else
    {
@@ -95,7 +95,7 @@ static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
    LPTSTR lpStr = nullptr;
    DWORD dwMaxIndex = 0;
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       HB_SIZE nLen, nSize, nTotal, n, n1, n2;
 
@@ -107,7 +107,7 @@ static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
             pArrItem = hb_arrayGetItemPtr(pItem, n + 1);
             if( HB_IS_STRING(pArrItem) )
             {
-               n1 = HB_ITEMCOPYSTR( pArrItem, nullptr, 0 );
+               n1 = HB_ITEMCOPYSTR(pArrItem, nullptr, 0);
                if( n1 )
                {
                   nLen += n1 * 2 + 2;
@@ -132,21 +132,21 @@ static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
                pArrItem = hb_arrayGetItemPtr(pItem, n + 1);
                if( HB_IS_STRING(pArrItem) )
                {
-                  n1 = HB_ITEMCOPYSTR( pArrItem, lpStr + nLen, nTotal - nLen );
+                  n1 = HB_ITEMCOPYSTR(pArrItem, lpStr + nLen, nTotal - nLen);
                   if( n1 )
                   {
                      nLen += n1 + 1;
-                     n1 = HB_ITEMCOPYSTR( pArrItem, lpStr + nLen, nTotal - nLen );
+                     n1 = HB_ITEMCOPYSTR(pArrItem, lpStr + nLen, nTotal - nLen);
                      nLen += n1 + 1;
                      dwMaxIndex++;
                   }
                }
                else if( hb_arrayLen(pArrItem) >= 2 )
                {
-                  n1 = HB_ITEMCOPYSTR( hb_arrayGetItemPtr(pArrItem, 1), lpStr + nLen, nTotal - nLen );
+                  n1 = HB_ITEMCOPYSTR(hb_arrayGetItemPtr(pArrItem, 1), lpStr + nLen, nTotal - nLen);
                   if( n1 )
                   {
-                     n2 = HB_ITEMCOPYSTR( hb_arrayGetItemPtr(pArrItem, 2), lpStr + nLen + n1 + 1, nTotal - nLen - n1 - 1 );
+                     n2 = HB_ITEMCOPYSTR(hb_arrayGetItemPtr(pArrItem, 2), lpStr + nLen + n1 + 1, nTotal - nLen - n1 - 1);
                      if( n2 )
                      {
                         nLen += n1 + n2 + 2;
@@ -245,14 +245,14 @@ static void s_GetFileName( HB_BOOL fSave )
 
    ofn.lpstrInitialDir  = HB_PARSTR(3, &hInitDir, nullptr);
    ofn.lpstrTitle       = HB_PARSTR(2, &hTitle, nullptr);
-   ofn.Flags            = HB_ISNUM(1) ? hbwapi_par_DWORD(1) : ( OFN_EXPLORER | OFN_ALLOWMULTISELECT | OFN_HIDEREADONLY | OFN_NOCHANGEDIR );
+   ofn.Flags            = HB_ISNUM(1) ? hbwapi_par_DWORD(1) : (OFN_EXPLORER | OFN_ALLOWMULTISELECT | OFN_HIDEREADONLY | OFN_NOCHANGEDIR);
    ofn.lpstrDefExt      = HB_PARSTR(4, &hDefExt, nullptr);
    if( ofn.lpstrDefExt && ofn.lpstrDefExt[0] == '.' )
    {
       ++ofn.lpstrDefExt;
    }
 
-   HB_ITEMCOPYSTR( hb_param(8, Harbour::Item::ANY), ofn.lpstrFile, ofn.nMaxFile );
+   HB_ITEMCOPYSTR(hb_param(8, Harbour::Item::ANY), ofn.lpstrFile, ofn.nMaxFile);
 
    if( fSave ? GetSaveFileName( &ofn ) : GetOpenFileName( &ofn ) )
    {
@@ -266,7 +266,7 @@ static void s_GetFileName( HB_BOOL fSave )
       }
       hb_stornint(ofn.Flags, 1);
       hb_stornint(ofn.nFilterIndex, 6);
-      HB_RETSTRLEN( ofn.lpstrFile, nLen );
+      HB_RETSTRLEN(ofn.lpstrFile, nLen);
    }
    else
    {

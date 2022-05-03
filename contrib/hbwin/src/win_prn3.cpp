@@ -70,12 +70,12 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
          typically return FALSE. This only means that the buffer (the 3rd
          parameter) was not filled in. You do not want it filled in here. */
       SetLastError(0);
-      bFlag = GetPrinter( hPrinter, 2, 0, 0, &dwNeeded );
+      bFlag = GetPrinter(hPrinter, 2, 0, 0, &dwNeeded);
       if( !bFlag )
       {
          if( (GetLastError() != ERROR_INSUFFICIENT_BUFFER) || (dwNeeded == 0) )
          {
-            ClosePrinter( hPrinter );
+            ClosePrinter(hPrinter);
             return false;
          }
       }
@@ -85,20 +85,20 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
 
       /* The second GetPrinter() will fill in all the current information
          so that all you have to do is modify what you are interested in. */
-      bFlag = GetPrinter( hPrinter, 2, reinterpret_cast<LPBYTE>(ppi2), dwNeeded, &dwNeeded );
+      bFlag = GetPrinter(hPrinter, 2, reinterpret_cast<LPBYTE>(ppi2), dwNeeded, &dwNeeded);
       if( !bFlag )
       {
-         ClosePrinter( hPrinter );
+         ClosePrinter(hPrinter);
          hb_xfree(ppi2);
          return false;
       }
 
       /* Set default printer attribute for this printer. */
       ppi2->Attributes |= PRINTER_ATTRIBUTE_DEFAULT;
-      bFlag = SetPrinter( hPrinter, 2, reinterpret_cast<LPBYTE>(ppi2), 0 );
+      bFlag = SetPrinter(hPrinter, 2, reinterpret_cast<LPBYTE>(ppi2), 0);
       if( !bFlag )
       {
-         ClosePrinter( hPrinter );
+         ClosePrinter(hPrinter);
          hb_xfree(ppi2);
          return false;
       }
@@ -117,7 +117,7 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
          using DEFPRINTER = BOOL(WINAPI *)(LPCTSTR); /* stops warnings */
          DEFPRINTER fnSetDefaultPrinter;
 
-         hWinSpool = hbwapi_LoadLibrarySystem( TEXT( "winspool.drv" ) );
+         hWinSpool = hbwapi_LoadLibrarySystem(TEXT("winspool.drv"));
          if( !hWinSpool )
          {
             return false;
@@ -127,12 +127,12 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
 
          if( !fnSetDefaultPrinter )
          {
-            FreeLibrary( hWinSpool );
+            FreeLibrary(hWinSpool);
             return false;
          }
 
-         bFlag = ( *fnSetDefaultPrinter )( lpPrinterName );
-         FreeLibrary( hWinSpool );
+         bFlag = (*fnSetDefaultPrinter)(lpPrinterName);
+         FreeLibrary(hWinSpool);
          if( !bFlag )
          {
             return false;
@@ -154,12 +154,12 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
             typically return FALSE. This only means that the buffer (the 3rd
             parameter) was not filled in. You do not want it filled in here. */
          SetLastError(0);
-         bFlag = GetPrinter( hPrinter, 2, 0, 0, &dwNeeded );
+         bFlag = GetPrinter(hPrinter, 2, 0, 0, &dwNeeded);
          if( !bFlag )
          {
             if( (GetLastError() != ERROR_INSUFFICIENT_BUFFER) || (dwNeeded == 0) )
             {
-               ClosePrinter( hPrinter );
+               ClosePrinter(hPrinter);
                return false;
             }
          }
@@ -169,10 +169,10 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
 
          /* The second GetPrinter() fills in all the current
             information. */
-         bFlag = GetPrinter( hPrinter, 2, reinterpret_cast<LPBYTE>(ppi2), dwNeeded, &dwNeeded );
+         bFlag = GetPrinter(hPrinter, 2, reinterpret_cast<LPBYTE>(ppi2), dwNeeded, &dwNeeded);
          if( (!bFlag) || (!ppi2->pDriverName) || (!ppi2->pPortName) )
          {
-            ClosePrinter( hPrinter );
+            ClosePrinter(hPrinter);
             hb_xfree(ppi2);
             return false;
          }
@@ -183,20 +183,20 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
             String will be in form "printername,drivername,portname". */
          pBuffer = static_cast<LPTSTR>(hb_xgrab((nStrLen + 1) * sizeof(TCHAR)));
 
-         pBuffer[0] = TEXT( '\0' );
+         pBuffer[0] = TEXT('\0');
 
          /* Build string in form "printername,drivername,portname". */
-         hbwapi_tstrncat( pBuffer, lpPrinterName, nStrLen );
-         hbwapi_tstrncat( pBuffer, TEXT( "," ), nStrLen );
-         hbwapi_tstrncat( pBuffer, ppi2->pDriverName, nStrLen );
-         hbwapi_tstrncat( pBuffer, TEXT( "," ), nStrLen );
-         hbwapi_tstrncat( pBuffer, ppi2->pPortName, nStrLen );
+         hbwapi_tstrncat(pBuffer, lpPrinterName, nStrLen);
+         hbwapi_tstrncat(pBuffer, TEXT(","), nStrLen);
+         hbwapi_tstrncat(pBuffer, ppi2->pDriverName, nStrLen);
+         hbwapi_tstrncat(pBuffer, TEXT(","), nStrLen);
+         hbwapi_tstrncat(pBuffer, ppi2->pPortName, nStrLen);
 
          /* Set the default printer in win.ini and registry. */
-         bFlag = WriteProfileString( TEXT( "windows" ), TEXT( "device" ), pBuffer );
+         bFlag = WriteProfileString(TEXT("windows"), TEXT("device"), pBuffer);
          if( !bFlag )
          {
-            ClosePrinter( hPrinter );
+            ClosePrinter(hPrinter);
             hb_xfree(ppi2);
             hb_xfree(pBuffer);
             return false;
@@ -211,7 +211,7 @@ static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
    /* Clean up. */
    if( hPrinter )
    {
-      ClosePrinter( hPrinter );
+      ClosePrinter(hPrinter);
    }
    if( ppi2 )
    {

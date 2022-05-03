@@ -744,7 +744,7 @@ static SAFEARRAY * hb_oleSafeArrayFromItem(PHB_ITEM pItem, VARTYPE vt, int iDims
 
    if( iDims == 0 )
    {
-      if( pItem )
+      if( pItem != nullptr )
       {
          if( HB_IS_STRING(pItem) )
          {
@@ -1880,7 +1880,7 @@ static void PutParams(DISPPARAMS * dispparam, HB_UINT uiOffset, HB_USHORT uiClas
          pRefs++;
       }
    }
-   if( pItem )
+   if( pItem != nullptr )
    {
       hb_itemRelease(pItem);
    }
@@ -2084,7 +2084,7 @@ HB_FUNC( __OLEENUMCREATE ) /* ( __hObj ) */
    lOleError = HB_VTBL(pDisp)->Invoke(HB_THIS_(pDisp) DISPID_NEWENUM, HB_ID_REF(IID_NULL),
                                       LOCALE_USER_DEFAULT,
                                       DISPATCH_PROPERTYGET,
-                                      &dispparam, &variant, &excep, &uiArgErr );
+                                      &dispparam, &variant, &excep, &uiArgErr);
 
    if( lOleError == S_OK )
    {
@@ -2821,7 +2821,7 @@ HB_FUNC( __OLEVARIANTNEW )
          if( pInit == nullptr || HB_IS_NUMERIC(pInit) )
          {
             V_VT(&variant) = VT_DECIMAL;
-            VarDecFromR8(hb_itemGetND(pInit), &HB_WIN_U1(&variant, decVal) /*&V_DECIMAL(&variant)*/ );
+            VarDecFromR8(hb_itemGetND(pInit), &HB_WIN_U1(&variant, decVal) /*&V_DECIMAL(&variant)*/);
          }
          break;
 

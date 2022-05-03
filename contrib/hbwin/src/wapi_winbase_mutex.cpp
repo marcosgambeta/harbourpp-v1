@@ -52,7 +52,7 @@ static HB_GARBAGE_FUNC( hbwapi_mutex_release )
 
    if( ph && *ph )
    {
-      CloseHandle( static_cast<HANDLE>(*ph) );
+      CloseHandle(static_cast<HANDLE>(*ph));
       *ph = nullptr;
    }
 }
@@ -89,10 +89,10 @@ static HANDLE hbwapi_mutex_par( int iParam )
 HB_FUNC( WAPI_CREATEMUTEX )
 {
    void * hName;
-   HANDLE hMutex = CreateMutex( static_cast<LPSECURITY_ATTRIBUTES>(hb_parptr(1)), hb_parl(2), HB_PARSTR(3, &hName, nullptr) );
+   HANDLE hMutex = CreateMutex(static_cast<LPSECURITY_ATTRIBUTES>(hb_parptr(1)), hb_parl(2), HB_PARSTR(3, &hName, nullptr));
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_mutex_ret( hMutex );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_mutex_ret(hMutex);
 
    hb_strfree(hName);
 }
@@ -101,10 +101,10 @@ HB_FUNC( WAPI_CREATEMUTEX )
 HB_FUNC( WAPI_OPENMUTEX )
 {
    void * hName;
-   HANDLE hMutex = OpenMutex( hb_parnl(1), hb_parl(2), HB_PARSTR(3, &hName, nullptr) );
+   HANDLE hMutex = OpenMutex(hb_parnl(1), hb_parl(2), HB_PARSTR(3, &hName, nullptr));
 
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_mutex_ret( hMutex );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_mutex_ret(hMutex);
 
    hb_strfree(hName);
 }
@@ -116,9 +116,9 @@ HB_FUNC( WAPI_RELEASEMUTEX )
 
    if( hMutex )
    {
-      BOOL bResult = ReleaseMutex( hMutex );
-      hbwapi_SetLastError( GetLastError() );
-      hbwapi_ret_L( bResult );
+      BOOL bResult = ReleaseMutex(hMutex);
+      hbwapi_SetLastError(GetLastError());
+      hbwapi_ret_L(bResult);
    }
    else
    {
