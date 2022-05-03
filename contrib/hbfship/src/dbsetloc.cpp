@@ -53,7 +53,7 @@ HB_FUNC( DBSETLOCATE )
    AREAP   pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_BOOL fSet  = HB_FALSE;
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       PHB_ITEM pLocate = hb_param(1, Harbour::Item::BLOCK);
       if( pLocate )

@@ -114,10 +114,10 @@ HB_FUNC( HPDF_IMAGE_GETSIZE )
    HPDF_Point pt;
    PHB_ITEM   info = hb_itemArrayNew(2);
 
-   pt = HPDF_Image_GetSize( static_cast<HPDF_Image>(hb_parptr(1)) );
+   pt = HPDF_Image_GetSize(static_cast<HPDF_Image>(hb_parptr(1)));
 
-   hb_arraySetND( info, 1, pt.x );
-   hb_arraySetND( info, 2, pt.y );
+   hb_arraySetND(info, 1, pt.x);
+   hb_arraySetND(info, 2, pt.y);
 
    hb_itemReturnRelease(info);
 }

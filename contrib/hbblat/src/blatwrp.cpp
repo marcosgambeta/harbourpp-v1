@@ -51,7 +51,7 @@
          contain C++ parts, which we don't need anyway. */
 
 HB_EXTERN_BEGIN
-extern int cSend( const char * szCmd );
+extern int cSend(const char * szCmd);
 HB_EXTERN_END
 
 HB_FUNC( HB_BLATSEND )

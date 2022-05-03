@@ -75,7 +75,7 @@ static HB_GARBAGE_FUNC( FB_db_handle_release )
       ISC_STATUS_ARRAY status;
 
       /* Destroy the object */
-      isc_detach_database( status, ph );
+      isc_detach_database(status, ph);
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = 0;
@@ -129,9 +129,9 @@ HB_FUNC( FBCREATEDB )
       const char *   charset = hb_parcx(5);
       unsigned short dialect = static_cast<unsigned short>(hb_parni(6));
 
-      hb_snprintf( create_db, sizeof(create_db),
-                   "CREATE DATABASE '%s' USER '%s' PASSWORD '%s' PAGE_SIZE = %i DEFAULT CHARACTER SET %s",
-                   db_name, user, pass, page, charset );
+      hb_snprintf(create_db, sizeof(create_db),
+                  "CREATE DATABASE '%s' USER '%s' PASSWORD '%s' PAGE_SIZE = %i DEFAULT CHARACTER SET %s",
+                  db_name, user, pass, page, charset);
 
       if( isc_dsql_execute_immediate(status, &newdb, &trans, 0, create_db, dialect, nullptr) )
       {
@@ -168,7 +168,7 @@ HB_FUNC( FBCONNECT )
       len = static_cast<int>(sizeof(dpb) - i - 4);
    }
    dpb[i++] = static_cast<char>(len);
-   hb_strncpy( &( dpb[i] ), user, len );
+   hb_strncpy(&(dpb[i]), user, len);
    i += static_cast<short>(len);
    dpb[i++] = isc_dpb_password;
    len        = static_cast<int>(strlen(passwd));
@@ -177,7 +177,7 @@ HB_FUNC( FBCONNECT )
       len = static_cast<int>(sizeof(dpb) - i - 2);
    }
    dpb[i++] = static_cast<char>(len);
-   hb_strncpy( &( dpb[i] ), passwd, len );
+   hb_strncpy(&(dpb[i]), passwd, len);
    i += static_cast<short>(len);
 
    if( isc_attach_database( status, 0, db_connect, &db, i, dpb ) )
@@ -186,7 +186,7 @@ HB_FUNC( FBCONNECT )
    }
    else
    {
-      hb_FB_db_handle_ret( db );
+      hb_FB_db_handle_ret(db);
    }
 }
 
@@ -217,7 +217,7 @@ HB_FUNC( FBERROR )
 {
    char msg[1024];
 
-   isc_sql_interprete( static_cast<short>(hb_parni(1)) /* sqlcode */, msg, sizeof(msg) );
+   isc_sql_interprete(static_cast<short>(hb_parni(1)) /* sqlcode */, msg, sizeof(msg));
 
    hb_retc(msg);
 }
@@ -321,7 +321,7 @@ HB_FUNC( FBEXECUTE )
       {
          if( !HB_ISPOINTER(4) )
          {
-            isc_rollback_transaction( status_rollback, &trans );
+            isc_rollback_transaction(status_rollback, &trans);
          }
 
          hb_retnl(isc_sqlcode(status));
@@ -426,7 +426,7 @@ HB_FUNC( FBQUERY )
 
       for( i = 0, var = sqlda->sqlvar; i < sqlda->sqld; i++, var++ )
       {
-         int dtype = ( var->sqltype & ~1 );
+         int dtype = (var->sqltype & ~1);
 
          switch( dtype )
          {
@@ -461,7 +461,7 @@ HB_FUNC( FBQUERY )
          hb_arraySetNL(aTemp, 6, sqlda->sqlvar[i].aliasname_length); /* support for aliases */
          hb_arraySetC(aTemp, 7, sqlda->sqlvar[i].aliasname);        /* support for aliases */
 
-         hb_arraySetForward( aNew, i + 1, aTemp );
+         hb_arraySetForward(aNew, i + 1, aTemp);
       }
 
       hb_itemRelease(aTemp);
@@ -607,35 +607,35 @@ HB_FUNC( FBGETDATA )
 
             case SQL_TIMESTAMP:
                isc_decode_timestamp(reinterpret_cast<ISC_TIMESTAMP*>(var->sqldata), &times);
-               hb_snprintf( date_s, sizeof(date_s), "%04d-%02d-%02d %02d:%02d:%02d.%04d",
-                            times.tm_year + 1900,
-                            times.tm_mon + 1,
-                            times.tm_mday,
-                            times.tm_hour,
-                            times.tm_min,
-                            times.tm_sec,
-                            static_cast<int>((reinterpret_cast<ISC_TIMESTAMP*>(var->sqldata))->timestamp_time % 10000) );
-               hb_snprintf( data, sizeof(data), "%*s ", 24, date_s );
+               hb_snprintf(date_s, sizeof(date_s), "%04d-%02d-%02d %02d:%02d:%02d.%04d",
+                           times.tm_year + 1900,
+                           times.tm_mon + 1,
+                           times.tm_mday,
+                           times.tm_hour,
+                           times.tm_min,
+                           times.tm_sec,
+                           static_cast<int>((reinterpret_cast<ISC_TIMESTAMP*>(var->sqldata))->timestamp_time % 10000));
+               hb_snprintf(data, sizeof(data), "%*s ", 24, date_s);
 
                hb_retc(data);
                break;
 
             case SQL_TYPE_DATE:
                isc_decode_sql_date(reinterpret_cast<ISC_DATE*>(var->sqldata), &times);
-               hb_snprintf( date_s, sizeof(date_s), "%04d-%02d-%02d", times.tm_year + 1900, times.tm_mon + 1, times.tm_mday );
-               hb_snprintf( data, sizeof(data), "%*s ", 8, date_s );
+               hb_snprintf(date_s, sizeof(date_s), "%04d-%02d-%02d", times.tm_year + 1900, times.tm_mon + 1, times.tm_mday);
+               hb_snprintf(data, sizeof(data), "%*s ", 8, date_s);
 
                hb_retc(data);
                break;
 
             case SQL_TYPE_TIME:
                isc_decode_sql_time(reinterpret_cast<ISC_TIME*>(var->sqldata), &times);
-               hb_snprintf( date_s, sizeof(date_s), "%02d:%02d:%02d.%04d",
-                            times.tm_hour,
-                            times.tm_min,
-                            times.tm_sec,
-                            static_cast<int>((*(reinterpret_cast<ISC_TIME*>(var->sqldata))) % 10000) );
-               hb_snprintf( data, sizeof(data), "%*s ", 13, date_s );
+               hb_snprintf(date_s, sizeof(date_s), "%02d:%02d:%02d.%04d",
+                           times.tm_hour,
+                           times.tm_min,
+                           times.tm_sec,
+                           static_cast<int>((*(reinterpret_cast<ISC_TIME*>(var->sqldata))) % 10000));
+               hb_snprintf(data, sizeof(data), "%*s ", 13, date_s);
 
                hb_retc(data);
                break;
@@ -690,36 +690,36 @@ HB_FUNC( FBGETDATA )
 
                   if( value >= 0 )
                   {
-                     hb_snprintf( data, sizeof(data), "%*" ISC_INT64_FORMAT "d.%0*" ISC_INT64_FORMAT "d",
-                                  field_width - 1 + dscale,
-                                  static_cast<ISC_INT64>(value) / tens,
-                                  -dscale,
-                                  static_cast<ISC_INT64>(value) % tens );
+                     hb_snprintf(data, sizeof(data), "%*" ISC_INT64_FORMAT "d.%0*" ISC_INT64_FORMAT "d",
+                                 field_width - 1 + dscale,
+                                 static_cast<ISC_INT64>(value) / tens,
+                                 -dscale,
+                                 static_cast<ISC_INT64>(value) % tens);
                   }
                   else if( (value / tens) != 0 )
                   {
-                     hb_snprintf( data, sizeof(data), "%*" ISC_INT64_FORMAT "d.%0*" ISC_INT64_FORMAT "d",
-                                  field_width - 1 + dscale,
-                                  static_cast<ISC_INT64>(value / tens),
-                                  -dscale,
-                                  static_cast<ISC_INT64>(-(value % tens)) );
+                     hb_snprintf(data, sizeof(data), "%*" ISC_INT64_FORMAT "d.%0*" ISC_INT64_FORMAT "d",
+                                 field_width - 1 + dscale,
+                                 static_cast<ISC_INT64>(value / tens),
+                                 -dscale,
+                                 static_cast<ISC_INT64>(-(value % tens)));
                   }
                   else
                   {
-                     hb_snprintf( data, sizeof(data), "%*s.%0*" ISC_INT64_FORMAT "d",
-                                  field_width - 1 + dscale,
-                                  "-0",
-                                  -dscale,
-                                  static_cast<ISC_INT64>(-(value % tens)) );
+                     hb_snprintf(data, sizeof(data), "%*s.%0*" ISC_INT64_FORMAT "d",
+                                 field_width - 1 + dscale,
+                                 "-0",
+                                 -dscale,
+                                 static_cast<ISC_INT64>(-(value % tens)));
                   }
                }
                else if( dscale )
                {
-                  hb_snprintf( data, sizeof(data), "%*" ISC_INT64_FORMAT "d%0*d", field_width, static_cast<ISC_INT64>(value), dscale, 0 );
+                  hb_snprintf(data, sizeof(data), "%*" ISC_INT64_FORMAT "d%0*d", field_width, static_cast<ISC_INT64>(value), dscale, 0);
                }
                else
                {
-                  hb_snprintf( data, sizeof(data), "%*" ISC_INT64_FORMAT "d", field_width, static_cast<ISC_INT64>(value) );
+                  hb_snprintf(data, sizeof(data), "%*" ISC_INT64_FORMAT "d", field_width, static_cast<ISC_INT64>(value));
                }
 
                hb_retc(data);
@@ -788,10 +788,10 @@ HB_FUNC( FBGETBLOB )
             char     p[1024];
             PHB_ITEM temp;
 
-            hb_snprintf( p, sizeof(p), "%*.*s", blob_seg_len, blob_seg_len, blob_segment );
+            hb_snprintf(p, sizeof(p), "%*.*s", blob_seg_len, blob_seg_len, blob_segment);
 
             temp = hb_itemPutC(nullptr, p);
-            hb_arrayAdd( aNew, temp );
+            hb_arrayAdd(aNew, temp);
             hb_itemRelease(temp);
 
             blob_stat = isc_get_segment(status, &blob_handle, reinterpret_cast<unsigned short*>(&blob_seg_len), sizeof(blob_segment), blob_segment);

@@ -83,12 +83,12 @@ HB_FILE;
 
 #define _PHB_FILE     pFile->pFile
 
-static PHB_FILE s_filegzipNew( PHB_FILE pFile, int iMode, int iLevel );
+static PHB_FILE s_filegzipNew(PHB_FILE pFile, int iMode, int iLevel);
 
 static voidpf s_gzip_zalloc( voidpf opaque, uInt items, uInt size )
 {
    HB_SYMBOL_UNUSED(opaque);
-   return hb_xalloc( static_cast<HB_SIZE>(items) * size );
+   return hb_xalloc(static_cast<HB_SIZE>(items) * size);
 }
 
 static void s_gzip_zfree( voidpf opaque, voidpf address )
@@ -103,7 +103,7 @@ static HB_SIZE s_gzip_write( PHB_FILE pFile, HB_MAXINT nTimeout )
 
    while( nWritten < nSize )
    {
-      HB_SIZE nWr = _PHB_FILE->pFuncs->Write( _PHB_FILE, pFile->buffer + nWritten, nSize - nWritten, nTimeout );
+      HB_SIZE nWr = _PHB_FILE->pFuncs->Write(_PHB_FILE, pFile->buffer + nWritten, nSize - nWritten, nTimeout);
       if( nWr == static_cast<HB_SIZE>(-1) )
          return nWr;
       else if( nWr == 0 )
@@ -117,7 +117,7 @@ static HB_SIZE s_gzip_write( PHB_FILE pFile, HB_MAXINT nTimeout )
    if( nWritten > 0 )
    {
       if( nWritten < nSize )
-         memmove( pFile->buffer, pFile->buffer + nWritten, nSize - nWritten );
+         memmove(pFile->buffer, pFile->buffer + nWritten, nSize - nWritten);
       pFile->gz.avail_out += static_cast<uInt>(nWritten);
       pFile->gz.next_out -= nWritten;
    }
@@ -130,23 +130,23 @@ static void s_gzip_flush( PHB_FILE pFile, HB_BOOL fClose )
    int err;
 
    if( pFile->gz.avail_out > 0 )
-      err = deflate( &pFile->gz, fClose ? Z_FINISH : Z_PARTIAL_FLUSH );
+      err = deflate(&pFile->gz, fClose ? Z_FINISH : Z_PARTIAL_FLUSH);
    else
       err = Z_OK;
 
    while( pFile->gz.avail_out < HB_GZIP_BUFSIZE )
    {
-      HB_SIZE nWr = s_gzip_write( pFile, pFile->nTimeout );
+      HB_SIZE nWr = s_gzip_write(pFile, pFile->nTimeout);
       if( nWr == 0 || nWr == static_cast<HB_SIZE>(-1) )
          return;
       if( err == Z_OK || err == Z_BUF_ERROR )
-         err = deflate( &pFile->gz, fClose ? Z_FINISH : Z_PARTIAL_FLUSH );
+         err = deflate(&pFile->gz, fClose ? Z_FINISH : Z_PARTIAL_FLUSH);
    }
 
    if( err == Z_OK || err == Z_STREAM_END )
       hb_fsSetError(0);
    else
-      hb_fsSetError( HB_GZIP_ERROR_BASE - err );
+      hb_fsSetError(HB_GZIP_ERROR_BASE - err);
 }
 
 static const char * s_gzio_name( const char * pszFileName, int * piLevel )
@@ -186,13 +186,13 @@ static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, ch
    pszName = s_gzio_name(pszFileName, nullptr);
    if( pRetPath )
    {
-      char * pszNameBuf = static_cast<char*>(hb_xgrab(HB_PATH_MAX) );
+      char * pszNameBuf = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
       int iPref = static_cast<int>(pszName - pszFileName);
 
-      fResult = hb_fileExists( pszName, pszNameBuf );
+      fResult = hb_fileExists(pszName, pszNameBuf);
       if( pRetPath != pszFileName )
          memcpy(pRetPath, pszFileName, iPref);
-      hb_strncpy( pRetPath + iPref, pszNameBuf, HB_PATH_MAX - 1 - iPref );
+      hb_strncpy(pRetPath + iPref, pszNameBuf, HB_PATH_MAX - 1 - iPref);
       hb_xfree(pszNameBuf);
    }
    else
@@ -219,15 +219,15 @@ static HB_BOOL s_fileCopy( PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const
 {
    int iSrcLvl = Z_DEFAULT_COMPRESSION,
        iDstLvl = Z_DEFAULT_COMPRESSION;
-   const char * pszSrc = s_gzio_name( pszSrcFile, &iSrcLvl ),
-              * pszDst = s_gzio_name( pszDstFile, &iDstLvl );
+   const char * pszSrc = s_gzio_name(pszSrcFile, &iSrcLvl),
+              * pszDst = s_gzio_name(pszDstFile, &iDstLvl);
 
    HB_SYMBOL_UNUSED(pFuncs);
 
    if( pszDst != pszDstFile && iSrcLvl == iDstLvl )
-      return hb_fsCopy( pszSrc, pszDst );
+      return hb_fsCopy(pszSrc, pszDst);
    else
-      return hb_fsCopy( pszSrcFile, pszDstFile );
+      return hb_fsCopy(pszSrcFile, pszDstFile);
 }
 
 static HB_BOOL s_fileDirExists( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
@@ -320,16 +320,16 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName,
 {
    int iLevel = Z_DEFAULT_COMPRESSION;
    char * pszNameBuf = nullptr;
-   const char * pszName = s_gzio_name( pszFileName, &iLevel );
+   const char * pszName = s_gzio_name(pszFileName, &iLevel);
    int iPref = static_cast<int>(pszName - pszFileName);
    PHB_FILE pFile;
 
    HB_SYMBOL_UNUSED(pFuncs);
 
    if( (nExFlags & FXO_COPYNAME) != 0 )
-      pszName = pszNameBuf = hb_strncpy( static_cast<char*>(hb_xgrab(HB_PATH_MAX)), pszName, HB_PATH_MAX - 1 );
+      pszName = pszNameBuf = hb_strncpy(static_cast<char*>(hb_xgrab(HB_PATH_MAX)), pszName, HB_PATH_MAX - 1);
 
-   pFile = hb_fileExtOpen( pszName, pszDefExt, nExFlags, pPaths, pError );
+   pFile = hb_fileExtOpen(pszName, pszDefExt, nExFlags, pPaths, pError);
 
    if( (nExFlags & FXO_COPYNAME) != 0 )
    {
@@ -339,44 +339,40 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName,
    }
 #if 0
    if( !pFile && pError )
-      hb_errPutFileName( pError, pszFileName );
+      hb_errPutFileName(pError, pszFileName);
 #endif
 
-   return s_filegzipNew( pFile, nExFlags & ( FO_READ | FO_WRITE | FO_READWRITE ),
-                         iLevel );
+   return s_filegzipNew(pFile, nExFlags & (FO_READ | FO_WRITE | FO_READWRITE), iLevel);
 }
 
 static void s_fileClose( PHB_FILE pFile )
 {
    if( pFile->iMode != FO_READ && pFile->fInited )
-      s_gzip_flush( pFile, true );
+      s_gzip_flush(pFile, true);
 
-   _PHB_FILE->pFuncs->Close( _PHB_FILE );
+   _PHB_FILE->pFuncs->Close(_PHB_FILE);
 
    if( pFile->fInited )
    {
       if( pFile->iMode == FO_READ )
-         inflateEnd( &pFile->gz );
+         inflateEnd(&pFile->gz);
       else
-         deflateEnd( &pFile->gz );
+         deflateEnd(&pFile->gz);
    }
    hb_xfree(pFile);
 }
 
-static HB_BOOL s_fileLock( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen,
-                           int iType )
+static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
 {
-   return _PHB_FILE->pFuncs->Lock( _PHB_FILE, nStart, nLen, iType );
+   return _PHB_FILE->pFuncs->Lock(_PHB_FILE, nStart, nLen, iType);
 }
 
-static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen,
-                           int iType )
+static int s_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
 {
-   return _PHB_FILE->pFuncs->LockTest( _PHB_FILE, nStart, nLen, iType );
+   return _PHB_FILE->pFuncs->LockTest(_PHB_FILE, nStart, nLen, iType);
 }
 
-static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize,
-                           HB_MAXINT nTimeout )
+static HB_SIZE s_fileRead(PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout)
 {
    HB_SIZE nResult = 0;
 
@@ -392,7 +388,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize,
          err = inflateInit2(&pFile->gz, 47);
          if( err != Z_OK )
          {
-            hb_fsSetError( HB_GZIP_ERROR_BASE - err );
+            hb_fsSetError(HB_GZIP_ERROR_BASE - err);
             return static_cast<HB_SIZE>(-1);
          }
          pFile->fInited = HB_TRUE;
@@ -411,7 +407,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize,
       {
          if( err == Z_BUF_ERROR && pFile->gz.avail_in == 0 )
          {
-            nResult = _PHB_FILE->pFuncs->Read( _PHB_FILE, pFile->buffer, HB_GZIP_BUFSIZE, nTimeout );
+            nResult = _PHB_FILE->pFuncs->Read(_PHB_FILE, pFile->buffer, HB_GZIP_BUFSIZE, nTimeout);
             if( nResult == 0 || nResult == static_cast<HB_SIZE>(- 1) )
                break;
             pFile->gz.next_in = ( Bytef * ) pFile->buffer;
@@ -419,18 +415,18 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize,
          }
          else if( err != Z_OK )
          {
-            hb_fsSetError( HB_GZIP_ERROR_BASE - err );
+            hb_fsSetError(HB_GZIP_ERROR_BASE - err);
             nResult = static_cast<HB_SIZE>(-1);
             break;
          }
-         err = inflate( &pFile->gz, Z_SYNC_FLUSH );
+         err = inflate(&pFile->gz, Z_SYNC_FLUSH);
       }
       if( pFile->gz.total_out != 0 )
          nResult = static_cast<HB_SIZE>(pFile->gz.total_out);
-      pFile->seek_pos += hb_fileResult( nResult );
+      pFile->seek_pos += hb_fileResult(nResult);
    }
    else
-      hb_fsSetError( HB_FILE_ERR_UNSUPPORTED );
+      hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
    return nResult;
 }
@@ -454,7 +450,7 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * buffer, HB_SIZE nSize,
          err = deflateInit2(&pFile->gz, pFile->iLevel, Z_DEFLATED, 31, HB_GZIP_MEM_LEVEL, Z_DEFAULT_STRATEGY);
          if( err != Z_OK )
          {
-            hb_fsSetError( HB_GZIP_ERROR_BASE - err );
+            hb_fsSetError(HB_GZIP_ERROR_BASE - err);
             return static_cast<HB_SIZE>(-1);
          }
          pFile->fInited = HB_TRUE;
@@ -472,16 +468,16 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * buffer, HB_SIZE nSize,
       {
          if( pFile->gz.avail_out == 0 )
          {
-            nResult = s_gzip_write( pFile, nTimeout );
+            nResult = s_gzip_write(pFile, nTimeout);
             if( nResult == 0 || nResult == static_cast<HB_SIZE>(- 1) )
                break;
          }
-         err = deflate( &pFile->gz, Z_NO_FLUSH );
+         err = deflate(&pFile->gz, Z_NO_FLUSH);
          if( err != Z_OK )
          {
             if( err != Z_BUF_ERROR )
             {
-               hb_fsSetError( HB_GZIP_ERROR_BASE - err );
+               hb_fsSetError(HB_GZIP_ERROR_BASE - err);
                nResult = static_cast<HB_SIZE>(-1);
             }
             break;
@@ -489,10 +485,10 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * buffer, HB_SIZE nSize,
       }
       if( nResult != static_cast<HB_SIZE>(- 1) )
          nResult = nSize - pFile->gz.avail_in;
-      pFile->seek_pos += hb_fileResult( nResult );
+      pFile->seek_pos += hb_fileResult(nResult);
    }
    else
-      hb_fsSetError( HB_FILE_ERR_UNSUPPORTED );
+      hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
    return nResult;
 }
@@ -503,9 +499,9 @@ static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * buffer, HB_SIZE nSize,
    HB_SIZE nResult = 0;
 
    if( pFile->iMode != FO_WRITE && pFile->seek_pos == nOffset )
-      nResult = pFile->pFuncs->Read( pFile, buffer, nSize, pFile->nTimeout );
+      nResult = pFile->pFuncs->Read(pFile, buffer, nSize, pFile->nTimeout);
    else
-      hb_fsSetError( HB_FILE_ERR_UNSUPPORTED );
+      hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
    return nResult;
 }
@@ -516,9 +512,9 @@ static HB_SIZE s_fileWriteAt( PHB_FILE pFile, const void * buffer, HB_SIZE nSize
    HB_SIZE nResult = 0;
 
    if( pFile->iMode != FO_READ && pFile->seek_pos == nOffset )
-      nResult = pFile->pFuncs->Write( pFile, buffer, nSize, pFile->nTimeout );
+      nResult = pFile->pFuncs->Write(pFile, buffer, nSize, pFile->nTimeout);
    else
-      hb_fsSetError( HB_FILE_ERR_UNSUPPORTED );
+      hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
    return nResult;
 }
@@ -530,7 +526,7 @@ static HB_BOOL s_fileTruncAt( PHB_FILE pFile, HB_FOFFSET nOffset )
       hb_fsSetError(0);
       return true;
    }
-   hb_fsSetError( HB_FILE_ERR_UNSUPPORTED );
+   hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
    return false;
 }
 
@@ -549,14 +545,14 @@ static HB_FOFFSET s_fileSize( PHB_FILE pFile )
    HB_SYMBOL_UNUSED(pFile);
 
    /* error below and 0 returned indicate stream File IO */
-   hb_fsSetError( HB_FILE_ERR_UNSUPPORTED );
+   hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
    return 0;
 }
 
 static HB_BOOL s_fileEof( PHB_FILE pFile )
 {
-   return pFile->iMode == FO_WRITE || _PHB_FILE->pFuncs->Eof( _PHB_FILE );
+   return pFile->iMode == FO_WRITE || _PHB_FILE->pFuncs->Eof(_PHB_FILE);
 }
 
 static void s_fileFlush( PHB_FILE pFile, HB_BOOL fDirty )
@@ -564,9 +560,9 @@ static void s_fileFlush( PHB_FILE pFile, HB_BOOL fDirty )
    if( pFile->iMode != FO_READ && pFile->fInited )
    {
       #if 0
-      s_gzip_flush( pFile, false );
+      s_gzip_flush(pFile, false);
       #endif
-      _PHB_FILE->pFuncs->Flush( _PHB_FILE, fDirty );
+      _PHB_FILE->pFuncs->Flush(_PHB_FILE, fDirty);
    }
    else
       hb_fsSetError(0);
@@ -576,8 +572,8 @@ static void s_fileCommit( PHB_FILE pFile )
 {
    if( pFile->iMode != FO_READ && pFile->fInited )
    {
-      pFile->pFuncs->Flush( pFile, true );
-      _PHB_FILE->pFuncs->Commit( _PHB_FILE );
+      pFile->pFuncs->Flush(pFile, true);
+      _PHB_FILE->pFuncs->Commit(_PHB_FILE);
    }
    else
       hb_fsSetError(0);
@@ -622,7 +618,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
       /* TODO? GET/SET compression level? */
    }
 
-   return _PHB_FILE->pFuncs->Configure( _PHB_FILE, iIndex, pValue );
+   return _PHB_FILE->pFuncs->Configure(_PHB_FILE, iIndex, pValue);
 }
 
 static HB_FHANDLE s_fileHandle( PHB_FILE pFile )
@@ -697,9 +693,9 @@ static PHB_FILE s_filegzipNew( PHB_FILE pFile, int iMode, int iLevel )
 
 HB_FUNC( HB_GZIO ) { ; }
 
-HB_CALL_ON_STARTUP_BEGIN( _hb_file_gzio_init_ )
-   hb_fileRegisterFull( &s_fileFuncs );
-HB_CALL_ON_STARTUP_END( _hb_file_gzio_init_ )
+HB_CALL_ON_STARTUP_BEGIN(_hb_file_gzio_init_)
+   hb_fileRegisterFull(&s_fileFuncs);
+HB_CALL_ON_STARTUP_END(_hb_file_gzio_init_)
 
 #if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_file_gzio_init_

@@ -84,15 +84,15 @@ HB_FUNC( HB_GS )
       code = gsapi_new_instance(&minst, nullptr);
       if( code >= 0 )
       {
-         code  = gsapi_init_with_args( minst, gsargc, gsargv );
-         code1 = gsapi_exit( minst );
+         code  = gsapi_init_with_args(minst, gsargc, gsargv);
+         code1 = gsapi_exit(minst);
 
          if( code == 0 || code == gs_error_Quit )
             code = code1;
 
-         gsapi_delete_instance( minst );
+         gsapi_delete_instance(minst);
 
-         bResult = ( code == 0 || code == gs_error_Quit );
+         bResult = (code == 0 || code == gs_error_Quit);
       }
    }
 
@@ -102,7 +102,7 @@ HB_FUNC( HB_GS )
 HB_FUNC( HB_GSAPI_REVISION )
 {
    gsapi_revision_t r;
-   int result = gsapi_revision( &r, sizeof(r) );
+   int result = gsapi_revision(&r, sizeof(r));
 
    if( result == 0 )
    {

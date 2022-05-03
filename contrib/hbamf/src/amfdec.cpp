@@ -30,8 +30,8 @@ typedef struct
    PHB_ITEM     conv_function;
 } amfContext;
 
-static HB_BOOL amf3_getItem( amfContext * context, PHB_ITEM pItem );
-extern HB_BOOL hbamf_is_cls_externalizable( HB_USHORT uiClass );
+static HB_BOOL amf3_getItem(amfContext * context, PHB_ITEM pItem);
+extern HB_BOOL hbamf_is_cls_externalizable(HB_USHORT uiClass);
 
 static PHB_ITEM hbamf_cls_externalizable_instance(PHB_ITEM pClassFuncStr)
 {
@@ -100,7 +100,7 @@ static HB_BOOL amfX_decode_double( amfContext * context, double * val )
    #ifndef HB_BIG_ENDIAN
    char c_val[8];
    #endif
-   const char * bytes = readBytes( context, 8 );
+   const char * bytes = readBytes(context, 8);
    if( !bytes )
       return false;
 
@@ -142,7 +142,7 @@ static HB_BOOL amf3_decode_int( amfContext * context, int * iVal )
    int  result   = 0;
    int  byte_cnt = 0;
 
-   byte_ref = readByte( context );
+   byte_ref = readByte(context);
    if( !byte_ref )
       return false;
 
@@ -153,7 +153,7 @@ static HB_BOOL amf3_decode_int( amfContext * context, int * iVal )
    {
       result <<= 7;
       result  |= byte & 0x7F;
-      byte_ref = readByte( context );
+      byte_ref = readByte(context);
       if( !byte_ref )
          return false;
       byte = byte_ref[0];
@@ -238,7 +238,7 @@ static void amf3_add_reference(PHB_ITEM pHash, PHB_ITEM pItem)
 
 static HB_BOOL amfX_decode_string( amfContext * context, PHB_ITEM pItem, unsigned int string_size )
 {
-   const char * str = readBytes( context, string_size );
+   const char * str = readBytes(context, string_size);
 
    if( !str )
       return false;
@@ -313,7 +313,7 @@ static HB_BOOL amf3_decode_dynamic_dict( amfContext * context, PHB_ITEM pItem )
       }
 
       pValue = hb_itemNew(nullptr);
-      if( !amf3_getItem( context, pValue ) )
+      if( !amf3_getItem(context, pValue) )
       {
          hb_itemRelease(pKey);
          hb_itemRelease(pValue);
@@ -342,7 +342,7 @@ static HB_BOOL decode_dynamic_array_AMF3(amfContext * context, PHB_ITEM pItem, i
          PHB_ITEM pValue = hb_itemNew(nullptr);
          lRet = HB_FALSE;
 
-         if( amf3_getItem( context, pValue ) )
+         if( amf3_getItem(context, pValue) )
          {
             PHB_ITEM pKey = hb_itemNew(nullptr);
             hb_itemPutNI(pKey, i);
@@ -367,7 +367,7 @@ static HB_BOOL decode_dynamic_array_AMF3(amfContext * context, PHB_ITEM pItem, i
          PHB_ITEM pValue = hb_itemNew(nullptr);
          lRet = HB_FALSE;
 
-         if( amf3_getItem( context, pValue ) )
+         if( amf3_getItem(context, pValue) )
          {
             if( hb_arraySet(pItem, i + 1, pValue) )
                lRet = HB_TRUE;
@@ -427,7 +427,7 @@ static HB_BOOL amf3_deserialize_array( amfContext * context, PHB_ITEM pItem, HB_
 
    /* Determine if array is mixed (associative) or not */
    mixed    = HB_FALSE;
-   byte_ref = readByte( context );
+   byte_ref = readByte(context);
    if( byte_ref == NULL )
       return false;
 
@@ -524,7 +524,7 @@ static HB_BOOL amf3_deserialize_date( amfContext * context, PHB_ITEM pItem )
 /* Decode a byte array. */
 static HB_BOOL amf3_decode_byte_array( amfContext * context, PHB_ITEM pItem, int byte_len )
 {
-   const char * str = readBytes( context, byte_len );
+   const char * str = readBytes(context, byte_len);
 
    if( !str )
       return false;
@@ -667,8 +667,8 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
          hb_hashNew(pMappedClassDef); /* empty hash emulation for now */
       }
 
-      /* PyObject_CallMethodObjArgs( context->class_mapper,
-          context->class_def_name, alias, NULL ); */
+      /* PyObject_CallMethodObjArgs(context->class_mapper,
+          context->class_def_name, alias, NULL); */
    }
    hb_itemRelease(pStrAlias);
 
@@ -710,7 +710,7 @@ static HB_BOOL amf3_decode_class_def( amfContext * context, PHB_ITEM pClass, int
          the raw bytes. */
 
       /* TODO: introduce similar RTE?
-         PyErr_SetString( amfast_DecodeError, "Encoded class is externalizable, but ClassDef is not." ); */
+         PyErr_SetString(amfast_DecodeError, "Encoded class is externalizable, but ClassDef is not."); */
       return false;
    }
 
@@ -826,7 +826,7 @@ static HB_BOOL amf3_decode_obj_attrs( amfContext * context, PHB_ITEM pHash, PHB_
       HB_BOOL  result;
 
       pValue = hb_itemNew(nullptr);
-      if( !amf3_getItem( context, pValue ) )
+      if( !amf3_getItem(context, pValue) )
       {
          hb_itemRelease(pValue);
          return false;
@@ -875,7 +875,7 @@ static HB_BOOL amf3_decode_anon_obj( amfContext * context, PHB_ITEM pItem, PHB_I
 
    /* we (Harbourers) are supplying already initialized hash to next function */
    if( hb_arrayGet(pItem, OBJAMF_VAR_HASH, pAnonHash) )
-      result = amf3_decode_obj_attrs( context, pAnonHash, pClass );
+      result = amf3_decode_obj_attrs(context, pAnonHash, pClass);
 
    hb_itemRelease(pAnonHash);
 
@@ -982,7 +982,7 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
          if( !readByte( context ) ) /* Skip array type marker */
             return false;
 
-         return amf3_deserialize_array( context, pItem, true );
+         return amf3_deserialize_array(context, pItem, true);
       }
 
       if( hb_hashGetCItemPos(pMappedClassDef, "OBJECT_PROXY_CLASS_DEF") != 0 )
@@ -992,7 +992,7 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
          if( !readByte( context ) ) /* Skip array type marker */
             return false;
 
-         return amf3_deserialize_obj( context, pItem, true );
+         return amf3_deserialize_obj(context, pItem, true);
       }
 
       obj_type = 1;
@@ -1073,14 +1073,14 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
    result = HB_FALSE;
    if( obj_type == 0 )
    {
-      result = amf3_decode_anon_obj( context, pItem, pClass );
+      result = amf3_decode_anon_obj(context, pItem, pClass);
    }
    else if( obj_type == 1 )
    {
       #if 0
       result = HB_TRUE;
       #endif
-      result = amf3_decode_externalizable( context, pItem /*, pMappedClassDef */ );
+      result = amf3_decode_externalizable(context, pItem /*, pMappedClassDef */);
    }
    else if( obj_type == 2 )
    {
@@ -1124,13 +1124,13 @@ static void amf3_conversion_in( amfContext * context, PHB_ITEM pItem )
    pointer of a final decoding function... in case reference checking
    returns nothing */
 
-static HB_BOOL amf3_getItem( amfContext * context, PHB_ITEM pItem )
+static HB_BOOL amf3_getItem(amfContext * context, PHB_ITEM pItem)
 {
    char byte;
    const char * byte_ref;
    HB_BOOL      lRet = HB_TRUE;
 
-   byte_ref = readByte( context );
+   byte_ref = readByte(context);
 
    if( !byte_ref )
       return false;
@@ -1174,37 +1174,37 @@ static HB_BOOL amf3_getItem( amfContext * context, PHB_ITEM pItem )
       break;
 
       case STRING_TYPE:
-         lRet = amf3_deserialize_string( context, pItem );
+         lRet = amf3_deserialize_string(context, pItem);
          break;
 
       case XML_DOC_TYPE:
          /* don't touch xml encoding right now */
-         lRet = amf3_deserialize_byte_array( context, pItem );
+         lRet = amf3_deserialize_byte_array(context, pItem);
          break;
 
       case DATE_TYPE:
-         lRet = amf3_deserialize_date( context, pItem );
+         lRet = amf3_deserialize_date(context, pItem);
          break;
 
       case ARRAY_TYPE:
-         lRet = amf3_deserialize_array( context, pItem, false );
+         lRet = amf3_deserialize_array(context, pItem, false);
          break;
 
       case OBJECT_TYPE:
-         lRet = amf3_deserialize_obj( context, pItem, false );
+         lRet = amf3_deserialize_obj(context, pItem, false);
          break;
 
       case XML_TYPE:
          /* don't touch xml encoding right now */
-         lRet = amf3_deserialize_byte_array( context, pItem );
+         lRet = amf3_deserialize_byte_array(context, pItem);
          break;
 
       case BYTE_ARRAY_TYPE:
-         lRet = amf3_deserialize_byte_array( context, pItem );
+         lRet = amf3_deserialize_byte_array(context, pItem);
          break;
 
       case AMF3_AMF0:
-         lRet = amf3_getItem( context, pItem );
+         lRet = amf3_getItem(context, pItem);
          break;
 
       default:
@@ -1213,7 +1213,7 @@ static HB_BOOL amf3_getItem( amfContext * context, PHB_ITEM pItem )
    }
 
    if( context->conv_function )
-      amf3_conversion_in( context, pItem );
+      amf3_conversion_in(context, pItem);
 
    return lRet;
 
@@ -1246,7 +1246,7 @@ HB_FUNC( AMF3_DECODE )
    context->class_ref     = hb_hashNew(nullptr);
    context->conv_function = pFuncSym;
 
-   amf3_getItem( context, pItem );
+   amf3_getItem(context, pItem);
 
 #if defined(_DEBUG)
    if( pDebugBlock )

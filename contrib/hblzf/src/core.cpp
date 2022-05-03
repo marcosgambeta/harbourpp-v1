@@ -69,7 +69,7 @@ HB_FUNC( HB_LZF_COMPRESSBOUND )
    if( HB_ISCHAR(1) || HB_ISNUM(1) )
    {
       HB_SIZE nLen = HB_ISCHAR(1) ? hb_parclen(1) : static_cast<HB_SIZE>(hb_parns(1));
-      hb_retns( hb_lzf_compressbound( nLen ) );
+      hb_retns(hb_lzf_compressbound(nLen));
    }
    else
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);

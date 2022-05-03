@@ -63,7 +63,7 @@ static void countCheck( int n )
 
    while( s_nCount >= SINGLEBUF )
    {
-      hb_conOutStd( "\0\0\0\0", 4 );
+      hb_conOutStd("\0\0\0\0", 4);
       s_nCount -= SINGLEBUF;
    }
 }
@@ -81,14 +81,14 @@ HB_FUNC( AMFSTDIO_READ )
    int        nTotal = 0;
    int        nLen;
    int        nToRead;
-   HB_FHANDLE hStdIn = hb_fsGetOsHandle( HB_STDIN_HANDLE );
+   HB_FHANDLE hStdIn = hb_fsGetOsHandle(HB_STDIN_HANDLE);
 
    while( nTotal < 4 )
    {
-      nToRead = ( s_nCount + 4 - nTotal > SINGLEBUF ? SINGLEBUF - s_nCount : 4 - nTotal );
+      nToRead = (s_nCount + 4 - nTotal > SINGLEBUF ? SINGLEBUF - s_nCount : 4 - nTotal);
       nBytes  = hb_fsRead( hStdIn, pszStrIn, static_cast<HB_USHORT>(nToRead));
 
-      countCheck( nBytes );
+      countCheck(nBytes);
 
       memcpy(pszTmp, pszStrIn, nBytes);
       nTotal += nBytes;
@@ -118,11 +118,11 @@ HB_FUNC( AMFSTDIO_READ )
       if( nLen - nTotal > SINGLEBUF )
          nToRead = SINGLEBUF - s_nCount;
       else
-         nToRead = ( s_nCount + nLen - nTotal > SINGLEBUF ? SINGLEBUF - s_nCount : nLen - nTotal );
+         nToRead = (s_nCount + nLen - nTotal > SINGLEBUF ? SINGLEBUF - s_nCount : nLen - nTotal);
 
       nBytes = hb_fsRead( hStdIn, pszStrIn, static_cast<HB_USHORT>(nToRead));
 
-      countCheck( nBytes );
+      countCheck(nBytes);
 
       memcpy(pszTmp, pszStrIn, nBytes);
       nTotal += nBytes;

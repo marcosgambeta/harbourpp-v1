@@ -64,7 +64,7 @@ HB_FUNC( EXECNAME )
    {
       if( !hb_parl(1) )
       {
-         PHB_FNAME pFileName = hb_fsFNameSplit( pszBaseName );
+         PHB_FNAME pFileName = hb_fsFNameSplit(pszBaseName);
 
          if( pFileName->szPath )
          {
@@ -74,7 +74,7 @@ HB_FUNC( EXECNAME )
          hb_xfree(pFileName);
       }
 
-      hb_retc_buffer( pszBaseName );
+      hb_retc_buffer(pszBaseName);
    }
    else
       hb_retc_null();

@@ -57,7 +57,7 @@ HB_FUNC( CUPSGETDEFAULT )
 HB_FUNC( CUPSGETDESTS )
 {
    cups_dest_t * dest_list;
-   int      num_dests = cupsGetDests( &dest_list );
+   int      num_dests = cupsGetDests(&dest_list);
    PHB_ITEM pArray    = hb_itemArrayNew(static_cast<HB_SIZE>(num_dests));
 
    if( num_dests > 0 )
@@ -66,9 +66,9 @@ HB_FUNC( CUPSGETDESTS )
       int i;
 
       for( i = 1; i <= num_dests; ++i, ++dest_list )
-         hb_arraySetC( pArray, i, dest_list->name );
+         hb_arraySetC(pArray, i, dest_list->name);
 
-      cupsFreeDests( num_dests, desk_list_bak );
+      cupsFreeDests(num_dests, desk_list_bak);
    }
 
    hb_itemReturnRelease(pArray);
@@ -87,13 +87,13 @@ HB_FUNC( CUPSPRINTFILE )
 
       if( HB_IS_HASH(pOptions) )
       {
-         for( tmp = 1; tmp <= hb_hashLen( pOptions ); ++tmp )
+         for( tmp = 1; tmp <= hb_hashLen(pOptions); ++tmp )
          {
             PHB_ITEM pKey = hb_hashGetKeyAt(pOptions, tmp);
             PHB_ITEM pVal = hb_hashGetValueAt(pOptions, tmp);
 
             if( pKey && HB_IS_STRING(pKey) && pVal )
-               num_options = cupsAddOption( hb_itemGetCPtr(pKey), hb_itemGetCPtr(pVal), num_options, &options );
+               num_options = cupsAddOption(hb_itemGetCPtr(pKey), hb_itemGetCPtr(pVal), num_options, &options);
          }
       }
       else if( HB_IS_ARRAY(pOptions) )
@@ -103,12 +103,12 @@ HB_FUNC( CUPSPRINTFILE )
             const char * pszOption = hb_arrayGetCPtr(pOptions, tmp);
 
             if( pszOption )
-               num_options = cupsParseOptions( pszOption, num_options, &options );
+               num_options = cupsParseOptions(pszOption, num_options, &options);
          }
       }
    }
 
    hb_retni(cupsPrintFile(hb_parcx(1) /* printername */, hb_parcx(2) /* filename */, hb_parcx(3) /* title */, num_options, options));
 
-   cupsFreeOptions( num_options, options );
+   cupsFreeOptions(num_options, options);
 }

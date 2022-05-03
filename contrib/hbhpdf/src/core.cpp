@@ -52,7 +52,7 @@ static HB_GARBAGE_FUNC( hb_HPDF_Doc_release )
    if( ph && *ph )
    {
       /* Destroy the object */
-      HPDF_Free( ( HPDF_Doc ) * ph ); /* TODO: C++ cast */
+      HPDF_Free(static_cast<HPDF_Doc>(*ph));
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -92,7 +92,7 @@ HB_FUNC( HPDF_FREE )
    if( ph && *ph )
    {
       /* Destroy the object */
-      HPDF_Free( ( HPDF_Doc ) * ph ); /* TODO: C++ cast */
+      HPDF_Free(static_cast<HPDF_Doc>(*ph)); /* TODO: C++ cast */
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -108,20 +108,20 @@ HB_FUNC( HPDF_NEWDOC )
 /* HPDF_FreeDoc( hNewDoc ) --> NIL */
 HB_FUNC( HPDF_FREEDOC )
 {
-   HPDF_FreeDoc( hb_HPDF_Doc_par(1) );
+   HPDF_FreeDoc(hb_HPDF_Doc_par(1));
 }
 
 /* HPDF_FreeDocAll() --> NIL */
 HB_FUNC( HPDF_FREEDOCALL )
 {
-   HPDF_FreeDocAll( hb_HPDF_Doc_par(1) );
+   HPDF_FreeDocAll(hb_HPDF_Doc_par(1));
 }
 
 /* HPDF_SaveToFile( hDoc, cFileToSave ) --> hStatus */
 HB_FUNC( HPDF_SAVETOFILE )
 {
    char *       pszFree;
-   const char * pszFileName = hb_fsNameConv( hb_parcx(2), &pszFree );
+   const char * pszFileName = hb_fsNameConv(hb_parcx(2), &pszFree);
 
    hb_retnl(static_cast<long>(HPDF_SaveToFile(hb_HPDF_Doc_par(1), pszFileName)));
 
@@ -186,7 +186,7 @@ HB_FUNC( HPDF_SETERRORHANDLER )
    hb_retnl(static_cast<long>(HPDF_SetErrorHandler(hb_HPDF_Doc_par(1), reinterpret_cast<HPDF_Error_Handler>(hb_parptr(2)))));
 }
 
-/* HPDF_GetError( hDoc ) --> nErrorCode */
+/* HPDF_GetError(hDoc) --> nErrorCode */
 HB_FUNC( HPDF_GETERROR )
 {
    hb_retnl(static_cast<long>(HPDF_GetError(hb_HPDF_Doc_par(1))));
@@ -198,10 +198,10 @@ HB_FUNC( HPDF_GETERRORDETAIL )
    hb_retnl(static_cast<long>(HPDF_GetErrorDetail(hb_HPDF_Doc_par(1))));
 }
 
-/* HPDF_ResetError( hDoc ) --> NIL */
+/* HPDF_ResetError(hDoc) --> NIL */
 HB_FUNC( HPDF_RESETERROR )
 {
-   HPDF_ResetError( hb_HPDF_Doc_par(1) );
+   HPDF_ResetError(hb_HPDF_Doc_par(1));
 }
 
 /* HPDF_SetPagesConfiguration( hDoc, nPagePerPages ) --> hStatus */
@@ -529,8 +529,8 @@ HB_FUNC( HPDF_PAGE_GETCURRENTPOS )
 
    HPDF_Page_GetCurrentPos2(static_cast<HPDF_Page>(hb_parptr(1)), &pt);
 
-   hb_arraySetND( info, 1, pt.x );
-   hb_arraySetND( info, 2, pt.y );
+   hb_arraySetND(info, 1, pt.x);
+   hb_arraySetND(info, 2, pt.y);
 
    hb_itemReturnRelease(info);
 }
@@ -543,8 +543,8 @@ HB_FUNC( HPDF_PAGE_GETCURRENTTEXTPOS )
 
    HPDF_Page_GetCurrentTextPos2(static_cast<HPDF_Page>(hb_parptr(1)), &pt);
 
-   hb_arraySetND( info, 1, pt.x );
-   hb_arraySetND( info, 2, pt.y );
+   hb_arraySetND(info, 1, pt.x);
+   hb_arraySetND(info, 2, pt.y);
 
    hb_itemReturnRelease(info);
 }
@@ -567,14 +567,14 @@ HB_FUNC( HPDF_PAGE_GETTRANSMATRIX )
    HPDF_TransMatrix matrix;
    PHB_ITEM         info = hb_itemArrayNew(6);
 
-   matrix = HPDF_Page_GetTransMatrix( static_cast<HPDF_Page>( hb_parptr(1) ) );
+   matrix = HPDF_Page_GetTransMatrix(static_cast<HPDF_Page>(hb_parptr(1)));
 
-   hb_arraySetND( info, 1, matrix.a );
-   hb_arraySetND( info, 2, matrix.b );
-   hb_arraySetND( info, 3, matrix.c );
-   hb_arraySetND( info, 4, matrix.d );
-   hb_arraySetND( info, 5, matrix.x );
-   hb_arraySetND( info, 6, matrix.y );
+   hb_arraySetND(info, 1, matrix.a);
+   hb_arraySetND(info, 2, matrix.b);
+   hb_arraySetND(info, 3, matrix.c);
+   hb_arraySetND(info, 4, matrix.d);
+   hb_arraySetND(info, 5, matrix.x);
+   hb_arraySetND(info, 6, matrix.y);
 
    hb_itemReturnRelease(info);
 }
@@ -609,7 +609,7 @@ HB_FUNC( HPDF_PAGE_GETDASH )
    HPDF_DashMode dash;
    PHB_ITEM      info = hb_itemArrayNew(10);
 
-   dash = HPDF_Page_GetDash( static_cast<HPDF_Page>( hb_parptr(1) ) );
+   dash = HPDF_Page_GetDash(static_cast<HPDF_Page>(hb_parptr(1)));
 
    hb_arraySetNI(info, 1, dash.ptn[0]);
    hb_arraySetNI(info, 2, dash.ptn[1]);
@@ -673,11 +673,11 @@ HB_FUNC( HPDF_PAGE_GETRGBFILL )
    HPDF_RGBColor rgb;
    PHB_ITEM      info = hb_itemArrayNew(3);
 
-   rgb = HPDF_Page_GetRGBFill( static_cast<HPDF_Page>( hb_parptr(1) ) );
+   rgb = HPDF_Page_GetRGBFill(static_cast<HPDF_Page>(hb_parptr(1)));
 
-   hb_arraySetND( info, 1, rgb.r );
-   hb_arraySetND( info, 2, rgb.g );
-   hb_arraySetND( info, 3, rgb.b );
+   hb_arraySetND(info, 1, rgb.r);
+   hb_arraySetND(info, 2, rgb.g);
+   hb_arraySetND(info, 3, rgb.b);
 
    hb_itemReturnRelease(info);
 }
@@ -688,11 +688,11 @@ HB_FUNC( HPDF_PAGE_GETRGBSTROKE )
    HPDF_RGBColor rgb;
    PHB_ITEM      info = hb_itemArrayNew(3);
 
-   rgb = HPDF_Page_GetRGBStroke( static_cast<HPDF_Page>( hb_parptr(1) ) );
+   rgb = HPDF_Page_GetRGBStroke(static_cast<HPDF_Page>(hb_parptr(1)));
 
-   hb_arraySetND( info, 1, rgb.r );
-   hb_arraySetND( info, 2, rgb.g );
-   hb_arraySetND( info, 3, rgb.b );
+   hb_arraySetND(info, 1, rgb.r);
+   hb_arraySetND(info, 2, rgb.g);
+   hb_arraySetND(info, 3, rgb.b);
 
    hb_itemReturnRelease(info);
 }
@@ -703,12 +703,12 @@ HB_FUNC( HPDF_PAGE_GETCMYKFILL )
    HPDF_CMYKColor cmyk;
    PHB_ITEM       info = hb_itemArrayNew(4);
 
-   cmyk = HPDF_Page_GetCMYKFill( static_cast<HPDF_Page>( hb_parptr(1) ) );
+   cmyk = HPDF_Page_GetCMYKFill(static_cast<HPDF_Page>(hb_parptr(1)));
 
-   hb_arraySetND( info, 1, cmyk.c );
-   hb_arraySetND( info, 2, cmyk.m );
-   hb_arraySetND( info, 3, cmyk.y );
-   hb_arraySetND( info, 4, cmyk.k );
+   hb_arraySetND(info, 1, cmyk.c);
+   hb_arraySetND(info, 2, cmyk.m);
+   hb_arraySetND(info, 3, cmyk.y);
+   hb_arraySetND(info, 4, cmyk.k);
 
    hb_itemReturnRelease(info);
 }
@@ -719,12 +719,12 @@ HB_FUNC( HPDF_PAGE_GETCMYKSTROKE )
    HPDF_CMYKColor cmyk;
    PHB_ITEM       info = hb_itemArrayNew(4);
 
-   cmyk = HPDF_Page_GetCMYKStroke( static_cast<HPDF_Page>( hb_parptr(1) ) );
+   cmyk = HPDF_Page_GetCMYKStroke(static_cast<HPDF_Page>(hb_parptr(1)));
 
-   hb_arraySetND( info, 1, cmyk.c );
-   hb_arraySetND( info, 2, cmyk.m );
-   hb_arraySetND( info, 3, cmyk.y );
-   hb_arraySetND( info, 4, cmyk.k );
+   hb_arraySetND(info, 1, cmyk.c);
+   hb_arraySetND(info, 2, cmyk.m);
+   hb_arraySetND(info, 3, cmyk.y);
+   hb_arraySetND(info, 4, cmyk.k);
 
    hb_itemReturnRelease(info);
 }
@@ -759,14 +759,14 @@ HB_FUNC( HPDF_PAGE_GETTEXTMATRIX )
    HPDF_TransMatrix matrix;
    PHB_ITEM         info = hb_itemArrayNew(6);
 
-   matrix = HPDF_Page_GetTextMatrix( static_cast<HPDF_Page>( hb_parptr(1) ) );
+   matrix = HPDF_Page_GetTextMatrix(static_cast<HPDF_Page>(hb_parptr(1)));
 
-   hb_arraySetND( info, 1, matrix.a );
-   hb_arraySetND( info, 2, matrix.b );
-   hb_arraySetND( info, 3, matrix.c );
-   hb_arraySetND( info, 4, matrix.d );
-   hb_arraySetND( info, 5, matrix.x );
-   hb_arraySetND( info, 6, matrix.y );
+   hb_arraySetND(info, 1, matrix.a);
+   hb_arraySetND(info, 2, matrix.b);
+   hb_arraySetND(info, 3, matrix.c);
+   hb_arraySetND(info, 4, matrix.d);
+   hb_arraySetND(info, 5, matrix.x);
+   hb_arraySetND(info, 6, matrix.y);
 
    hb_itemReturnRelease(info);
 }
@@ -1194,12 +1194,12 @@ HB_FUNC( HPDF_FONT_GETBBOX )
    HPDF_Box rc;
    PHB_ITEM info = hb_itemArrayNew(4);
 
-   rc = HPDF_Font_GetBBox( static_cast<HPDF_Font>(hb_parptr(1)) );
+   rc = HPDF_Font_GetBBox(static_cast<HPDF_Font>(hb_parptr(1)));
 
-   hb_arraySetND( info, 1, rc.left   );
-   hb_arraySetND( info, 2, rc.top    );
-   hb_arraySetND( info, 3, rc.right  );
-   hb_arraySetND( info, 4, rc.bottom );
+   hb_arraySetND(info, 1, rc.left);
+   hb_arraySetND(info, 2, rc.top);
+   hb_arraySetND(info, 3, rc.right);
+   hb_arraySetND(info, 4, rc.bottom);
 
    hb_itemReturnRelease(info);
 }
@@ -1400,7 +1400,7 @@ HB_FUNC( HPDF_EXTGSTATE_SETBLENDMODE )
 
 HB_FUNC( HPDF_VERSION_TEXT )
 {
-   hb_retc_const( HPDF_VERSION_TEXT );
+   hb_retc_const(HPDF_VERSION_TEXT);
 }
 
 /* --- New Functions in LibHaru 2.2.0 --- */
@@ -1431,7 +1431,7 @@ HB_FUNC( HPDF_GETCONTENTS )
 #endif
 }
 
-/* HPDF_CheckError( pError ) --> nStatus */
+/* HPDF_CheckError(pError) --> nStatus */
 HB_FUNC( HPDF_CHECKERROR )
 {
 #if HB_HPDF_VERS(2, 2, 0)

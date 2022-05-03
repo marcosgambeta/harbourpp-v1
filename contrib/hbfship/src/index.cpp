@@ -54,7 +54,7 @@ HB_FUNC( INDEXCOUNT )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
@@ -70,7 +70,7 @@ HB_FUNC( INDEXNAMES )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       DBORDERINFO pOrderInfo;
       PHB_ITEM    pArray;
