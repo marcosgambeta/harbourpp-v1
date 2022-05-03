@@ -99,11 +99,11 @@ HB_FUNC( STRFORMAT )
             {
                nPos = pszMask[nMaskPos] - '1';
 
-               strpar[nPos].raw = hb_itemString( hb_param(POS_TO_PAR(nPos), Harbour::Item::ANY), &strpar[nPos].nLen, &strpar[nPos].bFreeReq );
+               strpar[nPos].raw = hb_itemString(hb_param(POS_TO_PAR(nPos), Harbour::Item::ANY), &strpar[nPos].nLen, &strpar[nPos].bFreeReq);
 
                /* AllTrim() */
-               strpar[nPos].nLen   = hb_strRTrimLen( strpar[nPos].raw, strpar[nPos].nLen, false );
-               strpar[nPos].buffer = hb_strLTrim( strpar[nPos].raw, &strpar[nPos].nLen );
+               strpar[nPos].nLen   = hb_strRTrimLen(strpar[nPos].raw, strpar[nPos].nLen, false);
+               strpar[nPos].buffer = hb_strLTrim(strpar[nPos].raw, &strpar[nPos].nLen);
 
                nRetValLen += strpar[nPos].nLen;
             }

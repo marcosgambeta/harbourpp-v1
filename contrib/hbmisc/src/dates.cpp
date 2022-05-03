@@ -57,16 +57,16 @@ static const int s_daysinmonth[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 3
 static HB_BOOL hb_isleapyear( int iYear )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_isleapyear(%d)", iYear ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_isleapyear(%d)", iYear));
 #endif
 
-   return ( iYear % 4 == 0 && iYear % 100 != 0 ) || ( iYear % 400 == 0 );
+   return (iYear % 4 == 0 && iYear % 100 != 0) || (iYear % 400 == 0);
 }
 
 static int hb_daysinmonth( int iYear, int iMonth )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_daysinmonth(%d, %d)", iYear, iMonth ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_daysinmonth(%d, %d)", iYear, iMonth));
 #endif
 
    if( iMonth > 0 && iMonth < 13 )
@@ -78,14 +78,14 @@ static int hb_daysinmonth( int iYear, int iMonth )
 static int hb_doy( int iYear, int iMonth, int iDay )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_doy(%d, %d, %d)", iYear, iMonth, iDay ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_doy(%d, %d, %d)", iYear, iMonth, iDay));
 #endif
 
    int i;
    int iDoy = 0;
 
    for( i = 1; i < iMonth; ++i )
-      iDoy += hb_daysinmonth( iYear, i );
+      iDoy += hb_daysinmonth(iYear, i);
 
    return iDoy + iDay;
 }
@@ -93,15 +93,15 @@ static int hb_doy( int iYear, int iMonth, int iDay )
 static int hb_woy( long lDate, HB_BOOL fISO )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_woy(%ld, %d)", lDate, static_cast<int>(fISO) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_woy(%ld, %d)", lDate, static_cast<int>(fISO)));
 #endif
 
    int iYear, iMonth, iDay;
 
-   hb_dateDecode( lDate, &iYear, &iMonth, &iDay );
+   hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
 
    if( fISO )
-      hb_dateDecode( lDate + 3 - ( hb_dateDOW( iYear, iMonth, iDay ) + 5 ) % 7, &iYear, &iMonth, &iDay );
+      hb_dateDecode(lDate + 3 - (hb_dateDOW(iYear, iMonth, iDay) + 5 ) % 7, &iYear, &iMonth, &iDay);
 
    return ( hb_doy( iYear, iMonth, iDay ) - 1 ) / 7 + 1;
 }
@@ -112,7 +112,7 @@ HB_FUNC( AMONTHS )
    int      i;
 
    for( i = 0; i < 12; ++i )
-      hb_arraySetC( pReturn, i + 1, hb_langDGetItem( HB_LANG_ITEM_BASE_MONTH + i ) );
+      hb_arraySetC(pReturn, i + 1, hb_langDGetItem(HB_LANG_ITEM_BASE_MONTH + i));
 
    hb_itemReturnRelease(pReturn);
 }
@@ -123,7 +123,7 @@ HB_FUNC( ADAYS )
    int      i;
 
    for( i = 0; i < 7; ++i )
-      hb_arraySetC( pReturn, i + 1, hb_langDGetItem( HB_LANG_ITEM_BASE_DAY + i ) );
+      hb_arraySetC(pReturn, i + 1, hb_langDGetItem(HB_LANG_ITEM_BASE_DAY + i));
 
    hb_itemReturnRelease(pReturn);
 }
@@ -136,7 +136,7 @@ HB_FUNC( ISLEAPYEAR )
    {
       int iYear, iMonth, iDay;
 
-      hb_dateDecode( hb_itemGetDL( pDate ), &iYear, &iMonth, &iDay );
+      hb_dateDecode(hb_itemGetDL(pDate), &iYear, &iMonth, &iDay);
       hb_retl(hb_isleapyear(iYear));
    }
    else
@@ -151,7 +151,7 @@ HB_FUNC( HBMISC_DAYSINMONTH )
    {
       int iYear, iMonth, iDay;
 
-      hb_dateDecode( hb_itemGetDL( pDate ), &iYear, &iMonth, &iDay );
+      hb_dateDecode(hb_itemGetDL(pDate), &iYear, &iMonth, &iDay);
       hb_retni(hb_daysinmonth(iYear, iMonth));
    }
    else

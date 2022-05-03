@@ -79,16 +79,16 @@ HB_FUNC( HB_FUSE )
 
    if( HB_ISCHAR(1) )
    {
-      ft_text->handles[ft_text->area]  = hb_fsOpen( hb_parc(1), static_cast<HB_USHORT>(hb_parnidef(2, FO_READ)) );
+      ft_text->handles[ft_text->area]  = hb_fsOpen(hb_parc(1), static_cast<HB_USHORT>(hb_parnidef(2, FO_READ)));
       ft_text->offset[ft_text->area]   = 0;
       ft_text->recno[ft_text->area]    = 1;
       ft_text->lastbyte[ft_text->area] = hb_fsSeekLarge(ft_text->handles[ft_text->area], 0, FS_END);
-      ft_text->isEof[ft_text->area]    = ( ft_text->lastbyte[ft_text->area] == 0 );
+      ft_text->isEof[ft_text->area]    = (ft_text->lastbyte[ft_text->area] == 0);
       hb_retnint(ft_text->handles[ft_text->area]);
    }
    else
    {
-      hb_fsClose( ft_text->handles[ft_text->area] );
+      hb_fsClose(ft_text->handles[ft_text->area]);
       hb_retnint(1);
       ft_text->recno[ft_text->area]    = 0;
       ft_text->offset[ft_text->area]   = 0;
@@ -110,7 +110,7 @@ HB_FUNC( HB_FRECNO )
 static long hb_hbfskip( PFT_TEXT ft_text, char * buffer, HB_SIZE bufsize, int recs )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_hbfskip(%p, %p, %d)", ft_text, buffer, recs ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_hbfskip(%p, %p, %d)", ft_text, buffer, recs));
 #endif
 
    HB_FOFFSET read_pos;
@@ -137,7 +137,7 @@ static long hb_hbfskip( PFT_TEXT ft_text, char * buffer, HB_SIZE bufsize, int re
          if( (ft_text->offset[ft_text->area] + x + 2) < ft_text->lastbyte[ft_text->area] )
          {
             ft_text->isEof[ft_text->area]   = HB_FALSE;
-            ft_text->offset[ft_text->area] += ( x + 2 );
+            ft_text->offset[ft_text->area] += (x + 2);
             ft_text->recno[ft_text->area]  += 1;
          }
          else
@@ -154,7 +154,7 @@ static long hb_hbfskip( PFT_TEXT ft_text, char * buffer, HB_SIZE bufsize, int re
 
       for( y = recs; y > 0; --y )
       {
-         read_pos = ( size_t ) ( ft_text->offset[ft_text->area] - bufsize );
+         read_pos = static_cast<size_t>(ft_text->offset[ft_text->area] - bufsize);
 
          if( read_pos < 0 )
          {
@@ -194,7 +194,7 @@ HB_FUNC( HB_FSKIP )
 
    char * buffer = static_cast<char*>(hb_xgrab(_B_SIZE));
 
-   hb_hbfskip( ft_text, buffer, _B_SIZE, hb_parnidef(1, 1) );
+   hb_hbfskip(ft_text, buffer, _B_SIZE, hb_parnidef(1, 1));
 
    hb_xfree(buffer);
 }
@@ -249,7 +249,7 @@ HB_FUNC( HB_FGOTO )
       while( ft_text->recno[ft_text->area] != target )
       {
          long last = ft_text->recno[ft_text->area];
-         hb_hbfskip( ft_text, buffer, _B_SIZE, -1 );
+         hb_hbfskip(ft_text, buffer, _B_SIZE, -1);
          if( ft_text->recno[ft_text->area] == last )
             break;
       }
@@ -259,7 +259,7 @@ HB_FUNC( HB_FGOTO )
       while( ft_text->recno[ft_text->area] != target )
       {
          long last = ft_text->recno[ft_text->area];
-         hb_hbfskip( ft_text, buffer, _B_SIZE, 1 );
+         hb_hbfskip(ft_text, buffer, _B_SIZE, 1);
          if( ft_text->recno[ft_text->area] == last )
             break;
       }
@@ -322,7 +322,7 @@ HB_FUNC( HB_FGOTOP )
 
    ft_text->offset[ft_text->area] = 0;
    ft_text->recno[ft_text->area] = 1;
-   ft_text->isEof[ft_text->area] = ( ft_text->lastbyte[ft_text->area] == 0 );
+   ft_text->isEof[ft_text->area] = (ft_text->lastbyte[ft_text->area] == 0);
 }
 
 HB_FUNC( HB_FLASTREC )
@@ -337,7 +337,7 @@ HB_FUNC( HB_FLASTREC )
    old_offset = ft_text->offset[ft_text->area];
    bIsEof     = ft_text->isEof[ft_text->area];
 
-   HB_FUNC_EXEC( HB_FGOBOTTOM );
+   HB_FUNC_EXEC(HB_FGOBOTTOM);
    hb_retnl(ft_text->last_rec[ft_text->area]);
 
    ft_text->recno[ft_text->area]  = old_rec;
@@ -365,12 +365,12 @@ HB_FUNC( HB_FINFO )  /* used for debugging */
    PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    hb_reta(6);
-   hb_storvni( ft_text->area + 1, -1, 1 );
-   hb_storvni( ft_text->last_rec[ft_text->area], -1, 2 );
-   hb_storvni( ft_text->recno[ft_text->area], -1, 3 );
-   hb_storvnint( ft_text->offset[ft_text->area], -1, 4 );
-   hb_storvnint( ft_text->lastbyte[ft_text->area], -1, 5 );
-   hb_storvl( ft_text->isEof[ft_text->area], -1, 6 );
+   hb_storvni(ft_text->area + 1, -1, 1);
+   hb_storvni(ft_text->last_rec[ft_text->area], -1, 2);
+   hb_storvni(ft_text->recno[ft_text->area], -1, 3);
+   hb_storvnint(ft_text->offset[ft_text->area], -1, 4);
+   hb_storvnint(ft_text->lastbyte[ft_text->area], -1, 5);
+   hb_storvl(ft_text->isEof[ft_text->area], -1, 6);
 }
 
 /* ------------------------------------------------
@@ -432,10 +432,10 @@ HB_FUNC( HB_FREADANDSKIP )
    if( !ft_text->isEof[ft_text->area] )
    {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
-      HB_BOOL f = ( ft_text->lastbyte[ft_text->area] <= ft_text->offset[ft_text->area] + 1 );
+      HB_BOOL f = (ft_text->lastbyte[ft_text->area] <= ft_text->offset[ft_text->area] + 1);
       ft_text->isEof[ft_text->area] = f;
 #else
-      ft_text->isEof[ft_text->area] = ( ft_text->lastbyte[ft_text->area] <= ft_text->offset[ft_text->area] + 1 );
+      ft_text->isEof[ft_text->area] = (ft_text->lastbyte[ft_text->area] <= ft_text->offset[ft_text->area] + 1);
 #endif
    }
 

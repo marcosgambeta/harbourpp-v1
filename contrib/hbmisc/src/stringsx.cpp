@@ -9,7 +9,7 @@ static const char * hb_strtoken( const char * szText,
                                  HB_ISIZ * pnLen )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strtoken(%s, %" HB_PFS "d, %" HB_PFS "d, %d, %p)", szText, nText, nIndex, static_cast<int>(cDelimiter), static_cast<void*>(pnLen) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strtoken(%s, %" HB_PFS "d, %" HB_PFS "d, %d, %p)", szText, nText, nIndex, static_cast<int>(cDelimiter), static_cast<void*>(pnLen)));
 #endif
 
    HB_ISIZ nStart;
@@ -70,9 +70,9 @@ HB_FUNC( STRTOKEN )
    if( !cDelimiter )
       cDelimiter = ' ';
 
-   szText = hb_strtoken( hb_parc(1), hb_parclen(1), nIndex, cDelimiter, &nLen );
+   szText = hb_strtoken(hb_parc(1), hb_parclen(1), nIndex, cDelimiter, &nLen);
 
-   hb_storns( nLen, 4 );
+   hb_storns(nLen, 4);
    hb_retclen(szText, nLen);
 }
 
@@ -83,8 +83,8 @@ HB_FUNC( STRDUMP )
    HB_ISIZ      i, nLength = hb_parclen(1);
 
    for( i = 0; i < nLength; i++ )
-      printf( "%d ", szText[i] );
-   printf( "\n" );
+      printf("%d ", szText[i]);
+   printf("\n");
 }
 
 HB_FUNC( ROT13 )

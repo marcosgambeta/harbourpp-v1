@@ -54,7 +54,7 @@ static HB_GARBAGE_FUNC( PHB_FFIND_release )
    if( ph && *ph )
    {
       /* Destroy the object */
-      hb_fsFindClose( ( PHB_FFIND ) *ph );
+      hb_fsFindClose(static_cast<PHB_FFIND>(*ph));
 
       /* set pointer to nullptr just in case */
       *ph = nullptr;
@@ -71,7 +71,7 @@ static PHB_FFIND PHB_FFIND_par( int iParam )
 {
    void ** ph = static_cast<void**>(hb_parptrGC(&s_gcPHB_FFIND_funcs, iParam));
 
-   return ph ? ( PHB_FFIND ) *ph : nullptr;
+   return ph ? static_cast<PHB_FFIND>(*ph) : nullptr;
 }
 
 HB_FUNC( FILEFINDFIRST )
@@ -82,11 +82,11 @@ HB_FUNC( FILEFINDFIRST )
    {
       void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(PHB_FFIND), &s_gcPHB_FFIND_funcs));
 
-      PHB_FFIND ffind = hb_fsFindFirst( pszFileName, hb_parnldef(3, HB_FA_ALL) );
+      PHB_FFIND ffind = hb_fsFindFirst(pszFileName, hb_parnldef(3, HB_FA_ALL));
 
       *ph = static_cast<void*>(ffind);
 
-      hb_storptrGC( ph, 2 );
+      hb_storptrGC(ph, 2);
 
       hb_retl(ffind != nullptr);
    }
@@ -126,7 +126,7 @@ HB_FUNC( FILEFINDDATE )
 {
    PHB_FFIND ffind = PHB_FFIND_par(1);
 
-   hb_retds( ffind ? ffind->szDate : nullptr );
+   hb_retds(ffind ? ffind->szDate : nullptr);
 }
 
 HB_FUNC( FILEFINDTIME )

@@ -35,7 +35,7 @@ PHB_IRMMAP hb_irmMapAlloc( HB_ULONG ulSize )
 }
 
 
-void hb_irmMapFree( PHB_IRMMAP pMap )
+void hb_irmMapFree(PHB_IRMMAP pMap)
 {
    hb_xfree(pMap->pBits);
    hb_xfree(pMap);
@@ -52,7 +52,7 @@ int hb_irmMapBitGet(PHB_IRMMAP pMap, HB_ULONG ulRecNo)
 void hb_irmMapBitSet(PHB_IRMMAP pMap, HB_ULONG ulRecNo)
 {
    --ulRecNo;
-   pMap->pBits[ulRecNo >> 3] |= 1 << ( ulRecNo & 7 );
+   pMap->pBits[ulRecNo >> 3] |= 1 << (ulRecNo & 7);
 }
 
 
@@ -136,9 +136,9 @@ HB_ULONG hb_irmMapCount( PHB_IRMMAP pMap )
 
 static HB_GARBAGE_FUNC( hb_irmMapDestroy )
 {
-   PHB_IRMMAP * ppMap = ( PHB_IRMMAP * ) Cargo;
+   PHB_IRMMAP * ppMap = static_cast<PHB_IRMMAP*>(Cargo);
 
-   hb_irmMapFree( *ppMap );
+   hb_irmMapFree(*ppMap);
 }
 
 
@@ -151,7 +151,7 @@ static const HB_GC_FUNCS s_irmMapFuncs =
 
 static PHB_IRMMAP hb_irmMapParam( int iParam )
 {
-   PHB_IRMMAP * ppMap = ( PHB_IRMMAP * ) hb_parptrGC( &s_irmMapFuncs, iParam );
+   PHB_IRMMAP * ppMap = static_cast<PHB_IRMMAP*>(hb_parptrGC(&s_irmMapFuncs, iParam));
 
    if( ppMap && *ppMap )
       return *ppMap;
@@ -196,7 +196,7 @@ PHB_IRMMAP hb_irmExecute(PHB_ITEM pItem)
          --ulLen;
          pMapArray = static_cast<PHB_IRMMAP*>(hb_xgrab(sizeof(PHB_IRMMAP) * ulLen));
          for( ul = 0; ul < ulLen; ++ul )
-            pMapArray[ul] = hb_irmExecute( hb_arrayGetItemPtr(pItem, ul + 2) );
+            pMapArray[ul] = hb_irmExecute(hb_arrayGetItemPtr(pItem, ul + 2));
          ulSize = ( pMapArray[0]->ulSize + 7 ) >> 3;
          if( !strcmp( szOper, "&" ) )
          {
@@ -213,7 +213,7 @@ PHB_IRMMAP hb_irmExecute(PHB_ITEM pItem)
          pMap = pMapArray[0];
          for( ul = 1; ul < ulLen; ++ul )
          {
-            hb_irmMapFree( pMapArray[ul] );
+            hb_irmMapFree(pMapArray[ul]);
          }
          hb_xfree(pMapArray);
          return pMap;
@@ -225,19 +225,19 @@ PHB_IRMMAP hb_irmExecute(PHB_ITEM pItem)
                (!strcmp(szOper, "<=<=") && (hb_arrayLen(pItem) == 5)) )
       {
          AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-         if( pArea )
+         if( pArea != nullptr )
          {
             DBORDERINFO dboi;
 
             SELF_RECCOUNT(pArea, &ulSize);
-            pMap = hb_irmMapAlloc( ulSize );
+            pMap = hb_irmMapAlloc(ulSize);
 
             dboi.itmOrder    = hb_arrayGetItemPtr(pItem, 2);
             dboi.atomBagName = hb_arrayGetItemPtr(pItem, 3);
             dboi.itmResult   = hb_itemNew(nullptr);
             dboi.itmNewVal   = hb_itemArrayNew(DBRMI_SIZE);
-            hb_arraySetPtr( dboi.itmNewVal, DBRMI_FUNCTION, reinterpret_cast<void*>(hb_irmMapMarkCallback) );
-            hb_arraySetPtr( dboi.itmNewVal, DBRMI_PARAM, static_cast<void*>(pMap) );
+            hb_arraySetPtr(dboi.itmNewVal, DBRMI_FUNCTION, reinterpret_cast<void*>(hb_irmMapMarkCallback));
+            hb_arraySetPtr(dboi.itmNewVal, DBRMI_PARAM, static_cast<void*>(pMap));
             if( !strcmp( szOper, "=" ) )
             {
                hb_arraySet(dboi.itmNewVal, DBRMI_LOVAL, hb_arrayGetItemPtr(pItem, 4));
@@ -280,11 +280,11 @@ PHB_IRMMAP hb_irmExecute(PHB_ITEM pItem)
 /* irmExecute( aFilterTree ) --> pMap */
 HB_FUNC( IRMEXECUTE )
 {
-   PHB_IRMMAP pMap = hb_irmExecute( hb_param(1, Harbour::Item::ANY) );
+   PHB_IRMMAP pMap = hb_irmExecute(hb_param(1, Harbour::Item::ANY));
 
    if( pMap )
    {
-      PHB_IRMMAP * ppMap = ( PHB_IRMMAP * ) hb_gcAllocate( sizeof(PHB_IRMMAP), &s_irmMapFuncs );
+      PHB_IRMMAP * ppMap = static_cast<PHB_IRMMAP*>(hb_gcAllocate(sizeof(PHB_IRMMAP), &s_irmMapFuncs));
       *ppMap = pMap;
       hb_retptrGC(ppMap);
    }
@@ -304,7 +304,7 @@ HB_FUNC( IRMMAPNEXT )
    if( pMap )
    {
       HB_ULONG ulRecNo = hb_parnl(2);
-      ulRecNo = hb_irmMapNext( pMap, ulRecNo );
+      ulRecNo = hb_irmMapNext(pMap, ulRecNo);
       hb_stornl(ulRecNo, 2);
       hb_retl(ulRecNo != 0);
    }
@@ -324,7 +324,7 @@ HB_FUNC( IRMMAPSKIP )
    if( pMap )
    {
       HB_ULONG ulRecNo = hb_parnl(2);
-      ulRecNo = hb_irmMapNext( pMap, ulRecNo );
+      ulRecNo = hb_irmMapNext(pMap, ulRecNo);
       hb_stornl(ulRecNo, 2);
       if( ulRecNo != 0 )
          hb_retl(SELF_GOTO(static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer()), ulRecNo) == HB_SUCCESS);
