@@ -141,80 +141,80 @@ HB_FUNC( ADSMGGETACTIVITYINFO )
 
          case 3:
             hb_reta(4);                                /* Length of time ADS has been up */
-            hb_storvnl( stActivityInfo.stUpTime.usDays,    -1, 1 );
-            hb_storvnl( stActivityInfo.stUpTime.usHours,   -1, 2 );
-            hb_storvnl( stActivityInfo.stUpTime.usMinutes, -1, 3 );
-            hb_storvnl( stActivityInfo.stUpTime.usSeconds, -1, 4 );
+            hb_storvnl(stActivityInfo.stUpTime.usDays,    -1, 1);
+            hb_storvnl(stActivityInfo.stUpTime.usHours,   -1, 2);
+            hb_storvnl(stActivityInfo.stUpTime.usMinutes, -1, 3);
+            hb_storvnl(stActivityInfo.stUpTime.usSeconds, -1, 4);
             break;
 
          case 4:
             hb_reta(3);                                /* Users in use, max, rejected */
-            hb_storvnl( stActivityInfo.stUsers.ulInUse,    -1, 1 );
-            hb_storvnl( stActivityInfo.stUsers.ulMaxUsed,  -1, 2 );
-            hb_storvnl( stActivityInfo.stUsers.ulRejected, -1, 3 );
+            hb_storvnl(stActivityInfo.stUsers.ulInUse,    -1, 1);
+            hb_storvnl(stActivityInfo.stUsers.ulMaxUsed,  -1, 2);
+            hb_storvnl(stActivityInfo.stUsers.ulRejected, -1, 3);
             break;
 
          case 5:
             hb_reta(3);                                /* Conns in use, max, rejected */
-            hb_storvnl( stActivityInfo.stConnections.ulInUse,    -1, 1 );
-            hb_storvnl( stActivityInfo.stConnections.ulMaxUsed,  -1, 2 );
-            hb_storvnl( stActivityInfo.stConnections.ulRejected, -1, 3 );
+            hb_storvnl(stActivityInfo.stConnections.ulInUse,    -1, 1);
+            hb_storvnl(stActivityInfo.stConnections.ulMaxUsed,  -1, 2);
+            hb_storvnl(stActivityInfo.stConnections.ulRejected, -1, 3);
             break;
 
          case 6:
             hb_reta(3);                                /* WAs in use, max, rejected */
-            hb_storvnl( stActivityInfo.stWorkAreas.ulInUse,    -1, 1 );
-            hb_storvnl( stActivityInfo.stWorkAreas.ulMaxUsed,  -1, 2 );
-            hb_storvnl( stActivityInfo.stWorkAreas.ulRejected, -1, 3 );
+            hb_storvnl(stActivityInfo.stWorkAreas.ulInUse,    -1, 1);
+            hb_storvnl(stActivityInfo.stWorkAreas.ulMaxUsed,  -1, 2);
+            hb_storvnl(stActivityInfo.stWorkAreas.ulRejected, -1, 3);
             break;
 
          case 7:
             hb_reta(3);                                /* Tables in use, max, rejected */
-            hb_storvnl( stActivityInfo.stTables.ulInUse,    -1, 1 );
-            hb_storvnl( stActivityInfo.stTables.ulMaxUsed,  -1, 2 );
-            hb_storvnl( stActivityInfo.stTables.ulRejected, -1, 3 );
+            hb_storvnl(stActivityInfo.stTables.ulInUse,    -1, 1);
+            hb_storvnl(stActivityInfo.stTables.ulMaxUsed,  -1, 2);
+            hb_storvnl(stActivityInfo.stTables.ulRejected, -1, 3);
             break;
 
          case 8:
             hb_reta(3);                                /* Indexes in use, max, rejected */
-            hb_storvnl( stActivityInfo.stIndexes.ulInUse,    -1, 1 );
-            hb_storvnl( stActivityInfo.stIndexes.ulMaxUsed,  -1, 2 );
-            hb_storvnl( stActivityInfo.stIndexes.ulRejected, -1, 3 );
+            hb_storvnl(stActivityInfo.stIndexes.ulInUse,    -1, 1);
+            hb_storvnl(stActivityInfo.stIndexes.ulMaxUsed,  -1, 2);
+            hb_storvnl(stActivityInfo.stIndexes.ulRejected, -1, 3);
             break;
 
          case 9:
             hb_reta(3);                                /* Locks in use, max, rejected */
-            hb_storvnl( stActivityInfo.stLocks.ulInUse,    -1, 1 );
-            hb_storvnl( stActivityInfo.stLocks.ulMaxUsed,  -1, 2 );
-            hb_storvnl( stActivityInfo.stLocks.ulRejected, -1, 3 );
+            hb_storvnl(stActivityInfo.stLocks.ulInUse,    -1, 1);
+            hb_storvnl(stActivityInfo.stLocks.ulMaxUsed,  -1, 2);
+            hb_storvnl(stActivityInfo.stLocks.ulRejected, -1, 3);
             break;
 
          case 10:
             hb_reta(3);                                /* TPS header elems in use, max */
-            hb_storvnl( stActivityInfo.stTpsHeaderElems.ulInUse,    -1, 1 );
-            hb_storvnl( stActivityInfo.stTpsHeaderElems.ulMaxUsed,  -1, 2 );
-            hb_storvnl( stActivityInfo.stTpsHeaderElems.ulRejected, -1, 3 );
+            hb_storvnl(stActivityInfo.stTpsHeaderElems.ulInUse,    -1, 1);
+            hb_storvnl(stActivityInfo.stTpsHeaderElems.ulMaxUsed,  -1, 2);
+            hb_storvnl(stActivityInfo.stTpsHeaderElems.ulRejected, -1, 3);
             break;
 
          case 11:
             hb_reta(3);                                /* TPS vis elems in use, max */
-            hb_storvnl( stActivityInfo.stTpsVisElems.ulInUse,    -1, 1 );
-            hb_storvnl( stActivityInfo.stTpsVisElems.ulMaxUsed,  -1, 2 );
-            hb_storvnl( stActivityInfo.stTpsVisElems.ulRejected, -1, 3 );
+            hb_storvnl(stActivityInfo.stTpsVisElems.ulInUse,    -1, 1);
+            hb_storvnl(stActivityInfo.stTpsVisElems.ulMaxUsed,  -1, 2);
+            hb_storvnl(stActivityInfo.stTpsVisElems.ulRejected, -1, 3);
             break;
 
          case 12:
             hb_reta(3);                                /* TPS memo elems in use, max */
-            hb_storvnl( stActivityInfo.stTpsMemoElems.ulInUse,    -1, 1 );
-            hb_storvnl( stActivityInfo.stTpsMemoElems.ulMaxUsed,  -1, 2 );
-            hb_storvnl( stActivityInfo.stTpsMemoElems.ulRejected, -1, 3 );
+            hb_storvnl(stActivityInfo.stTpsMemoElems.ulInUse,    -1, 1);
+            hb_storvnl(stActivityInfo.stTpsMemoElems.ulMaxUsed,  -1, 2);
+            hb_storvnl(stActivityInfo.stTpsMemoElems.ulRejected, -1, 3);
             break;
 
          case 13:
             hb_reta(3);                                /* Worker threads in use, max */
-            hb_storvnl( stActivityInfo.stWorkerThreads.ulInUse,    -1, 1 );
-            hb_storvnl( stActivityInfo.stWorkerThreads.ulMaxUsed,  -1, 2 );
-            hb_storvnl( stActivityInfo.stWorkerThreads.ulRejected, -1, 3 );
+            hb_storvnl(stActivityInfo.stWorkerThreads.ulInUse,    -1, 1);
+            hb_storvnl(stActivityInfo.stWorkerThreads.ulMaxUsed,  -1, 2);
+            hb_storvnl(stActivityInfo.stWorkerThreads.ulRejected, -1, 3);
             break;
 
          default:
@@ -244,17 +244,17 @@ HB_FUNC( ADSMGGETCOMMSTATS )
    if( AdsMgGetCommStats( s_hMgmtHandle, &stCommStats, &usStructSize ) == AE_SUCCESS )
    {
       hb_reta(11);
-      hb_storvnd( stCommStats.dPercentCheckSums  , -1, 1  );  /* % of pkts with checksum failures */
-      hb_storvnl( stCommStats.ulTotalPackets     , -1, 2  );  /* Total packets received */
-      hb_storvnl( stCommStats.ulRcvPktOutOfSeq   , -1, 3  );  /* Receive packets out of sequence */
-      hb_storvnl( stCommStats.ulNotLoggedIn      , -1, 4  );  /* Packet owner not logged in */
-      hb_storvnl( stCommStats.ulRcvReqOutOfSeq   , -1, 5  );  /* Receive requests out of sequence */
-      hb_storvnl( stCommStats.ulCheckSumFailures , -1, 6  );  /* Checksum failures */
-      hb_storvnl( stCommStats.ulDisconnectedUsers, -1, 7  );  /* Server initiated disconnects */
-      hb_storvnl( stCommStats.ulPartialConnects  , -1, 8  );  /* Removed partial connections */
-      hb_storvnl( stCommStats.ulInvalidPackets   , -1, 9  );  /* Rcvd invalid packets (NT only) */
-      hb_storvnl( stCommStats.ulRecvFromErrors   , -1, 10 );  /* RecvFrom failed (NT only) */
-      hb_storvnl( stCommStats.ulSendToErrors     , -1, 11 );  /* SendTo failed (NT only) */
+      hb_storvnd(stCommStats.dPercentCheckSums  , -1, 1 );  /* % of pkts with checksum failures */
+      hb_storvnl(stCommStats.ulTotalPackets     , -1, 2 );  /* Total packets received */
+      hb_storvnl(stCommStats.ulRcvPktOutOfSeq   , -1, 3 );  /* Receive packets out of sequence */
+      hb_storvnl(stCommStats.ulNotLoggedIn      , -1, 4 );  /* Packet owner not logged in */
+      hb_storvnl(stCommStats.ulRcvReqOutOfSeq   , -1, 5 );  /* Receive requests out of sequence */
+      hb_storvnl(stCommStats.ulCheckSumFailures , -1, 6 );  /* Checksum failures */
+      hb_storvnl(stCommStats.ulDisconnectedUsers, -1, 7 );  /* Server initiated disconnects */
+      hb_storvnl(stCommStats.ulPartialConnects  , -1, 8 );  /* Removed partial connections */
+      hb_storvnl(stCommStats.ulInvalidPackets   , -1, 9 );  /* Rcvd invalid packets (NT only) */
+      hb_storvnl(stCommStats.ulRecvFromErrors   , -1, 10);  /* RecvFrom failed (NT only) */
+      hb_storvnl(stCommStats.ulSendToErrors     , -1, 11);  /* SendTo failed (NT only) */
    }
    else
    {
@@ -289,29 +289,29 @@ HB_FUNC( ADSMGGETCONFIGINFO )
       {
          case 0:
             hb_reta(25);
-            hb_storvnl( stConfigValues.ulNumConnections        , -1, 1  );  /* number connections */
-            hb_storvnl( stConfigValues.ulNumWorkAreas          , -1, 2  );  /* number work areas */
-            hb_storvnl( stConfigValues.ulNumTables             , -1, 3  );  /* number tables */
-            hb_storvnl( stConfigValues.ulNumIndexes            , -1, 4  );  /* number indexes */
-            hb_storvnl( stConfigValues.ulNumLocks              , -1, 5  );  /* number locks */
-            hb_storvnl( stConfigValues.ulUserBufferSize        , -1, 6  );  /* user buffer */
-            hb_storvnl( stConfigValues.ulStatDumpInterval      , -1, 7  );  /* statistics dump interval */
-            hb_storvnl( stConfigValues.ulErrorLogMax           , -1, 8  );  /* max size of error log */
-            hb_storvnl( stConfigValues.ulNumTPSHeaderElems     , -1, 9  );  /* number TPS header elems */
-            hb_storvnl( stConfigValues.ulNumTPSVisibilityElems , -1, 10 );  /* number TPS vis elems */
-            hb_storvnl( stConfigValues.ulNumTPSMemoTransElems  , -1, 11 );  /* number TPS memo elems */
-            hb_storvnl( stConfigValues.usNumReceiveECBs        , -1, 12 );  /* number rcv ECBs (NLM only) */
-            hb_storvnl( stConfigValues.usNumSendECBs           , -1, 13 );  /* number send ECBs (NLM only) */
-            hb_storvnd( stConfigValues.usNumBurstPackets       , -1, 14 );  /* number packets per burst */
-            hb_storvnl( stConfigValues.usNumWorkerThreads      , -1, 15 );  /* number worker threads */
+            hb_storvnl(stConfigValues.ulNumConnections        , -1, 1 );  /* number connections */
+            hb_storvnl(stConfigValues.ulNumWorkAreas          , -1, 2 );  /* number work areas */
+            hb_storvnl(stConfigValues.ulNumTables             , -1, 3 );  /* number tables */
+            hb_storvnl(stConfigValues.ulNumIndexes            , -1, 4 );  /* number indexes */
+            hb_storvnl(stConfigValues.ulNumLocks              , -1, 5 );  /* number locks */
+            hb_storvnl(stConfigValues.ulUserBufferSize        , -1, 6 );  /* user buffer */
+            hb_storvnl(stConfigValues.ulStatDumpInterval      , -1, 7 );  /* statistics dump interval */
+            hb_storvnl(stConfigValues.ulErrorLogMax           , -1, 8 );  /* max size of error log */
+            hb_storvnl(stConfigValues.ulNumTPSHeaderElems     , -1, 9 );  /* number TPS header elems */
+            hb_storvnl(stConfigValues.ulNumTPSVisibilityElems , -1, 10);  /* number TPS vis elems */
+            hb_storvnl(stConfigValues.ulNumTPSMemoTransElems  , -1, 11);  /* number TPS memo elems */
+            hb_storvnl(stConfigValues.usNumReceiveECBs        , -1, 12);  /* number rcv ECBs (NLM only) */
+            hb_storvnl(stConfigValues.usNumSendECBs           , -1, 13);  /* number send ECBs (NLM only) */
+            hb_storvnd(stConfigValues.usNumBurstPackets       , -1, 14);  /* number packets per burst */
+            hb_storvnl(stConfigValues.usNumWorkerThreads      , -1, 15);  /* number worker threads */
 #if ADS_LIB_VERSION >= 810
-            hb_storvnl( stConfigValues.ulSortBuffSize          , -1, 16 );  /* index sort buffer size */
+            hb_storvnl(stConfigValues.ulSortBuffSize          , -1, 16);  /* index sort buffer size */
             hb_storvni(0, -1, 17); /* reserved */
             hb_storvni(0, -1, 18); /* reserved */
 #elif ADS_LIB_VERSION < 810
-            hb_storvnl( stConfigValues.usSortBuffSize          , -1, 16 );  /* index sort buffer size */
-            hb_storvni( stConfigValues.ucReserved1             , -1, 17 );  /* reserved */
-            hb_storvni( stConfigValues.ucReserved2             , -1, 18 );  /* reserved */
+            hb_storvnl(stConfigValues.usSortBuffSize          , -1, 16);  /* index sort buffer size */
+            hb_storvni(stConfigValues.ucReserved1             , -1, 17);  /* reserved */
+            hb_storvni(stConfigValues.ucReserved2             , -1, 18);  /* reserved */
 #else /* not currently used */
             hb_storvnl(0, -1, 16); /* index sort buffer size */
             hb_storvni(0, -1, 17); /* reserved */
@@ -320,28 +320,28 @@ HB_FUNC( ADSMGGETCONFIGINFO )
             hb_storvc(reinterpret_cast<char*>(stConfigValues.aucErrorLog), -1, 19);    /* error log path */
             hb_storvc(reinterpret_cast<char*>(stConfigValues.aucSemaphore), -1, 20);   /* semaphore file path */
             hb_storvc(reinterpret_cast<char*>(stConfigValues.aucTransaction), -1, 21); /* TPS log file path */
-            hb_storvni( stConfigValues.ucReserved3             , -1, 22 );  /* reserved */
-            hb_storvni( stConfigValues.ucReserved4             , -1, 23 );  /* reserved */
-            hb_storvnl( stConfigValues.usSendIPPort            , -1, 24 );  /* NT Service IP send port # */
-            hb_storvnl( stConfigValues.usReceiveIPPort         , -1, 25 );  /* NT Service IP rcv port # */
-         /* hb_storvnl( stConfigValues.usReserved5             , -1, 26 );     reserved */
+            hb_storvni(stConfigValues.ucReserved3             , -1, 22);  /* reserved */
+            hb_storvni(stConfigValues.ucReserved4             , -1, 23);  /* reserved */
+            hb_storvnl(stConfigValues.usSendIPPort            , -1, 24);  /* NT Service IP send port # */
+            hb_storvnl(stConfigValues.usReceiveIPPort         , -1, 25);  /* NT Service IP rcv port # */
+         /* hb_storvnl(stConfigValues.usReserved5             , -1, 26);     reserved */
             break;
 
          case 1:
             hb_reta(13);
-            hb_storvnd( stConfigMemory.ulTotalConfigMem        , -1, 1  );  /* Total memory taken by config parameters */
-            hb_storvnl( stConfigMemory.ulConnectionMem         , -1, 2  );  /* memory taken by connections */
-            hb_storvnl( stConfigMemory.ulWorkAreaMem           , -1, 3  );  /* memory taken by work areas */
-            hb_storvnl( stConfigMemory.ulTableMem              , -1, 4  );  /* memory taken by tables */
-            hb_storvnl( stConfigMemory.ulIndexMem              , -1, 5  );  /* memory taken by indexes */
-            hb_storvnl( stConfigMemory.ulLockMem               , -1, 6  );  /* memory taken by locks */
-            hb_storvnl( stConfigMemory.ulUserBufferMem         , -1, 7  );  /* memory taken by user buffer */
-            hb_storvnl( stConfigMemory.ulTPSHeaderElemMem      , -1, 8  );  /* memory taken by TPS hdr elems */
-            hb_storvnl( stConfigMemory.ulTPSVisibilityElemMem  , -1, 9  );  /* memory taken by TPS vis elems */
-            hb_storvnl( stConfigMemory.ulTPSMemoTransElemMem   , -1, 10 );  /* memory taken by TPS memo elems */
-            hb_storvnl( stConfigMemory.ulReceiveEcbMem         , -1, 11 );  /* memory taken by rcv ECBs (NLM) */
-            hb_storvnl( stConfigMemory.ulSendEcbMem            , -1, 12 );  /* memory taken by send ECBs (NLM) */
-            hb_storvnl( stConfigMemory.ulWorkerThreadMem       , -1, 13 );  /* memory taken by worker threads */
+            hb_storvnd(stConfigMemory.ulTotalConfigMem        , -1, 1 );  /* Total memory taken by config parameters */
+            hb_storvnl(stConfigMemory.ulConnectionMem         , -1, 2 );  /* memory taken by connections */
+            hb_storvnl(stConfigMemory.ulWorkAreaMem           , -1, 3 );  /* memory taken by work areas */
+            hb_storvnl(stConfigMemory.ulTableMem              , -1, 4 );  /* memory taken by tables */
+            hb_storvnl(stConfigMemory.ulIndexMem              , -1, 5 );  /* memory taken by indexes */
+            hb_storvnl(stConfigMemory.ulLockMem               , -1, 6 );  /* memory taken by locks */
+            hb_storvnl(stConfigMemory.ulUserBufferMem         , -1, 7 );  /* memory taken by user buffer */
+            hb_storvnl(stConfigMemory.ulTPSHeaderElemMem      , -1, 8 );  /* memory taken by TPS hdr elems */
+            hb_storvnl(stConfigMemory.ulTPSVisibilityElemMem  , -1, 9 );  /* memory taken by TPS vis elems */
+            hb_storvnl(stConfigMemory.ulTPSMemoTransElemMem   , -1, 10);  /* memory taken by TPS memo elems */
+            hb_storvnl(stConfigMemory.ulReceiveEcbMem         , -1, 11);  /* memory taken by rcv ECBs (NLM) */
+            hb_storvnl(stConfigMemory.ulSendEcbMem            , -1, 12);  /* memory taken by send ECBs (NLM) */
+            hb_storvnl(stConfigMemory.ulWorkerThreadMem       , -1, 13);  /* memory taken by worker threads */
             break;
 
          default:
@@ -459,16 +459,16 @@ HB_FUNC( ADSMGGETLOCKOWNER )
                           &pusLockType ) == AE_SUCCESS )
    {
       hb_reta(5);
-      hb_storvc( reinterpret_cast<char*>(pstUserInfo->aucUserName), -1, 1);       /* Machine name under NT */
-      hb_storvnl( static_cast<UNSIGNED16>(pstUserInfo->usConnNumber), -1, 2); /* NetWare conn # (NLM only) */
+      hb_storvc(reinterpret_cast<char*>(pstUserInfo->aucUserName), -1, 1);       /* Machine name under NT */
+      hb_storvnl(static_cast<UNSIGNED16>(pstUserInfo->usConnNumber), -1, 2); /* NetWare conn # (NLM only) */
 #if ADS_LIB_VERSION >= 600
-      hb_storvc( reinterpret_cast<char*>(pstUserInfo->aucAuthUserName), -1, 3);   /* logon name with Data Dictionary */
-      hb_storvc( reinterpret_cast<char*>(pstUserInfo->aucAddress), -1, 4);        /* IP address */
+      hb_storvc(reinterpret_cast<char*>(pstUserInfo->aucAuthUserName), -1, 3);   /* logon name with Data Dictionary */
+      hb_storvc(reinterpret_cast<char*>(pstUserInfo->aucAddress), -1, 4);        /* IP address */
 #else
       hb_storvc(nullptr, -1, 3);                                      /* logon name with Data Dictionary */
       hb_storvc(nullptr, -1, 4);                                      /* IP address */
 #endif
-      hb_storvnl( pusLockType, -1, 5 );                              /* type of lock */
+      hb_storvnl(pusLockType, -1, 5);                              /* type of lock */
    }
    else
    {
@@ -629,7 +629,7 @@ HB_FUNC( ADSMGGETLOCKS )
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ )
       {
-         hb_arraySetNL( pArray, static_cast<HB_ULONG>(ulCount), astRecordInfo[ulCount - 1].ulRecordNumber );
+         hb_arraySetNL(pArray, static_cast<HB_ULONG>(ulCount), astRecordInfo[ulCount - 1].ulRecordNumber);
       }
 
       hb_itemReturnRelease(pArray);

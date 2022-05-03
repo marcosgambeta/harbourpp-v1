@@ -235,7 +235,7 @@ static void DumpArea(ADSAREAP pArea)  /* For debugging: call this to dump ads se
    UNSIGNED8  pucIndexExpr[MAX_STR_LEN + 1];
    UNSIGNED8  pucIndexCond[MAX_STR_LEN + 1];
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       pusLen = 15;
       AdsGetDateFormat(pucFormat, &pusLen);
@@ -655,7 +655,7 @@ static HB_ERRCODE adsScopeSet(ADSAREAP pArea, ADSHANDLE hOrder, HB_USHORT nScope
    if( hOrder )
    {
       nScope = (nScope == 0) ? ADS_TOP : ADS_BOTTOM;
-      if( pItem )
+      if( pItem != nullptr )
       {
          UNSIGNED16 u16KeyType = 0;
          AdsGetKeyType(hOrder, &u16KeyType);
@@ -6486,7 +6486,7 @@ ADSAREAP hb_adsGetWorkAreaPointer(void)
 {
    ADSAREAP pArea = static_cast<ADSAREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       if( adsGetRddType(pArea->area.rddID) >= 0 )
       {
@@ -6500,7 +6500,7 @@ HB_FUNC( ADSGETRELKEYPOS )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       hb_retnd(adsGetRelPos(pArea, pArea->hOrdCurrent));
    }
@@ -6514,7 +6514,7 @@ HB_FUNC( ADSSETRELKEYPOS )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       adsSetRelPos(pArea, pArea->hOrdCurrent, hb_parnd(1));
    }
@@ -6533,7 +6533,7 @@ HB_FUNC( ADSCUSTOMIZEAOF )
    UNSIGNED16 u16Option = ADS_AOF_ADD_RECORD;
 
    pArea = hb_adsGetWorkAreaPointer();
-   if( pArea )
+   if( pArea != nullptr )
    {
       if( HB_ISNUM(2) )                  /* add, delete or toggle */
       {

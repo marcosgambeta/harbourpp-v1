@@ -181,7 +181,7 @@ static HB_USHORT hb_errRT_OCIDD( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, c
    return uiAction;
 }
 
-static char * ocilibGetError( HB_ERRCODE * pErrCode )
+static char * ocilibGetError(HB_ERRCODE * pErrCode)
 {
    OCI_Error * err = OCI_GetLastError();
 
@@ -194,7 +194,7 @@ static char * ocilibGetError( HB_ERRCODE * pErrCode )
       szRet = hb_strdup( hb_itemGetCPtr(pRet) );
       hb_itemRelease(pRet);
 
-      iNativeErr = OCI_ErrorGetOCICode( err );
+      iNativeErr = OCI_ErrorGetOCICode(err);
    }
    else
    {
@@ -238,7 +238,7 @@ static HB_ERRCODE ocilibDisconnect( SQLDDCONNECTION * pConnection )
 {
    HB_ERRCODE errCode;
 
-   errCode = OCI_ConnectionFree( ( ( SDDCONN * ) pConnection->pSDDConn )->pConn ) ? HB_SUCCESS : HB_FAILURE;
+   errCode = OCI_ConnectionFree(( ( SDDCONN * ) pConnection->pSDDConn )->pConn) ? HB_SUCCESS : HB_FAILURE;
    hb_xfree(pConnection->pSDDConn);
    return errCode;
 }
@@ -252,7 +252,7 @@ static HB_ERRCODE ocilibExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 
    if( !st )
    {
-      szError = ocilibGetError( &errCode );
+      szError = ocilibGetError(&errCode);
       hb_errRT_OCIDD( EG_OPEN, ESQLDD_STMTALLOC, szError, hb_itemGetCPtr(pItem), errCode );
       hb_xfree(szError);
       return HB_FAILURE;
@@ -264,16 +264,16 @@ static HB_ERRCODE ocilibExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 
       /* TODO: new id */
       hb_rddsqlSetError(0, nullptr, hb_itemGetCPtr(pItem), nullptr, static_cast<unsigned long>(OCI_GetAffectedRows(st)));
-      OCI_StatementFree( st );
+      OCI_StatementFree(st);
       return HB_SUCCESS;
    }
    else
       hb_strfree(hStatement);
 
-   szError = ocilibGetError( &errCode );
-   hb_rddsqlSetError( errCode, szError, hb_itemGetCPtr(pItem), nullptr, 0 );
+   szError = ocilibGetError(&errCode);
+   hb_rddsqlSetError(errCode, szError, hb_itemGetCPtr(pItem), nullptr, 0);
    hb_xfree(szError);
-   OCI_StatementFree( st );
+   OCI_StatementFree(st);
    return HB_FAILURE;
 }
 
@@ -294,7 +294,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
 
    if( !st )
    {
-      szError = ocilibGetError( &errCode );
+      szError = ocilibGetError(&errCode);
       hb_errRT_OCIDD( EG_OPEN, ESQLDD_STMTALLOC, szError, pArea->szQuery, errCode );
       hb_xfree(szError);
       return HB_FAILURE;
@@ -306,8 +306,8 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
    {
       hb_strfree(hQuery);
       hb_itemRelease(pItem);
-      szError = ocilibGetError( &errCode );
-      OCI_StatementFree( st );
+      szError = ocilibGetError(&errCode);
+      OCI_StatementFree(st);
       hb_errRT_OCIDD( EG_OPEN, ESQLDD_INVALIDQUERY, szError, pArea->szQuery, errCode );
       hb_xfree(szError);
       return HB_FAILURE;
@@ -321,7 +321,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
    rs = OCI_GetResultset( st );
 
    uiFields = static_cast<HB_USHORT>(OCI_GetColumnCount(rs));
-   SELF_SETFIELDEXTENT( &pArea->area, uiFields );
+   SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
    pItemEof = hb_itemArrayNew(uiFields);
    pItem    = hb_itemNew(nullptr);
@@ -350,7 +350,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
          hb_itemRelease(pItemEof);
          hb_itemRelease(pItem);
          szError = ocilibGetError(nullptr);
-         OCI_StatementFree( st );
+         OCI_StatementFree(st);
          hb_errRT_OCIDD( EG_OPEN, ESQLDD_STMTDESCR + 1001, szError, pArea->szQuery, 0 );
          hb_xfree(szError);
          return HB_FAILURE;
@@ -470,7 +470,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
          hb_arraySetForward( pItemEof, uiIndex + 1, pItem );
 
          if( !bError )
-            bError = ( SELF_ADDFIELD( &pArea->area, &dbFieldInfo ) == HB_FAILURE );
+            bError = (SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == HB_FAILURE);
       }
 
       hb_itemRelease(pName);
@@ -484,7 +484,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
    if( bError )
    {
       hb_itemRelease(pItemEof);
-      OCI_StatementFree( st );
+      OCI_StatementFree(st);
       hb_errRT_OCIDD( EG_CORRUPTION, ESQLDD_INVALIDFIELD, "Invalid field type", pArea->szQuery, errCode );
       return HB_FAILURE;
    }
@@ -509,7 +509,7 @@ static HB_ERRCODE ocilibClose( SQLBASEAREAP pArea )
    if( pSDDData )
    {
       if( pSDDData->pStmt )
-         OCI_StatementFree( pSDDData->pStmt );
+         OCI_StatementFree(pSDDData->pStmt);
 
       hb_xfree(pSDDData);
       pArea->pSDDData = nullptr;
@@ -633,7 +633,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
             }
          }
 
-         if( pItem )
+         if( pItem != nullptr )
             hb_arraySetForward( pArray, ui, pItem );
       }
       hb_itemRelease(pItem);

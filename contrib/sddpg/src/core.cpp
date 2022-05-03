@@ -218,7 +218,7 @@ static HB_ERRCODE pgsqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    status = PQresultStatus( pResult );
    if( status != PGRES_TUPLES_OK && status != PGRES_COMMAND_OK )
    {
-      hb_rddsqlSetError( status, PQresultErrorMessage( pResult ), hb_itemGetCPtr(pItem), nullptr, 0 );
+      hb_rddsqlSetError(status, PQresultErrorMessage(pResult), hb_itemGetCPtr(pItem), nullptr, 0);
       return HB_FAILURE;
    }
 
@@ -265,7 +265,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
    pSDDData->pResult = pResult;
 
    uiFields = static_cast<HB_USHORT>(PQnfields(pResult));
-   SELF_SETFIELDEXTENT( &pArea->area, uiFields );
+   SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
    pItemEof = hb_itemArrayNew(uiFields);
    pItem    = hb_itemNew(nullptr);
@@ -444,7 +444,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
 #endif
 
          if( !bError )
-            bError = ( SELF_ADDFIELD( &pArea->area, &dbFieldInfo ) == HB_FAILURE );
+            bError = (SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == HB_FAILURE);
       }
 
       if( bError )
@@ -569,10 +569,10 @@ static HB_ERRCODE pgsqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
    if( bError )
    {
       PHB_ITEM pError = hb_errNew();
-      hb_errPutGenCode( pError, EG_DATATYPE );
-      hb_errPutDescription( pError, hb_langDGetErrorDesc( EG_DATATYPE ) );
-      hb_errPutSubCode( pError, EDBF_DATATYPE );
-      SELF_ERROR( &pArea->area, pError );
+      hb_errPutGenCode(pError, EG_DATATYPE);
+      hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_DATATYPE));
+      hb_errPutSubCode(pError, EDBF_DATATYPE);
+      SELF_ERROR(&pArea->area, pError);
       hb_itemRelease(pError);
       return HB_FAILURE;
    }

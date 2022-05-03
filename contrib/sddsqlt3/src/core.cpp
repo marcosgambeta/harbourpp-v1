@@ -56,11 +56,11 @@
 
 #include <sqlite3.h>
 
-#define S_HB_ARRAYGETSTR( arr, n, phstr, plen )  hb_arrayGetStrUTF8(arr, n, phstr, plen)
-#define S_HB_ITEMCOPYSTR( itm, str, len )        hb_itemCopyStrUTF8(itm, str, len)
-#define S_HB_ITEMGETSTR( itm, phstr, plen )      hb_itemGetStrUTF8(itm, phstr, plen)
-#define S_HB_ITEMPUTSTR( itm, str )              hb_itemPutStrUTF8(itm, str)
-#define S_HB_ITEMPUTSTRLEN( itm, str, len )      hb_itemPutStrLenUTF8(itm, str, len)
+#define S_HB_ARRAYGETSTR(arr, n, phstr, plen)  hb_arrayGetStrUTF8(arr, n, phstr, plen)
+#define S_HB_ITEMCOPYSTR(itm, str, len)        hb_itemCopyStrUTF8(itm, str, len)
+#define S_HB_ITEMGETSTR(itm, phstr, plen)      hb_itemGetStrUTF8(itm, phstr, plen)
+#define S_HB_ITEMPUTSTR(itm, str)              hb_itemPutStrUTF8(itm, str)
+#define S_HB_ITEMPUTSTRLEN(itm, str, len)      hb_itemPutStrLenUTF8(itm, str, len)
 
 typedef struct
 {
@@ -156,7 +156,7 @@ static HB_USHORT hb_errRT_SQLT3DD( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode,
    return uiAction;
 }
 
-static char * sqlite3GetError( sqlite3 * pDb, HB_ERRCODE * pErrCode )
+static char * sqlite3GetError(sqlite3 * pDb, HB_ERRCODE * pErrCode)
 {
    char * szRet;
    int iNativeErr;
@@ -192,7 +192,7 @@ static HB_USHORT sqlite3DeclType(sqlite3_stmt * st, HB_USHORT uiIndex )
     */
    if( szDeclType != nullptr )
    {
-      HB_SIZE nLen = strlen( szDeclType );
+      HB_SIZE nLen = strlen(szDeclType);
 
       if( hb_strAtI( "INT", 3, szDeclType, nLen ) != 0 )
          return HB_FT_INTEGER;
@@ -252,7 +252,7 @@ static void sqlite3DeclStru( sqlite3_stmt * st, HB_USHORT uiIndex, HB_USHORT * p
 
    if( szDeclType != nullptr )
    {
-      HB_SIZE nLen = strlen( szDeclType );
+      HB_SIZE nLen = strlen(szDeclType);
       HB_SIZE nAt;
       int iOverflow;
       HB_MAXINT iRetLen = 0;
@@ -385,7 +385,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
    {
       hb_strfree(hQuery);
       hb_itemRelease(pItem);
-      szError = sqlite3GetError( pDb, &errCode );
+      szError = sqlite3GetError(pDb, &errCode);
       hb_errRT_SQLT3DD( EG_OPEN, ESQLDD_INVALIDQUERY, szError, pArea->szQuery, errCode );
       sqlite3_finalize( st );
       hb_xfree(szError);
@@ -401,7 +401,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
       pArea->fFetched = HB_TRUE;
    else if( iStatus != SQLITE_ROW )
    {
-      szError = sqlite3GetError( pDb, &errCode );
+      szError = sqlite3GetError(pDb, &errCode);
       hb_errRT_SQLT3DD( EG_OPEN, ESQLDD_INVALIDQUERY, szError, pArea->szQuery, errCode );
       sqlite3_finalize( st );
       hb_xfree(szError);
@@ -409,7 +409,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
    }
 
    uiFields = static_cast<HB_USHORT>(sqlite3_column_count(st));
-   SELF_SETFIELDEXTENT( &pArea->area, uiFields );
+   SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
    errCode = 0;
    bError  = HB_FALSE;
@@ -503,7 +503,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
       }
 
       if( !bError )
-         bError = ( SELF_ADDFIELD( &pArea->area, &dbFieldInfo ) == HB_FAILURE );
+         bError = (SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == HB_FAILURE);
 
       if( bError )
          break;
@@ -636,7 +636,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                break;
          }
 
-         if( pItem )
+         if( pItem != nullptr )
          {
             hb_arraySetForward( pArray, ui + 1, pItem );
             hb_itemRelease(pItem);

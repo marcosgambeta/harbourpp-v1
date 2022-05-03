@@ -280,7 +280,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
    pSDDData->pSqlda = pSqlda;
 
    uiFields = pSqlda->sqld;
-   SELF_SETFIELDEXTENT( &pArea->area, uiFields );
+   SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
    pItemEof = hb_itemArrayNew(uiFields);
 
@@ -410,7 +410,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
       hb_itemRelease(pItem);
 
       if( !bError )
-         bError = ( SELF_ADDFIELD( &pArea->area, &dbFieldInfo ) == HB_FAILURE );
+         bError = (SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == HB_FAILURE);
 
       hb_xfree(szOurName);
 
@@ -530,7 +530,7 @@ static HB_ERRCODE fbGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                   /* default value is NIL */
                   break;
             }
-            if( pItem )
+            if( pItem != nullptr )
                hb_arraySetForward( pArray, ui + 1, pItem );
          }
 

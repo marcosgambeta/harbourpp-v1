@@ -125,7 +125,7 @@ char * hb_adsAnsiToOem( const char * pszSrc, HB_SIZE nLen )
    return const_cast<char*>(pszSrc);
 }
 
-void hb_adsOemAnsiFree( char * pszSrc )
+void hb_adsOemAnsiFree(char * pszSrc)
 {
    if( hb_ads_bOEM )
    {
@@ -148,7 +148,7 @@ typedef struct
 
 static void hb_adsThreadRelease( void * cargo )
 {
-   PHB_ADSDATA pAdsData = ( PHB_ADSDATA ) cargo;
+   PHB_ADSDATA pAdsData = static_cast<PHB_ADSDATA>(cargo);
 
    if( pAdsData->hConnect )
    {
@@ -174,7 +174,7 @@ static HB_ADSDATA s_ads_data;
    #define HB_ADS_CONN_DATA  ( &s_ads_data )
 #endif
 
-ADSHANDLE hb_ads_getConnection( void )
+ADSHANDLE hb_ads_getConnection(void)
 {
    return HB_ADS_CONN_DATA->hConnect;
 }
@@ -216,7 +216,7 @@ void hb_ads_clrConnection( ADSHANDLE hConnect )
    }
 }
 
-int hb_ads_getIndexPageSize( void )
+int hb_ads_getIndexPageSize(void)
 {
    return HB_ADS_CONN_DATA->iIndexPageSize;
 }
@@ -227,7 +227,7 @@ void hb_ads_setIndexPageSize( int iIndexPageSize )
 }
 
 #if !defined(ADS_LINUX)
-static PHB_ITEM hb_ads_getCallBack( void )
+static PHB_ITEM hb_ads_getCallBack(void)
 {
    return HB_ADS_THREAD_DATA->pCallBack;
 }
@@ -398,7 +398,7 @@ HB_FUNC( ADSGETTABLECONTYPE )
    UNSIGNED16 pusConnectType = 0;
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       ADSHANDLE pTableConnectHandle = 0;
 
@@ -447,7 +447,7 @@ HB_FUNC( ADSISTABLELOCKED )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       UNSIGNED16 pbLocked = 0;
 
@@ -470,7 +470,7 @@ HB_FUNC( ADSISRECORDLOCKED )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       HB_ULONG ulRec;
       UNSIGNED16 pbLocked = 0;
@@ -481,7 +481,7 @@ HB_FUNC( ADSISRECORDLOCKED )
       }
       else
       {
-         SELF_RECNO( &pArea->area, &ulRec );
+         SELF_RECNO(&pArea->area, &ulRec);
       }
 
       if( AdsIsRecordLocked( pArea->hTable, static_cast<UNSIGNED32>(ulRec), &pbLocked ) == AE_SUCCESS )
@@ -550,7 +550,7 @@ HB_FUNC( ADSGETTABLECHARTYPE )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       UNSIGNED16 usCharType = 0;
 
@@ -631,7 +631,7 @@ HB_FUNC( ADSBLOB2FILE )
    {
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-      if( pArea )
+      if( pArea != nullptr )
       {
          hb_retl(AdsBinaryToFile(pArea->hTable, static_cast<UNSIGNED8*>(const_cast<char*>(szFieldName)), static_cast<UNSIGNED8*>(const_cast<char*>(szFileName))) == AE_SUCCESS);
       }
@@ -655,7 +655,7 @@ HB_FUNC( ADSFILE2BLOB )
    {
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-      if( pArea )
+      if( pArea != nullptr )
       {
          hb_retl(AdsFileToBinary(pArea->hTable,
                                  static_cast<UNSIGNED8*>(const_cast<char*>(szFieldName)),
@@ -677,7 +677,7 @@ HB_FUNC( ADSGETRECORDCOUNT )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       ADSHANDLE hHandle;
       UNSIGNED32 ulKey = 0;
@@ -717,7 +717,7 @@ HB_FUNC( ADSKEYNO )
    {
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-      if( pArea )
+      if( pArea != nullptr )
       {
          UNSIGNED32 pulKey = 0;
          ADSHANDLE  hIndex = 0;
@@ -779,7 +779,7 @@ HB_FUNC( ADSKEYCOUNT )
    {
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-      if( pArea )
+      if( pArea != nullptr )
       {
          UNSIGNED32 pulKey = 0;
          ADSHANDLE  hIndex = 0;
@@ -842,7 +842,7 @@ HB_FUNC( ADSKEYCOUNT )
                   HB_ULONG ulRecNo;
                   UNSIGNED16 u16eof;
 
-                  SELF_RECNO( &pArea->area, &ulRecNo );
+                  SELF_RECNO(&pArea->area, &ulRecNo);
                   AdsGotoTop( hIndex );
 
                   AdsAtEOF( pArea->hTable, &u16eof );
@@ -853,7 +853,7 @@ HB_FUNC( ADSKEYCOUNT )
                      pulKey++;
                   }
 
-                  SELF_GOTO( &pArea->area, ulRecNo );
+                  SELF_GOTO(&pArea->area, ulRecNo);
                }
                else
                {
@@ -883,7 +883,7 @@ HB_FUNC( ADSADDCUSTOMKEY )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       if( hb_pcount() > 0 )
       {
@@ -919,7 +919,7 @@ HB_FUNC( ADSDELETECUSTOMKEY )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       if( hb_pcount() > 0 )
       {
@@ -955,7 +955,7 @@ HB_FUNC( ADSCLEARAOF )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       AdsClearAOF( pArea->hTable );
    }
@@ -969,7 +969,7 @@ HB_FUNC( ADSEVALAOF )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       UNSIGNED16 pusOptLevel = 0;
 
@@ -979,7 +979,7 @@ HB_FUNC( ADSEVALAOF )
 
          AdsEvalAOF( pArea->hTable, reinterpret_cast<UNSIGNED8*>(pucFilter), &pusOptLevel );
 
-         hb_adsOemAnsiFree( pucFilter );
+         hb_adsOemAnsiFree(pucFilter);
       }
 
       hb_retni(pusOptLevel);
@@ -994,7 +994,7 @@ HB_FUNC( ADSGETTABLEALIAS )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       UNSIGNED8  pucAlias[HB_RDD_MAX_ALIAS_LEN + 1];
       UNSIGNED16 usLen = sizeof(pucAlias);
@@ -1018,7 +1018,7 @@ HB_FUNC( ADSGETAOF )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       UNSIGNED8   pucFilter[HARBOUR_MAX_RDD_FILTER_LENGTH + 1];
       UNSIGNED8 * pucFilter2 = nullptr;
@@ -1036,7 +1036,7 @@ HB_FUNC( ADSGETAOF )
       {
          char * szRet = hb_adsAnsiToOem(reinterpret_cast<char*>(pucFilter2 ? pucFilter2 : pucFilter), usLen);
          hb_retc(szRet);
-         hb_adsOemAnsiFree( szRet );
+         hb_adsOemAnsiFree(szRet);
       }
       else
       {
@@ -1058,7 +1058,7 @@ HB_FUNC( ADSGETAOFOPTLEVEL )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       UNSIGNED16 pusOptLevel = 0;
 
@@ -1074,7 +1074,7 @@ HB_FUNC( ADSGETAOFNOOPT )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       UNSIGNED16 pusOptLevel;
       UNSIGNED8  pucNonOpt[HARBOUR_MAX_RDD_FILTER_LENGTH + 1];
@@ -1105,7 +1105,7 @@ HB_FUNC( ADSISRECORDINAOF )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       UNSIGNED16 bIsInAOF = 0;
 
@@ -1124,7 +1124,7 @@ HB_FUNC( ADSISRECORDVALID )
    HB_BOOL bReturn = HB_FALSE;
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       HB_BOOL fEof = HB_TRUE;
 
@@ -1150,7 +1150,7 @@ HB_FUNC( ADSREFRESHAOF )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       AdsRefreshAOF( pArea->hTable );
    }
@@ -1166,7 +1166,7 @@ HB_FUNC( ADSSETAOF )
    {
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-      if( pArea )
+      if( pArea != nullptr )
       {
          char * pucFilter = hb_adsOemToAnsi( hb_parc(1), hb_parclen(1) );
 
@@ -1174,7 +1174,7 @@ HB_FUNC( ADSSETAOF )
                                           reinterpret_cast<UNSIGNED8*>(pucFilter),
                                           static_cast<UNSIGNED16>(hb_pcount() > 1 ? hb_parni(2) : ADS_RESOLVE_DYNAMIC) /* usResolve */ ); /* ADS_RESOLVE_IMMEDIATE */
 
-         hb_adsOemAnsiFree( pucFilter );
+         hb_adsOemAnsiFree(pucFilter);
 
          hb_retl(ulRetVal == AE_SUCCESS);
       }
@@ -1193,7 +1193,7 @@ HB_FUNC( ADSGETFILTER )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       UNSIGNED8   pucFilter[HARBOUR_MAX_RDD_FILTER_LENGTH + 1];
       UNSIGNED8 * pucFilter2 = nullptr;
@@ -1211,7 +1211,7 @@ HB_FUNC( ADSGETFILTER )
       {
          char * szRet = hb_adsAnsiToOem(reinterpret_cast<char*>(pucFilter2 ? pucFilter2 : pucFilter), usLen);
          hb_retc(szRet);
-         hb_adsOemAnsiFree( szRet );
+         hb_adsOemAnsiFree(szRet);
       }
       else
       {
@@ -1240,7 +1240,7 @@ HB_FUNC( ADSENABLEENCRYPTION )
    {
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-      if( pArea )
+      if( pArea != nullptr )
       {
          hb_retnl(AdsEnableEncryption(pArea->hTable, static_cast<UNSIGNED8*>(const_cast<char*>(pucPassword))));
       }
@@ -1259,7 +1259,7 @@ HB_FUNC( ADSDISABLEENCRYPTION )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       hb_retnl(AdsDisableEncryption(pArea->hTable));
    }
@@ -1273,7 +1273,7 @@ HB_FUNC( ADSENCRYPTTABLE )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       hb_retnl(AdsEncryptTable(pArea->hTable));
    }
@@ -1287,7 +1287,7 @@ HB_FUNC( ADSDECRYPTTABLE )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       hb_retnl(AdsDecryptTable(pArea->hTable));
    }
@@ -1301,7 +1301,7 @@ HB_FUNC( ADSENCRYPTRECORD )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       hb_retnl(AdsEncryptRecord(pArea->hTable));
    }
@@ -1315,7 +1315,7 @@ HB_FUNC( ADSDECRYPTRECORD )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       hb_retnl(AdsDecryptRecord(pArea->hTable));
    }
@@ -1329,7 +1329,7 @@ HB_FUNC( ADSISENCRYPTIONENABLED )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       UNSIGNED16 usIsEnabled = 0;
       AdsIsEncryptionEnabled( pArea->hTable, &usIsEnabled );
@@ -1345,7 +1345,7 @@ HB_FUNC( ADSISRECORDENCRYPTED )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       UNSIGNED16 usIsEnabled = 0;
       AdsIsRecordEncrypted( pArea->hTable, &usIsEnabled );
@@ -1361,7 +1361,7 @@ HB_FUNC( ADSISTABLEENCRYPTED )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       UNSIGNED16 usIsEnabled = 0;
       AdsIsTableEncrypted( pArea->hTable, &usIsEnabled );
@@ -1466,7 +1466,7 @@ HB_FUNC( ADSCREATESQLSTATEMENT )
          {
             ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-            if( pArea )
+            if( pArea != nullptr )
             {
                char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
 
@@ -1514,11 +1514,11 @@ HB_FUNC( ADSEXECUTESQLDIRECT )
             pInfo.abName = "";
             pInfo.fReadonly = HB_TRUE;
             pArea->hTable = hCursor;
-            SELF_OPEN( &pArea->area, &pInfo );
+            SELF_OPEN(&pArea->area, &pInfo);
          }
          else
          {
-            hb_adsCloseCursor( pArea );
+            hb_adsCloseCursor(pArea);
          }
 
          hb_retl(true);
@@ -1579,11 +1579,11 @@ HB_FUNC( ADSEXECUTESQL )
             pInfo.abName = "";
             pInfo.fReadonly = HB_TRUE;
             pArea->hTable = hCursor;
-            SELF_OPEN( &pArea->area, &pInfo );
+            SELF_OPEN(&pArea->area, &pInfo);
          }
          else
          {
-            hb_adsCloseCursor( pArea );
+            hb_adsCloseCursor(pArea);
          }
 
          hb_retl(true);
@@ -1634,7 +1634,7 @@ HB_FUNC( ADSREFRESHRECORD )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       AdsRefreshRecord( pArea->hTable );
    }
@@ -1649,7 +1649,7 @@ HB_FUNC( ADSCOPYTABLE )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       if( HB_ISCHAR(1) )
       {
@@ -1672,7 +1672,7 @@ HB_FUNC( ADSCONVERTTABLE )
 {
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       if( HB_ISCHAR(1) )
       {
@@ -1804,7 +1804,7 @@ HB_FUNC( ADSGETNUMINDEXES )
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
    UNSIGNED16 pusCnt = 0;
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       AdsGetNumIndexes( pArea->hTable, &pusCnt );
    }
@@ -1839,14 +1839,14 @@ HB_FUNC( ADSGETHANDLETYPE )             /* DD, admin, table */
    hb_retni(AdsGetHandleType(HB_ADS_PARCONNECTION(1) /* hConnect */, &usType) == AE_SUCCESS ? usType : AE_INVALID_HANDLE);
 }
 
-/* nLastErr := AdsGetLastError( [@cLastErr] ) */
+/* nLastErr := AdsGetLastError([@cLastErr]) */
 HB_FUNC( ADSGETLASTERROR )
 {
    UNSIGNED32 ulLastErr = static_cast<UNSIGNED32>(~AE_SUCCESS);
    UNSIGNED8  aucError[ADS_MAX_ERROR_LEN + 1];
    UNSIGNED16 usLength = ADS_MAX_ERROR_LEN + 1;
 
-   AdsGetLastError( &ulLastErr, aucError, &usLength );
+   AdsGetLastError(&ulLastErr, aucError, &usLength);
 
    if( ulLastErr == AE_SUCCESS )
    {
@@ -2007,7 +2007,7 @@ HB_FUNC( ADSISNULL )
       UNSIGNED16 u16Null = 0;
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-      if( pArea )
+      if( pArea != nullptr )
       {
 #if ADS_LIB_VERSION >= 900
          AdsIsNull( pArea->hTable,
@@ -2471,7 +2471,7 @@ HB_FUNC( ADSCOPYTABLECONTENTS )
 #if ADS_LIB_VERSION >= 600
    ADSAREAP pArea = hb_adsGetWorkAreaPointer(); /* Source */
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       int iOldArea = hb_rddGetCurrentWorkAreaNumber();
 
@@ -2636,7 +2636,7 @@ HB_FUNC( ADSCREATEFTSINDEX )
 #if ADS_LIB_VERSION >= 700
    ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
-   if( pArea )
+   if( pArea != nullptr )
    {
       hb_retnl(AdsCreateFTSIndex(pArea->hTable,
                                  static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1)))     /* pucFileName              */ , /* if nullptr or the base name is the same as the table, then creates a compound AutoOpen index. */

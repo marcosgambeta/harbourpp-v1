@@ -165,7 +165,7 @@ static HB_ERRCODE mysqlConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
                            pItemUnixSocket && HB_IS_STRING(pItemUnixSocket) ? hb_itemGetCPtr(pItemUnixSocket) : nullptr,
                            hb_arrayGetNI(pItem, 8) /* flags*/) )
    {
-      hb_rddsqlSetError( mysql_errno( pMySql ), mysql_error( pMySql ), nullptr, nullptr, 0 );
+      hb_rddsqlSetError(mysql_errno(pMySql), mysql_error(pMySql), nullptr, nullptr, 0);
       mysql_close( pMySql );
       return HB_FAILURE;
    }
@@ -192,7 +192,7 @@ static HB_ERRCODE mysqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 
    if( mysql_real_query(pMySql, hb_itemGetCPtr(pItem), static_cast<unsigned long>(hb_itemGetCLen(pItem))) )
    {
-      hb_rddsqlSetError( mysql_errno( pMySql ), mysql_error( pMySql ), hb_itemGetCPtr(pItem), nullptr, 0 );
+      hb_rddsqlSetError(mysql_errno(pMySql), mysql_error(pMySql), hb_itemGetCPtr(pItem), nullptr, 0);
       return HB_FAILURE;
    }
 
@@ -218,7 +218,7 @@ static HB_ERRCODE mysqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
       }
       else /* error */
       {
-         hb_rddsqlSetError( mysql_errno( pMySql ), mysql_error( pMySql ), hb_itemGetCPtr(pItem), nullptr, 0 );
+         hb_rddsqlSetError(mysql_errno(pMySql ), mysql_error(pMySql), hb_itemGetCPtr(pItem), nullptr, 0);
          return HB_FAILURE;
       }
    }
@@ -254,7 +254,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
    }
 
    uiFields = static_cast<HB_USHORT>(mysql_num_fields(pSDDData->pResult));
-   SELF_SETFIELDEXTENT( &pArea->area, uiFields );
+   SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
    pItemEof = hb_itemArrayNew(uiFields);
 
@@ -397,7 +397,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
 #endif
 
          if( !bError )
-            bError = ( SELF_ADDFIELD( &pArea->area, &dbFieldInfo ) == HB_FAILURE );
+            bError = (SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == HB_FAILURE);
       }
 
       if( bError )
@@ -613,10 +613,10 @@ static HB_ERRCODE mysqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
    if( bError )
    {
       PHB_ITEM pError = hb_errNew();
-      hb_errPutGenCode( pError, EG_DATATYPE );
-      hb_errPutDescription( pError, hb_langDGetErrorDesc( EG_DATATYPE ) );
-      hb_errPutSubCode( pError, EDBF_DATATYPE );
-      SELF_ERROR( &pArea->area, pError );
+      hb_errPutGenCode(pError, EG_DATATYPE);
+      hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_DATATYPE));
+      hb_errPutSubCode(pError, EDBF_DATATYPE);
+      SELF_ERROR(&pArea->area, pError);
       hb_itemRelease(pError);
       return HB_FAILURE;
    }
