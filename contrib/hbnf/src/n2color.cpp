@@ -31,7 +31,7 @@ HB_FUNC( FT_N2COLOR )
    if( iColor >= 0x00 && iColor <= 0xff )
    {
       char szColorString[10];
-      hb_gtColorsToString( &iColor, 1, szColorString, 10 );
+      hb_gtColorsToString(&iColor, 1, szColorString, 10);
       hb_retc(szColorString);
    }
    else

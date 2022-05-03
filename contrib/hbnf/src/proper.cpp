@@ -51,7 +51,7 @@ static HB_BOOL _ftIsLower( char c )
 
 static HB_BOOL _ftIsAlpha( char c )
 {
-   return _ftIsUpper( c ) || _ftIsLower( c );
+   return _ftIsUpper(c) || _ftIsLower(c);
 }
 
 HB_FUNC( FT_PROPER )
@@ -75,14 +75,14 @@ HB_FUNC( FT_PROPER )
          }
          if( fCap )
          {
-            cDst[i] = _ftToUpper( cDst[i] );
+            cDst[i] = _ftToUpper(cDst[i]);
          }
          else
          {
-            cDst[i] = _ftToLower( cDst[i] );
+            cDst[i] = _ftToLower(cDst[i]);
          }
       }
-      fCap = ( cStr[i] == ' ' || cStr[i] == '-' || cStr[i] == '\'' );
+      fCap = (cStr[i] == ' ' || cStr[i] == '-' || cStr[i] == '\'');
    }
 
    /* Find "Mc" */
@@ -92,7 +92,7 @@ HB_FUNC( FT_PROPER )
       {
          if( cStr[i] == 'M' && cStr[i + 1] == 'c' )
          {
-            cDst[i + 2] = _ftToUpper( cDst[i + 2] );
+            cDst[i + 2] = _ftToUpper(cDst[i + 2]);
          }
       }
    }

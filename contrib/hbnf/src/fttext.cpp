@@ -374,7 +374,7 @@ static long _ft_skip( long iRecs )
             do
             {
                /* calc offset to read area of file ahead of current pointer */
-               fpOffset = HB_MAX( ft_text->offset[ft_text->area] - BUFFSIZE, 0 );
+               fpOffset = HB_MAX(ft_text->offset[ft_text->area] - BUFFSIZE, 0);
 
                /* read a chunk */
                if( (iBytesRead = hb_fileResult(hb_fileReadAt(ft_text->handles[ft_text->area], cBuff, BUFFSIZE, fpOffset))) == 0 )
@@ -399,7 +399,7 @@ static long _ft_skip( long iRecs )
                do
                {
                   /* get count of chars in this line */
-                  iByteCount = _findbol( cPtr, iBytesRemaining );
+                  iByteCount = _findbol(cPtr, iBytesRemaining);
 
                   if( iByteCount > 0 )
                   {
@@ -475,7 +475,7 @@ static int _ins_buff( PFT_TEXT ft_text, HB_ISIZ iLen )
 
    /* set target move distance, this allows iLen to be greater than
       BUFFSIZE */
-   iLen = HB_MIN( iLenRemaining, BUFFSIZE );
+   iLen = HB_MIN(iLenRemaining, BUFFSIZE);
    iLenRemaining -= iLen;
 
    /* initialize file pointers */
@@ -483,10 +483,10 @@ static int _ins_buff( PFT_TEXT ft_text, HB_ISIZ iLen )
    fpWrite = ft_text->offset[ft_text->area] + iLen;
 
    /* do initial load of both buffers */
-   WriteLen = hb_fileResult( hb_fileReadAt( ft_text->handles[ft_text->area], WriteBuff, BUFFSIZE, fpRead ) );
+   WriteLen = hb_fileResult(hb_fileReadAt(ft_text->handles[ft_text->area], WriteBuff, BUFFSIZE, fpRead));
    fpRead  += WriteLen;
 
-   ReadLen = hb_fileResult( hb_fileRead( ft_text->handles[ft_text->area], ReadBuff, BUFFSIZE, -1 ) );
+   ReadLen = hb_fileResult(hb_fileRead(ft_text->handles[ft_text->area], ReadBuff, BUFFSIZE, -1));
    fpRead += ReadLen;
 
    ft_text->error[ft_text->area] = 0;
@@ -528,21 +528,21 @@ static int _ins_buff( PFT_TEXT ft_text, HB_ISIZ iLen )
          WriteLen  = ReadLen;
 
          /* return to read area and read another buffer */
-         ReadLen = hb_fileResult( hb_fileReadAt( ft_text->handles[ft_text->area], ReadBuff, BUFFSIZE, fpRead ) );
+         ReadLen = hb_fileResult(hb_fileReadAt(ft_text->handles[ft_text->area], ReadBuff, BUFFSIZE, fpRead));
          fpRead += ReadLen;
       }
 
-      iLen = HB_MIN( iLenRemaining, BUFFSIZE );
+      iLen = HB_MIN(iLenRemaining, BUFFSIZE);
       iLenRemaining -= iLen;
    }
 
    /* store length in bytes, set legacy EOF marker */
-   ft_text->lastbyte[ft_text->area] = hb_fileSeek( ft_text->handles[ft_text->area], fpWrite, FS_SET );
-   hb_fileWrite( ft_text->handles[ft_text->area], WriteBuff, 0, -1 );
+   ft_text->lastbyte[ft_text->area] = hb_fileSeek(ft_text->handles[ft_text->area], fpWrite, FS_SET);
+   hb_fileWrite(ft_text->handles[ft_text->area], WriteBuff, 0, -1);
 
    /* clear last_rec so next gobot will recount the records */
    ft_text->last_rec[ft_text->area] = 0;
-   hb_fileSeek( ft_text->handles[ft_text->area], ft_text->offset[ft_text->area], FS_SET );
+   hb_fileSeek(ft_text->handles[ft_text->area], ft_text->offset[ft_text->area], FS_SET);
 
    hb_xfree(ReadBuff);
    hb_xfree(WriteBuff);
@@ -562,7 +562,7 @@ static int _del_buff( PFT_TEXT ft_text, HB_ISIZ iLen )
    fpRead  = ft_text->offset[ft_text->area] + iLen;
 
    /* do initial load of buffer */
-   WriteLen = hb_fileResult( hb_fileReadAt( ft_text->handles[ft_text->area], WriteBuff, BUFFSIZE, fpRead ) );
+   WriteLen = hb_fileResult(hb_fileReadAt(ft_text->handles[ft_text->area], WriteBuff, BUFFSIZE, fpRead));
    fpRead  += WriteLen;
 
    ft_text->error[ft_text->area] = 0;
@@ -572,7 +572,7 @@ static int _del_buff( PFT_TEXT ft_text, HB_ISIZ iLen )
       HB_ISIZ SaveLen;
 
       /* position to beginning of write area */
-      SaveLen = hb_fileResult( hb_fileWriteAt( ft_text->handles[ft_text->area], WriteBuff, WriteLen, fpWrite ) );
+      SaveLen = hb_fileResult(hb_fileWriteAt(ft_text->handles[ft_text->area], WriteBuff, WriteLen, fpWrite));
 
       /* move write pointer */
       fpWrite += SaveLen;
@@ -585,17 +585,17 @@ static int _del_buff( PFT_TEXT ft_text, HB_ISIZ iLen )
       }
 
       /* return to read area and read another buffer */
-      WriteLen = hb_fileResult( hb_fileReadAt( ft_text->handles[ft_text->area], WriteBuff, BUFFSIZE, fpRead ) );
+      WriteLen = hb_fileResult(hb_fileReadAt(ft_text->handles[ft_text->area], WriteBuff, BUFFSIZE, fpRead));
       fpRead  += WriteLen;
    }
 
    /* store length in bytes, set legacy EOF marker */
-   ft_text->lastbyte[ft_text->area] = hb_fileSeek( ft_text->handles[ft_text->area], fpWrite, FS_SET );
-   hb_fileWrite( ft_text->handles[ft_text->area], WriteBuff, 0, -1 );
+   ft_text->lastbyte[ft_text->area] = hb_fileSeek(ft_text->handles[ft_text->area], fpWrite, FS_SET);
+   hb_fileWrite(ft_text->handles[ft_text->area], WriteBuff, 0, -1);
 
    /* clear last_rec so next gobot will recount the records */
    ft_text->last_rec[ft_text->area] = 0;
-   hb_fileSeek( ft_text->handles[ft_text->area], ft_text->offset[ft_text->area], FS_SET );
+   hb_fileSeek(ft_text->handles[ft_text->area], ft_text->offset[ft_text->area], FS_SET);
 
    hb_xfree(WriteBuff);
 
@@ -605,7 +605,7 @@ static int _del_buff( PFT_TEXT ft_text, HB_ISIZ iLen )
 static HB_BOOL _writeeol( PHB_FILE fhnd )
 {
    const char * eol = hb_conNewLine();
-   HB_SIZE      len = strlen( eol );
+   HB_SIZE      len = strlen(eol);
 
    return hb_fileWrite( fhnd, eol, len, -1 ) == len;
 }
@@ -630,14 +630,14 @@ static HB_BOOL _writeLine( PFT_TEXT ft_text, const char * theData, HB_SIZE iData
 
 HB_FUNC( FT_FOFFSET )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_ft_text );
+   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD(&s_ft_text);
 
    hb_retnint(ft_text->offset[ft_text->area]);
 }
 
 HB_FUNC( FT_FUSE )
 {
-   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD( &s_ft_text );
+   PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD(&s_ft_text);
    const char * pszFileName = hb_parc(1);
 
    ft_text->error[ft_text->area] = 0;
@@ -668,7 +668,7 @@ HB_FUNC( FT_FUSE )
       }
       else
       {
-         ft_text->lastbyte[ft_text->area] = hb_fileSeek( ft_text->handles[ft_text->area], 0, FS_END );
+         ft_text->lastbyte[ft_text->area] = hb_fileSeek(ft_text->handles[ft_text->area], 0, FS_END);
          hb_retnint(hb_fileHandle(ft_text->handles[ft_text->area]));
       }
    }
@@ -823,20 +823,20 @@ HB_FUNC( FT_FDELETE )
       destPtr = ft_text->offset[ft_text->area];
 
       /* skip over deleted records, point to first 'to be retained' record */
-      _ft_skip( hb_parnldef(1, 1) );
-      srcPtr = hb_fileSeek( ft_text->handles[ft_text->area], ft_text->offset[ft_text->area], FS_SET );
+      _ft_skip(hb_parnldef(1, 1));
+      srcPtr = hb_fileSeek(ft_text->handles[ft_text->area], ft_text->offset[ft_text->area], FS_SET);
 
       /* buffer read retained data, write atop old data */
       do
       {
-         nBytesRead = hb_fileResult( hb_fileReadAt( ft_text->handles[ft_text->area], Buff, BUFFSIZE, srcPtr ) );  /* now read in a big glob */
+         nBytesRead = hb_fileResult(hb_fileReadAt(ft_text->handles[ft_text->area], Buff, BUFFSIZE, srcPtr));  /* now read in a big glob */
          srcPtr    += nBytesRead;
-         destPtr   += hb_fileResult( hb_fileWriteAt( ft_text->handles[ft_text->area], Buff, nBytesRead, destPtr ) );
+         destPtr   += hb_fileResult(hb_fileWriteAt(ft_text->handles[ft_text->area], Buff, nBytesRead, destPtr));
       }
       while( nBytesRead > 0 );
 
       /* move legacy EOF marker */
-      hb_fileWriteAt( ft_text->handles[ft_text->area], Buff, 0, srcPtr );
+      hb_fileWriteAt(ft_text->handles[ft_text->area], Buff, 0, srcPtr);
 
       ft_text->error[ft_text->area] = hb_fsError();
 
@@ -845,7 +845,7 @@ HB_FUNC( FT_FDELETE )
       ft_text->offset[ft_text->area] = cur_off;
 
       /* re_calc EOF */
-      ft_text->lastbyte[ft_text->area] = hb_fileSeek( ft_text->handles[ft_text->area], 0, FS_END );
+      ft_text->lastbyte[ft_text->area] = hb_fileSeek(ft_text->handles[ft_text->area], 0, FS_END);
       _ft_skip(0);
 
       /* restore pointers again */
@@ -908,21 +908,21 @@ HB_FUNC( FT_FAPPEND )
       ft_text->error[ft_text->area] = 0;
 
       /* go to end of file */
-      HB_FUNC_EXEC( FT_FGOBOT );
+      HB_FUNC_EXEC(FT_FGOBOT);
 
       /* find end of record */
-      iRead = hb_fileResult( hb_fileReadAt( ft_text->handles[ft_text->area], buff, BUFFSIZE, ft_text->offset[ft_text->area] ) );  /* now read in a big glob */
+      iRead = hb_fileResult(hb_fileReadAt(ft_text->handles[ft_text->area], buff, BUFFSIZE, ft_text->offset[ft_text->area]));  /* now read in a big glob */
 
       /* determine if EOL exists, if not, add one */
 
       /* get count of chars in this line */
       if( (iByteCount = _findeol(buff, iRead, nullptr)) == 0 )
       {
-         hb_fileSeek( ft_text->handles[ft_text->area], 0, FS_END );
+         hb_fileSeek(ft_text->handles[ft_text->area], 0, FS_END);
       }
       else
       {
-         ft_text->offset[ft_text->area] = hb_fileSeek( ft_text->handles[ft_text->area], ft_text->offset[ft_text->area] + iByteCount, FS_SET );
+         ft_text->offset[ft_text->area] = hb_fileSeek(ft_text->handles[ft_text->area], ft_text->offset[ft_text->area] + iByteCount, FS_SET);
          ft_text->recno[ft_text->area]++;
          no_lines--;
       }
@@ -935,7 +935,7 @@ HB_FUNC( FT_FAPPEND )
             break;
          }
          ft_text->recno[ft_text->area]++;
-         ft_text->offset[ft_text->area] = hb_fileSeek( ft_text->handles[ft_text->area], 0, FS_RELATIVE );
+         ft_text->offset[ft_text->area] = hb_fileSeek(ft_text->handles[ft_text->area], 0, FS_RELATIVE);
 #if 0
          no_lines--;  /* Harbour FIX */
 #endif
@@ -944,7 +944,7 @@ HB_FUNC( FT_FAPPEND )
       if( !ft_text->error[ft_text->area] )
       {
          /* move legacy EOF marker */
-         hb_fileWrite( ft_text->handles[ft_text->area], buff, 0, -1 );
+         hb_fileWrite(ft_text->handles[ft_text->area], buff, 0, -1);
          ft_text->error[ft_text->area] = hb_fsError();
       }
 
@@ -970,17 +970,17 @@ HB_FUNC( FT_FWRITELN )
       HB_BOOL      bInsert  = hb_parl(2);
 
       /* position file pointer to insertion point */
-      hb_fileSeek( ft_text->handles[ft_text->area], ft_text->offset[ft_text->area], FS_SET );
+      hb_fileSeek(ft_text->handles[ft_text->area], ft_text->offset[ft_text->area], FS_SET);
 
       if( bInsert )
       {
          /* insert mode, insert the length of new string + EOL */
-         fSuccess = ( _ins_buff( ft_text, iDataLen + 2 ) == 0 );
+         fSuccess = (_ins_buff(ft_text, iDataLen + 2) == 0);
 
          if( fSuccess )
          {
-            hb_fileSeek( ft_text->handles[ft_text->area], ft_text->offset[ft_text->area], FS_SET );
-            fSuccess = _writeLine( ft_text, theData, iDataLen );
+            hb_fileSeek(ft_text->handles[ft_text->area], ft_text->offset[ft_text->area], FS_SET);
+            fSuccess = _writeLine(ft_text, theData, iDataLen);
          }
       }
       else
@@ -996,7 +996,7 @@ HB_FUNC( FT_FWRITELN )
          {
             HB_ISIZ iEOL;
 
-            iRead = hb_fileResult( hb_fileRead( ft_text->handles[ft_text->area], buffer, BUFFSIZE, -1 ) );
+            iRead = hb_fileResult(hb_fileRead(ft_text->handles[ft_text->area], buffer, BUFFSIZE, -1));
             if( (iEOL = _findeol(buffer, iRead, nullptr)) == 0 )
             {
                iLineLen += iRead;
@@ -1014,21 +1014,21 @@ HB_FUNC( FT_FWRITELN )
          if( (iDataLen + 2) <= iLineLen )
          {
             /* delete excess bytes from current record */
-            _del_buff( ft_text, iLineLen - iDataLen - 2 );
+            _del_buff(ft_text, iLineLen - iDataLen - 2);
 
             /* write the new record's contents */
-            hb_fileWrite( ft_text->handles[ft_text->area], theData, iDataLen, -1 );
+            hb_fileWrite(ft_text->handles[ft_text->area], theData, iDataLen, -1);
          }
          else
          {
             /* insert extra bytes into current record */
-            _ins_buff( ft_text, iDataLen - iLineLen + 2 );
+            _ins_buff(ft_text, iDataLen - iLineLen + 2);
 
             /* write the new record's contents */
-            hb_fileWrite( ft_text->handles[ft_text->area], theData, iDataLen, -1 );
+            hb_fileWrite(ft_text->handles[ft_text->area], theData, iDataLen, -1);
          }
          ft_text->error[ft_text->area] = hb_fsError();
-         fSuccess = ( ft_text->error[ft_text->area] == 0 );
+         fSuccess = (ft_text->error[ft_text->area] == 0);
       }
    }
 
@@ -1046,7 +1046,7 @@ HB_FUNC( FT_FLASTRE )
       long       cur_rec    = ft_text->recno[ft_text->area];
       HB_FOFFSET cur_offset = ft_text->offset[ft_text->area];
 
-      HB_FUNC_EXEC( FT_FGOBOT );
+      HB_FUNC_EXEC(FT_FGOBOT);
       hb_retnl(ft_text->last_rec[ft_text->area]);
 
       ft_text->recno[ft_text->area]  = cur_rec;
@@ -1088,7 +1088,7 @@ HB_FUNC( FT_FGOTO )
 
       if( target )
       {
-         _ft_skip( target );
+         _ft_skip(target);
       }
    }
    else
@@ -1103,7 +1103,7 @@ HB_FUNC( FT_FGOTO )
 
       if( --target )
       {
-         _ft_skip( target );
+         _ft_skip(target);
       }
    }
    ft_text->error[ft_text->area] = hb_fsError();

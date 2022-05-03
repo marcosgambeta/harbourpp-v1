@@ -54,7 +54,7 @@ HB_FUNC( FT_SAVEATT )
       char *  pBuffer;
       char *  pAttrib;
 
-      nSize   = ( iBottom - iTop + 1 ) * ( iRight - iLeft + 1 );
+      nSize   = (iBottom - iTop + 1) * (iRight - iLeft + 1);
       pBuffer = pAttrib = static_cast<char*>(hb_xgrab(nSize + 1));
       while( iTop <= iBottom )
       {
@@ -64,7 +64,7 @@ HB_FUNC( FT_SAVEATT )
             int       iColor;
             HB_BYTE   bAttr;
             HB_USHORT usChar;
-            hb_gtGetChar( iTop, iCol, &iColor, &bAttr, &usChar );
+            hb_gtGetChar(iTop, iCol, &iColor, &bAttr, &usChar);
             *pBuffer++ = static_cast<char>(iColor);
             ++iCol;
          }
@@ -144,9 +144,9 @@ HB_FUNC( FT_RESTATT )
                int       iColor;
                HB_BYTE   bAttr;
                HB_USHORT usChar;
-               hb_gtGetChar( iTop, iCol, &iColor, &bAttr, &usChar );
+               hb_gtGetChar(iTop, iCol, &iColor, &bAttr, &usChar);
                iColor = static_cast<HB_UCHAR>(*pAttrib++);
-               hb_gtPutChar( iTop, iCol, iColor, bAttr, usChar );
+               hb_gtPutChar(iTop, iCol, iColor, bAttr, usChar);
                ++iCol;
                --nLen;
             }

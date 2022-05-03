@@ -26,7 +26,7 @@ HB_FUNC( FT_COLOR2N )
 
    if( HB_ISCHAR(1) )
    {
-      iRet = hb_gtColorToN( hb_parc(1) );
+      iRet = hb_gtColorToN(hb_parc(1));
       if( iRet == -1 )
       {
          iRet = 0;

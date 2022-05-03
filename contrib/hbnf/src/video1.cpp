@@ -50,7 +50,7 @@
 
 HB_FUNC( FT_SETATTR )
 {
-   hb_gtSetAttribute( hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5) );
+   hb_gtSetAttribute(hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5));
 }
 
 HB_FUNC( FT_REVATTR )
@@ -91,9 +91,9 @@ HB_FUNC( FT_REVATTR )
             int       iColor;
             HB_BYTE   bAttr;
             HB_USHORT usChar;
-            hb_gtGetChar( iTop, iCol, &iColor, &bAttr, &usChar );
-            iColor = ( iColor << 4 ) | ( iColor >> 4 );
-            hb_gtPutChar( iTop, iCol, iColor, bAttr, usChar );
+            hb_gtGetChar(iTop, iCol, &iColor, &bAttr, &usChar);
+            iColor = (iColor << 4) | (iColor >> 4);
+            hb_gtPutChar(iTop, iCol, iColor, bAttr, usChar);
             ++iCol;
          }
          ++iTop;
@@ -112,7 +112,7 @@ HB_FUNC( FT_REVCHR )
    HB_BYTE   bAttr;
    HB_USHORT usChar;
 
-   hb_gtGetChar( iRow, iCol, &iColor, &bAttr, &usChar );
-   iColor = ( iColor << 4 ) | ( iColor >> 4 );
-   hb_gtPutChar( iRow, iCol, iColor, bAttr, usChar );
+   hb_gtGetChar(iRow, iCol, &iColor, &bAttr, &usChar);
+   iColor = (iColor << 4) | (iColor >> 4);
+   hb_gtPutChar(iRow, iCol, iColor, bAttr, usChar);
 }

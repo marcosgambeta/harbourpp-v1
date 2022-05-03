@@ -50,7 +50,7 @@ HB_FUNC( FT_GETE )
       char * buffer = nullptr;
       int    x;
       int    buffsize = 0;
-      int    rettype  = HB_ISARRAY(1) ? ARRAYTYPE : ( HB_ISCHAR(1) && HB_ISBYREF(1) ? CHARTYPE : NORETURN );
+      int    rettype  = HB_ISARRAY(1) ? ARRAYTYPE : (HB_ISCHAR(1) && HB_ISBYREF(1) ? CHARTYPE : NORETURN);
 
       /* scan strings first and add up total size */
       if( rettype == CHARTYPE )
@@ -58,7 +58,7 @@ HB_FUNC( FT_GETE )
          for( x = 0; environ[x]; x++ )
          {
             /* add length of this string plus 2 for the crlf */
-            buffsize += ( strlen( environ[x] ) + 2 );
+            buffsize += (strlen(environ[x]) + 2);
          }
          /* add 1 more byte for final nul character */
          buffsize++;
@@ -78,21 +78,21 @@ HB_FUNC( FT_GETE )
          if( rettype == CHARTYPE )
          {
             /* tack string onto end of buffer */
-            hb_strncat( buffer, environ[x], buffsize );
+            hb_strncat(buffer, environ[x], buffsize);
             /* add crlf at end of each string */
-            hb_strncat( buffer, CRLF, buffsize );
+            hb_strncat(buffer, CRLF, buffsize);
          }
          else if( rettype == ARRAYTYPE )
          {
             /* store string to next array element */
-            hb_storvc( environ[x], 1, x + 1 );
+            hb_storvc(environ[x], 1, x + 1);
          }
       }
 
       if( rettype == CHARTYPE )
       {
          /* return buffer to app and free memory */
-         if( !hb_storclen_buffer( buffer, strlen( buffer ), 1 ) )
+         if( !hb_storclen_buffer( buffer, strlen(buffer), 1 ) )
          {
             hb_xfree(buffer);
          }
@@ -107,7 +107,7 @@ HB_FUNC( FT_GETE )
       LPTSTR   lpResult  = nullptr, lpDst;
       HB_SIZE  nSize     = 0, nCount = 0;
       PHB_ITEM pArray    = nullptr;
-      int      rettype   = HB_ISARRAY(1) ? ARRAYTYPE : ( HB_ISCHAR(1) && HB_ISBYREF(1) ? CHARTYPE : NORETURN );
+      int      rettype   = HB_ISARRAY(1) ? ARRAYTYPE : (HB_ISCHAR(1) && HB_ISBYREF(1) ? CHARTYPE : NORETURN);
 
       if( lpEnviron )
       {
@@ -151,12 +151,12 @@ HB_FUNC( FT_GETE )
                {
                   ;
                }
-               HB_ARRAYSETSTRLEN( pArray, nCount, lpEnv, nSize - 1 );
+               HB_ARRAYSETSTRLEN(pArray, nCount, lpEnv, nSize - 1);
                lpEnv += nSize;
             }
          }
 
-         FreeEnvironmentStrings( lpEnviron );
+         FreeEnvironmentStrings(lpEnviron);
 
          if( rettype == CHARTYPE )
          {
@@ -173,7 +173,7 @@ HB_FUNC( FT_GETE )
          hb_storc(nullptr, 1);
       }
 
-      hb_retns( nCount );
+      hb_retns(nCount);
    }
 #else
    if( HB_ISCHAR(1) )
