@@ -51,9 +51,9 @@ static ADSHANDLE s_hMgmtHandle = 0;
 
 HB_FUNC( ADSMGCONNECT )
 {
-   hb_retnl(AdsMgConnect(static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucServerName */,
-                         static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(2))) /* pucUserName */,
-                         static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(3))) /* pucPassword */,
+   hb_retnl(AdsMgConnect(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucServerName */,
+                         reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(2))) /* pucUserName */,
+                         reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(3))) /* pucPassword */,
                          &s_hMgmtHandle));
 }
 
@@ -78,7 +78,7 @@ HB_FUNC( ADSMGSETHANDLE )
 HB_FUNC( ADSMGKILLUSER )
 {
    hb_retnl(static_cast<UNSIGNED16>(AdsMgKillUser(s_hMgmtHandle,
-                                    static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))),
+                                    reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))),
                                     static_cast<UNSIGNED16>(hb_parni(2)))));
 }
 
@@ -383,7 +383,7 @@ HB_FUNC( ADSMGGETUSERNAMES )
    ADS_MGMT_USER_INFO * pastUserInfo = static_cast<ADS_MGMT_USER_INFO*>(hb_xgrab(sizeof(ADS_MGMT_USER_INFO) * usArrayLen));
 
    if( AdsMgGetUserNames( s_hMgmtHandle,
-                          static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucFileName */,
+                          reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucFileName */,
                           pastUserInfo,
                           &usArrayLen,
                           &usStructSize ) == AE_SUCCESS )
@@ -452,7 +452,7 @@ HB_FUNC( ADSMGGETLOCKOWNER )
    ADS_MGMT_USER_INFO * pstUserInfo = static_cast<ADS_MGMT_USER_INFO*>(hb_xgrab(sizeof(ADS_MGMT_USER_INFO)));
 
    if( AdsMgGetLockOwner( s_hMgmtHandle,
-                          static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucTableName */,
+                          reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucTableName */,
                           static_cast<UNSIGNED32>(hb_parnl(2)) /* ulRecordNumber */,
                           pstUserInfo,
                           &usStructSize,
@@ -496,7 +496,7 @@ HB_FUNC( ADSMGGETOPENTABLES ) /* nMaxNumberOfFilesToReturn, cUserName, nConnecti
    ADS_MGMT_TABLE_INFO * astOpenTableInfo = static_cast<ADS_MGMT_TABLE_INFO*>(hb_xgrab(sizeof(ADS_MGMT_TABLE_INFO) * usArrayLen));
 
    if( AdsMgGetOpenTables( s_hMgmtHandle,
-                           static_cast<UNSIGNED8*>(hb_parclen(2) > 0 ? const_cast<char*>(hb_parc(2)) : nullptr) /* pucUserName */,
+                           reinterpret_cast<UNSIGNED8*>(hb_parclen(2) > 0 ? const_cast<char*>(hb_parc(2)) : nullptr) /* pucUserName */,
                            static_cast<UNSIGNED16>(hb_parni(3)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(3) only valid for NetWare so don't default to current, only take a passed value */
                            astOpenTableInfo,
                            &usArrayLen,
@@ -535,7 +535,7 @@ HB_FUNC( ADSMGGETOPENTABLES2 ) /* nMaxNumberOfFilesToReturn, cUserName, nConnect
    ADS_MGMT_TABLE_INFO * astOpenTableInfo = static_cast<ADS_MGMT_TABLE_INFO*>(hb_xgrab(sizeof(ADS_MGMT_TABLE_INFO) * usArrayLen));
 
    if( AdsMgGetOpenTables( s_hMgmtHandle,
-                           static_cast<UNSIGNED8*>(hb_parclen(2) > 0 ? const_cast<char*>(hb_parc(2)) : nullptr) /* pucUserName */,
+                           reinterpret_cast<UNSIGNED8*>(hb_parclen(2) > 0 ? const_cast<char*>(hb_parc(2)) : nullptr) /* pucUserName */,
                            static_cast<UNSIGNED16>(hb_parni(3)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(3) only valid for NetWare so don't default to current, only take a passed value */
                            astOpenTableInfo,
                            &usArrayLen,
@@ -578,8 +578,8 @@ HB_FUNC( ADSMGGETOPENINDEXES ) /* nMaxNumberOfFilesToReturn, cTableName, cUserNa
    ADS_MGMT_INDEX_INFO * astOpenIndexInfo = static_cast<ADS_MGMT_INDEX_INFO*>(hb_xgrab(sizeof(ADS_MGMT_INDEX_INFO) * usArrayLen));
 
    if( AdsMgGetOpenIndexes( s_hMgmtHandle,
-                            static_cast<UNSIGNED8*>(hb_parclen(2) > 0 ? const_cast<char*>(hb_parc(2)) : nullptr) /* pucTableName */, /* fully qualified path to that table */
-                            static_cast<UNSIGNED8*>(hb_parclen(3) > 0 ? const_cast<char*>(hb_parc(3)) : nullptr) /* pucUserName */,
+                            reinterpret_cast<UNSIGNED8*>(hb_parclen(2) > 0 ? const_cast<char*>(hb_parc(2)) : nullptr) /* pucTableName */, /* fully qualified path to that table */
+                            reinterpret_cast<UNSIGNED8*>(hb_parclen(3) > 0 ? const_cast<char*>(hb_parc(3)) : nullptr) /* pucUserName */,
                             static_cast<UNSIGNED16>(hb_parni(4)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(4) only valid for NetWare so don't default to current, only take a passed value */
                             astOpenIndexInfo,
                             &usArrayLen,
@@ -618,8 +618,8 @@ HB_FUNC( ADSMGGETLOCKS )
    ADS_MGMT_RECORD_INFO * astRecordInfo = static_cast<ADS_MGMT_RECORD_INFO*>(hb_xgrab(sizeof(ADS_MGMT_RECORD_INFO) * usArrayLen));
 
    if( AdsMgGetLocks( s_hMgmtHandle,
-                      static_cast<UNSIGNED8*>(hb_parclen(2) > 0 ? const_cast<char*>(hb_parc(2)) : nullptr) /* pucTableName */, /* fully qualified path to that table */
-                      static_cast<UNSIGNED8*>(hb_parclen(3) > 0 ? const_cast<char*>(hb_parc(3)) : nullptr) /* pucUserName */,
+                      reinterpret_cast<UNSIGNED8*>(hb_parclen(2) > 0 ? const_cast<char*>(hb_parc(2)) : nullptr) /* pucTableName */, /* fully qualified path to that table */
+                      reinterpret_cast<UNSIGNED8*>(hb_parclen(3) > 0 ? const_cast<char*>(hb_parc(3)) : nullptr) /* pucUserName */,
                       static_cast<UNSIGNED16>(hb_parni(4)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(4) only valid for NetWare so don't default to current, only take a passed value */
                       astRecordInfo,
                       &usArrayLen,

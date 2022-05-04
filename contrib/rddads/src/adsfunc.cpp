@@ -291,7 +291,7 @@ HB_FUNC( ADSSETDATEFORMAT )
 
    if( HB_ISCHAR(1) )
    {
-      AdsSetDateFormat(static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))));
+      AdsSetDateFormat(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))));
    }
 }
 
@@ -325,7 +325,7 @@ HB_FUNC( ADSISSERVERLOADED )
 {
    UNSIGNED16 pbLoaded = 0;
 
-   hb_retni(HB_ISCHAR(1) && AdsIsServerLoaded(static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))), &pbLoaded) == AE_SUCCESS ? pbLoaded : 0);
+   hb_retni(HB_ISCHAR(1) && AdsIsServerLoaded(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))), &pbLoaded) == AE_SUCCESS ? pbLoaded : 0);
 }
 
 HB_FUNC( ADSGETCONNECTIONTYPE )
@@ -366,7 +366,7 @@ HB_FUNC( ADSUNLOCKRECORD )
 
 HB_FUNC( ADSGETMEMODATATYPE )
 {
-   UNSIGNED8 * pszFieldName = static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1)));
+   UNSIGNED8 * pszFieldName = reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1)));
 
    if( !pszFieldName )
    {
@@ -575,7 +575,7 @@ HB_FUNC( ADSSETDEFAULT )
 
    if( HB_ISCHAR(1) )
    {
-      AdsSetDefault(static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))));
+      AdsSetDefault(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))));
    }
 }
 
@@ -590,7 +590,7 @@ HB_FUNC( ADSSETSEARCHPATH )
 
    if( HB_ISCHAR(1) )
    {
-      AdsSetSearchPath(static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))));
+      AdsSetSearchPath(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))));
    }
 }
 
@@ -633,7 +633,7 @@ HB_FUNC( ADSBLOB2FILE )
 
       if( pArea != nullptr )
       {
-         hb_retl(AdsBinaryToFile(pArea->hTable, static_cast<UNSIGNED8*>(const_cast<char*>(szFieldName)), static_cast<UNSIGNED8*>(const_cast<char*>(szFileName))) == AE_SUCCESS);
+         hb_retl(AdsBinaryToFile(pArea->hTable, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(szFieldName)), reinterpret_cast<UNSIGNED8*>(const_cast<char*>(szFileName))) == AE_SUCCESS);
       }
       else
       {
@@ -658,9 +658,9 @@ HB_FUNC( ADSFILE2BLOB )
       if( pArea != nullptr )
       {
          hb_retl(AdsFileToBinary(pArea->hTable,
-                                 static_cast<UNSIGNED8*>(const_cast<char*>(szFieldName)),
+                                 reinterpret_cast<UNSIGNED8*>(const_cast<char*>(szFieldName)),
                                  static_cast<UNSIGNED16>(hb_pcount() > 2 ? hb_parni(3) : ADS_BINARY) /* usBinaryType */,
-                                 static_cast<UNSIGNED8*>(const_cast<char*>(szFileName))) == AE_SUCCESS);
+                                 reinterpret_cast<UNSIGNED8*>(const_cast<char*>(szFileName))) == AE_SUCCESS);
       }
       else
       {
@@ -743,7 +743,7 @@ HB_FUNC( ADSKEYNO )
          }
          else
          {
-            AdsGetIndexHandle(pArea->hTable, static_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pxOrder))) /* ordName */, &hIndex);
+            AdsGetIndexHandle(pArea->hTable, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pxOrder))) /* ordName */, &hIndex);
          }
 
          if( hIndex == 0 ) /* no index selected */
@@ -805,7 +805,7 @@ HB_FUNC( ADSKEYCOUNT )
          }
          else
          {
-            AdsGetIndexHandle(pArea->hTable, static_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pxOrder))) /* ordName */, &hIndex);
+            AdsGetIndexHandle(pArea->hTable, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pxOrder))) /* ordName */, &hIndex);
          }
 
          if( hIndex == 0 ) /* no index selected */
@@ -895,7 +895,7 @@ HB_FUNC( ADSADDCUSTOMKEY )
          }
          else
          {
-            AdsGetIndexHandle(pArea->hTable, static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* ordName */, &hIndex);
+            AdsGetIndexHandle(pArea->hTable, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* ordName */, &hIndex);
          }
 
          hb_retnl(static_cast<long>(AdsAddCustomKey(hIndex)));
@@ -931,7 +931,7 @@ HB_FUNC( ADSDELETECUSTOMKEY )
          }
          else
          {
-            AdsGetIndexHandle(pArea->hTable, static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* ordName */, &hIndex);
+            AdsGetIndexHandle(pArea->hTable, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* ordName */, &hIndex);
          }
 
          hb_retnl(static_cast<long>(AdsDeleteCustomKey(hIndex)));
@@ -1242,7 +1242,7 @@ HB_FUNC( ADSENABLEENCRYPTION )
 
       if( pArea != nullptr )
       {
-         hb_retnl(AdsEnableEncryption(pArea->hTable, static_cast<UNSIGNED8*>(const_cast<char*>(pucPassword))));
+         hb_retnl(AdsEnableEncryption(pArea->hTable, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(pucPassword))));
       }
       else
       {
@@ -1377,7 +1377,7 @@ HB_FUNC( ADSCONNECT )
 {
    ADSHANDLE hConnect = 0;
 
-   if( HB_ISCHAR(1) && AdsConnect(static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))), &hConnect) == AE_SUCCESS )
+   if( HB_ISCHAR(1) && AdsConnect(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))), &hConnect) == AE_SUCCESS )
    {
       hb_ads_setConnection( hConnect );
       hb_retl(true);
@@ -1504,7 +1504,7 @@ HB_FUNC( ADSEXECUTESQLDIRECT )
    {
       ADSHANDLE hCursor = 0;
 
-      if( AdsExecuteSQLDirect(pArea->hStatement, static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucStmt */, &hCursor) == AE_SUCCESS )
+      if( AdsExecuteSQLDirect(pArea->hStatement, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucStmt */, &hCursor) == AE_SUCCESS )
       {
          if( hCursor )
          {
@@ -1543,7 +1543,7 @@ HB_FUNC( ADSPREPARESQL )
 
    if( pArea && pArea->hStatement && HB_ISCHAR(1) )
    {
-      if( AdsPrepareSQL(pArea->hStatement, static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucStmt */) == AE_SUCCESS )
+      if( AdsPrepareSQL(pArea->hStatement, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucStmt */) == AE_SUCCESS )
       {
          hb_retl(true);
       }
@@ -1609,7 +1609,7 @@ HB_FUNC( ADSVERIFYSQL )
 
    if( pArea && pArea->hStatement && HB_ISCHAR(1) )
    {
-      hb_retl(AdsVerifySQL(pArea->hStatement, static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucStmt */) == AE_SUCCESS);
+      hb_retl(AdsVerifySQL(pArea->hStatement, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucStmt */) == AE_SUCCESS);
    }
    else
    {
@@ -1655,7 +1655,7 @@ HB_FUNC( ADSCOPYTABLE )
       {
          hb_retl(AdsCopyTable((pArea->hOrdCurrent) ? pArea->hOrdCurrent : pArea->hTable /* hIndex */, /* If an index is active copy table in indexed order. */
                                static_cast<UNSIGNED16>(hb_parnidef(2, ADS_RESPECTFILTERS)) /* usFilterOption */,
-                               static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucFile */) == AE_SUCCESS);
+                               reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucFile */) == AE_SUCCESS);
       }
       else
       {
@@ -1678,7 +1678,7 @@ HB_FUNC( ADSCONVERTTABLE )
       {
          hb_retl(AdsConvertTable(pArea->hTable,
                                  ADS_IGNOREFILTERS,
-                                 static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucFile */,
+                                 reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucFile */,
                                  static_cast<UNSIGNED16>(hb_parnidef(2, ADS_ADT)) /* usTableType */) == AE_SUCCESS);
       }
       else
@@ -1792,7 +1792,7 @@ HB_FUNC( ADSISEXPRVALID )               /* cExpr */
 
    if( pArea && HB_ISCHAR(1) )
    {
-      AdsIsExprValid(pArea->hTable, static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucExpr */, &bValidExpr);
+      AdsIsExprValid(pArea->hTable, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucExpr */, &bValidExpr);
    }
 
    hb_retl(bValidExpr != 0);
@@ -1871,7 +1871,7 @@ HB_FUNC( ADSGETNUMOPENTABLES )
 
 HB_FUNC( ADSSHOWERROR )
 {
-   AdsShowError(static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))));
+   AdsShowError(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))));
 }
 
 HB_FUNC( ADSBEGINTRANSACTION )
@@ -1886,7 +1886,7 @@ HB_FUNC( ADSCOMMITTRANSACTION )
 
 HB_FUNC( ADSFAILEDTRANSACTIONRECOVERY )
 {
-   hb_retl(AdsFailedTransactionRecovery(static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucServer */) == AE_SUCCESS);
+   hb_retl(AdsFailedTransactionRecovery(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucServer */) == AE_SUCCESS);
 }
 
 HB_FUNC( ADSINTRANSACTION )
@@ -1984,7 +1984,7 @@ HB_FUNC( ADSISEMPTY )
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
       if( pArea && AdsIsEmpty( pArea->hTable,
-                               ( HB_ISCHAR(1) ? static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) : ADSFIELD( hb_parni(1) ) ) /* pucFldName */,
+                               ( HB_ISCHAR(1) ? reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) : ADSFIELD( hb_parni(1) ) ) /* pucFldName */,
                                &pbEmpty ) == AE_SUCCESS )
       {
          hb_retl(pbEmpty != 0);
@@ -2011,7 +2011,7 @@ HB_FUNC( ADSISNULL )
       {
 #if ADS_LIB_VERSION >= 900
          AdsIsNull( pArea->hTable,
-                    ( HB_ISCHAR(1) ? static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) : ADSFIELD( hb_parni(1) ) ) /* pucFldName */,
+                    ( HB_ISCHAR(1) ? reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) : ADSFIELD( hb_parni(1) ) ) /* pucFldName */,
                     &u16Null );
 #else
          AdsIsEmpty( pArea->hTable,
@@ -2052,12 +2052,12 @@ HB_FUNC( ADSDDCREATEREFINTEGRITY )
 {
 #if ADS_LIB_VERSION >= 600
    hb_retl(AdsDDCreateRefIntegrity(HB_ADS_PARCONNECTION(1) /* hDictionary */,
-                                   static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pucRIName */,
-                                   static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(3))) /* pucFailTable */,
-                                   static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(4))) /* pucParentTableName */,
-                                   static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(5))) /* pucParentTagName */,
-                                   static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(6))) /* pucChildTableName */,
-                                   static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(7))) /* pucChildTagName */,
+                                   reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pucRIName */,
+                                   reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(3))) /* pucFailTable */,
+                                   reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(4))) /* pucParentTableName */,
+                                   reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(5))) /* pucParentTagName */,
+                                   reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(6))) /* pucChildTableName */,
+                                   reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(7))) /* pucChildTagName */,
                                    static_cast<UNSIGNED16>(hb_parni(8)) /* usUpdateRule */,
                                    static_cast<UNSIGNED16>(hb_parni(9)) /* usDeleteRule */) == AE_SUCCESS);
 #else
@@ -2069,7 +2069,7 @@ HB_FUNC( ADSDDREMOVEREFINTEGRITY )
 {
 #if ADS_LIB_VERSION >= 600
    hb_retl(AdsDDRemoveRefIntegrity(HB_ADS_PARCONNECTION(1) /* hDictionary */,
-                                   static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pucRIName */) == AE_SUCCESS);
+                                   reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pucRIName */) == AE_SUCCESS);
 #else
    hb_retl(false);
 #endif
@@ -2079,11 +2079,11 @@ HB_FUNC( ADSDDADDTABLE )
 {
 #if ADS_LIB_VERSION >= 600
    hb_retl(AdsDDAddTable(HB_ADS_PARCONNECTION(4) /* hDictionary */,
-                         static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pTableName */,
-                         static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pTableFileName */,
+                         reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pTableName */,
+                         reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pTableFileName */,
                          static_cast<UNSIGNED16>(hb_ads_iFileType),
                          static_cast<UNSIGNED16>(hb_ads_iCharType),
-                         static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(3))) /* pTableIndexFileName */,
+                         reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(3))) /* pTableIndexFileName */,
                          nullptr) == AE_SUCCESS);
 #else
    hb_retl(false);
@@ -2094,7 +2094,7 @@ HB_FUNC( ADSDDREMOVETABLE )
 {
 #if ADS_LIB_VERSION >= 600
    hb_retl(AdsDDRemoveTable(HB_ADS_PARCONNECTION(3) /* hConnect */,
-                            static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pTableName */,
+                            reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pTableName */,
                             static_cast<UNSIGNED16>(HB_ISNUM(2) ? hb_parni(2) : hb_parl(2)) /* usDeleteFiles */) == AE_SUCCESS);
 #else
    hb_retl(false);
@@ -2105,9 +2105,9 @@ HB_FUNC( ADSDDADDINDEXFILE )
 {
 #if ADS_LIB_VERSION >= 600
    hb_retl(AdsDDAddIndexFile(HB_ADS_PARCONNECTION(4) /* hConnect */,
-                             static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pTableName */,
-                             static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pIndexName */,
-                             static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(3))) /* pucComment */) == AE_SUCCESS);
+                             reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pTableName */,
+                             reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pIndexName */,
+                             reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(3))) /* pucComment */) == AE_SUCCESS);
 #else
    hb_retl(false);
 #endif
@@ -2117,8 +2117,8 @@ HB_FUNC( ADSDDREMOVEINDEXFILE )
 {
 #if ADS_LIB_VERSION >= 600
    hb_retl(AdsDDRemoveIndexFile(HB_ADS_PARCONNECTION(4) /* hConnect */,
-                                static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pTableName */,
-                                static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pIndexName */,
+                                reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pTableName */,
+                                reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pIndexName */,
                                 static_cast<UNSIGNED16>(HB_ISNUM(3) ? hb_parni(3) : hb_parl(3)) /* usDeleteFiles */) == AE_SUCCESS);
 #else
    hb_retl(false);
@@ -2129,8 +2129,8 @@ HB_FUNC( ADSDDADDUSERTOGROUP )
 {
 #if ADS_LIB_VERSION >= 600
    hb_retl(AdsDDAddUserToGroup(HB_ADS_PARCONNECTION(3) /* hConnect */,
-                               static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pGroup */,
-                               static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pName */) == AE_SUCCESS);
+                               reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pGroup */,
+                               reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pName */) == AE_SUCCESS);
 #else
    hb_retl(false);
 #endif
@@ -2140,8 +2140,8 @@ HB_FUNC( ADSDDREMOVEUSERFROMGROUP )
 {
 #if ADS_LIB_VERSION >= 600
    hb_retl(AdsDDRemoveUserFromGroup(HB_ADS_PARCONNECTION(3) /* hConnect */,
-                                    static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pGroup */,
-                                    static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pName */) == AE_SUCCESS);
+                                    reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pGroup */,
+                                    reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pName */) == AE_SUCCESS);
 #else
    hb_retl(false);
 #endif
@@ -2152,10 +2152,10 @@ HB_FUNC( ADSCONNECT60 )
 #if ADS_LIB_VERSION >= 600
    ADSHANDLE hConnect = 0;
 
-   if( AdsConnect60(static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucServerPath */,
+   if( AdsConnect60(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucServerPath */,
                     static_cast<UNSIGNED16>(hb_parni(2)) /* usServerTypes */,
-                    static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(3))) /* pucUserName */,
-                    static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(4))) /* pucPassword */,
+                    reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(3))) /* pucUserName */,
+                    reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(4))) /* pucPassword */,
                     static_cast<UNSIGNED32>(hb_parnldef(5, ADS_DEFAULT)) /* ulOptions */,
                     &hConnect) == AE_SUCCESS )
    {
@@ -2177,9 +2177,9 @@ HB_FUNC( ADSDDCREATE )
 #if ADS_LIB_VERSION >= 600
    ADSHANDLE hConnect = 0;
 
-   if( AdsDDCreate( static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucDictionaryPath */,
+   if( AdsDDCreate( reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucDictionaryPath */,
                     static_cast<UNSIGNED16>(hb_parl(2)) /* usEncrypt */,
-                    static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(3))) /* pucDescription */,
+                    reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(3))) /* pucDescription */,
                     &hConnect ) == AE_SUCCESS )
    {
       hb_ads_setConnection( hConnect );
@@ -2198,10 +2198,10 @@ HB_FUNC( ADSDDCREATEUSER )
 {
 #if ADS_LIB_VERSION >= 600
    hb_retl(AdsDDCreateUser(HB_ADS_PARCONNECTION(5) /* hConnect */,
-                           static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucGroupName */,
-                           static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(2))) /* pucUserName */,
-                           static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(3))) /* pucPassword */,
-                           static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(4))) /* pucDescription */) == AE_SUCCESS);
+                           reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucGroupName */,
+                           reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(2))) /* pucUserName */,
+                           reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(3))) /* pucPassword */,
+                           reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(4))) /* pucDescription */) == AE_SUCCESS);
 #else
    hb_retl(false);
 #endif
@@ -2211,7 +2211,7 @@ HB_FUNC( ADSDDDELETEUSER )
 {
 #if ADS_LIB_VERSION >= 600
    hb_retl(AdsDDDeleteUser(HB_ADS_PARCONNECTION(2) /* hConnect */,
-                           static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucUserName */) == AE_SUCCESS);
+                           reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucUserName */) == AE_SUCCESS);
 #else
    hb_retl(false);
 #endif
@@ -2378,7 +2378,7 @@ HB_FUNC( ADSDDGETUSERPROPERTY )
       UNSIGNED16 usPropertyLen = sizeof(pvProperty);
 
       UNSIGNED32 ulRetVal = AdsDDGetUserProperty( HB_ADS_PARCONNECTION(4) /* hConnect */,
-                                                  static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucUserName */,
+                                                  reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucUserName */,
                                                   static_cast<UNSIGNED16>(hb_parni(2)) /* usPropertyID */,
                                                   pvProperty,
                                                   &usPropertyLen );
@@ -2412,13 +2412,13 @@ HB_FUNC( ADSDDGETUSERPROPERTY )
 HB_FUNC( ADSTESTLOGIN )
 {
 #if ADS_LIB_VERSION >= 600
-   UNSIGNED8 * pucUserName = static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(3)));
+   UNSIGNED8 * pucUserName = reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(3)));
    ADSHANDLE adsTestHandle = 0;
 
-   if( AdsConnect60(static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucServerPath */,
+   if( AdsConnect60(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucServerPath */,
                     static_cast<UNSIGNED16>(hb_parni(2)) /* usServerTypes */,
                     pucUserName,
-                    static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(4))) /* pucPassword */,
+                    reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(4))) /* pucPassword */,
                     static_cast<UNSIGNED32>(hb_parnldef(5, ADS_DEFAULT)) /* ulOptions */,
                     &adsTestHandle) == AE_SUCCESS )
    {
@@ -2451,15 +2451,15 @@ HB_FUNC( ADSRESTRUCTURETABLE )
 {
 #if ADS_LIB_VERSION >= 600
    hb_retl(AdsRestructureTable(HB_ADS_PARCONNECTION(5) /* hConnect */,
-                               static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pTableName */,
+                               reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pTableName */,
                                nullptr /* pucAlias */,
                                static_cast<UNSIGNED16>(hb_ads_iFileType),
                                static_cast<UNSIGNED16>(hb_ads_iCharType),
                                static_cast<UNSIGNED16>(hb_ads_iLockType),
                                static_cast<UNSIGNED16>(hb_ads_iCheckRights),
-                               static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pucAddFields */,
-                               static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(3))) /* pucDeleteFields */,
-                               static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(4))) /* pucChangeFields */) == AE_SUCCESS);
+                               reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pucAddFields */,
+                               reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(3))) /* pucDeleteFields */,
+                               reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(4))) /* pucChangeFields */) == AE_SUCCESS);
 #else
    hb_retl(false);
 #endif
@@ -2521,7 +2521,7 @@ HB_FUNC( ADSDIRECTORY )
    pitmDir = hb_itemArrayNew(0);
 
    ulRetVal = AdsFindFirstTable( hConnect,
-                                 static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))),
+                                 reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))),
                                  static_cast<UNSIGNED8*>(ucFileName),
                                  &usFileNameLen,
                                  &sHandle );
@@ -2553,7 +2553,7 @@ HB_FUNC( ADSCHECKEXISTENCE )
    UNSIGNED16 usExist = 0;
 
    hb_retl(AdsCheckExistence(HB_ADS_PARCONNECTION(2) /* hConnect */,
-                             static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucFilename */,
+                             reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucFilename */,
                              &usExist) == AE_SUCCESS && usExist != 0);
 #else
    hb_retl(false);
@@ -2564,7 +2564,7 @@ HB_FUNC( ADSDELETEFILE )
 {
 #if ADS_LIB_VERSION >= 600
    hb_retl(AdsDeleteFile(HB_ADS_PARCONNECTION(2) /* hConnect */,
-                         static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucFilename */) == AE_SUCCESS);
+                         reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucFilename */) == AE_SUCCESS);
 #else
    hb_retl(false);
 #endif
@@ -2582,7 +2582,7 @@ HB_FUNC( ADSSTMTSETTABLEPASSWORD )
 
       if( pArea && pArea->hStatement )
       {
-         hb_retnl(AdsStmtSetTablePassword(pArea->hStatement, static_cast<UNSIGNED8*>(const_cast<char*>(pucTableName)), static_cast<UNSIGNED8*>(const_cast<char*>(pucPassword))));
+         hb_retnl(AdsStmtSetTablePassword(pArea->hStatement, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(pucTableName)), reinterpret_cast<UNSIGNED8*>(const_cast<char*>(pucPassword))));
       }
       else
       {
@@ -2639,22 +2639,22 @@ HB_FUNC( ADSCREATEFTSINDEX )
    if( pArea != nullptr )
    {
       hb_retnl(AdsCreateFTSIndex(pArea->hTable,
-                                 static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1)))     /* pucFileName              */ , /* if nullptr or the base name is the same as the table, then creates a compound AutoOpen index. */
-                                 static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(2)))     /* pucTag                   */ ,
-                                 static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(3)))     /* pucField                 */ ,
+                                 reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1)))     /* pucFileName              */ , /* if nullptr or the base name is the same as the table, then creates a compound AutoOpen index. */
+                                 reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(2)))     /* pucTag                   */ ,
+                                 reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(3)))     /* pucField                 */ ,
                                  static_cast<UNSIGNED32>(hb_parnldef(4, ADS_DEFAULT))  /* ulPageSize               */ ,
                                  static_cast<UNSIGNED32>(hb_parnldef(5, 3))            /* ulMinWordLen             */ ,
                                  static_cast<UNSIGNED32>(hb_parnldef(6, 30))           /* ulMaxWordLen             */ ,
                                  static_cast<UNSIGNED16>(hb_parldef(7, true))       /* usUseDefaultDelim        */ ,
-                                 static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(8)))     /* pucDelimiters            */ ,
+                                 reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(8)))     /* pucDelimiters            */ ,
                                  static_cast<UNSIGNED16>(hb_parldef(9, true))       /* usUseDefaultNoise        */ ,
-                                 static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(10)))    /* pucNoiseWords            */ ,
+                                 reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(10)))    /* pucNoiseWords            */ ,
                                  static_cast<UNSIGNED16>(hb_parldef(11, true))      /* usUseDefaultDrop         */ ,
-                                 static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(12)))    /* pucDropChars             */ ,
+                                 reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(12)))    /* pucDropChars             */ ,
                                  static_cast<UNSIGNED16>(hb_parldef(13, true))      /* usUseDefaultConditionals */ ,
-                                 static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(14)))    /* pucConditionalChars      */ ,
-                                 static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(15)))    /* pucReserved1             */ ,
-                                 static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(16)))    /* pucReserved2             */ ,
+                                 reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(14)))    /* pucConditionalChars      */ ,
+                                 reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(15)))    /* pucReserved1             */ ,
+                                 reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(16)))    /* pucReserved2             */ ,
                                  static_cast<UNSIGNED32>(hb_parnldef(17, ADS_DEFAULT)) /* ulOptions                */));
    }
    else
@@ -2670,7 +2670,7 @@ HB_FUNC( ADSCREATESAVEPOINT )
 {
 #if ADS_LIB_VERSION >= 800
    hb_retnl(AdsCreateSavepoint(HB_ADS_PARCONNECTION(1) /* hConnect */,
-                               static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(2))) /* pucSavepoint */,
+                               reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(2))) /* pucSavepoint */,
                                static_cast<UNSIGNED32>(hb_parnldef(3, ADS_DEFAULT)) /* ulOptions */));
 #else
    hb_retnl(0);
@@ -2681,7 +2681,7 @@ HB_FUNC( ADSROLLBACKSAVEPOINT )
 {
 #if ADS_LIB_VERSION >= 800
    hb_retnl(AdsRollbackTransaction80(HB_ADS_PARCONNECTION(1) /* hConnect */,
-                                     static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(2))) /* pucSavepoint */,
+                                     reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(2))) /* pucSavepoint */,
                                      static_cast<UNSIGNED32>(hb_parnldef(3, ADS_DEFAULT)) /* ulOptions */));
 #else
    hb_retnl(0);
@@ -2692,10 +2692,10 @@ HB_FUNC( ADSDDCREATELINK )
 {
 #if ADS_LIB_VERSION >= 900
    hb_retl(AdsDDCreateLink(HB_ADS_PARCONNECTION(1)     /* hConnect      */,
-                           static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pucLinkAlias  */,
-                           static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(3))) /* pucServerPath */,
-                           static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(4)))  /* pucUserName   */,
-                           static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(5))) /* pucPassword   */,
+                           reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pucLinkAlias  */,
+                           reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(3))) /* pucServerPath */,
+                           reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(4)))  /* pucUserName   */,
+                           reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(5))) /* pucPassword   */,
                            static_cast<UNSIGNED32>(hb_parnldef(6, ADS_DEFAULT)) /* ulOptions */ ) == AE_SUCCESS );
 #else
    hb_retl(false);
@@ -2706,10 +2706,10 @@ HB_FUNC( ADSDDMODIFYLINK )
 {
 #if ADS_LIB_VERSION >= 900
    hb_retl(AdsDDModifyLink(HB_ADS_PARCONNECTION(1)     /* hConnect      */,
-                           static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pucLinkAlias  */,
-                           static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(3))) /* pucServerPath */,
-                           static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(4)))  /* pucUserName   */,
-                           static_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(5)))  /* pucPassword   */,
+                           reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pucLinkAlias  */,
+                           reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(3))) /* pucServerPath */,
+                           reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(4)))  /* pucUserName   */,
+                           reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(5)))  /* pucPassword   */,
                            static_cast<UNSIGNED32>(hb_parnldef(6, ADS_DEFAULT)) /* ulOptions */) == AE_SUCCESS);
 #else
    hb_retl(false);
@@ -2720,7 +2720,7 @@ HB_FUNC( ADSDDDROPLINK )
 {
 #if ADS_LIB_VERSION >= 900
    hb_retl(AdsDDDropLink(HB_ADS_PARCONNECTION(1)                   /* hConnect     */,
-                         static_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pucLinkAlias */,
+                         reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pucLinkAlias */,
                          static_cast<UNSIGNED16>(hb_parl(3))                /* usDropGlobal */) == AE_SUCCESS); /* NOTE: Defaults to 0/HB_FALSE for non logical parameters. */
 #else
    hb_retl(false);

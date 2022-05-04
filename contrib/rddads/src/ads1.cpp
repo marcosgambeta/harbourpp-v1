@@ -102,10 +102,10 @@ static void adsSetListener_callback(HB_set_enum setting, HB_set_listener_enum wh
       switch( setting )
       {
          case HB_SET_DATEFORMAT:
-            AdsSetDateFormat(static_cast<UNSIGNED8*>(const_cast<char*>(hb_setGetCPtr(HB_SET_DATEFORMAT))));
+            AdsSetDateFormat(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_setGetCPtr(HB_SET_DATEFORMAT))));
             break;
          case HB_SET_DEFAULT:
-            AdsSetDefault(static_cast<UNSIGNED8*>(const_cast<char*>(hb_setGetCPtr(HB_SET_DEFAULT))));
+            AdsSetDefault(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_setGetCPtr(HB_SET_DEFAULT))));
             break;
          case HB_SET_DELETED:
             AdsShowDeleted(static_cast<UNSIGNED16>(!hb_setGetL(HB_SET_DELETED)));
@@ -117,7 +117,7 @@ static void adsSetListener_callback(HB_set_enum setting, HB_set_listener_enum wh
             AdsSetExact(static_cast<UNSIGNED16>(hb_setGetL(HB_SET_EXACT)));
             break;
          case HB_SET_PATH:
-            AdsSetSearchPath(static_cast<UNSIGNED8*>(const_cast<char*>(hb_setGetCPtr(HB_SET_PATH))));
+            AdsSetSearchPath(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_setGetCPtr(HB_SET_PATH))));
             break;
          case HB_SET_DECIMALS:
             AdsSetDecimals(static_cast<UNSIGNED16>(hb_setGetNI(HB_SET_DECIMALS)));
@@ -145,12 +145,12 @@ static void adsSetSend(void)
    HB_TRACE(HB_TR_DEBUG, ("adsSetSend()"));
 #endif
 
-   AdsSetDateFormat(static_cast<UNSIGNED8*>(const_cast<char*>(hb_setGetCPtr(HB_SET_DATEFORMAT))));
-   AdsSetDefault(static_cast<UNSIGNED8*>(const_cast<char*>(hb_setGetCPtr(HB_SET_DEFAULT))));
+   AdsSetDateFormat(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_setGetCPtr(HB_SET_DATEFORMAT))));
+   AdsSetDefault(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_setGetCPtr(HB_SET_DEFAULT))));
    AdsShowDeleted(static_cast<UNSIGNED16>(!hb_setGetL(HB_SET_DELETED)));
    AdsSetEpoch(static_cast<UNSIGNED16>(hb_setGetNI(HB_SET_EPOCH)));
    AdsSetExact(static_cast<UNSIGNED16>(hb_setGetL(HB_SET_EXACT)));
-   AdsSetSearchPath(static_cast<UNSIGNED8*>(const_cast<char*>(hb_setGetCPtr(HB_SET_PATH))));
+   AdsSetSearchPath(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_setGetCPtr(HB_SET_PATH))));
    AdsSetDecimals(static_cast<UNSIGNED16>(hb_setGetNI(HB_SET_DECIMALS)));
 }
 
@@ -415,7 +415,7 @@ static ADSHANDLE hb_adsFindBag(ADSAREAP pArea, const char * szBagName)
    UNSIGNED16 u16Count = 1;
    UNSIGNED32 u32Result;
 
-   u32Result = AdsOpenIndex(pArea->hTable, static_cast<UNSIGNED8*>(const_cast<char*>(szBagName) ), ahIndex, &u16Count);
+   u32Result = AdsOpenIndex(pArea->hTable, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(szBagName) ), ahIndex, &u16Count);
    if( u32Result == AE_INDEX_ALREADY_OPEN )
    {
       return ahIndex[0];
@@ -695,7 +695,7 @@ static HB_ERRCODE adsScopeSet(ADSAREAP pArea, ADSHANDLE hOrder, HB_USHORT nScope
                {
                   UNSIGNED16 u16DataType = ADS_STRINGKEY ;
                   UNSIGNED16 ucLen = static_cast<UNSIGNED16>(hb_itemGetCLen(pItem));
-                  UNSIGNED8 * pucScope = static_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pItem)));
+                  UNSIGNED8 * pucScope = reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pItem)));
 #if defined(ADS_USE_OEM_TRANSLATION) && ADS_LIB_VERSION < 600
                   UNSIGNED8 * pszKeyFree = nullptr;
 #endif
@@ -1152,7 +1152,7 @@ static HB_ERRCODE adsSeek(ADSAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB_B
    /* build a seek key */
    if( HB_IS_STRING(pKey) )
    {
-      pszKey = static_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pKey)));
+      pszKey = reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pKey)));
       u16KeyLen = static_cast<UNSIGNED16>(hb_itemGetCLen(pKey));
 #ifdef ADS_USE_OEM_TRANSLATION
 #if ADS_LIB_VERSION >= 600
@@ -3053,7 +3053,7 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
                if( hb_ads_bOEM )
                {
 #if ADS_LIB_VERSION >= 600
-                  u32RetVal = AdsSetFieldRaw(pArea->hTable, ADSFIELD(uiIndex), static_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pItem))), static_cast<UNSIGNED32>(nLen));
+                  u32RetVal = AdsSetFieldRaw(pArea->hTable, ADSFIELD(uiIndex), reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pItem))), static_cast<UNSIGNED32>(nLen));
 #else
                   char * pBuffer = hb_adsOemToAnsi(hb_itemGetCPtr(pItem), nLen);
                   u32RetVal = AdsSetString(pArea->hTable, ADSFIELD(uiIndex), static_cast<UNSIGNED8*>(pBuffer), nLen);
@@ -3063,7 +3063,7 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
                else
 #endif
                {
-                  u32RetVal = AdsSetString(pArea->hTable, ADSFIELD(uiIndex), static_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pItem))), static_cast<UNSIGNED32>(nLen));
+                  u32RetVal = AdsSetString(pArea->hTable, ADSFIELD(uiIndex), reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pItem))), static_cast<UNSIGNED32>(nLen));
                }
             }
             /* varchar unicode fields in ADT tables and varchar/varbinary
@@ -3165,7 +3165,7 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
             if( pField->uiTypeExtended == ADS_BINARY || pField->uiTypeExtended == ADS_IMAGE )
             {
                u32RetVal = AdsSetBinary(pArea->hTable, ADSFIELD(uiIndex), pField->uiTypeExtended, static_cast<UNSIGNED32>(nLen), 0,
-                  static_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pItem))), static_cast<UNSIGNED32>(nLen));
+                  reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pItem))), static_cast<UNSIGNED32>(nLen));
             }
 #if ADS_LIB_VERSION >= 1000
             else if( (pField->uiFlags & HB_FF_UNICODE) != 0 )
@@ -3997,7 +3997,7 @@ static HB_ERRCODE adsOpen(ADSAREAP pArea, LPDBOPENINFO pOpenInfo)
       do
       {
          u32RetVal = AdsOpenTable(hConnection,
-                                  static_cast<UNSIGNED8*>(const_cast<char*>(szFile)),
+                                  reinterpret_cast<UNSIGNED8*>(const_cast<char*>(szFile)),
                                   static_cast<UNSIGNED8*>(HB_UNCONST(pOpenInfo->atomAlias)),
                                   (fDictionary ? ADS_DEFAULT : static_cast<UNSIGNED16>(pArea->iFileType)),
                                   static_cast<UNSIGNED16>(hb_ads_iCharType),
@@ -4487,7 +4487,7 @@ static HB_ERRCODE adsSetRel(ADSAREAP pArea, LPDBRELINFO lpdbRelations)
    UNSIGNED32 u32RetVal = static_cast<UNSIGNED32>(~AE_SUCCESS);
    UNSIGNED8 * szExp;
 
-   szExp = static_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(lpdbRelations->abKey)));
+   szExp = reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(lpdbRelations->abKey)));
    if( *szExp && adsGetRddType(lpdbRelations->lpaChild->rddID) >= 0 )
    {
       ADSHANDLE hIndex = (reinterpret_cast<ADSAREAP>(lpdbRelations->lpaChild))->hOrdCurrent;
@@ -4517,7 +4517,7 @@ static HB_ERRCODE adsOrderListAdd(ADSAREAP pArea, LPDBORDERINFO pOrderInfo)
    UNSIGNED16 u16ArrayLen = 256;
    UNSIGNED32 u32RetVal;
 
-   u32RetVal = AdsOpenIndex(pArea->hTable, static_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pOrderInfo->atomBagName))), ahIndex, &u16ArrayLen);
+   u32RetVal = AdsOpenIndex(pArea->hTable, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pOrderInfo->atomBagName))), ahIndex, &u16ArrayLen);
    if( u32RetVal != AE_SUCCESS && u32RetVal != AE_INDEX_ALREADY_OPEN )
    {
       /* 1001 and 7008 are standard ADS Open Errors that will usually be sharing issues */
@@ -4785,7 +4785,7 @@ static HB_ERRCODE adsOrderCreate(ADSAREAP pArea, LPDBORDERCREATEINFO pOrderInfo)
    u32RetVal = AdsCreateIndex61(hTableOrIndex,
                                 static_cast<UNSIGNED8*>(HB_UNCONST(pOrderInfo->abBagName)),
                                 static_cast<UNSIGNED8*>(HB_UNCONST(pOrderInfo->atomBagName)),
-                                static_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pExprItem))),
+                                reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pExprItem))),
                                 pArea->area.lpdbOrdCondInfo ? reinterpret_cast<UNSIGNED8*>(pArea->area.lpdbOrdCondInfo->abFor) : nullptr,
                                 pucWhile, u32Options,
                                 adsGetFileType(pArea->area.rddID) == ADS_ADT ? adsIndexPageSize(ADS_ADT) : ADS_DEFAULT,
@@ -5181,7 +5181,7 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
                TODO: verify it is already open, or be sure to close it!
                (AE_INDEX_ALREADY_OPEN)
              */
-            u32 = AdsOpenIndex(pArea->hTable, static_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pOrderInfo->atomBagName))), nullptr, &u16);
+            u32 = AdsOpenIndex(pArea->hTable, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pOrderInfo->atomBagName))), nullptr, &u16);
 
             if( u32 != AE_INDEX_ALREADY_OPEN )
             {
@@ -5190,7 +5190,7 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
                {
                   ADSHANDLE ahIndex[1];
                   u16 = 1;
-                  if( AdsOpenIndex(pArea->hTable, static_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pOrderInfo->atomBagName))), ahIndex, &u16) == AE_INDEX_ALREADY_OPEN )
+                  if( AdsOpenIndex(pArea->hTable, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pOrderInfo->atomBagName))), ahIndex, &u16) == AE_INDEX_ALREADY_OPEN )
                   {
                      AdsCloseIndex(ahIndex[0]);
                   }
@@ -5513,7 +5513,7 @@ static HB_ERRCODE adsSetFilter(ADSAREAP pArea, LPDBFILTERINFO pFilterInfo)
 
       if( *pucFilter )
       {
-         AdsIsExprValid(pArea->hTable, static_cast<UNSIGNED8*>(const_cast<char*>(pucFilter)), &bValidExpr);
+         AdsIsExprValid(pArea->hTable, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(pucFilter)), &bValidExpr);
       }
 
       if( bValidExpr )
@@ -5738,7 +5738,7 @@ static HB_ERRCODE adsGetValueFile(ADSAREAP pArea, HB_USHORT uiIndex, const char 
       return HB_SUCCESS;
    }
 
-   u32RetVal = AdsBinaryToFile(pArea->hTable, ADSFIELD(uiIndex), static_cast<UNSIGNED8*>(const_cast<char*>(szFile)));
+   u32RetVal = AdsBinaryToFile(pArea->hTable, ADSFIELD(uiIndex), reinterpret_cast<UNSIGNED8*>(const_cast<char*>(szFile)));
    if( u32RetVal != AE_SUCCESS )
    {
       #if 0
@@ -5788,7 +5788,7 @@ static HB_ERRCODE adsPutValueFile(ADSAREAP pArea, HB_USHORT uiIndex, const char 
       uiMode = ADS_BINARY;
    }
 
-   u32RetVal = AdsFileToBinary(pArea->hTable, ADSFIELD(uiIndex), uiMode, static_cast<UNSIGNED8*>(const_cast<char*>(szFile)));
+   u32RetVal = AdsFileToBinary(pArea->hTable, ADSFIELD(uiIndex), uiMode, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(szFile)));
    if( u32RetVal != AE_SUCCESS )
    {
       commonError(pArea, EG_WRITE, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, 0, nullptr);
@@ -6061,7 +6061,7 @@ static HB_ERRCODE adsRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConne
          }
          else
          {
-            u32RetVal = AdsConnect(static_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pItem))), &hConnect);
+            u32RetVal = AdsConnect(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pItem))), &hConnect);
          }
 
          if( u32RetVal == AE_SUCCESS )
