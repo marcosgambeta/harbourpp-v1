@@ -103,7 +103,7 @@ namespace Harbour
 {
    namespace Item
    {
-      enum Type
+      enum Type : unsigned int
       {
          NIL       = 0x00000,
          POINTER   = 0x00001,
@@ -772,7 +772,7 @@ extern HB_EXPORT void   hb_retnlllen(HB_LONGLONG lNumber, int iWidth); /* return
 
 #ifdef _HB_API_MACROS_
 
-#define hb_pcount()                          (static_cast<int>(hb_stackBaseItem())->item.asSymbol.paramcnt)
+#define hb_pcount()                          (static_cast<int>((hb_stackBaseItem())->item.asSymbol.paramcnt))
 
 #define hb_ret()                             hb_itemClear(hb_stackReturnItem())
 #define hb_reta(nLen)                        hb_arrayNew(hb_stackReturnItem(), nLen)
