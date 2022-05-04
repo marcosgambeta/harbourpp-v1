@@ -497,33 +497,33 @@ static HB_ERRCODE fbGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                   break;
 
                case SQL_VARYING:
-                  pItem = hb_itemPutCL(pItem, pVar->sqldata + 2, *static_cast<short*>(pVar->sqldata));
+                  pItem = hb_itemPutCL(pItem, pVar->sqldata + 2, *reinterpret_cast<short*>(pVar->sqldata));
                   break;
 
                case SQL_SHORT:
                   if( pField->uiDec == 0 )
-                     pItem = hb_itemPutNILen(pItem, *static_cast<short*>(pVar->sqldata), 6);
+                     pItem = hb_itemPutNILen(pItem, *reinterpret_cast<short*>(pVar->sqldata), 6);
                   else
-                     pItem = hb_itemPutNDLen(pItem, hb_numDecConv(*static_cast<short*>(pVar->sqldata), static_cast<int>(pField->uiDec)), 6 - pField->uiDec, static_cast<int>(pField->uiDec));
+                     pItem = hb_itemPutNDLen(pItem, hb_numDecConv(*reinterpret_cast<short*>(pVar->sqldata), static_cast<int>(pField->uiDec)), 6 - pField->uiDec, static_cast<int>(pField->uiDec));
                   break;
 
                case SQL_LONG:
                   if( pField->uiDec == 0 )
-                     pItem = hb_itemPutNLLen(pItem, *static_cast<short*>(pVar->sqldata), 11);
+                     pItem = hb_itemPutNLLen(pItem, *reinterpret_cast<short*>(pVar->sqldata), 11);
                   else
-                     pItem = hb_itemPutNDLen(pItem, hb_numDecConv(*static_cast<long*>(pVar->sqldata), static_cast<int>(pField->uiDec)), 11 - pField->uiDec, static_cast<int>(pField->uiDec));
+                     pItem = hb_itemPutNDLen(pItem, hb_numDecConv(*reinterpret_cast<long*>(pVar->sqldata), static_cast<int>(pField->uiDec)), 11 - pField->uiDec, static_cast<int>(pField->uiDec));
                   break;
 
                case SQL_FLOAT:
-                  pItem = hb_itemPutNDLen(pItem, *static_cast<float*>(pVar->sqldata), 20 - pField->uiDec, pField->uiDec);
+                  pItem = hb_itemPutNDLen(pItem, *reinterpret_cast<float*>(pVar->sqldata), 20 - pField->uiDec, pField->uiDec);
                   break;
 
                case SQL_DOUBLE:
-                  pItem = hb_itemPutNDLen(pItem, *static_cast<double*>(pVar->sqldata), 20 - pField->uiDec, pField->uiDec);
+                  pItem = hb_itemPutNDLen(pItem, *reinterpret_cast<double*>(pVar->sqldata), 20 - pField->uiDec, pField->uiDec);
                   break;
 
                case SQL_TIMESTAMP:
-                  pItem = hb_itemPutTDT(pItem, (static_cast<ISC_TIMESTAMP*>(pVar->sqldata) )->timestamp_date + 2400001, (static_cast<ISC_TIMESTAMP*>(pVar->sqldata))->timestamp_time / 10);
+                  pItem = hb_itemPutTDT(pItem, (reinterpret_cast<ISC_TIMESTAMP*>(pVar->sqldata) )->timestamp_date + 2400001, (reinterpret_cast<ISC_TIMESTAMP*>(pVar->sqldata))->timestamp_time / 10);
                   break;
 
                default:
