@@ -723,7 +723,7 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
             }
 
             pField = hb_arrayGetItemPtr(pResult, i + 1);
-            hb_arrayNew(pField, HBPG_META_LEN);
+            hb_arrayNew(pField, HBPG_META_LEN_);
             hb_arraySetC(pField, HBPG_META_FIELDNAME, PQfname(res, i));
             hb_arraySetC(pField, HBPG_META_FIELDTYPE, buf);
             hb_arraySetNI(pField, HBPG_META_FIELDLEN, length);
