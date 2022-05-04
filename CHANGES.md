@@ -16,5 +16,7 @@
 . Suporte para 16-bit descontinuado  
 . Adicionado enumeration Harbour::Item::Type  
 . Adicionado enumeration Harbour::Result  
+. Uso de new e delete para reservar/liberar memória (parcial)  
+. Uso de bool/true/false no lugar de HB_BOOL/HB_TRUE/HB_FALSE (parcial)  
 
 Este documento é um trabalho em progresso.
