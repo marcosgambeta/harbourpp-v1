@@ -19,8 +19,6 @@ hbmk2.prg
 
 -DHBMK_WITH_BUILTIN_HEADERS_ALL
 
--lhbdossrl{dos}
-
 # not using these together with .rc input, because some compilers (mingw)
 # do not support multiple .rc inputs
 #-icon={allwin}../../package/harbour.ico

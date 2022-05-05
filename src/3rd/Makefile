@@ -1,7 +1,6 @@
 ROOT := ../../
 
 DIRS := \
-   hbdossrl \
    png \
    jpeg \
    pcre \

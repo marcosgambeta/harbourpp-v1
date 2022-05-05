@@ -35,11 +35,6 @@ else
          src/rtl/gtpca \
          src/rtl/gtstd
 
-      ifeq ($(HB_PLATFORM),dos)
-         ifneq ($(filter $(HB_COMPILER),watcom djgpp),)
-            DYNDIRLIST_BASE += src/3rd/hbdossrl
-         endif
-      endif
       ifeq ($(HB_PLATFORM),wce)
          DYNDIRLIST_BASE += src/rtl/gtwvt src/rtl/gtgui
       endif

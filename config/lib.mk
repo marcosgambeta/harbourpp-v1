@@ -39,9 +39,6 @@ endif
 ifneq ($(HB_HAS_ZLIB_LOCAL),)
    HB_DYN_LIBS += hbzlib
 endif
-ifeq ($(HB_PLATFORM),dos)
-   HB_DYN_LIBS += hbdossrl
-endif
 
 # Added only for hbpp
 -include $(TOP)$(ROOT)config/$(HB_PLATFORM)/libs.mk
