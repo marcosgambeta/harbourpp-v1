@@ -449,7 +449,7 @@ static HB_GENC_FUNC(hb_p_endblock)
 {
    HB_GENC_LABEL();
 
-   HB_GENC_ERROR( "HB_P_ENDBLOCK" );
+   HB_GENC_ERROR("HB_P_ENDBLOCK");
    return 1;
 }
 

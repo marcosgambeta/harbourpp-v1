@@ -2712,11 +2712,11 @@ void hb_compLinePush(HB_COMP_DECL) /* generates the pcode with the currently com
  */
 void hb_compStatmentStart(HB_COMP_DECL)
 {
-   if( ( HB_COMP_PARAM->functions.pLast->funFlags & HB_FUNF_STATEMENTS ) == 0 )
+   if( (HB_COMP_PARAM->functions.pLast->funFlags & HB_FUNF_STATEMENTS) == 0 )
    {
       PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
 
-      if( ( pFunc->funFlags & HB_FUNF_FILE_DECL ) != 0 )
+      if( (pFunc->funFlags & HB_FUNF_FILE_DECL) != 0 )
       {
          if( HB_COMP_PARAM->iStartProc == 2 && pFunc->szName[0] && hb_compRegisterFunc(HB_COMP_PARAM, pFunc, false) )
          {
@@ -4417,7 +4417,7 @@ static void hb_compGenIncluded(HB_COMP_DECL)
       memcpy(&FileName, HB_COMP_PARAM->pFileName, sizeof(HB_FNAME));
       szDestFile[0] = '\0';
 
-      if( ( HB_COMP_PARAM->iTraceInclude & 0xff ) == 2 )
+      if( (HB_COMP_PARAM->iTraceInclude & 0xff) == 2 )
       {
          FileName.szExtension = HB_COMP_PARAM->szDepExt;
          if( !FileName.szExtension )

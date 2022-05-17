@@ -934,7 +934,7 @@ void hb_compOptimizePCode(HB_COMP_DECL, PHB_HFUNC pFunc)
 
    HB_SYMBOL_UNUSED(HB_COMP_PARAM);
 
-   assert( HB_P_LAST_PCODE == sizeof(s_opt_table) / sizeof(PHB_OPT_FUNC) );
+   assert(HB_P_LAST_PCODE == sizeof(s_opt_table) / sizeof(PHB_OPT_FUNC));
 
    hb_compPCodeEval(pFunc, static_cast<const PHB_PCODE_FUNC*>(pFuncTable), nullptr);
 }
@@ -977,7 +977,7 @@ static HB_BOOL hb_compIsUncondJump(HB_BYTE bPCode)
    warning false positive in code:
      BEGIN SEQUENCE
         nI := 1
-        Break( NIL )
+        Break(NIL)
      RECOVER
         ? nI
      END SEQUENCE
