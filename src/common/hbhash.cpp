@@ -177,7 +177,7 @@ HB_BOOL hb_hashTableAdd(PHB_HASH_TABLE pTable, const void * pKey, const void * p
 
    nKey = (pTable->pKeyFunc)(pTable, pKey, pValue);
    pItem = pTable->pItems[nKey];
-   if( pItem )
+   if( pItem != nullptr )
    {
       while( pItem->next )
       {
@@ -205,14 +205,14 @@ const void * hb_hashTableFind(PHB_HASH_TABLE pTable, const void * pKey)
 
    nKey = (pTable->pKeyFunc)(pTable, pKey, nullptr);
    pItem = pTable->pItems[nKey];
-   if( pItem )
+   if( pItem != nullptr )
    {
       while( pItem && ((pTable->pCompFunc)(pTable, pItem->KeyPtr, pKey) != 0) )
       {
          pItem = pItem->next;
       }
 
-      if( pItem )
+      if( pItem != nullptr )
       {
          pFound = pItem->ValPtr;
       }

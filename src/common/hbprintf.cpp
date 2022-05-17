@@ -255,20 +255,20 @@ struct v_paramlst
  */
 
 /*
-#define va_arg_n( va, type, n )     \
+#define va_arg_n(va, type, n)     \
    ( { \
       type result; \
       if( n == 0 ) \
-         result = va_arg( va, type ); \
+         result = va_arg(va, type); \
       else \
       { \
          int count = (n); \
          va_list ap; \
-         va_start( ap, format ); \
+         va_start(ap, format); \
          do \
-            result = va_arg( ap, type ); \
+            result = va_arg(ap, type); \
          while( --count > 0 ); \
-         va_end( ap ); \
+         va_end(ap); \
       } \
       result; \
    } )

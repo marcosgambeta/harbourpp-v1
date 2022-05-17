@@ -169,14 +169,35 @@ HB_FATTR hb_fsAttrFromRaw(HB_FATTR raw_attr)
            ((raw_attr & S_ISGID) ? HB_FA_SGID : 0) |
            ((raw_attr & S_ISUID) ? HB_FA_SUID : 0);
 
-   if( S_ISREG( raw_attr ) )  nAttr |= HB_FA_FILE;
-   if( S_ISDIR( raw_attr ) )  nAttr |= HB_FA_DIRECTORY;
-   if( S_ISLNK( raw_attr ) )  nAttr |= HB_FA_LINK;
-   if( S_ISCHR( raw_attr ) )  nAttr |= HB_FA_CHRDEVICE;
-   if( S_ISBLK( raw_attr ) )  nAttr |= HB_FA_BLKDEVICE;
-   if( S_ISFIFO( raw_attr ) ) nAttr |= HB_FA_FIFO;
+   if( S_ISREG(raw_attr) )
+   {
+      nAttr |= HB_FA_FILE;
+   }
+   if( S_ISDIR(raw_attr) )
+   {
+      nAttr |= HB_FA_DIRECTORY;
+   }
+   if( S_ISLNK(raw_attr) )
+   {
+      nAttr |= HB_FA_LINK;
+   }
+   if( S_ISCHR(raw_attr) )
+   {
+      nAttr |= HB_FA_CHRDEVICE;
+   }
+   if( S_ISBLK(raw_attr) )
+   {
+      nAttr |= HB_FA_BLKDEVICE;
+   }
+   if( S_ISFIFO(raw_attr) )
+   {
+      nAttr |= HB_FA_FIFO;
+   }
 #if !defined(HB_OS_VXWORKS)
-   if( S_ISSOCK(raw_attr) ) nAttr |= HB_FA_SOCKET;
+   if( S_ISSOCK(raw_attr) )
+   {
+      nAttr |= HB_FA_SOCKET;
+   }
 #endif
 
 #else
@@ -388,7 +409,7 @@ static HB_BOOL hb_fsFindNextLow(PHB_FFIND ffind)
             info->hFindFile = FindFirstFile(lpFileMask, &info->pFindFileData);
             hb_xfree(lpFileMask);
 
-            if( ( info->hFindFile != INVALID_HANDLE_VALUE ) && _HB_WIN_MATCH() )
+            if( (info->hFindFile != INVALID_HANDLE_VALUE) && _HB_WIN_MATCH() )
             {
                bFound = HB_TRUE;
             }

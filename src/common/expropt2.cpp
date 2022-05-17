@@ -862,7 +862,7 @@ PHB_EXPR hb_compExprReducePlus(PHB_EXPR pSelf, HB_COMP_DECL)
           */
       }
    }
-   else if( ( pLeft->ExprType == HB_ET_DATE || pLeft->ExprType == HB_ET_TIMESTAMP ) && (pRight->ExprType == HB_ET_DATE || pRight->ExprType == HB_ET_TIMESTAMP) )
+   else if( (pLeft->ExprType == HB_ET_DATE || pLeft->ExprType == HB_ET_TIMESTAMP) && (pRight->ExprType == HB_ET_DATE || pRight->ExprType == HB_ET_TIMESTAMP) )
    {
       if( pLeft->ExprType == HB_ET_TIMESTAMP || pRight->ExprType == HB_ET_TIMESTAMP )
       {

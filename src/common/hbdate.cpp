@@ -595,7 +595,7 @@ HB_BOOL hb_timeStrGet(const char * szTime, int * piHour, int * piMinutes, int * 
                iHour += 12;
             }
          }
-         else if( (szTime[0] == 'a' || szTime[0] == 'A' ) && ( szTime[1] == 'm' || szTime[1] == 'M') )
+         else if( (szTime[0] == 'a' || szTime[0] == 'A') && (szTime[1] == 'm' || szTime[1] == 'M') )
          {
             ++iBlocks;
             szTime += 2;

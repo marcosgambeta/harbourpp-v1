@@ -1345,7 +1345,7 @@ HB_ULONG hb_compExprParamListLen(PHB_EXPR pExpr)
    return nLen;
 }
 
-/* Check if expression is hb_ArrayToParams( aParams ) function call
+/* Check if expression is hb_ArrayToParams(aParams) function call
  */
 HB_BOOL hb_compExprIsArrayToParams(PHB_EXPR pExpr)
 {
@@ -1370,7 +1370,7 @@ HB_SIZE hb_compExprParamListCheck(HB_COMP_DECL, PHB_EXPR pExpr)
          {
             /* &macro was passed
                or optional parameters list passed, f.e.: f(a,b,...)
-               or hb_ArrayToParams( aParams )
+               or hb_ArrayToParams(aParams)
                - handle it differently then in a normal statement */
             if( pElem->ExprType == HB_ET_MACRO )
             {
