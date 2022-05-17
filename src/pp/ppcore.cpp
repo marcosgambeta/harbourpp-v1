@@ -588,7 +588,7 @@ static void hb_pp_tokenAddNext(PHB_PP_STATE pState, const char * value, HB_SIZE 
       }
       else if( pState->iBlockState )
       {
-         if( ( pState->iBlockState == 1 || pState->iBlockState == 2 || pState->iBlockState == 4 ) && HB_PP_TOKEN_TYPE(type) == HB_PP_TOKEN_PIPE )
+         if( (pState->iBlockState == 1 || pState->iBlockState == 2 || pState->iBlockState == 4) && HB_PP_TOKEN_TYPE(type) == HB_PP_TOKEN_PIPE )
          {
             pState->iBlockState = 5;
          }
@@ -3590,7 +3590,7 @@ static HB_BOOL hb_pp_resultMarkerNew(PHB_PP_STATE pState, PHB_PP_TOKEN * pTokenP
                /* <-id-> was bad choice for marker type because -> is single
                   ALIAS token so we have to add workaround for it now */
                if( HB_PP_TOKEN_TYPE((*pTokenPtr)->type) == HB_PP_TOKEN_ALIAS ||
-                   (HB_PP_TOKEN_TYPE((*pTokenPtr)->type ) == HB_PP_TOKEN_MINUS &&
+                   (HB_PP_TOKEN_TYPE((*pTokenPtr)->type) == HB_PP_TOKEN_MINUS &&
                     hb_pp_tokenUnQuotedGet(&pTokenPtr, &fQuoted, true) && !fQuoted &&
                     HB_PP_TOKEN_TYPE((*pTokenPtr)->type) == HB_PP_TOKEN_GT) )
                {
@@ -3843,7 +3843,7 @@ static void hb_pp_directiveNew(PHB_PP_STATE pState, PHB_PP_TOKEN pToken, HB_USHO
                         concatenation and without this modification we
                         will introduce very serious bug */
                      if( (*pOptStart)->pMTokens && (*pOptStart)->pMTokens->spaces == 0 && (*pOptStart)->spaces > 0 &&
-                         HB_PP_TOKEN_TYPE( ( *pOptStart )->pMTokens->type ) != HB_PP_TOKEN_COMMA )
+                         HB_PP_TOKEN_TYPE((*pOptStart)->pMTokens->type) != HB_PP_TOKEN_COMMA )
                      {
                         (*pOptStart)->pMTokens->spaces = 1;
                      }
@@ -4913,7 +4913,7 @@ static HB_BOOL hb_pp_processDefine(PHB_PP_STATE pState, PHB_PP_TOKEN * pFirstPtr
       fRepeat = HB_FALSE;
       while( !HB_PP_TOKEN_ISEOS(*pFirstPtr) )
       {
-         if( HB_PP_TOKEN_TYPE((*pFirstPtr)->type ) == HB_PP_TOKEN_KEYWORD && (pState->pMap[HB_PP_HASHID(*pFirstPtr)] & HB_PP_DEFINE) )
+         if( HB_PP_TOKEN_TYPE((*pFirstPtr)->type) == HB_PP_TOKEN_KEYWORD && (pState->pMap[HB_PP_HASHID(*pFirstPtr)] & HB_PP_DEFINE) )
          {
             PHB_PP_RULE pRule = hb_pp_defineFind(pState, *pFirstPtr);
             if( pRule )

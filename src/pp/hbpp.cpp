@@ -417,7 +417,7 @@ static int hb_pp_generateVerInfo(char * szVerFile, int iRevID, char * szChangeLo
          hb_xfree(pszEnv);
       }
 
-      pszEnv = hb_getenv( "HB_PLATFORM" );
+      pszEnv = hb_getenv("HB_PLATFORM");
       if( pszEnv )
       {
          pszEscaped = hb_pp_escapeString(pszEnv);
@@ -426,7 +426,7 @@ static int hb_pp_generateVerInfo(char * szVerFile, int iRevID, char * szChangeLo
          hb_xfree(pszEnv);
       }
 
-      pszEnv = hb_getenv( "HB_COMPILER" );
+      pszEnv = hb_getenv("HB_COMPILER");
       if( pszEnv )
       {
          pszEscaped = hb_pp_escapeString(pszEnv);
@@ -494,7 +494,7 @@ static int hb_pp_parseChangelog(PHB_PP_STATE pState, const char * pszFileName, i
             break;
          }
 
-         if( strchr( szToCheck, '?' ) != nullptr )
+         if( strchr(szToCheck, '?') != nullptr )
          {
             pszFree = hb_fsFileFind(szToCheck);
             if( pszFree )
@@ -715,7 +715,9 @@ int main(int argc, char * argv[])
       for( i = 2; szFile && i < argc; i++ )
       {
          if( !HB_ISOPTSEP(argv[i][0]) )
+         {
             szFile = nullptr;
+         }
          else
          {
             switch( argv[i][1] )
