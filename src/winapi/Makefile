@@ -10,6 +10,7 @@ endif
 
 CPP_SOURCES := \
    commctrl.cpp \
+   mmsystem.cpp \
    wingdi.cpp \
 
 PRG_SOURCES :=
