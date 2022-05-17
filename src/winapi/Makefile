@@ -9,6 +9,7 @@ ifneq ($(HB_PLATFORM),wce)
 endif
 
 CPP_SOURCES := \
+   commctrl.cpp \
    wingdi.cpp \
 
 PRG_SOURCES :=
