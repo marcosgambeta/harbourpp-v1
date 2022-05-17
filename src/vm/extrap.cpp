@@ -75,7 +75,7 @@
 
 #if defined(HB_OS_WIN)
 
-static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExceptionInfo )
+static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS * pExceptionInfo)
 {
    char errmsg[8192];
    int errmsglen = sizeof(errmsg) - 1;
@@ -296,14 +296,14 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
          typedef BOOL ( WINAPI * P_M32F )( HANDLE, LPMODULEENTRY32 ); /* Module32First() */
          typedef BOOL ( WINAPI * P_M32N )( HANDLE, LPMODULEENTRY32 ); /* Module32Next() */
 
-         P_CTH32SSH pCreateToolhelp32Snapshot = reinterpret_cast<P_CTH32SSH>(HB_WINAPI_GETPROCADDRESS( hToolhelp, "CreateToolhelp32Snapshot" ));
-         P_M32F pModule32First = reinterpret_cast<P_M32F>(HB_WINAPI_GETPROCADDRESS( hToolhelp, "Module32First" ));
-         P_M32N pModule32Next = reinterpret_cast<P_M32N>(HB_WINAPI_GETPROCADDRESS( hToolhelp, "Module32Next" ));
+         P_CTH32SSH pCreateToolhelp32Snapshot = reinterpret_cast<P_CTH32SSH>(HB_WINAPI_GETPROCADDRESS(hToolhelp, "CreateToolhelp32Snapshot"));
+         P_M32F pModule32First = reinterpret_cast<P_M32F>(HB_WINAPI_GETPROCADDRESS(hToolhelp, "Module32First"));
+         P_M32N pModule32Next = reinterpret_cast<P_M32N>(HB_WINAPI_GETPROCADDRESS(hToolhelp, "Module32Next"));
 
          if( pCreateToolhelp32Snapshot && pModule32First && pModule32Next )
          {
             /* Take a snapshot of all modules in the specified process. */
-            HANDLE hModuleSnap = pCreateToolhelp32Snapshot( TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, GetCurrentProcessId() );
+            HANDLE hModuleSnap = pCreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, GetCurrentProcessId());
 
             if( hModuleSnap != INVALID_HANDLE_VALUE )
             {
@@ -313,7 +313,7 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
                me32.dwSize = sizeof(MODULEENTRY32);
 
                /* Retrieve information about the first module, and exit if unsuccessful */
-               if( pModule32First( hModuleSnap, &me32 ) )
+               if( pModule32First(hModuleSnap, &me32) )
                {
                   hb_strncat(errmsg, "\nModules:\n", errmsglen);
 
@@ -326,16 +326,16 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
                      hb_snprintf(buf, sizeof(buf), "%016" PFLL "X %016" PFLL "X %s\n", reinterpret_cast<HB_PTRUINT>(me32.modBaseAddr), static_cast<HB_PTRUINT>(me32.modBaseSize), me32.szExePath);
 #else
                      char szBuffer[MAX_PATH];
-                     hb_strncpy(szBuffer, me32.szExePath, HB_SIZEOFARRAY( szBuffer ) - 1);
+                     hb_strncpy(szBuffer, me32.szExePath, HB_SIZEOFARRAY(szBuffer) - 1);
                      hb_snprintf(buf, sizeof(buf), "%08lX %08lX %s\n", reinterpret_cast<HB_PTRUINT>(me32.modBaseAddr), static_cast<HB_PTRUINT>(me32.modBaseSize), szBuffer);
 #endif
                      hb_strncat(errmsg, buf, errmsglen);
                   }
-                  while( pModule32Next( hModuleSnap, &me32 ) );
+                  while( pModule32Next(hModuleSnap, &me32) );
                }
 
                /* Do not forget to clean up the snapshot object. */
-               CloseHandle( hModuleSnap );
+               CloseHandle(hModuleSnap);
             }
          }
       }
@@ -343,12 +343,12 @@ static LONG WINAPI hb_winExceptionHandler( struct _EXCEPTION_POINTERS * pExcepti
 
    hb_errInternalRaw(6005, "Exception error:%s", errmsg, nullptr);
 
-   return hb_cmdargCheck( "BATCH" ) ? EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH;
+   return hb_cmdargCheck("BATCH") ? EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH;
 }
 
 #elif defined(HB_SIGNAL_EXCEPTION_HANDLER)
 
-static void hb_signalExceptionHandler( int sig, siginfo_t * si, void * ucp )
+static void hb_signalExceptionHandler(int sig, siginfo_t * si, void * ucp)
 {
    char buffer[32];
    const char * signame;
@@ -394,7 +394,7 @@ void hb_vmSetExceptionHandler(void)
 {
 #if defined(HB_OS_WIN)
    {
-      LPTOP_LEVEL_EXCEPTION_FILTER ef = SetUnhandledExceptionFilter( hb_winExceptionHandler );
+      LPTOP_LEVEL_EXCEPTION_FILTER ef = SetUnhandledExceptionFilter(hb_winExceptionHandler);
       HB_SYMBOL_UNUSED(ef);
    }
 #elif defined(HB_SIGNAL_EXCEPTION_HANDLER)
@@ -410,13 +410,13 @@ void hb_vmSetExceptionHandler(void)
          int sigs[] = { SIGSEGV, SIGILL, SIGFPE, SIGBUS, 0 };
 
          /* Ignore SIGPIPEs so they don't kill us. */
-         signal( SIGPIPE, SIG_IGN );
+         signal(SIGPIPE, SIG_IGN);
          for( int i = 0; sigs[i]; ++i )
          {
-            sigaction( sigs[i], 0, &act );
+            sigaction(sigs[i], 0, &act);
             act.sa_sigaction = hb_signalExceptionHandler;
             act.sa_flags = SA_ONSTACK | SA_SIGINFO | SA_RESETHAND;
-            sigaction( sigs[i], &act, 0 );
+            sigaction(sigs[i], &act, 0);
          }
       }
    }
@@ -436,7 +436,7 @@ void hb_vmUnsetExceptionHandler(void)
       ss.ss_size = SIGSTKSZ;
       ss.ss_flags = SS_DISABLE;
       /* set alternative stack for SIGSEGV executed on stack overflow */
-      if( sigaltstack( &ss, &oss ) == 0 )
+      if( sigaltstack(&ss, &oss) == 0 )
       {
          if( oss.ss_sp && SS_DISABLE )
          {

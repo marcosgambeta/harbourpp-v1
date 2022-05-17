@@ -55,5 +55,5 @@
 
 HB_FUNC( BREAK )
 {
-   hb_vmRequestBreak( hb_param(1, Harbour::Item::ANY) );
+   hb_vmRequestBreak(hb_param(1, Harbour::Item::ANY));
 }

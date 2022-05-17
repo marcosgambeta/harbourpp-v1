@@ -54,13 +54,13 @@ int _CRT_glob = 0;
 
 HB_EXTERN_END
 
-int main( int argc, char * argv[] )
+int main(int argc, char * argv[])
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "main(%d, %p)", argc, static_cast<void*>(argv) ) );
+   HB_TRACE(HB_TR_DEBUG, ("main(%d, %p)", argc, static_cast<void*>(argv)));
 #endif
 
-   hb_cmdargInit( argc, argv );
+   hb_cmdargInit(argc, argv);
    hb_vmInit(true);
    return hb_vmQuit();
 }

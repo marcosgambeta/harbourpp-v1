@@ -1458,7 +1458,7 @@ DLMALLOC_EXPORT int mspace_mallopt(int, int);
 /*------------------------------ internal #includes ---------------------- */
 
 #ifdef _MSC_VER
-#pragma warning( disable : 4146 ) /* no "unsigned" warnings */
+#pragma warning(disable : 4146) /* no "unsigned" warnings */
 #endif /* _MSC_VER */
 #if !NO_MALLOC_STATS
 #include <stdio.h>       /* for printing in malloc_stats */
@@ -1886,13 +1886,13 @@ static FORCEINLINE int win32munmap(void* ptr, size_t size) {
 /* #define TRY_LOCK(lk) ... */
 /* static MLOCK_T malloc_global_mutex = ... */
 
-static FORCEINLINE int user_acquire_lock( HB_SPINLOCK_R * lk )
+static FORCEINLINE int user_acquire_lock(HB_SPINLOCK_R * lk)
 {
-   HB_SPINLOCK_ACQUIRE_R( lk );
+   HB_SPINLOCK_ACQUIRE_R(lk);
    return 0;
 }
 
-static FORCEINLINE void user_initial_lock( HB_SPINLOCK_R * lk )
+static FORCEINLINE void user_initial_lock(HB_SPINLOCK_R * lk)
 {
    HB_SPINLOCK_INIT_R(lk);
 }

@@ -58,10 +58,10 @@
 static const HB_BYTE s_pCode[2] = { HB_P_PUSHNIL, HB_P_ENDBLOCK };
 
 /* Release all allocated memory when called from the garbage collector */
-static HB_GARBAGE_FUNC( hb_codeblockGarbageDelete )
+static HB_GARBAGE_FUNC(hb_codeblockGarbageDelete)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockGarbageDelete(%p)", Cargo ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_codeblockGarbageDelete(%p)", Cargo));
 #endif
 
    PHB_CODEBLOCK pCBlock = static_cast<PHB_CODEBLOCK>(Cargo);
@@ -77,11 +77,11 @@ static HB_GARBAGE_FUNC( hb_codeblockGarbageDelete )
    /* free space allocated for local variables */
    if( pCBlock->pLocals )
    {
-      if( hb_xRefDec( pCBlock->pLocals ) )
+      if( hb_xRefDec(pCBlock->pLocals) )
       {
          while( pCBlock->uiLocals )
          {
-            hb_memvarValueDecRef( pCBlock->pLocals[pCBlock->uiLocals--].item.asMemvar.value );
+            hb_memvarValueDecRef(pCBlock->pLocals[pCBlock->uiLocals--].item.asMemvar.value);
          }
          hb_xfree(pCBlock->pLocals);
       }
@@ -90,10 +90,10 @@ static HB_GARBAGE_FUNC( hb_codeblockGarbageDelete )
    }
 }
 
-static HB_GARBAGE_FUNC( hb_codeblockGarbageMark )
+static HB_GARBAGE_FUNC(hb_codeblockGarbageMark)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockGarbageMark(%p)", Cargo ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_codeblockGarbageMark(%p)", Cargo));
 #endif
 
    PHB_CODEBLOCK pCBlock = static_cast<PHB_CODEBLOCK>(Cargo);
@@ -105,7 +105,7 @@ static HB_GARBAGE_FUNC( hb_codeblockGarbageMark )
 
       do
       {
-         hb_gcItemRef( &pLocals[uiLocals] );
+         hb_gcItemRef(&pLocals[uiLocals]);
       }
       while( --uiLocals );
    }
@@ -129,7 +129,7 @@ static const HB_GC_FUNCS s_gcCodeblockFuncs =
 PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE * pBuffer, HB_USHORT uiLocals, const HB_BYTE * pLocalPosTable, PHB_SYMB pSymbols, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockNew(%p, %hu, %p, %p, %" HB_PFS "u)", static_cast<const void*>(pBuffer), uiLocals, static_cast<const void*>(pLocalPosTable), static_cast<void*>(pSymbols), nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_codeblockNew(%p, %hu, %p, %p, %" HB_PFS "u)", static_cast<const void*>(pBuffer), uiLocals, static_cast<const void*>(pLocalPosTable), static_cast<void*>(pSymbols), nLen));
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -186,12 +186,12 @@ PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE * pBuffer, HB_USHORT uiLocals, const
          pLocal = hb_stackLocalVariable( iLocal );
          pLocalPosTable += 2;
 
-         pLocal = hb_memvarDetachLocal( pLocal );
+         pLocal = hb_memvarDetachLocal(pLocal);
          hb_itemRawCpy(pLocals + ui, pLocal);
          /* Increment the reference counter so this value will not be
           * released if other codeblock will be deleted
           */
-         hb_memvarValueIncRef( pLocal->item.asMemvar.value );
+         hb_memvarValueIncRef(pLocal->item.asMemvar.value);
       }
       while( ++ui <= uiLocals );
    }
@@ -212,7 +212,7 @@ PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE * pBuffer, HB_USHORT uiLocals, const
          pLocals  = pOwner->pLocals;
          if( pLocals )
          {
-            hb_xRefInc( pLocals );
+            hb_xRefInc(pLocals);
          }
       }
       else
@@ -226,14 +226,14 @@ PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE * pBuffer, HB_USHORT uiLocals, const
 
    pCBlock->pCode     = pCode;
    pCBlock->dynBuffer = nLen != 0;
-   pCBlock->pDefSymb  = pBase->item.asSymbol.stackstate->uiClass ? hb_clsMethodSym( pBase ) : pBase->item.asSymbol.value;
+   pCBlock->pDefSymb  = pBase->item.asSymbol.stackstate->uiClass ? hb_clsMethodSym(pBase) : pBase->item.asSymbol.value;
    pCBlock->pSymbols  = pSymbols;
    pCBlock->pStatics  = hb_stackGetStaticsBase();
    pCBlock->uiLocals  = uiLocals;
    pCBlock->pLocals   = pLocals;
 
 #if 0
-   HB_TRACE( HB_TR_INFO, ( "codeblock created %p", static_cast<void*>(pCBlock) ) );
+   HB_TRACE(HB_TR_INFO, ("codeblock created %p", static_cast<void*>(pCBlock)));
 #endif
 
    return pCBlock;
@@ -242,7 +242,7 @@ PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE * pBuffer, HB_USHORT uiLocals, const
 PHB_CODEBLOCK hb_codeblockMacroNew(const HB_BYTE * pBuffer, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockMacroNew(%p, %" HB_PFS "u)", static_cast<const void*>(pBuffer), nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_codeblockMacroNew(%p, %" HB_PFS "u)", static_cast<const void*>(pBuffer), nLen));
 #endif
 
    HB_STACK_TLS_PRELOAD
@@ -265,14 +265,14 @@ PHB_CODEBLOCK hb_codeblockMacroNew(const HB_BYTE * pBuffer, HB_SIZE nLen)
    /* Store the number of referenced local variables */
    pCBlock->pCode     = pCode;
    pCBlock->dynBuffer = HB_TRUE;
-   pCBlock->pDefSymb  = pBase->item.asSymbol.stackstate->uiClass ? hb_clsMethodSym( pBase ) : pBase->item.asSymbol.value;
+   pCBlock->pDefSymb  = pBase->item.asSymbol.stackstate->uiClass ? hb_clsMethodSym(pBase) : pBase->item.asSymbol.value;
    pCBlock->pSymbols  = nullptr;  /* macro-compiled codeblock cannot access a local symbol table */
    pCBlock->pStatics  = hb_stackGetStaticsBase();
    pCBlock->uiLocals  = 0;
    pCBlock->pLocals   = nullptr;
 
 #if 0
-   HB_TRACE( HB_TR_INFO, ( "codeblock created %p", static_cast<void*>(pCBlock) ) );
+   HB_TRACE(HB_TR_INFO, ("codeblock created %p", static_cast<void*>(pCBlock)));
 #endif
 
    return pCBlock;
@@ -282,7 +282,7 @@ PHB_CODEBLOCK hb_codeblockMacroNew(const HB_BYTE * pBuffer, HB_SIZE nLen)
 PHB_ITEM hb_codeblockGetVar(PHB_ITEM pItem, int iItemPos)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockGetVar(%p, %d)", static_cast<void*>(pItem), iItemPos ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_codeblockGetVar(%p, %d)", static_cast<void*>(pItem), iItemPos));
 #endif
 
    PHB_CODEBLOCK pCBlock = pItem->item.asBlock.value;
@@ -292,10 +292,10 @@ PHB_ITEM hb_codeblockGetVar(PHB_ITEM pItem, int iItemPos)
 }
 
 /* Get local variable passed by reference */
-PHB_ITEM hb_codeblockGetRef( PHB_CODEBLOCK pCBlock, int iItemPos )
+PHB_ITEM hb_codeblockGetRef(PHB_CODEBLOCK pCBlock, int iItemPos)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_codeblockGetRef(%p, %d)", static_cast<void*>(pCBlock), iItemPos ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_codeblockGetRef(%p, %d)", static_cast<void*>(pCBlock), iItemPos));
 #endif
 
    return pCBlock->pLocals - iItemPos;
@@ -315,7 +315,7 @@ void * hb_codeblockId(PHB_ITEM pItem)
 }
 
 /* retrieves numer of references to the codeblock */
-HB_COUNTER hb_codeblockRefs( PHB_ITEM pItem )
+HB_COUNTER hb_codeblockRefs(PHB_ITEM pItem)
 {
    if( HB_IS_BLOCK(pItem) )
    {

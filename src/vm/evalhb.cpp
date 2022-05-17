@@ -55,7 +55,7 @@ HB_FUNC( EVAL )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::BLOCK);
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       int iPCount = hb_pcount();
 
@@ -74,6 +74,6 @@ HB_FUNC( EVAL )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_NOMETHOD, 1004, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_NOMETHOD, 1004, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

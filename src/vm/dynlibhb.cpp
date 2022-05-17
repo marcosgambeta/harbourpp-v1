@@ -104,7 +104,7 @@ PHB_ITEM hb_libLoad(PHB_ITEM pLibName, PHB_ITEM pArgs)
       if( hb_vmLockModuleSymbols() )
       {
          /* use stack address as first level marker */
-         hb_vmBeginSymbolGroup( static_cast<void*>(hb_stackId()), true );
+         hb_vmBeginSymbolGroup(static_cast<void*>(hb_stackId()), true);
 #if defined(HB_OS_WIN)
          {
             void * hFileName;
@@ -114,23 +114,23 @@ PHB_ITEM hb_libLoad(PHB_ITEM pLibName, PHB_ITEM pArgs)
             hb_strfree(hFileName);
          }
 #elif defined(HB_HAS_DLFCN)
-         hDynLib = static_cast<void*>(dlopen( hb_itemGetCPtr(pLibName), RTLD_LAZY | RTLD_GLOBAL ));
+         hDynLib = static_cast<void*>(dlopen(hb_itemGetCPtr(pLibName), RTLD_LAZY | RTLD_GLOBAL));
 
          if( !hDynLib )
          {
 #if 0
-            HB_TRACE( HB_TR_DEBUG, ( "hb_libLoad(): dlopen(): %s", dlerror() ) );
+            HB_TRACE(HB_TR_DEBUG, ("hb_libLoad(): dlopen(): %s", dlerror()));
 #endif
          }
 #elif defined(HB_CAUSEWAY_DLL)
-         hDynLib = LoadLibrary( hb_itemGetCPtr(pLibName) );
+         hDynLib = LoadLibrary(hb_itemGetCPtr(pLibName));
 #else
          {
             int iTODO;
          }
 #endif
          /* set real marker */
-         hb_vmInitSymbolGroup( hDynLib, argc, argv );
+         hb_vmInitSymbolGroup(hDynLib, argc, argv);
 
          hb_vmUnlockModuleSymbols();
       }
@@ -162,13 +162,13 @@ HB_BOOL hb_libFree(PHB_ITEM pDynLib)
       if( hDynLib )
       {
          *pDynLibPtr = nullptr;
-         hb_vmExitSymbolGroup( hDynLib );
+         hb_vmExitSymbolGroup(hDynLib);
 #if defined(HB_OS_WIN)
-         fResult = FreeLibrary( static_cast<HMODULE>(hDynLib) );
+         fResult = FreeLibrary(static_cast<HMODULE>(hDynLib));
 #elif defined(HB_HAS_DLFCN)
-         fResult = dlclose( hDynLib ) == 0;
+         fResult = dlclose(hDynLib) == 0;
 #elif defined(HB_CAUSEWAY_DLL)
-         FreeLibrary( hDynLib );
+         FreeLibrary(hDynLib);
          fResult = HB_TRUE;
 #endif
       }
@@ -178,25 +178,25 @@ HB_BOOL hb_libFree(PHB_ITEM pDynLib)
    return fResult;
 }
 
-void * hb_libHandle( PHB_ITEM pDynLib )
+void * hb_libHandle(PHB_ITEM pDynLib)
 {
    void ** pDynLibPtr = static_cast<void**>(hb_itemGetPtrGC(pDynLib, &s_gcDynlibFuncs));
 
    return pDynLibPtr ? *pDynLibPtr : nullptr;
 }
 
-void * hb_libSymAddr( PHB_ITEM pDynLib, const char * pszSymbol )
+void * hb_libSymAddr(PHB_ITEM pDynLib, const char * pszSymbol)
 {
-   void * hDynLib = hb_libHandle( pDynLib );
+   void * hDynLib = hb_libHandle(pDynLib);
 
    if( hDynLib )
    {
 #if defined(HB_OS_WIN)
       return reinterpret_cast<void*>(GetProcAddress(static_cast<HMODULE>(hDynLib), pszSymbol));
 #elif defined(HB_HAS_DLFCN)
-      return dlsym( hDynLib, pszSymbol );
+      return dlsym(hDynLib, pszSymbol);
 #elif defined(HB_CAUSEWAY_DLL)
-      return GetProcAddress( hDynLib, pszSymbol );
+      return GetProcAddress(hDynLib, pszSymbol);
 #else
       HB_SYMBOL_UNUSED(pszSymbol);
 #endif
@@ -241,7 +241,7 @@ HB_FUNC( HB_LIBERROR )
 }
 
 /* Get FUNCTION or PROCEDURE symbol from given library.
- *    hb_libGetFunSym( <pLibHandle>, <cFuncName> ) --> <sFuncSym> | NIL
+ *    hb_libGetFunSym(<pLibHandle>, <cFuncName>) --> <sFuncSym> | NIL
  */
 HB_FUNC( HB_LIBGETFUNSYM )
 {
@@ -249,11 +249,11 @@ HB_FUNC( HB_LIBGETFUNSYM )
 
    if( szFuncName )
    {
-      void * hDynLib = hb_libHandle( hb_param(1, Harbour::Item::ANY) );
+      void * hDynLib = hb_libHandle(hb_param(1, Harbour::Item::ANY));
 
       if( hDynLib )
       {
-         PHB_SYMB pSym = hb_vmFindFuncSym( szFuncName, hDynLib );
+         PHB_SYMB pSym = hb_vmFindFuncSym(szFuncName, hDynLib);
 
          if( pSym )
          {

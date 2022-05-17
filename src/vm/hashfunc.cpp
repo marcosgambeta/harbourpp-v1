@@ -106,7 +106,7 @@ HB_FUNC( HB_HPOS )
    if( pHash && pKey )
    {
       HB_SIZE nPos;
-      hb_hashScan( pHash, pKey, &nPos );
+      hb_hashScan(pHash, pKey, &nPos);
       hb_retns(nPos);
    }
    else
@@ -175,14 +175,14 @@ HB_FUNC( HB_HSETDEF )
       PHB_ITEM pDefault = hb_param(3, Harbour::Item::ANY), pDest;
       int iFlags = hb_hashGetFlags(pHash);
 
-      if( ( iFlags & HB_HASH_AUTOADD_ACCESS ) == 0 )
+      if( (iFlags & HB_HASH_AUTOADD_ACCESS) == 0 )
       {
          hb_hashSetFlags(pHash, HB_HASH_AUTOADD_ACCESS);
       }
 
       pDest = hb_hashGetItemPtr(pHash, pKey, HB_HASH_AUTOADD_ACCESS);
 
-      if( ( iFlags & HB_HASH_AUTOADD_ACCESS ) == 0 )
+      if( (iFlags & HB_HASH_AUTOADD_ACCESS) == 0 )
       {
          hb_hashClearFlags(pHash, HB_HASH_AUTOADD_ACCESS);
       }
@@ -284,7 +284,7 @@ HB_FUNC( HB_HVALUEAT )
    if( pHash && pPos )
    {
       PHB_ITEM pItem = hb_hashGetValueAt(pHash, hb_itemGetNS(pPos));
-      if( pItem )
+      if( pItem != nullptr )
       {
          if( pValue )
          {
@@ -386,7 +386,7 @@ HB_FUNC( HB_HVALUES )
 
    if( pHash )
    {
-      hb_itemReturnRelease(hb_hashGetValues( pHash ));
+      hb_itemReturnRelease(hb_hashGetValues(pHash));
    }
    else
    {
@@ -438,7 +438,7 @@ HB_FUNC( HB_HCLONE )
 
    if( pHash )
    {
-      hb_hashCloneTo( hb_stackReturnItem(), pHash );
+      hb_hashCloneTo(hb_stackReturnItem(), pHash);
    }
    else
    {
@@ -529,7 +529,7 @@ HB_FUNC( HB_HMERGE )
          }
          else
          {
-            hb_hashJoin( pDest, pSource, pAction ? hb_itemGetNI(pAction) : HB_HASH_UNION );
+            hb_hashJoin(pDest, pSource, pAction ? hb_itemGetNI(pAction) : HB_HASH_UNION);
          }
       }
       hb_itemReturn(pDest);
@@ -636,7 +636,7 @@ HB_FUNC( HB_HSCAN )
          while( nCount-- )
          {
             PHB_ITEM pItem = hb_hashGetValueAt(pHash, nStart);
-            if( pItem )
+            if( pItem != nullptr )
             {
                if( HB_IS_STRING(pItem) && hb_itemStrCmp(pItem, pValue, fExact) == 0 )
                {
@@ -657,7 +657,7 @@ HB_FUNC( HB_HSCAN )
          while( nCount-- )
          {
             PHB_ITEM pItem = hb_hashGetValueAt(pHash, nStart);
-            if( pItem )
+            if( pItem != nullptr )
             {
                if( HB_IS_NUMERIC(pItem) && hb_itemGetNInt(pItem) == nValue && hb_itemGetND(pItem) == static_cast<double>(nValue) )
                {
@@ -678,7 +678,7 @@ HB_FUNC( HB_HSCAN )
          while( nCount-- )
          {
             PHB_ITEM pItem = hb_hashGetValueAt(pHash, nStart);
-            if( pItem )
+            if( pItem != nullptr )
             {
                if( HB_IS_NUMERIC(pItem) && hb_itemGetND(pItem) == dValue )
                {
@@ -698,7 +698,7 @@ HB_FUNC( HB_HSCAN )
          while( nCount-- )
          {
             PHB_ITEM pItem = hb_hashGetValueAt(pHash, nStart);
-            if( pItem )
+            if( pItem != nullptr )
             {
                if( HB_IS_DATETIME(pItem) &&
                    pItem->item.asDateTime.julian == pValue->item.asDateTime.julian &&
@@ -721,7 +721,7 @@ HB_FUNC( HB_HSCAN )
          while( nCount-- )
          {
             PHB_ITEM pItem = hb_hashGetValueAt(pHash, nStart);
-            if( pItem )
+            if( pItem != nullptr )
             {
                if( HB_IS_LOGICAL(pItem) && hb_itemGetL(pItem) == fValue )
                {
@@ -741,7 +741,7 @@ HB_FUNC( HB_HSCAN )
          while( nCount-- )
          {
             PHB_ITEM pItem = hb_hashGetValueAt(pHash, nStart);
-            if( pItem )
+            if( pItem != nullptr )
             {
                if( HB_IS_NIL(pItem) )
                {
@@ -761,7 +761,7 @@ HB_FUNC( HB_HSCAN )
          while( nCount-- )
          {
             PHB_ITEM pItem = hb_hashGetValueAt(pHash, nStart);
-            if( pItem )
+            if( pItem != nullptr )
             {
                if( HB_IS_POINTER(pItem) &&
                    pItem->item.asPointer.value == pValue->item.asPointer.value )
@@ -782,7 +782,7 @@ HB_FUNC( HB_HSCAN )
          while( nCount-- )
          {
             PHB_ITEM pItem = hb_hashGetValueAt(pHash, nStart);
-            if( pItem )
+            if( pItem != nullptr )
             {
                if( HB_IS_ARRAY(pItem) &&
                    pItem->item.asArray.value == pValue->item.asArray.value )
@@ -803,7 +803,7 @@ HB_FUNC( HB_HSCAN )
          while( nCount-- )
          {
             PHB_ITEM pItem = hb_hashGetValueAt(pHash, nStart);
-            if( pItem )
+            if( pItem != nullptr )
             {
                if( HB_IS_HASH(pItem) && pItem->item.asHash.value == pValue->item.asHash.value )
                {
@@ -833,7 +833,7 @@ HB_FUNC( HB_HSORT )
 
    if( pHash )
    {
-      hb_hashSort( pHash );
+      hb_hashSort(pHash);
       hb_itemReturn(pHash);
    }
    else
@@ -857,13 +857,13 @@ HB_FUNC( HB_HCASEMATCH )
       {
          if( hb_itemGetL(pValue) )
          {
-            if( ( iFlags & HB_HASH_IGNORECASE ) != 0 )
+            if( (iFlags & HB_HASH_IGNORECASE) != 0 )
             {
                hb_hashClearFlags(pHash, HB_HASH_IGNORECASE);
                hb_hashSetFlags(pHash, HB_HASH_RESORT);
             }
          }
-         else if( ( iFlags & HB_HASH_IGNORECASE ) == 0 )
+         else if( (iFlags & HB_HASH_IGNORECASE) == 0 )
          {
             hb_hashClearFlags(pHash, HB_HASH_BINARY);
             hb_hashSetFlags(pHash, HB_HASH_IGNORECASE | HB_HASH_RESORT);
@@ -891,13 +891,13 @@ HB_FUNC( HB_HBINARY )
       {
          if( hb_itemGetL(pValue) )
          {
-            if( ( iFlags & HB_HASH_BINARY ) == 0 )
+            if( (iFlags & HB_HASH_BINARY) == 0 )
             {
                hb_hashClearFlags(pHash, HB_HASH_IGNORECASE);
                hb_hashSetFlags(pHash, HB_HASH_BINARY | HB_HASH_RESORT);
             }
          }
-         else if( ( iFlags & HB_HASH_BINARY ) != 0 )
+         else if( (iFlags & HB_HASH_BINARY) != 0 )
          {
             hb_hashClearFlags(pHash, HB_HASH_BINARY);
             hb_hashSetFlags(pHash, HB_HASH_RESORT);
@@ -923,7 +923,7 @@ HB_FUNC( HB_HAUTOADD )
 
       if( hb_pcount() >= 3 )
       {
-         hb_hashSetDefault( pHash, hb_param(3, Harbour::Item::ANY) );
+         hb_hashSetDefault(pHash, hb_param(3, Harbour::Item::ANY));
       }
 
       if( pValue )
@@ -974,14 +974,14 @@ HB_FUNC( HB_HKEEPORDER )
       {
          if( hb_itemGetL(pValue) )
          {
-            if( ( iFlags & HB_HASH_KEEPORDER ) == 0 )
+            if( (iFlags & HB_HASH_KEEPORDER) == 0 )
             {
                hb_hashSetFlags(pHash, HB_HASH_KEEPORDER);
             }
          }
          else
          {
-            if( ( iFlags & HB_HASH_KEEPORDER ) != 0 )
+            if( (iFlags & HB_HASH_KEEPORDER) != 0 )
             {
                hb_hashClearFlags(pHash, HB_HASH_KEEPORDER);
             }
@@ -1019,10 +1019,10 @@ HB_FUNC( HB_HDEFAULT )
 
    if( pHash )
    {
-      hb_itemReturn(hb_hashGetDefault( pHash ));
+      hb_itemReturn(hb_hashGetDefault(pHash));
       if( hb_pcount() > 1 )
       {
-         hb_hashSetDefault( pHash, hb_param(2, Harbour::Item::ANY) );
+         hb_hashSetDefault(pHash, hb_param(2, Harbour::Item::ANY));
       }
    }
    else

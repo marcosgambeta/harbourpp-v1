@@ -47,7 +47,7 @@
 #include "hbapi.h"
 #include "hbvm.h"
 
-PHB_FUNC hb_vmProcAddress( const char * szFuncName )
+PHB_FUNC hb_vmProcAddress(const char * szFuncName)
 {
    struct HB_FUNC_REF_ADDR
    {
@@ -114,12 +114,12 @@ PHB_FUNC hb_vmProcAddress( const char * szFuncName )
       { "hb_xrealloc",         reinterpret_cast<PHB_FUNC>( hb_xrealloc               ) }
    };
 
-   unsigned int uiFirst = 0, uiLast = HB_SIZEOFARRAY( s_funcTable ), uiMiddle;
+   unsigned int uiFirst = 0, uiLast = HB_SIZEOFARRAY(s_funcTable), uiMiddle;
    int iCmp;
 
    do
    {
-      uiMiddle = ( uiFirst + uiLast ) >> 1;
+      uiMiddle = (uiFirst + uiLast) >> 1;
       iCmp = strcmp(szFuncName, s_funcTable[uiMiddle].szFuncName);
       if( iCmp <= 0 )
       {

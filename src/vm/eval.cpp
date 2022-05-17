@@ -55,7 +55,7 @@
 HB_BOOL hb_evalNew(PHB_EVALINFO pEvalInfo, PHB_ITEM pItem)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_evalNew(%p, %p)", static_cast<void*>(pEvalInfo), static_cast<void*>(pItem) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_evalNew(%p, %p)", static_cast<void*>(pEvalInfo), static_cast<void*>(pItem)));
 #endif
 
    if( pEvalInfo )
@@ -85,10 +85,10 @@ HB_BOOL hb_evalNew(PHB_EVALINFO pEvalInfo, PHB_ITEM pItem)
          all, don't release the eval parameter Items explicitly to make both
          Harbour and CA-Cl*pper happy. [vszakats] */
 
-HB_BOOL hb_evalPutParam( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
+HB_BOOL hb_evalPutParam(PHB_EVALINFO pEvalInfo, PHB_ITEM pItem)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_evalPutParam(%p, %p)", static_cast<void*>(pEvalInfo), static_cast<void*>(pItem) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_evalPutParam(%p, %p)", static_cast<void*>(pEvalInfo), static_cast<void*>(pItem)));
 #endif
 
    if( pEvalInfo && pItem && pEvalInfo->paramCount < HB_EVAL_PARAM_MAX_ )
@@ -106,7 +106,7 @@ HB_BOOL hb_evalPutParam( PHB_EVALINFO pEvalInfo, PHB_ITEM pItem )
 PHB_ITEM hb_evalLaunch(PHB_EVALINFO pEvalInfo)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_evalLaunch(%p)", static_cast<void*>(pEvalInfo) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_evalLaunch(%p)", static_cast<void*>(pEvalInfo)));
 #endif
 
    PHB_ITEM pResult = nullptr;
@@ -141,7 +141,7 @@ PHB_ITEM hb_evalLaunch(PHB_EVALINFO pEvalInfo)
          HB_USHORT uiParam = 0;
 
          hb_vmPushSymbol(pSymbol);
-         if( pItem )
+         if( pItem != nullptr )
          {
             hb_vmPush(pItem);
          }
@@ -153,7 +153,7 @@ PHB_ITEM hb_evalLaunch(PHB_EVALINFO pEvalInfo)
          {
             hb_vmPush(pEvalInfo->pItems[++uiParam]);
          }
-         if( pItem )
+         if( pItem != nullptr )
          {
             hb_vmSend(uiParam);
          }
@@ -175,7 +175,7 @@ PHB_ITEM hb_evalLaunch(PHB_EVALINFO pEvalInfo)
 HB_BOOL hb_evalRelease(PHB_EVALINFO pEvalInfo)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_evalRelease(%p)", static_cast<void*>(pEvalInfo) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_evalRelease(%p)", static_cast<void*>(pEvalInfo)));
 #endif
 
    if( pEvalInfo )
@@ -206,15 +206,15 @@ HB_BOOL hb_evalRelease(PHB_EVALINFO pEvalInfo)
          evaluated, you must use '(PHB_ITEM *) 0' as the third parameter.
  */
 
-PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
+PHB_ITEM hb_itemDo(PHB_ITEM pItem, HB_ULONG ulPCount, ...)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemDo(%p, %lu, ...)", static_cast<void*>(pItem), ulPCount ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_itemDo(%p, %lu, ...)", static_cast<void*>(pItem), ulPCount));
 #endif
 
    PHB_ITEM pResult = nullptr;
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       PHB_SYMB pSymbol = nullptr;
 
@@ -243,7 +243,7 @@ PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
          if( hb_vmRequestReenter() )
          {
             hb_vmPushSymbol(pSymbol);
-            if( pItem )
+            if( pItem != nullptr )
             {
                hb_vmPush(pItem);
             }
@@ -255,14 +255,14 @@ PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
             if( ulPCount )
             {
                va_list va;
-               va_start( va, ulPCount );
+               va_start(va, ulPCount);
                for( HB_ULONG ulParam = 1; ulParam <= ulPCount; ulParam++ )
                {
-                  hb_vmPush(va_arg( va, PHB_ITEM ));
+                  hb_vmPush(va_arg(va, PHB_ITEM));
                }
-               va_end( va );
+               va_end(va);
             }
-            if( pItem )
+            if( pItem != nullptr )
             {
                hb_vmSend(static_cast<HB_USHORT>(ulPCount));
             }
@@ -290,7 +290,7 @@ PHB_ITEM hb_itemDo( PHB_ITEM pItem, HB_ULONG ulPCount, ... )
 PHB_ITEM hb_itemDoC( const char * szFunc, HB_ULONG ulPCount, ... )
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_itemDoC(%s, %lu, ...)", szFunc, ulPCount ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_itemDoC(%s, %lu, ...)", szFunc, ulPCount));
 #endif
 
    PHB_ITEM pResult = nullptr;
@@ -308,12 +308,12 @@ PHB_ITEM hb_itemDoC( const char * szFunc, HB_ULONG ulPCount, ... )
             if( ulPCount )
             {
                va_list va;
-               va_start( va, ulPCount );
+               va_start(va, ulPCount);
                for( HB_ULONG ulParam = 1; ulParam <= ulPCount; ulParam++ )
                {
-                  hb_vmPush(va_arg( va, PHB_ITEM ));
+                  hb_vmPush(va_arg(va, PHB_ITEM));
                }
-               va_end( va );
+               va_end(va);
             }
             hb_vmProc(static_cast<HB_USHORT>(ulPCount));
             pResult = hb_itemNew(hb_stackReturnItem());
@@ -348,7 +348,7 @@ void hb_evalBlock1(PHB_ITEM pCodeBlock, PHB_ITEM pParam)
 }
 
 /* same functionality but with a nullptr terminated list of parameters */
-void hb_evalBlock( PHB_ITEM pCodeBlock, ... )
+void hb_evalBlock(PHB_ITEM pCodeBlock, ...)
 {
    va_list args;
    HB_USHORT uiParams = 0;
@@ -357,13 +357,13 @@ void hb_evalBlock( PHB_ITEM pCodeBlock, ... )
    hb_vmPushEvalSym();
    hb_vmPush(pCodeBlock);
 
-   va_start( args, pCodeBlock );
-   while( ( pParam = va_arg( args, PHB_ITEM ) ) != nullptr )
+   va_start(args, pCodeBlock);
+   while( (pParam = va_arg(args, PHB_ITEM)) != nullptr )
    {
       hb_vmPush(pParam);
       uiParams++;
    }
-   va_end( args );
+   va_end(args);
 
    hb_vmSend(uiParams);
 }
@@ -375,7 +375,7 @@ HB_FUNC( HB_FORNEXT ) /* nStart, nEnd | bEnd, bCode, nStep */
    if( pCodeBlock )
    {
       HB_MAXINT nStart = hb_parnint(1), nEnd;
-      HB_MAXINT nStep = ( hb_pcount() > 3 ) ? hb_parnint(4) : 1;
+      HB_MAXINT nStep = (hb_pcount() > 3) ? hb_parnint(4) : 1;
 
       PHB_ITEM pEndBlock = hb_param(2, Harbour::Item::BLOCK);
 
@@ -419,13 +419,13 @@ HB_FUNC( HB_FORNEXT ) /* nStart, nEnd | bEnd, bCode, nStep */
  * implementation [druzus]
  *
  * The following syntax is supported:
- *    hb_ExecFromArray( <cFuncName> [, <aParams> ] )
- *    hb_ExecFromArray( @<funcName>() [, <aParams> ] )
- *    hb_ExecFromArray( <bCodeBlock> [, <aParams> ] )
- *    hb_ExecFromArray( <oObject>, <cMethodName> [, <aParams> ] )
- *    hb_ExecFromArray( <oObject>, @<msgName>() [, <aParams> ] )
+ *    hb_ExecFromArray(<cFuncName> [, <aParams> ])
+ *    hb_ExecFromArray(@<funcName>() [, <aParams> ])
+ *    hb_ExecFromArray(<bCodeBlock> [, <aParams> ])
+ *    hb_ExecFromArray(<oObject>, <cMethodName> [, <aParams> ])
+ *    hb_ExecFromArray(<oObject>, @<msgName>() [, <aParams> ])
  * or:
- *    hb_ExecFromArray( <aExecArray> )
+ *    hb_ExecFromArray(<aExecArray>)
  * where <aExecArray> is in one of the following format:
  *    { <cFuncName> [, <params,...>] }
  *    { @<funcName>() [, <params,...>] }
@@ -484,7 +484,7 @@ HB_FUNC( HB_EXECFROMARRAY )
       }
    }
 
-   if( pFunc && ( !pArray || HB_IS_ARRAY(pArray) ) )
+   if( pFunc && (!pArray || HB_IS_ARRAY(pArray)) )
    {
       if( HB_IS_SYMBOL(pFunc) )
       {
@@ -541,11 +541,11 @@ HB_FUNC( HB_EXECFROMARRAY )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
-HB_BOOL hb_execFromArray( PHB_ITEM pParam )
+HB_BOOL hb_execFromArray(PHB_ITEM pParam)
 {
    PHB_ITEM pArray = nullptr;
    PHB_ITEM pSelf = nullptr;
@@ -623,12 +623,12 @@ HB_BOOL hb_execFromArray( PHB_ITEM pParam )
       }
    }
 
-   hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 
    return false;
 }
 
-/* hb_ExecMsg( <sFuncSym>, <object>, [<params,...>] ) --> <xResult>
+/* hb_ExecMsg(<sFuncSym>, <object>, [<params,...>]) --> <xResult>
  * Execute <sFuncSym> with <object> set as QSELF() value
  */
 HB_FUNC( HB_EXECMSG )
@@ -643,6 +643,6 @@ HB_FUNC( HB_EXECMSG )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

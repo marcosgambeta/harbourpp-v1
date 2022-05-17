@@ -245,7 +245,7 @@ void hb_winmainArgVBuild(void)
          for( iArgC = 0; iArgC < s_argc; ++iArgC )
          {
             nSize = hb_wctomblen(s_lpArgV[iArgC]) + 1;
-            hb_wcntombcpy( lpStr, s_lpArgV[iArgC], nSize - 1 );
+            hb_wcntombcpy(lpStr, s_lpArgV[iArgC], nSize - 1);
             s_lpArgVStr[iArgC] = lpStr;
             lpStr += nSize;
          }
@@ -284,7 +284,7 @@ void hb_winmainArgVFree(void)
    }
 }
 
-void hb_winmainArgInit( void * hInstance, void * hPrevInstance, int iCmdShow )
+void hb_winmainArgInit(void * hInstance, void * hPrevInstance, int iCmdShow)
 {
    s_hInstance = static_cast<HANDLE>(hInstance);
    s_hPrevInstance = static_cast<HANDLE>(hPrevInstance);
@@ -312,10 +312,10 @@ HB_BOOL hb_winmainArgGet(void * phInstance, void * phPrevInstance, int * piCmdSh
 
 #endif
 
-void hb_cmdargInit( int argc, char * argv[] )
+void hb_cmdargInit(int argc, char * argv[])
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargInit(%d, %p)", argc, static_cast<void*>(argv) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_cmdargInit(%d, %p)", argc, static_cast<void*>(argv)));
 #endif
 
 #if defined(HB_OS_WIN)
@@ -347,19 +347,19 @@ char ** hb_cmdargARGV(void)
    return s_argv;
 }
 
-const char * hb_cmdargARGVN( int argc )
+const char * hb_cmdargARGVN(int argc)
 {
    return argc >= 0 && argc < s_argc ? s_argv[argc] : nullptr;
 }
 
 /* NOTE: Pointer must be freed with hb_xfree() if not nullptr */
 
-static char * hb_cmdargDup( int argc )
+static char * hb_cmdargDup(int argc)
 {
 #if defined(HB_OS_WIN)
    if( s_lpArgV )
    {
-      return argc >= 0 && argc < s_argc ? HB_OSSTRDUP( s_lpArgV[argc] ) : nullptr;
+      return argc >= 0 && argc < s_argc ? HB_OSSTRDUP(s_lpArgV[argc]) : nullptr;
    }
 #endif
    return argc >= 0 && argc < s_argc ? hb_osStrDecode( s_argv[argc] ) : nullptr;
@@ -368,7 +368,7 @@ static char * hb_cmdargDup( int argc )
 void hb_cmdargUpdate(void) 
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargUpdate()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_cmdargUpdate()"));
 #endif
 
 #if !defined(HB_OS_WIN)
@@ -381,7 +381,7 @@ void hb_cmdargUpdate(void)
 
          if( !pFName->szPath )
          {
-            char * pszPATH = hb_getenv( "PATH" );
+            char * pszPATH = hb_getenv("PATH");
 
             if( pszPATH && *pszPATH )
             {
@@ -482,10 +482,10 @@ int hb_cmdargPushArgs(void)
    return iArgCount;
 }
 
-HB_BOOL hb_cmdargIsInternal( const char * szArg, int * piLen )
+HB_BOOL hb_cmdargIsInternal(const char * szArg, int * piLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargIsInternal(%s, %p)", szArg, static_cast<void*>(piLen) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_cmdargIsInternal(%s, %p)", szArg, static_cast<void*>(piLen)));
 #endif
 
    /* NOTE: Not checking for '--' here, as it would filter out
@@ -516,7 +516,7 @@ HB_BOOL hb_cmdargIsInternal( const char * szArg, int * piLen )
 static char * hb_cmdargGet(const char * pszName, HB_BOOL bRetValue)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargGet(%s, %d)", pszName, static_cast<int>(bRetValue) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_cmdargGet(%s, %d)", pszName, static_cast<int>(bRetValue)));
 #endif
 
    char * pszRetVal = nullptr;
@@ -541,7 +541,7 @@ static char * hb_cmdargGet(const char * pszName, HB_BOOL bRetValue)
                {
                   lpPos++;
                }
-               return HB_OSSTRDUP( lpPos );
+               return HB_OSSTRDUP(lpPos);
             }
             else
 #endif
@@ -564,7 +564,7 @@ static char * hb_cmdargGet(const char * pszName, HB_BOOL bRetValue)
    }
 
    /* Check the environment variable */
-   pszEnvVar = hb_getenv( "HARBOUR" );
+   pszEnvVar = hb_getenv("HARBOUR");
    if( !pszEnvVar || pszEnvVar[0] == '\0' )
    {
       if( pszEnvVar )
@@ -572,7 +572,7 @@ static char * hb_cmdargGet(const char * pszName, HB_BOOL bRetValue)
          hb_xfree(pszEnvVar);
       }
 
-      pszEnvVar = hb_getenv( "CLIPPER" );
+      pszEnvVar = hb_getenv("CLIPPER");
    }
 
    if( pszEnvVar && pszEnvVar[0] != '\0' )
@@ -592,20 +592,20 @@ static char * hb_cmdargGet(const char * pszName, HB_BOOL bRetValue)
          char * pszEnd;
 
          /* Skip the separators */
-         while( *pszNext && strchr( s_szSeparator, *pszNext ) )
+         while( *pszNext && strchr(s_szSeparator, *pszNext) )
          {
             pszNext++;
          }
 
          /* The // is optional in the envvar */
-         if( hb_cmdargIsInternal( pszNext, &iPrefixLen ) )
+         if( hb_cmdargIsInternal(pszNext, &iPrefixLen) )
          {
             pszNext += iPrefixLen;
          }
 
          pszEnd = pszNext;
          /* Search for the end of this switch */
-         while( *pszEnd && strchr( s_szSeparator, *pszEnd ) == nullptr )
+         while( *pszEnd && strchr(s_szSeparator, *pszEnd) == nullptr )
          {
             pszEnd++;
          }
@@ -648,7 +648,7 @@ static char * hb_cmdargGet(const char * pszName, HB_BOOL bRetValue)
    return pszRetVal;
 }
 
-HB_BOOL hb_cmdargCheck( const char * pszName )
+HB_BOOL hb_cmdargCheck(const char * pszName)
 {
    return hb_cmdargGet(pszName, false) != nullptr;
 }
@@ -660,10 +660,10 @@ char * hb_cmdargString(const char * pszName)
    return hb_cmdargGet(pszName, true);
 }
 
-int hb_cmdargNum( const char * pszName )
+int hb_cmdargNum(const char * pszName)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_cmdargNum(%s)", pszName ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_cmdargNum(%s)", pszName));
 #endif
 
    char * pszValue;
@@ -671,7 +671,7 @@ int hb_cmdargNum( const char * pszName )
    pszValue = hb_cmdargGet(pszName, true);
    if( pszValue )
    {
-      int iValue = atoi( pszValue );
+      int iValue = atoi(pszValue);
 
       hb_xfree(pszValue);
 
@@ -750,7 +750,7 @@ HB_FUNC( HB_ARGC )
 
 HB_FUNC( HB_ARGV )
 {
-   char * pszArg = hb_cmdargDup( hb_parni(1) );
+   char * pszArg = hb_cmdargDup(hb_parni(1));
 
    if( pszArg )
    {
@@ -810,7 +810,7 @@ HB_FUNC( HB_ACMDLINE )
 
       for( int iPos = 1; iPos <= iLen; ++iPos )
       {
-         hb_arraySetCPtr(pArray, iPos, hb_cmdargDup( iPos ));
+         hb_arraySetCPtr(pArray, iPos, hb_cmdargDup(iPos));
       }
 
       hb_itemReturnRelease(pArray);
@@ -850,7 +850,7 @@ HB_FUNC( HB_CMDLINE )
 
          /* Convert from OS codepage */
 #if defined(UNICODE)
-         HB_RETSTR( lpBuffer );
+         HB_RETSTR(lpBuffer);
          hb_xfree(lpBuffer);
 #else
          hb_retc_buffer(static_cast<char*>(hb_osDecodeCP(lpBuffer, nullptr, nullptr)));
@@ -893,7 +893,7 @@ void hb_cmdargProcess(void)
    int iHandles;
 #endif
 
-   if( hb_cmdargCheck( "INFO" ) )
+   if( hb_cmdargCheck("INFO") )
    {
       {
          char * pszVersion = hb_verHarbour();
@@ -921,13 +921,13 @@ void hb_cmdargProcess(void)
       }
    }
 
-   if( hb_cmdargCheck( "BUILD" ) )
+   if( hb_cmdargCheck("BUILD") )
    {
       hb_verBuildInfo();
    }
 
 #if 0
-   iHandles = hb_cmdargNum( "F" );
+   iHandles = hb_cmdargNum("F");
    if( iHandles > 20 )
    {
    }

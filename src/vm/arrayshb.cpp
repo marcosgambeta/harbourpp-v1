@@ -53,10 +53,10 @@
 /* This function creates an array item using 'iDimension' as an index
  * to retrieve the number of elements from the parameter list.
  */
-static void hb_arrayNewRagged( PHB_ITEM pArray, int iDimension )
+static void hb_arrayNewRagged(PHB_ITEM pArray, int iDimension)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_arrayNewRagged(%p, %d)", pArray, iDimension ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_arrayNewRagged(%p, %d)", pArray, iDimension));
 #endif
 
    HB_SIZE nElements;
@@ -72,7 +72,7 @@ static void hb_arrayNewRagged( PHB_ITEM pArray, int iDimension )
        */
       while( nElements )
       {
-         hb_arrayNewRagged( hb_arrayGetItemPtr(pArray, nElements--), iDimension );
+         hb_arrayNewRagged(hb_arrayGetItemPtr(pArray, nElements--), iDimension);
       }
    }
 }
@@ -87,7 +87,7 @@ HB_FUNC( ARRAY )
 
       for( int iParam = 1; iParam <= iPCount; iParam++ )
       {
-         if( !HB_ISNUM( iParam ) )
+         if( !HB_ISNUM(iParam) )
          {
             bError = HB_TRUE;
             break;
@@ -107,7 +107,7 @@ HB_FUNC( ARRAY )
 
       if( !bError )
       {
-         hb_arrayNewRagged( hb_stackReturnItem(), 1 );
+         hb_arrayNewRagged(hb_stackReturnItem(), 1);
       }
    }
 }
@@ -131,7 +131,7 @@ HB_FUNC( AADD )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
