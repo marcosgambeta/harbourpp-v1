@@ -39,7 +39,7 @@ else
          DYNDIRLIST_BASE += src/rtl/gtwvt src/rtl/gtgui
       endif
       ifeq ($(HB_PLATFORM),win)
-         DYNDIRLIST_BASE += src/rtl/gtwvt src/rtl/gtgui src/rtl/gtwin
+         DYNDIRLIST_BASE += src/rtl/gtwvt src/rtl/gtgui src/rtl/gtwin src/winapi
       endif
       ifneq ($(HB_PLATFORM_UNIX),)
          DYNDIRLIST_BASE += src/rtl/gttrm
@@ -96,8 +96,17 @@ else
       hbextern$(HB_COMP_REF) \
       debug$(HB_COMP_REF)
 
+      ifeq ($(HB_PLATFORM),win)
+         DIRS += winapi
+      endif
+
       ifneq ($(HB_BUILD_DYN),no)
-         DIRS += dynlib{3rd,codepage,common,hbextern,lang,macro,pp,rdd,rtl,vm}
+         #DIRS += dynlib{3rd,codepage,common,hbextern,lang,macro,pp,rdd,rtl,vm}
+         ifeq ($(HB_PLATFORM),win)
+            DIRS += dynlib{3rd,codepage,common,hbextern,lang,macro,pp,rdd,rtl,vm,winapi}
+		 else  	
+            DIRS += dynlib{3rd,codepage,common,hbextern,lang,macro,pp,rdd,rtl,vm}
+         endif
       endif
 
 endif
