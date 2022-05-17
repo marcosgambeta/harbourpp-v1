@@ -63,7 +63,7 @@ HB_FUNC( STUFF )
       HB_SIZE nIns = hb_parclen(4);
       HB_SIZE nTot;
 
-      if( HB_CDP_ISCHARIDX( cdp ) )
+      if( HB_CDP_ISCHARIDX(cdp) )
       {
          if( nPos )
          {
@@ -107,7 +107,7 @@ HB_FUNC( STUFF )
          }
       }
 
-      if( ( nTot = nLen + nIns - nDel ) > 0 )
+      if( (nTot = nLen + nIns - nDel) > 0 )
       {
          char * szResult = static_cast<char*>(hb_xgrab(nTot + 1));
 

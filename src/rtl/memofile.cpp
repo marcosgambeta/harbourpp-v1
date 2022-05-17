@@ -52,7 +52,7 @@
          this limit is extended, so we are not *strictly* compatible here.
          [vszakats] */
 
-static void hb_memoread( HB_BOOL bHandleEOF )
+static void hb_memoread(HB_BOOL bHandleEOF)
 {
    const char * pszFileName = hb_parc(1);
 
@@ -94,7 +94,7 @@ HB_FUNC( MEMOREAD )
    hb_memoread(true);
 }
 
-static HB_BOOL hb_memowrit( HB_BOOL bHandleEOF )
+static HB_BOOL hb_memowrit(HB_BOOL bHandleEOF)
 {
    const char * pszFileName = hb_parc(1);
    PHB_ITEM pString   = hb_param(2, Harbour::Item::STRING);

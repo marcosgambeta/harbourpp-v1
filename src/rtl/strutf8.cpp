@@ -63,7 +63,7 @@ HB_FUNC( HB_STRISUTF8 )
          {
             int i = 0;
 
-            while( ( c <<= 1 ) & 0x80  )
+            while( (c <<= 1) & 0x80 )
             {
                ++i;
             }
@@ -73,7 +73,7 @@ HB_FUNC( HB_STRISUTF8 )
             }
             nLen -= i;
             do
-               if( ( *szText++ & 0xC0 ) != 0x80 )
+               if( (*szText++ & 0xC0) != 0x80 )
                {
                   break;
                }

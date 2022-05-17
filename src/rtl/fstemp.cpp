@@ -74,8 +74,8 @@
 #  define HB_HAS_MKSTEMP
 #  if ( defined(HB_OS_BSD) && !defined(__NetBSD__) ) || defined(HB_OS_DARWIN)
 #     define HB_HAS_MKSTEMPS
-#  elif defined(HB_OS_LINUX) && ( defined(_BSD_SOURCE) || defined(_SVID_SOURCE) ) && defined(__GLIBC_PREREQ)
-#     if __GLIBC_PREREQ( 2, 12 )
+#  elif defined(HB_OS_LINUX) && (defined(_BSD_SOURCE) || defined(_SVID_SOURCE)) && defined(__GLIBC_PREREQ)
+#     if __GLIBC_PREREQ(2, 12)
 #        define HB_HAS_MKSTEMPS
 #     endif
 #  endif
@@ -142,7 +142,7 @@ static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_B
 }
 #endif
 
-HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * pszPrefix, const char * pszExt, HB_FATTR ulAttr )
+HB_FHANDLE hb_fsCreateTempEx(char * pszName, const char * pszDir, const char * pszPrefix, const char * pszExt, HB_FATTR ulAttr)
 {
    /* less attemps */
    int iAttemptLeft = 99, iLen;
@@ -173,7 +173,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
       }
 
       iLen = static_cast<int>(strlen(pszName));
-      if( iLen > ( HB_PATH_MAX - 1 ) - 6 - ( pszExt ? static_cast<int>(strlen(pszExt)) : 0 ) )
+      if( iLen > (HB_PATH_MAX - 1) - 6 - (pszExt ? static_cast<int>(strlen(pszExt)) : 0) )
       {
          fd = FS_ERROR;
          break;
@@ -185,7 +185,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
           hb_setGetDirCase() != HB_SET_CASE_LOWER &&
           hb_setGetDirCase() != HB_SET_CASE_UPPER
 #if !defined(HB_HAS_MKSTEMPS)
-          && ( pszExt == nullptr || *pszExt == 0 )
+          && (pszExt == nullptr || *pszExt == 0)
 #endif
         )
       {
@@ -198,7 +198,7 @@ HB_FHANDLE hb_fsCreateTempEx( char * pszName, const char * pszDir, const char * 
 #if defined(HB_USE_LARGEFILE64)
             fd = static_cast<HB_FHANDLE>(mkstemps64(pszName, static_cast<int>(strlen(pszExt))));
 #else
-            fd = static_cast<HB_FHANDLE>(mkstemps( pszName, static_cast<int>(strlen(pszExt)) ));
+            fd = static_cast<HB_FHANDLE>(mkstemps(pszName, static_cast<int>(strlen(pszExt))));
 #endif
          }
          else
@@ -303,7 +303,7 @@ static HB_BOOL hb_fsTempName(char * pszBuffer, const char * pszDir, const char *
       HB_SYMBOL_UNUSED(pszPrefix);
 
       pTmpBuffer[0] = '\0';
-      fResult = ( tmpnam( pTmpBuffer ) != nullptr );
+      fResult = (tmpnam(pTmpBuffer) != nullptr);
       pTmpBuffer[L_tmpnam] = '\0';
 
       if( fResult )
@@ -368,7 +368,7 @@ HB_FHANDLE hb_fsCreateTemp(const char * pszDir, const char * pszPrefix, HB_FATTR
 }
 
 /* NOTE: pszTempDir must be at least HB_PATH_MAX long. */
-HB_ERRCODE hb_fsTempDir( char * pszTempDir )
+HB_ERRCODE hb_fsTempDir(char * pszTempDir)
 {
    HB_ERRCODE nResult = static_cast<HB_ERRCODE>(FS_ERROR);
 
@@ -376,19 +376,19 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
 
 #if defined(HB_OS_UNIX)
    {
-      char * pszTempDirEnv = hb_getenv( "TMPDIR" );
+      char * pszTempDirEnv = hb_getenv("TMPDIR");
 
-      if( fsGetTempDirByCase( pszTempDir, pszTempDirEnv, false ) )
+      if( fsGetTempDirByCase(pszTempDir, pszTempDirEnv, false) )
       {
          nResult = 0;
       }
 #ifdef P_tmpdir
-      else if( fsGetTempDirByCase( pszTempDir, P_tmpdir, true ) )
+      else if( fsGetTempDirByCase(pszTempDir, P_tmpdir, true) )
       {
          nResult = 0;
       }
 #endif
-      else if( fsGetTempDirByCase( pszTempDir, "/tmp", true ) )
+      else if( fsGetTempDirByCase(pszTempDir, "/tmp", true) )
       {
          nResult = 0;
       }
@@ -402,7 +402,7 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
    {
       TCHAR lpDir[HB_PATH_MAX];
 
-      if( GetTempPath( HB_PATH_MAX, lpDir ) )
+      if( GetTempPath(HB_PATH_MAX, lpDir) )
       {
          nResult = 0;
          lpDir[HB_PATH_MAX - 1] = TEXT('\0');
@@ -417,11 +417,11 @@ HB_ERRCODE hb_fsTempDir( char * pszTempDir )
 
       while( *tmp && nResult != 0 )
       {
-         char * pszTempDirEnv = hb_getenv( *tmp++ );
+         char * pszTempDirEnv = hb_getenv(*tmp++);
 
          if( pszTempDirEnv )
          {
-            if( fsGetTempDirByCase( pszTempDir, pszTempDirEnv, false ) )
+            if( fsGetTempDirByCase(pszTempDir, pszTempDirEnv, false) )
             {
                nResult = 0;
             }

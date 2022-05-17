@@ -57,7 +57,7 @@ HB_FUNC( AMPM )
    {
       const char * pszTime = hb_parc(1);
       memcpy(pszResult, pszTime, nTimeLen);
-      iHour = static_cast<int>(hb_strVal( pszTime, nTimeLen ));
+      iHour = static_cast<int>(hb_strVal(pszTime, nTimeLen));
    }
 
    if( iHour == 0 || iHour == 24 )
@@ -91,7 +91,7 @@ HB_FUNC( AMPM )
    }
    else
    {
-      bAM = ( iHour != 12 );
+      bAM = (iHour != 12);
    }
    
    memcpy(pszResult + nTimeLen, bAM ? " am" : " pm", 4);

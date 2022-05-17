@@ -57,11 +57,11 @@ HB_FUNC( CTOD )
 {
    if( HB_ISCHAR(1) )
    {
-      hb_retdl( hb_dateUnformat( hb_parc(1), hb_setGetDateFormat() ) );
+      hb_retdl(hb_dateUnformat(hb_parc(1), hb_setGetDateFormat()));
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1119, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1119, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -75,11 +75,11 @@ HB_FUNC( HB_CTOD )
       {
          szFormat = hb_setGetDateFormat();
       }
-      hb_retdl( hb_dateUnformat( hb_parc(1), szFormat ) );
+      hb_retdl(hb_dateUnformat(hb_parc(1), szFormat));
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1119, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1119, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -94,7 +94,7 @@ HB_FUNC( DTOC )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1118, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1118, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -114,7 +114,7 @@ HB_FUNC( HB_DTOC )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1118, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1118, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -128,7 +128,7 @@ HB_FUNC( DTOS )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1120, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1120, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -155,7 +155,7 @@ HB_FUNC( YEAR )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1112, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1112, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -173,7 +173,7 @@ HB_FUNC( MONTH )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1113, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1113, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -191,7 +191,7 @@ HB_FUNC( DAY )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1114, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1114, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -205,7 +205,7 @@ HB_FUNC( DOW )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1115, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1115, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -213,7 +213,7 @@ HB_FUNC( TIME )
 {
    char szResult[9];
 
-   hb_dateTimeStr( szResult );
+   hb_dateTimeStr(szResult);
    hb_retclen(szResult, 8);
 }
 
@@ -221,8 +221,8 @@ HB_FUNC( DATE )
 {
    int iYear, iMonth, iDay;
 
-   hb_dateToday( &iYear, &iMonth, &iDay );
-   hb_retd( iYear, iMonth, iDay );
+   hb_dateToday(&iYear, &iMonth, &iDay);
+   hb_retd(iYear, iMonth, iDay);
 }
 
 HB_FUNC( HB_DATE )
@@ -230,12 +230,12 @@ HB_FUNC( HB_DATE )
    if( hb_pcount() == 0 )
    {
       int iYear, iMonth, iDay;
-      hb_dateToday( &iYear, &iMonth, &iDay );
-      hb_retd( iYear, iMonth, iDay );
+      hb_dateToday(&iYear, &iMonth, &iDay);
+      hb_retd(iYear, iMonth, iDay);
    }
    else
    {
-      hb_retd( hb_parni(1), hb_parni(2), hb_parni(3) );
+      hb_retd(hb_parni(1), hb_parni(2), hb_parni(3));
    }
 }
 
@@ -245,11 +245,11 @@ HB_FUNC( HB_DATETIME )
    {
       long lDate, lTime;
       hb_timeStampGet(&lDate, &lTime);
-      hb_rettdt( lDate, lTime );
+      hb_rettdt(lDate, lTime);
    }
    else
    {
-      hb_rettdt( hb_dateEncode( hb_parni(1), hb_parni(2), hb_parni(3) ), hb_timeEncode( hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7) ) );
+      hb_rettdt(hb_dateEncode(hb_parni(1), hb_parni(2), hb_parni(3) ), hb_timeEncode(hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7)));
    }
 }
 
@@ -257,12 +257,12 @@ HB_FUNC( HB_DTOT )
 {
    long lDate, lTime, lDate2;
 
-   if( hb_partdt( &lDate, &lTime, 1 ) )
+   if( hb_partdt(&lDate, &lTime, 1) )
    {
       const char * szTime = hb_parc(2);
       if( szTime )
       {
-         hb_timeStampStrGetDT( szTime, &lDate2, &lTime );
+         hb_timeStampStrGetDT(szTime, &lDate2, &lTime);
       }
       else if( HB_ISNUM(2) )
       {
@@ -276,11 +276,11 @@ HB_FUNC( HB_DTOT )
       {
          lTime = 0;
       }
-      hb_rettdt( lDate, lTime );
+      hb_rettdt(lDate, lTime);
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -288,9 +288,9 @@ HB_FUNC( HB_TTOD )
 {
    long lDate, lTime;
 
-   if( hb_partdt( &lDate, &lTime, 1 ) )
+   if( hb_partdt(&lDate, &lTime, 1) )
    {
-      hb_retdl( lDate );
+      hb_retdl(lDate);
       if( HB_ISBYREF(2) )
       {
          const char * szTimeFormat = hb_parc(3);
@@ -311,7 +311,7 @@ HB_FUNC( HB_TTOD )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -325,7 +325,7 @@ HB_FUNC( HB_TTON )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -335,11 +335,11 @@ HB_FUNC( HB_NTOT )
 
    if( pNum )
    {
-      hb_rettd( hb_itemGetND(pNum) );
+      hb_rettd(hb_itemGetND(pNum));
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -353,7 +353,7 @@ HB_FUNC( HB_NTOMSEC )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -367,7 +367,7 @@ HB_FUNC( HB_NTOSEC )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -381,7 +381,7 @@ HB_FUNC( HB_NTOMIN )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -395,7 +395,7 @@ HB_FUNC( HB_NTOHOUR )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -403,13 +403,13 @@ HB_FUNC( HB_TTOSEC )
 {
    long lDate, lTime;
 
-   if( hb_partdt( &lDate, &lTime, 1 ) )
+   if( hb_partdt(&lDate, &lTime, 1) )
    {
       hb_retnd(static_cast<double>(lDate) * HB_SECONDS_PER_DAY + static_cast<double>(lTime) / 1000);
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -419,11 +419,11 @@ HB_FUNC( HB_SECTOT )
 
    if( pNum )
    {
-      hb_rettd( hb_itemGetND(pNum) / HB_SECONDS_PER_DAY );
+      hb_rettd(hb_itemGetND(pNum) / HB_SECONDS_PER_DAY);
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -433,11 +433,11 @@ HB_FUNC( HB_MSECTOT )
 
    if( pNum )
    {
-      hb_rettd( hb_itemGetND(pNum) / HB_MILLISECS_PER_DAY );
+      hb_rettd(hb_itemGetND(pNum) / HB_MILLISECS_PER_DAY);
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -445,13 +445,13 @@ HB_FUNC( HB_TTOMSEC )
 {
    long lDate, lTime;
 
-   if( hb_partdt( &lDate, &lTime, 1 ) )
+   if( hb_partdt(&lDate, &lTime, 1) )
    {
       hb_retnd(static_cast<double>(lDate) * HB_MILLISECS_PER_DAY + lTime);
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -459,13 +459,13 @@ HB_FUNC( HB_TTOMIN )
 {
    long lDate, lTime;
 
-   if( hb_partdt( &lDate, &lTime, 1 ) )
+   if( hb_partdt(&lDate, &lTime, 1) )
    {
       hb_retnd(static_cast<double>(lDate) * HB_MINUTES_PER_DAY + static_cast<double>(lTime) / (60 * 1000));
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -473,13 +473,13 @@ HB_FUNC( HB_TTOHOUR )
 {
    long lDate, lTime;
 
-   if( hb_partdt( &lDate, &lTime, 1 ) )
+   if( hb_partdt(&lDate, &lTime, 1) )
    {
       hb_retnd(static_cast<double>(lDate) * 24 + static_cast<double>(lTime) / (60 * 60 * 1000));
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -487,7 +487,7 @@ HB_FUNC( HB_TTOC )
 {
    long lDate, lTime;
 
-   if( hb_partdt( &lDate, &lTime, 1 ) )
+   if( hb_partdt(&lDate, &lTime, 1) )
    {
       const char * szDateFormat = hb_parc(2);
       const char * szTimeFormat = hb_parc(3);
@@ -506,7 +506,7 @@ HB_FUNC( HB_TTOC )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -529,12 +529,12 @@ HB_FUNC( HB_CTOT )
          szTimeFormat = hb_setGetTimeFormat();
       }
 
-      hb_timeStampUnformat( szDateTime, szDateFormat, szTimeFormat, &lDate, &lTime );
-      hb_rettdt( lDate, lTime );
+      hb_timeStampUnformat(szDateTime, szDateFormat, szTimeFormat, &lDate, &lTime);
+      hb_rettdt(lDate, lTime);
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -542,7 +542,7 @@ HB_FUNC( HB_TTOS )
 {
    long lDate, lTime;
 
-   if( hb_partdt( &lDate, &lTime, 1 ) )
+   if( hb_partdt(&lDate, &lTime, 1) )
    {
       char szBuffer[18];
 
@@ -550,7 +550,7 @@ HB_FUNC( HB_TTOS )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -563,11 +563,11 @@ HB_FUNC( HB_STOT )
       long lDate, lTime;
 
       hb_timeStampStrRawGet(szDateTime, &lDate, &lTime);
-      hb_rettdt( lDate, lTime );
+      hb_rettdt(lDate, lTime);
    }
    else
    {
-      hb_rettdt( 0, 0 );
+      hb_rettdt(0, 0);
    }
 }
 
@@ -575,7 +575,7 @@ HB_FUNC( HB_HOUR )
 {
    long lDate, lTime;
 
-   if( hb_partdt( &lDate, &lTime, 1 ) )
+   if( hb_partdt(&lDate, &lTime, 1) )
    {
       int iHour, iMinutes, iSeconds, iMSec;
 
@@ -584,7 +584,7 @@ HB_FUNC( HB_HOUR )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -592,7 +592,7 @@ HB_FUNC( HB_MINUTE )
 {
    long lDate, lTime;
 
-   if( hb_partdt( &lDate, &lTime, 1 ) )
+   if( hb_partdt(&lDate, &lTime, 1) )
    {
       int iHour, iMinutes, iSeconds, iMSec;
 
@@ -601,7 +601,7 @@ HB_FUNC( HB_MINUTE )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -609,7 +609,7 @@ HB_FUNC( HB_SEC )
 {
    long lDate, lTime;
 
-   if( hb_partdt( &lDate, &lTime, 1 ) )
+   if( hb_partdt(&lDate, &lTime, 1) )
    {
       int iHour, iMinutes, iSeconds, iMSec;
 
@@ -618,7 +618,7 @@ HB_FUNC( HB_SEC )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -626,11 +626,11 @@ HB_FUNC( HB_TSTOSTR )
 {
    long lDate, lTime;
 
-   if( hb_partdt( &lDate, &lTime, 1 ) )
+   if( hb_partdt(&lDate, &lTime, 1) )
    {
       char szBuffer[24];
 
-      hb_timeStampStr( szBuffer, lDate, lTime );
+      hb_timeStampStr(szBuffer, lDate, lTime);
       if( hb_parl(2) )
       {
          if( lTime == 0 )
@@ -676,7 +676,7 @@ HB_FUNC( HB_TSTOSTR )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -688,17 +688,17 @@ HB_FUNC( HB_STRTOTS )
    {
       long lDate, lTime;
 
-      hb_timeStampStrGetDT( szDateTime, &lDate, &lTime );
-      hb_rettdt( lDate, lTime );
+      hb_timeStampStrGetDT(szDateTime, &lDate, &lTime);
+      hb_rettdt(lDate, lTime);
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 /* get week number and other parts ISO 8601 week date:
-   hb_Week( <dDate>, [@<nYear>], [@<nDayOfWeek>] ) --> <nWeek> */
+   hb_Week(<dDate>, [@<nYear>], [@<nDayOfWeek>]) --> <nWeek> */
 HB_FUNC( HB_WEEK )
 {
    PHB_ITEM pDate = hb_param(1, Harbour::Item::DATETIME);
@@ -707,14 +707,14 @@ HB_FUNC( HB_WEEK )
    {
       int iYear, iWeek, iDay;
 
-      hb_dateDecWeek( hb_itemGetDL(pDate), &iYear, &iWeek, &iDay );
+      hb_dateDecWeek(hb_itemGetDL(pDate), &iYear, &iWeek, &iDay);
       hb_storni(iYear, 2);
       hb_storni(iDay, 3);
       hb_retni(iWeek);
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -724,7 +724,7 @@ HB_FUNC( HB_UTCOFFSET )
    {
       int iYear, iMonth, iDay, iHour, iMinute, iSecond, iMSec;
 
-      hb_timeStampUnpack( hb_partd(1), &iYear, &iMonth, &iDay, &iHour, &iMinute, &iSecond, &iMSec );
+      hb_timeStampUnpack(hb_partd(1), &iYear, &iMonth, &iDay, &iHour, &iMinute, &iSecond, &iMSec);
       hb_retnl(hb_timeStampUTCOffset(iYear, iMonth, iDay, iHour, iMinute, iSecond));
    }
    else
@@ -737,10 +737,10 @@ HB_FUNC( HB_TSTOUTC )
 {
    if( HB_ISTIMESTAMP(1) )
    {
-      hb_rettd( hb_timeLocalToUTC( hb_partd(1) ) );
+      hb_rettd(hb_timeLocalToUTC(hb_partd(1)));
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

@@ -53,7 +53,7 @@ HB_FUNC( HB_SHA224 )
    unsigned char digest[SHA224_DIGEST_SIZE];
    sha224_ctx ctx;
 
-   hb_sha224_init( &ctx );
+   hb_sha224_init(&ctx);
    #if HB_SIZE_MAX > UINT_MAX
    {
       const char * buffer = hb_parcx(1);
@@ -83,12 +83,12 @@ HB_FUNC( HB_SHA224 )
    #else
       hb_sha224_update( &ctx, hb_parcx(1), hb_parclen(1) );
    #endif
-   hb_sha224_final( &ctx, digest );
+   hb_sha224_final(&ctx, digest);
 
    if( !hb_parl(2) )
    {
       char hex[( sizeof(digest) * 2 ) + 1];
-      hb_strtohex( reinterpret_cast<char*>(digest), sizeof(digest), hex );
+      hb_strtohex(reinterpret_cast<char*>(digest), sizeof(digest), hex);
       hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
    }
    else
@@ -102,7 +102,7 @@ HB_FUNC( HB_SHA256 )
    unsigned char digest[SHA256_DIGEST_SIZE];
    sha256_ctx ctx;
 
-   hb_sha256_init( &ctx );
+   hb_sha256_init(&ctx);
    #if HB_SIZE_MAX > UINT_MAX
    {
       const char * buffer = hb_parcx(1);
@@ -132,12 +132,12 @@ HB_FUNC( HB_SHA256 )
    #else
       hb_sha256_update( &ctx, hb_parcx(1), hb_parclen(1) );
    #endif
-   hb_sha256_final( &ctx, digest );
+   hb_sha256_final(&ctx, digest);
 
    if( !hb_parl(2) )
    {
       char hex[( sizeof(digest) * 2 ) + 1];
-      hb_strtohex( reinterpret_cast<char*>(digest), sizeof(digest), hex );
+      hb_strtohex(reinterpret_cast<char*>(digest), sizeof(digest), hex);
       hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
    }
    else
@@ -151,7 +151,7 @@ HB_FUNC( HB_SHA384 )
    unsigned char digest[SHA384_DIGEST_SIZE];
    sha384_ctx ctx;
 
-   hb_sha384_init( &ctx );
+   hb_sha384_init(&ctx);
    #if HB_SIZE_MAX > UINT_MAX
    {
       const char * buffer = hb_parcx(1);
@@ -181,12 +181,12 @@ HB_FUNC( HB_SHA384 )
    #else
       hb_sha384_update( &ctx, hb_parcx(1), hb_parclen(1) );
    #endif
-   hb_sha384_final( &ctx, digest );
+   hb_sha384_final(&ctx, digest);
 
    if( !hb_parl(2) )
    {
       char hex[( sizeof(digest) * 2 ) + 1];
-      hb_strtohex( reinterpret_cast<char*>(digest), sizeof(digest), hex );
+      hb_strtohex(reinterpret_cast<char*>(digest), sizeof(digest), hex);
       hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
    }
    else
@@ -200,7 +200,7 @@ HB_FUNC( HB_SHA512 )
    unsigned char digest[SHA512_DIGEST_SIZE];
    sha512_ctx ctx;
 
-   hb_sha512_init( &ctx );
+   hb_sha512_init(&ctx);
    #if HB_SIZE_MAX > UINT_MAX
    {
       const char * buffer = hb_parcx(1);
@@ -230,12 +230,12 @@ HB_FUNC( HB_SHA512 )
    #else
       hb_sha512_update( &ctx, hb_parcx(1), hb_parclen(1) );
    #endif
-   hb_sha512_final( &ctx, digest );
+   hb_sha512_final(&ctx, digest);
 
    if( !hb_parl(2) )
    {
       char hex[( sizeof(digest) * 2 ) + 1];
-      hb_strtohex( reinterpret_cast<char*>(digest), sizeof(digest), hex );
+      hb_strtohex(reinterpret_cast<char*>(digest), sizeof(digest), hex);
       hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
    }
    else

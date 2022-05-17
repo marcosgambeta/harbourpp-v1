@@ -56,7 +56,7 @@
 #define HB_BFSOCK_READAHEAD   0x40
 #define HB_BFSOCK_WRBUFSIZE   4096
 
-#define HB_BFSOCK_GET( p )    ( static_cast<PHB_SOCKEX_BF>(p->cargo) )
+#define HB_BFSOCK_GET(p)    ( static_cast<PHB_SOCKEX_BF>(p->cargo) )
 
 struct HB_SOCKEX_BF
 {
@@ -88,12 +88,12 @@ static void s_bf_hash( const HB_BLOWFISH * bf, HB_BYTE * vect, HB_BYTE * counter
       ++cl;
       HB_PUT_BE_UINT32(&counter[0], cl);
    }
-   hb_blowfishEncrypt( bf, &xl, &xr );
+   hb_blowfishEncrypt(bf, &xl, &xr);
    HB_PUT_BE_UINT32(&vect[0], xl);
    HB_PUT_BE_UINT32(&vect[4], xr);
 }
 
-static long s_bf_send( PHB_SOCKEX_BF pBF, HB_MAXINT timeout )
+static long s_bf_send(PHB_SOCKEX_BF pBF, HB_MAXINT timeout)
 {
    long lSent = 0, len = pBF->inbuffer;
 
@@ -137,14 +137,14 @@ static long s_bf_send( PHB_SOCKEX_BF pBF, HB_MAXINT timeout )
 
 static long s_sockexRead(PHB_SOCKEX pSock, void * data, long len, HB_MAXINT timeout)
 {
-   PHB_SOCKEX_BF pBF = HB_BFSOCK_GET( pSock );
+   PHB_SOCKEX_BF pBF = HB_BFSOCK_GET(pSock);
    long lRecv;
 
    if( pSock->inbuffer > 0 && len > 0 )
    {
       lRecv = HB_MIN(pSock->inbuffer, len);
       memcpy(data, pSock->buffer + pSock->posbuffer, lRecv);
-      if( ( pSock->inbuffer -= lRecv ) > 0 )
+      if( (pSock->inbuffer -= lRecv) > 0 )
       {
          pSock->posbuffer += lRecv;
       }
@@ -158,11 +158,11 @@ static long s_sockexRead(PHB_SOCKEX pSock, void * data, long len, HB_MAXINT time
       lRecv = hb_sockexRead(pBF->sock, data, len, timeout);
       if( lRecv > 0 )
       {
-         HB_BYTE * pData = ( HB_BYTE * ) data;
+         HB_BYTE * pData = static_cast<HB_BYTE*>(data);
 
          for( long l = 0; l < lRecv; ++l )
          {
-            if( ( pBF->decoded & ( HB_BF_CIPHERBLOCK - 1 ) ) == 0 )
+            if( (pBF->decoded & (HB_BF_CIPHERBLOCK - 1)) == 0 )
             {
                s_bf_hash( &pBF->bf, pBF->decryptkey, pBF->decounter );
                pBF->decoded = 0;
@@ -176,7 +176,7 @@ static long s_sockexRead(PHB_SOCKEX pSock, void * data, long len, HB_MAXINT time
 
 static long s_sockexWrite(PHB_SOCKEX pSock, const void * data, long len, HB_MAXINT timeout)
 {
-   PHB_SOCKEX_BF pBF = HB_BFSOCK_GET( pSock );
+   PHB_SOCKEX_BF pBF = HB_BFSOCK_GET(pSock);
    const HB_BYTE * pData = static_cast<const HB_BYTE*>(data);
    long lWritten = 0, lDone;
 
@@ -184,16 +184,16 @@ static long s_sockexWrite(PHB_SOCKEX pSock, const void * data, long len, HB_MAXI
    {
       if( pBF->inbuffer == HB_BFSOCK_WRBUFSIZE )
       {
-         lWritten = s_bf_send( pBF, timeout );
+         lWritten = s_bf_send(pBF, timeout);
          if( lWritten <= 0 )
          {
             break;
          }
          timeout = 0;
       }
-      if( ( pBF->encoded & ( HB_BF_CIPHERBLOCK - 1 ) ) == 0 )
+      if( (pBF->encoded & (HB_BF_CIPHERBLOCK - 1)) == 0 )
       {
-         s_bf_hash( &pBF->bf, pBF->encryptkey, pBF->encounter );
+         s_bf_hash(&pBF->bf, pBF->encryptkey, pBF->encounter);
          pBF->encoded = 0;
       }
       pBF->buffer[pBF->inbuffer++] = pData[lDone] ^ pBF->encryptkey[pBF->encoded++];
@@ -202,18 +202,18 @@ static long s_sockexWrite(PHB_SOCKEX pSock, const void * data, long len, HB_MAXI
    return lWritten >= 0 ? lDone : lWritten;
 }
 
-static long s_sockexFlush( PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync )
+static long s_sockexFlush(PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync)
 {
-   PHB_SOCKEX_BF pBF = HB_BFSOCK_GET( pSock );
+   PHB_SOCKEX_BF pBF = HB_BFSOCK_GET(pSock);
 
    while( pBF->inbuffer > 0 )
    {
-      if( s_bf_send( pBF, timeout ) <= 0 )
+      if( s_bf_send(pBF, timeout) <= 0 )
       {
          break;
       }
    }
-   return pBF->inbuffer + hb_sockexFlush( pBF->sock, timeout, fSync );
+   return pBF->inbuffer + hb_sockexFlush(pBF->sock, timeout, fSync);
 }
 
 static int s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
@@ -243,21 +243,21 @@ static char * s_sockexName(PHB_SOCKEX pSock)
    return pszName;
 }
 
-static const char * s_sockexErrorStr( PHB_SOCKEX pSock, int iError )
+static const char * s_sockexErrorStr(PHB_SOCKEX pSock, int iError)
 {
-   return hb_sockexErrorStr( HB_BFSOCK_GET( pSock )->sock, iError );
+   return hb_sockexErrorStr(HB_BFSOCK_GET(pSock)->sock, iError);
 }
 
 static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
 {
-   PHB_SOCKEX_BF pBF = HB_BFSOCK_GET( pSock );
+   PHB_SOCKEX_BF pBF = HB_BFSOCK_GET(pSock);
    int iResult = 0;
 
    if( pBF )
    {
       if( pBF->sock )
       {
-         s_sockexFlush( pSock, HB_MAX(15000, pSock->iAutoFlush), true );
+         s_sockexFlush(pSock, HB_MAX(15000, pSock->iAutoFlush), true);
       }
 
       if( pBF->sock )
@@ -283,7 +283,7 @@ static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
    return iResult;
 }
 
-static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams );
+static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams);
 
 static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
 {
@@ -292,7 +292,7 @@ static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
    pSock = hb_sockexNew(sd, nullptr, pParams);
    if( pSock )
    {
-      pSockNew = s_sockexNext( pSock, pParams );
+      pSockNew = s_sockexNext(pSock, pParams);
       if( pSockNew == nullptr )
       {
          hb_sockexClose(pSock, false);
@@ -317,7 +317,7 @@ static const HB_SOCKET_FILTER s_sockFilter =
    s_sockexErrorStr
 };
 
-static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
+static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
 {
    PHB_SOCKEX pSockNew = nullptr;
 
@@ -333,7 +333,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
          const HB_BYTE * pVect = static_cast<const HB_BYTE*>(ivlen > 0 ? iv : nullptr);
          int i;
 
-         hb_blowfishInit( &pBF->bf, keydata, keylen );
+         hb_blowfishInit(&pBF->bf, keydata, keylen);
          for( i = 0; i < HB_BF_CIPHERBLOCK; ++i )
          {
             if( pVect && ivlen > 0 )
@@ -354,21 +354,21 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
          pSockNew->pFilter = &s_sockFilter;
          pSockNew->cargo = static_cast<void*>(pBF);
          pBF->sock = pSock;
-         hb_socekxParamsInit( pSockNew, pParams );
+         hb_socekxParamsInit(pSockNew, pParams);
       }
    }
 
    return pSockNew;
 }
 
-/* hb_socketNewBFSock( <pSocket>, [<hParams>] ) --> <pSocket> */
+/* hb_socketNewBFSock(<pSocket>, [<hParams>]) --> <pSocket> */
 HB_FUNC( HB_SOCKETNEWBFSOCK )
 {
    PHB_SOCKEX pSock = hb_sockexParam(1);
 
    if( pSock )
    {
-      pSock = s_sockexNext( pSock, hb_param(2, Harbour::Item::HASH) );
+      pSock = s_sockexNext(pSock, hb_param(2, Harbour::Item::HASH));
       if( pSock )
       {
          hb_sockexItemClear(hb_param(1, Harbour::Item::POINTER));
@@ -377,9 +377,9 @@ HB_FUNC( HB_SOCKETNEWBFSOCK )
    }
 }
 
-HB_CALL_ON_STARTUP_BEGIN( _hb_bfsock_init_ )
-   hb_sockexRegister( &s_sockFilter );
-HB_CALL_ON_STARTUP_END( _hb_bfsock_init_ )
+HB_CALL_ON_STARTUP_BEGIN(_hb_bfsock_init_)
+   hb_sockexRegister(&s_sockFilter);
+HB_CALL_ON_STARTUP_END(_hb_bfsock_init_)
 
 #if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_bfsock_init_

@@ -63,7 +63,7 @@ HB_FUNC( HB_STRDECODESCAPE )
       {
          char * str = static_cast<char*>(hb_xgrab(nLen + 1));
          hb_xmemcpy(str, hb_itemGetCPtr(pText), nLen + 1);
-         hb_strRemEscSeq( str, &nLen );
+         hb_strRemEscSeq(str, &nLen);
          hb_retclen_buffer(str, nLen);
       }
       else
@@ -73,7 +73,7 @@ HB_FUNC( HB_STRDECODESCAPE )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -139,7 +139,7 @@ HB_FUNC( HB_STRCDECODE )
             {
                pszSrc += n;
                nLen -= n;
-               hb_strRemEscSeq( pszDst + nDst, &n );
+               hb_strRemEscSeq(pszDst + nDst, &n);
                nDst += n;
             }
             if( !fCont )
@@ -148,7 +148,7 @@ HB_FUNC( HB_STRCDECODE )
                --nLen;
             }
          }
-         if( nLen == 0 && ( !fCont || HB_ISBYREF(2) ) )
+         if( nLen == 0 && (!fCont || HB_ISBYREF(2)) )
          {
             hb_retclen_buffer(pszDst, nDst);
             hb_storl(fCont, 2);
@@ -165,6 +165,6 @@ HB_FUNC( HB_STRCDECODE )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

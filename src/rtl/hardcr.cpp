@@ -48,17 +48,17 @@
 #include "hbapiitm.h"
 #include "hbapicdp.h"
 
-static char * hb_strHardCR( char * pszString, HB_SIZE nStringLen )
+static char * hb_strHardCR(char * pszString, HB_SIZE nStringLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strHardCR(%s, %" HB_PFS "u)", pszString, nStringLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strHardCR(%s, %" HB_PFS "u)", pszString, nStringLen));
 #endif
 
    HB_SIZE nStringPos;
    PHB_CODEPAGE cdp;
 
    cdp = hb_vmCDP();
-   if( HB_CDP_ISCUSTOM( cdp ) )
+   if( HB_CDP_ISCUSTOM(cdp) )
    {
       HB_WCHAR wc;
 
@@ -70,7 +70,7 @@ static char * hb_strHardCR( char * pszString, HB_SIZE nStringLen )
             pszString[nStringPos] = HB_CHAR_HARD1;
             nStringPos += 2;
          }
-         else if( !HB_CDPCHAR_GET( cdp, pszString, nStringLen, &nStringPos, &wc ) )
+         else if( !HB_CDPCHAR_GET(cdp, pszString, nStringLen, &nStringPos, &wc) )
          {
             break;
          }

@@ -53,15 +53,15 @@
 
 /* NOTE: Must be in sync with hbgtcore.c */
 #if defined(HB_GT_LIB)
-   HB_GT_REQUEST( HB_GT_LIB )
+   HB_GT_REQUEST(HB_GT_LIB)
 #elif defined(HB_OS_WIN)
-   HB_GT_REQUEST( WIN )
+   HB_GT_REQUEST(WIN)
 #elif defined(HB_OS_VXWORKS)
-   HB_GT_REQUEST( STD )
+   HB_GT_REQUEST(STD)
 #elif defined(HB_OS_UNIX)
-   HB_GT_REQUEST( TRM )
+   HB_GT_REQUEST(TRM)
 #else
-   HB_GT_REQUEST( STD )
+   HB_GT_REQUEST(STD)
 #endif
 
 HB_FUNC( HB_GTSYS )

@@ -57,7 +57,7 @@ HB_FUNC( NOSNOW )
 {
    if( HB_ISLOG(1) )
    {
-      hb_gtSetSnowFlag( hb_parl(1) );
+      hb_gtSetSnowFlag(hb_parl(1));
    }   
 }
 
@@ -65,7 +65,7 @@ HB_FUNC( SETMODE )
 {
    int iRows, iCols;
 
-   hb_gtScrDim( &iRows, &iCols );
+   hb_gtScrDim(&iRows, &iCols);
    if( HB_ISNUM(1) )
    {
       iRows = hb_parni(1);

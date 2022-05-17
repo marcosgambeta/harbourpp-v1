@@ -65,8 +65,8 @@ HB_FUNC( __RUN )
    if( pszCommand && hb_gtSuspend() == HB_SUCCESS )
    {
 #if defined(HB_OS_WIN)
-      LPTSTR lpCommand = HB_CHARDUP( pszCommand );
-      ( void ) HB_WINAPI_SYSTEM( lpCommand ); // TODO: C++ cast
+      LPTSTR lpCommand = HB_CHARDUP(pszCommand);
+      ( void ) HB_WINAPI_SYSTEM(lpCommand); // TODO: C++ cast
       hb_xfree(lpCommand);
 #else
       char * pszFree = nullptr;

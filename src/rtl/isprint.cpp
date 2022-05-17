@@ -47,7 +47,7 @@
 #include "hbapi.h"
 #include "hbapifs.h"
 
-HB_BOOL hb_printerIsReady( const char * pszPrinterName )
+HB_BOOL hb_printerIsReady(const char * pszPrinterName)
 {
    HB_BOOL bIsPrinter;
 
@@ -71,7 +71,7 @@ HB_BOOL hb_printerIsReady( const char * pszPrinterName )
       }
 
       pFile = hb_fileExtOpen(pszPrinterName, nullptr, FXO_APPEND | FO_WRITE | FO_SHARED | FO_PRIVATE, nullptr, nullptr);
-      bIsPrinter = ( pFile != nullptr );
+      bIsPrinter = (pFile != nullptr);
       if( bIsPrinter )
       {
          hb_fileClose(pFile);

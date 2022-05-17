@@ -47,10 +47,10 @@
 #include "hbapi.h"
 #include "hbapiitm.h"
 
-void hb_strDescend( char * szStringTo, const char * szStringFrom, HB_SIZE nLen )
+void hb_strDescend(char * szStringTo, const char * szStringFrom, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strDescend(%p, %s, %" HB_PFS "u)", static_cast<void*>(szStringTo), szStringFrom, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strDescend(%p, %s, %" HB_PFS "u)", static_cast<void*>(szStringTo), szStringFrom, nLen));
 #endif
 
    if( nLen == 1 && szStringFrom[0] == '\0' )
@@ -70,7 +70,7 @@ HB_FUNC( DESCEND )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       if( HB_IS_STRING(pItem) )
       {
@@ -79,7 +79,7 @@ HB_FUNC( DESCEND )
          if( nLen > 0 )
          {
             char * szBuffer = static_cast<char*>(hb_xgrab(nLen + 1));
-            hb_strDescend( szBuffer, hb_itemGetCPtr(pItem), nLen );
+            hb_strDescend(szBuffer, hb_itemGetCPtr(pItem), nLen);
             hb_retclen_buffer(szBuffer, nLen);
          }
          else

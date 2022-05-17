@@ -76,7 +76,7 @@ HB_FUNC( MAXROW ) /* Return the maximum screen/window row number (zero origin) *
    if( hb_parl(1) )
    {
       int iRows, iCols;
-      hb_gtScrDim( &iRows, &iCols );
+      hb_gtScrDim(&iRows, &iCols);
       hb_retni(iRows - 1);
    }
    else
@@ -91,7 +91,7 @@ HB_FUNC( MAXCOL ) /* Return the maximum screen/window column number (zero origin
    if( hb_parl(1) )
    {
       int iRows, iCols;
-      hb_gtScrDim( &iRows, &iCols );
+      hb_gtScrDim(&iRows, &iCols);
       hb_retni(iCols - 1);
    }
    else

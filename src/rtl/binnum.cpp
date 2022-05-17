@@ -53,7 +53,7 @@ HB_FUNC( BIN2W )
    PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
    HB_U16 uiResult = 0;
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       HB_SIZE nLen = hb_itemGetCLen(pItem);
       if( nLen )
@@ -70,7 +70,7 @@ HB_FUNC( BIN2I )
    PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
    HB_I16 iResult = 0;
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       HB_SIZE nLen = hb_itemGetCLen(pItem);
       if( nLen )
@@ -87,7 +87,7 @@ HB_FUNC( BIN2L )
    PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
    HB_I32 iResult = 0;
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       HB_SIZE nLen = hb_itemGetCLen(pItem);
       if( nLen )

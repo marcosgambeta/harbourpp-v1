@@ -53,7 +53,7 @@ HB_FUNC( HB_HMAC_SHA1 )
    unsigned char mac[HMAC_SHA1_DIGEST_LENGTH];
    HMAC_SHA1_CTX ctx;
 
-   hb_HMAC_SHA1_Init( &ctx );
+   hb_HMAC_SHA1_Init(&ctx);
    #if HB_SIZE_MAX > UINT_MAX
    {
       const char * buffer = hb_parcx(2);
@@ -75,15 +75,15 @@ HB_FUNC( HB_HMAC_SHA1 )
             nCount = 0;
          }
 
-         hb_HMAC_SHA1_UpdateKey( &ctx, buffer + nDone, uiChunk );
+         hb_HMAC_SHA1_UpdateKey(&ctx, buffer + nDone, uiChunk);
 
          nDone += static_cast<HB_SIZE>(uiChunk);
       }
    }
    #else
-      hb_HMAC_SHA1_UpdateKey( &ctx, hb_parcx(2), hb_parclen(2) );
+      hb_HMAC_SHA1_UpdateKey(&ctx, hb_parcx(2), hb_parclen(2));
    #endif
-   hb_HMAC_SHA1_EndKey( &ctx );
+   hb_HMAC_SHA1_EndKey(&ctx);
 
    hb_HMAC_SHA1_StartMessage( &ctx );
    #if HB_SIZE_MAX > UINT_MAX
@@ -121,7 +121,7 @@ HB_FUNC( HB_HMAC_SHA1 )
    if( !hb_parl(3) )
    {
       char hex[( sizeof(mac) * 2 ) + 1];
-      hb_strtohex( reinterpret_cast<char*>(mac), sizeof(mac), hex );
+      hb_strtohex(reinterpret_cast<char*>(mac), sizeof(mac), hex);
       hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
    }
    else

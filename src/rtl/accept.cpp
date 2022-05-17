@@ -90,7 +90,7 @@ HB_FUNC( __ACCEPT )
    while( input != K_ENTER && hb_vmRequestQuery() == 0 )
    {
       /* Wait forever, for keyboard events only */
-      input = hb_inkey( true, 0.0, INKEY_KEYBOARD );
+      input = hb_inkey(true, 0.0, INKEY_KEYBOARD);
       switch( input )
       {
          case K_BS:
@@ -127,7 +127,7 @@ HB_FUNC( __ACCEPT )
       }
       if( nChar > 0 )
       {
-         hb_conOutAlt( szKey, nChar );
+         hb_conOutAlt(szKey, nChar);
       }   
    }
 

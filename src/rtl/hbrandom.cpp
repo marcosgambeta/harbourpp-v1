@@ -89,13 +89,13 @@ double hb_random_num(void)
    return static_cast<double>(t - 1) / ( MODULUS - 1 );
 }
 
-void hb_random_seed( HB_I32 seed )
+void hb_random_seed(HB_I32 seed)
 {
    seed %= MODULUS;
-   * SEED_PTR = ( seed < 0 ) ? seed + MODULUS : seed;
+   * SEED_PTR = (seed < 0) ? seed + MODULUS : seed;
 }
 
-static void hb_random( double dRnd )
+static void hb_random(double dRnd)
 {
    if( !HB_ISNUM(1) )
    {
@@ -121,20 +121,20 @@ static void hb_random( double dRnd )
 
 /*
  * hb_Random() --> returns a real value n so that 0 <= n < 1
- * hb_Random( x ) --> returns a real number n so that 0 <= n < x
- * hb_Random( x, y ) --> Returns a real number n so that x <= n < y
+ * hb_Random(x) --> returns a real number n so that 0 <= n < x
+ * hb_Random(x, y) --> Returns a real number n so that x <= n < y
  */
 HB_FUNC( HB_RANDOM )
 {
-   hb_random( hb_random_num() );
+   hb_random(hb_random_num());
 }
 
 HB_FUNC( HB_RANDNUM )
 {
-   hb_random( hb_random_num_secure() );
+   hb_random(hb_random_num_secure());
 }
 
-static void hb_randomint( double dRnd )
+static void hb_randomint(double dRnd)
 {
    if( !HB_ISNUM(1) )
    {
@@ -160,23 +160,23 @@ static void hb_randomint( double dRnd )
 
 /*
  * hb_RandomInt() --> returns 0 or 1, evenly distributed
- * hb_RandomInt( N ) --> returns an integer between 1 and N (inclusive)
- * hb_RandomInt( x, y ) --> Returns an integer number between x and y (inclusive)
+ * hb_RandomInt(N) --> returns an integer between 1 and N (inclusive)
+ * hb_RandomInt(x, y) --> Returns an integer number between x and y (inclusive)
  * The integer returned is of the longest type available
  */
 HB_FUNC( HB_RANDOMINT )
 {
-   hb_randomint( hb_random_num() );
+   hb_randomint(hb_random_num());
 }
 
 HB_FUNC( HB_RANDINT )
 {
-   hb_randomint( hb_random_num_secure() );
+   hb_randomint(hb_random_num_secure());
 }
 
 HB_FUNC( HB_RANDOMSEED )
 {
-   hb_random_seed( hb_parni(1) );
+   hb_random_seed(hb_parni(1));
 }
 
 HB_FUNC( HB_RANDOMINTMAX )

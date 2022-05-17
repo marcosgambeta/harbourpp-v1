@@ -76,7 +76,7 @@ HB_FUNC( HB_ASCIIUPPER )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1102, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1102, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }   
 }
 
@@ -108,7 +108,7 @@ HB_FUNC( HB_ASCIILOWER )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1103, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1103, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }   
 }
 

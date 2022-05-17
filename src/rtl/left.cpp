@@ -69,7 +69,7 @@ HB_FUNC( LEFT )
          if( static_cast<HB_SIZE>(nLen) < nText )
          {
             PHB_CODEPAGE cdp = hb_vmCDP();
-            if( HB_CDP_ISCHARIDX( cdp ) )
+            if( HB_CDP_ISCHARIDX(cdp) )
             {
                nLen = hb_cdpTextPos(cdp, hb_itemGetCPtr(pText), nText, nLen);
             }   
@@ -86,7 +86,7 @@ HB_FUNC( LEFT )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1124, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1124, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -101,7 +101,7 @@ HB_FUNC( HB_LEFTEQ )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1071, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1071, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -116,6 +116,6 @@ HB_FUNC( HB_LEFTEQI )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1071, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1071, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

@@ -173,7 +173,7 @@ HB_U16 hb_crc16(HB_U16 crc, const void * buf, HB_SIZE len)
    return crc ^ 0xffff;
 }
 
-HB_MAXUINT hb_crc( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT poly )
+HB_MAXUINT hb_crc(HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT poly)
 {
    if( buf && len )
    {
@@ -197,7 +197,7 @@ HB_MAXUINT hb_crc( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT pol
          crc ^= *ucbuf++;
          do
          {
-            crc = ( crc & 1 ) ? revp ^ ( crc >> 1 ) : crc >> 1;
+            crc = (crc & 1) ? revp ^ (crc >> 1) : crc >> 1;
          }
          while( --i );
       }
@@ -207,7 +207,7 @@ HB_MAXUINT hb_crc( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT pol
    return crc;
 }
 
-HB_MAXUINT hb_crcct( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT poly )
+HB_MAXUINT hb_crcct(HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT poly)
 {
    if( buf && len )
    {
@@ -232,7 +232,7 @@ HB_MAXUINT hb_crcct( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT p
             crc ^= static_cast<HB_MAXUINT>(*ucbuf++);
             do
             {
-               crc = ( crc & mask ) ? poly ^ ( crc << 1 ) : crc << 1;
+               crc = (crc & mask) ? poly ^ (crc << 1) : crc << 1;
             }
             while( --i );
          }
@@ -248,7 +248,7 @@ HB_MAXUINT hb_crcct( HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT p
             crc ^= static_cast<HB_MAXUINT>(*ucbuf++) << bits;
             do
             {
-               crc = ( crc & mask ) ? poly ^ ( crc << 1 ) : crc << 1;
+               crc = (crc & mask) ? poly ^ (crc << 1) : crc << 1;
             }
             while( --i );
          }

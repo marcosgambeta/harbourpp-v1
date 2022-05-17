@@ -101,10 +101,10 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
 
          if( !s_fInit )
          {
-            HMODULE hModule = GetModuleHandle( HB_WINAPI_KERNEL32_DLL() );
+            HMODULE hModule = GetModuleHandle(HB_WINAPI_KERNEL32_DLL());
             if( hModule )
             {
-               s_pGetDiskFreeSpaceEx = reinterpret_cast<P_GDFSE>(HB_WINAPI_GETPROCADDRESST( hModule, "GetDiskFreeSpaceEx" ));
+               s_pGetDiskFreeSpaceEx = reinterpret_cast<P_GDFSE>(HB_WINAPI_GETPROCADDRESST(hModule, "GetDiskFreeSpaceEx"));
             }
             s_fInit = HB_TRUE;
          }
@@ -116,11 +116,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
             DWORD dwNumberOfFreeClusters;
             DWORD dwTotalNumberOfClusters;
 
-            fResult = GetDiskFreeSpace( lpPath,
-                                        &dwSectorsPerCluster,
-                                        &dwBytesPerSector,
-                                        &dwNumberOfFreeClusters,
-                                        &dwTotalNumberOfClusters ) ? HB_TRUE : HB_FALSE;
+            fResult = GetDiskFreeSpace(lpPath, &dwSectorsPerCluster, &dwBytesPerSector, &dwNumberOfFreeClusters, &dwTotalNumberOfClusters) ? HB_TRUE : HB_FALSE;
             hb_fsSetIOError(fResult, 0);
 
             if( fResult )
@@ -147,29 +143,29 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
          else
 #endif
          {
-#if defined(_MSC_VER) || ( defined(__GNUC__) )
+#if defined(_MSC_VER) || (defined(__GNUC__))
 
-#  define HB_GET_LARGE_UINT( v )  ( static_cast<double>((v).LowPart) + static_cast<double>((v).HighPart) * ( ( static_cast<double>(0xFFFFFFFF) ) + 1 ) )
+#  define HB_GET_LARGE_UINT(v)  (static_cast<double>((v).LowPart) + static_cast<double>((v).HighPart) * ((static_cast<double>(0xFFFFFFFF)) + 1))
 
 #else
    /* NOTE: Borland doesn't seem to deal with the un-named
             struct that is part of ULARGE_INTEGER
             [pt] */
-#  define HB_GET_LARGE_UINT( v )  ( static_cast<double>((v).u.LowPart) + static_cast<double>((v).u.HighPart) * ( ( static_cast<double>(0xFFFFFFFF) ) + 1 ) )
+#  define HB_GET_LARGE_UINT(v)  (static_cast<double>((v).u.LowPart) + static_cast<double>((v).u.HighPart) * ((static_cast<double>(0xFFFFFFFF)) + 1))
 #endif
 
             ULARGE_INTEGER i64FreeBytesToCaller, i64TotalBytes, i64FreeBytes;
 
 #if !defined(HB_OS_WIN_64)
-            fResult = s_pGetDiskFreeSpaceEx( lpPath,
-                                             static_cast<PULARGE_INTEGER>(&i64FreeBytesToCaller),
-                                             static_cast<PULARGE_INTEGER>(&i64TotalBytes),
-                                             static_cast<PULARGE_INTEGER>(&i64FreeBytes) );
+            fResult = s_pGetDiskFreeSpaceEx(lpPath,
+                                            static_cast<PULARGE_INTEGER>(&i64FreeBytesToCaller),
+                                            static_cast<PULARGE_INTEGER>(&i64TotalBytes),
+                                            static_cast<PULARGE_INTEGER>(&i64FreeBytes));
 #else
-            fResult = GetDiskFreeSpaceEx( lpPath,
-                                          static_cast<PULARGE_INTEGER>(&i64FreeBytesToCaller),
-                                          static_cast<PULARGE_INTEGER>(&i64TotalBytes),
-                                          static_cast<PULARGE_INTEGER>(&i64FreeBytes) );
+            fResult = GetDiskFreeSpaceEx(lpPath,
+                                         static_cast<PULARGE_INTEGER>(&i64FreeBytesToCaller),
+                                         static_cast<PULARGE_INTEGER>(&i64TotalBytes),
+                                         static_cast<PULARGE_INTEGER>(&i64FreeBytes));
 #endif
             hb_fsSetIOError(fResult, 0);
 
@@ -178,19 +174,19 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
                switch( uiType )
                {
                   case HB_DISK_AVAIL:
-                     dSpace = HB_GET_LARGE_UINT( i64FreeBytesToCaller );
+                     dSpace = HB_GET_LARGE_UINT(i64FreeBytesToCaller);
                      break;
 
                   case HB_DISK_FREE:
-                     dSpace = HB_GET_LARGE_UINT( i64FreeBytes );
+                     dSpace = HB_GET_LARGE_UINT(i64FreeBytes);
                      break;
 
                   case HB_DISK_TOTAL:
-                     dSpace = HB_GET_LARGE_UINT( i64TotalBytes );
+                     dSpace = HB_GET_LARGE_UINT(i64TotalBytes);
                      break;
 
                   case HB_DISK_USED:
-                     dSpace = HB_GET_LARGE_UINT( i64TotalBytes ) - HB_GET_LARGE_UINT( i64FreeBytes );
+                     dSpace = HB_GET_LARGE_UINT(i64TotalBytes) - HB_GET_LARGE_UINT(i64FreeBytes);
                      break;
                }
             }
@@ -214,9 +210,9 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
       pszPath = hb_fsNameConv(pszPath, &pszFree);
 
 #if defined(HB_OS_DARWIN) || defined(HB_OS_ANDROID) || defined(HB_OS_VXWORKS)
-      if( statfs( pszPath, &sf ) == 0 )
+      if( statfs(pszPath, &sf) == 0 )
 #else
-      if( statvfs( pszPath, &sf ) == 0 )
+      if( statvfs(pszPath, &sf) == 0 )
 #endif
       {
          switch( uiType )

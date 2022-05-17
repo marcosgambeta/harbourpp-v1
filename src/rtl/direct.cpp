@@ -97,7 +97,7 @@
          this issue is very much platform specific, and this is
          not the only place which may need the conversion [vszakats]. */
 
-PHB_ITEM hb_fsDirectory( const char * pszDirSpec, const char * pszAttributes, HB_BOOL fDateTime )
+PHB_ITEM hb_fsDirectory(const char * pszDirSpec, const char * pszAttributes, HB_BOOL fDateTime)
 {
    PHB_ITEM  pDir = hb_itemArrayNew(0);
    char *    pszFree = nullptr;

@@ -54,10 +54,10 @@
 /* NOTE: Use as minimal calls from here, as possible.
          Don't allocate memory from this function. [vszakats] */
 
-void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * szPar1, const char * szPar2 )
+void hb_errInternalRaw(HB_ERRCODE errCode, const char * szText, const char * szPar1, const char * szPar2)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_errInternal(%d, %s, %s, %s)", errCode, szText, szPar1, szPar2 ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_errInternal(%d, %s, %s, %s)", errCode, szText, szPar1, szPar2));
 #endif
 
    char buffer[8192];
@@ -94,8 +94,8 @@ void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * sz
       char szTime[9];
       int  iYear, iMonth, iDay;
 
-      hb_dateToday( &iYear, &iMonth, &iDay );
-      hb_dateTimeStr( szTime );
+      hb_dateToday(&iYear, &iMonth, &iDay);
+      hb_dateTimeStr(szTime);
 
       fprintf(hLog, "Application Internal Error - %s\n", hb_cmdargARGVN(0));
       fprintf(hLog, "Terminated at: %04d-%02d-%02d %s\n", iYear, iMonth, iDay, szTime);
@@ -146,7 +146,7 @@ void hb_errInternalRaw( HB_ERRCODE errCode, const char * szText, const char * sz
    if( fStack && hb_stackTotalItems() )
    {
       int iLevel = 0;
-      while( hb_procinfo( iLevel++, buffer, &uiLine, file ) )
+      while( hb_procinfo(iLevel++, buffer, &uiLine, file) )
       {
          char msg[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 32];
 

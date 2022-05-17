@@ -71,9 +71,9 @@ HB_FUNC( MOD )
 
       if( dBase )
       {
-         double dResult = fmod( dNumber, dBase );
+         double dResult = fmod(dNumber, dBase);
 
-         if( dResult && ( dNumber > 0 ? dBase < 0 : dBase > 0 ) )
+         if( dResult && (dNumber > 0 ? dBase < 0 : dBase > 0) )
          {
             dResult += dBase;
          }
@@ -89,7 +89,7 @@ HB_FUNC( MOD )
           * decimal places, it can be seen in code like:
           *    PROCEDURE Main()
           *       Set(_SET_FIXED, .T.)
-          *       ? Transform( Mod( 12345, 0 ), "" )
+          *       ? Transform(Mod(12345, 0), "")
           *       RETURN
           *
           * [druzus]
@@ -103,12 +103,12 @@ HB_FUNC( MOD )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1085, nullptr, "%", 2, hb_param(1, Harbour::Item::ANY), hb_param(2, Harbour::Item::ANY) );
-   }   
+      hb_errRT_BASE_SubstR(EG_ARG, 1085, nullptr, "%", 2, hb_param(1, Harbour::Item::ANY), hb_param(2, Harbour::Item::ANY));
+   }
 }
 
 /*
-   FUNCTION Mod( cl_num, cl_base )
+   FUNCTION Mod(cl_num, cl_base)
 
       LOCAL cl_result := cl_num % cl_base
 

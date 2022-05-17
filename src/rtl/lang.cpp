@@ -54,13 +54,13 @@ HB_FUNC( HB_USERLANG )
 {
    char * ietf;
 
-   ietf = hb_getenv( "LC_ALL" );
+   ietf = hb_getenv("LC_ALL");
    if( ietf == nullptr )
    {
-      ietf = hb_getenv( "LC_MESSAGES" );
+      ietf = hb_getenv("LC_MESSAGES");
       if( ietf == nullptr )
       {
-         ietf = hb_getenv( "LANG" );
+         ietf = hb_getenv("LANG");
       }   
    }
 

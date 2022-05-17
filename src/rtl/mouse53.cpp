@@ -71,7 +71,7 @@ HB_FUNC( MSETCURSOR )
 
    if( HB_ISLOG(1) )
    {
-      hb_mouseSetCursor( hb_parl(1) );
+      hb_mouseSetCursor(hb_parl(1));
    }   
 }
 
@@ -129,7 +129,7 @@ HB_FUNC( MDBLCLK )
 
    if( HB_ISNUM(1) )
    {
-      hb_mouseSetDoubleClickSpeed( hb_parni(1) );
+      hb_mouseSetDoubleClickSpeed(hb_parni(1));
    }   
 }
 
@@ -154,16 +154,16 @@ HB_FUNC( MRESTSTATE )
 {
    if( hb_parclen(1) == static_cast<HB_SIZE>(hb_mouseStorageSize()) )
    {
-      hb_mouseRestoreState( hb_parc(1) );
+      hb_mouseRestoreState(hb_parc(1));
    }
 }
 
 HB_FUNC( MSETBOUNDS )
 {
-   hb_mouseSetBounds( hb_parni(1), /* Defaults to zero on bad type */
-                      hb_parni(2), /* Defaults to zero on bad type */
-                      HB_ISNUM(3) ? hb_parni(3) : hb_gtMaxRow(),
-                      HB_ISNUM(4) ? hb_parni(4) : hb_gtMaxCol() );
+   hb_mouseSetBounds(hb_parni(1), /* Defaults to zero on bad type */
+                     hb_parni(2), /* Defaults to zero on bad type */
+                     HB_ISNUM(3) ? hb_parni(3) : hb_gtMaxRow(),
+                     HB_ISNUM(4) ? hb_parni(4) : hb_gtMaxCol());
 }
 
 #endif
@@ -172,7 +172,7 @@ HB_FUNC( HB_MGETBOUNDS )
 {
    int iTop, iLeft, iBottom, iRight;
 
-   hb_mouseGetBounds( &iTop, &iLeft, &iBottom, &iRight );
+   hb_mouseGetBounds(&iTop, &iLeft, &iBottom, &iRight);
 
    hb_storni(iTop, 1);
    hb_storni(iLeft, 2);

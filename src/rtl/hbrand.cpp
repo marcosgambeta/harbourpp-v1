@@ -47,7 +47,7 @@
 #include "hbapi.h"
 #include "arc4.h"
 
-void hb_random_block( void * data, HB_SIZE len )
+void hb_random_block(void * data, HB_SIZE len)
 {
    hb_arc4random_buf( data, len );
 }
@@ -70,7 +70,7 @@ HB_FUNC( HB_RANDSTR )
    if( len > 0 )
    {
       void * data = hb_xgrab(len + 1);
-      hb_random_block( data, len );
+      hb_random_block(data, len);
       hb_retclen_buffer(static_cast<char*>(data), len);
    }
    else

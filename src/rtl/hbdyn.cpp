@@ -66,9 +66,9 @@
 
 #define _DYNEXEC_MAXPARAM   15
 
-typedef void ( *PHB_DYNADDR )(void);
+typedef void (*PHB_DYNADDR)(void);
 
-static int hb_hbtoctype( int iHarbourType )
+static int hb_hbtoctype(int iHarbourType)
 {
    switch( iHarbourType )
    {
@@ -123,7 +123,7 @@ struct HB_DYNARG
 
 using PHB_DYNARG = HB_DYNARG *;
 
-static HB_U64 hb_u64par( PHB_ITEM pParam, PHB_DYNARG pArg )
+static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
 {
    HB_U64 r;
 
@@ -204,7 +204,7 @@ static HB_U64 hb_u64par( PHB_ITEM pParam, PHB_DYNARG pArg )
          pArg->hString = hb_xgrab(nLen + sizeof(char));
          pArg->bRawBuffer = HB_TRUE;
          memcpy(static_cast<char*>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
-         ( static_cast<char*>(pArg->hString) )[nLen] = '\0';
+         (static_cast<char*>(pArg->hString))[nLen] = '\0';
          r = reinterpret_cast<HB_PTRUINT>(pArg->hString);
          pArg->value.t.n64 = r;
          break;
@@ -240,7 +240,7 @@ static HB_U64 hb_u64par( PHB_ITEM pParam, PHB_DYNARG pArg )
                pArg->hString = hb_xgrab(nLen + sizeof(char));
                pArg->bRawBuffer = HB_TRUE;
                memcpy(static_cast<char*>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
-               ( static_cast<char*>(pArg->hString) )[nLen] = '\0';
+               (static_cast<char*>(pArg->hString))[nLen] = '\0';
                r = reinterpret_cast<HB_PTRUINT>(pArg->hString);
                break;
             }
@@ -273,7 +273,7 @@ static HB_U64 hb_u64par( PHB_ITEM pParam, PHB_DYNARG pArg )
    return r;
 }
 
-static PHB_ITEM hb_u64ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVAL value, HB_ISIZ nLen )
+static PHB_ITEM hb_u64ret(PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVAL value, HB_ISIZ nLen)
 {
    switch( iRetType )
    {
@@ -420,52 +420,52 @@ static PHB_ITEM hb_u64ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
    return pItem;
 }
 
-#define HB_DYN_CTYPE_DECL( _ret_, _type_ ) \
-   typedef _ret_ ( *_type_##P00 )(void); \
-   typedef _ret_ ( *_type_##P01 )(HB_U64); \
-   typedef _ret_ ( *_type_##P02 )(HB_U64, HB_U64); \
-   typedef _ret_ ( *_type_##P03 )(HB_U64, HB_U64, HB_U64); \
-   typedef _ret_ ( *_type_##P04 )(HB_U64, HB_U64, HB_U64, HB_U64); \
-   typedef _ret_ ( *_type_##P05 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
-   typedef _ret_ ( *_type_##P06 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
-   typedef _ret_ ( *_type_##P07 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
-   typedef _ret_ ( *_type_##P08 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
-   typedef _ret_ ( *_type_##P09 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
-   typedef _ret_ ( *_type_##P10 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
-   typedef _ret_ ( *_type_##P11 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
-   typedef _ret_ ( *_type_##P12 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
-   typedef _ret_ ( *_type_##P13 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
-   typedef _ret_ ( *_type_##P14 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
-   typedef _ret_ ( *_type_##P15 )(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64)
+#define HB_DYN_CTYPE_DECL(_ret_, _type_) \
+   typedef _ret_ (*_type_##P00)(void); \
+   typedef _ret_ (*_type_##P01)(HB_U64); \
+   typedef _ret_ (*_type_##P02)(HB_U64, HB_U64); \
+   typedef _ret_ (*_type_##P03)(HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ (*_type_##P04)(HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ (*_type_##P05)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ (*_type_##P06)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ (*_type_##P07)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ (*_type_##P08)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ (*_type_##P09)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ (*_type_##P10)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ (*_type_##P11)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ (*_type_##P12)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ (*_type_##P13)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ (*_type_##P14)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64); \
+   typedef _ret_ (*_type_##P15)(HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64, HB_U64)
 
-#define HB_DYN_FUN_CALL( pcount, _ret_, _type_ ) \
+#define HB_DYN_FUN_CALL(pcount, _ret_, _type_) \
    do \
    { \
       switch( pcount ) \
       { \
-         case  0: ret.t._ret_ = ( ( _type_##P00 ) * pFunction )( ); break; \
-         case  1: ret.t._ret_ = ( ( _type_##P01 ) * pFunction )( rawpar[0] ); break; \
-         case  2: ret.t._ret_ = ( ( _type_##P02 ) * pFunction )( rawpar[0], rawpar[1] ); break; \
-         case  3: ret.t._ret_ = ( ( _type_##P03 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2] ); break; \
-         case  4: ret.t._ret_ = ( ( _type_##P04 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3] ); break; \
-         case  5: ret.t._ret_ = ( ( _type_##P05 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4] ); break; \
-         case  6: ret.t._ret_ = ( ( _type_##P06 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5] ); break; \
-         case  7: ret.t._ret_ = ( ( _type_##P07 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6] ); break; \
-         case  8: ret.t._ret_ = ( ( _type_##P08 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7] ); break; \
-         case  9: ret.t._ret_ = ( ( _type_##P09 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8] ); break; \
-         case 10: ret.t._ret_ = ( ( _type_##P10 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9] ); break; \
-         case 11: ret.t._ret_ = ( ( _type_##P11 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10] ); break; \
-         case 12: ret.t._ret_ = ( ( _type_##P12 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11] ); break; \
-         case 13: ret.t._ret_ = ( ( _type_##P13 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12] ); break; \
-         case 14: ret.t._ret_ = ( ( _type_##P14 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13] ); break; \
-         case 15: ret.t._ret_ = ( ( _type_##P15 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14] ); break; \
+         case  0: ret.t._ret_ = ((_type_##P00) * pFunction)(); break; \
+         case  1: ret.t._ret_ = ((_type_##P01) * pFunction)(rawpar[0]); break; \
+         case  2: ret.t._ret_ = ((_type_##P02) * pFunction)(rawpar[0], rawpar[1]); break; \
+         case  3: ret.t._ret_ = ((_type_##P03) * pFunction)(rawpar[0], rawpar[1], rawpar[2]); break; \
+         case  4: ret.t._ret_ = ((_type_##P04) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3]); break; \
+         case  5: ret.t._ret_ = ((_type_##P05) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4]); break; \
+         case  6: ret.t._ret_ = ((_type_##P06) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5]); break; \
+         case  7: ret.t._ret_ = ((_type_##P07) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6]); break; \
+         case  8: ret.t._ret_ = ((_type_##P08) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7]); break; \
+         case  9: ret.t._ret_ = ((_type_##P09) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8]); break; \
+         case 10: ret.t._ret_ = ((_type_##P10) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9]); break; \
+         case 11: ret.t._ret_ = ((_type_##P11) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10]); break; \
+         case 12: ret.t._ret_ = ((_type_##P12) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11]); break; \
+         case 13: ret.t._ret_ = ((_type_##P13) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12]); break; \
+         case 14: ret.t._ret_ = ((_type_##P14) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13]); break; \
+         case 15: ret.t._ret_ = ((_type_##P15) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14]); break; \
       } \
    } \
    while(0)
 
-HB_DYN_CTYPE_DECL( HB_U64, FX64_64 );
-HB_DYN_CTYPE_DECL( double, FX64_DB );
-HB_DYN_CTYPE_DECL( float,  FX64_FL );
+HB_DYN_CTYPE_DECL(HB_U64, FX64_64);
+HB_DYN_CTYPE_DECL(double, FX64_DB);
+HB_DYN_CTYPE_DECL(float,  FX64_FL);
 
 #elif defined(HB_ARCH_32BIT)
 
@@ -495,7 +495,7 @@ struct HB_DYNARG
 
 using PHB_DYNARG = HB_DYNARG *;
 
-static void hb_u32par( PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r2, HB_BOOL * b64 )
+static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r2, HB_BOOL * b64)
 {
    *b64 = HB_FALSE;
    *r2 = 0;
@@ -612,7 +612,7 @@ static void hb_u32par( PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r
          pArg->hString = hb_xgrab(nLen + sizeof(char));
          pArg->bRawBuffer = HB_TRUE;
          memcpy(static_cast<char*>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
-         ( static_cast<char*>(pArg->hString) )[nLen] = '\0';
+         (static_cast<char*>(pArg->hString))[nLen] = '\0';
          *r1 = reinterpret_cast<HB_PTRUINT>(pArg->hString);
          pArg->value.t.n32 = *r1;
          break;
@@ -648,7 +648,7 @@ static void hb_u32par( PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r
                pArg->hString = hb_xgrab(nLen + sizeof(char));
                pArg->bRawBuffer = HB_TRUE;
                memcpy(static_cast<char*>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
-               ( static_cast<char*>(pArg->hString) )[nLen] = '\0';
+               (static_cast<char*>(pArg->hString))[nLen] = '\0';
                *r1 = reinterpret_cast<HB_PTRUINT>(pArg->hString);
                break;
             }
@@ -669,7 +669,7 @@ static void hb_u32par( PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r
       case HB_DYN_CTYPE_FLOAT_PTR:
       case HB_DYN_CTYPE_DOUBLE_PTR:
       case HB_DYN_CTYPE_STRUCTURE_PTR:
-         pArg->value.t.n32 = ( HB_U32 ) hb_itemGetPtr(pParam);
+         pArg->value.t.n32 = reinterpret_cast<HB_U32>(hb_itemGetPtr(pParam));
          *r1 = pArg->bByRef ? reinterpret_cast<HB_U32>(&pArg->value.t.n32) : pArg->value.t.n32;
          break;
 
@@ -679,7 +679,7 @@ static void hb_u32par( PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r
    }
 }
 
-static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVAL value, HB_ISIZ nLen )
+static PHB_ITEM hb_u32ret(PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVAL value, HB_ISIZ nLen)
 {
    switch( iRetType )
    {
@@ -831,75 +831,75 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
    return pItem;
 }
 
-#define HB_DYN_CTYPE_DECL( ret, abi, _type_ ) \
-   typedef ret ( abi * _type_##P00 )(void); \
-   typedef ret ( abi * _type_##P01 )(HB_U32); \
-   typedef ret ( abi * _type_##P02 )(HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P03 )(HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P04 )(HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P05 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P06 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P07 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P08 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P09 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P10 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P11 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P12 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P13 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P14 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P15 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P16 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P17 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P18 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P19 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P20 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P21 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P22 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P23 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P24 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P25 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P26 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P27 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P28 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P29 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
-   typedef ret ( abi * _type_##P30 )(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32)
+#define HB_DYN_CTYPE_DECL(ret, abi, _type_) \
+   typedef ret (abi * _type_##P00)(void); \
+   typedef ret (abi * _type_##P01)(HB_U32); \
+   typedef ret (abi * _type_##P02)(HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P03)(HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P04)(HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P05)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P06)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P07)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P08)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P09)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P10)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P11)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P12)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P13)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P14)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P15)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P16)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P17)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P18)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P19)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P20)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P21)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P22)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P23)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P24)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P25)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P26)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P27)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P28)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P29)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32); \
+   typedef ret (abi * _type_##P30)(HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32, HB_U32)
 
-#define HB_DYN_FUN_CALL( pcount, _ret_, _type_ ) \
+#define HB_DYN_FUN_CALL(pcount, _ret_, _type_) \
    do \
    { \
       switch( pcount ) \
       { \
-         case  0: ret.t._ret_ = ( ( _type_##P00 ) * pFunction )( ); break; \
-         case  1: ret.t._ret_ = ( ( _type_##P01 ) * pFunction )( rawpar[0] ); break; \
-         case  2: ret.t._ret_ = ( ( _type_##P02 ) * pFunction )( rawpar[0], rawpar[1] ); break; \
-         case  3: ret.t._ret_ = ( ( _type_##P03 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2] ); break; \
-         case  4: ret.t._ret_ = ( ( _type_##P04 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3] ); break; \
-         case  5: ret.t._ret_ = ( ( _type_##P05 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4] ); break; \
-         case  6: ret.t._ret_ = ( ( _type_##P06 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5] ); break; \
-         case  7: ret.t._ret_ = ( ( _type_##P07 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6] ); break; \
-         case  8: ret.t._ret_ = ( ( _type_##P08 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7] ); break; \
-         case  9: ret.t._ret_ = ( ( _type_##P09 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8] ); break; \
-         case 10: ret.t._ret_ = ( ( _type_##P10 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9] ); break; \
-         case 11: ret.t._ret_ = ( ( _type_##P11 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10] ); break; \
-         case 12: ret.t._ret_ = ( ( _type_##P12 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11] ); break; \
-         case 13: ret.t._ret_ = ( ( _type_##P13 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12] ); break; \
-         case 14: ret.t._ret_ = ( ( _type_##P14 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13] ); break; \
-         case 15: ret.t._ret_ = ( ( _type_##P15 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14] ); break; \
-         case 16: ret.t._ret_ = ( ( _type_##P16 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15] ); break; \
-         case 17: ret.t._ret_ = ( ( _type_##P17 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16] ); break; \
-         case 18: ret.t._ret_ = ( ( _type_##P18 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17] ); break; \
-         case 19: ret.t._ret_ = ( ( _type_##P19 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18] ); break; \
-         case 20: ret.t._ret_ = ( ( _type_##P20 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19] ); break; \
-         case 21: ret.t._ret_ = ( ( _type_##P21 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20] ); break; \
-         case 22: ret.t._ret_ = ( ( _type_##P22 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21] ); break; \
-         case 23: ret.t._ret_ = ( ( _type_##P23 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22] ); break; \
-         case 24: ret.t._ret_ = ( ( _type_##P24 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23] ); break; \
-         case 25: ret.t._ret_ = ( ( _type_##P25 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24] ); break; \
-         case 26: ret.t._ret_ = ( ( _type_##P26 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24], rawpar[25] ); break; \
-         case 27: ret.t._ret_ = ( ( _type_##P27 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24], rawpar[25], rawpar[26] ); break; \
-         case 28: ret.t._ret_ = ( ( _type_##P28 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24], rawpar[25], rawpar[26], rawpar[27] ); break; \
-         case 29: ret.t._ret_ = ( ( _type_##P29 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24], rawpar[25], rawpar[26], rawpar[27], rawpar[28] ); break; \
-         case 30: ret.t._ret_ = ( ( _type_##P30 ) * pFunction )( rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24], rawpar[25], rawpar[26], rawpar[27], rawpar[28], rawpar[29] ); break; \
+         case  0: ret.t._ret_ = ((_type_##P00) * pFunction)(); break; \
+         case  1: ret.t._ret_ = ((_type_##P01) * pFunction)(rawpar[0]); break; \
+         case  2: ret.t._ret_ = ((_type_##P02) * pFunction)(rawpar[0], rawpar[1]); break; \
+         case  3: ret.t._ret_ = ((_type_##P03) * pFunction)(rawpar[0], rawpar[1], rawpar[2]); break; \
+         case  4: ret.t._ret_ = ((_type_##P04) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3]); break; \
+         case  5: ret.t._ret_ = ((_type_##P05) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4]); break; \
+         case  6: ret.t._ret_ = ((_type_##P06) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5]); break; \
+         case  7: ret.t._ret_ = ((_type_##P07) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6]); break; \
+         case  8: ret.t._ret_ = ((_type_##P08) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7]); break; \
+         case  9: ret.t._ret_ = ((_type_##P09) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8]); break; \
+         case 10: ret.t._ret_ = ((_type_##P10) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9]); break; \
+         case 11: ret.t._ret_ = ((_type_##P11) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10]); break; \
+         case 12: ret.t._ret_ = ((_type_##P12) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11]); break; \
+         case 13: ret.t._ret_ = ((_type_##P13) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12]); break; \
+         case 14: ret.t._ret_ = ((_type_##P14) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13]); break; \
+         case 15: ret.t._ret_ = ((_type_##P15) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14]); break; \
+         case 16: ret.t._ret_ = ((_type_##P16) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15]); break; \
+         case 17: ret.t._ret_ = ((_type_##P17) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16]); break; \
+         case 18: ret.t._ret_ = ((_type_##P18) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17]); break; \
+         case 19: ret.t._ret_ = ((_type_##P19) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18]); break; \
+         case 20: ret.t._ret_ = ((_type_##P20) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19]); break; \
+         case 21: ret.t._ret_ = ((_type_##P21) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20]); break; \
+         case 22: ret.t._ret_ = ((_type_##P22) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21]); break; \
+         case 23: ret.t._ret_ = ((_type_##P23) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22]); break; \
+         case 24: ret.t._ret_ = ((_type_##P24) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23]); break; \
+         case 25: ret.t._ret_ = ((_type_##P25) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24]); break; \
+         case 26: ret.t._ret_ = ((_type_##P26) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24], rawpar[25]); break; \
+         case 27: ret.t._ret_ = ((_type_##P27) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24], rawpar[25], rawpar[26]); break; \
+         case 28: ret.t._ret_ = ((_type_##P28) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24], rawpar[25], rawpar[26], rawpar[27]); break; \
+         case 29: ret.t._ret_ = ((_type_##P29) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24], rawpar[25], rawpar[26], rawpar[27], rawpar[28]); break; \
+         case 30: ret.t._ret_ = ((_type_##P30) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24], rawpar[25], rawpar[26], rawpar[27], rawpar[28], rawpar[29]); break; \
       } \
    } while(0)
 
@@ -910,25 +910,25 @@ static PHB_ITEM hb_u32ret( PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVA
    #define HB_CDECL
 #endif
 
-HB_DYN_CTYPE_DECL( HB_U32, HB_CDECL, FX86_C32 );
+HB_DYN_CTYPE_DECL(HB_U32, HB_CDECL, FX86_C32);
 #if !defined(HB_LONG_LONG_OFF)
-HB_DYN_CTYPE_DECL( HB_U64, HB_CDECL, FX86_C64 );
+HB_DYN_CTYPE_DECL(HB_U64, HB_CDECL, FX86_C64);
 #endif
-HB_DYN_CTYPE_DECL( double, HB_CDECL, FX86_CDB );
-HB_DYN_CTYPE_DECL( float,  HB_CDECL, FX86_CFL );
+HB_DYN_CTYPE_DECL(double, HB_CDECL, FX86_CDB);
+HB_DYN_CTYPE_DECL(float,  HB_CDECL, FX86_CFL);
 
 #if defined(HB_OS_WIN)
 
-HB_DYN_CTYPE_DECL( HB_U32, __stdcall, FX86_S32 );
-HB_DYN_CTYPE_DECL( HB_U64, __stdcall, FX86_S64 );
-HB_DYN_CTYPE_DECL( double, __stdcall, FX86_SDB );
-HB_DYN_CTYPE_DECL( float,  __stdcall, FX86_SFL );
+HB_DYN_CTYPE_DECL(HB_U32, __stdcall, FX86_S32);
+HB_DYN_CTYPE_DECL(HB_U64, __stdcall, FX86_S64);
+HB_DYN_CTYPE_DECL(double, __stdcall, FX86_SDB);
+HB_DYN_CTYPE_DECL(float,  __stdcall, FX86_SFL);
 
 #endif
 
 #endif
 
-void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, int * piArgFlags )
+void hb_dynCall(int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, int * piArgFlags)
 {
    PHB_DYNADDR pFunction = reinterpret_cast<PHB_DYNADDR>(pFunctionRaw);
 
@@ -997,28 +997,28 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
 
             if( pArg[tmp].iType == HB_DYN_CTYPE_DEFAULT )
             {
-               pArg[tmp].iType = hb_hbtoctype( HB_ITEM_TYPE( pParam ) );
+               pArg[tmp].iType = hb_hbtoctype(HB_ITEM_TYPE(pParam));
             }
 
-            pArg[tmp].bByRef = HB_ISBYREF( iFirst + tmp );
+            pArg[tmp].bByRef = HB_ISBYREF(iFirst + tmp);
 
-            rawpar[tmp] = hb_u64par( pParam, &pArg[tmp] );
+            rawpar[tmp] = hb_u64par(pParam, &pArg[tmp]);
          }
 
          switch( iRetTypeRaw )
          {
             case _RETTYPERAW_INT64:
-               HB_DYN_FUN_CALL( iParams, n64, FX64_64 );
+               HB_DYN_FUN_CALL(iParams, n64, FX64_64);
                break;
             case _RETTYPERAW_DOUBLE:
-               HB_DYN_FUN_CALL( iParams, nDB, FX64_DB );
+               HB_DYN_FUN_CALL(iParams, nDB, FX64_DB);
                break;
             case _RETTYPERAW_FLOAT:
-               HB_DYN_FUN_CALL( iParams, nFL, FX64_FL );
+               HB_DYN_FUN_CALL(iParams, nFL, FX64_FL);
                break;
          }
 
-         hb_u64ret( hb_stackReturnItem(), iRetType, iEncoding, ret, -1 );
+         hb_u64ret(hb_stackReturnItem(), iRetType, iEncoding, ret, -1);
 
          for( tmp = 0; tmp < iParams; ++tmp )
          {
@@ -1127,12 +1127,12 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
 
             if( pArg[tmp].iType == HB_DYN_CTYPE_DEFAULT )
             {
-               pArg[tmp].iType = hb_hbtoctype( HB_ITEM_TYPE( pParam ) );
+               pArg[tmp].iType = hb_hbtoctype(HB_ITEM_TYPE(pParam));
             }
 
-            pArg[tmp].bByRef = HB_ISBYREF( iFirst + tmp );
+            pArg[tmp].bByRef = HB_ISBYREF(iFirst + tmp);
 
-            hb_u32par( pParam, &pArg[tmp], &r1, &r2, &b64 );
+            hb_u32par(pParam, &pArg[tmp], &r1, &r2, &b64);
 
             rawpar[iParamsRaw++] = r1;
             if( b64 )
@@ -1148,16 +1148,16 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
                switch( iRetTypeRaw )
                {
                   case _RETTYPERAW_INT32:
-                     HB_DYN_FUN_CALL( iParamsRaw, n32, FX86_S32 );
+                     HB_DYN_FUN_CALL(iParamsRaw, n32, FX86_S32);
                      break;
                   case _RETTYPERAW_INT64:
-                     HB_DYN_FUN_CALL( iParamsRaw, n64, FX86_S64 );
+                     HB_DYN_FUN_CALL(iParamsRaw, n64, FX86_S64);
                      break;
                   case _RETTYPERAW_DOUBLE:
-                     HB_DYN_FUN_CALL( iParamsRaw, nDB, FX86_SDB );
+                     HB_DYN_FUN_CALL(iParamsRaw, nDB, FX86_SDB);
                      break;
                   case _RETTYPERAW_FLOAT:
-                     HB_DYN_FUN_CALL( iParamsRaw, nFL, FX86_SFL );
+                     HB_DYN_FUN_CALL(iParamsRaw, nFL, FX86_SFL);
                      break;
                }
                break;
@@ -1166,24 +1166,24 @@ void hb_dynCall( int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, i
                switch( iRetTypeRaw )
                {
                   case _RETTYPERAW_INT32:
-                     HB_DYN_FUN_CALL( iParamsRaw, n32, FX86_C32 );
+                     HB_DYN_FUN_CALL(iParamsRaw, n32, FX86_C32);
                      break;
                   case _RETTYPERAW_INT64:
 #if !defined(HB_LONG_LONG_OFF)
-                     HB_DYN_FUN_CALL( iParamsRaw, n64, FX86_C64 );
+                     HB_DYN_FUN_CALL(iParamsRaw, n64, FX86_C64);
 #endif
                      break;
                   case _RETTYPERAW_DOUBLE:
-                     HB_DYN_FUN_CALL( iParamsRaw, nDB, FX86_CDB );
+                     HB_DYN_FUN_CALL(iParamsRaw, nDB, FX86_CDB);
                      break;
                   case _RETTYPERAW_FLOAT:
-                     HB_DYN_FUN_CALL( iParamsRaw, nFL, FX86_CFL );
+                     HB_DYN_FUN_CALL(iParamsRaw, nFL, FX86_CFL);
                      break;
                }
                break;
          }
 
-         hb_u32ret( hb_stackReturnItem(), iRetType, iEncoding, ret, -1 );
+         hb_u32ret(hb_stackReturnItem(), iRetType, iEncoding, ret, -1);
 
          for( tmp = 0; tmp < iParams; ++tmp )
          {

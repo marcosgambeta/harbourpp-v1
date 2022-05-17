@@ -51,7 +51,7 @@
 #include "hbapiitm.h"
 #include "hbapierr.h"
 
-/* hb_UChar( <nCode> ) --> <cText>
+/* hb_UChar(<nCode>) --> <cText>
  * return string with U+nCode character in HVM CP encoding
  */
 HB_FUNC( HB_UCHAR )
@@ -66,11 +66,11 @@ HB_FUNC( HB_UCHAR )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
-/* hb_BChar( <nCode> ) --> <cText>
+/* hb_BChar(<nCode>) --> <cText>
  * return 1 byte string with <nCode> value
  */
 HB_FUNC( HB_BCHAR )
@@ -83,7 +83,7 @@ HB_FUNC( HB_BCHAR )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -100,7 +100,7 @@ HB_FUNC( HB_UCODE )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -117,7 +117,7 @@ HB_FUNC( HB_BCODE )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -134,7 +134,7 @@ HB_FUNC( HB_ULEN )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -151,11 +151,11 @@ HB_FUNC( HB_BLEN )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
-/* hb_UPeek( <cText>, <n> ) --> <nCode>
+/* hb_UPeek(<cText>, <n>) --> <nCode>
  * return unicode value of <n>th character in given string
  */
 HB_FUNC( HB_UPEEK )
@@ -184,11 +184,11 @@ HB_FUNC( HB_UPEEK )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
-/* hb_BPeek( <cText>, <n> ) --> <nCode>
+/* hb_BPeek(<cText>, <n>) --> <nCode>
  * return value of <n>th byte in given string
  */
 HB_FUNC( HB_BPEEK )
@@ -203,7 +203,7 @@ HB_FUNC( HB_BPEEK )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -258,7 +258,7 @@ HB_FUNC( HB_UPOKE )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -282,18 +282,18 @@ HB_FUNC( HB_BPOKE )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
-/* hb_USubStr( <cString>, <nStart>, <nCount> ) --> <cSubstring>
+/* hb_USubStr(<cString>, <nStart>, <nCount>) --> <cSubstring>
  */
 HB_FUNC( HB_USUBSTR )
 {
    PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
    int iPCount = hb_pcount();
 
-   if( pText && HB_ISNUM(2) && ( iPCount < 3 || HB_ISNUM(3) ) )
+   if( pText && HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)) )
    {
       PHB_CODEPAGE cdp = hb_vmCDP();
       const char * pszText = hb_itemGetCPtr(pText);
@@ -342,18 +342,18 @@ HB_FUNC( HB_USUBSTR )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1110, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1110, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
-/* hb_BSubStr( <cString>, <nStart>, <nCount> ) --> <cSubstring>
+/* hb_BSubStr(<cString>, <nStart>, <nCount>) --> <cSubstring>
  */
 HB_FUNC( HB_BSUBSTR )
 {
    PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
    int iPCount = hb_pcount();
 
-   if( pText && HB_ISNUM(2) && ( iPCount < 3 || HB_ISNUM(3) ) )
+   if( pText && HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)) )
    {
       const char * pszText = hb_itemGetCPtr(pText);
       HB_ISIZ nSize = hb_itemGetCLen(pText);
@@ -402,11 +402,11 @@ HB_FUNC( HB_BSUBSTR )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1110, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1110, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
-/* hb_ULeft( <cString>, <nCount> ) --> <cSubstring>
+/* hb_ULeft(<cString>, <nCount>) --> <cSubstring>
  */
 HB_FUNC( HB_ULEFT )
 {
@@ -438,11 +438,11 @@ HB_FUNC( HB_ULEFT )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1124, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1124, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
-/* hb_BLeft( <cString>, <nCount> ) --> <cSubstring>
+/* hb_BLeft(<cString>, <nCount>) --> <cSubstring>
  */
 HB_FUNC( HB_BLEFT )
 {
@@ -470,11 +470,11 @@ HB_FUNC( HB_BLEFT )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1124, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1124, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
-/* hb_URight( <cString>, <nCount> ) --> <cSubstring>
+/* hb_URight(<cString>, <nCount>) --> <cSubstring>
  */
 HB_FUNC( HB_URIGHT )
 {
@@ -512,7 +512,7 @@ HB_FUNC( HB_URIGHT )
    }
 }
 
-/* hb_BRight( <cString>, <nCount> ) --> <cSubstring>
+/* hb_BRight(<cString>, <nCount>) --> <cSubstring>
  */
 HB_FUNC( HB_BRIGHT )
 {
@@ -603,7 +603,7 @@ HB_FUNC( HB_UAT )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1108, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1108, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -670,7 +670,7 @@ HB_FUNC( HB_BAT )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1108, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1108, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -767,7 +767,7 @@ HB_FUNC( HB_BSTUFF )
          }
       }
 
-      if( ( nTot = nLen + nIns - nDel ) > 0 )
+      if( (nTot = nLen + nIns - nDel) > 0 )
       {
          char * szResult = static_cast<char*>(hb_xgrab(nTot + 1));
 
@@ -823,7 +823,7 @@ HB_FUNC( HB_USTUFF )
          }
       }
 
-      if( ( nTot = nLen + nIns - nDel ) > 0 )
+      if( (nTot = nLen + nIns - nDel) > 0 )
       {
          char * szResult = static_cast<char*>(hb_xgrab(nTot + 1));
 

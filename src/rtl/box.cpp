@@ -66,7 +66,7 @@ HB_FUNC( DISPBOX )
 
          if( pszColor )
          {
-            iColor = hb_gtColorToN( pszColor );
+            iColor = hb_gtColorToN(pszColor);
          }
          else if( HB_ISNUM(6) )
          {
@@ -76,7 +76,7 @@ HB_FUNC( DISPBOX )
          {
             iColor = -1;
          }
-         hb_gtBoxEx( hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight), pszBox, iColor );
+         hb_gtBoxEx(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight), pszBox, iColor);
       }
       else
       {
@@ -84,22 +84,22 @@ HB_FUNC( DISPBOX )
 
          if( pszColor )
          {
-            hb_gtGetColorStr( szOldColor );
-            hb_gtSetColorStr( pszColor );
+            hb_gtGetColorStr(szOldColor);
+            hb_gtSetColorStr(pszColor);
          }
 
          if( hb_parni(5) == 2 )
          {
-            hb_gtBoxD( hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight) );
+            hb_gtBoxD(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight));
          }
          else
          {
-            hb_gtBoxS( hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight) );
+            hb_gtBoxS(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight));
          }
 
          if( pszColor )
          {
-            hb_gtSetColorStr( szOldColor );
+            hb_gtSetColorStr(szOldColor);
          }
       }
    }
@@ -116,8 +116,8 @@ HB_FUNC( HB_DISPBOX )
    {
       const char * pszBox   = hb_parc(5);
       const char * pszColor = hb_parc(6);
-      int          iColor   = pszColor ? hb_gtColorToN( pszColor ) : hb_parnidef(6, -1);
+      int          iColor   = pszColor ? hb_gtColorToN(pszColor) : hb_parnidef(6, -1);
 
-      hb_gtDrawBox( hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight), pszBox, iColor );
+      hb_gtDrawBox(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight), pszBox, iColor);
    }
 }

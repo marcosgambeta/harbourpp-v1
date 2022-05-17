@@ -47,7 +47,7 @@
 #include "hbapi.h"
 #include "hbapigt.h"
 
-static void hb_getScreenRange( int * piMin, int * piMax, HB_BOOL fNoCheck, HB_BOOL fVertical )
+static void hb_getScreenRange(int * piMin, int * piMax, HB_BOOL fNoCheck, HB_BOOL fVertical)
 {
    int iFrom, iTo, iMax;
 
@@ -134,7 +134,7 @@ HB_FUNC( RESTSCREEN )
          pBufStr = static_cast<const char*>(pBuffer);
       }
 
-      hb_gtRest( iTop, iLeft, iBottom, iRight, pBufStr );
+      hb_gtRest(iTop, iLeft, iBottom, iRight, pBufStr);
 
       if( pBuffer )
       {

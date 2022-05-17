@@ -108,8 +108,8 @@ void hb_znetClose(PHB_ZNETSTREAM pStream)
       hb_xfree(pStream->bf);
    }
 
-   deflateEnd( &pStream->wr );
-   inflateEnd( &pStream->rd );
+   deflateEnd(&pStream->wr);
+   inflateEnd(&pStream->rd);
 
    hb_xfree(pStream);
 }
@@ -153,7 +153,7 @@ PHB_ZNETSTREAM hb_znetOpen(int level, int strategy)
 
 /* set encryption key
  */
-void hb_znetEncryptKey( PHB_ZNETSTREAM pStream, const void * keydata, int keylen )
+void hb_znetEncryptKey(PHB_ZNETSTREAM pStream, const void * keydata, int keylen)
 {
    if( pStream->crypt == 0 )
    {
@@ -161,7 +161,7 @@ void hb_znetEncryptKey( PHB_ZNETSTREAM pStream, const void * keydata, int keylen
 
       /* initialize encryption key */
       pStream->bf = static_cast<HB_BLOWFISH*>(hb_xgrab(sizeof(HB_BLOWFISH)));
-      hb_blowfishInit( pStream->bf, keydata, keylen );
+      hb_blowfishInit(pStream->bf, keydata, keylen);
 
       /* initialize input buffer */
       pStream->skip_in = 0;
@@ -184,24 +184,24 @@ void hb_znetEncryptKey( PHB_ZNETSTREAM pStream, const void * keydata, int keylen
    }
 }
 
-static void hb_znetDecrypt( PHB_ZNETSTREAM pStream, Bytef * data )
+static void hb_znetDecrypt(PHB_ZNETSTREAM pStream, Bytef * data)
 {
    HB_U32 xl, xr;
 
    xl = HB_GET_BE_UINT32(data);
    xr = HB_GET_BE_UINT32(data + 4);
-   hb_blowfishDecrypt( pStream->bf, &xl, &xr );
+   hb_blowfishDecrypt(pStream->bf, &xl, &xr);
    HB_PUT_BE_UINT32(data, xl);
    HB_PUT_BE_UINT32(data + 4, xr);
 }
 
-static void hb_znetEncrypt( PHB_ZNETSTREAM pStream, Bytef * data )
+static void hb_znetEncrypt(PHB_ZNETSTREAM pStream, Bytef * data)
 {
    HB_U32 xl, xr;
 
    xl = HB_GET_BE_UINT32(data);
    xr = HB_GET_BE_UINT32(data + 4);
-   hb_blowfishEncrypt( pStream->bf, &xl, &xr );
+   hb_blowfishEncrypt(pStream->bf, &xl, &xr);
    HB_PUT_BE_UINT32(data, xl);
    HB_PUT_BE_UINT32(data + 4, xr);
 }
@@ -237,7 +237,7 @@ long hb_znetRead(PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len, 
             {
                timeout = 0;
             }
-            rec = hb_socketRecv( sd, pStream->inbuf + pStream->crypt_in, HB_ZNET_BUFSIZE - pStream->crypt_in, 0, timeout );
+            rec = hb_socketRecv(sd, pStream->inbuf + pStream->crypt_in, HB_ZNET_BUFSIZE - pStream->crypt_in, 0, timeout);
             if( rec <= 0 )
             {
                break;
@@ -251,7 +251,7 @@ long hb_znetRead(PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len, 
             {
                if( pStream->crypt_in >= 8 )
                {
-                  hb_znetDecrypt( pStream, pStream->rd.next_in );
+                  hb_znetDecrypt(pStream, pStream->rd.next_in);
                   pStream->crypt_size = HB_GET_BE_UINT16(pStream->rd.next_in);
                   pStream->rd.next_in += 2;
                   pStream->crypt_in -= 8;
@@ -264,7 +264,7 @@ long hb_znetRead(PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len, 
             }
             if( pStream->skip_in == 0 )
             {
-               long l = ( pStream->crypt_size + 0x07 ) & ~0x07;
+               long l = (pStream->crypt_size + 0x07) & ~0x07;
                rec = pStream->crypt_in & ~0x07;
                if( rec > l )
                {
@@ -273,7 +273,7 @@ long hb_znetRead(PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len, 
                /* decrypt the buffer */
                for( l = 0; l < rec; l += 8 )
                {
-                  hb_znetDecrypt( pStream, pStream->rd.next_in + pStream->rd.avail_in + l );
+                  hb_znetDecrypt(pStream, pStream->rd.next_in + pStream->rd.avail_in + l);
                }
                pStream->crypt_in -= rec;
                if( static_cast<uInt>(rec) > pStream->crypt_size )
@@ -340,7 +340,7 @@ static long hb_znetStreamWrite(PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT t
             /* encrypt the buffer */
             for( tosnd = 0; tosnd < rest; tosnd += 8 )
             {
-               hb_znetEncrypt( pStream, pStream->crypt_out + tosnd );
+               hb_znetEncrypt(pStream, pStream->crypt_out + tosnd);
             }
             rest = 0;
             pStream->crypt_out = pStream->wr.next_out;
@@ -365,7 +365,7 @@ static long hb_znetStreamWrite(PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT t
 
    if( tosnd > 0 )
    {
-      snd = hb_socketSend( sd, pStream->outbuf, tosnd, 0, timeout );
+      snd = hb_socketSend(sd, pStream->outbuf, tosnd, 0, timeout);
       if( snd > 0 )
       {
          tosnd += rest - snd;
@@ -397,7 +397,7 @@ static long hb_znetStreamWrite(PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT t
 /* flush data in stream structure - return number of bytes left in the
  * buffer which were not sent
  */
-long hb_znetFlush( PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT timeout, HB_BOOL fSync )
+long hb_znetFlush(PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT timeout, HB_BOOL fSync)
 {
    uInt uiSize = HB_ZNET_BUFSIZE - ( pStream->crypt ? 2 : 0 );
 
@@ -488,7 +488,7 @@ long hb_znetWrite(PHB_ZNETSTREAM pStream, HB_SOCKET sd, const void * buffer, lon
 
 /* socket filter */
 
-#define HB_ZNET_GET( p )      ( static_cast<PHB_ZNETSTREAM>(p->cargo) )
+#define HB_ZNET_GET(p)      ( static_cast<PHB_ZNETSTREAM>(p->cargo) )
 
 static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
 {
@@ -496,12 +496,12 @@ static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
    const void * keydata = nullptr;
    int keylen = 0, level = HB_ZLIB_COMPRESSION_DEFAULT, strategy = HB_ZLIB_STRATEGY_DEFAULT;
 
-   hb_socekxParamsGetStd( pParams, &keydata, &keylen, nullptr, nullptr, &level, &strategy );
+   hb_socekxParamsGetStd(pParams, &keydata, &keylen, nullptr, nullptr, &level, &strategy);
 
-   pSock = hb_sockexNewZNet( sd, keydata, keylen, level, strategy );
+   pSock = hb_sockexNewZNet(sd, keydata, keylen, level, strategy);
    if( pSock )
    {
-      hb_socekxParamsInit( pSock, pParams );
+      hb_socekxParamsInit(pSock, pParams);
    }
 
    return pSock;
@@ -510,7 +510,7 @@ static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
 /* this wrapper does not support multilevel filtering so
    it destroys previous wrappers if any and create new one.
  */
-static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
+static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
 {
    PHB_SOCKEX pSockNew = nullptr;
 
@@ -534,7 +534,7 @@ static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
    {
       if( pSock->sd != HB_NO_SOCKET )
       {
-         hb_znetFlush( HB_ZNET_GET( pSock ), pSock->sd, HB_MAX(15000, pSock->iAutoFlush), true );
+         hb_znetFlush(HB_ZNET_GET(pSock), pSock->sd, HB_MAX(15000, pSock->iAutoFlush), true);
       }
       hb_znetClose(HB_ZNET_GET(pSock));
    }
@@ -590,14 +590,14 @@ static long s_sockexWrite(PHB_SOCKEX pSock, const void * data, long len, HB_MAXI
    return pSock->cargo ? hb_znetWrite(HB_ZNET_GET(pSock), pSock->sd, data, len, timeout, nullptr) : hb_socketSend(pSock->sd, data, len, 0, timeout);
 }
 
-static long s_sockexFlush( PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync )
+static long s_sockexFlush(PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync)
 {
    if( pSock->sd == HB_NO_SOCKET )
    {
       hb_socketSetError(HB_SOCKET_ERR_INVALIDHANDLE);
       return -1;
    }
-   return pSock->cargo ? hb_znetFlush( HB_ZNET_GET( pSock ), pSock->sd, timeout, fSync ) : 0;
+   return pSock->cargo ? hb_znetFlush(HB_ZNET_GET(pSock), pSock->sd, timeout, fSync) : 0;
 }
 
 static int s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
@@ -641,9 +641,9 @@ static int s_sockexCanWrite(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout
       hb_socketSetError(HB_SOCKET_ERR_INVALIDHANDLE);
       return -1;
    }
-   else if( fBuffer && pSock->cargo && /* HB_ZNET_GET( pSock )->wr.avail_out > 0 && */
+   else if( fBuffer && pSock->cargo && /* HB_ZNET_GET(pSock)->wr.avail_out > 0 && */
             static_cast<uInt>(HB_ZNET_BUFSIZE - (HB_ZNET_GET(pSock)->crypt ? 2 : 0)) <=
-            HB_ZNET_GET( pSock )->wr.avail_out )
+            HB_ZNET_GET(pSock)->wr.avail_out )
    {
       return 1;
    }
@@ -658,7 +658,7 @@ static char * s_sockexName(PHB_SOCKEX pSock)
    return hb_strdup(pSock->pFilter->pszName);
 }
 
-static const char * s_sockexErrorStr( PHB_SOCKEX pSock, int iError )
+static const char * s_sockexErrorStr(PHB_SOCKEX pSock, int iError)
 {
    HB_SYMBOL_UNUSED(pSock);
 
@@ -682,7 +682,7 @@ static const char * s_sockexErrorStr( PHB_SOCKEX pSock, int iError )
          return "Z_VERSION_ERROR";
    }
 
-   return hb_socketErrorStr( iError );
+   return hb_socketErrorStr(iError);
 }
 
 static const HB_SOCKET_FILTER s_sockFilter =
@@ -700,7 +700,7 @@ static const HB_SOCKET_FILTER s_sockFilter =
    s_sockexErrorStr
 };
 
-PHB_SOCKEX hb_sockexNewZNet( HB_SOCKET sd, const void * keydata, int keylen, int level, int strategy )
+PHB_SOCKEX hb_sockexNewZNet(HB_SOCKET sd, const void * keydata, int keylen, int level, int strategy)
 {
    PHB_SOCKEX pSock = nullptr;
 
@@ -715,7 +715,7 @@ PHB_SOCKEX hb_sockexNewZNet( HB_SOCKET sd, const void * keydata, int keylen, int
          {
             if( keydata && keylen > 0 )
             {
-               hb_znetEncryptKey( pStream, keydata, keylen );
+               hb_znetEncryptKey(pStream, keydata, keylen);
             }
          }
          else
@@ -737,8 +737,8 @@ PHB_SOCKEX hb_sockexNewZNet( HB_SOCKET sd, const void * keydata, int keylen, int
    return pSock;
 }
 
-/* hb_socketNewZNet( <pSocket>, [<cPass>], ;
-                     [<nCompressionLevel>], [<nStrategy>] ) --> <pSocket>
+/* hb_socketNewZNet(<pSocket>, [<cPass>], ;
+                     [<nCompressionLevel>], [<nStrategy>]) --> <pSocket>
  */
 HB_FUNC( HB_SOCKETNEWZNET )
 {
@@ -759,7 +759,7 @@ HB_FUNC( HB_SOCKETNEWZNET )
              level = hb_parnidef(3, HB_ZLIB_COMPRESSION_DEFAULT),
              strategy = hb_parnidef(4, HB_ZLIB_STRATEGY_DEFAULT);
 
-         pSock = hb_sockexNewZNet( sd, keydata, keylen, level, strategy );
+         pSock = hb_sockexNewZNet(sd, keydata, keylen, level, strategy);
       }
 
       if( pSock )
@@ -770,9 +770,9 @@ HB_FUNC( HB_SOCKETNEWZNET )
    }
 }
 
-HB_CALL_ON_STARTUP_BEGIN( _hb_znet_init_ )
-   hb_sockexRegister( &s_sockFilter );
-HB_CALL_ON_STARTUP_END( _hb_znet_init_ )
+HB_CALL_ON_STARTUP_BEGIN(_hb_znet_init_)
+   hb_sockexRegister(&s_sockFilter);
+HB_CALL_ON_STARTUP_END(_hb_znet_init_)
 
 #if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_znet_init_

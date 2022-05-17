@@ -81,7 +81,7 @@ static const char * s_hb_padGet(PHB_CODEPAGE cdp, HB_SIZE * pnPad)
 #define HB_PAD_R  1
 #define HB_PAD_C  2
 
-static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
+static void s_hb_strPad(int iMode, PHB_CODEPAGE cdp)
 {
    HB_ISIZ nLen = hb_parns(2);
 
@@ -104,7 +104,7 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
             if( cdp )
             {
                HB_SIZE nText = nLen;
-               nLen = hb_cdpTextPosEx( cdp, szText, nSize, &nText );
+               nLen = hb_cdpTextPosEx(cdp, szText, nSize, &nText);
                nLen += nText;
             }
 
@@ -119,8 +119,8 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                   case HB_PAD_L:
                      if( nPad > 1 )
                      {
-                        HB_SIZE nRep = ( static_cast<HB_SIZE>(nLen) - nSize ), nPos = 0;
-                        nLen += nRep * ( nPad - 1 );
+                        HB_SIZE nRep = (static_cast<HB_SIZE>(nLen) - nSize), nPos = 0;
+                        nLen += nRep * (nPad - 1);
                         szResult = static_cast<char*>(hb_xgrab(nLen + 1));
                         while( nRep-- )
                         {
@@ -158,8 +158,8 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                   default: /* HB_PAD_C */
                      if( nPad > 1 )
                      {
-                        HB_SIZE nRep = ( static_cast<HB_SIZE>(nLen) - nSize ) >> 1, nPos = 0;
-                        nLen += ( nLen - nSize ) * ( nPad - 1 );
+                        HB_SIZE nRep = (static_cast<HB_SIZE>(nLen) - nSize) >> 1, nPos = 0;
+                        nLen += (nLen - nSize) * (nPad - 1);
                         szResult = static_cast<char*>(hb_xgrab(nLen + 1));
                         while( nRep-- )
                         {
@@ -177,7 +177,7 @@ static void s_hb_strPad( int iMode, PHB_CODEPAGE cdp )
                      else
                      {
                         szResult = static_cast<char*>(hb_xgrab(nLen + 1));
-                        nPad = ( static_cast<HB_SIZE>(nLen) - nSize ) >> 1;
+                        nPad = (static_cast<HB_SIZE>(nLen) - nSize) >> 1;
                         hb_xmemset(szResult, szPad[0], nPad);
                         hb_xmemcpy(szResult + nPad, szText, nSize);
                         hb_xmemset(szResult + nPad + nSize, szPad[0], static_cast<HB_SIZE>(nLen) - nSize - nPad);
@@ -219,12 +219,12 @@ HB_FUNC( PADL )
 {
    PHB_CODEPAGE cdp = hb_vmCDP();
 
-   if( !HB_CDP_ISCHARIDX( cdp ) )
+   if( !HB_CDP_ISCHARIDX(cdp) )
    {
       cdp = nullptr;
    }
 
-   s_hb_strPad( HB_PAD_L, cdp );
+   s_hb_strPad(HB_PAD_L, cdp);
 }
 
 HB_FUNC( HB_BPADL )
@@ -236,12 +236,12 @@ HB_FUNC( HB_UPADL )
 {
    PHB_CODEPAGE cdp = hb_vmCDP();
 
-   if( !HB_CDP_ISCUSTOM( cdp ) )
+   if( !HB_CDP_ISCUSTOM(cdp) )
    {
       cdp = nullptr;
    }
 
-   s_hb_strPad( HB_PAD_L, cdp );
+   s_hb_strPad(HB_PAD_L, cdp);
 }
 
 /* right-pads a date, number, or string with spaces or supplied character */
@@ -249,12 +249,12 @@ HB_FUNC( PADR )
 {
    PHB_CODEPAGE cdp = hb_vmCDP();
 
-   if( !HB_CDP_ISCHARIDX( cdp ) )
+   if( !HB_CDP_ISCHARIDX(cdp) )
    {
       cdp = nullptr;
    }
 
-   s_hb_strPad( HB_PAD_R, cdp );
+   s_hb_strPad(HB_PAD_R, cdp);
 }
 
 HB_FUNC( HB_BPADR )
@@ -266,12 +266,12 @@ HB_FUNC( HB_UPADR )
 {
    PHB_CODEPAGE cdp = hb_vmCDP();
 
-   if( !HB_CDP_ISCUSTOM( cdp ) )
+   if( !HB_CDP_ISCUSTOM(cdp) )
    {
       cdp = nullptr;
    }
 
-   s_hb_strPad( HB_PAD_R, cdp );
+   s_hb_strPad(HB_PAD_R, cdp);
 }
 
 /* centre-pads a date, number, or string with spaces or supplied character */
@@ -279,12 +279,12 @@ HB_FUNC( PADC )
 {
    PHB_CODEPAGE cdp = hb_vmCDP();
 
-   if( !HB_CDP_ISCHARIDX( cdp ) )
+   if( !HB_CDP_ISCHARIDX(cdp) )
    {
       cdp = nullptr;
    }
 
-   s_hb_strPad( HB_PAD_C, cdp );
+   s_hb_strPad(HB_PAD_C, cdp);
 }
 
 HB_FUNC( HB_BPADC )
@@ -296,10 +296,10 @@ HB_FUNC( HB_UPADC )
 {
    PHB_CODEPAGE cdp = hb_vmCDP();
 
-   if( !HB_CDP_ISCUSTOM( cdp ) )
+   if( !HB_CDP_ISCUSTOM(cdp) )
    {
       cdp = nullptr;
    }
 
-   s_hb_strPad( HB_PAD_C, cdp );
+   s_hb_strPad(HB_PAD_C, cdp);
 }

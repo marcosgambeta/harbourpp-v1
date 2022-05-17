@@ -90,7 +90,7 @@ static const _HB_BUTTON_ID s_buttons[] =
    { "NO",        2, 0x0020 }
 };
 
-#define _HB_BUTTON_COUNT  HB_SIZEOFARRAY( s_buttons )
+#define _HB_BUTTON_COUNT  HB_SIZEOFARRAY(s_buttons)
 
 static int hb_gt_gui_optionId(const char * pszOption)
 {
@@ -167,7 +167,7 @@ static int hb_gt_gui_optionPos(int id, int iType, PHB_ITEM pOptions)
       for( int i = 1; i <= iOptions; ++i )
       {
          id = hb_gt_gui_optionId(hb_arrayGetCPtr(pOptions, i));
-         if( iButton == id || ( iOptions == 1 && iType == id ) )
+         if( iButton == id || (iOptions == 1 && iType == id) )
          {
             return i;
          }
@@ -247,7 +247,7 @@ static int hb_gt_gui_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
 static const char * hb_gt_gui_Version(PHB_GT pGT, int iType)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Version(%p,%d)", static_cast<void*>(pGT), iType ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_gui_Version(%p,%d)", static_cast<void*>(pGT), iType));
 #endif
 
    HB_SYMBOL_UNUSED(pGT);
@@ -265,7 +265,7 @@ static const char * hb_gt_gui_Version(PHB_GT pGT, int iType)
 static void hb_gt_gui_Tone(PHB_GT pGT, double dFrequency, double dDuration)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_gui_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration));
 #endif
 
 #if defined(HB_OS_WIN)
@@ -282,7 +282,7 @@ static void hb_gt_gui_Tone(PHB_GT pGT, double dFrequency, double dDuration)
 static HB_BOOL hb_gt_gui_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_gui_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_gui_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));
 #endif
 
    switch( iType )
@@ -292,9 +292,9 @@ static HB_BOOL hb_gt_gui_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          if( hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING )
          {
 #if defined(UNICODE)
-            hb_gt_winapi_setClipboard( CF_UNICODETEXT, pInfo->pNewVal );
+            hb_gt_winapi_setClipboard(CF_UNICODETEXT, pInfo->pNewVal);
 #else
-            hb_gt_winapi_setClipboard( CF_TEXT, pInfo->pNewVal );
+            hb_gt_winapi_setClipboard(CF_TEXT, pInfo->pNewVal);
 #endif
          }
          else
@@ -304,9 +304,9 @@ static HB_BOOL hb_gt_gui_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
                pInfo->pResult = hb_itemNew(nullptr);
             }
 #if defined(UNICODE)
-            hb_gt_winapi_getClipboard( CF_UNICODETEXT, pInfo->pResult );
+            hb_gt_winapi_getClipboard(CF_UNICODETEXT, pInfo->pResult);
 #else
-            hb_gt_winapi_getClipboard( CF_TEXT, pInfo->pResult );
+            hb_gt_winapi_getClipboard(CF_TEXT, pInfo->pResult);
 #endif
          }
          break;
@@ -328,10 +328,10 @@ static HB_BOOL hb_gt_gui_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
 /* *********************************************************************** */
 
-static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
+static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", static_cast<void*>(pFuncTable) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_FuncInit(%p)", static_cast<void*>(pFuncTable)));
 #endif
 
    pFuncTable->Version                    = hb_gt_gui_Version;

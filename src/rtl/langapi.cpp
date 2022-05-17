@@ -197,7 +197,7 @@ HB_LANG_ANNOUNCE( EN )
 
 /* Always link in the default language */
 #if 0
-HB_LANG_REQUEST( HB_LANG_DEFAULT );
+HB_LANG_REQUEST(HB_LANG_DEFAULT);
 #endif
 
 /* NOTE: This is the maximum number of registered languages, later this can be
@@ -294,7 +294,7 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
       }
       else
       {
-         pszTrans = hb_cdpDup( lang->pItemList[i], cdpIn, cdpOut );
+         pszTrans = hb_cdpDup(lang->pItemList[i], cdpIn, cdpOut);
       }
 
       if( strcmp(pszTrans, lang->pItemList[i]) != 0 )
@@ -342,7 +342,7 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
 void hb_langReleaseAll(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_langReleaseAll()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_langReleaseAll()"));
 #endif
 
    for( int iPos = 0; iPos < HB_LANG_MAX_; iPos++ )
@@ -351,10 +351,10 @@ void hb_langReleaseAll(void)
    }
 }
 
-HB_BOOL hb_langRegister( PHB_LANG lang )
+HB_BOOL hb_langRegister(PHB_LANG lang)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_langRegister(%p)", static_cast<const void*>(lang) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_langRegister(%p)", static_cast<const void*>(lang)));
 #endif
 
    if( lang )
@@ -371,10 +371,10 @@ HB_BOOL hb_langRegister( PHB_LANG lang )
    return false;
 }
 
-PHB_LANG hb_langFind( const char * pszID )
+PHB_LANG hb_langFind(const char * pszID)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_langFind(%s)", pszID ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_langFind(%s)", pszID));
 #endif
 
    PHB_LANG_BASE pBase;
@@ -384,10 +384,10 @@ PHB_LANG hb_langFind( const char * pszID )
    return pBase ? pBase->lang : nullptr;
 }
 
-PHB_LANG hb_langSelect( PHB_LANG lang )
+PHB_LANG hb_langSelect(PHB_LANG lang)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_langSelect(%p)", static_cast<const void*>(lang) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_langSelect(%p)", static_cast<const void*>(lang)));
 #endif
 
    PHB_LANG langOld;
@@ -401,19 +401,19 @@ PHB_LANG hb_langSelect( PHB_LANG lang )
    return langOld;
 }
 
-const char * hb_langSelectID( const char * pszID )
+const char * hb_langSelectID(const char * pszID)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_langSelectID(%s)", pszID ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_langSelectID(%s)", pszID));
 #endif
 
    const char * pszIDOld = hb_langID();
    PHB_LANG     lang;
 
-   lang = hb_langFind( pszID );
+   lang = hb_langFind(pszID);
    if( lang )
    {
-      hb_langSelect( lang );
+      hb_langSelect(lang);
    }
    else
    {
@@ -426,12 +426,12 @@ const char * hb_langSelectID( const char * pszID )
 const char * hb_langGetItem(const char * pszID, int iIndex)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_langGetItem(%s,%i)", pszID, iIndex ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_langGetItem(%s,%i)", pszID, iIndex));
 #endif
 
    PHB_LANG lang;
 
-   lang = pszID ? hb_langFind( pszID ) : hb_vmLang();
+   lang = pszID ? hb_langFind(pszID) : hb_vmLang();
    if( lang && iIndex >= 0 && iIndex < HB_LANG_ITEM_MAX_ )
    {
       return lang->pItemList[iIndex];
@@ -445,7 +445,7 @@ const char * hb_langGetItem(const char * pszID, int iIndex)
 const char * hb_langID(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_langID()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_langID()"));
 #endif
 
    return hb_langGetItem(nullptr, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID);
@@ -458,7 +458,7 @@ char * hb_langName(const char * pszID)
    char *   pszName;
    PHB_LANG lang;
 
-   lang = pszID ? hb_langFind( pszID ) : hb_vmLang();
+   lang = pszID ? hb_langFind(pszID) : hb_vmLang();
    if( lang )
    {
       pszName = static_cast<char*>(hb_xgrab(128));
@@ -480,7 +480,7 @@ char * hb_langName(const char * pszID)
 const char * hb_langDGetErrorDesc(int iIndex)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_langDGetErrorDesc(%i)", iIndex ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_langDGetErrorDesc(%i)", iIndex));
 #endif
 
    return hb_langGetItem(nullptr, HB_LANG_ITEM_BASE_ERRDESC + iIndex);
@@ -489,7 +489,7 @@ const char * hb_langDGetErrorDesc(int iIndex)
 const char * hb_langDGetItem(int iIndex)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_langDGetItem(%i)", iIndex ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_langDGetItem(%i)", iIndex));
 #endif
 
    PHB_LANG lang;
@@ -516,7 +516,7 @@ HB_FUNC( __HB_LANGSELECT )
    szNewLang = hb_parc(1);
    if( szNewLang )
    {
-      hb_langSelectID( szNewLang );
+      hb_langSelectID(szNewLang);
    }
 }
 

@@ -68,14 +68,14 @@ HB_BOOL hb_gtWFlash(void)
    return false;
 }
 
-void hb_gtWApp( HB_GT_WND ** wnd )
+void hb_gtWApp(HB_GT_WND ** wnd)
 {
    /* TODO: */
 
    HB_SYMBOL_UNUSED(wnd);
 }
 
-void hb_gtWCurrent( HB_GT_WND * wnd )
+void hb_gtWCurrent(HB_GT_WND * wnd)
 {
    /* TODO: */
 
@@ -90,7 +90,7 @@ void hb_gtWPos(HB_GT_WND * wnd, HB_GT_RECT * rect)
    HB_SYMBOL_UNUSED(rect);
 }
 
-HB_BOOL hb_gtWVis( HB_GT_WND * wnd, HB_USHORT iStatus ) /* USHORT in CA-Cl*pper [vszakats] */
+HB_BOOL hb_gtWVis(HB_GT_WND * wnd, HB_USHORT iStatus) /* USHORT in CA-Cl*pper [vszakats] */
 {
    /* TODO: */
 
@@ -100,7 +100,7 @@ HB_BOOL hb_gtWVis( HB_GT_WND * wnd, HB_USHORT iStatus ) /* USHORT in CA-Cl*pper 
    return false;
 }
 
-HB_ERRCODE hb_gtSLR( HB_GT_SLR * pSLR ) /* System-Level Request */
+HB_ERRCODE hb_gtSLR(HB_GT_SLR * pSLR) /* System-Level Request */
 {
    /* Do nothing in Harbour, since the low-level GT API is
       implemented with a different method than in CA-Cl*pper. */
@@ -126,7 +126,7 @@ HB_ERRCODE hb_gtFlushCursor(void)
    return HB_FAILURE;
 }
 
-HB_ERRCODE hb_gtSetColor( HB_GT_RGB * color )
+HB_ERRCODE hb_gtSetColor(HB_GT_RGB * color)
 {
    /* TODO: */
 
@@ -135,7 +135,7 @@ HB_ERRCODE hb_gtSetColor( HB_GT_RGB * color )
    return HB_FAILURE;
 }
 
-HB_ERRCODE hb_gtGetColor( HB_GT_RGB * color )
+HB_ERRCODE hb_gtGetColor(HB_GT_RGB * color)
 {
    /* TODO: */
 
@@ -144,7 +144,7 @@ HB_ERRCODE hb_gtGetColor( HB_GT_RGB * color )
    return HB_FAILURE;
 }
 
-HB_ERRCODE hb_gtSetBorder( HB_GT_RGB * color )
+HB_ERRCODE hb_gtSetBorder(HB_GT_RGB * color)
 {
    /* TODO: */
 

@@ -69,7 +69,7 @@ HB_FUNC( RIGHT )
          if( static_cast<HB_SIZE>(nLen) < nText )
          {
             PHB_CODEPAGE cdp = hb_vmCDP();
-            if( HB_CDP_ISCHARIDX( cdp ) )
+            if( HB_CDP_ISCHARIDX(cdp) )
             {
                HB_SIZE nChars = hb_cdpTextLen(cdp, hb_itemGetCPtr(pText), nText);
                if( nChars > static_cast<HB_SIZE>(nLen) )

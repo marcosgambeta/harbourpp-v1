@@ -107,25 +107,25 @@ static PHB_PRNPOS hb_prnPos(void)
 void hb_conInit(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_conInit()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_conInit()"));
 #endif
 
 #if !defined(HB_OS_WIN)
    /* On Windows file handles with numbers 0, 1, 2 are
       translated inside filesys to:
-      GetStdHandle( STD_INPUT_HANDLE ), GetStdHandle( STD_OUTPUT_HANDLE ),
-      GetStdHandle( STD_ERROR_HANDLE ) */
+      GetStdHandle(STD_INPUT_HANDLE), GetStdHandle(STD_OUTPUT_HANDLE),
+      GetStdHandle(STD_ERROR_HANDLE) */
 
-   s_hFilenoStdin  = fileno( stdin );
-   s_hFilenoStdout = fileno( stdout );
-   s_hFilenoStderr = fileno( stderr );
+   s_hFilenoStdin  = fileno(stdin);
+   s_hFilenoStdout = fileno(stdout);
+   s_hFilenoStderr = fileno(stderr);
 
 #endif
 
 #ifdef HB_CLP_UNDOC
    {
       /* Undocumented CA-Cl*pper switch //STDERR:x */
-      int iStderr = hb_cmdargNum( "STDERR" );
+      int iStderr = hb_cmdargNum("STDERR");
 
       if( iStderr == 0 || iStderr == 1 )  /* //STDERR with no parameter or 0 */
       {
@@ -152,12 +152,12 @@ void hb_conInit(void)
    hb_fsSetDevMode(s_hFilenoStdout, FD_BINARY);
    hb_fsSetDevMode(s_hFilenoStderr, FD_BINARY);
 
-   if( hb_gtInit( s_hFilenoStdin, s_hFilenoStdout, s_hFilenoStderr ) != HB_SUCCESS )
+   if( hb_gtInit(s_hFilenoStdin, s_hFilenoStdout, s_hFilenoStderr) != HB_SUCCESS )
    {
       hb_errInternal(9995, "Harbour terminal (GT) initialization failure", nullptr, nullptr);
    }
 
-   if( hb_cmdargCheck( "INFO" ) )
+   if( hb_cmdargCheck("INFO") )
    {
       hb_conOutErr(hb_gtVersion(1), 0);
       hb_conOutErr(hb_conNewLine(), 0);
@@ -167,7 +167,7 @@ void hb_conInit(void)
 void hb_conRelease(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_conRelease()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_conRelease()"));
 #endif
 
    /*
@@ -190,7 +190,7 @@ void hb_conRelease(void)
 const char * hb_conNewLine(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_conNewLine()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_conNewLine()"));
 #endif
 
    return s_szCrLf;
@@ -212,10 +212,10 @@ HB_FUNC( HB_OSNEWLINE )
 #endif
 
 /* Output an item to STDOUT */
-void hb_conOutStd( const char * szStr, HB_SIZE nLen )
+void hb_conOutStd(const char * szStr, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_conOutStd(%s, %" HB_PFS "u)", szStr, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_conOutStd(%s, %" HB_PFS "u)", szStr, nLen));
 #endif
 
    if( nLen == 0 )
@@ -225,15 +225,15 @@ void hb_conOutStd( const char * szStr, HB_SIZE nLen )
 
    if( nLen > 0 )
    {
-      hb_gtOutStd( szStr, nLen );
+      hb_gtOutStd(szStr, nLen);
    }
 }
 
 /* Output an item to STDERR */
-void hb_conOutErr( const char * szStr, HB_SIZE nLen )
+void hb_conOutErr(const char * szStr, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_conOutErr(%s, %" HB_PFS "u)", szStr, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_conOutErr(%s, %" HB_PFS "u)", szStr, nLen));
 #endif
 
    if( nLen == 0 )
@@ -243,37 +243,37 @@ void hb_conOutErr( const char * szStr, HB_SIZE nLen )
 
    if( nLen > 0 )
    {
-      hb_gtOutErr( szStr, nLen );
+      hb_gtOutErr(szStr, nLen);
    }
 }
 
 /* Output an item to the screen and/or printer and/or alternate */
-void hb_conOutAlt( const char * szStr, HB_SIZE nLen )
+void hb_conOutAlt(const char * szStr, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_conOutAlt(%s, %" HB_PFS "u)", szStr, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_conOutAlt(%s, %" HB_PFS "u)", szStr, nLen));
 #endif
 
    PHB_FILE pFile;
 
    if( hb_setGetConsole() )
    {
-      hb_gtWriteCon( szStr, nLen );
+      hb_gtWriteCon(szStr, nLen);
    }
 
-   if( hb_setGetAlternate() && ( pFile = hb_setGetAltHan() ) != nullptr )
+   if( hb_setGetAlternate() && (pFile = hb_setGetAltHan()) != nullptr )
    {
       /* Print to alternate file if SET ALTERNATE ON and valid alternate file */
       hb_fileWrite(pFile, szStr, nLen, -1);
    }
 
-   if( ( pFile = hb_setGetExtraHan() ) != nullptr )
+   if( (pFile = hb_setGetExtraHan()) != nullptr )
    {
       /* Print to extra file if valid alternate file */
       hb_fileWrite(pFile, szStr, nLen, -1);
    }
 
-   if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_CON ) ) != nullptr )
+   if( (pFile = hb_setGetPrinterHandle(HB_SET_PRN_CON)) != nullptr )
    {
       /* Print to printer if SET PRINTER ON and valid printer file */
       hb_fileWrite(pFile, szStr, nLen, -1);
@@ -282,15 +282,15 @@ void hb_conOutAlt( const char * szStr, HB_SIZE nLen )
 }
 
 /* Output an item to the screen and/or printer */
-static void hb_conOutDev( const char * szStr, HB_SIZE nLen )
+static void hb_conOutDev(const char * szStr, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_conOutDev(%s, %" HB_PFS "u)", szStr, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_conOutDev(%s, %" HB_PFS "u)", szStr, nLen));
 #endif
 
    PHB_FILE pFile;
 
-   if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_DEV ) ) != nullptr )
+   if( (pFile = hb_setGetPrinterHandle(HB_SET_PRN_DEV)) != nullptr )
    {
       /* Display to printer if SET DEVICE TO PRINTER and valid printer file */
       hb_fileWrite(pFile, szStr, nLen, -1);
@@ -303,7 +303,7 @@ static void hb_conOutDev( const char * szStr, HB_SIZE nLen )
    }
 }
 
-static char * hb_itemStringCon( PHB_ITEM pItem, HB_SIZE * pnLen, HB_BOOL * pfFreeReq )
+static char * hb_itemStringCon(PHB_ITEM pItem, HB_SIZE * pnLen, HB_BOOL * pfFreeReq)
 {
    /* logical values in device output (not console, stdout or stderr) are
       shown as single letter */
@@ -328,12 +328,12 @@ HB_FUNC( OUTSTD ) /* writes a list of values to the standard output device */
 
       if( iParam > 1 )
       {
-         hb_conOutStd( " ", 1 );
+         hb_conOutStd(" ", 1);
       }
       pszString = hb_itemString(hb_param(iParam, Harbour::Item::ANY), &nLen, &fFree);
       if( nLen )
       {
-         hb_conOutStd( pszString, nLen );
+         hb_conOutStd(pszString, nLen);
       }
       if( fFree )
       {
@@ -380,12 +380,12 @@ HB_FUNC( QQOUT ) /* writes a list of values to the current device (screen or pri
 
       if( iParam > 1 )
       {
-         hb_conOutAlt( " ", 1 );
+         hb_conOutAlt(" ", 1);
       }
       pszString = hb_itemString(hb_param(iParam, Harbour::Item::ANY), &nLen, &fFree);
       if( nLen )
       {
-         hb_conOutAlt( pszString, nLen );
+         hb_conOutAlt(pszString, nLen);
       }
       if( fFree )
       {
@@ -398,9 +398,9 @@ HB_FUNC( QOUT )
 {
    PHB_FILE pFile;
 
-   hb_conOutAlt( s_szCrLf, s_iCrLfLen );
+   hb_conOutAlt(s_szCrLf, s_iCrLfLen);
 
-   if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_CON ) ) != nullptr )
+   if( (pFile = hb_setGetPrinterHandle(HB_SET_PRN_CON)) != nullptr )
    {
       PHB_PRNPOS pPrnPos = hb_prnPos();
 
@@ -434,7 +434,7 @@ HB_FUNC( __EJECT ) /* Ejects the current page from the printer */
    PHB_PRNPOS pPrnPos;
    PHB_FILE pFile;
 
-   if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_ANY ) ) != nullptr )
+   if( (pFile = hb_setGetPrinterHandle(HB_SET_PRN_ANY)) != nullptr )
    {
       static const char s_szEop[4] = { 0x0C, 0x0D, 0x00, 0x00 }; /* Buffer is 4 bytes to make CodeGuard happy */
       hb_fileWrite(pFile, s_szEop, 2, -1);
@@ -457,7 +457,7 @@ HB_FUNC( PCOL ) /* Returns the current printer row position */
 static void hb_conDevPos(int iRow, int iCol)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_conDevPos(%d, %d)", iRow, iCol ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_conDevPos(%d, %d)", iRow, iCol));
 #endif
 
    PHB_FILE pFile;
@@ -465,7 +465,7 @@ static void hb_conDevPos(int iRow, int iCol)
    /* Position printer if SET DEVICE TO PRINTER and valid printer file
       otherwise position console */
 
-   if( ( pFile = hb_setGetPrinterHandle( HB_SET_PRN_DEV ) ) != nullptr )
+   if( (pFile = hb_setGetPrinterHandle(HB_SET_PRN_DEV)) != nullptr )
    {
       int iPRow = iRow;
       int iPCol = iCol + hb_setGetMargin();
@@ -568,27 +568,27 @@ HB_FUNC( DEVOUT ) /* writes a single value to the current device (screen or prin
    {
       char szOldColor[HB_CLRSTR_LEN];
 
-      hb_gtGetColorStr( szOldColor );
-      hb_gtSetColorStr( hb_parc(2) );
+      hb_gtGetColorStr(szOldColor);
+      hb_gtSetColorStr(hb_parc(2));
 
-      pszString = hb_itemStringCon( hb_param(1, Harbour::Item::ANY), &nLen, &fFree );
+      pszString = hb_itemStringCon(hb_param(1, Harbour::Item::ANY), &nLen, &fFree);
       if( nLen )
       {
-         hb_conOutDev( pszString, nLen );
+         hb_conOutDev(pszString, nLen);
       }
       if( fFree )
       {
          hb_xfree(pszString);
       }
 
-      hb_gtSetColorStr( szOldColor );
+      hb_gtSetColorStr(szOldColor);
    }
    else if( hb_pcount() >= 1 )
    {
-      pszString = hb_itemStringCon( hb_param(1, Harbour::Item::ANY), &nLen, &fFree );
+      pszString = hb_itemStringCon(hb_param(1, Harbour::Item::ANY), &nLen, &fFree);
       if( nLen )
       {
-         hb_conOutDev( pszString, nLen );
+         hb_conOutDev(pszString, nLen);
       }
       if( fFree )
       {
@@ -607,10 +607,10 @@ HB_FUNC( DISPOUT ) /* writes a single value to the screen, but is not affected b
    {
       char szOldColor[HB_CLRSTR_LEN];
 
-      hb_gtGetColorStr( szOldColor );
-      hb_gtSetColorStr( hb_parc(2) );
+      hb_gtGetColorStr(szOldColor);
+      hb_gtSetColorStr(hb_parc(2));
 
-      pszString = hb_itemStringCon( hb_param(1, Harbour::Item::ANY), &nLen, &bFreeReq );
+      pszString = hb_itemStringCon(hb_param(1, Harbour::Item::ANY), &nLen, &bFreeReq);
 
       hb_gtWrite(pszString, nLen);
 
@@ -619,11 +619,11 @@ HB_FUNC( DISPOUT ) /* writes a single value to the screen, but is not affected b
          hb_xfree(pszString);
       }
 
-      hb_gtSetColorStr( szOldColor );
+      hb_gtSetColorStr(szOldColor);
    }
    else if( hb_pcount() >= 1 )
    {
-      pszString = hb_itemStringCon( hb_param(1, Harbour::Item::ANY), &nLen, &bFreeReq );
+      pszString = hb_itemStringCon(hb_param(1, Harbour::Item::ANY), &nLen, &bFreeReq);
 
       hb_gtWrite(pszString, nLen);
 
@@ -648,10 +648,10 @@ HB_FUNC( DISPOUTAT )  /* writes a single value to the screen at specific positio
    {
       char szOldColor[HB_CLRSTR_LEN];
 
-      hb_gtGetColorStr( szOldColor );
-      hb_gtSetColorStr( hb_parc(4) );
+      hb_gtGetColorStr(szOldColor);
+      hb_gtSetColorStr(hb_parc(4));
 
-      pszString = hb_itemStringCon( hb_param(3, Harbour::Item::ANY), &nLen, &bFreeReq );
+      pszString = hb_itemStringCon(hb_param(3, Harbour::Item::ANY), &nLen, &bFreeReq);
 
       hb_gtWriteAt(hb_parni(1), hb_parni(2), pszString, nLen);
 
@@ -660,11 +660,11 @@ HB_FUNC( DISPOUTAT )  /* writes a single value to the screen at specific positio
          hb_xfree(pszString);
       }
 
-      hb_gtSetColorStr( szOldColor );
+      hb_gtSetColorStr(szOldColor);
    }
    else if( hb_pcount() >= 3 )
    {
-      pszString = hb_itemStringCon( hb_param(3, Harbour::Item::ANY), &nLen, &bFreeReq );
+      pszString = hb_itemStringCon(hb_param(3, Harbour::Item::ANY), &nLen, &bFreeReq);
 
       hb_gtWriteAt(hb_parni(1), hb_parni(2), pszString, nLen);
 
@@ -686,11 +686,11 @@ HB_FUNC( HB_DISPOUTAT )
       HB_BOOL bFreeReq;
       int iColor;
 
-      pszString = hb_itemStringCon( hb_param(3, Harbour::Item::ANY), &nLen, &bFreeReq );
+      pszString = hb_itemStringCon(hb_param(3, Harbour::Item::ANY), &nLen, &bFreeReq);
 
       if( HB_ISCHAR(4) )
       {
-         iColor = hb_gtColorToN( hb_parc(4) );
+         iColor = hb_gtColorToN(hb_parc(4));
       }
       else if( HB_ISNUM(4) )
       {
@@ -701,7 +701,7 @@ HB_FUNC( HB_DISPOUTAT )
          iColor = -1;
       }
 
-      hb_gtPutText( hb_parni(1), hb_parni(2), pszString, nLen, iColor );
+      hb_gtPutText(hb_parni(1), hb_parni(2), pszString, nLen, iColor);
 
       if( bFreeReq )
       {
@@ -728,7 +728,7 @@ HB_FUNC( HB_DISPOUTATBOX )
 
       if( HB_ISCHAR(4) )
       {
-         iColor = hb_gtColorToN( hb_parc(4) );
+         iColor = hb_gtColorToN(hb_parc(4));
       }
       else if( HB_ISNUM(4) )
       {
@@ -741,9 +741,9 @@ HB_FUNC( HB_DISPOUTATBOX )
 
       cdp = hb_gtBoxCP();
 
-      while( HB_CDPCHAR_GET( cdp, pszString, nLen, &nIndex, &wc ) )
+      while( HB_CDPCHAR_GET(cdp, pszString, nLen, &nIndex, &wc) )
       {
-         hb_gtPutChar( iRow, iCol++, iColor, HB_GT_ATTR_BOX, wc );
+         hb_gtPutChar(iRow, iCol++, iColor, HB_GT_ATTR_BOX, wc);
       }
 
       hb_gtFlush();

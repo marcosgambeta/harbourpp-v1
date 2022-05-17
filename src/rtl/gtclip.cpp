@@ -61,14 +61,14 @@
 
 #include "hbthread.h"
 
-static HB_CRITICAL_NEW( s_clipMtx );
+static HB_CRITICAL_NEW(s_clipMtx);
 
 static char *  s_szClipboardData;
 static HB_SIZE s_nClipboardLen;
 
-HB_BOOL hb_gt_setClipboard( const char * szClipData, HB_SIZE nLen )
+HB_BOOL hb_gt_setClipboard(const char * szClipData, HB_SIZE nLen)
 {
-   hb_threadEnterCriticalSection( &s_clipMtx );
+   hb_threadEnterCriticalSection(&s_clipMtx);
 
    if( s_nClipboardLen )
    {
@@ -82,14 +82,14 @@ HB_BOOL hb_gt_setClipboard( const char * szClipData, HB_SIZE nLen )
       s_szClipboardData[s_nClipboardLen] = '\0';
    }
 
-   hb_threadLeaveCriticalSection( &s_clipMtx );
+   hb_threadLeaveCriticalSection(&s_clipMtx);
 
    return true;
 }
 
-HB_BOOL hb_gt_getClipboard( char ** pszClipData, HB_SIZE * pnLen )
+HB_BOOL hb_gt_getClipboard(char ** pszClipData, HB_SIZE * pnLen)
 {
-   hb_threadEnterCriticalSection( &s_clipMtx );
+   hb_threadEnterCriticalSection(&s_clipMtx);
 
    *pszClipData = nullptr;
    *pnLen = s_nClipboardLen;
@@ -97,17 +97,17 @@ HB_BOOL hb_gt_getClipboard( char ** pszClipData, HB_SIZE * pnLen )
    {
       *pszClipData = static_cast<char*>(hb_xgrab(s_nClipboardLen + 1));
       memcpy(*pszClipData, s_szClipboardData, s_nClipboardLen);
-      ( *pszClipData )[s_nClipboardLen] = '\0';
+      (*pszClipData)[s_nClipboardLen] = '\0';
    }
 
-   hb_threadLeaveCriticalSection( &s_clipMtx );
+   hb_threadLeaveCriticalSection(&s_clipMtx);
 
    return s_nClipboardLen != 0;
 }
 
 #if defined(HB_OS_WIN)
 
-HB_BOOL hb_gt_winapi_setClipboardRaw( HB_UINT uFormat, void * pData, HB_SIZE nSize )
+HB_BOOL hb_gt_winapi_setClipboardRaw(HB_UINT uFormat, void * pData, HB_SIZE nSize)
 {
    HB_BOOL fResult = HB_FALSE;
 
@@ -147,7 +147,7 @@ HB_BOOL hb_gt_winapi_setClipboardRaw( HB_UINT uFormat, void * pData, HB_SIZE nSi
    return fResult;
 }
 
-HB_BOOL hb_gt_winapi_setClipboard( HB_UINT uFormat, PHB_ITEM pItem )
+HB_BOOL hb_gt_winapi_setClipboard(HB_UINT uFormat, PHB_ITEM pItem)
 {
    HB_BOOL fResult = HB_FALSE;
 
@@ -205,7 +205,7 @@ HB_BOOL hb_gt_winapi_setClipboard( HB_UINT uFormat, PHB_ITEM pItem )
    return fResult;
 }
 
-HB_BOOL hb_gt_winapi_getClipboard( HB_UINT uFormat, PHB_ITEM pItem )
+HB_BOOL hb_gt_winapi_getClipboard(HB_UINT uFormat, PHB_ITEM pItem)
 {
    HB_SIZE nSize = 0;
 

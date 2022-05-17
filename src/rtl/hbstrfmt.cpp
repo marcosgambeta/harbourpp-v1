@@ -55,7 +55,7 @@ struct BUFFERTYPE
    HB_SIZE nMax;
 };
 
-static void bufadd( BUFFERTYPE * pBuf, const char * pAdd, HB_SIZE nLen )
+static void bufadd(BUFFERTYPE * pBuf, const char * pAdd, HB_SIZE nLen)
 {
    if( pBuf->nLen + nLen >= pBuf->nMax )
    {
@@ -67,7 +67,7 @@ static void bufadd( BUFFERTYPE * pBuf, const char * pAdd, HB_SIZE nLen )
    pBuf->pData[pBuf->nLen] = '\0';
 }
 
-static void hb_itemHexStr( PHB_ITEM pItem, char * pStr, HB_BOOL fUpper )
+static void hb_itemHexStr(PHB_ITEM pItem, char * pStr, HB_BOOL fUpper)
 {
    HB_MAXUINT nValue, nTmp;
    int iLen;
@@ -92,7 +92,7 @@ static void hb_itemHexStr( PHB_ITEM pItem, char * pStr, HB_BOOL fUpper )
    while( iLen );
 }
 
-PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PHB_ITEM * pItemArray )
+PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PHB_ITEM * pItemArray)
 {
    BUFFERTYPE  buffer;
    PHB_ITEM    pItem;
@@ -115,7 +115,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
    {
       if( *pFmt != '%' )
       {
-         bufadd( &buffer, pFmt++, 1 );
+         bufadd(&buffer, pFmt++, 1);
          continue;
       }
 
@@ -123,7 +123,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
 
       if( *pFmt == '%' )
       {
-         bufadd( &buffer, pFmt++, 1 );
+         bufadd(&buffer, pFmt++, 1);
          continue;
       }
 
@@ -201,7 +201,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
             iParamNo = ++iParam;
          }
          
-         pItem = ( iParamNo > iCount ) ? nullptr : pItemArray[iParamNo - 1];
+         pItem = (iParamNo > iCount) ? nullptr : pItemArray[iParamNo - 1];
       }
       else
       {
@@ -217,18 +217,18 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
             buf[0] = static_cast<char>(hb_itemGetNI(pItem));
             if( fLeftAlign )
             {
-               bufadd( &buffer, buf, 1 );
+               bufadd(&buffer, buf, 1);
             }
             if( iWidth > 1 )
             {
                for( i = 1; i < iWidth; i++ )
                {
-                  bufadd( &buffer, " ", 1 );
+                  bufadd(&buffer, " ", 1);
                }
             }
             if( !fLeftAlign )
             {
-               bufadd( &buffer, buf, 1 );
+               bufadd(&buffer, buf, 1);
             }
             break;
          }
@@ -303,30 +303,30 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                /* ForceSign has priority over SpaceSign */
                if( fSign )
                {
-                  bufadd( &buffer, "-", 1 );
+                  bufadd(&buffer, "-", 1);
                }
                else if( fForceSign )
                {
-                  bufadd( &buffer, "+", 1 );
+                  bufadd(&buffer, "+", 1);
                }
                else if( fSpaceSign )
                {
-                  bufadd( &buffer, " ", 1 );
+                  bufadd(&buffer, " ", 1);
                }
 
                for( i = iSize; i < iDec; i++ )
                {
-                  bufadd( &buffer, "0", 1 );
+                  bufadd(&buffer, "0", 1);
                }
 
-               bufadd( &buffer, pStr2, static_cast<HB_SIZE>(iSize) );
+               bufadd(&buffer, pStr2, static_cast<HB_SIZE>(iSize));
                if( iDec > iSize )
                {
                   iSize = iDec;
                }
                for( i = iSize + iExtra; i < iWidth; i++ )
                {
-                  bufadd( &buffer, " ", 1 );
+                  bufadd(&buffer, " ", 1);
                }
             }
             else
@@ -337,51 +337,51 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                   /* ForceSign has priority over SpaceSign */
                   if( fSign )
                   {
-                     bufadd( &buffer, "-", 1 );
+                     bufadd(&buffer, "-", 1);
                   }
                   else if( fForceSign )
                   {
-                     bufadd( &buffer, "+", 1 );
+                     bufadd(&buffer, "+", 1);
                   }
                   else if( fSpaceSign )
                   {
-                     bufadd( &buffer, " ", 1 );
+                     bufadd(&buffer, " ", 1);
                   }
 
                   for( i = iSize + iExtra; i < iWidth; i++ )
                   {
-                     bufadd( &buffer, "0", 1 );
+                     bufadd(&buffer, "0", 1);
                   }
 
-                  bufadd( &buffer, pStr2, strlen(pStr2) );
+                  bufadd(&buffer, pStr2, strlen(pStr2));
                }
                else
                {
-                  for( i = ( iSize > iDec ? iSize : iDec ) + iExtra; i < iWidth; i++ )
+                  for( i = (iSize > iDec ? iSize : iDec) + iExtra; i < iWidth; i++ )
                   {
-                     bufadd( &buffer, " ", 1 );
+                     bufadd(&buffer, " ", 1);
                   }
 
                   /* ForceSign has priority over SpaceSign */
                   if( fSign )
                   {
-                     bufadd( &buffer, "-", 1 );
+                     bufadd(&buffer, "-", 1);
                   }
                   else if( fForceSign )
                   {
-                     bufadd( &buffer, "+", 1 );
+                     bufadd(&buffer, "+", 1);
                   }
                   else if( fSpaceSign )
                   {
-                     bufadd( &buffer, " ", 1 );
+                     bufadd(&buffer, " ", 1);
                   }
 
                   for( i = iSize; i < iDec; i++ )
                   {
-                     bufadd( &buffer, "0", 1 );
+                     bufadd(&buffer, "0", 1);
                   }
 
-                  bufadd( &buffer, pStr2, static_cast<HB_SIZE>(iSize) );
+                  bufadd(&buffer, pStr2, static_cast<HB_SIZE>(iSize));
                }
             }
 
@@ -443,7 +443,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
             }
 
             iExtra = 0;
-            if( ( fForceSign || fSpaceSign ) && *pStr2 != '-' )
+            if( (fForceSign || fSpaceSign) && *pStr2 != '-' )
             {
                iExtra = 1;
             }
@@ -456,20 +456,20 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                   /* ForceSign has priority over SpaceSign */
                   if( fForceSign )
                   {
-                     bufadd( &buffer, "+", 1 );
+                     bufadd(&buffer, "+", 1);
                   }
                   else
                   {
                      if( fSpaceSign )
                      {
-                        bufadd( &buffer, " ", 1 );
+                        bufadd(&buffer, " ", 1);
                      }
                   }
                }
-               bufadd( &buffer, pStr2, static_cast<HB_SIZE>(iSize) );
+               bufadd(&buffer, pStr2, static_cast<HB_SIZE>(iSize));
                for( i = iSize + iExtra; i < iWidth; i++ )
                {
-                  bufadd( &buffer, " ", 1 );
+                  bufadd(&buffer, " ", 1);
                }
             }
             else
@@ -479,35 +479,35 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                {
                   if( *pStr2 == '-' )
                   {
-                     bufadd( &buffer, pStr2++, 1 );
+                     bufadd(&buffer, pStr2++, 1);
                   }
                   else
                   {
                      /* ForceSign has priority over SpaceSign */
                      if( fForceSign )
                      {
-                        bufadd( &buffer, "+", 1 );
+                        bufadd(&buffer, "+", 1);
                      }
                      else
                      {
                         if( fSpaceSign )
                         {
-                           bufadd( &buffer, " ", 1 );
+                           bufadd(&buffer, " ", 1);
                         }
                      }
                   }
                   for( i = iSize + iExtra; i < iWidth; i++ )
                   {
-                     bufadd( &buffer, "0", 1 );
+                     bufadd(&buffer, "0", 1);
                   }
 
-                  bufadd( &buffer, pStr2, strlen(pStr2) );
+                  bufadd(&buffer, pStr2, strlen(pStr2));
                }
                else
                {
                   for( i = iSize + iExtra; i < iWidth; i++ )
                   {
-                     bufadd( &buffer, " ", 1 );
+                     bufadd(&buffer, " ", 1);
                   }
 
                   if( *pStr2 != '-' )
@@ -515,17 +515,17 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
                      /* ForceSign has priority over SpaceSign */
                      if( fForceSign )
                      {
-                        bufadd( &buffer, "+", 1 );
+                        bufadd(&buffer, "+", 1);
                      }
                      else
                      {
                         if( fSpaceSign )
                         {
-                           bufadd( &buffer, " ", 1 );
+                           bufadd(&buffer, " ", 1);
                         }
                      }
                   }
-                  bufadd( &buffer, pStr2, static_cast<HB_SIZE>(iSize) );
+                  bufadd(&buffer, pStr2, static_cast<HB_SIZE>(iSize));
                }
             }
 
@@ -550,20 +550,20 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
             }
             if( fLeftAlign )
             {
-               bufadd( &buffer, pStr, nSize );
+               bufadd(&buffer, pStr, nSize);
             }
 
             if( iWidth > 1 )
             {
                for( i = static_cast<int>(nSize); i < iWidth; i++ )
                {
-                  bufadd( &buffer, " ", 1 );
+                  bufadd(&buffer, " ", 1);
                }
             }
 
             if( !fLeftAlign )
             {
-               bufadd( &buffer, pStr, nSize );
+               bufadd(&buffer, pStr, nSize);
             }
 
             break;
@@ -571,7 +571,7 @@ PHB_ITEM hb_strFormat( PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, P
 
          default:
          {
-            bufadd( &buffer, pFmtSave, pFmt - pFmtSave );
+            bufadd(&buffer, pFmtSave, pFmt - pFmtSave);
             continue;
          }
       }
@@ -610,6 +610,6 @@ HB_FUNC( HB_STRFORMAT )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

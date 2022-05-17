@@ -125,9 +125,9 @@ HB_FUNC( STRZERO )
          /* NOTE: In CA-Cl*pper StrZero() is written in Clipper, and will call
                   Str() to do the job, the error (if any) will also be thrown
                   by Str().  [vszakats] */
-         hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, "STR", HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, "STR", HB_ERR_ARGS_BASEPARAMS);
 #else
-         hb_errRT_BASE_SubstR( EG_ARG, 6003, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+         hb_errRT_BASE_SubstR(EG_ARG, 6003, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #endif
    }
 }

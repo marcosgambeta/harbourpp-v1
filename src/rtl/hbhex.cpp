@@ -80,13 +80,13 @@ HB_FUNC( HB_HEXTONUM )
             nNum = 0;
             break;
          }
-         nNum = ( nNum << 4 ) + iDigit;
+         nNum = (nNum << 4) + iDigit;
       }
       hb_retnint(nNum);
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }   
 }
 
@@ -100,7 +100,7 @@ HB_FUNC( HB_NUMTOHEX )
    if( HB_ISNUM(2) )
    {
       iLen = hb_parni(2);
-      iLen = ( iLen < 1 ) ? 1 : ( ( iLen > 32 ) ? 32 : iLen );
+      iLen = (iLen < 1) ? 1 : ((iLen > 32) ? 32 : iLen);
       fDefaultLen = 0;
    }
    else
@@ -119,7 +119,7 @@ HB_FUNC( HB_NUMTOHEX )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
    }
 
@@ -148,14 +148,14 @@ HB_FUNC( HB_STRTOHEX )
 
    if( !szStr || !szSep )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
    }
 
    nStr = hb_parclen(1);
    if( nStr )
    {
-      HB_SIZE nDest = ( nStr << 1 ) + ( nStr - 1 ) * nSep;
+      HB_SIZE nDest = (nStr << 1) + (nStr - 1) * nSep;
       char * szDest, * szPtr;
 
       szPtr = szDest = static_cast<char*>(hb_xgrab(nDest + 1));
@@ -188,7 +188,7 @@ HB_FUNC( HB_HEXTOSTR )
 
    if( !szStr )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
    }
 
@@ -204,7 +204,7 @@ HB_FUNC( HB_HEXTOSTR )
       do
       {
          char c = *szPtr++;
-         if( ( c >= '0' && c <= '9' ) || ( c >= 'A' && c <= 'F' ) || ( c >= 'a' && c <= 'f' ) )
+         if( (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f') )
          {
             ++nDest;
          }

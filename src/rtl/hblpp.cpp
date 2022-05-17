@@ -74,7 +74,7 @@ void hb_lppDestroy(PHB_LPP pSocket)
    hb_xfree(pSocket);
 }
 
-void hb_lppSetLimit( PHB_LPP pSocket, HB_SIZE nLimit )
+void hb_lppSetLimit(PHB_LPP pSocket, HB_SIZE nLimit)
 {
    pSocket->nLimit = nLimit;
 }
@@ -84,7 +84,7 @@ int hb_lppError(PHB_LPP pSocket)
    return pSocket->iError;
 }
 
-HB_BOOL hb_lppSend( PHB_LPP pSocket, const void * data, HB_SIZE len, HB_MAXINT timeout )
+HB_BOOL hb_lppSend(PHB_LPP pSocket, const void * data, HB_SIZE len, HB_MAXINT timeout)
 {
    HB_MAXUINT timer;
    long       lSend;
@@ -98,7 +98,7 @@ HB_BOOL hb_lppSend( PHB_LPP pSocket, const void * data, HB_SIZE len, HB_MAXINT t
       pSocket->nSendPos = 0;
    }
 
-   timer = hb_timerInit( timeout );
+   timer = hb_timerInit(timeout);
 
    for( ;; )
    {
@@ -111,7 +111,7 @@ HB_BOOL hb_lppSend( PHB_LPP pSocket, const void * data, HB_SIZE len, HB_MAXINT t
          lSend = LONG_MAX;
       }
 
-      lSend = hb_socketSend( pSocket->sd, pSocket->pSendBuffer + pSocket->nSendPos, lSend, 0, timeout );
+      lSend = hb_socketSend(pSocket->sd, pSocket->pSendBuffer + pSocket->nSendPos, lSend, 0, timeout);
       if( lSend == -1 )
       {
          pSocket->iError = hb_socketGetError();
@@ -125,7 +125,7 @@ HB_BOOL hb_lppSend( PHB_LPP pSocket, const void * data, HB_SIZE len, HB_MAXINT t
          pSocket->iError      = 0;
          return true;
       }
-      if( ( timeout = hb_timerTest( timeout, &timer ) ) == 0 )
+      if( (timeout = hb_timerTest(timeout, &timer)) == 0 )
       {
          pSocket->iError = HB_SOCKET_ERR_TIMEOUT;
          return false;
@@ -133,7 +133,7 @@ HB_BOOL hb_lppSend( PHB_LPP pSocket, const void * data, HB_SIZE len, HB_MAXINT t
    }
 }
 
-HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT timeout )
+HB_BOOL hb_lppRecv(PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT timeout)
 {
    HB_MAXUINT timer;
    long       lRecv;
@@ -145,14 +145,14 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
       pSocket->fRecvHasSize = HB_FALSE;
    }
 
-   timer = hb_timerInit( timeout );
+   timer = hb_timerInit(timeout);
 
    for( ;; )
    {
       if( !pSocket->fRecvHasSize )
       {
          lRecv = static_cast<long>(4 - pSocket->nRecvLen);
-         lRecv = hb_socketRecv( pSocket->sd, pSocket->pRecvBuffer + pSocket->nRecvLen, lRecv, 0, timeout );
+         lRecv = hb_socketRecv(pSocket->sd, pSocket->pRecvBuffer + pSocket->nRecvLen, lRecv, 0, timeout);
          if( lRecv == -1 )
          {
             pSocket->iError = hb_socketGetError();
@@ -200,7 +200,7 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
          lRecv = LONG_MAX;
       }
 
-      lRecv = hb_socketRecv( pSocket->sd, pSocket->pRecvBuffer + pSocket->nRecvLen, lRecv, 0, timeout );
+      lRecv = hb_socketRecv(pSocket->sd, pSocket->pRecvBuffer + pSocket->nRecvLen, lRecv, 0, timeout);
       if( lRecv == -1 )
       {
          pSocket->iError = hb_socketGetError();
@@ -222,7 +222,7 @@ HB_BOOL hb_lppRecv( PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT time
          pSocket->iError      = 0;
          return true;
       }
-      if( ( timeout = hb_timerTest( timeout, &timer ) ) == 0 )
+      if( (timeout = hb_timerTest(timeout, &timer)) == 0 )
       {
          pSocket->iError = HB_SOCKET_ERR_TIMEOUT;
          return false;

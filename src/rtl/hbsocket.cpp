@@ -319,7 +319,7 @@ int hb_socketGetOsError(void)
    return hb_stackIOErrors()->iSocketOsError;
 }
 
-const char * hb_socketErrorStr( int iError )
+const char * hb_socketErrorStr(int iError)
 {
    if( iError >= 0 && iError <= HB_SOCKET_ERR_OTHER )
    {
@@ -351,14 +351,14 @@ void hb_socketCleanup(void)
    ;
 }
 
-int hb_socketGetAddrFamily( const void * pSockAddr, unsigned len )
+int hb_socketGetAddrFamily(const void * pSockAddr, unsigned len)
 {
    HB_SYMBOL_UNUSED(pSockAddr);
    HB_SYMBOL_UNUSED(len);
    return -1;
 }
 
-HB_BOOL hb_socketLocalAddr( void ** pSockAddr, unsigned * puiLen, const char * szAddr )
+HB_BOOL hb_socketLocalAddr(void ** pSockAddr, unsigned * puiLen, const char * szAddr)
 {
    HB_SYMBOL_UNUSED(szAddr);
    hb_socketSetError(HB_SOCKET_ERR_AFNOSUPPORT);
@@ -367,7 +367,7 @@ HB_BOOL hb_socketLocalAddr( void ** pSockAddr, unsigned * puiLen, const char * s
    return false;
 }
 
-HB_BOOL hb_socketInetAddr( void ** pSockAddr, unsigned * puiLen, const char * szAddr, int iPort )
+HB_BOOL hb_socketInetAddr(void ** pSockAddr, unsigned * puiLen, const char * szAddr, int iPort)
 {
    HB_SYMBOL_UNUSED(szAddr);
    HB_SYMBOL_UNUSED(iPort);
@@ -377,7 +377,7 @@ HB_BOOL hb_socketInetAddr( void ** pSockAddr, unsigned * puiLen, const char * sz
    return false;
 }
 
-HB_BOOL hb_socketInet6Addr( void ** pSockAddr, unsigned * puiLen, const char * szAddr, int iPort )
+HB_BOOL hb_socketInet6Addr(void ** pSockAddr, unsigned * puiLen, const char * szAddr, int iPort)
 {
    HB_SYMBOL_UNUSED(szAddr);
    HB_SYMBOL_UNUSED(iPort);
@@ -454,7 +454,7 @@ int hb_socketClose(HB_SOCKET sd)
    return -1;
 }
 
-int hb_socketShutdown( HB_SOCKET sd, int iMode )
+int hb_socketShutdown(HB_SOCKET sd, int iMode)
 {
    HB_SYMBOL_UNUSED(sd);
    HB_SYMBOL_UNUSED(iMode);
@@ -462,7 +462,7 @@ int hb_socketShutdown( HB_SOCKET sd, int iMode )
    return -1;
 }
 
-int hb_socketBind( HB_SOCKET sd, const void * pSockAddr, unsigned uiLen )
+int hb_socketBind(HB_SOCKET sd, const void * pSockAddr, unsigned uiLen)
 {
    HB_SYMBOL_UNUSED(sd);
    HB_SYMBOL_UNUSED(pSockAddr);
@@ -471,7 +471,7 @@ int hb_socketBind( HB_SOCKET sd, const void * pSockAddr, unsigned uiLen )
    return -1;
 }
 
-int hb_socketListen( HB_SOCKET sd, int iBacklog )
+int hb_socketListen(HB_SOCKET sd, int iBacklog)
 {
    HB_SYMBOL_UNUSED(sd);
    HB_SYMBOL_UNUSED(iBacklog);
@@ -479,7 +479,7 @@ int hb_socketListen( HB_SOCKET sd, int iBacklog )
    return -1;
 }
 
-HB_SOCKET hb_socketAccept( HB_SOCKET sd, void ** pSockAddr, unsigned * puiLen, HB_MAXINT timeout )
+HB_SOCKET hb_socketAccept(HB_SOCKET sd, void ** pSockAddr, unsigned * puiLen, HB_MAXINT timeout)
 {
    HB_SYMBOL_UNUSED(sd);
    HB_SYMBOL_UNUSED(timeout);
@@ -489,7 +489,7 @@ HB_SOCKET hb_socketAccept( HB_SOCKET sd, void ** pSockAddr, unsigned * puiLen, H
    return HB_NO_SOCKET;
 }
 
-int hb_socketConnect( HB_SOCKET sd, const void * pSockAddr, unsigned uiLen, HB_MAXINT timeout )
+int hb_socketConnect(HB_SOCKET sd, const void * pSockAddr, unsigned uiLen, HB_MAXINT timeout)
 {
    HB_SYMBOL_UNUSED(sd);
    HB_SYMBOL_UNUSED(pSockAddr);
@@ -499,7 +499,7 @@ int hb_socketConnect( HB_SOCKET sd, const void * pSockAddr, unsigned uiLen, HB_M
    return -1;
 }
 
-long hb_socketSend( HB_SOCKET sd, const void * data, long len, int flags, HB_MAXINT timeout )
+long hb_socketSend(HB_SOCKET sd, const void * data, long len, int flags, HB_MAXINT timeout)
 {
    HB_SYMBOL_UNUSED(sd);
    HB_SYMBOL_UNUSED(data);
@@ -510,7 +510,7 @@ long hb_socketSend( HB_SOCKET sd, const void * data, long len, int flags, HB_MAX
    return -1;
 }
 
-long hb_socketSendTo( HB_SOCKET sd, const void * data, long len, int flags, const void * pSockAddr, unsigned uiSockLen, HB_MAXINT timeout )
+long hb_socketSendTo(HB_SOCKET sd, const void * data, long len, int flags, const void * pSockAddr, unsigned uiSockLen, HB_MAXINT timeout)
 {
    HB_SYMBOL_UNUSED(sd);
    HB_SYMBOL_UNUSED(data);
@@ -523,7 +523,7 @@ long hb_socketSendTo( HB_SOCKET sd, const void * data, long len, int flags, cons
    return -1;
 }
 
-long hb_socketRecv( HB_SOCKET sd, void * data, long len, int flags, HB_MAXINT timeout )
+long hb_socketRecv(HB_SOCKET sd, void * data, long len, int flags, HB_MAXINT timeout)
 {
    HB_SYMBOL_UNUSED(sd);
    HB_SYMBOL_UNUSED(data);
@@ -534,7 +534,7 @@ long hb_socketRecv( HB_SOCKET sd, void * data, long len, int flags, HB_MAXINT ti
    return -1;
 }
 
-long hb_socketRecvFrom( HB_SOCKET sd, void * data, long len, int flags, void ** pSockAddr, unsigned * puiSockLen, HB_MAXINT timeout )
+long hb_socketRecvFrom(HB_SOCKET sd, void * data, long len, int flags, void ** pSockAddr, unsigned * puiSockLen, HB_MAXINT timeout)
 {
    HB_SYMBOL_UNUSED(sd);
    HB_SYMBOL_UNUSED(data);
@@ -547,7 +547,7 @@ long hb_socketRecvFrom( HB_SOCKET sd, void * data, long len, int flags, void ** 
    return -1;
 }
 
-int hb_socketSetBlockingIO( HB_SOCKET sd, HB_BOOL fBlocking )
+int hb_socketSetBlockingIO(HB_SOCKET sd, HB_BOOL fBlocking)
 {
    HB_SYMBOL_UNUSED(sd);
    HB_SYMBOL_UNUSED(fBlocking);
@@ -555,7 +555,7 @@ int hb_socketSetBlockingIO( HB_SOCKET sd, HB_BOOL fBlocking )
    return -1;
 }
 
-int hb_socketSetNoDelay( HB_SOCKET sd, HB_BOOL fNoDelay )
+int hb_socketSetNoDelay(HB_SOCKET sd, HB_BOOL fNoDelay)
 {
    HB_SYMBOL_UNUSED(sd);
    HB_SYMBOL_UNUSED(fNoDelay);
@@ -563,7 +563,7 @@ int hb_socketSetNoDelay( HB_SOCKET sd, HB_BOOL fNoDelay )
    return -1;
 }
 
-int hb_socketSetExclusiveAddr( HB_SOCKET sd, HB_BOOL fExclusive )
+int hb_socketSetExclusiveAddr(HB_SOCKET sd, HB_BOOL fExclusive)
 {
    HB_SYMBOL_UNUSED(sd);
    HB_SYMBOL_UNUSED(fExclusive);
@@ -571,7 +571,7 @@ int hb_socketSetExclusiveAddr( HB_SOCKET sd, HB_BOOL fExclusive )
    return -1;
 }
 
-int hb_socketSetReuseAddr( HB_SOCKET sd, HB_BOOL fReuse )
+int hb_socketSetReuseAddr(HB_SOCKET sd, HB_BOOL fReuse)
 {
    HB_SYMBOL_UNUSED(sd);
    HB_SYMBOL_UNUSED(fReuse);
@@ -653,7 +653,7 @@ int hb_socketSelectWrite(HB_SOCKET sd, HB_MAXINT timeout)
 }
 
 
-int hb_socketSelectWriteEx( HB_SOCKET sd, HB_MAXINT timeout )
+int hb_socketSelectWriteEx(HB_SOCKET sd, HB_MAXINT timeout)
 {
    HB_SYMBOL_UNUSED(sd);
    HB_SYMBOL_UNUSED(timeout);
@@ -661,7 +661,7 @@ int hb_socketSelectWriteEx( HB_SOCKET sd, HB_MAXINT timeout )
    return -1;
 }
 
-int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BOOL fSetWR, PHB_ITEM pArrayEX, HB_BOOL fSetEX, HB_MAXINT timeout, HB_SOCKET_FUNC pFunc )
+int hb_socketSelect(PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BOOL fSetWR, PHB_ITEM pArrayEX, HB_BOOL fSetEX, HB_MAXINT timeout, HB_SOCKET_FUNC pFunc)
 {
    HB_SYMBOL_UNUSED(pArrayRD);
    HB_SYMBOL_UNUSED(fSetRD);
@@ -675,7 +675,7 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
    return -1;
 }
 
-HB_BOOL hb_socketResolveInetAddr( void ** pSockAddr, unsigned * puiLen, const char * szAddr, int iPort )
+HB_BOOL hb_socketResolveInetAddr(void ** pSockAddr, unsigned * puiLen, const char * szAddr, int iPort)
 {
    HB_SYMBOL_UNUSED(szAddr);
    HB_SYMBOL_UNUSED(iPort);
@@ -685,7 +685,7 @@ HB_BOOL hb_socketResolveInetAddr( void ** pSockAddr, unsigned * puiLen, const ch
    return false;
 }
 
-char * hb_socketResolveAddr( const char * szAddr, int af )
+char * hb_socketResolveAddr(const char * szAddr, int af)
 {
    HB_SYMBOL_UNUSED(szAddr);
    HB_SYMBOL_UNUSED(af);
@@ -693,7 +693,7 @@ char * hb_socketResolveAddr( const char * szAddr, int af )
    return nullptr;
 }
 
-PHB_ITEM hb_socketGetHosts( const char * szAddr, int af )
+PHB_ITEM hb_socketGetHosts(const char * szAddr, int af)
 {
    HB_SYMBOL_UNUSED(szAddr);
    HB_SYMBOL_UNUSED(af);
@@ -701,7 +701,7 @@ PHB_ITEM hb_socketGetHosts( const char * szAddr, int af )
    return nullptr;
 }
 
-PHB_ITEM hb_socketGetAliases( const char * szAddr, int af )
+PHB_ITEM hb_socketGetAliases(const char * szAddr, int af)
 {
    HB_SYMBOL_UNUSED(szAddr);
    HB_SYMBOL_UNUSED(af);
@@ -717,7 +717,7 @@ char * hb_socketGetHostName(const void * pSockAddr, unsigned len)
    return nullptr;
 }
 
-PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
+PHB_ITEM hb_socketGetIFaces(int af, HB_BOOL fNoAliases)
 {
    HB_SYMBOL_UNUSED(af);
    HB_SYMBOL_UNUSED(fNoAliases);
@@ -732,13 +732,13 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
 #if defined(HB_OS_WIN)
 #  define HB_SOCK_GETERROR()              WSAGetLastError()
 #  define HB_SOCK_GETHERROR()             WSAGetLastError()
-#  define HB_SOCK_IS_EINTR( err )         ( (err) == WSAEINTR )
-#  define HB_SOCK_IS_EINPROGRES( err )    ( (err) == WSAEWOULDBLOCK )
+#  define HB_SOCK_IS_EINTR(err)         ( (err) == WSAEINTR )
+#  define HB_SOCK_IS_EINPROGRES(err)    ( (err) == WSAEWOULDBLOCK )
 #else
 #  define HB_SOCK_GETERROR()              errno
 #  define HB_SOCK_GETHERROR()             h_errno
-#  define HB_SOCK_IS_EINTR( err )         ( (err) == EINTR )
-#  define HB_SOCK_IS_EINPROGRES( err )    ( (err) == EINPROGRESS )
+#  define HB_SOCK_IS_EINTR(err)         ( (err) == EINTR )
+#  define HB_SOCK_IS_EINPROGRES(err)    ( (err) == EINPROGRESS )
 #endif
 
 typedef union
@@ -752,9 +752,9 @@ typedef union
 } HB_SOCKADDR_STORAGE;
 
 /* MT macros */
-#define HB_SOCKET_LOCK()        hb_threadEnterCriticalSection( &s_sockMtx )
-#define HB_SOCKET_UNLOCK()      hb_threadLeaveCriticalSection( &s_sockMtx )
-static HB_CRITICAL_NEW( s_sockMtx );
+#define HB_SOCKET_LOCK()        hb_threadEnterCriticalSection(&s_sockMtx)
+#define HB_SOCKET_UNLOCK()      hb_threadLeaveCriticalSection(&s_sockMtx)
+static HB_CRITICAL_NEW(s_sockMtx);
 
 static int s_iSessions;
 
@@ -763,13 +763,13 @@ static int s_iSessions;
 #endif
 
 #if !defined(HB_HAS_INET_NTOP) && !defined(HB_IS_INET_NTOA_MT_SAFE) && defined(AF_INET)
-static const char * hb_inet_ntoa( const struct in_addr * addr, char * pBuffer )
+static const char * hb_inet_ntoa(const struct in_addr * addr, char * pBuffer)
 {
    /* dirty hack to make inet_ntoa() MT safe,
     * in many systems inet_ntoa() returns pointer to
     * static buffer and is not MT safe.
     */
-   HB_ULONG u = ntohl( addr->s_addr );
+   HB_ULONG u = ntohl(addr->s_addr);
 
    hb_snprintf(pBuffer, INET_ADDRSTRLEN, "%hd.%hd.%hd.%hd", HB_UHBYTE(u), HB_ULBYTE(u), HB_HIBYTE(u), HB_LOBYTE(u));
    return pBuffer;
@@ -785,7 +785,7 @@ int hb_socketInit(void)
    {
 #if defined(HB_OS_WIN)
       WSADATA wsadata;
-      ret = WSAStartup( HB_MKUSHORT( 1, 1 ), &wsadata );
+      ret = WSAStartup(HB_MKUSHORT(1, 1), &wsadata);
 #endif
    }
    HB_SOCKET_UNLOCK();
@@ -1342,7 +1342,7 @@ static void hb_socketSetResolveError(int err)
 #if defined(NO_DATA)
       case NO_DATA:
 #endif
-#if defined(NO_ADDRESS) && ( !defined(NO_DATA) || NO_ADDRESS != NO_DATA )
+#if defined(NO_ADDRESS) && (!defined(NO_DATA) || NO_ADDRESS != NO_DATA)
       case NO_ADDRESS:
 #endif
          uiErr = HB_SOCKET_ERR_NODATA;
@@ -1361,7 +1361,7 @@ static void hb_socketSetResolveError(int err)
 #endif
 
 #if defined(HB_SOCKET_TRANSLATE_DOMAIN)
-static int hb_socketTransDomain( int domain, int *err )
+static int hb_socketTransDomain(int domain, int *err)
 {
    switch( domain )
    {
@@ -1548,10 +1548,10 @@ static int hb_socketTransFlags(int flags)
    return iResult;
 }
 
-static int hb_socketSelectRD( HB_SOCKET sd, HB_MAXINT timeout )
+static int hb_socketSelectRD(HB_SOCKET sd, HB_MAXINT timeout)
 {
 #if defined(HB_HAS_POLL)
-   HB_MAXUINT timer = hb_timerInit( timeout );
+   HB_MAXUINT timer = hb_timerInit(timeout);
    struct pollfd fds;
    int iResult;
 
@@ -1562,9 +1562,9 @@ static int hb_socketSelectRD( HB_SOCKET sd, HB_MAXINT timeout )
    do
    {
       int tout = timeout < 0 || timeout > 1000 ? 1000 : static_cast<int>(timeout), iError;
-      iResult = poll( &fds, 1, tout );
+      iResult = poll(&fds, 1, tout);
       iError = iResult >= 0 ? 0 : HB_SOCK_GETERROR();
-      if( iResult > 0 && ( fds.revents & POLLIN ) == 0 )
+      if( iResult > 0 && (fds.revents & POLLIN) == 0 )
       {
          if( fds.revents & POLLNVAL )
          {
@@ -1578,12 +1578,12 @@ static int hb_socketSelectRD( HB_SOCKET sd, HB_MAXINT timeout )
          }
       }
       hb_socketSetOsError(iError);
-      if( iResult == -1 && HB_SOCK_IS_EINTR( iError ) )
+      if( iResult == -1 && HB_SOCK_IS_EINTR(iError) )
       {
          iResult = 0;
       }
    }
-   while( iResult == 0 && ( timeout = hb_timerTest( timeout, &timer ) ) != 0 && hb_vmRequestQuery() == 0 );
+   while( iResult == 0 && (timeout = hb_timerTest(timeout, &timer)) != 0 && hb_vmRequestQuery() == 0 );
 
    return iResult;
 #else /* !HB_HAS_POLL */
@@ -1591,7 +1591,7 @@ static int hb_socketSelectRD( HB_SOCKET sd, HB_MAXINT timeout )
    struct timeval tv;
    fd_set rfds;
 #  if !defined(HB_HAS_SELECT_TIMER)
-   HB_MAXUINT timer = hb_timerInit( timeout );
+   HB_MAXUINT timer = hb_timerInit(timeout);
 #  else
    tv.tv_sec = static_cast<long>(timeout / 1000);
    tv.tv_usec = static_cast<long>(timeout % 1000) * 1000;
@@ -1614,13 +1614,13 @@ static int hb_socketSelectRD( HB_SOCKET sd, HB_MAXINT timeout )
       }
 #  endif
 
-      FD_ZERO( &rfds );
-      FD_SET( static_cast<HB_SOCKET_T>(sd), &rfds );
-      iResult = select( static_cast<int>(sd + 1), &rfds, nullptr, nullptr, &tv );
+      FD_ZERO(&rfds);
+      FD_SET(static_cast<HB_SOCKET_T>(sd), &rfds);
+      iResult = select(static_cast<int>(sd + 1), &rfds, nullptr, nullptr, &tv);
       iError = iResult >= 0 ? 0 : HB_SOCK_GETERROR();
       hb_socketSetOsError(iError);
 
-      if( iResult == -1 && HB_SOCK_IS_EINTR( iError ) )
+      if( iResult == -1 && HB_SOCK_IS_EINTR(iError) )
       {
          iResult = 0;
       }
@@ -1631,21 +1631,21 @@ static int hb_socketSelectRD( HB_SOCKET sd, HB_MAXINT timeout )
          break;
       }
 #  else
-      if( iResult != 0 || ( timeout = hb_timerTest( timeout, &timer ) ) == 0 || hb_vmRequestQuery() != 0 )
+      if( iResult != 0 || (timeout = hb_timerTest(timeout, &timer)) == 0 || hb_vmRequestQuery() != 0 )
       {
          break;
       }
 #  endif
    }
 
-   return iResult < 0 ? -1 : ( iResult > 0 && FD_ISSET( ( HB_SOCKET_T ) sd, &rfds ) ? 1 : 0 );
+   return iResult < 0 ? -1 : (iResult > 0 && FD_ISSET(static_cast<HB_SOCKET_T>(sd), &rfds) ? 1 : 0);
 #endif /* !HB_HAS_POLL */
 }
 
-static int hb_socketSelectWR( HB_SOCKET sd, HB_MAXINT timeout )
+static int hb_socketSelectWR(HB_SOCKET sd, HB_MAXINT timeout)
 {
 #if defined(HB_HAS_POLL)
-   HB_MAXUINT timer = hb_timerInit( timeout );
+   HB_MAXUINT timer = hb_timerInit(timeout);
    struct pollfd fds;
    int iResult;
 
@@ -1656,9 +1656,9 @@ static int hb_socketSelectWR( HB_SOCKET sd, HB_MAXINT timeout )
    do
    {
       int tout = timeout < 0 || timeout > 1000 ? 1000 : static_cast<int>(timeout), iError;
-      iResult = poll( &fds, 1, tout );
+      iResult = poll(&fds, 1, tout);
       iError = iResult >= 0 ? 0 : HB_SOCK_GETERROR();
-      if( iResult > 0 && ( fds.revents & POLLOUT ) == 0 )
+      if( iResult > 0 && (fds.revents & POLLOUT) == 0 )
       {
          if( fds.revents & POLLNVAL )
          {
@@ -1677,12 +1677,12 @@ static int hb_socketSelectWR( HB_SOCKET sd, HB_MAXINT timeout )
          }
       }
       hb_socketSetOsError(iError);
-      if( iResult == -1 && HB_SOCK_IS_EINTR( iError ) )
+      if( iResult == -1 && HB_SOCK_IS_EINTR(iError) )
       {
          iResult = 0;
       }
    }
-   while( iResult == 0 && ( timeout = hb_timerTest( timeout, &timer ) ) != 0 && hb_vmRequestQuery() == 0 );
+   while( iResult == 0 && (timeout = hb_timerTest(timeout, &timer)) != 0 && hb_vmRequestQuery() == 0 );
 
    return iResult;
 #else /* !HB_HAS_POLL */
@@ -1690,7 +1690,7 @@ static int hb_socketSelectWR( HB_SOCKET sd, HB_MAXINT timeout )
    struct timeval tv;
    fd_set wfds;
 #  if !defined(HB_HAS_SELECT_TIMER)
-   HB_MAXUINT timer = hb_timerInit( timeout );
+   HB_MAXUINT timer = hb_timerInit(timeout);
 #  else
    tv.tv_sec = static_cast<long>(timeout / 1000);
    tv.tv_usec = static_cast<long>(timeout % 1000) * 1000;
@@ -1713,13 +1713,13 @@ static int hb_socketSelectWR( HB_SOCKET sd, HB_MAXINT timeout )
       }
 #  endif
 
-      FD_ZERO( &wfds );
-      FD_SET( static_cast<HB_SOCKET_T>(sd), &wfds );
-      iResult = select( static_cast<int>(sd + 1), nullptr, &wfds, nullptr, &tv );
+      FD_ZERO(&wfds);
+      FD_SET(static_cast<HB_SOCKET_T>(sd), &wfds);
+      iResult = select(static_cast<int>(sd + 1), nullptr, &wfds, nullptr, &tv);
       iError = iResult >= 0 ? 0 : HB_SOCK_GETERROR();
       hb_socketSetOsError(iError);
 
-      if( iResult == -1 && HB_SOCK_IS_EINTR( iError ) )
+      if( iResult == -1 && HB_SOCK_IS_EINTR(iError) )
       {
          iResult = 0;
       }
@@ -1730,21 +1730,21 @@ static int hb_socketSelectWR( HB_SOCKET sd, HB_MAXINT timeout )
          break;
       }
 #  else
-      if( iResult != 0 || ( timeout = hb_timerTest( timeout, &timer ) ) == 0 || hb_vmRequestQuery() != 0 )
+      if( iResult != 0 || (timeout = hb_timerTest(timeout, &timer)) == 0 || hb_vmRequestQuery() != 0 )
       {
          break;
       }
 #  endif
    }
 
-   return iResult < 0 ? -1 : ( iResult > 0 && FD_ISSET( ( HB_SOCKET_T ) sd, &wfds ) ? 1 : 0 );
+   return iResult < 0 ? -1 : (iResult > 0 && FD_ISSET(static_cast<HB_SOCKET_T>(sd), &wfds) ? 1 : 0);
 #endif /* !HB_HAS_POLL */
 }
 
 static int hb_socketSelectWRE( HB_SOCKET sd, HB_MAXINT timeout )
 {
 #if defined(HB_HAS_POLL)
-   HB_MAXUINT timer = hb_timerInit( timeout );
+   HB_MAXUINT timer = hb_timerInit(timeout);
    int iResult, iError, tout;
    struct pollfd fds;
 
@@ -1755,9 +1755,9 @@ static int hb_socketSelectWRE( HB_SOCKET sd, HB_MAXINT timeout )
    do
    {
       tout = timeout < 0 || timeout > 1000 ? 1000 : static_cast<int>(timeout);
-      iResult = poll( &fds, 1, tout );
+      iResult = poll(&fds, 1, tout);
       iError = iResult >= 0 ? 0 : HB_SOCK_GETERROR();
-      if( iResult > 0 && ( fds.revents & POLLOUT ) == 0 )
+      if( iResult > 0 && (fds.revents & POLLOUT) == 0 )
       {
          if( fds.revents & POLLNVAL )
          {
@@ -1776,17 +1776,17 @@ static int hb_socketSelectWRE( HB_SOCKET sd, HB_MAXINT timeout )
          }
       }
       hb_socketSetOsError(iError);
-      if( iResult == -1 && HB_SOCK_IS_EINTR( iError ) )
+      if( iResult == -1 && HB_SOCK_IS_EINTR(iError) )
       {
          iResult = 0;
       }
    }
-   while( iResult == 0 && ( timeout = hb_timerTest( timeout, &timer ) ) != 0 && hb_vmRequestQuery() == 0 );
+   while( iResult == 0 && (timeout = hb_timerTest(timeout, &timer)) != 0 && hb_vmRequestQuery() == 0 );
 
    if( iResult > 0 )
    {
       socklen_t len = sizeof(iError);
-      if( getsockopt( sd, SOL_SOCKET, SO_ERROR, static_cast<char*>(&iError), &len ) != 0 )
+      if( getsockopt(sd, SOL_SOCKET, SO_ERROR, static_cast<char*>(&iError), &len) != 0 )
       {
          iResult = -1;
          iError = HB_SOCK_GETERROR();
@@ -1807,7 +1807,7 @@ static int hb_socketSelectWRE( HB_SOCKET sd, HB_MAXINT timeout )
 #  endif
    socklen_t len;
 #  if !defined(HB_HAS_SELECT_TIMER)
-   HB_MAXUINT timer = hb_timerInit( timeout );
+   HB_MAXUINT timer = hb_timerInit(timeout);
 #  else
    tv.tv_sec = static_cast<long>(timeout / 1000);
    tv.tv_usec = static_cast<long>(timeout % 1000) * 1000;
@@ -1830,25 +1830,25 @@ static int hb_socketSelectWRE( HB_SOCKET sd, HB_MAXINT timeout )
       }
 #  endif
 
-      FD_ZERO( &wfds );
-      FD_SET( static_cast<HB_SOCKET_T>(sd), &wfds );
+      FD_ZERO(&wfds);
+      FD_SET(static_cast<HB_SOCKET_T>(sd), &wfds);
 #  if defined(HB_OS_WIN)
-      FD_ZERO( &efds );
-      FD_SET( static_cast<HB_SOCKET_T>(sd), &efds );
+      FD_ZERO(&efds);
+      FD_SET(static_cast<HB_SOCKET_T>(sd), &efds);
       pefds = &efds;
 #  else
       pefds = nullptr;
 #  endif
 
-      iResult = select( static_cast<int>(sd + 1), nullptr, &wfds, pefds, &tv );
+      iResult = select(static_cast<int>(sd + 1), nullptr, &wfds, pefds, &tv);
       iError = iResult >= 0 ? 0 : HB_SOCK_GETERROR();
       hb_socketSetOsError(iError);
 #  if defined(HB_OS_WIN)
-      if( iResult > 0 && FD_ISSET( static_cast<HB_SOCKET_T>(sd), pefds ) )
+      if( iResult > 0 && FD_ISSET(static_cast<HB_SOCKET_T>(sd), pefds) )
       {
          iResult = -1;
          len = sizeof(iError);
-         if( getsockopt( sd, SOL_SOCKET, SO_ERROR, reinterpret_cast<char*>(&iError), &len ) != 0 )
+         if( getsockopt(sd, SOL_SOCKET, SO_ERROR, reinterpret_cast<char*>(&iError), &len) != 0 )
          {
             iError = HB_SOCK_GETERROR();
          }
@@ -1856,7 +1856,7 @@ static int hb_socketSelectWRE( HB_SOCKET sd, HB_MAXINT timeout )
       }
       else
 #  endif
-      if( iResult == -1 && HB_SOCK_IS_EINTR( iError ) )
+      if( iResult == -1 && HB_SOCK_IS_EINTR(iError) )
       {
          iResult = 0;
       }
@@ -1867,7 +1867,7 @@ static int hb_socketSelectWRE( HB_SOCKET sd, HB_MAXINT timeout )
          break;
       }
 #  else
-      if( iResult != 0 || ( timeout = hb_timerTest( timeout, &timer ) ) == 0 || hb_vmRequestQuery() != 0 )
+      if( iResult != 0 || (timeout = hb_timerTest(timeout, &timer)) == 0 || hb_vmRequestQuery() != 0 )
       {
          break;
       }
@@ -1875,10 +1875,10 @@ static int hb_socketSelectWRE( HB_SOCKET sd, HB_MAXINT timeout )
       break;
    }
 #if !defined(HB_OS_WIN)
-   if( iResult > 0 && FD_ISSET( ( HB_SOCKET_T ) sd, &wfds ) )
+   if( iResult > 0 && FD_ISSET(static_cast<HB_SOCKET_T>(sd), &wfds) )
    {
       len = sizeof(iError);
-      if( getsockopt( sd, SOL_SOCKET, SO_ERROR, static_cast<char*>(&iError), &len ) != 0 )
+      if( getsockopt(sd, SOL_SOCKET, SO_ERROR, static_cast<char*>(&iError), &len) != 0 )
       {
          iResult = -1;
          iError = HB_SOCK_GETERROR();
@@ -1892,21 +1892,21 @@ static int hb_socketSelectWRE( HB_SOCKET sd, HB_MAXINT timeout )
    }
 #endif
 
-   return iResult < 0 ? -1 : ( iResult > 0 && FD_ISSET( ( HB_SOCKET_T ) sd, &wfds ) ? 1 : 0 );
+   return iResult < 0 ? -1 : (iResult > 0 && FD_ISSET(static_cast<HB_SOCKET_T>(sd), &wfds) ? 1 : 0);
 #endif /* !HB_HAS_POLL */
 }
 
-HB_U16 hb_socketNToHS( HB_U16 netshort )
+HB_U16 hb_socketNToHS(HB_U16 netshort)
 {
-   return ntohs( netshort );
+   return ntohs(netshort);
 }
 
-int hb_socketGetAddrFamily( const void * pSockAddr, unsigned len )
+int hb_socketGetAddrFamily(const void * pSockAddr, unsigned len)
 {
-   return pSockAddr && len ? ( static_cast<const struct sockaddr*>(pSockAddr) )->sa_family : -1;
+   return pSockAddr && len ? (static_cast<const struct sockaddr*>(pSockAddr))->sa_family : -1;
 }
 
-HB_BOOL hb_socketLocalAddr( void ** pSockAddr, unsigned * puiLen, const char * szAddr )
+HB_BOOL hb_socketLocalAddr(void ** pSockAddr, unsigned * puiLen, const char * szAddr)
 {
 #if defined(HB_HAS_UNIX)
    struct sockaddr_un sa;
@@ -1929,17 +1929,17 @@ HB_BOOL hb_socketLocalAddr( void ** pSockAddr, unsigned * puiLen, const char * s
 #endif
 }
 
-HB_BOOL hb_socketInetAddr( void ** pSockAddr, unsigned * puiLen, const char * szAddr, int iPort )
+HB_BOOL hb_socketInetAddr(void ** pSockAddr, unsigned * puiLen, const char * szAddr, int iPort)
 {
 #if defined(AF_INET)
    struct sockaddr_in sa;
 
    memset(&sa, 0, sizeof(sa));
    sa.sin_family = AF_INET;
-   sa.sin_port = htons( static_cast<HB_U16>(iPort) );
+   sa.sin_port = htons(static_cast<HB_U16>(iPort));
    if( !szAddr || !*szAddr )
    {
-      sa.sin_addr.s_addr = htonl( INADDR_ANY );
+      sa.sin_addr.s_addr = htonl(INADDR_ANY);
       *pSockAddr = memcpy(hb_xgrab(sizeof(sa) + 1), &sa, sizeof(sa));
       *puiLen = static_cast<unsigned>(sizeof(sa));
       return true;
@@ -1947,11 +1947,11 @@ HB_BOOL hb_socketInetAddr( void ** pSockAddr, unsigned * puiLen, const char * sz
    else
    {
 #if defined(HB_HAS_INET_PTON)
-      if( inet_pton( AF_INET, szAddr, &sa.sin_addr ) > 0 )
+      if( inet_pton(AF_INET, szAddr, &sa.sin_addr) > 0 )
 #elif defined(HB_HAS_INET_ATON)
-      if( inet_aton( szAddr, &sa.sin_addr ) != 0 )
+      if( inet_aton(szAddr, &sa.sin_addr) != 0 )
 #else
-      sa.sin_addr.s_addr = inet_addr( szAddr );
+      sa.sin_addr.s_addr = inet_addr(szAddr);
       if( sa.sin_addr.s_addr != INADDR_NONE || strcmp("255.255.255.255", szAddr) == 0 )  /* dirty hack */
 #endif
       {
@@ -1974,14 +1974,14 @@ HB_BOOL hb_socketInetAddr( void ** pSockAddr, unsigned * puiLen, const char * sz
    return false;
 }
 
-HB_BOOL hb_socketInet6Addr( void ** pSockAddr, unsigned * puiLen, const char * szAddr, int iPort )
+HB_BOOL hb_socketInet6Addr(void ** pSockAddr, unsigned * puiLen, const char * szAddr, int iPort)
 {
 #if defined(HB_HAS_INET6)
    struct sockaddr_in6 sa;
 
    memset(&sa, 0, sizeof(sa));
    sa.sin6_family = AF_INET6;
-   sa.sin6_port = htons( static_cast<HB_U16>(iPort) );
+   sa.sin6_port = htons(static_cast<HB_U16>(iPort));
    if( !szAddr || !*szAddr )
    {
 #if defined(HB_HAS_INET6_ADDR_CONST)
@@ -1998,7 +1998,7 @@ HB_BOOL hb_socketInet6Addr( void ** pSockAddr, unsigned * puiLen, const char * s
    else
    {
 #if defined(HB_HAS_INET_PTON)
-      int err = inet_pton( AF_INET6, szAddr, &sa.sin6_addr );
+      int err = inet_pton(AF_INET6, szAddr, &sa.sin6_addr);
       if( err > 0 )
       {
          *pSockAddr = memcpy(hb_xgrab(sizeof(sa) + 1), &sa, sizeof(sa));
@@ -2032,7 +2032,7 @@ char * hb_socketAddrGetName(const void * pSockAddr, unsigned len)
 {
    char * szName = nullptr;
 
-   switch( hb_socketGetAddrFamily( pSockAddr, len ) )
+   switch( hb_socketGetAddrFamily(pSockAddr, len) )
    {
 #if defined(AF_INET)
       case AF_INET:
@@ -2042,12 +2042,12 @@ char * hb_socketAddrGetName(const void * pSockAddr, unsigned len)
             const char * szAddr;
 #  if defined(HB_HAS_INET_NTOP)
             char buf[INET_ADDRSTRLEN];
-            szAddr = inet_ntop( AF_INET, HB_UNCONST(&sa->sin_addr), buf, sizeof(buf) );
+            szAddr = inet_ntop(AF_INET, HB_UNCONST(&sa->sin_addr), buf, sizeof(buf));
 #  elif defined(HB_IS_INET_NTOA_MT_SAFE)
-            szAddr = inet_ntoa( sa->sin_addr );
+            szAddr = inet_ntoa(sa->sin_addr);
 #  else
             char buf[INET_ADDRSTRLEN];
-            szAddr = hb_inet_ntoa( &sa->sin_addr, buf );
+            szAddr = hb_inet_ntoa(&sa->sin_addr, buf);
 #  endif
             if( szAddr )
             {
@@ -2064,7 +2064,7 @@ char * hb_socketAddrGetName(const void * pSockAddr, unsigned len)
             const char * szAddr;
 #  if defined(HB_HAS_INET_NTOP)
             char buf[INET6_ADDRSTRLEN];
-            szAddr = inet_ntop( AF_INET6, HB_UNCONST(&sa->sin6_addr), buf, sizeof(buf) );
+            szAddr = inet_ntop(AF_INET6, HB_UNCONST(&sa->sin6_addr), buf, sizeof(buf));
 #  else
             {
                int iTODO;
@@ -2109,13 +2109,13 @@ int hb_socketAddrGetPort(const void * pSockAddr, unsigned len)
 {
    int iPort = -1;
 
-   switch( hb_socketGetAddrFamily( pSockAddr, len ) )
+   switch( hb_socketGetAddrFamily(pSockAddr, len) )
    {
 #if defined(AF_INET)
       case AF_INET:
          if( len >= sizeof(struct sockaddr_in) )
          {
-            iPort = ntohs( ( static_cast<const struct sockaddr_in*>(pSockAddr) )->sin_port );
+            iPort = ntohs((static_cast<const struct sockaddr_in*>(pSockAddr))->sin_port);
          }
          break;
 #endif
@@ -2123,7 +2123,7 @@ int hb_socketAddrGetPort(const void * pSockAddr, unsigned len)
       case AF_INET6:
          if( len >= sizeof(struct sockaddr_in6) )
          {
-            iPort = ntohs( ( static_cast<const struct sockaddr_in6*>(pSockAddr) )->sin6_port );
+            iPort = ntohs((static_cast<const struct sockaddr_in6*>(pSockAddr))->sin6_port);
          }
          break;
 #endif
@@ -2157,18 +2157,18 @@ HB_BOOL hb_socketAddrFromItem(void ** pSockAddr, unsigned * puiLen, PHB_ITEM pAd
 
    if( pAddrItm && HB_IS_ARRAY(pAddrItm) )
    {
-      if( hb_arrayLen(pAddrItm) >= 2 && ( hb_arrayGetType(pAddrItm, 1) & Harbour::Item::NUMERIC ) != 0 )
+      if( hb_arrayLen(pAddrItm) >= 2 && (hb_arrayGetType(pAddrItm, 1) & Harbour::Item::NUMERIC) != 0 )
       {
          switch( hb_arrayGetNI(pAddrItm, 1) )
          {
             case HB_SOCKET_AF_INET:
-               fOK = hb_socketInetAddr( pSockAddr, puiLen, hb_arrayGetCPtr(pAddrItm, 2), hb_arrayGetNI(pAddrItm, 3) );
+               fOK = hb_socketInetAddr(pSockAddr, puiLen, hb_arrayGetCPtr(pAddrItm, 2), hb_arrayGetNI(pAddrItm, 3));
                break;
             case HB_SOCKET_AF_INET6:
-               fOK = hb_socketInet6Addr( pSockAddr, puiLen, hb_arrayGetCPtr(pAddrItm, 2), hb_arrayGetNI(pAddrItm, 3) );
+               fOK = hb_socketInet6Addr(pSockAddr, puiLen, hb_arrayGetCPtr(pAddrItm, 2), hb_arrayGetNI(pAddrItm, 3));
                break;
             case HB_SOCKET_AF_LOCAL:
-               fOK = hb_socketLocalAddr( pSockAddr, puiLen, hb_arrayGetCPtr(pAddrItm, 2) );
+               fOK = hb_socketLocalAddr(pSockAddr, puiLen, hb_arrayGetCPtr(pAddrItm, 2));
                break;
             case HB_SOCKET_AF_PACKET:
             case HB_SOCKET_AF_IPX:
@@ -2184,7 +2184,7 @@ PHB_ITEM hb_socketAddrToItem(const void * pSockAddr, unsigned len)
 {
    PHB_ITEM pAddrItm = nullptr;
 
-   switch( hb_socketGetAddrFamily( pSockAddr, len ) )
+   switch( hb_socketGetAddrFamily(pSockAddr, len) )
    {
 #if defined(AF_INET)
       case AF_INET:
@@ -2194,19 +2194,19 @@ PHB_ITEM hb_socketAddrToItem(const void * pSockAddr, unsigned len)
             const char * szAddr;
 #  if defined(HB_HAS_INET_NTOP)
             char buf[INET_ADDRSTRLEN];
-            szAddr = inet_ntop( AF_INET, HB_UNCONST(&sa->sin_addr), buf, sizeof(buf) );
+            szAddr = inet_ntop(AF_INET, HB_UNCONST(&sa->sin_addr), buf, sizeof(buf));
 #  elif defined(HB_IS_INET_NTOA_MT_SAFE)
-            szAddr = inet_ntoa( sa->sin_addr );
+            szAddr = inet_ntoa(sa->sin_addr);
 #  else
             char buf[INET_ADDRSTRLEN];
-            szAddr = hb_inet_ntoa( &sa->sin_addr, buf );
+            szAddr = hb_inet_ntoa(&sa->sin_addr, buf);
 #  endif
             if( szAddr )
             {
                pAddrItm = hb_itemArrayNew(3);
                hb_arraySetNI(pAddrItm, 1, HB_SOCKET_AF_INET);
                hb_arraySetC(pAddrItm, 2, szAddr);
-               hb_arraySetNI(pAddrItm, 3, ntohs( sa->sin_port ));
+               hb_arraySetNI(pAddrItm, 3, ntohs(sa->sin_port));
             }
          }
          break;
@@ -2219,7 +2219,7 @@ PHB_ITEM hb_socketAddrToItem(const void * pSockAddr, unsigned len)
             const char * szAddr;
 #  if defined(HB_HAS_INET_NTOP)
             char buf[INET6_ADDRSTRLEN];
-            szAddr = inet_ntop( AF_INET6, HB_UNCONST(&sa->sin6_addr), buf, sizeof(buf) );
+            szAddr = inet_ntop(AF_INET6, HB_UNCONST(&sa->sin6_addr), buf, sizeof(buf));
 #  else
             {
                int iTODO;
@@ -2231,7 +2231,7 @@ PHB_ITEM hb_socketAddrToItem(const void * pSockAddr, unsigned len)
                pAddrItm = hb_itemArrayNew(3);
                hb_arraySetNI(pAddrItm, 1, HB_SOCKET_AF_INET6);
                hb_arraySetC(pAddrItm, 2, szAddr);
-               hb_arraySetNI(pAddrItm, 3, ntohs( sa->sin6_port ));
+               hb_arraySetNI(pAddrItm, 3, ntohs(sa->sin6_port));
             }
          }
          break;
@@ -2315,7 +2315,7 @@ HB_SOCKET hb_socketOpen(int domain, int type, int protocol)
    int err = 0;
 
 #if defined(HB_SOCKET_TRANSLATE_DOMAIN)
-   domain = hb_socketTransDomain( domain, &err );
+   domain = hb_socketTransDomain(domain, &err);
 #endif
 
 #if defined(HB_SOCKET_TRANSLATE_TYPE)
@@ -2327,7 +2327,7 @@ HB_SOCKET hb_socketOpen(int domain, int type, int protocol)
 
    if( err == 0 )
    {
-      sd = socket( domain, type, protocol );
+      sd = socket(domain, type, protocol);
       hb_socketSetOsError(sd != HB_NO_SOCKET ? 0 : HB_SOCK_GETERROR());
    }
    else
@@ -2344,7 +2344,7 @@ int hb_socketClose(HB_SOCKET sd)
 
    hb_vmUnlock();
 #if defined(HB_OS_WIN)
-   ret = closesocket( sd );
+   ret = closesocket(sd);
 #else
 #  if defined(EINTR)
    {
@@ -2368,7 +2368,7 @@ int hb_socketClose(HB_SOCKET sd)
    return ret;
 }
 
-int hb_socketShutdown( HB_SOCKET sd, int iMode )
+int hb_socketShutdown(HB_SOCKET sd, int iMode)
 {
    int ret;
 
@@ -2406,33 +2406,33 @@ int hb_socketShutdown( HB_SOCKET sd, int iMode )
    }
 
    hb_vmUnlock();
-   ret = shutdown( sd, iMode );
+   ret = shutdown(sd, iMode);
    hb_socketSetOsError(ret == 0 ? 0 : HB_SOCK_GETERROR());
    hb_vmLock();
    return ret;
 }
 
-int hb_socketBind( HB_SOCKET sd, const void * pSockAddr, unsigned uiLen )
+int hb_socketBind(HB_SOCKET sd, const void * pSockAddr, unsigned uiLen)
 {
    int ret;
 
-   ret = bind( sd, static_cast<const struct sockaddr*>(pSockAddr), static_cast<socklen_t>(uiLen) );
+   ret = bind(sd, static_cast<const struct sockaddr*>(pSockAddr), static_cast<socklen_t>(uiLen));
    hb_socketSetOsError(ret == 0 ? 0 : HB_SOCK_GETERROR());
 
    return ret;
 }
 
-int hb_socketListen( HB_SOCKET sd, int iBacklog )
+int hb_socketListen(HB_SOCKET sd, int iBacklog)
 {
    int ret;
 
-   ret = listen( sd, iBacklog );
+   ret = listen(sd, iBacklog);
    hb_socketSetOsError(ret == 0 ? 0 : HB_SOCK_GETERROR());
 
    return ret;
 }
 
-HB_SOCKET hb_socketAccept( HB_SOCKET sd, void ** pSockAddr, unsigned * puiLen, HB_MAXINT timeout )
+HB_SOCKET hb_socketAccept(HB_SOCKET sd, void ** pSockAddr, unsigned * puiLen, HB_MAXINT timeout)
 {
    HB_SOCKET newsd = HB_NO_SOCKET;
    HB_SOCKADDR_STORAGE st;
@@ -2445,7 +2445,7 @@ HB_SOCKET hb_socketAccept( HB_SOCKET sd, void ** pSockAddr, unsigned * puiLen, H
       *pSockAddr = nullptr;
       *puiLen = 0;
    }
-   ret = hb_socketSelectRD( sd, timeout );
+   ret = hb_socketSelectRD(sd, timeout);
    if( ret > 0 )
    {
       int err;
@@ -2455,13 +2455,13 @@ HB_SOCKET hb_socketAccept( HB_SOCKET sd, void ** pSockAddr, unsigned * puiLen, H
        * network error appear after above Select() or when other thread
        * accepts incoming connection (concurrent calls).
        */
-      ret = timeout < 0 ? 0 : hb_socketSetBlockingIO( sd, false );
-      newsd = accept( sd, &st.sa, &len );
+      ret = timeout < 0 ? 0 : hb_socketSetBlockingIO(sd, false);
+      newsd = accept(sd, &st.sa, &len);
       err = newsd != HB_NO_SOCKET ? 0 : HB_SOCK_GETERROR();
 
       if( ret > 0 )
       {
-         hb_socketSetBlockingIO( sd, true );
+         hb_socketSetBlockingIO(sd, true);
       }
       if( newsd != HB_NO_SOCKET )
       {
@@ -2475,7 +2475,7 @@ HB_SOCKET hb_socketAccept( HB_SOCKET sd, void ** pSockAddr, unsigned * puiLen, H
           * IO from parent handler so we have to force blocking IO mode
           * explicitly.
           */
-         hb_socketSetBlockingIO( newsd, true );
+         hb_socketSetBlockingIO(newsd, true);
       }
 
       hb_socketSetOsError(err);
@@ -2488,7 +2488,7 @@ HB_SOCKET hb_socketAccept( HB_SOCKET sd, void ** pSockAddr, unsigned * puiLen, H
    return newsd;
 }
 
-int hb_socketConnect( HB_SOCKET sd, const void * pSockAddr, unsigned uiLen, HB_MAXINT timeout )
+int hb_socketConnect(HB_SOCKET sd, const void * pSockAddr, unsigned uiLen, HB_MAXINT timeout)
 {
    int ret, blk, err;
 
@@ -2497,11 +2497,11 @@ int hb_socketConnect( HB_SOCKET sd, const void * pSockAddr, unsigned uiLen, HB_M
    /* set not blocking IO to implement timeout in connect() operation in
     * portable way without using signals
     */
-   blk = timeout < 0 ? 0 : hb_socketSetBlockingIO( sd, false );
-   ret = connect( sd, static_cast<const struct sockaddr*>(pSockAddr), static_cast<socklen_t>(uiLen) );
+   blk = timeout < 0 ? 0 : hb_socketSetBlockingIO(sd, false);
+   ret = connect(sd, static_cast<const struct sockaddr*>(pSockAddr), static_cast<socklen_t>(uiLen));
    err = ret == 0 ? 0 : HB_SOCK_GETERROR();
    hb_socketSetOsError(err);
-   if( ret != 0 && timeout >= 0 && HB_SOCK_IS_EINPROGRES( err ) )
+   if( ret != 0 && timeout >= 0 && HB_SOCK_IS_EINPROGRES(err) )
    {
       /* inside hb_socketSelectWRE() we have code which hides differences
        * between Windows and POSIX platforms in error detection.
@@ -2525,7 +2525,7 @@ int hb_socketConnect( HB_SOCKET sd, const void * pSockAddr, unsigned uiLen, HB_M
       err = hb_socketGetOsError();
       rawerr = err ? 0 : hb_socketGetError();
 
-      hb_socketSetBlockingIO( sd, true );
+      hb_socketSetBlockingIO(sd, true);
 
       if( err )
       {
@@ -2541,7 +2541,7 @@ int hb_socketConnect( HB_SOCKET sd, const void * pSockAddr, unsigned uiLen, HB_M
    return ret;
 }
 
-long hb_socketSend( HB_SOCKET sd, const void * data, long len, int flags, HB_MAXINT timeout )
+long hb_socketSend(HB_SOCKET sd, const void * data, long len, int flags, HB_MAXINT timeout)
 {
    long lSent = 0;
 
@@ -2549,7 +2549,7 @@ long hb_socketSend( HB_SOCKET sd, const void * data, long len, int flags, HB_MAX
 
    if( timeout >= 0 )
    {
-      lSent = hb_socketSelectWR( sd, timeout );
+      lSent = hb_socketSelectWR(sd, timeout);
       if( lSent == 0 )
       {
          hb_socketSetError(HB_SOCKET_ERR_TIMEOUT);
@@ -2571,18 +2571,18 @@ long hb_socketSend( HB_SOCKET sd, const void * data, long len, int flags, HB_MAX
 #endif
       do
       {
-         lSent = send( sd, static_cast<const char*>(data), len, flags );
+         lSent = send(sd, static_cast<const char*>(data), len, flags);
          iError = lSent > 0 ? 0 : HB_SOCK_GETERROR();
          hb_socketSetOsError(iError);
       }
-      while( lSent == -1 && HB_SOCK_IS_EINTR( iError ) && hb_vmRequestQuery() == 0 );
+      while( lSent == -1 && HB_SOCK_IS_EINTR(iError) && hb_vmRequestQuery() == 0 );
    }
    hb_vmLock();
 
    return lSent;
 }
 
-long hb_socketSendTo( HB_SOCKET sd, const void * data, long len, int flags, const void * pSockAddr, unsigned uiSockLen, HB_MAXINT timeout )
+long hb_socketSendTo(HB_SOCKET sd, const void * data, long len, int flags, const void * pSockAddr, unsigned uiSockLen, HB_MAXINT timeout)
 {
    long lSent = 0;
 
@@ -2590,7 +2590,7 @@ long hb_socketSendTo( HB_SOCKET sd, const void * data, long len, int flags, cons
 
    if( timeout >= 0 )
    {
-      lSent = hb_socketSelectWR( sd, timeout );
+      lSent = hb_socketSelectWR(sd, timeout);
       if( lSent == 0 )
       {
          hb_socketSetError(HB_SOCKET_ERR_TIMEOUT);
@@ -2608,18 +2608,18 @@ long hb_socketSendTo( HB_SOCKET sd, const void * data, long len, int flags, cons
 #endif
       do
       {
-         lSent = sendto( sd, static_cast<const char*>(data), len, flags, static_cast<const struct sockaddr*>(pSockAddr), static_cast<socklen_t>(uiSockLen) );
+         lSent = sendto(sd, static_cast<const char*>(data), len, flags, static_cast<const struct sockaddr*>(pSockAddr), static_cast<socklen_t>(uiSockLen));
          iError = lSent > 0 ? 0 : HB_SOCK_GETERROR();
          hb_socketSetOsError(iError);
       }
-      while( lSent == -1 && HB_SOCK_IS_EINTR( iError ) && hb_vmRequestQuery() == 0 );
+      while( lSent == -1 && HB_SOCK_IS_EINTR(iError) && hb_vmRequestQuery() == 0 );
    }
    hb_vmLock();
 
    return lSent;
 }
 
-long hb_socketRecv( HB_SOCKET sd, void * data, long len, int flags, HB_MAXINT timeout )
+long hb_socketRecv(HB_SOCKET sd, void * data, long len, int flags, HB_MAXINT timeout)
 {
    long lReceived = 0;
 
@@ -2627,7 +2627,7 @@ long hb_socketRecv( HB_SOCKET sd, void * data, long len, int flags, HB_MAXINT ti
 
    if( timeout >= 0 )
    {
-      lReceived = hb_socketSelectRD( sd, timeout );
+      lReceived = hb_socketSelectRD(sd, timeout);
       if( lReceived == 0 )
       {
          hb_socketSetError(HB_SOCKET_ERR_TIMEOUT);
@@ -2641,18 +2641,18 @@ long hb_socketRecv( HB_SOCKET sd, void * data, long len, int flags, HB_MAXINT ti
       flags = hb_socketTransFlags(flags);
       do
       {
-         lReceived = recv( sd, static_cast<char*>(data), len, flags );
+         lReceived = recv(sd, static_cast<char*>(data), len, flags);
          iError = lReceived > 0 ? 0 : HB_SOCK_GETERROR();
          hb_socketSetOsError(iError);
       }
-      while( lReceived == -1 && HB_SOCK_IS_EINTR( iError ) && hb_vmRequestQuery() == 0 );
+      while( lReceived == -1 && HB_SOCK_IS_EINTR(iError) && hb_vmRequestQuery() == 0 );
    }
    hb_vmLock();
 
    return lReceived;
 }
 
-long hb_socketRecvFrom( HB_SOCKET sd, void * data, long len, int flags, void ** pSockAddr, unsigned * puiSockLen, HB_MAXINT timeout )
+long hb_socketRecvFrom(HB_SOCKET sd, void * data, long len, int flags, void ** pSockAddr, unsigned * puiSockLen, HB_MAXINT timeout)
 {
    long lReceived = 0;
 
@@ -2666,7 +2666,7 @@ long hb_socketRecvFrom( HB_SOCKET sd, void * data, long len, int flags, void ** 
 
    if( timeout >= 0 )
    {
-      lReceived = hb_socketSelectRD( sd, timeout );
+      lReceived = hb_socketSelectRD(sd, timeout);
       if( lReceived == 0 )
       {
          hb_socketSetError(HB_SOCKET_ERR_TIMEOUT);
@@ -2682,11 +2682,11 @@ long hb_socketRecvFrom( HB_SOCKET sd, void * data, long len, int flags, void ** 
       flags = hb_socketTransFlags(flags);
       do
       {
-         lReceived = recvfrom( sd, static_cast<char*>(data), len, flags, &st.sa, &salen );
+         lReceived = recvfrom(sd, static_cast<char*>(data), len, flags, &st.sa, &salen);
          iError = lReceived > 0 ? 0 : HB_SOCK_GETERROR();
          hb_socketSetOsError(iError);
       }
-      while( lReceived == -1 && HB_SOCK_IS_EINTR( iError ) && hb_vmRequestQuery() == 0 );
+      while( lReceived == -1 && HB_SOCK_IS_EINTR(iError) && hb_vmRequestQuery() == 0 );
 
       if( lReceived != -1 && pSockAddr && puiSockLen )
       {
@@ -2699,25 +2699,25 @@ long hb_socketRecvFrom( HB_SOCKET sd, void * data, long len, int flags, void ** 
    return lReceived;
 }
 
-int hb_socketSetBlockingIO( HB_SOCKET sd, HB_BOOL fBlocking )
+int hb_socketSetBlockingIO(HB_SOCKET sd, HB_BOOL fBlocking)
 {
    int ret;
 
 #if defined(HB_OS_WIN)
    u_long mode = fBlocking ? 0 : 1;
-   ret = ioctlsocket( sd, FIONBIO, &mode );
+   ret = ioctlsocket(sd, FIONBIO, &mode);
    hb_socketSetOsError(ret != -1 ? 0 : HB_SOCK_GETERROR());
    if( ret == 0 )
    {
       ret = 1;
    }
 #elif defined(O_NONBLOCK)
-   ret = fcntl( sd, F_GETFL, 0 );
+   ret = fcntl(sd, F_GETFL, 0);
    if( ret != -1 )
    {
       HB_BOOL fBlocked;
       int flags;
-      fBlocked = ( ret & O_NONBLOCK ) == 0;
+      fBlocked = (ret & O_NONBLOCK) == 0;
       if( fBlocking ? !fBlocked : fBlocked )
       {
          if( fBlocking )
@@ -2728,7 +2728,7 @@ int hb_socketSetBlockingIO( HB_SOCKET sd, HB_BOOL fBlocking )
          {
             flags = ret | O_NONBLOCK;
          }
-         ret = fcntl( sd, F_SETFL, flags );
+         ret = fcntl(sd, F_SETFL, flags);
          if( ret == 0 )
          {
             ret = 1;
@@ -2750,7 +2750,7 @@ int hb_socketSetBlockingIO( HB_SOCKET sd, HB_BOOL fBlocking )
    return ret;
 }
 
-int hb_socketSetNoDelay( HB_SOCKET sd, HB_BOOL fNoDelay )
+int hb_socketSetNoDelay(HB_SOCKET sd, HB_BOOL fNoDelay)
 {
    int ret;
 
@@ -2763,7 +2763,7 @@ int hb_socketSetNoDelay( HB_SOCKET sd, HB_BOOL fNoDelay )
     * Nagle's algorithm that have severe performance penalties.
     */
    int val = fNoDelay ? 1 : 0;
-   ret = setsockopt( sd, IPPROTO_TCP, TCP_NODELAY, reinterpret_cast<const char*>(&val), sizeof(val) );
+   ret = setsockopt(sd, IPPROTO_TCP, TCP_NODELAY, reinterpret_cast<const char*>(&val), sizeof(val));
    hb_socketSetOsError(ret != -1 ? 0 : HB_SOCK_GETERROR());
 #else
    int iTODO;
@@ -2778,14 +2778,14 @@ int hb_socketSetNoDelay( HB_SOCKET sd, HB_BOOL fNoDelay )
 /* NOTE: For notes on Windows, see:
          https://msdn.microsoft.com/library/ms740621
          [vszakats] */
-int hb_socketSetExclusiveAddr( HB_SOCKET sd, HB_BOOL fExclusive )
+int hb_socketSetExclusiveAddr(HB_SOCKET sd, HB_BOOL fExclusive)
 {
    int ret;
 
    #if defined(HB_OS_WIN)
       #if defined(SO_EXCLUSIVEADDRUSE)
          int val = fExclusive ? 1 : 0;
-         ret = setsockopt( sd, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, reinterpret_cast<const char*>(&val), sizeof(val) );
+         ret = setsockopt(sd, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, reinterpret_cast<const char*>(&val), sizeof(val));
          hb_socketSetOsError(ret != -1 ? 0 : HB_SOCK_GETERROR());
       #else
          HB_SYMBOL_UNUSED(sd);
@@ -2802,7 +2802,7 @@ int hb_socketSetExclusiveAddr( HB_SOCKET sd, HB_BOOL fExclusive )
    return ret;
 }
 
-int hb_socketSetReuseAddr( HB_SOCKET sd, HB_BOOL fReuse )
+int hb_socketSetReuseAddr(HB_SOCKET sd, HB_BOOL fReuse)
 {
    int ret;
 
@@ -2820,7 +2820,7 @@ int hb_socketSetReuseAddr( HB_SOCKET sd, HB_BOOL fReuse )
    #else
    {
       int val = fReuse ? 1 : 0;
-      ret = setsockopt( sd, SOL_SOCKET, SO_REUSEADDR, static_cast<const char*>(&val), sizeof(val) );
+      ret = setsockopt(sd, SOL_SOCKET, SO_REUSEADDR, static_cast<const char*>(&val), sizeof(val));
       hb_socketSetOsError(ret != -1 ? 0 : HB_SOCK_GETERROR());
    }
    #endif
@@ -2831,7 +2831,7 @@ int hb_socketSetKeepAlive( HB_SOCKET sd, HB_BOOL fKeepAlive )
 {
    int val = fKeepAlive ? 1 : 0, ret;
 
-   ret = setsockopt( sd, SOL_SOCKET, SO_KEEPALIVE, reinterpret_cast<const char*>(&val), sizeof(val) );
+   ret = setsockopt(sd, SOL_SOCKET, SO_KEEPALIVE, reinterpret_cast<const char*>(&val), sizeof(val));
    hb_socketSetOsError(ret != -1 ? 0 : HB_SOCK_GETERROR());
    return ret;
 }
@@ -2840,7 +2840,7 @@ int hb_socketSetBroadcast(HB_SOCKET sd, HB_BOOL fBroadcast)
 {
 #if defined(SO_BROADCAST)
    int val = fBroadcast ? 1 : 0, ret;
-   ret = setsockopt( sd, SOL_SOCKET, SO_BROADCAST, reinterpret_cast<const char*>(&val), sizeof(val) );
+   ret = setsockopt(sd, SOL_SOCKET, SO_BROADCAST, reinterpret_cast<const char*>(&val), sizeof(val));
    hb_socketSetOsError(ret != -1 ? 0 : HB_SOCK_GETERROR());
    return ret;
 #else
@@ -2853,7 +2853,7 @@ int hb_socketSetBroadcast(HB_SOCKET sd, HB_BOOL fBroadcast)
 
 int hb_socketSetSndBufSize(HB_SOCKET sd, int iSize)
 {
-   int ret = setsockopt( sd, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<const char*>(&iSize), sizeof(iSize) );
+   int ret = setsockopt(sd, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<const char*>(&iSize), sizeof(iSize));
 
    hb_socketSetOsError(ret != -1 ? 0 : HB_SOCK_GETERROR());
    return ret;
@@ -2861,7 +2861,7 @@ int hb_socketSetSndBufSize(HB_SOCKET sd, int iSize)
 
 int hb_socketSetRcvBufSize(HB_SOCKET sd, int iSize)
 {
-   int ret = setsockopt( sd, SOL_SOCKET, SO_RCVBUF, reinterpret_cast<const char*>(&iSize), sizeof(iSize) );
+   int ret = setsockopt(sd, SOL_SOCKET, SO_RCVBUF, reinterpret_cast<const char*>(&iSize), sizeof(iSize));
 
    hb_socketSetOsError(ret != -1 ? 0 : HB_SOCK_GETERROR());
    return ret;
@@ -2870,7 +2870,7 @@ int hb_socketSetRcvBufSize(HB_SOCKET sd, int iSize)
 int hb_socketGetSndBufSize(HB_SOCKET sd, int * piSize)
 {
    socklen_t len = sizeof(*piSize);
-   int ret = getsockopt( sd, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<char*>(piSize), &len );
+   int ret = getsockopt(sd, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<char*>(piSize), &len);
 
    hb_socketSetOsError(ret != -1 ? 0 : HB_SOCK_GETERROR());
    return ret;
@@ -2879,7 +2879,7 @@ int hb_socketGetSndBufSize(HB_SOCKET sd, int * piSize)
 int hb_socketGetRcvBufSize(HB_SOCKET sd, int * piSize)
 {
    socklen_t len = sizeof(*piSize);
-   int ret = getsockopt( sd, SOL_SOCKET, SO_RCVBUF, reinterpret_cast<char*>(piSize), &len );
+   int ret = getsockopt(sd, SOL_SOCKET, SO_RCVBUF, reinterpret_cast<char*>(piSize), &len);
 
    hb_socketSetOsError(ret != -1 ? 0 : HB_SOCK_GETERROR());
    return ret;
@@ -2894,18 +2894,18 @@ int hb_socketSetMulticast(HB_SOCKET sd, int af, const char * szAddr)
       int ret;
 
 #if defined(HB_HAS_INET_PTON)
-      ret = inet_pton( AF_INET, szAddr, &mreq.imr_multiaddr ) > 0 ? 0 : -1;
+      ret = inet_pton(AF_INET, szAddr, &mreq.imr_multiaddr) > 0 ? 0 : -1;
 #elif defined(HB_HAS_INET_ATON)
-      ret = inet_aton( szAddr, &mreq.imr_multiaddr ) != 0 ? 0 : -1;
+      ret = inet_aton(szAddr, &mreq.imr_multiaddr) != 0 ? 0 : -1;
 #else
-      mreq.imr_multiaddr.s_addr = inet_addr( szAddr );
-      ret = ( mreq.imr_multiaddr.s_addr != INADDR_NONE || strcmp("255.255.255.255", szAddr) == 0 ) ? 0 : -1; /* dirty hack */
+      mreq.imr_multiaddr.s_addr = inet_addr(szAddr);
+      ret = (mreq.imr_multiaddr.s_addr != INADDR_NONE || strcmp("255.255.255.255", szAddr) == 0) ? 0 : -1; /* dirty hack */
 #endif
-      mreq.imr_interface.s_addr = htonl( INADDR_ANY );
+      mreq.imr_interface.s_addr = htonl(INADDR_ANY);
 
       if( ret == 0 )
       {
-         ret = setsockopt( sd, IPPROTO_IP, IP_ADD_MEMBERSHIP, reinterpret_cast<const char*>(&mreq), sizeof(mreq) );
+         ret = setsockopt(sd, IPPROTO_IP, IP_ADD_MEMBERSHIP, reinterpret_cast<const char*>(&mreq), sizeof(mreq));
       }
       hb_socketSetOsError(ret != -1 ? 0 : HB_SOCK_GETERROR());
       return ret;
@@ -2918,7 +2918,7 @@ int hb_socketSetMulticast(HB_SOCKET sd, int af, const char * szAddr)
    {
 #if defined(HB_HAS_INET_PTON)
       struct ipv6_mreq mreq;
-      int err = inet_pton( AF_INET6, szAddr, &mreq.ipv6mr_multiaddr );
+      int err = inet_pton(AF_INET6, szAddr, &mreq.ipv6mr_multiaddr);
       if( err > 0 )
       {
          int ret;
@@ -2926,7 +2926,7 @@ int hb_socketSetMulticast(HB_SOCKET sd, int af, const char * szAddr)
 #if !defined(IPV6_JOIN_GROUP) && defined(IPV6_ADD_MEMBERSHIP)
 #  define IPV6_JOIN_GROUP  IPV6_ADD_MEMBERSHIP
 #endif
-         ret = setsockopt( sd, IPPROTO_IPV6, IPV6_JOIN_GROUP, static_cast<const char*>(&mreq), sizeof(mreq) );
+         ret = setsockopt(sd, IPPROTO_IPV6, IPV6_JOIN_GROUP, static_cast<const char*>(&mreq), sizeof(mreq));
          hb_socketSetOsError(ret != -1 ? 0 : HB_SOCK_GETERROR());
          return ret;
       }
@@ -2954,7 +2954,7 @@ int hb_socketSelectRead(HB_SOCKET sd, HB_MAXINT timeout)
    int ret;
 
    hb_vmUnlock();
-   ret = hb_socketSelectRD( sd, timeout );
+   ret = hb_socketSelectRD(sd, timeout);
    hb_vmLock();
 
    return ret;
@@ -2965,13 +2965,13 @@ int hb_socketSelectWrite(HB_SOCKET sd, HB_MAXINT timeout)
    int ret;
 
    hb_vmUnlock();
-   ret = hb_socketSelectWR( sd, timeout );
+   ret = hb_socketSelectWR(sd, timeout);
    hb_vmLock();
 
    return ret;
 }
 
-int hb_socketSelectWriteEx( HB_SOCKET sd, HB_MAXINT timeout )
+int hb_socketSelectWriteEx(HB_SOCKET sd, HB_MAXINT timeout)
 {
    int ret;
 
@@ -2982,11 +2982,11 @@ int hb_socketSelectWriteEx( HB_SOCKET sd, HB_MAXINT timeout )
    return ret;
 }
 
-static HB_SOCKET s_socketSelectCallback( PHB_ITEM pItem )
+static HB_SOCKET s_socketSelectCallback(PHB_ITEM pItem)
 {
    HB_SOCKET sd = HB_NO_SOCKET;
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       if( HB_IS_NUMERIC(pItem) )
       {
@@ -3005,7 +3005,7 @@ static HB_SOCKET s_socketSelectCallback( PHB_ITEM pItem )
 }
 
 #if defined(HB_HAS_POLL)
-static int s_socketPollCheck( HB_SOCKET sd, struct pollfd * pfds, nfds_t nfds )
+static int s_socketPollCheck(HB_SOCKET sd, struct pollfd * pfds, nfds_t nfds)
 {
    for( nfds_t npos = 0; npos < nfds; ++npos )
    {
@@ -3018,7 +3018,7 @@ static int s_socketPollCheck( HB_SOCKET sd, struct pollfd * pfds, nfds_t nfds )
 }
 #endif /* HB_HAS_POLL */
 
-int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BOOL fSetWR, PHB_ITEM pArrayEX, HB_BOOL fSetEX, HB_MAXINT timeout, HB_SOCKET_FUNC pFunc )
+int hb_socketSelect(PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BOOL fSetWR, PHB_ITEM pArrayEX, HB_BOOL fSetEX, HB_MAXINT timeout, HB_SOCKET_FUNC pFunc)
 {
 #if defined(HB_HAS_POLL)
    HB_SOCKET sd;
@@ -3063,10 +3063,10 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
       nLen = pItemSets[i] ? hb_arrayLen(pItemSets[i]) : 0;
       for( ul = 1; ul <= nLen && nfds < ncnt; ul++ )
       {
-         sd = pFunc( hb_arrayGetItemPtr(pItemSets[i], ul) );
+         sd = pFunc(hb_arrayGetItemPtr(pItemSets[i], ul));
          if( sd != HB_NO_SOCKET )
          {
-            iPos = s_socketPollCheck( sd, pfds, nfds );
+            iPos = s_socketPollCheck(sd, pfds, nfds);
             if( iPos < 0 )
             {
                iPos = static_cast<int>(nfds++);
@@ -3080,21 +3080,21 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
 
    if( hb_vmRequestQuery() == 0 )
    {
-      HB_MAXUINT timer = hb_timerInit( timeout );
+      HB_MAXUINT timer = hb_timerInit(timeout);
 
       hb_vmUnlock();
       do
       {
          tout = timeout < 0 || timeout > 1000 ? 1000 : static_cast<int>(timeout);
-         iResult = poll( pfds, nfds, tout );
+         iResult = poll(pfds, nfds, tout);
          iError = iResult >= 0 ? 0 : HB_SOCK_GETERROR();
          hb_socketSetOsError(iError);
-         if( iResult == -1 && HB_SOCK_IS_EINTR( iError ) )
+         if( iResult == -1 && HB_SOCK_IS_EINTR(iError) )
          {
             iResult = 0;
          }
       }
-      while( iResult == 0 && ( timeout = hb_timerTest( timeout, &timer ) ) != 0 && hb_vmRequestQuery() == 0 );
+      while( iResult == 0 && (timeout = hb_timerTest(timeout, &timer)) != 0 && hb_vmRequestQuery() == 0 );
       hb_vmLock();
 
       pEvents[0] |= POLLHUP | POLLPRI;
@@ -3109,11 +3109,11 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
                nLen = hb_arrayLen(pItemSets[i]);
                for( ul = 1; ul <= nLen; ul++ )
                {
-                  sd = pFunc( hb_arrayGetItemPtr(pItemSets[i], ul) );
+                  sd = pFunc(hb_arrayGetItemPtr(pItemSets[i], ul));
                   if( sd != HB_NO_SOCKET )
                   {
-                     iPos = s_socketPollCheck( sd, pfds, nfds );
-                     if( iPos >= 0 && ( pfds[iPos].revents & pEvents[i] ) != 0 )
+                     iPos = s_socketPollCheck(sd, pfds, nfds);
+                     if( iPos >= 0 && (pfds[iPos].revents & pEvents[i]) != 0 )
                      {
                         if( ++nPos != ul )
                         {
@@ -3161,7 +3161,7 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
    pSet[1] = fSetWR;
    pSet[2] = fSetEX;
 
-   timer = hb_timerInit( timeout );
+   timer = hb_timerInit(timeout);
 
    do
    {
@@ -3172,17 +3172,17 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
          nLen = pItemSets[i] ? hb_arrayLen(pItemSets[i]) : 0;
          if( nLen > 0 )
          {
-            FD_ZERO( &fds[i] );
+            FD_ZERO(&fds[i]);
             for( ul = 1; ul <= nLen; ul++ )
             {
-               sd = pFunc( hb_arrayGetItemPtr(pItemSets[i], ul) );
+               sd = pFunc(hb_arrayGetItemPtr(pItemSets[i], ul));
                if( sd != HB_NO_SOCKET )
                {
                   if( maxsd < sd )
                   {
                      maxsd = sd;
                   }
-                  FD_SET( static_cast<HB_SOCKET_T>(sd), &fds[i] );
+                  FD_SET(static_cast<HB_SOCKET_T>(sd), &fds[i]);
                   ret = 1;
                }
             }
@@ -3211,17 +3211,17 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
 
       hb_vmUnlock();
 
-      ret = select( static_cast<int>(maxsd + 1), pfds[0], pfds[1], pfds[2], &tv );
+      ret = select(static_cast<int>(maxsd + 1), pfds[0], pfds[1], pfds[2], &tv);
       iError = ret >= 0 ? 0 : HB_SOCK_GETERROR();
       hb_socketSetOsError(iError);
-      if( ret == -1 && HB_SOCK_IS_EINTR( iError ) )
+      if( ret == -1 && HB_SOCK_IS_EINTR(iError) )
       {
          ret = 0;
       }
 
       hb_vmLock();
    }
-   while( ret == 0 && ( timeout = hb_timerTest( timeout, &timer ) ) != 0 && hb_vmRequestQuery() == 0 );
+   while( ret == 0 && (timeout = hb_timerTest(timeout, &timer)) != 0 && hb_vmRequestQuery() == 0 );
 
    for( i = 0; i < 3; i++ )
    {
@@ -3233,8 +3233,8 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
             nLen = hb_arrayLen(pItemSets[i]);
             for( ul = 1; ul <= nLen; ul++ )
             {
-               sd = pFunc( hb_arrayGetItemPtr(pItemSets[i], ul) );
-               if( sd != HB_NO_SOCKET && FD_ISSET( static_cast<HB_SOCKET_T>(sd), pfds[i] ) )
+               sd = pFunc(hb_arrayGetItemPtr(pItemSets[i], ul));
+               if( sd != HB_NO_SOCKET && FD_ISSET(static_cast<HB_SOCKET_T>(sd), pfds[i]) )
                {
                   if( ++nPos != ul )
                   {
@@ -3254,7 +3254,7 @@ int hb_socketSelect( PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BO
 /*
  * DNS functions
  */
-HB_BOOL hb_socketResolveInetAddr( void ** pSockAddr, unsigned * puiLen, const char * szAddr, int iPort )
+HB_BOOL hb_socketResolveInetAddr(void ** pSockAddr, unsigned * puiLen, const char * szAddr, int iPort)
 {
 #if defined(AF_INET)
    struct sockaddr_in sa;
@@ -3262,21 +3262,21 @@ HB_BOOL hb_socketResolveInetAddr( void ** pSockAddr, unsigned * puiLen, const ch
 
    memset(&sa, 0, sizeof(sa));
    sa.sin_family = AF_INET;
-   sa.sin_port = htons( static_cast<HB_U16>(iPort) );
+   sa.sin_port = htons(static_cast<HB_U16>(iPort));
    if( !szAddr || !*szAddr )
    {
-      sa.sin_addr.s_addr = htonl( INADDR_ANY );
+      sa.sin_addr.s_addr = htonl(INADDR_ANY);
       *pSockAddr = memcpy(hb_xgrab(sizeof(sa) + 1), &sa, sizeof(sa));
       *puiLen = static_cast<unsigned>(sizeof(sa));
       return true;
    }
 
 #if defined(HB_HAS_INET_PTON)
-   fTrans = inet_pton( AF_INET, szAddr, &sa.sin_addr ) > 0;
+   fTrans = inet_pton(AF_INET, szAddr, &sa.sin_addr) > 0;
 #elif defined(HB_HAS_INET_ATON)
-   fTrans = inet_aton( szAddr, &sa.sin_addr ) != 0;
+   fTrans = inet_aton(szAddr, &sa.sin_addr) != 0;
 #else
-   sa.sin_addr.s_addr = inet_addr( szAddr );
+   sa.sin_addr.s_addr = inet_addr(szAddr);
    fTrans = sa.sin_addr.s_addr != INADDR_NONE || strcmp("255.255.255.255", szAddr) == 0; /* dirty hack */
 #endif
 
@@ -3294,9 +3294,9 @@ HB_BOOL hb_socketResolveInetAddr( void ** pSockAddr, unsigned * puiLen, const ch
       if( iError == 0 )
       {
          if( static_cast<int>(res->ai_addrlen) >= static_cast<int>(sizeof(struct sockaddr_in)) &&
-             hb_socketGetAddrFamily( res->ai_addr, static_cast<unsigned>(res->ai_addrlen) ) == AF_INET )
+             hb_socketGetAddrFamily(res->ai_addr, static_cast<unsigned>(res->ai_addrlen)) == AF_INET )
          {
-            sa.sin_addr.s_addr = ( reinterpret_cast<struct sockaddr_in*>(res->ai_addr) )->sin_addr.s_addr;
+            sa.sin_addr.s_addr = (reinterpret_cast<struct sockaddr_in*>(res->ai_addr))->sin_addr.s_addr;
             fTrans = HB_TRUE;
          }
          freeaddrinfo(res);
@@ -3310,7 +3310,7 @@ HB_BOOL hb_socketResolveInetAddr( void ** pSockAddr, unsigned * puiLen, const ch
       hb_socketSetResolveError(he == nullptr ? HB_SOCK_GETHERROR() : 0);
       if( he && he->h_addr_list[0] )
       {
-         sa.sin_addr.s_addr = ( reinterpret_cast<struct in_addr*>(he->h_addr_list[0]) )->s_addr;
+         sa.sin_addr.s_addr = (reinterpret_cast<struct in_addr*>(he->h_addr_list[0]))->s_addr;
          fTrans = HB_TRUE;
       }
       hb_vmLock();
@@ -3333,7 +3333,7 @@ HB_BOOL hb_socketResolveInetAddr( void ** pSockAddr, unsigned * puiLen, const ch
    return false;
 }
 
-char * hb_socketResolveAddr( const char * szAddr, int af )
+char * hb_socketResolveAddr(const char * szAddr, int af)
 {
    char * szResult = nullptr;
    HB_BOOL fTrans = HB_FALSE;
@@ -3348,11 +3348,11 @@ char * hb_socketResolveAddr( const char * szAddr, int af )
    {
       struct in_addr sin;
 #if defined(HB_HAS_INET_PTON)
-      fTrans = inet_pton( AF_INET, szAddr, &sin ) > 0;
+      fTrans = inet_pton(AF_INET, szAddr, &sin) > 0;
 #elif defined(HB_HAS_INET_ATON)
-      fTrans = inet_aton( szAddr, &sin ) != 0;
+      fTrans = inet_aton(szAddr, &sin) != 0;
 #else
-      sin.s_addr = inet_addr( szAddr );
+      sin.s_addr = inet_addr(szAddr);
       fTrans = sin.s_addr != INADDR_NONE || strcmp("255.255.255.255", szAddr) == 0; /* dirty hack */
 #endif
 
@@ -3365,7 +3365,7 @@ char * hb_socketResolveAddr( const char * szAddr, int af )
          he = gethostbyname(szAddr);
          if( he && he->h_addr_list[0] )
          {
-            sin.s_addr = ( reinterpret_cast<struct in_addr*>(he->h_addr_list[0]) )->s_addr;
+            sin.s_addr = (reinterpret_cast<struct in_addr*>(he->h_addr_list[0]))->s_addr;
             fTrans = HB_TRUE;
          }
          else
@@ -3380,12 +3380,12 @@ char * hb_socketResolveAddr( const char * szAddr, int af )
       {
 #  if defined(HB_HAS_INET_NTOP)
          char buf[INET_ADDRSTRLEN];
-         szAddr = inet_ntop( AF_INET, &sin, buf, sizeof(buf) );
+         szAddr = inet_ntop(AF_INET, &sin, buf, sizeof(buf));
 #  elif defined(HB_IS_INET_NTOA_MT_SAFE)
-         szAddr = inet_ntoa( sin );
+         szAddr = inet_ntoa(sin);
 #  else
          char buf[INET_ADDRSTRLEN];
-         szAddr = hb_inet_ntoa( &sin, buf );
+         szAddr = hb_inet_ntoa(&sin, buf);
 #  endif
          szResult = hb_strdup(szAddr);
       }
@@ -3395,12 +3395,12 @@ char * hb_socketResolveAddr( const char * szAddr, int af )
    {
 #if defined(HB_HAS_INET_PTON)
       struct in6_addr sin;
-      fTrans = inet_pton( AF_INET6, szAddr, &sin ) > 0;
+      fTrans = inet_pton(AF_INET6, szAddr, &sin) > 0;
       if( fTrans )
       {
 #  if defined(HB_HAS_INET_NTOP)
          char buf[INET6_ADDRSTRLEN];
-         szAddr = inet_ntop( AF_INET6, &sin, buf, sizeof(buf) );
+         szAddr = inet_ntop(AF_INET6, &sin, buf, sizeof(buf));
 #  else
          int iTODO;
 #  endif
@@ -3438,7 +3438,7 @@ char * hb_socketResolveAddr( const char * szAddr, int af )
    return szResult;
 }
 
-PHB_ITEM hb_socketGetHosts( const char * szAddr, int af )
+PHB_ITEM hb_socketGetHosts(const char * szAddr, int af)
 {
    PHB_ITEM pItem = nullptr;
 
@@ -3517,15 +3517,15 @@ PHB_ITEM hb_socketGetHosts( const char * szAddr, int af )
          struct in_addr sia;
 
 #if defined(HB_HAS_INET_PTON)
-         if( inet_pton( AF_INET, szAddr, &sia ) > 0 )
+         if( inet_pton(AF_INET, szAddr, &sia) > 0 )
 #elif defined(HB_HAS_INET_ATON)
-         if( inet_aton( szAddr, &sia ) != 0 )
+         if( inet_aton(szAddr, &sia) != 0 )
 #else
-         sia.s_addr = inet_addr( szAddr );
+         sia.s_addr = inet_addr(szAddr);
          if( sia.s_addr != INADDR_NONE || strcmp("255.255.255.255", szAddr) == 0 )  /* dirty hack */
 #endif
          {
-            he = gethostbyaddr( reinterpret_cast<const char*>(&sia), sizeof(sia), AF_INET );
+            he = gethostbyaddr(reinterpret_cast<const char*>(&sia), sizeof(sia), AF_INET);
          }
       }
 #endif
@@ -3553,12 +3553,12 @@ PHB_ITEM hb_socketGetHosts( const char * szAddr, int af )
             struct in_addr * sin = reinterpret_cast<struct in_addr*>(he->h_addr_list[iCount - 1]);
 #  if defined(HB_HAS_INET_NTOP)
             char buf[INET_ADDRSTRLEN];
-            szAddr = inet_ntop( AF_INET, sin, buf, sizeof(buf) );
+            szAddr = inet_ntop(AF_INET, sin, buf, sizeof(buf));
 #  elif defined(HB_IS_INET_NTOA_MT_SAFE)
-            szAddr = inet_ntoa( *sin );
+            szAddr = inet_ntoa(*sin);
 #  else
             char buf[INET_ADDRSTRLEN];
-            szAddr = hb_inet_ntoa( sin, buf );
+            szAddr = hb_inet_ntoa(sin, buf);
 #  endif
             hb_arraySetC(pItem, iCount, szAddr);
          }
@@ -3577,7 +3577,7 @@ PHB_ITEM hb_socketGetHosts( const char * szAddr, int af )
    return pItem;
 }
 
-PHB_ITEM hb_socketGetAliases( const char * szAddr, int af )
+PHB_ITEM hb_socketGetAliases(const char * szAddr, int af)
 {
    /* TODO: implement it */
    HB_SYMBOL_UNUSED(szAddr);
@@ -3589,7 +3589,7 @@ PHB_ITEM hb_socketGetAliases( const char * szAddr, int af )
 char * hb_socketGetHostName(const void * pSockAddr, unsigned len)
 {
    char * szResult = nullptr;
-   int af = hb_socketGetAddrFamily( pSockAddr, len );
+   int af = hb_socketGetAddrFamily(pSockAddr, len);
 
    if( af != -1 )
    {
@@ -3639,7 +3639,7 @@ char * hb_socketGetHostName(const void * pSockAddr, unsigned len)
 #if defined(HB_HAS_GETHOSTBYADDR)
          const struct sockaddr_in * sa = static_cast<const struct sockaddr_in*>(pSockAddr);
          hb_vmUnlock();
-         he = gethostbyaddr( reinterpret_cast<const char*>(&sa->sin_addr), sizeof(sa->sin_addr), af );
+         he = gethostbyaddr(reinterpret_cast<const char*>(&sa->sin_addr), sizeof(sa->sin_addr), af);
          hb_socketSetResolveError(he == nullptr ? HB_SOCK_GETHERROR() : 0);
          hb_vmLock();
 #else
@@ -3658,7 +3658,7 @@ char * hb_socketGetHostName(const void * pSockAddr, unsigned len)
       {
          const struct sockaddr_in6 * sa = static_cast<const struct sockaddr_in6*>(pSockAddr);
          hb_vmUnlock();
-         he = gethostbyaddr( static_cast<const char*>(&sa->sin6_addr), sizeof(sa->sin6_addr), af );
+         he = gethostbyaddr(static_cast<const char*>(&sa->sin6_addr), sizeof(sa->sin6_addr), af);
          hb_socketSetResolveError(he == nullptr ? HB_SOCK_GETHERROR() : 0);
          hb_vmLock();
       }
@@ -3676,7 +3676,7 @@ char * hb_socketGetHostName(const void * pSockAddr, unsigned len)
  * IFACEs
  */
 #if defined(HB_OS_WIN) || defined(SIOCGIFCONF)
-static void hb_socketArraySetInetAddr( PHB_ITEM pItem, HB_SIZE nPos, const void * pSockAddr, unsigned len )
+static void hb_socketArraySetInetAddr(PHB_ITEM pItem, HB_SIZE nPos, const void * pSockAddr, unsigned len)
 {
    char * szAddr = hb_socketAddrGetName(pSockAddr, len);
 
@@ -3690,7 +3690,7 @@ static void hb_socketArraySetInetAddr( PHB_ITEM pItem, HB_SIZE nPos, const void 
 }
 #endif
 #if defined(HB_OS_WIN) && !defined(SIOCGIFCONF)
-static HB_SIZE hb_socketArrayFindInetAddr( const char * szAddr, PHB_ITEM pArray, HB_SIZE nPos )
+static HB_SIZE hb_socketArrayFindInetAddr(const char * szAddr, PHB_ITEM pArray, HB_SIZE nPos)
 {
    HB_SIZE nLen = hb_arrayLen(pArray);
 
@@ -3712,7 +3712,7 @@ static char * hb_getMAC( const char * pszIfName )
    struct ifaddrs * ifap = nullptr;
    char * pszMAC = nullptr;
 
-   if( getifaddrs( &ifap ) == 0 && ifap )
+   if( getifaddrs(&ifap) == 0 && ifap )
    {
       struct ifaddrs * ifa = ifap;
 
@@ -3721,7 +3721,7 @@ static char * hb_getMAC( const char * pszIfName )
          if( ifa->ifa_addr != nullptr && ifa->ifa_addr->sa_family == AF_LINK && ifa->ifa_name && strcmp(ifa->ifa_name, pszIfName) == 0 )
          {
             struct sockaddr_dl * sdl = static_cast<struct sockaddr_dl*>(ifa->ifa_addr);
-            unsigned char * data = static_cast<unsigned char*>(LLADDR( sdl ));
+            unsigned char * data = static_cast<unsigned char*>(LLADDR(sdl));
             char hwaddr[24];
 
             hb_snprintf(hwaddr, sizeof(hwaddr), "%02X:%02X:%02X:%02X:%02X:%02X", data[0], data[1], data[2], data[3], data[4], data[5]);
@@ -3730,13 +3730,13 @@ static char * hb_getMAC( const char * pszIfName )
          }
          ifa = ifa->ifa_next;
       }
-      freeifaddrs( ifap );
+      freeifaddrs(ifap);
    }
    return pszMAC;
 }
 #endif
 
-PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
+PHB_ITEM hb_socketGetIFaces(int af, HB_BOOL fNoAliases)
 {
    PHB_ITEM pArray = nullptr;
    PHB_ITEM pItem = nullptr;
@@ -3763,7 +3763,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
       af = hb_socketTransDomain(af, nullptr);
 #  endif
 #  ifdef SIOCGIFNUM
-      if( ioctl( sd, SIOCGIFNUM, &len ) == -1 )
+      if( ioctl(sd, SIOCGIFNUM, &len) == -1 )
       {
          len = 0;
       }
@@ -3776,13 +3776,13 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
       buf = static_cast<char*>(hb_xgrab(len));
 
       ifc.ifc_len = len;
-      ifc.ifc_buf = ( caddr_t ) buf;
+      ifc.ifc_buf = static_cast<caddr_t>(buf);
 
       /* Warning: On some platforms this code can effectively work only with
        *          IP4 interfaces and IP6 will need different implementation.
        */
 
-      if( ioctl( sd, SIOCGIFCONF, &ifc ) != -1 )
+      if( ioctl(sd, SIOCGIFCONF, &ifc) != -1 )
       {
          for( ptr = static_cast<char*>(ifc.ifc_buf), size = ifc.ifc_len; size > 0; )
          {
@@ -3828,7 +3828,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
             /* skip alias devices */
             if( fNoAliases )
             {
-               const char * cptr = strchr( pifr->ifr_name, ':' );
+               const char * cptr = strchr(pifr->ifr_name, ':');
 
                len = cptr ? static_cast<int>(cptr - pifr->ifr_name) : static_cast<int>(strlen(pifr->ifr_name));
                if( pLastName && len == iLastName && family == iLastFamily && memcmp(pLastName, pifr->ifr_name, len) == 0 )
@@ -3842,14 +3842,14 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
 
             {
                struct ifreq ifr = *pifr;
-               if( ioctl(  sd, SIOCGIFFLAGS, &ifr ) == -1 )
+               if( ioctl(sd, SIOCGIFFLAGS, &ifr) == -1 )
                {
                   continue;
                }
                flags = ifr.ifr_flags;
             }
 
-            if( ( flags & IFF_UP ) == 0 )
+            if( (flags & IFF_UP) == 0 )
             {
                continue;
             }
@@ -3892,7 +3892,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
 #     ifndef ifr_netmask
 #        define ifr_netmask   ifr_addr
 #     endif
-               if( ioctl( sd, SIOCGIFNETMASK, pifr ) != -1 )
+               if( ioctl(sd, SIOCGIFNETMASK, pifr) != -1 )
                {
                   hb_socketArraySetInetAddr(pItem, HB_SOCKET_IFINFO_NETMASK, &pifr->ifr_netmask, len);
                }
@@ -3900,7 +3900,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
 #  if defined(SIOCGIFBRDADDR)
                if( flags & IFF_BROADCAST )
                {
-                  if( ioctl( sd, SIOCGIFBRDADDR, pifr ) != -1 )
+                  if( ioctl(sd, SIOCGIFBRDADDR, pifr) != -1 )
                   {
                      hb_socketArraySetInetAddr(pItem, HB_SOCKET_IFINFO_BROADCAST, &pifr->ifr_broadaddr, len);
                   }
@@ -3909,7 +3909,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
 #  if defined(SIOCGIFDSTADDR)
                if( flags & IFF_POINTOPOINT )
                {
-                  if( ioctl( sd, SIOCGIFDSTADDR, pifr ) != -1 )
+                  if( ioctl(sd, SIOCGIFDSTADDR, pifr) != -1 )
                   {
                      hb_socketArraySetInetAddr(pItem, HB_SOCKET_IFINFO_P2PADDR, &pifr->ifr_dstaddr, len);
                   }
@@ -3919,7 +3919,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
 #     ifndef ifr_hwaddr
 #        define ifr_hwaddr    ifr_addr
 #     endif
-               if( ioctl( sd, SIOCGIFHWADDR, pifr ) != -1 )
+               if( ioctl(sd, SIOCGIFHWADDR, pifr) != -1 )
                {
                   char hwaddr[24];
                   unsigned char * data;
@@ -3928,7 +3928,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
                   hb_arraySetC(pItem, HB_SOCKET_IFINFO_HWADDR, hwaddr);
                }
 #  elif defined(SIOCGENADDR)
-               if( ioctl( sd, SIOCGENADDR, pifr ) != -1 )
+               if( ioctl(sd, SIOCGENADDR, pifr) != -1 )
                {
                   char hwaddr[24];
                   unsigned char * data;
@@ -3947,11 +3947,11 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
 #  endif
             }
 
-            flags = ( ( flags & IFF_UP ) ? HB_SOCKET_IFF_UP : 0 ) |
-                    ( ( flags & IFF_BROADCAST ) ? HB_SOCKET_IFF_BROADCAST : 0 ) |
-                    ( ( flags & IFF_LOOPBACK ) ? HB_SOCKET_IFF_LOOPBACK : 0 ) |
-                    ( ( flags & IFF_POINTOPOINT ) ? HB_SOCKET_IFF_POINTOPOINT : 0 ) |
-                    ( ( flags & IFF_MULTICAST ) ? HB_SOCKET_IFF_MULTICAST : 0 );
+            flags = ((flags & IFF_UP) ? HB_SOCKET_IFF_UP : 0) |
+                    ((flags & IFF_BROADCAST) ? HB_SOCKET_IFF_BROADCAST : 0) |
+                    ((flags & IFF_LOOPBACK) ? HB_SOCKET_IFF_LOOPBACK : 0) |
+                    ((flags & IFF_POINTOPOINT) ? HB_SOCKET_IFF_POINTOPOINT : 0) |
+                    ((flags & IFF_MULTICAST) ? HB_SOCKET_IFF_MULTICAST : 0);
             hb_arraySetNI(pItem, HB_SOCKET_IFINFO_FLAGS, flags);
 
             if( pArray == nullptr )
@@ -3983,7 +3983,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
       void * pBuffer = hb_xgrab(dwBuffer);
       LPINTERFACE_INFO pIfInfo = static_cast<LPINTERFACE_INFO>(pBuffer);
 
-      if( WSAIoctl( sd, SIO_GET_INTERFACE_LIST, nullptr, 0, pIfInfo, dwBuffer, &dwBuffer, 0, 0 ) != SOCKET_ERROR )
+      if( WSAIoctl(sd, SIO_GET_INTERFACE_LIST, nullptr, 0, pIfInfo, dwBuffer, &dwBuffer, 0, 0) != SOCKET_ERROR )
       {
          int iCount = dwBuffer / sizeof(INTERFACE_INFO);
 
@@ -4012,11 +4012,11 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
                   hb_socketArraySetInetAddr(pItem, HB_SOCKET_IFINFO_P2PADDR, &pIfInfo->iiBroadcastAddress, sizeof(pIfInfo->iiBroadcastAddress));
                }
 
-               flags = ( ( flags & IFF_UP ) ? HB_SOCKET_IFF_UP : 0 ) |
-                       ( ( flags & IFF_BROADCAST ) ? HB_SOCKET_IFF_BROADCAST : 0 ) |
-                       ( ( flags & IFF_LOOPBACK ) ? HB_SOCKET_IFF_LOOPBACK : 0 ) |
-                       ( ( flags & IFF_POINTTOPOINT ) ? HB_SOCKET_IFF_POINTOPOINT : 0 ) |
-                       ( ( flags & IFF_MULTICAST ) ? HB_SOCKET_IFF_MULTICAST : 0 );
+               flags = ((flags & IFF_UP) ? HB_SOCKET_IFF_UP : 0) |
+                       ((flags & IFF_BROADCAST) ? HB_SOCKET_IFF_BROADCAST : 0) |
+                       ((flags & IFF_LOOPBACK) ? HB_SOCKET_IFF_LOOPBACK : 0) |
+                       ((flags & IFF_POINTTOPOINT) ? HB_SOCKET_IFF_POINTOPOINT : 0) |
+                       ((flags & IFF_MULTICAST) ? HB_SOCKET_IFF_MULTICAST : 0);
                hb_arraySetNI(pItem, HB_SOCKET_IFINFO_FLAGS, flags);
 
                /* Windows does not support interface names like other OS-es
@@ -4059,7 +4059,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
                   {
                      HB_SIZE nPos = 0;
 
-                     while( ( nPos = hb_socketArrayFindInetAddr( pIpAddress->IpAddress.String, pArray, nPos + 1 ) ) != 0 )
+                     while( (nPos = hb_socketArrayFindInetAddr(pIpAddress->IpAddress.String, pArray, nPos + 1)) != 0 )
                      {
                         PHB_ITEM pIfItem = hb_arrayGetItemPtr(pArray, nPos);
                         if( !hb_arrayGetCPtr(pIfItem, HB_SOCKET_IFINFO_HWADDR)[0] )
@@ -4103,7 +4103,7 @@ PHB_ITEM hb_socketGetIFaces( int af, HB_BOOL fNoAliases )
    hb_socketSetError(HB_SOCKET_ERR_AFNOSUPPORT);
 #endif
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       hb_itemRelease(pItem);
    }

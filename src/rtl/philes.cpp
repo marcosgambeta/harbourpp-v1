@@ -245,7 +245,7 @@ HB_FUNC( FREADSTR )
 
       if( nToRead > 0 )
       {
-         HB_FHANDLE fhnd = hb_numToHandle( hb_parnint(1) );
+         HB_FHANDLE fhnd = hb_numToHandle(hb_parnint(1));
          char * buffer = static_cast<char*>(hb_xgrab(nToRead + 1));
          HB_SIZE nRead;
 
@@ -275,7 +275,7 @@ HB_FUNC( HB_FREADLEN )
 
    if( nToRead > 0 && HB_ISNUM(1) )
    {
-      HB_FHANDLE fhnd = hb_numToHandle( hb_parnint(1) );
+      HB_FHANDLE fhnd = hb_numToHandle(hb_parnint(1));
       char * buffer = static_cast<char*>(hb_xgrab(nToRead + 1));
       HB_SIZE nRead;
 
@@ -474,7 +474,7 @@ HB_FUNC( HB_FSETDATETIME )
 
    if( HB_ISTIMESTAMP(2) )
    {
-      hb_partdt( &lDate, &lTime, 2 );
+      hb_partdt(&lDate, &lTime, 2);
    }
    else
    {
@@ -509,7 +509,7 @@ HB_FUNC( HB_FGETDATETIME )
       if( HB_ISBYREF(3) )
       {
          char buf[13];
-         hb_timeStr( buf, lMillisec );
+         hb_timeStr(buf, lMillisec);
          if( lMillisec % 1000 == 0 )
          {
             buf[8] = '\0';
@@ -567,7 +567,7 @@ HB_FUNC( HB_FISDEVICE )
       --> <nBytesRead> */
 HB_FUNC( HB_PREAD )
 {
-   HB_FHANDLE hPipe = hb_numToHandle( hb_parnintdef(1, FS_ERROR) );
+   HB_FHANDLE hPipe = hb_numToHandle(hb_parnintdef(1, FS_ERROR));
    PHB_ITEM pBuffer = hb_param(2, Harbour::Item::STRING);
    char * buffer;
    HB_SIZE nSize;
@@ -604,7 +604,7 @@ HB_FUNC( HB_PREAD )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -612,7 +612,7 @@ HB_FUNC( HB_PREAD )
       --> <nBytesWritten> */
 HB_FUNC( HB_PWRITE )
 {
-   HB_FHANDLE hPipe = hb_numToHandle( hb_parnintdef(1, FS_ERROR) );
+   HB_FHANDLE hPipe = hb_numToHandle(hb_parnintdef(1, FS_ERROR));
    const char * data = hb_parc(2);
 
    if( hPipe != FS_ERROR && data != nullptr )
@@ -640,7 +640,7 @@ HB_FUNC( HB_PWRITE )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 

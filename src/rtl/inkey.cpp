@@ -65,8 +65,8 @@ static void hb_inkeySetTextKeys(const char * pszText, HB_SIZE nSize, HB_BOOL fIn
       HB_WCHAR buffer[32], * keys;
       HB_SIZE n = 0;
 
-      keys = nSize <= HB_SIZEOFARRAY( buffer ) ? buffer : static_cast<HB_WCHAR*>(hb_xgrab(nSize * sizeof(HB_WCHAR)));
-      while( HB_CDPCHAR_GET( cdp, pszText, nSize, &nIndex, &wc ) )
+      keys = nSize <= HB_SIZEOFARRAY(buffer) ? buffer : static_cast<HB_WCHAR*>(hb_xgrab(nSize * sizeof(HB_WCHAR)));
+      while( HB_CDPCHAR_GET(cdp, pszText, nSize, &nIndex, &wc) )
       {
          keys[n++] = wc;
       }
@@ -76,14 +76,14 @@ static void hb_inkeySetTextKeys(const char * pszText, HB_SIZE nSize, HB_BOOL fIn
          int iKey = keys[n] >= 128 ? HB_INKEY_NEW_UNICODE( keys[n] ) : keys[n];
          hb_inkeyIns(iKey);
       }
-      if( nSize > HB_SIZEOFARRAY( buffer ) )
+      if( nSize > HB_SIZEOFARRAY(buffer) )
       {
          hb_xfree(keys);
       }
    }
    else
    {
-      while( HB_CDPCHAR_GET( cdp, pszText, nSize, &nIndex, &wc ) )
+      while( HB_CDPCHAR_GET(cdp, pszText, nSize, &nIndex, &wc) )
       {
          int iKey = wc >= 128 ? HB_INKEY_NEW_UNICODE( wc ) : wc;
          hb_inkeyPut(iKey);
@@ -105,7 +105,7 @@ HB_FUNC( __KEYBOARD )
 
    if( HB_ISCHAR(1) )
    {
-      hb_inkeySetText( hb_parc(1), hb_parclen(1), false );
+      hb_inkeySetText(hb_parc(1), hb_parclen(1), false);
    }
 }
 
@@ -221,7 +221,7 @@ HB_FUNC( HB_KEYCODE )
       HB_SIZE nIndex = 0;
       HB_WCHAR wc;
 
-      if( HB_CDPCHAR_GET( cdp, szValue, hb_parclen(1), &nIndex, &wc ) )
+      if( HB_CDPCHAR_GET(cdp, szValue, hb_parclen(1), &nIndex, &wc) )
       {
          iKey = wc >= 128 ? HB_INKEY_NEW_UNICODE( wc ) : wc;
       }

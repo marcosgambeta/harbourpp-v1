@@ -57,22 +57,22 @@
    #define s_nullStr     ""
 #endif
 
-const char * hb_dateCMonth( int iMonth )
+const char * hb_dateCMonth(int iMonth)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dateCMonth(%d)", iMonth ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_dateCMonth(%d)", iMonth));
 #endif
 
-   return ( iMonth >= 1 && iMonth <= 12 ) ? hb_langDGetItem(HB_LANG_ITEM_BASE_MONTH + iMonth - 1) : s_nullStr;
+   return (iMonth >= 1 && iMonth <= 12) ? hb_langDGetItem(HB_LANG_ITEM_BASE_MONTH + iMonth - 1) : s_nullStr;
 }
 
-const char * hb_dateCDOW( int iDay )
+const char * hb_dateCDOW(int iDay)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_dateCDOW(%d)", iDay ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_dateCDOW(%d)", iDay));
 #endif
 
-   return ( iDay >= 1 && iDay <= 7 ) ? hb_langDGetItem(HB_LANG_ITEM_BASE_DAY + iDay - 1) : s_nullStr;
+   return (iDay >= 1 && iDay <= 7) ? hb_langDGetItem(HB_LANG_ITEM_BASE_DAY + iDay - 1) : s_nullStr;
 }
 
 HB_FUNC( CMONTH )
@@ -88,7 +88,7 @@ HB_FUNC( CMONTH )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1116, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1116, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }   
 }
 
@@ -114,7 +114,7 @@ HB_FUNC( CDOW )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1117, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1117, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -128,6 +128,6 @@ HB_FUNC( HB_CDAY )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1117, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1117, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

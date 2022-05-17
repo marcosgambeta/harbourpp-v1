@@ -54,7 +54,7 @@
 HB_FUNC( HB_STRREPLACE )
 {
    PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
-   PHB_ITEM pSrc = hb_param(2, Harbour::Item::STRING | Harbour::Item::ARRAY | ( HB_ISNIL(3) ? Harbour::Item::HASH : 0 ));
+   PHB_ITEM pSrc = hb_param(2, Harbour::Item::STRING | Harbour::Item::ARRAY | (HB_ISNIL(3) ? Harbour::Item::HASH : 0));
 
    if( pText && pSrc )
    {
@@ -147,7 +147,7 @@ HB_FUNC( HB_STRREPLACE )
             }
             else if( pszSrc )
             {
-               ptr = static_cast<const char*>(memchr( pszSrc, static_cast<HB_UCHAR>(pszText[nPos]), nSrc ));
+               ptr = static_cast<const char*>(memchr(pszSrc, static_cast<HB_UCHAR>(pszText[nPos]), nSrc));
                nAt = ptr ? ptr - pszSrc + 1 : 0;
                nSkip = 1;
             }
@@ -257,6 +257,6 @@ HB_FUNC( HB_STRREPLACE )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

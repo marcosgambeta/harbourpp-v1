@@ -57,7 +57,7 @@ HB_FUNC( SUBSTR )
    PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
    int iPCount = hb_pcount();
 
-   if( pText && HB_ISNUM(2) && ( iPCount < 3 || HB_ISNUM(3) ) )
+   if( pText && HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)) )
    {
       PHB_CODEPAGE cdp = hb_vmCDP();
       const char * pszText = hb_itemGetCPtr(pText);
@@ -75,7 +75,7 @@ HB_FUNC( SUBSTR )
 
       if( nCount > 0 )
       {
-         if( HB_CDP_ISCHARIDX( cdp ) )
+         if( HB_CDP_ISCHARIDX(cdp) )
          {
             if( nFrom < 0 )
             {
@@ -125,6 +125,6 @@ HB_FUNC( SUBSTR )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1110, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1110, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

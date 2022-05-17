@@ -143,7 +143,7 @@ static HB_ERRCODE hb_WinToDosError(DWORD dwError)
 HB_ERRCODE hb_fsGetFError(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsGetFError()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsGetFError()"));
 #endif
 
    return hb_stackIOErrors()->uiFError;
@@ -153,7 +153,7 @@ HB_ERRCODE hb_fsGetFError(void)
 HB_ERRCODE hb_fsError(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsError()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsError()"));
 #endif
 
    return hb_stackIOErrors()->uiErrorLast;
@@ -163,7 +163,7 @@ HB_ERRCODE hb_fsError(void)
 HB_ERRCODE hb_fsOsError(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsOsError()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsOsError()"));
 #endif
 
    return hb_stackIOErrors()->uiOsErrorLast;
@@ -173,7 +173,7 @@ HB_ERRCODE hb_fsOsError(void)
 void hb_fsSetFError(HB_ERRCODE uiError)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsSetFError(%u)", uiError ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsSetFError(%u)", uiError));
 #endif
 
    hb_stackIOErrors()->uiFError = uiError;
@@ -183,7 +183,7 @@ void hb_fsSetFError(HB_ERRCODE uiError)
 void  hb_fsSetError(HB_ERRCODE uiError)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsSetError(%u)", uiError ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsSetError(%u)", uiError));
 #endif
 
    PHB_IOERRORS pIOErrors;
@@ -223,7 +223,7 @@ void  hb_fsSetIOError(HB_BOOL fResult, HB_USHORT uiOperation)
     * OS error code processed above.
     */
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsSetIOError(%d,%hu)", fResult, uiOperation ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsSetIOError(%d,%hu)", fResult, uiOperation));
 #endif
 
    pIOErrors = hb_stackIOErrors();

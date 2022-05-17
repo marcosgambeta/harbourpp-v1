@@ -49,10 +49,10 @@
 
 /* NOTE: pszResult must have an allocated buffer of at least nStringLen */
 
-static HB_SIZE hb_strMemotran( char * pszResult, const char * pszString, HB_SIZE nStringLen, char cHardCR, char cSoftCR )
+static HB_SIZE hb_strMemotran(char * pszResult, const char * pszString, HB_SIZE nStringLen, char cHardCR, char cSoftCR)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_strMemotran(%p, %s, %" HB_PFS "u, %x, %x)", static_cast<void*>(pszResult), pszString, nStringLen, cHardCR, cSoftCR ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_strMemotran(%p, %s, %" HB_PFS "u, %x, %x)", static_cast<void*>(pszResult), pszString, nStringLen, cHardCR, cSoftCR));
 #endif
 
    HB_SIZE nStringPos = 0;
@@ -111,7 +111,7 @@ HB_FUNC( MEMOTRAN )
          cSoftCR = *pszRepl;
       }
 
-      nLen = hb_strMemotran( pszResult, hb_itemGetCPtr(pString), nLen, cHardCR, cSoftCR );
+      nLen = hb_strMemotran(pszResult, hb_itemGetCPtr(pString), nLen, cHardCR, cSoftCR);
       hb_retclen_buffer(pszResult, nLen);
    }
    else

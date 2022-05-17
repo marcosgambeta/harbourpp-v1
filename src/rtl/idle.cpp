@@ -80,12 +80,12 @@ static void hb_idleDataRelease(void * Cargo)
    }
 }
 
-static HB_TSD_NEW( s_idleData, sizeof(HB_IDLEDATA), nullptr, hb_idleDataRelease );
+static HB_TSD_NEW(s_idleData, sizeof(HB_IDLEDATA), nullptr, hb_idleDataRelease);
 
 void hb_releaseCPU(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_releaseCPU()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_releaseCPU()"));
 #endif
 
    hb_threadReleaseCPU();
@@ -136,18 +136,18 @@ void hb_idleReset(void)
    pIdleData->fCollectGarbage = HB_TRUE;
 }
 
-void hb_idleSleep( double dSeconds )
+void hb_idleSleep(double dSeconds)
 {
    if( dSeconds >= 0 )
    {
       HB_MAXINT timeout = dSeconds > 0 ? static_cast<HB_MAXINT>(dSeconds * 1000) : 0;
-      HB_MAXUINT timer = hb_timerInit( timeout );
+      HB_MAXUINT timer = hb_timerInit(timeout);
 
       do
       {
          hb_idleState();
       }
-      while( ( timeout = hb_timerTest( timeout, &timer ) ) != 0 && hb_vmRequestQuery() == 0 );
+      while( (timeout = hb_timerTest(timeout, &timer)) != 0 && hb_vmRequestQuery() == 0 );
 
       hb_idleReset();
    }
@@ -171,7 +171,7 @@ HB_FUNC( HB_IDLERESET )
 /* call from user code to stay in idle state for given period */
 HB_FUNC( HB_IDLESLEEP )
 {
-   hb_idleSleep( hb_parnd(1) );
+   hb_idleSleep(hb_parnd(1));
 }
 
 /* add a new background task and return its handle */

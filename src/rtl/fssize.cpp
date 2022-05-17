@@ -81,14 +81,14 @@ HB_FOFFSET hb_fsFSize(const char * pszFileName, HB_BOOL bUseDirEntry)
    {
 #if defined(HB_OS_WIN)
       typedef BOOL ( WINAPI * _HB_GETFILEATTRIBUTESEX )( LPCTSTR, GET_FILEEX_INFO_LEVELS, LPVOID );
-      static _HB_GETFILEATTRIBUTESEX s_pGetFileAttributesEx = ( _HB_GETFILEATTRIBUTESEX ) -1;
+      static _HB_GETFILEATTRIBUTESEX s_pGetFileAttributesEx = ( _HB_GETFILEATTRIBUTESEX ) -1; // TODO: C++ cast
 
       if( s_pGetFileAttributesEx == reinterpret_cast<_HB_GETFILEATTRIBUTESEX>(-1) )
       {
          HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
          if( hModule )
          {
-            s_pGetFileAttributesEx = reinterpret_cast<_HB_GETFILEATTRIBUTESEX>(HB_WINAPI_GETPROCADDRESST( hModule, "GetFileAttributesEx" ));
+            s_pGetFileAttributesEx = reinterpret_cast<_HB_GETFILEATTRIBUTESEX>(HB_WINAPI_GETPROCADDRESST(hModule, "GetFileAttributesEx"));
          }
          else
          {
@@ -105,7 +105,7 @@ HB_FOFFSET hb_fsFSize(const char * pszFileName, HB_BOOL bUseDirEntry)
 
          lpFileName = HB_FSNAMECONV(pszFileName, &lpFree);
          memset(&attrex, 0, sizeof(attrex));
-         fResult = GetFileAttributesEx( lpFileName, GetFileExInfoStandard, &attrex ) && ( attrex.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ) == 0;
+         fResult = GetFileAttributesEx(lpFileName, GetFileExInfoStandard, &attrex) && (attrex.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0;
          hb_fsSetIOError(fResult, 0);
          if( lpFree )
          {
@@ -152,7 +152,7 @@ HB_FOFFSET hb_fsFSize(const char * pszFileName, HB_BOOL bUseDirEntry)
       pszFileName = hb_fsNameConv(pszFileName, &pszFree);
       statbuf.st_size = 0;
       hb_vmUnlock();
-      fResult = stat( static_cast<char*>(pszFileName), &statbuf ) == 0;
+      fResult = stat(static_cast<char*>(pszFileName), &statbuf) == 0;
       hb_fsSetIOError(fResult, 0);
       hb_vmLock();
       if( pszFree )

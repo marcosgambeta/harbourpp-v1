@@ -50,7 +50,7 @@
 HB_BOOL hb_fsFile(const char * pszFileName)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsFile(%s)", pszFileName ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsFile(%s)", pszFileName));
 #endif
 
    PHB_FFIND ffind;
@@ -64,10 +64,10 @@ HB_BOOL hb_fsFile(const char * pszFileName)
    return false;
 }
 
-HB_BOOL hb_fsIsDirectory( const char * pszFileName )
+HB_BOOL hb_fsIsDirectory(const char * pszFileName)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsIsDirectory(%s)", pszFileName ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsIsDirectory(%s)", pszFileName));
 #endif
 
    HB_BOOL bResult = HB_FALSE;
@@ -75,7 +75,7 @@ HB_BOOL hb_fsIsDirectory( const char * pszFileName )
    int iLen;
 
    iLen = static_cast<int>(strlen(pszFileName));
-   while( iLen && strchr( HB_OS_PATH_DELIM_CHR_LIST, pszFileName[iLen - 1] ) )
+   while( iLen && strchr(HB_OS_PATH_DELIM_CHR_LIST, pszFileName[iLen - 1]) )
    {
       --iLen;
    }
@@ -85,14 +85,14 @@ HB_BOOL hb_fsIsDirectory( const char * pszFileName )
       pszFileName = pszFree = hb_strndup(pszFileName, iLen);
    }
 
-   if( iLen && iLen <= ( HB_PATH_MAX - 1 ) )
+   if( iLen && iLen <= (HB_PATH_MAX - 1) )
    {
       PHB_FFIND ffind;
       if( (ffind = hb_fsFindFirst(pszFileName, HB_FA_DIRECTORY)) != nullptr )
       {
          do
          {
-            if( ( ffind->attr & HB_FA_DIRECTORY ) == HB_FA_DIRECTORY )
+            if( (ffind->attr & HB_FA_DIRECTORY) == HB_FA_DIRECTORY )
             {
                bResult = HB_TRUE;
                break;

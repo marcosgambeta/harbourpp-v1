@@ -54,16 +54,16 @@ HB_FUNC( HB_SETDISPCP )
    {
       if( hb_pcount() == 2 && HB_ISLOG(2) )
       {
-         hb_gtSetDispCP( hb_parc(1), nullptr, hb_parl(2) );
+         hb_gtSetDispCP(hb_parc(1), nullptr, hb_parl(2));
       }
       else
       {
-         hb_gtSetDispCP( hb_parc(1), hb_parc(2), hb_parl(3) );
+         hb_gtSetDispCP(hb_parc(1), hb_parc(2), hb_parl(3));
       }   
    }
    else if( !( hb_pcount() >= 1 && HB_ISNIL(1) ) )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }   
 }
 
@@ -71,11 +71,11 @@ HB_FUNC( HB_SETKEYCP )
 {
    if( HB_ISCHAR(1) )
    {
-      hb_gtSetKeyCP( hb_parc(1), hb_parc(2) );
+      hb_gtSetKeyCP(hb_parc(1), hb_parc(2));
    }
    else if( !( hb_pcount() >= 1 && HB_ISNIL(1) ) )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }   
 }
 
@@ -96,7 +96,7 @@ HB_FUNC( HB_SETTERMCP )
    }
    else if( !( hb_pcount() >= 1 && HB_ISNIL(1) ) )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }   
 }
 
@@ -118,8 +118,8 @@ HB_FUNC( HB_GTINFO )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-   }   
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
 }
 
 HB_FUNC( HB_GTVERSION )
@@ -148,12 +148,12 @@ HB_FUNC( HB_GFXPRIMITIVE )
 
 HB_FUNC( HB_GFXTEXT )
 {
-   hb_gtGfxText( hb_parni(1) /* nTop   */,
-                 hb_parni(2) /* nLeft  */,
-                 hb_parc(3)  /* cText  */,
-                 hb_parni(4) /* nColor */,
-                 hb_parni(5) /* nSize  */,
-                 hb_parni(6) /* nWidth */ );
+   hb_gtGfxText(hb_parni(1) /* nTop   */,
+                hb_parni(2) /* nLeft  */,
+                hb_parc(3)  /* cText  */,
+                hb_parni(4) /* nColor */,
+                hb_parni(5) /* nSize  */,
+                hb_parni(6) /* nWidth */);
 }
 
 HB_FUNC( HB_GTLOCK )

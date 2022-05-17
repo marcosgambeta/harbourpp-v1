@@ -58,7 +58,7 @@
    #include <unistd.h>
 #endif
 
-HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
+HB_BOOL hb_fsLink(const char * pszExisting, const char * pszNewFile)
 {
    HB_BOOL fResult;
 
@@ -77,7 +77,7 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
             HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
             if( hModule )
             {
-               s_pCreateHardLink = reinterpret_cast<_HB_CREATEHARDLINK>(HB_WINAPI_GETPROCADDRESST( hModule, "CreateHardLink" ));
+               s_pCreateHardLink = reinterpret_cast<_HB_CREATEHARDLINK>(HB_WINAPI_GETPROCADDRESST(hModule, "CreateHardLink"));
             }
          }
 
@@ -115,7 +115,7 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
          pszExisting = hb_fsNameConv(pszExisting, &pszExistingFree);
          pszNewFile = hb_fsNameConv(pszNewFile, &pszNewFileFree);
 
-         fResult = ( link( pszExisting, pszNewFile ) == 0 );
+         fResult = (link(pszExisting, pszNewFile) == 0);
          hb_fsSetIOError(fResult, 0);
 
          if( pszExistingFree )
@@ -145,7 +145,7 @@ HB_BOOL hb_fsLink( const char * pszExisting, const char * pszNewFile )
    return fResult;
 }
 
-HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
+HB_BOOL hb_fsLinkSym(const char * pszTarget, const char * pszNewFile)
 {
    HB_BOOL fResult;
 
@@ -168,7 +168,7 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
             HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
             if( hModule )
             {
-               s_pCreateSymbolicLink = reinterpret_cast<_HB_CREATESYMBOLICLINK>(HB_WINAPI_GETPROCADDRESST( hModule, "CreateSymbolicLink" ));
+               s_pCreateSymbolicLink = reinterpret_cast<_HB_CREATESYMBOLICLINK>(HB_WINAPI_GETPROCADDRESST(hModule, "CreateSymbolicLink"));
             }
          }
 
@@ -182,10 +182,10 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
             lpSymlinkFileName = HB_FSNAMECONV(pszNewFile, &lpSymlinkFileNameFree);
             lpTargetFileName = HB_FSNAMECONV(pszTarget, &lpTargetFileNameFree);
 
-            dwAttr = GetFileAttributes( lpTargetFileName );
-            fDir = ( dwAttr != INVALID_FILE_ATTRIBUTES ) && ( dwAttr & FILE_ATTRIBUTE_DIRECTORY );
+            dwAttr = GetFileAttributes(lpTargetFileName);
+            fDir = (dwAttr != INVALID_FILE_ATTRIBUTES) && (dwAttr & FILE_ATTRIBUTE_DIRECTORY);
 
-            fResult = s_pCreateSymbolicLink( lpSymlinkFileName, lpTargetFileName, fDir ? SYMBOLIC_LINK_FLAG_DIRECTORY : 0 ) != 0;
+            fResult = s_pCreateSymbolicLink(lpSymlinkFileName, lpTargetFileName, fDir ? SYMBOLIC_LINK_FLAG_DIRECTORY : 0) != 0;
             hb_fsSetIOError(fResult, 0);
 
             if( lpSymlinkFileNameFree )
@@ -211,7 +211,7 @@ HB_BOOL hb_fsLinkSym( const char * pszTarget, const char * pszNewFile )
          pszTarget = hb_fsNameConv(pszTarget, &pszTargetFree);
          pszNewFile = hb_fsNameConv(pszNewFile, &pszNewFileFree);
 
-         fResult = ( symlink( pszTarget, pszNewFile ) == 0 );
+         fResult = (symlink(pszTarget, pszNewFile) == 0);
          hb_fsSetIOError(fResult, 0);
 
          if( pszTargetFree )
@@ -280,7 +280,7 @@ char * hb_fsLinkRead(const char * pszFile)
             HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
             if( hModule )
             {
-               s_pGetFinalPathNameByHandle = reinterpret_cast<_HB_GETFINALPATHNAMEBYHANDLE>(HB_WINAPI_GETPROCADDRESST( hModule, "GetFinalPathNameByHandle" ));
+               s_pGetFinalPathNameByHandle = reinterpret_cast<_HB_GETFINALPATHNAMEBYHANDLE>(HB_WINAPI_GETPROCADDRESST(hModule, "GetFinalPathNameByHandle"));
             }
          }
 
@@ -294,8 +294,8 @@ char * hb_fsLinkRead(const char * pszFile)
 
             lpFileName = HB_FSNAMECONV(pszFile, &lpFileNameFree);
 
-            dwAttr = GetFileAttributes( lpFileName );
-            fDir = ( dwAttr != INVALID_FILE_ATTRIBUTES ) && ( dwAttr & FILE_ATTRIBUTE_DIRECTORY );
+            dwAttr = GetFileAttributes(lpFileName);
+            fDir = (dwAttr != INVALID_FILE_ATTRIBUTES) && (dwAttr & FILE_ATTRIBUTE_DIRECTORY);
 
             hFile = CreateFile(lpFileName,
                                GENERIC_READ,
@@ -313,13 +313,13 @@ char * hb_fsLinkRead(const char * pszFile)
             {
                DWORD size;
                TCHAR lpLink[HB_PATH_MAX];
-               size = s_pGetFinalPathNameByHandle( hFile, lpLink, HB_PATH_MAX, VOLUME_NAME_DOS );
+               size = s_pGetFinalPathNameByHandle(hFile, lpLink, HB_PATH_MAX, VOLUME_NAME_DOS);
                if( size < HB_PATH_MAX )
                {
                   if( size > 0 )
                   {
                      lpLink[size] = TEXT('\0');
-                     pszLink = HB_OSSTRDUP( lpLink );
+                     pszLink = HB_OSSTRDUP(lpLink);
                   }
 
                   hb_fsSetIOError(true, 0);
@@ -348,7 +348,7 @@ char * hb_fsLinkRead(const char * pszFile)
          pszFile = hb_fsNameConv(pszFile, &pszFileFree);
 
          pszLink = static_cast<char*>(hb_xgrab(HB_PATH_MAX + 1));
-         size = readlink( pszFile, pszLink, HB_PATH_MAX );
+         size = readlink(pszFile, pszLink, HB_PATH_MAX);
          hb_fsSetIOError(size != static_cast<size_t>(-1), 0);
          if( size == static_cast<size_t>(-1) )
          {

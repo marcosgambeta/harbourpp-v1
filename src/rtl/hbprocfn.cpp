@@ -58,12 +58,12 @@ HB_FUNC( HB_PROCESSOPEN )
    PHB_ITEM pStdErr = hb_param(4, Harbour::Item::BYREF);
 
    if( szName &&
-       ( pStdIn  || HB_ISNIL(2) ) &&
-       ( pStdOut || HB_ISNIL(3) ) &&
-       ( pStdErr || HB_ISNIL(4) ) &&
-       ( HB_ISLOG(5) || HB_ISNIL(5) ) &&
-       ( HB_ISBYREF(6) || HB_ISNIL(6) ) &&
-       ( !pStdIn || ( pStdIn != pStdOut && pStdIn != pStdErr ) ) )
+       (pStdIn  || HB_ISNIL(2)) &&
+       (pStdOut || HB_ISNIL(3)) &&
+       (pStdErr || HB_ISNIL(4)) &&
+       (HB_ISLOG(5) || HB_ISNIL(5)) &&
+       (HB_ISBYREF(6) || HB_ISNIL(6)) &&
+       (!pStdIn || (pStdIn != pStdOut && pStdIn != pStdErr)) )
    {
       HB_BOOL fDetach = hb_parl(5);
       HB_FHANDLE hStdIn, *phStdIn, hStdOut, *phStdOut, hStdErr, *phStdErr;
@@ -72,7 +72,7 @@ HB_FUNC( HB_PROCESSOPEN )
 
       phStdIn  = pStdIn  ? &hStdIn  : nullptr;
       phStdOut = pStdOut ? &hStdOut : nullptr;
-      phStdErr = pStdErr ? ( pStdOut == pStdErr ? phStdOut : &hStdErr ) : nullptr;
+      phStdErr = pStdErr ? (pStdOut == pStdErr ? phStdOut : &hStdErr) : nullptr;
 
       hProcess = hb_fsProcessOpen(szName, phStdIn, phStdOut, phStdErr, fDetach, &ulPID);
       hb_fsSetFError(hb_fsError());
@@ -96,15 +96,15 @@ HB_FUNC( HB_PROCESSOPEN )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( HB_PROCESSVALUE )
 {
-   HB_FHANDLE hProcess = hb_numToHandle( hb_parnint(1) );
+   HB_FHANDLE hProcess = hb_numToHandle(hb_parnint(1));
 
-   if( hProcess != 0 && hProcess != FS_ERROR && ( hb_pcount() < 2 || HB_ISLOG(2) ) )
+   if( hProcess != 0 && hProcess != FS_ERROR && (hb_pcount() < 2 || HB_ISLOG(2)) )
    {
       int iResult = hb_fsProcessValue(hProcess, hb_pcount() < 2 || hb_parl(2));
       hb_fsSetFError(hb_fsError());
@@ -112,15 +112,15 @@ HB_FUNC( HB_PROCESSVALUE )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( HB_PROCESSCLOSE )
 {
-   HB_FHANDLE hProcess = hb_numToHandle( hb_parnint(1) );
+   HB_FHANDLE hProcess = hb_numToHandle(hb_parnint(1));
 
-   if( hProcess != 0 && hProcess != FS_ERROR && ( hb_pcount() < 2 || HB_ISLOG(2) ) )
+   if( hProcess != 0 && hProcess != FS_ERROR && (hb_pcount() < 2 || HB_ISLOG(2)) )
    {
       HB_BOOL fResult = hb_fsProcessClose(hProcess, hb_pcount() < 2 || hb_parl(2));
       hb_fsSetFError(hb_fsError());
@@ -128,12 +128,11 @@ HB_FUNC( HB_PROCESSCLOSE )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
-/* hb_processRun( <cCommand>, [ <cStdIn> ], [ @<cStdOut> ], [ @<cStdErr> ], ;
-                  [ <lDetach> ] ) --> <nResult> */
+/* hb_processRun(<cCommand>, [ <cStdIn> ], [ @<cStdOut> ], [ @<cStdErr> ], [ <lDetach> ]) --> <nResult> */
 HB_FUNC( HB_PROCESSRUN )
 {
    const char * szName = hb_parc(1);
@@ -142,11 +141,7 @@ HB_FUNC( HB_PROCESSRUN )
    PHB_ITEM pStdErr = hb_param(4, Harbour::Item::BYREF);
    HB_BOOL fDetach = hb_parl(5);
 
-   if( szName &&
-       ( szStdIn || HB_ISNIL(2) ) &&
-       ( pStdOut || HB_ISNIL(3) ) &&
-       ( pStdErr || HB_ISNIL(4) ) &&
-       ( HB_ISLOG(5) || HB_ISNIL(5) ) )
+   if( szName && (szStdIn || HB_ISNIL(2)) && (pStdOut || HB_ISNIL(3)) && (pStdErr || HB_ISNIL(4)) && (HB_ISLOG(5) || HB_ISNIL(5)) )
    {
       HB_SIZE nStdOut, nStdErr;
       char * pStdOutBuf, * pStdErrBuf;
@@ -156,7 +151,7 @@ HB_FUNC( HB_PROCESSRUN )
       nStdOut = nStdErr = 0;
       pStdOutBuf = pStdErrBuf = nullptr;
       pStdOutPtr = pStdOut ? &pStdOutBuf : nullptr;
-      pStdErrPtr = pStdErr ? ( pStdOut == pStdErr ? pStdOutPtr : &pStdErrBuf ) : nullptr;
+      pStdErrPtr = pStdErr ? (pStdOut == pStdErr ? pStdOutPtr : &pStdErrBuf) : nullptr;
 
       iResult = hb_fsProcessRun(szName, szStdIn, hb_parclen(2), pStdOutPtr, &nStdOut, pStdErrPtr, &nStdErr, fDetach);
       hb_fsSetFError(hb_fsError());
@@ -189,6 +184,6 @@ HB_FUNC( HB_PROCESSRUN )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 4001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

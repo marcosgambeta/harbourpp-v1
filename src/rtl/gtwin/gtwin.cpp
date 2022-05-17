@@ -142,22 +142,22 @@ static HB_GT_FUNCS SuperTable;
 #define HB_GTSUPER                          ( &SuperTable )
 #define HB_GTID_PTR                         ( &s_GtId )
 
-static const COLORREF s_colorsDef[16] = { RGB( 0x00, 0x00, 0x00 ),
-                                          RGB( 0x00, 0x00, 0x80 ),
-                                          RGB( 0x00, 0x80, 0x00 ),
-                                          RGB( 0x00, 0x80, 0x80 ),
-                                          RGB( 0x80, 0x00, 0x00 ),
-                                          RGB( 0x80, 0x00, 0x80 ),
-                                          RGB( 0x80, 0x80, 0x00 ),
-                                          RGB( 0xC0, 0xC0, 0xC0 ),
-                                          RGB( 0x80, 0x80, 0x80 ),
-                                          RGB( 0x00, 0x00, 0xFF ),
-                                          RGB( 0x00, 0xFF, 0x00 ),
-                                          RGB( 0x00, 0xFF, 0xFF ),
-                                          RGB( 0xFF, 0x00, 0x00 ),
-                                          RGB( 0xFF, 0x00, 0xFF ),
-                                          RGB( 0xFF, 0xFF, 0x00 ),
-                                          RGB( 0xFF, 0xFF, 0xFF ) };
+static const COLORREF s_colorsDef[16] = { RGB(0x00, 0x00, 0x00),
+                                          RGB(0x00, 0x00, 0x80),
+                                          RGB(0x00, 0x80, 0x00),
+                                          RGB(0x00, 0x80, 0x80),
+                                          RGB(0x80, 0x00, 0x00),
+                                          RGB(0x80, 0x00, 0x80),
+                                          RGB(0x80, 0x80, 0x00),
+                                          RGB(0xC0, 0xC0, 0xC0),
+                                          RGB(0x80, 0x80, 0x80),
+                                          RGB(0x00, 0x00, 0xFF),
+                                          RGB(0x00, 0xFF, 0x00),
+                                          RGB(0x00, 0xFF, 0xFF),
+                                          RGB(0xFF, 0x00, 0x00),
+                                          RGB(0xFF, 0x00, 0xFF),
+                                          RGB(0xFF, 0xFF, 0x00),
+                                          RGB(0xFF, 0xFF, 0xFF) };
 
 static HB_BOOL     s_fWin9x;
 static COLORREF    s_colorsOld[16];
@@ -304,12 +304,12 @@ static int hb_gt_win_getKbdState(void)
 static void hb_gt_win_xSetCursorPos(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_xSetCursorPos()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_xSetCursorPos()"));
 #endif
 
    s_csbi.dwCursorPosition.Y = static_cast<short>(s_iCurRow);
    s_csbi.dwCursorPosition.X = static_cast<short>(s_iCurCol);
-   SetConsoleCursorPosition( s_HOutput, s_csbi.dwCursorPosition );
+   SetConsoleCursorPosition(s_HOutput, s_csbi.dwCursorPosition);
 }
 
 /* *********************************************************************** */
@@ -317,7 +317,7 @@ static void hb_gt_win_xSetCursorPos(void)
 static void hb_gt_win_xSetCursorStyle(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_xSetCursorStyle()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_xSetCursorStyle()"));
 #endif
 
    CONSOLE_CURSOR_INFO cci;
@@ -361,7 +361,7 @@ static void hb_gt_win_xSetCursorStyle(void)
 static void hb_gt_win_xScreenUpdate(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_xScreenUpdate()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_xScreenUpdate()"));
 #endif
 
    if( s_pCharInfoScreen )
@@ -384,11 +384,11 @@ static void hb_gt_win_xScreenUpdate(void)
          s_iUpdtLeft = _GetScreenWidth();
          s_iUpdtBottom = s_iUpdtRight = 0;
 
-         WriteConsoleOutput( s_HOutput,         /* output handle */
-                             s_pCharInfoScreen, /* data to write */
-                             coSize,            /* col/row size of source buffer */
-                             coDest,            /* upper-left cell to write data from in src */
-                             &srWin );          /* screen buffer rect to write data to */
+         WriteConsoleOutput(s_HOutput,         /* output handle */
+                            s_pCharInfoScreen, /* data to write */
+                            coSize,            /* col/row size of source buffer */
+                            coDest,            /* upper-left cell to write data from in src */
+                            &srWin);           /* screen buffer rect to write data to */
       }
 
       if( s_iOldCurStyle != s_iCursorStyle )
@@ -396,7 +396,7 @@ static void hb_gt_win_xScreenUpdate(void)
          hb_gt_win_xSetCursorStyle();
       }
 
-      if( s_iCursorStyle != SC_NONE && ( s_csbi.dwCursorPosition.Y != s_iCurRow || s_csbi.dwCursorPosition.X != s_iCurCol ) )
+      if( s_iCursorStyle != SC_NONE && (s_csbi.dwCursorPosition.Y != s_iCurRow || s_csbi.dwCursorPosition.X != s_iCurCol) )
       {
          hb_gt_win_xSetCursorPos();
       }
@@ -408,7 +408,7 @@ static void hb_gt_win_xScreenUpdate(void)
 static void hb_gt_win_xUpdtSet(int iTop, int iLeft, int iBottom, int iRight)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_xUpdtSet(%d, %d, %d, %d)", iTop, iLeft, iBottom, iRight ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_xUpdtSet(%d, %d, %d, %d)", iTop, iLeft, iBottom, iRight));
 #endif
 
    if( iTop < s_iUpdtTop )
@@ -431,10 +431,10 @@ static void hb_gt_win_xUpdtSet(int iTop, int iLeft, int iBottom, int iRight)
 
 /* *********************************************************************** */
 
-static BOOL WINAPI hb_gt_win_CtrlHandler( DWORD dwCtrlType )
+static BOOL WINAPI hb_gt_win_CtrlHandler(DWORD dwCtrlType)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_CtrlHandler(%lu)", static_cast<HB_ULONG>(dwCtrlType) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_CtrlHandler(%lu)", static_cast<HB_ULONG>(dwCtrlType)));
 #endif
 
    BOOL bHandled;
@@ -472,7 +472,7 @@ static BOOL WINAPI hb_gt_win_CtrlHandler( DWORD dwCtrlType )
 static void hb_gt_win_xGetScreenContents(PHB_GT pGT, SMALL_RECT * psrWin)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_xGetScreenContents(%p,%p)", static_cast<void*>(pGT), static_cast<void*>(psrWin) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_xGetScreenContents(%p,%p)", static_cast<void*>(pGT), static_cast<void*>(psrWin)));
 #endif
 
    int iCol;
@@ -521,7 +521,7 @@ static void hb_gt_win_xGetScreenContents(PHB_GT pGT, SMALL_RECT * psrWin)
 static void hb_gt_win_xInitScreenParam(PHB_GT pGT)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_xInitScreenParam(%p)", static_cast<void*>(pGT) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_xInitScreenParam(%p)", static_cast<void*>(pGT)));
 #endif
 
    if( GetConsoleScreenBufferInfo(s_HOutput, &s_csbi) )
@@ -570,11 +570,11 @@ static void hb_gt_win_xInitScreenParam(PHB_GT pGT)
       coDest.X = srWin.Left;
 
       /* read the screen rectangle into the buffer */
-      if( ReadConsoleOutput( s_HOutput,         /* screen handle */
-                             s_pCharInfoScreen, /* transfer area */
-                             s_csbi.dwSize,     /* size of destination buffer */
-                             coDest,            /* upper-left cell to write data to */
-                             &srWin ) )         /* screen buffer rectangle to read from */
+      if( ReadConsoleOutput(s_HOutput,         /* screen handle */
+                            s_pCharInfoScreen, /* transfer area */
+                            s_csbi.dwSize,     /* size of destination buffer */
+                            coDest,            /* upper-left cell to write data to */
+                            &srWin) )          /* screen buffer rectangle to read from */
       {
          hb_gt_win_xGetScreenContents(pGT, &srWin);
       }
@@ -590,7 +590,7 @@ static void hb_gt_win_xInitScreenParam(PHB_GT pGT)
 
 #if defined(HB_GTWIN_USE_PCONSOLEINFOEX)
 
-static HB_BOOL hb_gt_win_SetPalette_Vista( HB_BOOL bSet, COLORREF * colors )
+static HB_BOOL hb_gt_win_SetPalette_Vista(HB_BOOL bSet, COLORREF * colors)
 {
    static HB_BOOL s_fChecked = HB_FALSE;
 
@@ -607,8 +607,8 @@ static HB_BOOL hb_gt_win_SetPalette_Vista( HB_BOOL bSet, COLORREF * colors )
       HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
       if( hModule )
       {
-         s_pGetConsoleScreenBufferInfoEx = reinterpret_cast<P_GETCONSOLESCREENBUFFERINFOEX>(HB_WINAPI_GETPROCADDRESS( hModule, "GetConsoleScreenBufferInfoEx" ));
-         s_pSetConsoleScreenBufferInfoEx = reinterpret_cast<P_SETCONSOLESCREENBUFFERINFOEX>(HB_WINAPI_GETPROCADDRESS( hModule, "SetConsoleScreenBufferInfoEx" ));
+         s_pGetConsoleScreenBufferInfoEx = reinterpret_cast<P_GETCONSOLESCREENBUFFERINFOEX>(HB_WINAPI_GETPROCADDRESS(hModule, "GetConsoleScreenBufferInfoEx"));
+         s_pSetConsoleScreenBufferInfoEx = reinterpret_cast<P_SETCONSOLESCREENBUFFERINFOEX>(HB_WINAPI_GETPROCADDRESS(hModule, "SetConsoleScreenBufferInfoEx"));
       }
       s_fChecked = HB_TRUE;
    }
@@ -618,7 +618,7 @@ static HB_BOOL hb_gt_win_SetPalette_Vista( HB_BOOL bSet, COLORREF * colors )
       CONSOLE_SCREEN_BUFFER_INFOEX info;
 
       info.cbSize = sizeof(info);
-      bDone = s_pGetConsoleScreenBufferInfoEx( s_HOutput, &info ) != 0;
+      bDone = s_pGetConsoleScreenBufferInfoEx(s_HOutput, &info) != 0;
       if( bDone )
       {
          if( !bSet )
@@ -649,7 +649,7 @@ static HB_BOOL hb_gt_win_SetPalette_Vista( HB_BOOL bSet, COLORREF * colors )
              */
             info.srWindow.Right++;
             info.srWindow.Bottom++;
-            bDone = s_pSetConsoleScreenBufferInfoEx( s_HOutput, &info ) != 0;
+            bDone = s_pSetConsoleScreenBufferInfoEx(s_HOutput, &info) != 0;
          }
          else
          {
@@ -671,10 +671,10 @@ static HB_BOOL hb_gt_win_SetPalette_Vista( HB_BOOL bSet, COLORREF * colors )
 
 #endif
 
-static HB_BOOL hb_gt_win_SetPalette( HB_BOOL bSet, COLORREF * colors )
+static HB_BOOL hb_gt_win_SetPalette(HB_BOOL bSet, COLORREF * colors)
 {
 #if defined(HB_GTWIN_USE_PCONSOLEINFOEX)
-   return hb_gt_win_SetPalette_Vista( bSet, colors );
+   return hb_gt_win_SetPalette_Vista(bSet, colors);
 #else
    if( !bSet )
    {
@@ -697,7 +697,7 @@ static HWND hb_getConsoleWindowHandle(void)
    return hWnd;
 }
 
-static HB_BOOL hb_gt_win_SetCloseButton( HB_BOOL bSet, HB_BOOL bClosable )
+static HB_BOOL hb_gt_win_SetCloseButton(HB_BOOL bSet, HB_BOOL bClosable)
 {
    HB_BOOL bOldClosable = HB_TRUE;
 
@@ -705,11 +705,11 @@ static HB_BOOL hb_gt_win_SetCloseButton( HB_BOOL bSet, HB_BOOL bClosable )
 
    if( hWnd )
    {
-      HMENU hSysMenu = GetSystemMenu( hWnd, FALSE );
+      HMENU hSysMenu = GetSystemMenu(hWnd, FALSE);
 
       if( hSysMenu )
       {
-         bOldClosable = ( GetMenuState( hSysMenu, SC_CLOSE, MF_BYCOMMAND ) & MFS_GRAYED ) == 0;
+         bOldClosable = (GetMenuState(hSysMenu, SC_CLOSE, MF_BYCOMMAND) & MFS_GRAYED) == 0;
 
          if( bSet )
          {
@@ -724,7 +724,7 @@ static HB_BOOL hb_gt_win_SetCloseButton( HB_BOOL bSet, HB_BOOL bClosable )
                HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
                if( hModule )
                {
-                  s_pSetConsoleMenuClose = reinterpret_cast<P_SETCONSOLEMENUCLOSE>(HB_WINAPI_GETPROCADDRESS( hModule, "SetConsoleMenuClose" ));
+                  s_pSetConsoleMenuClose = reinterpret_cast<P_SETCONSOLEMENUCLOSE>(HB_WINAPI_GETPROCADDRESS(hModule, "SetConsoleMenuClose"));
                }
                s_fChecked = HB_TRUE;
             }
@@ -747,7 +747,7 @@ static HB_BOOL hb_gt_win_SetCloseButton( HB_BOOL bSet, HB_BOOL bClosable )
 static void hb_gt_win_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStderr)) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStderr))));
 #endif
 
    s_fWin9x = hb_iswin9x();
@@ -781,7 +781,7 @@ static void hb_gt_win_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
       lpOsType[0] = lpOsType[HB_SIZEOFARRAY(lpOsType) - 1] = TEXT('\0');
       dwLen = GetEnvironmentVariable(TEXT("OSTYPE"), lpOsType, HB_SIZEOFARRAY(lpOsType) - 1);
-      if( dwLen > 0 && dwLen < HB_SIZEOFARRAY( lpOsType ) - 1 )
+      if( dwLen > 0 && dwLen < HB_SIZEOFARRAY(lpOsType) - 1 )
       {
          if( lstrcmp(lpOsType, TEXT("msys")) == 0 )
          {
@@ -794,14 +794,14 @@ static void hb_gt_win_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
    AllocConsole();
 #endif
 
-   if( ( s_HInput = GetStdHandle( STD_INPUT_HANDLE ) ) == INVALID_HANDLE_VALUE )
+   if( (s_HInput = GetStdHandle(STD_INPUT_HANDLE)) == INVALID_HANDLE_VALUE )
    {
 #ifdef HB_NO_ALLOC_CONSOLE
       /* allocate console only when debugger is linked */
       if( hb_dynsymFind("__DBGENTRY") )
       {
          AllocConsole(); /* It is a Windows app without a console, so we create one */
-         s_HInput = GetStdHandle( STD_INPUT_HANDLE );
+         s_HInput = GetStdHandle(STD_INPUT_HANDLE);
       }
 #endif
       if( s_HInput == INVALID_HANDLE_VALUE )
@@ -811,7 +811,7 @@ static void hb_gt_win_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
    }
 
    /* Add Ctrl+Break handler [vszakats] */
-   SetConsoleCtrlHandler( hb_gt_win_CtrlHandler, TRUE );
+   SetConsoleCtrlHandler(hb_gt_win_CtrlHandler, TRUE);
 
    HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
 
@@ -858,7 +858,7 @@ static void hb_gt_win_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
    SetConsoleMode( s_HInput, s_fMouseEnable ? ENABLE_MOUSE_INPUT : 0x0000 );
 
-   s_fClosable = s_fOldClosable = hb_gt_win_SetCloseButton( false, false );
+   s_fClosable = s_fOldClosable = hb_gt_win_SetCloseButton(false, false);
    s_fResetColors = HB_FALSE;
 
    HB_GTSELF_SETFLAG(pGT, HB_GTI_REDRAWMAX, 4);
@@ -878,15 +878,15 @@ static void hb_gt_win_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 static void hb_gt_win_Exit(PHB_GT pGT)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Exit(%p)", static_cast<void*>(pGT) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Exit(%p)", static_cast<void*>(pGT)));
 #endif
 
    HB_GTSELF_REFRESH(pGT);
 
-   hb_gt_win_SetCloseButton( true, s_fOldClosable );
+   hb_gt_win_SetCloseButton(true, s_fOldClosable);
    if( s_fResetColors )
    {
-      hb_gt_win_SetPalette( true, s_colorsOld );
+      hb_gt_win_SetPalette(true, s_colorsOld);
    }
 
    if( s_pCharInfoScreen )
@@ -906,10 +906,10 @@ static void hb_gt_win_Exit(PHB_GT pGT)
 
       SetConsoleWindowInfo(s_HOutput, TRUE, &s_origCsbi.srWindow);
 
-      CloseHandle( s_HOutput );
+      CloseHandle(s_HOutput);
    }
    /* Remove Ctrl+Break handler */
-   SetConsoleCtrlHandler( hb_gt_win_CtrlHandler, FALSE );
+   SetConsoleCtrlHandler(hb_gt_win_CtrlHandler, FALSE);
 
    HB_GTSUPER_EXIT(pGT);
 }
@@ -919,7 +919,7 @@ static void hb_gt_win_Exit(PHB_GT pGT)
 static HB_BOOL hb_gt_win_SetMode(PHB_GT pGT, int iRows, int iCols)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRows, iCols ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRows, iCols));
 #endif
 
    HB_BOOL fRet = HB_FALSE;
@@ -1030,7 +1030,7 @@ static HB_BOOL hb_gt_win_SetMode(PHB_GT pGT, int iRows, int iCols)
 static const char * hb_gt_win_Version(PHB_GT pGT, int iType)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Version(%p,%d)", static_cast<void*>(pGT), iType ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Version(%p,%d)", static_cast<void*>(pGT), iType));
 #endif
 
    HB_SYMBOL_UNUSED(pGT);
@@ -1048,7 +1048,7 @@ static const char * hb_gt_win_Version(PHB_GT pGT, int iType)
 static HB_BOOL hb_gt_win_PostExt(PHB_GT pGT)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_PostExt(%p)", static_cast<void*>(pGT) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_PostExt(%p)", static_cast<void*>(pGT)));
 #endif
 
    HB_GTSUPER_POSTEXT(pGT);
@@ -1064,7 +1064,7 @@ static HB_BOOL hb_gt_win_PostExt(PHB_GT pGT)
 static HB_BOOL hb_gt_win_Suspend(PHB_GT pGT)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Suspend(%p)", static_cast<void*>(pGT) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Suspend(%p)", static_cast<void*>(pGT)));
 #endif
 
    HB_SYMBOL_UNUSED(pGT);
@@ -1081,12 +1081,12 @@ static HB_BOOL hb_gt_win_Suspend(PHB_GT pGT)
 static HB_BOOL hb_gt_win_Resume(PHB_GT pGT)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Resume(%p)", static_cast<void*>(pGT) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Resume(%p)", static_cast<void*>(pGT)));
 #endif
 
    if( s_pCharInfoScreen )
    {
-      SetConsoleCtrlHandler( hb_gt_win_CtrlHandler, TRUE );
+      SetConsoleCtrlHandler(hb_gt_win_CtrlHandler, TRUE);
       SetConsoleMode( s_HOutput, s_dwomode );
       SetConsoleMode( s_HInput, s_fMouseEnable ? ENABLE_MOUSE_INPUT : 0x0000 );
       hb_gt_win_xInitScreenParam(pGT);
@@ -1098,11 +1098,11 @@ static HB_BOOL hb_gt_win_Resume(PHB_GT pGT)
 
 /* *********************************************************************** */
 
-static int Handle_Alt_Key( INPUT_RECORD * pInRec, HB_BOOL * pAltIsDown, int * pAltVal )
+static int Handle_Alt_Key(INPUT_RECORD * pInRec, HB_BOOL * pAltIsDown, int * pAltVal)
 {
    int iVal = 0;
 
-   switch( ( pInRec->Event.KeyEvent.dwControlKeyState & ENHANCED_KEY ) == 0 ? pInRec->Event.KeyEvent.wVirtualScanCode : 0 )
+   switch( (pInRec->Event.KeyEvent.dwControlKeyState & ENHANCED_KEY) == 0 ? pInRec->Event.KeyEvent.wVirtualScanCode : 0 )
    {
       case 0x49: ++iVal;  /* fallthrough */ /* 9 */
       case 0x48: ++iVal;  /* fallthrough */ /* 8 */
@@ -1141,7 +1141,7 @@ static int Handle_Alt_Key( INPUT_RECORD * pInRec, HB_BOOL * pAltIsDown, int * pA
    return iVal;
 }
 
-static int SpecialHandling( WORD wScan, int iKey, HB_BOOL fShifted )
+static int SpecialHandling(WORD wScan, int iKey, HB_BOOL fShifted)
 {
    int iStd, iShift;
 
@@ -1247,7 +1247,7 @@ static int SpecialHandling( WORD wScan, int iKey, HB_BOOL fShifted )
 static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask));
 #endif
 
    int iKey = 0;
@@ -1267,7 +1267,7 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
       /* Check for keyboard input */
 
       s_dwNumRead = 0;
-      GetNumberOfConsoleInputEvents( s_HInput, &s_dwNumRead );
+      GetNumberOfConsoleInputEvents(s_HInput, &s_dwNumRead);
 
       if( s_dwNumRead )
       {
@@ -1286,10 +1286,10 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
 #endif
 
          /* Read keyboard input */
-         ReadConsoleInput( s_HInput,          /* input buffer handle    */
-                           s_irBuffer,        /* buffer to read into    */
-                           INPUT_BUFFER_LEN,  /* size of read buffer    */
-                           &s_dwNumRead );    /* number of records read */
+         ReadConsoleInput(s_HInput,          /* input buffer handle    */
+                          s_irBuffer,        /* buffer to read into    */
+                          INPUT_BUFFER_LEN,  /* size of read buffer    */
+                          &s_dwNumRead);     /* number of records read */
          /* Set up to process the first input event */
          s_dwNumIndex = 0;
 
@@ -1404,9 +1404,9 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
          {
             if( s_fAltIsDown )
             {
-               iChar = Handle_Alt_Key( pInRec, &s_fAltIsDown, &s_iAltVal );
+               iChar = Handle_Alt_Key(pInRec, &s_fAltIsDown, &s_iAltVal);
             }
-            else if( wScan == 0x38 /* Alt */ && pInRec->Event.KeyEvent.bKeyDown && ( dwState & NUMLOCK_ON ) == 0 )
+            else if( wScan == 0x38 /* Alt */ && pInRec->Event.KeyEvent.bKeyDown && (dwState & NUMLOCK_ON) == 0 )
             {
                s_fAltIsDown = HB_TRUE;
                s_iAltVal = 0;
@@ -1447,9 +1447,9 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
              *
              */
 
-            if( s_fSpecialKeyHandling && ( dwState & CAPSLOCK_ON ) )
+            if( s_fSpecialKeyHandling && (dwState & CAPSLOCK_ON) )
             {
-               iChar = SpecialHandling( wScan, iChar, ( dwState & SHIFT_PRESSED ) != 0 );
+               iChar = SpecialHandling(wScan, iChar, (dwState & SHIFT_PRESSED) != 0);
             }
 
             switch( wVKey )
@@ -1462,7 +1462,7 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
                   break;
                case VK_RETURN:
                   iKey = HB_KX_ENTER;
-                  if( ( dwState & ENHANCED_KEY ) != 0 )
+                  if( (dwState & ENHANCED_KEY) != 0 )
                   {
                      iFlags |= HB_KF_KEYPAD;
                   }
@@ -1472,70 +1472,70 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
                   break;
                case VK_PRIOR:
                   iKey = HB_KX_PGUP;
-                  if( ( dwState & ENHANCED_KEY ) == 0 )
+                  if( (dwState & ENHANCED_KEY) == 0 )
                   {
                      iFlags |= HB_KF_KEYPAD;
                   }
                   break;
                case VK_NEXT:
                   iKey = HB_KX_PGDN;
-                  if( ( dwState & ENHANCED_KEY ) == 0 )
+                  if( (dwState & ENHANCED_KEY) == 0 )
                   {
                      iFlags |= HB_KF_KEYPAD;
                   }
                   break;
                case VK_END:
                   iKey = HB_KX_END;
-                  if( ( dwState & ENHANCED_KEY ) == 0 )
+                  if( (dwState & ENHANCED_KEY) == 0 )
                   {
                      iFlags |= HB_KF_KEYPAD;
                   }
                   break;
                case VK_HOME:
                   iKey = HB_KX_HOME;
-                  if( ( dwState & ENHANCED_KEY ) == 0 )
+                  if( (dwState & ENHANCED_KEY) == 0 )
                   {
                      iFlags |= HB_KF_KEYPAD;
                   }
                   break;
                case VK_LEFT:
                   iKey = HB_KX_LEFT;
-                  if( ( dwState & ENHANCED_KEY ) == 0 )
+                  if( (dwState & ENHANCED_KEY) == 0 )
                   {
                      iFlags |= HB_KF_KEYPAD;
                   }
                   break;
                case VK_UP:
                   iKey = HB_KX_UP;
-                  if( ( dwState & ENHANCED_KEY ) == 0 )
+                  if( (dwState & ENHANCED_KEY) == 0 )
                   {
                      iFlags |= HB_KF_KEYPAD;
                   }
                   break;
                case VK_RIGHT:
                   iKey = HB_KX_RIGHT;
-                  if( ( dwState & ENHANCED_KEY ) == 0 )
+                  if( (dwState & ENHANCED_KEY) == 0 )
                   {
                      iFlags |= HB_KF_KEYPAD;
                   }
                   break;
                case VK_DOWN:
                   iKey = HB_KX_DOWN;
-                  if( ( dwState & ENHANCED_KEY ) == 0 )
+                  if( (dwState & ENHANCED_KEY) == 0 )
                   {
                      iFlags |= HB_KF_KEYPAD;
                   }
                   break;
                case VK_INSERT:
                   iKey = HB_KX_INS;
-                  if( ( dwState & ENHANCED_KEY ) == 0 )
+                  if( (dwState & ENHANCED_KEY) == 0 )
                   {
                      iFlags |= HB_KF_KEYPAD;
                   }
                   break;
                case VK_DELETE:
                   iKey = HB_KX_DEL;
-                  if( ( dwState & ENHANCED_KEY ) == 0 )
+                  if( (dwState & ENHANCED_KEY) == 0 )
                   {
                      iFlags |= HB_KF_KEYPAD;
                   }
@@ -1582,7 +1582,7 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
                   iKey = HB_KX_PRTSCR;
                   break;
                case VK_CANCEL:
-                  if( ( dwState & ENHANCED_KEY ) == 0 )
+                  if( (dwState & ENHANCED_KEY) == 0 )
                   {
                      break;
                   }
@@ -1659,7 +1659,7 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
                   break;
 #ifdef VK_OEM_2
                case VK_OEM_2:
-                  if( ( iFlags & HB_KF_CTRL ) != 0 && ( iFlags & HB_KF_SHIFT ) != 0 )
+                  if( (iFlags & HB_KF_CTRL) != 0 && (iFlags & HB_KF_SHIFT) != 0 )
                   {
                      iKey = '?';
                   }
@@ -1671,7 +1671,7 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
                   break;
 #endif
                default:
-                  if( ( dwState & ( LEFT_ALT_PRESSED | RIGHT_ALT_PRESSED | LEFT_CTRL_PRESSED | RIGHT_CTRL_PRESSED ) ) == LEFT_ALT_PRESSED )
+                  if( (dwState & (LEFT_ALT_PRESSED | RIGHT_ALT_PRESSED | LEFT_CTRL_PRESSED | RIGHT_CTRL_PRESSED)) == LEFT_ALT_PRESSED )
                   {
                      switch( wScan )
                      {
@@ -1805,7 +1805,7 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
                   break;
             }
          }
-         else if( wVKey == VK_MENU && ( dwState & NUMLOCK_ON ) != 0 )
+         else if( wVKey == VK_MENU && (dwState & NUMLOCK_ON) != 0 )
          {
 #if defined(UNICODE)
             iChar = pInRec->Event.KeyEvent.uChar.UnicodeChar;
@@ -1816,12 +1816,12 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
 
          if( iKey != 0 )
          {
-            iKey = HB_INKEY_NEW_KEY( iKey, iFlags );
+            iKey = HB_INKEY_NEW_KEY(iKey, iFlags);
          }
-         else if( ( iFlags & HB_KF_CTRL ) != 0 && ( iChar > 0 && iChar < 32 ) )
+         else if( (iFlags & HB_KF_CTRL) != 0 && (iChar > 0 && iChar < 32) )
          {
             iChar += 'A' - 1;
-            iKey = HB_INKEY_NEW_KEY( iChar, iFlags );
+            iKey = HB_INKEY_NEW_KEY(iChar, iFlags);
          }
          else if( iChar != 0 )
          {
@@ -1837,21 +1837,21 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
                iKey = HB_INKEY_NEW_UNICODEF(u, iFlags);
             }
 #endif
-            else if( iChar < 127 && ( iFlags & ( HB_KF_CTRL | HB_KF_ALT ) ) )
+            else if( iChar < 127 && (iFlags & (HB_KF_CTRL | HB_KF_ALT)) )
             {
-               if( iChar >= 32 && ( ( ( iFlags & HB_KF_CTRL ) != 0 && ( iFlags & HB_KF_ALT ) != 0 ) || ( dwState & ( LEFT_ALT_PRESSED | RIGHT_ALT_PRESSED ) ) == RIGHT_ALT_PRESSED ) )
+               if( iChar >= 32 && (((iFlags & HB_KF_CTRL) != 0 && (iFlags & HB_KF_ALT) != 0) || (dwState & (LEFT_ALT_PRESSED | RIGHT_ALT_PRESSED)) == RIGHT_ALT_PRESSED) )
                {
-                  iFlags &= ~( HB_KF_CTRL | HB_KF_ALT );
-                  iKey = HB_INKEY_NEW_CHARF( iChar, iFlags );
+                  iFlags &= ~(HB_KF_CTRL | HB_KF_ALT);
+                  iKey = HB_INKEY_NEW_CHARF(iChar, iFlags);
                }
                else
                {
-                  iKey = HB_INKEY_NEW_KEY( iChar, iFlags );
+                  iKey = HB_INKEY_NEW_KEY(iChar, iFlags);
                }
             }
             else
             {
-               iKey = HB_INKEY_NEW_CHARF( iChar, iFlags );
+               iKey = HB_INKEY_NEW_CHARF(iChar, iFlags);
             }
          }
 #ifdef _TRACE
@@ -1884,8 +1884,8 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
          }
          else if( pInRec->Event.MouseEvent.dwEventFlags == MOUSE_WHEELED )
          {
-            iKey = ( pInRec->Event.MouseEvent.dwButtonState & 0xFF000000 ) ? K_MWBACKWARD : K_MWFORWARD;
-            iKey = HB_INKEY_NEW_MKEY( iKey, iFlags );
+            iKey = (pInRec->Event.MouseEvent.dwButtonState & 0xFF000000) ? K_MWBACKWARD : K_MWFORWARD;
+            iKey = HB_INKEY_NEW_MKEY(iKey, iFlags);
          }
          else if( s_mouse_col != pInRec->Event.MouseEvent.dwMousePosition.X || s_mouse_row != pInRec->Event.MouseEvent.dwMousePosition.Y )
          {
@@ -1897,34 +1897,34 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
          else if( pInRec->Event.MouseEvent.dwButtonState & ~s_mouse_buttons & FROM_LEFT_1ST_BUTTON_PRESSED )
          {
             iKey = pInRec->Event.MouseEvent.dwEventFlags == DOUBLE_CLICK ? K_LDBLCLK : K_LBUTTONDOWN;
-            iKey = HB_INKEY_NEW_MKEY( iKey, iFlags );
+            iKey = HB_INKEY_NEW_MKEY(iKey, iFlags);
             s_mouse_buttons |= FROM_LEFT_1ST_BUTTON_PRESSED;
          }
          else if( pInRec->Event.MouseEvent.dwButtonState & ~s_mouse_buttons & RIGHTMOST_BUTTON_PRESSED )
          {
             iKey = pInRec->Event.MouseEvent.dwEventFlags == DOUBLE_CLICK ? K_RDBLCLK : K_RBUTTONDOWN;
-            iKey = HB_INKEY_NEW_MKEY( iKey, iFlags );
+            iKey = HB_INKEY_NEW_MKEY(iKey, iFlags);
             s_mouse_buttons |= RIGHTMOST_BUTTON_PRESSED;
          }
          else if( pInRec->Event.MouseEvent.dwButtonState & ~s_mouse_buttons & FROM_LEFT_2ND_BUTTON_PRESSED )
          {
             iKey = pInRec->Event.MouseEvent.dwEventFlags == DOUBLE_CLICK ? K_MDBLCLK : K_MBUTTONDOWN;
-            iKey = HB_INKEY_NEW_MKEY( iKey, iFlags );
+            iKey = HB_INKEY_NEW_MKEY(iKey, iFlags);
             s_mouse_buttons |= FROM_LEFT_2ND_BUTTON_PRESSED;
          }
          else if( ~pInRec->Event.MouseEvent.dwButtonState & s_mouse_buttons & FROM_LEFT_1ST_BUTTON_PRESSED )
          {
-            iKey = HB_INKEY_NEW_MKEY( K_LBUTTONUP, iFlags );
+            iKey = HB_INKEY_NEW_MKEY(K_LBUTTONUP, iFlags);
             s_mouse_buttons ^= FROM_LEFT_1ST_BUTTON_PRESSED;
          }
          else if( ~pInRec->Event.MouseEvent.dwButtonState & s_mouse_buttons & RIGHTMOST_BUTTON_PRESSED )
          {
-            iKey = HB_INKEY_NEW_MKEY( K_RBUTTONUP, iFlags );
+            iKey = HB_INKEY_NEW_MKEY(K_RBUTTONUP, iFlags);
             s_mouse_buttons ^= RIGHTMOST_BUTTON_PRESSED;
          }
          else if( ~pInRec->Event.MouseEvent.dwButtonState & s_mouse_buttons & FROM_LEFT_2ND_BUTTON_PRESSED )
          {
-            iKey = HB_INKEY_NEW_MKEY( K_MBUTTONUP, iFlags );
+            iKey = HB_INKEY_NEW_MKEY(K_MBUTTONUP, iFlags);
             s_mouse_buttons ^= FROM_LEFT_2ND_BUTTON_PRESSED;
          }
       }
@@ -1945,7 +1945,7 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
 static void hb_gt_win_Tone(PHB_GT pGT, double dFrequency, double dDuration)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration));
 #endif
 
    HB_SYMBOL_UNUSED(pGT);
@@ -1974,7 +1974,7 @@ static HB_BOOL hb_gt_win_IsFullScreen(void)
 
 /* *********************************************************************** */
 
-static HB_BOOL hb_gt_win_FullScreen( HB_BOOL bFullScreen )
+static HB_BOOL hb_gt_win_FullScreen(HB_BOOL bFullScreen)
 {
    if( bFullScreen )
    {
@@ -1993,7 +1993,7 @@ static HB_BOOL hb_gt_win_FullScreen( HB_BOOL bFullScreen )
 static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, pInfo ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, pInfo));
 #endif
 
    switch( iType )
@@ -2005,7 +2005,7 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
             HB_BOOL fNewValue = hb_itemGetL(pInfo->pNewVal);
             if( hb_itemGetL(pInfo->pResult) != fNewValue )
             {
-               hb_gt_win_FullScreen( fNewValue );
+               hb_gt_win_FullScreen(fNewValue);
             }
          }
          break;
@@ -2028,10 +2028,10 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          UINT uiCodePage = GetConsoleCP();
          UINT uiCodePageNew = hb_itemGetNI(pInfo->pNewVal);
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, uiCodePage);
-         if( ( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC ) && uiCodePageNew != uiCodePage )
+         if( (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) && uiCodePageNew != uiCodePage )
          {
-            SetConsoleCP( uiCodePageNew );
-            SetConsoleOutputCP( uiCodePageNew );
+            SetConsoleCP(uiCodePageNew);
+            SetConsoleOutputCP(uiCodePageNew);
          }
          break;
       }
@@ -2041,7 +2041,7 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          TCHAR buff[256];
          DWORD dwLen;
 
-         dwLen = GetConsoleTitle( buff, HB_SIZEOFARRAY( buff ) );
+         dwLen = GetConsoleTitle(buff, HB_SIZEOFARRAY(buff));
          pInfo->pResult = HB_ITEMPUTSTRLEN(pInfo->pResult, buff, dwLen);
          if( hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING )
          {
@@ -2059,7 +2059,7 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
             HB_BOOL fNewValue = hb_itemGetL(pInfo->pNewVal);
             if( fNewValue != s_fClosable )
             {
-               hb_gt_win_SetCloseButton( true, fNewValue );
+               hb_gt_win_SetCloseButton(true, fNewValue);
                s_fClosable = fNewValue;
             }
          }
@@ -2070,10 +2070,10 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC )
          {
             int iVal = hb_itemGetNI(pInfo->pNewVal);
-            if( iVal >= 0 && iVal <= 2 && ( s_fClosable ? ( iVal != 0 ) : ( iVal == 0 ) ) )
+            if( iVal >= 0 && iVal <= 2 && (s_fClosable ? (iVal != 0) : (iVal == 0)) )
             {
                s_fClosable = iVal == 0;
-               hb_gt_win_SetCloseButton( true, s_fClosable );
+               hb_gt_win_SetCloseButton(true, s_fClosable);
             }
          }
          break;
@@ -2098,14 +2098,14 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
             if( iIndex >= 0 && iIndex < 16 )
             {
                COLORREF colors[16];
-               HB_BOOL fGet = hb_gt_win_SetPalette( false, colors );
+               HB_BOOL fGet = hb_gt_win_SetPalette(false, colors);
 
                pInfo->pResult = hb_itemPutNL(pInfo->pResult, colors[iIndex]);
 
-               if( fGet && ( hb_itemType(pInfo->pNewVal2) & Harbour::Item::NUMERIC ) )
+               if( fGet && (hb_itemType(pInfo->pNewVal2) & Harbour::Item::NUMERIC) )
                {
                   colors[iIndex] = hb_itemGetNL(pInfo->pNewVal2);
-                  hb_gt_win_SetPalette( true, colors );
+                  hb_gt_win_SetPalette(true, colors);
                }
             }
          }
@@ -2119,7 +2119,7 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
                pInfo->pResult = hb_itemNew(nullptr);
             }
 
-            hb_gt_win_SetPalette( false, colors );
+            hb_gt_win_SetPalette(false, colors);
 
             hb_arrayNew(pInfo->pResult, 16);
             for( i = 0; i < 16; i++ )
@@ -2136,7 +2136,7 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
                      colors[i] = hb_arrayGetNL(pInfo->pNewVal, i + 1);
                   }
 
-                  hb_gt_win_SetPalette( true, colors );
+                  hb_gt_win_SetPalette(true, colors);
                }
             }
          }
@@ -2204,9 +2204,9 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
       case HB_GTI_CLIPBOARDDATA:
          if( hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING )
 #if defined(UNICODE)
-            hb_gt_winapi_setClipboard( CF_UNICODETEXT, pInfo->pNewVal );
+            hb_gt_winapi_setClipboard(CF_UNICODETEXT, pInfo->pNewVal);
 #else
-            hb_gt_winapi_setClipboard( CF_OEMTEXT, pInfo->pNewVal );
+            hb_gt_winapi_setClipboard(CF_OEMTEXT, pInfo->pNewVal);
 #endif
          else
          {
@@ -2215,9 +2215,9 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
                pInfo->pResult = hb_itemNew(nullptr);
             }
 #if defined(UNICODE)
-            hb_gt_winapi_getClipboard( CF_UNICODETEXT, pInfo->pResult );
+            hb_gt_winapi_getClipboard(CF_UNICODETEXT, pInfo->pResult);
 #else
-            hb_gt_winapi_getClipboard( CF_OEMTEXT, pInfo->pResult );
+            hb_gt_winapi_getClipboard(CF_OEMTEXT, pInfo->pResult);
 #endif
          }
          break;
@@ -2266,15 +2266,15 @@ static HB_BOOL hb_gt_win_mouse_ButtonState(PHB_GT pGT, int iButton)
 
    if( iButton == 0 )
    {
-      fReturn = ( GetKeyState( VK_LBUTTON ) & 0x8000 ) != 0;
+      fReturn = (GetKeyState(VK_LBUTTON) & 0x8000) != 0;
    }
    else if( iButton == 1 )
    {
-      fReturn = ( GetKeyState( VK_RBUTTON ) & 0x8000 ) != 0;
+      fReturn = (GetKeyState(VK_RBUTTON) & 0x8000) != 0;
    }
    else if( iButton == 2 )
    {
-      fReturn = ( GetKeyState( VK_MBUTTON ) & 0x8000 ) != 0;
+      fReturn = (GetKeyState(VK_MBUTTON) & 0x8000) != 0;
    }
 
    return fReturn;
@@ -2286,7 +2286,7 @@ static int hb_gt_win_mouse_CountButton(PHB_GT pGT)
 
    HB_SYMBOL_UNUSED(pGT);
 
-   GetNumberOfConsoleMouseButtons( &dwCount );
+   GetNumberOfConsoleMouseButtons(&dwCount);
 
    return static_cast<int>(dwCount);
 }
@@ -2296,7 +2296,7 @@ static int hb_gt_win_mouse_CountButton(PHB_GT pGT)
 static void hb_gt_win_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize));
 #endif
 
    if( iSize > 0 && s_pCharInfoScreen && iRow < static_cast<int>(_GetScreenHeight()) && iCol < static_cast<int>(_GetScreenWidth()) )
@@ -2304,7 +2304,7 @@ static void hb_gt_win_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
       int iColor;
       HB_BYTE bAttr;
       int iFirst = iCol;
-      int i = ( iRow * _GetScreenWidth() + iCol );
+      int i = (iRow * _GetScreenWidth() + iCol);
 
       while( iSize-- > 0 )
       {
@@ -2314,7 +2314,7 @@ static void hb_gt_win_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
          {
             break;
          }
-         s_pCharInfoScreen[i].Char.UnicodeChar = hb_cdpGetU16Ctrl( usChar );
+         s_pCharInfoScreen[i].Char.UnicodeChar = hb_cdpGetU16Ctrl(usChar);
 #else
          HB_UCHAR uc;
          if( !HB_GTSELF_GETSCRUC(pGT, iRow, iCol++, &iColor, &bAttr, &uc, true) )
@@ -2336,7 +2336,7 @@ static void hb_gt_win_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
 static void hb_gt_win_Refresh(PHB_GT pGT)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_win_Refresh(%p)", static_cast<void*>(pGT) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_Refresh(%p)", static_cast<void*>(pGT)));
 #endif
 
    HB_GTSUPER_REFRESH(pGT);
@@ -2364,10 +2364,10 @@ static void hb_gt_win_Refresh(PHB_GT pGT)
 
 /* *********************************************************************** */
 
-static HB_BOOL hb_gt_FuncInit( PHB_GT_FUNCS pFuncTable )
+static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_FuncInit(%p)", static_cast<void*>(pFuncTable) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_FuncInit(%p)", static_cast<void*>(pFuncTable)));
 #endif
 
    pFuncTable->Init                       = hb_gt_win_Init;

@@ -67,7 +67,7 @@
 #  define HB_ZSOCK_MEM_LEVEL  MAX_MEM_LEVEL
 #endif
 
-#define HB_ZSOCK_GET( p )     ( static_cast<PHB_SOCKEX_Z>(p->cargo) )
+#define HB_ZSOCK_GET(p)     ( static_cast<PHB_SOCKEX_Z>(p->cargo) )
 
 struct HB_SOCKEX_Z
 {
@@ -85,7 +85,7 @@ struct HB_SOCKEX_Z
 
 using PHB_SOCKEX_Z = HB_SOCKEX_Z *;
 
-static voidpf s_zsock_zalloc( voidpf opaque, uInt items, uInt size )
+static voidpf s_zsock_zalloc(voidpf opaque, uInt items, uInt size)
 {
    HB_SYMBOL_UNUSED(opaque);
    return hb_xalloc(static_cast<HB_SIZE>(items) * size);
@@ -139,9 +139,9 @@ static long s_zsock_write(PHB_SOCKEX_Z pZ, HB_MAXINT timeout)
    return lSent;
 }
 
-static int s_zsock_inbuffer( PHB_SOCKEX pSock )
+static int s_zsock_inbuffer(PHB_SOCKEX pSock)
 {
-   PHB_SOCKEX_Z pZ = HB_ZSOCK_GET( pSock );
+   PHB_SOCKEX_Z pZ = HB_ZSOCK_GET(pSock);
 
    if( pSock->inbuffer == 0 && pZ->fDecompressIn )
    {
@@ -173,14 +173,14 @@ static int s_zsock_inbuffer( PHB_SOCKEX pSock )
 
 static long s_sockexRead(PHB_SOCKEX pSock, void * data, long len, HB_MAXINT timeout)
 {
-   PHB_SOCKEX_Z pZ = HB_ZSOCK_GET( pSock );
+   PHB_SOCKEX_Z pZ = HB_ZSOCK_GET(pSock);
    long lRecv = 0;
 
    if( pSock->inbuffer > 0 && len > 0 )
    {
       lRecv = HB_MIN(pSock->inbuffer, len);
       memcpy(data, pSock->buffer + pSock->posbuffer, lRecv);
-      if( ( pSock->inbuffer -= lRecv ) > 0 )
+      if( (pSock->inbuffer -= lRecv) > 0 )
       {
          pSock->posbuffer += lRecv;
       }
@@ -234,7 +234,7 @@ static long s_sockexRead(PHB_SOCKEX pSock, void * data, long len, HB_MAXINT time
 
 static long s_sockexWrite(PHB_SOCKEX pSock, const void * data, long len, HB_MAXINT timeout)
 {
-   PHB_SOCKEX_Z pZ = HB_ZSOCK_GET( pSock );
+   PHB_SOCKEX_Z pZ = HB_ZSOCK_GET(pSock);
 
    if( pZ->fCompressOut )
    {
@@ -276,9 +276,9 @@ static long s_sockexWrite(PHB_SOCKEX pSock, const void * data, long len, HB_MAXI
    }
 }
 
-static long s_sockexFlush( PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync )
+static long s_sockexFlush(PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync)
 {
-   PHB_SOCKEX_Z pZ = HB_ZSOCK_GET( pSock );
+   PHB_SOCKEX_Z pZ = HB_ZSOCK_GET(pSock);
    long lResult = 0;
 
    if( pZ->fCompressOut &&
@@ -313,7 +313,7 @@ static long s_sockexFlush( PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync )
       }
       lResult = HB_ZSOCK_WRBUFSIZE - pZ->z_write.avail_out;
    }
-   return lResult + hb_sockexFlush( pZ->sock, timeout, fSync );
+   return lResult + hb_sockexFlush(pZ->sock, timeout, fSync);
 }
 
 static int s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
@@ -343,7 +343,7 @@ static char * s_sockexName(PHB_SOCKEX pSock)
    return pszName;
 }
 
-static const char * s_sockexErrorStr( PHB_SOCKEX pSock, int iError )
+static const char * s_sockexErrorStr(PHB_SOCKEX pSock, int iError)
 {
    switch( HB_ZSOCK_ERROR_BASE - iError )
    {
@@ -365,24 +365,24 @@ static const char * s_sockexErrorStr( PHB_SOCKEX pSock, int iError )
          return "Z_VERSION_ERROR";
    }
 
-   return hb_sockexErrorStr( HB_ZSOCK_GET( pSock )->sock, iError );
+   return hb_sockexErrorStr(HB_ZSOCK_GET(pSock)->sock, iError);
 }
 
 static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
 {
-   PHB_SOCKEX_Z pZ = HB_ZSOCK_GET( pSock );
+   PHB_SOCKEX_Z pZ = HB_ZSOCK_GET(pSock);
    int iResult = 0;
 
    if( pZ )
    {
       if( pZ->sock )
       {
-         s_sockexFlush( pSock, HB_MAX(15000, pSock->iAutoFlush), true );
+         s_sockexFlush(pSock, HB_MAX(15000, pSock->iAutoFlush), true);
       }
 
       if( pZ->fDecompressIn )
       {
-         inflateEnd( &pZ->z_read );
+         inflateEnd(&pZ->z_read);
       }
       if( pZ->rdbuf )
       {
@@ -390,7 +390,7 @@ static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
       }
       if( pZ->fCompressOut )
       {
-         deflateEnd( &pZ->z_write );
+         deflateEnd(&pZ->z_write);
       }
       if( pZ->wrbuf )
       {
@@ -420,7 +420,7 @@ static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
    return iResult;
 }
 
-static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams );
+static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams);
 
 static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
 {
@@ -429,7 +429,7 @@ static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
    pSock = hb_sockexNew(sd, nullptr, pParams);
    if( pSock )
    {
-      pSockNew = s_sockexNext( pSock, pParams );
+      pSockNew = s_sockexNext(pSock, pParams);
       if( pSockNew == nullptr )
       {
          hb_sockexClose(pSock, false);
@@ -454,7 +454,7 @@ static const HB_SOCKET_FILTER s_sockFilter =
    s_sockexErrorStr
 };
 
-static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
+static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
 {
    PHB_SOCKEX pSockNew = nullptr;
 
@@ -512,7 +512,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
          }
       }
 
-      if( level != HB_ZLIB_COMPRESSION_DISABLE && ( fDecompressIn || fCompressOut ) )
+      if( level != HB_ZLIB_COMPRESSION_DISABLE && (fDecompressIn || fCompressOut) )
       {
          PHB_SOCKEX_Z pZ = static_cast<PHB_SOCKEX_Z>(hb_xgrabz(sizeof(HB_SOCKEX_Z)));
 
@@ -588,7 +588,7 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
             pSockNew->fShutDown = pSock->fShutDown;
             pSockNew->iAutoFlush = pSock->iAutoFlush;
             pZ->sock = pSock;
-            hb_socekxParamsInit( pSockNew, pParams );
+            hb_socekxParamsInit(pSockNew, pParams);
          }
          else
          {
@@ -601,14 +601,14 @@ static PHB_SOCKEX s_sockexNext( PHB_SOCKEX pSock, PHB_ITEM pParams )
    return pSockNew;
 }
 
-/* hb_socketNewZSock( <pSocket>, [<hParams>] ) --> <pSocket> */
+/* hb_socketNewZSock(<pSocket>, [<hParams>]) --> <pSocket> */
 HB_FUNC( HB_SOCKETNEWZSOCK )
 {
    PHB_SOCKEX pSock = hb_sockexParam(1);
 
    if( pSock )
    {
-      pSock = s_sockexNext( pSock, hb_param(2, Harbour::Item::HASH) );
+      pSock = s_sockexNext(pSock, hb_param(2, Harbour::Item::HASH));
       if( pSock )
       {
          hb_sockexItemClear(hb_param(1, Harbour::Item::POINTER));
@@ -617,9 +617,9 @@ HB_FUNC( HB_SOCKETNEWZSOCK )
    }
 }
 
-HB_CALL_ON_STARTUP_BEGIN( _hb_zsock_init_ )
-   hb_sockexRegister( &s_sockFilter );
-HB_CALL_ON_STARTUP_END( _hb_zsock_init_ )
+HB_CALL_ON_STARTUP_BEGIN(_hb_zsock_init_)
+   hb_sockexRegister(&s_sockFilter);
+HB_CALL_ON_STARTUP_END(_hb_zsock_init_)
 
 #if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_zsock_init_

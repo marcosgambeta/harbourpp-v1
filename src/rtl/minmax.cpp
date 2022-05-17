@@ -100,7 +100,7 @@ HB_FUNC( MAX )
          long l1 = hb_itemGetDL(p1);
          long l2 = hb_itemGetDL(p2);
 
-         hb_retdl( l1 >= l2 ? l1 : l2 );
+         hb_retdl(l1 >= l2 ? l1 : l2);
          return;
       }
       else if( HB_IS_DATETIME(p1) && HB_IS_DATETIME(p2) )
@@ -120,7 +120,7 @@ HB_FUNC( MAX )
          return;
       }
    }
-   hb_errRT_BASE_SubstR( EG_ARG, 1093, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR(EG_ARG, 1093, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
 /* returns the minimum of two date or numerics */
@@ -175,7 +175,7 @@ HB_FUNC( MIN )
          long l1 = hb_itemGetDL(p1);
          long l2 = hb_itemGetDL(p2);
 
-         hb_retdl( l1 <= l2 ? l1 : l2 );
+         hb_retdl(l1 <= l2 ? l1 : l2);
          return;
       }
       else if( HB_IS_DATETIME(p1) && HB_IS_DATETIME(p2) )
@@ -196,5 +196,5 @@ HB_FUNC( MIN )
       }
    }
 
-   hb_errRT_BASE_SubstR( EG_ARG, 1092, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR(EG_ARG, 1092, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

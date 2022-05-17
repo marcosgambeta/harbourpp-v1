@@ -48,20 +48,20 @@
 #include "hbapigt.h"
 #include "hbset.h"
 
-const char * hb_conSetColor( const char * szColor )
+const char * hb_conSetColor(const char * szColor)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_conSetColor(%s)", szColor ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_conSetColor(%s)", szColor));
 #endif
 
    char * szOldColor;
 
    szOldColor = hb_setGetColor();
-   hb_gtGetColorStr( szOldColor );
+   hb_gtGetColorStr(szOldColor);
 
    if( szColor != nullptr )
    {
-      hb_gtSetColorStr( szColor );
+      hb_gtSetColorStr(szColor);
    }
 
    return szOldColor;
@@ -76,7 +76,7 @@ HB_FUNC( COLORSELECT )
 {
    if( HB_ISNUM(1) )
    {
-      hb_gtColorSelect( hb_parni(1) );
+      hb_gtColorSelect(hb_parni(1));
    }
 }
 
@@ -84,11 +84,11 @@ HB_FUNC( SETBLINK )
 {
    HB_BOOL bPreviousBlink;
 
-   hb_gtGetBlink( &bPreviousBlink );
+   hb_gtGetBlink(&bPreviousBlink);
 
    if( HB_ISLOG(1) )
    {
-      hb_gtSetBlink( hb_parl(1) );
+      hb_gtSetBlink(hb_parl(1));
    }
 
    hb_retl(bPreviousBlink);

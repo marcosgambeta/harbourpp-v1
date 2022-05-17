@@ -50,7 +50,7 @@
 #include "hbapierr.h"
 #include "hbapicdp.h"
 
-static HB_SIZE utf8pos( const char * szUTF8, HB_SIZE nLen, HB_SIZE nUTF8Pos )
+static HB_SIZE utf8pos(const char * szUTF8, HB_SIZE nLen, HB_SIZE nUTF8Pos)
 {
    if( nUTF8Pos > 0 && nUTF8Pos <= nLen )
    {
@@ -60,7 +60,7 @@ static HB_SIZE utf8pos( const char * szUTF8, HB_SIZE nLen, HB_SIZE nUTF8Pos )
 
       for( n1 = n2 = 0; n1 < nLen; )
       {
-         if( hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>(szUTF8[n1]), &n, &uc ) )
+         if( hb_cdpUTF8ToU16NextChar(static_cast<HB_UCHAR>(szUTF8[n1]), &n, &uc) )
          {
             ++n1;
          }
@@ -100,14 +100,14 @@ HB_FUNC( HB_CDPEXISTS )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( HB_CDPUNIID )
 {
    const char * id = hb_parc(1);
-   PHB_CODEPAGE cdp = id ? hb_cdpFindExt( id ) : hb_vmCDP();
+   PHB_CODEPAGE cdp = id ? hb_cdpFindExt(id) : hb_vmCDP();
 
    hb_retc(cdp ? cdp->uniTable->uniID : nullptr);
 }
@@ -115,7 +115,7 @@ HB_FUNC( HB_CDPUNIID )
 HB_FUNC( HB_CDPINFO )
 {
    const char * id = hb_parc(1);
-   PHB_CODEPAGE cdp = id ? hb_cdpFindExt( id ) : hb_vmCDP();
+   PHB_CODEPAGE cdp = id ? hb_cdpFindExt(id) : hb_vmCDP();
 
    hb_retc(cdp ? cdp->info : nullptr);
 }
@@ -123,13 +123,13 @@ HB_FUNC( HB_CDPINFO )
 HB_FUNC( HB_CDPISCHARIDX )
 {
    const char * id = hb_parc(1);
-   PHB_CODEPAGE cdp = id ? hb_cdpFindExt( id ) : hb_vmCDP();
+   PHB_CODEPAGE cdp = id ? hb_cdpFindExt(id) : hb_vmCDP();
    HB_BOOL fResult = HB_FALSE;
 
    if( cdp )
    {
-      fResult = HB_CDP_ISCHARIDX( cdp );
-      if( HB_CDP_ISCUSTOM( cdp ) && HB_ISLOG(2) )
+      fResult = HB_CDP_ISCHARIDX(cdp);
+      if( HB_CDP_ISCUSTOM(cdp) && HB_ISLOG(2) )
       {
          if( hb_parl(2) )
          {
@@ -165,7 +165,7 @@ HB_FUNC( HB_CDPLIST )
       ++nPos;
    }
 
-   hb_reta( nPos );
+   hb_reta(nPos);
 
    nPos = 0;
    while( list[nPos] )
@@ -190,14 +190,14 @@ HB_FUNC( HB_TRANSLATE )
    const char * szIdIn = hb_parc(2);
    const char * szIdOut = hb_parc(3);
 
-   if( nLen && ( szIdIn || szIdOut ) )
+   if( nLen && (szIdIn || szIdOut) )
    {
-      PHB_CODEPAGE cdpIn = szIdIn ? hb_cdpFindExt( szIdIn ) : hb_vmCDP();
-      PHB_CODEPAGE cdpOut = szIdOut ? hb_cdpFindExt( szIdOut ) : hb_vmCDP();
+      PHB_CODEPAGE cdpIn = szIdIn ? hb_cdpFindExt(szIdIn) : hb_vmCDP();
+      PHB_CODEPAGE cdpOut = szIdOut ? hb_cdpFindExt(szIdOut) : hb_vmCDP();
 
-      if( cdpIn && cdpOut && cdpIn != cdpOut && ( cdpIn->uniTable != cdpOut->uniTable || HB_CDP_ISCUSTOM( cdpIn ) || HB_CDP_ISCUSTOM( cdpOut ) ) )
+      if( cdpIn && cdpOut && cdpIn != cdpOut && (cdpIn->uniTable != cdpOut->uniTable || HB_CDP_ISCUSTOM(cdpIn) || HB_CDP_ISCUSTOM(cdpOut)) )
       {
-         char * szResult = hb_cdpnDup( hb_parc(1), &nLen, cdpIn, cdpOut );
+         char * szResult = hb_cdpnDup(hb_parc(1), &nLen, cdpIn, cdpOut);
          hb_retclen_buffer(szResult, nLen);
       }
       else
@@ -223,7 +223,7 @@ HB_FUNC( HB_UTF8CHR )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -239,7 +239,7 @@ HB_FUNC( HB_UTF8ASC )
 
       while( nLen )
       {
-         if( !hb_cdpUTF8ToU16NextChar( static_cast<unsigned char>(*pszString), &n, &wc ) )
+         if( !hb_cdpUTF8ToU16NextChar(static_cast<unsigned char>(*pszString), &n, &wc) )
          {
             break;
          }
@@ -254,7 +254,7 @@ HB_FUNC( HB_UTF8ASC )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -266,7 +266,7 @@ HB_FUNC( HB_STRTOUTF8 )
    if( nLen )
    {
       const char * szCP = hb_parc(2);
-      PHB_CODEPAGE cdp = szCP ? hb_cdpFindExt( szCP ) : hb_vmCDP();
+      PHB_CODEPAGE cdp = szCP ? hb_cdpFindExt(szCP) : hb_vmCDP();
 
       if( cdp )
       {
@@ -306,7 +306,7 @@ HB_FUNC( HB_UTF8TOSTR )
       if( nLen )
       {
          const char * szCP = hb_parc(2);
-         PHB_CODEPAGE cdp = szCP ? hb_cdpFindExt( szCP ) : hb_vmCDP();
+         PHB_CODEPAGE cdp = szCP ? hb_cdpFindExt(szCP) : hb_vmCDP();
 
          if( cdp )
          {
@@ -320,7 +320,7 @@ HB_FUNC( HB_UTF8TOSTR )
                szString = hb_parc(1);
                nDest = hb_cdpUTF8AsStrLen(cdp, szString, nLen, 0);
                szDest = static_cast<char*>(hb_xgrab(nDest + 1));
-               hb_cdpUTF8ToStr( cdp, szString, nLen, szDest, nDest + 1 );
+               hb_cdpUTF8ToStr(cdp, szString, nLen, szDest, nDest + 1);
             }
          }
       }
@@ -336,7 +336,7 @@ HB_FUNC( HB_UTF8TOSTR )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -362,7 +362,7 @@ HB_FUNC( HB_UTF8AT )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -394,7 +394,7 @@ HB_FUNC( HB_UTF8RAT )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -403,7 +403,7 @@ HB_FUNC( HB_UTF8SUBSTR )
    const char * szString = hb_parc(1);
    int iPCount = hb_pcount();
 
-   if( szString && ( iPCount < 2 || ( HB_ISNUM(2) && ( iPCount < 3 || HB_ISNUM(3) ) ) ) )
+   if( szString && (iPCount < 2 || (HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)))) )
    {
       char * szDest = nullptr;
       HB_SIZE nLen = hb_parclen(1), nDest = 0;
@@ -412,7 +412,7 @@ HB_FUNC( HB_UTF8SUBSTR )
 
       if( nFrom < 0 )
       {
-         nFrom += hb_cdpUTF8StringLength( szString, nLen );
+         nFrom += hb_cdpUTF8StringLength(szString, nLen);
          if( nFrom < 0 )
          {
             nFrom = 0;
@@ -425,7 +425,7 @@ HB_FUNC( HB_UTF8SUBSTR )
 
       if( nLen > static_cast<HB_SIZE>(nFrom) && nCount > 0 )
       {
-         szDest = hb_cdpUTF8StringSubstr( szString, nLen, nFrom, nCount, &nDest );
+         szDest = hb_cdpUTF8StringSubstr(szString, nLen, nFrom, nCount, &nDest);
       }
       if( szDest )
       {
@@ -438,7 +438,7 @@ HB_FUNC( HB_UTF8SUBSTR )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -454,7 +454,7 @@ HB_FUNC( HB_UTF8LEFT )
 
       if( nLenReq > 0 )
       {
-         szDest = hb_cdpUTF8StringSubstr( szString, hb_parclen(1), 0, nLenReq, &nDest );
+         szDest = hb_cdpUTF8StringSubstr(szString, hb_parclen(1), 0, nLenReq, &nDest);
       }
 
       if( szDest )
@@ -468,7 +468,7 @@ HB_FUNC( HB_UTF8LEFT )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -484,12 +484,12 @@ HB_FUNC( HB_UTF8RIGHT )
 
       if( nLen && nLenReq > 0 )
       {
-         nFrom = hb_cdpUTF8StringLength( szString, nLen ) - nLenReq;
+         nFrom = hb_cdpUTF8StringLength(szString, nLen) - nLenReq;
          if( nFrom < 0 )
          {
             nFrom = 0;
          }
-         szDest = hb_cdpUTF8StringSubstr( szString, nLen, nFrom, nLenReq, &nDest );
+         szDest = hb_cdpUTF8StringSubstr(szString, nLen, nFrom, nLenReq, &nDest);
       }
 
       if( szDest )
@@ -503,7 +503,7 @@ HB_FUNC( HB_UTF8RIGHT )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -527,7 +527,7 @@ HB_FUNC( HB_UTF8PEEK )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -540,7 +540,7 @@ HB_FUNC( HB_UTF8POKE )
       const char * szString = hb_itemGetCPtr(pText);
       HB_SIZE nLen = hb_itemGetCLen(pText), nPos;
 
-      nPos = utf8pos( szString, nLen, hb_parns(2) );
+      nPos = utf8pos(szString, nLen, hb_parns(2));
       if( nPos )
       {
          HB_WCHAR uc, uc2;
@@ -550,7 +550,7 @@ HB_FUNC( HB_UTF8POKE )
          uc = static_cast<HB_WCHAR>(hb_parni(3));
          n = hb_cdpUTF8CharSize(uc);
          n2 = 0;
-         hb_cdpUTF8ToU16NextChar( szString[nPos], &n2, &uc2 );
+         hb_cdpUTF8ToU16NextChar(szString[nPos], &n2, &uc2);
          ++n2;
          if( n == n2 )
          {
@@ -582,7 +582,7 @@ HB_FUNC( HB_UTF8POKE )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -601,7 +601,7 @@ HB_FUNC( HB_UTF8STUFF )
 
       if( nPos )
       {
-         nPos = utf8pos( szText, nLen, nPos );
+         nPos = utf8pos(szText, nLen, nPos);
          if( nPos == 0 )
          {
             nPos = nLen;
@@ -615,7 +615,7 @@ HB_FUNC( HB_UTF8STUFF )
       {
          if( nPos < nLen )
          {
-            nDel = utf8pos( szText + nPos, nLen - nPos, nDel + 1 );
+            nDel = utf8pos(szText + nPos, nLen - nPos, nDel + 1);
             if( nDel == 0 )
             {
                nDel = nLen - nPos;
@@ -631,7 +631,7 @@ HB_FUNC( HB_UTF8STUFF )
          }
       }
 
-      if( ( nTot = nLen + nIns - nDel ) > 0 )
+      if( (nTot = nLen + nIns - nDel) > 0 )
       {
          char * szResult = static_cast<char*>(hb_xgrab(nTot + 1));
 
@@ -647,7 +647,7 @@ HB_FUNC( HB_UTF8STUFF )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -661,7 +661,7 @@ HB_FUNC( HB_UTF8LEN )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 

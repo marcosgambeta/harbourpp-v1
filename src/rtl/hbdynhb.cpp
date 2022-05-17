@@ -82,14 +82,14 @@ HB_FUNC( HB_DYNCALL )
                      bFreeLibrary = HB_TRUE;
                   }
                }
-               else if( hb_libHandle( pLibrary ) )
+               else if( hb_libHandle(pLibrary) )
                {
                   pLibraryHandle = pLibrary;
                }
 
                if( pLibraryHandle )
                {
-                  pFunctionPtr = hb_libSymAddr( pLibraryHandle, hb_itemGetCPtr(pFunction) );
+                  pFunctionPtr = hb_libSymAddr(pLibraryHandle, hb_itemGetCPtr(pFunction));
                }
 
                ++nBasePos;
@@ -112,14 +112,14 @@ HB_FUNC( HB_DYNCALL )
 
                for( HB_SIZE nPos = 0; nPos < nArgCount; ++nPos )
                {
-                  piArgFlags[nPos] = ( ( nPos + nBasePos ) <= nLen && HB_IS_NUMERIC(hb_arrayGetItemPtr(pParam, nPos + nBasePos)) ) ? hb_arrayGetNI(pParam, nPos + nBasePos) : HB_DYN_CTYPE_DEFAULT;
+                  piArgFlags[nPos] = ((nPos + nBasePos) <= nLen && HB_IS_NUMERIC(hb_arrayGetItemPtr(pParam, nPos + nBasePos))) ? hb_arrayGetNI(pParam, nPos + nBasePos) : HB_DYN_CTYPE_DEFAULT;
                }
             }
          }
       }
    }
 
-   hb_dynCall( iFuncFlags, pFunctionPtr, hb_pcount(), 2, piArgFlags );
+   hb_dynCall(iFuncFlags, pFunctionPtr, hb_pcount(), 2, piArgFlags);
 
    if( piArgFlags )
    {

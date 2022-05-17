@@ -82,18 +82,16 @@
    #define ALTL_PRESSED     0
    #define ALT_PRESSED      ALTL_PRESSED
 #endif
-#define HB_GT_KBD_MODIF_MASK \
-   ( ( SHIFT_PRESSED | CONTROL_PRESSED | ALTL_PRESSED ) << 16 )
+#define HB_GT_KBD_MODIF_MASK ((SHIFT_PRESSED | CONTROL_PRESSED | ALTL_PRESSED) << 16)
 
-#define MOUSE_ALL_EVENTS_MASK \
-   ( INKEY_MOVE | INKEY_LDOWN | INKEY_LUP | INKEY_RDOWN | INKEY_RUP )
+#define MOUSE_ALL_EVENTS_MASK (INKEY_MOVE | INKEY_LDOWN | INKEY_LUP | INKEY_RDOWN | INKEY_RUP)
 
 /* extra keysyms definitions */
 #define SL_KEY_NUM_5        SL_KEY_B2     /* this is checked explicitly */
 #define SL_KEY_MAX          ( static_cast<unsigned int>(0x2000) )
 #define SL_KEY_ESC          ( SL_KEY_MAX + 1 )
 #define SL_KEY_MOU          ( SL_KEY_ESC + 1 )
-#define SL_KEY_ALT( ch )  ( SL_KEY_MAX + ( static_cast<unsigned int>(ch) ) )
+#define SL_KEY_ALT(ch)  ( SL_KEY_MAX + ( static_cast<unsigned int>(ch) ) )
 
 /* we choose Ctrl+\ as an abort key on Unixes where it is a SIGQUIT key by default */
 /* abort key is Ctrl+\ on Unix ( but Ctrl+@ on Linux console ) */
@@ -134,12 +132,12 @@ static void hb_sln_Init_TermType(void)
    const char * Env;
 
    /* an uncertain way to check if we run under linux console */
-   Env = getenv( "TERM" );
+   Env = getenv("TERM");
 
    hb_sln_UnderLinuxConsole = Env && strncmp(Env, "linux", 5) == 0;
 
    /* an uncertain way to check if we run under xterm */
-   hb_sln_UnderXterm = Env && ( strstr(Env, "xterm") != nullptr || strncmp(Env, "rxvt", 4) == 0 );
+   hb_sln_UnderXterm = Env && (strstr(Env, "xterm") != nullptr || strncmp(Env, "rxvt", 4) == 0);
 }
 
 /* *********************************************************************** */
@@ -160,7 +158,7 @@ static void hb_sln_Init_KeyTranslations(void)
 
    /* on Unix systems ESC is a special key so let
       assume ESC is a double pressed ESC key */
-   SLkp_define_keysym( const_cast<char*>("^[^["), SL_KEY_ESC );
+   SLkp_define_keysym(const_cast<char*>("^[^["), SL_KEY_ESC);
 
    /* try to define Shift-Fn and Ctrl-Fn keys.
       Because we assume terminal has only 10 Fkeys
@@ -174,13 +172,13 @@ static void hb_sln_Init_KeyTranslations(void)
       phases : from '1' to '9' and from 'A' to 'K' */
    for( i = 1; i <= 2; i++ )
    {
-      for( ch = ( i == 1 ? '1' : 'A' ); ch <= ( i == 1 ? '9' : 'K' ); ch++ )
+      for( ch = (i == 1 ? '1' : 'A'); ch <= (i == 1 ? '9' : 'K'); ch++ )
       {
          keyname[1] = ch;
-         keyseq = SLtt_tgetstr( keyname );
+         keyseq = SLtt_tgetstr(keyname);
          if( keyseq != nullptr && keyseq[0] != 0 )
          {
-            SLkp_define_keysym( keyseq, SL_KEY_F( keynum ) );
+            SLkp_define_keysym(keyseq, SL_KEY_F(keynum));
          }
          keynum++;
       }
@@ -208,7 +206,7 @@ static void hb_sln_Init_KeyTranslations(void)
                       Have I any hidden error in key definitions ??? */
          if( ch != 'O' )
          {
-            SLkp_define_keysym( keyname, SL_KEY_ALT( ch ) );
+            SLkp_define_keysym(keyname, SL_KEY_ALT(ch));
          }
       }
    }
@@ -216,25 +214,25 @@ static void hb_sln_Init_KeyTranslations(void)
    /* mouse events under xterm */
    if( hb_sln_UnderXterm )
    {
-      keyseq = SLtt_tgetstr( const_cast<char*>("Km") );
-      if( ( keyseq != nullptr ) && ( keyseq[0] != 0 ) )
+      keyseq = SLtt_tgetstr(const_cast<char*>("Km"));
+      if( (keyseq != nullptr) && (keyseq[0] != 0) )
       {
          #if 0
          fprintf(stderr, "%s\r\n", keyseq);
          #endif
-         SLkp_define_keysym( keyseq, SL_KEY_MOU );
+         SLkp_define_keysym(keyseq, SL_KEY_MOU);
       }
    }
 
    /* five on numeric console */
    #if 0
-   SLkp_define_keysym( "^[[G", SL_KEY_NUM_5 );
+   SLkp_define_keysym("^[[G", SL_KEY_NUM_5);
    #endif
 }
 
 /* *********************************************************************** */
 
-int hb_sln_Init_Terminal( int phase )
+int hb_sln_Init_Terminal(int phase)
 {
    struct termios newTTY;
    int ret = 0;
@@ -257,7 +255,7 @@ int hb_sln_Init_Terminal( int phase )
 #endif
 
       /* get Dead key definition */
-      p = ( unsigned const char * ) getenv( s_DeadKeyEnvName );
+      p = static_cast<unsigned const char*>(getenv(s_DeadKeyEnvName));
       if( p && *p )
       {
          s_iDeadKey = static_cast<int>(*p);
@@ -268,10 +266,10 @@ int hb_sln_Init_Terminal( int phase )
    }
 
    /* Ctrl+\ to abort, no flow-control, no output processing */
-   if( SLang_init_tty( s_hb_sln_Abort_key, 0, 0 ) != -1 )
+   if( SLang_init_tty(s_hb_sln_Abort_key, 0, 0) != -1 )
    {
       /* do missing disable of start/stop processing */
-      if( tcgetattr( SLang_TT_Read_FD, &newTTY ) == 0 )
+      if( tcgetattr(SLang_TT_Read_FD, &newTTY) == 0 )
       {
          newTTY.c_cc[VSTOP]  = 255;  /* disable ^S start/stop processing */
          newTTY.c_cc[VSTART] = 255;  /* disable ^Q start/stop processing */
@@ -286,7 +284,7 @@ int hb_sln_Init_Terminal( int phase )
             reading if c_cc[VMIN] = 0 [druzus] */
          newTTY.c_cc[VMIN] = 1;
 
-         if( tcsetattr( SLang_TT_Read_FD, TCSADRAIN, &newTTY ) == 0 )
+         if( tcsetattr(SLang_TT_Read_FD, TCSADRAIN, &newTTY) == 0 )
          {
             /* everything looks ok so far */
             ret = 1;
@@ -296,7 +294,7 @@ int hb_sln_Init_Terminal( int phase )
 
    /* first time init phase - we don't want this after
       return from system command ( see run.c )      */
-   if( ret && ( phase == 0 ) )
+   if( ret && (phase == 0) )
    {
       /* define keyboard translations */
       hb_sln_Init_KeyTranslations();
@@ -313,7 +311,7 @@ int hb_sln_Init_Terminal( int phase )
 int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_gt_sln_ReadKey(%p,%d)", static_cast<void*>(pGT), static_cast<int>(iEventMask) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_ReadKey(%p,%d)", static_cast<void*>(pGT), static_cast<int>(iEventMask)));
 #endif
 
    static int InDeadState = HB_FALSE;
@@ -345,7 +343,7 @@ int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
    }
 
    fInput = SLang_input_pending(0) != 0;
-   iKey = hb_gt_sln_mouse_Inkey( iEventMask, !fInput );
+   iKey = hb_gt_sln_mouse_Inkey(iEventMask, !fInput);
    if( !fInput || iKey != 0 )
    {
       return iKey;
@@ -374,7 +372,7 @@ int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
       else
       {
          /* wait hb_sln_escDelay millisec for next char and in not return ESC keycode */
-         if( 0 == SLang_input_pending( -HB_MAX(hb_sln_escDelay, 0) ) )
+         if( 0 == SLang_input_pending(-HB_MAX(hb_sln_escDelay, 0)) )
          {
             return 033;
          }
@@ -387,7 +385,7 @@ int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
       return HB_BREAK_FLAG;
    }
 
-   SLang_ungetkey( ch );
+   SLang_ungetkey(ch);
 /* ------------------------------------------------- */
 
    ch = SLkp_getkey();
@@ -426,22 +424,22 @@ int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
    }
 
    /* any special key ? */
-   if( ( tmp = ( ch | ( kbdflags << 16 ) ) ) > 256 )
+   if( (tmp = (ch | (kbdflags << 16))) > 256 )
    {
       if( tmp == SL_KEY_MOU )
       {
          hb_gt_sln_mouse_ProcessTerminalEvent();
-         return hb_gt_sln_mouse_Inkey( iEventMask, false );
+         return hb_gt_sln_mouse_Inkey(iEventMask, false);
       }
 
-      tmp = hb_sln_FindKeyTranslation( tmp );
+      tmp = hb_sln_FindKeyTranslation(tmp);
       if( tmp != 0 )
       {
          return tmp;
       }
 
       /* FIXME: this code is broken - needs a different approach */
-      tmp = hb_sln_FindKeyTranslation( ch );
+      tmp = hb_sln_FindKeyTranslation(ch);
       if( tmp != 0 || ch > 256 )
       {
          return tmp;
@@ -462,18 +460,18 @@ int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
       HB_WCHAR wc = 0;
       int n = 0;
 
-      if( hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>(ch), &n, &wc ) )
+      if( hb_cdpUTF8ToU16NextChar(static_cast<HB_UCHAR>(ch), &n, &wc) )
       {
          unsigned int buf[10], i = 0;
 
          while( n > 0 )
          {
-            if( SLang_input_pending( hb_sln_escDelay == 0 ? -100 : -HB_MAX(hb_sln_escDelay, 0) ) == 0 )
+            if( SLang_input_pending(hb_sln_escDelay == 0 ? -100 : -HB_MAX(hb_sln_escDelay, 0)) == 0 )
             {
                break;
             }
             buf[i++] = SLang_getkey();
-            if( !hb_cdpUTF8ToU16NextChar( static_cast<HB_UCHAR>(buf[i - 1]), &n, &wc ) )
+            if( !hb_cdpUTF8ToU16NextChar(static_cast<HB_UCHAR>(buf[i - 1]), &n, &wc) )
             {
                n = -1;
             }
@@ -486,7 +484,7 @@ int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
          {
             while( i > 0 )
             {
-               SLang_ungetkey( buf[--i] );
+               SLang_ungetkey(buf[--i]);
             }
          }
       }
@@ -503,7 +501,7 @@ static int hb_sln_try_get_Kbd_State(void)
 #if defined(__linux__)
    unsigned char modifiers = 6;
 
-   if( ioctl( 0, TIOCLINUX, &modifiers ) < 0 )
+   if( ioctl(0, TIOCLINUX, &modifiers) < 0 )
    {
       return 0;
    }
@@ -515,28 +513,28 @@ static int hb_sln_try_get_Kbd_State(void)
    int modifiers = 0;
    int IOcommand = 0;
 
-   if( ioctl( 0, TCGETSC, &IOcommand ) >= 0 )
+   if( ioctl(0, TCGETSC, &IOcommand) >= 0 )
    {
       /* if keyboard is not in SCANCODE mode */
       if( IOcommand == KB_XSCANCODE )
       {
          /* try to set it to SCANCODE mode */
          IOcommand = KB_ISSCANCODE;
-         if( ioctl( 0, TCSETSC, &IOcommand ) >= 0 )
+         if( ioctl(0, TCSETSC, &IOcommand) >= 0 )
          {
             /* if SCANCODE mode is set correctly try get KBD state */
-            if( ioctl( 0, KDGKBSTATE, &modifiers ) < 0 )
+            if( ioctl(0, KDGKBSTATE, &modifiers) < 0 )
             {
                modifiers = 0;
             }
 
             /* turn a keyboard to a normal mode ( translation mode ) */
             IOcommand = KB_XSCANCODE;
-            ( void ) ioctl( 0, TCSETSC, &IOcommand ) // TODO: C++ cast and ;
+            ( void ) ioctl(0, TCSETSC, &IOcommand) // TODO: C++ cast and ;
          }
       }
       /* keyboard is already in SCANCODE mode */
-      else if( ioctl( 0, KDGKBSTATE, &modifiers ) < 0 )
+      else if( ioctl(0, KDGKBSTATE, &modifiers) < 0 )
       {
          modifiers = 0;
       }
@@ -559,21 +557,21 @@ static int hb_sln_try_get_Kbd_State(void)
 
 int hb_sln_Shft_Pressed(void)
 {
-   return ( hb_sln_try_get_Kbd_State() & SHIFT_PRESSED ) != 0;
+   return (hb_sln_try_get_Kbd_State() & SHIFT_PRESSED) != 0;
 }
 
 /* *********************************************************************** */
 
 int hb_sln_Ctrl_Pressed(void)
 {
-   return ( hb_sln_try_get_Kbd_State() & CONTROL_PRESSED ) != 0;
+   return (hb_sln_try_get_Kbd_State() & CONTROL_PRESSED) != 0;
 }
 
 /* *********************************************************************** */
 
 int hb_sln_Alt_Pressed(void)
 {
-   return ( hb_sln_try_get_Kbd_State() & ALT_PRESSED ) != 0;
+   return (hb_sln_try_get_Kbd_State() & ALT_PRESSED) != 0;
 }
 
 /* *********************************************************************** */

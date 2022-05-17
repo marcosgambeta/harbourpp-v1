@@ -74,12 +74,12 @@ char * hb_username(void)
 
    if( lpValue[0] )
    {
-      return HB_OSSTRDUP( lpValue );
+      return HB_OSSTRDUP(lpValue);
    }
 
 #elif (defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS))
 
-   struct passwd * pwd = getpwuid( getuid() );
+   struct passwd * pwd = getpwuid(getuid());
    if( pwd && pwd->pw_name )
    {
       return hb_osStrDecode( pwd->pw_name );
@@ -87,7 +87,7 @@ char * hb_username(void)
 
 #endif
 
-   return hb_getenv( "USER" );
+   return hb_getenv("USER");
 }
 
 HB_FUNC( HB_USERNAME )

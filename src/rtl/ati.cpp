@@ -51,10 +51,10 @@
 #include "hbapicdp.h"
 #include "hbapierr.h"
 
-static HB_SIZE s_strAtI( PHB_CODEPAGE cdp, const char * szSub, HB_SIZE nSubLen, const char * szText, HB_SIZE nLen )
+static HB_SIZE s_strAtI(PHB_CODEPAGE cdp, const char * szSub, HB_SIZE nSubLen, const char * szText, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "s_strAtI(%p, %s, %" HB_PFS "u, %s, %" HB_PFS "u)", static_cast<void*>(cdp), szSub, nSubLen, szText, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("s_strAtI(%p, %s, %" HB_PFS "u, %s, %" HB_PFS "u)", static_cast<void*>(cdp), szSub, nSubLen, szText, nLen));
 #endif
 
    if( nSubLen > 0 && nLen >= nSubLen )
@@ -63,17 +63,17 @@ static HB_SIZE s_strAtI( PHB_CODEPAGE cdp, const char * szSub, HB_SIZE nSubLen, 
       do
       {
          HB_SIZE nSubPos = 0, nPrev = nPos;
-         if( hb_cdpCharCaseEq( cdp, szText, nLen, &nPos, szSub, nSubLen, &nSubPos ) )
+         if( hb_cdpCharCaseEq(cdp, szText, nLen, &nPos, szSub, nSubLen, &nSubPos) )
          {
             HB_SIZE nBack = nPos;
             do
             {
                if( nSubPos >= nSubLen )
                {
-                  return ( HB_CDP_ISCHARIDX( cdp ) ? nIndex : nPrev ) + 1;
+                  return (HB_CDP_ISCHARIDX(cdp) ? nIndex : nPrev) + 1;
                }
             }
-            while( hb_cdpCharCaseEq( cdp, szText, nLen, &nPos, szSub, nSubLen, &nSubPos ) );
+            while( hb_cdpCharCaseEq(cdp, szText, nLen, &nPos, szSub, nSubLen, &nSubPos) );
             nPos = nBack;
          }
          ++nIndex;
@@ -101,7 +101,7 @@ HB_FUNC( HB_ATI )
       {
          nStart = nFrom = 0;
       }
-      else if( HB_CDP_ISCHARIDX( cdp ) )
+      else if( HB_CDP_ISCHARIDX(cdp) )
       {
          nFrom = hb_cdpTextPos(cdp, pszText, nTextLength, --nStart);
       }
@@ -126,7 +126,7 @@ HB_FUNC( HB_ATI )
             else
             {
                nTo -= nStart;
-               if( HB_CDP_ISCHARIDX( cdp ) )
+               if( HB_CDP_ISCHARIDX(cdp) )
                {
                   nTo = hb_cdpTextPos(cdp, pszText, nTextLength, nTo);
                }
@@ -143,10 +143,10 @@ HB_FUNC( HB_ATI )
 
          if( nTo > 0 )
          {
-            nPos = s_strAtI( cdp, hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), pszText, nTo );
+            nPos = s_strAtI(cdp, hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), pszText, nTo);
             if( nPos > 0 )
             {
-               nPos += HB_CDP_ISCHARIDX( cdp ) ? nStart : nFrom;
+               nPos += HB_CDP_ISCHARIDX(cdp) ? nStart : nFrom;
             }
          }
       }
@@ -154,6 +154,6 @@ HB_FUNC( HB_ATI )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1108, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1108, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

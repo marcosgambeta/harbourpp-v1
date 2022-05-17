@@ -65,26 +65,26 @@
 
 #if !defined(_HB_Z_COMPRESSBOUND)
 /* additional 12 bytes is for GZIP compression which uses bigger header */
-#define deflateBound( s, n )  ( hb_zlibCompressBound( n ) + ( fGZip ? 12 : 0 ) )
+#define deflateBound(s, n)  (hb_zlibCompressBound(n) + (fGZip ? 12 : 0))
 #endif
 
-static HB_SIZE s_zlibCompressBound( HB_SIZE nLen )
+static HB_SIZE s_zlibCompressBound(HB_SIZE nLen)
 {
 #if !defined(_HB_Z_COMPRESSBOUND)
-   return nLen + ( nLen >> 12 ) + ( nLen >> 14 ) + ( nLen >> 25 ) + 13;
+   return nLen + (nLen >> 12) + (nLen >> 14) + (nLen >> 25) + 13;
 #else
-   return compressBound( static_cast<uLong>(nLen) );
+   return compressBound(static_cast<uLong>(nLen));
 #endif
 }
 
-static void * s_zlib_alloc( void * cargo, uInt items, uInt size )
+static void * s_zlib_alloc(void * cargo, uInt items, uInt size)
 {
    HB_SYMBOL_UNUSED(cargo);
 
-   return ( items > 0 && size > 0 ) ? hb_xalloc(static_cast<HB_SIZE>(items) * size) : nullptr;
+   return (items > 0 && size > 0) ? hb_xalloc(static_cast<HB_SIZE>(items) * size) : nullptr;
 }
 
-static void s_zlib_free( void * cargo, void * address )
+static void s_zlib_free(void * cargo, void * address)
 {
    HB_SYMBOL_UNUSED(cargo);
 
@@ -112,7 +112,7 @@ static int s_zlibCompress2(char ** pDstPtr, HB_SIZE * pnDst, const char * pSrc, 
       {
          if( *pnDst == 0 )
          {
-            *pnDst = deflateBound( &stream, static_cast<uLong>(nSrc) );
+            *pnDst = deflateBound(&stream, static_cast<uLong>(nSrc));
          }
          *pDstPtr = static_cast<char*>(hb_xalloc(*pnDst + 1));
          if( *pDstPtr == nullptr )
@@ -138,13 +138,13 @@ static int s_zlibCompress2(char ** pDstPtr, HB_SIZE * pnDst, const char * pSrc, 
          *pnDst = stream.total_out;
          iResult = Z_OK;
       }
-      deflateEnd( &stream );
+      deflateEnd(&stream);
    }
 
    return iResult;
 }
 
-static int s_zlibCompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nSrc, int level )
+static int s_zlibCompress(char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nSrc, int level)
 {
    return s_zlibCompress2(&pDst, pnDst, pSrc, nSrc, false, level);
 }
@@ -178,13 +178,13 @@ static HB_SIZE s_zlibUncompressedSize(const char * szSrc, HB_SIZE nLen, int * pi
          nDest = stream.total_out;
          *piResult = Z_OK;
       }
-      inflateEnd( &stream );
+      inflateEnd(&stream);
    }
 
    return nDest;
 }
 
-static int s_zlibUncompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nSrc )
+static int s_zlibUncompress(char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nSrc)
 {
    z_stream stream;
    int iResult;
@@ -213,14 +213,14 @@ static int s_zlibUncompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB
          *pnDst = stream.total_out;
          iResult = Z_OK;
       }
-      inflateEnd( &stream );
+      inflateEnd(&stream);
    }
 
    return iResult;
 }
 
 /*
- * hb_ZLibVersion( [<nType>] ) --> <cZlibVersion>
+ * hb_ZLibVersion([<nType>]) --> <cZlibVersion>
  */
 HB_FUNC( HB_ZLIBVERSION )
 {
@@ -238,7 +238,7 @@ HB_FUNC( HB_ZLIBVERSION )
 }
 
 /*
- * hb_ZCompressBound( <cData> | <nDataLen> ) --> <nMaxCompressLen>
+ * hb_ZCompressBound(<cData> | <nDataLen>) --> <nMaxCompressLen>
  */
 HB_FUNC( HB_ZCOMPRESSBOUND )
 {
@@ -252,7 +252,7 @@ HB_FUNC( HB_ZCOMPRESSBOUND )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -287,12 +287,12 @@ HB_FUNC( HB_ZUNCOMPRESSLEN )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 /*
- * hb_ZCompress( <cData>, [<nDstBufLen>|<@cBuffer>], [<@nResult>], [<nLevel>] )
+ * hb_ZCompress(<cData>, [<nDstBufLen>|<@cBuffer>], [<@nResult>], [<nLevel>])
  *    => <cCompressedData> or NIL on Error
  */
 HB_FUNC( HB_ZCOMPRESS )
@@ -367,12 +367,12 @@ HB_FUNC( HB_ZCOMPRESS )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 /*
- * hb_ZUncompress( <cCompressedData>, [<nDstBufLen>|<@cBuffer>], [<@nResult>] )
+ * hb_ZUncompress(<cCompressedData>, [<nDstBufLen>|<@cBuffer>], [<@nResult>])
  *    => <cUnCompressedData> or NIL on Error
  */
 HB_FUNC( HB_ZUNCOMPRESS )
@@ -412,7 +412,7 @@ HB_FUNC( HB_ZUNCOMPRESS )
 
          if( iResult == Z_OK )
          {
-            iResult = s_zlibUncompress( pDest, &nDstLen, szData, nLen );
+            iResult = s_zlibUncompress(pDest, &nDstLen, szData, nLen);
 
             if( !pBuffer )
             {
@@ -440,12 +440,12 @@ HB_FUNC( HB_ZUNCOMPRESS )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 /*
- * hb_gzCompressBound( <cData> | <nDataLen> ) --> <nMaxCompressLen>
+ * hb_gzCompressBound(<cData> | <nDataLen>) --> <nMaxCompressLen>
  */
 HB_FUNC( HB_GZCOMPRESSBOUND )
 {
@@ -459,12 +459,12 @@ HB_FUNC( HB_GZCOMPRESSBOUND )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 /*
- * hb_gzCompress( <cData>, [<nDstBufLen>|<@cBuffer>], [<@nResult>], [<nLevel>] )
+ * hb_gzCompress(<cData>, [<nDstBufLen>|<@cBuffer>], [<@nResult>], [<nLevel>])
  *    => <cCompressedData> or NIL on Error
  *
  * Note: this function does not create any references to gz* ZLIB functions
@@ -542,7 +542,7 @@ HB_FUNC( HB_GZCOMPRESS )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -559,10 +559,9 @@ HB_FUNC( HB_ZERROR )
 #endif
 }
 
-HB_CALL_ON_STARTUP_BEGIN( _hb_zlib_init_ )
-   hb_zlibInit( s_zlibCompressBound, s_zlibUncompressedSize,
-                s_zlibCompress, s_zlibUncompress );
-HB_CALL_ON_STARTUP_END( _hb_zlib_init_ )
+HB_CALL_ON_STARTUP_BEGIN(_hb_zlib_init_)
+   hb_zlibInit(s_zlibCompressBound, s_zlibUncompressedSize, s_zlibCompress, s_zlibUncompress);
+HB_CALL_ON_STARTUP_END(_hb_zlib_init_)
 
 #if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_zlib_init_

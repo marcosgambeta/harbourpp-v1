@@ -54,7 +54,7 @@ HB_FUNC( SPACE )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::NUMERIC);
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       HB_ISIZ nLen = hb_itemGetNS(pItem);
 
@@ -79,6 +79,6 @@ HB_FUNC( SPACE )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1105, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1105, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

@@ -54,9 +54,9 @@
 
 #ifndef HB_NO_GZLIB
 /* GZIP stream destructor */
-static HB_GARBAGE_FUNC( hb_gz_Destructor )
+static HB_GARBAGE_FUNC(hb_gz_Destructor)
 {
-   gzFile * gzHolder = ( gzFile * ) Cargo;
+   gzFile * gzHolder = static_cast<gzFile*>(Cargo);
 
    if( *gzHolder )
    {
@@ -73,7 +73,7 @@ static const HB_GC_FUNCS s_gcGZFuncs =
    hb_gcDummyMark
 };
 
-static gzFile hb_gzParam( int iParam )
+static gzFile hb_gzParam(int iParam)
 {
    gzFile * gzHolder = static_cast<gzFile*>(hb_parptrGC(&s_gcGZFuncs, iParam));
 
@@ -82,7 +82,7 @@ static gzFile hb_gzParam( int iParam )
       return *gzHolder;
    }
 
-   hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    return nullptr;
 }
 #endif
@@ -120,7 +120,7 @@ HB_FUNC( HB_GZOPEN )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 #endif
 }
@@ -150,7 +150,7 @@ HB_FUNC( HB_GZDOPEN )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 #endif
 }
@@ -178,13 +178,13 @@ HB_FUNC( HB_GZCLOSE )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 #endif
 }
 
 /*
- * hb_gzSetParams( <pGZipStream>, <nLevel>, <nStrategy> ) => <nResult>
+ * hb_gzSetParams(<pGZipStream>, <nLevel>, <nStrategy>) => <nResult>
  */
 HB_FUNC( HB_GZSETPARAMS )
 {
@@ -199,7 +199,7 @@ HB_FUNC( HB_GZSETPARAMS )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 #endif
 }
@@ -239,7 +239,7 @@ HB_FUNC( HB_GZREAD )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 #endif
 }
@@ -268,13 +268,13 @@ HB_FUNC( HB_GZWRITE )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 #endif
 }
 
 /*
- * hb_gzGetS( <pGZipStream>, <nMaxBytes> ) => <cLine> or NIL on error
+ * hb_gzGetS(<pGZipStream>, <nMaxBytes>) => <cLine> or NIL on error
  */
 HB_FUNC( HB_GZGETS )
 {
@@ -293,7 +293,7 @@ HB_FUNC( HB_GZGETS )
             char * szBuff;
 
             hb_vmUnlock();
-            szBuff = gzgets( gz, szBuffer, iLen );
+            szBuff = gzgets(gz, szBuffer, iLen);
             hb_vmLock();
 
             if( szBuff != Z_NULL )
@@ -309,13 +309,13 @@ HB_FUNC( HB_GZGETS )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 #endif
 }
 
 /*
- * hb_gzPutS( <pGZipStream>, <cData> ) => <nResult>
+ * hb_gzPutS(<pGZipStream>, <cData>) => <nResult>
  */
 HB_FUNC( HB_GZPUTS )
 {
@@ -330,7 +330,7 @@ HB_FUNC( HB_GZPUTS )
          int iResult;
 
          hb_vmUnlock();
-         iResult = gzputs( gz, szData );
+         iResult = gzputs(gz, szData);
          hb_vmLock();
 
          hb_retni(iResult);
@@ -338,13 +338,13 @@ HB_FUNC( HB_GZPUTS )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 #endif
 }
 
 /*
- * hb_gzPutC( <pGZipStream>, <nByte> ) => <nResult>
+ * hb_gzPutC(<pGZipStream>, <nByte>) => <nResult>
  */
 HB_FUNC( HB_GZPUTC )
 {
@@ -357,7 +357,7 @@ HB_FUNC( HB_GZPUTC )
          int iResult;
 
          hb_vmUnlock();
-         iResult = gzputc( gz, hb_parni(2) );
+         iResult = gzputc(gz, hb_parni(2));
          hb_vmLock();
 
          hb_retni(iResult);
@@ -365,13 +365,13 @@ HB_FUNC( HB_GZPUTC )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 #endif
 }
 
 /*
- * hb_gzGetC( <pGZipStream> ) => <nByte>
+ * hb_gzGetC(<pGZipStream>) => <nByte>
  */
 HB_FUNC( HB_GZGETC )
 {
@@ -383,7 +383,7 @@ HB_FUNC( HB_GZGETC )
       int iResult;
 
       hb_vmUnlock();
-      iResult = gzgetc( gz );
+      iResult = gzgetc(gz);
       hb_vmLock();
 
       hb_retni(iResult);
@@ -392,7 +392,7 @@ HB_FUNC( HB_GZGETC )
 }
 
 /*
- * hb_gzUnGetC( <nByte>, <pGZipStream> ) => <nByte>
+ * hb_gzUnGetC(<nByte>, <pGZipStream>) => <nByte>
  */
 HB_FUNC( HB_GZUNGETC )
 {
@@ -406,7 +406,7 @@ HB_FUNC( HB_GZUNGETC )
          int iResult;
 
          hb_vmUnlock();
-         iResult = gzungetc( hb_parni(1), gz );
+         iResult = gzungetc(hb_parni(1), gz);
          hb_vmLock();
 
          hb_retni(iResult);
@@ -415,13 +415,13 @@ HB_FUNC( HB_GZUNGETC )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 #endif
 }
 
 /*
- * hb_gzFlush( <pGZipStream>, [ <nFlush> ] ) => <nResult>
+ * hb_gzFlush(<pGZipStream>, [ <nFlush> ]) => <nResult>
  */
 HB_FUNC( HB_GZFLUSH )
 {
@@ -433,7 +433,7 @@ HB_FUNC( HB_GZFLUSH )
       int iResult;
 
       hb_vmUnlock();
-      iResult = gzflush( gz, hb_parnidef(2, Z_SYNC_FLUSH) );
+      iResult = gzflush(gz, hb_parnidef(2, Z_SYNC_FLUSH));
       hb_vmLock();
 
       hb_retni(iResult);
@@ -463,13 +463,13 @@ HB_FUNC( HB_GZSEEK )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 #endif
 }
 
 /*
- * hb_gzRewind( <pGZipStream> ) => <nResult>
+ * hb_gzRewind(<pGZipStream>) => <nResult>
  */
 HB_FUNC( HB_GZREWIND )
 {
@@ -481,7 +481,7 @@ HB_FUNC( HB_GZREWIND )
       int iResult;
 
       hb_vmUnlock();
-      iResult = gzrewind( gz );
+      iResult = gzrewind(gz);
       hb_vmLock();
 
       hb_retni(iResult);
@@ -490,7 +490,7 @@ HB_FUNC( HB_GZREWIND )
 }
 
 /*
- * hb_gzTell( <pGZipStream> ) => <nResult>
+ * hb_gzTell(<pGZipStream>) => <nResult>
  */
 HB_FUNC( HB_GZTELL )
 {
@@ -502,7 +502,7 @@ HB_FUNC( HB_GZTELL )
       HB_MAXINT nResult;
 
       hb_vmUnlock();
-      nResult = gztell( gz );
+      nResult = gztell(gz);
       hb_vmLock();
 
       hb_retnint(nResult);
@@ -532,7 +532,7 @@ HB_FUNC( HB_GZEOF )
 }
 
 /*
- * hb_gzDirect( <pGZipStream> ) => <lResult>
+ * hb_gzDirect(<pGZipStream>) => <lResult>
  */
 HB_FUNC( HB_GZDIRECT )
 {
@@ -544,7 +544,7 @@ HB_FUNC( HB_GZDIRECT )
       int iResult;
 
       hb_vmUnlock();
-      iResult = gzdirect( gz );
+      iResult = gzdirect(gz);
       hb_vmLock();
 
       hb_retl(iResult != 0);
@@ -572,7 +572,7 @@ HB_FUNC( HB_GZERROR )
 }
 
 /*
- * hb_gzClearErr( <pGZipStream> ) => NIL
+ * hb_gzClearErr(<pGZipStream>) => NIL
  */
 HB_FUNC( HB_GZCLEARERR )
 {
@@ -581,7 +581,7 @@ HB_FUNC( HB_GZCLEARERR )
    gzFile gz = hb_gzParam(1);
    if( gz )
    {
-      gzclearerr( gz );
+      gzclearerr(gz);
    }
 #endif
 #endif

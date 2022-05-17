@@ -67,7 +67,7 @@ HB_FUNC( CHR )
       hb_retclen(szChar, 1);
 #else
       PHB_CODEPAGE cdp = hb_vmCDP();
-      if( HB_CDP_ISCHARUNI( cdp ) )
+      if( HB_CDP_ISCHARUNI(cdp) )
       {
          char szChar[HB_MAX_CHAR_LEN];
          HB_SIZE nLen;
@@ -83,7 +83,7 @@ HB_FUNC( CHR )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1104, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1104, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -96,7 +96,7 @@ HB_FUNC( ASC )
    {
       int iChar;
       PHB_CODEPAGE cdp = hb_vmCDP();
-      if( HB_CDP_ISCHARUNI( cdp ) )
+      if( HB_CDP_ISCHARUNI(cdp) )
       {
          iChar = hb_cdpTextGetU16(cdp, szValue, hb_parclen(1));
       }
@@ -109,6 +109,6 @@ HB_FUNC( ASC )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1107, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1107, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

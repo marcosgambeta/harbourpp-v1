@@ -207,10 +207,10 @@ static const HB_KEY_VALUE s_transKeyStd[] = {
    { K_CTRL_BS, K_ALT_BS,        K_CTRL_BS,       0 },   /* 127 */
 };
 
-int hb_inkey( HB_BOOL fWait, double dSeconds, int iEventMask )
+int hb_inkey(HB_BOOL fWait, double dSeconds, int iEventMask)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkey(%d, %f, %d)", static_cast<int>(fWait), dSeconds, iEventMask ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_inkey(%d, %f, %d)", static_cast<int>(fWait), dSeconds, iEventMask));
 #endif
 
    int iKey = 0;
@@ -228,7 +228,7 @@ int hb_inkey( HB_BOOL fWait, double dSeconds, int iEventMask )
 void hb_inkeyPut(int iKey)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyPut(%d)", iKey ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_inkeyPut(%d)", iKey));
 #endif
 
    PHB_GT pGT;
@@ -244,7 +244,7 @@ void hb_inkeyPut(int iKey)
 void hb_inkeyIns(int iKey)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyIns(%d)", iKey ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_inkeyIns(%d)", iKey));
 #endif
 
    PHB_GT pGT;
@@ -257,10 +257,10 @@ void hb_inkeyIns(int iKey)
    }
 }
 
-int hb_inkeyLast( int iEventMask )
+int hb_inkeyLast(int iEventMask)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyLast(%d)", iEventMask ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_inkeyLast(%d)", iEventMask));
 #endif
 
    int iKey = 0;
@@ -275,10 +275,10 @@ int hb_inkeyLast( int iEventMask )
    return iKey;
 }
 
-int hb_inkeyNext( int iEventMask )
+int hb_inkeyNext(int iEventMask)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyNext(%d)", iEventMask ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_inkeyNext(%d)", iEventMask));
 #endif
 
    int iKey = 0;
@@ -296,7 +296,7 @@ int hb_inkeyNext( int iEventMask )
 void hb_inkeyPoll(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyPoll()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_inkeyPoll()"));
 #endif
 
    PHB_GT pGT;
@@ -309,10 +309,10 @@ void hb_inkeyPoll(void)
    }
 }
 
-int hb_inkeySetLast( int iKey )
+int hb_inkeySetLast(int iKey)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeySetLast(%d)", iKey ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_inkeySetLast(%d)", iKey));
 #endif
 
    int iLast = 0;
@@ -327,10 +327,10 @@ int hb_inkeySetLast( int iKey )
    return iLast;
 }
 
-void hb_inkeySetText( const char * szText, HB_SIZE nLen, HB_BOOL fEol )
+void hb_inkeySetText(const char * szText, HB_SIZE nLen, HB_BOOL fEol)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeySetText(%s,%" HB_PFS "u, %d)", szText, nLen, fEol ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_inkeySetText(%s,%" HB_PFS "u, %d)", szText, nLen, fEol));
 #endif
 
    PHB_GT pGT;
@@ -346,7 +346,7 @@ void hb_inkeySetText( const char * szText, HB_SIZE nLen, HB_BOOL fEol )
 void hb_inkeyReset(void)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyReset()" ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_inkeyReset()"));
 #endif
 
    PHB_GT pGT;
@@ -359,9 +359,9 @@ void hb_inkeyReset(void)
    }
 }
 
-static int s_inkeyTransChar( int iKey, int iFlags, const HB_KEY_VALUE * pKeyVal )
+static int s_inkeyTransChar(int iKey, int iFlags, const HB_KEY_VALUE * pKeyVal)
 {
-   if( ( iFlags & HB_KF_KEYPAD ) != 0 && ( iFlags & ( HB_KF_ALT | HB_KF_CTRL ) ) != 0 )
+   if( (iFlags & HB_KF_KEYPAD) != 0 && (iFlags & (HB_KF_ALT | HB_KF_CTRL)) != 0 )
    {
       switch( iKey )
       {
@@ -372,13 +372,13 @@ static int s_inkeyTransChar( int iKey, int iFlags, const HB_KEY_VALUE * pKeyVal 
             }
             break;
          case '+':
-            return ( iFlags & HB_KF_ALT ) ? KP_ALT_PLUS : KP_CTRL_PLUS;
+            return (iFlags & HB_KF_ALT) ? KP_ALT_PLUS : KP_CTRL_PLUS;
          case '-':
-            return ( iFlags & HB_KF_ALT ) ? KP_ALT_MINUS : KP_CTRL_MINUS;
+            return (iFlags & HB_KF_ALT) ? KP_ALT_MINUS : KP_CTRL_MINUS;
          case '*':
-            return ( iFlags & HB_KF_ALT ) ? KP_ALT_ASTERISK : KP_CTRL_ASTERISK;
+            return (iFlags & HB_KF_ALT) ? KP_ALT_ASTERISK : KP_CTRL_ASTERISK;
          case '/':
-            return ( iFlags & HB_KF_ALT ) ? KP_ALT_SLASH : KP_CTRL_SLASH;
+            return (iFlags & HB_KF_ALT) ? KP_ALT_SLASH : KP_CTRL_SLASH;
          case '.':
          case ',':
             if( iFlags & HB_KF_CTRL )
@@ -404,15 +404,15 @@ static int s_inkeyTransChar( int iKey, int iFlags, const HB_KEY_VALUE * pKeyVal 
       }
    }
 
-   if( ( iFlags & HB_KF_ALT ) != 0 && pKeyVal->alt_key )
+   if( (iFlags & HB_KF_ALT) != 0 && pKeyVal->alt_key )
    {
       return pKeyVal->alt_key;
    }
-   else if( ( iFlags & HB_KF_CTRL ) != 0 && ( pKeyVal->ctrl_key || pKeyVal->key == '@' ) )
+   else if( (iFlags & HB_KF_CTRL) != 0 && (pKeyVal->ctrl_key || pKeyVal->key == '@') )
    {
       return pKeyVal->ctrl_key;
    }
-   else if( ( iFlags & HB_KF_SHIFT ) != 0 && pKeyVal->shift_key )
+   else if( (iFlags & HB_KF_SHIFT) != 0 && pKeyVal->shift_key )
    {
       return pKeyVal->shift_key;
    }
@@ -425,7 +425,7 @@ static int s_inkeyTransChar( int iKey, int iFlags, const HB_KEY_VALUE * pKeyVal 
 HB_SIZE hb_inkeyKeyString(int iKey, char * buffer, HB_SIZE nSize)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyKeyString(%d,%p, %" HB_PFS "u)", iKey, static_cast<void*>(buffer), nSize ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_inkeyKeyString(%d,%p, %" HB_PFS "u)", iKey, static_cast<void*>(buffer), nSize));
 #endif
 
    HB_SIZE nLen = 0;
@@ -436,23 +436,23 @@ HB_SIZE hb_inkeyKeyString(int iKey, char * buffer, HB_SIZE nSize)
    }
    else
    {
-      if( HB_INKEY_ISCHAR( iKey ) )
+      if( HB_INKEY_ISCHAR(iKey) )
       {
-         iKey = HB_INKEY_VALUE( iKey );
+         iKey = HB_INKEY_VALUE(iKey);
       }
-      else if( HB_INKEY_ISKEY( iKey ) )
+      else if( HB_INKEY_ISKEY(iKey) )
       {
-         int iFlags = HB_INKEY_FLAGS( iKey );
+         int iFlags = HB_INKEY_FLAGS(iKey);
 
-         iKey = HB_INKEY_VALUE( iKey );
+         iKey = HB_INKEY_VALUE(iKey);
 
-         if( iKey > 0 && iKey <= static_cast<int>(HB_SIZEOFARRAY( s_transKeyFun )) )
+         if( iKey > 0 && iKey <= static_cast<int>(HB_SIZEOFARRAY(s_transKeyFun)) )
          {
-            iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyFun[iKey - 1] );
+            iKey = s_inkeyTransChar(iKey, iFlags, &s_transKeyFun[iKey - 1]);
          }
          else if( iKey >= 32 && iKey <= 127 )
          {
-            iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyStd[iKey - 32] );
+            iKey = s_inkeyTransChar(iKey, iFlags, &s_transKeyStd[iKey - 32]);
          }
       }
       if( iKey >= 32 && iKey <= 255 && iKey != 127 )
@@ -464,40 +464,40 @@ HB_SIZE hb_inkeyKeyString(int iKey, char * buffer, HB_SIZE nSize)
    return nLen;
 }
 
-int hb_inkeyKeyStd( int iKey )
+int hb_inkeyKeyStd(int iKey)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyKeyStd(%d)", iKey ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_inkeyKeyStd(%d)", iKey));
 #endif
 
-   if( HB_INKEY_ISEXT( iKey ) )
+   if( HB_INKEY_ISEXT(iKey) )
    {
-      int iFlags = HB_INKEY_FLAGS( iKey );
+      int iFlags = HB_INKEY_FLAGS(iKey);
 
-      if( HB_INKEY_ISMOUSEPOS( iKey ) )
+      if( HB_INKEY_ISMOUSEPOS(iKey) )
       {
          iKey = K_MOUSEMOVE;
       }
-      else if( HB_INKEY_ISKEY( iKey ) )
+      else if( HB_INKEY_ISKEY(iKey) )
       {
-         iKey = HB_INKEY_VALUE( iKey );
+         iKey = HB_INKEY_VALUE(iKey);
 
-         if( iKey > 0 && iKey <= static_cast<int>(HB_SIZEOFARRAY( s_transKeyFun )) )
+         if( iKey > 0 && iKey <= static_cast<int>(HB_SIZEOFARRAY(s_transKeyFun)) )
          {
-            iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyFun[iKey - 1] );
+            iKey = s_inkeyTransChar(iKey, iFlags, &s_transKeyFun[iKey - 1]);
          }
          else if( iKey >= 32 && iKey <= 127 )
          {
-            iKey = s_inkeyTransChar( iKey, iFlags, &s_transKeyStd[iKey - 32] );
+            iKey = s_inkeyTransChar(iKey, iFlags, &s_transKeyStd[iKey - 32]);
          }
       }
-      else if( HB_INKEY_ISCHAR( iKey ) || HB_INKEY_ISUNICODE( iKey ) )
+      else if( HB_INKEY_ISCHAR(iKey) || HB_INKEY_ISUNICODE( iKey ) )
       {
-         int iVal = HB_INKEY_VALUE( iKey );
+         int iVal = HB_INKEY_VALUE(iKey);
 
-         if( iVal >= 32 && iVal <= 127 && ( iFlags & ( HB_KF_ALT | HB_KF_CTRL ) ) != 0 )
+         if( iVal >= 32 && iVal <= 127 && (iFlags & (HB_KF_ALT | HB_KF_CTRL)) != 0 )
          {
-            iKey = s_inkeyTransChar( iVal, iFlags, &s_transKeyStd[iVal - 32] );
+            iKey = s_inkeyTransChar(iVal, iFlags, &s_transKeyStd[iVal - 32]);
          }
          else if( HB_INKEY_ISUNICODE( iKey ) )
          {
@@ -522,56 +522,56 @@ int hb_inkeyKeyStd( int iKey )
       }
       else /* HB_INKEY_ISMOUSEKEY | HB_INKEY_ISEVENT */
       {
-         iKey = HB_INKEY_VALUE( iKey );
+         iKey = HB_INKEY_VALUE(iKey);
       }
    }
    return iKey;
 }
 
-int hb_inkeyKeyMod( int iKey )
+int hb_inkeyKeyMod(int iKey)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyKeyMod(%d)", iKey ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_inkeyKeyMod(%d)", iKey));
 #endif
 
    int iFlags = 0;
 
-   if( HB_INKEY_ISEXT( iKey ) && !HB_INKEY_ISMOUSEPOS( iKey ) )
+   if( HB_INKEY_ISEXT(iKey) && !HB_INKEY_ISMOUSEPOS(iKey) )
    {
-      iFlags = HB_INKEY_FLAGS( iKey );
+      iFlags = HB_INKEY_FLAGS(iKey);
    }
 
    return iFlags;
 }
 
-int hb_inkeyKeyVal( int iKey )
+int hb_inkeyKeyVal(int iKey)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyKeyVal(%d)", iKey ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_inkeyKeyVal(%d)", iKey));
 #endif
 
    int iValue = 0;
 
-   if( HB_INKEY_ISEXT( iKey ) && !HB_INKEY_ISMOUSEPOS( iKey ) )
+   if( HB_INKEY_ISEXT(iKey) && !HB_INKEY_ISMOUSEPOS(iKey) )
    {
-      iValue = HB_INKEY_VALUE( iKey );
+      iValue = HB_INKEY_VALUE(iKey);
    }
 
    return iValue;
 }
 
-int hb_inkeyKeyExt( int iKey )
+int hb_inkeyKeyExt(int iKey)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_inkeyKeyVal(%d)", iKey ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_inkeyKeyVal(%d)", iKey));
 #endif
 
    int iValue = 0;
 
-   if( HB_INKEY_ISKEY( iKey ) )
+   if( HB_INKEY_ISKEY(iKey) )
    {
-      iValue = HB_INKEY_VALUE( iKey );
-      if( iValue < 1 || iValue > static_cast<int>(HB_SIZEOFARRAY( s_transKeyFun )) )
+      iValue = HB_INKEY_VALUE(iKey);
+      if( iValue < 1 || iValue > static_cast<int>(HB_SIZEOFARRAY(s_transKeyFun)) )
       {
          iValue = 0;
       }

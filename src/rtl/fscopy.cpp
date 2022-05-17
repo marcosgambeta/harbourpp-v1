@@ -49,7 +49,7 @@
 
 #define HB_FSCOPY_BUFFERSIZE  65536
 
-HB_BOOL hb_fsCopy( const char * pszSource, const char * pszDest )
+HB_BOOL hb_fsCopy(const char * pszSource, const char * pszDest)
 {
    HB_BOOL fResult = HB_FALSE;
    PHB_FILE pSrcFile;

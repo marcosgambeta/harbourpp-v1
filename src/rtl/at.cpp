@@ -69,7 +69,7 @@ HB_FUNC( HB_AT )
       {
          nStart = nFrom = 0;
       }
-      else if( HB_CDP_ISCHARIDX( cdp ) )
+      else if( HB_CDP_ISCHARIDX(cdp) )
       {
          nFrom = hb_cdpTextPos(cdp, pszText, nTextLength, --nStart);
       }
@@ -94,7 +94,7 @@ HB_FUNC( HB_AT )
             else
             {
                nTo -= nStart;
-               if( HB_CDP_ISCHARIDX( cdp ) )
+               if( HB_CDP_ISCHARIDX(cdp) )
                {
                   nTo = hb_cdpTextPos(cdp, pszText, nTextLength, nTo);
                }
@@ -114,7 +114,7 @@ HB_FUNC( HB_AT )
             nPos = hb_strAt(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), pszText, nTo);
             if( nPos > 0 )
             {
-               if( HB_CDP_ISCHARIDX( cdp ) )
+               if( HB_CDP_ISCHARIDX(cdp) )
                {
                   nPos = hb_cdpTextLen(cdp, pszText, nPos - 1) + 1 + nStart;
                }
@@ -129,7 +129,7 @@ HB_FUNC( HB_AT )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1108, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1108, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
@@ -144,7 +144,7 @@ HB_FUNC( AT )
       if( nPos )
       {
          PHB_CODEPAGE cdp = hb_vmCDP();
-         if( HB_CDP_ISCHARIDX( cdp ) )
+         if( HB_CDP_ISCHARIDX(cdp) )
          {
             nPos = hb_cdpTextLen(cdp, hb_itemGetCPtr(pText), nPos - 1) + 1;
          }
@@ -153,6 +153,6 @@ HB_FUNC( AT )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1108, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1108, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

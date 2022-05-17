@@ -49,7 +49,7 @@
 #include "hbapierr.h"
 
 /* returns the numeric value of a character string representation of a number */
-static void hb_val( HB_BOOL fExt )
+static void hb_val(HB_BOOL fExt)
 {
    PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
@@ -61,7 +61,7 @@ static void hb_val( HB_BOOL fExt )
       HB_MAXINT lValue;
       double dValue;
 
-      fDbl = hb_valStrnToNum( szText, iLen, &lValue, &dValue, &iDec, &iWidth );
+      fDbl = hb_valStrnToNum(szText, iLen, &lValue, &dValue, &iDec, &iWidth);
 
       if( fExt )
       {
@@ -97,7 +97,7 @@ static void hb_val( HB_BOOL fExt )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1098, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1098, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 

@@ -76,7 +76,7 @@ HB_FUNC( HB_UTF8TOSTRBOX )
                szString = hb_parc(1);
                nDest = hb_cdpUTF8AsStrLen(cdp, szString, nLen, 0);
                szDest = static_cast<char*>(hb_xgrab(nDest + 1));
-               hb_cdpUTF8ToStr( cdp, szString, nLen, szDest, nDest + 1 );
+               hb_cdpUTF8ToStr(cdp, szString, nLen, szDest, nDest + 1);
             }
          }
       }
@@ -92,6 +92,6 @@ HB_FUNC( HB_UTF8TOSTRBOX )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

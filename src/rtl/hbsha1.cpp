@@ -53,7 +53,7 @@ HB_FUNC( HB_SHA1 )
    sha1_byte digest[SHA1_DIGEST_LENGTH];
    SHA_CTX ctx;
 
-   hb_SHA1_Init( &ctx );
+   hb_SHA1_Init(&ctx);
 
    #if HB_SIZE_MAX > UINT_MAX
    {
@@ -85,12 +85,12 @@ HB_FUNC( HB_SHA1 )
       hb_SHA1_Update( &ctx, hb_parcx(1), hb_parclen(1) );
    #endif
 
-   hb_SHA1_Final( digest, &ctx );
+   hb_SHA1_Final(digest, &ctx);
 
    if( !hb_parl(2) )
    {
       char hex[( sizeof(digest) * 2 ) + 1];
-      hb_strtohex( reinterpret_cast<char*>(digest), sizeof(digest), hex );
+      hb_strtohex(reinterpret_cast<char*>(digest), sizeof(digest), hex);
       hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
    }
    else

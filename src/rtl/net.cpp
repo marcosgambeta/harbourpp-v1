@@ -85,7 +85,7 @@ char * hb_netname(void)
 
    if( lpValue[0] )
    {
-      return HB_OSSTRDUP( lpValue );
+      return HB_OSSTRDUP(lpValue);
    }
 
 #elif (defined(HB_OS_UNIX))
@@ -100,7 +100,7 @@ char * hb_netname(void)
 
 #endif
 
-   return hb_getenv( "HOSTNAME" );
+   return hb_getenv("HOSTNAME");
 }
 
 HB_FUNC( NETNAME )

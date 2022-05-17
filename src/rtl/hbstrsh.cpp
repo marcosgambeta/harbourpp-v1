@@ -63,7 +63,7 @@ HB_FUNC( HB_STRSHRINK )
          HB_ISIZ nLen;
          PHB_CODEPAGE cdp = hb_vmCDP();
 
-         if( HB_CDP_ISCHARIDX( cdp ) )
+         if( HB_CDP_ISCHARIDX(cdp) )
          {
             nLen = hb_cdpTextLen(cdp, pszText, nText);
          }
@@ -74,7 +74,7 @@ HB_FUNC( HB_STRSHRINK )
 
          if( nShrinkBy < nLen )
          {
-            if( HB_CDP_ISCHARIDX( cdp ) )
+            if( HB_CDP_ISCHARIDX(cdp) )
             {
                nLen = hb_cdpTextPos(cdp, pszText, nText, nLen - nShrinkBy);
             }

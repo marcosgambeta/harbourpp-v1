@@ -81,7 +81,7 @@ struct HB_MLC_INFO
 
 using PHB_MLC_INFO = HB_MLC_INFO *;
 
-static void hb_mlGetEOLs( PHB_MLC_INFO pMLC, int iParam )
+static void hb_mlGetEOLs(PHB_MLC_INFO pMLC, int iParam)
 {
    int iEOLs = 0;
    HB_SIZE nLen;
@@ -102,7 +102,7 @@ static void hb_mlGetEOLs( PHB_MLC_INFO pMLC, int iParam )
       pMLC->pEOLs[0].nLen = nLen;
       iEOLs = 1;
    }
-   else if( HB_ISARRAY( iParam ) )
+   else if( HB_ISARRAY(iParam) )
    {
       PHB_ITEM pArray = hb_param(iParam, Harbour::Item::ARRAY);
       HB_SIZE nSize = hb_arrayLen(pArray), n;
@@ -152,7 +152,7 @@ static void hb_mlGetEOLs( PHB_MLC_INFO pMLC, int iParam )
    pMLC->iEOLs = iEOLs;
 }
 
-static HB_BOOL hb_mlInit( PHB_MLC_INFO pMLC, int iParAdd )
+static HB_BOOL hb_mlInit(PHB_MLC_INFO pMLC, int iParAdd)
 {
    HB_ISIZ nSize = hb_parnsdef(2, 79);
 
@@ -183,19 +183,19 @@ static HB_BOOL hb_mlInit( PHB_MLC_INFO pMLC, int iParAdd )
       }
 
       pMLC->cdp = hb_vmCDP();
-      if( !HB_CDP_ISCHARIDX( pMLC->cdp ) )
+      if( !HB_CDP_ISCHARIDX(pMLC->cdp) )
       {
          pMLC->cdp = nullptr;
       }
 
-      hb_mlGetEOLs( pMLC, 5 + iParAdd );
+      hb_mlGetEOLs(pMLC, 5 + iParAdd);
       return true;
    }
 
    return false;
 }
 
-static void hb_mlExit( PHB_MLC_INFO pMLC )
+static void hb_mlExit(PHB_MLC_INFO pMLC)
 {
    if( pMLC->iEOLs > HB_EOL_BUFFER_SIZE )
    {
@@ -203,7 +203,7 @@ static void hb_mlExit( PHB_MLC_INFO pMLC )
    }
 }
 
-static int hb_mlEol( PHB_MLC_INFO pMLC )
+static int hb_mlEol(PHB_MLC_INFO pMLC)
 {
    const char * pszString = pMLC->pszString + pMLC->nOffset;
    HB_SIZE nLen = pMLC->nLen - pMLC->nOffset;
@@ -222,7 +222,7 @@ static int hb_mlEol( PHB_MLC_INFO pMLC )
    return -1;
 }
 
-static HB_SIZE hb_mlGetLine( PHB_MLC_INFO pMLC )
+static HB_SIZE hb_mlGetLine(PHB_MLC_INFO pMLC)
 {
    HB_SIZE nBlankCol = 0, nBlankPos = 0, nLastCol = 0, nLastPos;
    int i;
@@ -260,7 +260,7 @@ static HB_SIZE hb_mlGetLine( PHB_MLC_INFO pMLC )
          continue;
       }
 
-      i = hb_mlEol( pMLC );
+      i = hb_mlEol(pMLC);
       if( i >= 0 )
       {
          if( pMLC->nOffset < pMLC->nMaxPos )
@@ -281,7 +281,7 @@ static HB_SIZE hb_mlGetLine( PHB_MLC_INFO pMLC )
       nLastPos = pMLC->nOffset;
       if( pMLC->cdp )
       {
-         if( !HB_CDPCHAR_GET( pMLC->cdp, pMLC->pszString, pMLC->nLen, &pMLC->nOffset, &ch ) )
+         if( !HB_CDPCHAR_GET(pMLC->cdp, pMLC->pszString, pMLC->nLen, &pMLC->nOffset, &ch) )
          {
             break;
          }
@@ -329,7 +329,7 @@ static HB_SIZE hb_mlGetLine( PHB_MLC_INFO pMLC )
          }
          break;
       }
-      if( pMLC->nCol > 1 && ( ch == ' ' || ch == HB_CHAR_HT ) )
+      if( pMLC->nCol > 1 && (ch == ' ' || ch == HB_CHAR_HT) )
       {
          nBlankCol = pMLC->nCol;
          nBlankPos = pMLC->nOffset;
@@ -348,11 +348,11 @@ static HB_SIZE hb_mlGetLine( PHB_MLC_INFO pMLC )
    return true;
 }
 
-/* MemoLine( <cString>, [ <nLineLength>=79 ],
- *           [ <nLineNumber>=1 ],
- *           [ <nTabSize>=4 ], [ <lWrap>=.T. ],
- *           [ <cEOL>|<acEOLs> ],
- *           [ <lPad>=.T. ] ) --> <cLine>
+/* MemoLine(<cString>, [ <nLineLength>=79 ],
+ *          [ <nLineNumber>=1 ],
+ *          [ <nTabSize>=4 ], [ <lWrap>=.T. ],
+ *          [ <cEOL>|<acEOLs> ],
+ *          [ <lPad>=.T. ]) --> <cLine>
  *
  * NOTE: <lPad> is undocumented parameter and will be removed and
  *       replaced by other solution in the future.
@@ -367,11 +367,11 @@ HB_FUNC( MEMOLINE )
    {
       HB_MLC_INFO MLC;
 
-      if( hb_mlInit( &MLC, 1 ) )
+      if( hb_mlInit(&MLC, 1) )
       {
          while( --nLine )
          {
-            if( !hb_mlGetLine( &MLC ) )
+            if( !hb_mlGetLine(&MLC) )
             {
                break;
             }
@@ -387,15 +387,15 @@ HB_FUNC( MEMOLINE )
             /* CA-Cl*pper also does not check if line exists and always
              * fill one line more, i.e.:
              *    for i := 0 to 4
-             *       ? "[" + MemoLine( " ", 20, i ) + "]"
+             *       ? "[" + MemoLine(" ", 20, i) + "]"
              *    next
              * [druzus]
              */
-            hb_mlGetLine( &MLC );
+            hb_mlGetLine(&MLC);
 
             if( MLC.cdp )
             {
-               nSize = ( MLC.nOffset - nIndex ) + MLC.nLineLength;
+               nSize = (MLC.nOffset - nIndex) + MLC.nLineLength;
             }
             else
             {
@@ -415,7 +415,7 @@ HB_FUNC( MEMOLINE )
 
                   if( MLC.cdp )
                   {
-                     if( !HB_CDPCHAR_GET( MLC.cdp, MLC.pszString, MLC.nLen, &nIndex, &wc ) )
+                     if( !HB_CDPCHAR_GET(MLC.cdp, MLC.pszString, MLC.nLen, &nIndex, &wc) )
                      {
                         break;
                      }
@@ -438,7 +438,7 @@ HB_FUNC( MEMOLINE )
                   {
                      if( MLC.cdp )
                      {
-                        if( !HB_CDPCHAR_PUT( MLC.cdp, szLine, nSize, &nLen, wc ) )
+                        if( !HB_CDPCHAR_PUT(MLC.cdp, szLine, nSize, &nLen, wc) )
                         {
                            break;
                         }
@@ -460,7 +460,7 @@ HB_FUNC( MEMOLINE )
                }
                if( !fPad && nCol > 0 )
                {
-                  nCol = nIndex < MLC.nLen && ( MLC.pszString[nIndex] == ' ' || MLC.pszString[nIndex] == HB_CHAR_HT ) ? 1 : 0;
+                  nCol = nIndex < MLC.nLen && (MLC.pszString[nIndex] == ' ' || MLC.pszString[nIndex] == HB_CHAR_HT) ? 1 : 0;
                }
                if( nCol > 0 )
                {
@@ -469,7 +469,7 @@ HB_FUNC( MEMOLINE )
                }
             }
          }
-         hb_mlExit( &MLC );
+         hb_mlExit(&MLC);
       }
    }
    if( szLine == nullptr )
@@ -491,13 +491,13 @@ HB_FUNC( MLCOUNT )
    HB_MLC_INFO MLC;
    HB_SIZE nLines  = 0;
 
-   if( hb_mlInit( &MLC, 0 ) )
+   if( hb_mlInit(&MLC, 0) )
    {
-      while( hb_mlGetLine( &MLC ) )
+      while( hb_mlGetLine(&MLC) )
       {
          ++nLines;
       }
-      hb_mlExit( &MLC );
+      hb_mlExit(&MLC);
    }
    hb_retns(nLines);
 }
@@ -515,11 +515,11 @@ HB_FUNC( MLPOS )
 
    if( nLine >= 1 )
    {
-      if( hb_mlInit( &MLC, 1 ) )
+      if( hb_mlInit(&MLC, 1) )
       {
          while( --nLine )
          {
-            if( !hb_mlGetLine( &MLC ) )
+            if( !hb_mlGetLine(&MLC) )
             {
                break;
             }
@@ -536,7 +536,7 @@ HB_FUNC( MLPOS )
                ++nOffset;
             }
          }
-         hb_mlExit( &MLC );
+         hb_mlExit(&MLC);
       }
    }
    hb_retns(nOffset);
@@ -556,13 +556,13 @@ HB_FUNC( MLCTOPOS )
    if( nLine > 0 && HB_ISNUM(4) )
    {
       HB_MLC_INFO MLC;
-      if( hb_mlInit( &MLC, 2 ) )
+      if( hb_mlInit(&MLC, 2) )
       {
          if( MLC.nLineLength > 4 )
          {
             while( --nLine )
             {
-               if( !hb_mlGetLine( &MLC ) )
+               if( !hb_mlGetLine(&MLC) )
                {
                   break;
                }
@@ -571,7 +571,7 @@ HB_FUNC( MLCTOPOS )
             {
                MLC.nMaxCol = nCol;
                MLC.nLineLength = nCol;
-               hb_mlGetLine( &MLC );
+               hb_mlGetLine(&MLC);
             }
             nOffset = MLC.nOffset;
             if( MLC.cdp )
@@ -579,7 +579,7 @@ HB_FUNC( MLCTOPOS )
                nOffset = hb_cdpTextLen(MLC.cdp, MLC.pszString, nOffset);
             }
          }
-         hb_mlExit( &MLC );
+         hb_mlExit(&MLC);
       }
    }
    hb_retns(nOffset + 1);
@@ -599,12 +599,12 @@ HB_FUNC( MPOSTOLC )
    if( nPos > 0 )
    {
       HB_MLC_INFO MLC;
-      if( hb_mlInit( &MLC, 1 ) )
+      if( hb_mlInit(&MLC, 1) )
       {
          if( MLC.cdp )
          {
             HB_SIZE nRest = nPos;
-            nPos = hb_cdpTextPosEx( MLC.cdp, MLC.pszString, MLC.nLen, &nRest );
+            nPos = hb_cdpTextPosEx(MLC.cdp, MLC.pszString, MLC.nLen, &nRest);
             nPos += nRest;
          }
          MLC.nMaxPos = nPos;
@@ -613,7 +613,7 @@ HB_FUNC( MPOSTOLC )
             for( ;; )
             {
                HB_SIZE nOffset = MLC.nOffset;
-               hb_mlGetLine( &MLC );
+               hb_mlGetLine(&MLC);
                nCol = MLC.nCol;
                ++nLine;
                if( MLC.nOffset == nOffset || MLC.nOffset >= MLC.nMaxPos )
@@ -622,7 +622,7 @@ HB_FUNC( MPOSTOLC )
                }
             }
          }
-         hb_mlExit( &MLC );
+         hb_mlExit(&MLC);
       }
    }
    hb_reta(2);
@@ -630,9 +630,9 @@ HB_FUNC( MPOSTOLC )
    hb_storvns(nCol, -1, 2);
 }
 
-/* hb_MLEval( <cString>, <bCode>, [ <nLineLength>=79 ],
- *            [ <nTabSize>=4 ], [ <lWrap>=.T. ],
- *            [ <nPos> ], [ @<nRow> ], [ @<nCol> ] ) --> <nLines>
+/* hb_MLEval(<cString>, <bCode>, [ <nLineLength>=79 ],
+ *           [ <nTabSize>=4 ], [ <lWrap>=.T. ],
+ *           [ <nPos> ], [ @<nRow> ], [ @<nCol> ]) --> <nLines>
  */
 HB_FUNC( HB_MLEVAL )
 {
@@ -654,7 +654,7 @@ HB_FUNC( HB_MLEVAL )
       HB_BOOL fSoftCR, fEOL;
       char * pszLine;
 
-      if( !HB_CDP_ISCHARIDX( cdp ) )
+      if( !HB_CDP_ISCHARIDX(cdp) )
       {
          cdp = nullptr;
       }
@@ -724,11 +724,11 @@ HB_FUNC( HB_MLEVAL )
 
             if( cdp )
             {
-               if( !HB_CDPCHAR_GET( cdp, pszString, nLen, &nOffset, &ch ) )
+               if( !HB_CDPCHAR_GET(cdp, pszString, nLen, &nOffset, &ch) )
                {
                   continue;
                }
-               if( !HB_CDPCHAR_PUT( cdp, pszLine, nLineLength + 1, &nDst, ch ) )
+               if( !HB_CDPCHAR_PUT(cdp, pszLine, nLineLength + 1, &nDst, ch) )
                {
                   break;
                }
@@ -777,7 +777,7 @@ HB_FUNC( HB_MLEVAL )
                {
                   pszLine[nDst++] = static_cast<char>(ch);
                }
-               else if( !HB_CDPCHAR_PUT( cdp, pszLine, nLineLength + 1, &nDst, ch ) )
+               else if( !HB_CDPCHAR_PUT(cdp, pszLine, nLineLength + 1, &nDst, ch) )
                {
                   break;
                }
@@ -792,7 +792,7 @@ HB_FUNC( HB_MLEVAL )
 
          pLineItem = hb_itemPutCL(pLineItem, pszLine, nDst);
          pSoftItem = hb_itemPutL(pSoftItem, fSoftCR);
-         hb_vmEvalBlockV( pBlock, 2, pLineItem, pSoftItem );
+         hb_vmEvalBlockV(pBlock, 2, pLineItem, pSoftItem);
       }
       while( nOffset < nLen && hb_vmRequestQuery() == 0 );
 
@@ -801,7 +801,7 @@ HB_FUNC( HB_MLEVAL )
          ++nLines;
          pLineItem = hb_itemPutC(pLineItem, nullptr);
          pSoftItem = hb_itemPutL(pSoftItem, false);
-         hb_vmEvalBlockV( pBlock, 2, pLineItem, pSoftItem );
+         hb_vmEvalBlockV(pBlock, 2, pLineItem, pSoftItem);
       }
 
       if( nRowPos == 0 && nOffset >= nPos )

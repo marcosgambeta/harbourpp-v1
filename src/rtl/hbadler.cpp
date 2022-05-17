@@ -61,7 +61,7 @@
 HB_U32 hb_adler32(HB_U32 adler, const void * buf, HB_SIZE len)
 {
    HB_U32 s1 = adler & 0xffff;
-   HB_U32 s2 = ( adler >> 16 ) & 0xffff;
+   HB_U32 s2 = (adler >> 16) & 0xffff;
 
    if( buf && len )
    {
@@ -95,7 +95,7 @@ HB_U32 hb_adler32(HB_U32 adler, const void * buf, HB_SIZE len)
       while( len );
    }
 
-   return ( s2 << 16 ) | s1;
+   return (s2 << 16) | s1;
 }
 
 HB_FUNC( HB_ADLER32 )

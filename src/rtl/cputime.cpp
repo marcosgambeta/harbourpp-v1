@@ -58,7 +58,7 @@
 #endif
 
 /*
-   SecondsCPU( n ) --> nTime
+   SecondsCPU(n) --> nTime
    FlagShip/CLIP compatible function, which reports how many CPU and/or
    system seconds have elapsed since the beginning of the program execution.
     n == 1  utime  -> user CPU time of the current process
@@ -69,7 +69,7 @@
     n == 13 cu+cs  -> sum of cutime + cstime
  */
 
-double hb_secondsCPU( int n )
+double hb_secondsCPU(int n)
 {
    double d = 0.0;
 
@@ -77,7 +77,7 @@ double hb_secondsCPU( int n )
    FILETIME Create, Exit, Kernel, User;
 #endif
 
-   if( ( n < 1 || n > 3 ) && ( n < 11 || n > 13 ) )
+   if( (n < 1 || n > 3) && (n < 11 || n > 13) )
    {
       n = 3;
    }
@@ -86,7 +86,7 @@ double hb_secondsCPU( int n )
    {
       struct tms tm;
 
-      times( &tm );
+      times(&tm);
 
       if( n > 10 )
       {
@@ -121,7 +121,7 @@ double hb_secondsCPU( int n )
       n -= 10;
    }
 #if defined(HB_OS_WIN)
-   if( hb_iswinnt() && GetProcessTimes( GetCurrentProcess(), &Create, &Exit, &Kernel, &User ) )
+   if( hb_iswinnt() && GetProcessTimes(GetCurrentProcess(), &Create, &Exit, &Kernel, &User) )
    {
       if( n & 1 )
       {

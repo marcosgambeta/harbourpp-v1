@@ -122,7 +122,7 @@ HB_FUNC( HB_VERSION )
          hb_xfree(pszBuildDate);
          break;
       }
-      case HB_VERSION_BUILD_TIMESTAMP_UTC: hb_rettdt( 0, 0 ); break;
+      case HB_VERSION_BUILD_TIMESTAMP_UTC: hb_rettdt(0, 0); break;
       case HB_VERSION_FLAG_PRG:       hb_retc_const(hb_verFlagsPRG()); break;
       case HB_VERSION_FLAG_C:         hb_retc_const(hb_verFlagsC()); break;
       case HB_VERSION_FLAG_LINKER:    hb_retc_const(hb_verFlagsL()); break;

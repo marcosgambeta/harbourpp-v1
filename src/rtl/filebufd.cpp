@@ -50,7 +50,7 @@
 #include "hbapi.h"
 #include "hbapifs.h"
 
-static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
+static HB_BOOL s_fileAccept(PHB_FILE_FUNCS pFuncs, const char * pszFileName)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszFileName);
@@ -58,7 +58,7 @@ static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
    return false;
 }
 
-static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, char * pRetPath )
+static HB_BOOL s_fileExists(PHB_FILE_FUNCS pFuncs, const char * pszFileName, char * pRetPath)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszFileName);
@@ -90,14 +90,14 @@ static HB_BOOL s_fileRename( PHB_FILE_FUNCS pFuncs, const char * pszName, const 
    return false;
 }
 
-static HB_BOOL s_fileCopy( PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const char * pszDstFile )
+static HB_BOOL s_fileCopy(PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const char * pszDstFile)
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fsCopy(pszSrcFile, pszDstFile);
 }
 
-static HB_BOOL s_fileDirExists( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
+static HB_BOOL s_fileDirExists(PHB_FILE_FUNCS pFuncs, const char * pszDirName)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszDirName);
@@ -138,7 +138,7 @@ static double s_fileDirSpace( PHB_FILE_FUNCS pFuncs, const char * pszDirName, HB
    return 0.0;
 }
 
-static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec, const char * pszAttr )
+static PHB_ITEM s_fileDirectory(PHB_FILE_FUNCS pFuncs, const char * pszDirSpec, const char * pszAttr)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszDirSpec);
@@ -195,7 +195,7 @@ static HB_BOOL s_fileAttrSet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB
    return false;
 }
 
-static HB_BOOL s_fileLink( PHB_FILE_FUNCS pFuncs, const char * pszExisting, const char * pszNewName )
+static HB_BOOL s_fileLink(PHB_FILE_FUNCS pFuncs, const char * pszExisting, const char * pszNewName)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszExisting);
@@ -206,7 +206,7 @@ static HB_BOOL s_fileLink( PHB_FILE_FUNCS pFuncs, const char * pszExisting, cons
    return false;
 }
 
-static HB_BOOL s_fileLinkSym( PHB_FILE_FUNCS pFuncs, const char * pszTarget, const char * pszNewName )
+static HB_BOOL s_fileLinkSym(PHB_FILE_FUNCS pFuncs, const char * pszTarget, const char * pszNewName)
 {
    HB_SYMBOL_UNUSED(pFuncs);
    HB_SYMBOL_UNUSED(pszTarget);
@@ -261,7 +261,7 @@ static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, in
    return false;
 }
 
-static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType )
+static int s_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
 {
    HB_SYMBOL_UNUSED(pFile);
    HB_SYMBOL_UNUSED(nStart);
@@ -360,7 +360,7 @@ static HB_BOOL s_fileEof( PHB_FILE pFile )
    return true;
 }
 
-static void s_fileFlush( PHB_FILE pFile, HB_BOOL fDirty )
+static void s_fileFlush(PHB_FILE pFile, HB_BOOL fDirty)
 {
    HB_SYMBOL_UNUSED(pFile);
    HB_SYMBOL_UNUSED(fDirty);
@@ -368,7 +368,7 @@ static void s_fileFlush( PHB_FILE pFile, HB_BOOL fDirty )
    hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 }
 
-static void s_fileCommit( PHB_FILE pFile )
+static void s_fileCommit(PHB_FILE pFile)
 {
    HB_SYMBOL_UNUSED(pFile);
 
@@ -386,7 +386,7 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
    return false;
 }
 
-static HB_FHANDLE s_fileHandle( PHB_FILE pFile )
+static HB_FHANDLE s_fileHandle(PHB_FILE pFile)
 {
    HB_SYMBOL_UNUSED(pFile);
 
@@ -437,10 +437,10 @@ static const HB_FILE_FUNCS s_fileFuncs =
    s_fileHandle
 };
 
-typedef HB_BOOL ( * HB_FILE_FUNC )( PHB_FILE_FUNCS pFuncs, const char * );
+typedef HB_BOOL (* HB_FILE_FUNC)(PHB_FILE_FUNCS pFuncs, const char *);
 #define HB_FILE_FUNC_COUNT ( sizeof(HB_FILE_FUNCS) / sizeof(HB_FILE_FUNC) )
 
-HB_BOOL hb_fileRegisterPart( HB_FILE_FUNCS * pFuncs )
+HB_BOOL hb_fileRegisterPart(HB_FILE_FUNCS * pFuncs)
 {
    const HB_FILE_FUNC * pDummyFunc;
    HB_FILE_FUNC * pFunction;
@@ -456,5 +456,5 @@ HB_BOOL hb_fileRegisterPart( HB_FILE_FUNCS * pFuncs )
       }
    }
 
-   return hb_fileRegisterFull( pFuncs );
+   return hb_fileRegisterFull(pFuncs);
 }

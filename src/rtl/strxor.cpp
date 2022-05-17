@@ -52,7 +52,7 @@ HB_FUNC( HB_STRXOR )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       PHB_ITEM     pItem2;
       HB_SIZE      nLen1, n;
@@ -62,7 +62,7 @@ HB_FUNC( HB_STRXOR )
       pStr1 = hb_itemGetCPtr(pItem);
       nLen1 = hb_itemGetCLen(pItem);
 
-      if( ( pItem2 = hb_param(2, Harbour::Item::STRING) ) != nullptr )
+      if( (pItem2 = hb_param(2, Harbour::Item::STRING)) != nullptr )
       {
          HB_SIZE nLen2 = hb_itemGetCLen(pItem2);
          if( nLen2 )
@@ -90,7 +90,7 @@ HB_FUNC( HB_STRXOR )
 
          return;
       }
-      else if( ( pItem2 = hb_param(2, Harbour::Item::NUMERIC) ) != nullptr )
+      else if( (pItem2 = hb_param(2, Harbour::Item::NUMERIC)) != nullptr )
       {
          char bChar = static_cast<char>(hb_itemGetNI(pItem2));
 
@@ -114,5 +114,5 @@ HB_FUNC( HB_STRXOR )
       }
    }
 
-   hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

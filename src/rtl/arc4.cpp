@@ -107,9 +107,9 @@ static int rs_initialized;
 static struct arc4_stream rs;
 static HB_I32 arc4_count;
 
-static HB_CRITICAL_NEW( arc4_lock );
-#define ARC4_LOCK()    hb_threadEnterCriticalSection( &arc4_lock )
-#define ARC4_UNLOCK()  hb_threadLeaveCriticalSection( &arc4_lock )
+static HB_CRITICAL_NEW(arc4_lock);
+#define ARC4_LOCK()    hb_threadEnterCriticalSection(&arc4_lock)
+#define ARC4_UNLOCK()  hb_threadLeaveCriticalSection(&arc4_lock)
 
 #if defined(__BORLANDC__) && defined(_HB_INLINE_)
 #undef _HB_INLINE_
@@ -128,13 +128,13 @@ static _HB_INLINE_ void arc4_init(void)
    rs.i = rs.j = 0;
 }
 
-static _HB_INLINE_ void arc4_addrandom( const HB_U8 * dat, int datlen )
+static _HB_INLINE_ void arc4_addrandom(const HB_U8 * dat, int datlen)
 {
    rs.i--;
    for( int n = 0; n < 256; ++n )
    {
       HB_U8 si;
-      rs.i         = ( rs.i + 1 );
+      rs.i         = (rs.i + 1);
       si           = rs.s[rs.i];
       rs.j         = rs.j + si + dat[n % datlen];
       rs.s[rs.i]   = rs.s[rs.j];
@@ -144,13 +144,13 @@ static _HB_INLINE_ void arc4_addrandom( const HB_U8 * dat, int datlen )
 }
 
 #if defined(HB_OS_UNIX)
-static HB_ISIZ read_all( int fd, HB_U8 * buf, size_t count )
+static HB_ISIZ read_all(int fd, HB_U8 * buf, size_t count)
 {
    HB_SIZE numread = 0;
 
    while( numread < count )
    {
-      HB_ISIZ result = read( fd, buf + numread, count - numread );
+      HB_ISIZ result = read(fd, buf + numread, count - numread);
 
       if( result < 0 )
       {
@@ -179,7 +179,7 @@ static int arc4_seed_win(void)
    unsigned char     buf[ADD_ENTROPY];
 
    if( !s_provider_set &&
-       !CryptAcquireContext( &s_provider, nullptr, nullptr, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT ) &&
+       !CryptAcquireContext(&s_provider, nullptr, nullptr, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT) &&
        GetLastError() != static_cast<DWORD>(NTE_BAD_KEYSET) )
    {
       return -1;
@@ -187,12 +187,12 @@ static int arc4_seed_win(void)
 
    s_provider_set = 1;
 
-   if( !CryptGenRandom( s_provider, sizeof(buf), buf ) )
+   if( !CryptGenRandom(s_provider, sizeof(buf), buf) )
    {
       return -1;
    }
 
-   arc4_addrandom( buf, sizeof(buf) );
+   arc4_addrandom(buf, sizeof(buf));
    memset(buf, 0, sizeof(buf));
 
    return 0;
@@ -223,7 +223,7 @@ static int arc4_seed_sysctl_linux(void)
    {
       n = sizeof(buf) - len;
 
-      if( sysctl( mib, 3, &buf[len], &n, nullptr, 0 ) != 0 )
+      if( sysctl(mib, 3, &buf[len], &n, nullptr, 0) != 0 )
       {
          return -1;
       }
@@ -240,7 +240,7 @@ static int arc4_seed_sysctl_linux(void)
       return -1;
    }
 
-   arc4_addrandom( buf, sizeof(buf) );
+   arc4_addrandom(buf, sizeof(buf));
    memset(buf, 0, sizeof(buf));
 
    return 0;
@@ -266,7 +266,7 @@ static int arc4_seed_sysctl_bsd(void)
    memset(buf, 0, sizeof(buf));
 
    len = sizeof(buf);
-   if( sysctl( mib, 2, buf, &len, nullptr, 0 ) == -1 )
+   if( sysctl(mib, 2, buf, &len, nullptr, 0) == -1 )
    {
       for( len = 0; len < sizeof(buf); len += sizeof(unsigned) )
       {
@@ -277,7 +277,7 @@ static int arc4_seed_sysctl_bsd(void)
             n = len - sizeof(buf);
          }
 
-         if( sysctl( mib, 2, &buf[len], &n, nullptr, 0 ) == -1 )
+         if( sysctl(mib, 2, &buf[len], &n, nullptr, 0) == -1 )
          {
             return -1;
          }
@@ -295,7 +295,7 @@ static int arc4_seed_sysctl_bsd(void)
       return -1;
    }
 
-   arc4_addrandom( buf, sizeof(buf) );
+   arc4_addrandom(buf, sizeof(buf));
    memset(buf, 0, sizeof(buf));
 
    return 0;
@@ -307,7 +307,7 @@ static int arc4_seed_sysctl_bsd(void)
 #if defined(HB_OS_LINUX)
 
 #define TRY_SEED_PROC_SYS_KERNEL_RANDOM_UUID
-static _HB_INLINE_ int hex_char_to_int( char c )
+static _HB_INLINE_ int hex_char_to_int(char c)
 {
    switch( c )
    {
@@ -345,7 +345,7 @@ static int arc4_seed_proc_sys_kernel_random_uuid(void)
 
    for( int bytes = 0; bytes < ADD_ENTROPY; )
    {
-      int fd = open( "/proc/sys/kernel/random/uuid", O_RDONLY, 0 );
+      int fd = open("/proc/sys/kernel/random/uuid", O_RDONLY, 0);
       int n;
 
       if( fd < 0 )
@@ -353,8 +353,8 @@ static int arc4_seed_proc_sys_kernel_random_uuid(void)
          return -1;
       }
 
-      n = read( fd, buf, sizeof(buf) );
-      close( fd );
+      n = read(fd, buf, sizeof(buf));
+      close(fd);
 
       if( n <= 0 )
       {
@@ -364,9 +364,9 @@ static int arc4_seed_proc_sys_kernel_random_uuid(void)
       memset(entropy, 0, sizeof(entropy));
       for( i = nybbles = 0; i < n; ++i )
       {
-         if( HB_ISXDIGIT( buf[i] ) )
+         if( HB_ISXDIGIT(buf[i]) )
          {
-            int nyb = hex_char_to_int( buf[i] );
+            int nyb = hex_char_to_int(buf[i]);
 
             if( nybbles & 1 )
             {
@@ -385,7 +385,7 @@ static int arc4_seed_proc_sys_kernel_random_uuid(void)
          return -1;
       }
 
-      arc4_addrandom( entropy, nybbles / 2 );
+      arc4_addrandom(entropy, nybbles / 2);
       bytes += nybbles / 2;
    }
 
@@ -409,22 +409,22 @@ static int arc4_seed_urandom(void)
       HB_U8 buf[ADD_ENTROPY];
       HB_SIZE n;
 
-      int fd = open( filenames[i], O_RDONLY, 0 );
+      int fd = open(filenames[i], O_RDONLY, 0);
 
       if( fd < 0 )
       {
          continue;
       }
 
-      n = read_all( fd, buf, sizeof(buf) );
-      close( fd );
+      n = read_all(fd, buf, sizeof(buf));
+      close(fd);
 
       if( n != sizeof(buf) )
       {
          return -1;
       }
 
-      arc4_addrandom( buf, sizeof(buf) );
+      arc4_addrandom(buf, sizeof(buf));
       memset(buf, 0, sizeof(buf));
 
       return 0;
@@ -436,16 +436,16 @@ static int arc4_seed_urandom(void)
 
 static int arc4_seed_rand(void)
 {
-   HB_U8   buf[ADD_ENTROPY];
+   HB_U8 buf[ADD_ENTROPY];
 
-   srand( static_cast<unsigned>(hb_dateMilliSeconds()) );
+   srand(static_cast<unsigned>(hb_dateMilliSeconds()));
 
    for( HB_SIZE i = 0; i < sizeof(buf); i++ )
    {
       buf[i] = static_cast<HB_U8>(rand() % 256);  /* not biased */
    }
 
-   arc4_addrandom( buf, sizeof(buf) );
+   arc4_addrandom(buf, sizeof(buf));
    memset(buf, 0, sizeof(buf));
 
    return 0;
@@ -606,7 +606,7 @@ void arc4random_stir(void)
    ARC4_UNLOCK();
 }
 
-void arc4random_addrandom( const unsigned char * dat, int datlen )
+void arc4random_addrandom(const unsigned char * dat, int datlen)
 {
    ARC4_LOCK();
    if( !rs_initialized )
@@ -622,7 +622,7 @@ void arc4random_addrandom( const unsigned char * dat, int datlen )
        * data in 'dat', just in case the user is doing something
        * crazy like passing us all the files in /var/log.
        */
-      arc4_addrandom( dat + j, datlen - j );
+      arc4_addrandom(dat + j, datlen - j);
    }
    ARC4_UNLOCK();
 }
@@ -643,7 +643,7 @@ HB_U32 hb_arc4random(void)
    return val;
 }
 
-void hb_arc4random_buf( void * _buf, HB_SIZE n )
+void hb_arc4random_buf(void * _buf, HB_SIZE n)
 {
    HB_U8 * buf = static_cast<HB_U8*>(_buf);
 
@@ -674,7 +674,7 @@ void hb_arc4random_buf( void * _buf, HB_SIZE n )
  * [2**32 % upper_bound, 2**32) which maps back to [0, upper_bound)
  * after reduction modulo upper_bound.
  */
-HB_U32 hb_arc4random_uniform( HB_U32 upper_bound )
+HB_U32 hb_arc4random_uniform(HB_U32 upper_bound)
 {
    HB_U32 r, min;
 
@@ -695,7 +695,7 @@ HB_U32 hb_arc4random_uniform( HB_U32 upper_bound )
    else
    {
       /* (2**32 - (x * 2)) % x == 2**32 % x when x <= 2**31 */
-      min = ( ( 0xffffffff - ( upper_bound * 2 ) ) + 1 ) % upper_bound;
+      min = ((0xffffffff - (upper_bound * 2)) + 1) % upper_bound;
    }
 #endif
 

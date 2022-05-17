@@ -52,7 +52,7 @@ HB_FUNC( HB_VALTOSTR )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       HB_SIZE nLen;
       HB_BOOL bFreeReq;
@@ -69,6 +69,6 @@ HB_FUNC( HB_VALTOSTR )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

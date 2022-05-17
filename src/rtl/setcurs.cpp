@@ -47,19 +47,19 @@
 #include "hbapi.h"
 #include "hbapigt.h"
 
-int hb_conSetCursor( HB_BOOL bSetCursor, int iNewCursor )
+int hb_conSetCursor(HB_BOOL bSetCursor, int iNewCursor)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_conSetCursor(%d, %d)", static_cast<int>(bSetCursor), iNewCursor ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_conSetCursor(%d, %d)", static_cast<int>(bSetCursor), iNewCursor));
 #endif
 
    int iCursor;
 
-   hb_gtGetCursor( &iCursor );
+   hb_gtGetCursor(&iCursor);
 
    if( bSetCursor )
    {
-      hb_gtSetCursor( iNewCursor );
+      hb_gtSetCursor(iNewCursor);
    }
 
    return iCursor;
@@ -69,12 +69,12 @@ HB_FUNC( SETCURSOR )
 {
    int iCursor;
 
-   hb_gtGetCursor( &iCursor );
+   hb_gtGetCursor(&iCursor);
 
    hb_retni(iCursor);
 
    if( HB_ISNUM(1) )
    {
-      hb_gtSetCursor( hb_parni(1) );
+      hb_gtSetCursor(hb_parni(1));
    }
 }

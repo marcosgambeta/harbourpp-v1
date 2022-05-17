@@ -63,7 +63,7 @@ HB_FUNC( GETENV )
 
       if( pszName[0] != '\0' )
       {
-         pszValue = hb_getenv( pszName );
+         pszValue = hb_getenv(pszName);
       }
 
       if( pszValue )
@@ -110,7 +110,7 @@ HB_FUNC( HB_GETENV )
 
       if( pszName[0] != '\0' )
       {
-         pszValue = hb_getenv( pszName );
+         pszValue = hb_getenv(pszName);
       }
 
       if( pszValue )
@@ -139,7 +139,7 @@ HB_FUNC( HB_SETENV )
 
    if( pszName )
    {
-      fResult = hb_setenv( pszName, hb_parc(2) );
+      fResult = hb_setenv(pszName, hb_parc(2));
    }
 
    hb_retl(fResult);

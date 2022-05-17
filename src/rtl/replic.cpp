@@ -88,7 +88,7 @@ HB_FUNC( REPLICATE )
          }
          else
          {
-            hb_errRT_BASE_SubstR( EG_STROVERFLOW, 1234, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+            hb_errRT_BASE_SubstR(EG_STROVERFLOW, 1234, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
          }
       }
       else
@@ -98,6 +98,6 @@ HB_FUNC( REPLICATE )
    }
    else
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 1106, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 1106, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }   
 }

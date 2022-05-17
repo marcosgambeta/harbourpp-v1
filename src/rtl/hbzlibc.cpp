@@ -48,7 +48,7 @@
 
 #include "hbzlib.h"
 
-static HB_SIZE s_zlibCompressBound( HB_SIZE nLen )
+static HB_SIZE s_zlibCompressBound(HB_SIZE nLen)
 {
    HB_SYMBOL_UNUSED(nLen);
    return 0;
@@ -62,7 +62,7 @@ static HB_SIZE s_zlibUncompressedSize(const char * pSrc, HB_SIZE nLen, int * piR
    return 0;
 }
 
-static int s_zlibCompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nLen, int iLevel )
+static int s_zlibCompress(char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nLen, int iLevel)
 {
    HB_SYMBOL_UNUSED(pDst);
    HB_SYMBOL_UNUSED(pnDst);
@@ -73,7 +73,7 @@ static int s_zlibCompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_S
    return HB_ZLIB_RES_UNSUPPORTED;
 }
 
-static int s_zlibUncompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nLen )
+static int s_zlibUncompress(char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nLen)
 {
    HB_SYMBOL_UNUSED(pDst);
    HB_SYMBOL_UNUSED(pnDst);
@@ -88,7 +88,7 @@ static HB_ZLIB_UNSIZE s_uncompressedSize = s_zlibUncompressedSize;
 static HB_ZLIB_COMPRS s_compress         = s_zlibCompress;
 static HB_ZLIB_UNCMPS s_uncompress       = s_zlibUncompress;
 
-void hb_zlibInit( HB_ZLIB_CBOUND pBound, HB_ZLIB_UNSIZE pUnSize, HB_ZLIB_COMPRS pCompress, HB_ZLIB_UNCMPS pUncompress )
+void hb_zlibInit(HB_ZLIB_CBOUND pBound, HB_ZLIB_UNSIZE pUnSize, HB_ZLIB_COMPRS pCompress, HB_ZLIB_UNCMPS pUncompress)
 {
    s_compressBound    = pBound;
    s_uncompressedSize = pUnSize;
@@ -96,9 +96,9 @@ void hb_zlibInit( HB_ZLIB_CBOUND pBound, HB_ZLIB_UNSIZE pUnSize, HB_ZLIB_COMPRS 
    s_uncompress       = pUncompress;
 }
 
-HB_SIZE hb_zlibCompressBound( HB_SIZE nLen )
+HB_SIZE hb_zlibCompressBound(HB_SIZE nLen)
 {
-   return s_compressBound( nLen );
+   return s_compressBound(nLen);
 }
 
 HB_SIZE hb_zlibUncompressedSize(const char * pSrc, HB_SIZE nLen, int * piResult)
@@ -106,12 +106,12 @@ HB_SIZE hb_zlibUncompressedSize(const char * pSrc, HB_SIZE nLen, int * piResult)
    return s_uncompressedSize(pSrc, nLen, piResult);
 }
 
-int hb_zlibCompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nLen, int iLevel )
+int hb_zlibCompress(char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nLen, int iLevel)
 {
-   return s_compress( pDst, pnDst, pSrc, nLen, iLevel );
+   return s_compress(pDst, pnDst, pSrc, nLen, iLevel);
 }
 
-int hb_zlibUncompress( char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nLen )
+int hb_zlibUncompress(char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nLen)
 {
-   return s_uncompress( pDst, pnDst, pSrc, nLen );
+   return s_uncompress(pDst, pnDst, pSrc, nLen);
 }

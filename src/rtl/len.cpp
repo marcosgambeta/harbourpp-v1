@@ -58,13 +58,13 @@ HB_FUNC( LEN )
             compiler checks this, but a direct hb_vmDo() call
             may not do so. [vszakats] */
 
-   if( pItem )
+   if( pItem != nullptr )
    {
       if( HB_IS_STRING(pItem) )
       {
          HB_SIZE nLen = hb_itemGetCLen(pItem);
          PHB_CODEPAGE cdp = hb_vmCDP();
-         if( HB_CDP_ISCHARIDX( cdp ) )
+         if( HB_CDP_ISCHARIDX(cdp) )
          {
             nLen = hb_cdpTextLen(cdp, hb_itemGetCPtr(pItem), nLen);
          }
@@ -83,5 +83,5 @@ HB_FUNC( LEN )
       }
    }
 
-   hb_errRT_BASE_SubstR( EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
