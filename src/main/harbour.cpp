@@ -118,11 +118,11 @@ const char * hb_verHB_COMP(void)
 }
 #endif
 
-int main( int argc, char * argv[] )
+int main(int argc, char * argv[])
 {
    int iResult;
 
-   iResult = hb_compMain( argc, static_cast<const char* const*>(argv) );
+   iResult = hb_compMain(argc, static_cast<const char* const*>(argv));
 
    hb_xexit();
 
