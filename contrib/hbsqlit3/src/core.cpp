@@ -83,7 +83,7 @@ static int  hook_commit(void *);
 static void hook_rollback(void *);
 static void func(sqlite3_context *, int, sqlite3_value **);
 
-typedef struct
+struct HB_SQLITE3
 {
    sqlite3 * db;
    PHB_ITEM  cbAuthorizer;
@@ -92,21 +92,25 @@ typedef struct
    PHB_ITEM  cbHookCommit;
    PHB_ITEM  cbHookRollback;
    PHB_ITEM  cbFunc;
-} HB_SQLITE3, * PHB_SQLITE3;
+};
 
-typedef struct
+using PHB_SQLITE3 = HB_SQLITE3 *;
+
+struct HB_SQLITE3_HOLDER
 {
    int type;
    HB_SQLITE3 * hbsqlite3;
-} HB_SQLITE3_HOLDER, * PHB_SQLITE3_HOLDER;
+};
 
-typedef sqlite3_stmt * psqlite3_stmt;
+using PHB_SQLITE3_HOLDER = HB_SQLITE3_HOLDER *;
+
+using psqlite3_stmt = sqlite3_stmt *;
 
 /**
    destructor, it's executed automatically
  */
 
-static HB_GARBAGE_FUNC( hb_sqlite3_destructor )
+static HB_GARBAGE_FUNC(hb_sqlite3_destructor)
 {
    PHB_SQLITE3_HOLDER pStructHolder = static_cast<PHB_SQLITE3_HOLDER>(Cargo);
 
@@ -159,7 +163,7 @@ static HB_GARBAGE_FUNC( hb_sqlite3_destructor )
    }
 }
 
-static HB_GARBAGE_FUNC( hb_sqlite3_mark )
+static HB_GARBAGE_FUNC(hb_sqlite3_mark)
 {
    PHB_SQLITE3_HOLDER pStructHolder = static_cast<PHB_SQLITE3_HOLDER>(Cargo);
 
@@ -258,12 +262,12 @@ static void * hb_sqlite3_itemGet(PHB_ITEM pItem, int iType, HB_BOOL fError)
    return nullptr;
 }
 
-static void hb_sqlite3_ret( void * pMemAddr, int iType )
+static void hb_sqlite3_ret(void * pMemAddr, int iType)
 {
    hb_sqlite3_itemPut(hb_stackReturnItem(), pMemAddr, iType);
 }
 
-static void * hb_sqlite3_param( int iParam, int iType, HB_BOOL fError )
+static void * hb_sqlite3_param(int iParam, int iType, HB_BOOL fError)
 {
    return hb_sqlite3_itemGet(hb_param(iParam, Harbour::Item::POINTER), iType, fError);
 }
@@ -276,7 +280,7 @@ static void * hb_sqlite3_param( int iParam, int iType, HB_BOOL fError )
       Commit And Rollback Notification Callback
  */
 
-static int callback( void * Cargo, int argc, char ** argv, char ** azColName )
+static int callback(void * Cargo, int argc, char ** argv, char ** azColName)
 {
    PHB_ITEM pCallback = static_cast<PHB_ITEM>(Cargo);
 
@@ -312,7 +316,7 @@ static int callback( void * Cargo, int argc, char ** argv, char ** azColName )
    return 0;
 }
 
-static int authorizer( void * Cargo, int iAction, const char * sName1, const char * sName2, const char * sName3, const char * sName4 )
+static int authorizer(void * Cargo, int iAction, const char * sName1, const char * sName2, const char * sName3, const char * sName4)
 {
    PHB_ITEM pCallback = static_cast<PHB_ITEM>(Cargo);
 
@@ -348,7 +352,7 @@ static int authorizer( void * Cargo, int iAction, const char * sName1, const cha
    return 0;
 }
 
-static int busy_handler( void * Cargo, int iNumberOfTimes )
+static int busy_handler(void * Cargo, int iNumberOfTimes)
 {
    PHB_ITEM pCallback = static_cast<PHB_ITEM>(Cargo);
 
@@ -371,7 +375,7 @@ static int busy_handler( void * Cargo, int iNumberOfTimes )
    return 0;
 }
 
-static int progress_handler( void * Cargo )
+static int progress_handler(void * Cargo)
 {
    PHB_ITEM pCallback = static_cast<PHB_ITEM>(Cargo);
 
@@ -393,7 +397,7 @@ static int progress_handler( void * Cargo )
    return 0;
 }
 
-static int hook_commit( void * Cargo )
+static int hook_commit(void * Cargo)
 {
    PHB_ITEM pCallback = static_cast<PHB_ITEM>(Cargo);
 
@@ -415,7 +419,7 @@ static int hook_commit( void * Cargo )
    return 0;
 }
 
-static void hook_rollback( void * Cargo )
+static void hook_rollback(void * Cargo)
 {
    PHB_ITEM pCallback = static_cast<PHB_ITEM>(Cargo);
 
@@ -429,7 +433,7 @@ static void hook_rollback( void * Cargo )
    }
 }
 
-static void func( sqlite3_context * ctx, int argc, sqlite3_value ** argv )
+static void func(sqlite3_context * ctx, int argc, sqlite3_value ** argv)
 {
    PHB_ITEM pCallback = static_cast<PHB_ITEM>(sqlite3_user_data(ctx));
 
@@ -445,7 +449,7 @@ static void func( sqlite3_context * ctx, int argc, sqlite3_value ** argv )
       {
          for( int i = 0; i < argc; i++ )
          {
-            switch( sqlite3_value_type( argv[i] ) )
+            switch( sqlite3_value_type(argv[i]) )
             {
                case SQLITE_NULL:
                   hb_vmPushNil();
@@ -481,7 +485,7 @@ static void func( sqlite3_context * ctx, int argc, sqlite3_value ** argv )
 
       pResult = hb_param(-1, Harbour::Item::ANY);
 
-      switch( hb_itemType( pResult ) )
+      switch( hb_itemType(pResult) )
       {
          case Harbour::Item::NIL:
             sqlite3_result_null(ctx);
@@ -579,7 +583,7 @@ HB_FUNC( SQLITE3_SHUTDOWN )
 /**
    Enable Or Disable Extended Result Codes
 
-   sqlite3_extended_result_codes( db, lOnOff ) --> nResultCode
+   sqlite3_extended_result_codes(db, lOnOff) --> nResultCode
  */
 
 HB_FUNC( SQLITE3_EXTENDED_RESULT_CODES )
@@ -599,8 +603,8 @@ HB_FUNC( SQLITE3_EXTENDED_RESULT_CODES )
 /**
    Error Codes And Messages
 
-   sqlite3_errcode( db ) --> returns the numeric result code or extended result code
-   sqlite3_errmsg( db )  --> return English-language text that describes the error
+   sqlite3_errcode(db) --> returns the numeric result code or extended result code
+   sqlite3_errmsg(db)  --> return English-language text that describes the error
  */
 
 HB_FUNC( SQLITE3_ERRCODE )
@@ -661,7 +665,7 @@ HB_FUNC( SQLITE3_ERRSTR )
 /**
    Suspend Execution For A Short Time
 
-   sqlite3_sleep( ms )
+   sqlite3_sleep(ms)
  */
 
 HB_FUNC( SQLITE3_SLEEP )
@@ -672,7 +676,7 @@ HB_FUNC( SQLITE3_SLEEP )
 /**
    Last Insert Rowid
 
-   sqlite3_last_insert_rowid( db ) --> nROWID
+   sqlite3_last_insert_rowid(db) --> nROWID
  */
 
 HB_FUNC( SQLITE3_LAST_INSERT_ROWID )
@@ -692,7 +696,7 @@ HB_FUNC( SQLITE3_LAST_INSERT_ROWID )
 /**
    Name Of The Directory Holding Temporary Files
 
-   sqlite3_temp_directory( cDirName ) --> lResult
+   sqlite3_temp_directory(cDirName) --> lResult
  */
 
 HB_FUNC( SQLITE3_TEMP_DIRECTORY )
@@ -704,7 +708,7 @@ HB_FUNC( SQLITE3_TEMP_DIRECTORY )
       char *       pszFree;
       const char * pszDirName = hb_fsNameConv(hb_parcx(1), &pszFree);
 
-      if( hb_fsIsDirectory( pszDirName ) )
+      if( hb_fsIsDirectory(pszDirName) )
       {
          bResult = HB_TRUE;
       }
@@ -712,7 +716,7 @@ HB_FUNC( SQLITE3_TEMP_DIRECTORY )
       {
          if( hb_parl(2) )  /* create temp directory if not exist */
          {
-            if( hb_fsMkDir( pszDirName ) )
+            if( hb_fsMkDir(pszDirName) )
             {
                bResult = HB_TRUE;
             }
@@ -746,10 +750,9 @@ HB_FUNC( SQLITE3_TEMP_DIRECTORY )
 }
 
 /**
-   Opening( creating ) A New Database Connection
+   Opening(creating) A New Database Connection
 
-   sqlite3_open( cDatabace, lCreateIfNotExist ) --> return pointer to Db
-                                                    or NIL if error occurs
+   sqlite3_open(cDatabace, lCreateIfNotExist) --> return pointer to Db or NIL if error occurs
    sqlite3_open_v2(cDatabace, nOpenMode)      --> return pHbSqlite3 or NIL
  */
 
@@ -759,9 +762,9 @@ HB_FUNC( SQLITE3_OPEN )
    char *       pszFree;
    const char * pszdbName = hb_fsNameConv(hb_parcx(1), &pszFree);
 
-   if( hb_fsFileExists( pszdbName ) || hb_parl(2) )
+   if( hb_fsFileExists(pszdbName) || hb_parl(2) )
    {
-      if( sqlite3_open( pszdbName, &db ) == SQLITE_OK )
+      if( sqlite3_open(pszdbName, &db) == SQLITE_OK )
       {
          HB_SQLITE3 * hbsqlite3;
 
@@ -825,7 +828,7 @@ HB_FUNC( SQLITE3_OPEN_V2 )
 /**
    One-Step Query Execution Interface
 
-   sqlite3_exec( db, cSQLTEXT, [pCallbackFunc | cCallbackFunc] ) --> nResultCode
+   sqlite3_exec(db, cSQLTEXT, [pCallbackFunc | cCallbackFunc]) --> nResultCode
  */
 
 HB_FUNC( SQLITE3_EXEC )
@@ -868,7 +871,7 @@ HB_FUNC( SQLITE3_EXEC )
 /**
    Compiling An SQL Statement
 
-   sqlite3_prepare( db, cSQLTEXT, [nPrepFlags] )
+   sqlite3_prepare(db, cSQLTEXT, [nPrepFlags])
    --> return pointer to compiled statement or NIL if error occurs
 
    TODO: pszTail?
@@ -908,7 +911,7 @@ HB_FUNC( SQLITE3_PREPARE )
 /**
    Determine If An SQL Statement Is Complete
 
-   sqlite3_complete( sqlText ) --> lResult
+   sqlite3_complete(sqlText) --> lResult
  */
 
 HB_FUNC( SQLITE3_COMPLETE )
@@ -932,7 +935,7 @@ HB_FUNC( SQLITE3_COMPLETE )
    used to create a prepared statement
    if that statement was compiled using either sqlite3_prepare()
 
-   sqlite3_sql( pStmt ) --> cSQLTEXT
+   sqlite3_sql(pStmt) --> cSQLTEXT
  */
 
 HB_FUNC( SQLITE3_SQL )
@@ -941,7 +944,7 @@ HB_FUNC( SQLITE3_SQL )
 #if SQLITE_VERSION_NUMBER > 3004001
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retstr_utf8(sqlite3_sql(pStmt));
    }
@@ -957,7 +960,7 @@ HB_FUNC( SQLITE3_SQL )
 /**
    Prepared Statement Status.
 
-   sqlite3_stmt_status( pStmt, nOp, lResetFlag ) --> nStatus
+   sqlite3_stmt_status(pStmt, nOp, lResetFlag) --> nStatus
  */
 
 HB_FUNC( SQLITE3_STMT_STATUS )
@@ -965,7 +968,7 @@ HB_FUNC( SQLITE3_STMT_STATUS )
 #if SQLITE_VERSION_NUMBER >= 3006004
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retni(sqlite3_stmt_status(pStmt, hb_parni(2), static_cast<int>(hb_parl(3))));
    }
@@ -979,7 +982,7 @@ HB_FUNC( SQLITE3_STMT_STATUS )
 }
 
 /**
-   sqlite3_stmt_readonly( pStmt ) --> lResult
+   sqlite3_stmt_readonly(pStmt) --> lResult
 
    Determine If An SQL Statement Writes The Database
  */
@@ -988,7 +991,7 @@ HB_FUNC( SQLITE3_STMT_READONLY )
 #if SQLITE_VERSION_NUMBER >= 3007004
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retl(static_cast<HB_BOOL>(sqlite3_stmt_readonly(pStmt)));
    }
@@ -1004,7 +1007,7 @@ HB_FUNC( SQLITE3_STMT_READONLY )
 /**
    Find The Database Handle Associated With A Prepared Statement
 
-   sqlite3_db_handle( pStmt ) --> pHbSqlite3
+   sqlite3_db_handle(pStmt) --> pHbSqlite3
  */
 
 #if 0
@@ -1012,7 +1015,7 @@ HB_FUNC( SQLITE3_DB_HANDLE )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       /* ... */
    }
@@ -1026,14 +1029,14 @@ HB_FUNC( SQLITE3_DB_HANDLE )
 /**
    Evaluate An Prepared SQL Statement
 
-   sqlite3_step( pStmt ) --> nResultCode
+   sqlite3_step(pStmt) --> nResultCode
  */
 
 HB_FUNC( SQLITE3_STEP )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retni(sqlite3_step(pStmt));
    }
@@ -1046,7 +1049,7 @@ HB_FUNC( SQLITE3_STEP )
 /**
    Reset All Bindings On A Prepared Statement
 
-   sqlite3_clear_bindings( pStmt ) --> nResultCode
+   sqlite3_clear_bindings(pStmt) --> nResultCode
 
    Contrary to the intuition of many,
    sqlite3_reset() does not reset the bindings on a prepared statement.
@@ -1057,7 +1060,7 @@ HB_FUNC( SQLITE3_CLEAR_BINDINGS )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retni(sqlite3_clear_bindings(pStmt));
    }
@@ -1070,14 +1073,14 @@ HB_FUNC( SQLITE3_CLEAR_BINDINGS )
 /**
    Reset A Prepared Statement Object
 
-   sqlite3_reset( pStmt ) --> nResultCode
+   sqlite3_reset(pStmt) --> nResultCode
  */
 
 HB_FUNC( SQLITE3_RESET )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retni(sqlite3_reset(pStmt));
    }
@@ -1090,14 +1093,14 @@ HB_FUNC( SQLITE3_RESET )
 /**
    Finalize A Prepared Statement Object
 
-   sqlite3_finalize( pStmt ) --> nResultCode
+   sqlite3_finalize(pStmt) --> nResultCode
  */
 
 HB_FUNC( SQLITE3_FINALIZE )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retni(sqlite3_finalize(pStmt));
    }
@@ -1133,7 +1136,7 @@ HB_FUNC( SQLITE3_BIND_BLOB )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retni(sqlite3_bind_blob(pStmt, hb_parni(2), hb_parcx(3), static_cast<int>(hb_parcsiz(3)) - 1, SQLITE_TRANSIENT));
    }
@@ -1147,7 +1150,7 @@ HB_FUNC( SQLITE3_BIND_DOUBLE )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retni(sqlite3_bind_double(pStmt, hb_parni(2), hb_parnd(3)));
    }
@@ -1161,7 +1164,7 @@ HB_FUNC( SQLITE3_BIND_INT )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retni(sqlite3_bind_int(pStmt, hb_parni(2), hb_parni(3)));
    }
@@ -1176,7 +1179,7 @@ HB_FUNC( SQLITE3_BIND_INT64 )
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
    sqlite3_int64 int64 = hb_parnint(3);
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retni(sqlite3_bind_int64(pStmt, hb_parni(2), int64));
    }
@@ -1190,7 +1193,7 @@ HB_FUNC( SQLITE3_BIND_NULL )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retni(sqlite3_bind_null(pStmt, hb_parni(2)));
    }
@@ -1204,7 +1207,7 @@ HB_FUNC( SQLITE3_BIND_TEXT )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       void *  hSQLText;
       HB_SIZE nSQLText;
@@ -1225,7 +1228,7 @@ HB_FUNC( SQLITE3_BIND_ZEROBLOB )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retni(sqlite3_bind_zeroblob(pStmt, hb_parni(2), hb_parni(3)));
    }
@@ -1238,14 +1241,14 @@ HB_FUNC( SQLITE3_BIND_ZEROBLOB )
 /**
    Number Of Host Parameters
 
-   sqlite3_bind_parameter_count( pStmt ) --> nResult
+   sqlite3_bind_parameter_count(pStmt) --> nResult
  */
 
 HB_FUNC( SQLITE3_BIND_PARAMETER_COUNT )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retni(sqlite3_bind_parameter_count(pStmt));
    }
@@ -1258,14 +1261,14 @@ HB_FUNC( SQLITE3_BIND_PARAMETER_COUNT )
 /**
    Index Of A Parameter With A Given Name
 
-   sqlite3_bind_parameter_index( pStmt, cParameterName ) --> nResult
+   sqlite3_bind_parameter_index(pStmt, cParameterName) --> nResult
  */
 
 HB_FUNC( SQLITE3_BIND_PARAMETER_INDEX )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       void * hParameterName;
 
@@ -1282,14 +1285,14 @@ HB_FUNC( SQLITE3_BIND_PARAMETER_INDEX )
 /**
    Name Of A Host Parameter
 
-   sqlite3_bind_parameter_name( pStmt, nParameterIndex ) --> cParameterName
+   sqlite3_bind_parameter_name(pStmt, nParameterIndex) --> cParameterName
  */
 
 HB_FUNC( SQLITE3_BIND_PARAMETER_NAME )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retstr_utf8(sqlite3_bind_parameter_name(pStmt, hb_parni(2)));
    }
@@ -1302,7 +1305,7 @@ HB_FUNC( SQLITE3_BIND_PARAMETER_NAME )
 /**
    Count The Number Of Rows Modified
 
-   sqlite3_changes( db ) --> nRowCount
+   sqlite3_changes(db) --> nRowCount
  */
 
 HB_FUNC( SQLITE3_CHANGES )
@@ -1322,7 +1325,7 @@ HB_FUNC( SQLITE3_CHANGES )
 /**
    Total Number Of Rows Modified
 
-   sqlite3_total_changes( db ) --> nRowCount
+   sqlite3_total_changes(db) --> nRowCount
  */
 
 HB_FUNC( SQLITE3_TOTAL_CHANGES )
@@ -1342,14 +1345,14 @@ HB_FUNC( SQLITE3_TOTAL_CHANGES )
 /**
    Number Of Columns In A Result Set
 
-   sqlite3_column_count( pStmt ) --> nColumnCount
+   sqlite3_column_count(pStmt) --> nColumnCount
  */
 
 HB_FUNC( SQLITE3_COLUMN_COUNT )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retni(sqlite3_column_count(pStmt));
    }
@@ -1360,7 +1363,7 @@ HB_FUNC( SQLITE3_COLUMN_COUNT )
 }
 
 /**
-   sqlite3_column_type( pStmt, nIndex ) --> nColumnType
+   sqlite3_column_type(pStmt, nIndex) --> nColumnType
    nColumnType is Datatype code for the initial data type of the result column
 
    SQLITE_INTEGER      1
@@ -1371,14 +1374,14 @@ HB_FUNC( SQLITE3_COLUMN_COUNT )
    SQLITE_NULL         5
 
    Declared Datatype Of A Query Result (see doc)
-   sqlite3_column_decltype( pStmt, nIndex ) --> nColumnDeclType
+   sqlite3_column_decltype(pStmt, nIndex) --> nColumnDeclType
  */
 
 HB_FUNC( SQLITE3_COLUMN_TYPE )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retni(sqlite3_column_type(pStmt, hb_parni(2) - 1));
    }
@@ -1392,7 +1395,7 @@ HB_FUNC( SQLITE3_COLUMN_DECLTYPE )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retstr_utf8(sqlite3_column_decltype(pStmt, hb_parni(2) - 1));
    }
@@ -1405,14 +1408,14 @@ HB_FUNC( SQLITE3_COLUMN_DECLTYPE )
 /**
    Column Names In A Result Set
 
-   sqlite3_column_name( pStmt, columnIndex ) --> columnName
+   sqlite3_column_name(pStmt, columnIndex) --> columnName
  */
 
 HB_FUNC( SQLITE3_COLUMN_NAME )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retstr_utf8(sqlite3_column_name(pStmt, hb_parni(2) - 1));
    }
@@ -1423,23 +1426,23 @@ HB_FUNC( SQLITE3_COLUMN_NAME )
 }
 
 /**
-   sqlite3_column_bytes( pStmt, columnIndex )
+   sqlite3_column_bytes(pStmt, columnIndex)
    --> returns the number of bytes in that BLOB or string
 
    Results Values From A Query
 
-   sqlite3_column_blob( pStmt, columnIndex )   --> value as BLOB
-   sqlite3_column_double( pStmt, columnIndex ) --> value as double
-   sqlite3_column_int( pStmt, columnIndex )    --> value as integer
+   sqlite3_column_blob(pStmt, columnIndex)   --> value as BLOB
+   sqlite3_column_double(pStmt, columnIndex) --> value as double
+   sqlite3_column_int(pStmt, columnIndex)    --> value as integer
    sqlite3_column_int64(pStmt, columnIndex)  --> value as long long
-   sqlite3_column_text( pStmt, columnIndex )   --> value as text
+   sqlite3_column_text(pStmt, columnIndex)   --> value as text
  */
 
 HB_FUNC( SQLITE3_COLUMN_BYTES )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retni(sqlite3_column_bytes(pStmt, hb_parni(2) - 1));
    }
@@ -1453,7 +1456,7 @@ HB_FUNC( SQLITE3_COLUMN_BLOB )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       int iIndex = hb_parni(2) - 1;
       hb_retclen(static_cast<const char*>(sqlite3_column_blob(pStmt, iIndex)), sqlite3_column_bytes(pStmt, iIndex));
@@ -1468,7 +1471,7 @@ HB_FUNC( SQLITE3_COLUMN_DOUBLE )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retnd(sqlite3_column_double(pStmt, hb_parni(2) - 1));
    }
@@ -1482,7 +1485,7 @@ HB_FUNC( SQLITE3_COLUMN_INT )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retni(sqlite3_column_int(pStmt, hb_parni(2) - 1));
    }
@@ -1496,7 +1499,7 @@ HB_FUNC( SQLITE3_COLUMN_INT64 )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retnint(sqlite3_column_int64(pStmt, hb_parni(2) - 1));
    }
@@ -1510,7 +1513,7 @@ HB_FUNC( SQLITE3_COLUMN_TEXT )
 {
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       int iIndex = hb_parni(2) - 1;
       hb_retstrlen_utf8(reinterpret_cast<const char*>(sqlite3_column_text(pStmt, iIndex)), sqlite3_column_bytes(pStmt, iIndex));
@@ -1548,7 +1551,7 @@ HB_FUNC( SQLITE3_LOAD_EXTENSION )
 /**
    Enable Or Disable Extension Loading
 
-   sqlite3_enable_load_extension( db, lOnOff ) --> prev.state
+   sqlite3_enable_load_extension(db, lOnOff) --> prev.state
  */
 
 HB_FUNC( SQLITE3_ENABLE_LOAD_EXTENSION )
@@ -1583,7 +1586,7 @@ HB_FUNC( SQLITE3_RESET_AUTO_EXTENSION )
 /**
    Set A Busy Timeout
 
-   sqlite3_busy_timeout( db, ms )
+   sqlite3_busy_timeout(db, ms)
  */
 
 HB_FUNC( SQLITE3_BUSY_TIMEOUT )
@@ -1603,7 +1606,7 @@ HB_FUNC( SQLITE3_BUSY_TIMEOUT )
 /**
    Convenience Routines For Running Queries
 
-   sqlite3_get_table( db, sqlText ) --> aResult
+   sqlite3_get_table(db, sqlText) --> aResult
  */
 
 HB_FUNC( SQLITE3_GET_TABLE )
@@ -1618,7 +1621,7 @@ HB_FUNC( SQLITE3_GET_TABLE )
       char *   pszErrMsg = nullptr;
       char **  pResult;
 
-      if( sqlite3_get_table( pHbSqlite3->db, hb_parstr_utf8(2, &hSQLText, nullptr), &pResult, &iRow, &iCol, &pszErrMsg ) == SQLITE_OK )
+      if( sqlite3_get_table(pHbSqlite3->db, hb_parstr_utf8(2, &hSQLText, nullptr), &pResult, &iRow, &iCol, &pszErrMsg) == SQLITE_OK )
       {
          int k = 0;
 
@@ -1726,9 +1729,9 @@ HB_FUNC( SQLITE3_TABLE_COLUMN_METADATA )
 /**
    Source Of Data In A Query Result
 
-   sqlite3_column_database_name( pStmt, ColumnIndex ) --> cDatabaseName
-   sqlite3_column_table_name( pStmt, ColumnIndex )    --> cTableName
-   sqlite3_column_origin_name( pStmt, ColumnIndex )   --> cColumnName
+   sqlite3_column_database_name(pStmt, ColumnIndex) --> cDatabaseName
+   sqlite3_column_table_name(pStmt, ColumnIndex)    --> cTableName
+   sqlite3_column_origin_name(pStmt, ColumnIndex)   --> cColumnName
  */
 
 HB_FUNC( SQLITE3_COLUMN_DATABASE_NAME )
@@ -1736,7 +1739,7 @@ HB_FUNC( SQLITE3_COLUMN_DATABASE_NAME )
 #ifdef SQLITE_ENABLE_COLUMN_METADATA
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retstr_utf8(sqlite3_column_database_name(pStmt, hb_parni(2) - 1));
    }
@@ -1754,7 +1757,7 @@ HB_FUNC( SQLITE3_COLUMN_TABLE_NAME )
 #ifdef SQLITE_ENABLE_COLUMN_METADATA
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retstr_utf8(sqlite3_column_table_name(pStmt, hb_parni(2) - 1));
    }
@@ -1772,7 +1775,7 @@ HB_FUNC( SQLITE3_COLUMN_ORIGIN_NAME )
 #ifdef SQLITE_ENABLE_COLUMN_METADATA
    psqlite3_stmt pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt )
+   if( pStmt != nullptr )
    {
       hb_retstr_utf8(sqlite3_column_origin_name(pStmt, hb_parni(2) - 1));
    }
@@ -1810,15 +1813,16 @@ HB_FUNC( SQLITE3_BLOB_OPEN )
       void * hTableName;
       void * hColumnName;
 
-      if( sqlite3_blob_open(
-             pHbSqlite3->db,
-             hb_parstr_utf8(2, &hDbName, nullptr),
-             hb_parstr_utf8(3, &hTableName, nullptr),
-             hb_parstr_utf8(4, &hColumnName, nullptr),
-             ( sqlite3_int64 ) hb_parnint(5) /* iRow */,
-             hb_parni(6) /* flags */,
-             &ppBlob ) == SQLITE_OK )
+      if( sqlite3_blob_open(pHbSqlite3->db,
+                            hb_parstr_utf8(2, &hDbName, nullptr),
+                            hb_parstr_utf8(3, &hTableName, nullptr),
+                            hb_parstr_utf8(4, &hColumnName, nullptr),
+                            static_cast<sqlite3_int64>(hb_parnint(5)) /* iRow */,
+                            hb_parni(6) /* flags */,
+                            &ppBlob) == SQLITE_OK )
+      {
          hb_retptr(ppBlob);
+      }
       else
       {
          hb_retptr(nullptr);
@@ -1843,7 +1847,7 @@ HB_FUNC( SQLITE3_BLOB_REOPEN )
 #if SQLITE_VERSION_NUMBER >= 3007004
    sqlite3_blob * pBlob = static_cast<sqlite3_blob*>(hb_parptr(1));
 
-   if( pBlob )
+   if( pBlob != nullptr )
    {
       hb_retni(sqlite3_blob_reopen(pBlob, hb_parnint(2)));
    }
@@ -1864,7 +1868,7 @@ HB_FUNC( SQLITE3_BLOB_CLOSE )
 {
    sqlite3_blob * pBlob = static_cast<sqlite3_blob*>(hb_parptr(1));
 
-   if( pBlob )
+   if( pBlob != nullptr )
    {
       hb_retni(sqlite3_blob_close(pBlob));
    }
@@ -1882,7 +1886,7 @@ HB_FUNC( SQLITE3_BLOB_BYTES )
 {
    sqlite3_blob * pBlob = static_cast<sqlite3_blob*>(hb_parptr(1));
 
-   if( pBlob )
+   if( pBlob != nullptr )
    {
       hb_retni(sqlite3_blob_bytes(pBlob));
    }
@@ -1900,7 +1904,7 @@ HB_FUNC( SQLITE3_BLOB_READ )
 {
    sqlite3_blob * pBlob = static_cast<sqlite3_blob*>(hb_parptr(1));
 
-   if( pBlob )
+   if( pBlob != nullptr )
    {
       int    iLen = hb_parni(2);
       char * buffer;
@@ -1912,7 +1916,7 @@ HB_FUNC( SQLITE3_BLOB_READ )
 
       buffer = static_cast<char*>(hb_xgrab(iLen + 1));
 
-      if( SQLITE_OK == sqlite3_blob_read( pBlob, static_cast<void*>(buffer), iLen, hb_parni(3) ) )
+      if( SQLITE_OK == sqlite3_blob_read(pBlob, static_cast<void*>(buffer), iLen, hb_parni(3)) )
       {
          hb_retclen_buffer(buffer, iLen);
       }
@@ -1935,7 +1939,7 @@ HB_FUNC( SQLITE3_BLOB_WRITE )
 {
    sqlite3_blob * pBlob = static_cast<sqlite3_blob*>(hb_parptr(1));
 
-   if( pBlob )
+   if( pBlob != nullptr )
    {
       int iLen = hb_parni(3);
 
@@ -1955,7 +1959,7 @@ HB_FUNC( SQLITE3_BLOB_WRITE )
 /**
     Test To See If The Database Is In Auto-Commit Mode
 
-    sqlite3_get_autocommit( db ) --> lResult
+    sqlite3_get_autocommit(db) --> lResult
  */
 
 HB_FUNC( SQLITE3_GET_AUTOCOMMIT )
@@ -1975,7 +1979,7 @@ HB_FUNC( SQLITE3_GET_AUTOCOMMIT )
 /**
    Enable Or Disable Shared Pager Cache
 
-   sqlite3_enable_shared_cache( lOnOff ) --> nResultCode
+   sqlite3_enable_shared_cache(lOnOff) --> nResultCode
  */
 
 HB_FUNC( SQLITE3_ENABLE_SHARED_CACHE )
@@ -1988,11 +1992,11 @@ HB_FUNC( SQLITE3_ENABLE_SHARED_CACHE )
 /**
    Tracing And Profiling Functions
 
-   sqlite3_trace( db, lOnOff )
-   sqlite3_profile( db, lOnOff )
+   sqlite3_trace(db, lOnOff)
+   sqlite3_profile(db, lOnOff)
  */
 #if 0
-static void SQL3ProfileLog( void * sFile, const char * sProfileMsg, sqlite3_uint64 uint64 )
+static void SQL3ProfileLog(void * sFile, const char * sProfileMsg, sqlite3_uint64 uint64)
 {
    if( sProfileMsg )
    {
@@ -2008,7 +2012,7 @@ static void SQL3ProfileLog( void * sFile, const char * sProfileMsg, sqlite3_uint
 #endif
 
 #if 0
-static void SQL3TraceLog( void * sFile, const char * sTraceMsg )
+static void SQL3TraceLog(void * sFile, const char * sTraceMsg)
 {
    if( sTraceMsg )
    {
@@ -2103,7 +2107,7 @@ HB_FUNC( SQLITE3_BUFF_TO_FILE )
    Causes any pending database operation to abort and return at its
    earliest opportunity.
 
-   sqlite3_interrupt( db ) --> NIL
+   sqlite3_interrupt(db) --> NIL
  */
 
 HB_FUNC( SQLITE3_INTERRUPT )
@@ -2119,7 +2123,7 @@ HB_FUNC( SQLITE3_INTERRUPT )
 /**
    A Callback To Handle SQLITE_BUSY Errors
 
-   sqlite3_busy_handler( db, nNumOfOpCodes, [cFunc|sFunc] )
+   sqlite3_busy_handler(db, nNumOfOpCodes, [cFunc|sFunc])
  */
 
 HB_FUNC( SQLITE3_BUSY_HANDLER )
@@ -2151,7 +2155,7 @@ HB_FUNC( SQLITE3_BUSY_HANDLER )
 /**
    Query Progress Callbacks
 
-   sqlite3_progress_handler( db, nNumOfOpCodes, [cFunc|sFunc] )
+   sqlite3_progress_handler(db, nNumOfOpCodes, [cFunc|sFunc])
  */
 
 HB_FUNC( SQLITE3_PROGRESS_HANDLER )
@@ -2183,8 +2187,8 @@ HB_FUNC( SQLITE3_PROGRESS_HANDLER )
 /**
    Commit And Rollback Notification Callbacks
 
-   sqlite3_commit_hook( db, [cFunc|sFunc] )
-   sqlite3_rollback_hook( db, [cFunc|sFunc] )
+   sqlite3_commit_hook(db, [cFunc|sFunc])
+   sqlite3_rollback_hook(db, [cFunc|sFunc])
  */
 
 HB_FUNC( SQLITE3_COMMIT_HOOK )
@@ -2242,7 +2246,7 @@ HB_FUNC( SQLITE3_ROLLBACK_HOOK )
 /**
    Compile-Time Authorization Callbacks
 
-   sqlite3_set_authorizer( pDb, [cFunc|sFunc] )
+   sqlite3_set_authorizer(pDb, [cFunc|sFunc])
  */
 
 HB_FUNC( SQLITE3_SET_AUTHORIZER )
@@ -2278,13 +2282,13 @@ HB_FUNC( SQLITE3_SET_AUTHORIZER )
 
    ! Experimental !
 
-   sqlite3_backup_init( DbDest, cDestName, DbSource, cSourceName ) ->
+   sqlite3_backup_init(DbDest, cDestName, DbSource, cSourceName) ->
                return pointer to Backup or NIL if error occurs
 
-   sqlite3_backup_step( pBackup, nPage ) --> nResult
-   sqlite3_backup_finish( pBackup )      --> nResult
-   sqlite3_backup_remaining( pBackup )   --> nResult
-   sqlite3_backup_pagecount( pBackup )   --> nResult
+   sqlite3_backup_step(pBackup, nPage) --> nResult
+   sqlite3_backup_finish(pBackup)      --> nResult
+   sqlite3_backup_remaining(pBackup)   --> nResult
+   sqlite3_backup_pagecount(pBackup)   --> nResult
  */
 
 HB_FUNC( SQLITE3_BACKUP_INIT )
@@ -2322,7 +2326,7 @@ HB_FUNC( SQLITE3_BACKUP_STEP )
    /* FIXME: Use GC collected pointer */
    sqlite3_backup * pBackup = static_cast<sqlite3_backup*>(hb_parptr(1));
 
-   if( pBackup )
+   if( pBackup != nullptr )
    {
       hb_retni(sqlite3_backup_step(pBackup, hb_parni(2)));
    }
@@ -2341,7 +2345,7 @@ HB_FUNC( SQLITE3_BACKUP_FINISH )
    /* FIXME: Use and free GC collected pointer */
    sqlite3_backup * pBackup = static_cast<sqlite3_backup*>(hb_parptr(1));
 
-   if( pBackup )
+   if( pBackup != nullptr )
    {
       hb_retni(sqlite3_backup_finish(pBackup));
    }
@@ -2360,7 +2364,7 @@ HB_FUNC( SQLITE3_BACKUP_REMAINING )
    /* FIXME: Use GC collected pointer */
    sqlite3_backup * pBackup = static_cast<sqlite3_backup*>(hb_parptr(1));
 
-   if( pBackup )
+   if( pBackup != nullptr )
    {
       hb_retni(sqlite3_backup_remaining(pBackup));
    }
@@ -2379,7 +2383,7 @@ HB_FUNC( SQLITE3_BACKUP_PAGECOUNT )
    /* FIXME: Use GC collected pointer */
    sqlite3_backup * pBackup = static_cast<sqlite3_backup*>(hb_parptr(1));
 
-   if( pBackup )
+   if( pBackup != nullptr )
    {
       hb_retni(sqlite3_backup_pagecount(pBackup));
    }
@@ -2396,7 +2400,7 @@ HB_FUNC( SQLITE3_BACKUP_PAGECOUNT )
    Memory Allocator Statistics
 
    sqlite3_memory_used() --> nResult
-   sqlite3_memory_highwater( lResetFlag ) --> nResult
+   sqlite3_memory_highwater(lResetFlag) --> nResult
  */
 
 HB_FUNC( SQLITE3_MEMORY_USED )
@@ -2438,13 +2442,13 @@ HB_FUNC( SQLITE3_THREADSAFE )
 /**
    SQLite Runtime Status
 
-   sqlite3_status( nOp, @nCurrent, @nHighwater, lResetFlag ) --> nResult
+   sqlite3_status(nOp, @nCurrent, @nHighwater, lResetFlag) --> nResult
  */
 
 HB_FUNC( SQLITE3_STATUS )
 {
 #if SQLITE_VERSION_NUMBER >= 3006000
-   if( hb_pcount() > 3 && ( HB_ISNUM(2) && HB_ISBYREF(2) ) && ( HB_ISNUM(3) && HB_ISBYREF(3) ) )
+   if( hb_pcount() > 3 && (HB_ISNUM(2) && HB_ISBYREF(2)) && (HB_ISNUM(3) && HB_ISBYREF(3)) )
    {
       int iCurrent, iHighwater;
 
@@ -2465,7 +2469,7 @@ HB_FUNC( SQLITE3_STATUS )
 /**
    Database Connection Status
 
-   sqlite3_db_status( pDb, nOp, @nCurrent, @nHighwater, lResetFlag ) --> nResult
+   sqlite3_db_status(pDb, nOp, @nCurrent, @nHighwater, lResetFlag) --> nResult
  */
 
 HB_FUNC( SQLITE3_DB_STATUS )
@@ -2473,7 +2477,7 @@ HB_FUNC( SQLITE3_DB_STATUS )
 #if SQLITE_VERSION_NUMBER >= 3006001
    HB_SQLITE3 * pHbSqlite3 = static_cast<HB_SQLITE3*>(hb_sqlite3_param(1, HB_SQLITE3_DB, true));
 
-   if( pHbSqlite3 && pHbSqlite3->db && ( hb_pcount() > 4 ) && ( HB_ISNUM(3) && HB_ISBYREF(3) ) && ( HB_ISNUM(4) && HB_ISBYREF(4) ) )
+   if( pHbSqlite3 && pHbSqlite3->db && (hb_pcount() > 4) && (HB_ISNUM(3) && HB_ISBYREF(3)) && (HB_ISNUM(4) && HB_ISBYREF(4)) )
    {
       int iCurrent, iHighwater;
 
@@ -2494,7 +2498,7 @@ HB_FUNC( SQLITE3_DB_STATUS )
 /**
    Run-time Limits
 
-   sqlite3_limit( pDb, nId, nNewVal ) --> nOldVal
+   sqlite3_limit(pDb, nId, nNewVal) --> nOldVal
  */
 
 HB_FUNC( SQLITE3_LIMIT )
@@ -2502,7 +2506,7 @@ HB_FUNC( SQLITE3_LIMIT )
 #if SQLITE_VERSION_NUMBER >= 3005008
    HB_SQLITE3 * pHbSqlite3 = static_cast<HB_SQLITE3*>(hb_sqlite3_param(1, HB_SQLITE3_DB, true));
 
-   if( pHbSqlite3 && pHbSqlite3->db && ( hb_pcount() > 2 ) && HB_ISNUM(2) && HB_ISNUM(3) )
+   if( pHbSqlite3 && pHbSqlite3->db && (hb_pcount() > 2) && HB_ISNUM(2) && HB_ISNUM(3) )
    {
       hb_retni(sqlite3_limit(pHbSqlite3->db, hb_parni(2), hb_parni(3)));
    }
@@ -2543,7 +2547,7 @@ HB_FUNC( SQLITE3_COMPILEOPTION_GET )
 /**
    Create Or Redefine SQL Functions
 
-   sqlite3_create_function( db, cFuncName, nArg, [cFunc|sFunc] )
+   sqlite3_create_function(db, cFuncName, nArg, [cFunc|sFunc])
 
    Only scalar function creation now supported.
  */
