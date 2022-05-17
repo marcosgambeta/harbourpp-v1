@@ -63,7 +63,7 @@
 static RDDFUNCS        delimSuper;
 static const HB_USHORT s_uiNumLength[9] = { 0, 4, 6, 8, 11, 13, 16, 18, 20 };
 
-static void hb_delimInitArea( DELIMAREAP pArea, char * szFileName )
+static void hb_delimInitArea(DELIMAREAP pArea, char * szFileName)
 {
    const char * szEol;
 
@@ -78,10 +78,10 @@ static void hb_delimInitArea( DELIMAREAP pArea, char * szFileName )
    }
    pArea->szEol = hb_strdup(szEol);
    pArea->uiEolLen = static_cast<HB_USHORT>(strlen(szEol));
-   pArea->fAnyEol = ( szEol[0] == '\n' || szEol[0] == '\r' ) &&
-                    ( pArea->uiEolLen == 1 ||
-                      ( pArea->uiEolLen == 2 && szEol[0] != szEol[1] &&
-                        ( szEol[1] == '\n' || szEol[1] == '\r' ) ) );
+   pArea->fAnyEol = (szEol[0] == '\n' || szEol[0] == '\r') &&
+                    (pArea->uiEolLen == 1 ||
+                      (pArea->uiEolLen == 2 && szEol[0] != szEol[1] &&
+                        (szEol[1] == '\n' || szEol[1] == '\r')));
 
    /* allocate record buffer, one additional byte is for deleted flag */
    pArea->pRecord = static_cast<HB_BYTE*>(hb_xgrab(pArea->uiRecordLen + 1));
@@ -119,7 +119,7 @@ static HB_ERRCODE hb_delimWrite(DELIMAREAP pArea, const void * pBuffer, HB_SIZE 
    return HB_SUCCESS;
 }
 
-static HB_ERRCODE hb_delimWriteHeader( DELIMAREAP pArea )
+static HB_ERRCODE hb_delimWriteHeader(DELIMAREAP pArea)
 {
    HB_ERRCODE errCode = HB_SUCCESS;
    const char * pszFieldName;
@@ -176,7 +176,7 @@ static void hb_delimClearRecordBuffer(DELIMAREAP pArea)
 static HB_SIZE hb_delimEncodeBuffer(DELIMAREAP pArea)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimEncodeBuffer(%p)", static_cast<void*>(pArea) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimEncodeBuffer(%p)", static_cast<void*>(pArea)));
 #endif
 
    HB_SIZE nSize;
@@ -223,7 +223,7 @@ static HB_SIZE hb_delimEncodeBuffer(DELIMAREAP pArea)
             break;
 
          case HB_FT_LOGICAL:
-            pBuffer[nSize++] = ( *pFieldBuf == 'T' || *pFieldBuf == 't' || *pFieldBuf == 'Y' || *pFieldBuf == 'y' ) ? 'T' : 'F';
+            pBuffer[nSize++] = (*pFieldBuf == 'T' || *pFieldBuf == 't' || *pFieldBuf == 'Y' || *pFieldBuf == 'y') ? 'T' : 'F';
             break;
 
          case HB_FT_DATE:
@@ -277,7 +277,7 @@ static HB_SIZE hb_delimEncodeBuffer(DELIMAREAP pArea)
    return nSize;
 }
 
-static int hb_delimNextChar( DELIMAREAP pArea )
+static int hb_delimNextChar(DELIMAREAP pArea)
 {
    for( ;; )
    {
@@ -351,10 +351,10 @@ static int hb_delimNextChar( DELIMAREAP pArea )
 /*
  * Read record, decode it to buffer and set next record offset
  */
-static HB_ERRCODE hb_delimReadRecord( DELIMAREAP pArea )
+static HB_ERRCODE hb_delimReadRecord(DELIMAREAP pArea)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimReadRecord(%p)", static_cast<void*>(pArea) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimReadRecord(%p)", static_cast<void*>(pArea)));
 #endif
 
    int ch = 0;
@@ -375,7 +375,7 @@ static HB_ERRCODE hb_delimReadRecord( DELIMAREAP pArea )
          HB_BYTE * pFieldBuf = pArea->pRecord + pArea->pFieldOffset[uiField], buffer[256];
          char cStop;
 
-         ch = hb_delimNextChar( pArea );
+         ch = hb_delimNextChar(pArea);
          if( ch != -2 )
          {
             pArea->area.fEof = HB_FALSE;
@@ -384,14 +384,14 @@ static HB_ERRCODE hb_delimReadRecord( DELIMAREAP pArea )
          /* ignore leading spaces */
          while( ch == ' ' )
          {
-            ch = hb_delimNextChar( pArea );
+            ch = hb_delimNextChar(pArea);
          }
 
          /* set the stop character */
          if( pArea->cDelim && ch == pArea->cDelim )
          {
             cStop = pArea->cDelim;
-            ch = hb_delimNextChar( pArea );
+            ch = hb_delimNextChar(pArea);
          }
          else
          {
@@ -403,7 +403,7 @@ static HB_ERRCODE hb_delimReadRecord( DELIMAREAP pArea )
           * can be terminated only with valid stop character when
           * other fields also by length
           */
-         if( pField->uiType == HB_FT_STRING || ( pField->uiType == HB_FT_TIMESTAMP && cStop == pArea->cDelim ) )
+         if( pField->uiType == HB_FT_STRING || (pField->uiType == HB_FT_TIMESTAMP && cStop == pArea->cDelim) )
          {
             while( ch >= 0 && ch != cStop )
             {
@@ -411,7 +411,7 @@ static HB_ERRCODE hb_delimReadRecord( DELIMAREAP pArea )
                {
                   pFieldBuf[uiSize++] = static_cast<HB_BYTE>(ch);
                }
-               ch = hb_delimNextChar( pArea );
+               ch = hb_delimNextChar(pArea);
             }
          }
          else
@@ -422,17 +422,17 @@ static HB_ERRCODE hb_delimReadRecord( DELIMAREAP pArea )
                {
                   buffer[uiSize++] = static_cast<HB_BYTE>(ch);
                }
-               ch = hb_delimNextChar( pArea );
+               ch = hb_delimNextChar(pArea);
             }
             buffer[uiSize] = '\0';
 
             if( pField->uiType == HB_FT_LOGICAL )
             {
-               *pFieldBuf = ( *buffer == 'T' || *buffer == 't' || *buffer == 'Y' || *buffer == 'y' ) ? 'T' : 'F';
+               *pFieldBuf = (*buffer == 'T' || *buffer == 't' || *buffer == 'Y' || *buffer == 'y') ? 'T' : 'F';
             }
             else if( pField->uiType == HB_FT_DATE )
             {
-               if( uiSize == 8 && hb_dateEncStr( reinterpret_cast<char*>(buffer) ) != 0 )
+               if( uiSize == 8 && hb_dateEncStr(reinterpret_cast<char*>(buffer)) != 0 )
                {
                   memcpy(pFieldBuf, buffer, 8);
                }
@@ -451,7 +451,7 @@ static HB_ERRCODE hb_delimReadRecord( DELIMAREAP pArea )
                double dVal;
                HB_BOOL fDbl;
 
-               fDbl = hb_strnToNum( reinterpret_cast<const char*>(buffer), uiSize, &lVal, &dVal );
+               fDbl = hb_strnToNum(reinterpret_cast<const char*>(buffer), uiSize, &lVal, &dVal);
                if( fDbl )
                {
                   pArea->area.valResult = hb_itemPutNDLen(pArea->area.valResult, dVal, uiLen - pField->uiDec - 1, pField->uiDec);
@@ -469,7 +469,7 @@ static HB_ERRCODE hb_delimReadRecord( DELIMAREAP pArea )
          /* ignore all character to the next field separator */
          while( ch >= 0 && ch != pArea->cSeparator )
          {
-            ch = hb_delimNextChar( pArea );
+            ch = hb_delimNextChar(pArea);
          }
 
          /* stop reading on EOL */
@@ -483,7 +483,7 @@ static HB_ERRCODE hb_delimReadRecord( DELIMAREAP pArea )
    /* ignore all character to the end of line */
    while( ch >= 0 )
    {
-      ch = hb_delimNextChar( pArea );
+      ch = hb_delimNextChar(pArea);
    }
 
    pArea->fPositioned = !pArea->area.fEof;
@@ -491,16 +491,16 @@ static HB_ERRCODE hb_delimReadRecord( DELIMAREAP pArea )
    return HB_SUCCESS;
 }
 
-static HB_ERRCODE hb_delimNextRecord( DELIMAREAP pArea )
+static HB_ERRCODE hb_delimNextRecord(DELIMAREAP pArea)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimNextRecord(%p)", static_cast<void*>(pArea) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimNextRecord(%p)", static_cast<void*>(pArea)));
 #endif
 
    if( pArea->fPositioned )
    {
       pArea->ulRecNo++;
-      return hb_delimReadRecord( pArea );
+      return hb_delimReadRecord(pArea);
    }
    return HB_SUCCESS;
 }
@@ -512,10 +512,10 @@ static HB_ERRCODE hb_delimNextRecord( DELIMAREAP pArea )
 /*
  * Position cursor at a specific physical record.
  */
-static HB_ERRCODE hb_delimGoTo( DELIMAREAP pArea, HB_ULONG ulRecNo )
+static HB_ERRCODE hb_delimGoTo(DELIMAREAP pArea, HB_ULONG ulRecNo)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimGoTo(%p, %lu)", static_cast<void*>(pArea), ulRecNo ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimGoTo(%p, %lu)", static_cast<void*>(pArea), ulRecNo));
 #endif
 
 #ifndef HB_CLP_STRICT
@@ -523,7 +523,7 @@ static HB_ERRCODE hb_delimGoTo( DELIMAREAP pArea, HB_ULONG ulRecNo )
    {
       while( pArea->ulRecNo < ulRecNo && pArea->fPositioned )
       {
-         if( hb_delimNextRecord( pArea ) != HB_SUCCESS )
+         if( hb_delimNextRecord(pArea) != HB_SUCCESS )
          {
             return HB_FAILURE;
          }
@@ -532,7 +532,7 @@ static HB_ERRCODE hb_delimGoTo( DELIMAREAP pArea, HB_ULONG ulRecNo )
    }
 #endif
    /* generate RTE */
-   return SUPER_GOTO( &pArea->area, ulRecNo );
+   return SUPER_GOTO(&pArea->area, ulRecNo);
 }
 
 /*
@@ -541,7 +541,7 @@ static HB_ERRCODE hb_delimGoTo( DELIMAREAP pArea, HB_ULONG ulRecNo )
 static HB_ERRCODE hb_delimGoToId(DELIMAREAP pArea, PHB_ITEM pItem)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimGoToId(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pItem) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimGoToId(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pItem)));
 #endif
 
 #ifndef HB_CLP_STRICT
@@ -557,10 +557,10 @@ static HB_ERRCODE hb_delimGoToId(DELIMAREAP pArea, PHB_ITEM pItem)
 /*
  * Position cursor at the first record.
  */
-static HB_ERRCODE hb_delimGoTop( DELIMAREAP pArea )
+static HB_ERRCODE hb_delimGoTop(DELIMAREAP pArea)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimGoTop(%p)", static_cast<void*>(pArea) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimGoTop(%p)", static_cast<void*>(pArea)));
 #endif
 
    if( SELF_GOCOLD(&pArea->area) != HB_SUCCESS )
@@ -576,11 +576,11 @@ static HB_ERRCODE hb_delimGoTop( DELIMAREAP pArea )
       if( pArea->ulRecNo != 0 || !pArea->fReadonly )
       {
          /* generate RTE */
-         return SUPER_GOTOP( &pArea->area );
+         return SUPER_GOTOP(&pArea->area);
       }
 
       pArea->ulRecNo = 1;
-      if( hb_delimReadRecord( pArea ) != HB_SUCCESS )
+      if( hb_delimReadRecord(pArea) != HB_SUCCESS )
       {
          return HB_FAILURE;
       }
@@ -592,10 +592,10 @@ static HB_ERRCODE hb_delimGoTop( DELIMAREAP pArea )
 /*
  * Reposition cursor, regardless of filter.
  */
-static HB_ERRCODE hb_delimSkipRaw( DELIMAREAP pArea, HB_LONG lToSkip )
+static HB_ERRCODE hb_delimSkipRaw(DELIMAREAP pArea, HB_LONG lToSkip)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimSkipRaw(%p,%ld)", static_cast<void*>(pArea), lToSkip ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimSkipRaw(%p,%ld)", static_cast<void*>(pArea), lToSkip));
 #endif
 
    if( SELF_GOCOLD(&pArea->area) != HB_SUCCESS )
@@ -606,21 +606,21 @@ static HB_ERRCODE hb_delimSkipRaw( DELIMAREAP pArea, HB_LONG lToSkip )
    if( lToSkip != 1 || !pArea->fReadonly )
    {
       /* generate RTE */
-      return SUPER_SKIPRAW( &pArea->area, lToSkip );
+      return SUPER_SKIPRAW(&pArea->area, lToSkip);
    }
    else
    {
-      return hb_delimNextRecord( pArea );
+      return hb_delimNextRecord(pArea);
    }
 }
 
 /*
  * Determine deleted status for a record.
  */
-static HB_ERRCODE hb_delimDeleted( DELIMAREAP pArea, HB_BOOL * pDeleted )
+static HB_ERRCODE hb_delimDeleted(DELIMAREAP pArea, HB_BOOL * pDeleted)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimDeleted(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pDeleted) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimDeleted(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pDeleted)));
 #endif
 
    HB_SYMBOL_UNUSED(pArea);
@@ -636,7 +636,7 @@ static HB_ERRCODE hb_delimDeleted( DELIMAREAP pArea, HB_BOOL * pDeleted )
 static HB_ERRCODE hb_delimRecCount(DELIMAREAP pArea, HB_ULONG * pRecCount)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimRecCount(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRecCount) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimRecCount(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRecCount)));
 #endif
 
    *pRecCount = pArea->ulRecCount;
@@ -647,10 +647,10 @@ static HB_ERRCODE hb_delimRecCount(DELIMAREAP pArea, HB_ULONG * pRecCount)
 /*
  * Obtain physical row number at current WorkArea cursor position.
  */
-static HB_ERRCODE hb_delimRecNo( DELIMAREAP pArea, HB_ULONG * pulRecNo )
+static HB_ERRCODE hb_delimRecNo(DELIMAREAP pArea, HB_ULONG * pulRecNo)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimRecNo(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pulRecNo) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimRecNo(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pulRecNo)));
 #endif
 
    *pulRecNo = pArea->ulRecNo;
@@ -664,7 +664,7 @@ static HB_ERRCODE hb_delimRecNo( DELIMAREAP pArea, HB_ULONG * pulRecNo )
 static HB_ERRCODE hb_delimRecId(DELIMAREAP pArea, PHB_ITEM pRecNo)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimRecId(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRecNo) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimRecId(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRecNo)));
 #endif
 
    HB_ERRCODE errCode;
@@ -692,10 +692,10 @@ static HB_ERRCODE hb_delimRecId(DELIMAREAP pArea, PHB_ITEM pRecNo)
 /*
  * Append a record to the WorkArea.
  */
-static HB_ERRCODE hb_delimAppend( DELIMAREAP pArea, HB_BOOL fUnLockAll )
+static HB_ERRCODE hb_delimAppend(DELIMAREAP pArea, HB_BOOL fUnLockAll)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimAppend(%p,%d)", static_cast<void*>(pArea), static_cast<int>(fUnLockAll) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimAppend(%p,%d)", static_cast<void*>(pArea), static_cast<int>(fUnLockAll)));
 #endif
 
    HB_SYMBOL_UNUSED(fUnLockAll);
@@ -721,10 +721,10 @@ static HB_ERRCODE hb_delimAppend( DELIMAREAP pArea, HB_BOOL fUnLockAll )
 /*
  * Delete a record.
  */
-static HB_ERRCODE hb_delimDeleteRec( DELIMAREAP pArea )
+static HB_ERRCODE hb_delimDeleteRec(DELIMAREAP pArea)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimDeleteRec(%p)", static_cast<void*>(pArea) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimDeleteRec(%p)", static_cast<void*>(pArea)));
 #endif
 
    HB_SYMBOL_UNUSED(pArea);
@@ -746,10 +746,10 @@ static HB_ERRCODE hb_delimDeleteRec( DELIMAREAP pArea )
 /*
  * Undelete the current record.
  */
-static HB_ERRCODE hb_delimRecall( DELIMAREAP pArea )
+static HB_ERRCODE hb_delimRecall(DELIMAREAP pArea)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimRecall(%p)", static_cast<void*>(pArea) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimRecall(%p)", static_cast<void*>(pArea)));
 #endif
 
    HB_SYMBOL_UNUSED(pArea);
@@ -763,7 +763,7 @@ static HB_ERRCODE hb_delimRecall( DELIMAREAP pArea )
 static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimGetValue(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimGetValue(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
 #endif
 
    LPFIELD pField;
@@ -777,10 +777,10 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
    switch( pField->uiType )
    {
       case HB_FT_STRING:
-         if( ( pField->uiFlags & HB_FF_BINARY ) == 0 )
+         if( (pField->uiFlags & HB_FF_BINARY) == 0 )
          {
             HB_SIZE nLen = pField->uiLen;
-            char * pszVal = hb_cdpnDup( reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], &nLen, pArea->area.cdPage, hb_vmCDP() );
+            char * pszVal = hb_cdpnDup(reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], &nLen, pArea->area.cdPage, hb_vmCDP());
             hb_itemPutCLPtr(pItem, pszVal, nLen);
          }
          else
@@ -815,7 +815,7 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
 
          bChar = pFieldPtr[pField->uiLen];
          pFieldPtr[pField->uiLen] = 0;
-         hb_timeStampStrGetDT( reinterpret_cast<const char*>(pFieldPtr), &lJulian, &lMilliSec );
+         hb_timeStampStrGetDT(reinterpret_cast<const char*>(pFieldPtr), &lJulian, &lMilliSec);
          pFieldPtr[pField->uiLen] = bChar;
          hb_itemPutTDT(pItem, lJulian, lMilliSec);
          break;
@@ -827,13 +827,11 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          double dVal;
          HB_BOOL fDbl;
 
-         fDbl = hb_strnToNum( reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], pField->uiLen, &lVal, &dVal );
+         fDbl = hb_strnToNum(reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], pField->uiLen, &lVal, &dVal);
 
          if( pField->uiDec )
          {
-            hb_itemPutNDLen(pItem, fDbl ? dVal : static_cast<double>(lVal),
-                            static_cast<int>(pField->uiLen - pField->uiDec - 1),
-                            static_cast<int>(pField->uiDec));
+            hb_itemPutNDLen(pItem, fDbl ? dVal : static_cast<double>(lVal), static_cast<int>(pField->uiLen - pField->uiDec - 1), static_cast<int>(pField->uiDec));
          }
          else if( fDbl )
          {
@@ -876,7 +874,7 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
 static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimPutValue(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimPutValue(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
 #endif
 
    char szBuffer[256];
@@ -907,7 +905,7 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
       {
          if( pField->uiType == HB_FT_STRING )
          {
-            if( ( pField->uiFlags & HB_FF_BINARY ) == 0 )
+            if( (pField->uiFlags & HB_FF_BINARY) == 0 )
             {
                nSize = pField->uiLen;
                hb_cdpnDup2(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem),
@@ -940,17 +938,17 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
             hb_itemGetDS(pItem, szBuffer);
             memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], szBuffer, 8);
          }
-         else if( pField->uiType == HB_FT_TIMESTAMP && ( pField->uiLen == 12 || pField->uiLen == 23 ) )
+         else if( pField->uiType == HB_FT_TIMESTAMP && (pField->uiLen == 12 || pField->uiLen == 23) )
          {
             long lDate, lTime;
             hb_itemGetTDT(pItem, &lDate, &lTime);
             if( pField->uiLen == 12 )
             {
-               hb_timeStr( szBuffer, lTime );
+               hb_timeStr(szBuffer, lTime);
             }
             else
             {
-               hb_timeStampStr( szBuffer, lDate, lTime );
+               hb_timeStampStr(szBuffer, lDate, lTime);
             }
             memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], szBuffer, pField->uiLen);
          }
@@ -1016,10 +1014,10 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
 /*
  * Replace the current record.
  */
-static HB_ERRCODE hb_delimPutRec( DELIMAREAP pArea, HB_BYTE * pBuffer )
+static HB_ERRCODE hb_delimPutRec(DELIMAREAP pArea, HB_BYTE * pBuffer)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimPutRec(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pBuffer) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimPutRec(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pBuffer)));
 #endif
 
    if( !pArea->fPositioned )
@@ -1041,10 +1039,10 @@ static HB_ERRCODE hb_delimPutRec( DELIMAREAP pArea, HB_BYTE * pBuffer )
 /*
  * Retrieve current record buffer
  */
-static HB_ERRCODE hb_delimGetRec( DELIMAREAP pArea, HB_BYTE ** pBufferPtr )
+static HB_ERRCODE hb_delimGetRec(DELIMAREAP pArea, HB_BYTE ** pBufferPtr)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimGetRec(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pBufferPtr) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimGetRec(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pBufferPtr)));
 #endif
 
    *pBufferPtr = pArea->pRecord - 1;
@@ -1055,10 +1053,10 @@ static HB_ERRCODE hb_delimGetRec( DELIMAREAP pArea, HB_BYTE ** pBufferPtr )
 /*
  * Copy one or more records from one WorkArea to another.
  */
-static HB_ERRCODE hb_delimTrans( DELIMAREAP pArea, LPDBTRANSINFO pTransInfo )
+static HB_ERRCODE hb_delimTrans(DELIMAREAP pArea, LPDBTRANSINFO pTransInfo)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimTrans(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pTransInfo) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimTrans(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pTransInfo)));
 #endif
 
    if( pTransInfo->uiFlags & DBTF_MATCH )
@@ -1090,16 +1088,16 @@ static HB_ERRCODE hb_delimTrans( DELIMAREAP pArea, LPDBTRANSINFO pTransInfo )
          hb_itemRelease(pPutRec);
       }
    }
-   return SUPER_TRANS( &pArea->area, pTransInfo );
+   return SUPER_TRANS(&pArea->area, pTransInfo);
 }
 
 /*
  * Perform a write of WorkArea memory to the data store.
  */
-static HB_ERRCODE hb_delimGoCold( DELIMAREAP pArea )
+static HB_ERRCODE hb_delimGoCold(DELIMAREAP pArea)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimGoCold(%p)", static_cast<void*>(pArea) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimGoCold(%p)", static_cast<void*>(pArea)));
 #endif
 
    if( pArea->fRecordChanged )
@@ -1119,10 +1117,10 @@ static HB_ERRCODE hb_delimGoCold( DELIMAREAP pArea )
 /*
  * Mark the WorkArea data buffer as hot.
  */
-static HB_ERRCODE hb_delimGoHot( DELIMAREAP pArea )
+static HB_ERRCODE hb_delimGoHot(DELIMAREAP pArea)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimGoHot(%p)", static_cast<void*>(pArea) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimGoHot(%p)", static_cast<void*>(pArea)));
 #endif
 
    if( pArea->fReadonly )
@@ -1142,10 +1140,10 @@ static HB_ERRCODE hb_delimGoHot( DELIMAREAP pArea )
 /*
  * Write data buffer to the data store.
  */
-static HB_ERRCODE hb_delimFlush( DELIMAREAP pArea )
+static HB_ERRCODE hb_delimFlush(DELIMAREAP pArea)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimFlush(%p)", static_cast<void*>(pArea) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimFlush(%p)", static_cast<void*>(pArea)));
 #endif
 
    HB_ERRCODE errCode;
@@ -1154,7 +1152,7 @@ static HB_ERRCODE hb_delimFlush( DELIMAREAP pArea )
 
    if( pArea->fFlush && hb_setGetHardCommit() )
    {
-      hb_fileCommit( pArea->pFile );
+      hb_fileCommit(pArea->pFile);
       pArea->fFlush = HB_FALSE;
    }
 
@@ -1167,7 +1165,7 @@ static HB_ERRCODE hb_delimFlush( DELIMAREAP pArea )
 static HB_ERRCODE hb_delimInfo(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimInfo(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimInfo(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
 #endif
 
    switch( uiIndex )
@@ -1260,7 +1258,7 @@ static HB_ERRCODE hb_delimInfo(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
          break;
 
       case DBI_FILEHANDLE:
-         hb_itemPutNInt(pItem, static_cast<HB_NHANDLE>(hb_fileHandle( pArea->pFile )));
+         hb_itemPutNInt(pItem, static_cast<HB_NHANDLE>(hb_fileHandle(pArea->pFile)));
          break;
 
       case DBI_SHARED:
@@ -1307,10 +1305,10 @@ static HB_ERRCODE hb_delimInfo(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
 /*
  * Add a field to the WorkArea.
  */
-static HB_ERRCODE hb_delimAddField( DELIMAREAP pArea, LPDBFIELDINFO pFieldInfo )
+static HB_ERRCODE hb_delimAddField(DELIMAREAP pArea, LPDBFIELDINFO pFieldInfo)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimAddField(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pFieldInfo) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimAddField(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pFieldInfo)));
 #endif
 
    HB_USHORT uiDelim = 0;
@@ -1427,19 +1425,19 @@ static HB_ERRCODE hb_delimAddField( DELIMAREAP pArea, LPDBFIELDINFO pFieldInfo )
    pArea->uiRecordLen += pFieldInfo->uiLen;
    pArea->nBufferSize += pFieldInfo->uiLen + uiDelim + 1;
 
-   return SUPER_ADDFIELD( &pArea->area, pFieldInfo );
+   return SUPER_ADDFIELD(&pArea->area, pFieldInfo);
 }
 
 /*
  * Establish the extent of the array of fields for a WorkArea.
  */
-static HB_ERRCODE hb_delimSetFieldExtent( DELIMAREAP pArea, HB_USHORT uiFieldExtent )
+static HB_ERRCODE hb_delimSetFieldExtent(DELIMAREAP pArea, HB_USHORT uiFieldExtent)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimSetFieldExtent(%p,%hu)", static_cast<void*>(pArea), uiFieldExtent ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimSetFieldExtent(%p,%hu)", static_cast<void*>(pArea), uiFieldExtent));
 #endif
 
-   if( SUPER_SETFIELDEXTENT( &pArea->area, uiFieldExtent ) == HB_FAILURE )
+   if( SUPER_SETFIELDEXTENT(&pArea->area, uiFieldExtent) == HB_FAILURE )
    {
       return HB_FAILURE;
    }
@@ -1456,13 +1454,13 @@ static HB_ERRCODE hb_delimSetFieldExtent( DELIMAREAP pArea, HB_USHORT uiFieldExt
 /*
  * Clear the WorkArea for use.
  */
-static HB_ERRCODE hb_delimNewArea( DELIMAREAP pArea )
+static HB_ERRCODE hb_delimNewArea(DELIMAREAP pArea)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimNewArea(%p)", static_cast<void*>(pArea) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimNewArea(%p)", static_cast<void*>(pArea)));
 #endif
 
-   if( SUPER_NEW( &pArea->area ) == HB_FAILURE )
+   if( SUPER_NEW(&pArea->area) == HB_FAILURE )
    {
       return HB_FAILURE;
    }
@@ -1487,7 +1485,7 @@ static HB_ERRCODE hb_delimNewArea( DELIMAREAP pArea )
 static HB_ERRCODE hb_delimStructSize(DELIMAREAP pArea, HB_USHORT * uiSize)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimStrucSize(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(uiSize) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimStrucSize(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(uiSize)));
 #endif
    HB_SYMBOL_UNUSED(pArea);
 
@@ -1501,7 +1499,7 @@ static HB_ERRCODE hb_delimStructSize(DELIMAREAP pArea, HB_USHORT * uiSize)
 static HB_ERRCODE hb_delimClose(DELIMAREAP pArea)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimClose(%p)", static_cast<void*>(pArea) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimClose(%p)", static_cast<void*>(pArea)));
 #endif
 
    /* Update record and unlock records */
@@ -1556,7 +1554,7 @@ static HB_ERRCODE hb_delimClose(DELIMAREAP pArea)
 static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimCreate(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pCreateInfo) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimCreate(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pCreateInfo)));
 #endif
 
    PHB_ITEM pError = nullptr;
@@ -1570,7 +1568,7 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
 
    if( pCreateInfo->cdpId )
    {
-      pArea->area.cdPage = hb_cdpFindExt( pCreateInfo->cdpId );
+      pArea->area.cdPage = hb_cdpFindExt(pCreateInfo->cdpId);
       if( !pArea->area.cdPage )
       {
          pArea->area.cdPage = hb_vmCDP();
@@ -1617,7 +1615,7 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
             hb_errPutFileName(pError, szFileName);
             hb_errPutFlags(pError, EF_CANRETRY | EF_CANDEFAULT);
          }
-         fRetry = ( SELF_ERROR(&pArea->area, pError) == E_RETRY );
+         fRetry = (SELF_ERROR(&pArea->area, pError) == E_RETRY);
       }
       else
       {
@@ -1641,7 +1639,7 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
    {
       PHB_ITEM pItem = hb_itemNew(nullptr);
 
-      hb_delimInitArea( pArea, szFileName );
+      hb_delimInitArea(pArea, szFileName);
 
       pArea->ulRecNo = 1;
       pArea->area.fEof = HB_TRUE;
@@ -1650,7 +1648,7 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
 
       if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_SETHEADER, pCreateInfo->ulConnection, pItem) == HB_SUCCESS && hb_itemGetNI(pItem) > 0 )
       {
-         errCode = hb_delimWriteHeader( pArea );
+         errCode = hb_delimWriteHeader(pArea);
       }
 
       hb_itemRelease(pItem);
@@ -1670,7 +1668,7 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
 static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimOpen(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOpenInfo) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimOpen(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOpenInfo)));
 #endif
 
    PHB_ITEM pError = nullptr;
@@ -1686,7 +1684,7 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
 
    if( pOpenInfo->cdpId )
    {
-      pArea->area.cdPage = hb_cdpFindExt( pOpenInfo->cdpId );
+      pArea->area.cdPage = hb_cdpFindExt(pOpenInfo->cdpId);
       if( !pArea->area.cdPage )
       {
          pArea->area.cdPage = hb_vmCDP();
@@ -1697,7 +1695,7 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
       pArea->area.cdPage = hb_vmCDP();
    }
 
-   uiFlags = ( pArea->fReadonly ? FO_READ : FO_READWRITE ) | ( pArea->fShared ? FO_DENYNONE : FO_EXCLUSIVE );
+   uiFlags = (pArea->fReadonly ? FO_READ : FO_READWRITE) | (pArea->fShared ? FO_DENYNONE : FO_EXCLUSIVE);
 
    pFileName = hb_fsFNameSplit(pOpenInfo->abName);
    /* Add default file name extension if necessary */
@@ -1719,7 +1717,7 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
    /* Create default alias if necessary */
    if( !pOpenInfo->atomAlias && pFileName->szName )
    {
-      const char * szName = strrchr( pFileName->szName, ':' );
+      const char * szName = strrchr(pFileName->szName, ':');
       if( szName == nullptr )
       {
          szName = pFileName->szName;
@@ -1728,7 +1726,7 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
       {
          ++szName;
       }
-      hb_strncpyUpperTrim( szAlias, szName, sizeof(szAlias) - 1 );
+      hb_strncpyUpperTrim(szAlias, szName, sizeof(szAlias) - 1);
       pOpenInfo->atomAlias = szAlias;
    }
    hb_xfree(pFileName);
@@ -1749,7 +1747,7 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
             hb_errPutFileName(pError, szFileName);
             hb_errPutFlags(pError, EF_CANRETRY | EF_CANDEFAULT);
          }
-         fRetry = ( SELF_ERROR(&pArea->area, pError) == E_RETRY );
+         fRetry = (SELF_ERROR(&pArea->area, pError) == E_RETRY);
       }
       else
       {
@@ -1775,7 +1773,7 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
       return HB_FAILURE;
    }
 
-   hb_delimInitArea( pArea, szFileName );
+   hb_delimInitArea(pArea, szFileName);
 
    /* Position cursor at the first record */
    return SELF_GOTOP(&pArea->area);
@@ -1784,10 +1782,10 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
 /*
  * RDD init
  */
-static HB_ERRCODE hb_delimInit( LPRDDNODE pRDD )
+static HB_ERRCODE hb_delimInit(LPRDDNODE pRDD)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimInit(%p)", static_cast<void*>(pRDD) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimInit(%p)", static_cast<void*>(pRDD)));
 #endif
 
    PHB_TSD pTSD;
@@ -1796,9 +1794,9 @@ static HB_ERRCODE hb_delimInit( LPRDDNODE pRDD )
    HB_TSD_INIT(pTSD, sizeof(DELIMDATA), nullptr, nullptr);
    pRDD->lpvCargo = static_cast<void*>(pTSD);
 
-   if( ISSUPER_INIT( pRDD ) )
+   if( ISSUPER_INIT(pRDD) )
    {
-      return SUPER_INIT( pRDD );
+      return SUPER_INIT(pRDD);
    }
    else
    {
@@ -1809,22 +1807,22 @@ static HB_ERRCODE hb_delimInit( LPRDDNODE pRDD )
 /*
  * RDD exit
  */
-static HB_ERRCODE hb_delimExit( LPRDDNODE pRDD )
+static HB_ERRCODE hb_delimExit(LPRDDNODE pRDD)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimExit(%p)", static_cast<void*>(pRDD) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimExit(%p)", static_cast<void*>(pRDD)));
 #endif
 
    if( pRDD->lpvCargo )
    {
-      hb_stackReleaseTSD( static_cast<PHB_TSD>(pRDD->lpvCargo) );
+      hb_stackReleaseTSD(static_cast<PHB_TSD>(pRDD->lpvCargo));
       hb_xfree(pRDD->lpvCargo);
       pRDD->lpvCargo = nullptr;
    }
 
-   if( ISSUPER_EXIT( pRDD ) )
+   if( ISSUPER_EXIT(pRDD) )
    {
-      return SUPER_EXIT( pRDD );
+      return SUPER_EXIT(pRDD);
    }
    else
    {
@@ -1838,7 +1836,7 @@ static HB_ERRCODE hb_delimExit( LPRDDNODE pRDD )
 static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_delimRddInfo(%p,%hu,%lu,%p)", static_cast<void*>(pRDD), uiIndex, ulConnect, static_cast<void*>(pItem) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_delimRddInfo(%p,%hu,%lu,%p)", static_cast<void*>(pRDD), uiIndex, ulConnect, static_cast<void*>(pItem)));
 #endif
 
    switch( uiIndex )
@@ -1850,7 +1848,7 @@ static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
 
       case RDDI_TABLEEXT:
       {
-         LPDELIMDATA pData = DELIMNODE_DATA( pRDD );
+         LPDELIMDATA pData = DELIMNODE_DATA(pRDD);
          const char * szNew = hb_itemGetCPtr(pItem);
          char * szNewVal;
 
@@ -1865,7 +1863,7 @@ static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
       }
       case RDDI_SETHEADER:
       {
-         LPDELIMDATA pData = DELIMNODE_DATA( pRDD );
+         LPDELIMDATA pData = DELIMNODE_DATA(pRDD);
          HB_USHORT uiSetHeader = pData->uiSetHeader;
          if( HB_IS_NUMERIC(pItem) )
          {
@@ -1990,7 +1988,10 @@ static const RDDFUNCS delimTable =
    nullptr /* hb_delimWhoCares */
 };
 
-HB_FUNC( DELIM ) { ; }
+HB_FUNC( DELIM )
+{
+   ;
+}
 
 HB_FUNC_STATIC( DELIM_GETFUNCTABLE )
 {
@@ -2001,7 +2002,7 @@ HB_FUNC_STATIC( DELIM_GETFUNCTABLE )
    pTable = static_cast<RDDFUNCS*>(hb_parptr(2));
 
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "DELIM_GETFUNCTABLE(%p, %p)", static_cast<void*>(puiCount), static_cast<void*>(pTable) ) );
+   HB_TRACE(HB_TR_DEBUG, ("DELIM_GETFUNCTABLE(%p, %p)", static_cast<void*>(puiCount), static_cast<void*>(pTable)));
 #endif
 
    if( pTable )
@@ -2018,20 +2019,20 @@ HB_FUNC_STATIC( DELIM_GETFUNCTABLE )
    }
 }
 
-static void hb_delimRddInit( void * cargo )
+static void hb_delimRddInit(void * cargo)
 {
    HB_SYMBOL_UNUSED(cargo);
 
-   if( hb_rddRegister( "DELIM", RDT_TRANSFER ) > 1 )
+   if( hb_rddRegister("DELIM", RDT_TRANSFER) > 1 )
    {
       hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
    }
 }
 
-HB_INIT_SYMBOLS_BEGIN( delim1__InitSymbols )
+HB_INIT_SYMBOLS_BEGIN(delim1__InitSymbols)
 {"DELIM",              {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( DELIM )}, nullptr},
 {"DELIM_GETFUNCTABLE", {HB_FS_PUBLIC|HB_FS_LOCAL}, {HB_FUNCNAME( DELIM_GETFUNCTABLE )}, nullptr}
-HB_INIT_SYMBOLS_END( delim1__InitSymbols )
+HB_INIT_SYMBOLS_END(delim1__InitSymbols)
 
 HB_CALL_ON_STARTUP_BEGIN(_hb_delim_rdd_init_)
    hb_vmAtInit(hb_delimRddInit, nullptr);

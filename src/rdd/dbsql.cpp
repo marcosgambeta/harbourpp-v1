@@ -201,7 +201,7 @@ static HB_BOOL hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const c
          char szDateTime[24];
 
          hb_itemGetTDT(pValue, &lDate, &lTime);
-         hb_timeStampStr( szDateTime, lDate, lTime );
+         hb_timeStampStr(szDateTime, lDate, lTime);
          hb_addStrToFBuffer(pFileBuf, szDelim);
          hb_addStrToFBuffer(pFileBuf, szDateTime);
          hb_addStrToFBuffer(pFileBuf, szDelim);
@@ -222,7 +222,7 @@ static HB_BOOL hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const c
          int iSize, iWidth, iDec;
 
          hb_itemGetNLen(pValue, &iWidth, &iDec);
-         iSize = ( iDec > 0 ? iWidth + 1 + iDec : iWidth );
+         iSize = (iDec > 0 ? iWidth + 1 + iDec : iWidth);
          if( hb_itemStrBuf(szResult, pValue, iSize, iDec) )
          {
             int iPos = 0;
@@ -248,11 +248,11 @@ static HB_BOOL hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const c
 }
 
 /* Export DBF content to a SQL script file */
-static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
-                           PHB_ITEM pWhile, PHB_ITEM pFor,
-                           const char * szDelim, const char * szSep,
-                           const char * szEsc, const char * szTable,
-                           PHB_FILE pFile, HB_BOOL fInsert, HB_BOOL fRecno )
+static HB_ULONG hb_db2Sql(AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
+                          PHB_ITEM pWhile, PHB_ITEM pFor,
+                          const char * szDelim, const char * szSep,
+                          const char * szEsc, const char * szTable,
+                          PHB_FILE pFile, HB_BOOL fInsert, HB_BOOL fRecno)
 {
    PHB_FILEBUF pFileBuf;
    HB_ULONG ulRecords = 0;
@@ -262,7 +262,7 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
    const char * szNewLine = hb_conNewLine();
    char * szInsert = nullptr;
    HB_BOOL fEof = HB_TRUE;
-   HB_BOOL fNoFieldPassed = ( pFields == nullptr || hb_arrayLen(pFields) == 0 );
+   HB_BOOL fNoFieldPassed = (pFields == nullptr || hb_arrayLen(pFields) == 0);
 
    if( SELF_FIELDCOUNT(pArea, &uiFields) != HB_SUCCESS )
    {
@@ -362,7 +362,7 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
          break;
       }
 
-      if( ( llNext % 10000 ) == 0 )
+      if( (llNext % 10000) == 0 )
       {
          hb_inkeyPoll();
       }
@@ -383,9 +383,9 @@ static HB_ULONG hb_db2Sql( AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
    return ulRecords;
 }
 
-/* __dbSQL( .T., <cFileName>, <cTable>, [<bFor>], [<bWhile>], ;
-            [<nNext>], [<nRec>], [<lRest>], [<lAppend>], [<lInsert>], ;
-            [<lRecNo>], [<cSep>], [<cDelim>], [<cEsc>] ) -> <nRecords> */
+/* __dbSQL(.T., <cFileName>, <cTable>, [<bFor>], [<bWhile>], ;
+           [<nNext>], [<nRec>], [<lRest>], [<lAppend>], [<lInsert>], ;
+           [<lRecNo>], [<cSep>], [<cDelim>], [<cEsc>]) -> <nRecords> */
 HB_FUNC( __DBSQL )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -413,7 +413,7 @@ HB_FUNC( __DBSQL )
 
       if( !szFileName )
       {
-         hb_errRT_DBCMD( EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME );
+         hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       }
       else if( fExport )   /* COPY TO SQL */
       {
@@ -500,6 +500,6 @@ HB_FUNC( __DBSQL )
    }
    else
    {
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }

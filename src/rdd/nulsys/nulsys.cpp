@@ -47,7 +47,7 @@
 #include "hbapi.h"
 #include "hbapirdd.h"
 
-HB_ERRCODE hb_rddSelectWorkAreaAlias( const char * szName )
+HB_ERRCODE hb_rddSelectWorkAreaAlias(const char * szName)
 {
    HB_SYMBOL_UNUSED(szName);
 

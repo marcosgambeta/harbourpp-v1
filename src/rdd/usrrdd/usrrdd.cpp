@@ -2065,7 +2065,7 @@ static HB_ERRCODE hb_usrZap(AREAP pArea)
 
    if( !hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_ZAP) )
    {
-      return SUPER_ZAP( pArea );
+      return SUPER_ZAP(pArea);
    }
 
    hb_vmPushInteger(pArea->uiArea);
@@ -3744,9 +3744,9 @@ static LPRDDNODE hb_usrGetNodeParam(int iParams)
    return nullptr;
 }
 
-#define HB_FUNC_UR_SUPER( x )  HB_FUNC( UR_SUPER_##x )
+#define HB_FUNC_UR_SUPER(x)  HB_FUNC(UR_SUPER_##x)
 
-HB_FUNC_UR_SUPER( BOF )
+HB_FUNC_UR_SUPER(BOF)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -3759,7 +3759,7 @@ HB_FUNC_UR_SUPER( BOF )
    }
 }
 
-HB_FUNC_UR_SUPER( EOF )
+HB_FUNC_UR_SUPER(EOF)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -3772,7 +3772,7 @@ HB_FUNC_UR_SUPER( EOF )
    }
 }
 
-HB_FUNC_UR_SUPER( FOUND )
+HB_FUNC_UR_SUPER(FOUND)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -3785,7 +3785,7 @@ HB_FUNC_UR_SUPER( FOUND )
    }
 }
 
-HB_FUNC_UR_SUPER( GOBOTTOM )
+HB_FUNC_UR_SUPER(GOBOTTOM)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -3795,7 +3795,7 @@ HB_FUNC_UR_SUPER( GOBOTTOM )
    }
 }
 
-HB_FUNC_UR_SUPER( GOTOP )
+HB_FUNC_UR_SUPER(GOTOP)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -3805,7 +3805,7 @@ HB_FUNC_UR_SUPER( GOTOP )
    }
 }
 
-HB_FUNC_UR_SUPER( GOTO )
+HB_FUNC_UR_SUPER(GOTO)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -3815,7 +3815,7 @@ HB_FUNC_UR_SUPER( GOTO )
    }
 }
 
-HB_FUNC_UR_SUPER( GOTOID )
+HB_FUNC_UR_SUPER(GOTOID)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -3825,7 +3825,7 @@ HB_FUNC_UR_SUPER( GOTOID )
    }
 }
 
-HB_FUNC_UR_SUPER( SEEK )
+HB_FUNC_UR_SUPER(SEEK)
 {
    AREAP pArea = hb_usrGetAreaParam(4);
 
@@ -3835,7 +3835,7 @@ HB_FUNC_UR_SUPER( SEEK )
    }
 }
 
-HB_FUNC_UR_SUPER( SKIP )
+HB_FUNC_UR_SUPER(SKIP)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -3845,7 +3845,7 @@ HB_FUNC_UR_SUPER( SKIP )
    }
 }
 
-HB_FUNC_UR_SUPER( SKIPFILTER )
+HB_FUNC_UR_SUPER(SKIPFILTER)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -3855,7 +3855,7 @@ HB_FUNC_UR_SUPER( SKIPFILTER )
    }
 }
 
-HB_FUNC_UR_SUPER( SKIPRAW )
+HB_FUNC_UR_SUPER(SKIPRAW)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -3865,7 +3865,7 @@ HB_FUNC_UR_SUPER( SKIPRAW )
    }
 }
 
-HB_FUNC_UR_SUPER( DELETED )
+HB_FUNC_UR_SUPER(DELETED)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -3878,7 +3878,7 @@ HB_FUNC_UR_SUPER( DELETED )
    }
 }
 
-HB_FUNC_UR_SUPER( ADDFIELD )
+HB_FUNC_UR_SUPER(ADDFIELD)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -3898,7 +3898,7 @@ HB_FUNC_UR_SUPER( ADDFIELD )
    }
 }
 
-HB_FUNC_UR_SUPER( FIELDDISPLAY )
+HB_FUNC_UR_SUPER(FIELDDISPLAY)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -3918,7 +3918,7 @@ HB_FUNC_UR_SUPER( FIELDDISPLAY )
    }
 }
 
-HB_FUNC_UR_SUPER( FIELDNAME )
+HB_FUNC_UR_SUPER(FIELDNAME)
 {
    AREAP pArea = hb_usrGetAreaParam(3);
 
@@ -3932,7 +3932,7 @@ HB_FUNC_UR_SUPER( FIELDNAME )
    }
 }
 
-HB_FUNC_UR_SUPER( APPEND )
+HB_FUNC_UR_SUPER(APPEND)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -3942,7 +3942,7 @@ HB_FUNC_UR_SUPER( APPEND )
    }
 }
 
-HB_FUNC_UR_SUPER( DELETE )
+HB_FUNC_UR_SUPER(DELETE)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -3952,7 +3952,7 @@ HB_FUNC_UR_SUPER( DELETE )
    }
 }
 
-HB_FUNC_UR_SUPER( RECALL )
+HB_FUNC_UR_SUPER(RECALL)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -3962,7 +3962,7 @@ HB_FUNC_UR_SUPER( RECALL )
    }
 }
 
-HB_FUNC_UR_SUPER( FIELDCOUNT )
+HB_FUNC_UR_SUPER(FIELDCOUNT)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -3975,7 +3975,7 @@ HB_FUNC_UR_SUPER( FIELDCOUNT )
    }
 }
 
-HB_FUNC_UR_SUPER( FLUSH )
+HB_FUNC_UR_SUPER(FLUSH)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -3985,7 +3985,7 @@ HB_FUNC_UR_SUPER( FLUSH )
    }
 }
 
-HB_FUNC_UR_SUPER( GOCOLD )
+HB_FUNC_UR_SUPER(GOCOLD)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -3995,7 +3995,7 @@ HB_FUNC_UR_SUPER( GOCOLD )
    }
 }
 
-HB_FUNC_UR_SUPER( GOHOT )
+HB_FUNC_UR_SUPER(GOHOT)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -4005,7 +4005,7 @@ HB_FUNC_UR_SUPER( GOHOT )
    }
 }
 
-HB_FUNC_UR_SUPER( PUTREC )
+HB_FUNC_UR_SUPER(PUTREC)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4027,7 +4027,7 @@ HB_FUNC_UR_SUPER( PUTREC )
    }
 }
 
-HB_FUNC_UR_SUPER( GETREC )
+HB_FUNC_UR_SUPER(GETREC)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4040,7 +4040,7 @@ HB_FUNC_UR_SUPER( GETREC )
    }
 }
 
-HB_FUNC_UR_SUPER( GETVALUE )
+HB_FUNC_UR_SUPER(GETVALUE)
 {
    AREAP pArea = hb_usrGetAreaParam(3);
 
@@ -4050,7 +4050,7 @@ HB_FUNC_UR_SUPER( GETVALUE )
    }
 }
 
-HB_FUNC_UR_SUPER( PUTVALUE )
+HB_FUNC_UR_SUPER(PUTVALUE)
 {
    AREAP pArea = hb_usrGetAreaParam(3);
 
@@ -4060,7 +4060,7 @@ HB_FUNC_UR_SUPER( PUTVALUE )
    }
 }
 
-HB_FUNC_UR_SUPER( GETVARLEN )
+HB_FUNC_UR_SUPER(GETVARLEN)
 {
    AREAP pArea = hb_usrGetAreaParam(3);
 
@@ -4073,7 +4073,7 @@ HB_FUNC_UR_SUPER( GETVARLEN )
    }
 }
 
-HB_FUNC_UR_SUPER( RECCOUNT )
+HB_FUNC_UR_SUPER(RECCOUNT)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4086,7 +4086,7 @@ HB_FUNC_UR_SUPER( RECCOUNT )
    }
 }
 
-HB_FUNC_UR_SUPER( RECINFO )
+HB_FUNC_UR_SUPER(RECINFO)
 {
    AREAP pArea = hb_usrGetAreaParam(4);
 
@@ -4096,7 +4096,7 @@ HB_FUNC_UR_SUPER( RECINFO )
    }
 }
 
-HB_FUNC_UR_SUPER( RECNO )
+HB_FUNC_UR_SUPER(RECNO)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4109,7 +4109,7 @@ HB_FUNC_UR_SUPER( RECNO )
    }
 }
 
-HB_FUNC_UR_SUPER( RECID )
+HB_FUNC_UR_SUPER(RECID)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4119,7 +4119,7 @@ HB_FUNC_UR_SUPER( RECID )
    }
 }
 
-HB_FUNC_UR_SUPER( FIELDINFO )
+HB_FUNC_UR_SUPER(FIELDINFO)
 {
    AREAP pArea = hb_usrGetAreaParam(4);
 
@@ -4129,7 +4129,7 @@ HB_FUNC_UR_SUPER( FIELDINFO )
    }
 }
 
-HB_FUNC_UR_SUPER( CREATEFIELDS )
+HB_FUNC_UR_SUPER(CREATEFIELDS)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4139,7 +4139,7 @@ HB_FUNC_UR_SUPER( CREATEFIELDS )
    }
 }
 
-HB_FUNC_UR_SUPER( SETFIELDEXTENT )
+HB_FUNC_UR_SUPER(SETFIELDEXTENT)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4149,7 +4149,7 @@ HB_FUNC_UR_SUPER( SETFIELDEXTENT )
    }
 }
 
-HB_FUNC_UR_SUPER( ALIAS )
+HB_FUNC_UR_SUPER(ALIAS)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4162,7 +4162,7 @@ HB_FUNC_UR_SUPER( ALIAS )
    }
 }
 
-HB_FUNC_UR_SUPER( CLOSE )
+HB_FUNC_UR_SUPER(CLOSE)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -4172,7 +4172,7 @@ HB_FUNC_UR_SUPER( CLOSE )
    }
 }
 
-HB_FUNC_UR_SUPER( CREATE )
+HB_FUNC_UR_SUPER(CREATE)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4192,7 +4192,7 @@ HB_FUNC_UR_SUPER( CREATE )
    }
 }
 
-HB_FUNC_UR_SUPER( OPEN )
+HB_FUNC_UR_SUPER(OPEN)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4212,7 +4212,7 @@ HB_FUNC_UR_SUPER( OPEN )
    }
 }
 
-HB_FUNC_UR_SUPER( INFO )
+HB_FUNC_UR_SUPER(INFO)
 {
    AREAP pArea = hb_usrGetAreaParam(3);
 
@@ -4222,7 +4222,7 @@ HB_FUNC_UR_SUPER( INFO )
    }
 }
 
-HB_FUNC_UR_SUPER( DBEVAL )
+HB_FUNC_UR_SUPER(DBEVAL)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4242,7 +4242,7 @@ HB_FUNC_UR_SUPER( DBEVAL )
    }
 }
 
-HB_FUNC_UR_SUPER( PACK )
+HB_FUNC_UR_SUPER(PACK)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -4252,7 +4252,7 @@ HB_FUNC_UR_SUPER( PACK )
    }
 }
 
-HB_FUNC_UR_SUPER( PACKREC )
+HB_FUNC_UR_SUPER(PACKREC)
 {
    AREAP pArea = hb_usrGetAreaParam(3);
 
@@ -4265,7 +4265,7 @@ HB_FUNC_UR_SUPER( PACKREC )
    }
 }
 
-HB_FUNC_UR_SUPER( SORT )
+HB_FUNC_UR_SUPER(SORT)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4286,7 +4286,7 @@ HB_FUNC_UR_SUPER( SORT )
    }
 }
 
-HB_FUNC_UR_SUPER( TRANS )
+HB_FUNC_UR_SUPER(TRANS)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4307,7 +4307,7 @@ HB_FUNC_UR_SUPER( TRANS )
    }
 }
 
-HB_FUNC_UR_SUPER( TRANSREC )
+HB_FUNC_UR_SUPER(TRANSREC)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4328,7 +4328,7 @@ HB_FUNC_UR_SUPER( TRANSREC )
    }
 }
 
-HB_FUNC_UR_SUPER( ZAP )
+HB_FUNC_UR_SUPER(ZAP)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -4338,7 +4338,7 @@ HB_FUNC_UR_SUPER( ZAP )
    }
 }
 
-HB_FUNC_UR_SUPER( CHILDEND )
+HB_FUNC_UR_SUPER(CHILDEND)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4358,7 +4358,7 @@ HB_FUNC_UR_SUPER( CHILDEND )
    }
 }
 
-HB_FUNC_UR_SUPER( CHILDSTART )
+HB_FUNC_UR_SUPER(CHILDSTART)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4378,7 +4378,7 @@ HB_FUNC_UR_SUPER( CHILDSTART )
    }
 }
 
-HB_FUNC_UR_SUPER( CHILDSYNC )
+HB_FUNC_UR_SUPER(CHILDSYNC)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4398,7 +4398,7 @@ HB_FUNC_UR_SUPER( CHILDSYNC )
    }
 }
 
-HB_FUNC_UR_SUPER( SYNCCHILDREN )
+HB_FUNC_UR_SUPER(SYNCCHILDREN)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -4408,7 +4408,7 @@ HB_FUNC_UR_SUPER( SYNCCHILDREN )
    }
 }
 
-HB_FUNC_UR_SUPER( CLEARREL )
+HB_FUNC_UR_SUPER(CLEARREL)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -4418,7 +4418,7 @@ HB_FUNC_UR_SUPER( CLEARREL )
    }
 }
 
-HB_FUNC_UR_SUPER( FORCEREL )
+HB_FUNC_UR_SUPER(FORCEREL)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -4428,7 +4428,7 @@ HB_FUNC_UR_SUPER( FORCEREL )
    }
 }
 
-HB_FUNC_UR_SUPER( RELAREA )
+HB_FUNC_UR_SUPER(RELAREA)
 {
    AREAP pArea = hb_usrGetAreaParam(3);
 
@@ -4441,7 +4441,7 @@ HB_FUNC_UR_SUPER( RELAREA )
    }
 }
 
-HB_FUNC_UR_SUPER( RELEVAL )
+HB_FUNC_UR_SUPER(RELEVAL)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4461,7 +4461,7 @@ HB_FUNC_UR_SUPER( RELEVAL )
    }
 }
 
-HB_FUNC_UR_SUPER( RELTEXT )
+HB_FUNC_UR_SUPER(RELTEXT)
 {
    AREAP pArea = hb_usrGetAreaParam(3);
 
@@ -4471,7 +4471,7 @@ HB_FUNC_UR_SUPER( RELTEXT )
    }
 }
 
-HB_FUNC_UR_SUPER( SETREL )
+HB_FUNC_UR_SUPER(SETREL)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4491,7 +4491,7 @@ HB_FUNC_UR_SUPER( SETREL )
    }
 }
 
-HB_FUNC_UR_SUPER( ORDLSTADD )
+HB_FUNC_UR_SUPER(ORDLSTADD)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4513,7 +4513,7 @@ HB_FUNC_UR_SUPER( ORDLSTADD )
    }
 }
 
-HB_FUNC_UR_SUPER( ORDLSTCLEAR )
+HB_FUNC_UR_SUPER(ORDLSTCLEAR)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -4523,7 +4523,7 @@ HB_FUNC_UR_SUPER( ORDLSTCLEAR )
    }
 }
 
-HB_FUNC_UR_SUPER( ORDLSTDELETE )
+HB_FUNC_UR_SUPER(ORDLSTDELETE)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4545,7 +4545,7 @@ HB_FUNC_UR_SUPER( ORDLSTDELETE )
    }
 }
 
-HB_FUNC_UR_SUPER( ORDLSTFOCUS )
+HB_FUNC_UR_SUPER(ORDLSTFOCUS)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4567,7 +4567,7 @@ HB_FUNC_UR_SUPER( ORDLSTFOCUS )
    }
 }
 
-HB_FUNC_UR_SUPER( ORDLSTREBUILD )
+HB_FUNC_UR_SUPER(ORDLSTREBUILD)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -4577,7 +4577,7 @@ HB_FUNC_UR_SUPER( ORDLSTREBUILD )
    }
 }
 
-HB_FUNC_UR_SUPER( ORDSETCOND )
+HB_FUNC_UR_SUPER(ORDSETCOND)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4607,7 +4607,7 @@ HB_FUNC_UR_SUPER( ORDSETCOND )
    }
 }
 
-HB_FUNC_UR_SUPER( ORDCREATE )
+HB_FUNC_UR_SUPER(ORDCREATE)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4629,7 +4629,7 @@ HB_FUNC_UR_SUPER( ORDCREATE )
    }
 }
 
-HB_FUNC_UR_SUPER( ORDDESTROY )
+HB_FUNC_UR_SUPER(ORDDESTROY)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4651,7 +4651,7 @@ HB_FUNC_UR_SUPER( ORDDESTROY )
    }
 }
 
-HB_FUNC_UR_SUPER( ORDINFO )
+HB_FUNC_UR_SUPER(ORDINFO)
 {
    AREAP pArea = hb_usrGetAreaParam(3);
 
@@ -4673,7 +4673,7 @@ HB_FUNC_UR_SUPER( ORDINFO )
    }
 }
 
-HB_FUNC_UR_SUPER( CLEARFILTER )
+HB_FUNC_UR_SUPER(CLEARFILTER)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -4683,7 +4683,7 @@ HB_FUNC_UR_SUPER( CLEARFILTER )
    }
 }
 
-HB_FUNC_UR_SUPER( CLEARLOCATE )
+HB_FUNC_UR_SUPER(CLEARLOCATE)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -4693,7 +4693,7 @@ HB_FUNC_UR_SUPER( CLEARLOCATE )
    }
 }
 
-HB_FUNC_UR_SUPER( CLEARSCOPE )
+HB_FUNC_UR_SUPER(CLEARSCOPE)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -4703,7 +4703,7 @@ HB_FUNC_UR_SUPER( CLEARSCOPE )
    }
 }
 
-HB_FUNC_UR_SUPER( FILTERTEXT )
+HB_FUNC_UR_SUPER(FILTERTEXT)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4713,7 +4713,7 @@ HB_FUNC_UR_SUPER( FILTERTEXT )
    }
 }
 
-HB_FUNC_UR_SUPER( SETFILTER )
+HB_FUNC_UR_SUPER(SETFILTER)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4733,7 +4733,7 @@ HB_FUNC_UR_SUPER( SETFILTER )
    }
 }
 
-HB_FUNC_UR_SUPER( SETLOCATE )
+HB_FUNC_UR_SUPER(SETLOCATE)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4753,7 +4753,7 @@ HB_FUNC_UR_SUPER( SETLOCATE )
    }
 }
 
-HB_FUNC_UR_SUPER( LOCATE )
+HB_FUNC_UR_SUPER(LOCATE)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4763,7 +4763,7 @@ HB_FUNC_UR_SUPER( LOCATE )
    }
 }
 
-HB_FUNC_UR_SUPER( COMPILE )
+HB_FUNC_UR_SUPER(COMPILE)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4781,7 +4781,7 @@ HB_FUNC_UR_SUPER( COMPILE )
    }
 }
 
-HB_FUNC_UR_SUPER( ERROR )
+HB_FUNC_UR_SUPER(ERROR)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4803,7 +4803,7 @@ HB_FUNC_UR_SUPER( ERROR )
    }
 }
 
-HB_FUNC_UR_SUPER( EVALBLOCK )
+HB_FUNC_UR_SUPER(EVALBLOCK)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4823,7 +4823,7 @@ HB_FUNC_UR_SUPER( EVALBLOCK )
    }
 }
 
-HB_FUNC_UR_SUPER( RAWLOCK )
+HB_FUNC_UR_SUPER(RAWLOCK)
 {
    AREAP pArea = hb_usrGetAreaParam(3);
 
@@ -4833,7 +4833,7 @@ HB_FUNC_UR_SUPER( RAWLOCK )
    }
 }
 
-HB_FUNC_UR_SUPER( LOCK )
+HB_FUNC_UR_SUPER(LOCK)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4855,7 +4855,7 @@ HB_FUNC_UR_SUPER( LOCK )
    }
 }
 
-HB_FUNC_UR_SUPER( UNLOCK )
+HB_FUNC_UR_SUPER(UNLOCK)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4865,7 +4865,7 @@ HB_FUNC_UR_SUPER( UNLOCK )
    }
 }
 
-HB_FUNC_UR_SUPER( CLOSEMEMFILE )
+HB_FUNC_UR_SUPER(CLOSEMEMFILE)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -4875,7 +4875,7 @@ HB_FUNC_UR_SUPER( CLOSEMEMFILE )
    }
 }
 
-HB_FUNC_UR_SUPER( CREATEMEMFILE )
+HB_FUNC_UR_SUPER(CREATEMEMFILE)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4895,7 +4895,7 @@ HB_FUNC_UR_SUPER( CREATEMEMFILE )
    }
 }
 
-HB_FUNC_UR_SUPER( OPENMEMFILE )
+HB_FUNC_UR_SUPER(OPENMEMFILE)
 {
    AREAP pArea = hb_usrGetAreaParam(2);
 
@@ -4915,7 +4915,7 @@ HB_FUNC_UR_SUPER( OPENMEMFILE )
    }
 }
 
-HB_FUNC_UR_SUPER( GETVALUEFILE )
+HB_FUNC_UR_SUPER(GETVALUEFILE)
 {
    AREAP pArea = hb_usrGetAreaParam(4);
 
@@ -4925,7 +4925,7 @@ HB_FUNC_UR_SUPER( GETVALUEFILE )
    }
 }
 
-HB_FUNC_UR_SUPER( PUTVALUEFILE )
+HB_FUNC_UR_SUPER(PUTVALUEFILE)
 {
    AREAP pArea = hb_usrGetAreaParam(4);
 
@@ -4935,7 +4935,7 @@ HB_FUNC_UR_SUPER( PUTVALUEFILE )
    }
 }
 
-HB_FUNC_UR_SUPER( READDBHEADER )
+HB_FUNC_UR_SUPER(READDBHEADER)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -4945,7 +4945,7 @@ HB_FUNC_UR_SUPER( READDBHEADER )
    }
 }
 
-HB_FUNC_UR_SUPER( WRITEDBHEADER )
+HB_FUNC_UR_SUPER(WRITEDBHEADER)
 {
    AREAP pArea = hb_usrGetAreaParam(1);
 
@@ -4955,7 +4955,7 @@ HB_FUNC_UR_SUPER( WRITEDBHEADER )
    }
 }
 
-HB_FUNC_UR_SUPER( DROP )
+HB_FUNC_UR_SUPER(DROP)
 {
    LPRDDNODE pRDD = hb_usrGetNodeParam(2);
 
@@ -4965,7 +4965,7 @@ HB_FUNC_UR_SUPER( DROP )
    }
 }
 
-HB_FUNC_UR_SUPER( EXISTS )
+HB_FUNC_UR_SUPER(EXISTS)
 {
    LPRDDNODE pRDD = hb_usrGetNodeParam(2);
 
@@ -4975,7 +4975,7 @@ HB_FUNC_UR_SUPER( EXISTS )
    }
 }
 
-HB_FUNC_UR_SUPER( RENAME )
+HB_FUNC_UR_SUPER(RENAME)
 {
    LPRDDNODE pRDD = hb_usrGetNodeParam(2);
 
@@ -4985,7 +4985,7 @@ HB_FUNC_UR_SUPER( RENAME )
    }
 }
 
-HB_FUNC_UR_SUPER( RDDINFO )
+HB_FUNC_UR_SUPER(RDDINFO)
 {
    LPRDDNODE pRDD = hb_usrGetNodeParam(4);
 

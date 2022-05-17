@@ -64,7 +64,7 @@ HB_FUNC( SX_SLIMFAST )
       szExp = szDst;
       nDst = 0;
 
-      while( ( c = *szExp++ ) != 0 )
+      while( (c = *szExp++) != 0 )
       {
          if( c == cQuote )
          {
@@ -99,7 +99,7 @@ HB_FUNC( SX_WILDMATCH )
 
    if( szPattern && szPattern[0] && szValue )
    {
-      fMatch = hb_strMatchWild( szValue, szPattern );
+      fMatch = hb_strMatchWild(szValue, szPattern);
    }
 
    hb_retl(fMatch);

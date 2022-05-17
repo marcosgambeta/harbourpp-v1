@@ -179,7 +179,7 @@ HB_FUNC( SX_TABLENAME )
    }
 }
 
-static void hb_sxRollBackChild( AREAP pArea, PHB_ITEM pItem )
+static void hb_sxRollBackChild(AREAP pArea, PHB_ITEM pItem)
 {
    LPDBRELINFO lpdbRelation = pArea->lpdbRelations;
 
@@ -189,7 +189,7 @@ static void hb_sxRollBackChild( AREAP pArea, PHB_ITEM pItem )
       {
          break;
       }
-      hb_sxRollBackChild( lpdbRelation->lpaChild, pItem );
+      hb_sxRollBackChild(lpdbRelation->lpaChild, pItem);
       lpdbRelation = lpdbRelation->lpdbriNext;
    }
 }
@@ -221,7 +221,7 @@ HB_FUNC( SX_ROLLBACK )
       fResult = SELF_INFO(pArea, DBI_ROLLBACK, pItem) == HB_SUCCESS;
       if( fResult && fRollChild )
       {
-         hb_sxRollBackChild( pArea, pItem );
+         hb_sxRollBackChild(pArea, pItem);
       }
       hb_itemRelease(pItem);
    }
@@ -316,7 +316,7 @@ HB_FUNC( SX_SETPASS )
    }
    else if( iPCount >= 2 && iPCount <= 4 )
    {
-      if( HB_ISCHAR(1) && HB_ISNUM(2) && ( iPCount < 3 || HB_ISCHAR(3) ) && ( iPCount < 4 || HB_ISNUM(4) ) )
+      if( HB_ISCHAR(1) && HB_ISNUM(2) && (iPCount < 3 || HB_ISCHAR(3)) && (iPCount < 4 || HB_ISNUM(4)) )
       {
          /* Set pending password for table which will be open
           * 3rd and 4th parameters are optional Harbour extensions
@@ -471,7 +471,7 @@ HB_FUNC( SX_SETTURBO )
    pRDDNode = hb_rddFindNode( szDriver, &uiRddID );  /* find the RDDNODE */
    if( !pRDDNode )
    {
-      hb_errRT_BASE_SubstR( EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
    else
    {
@@ -489,7 +489,7 @@ HB_FUNC( SX_SETTURBO )
 }
 
 /*
- * _sxOpenInit( nArea, xShared, xReadOnly, xAlias )
+ * _sxOpenInit(nArea, xShared, xReadOnly, xAlias)
  */
 HB_FUNC( _SXOPENINIT )
 {

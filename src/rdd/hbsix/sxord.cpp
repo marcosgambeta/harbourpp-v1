@@ -81,7 +81,7 @@
 #include "hbapifs.h"
 #include "hbapirdd.h"
 
-static HB_BOOL hb_sxOrdParam( LPDBORDERINFO pInfo )
+static HB_BOOL hb_sxOrdParam(LPDBORDERINFO pInfo)
 {
    memset(pInfo, 0, sizeof(DBORDERINFO));
 
@@ -114,7 +114,7 @@ HB_FUNC( SX_TAGORDER )
    {
       DBORDERINFO Info;
 
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          Info.itmResult = hb_itemPutNI(nullptr, 0);
          SELF_ORDINFO(pArea, DBOI_NUMBER, &Info);
@@ -127,7 +127,7 @@ HB_FUNC( SX_TAGORDER )
 }
 
 /*
- * sx_TagNo( tag, bag ) --> nTagPosInBag
+ * sx_TagNo(tag, bag) --> nTagPosInBag
  * returns order position in order bag
  */
 HB_FUNC( SX_TAGNO )
@@ -139,7 +139,7 @@ HB_FUNC( SX_TAGNO )
    {
       DBORDERINFO Info;
 
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          Info.itmResult = hb_itemPutNI(nullptr, 0);
          if( SELF_ORDINFO(pArea, DBOI_NUMBER, &Info) == HB_SUCCESS )
@@ -180,7 +180,7 @@ HB_FUNC( SX_FREEZE )
    {
       DBORDERINFO Info;
 
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          HB_BOOL fResult = HB_FALSE;
          Info.itmNewVal = hb_itemPutL(nullptr, true);
@@ -204,7 +204,7 @@ HB_FUNC( SX_WARM )
    {
       DBORDERINFO Info;
 
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          HB_BOOL fResult = HB_FALSE;
          Info.itmNewVal = hb_itemPutL(nullptr, false);
@@ -228,7 +228,7 @@ HB_FUNC( SX_CHILL )
    {
       DBORDERINFO Info;
 
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          HB_BOOL fResult = HB_FALSE;
          Info.itmNewVal = hb_itemPutL(nullptr, true);
@@ -260,7 +260,7 @@ HB_FUNC( SX_THERMOMETER )
    {
       DBORDERINFO Info;
 
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          int i;
          Info.itmResult = hb_itemPutNI(nullptr, 0);
@@ -294,7 +294,7 @@ HB_FUNC( SX_CLRSCOPE )
    {
       DBORDERINFO Info;
 
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          int iScope = hb_parnidef(1, 2);
          Info.itmResult = hb_itemNew(nullptr);
@@ -319,7 +319,7 @@ HB_FUNC( SX_SETSCOPE )
    {
       DBORDERINFO Info;
 
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          int iScope = hb_parni(1);
          Info.itmResult = hb_itemNew(nullptr);
@@ -446,7 +446,7 @@ HB_FUNC( SX_INDEXNAME )
    if( pArea != nullptr )
    {
       DBORDERINFO Info;
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          Info.itmResult = hb_itemNew(nullptr);
          SELF_ORDINFO(pArea, DBOI_FULLPATH, &Info);
@@ -467,7 +467,7 @@ HB_FUNC( SX_INDEXTYPE )
    if( pArea != nullptr )
    {
       DBORDERINFO Info;
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          if( hb_pcount() == 1 && HB_ISCHAR(1) )
          {
@@ -492,7 +492,7 @@ HB_FUNC( SX_DESCEND )
    if( pArea != nullptr )
    {
       DBORDERINFO Info;
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          Info.itmResult = hb_itemNew(nullptr);
          if( SELF_ORDINFO(pArea, DBOI_ISDESC, &Info) == HB_SUCCESS )
@@ -514,7 +514,7 @@ HB_FUNC( SX_KEYADD )
    if( pArea != nullptr )
    {
       DBORDERINFO Info;
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          Info.itmResult = hb_itemPutL(nullptr, false);
          Info.itmNewVal = hb_param(3, Harbour::Item::ANY);
@@ -534,7 +534,7 @@ HB_FUNC( SX_KEYDROP )
    if( pArea != nullptr )
    {
       DBORDERINFO Info;
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          Info.itmResult = hb_itemPutL(nullptr, false);
          Info.itmNewVal = hb_param(3, Harbour::Item::ANY);
@@ -553,7 +553,7 @@ HB_FUNC( SX_KEYDATA )
    if( pArea != nullptr )
    {
       DBORDERINFO Info;
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          Info.itmResult = hb_itemNew(nullptr);
          SELF_ORDINFO(pArea, DBOI_KEYVAL, &Info);
@@ -588,7 +588,7 @@ HB_FUNC( SX_KEYCOUNT )
    if( pArea != nullptr )
    {
       DBORDERINFO Info;
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          Info.itmResult = hb_itemNew(nullptr);
          SELF_ORDINFO(pArea, DBOI_KEYCOUNT, &Info);
@@ -608,7 +608,7 @@ HB_FUNC( SX_KEYNO )
    if( pArea != nullptr )
    {
       DBORDERINFO Info;
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          Info.itmResult = hb_itemNew(nullptr);
          SELF_ORDINFO(pArea, DBOI_POSITION, &Info);
@@ -628,7 +628,7 @@ HB_FUNC( SX_KEYGOTO )
    if( pArea && hb_parnl(3) != 0 )
    {
       DBORDERINFO Info;
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          Info.itmNewVal = hb_param(3, Harbour::Item::NUMERIC);
          Info.itmResult = hb_itemNew(nullptr);
@@ -684,7 +684,7 @@ HB_FUNC( SX_TAGUNIQUE )
    if( pArea != nullptr )
    {
       DBORDERINFO Info;
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          Info.itmResult = hb_itemPutL(nullptr, false);
          SELF_ORDINFO(pArea, DBOI_UNIQUE, &Info);
@@ -727,7 +727,7 @@ HB_FUNC( SX_WILDSEEK )
                if( errCode == HB_SUCCESS )
                {
                   const char * szKey = hb_itemGetCPtr(Info.itmResult);
-                  fFound = hb_strMatchWild( szKey, szPattern );
+                  fFound = hb_strMatchWild(szKey, szPattern);
                }
             }
          }
@@ -758,7 +758,7 @@ HB_FUNC( SX_ROXLOCK )
    if( pArea != nullptr )
    {
       DBORDERINFO Info;
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          Info.itmNewVal = hb_itemPutL(nullptr, true);
          Info.itmResult = hb_itemPutL(nullptr, false);
@@ -780,7 +780,7 @@ HB_FUNC( SX_ROXUNLOCK )
    if( pArea != nullptr )
    {
       DBORDERINFO Info;
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          Info.itmNewVal = hb_itemPutL(nullptr, false);
          Info.itmResult = hb_itemPutL(nullptr, false);
@@ -799,7 +799,7 @@ HB_FUNC( SX_ISMYROX )
    if( pArea != nullptr )
    {
       DBORDERINFO Info;
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          Info.itmResult = hb_itemNew(nullptr);
          if( SELF_ORDINFO(pArea, DBOI_READLOCK, &Info) == HB_SUCCESS )
@@ -820,7 +820,7 @@ HB_FUNC( SX_ISROXLOCK )
    if( pArea != nullptr )
    {
       DBORDERINFO Info;
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          Info.itmResult = hb_itemNew(nullptr);
          if( SELF_ORDINFO(pArea, DBOI_READLOCK, &Info) == HB_SUCCESS )
@@ -855,7 +855,7 @@ HB_FUNC( SX_SORTOPTION )
    if( pArea != nullptr )
    {
       DBORDERINFO Info;
-      if( hb_sxOrdParam( &Info ) )
+      if( hb_sxOrdParam(&Info) )
       {
          Info.itmResult = hb_itemNew(nullptr);
          Info.itmNewVal = hb_param(1, Harbour::Item::LOGICAL);

@@ -83,7 +83,7 @@ HB_FUNC( HB_DBDETACH )
    }
    else
    {
-      hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD(EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       return;
    }
 
@@ -93,12 +93,12 @@ HB_FUNC( HB_DBDETACH )
    }
    else
    {
-      hb_errRT_DBCMD( EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
 
 /*
- * hb_dbRequest( [<cAlias>], [<lFreeArea>], [<@xCargo>], [<nTimeOut>|<lWait>] )
+ * hb_dbRequest([<cAlias>], [<lFreeArea>], [<@xCargo>], [<nTimeOut>|<lWait>])
  *          --> <lSuccess>
  */
 HB_FUNC( HB_DBREQUEST )
@@ -121,7 +121,7 @@ HB_FUNC( HB_DBREQUEST )
          ulMilliSec = 0;
       }
 
-      pArea = hb_rddRequestArea( szAlias, pCargo, fNewArea, ulMilliSec );
+      pArea = hb_rddRequestArea(szAlias, pCargo, fNewArea, ulMilliSec);
       if( pArea != nullptr )
       {
          hb_rddSelectWorkAreaNumber(pArea->uiArea);
@@ -137,6 +137,6 @@ HB_FUNC( HB_DBREQUEST )
    }
    else
    {
-      hb_errRT_DBCMD( EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME );
+      hb_errRT_DBCMD(EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
    }
 }
