@@ -12,6 +12,7 @@ CPP_SOURCES := \
    commctrl.cpp \
    mmsystem.cpp \
    wingdi.cpp \
+   winuser.cpp \
 
 PRG_SOURCES :=
 
