@@ -13,11 +13,11 @@
 #ifndef __HBEXTERN_CH__GTWVW__
 #define __HBEXTERN_CH__GTWVW__
 
-#if defined( __HBEXTREQ__ ) .OR. defined( __HBEXTERN__GTWVW__ANNOUNCE )
+#if defined(__HBEXTREQ__) .OR. defined(__HBEXTERN__GTWVW__ANNOUNCE)
    ANNOUNCE __HBEXTERN__GTWVW__
 #endif
 
-#if defined( __HBEXTREQ__ ) .OR. defined( __HBEXTERN__GTWVW__REQUEST )
+#if defined(__HBEXTREQ__) .OR. defined(__HBEXTERN__GTWVW__REQUEST)
    #command DYNAMIC <fncs,...> => EXTERNAL <fncs>
 #endif
 
@@ -313,7 +313,7 @@ DYNAMIC wvw_XReposWindow
 DYNAMIC wvw_YesClose
 DYNAMIC wvw__MakeDlgTemplate
 
-#if defined( __HBEXTREQ__ ) .OR. defined( __HBEXTERN__GTWVW__REQUEST )
+#if defined(__HBEXTREQ__) .OR. defined(__HBEXTERN__GTWVW__REQUEST)
    #uncommand DYNAMIC <fncs,...> => EXTERNAL <fncs>
 #endif
 
