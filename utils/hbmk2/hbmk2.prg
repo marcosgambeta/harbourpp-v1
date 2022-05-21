@@ -1657,6 +1657,10 @@ STATIC FUNCTION __hbmk( aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExit
       aLIB_BASE_3_MT    := aLIB_BASE_3
       cLIB_BASE_PCRE    := "hbpcre"
       cLIB_BASE_ZLIB    := "hbzlib"
+#if defined(__PLATFORM__WINDOWS)
+      aadd(aLIB_BASE_1, "hbwinapi")
+      aadd(aLIB_BASE_1_MT, "hbwinapi")
+#endif
    ELSE
 
       cDL_Version_Alter := ""
