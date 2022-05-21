@@ -49,6 +49,10 @@ HB_FUNC( WINAPI_INITCOMMONCONTROLS )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI InitCommonControlsEx(const INITCOMMONCONTROLSEX *)
 */
+HB_FUNC( WINAPI_INITCOMMONCONTROLSEX )
+{
+  hb_retl(InitCommonControlsEx(static_cast<const INITCOMMONCONTROLSEX *>(hb_parptr(1))));
+}
 
 /*
 WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_Create(int cx,int cy,UINT flags,int cInitial,int cGrow)
@@ -259,7 +263,7 @@ WINCOMMCTRLAPI WINBOOL WINAPI ImageList_DragShowNolock(WINBOOL fShow)
 */
 HB_FUNC( WINAPI_IMAGELIST_DRAGSHOWNOLOCK )
 {
-  hb_retl(ImageList_DragShowNolock( ( WINBOOL ) hb_parl(1) ));
+  hb_retl(ImageList_DragShowNolock(hb_parl(1)));
 }
 
 /*
@@ -407,7 +411,7 @@ WINCOMMCTRLAPI HWND WINAPI CreateUpDownControl(DWORD dwStyle,int x,int y,int cx,
 */
 HB_FUNC( WINAPI_CREATEUPDOWNCONTROL )
 {
-  hb_retptr(CreateUpDownControl( ( DWORD ) hb_parnl(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<HWND>(hb_parptr(6)), hb_parni(7), static_cast<HINSTANCE>(hb_parptr(8)), static_cast<HWND>(hb_parptr(9)), hb_parni(10), hb_parni(11), hb_parni(12) ));
+  hb_retptr(CreateUpDownControl(static_cast<DWORD>(hb_parnl(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<HWND>(hb_parptr(6)), hb_parni(7), static_cast<HINSTANCE>(hb_parptr(8)), static_cast<HWND>(hb_parptr(9)), hb_parni(10), hb_parni(11), hb_parni(12) ));
 }
 
 /*
@@ -559,7 +563,7 @@ WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_ShowScrollBar(HWND,int code,WINBOOL)
 */
 HB_FUNC( WINAPI_FLATSB_SHOWSCROLLBAR )
 {
-  hb_retl(FlatSB_ShowScrollBar(static_cast<HWND>(hb_parptr(1)), hb_parni(2), ( WINBOOL ) hb_parl(3)));
+  hb_retl(FlatSB_ShowScrollBar(static_cast<HWND>(hb_parptr(1)), hb_parni(2), hb_parl(3)));
 }
 
 /*
@@ -591,7 +595,7 @@ WINCOMMCTRLAPI int WINAPI FlatSB_SetScrollPos(HWND,int code,int pos,WINBOOL fRed
 */
 HB_FUNC( WINAPI_FLATSB_SETSCROLLPOS )
 {
-  hb_retni(FlatSB_SetScrollPos(static_cast<HWND>(hb_parptr(1)), hb_parni(2), hb_parni(3), ( WINBOOL ) hb_parl(4)));
+  hb_retni(FlatSB_SetScrollPos(static_cast<HWND>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parl(4)));
 }
 
 /*
@@ -603,7 +607,7 @@ WINCOMMCTRLAPI int WINAPI FlatSB_SetScrollRange(HWND,int code,int min,int max,WI
 */
 HB_FUNC( WINAPI_FLATSB_SETSCROLLRANGE )
 {
-  hb_retni(FlatSB_SetScrollRange(static_cast<HWND>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), ( WINBOOL ) hb_parl(5)));
+  hb_retni(FlatSB_SetScrollRange(static_cast<HWND>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parl(5)));
 }
 
 /*
@@ -611,7 +615,7 @@ WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_SetScrollProp(HWND,UINT index,INT_PTR newVa
 */
 HB_FUNC( WINAPI_FLATSB_SETSCROLLPROP )
 {
-  hb_retl(FlatSB_SetScrollProp(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), ( INT_PTR ) hb_parni(3), ( WINBOOL ) hb_parl(4)));
+  hb_retl(FlatSB_SetScrollProp(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), ( INT_PTR ) hb_parni(3), hb_parl(4)));
 }
 
 /*

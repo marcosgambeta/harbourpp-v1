@@ -62,7 +62,7 @@ WINGDIAPI WINBOOL WINAPI Arc(HDC hdc,int x1,int y1,int x2,int y2,int x3,int y3,i
 */
 HB_FUNC( WINAPI_ARC )
 {
-  hb_retl(( WINBOOL ) Arc( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), hb_parni(8), hb_parni(9) ));
+  hb_retl(Arc(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), hb_parni(8), hb_parni(9)));
 }
 
 /*
@@ -70,7 +70,7 @@ WINGDIAPI WINBOOL WINAPI BitBlt(HDC hdc,int x,int y,int cx,int cy,HDC hdcSrc,int
 */
 HB_FUNC( WINAPI_BITBLT )
 {
-  hb_retl(( WINBOOL ) BitBlt( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<HDC>(hb_parptr(6)), hb_parni(7), hb_parni(8), ( DWORD ) hb_parnl(9) ));
+  hb_retl(BitBlt(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<HDC>(hb_parptr(6)), hb_parni(7), hb_parni(8), static_cast<DWORD>(hb_parnl(9))));
 }
 
 /*
@@ -78,7 +78,7 @@ WINGDIAPI WINBOOL WINAPI CancelDC(HDC hdc)
 */
 HB_FUNC( WINAPI_CANCELDC )
 {
-  hb_retl(( WINBOOL ) CancelDC( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retl(CancelDC(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -86,7 +86,7 @@ WINGDIAPI WINBOOL WINAPI Chord(HDC hdc,int x1,int y1,int x2,int y2,int x3,int y3
 */
 HB_FUNC( WINAPI_CHORD )
 {
-  hb_retl(( WINBOOL ) Chord( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), hb_parni(8), hb_parni(9) ));
+  hb_retl(Chord(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), hb_parni(8), hb_parni(9)));
 }
 
 /*
@@ -106,7 +106,7 @@ WINGDIAPI int WINAPI CombineRgn(HRGN hrgnDst,HRGN hrgnSrc1,HRGN hrgnSrc2,int iMo
 */
 HB_FUNC( WINAPI_COMBINERGN )
 {
-  hb_retni(CombineRgn( static_cast<HRGN>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)), static_cast<HRGN>(hb_parptr(3)), hb_parni(4) ));
+  hb_retni(CombineRgn(static_cast<HRGN>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)), static_cast<HRGN>(hb_parptr(3)), hb_parni(4)));
 }
 
 /*
@@ -210,7 +210,7 @@ WINGDIAPI HFONT WINAPI CreateFontA(int cHeight,int cWidth,int cEscapement,int cO
 */
 HB_FUNC( WINAPI_CREATEFONTA )
 {
-  hb_retptr(CreateFontA(hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), ( DWORD ) hb_parnl(6), ( DWORD ) hb_parnl(7), ( DWORD ) hb_parnl(8), ( DWORD ) hb_parnl(9), ( DWORD ) hb_parnl(10), ( DWORD ) hb_parnl(11), ( DWORD ) hb_parnl(12), ( DWORD ) hb_parnl(13), ( LPCSTR ) hb_parc(14)));
+  hb_retptr(CreateFontA(hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<DWORD>(hb_parnl(6)), static_cast<DWORD>(hb_parnl(7)), static_cast<DWORD>(hb_parnl(8)), static_cast<DWORD>(hb_parnl(9)), static_cast<DWORD>(hb_parnl(10)), static_cast<DWORD>(hb_parnl(11)), static_cast<DWORD>(hb_parnl(12)), static_cast<DWORD>(hb_parnl(13)), ( LPCSTR ) hb_parc(14)));
 }
 
 /*
@@ -218,7 +218,7 @@ WINGDIAPI HFONT WINAPI CreateFontW(int cHeight,int cWidth,int cEscapement,int cO
 */
 HB_FUNC( WINAPI_CREATEFONTW )
 {
-  hb_retptr(CreateFontW(hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), ( DWORD ) hb_parnl(6), ( DWORD ) hb_parnl(7), ( DWORD ) hb_parnl(8), ( DWORD ) hb_parnl(9), ( DWORD ) hb_parnl(10), ( DWORD ) hb_parnl(11), ( DWORD ) hb_parnl(12), ( DWORD ) hb_parnl(13), ( LPCWSTR ) hb_parc(14)));
+  hb_retptr(CreateFontW(hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<DWORD>(hb_parnl(6)), static_cast<DWORD>(hb_parnl(7)), static_cast<DWORD>(hb_parnl(8)), static_cast<DWORD>(hb_parnl(9)), static_cast<DWORD>(hb_parnl(10)), static_cast<DWORD>(hb_parnl(11)), static_cast<DWORD>(hb_parnl(12)), static_cast<DWORD>(hb_parnl(13)), ( LPCWSTR ) hb_parc(14)));
 }
 
 /*
@@ -306,7 +306,7 @@ WINGDIAPI WINBOOL WINAPI CreateScalableFontResourceA(DWORD fdwHidden,LPCSTR lpsz
 */
 HB_FUNC( WINAPI_CREATESCALABLEFONTRESOURCEA )
 {
-  hb_retl(( WINBOOL ) CreateScalableFontResourceA( ( DWORD ) hb_parnl(1), ( LPCSTR ) hb_parc(2), ( LPCSTR ) hb_parc(3), ( LPCSTR ) hb_parc(4) ));
+  hb_retl(CreateScalableFontResourceA(static_cast<DWORD>(hb_parnl(1)), ( LPCSTR ) hb_parc(2), ( LPCSTR ) hb_parc(3), ( LPCSTR ) hb_parc(4)));
 }
 
 /*
@@ -314,7 +314,7 @@ WINGDIAPI WINBOOL WINAPI CreateScalableFontResourceW(DWORD fdwHidden,LPCWSTR lps
 */
 HB_FUNC( WINAPI_CREATESCALABLEFONTRESOURCEW )
 {
-  hb_retl(( WINBOOL ) CreateScalableFontResourceW( ( DWORD ) hb_parnl(1), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3), ( LPCWSTR ) hb_parc(4) ));
+  hb_retl(CreateScalableFontResourceW(static_cast<DWORD>(hb_parnl(1)), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3), ( LPCWSTR ) hb_parc(4)));
 }
 
 /*
@@ -330,7 +330,7 @@ WINGDIAPI WINBOOL WINAPI DeleteDC(HDC hdc)
 */
 HB_FUNC( WINAPI_DELETEDC )
 {
-  hb_retl(( WINBOOL ) DeleteDC( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retl(DeleteDC(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -338,7 +338,7 @@ WINGDIAPI WINBOOL WINAPI DeleteMetaFile(HMETAFILE hmf)
 */
 HB_FUNC( WINAPI_DELETEMETAFILE )
 {
-  hb_retl(( WINBOOL ) DeleteMetaFile( static_cast<HMETAFILE>(hb_parptr(1)) ));
+  hb_retl(DeleteMetaFile(static_cast<HMETAFILE>(hb_parptr(1))));
 }
 
 /*
@@ -346,7 +346,7 @@ WINGDIAPI WINBOOL WINAPI DeleteObject(HGDIOBJ ho)
 */
 HB_FUNC( WINAPI_DELETEOBJECT )
 {
-  hb_retl(( WINBOOL ) DeleteObject( static_cast<HGDIOBJ>(hb_parptr(1)) ));
+  hb_retl(DeleteObject(static_cast<HGDIOBJ>(hb_parptr(1))));
 }
 
 /*
@@ -366,7 +366,7 @@ WINGDIAPI int WINAPI DrawEscape(HDC hdc,int iEscape,int cjIn,LPCSTR lpIn)
 */
 HB_FUNC( WINAPI_DRAWESCAPE )
 {
-  hb_retni(DrawEscape( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), ( LPCSTR ) hb_parc(4) ));
+  hb_retni(DrawEscape(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), ( LPCSTR ) hb_parc(4)));
 }
 
 /*
@@ -374,7 +374,7 @@ WINGDIAPI WINBOOL WINAPI Ellipse(HDC hdc,int left,int top,int right,int bottom)
 */
 HB_FUNC( WINAPI_ELLIPSE )
 {
-  hb_retl(( WINBOOL ) Ellipse( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5) ));
+  hb_retl(Ellipse(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
 }
 
 /*
@@ -410,7 +410,7 @@ WINGDIAPI WINBOOL WINAPI EqualRgn(HRGN hrgn1,HRGN hrgn2)
 */
 HB_FUNC( WINAPI_EQUALRGN )
 {
-  hb_retl(( WINBOOL ) EqualRgn( static_cast<HRGN>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)) ));
+  hb_retl(EqualRgn(static_cast<HRGN>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2))));
 }
 
 /*
@@ -418,7 +418,7 @@ WINGDIAPI int WINAPI Escape(HDC hdc,int iEscape,int cjIn,LPCSTR pvIn,LPVOID pvOu
 */
 HB_FUNC( WINAPI_ESCAPE )
 {
-  hb_retni(Escape( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), ( LPCSTR ) hb_parc(4), static_cast<LPVOID>(hb_parptr(5)) ));
+  hb_retni(Escape(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), ( LPCSTR ) hb_parc(4), static_cast<LPVOID>(hb_parptr(5))));
 }
 
 /*
@@ -426,7 +426,7 @@ WINGDIAPI int WINAPI ExtEscape(HDC hdc,int iEscape,int cjInput,LPCSTR lpInData,i
 */
 HB_FUNC( WINAPI_EXTESCAPE )
 {
-  hb_retni(ExtEscape( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), ( LPCSTR ) hb_parc(4), hb_parni(5), ( LPSTR ) hb_parc(6) ));
+  hb_retni(ExtEscape(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), ( LPCSTR ) hb_parc(4), hb_parni(5), ( LPSTR ) hb_parc(6)));
 }
 
 /*
@@ -434,7 +434,7 @@ WINGDIAPI int WINAPI ExcludeClipRect(HDC hdc,int left,int top,int right,int bott
 */
 HB_FUNC( WINAPI_EXCLUDECLIPRECT )
 {
-  hb_retni(ExcludeClipRect( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5) ));
+  hb_retni(ExcludeClipRect(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
 }
 
 /*
@@ -446,7 +446,7 @@ WINGDIAPI WINBOOL WINAPI ExtFloodFill(HDC hdc,int x,int y,COLORREF color,UINT ty
 */
 HB_FUNC( WINAPI_EXTFLOODFILL )
 {
-  hb_retl(( WINBOOL ) ExtFloodFill( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<COLORREF>(hb_parnl(4)), static_cast<UINT>(hb_parni(5)) ));
+  hb_retl(ExtFloodFill(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<COLORREF>(hb_parnl(4)), static_cast<UINT>(hb_parni(5))));
 }
 
 /*
@@ -454,7 +454,7 @@ WINGDIAPI WINBOOL WINAPI FillRgn(HDC hdc,HRGN hrgn,HBRUSH hbr)
 */
 HB_FUNC( WINAPI_FILLRGN )
 {
-  hb_retl(( WINBOOL ) FillRgn( static_cast<HDC>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)), static_cast<HBRUSH>(hb_parptr(3)) ));
+  hb_retl(FillRgn(static_cast<HDC>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)), static_cast<HBRUSH>(hb_parptr(3))));
 }
 
 /*
@@ -462,7 +462,7 @@ WINGDIAPI WINBOOL WINAPI FloodFill(HDC hdc,int x,int y,COLORREF color)
 */
 HB_FUNC( WINAPI_FLOODFILL )
 {
-  hb_retl(( WINBOOL ) FloodFill( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<COLORREF>(hb_parnl(4)) ));
+  hb_retl(FloodFill(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<COLORREF>(hb_parnl(4))));
 }
 
 /*
@@ -470,7 +470,7 @@ WINGDIAPI WINBOOL WINAPI FrameRgn(HDC hdc,HRGN hrgn,HBRUSH hbr,int w,int h)
 */
 HB_FUNC( WINAPI_FRAMERGN )
 {
-  hb_retl(( WINBOOL ) FrameRgn( static_cast<HDC>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)), static_cast<HBRUSH>(hb_parptr(3)), hb_parni(4), hb_parni(5) ));
+  hb_retl(FrameRgn(static_cast<HDC>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)), static_cast<HBRUSH>(hb_parptr(3)), hb_parni(4), hb_parni(5)));
 }
 
 /*
@@ -478,7 +478,7 @@ WINGDIAPI int WINAPI GetROP2(HDC hdc)
 */
 HB_FUNC( WINAPI_GETROP2 )
 {
-  hb_retni(GetROP2( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(GetROP2(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -490,7 +490,7 @@ WINGDIAPI COLORREF WINAPI GetBkColor(HDC hdc)
 */
 HB_FUNC( WINAPI_GETBKCOLOR )
 {
-  hb_retnl( ( COLORREF ) GetBkColor( static_cast<HDC>(hb_parptr(1)) ) );
+  hb_retnl(GetBkColor(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -498,7 +498,7 @@ WINGDIAPI COLORREF WINAPI GetDCBrushColor(HDC hdc)
 */
 HB_FUNC( WINAPI_GETDCBRUSHCOLOR )
 {
-  hb_retnl( ( COLORREF ) GetDCBrushColor( static_cast<HDC>(hb_parptr(1)) ) );
+  hb_retnl(GetDCBrushColor(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -506,7 +506,7 @@ WINGDIAPI COLORREF WINAPI GetDCPenColor(HDC hdc)
 */
 HB_FUNC( WINAPI_GETDCPENCOLOR )
 {
-  hb_retnl( ( COLORREF ) GetDCPenColor( static_cast<HDC>(hb_parptr(1)) ) );
+  hb_retnl(GetDCPenColor(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -514,7 +514,7 @@ WINGDIAPI int WINAPI GetBkMode(HDC hdc)
 */
 HB_FUNC( WINAPI_GETBKMODE )
 {
-  hb_retni(GetBkMode( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(GetBkMode(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -522,7 +522,7 @@ WINGDIAPI LONG WINAPI GetBitmapBits(HBITMAP hbit,LONG cb,LPVOID lpvBits)
 */
 HB_FUNC( WINAPI_GETBITMAPBITS )
 {
-  hb_retnl( ( LONG ) GetBitmapBits( static_cast<HBITMAP>(hb_parptr(1)), ( LONG ) hb_parnl(2), static_cast<LPVOID>(hb_parptr(3)) ) );
+  hb_retnl(GetBitmapBits(static_cast<HBITMAP>(hb_parptr(1)), ( LONG ) hb_parnl(2), static_cast<LPVOID>(hb_parptr(3))));
 }
 
 /*
@@ -586,7 +586,7 @@ WINGDIAPI int WINAPI GetClipRgn(HDC hdc,HRGN hrgn)
 */
 HB_FUNC( WINAPI_GETCLIPRGN )
 {
-  hb_retni(GetClipRgn( static_cast<HDC>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)) ));
+  hb_retni(GetClipRgn(static_cast<HDC>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2))));
 }
 
 /*
@@ -594,7 +594,7 @@ WINGDIAPI int WINAPI GetMetaRgn(HDC hdc,HRGN hrgn)
 */
 HB_FUNC( WINAPI_GETMETARGN )
 {
-  hb_retni(GetMetaRgn( static_cast<HDC>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)) ));
+  hb_retni(GetMetaRgn(static_cast<HDC>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2))));
 }
 
 /*
@@ -614,7 +614,7 @@ WINGDIAPI int WINAPI GetDeviceCaps(HDC hdc,int index)
 */
 HB_FUNC( WINAPI_GETDEVICECAPS )
 {
-  hb_retni(GetDeviceCaps( static_cast<HDC>(hb_parptr(1)), hb_parni(2) ));
+  hb_retni(GetDeviceCaps(static_cast<HDC>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -626,7 +626,7 @@ WINGDIAPI DWORD WINAPI GetFontData (HDC hdc,DWORD dwTable,DWORD dwOffset,PVOID p
 */
 HB_FUNC( WINAPI_GETFONTDATA )
 {
-  hb_retnl( ( DWORD ) GetFontData( static_cast<HDC>(hb_parptr(1)), ( DWORD ) hb_parnl(2), ( DWORD ) hb_parnl(3), static_cast<PVOID>(hb_parptr(4)), ( DWORD ) hb_parnl(5) ) );
+  hb_retnl(GetFontData(static_cast<HDC>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2)), static_cast<DWORD>(hb_parnl(3)), static_cast<PVOID>(hb_parptr(4)), static_cast<DWORD>(hb_parnl(5))));
 }
 
 /*
@@ -642,7 +642,7 @@ WINGDIAPI int WINAPI GetGraphicsMode(HDC hdc)
 */
 HB_FUNC( WINAPI_GETGRAPHICSMODE )
 {
-  hb_retni(GetGraphicsMode( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(GetGraphicsMode(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -650,7 +650,7 @@ WINGDIAPI int WINAPI GetMapMode(HDC hdc)
 */
 HB_FUNC( WINAPI_GETMAPMODE )
 {
-  hb_retni(GetMapMode( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(GetMapMode(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -658,7 +658,7 @@ WINGDIAPI UINT WINAPI GetMetaFileBitsEx(HMETAFILE hMF,UINT cbBuffer,LPVOID lpDat
 */
 HB_FUNC( WINAPI_GETMETAFILEBITSEX )
 {
-  hb_retni(( UINT ) GetMetaFileBitsEx( static_cast<HMETAFILE>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), static_cast<LPVOID>(hb_parptr(3)) ));
+  hb_retni(GetMetaFileBitsEx(static_cast<HMETAFILE>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), static_cast<LPVOID>(hb_parptr(3))));
 }
 
 /*
@@ -682,7 +682,7 @@ WINGDIAPI COLORREF WINAPI GetNearestColor(HDC hdc,COLORREF color)
 */
 HB_FUNC( WINAPI_GETNEARESTCOLOR )
 {
-  hb_retnl( ( COLORREF ) GetNearestColor( static_cast<HDC>(hb_parptr(1)), static_cast<COLORREF>(hb_parnl(2)) ) );
+  hb_retnl(GetNearestColor(static_cast<HDC>(hb_parptr(1)), static_cast<COLORREF>(hb_parnl(2))));
 }
 
 /*
@@ -690,7 +690,7 @@ WINGDIAPI UINT WINAPI GetNearestPaletteIndex(HPALETTE h,COLORREF color)
 */
 HB_FUNC( WINAPI_GETNEARESTPALETTEINDEX )
 {
-  hb_retni(( UINT ) GetNearestPaletteIndex( static_cast<HPALETTE>(hb_parptr(1)), static_cast<COLORREF>(hb_parnl(2)) ));
+  hb_retni(GetNearestPaletteIndex(static_cast<HPALETTE>(hb_parptr(1)), static_cast<COLORREF>(hb_parnl(2))));
 }
 
 /*
@@ -698,7 +698,7 @@ WINGDIAPI DWORD WINAPI GetObjectType(HGDIOBJ h)
 */
 HB_FUNC( WINAPI_GETOBJECTTYPE )
 {
-  hb_retnl( ( DWORD ) GetObjectType( static_cast<HGDIOBJ>(hb_parptr(1)) ) );
+  hb_retnl(GetObjectType(static_cast<HGDIOBJ>(hb_parptr(1))));
 }
 
 /*
@@ -718,7 +718,7 @@ WINGDIAPI COLORREF WINAPI GetPixel(HDC hdc,int x,int y)
 */
 HB_FUNC( WINAPI_GETPIXEL )
 {
-  hb_retnl( ( COLORREF ) GetPixel( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3) ) );
+  hb_retnl(GetPixel(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3)));
 }
 
 /*
@@ -726,7 +726,7 @@ WINGDIAPI int WINAPI GetPixelFormat(HDC hdc)
 */
 HB_FUNC( WINAPI_GETPIXELFORMAT )
 {
-  hb_retni(GetPixelFormat( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(GetPixelFormat(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -734,7 +734,7 @@ WINGDIAPI int WINAPI GetPolyFillMode(HDC hdc)
 */
 HB_FUNC( WINAPI_GETPOLYFILLMODE )
 {
-  hb_retni(GetPolyFillMode( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(GetPolyFillMode(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -746,7 +746,7 @@ WINGDIAPI int WINAPI GetRandomRgn (HDC hdc,HRGN hrgn,INT i)
 */
 HB_FUNC( WINAPI_GETRANDOMRGN )
 {
-  hb_retni(GetRandomRgn( static_cast<HDC>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)), hb_parni(3) ));
+  hb_retni(GetRandomRgn(static_cast<HDC>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)), hb_parni(3)));
 }
 
 /*
@@ -770,7 +770,7 @@ WINGDIAPI int WINAPI GetStretchBltMode(HDC hdc)
 */
 HB_FUNC( WINAPI_GETSTRETCHBLTMODE )
 {
-  hb_retni(GetStretchBltMode( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(GetStretchBltMode(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -782,7 +782,7 @@ WINGDIAPI UINT WINAPI GetSystemPaletteUse(HDC hdc)
 */
 HB_FUNC( WINAPI_GETSYSTEMPALETTEUSE )
 {
-  hb_retni(( UINT ) GetSystemPaletteUse( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(GetSystemPaletteUse(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -790,7 +790,7 @@ WINGDIAPI int WINAPI GetTextCharacterExtra(HDC hdc)
 */
 HB_FUNC( WINAPI_GETTEXTCHARACTEREXTRA )
 {
-  hb_retni(GetTextCharacterExtra( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(GetTextCharacterExtra(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -798,7 +798,7 @@ WINGDIAPI UINT WINAPI GetTextAlign(HDC hdc)
 */
 HB_FUNC( WINAPI_GETTEXTALIGN )
 {
-  hb_retni(( UINT ) GetTextAlign( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(GetTextAlign(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -806,7 +806,7 @@ WINGDIAPI COLORREF WINAPI GetTextColor(HDC hdc)
 */
 HB_FUNC( WINAPI_GETTEXTCOLOR )
 {
-  hb_retnl( ( COLORREF ) GetTextColor( static_cast<HDC>(hb_parptr(1)) ) );
+  hb_retnl(GetTextColor(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -838,7 +838,7 @@ WINGDIAPI int WINAPI GetTextCharset(HDC hdc)
 */
 HB_FUNC( WINAPI_GETTEXTCHARSET )
 {
-  hb_retni(GetTextCharset( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(GetTextCharset(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -854,7 +854,7 @@ WINGDIAPI DWORD WINAPI GetFontLanguageInfo(HDC hdc)
 */
 HB_FUNC( WINAPI_GETFONTLANGUAGEINFO )
 {
-  hb_retnl( ( DWORD ) GetFontLanguageInfo( static_cast<HDC>(hb_parptr(1)) ) );
+  hb_retnl(GetFontLanguageInfo(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -898,7 +898,7 @@ WINGDIAPI int WINAPI AddFontResourceExA(LPCSTR name,DWORD fl,PVOID res)
 */
 HB_FUNC( WINAPI_ADDFONTRESOURCEEXA )
 {
-  hb_retni(AddFontResourceExA( ( LPCSTR ) hb_parc(1), ( DWORD ) hb_parnl(2), static_cast<PVOID>(hb_parptr(3)) ));
+  hb_retni(AddFontResourceExA(( LPCSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2)), static_cast<PVOID>(hb_parptr(3))));
 }
 
 /*
@@ -906,7 +906,7 @@ WINGDIAPI int WINAPI AddFontResourceExW(LPCWSTR name,DWORD fl,PVOID res)
 */
 HB_FUNC( WINAPI_ADDFONTRESOURCEEXW )
 {
-  hb_retni(AddFontResourceExW( ( LPCWSTR ) hb_parc(1), ( DWORD ) hb_parnl(2), static_cast<PVOID>(hb_parptr(3)) ));
+  hb_retni(AddFontResourceExW(( LPCWSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2)), static_cast<PVOID>(hb_parptr(3))));
 }
 
 /*
@@ -914,7 +914,7 @@ WINGDIAPI WINBOOL WINAPI RemoveFontResourceExA(LPCSTR name,DWORD fl,PVOID pdv)
 */
 HB_FUNC( WINAPI_REMOVEFONTRESOURCEEXA )
 {
-  hb_retl(( WINBOOL ) RemoveFontResourceExA( ( LPCSTR ) hb_parc(1), ( DWORD ) hb_parnl(2), static_cast<PVOID>(hb_parptr(3)) ));
+  hb_retl(RemoveFontResourceExA(( LPCSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2)), static_cast<PVOID>(hb_parptr(3))));
 }
 
 /*
@@ -922,7 +922,7 @@ WINGDIAPI WINBOOL WINAPI RemoveFontResourceExW(LPCWSTR name,DWORD fl,PVOID pdv)
 */
 HB_FUNC( WINAPI_REMOVEFONTRESOURCEEXW )
 {
-  hb_retl(( WINBOOL ) RemoveFontResourceExW( ( LPCWSTR ) hb_parc(1), ( DWORD ) hb_parnl(2), static_cast<PVOID>(hb_parptr(3)) ));
+  hb_retl(RemoveFontResourceExW(( LPCWSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2)), static_cast<PVOID>(hb_parptr(3))));
 }
 
 /*
@@ -934,7 +934,7 @@ WINGDIAPI WINBOOL WINAPI RemoveFontMemResourceEx(HANDLE h)
 */
 HB_FUNC( WINAPI_REMOVEFONTMEMRESOURCEEX )
 {
-  hb_retl(( WINBOOL ) RemoveFontMemResourceEx( static_cast<HANDLE>(hb_parptr(1)) ));
+  hb_retl(RemoveFontMemResourceEx(static_cast<HANDLE>(hb_parptr(1))));
 }
 
 /*
@@ -966,7 +966,7 @@ WINGDIAPI int WINAPI IntersectClipRect(HDC hdc,int left,int top,int right,int bo
 */
 HB_FUNC( WINAPI_INTERSECTCLIPRECT )
 {
-  hb_retni(IntersectClipRect( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5) ));
+  hb_retni(IntersectClipRect(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
 }
 
 /*
@@ -974,7 +974,7 @@ WINGDIAPI WINBOOL WINAPI InvertRgn(HDC hdc,HRGN hrgn)
 */
 HB_FUNC( WINAPI_INVERTRGN )
 {
-  hb_retl(( WINBOOL ) InvertRgn( static_cast<HDC>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)) ));
+  hb_retl(InvertRgn(static_cast<HDC>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2))));
 }
 
 /*
@@ -986,7 +986,7 @@ WINGDIAPI WINBOOL WINAPI LineTo(HDC hdc,int x,int y)
 */
 HB_FUNC( WINAPI_LINETO )
 {
-  hb_retl(( WINBOOL ) LineTo( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3) ));
+  hb_retl(LineTo(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3)));
 }
 
 /*
@@ -994,7 +994,7 @@ WINGDIAPI WINBOOL WINAPI MaskBlt(HDC hdcDest,int xDest,int yDest,int width,int h
 */
 HB_FUNC( WINAPI_MASKBLT )
 {
-  hb_retl(( WINBOOL ) MaskBlt( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<HDC>(hb_parptr(6)), hb_parni(7), hb_parni(8), static_cast<HBITMAP>(hb_parptr(9)), hb_parni(10), hb_parni(11), ( DWORD ) hb_parnl(12) ));
+  hb_retl(MaskBlt(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<HDC>(hb_parptr(6)), hb_parni(7), hb_parni(8), static_cast<HBITMAP>(hb_parptr(9)), hb_parni(10), hb_parni(11), static_cast<DWORD>(hb_parnl(12))));
 }
 
 /*
@@ -1006,7 +1006,7 @@ WINGDIAPI int WINAPI OffsetClipRgn(HDC hdc,int x,int y)
 */
 HB_FUNC( WINAPI_OFFSETCLIPRGN )
 {
-  hb_retni(OffsetClipRgn( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3) ));
+  hb_retni(OffsetClipRgn(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3)));
 }
 
 /*
@@ -1014,7 +1014,7 @@ WINGDIAPI int WINAPI OffsetRgn(HRGN hrgn,int x,int y)
 */
 HB_FUNC( WINAPI_OFFSETRGN )
 {
-  hb_retni(OffsetRgn( static_cast<HRGN>(hb_parptr(1)), hb_parni(2), hb_parni(3) ));
+  hb_retni(OffsetRgn(static_cast<HRGN>(hb_parptr(1)), hb_parni(2), hb_parni(3)));
 }
 
 /*
@@ -1022,7 +1022,7 @@ WINGDIAPI WINBOOL WINAPI PatBlt(HDC hdc,int x,int y,int w,int h,DWORD rop)
 */
 HB_FUNC( WINAPI_PATBLT )
 {
-  hb_retl(( WINBOOL ) PatBlt( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), ( DWORD ) hb_parnl(6) ));
+  hb_retl(PatBlt(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<DWORD>(hb_parnl(6))));
 }
 
 /*
@@ -1030,7 +1030,7 @@ WINGDIAPI WINBOOL WINAPI Pie(HDC hdc,int left,int top,int right,int bottom,int x
 */
 HB_FUNC( WINAPI_PIE )
 {
-  hb_retl(( WINBOOL ) Pie( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), hb_parni(8), hb_parni(9) ));
+  hb_retl(Pie(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), hb_parni(8), hb_parni(9)));
 }
 
 /*
@@ -1038,7 +1038,7 @@ WINGDIAPI WINBOOL WINAPI PlayMetaFile(HDC hdc,HMETAFILE hmf)
 */
 HB_FUNC( WINAPI_PLAYMETAFILE )
 {
-  hb_retl(( WINBOOL ) PlayMetaFile( static_cast<HDC>(hb_parptr(1)), static_cast<HMETAFILE>(hb_parptr(2)) ));
+  hb_retl(PlayMetaFile(static_cast<HDC>(hb_parptr(1)), static_cast<HMETAFILE>(hb_parptr(2))));
 }
 
 /*
@@ -1046,7 +1046,7 @@ WINGDIAPI WINBOOL WINAPI PaintRgn(HDC hdc,HRGN hrgn)
 */
 HB_FUNC( WINAPI_PAINTRGN )
 {
-  hb_retl(( WINBOOL ) PaintRgn( static_cast<HDC>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)) ));
+  hb_retl(PaintRgn(static_cast<HDC>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2))));
 }
 
 /*
@@ -1058,7 +1058,7 @@ WINGDIAPI WINBOOL WINAPI PtInRegion(HRGN hrgn,int x,int y)
 */
 HB_FUNC( WINAPI_PTINREGION )
 {
-  hb_retl(( WINBOOL ) PtInRegion( static_cast<HRGN>(hb_parptr(1)), hb_parni(2), hb_parni(3) ));
+  hb_retl(PtInRegion(static_cast<HRGN>(hb_parptr(1)), hb_parni(2), hb_parni(3)));
 }
 
 /*
@@ -1066,7 +1066,7 @@ WINGDIAPI WINBOOL WINAPI PtVisible(HDC hdc,int x,int y)
 */
 HB_FUNC( WINAPI_PTVISIBLE )
 {
-  hb_retl(( WINBOOL ) PtVisible( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3) ));
+  hb_retl(PtVisible(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3)));
 }
 
 /*
@@ -1082,7 +1082,7 @@ WINGDIAPI WINBOOL WINAPI Rectangle(HDC hdc,int left,int top,int right,int bottom
 */
 HB_FUNC( WINAPI_RECTANGLE )
 {
-  hb_retl(( WINBOOL ) Rectangle( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5) ));
+  hb_retl(Rectangle(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
 }
 
 /*
@@ -1090,7 +1090,7 @@ WINGDIAPI WINBOOL WINAPI RestoreDC(HDC hdc,int nSavedDC)
 */
 HB_FUNC( WINAPI_RESTOREDC )
 {
-  hb_retl(( WINBOOL ) RestoreDC( static_cast<HDC>(hb_parptr(1)), hb_parni(2) ));
+  hb_retl(RestoreDC(static_cast<HDC>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -1106,7 +1106,7 @@ WINGDIAPI UINT WINAPI RealizePalette(HDC hdc)
 */
 HB_FUNC( WINAPI_REALIZEPALETTE )
 {
-  hb_retni(( UINT ) RealizePalette( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(RealizePalette(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1114,7 +1114,7 @@ WINGDIAPI WINBOOL WINAPI RemoveFontResourceA(LPCSTR lpFileName)
 */
 HB_FUNC( WINAPI_REMOVEFONTRESOURCEA )
 {
-  hb_retl(( WINBOOL ) RemoveFontResourceA( ( LPCSTR ) hb_parc(1) ));
+  hb_retl(RemoveFontResourceA(( LPCSTR ) hb_parc(1)));
 }
 
 /*
@@ -1122,7 +1122,7 @@ WINGDIAPI WINBOOL WINAPI RemoveFontResourceW(LPCWSTR lpFileName)
 */
 HB_FUNC( WINAPI_REMOVEFONTRESOURCEW )
 {
-  hb_retl(( WINBOOL ) RemoveFontResourceW( ( LPCWSTR ) hb_parc(1) ));
+  hb_retl(RemoveFontResourceW(( LPCWSTR ) hb_parc(1)));
 }
 
 /*
@@ -1130,7 +1130,7 @@ WINGDIAPI WINBOOL WINAPI RoundRect(HDC hdc,int left,int top,int right,int bottom
 */
 HB_FUNC( WINAPI_ROUNDRECT )
 {
-  hb_retl(( WINBOOL ) RoundRect( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7) ));
+  hb_retl(RoundRect(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7)));
 }
 
 /*
@@ -1138,7 +1138,7 @@ WINGDIAPI WINBOOL WINAPI ResizePalette(HPALETTE hpal,UINT n)
 */
 HB_FUNC( WINAPI_RESIZEPALETTE )
 {
-  hb_retl(( WINBOOL ) ResizePalette( static_cast<HPALETTE>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)) ));
+  hb_retl(ResizePalette(static_cast<HPALETTE>(hb_parptr(1)), static_cast<UINT>(hb_parni(2))));
 }
 
 /*
@@ -1146,7 +1146,7 @@ WINGDIAPI int WINAPI SaveDC(HDC hdc)
 */
 HB_FUNC( WINAPI_SAVEDC )
 {
-  hb_retni(SaveDC( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(SaveDC(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1154,7 +1154,7 @@ WINGDIAPI int WINAPI SelectClipRgn(HDC hdc,HRGN hrgn)
 */
 HB_FUNC( WINAPI_SELECTCLIPRGN )
 {
-  hb_retni(SelectClipRgn( static_cast<HDC>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)) ));
+  hb_retni(SelectClipRgn(static_cast<HDC>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2))));
 }
 
 /*
@@ -1162,7 +1162,7 @@ WINGDIAPI int WINAPI ExtSelectClipRgn(HDC hdc,HRGN hrgn,int mode)
 */
 HB_FUNC( WINAPI_EXTSELECTCLIPRGN )
 {
-  hb_retni(ExtSelectClipRgn( static_cast<HDC>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)), hb_parni(3) ));
+  hb_retni(ExtSelectClipRgn(static_cast<HDC>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)), hb_parni(3)));
 }
 
 /*
@@ -1170,7 +1170,7 @@ WINGDIAPI int WINAPI SetMetaRgn(HDC hdc)
 */
 HB_FUNC( WINAPI_SETMETARGN )
 {
-  hb_retni(SetMetaRgn( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(SetMetaRgn(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1186,7 +1186,7 @@ WINGDIAPI HPALETTE WINAPI SelectPalette(HDC hdc,HPALETTE hPal,WINBOOL bForceBkgd
 */
 HB_FUNC( WINAPI_SELECTPALETTE )
 {
-  hb_retptr(SelectPalette(static_cast<HDC>(hb_parptr(1)), static_cast<HPALETTE>(hb_parptr(2)), ( WINBOOL ) hb_parl(3)));
+  hb_retptr(SelectPalette(static_cast<HDC>(hb_parptr(1)), static_cast<HPALETTE>(hb_parptr(2)), hb_parl(3)));
 }
 
 /*
@@ -1194,7 +1194,7 @@ WINGDIAPI COLORREF WINAPI SetBkColor(HDC hdc,COLORREF color)
 */
 HB_FUNC( WINAPI_SETBKCOLOR )
 {
-  hb_retnl( ( COLORREF ) SetBkColor( static_cast<HDC>(hb_parptr(1)), static_cast<COLORREF>(hb_parnl(2)) ) );
+  hb_retnl(SetBkColor(static_cast<HDC>(hb_parptr(1)), static_cast<COLORREF>(hb_parnl(2))));
 }
 
 /*
@@ -1202,7 +1202,7 @@ WINGDIAPI COLORREF WINAPI SetDCBrushColor(HDC hdc,COLORREF color)
 */
 HB_FUNC( WINAPI_SETDCBRUSHCOLOR )
 {
-  hb_retnl( ( COLORREF ) SetDCBrushColor( static_cast<HDC>(hb_parptr(1)), static_cast<COLORREF>(hb_parnl(2)) ) );
+  hb_retnl(SetDCBrushColor(static_cast<HDC>(hb_parptr(1)), static_cast<COLORREF>(hb_parnl(2))));
 }
 
 /*
@@ -1210,7 +1210,7 @@ WINGDIAPI COLORREF WINAPI SetDCPenColor(HDC hdc,COLORREF color)
 */
 HB_FUNC( WINAPI_SETDCPENCOLOR )
 {
-  hb_retnl( ( COLORREF ) SetDCPenColor( static_cast<HDC>(hb_parptr(1)), static_cast<COLORREF>(hb_parnl(2)) ) );
+  hb_retnl(SetDCPenColor(static_cast<HDC>(hb_parptr(1)), static_cast<COLORREF>(hb_parnl(2))));
 }
 
 /*
@@ -1218,7 +1218,7 @@ WINGDIAPI int WINAPI SetBkMode(HDC hdc,int mode)
 */
 HB_FUNC( WINAPI_SETBKMODE )
 {
-  hb_retni(SetBkMode( static_cast<HDC>(hb_parptr(1)), hb_parni(2) ));
+  hb_retni(SetBkMode(static_cast<HDC>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -1242,7 +1242,7 @@ WINGDIAPI DWORD WINAPI SetMapperFlags(HDC hdc,DWORD flags)
 */
 HB_FUNC( WINAPI_SETMAPPERFLAGS )
 {
-  hb_retnl( ( DWORD ) SetMapperFlags( static_cast<HDC>(hb_parptr(1)), ( DWORD ) hb_parnl(2) ) );
+  hb_retnl(SetMapperFlags(static_cast<HDC>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2))));
 }
 
 /*
@@ -1250,7 +1250,7 @@ WINGDIAPI int WINAPI SetGraphicsMode(HDC hdc,int iMode)
 */
 HB_FUNC( WINAPI_SETGRAPHICSMODE )
 {
-  hb_retni(SetGraphicsMode( static_cast<HDC>(hb_parptr(1)), hb_parni(2) ));
+  hb_retni(SetGraphicsMode(static_cast<HDC>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -1258,7 +1258,7 @@ WINGDIAPI int WINAPI SetMapMode(HDC hdc,int iMode)
 */
 HB_FUNC( WINAPI_SETMAPMODE )
 {
-  hb_retni(SetMapMode( static_cast<HDC>(hb_parptr(1)), hb_parni(2) ));
+  hb_retni(SetMapMode(static_cast<HDC>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -1266,7 +1266,7 @@ WINGDIAPI DWORD WINAPI SetLayout(HDC hdc,DWORD l)
 */
 HB_FUNC( WINAPI_SETLAYOUT )
 {
-  hb_retnl( ( DWORD ) SetLayout( static_cast<HDC>(hb_parptr(1)), ( DWORD ) hb_parnl(2) ) );
+  hb_retnl(SetLayout(static_cast<HDC>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2))));
 }
 
 /*
@@ -1274,7 +1274,7 @@ WINGDIAPI DWORD WINAPI GetLayout(HDC hdc)
 */
 HB_FUNC( WINAPI_GETLAYOUT )
 {
-  hb_retnl( ( DWORD ) GetLayout( static_cast<HDC>(hb_parptr(1)) ) );
+  hb_retnl(GetLayout(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1290,7 +1290,7 @@ WINGDIAPI COLORREF WINAPI SetPixel(HDC hdc,int x,int y,COLORREF color)
 */
 HB_FUNC( WINAPI_SETPIXEL )
 {
-  hb_retnl( ( COLORREF ) SetPixel( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<COLORREF>(hb_parnl(4)) ) );
+  hb_retnl(SetPixel(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<COLORREF>(hb_parnl(4))));
 }
 
 /*
@@ -1298,7 +1298,7 @@ WINGDIAPI WINBOOL WINAPI SetPixelV(HDC hdc,int x,int y,COLORREF color)
 */
 HB_FUNC( WINAPI_SETPIXELV )
 {
-  hb_retl(( WINBOOL ) SetPixelV( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<COLORREF>(hb_parnl(4)) ));
+  hb_retl(SetPixelV(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<COLORREF>(hb_parnl(4))));
 }
 
 /*
@@ -1310,7 +1310,7 @@ WINGDIAPI int WINAPI SetPolyFillMode(HDC hdc,int mode)
 */
 HB_FUNC( WINAPI_SETPOLYFILLMODE )
 {
-  hb_retni(SetPolyFillMode( static_cast<HDC>(hb_parptr(1)), hb_parni(2) ));
+  hb_retni(SetPolyFillMode(static_cast<HDC>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -1318,7 +1318,7 @@ WINGDIAPI WINBOOL WINAPI StretchBlt(HDC hdcDest,int xDest,int yDest,int wDest,in
 */
 HB_FUNC( WINAPI_STRETCHBLT )
 {
-  hb_retl(( WINBOOL ) StretchBlt( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<HDC>(hb_parptr(6)), hb_parni(7), hb_parni(8), hb_parni(9), hb_parni(10), ( DWORD ) hb_parnl(11) ));
+  hb_retl(StretchBlt(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<HDC>(hb_parptr(6)), hb_parni(7), hb_parni(8), hb_parni(9), hb_parni(10), static_cast<DWORD>(hb_parnl(11))));
 }
 
 /*
@@ -1326,7 +1326,7 @@ WINGDIAPI WINBOOL WINAPI SetRectRgn(HRGN hrgn,int left,int top,int right,int bot
 */
 HB_FUNC( WINAPI_SETRECTRGN )
 {
-  hb_retl(( WINBOOL ) SetRectRgn( static_cast<HRGN>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5) ));
+  hb_retl(SetRectRgn(static_cast<HRGN>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
 }
 
 /*
@@ -1338,7 +1338,7 @@ WINGDIAPI int WINAPI SetROP2(HDC hdc,int rop2)
 */
 HB_FUNC( WINAPI_SETROP2 )
 {
-  hb_retni(SetROP2( static_cast<HDC>(hb_parptr(1)), hb_parni(2) ));
+  hb_retni(SetROP2(static_cast<HDC>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -1346,7 +1346,7 @@ WINGDIAPI int WINAPI SetStretchBltMode(HDC hdc,int mode)
 */
 HB_FUNC( WINAPI_SETSTRETCHBLTMODE )
 {
-  hb_retni(SetStretchBltMode( static_cast<HDC>(hb_parptr(1)), hb_parni(2) ));
+  hb_retni(SetStretchBltMode(static_cast<HDC>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -1354,7 +1354,7 @@ WINGDIAPI UINT WINAPI SetSystemPaletteUse(HDC hdc,UINT use)
 */
 HB_FUNC( WINAPI_SETSYSTEMPALETTEUSE )
 {
-  hb_retni(( UINT ) SetSystemPaletteUse( static_cast<HDC>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)) ));
+  hb_retni(SetSystemPaletteUse(static_cast<HDC>(hb_parptr(1)), static_cast<UINT>(hb_parni(2))));
 }
 
 /*
@@ -1362,7 +1362,7 @@ WINGDIAPI int WINAPI SetTextCharacterExtra(HDC hdc,int extra)
 */
 HB_FUNC( WINAPI_SETTEXTCHARACTEREXTRA )
 {
-  hb_retni(SetTextCharacterExtra( static_cast<HDC>(hb_parptr(1)), hb_parni(2) ));
+  hb_retni(SetTextCharacterExtra(static_cast<HDC>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -1370,7 +1370,7 @@ WINGDIAPI COLORREF WINAPI SetTextColor(HDC hdc,COLORREF color)
 */
 HB_FUNC( WINAPI_SETTEXTCOLOR )
 {
-  hb_retnl( ( COLORREF ) SetTextColor( static_cast<HDC>(hb_parptr(1)), static_cast<COLORREF>(hb_parnl(2)) ) );
+  hb_retnl(SetTextColor(static_cast<HDC>(hb_parptr(1)), static_cast<COLORREF>(hb_parnl(2))));
 }
 
 /*
@@ -1378,7 +1378,7 @@ WINGDIAPI UINT WINAPI SetTextAlign(HDC hdc,UINT align)
 */
 HB_FUNC( WINAPI_SETTEXTALIGN )
 {
-  hb_retni(( UINT ) SetTextAlign( static_cast<HDC>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)) ));
+  hb_retni(SetTextAlign(static_cast<HDC>(hb_parptr(1)), static_cast<UINT>(hb_parni(2))));
 }
 
 /*
@@ -1386,7 +1386,7 @@ WINGDIAPI WINBOOL WINAPI SetTextJustification(HDC hdc,int extra,int count)
 */
 HB_FUNC( WINAPI_SETTEXTJUSTIFICATION )
 {
-  hb_retl(( WINBOOL ) SetTextJustification( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3) ));
+  hb_retl(SetTextJustification(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3)));
 }
 
 /*
@@ -1394,7 +1394,7 @@ WINGDIAPI WINBOOL WINAPI UpdateColors(HDC hdc)
 */
 HB_FUNC( WINAPI_UPDATECOLORS )
 {
-  hb_retl(( WINBOOL ) UpdateColors( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retl(UpdateColors(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1426,7 +1426,7 @@ WINGDIAPI WINBOOL WINAPI TransparentBlt(HDC hdcDest,int xoriginDest,int yoriginD
 */
 HB_FUNC( WINAPI_TRANSPARENTBLT )
 {
-  hb_retl(( WINBOOL ) TransparentBlt( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<HDC>(hb_parptr(6)), hb_parni(7), hb_parni(8), hb_parni(9), hb_parni(10), static_cast<UINT>(hb_parni(11)) ));
+  hb_retl(TransparentBlt(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<HDC>(hb_parptr(6)), hb_parni(7), hb_parni(8), hb_parni(9), hb_parni(10), static_cast<UINT>(hb_parni(11))));
 }
 
 /*
@@ -1434,7 +1434,7 @@ WINGDIAPI WINBOOL WINAPI GdiTransparentBlt(HDC hdcDest,int xoriginDest,int yorig
 */
 HB_FUNC( WINAPI_GDITRANSPARENTBLT )
 {
-  hb_retl(( WINBOOL ) GdiTransparentBlt( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<HDC>(hb_parptr(6)), hb_parni(7), hb_parni(8), hb_parni(9), hb_parni(10), static_cast<UINT>(hb_parni(11)) ));
+  hb_retl(GdiTransparentBlt(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<HDC>(hb_parptr(6)), hb_parni(7), hb_parni(8), hb_parni(9), hb_parni(10), static_cast<UINT>(hb_parni(11))));
 }
 
 /*
@@ -1490,7 +1490,7 @@ WINGDIAPI WINBOOL WINAPI DeleteEnhMetaFile(HENHMETAFILE hmf)
 */
 HB_FUNC( WINAPI_DELETEENHMETAFILE )
 {
-  hb_retl(( WINBOOL ) DeleteEnhMetaFile( static_cast<HENHMETAFILE>(hb_parptr(1)) ));
+  hb_retl(DeleteEnhMetaFile(static_cast<HENHMETAFILE>(hb_parptr(1))));
 }
 
 /*
@@ -1522,7 +1522,7 @@ WINGDIAPI UINT WINAPI GetEnhMetaFileDescriptionA(HENHMETAFILE hemf,UINT cchBuffe
 */
 HB_FUNC( WINAPI_GETENHMETAFILEDESCRIPTIONA )
 {
-  hb_retni(( UINT ) GetEnhMetaFileDescriptionA( static_cast<HENHMETAFILE>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), ( LPSTR ) hb_parc(3) ));
+  hb_retni(GetEnhMetaFileDescriptionA(static_cast<HENHMETAFILE>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), ( LPSTR ) hb_parc(3)));
 }
 
 /*
@@ -1530,7 +1530,7 @@ WINGDIAPI UINT WINAPI GetEnhMetaFileDescriptionW(HENHMETAFILE hemf,UINT cchBuffe
 */
 HB_FUNC( WINAPI_GETENHMETAFILEDESCRIPTIONW )
 {
-  hb_retni(( UINT ) GetEnhMetaFileDescriptionW( static_cast<HENHMETAFILE>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), ( LPWSTR ) hb_parc(3) ));
+  hb_retni(GetEnhMetaFileDescriptionW(static_cast<HENHMETAFILE>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), ( LPWSTR ) hb_parc(3)));
 }
 
 /*
@@ -1642,7 +1642,7 @@ WINGDIAPI int WINAPI EndDoc(HDC hdc)
 */
 HB_FUNC( WINAPI_ENDDOC )
 {
-  hb_retni(EndDoc( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(EndDoc(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1650,7 +1650,7 @@ WINGDIAPI int WINAPI StartPage(HDC hdc)
 */
 HB_FUNC( WINAPI_STARTPAGE )
 {
-  hb_retni(StartPage( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(StartPage(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1658,7 +1658,7 @@ WINGDIAPI int WINAPI EndPage(HDC hdc)
 */
 HB_FUNC( WINAPI_ENDPAGE )
 {
-  hb_retni(EndPage( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(EndPage(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1666,7 +1666,7 @@ WINGDIAPI int WINAPI AbortDoc(HDC hdc)
 */
 HB_FUNC( WINAPI_ABORTDOC )
 {
-  hb_retni(AbortDoc( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(AbortDoc(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1678,7 +1678,7 @@ WINGDIAPI WINBOOL WINAPI AbortPath(HDC hdc)
 */
 HB_FUNC( WINAPI_ABORTPATH )
 {
-  hb_retl(( WINBOOL ) AbortPath( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retl(AbortPath(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1686,7 +1686,7 @@ WINGDIAPI WINBOOL WINAPI ArcTo(HDC hdc,int left,int top,int right,int bottom,int
 */
 HB_FUNC( WINAPI_ARCTO )
 {
-  hb_retl(( WINBOOL ) ArcTo( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), hb_parni(8), hb_parni(9) ));
+  hb_retl(ArcTo(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), hb_parni(8), hb_parni(9)));
 }
 
 /*
@@ -1694,7 +1694,7 @@ WINGDIAPI WINBOOL WINAPI BeginPath(HDC hdc)
 */
 HB_FUNC( WINAPI_BEGINPATH )
 {
-  hb_retl(( WINBOOL ) BeginPath( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retl(BeginPath(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1702,7 +1702,7 @@ WINGDIAPI WINBOOL WINAPI CloseFigure(HDC hdc)
 */
 HB_FUNC( WINAPI_CLOSEFIGURE )
 {
-  hb_retl(( WINBOOL ) CloseFigure( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retl(CloseFigure(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1710,7 +1710,7 @@ WINGDIAPI WINBOOL WINAPI EndPath(HDC hdc)
 */
 HB_FUNC( WINAPI_ENDPATH )
 {
-  hb_retl(( WINBOOL ) EndPath( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retl(EndPath(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1718,7 +1718,7 @@ WINGDIAPI WINBOOL WINAPI FillPath(HDC hdc)
 */
 HB_FUNC( WINAPI_FILLPATH )
 {
-  hb_retl(( WINBOOL ) FillPath( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retl(FillPath(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1726,7 +1726,7 @@ WINGDIAPI WINBOOL WINAPI FlattenPath(HDC hdc)
 */
 HB_FUNC( WINAPI_FLATTENPATH )
 {
-  hb_retl(( WINBOOL ) FlattenPath( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retl(FlattenPath(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1750,7 +1750,7 @@ WINGDIAPI WINBOOL WINAPI SelectClipPath(HDC hdc,int mode)
 */
 HB_FUNC( WINAPI_SELECTCLIPPATH )
 {
-  hb_retl(( WINBOOL ) SelectClipPath( static_cast<HDC>(hb_parptr(1)), hb_parni(2) ));
+  hb_retl(SelectClipPath(static_cast<HDC>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -1758,7 +1758,7 @@ WINGDIAPI int WINAPI SetArcDirection(HDC hdc,int dir)
 */
 HB_FUNC( WINAPI_SETARCDIRECTION )
 {
-  hb_retni(SetArcDirection( static_cast<HDC>(hb_parptr(1)), hb_parni(2) ));
+  hb_retni(SetArcDirection(static_cast<HDC>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -1770,7 +1770,7 @@ WINGDIAPI WINBOOL WINAPI StrokeAndFillPath(HDC hdc)
 */
 HB_FUNC( WINAPI_STROKEANDFILLPATH )
 {
-  hb_retl(( WINBOOL ) StrokeAndFillPath( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retl(StrokeAndFillPath(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1778,7 +1778,7 @@ WINGDIAPI WINBOOL WINAPI StrokePath(HDC hdc)
 */
 HB_FUNC( WINAPI_STROKEPATH )
 {
-  hb_retl(( WINBOOL ) StrokePath( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retl(StrokePath(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1786,7 +1786,7 @@ WINGDIAPI WINBOOL WINAPI WidenPath(HDC hdc)
 */
 HB_FUNC( WINAPI_WIDENPATH )
 {
-  hb_retl(( WINBOOL ) WidenPath( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retl(WidenPath(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1802,7 +1802,7 @@ WINGDIAPI int WINAPI GetArcDirection(HDC hdc)
 */
 HB_FUNC( WINAPI_GETARCDIRECTION )
 {
-  hb_retni(GetArcDirection( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retni(GetArcDirection(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -1810,7 +1810,7 @@ WINGDIAPI int WINAPI GetObjectA(HANDLE h,int c,LPVOID pv)
 */
 HB_FUNC( WINAPI_GETOBJECTA )
 {
-  hb_retni(GetObjectA( static_cast<HANDLE>(hb_parptr(1)), hb_parni(2), static_cast<LPVOID>(hb_parptr(3)) ));
+  hb_retni(GetObjectA(static_cast<HANDLE>(hb_parptr(1)), hb_parni(2), static_cast<LPVOID>(hb_parptr(3))));
 }
 
 /*
@@ -1818,7 +1818,7 @@ WINGDIAPI int WINAPI GetObjectW(HANDLE h,int c,LPVOID pv)
 */
 HB_FUNC( WINAPI_GETOBJECTW )
 {
-  hb_retni(GetObjectW( static_cast<HANDLE>(hb_parptr(1)), hb_parni(2), static_cast<LPVOID>(hb_parptr(3)) ));
+  hb_retni(GetObjectW(static_cast<HANDLE>(hb_parptr(1)), hb_parni(2), static_cast<LPVOID>(hb_parptr(3))));
 }
 
 /*
@@ -1830,7 +1830,7 @@ WINGDIAPI WINBOOL WINAPI TextOutA(HDC hdc,int x,int y,LPCSTR lpString,int c)
 */
 HB_FUNC( WINAPI_TEXTOUTA )
 {
-  hb_retl(( WINBOOL ) TextOutA( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), ( LPCSTR ) hb_parc(4), hb_parni(5) ));
+  hb_retl(TextOutA(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), ( LPCSTR ) hb_parc(4), hb_parni(5)));
 }
 
 /*
@@ -1838,7 +1838,7 @@ WINGDIAPI WINBOOL WINAPI TextOutW(HDC hdc,int x,int y,LPCWSTR lpString,int c)
 */
 HB_FUNC( WINAPI_TEXTOUTW )
 {
-  hb_retl(( WINBOOL ) TextOutW( static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), ( LPCWSTR ) hb_parc(4), hb_parni(5) ));
+  hb_retl(TextOutW(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), ( LPCWSTR ) hb_parc(4), hb_parni(5)));
 }
 
 /*
@@ -1934,7 +1934,7 @@ WINGDIAPI int WINAPI GetTextFaceA(HDC hdc,int c,LPSTR lpName)
 */
 HB_FUNC( WINAPI_GETTEXTFACEA )
 {
-  hb_retni(GetTextFaceA( static_cast<HDC>(hb_parptr(1)), hb_parni(2), ( LPSTR ) hb_parc(3) ));
+  hb_retni(GetTextFaceA(static_cast<HDC>(hb_parptr(1)), hb_parni(2), ( LPSTR ) hb_parc(3)));
 }
 
 /*
@@ -1942,7 +1942,7 @@ WINGDIAPI int WINAPI GetTextFaceW(HDC hdc,int c,LPWSTR lpName)
 */
 HB_FUNC( WINAPI_GETTEXTFACEW )
 {
-  hb_retni(GetTextFaceW( static_cast<HDC>(hb_parptr(1)), hb_parni(2), ( LPWSTR ) hb_parc(3) ));
+  hb_retni(GetTextFaceW(static_cast<HDC>(hb_parptr(1)), hb_parni(2), ( LPWSTR ) hb_parc(3)));
 }
 
 /*
@@ -1966,7 +1966,7 @@ WINGDIAPI WINBOOL WINAPI UnrealizeObject(HGDIOBJ h)
 */
 HB_FUNC( WINAPI_UNREALIZEOBJECT )
 {
-  hb_retl(( WINBOOL ) UnrealizeObject( static_cast<HGDIOBJ>(hb_parptr(1)) ));
+  hb_retl(UnrealizeObject(static_cast<HGDIOBJ>(hb_parptr(1))));
 }
 
 /*
@@ -1974,7 +1974,7 @@ WINGDIAPI WINBOOL WINAPI GdiFlush(void)
 */
 HB_FUNC( WINAPI_GDIFLUSH )
 {
-  hb_retl(( WINBOOL ) GdiFlush());
+  hb_retl(GdiFlush());
 }
 
 /*
@@ -1982,7 +1982,7 @@ WINGDIAPI DWORD WINAPI GdiSetBatchLimit(DWORD dw)
 */
 HB_FUNC( WINAPI_GDISETBATCHLIMIT )
 {
-  hb_retnl( ( DWORD ) GdiSetBatchLimit( ( DWORD ) hb_parnl(1) ) );
+  hb_retnl(GdiSetBatchLimit(static_cast<DWORD>(hb_parnl(1))));
 }
 
 /*
@@ -1990,7 +1990,7 @@ WINGDIAPI DWORD WINAPI GdiGetBatchLimit(void)
 */
 HB_FUNC( WINAPI_GDIGETBATCHLIMIT )
 {
-  hb_retnl( ( DWORD ) GdiGetBatchLimit() );
+  hb_retnl(GdiGetBatchLimit());
 }
 
 /*
@@ -1998,16 +1998,12 @@ WINGDIAPI int WINAPI SetICMMode(HDC hdc,int mode)
 */
 HB_FUNC( WINAPI_SETICMMODE )
 {
-  hb_retni(SetICMMode( static_cast<HDC>(hb_parptr(1)), hb_parni(2) ));
+  hb_retni(SetICMMode(static_cast<HDC>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
 WINGDIAPI WINBOOL WINAPI CheckColorsInGamut(HDC hdc,LPVOID lpRGBTriple,LPVOID dlpBuffer,DWORD nCount)
 */
-HB_FUNC( WINAPI_CHECKCOLORSINGAMUT )
-{
-  hb_retl(( WINBOOL ) CheckColorsInGamut( static_cast<HDC>(hb_parptr(1)), static_cast<LPVOID>(hb_parptr(2)), static_cast<LPVOID>(hb_parptr(3)), ( DWORD ) hb_parnl(4) ));
-}
 
 /*
 WINGDIAPI HCOLORSPACE WINAPI GetColorSpace(HDC hdc)
@@ -2046,7 +2042,7 @@ WINGDIAPI WINBOOL WINAPI DeleteColorSpace(HCOLORSPACE hcs)
 */
 HB_FUNC( WINAPI_DELETECOLORSPACE )
 {
-  hb_retl(( WINBOOL ) DeleteColorSpace( static_cast<HCOLORSPACE>(hb_parptr(1)) ));
+  hb_retl(DeleteColorSpace(static_cast<HCOLORSPACE>(hb_parptr(1))));
 }
 
 /*
@@ -2054,7 +2050,7 @@ WINGDIAPI WINBOOL WINAPI GetICMProfileA(HDC hdc,LPDWORD pBufSize,LPSTR pszFilena
 */
 HB_FUNC( WINAPI_GETICMPROFILEA )
 {
-  hb_retl(( WINBOOL ) GetICMProfileA( static_cast<HDC>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2)), ( LPSTR ) hb_parc(3) ));
+  hb_retl(GetICMProfileA(static_cast<HDC>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2)), ( LPSTR ) hb_parc(3)));
 }
 
 /*
@@ -2062,7 +2058,7 @@ WINGDIAPI WINBOOL WINAPI GetICMProfileW(HDC hdc,LPDWORD pBufSize,LPWSTR pszFilen
 */
 HB_FUNC( WINAPI_GETICMPROFILEW )
 {
-  hb_retl(( WINBOOL ) GetICMProfileW( static_cast<HDC>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2)), ( LPWSTR ) hb_parc(3) ));
+  hb_retl(GetICMProfileW(static_cast<HDC>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2)), ( LPWSTR ) hb_parc(3)));
 }
 
 /*
@@ -2070,7 +2066,7 @@ WINGDIAPI WINBOOL WINAPI SetICMProfileA(HDC hdc,LPSTR lpFileName)
 */
 HB_FUNC( WINAPI_SETICMPROFILEA )
 {
-  hb_retl(( WINBOOL ) SetICMProfileA( static_cast<HDC>(hb_parptr(1)), ( LPSTR ) hb_parc(2) ));
+  hb_retl(SetICMProfileA(static_cast<HDC>(hb_parptr(1)), ( LPSTR ) hb_parc(2)));
 }
 
 /*
@@ -2078,7 +2074,7 @@ WINGDIAPI WINBOOL WINAPI SetICMProfileW(HDC hdc,LPWSTR lpFileName)
 */
 HB_FUNC( WINAPI_SETICMPROFILEW )
 {
-  hb_retl(( WINBOOL ) SetICMProfileW( static_cast<HDC>(hb_parptr(1)), ( LPWSTR ) hb_parc(2) ));
+  hb_retl(SetICMProfileW(static_cast<HDC>(hb_parptr(1)), ( LPWSTR ) hb_parc(2)));
 }
 
 /*
@@ -2086,7 +2082,7 @@ WINGDIAPI WINBOOL WINAPI GetDeviceGammaRamp(HDC hdc,LPVOID lpRamp)
 */
 HB_FUNC( WINAPI_GETDEVICEGAMMARAMP )
 {
-  hb_retl(( WINBOOL ) GetDeviceGammaRamp( static_cast<HDC>(hb_parptr(1)), static_cast<LPVOID>(hb_parptr(2)) ));
+  hb_retl(GetDeviceGammaRamp(static_cast<HDC>(hb_parptr(1)), static_cast<LPVOID>(hb_parptr(2))));
 }
 
 /*
@@ -2094,7 +2090,7 @@ WINGDIAPI WINBOOL WINAPI SetDeviceGammaRamp(HDC hdc,LPVOID lpRamp)
 */
 HB_FUNC( WINAPI_SETDEVICEGAMMARAMP )
 {
-  hb_retl(( WINBOOL ) SetDeviceGammaRamp( static_cast<HDC>(hb_parptr(1)), static_cast<LPVOID>(hb_parptr(2)) ));
+  hb_retl(SetDeviceGammaRamp(static_cast<HDC>(hb_parptr(1)), static_cast<LPVOID>(hb_parptr(2))));
 }
 
 /*
@@ -2102,7 +2098,7 @@ WINGDIAPI WINBOOL WINAPI ColorMatchToTarget(HDC hdc,HDC hdcTarget,DWORD action)
 */
 HB_FUNC( WINAPI_COLORMATCHTOTARGET )
 {
-  hb_retl(( WINBOOL ) ColorMatchToTarget( static_cast<HDC>(hb_parptr(1)), static_cast<HDC>(hb_parptr(2)), ( DWORD ) hb_parnl(3) ));
+  hb_retl(ColorMatchToTarget(static_cast<HDC>(hb_parptr(1)), static_cast<HDC>(hb_parptr(2)), static_cast<DWORD>(hb_parnl(3))));
 }
 
 /*
@@ -2118,7 +2114,7 @@ WINGDIAPI WINBOOL WINAPI UpdateICMRegKeyA(DWORD reserved,LPSTR lpszCMID,LPSTR lp
 */
 HB_FUNC( WINAPI_UPDATEICMREGKEYA )
 {
-  hb_retl(( WINBOOL ) UpdateICMRegKeyA( ( DWORD ) hb_parnl(1), ( LPSTR ) hb_parc(2), ( LPSTR ) hb_parc(3), static_cast<UINT>(hb_parni(4)) ));
+  hb_retl(UpdateICMRegKeyA(static_cast<DWORD>(hb_parnl(1)), ( LPSTR ) hb_parc(2), ( LPSTR ) hb_parc(3), static_cast<UINT>(hb_parni(4))));
 }
 
 /*
@@ -2126,7 +2122,7 @@ WINGDIAPI WINBOOL WINAPI UpdateICMRegKeyW(DWORD reserved,LPWSTR lpszCMID,LPWSTR 
 */
 HB_FUNC( WINAPI_UPDATEICMREGKEYW )
 {
-  hb_retl(( WINBOOL ) UpdateICMRegKeyW( ( DWORD ) hb_parnl(1), ( LPWSTR ) hb_parc(2), ( LPWSTR ) hb_parc(3), static_cast<UINT>(hb_parni(4)) ));
+  hb_retl(UpdateICMRegKeyW(static_cast<DWORD>(hb_parnl(1)), ( LPWSTR ) hb_parc(2), ( LPWSTR ) hb_parc(3), static_cast<UINT>(hb_parni(4))));
 }
 
 /*
@@ -2134,7 +2130,7 @@ WINGDIAPI WINBOOL WINAPI ColorCorrectPalette(HDC hdc,HPALETTE hPal,DWORD deFirst
 */
 HB_FUNC( WINAPI_COLORCORRECTPALETTE )
 {
-  hb_retl(( WINBOOL ) ColorCorrectPalette( static_cast<HDC>(hb_parptr(1)), static_cast<HPALETTE>(hb_parptr(2)), ( DWORD ) hb_parnl(3), ( DWORD ) hb_parnl(4) ));
+  hb_retl(ColorCorrectPalette(static_cast<HDC>(hb_parptr(1)), static_cast<HPALETTE>(hb_parptr(2)), static_cast<DWORD>(hb_parnl(3)), static_cast<DWORD>(hb_parnl(4))));
 }
 
 /*
@@ -2142,7 +2138,7 @@ WINGDIAPI WINBOOL WINAPI wglCopyContext(HGLRC,HGLRC,UINT)
 */
 HB_FUNC( WINAPI_WGLCOPYCONTEXT )
 {
-  hb_retl(( WINBOOL ) wglCopyContext( static_cast<HGLRC>(hb_parptr(1)), static_cast<HGLRC>(hb_parptr(2)), static_cast<UINT>(hb_parni(3)) ));
+  hb_retl(wglCopyContext(static_cast<HGLRC>(hb_parptr(1)), static_cast<HGLRC>(hb_parptr(2)), static_cast<UINT>(hb_parni(3))));
 }
 
 /*
@@ -2166,7 +2162,7 @@ WINGDIAPI WINBOOL WINAPI wglDeleteContext(HGLRC)
 */
 HB_FUNC( WINAPI_WGLDELETECONTEXT )
 {
-  hb_retl(( WINBOOL ) wglDeleteContext( static_cast<HGLRC>(hb_parptr(1)) ));
+  hb_retl(wglDeleteContext(static_cast<HGLRC>(hb_parptr(1))));
 }
 
 /*
@@ -2194,7 +2190,7 @@ WINGDIAPI WINBOOL WINAPI wglMakeCurrent(HDC,HGLRC)
 */
 HB_FUNC( WINAPI_WGLMAKECURRENT )
 {
-  hb_retl(( WINBOOL ) wglMakeCurrent( static_cast<HDC>(hb_parptr(1)), static_cast<HGLRC>(hb_parptr(2)) ));
+  hb_retl(wglMakeCurrent(static_cast<HDC>(hb_parptr(1)), static_cast<HGLRC>(hb_parptr(2))));
 }
 
 /*
@@ -2202,7 +2198,7 @@ WINGDIAPI WINBOOL WINAPI wglShareLists(HGLRC,HGLRC)
 */
 HB_FUNC( WINAPI_WGLSHARELISTS )
 {
-  hb_retl(( WINBOOL ) wglShareLists( static_cast<HGLRC>(hb_parptr(1)), static_cast<HGLRC>(hb_parptr(2)) ));
+  hb_retl(wglShareLists(static_cast<HGLRC>(hb_parptr(1)), static_cast<HGLRC>(hb_parptr(2))));
 }
 
 /*
@@ -2210,7 +2206,7 @@ WINGDIAPI WINBOOL WINAPI wglUseFontBitmapsA(HDC,DWORD,DWORD,DWORD)
 */
 HB_FUNC( WINAPI_WGLUSEFONTBITMAPSA )
 {
-  hb_retl(( WINBOOL ) wglUseFontBitmapsA( static_cast<HDC>(hb_parptr(1)), ( DWORD ) hb_parnl(2), ( DWORD ) hb_parnl(3), ( DWORD ) hb_parnl(4) ));
+  hb_retl(wglUseFontBitmapsA(static_cast<HDC>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2)), static_cast<DWORD>(hb_parnl(3)), static_cast<DWORD>(hb_parnl(4))));
 }
 
 /*
@@ -2218,7 +2214,7 @@ WINGDIAPI WINBOOL WINAPI wglUseFontBitmapsW(HDC,DWORD,DWORD,DWORD)
 */
 HB_FUNC( WINAPI_WGLUSEFONTBITMAPSW )
 {
-  hb_retl(( WINBOOL ) wglUseFontBitmapsW( static_cast<HDC>(hb_parptr(1)), ( DWORD ) hb_parnl(2), ( DWORD ) hb_parnl(3), ( DWORD ) hb_parnl(4) ));
+  hb_retl(wglUseFontBitmapsW(static_cast<HDC>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2)), static_cast<DWORD>(hb_parnl(3)), static_cast<DWORD>(hb_parnl(4))));
 }
 
 /*
@@ -2226,7 +2222,7 @@ WINGDIAPI WINBOOL WINAPI SwapBuffers(HDC)
 */
 HB_FUNC( WINAPI_SWAPBUFFERS )
 {
-  hb_retl(( WINBOOL ) SwapBuffers( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retl(SwapBuffers(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -2254,7 +2250,7 @@ WINGDIAPI WINBOOL WINAPI wglRealizeLayerPalette(HDC,int,WINBOOL)
 */
 HB_FUNC( WINAPI_WGLREALIZELAYERPALETTE )
 {
-  hb_retl(( WINBOOL ) wglRealizeLayerPalette( static_cast<HDC>(hb_parptr(1)), hb_parni(2), ( WINBOOL ) hb_parl(3) ));
+  hb_retl(wglRealizeLayerPalette(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parl(3)));
 }
 
 /*
@@ -2262,7 +2258,7 @@ WINGDIAPI WINBOOL WINAPI wglSwapLayerBuffers(HDC,UINT)
 */
 HB_FUNC( WINAPI_WGLSWAPLAYERBUFFERS )
 {
-  hb_retl(( WINBOOL ) wglSwapLayerBuffers( static_cast<HDC>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)) ));
+  hb_retl(wglSwapLayerBuffers(static_cast<HDC>(hb_parptr(1)), static_cast<UINT>(hb_parni(2))));
 }
 
 /*
