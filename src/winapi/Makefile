@@ -13,6 +13,7 @@ CPP_SOURCES := \
    mmsystem.cpp \
    winbase.cpp \
    wingdi.cpp \
+   winhttp.cpp \
    winspool.cpp \
    winuser.cpp \
 
