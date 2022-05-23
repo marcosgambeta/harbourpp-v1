@@ -11,6 +11,7 @@ endif
 CPP_SOURCES := \
    commctrl.cpp \
    mmsystem.cpp \
+   winbase.cpp \
    wingdi.cpp \
    winspool.cpp \
    winuser.cpp \
