@@ -15,6 +15,7 @@ CPP_SOURCES := \
    wingdi.cpp \
    winhttp.cpp \
    winnetwk.cpp \
+   winreg.cpp \
    winspool.cpp \
    winuser.cpp \
 
