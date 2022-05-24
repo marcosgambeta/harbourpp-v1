@@ -145,5 +145,6 @@ PRG_HEADERS := \
    simpleio.ch \
    std.ch \
    tbrowse.ch \
+   winapi_mmsystem.ch \
 
 include $(TOP)$(ROOT)config/header.mk
