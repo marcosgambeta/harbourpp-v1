@@ -147,6 +147,7 @@ PRG_HEADERS := \
    tbrowse.ch \
    winapi_mmsystem.ch \
    winapi_wingdi.ch \
+   winapi_winspool.ch \
    winapi_winuser.ch \
 
 include $(TOP)$(ROOT)config/header.mk
