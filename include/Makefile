@@ -148,6 +148,7 @@ PRG_HEADERS := \
    winapi_mmsystem.ch \
    winapi_wingdi.ch \
    winapi_winhttp.ch \
+   winapi_winnetwk.ch \
    winapi_winreg.ch \
    winapi_winspool.ch \
    winapi_winuser.ch \
