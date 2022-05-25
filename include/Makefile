@@ -145,6 +145,7 @@ PRG_HEADERS := \
    simpleio.ch \
    std.ch \
    tbrowse.ch \
+   winapi_commctrl.ch \
    winapi_mmsystem.ch \
    winapi_wingdi.ch \
    winapi_winhttp.ch \
