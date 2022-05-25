@@ -147,6 +147,7 @@ PRG_HEADERS := \
    tbrowse.ch \
    winapi_commctrl.ch \
    winapi_mmsystem.ch \
+   winapi_winbase.ch \
    winapi_wingdi.ch \
    winapi_winhttp.ch \
    winapi_winnetwk.ch \
