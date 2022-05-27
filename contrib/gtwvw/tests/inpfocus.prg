@@ -5,27 +5,8 @@
 
 #include "inkey.ch"
 #include "setcurs.ch"
-
-// MessageBox() Flags (from winuser.h)
-#define MB_OK                0
-#define MB_OKCANCEL          1
-#define MB_ABORTRETRYIGNORE  2
-#define MB_YESNOCANCEL       3
-#define MB_YESNO             4
-#define MB_RETRYCANCEL       5
-
-// MessageBox() Icons (from winuser.h)
-#define MB_ICONHAND          16 // 0x00000010L
-#define MB_ICONQUESTION      32 // 0x00000020L
-#define MB_ICONEXCLAMATION   48 // 0x00000030L
-#define MB_ICONASTERISK      64 // 0x00000040L
-
-// icon indexes for standard bitmap (from commctrl.h)
-#define STD_DELETE              5
-#define STD_FILENEW             6
-
-// icon indexes for standard view bitmap
-#define VIEW_PARENTFOLDER       8
+#include "winapi_winuser.ch"
+#include "winapi_commctrl.ch"
 
 // our command ids
 #define IDM_OPENWIN     100
@@ -213,10 +194,6 @@ STATIC FUNCTION typing( ch )
    ENDIF
 
    RETURN NIL
-
-// from winuser.h
-#define WM_COMMAND                      0x0111
-#define WM_CHAR                         0x0102
 
 /*
  * WVW_INPUTFOCUS() is a special, callback function
