@@ -10,8 +10,8 @@
   NOTE: source code generated with the help of a code generator
 */
 
-#ifndef _WINAPI_MMSYSTEM
-#define _WINAPI_MMSYSTEM
+#ifndef _WINAPI_MMSYSTEM_
+#define _WINAPI_MMSYSTEM_
 
 // #ifdef __cplusplus
 // #endif
@@ -1215,11 +1215,11 @@
 #define SELECTDIB                                                    41
 // #define DIBINDEX(n)                                                  MAKELONG((n),0x10FF)
 
-#ifndef SC_SCREENSAVE
-#define SC_SCREENSAVE                                                0xF140
-#endif
+// #ifndef SC_SCREENSAVE
+// #define SC_SCREENSAVE                                                0xF140
+// #endif
 
 // #ifdef __cplusplus
 // #endif
 
-#endif /* _WINAPI_MMSYSTEM */
+#endif /* _WINAPI_MMSYSTEM_ */

@@ -2564,7 +2564,7 @@
 #define MFS_DEFAULT                                                  MF_DEFAULT
 
 // #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-#define MF_END                                                       0x00000080
+// #define MF_END                                                       0x00000080
 // #endif
 #endif
 

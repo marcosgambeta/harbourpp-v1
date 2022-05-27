@@ -905,8 +905,8 @@
 #define TBN_WRAPACCELERATOR                                          (TBN_FIRST-26)
 #define TBN_DRAGOVER                                                 (TBN_FIRST-27)
 #define TBN_MAPACCELERATOR                                           (TBN_FIRST-28)
-#define TBNRF_HIDEHELP                                               0x1
-#define TBNRF_ENDCUSTOMIZE                                           0x2
+// #define TBNRF_HIDEHELP                                               0x1
+// #define TBNRF_ENDCUSTOMIZE                                           0x2
 
 // #define TBN_GETINFOTIP                                               __MINGW_NAME_AW(TBN_GETINFOTIP)
 // #define NMTBGETINFOTIP                                               __MINGW_NAME_AW(NMTBGETINFOTIP)
@@ -3764,21 +3764,19 @@
 
 #ifndef NOTRACKMOUSEEVENT
 
-#ifndef WM_MOUSEHOVER
-#define WM_MOUSEHOVER                                                0x2a1
-#define WM_MOUSELEAVE                                                0x2a3
-#endif
+// #ifndef WM_MOUSEHOVER
+// #define WM_MOUSEHOVER                                                0x2a1
+// #define WM_MOUSELEAVE                                                0x2a3
+// #endif
 
-#ifndef TME_HOVER
-#define TME_HOVER                                                    0x1
-#define TME_LEAVE                                                    0x2
-#define TME_NONCLIENT                                                0x10
-#define TME_QUERY                                                    0x40000000
-#define TME_CANCEL                                                   0x80000000
-
-#define HOVER_DEFAULT                                                0xffffffff
-
-#endif
+// #ifndef TME_HOVER
+// #define TME_HOVER                                                    0x1
+// #define TME_LEAVE                                                    0x2
+// #define TME_NONCLIENT                                                0x10
+// #define TME_QUERY                                                    0x40000000
+// #define TME_CANCEL                                                   0x80000000
+// #define HOVER_DEFAULT                                                0xffffffff
+// #endif
 
 #endif
 
