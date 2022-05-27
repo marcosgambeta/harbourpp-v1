@@ -8,6 +8,7 @@
 
 #include "getexit.ch"
 #include "inkey.ch"
+#include "winapi_winuser.ch"
 
 /* Two different keyboard handling method
    (notes: WVW_CB_KBD_CLIPPER doesn't mimic anything from Cl*pper
@@ -135,7 +136,7 @@ FUNCTION CBhandler( nWinNum, nId, nEvent, nIndex, cVar, GetList )
    ENDIF
 
    DO CASE
-   CASE nEvent == 3 // CBN_SETFOCUS
+   CASE nEvent == CBN_SETFOCUS
       i := AScan( GetList, {| x | x:Name == cVar } )
       IF i > 0
          /* ! oGet:HasFocus means
@@ -178,7 +179,7 @@ FUNCTION CBhandler( nWinNum, nId, nEvent, nIndex, cVar, GetList )
           */
       ENDIF
 
-   CASE nEvent == 4 // CBN_KILLFOCUS
+   CASE nEvent == CBN_KILLFOCUS
       // put current content of combobox into GET variable beneath it.
       cCurSel := wvw_cbGetCurText( nWinNum, nId )
       oGet:varput( cCurSel )
