@@ -37,6 +37,8 @@ SOFTWARE.
 #include <windows.h>
 #include <winnetwk.h>
 #include "hbapi.h"
+#include "hbapiitm.h"
+#include "hbapicls.h"
 
 /*
 DWORD WINAPI WNetAddConnectionA(LPCSTR lpRemoteName,LPCSTR lpPassword,LPCSTR lpLocalName)

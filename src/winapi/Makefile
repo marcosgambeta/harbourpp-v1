@@ -19,7 +19,10 @@ CPP_SOURCES := \
    winspool.cpp \
    winuser.cpp \
 
-PRG_SOURCES :=
+PRG_SOURCES := \
+   struct_point.prg \
+   struct_rect.prg \
+   struct_size.prg \
 
 LIBNAME := hbwinapi
 

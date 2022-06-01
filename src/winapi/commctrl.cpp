@@ -37,6 +37,8 @@ SOFTWARE.
 #include <windows.h>
 #include <commctrl.h>
 #include "hbapi.h"
+#include "hbapiitm.h"
+#include "hbapicls.h"
 
 /*
 WINCOMMCTRLAPI void WINAPI InitCommonControls(void)
@@ -353,10 +355,18 @@ WINCOMMCTRLAPI HBITMAP WINAPI CreateMappedBitmap(HINSTANCE hInstance,INT_PTR idB
 /*
 WINCOMMCTRLAPI void WINAPI DrawStatusTextA(HDC hDC,LPCRECT lprc,LPCSTR pszText,UINT uFlags)
 */
+HB_FUNC( WINAPI_DRAWSTATUSTEXTA )
+{
+  DrawStatusTextA(static_cast<HDC>(hb_parptr(1)), static_cast<LPCRECT>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0))), ( LPCSTR ) hb_parc(3), static_cast<UINT>(hb_parni(4)));
+}
 
 /*
 WINCOMMCTRLAPI void WINAPI DrawStatusTextW(HDC hDC,LPCRECT lprc,LPCWSTR pszText,UINT uFlags)
 */
+HB_FUNC( WINAPI_DRAWSTATUSTEXTW )
+{
+  DrawStatusTextW(static_cast<HDC>(hb_parptr(1)), static_cast<LPCRECT>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0))), ( LPCWSTR ) hb_parc(3), static_cast<UINT>(hb_parni(4)));
+}
 
 /*
 WINCOMMCTRLAPI HWND WINAPI CreateStatusWindowA(LONG style,LPCSTR lpszText,HWND hwndParent,UINT wID)

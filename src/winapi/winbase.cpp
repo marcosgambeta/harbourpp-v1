@@ -37,6 +37,8 @@ SOFTWARE.
 #include <windows.h>
 #include <winbase.h>
 #include <hbapi.h>
+#include "hbapiitm.h"
+#include "hbapicls.h"
 
 /*
 WINBASEAPI HLOCAL WINAPI LocalAlloc (UINT uFlags, SIZE_T uBytes)

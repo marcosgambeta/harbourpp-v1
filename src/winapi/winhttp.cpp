@@ -37,6 +37,8 @@ SOFTWARE.
 #include <windows.h>
 #include <winhttp.h>
 #include "hbapi.h"
+#include "hbapiitm.h"
+#include "hbapicls.h"
 
 /*
 WINBOOL WINAPI WinHttpAddRequestHeaders(HINTERNET,LPCWSTR,DWORD,DWORD)

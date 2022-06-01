@@ -36,6 +36,8 @@ SOFTWARE.
 
 #include <windows.h>
 #include "hbapi.h"
+#include "hbapiitm.h"
+#include "hbapicls.h"
 
 /*
 WINGDIAPI int WINAPI AddFontResourceA(LPCSTR)
@@ -484,6 +486,10 @@ HB_FUNC( WINAPI_GETROP2 )
 /*
 WINGDIAPI WINBOOL WINAPI GetAspectRatioFilterEx(HDC hdc,LPSIZE lpsize)
 */
+HB_FUNC( WINAPI_GETASPECTRATIOFILTEREX )
+{
+  hb_retl(GetAspectRatioFilterEx(static_cast<HDC>(hb_parptr(1)), static_cast<LPSIZE>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI COLORREF WINAPI GetBkColor(HDC hdc)
@@ -528,14 +534,26 @@ HB_FUNC( WINAPI_GETBITMAPBITS )
 /*
 WINGDIAPI WINBOOL WINAPI GetBitmapDimensionEx(HBITMAP hbit,LPSIZE lpsize)
 */
+HB_FUNC( WINAPI_GETBITMAPDIMENSIONEX )
+{
+  hb_retl(GetBitmapDimensionEx(static_cast<HBITMAP>(hb_parptr(1)), static_cast<LPSIZE>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI UINT WINAPI GetBoundsRect(HDC hdc,LPRECT lprect,UINT flags)
 */
+HB_FUNC( WINAPI_GETBOUNDSRECT )
+{
+  hb_retni(GetBoundsRect(static_cast<HDC>(hb_parptr(1)), static_cast<LPRECT>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0))), static_cast<UINT>(hb_parni(3))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetBrushOrgEx(HDC hdc,LPPOINT lppt)
 */
+HB_FUNC( WINAPI_GETBRUSHORGEX )
+{
+  hb_retl(GetBrushOrgEx(static_cast<HDC>(hb_parptr(1)), static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetCharWidthA(HDC hdc,UINT iFirst,UINT iLast,LPINT lpBuffer)
@@ -548,18 +566,42 @@ WINGDIAPI WINBOOL WINAPI GetCharWidthW(HDC hdc,UINT iFirst,UINT iLast,LPINT lpBu
 /*
 WINGDIAPI WINBOOL WINAPI GetCharWidth32A(HDC hdc,UINT iFirst,UINT iLast,LPINT lpBuffer)
 */
+HB_FUNC( WINAPI_GETCHARWIDTH32A )
+{
+  INT lpBuffer;
+  hb_retl(GetCharWidth32A(static_cast<HDC>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), static_cast<UINT>(hb_parni(3)), &lpBuffer));
+  hb_storni(lpBuffer, 4);
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetCharWidth32W(HDC hdc,UINT iFirst,UINT iLast,LPINT lpBuffer)
 */
+HB_FUNC( WINAPI_GETCHARWIDTH32W )
+{
+  INT lpBuffer;
+  hb_retl(GetCharWidth32W(static_cast<HDC>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), static_cast<UINT>(hb_parni(3)), &lpBuffer));
+  hb_storni(lpBuffer, 4);
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetCharWidthFloatA(HDC hdc,UINT iFirst,UINT iLast,PFLOAT lpBuffer)
 */
+HB_FUNC( WINAPI_GETCHARWIDTHFLOATA )
+{
+  FLOAT lpBuffer;
+  hb_retl(GetCharWidthFloatA(static_cast<HDC>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), static_cast<UINT>(hb_parni(3)), &lpBuffer));
+  hb_stornd(lpBuffer, 4);
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetCharWidthFloatW(HDC hdc,UINT iFirst,UINT iLast,PFLOAT lpBuffer)
 */
+HB_FUNC( WINAPI_GETCHARWIDTHFLOATW )
+{
+  FLOAT lpBuffer;
+  hb_retl(GetCharWidthFloatW(static_cast<HDC>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), static_cast<UINT>(hb_parni(3)), &lpBuffer));
+  hb_stornd(lpBuffer, 4);
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetCharABCWidthsA(HDC hdc,UINT wFirst,UINT wLast,LPABC lpABC)
@@ -580,6 +622,10 @@ WINGDIAPI WINBOOL WINAPI GetCharABCWidthsFloatW(HDC hdc,UINT iFirst,UINT iLast,L
 /*
 WINGDIAPI int WINAPI GetClipBox(HDC hdc,LPRECT lprect)
 */
+HB_FUNC( WINAPI_GETCLIPBOX )
+{
+  hb_retni(GetClipBox(static_cast<HDC>(hb_parptr(1)), static_cast<LPRECT>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI int WINAPI GetClipRgn(HDC hdc,HRGN hrgn)
@@ -608,6 +654,10 @@ HB_FUNC( WINAPI_GETCURRENTOBJECT )
 /*
 WINGDIAPI WINBOOL WINAPI GetCurrentPositionEx(HDC hdc,LPPOINT lppt)
 */
+HB_FUNC( WINAPI_GETCURRENTPOSITIONEX )
+{
+  hb_retl(GetCurrentPositionEx(static_cast<HDC>(hb_parptr(1)), static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI int WINAPI GetDeviceCaps(HDC hdc,int index)
@@ -756,6 +806,10 @@ WINGDIAPI DWORD WINAPI GetRegionData(HRGN hrgn,DWORD nCount,LPRGNDATA lpRgnData)
 /*
 WINGDIAPI int WINAPI GetRgnBox(HRGN hrgn,LPRECT lprc)
 */
+HB_FUNC( WINAPI_GETRGNBOX )
+{
+  hb_retni(GetRgnBox(static_cast<HRGN>(hb_parptr(1)), static_cast<LPRECT>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI HGDIOBJ WINAPI GetStockObject(int i)
@@ -812,26 +866,58 @@ HB_FUNC( WINAPI_GETTEXTCOLOR )
 /*
 WINGDIAPI WINBOOL WINAPI GetTextExtentPointA(HDC hdc,LPCSTR lpString,int c,LPSIZE lpsz)
 */
+HB_FUNC( WINAPI_GETTEXTEXTENTPOINTA )
+{
+  hb_retl(GetTextExtentPointA(static_cast<HDC>(hb_parptr(1)), ( LPCSTR ) hb_parc(2), hb_parni(3), static_cast<LPSIZE>(hb_itemGetPtr(hb_objSendMsg(hb_param(4, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetTextExtentPointW(HDC hdc,LPCWSTR lpString,int c,LPSIZE lpsz)
 */
+HB_FUNC( WINAPI_GETTEXTEXTENTPOINTW )
+{
+  hb_retl(GetTextExtentPointW(static_cast<HDC>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2), hb_parni(3), static_cast<LPSIZE>(hb_itemGetPtr(hb_objSendMsg(hb_param(4, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetTextExtentPoint32A(HDC hdc,LPCSTR lpString,int c,LPSIZE psizl)
 */
+HB_FUNC( WINAPI_GETTEXTEXTENTPOINT32A )
+{
+  hb_retl(GetTextExtentPoint32A(static_cast<HDC>(hb_parptr(1)), ( LPCSTR ) hb_parc(2), hb_parni(3), static_cast<LPSIZE>(hb_itemGetPtr(hb_objSendMsg(hb_param(4, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetTextExtentPoint32W(HDC hdc,LPCWSTR lpString,int c,LPSIZE psizl)
 */
+HB_FUNC( WINAPI_GETTEXTEXTENTPOINT32W )
+{
+  hb_retl(GetTextExtentPoint32W(static_cast<HDC>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2), hb_parni(3), static_cast<LPSIZE>(hb_itemGetPtr(hb_objSendMsg(hb_param(4, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetTextExtentExPointA(HDC hdc,LPCSTR lpszString,int cchString,int nMaxExtent,LPINT lpnFit,LPINT lpnDx,LPSIZE lpSize)
 */
+HB_FUNC( WINAPI_GETTEXTEXTENTEXPOINTA )
+{
+  INT lpnFit;
+  INT lpnDx;
+  hb_retl(GetTextExtentExPointA(static_cast<HDC>(hb_parptr(1)), ( LPCSTR ) hb_parc(2), hb_parni(3), hb_parni(4), &lpnFit, &lpnDx, static_cast<LPSIZE>(hb_itemGetPtr(hb_objSendMsg(hb_param(7, Harbour::Item::OBJECT), "POINTER", 0)))));
+  hb_storni(lpnFit, 5);
+  hb_storni(lpnDx, 6);
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetTextExtentExPointW(HDC hdc,LPCWSTR lpszString,int cchString,int nMaxExtent,LPINT lpnFit,LPINT lpnDx,LPSIZE lpSize)
 */
+HB_FUNC( WINAPI_GETTEXTEXTENTEXPOINTW )
+{
+  INT lpnFit;
+  INT lpnDx;
+  hb_retl(GetTextExtentExPointW(static_cast<HDC>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2), hb_parni(3), hb_parni(4), &lpnFit, &lpnDx, static_cast<LPSIZE>(hb_itemGetPtr(hb_objSendMsg(hb_param(7, Harbour::Item::OBJECT), "POINTER", 0)))));
+  hb_storni(lpnFit, 5);
+  hb_storni(lpnDx, 6);
+}
 
 /*
 WINGDIAPI int WINAPI GetTextCharset(HDC hdc)
@@ -948,18 +1034,34 @@ WINGDIAPI HFONT WINAPI CreateFontIndirectExW(CONST ENUMLOGFONTEXDVW *)
 /*
 WINGDIAPI WINBOOL WINAPI GetViewportExtEx(HDC hdc,LPSIZE lpsize)
 */
+HB_FUNC( WINAPI_GETVIEWPORTEXTEX )
+{
+  hb_retl(GetViewportExtEx(static_cast<HDC>(hb_parptr(1)), static_cast<LPSIZE>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetViewportOrgEx(HDC hdc,LPPOINT lppoint)
 */
+HB_FUNC( WINAPI_GETVIEWPORTORGEX )
+{
+  hb_retl(GetViewportOrgEx(static_cast<HDC>(hb_parptr(1)), static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetWindowExtEx(HDC hdc,LPSIZE lpsize)
 */
+HB_FUNC( WINAPI_GETWINDOWEXTEX )
+{
+  hb_retl(GetWindowExtEx(static_cast<HDC>(hb_parptr(1)), static_cast<LPSIZE>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetWindowOrgEx(HDC hdc,LPPOINT lppoint)
 */
+HB_FUNC( WINAPI_GETWINDOWORGEX )
+{
+  hb_retl(GetWindowOrgEx(static_cast<HDC>(hb_parptr(1)), static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI int WINAPI IntersectClipRect(HDC hdc,int left,int top,int right,int bottom)
@@ -1580,6 +1682,10 @@ WINGDIAPI WINBOOL WINAPI GetTextMetricsW(HDC hdc,LPTEXTMETRICW lptm)
 /*
 WINGDIAPI WINBOOL WINAPI AngleArc(HDC hdc,int x,int y,DWORD r,FLOAT StartAngle,FLOAT SweepAngle)
 */
+HB_FUNC( WINAPI_ANGLEARC )
+{
+  hb_retl(AngleArc(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<DWORD>(hb_parnl(4)), static_cast<FLOAT>(hb_parnd(5)), static_cast<FLOAT>(hb_parnd(6))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI PolyPolyline(HDC hdc,CONST POINT *apt,CONST DWORD *asz,DWORD csz)
@@ -1764,6 +1870,12 @@ HB_FUNC( WINAPI_SETARCDIRECTION )
 /*
 WINGDIAPI WINBOOL WINAPI SetMiterLimit(HDC hdc,FLOAT limit,PFLOAT old)
 */
+HB_FUNC( WINAPI_SETMITERLIMIT )
+{
+  FLOAT old;
+  hb_retl(SetMiterLimit(static_cast<HDC>(hb_parptr(1)), static_cast<FLOAT>(hb_parnd(2)), &old));
+  hb_stornd(old, 3);
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI StrokeAndFillPath(HDC hdc)
@@ -1796,6 +1908,12 @@ WINGDIAPI HPEN WINAPI ExtCreatePen(DWORD iPenStyle,DWORD cWidth,CONST LOGBRUSH *
 /*
 WINGDIAPI WINBOOL WINAPI GetMiterLimit(HDC hdc,PFLOAT plimit)
 */
+HB_FUNC( WINAPI_GETMITERLIMIT )
+{
+  FLOAT limit;
+  hb_retl(GetMiterLimit(static_cast<HDC>(hb_parptr(1)), &limit));
+  hb_stornd(limit, 2);
+}
 
 /*
 WINGDIAPI int WINAPI GetArcDirection(HDC hdc)
@@ -1824,6 +1942,10 @@ HB_FUNC( WINAPI_GETOBJECTW )
 /*
 WINGDIAPI WINBOOL WINAPI MoveToEx(HDC hdc,int x,int y,LPPOINT lppt)
 */
+HB_FUNC( WINAPI_MOVETOEX )
+{
+  hb_retl(MoveToEx(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(4, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI TextOutA(HDC hdc,int x,int y,LPCSTR lpString,int c)
@@ -1864,10 +1986,18 @@ WINGDIAPI HRGN WINAPI CreatePolygonRgn(CONST POINT *pptl,int cPoint,int iMode)
 /*
 WINGDIAPI WINBOOL WINAPI DPtoLP(HDC hdc,LPPOINT lppt,int c)
 */
+HB_FUNC( WINAPI_DPTOLP )
+{
+  hb_retl(DPtoLP(static_cast<HDC>(hb_parptr(1)), static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0))), hb_parni(3)));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI LPtoDP(HDC hdc,LPPOINT lppt,int c)
 */
+HB_FUNC( WINAPI_LPTODP )
+{
+  hb_retl(LPtoDP(static_cast<HDC>(hb_parptr(1)), static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0))), hb_parni(3)));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI Polygon(HDC hdc,CONST POINT *apt,int cpt)
@@ -1892,42 +2022,82 @@ WINGDIAPI WINBOOL WINAPI PolylineTo(HDC hdc,CONST POINT *apt,DWORD cpt)
 /*
 WINGDIAPI WINBOOL WINAPI SetViewportExtEx(HDC hdc,int x,int y,LPSIZE lpsz)
 */
+HB_FUNC( WINAPI_SETVIEWPORTEXTEX )
+{
+  hb_retl(SetViewportExtEx(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<LPSIZE>(hb_itemGetPtr(hb_objSendMsg(hb_param(4, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI SetViewportOrgEx(HDC hdc,int x,int y,LPPOINT lppt)
 */
+HB_FUNC( WINAPI_SETVIEWPORTORGEX )
+{
+  hb_retl(SetViewportOrgEx(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(4, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI SetWindowExtEx(HDC hdc,int x,int y,LPSIZE lpsz)
 */
+HB_FUNC( WINAPI_SETWINDOWEXTEX )
+{
+  hb_retl(SetWindowExtEx(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<LPSIZE>(hb_itemGetPtr(hb_objSendMsg(hb_param(4, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI SetWindowOrgEx(HDC hdc,int x,int y,LPPOINT lppt)
 */
+HB_FUNC( WINAPI_SETWINDOWORGEX )
+{
+  hb_retl(SetWindowOrgEx(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(4, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI OffsetViewportOrgEx(HDC hdc,int x,int y,LPPOINT lppt)
 */
+HB_FUNC( WINAPI_OFFSETVIEWPORTORGEX )
+{
+  hb_retl(OffsetViewportOrgEx(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(4, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI OffsetWindowOrgEx(HDC hdc,int x,int y,LPPOINT lppt)
 */
+HB_FUNC( WINAPI_OFFSETWINDOWORGEX )
+{
+  hb_retl(OffsetWindowOrgEx(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(4, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI ScaleViewportExtEx(HDC hdc,int xn,int dx,int yn,int yd,LPSIZE lpsz)
 */
+HB_FUNC( WINAPI_SCALEVIEWPORTEXTEX )
+{
+  hb_retl(ScaleViewportExtEx(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<LPSIZE>(hb_itemGetPtr(hb_objSendMsg(hb_param(6, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI ScaleWindowExtEx(HDC hdc,int xn,int xd,int yn,int yd,LPSIZE lpsz)
 */
+HB_FUNC( WINAPI_SCALEWINDOWEXTEX )
+{
+  hb_retl(ScaleWindowExtEx(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<LPSIZE>(hb_itemGetPtr(hb_objSendMsg(hb_param(6, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI SetBitmapDimensionEx(HBITMAP hbm,int w,int h,LPSIZE lpsz)
 */
+HB_FUNC( WINAPI_SETBITMAPDIMENSIONEX )
+{
+  hb_retl(SetBitmapDimensionEx(static_cast<HBITMAP>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<LPSIZE>(hb_itemGetPtr(hb_objSendMsg(hb_param(4, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI SetBrushOrgEx(HDC hdc,int x,int y,LPPOINT lppt)
 */
+HB_FUNC( WINAPI_SETBRUSHORGEX )
+{
+  hb_retl(SetBrushOrgEx(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(4, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI int WINAPI GetTextFaceA(HDC hdc,int c,LPSTR lpName)
@@ -1956,10 +2126,18 @@ WINGDIAPI DWORD WINAPI GetKerningPairsW(HDC hdc,DWORD nPairs,LPKERNINGPAIR lpKer
 /*
 WINGDIAPI WINBOOL WINAPI GetDCOrgEx(HDC hdc,LPPOINT lppt)
 */
+HB_FUNC( WINAPI_GETDCORGEX )
+{
+  hb_retl(GetDCOrgEx(static_cast<HDC>(hb_parptr(1)), static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI FixBrushOrgEx(HDC hdc,int x,int y,LPPOINT ptl)
 */
+HB_FUNC( WINAPI_FIXBRUSHORGEX )
+{
+  hb_retl(FixBrushOrgEx(static_cast<HDC>(hb_parptr(1)), hb_parni(2), hb_parni(3), static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(4, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI UnrealizeObject(HGDIOBJ h)

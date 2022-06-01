@@ -36,6 +36,8 @@ SOFTWARE.
 
 #include <windows.h>
 #include "hbapi.h"
+#include "hbapiitm.h"
+#include "hbapicls.h"
 
 /*
 WINMMAPI LRESULT WINAPI CloseDriver(HDRVR hDriver,LPARAM lParam1,LPARAM lParam2)

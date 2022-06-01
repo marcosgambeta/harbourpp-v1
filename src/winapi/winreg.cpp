@@ -37,6 +37,8 @@ SOFTWARE.
 #include <windows.h>
 #include <winreg.h>
 #include "hbapi.h"
+#include "hbapiitm.h"
+#include "hbapicls.h"
 
 /*
 WINADVAPI LONG WINAPI RegCloseKey(HKEY hKey)

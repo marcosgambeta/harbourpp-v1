@@ -36,6 +36,8 @@ SOFTWARE.
 
 #include <windows.h>
 #include "hbapi.h"
+#include "hbapiitm.h"
+#include "hbapicls.h"
 
 /*
 WINUSERAPI int WINAPI wvsprintfA(LPSTR,LPCSTR,va_list arglist)
@@ -2824,6 +2826,10 @@ HB_FUNC( WINAPI_SETCURSOR )
 /*
 WINUSERAPI WINBOOL WINAPI GetCursorPos(LPPOINT lpPoint)
 */
+HB_FUNC( WINAPI_GETCURSORPOS )
+{
+  hb_retl(GetCursorPos(static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI ClipCursor(CONST RECT *lpRect)
@@ -2832,6 +2838,10 @@ WINUSERAPI WINBOOL WINAPI ClipCursor(CONST RECT *lpRect)
 /*
 WINUSERAPI WINBOOL WINAPI GetClipCursor(LPRECT lpRect)
 */
+HB_FUNC( WINAPI_GETCLIPCURSOR )
+{
+  hb_retl(GetClipCursor(static_cast<LPRECT>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINUSERAPI HCURSOR WINAPI GetCursor(VOID)
@@ -2900,18 +2910,34 @@ HB_FUNC( WINAPI_SETCARETPOS )
 /*
 WINUSERAPI WINBOOL WINAPI GetCaretPos(LPPOINT lpPoint)
 */
+HB_FUNC( WINAPI_GETCARETPOS )
+{
+  hb_retl(GetCaretPos(static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI ClientToScreen(HWND hWnd,LPPOINT lpPoint)
 */
+HB_FUNC( WINAPI_CLIENTOSCREEN )
+{
+  hb_retl(ClientToScreen(static_cast<HWND>(hb_parptr(1)), static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI ScreenToClient(HWND hWnd,LPPOINT lpPoint)
 */
+HB_FUNC( WINAPI_SCREENTOCLIENT )
+{
+  hb_retl(ScreenToClient(static_cast<HWND>(hb_parptr(1)), static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINUSERAPI int WINAPI MapWindowPoints(HWND hWndFrom,HWND hWndTo,LPPOINT lpPoints,UINT cPoints)
 */
+HB_FUNC( WINAPI_MAPWINDOWPOINTS )
+{
+  hb_retni(MapWindowPoints(static_cast<HWND>(hb_parptr(1)), static_cast<HWND>(hb_parptr(2)), static_cast<LPPOINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(3, Harbour::Item::OBJECT), "POINTER", 0))), static_cast<UINT>(hb_parni(4))));
+}
 
 /*
 WINUSERAPI HWND WINAPI WindowFromPoint(POINT Point)
