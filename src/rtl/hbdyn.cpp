@@ -193,7 +193,7 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
          /* FIXME */
 
       case HB_DYN_CTYPE_DOUBLE:
-         HB_PUT_LE_DOUBLE(static_cast<HB_BYTE*>(&pArg->value.t.n64), hb_itemGetND(pParam));
+         HB_PUT_LE_DOUBLE(reinterpret_cast<HB_BYTE*>(&pArg->value.t.n64), hb_itemGetND(pParam));
          r = pArg->bByRef ? reinterpret_cast<HB_PTRUINT>(&pArg->value.t.n64) : pArg->value.t.n64;
          break;
 
