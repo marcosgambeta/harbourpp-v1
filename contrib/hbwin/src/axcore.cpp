@@ -617,12 +617,12 @@ HB_FUNC( __AXREGISTERHANDLER )  /* (pDisp, bHandler [, cIID]) --> pSink */
 
       if( pItemBlock )
       {
-         IConnectionPointContainer* pCPC = nullptr;
-         IConnectionPoint*          pCP = nullptr;
-         HRESULT                    lOleError;
-         IID                        rriid;
-         void*                      hCLSID;
-         const char *               szIID;
+         IConnectionPointContainer * pCPC = nullptr;
+         IConnectionPoint * pCP = nullptr;
+         HRESULT lOleError;
+         IID rriid;
+         void * hCLSID;
+         const char * szIID;
 
          hb_oleInit();
 

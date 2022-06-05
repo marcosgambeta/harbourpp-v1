@@ -75,14 +75,14 @@
 #include <shellapi.h>
 
 #if defined(NONAMELESSUNION)
-#  define HB_WIN_V_UNION( x, z )  ( ( x ).DUMMYUNIONNAME.z )
+#  define HB_WIN_V_UNION(x, z)  ((x).DUMMYUNIONNAME.z)
 #else
-#  define HB_WIN_V_UNION( x, z )  ( ( x ).z )
+#  define HB_WIN_V_UNION(x, z)  ((x).z)
 #endif
 
-/* win_ShellNotifyIcon( [<hWnd>], [<nUID>], [<nMessage>], [<hIcon>],
-                        [<cTooltip>], [<lAddDel>],
-                        [<cInfo>], [<nInfoTimeOut>], [<cInfoTitle>], [<nInfoFlags>] ) --> <lOK> */
+/* win_ShellNotifyIcon([<hWnd>], [<nUID>], [<nMessage>], [<hIcon>],
+                       [<cTooltip>], [<lAddDel>],
+                       [<cInfo>], [<nInfoTimeOut>], [<cInfoTitle>], [<nInfoFlags>]) --> <lOK> */
 HB_FUNC( WIN_SHELLNOTIFYICON )
 {
    NOTIFYICONDATA tnid;
@@ -101,7 +101,7 @@ HB_FUNC( WIN_SHELLNOTIFYICON )
    {
       tnid.uFlags |= NIF_ICON;
    }
-   if( HB_ITEMCOPYSTR( hb_param(5, Harbour::Item::ANY), tnid.szTip, HB_SIZEOFARRAY( tnid.szTip ) ) > 0 )
+   if( HB_ITEMCOPYSTR(hb_param(5, Harbour::Item::ANY), tnid.szTip, HB_SIZEOFARRAY(tnid.szTip)) > 0 )
    {
       tnid.uFlags |= NIF_TIP;
    }
@@ -109,12 +109,12 @@ HB_FUNC( WIN_SHELLNOTIFYICON )
    #if defined(NIF_INFO) /* did the headers provide Windows 2000 features? */
    if( hb_iswin2k() )      /* are we running on Windows 2000 or above? */
    {
-      if( HB_ITEMCOPYSTR( hb_param(7, Harbour::Item::ANY), tnid.szInfo, HB_SIZEOFARRAY( tnid.szInfo ) ) > 0 )
+      if( HB_ITEMCOPYSTR(hb_param(7, Harbour::Item::ANY), tnid.szInfo, HB_SIZEOFARRAY(tnid.szInfo)) > 0 )
       {
          tnid.uFlags |= NIF_INFO;
       }
-      HB_WIN_V_UNION( tnid, uTimeout ) = ( UINT ) hb_parni(8);
-      if( HB_ITEMCOPYSTR( hb_param(9, Harbour::Item::ANY), tnid.szInfoTitle, HB_SIZEOFARRAY( tnid.szInfoTitle ) ) > 0 )
+      HB_WIN_V_UNION(tnid, uTimeout) = static_cast<UINT>(hb_parni(8));
+      if( HB_ITEMCOPYSTR(hb_param(9, Harbour::Item::ANY), tnid.szInfoTitle, HB_SIZEOFARRAY(tnid.szInfoTitle)) > 0 )
       {
          tnid.uFlags |= NIF_INFO;
       }
@@ -151,7 +151,7 @@ typedef struct
    LPSHNAMEMAPPING lpSHNameMapping;
 } HANDLETOMAPPINGS;
 
-static LPTSTR s_StringList( int iParam )
+static LPTSTR s_StringList(int iParam)
 {
    PHB_ITEM pItem = hb_param(iParam, Harbour::Item::ARRAY | Harbour::Item::STRING), pArrItem;
    LPTSTR lpStr = nullptr;
@@ -209,9 +209,9 @@ static LPTSTR s_StringList( int iParam )
    return lpStr;
 }
 
-/* win_SHFileOperation( [<hWnd>], [<nFunction>], [<cFrom>|<aFrom>], [<cTo>|<aTo>],
-                        [<nFlags>], [<@lAnyOperationAborted>],
-                        [<aNameMappings>], [<cProgressTitle>] ) -> <nResult> */
+/* win_SHFileOperation([<hWnd>], [<nFunction>], [<cFrom>|<aFrom>], [<cTo>|<aTo>],
+                       [<nFlags>], [<@lAnyOperationAborted>],
+                       [<aNameMappings>], [<cProgressTitle>]) -> <nResult> */
 HB_FUNC( WIN_SHFILEOPERATION )
 {
    int iRetVal;

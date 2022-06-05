@@ -842,9 +842,8 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, PVOID pvReserved)
    return fResult;
 }
 
-/* win_oleServerInit( <cClassID>, <cServerName>, ;
- *                    [<hAction> | <oAction> | <bAction> | <sAction>], ;
- *                    [<lHashClone> | <lAcceptAll>] )
+/*
+win_oleServerInit(<cClassID>, <cServerName>, [<hAction> | <oAction> | <bAction> | <sAction>], [<lHashClone> | <lAcceptAll>])
  */
 HB_FUNC( WIN_OLESERVERINIT )
 {

@@ -94,7 +94,7 @@ HB_FUNC( WIN_GETCOMMANDLINEPARAM )
 
    /* Skip application path */
    pos = 0;
-   while( lpCmdLine[pos] && ( fQuote || !HB_ISSPACE( lpCmdLine[pos] ) ) )
+   while( lpCmdLine[pos] && (fQuote || !HB_ISSPACE(lpCmdLine[pos])) )
    {
       if( lpCmdLine[pos] == '"' )
       {
@@ -102,7 +102,7 @@ HB_FUNC( WIN_GETCOMMANDLINEPARAM )
       }
       pos++;
    }
-   while( HB_ISSPACE( lpCmdLine[pos] ) )
+   while( HB_ISSPACE(lpCmdLine[pos]) )
    {
       pos++;
    }
@@ -203,7 +203,7 @@ HB_FUNC( WIN_SYSREFRESH )
    {
       MSG msg;
 
-      while( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) )
+      while( PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE) )
       {
          switch( msg.message )
          {
@@ -243,7 +243,7 @@ HB_FUNC( WIN_QPCOUNTER2SEC )
    if( s_dFrequence == 0 )
    {
       LARGE_INTEGER frequency;
-      if( !QueryPerformanceFrequency( &frequency ) )
+      if( !QueryPerformanceFrequency(&frequency) )
       {
          hb_retnd(0);
          return;

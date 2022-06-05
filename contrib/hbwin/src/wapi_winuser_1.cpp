@@ -49,7 +49,7 @@
 #include "hbapierr.h"
 
 #ifndef WS_OVERLAPPEDWINDOW
-#define WS_OVERLAPPEDWINDOW  ( WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX )
+#define WS_OVERLAPPEDWINDOW  (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX)
 #endif
 
 HB_FUNC( WAPI_SETWINDOWPOS )
@@ -165,7 +165,7 @@ HB_FUNC( WAPI_DRAWTEXT )
    HDC hDC = hbwapi_par_HDC(1);
    RECT rect;
 
-   if( hDC && hbwapi_par_RECT( &rect, 3, true ) )
+   if( hDC && hbwapi_par_RECT(&rect, 3, true) )
    {
       void * hText;
       HB_SIZE nTextLen;
@@ -203,7 +203,7 @@ HB_FUNC( WAPI_ENABLESCROLLBAR )
 HB_FUNC( WAPI_GETSCROLLBARINFO )
 {
    PSCROLLBARINFO sbi = static_cast<PSCROLLBARINFO>(hbwapi_par_STRUCT(3));
-   BOOL           bSuccess;
+   BOOL bSuccess;
 
    memset(&sbi, 0, sizeof(SCROLLBARINFO));
    sbi->cbSize = sizeof(SCROLLBARINFO);
@@ -361,8 +361,7 @@ HB_FUNC( WAPI_LOADBITMAP )
 }
 #endif
 
-/* wapi_LoadImage( [<hInstance>], <cName>|<nID>, [<nType>],
-                   [<nWidth>], [<nHeight>], [<nFlags>] ) --> <hImage> */
+/* wapi_LoadImage([<hInstance>], <cName>|<nID>, [<nType>], [<nWidth>], [<nHeight>], [<nFlags>]) --> <hImage> */
 HB_FUNC( WAPI_LOADIMAGE )
 {
    void * hString = nullptr;
@@ -622,7 +621,7 @@ HB_FUNC( WAPI_GETMENUSTATE )
 
    uiResult = GetMenuState(hbwapi_par_raw_HMENU(1), hbwapi_par_UINT(2), hbwapi_par_UINT(3));
    hbwapi_SetLastError(GetLastError());
-   if( uiResult == ( UINT ) -1 )
+   if( uiResult == static_cast<UINT>(-1) )
    {
       hbwapi_ret_NI(-1);
    }
@@ -672,7 +671,7 @@ HB_FUNC( WAPI_GETMENUDEFAULTITEM )
 
    uiResult = GetMenuDefaultItem(hbwapi_par_raw_HMENU(1), HB_ISNUM(2) ? hbwapi_par_INT(2) : hbwapi_par_BOOL(2), hbwapi_par_UINT(3));
    hbwapi_SetLastError(GetLastError());
-   if( uiResult == ( UINT ) -1 )
+   if( uiResult == static_cast<UINT>(-1) )
    {
       hbwapi_ret_NI(-1);
    }

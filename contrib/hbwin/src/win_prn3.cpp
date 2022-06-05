@@ -47,7 +47,7 @@
 #include "hbwapi.h"
 #include <winspool.h>
 
-static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
+static HB_BOOL hb_SetDefaultPrinter(LPCTSTR lpPrinterName)
 {
    BOOL bFlag;
    DWORD dwNeeded = 0;

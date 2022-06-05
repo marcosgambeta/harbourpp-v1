@@ -1424,7 +1424,7 @@ void hb_oleVariantToItemEx(PHB_ITEM pItem, VARIANT * pVariant, HB_USHORT uiClass
       case VT_PTR:
       case VT_PTR | VT_BYREF:
       case VT_BYREF:
-         hb_itemPutPtr(pItem, V_BYREF( pVariant));
+         hb_itemPutPtr(pItem, V_BYREF(pVariant));
          break;
 #endif
 
@@ -1906,7 +1906,7 @@ HB_FUNC( __OLEISDISP )
    hb_retl(hb_oleItemGet(hb_param(1, Harbour::Item::ANY)) != nullptr);
 }
 
-HB_FUNC( WIN_OLECLASSEXISTS ) /* ( cOleName | cCLSID ) */
+HB_FUNC( WIN_OLECLASSEXISTS ) /* (cOleName | cCLSID) */
 {
    bool fExists = false;
    const char * cOleName = hb_parc(1);
@@ -1929,7 +1929,7 @@ HB_FUNC( WIN_OLECLASSEXISTS ) /* ( cOleName | cCLSID ) */
    hb_retl(fExists);
 }
 
-HB_FUNC( __OLECREATEOBJECT ) /* ( cOleName | cCLSID  [, cIID ] ) */
+HB_FUNC( __OLECREATEOBJECT ) /* (cOleName | cCLSID  [, cIID ]) */
 {
    GUID         ClassID, iid = IID_IDispatch;
    IDispatch *  pDisp = nullptr;
@@ -1988,7 +1988,7 @@ HB_FUNC( __OLECREATEOBJECT ) /* ( cOleName | cCLSID  [, cIID ] ) */
    }
 }
 
-HB_FUNC( __OLEGETACTIVEOBJECT ) /* ( cOleName | cCLSID  [, cIID ] ) */
+HB_FUNC( __OLEGETACTIVEOBJECT ) /* (cOleName | cCLSID  [, cIID ]) */
 {
    BSTR         wCLSID;
    IID          ClassID, iid = IID_IDispatch;
@@ -2054,7 +2054,7 @@ HB_FUNC( __OLEGETACTIVEOBJECT ) /* ( cOleName | cCLSID  [, cIID ] ) */
    }
 }
 
-HB_FUNC( __OLEENUMCREATE ) /* ( __hObj ) */
+HB_FUNC( __OLEENUMCREATE ) /* (__hObj) */
 {
    IDispatch *    pDisp;
    IEnumVARIANT * pEnum;
@@ -2643,7 +2643,7 @@ HB_FUNC( __OLEINVOKEPUT )
    hb_oleInvokeCall(DISPATCH_PROPERTYPUT);
 }
 
-/* __oleVariantGetValue( <pVariant> ) --> <xValue> */
+/* __oleVariantGetValue(<pVariant>) --> <xValue> */
 HB_FUNC( __OLEVARIANTGETVALUE )
 {
    VARIANT * pVariant = hb_oleVariantParam(1);
@@ -2654,7 +2654,7 @@ HB_FUNC( __OLEVARIANTGETVALUE )
    }
 }
 
-/* __oleVariantGetType( <pVariant> ) --> <nVariantType> */
+/* __oleVariantGetType(<pVariant>) --> <nVariantType> */
 HB_FUNC( __OLEVARIANTGETTYPE )
 {
    VARIANT * pVariant = hb_oleVariantParam(1);
@@ -2665,7 +2665,7 @@ HB_FUNC( __OLEVARIANTGETTYPE )
    }
 }
 
-/* __oleVariantNew( <nVariantType>, [<xInitValue>], [<nDims,...>] ) --> <pVariant> */
+/* __oleVariantNew(<nVariantType>, [<xInitValue>], [<nDims,...>]) --> <pVariant> */
 HB_FUNC( __OLEVARIANTNEW )
 {
    int iType = hb_parni(1);
@@ -2939,7 +2939,7 @@ HB_FUNC( __OLEVARIANTNEW )
    }
 }
 
-/* __oleVariantNullDate( [<lNewNullDateFlag>] ) --> <lPrevNullDateFlag> */
+/* __oleVariantNullDate([<lNewNullDateFlag>]) --> <lPrevNullDateFlag> */
 HB_FUNC( __OLEVARIANTNULLDATE )
 {
    hb_retl(hb_oleGetNullDateFlag());
@@ -2949,7 +2949,7 @@ HB_FUNC( __OLEVARIANTNULLDATE )
    }
 }
 
-/* __oleVariantNil2Null( [<lNewNil2NullFlag>] ) --> <lPrevNil2NullFlag> */
+/* __oleVariantNil2Null([<lNewNil2NullFlag>]) --> <lPrevNil2NullFlag> */
 HB_FUNC( __OLEVARIANTNIL2NULL )
 {
    hb_retl(hb_oleGetNil2NullFlag());

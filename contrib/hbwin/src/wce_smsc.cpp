@@ -68,14 +68,14 @@ HB_FUNC( WCE_SMSSENDMESSAGE ) /* cMessage, cNumber */
       LPCTSTR sztMessage     = HB_PARSTRDEF(1, &hMessage, &nMessageLen);
       LPCTSTR sztPhoneNumber = HB_PARSTRDEF(2, &hPhoneNumber, &nPhoneNumberLen);
 
-      if( nPhoneNumberLen <= HB_SIZEOFARRAY( smsaDestination.ptsAddress ) )
+      if( nPhoneNumberLen <= HB_SIZEOFARRAY(smsaDestination.ptsAddress) )
       {
          TEXT_PROVIDER_SPECIFIC_DATA tpsd;
          SMS_MESSAGE_ID smsmidMessageID = 0;
 
          /* Create the destination address */
          memset(&smsaDestination, 0, sizeof(smsaDestination));
-         smsaDestination.smsatAddressType = ( *sztPhoneNumber == _T( '+' ) ) ? SMSAT_INTERNATIONAL : SMSAT_NATIONAL;
+         smsaDestination.smsatAddressType = (*sztPhoneNumber == _T('+')) ? SMSAT_INTERNATIONAL : SMSAT_NATIONAL;
          memcpy(smsaDestination.ptsAddress, sztPhoneNumber, HB_SIZEOFARRAY(smsaDestination.ptsAddress));
 
          /* Set up provider specific data */

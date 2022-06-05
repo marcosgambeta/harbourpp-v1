@@ -113,12 +113,7 @@ HB_FUNC( WIN_REGQUERYVALUEEX )
    DWORD dwType = 0;
    DWORD dwSize = 0;
 
-   if( RegQueryValueEx(static_cast<HKEY>(hb_parptr(1)),
-                       lpKey,
-                       nullptr,
-                       &dwType,
-                       nullptr,
-                       &dwSize) == ERROR_SUCCESS)
+   if( RegQueryValueEx(static_cast<HKEY>(hb_parptr(1)), lpKey, nullptr, &dwType, nullptr, &dwSize) == ERROR_SUCCESS )
    {
       if( dwSize > 0 )
       {
@@ -126,7 +121,7 @@ HB_FUNC( WIN_REGQUERYVALUEEX )
          {
             LPBYTE lpValue = static_cast<LPBYTE>(hb_xgrab((dwSize + 1) * sizeof(TCHAR)));
 
-            if( RegQueryValueEx(static_cast<HKEY>(hb_parptr(1)), lpKey, nullptr, &dwType, lpValue, &dwSize) == ERROR_SUCCESS)
+            if( RegQueryValueEx(static_cast<HKEY>(hb_parptr(1)), lpKey, nullptr, &dwType, lpValue, &dwSize) == ERROR_SUCCESS )
             {
                dwSize /= sizeof(TCHAR);
 
@@ -143,7 +138,7 @@ HB_FUNC( WIN_REGQUERYVALUEEX )
          {
             LPBYTE lpValue = static_cast<LPBYTE>(hb_xgrab(dwSize + 1));
 
-            if( RegQueryValueEx(static_cast<HKEY>(hb_parptr(1)), lpKey, nullptr, &dwType, lpValue, &dwSize) == ERROR_SUCCESS)
+            if( RegQueryValueEx(static_cast<HKEY>(hb_parptr(1)), lpKey, nullptr, &dwType, lpValue, &dwSize) == ERROR_SUCCESS )
             {
                if( !hb_storclen_buffer(reinterpret_cast<char*>(lpValue), dwSize, 5))
                {

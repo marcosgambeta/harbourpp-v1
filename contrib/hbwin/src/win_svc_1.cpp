@@ -56,7 +56,7 @@ static PHB_ITEM              s_pHarbourControlFunc = nullptr;
 static TCHAR                 s_lpServiceName[256];
 
 /* Control handler function */
-static VOID WINAPI hbwin_SvcControlHandler( DWORD fdwControl )
+static VOID WINAPI hbwin_SvcControlHandler(DWORD fdwControl)
 {
    if( s_pHarbourControlFunc )
    {
@@ -96,7 +96,7 @@ static VOID WINAPI hbwin_SvcControlHandler( DWORD fdwControl )
    SetServiceStatus(s_hStatus, &s_ServiceStatus);  /* Report current status */
 }
 
-static VOID WINAPI hbwin_SvcMainFunction( DWORD dwArgc, LPTSTR * lpszArgv )
+static VOID WINAPI hbwin_SvcMainFunction(DWORD dwArgc, LPTSTR * lpszArgv)
 {
    s_ServiceStatus.dwServiceType             = SERVICE_WIN32;
    s_ServiceStatus.dwCurrentState            = SERVICE_START_PENDING;
@@ -108,7 +108,7 @@ static VOID WINAPI hbwin_SvcMainFunction( DWORD dwArgc, LPTSTR * lpszArgv )
 
    s_hStatus = RegisterServiceCtrlHandler(s_lpServiceName, static_cast<LPHANDLER_FUNCTION>(hbwin_SvcControlHandler));
 
-   if( s_hStatus != ( SERVICE_STATUS_HANDLE ) 0 )
+   if( s_hStatus != static_cast<SERVICE_STATUS_HANDLE>(0) )
    {
       if( s_pHarbourEntryFunc != nullptr )
       {
@@ -236,7 +236,7 @@ HB_FUNC( WIN_SERVICESTART )
    }
 
    lpServiceTable[0].lpServiceName = s_lpServiceName;
-   lpServiceTable[0].lpServiceProc = ( LPSERVICE_MAIN_FUNCTION ) hbwin_SvcMainFunction;
+   lpServiceTable[0].lpServiceProc = static_cast<LPSERVICE_MAIN_FUNCTION>(hbwin_SvcMainFunction);
 
    lpServiceTable[1].lpServiceName = nullptr;
    lpServiceTable[1].lpServiceProc = nullptr;

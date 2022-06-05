@@ -62,7 +62,7 @@
 #define _JPEG_CS_RGB           2
 #define _JPEG_CS_CMYK          3
 
-static int hb_jpeg_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int * piHeight, int * piWidth, int * piColorSpace, int * piBPC )
+static int hb_jpeg_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * piHeight, int * piWidth, int * piColorSpace, int * piBPC)
 {
    HB_SIZE nPos = 0;
 
@@ -216,7 +216,7 @@ typedef struct
    HB_BOOL bOk;
 } HB_PNG_READ;
 
-static void hb_png_read_func( png_structp png_ptr, png_bytep data, png_uint_32 length )
+static void hb_png_read_func(png_structp png_ptr, png_bytep data, png_uint_32 length)
 {
    HB_PNG_READ * hb_png_read_data = static_cast<HB_PNG_READ*>(png_get_io_ptr(png_ptr));
    png_uint_32 pos;
@@ -229,7 +229,7 @@ static void hb_png_read_func( png_structp png_ptr, png_bytep data, png_uint_32 l
    hb_png_read_data->bOk = (length == pos);
 }
 
-static int hb_png_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int * piHeight, int * piWidth, int * piColorSpace, int * piBPC )
+static int hb_png_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * piHeight, int * piWidth, int * piColorSpace, int * piBPC)
 {
    png_structp png_ptr;
    png_infop info_ptr;

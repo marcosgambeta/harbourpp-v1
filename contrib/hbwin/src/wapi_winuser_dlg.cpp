@@ -53,7 +53,7 @@
 
 /* Application-defined callback used with the CreateDialog and DialogBox... It
    processes messages sent to a modal or modeless dialog box. */
-static BOOL CALLBACK wapi_DialogFuncProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam )
+static BOOL CALLBACK wapi_DialogFuncProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
    PHB_SYMB pSymbol;
 

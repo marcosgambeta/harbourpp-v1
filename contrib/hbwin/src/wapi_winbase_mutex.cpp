@@ -46,7 +46,7 @@
 
 #include "hbwapi.h"
 
-static HB_GARBAGE_FUNC( hbwapi_mutex_release )
+static HB_GARBAGE_FUNC(hbwapi_mutex_release)
 {
    void ** ph = static_cast<void**>(Cargo);
 
@@ -63,7 +63,7 @@ static const HB_GC_FUNCS s_gc_hbwapi_mutex_funcs =
    hb_gcDummyMark
 };
 
-static void hbwapi_mutex_ret( HANDLE hMutex )
+static void hbwapi_mutex_ret(HANDLE hMutex)
 {
    if( hMutex )
    {
@@ -78,14 +78,16 @@ static void hbwapi_mutex_ret( HANDLE hMutex )
    }
 }
 
-static HANDLE hbwapi_mutex_par( int iParam )
+static HANDLE hbwapi_mutex_par(int iParam)
 {
    void ** ph = static_cast<void**>(hb_parptrGC(&s_gc_hbwapi_mutex_funcs, iParam));
 
    return ph ? static_cast<HANDLE>(*ph) : nullptr;
 }
 
-/* HANDLE WINAPI CreateMutex( LPSECURITY_ATTRIBUTES lpMutexAttributes, BOOL bInitialOwner, LPCTSTR lpName ) */
+/*
+HANDLE WINAPI CreateMutex(LPSECURITY_ATTRIBUTES lpMutexAttributes, BOOL bInitialOwner, LPCTSTR lpName)
+*/
 HB_FUNC( WAPI_CREATEMUTEX )
 {
    void * hName;
@@ -97,7 +99,9 @@ HB_FUNC( WAPI_CREATEMUTEX )
    hb_strfree(hName);
 }
 
-/* HANDLE WINAPI OpenMutex( DWORD dwDesiredAccess, BOOL bInheritHandle, LPCTSTR lpName ) */
+/*
+HANDLE WINAPI OpenMutex(DWORD dwDesiredAccess, BOOL bInheritHandle, LPCTSTR lpName)
+*/
 HB_FUNC( WAPI_OPENMUTEX )
 {
    void * hName;
@@ -109,7 +113,9 @@ HB_FUNC( WAPI_OPENMUTEX )
    hb_strfree(hName);
 }
 
-/* BOOL WINAPI ReleaseMutex( HANDLE hMutex ) */
+/*
+BOOL WINAPI ReleaseMutex(HANDLE hMutex)
+*/
 HB_FUNC( WAPI_RELEASEMUTEX )
 {
    HANDLE hMutex = hbwapi_mutex_par(1);

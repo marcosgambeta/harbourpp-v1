@@ -180,7 +180,7 @@ HB_FUNC( WIN_TEXTOUT )
                aFixed[--n] = iWidth;
             }
 
-            if( ExtTextOut( hDC, iRow, iCol, 0, nullptr, lpData, static_cast<UINT>(nLen), aFixed ) )
+            if( ExtTextOut(hDC, iRow, iCol, 0, nullptr, lpData, static_cast<UINT>(nLen), aFixed) )
             {
                lResult = static_cast<long>(nLen * iWidth);
             }
@@ -331,7 +331,7 @@ HB_FUNC( WIN_CREATEFONT )
 
       pfFaceName = HB_PARSTR(2, &hfFaceName, &nLen);
 
-      if( nLen > ( LF_FACESIZE - 1 ) )
+      if( nLen > (LF_FACESIZE - 1) )
       {
          nLen = LF_FACESIZE - 1;
       }
@@ -448,7 +448,7 @@ HB_FUNC( WIN_SETDOCUMENTPROPERTIES )
                   dmFields |= DM_PRINTQUALITY;
                }
 
-               if( pDevMode->dmPaperSize == DMPAPER_USER && ( iProp = hb_parni(9) ) > 0 && ( iProp2 = hb_parni(10) ) > 0 )
+               if( pDevMode->dmPaperSize == DMPAPER_USER && (iProp = hb_parni(9)) > 0 && (iProp2 = hb_parni(10)) > 0 )
                {
                   pDevMode->dmPaperLength = static_cast<short>(iProp);
                   pDevMode->dmPaperWidth = static_cast<short>(iProp2);
@@ -530,7 +530,7 @@ HB_FUNC( WIN_GETDOCUMENTPROPERTIES )
    hb_retl(bResult);
 }
 
-static int CALLBACK FontEnumCallBack( LOGFONT * lplf, TEXTMETRIC * lpntm, DWORD dwFontType, LPVOID pArray )
+static int CALLBACK FontEnumCallBack(LOGFONT * lplf, TEXTMETRIC * lpntm, DWORD dwFontType, LPVOID pArray)
 {
    PHB_ITEM pSubItems = hb_itemArrayNew(4);
 
@@ -674,7 +674,7 @@ HB_FUNC( WIN_FILLRECT )
       rct.right  = hb_parnl(4);
       rct.bottom = hb_parnl(5);
 
-      if( FillRect( hDC, &rct, hBrush ) )
+      if( FillRect(hDC, &rct, hBrush) )
       {
          fResult = HB_TRUE;
       }

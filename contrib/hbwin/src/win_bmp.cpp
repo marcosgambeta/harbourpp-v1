@@ -63,21 +63,21 @@
 
 /* Functions for loading and printing bitmaps */
 
-int hbwin_bitmapType( const void * pImgBuf, HB_SIZE size )
+int hbwin_bitmapType(const void * pImgBuf, HB_SIZE size)
 {
    int iType = HB_WIN_BITMAP_UNKNOWN;
 
    if( pImgBuf )
    {
-      if(      size > 2 && memcmp( pImgBuf, "BM", 2 ) == 0 )
+      if( size > 2 && memcmp(pImgBuf, "BM", 2) == 0 )
       {
          iType = HB_WIN_BITMAP_BMP;
       }
-      else if( size > 3 && memcmp( pImgBuf, "\xFF\xD8\xFF", 3 ) == 0 )
+      else if( size > 3 && memcmp(pImgBuf, "\xFF\xD8\xFF", 3) == 0 )
       {
          iType = HB_WIN_BITMAP_JPEG;
       }
-      else if( size > 4 && memcmp( pImgBuf, "\x89PNG", 4 ) == 0 )
+      else if( size > 4 && memcmp(pImgBuf, "\x89PNG", 4) == 0 )
       {
          iType = HB_WIN_BITMAP_PNG;
       }
@@ -104,7 +104,7 @@ HB_FUNC( WIN_LOADBITMAPFILE )
                 and may cause GPF even in simple error cases, like invalid file content.
                 [vszakats] */
 
-      if( nSize <= 2 || hbwin_bitmapType( pBuffer, nSize ) == HB_WIN_BITMAP_UNKNOWN )
+      if( nSize <= 2 || hbwin_bitmapType(pBuffer, nSize) == HB_WIN_BITMAP_UNKNOWN )
       {
          hb_xfree(pBuffer);
          pBuffer = nullptr;
@@ -129,7 +129,7 @@ HB_FUNC( WIN_LOADBITMAPFILE )
 #define CHECKPNGFORMAT   4120
 #endif
 
-static int hbwin_bitmapIsSupported( HDC hDC, int iType, const void * pImgBuf, HB_SIZE nSize )
+static int hbwin_bitmapIsSupported(HDC hDC, int iType, const void * pImgBuf, HB_SIZE nSize)
 {
    if( hDC && iType != HB_WIN_BITMAP_UNKNOWN && pImgBuf && nSize >= sizeof(BITMAPCOREHEADER) )
    {
@@ -144,7 +144,7 @@ static int hbwin_bitmapIsSupported( HDC hDC, int iType, const void * pImgBuf, HB
          iRes = ExtEscape(hDC, QUERYESCSUPPORT, sizeof(iRes), reinterpret_cast<LPCSTR>(&iRes), 0, 0);
          if( iRes > 0 )
          {
-            if( ExtEscape( hDC, iType, static_cast<int>(nSize), static_cast<LPCSTR>(pImgBuf), sizeof(iRes), reinterpret_cast<LPSTR>(&iRes) ) > 0 )
+            if( ExtEscape(hDC, iType, static_cast<int>(nSize), static_cast<LPCSTR>(pImgBuf), sizeof(iRes), reinterpret_cast<LPSTR>(&iRes)) > 0 )
             {
                if( iRes == 1 )
                {
@@ -192,7 +192,7 @@ HB_FUNC( WIN_DRAWBITMAP )
    /* FIXME: No check is done on 2nd parameter which is a large security hole
              and may cause GPF in simple error cases.
              [vszakats] */
-   if( hbwin_bitmapIsSupported( hDC, iType, pbmfh, nSize ) == 0 )
+   if( hbwin_bitmapIsSupported(hDC, iType, pbmfh, nSize) == 0 )
    {
       int iWidth  = hb_parni(7);
       int iHeight = hb_parni(8);

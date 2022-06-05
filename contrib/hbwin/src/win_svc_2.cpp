@@ -144,9 +144,9 @@ HB_FUNC( WIN_SERVICEDELETE )
          {
             SERVICE_STATUS ssStatus;
 
-            if( ControlService( schSrv, SERVICE_CONTROL_STOP, &ssStatus ) )
+            if( ControlService(schSrv, SERVICE_CONTROL_STOP, &ssStatus) )
             {
-               while( ssStatus.dwCurrentState != SERVICE_STOPPED && QueryServiceStatus( schSrv, &ssStatus ) )
+               while( ssStatus.dwCurrentState != SERVICE_STOPPED && QueryServiceStatus(schSrv, &ssStatus) )
                {
                   hb_idleSleep(1.0);
                }

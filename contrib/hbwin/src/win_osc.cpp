@@ -173,7 +173,7 @@ HB_FUNC( WIN_OSVERSIONINFO )
 
    for( int pos = 0; pos < static_cast<int>(HB_SIZEOFARRAY(s_vers)); ++pos )
    {
-      if( hb_iswinver( s_vers[pos].iMajor, s_vers[pos].iMinor, 0, ( pos == 0 ) ) )
+      if( hb_iswinver(s_vers[pos].iMajor, s_vers[pos].iMinor, 0, (pos == 0)) )
       {
          iMajor = s_vers[pos].iMajor;
          iMinor = s_vers[pos].iMinor;
@@ -191,7 +191,7 @@ HB_FUNC( WIN_OSVERSIONINFO )
    {
       for( int tmp = 5; tmp > 0; --tmp )
       {
-         if( hb_iswinsp( tmp, true ) )
+         if( hb_iswinsp(tmp, true) )
          {
             char szServicePack[8];
             hb_snprintf(szServicePack, sizeof(szServicePack), "SP%u", tmp);

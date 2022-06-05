@@ -50,7 +50,7 @@
 
 #include <commdlg.h>
 
-/* win_PrintDlgDC( [@<cDevice>], [<nFromPage>], [<nToPage>], [<nCopies>] )
+/* win_PrintDlgDC([@<cDevice>], [<nFromPage>], [<nToPage>], [<nCopies>])
  *                --> <hDC>
  */
 HB_FUNC( WIN_PRINTDLGDC )
@@ -66,7 +66,7 @@ HB_FUNC( WIN_PRINTDLGDC )
    pd.nToPage = static_cast<WORD>(hb_parnidef(3, 1));
    pd.nCopies = static_cast<WORD>(hb_parnidef(4, 1));
 
-   if( PrintDlg( &pd ) )
+   if( PrintDlg(&pd) )
    {
       if( pd.hDevNames )
       {
@@ -89,7 +89,7 @@ HB_FUNC( WIN_PRINTDLGDC )
    }
 }
 
-static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
+static LPTSTR s_dialogPairs(int iParam, DWORD * pdwIndex)
 {
    PHB_ITEM pItem = hb_param(iParam, Harbour::Item::ARRAY | Harbour::Item::STRING), pArrItem;
    LPTSTR lpStr = nullptr;
@@ -218,7 +218,7 @@ static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
    return lpStr;
 }
 
-static void s_GetFileName( HB_BOOL fSave )
+static void s_GetFileName(HB_BOOL fSave)
 {
    void * hInitDir, * hTitle, * hDefExt;
    LPTSTR lpstrFilter;
@@ -254,12 +254,12 @@ static void s_GetFileName( HB_BOOL fSave )
 
    HB_ITEMCOPYSTR(hb_param(8, Harbour::Item::ANY), ofn.lpstrFile, ofn.nMaxFile);
 
-   if( fSave ? GetSaveFileName( &ofn ) : GetOpenFileName( &ofn ) )
+   if( fSave ? GetSaveFileName(&ofn) : GetOpenFileName(&ofn) )
    {
       HB_SIZE nLen;
       for( nLen = 0; nLen < ofn.nMaxFile; ++nLen )
       {
-         if( ofn.lpstrFile[nLen] == 0 && ( nLen + 1 == ofn.nMaxFile || ofn.lpstrFile[nLen + 1] == 0 ) )
+         if( ofn.lpstrFile[nLen] == 0 && (nLen + 1 == ofn.nMaxFile || ofn.lpstrFile[nLen + 1] == 0) )
          {
             break;
          }
@@ -284,8 +284,8 @@ static void s_GetFileName( HB_BOOL fSave )
    hb_strfree(hDefExt);
 }
 
-/* win_GetOpenFileName( [[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;
- *                      [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>] )
+/* win_GetOpenFileName([[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;
+ *                     [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>])
  *    --> <cFilePath> | <cPath> + e"\0" + <cFile1> [+ e"\0" + <cFileN>] | ""
  *
  */
@@ -294,8 +294,8 @@ HB_FUNC( WIN_GETOPENFILENAME )
    s_GetFileName(false);
 }
 
-/* win_GetSaveFileName( [[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;
- *                      [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>] )
+/* win_GetSaveFileName([[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;
+ *                     [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>])
  *    --> <cFilePath> | <cPath> + e"\0" + <cFile1> [+ e"\0" + <cFileN>] | ""
  *
  */
