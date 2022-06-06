@@ -686,7 +686,7 @@ HB_FUNC( EVP_VERIFYFINAL )
 
       if( ctx )
       {
-         hb_retni(EVP_VerifyFinal(ctx, static_cast<HB_SSL_CONST unsigned char*>(hb_parcx(2)), static_cast<unsigned int>(hb_parclen(2)), hb_EVP_PKEY_par(3)));
+         hb_retni(EVP_VerifyFinal(ctx, reinterpret_cast<HB_SSL_CONST unsigned char*>(hb_parcx(2)), static_cast<unsigned int>(hb_parclen(2)), hb_EVP_PKEY_par(3)));
       }
    }
    else
