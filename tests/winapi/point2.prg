@@ -1,7 +1,7 @@
 /*
  * WinApi test
  *
- * Copyright 2012 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+ * Copyright 2022 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
  *
  */
 
@@ -9,7 +9,7 @@ PROCEDURE Main()
 
    LOCAL oPoint
 
-   oPoint := WINAPI_POINT():new()
+   oPoint := WINAPI_STRUCT_POINT():new()
 
    ? "pointer=", oPoint:pointer
 
