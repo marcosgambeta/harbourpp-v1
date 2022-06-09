@@ -20,6 +20,9 @@ CPP_SOURCES := \
    winuser.cpp \
 
 PRG_SOURCES := \
+   struct_imagelistdrawparams.prg \
+   struct_initcommoncontrolsex.prg \
+   struct_msg.prg \
    struct_point.prg \
    struct_rect.prg \
    struct_size.prg \

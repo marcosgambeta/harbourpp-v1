@@ -36,37 +36,39 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WINAPI_RECT
+CLASS WINAPI_STRUCT_RECT
 
    DATA pointer
    DATA self_destruction INIT .F.
 
-   ACCESS left INLINE ::GetLeft()
-   ASSIGN left(n) INLINE ::setLeft(n)
-   ACCESS top INLINE ::GetTop()
-   ASSIGN top(n) INLINE ::setTop(n)
-   ACCESS right INLINE ::GetRight()
-   ASSIGN right(n) INLINE ::setRight(n)
-   ACCESS bottom INLINE ::GetBottom()
-   ASSIGN bottom(n) INLINE ::setBottom(n)
-
    METHOD new
    METHOD delete
 
-   METHOD setLeft
-   METHOD getLeft
-   METHOD setTop
-   METHOD getTop
-   METHOD setRight
-   METHOD getRight
-   METHOD setBottom
-   METHOD getBottom
+   ASSIGN left(n) INLINE ::setleft(n)
+   ACCESS left INLINE ::getleft()
+   METHOD setleft
+   METHOD getleft
+
+   ASSIGN top(n) INLINE ::settop(n)
+   ACCESS top INLINE ::gettop()
+   METHOD settop
+   METHOD gettop
+
+   ASSIGN right(n) INLINE ::setright(n)
+   ACCESS right INLINE ::getright()
+   METHOD setright
+   METHOD getright
+
+   ASSIGN bottom(n) INLINE ::setbottom(n)
+   ACCESS bottom INLINE ::getbottom()
+   METHOD setbottom
+   METHOD getbottom
 
    DESTRUCTOR destroyObject
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WINAPI_RECT
+PROCEDURE destroyObject() CLASS WINAPI_STRUCT_RECT
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -79,7 +81,7 @@ RETURN
 #include "hbapiitm.h"
 #include "hbapicls.h"
 
-HB_FUNC_STATIC( WINAPI_RECT_NEW )
+HB_FUNC_STATIC( WINAPI_STRUCT_RECT_NEW )
 {
   auto obj = new RECT();
   PHB_ITEM self = hb_stackSelfItem();
@@ -92,7 +94,7 @@ HB_FUNC_STATIC( WINAPI_RECT_NEW )
   hb_itemReturn( self );
 }
 
-HB_FUNC_STATIC( WINAPI_RECT_DELETE )
+HB_FUNC_STATIC( WINAPI_STRUCT_RECT_DELETE )
 {
   auto obj = static_cast<RECT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
@@ -109,7 +111,9 @@ HB_FUNC_STATIC( WINAPI_RECT_DELETE )
   hb_itemReturn( hb_stackSelfItem() );
 }
 
-HB_FUNC_STATIC( WINAPI_RECT_SETLEFT )
+// LONG left
+
+HB_FUNC_STATIC( WINAPI_STRUCT_RECT_SETLEFT )
 {
   auto obj = static_cast<RECT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
@@ -119,7 +123,7 @@ HB_FUNC_STATIC( WINAPI_RECT_SETLEFT )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_RECT_GETLEFT )
+HB_FUNC_STATIC( WINAPI_STRUCT_RECT_GETLEFT )
 {
   auto obj = static_cast<RECT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
@@ -129,7 +133,9 @@ HB_FUNC_STATIC( WINAPI_RECT_GETLEFT )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_RECT_SETTOP )
+// LONG top
+
+HB_FUNC_STATIC( WINAPI_STRUCT_RECT_SETTOP )
 {
   auto obj = static_cast<RECT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
@@ -139,7 +145,7 @@ HB_FUNC_STATIC( WINAPI_RECT_SETTOP )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_RECT_GETTOP )
+HB_FUNC_STATIC( WINAPI_STRUCT_RECT_GETTOP )
 {
   auto obj = static_cast<RECT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
@@ -149,7 +155,9 @@ HB_FUNC_STATIC( WINAPI_RECT_GETTOP )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_RECT_SETRIGHT )
+// LONG right
+
+HB_FUNC_STATIC( WINAPI_STRUCT_RECT_SETRIGHT )
 {
   auto obj = static_cast<RECT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
@@ -159,7 +167,7 @@ HB_FUNC_STATIC( WINAPI_RECT_SETRIGHT )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_RECT_GETRIGHT )
+HB_FUNC_STATIC( WINAPI_STRUCT_RECT_GETRIGHT )
 {
   auto obj = static_cast<RECT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
@@ -169,7 +177,9 @@ HB_FUNC_STATIC( WINAPI_RECT_GETRIGHT )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_RECT_SETBOTTOM )
+// LONG bottom
+
+HB_FUNC_STATIC( WINAPI_STRUCT_RECT_SETBOTTOM )
 {
   auto obj = static_cast<RECT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
@@ -179,7 +189,7 @@ HB_FUNC_STATIC( WINAPI_RECT_SETBOTTOM )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_RECT_GETBOTTOM )
+HB_FUNC_STATIC( WINAPI_STRUCT_RECT_GETBOTTOM )
 {
   auto obj = static_cast<RECT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
@@ -188,5 +198,14 @@ HB_FUNC_STATIC( WINAPI_RECT_GETBOTTOM )
     hb_retnl(obj->bottom);
   }
 }
+
+/*
+typedef struct tagRECT {
+  LONG left;
+  LONG top;
+  LONG right;
+  LONG bottom;
+} RECT, *PRECT, *NPRECT, *LPRECT;
+*/
 
 #pragma ENDDUMP

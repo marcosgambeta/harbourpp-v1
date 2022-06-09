@@ -38,6 +38,7 @@ SOFTWARE.
 #include "hbapi.h"
 #include "hbapiitm.h"
 #include "hbapicls.h"
+#include "hbwinuni.h"
 
 /*
 WINUSERAPI int WINAPI wvsprintfA(LPSTR,LPCSTR,va_list arglist)
@@ -60,7 +61,7 @@ WINUSERAPI HKL WINAPI LoadKeyboardLayoutA(LPCSTR pwszKLID,UINT Flags)
 */
 HB_FUNC( WINAPI_LOADKEYBOARDLAYOUTA )
 {
-  hb_retptr(LoadKeyboardLayoutA( ( LPCSTR ) hb_parc(1), static_cast<UINT>(hb_parni(2)) ));
+  hb_retptr(LoadKeyboardLayoutA(( LPCSTR ) hb_parc(1), static_cast<UINT>(hb_parni(2))));
 }
 
 /*
@@ -68,7 +69,7 @@ WINUSERAPI HKL WINAPI LoadKeyboardLayoutW(LPCWSTR pwszKLID,UINT Flags)
 */
 HB_FUNC( WINAPI_LOADKEYBOARDLAYOUTW )
 {
-  hb_retptr(LoadKeyboardLayoutW( ( LPCWSTR ) hb_parc(1), static_cast<UINT>(hb_parni(2)) ));
+  hb_retptr(LoadKeyboardLayoutW(( LPCWSTR ) hb_parc(1), static_cast<UINT>(hb_parni(2))));
 }
 
 /*
@@ -76,7 +77,7 @@ WINUSERAPI HKL WINAPI ActivateKeyboardLayout(HKL hkl,UINT Flags)
 */
 HB_FUNC( WINAPI_ACTIVATEKEYBOARDLAYOUT )
 {
-  hb_retptr(ActivateKeyboardLayout( static_cast<HKL>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)) ));
+  hb_retptr(ActivateKeyboardLayout(static_cast<HKL>(hb_parptr(1)), static_cast<UINT>(hb_parni(2))));
 }
 
 /*
@@ -322,38 +323,84 @@ WINUSERAPI WINBOOL WINAPI TrackMouseEvent(LPTRACKMOUSEEVENT lpEventTrack)
 /*
 WINUSERAPI WINBOOL WINAPI DrawEdge(HDC hdc,LPRECT qrc,UINT edge,UINT grfFlags)
 */
+HB_FUNC( WINAPI_DRAWEDGE )
+{
+  hb_retl(DrawEdge(static_cast<HDC>(hb_parptr(1)), static_cast<LPRECT>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0))), static_cast<UINT>(hb_parni(3)), static_cast<UINT>(hb_parni(4))));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI DrawFrameControl(HDC,LPRECT,UINT,UINT)
 */
+HB_FUNC( WINAPI_DRAWFRAMECONTROL )
+{
+  hb_retl(DrawFrameControl(static_cast<HDC>(hb_parptr(1)), static_cast<LPRECT>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0))), static_cast<UINT>(hb_parni(3)), static_cast<UINT>(hb_parni(4))));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI DrawCaption(HWND hwnd,HDC hdc,CONST RECT *lprect,UINT flags)
 */
+HB_FUNC( WINAPI_DRAWCAPTION )
+{
+  hb_retl(DrawCaption(static_cast<HWND>(hb_parptr(1)), static_cast<HDC>(hb_parptr(2)), static_cast<CONST RECT*>(hb_itemGetPtr(hb_objSendMsg(hb_param(3, Harbour::Item::OBJECT), "POINTER", 0))), static_cast<UINT>(hb_parni(4))));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI DrawAnimatedRects(HWND hwnd,int idAni,CONST RECT *lprcFrom,CONST RECT *lprcTo)
 */
+HB_FUNC( WINAPI_DRAWANIMATEDRECTS )
+{
+  hb_retl(DrawAnimatedRects(static_cast<HWND>(hb_parptr(1)), hb_parni(2), static_cast<CONST RECT*>(hb_itemGetPtr(hb_objSendMsg(hb_param(3, Harbour::Item::OBJECT), "POINTER", 0))), static_cast<CONST RECT*>(hb_itemGetPtr(hb_objSendMsg(hb_param(4, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI GetMessageA(LPMSG lpMsg,HWND hWnd,UINT wMsgFilterMin,UINT wMsgFilterMax)
 */
+HB_FUNC( WINAPI_GETMESSAGEA )
+{
+  hb_retl(GetMessageA(static_cast<LPMSG>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0))), static_cast<HWND>(hb_parptr(2)), static_cast<UINT>(hb_parni(3)), static_cast<UINT>(hb_parni(4))));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI GetMessageW(LPMSG lpMsg,HWND hWnd,UINT wMsgFilterMin,UINT wMsgFilterMax)
 */
+HB_FUNC( WINAPI_GETMESSAGEW )
+{
+  hb_retl(GetMessageW(static_cast<LPMSG>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0))), static_cast<HWND>(hb_parptr(2)), static_cast<UINT>(hb_parni(3)), static_cast<UINT>(hb_parni(4))));
+}
+
+HB_FUNC( WINAPI_GETMESSAGE )
+{
+  hb_retl(GetMessage(static_cast<LPMSG>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0))), static_cast<HWND>(hb_parptr(2)), static_cast<UINT>(hb_parni(3)), static_cast<UINT>(hb_parni(4))));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI TranslateMessage(CONST MSG *lpMsg)
 */
+HB_FUNC( WINAPI_TRANSLATEMESSAGE )
+{
+  hb_retl(TranslateMessage(static_cast<CONST MSG*>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINUSERAPI LRESULT WINAPI DispatchMessageA(CONST MSG *lpMsg)
 */
+HB_FUNC( WINAPI_DISPATCHMESSAGEA )
+{
+  hb_retnl(DispatchMessageA(static_cast<CONST MSG*>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINUSERAPI LRESULT WINAPI DispatchMessageW(CONST MSG *lpMsg)
 */
+HB_FUNC( WINAPI_DISPATCHMESSAGEW )
+{
+  hb_retnl(DispatchMessageW(static_cast<CONST MSG*>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
+
+HB_FUNC( WINAPI_DISPATCHMESSAGE )
+{
+  hb_retnl(DispatchMessage(static_cast<CONST MSG*>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI SetMessageQueue(int cMessagesMax)
@@ -366,10 +413,23 @@ HB_FUNC( WINAPI_SETMESSAGEQUEUE )
 /*
 WINUSERAPI WINBOOL WINAPI PeekMessageA(LPMSG lpMsg,HWND hWnd,UINT wMsgFilterMin,UINT wMsgFilterMax,UINT wRemoveMsg)
 */
+HB_FUNC( WINAPI_PEEKMESSAGEA )
+{
+  hb_retl(PeekMessageA(static_cast<LPMSG>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0))), static_cast<HWND>(hb_parptr(2)), static_cast<UINT>(hb_parni(3)), static_cast<UINT>(hb_parni(4)), static_cast<UINT>(hb_parni(5))));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI PeekMessageW(LPMSG lpMsg,HWND hWnd,UINT wMsgFilterMin,UINT wMsgFilterMax,UINT wRemoveMsg)
 */
+HB_FUNC( WINAPI_PEEKMESSAGEW )
+{
+  hb_retl(PeekMessageW(static_cast<LPMSG>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0))), static_cast<HWND>(hb_parptr(2)), static_cast<UINT>(hb_parni(3)), static_cast<UINT>(hb_parni(4)), static_cast<UINT>(hb_parni(5))));
+}
+
+HB_FUNC( WINAPI_PEEKMESSAGE )
+{
+  hb_retl(PeekMessage(static_cast<LPMSG>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0))), static_cast<HWND>(hb_parptr(2)), static_cast<UINT>(hb_parni(3)), static_cast<UINT>(hb_parni(4)), static_cast<UINT>(hb_parni(5))));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI RegisterHotKey(HWND hWnd,int id,UINT fsModifiers,UINT vk)
@@ -416,7 +476,7 @@ WINUSERAPI LONG WINAPI GetMessageTime(VOID)
 */
 HB_FUNC( WINAPI_GETMESSAGETIME )
 {
-  hb_retnl( ( LONG ) GetMessageTime() );
+  hb_retnl(GetMessageTime());
 }
 
 /*
@@ -424,12 +484,18 @@ WINUSERAPI LPARAM WINAPI GetMessageExtraInfo(VOID)
 */
 HB_FUNC( WINAPI_GETMESSAGEEXTRAINFO )
 {
-  hb_retnl( ( LPARAM ) GetMessageExtraInfo() );
+  hb_retnl(GetMessageExtraInfo());
 }
 
 /*
-WINUSERAPI DWORD WINAPI GetUnpredictedMessagePos (VOID)
+WINUSERAPI DWORD WINAPI GetUnpredictedMessagePos(VOID)
 */
+#if 0
+HB_FUNC( WINAPI_GETUNPREDICTEDMESSAGEPOS )
+{
+  hb_retnl(GetUnpredictedMessagePos());
+}
+#endif
 
 /*
 WINUSERAPI WINBOOL WINAPI IsWow64Message(VOID)
@@ -444,7 +510,7 @@ WINUSERAPI LPARAM WINAPI SetMessageExtraInfo(LPARAM lParam)
 */
 HB_FUNC( WINAPI_SETMESSAGEEXTRAINFO )
 {
-  hb_retnl( ( LPARAM ) SetMessageExtraInfo( ( LPARAM ) hb_parnl(1) ) );
+  hb_retnl(SetMessageExtraInfo(static_cast<LPARAM>(hb_parnl(1))));
 }
 
 /*
@@ -452,7 +518,7 @@ WINUSERAPI LRESULT WINAPI SendMessageA(HWND hWnd,UINT Msg,WPARAM wParam,LPARAM l
 */
 HB_FUNC( WINAPI_SENDMESSAGEA )
 {
-  hb_retnl( ( LRESULT ) SendMessageA( static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), ( WPARAM ) hb_parni(3), ( LPARAM ) hb_parnl(4) ) );
+  hb_retnl(SendMessageA(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), static_cast<WPARAM>(hb_parni(3)), static_cast<LPARAM>(hb_parnl(4))));
 }
 
 /*
@@ -460,7 +526,7 @@ WINUSERAPI LRESULT WINAPI SendMessageW(HWND hWnd,UINT Msg,WPARAM wParam,LPARAM l
 */
 HB_FUNC( WINAPI_SENDMESSAGEW )
 {
-  hb_retnl( ( LRESULT ) SendMessageW( static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), ( WPARAM ) hb_parni(3), ( LPARAM ) hb_parnl(4) ) );
+  hb_retnl(SendMessageW(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), static_cast<WPARAM>(hb_parni(3)), static_cast<LPARAM>(hb_parnl(4))));
 }
 
 /*
@@ -476,7 +542,7 @@ WINUSERAPI WINBOOL WINAPI SendNotifyMessageA(HWND hWnd,UINT Msg,WPARAM wParam,LP
 */
 HB_FUNC( WINAPI_SENDNOTIFYMESSAGEA )
 {
-  hb_retl(SendNotifyMessageA(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), ( WPARAM ) hb_parni(3), ( LPARAM ) hb_parnl(4)));
+  hb_retl(SendNotifyMessageA(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), static_cast<WPARAM>(hb_parni(3)), static_cast<LPARAM>(hb_parnl(4))));
 }
 
 /*
@@ -484,7 +550,7 @@ WINUSERAPI WINBOOL WINAPI SendNotifyMessageW(HWND hWnd,UINT Msg,WPARAM wParam,LP
 */
 HB_FUNC( WINAPI_SENDNOTIFYMESSAGEW )
 {
-  hb_retl(SendNotifyMessageW(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), ( WPARAM ) hb_parni(3), ( LPARAM ) hb_parnl(4)));
+  hb_retl(SendNotifyMessageW(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), static_cast<WPARAM>(hb_parni(3)), static_cast<LPARAM>(hb_parnl(4))));
 }
 
 /*
@@ -544,7 +610,7 @@ WINUSERAPI WINBOOL WINAPI PostMessageA(HWND hWnd, UINT Msg, WPARAM wParam, LPARA
 */
 HB_FUNC( WINAPI_POSTMESSAGEA )
 {
-  hb_retl(PostMessageA(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), ( WPARAM ) hb_parni(3), ( LPARAM ) hb_parnl(4)));
+  hb_retl(PostMessageA(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), static_cast<WPARAM>(hb_parni(3)), static_cast<LPARAM>(hb_parnl(4))));
 }
 
 /*
@@ -552,7 +618,7 @@ WINUSERAPI WINBOOL WINAPI PostMessageW(HWND hWnd, UINT Msg, WPARAM wParam, LPARA
 */
 HB_FUNC( WINAPI_POSTMESSAGEW )
 {
-  hb_retl(PostMessageW(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), ( WPARAM ) hb_parni(3), ( LPARAM ) hb_parnl(4)));
+  hb_retl(PostMessageW(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), static_cast<WPARAM>(hb_parni(3)), static_cast<LPARAM>(hb_parnl(4))));
 }
 
 /*
@@ -560,7 +626,7 @@ WINUSERAPI WINBOOL WINAPI PostThreadMessageA(DWORD idThread, UINT Msg, WPARAM wP
 */
 HB_FUNC( WINAPI_POSTTHREADMESSAGEA )
 {
-  hb_retl(PostThreadMessageA(static_cast<DWORD>(hb_parnl(1)), static_cast<UINT>(hb_parni(2)), ( WPARAM ) hb_parni(3), ( LPARAM ) hb_parnl(4) ));
+  hb_retl(PostThreadMessageA(static_cast<DWORD>(hb_parnl(1)), static_cast<UINT>(hb_parni(2)), static_cast<WPARAM>(hb_parni(3)), static_cast<LPARAM>(hb_parnl(4))));
 }
 
 /*
@@ -568,7 +634,7 @@ WINUSERAPI WINBOOL WINAPI PostThreadMessageW(DWORD idThread, UINT Msg, WPARAM wP
 */
 HB_FUNC( WINAPI_POSTTHREADMESSAGEW )
 {
-  hb_retl(PostThreadMessageW(static_cast<DWORD>(hb_parnl(1)), static_cast<UINT>(hb_parni(2)), ( WPARAM ) hb_parni(3), ( LPARAM ) hb_parnl(4)));
+  hb_retl(PostThreadMessageW(static_cast<DWORD>(hb_parnl(1)), static_cast<UINT>(hb_parni(2)), static_cast<WPARAM>(hb_parni(3)), static_cast<LPARAM>(hb_parnl(4))));
 }
 
 /*
@@ -608,7 +674,7 @@ WINUSERAPI LRESULT WINAPI DefWindowProcA(HWND hWnd, UINT Msg, WPARAM wParam, LPA
 */
 HB_FUNC( WINAPI_DEFWINDOWPROCA )
 {
-  hb_retnl( ( LRESULT ) DefWindowProcA( static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), ( WPARAM ) hb_parni(3), ( LPARAM ) hb_parnl(4) ) );
+  hb_retnl(DefWindowProcA(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), static_cast<WPARAM>(hb_parni(3)), static_cast<LPARAM>(hb_parnl(4))));
 }
 
 /*
@@ -616,7 +682,7 @@ WINUSERAPI LRESULT WINAPI DefWindowProcW(HWND hWnd, UINT Msg, WPARAM wParam, LPA
 */
 HB_FUNC( WINAPI_DEFWINDOWPROCW )
 {
-  hb_retnl( ( LRESULT ) DefWindowProcW( static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), ( WPARAM ) hb_parni(3), ( LPARAM ) hb_parnl(4) ) );
+  hb_retnl(DefWindowProcW(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), static_cast<WPARAM>(hb_parni(3)), static_cast<LPARAM>(hb_parnl(4))));
 }
 
 /*
@@ -728,7 +794,7 @@ WINUSERAPI HDEVNOTIFY WINAPI RegisterDeviceNotificationA(HANDLE hRecipient,LPVOI
 */
 HB_FUNC( WINAPI_REGISTERDEVICENOTIFICATIONA )
 {
-  hb_retptr(RegisterDeviceNotificationA( static_cast<HANDLE>(hb_parptr(1)), static_cast<LPVOID>(hb_parptr(2)), static_cast<DWORD>(hb_parnl(3)) ));
+  hb_retptr(RegisterDeviceNotificationA(static_cast<HANDLE>(hb_parptr(1)), static_cast<LPVOID>(hb_parptr(2)), static_cast<DWORD>(hb_parnl(3))));
 }
 
 /*
@@ -736,7 +802,7 @@ WINUSERAPI HDEVNOTIFY WINAPI RegisterDeviceNotificationW(HANDLE hRecipient,LPVOI
 */
 HB_FUNC( WINAPI_REGISTERDEVICENOTIFICATIONW )
 {
-  hb_retptr(RegisterDeviceNotificationW( static_cast<HANDLE>(hb_parptr(1)), static_cast<LPVOID>(hb_parptr(2)), static_cast<DWORD>(hb_parnl(3)) ));
+  hb_retptr(RegisterDeviceNotificationW(static_cast<HANDLE>(hb_parptr(1)), static_cast<LPVOID>(hb_parptr(2)), static_cast<DWORD>(hb_parnl(3))));
 }
 
 /*
@@ -752,7 +818,7 @@ WINUSERAPI HWND WINAPI CreateWindowExA(DWORD dwExStyle,LPCSTR lpClassName,LPCSTR
 */
 HB_FUNC( WINAPI_CREATEWINDOWEXA )
 {
-  hb_retptr(CreateWindowExA(static_cast<DWORD>(hb_parnl(1)), ( LPCSTR ) hb_parc(2), ( LPCSTR ) hb_parc(3), static_cast<DWORD>(hb_parnl(4)), hb_parni(5), hb_parni(6), hb_parni(7), hb_parni(8), static_cast<HWND>(hb_parptr(9)), static_cast<HMENU>(hb_parptr(10)), static_cast<HINSTANCE>(hb_parptr(11)), static_cast<LPVOID>(hb_parptr(12)) ));
+  hb_retptr(CreateWindowExA(static_cast<DWORD>(hb_parnl(1)), ( LPCSTR ) hb_parc(2), ( LPCSTR ) hb_parc(3), static_cast<DWORD>(hb_parnl(4)), hb_parni(5), hb_parni(6), hb_parni(7), hb_parni(8), static_cast<HWND>(hb_parptr(9)), static_cast<HMENU>(hb_parptr(10)), static_cast<HINSTANCE>(hb_parptr(11)), static_cast<LPVOID>(hb_parptr(12))));
 }
 
 /*
@@ -760,7 +826,7 @@ WINUSERAPI HWND WINAPI CreateWindowExW(DWORD dwExStyle,LPCWSTR lpClassName,LPCWS
 */
 HB_FUNC( WINAPI_CREATEWINDOWEXW )
 {
-  hb_retptr(CreateWindowExW(static_cast<DWORD>(hb_parnl(1)), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3), static_cast<DWORD>(hb_parnl(4)), hb_parni(5), hb_parni(6), hb_parni(7), hb_parni(8), static_cast<HWND>(hb_parptr(9)), static_cast<HMENU>(hb_parptr(10)), static_cast<HINSTANCE>(hb_parptr(11)), static_cast<LPVOID>(hb_parptr(12)) ));
+  hb_retptr(CreateWindowExW(static_cast<DWORD>(hb_parnl(1)), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3), static_cast<DWORD>(hb_parnl(4)), hb_parni(5), hb_parni(6), hb_parni(7), hb_parni(8), static_cast<HWND>(hb_parptr(9)), static_cast<HMENU>(hb_parptr(10)), static_cast<HINSTANCE>(hb_parptr(11)), static_cast<LPVOID>(hb_parptr(12))));
 }
 
 /*
@@ -908,11 +974,11 @@ WINUSERAPI WINBOOL WINAPI SetWindowPlacement (HWND hWnd, CONST WINDOWPLACEMENT *
 */
 
 /*
-WINUSERAPI WINBOOL WINAPI GetWindowDisplayAffinity (HWND hWnd, DWORD *pdwAffinity)
+WINUSERAPI WINBOOL WINAPI GetWindowDisplayAffinity(HWND hWnd, DWORD *pdwAffinity)
 */
 
 /*
-WINUSERAPI WINBOOL WINAPI SetWindowDisplayAffinity (HWND hWnd, DWORD dwAffinity)
+WINUSERAPI WINBOOL WINAPI SetWindowDisplayAffinity(HWND hWnd, DWORD dwAffinity)
 */
 
 /*
@@ -920,7 +986,7 @@ WINUSERAPI HDWP WINAPI BeginDeferWindowPos (int nNumWindows)
 */
 HB_FUNC( WINAPI_BEGINDEFERWINDOWPOS )
 {
-  hb_retptr(BeginDeferWindowPos( hb_parni(1) ));
+  hb_retptr(BeginDeferWindowPos(hb_parni(1)));
 }
 
 /*
@@ -928,7 +994,7 @@ WINUSERAPI HDWP WINAPI DeferWindowPos (HDWP hWinPosInfo, HWND hWnd, HWND hWndIns
 */
 HB_FUNC( WINAPI_DEFERWINDOWPOS )
 {
-  hb_retptr(DeferWindowPos( static_cast<HDWP>(hb_parptr(1)), static_cast<HWND>(hb_parptr(2)), static_cast<HWND>(hb_parptr(3)), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), static_cast<UINT>(hb_parni(8)) ));
+  hb_retptr(DeferWindowPos(static_cast<HDWP>(hb_parptr(1)), static_cast<HWND>(hb_parptr(2)), static_cast<HWND>(hb_parptr(3)), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), static_cast<UINT>(hb_parni(8))));
 }
 
 /*
@@ -1024,7 +1090,7 @@ WINUSERAPI HWND WINAPI GetDlgItem(HWND hDlg,int nIDDlgItem)
 */
 HB_FUNC( WINAPI_GETDLGITEM )
 {
-  hb_retptr(GetDlgItem( static_cast<HWND>(hb_parptr(1)), hb_parni(2) ));
+  hb_retptr(GetDlgItem(static_cast<HWND>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -1100,7 +1166,7 @@ WINUSERAPI LRESULT WINAPI SendDlgItemMessageA(HWND hDlg,int nIDDlgItem,UINT Msg,
 */
 HB_FUNC( WINAPI_SENDDLGITEMMESSAGEA )
 {
-  hb_retnl( ( LRESULT ) SendDlgItemMessageA( static_cast<HWND>(hb_parptr(1)), hb_parni(2), static_cast<UINT>(hb_parni(3)), ( WPARAM ) hb_parni(4), ( LPARAM ) hb_parnl(5) ) );
+  hb_retnl(SendDlgItemMessageA(static_cast<HWND>(hb_parptr(1)), hb_parni(2), static_cast<UINT>(hb_parni(3)), static_cast<WPARAM>(hb_parni(4)), static_cast<LPARAM>(hb_parnl(5))));
 }
 
 /*
@@ -1108,7 +1174,7 @@ WINUSERAPI LRESULT WINAPI SendDlgItemMessageW(HWND hDlg,int nIDDlgItem,UINT Msg,
 */
 HB_FUNC( WINAPI_SENDDLGITEMMESSAGEW )
 {
-  hb_retnl( ( LRESULT ) SendDlgItemMessageW( static_cast<HWND>(hb_parptr(1)), hb_parni(2), static_cast<UINT>(hb_parni(3)), ( WPARAM ) hb_parni(4), ( LPARAM ) hb_parnl(5) ) );
+  hb_retnl(SendDlgItemMessageW(static_cast<HWND>(hb_parptr(1)), hb_parni(2), static_cast<UINT>(hb_parni(3)), static_cast<WPARAM>(hb_parni(4)), static_cast<LPARAM>(hb_parnl(5))));
 }
 
 /*
@@ -1124,7 +1190,7 @@ WINUSERAPI HWND WINAPI GetNextDlgTabItem(HWND hDlg,HWND hCtl,WINBOOL bPrevious)
 */
 HB_FUNC( WINAPI_GETNEXTDLGTABITEM )
 {
-  hb_retptr(GetNextDlgTabItem( static_cast<HWND>(hb_parptr(1)), static_cast<HWND>(hb_parptr(2)), hb_parl(3)));
+  hb_retptr(GetNextDlgTabItem(static_cast<HWND>(hb_parptr(1)), static_cast<HWND>(hb_parptr(2)), hb_parl(3)));
 }
 
 /*
@@ -1132,7 +1198,7 @@ WINUSERAPI int WINAPI GetDlgCtrlID(HWND hWnd)
 */
 HB_FUNC( WINAPI_GETDLGCTRLID )
 {
-  hb_retni( GetDlgCtrlID( static_cast<HWND>(hb_parptr(1)) ) );
+  hb_retni(GetDlgCtrlID(static_cast<HWND>(hb_parptr(1))));
 }
 
 /*
@@ -1144,7 +1210,7 @@ WINUSERAPI LRESULT WINAPI DefDlgProcA(HWND hDlg,UINT Msg,WPARAM wParam,LPARAM lP
 */
 HB_FUNC( WINAPI_DEFDLGPROCA )
 {
-  hb_retnl( ( LRESULT ) DefDlgProcA( static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), ( WPARAM ) hb_parni(3), ( LPARAM ) hb_parnl(4) ) );
+  hb_retnl(DefDlgProcA(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), static_cast<WPARAM>(hb_parni(3)), static_cast<LPARAM>(hb_parnl(4))));
 }
 
 /*
@@ -1152,16 +1218,24 @@ WINUSERAPI LRESULT WINAPI DefDlgProcW(HWND hDlg,UINT Msg,WPARAM wParam,LPARAM lP
 */
 HB_FUNC( WINAPI_DEFDLGPROCW )
 {
-  hb_retnl( ( LRESULT ) DefDlgProcW( static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), ( WPARAM ) hb_parni(3), ( LPARAM ) hb_parnl(4) ) );
+  hb_retnl(DefDlgProcW(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), static_cast<WPARAM>(hb_parni(3)), static_cast<LPARAM>(hb_parnl(4))));
 }
 
 /*
 WINUSERAPI WINBOOL WINAPI CallMsgFilterA(LPMSG lpMsg,int nCode)
 */
+HB_FUNC( WINAPI_CALLMSGFILTERA )
+{
+  hb_retl(CallMsgFilterA(static_cast<LPMSG>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0))), hb_parni(2)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI CallMsgFilterW(LPMSG lpMsg,int nCode)
 */
+HB_FUNC( WINAPI_CALLMSGFILTERW )
+{
+  hb_retl(CallMsgFilterW(static_cast<LPMSG>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0))), hb_parni(2)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI OpenClipboard(HWND hWndNewOwner)
@@ -1200,7 +1274,7 @@ WINUSERAPI HWND WINAPI SetClipboardViewer(HWND hWndNewViewer)
 */
 HB_FUNC( WINAPI_SETCLIPBOARDVIEWER )
 {
-  hb_retptr(SetClipboardViewer( static_cast<HWND>(hb_parptr(1)) ));
+  hb_retptr(SetClipboardViewer(static_cast<HWND>(hb_parptr(1))));
 }
 
 /*
@@ -1224,7 +1298,7 @@ WINUSERAPI HANDLE WINAPI SetClipboardData(UINT uFormat, HANDLE hMem)
 */
 HB_FUNC( WINAPI_SETCLIPBOARDDATA )
 {
-  hb_retptr(SetClipboardData( static_cast<UINT>(hb_parni(1)), static_cast<HANDLE>(hb_parptr(2)) ));
+  hb_retptr(SetClipboardData(static_cast<UINT>(hb_parni(1)), static_cast<HANDLE>(hb_parptr(2))));
 }
 
 /*
@@ -1232,7 +1306,7 @@ WINUSERAPI HANDLE WINAPI GetClipboardData(UINT uFormat)
 */
 HB_FUNC( WINAPI_GETCLIPBOARDDATA )
 {
-  hb_retptr(GetClipboardData( static_cast<UINT>(hb_parni(1)) ));
+  hb_retptr(GetClipboardData(static_cast<UINT>(hb_parni(1))));
 }
 
 /*
@@ -1248,7 +1322,7 @@ WINUSERAPI UINT WINAPI RegisterClipboardFormatW(LPCWSTR lpszFormat)
 */
 HB_FUNC( WINAPI_REGISTERCLIPBOARDFORMATW )
 {
-  hb_retni(RegisterClipboardFormatW(( LPCWSTR ) hb_parc(1) ));
+  hb_retni(RegisterClipboardFormatW(( LPCWSTR ) hb_parc(1)));
 }
 
 /*
@@ -1264,7 +1338,7 @@ WINUSERAPI UINT WINAPI EnumClipboardFormats(UINT format)
 */
 HB_FUNC( WINAPI_ENUMCLIPBOARDFORMATS )
 {
-  hb_retni(EnumClipboardFormats( static_cast<UINT>(hb_parni(1)) ));
+  hb_retni(EnumClipboardFormats(static_cast<UINT>(hb_parni(1))));
 }
 
 /*
@@ -1272,7 +1346,7 @@ WINUSERAPI int WINAPI GetClipboardFormatNameA(UINT format, LPSTR lpszFormatName,
 */
 HB_FUNC( WINAPI_GETCLIPBOARDFORMATNAMEA )
 {
-  hb_retni( GetClipboardFormatNameA( static_cast<UINT>(hb_parni(1)), ( LPSTR ) hb_parc(2), hb_parni(3) ) );
+  hb_retni(GetClipboardFormatNameA(static_cast<UINT>(hb_parni(1)), ( LPSTR ) hb_parc(2), hb_parni(3)));
 }
 
 /*
@@ -1280,7 +1354,7 @@ WINUSERAPI int WINAPI GetClipboardFormatNameW(UINT format, LPWSTR lpszFormatName
 */
 HB_FUNC( WINAPI_GETCLIPBOARDFORMATNAMEW )
 {
-  hb_retni( GetClipboardFormatNameW( static_cast<UINT>(hb_parni(1)), ( LPWSTR ) hb_parc(2), hb_parni(3) ) );
+  hb_retni(GetClipboardFormatNameW(static_cast<UINT>(hb_parni(1)), ( LPWSTR ) hb_parc(2), hb_parni(3)));
 }
 
 /*
@@ -1392,7 +1466,7 @@ WINUSERAPI LPSTR WINAPI CharUpperA(LPSTR lpsz)
 */
 HB_FUNC( WINAPI_CHARUPPERA )
 {
-  hb_retc( ( LPSTR ) CharUpperA( ( LPSTR ) hb_parc(1) ) );
+  hb_retc(( LPSTR ) CharUpperA(( LPSTR ) hb_parc(1)));
 }
 
 /*
@@ -1404,7 +1478,7 @@ WINUSERAPI DWORD WINAPI CharUpperBuffA(LPSTR lpsz,DWORD cchLength)
 */
 HB_FUNC( WINAPI_CHARUPPERBUFFA )
 {
-  hb_retnl(CharUpperBuffA( ( LPSTR ) hb_parc(1), ( DWORD ) hb_parnl(2) ));
+  hb_retnl(CharUpperBuffA(( LPSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2))));
 }
 
 /*
@@ -1412,7 +1486,7 @@ WINUSERAPI DWORD WINAPI CharUpperBuffW(LPWSTR lpsz,DWORD cchLength)
 */
 HB_FUNC( WINAPI_CHARUPPERBUFFW )
 {
-  hb_retnl(CharUpperBuffW( ( LPWSTR ) hb_parc(1), ( DWORD ) hb_parnl(2) ));
+  hb_retnl(CharUpperBuffW(( LPWSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2))));
 }
 
 /*
@@ -1420,7 +1494,7 @@ WINUSERAPI LPSTR WINAPI CharLowerA(LPSTR lpsz)
 */
 HB_FUNC( WINAPI_CHARLOWERA )
 {
-  hb_retc( ( LPSTR ) CharLowerA( ( LPSTR ) hb_parc(1) ) );
+  hb_retc(( LPSTR ) CharLowerA(( LPSTR ) hb_parc(1)));
 }
 
 /*
@@ -1432,7 +1506,7 @@ WINUSERAPI DWORD WINAPI CharLowerBuffA(LPSTR lpsz,DWORD cchLength)
 */
 HB_FUNC( WINAPI_CHARLOWERBUFFA )
 {
-  hb_retnl(CharLowerBuffA( ( LPSTR ) hb_parc(1), ( DWORD ) hb_parnl(2) ));
+  hb_retnl(CharLowerBuffA(( LPSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2))));
 }
 
 /*
@@ -1440,7 +1514,7 @@ WINUSERAPI DWORD WINAPI CharLowerBuffW(LPWSTR lpsz,DWORD cchLength)
 */
 HB_FUNC( WINAPI_CHARLOWERBUFFW )
 {
-  hb_retnl(CharLowerBuffW( ( LPWSTR ) hb_parc(1), ( DWORD ) hb_parnl(2) ));
+  hb_retnl(CharLowerBuffW(( LPWSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2))));
 }
 
 /*
@@ -1448,31 +1522,43 @@ WINUSERAPI LPSTR WINAPI CharNextA(LPCSTR lpsz)
 */
 HB_FUNC( WINAPI_CHARNEXTA )
 {
-  hb_retc( ( LPSTR ) CharNextA( ( LPCSTR ) hb_parc(1) ) );
+  hb_retc(( LPSTR ) CharNextA(( LPCSTR ) hb_parc(1)));
 }
 
 /*
 WINUSERAPI LPWSTR WINAPI CharNextW(LPCWSTR lpsz)
 */
+#if 0
+HB_FUNC( WINAPI_CHARNEXTW )
+{
+  hb_retc(( LPWSTR ) CharNextW(( LPCWSTR ) hb_parc(1))); // TODO: fix
+}
+#endif
 
 /*
 WINUSERAPI LPSTR WINAPI CharPrevA(LPCSTR lpszStart,LPCSTR lpszCurrent)
 */
 HB_FUNC( WINAPI_CHARPREVA )
 {
-  hb_retc( ( LPSTR ) CharPrevA( ( LPCSTR ) hb_parc(1), ( LPCSTR ) hb_parc(2) ) );
+  hb_retc(( LPSTR ) CharPrevA(( LPCSTR ) hb_parc(1), ( LPCSTR ) hb_parc(2)));
 }
 
 /*
 WINUSERAPI LPWSTR WINAPI CharPrevW(LPCWSTR lpszStart,LPCWSTR lpszCurrent)
 */
+#if 0
+HB_FUNC( WINAPI_CHARPREVW )
+{
+  hb_retc(( LPWSTR ) CharPrevW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2))); // TODO: fix
+}
+#endif
 
 /*
 WINUSERAPI LPSTR WINAPI CharNextExA(WORD CodePage,LPCSTR lpCurrentChar,DWORD dwFlags)
 */
 HB_FUNC( WINAPI_CHARNEXTEXA )
 {
-  hb_retc( ( LPSTR ) CharNextExA( ( WORD ) hb_parni(1), ( LPCSTR ) hb_parc(2), static_cast<DWORD>(hb_parnl(3)) ) );
+  hb_retc(( LPSTR ) CharNextExA(static_cast<WORD>(hb_parni(1)), ( LPCSTR ) hb_parc(2), static_cast<DWORD>(hb_parnl(3))));
 }
 
 /*
@@ -1480,7 +1566,7 @@ WINUSERAPI LPSTR WINAPI CharPrevExA(WORD CodePage,LPCSTR lpStart,LPCSTR lpCurren
 */
 HB_FUNC( WINAPI_CHARPREVEXA )
 {
-  hb_retc( ( LPSTR ) CharPrevExA( ( WORD ) hb_parni(1), ( LPCSTR ) hb_parc(2), ( LPCSTR ) hb_parc(3), static_cast<DWORD>(hb_parnl(4)) ) );
+  hb_retc(( LPSTR ) CharPrevExA(static_cast<WORD>(hb_parni(1)), ( LPCSTR ) hb_parc(2), ( LPCSTR ) hb_parc(3), static_cast<DWORD>(hb_parnl(4))));
 }
 
 /*
@@ -1494,6 +1580,10 @@ HB_FUNC( WINAPI_ISCHARALPHAA )
 /*
 WINUSERAPI WINBOOL WINAPI IsCharAlphaW(WCHAR ch)
 */
+HB_FUNC( WINAPI_ISCHARALPHAW )
+{
+  hb_retl(IsCharAlphaW(( WCHAR ) hb_parni(1)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI IsCharAlphaNumericA(CHAR ch)
@@ -1506,6 +1596,10 @@ HB_FUNC( WINAPI_ISCHARALPHANUMERICA )
 /*
 WINUSERAPI WINBOOL WINAPI IsCharAlphaNumericW(WCHAR ch)
 */
+HB_FUNC( WINAPI_ISCHARALPHANUMERICW )
+{
+  hb_retl(IsCharAlphaNumericW(( WCHAR ) hb_parni(1)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI IsCharUpperA(CHAR ch)
@@ -1518,6 +1612,10 @@ HB_FUNC( WINAPI_ISCHARUPPERA )
 /*
 WINUSERAPI WINBOOL WINAPI IsCharUpperW(WCHAR ch)
 */
+HB_FUNC( WINAPI_ISCHARUPPERW )
+{
+  hb_retl(IsCharUpperW(( WCHAR ) hb_parni(1)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI IsCharLowerA(CHAR ch)
@@ -1530,13 +1628,17 @@ HB_FUNC( WINAPI_ISCHARLOWERA )
 /*
 WINUSERAPI WINBOOL WINAPI IsCharLowerW(WCHAR ch)
 */
+HB_FUNC( WINAPI_ISCHARLOWERW )
+{
+  hb_retl(IsCharLowerW(( WCHAR ) hb_parni(1)));
+}
 
 /*
 WINUSERAPI HWND WINAPI SetFocus(HWND hWnd)
 */
 HB_FUNC( WINAPI_SETFOCUS )
 {
-  hb_retptr(SetFocus( static_cast<HWND>(hb_parptr(1)) ));
+  hb_retptr(SetFocus(static_cast<HWND>(hb_parptr(1))));
 }
 
 /*
@@ -1568,7 +1670,7 @@ WINUSERAPI SHORT WINAPI GetKeyState(int nVirtKey)
 */
 HB_FUNC( WINAPI_GETKEYSTATE )
 {
-  hb_retni( ( SHORT ) GetKeyState( hb_parni(1) ) );
+  hb_retni(GetKeyState(hb_parni(1)));
 }
 
 /*
@@ -1576,7 +1678,7 @@ WINUSERAPI SHORT WINAPI GetAsyncKeyState(int vKey)
 */
 HB_FUNC( WINAPI_GETASYNCKEYSTATE )
 {
-  hb_retni( ( SHORT ) GetAsyncKeyState( hb_parni(1) ) );
+  hb_retni(GetAsyncKeyState(hb_parni(1)));
 }
 
 /*
@@ -1592,7 +1694,7 @@ WINUSERAPI int WINAPI GetKeyNameTextA(LONG lParam,LPSTR lpString,int cchSize)
 */
 HB_FUNC( WINAPI_GETKEYNAMETEXTA )
 {
-  hb_retni( GetKeyNameTextA( ( LONG ) hb_parnl(1), ( LPSTR ) hb_parc(2), hb_parni(3) ) );
+  hb_retni(GetKeyNameTextA(hb_parnl(1), ( LPSTR ) hb_parc(2), hb_parni(3)));
 }
 
 /*
@@ -1600,7 +1702,7 @@ WINUSERAPI int WINAPI GetKeyNameTextW(LONG lParam,LPWSTR lpString,int cchSize)
 */
 HB_FUNC( WINAPI_GETKEYNAMETEXTW )
 {
-  hb_retni( GetKeyNameTextW( ( LONG ) hb_parnl(1), ( LPWSTR ) hb_parc(2), hb_parni(3) ) );
+  hb_retni(GetKeyNameTextW(hb_parnl(1), ( LPWSTR ) hb_parc(2), hb_parni(3)));
 }
 
 /*
@@ -1608,7 +1710,7 @@ WINUSERAPI int WINAPI GetKeyboardType(int nTypeFlag)
 */
 HB_FUNC( WINAPI_GETKEYBOARDTYPE )
 {
-  hb_retni( GetKeyboardType( hb_parni(1) ) );
+  hb_retni(GetKeyboardType(hb_parni(1)));
 }
 
 /*
@@ -1628,7 +1730,7 @@ WINUSERAPI DWORD WINAPI OemKeyScan(WORD wOemChar)
 */
 HB_FUNC( WINAPI_OEMKEYSCAN )
 {
-  hb_retnl(OemKeyScan( ( WORD ) hb_parni(1) ));
+  hb_retnl(OemKeyScan(static_cast<WORD>(hb_parni(1))));
 }
 
 /*
@@ -1636,7 +1738,7 @@ WINUSERAPI SHORT WINAPI VkKeyScanA(CHAR ch)
 */
 HB_FUNC( WINAPI_VKKEYSCANA )
 {
-  hb_retni( ( SHORT ) VkKeyScanA( ( CHAR ) hb_parni(1) ) );
+  hb_retni(VkKeyScanA(( CHAR ) hb_parni(1)));
 }
 
 /*
@@ -1648,7 +1750,7 @@ WINUSERAPI SHORT WINAPI VkKeyScanExA(CHAR ch,HKL dwhkl)
 */
 HB_FUNC( WINAPI_VKKEYSCANEXA )
 {
-  hb_retni( ( SHORT ) VkKeyScanExA( ( CHAR ) hb_parni(1), static_cast<HKL>(hb_parptr(2)) ) );
+  hb_retni(VkKeyScanExA(( CHAR ) hb_parni(1), static_cast<HKL>(hb_parptr(2))));
 }
 
 /*
@@ -1660,7 +1762,7 @@ WINUSERAPI VOID WINAPI keybd_event(BYTE bVk,BYTE bScan,DWORD dwFlags,ULONG_PTR d
 */
 HB_FUNC( WINAPI_KEYBD_EVENT )
 {
-  keybd_event( ( BYTE ) hb_parni(1), ( BYTE ) hb_parni(2), static_cast<DWORD>(hb_parnl(3)), ( ULONG_PTR ) hb_parnl(4) );
+  keybd_event(( BYTE ) hb_parni(1), ( BYTE ) hb_parni(2), static_cast<DWORD>(hb_parnl(3)), ( ULONG_PTR ) hb_parnl(4));
 }
 
 /*
@@ -1860,7 +1962,7 @@ WINUSERAPI HWND WINAPI SetCapture(HWND hWnd)
 */
 HB_FUNC( WINAPI_SETCAPTURE )
 {
-  hb_retptr(SetCapture( static_cast<HWND>(hb_parptr(1)) ));
+  hb_retptr(SetCapture(static_cast<HWND>(hb_parptr(1))));
 }
 
 /*
@@ -1918,10 +2020,18 @@ HB_FUNC( WINAPI_ISWINDOWENABLED )
 /*
 WINUSERAPI HACCEL WINAPI LoadAcceleratorsA(HINSTANCE hInstance,LPCSTR lpTableName)
 */
+HB_FUNC( WINAPI_LOADACCELERATORSA )
+{
+  hb_retptr(LoadAcceleratorsA(static_cast<HINSTANCE>(hb_parptr(1)), ( LPCSTR ) hb_parc(2)));
+}
 
 /*
 WINUSERAPI HACCEL WINAPI LoadAcceleratorsW(HINSTANCE hInstance,LPCWSTR lpTableName)
 */
+HB_FUNC( WINAPI_LOADACCELERATORSW )
+{
+  hb_retptr(LoadAcceleratorsW(static_cast<HINSTANCE>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2)));
+}
 
 /*
 WINUSERAPI HACCEL WINAPI CreateAcceleratorTableA(LPACCEL paccel,int cAccel)
@@ -1934,6 +2044,10 @@ WINUSERAPI HACCEL WINAPI CreateAcceleratorTableW(LPACCEL paccel,int cAccel)
 /*
 WINUSERAPI WINBOOL WINAPI DestroyAcceleratorTable(HACCEL hAccel)
 */
+HB_FUNC( WINAPI_DESTROYACCELERATORTABLE )
+{
+  hb_retl(DestroyAcceleratorTable(static_cast<HACCEL>(hb_parptr(1))));
+}
 
 /*
 WINUSERAPI int WINAPI CopyAcceleratorTableA(HACCEL hAccelSrc,LPACCEL lpAccelDst,int cAccelEntries)
@@ -1946,10 +2060,18 @@ WINUSERAPI int WINAPI CopyAcceleratorTableW(HACCEL hAccelSrc,LPACCEL lpAccelDst,
 /*
 WINUSERAPI int WINAPI TranslateAcceleratorA(HWND hWnd,HACCEL hAccTable,LPMSG lpMsg)
 */
+HB_FUNC( WINAPI_TRANSLATEACCELERATORA )
+{
+  hb_retni(TranslateAcceleratorA(static_cast<HWND>(hb_parptr(1)), static_cast<HACCEL>(hb_parptr(2)), static_cast<LPMSG>(hb_itemGetPtr(hb_objSendMsg(hb_param(3, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINUSERAPI int WINAPI TranslateAcceleratorW(HWND hWnd,HACCEL hAccTable,LPMSG lpMsg)
 */
+HB_FUNC( WINAPI_TRANSLATEACCELERATORW )
+{
+  hb_retni(TranslateAcceleratorW(static_cast<HWND>(hb_parptr(1)), static_cast<HACCEL>(hb_parptr(2)), static_cast<LPMSG>(hb_itemGetPtr(hb_objSendMsg(hb_param(3, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINUSERAPI UINT_PTR WINAPI SetCoalescableTimer (HWND hWnd, UINT_PTR nIDEvent, UINT uElapse, TIMERPROC lpTimerFunc, ULONG uToleranceDelay)
@@ -1960,7 +2082,7 @@ WINUSERAPI HMENU WINAPI LoadMenuA(HINSTANCE hInstance,LPCSTR lpMenuName)
 */
 HB_FUNC( WINAPI_LOADMENUA )
 {
-  hb_retptr(LoadMenuA( static_cast<HINSTANCE>(hb_parptr(1)), ( LPCSTR ) hb_parc(2) ));
+  hb_retptr(LoadMenuA(static_cast<HINSTANCE>(hb_parptr(1)), ( LPCSTR ) hb_parc(2)));
 }
 
 /*
@@ -1968,7 +2090,7 @@ WINUSERAPI HMENU WINAPI LoadMenuW(HINSTANCE hInstance,LPCWSTR lpMenuName)
 */
 HB_FUNC( WINAPI_LOADMENUW )
 {
-  hb_retptr(LoadMenuW( static_cast<HINSTANCE>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2) ));
+  hb_retptr(LoadMenuW(static_cast<HINSTANCE>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2)));
 }
 
 /*
@@ -1984,7 +2106,7 @@ WINUSERAPI HMENU WINAPI GetMenu(HWND hWnd)
 */
 HB_FUNC( WINAPI_GETMENU )
 {
-  hb_retptr(GetMenu( static_cast<HWND>(hb_parptr(1)) ));
+  hb_retptr(GetMenu(static_cast<HWND>(hb_parptr(1))));
 }
 
 /*
@@ -2016,7 +2138,7 @@ WINUSERAPI WINBOOL WINAPI HiliteMenuItem(HWND hWnd,HMENU hMenu,UINT uIDHiliteIte
 */
 HB_FUNC( WINAPI_HILITEMENUITEM )
 {
-  hb_retl(HiliteMenuItem( static_cast<HWND>(hb_parptr(1)), static_cast<HMENU>(hb_parptr(2)), static_cast<UINT>(hb_parni(3)), static_cast<UINT>(hb_parni(4))));
+  hb_retl(HiliteMenuItem(static_cast<HWND>(hb_parptr(1)), static_cast<HMENU>(hb_parptr(2)), static_cast<UINT>(hb_parni(3)), static_cast<UINT>(hb_parni(4))));
 }
 
 /*
@@ -2056,7 +2178,7 @@ WINUSERAPI HMENU WINAPI GetSystemMenu(HWND hWnd,WINBOOL bRevert)
 */
 HB_FUNC( WINAPI_GETSYSTEMMENU )
 {
-  hb_retptr(GetSystemMenu( static_cast<HWND>(hb_parptr(1)), hb_parl(2) ));
+  hb_retptr(GetSystemMenu(static_cast<HWND>(hb_parptr(1)), hb_parl(2)));
 }
 
 /*
@@ -2120,7 +2242,7 @@ WINUSERAPI int WINAPI GetMenuItemCount(HMENU hMenu)
 */
 HB_FUNC( WINAPI_GETMENUITEMCOUNT )
 {
-  hb_retni( GetMenuItemCount( static_cast<HMENU>(hb_parptr(1)) ) );
+  hb_retni(GetMenuItemCount(static_cast<HMENU>(hb_parptr(1))));
 }
 
 /*
@@ -2200,12 +2322,16 @@ WINUSERAPI LONG WINAPI GetMenuCheckMarkDimensions(VOID)
 */
 HB_FUNC( WINAPI_GETMENUCHECKMARKDIMENSIONS )
 {
-  hb_retnl( ( LONG ) GetMenuCheckMarkDimensions() );
+  hb_retnl(GetMenuCheckMarkDimensions());
 }
 
 /*
 WINUSERAPI WINBOOL WINAPI TrackPopupMenu(HMENU hMenu,UINT uFlags,int x,int y,int nReserved,HWND hWnd,CONST RECT *prcRect)
 */
+HB_FUNC( WINAPI_TRACKPOPUPMENU )
+{
+  hb_retl(TrackPopupMenu(static_cast<HMENU>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<HWND>(hb_parptr(6)), static_cast<CONST RECT*>(hb_itemGetPtr(hb_objSendMsg(hb_param(7, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI TrackPopupMenuEx(HMENU,UINT,int,int,HWND,LPTPMPARAMS)
@@ -2228,8 +2354,14 @@ HB_FUNC( WINAPI_ENDMENU )
 }
 
 /*
-WINUSERAPI WINBOOL WINAPI CalculatePopupWindowPosition (const POINT *anchorPoint, const SIZE *windowSize, UINT flags, RECT *excludeRect, RECT *popupWindowPosition)
+WINUSERAPI WINBOOL WINAPI CalculatePopupWindowPosition(const POINT *anchorPoint, const SIZE *windowSize, UINT flags, RECT *excludeRect, RECT *popupWindowPosition)
 */
+#if 0
+HB_FUNC( WINAPI_CALCULATEPOPUPWINDOWPOSITION )
+{
+  hb_retl(CalculatePopupWindowPosition(static_cast<CONST POINT*>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0))), static_cast<CONST SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0))), static_cast<UINT>(hb_parni(3)), static_cast<RECT*>(hb_itemGetPtr(hb_objSendMsg(hb_param(4, Harbour::Item::OBJECT), "POINTER", 0))), static_cast<RECT*>(hb_itemGetPtr(hb_objSendMsg(hb_param(5, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
+#endif
 
 /*
 WINUSERAPI WINBOOL WINAPI InsertMenuItemA(HMENU hmenu,UINT item,WINBOOL fByPosition,LPCMENUITEMINFOA lpmi)
@@ -2274,10 +2406,20 @@ HB_FUNC( WINAPI_SETMENUDEFAULTITEM )
 /*
 WINUSERAPI WINBOOL WINAPI GetMenuItemRect(HWND hWnd,HMENU hMenu,UINT uItem,LPRECT lprcItem)
 */
+HB_FUNC( WINAPI_GETMENUITEMRECT )
+{
+  hb_retl(GetMenuItemRect(static_cast<HWND>(hb_parptr(1)), static_cast<HMENU>(hb_parptr(2)), static_cast<UINT>(hb_parni(3)), static_cast<LPRECT>(hb_itemGetPtr(hb_objSendMsg(hb_param(4, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINUSERAPI int WINAPI MenuItemFromPoint(HWND hWnd,HMENU hMenu,POINT ptScreen)
 */
+#if 0
+HB_FUNC( WINAPI_MENUITEMFROMPOINT )
+{
+  hb_retni(MenuItemFromPoint(static_cast<HWND>(hb_parptr(1)), static_cast<HMENU>(hb_parptr(2)), static_cast<POINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(3, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
+#endif
 
 /*
 WINUSERAPI DWORD WINAPI DragObject(HWND hwndParent,HWND hwndFrom,UINT fmt,ULONG_PTR data,HCURSOR hcur)
@@ -2360,7 +2502,7 @@ WINUSERAPI HWND WINAPI SetActiveWindow(HWND hWnd)
 */
 HB_FUNC( WINAPI_SETACTIVEWINDOW )
 {
-  hb_retptr(SetActiveWindow( static_cast<HWND>(hb_parptr(1)) ));
+  hb_retptr(SetActiveWindow(static_cast<HWND>(hb_parptr(1))));
 }
 
 /*
@@ -2416,7 +2558,7 @@ WINUSERAPI HWND WINAPI WindowFromDC(HDC hDC)
 */
 HB_FUNC( WINAPI_WINDOWFROMDC )
 {
-  hb_retptr(WindowFromDC( static_cast<HDC>(hb_parptr(1)) ));
+  hb_retptr(WindowFromDC(static_cast<HDC>(hb_parptr(1))));
 }
 
 /*
@@ -2424,7 +2566,7 @@ WINUSERAPI HDC WINAPI GetDC(HWND hWnd)
 */
 HB_FUNC( WINAPI_GETDC )
 {
-  hb_retptr(GetDC( static_cast<HWND>(hb_parptr(1)) ));
+  hb_retptr(GetDC(static_cast<HWND>(hb_parptr(1))));
 }
 
 /*
@@ -2432,7 +2574,7 @@ WINUSERAPI HDC WINAPI GetDCEx(HWND hWnd,HRGN hrgnClip,DWORD flags)
 */
 HB_FUNC( WINAPI_GETDCEX )
 {
-  hb_retptr(GetDCEx( static_cast<HWND>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)), static_cast<DWORD>(hb_parnl(3)) ));
+  hb_retptr(GetDCEx(static_cast<HWND>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)), static_cast<DWORD>(hb_parnl(3))));
 }
 
 /*
@@ -2440,7 +2582,7 @@ WINUSERAPI HDC WINAPI GetWindowDC(HWND hWnd)
 */
 HB_FUNC( WINAPI_GETWINDOWDC )
 {
-  hb_retptr(GetWindowDC( static_cast<HWND>(hb_parptr(1)) ));
+  hb_retptr(GetWindowDC(static_cast<HWND>(hb_parptr(1))));
 }
 
 /*
@@ -2448,7 +2590,7 @@ WINUSERAPI int WINAPI ReleaseDC(HWND hWnd,HDC hDC)
 */
 HB_FUNC( WINAPI_RELEASEDC )
 {
-  hb_retni( ReleaseDC( static_cast<HWND>(hb_parptr(1)), static_cast<HDC>(hb_parptr(2)) ) );
+  hb_retni(ReleaseDC(static_cast<HWND>(hb_parptr(1)), static_cast<HDC>(hb_parptr(2))));
 }
 
 /*
@@ -2484,7 +2626,7 @@ WINUSERAPI int WINAPI GetWindowRgn(HWND hWnd,HRGN hRgn)
 */
 HB_FUNC( WINAPI_GETWINDOWRGN )
 {
-  hb_retni( GetWindowRgn( static_cast<HWND>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2)) ) );
+  hb_retni(GetWindowRgn(static_cast<HWND>(hb_parptr(1)), static_cast<HRGN>(hb_parptr(2))));
 }
 
 /*
@@ -2496,7 +2638,7 @@ WINUSERAPI int WINAPI ExcludeUpdateRgn(HDC hDC,HWND hWnd)
 */
 HB_FUNC( WINAPI_EXCLUDEUPDATERGN )
 {
-  hb_retni( ExcludeUpdateRgn( static_cast<HDC>(hb_parptr(1)), static_cast<HWND>(hb_parptr(2)) ) );
+  hb_retni(ExcludeUpdateRgn(static_cast<HDC>(hb_parptr(1)), static_cast<HWND>(hb_parptr(2))));
 }
 
 /*
@@ -2560,7 +2702,7 @@ WINUSERAPI int WINAPI GetScrollPos(HWND hWnd,int nBar)
 */
 HB_FUNC( WINAPI_GETSCROLLPOS )
 {
-  hb_retni( GetScrollPos( static_cast<HWND>(hb_parptr(1)), hb_parni(2) ) );
+  hb_retni(GetScrollPos(static_cast<HWND>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -2612,7 +2754,7 @@ WINUSERAPI HANDLE WINAPI GetPropA(HWND hWnd,LPCSTR lpString)
 */
 HB_FUNC( WINAPI_GETPROPA )
 {
-  hb_retptr(GetPropA( static_cast<HWND>(hb_parptr(1)), ( LPCSTR ) hb_parc(2) ));
+  hb_retptr(GetPropA(static_cast<HWND>(hb_parptr(1)), ( LPCSTR ) hb_parc(2)));
 }
 
 /*
@@ -2620,7 +2762,7 @@ WINUSERAPI HANDLE WINAPI GetPropW(HWND hWnd,LPCWSTR lpString)
 */
 HB_FUNC( WINAPI_GETPROPW )
 {
-  hb_retptr(GetPropW( static_cast<HWND>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2) ));
+  hb_retptr(GetPropW(static_cast<HWND>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2)));
 }
 
 /*
@@ -2628,7 +2770,7 @@ WINUSERAPI HANDLE WINAPI RemovePropA(HWND hWnd,LPCSTR lpString)
 */
 HB_FUNC( WINAPI_REMOVEPROPA )
 {
-  hb_retptr(RemovePropA( static_cast<HWND>(hb_parptr(1)), ( LPCSTR ) hb_parc(2) ));
+  hb_retptr(RemovePropA(static_cast<HWND>(hb_parptr(1)), ( LPCSTR ) hb_parc(2)));
 }
 
 /*
@@ -2636,7 +2778,7 @@ WINUSERAPI HANDLE WINAPI RemovePropW(HWND hWnd,LPCWSTR lpString)
 */
 HB_FUNC( WINAPI_REMOVEPROPW )
 {
-  hb_retptr(RemovePropW( static_cast<HWND>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2) ));
+  hb_retptr(RemovePropW(static_cast<HWND>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2)));
 }
 
 /*
@@ -2676,7 +2818,7 @@ WINUSERAPI int WINAPI GetWindowTextA(HWND hWnd,LPSTR lpString,int nMaxCount)
 */
 HB_FUNC( WINAPI_GETWINDOWTEXTA )
 {
-  hb_retni( GetWindowTextA( static_cast<HWND>(hb_parptr(1)), ( LPSTR ) hb_parc(2), hb_parni(3) ) );
+  hb_retni(GetWindowTextA(static_cast<HWND>(hb_parptr(1)), ( LPSTR ) hb_parc(2), hb_parni(3)));
 }
 
 /*
@@ -2684,7 +2826,7 @@ WINUSERAPI int WINAPI GetWindowTextW(HWND hWnd,LPWSTR lpString,int nMaxCount)
 */
 HB_FUNC( WINAPI_GETWINDOWTEXTW )
 {
-  hb_retni( GetWindowTextW( static_cast<HWND>(hb_parptr(1)), ( LPWSTR ) hb_parc(2), hb_parni(3) ) );
+  hb_retni(GetWindowTextW(static_cast<HWND>(hb_parptr(1)), ( LPWSTR ) hb_parc(2), hb_parni(3)));
 }
 
 /*
@@ -2692,7 +2834,7 @@ WINUSERAPI int WINAPI GetWindowTextLengthA(HWND hWnd)
 */
 HB_FUNC( WINAPI_GETWINDOWTEXTLENGTHA )
 {
-  hb_retni( GetWindowTextLengthA( static_cast<HWND>(hb_parptr(1)) ) );
+  hb_retni(GetWindowTextLengthA(static_cast<HWND>(hb_parptr(1))));
 }
 
 /*
@@ -2700,7 +2842,7 @@ WINUSERAPI int WINAPI GetWindowTextLengthW(HWND hWnd)
 */
 HB_FUNC( WINAPI_GETWINDOWTEXTLENGTHW )
 {
-  hb_retni( GetWindowTextLengthW( static_cast<HWND>(hb_parptr(1)) ) );
+  hb_retni(GetWindowTextLengthW(static_cast<HWND>(hb_parptr(1))));
 }
 
 /*
@@ -2732,7 +2874,7 @@ WINUSERAPI DWORD WINAPI GetWindowContextHelpId(HWND)
 */
 HB_FUNC( WINAPI_GETWINDOWCONTEXTHELPID )
 {
-  hb_retnl(GetWindowContextHelpId( static_cast<HWND>(hb_parptr(1)) ));
+  hb_retnl(GetWindowContextHelpId(static_cast<HWND>(hb_parptr(1))));
 }
 
 /*
@@ -2748,7 +2890,7 @@ WINUSERAPI DWORD WINAPI GetMenuContextHelpId(HMENU)
 */
 HB_FUNC( WINAPI_GETMENUCONTEXTHELPID )
 {
-  hb_retnl(GetMenuContextHelpId( static_cast<HMENU>(hb_parptr(1)) ));
+  hb_retnl(GetMenuContextHelpId(static_cast<HMENU>(hb_parptr(1))));
 }
 
 /*
@@ -2764,7 +2906,16 @@ WINUSERAPI int WINAPI MessageBoxW(HWND hWnd,LPCWSTR lpText,LPCWSTR lpCaption,UIN
 */
 HB_FUNC( WINAPI_MESSAGEBOXW )
 {
-  hb_retni(MessageBoxW( static_cast<HWND>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3), static_cast<UINT>(hb_parni(4))));
+  hb_retni(MessageBoxW(static_cast<HWND>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3), static_cast<UINT>(hb_parni(4))));
+}
+
+HB_FUNC( WINAPI_MESSAGEBOX )
+{
+  void * str2;
+  void * str3;
+  hb_retni(MessageBox(static_cast<HWND>(hb_parptr(1)), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), static_cast<UINT>(hb_parni(4))));
+  hb_strfree(str2);
+  hb_strfree(str3);
 }
 
 /*
@@ -2772,7 +2923,7 @@ WINUSERAPI int WINAPI MessageBoxExA(HWND hWnd,LPCSTR lpText,LPCSTR lpCaption,UIN
 */
 HB_FUNC( WINAPI_MESSAGEBOXEXA )
 {
-  hb_retni(MessageBoxExA(static_cast<HWND>(hb_parptr(1)), ( LPCSTR ) hb_parc(2), ( LPCSTR ) hb_parc(3), static_cast<UINT>(hb_parni(4)), ( WORD ) hb_parni(5) ) );
+  hb_retni(MessageBoxExA(static_cast<HWND>(hb_parptr(1)), ( LPCSTR ) hb_parc(2), ( LPCSTR ) hb_parc(3), static_cast<UINT>(hb_parni(4)), static_cast<WORD>(hb_parni(5))));
 }
 
 /*
@@ -2780,7 +2931,16 @@ WINUSERAPI int WINAPI MessageBoxExW(HWND hWnd,LPCWSTR lpText,LPCWSTR lpCaption,U
 */
 HB_FUNC( WINAPI_MESSAGEBOXEXW )
 {
-  hb_retni(MessageBoxExW( static_cast<HWND>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3), static_cast<UINT>(hb_parni(4)), ( WORD ) hb_parni(5) ) );
+  hb_retni(MessageBoxExW(static_cast<HWND>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3), static_cast<UINT>(hb_parni(4)), static_cast<WORD>(hb_parni(5))));
+}
+
+HB_FUNC( WINAPI_MESSAGEBOXEX )
+{
+  void * str2;
+  void * str3;
+  hb_retni(MessageBoxEx(static_cast<HWND>(hb_parptr(1)), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), static_cast<UINT>(hb_parni(4)), static_cast<WORD>(hb_parni(5))));
+  hb_strfree(str2);
+  hb_strfree(str3);
 }
 
 /*
@@ -2820,7 +2980,7 @@ WINUSERAPI HCURSOR WINAPI SetCursor(HCURSOR hCursor)
 */
 HB_FUNC( WINAPI_SETCURSOR )
 {
-  hb_retptr(SetCursor( static_cast<HCURSOR>(hb_parptr(1)) ));
+  hb_retptr(SetCursor(static_cast<HCURSOR>(hb_parptr(1))));
 }
 
 /*
@@ -2984,7 +3144,7 @@ WINUSERAPI DWORD WINAPI GetSysColor(int nIndex)
 */
 HB_FUNC( WINAPI_GETSYSCOLOR )
 {
-  hb_retnl(GetSysColor( hb_parni(1) ));
+  hb_retnl(GetSysColor(hb_parni(1)));
 }
 
 /*
@@ -2992,7 +3152,7 @@ WINUSERAPI HBRUSH WINAPI GetSysColorBrush(int nIndex)
 */
 HB_FUNC( WINAPI_GETSYSCOLORBRUSH )
 {
-  hb_retptr(GetSysColorBrush( hb_parni(1) ));
+  hb_retptr(GetSysColorBrush(hb_parni(1)));
 }
 
 /*
@@ -3064,7 +3224,7 @@ WINUSERAPI WORD WINAPI GetWindowWord(HWND hWnd,int nIndex)
 */
 HB_FUNC( WINAPI_GETWINDOWWORD )
 {
-  hb_retni( ( WORD ) GetWindowWord( static_cast<HWND>(hb_parptr(1)), hb_parni(2) ) );
+  hb_retni(GetWindowWord(static_cast<HWND>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -3072,7 +3232,7 @@ WINUSERAPI WORD WINAPI SetWindowWord(HWND hWnd,int nIndex,WORD wNewWord)
 */
 HB_FUNC( WINAPI_SETWINDOWWORD )
 {
-  hb_retni( ( WORD ) SetWindowWord( static_cast<HWND>(hb_parptr(1)), hb_parni(2), ( WORD ) hb_parni(3) ) );
+  hb_retni(SetWindowWord(static_cast<HWND>(hb_parptr(1)), hb_parni(2), static_cast<WORD>(hb_parni(3))));
 }
 
 /*
@@ -3080,7 +3240,7 @@ WINUSERAPI LONG WINAPI GetWindowLongA(HWND hWnd,int nIndex)
 */
 HB_FUNC( WINAPI_GETWINDOWLONGA )
 {
-  hb_retnl( ( LONG ) GetWindowLongA( static_cast<HWND>(hb_parptr(1)), hb_parni(2) ) );
+  hb_retnl(GetWindowLongA(static_cast<HWND>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -3088,7 +3248,7 @@ WINUSERAPI LONG WINAPI GetWindowLongW(HWND hWnd,int nIndex)
 */
 HB_FUNC( WINAPI_GETWINDOWLONGW )
 {
-  hb_retnl( ( LONG ) GetWindowLongW( static_cast<HWND>(hb_parptr(1)), hb_parni(2) ) );
+  hb_retnl(GetWindowLongW(static_cast<HWND>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -3096,7 +3256,7 @@ WINUSERAPI LONG WINAPI SetWindowLongA(HWND hWnd,int nIndex,LONG dwNewLong)
 */
 HB_FUNC( WINAPI_SETWINDOWLONGA )
 {
-  hb_retnl( ( LONG ) SetWindowLongA( static_cast<HWND>(hb_parptr(1)), hb_parni(2), ( LONG ) hb_parnl(3) ) );
+  hb_retnl(SetWindowLongA(static_cast<HWND>(hb_parptr(1)), hb_parni(2), hb_parnl(3)));
 }
 
 /*
@@ -3104,7 +3264,7 @@ WINUSERAPI LONG WINAPI SetWindowLongW(HWND hWnd,int nIndex,LONG dwNewLong)
 */
 HB_FUNC( WINAPI_SETWINDOWLONGW )
 {
-  hb_retnl( ( LONG ) SetWindowLongW( static_cast<HWND>(hb_parptr(1)), hb_parni(2), ( LONG ) hb_parnl(3) ) );
+  hb_retnl(SetWindowLongW(static_cast<HWND>(hb_parptr(1)), hb_parni(2), hb_parnl(3)));
 }
 
 /*
@@ -3128,7 +3288,7 @@ WINUSERAPI WORD WINAPI GetClassWord(HWND hWnd,int nIndex)
 */
 HB_FUNC( WINAPI_GETCLASSWORD )
 {
-  hb_retni( ( WORD ) GetClassWord( static_cast<HWND>(hb_parptr(1)), hb_parni(2) ) );
+  hb_retni(GetClassWord(static_cast<HWND>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -3136,7 +3296,7 @@ WINUSERAPI WORD WINAPI SetClassWord(HWND hWnd,int nIndex,WORD wNewWord)
 */
 HB_FUNC( WINAPI_SETCLASSWORD )
 {
-  hb_retni( ( WORD ) SetClassWord( static_cast<HWND>(hb_parptr(1)), hb_parni(2), ( WORD ) hb_parni(3) ) );
+  hb_retni(SetClassWord(static_cast<HWND>(hb_parptr(1)), hb_parni(2), static_cast<WORD>(hb_parni(3))));
 }
 
 /*
@@ -3144,7 +3304,7 @@ WINUSERAPI DWORD WINAPI GetClassLongA(HWND hWnd,int nIndex)
 */
 HB_FUNC( WINAPI_GETCLASSLONGA )
 {
-  hb_retnl(GetClassLongA( static_cast<HWND>(hb_parptr(1)), hb_parni(2) ));
+  hb_retnl(GetClassLongA(static_cast<HWND>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -3152,7 +3312,7 @@ WINUSERAPI DWORD WINAPI GetClassLongW(HWND hWnd,int nIndex)
 */
 HB_FUNC( WINAPI_GETCLASSLONGW )
 {
-  hb_retnl(GetClassLongW( static_cast<HWND>(hb_parptr(1)), hb_parni(2) ));
+  hb_retnl(GetClassLongW(static_cast<HWND>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -3160,7 +3320,7 @@ WINUSERAPI DWORD WINAPI SetClassLongA(HWND hWnd,int nIndex,LONG dwNewLong)
 */
 HB_FUNC( WINAPI_SETCLASSLONGA )
 {
-  hb_retnl(SetClassLongA( static_cast<HWND>(hb_parptr(1)), hb_parni(2), ( LONG ) hb_parnl(3) ));
+  hb_retnl(SetClassLongA(static_cast<HWND>(hb_parptr(1)), hb_parni(2), hb_parnl(3)));
 }
 
 /*
@@ -3168,7 +3328,7 @@ WINUSERAPI DWORD WINAPI SetClassLongW(HWND hWnd,int nIndex,LONG dwNewLong)
 */
 HB_FUNC( WINAPI_SETCLASSLONGW )
 {
-  hb_retnl(SetClassLongW( static_cast<HWND>(hb_parptr(1)), hb_parni(2), ( LONG ) hb_parnl(3) ));
+  hb_retnl(SetClassLongW(static_cast<HWND>(hb_parptr(1)), hb_parni(2), hb_parnl(3)));
 }
 
 /*
@@ -3176,7 +3336,7 @@ WINUSERAPI ULONG_PTR WINAPI GetClassLongPtrA(HWND hWnd,int nIndex)
 */
 HB_FUNC( WINAPI_GETCLASSLONGPTRA )
 {
-  hb_retnl( ( ULONG_PTR ) GetClassLongPtrA( static_cast<HWND>(hb_parptr(1)), hb_parni(2) ) );
+  hb_retnl(( ULONG_PTR ) GetClassLongPtrA(static_cast<HWND>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -3184,7 +3344,7 @@ WINUSERAPI ULONG_PTR WINAPI GetClassLongPtrW(HWND hWnd,int nIndex)
 */
 HB_FUNC( WINAPI_GETCLASSLONGPTRW )
 {
-  hb_retnl( ( ULONG_PTR ) GetClassLongPtrW( static_cast<HWND>(hb_parptr(1)), hb_parni(2) ) );
+  hb_retnl(( ULONG_PTR ) GetClassLongPtrW(static_cast<HWND>(hb_parptr(1)), hb_parni(2)));
 }
 
 /*
@@ -3220,7 +3380,7 @@ WINUSERAPI HWND WINAPI GetParent(HWND hWnd)
 */
 HB_FUNC( WINAPI_GETPARENT )
 {
-  hb_retptr(GetParent( static_cast<HWND>(hb_parptr(1)) ));
+  hb_retptr(GetParent(static_cast<HWND>(hb_parptr(1))));
 }
 
 /*
@@ -3228,7 +3388,7 @@ WINUSERAPI HWND WINAPI SetParent(HWND hWndChild,HWND hWndNewParent)
 */
 HB_FUNC( WINAPI_SETPARENT )
 {
-  hb_retptr(SetParent( static_cast<HWND>(hb_parptr(1)), static_cast<HWND>(hb_parptr(2)) ));
+  hb_retptr(SetParent(static_cast<HWND>(hb_parptr(1)), static_cast<HWND>(hb_parptr(2))));
 }
 
 /*
@@ -3240,7 +3400,7 @@ WINUSERAPI HWND WINAPI FindWindowA(LPCSTR lpClassName,LPCSTR lpWindowName)
 */
 HB_FUNC( WINAPI_FINDWINDOWA )
 {
-  hb_retptr(FindWindowA( ( LPCSTR ) hb_parc(1), ( LPCSTR ) hb_parc(2) ));
+  hb_retptr(FindWindowA(( LPCSTR ) hb_parc(1), ( LPCSTR ) hb_parc(2)));
 }
 
 /*
@@ -3248,7 +3408,7 @@ WINUSERAPI HWND WINAPI FindWindowW(LPCWSTR lpClassName,LPCWSTR lpWindowName)
 */
 HB_FUNC( WINAPI_FINDWINDOWW )
 {
-  hb_retptr(FindWindowW( ( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2) ));
+  hb_retptr(FindWindowW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2)));
 }
 
 /*
@@ -3256,7 +3416,7 @@ WINUSERAPI HWND WINAPI FindWindowExA(HWND hWndParent,HWND hWndChildAfter,LPCSTR 
 */
 HB_FUNC( WINAPI_FINDWINDOWEXA )
 {
-  hb_retptr(FindWindowExA( static_cast<HWND>(hb_parptr(1)), static_cast<HWND>(hb_parptr(2)), ( LPCSTR ) hb_parc(3), ( LPCSTR ) hb_parc(4) ));
+  hb_retptr(FindWindowExA(static_cast<HWND>(hb_parptr(1)), static_cast<HWND>(hb_parptr(2)), ( LPCSTR ) hb_parc(3), ( LPCSTR ) hb_parc(4)));
 }
 
 /*
@@ -3264,7 +3424,7 @@ WINUSERAPI HWND WINAPI FindWindowExW(HWND hWndParent,HWND hWndChildAfter,LPCWSTR
 */
 HB_FUNC( WINAPI_FINDWINDOWEXW )
 {
-  hb_retptr(FindWindowExW( static_cast<HWND>(hb_parptr(1)), static_cast<HWND>(hb_parptr(2)), ( LPCWSTR ) hb_parc(3), ( LPCWSTR ) hb_parc(4) ));
+  hb_retptr(FindWindowExW(static_cast<HWND>(hb_parptr(1)), static_cast<HWND>(hb_parptr(2)), ( LPCWSTR ) hb_parc(3), ( LPCWSTR ) hb_parc(4)));
 }
 
 /*
@@ -3304,7 +3464,7 @@ WINUSERAPI int WINAPI GetClassNameA(HWND hWnd,LPSTR lpClassName,int nMaxCount)
 */
 HB_FUNC( WINAPI_GETCLASSNAMEA )
 {
-  hb_retni( GetClassNameA( static_cast<HWND>(hb_parptr(1)), ( LPSTR ) hb_parc(2), hb_parni(3) ) );
+  hb_retni(GetClassNameA(static_cast<HWND>(hb_parptr(1)), ( LPSTR ) hb_parc(2), hb_parni(3)));
 }
 
 /*
@@ -3312,7 +3472,7 @@ WINUSERAPI int WINAPI GetClassNameW(HWND hWnd,LPWSTR lpClassName,int nMaxCount)
 */
 HB_FUNC( WINAPI_GETCLASSNAMEW )
 {
-  hb_retni( GetClassNameW( static_cast<HWND>(hb_parptr(1)), ( LPWSTR ) hb_parc(2), hb_parni(3) ) );
+  hb_retni(GetClassNameW(static_cast<HWND>(hb_parptr(1)), ( LPWSTR ) hb_parc(2), hb_parni(3)));
 }
 
 /*
@@ -3320,7 +3480,7 @@ WINUSERAPI HWND WINAPI GetTopWindow(HWND hWnd)
 */
 HB_FUNC( WINAPI_GETTOPWINDOW )
 {
-  hb_retptr(GetTopWindow( static_cast<HWND>(hb_parptr(1)) ));
+  hb_retptr(GetTopWindow(static_cast<HWND>(hb_parptr(1))));
 }
 
 /*
@@ -3328,7 +3488,7 @@ WINUSERAPI DWORD WINAPI GetWindowThreadProcessId(HWND hWnd,LPDWORD lpdwProcessId
 */
 HB_FUNC( WINAPI_GETWINDOWTHREADPROCESSID )
 {
-  hb_retnl(GetWindowThreadProcessId( static_cast<HWND>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2)) ));
+  hb_retnl(GetWindowThreadProcessId(static_cast<HWND>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2))));
 }
 
 /*
@@ -3344,7 +3504,7 @@ WINUSERAPI HWND WINAPI GetLastActivePopup(HWND hWnd)
 */
 HB_FUNC( WINAPI_GETLASTACTIVEPOPUP )
 {
-  hb_retptr(GetLastActivePopup( static_cast<HWND>(hb_parptr(1)) ));
+  hb_retptr(GetLastActivePopup(static_cast<HWND>(hb_parptr(1))));
 }
 
 /*
@@ -3404,7 +3564,7 @@ WINUSERAPI HBITMAP WINAPI LoadBitmapA(HINSTANCE hInstance,LPCSTR lpBitmapName)
 */
 HB_FUNC( WINAPI_LOADBITMAPA )
 {
-  hb_retptr(LoadBitmapA( static_cast<HINSTANCE>(hb_parptr(1)), ( LPCSTR ) hb_parc(2) ));
+  hb_retptr(LoadBitmapA(static_cast<HINSTANCE>(hb_parptr(1)), ( LPCSTR ) hb_parc(2)));
 }
 
 /*
@@ -3412,7 +3572,7 @@ WINUSERAPI HBITMAP WINAPI LoadBitmapW(HINSTANCE hInstance,LPCWSTR lpBitmapName)
 */
 HB_FUNC( WINAPI_LOADBITMAPW )
 {
-  hb_retptr(LoadBitmapW( static_cast<HINSTANCE>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2) ));
+  hb_retptr(LoadBitmapW(static_cast<HINSTANCE>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2)));
 }
 
 /*
@@ -3420,7 +3580,7 @@ WINUSERAPI HCURSOR WINAPI LoadCursorA(HINSTANCE hInstance,LPCSTR lpCursorName)
 */
 HB_FUNC( WINAPI_LOADCURSORA )
 {
-  hb_retptr(LoadCursorA( static_cast<HINSTANCE>(hb_parptr(1)), ( LPCSTR ) hb_parc(2) ));
+  hb_retptr(LoadCursorA(static_cast<HINSTANCE>(hb_parptr(1)), ( LPCSTR ) hb_parc(2)));
 }
 
 /*
@@ -3428,7 +3588,7 @@ WINUSERAPI HCURSOR WINAPI LoadCursorW(HINSTANCE hInstance,LPCWSTR lpCursorName)
 */
 HB_FUNC( WINAPI_LOADCURSORW )
 {
-  hb_retptr(LoadCursorW( static_cast<HINSTANCE>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2) ));
+  hb_retptr(LoadCursorW(static_cast<HINSTANCE>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2)));
 }
 
 /*
@@ -3436,7 +3596,7 @@ WINUSERAPI HCURSOR WINAPI LoadCursorFromFileA(LPCSTR lpFileName)
 */
 HB_FUNC( WINAPI_LOADCURSORFROMFILEA )
 {
-  hb_retptr(LoadCursorFromFileA( ( LPCSTR ) hb_parc(1) ));
+  hb_retptr(LoadCursorFromFileA(( LPCSTR ) hb_parc(1)));
 }
 
 /*
@@ -3444,7 +3604,7 @@ WINUSERAPI HCURSOR WINAPI LoadCursorFromFileW(LPCWSTR lpFileName)
 */
 HB_FUNC( WINAPI_LOADCURSORFROMFILEW )
 {
-  hb_retptr(LoadCursorFromFileW( ( LPCWSTR ) hb_parc(1) ));
+  hb_retptr(LoadCursorFromFileW(( LPCWSTR ) hb_parc(1)));
 }
 
 /*
@@ -3472,7 +3632,7 @@ WINUSERAPI HICON WINAPI LoadIconA(HINSTANCE hInstance,LPCSTR lpIconName)
 */
 HB_FUNC( WINAPI_LOADICONA )
 {
-  hb_retptr(LoadIconA( static_cast<HINSTANCE>(hb_parptr(1)), ( LPCSTR ) hb_parc(2) ));
+  hb_retptr(LoadIconA(static_cast<HINSTANCE>(hb_parptr(1)), ( LPCSTR ) hb_parc(2)));
 }
 
 /*
@@ -3480,7 +3640,7 @@ WINUSERAPI HICON WINAPI LoadIconW(HINSTANCE hInstance,LPCWSTR lpIconName)
 */
 HB_FUNC( WINAPI_LOADICONW )
 {
-  hb_retptr(LoadIconW( static_cast<HINSTANCE>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2) ));
+  hb_retptr(LoadIconW(static_cast<HINSTANCE>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2)));
 }
 
 /*
@@ -3560,7 +3720,7 @@ WINUSERAPI HICON WINAPI CopyIcon(HICON hIcon)
 */
 HB_FUNC( WINAPI_COPYICON )
 {
-  hb_retptr(CopyIcon( static_cast<HICON>(hb_parptr(1)) ));
+  hb_retptr(CopyIcon(static_cast<HICON>(hb_parptr(1))));
 }
 
 /*
@@ -3594,14 +3754,26 @@ HB_FUNC( WINAPI_LOADSTRINGW )
 /*
 WINUSERAPI WINBOOL WINAPI IsDialogMessageA(HWND hDlg,LPMSG lpMsg)
 */
+HB_FUNC( WINAPI_ISDIALOGMESSAGEA )
+{
+  hb_retl(IsDialogMessageA(static_cast<HWND>(hb_parptr(1)), static_cast<LPMSG>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI IsDialogMessageW(HWND hDlg,LPMSG lpMsg)
 */
+HB_FUNC( WINAPI_ISDIALOGMESSAGEW )
+{
+  hb_retl(IsDialogMessageW(static_cast<HWND>(hb_parptr(1)), static_cast<LPMSG>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI MapDialogRect(HWND hDlg,LPRECT lpRect)
 */
+HB_FUNC( WINAPI_MAPDIALOGRECT )
+{
+  hb_retl(MapDialogRect(static_cast<HWND>(hb_parptr(1)), static_cast<LPRECT>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINUSERAPI int WINAPI DlgDirListA(HWND hDlg,LPSTR lpPathSpec,int nIDListBox,int nIDStaticPath,UINT uFileType)
@@ -3648,7 +3820,7 @@ WINUSERAPI int WINAPI DlgDirListComboBoxW(HWND hDlg,LPWSTR lpPathSpec,int nIDCom
 */
 HB_FUNC( WINAPI_DLGDIRLISTCOMBOBOXW )
 {
-  hb_retni(DlgDirListComboBoxW( static_cast<HWND>(hb_parptr(1)), ( LPWSTR ) hb_parc(2), hb_parni(3), hb_parni(4), static_cast<UINT>(hb_parni(5))));
+  hb_retni(DlgDirListComboBoxW(static_cast<HWND>(hb_parptr(1)), ( LPWSTR ) hb_parc(2), hb_parni(3), hb_parni(4), static_cast<UINT>(hb_parni(5))));
 }
 
 /*
@@ -3680,7 +3852,7 @@ WINUSERAPI LRESULT WINAPI DefFrameProcA(HWND hWnd,HWND hWndMDIClient,UINT uMsg,W
 */
 HB_FUNC( WINAPI_DEFFRAMEPROCA )
 {
-  hb_retnl(DefFrameProcA(static_cast<HWND>(hb_parptr(1)), static_cast<HWND>(hb_parptr(2)), static_cast<UINT>(hb_parni(3)), ( WPARAM ) hb_parni(4), ( LPARAM ) hb_parnl(5)));
+  hb_retnl(DefFrameProcA(static_cast<HWND>(hb_parptr(1)), static_cast<HWND>(hb_parptr(2)), static_cast<UINT>(hb_parni(3)), static_cast<WPARAM>(hb_parni(4)), static_cast<LPARAM>(hb_parnl(5))));
 }
 
 /*
@@ -3688,7 +3860,7 @@ WINUSERAPI LRESULT WINAPI DefFrameProcW(HWND hWnd,HWND hWndMDIClient,UINT uMsg,W
 */
 HB_FUNC( WINAPI_DEFFRAMEPROCW )
 {
-  hb_retnl(DefFrameProcW(static_cast<HWND>(hb_parptr(1)), static_cast<HWND>(hb_parptr(2)), static_cast<UINT>(hb_parni(3)), ( WPARAM ) hb_parni(4), ( LPARAM ) hb_parnl(5) ) );
+  hb_retnl(DefFrameProcW(static_cast<HWND>(hb_parptr(1)), static_cast<HWND>(hb_parptr(2)), static_cast<UINT>(hb_parni(3)), static_cast<WPARAM>(hb_parni(4)), static_cast<LPARAM>(hb_parnl(5))));
 }
 
 /*
@@ -3696,7 +3868,7 @@ WINUSERAPI LRESULT WINAPI DefMDIChildProcA(HWND hWnd,UINT uMsg,WPARAM wParam,LPA
 */
 HB_FUNC( WINAPI_DEFMDICHILDPROCA )
 {
-  hb_retnl( ( LRESULT ) DefMDIChildProcA( static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), ( WPARAM ) hb_parni(3), ( LPARAM ) hb_parnl(4) ) );
+  hb_retnl(DefMDIChildProcA(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), static_cast<WPARAM>(hb_parni(3)), static_cast<LPARAM>(hb_parnl(4))));
 }
 
 /*
@@ -3704,12 +3876,16 @@ WINUSERAPI LRESULT WINAPI DefMDIChildProcW(HWND hWnd,UINT uMsg,WPARAM wParam,LPA
 */
 HB_FUNC( WINAPI_DEFMDICHILDPROCW )
 {
-  hb_retnl(DefMDIChildProcW(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), ( WPARAM ) hb_parni(3), ( LPARAM ) hb_parnl(4)));
+  hb_retnl(DefMDIChildProcW(static_cast<HWND>(hb_parptr(1)), static_cast<UINT>(hb_parni(2)), static_cast<WPARAM>(hb_parni(3)), static_cast<LPARAM>(hb_parnl(4))));
 }
 
 /*
 WINUSERAPI WINBOOL WINAPI TranslateMDISysAccel(HWND hWndClient,LPMSG lpMsg)
 */
+HB_FUNC( WINAPI_TRANSLATEMDISYSACCEL )
+{
+  hb_retl(TranslateMDISysAccel(static_cast<HWND>(hb_parptr(1)), static_cast<LPMSG>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINUSERAPI UINT WINAPI ArrangeIconicWindows(HWND hWnd)
@@ -3724,7 +3900,7 @@ WINUSERAPI HWND WINAPI CreateMDIWindowA(LPCSTR lpClassName,LPCSTR lpWindowName,D
 */
 HB_FUNC( WINAPI_CREATEMDIWINDOWA )
 {
-  hb_retptr(CreateMDIWindowA( ( LPCSTR ) hb_parc(1), ( LPCSTR ) hb_parc(2), static_cast<DWORD>(hb_parnl(3)), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), static_cast<HWND>(hb_parptr(8)), static_cast<HINSTANCE>(hb_parptr(9)), ( LPARAM ) hb_parnl(10) ));
+  hb_retptr(CreateMDIWindowA(( LPCSTR ) hb_parc(1), ( LPCSTR ) hb_parc(2), static_cast<DWORD>(hb_parnl(3)), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), static_cast<HWND>(hb_parptr(8)), static_cast<HINSTANCE>(hb_parptr(9)), static_cast<LPARAM>(hb_parnl(10))));
 }
 
 /*
@@ -3732,7 +3908,7 @@ WINUSERAPI HWND WINAPI CreateMDIWindowW(LPCWSTR lpClassName,LPCWSTR lpWindowName
 */
 HB_FUNC( WINAPI_CREATEMDIWINDOWW )
 {
-  hb_retptr(CreateMDIWindowW( ( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), static_cast<DWORD>(hb_parnl(3)), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), static_cast<HWND>(hb_parptr(8)), static_cast<HINSTANCE>(hb_parptr(9)), ( LPARAM ) hb_parnl(10) ));
+  hb_retptr(CreateMDIWindowW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), static_cast<DWORD>(hb_parnl(3)), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), static_cast<HWND>(hb_parptr(8)), static_cast<HINSTANCE>(hb_parptr(9)), static_cast<LPARAM>(hb_parnl(10))));
 }
 
 /*
@@ -3764,7 +3940,7 @@ WINUSERAPI DWORD WINAPI GetGuiResources(HANDLE hProcess,DWORD uiFlags)
 */
 HB_FUNC( WINAPI_GETGUIRESOURCES )
 {
-  hb_retnl(GetGuiResources( static_cast<HANDLE>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2)) ));
+  hb_retnl(GetGuiResources(static_cast<HANDLE>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2))));
 }
 
 /*
@@ -3848,7 +4024,7 @@ WINUSERAPI VOID WINAPI SetDebugErrorLevel (DWORD dwLevel)
 */
 HB_FUNC( WINAPI_SETDEBUGERRORLEVEL )
 {
-  SetDebugErrorLevel( static_cast<DWORD>(hb_parnl(1)) );
+  SetDebugErrorLevel(static_cast<DWORD>(hb_parnl(1)));
 }
 
 /*
@@ -3856,7 +4032,7 @@ WINUSERAPI VOID WINAPI SetLastErrorEx (DWORD dwErrCode, DWORD dwType)
 */
 HB_FUNC( WINAPI_SETLASTERROREX )
 {
-  SetLastErrorEx( static_cast<DWORD>(hb_parnl(1)), static_cast<DWORD>(hb_parnl(2)) );
+  SetLastErrorEx(static_cast<DWORD>(hb_parnl(1)), static_cast<DWORD>(hb_parnl(2)));
 }
 
 /*
@@ -3864,7 +4040,7 @@ WINUSERAPI int WINAPI InternalGetWindowText (HWND hWnd, LPWSTR pString, int cchM
 */
 HB_FUNC( WINAPI_INTERNALGETWINDOWTEXT )
 {
-  hb_retni( InternalGetWindowText( static_cast<HWND>(hb_parptr(1)), ( LPWSTR ) hb_parc(2), hb_parni(3) ) );
+  hb_retni(InternalGetWindowText(static_cast<HWND>(hb_parptr(1)), ( LPWSTR ) hb_parc(2), hb_parni(3)));
 }
 
 /*
@@ -3912,7 +4088,7 @@ WINUSERAPI VOID WINAPI NotifyWinEvent(DWORD event,HWND hwnd,LONG idObject,LONG i
 */
 HB_FUNC( WINAPI_NOTIFYWINEVENT )
 {
-  NotifyWinEvent( static_cast<DWORD>(hb_parnl(1)), static_cast<HWND>(hb_parptr(2)), ( LONG ) hb_parnl(3), ( LONG ) hb_parnl(4) );
+  NotifyWinEvent(static_cast<DWORD>(hb_parnl(1)), static_cast<HWND>(hb_parptr(2)), hb_parnl(3), hb_parnl(4));
 }
 
 /*
@@ -4032,7 +4208,7 @@ WINUSERAPI DWORD WINAPI GetListBoxInfo(HWND hwnd)
 */
 HB_FUNC( WINAPI_GETLISTBOXINFO )
 {
-  hb_retnl(GetListBoxInfo( static_cast<HWND>(hb_parptr(1)) ));
+  hb_retnl(GetListBoxInfo(static_cast<HWND>(hb_parptr(1))));
 }
 
 /*

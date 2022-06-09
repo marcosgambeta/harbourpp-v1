@@ -39,6 +39,7 @@ SOFTWARE.
 #include <hbapi.h>
 #include "hbapiitm.h"
 #include "hbapicls.h"
+#include "hbwinuni.h"
 
 /*
 WINBASEAPI HLOCAL WINAPI LocalAlloc (UINT uFlags, SIZE_T uBytes)
@@ -245,7 +246,9 @@ WINBASEAPI WINBOOL WINAPI GetBinaryTypeA (LPCSTR lpApplicationName, LPDWORD lpBi
 */
 HB_FUNC( WINAPI_GETBINARYTYPEA )
 {
-  hb_retl(GetBinaryTypeA(( LPCSTR ) hb_parc(1), static_cast<LPDWORD>(hb_parptr(2))));
+  DWORD BinaryType;
+  hb_retl(GetBinaryTypeA(( LPCSTR ) hb_parc(1), &BinaryType));
+  hb_stornl(BinaryType, 2);
 }
 
 /*
@@ -253,7 +256,18 @@ WINBASEAPI WINBOOL WINAPI GetBinaryTypeW (LPCWSTR lpApplicationName, LPDWORD lpB
 */
 HB_FUNC( WINAPI_GETBINARYTYPEW )
 {
-  hb_retl(GetBinaryTypeW(( LPCWSTR ) hb_parc(1), static_cast<LPDWORD>(hb_parptr(2))));
+  DWORD BinaryType;
+  hb_retl(GetBinaryTypeW(( LPCWSTR ) hb_parc(1), &BinaryType));
+  hb_stornl(BinaryType, 2);
+}
+
+HB_FUNC( WINAPI_GETBINARYTYPE )
+{
+  void * str;
+  DWORD BinaryType;
+  hb_retl(GetBinaryType(HB_PARSTR(1, &str, nullptr), &BinaryType));
+  hb_stornl(BinaryType, 2);
+  hb_strfree(str);
 }
 
 /*
@@ -395,6 +409,16 @@ WINBASEAPI WINBOOL WINAPI SetProcessDEPPolicy (DWORD dwFlags)
 /*
 WINBASEAPI WINBOOL WINAPI GetProcessDEPPolicy (HANDLE hProcess, LPDWORD lpFlags, PBOOL lpPermanent)
 */
+#if 0
+HB_FUNC( WINAPI_GETPROCESSDEPPOLICY )
+{
+  DWORD Flags;
+  BOOL Permanent;
+  hb_retl(GetProcessDEPPolicy(static_cast<HANDLE>(hb_parptr(1)), &Flags, &Permanent));
+  hb_stornl(Flags, 2);
+  hb_storl(Permanent, 3);
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI SetProcessPriorityBoost (HANDLE hProcess, WINBOOL bDisablePriorityBoost)
@@ -447,10 +471,22 @@ WINBASEAPI WINBOOL WINAPI PowerClearRequest (HANDLE PowerRequest, POWER_REQUEST_
 /*
 WINBASEAPI VOID WINAPI RestoreLastError (DWORD dwErrCode)
 */
+#if 0
+HB_FUNC( WINAPI_RESTORELASTERROR )
+{
+  RestoreLastError(static_cast<DWORD>(hb_parnl(1)));
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI SetFileCompletionNotificationModes (HANDLE FileHandle, UCHAR Flags)
 */
+#if 0
+HB_FUNC( WINAPI_SETFILECOMPLETIONNOTIFICATIONMODES )
+{
+  hb_retl(SetFileCompletionNotificationModes(static_cast<HANDLE>(hb_parptr(1)), static_cast<UCHAR>(hb_parni(2))));
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI SetFileIoOverlappedRange (HANDLE FileHandle, PUCHAR OverlappedRangeStart, ULONG Length)
@@ -469,7 +505,9 @@ WINBASEAPI WINBOOL WINAPI SetThreadErrorMode (DWORD dwNewMode, LPDWORD lpOldMode
 */
 HB_FUNC( WINAPI_SETTHREADERRORMODE )
 {
-  hb_retl(SetThreadErrorMode(static_cast<DWORD>(hb_parnl(1)), static_cast<LPDWORD>(hb_parptr(2))));
+  DWORD OldMode;
+  hb_retl(SetThreadErrorMode(static_cast<DWORD>(hb_parnl(1)), &OldMode));
+  hb_stornl(OldMode, 2);
 }
 
 /*
@@ -592,6 +630,13 @@ HB_FUNC( WINAPI_SETFILESHORTNAMEW )
   hb_retl(SetFileShortNameW(static_cast<HANDLE>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2)));
 }
 
+HB_FUNC( WINAPI_SETFILESHORTNAME )
+{
+  void * str;
+  hb_retl(SetFileShortName(static_cast<HANDLE>(hb_parptr(1)), HB_PARSTR(2, &str, nullptr)));
+  hb_strfree(str);
+}
+
 /*
 WINBASEAPI DWORD WINAPI LoadModule (LPCSTR lpModuleName, LPVOID lpParameterBlock)
 */
@@ -645,7 +690,9 @@ WINBASEAPI WINBOOL WINAPI GetCommMask (HANDLE hFile, LPDWORD lpEvtMask)
 */
 HB_FUNC( WINAPI_GETCOMMMASK )
 {
-  hb_retl(GetCommMask(static_cast<HANDLE>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2))));
+  DWORD EvtMask;
+  hb_retl(GetCommMask(static_cast<HANDLE>(hb_parptr(1)), &EvtMask));
+  hb_stornl(EvtMask, 2);
 }
 
 /*
@@ -657,7 +704,9 @@ WINBASEAPI WINBOOL WINAPI GetCommModemStatus (HANDLE hFile, LPDWORD lpModemStat)
 */
 HB_FUNC( WINAPI_GETCOMMMODEMSTATUS )
 {
-  hb_retl(GetCommModemStatus(static_cast<HANDLE>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2))));
+  DWORD ModemStat;
+  hb_retl(GetCommModemStatus(static_cast<HANDLE>(hb_parptr(1)), &ModemStat));
+  hb_stornl(ModemStat, 2);
 }
 
 /*
@@ -707,6 +756,10 @@ WINBASEAPI WINBOOL WINAPI SetCommTimeouts (HANDLE hFile, LPCOMMTIMEOUTS lpCommTi
 /*
 WINBASEAPI WINBOOL WINAPI TransmitCommChar (HANDLE hFile, char cChar)
 */
+HB_FUNC( WINAPI_TRANSMITCOMMCHAR )
+{
+  hb_retl(TransmitCommChar(static_cast<HANDLE>(hb_parptr(1)), static_cast<char>(hb_parni(2))));
+}
 
 /*
 WINBASEAPI WINBOOL WINAPI WaitCommEvent (HANDLE hFile, LPDWORD lpEvtMask, LPOVERLAPPED lpOverlapped)
@@ -725,7 +778,13 @@ WINBASEAPI DWORD WINAPI GetTapePosition (HANDLE hDevice, DWORD dwPositionType, L
 */
 HB_FUNC( WINAPI_GETTAPEPOSITION )
 {
-  hb_retnl(GetTapePosition(static_cast<HANDLE>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2)), static_cast<LPDWORD>(hb_parptr(3)), static_cast<LPDWORD>(hb_parptr(4)), static_cast<LPDWORD>(hb_parptr(5))));
+  DWORD dwPartition;
+  DWORD dwOffsetLow;
+  DWORD dwOffsetHigh;
+  hb_retnl(GetTapePosition(static_cast<HANDLE>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2)), &dwPartition, &dwOffsetLow, &dwOffsetHigh));
+  hb_stornl(dwPartition, 3);
+  hb_stornl(dwOffsetLow, 4);
+  hb_stornl(dwOffsetHigh, 5);
 }
 
 /*
@@ -773,7 +832,9 @@ WINBASEAPI DWORD WINAPI GetTapeParameters (HANDLE hDevice, DWORD dwOperation, LP
 */
 HB_FUNC( WINAPI_GETTAPEPARAMETERS )
 {
-  hb_retnl(GetTapeParameters(static_cast<HANDLE>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2)), static_cast<LPDWORD>(hb_parptr(3)), static_cast<LPVOID>(hb_parptr(4))));
+  DWORD dwSize;
+  hb_retnl(GetTapeParameters(static_cast<HANDLE>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2)), &dwSize, static_cast<LPVOID>(hb_parptr(4))));
+  hb_stornl(dwSize, 3);
 }
 
 /*
@@ -833,7 +894,15 @@ WINBASEAPI WINBOOL WINAPI GetNamedPipeInfo (HANDLE hNamedPipe, LPDWORD lpFlags, 
 */
 HB_FUNC( WINAPI_GETNAMEDPIPEINFO )
 {
-  hb_retl(GetNamedPipeInfo(static_cast<HANDLE>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2)), static_cast<LPDWORD>(hb_parptr(3)), static_cast<LPDWORD>(hb_parptr(4)), static_cast<LPDWORD>(hb_parptr(5))));
+  DWORD Flags;
+  DWORD OutBufferSize;
+  DWORD InBufferSize;
+  DWORD MaxInstances;
+  hb_retl(GetNamedPipeInfo(static_cast<HANDLE>(hb_parptr(1)), &Flags, &OutBufferSize, &InBufferSize, &MaxInstances));
+  hb_stornl(Flags, 2);
+  hb_stornl(OutBufferSize, 3);
+  hb_stornl(InBufferSize, 4);
+  hb_stornl(MaxInstances, 5);
 }
 
 /*
@@ -849,7 +918,15 @@ WINBASEAPI WINBOOL WINAPI GetMailslotInfo (HANDLE hMailslot, LPDWORD lpMaxMessag
 */
 HB_FUNC( WINAPI_GETMAILSLOTINFO )
 {
-  hb_retl(GetMailslotInfo(static_cast<HANDLE>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2)), static_cast<LPDWORD>(hb_parptr(3)), static_cast<LPDWORD>(hb_parptr(4)), static_cast<LPDWORD>(hb_parptr(5))));
+  DWORD MaxMessageSize;
+  DWORD NextSize;
+  DWORD MessageCount;
+  DWORD ReadTimeout;
+  hb_retl(GetMailslotInfo(static_cast<HANDLE>(hb_parptr(1)), &MaxMessageSize, &NextSize, &MessageCount, &ReadTimeout));
+  hb_stornl(MaxMessageSize, 2);
+  hb_stornl(NextSize, 3);
+  hb_stornl(MessageCount, 4);
+  hb_stornl(ReadTimeout, 5);
 }
 
 /*
@@ -876,6 +953,13 @@ HB_FUNC( WINAPI_ENCRYPTFILEW )
   hb_retl(EncryptFileW(( LPCWSTR ) hb_parc(1)));
 }
 
+HB_FUNC( WINAPI_ENCRYPTFILE )
+{
+  void * str;
+  hb_retl(EncryptFile(HB_PARSTR(1, &str, nullptr)));
+  hb_strfree(str);
+}
+
 /*
 WINADVAPI WINBOOL WINAPI DecryptFileA (LPCSTR lpFileName, DWORD dwReserved)
 */
@@ -892,12 +976,21 @@ HB_FUNC( WINAPI_DECRYPTFILEW )
   hb_retl(DecryptFileW(( LPCWSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2))));
 }
 
+HB_FUNC( WINAPI_DECRYPTFILE )
+{
+  void * str;
+  hb_retl(DecryptFile(HB_PARSTR(1, &str, nullptr), static_cast<DWORD>(hb_parnl(2))));
+  hb_strfree(str);
+}
+
 /*
 WINADVAPI WINBOOL WINAPI FileEncryptionStatusA (LPCSTR lpFileName, LPDWORD lpStatus)
 */
 HB_FUNC( WINAPI_FILEENCRYPTIONSTATUSA )
 {
-  hb_retl(FileEncryptionStatusA(( LPCSTR ) hb_parc(1), static_cast<LPDWORD>(hb_parptr(2))));
+  DWORD Status;
+  hb_retl(FileEncryptionStatusA(( LPCSTR ) hb_parc(1), &Status));
+  hb_stornl(Status, 2);
 }
 
 /*
@@ -905,7 +998,18 @@ WINADVAPI WINBOOL WINAPI FileEncryptionStatusW (LPCWSTR lpFileName, LPDWORD lpSt
 */
 HB_FUNC( WINAPI_FILEENCRYPTIONSTATUSW )
 {
-  hb_retl(FileEncryptionStatusW(( LPCWSTR ) hb_parc(1), static_cast<LPDWORD>(hb_parptr(2))));
+  DWORD Status;
+  hb_retl(FileEncryptionStatusW(( LPCWSTR ) hb_parc(1), &Status));
+  hb_stornl(Status, 2);
+}
+
+HB_FUNC( WINAPI_FILEENCRYPTIONSTATUS )
+{
+  void * str;
+  DWORD Status;
+  hb_retl(FileEncryptionStatus(HB_PARSTR(1, &str, nullptr), &Status));
+  hb_stornl(Status, 2);
+  hb_strfree(str);
 }
 
 /*
@@ -948,6 +1052,15 @@ HB_FUNC( WINAPI_LSTRCMPW )
   hb_retni(lstrcmpW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2)));
 }
 
+HB_FUNC( WINAPI_LSTRCMP )
+{
+  void * str1;
+  void * str2;
+  hb_retni(lstrcmp(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str1);
+  hb_strfree(str2);
+}
+
 /*
 WINBASEAPI int WINAPI lstrcmpiA (LPCSTR lpString1, LPCSTR lpString2)
 */
@@ -962,6 +1075,15 @@ WINBASEAPI int WINAPI lstrcmpiW (LPCWSTR lpString1, LPCWSTR lpString2)
 HB_FUNC( WINAPI_LSTRCMPIW )
 {
   hb_retni(lstrcmpiW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2)));
+}
+
+HB_FUNC( WINAPI_LSTRCMPI )
+{
+  void * str1;
+  void * str2;
+  hb_retni(lstrcmpi(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str1);
+  hb_strfree(str2);
 }
 
 /*
@@ -1014,6 +1136,13 @@ WINBASEAPI int WINAPI lstrlenW (LPCWSTR lpString)
 HB_FUNC( WINAPI_LSTRLENW )
 {
   hb_retni(lstrlenW(( LPCWSTR ) hb_parc(1)));
+}
+
+HB_FUNC( WINAPI_LSTRLEN )
+{
+  void * str;
+  hb_retni(lstrlen(HB_PARSTR(1, &str, nullptr)));
+  hb_strfree(str);
 }
 
 /*
@@ -1069,12 +1198,18 @@ WINBASEAPI LONG WINAPI _llseek (HFILE hFile, LONG lOffset, int iOrigin)
 */
 HB_FUNC( WINAPI__LLSEEK )
 {
-  hb_retnl(_llseek(( HFILE ) hb_parni(1), ( LONG ) hb_parnl(2), hb_parni(3)));
+  hb_retnl(_llseek(( HFILE ) hb_parni(1), hb_parnl(2), hb_parni(3)));
 }
 
 /*
 WINADVAPI WINBOOL WINAPI IsTextUnicode (CONST VOID *lpv, int iSize, LPINT lpiResult)
 */
+HB_FUNC( WINAPI_ISTEXTUNICODE )
+{
+  INT iResult;
+  hb_retl(IsTextUnicode(static_cast<CONST VOID*>(hb_parptr(1)), hb_parni(2), &iResult));
+  hb_storni(iResult, 3);
+}
 
 /*
 WINBASEAPI DWORD WINAPI SignalObjectAndWait (HANDLE hObjectToSignal, HANDLE hObjectToWaitOn, DWORD dwMilliseconds, WINBOOL bAlertable)
@@ -1101,11 +1236,26 @@ WINBASEAPI HANDLE WINAPI CreateSemaphoreW (LPSECURITY_ATTRIBUTES lpSemaphoreAttr
 */
 
 /*
+WINBASEAPI HMODULE WINAPI LoadLibraryA (LPCSTR lpLibFileName)
+*/
+HB_FUNC( WINAPI_LOADLIBRARYA )
+{
+  hb_retptr(LoadLibraryA(( LPCSTR ) hb_parc(1)));
+}
+
+/*
 WINBASEAPI HMODULE WINAPI LoadLibraryW (LPCWSTR lpLibFileName)
 */
 HB_FUNC( WINAPI_LOADLIBRARYW )
 {
   hb_retptr(LoadLibraryW(( LPCWSTR ) hb_parc(1)));
+}
+
+HB_FUNC( WINAPI_LOADLIBRARY )
+{
+  void * str;
+  hb_retptr(LoadLibrary(HB_PARSTR(1, &str, nullptr)));
+  hb_strfree(str);
 }
 
 /*
@@ -1176,17 +1326,16 @@ HB_FUNC( WINAPI_GETLOGICALDRIVESTRINGSA )
   hb_retnl(GetLogicalDriveStringsA(static_cast<DWORD>(hb_parnl(1)), ( LPSTR ) hb_parc(2)));
 }
 
-/*
-WINBASEAPI HMODULE WINAPI LoadLibraryA (LPCSTR lpLibFileName)
-*/
-HB_FUNC( WINAPI_LOADLIBRARYA )
-{
-  hb_retptr(LoadLibraryA(( LPCSTR ) hb_parc(1)));
-}
 
 /*
 WINBASEAPI HMODULE WINAPI LoadPackagedLibrary (LPCWSTR lpwLibFileName, DWORD Reserved)
 */
+#if 0
+HB_FUNC( WINAPI_LOADPACKAGEDLIBRARY )
+{
+  hb_retptr(LoadPackagedLibrary(( LPCWSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2))));
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI QueryFullProcessImageNameA (HANDLE hProcess, DWORD dwFlags, LPSTR lpExeName, PDWORD lpdwSize)
@@ -1201,7 +1350,11 @@ WINBASEAPI WINBOOL WINAPI GetProcessShutdownParameters (LPDWORD lpdwLevel, LPDWO
 */
 HB_FUNC( WINAPI_GETPROCESSSHUTDOWNPARAMETERS )
 {
-  hb_retl(GetProcessShutdownParameters(static_cast<LPDWORD>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2))));
+  DWORD dwLevel;
+  DWORD dwFlags;
+  hb_retl(GetProcessShutdownParameters(&dwLevel, &dwFlags));
+  hb_stornl(dwLevel, 1);
+  hb_stornl(dwFlags, 2);
 }
 
 /*
@@ -1218,6 +1371,13 @@ WINBASEAPI VOID WINAPI FatalAppExitW (UINT uAction, LPCWSTR lpMessageText)
 HB_FUNC( WINAPI_FATALAPPEXITW )
 {
   FatalAppExitW(static_cast<UINT>(hb_parni(1)), ( LPCWSTR ) hb_parc(2));
+}
+
+HB_FUNC( WINAPI_FATALAPPEXIT )
+{
+  void * str;
+  FatalAppExit(static_cast<UINT>(hb_parni(1)), HB_PARSTR(2, &str, nullptr));
+  hb_strfree(str);
 }
 
 /*
@@ -1240,6 +1400,15 @@ HB_FUNC( WINAPI_GETFIRMWAREENVIRONMENTVARIABLEW )
   hb_retnl(GetFirmwareEnvironmentVariableW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), static_cast<PVOID>(hb_parptr(3)), static_cast<DWORD>(hb_parnl(4))));
 }
 
+HB_FUNC( WINAPI_GETFIRMWAREENVIRONMENTVARIABLE )
+{
+  void * str1;
+  void * str2;
+  hb_retnl(GetFirmwareEnvironmentVariable(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), static_cast<PVOID>(hb_parptr(3)), static_cast<DWORD>(hb_parnl(4))));
+  hb_strfree(str1);
+  hb_strfree(str2);
+}
+
 /*
 WINBASEAPI WINBOOL WINAPI SetFirmwareEnvironmentVariableA (LPCSTR lpName, LPCSTR lpGuid, PVOID pValue, DWORD nSize)
 */
@@ -1256,17 +1425,47 @@ HB_FUNC( WINAPI_SETFIRMWAREENVIRONMENTVARIABLEW )
   hb_retl(SetFirmwareEnvironmentVariableW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), static_cast<PVOID>(hb_parptr(3)), static_cast<DWORD>(hb_parnl(4))));
 }
 
+HB_FUNC( WINAPI_SETFIRMWAREENVIRONMENTVARIABLE )
+{
+  void * str1;
+  void * str2;
+  hb_retl(SetFirmwareEnvironmentVariable(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), static_cast<PVOID>(hb_parptr(3)), static_cast<DWORD>(hb_parnl(4))));
+  hb_strfree(str1);
+  hb_strfree(str2);
+}
+
 /*
 WINBASEAPI HRSRC WINAPI FindResourceA (HMODULE hModule, LPCSTR lpName, LPCSTR lpType)
 */
+HB_FUNC( WINAPI_FINDRESOURCEA )
+{
+  hb_retptr(FindResourceA(static_cast<HMODULE>(hb_parptr(1)), ( LPCSTR ) hb_parc(2), ( LPCSTR ) hb_parc(3)));
+}
 
 /*
 WINBASEAPI HRSRC WINAPI FindResourceW (HMODULE hModule, LPCWSTR lpName, LPCWSTR lpType)
 */
+HB_FUNC( WINAPI_FINDRESOURCEW )
+{
+  hb_retptr(FindResourceW(static_cast<HMODULE>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3)));
+}
+
+HB_FUNC( WINAPI_FINDRESOURCE )
+{
+  void * str1;
+  void * str2;
+  hb_retptr(FindResource(static_cast<HMODULE>(hb_parptr(1)), HB_PARSTR(2, &str1, nullptr), HB_PARSTR(3, &str2, nullptr)));
+  hb_strfree(str1);
+  hb_strfree(str2);
+}
 
 /*
 WINBASEAPI HRSRC WINAPI FindResourceExA (HMODULE hModule, LPCSTR lpType, LPCSTR lpName, WORD wLanguage)
 */
+HB_FUNC( WINAPI_FINDRESOURCEEXA )
+{
+  hb_retptr(FindResourceExA(static_cast<HMODULE>(hb_parptr(1)), ( LPCSTR ) hb_parc(2), ( LPCSTR ) hb_parc(3), static_cast<WORD>(hb_parni(4))));
+}
 
 /*
 WINBASEAPI WINBOOL WINAPI EnumResourceTypesA (HMODULE hModule, ENUMRESTYPEPROCA lpEnumFunc, LONG_PTR lParam)
@@ -1308,6 +1507,13 @@ HB_FUNC( WINAPI_BEGINUPDATERESOURCEW )
   hb_retptr(BeginUpdateResourceW(( LPCWSTR ) hb_parc(1), hb_parl(2)));
 }
 
+HB_FUNC( WINAPI_BEGINUPDATERESOURCE )
+{
+  void * str;
+  hb_retptr(BeginUpdateResource(HB_PARSTR(1, &str, nullptr), hb_parl(2)));
+  hb_strfree(str);
+}
+
 /*
 WINBASEAPI WINBOOL WINAPI UpdateResourceA (HANDLE hUpdate, LPCSTR lpType, LPCSTR lpName, WORD wLanguage, LPVOID lpData, DWORD cb)
 */
@@ -1321,7 +1527,16 @@ WINBASEAPI WINBOOL WINAPI UpdateResourceW (HANDLE hUpdate, LPCWSTR lpType, LPCWS
 */
 HB_FUNC( WINAPI_UPDATERESOURCEW )
 {
-  hb_retl(UpdateResourceW(static_cast<HANDLE>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3), ( WORD ) hb_parni(4), static_cast<LPVOID>(hb_parptr(5)), static_cast<DWORD>(hb_parnl(6))));
+  hb_retl(UpdateResourceW(static_cast<HANDLE>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3), static_cast<WORD>(hb_parni(4)), static_cast<LPVOID>(hb_parptr(5)), static_cast<DWORD>(hb_parnl(6))));
+}
+
+HB_FUNC( WINAPI_UPDATERESOURCE )
+{
+  void * str1;
+  void * str2;
+  hb_retl(UpdateResource(static_cast<HANDLE>(hb_parptr(1)), HB_PARSTR(2, &str1, nullptr), HB_PARSTR(3, &str2, nullptr), static_cast<WORD>(hb_parni(4)), static_cast<LPVOID>(hb_parptr(5)), static_cast<DWORD>(hb_parnl(6))));
+  hb_strfree(str1);
+  hb_strfree(str2);
 }
 
 /*
@@ -1351,10 +1566,33 @@ WINBASEAPI DWORD WINAPI GetFirmwareEnvironmentVariableExW (LPCWSTR lpName, LPCWS
 /*
 WINBASEAPI WINBOOL WINAPI SetFirmwareEnvironmentVariableExA (LPCSTR lpName, LPCSTR lpGuid, PVOID pValue, DWORD nSize, DWORD dwAttributes)
 */
+#if 0
+HB_FUNC( WINAPI_SETFIRMWAREENVIRONMENTVARIABLEEXA )
+{
+  hb_retl(SetFirmwareEnvironmentVariableExA(( LPCSTR ) hb_parc(1), ( LPCSTR ) hb_parc(2), static_cast<PVOID>(hb_parptr(3)), static_cast<DWORD>(hb_parnl(4)), static_cast<DWORD>(hb_parnl(5))));
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI SetFirmwareEnvironmentVariableExW (LPCWSTR lpName, LPCWSTR lpGuid, PVOID pValue, DWORD nSize, DWORD dwAttributes)
 */
+#if 0
+HB_FUNC( WINAPI_SETFIRMWAREENVIRONMENTVARIABLEEXW )
+{
+  hb_retl(SetFirmwareEnvironmentVariableExW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), static_cast<PVOID>(hb_parptr(3)), static_cast<DWORD>(hb_parnl(4)), static_cast<DWORD>(hb_parnl(5))));
+}
+#endif
+
+#if 0
+HB_FUNC( WINAPI_SETFIRMWAREENVIRONMENTVARIABLEEX )
+{
+  void * str1;
+  void * str2;
+  hb_retl(SetFirmwareEnvironmentVariableEx(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), static_cast<PVOID>(hb_parptr(3)), static_cast<DWORD>(hb_parnl(4)), static_cast<DWORD>(hb_parnl(5))));
+  hb_strfree(str1);
+  hb_strfree(str2);
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI GetFirmwareType (PFIRMWARE_TYPE FirmwareType)
@@ -1363,6 +1601,14 @@ WINBASEAPI WINBOOL WINAPI GetFirmwareType (PFIRMWARE_TYPE FirmwareType)
 /*
 WINBASEAPI WINBOOL WINAPI IsNativeVhdBoot (PBOOL NativeVhdBoot)
 */
+#if 0
+HB_FUNC( WINAPI_ISNATIVEVHDBOOT )
+{
+  BOOL NativeVhdBoot;
+  hb_retl(IsNativeVhdBoot(&NativeVhdBoot));
+  hb_storl(NativeVhdBoot, 1);
+}
+#endif
 
 /*
 WINBASEAPI ATOM WINAPI GlobalAddAtomA (LPCSTR lpString)
@@ -1378,6 +1624,13 @@ WINBASEAPI ATOM WINAPI GlobalAddAtomW (LPCWSTR lpString)
 HB_FUNC( WINAPI_GLOBALADDATOMW )
 {
   hb_retni(GlobalAddAtomW(( LPCWSTR ) hb_parc(1)));
+}
+
+HB_FUNC( WINAPI_GLOBALADDATOM )
+{
+  void * str;
+  hb_retni(GlobalAddAtom(HB_PARSTR(1, &str, nullptr)));
+  hb_strfree(str);
 }
 
 /*
@@ -1396,6 +1649,13 @@ HB_FUNC( WINAPI_GLOBALADDATOMEXW )
   hb_retni(GlobalAddAtomExW(( LPCWSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2))));
 }
 
+HB_FUNC( WINAPI_GLOBALADDATOMEX )
+{
+  void * str;
+  hb_retni(GlobalAddAtomEx(HB_PARSTR(1, &str, nullptr), static_cast<DWORD>(hb_parnl(2))));
+  hb_strfree(str);
+}
+
 /*
 WINBASEAPI ATOM WINAPI GlobalFindAtomA (LPCSTR lpString)
 */
@@ -1410,6 +1670,13 @@ WINBASEAPI ATOM WINAPI GlobalFindAtomW (LPCWSTR lpString)
 HB_FUNC( WINAPI_GLOBALFINDATOMW )
 {
   hb_retni(GlobalFindAtomW(( LPCWSTR ) hb_parc(1)));
+}
+
+HB_FUNC( WINAPI_GLOBALFINDATOM )
+{
+  void * str;
+  hb_retni(GlobalFindAtom(HB_PARSTR(1, &str, nullptr)));
+  hb_strfree(str);
 }
 
 /*
@@ -1444,6 +1711,13 @@ HB_FUNC( WINAPI_ADDATOMW )
   hb_retni(AddAtomW(( LPCWSTR ) hb_parc(1)));
 }
 
+HB_FUNC( WINAPI_ADDATOM )
+{
+  void * str;
+  hb_retni(AddAtom(HB_PARSTR(1, &str, nullptr)));
+  hb_strfree(str);
+}
+
 /*
 WINBASEAPI ATOM WINAPI FindAtomA (LPCSTR lpString)
 */
@@ -1458,6 +1732,13 @@ WINBASEAPI ATOM WINAPI FindAtomW (LPCWSTR lpString)
 HB_FUNC( WINAPI_FINDATOMW )
 {
   hb_retni(FindAtomW(( LPCWSTR ) hb_parc(1)));
+}
+
+HB_FUNC( WINAPI_FINDATOM )
+{
+  void * str;
+  hb_retni(FindAtom(HB_PARSTR(1, &str, nullptr)));
+  hb_strfree(str);
 }
 
 /*
@@ -1492,6 +1773,15 @@ HB_FUNC( WINAPI_GETPROFILEINTW )
   hb_retni(GetProfileIntW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), ( INT ) hb_parni(3)));
 }
 
+HB_FUNC( WINAPI_GETPROFILEINT )
+{
+  void * str1;
+  void * str2;
+  hb_retni(GetProfileInt(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), ( INT ) hb_parni(3)));
+  hb_strfree(str1);
+  hb_strfree(str2);
+}
+
 /*
 WINBASEAPI DWORD WINAPI GetProfileStringA (LPCSTR lpAppName, LPCSTR lpKeyName, LPCSTR lpDefault, LPSTR lpReturnedString, DWORD nSize)
 */
@@ -1522,6 +1812,17 @@ WINBASEAPI WINBOOL WINAPI WriteProfileStringW (LPCWSTR lpAppName, LPCWSTR lpKeyN
 HB_FUNC( WINAPI_WRITEPROFILESTRINGW )
 {
   hb_retl(WriteProfileStringW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3)));
+}
+
+HB_FUNC( WINAPI_WRITEPROFILESTRING )
+{
+  void * str1;
+  void * str2;
+  void * str3;
+  hb_retl(WriteProfileString(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr)));
+  hb_strfree(str1);
+  hb_strfree(str2);
+  hb_strfree(str3);
 }
 
 /*
@@ -1556,6 +1857,15 @@ HB_FUNC( WINAPI_WRITEPROFILESECTIONW )
   hb_retl(WriteProfileSectionW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2)));
 }
 
+HB_FUNC( WINAPI_WRITEPROFILESECTION )
+{
+  void * str1;
+  void * str2;
+  hb_retl(WriteProfileSection(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str1);
+  hb_strfree(str2);
+}
+
 /*
 WINBASEAPI UINT WINAPI GetPrivateProfileIntA (LPCSTR lpAppName, LPCSTR lpKeyName, INT nDefault, LPCSTR lpFileName)
 */
@@ -1570,6 +1880,17 @@ WINBASEAPI UINT WINAPI GetPrivateProfileIntW (LPCWSTR lpAppName, LPCWSTR lpKeyNa
 HB_FUNC( WINAPI_GETPRIVATEPROFILEINTW )
 {
   hb_retni(GetPrivateProfileIntW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), ( INT ) hb_parni(3), ( LPCWSTR ) hb_parc(4)));
+}
+
+HB_FUNC( WINAPI_GETPRIVATEPROFILEINT )
+{
+  void * str1;
+  void * str2;
+  void * str3;
+  hb_retni(GetPrivateProfileInt(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), ( INT ) hb_parni(3), HB_PARSTR(4, &str3, nullptr)));
+  hb_strfree(str1);
+  hb_strfree(str2);
+  hb_strfree(str3);
 }
 
 /*
@@ -1604,6 +1925,19 @@ HB_FUNC( WINAPI_WRITEPRIVATEPROFILESTRINGW )
   hb_retl(WritePrivateProfileStringW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3), ( LPCWSTR ) hb_parc(4)));
 }
 
+HB_FUNC( WINAPI_WRITEPRIVATEPROFILESTRING )
+{
+  void * str1;
+  void * str2;
+  void * str3;
+  void * str4;
+  hb_retl(WritePrivateProfileString(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr)));
+  hb_strfree(str1);
+  hb_strfree(str2);
+  hb_strfree(str3);
+  hb_strfree(str4);
+}
+
 /*
 WINBASEAPI DWORD WINAPI GetPrivateProfileSectionA (LPCSTR lpAppName, LPSTR lpReturnedString, DWORD nSize, LPCSTR lpFileName)
 */
@@ -1634,6 +1968,17 @@ WINBASEAPI WINBOOL WINAPI WritePrivateProfileSectionW (LPCWSTR lpAppName, LPCWST
 HB_FUNC( WINAPI_WRITEPRIVATEPROFILESECTIONW )
 {
   hb_retl(WritePrivateProfileSectionW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3)));
+}
+
+HB_FUNC( WINAPI_WRITEPRIVATEPROFILESECTION )
+{
+  void * str1;
+  void * str2;
+  void * str3;
+  hb_retl(WritePrivateProfileSection(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr)));
+  hb_strfree(str1);
+  hb_strfree(str2);
+  hb_strfree(str3);
 }
 
 /*
@@ -1682,6 +2027,17 @@ WINBASEAPI WINBOOL WINAPI WritePrivateProfileStructW (LPCWSTR lpszSection, LPCWS
 HB_FUNC( WINAPI_WRITEPRIVATEPROFILESTRUCTW )
 {
   hb_retl(WritePrivateProfileStructW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), static_cast<LPVOID>(hb_parptr(3)), static_cast<UINT>(hb_parni(4)), ( LPCWSTR ) hb_parc(5)));
+}
+
+HB_FUNC( WINAPI_WRITEPRIVATEPROFILESTRUCT )
+{
+  void * str1;
+  void * str2;
+  void * str3;
+  hb_retl(WritePrivateProfileStruct(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), static_cast<LPVOID>(hb_parptr(3)), static_cast<UINT>(hb_parni(4)), HB_PARSTR(5, &str3, nullptr)));
+  hb_strfree(str1);
+  hb_strfree(str2);
+  hb_strfree(str3);
 }
 
 /*
@@ -1740,6 +2096,13 @@ HB_FUNC( WINAPI_SETDLLDIRECTORYW )
   hb_retl(SetDllDirectoryW(( LPCWSTR ) hb_parc(1)));
 }
 
+HB_FUNC( WINAPI_SETDLLDIRECTORY )
+{
+  void * str;
+  hb_retl(SetDllDirectory(HB_PARSTR(1, &str, nullptr)));
+  hb_strfree(str);
+}
+
 /*
 WINBASEAPI DWORD WINAPI GetDllDirectoryA (DWORD nBufferLength, LPSTR lpBuffer)
 */
@@ -1783,10 +2146,31 @@ WINBASEAPI WINBOOL WINAPI CreateDirectoryTransactedW (LPCWSTR lpTemplateDirector
 /*
 WINBASEAPI WINBOOL WINAPI RemoveDirectoryTransactedA (LPCSTR lpPathName, HANDLE hTransaction)
 */
+#if 0
+HB_FUNC( WINAPI_REMOVEDIRECTORYTRANSACTEDA )
+{
+  hb_retl(RemoveDirectoryTransactedA(( LPCSTR ) hb_parc(1), static_cast<HANDLE>(hb_parptr(2))));
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI RemoveDirectoryTransactedW (LPCWSTR lpPathName, HANDLE hTransaction)
 */
+#if 0
+HB_FUNC( WINAPI_REMOVEDIRECTORYTRANSACTEDW )
+{
+  hb_retl(RemoveDirectoryTransactedW(( LPCWSTR ) hb_parc(1), static_cast<HANDLE>(hb_parptr(2))));
+}
+#endif
+
+#if 0
+HB_FUNC( WINAPI_REMOVEDIRECTORYTRANSACTED )
+{
+  void * str;
+  hb_retl(RemoveDirectoryTransacted(HB_PARSTR(1, &str, nullptr), static_cast<HANDLE>(hb_parptr(2))));
+  hb_strfree(str);
+}
+#endif
 
 /*
 WINBASEAPI DWORD WINAPI GetFullPathNameTransactedA (LPCSTR lpFileName, DWORD nBufferLength, LPSTR lpBuffer, LPSTR *lpFilePart, HANDLE hTransaction)
@@ -1831,10 +2215,31 @@ HB_FUNC( WINAPI_REOPENFILE )
 /*
 WINBASEAPI WINBOOL WINAPI SetFileAttributesTransactedA (LPCSTR lpFileName, DWORD dwFileAttributes, HANDLE hTransaction)
 */
+#if 0
+HB_FUNC( WINAPI_SETFILEATTRIBUTESTRANSACTEDA )
+{
+  hb_retl(SetFileAttributesTransactedA(( LPCSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2)), static_cast<HANDLE>(hb_parptr(3))));
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI SetFileAttributesTransactedW (LPCWSTR lpFileName, DWORD dwFileAttributes, HANDLE hTransaction)
 */
+#if 0
+HB_FUNC( WINAPI_SETFILEATTRIBUTESTRANSACTEDW )
+{
+  hb_retl(SetFileAttributesTransactedW(( LPCWSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2)), static_cast<HANDLE>(hb_parptr(3))));
+}
+#endif
+
+#if 0
+HB_FUNC( WINAPI_SETFILEATTRIBUTESTRANSACTED )
+{
+  void * str;
+  hb_retl(SetFileAttributesTransacted(HB_PARSTR(1, &str, nullptr), static_cast<DWORD>(hb_parnl(2)), static_cast<HANDLE>(hb_parptr(3))));
+  hb_strfree(str);
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI GetFileAttributesTransactedA (LPCSTR lpFileName, GET_FILEEX_INFO_LEVELS fInfoLevelId, LPVOID lpFileInformation, HANDLE hTransaction)
@@ -1849,7 +2254,9 @@ WINBASEAPI DWORD WINAPI GetCompressedFileSizeA (LPCSTR lpFileName, LPDWORD lpFil
 */
 HB_FUNC( WINAPI_GETCOMPRESSEDFILESIZEA )
 {
-  hb_retnl(GetCompressedFileSizeA(( LPCSTR ) hb_parc(1), static_cast<LPDWORD>(hb_parptr(2))));
+  DWORD FileSizeHigh;
+  hb_retnl(GetCompressedFileSizeA(( LPCSTR ) hb_parc(1), &FileSizeHigh));
+  hb_stornl(FileSizeHigh, 2);
 }
 
 /*
@@ -1857,24 +2264,83 @@ WINBASEAPI DWORD WINAPI GetCompressedFileSizeW (LPCWSTR lpFileName, LPDWORD lpFi
 */
 HB_FUNC( WINAPI_GETCOMPRESSEDFILESIZEW )
 {
-  hb_retnl(GetCompressedFileSizeW(( LPCWSTR ) hb_parc(1), static_cast<LPDWORD>(hb_parptr(2))));
+  DWORD FileSizeHigh;
+  hb_retnl(GetCompressedFileSizeW(( LPCWSTR ) hb_parc(1), &FileSizeHigh));
+  hb_stornl(FileSizeHigh, 2);
+}
+
+HB_FUNC( WINAPI_GETCOMPRESSEDFILESIZE )
+{
+  void * str;
+  DWORD FileSizeHigh;
+  hb_retnl(GetCompressedFileSize(HB_PARSTR(1, &str, nullptr), &FileSizeHigh));
+  hb_stornl(FileSizeHigh, 2);
+  hb_strfree(str);
 }
 
 /*
 WINBASEAPI DWORD WINAPI GetCompressedFileSizeTransactedA (LPCSTR lpFileName, LPDWORD lpFileSizeHigh, HANDLE hTransaction)
 */
+#if 0
+HB_FUNC( WINAPI_GETCOMPRESSEDFILESIZETRANSACTEDA )
+{
+  DWORD FileSizeHigh;
+  hb_retnl(GetCompressedFileSizeTransactedA(( LPCSTR ) hb_parc(1), &FileSizeHigh, static_cast<HANDLE>(hb_parptr(3))));
+  hb_stornl(FileSizeHigh, 2);
+}
+#endif
 
 /*
 WINBASEAPI DWORD WINAPI GetCompressedFileSizeTransactedW (LPCWSTR lpFileName, LPDWORD lpFileSizeHigh, HANDLE hTransaction)
 */
+#if 0
+HB_FUNC( WINAPI_GETCOMPRESSEDFILESIZETRANSACTEDW )
+{
+  DWORD FileSizeHigh;
+  hb_retnl(GetCompressedFileSizeTransactedW(( LPCWSTR ) hb_parc(1), &FileSizeHigh, static_cast<HANDLE>(hb_parptr(3))));
+  hb_stornl(FileSizeHigh, 2);
+}
+#endif
+
+#if 0
+HB_FUNC( WINAPI_GETCOMPRESSEDFILESIZETRANSACTED )
+{
+  void * str;
+  DWORD FileSizeHigh;
+  hb_retnl(GetCompressedFileSizeTransacted(HB_PARSTR(1, &str, nullptr), &FileSizeHigh, static_cast<HANDLE>(hb_parptr(3))));
+  hb_stornl(FileSizeHigh, 2);
+  hb_strfree(str);
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI DeleteFileTransactedA (LPCSTR lpFileName, HANDLE hTransaction)
 */
+#if 0
+HB_FUNC( WINAPI_DELETEFILETRANSACTEDA )
+{
+  hb_retl(DeleteFileTransactedA(( LPCSTR ) hb_parc(1), static_cast<HANDLE>(hb_parptr(2))));
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI DeleteFileTransactedW (LPCWSTR lpFileName, HANDLE hTransaction)
 */
+#if 0
+HB_FUNC( WINAPI_DELETEFILETRANSACTEDW )
+{
+  hb_retl(DeleteFileTransactedW(( LPCWSTR ) hb_parc(1), static_cast<HANDLE>(hb_parptr(2))));
+}
+#endif
+
+#if 0
+HB_FUNC( WINAPI_DELETEFILETRANSACTED )
+{
+  void * str;
+  hb_retl(DeleteFileTransacted(HB_PARSTR(1, &str, nullptr), static_cast<HANDLE>(hb_parptr(2))));
+  hb_strfree(str);
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI CheckNameLegalDOS8Dot3A (LPCSTR lpName, LPSTR lpOemName, DWORD OemNameSize, PBOOL pbNameContainsSpaces, PBOOL pbNameLegal)
@@ -1898,6 +2364,15 @@ WINBASEAPI WINBOOL WINAPI CopyFileW (LPCWSTR lpExistingFileName, LPCWSTR lpNewFi
 HB_FUNC( WINAPI_COPYFILEW )
 {
   hb_retl(CopyFileW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), hb_parl(3)));
+}
+
+HB_FUNC( WINAPI_COPYFILE )
+{
+  void * str1;
+  void * str2;
+  hb_retl(CopyFileW(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), hb_parl(3)));
+  hb_strfree(str1);
+  hb_strfree(str2);
 }
 
 /*
@@ -1944,6 +2419,15 @@ HB_FUNC( WINAPI_MOVEFILEW )
   hb_retl(MoveFileW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2)));
 }
 
+HB_FUNC( WINAPI_MOVEFILE )
+{
+  void * str1;
+  void * str2;
+  hb_retl(MoveFile(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str1);
+  hb_strfree(str2);
+}
+
 /*
 WINBASEAPI WINBOOL WINAPI MoveFileExA (LPCSTR lpExistingFileName, LPCSTR lpNewFileName, DWORD dwFlags)
 */
@@ -1958,6 +2442,15 @@ WINBASEAPI WINBOOL WINAPI MoveFileExW (LPCWSTR lpExistingFileName, LPCWSTR lpNew
 HB_FUNC( WINAPI_MOVEFILEEXW )
 {
   hb_retl(MoveFileExW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), static_cast<DWORD>(hb_parnl(3))));
+}
+
+HB_FUNC( WINAPI_MOVEFILEEX )
+{
+  void * str1;
+  void * str2;
+  hb_retl(MoveFileEx(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), static_cast<DWORD>(hb_parnl(3))));
+  hb_strfree(str1);
+  hb_strfree(str2);
 }
 
 /*
@@ -1990,6 +2483,17 @@ WINBASEAPI WINBOOL WINAPI ReplaceFileW (LPCWSTR lpReplacedFileName, LPCWSTR lpRe
 HB_FUNC( WINAPI_REPLACEFILEW )
 {
   hb_retl(ReplaceFileW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3), static_cast<DWORD>(hb_parnl(4)), static_cast<LPVOID>(hb_parptr(5)), static_cast<LPVOID>(hb_parptr(6))));
+}
+
+HB_FUNC( WINAPI_REPLACEFILE )
+{
+  void * str1;
+  void * str2;
+  void * str3;
+  hb_retl(ReplaceFile(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), static_cast<DWORD>(hb_parnl(4)), static_cast<LPVOID>(hb_parptr(5)), static_cast<LPVOID>(hb_parptr(6))));
+  hb_strfree(str1);
+  hb_strfree(str2);
+  hb_strfree(str3);
 }
 
 /*
@@ -2073,7 +2577,15 @@ WINBASEAPI WINBOOL WINAPI GetNamedPipeHandleStateA (HANDLE hNamedPipe, LPDWORD l
 */
 HB_FUNC( WINAPI_GETNAMEDPIPEHANDLESTATEA )
 {
-  hb_retl(GetNamedPipeHandleStateA(static_cast<HANDLE>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2)), static_cast<LPDWORD>(hb_parptr(3)), static_cast<LPDWORD>(hb_parptr(4)), static_cast<LPDWORD>(hb_parptr(5)), ( LPSTR ) hb_parc(6), static_cast<DWORD>(hb_parnl(7))));
+  DWORD State;
+  DWORD CurInstances;
+  DWORD MaxCollectionCount;
+  DWORD CollectDataTimeout;
+  hb_retl(GetNamedPipeHandleStateA(static_cast<HANDLE>(hb_parptr(1)), &State, &CurInstances, &MaxCollectionCount, &CollectDataTimeout, ( LPSTR ) hb_parc(6), static_cast<DWORD>(hb_parnl(7))));
+  hb_stornl(State, 2);
+  hb_stornl(CurInstances, 3);
+  hb_stornl(MaxCollectionCount, 4);
+  hb_stornl(CollectDataTimeout, 5);
 }
 
 /*
@@ -2081,7 +2593,15 @@ WINBASEAPI WINBOOL WINAPI GetNamedPipeHandleStateW (HANDLE hNamedPipe, LPDWORD l
 */
 HB_FUNC( WINAPI_GETNAMEDPIPEHANDLESTATEW )
 {
-  hb_retl(GetNamedPipeHandleStateW(static_cast<HANDLE>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2)), static_cast<LPDWORD>(hb_parptr(3)), static_cast<LPDWORD>(hb_parptr(4)), static_cast<LPDWORD>(hb_parptr(5)), ( LPWSTR ) hb_parc(6), static_cast<DWORD>(hb_parnl(7))));
+  DWORD State;
+  DWORD CurInstances;
+  DWORD MaxCollectionCount;
+  DWORD CollectDataTimeout;
+  hb_retl(GetNamedPipeHandleStateW(static_cast<HANDLE>(hb_parptr(1)), &State, &CurInstances, &MaxCollectionCount, &CollectDataTimeout, ( LPWSTR ) hb_parc(6), static_cast<DWORD>(hb_parnl(7))));
+  hb_stornl(State, 2);
+  hb_stornl(CurInstances, 3);
+  hb_stornl(MaxCollectionCount, 4);
+  hb_stornl(CollectDataTimeout, 5);
 }
 
 /*
@@ -2089,7 +2609,9 @@ WINBASEAPI WINBOOL WINAPI CallNamedPipeA (LPCSTR lpNamedPipeName, LPVOID lpInBuf
 */
 HB_FUNC( WINAPI_CALLNAMEDPIPEA )
 {
-  hb_retl(CallNamedPipeA(( LPCSTR ) hb_parc(1), static_cast<LPVOID>(hb_parptr(2)), static_cast<DWORD>(hb_parnl(3)), static_cast<LPVOID>(hb_parptr(4)), static_cast<DWORD>(hb_parnl(5)), static_cast<LPDWORD>(hb_parptr(6)), static_cast<DWORD>(hb_parnl(7))));
+  DWORD BytesRead;
+  hb_retl(CallNamedPipeA(( LPCSTR ) hb_parc(1), static_cast<LPVOID>(hb_parptr(2)), static_cast<DWORD>(hb_parnl(3)), static_cast<LPVOID>(hb_parptr(4)), static_cast<DWORD>(hb_parnl(5)), &BytesRead, static_cast<DWORD>(hb_parnl(7))));
+  hb_stornl(BytesRead, 6);
 }
 
 /*
@@ -2097,7 +2619,9 @@ WINBASEAPI WINBOOL WINAPI CallNamedPipeW (LPCWSTR lpNamedPipeName, LPVOID lpInBu
 */
 HB_FUNC( WINAPI_CALLNAMEDPIPEW )
 {
-  hb_retl(CallNamedPipeW(( LPCWSTR ) hb_parc(1), static_cast<LPVOID>(hb_parptr(2)), static_cast<DWORD>(hb_parnl(3)), static_cast<LPVOID>(hb_parptr(4)), static_cast<DWORD>(hb_parnl(5)), static_cast<LPDWORD>(hb_parptr(6)), static_cast<DWORD>(hb_parnl(7))));
+  DWORD BytesRead;
+  hb_retl(CallNamedPipeW(( LPCWSTR ) hb_parc(1), static_cast<LPVOID>(hb_parptr(2)), static_cast<DWORD>(hb_parnl(3)), static_cast<LPVOID>(hb_parptr(4)), static_cast<DWORD>(hb_parnl(5)), &BytesRead, static_cast<DWORD>(hb_parnl(7))));
+  hb_stornl(BytesRead, 6);
 }
 
 /*
@@ -2122,6 +2646,15 @@ WINBASEAPI WINBOOL WINAPI SetVolumeLabelW (LPCWSTR lpRootPathName, LPCWSTR lpVol
 HB_FUNC( WINAPI_SETVOLUMELABELW )
 {
   hb_retl(SetVolumeLabelW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2)));
+}
+
+HB_FUNC( WINAPI_SETVOLUMELABEL )
+{
+  void * str1;
+  void * str2;
+  hb_retl(SetVolumeLabel(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str1);
+  hb_strfree(str2);
 }
 
 /*
@@ -2153,7 +2686,13 @@ WINBASEAPI WINBOOL WINAPI GetVolumeInformationA (LPCSTR lpRootPathName, LPSTR lp
 */
 HB_FUNC( WINAPI_GETVOLUMEINFORMATIONA )
 {
-  hb_retl(GetVolumeInformationA(( LPCSTR ) hb_parc(1), ( LPSTR ) hb_parc(2), static_cast<DWORD>(hb_parnl(3)), static_cast<LPDWORD>(hb_parptr(4)), static_cast<LPDWORD>(hb_parptr(5)), static_cast<LPDWORD>(hb_parptr(6)), ( LPSTR ) hb_parc(7), static_cast<DWORD>(hb_parnl(8))));
+  DWORD VolumeSerialNumber;
+  DWORD MaximumComponentLength;
+  DWORD FileSystemFlags;
+  hb_retl(GetVolumeInformationA(( LPCSTR ) hb_parc(1), ( LPSTR ) hb_parc(2), static_cast<DWORD>(hb_parnl(3)), &VolumeSerialNumber, &MaximumComponentLength, &FileSystemFlags, ( LPSTR ) hb_parc(7), static_cast<DWORD>(hb_parnl(8))));
+  hb_stornl(VolumeSerialNumber, 4);
+  hb_stornl(MaximumComponentLength, 5);
+  hb_stornl(FileSystemFlags, 6);
 }
 
 /*
@@ -2172,6 +2711,13 @@ HB_FUNC( WINAPI_CLEAREVENTLOGW )
   hb_retl(ClearEventLogW(static_cast<HANDLE>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2)));
 }
 
+HB_FUNC( WINAPI_CLEAREVENTLOG )
+{
+  void * str;
+  hb_retl(ClearEventLog(static_cast<HANDLE>(hb_parptr(1)), HB_PARSTR(2, &str, nullptr)));
+  hb_strfree(str);
+}
+
 /*
 WINADVAPI WINBOOL WINAPI BackupEventLogA (HANDLE hEventLog, LPCSTR lpBackupFileName)
 */
@@ -2186,6 +2732,13 @@ WINADVAPI WINBOOL WINAPI BackupEventLogW (HANDLE hEventLog, LPCWSTR lpBackupFile
 HB_FUNC( WINAPI_BACKUPEVENTLOGW )
 {
   hb_retl(BackupEventLogW(static_cast<HANDLE>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2)));
+}
+
+HB_FUNC( WINAPI_BACKUPEVENTLOG )
+{
+  void * str;
+  hb_retl(BackupEventLog(static_cast<HANDLE>(hb_parptr(1)), HB_PARSTR(2, &str, nullptr)));
+  hb_strfree(str);
 }
 
 /*
@@ -2215,10 +2768,22 @@ HB_FUNC( WINAPI_NOTIFYCHANGEEVENTLOG )
 /*
 WINADVAPI WINBOOL WINAPI GetNumberOfEventLogRecords (HANDLE hEventLog, PDWORD NumberOfRecords)
 */
+HB_FUNC( WINAPI_GETNUMBEROFEVENTLOGRECORDS )
+{
+  DWORD NumberOfRecords;
+  hb_retl(GetNumberOfEventLogRecords(static_cast<HANDLE>(hb_parptr(1)), &NumberOfRecords));
+  hb_stornl(NumberOfRecords, 2);
+}
 
 /*
 WINADVAPI WINBOOL WINAPI GetOldestEventLogRecord (HANDLE hEventLog, PDWORD OldestRecord)
 */
+HB_FUNC( WINAPI_GETOLDESTEVENTLOGRECORD )
+{
+  DWORD OldestRecord;
+  hb_retl(GetOldestEventLogRecord(static_cast<HANDLE>(hb_parptr(1)), &OldestRecord));
+  hb_stornl(OldestRecord, 2);
+}
 
 /*
 WINADVAPI HANDLE WINAPI OpenEventLogA (LPCSTR lpUNCServerName, LPCSTR lpSourceName)
@@ -2234,6 +2799,15 @@ WINADVAPI HANDLE WINAPI OpenEventLogW (LPCWSTR lpUNCServerName, LPCWSTR lpSource
 HB_FUNC( WINAPI_OPENEVENTLOGW )
 {
   hb_retptr(OpenEventLogW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2)));
+}
+
+HB_FUNC( WINAPI_OPENEVENTLOG )
+{
+  void * str1;
+  void * str2;
+  hb_retptr(OpenEventLog(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str1);
+  hb_strfree(str2);
 }
 
 /*
@@ -2252,6 +2826,15 @@ HB_FUNC( WINAPI_REGISTEREVENTSOURCEW )
   hb_retptr(RegisterEventSourceW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2)));
 }
 
+HB_FUNC( WINAPI_REGISTEREVENTSOURCE )
+{
+  void * str1;
+  void * str2;
+  hb_retptr(RegisterEventSource(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str1);
+  hb_strfree(str2);
+}
+
 /*
 WINADVAPI HANDLE WINAPI OpenBackupEventLogA (LPCSTR lpUNCServerName, LPCSTR lpFileName)
 */
@@ -2266,6 +2849,15 @@ WINADVAPI HANDLE WINAPI OpenBackupEventLogW (LPCWSTR lpUNCServerName, LPCWSTR lp
 HB_FUNC( WINAPI_OPENBACKUPEVENTLOGW )
 {
   hb_retptr(OpenBackupEventLogW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2)));
+}
+
+HB_FUNC( WINAPI_OPENBACKUPEVENTLOG )
+{
+  void * str1;
+  void * str2;
+  hb_retptr(OpenBackupEventLog(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str1);
+  hb_strfree(str2);
 }
 
 /*
@@ -2289,7 +2881,9 @@ WINADVAPI WINBOOL WINAPI GetEventLogInformation (HANDLE hEventLog, DWORD dwInfoL
 */
 HB_FUNC( WINAPI_GETEVENTLOGINFORMATION )
 {
-  hb_retl(GetEventLogInformation(static_cast<HANDLE>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2)), static_cast<LPVOID>(hb_parptr(3)), static_cast<DWORD>(hb_parnl(4)), static_cast<LPDWORD>(hb_parptr(5))));
+  DWORD cbBytesNeeded;
+  hb_retl(GetEventLogInformation(static_cast<HANDLE>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2)), static_cast<LPVOID>(hb_parptr(3)), static_cast<DWORD>(hb_parnl(4)), &cbBytesNeeded));
+  hb_stornl(cbBytesNeeded, 5);
 }
 
 /*
@@ -2359,6 +2953,10 @@ WINBASEAPI WINBOOL WINAPI ReadDirectoryChangesW (HANDLE hDirectory, LPVOID lpBuf
 /*
 WINBASEAPI WINBOOL WINAPI IsBadReadPtr (CONST VOID *lp, UINT_PTR ucb)
 */
+HB_FUNC( WINAPI_ISBADREADPTR )
+{
+  hb_retl(IsBadReadPtr(static_cast<CONST VOID*>(hb_parptr(1)), ( UINT_PTR ) hb_parni(2)));
+}
 
 /*
 WINBASEAPI WINBOOL WINAPI IsBadWritePtr (LPVOID lp, UINT_PTR ucb)
@@ -2371,6 +2969,10 @@ HB_FUNC( WINAPI_ISBADWRITEPTR )
 /*
 WINBASEAPI WINBOOL WINAPI IsBadHugeReadPtr (CONST VOID *lp, UINT_PTR ucb)
 */
+HB_FUNC( WINAPI_ISBADHUGEREADPTR )
+{
+  hb_retl(IsBadHugeReadPtr(static_cast<CONST VOID*>(hb_parptr(1)), ( UINT_PTR ) hb_parni(2)));
+}
 
 /*
 WINBASEAPI WINBOOL WINAPI IsBadHugeWritePtr (LPVOID lp, UINT_PTR ucb)
@@ -2398,6 +3000,13 @@ WINBASEAPI WINBOOL WINAPI IsBadStringPtrW (LPCWSTR lpsz, UINT_PTR ucchMax)
 HB_FUNC( WINAPI_ISBADSTRINGPTRW )
 {
   hb_retl(IsBadStringPtrW(( LPCWSTR ) hb_parc(1), ( UINT_PTR ) hb_parni(2)));
+}
+
+HB_FUNC( WINAPI_ISBADSTRINGPTR )
+{
+  void * str;
+  hb_retl(IsBadStringPtr(HB_PARSTR(1, &str, nullptr), ( UINT_PTR ) hb_parni(2)));
+  hb_strfree(str);
 }
 
 /*
@@ -2459,18 +3068,43 @@ WINADVAPI WINBOOL WINAPI LookupPrivilegeNameW (LPCWSTR lpSystemName, PLUID lpLui
 /*
 WINADVAPI WINBOOL WINAPI LookupPrivilegeDisplayNameA (LPCSTR lpSystemName, LPCSTR lpName, LPSTR lpDisplayName, LPDWORD cchDisplayName, LPDWORD lpLanguageId)
 */
-HB_FUNC( WINAPI_LOOKUPPRIVILEGEDISPLAYNAMEA )
+HB_FUNC( WINAPI_LOOKUPPRIVILEGEDISPLAYNAMEA ) // TODO: corrigir parametro 3
 {
-  hb_retl(LookupPrivilegeDisplayNameA(( LPCSTR ) hb_parc(1), ( LPCSTR ) hb_parc(2), ( LPSTR ) hb_parc(3), static_cast<LPDWORD>(hb_parptr(4)), static_cast<LPDWORD>(hb_parptr(5))));
+  DWORD cchDisplayName;
+  DWORD LanguageId;
+  hb_retl(LookupPrivilegeDisplayNameA(( LPCSTR ) hb_parc(1), ( LPCSTR ) hb_parc(2), ( LPSTR ) hb_parc(3), &cchDisplayName, &LanguageId));
+  hb_stornl(cchDisplayName, 4);
+  hb_stornl(LanguageId, 5);
 }
 
 /*
 WINADVAPI WINBOOL WINAPI LookupPrivilegeDisplayNameW (LPCWSTR lpSystemName, LPCWSTR lpName, LPWSTR lpDisplayName, LPDWORD cchDisplayName, LPDWORD lpLanguageId)
 */
-HB_FUNC( WINAPI_LOOKUPPRIVILEGEDISPLAYNAMEW )
+HB_FUNC( WINAPI_LOOKUPPRIVILEGEDISPLAYNAMEW ) // TODO: corrigir parametro 3
 {
-  hb_retl(LookupPrivilegeDisplayNameW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), ( LPWSTR ) hb_parc(3), static_cast<LPDWORD>(hb_parptr(4)), static_cast<LPDWORD>(hb_parptr(5))));
+  DWORD cchDisplayName;
+  DWORD LanguageId;
+  hb_retl(LookupPrivilegeDisplayNameW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), ( LPWSTR ) hb_parc(3), &cchDisplayName, &LanguageId));
+  hb_stornl(cchDisplayName, 4);
+  hb_stornl(LanguageId, 5);
 }
+
+#if 0
+HB_FUNC( WINAPI_LOOKUPPRIVILEGEDISPLAYNAME ) // TODO: corrigir parametro 3
+{
+  void * str1;
+  void * str2;
+  void * str3;
+  DWORD cchDisplayName;
+  DWORD LanguageId;
+  hb_retl(LookupPrivilegeDisplayName(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), &cchDisplayName, &LanguageId));
+  hb_stornl(cchDisplayName, 4);
+  hb_stornl(LanguageId, 5);
+  hb_strfree(str1);
+  hb_strfree(str2);
+  hb_strfree(str3);
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI BuildCommDCBA (LPCSTR lpDef, LPDCB lpDCB)
@@ -2515,17 +3149,21 @@ WINBASEAPI WINBOOL WINAPI SetDefaultCommConfigW (LPCWSTR lpszName, LPCOMMCONFIG 
 /*
 WINBASEAPI WINBOOL WINAPI GetComputerNameA (LPSTR lpBuffer, LPDWORD nSize)
 */
-HB_FUNC( WINAPI_GETCOMPUTERNAMEA )
+HB_FUNC( WINAPI_GETCOMPUTERNAMEA ) // TODO: corrigir parametro 1
 {
-  hb_retl(GetComputerNameA(( LPSTR ) hb_parc(1), static_cast<LPDWORD>(hb_parptr(2))));
+  DWORD nSize;
+  hb_retl(GetComputerNameA(( LPSTR ) hb_parc(1), &nSize));
+  hb_stornl(nSize, 2);
 }
 
 /*
 WINBASEAPI WINBOOL WINAPI GetComputerNameW (LPWSTR lpBuffer, LPDWORD nSize)
 */
-HB_FUNC( WINAPI_GETCOMPUTERNAMEW )
+HB_FUNC( WINAPI_GETCOMPUTERNAMEW ) // TODO: corrigir parametro 1
 {
-  hb_retl(GetComputerNameW(( LPWSTR ) hb_parc(1), static_cast<LPDWORD>(hb_parptr(2))));
+  DWORD nSize;
+  hb_retl(GetComputerNameW(( LPWSTR ) hb_parc(1), &nSize));
+  hb_stornl(nSize, 2);
 }
 
 /*
@@ -2544,6 +3182,13 @@ HB_FUNC( WINAPI_SETCOMPUTERNAMEW )
   hb_retl(SetComputerNameW(( LPCWSTR ) hb_parc(1)));
 }
 
+HB_FUNC( WINAPI_SETCOMPUTERNAME )
+{
+  void * str;
+  hb_retl(SetComputerName(HB_PARSTR(1, &str, nullptr)));
+  hb_strfree(str);
+}
+
 /*
 WINBASEAPI WINBOOL WINAPI SetComputerNameExA (COMPUTER_NAME_FORMAT NameType, LPCTSTR lpBuffer)
 */
@@ -2553,7 +3198,9 @@ WINBASEAPI WINBOOL WINAPI DnsHostnameToComputerNameA (LPCSTR Hostname, LPSTR Com
 */
 HB_FUNC( WINAPI_DNSHOSTNAMETOCOMPUTERNAMEA )
 {
-  hb_retl(DnsHostnameToComputerNameA(( LPCSTR ) hb_parc(1), ( LPSTR ) hb_parc(2), static_cast<LPDWORD>(hb_parptr(3))));
+  DWORD nSize;
+  hb_retl(DnsHostnameToComputerNameA(( LPCSTR ) hb_parc(1), ( LPSTR ) hb_parc(2), &nSize));
+  hb_stornl(nSize, 3);
 }
 
 /*
@@ -2561,23 +3208,29 @@ WINBASEAPI WINBOOL WINAPI DnsHostnameToComputerNameW (LPCWSTR Hostname, LPWSTR C
 */
 HB_FUNC( WINAPI_DNSHOSTNAMETOCOMPUTERNAMEW )
 {
-  hb_retl(DnsHostnameToComputerNameW(( LPCWSTR ) hb_parc(1), ( LPWSTR ) hb_parc(2), static_cast<LPDWORD>(hb_parptr(3))));
+  DWORD nSize;
+  hb_retl(DnsHostnameToComputerNameW(( LPCWSTR ) hb_parc(1), ( LPWSTR ) hb_parc(2), &nSize));
+  hb_stornl(nSize, 3);
 }
 
 /*
 WINADVAPI WINBOOL WINAPI GetUserNameA (LPSTR lpBuffer, LPDWORD pcbBuffer)
 */
-HB_FUNC( WINAPI_GETUSERNAMEA )
+HB_FUNC( WINAPI_GETUSERNAMEA ) // TODO: corrigir parametro 1
 {
-  hb_retl(GetUserNameA(( LPSTR ) hb_parc(1), static_cast<LPDWORD>(hb_parptr(2))));
+  DWORD pcbBuffer;
+  hb_retl(GetUserNameA(( LPSTR ) hb_parc(1), &pcbBuffer));
+  hb_stornl(pcbBuffer, 2);
 }
 
 /*
 WINADVAPI WINBOOL WINAPI GetUserNameW (LPWSTR lpBuffer, LPDWORD pcbBuffer)
 */
-HB_FUNC( WINAPI_GETUSERNAMEW )
+HB_FUNC( WINAPI_GETUSERNAMEW ) // TODO: corrigir parametro 1
 {
-  hb_retl(GetUserNameW(( LPWSTR ) hb_parc(1), static_cast<LPDWORD>(hb_parptr(2))));
+  DWORD pcbBuffer;
+  hb_retl(GetUserNameW(( LPWSTR ) hb_parc(1), &pcbBuffer));
+  hb_stornl(pcbBuffer, 2);
 }
 
 /*
@@ -2715,6 +3368,14 @@ WINBASEAPI WINBOOL WINAPI UnregisterBadMemoryNotification (PVOID RegistrationHan
 /*
 WINBASEAPI WINBOOL WINAPI GetMemoryErrorHandlingCapabilities (PULONG Capabilities)
 */
+#if 0
+HB_FUNC( WINAPI_GETMEMORYERRORHANDLINGCAPABILITIES )
+{
+  ULONG Capabilities;
+  hb_retl(GetMemoryErrorHandlingCapabilities(&Capabilities));
+  hb_stornl(Capabilities, 1);
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI AllocateUserPhysicalPages (HANDLE hProcess, PULONG_PTR NumberOfPages, PULONG_PTR PageArray)
@@ -2754,6 +3415,13 @@ WINBASEAPI HANDLE WINAPI OpenJobObjectW (DWORD dwDesiredAccess, WINBOOL bInherit
 HB_FUNC( WINAPI_OPENJOBOBJECTW )
 {
   hb_retptr(OpenJobObjectW(static_cast<DWORD>(hb_parnl(1)), hb_parl(2), ( LPCWSTR ) hb_parc(3)));
+}
+
+HB_FUNC( WINAPI_OPENJOBOBJECT )
+{
+  void * str;
+  hb_retptr(OpenJobObject(static_cast<DWORD>(hb_parnl(1)), hb_parl(2), HB_PARSTR(3, &str, nullptr)));
+  hb_strfree(str);
 }
 
 /*
@@ -2854,6 +3522,15 @@ WINBASEAPI WINBOOL WINAPI SetVolumeMountPointW (LPCWSTR lpszVolumeMountPoint, LP
 HB_FUNC( WINAPI_SETVOLUMEMOUNTPOINTW )
 {
   hb_retl(SetVolumeMountPointW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2)));
+}
+
+HB_FUNC( WINAPI_SETVOLUMEMOUNTPOINT )
+{
+  void * str1;
+  void * str2;
+  hb_retl(SetVolumeMountPoint(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str1);
+  hb_strfree(str2);
 }
 
 /*
@@ -2979,18 +3656,42 @@ WINBASEAPI WINBOOL WINAPI GetNumaProximityNode (ULONG ProximityId, PUCHAR NodeNu
 /*
 WINBASEAPI WORD WINAPI GetActiveProcessorGroupCount (VOID)
 */
+#if 0
+HB_FUNC( WINAPI_GETACTIVEPROCESSORGROUPCOUNT )
+{
+  hb_retni(GetActiveProcessorGroupCount());
+}
+#endif
 
 /*
 WINBASEAPI WORD WINAPI GetMaximumProcessorGroupCount (VOID)
 */
+#if 0
+HB_FUNC( WINAPI_GETMAXIMUMPROCESSORGROUPCOUNT )
+{
+  hb_retni(GetMaximumProcessorGroupCount());
+}
+#endif
 
 /*
 WINBASEAPI DWORD WINAPI GetActiveProcessorCount (WORD GroupNumber)
 */
+#if 0
+HB_FUNC( WINAPI_GETACTIVEPROCESSORCOUNT )
+{
+  hb_retni(GetActiveProcessorCount(static_cast<WORD>(hb_parni(1))));
+}
+#endif
 
 /*
 WINBASEAPI DWORD WINAPI GetMaximumProcessorCount (WORD GroupNumber)
 */
+#if 0
+HB_FUNC( WINAPI_GETMAXIMUMPROCESSORCOUNT )
+{
+  hb_retnl(GetMaximumProcessorCount(static_cast<WORD>(hb_parni(1))));
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI GetNumaNodeNumberFromHandle (HANDLE hFile, PUSHORT NodeNumber)
@@ -3019,10 +3720,22 @@ WINBASEAPI HRESULT WINAPI UnregisterApplicationRecoveryCallback (void)
 /*
 WINBASEAPI HRESULT WINAPI RegisterApplicationRestart (PCWSTR pwzCommandline, DWORD dwFlags)
 */
+#if 0
+HB_FUNC( WINAPI_REGISTERAPPLICATIONRESTART )
+{
+  hb_retnl(RegisterApplicationRestart(( PCWSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2))));
+}
+#endif
 
 /*
 WINBASEAPI HRESULT WINAPI UnregisterApplicationRestart (void)
 */
+#if 0
+HB_FUNC( WINAPI_UNREGISTERAPPLICATIONRESTART )
+{
+  hb_retnl(UnregisterApplicationRestart()));
+}
+#endif
 
 /*
 WINBASEAPI HRESULT WINAPI GetApplicationRecoveryCallback (HANDLE hProcess, APPLICATION_RECOVERY_CALLBACK *pRecoveryCallback, PVOID *ppvParameter, PDWORD pdwPingInterval, PDWORD pdwFlags)
@@ -3035,10 +3748,24 @@ WINBASEAPI HRESULT WINAPI GetApplicationRestartSettings (HANDLE hProcess, PWSTR 
 /*
 WINBASEAPI HRESULT WINAPI ApplicationRecoveryInProgress (PBOOL pbCancelled)
 */
+#if 0
+HB_FUNC( WINAPI_APPLICATIONRECOVERYINPROGRESS )
+{
+  BOOL Cancelled;
+  hb_retnl(ApplicationRecoveryInProgress(&Cancelled));
+  hb_storl(Cancelled, 1);
+}
+#endif
 
 /*
 WINBASEAPI VOID WINAPI ApplicationRecoveryFinished (WINBOOL bSuccess)
 */
+#if 0
+HB_FUNC( WINAPI_APPLICATIONRECOVERYFINISHED )
+{
+  ApplicationRecoveryFinished(hb_parl(1));
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI GetFileInformationByHandleEx (HANDLE hFile, FILE_INFO_BY_HANDLE_CLASS FileInformationClass, LPVOID lpFileInformation, DWORD dwBufferSize)
@@ -3051,18 +3778,64 @@ WINBASEAPI HANDLE WINAPI OpenFileById (HANDLE hVolumeHint, LPFILE_ID_DESCRIPTOR 
 /*
 WINBASEAPI BOOLEAN APIENTRY CreateSymbolicLinkA (LPCSTR lpSymlinkFileName, LPCSTR lpTargetFileName, DWORD dwFlags)
 */
+#if 0
+HB_FUNC( WINAPI_CREATESYMBOLICLINKA )
+{
+  hb_retl(CreateSymbolicLinkA(( LPCSTR ) hb_parc(1), ( LPCSTR ) hb_parc(2), static_cast<DWORD>(hb_parnl(3))));
+}
+#endif
 
 /*
 WINBASEAPI BOOLEAN APIENTRY CreateSymbolicLinkW (LPCWSTR lpSymlinkFileName, LPCWSTR lpTargetFileName, DWORD dwFlags)
 */
+#if 0
+HB_FUNC( WINAPI_CREATESYMBOLICLINKW )
+{
+  hb_retl(CreateSymbolicLinkW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), static_cast<DWORD>(hb_parnl(3))));
+}
+#endif
+
+#if 0
+HB_FUNC( WINAPI_CREATESYMBOLICLINK )
+{
+  void * str1;
+  void * str2;
+  hb_retl(CreateSymbolicLink(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), static_cast<DWORD>(hb_parnl(3))));
+  hb_strfree(str1);
+  hb_strfree(str2);
+}
+#endif
 
 /*
 WINBASEAPI BOOLEAN APIENTRY CreateSymbolicLinkTransactedA (LPCSTR lpSymlinkFileName, LPCSTR lpTargetFileName, DWORD dwFlags, HANDLE hTransaction)
 */
+#if 0
+HB_FUNC( WINAPI_CREATESYMBOLICLINKTRANSACTEDA )
+{
+  hb_retl(CreateSymbolicLinkTransactedA(( LPCSTR ) hb_parc(1), ( LPCSTR ) hb_parc(2), static_cast<DWORD>(hb_parnl(3)), static_cast<HANDLE>(hb_parptr(4))));
+}
+#endif
 
 /*
 WINBASEAPI BOOLEAN APIENTRY CreateSymbolicLinkTransactedW (LPCWSTR lpSymlinkFileName, LPCWSTR lpTargetFileName, DWORD dwFlags, HANDLE hTransaction)
 */
+#if 0
+HB_FUNC( WINAPI_CREATESYMBOLICLINKTRANSACTEDW )
+{
+  hb_retl(CreateSymbolicLinkTransactedW(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), static_cast<DWORD>(hb_parnl(3)), static_cast<HANDLE>(hb_parptr(4))));
+}
+#endif
+
+#if 0
+HB_FUNC( WINAPI_CREATESYMBOLICLINKTRANSACTED )
+{
+  void * str1;
+  void * str2;
+  hb_retl(CreateSymbolicLinkTransacted(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), static_cast<DWORD>(hb_parnl(3)), static_cast<HANDLE>(hb_parptr(4))));
+  hb_strfree(str1);
+  hb_strfree(str2);
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI QueryActCtxSettingsW (DWORD dwFlags, HANDLE hActCtx, PCWSTR settingsNameSpace, PCWSTR settingName, PWSTR pvBuffer, SIZE_T dwBuffer, SIZE_T *pdwWrittenOrRequired)

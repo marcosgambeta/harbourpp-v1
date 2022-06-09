@@ -39,6 +39,7 @@ SOFTWARE.
 #include "hbapi.h"
 #include "hbapiitm.h"
 #include "hbapicls.h"
+#include "hbwinuni.h"
 
 /*
 WINCOMMCTRLAPI void WINAPI InitCommonControls(void)
@@ -53,7 +54,7 @@ WINCOMMCTRLAPI WINBOOL WINAPI InitCommonControlsEx(const INITCOMMONCONTROLSEX *)
 */
 HB_FUNC( WINAPI_INITCOMMONCONTROLSEX )
 {
-  hb_retl(InitCommonControlsEx(static_cast<const INITCOMMONCONTROLSEX *>(hb_parptr(1))));
+  hb_retl(InitCommonControlsEx(static_cast<const INITCOMMONCONTROLSEX*>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0)))));
 }
 
 /*
@@ -171,6 +172,10 @@ HB_FUNC( WINAPI_IMAGELIST_DRAWEX )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_DrawIndirect(IMAGELISTDRAWPARAMS *pimldp)
 */
+HB_FUNC( WINAPI_IMAGELIST_DRAWINDIRECT )
+{
+  hb_retl(ImageList_DrawIndirect(static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_Remove(HIMAGELIST himl,int i)
@@ -271,6 +276,10 @@ HB_FUNC( WINAPI_IMAGELIST_DRAGSHOWNOLOCK )
 /*
 WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_GetDragImage(POINT *ppt,POINT *pptHotspot)
 */
+HB_FUNC( WINAPI_IMAGELIST_GETDRAGIMAGE )
+{
+  hb_retptr(ImageList_GetDragImage(static_cast<POINT*>(hb_itemGetPtr(hb_objSendMsg(hb_param(1, Harbour::Item::OBJECT), "POINTER", 0))), static_cast<POINT*>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0)))));
+}
 
 /*
 WINBOOL ImageList_RemoveAll(HIMAGELIST himl)
@@ -291,6 +300,12 @@ HB_FUNC( WINAPI_IMAGELIST_EXTRACTICON )
 /*
 HIMAGELIST ImageList_LoadBitmap(HINSTANCE hi,LPCSTR lpbmp,int cx,int cGrow,COLORREF crMask)
 */
+HB_FUNC( WINAPI_IMAGELIST_LOADBITMAP )
+{
+  void * str;
+  hb_retptr(ImageList_LoadBitmap(static_cast<HINSTANCE>(hb_parptr(1)), HB_PARSTR(2, &str, nullptr), hb_parni(3), hb_parni(4), static_cast<COLORREF>(hb_parnl(5))));
+  hb_strfree(str);
+}
 
 /*
 WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_Read(LPSTREAM pstm)
@@ -311,6 +326,14 @@ WINCOMMCTRLAPI HRESULT WINAPI ImageList_WriteEx(HIMAGELIST himl,DWORD dwFlags,LP
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_GetIconSize(HIMAGELIST himl,int *cx,int *cy)
 */
+HB_FUNC( WINAPI_IMAGELIST_GETICONSIZE )
+{
+  int cx;
+  int cy;
+  hb_retl(ImageList_GetIconSize(static_cast<HIMAGELIST>(hb_parptr(1)), &cx, &cy));
+  hb_storni(cx, 2);
+  hb_storni(cy, 3);
+}
 
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_SetIconSize(HIMAGELIST himl,int cx,int cy)
@@ -373,7 +396,7 @@ WINCOMMCTRLAPI HWND WINAPI CreateStatusWindowA(LONG style,LPCSTR lpszText,HWND h
 */
 HB_FUNC( WINAPI_CREATESTATUSWINDOWA )
 {
-  hb_retptr(CreateStatusWindowA( ( LONG ) hb_parnl(1), ( LPCSTR ) hb_parc(2), static_cast<HWND>(hb_parptr(3)), static_cast<UINT>(hb_parni(4)) ));
+  hb_retptr(CreateStatusWindowA(hb_parnl(1), ( LPCSTR ) hb_parc(2), static_cast<HWND>(hb_parptr(3)), static_cast<UINT>(hb_parni(4))));
 }
 
 /*
@@ -381,7 +404,7 @@ WINCOMMCTRLAPI HWND WINAPI CreateStatusWindowW(LONG style,LPCWSTR lpszText,HWND 
 */
 HB_FUNC( WINAPI_CREATESTATUSWINDOWW )
 {
-  hb_retptr(CreateStatusWindowW( ( LONG ) hb_parnl(1), ( LPCWSTR ) hb_parc(2), static_cast<HWND>(hb_parptr(3)), static_cast<UINT>(hb_parni(4)) ));
+  hb_retptr(CreateStatusWindowW(hb_parnl(1), ( LPCWSTR ) hb_parc(2), static_cast<HWND>(hb_parptr(3)), static_cast<UINT>(hb_parni(4))));
 }
 
 /*
@@ -415,13 +438,19 @@ HB_FUNC( WINAPI_DRAWINSERT )
 /*
 WINCOMMCTRLAPI int WINAPI LBItemFromPt(HWND hLB,POINT pt,WINBOOL bAutoScroll)
 */
+#if 0
+HB_FUNC( WINAPI_LBITEMFROMPT )
+{
+  hb_retni(LBItemFromPt(static_cast<HWND>(hb_parptr(1)), *static_cast<POINT>(hb_itemGetPtr(hb_objSendMsg(hb_param(2, Harbour::Item::OBJECT), "POINTER", 0))), hb_parl(3)));
+}
+#endif
 
 /*
 WINCOMMCTRLAPI HWND WINAPI CreateUpDownControl(DWORD dwStyle,int x,int y,int cx,int cy,HWND hParent,int nID,HINSTANCE hInst,HWND hBuddy,int nUpper,int nLower,int nPos)
 */
 HB_FUNC( WINAPI_CREATEUPDOWNCONTROL )
 {
-  hb_retptr(CreateUpDownControl(static_cast<DWORD>(hb_parnl(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<HWND>(hb_parptr(6)), hb_parni(7), static_cast<HINSTANCE>(hb_parptr(8)), static_cast<HWND>(hb_parptr(9)), hb_parni(10), hb_parni(11), hb_parni(12) ));
+  hb_retptr(CreateUpDownControl(static_cast<DWORD>(hb_parnl(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<HWND>(hb_parptr(6)), hb_parni(7), static_cast<HINSTANCE>(hb_parptr(8)), static_cast<HWND>(hb_parptr(9)), hb_parni(10), hb_parni(11), hb_parni(12)));
 }
 
 /*
@@ -579,6 +608,14 @@ HB_FUNC( WINAPI_FLATSB_SHOWSCROLLBAR )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_GetScrollRange(HWND,int code,LPINT,LPINT)
 */
+HB_FUNC( WINAPI_FLATSB_GETSCROLLRANGE )
+{
+  INT i1;
+  INT i2;
+  hb_retl(FlatSB_GetScrollRange(static_cast<HWND>(hb_parptr(1)), hb_parni(2), &i1, &i2));
+  hb_storni(i1, 3);
+  hb_storni(i2, 4);
+}
 
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_GetScrollInfo(HWND,int code,LPSCROLLINFO)
@@ -595,6 +632,12 @@ HB_FUNC( WINAPI_FLATSB_GETSCROLLPOS )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_GetScrollProp(HWND,int propIndex,LPINT)
 */
+HB_FUNC( WINAPI_FLATSB_SCROLLPROP )
+{
+  INT i;
+  hb_retl(FlatSB_GetScrollProp(static_cast<HWND>(hb_parptr(1)), hb_parni(2), &i));
+  hb_storni(i, 3);
+}
 
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_GetScrollPropPtr(HWND,int propIndex,PINT_PTR)

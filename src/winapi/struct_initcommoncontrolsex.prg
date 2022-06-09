@@ -36,7 +36,7 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WINAPI_STRUCT_POINT
+CLASS WINAPI_STRUCT_INITCOMMONCONTROLSEX
 
    DATA pointer
    DATA self_destruction INIT .F.
@@ -44,21 +44,21 @@ CLASS WINAPI_STRUCT_POINT
    METHOD new
    METHOD delete
 
-   ASSIGN x(n) INLINE ::setx(n)
-   ACCESS x INLINE ::getx()
-   METHOD setx
-   METHOD getx
+   ASSIGN dwSize(n) INLINE ::setdwSize(n)
+   ACCESS dwSize INLINE ::getdwSize()
+   METHOD setdwSize
+   METHOD getdwSize
 
-   ASSIGN y(n) INLINE ::sety(n)
-   ACCESS y INLINE ::gety()
-   METHOD sety
-   METHOD gety
+   ASSIGN dwICC(n) INLINE ::setdwICC(n)
+   ACCESS dwICC INLINE ::getdwICC()
+   METHOD setdwICC
+   METHOD getdwICC
 
    DESTRUCTOR destroyObject
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WINAPI_STRUCT_POINT
+PROCEDURE destroyObject() CLASS WINAPI_STRUCT_INITCOMMONCONTROLSEX
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -67,13 +67,15 @@ RETURN
 #pragma BEGINDUMP
 
 #include <windows.h>
+#include <commctrl.h>
 #include "hbapi.h"
 #include "hbapiitm.h"
 #include "hbapicls.h"
 
-HB_FUNC_STATIC( WINAPI_STRUCT_POINT_NEW )
+HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_NEW )
 {
-  auto obj = new POINT();
+  auto obj = new INITCOMMONCONTROLSEX();
+  obj->dwSize = sizeof(INITCOMMONCONTROLSEX);
   PHB_ITEM self = hb_stackSelfItem();
   PHB_ITEM ptr = hb_itemPutPtr( nullptr, ( void * ) obj );
   hb_objSendMsg( self, "_pointer", 1, ptr );
@@ -84,9 +86,9 @@ HB_FUNC_STATIC( WINAPI_STRUCT_POINT_NEW )
   hb_itemReturn( self );
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_POINT_DELETE )
+HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_DELETE )
 {
-  auto obj = static_cast<POINT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
   if( obj != nullptr )
   {
@@ -101,55 +103,55 @@ HB_FUNC_STATIC( WINAPI_STRUCT_POINT_DELETE )
   hb_itemReturn( hb_stackSelfItem() );
 }
 
-// LONG x
+// DWORD dwSize
 
-HB_FUNC_STATIC( WINAPI_STRUCT_POINT_SETX )
+HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_SETDWSIZE )
 {
-  auto obj = static_cast<POINT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
   if( obj != nullptr )
   {
-    obj->x = hb_parnl(1);
+    obj->dwSize = static_cast<DWORD>(hb_parnl(1));
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_POINT_GETX )
+HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_GETDWSIZE )
 {
-  auto obj = static_cast<POINT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->x);
+    hb_retnl(obj->dwSize);
   }
 }
 
-// LONG y
+// DWORD dwICC
 
-HB_FUNC_STATIC( WINAPI_STRUCT_POINT_SETY )
+HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_SETDWICC )
 {
-  auto obj = static_cast<POINT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
   if( obj != nullptr )
   {
-    obj->y = hb_parnl(1);
+    obj->dwICC = static_cast<DWORD>(hb_parnl(1));
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_POINT_GETY )
+HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_GETDWICC )
 {
-  auto obj = static_cast<POINT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->y);
+    hb_retnl(obj->dwICC);
   }
 }
 
 /*
-typedef struct tagPOINT {
-  LONG x;
-  LONG y;
-} POINT, *PPOINT, *NPPOINT, *LPPOINT;
+typedef struct tagINITCOMMONCONTROLSEX {
+  DWORD dwSize;
+  DWORD dwICC;
+} INITCOMMONCONTROLSEX, *LPINITCOMMONCONTROLSEX;
 */
 
 #pragma ENDDUMP

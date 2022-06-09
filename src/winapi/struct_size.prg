@@ -36,29 +36,29 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WINAPI_SIZE
+CLASS WINAPI_STRUCT_SIZE
 
    DATA pointer
    DATA self_destruction INIT .F.
 
-   ACCESS cx INLINE ::GetCX()
-   ASSIGN cx(n) INLINE ::setCX(n)
-   ACCESS cy INLINE ::GetCY()
-   ASSIGN cy(n) INLINE ::setCY(n)
-
    METHOD new
    METHOD delete
 
-   METHOD setCX
-   METHOD getCX
-   METHOD setCY
-   METHOD getCY
+   ASSIGN cx(n) INLINE ::setcx(n)
+   ACCESS cx INLINE ::getcx()
+   METHOD setcx
+   METHOD getcx
+
+   ASSIGN cy(n) INLINE ::setcy(n)
+   ACCESS cy INLINE ::getcy()
+   METHOD setcy
+   METHOD getcy
 
    DESTRUCTOR destroyObject
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WINAPI_SIZE
+PROCEDURE destroyObject() CLASS WINAPI_STRUCT_SIZE
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -71,7 +71,7 @@ RETURN
 #include "hbapiitm.h"
 #include "hbapicls.h"
 
-HB_FUNC_STATIC( WINAPI_SIZE_NEW )
+HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_NEW )
 {
   auto obj = new SIZE();
   PHB_ITEM self = hb_stackSelfItem();
@@ -84,7 +84,7 @@ HB_FUNC_STATIC( WINAPI_SIZE_NEW )
   hb_itemReturn( self );
 }
 
-HB_FUNC_STATIC( WINAPI_SIZE_DELETE )
+HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_DELETE )
 {
   auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
@@ -101,7 +101,9 @@ HB_FUNC_STATIC( WINAPI_SIZE_DELETE )
   hb_itemReturn( hb_stackSelfItem() );
 }
 
-HB_FUNC_STATIC( WINAPI_SIZE_SETCX )
+// LONG cx
+
+HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_SETCX )
 {
   auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
@@ -111,7 +113,7 @@ HB_FUNC_STATIC( WINAPI_SIZE_SETCX )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_SIZE_GETCX )
+HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_GETCX )
 {
   auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
@@ -121,7 +123,9 @@ HB_FUNC_STATIC( WINAPI_SIZE_GETCX )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_SIZE_SETCY )
+// LONG cy
+
+HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_SETCY )
 {
   auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
@@ -131,7 +135,7 @@ HB_FUNC_STATIC( WINAPI_SIZE_SETCY )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_SIZE_GETCY )
+HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_GETCY )
 {
   auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
@@ -140,5 +144,12 @@ HB_FUNC_STATIC( WINAPI_SIZE_GETCY )
     hb_retnl(obj->cy);
   }
 }
+
+/*
+typedef struct tagSIZE {
+  LONG cx;
+  LONG cy;
+} SIZE, *PSIZE, *LPSIZE;
+*/
 
 #pragma ENDDUMP
