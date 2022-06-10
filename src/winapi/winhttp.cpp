@@ -39,13 +39,14 @@ SOFTWARE.
 #include "hbapi.h"
 #include "hbapiitm.h"
 #include "hbapicls.h"
+#include "winapi.h"
 
 /*
 WINBOOL WINAPI WinHttpAddRequestHeaders(HINTERNET,LPCWSTR,DWORD,DWORD)
 */
 HB_FUNC( WINAPI_WINHTTPADDREQUESTHEADERS )
 {
-  hb_retl(WinHttpAddRequestHeaders(static_cast<HINTERNET>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2), static_cast<DWORD>(hb_parnl(3)), static_cast<DWORD>(hb_parnl(4))));
+  winapi_ret_BOOL(WinHttpAddRequestHeaders(static_cast<HINTERNET>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2), winapi_par_DWORD(3), winapi_par_DWORD(4)));
 }
 
 /*
@@ -57,7 +58,7 @@ WINBOOL WINAPI WinHttpCheckPlatform(void)
 */
 HB_FUNC( WINAPI_WINHTTPCHECKPLATFORM )
 {
-  hb_retl(WinHttpCheckPlatform());
+  winapi_ret_BOOL(WinHttpCheckPlatform());
 }
 
 /*
@@ -65,7 +66,7 @@ WINBOOL WINAPI WinHttpCloseHandle(HINTERNET)
 */
 HB_FUNC( WINAPI_WINHTTPCLOSEHANDLE )
 {
-  hb_retl(WinHttpCloseHandle(static_cast<HINTERNET>(hb_parptr(1))));
+  winapi_ret_BOOL(WinHttpCloseHandle(static_cast<HINTERNET>(hb_parptr(1))));
 }
 
 /*
@@ -97,7 +98,7 @@ HINTERNET WINAPI WinHttpOpen(LPCWSTR,DWORD,LPCWSTR,LPCWSTR,DWORD)
 */
 HB_FUNC( WINAPI_WINHTTPOPEN )
 {
-  hb_retptr(WinHttpOpen(( LPCWSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2)), ( LPCWSTR ) hb_parc(3), ( LPCWSTR ) hb_parc(4), static_cast<DWORD>(hb_parnl(5))));
+  hb_retptr(WinHttpOpen(( LPCWSTR ) hb_parc(1), winapi_par_DWORD(2), ( LPCWSTR ) hb_parc(3), ( LPCWSTR ) hb_parc(4), winapi_par_DWORD(5)));
 }
 
 /*
@@ -113,7 +114,7 @@ WINBOOL WINAPI WinHttpQueryAuthSchemes(HINTERNET,LPDWORD,LPDWORD,LPDWORD)
 */
 HB_FUNC( WINAPI_WINHTTPQUERYAUTHSCHEMES )
 {
-  hb_retl(WinHttpQueryAuthSchemes(static_cast<HINTERNET>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2)), static_cast<LPDWORD>(hb_parptr(3)), static_cast<LPDWORD>(hb_parptr(4))));
+  winapi_ret_BOOL(WinHttpQueryAuthSchemes(static_cast<HINTERNET>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2)), static_cast<LPDWORD>(hb_parptr(3)), static_cast<LPDWORD>(hb_parptr(4))));
 }
 
 /*
@@ -121,7 +122,7 @@ WINBOOL WINAPI WinHttpQueryDataAvailable(HINTERNET,LPDWORD)
 */
 HB_FUNC( WINAPI_WINHTTPQUERYDATAAVAILABLE )
 {
-  hb_retl(WinHttpQueryDataAvailable(static_cast<HINTERNET>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2))));
+  winapi_ret_BOOL(WinHttpQueryDataAvailable(static_cast<HINTERNET>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2))));
 }
 
 /*
@@ -129,7 +130,7 @@ WINBOOL WINAPI WinHttpQueryHeaders(HINTERNET,DWORD,LPCWSTR,LPVOID,LPDWORD,LPDWOR
 */
 HB_FUNC( WINAPI_WINHTTPQUERYHEADERS )
 {
-  hb_retl(WinHttpQueryHeaders(static_cast<HINTERNET>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2)), ( LPCWSTR ) hb_parc(3), static_cast<LPVOID>(hb_parptr(4)), static_cast<LPDWORD>(hb_parptr(5)), static_cast<LPDWORD>(hb_parptr(6))));
+  winapi_ret_BOOL(WinHttpQueryHeaders(static_cast<HINTERNET>(hb_parptr(1)), winapi_par_DWORD(2), ( LPCWSTR ) hb_parc(3), static_cast<LPVOID>(hb_parptr(4)), static_cast<LPDWORD>(hb_parptr(5)), static_cast<LPDWORD>(hb_parptr(6))));
 }
 
 /*
@@ -137,7 +138,7 @@ WINBOOL WINAPI WinHttpQueryOption(HINTERNET,DWORD,LPVOID,LPDWORD)
 */
 HB_FUNC( WINAPI_WINHTTPQUERYOPTION )
 {
-  hb_retl(WinHttpQueryOption(static_cast<HINTERNET>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2)), static_cast<LPVOID>(hb_parptr(3)), static_cast<LPDWORD>(hb_parptr(4))));
+  winapi_ret_BOOL(WinHttpQueryOption(static_cast<HINTERNET>(hb_parptr(1)), winapi_par_DWORD(2), static_cast<LPVOID>(hb_parptr(3)), static_cast<LPDWORD>(hb_parptr(4))));
 }
 
 /*
@@ -145,7 +146,7 @@ WINBOOL WINAPI WinHttpReadData(HINTERNET,LPVOID,DWORD,LPDWORD)
 */
 HB_FUNC( WINAPI_WINHTTPREADDATA )
 {
-  hb_retl(WinHttpReadData(static_cast<HINTERNET>(hb_parptr(1)), static_cast<LPVOID>(hb_parptr(2)), static_cast<DWORD>(hb_parnl(3)), static_cast<LPDWORD>(hb_parptr(4))));
+  winapi_ret_BOOL(WinHttpReadData(static_cast<HINTERNET>(hb_parptr(1)), static_cast<LPVOID>(hb_parptr(2)), winapi_par_DWORD(3), static_cast<LPDWORD>(hb_parptr(4))));
 }
 
 /*
@@ -153,7 +154,7 @@ WINBOOL WINAPI WinHttpReceiveResponse(HINTERNET,LPVOID)
 */
 HB_FUNC( WINAPI_WINHTTPRECEIVERESPONSE )
 {
-  hb_retl(WinHttpReceiveResponse(static_cast<HINTERNET>(hb_parptr(1)), static_cast<LPVOID>(hb_parptr(2))));
+  winapi_ret_BOOL(WinHttpReceiveResponse(static_cast<HINTERNET>(hb_parptr(1)), static_cast<LPVOID>(hb_parptr(2))));
 }
 
 /*
@@ -169,7 +170,7 @@ WINBOOL WINAPI WinHttpSetCredentials(HINTERNET,DWORD,DWORD,LPCWSTR,LPCWSTR,LPVOI
 */
 HB_FUNC( WINAPI_WINHTTPSETCREDENTIALS )
 {
-  hb_retl(WinHttpSetCredentials(static_cast<HINTERNET>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2)), static_cast<DWORD>(hb_parnl(3)), ( LPCWSTR ) hb_parc(4), ( LPCWSTR ) hb_parc(5), static_cast<LPVOID>(hb_parptr(6))));
+  winapi_ret_BOOL(WinHttpSetCredentials(static_cast<HINTERNET>(hb_parptr(1)), winapi_par_DWORD(2), winapi_par_DWORD(3), ( LPCWSTR ) hb_parc(4), ( LPCWSTR ) hb_parc(5), static_cast<LPVOID>(hb_parptr(6))));
 }
 
 /*
@@ -177,7 +178,7 @@ WINBOOL WINAPI WinHttpSetOption(HINTERNET,DWORD,LPVOID,DWORD)
 */
 HB_FUNC( WINAPI_WINHTTPSETOPTION )
 {
-  hb_retl(WinHttpSetOption(static_cast<HINTERNET>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2)), static_cast<LPVOID>(hb_parptr(3)), static_cast<DWORD>(hb_parnl(4))));
+  winapi_ret_BOOL(WinHttpSetOption(static_cast<HINTERNET>(hb_parptr(1)), winapi_par_DWORD(2), static_cast<LPVOID>(hb_parptr(3)), winapi_par_DWORD(4)));
 }
 
 /*
@@ -189,7 +190,7 @@ WINBOOL WINAPI WinHttpSetTimeouts(HINTERNET,int,int,int,int)
 */
 HB_FUNC( WINAPI_WINHTTPSETTIMEOUTS )
 {
-  hb_retl(WinHttpSetTimeouts(static_cast<HINTERNET>(hb_parptr(1)), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
+  winapi_ret_BOOL(WinHttpSetTimeouts(static_cast<HINTERNET>(hb_parptr(1)), winapi_par_int(2), winapi_par_int(3), winapi_par_int(4), winapi_par_int(5)));
 }
 
 /*
@@ -205,5 +206,5 @@ WINBOOL WINAPI WinHttpWriteData(HINTERNET,LPCVOID,DWORD,LPDWORD)
 */
 HB_FUNC( WINAPI_WINHTTPWRITEDATA )
 {
-  hb_retl(WinHttpWriteData(static_cast<HINTERNET>(hb_parptr(1)), static_cast<LPCVOID>(hb_parptr(2)), static_cast<DWORD>(hb_parnl(3)), static_cast<LPDWORD>(hb_parptr(4))));
+  winapi_ret_BOOL(WinHttpWriteData(static_cast<HINTERNET>(hb_parptr(1)), static_cast<LPCVOID>(hb_parptr(2)), winapi_par_DWORD(3), static_cast<LPDWORD>(hb_parptr(4))));
 }

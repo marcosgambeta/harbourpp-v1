@@ -39,6 +39,7 @@ SOFTWARE.
 #include "hbapi.h"
 #include "hbapiitm.h"
 #include "hbapicls.h"
+#include "winapi.h"
 
 /*
 DWORD WINAPI WNetAddConnectionA(LPCSTR lpRemoteName,LPCSTR lpPassword,LPCSTR lpLocalName)
@@ -61,7 +62,7 @@ DWORD WINAPI WNetAddConnection2A(LPNETRESOURCEA lpNetResource,LPCSTR lpPassword,
 */
 HB_FUNC( WINAPI_WNETADDCONNECTION2A )
 {
-  hb_retnl(WNetAddConnection2A(static_cast<LPNETRESOURCEA>(hb_parptr(1)), ( LPCSTR ) hb_parc(2), ( LPCSTR ) hb_parc(3), static_cast<DWORD>(hb_parnl(4))));
+  hb_retnl(WNetAddConnection2A(static_cast<LPNETRESOURCEA>(hb_parptr(1)), ( LPCSTR ) hb_parc(2), ( LPCSTR ) hb_parc(3), winapi_par_DWORD(4)));
 }
 
 /*
@@ -69,7 +70,7 @@ DWORD WINAPI WNetAddConnection2W(LPNETRESOURCEW lpNetResource,LPCWSTR lpPassword
 */
 HB_FUNC( WINAPI_WNETADDCONNECTION2W )
 {
-  hb_retnl(WNetAddConnection2W(static_cast<LPNETRESOURCEW>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3), static_cast<DWORD>(hb_parnl(4))));
+  hb_retnl(WNetAddConnection2W(static_cast<LPNETRESOURCEW>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3), winapi_par_DWORD(4)));
 }
 
 /*
@@ -77,7 +78,7 @@ DWORD WINAPI WNetAddConnection3A(HWND hwndOwner,LPNETRESOURCEA lpNetResource,LPC
 */
 HB_FUNC( WINAPI_WNETADDCONNECTION3A )
 {
-  hb_retnl(WNetAddConnection3A(static_cast<HWND>(hb_parptr(1)), static_cast<LPNETRESOURCEA>(hb_parptr(2)), ( LPCSTR ) hb_parc(3), ( LPCSTR ) hb_parc(4), static_cast<DWORD>(hb_parnl(5))));
+  hb_retnl(WNetAddConnection3A(winapi_par_HWND(1), static_cast<LPNETRESOURCEA>(hb_parptr(2)), ( LPCSTR ) hb_parc(3), ( LPCSTR ) hb_parc(4), winapi_par_DWORD(5)));
 }
 
 /*
@@ -85,7 +86,7 @@ DWORD WINAPI WNetAddConnection3W(HWND hwndOwner,LPNETRESOURCEW lpNetResource,LPC
 */
 HB_FUNC( WINAPI_WNETADDCONNECTION3W )
 {
-  hb_retnl(WNetAddConnection3W(static_cast<HWND>(hb_parptr(1)), static_cast<LPNETRESOURCEW>(hb_parptr(2)), ( LPCWSTR ) hb_parc(3), ( LPCWSTR ) hb_parc(4), static_cast<DWORD>(hb_parnl(5))));
+  hb_retnl(WNetAddConnection3W(winapi_par_HWND(1), static_cast<LPNETRESOURCEW>(hb_parptr(2)), ( LPCWSTR ) hb_parc(3), ( LPCWSTR ) hb_parc(4), winapi_par_DWORD(5)));
 }
 
 /*
@@ -109,7 +110,7 @@ DWORD WINAPI WNetCancelConnection2A(LPCSTR lpName,DWORD dwFlags,WINBOOL fForce)
 */
 HB_FUNC( WINAPI_WNETCANCELCONNECTION2A )
 {
-  hb_retnl(WNetCancelConnection2A(( LPCSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2)), hb_parl(3)));
+  hb_retnl(WNetCancelConnection2A(( LPCSTR ) hb_parc(1), winapi_par_DWORD(2), hb_parl(3)));
 }
 
 /*
@@ -117,7 +118,7 @@ DWORD WINAPI WNetCancelConnection2W(LPCWSTR lpName,DWORD dwFlags,WINBOOL fForce)
 */
 HB_FUNC( WINAPI_WNETCANCELCONNECTION2W )
 {
-  hb_retnl(WNetCancelConnection2W(( LPCWSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2)), hb_parl(3)));
+  hb_retnl(WNetCancelConnection2W(( LPCWSTR ) hb_parc(1), winapi_par_DWORD(2), hb_parl(3)));
 }
 
 /*
@@ -142,7 +143,7 @@ DWORD WINAPI WNetRestoreConnectionA(HWND hwndParent,LPCSTR lpDevice)
 #if 0
 HB_FUNC( WINAPI_WNETRESTORECONNECTIONA )
 {
-  hb_retnl(WNetRestoreConnectionA(static_cast<HWND>(hb_parptr(1)), ( LPCSTR ) hb_parc(2)));
+  hb_retnl(WNetRestoreConnectionA(winapi_par_HWND(1), ( LPCSTR ) hb_parc(2)));
 }
 #endif
 
@@ -151,7 +152,7 @@ DWORD WINAPI WNetUseConnectionA(HWND hwndOwner,LPNETRESOURCEA lpNetResource,LPCS
 */
 HB_FUNC( WINAPI_WNETUSECONNECTIONA )
 {
-  hb_retnl(WNetUseConnectionA(static_cast<HWND>(hb_parptr(1)), static_cast<LPNETRESOURCEA>(hb_parptr(2)), ( LPCSTR ) hb_parc(3), ( LPCSTR ) hb_parc(4), static_cast<DWORD>(hb_parnl(5)), ( LPSTR ) hb_parc(6), static_cast<LPDWORD>(hb_parptr(7)), static_cast<LPDWORD>(hb_parptr(8))));
+  hb_retnl(WNetUseConnectionA(winapi_par_HWND(1), static_cast<LPNETRESOURCEA>(hb_parptr(2)), ( LPCSTR ) hb_parc(3), ( LPCSTR ) hb_parc(4), winapi_par_DWORD(5), ( LPSTR ) hb_parc(6), static_cast<LPDWORD>(hb_parptr(7)), static_cast<LPDWORD>(hb_parptr(8))));
 }
 
 /*
@@ -159,7 +160,7 @@ DWORD WINAPI WNetUseConnectionW(HWND hwndOwner,LPNETRESOURCEW lpNetResource,LPCW
 */
 HB_FUNC( WINAPI_WNETUSECONNECTIONW )
 {
-  hb_retnl(WNetUseConnectionW(static_cast<HWND>(hb_parptr(1)), static_cast<LPNETRESOURCEW>(hb_parptr(2)), ( LPCWSTR ) hb_parc(3), ( LPCWSTR ) hb_parc(4), static_cast<DWORD>(hb_parnl(5)), ( LPWSTR ) hb_parc(6), static_cast<LPDWORD>(hb_parptr(7)), static_cast<LPDWORD>(hb_parptr(8))));
+  hb_retnl(WNetUseConnectionW(winapi_par_HWND(1), static_cast<LPNETRESOURCEW>(hb_parptr(2)), ( LPCWSTR ) hb_parc(3), ( LPCWSTR ) hb_parc(4), winapi_par_DWORD(5), ( LPWSTR ) hb_parc(6), static_cast<LPDWORD>(hb_parptr(7)), static_cast<LPDWORD>(hb_parptr(8))));
 }
 
 /*
@@ -167,7 +168,7 @@ DWORD WINAPI WNetConnectionDialog(HWND hwnd,DWORD dwType)
 */
 HB_FUNC( WINAPI_WNETCONNECTIONDIALOG )
 {
-  hb_retnl(WNetConnectionDialog(static_cast<HWND>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2))));
+  hb_retnl(WNetConnectionDialog(winapi_par_HWND(1), winapi_par_DWORD(2)));
 }
 
 /*
@@ -175,7 +176,7 @@ DWORD WINAPI WNetDisconnectDialog(HWND hwnd,DWORD dwType)
 */
 HB_FUNC( WINAPI_WNETDISCONNECTDIALOG )
 {
-  hb_retnl(WNetDisconnectDialog(static_cast<HWND>(hb_parptr(1)), static_cast<DWORD>(hb_parnl(2))));
+  hb_retnl(WNetDisconnectDialog(winapi_par_HWND(1), winapi_par_DWORD(2)));
 }
 
 /*
@@ -188,7 +189,7 @@ DWORD WINAPI WNetRestoreConnectionW(HWND hwndParent,LPCWSTR lpDevice)
 #if 0
 HB_FUNC( WINAPI_WNETRESTORECONNECTIONW )
 {
-  hb_retnl(WNetRestoreConnectionW(static_cast<HWND>(hb_parptr(1)), ( LPCWSTR ) hb_parc(2)));
+  hb_retnl(WNetRestoreConnectionW(winapi_par_HWND(1), ( LPCWSTR ) hb_parc(2)));
 }
 #endif
 
@@ -237,7 +238,7 @@ DWORD WINAPI WNetEnumResourceA(HANDLE hEnum,LPDWORD lpcCount,LPVOID lpBuffer,LPD
 */
 HB_FUNC( WINAPI_WNETENUMRESOURCEA )
 {
-  hb_retnl(WNetEnumResourceA(static_cast<HANDLE>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2)), static_cast<LPVOID>(hb_parptr(3)), static_cast<LPDWORD>(hb_parptr(4))));
+  hb_retnl(WNetEnumResourceA(winapi_par_HANDLE(1), static_cast<LPDWORD>(hb_parptr(2)), static_cast<LPVOID>(hb_parptr(3)), static_cast<LPDWORD>(hb_parptr(4))));
 }
 
 /*
@@ -245,7 +246,7 @@ DWORD WINAPI WNetEnumResourceW(HANDLE hEnum,LPDWORD lpcCount,LPVOID lpBuffer,LPD
 */
 HB_FUNC( WINAPI_WNETENUMRESOURCEW )
 {
-  hb_retnl(WNetEnumResourceW(static_cast<HANDLE>(hb_parptr(1)), static_cast<LPDWORD>(hb_parptr(2)), static_cast<LPVOID>(hb_parptr(3)), static_cast<LPDWORD>(hb_parptr(4))));
+  hb_retnl(WNetEnumResourceW(winapi_par_HANDLE(1), static_cast<LPDWORD>(hb_parptr(2)), static_cast<LPVOID>(hb_parptr(3)), static_cast<LPDWORD>(hb_parptr(4))));
 }
 
 /*
@@ -253,7 +254,7 @@ DWORD WINAPI WNetCloseEnum(HANDLE hEnum)
 */
 HB_FUNC( WINAPI_WNETCLOSEENUM )
 {
-  hb_retnl(WNetCloseEnum(static_cast<HANDLE>(hb_parptr(1))));
+  hb_retnl(WNetCloseEnum(winapi_par_HANDLE(1)));
 }
 
 /*
@@ -285,7 +286,7 @@ DWORD WINAPI WNetGetUniversalNameA(LPCSTR lpLocalPath,DWORD dwInfoLevel,LPVOID l
 */
 HB_FUNC( WINAPI_WNETGETUNIVERSALNAMEA )
 {
-  hb_retnl(WNetGetUniversalNameA(( LPCSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2)), static_cast<LPVOID>(hb_parptr(3)), static_cast<LPDWORD>(hb_parptr(4))));
+  hb_retnl(WNetGetUniversalNameA(( LPCSTR ) hb_parc(1), winapi_par_DWORD(2), static_cast<LPVOID>(hb_parptr(3)), static_cast<LPDWORD>(hb_parptr(4))));
 }
 
 /*
@@ -293,7 +294,7 @@ DWORD WINAPI WNetGetUniversalNameW(LPCWSTR lpLocalPath,DWORD dwInfoLevel,LPVOID 
 */
 HB_FUNC( WINAPI_WNETGETUNIVERSALNAMEW )
 {
-  hb_retnl(WNetGetUniversalNameW(( LPCWSTR ) hb_parc(1), static_cast<DWORD>(hb_parnl(2)), static_cast<LPVOID>(hb_parptr(3)), static_cast<LPDWORD>(hb_parptr(4))));
+  hb_retnl(WNetGetUniversalNameW(( LPCWSTR ) hb_parc(1), winapi_par_DWORD(2), static_cast<LPVOID>(hb_parptr(3)), static_cast<LPDWORD>(hb_parptr(4))));
 }
 
 /*
@@ -317,7 +318,7 @@ DWORD WINAPI WNetGetProviderNameA(DWORD dwNetType,LPSTR lpProviderName,LPDWORD l
 */
 HB_FUNC( WINAPI_WNETGETPROVIDERNAMEA )
 {
-  hb_retnl(WNetGetProviderNameA(static_cast<DWORD>(hb_parnl(1)), ( LPSTR ) hb_parc(2), static_cast<LPDWORD>(hb_parptr(3))));
+  hb_retnl(WNetGetProviderNameA(winapi_par_DWORD(1), ( LPSTR ) hb_parc(2), static_cast<LPDWORD>(hb_parptr(3))));
 }
 
 /*
@@ -325,7 +326,7 @@ DWORD WINAPI WNetGetProviderNameW(DWORD dwNetType,LPWSTR lpProviderName,LPDWORD 
 */
 HB_FUNC( WINAPI_WNETGETPROVIDERNAMEW )
 {
-  hb_retnl(WNetGetProviderNameW(static_cast<DWORD>(hb_parnl(1)), ( LPWSTR ) hb_parc(2), static_cast<LPDWORD>(hb_parptr(3))));
+  hb_retnl(WNetGetProviderNameW(winapi_par_DWORD(1), ( LPWSTR ) hb_parc(2), static_cast<LPDWORD>(hb_parptr(3))));
 }
 
 /*
@@ -349,7 +350,7 @@ DWORD WINAPI WNetGetLastErrorA(LPDWORD lpError,LPSTR lpErrorBuf,DWORD nErrorBufS
 */
 HB_FUNC( WINAPI_WNETGETLASTERRORA )
 {
-  hb_retnl(WNetGetLastErrorA(static_cast<LPDWORD>(hb_parptr(1)), ( LPSTR ) hb_parc(2), static_cast<DWORD>(hb_parnl(3)), ( LPSTR ) hb_parc(4), static_cast<DWORD>(hb_parnl(5))));
+  hb_retnl(WNetGetLastErrorA(static_cast<LPDWORD>(hb_parptr(1)), ( LPSTR ) hb_parc(2), winapi_par_DWORD(3), ( LPSTR ) hb_parc(4), winapi_par_DWORD(5)));
 }
 
 /*
@@ -357,7 +358,7 @@ DWORD WINAPI WNetGetLastErrorW(LPDWORD lpError,LPWSTR lpErrorBuf,DWORD nErrorBuf
 */
 HB_FUNC( WINAPI_WNETGETLASTERRORW )
 {
-  hb_retnl(WNetGetLastErrorW(static_cast<LPDWORD>(hb_parptr(1)), ( LPWSTR ) hb_parc(2), static_cast<DWORD>(hb_parnl(3)), ( LPWSTR ) hb_parc(4), static_cast<DWORD>(hb_parnl(5))));
+  hb_retnl(WNetGetLastErrorW(static_cast<LPDWORD>(hb_parptr(1)), ( LPWSTR ) hb_parc(2), winapi_par_DWORD(3), ( LPWSTR ) hb_parc(4), winapi_par_DWORD(5)));
 }
 
 /*
