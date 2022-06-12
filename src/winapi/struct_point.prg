@@ -44,11 +44,13 @@ CLASS WINAPI_STRUCT_POINT
    METHOD new
    METHOD delete
 
+   // LONG x
    ASSIGN x(n) INLINE ::setx(n)
    ACCESS x INLINE ::getx()
    METHOD setx
    METHOD getx
 
+   // LONG y
    ASSIGN y(n) INLINE ::sety(n)
    ACCESS y INLINE ::gety()
    METHOD sety

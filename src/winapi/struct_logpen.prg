@@ -36,7 +36,7 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WINAPI_STRUCT_SIZE
+CLASS WINAPI_STRUCT_LOGPEN
 
    DATA pointer
    DATA self_destruction INIT .F.
@@ -44,23 +44,29 @@ CLASS WINAPI_STRUCT_SIZE
    METHOD new
    METHOD delete
 
-   // LONG cx
-   ASSIGN cx(n) INLINE ::setcx(n)
-   ACCESS cx INLINE ::getcx()
-   METHOD setcx
-   METHOD getcx
+   // UINT lopnStyle
+   ASSIGN lopnStyle(n) INLINE ::setlopnStyle(n)
+   ACCESS lopnStyle INLINE ::getlopnStyle()
+   METHOD setlopnStyle
+   METHOD getlopnStyle
 
-   // LONG cy
-   ASSIGN cy(n) INLINE ::setcy(n)
-   ACCESS cy INLINE ::getcy()
-   METHOD setcy
-   METHOD getcy
+   // POINT lopnWidth
+   ASSIGN lopnWidth(n) INLINE ::setlopnWidth(n)
+   ACCESS lopnWidth INLINE ::getlopnWidth()
+   METHOD setlopnWidth
+   METHOD getlopnWidth
+
+   // COLORREF lopnColor
+   ASSIGN lopnColor(n) INLINE ::setlopnColor(n)
+   ACCESS lopnColor INLINE ::getlopnColor()
+   METHOD setlopnColor
+   METHOD getlopnColor
 
    DESTRUCTOR destroyObject
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WINAPI_STRUCT_SIZE
+PROCEDURE destroyObject() CLASS WINAPI_STRUCT_LOGPEN
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -73,9 +79,9 @@ RETURN
 #include "hbapiitm.h"
 #include "hbapicls.h"
 
-HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_NEW )
+HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_NEW )
 {
-  auto obj = new SIZE();
+  auto obj = new LOGPEN();
   PHB_ITEM self = hb_stackSelfItem();
   PHB_ITEM ptr = hb_itemPutPtr( nullptr, ( void * ) obj );
   hb_objSendMsg( self, "_pointer", 1, ptr );
@@ -86,9 +92,9 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_NEW )
   hb_itemReturn( self );
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_DELETE )
+HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_DELETE )
 {
-  auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<LOGPEN*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
   if( obj != nullptr )
   {
@@ -103,55 +109,78 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_DELETE )
   hb_itemReturn( hb_stackSelfItem() );
 }
 
-// LONG cx
+// UINT lopnStyle
 
-HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_SETCX )
+HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_SETLOPNSTYLE )
 {
-  auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<LOGPEN*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
   if( obj != nullptr )
   {
-    obj->cx = hb_parnl(1);
+    obj->lopnStyle = hb_parni(1);
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_GETCX )
+HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_GETLOPNSTYLE )
 {
-  auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<LOGPEN*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->cx);
+    hb_retni(obj->lopnStyle);
   }
 }
 
-// LONG cy
+// POINT lopnWidth
 
-HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_SETCY )
+HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_SETLOPNWIDTH )
 {
-  auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<LOGPEN*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
   if( obj != nullptr )
   {
-    obj->cy = hb_parnl(1);
+    obj->lopnWidth.x = hb_parnl(1);
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_GETCY )
+HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_GETLOPNWIDTH )
 {
-  auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<LOGPEN*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->cy);
+    hb_retnl(obj->lopnWidth.x);
+  }
+}
+
+// COLORREF lopnColor
+
+HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_SETLOPNCOLOR )
+{
+  auto obj = static_cast<LOGPEN*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+
+  if( obj != nullptr )
+  {
+    obj->lopnColor = hb_parnl(1);
+  }
+}
+
+HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_GETLOPNCOLOR )
+{
+  auto obj = static_cast<LOGPEN*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+
+  if( obj != nullptr )
+  {
+    hb_retnl(obj->lopnColor);
   }
 }
 
 /*
-typedef struct tagSIZE {
-  LONG cx;
-  LONG cy;
-} SIZE, *PSIZE, *LPSIZE;
+typedef struct tagLOGPEN {
+  UINT     lopnStyle;
+  POINT    lopnWidth;
+  COLORREF lopnColor;
+} LOGPEN, *PLOGPEN, *NPLOGPEN, *LPLOGPEN;
 */
 
 #pragma ENDDUMP

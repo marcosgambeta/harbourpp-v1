@@ -44,35 +44,43 @@ CLASS WINAPI_STRUCT_MSG
    METHOD new
    METHOD delete
 
+   // HWND hwnd
    ASSIGN hwnd(p) INLINE ::sethwnd(p)
    ACCESS hwnd INLINE ::gethwnd()
    METHOD sethwnd
    METHOD gethwnd
 
+   // UINT message
    ASSIGN message(n) INLINE ::setmessage(n)
    ACCESS message INLINE ::getmessage()
    METHOD setmessage
    METHOD getmessage
 
+   // WPARAM wParam
    ASSIGN wParam(n) INLINE ::setwParam(n)
    ACCESS wParam INLINE ::getwParam()
    METHOD setwParam
    METHOD getwParam
 
+   // LPARAM lParam
    ASSIGN lParam(n) INLINE ::setlParam(n)
    ACCESS lParam INLINE ::getlParam()
    METHOD setLParam
    METHOD getLParam
 
+   // DWORD time
    ASSIGN time(n) INLINE ::settime(n)
    ACCESS time INLINE ::gettime()
    METHOD setTime
    METHOD getTime
 
+   // POINT pt
    ASSIGN pt(p) INLINE ::setpt(p)
    ACCESS pt INLINE ::getpt()
    METHOD setPt
    METHOD getPt
+
+   // DWORD lPrivate
 
    DESTRUCTOR destroyObject
 

@@ -44,21 +44,25 @@ CLASS WINAPI_STRUCT_RECT
    METHOD new
    METHOD delete
 
+   // LONG left
    ASSIGN left(n) INLINE ::setleft(n)
    ACCESS left INLINE ::getleft()
    METHOD setleft
    METHOD getleft
 
+   // LONG top
    ASSIGN top(n) INLINE ::settop(n)
    ACCESS top INLINE ::gettop()
    METHOD settop
    METHOD gettop
 
+   // LONG right
    ASSIGN right(n) INLINE ::setright(n)
    ACCESS right INLINE ::getright()
    METHOD setright
    METHOD getright
 
+   // LONG bottom
    ASSIGN bottom(n) INLINE ::setbottom(n)
    ACCESS bottom INLINE ::getbottom()
    METHOD setbottom

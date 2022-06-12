@@ -36,7 +36,7 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WINAPI_STRUCT_SIZE
+CLASS WINAPI_STRUCT_LOGBRUSH
 
    DATA pointer
    DATA self_destruction INIT .F.
@@ -44,23 +44,29 @@ CLASS WINAPI_STRUCT_SIZE
    METHOD new
    METHOD delete
 
-   // LONG cx
-   ASSIGN cx(n) INLINE ::setcx(n)
-   ACCESS cx INLINE ::getcx()
-   METHOD setcx
-   METHOD getcx
+   // UINT lbStyle
+   ASSIGN lbStyle(n) INLINE ::setlbStyle(n)
+   ACCESS lbStyle INLINE ::getlbStyle()
+   METHOD setlbStyle
+   METHOD getlbStyle
 
-   // LONG cy
-   ASSIGN cy(n) INLINE ::setcy(n)
-   ACCESS cy INLINE ::getcy()
-   METHOD setcy
-   METHOD getcy
+   // COLORREF lbColor
+   ASSIGN lbColor(n) INLINE ::setlbColor(n)
+   ACCESS lbColor INLINE ::getlbColor()
+   METHOD setlbColor
+   METHOD getlbColor
+
+   // ULONG_PTR lbHatch
+   ASSIGN lbHatch(n) INLINE ::setlbHatch(n)
+   ACCESS lbHatch INLINE ::getlbHatch()
+   METHOD setlbHatch
+   METHOD getlbHatch
 
    DESTRUCTOR destroyObject
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WINAPI_STRUCT_SIZE
+PROCEDURE destroyObject() CLASS WINAPI_STRUCT_LOGBRUSH
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -73,9 +79,9 @@ RETURN
 #include "hbapiitm.h"
 #include "hbapicls.h"
 
-HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_NEW )
+HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_NEW )
 {
-  auto obj = new SIZE();
+  auto obj = new LOGBRUSH();
   PHB_ITEM self = hb_stackSelfItem();
   PHB_ITEM ptr = hb_itemPutPtr( nullptr, ( void * ) obj );
   hb_objSendMsg( self, "_pointer", 1, ptr );
@@ -86,9 +92,9 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_NEW )
   hb_itemReturn( self );
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_DELETE )
+HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_DELETE )
 {
-  auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
   if( obj != nullptr )
   {
@@ -103,55 +109,78 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_DELETE )
   hb_itemReturn( hb_stackSelfItem() );
 }
 
-// LONG cx
+// UINT lbStyle
 
-HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_SETCX )
+HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBSTYLE )
 {
-  auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
   if( obj != nullptr )
   {
-    obj->cx = hb_parnl(1);
+    obj->lbStyle = hb_parni(1);
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_GETCX )
+HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBSTYLE )
 {
-  auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->cx);
+    hb_retni(obj->lbStyle);
   }
 }
 
-// LONG cy
+// COLORREF lbColor
 
-HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_SETCY )
+HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBCOLOR )
 {
-  auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
   if( obj != nullptr )
   {
-    obj->cy = hb_parnl(1);
+    obj->lbColor = hb_parnl(1);
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_GETCY )
+HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBCOLOR )
 {
-  auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->cy);
+    hb_retnl(obj->lbColor);
+  }
+}
+
+// ULONG_PTR lbHatch
+
+HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBHATCH )
+{
+  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+
+  if( obj != nullptr )
+  {
+    obj->lbHatch = hb_parnl(1);
+  }
+}
+
+HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBHATCH )
+{
+  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+
+  if( obj != nullptr )
+  {
+    hb_retnl(obj->lbHatch);
   }
 }
 
 /*
-typedef struct tagSIZE {
-  LONG cx;
-  LONG cy;
-} SIZE, *PSIZE, *LPSIZE;
+typedef struct tagLOGBRUSH {
+  UINT      lbStyle;
+  COLORREF  lbColor;
+  ULONG_PTR lbHatch;
+} LOGBRUSH, *PLOGBRUSH, *NPLOGBRUSH, *LPLOGBRUSH;
 */
 
 #pragma ENDDUMP

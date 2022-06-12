@@ -44,86 +44,103 @@ CLASS WINAPI_STRUCT_IMAGELISTDRAWPARAMS
    METHOD new
    METHOD delete
 
+   // DWORD cbSize
    ASSIGN cbSize(n) INLINE ::setcbSize(n)
    ACCESS cbSize INLINE ::getcbSize()
    METHOD setcbSize
    METHOD getcbSize
 
+   // HIMAGELIST himl
    ASSIGN himl(p) INLINE ::sethiml(p)
    ACCESS himl INLINE ::gethiml()
    METHOD sethiml
    METHOD gethiml
 
+   // int i
    ASSIGN i(n) INLINE ::seti(n)
    ACCESS i INLINE ::geti()
    METHOD seti
    METHOD geti
 
+   // HDC hdcDst
    ASSIGN hdcDst(p) INLINE ::sethdcDst(p)
    ACCESS hdcDst INLINE ::gethdcDst()
    METHOD sethdcDst
    METHOD gethdcDst
 
+   // int x
    ASSIGN x(n) INLINE ::setx(n)
    ACCESS x INLINE ::getx()
    METHOD setx
    METHOD getx
 
+   // int y
    ASSIGN y(n) INLINE ::sety(n)
    ACCESS y INLINE ::gety()
    METHOD sety
    METHOD gety
 
+   // int cx
    ASSIGN cx(n) INLINE ::setcx(n)
    ACCESS cx INLINE ::getcx()
    METHOD setcx
    METHOD getcx
 
+   // int cy
    ASSIGN cy(n) INLINE ::setcy(n)
    ACCESS cy INLINE ::getcy()
    METHOD setcy
    METHOD getcy
 
+   // int xBitmap
    ASSIGN xBitmap(n) INLINE ::setxBitmap(n)
    ACCESS xBitmap INLINE ::getxBitmap()
    METHOD setxBitmap
    METHOD getxBitmap
 
+   // int yBitmap
    ASSIGN yBitmap(n) INLINE ::setyBitmap(n)
    ACCESS yBitmap INLINE ::getyBitmap()
    METHOD setyBitmap
    METHOD getyBitmap
 
+   // COLORREF rgbBk
    ASSIGN rgbBk(n) INLINE ::setrgbBk(n)
    ACCESS rgbBk INLINE ::getrgbBk()
    METHOD setrgbBk
    METHOD getrgbBk
 
+   // COLORREF rgbFg
    ASSIGN rgbFg(n) INLINE ::setrgbFg(n)
    ACCESS rgbFg INLINE ::getrgbFg()
    METHOD setrgbFg
    METHOD getrgbFg
 
+   // UINT fStyle
    ASSIGN fStyle(n) INLINE ::setfStyle(n)
    ACCESS fStyle INLINE ::getfStyle()
    METHOD setfStyle
    METHOD getfStyle
 
+   // DWORD dwRop
    ASSIGN dwRop(n) INLINE ::setdwRop(n)
    ACCESS dwRop INLINE ::getdwRop()
    METHOD setdwRop
    METHOD getdwRop
 
+   // DWORD fState
    ASSIGN fState(n) INLINE ::setfState(n)
    ACCESS fState INLINE ::getfState()
    METHOD setfState
    METHOD getfState
 
+   // DWORD Frame
    ASSIGN Frame(n) INLINE ::setFrame(n)
    ACCESS Frame INLINE ::getFrame()
    METHOD setFrame
    METHOD getFrame
 
+   // COLORREF crEffect
    ASSIGN crEffect(n) INLINE ::setcrEffect(n)
    ACCESS crEffect INLINE ::getcrEffect()
    METHOD setcrEffect

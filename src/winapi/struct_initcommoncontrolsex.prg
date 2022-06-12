@@ -44,11 +44,13 @@ CLASS WINAPI_STRUCT_INITCOMMONCONTROLSEX
    METHOD new
    METHOD delete
 
+   // DWORD dwSize
    ASSIGN dwSize(n) INLINE ::setdwSize(n)
    ACCESS dwSize INLINE ::getdwSize()
    METHOD setdwSize
    METHOD getdwSize
 
+   // DWORD dwICC
    ASSIGN dwICC(n) INLINE ::setdwICC(n)
    ACCESS dwICC INLINE ::getdwICC()
    METHOD setdwICC
