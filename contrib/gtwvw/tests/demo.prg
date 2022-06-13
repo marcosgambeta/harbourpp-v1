@@ -16,87 +16,7 @@
 #include "inkey.ch"
 #include "setcurs.ch"
 #include "hbgtinfo.ch"
-
-#define MF_INSERT                     0
-#define MF_CHANGE                   128
-#define MF_APPEND                   256
-#define MF_DELETE                   512
-#define MF_REMOVE                  4096
-
-#define MF_BYCOMMAND                  0
-#define MF_BYPOSITION              1024
-
-#define MF_SEPARATOR               2048
-
-#define MF_ENABLED                    0
-#define MF_GRAYED                     1
-#define MF_DISABLED                   2
-
-#define MF_UNCHECKED                  0
-#define MF_CHECKED                    8
-#define MF_USECHECKBITMAPS          512
-
-#define MF_STRING                     0
-#define MF_BITMAP                     4
-#define MF_OWNERDRAW                256
-
-#define MF_POPUP                     16
-#define MF_MENUBARBREAK              32
-#define MF_MENUBREAK                 64
-
-#define MF_UNHILITE                   0
-#define MF_HILITE                   128
-
-#define MB_OK                                 0
-#define MB_OKCANCEL                           1
-#define MB_ABORTRETRYIGNORE                   2
-#define MB_YESNOCANCEL                        3
-#define MB_YESNO                              4
-#define MB_RETRYCANCEL                        5
-#define MB_CANCELTRYCONTINUE                  6
-
-
-#define MB_ICONHAND                          16
-#define MB_ICONQUESTION                      32
-#define MB_ICONEXCLAMATION                   48
-#define MB_ICONASTERISK                      64
-
-#define MB_USERICON                         128
-#define MB_ICONWARNING              MB_ICONEXCLAMATION
-#define MB_ICONERROR                MB_ICONHAND
-
-#define MB_ICONINFORMATION          MB_ICONASTERISK
-#define MB_ICONSTOP                 MB_ICONHAND
-
-#define MB_DEFBUTTON1                         0
-#define MB_DEFBUTTON2                       256
-#define MB_DEFBUTTON3                       512
-#define MB_DEFBUTTON4                       768
-
-#define MB_APPLMODAL                          0
-#define MB_SYSTEMMODAL                     4096
-#define MB_TASKMODAL                       8192
-#define MB_HELP                           16384 // Help Button
-
-#define MB_NOFOCUS                        32768
-#define MB_SETFOREGROUND                  65536
-#define MB_DEFAULT_DESKTOP_ONLY          131072
-
-#define MB_TOPMOST                       262144
-#define MB_RIGHT                         524288
-#define MB_RTLREADING                   1048576
-
-#define IDOK                1
-#define IDCANCEL            2
-#define IDABORT             3
-#define IDRETRY             4
-#define IDIGNORE            5
-#define IDYES               6
-#define IDNO                7
-#define IDCLOSE             8
-#define IDHELP              9
-
-#define IDTRYAGAIN          10
+#include "winapi_winuser.ch"
 
 #define WVW_MAXWINDOWS    20             // ! must match with hbgtwvw.h
 #define WVW_DEFAULT_MENUKEYEVENT  1024   // ! must match with hbgtwvw.h
@@ -664,16 +584,16 @@ FUNCTION VXBscroller( oBrowse, nWinNum, XBid, XBmsg )
    lNeedStabilize := .F.
    DO WHILE .T.  // dummy loop
       DO CASE
-      CASE XBmsg == 0 // SB_LINEUP
+      CASE XBmsg == SB_LINEUP
          IF ordKeyNo() == 1; exit; ENDIF
          oBrowse:up()
-      CASE XBmsg == 1 // SB_LINEDOWN
+      CASE XBmsg == SB_LINEDOWN
          IF ordKeyNo() == ordKeyCount(); exit; ENDIF
          oBrowse:down()
-      CASE XBmsg == 2 // SB_PAGEUP
+      CASE XBmsg == SB_PAGEUP
          IF ordKeyNo() == 1; exit; ENDIF
          oBrowse:pageup()
-      CASE XBmsg == 3 // SB_PAGEDOWN
+      CASE XBmsg == SB_PAGEDOWN
          IF ordKeyNo() == ordKeyCount(); exit; ENDIF
          oBrowse:pagedown()
       OTHERWISE
@@ -709,16 +629,16 @@ FUNCTION HXBscroller( oBrowse, nWinNum, XBid, XBmsg )
    lNeedStabilize := .F.
    DO WHILE .T.  // dummy loop
       DO CASE
-      CASE XBmsg == 0 // SB_LINELEFT
+      CASE XBmsg == SB_LINELEFT
          IF oBrowse:colPos == 1; exit; ENDIF
          oBrowse:Left()
-      CASE XBmsg == 1 // SB_LINERIGHT
+      CASE XBmsg == SB_LINERIGHT
          IF oBrowse:colpos == oBrowse:colCount; exit; ENDIF
          oBrowse:Right()
-      CASE XBmsg == 2 // SB_PAGELEFT
+      CASE XBmsg == SB_PAGELEFT
          IF oBrowse:colPos == 1; exit; ENDIF
          oBrowse:panleft()
-      CASE XBmsg == 3 // SB_PAGERIGHT
+      CASE XBmsg == SB_PAGERIGHT
          IF oBrowse:colpos == oBrowse:colCount; exit; ENDIF
          oBrowse:panright()
       OTHERWISE
