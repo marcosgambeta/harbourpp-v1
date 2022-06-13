@@ -749,7 +749,7 @@ HB_FUNC( WVG_ISMENUITEMCHECKED )
    }
    else
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 }
 
@@ -768,7 +768,7 @@ HB_FUNC( WVG_ISMENUITEMENABLED )
    }
    else
    {
-      hb_retl(TRUE);
+      hb_retl(true);
    }
 }
 
