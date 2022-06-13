@@ -184,7 +184,7 @@ HB_FUNC( WVW_PBSETFOCUS )
    }
    else
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 }
 
@@ -227,7 +227,7 @@ HB_FUNC( WVW_PBENABLE )
    }
    else
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 }
 
@@ -265,7 +265,7 @@ HB_FUNC( WVW_PBSETCODEBLOCK )
       }
 #endif
 
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -282,7 +282,7 @@ HB_FUNC( WVW_PBSETCODEBLOCK )
    pcd->bBusy = FALSE;
    pData->s_bRecurseCBlock = bOldSetting;
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /* wvw_pbSetStyle( [nWinNum], nPBid, nStyle )
@@ -311,7 +311,7 @@ HB_FUNC( WVW_PBSETSTYLE )
       SendMessage(pcd->hWndCtrl, BM_SETSTYLE, static_cast<WPARAM>(ulStyle), static_cast<LPARAM>(TRUE));
    }
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /* wvw_pbSetFont([nWinNum], cFontFace, nHeight, nWidth, nWeight, nQUality,;
@@ -640,7 +640,7 @@ HB_FUNC( WVW_CBSETFOCUS )
    }
    else
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 }
 
@@ -683,7 +683,7 @@ HB_FUNC( WVW_CBENABLE )
    }
    else
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 }
 
@@ -704,7 +704,7 @@ HB_FUNC( WVW_CBSETCODEBLOCK )
 
    if( !phiCodeBlock || pcd == nullptr || pcd->bBusy )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -721,7 +721,7 @@ HB_FUNC( WVW_CBSETCODEBLOCK )
    pcd->bBusy = FALSE;
    pData->s_bRecurseCBlock = bOldSetting;
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /* wvw_cbSetFont([nWinNum], cFontFace, nHeight, nWidth, nWeight, nQUality, lItalic, lUnderline, lStrikeout
@@ -810,7 +810,7 @@ HB_FUNC( WVW_CBSETINDEX )
 
    if( pcd == nullptr || iIndex < 0 )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -927,7 +927,7 @@ HB_FUNC( WVW_CBISDROPPED )
 
    if( pcd == nullptr )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 

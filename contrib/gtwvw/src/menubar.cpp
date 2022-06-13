@@ -88,7 +88,7 @@ HB_FUNC( WVW_APPENDMENU )
    if( !(hb_parni(2) & (MF_SEPARATOR | MF_POPUP)) && (hb_parni(3) >= WVW_ID_BASE_PUSHBUTTON) )
    {
       MessageBox(nullptr, TEXT("Menu Command Id too high. Potential conflict with pushbutton"), hb_gt_wvw_GetAppName(), MB_ICONERROR);
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 

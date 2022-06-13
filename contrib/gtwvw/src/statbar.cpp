@@ -716,7 +716,7 @@ HB_FUNC( WVW_XBENABLE )
 
    if( uiXBid == 0 || hWndXB == nullptr || uiFlags > ESB_DISABLE_BOTH )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -740,7 +740,7 @@ HB_FUNC( WVW_XBSHOW )
 
    if( uiXBid == 0 || hWndXB == nullptr )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 

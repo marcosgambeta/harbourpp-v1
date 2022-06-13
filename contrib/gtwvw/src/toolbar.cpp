@@ -214,21 +214,21 @@ HB_FUNC( WVW_TBADDBUTTON )
    hWndTB = pWindowData->hToolBar;
    if( hWndTB == nullptr )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
    if( iCommand >= WVW_ID_BASE_PUSHBUTTON )
    {
       MessageBox(nullptr, TEXT("Toolbar button Command Id too high. Potential conflict with pushbutton"), hb_gt_wvw_GetAppName(), MB_ICONERROR);
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
    if( strlen(szLabel) > WVW_TB_LABELMAXLENGTH )
    {
       MessageBox(nullptr, TEXT("Cannot addbutton, Label too long..."), hb_gt_wvw_GetAppName(), MB_ICONERROR);
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -241,14 +241,14 @@ HB_FUNC( WVW_TBADDBUTTON )
          if( !AddTBButton(hWndTB, szBitmap, uiBitmap, szLabel, iCommand, 1, bMap3Dcolors, pWindowData, bDropdown) )
          {
             MessageBox(nullptr, TEXT("Failed addbutton..."), hb_gt_wvw_GetAppName(), MB_ICONERROR);
-            hb_retl(FALSE);
+            hb_retl(false);
             return;
          }
       }
       else
       {
          MessageBox(nullptr, TEXT("Failed addbutton..."), hb_gt_wvw_GetAppName(), MB_ICONERROR);
-         hb_retl(FALSE);
+         hb_retl(false);
          return;
       }
    }
@@ -260,7 +260,7 @@ HB_FUNC( WVW_TBADDBUTTON )
       hb_gt_wvwResetWindow(usWinNum);
    }
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*wvw_tbButtonCount([nWinNum])
@@ -298,7 +298,7 @@ HB_FUNC( WVW_TBDELBUTTON )
    hWndTB = pWindowData->hToolBar;
    if( hWndTB == nullptr || iButton < 0 )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -306,7 +306,7 @@ HB_FUNC( WVW_TBDELBUTTON )
 
    if( !SendMessage(hWndTB, TB_DELETEBUTTON, static_cast<WPARAM>(iButton), static_cast<LPARAM>(0)) )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -317,7 +317,7 @@ HB_FUNC( WVW_TBDELBUTTON )
       hb_gt_wvwResetWindow(usWinNum);
    }
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /* wvw_tbGetButtonRect([nWinNum], nButton)
@@ -377,14 +377,14 @@ HB_FUNC( WVW_TBENABLEBUTTON )
    hWndTB = pWindowData->hToolBar;
    if( hWndTB == nullptr || iButton < 0 )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
    iCommand = IndexToCommand(hWndTB, iButton);
    if( iCommand < 0 )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -392,7 +392,7 @@ HB_FUNC( WVW_TBENABLEBUTTON )
 
    if( !SendMessage(hWndTB, TB_ENABLEBUTTON, static_cast<WPARAM>(iCommand), static_cast<LPARAM>(MAKELONG(bEnable, 0))) )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -403,7 +403,7 @@ HB_FUNC( WVW_TBENABLEBUTTON )
       hb_gt_wvwResetWindow(usWinNum);
    }
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*wvw_tbDestroy( [nWinNum] )

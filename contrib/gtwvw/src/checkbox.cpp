@@ -181,7 +181,7 @@ HB_FUNC( WVW_CXSETFOCUS )
    }
    else
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 }
 
@@ -211,7 +211,7 @@ HB_FUNC( WVW_CXENABLE )
    }
    else
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 }
 
@@ -231,7 +231,7 @@ HB_FUNC( WVW_CXSETCODEBLOCK )
 
    if( !phiCodeBlock || pcd == nullptr || pcd->bBusy )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -248,7 +248,7 @@ HB_FUNC( WVW_CXSETCODEBLOCK )
    pcd->bBusy = FALSE;
    pData->s_bRecurseCBlock = bOldSetting;
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /* wvw_cxSetCheck( [nWinNum], nCXid, nCheckState )
@@ -271,7 +271,7 @@ HB_FUNC( WVW_CXSETCHECK )
       SendMessage(pcd->hWndCtrl, BM_SETCHECK, static_cast<WPARAM>(ulCheck), static_cast<LPARAM>(0));
    }
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*wvw_cxGetCheck( [nWinNum], nCXid )
@@ -379,7 +379,7 @@ HB_FUNC( WVW_CXSTATUSFONT )
       }
    }
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /* CHECKBOX ends                                                     */
@@ -593,14 +593,14 @@ HB_FUNC( WVW_PGSETRANGE )
 
    if( uiPGid == 0 || hWndPG == nullptr || (iMin > iMax) )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
    SendMessage(hWndPG, PBM_SETRANGE, 0, MAKELPARAM(iMin, iMax));
    SendMessage(hWndPG, PBM_SETPOS, static_cast<WPARAM>(iMin), 0);
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*wvw_pgSetPos(nWinNum, PGid, [nPos])
@@ -620,7 +620,7 @@ HB_FUNC( WVW_PGSETPOS )
 
    if( uiPGid == 0 || hWndPG == nullptr )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -628,13 +628,13 @@ HB_FUNC( WVW_PGSETPOS )
 
    if( iPos < pbrange.iLow || iPos > pbrange.iHigh )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
    SendMessage(hWndPG, PBM_SETPOS, static_cast<WPARAM>(iPos), 0);
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*wvw_pgGetPos(nWinNum, PGid)

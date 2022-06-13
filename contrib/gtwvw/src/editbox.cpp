@@ -301,7 +301,7 @@ HB_FUNC( WVW_EBSETFOCUS )
    }
    else
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 }
 
@@ -344,7 +344,7 @@ HB_FUNC( WVW_EBENABLE )
    }
    else
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 }
 
@@ -375,7 +375,7 @@ HB_FUNC( WVW_EBEDITABLE )
    }
    else
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 }
 
@@ -396,7 +396,7 @@ HB_FUNC( WVW_EBSETCODEBLOCK )
 
    if( !phiCodeBlock || pcd == nullptr || pcd->bBusy )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -413,7 +413,7 @@ HB_FUNC( WVW_EBSETCODEBLOCK )
    pcd->bBusy = FALSE;
    pData->s_bRecurseCBlock = bOldSetting;
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /* wvw_ebSetFont([nWinNum], cFontFace, nHeight, nWidth, nWeight, nQUality,;
@@ -495,7 +495,7 @@ HB_FUNC( WVW_EBISMULTILINE )
 
    if( pcd == nullptr )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -528,7 +528,7 @@ HB_FUNC( WVW_EBGETTEXT )
 
    if( pcd == nullptr )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -575,7 +575,7 @@ HB_FUNC( WVW_EBSETTEXT )
 
    if( pcd == nullptr )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -613,7 +613,7 @@ HB_FUNC( WVW_EBGETSEL )
 
    if( pcd == nullptr )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -627,7 +627,7 @@ HB_FUNC( WVW_EBGETSEL )
    {
       hb_stornl(dwEnd, 4);
    }
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*wvw_ebSetSel( [nWinNum], nEBid, nstart, nend )
@@ -649,12 +649,12 @@ HB_FUNC( WVW_EBSETSEL )
 
    if( pcd == nullptr )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
    SendMessage(static_cast<HWND>(pcd->hWndCtrl), EM_SETSEL, static_cast<WPARAM>(dwStart), static_cast<LPARAM>(dwEnd));
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /* Static controls */
@@ -790,11 +790,11 @@ HB_FUNC( WVW_STSETTEXT )
    {
 
       SetWindowText(static_cast<HWND>(hWndCB), static_cast<LPCTSTR>(hb_parc(3)));
-      hb_retl(1);
+      hb_retl(true);
    }
    else
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 }
 

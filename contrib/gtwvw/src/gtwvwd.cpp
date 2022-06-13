@@ -7532,7 +7532,7 @@ HB_FUNC( WVW_LCLOSEWINDOW )
    if( s_pWvwData->s_usNumWindows <= 1 )
    {
       MessageBox(nullptr, TEXT("No more window to close"), "Error", MB_ICONERROR);
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -7555,7 +7555,7 @@ HB_FUNC( WVW_LCLOSEWINDOW )
 
    SendMessage(pWindowData->hWnd, WM_SETFOCUS, 0, 0);
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*wvw_nNumWindows()
@@ -7756,7 +7756,7 @@ HB_FUNC( WVW_ADDROWS )
 
    if( iRows == 0 )
    {
-      hb_retl(TRUE);
+      hb_retl(true);
       return;
    }
 
@@ -7766,7 +7766,7 @@ HB_FUNC( WVW_ADDROWS )
       (pWindowData->ROWS + iRows < 1)
       )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -7850,7 +7850,7 @@ HB_FUNC( WVW_ADDROWS )
                               static_cast<USHORT>(pWindowData->COLS) - 1, static_cast<USHORT>(pWindowData->ROWS) - 1);
    }
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*
@@ -8287,7 +8287,7 @@ HB_FUNC( WVW_PROCESSMESSAGES )
 
    hb_gt_wvwDoProcessMessages(usWinNum);
 
-   hb_retl(1);
+   hb_retl(true);
 }
 
 HB_FUNC( WVW_GETTITLE )
@@ -8367,7 +8367,7 @@ HB_FUNC( WVW_SETCLIPBOARD )
 
    if( !IsClipboardFormatAvailable(CF_TEXT) )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -8375,13 +8375,13 @@ HB_FUNC( WVW_SETCLIPBOARD )
     */
    if( !HB_ISCHAR(1) )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
    if( !OpenClipboard(nullptr) )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
    EmptyClipboard();
@@ -8397,7 +8397,7 @@ HB_FUNC( WVW_SETCLIPBOARD )
    if( hglbCopy == nullptr )
    {
       CloseClipboard();
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -8413,7 +8413,7 @@ HB_FUNC( WVW_SETCLIPBOARD )
    SetClipboardData(CF_TEXT, hglbCopy);
 
    CloseClipboard();
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 HB_FUNC( WVW_PASTEFROMCLIPBOARD )

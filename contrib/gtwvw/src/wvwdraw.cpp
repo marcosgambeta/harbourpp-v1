@@ -170,7 +170,7 @@ HB_FUNC( WVW_DRAWLABELOBJ )
    SetBkColor(pWindowData->hdc, oldBkColor);
    SetTextColor(pWindowData->hdc, oldTextColor);
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*                                                                                       */
@@ -262,7 +262,7 @@ HB_FUNC( WVW_DRAWTOOLBUTTONSTATE )
          break;
 
    }
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*                                                                                                 */
@@ -866,7 +866,7 @@ HB_FUNC( WVW_DRAWBOXGET )
    MoveToEx(pWindowData->hdc, iRight, iTop, nullptr);
    LineTo(pWindowData->hdc, iRight, iBottom + 1);
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*
@@ -931,7 +931,7 @@ HB_FUNC( WVW_DRAWBOXGET_XP )
    MoveToEx(pWindowData->hdc, iRight + 1, iTop - 1, nullptr);
    LineTo(pWindowData->hdc, iRight + 1, iBottom + 1);
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*                                                                   */
@@ -1006,7 +1006,7 @@ HB_FUNC( WVW_DRAWBOXRAISED )
 
    hb_gt_wvwDrawBoxRaised(pWindowData->byWinId, iTop, iLeft, iBottom, iRight, bTight);
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*                                                                                         */
@@ -1080,7 +1080,7 @@ HB_FUNC( WVW_DRAWBOXRECESSED )
 
    hb_gt_wvwDrawBoxRecessed(pWindowData->byWinId, iTop, iLeft, iBottom, iRight, bTight);
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*
@@ -1156,7 +1156,7 @@ HB_FUNC( WVW_DRAWBOXGROUP )
    MoveToEx(pWindowData->hdc, iLeft, iTop, nullptr);            /* Top Inner     */
    LineTo(pWindowData->hdc, iRight, iTop);
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*                                                                   */
@@ -1222,7 +1222,7 @@ HB_FUNC( WVW_DRAWBOXGROUPRAISED )
    MoveToEx(pWindowData->hdc, iLeft, iTop, nullptr);            /* Top Inner     */
    LineTo(pWindowData->hdc, iRight, iTop);
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*                                                                        */
@@ -1581,10 +1581,10 @@ HB_FUNC( WVW_DRAWLABEL )
       SetBkColor(pWindowData->hdc, oldBkColor);
       SetTextColor(pWindowData->hdc, oldTextColor);
 
-      hb_retl(TRUE);
+      hb_retl(true);
    }
 
-   hb_retl(FALSE);
+   hb_retl(false);
 }
 
 /*                                                                   */
@@ -1647,7 +1647,7 @@ HB_FUNC( WVW_DRAWOUTLINE )
       DeleteObject(hPen);
    }
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*                  1                                                                               */
@@ -1818,7 +1818,7 @@ HB_FUNC( WVW_DRAWLINE )
 
    SelectObject(pWindowData->hdc, hOldPen);
    DeleteObject(hPen);
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*                                                                   */
@@ -2119,7 +2119,7 @@ HB_FUNC( WVW_DRAWGRIDHORZ )
       usAtRow++;
    }
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*
@@ -2147,7 +2147,7 @@ HB_FUNC( WVW_DRAWGRIDVERT )
 
    if( !iTabs )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 
    iOffTop    = !HB_ISNIL(6) ? hb_parvni(6, 1) : 0;
@@ -2192,7 +2192,7 @@ HB_FUNC( WVW_DRAWGRIDVERT )
       LineTo(pWindowData->hdc, x, iBottom);
    }
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*                                                                                  */
@@ -2342,7 +2342,7 @@ HB_FUNC( WVW_DRAWBUTTON )
       }
    }
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /* wvw_DrawStatusBar() is meant for WVT compatibility only.
@@ -2547,10 +2547,10 @@ HB_FUNC( WVW_DRAWLABELEX )
       SetBkColor(pWindowData->hdc, oldBkColor);
       SetTextColor(pWindowData->hdc, oldTextColor);
 
-      hb_retl(TRUE);
+      hb_retl(true);
    }
 
-   hb_retl(FALSE);
+   hb_retl(false);
 }
 
 /*                        1      2       3       4        5        6       7       8      9        */
@@ -2701,7 +2701,7 @@ HB_FUNC( WVW_DRAWLINEEX )
          break;
    }
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 /*                                                                           */

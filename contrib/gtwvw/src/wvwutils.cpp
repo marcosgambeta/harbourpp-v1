@@ -420,7 +420,7 @@ HB_FUNC( WVW_SETCONTROLTEXT )
       return;
    }
    SetWindowText(hWndPB, hb_parcx(3));
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 HB_FUNC( WVW_PBVISIBLE )
@@ -434,7 +434,7 @@ HB_FUNC( WVW_PBVISIBLE )
 
    if( uiCtrlId == 0 || hWndPB == nullptr )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -472,7 +472,7 @@ HB_FUNC( WVW_CBVISIBLE )
    }
    else
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 }
 
@@ -487,7 +487,7 @@ HB_FUNC( WVW_CXVISIBLE )
 
    if( uiCtrlId == 0 || hWndPB == nullptr )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -520,7 +520,7 @@ HB_FUNC( WVW_XBVISIBLE )
 
    if( uiXBid == 0 || hWndXB == nullptr )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
       return;
    }
 
@@ -609,7 +609,7 @@ HB_FUNC( BRINGTOTOP1 )
    if( IsIconic(hWnd) )
    {
       ShowWindow(hWnd, SW_RESTORE);
-      hb_retl(TRUE);
+      hb_retl(true);
       return;
    }
    BringWindowToTop(hWnd); /* IE 5.5 related hack */
@@ -1380,11 +1380,11 @@ HB_FUNC( WVW_SETTIMER )
 
       SetTimer(pWindowData->hWnd, WVW_ID_BASE_TIMER + usWinNum, static_cast<UINT>(hb_parni(2)), nullptr);
 
-      hb_retl(TRUE);
+      hb_retl(true);
    }
    else
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 }
 
@@ -1403,11 +1403,11 @@ HB_FUNC( WVW_KILLTIMER )
       WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
       KillTimer(pWindowData->hWnd, WVW_ID_BASE_TIMER + usWinNum);
-      hb_retl(TRUE);
+      hb_retl(true);
    }
    else
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 }
 
@@ -1611,11 +1611,11 @@ HB_FUNC( WVW_LOADPEN )
       }
       p->s_sApp->hUserPens[iSlot] = hPen;
 
-      hb_retl(TRUE);
+      hb_retl(true);
    }
    else
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 }
 
@@ -1774,7 +1774,7 @@ HB_FUNC( WVW_SETMOUSEPOS )
    }
    else
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 }
 
@@ -1857,7 +1857,7 @@ HB_FUNC( WVW_FILLRECTANGLE )
       DeleteObject(hBrush);
    }
 
-   hb_retl(TRUE);
+   hb_retl(true);
 }
 
 HB_FUNC( WVW_LBADDSTRING )
@@ -1930,7 +1930,7 @@ HB_FUNC( WVW_SETPEN )
 
    if( HB_ISNIL(1) )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 
    iPenStyle = hb_parni(1);
@@ -1956,11 +1956,11 @@ HB_FUNC( WVW_SETPEN )
 
       p->s_sApp->currentPen = hPen;
 
-      hb_retl(TRUE);
+      hb_retl(true);
    }
    else
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 }
 
@@ -1980,7 +1980,7 @@ HB_FUNC( WVW_SETBRUSH )
 
    if( HB_ISNIL(1) )
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 
    lb.lbStyle = hb_parnl(1);
@@ -2006,11 +2006,11 @@ HB_FUNC( WVW_SETBRUSH )
       }
       p->s_sApp->currentBrush = hBrush;
 
-      hb_retl(TRUE);
+      hb_retl(true);
    }
    else
    {
-      hb_retl(FALSE);
+      hb_retl(false);
    }
 }
 
