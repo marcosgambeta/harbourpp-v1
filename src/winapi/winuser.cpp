@@ -258,7 +258,9 @@ WINUSERAPI WINBOOL WINAPI GetUserObjectInformationA(HANDLE hObj,int nIndex,PVOID
 */
 HB_FUNC( WINAPI_GETUSEROBJECTINFORMATIONA )
 {
-  winapi_ret_BOOL(GetUserObjectInformationA(winapi_par_HANDLE(1), winapi_par_int(2), static_cast<PVOID>(hb_parptr(3)), winapi_par_DWORD(4), static_cast<LPDWORD>(hb_parptr(5))));
+  DWORD nLengthNeeded;
+  winapi_ret_BOOL(GetUserObjectInformationA(winapi_par_HANDLE(1), winapi_par_int(2), static_cast<PVOID>(hb_parptr(3)), winapi_par_DWORD(4), &nLengthNeeded));
+  winapi_stor_DWORD(nLengthNeeded, 5);
 }
 
 /*
@@ -266,7 +268,9 @@ WINUSERAPI WINBOOL WINAPI GetUserObjectInformationW(HANDLE hObj,int nIndex,PVOID
 */
 HB_FUNC( WINAPI_GETUSEROBJECTINFORMATIONW )
 {
-  winapi_ret_BOOL(GetUserObjectInformationW(winapi_par_HANDLE(1), winapi_par_int(2), static_cast<PVOID>(hb_parptr(3)), winapi_par_DWORD(4), static_cast<LPDWORD>(hb_parptr(5))));
+  DWORD nLengthNeeded;
+  winapi_ret_BOOL(GetUserObjectInformationW(winapi_par_HANDLE(1), winapi_par_int(2), static_cast<PVOID>(hb_parptr(3)), winapi_par_DWORD(4), &nLengthNeeded));
+  winapi_stor_DWORD(nLengthNeeded, 5);
 }
 
 /*
@@ -837,6 +841,15 @@ HB_FUNC( WINAPI_CREATEWINDOWEXW )
   winapi_ret_HWND(CreateWindowExW(winapi_par_DWORD(1), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3), winapi_par_DWORD(4), winapi_par_int(5), winapi_par_int(6), winapi_par_int(7), winapi_par_int(8), winapi_par_HWND(9), winapi_par_HMENU(10), winapi_par_HINSTANCE(11), static_cast<LPVOID>(hb_parptr(12))));
 }
 
+HB_FUNC( WINAPI_CREATEWINDOWEX )
+{
+  void * str2;
+  void * str3;
+  winapi_ret_HWND(CreateWindowEx(winapi_par_DWORD(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), winapi_par_DWORD(4), winapi_par_int(5), winapi_par_int(6), winapi_par_int(7), winapi_par_int(8), winapi_par_HWND(9), winapi_par_HMENU(10), winapi_par_HINSTANCE(11), static_cast<LPVOID>(hb_parptr(12))));
+  hb_strfree(str2);
+  hb_strfree(str3);
+}
+
 /*
 WINUSERAPI WINBOOL WINAPI IsWindow(HWND hWnd)
 */
@@ -896,6 +909,16 @@ WINUSERAPI WINBOOL WINAPI UpdateLayeredWindowIndirect (HWND hWnd, const UPDATELA
 /*
 WINUSERAPI WINBOOL WINAPI GetLayeredWindowAttributes (HWND hwnd, COLORREF *pcrKey, BYTE *pbAlpha, DWORD *pdwFlags)
 */
+HB_FUNC( WINAPI_GETLAYEREDWINDOWATTRIBUTES )
+{
+  COLORREF crKey;
+  BYTE bAlpha;
+  DWORD dwFlags;
+  winapi_ret_BOOL(GetLayeredWindowAttributes(winapi_par_HWND(1), &crKey, &bAlpha, &dwFlags));
+  winapi_stor_COLORREF(crKey, 2);
+  winapi_stor_BYTE(bAlpha, 3);
+  winapi_stor_DWORD(dwFlags, 4);
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI PrintWindow (HWND hwnd, HDC hdcBlt, UINT nFlags)
@@ -984,10 +1007,24 @@ WINUSERAPI WINBOOL WINAPI SetWindowPlacement (HWND hWnd, CONST WINDOWPLACEMENT *
 /*
 WINUSERAPI WINBOOL WINAPI GetWindowDisplayAffinity(HWND hWnd, DWORD *pdwAffinity)
 */
+#if 0
+HB_FUNC( WINAPI_GETWINDOWDISPLAYAFFINITY )
+{
+  DWORD dwAffinity;
+  winapi_ret_BOOL(GetWindowDisplayAffinity(winapi_par_HWND(1), &dwAffinity));
+  winapi_stor_DWORD(dwAffinity, 2);
+}
+#endif
 
 /*
 WINUSERAPI WINBOOL WINAPI SetWindowDisplayAffinity(HWND hWnd, DWORD dwAffinity)
 */
+#if 0
+HB_FUNC( WINAPI_SETWINDOWDISPLAYAFFINITY )
+{
+  winapi_ret_BOOL(SetWindowDisplayAffinity(winapi_par_HWND(1), winapi_par_DWORD(2)));
+}
+#endif
 
 /*
 WINUSERAPI HDWP WINAPI BeginDeferWindowPos (int nNumWindows)
@@ -1112,6 +1149,12 @@ HB_FUNC( WINAPI_SETDLGITEMINT )
 /*
 WINUSERAPI UINT WINAPI GetDlgItemInt(HWND hDlg,int nIDDlgItem,WINBOOL *lpTranslated,WINBOOL bSigned)
 */
+HB_FUNC( WINAPI_GETDLGITEMINT )
+{
+  BOOL Translated;
+  winapi_ret_UINT(GetDlgItemInt(winapi_par_HWND(1), winapi_par_int(2), &Translated, winapi_par_BOOL(4)));
+  winapi_stor_BOOL(Translated, 3);
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI SetDlgItemTextA(HWND hDlg,int nIDDlgItem,LPCSTR lpString)
@@ -1127,6 +1170,13 @@ WINUSERAPI WINBOOL WINAPI SetDlgItemTextW(HWND hDlg,int nIDDlgItem,LPCWSTR lpStr
 HB_FUNC( WINAPI_SETDLGITEMTEXTW )
 {
   winapi_ret_BOOL(SetDlgItemTextW(winapi_par_HWND(1), winapi_par_int(2), ( LPCWSTR ) hb_parc(3)));
+}
+
+HB_FUNC( WINAPI_SETDLGITEMTEXT )
+{
+  void * str;
+  winapi_ret_BOOL(SetDlgItemText(winapi_par_HWND(1), winapi_par_int(2), HB_PARSTR(3, &str, nullptr)));
+  hb_strfree(str);
 }
 
 /*
@@ -1212,6 +1262,10 @@ HB_FUNC( WINAPI_GETDLGCTRLID )
 /*
 WINUSERAPI __LONG32 WINAPI GetDialogBaseUnits(VOID)
 */
+HB_FUNC( WINAPI_GETDIALOGBASEUNITS )
+{
+  winapi_ret___LONG32(GetDialogBaseUnits());
+}
 
 /*
 WINUSERAPI LRESULT WINAPI DefDlgProcA(HWND hDlg,UINT Msg,WPARAM wParam,LPARAM lParam)
@@ -1333,6 +1387,13 @@ HB_FUNC( WINAPI_REGISTERCLIPBOARDFORMATW )
   winapi_ret_UINT(RegisterClipboardFormatW(( LPCWSTR ) hb_parc(1)));
 }
 
+HB_FUNC( WINAPI_REGISTERCLIPBOARDFORMAT )
+{
+  void * str;
+  winapi_ret_UINT(RegisterClipboardFormat(HB_PARSTR(1, &str, nullptr)));
+  hb_strfree(str);
+}
+
 /*
 WINUSERAPI int WINAPI CountClipboardFormats(VOID)
 */
@@ -1396,10 +1457,22 @@ HB_FUNC( WINAPI_GETOPENCLIPBOARDWINDOW )
 /*
 WINUSERAPI WINBOOL WINAPI AddClipboardFormatListener (HWND hwnd)
 */
+#if 0
+HB_FUNC( WINAPI_ADDCLIPBOARDFORMATLISTENER )
+{
+  winapi_ret_BOOL(AddClipboardFormatListener(winapi_par_HWND(1)));
+}
+#endif
 
 /*
 WINUSERAPI WINBOOL WINAPI RemoveClipboardFormatListener (HWND hwnd)
 */
+#if 0
+HB_FUNC( WINAPI_REMOVECLIPBOARDFORMATLISTENER )
+{
+  winapi_ret_BOOL(RemoveClipboardFormatListener(winapi_par_HWND(1)));
+}
+#endif
 
 /*
 WINUSERAPI WINBOOL WINAPI GetUpdatedClipboardFormats (PUINT lpuiFormats, UINT cFormats, PUINT pcFormatsOut)
@@ -1813,7 +1886,7 @@ HB_FUNC( WINAPI_ISTOUCHWINDOW )
 {
   ULONG Flags;
   winapi_ret_BOOL(IsTouchWindow(winapi_par_HWND(1), &Flags));
-  hb_stornl(Flags, 2);
+  winapi_stor_ULONG(Flags, 2);
 }
 #endif
 
@@ -3560,7 +3633,9 @@ WINUSERAPI DWORD WINAPI GetWindowThreadProcessId(HWND hWnd,LPDWORD lpdwProcessId
 */
 HB_FUNC( WINAPI_GETWINDOWTHREADPROCESSID )
 {
-  winapi_ret_DWORD(GetWindowThreadProcessId(winapi_par_HWND(1), static_cast<LPDWORD>(hb_parptr(2))));
+  DWORD dwProcessId;
+  winapi_ret_DWORD(GetWindowThreadProcessId(winapi_par_HWND(1), &dwProcessId));
+  winapi_stor_DWORD(dwProcessId, 2);
 }
 
 /*
@@ -3821,6 +3896,10 @@ HB_FUNC( WINAPI_DRAWICONEX )
 /*
 WINUSERAPI HICON WINAPI CreateIconIndirect(PICONINFO piconinfo)
 */
+HB_FUNC( WINAPI_CREATEICONINDIRECT )
+{
+  winapi_ret_HICON(CreateIconIndirect(static_cast<PICONINFO>(winapi_get_ptr(1))));
+}
 
 /*
 WINUSERAPI HICON WINAPI CopyIcon(HICON hIcon)
@@ -3833,6 +3912,10 @@ HB_FUNC( WINAPI_COPYICON )
 /*
 WINUSERAPI WINBOOL WINAPI GetIconInfo(HICON hIcon,PICONINFO piconinfo)
 */
+HB_FUNC( WINAPI_GETICONINFO )
+{
+  winapi_ret_BOOL(GetIconInfo(winapi_par_HICON(1), static_cast<PICONINFO>(winapi_get_ptr(2))));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI GetIconInfoExA (HICON hicon, PICONINFOEXA piconinfo)

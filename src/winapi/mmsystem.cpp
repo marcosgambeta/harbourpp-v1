@@ -154,7 +154,7 @@ HB_FUNC( WINAPI_WAVEOUTGETVOLUME )
 {
   DWORD dwVolume;
   winapi_ret_MMRESULT(waveOutGetVolume(winapi_par_HWAVEOUT(1), &dwVolume));
-  hb_stornl(dwVolume, 2);
+  winapi_stor_DWORD(dwVolume, 2);
 }
 
 /*
@@ -248,7 +248,7 @@ HB_FUNC( WINAPI_WAVEOUTGETPITCH )
 {
   DWORD dwPitch;
   winapi_ret_MMRESULT(waveOutGetPitch(winapi_par_HWAVEOUT(1), &dwPitch));
-  hb_stornl(dwPitch, 2);
+  winapi_stor_DWORD(dwPitch, 2);
 }
 
 /*
@@ -266,7 +266,7 @@ HB_FUNC( WINAPI_WAVEOUTGETPLAYBACKRATE )
 {
   DWORD dwRate;
   winapi_ret_MMRESULT(waveOutGetPlaybackRate(winapi_par_HWAVEOUT(1), &dwRate));
-  hb_stornl(dwRate, 2);
+  winapi_stor_DWORD(dwRate, 2);
 }
 
 /*
@@ -376,7 +376,7 @@ HB_FUNC( WINAPI_WAVEINGETID )
 {
   UINT uDeviceID;
   winapi_ret_MMRESULT(waveInGetID(winapi_par_HWAVEIN(1), &uDeviceID));
-  hb_storni(uDeviceID, 2);
+  winapi_stor_UINT(uDeviceID, 2);
 }
 
 /*
@@ -470,7 +470,7 @@ HB_FUNC( WINAPI_MIDIOUTGETVOLUME )
 {
   DWORD dwVolume;
   winapi_ret_MMRESULT(midiOutGetVolume(winapi_par_HMIDIOUT(1), &dwVolume));
-  hb_stornl(dwVolume, 2);
+  winapi_stor_DWORD(dwVolume, 2);
 }
 
 /*
@@ -640,7 +640,7 @@ HB_FUNC( WINAPI_MIDIINGETID )
 {
   UINT uDeviceID;
   winapi_ret_MMRESULT(midiInGetID(winapi_par_HMIDIIN(1), &uDeviceID));
-  hb_storni(uDeviceID, 2);
+  winapi_stor_UINT(uDeviceID, 2);
 }
 
 /*
@@ -682,7 +682,7 @@ HB_FUNC( WINAPI_AUXGETVOLUME )
 {
   DWORD dwVolume;
   winapi_ret_MMRESULT(auxGetVolume(winapi_par_UINT(1), &dwVolume));
-  hb_stornl(dwVolume, 2);
+  winapi_stor_DWORD(dwVolume, 2);
 }
 
 /*
