@@ -394,7 +394,7 @@ const char * hb_pards(int iParam)
 
 /* NOTE: szDate must be a 9 chars wide buffer. [vszakats] */
 
-char * hb_pardsbuff( char * szDate, int iParam )
+char * hb_pardsbuff(char * szDate, int iParam)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_pardsbuff(%p, %d)", static_cast<void*>(szDate), iParam));
@@ -1149,7 +1149,7 @@ const char * hb_parvds(int iParam, ...)
 
 /* NOTE: szDate must be a 9 chars wide buffer. [vszakats] */
 
-char  * hb_parvdsbuff( char * szDate, int iParam, ... )
+char  * hb_parvdsbuff(char * szDate, int iParam, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_parvdsbuff(%p, %d, ...)", static_cast<void*>(szDate), iParam));
@@ -3126,7 +3126,7 @@ int hb_storvptrGC(void * pointer, int iParam, ...)
 }
 
 #undef hb_pcount
-int  hb_pcount(void)
+int hb_pcount(void)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_pcount()"));
@@ -3134,5 +3134,5 @@ int  hb_pcount(void)
 
    HB_STACK_TLS_PRELOAD
 
-   return static_cast<int>(( hb_stackBaseItem() )->item.asSymbol.paramcnt);
+   return static_cast<int>((hb_stackBaseItem())->item.asSymbol.paramcnt);
 }

@@ -99,7 +99,7 @@ PHB_ITEM hb_itemParamPtr(HB_USHORT uiParam, long lMask)
    return hb_param(static_cast<int>(uiParam), lMask);
 }
 
-HB_BOOL hb_itemParamStore( HB_USHORT uiParam, PHB_ITEM pItem )
+HB_BOOL hb_itemParamStore(HB_USHORT uiParam, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemParamStore(%hu, %p)", uiParam, static_cast<void*>(pItem)));
@@ -378,7 +378,7 @@ PHB_ITEM hb_itemPutCConst(PHB_ITEM pItem, const char * szText)
    pItem->type = Harbour::Item::STRING;
    pItem->item.asString.length = nLen;
    pItem->item.asString.allocated = 0;
-   pItem->item.asString.value = const_cast<char*>(( nLen > 1 ? szText : hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0] ));
+   pItem->item.asString.value = const_cast<char*>((nLen > 1 ? szText : hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0]));
 
    return pItem;
 }
@@ -1096,7 +1096,7 @@ PHB_ITEM hb_itemPutD(PHB_ITEM pItem, int iYear, int iMonth, int iDay)
    }
 
    pItem->type = Harbour::Item::DATE;
-   pItem->item.asDateTime.julian = hb_dateEncode( iYear, iMonth, iDay );
+   pItem->item.asDateTime.julian = hb_dateEncode(iYear, iMonth, iDay);
    pItem->item.asDateTime.time = 0;
 
    return pItem;
@@ -1754,7 +1754,7 @@ PHB_ITEM hb_itemPutPtrGC(PHB_ITEM pItem, void * pValue)
    pItem->item.asPointer.collect = HB_TRUE;
    pItem->item.asPointer.single = HB_FALSE;
 
-   hb_gcAttach( pValue );
+   hb_gcAttach(pValue);
 
    return pItem;
 }
@@ -2240,7 +2240,7 @@ void hb_itemCopyFromRef(PHB_ITEM pDest, PHB_ITEM pSource)
  * copy (transfer) the value of item without increasing
  * a reference counters, the pSource item is cleared
  */
-void hb_itemMove( PHB_ITEM pDest, PHB_ITEM pSource )
+void hb_itemMove(PHB_ITEM pDest, PHB_ITEM pSource)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemMove(%p, %p)", static_cast<void*>(pDest), static_cast<void*>(pSource)));
@@ -2397,7 +2397,7 @@ void hb_itemSwap(PHB_ITEM pItem1, PHB_ITEM pItem2)
 /* Internal API, not standard Clipper */
 /* De-references item passed by the reference */
 
-PHB_ITEM hb_itemUnRefOnce( PHB_ITEM pItem )
+PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemUnRefOnce(%p)", static_cast<void*>(pItem)));
@@ -2502,7 +2502,7 @@ PHB_ITEM hb_itemUnRefOnce( PHB_ITEM pItem )
                /* a reference to a local variable */
                PHB_ITEM * pLocal;
 
-               pLocal = *( pItem->item.asRefer.BasePtr.itemsbasePtr ) + pItem->item.asRefer.offset + pItem->item.asRefer.value;
+               pLocal = *(pItem->item.asRefer.BasePtr.itemsbasePtr) + pItem->item.asRefer.offset + pItem->item.asRefer.value;
                pItem = *pLocal;
             }
          }
@@ -2615,11 +2615,8 @@ PHB_ITEM hb_itemReSizeString(PHB_ITEM pItem, HB_SIZE nSize)
    }
    else
    {
-      HB_SIZE nAlloc = nSize + 1 + ( pItem->item.asString.allocated <= nSize ? nSize : 0 );
-      pItem->item.asString.value = static_cast<char*>(
-                     hb_xRefResize(pItem->item.asString.value,
-                                   pItem->item.asString.length,
-                                   nAlloc, &pItem->item.asString.allocated));
+      HB_SIZE nAlloc = nSize + 1 + (pItem->item.asString.allocated <= nSize ? nSize : 0);
+      pItem->item.asString.value = static_cast<char*>(hb_xRefResize(pItem->item.asString.value, pItem->item.asString.length, nAlloc, &pItem->item.asString.allocated));
       pItem->item.asString.length = nSize;
       pItem->item.asString.value[nSize] = '\0';
    }
@@ -2655,7 +2652,7 @@ PHB_ITEM hb_itemUnShareString(PHB_ITEM pItem)
    return pItem;
 }
 
-PHB_ITEM hb_itemUnShare( PHB_ITEM pItem )
+PHB_ITEM hb_itemUnShare(PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemUnShare(%p)", static_cast<void*>(pItem)));
@@ -2702,7 +2699,7 @@ HB_BOOL hb_itemGetWriteCL(PHB_ITEM pItem, char ** pszValue, HB_SIZE * pnLen)
 
 /* Internal API, not standard Clipper */
 /* clone the given item */
-PHB_ITEM hb_itemClone( PHB_ITEM pItem )
+PHB_ITEM hb_itemClone(PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemClone(%p)", static_cast<void*>(pItem)));
@@ -2783,8 +2780,7 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
    }
    else if( HB_IS_DATETIME(pItem1) )
    {
-      fResult = HB_IS_DATETIME(pItem2) &&
-                pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
+      fResult = HB_IS_DATETIME(pItem2) && pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
                 pItem1->item.asDateTime.time == pItem2->item.asDateTime.time;
    }
    else if( HB_IS_LOGICAL(pItem1) )
@@ -2809,10 +2805,8 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
    }
    else if( HB_IS_SYMBOL(pItem1) )
    {
-      fResult = HB_IS_SYMBOL(pItem2) &&
-                ( pItem1->item.asSymbol.value == pItem2->item.asSymbol.value ||
-                  ( pItem1->item.asSymbol.value->pDynSym != nullptr &&
-                    pItem1->item.asSymbol.value->pDynSym == pItem2->item.asSymbol.value->pDynSym ) );
+      fResult = HB_IS_SYMBOL(pItem2) && (pItem1->item.asSymbol.value == pItem2->item.asSymbol.value ||
+                (pItem1->item.asSymbol.value->pDynSym != nullptr && pItem1->item.asSymbol.value->pDynSym == pItem2->item.asSymbol.value->pDynSym));
    }
    return fResult;
 }
@@ -2821,7 +2815,7 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
    to -1, 0 or 1 if pItem1 is <, == or > then pItem2 and return true
    otherwise return false.
  */
-HB_BOOL hb_itemCompare( PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, int * piResult )
+HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, int * piResult)
 {
    HB_BOOL fResult = HB_FALSE;
 
@@ -2861,9 +2855,9 @@ HB_BOOL hb_itemCompare( PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, i
       if( HB_IS_DATETIME(pItem2) )
       {
          *piResult = pItem1->item.asDateTime.julian < pItem2->item.asDateTime.julian ? -1 :
-                   ( pItem1->item.asDateTime.julian > pItem2->item.asDateTime.julian ? 1 :
-                   ( pItem1->item.asDateTime.time < pItem2->item.asDateTime.time ? -1 :
-                   ( pItem1->item.asDateTime.time > pItem2->item.asDateTime.time ? 1 : 0 ) ) );
+                   (pItem1->item.asDateTime.julian > pItem2->item.asDateTime.julian ? 1 :
+                   (pItem1->item.asDateTime.time < pItem2->item.asDateTime.time ? -1 :
+                   (pItem1->item.asDateTime.time > pItem2->item.asDateTime.time ? 1 : 0)));
          fResult = HB_TRUE;
       }
    }
@@ -3120,7 +3114,7 @@ int hb_itemStrICmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
 
 /* converts a numeric to a string with optional width & precision. */
 
-HB_BOOL hb_itemStrBuf( char * szResult, PHB_ITEM pNumber, int iSize, int iDec )
+HB_BOOL hb_itemStrBuf(char * szResult, PHB_ITEM pNumber, int iSize, int iDec)
 {
    int iPos, iDot;
    HB_BOOL fNeg;
@@ -3144,7 +3138,7 @@ HB_BOOL hb_itemStrBuf( char * szResult, PHB_ITEM pNumber, int iSize, int iDec )
    {
       double dNumber = hb_itemGetND(pNumber);
 
-      if( !hb_isfinite( dNumber ) )
+      if( !hb_isfinite(dNumber) )
       {
          /* Numeric overflow */
          iPos = -1;
@@ -3167,17 +3161,17 @@ HB_BOOL hb_itemStrBuf( char * szResult, PHB_ITEM pNumber, int iSize, int iDec )
          if( dNumber < 0 )
          {
             fNeg = HB_TRUE;
-            dFract = modf( -dNumber, &dInt );
+            dFract = modf(-dNumber, &dInt);
          }
          else
          {
             fNeg = HB_FALSE;
-            dFract = modf( dNumber, &dInt );
+            dFract = modf(dNumber, &dInt);
          }
 
          while( iPos-- > 0 )
          {
-            dDig = modf( dInt / doBase + 0.01, &dInt ) * doBase;
+            dDig = modf(dInt / doBase + 0.01, &dInt) * doBase;
             szResult[iPos] = '0' + static_cast<char>(dDig + 0.01);
             if( szResult[iPos] != '0' )
             {
@@ -3198,7 +3192,7 @@ HB_BOOL hb_itemStrBuf( char * szResult, PHB_ITEM pNumber, int iSize, int iDec )
          {
             for( iPos = iDot + 1; iPos < iSize; iPos++ )
             {
-               dFract = modf( dFract * doBase, &dDig );
+               dFract = modf(dFract * doBase, &dDig);
                szResult[iPos] = '0' + static_cast<char>(dDig + 0.01);
                if( iFirst < 0 )
                {
@@ -3226,10 +3220,10 @@ HB_BOOL hb_itemStrBuf( char * szResult, PHB_ITEM pNumber, int iSize, int iDec )
             }
             else
             {
-               iZer = iSize - iFirst - iPrec - ( iDec > 0 ? 1 : 0 );
+               iZer = iSize - iFirst - iPrec - (iDec > 0 ? 1 : 0);
             }
 
-            dFract = modf( dFract * doBase, &dDig );
+            dFract = modf(dFract * doBase, &dDig);
             iLast = static_cast<int>(dDig + 0.01);
 
             /* hack for x.xxxx4999999999, f.e. 8.995 ~FL 8.994999999999999218.. */
@@ -3237,7 +3231,7 @@ HB_BOOL hb_itemStrBuf( char * szResult, PHB_ITEM pNumber, int iSize, int iDec )
             {
                for( iPos = -iZer; iPos > 0; --iPos )
                {
-                  dFract = modf( dFract * doBase, &dDig );
+                  dFract = modf(dFract * doBase, &dDig);
                   if( dDig + 0.01 < 9 && (iPos != 1 || dDig < 2) )
                   {
                      break;
@@ -3422,7 +3416,7 @@ char * hb_itemStr(PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec)
          }
          else if( pWidth )
          {
-            iWidth -= ( iDec + 1 );
+            iWidth -= (iDec + 1);
          }
       }
 
@@ -3558,7 +3552,7 @@ char * hb_itemString(PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq)
          do
          {
             HB_UCHAR uc = static_cast<HB_UCHAR>(addr & 0xf);
-            buffer[--size] = static_cast<char>(uc + ( uc < 10 ? '0' : 'A' - 10 ));
+            buffer[--size] = static_cast<char>(uc + (uc < 10 ? '0' : 'A' - 10));
             addr >>= 4;
          }
          while( size > 2 );

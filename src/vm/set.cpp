@@ -1066,7 +1066,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
          {
             if( HB_IS_STRING(pArg1) )
             {
-               hb_langSelectID( hb_itemGetCPtr(pArg1) );
+               hb_langSelectID(hb_itemGetCPtr(pArg1));
             }
             else
             {
@@ -1080,7 +1080,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
          {
             if( HB_IS_STRING(pArg1) )
             {
-               hb_cdpSelectID( hb_itemGetCPtr(pArg1) );
+               hb_cdpSelectID(hb_itemGetCPtr(pArg1));
             }
             else
             {
@@ -1255,7 +1255,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
       case HB_SET_OSCODEPAGE:
          if( pSet->hb_set_oscp )
          {
-            pResult = hb_itemPutC(pResult, ( static_cast<PHB_CODEPAGE>(pSet->hb_set_oscp) )->id);
+            pResult = hb_itemPutC(pResult, (static_cast<PHB_CODEPAGE>(pSet->hb_set_oscp))->id);
          }
          else if( pResult )
          {
@@ -1288,7 +1288,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
       case HB_SET_DBCODEPAGE:
          if( pSet->hb_set_dbcp )
          {
-            pResult = hb_itemPutC(pResult, ( static_cast<PHB_CODEPAGE>(pSet->hb_set_dbcp) )->id);
+            pResult = hb_itemPutC(pResult, (static_cast<PHB_CODEPAGE>(pSet->hb_set_dbcp))->id);
          }
          else if( pResult )
          {
@@ -1346,7 +1346,7 @@ HB_FUNC( SET )
    hb_setGetItem(static_cast<HB_set_enum>(hb_parnidef(1, HB_SET_INVALID_)), hb_stackReturnItem(), hb_param(2, Harbour::Item::ANY), hb_param(3, Harbour::Item::ANY));
 }
 
-void hb_setInitialize( PHB_SET_STRUCT pSet )
+void hb_setInitialize(PHB_SET_STRUCT pSet)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_setInitialize(%p)", static_cast<void*>(pSet)));
@@ -1530,7 +1530,7 @@ void hb_setRelease(PHB_SET_STRUCT pSet)
    }
 }
 
-PHB_SET_STRUCT hb_setClone( PHB_SET_STRUCT pSrc )
+PHB_SET_STRUCT hb_setClone(PHB_SET_STRUCT pSrc)
 {
    PHB_SET_STRUCT pSet = static_cast<PHB_SET_STRUCT>(hb_xgrab(sizeof(HB_SET_STRUCT)));
 
@@ -2089,14 +2089,14 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
          case HB_SET_LANGUAGE:
             if( HB_IS_STRING(pItem) )
             {
-               hb_langSelectID( hb_itemGetCPtr(pItem) );
+               hb_langSelectID(hb_itemGetCPtr(pItem));
                fResult = HB_TRUE;
             }
             break;
          case HB_SET_CODEPAGE:
             if( HB_IS_STRING(pItem) )
             {
-               hb_cdpSelectID( hb_itemGetCPtr(pItem) );
+               hb_cdpSelectID(hb_itemGetCPtr(pItem));
                fResult = HB_TRUE;
             }
             break;
@@ -3244,7 +3244,7 @@ const char * hb_osDecodeCP(const char * szName, char ** pszFree, HB_SIZE * pnSiz
    return szName;
 }
 
-char * hb_osStrEncode( const char * pszName )
+char * hb_osStrEncode(const char * pszName)
 {
    if( hb_vmIsReady() )
    {
@@ -3282,7 +3282,7 @@ char * hb_osStrEncodeN(const char * pszName, HB_SIZE nLen)
    return hb_strndup(pszName, nLen);
 }
 
-char * hb_osStrDecode( const char * pszName )
+char * hb_osStrDecode(const char * pszName)
 {
    if( hb_vmIsReady() )
    {
@@ -3323,7 +3323,7 @@ char * hb_osStrDecode2(const char * pszName, char * pszBuffer, HB_SIZE nSize)
 }
 
 #if defined(HB_OS_WIN)
-HB_WCHAR * hb_osStrU16Encode( const char * pszName )
+HB_WCHAR * hb_osStrU16Encode(const char * pszName)
 {
    if( hb_vmIsReady() )
    {
@@ -3335,7 +3335,7 @@ HB_WCHAR * hb_osStrU16Encode( const char * pszName )
 
          nLen = strlen(pszName);
          nSize = hb_cdpStrAsU16Len(cdp, pszName, nLen, 0);
-         pszBufferW = static_cast<HB_WCHAR*>(hb_xgrab(( nSize + 1 ) * sizeof(HB_WCHAR)));
+         pszBufferW = static_cast<HB_WCHAR*>(hb_xgrab((nSize + 1) * sizeof(HB_WCHAR)));
          hb_cdpStrToU16(cdp, HB_CDP_ENDIAN_NATIVE, pszName, nLen, pszBufferW, nSize + 1);
          return pszBufferW;
       }
@@ -3356,7 +3356,7 @@ HB_WCHAR * hb_osStrU16EncodeN(const char * pszName, HB_SIZE nLen)
 
          nLen = hb_strnlen(pszName, nLen);
          nSize = hb_cdpStrAsU16Len(cdp, pszName, nLen, 0);
-         pszBufferW = static_cast<HB_WCHAR*>(hb_xgrab(( nSize + 1 ) * sizeof(HB_WCHAR)));
+         pszBufferW = static_cast<HB_WCHAR*>(hb_xgrab((nSize + 1) * sizeof(HB_WCHAR)));
          hb_cdpStrToU16(cdp, HB_CDP_ENDIAN_NATIVE, pszName, nLen, pszBufferW, nSize + 1);
          return pszBufferW;
       }
@@ -3365,7 +3365,7 @@ HB_WCHAR * hb_osStrU16EncodeN(const char * pszName, HB_SIZE nLen)
    return hb_mbntowc(pszName, nLen); /* No HVM stack */
 }
 
-char * hb_osStrU16Decode( const HB_WCHAR * pszNameW )
+char * hb_osStrU16Decode(const HB_WCHAR * pszNameW)
 {
    if( hb_vmIsReady() )
    {

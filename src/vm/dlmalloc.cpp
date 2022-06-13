@@ -2357,8 +2357,8 @@ typedef unsigned int flag_t;           /* The type of various bit flag sets */
 #define chunk_minus_offset(p, s) ((mchunkptr)(((char*)(p)) - (s)))
 
 /* Ptr to next or previous physical malloc_chunk. */
-#define next_chunk(p) ((mchunkptr)( ((char*)(p)) + ((p)->head & ~FLAG_BITS)))
-#define prev_chunk(p) ((mchunkptr)( ((char*)(p)) - ((p)->prev_foot) ))
+#define next_chunk(p) ((mchunkptr)(((char*)(p)) + ((p)->head & ~FLAG_BITS)))
+#define prev_chunk(p) ((mchunkptr)(((char*)(p)) - ((p)->prev_foot)))
 
 /* extract next chunk's pinuse bit */
 #define next_pinuse(p)  ((next_chunk(p)->head) & PINUSE_BIT)

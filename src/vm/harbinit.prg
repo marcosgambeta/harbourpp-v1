@@ -78,6 +78,6 @@ PROCEDURE __HBVMInit()
 
 PROCEDURE __SetHelpK()
 
-   SetKey( K_F1, {| p, l, v | __XHelp( p, l, v ) } )
+   SetKey(K_F1, {|p, l, v|__XHelp(p, l, v)})
 
    RETURN

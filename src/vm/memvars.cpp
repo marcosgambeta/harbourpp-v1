@@ -215,7 +215,7 @@ PHB_ITEM hb_memvarDetachLocal(PHB_ITEM pLocal)
  * an exit from the function/procedure)
  *
  */
-static void hb_memvarAddPrivate( PHB_DYNS pDynSym, PHB_ITEM pValue )
+static void hb_memvarAddPrivate(PHB_DYNS pDynSym, PHB_ITEM pValue)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarAddPrivate(%p,%p)", static_cast<void*>(pDynSym), static_cast<void*>(pValue)));
@@ -314,7 +314,7 @@ HB_SIZE hb_memvarGetPrivatesBase(void)
 /*
  * This function releases PRIVATE variables created after passed base
  */
-void hb_memvarSetPrivatesBase( HB_SIZE nBase )
+void hb_memvarSetPrivatesBase(HB_SIZE nBase)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarSetPrivatesBase(%" HB_PFS "u)", nBase));
@@ -605,7 +605,7 @@ static PHB_DYNS hb_memvarFindSymbol(const char * szArg, HB_SIZE nLen)
 
          if( cChar >= 'a' && cChar <= 'z' )
          {
-            szUprName[iSize++] = cChar - ( 'a' - 'A' );
+            szUprName[iSize++] = cChar - ('a' - 'A');
          }
          else if( cChar == ' ' || cChar == '\t' || cChar == '\n' )
          {
@@ -749,9 +749,7 @@ static void hb_memvarCreateFromDynSymbol(PHB_DYNS pDynVar, int iScope, PHB_ITEM 
             /* NOTE: PUBLIC variables named CLIPPER and HARBOUR are initialized
                      to .T., this is normal Clipper behaviour. [vszakats] */
 
-            pMemvar->item.asLogical.value =
-                        ( strcmp(pDynVar->pSymbol->szName, "HARBOUR") == 0 ||
-                          strcmp(pDynVar->pSymbol->szName, "CLIPPER") == 0 );
+            pMemvar->item.asLogical.value = (strcmp(pDynVar->pSymbol->szName, "HARBOUR") == 0 || strcmp(pDynVar->pSymbol->szName, "CLIPPER") == 0);
          }
       }
    }
@@ -759,7 +757,7 @@ static void hb_memvarCreateFromDynSymbol(PHB_DYNS pDynVar, int iScope, PHB_ITEM 
    {
       /* Create new PRIVATE var and add it to the PRIVATE variables stack
        */
-      hb_memvarAddPrivate( pDynVar, pValue );
+      hb_memvarAddPrivate(pDynVar, pValue);
    }
 }
 

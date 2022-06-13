@@ -296,11 +296,11 @@ HB_BOOL hb_winmainArgGet(void * phInstance, void * phPrevInstance, int * piCmdSh
 {
    if( phInstance )
    {
-      *( static_cast<HANDLE*>(phInstance) ) = s_hInstance;
+      *(static_cast<HANDLE*>(phInstance)) = s_hInstance;
    }
    if( phPrevInstance )
    {
-      *( static_cast<HANDLE*>(phPrevInstance) ) = s_hPrevInstance;
+      *(static_cast<HANDLE*>(phPrevInstance)) = s_hPrevInstance;
    }
    if( piCmdShow )
    {
@@ -362,7 +362,7 @@ static char * hb_cmdargDup(int argc)
       return argc >= 0 && argc < s_argc ? HB_OSSTRDUP(s_lpArgV[argc]) : nullptr;
    }
 #endif
-   return argc >= 0 && argc < s_argc ? hb_osStrDecode( s_argv[argc] ) : nullptr;
+   return argc >= 0 && argc < s_argc ? hb_osStrDecode(s_argv[argc]) : nullptr;
 }
 
 void hb_cmdargUpdate(void) 
@@ -553,7 +553,7 @@ static char * hb_cmdargGet(const char * pszName, HB_BOOL bRetValue)
                   pszPos++;
                }
 
-               return hb_osStrDecode( pszPos );
+               return hb_osStrDecode(pszPos);
             }
          }
          else

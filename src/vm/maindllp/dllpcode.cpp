@@ -74,7 +74,7 @@
 
 HB_EXTERN_BEGIN
 
-#define HB_DLL_MSG_NO_FUNC( func )  \
+#define HB_DLL_MSG_NO_FUNC(func) \
    do \
    { \
       MessageBox(nullptr, TEXT("Function '") TEXT(func) TEXT("' not found!"), TEXT(func), MB_OK | MB_ICONERROR); \

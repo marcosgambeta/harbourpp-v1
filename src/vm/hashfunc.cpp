@@ -702,7 +702,7 @@ HB_FUNC( HB_HSCAN )
             {
                if( HB_IS_DATETIME(pItem) &&
                    pItem->item.asDateTime.julian == pValue->item.asDateTime.julian &&
-                   ( !fExact || pItem->item.asDateTime.time == pValue->item.asDateTime.time ) )
+                   (!fExact || pItem->item.asDateTime.time == pValue->item.asDateTime.time) )
                {
                   fFound = HB_TRUE;
                   break;
@@ -763,8 +763,7 @@ HB_FUNC( HB_HSCAN )
             PHB_ITEM pItem = hb_hashGetValueAt(pHash, nStart);
             if( pItem != nullptr )
             {
-               if( HB_IS_POINTER(pItem) &&
-                   pItem->item.asPointer.value == pValue->item.asPointer.value )
+               if( HB_IS_POINTER(pItem) && pItem->item.asPointer.value == pValue->item.asPointer.value )
                {
                   fFound = HB_TRUE;
                   break;
@@ -784,8 +783,7 @@ HB_FUNC( HB_HSCAN )
             PHB_ITEM pItem = hb_hashGetValueAt(pHash, nStart);
             if( pItem != nullptr )
             {
-               if( HB_IS_ARRAY(pItem) &&
-                   pItem->item.asArray.value == pValue->item.asArray.value )
+               if( HB_IS_ARRAY(pItem) && pItem->item.asArray.value == pValue->item.asArray.value )
                {
                   fFound = HB_TRUE;
                   break;
@@ -1004,7 +1002,7 @@ HB_FUNC( HB_HALLOCATE )
       HB_ISIZ nMem = hb_itemGetNS(pValue);
       if( nMem >= 0 )
       {
-         hb_hashPreallocate( pHash, nMem );
+         hb_hashPreallocate(pHash, nMem);
       }
    }
    else

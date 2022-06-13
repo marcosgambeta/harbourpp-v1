@@ -414,7 +414,7 @@ const HB_WCHAR * hb_itemGetStrU16(PHB_ITEM pItem, int iEndian, void ** phString,
          return s_szConstStr;
       }
 
-      pszU16 = static_cast<HB_WCHAR*>(hb_xgrab(( nLen + 1 ) * sizeof(HB_WCHAR)));
+      pszU16 = static_cast<HB_WCHAR*>(hb_xgrab((nLen + 1) * sizeof(HB_WCHAR)));
       hb_cdpStrToU16(cdp, iEndian, pItem->item.asString.value, pItem->item.asString.length, pszU16, nLen + 1);
 
       *phString = static_cast<void*>(pszU16);
@@ -495,9 +495,7 @@ HB_SIZE hb_itemCopyStrU16(PHB_ITEM pItem, int iEndian, HB_WCHAR * pStrBuffer, HB
       }
       else
       {
-         nSize = hb_cdpStrAsU16Len(hb_vmCDP(),
-                                   pItem->item.asString.value,
-                                   pItem->item.asString.length, nSize);
+         nSize = hb_cdpStrAsU16Len(hb_vmCDP(), pItem->item.asString.value, pItem->item.asString.length, nSize);
       }
       return nSize;
    }
@@ -915,7 +913,9 @@ const char * hb_parastr(int iParam, HB_SIZE nIndex, void * cdp, void ** phString
    }
 
    if( pnLen )
+   {
       *pnLen = 0;
+   }
    *phString = nullptr;
 
    return nullptr;
@@ -985,7 +985,9 @@ const HB_WCHAR * hb_parastr_u16(int iParam, HB_SIZE nIndex, int iEndian, void **
    }
 
    if( pnLen )
+   {
       *pnLen = 0;
+   }
    *phString = nullptr;
 
    return nullptr;

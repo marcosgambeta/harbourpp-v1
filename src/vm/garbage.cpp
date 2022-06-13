@@ -70,8 +70,8 @@
 #  if defined(HB_SPINLOCK_INIT) && !defined(HB_HELGRIND_FRIENDLY)
 
       static HB_SPINLOCK_T s_gcSpinLock = HB_SPINLOCK_INIT;
-#     define HB_GC_LOCK()       HB_SPINLOCK_ACQUIRE( &s_gcSpinLock )
-#     define HB_GC_UNLOCK()     HB_SPINLOCK_RELEASE( &s_gcSpinLock )
+#     define HB_GC_LOCK()       HB_SPINLOCK_ACQUIRE(&s_gcSpinLock)
+#     define HB_GC_UNLOCK()     HB_SPINLOCK_RELEASE(&s_gcSpinLock)
 
 #  else
 
@@ -110,11 +110,11 @@ using PHB_GARBAGE = HB_GARBAGE *;
 #  define HB_GARBAGE_SIZE     sizeof(HB_GARBAGE)
 #endif
 
-#define HB_GC_PTR(p)        ( reinterpret_cast<PHB_GARBAGE>(reinterpret_cast<HB_BYTE*>(p) - HB_GARBAGE_SIZE) )
+#define HB_GC_PTR(p)        (reinterpret_cast<PHB_GARBAGE>(reinterpret_cast<HB_BYTE*>(p) - HB_GARBAGE_SIZE))
 
 #endif /* !defined(HB_GC_PTR) */
 
-#define HB_BLOCK_PTR(p)       ( static_cast<void*>(reinterpret_cast<HB_BYTE*>(p) + HB_GARBAGE_SIZE) )
+#define HB_BLOCK_PTR(p)       (static_cast<void*>(reinterpret_cast<HB_BYTE*>(p) + HB_GARBAGE_SIZE))
 
 /* we may use a cache later */
 #define HB_GARBAGE_NEW(nSize)    (static_cast<PHB_GARBAGE>(hb_xgrab(HB_GARBAGE_SIZE + (nSize))))
@@ -127,7 +127,7 @@ using PHB_GARBAGE = HB_GARBAGE *;
 #define HB_GC_DELETELST    4  /* item will be deleted during finalization */
 
 #ifdef HB_GC_AUTO
-#define HB_GC_AUTO_MAX        ( static_cast<HB_PTRUINT>(-1) )
+#define HB_GC_AUTO_MAX        (static_cast<HB_PTRUINT>(-1))
 /* number of allocated memory blocks */
 static HB_PTRUINT s_ulBlocks = 0;
 /* number of allocated memory blocks after last GC activation */
@@ -193,7 +193,7 @@ static void hb_gcUnlink(PHB_GARBAGE * pList, PHB_GARBAGE pAlloc)
 }
 
 /* allocates a memory block */
-void * hb_gcAllocate( HB_SIZE nSize, const HB_GC_FUNCS * pFuncs )
+void * hb_gcAllocate(HB_SIZE nSize, const HB_GC_FUNCS * pFuncs)
 {
    PHB_GARBAGE pAlloc;
 
@@ -243,7 +243,7 @@ void hb_gcFree(void * pBlock)
       PHB_GARBAGE pAlloc = HB_GC_PTR(pBlock);
 
       /* Don't release the block that will be deleted during finalization */
-      if( !( pAlloc->used & HB_GC_DELETE ) )
+      if( !(pAlloc->used & HB_GC_DELETE) )
       {
          HB_GC_LOCK();
          if( pAlloc->locked )
@@ -290,7 +290,7 @@ void hb_gcRefFree(void * pBlock)
       if( hb_xRefDec(pAlloc) )
       {
          /* Don't release the block that will be deleted during finalization */
-         if( !( pAlloc->used & HB_GC_DELETE ) )
+         if( !(pAlloc->used & HB_GC_DELETE) )
          {
             pAlloc->used |= HB_GC_DELETE;
 

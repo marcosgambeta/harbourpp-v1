@@ -5,27 +5,7 @@ include $(TOP)$(ROOT)config/global.mk
 ifeq ($(HB_HVM_ALL),)
 
    HB_HVM_ALL := yes
-   ifeq ($(HB_COMPILER),watcom)
-      ifeq ($(HB_BUILD_MODE),cpp)
-         HB_HVM_ALL := no
-      endif
-   endif
    ifeq ($(HB_COMPILER),bcc)
-      HB_HVM_ALL := no
-   endif
-   ifeq ($(HB_COMPILER),pocc)
-      HB_HVM_ALL := no
-   endif
-   ifeq ($(HB_COMPILER),pocc64)
-      HB_HVM_ALL := no
-   endif
-   ifeq ($(HB_COMPILER),poccarm)
-      HB_HVM_ALL := no
-   endif
-   ifeq ($(HB_COMPILER),xcc)
-      HB_HVM_ALL := no
-   endif
-   ifeq ($(HB_COMPILER),dmc)
       HB_HVM_ALL := no
    endif
    export HB_HVM_ALL

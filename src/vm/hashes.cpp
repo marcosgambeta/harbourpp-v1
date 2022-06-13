@@ -83,7 +83,7 @@ using HB_BASEHASH = _HB_BASEHASH;
 using PHB_BASEHASH = HB_BASEHASH *;
 
 /* This releases hash when called from the garbage collector */
-static HB_GARBAGE_FUNC( hb_hashGarbageRelease )
+static HB_GARBAGE_FUNC(hb_hashGarbageRelease)
 {
    PHB_BASEHASH pBaseHash = static_cast<PHB_BASEHASH>(Cargo);
 
@@ -146,7 +146,7 @@ static HB_GARBAGE_FUNC( hb_hashGarbageRelease )
    }
 }
 
-static HB_GARBAGE_FUNC( hb_hashGarbageMark )
+static HB_GARBAGE_FUNC(hb_hashGarbageMark)
 {
    PHB_BASEHASH pBaseHash = static_cast<PHB_BASEHASH>(Cargo);
 
@@ -192,10 +192,8 @@ static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
          if( iFlags & HB_HASH_BINARY )
          {
             return pKey1->item.asString.length < pKey2->item.asString.length ? -1 :
-                 ( pKey1->item.asString.length > pKey2->item.asString.length ? 1 :
-                   memcmp(pKey1->item.asString.value,
-                           pKey2->item.asString.value,
-                           pKey1->item.asString.length) );
+                 (pKey1->item.asString.length > pKey2->item.asString.length ? 1 :
+                   memcmp(pKey1->item.asString.value, pKey2->item.asString.value, pKey1->item.asString.length));
          }
          else if( iFlags & HB_HASH_IGNORECASE )
          {
@@ -216,9 +214,9 @@ static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
       if( HB_IS_DATETIME(pKey2) )
       {
          return pKey1->item.asDateTime.julian < pKey2->item.asDateTime.julian ? -1 :
-              ( pKey1->item.asDateTime.julian > pKey2->item.asDateTime.julian ? 1 :
-              ( pKey1->item.asDateTime.time < pKey2->item.asDateTime.time ? -1 :
-              ( pKey1->item.asDateTime.time > pKey2->item.asDateTime.time ? 1 : 0 ) ) );
+              (pKey1->item.asDateTime.julian > pKey2->item.asDateTime.julian ? 1 :
+              (pKey1->item.asDateTime.time < pKey2->item.asDateTime.time ? -1 :
+              (pKey1->item.asDateTime.time > pKey2->item.asDateTime.time ? 1 : 0)));
       }
       else if( HB_IS_STRING(pKey2) )
       {
@@ -233,8 +231,7 @@ static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
    {
       if( HB_IS_POINTER(pKey2) )
       {
-         return pKey1->item.asPointer.value < pKey2->item.asPointer.value ? -1 :
-              ( pKey1->item.asPointer.value > pKey2->item.asPointer.value ? 1 : 0 );
+         return pKey1->item.asPointer.value < pKey2->item.asPointer.value ? -1 : (pKey1->item.asPointer.value > pKey2->item.asPointer.value ? 1 : 0);
       }
       else if( HB_IS_STRING(pKey2) || HB_IS_DATETIME(pKey2) )
       {
@@ -372,7 +369,7 @@ static HB_BOOL hb_hashFind(PHB_BASEHASH pBaseHash, PHB_ITEM pKey, HB_SIZE * pnPo
    return false;
 }
 
-static void hb_hashResize( PHB_BASEHASH pBaseHash, HB_SIZE nNewSize )
+static void hb_hashResize(PHB_BASEHASH pBaseHash, HB_SIZE nNewSize)
 {
    if( pBaseHash->nSize < nNewSize )
    {
@@ -437,7 +434,7 @@ static PHB_ITEM hb_hashValuePtr(PHB_BASEHASH pBaseHash, PHB_ITEM pKey, HB_BOOL f
 
       if( pBaseHash->nSize == pBaseHash->nLen )
       {
-         hb_hashResize( pBaseHash, pBaseHash->nSize + HB_HASH_ITEM_ALLOC );
+         hb_hashResize(pBaseHash, pBaseHash->nSize + HB_HASH_ITEM_ALLOC);
       }
 
       if( pBaseHash->pnPos )
@@ -471,7 +468,7 @@ static HB_BOOL hb_hashNewValue(PHB_BASEHASH pBaseHash, PHB_ITEM pKey, PHB_ITEM p
    {
       if( pBaseHash->nSize == pBaseHash->nLen )
       {
-         hb_hashResize( pBaseHash, pBaseHash->nSize + HB_HASH_ITEM_ALLOC );
+         hb_hashResize(pBaseHash, pBaseHash->nSize + HB_HASH_ITEM_ALLOC);
       }
 
       if( pBaseHash->pnPos )
@@ -500,7 +497,7 @@ static void hb_hashNewPair(PHB_BASEHASH pBaseHash, PHB_ITEM * pKeyPtr, PHB_ITEM 
 {
    if( pBaseHash->nSize == pBaseHash->nLen )
    {
-      hb_hashResize( pBaseHash, pBaseHash->nSize + HB_HASH_ITEM_ALLOC );
+      hb_hashResize(pBaseHash, pBaseHash->nSize + HB_HASH_ITEM_ALLOC);
    }
 
    if( pBaseHash->pnPos )
@@ -671,7 +668,7 @@ HB_SIZE hb_hashLen(PHB_ITEM pHash)
    }
 }
 
-void hb_hashPreallocate( PHB_ITEM pHash, HB_SIZE nNewSize )
+void hb_hashPreallocate(PHB_ITEM pHash, HB_SIZE nNewSize)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_hashPreallocate(%p,%" HB_PFS "u)", static_cast<void*>(pHash), nNewSize));
@@ -679,7 +676,7 @@ void hb_hashPreallocate( PHB_ITEM pHash, HB_SIZE nNewSize )
 
    if( HB_IS_HASH(pHash) )
    {
-      hb_hashResize( pHash->item.asHash.value, nNewSize );
+      hb_hashResize(pHash->item.asHash.value, nNewSize);
    }
 }
 
@@ -963,7 +960,7 @@ HB_BOOL hb_hashDel(PHB_ITEM pHash, PHB_ITEM pKey)
    return false;
 }
 
-HB_BOOL hb_hashRemove( PHB_ITEM pHash, PHB_ITEM pItem )
+HB_BOOL hb_hashRemove(PHB_ITEM pHash, PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_hashRemove(%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pItem)));
@@ -1140,7 +1137,7 @@ void hb_hashCloneBody(PHB_ITEM pDest, PHB_ITEM pHash, PHB_NESTED_CLONED pClonedL
 
    hb_hashNew(pDest);
    pDest->item.asHash.value->iFlags = pHash->item.asHash.value->iFlags;
-   hb_hashResize( pDest->item.asHash.value, pHash->item.asHash.value->nLen );
+   hb_hashResize(pDest->item.asHash.value, pHash->item.asHash.value->nLen);
    if( pHash->item.asHash.value->pDefault )
    {
       pDest->item.asHash.value->pDefault = hb_itemNew(pHash->item.asHash.value->pDefault);
@@ -1181,7 +1178,7 @@ PHB_ITEM hb_hashCloneTo(PHB_ITEM pDest, PHB_ITEM pHash)
    return pDest;
 }
 
-PHB_ITEM hb_hashClone( PHB_ITEM pHash )
+PHB_ITEM hb_hashClone(PHB_ITEM pHash)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_hashClone(%p)", static_cast<void*>(pHash)));
@@ -1267,7 +1264,7 @@ void hb_hashJoin(PHB_ITEM pDest, PHB_ITEM pSource, int iType)
             }
             break;
 
-         case HB_HASH_REMOVE:       /* NOT -> h1 AND ( h1 XOR h2 ) */
+         case HB_HASH_REMOVE:       /* NOT -> h1 AND (h1 XOR h2) */
             pBaseHash = pSource->item.asHash.value;
             if( pBaseHash == pDest->item.asHash.value )
             {
@@ -1383,9 +1380,7 @@ void hb_hashSetFlags(PHB_ITEM pHash, int iFlags)
    if( HB_IS_HASH(pHash) )
    {
       pHash->item.asHash.value->iFlags |= iFlags;
-      if( pHash->item.asHash.value->pnPos == nullptr &&
-          pHash->item.asHash.value->nSize &&
-          ( pHash->item.asHash.value->iFlags & HB_HASH_KEEPORDER ) != 0 )
+      if( pHash->item.asHash.value->pnPos == nullptr && pHash->item.asHash.value->nSize && (pHash->item.asHash.value->iFlags & HB_HASH_KEEPORDER) != 0 )
       {
          HB_SIZE n = pHash->item.asHash.value->nSize;
 

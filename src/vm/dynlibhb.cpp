@@ -71,7 +71,7 @@
 #  include <dlfcn.h>
 #endif
 
-static HB_GARBAGE_FUNC( hb_libRelease )
+static HB_GARBAGE_FUNC(hb_libRelease)
 {
    /* do nothing */
    HB_SYMBOL_UNUSED(Cargo);

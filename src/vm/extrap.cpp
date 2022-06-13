@@ -292,9 +292,9 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS * pExceptio
             #undef LPMODULEENTRY32
          #endif
 
-         typedef HANDLE ( WINAPI * P_CTH32SSH )( DWORD, DWORD ); /* CreateToolhelp32Snapshot() */
-         typedef BOOL ( WINAPI * P_M32F )( HANDLE, LPMODULEENTRY32 ); /* Module32First() */
-         typedef BOOL ( WINAPI * P_M32N )( HANDLE, LPMODULEENTRY32 ); /* Module32Next() */
+         typedef HANDLE (WINAPI * P_CTH32SSH)(DWORD, DWORD); /* CreateToolhelp32Snapshot() */
+         typedef BOOL (WINAPI * P_M32F)(HANDLE, LPMODULEENTRY32); /* Module32First() */
+         typedef BOOL (WINAPI * P_M32N)(HANDLE, LPMODULEENTRY32); /* Module32Next() */
 
          P_CTH32SSH pCreateToolhelp32Snapshot = reinterpret_cast<P_CTH32SSH>(HB_WINAPI_GETPROCADDRESS(hToolhelp, "CreateToolhelp32Snapshot"));
          P_M32F pModule32First = reinterpret_cast<P_M32F>(HB_WINAPI_GETPROCADDRESS(hToolhelp, "Module32First"));
@@ -440,7 +440,7 @@ void hb_vmUnsetExceptionHandler(void)
       {
          if( oss.ss_sp && SS_DISABLE )
          {
-            free( oss.ss_sp );
+            free(oss.ss_sp);
          }
       }
 #endif

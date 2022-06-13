@@ -75,12 +75,12 @@ static HB_TSD_NEW(s_macroFlags, sizeof(int), hb_macroFlagsInit, nullptr);
 
 static int hb_macroFlags(void)
 {
-   return *( static_cast<int*>(hb_stackGetTSD(&s_macroFlags)) );
+   return *(static_cast<int*>(hb_stackGetTSD(&s_macroFlags)));
 }
 
 static void hb_macroFlagsSet(int flag)
 {
-   *( static_cast<int*>(hb_stackGetTSD(&s_macroFlags)) ) = flag;
+   *(static_cast<int*>(hb_stackGetTSD(&s_macroFlags))) = flag;
 }
 
 #else
@@ -103,7 +103,7 @@ static int s_macroFlags = HB_SM_DEFAULT;
  * 'iFlag' - specifies if compiled code should generate pcodes either for push
  *    operation (for example: var :=&macro) or for pop operation (&macro :=var)
  */
-static int hb_macroParse( PHB_MACRO pMacro )
+static int hb_macroParse(PHB_MACRO pMacro)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_macroParse(%p)", static_cast<void*>(pMacro)));
@@ -125,7 +125,7 @@ static int hb_macroParse( PHB_MACRO pMacro )
    pMacro->uiListElements = 0;
    pMacro->exprType = HB_ET_NONE;
 
-   return hb_macroYYParse( pMacro );
+   return hb_macroYYParse(pMacro);
 }
 
 /* releases all memory allocated for macro evaluation
@@ -302,7 +302,7 @@ static char * hb_macroTextSubst(const char * szString, HB_SIZE * pnStringLen)
    memcpy(szResult, szString, nResStrLen + 1);
    /* switch the pointer so it will point into the result buffer
     */
-   pHead = szResult + ( pHead - szString );
+   pHead = szResult + (pHead - szString);
 
    do
    {
@@ -357,7 +357,7 @@ static char * hb_macroTextSubst(const char * szString, HB_SIZE * pnStringLen)
                ++nNameLen;   /* count also the '&' character */
 
                /* number of characters left on the right side of a variable name */
-               nCharsLeft = nResStrLen - ( pHead - szResult );
+               nCharsLeft = nResStrLen - (pHead - szResult);
 
                /* NOTE:
                 * if a replacement string is shorter then the variable
@@ -367,7 +367,7 @@ static char * hb_macroTextSubst(const char * szString, HB_SIZE * pnStringLen)
                 */
                if( nValLen > nNameLen )
                {
-                  nResStrLen += ( nValLen - nNameLen );
+                  nResStrLen += (nValLen - nNameLen);
                   if( nResStrLen > nResBufLen )
                   {
                      HB_SIZE nHead = pHead - szResult;
@@ -380,7 +380,7 @@ static char * hb_macroTextSubst(const char * szString, HB_SIZE * pnStringLen)
                }
                else
                {
-                  nResStrLen -= ( nNameLen - nValLen );
+                  nResStrLen -= (nNameLen - nValLen);
                }
 
                /* move bytes located on the right side of a variable name */
@@ -456,7 +456,7 @@ void hb_macroGetValue(PHB_ITEM pItem, int iContext, int flags)
        * Macro Parser, f.e.:
        *       PROCEDURE Main()
        *          LOCAL cText
-       *          cText := "( v := 'A' ) + &v"
+       *          cText := "(v := 'A') + &v"
        *          M->v := "'B'"
        *          ? "Macro:", cText
        *          ? "Result:", &cText
@@ -492,7 +492,7 @@ void hb_macroGetValue(PHB_ITEM pItem, int iContext, int flags)
          }
       }
 
-      iStatus = hb_macroParse( &struMacro );
+      iStatus = hb_macroParse(&struMacro);
 
       if( iStatus == HB_MACRO_OK && (struMacro.status & HB_MACRO_CONT) )
       {
@@ -574,7 +574,7 @@ void hb_macroSetValue(PHB_ITEM pItem, int flags)
  *   passed by reference or used in optimized left side of the <op>=
  *   expression or as argument of ++ or -- operation
  */
-void hb_macroPushReference( PHB_ITEM pItem )
+void hb_macroPushReference(PHB_ITEM pItem)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_macroPushReference(%p)", static_cast<void*>(pItem)));
@@ -616,14 +616,14 @@ void hb_macroPushReference( PHB_ITEM pItem )
  *    &alias->var or
  *    alias->&var
  * NOTE:
- *    Clipper implements these two cases as: &( alias +'->' + variable )
+ *    Clipper implements these two cases as: &(alias +'->' + variable)
  *    This causes some non expected behaviours, for example:
  *    A :="M + M"
  *    ? &A->&A
  *    is the same as:
- *    &( "M + M->M + M" )
+ *    &("M + M->M + M")
  *    instead of
- *    &( "M + M" ) -> &( "M + M" )
+ *    &("M + M") -> &("M + M")
  */
 static void hb_macroUseAliased(PHB_ITEM pAlias, PHB_ITEM pVar, int iFlag, int iSupported)
 {
@@ -652,7 +652,7 @@ static void hb_macroUseAliased(PHB_ITEM pAlias, PHB_ITEM pVar, int iFlag, int iS
       struMacro.string    = szString;
       struMacro.length    = nLen;
 
-      iStatus = hb_macroParse( &struMacro );
+      iStatus = hb_macroParse(&struMacro);
 
       hb_stackPop();    /* remove compiled variable name */
       hb_stackPop();    /* remove compiled alias */
@@ -686,7 +686,7 @@ static void hb_macroUseAliased(PHB_ITEM pAlias, PHB_ITEM pVar, int iFlag, int iS
       struMacro.string    = pVar->item.asString.value;
       struMacro.length    = pVar->item.asString.length;
 
-      iStatus = hb_macroParse( &struMacro );
+      iStatus = hb_macroParse(&struMacro);
 
       if( iStatus == HB_MACRO_OK && (struMacro.status & HB_MACRO_CONT) )
       {
@@ -731,7 +731,7 @@ void hb_macroPushAliasedValue(PHB_ITEM pAlias, PHB_ITEM pVar, int flags)
 }
 
 /* Check for '&' operator and replace it with a macro variable value
- * Returns: the passed string if there is no '&' operator ( pbNewString := FALSE )
+ * Returns: the passed string if there is no '&' operator (pbNewString := FALSE)
  * new string if a valid macro text substitution was found (and sets
  * pbNewString to TRUE)
  */
@@ -795,7 +795,7 @@ char * hb_macroTextSymbol(const char * szString, HB_SIZE nLength, HB_BOOL * pfNe
                memcpy(szResult, szString, nLength);
                szResult[nLength] = '\0';
             }
-            szResult[nLen] = c - ( 'a' - 'A' );
+            szResult[nLen] = c - ('a' - 'A');
          }
          else if( !(c == '_' || (c >= 'A' && c <= 'Z') || (nLen && (c >= '0' && c <= '9'))) )
          {
@@ -836,7 +836,7 @@ char * hb_macroTextSymbol(const char * szString, HB_SIZE nLength, HB_BOOL * pfNe
  * NOTE: it can be called to implement an index key evaluation
  * use hb_macroRun() to evaluate a compiled pcode
  */
-PHB_MACRO hb_macroCompile( const char * szString )
+PHB_MACRO hb_macroCompile(const char * szString)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_macroCompile(%s)", szString));
@@ -854,7 +854,7 @@ PHB_MACRO hb_macroCompile( const char * szString )
    pMacro->string    = szString;
    pMacro->length    = strlen(szString);
 
-   iStatus = hb_macroParse( pMacro );
+   iStatus = hb_macroParse(pMacro);
    if( !(iStatus == HB_MACRO_OK && (pMacro->status & HB_MACRO_CONT)) )
    {
       hb_macroDelete(pMacro);
@@ -866,7 +866,7 @@ PHB_MACRO hb_macroCompile( const char * szString )
 
 static void hb_macroBlock(const char * szString, PHB_ITEM pItem)
 {
-   PHB_MACRO pMacro = hb_macroCompile( szString );
+   PHB_MACRO pMacro = hb_macroCompile(szString);
 
    if( pMacro )
    {
@@ -1169,7 +1169,7 @@ const char * hb_macroGetType(PHB_ITEM pItem)
       struMacro.status    = HB_MACRO_CONT;
       struMacro.string    = pItem->item.asString.value;
       struMacro.length    = pItem->item.asString.length;
-      iStatus = hb_macroParse( &struMacro );
+      iStatus = hb_macroParse(&struMacro);
 
       if( iStatus == HB_MACRO_OK )
       {
@@ -1390,7 +1390,7 @@ HB_SIZE hb_macroGenJump(HB_ISIZ nOffset, HB_COMP_DECL)
    return HB_PCODE_DATA->nPCodePos - 3;
 }
 
-HB_SIZE hb_macroGenJumpFalse( HB_ISIZ nOffset, HB_COMP_DECL )
+HB_SIZE hb_macroGenJumpFalse(HB_ISIZ nOffset, HB_COMP_DECL)
 {
    if( nOffset == 0 )
    {
@@ -1416,7 +1416,7 @@ HB_SIZE hb_macroGenJumpFalse( HB_ISIZ nOffset, HB_COMP_DECL )
    return HB_PCODE_DATA->nPCodePos - 3;
 }
 
-HB_SIZE hb_macroGenJumpTrue( HB_ISIZ nOffset, HB_COMP_DECL )
+HB_SIZE hb_macroGenJumpTrue(HB_ISIZ nOffset, HB_COMP_DECL)
 {
    if( nOffset == 0 )
    {
@@ -1442,7 +1442,7 @@ HB_SIZE hb_macroGenJumpTrue( HB_ISIZ nOffset, HB_COMP_DECL )
    return HB_PCODE_DATA->nPCodePos - 3;
 }
 
-void hb_macroGenJumpThere( HB_SIZE nFrom, HB_SIZE nTo, HB_COMP_DECL )
+void hb_macroGenJumpThere(HB_SIZE nFrom, HB_SIZE nTo, HB_COMP_DECL)
 {
    HB_BYTE * pCode = HB_PCODE_DATA->pCode;
    HB_ISIZ nOffset = nTo - nFrom + 1;
@@ -1457,9 +1457,9 @@ void hb_macroGenJumpThere( HB_SIZE nFrom, HB_SIZE nTo, HB_COMP_DECL )
    }
 }
 
-void hb_macroGenJumpHere( HB_SIZE nOffset, HB_COMP_DECL )
+void hb_macroGenJumpHere(HB_SIZE nOffset, HB_COMP_DECL)
 {
-   hb_macroGenJumpThere( nOffset, HB_PCODE_DATA->nPCodePos, HB_COMP_PARAM );
+   hb_macroGenJumpThere(nOffset, HB_PCODE_DATA->nPCodePos, HB_COMP_PARAM);
 }
 
 /*
@@ -1570,7 +1570,7 @@ void hb_macroGenPushLong(HB_MAXINT nNumber, HB_COMP_DECL)
 }
 
 /* generates the pcode to push a date on the virtual machine stack */
-void hb_macroGenPushDate( long lDate, HB_COMP_DECL )
+void hb_macroGenPushDate(long lDate, HB_COMP_DECL)
 {
    HB_BYTE pBuffer[5];
 
@@ -1591,7 +1591,7 @@ void hb_macroGenPushTimeStamp(long lDate, long lTime, HB_COMP_DECL)
 }
 
 /* sends a message to an object */
-void hb_macroGenMessage( const char * szMsgName, HB_BOOL bIsObject, HB_COMP_DECL )
+void hb_macroGenMessage(const char * szMsgName, HB_BOOL bIsObject, HB_COMP_DECL)
 {
    if( szMsgName )
    {
@@ -1629,7 +1629,7 @@ void hb_macroGenMessageData(const char * szMsg, HB_BOOL bIsObject, HB_COMP_DECL)
    szResult[0] = '_';
    memcpy(szResult + 1, szMsg, iLen);
    szResult[iLen + 1] = '\0';
-   hb_macroGenMessage( szResult, bIsObject, HB_COMP_PARAM );
+   hb_macroGenMessage(szResult, bIsObject, HB_COMP_PARAM);
 }
 
 /* generates the pcode to pop a value from the virtual machine stack onto a variable */

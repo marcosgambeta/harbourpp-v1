@@ -155,7 +155,7 @@ static char * hb_hrbReadId(const char * szBody, HB_SIZE nBodySize, HB_SIZE * pnB
          return nullptr;
       }
    }
-   while( szBody[( *pnBodyOffset )++] );
+   while( szBody[(*pnBodyOffset)++] );
 
    return hb_strdup(szIdx);
 }
@@ -480,7 +480,7 @@ static PHRB_BODY hb_hrbLoad(const char * szHrbBody, HB_SIZE nBodySize, HB_USHORT
             else
             {
                pSymRead[ul].value.pCodeFunc = &pHrbBody->pDynFunc[nPos].pcodeFunc;
-               pSymRead[ul].scope.value |= HB_FS_PCODEFUNC | HB_FS_LOCAL | ( usBind == HB_HRB_BIND_FORCELOCAL ? HB_FS_STATIC : 0 );
+               pSymRead[ul].scope.value |= HB_FS_PCODEFUNC | HB_FS_LOCAL | (usBind == HB_HRB_BIND_FORCELOCAL ? HB_FS_STATIC : 0);
             }
          }
          else if( pSymRead[ul].value.pCodeFunc == reinterpret_cast<PHB_PCODEFUNC>(SYM_DEFERRED) )
@@ -685,7 +685,7 @@ static PHRB_BODY hb_hrbParam(int iParam)
 
 static void hb_hrbReturn(PHRB_BODY pHrbBody)
 {
-   PHRB_BODY * pHrbPtr = static_cast<PHRB_BODY*>(hb_gcAllocate( sizeof(PHRB_BODY), &s_gcHrbFuncs ));
+   PHRB_BODY * pHrbPtr = static_cast<PHRB_BODY*>(hb_gcAllocate(sizeof(PHRB_BODY), &s_gcHrbFuncs));
 
    *pHrbPtr = pHrbBody;
    hb_retptrGC(pHrbPtr);

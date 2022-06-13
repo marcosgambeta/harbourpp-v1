@@ -57,7 +57,7 @@ HB_VMHANDLE hb_xvalloc(HB_SIZE nSize, HB_USHORT nFlags)
    return 0;
 }
 
-void hb_xvfree( HB_VMHANDLE h )
+void hb_xvfree(HB_VMHANDLE h)
 {
    /* TODO */
    HB_SYMBOL_UNUSED(h);
@@ -87,14 +87,14 @@ void hb_xvunlock(HB_VMHANDLE h)
 
 /* Wire */
 
-void * hb_xvwire( HB_VMHANDLE h )
+void * hb_xvwire(HB_VMHANDLE h)
 {
    /* TODO */
    HB_SYMBOL_UNUSED(h);
    return nullptr;
 }
 
-void hb_xvunwire( HB_VMHANDLE h )
+void hb_xvunwire(HB_VMHANDLE h)
 {
    /* TODO */
    HB_SYMBOL_UNUSED(h);
@@ -109,7 +109,7 @@ HB_SIZE hb_xvlockcount(HB_VMHANDLE h)
    return 0;
 }
 
-HB_SIZE hb_xvsize( HB_VMHANDLE h )
+HB_SIZE hb_xvsize(HB_VMHANDLE h)
 {
    /* TODO */
    HB_SYMBOL_UNUSED(h);
@@ -131,7 +131,7 @@ void hb_xvheapdestroy(HB_VMHANDLE h)
    HB_SYMBOL_UNUSED(h);
 }
 
-HB_VMHANDLE hb_xvheapresize( HB_VMHANDLE h, HB_SIZE nSize )
+HB_VMHANDLE hb_xvheapresize(HB_VMHANDLE h, HB_SIZE nSize)
 {
    /* TODO */
    HB_SYMBOL_UNUSED(h);
@@ -147,7 +147,7 @@ HB_SIZE hb_xvheapalloc(HB_VMHANDLE h, HB_SIZE nSize)
    return 0;
 }
 
-void hb_xvheapfree( HB_VMHANDLE h, HB_SIZE nOffset )
+void hb_xvheapfree(HB_VMHANDLE h, HB_SIZE nOffset)
 {
    /* TODO */
    HB_SYMBOL_UNUSED(h);

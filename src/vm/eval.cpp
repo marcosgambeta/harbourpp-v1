@@ -287,7 +287,7 @@ PHB_ITEM hb_itemDo(PHB_ITEM pItem, HB_ULONG ulPCount, ...)
          being called, you must use '(PHB_ITEM *) 0' as the third parameter.
  */
 
-PHB_ITEM hb_itemDoC( const char * szFunc, HB_ULONG ulPCount, ... )
+PHB_ITEM hb_itemDoC(const char * szFunc, HB_ULONG ulPCount, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemDoC(%s, %lu, ...)", szFunc, ulPCount));

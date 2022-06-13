@@ -214,7 +214,7 @@ static HB_MAXINT hb_taskTimeStop(unsigned long ulMilliSec)
    }
 }
 
-static void hb_taskFreeze( HB_MAXINT wakeup )
+static void hb_taskFreeze(HB_MAXINT wakeup)
 {
    wakeup -= hb_taskTimeStop(0);
    if( wakeup > 0 )
@@ -313,7 +313,7 @@ static void hb_taskWakeUp(PHB_TASKINFO pTask)
          *pSleep = (*pSleep)->pSleepNext;
          break;
       }
-      pSleep = &( *pSleep )->pSleepNext;
+      pSleep = &(*pSleep)->pSleepNext;
    }
 }
 
@@ -357,7 +357,7 @@ static void hb_taskFree(PHB_TASKINFO pTask)
    hb_xfree(pTask);
 }
 
-static void hb_taskFinalize( PHB_TASKINFO pTask )
+static void hb_taskFinalize(PHB_TASKINFO pTask)
 {
    pTask->data = nullptr;
 
@@ -409,7 +409,7 @@ static void hb_taskFinalize( PHB_TASKINFO pTask )
          }
          else
          {
-            pLock = &( *pLock )->pBlockNext;
+            pLock = &(*pLock)->pBlockNext;
          }
       }
 #ifdef HB_TASK_DEBUG
@@ -435,7 +435,7 @@ static void hb_taskFinalize( PHB_TASKINFO pTask )
          }
          else
          {
-            pWait = &( *pWait )->pWaitNext;
+            pWait = &(*pWait)->pWaitNext;
          }
       }
 #ifdef HB_TASK_DEBUG
@@ -498,7 +498,7 @@ static void hb_taskRun(void)
    /* execute task startup function */
    s_currTask->result = s_currTask->start(s_currTask->cargo);
    /* mark task as finished */
-   hb_taskFinalize( s_currTask );
+   hb_taskFinalize(s_currTask);
    /* switch to next active task */
    hb_taskYield();
    /* unreachable code */
@@ -681,9 +681,7 @@ void hb_taskYield(void)
       {
          if( pTask->state == TASK_SLEEPING && pTask == s_taskSleep )
          {
-            if( s_taskSleep->wakeup == HB_TASK_NO_DELAY ||
-                ( s_taskSleep->wakeup != HB_TASK_INFINITE_DELAY &&
-                  s_taskSleep->wakeup <= hb_taskTimeStop(0) ) )
+            if( s_taskSleep->wakeup == HB_TASK_NO_DELAY || (s_taskSleep->wakeup != HB_TASK_INFINITE_DELAY && s_taskSleep->wakeup <= hb_taskTimeStop(0)) )
             {
                s_taskSleep = pTask->pSleepNext;
                pTask->state = TASK_RUNNING;
@@ -698,7 +696,7 @@ void hb_taskYield(void)
    {
       if( s_taskSleep && s_taskSleep->wakeup != HB_TASK_INFINITE_DELAY )
       {
-         hb_taskFreeze( s_taskSleep->wakeup );
+         hb_taskFreeze(s_taskSleep->wakeup);
          pTask = s_taskSleep;
          s_taskSleep = pTask->pSleepNext;
          pTask->state = TASK_RUNNING;
@@ -709,7 +707,7 @@ void hb_taskYield(void)
       }
    }
 
-   hb_taskResume( pTask );
+   hb_taskResume(pTask);
 }
 
 void hb_taskSheduler(void)
@@ -827,7 +825,7 @@ void hb_taskDestroy(void * pTaskPtr)
       }
       else
       {
-         hb_taskFinalize( pTask );
+         hb_taskFinalize(pTask);
       }
    }
 }
@@ -871,7 +869,7 @@ int hb_taskJoin(void * pTaskPtr, unsigned long ulMilliSec, void ** pResult)
 /* detach given task - it will be removed automatically */
 void hb_taskDetach(void * pTask)
 {
-   ( static_cast<PHB_TASKINFO>(pTask) )->detached = HB_TRUE;
+   (static_cast<PHB_TASKINFO>(pTask))->detached = HB_TRUE;
 }
 
 /* current task quit */
@@ -880,7 +878,7 @@ void hb_taskQuit(void * result)
    if( s_currTask != s_mainTask )
    {
       s_currTask->result = result;
-      hb_taskFinalize( s_currTask );
+      hb_taskFinalize(s_currTask);
       /* switch to next active task */
       hb_taskYield();
       /* unreachable code */
@@ -920,7 +918,7 @@ int hb_taskLock(void ** pMutexPtr, unsigned long ulMilliSec)
 
       while( *pLockers )
       {
-         pLockers = &( *pLockers )->pBlockNext;
+         pLockers = &(*pLockers)->pBlockNext;
       }
       *pLockers = s_currTask;
       s_currTask->pBlockNext = nullptr;
@@ -941,7 +939,7 @@ int hb_taskLock(void ** pMutexPtr, unsigned long ulMilliSec)
             }
             else
             {
-               pLockers = &( *pLockers )->pBlockNext;
+               pLockers = &(*pLockers)->pBlockNext;
             }
          }
 #ifdef HB_TASK_DEBUG
@@ -992,7 +990,7 @@ void hb_taskSignal(void ** pCondPtr)
 
       while( *pLockers )
       {
-         pLockers = &( *pLockers )->pBlockNext;
+         pLockers = &(*pLockers)->pBlockNext;
       }
 
       pTask = pCond->waiters;
@@ -1034,7 +1032,7 @@ void hb_taskBroadcast(void ** pCondPtr)
 
       while( *pLockers )
       {
-         pLockers = &( *pLockers )->pBlockNext;
+         pLockers = &(*pLockers)->pBlockNext;
       }
 
       do
@@ -1098,7 +1096,7 @@ int hb_taskWait(void ** pCondPtr, void ** pMutexPtr, unsigned long ulMilliSec)
    pWaiters = &pCond->waiters;
    while( *pWaiters )
    {
-      pWaiters = &( *pWaiters )->pWaitNext;
+      pWaiters = &(*pWaiters)->pWaitNext;
    }
    *pWaiters = s_currTask;
    s_currTask->pWaitNext = nullptr;
@@ -1134,7 +1132,7 @@ int hb_taskWait(void ** pCondPtr, void ** pMutexPtr, unsigned long ulMilliSec)
          }
          else
          {
-            pWaiters = &( *pWaiters )->pWaitNext;
+            pWaiters = &(*pWaiters)->pWaitNext;
          }
       }
 #ifdef HB_TASK_DEBUG
@@ -1175,7 +1173,7 @@ void hb_taskDestroyMutex(void ** pMutexPtr)
             hb_xfree(pMutex);
             return;
          }
-         pMutexLst = &( *pMutexLst )->next;
+         pMutexLst = &(*pMutexLst)->next;
       }
       hb_errInternal(HB_EI_ERRUNRECOV, "TaskDestroyMutex: not a mutex", nullptr, nullptr);
    }
@@ -1201,7 +1199,7 @@ void hb_taskDestroyCond(void ** pCondPtr)
             hb_xfree(pCond);
             return;
          }
-         pCondLst = &( *pCondLst )->next;
+         pCondLst = &(*pCondLst)->next;
       }
       hb_errInternal(HB_EI_ERRUNRECOV, "TaskDestroyCond: not a cond", nullptr, nullptr);
    }

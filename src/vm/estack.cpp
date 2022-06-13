@@ -105,7 +105,7 @@
       /* compiler has no native TLS support, we have to implement it ourselves */
 #     if !defined(_HB_STACK_MACROS_)
          static HB_TLS_KEY hb_stack_key;
-#        define hb_stack_ptr     ( static_cast<PHB_STACK>(hb_tls_get(hb_stack_key)) )
+#        define hb_stack_ptr     (static_cast<PHB_STACK>(hb_tls_get(hb_stack_key)))
 #     elif !defined(_HB_STACK_LOCAL_MACROS_)
          HB_TLS_KEY hb_stack_key;
 #     endif
@@ -118,7 +118,7 @@
 #     define hb_stack_dealloc()  do { hb_xfree(static_cast<void*>(hb_tls_get(hb_stack_key))); \
                                       hb_tls_set(hb_stack_key, nullptr); } \
                                  while(0)
-#     define hb_stack_ready()    ( s_fInited && hb_tls_get(hb_stack_key) )
+#     define hb_stack_ready()    (s_fInited && hb_tls_get(hb_stack_key))
 
 #  endif /* HB_USE_TLS */
 
@@ -182,7 +182,7 @@ static void hb_stack_init(PHB_STACK pStack)
    pStack->iKeyPoll = 1;
 }
 
-static void hb_stack_destroy_TSD( PHB_STACK pStack )
+static void hb_stack_destroy_TSD(PHB_STACK pStack)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stack_destroy_TSD(%p)", static_cast<void*>(pStack)));
@@ -217,7 +217,7 @@ static void hb_stack_free(PHB_STACK pStack)
 
    HB_ISIZ n;
 
-   hb_stack_destroy_TSD( pStack );
+   hb_stack_destroy_TSD(pStack);
 
    if( pStack->privates.stack )
    {
@@ -257,10 +257,10 @@ void hb_stackDestroyTSD(void)
 
    HB_STACK_TLS_PRELOAD
 
-   hb_stack_destroy_TSD( &hb_stack );
+   hb_stack_destroy_TSD(&hb_stack);
 }
 
-void * hb_stackGetTSD( PHB_TSD pTSD )
+void * hb_stackGetTSD(PHB_TSD pTSD)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stackGetTSD(%p)", static_cast<void*>(pTSD)));
@@ -284,7 +284,7 @@ void * hb_stackGetTSD( PHB_TSD pTSD )
 
       if( pTSD->iHandle > hb_stack.iTSD )
       {
-         hb_stack.pTSD = static_cast<PHB_TSD_HOLDER>(hb_xrealloc(hb_stack.pTSD, ( pTSD->iHandle + 1 ) * sizeof(HB_TSD_HOLDER)));
+         hb_stack.pTSD = static_cast<PHB_TSD_HOLDER>(hb_xrealloc(hb_stack.pTSD, (pTSD->iHandle + 1) * sizeof(HB_TSD_HOLDER)));
          memset(&hb_stack.pTSD[hb_stack.iTSD + 1], 0, (pTSD->iHandle - hb_stack.iTSD) * sizeof(HB_TSD_HOLDER));
          hb_stack.iTSD = pTSD->iHandle;
       }
@@ -313,7 +313,7 @@ void * hb_stackGetTSD( PHB_TSD pTSD )
    return hb_stack.pTSD[pTSD->iHandle].value;
 }
 
-void * hb_stackTestTSD( PHB_TSD pTSD )
+void * hb_stackTestTSD(PHB_TSD pTSD)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stackTestTSD(%p)", static_cast<void*>(pTSD)));
@@ -328,7 +328,7 @@ void * hb_stackTestTSD( PHB_TSD pTSD )
 #endif
 }
 
-void hb_stackReleaseTSD( PHB_TSD pTSD )
+void hb_stackReleaseTSD(PHB_TSD pTSD)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stackReleaseTSD(%p)", static_cast<void*>(pTSD)));
@@ -480,7 +480,7 @@ HB_BOOL hb_stackQuitState(void)
 }
 
 #undef hb_stackSetQuitState
-void hb_stackSetQuitState( HB_USHORT uiState )
+void hb_stackSetQuitState(HB_USHORT uiState)
 {
    HB_STACK_TLS_PRELOAD
    hb_stack.uiQuitState = uiState;
@@ -652,7 +652,7 @@ void hb_stackDec(void)
 }
 
 #undef hb_stackDecrease
-void hb_stackDecrease( HB_SIZE nItems )
+void hb_stackDecrease(HB_SIZE nItems)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_stackDecrease()"));
@@ -751,7 +751,7 @@ void hb_stackIncrease(void)
    while( ++nEndIndex < hb_stack.nItems );
 }
 
-void hb_stackRemove( HB_ISIZ nUntilPos )
+void hb_stackRemove(HB_ISIZ nUntilPos)
 {
    HB_STACK_TLS_PRELOAD
    PHB_ITEM * pEnd = hb_stack.pItems + nUntilPos;
@@ -779,7 +779,7 @@ static void hb_stackDispLocal(void)
    PHB_ITEM * pBase;
 
    hb_conOutErr(hb_conNewLine(), 0);
-   hb_snprintf(buffer, sizeof(buffer), HB_I_( "Virtual Machine Stack Dump at %s(%i):" ),
+   hb_snprintf(buffer, sizeof(buffer), HB_I_("Virtual Machine Stack Dump at %s(%i):"),
       (*hb_stack.pBase)->item.asSymbol.value->szName, (*hb_stack.pBase)->item.asSymbol.stackstate->uiLineNo);
    hb_conOutErr(buffer, 0);
    hb_conOutErr(hb_conNewLine(), 0);
@@ -792,71 +792,71 @@ static void hb_stackDispLocal(void)
       switch( hb_itemType(*pBase) )
       {
          case Harbour::Item::NIL:
-            hb_snprintf(buffer, sizeof(buffer), HB_I_( "NIL " ));
+            hb_snprintf(buffer, sizeof(buffer), HB_I_("NIL "));
             break;
 
          case Harbour::Item::ARRAY:
             if( hb_arrayIsObject(*pBase) )
             {
-               hb_snprintf(buffer, sizeof(buffer), HB_I_( "OBJECT = %s " ), hb_objGetClsName(*pBase));
+               hb_snprintf(buffer, sizeof(buffer), HB_I_("OBJECT = %s "), hb_objGetClsName(*pBase));
             }
             else
             {
-               hb_snprintf(buffer, sizeof(buffer), HB_I_( "ARRAY " ));
+               hb_snprintf(buffer, sizeof(buffer), HB_I_("ARRAY "));
             }
             break;
 
          case Harbour::Item::BLOCK:
-            hb_snprintf(buffer, sizeof(buffer), HB_I_( "BLOCK " ));
+            hb_snprintf(buffer, sizeof(buffer), HB_I_("BLOCK "));
             break;
 
          case Harbour::Item::DATE:
          {
             char szDate[9];
-            hb_snprintf(buffer, sizeof(buffer), HB_I_( "DATE = \"%s\" " ), hb_itemGetDS(*pBase, szDate));
+            hb_snprintf(buffer, sizeof(buffer), HB_I_("DATE = \"%s\" "), hb_itemGetDS(*pBase, szDate));
          }
          break;
 
          case Harbour::Item::TIMESTAMP:
          {
             char szDateTime[24];
-            hb_snprintf(buffer, sizeof(buffer), HB_I_( "TIMESTAMP = \"%s\" " ), hb_timeStampStr(szDateTime, (*pBase)->item.asDateTime.julian, (*pBase)->item.asDateTime.time));
+            hb_snprintf(buffer, sizeof(buffer), HB_I_("TIMESTAMP = \"%s\" "), hb_timeStampStr(szDateTime, (*pBase)->item.asDateTime.julian, (*pBase)->item.asDateTime.time));
          }
          break;
 
          case Harbour::Item::DOUBLE:
-            hb_snprintf(buffer, sizeof(buffer), HB_I_( "DOUBLE = %f " ), hb_itemGetND(*pBase));
+            hb_snprintf(buffer, sizeof(buffer), HB_I_("DOUBLE = %f "), hb_itemGetND(*pBase));
             break;
 
          case Harbour::Item::LOGICAL:
-            hb_snprintf(buffer, sizeof(buffer), HB_I_( "LOGICAL = %s " ), hb_itemGetL(*pBase) ? ".T." : ".F.");
+            hb_snprintf(buffer, sizeof(buffer), HB_I_("LOGICAL = %s "), hb_itemGetL(*pBase) ? ".T." : ".F.");
             break;
 
          case Harbour::Item::LONG:
          {
             char szBuf[24];
-            hb_snprintf(buffer, sizeof(buffer), HB_I_( "LONG = %s " ), hb_numToStr(szBuf, sizeof(szBuf), hb_itemGetNInt(*pBase)));
+            hb_snprintf(buffer, sizeof(buffer), HB_I_("LONG = %s "), hb_numToStr(szBuf, sizeof(szBuf), hb_itemGetNInt(*pBase)));
             break;
          }
 
          case Harbour::Item::INTEGER:
-            hb_snprintf(buffer, sizeof(buffer), HB_I_( "INTEGER = %i " ), hb_itemGetNI(*pBase));
+            hb_snprintf(buffer, sizeof(buffer), HB_I_("INTEGER = %i "), hb_itemGetNI(*pBase));
             break;
 
          case Harbour::Item::STRING:
-            hb_snprintf(buffer, sizeof(buffer), HB_I_( "STRING = \"%s\" " ), hb_itemGetCPtr(*pBase));
+            hb_snprintf(buffer, sizeof(buffer), HB_I_("STRING = \"%s\" "), hb_itemGetCPtr(*pBase));
             break;
 
          case Harbour::Item::SYMBOL:
-            hb_snprintf(buffer, sizeof(buffer), HB_I_( "SYMBOL = %s " ), (*pBase)->item.asSymbol.value->szName);
+            hb_snprintf(buffer, sizeof(buffer), HB_I_("SYMBOL = %s "), (*pBase)->item.asSymbol.value->szName);
             break;
 
          case Harbour::Item::POINTER:
-            hb_snprintf(buffer, sizeof(buffer), HB_I_( "POINTER = %p " ), (*pBase)->item.asPointer.value);
+            hb_snprintf(buffer, sizeof(buffer), HB_I_("POINTER = %p "), (*pBase)->item.asPointer.value);
             break;
 
          default:
-            hb_snprintf(buffer, sizeof(buffer), HB_I_( "UNKNOWN = TYPE %i " ), hb_itemType(*pBase));
+            hb_snprintf(buffer, sizeof(buffer), HB_I_("UNKNOWN = TYPE %i "), hb_itemType(*pBase));
             break;
       }
 
@@ -920,7 +920,7 @@ void hb_stackOldFrame(PHB_STACK_STATE pFrame)
 
    hb_stack.pBase = hb_stack.pItems + pFrame->nBaseItem;
    hb_stack.pStatics = pFrame->pStatics;
-   hb_memvarSetPrivatesBase( pFrame->nPrivateBase );
+   hb_memvarSetPrivatesBase(pFrame->nPrivateBase);
 }
 
 #undef hb_stackItem
@@ -932,7 +932,7 @@ PHB_ITEM hb_stackItem(HB_ISIZ nItemPos)
       hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
    }
 
-   return *( hb_stack.pItems + nItemPos );
+   return *(hb_stack.pItems + nItemPos);
 }
 
 #undef hb_stackItemFromTop
@@ -944,7 +944,7 @@ PHB_ITEM hb_stackItemFromTop(int iFromTop)
       hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
    }
 
-   return *( hb_stack.pPos + iFromTop );
+   return *(hb_stack.pPos + iFromTop);
 }
 
 #undef hb_stackItemFromBase
@@ -956,7 +956,7 @@ PHB_ITEM hb_stackItemFromBase(int iFromBase)
       hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
    }
 
-   return *( hb_stack.pBase + iFromBase + 1 );
+   return *(hb_stack.pBase + iFromBase + 1);
 }
 
 #undef hb_stackLocalVariable
@@ -982,7 +982,7 @@ PHB_ITEM hb_stackLocalVariable(int iLocal)
          iLocal += pBase->item.asSymbol.paramcnt - pBase->item.asSymbol.paramdeclcnt;
       }
    }
-   return *( hb_stack.pBase + iLocal + 1 );
+   return *(hb_stack.pBase + iLocal + 1);
 }
 
 #undef hb_stackLocalVariableAt
@@ -1008,7 +1008,7 @@ PHB_ITEM hb_stackLocalVariableAt(int * piFromBase)
          *piFromBase += pBase->item.asSymbol.paramcnt - pBase->item.asSymbol.paramdeclcnt;
       }
    }
-   return *( hb_stack.pBase + *piFromBase + 1 );
+   return *(hb_stack.pBase + *piFromBase + 1);
 }
 
 #undef hb_stackBaseItem
@@ -1024,7 +1024,7 @@ PHB_ITEM hb_stackBaseItem(void)
 PHB_ITEM hb_stackSelfItem(void)
 {
    HB_STACK_TLS_PRELOAD
-   return *( hb_stack.pBase + 1 );
+   return *(hb_stack.pBase + 1);
 }
 
 #undef hb_stackReturnItem
@@ -1174,7 +1174,7 @@ HB_ISIZ hb_stackGetRecoverBase(void)
 }
 
 #undef hb_stackSetRecoverBase
-void hb_stackSetRecoverBase( HB_ISIZ nBase )
+void hb_stackSetRecoverBase(HB_ISIZ nBase)
 {
    HB_STACK_TLS_PRELOAD
    hb_stack.nRecoverBase = nBase;
@@ -1278,7 +1278,7 @@ void hb_stackClearMemvarsBase(void)
    while( pBase->item.asSymbol.stackstate->nPrivateBase != 0 )
    {
       pBase->item.asSymbol.stackstate->nPrivateBase = 0;
-      pBase = *( hb_stack.pItems + pBase->item.asSymbol.stackstate->nBaseItem );
+      pBase = *(hb_stack.pItems + pBase->item.asSymbol.stackstate->nBaseItem);
    }
 }
 
@@ -1381,7 +1381,7 @@ void hb_stackDispCall(void)
    while( hb_procinfo(iLevel++, buffer, &uiLine, file) )
    {
       int l = static_cast<int>(strlen(buffer));
-      hb_snprintf(buffer + l, sizeof(buffer) - l, "(%hu)%s%s", uiLine, *file ? HB_I_( " in " ) : "", file);
+      hb_snprintf(buffer + l, sizeof(buffer) - l, "(%hu)%s%s", uiLine, *file ? HB_I_(" in ") : "", file);
 
       hb_conOutErr("Called from ", 0);
       hb_conOutErr(buffer, 0);

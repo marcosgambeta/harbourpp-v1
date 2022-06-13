@@ -51,13 +51,13 @@
   hb_threadSelf() --> <pThID> | NIL
   hb_threadID([ <pThID> ]) --> <nThNo>
   hb_threadJoin(<pThID> [, @<xRetCode> ]) --> <lOK>
-  hb_threadDetach( <pThID> ) --> <lOK>
+  hb_threadDetach(<pThID>) --> <lOK>
 * hb_threadQuitRequest(<pThID>) --> <lOK>
   hb_threadTerminateAll() --> NIL
   hb_threadIsMain([ <pThID> ]) --> <lMainHvmThread>
   hb_threadWaitForAll() --> NIL
   hb_threadWait(<pThID> | <apThID>, [ <nTimeOut> ] [, <lAll> ]) => <nThInd> | <nThCount> | 0
-  hb_threadOnce( @<onceControl> [, <bAction> | <@sAction()> ] ) --> <lFirstCall>
+  hb_threadOnce(@<onceControl> [, <bAction> | <@sAction()> ]) --> <lFirstCall>
   hb_threadOnceInit(@<item>, <value>) --> <lInitialized>
   hb_mutexCreate() --> <pMtx>
   hb_mutexExists(<pMtx>) --> <lExists>
@@ -65,7 +65,7 @@
   hb_mutexUnlock(<pMtx>) --> <lOK>
   hb_mutexNotify(<pMtx> [, <xVal>]) --> NIL
   hb_mutexNotifyAll(<pMtx> [, <xVal>]) --> NIL
-  hb_mutexSubscribe( <pMtx>, [ <nTimeOut> ] [, @<xSubscribed> ] ) --> <lSubscribed>
+  hb_mutexSubscribe(<pMtx>, [ <nTimeOut> ] [, @<xSubscribed> ]) --> <lSubscribed>
   hb_mutexSubscribeNow(<pMtx>, [ <nTimeOut> ] [, @<xSubscribed> ]) --> <lSubscribed>
   hb_mutexEval(<pMtx>, <bCode> | <@sFunc()> [, <params,...> ]) --> <xCodeResult>
 ** hb_mutexQueueInfo(<pMtx>, [ @<nWaitersCount> ], [ @<nQueueLength> ]) --> .T.
@@ -137,7 +137,7 @@
       ts->tv_sec  = tv.tv_sec;
       ts->tv_nsec = tv.tv_usec * 1000l;
 #     endif
-      ts->tv_nsec += ( ulMilliSec % 1000 ) * 1000000l;
+      ts->tv_nsec += (ulMilliSec % 1000) * 1000000l;
       ts->tv_sec  += ulMilliSec / 1000 + ts->tv_nsec / 1000000000l;
       ts->tv_nsec %= 1000000000l;
    }
@@ -434,7 +434,7 @@ HB_COUNTER hb_atomic_get(volatile HB_COUNTER * pCounter)
 
 void hb_atomic_inc(volatile HB_COUNTER * pCounter)
 {
-   ++( *pCounter );
+   ++(*pCounter);
 }
 
 HB_BOOL hb_atomic_dec(volatile HB_COUNTER * pCounter)
@@ -484,7 +484,7 @@ HB_COUNTER hb_atomic_get(volatile HB_COUNTER * pCounter)
 void hb_atomic_inc(volatile HB_COUNTER * pCounter)
 {
    hb_threadEnterCriticalSection(&s_atomicMtx);
-   ++( *pCounter );
+   ++(*pCounter);
    hb_threadLeaveCriticalSection(&s_atomicMtx);
 }
 
@@ -822,7 +822,7 @@ HB_BOOL hb_threadJoin(HB_THREAD_HANDLE th_h)
 #endif
 }
 
-HB_BOOL hb_threadDetach( HB_THREAD_HANDLE th_h )
+HB_BOOL hb_threadDetach(HB_THREAD_HANDLE th_h)
 {
 #if !defined(HB_MT_VM)
    HB_SYMBOL_UNUSED(th_h);
@@ -892,7 +892,7 @@ static HB_GARBAGE_FUNC(hb_threadDestructor)
    }
    if( pThread->th_h != 0 )
    {
-      hb_threadDetach( pThread->th_h );
+      hb_threadDetach(pThread->th_h);
       pThread->th_h = 0;
    }
    if( pThread->hGT )
@@ -1049,7 +1049,7 @@ PHB_THREADSTATE hb_threadStateNew(void)
    return pThread;
 }
 
-PHB_THREADSTATE hb_threadStateClone( HB_ULONG ulAttr, PHB_ITEM pParams )
+PHB_THREADSTATE hb_threadStateClone(HB_ULONG ulAttr, PHB_ITEM pParams)
 {
    HB_STACK_TLS_PRELOAD
    PHB_THREADSTATE pThread;
@@ -1063,7 +1063,7 @@ PHB_THREADSTATE hb_threadStateClone( HB_ULONG ulAttr, PHB_ITEM pParams )
       pThread->pszLang   = hb_langID();
       pThread->pI18N     = hb_i18n_alloc(hb_vmI18N());
       pThread->pszDefRDD = hb_stackRDD()->szDefaultRDD;
-      pThread->pSet      = hb_setClone( hb_stackSetStruct() );
+      pThread->pSet      = hb_setClone(hb_stackSetStruct());
 
       if( (ulAttr & HB_THREAD_INHERIT_MEMVARS) != 0 )
       {
@@ -1228,7 +1228,7 @@ HB_FUNC( HB_THREADSTART )
          }
       }
 
-      pThread = hb_threadStateClone( ulAttr, pParams );
+      pThread = hb_threadStateClone(ulAttr, pParams);
       pThread->pFunc = hb_threadStartVM;
       pThread->cargo = pThread;
       pReturn = pThread->pThItm;
@@ -1378,7 +1378,7 @@ static int hb_threadWait(PHB_THREADSTATE * pThreads, int iThreads, HB_BOOL fAll,
             }
          }
       }
-      if( iFinished >= ( fAll ? iThreads : 1 ) )
+      if( iFinished >= (fAll ? iThreads : 1) )
       {
          break;
       }
@@ -1487,7 +1487,7 @@ HB_FUNC( HB_THREADDETACH )
       HB_STACK_TLS_PRELOAD
       HB_BOOL fResult = HB_FALSE;
 
-      if( pThread->th_h && hb_threadDetach( pThread->th_h ) )
+      if( pThread->th_h && hb_threadDetach(pThread->th_h) )
       {
          pThread->th_h = 0;
          fResult = HB_TRUE;
@@ -1596,7 +1596,7 @@ HB_FUNC( HB_THREADTERMINATEALL )
 #endif
 }
 
-/* hb_threadOnce( @<onceControl> [, <bAction> ] ) --> <lFirstCall>
+/* hb_threadOnce(@<onceControl> [, <bAction> ]) --> <lFirstCall>
  * Execute <bAction> only once. <onceControl> is variable which holds
  * the execution status and have to be initialized to NIL. In most of
  * cases it will be simple static variable in user code.
@@ -2411,7 +2411,7 @@ void hb_threadMutexNotify(PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting)
    }
 }
 
-PHB_ITEM hb_threadMutexSubscribe( PHB_ITEM pItem, HB_BOOL fClear )
+PHB_ITEM hb_threadMutexSubscribe(PHB_ITEM pItem, HB_BOOL fClear)
 {
    PHB_MUTEX pMutex = hb_mutexPtr(pItem);
    PHB_ITEM pResult = nullptr;
@@ -2529,7 +2529,7 @@ PHB_ITEM hb_threadMutexSubscribe( PHB_ITEM pItem, HB_BOOL fClear )
    return pResult;
 }
 
-PHB_ITEM hb_threadMutexTimedSubscribe( PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_BOOL fClear )
+PHB_ITEM hb_threadMutexTimedSubscribe(PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_BOOL fClear)
 {
    PHB_MUTEX pMutex = hb_mutexPtr(pItem);
    PHB_ITEM pResult = nullptr;
@@ -2571,7 +2571,7 @@ PHB_ITEM hb_threadMutexTimedSubscribe( PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_B
          HB_CRITICAL_LOCK(pMutex->mutex);
       }
 
-      if( ulMilliSec && !( pMutex->events && hb_arrayLen(pMutex->events) > 0 ) )
+      if( ulMilliSec && !(pMutex->events && hb_arrayLen(pMutex->events) > 0) )
       {
          /* release own lock from this mutex */
          if( HB_THREAD_EQUAL(pMutex->owner, HB_THREAD_SELF()) )

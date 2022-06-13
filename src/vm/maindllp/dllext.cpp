@@ -388,7 +388,9 @@ void hb_retnlen(double dNumber, int iWidth, int iDec)
    }
 
    if( s_retnlen )
+   {
       s_retnlen(dNumber, iWidth, iDec);
+   }   
 }
 
 void hb_retndlen(double dNumber, int iWidth, int iDec)

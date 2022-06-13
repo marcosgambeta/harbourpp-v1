@@ -82,7 +82,7 @@ using PHB_SYM_HOLDER = HB_SYM_HOLDER *;
 #  define HB_DYNSYM_LOCK()      do {} while(0)
 #  define HB_DYNSYM_UNLOCK()    do {} while(0)
 
-#  define hb_dynsymHandles(p)     ( p )
+#  define hb_dynsymHandles(p)     (p)
 
 #endif /* HB_MT_VM */
 
@@ -377,7 +377,7 @@ PHB_DYNS hb_dynsymNew(PHB_SYMB pSymbol)
 }
 
 /* finds and creates a symbol if not found */
-PHB_DYNS hb_dynsymGetCase( const char * szName )
+PHB_DYNS hb_dynsymGetCase(const char * szName)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dynsymGetCase(%s)", szName));
@@ -422,7 +422,7 @@ PHB_DYNS hb_dynsymGet(const char * szName)  /* finds and creates a symbol if not
          }
          else if( cChar >= 'a' && cChar <= 'z' )
          {
-            *pDest++ = cChar - ( 'a' - 'A' );
+            *pDest++ = cChar - ('a' - 'A');
          }
          else
          {
@@ -459,7 +459,7 @@ PHB_DYNS hb_dynsymFindName(const char * szName)  /* finds a symbol */
          }
          else if( cChar >= 'a' && cChar <= 'z' )
          {
-            *pDest++ = cChar - ( 'a' - 'A' );
+            *pDest++ = cChar - ('a' - 'A');
          }
          else
          {
@@ -675,7 +675,7 @@ void hb_dynsymEval(PHB_DYNS_FUNC pFunction, void * Cargo)
 
       HB_DYNSYM_UNLOCK();
 
-      if( !pDynSym || !( pFunction ) ( pDynSym, Cargo ) )
+      if( !pDynSym || !(pFunction)(pDynSym, Cargo) )
       {
          break;
       }
@@ -694,7 +694,7 @@ void hb_dynsymProtectEval(PHB_DYNS_FUNC pFunction, void * Cargo)
 
    while( uiPos < s_uiDynSymbols )
    {
-      if( !( pFunction ) ( s_pDynItems[uiPos++].pDynSym, Cargo ) )
+      if( !(pFunction)(s_pDynItems[uiPos++].pDynSym, Cargo) )
       {
          break;
       }
@@ -722,7 +722,7 @@ void hb_dynsymRelease(void)
    {
       do
       {
-         hb_xfree(( s_pDynItems + --s_uiDynSymbols )->pDynSym);
+         hb_xfree((s_pDynItems + --s_uiDynSymbols)->pDynSym);
       }
       while( s_uiDynSymbols );
       hb_xfree(s_pDynItems);
