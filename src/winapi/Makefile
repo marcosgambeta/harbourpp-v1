@@ -10,7 +10,6 @@ endif
 
 CPP_SOURCES := \
    bcrypt.cpp \
-   commapi.cpp \
    commctrl.cpp \
    mmsystem.cpp \
    utils.cpp \
