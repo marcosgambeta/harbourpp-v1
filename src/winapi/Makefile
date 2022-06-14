@@ -26,6 +26,7 @@ PRG_SOURCES := \
    struct_abcfloat.prg \
    struct_bitmapinfoheader.prg \
    struct_comstat.prg \
+   struct_dcb.prg \
    struct_iconinfo.prg \
    struct_imagelistdrawparams.prg \
    struct_initcommoncontrolsex.prg \
