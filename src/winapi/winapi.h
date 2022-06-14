@@ -30,8 +30,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#define winapi_get_ptr(n)          hb_itemGetPtr(hb_objSendMsg(hb_param(n, Harbour::Item::OBJECT), "POINTER", 0))
-#define winapi_par_STRUCT(s, n)    static_cast<s>(hb_itemGetPtr(hb_objSendMsg(hb_param(n, Harbour::Item::OBJECT), "POINTER", 0))
+#define winapi_get_ptr(n)          hb_itemGetPtr(hb_objSendMsg(hb_param(n, Harbour::Item::OBJECT), "PTR", 0))
+// #define winapi_par_STRUCT(s, n)    static_cast<s>(hb_itemGetPtr(hb_objSendMsg(hb_param(n, Harbour::Item::OBJECT), "PTR", 0))
 
 #define winapi_par_ATOM(n)         static_cast<ATOM>(hb_parni(n))
 #define winapi_par_BOOL(n)         hb_parl(n)

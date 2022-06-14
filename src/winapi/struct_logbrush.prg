@@ -38,7 +38,7 @@ SOFTWARE.
 
 CLASS WINAPI_STRUCT_LOGBRUSH
 
-   DATA pointer
+   DATA ptr
    DATA self_destruction INIT .F.
 
    METHOD new
@@ -84,7 +84,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_NEW )
   auto obj = new LOGBRUSH();
   PHB_ITEM self = hb_stackSelfItem();
   PHB_ITEM ptr = hb_itemPutPtr( nullptr, ( void * ) obj );
-  hb_objSendMsg( self, "_pointer", 1, ptr );
+  hb_objSendMsg( self, "_ptr", 1, ptr );
   hb_itemRelease( ptr );
   PHB_ITEM des = hb_itemPutL( nullptr, true );
   hb_objSendMsg( self, "_SELF_DESTRUCTION", 1, des );
@@ -94,7 +94,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_DELETE )
 {
-  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -102,7 +102,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_DELETE )
     obj = nullptr;
     PHB_ITEM self = hb_stackSelfItem();
     PHB_ITEM ptr = hb_itemPutPtr( nullptr, nullptr );
-    hb_objSendMsg( self, "_pointer", 1, ptr );
+    hb_objSendMsg( self, "_ptr", 1, ptr );
     hb_itemRelease( ptr );
   }
 
@@ -113,7 +113,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBSTYLE )
 {
-  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -123,7 +123,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBSTYLE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBSTYLE )
 {
-  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -135,7 +135,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBSTYLE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBCOLOR )
 {
-  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -145,7 +145,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBCOLOR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBCOLOR )
 {
-  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -157,7 +157,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBCOLOR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBHATCH )
 {
-  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -167,7 +167,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBHATCH )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBHATCH )
 {
-  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {

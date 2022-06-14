@@ -38,7 +38,7 @@ SOFTWARE.
 
 CLASS WINAPI_STRUCT_PIXELFORMATDESCRIPTOR
 
-   DATA pointer
+   DATA ptr
    DATA self_destruction INIT .F.
 
    METHOD new
@@ -222,7 +222,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_NEW )
   auto obj = new PIXELFORMATDESCRIPTOR();
   PHB_ITEM self = hb_stackSelfItem();
   PHB_ITEM ptr = hb_itemPutPtr( nullptr, ( void * ) obj );
-  hb_objSendMsg( self, "_pointer", 1, ptr );
+  hb_objSendMsg( self, "_ptr", 1, ptr );
   hb_itemRelease( ptr );
   PHB_ITEM des = hb_itemPutL( nullptr, true );
   hb_objSendMsg( self, "_SELF_DESTRUCTION", 1, des );
@@ -232,7 +232,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_DELETE )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -240,7 +240,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_DELETE )
     obj = nullptr;
     PHB_ITEM self = hb_stackSelfItem();
     PHB_ITEM ptr = hb_itemPutPtr( nullptr, nullptr );
-    hb_objSendMsg( self, "_pointer", 1, ptr );
+    hb_objSendMsg( self, "_ptr", 1, ptr );
     hb_itemRelease( ptr );
   }
 
@@ -251,7 +251,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETNSIZE )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -261,7 +261,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETNSIZE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETNSIZE )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -273,7 +273,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETNSIZE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETNVERSION )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -283,7 +283,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETNVERSION )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETNVERSION )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -295,7 +295,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETNVERSION )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETDWFLAGS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -305,7 +305,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETDWFLAGS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETDWFLAGS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -317,7 +317,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETDWFLAGS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETIPIXELTYPE )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -327,7 +327,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETIPIXELTYPE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETIPIXELTYPE )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -339,7 +339,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETIPIXELTYPE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCCOLORBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -349,7 +349,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCCOLORBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCCOLORBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -361,7 +361,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCCOLORBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCREDBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -371,7 +371,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCREDBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCREDBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -383,7 +383,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCREDBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCREDSHIFT )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -393,7 +393,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCREDSHIFT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCREDSHIFT )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -405,7 +405,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCREDSHIFT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCGREENBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -415,7 +415,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCGREENBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCGREENBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -427,7 +427,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCGREENBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCGREENSHIFT )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -437,7 +437,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCGREENSHIFT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCGREENSHIFT )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -449,7 +449,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCGREENSHIFT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCBLUEBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -459,7 +459,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCBLUEBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCBLUEBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -471,7 +471,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCBLUEBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCBLUESHIFT )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -481,7 +481,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCBLUESHIFT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCBLUESHIFT )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -493,7 +493,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCBLUESHIFT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCALPHABITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -503,7 +503,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCALPHABITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCALPHABITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -515,7 +515,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCALPHABITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCALPHASHIFT )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -525,7 +525,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCALPHASHIFT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCALPHASHIFT )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -537,7 +537,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCALPHASHIFT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCACCUMBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -547,7 +547,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCACCUMBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCACCUMBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -559,7 +559,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCACCUMBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCACCUMREDBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -569,7 +569,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCACCUMREDBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCACCUMREDBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -581,7 +581,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCACCUMREDBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCACCUMGREENBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -591,7 +591,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCACCUMGREENBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCACCUMGREENBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -603,7 +603,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCACCUMGREENBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCACCUMBLUEBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -613,7 +613,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCACCUMBLUEBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCACCUMBLUEBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -625,7 +625,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCACCUMBLUEBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCACCUMALPHABITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -635,7 +635,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCACCUMALPHABITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCACCUMALPHABITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -647,7 +647,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCACCUMALPHABITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCDEPTHBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -657,7 +657,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCDEPTHBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCDEPTHBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -669,7 +669,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCDEPTHBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCSTENCILBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -679,7 +679,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCSTENCILBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCSTENCILBITS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -691,7 +691,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCSTENCILBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCAUXBUFFERS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -701,7 +701,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCAUXBUFFERS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCAUXBUFFERS )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -713,7 +713,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCAUXBUFFERS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETILAYERTYPE )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -723,7 +723,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETILAYERTYPE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETILAYERTYPE )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -735,7 +735,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETILAYERTYPE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETBRESERVED )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -745,7 +745,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETBRESERVED )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETBRESERVED )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -757,7 +757,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETBRESERVED )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETDWLAYERMASK )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -767,7 +767,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETDWLAYERMASK )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETDWLAYERMASK )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -779,7 +779,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETDWLAYERMASK )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETDWVISIBLEMASK )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -789,7 +789,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETDWVISIBLEMASK )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETDWVISIBLEMASK )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -801,7 +801,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETDWVISIBLEMASK )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETDWDAMAGEMASK )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -811,7 +811,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETDWDAMAGEMASK )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETDWDAMAGEMASK )
 {
-  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<PIXELFORMATDESCRIPTOR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {

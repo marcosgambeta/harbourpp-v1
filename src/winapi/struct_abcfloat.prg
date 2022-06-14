@@ -38,7 +38,7 @@ SOFTWARE.
 
 CLASS WINAPI_STRUCT_ABCFLOAT
 
-   DATA pointer
+   DATA ptr
    DATA self_destruction INIT .F.
 
    METHOD new
@@ -84,7 +84,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_NEW )
   auto obj = new ABCFLOAT();
   PHB_ITEM self = hb_stackSelfItem();
   PHB_ITEM ptr = hb_itemPutPtr( nullptr, ( void * ) obj );
-  hb_objSendMsg( self, "_pointer", 1, ptr );
+  hb_objSendMsg( self, "_ptr", 1, ptr );
   hb_itemRelease( ptr );
   PHB_ITEM des = hb_itemPutL( nullptr, true );
   hb_objSendMsg( self, "_SELF_DESTRUCTION", 1, des );
@@ -94,7 +94,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_DELETE )
 {
-  auto obj = static_cast<ABCFLOAT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<ABCFLOAT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -102,7 +102,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_DELETE )
     obj = nullptr;
     PHB_ITEM self = hb_stackSelfItem();
     PHB_ITEM ptr = hb_itemPutPtr( nullptr, nullptr );
-    hb_objSendMsg( self, "_pointer", 1, ptr );
+    hb_objSendMsg( self, "_ptr", 1, ptr );
     hb_itemRelease( ptr );
   }
 
@@ -113,7 +113,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_SETABCFA )
 {
-  auto obj = static_cast<ABCFLOAT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<ABCFLOAT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -123,7 +123,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_SETABCFA )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_GETABCFA )
 {
-  auto obj = static_cast<ABCFLOAT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<ABCFLOAT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -135,7 +135,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_GETABCFA )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_SETABCFB )
 {
-  auto obj = static_cast<ABCFLOAT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<ABCFLOAT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -145,7 +145,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_SETABCFB )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_GETABCFB )
 {
-  auto obj = static_cast<ABCFLOAT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<ABCFLOAT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -157,7 +157,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_GETABCFB )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_SETABCFC )
 {
-  auto obj = static_cast<ABCFLOAT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<ABCFLOAT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {
@@ -167,7 +167,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_SETABCFC )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_GETABCFC )
 {
-  auto obj = static_cast<ABCFLOAT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "POINTER", 0)));
+  auto obj = static_cast<ABCFLOAT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
 
   if( obj != nullptr )
   {

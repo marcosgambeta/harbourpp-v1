@@ -11,7 +11,7 @@ PROCEDURE Main()
 
    oPoint := WINAPI_STRUCT_POINT():new()
 
-   ? "pointer=", oPoint:pointer
+   ? "pointer=", oPoint:ptr
 
    ? "WinApi_GetCursorPos(oPoint)=", WinApi_GetCursorPos(oPoint)
 
