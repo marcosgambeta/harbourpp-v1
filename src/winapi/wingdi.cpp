@@ -59,9 +59,9 @@ HB_FUNC( WINAPI_ADDFONTRESOURCEW )
 
 HB_FUNC( WINAPI_ADDFONTRESOURCE )
 {
-  void * str;
-  winapi_ret_int(AddFontResource(HB_PARSTR(1, &str, nullptr)));
-  hb_strfree(str);
+  void * str1;
+  winapi_ret_int(AddFontResource(HB_PARSTR(1, &str1, nullptr)));
+  hb_strfree(str1);
 }
 
 /*
@@ -142,9 +142,9 @@ HB_FUNC( WINAPI_COPYMETAFILEW )
 
 HB_FUNC( WINAPI_COPYMETAFILE )
 {
-  void * str;
-  winapi_ret_HMETAFILE(CopyMetaFile(winapi_par_HMETAFILE(1), HB_PARSTR(2, &str, nullptr)));
-  hb_strfree(str);
+  void * str2;
+  winapi_ret_HMETAFILE(CopyMetaFile(winapi_par_HMETAFILE(1), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str2);
 }
 
 /*
@@ -257,9 +257,9 @@ HB_FUNC( WINAPI_CREATEFONTW )
 
 HB_FUNC( WINAPI_CREATEFONT )
 {
-  void * str;
-  winapi_ret_HFONT(CreateFontW(winapi_par_int(1), winapi_par_int(2), winapi_par_int(3), winapi_par_int(4), winapi_par_int(5), winapi_par_DWORD(6), winapi_par_DWORD(7), winapi_par_DWORD(8), winapi_par_DWORD(9), winapi_par_DWORD(10), winapi_par_DWORD(11), winapi_par_DWORD(12), winapi_par_DWORD(13), HB_PARSTR(14, &str, nullptr)));
-  hb_strfree(str);
+  void * str14;
+  winapi_ret_HFONT(CreateFontW(winapi_par_int(1), winapi_par_int(2), winapi_par_int(3), winapi_par_int(4), winapi_par_int(5), winapi_par_DWORD(6), winapi_par_DWORD(7), winapi_par_DWORD(8), winapi_par_DWORD(9), winapi_par_DWORD(10), winapi_par_DWORD(11), winapi_par_DWORD(12), winapi_par_DWORD(13), HB_PARSTR(14, &str14, nullptr)));
+  hb_strfree(str14);
 }
 
 /*
@@ -296,9 +296,9 @@ HB_FUNC( WINAPI_CREATEMETAFILEW )
 
 HB_FUNC( WINAPI_CREATEMETAFILE )
 {
-  void * str;
-  winapi_ret_HDC(CreateMetaFile(HB_PARSTR(1, &str, nullptr)));
-  hb_strfree(str);
+  void * str1;
+  winapi_ret_HDC(CreateMetaFile(HB_PARSTR(1, &str1, nullptr)));
+  hb_strfree(str1);
 }
 
 /*
@@ -675,18 +675,34 @@ HB_FUNC( WINAPI_GETCHARWIDTHFLOATW )
 /*
 WINGDIAPI WINBOOL WINAPI GetCharABCWidthsA(HDC hdc,UINT wFirst,UINT wLast,LPABC lpABC)
 */
+HB_FUNC( WINAPI_GETCHARABCWIDTHSA )
+{
+  winapi_ret_BOOL(GetCharABCWidthsA(winapi_par_HDC(1), winapi_par_UINT(2), winapi_par_UINT(3), static_cast<LPABC>(winapi_get_ptr(4))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetCharABCWidthsW(HDC hdc,UINT wFirst,UINT wLast,LPABC lpABC)
 */
+HB_FUNC( WINAPI_GETCHARABCWIDTHSW )
+{
+  winapi_ret_BOOL(GetCharABCWidthsW(winapi_par_HDC(1), winapi_par_UINT(2), winapi_par_UINT(3), static_cast<LPABC>(winapi_get_ptr(4))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetCharABCWidthsFloatA(HDC hdc,UINT iFirst,UINT iLast,LPABCFLOAT lpABC)
 */
+HB_FUNC( WINAPI_GETCHARABCWIDTHSFLOATA )
+{
+  winapi_ret_BOOL(GetCharABCWidthsFloatA(winapi_par_HDC(1), winapi_par_UINT(2), winapi_par_UINT(3), static_cast<LPABCFLOAT>(winapi_get_ptr(4))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetCharABCWidthsFloatW(HDC hdc,UINT iFirst,UINT iLast,LPABCFLOAT lpABC)
 */
+HB_FUNC( WINAPI_GETCHARABCWIDTHSFLOATW )
+{
+  winapi_ret_BOOL(GetCharABCWidthsFloatW(winapi_par_HDC(1), winapi_par_UINT(2), winapi_par_UINT(3), static_cast<LPABCFLOAT>(winapi_get_ptr(4))));
+}
 
 /*
 WINGDIAPI int WINAPI GetClipBox(HDC hdc,LPRECT lprect)
@@ -798,9 +814,9 @@ HB_FUNC( WINAPI_GETMETAFILEW )
 
 HB_FUNC( WINAPI_GETMETAFILE )
 {
-  void * str;
-  winapi_ret_HMETAFILE(GetMetaFile(HB_PARSTR(1, &str, nullptr)));
-  hb_strfree(str);
+  void * str1;
+  winapi_ret_HMETAFILE(GetMetaFile(HB_PARSTR(1, &str1, nullptr)));
+  hb_strfree(str1);
 }
 
 /*
@@ -957,9 +973,9 @@ HB_FUNC( WINAPI_GETTEXTEXTENTPOINTW )
 
 HB_FUNC( WINAPI_GETTEXTEXTENTPOINT )
 {
-  void * str;
-  winapi_ret_BOOL(GetTextExtentPoint(winapi_par_HDC(1), HB_PARSTR(2, &str, nullptr), winapi_par_int(3), static_cast<LPSIZE>(winapi_get_ptr(4))));
-  hb_strfree(str);
+  void * str2;
+  winapi_ret_BOOL(GetTextExtentPoint(winapi_par_HDC(1), HB_PARSTR(2, &str2, nullptr), winapi_par_int(3), static_cast<LPSIZE>(winapi_get_ptr(4))));
+  hb_strfree(str2);
 }
 
 /*
@@ -980,9 +996,9 @@ HB_FUNC( WINAPI_GETTEXTEXTENTPOINT32W )
 
 HB_FUNC( WINAPI_GETTEXTEXTENTPOINT32 )
 {
-  void * str;
-  winapi_ret_BOOL(GetTextExtentPoint32(winapi_par_HDC(1), HB_PARSTR(2, &str, nullptr), winapi_par_int(3), static_cast<LPSIZE>(winapi_get_ptr(4))));
-  hb_strfree(str);
+  void * str2;
+  winapi_ret_BOOL(GetTextExtentPoint32(winapi_par_HDC(1), HB_PARSTR(2, &str2, nullptr), winapi_par_int(3), static_cast<LPSIZE>(winapi_get_ptr(4))));
+  hb_strfree(str2);
 }
 
 /*
@@ -1011,13 +1027,13 @@ HB_FUNC( WINAPI_GETTEXTEXTENTEXPOINTW )
 
 HB_FUNC( WINAPI_GETTEXTEXTENTEXPOINT )
 {
-  void * str;
+  void * str2;
   INT lpnFit;
   INT lpnDx;
-  winapi_ret_BOOL(GetTextExtentExPoint(winapi_par_HDC(1), HB_PARSTR(2, &str, nullptr), winapi_par_int(3), winapi_par_int(4), &lpnFit, &lpnDx, static_cast<LPSIZE>(winapi_get_ptr(7))));
+  winapi_ret_BOOL(GetTextExtentExPoint(winapi_par_HDC(1), HB_PARSTR(2, &str2, nullptr), winapi_par_int(3), winapi_par_int(4), &lpnFit, &lpnDx, static_cast<LPSIZE>(winapi_get_ptr(7))));
   winapi_stor_INT(lpnFit, 5);
   winapi_stor_INT(lpnDx, 6);
-  hb_strfree(str);
+  hb_strfree(str2);
 }
 
 /*
@@ -1059,14 +1075,43 @@ WINGDIAPI DWORD WINAPI GetFontUnicodeRanges(HDC hdc,LPGLYPHSET lpgs)
 /*
 WINGDIAPI DWORD WINAPI GetGlyphIndicesA(HDC hdc,LPCSTR lpstr,int c,LPWORD pgi,DWORD fl)
 */
+HB_FUNC( WINAPI_GETGLYPHINDICESA )
+{
+  WORD gi;
+  winapi_ret_DWORD(GetGlyphIndicesA(winapi_par_HDC(1), ( LPCSTR ) hb_parc(2), winapi_par_int(3), &gi, winapi_par_DWORD(5)));
+  winapi_stor_WORD(gi, 4);
+}
 
 /*
 WINGDIAPI DWORD WINAPI GetGlyphIndicesW(HDC hdc,LPCWSTR lpstr,int c,LPWORD pgi,DWORD fl)
 */
+HB_FUNC( WINAPI_GETGLYPHINDICESW )
+{
+  WORD gi;
+  winapi_ret_DWORD(GetGlyphIndicesW(winapi_par_HDC(1), ( LPCWSTR ) hb_parc(2), winapi_par_int(3), &gi, winapi_par_DWORD(5)));
+  winapi_stor_WORD(gi, 4);
+}
+
+HB_FUNC( WINAPI_GETGLYPHINDICES )
+{
+  void * str2;
+  WORD gi;
+  winapi_ret_DWORD(GetGlyphIndices(winapi_par_HDC(1), HB_PARSTR(2, &str2, nullptr), winapi_par_int(3), &gi, winapi_par_DWORD(5)));
+  winapi_stor_WORD(gi, 4);
+  hb_strfree(str2);
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetTextExtentPointI(HDC hdc,LPWORD pgiIn,int cgi,LPSIZE psize)
 */
+#if 0
+HB_FUNC( WINAPI_GETTEXTEXTENTPOINTI )
+{
+  WORD giIn;
+  winapi_ret_BOOL(GetTextExtentPointI(winapi_par_HDC(1), &giIn, winapi_par_int(3), static_cast<LPSIZE>(winapi_get_ptr(4))));
+  winapi_stor_WORD(giIn, 2);
+}
+#endif
 
 /*
 WINGDIAPI WINBOOL WINAPI GetTextExtentExPointI (HDC hdc,LPWORD lpwszString,int cwchString,int nMaxExtent,LPINT lpnFit,LPINT lpnDx,LPSIZE lpSize)
@@ -1079,6 +1124,12 @@ WINGDIAPI WINBOOL WINAPI GetCharWidthI(HDC hdc,UINT giFirst,UINT cgi,LPWORD pgi,
 /*
 WINGDIAPI WINBOOL WINAPI GetCharABCWidthsI(HDC hdc,UINT giFirst,UINT cgi,LPWORD pgi,LPABC pabc)
 */
+HB_FUNC( WINAPI_GETCHARABCWIDTHSI )
+{
+  WORD gi;
+  winapi_ret_BOOL(GetCharABCWidthsI(winapi_par_HDC(1), winapi_par_UINT(2), winapi_par_UINT(3), &gi, static_cast<LPABC>(winapi_get_ptr(5))));
+  winapi_stor_WORD(gi, 4);
+}
 
 /*
 WINGDIAPI int WINAPI AddFontResourceExA(LPCSTR name,DWORD fl,PVOID res)
@@ -1098,9 +1149,9 @@ HB_FUNC( WINAPI_ADDFONTRESOURCEEXW )
 
 HB_FUNC( WINAPI_ADDFONTRESOURCEEX )
 {
-  void * str;
-  winapi_ret_int(AddFontResourceEx(HB_PARSTR(1, &str, nullptr), winapi_par_DWORD(2), static_cast<PVOID>(hb_parptr(3))));
-  hb_strfree(str);
+  void * str1;
+  winapi_ret_int(AddFontResourceEx(HB_PARSTR(1, &str1, nullptr), winapi_par_DWORD(2), static_cast<PVOID>(hb_parptr(3))));
+  hb_strfree(str1);
 }
 
 /*
@@ -1121,9 +1172,9 @@ HB_FUNC( WINAPI_REMOVEFONTRESOURCEEXW )
 
 HB_FUNC( WINAPI_REMOVEFONTRESOURCEEX )
 {
-  void * str;
-  winapi_ret_BOOL(RemoveFontResourceEx(HB_PARSTR(1, &str, nullptr), winapi_par_DWORD(2), static_cast<PVOID>(hb_parptr(3))));
-  hb_strfree(str);
+  void * str1;
+  winapi_ret_BOOL(RemoveFontResourceEx(HB_PARSTR(1, &str1, nullptr), winapi_par_DWORD(2), static_cast<PVOID>(hb_parptr(3))));
+  hb_strfree(str1);
 }
 
 /*
@@ -1352,9 +1403,9 @@ HB_FUNC( WINAPI_REMOVEFONTRESOURCEW )
 
 HB_FUNC( WINAPI_REMOVEFONTRESOURCE )
 {
-  void * str;
-  winapi_ret_BOOL(RemoveFontResource(HB_PARSTR(1, &str, nullptr)));
-  hb_strfree(str);
+  void * str1;
+  winapi_ret_BOOL(RemoveFontResource(HB_PARSTR(1, &str1, nullptr)));
+  hb_strfree(str1);
 }
 
 /*
@@ -1715,9 +1766,9 @@ HB_FUNC( WINAPI_COPYENHMETAFILEW )
 
 HB_FUNC( WINAPI_COPYENHMETAFILE )
 {
-  void * str;
-  winapi_ret_HENHMETAFILE(CopyEnhMetaFile(winapi_par_HENHMETAFILE(1), HB_PARSTR(2, &str, nullptr)));
-  hb_strfree(str);
+  void * str2;
+  winapi_ret_HENHMETAFILE(CopyEnhMetaFile(winapi_par_HENHMETAFILE(1), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str2);
 }
 
 /*
@@ -1775,9 +1826,9 @@ HB_FUNC( WINAPI_GETENHMETAFILEW )
 
 HB_FUNC( WINAPI_GETENHMETAFILE )
 {
-  void * str;
-  winapi_ret_HENHMETAFILE(GetEnhMetaFile(HB_PARSTR(1, &str, nullptr)));
-  hb_strfree(str);
+  void * str1;
+  winapi_ret_HENHMETAFILE(GetEnhMetaFile(HB_PARSTR(1, &str1, nullptr)));
+  hb_strfree(str1);
 }
 
 /*
@@ -2138,9 +2189,9 @@ HB_FUNC( WINAPI_TEXTOUTW )
 
 HB_FUNC( WINAPI_TEXTOUT )
 {
-  void * str;
-  winapi_ret_BOOL(TextOut(winapi_par_HDC(1), winapi_par_int(2), winapi_par_int(3), HB_PARSTR(4, &str, nullptr), winapi_par_int(5)));
-  hb_strfree(str);
+  void * str4;
+  winapi_ret_BOOL(TextOut(winapi_par_HDC(1), winapi_par_int(2), winapi_par_int(3), HB_PARSTR(4, &str4, nullptr), winapi_par_int(5)));
+  hb_strfree(str4);
 }
 
 /*

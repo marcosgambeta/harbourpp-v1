@@ -303,9 +303,9 @@ HIMAGELIST ImageList_LoadBitmap(HINSTANCE hi,LPCSTR lpbmp,int cx,int cGrow,COLOR
 */
 HB_FUNC( WINAPI_IMAGELIST_LOADBITMAP )
 {
-  void * str;
-  winapi_ret_HIMAGELIST(ImageList_LoadBitmap(winapi_par_HINSTANCE(1), HB_PARSTR(2, &str, nullptr), winapi_par_int(3), winapi_par_int(4), winapi_par_COLORREF(5)));
-  hb_strfree(str);
+  void * str2;
+  winapi_ret_HIMAGELIST(ImageList_LoadBitmap(winapi_par_HINSTANCE(1), HB_PARSTR(2, &str2, nullptr), winapi_par_int(3), winapi_par_int(4), winapi_par_COLORREF(5)));
+  hb_strfree(str2);
 }
 
 /*

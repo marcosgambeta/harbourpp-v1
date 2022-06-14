@@ -137,9 +137,9 @@ HB_FUNC( WINAPI_WNETCANCELCONNECTIONW )
 
 HB_FUNC( WINAPI_WNETCANCELCONNECTION )
 {
-  void * str;
-  winapi_ret_DWORD(WNetCancelConnection(HB_PARSTR(1, &str, nullptr), winapi_par_BOOL(2)));
-  hb_strfree(str);
+  void * str1;
+  winapi_ret_DWORD(WNetCancelConnection(HB_PARSTR(1, &str1, nullptr), winapi_par_BOOL(2)));
+  hb_strfree(str1);
 }
 
 /*
@@ -160,9 +160,9 @@ HB_FUNC( WINAPI_WNETCANCELCONNECTION2W )
 
 HB_FUNC( WINAPI_WNETCANCELCONNECTION2 )
 {
-  void * str;
-  winapi_ret_DWORD(WNetCancelConnection2(HB_PARSTR(1, &str, nullptr), winapi_par_DWORD(2), winapi_par_BOOL(3)));
-  hb_strfree(str);
+  void * str1;
+  winapi_ret_DWORD(WNetCancelConnection2(HB_PARSTR(1, &str1, nullptr), winapi_par_DWORD(2), winapi_par_BOOL(3)));
+  hb_strfree(str1);
 }
 
 /*
@@ -187,11 +187,11 @@ HB_FUNC( WINAPI_WNETGETCONNECTIONW )
 
 HB_FUNC( WINAPI_WNETGETCONNECTION )
 {
-  void * str;
+  void * str1;
   DWORD nLength;
-  winapi_ret_DWORD(WNetGetConnection(HB_PARSTR(1, &str, nullptr), ( LPWSTR ) hb_parc(2), &nLength));
+  winapi_ret_DWORD(WNetGetConnection(HB_PARSTR(1, &str1, nullptr), ( LPWSTR ) hb_parc(2), &nLength));
   winapi_stor_DWORD(nLength, 3);
-  hb_strfree(str);
+  hb_strfree(str1);
 }
 
 /*

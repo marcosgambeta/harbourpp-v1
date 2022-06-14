@@ -9,8 +9,10 @@ ifneq ($(HB_PLATFORM),wce)
 endif
 
 CPP_SOURCES := \
+   bcrypt.cpp \
    commctrl.cpp \
    mmsystem.cpp \
+   utils.cpp \
    winbase.cpp \
    wingdi.cpp \
    winhttp.cpp \
@@ -20,6 +22,8 @@ CPP_SOURCES := \
    winuser.cpp \
 
 PRG_SOURCES := \
+   struct_abc.prg \
+   struct_abcfloat.prg \
    struct_bitmapinfoheader.prg \
    struct_iconinfo.prg \
    struct_imagelistdrawparams.prg \
@@ -30,7 +34,9 @@ PRG_SOURCES := \
    struct_pixelformatdescriptor.prg \
    struct_point.prg \
    struct_rect.prg \
+   struct_rgbquad.prg \
    struct_size.prg \
+   struct_timecaps.prg \
 
 LIBNAME := hbwinapi
 

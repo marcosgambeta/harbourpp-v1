@@ -323,9 +323,9 @@ HB_FUNC( WINAPI_REGISTERWINDOWMESSAGEW )
 
 HB_FUNC( WINAPI_REGISTERWINDOWMESSAGE )
 {
-  void * str;
-  winapi_ret_UINT(RegisterWindowMessage(HB_PARSTR(1, &str, nullptr)));
-  hb_strfree(str);
+  void * str1;
+  winapi_ret_UINT(RegisterWindowMessage(HB_PARSTR(1, &str1, nullptr)));
+  hb_strfree(str1);
 }
 
 /*
@@ -1174,9 +1174,9 @@ HB_FUNC( WINAPI_SETDLGITEMTEXTW )
 
 HB_FUNC( WINAPI_SETDLGITEMTEXT )
 {
-  void * str;
-  winapi_ret_BOOL(SetDlgItemText(winapi_par_HWND(1), winapi_par_int(2), HB_PARSTR(3, &str, nullptr)));
-  hb_strfree(str);
+  void * str3;
+  winapi_ret_BOOL(SetDlgItemText(winapi_par_HWND(1), winapi_par_int(2), HB_PARSTR(3, &str3, nullptr)));
+  hb_strfree(str3);
 }
 
 /*
@@ -1389,9 +1389,9 @@ HB_FUNC( WINAPI_REGISTERCLIPBOARDFORMATW )
 
 HB_FUNC( WINAPI_REGISTERCLIPBOARDFORMAT )
 {
-  void * str;
-  winapi_ret_UINT(RegisterClipboardFormat(HB_PARSTR(1, &str, nullptr)));
-  hb_strfree(str);
+  void * str1;
+  winapi_ret_UINT(RegisterClipboardFormat(HB_PARSTR(1, &str1, nullptr)));
+  hb_strfree(str1);
 }
 
 /*
@@ -2166,9 +2166,9 @@ HB_FUNC( WINAPI_LOADACCELERATORSW )
 
 HB_FUNC( WINAPI_LOADACCELERATORS )
 {
-  void * str;
-  winapi_ret_HACCEL(LoadAccelerators(winapi_par_HINSTANCE(1), HB_PARSTR(2, &str, nullptr)));
-  hb_strfree(str);
+  void * str2;
+  winapi_ret_HACCEL(LoadAccelerators(winapi_par_HINSTANCE(1), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str2);
 }
 
 /*
@@ -2953,9 +2953,9 @@ HB_FUNC( WINAPI_SETWINDOWTEXTW )
 
 HB_FUNC( WINAPI_SETWINDOWTEXT )
 {
-  void * str;
-  winapi_ret_BOOL(SetWindowText(winapi_par_HWND(1), HB_PARSTR(2, &str, nullptr)));
-  hb_strfree(str);
+  void * str2;
+  winapi_ret_BOOL(SetWindowText(winapi_par_HWND(1), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str2);
 }
 
 /*
@@ -3724,9 +3724,9 @@ HB_FUNC( WINAPI_LOADBITMAPW )
 
 HB_FUNC( WINAPI_LOADBITMAP )
 {
-  void * str;
-  winapi_ret_HBITMAP(LoadBitmap(winapi_par_HINSTANCE(1), HB_PARSTR(2, &str, nullptr)));
-  hb_strfree(str);
+  void * str2;
+  winapi_ret_HBITMAP(LoadBitmap(winapi_par_HINSTANCE(1), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str2);
 }
 
 /*
@@ -3747,9 +3747,9 @@ HB_FUNC( WINAPI_LOADCURSORW )
 
 HB_FUNC( WINAPI_LOADCURSOR )
 {
-  void * str;
-  winapi_ret_HCURSOR(LoadCursor(winapi_par_HINSTANCE(1), HB_PARSTR(2, &str, nullptr)));
-  hb_strfree(str);
+  void * str2;
+  winapi_ret_HCURSOR(LoadCursor(winapi_par_HINSTANCE(1), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str2);
 }
 
 /*
@@ -3770,9 +3770,9 @@ HB_FUNC( WINAPI_LOADCURSORFROMFILEW )
 
 HB_FUNC( WINAPI_LOADCURSORFROMFILE )
 {
-  void * str;
-  winapi_ret_HCURSOR(LoadCursorFromFile(HB_PARSTR(1, &str, nullptr)));
-  hb_strfree(str);
+  void * str1;
+  winapi_ret_HCURSOR(LoadCursorFromFile(HB_PARSTR(1, &str1, nullptr)));
+  hb_strfree(str1);
 }
 
 /*
@@ -3813,9 +3813,9 @@ HB_FUNC( WINAPI_LOADICONW )
 
 HB_FUNC( WINAPI_LOADICON )
 {
-  void * str;
-  winapi_ret_HICON(LoadIcon(winapi_par_HINSTANCE(1), HB_PARSTR(2, &str, nullptr)));
-  hb_strfree(str);
+  void * str2;
+  winapi_ret_HICON(LoadIcon(winapi_par_HINSTANCE(1), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str2);
 }
 
 /*
@@ -3872,9 +3872,9 @@ HB_FUNC( WINAPI_LOADIMAGEW )
 
 HB_FUNC( WINAPI_LOADIMAGE )
 {
-  void * str;
-  winapi_ret_HANDLE(LoadImage(winapi_par_HINSTANCE(1), HB_PARSTR(2, &str, nullptr), winapi_par_UINT(3), winapi_par_int(4), winapi_par_int(5), winapi_par_UINT(6)));
-  hb_strfree(str);
+  void * str2;
+  winapi_ret_HANDLE(LoadImage(winapi_par_HINSTANCE(1), HB_PARSTR(2, &str2, nullptr), winapi_par_UINT(3), winapi_par_int(4), winapi_par_int(5), winapi_par_UINT(6)));
+  hb_strfree(str2);
 }
 
 /*

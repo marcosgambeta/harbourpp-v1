@@ -54,7 +54,11 @@ WINMMAPI HDRVR WINAPI OpenDriver(LPCWSTR szDriverName,LPCWSTR szSectionName,LPAR
 */
 HB_FUNC( WINAPI_OPENDRIVER )
 {
-  winapi_ret_HDRVR(OpenDriver(( LPCWSTR ) hb_parc(1), ( LPCWSTR ) hb_parc(2), winapi_par_LPARAM(3)));
+  void * str1;
+  void * str2;
+  winapi_ret_HDRVR(OpenDriver(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), winapi_par_LPARAM(3)));
+  hb_strfree(str1);
+  hb_strfree(str2);
 }
 
 /*
@@ -88,47 +92,55 @@ WINMMAPI LRESULT WINAPI DefDriverProc(DWORD_PTR dwDriverIdentifier,HDRVR hdrvr,U
 /*
 WINMMAPI WINBOOL WINAPI sndPlaySoundA(LPCSTR pszSound,UINT fuSound)
 */
+#if 0
 HB_FUNC( WINAPI_SNDPLAYSOUNDA )
 {
   winapi_ret_BOOL(sndPlaySoundA(( LPCSTR ) hb_parc(1), winapi_par_UINT(2)));
 }
+#endif
 
 /*
 WINMMAPI WINBOOL WINAPI sndPlaySoundW(LPCWSTR pszSound,UINT fuSound)
 */
+#if 0
 HB_FUNC( WINAPI_SNDPLAYSOUNDW )
 {
   winapi_ret_BOOL(sndPlaySoundW(( LPCWSTR ) hb_parc(1), winapi_par_UINT(2)));
 }
+#endif
 
 HB_FUNC( WINAPI_SNDPLAYSOUND )
 {
-  void * str;
-  winapi_ret_BOOL(sndPlaySound(HB_PARSTR(1, &str, nullptr), winapi_par_UINT(2)));
-  hb_strfree(str);
+  void * str1;
+  winapi_ret_BOOL(sndPlaySound(HB_PARSTR(1, &str1, nullptr), winapi_par_UINT(2)));
+  hb_strfree(str1);
 }
 
 /*
 WINMMAPI WINBOOL WINAPI PlaySoundA(LPCSTR pszSound,HMODULE hmod,DWORD fdwSound)
 */
+#if 0
 HB_FUNC( WINAPI_PLAYSOUNDA )
 {
   winapi_ret_BOOL(PlaySoundA(( LPCSTR ) hb_parc(1), winapi_par_HMODULE(2), winapi_par_DWORD(3)));
 }
+#endif
 
 /*
 WINMMAPI WINBOOL WINAPI PlaySoundW(LPCWSTR pszSound,HMODULE hmod,DWORD fdwSound)
 */
+#if 0
 HB_FUNC( WINAPI_PLAYSOUNDW )
 {
   winapi_ret_BOOL(PlaySoundW(( LPCWSTR ) hb_parc(1), winapi_par_HMODULE(2), winapi_par_DWORD(3)));
 }
+#endif
 
 HB_FUNC( WINAPI_PLAYSOUND )
 {
-  void * str;
-  winapi_ret_BOOL(PlaySound(HB_PARSTR(1, &str, nullptr), winapi_par_HMODULE(2), winapi_par_DWORD(3)));
-  hb_strfree(str);
+  void * str1;
+  winapi_ret_BOOL(PlaySound(HB_PARSTR(1, &str1, nullptr), winapi_par_HMODULE(2), winapi_par_DWORD(3)));
+  hb_strfree(str1);
 }
 
 /*
@@ -788,6 +800,10 @@ HB_FUNC( WINAPI_TIMEKILLEVENT )
 /*
 WINMMAPI MMRESULT WINAPI timeGetDevCaps(LPTIMECAPS ptc,UINT cbtc)
 */
+HB_FUNC( WINAPI_TIMEGETDEVCAPS )
+{
+  winapi_ret_MMRESULT(timeGetDevCaps(static_cast<LPTIMECAPS>(winapi_get_ptr(1)), winapi_par_UINT(2)));
+}
 
 /*
 WINMMAPI MMRESULT WINAPI timeBeginPeriod(UINT uPeriod)
@@ -1003,9 +1019,9 @@ HB_FUNC( WINAPI_MCIGETDEVICEIDW )
 
 HB_FUNC( WINAPI_MCIGETDEVICEID )
 {
-  void * str;
-  winapi_ret_MCIDEVICEID(mciGetDeviceID(HB_PARSTR(1, &str, nullptr)));
-  hb_strfree(str);
+  void * str1;
+  winapi_ret_MCIDEVICEID(mciGetDeviceID(HB_PARSTR(1, &str1, nullptr)));
+  hb_strfree(str1);
 }
 
 /*
@@ -1026,9 +1042,9 @@ HB_FUNC( WINAPI_MCIGETDEVICEIDFROMELEMENTIDW )
 
 HB_FUNC( WINAPI_MCIGETDEVICEIDFROMELEMENTID )
 {
-  void * str;
-  winapi_ret_MCIDEVICEID(mciGetDeviceIDFromElementID(winapi_par_DWORD(1), HB_PARSTR(2, &str, nullptr)));
-  hb_strfree(str);
+  void * str2;
+  winapi_ret_MCIDEVICEID(mciGetDeviceIDFromElementID(winapi_par_DWORD(1), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str2);
 }
 
 /*

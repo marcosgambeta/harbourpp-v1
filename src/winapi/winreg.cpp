@@ -124,9 +124,9 @@ HB_FUNC( WINAPI_REGDELETEKEYW )
 
 HB_FUNC( WINAPI_REGDELETEKEY )
 {
-  void * str;
-  winapi_ret_LONG(RegDeleteKey(winapi_par_HKEY(1), HB_PARSTR(2, &str, nullptr)));
-  hb_strfree(str);
+  void * str2;
+  winapi_ret_LONG(RegDeleteKey(winapi_par_HKEY(1), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str2);
 }
 
 /*
@@ -181,9 +181,9 @@ HB_FUNC( WINAPI_REGDELETEVALUEW )
 
 HB_FUNC( WINAPI_REGDELETEVALUE )
 {
-  void * str;
-  winapi_ret_LONG(RegDeleteValue(winapi_par_HKEY(1), HB_PARSTR(2, &str, nullptr)));
-  hb_strfree(str);
+  void * str2;
+  winapi_ret_LONG(RegDeleteValue(winapi_par_HKEY(1), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str2);
 }
 
 /*
@@ -356,9 +356,9 @@ HB_FUNC( WINAPI_REGRESTOREKEYW )
 
 HB_FUNC( WINAPI_REGRESTOREKEY )
 {
-  void * str;
-  winapi_ret_LONG(RegRestoreKey(winapi_par_HKEY(1), HB_PARSTR(2, &str, nullptr), winapi_par_DWORD(3)));
-  hb_strfree(str);
+  void * str2;
+  winapi_ret_LONG(RegRestoreKey(winapi_par_HKEY(1), HB_PARSTR(2, &str2, nullptr), winapi_par_DWORD(3)));
+  hb_strfree(str2);
 }
 
 /*
@@ -424,9 +424,9 @@ HB_FUNC( WINAPI_REGUNLOADKEYW )
 
 HB_FUNC( WINAPI_REGUNLOADKEY )
 {
-  void * str;
-  winapi_ret_LONG(RegUnLoadKey(winapi_par_HKEY(1), HB_PARSTR(2, &str, nullptr)));
-  hb_strfree(str);
+  void * str2;
+  winapi_ret_LONG(RegUnLoadKey(winapi_par_HKEY(1), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str2);
 }
 
 /*
@@ -604,9 +604,9 @@ HB_FUNC( WINAPI_REGDELETETREEW )
 #if 0
 HB_FUNC( WINAPI_REGDELETETREE )
 {
-  void * str;
-  winapi_ret_LONG(RegDeleteTree(winapi_par_HKEY(1), HB_PARSTR(2, &str, nullptr)));
-  hb_strfree(str);
+  void * str2;
+  winapi_ret_LONG(RegDeleteTree(winapi_par_HKEY(1), HB_PARSTR(2, &str2, nullptr)));
+  hb_strfree(str2);
 }
 #endif
 
