@@ -674,6 +674,14 @@ HB_FUNC( WINAPI_CLEARCOMMBREAK )
 /*
 WINBASEAPI WINBOOL WINAPI ClearCommError (HANDLE hFile, LPDWORD lpErrors, LPCOMSTAT lpStat)
 */
+#if 0
+HB_FUNC( WINAPI_CLEARCOMMERROR )
+{
+  DWORD Errors;
+  winapi_ret_BOOL(ClearCommError(winapi_par_HANDLE(1), &Errors, ###));
+  winapi_stor_DWORD(Errors, 2);
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI SetupComm (HANDLE hFile, DWORD dwInQueue, DWORD dwOutQueue)
@@ -692,8 +700,17 @@ HB_FUNC( WINAPI_ESCAPECOMMFUNCTION )
 }
 
 /*
-WINBASEAPI WINBOOL WINAPI GetCommConfig (HANDLE hCommDev, LPCOMMCONFIG lpCC, LPDWORD lpdwSize)
+WINBASEAPI WINBOOL WINAPI GetCommConfig(HANDLE hCommDev, LPCOMMCONFIG lpCC, LPDWORD lpdwSize)
+BOOL GetCommConfig([in] HANDLE hCommDev, [out] LPCOMMCONFIG lpCC, [in, out] LPDWORD lpdwSize)
 */
+#if 0
+HB_FUNC( WINAPI_GETCOMMCONFIG )
+{
+  DWORD dwSize = winapi_par_DWORD(3);
+  winapi_ret_BOOL(GetCommConfig(winapi_par_HANDLE(1), ###, &dwSize));
+  winapi_stor_DWORD(dwSize, 3);
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI GetCommMask (HANDLE hFile, LPDWORD lpEvtMask)
@@ -708,6 +725,12 @@ HB_FUNC( WINAPI_GETCOMMMASK )
 /*
 WINBASEAPI WINBOOL WINAPI GetCommProperties (HANDLE hFile, LPCOMMPROP lpCommProp)
 */
+#if 0
+HB_FUNC( WINAPI_GETCOMMPROPERTIES )
+{
+  winapi_ret_BOOL(GetCommProperties(winapi_par_HANDLE(1), ###));
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI GetCommModemStatus (HANDLE hFile, LPDWORD lpModemStat)
@@ -722,10 +745,22 @@ HB_FUNC( WINAPI_GETCOMMMODEMSTATUS )
 /*
 WINBASEAPI WINBOOL WINAPI GetCommState (HANDLE hFile, LPDCB lpDCB)
 */
+#if 0
+HB_FUNC( WINAPI_GETCOMMSTATE )
+{
+  winapi_ret_BOOL(GetCommState(winapi_par_HANDLE(1), ###));
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI GetCommTimeouts (HANDLE hFile, LPCOMMTIMEOUTS lpCommTimeouts)
 */
+#if 0
+HB_FUNC( WINAPI_GETCOMMTIMEOUTS )
+{
+  winapi_ret_BOOL(GetCommTimeouts(winapi_par_HANDLE(1), ###));
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI PurgeComm (HANDLE hFile, DWORD dwFlags)
@@ -746,6 +781,12 @@ HB_FUNC( WINAPI_SETCOMMBREAK )
 /*
 WINBASEAPI WINBOOL WINAPI SetCommConfig (HANDLE hCommDev, LPCOMMCONFIG lpCC, DWORD dwSize)
 */
+#if 0
+HB_FUNC( WINAPI_SETCOMMCONFIG )
+{
+  winapi_ret_BOOL(SetCommConfig(winapi_par_HANDLE(1), ###, winapi_par_DWORD(3)));
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI SetCommMask (HANDLE hFile, DWORD dwEvtMask)
@@ -758,10 +799,22 @@ HB_FUNC( WINAPI_SETCOMMMASK )
 /*
 WINBASEAPI WINBOOL WINAPI SetCommState (HANDLE hFile, LPDCB lpDCB)
 */
+#if 0
+HB_FUNC( WINAPI_SETCOMMSTATE )
+{
+  winapi_ret_BOOL(SetCommState(winapi_par_HANDLE(1), ###));
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI SetCommTimeouts (HANDLE hFile, LPCOMMTIMEOUTS lpCommTimeouts)
 */
+#if 0
+HB_FUNC( WINAPI_SETCOMMTIMEOUTS )
+{
+  winapi_ret_BOOL(SetCommTimeouts(winapi_par_HANDLE(1), ###));
+}
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI TransmitCommChar (HANDLE hFile, char cChar)
@@ -774,6 +827,14 @@ HB_FUNC( WINAPI_TRANSMITCOMMCHAR )
 /*
 WINBASEAPI WINBOOL WINAPI WaitCommEvent (HANDLE hFile, LPDWORD lpEvtMask, LPOVERLAPPED lpOverlapped)
 */
+#if 0
+HB_FUNC( WINAPI_WAITCOMMEVENT )
+{
+  DWORD EvtMask;
+  winapi_ret_BOOL(WaitCommEvent(winapi_par_HANDLE(1), &EvtMask, ###));
+  winapi_stor_DWORD(EvtMask, 3);
+}
+#endif
 
 /*
 WINBASEAPI DWORD WINAPI SetTapePosition (HANDLE hDevice, DWORD dwPositionMethod, DWORD dwPartition, DWORD dwOffsetLow, DWORD dwOffsetHigh, WINBOOL bImmediate)
