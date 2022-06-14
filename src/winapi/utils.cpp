@@ -34,10 +34,10 @@ SOFTWARE.
 
 HB_FUNC( WINAPI_PTON )
 {
-  hb_retnl(reinterpret_cast<long>(hb_parptr(1)));
+  hb_retnint(reinterpret_cast<HB_PTRUINT>(hb_parptr(1)));
 }
 
 HB_FUNC( WINAPI_NTOP )
 {
-  hb_retptr(reinterpret_cast<void*>(hb_parnl(1)));
+  hb_retptr(reinterpret_cast<void*>(hb_parnint(1)));
 }
