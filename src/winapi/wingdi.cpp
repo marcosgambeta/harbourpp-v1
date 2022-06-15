@@ -1946,10 +1946,18 @@ WINGDIAPI UINT WINAPI SetDIBColorTable(HDC hdc,UINT iStart,UINT cEntries,CONST R
 /*
 WINGDIAPI WINBOOL WINAPI SetColorAdjustment(HDC hdc,CONST COLORADJUSTMENT *lpca)
 */
+HB_FUNC( WINAPI_SETCOLORADJUSTMENT )
+{
+  winapi_ret_BOOL(SetColorAdjustment(winapi_par_HDC(1), static_cast<CONST COLORADJUSTMENT*>(winapi_get_ptr(2))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetColorAdjustment(HDC hdc,LPCOLORADJUSTMENT lpca)
 */
+HB_FUNC( WINAPI_GETCOLORADJUSTMENT )
+{
+  winapi_ret_BOOL(GetColorAdjustment(winapi_par_HDC(1), static_cast<LPCOLORADJUSTMENT>(winapi_get_ptr(2))));
+}
 
 /*
 WINGDIAPI HPALETTE WINAPI CreateHalftonePalette(HDC hdc)
