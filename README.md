@@ -3,8 +3,11 @@
 Harbour++ é um projeto derivado do projeto Harbour, tendo como objetivo principal
 a transição da linguagem C para a linguagem C++, usando o C++11 como padrão mínimo.
 
-Para facilitar a adaptação das aplicações, será mantido o máximo de compatibilidade
-possível com CA-Clipper/Harbour.
+Foi utilizado como base o código-fonte do Harbour 3.2.0dev. Recursos do Harbour 3.4
+estão sendo revisados e, conforme o caso, implementados no Harbour++.
+
+Para facilitar a adaptação das aplicações, a série 1 do Harbour++ (versões 1.#.#) manterá
+o máximo possível de compatibilidade com os comandos, classes e funções do CA-Clipper/Harbour.
 
 Este projeto é um trabalho em progresso.
 
@@ -60,3 +63,5 @@ O desenvolvimento deste projeto é apoiado por donativos. Se desejar contribuir,
 utilize a chave PIX abaixo:
 
 marcosgambeta@outlook.com
+
+Valor sugerido: R$ 10,00/mês por desenvolvedor.
