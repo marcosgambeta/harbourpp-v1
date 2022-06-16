@@ -1,6 +1,7 @@
 gtalleg/gtalleg.hbp
 gtqtc/gtqtc.hbp
 gtwvg/gtwvg.hbp
+gtwvg34/gtwvg34.hbp
 gtwvw/gtwvw.hbp
 hbamf/hbamf.hbp
 hbblat/hbblat.hbp
