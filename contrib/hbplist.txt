@@ -53,6 +53,7 @@ hbtpathy/hbtpathy.hbp
 hbtest/hbtest.hbp
 hbunix/hbunix.hbp
 hbwin/hbwin.hbp
+hbwin34/hbwin34.hbp
 hbxdiff/hbxdiff.hbp              # uses: libxdiff (locally hosted)
 hbxpp/hbxpp.hbp
 hbzebra/hbzebra.hbp
