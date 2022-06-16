@@ -3,6 +3,7 @@ gtqtc/gtqtc.hbp
 gtwvg/gtwvg.hbp
 gtwvg34/gtwvg34.hbp
 gtwvw/gtwvw.hbp
+gtwvw34/gtwvw34.hbp
 hbamf/hbamf.hbp
 hbblat/hbblat.hbp
 hbblink/hbblink.hbp
