@@ -4,7 +4,8 @@ skip={!allwin}
 
 incpaths=.
 
-gt=${_HB_DYNPREF}${hb_name}${_HB_DYNSUFF}
+#gt=${_HB_DYNPREF}${hb_name}${_HB_DYNSUFF}
+gt=${_HB_DYNPREF}gtwvw${_HB_DYNSUFF}
 
 libs=hbwin34.hbc
 
