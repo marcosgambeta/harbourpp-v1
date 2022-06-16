@@ -5381,7 +5381,9 @@ STATIC FUNCTION __hbmk( aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExit
 
                   AEval(array, {| tmp, i | array[ i ] := FuncNameEncode(tmp) })
 
-                  AEval(array, {| tmp | cFile += "HB_FUNC_EXTERN( " + tmp + " );"                + _FIL_EOL })
+                  // TODO: temporary solution for gtwvg34 and gtwvw34
+                  //AEval(array, {| tmp | cFile += "HB_FUNC_EXTERN( " + tmp + " );"                + _FIL_EOL })
+                  AEval(array, {| tmp | cFile += "HB_FUNC_EXTERN( " + StrTran(tmp, "34", "") + " );"                + _FIL_EOL })
 
                   IF l_cCMAIN != NIL .AND. ! lHBMAINDLLP
                      IF ! Empty(array)
@@ -5394,7 +5396,9 @@ STATIC FUNCTION __hbmk( aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExit
                   cFile += ""                                                                     + _FIL_EOL
                   cFile += "void _hb_lnk_ForceLink_hbmk( void )"                                  + _FIL_EOL
                   cFile += "{"                                                                    + _FIL_EOL
-                  AEval(array, {| tmp | cFile += "   HB_FUNC_EXEC( " + tmp + " );"               + _FIL_EOL })
+                  // TODO: temporary solution for gtwvg34 and gtwvw34
+                  //AEval(array, {| tmp | cFile += "   HB_FUNC_EXEC( " + tmp + " );"               + _FIL_EOL })
+                  AEval(array, {| tmp | cFile += "   HB_FUNC_EXEC( " + StrTran(tmp, "34", "") + " );"               + _FIL_EOL })
                   IF l_cCMAIN != NIL .AND. ! lHBMAINDLLP
                      IF ! Empty(array)
                         cFile += ""                                                               + _FIL_EOL
@@ -5438,7 +5442,9 @@ STATIC FUNCTION __hbmk( aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExit
                         _HBMODE_IS_XHB( hbmk[ _HBMK_nHBMODE ] )
                         cFile += '   s_defaultGT = "' + Upper( SubStr(hbmk[ _HBMK_cGT ], 3) ) + '";'           + _FIL_EOL
                      ELSE
-                        cFile += '   hb_vmSetDefaultGT( "' + Upper( SubStr(hbmk[ _HBMK_cGT ], 3) ) + '" );'    + _FIL_EOL
+                        // TODO: temporary solution for gtwvg34 and gtwvw34
+                        //cFile += '   hb_vmSetDefaultGT( "' + Upper( SubStr(hbmk[ _HBMK_cGT ], 3) ) + '" );'    + _FIL_EOL
+                        cFile += "   hb_vmSetDefaultGT( " + Chr(34) + StrTran(Upper(SubStr(hbmk[ _HBMK_cGT ], 3)), "34", "") + Chr(34) + " );"    + _FIL_EOL
                      ENDIF
                   ENDIF
                   IF l_cMAIN != NIL
