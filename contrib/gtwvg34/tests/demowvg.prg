@@ -17,7 +17,7 @@
  */
 
 #require "gtwvg34"
-#require "hbtest"
+//#require "hbtest"
 
 #include "inkey.ch"
 #include "hbgtinfo.ch"
@@ -710,3 +710,4 @@ SET PROCEDURE TO "_tbrowse.prg"
 SET PROCEDURE TO "_utils.prg"
 SET PROCEDURE TO "_wvtcls.prg"
 SET PROCEDURE TO "_xbp.prg"
+SET PROCEDURE TO "table.prg"
