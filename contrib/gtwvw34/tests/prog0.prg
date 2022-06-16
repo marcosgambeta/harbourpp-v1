@@ -8,7 +8,7 @@
    open and close every pseudo-windows respectively. */
 
 #require "gtwvw34"
-#require "hbtest"
+//#require "hbtest"
 
 #include "dbstruct.ch"
 #include "hbgtinfo.ch"
@@ -349,3 +349,5 @@ STATIC PROCEDURE ZREVWINDOW()
 
 STATIC FUNCTION nCeiling( nNumber )
    RETURN Int( nNumber ) + iif( ( nNumber - Int( nNumber ) ) > 0, 1, 0 )
+
+SET PROCEDURE TO "table.prg"

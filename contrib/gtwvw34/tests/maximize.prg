@@ -1,6 +1,6 @@
 /* sample on using Maximize Mode in GTWVW. budyanto@centrin.net.id */
 
-#require "gtwvw"
+#require "gtwvw34"
 
 #include "inkey.ch"
 

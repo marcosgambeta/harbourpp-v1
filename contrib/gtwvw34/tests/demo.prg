@@ -12,7 +12,7 @@
 // parts of this program are copyrights of their respective owners
 
 #require "gtwvw34"
-#require "hbtest"
+//#require "hbtest"
 
 #include "dbstruct.ch"
 #include "inkey.ch"
@@ -1701,3 +1701,5 @@ STATIC PROCEDURE xKeyRepeater( lInit )
 
 STATIC FUNCTION _nCeiling( nNumber )
    RETURN Int( nNumber ) + iif( ( nNumber - Int( nNumber ) ) > 0, 1, 0 )
+
+SET PROCEDURE TO "table.prg"

@@ -8,7 +8,7 @@
    Notes: GTWVW now also has native Windows Controls. See other samples. */
 
 #require "gtwvw34"
-#require "hbtest"
+//#require "hbtest"
 
 #include "dbstruct.ch"
 #include "inkey.ch"
@@ -400,3 +400,5 @@ STATIC PROCEDURE AddMiscObjects( nWinNum, bAction )
    AAdd( s_amiscobjlist[ nWinNum + 1 ], bAction )
 
    RETURN
+
+SET PROCEDURE TO "table.prg"

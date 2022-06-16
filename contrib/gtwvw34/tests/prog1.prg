@@ -18,7 +18,7 @@
    and let all other functions unchanged (xGet1(), xBrowse1(), ...). */
 
 #require "gtwvw34"
-#require "hbtest"
+//#require "hbtest"
 
 #include "dbstruct.ch"
 #include "inkey.ch"
@@ -364,3 +364,5 @@ STATIC PROCEDURE ZREVWINDOW()
 
 STATIC FUNCTION nCeiling( nNumber )
    RETURN Int( nNumber ) + iif( ( nNumber - Int( nNumber ) ) > 0, 1, 0 )
+
+SET PROCEDURE TO "table.prg"
