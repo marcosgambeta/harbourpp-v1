@@ -195,7 +195,7 @@ HB_FUNC( __PP_INIT )
 
 /*
  * add new (or replace previous) include paths.
- * __pp_Path( <pPP>, <cPath> [, <lClearPrev>] ) --> NIL
+ * __pp_Path(<pPP>, <cPath> [, <lClearPrev>]) --> NIL
  */
 HB_FUNC( __PP_PATH )
 {
@@ -223,7 +223,7 @@ HB_FUNC( __PP_RESET )
 
 /*
  * preprocess and execute new preprocessor directive
- * __pp_AddRule( <pPP>, <cDirective> ) --> <lOK>
+ * __pp_AddRule(<pPP>, <cDirective>) --> <lOK>
  */
 HB_FUNC( __PP_ADDRULE )
 {

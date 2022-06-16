@@ -1687,7 +1687,9 @@ static int hb_pp_tokenStr(PHB_PP_TOKEN pToken, PHB_MEM_BUFFER pBuffer, HB_BOOL f
        ltype >= HB_PP_TOKEN_ASSIGN && ltype != HB_PP_TOKEN_EQ &&
        HB_PP_TOKEN_TYPE(pToken->type) >= HB_PP_TOKEN_ASSIGN &&
        HB_PP_TOKEN_TYPE(pToken->type) != HB_PP_TOKEN_EQ )
+   {
       nSpace = 1;
+   }
 
    if( nSpace > 0 )
    {
@@ -1984,8 +1986,7 @@ static void hb_pp_ruleSetId(PHB_PP_STATE pState, PHB_PP_TOKEN pMatch, HB_BYTE id
 {
    if( HB_PP_TOKEN_ISMATCH(pMatch) )
    {
-      int i;
-      for( i = 0; i < HB_PP_HASHID_MAX; ++i )
+      for( int i = 0; i < HB_PP_HASHID_MAX; ++i )
       {
          pState->pMap[i] |= id;
       }
@@ -2176,7 +2177,7 @@ static PHB_PP_FILE hb_pp_FileNew(PHB_PP_STATE pState, const char * szFileName, H
             {
                hb_strncpy(szFileNameBuf, pFileName->szName, sizeof(szFileNameBuf) - 1);
                iAction = (pOpenFunc)(pState->cargo, szFileNameBuf, false, fSysFile, fBinary, fSearchPath ? pState->pIncludePath : nullptr,
-                                     pfNested, &file_in, &pLineBuf, &nLineBufLen, &fFree );
+                                     pfNested, &file_in, &pLineBuf, &nLineBufLen, &fFree);
                if( iAction == HB_PP_OPEN_OK )
                {
                   szFileName = szFileNameBuf;
@@ -2416,9 +2417,9 @@ static void hb_pp_pragmaStreamFile(PHB_PP_STATE pState, const char * szFileName)
 
       if( pFile->file_in )
       {
-         (void) fseek(pFile->file_in, 0L, SEEK_END);
+         (void) fseek(pFile->file_in, 0L, SEEK_END); // TODO: C++ cast
          nSize = ftell(pFile->file_in);
-         (void) fseek(pFile->file_in, 0L, SEEK_SET);
+         (void) fseek(pFile->file_in, 0L, SEEK_SET); // TODO: C++ cast
       }
       else
       {
@@ -3278,8 +3279,7 @@ static HB_BOOL hb_pp_matchMarkerNew(PHB_PP_TOKEN * pTokenPtr, PHB_PP_MARKERLST *
                   }
                }
                while( --i > 0 );
-               if( i == 0 && hb_pp_tokenUnQuotedGet(&pTokenPtr, &fQuoted, true) &&
-                   !fQuoted && HB_PP_TOKEN_TYPE((*pTokenPtr)->type) == HB_PP_TOKEN_GT )
+               if( i == 0 && hb_pp_tokenUnQuotedGet(&pTokenPtr, &fQuoted, true) && !fQuoted && HB_PP_TOKEN_TYPE((*pTokenPtr)->type) == HB_PP_TOKEN_GT )
                {
                   type = HB_PP_MMARKER_LIST;
                }
@@ -4300,9 +4300,7 @@ static HB_BOOL hb_pp_tokenMatch(PHB_PP_TOKEN pMatch, PHB_PP_TOKEN * pTokenPtr, P
             {
                *pTokenPtr = (*pTokenPtr)->pNext;
             }
-            while( !HB_PP_TOKEN_ISEOC(*pTokenPtr) &&
-                   (*pTokenPtr)->spaces == 0 &&
-                   HB_PP_TOKEN_TYPE((*pTokenPtr)->type) != HB_PP_TOKEN_COMMA );
+            while( !HB_PP_TOKEN_ISEOC(*pTokenPtr) && (*pTokenPtr)->spaces == 0 && HB_PP_TOKEN_TYPE((*pTokenPtr)->type) != HB_PP_TOKEN_COMMA );
 
             fMatch = HB_TRUE;
          }
@@ -4346,8 +4344,7 @@ static HB_BOOL hb_pp_patternMatch(PHB_PP_TOKEN pMatch, PHB_PP_TOKEN * pTokenPtr,
          {
             pLast = pOptional;
             pFirst = pToken;
-            if( hb_pp_patternMatch(pOptional->pMTokens, &pToken, pNewStop, mode, nullptr) &&
-                pFirst != pToken )
+            if( hb_pp_patternMatch(pOptional->pMTokens, &pToken, pNewStop, mode, nullptr) && pFirst != pToken )
             {
                if( pRule && !hb_pp_patternMatch(pOptional->pMTokens, &pFirst, pNewStop, mode, pRule) )
                {
@@ -4777,16 +4774,14 @@ static void hb_pp_patternReplace(PHB_PP_STATE pState, PHB_PP_RULE pRule, PHB_PP_
    if( pState->fWriteTrace )
    {
       fprintf(pState->file_trace, "%s(%d) >%s<\n",
-               pState->pFile && pState->pFile->szFileName ? pState->pFile->szFileName : "",
-               pState->pFile ? pState->pFile->iCurrentLine : 0,
-               /* the source string */
-               hb_pp_tokenListStr(pSource, pRule->pNextExpr, true,
-                                   pState->pBuffer, true, false));
+              pState->pFile && pState->pFile->szFileName ? pState->pFile->szFileName : "",
+              pState->pFile ? pState->pFile->iCurrentLine : 0,
+              /* the source string */
+              hb_pp_tokenListStr(pSource, pRule->pNextExpr, true, pState->pBuffer, true, false));
       fprintf(pState->file_trace, "#%s%s >%s<\n",
-               pRule->mode == HB_PP_CMP_STD ? "x" : "", szType,
-               /* the result string */
-               hb_pp_tokenListStr(pFinalResult, *pResultPtr, true,
-                                   pState->pBuffer, true, false));
+              pRule->mode == HB_PP_CMP_STD ? "x" : "", szType,
+              /* the result string */
+              hb_pp_tokenListStr(pFinalResult, *pResultPtr, true, pState->pBuffer, true, false));
    }
 
    /* Replace matched tokens with result pattern */
@@ -6611,8 +6606,7 @@ char * hb_pp_parseLine(PHB_PP_STATE pState, const char * pLine, HB_SIZE * pnLen)
 
    if( (nLen && pLine[nLen - 1] == '\n') ||
        hb_membufLen(pState->pOutputBuffer) == 0 ||
-       hb_membufPtr(pState->pOutputBuffer)
-                        [hb_membufLen(pState->pOutputBuffer) - 1] != '\n' )
+       hb_membufPtr(pState->pOutputBuffer)[hb_membufLen(pState->pOutputBuffer) - 1] != '\n' )
    {
       hb_membufAddCh(pState->pOutputBuffer, '\0');
    }
