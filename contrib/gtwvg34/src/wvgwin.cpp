@@ -123,7 +123,7 @@ HB_FUNC( WVG_SETMENU )
    width  += wi.right - wi.left - ci.right;
    height += wi.bottom - wi.top - ci.bottom;
 
-   SetWindowPos( hWnd, NULL, wi.left, wi.top, width, height, SWP_NOZORDER );
+   SetWindowPos( hWnd, nullptr, wi.left, wi.top, width, height, SWP_NOZORDER );
    #endif
 
    hb_retl( bSet );
@@ -169,7 +169,7 @@ HB_FUNC( WVG_ISMENUITEMENABLED )  /* = grayed */
 HB_FUNC( WVG_SETMENUITEM )
 {
    MENUITEMINFO lpmii;
-   void *       hText = NULL;
+   void *       hText = nullptr;
 
    memset( &lpmii, 0, sizeof( lpmii ) );
 
@@ -178,7 +178,7 @@ HB_FUNC( WVG_SETMENUITEM )
    if( hb_parl( 5 ) )
    {
       lpmii.fMask = MIIM_STRING;
-      lpmii.dwTypeData = ( LPTSTR ) HB_UNCONST( HB_PARSTR( 4, &hText, NULL ) );
+      lpmii.dwTypeData = ( LPTSTR ) HB_UNCONST( HB_PARSTR( 4, &hText, nullptr ) );
    }
    else
       lpmii.fMask = MIIM_SUBMENU;
@@ -286,7 +286,7 @@ HB_FUNC( WVG_SENDTOOLBARMESSAGE )
       {
          TBADDBITMAP tbab;
 
-         tbab.hInst = NULL;
+         tbab.hInst = nullptr;
 #if ( _WIN32_IE >= 0x0500 )
          tbab.nID = ( UINT_PTR ) hbwapi_par_raw_HBITMAP( 3 );
 #else
@@ -312,7 +312,7 @@ HB_FUNC( WVG_SENDTOOLBARMESSAGE )
       case TB_ADDSTRING:
       {
          void * hCaption;
-         hbwapi_ret_NI( ( int ) SendMessage( hTB, TB_ADDSTRING, 0, ( LPARAM ) HB_PARSTR( 3, &hCaption, NULL ) ) );
+         hbwapi_ret_NI( ( int ) SendMessage( hTB, TB_ADDSTRING, 0, ( LPARAM ) HB_PARSTR( 3, &hCaption, nullptr ) ) );
          hb_strfree( hCaption );
          break;
       }
@@ -475,26 +475,26 @@ HB_FUNC( WVG_SENDEDITCONTROLMESSAGE )
 HB_FUNC( WVG_SENDCBMESSAGE )
 {
    HWND   hCB   = hbwapi_par_raw_HWND( 1 );
-   void * hText = NULL;
+   void * hText = nullptr;
 
    switch( hbwapi_par_INT( 2 ) )
    {
       case CB_ADDSTRING:
-         hb_retnint( SendMessage( hCB, CB_ADDSTRING, 0, ( LPARAM ) ( LPCTSTR ) HB_PARSTR( 3, &hText, NULL ) ) );
+         hb_retnint( SendMessage( hCB, CB_ADDSTRING, 0, ( LPARAM ) ( LPCTSTR ) HB_PARSTR( 3, &hText, nullptr ) ) );
          break;
       case CB_DELETESTRING:
          hb_retnint( SendMessage( hCB, CB_DELETESTRING, hb_parni( 3 ), 0 ) );
          break;
 #if defined( CB_DIR )
       case CB_DIR:
-         hb_retnint( SendMessage( hCB, CB_DIR, ( WPARAM ) hb_parni( 3 ), ( LPARAM ) HB_PARSTR( 4, &hText, NULL ) ) );
+         hb_retnint( SendMessage( hCB, CB_DIR, ( WPARAM ) hb_parni( 3 ), ( LPARAM ) HB_PARSTR( 4, &hText, nullptr ) ) );
          break;
 #endif
       case CB_FINDSTRING:
-         hb_retnint( SendMessage( hCB, CB_FINDSTRING, ( WPARAM ) hb_parni( 3 ), ( LPARAM ) HB_PARSTR( 4, &hText, NULL ) ) );
+         hb_retnint( SendMessage( hCB, CB_FINDSTRING, ( WPARAM ) hb_parni( 3 ), ( LPARAM ) HB_PARSTR( 4, &hText, nullptr ) ) );
          break;
       case CB_FINDSTRINGEXACT:
-         hb_retnint( SendMessage( hCB, CB_FINDSTRINGEXACT, ( WPARAM ) hb_parni( 3 ), ( LPARAM ) HB_PARSTR( 4, &hText, NULL ) ) );
+         hb_retnint( SendMessage( hCB, CB_FINDSTRINGEXACT, ( WPARAM ) hb_parni( 3 ), ( LPARAM ) HB_PARSTR( 4, &hText, nullptr ) ) );
          break;
 #if defined( CB_GETCOMBOBOXINFO )
       case CB_GETCOMBOBOXINFO:
@@ -616,7 +616,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
       case CB_INITSTORAGE:
          break;
       case CB_INSERTSTRING:
-         hb_retnint( SendMessage( hCB, CB_INSERTSTRING, ( WPARAM ) hb_parnint( 3 ), ( LPARAM ) HB_PARSTR( 4, &hText, NULL ) ) );
+         hb_retnint( SendMessage( hCB, CB_INSERTSTRING, ( WPARAM ) hb_parnint( 3 ), ( LPARAM ) HB_PARSTR( 4, &hText, nullptr ) ) );
          break;
       case CB_LIMITTEXT:
          SendMessage( hCB, CB_LIMITTEXT, hb_parni( 3 ), 0 );
@@ -625,7 +625,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
          SendMessage( hCB, CB_RESETCONTENT, 0, 0 );
          break;
       case CB_SELECTSTRING:
-         hb_retnint( SendMessage( hCB, CB_SELECTSTRING, ( WPARAM ) hb_parnint( 3 ), ( LPARAM ) HB_PARSTR( 4, &hText, NULL ) ) );
+         hb_retnint( SendMessage( hCB, CB_SELECTSTRING, ( WPARAM ) hb_parnint( 3 ), ( LPARAM ) HB_PARSTR( 4, &hText, nullptr ) ) );
          break;
 #if defined( CB_SETCUEBANNER )
       case CB_SETCUEBANNER:
