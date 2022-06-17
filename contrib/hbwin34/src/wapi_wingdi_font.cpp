@@ -50,14 +50,14 @@ HB_FUNC( WAPI_ADDFONTRESOURCE )
 {
    void * hFileName;
 
-   hb_retni( AddFontResource( HB_PARSTRDEF( 1, &hFileName, NULL ) ) );
+   hb_retni( AddFontResource( HB_PARSTRDEF( 1, &hFileName, nullptr ) ) );
    hb_strfree( hFileName );
 }
 
 HB_FUNC( WAPI_ADDFONTMEMRESOURCEEX )
 {
    DWORD dwFonts = 0;
-   HANDLE hResult = NULL;
+   HANDLE hResult = nullptr;
 
 #if ! defined( HB_OS_WIN_CE )
    {
@@ -72,11 +72,11 @@ HB_FUNC( WAPI_ADDFONTMEMRESOURCEEX )
             s_pAddFontMemResourceEx = ( _HB_ADDFONTMEMRESOURCEEX ) HB_WINAPI_GETPROCADDRESST( hModule,
                "AddFontMemResourceEx" );
          else
-            s_pAddFontMemResourceEx = NULL;
+            s_pAddFontMemResourceEx = nullptr;
       }
 
       if( s_pAddFontMemResourceEx )
-         hResult = s_pAddFontMemResourceEx( ( PVOID ) HB_UNCONST( hb_parcx( 1 ) ), ( DWORD ) hb_parclen( 1 ), NULL, &dwFonts );
+         hResult = s_pAddFontMemResourceEx( ( PVOID ) HB_UNCONST( hb_parcx( 1 ) ), ( DWORD ) hb_parclen( 1 ), nullptr, &dwFonts );
    }
 #endif
 
@@ -88,7 +88,7 @@ HB_FUNC( WAPI_ADDFONTMEMRESOURCEEX )
 HB_FUNC( WAPI_REMOVEFONTRESOURCE )
 {
    void * hFileName;
-   hbwapi_ret_L( RemoveFontResource( HB_PARSTRDEF( 1, &hFileName, NULL ) ) );
+   hbwapi_ret_L( RemoveFontResource( HB_PARSTRDEF( 1, &hFileName, nullptr ) ) );
    hb_strfree( hFileName );
 }
 
@@ -109,13 +109,13 @@ HB_FUNC( WAPI_ADDFONTRESOURCEEX )
             s_pAddFontResourceEx = ( _HB_ADDFONTRESOURCEEX ) HB_WINAPI_GETPROCADDRESST( hModule,
                "AddFontResourceEx" );
          else
-            s_pAddFontResourceEx = NULL;
+            s_pAddFontResourceEx = nullptr;
       }
 
       if( s_pAddFontResourceEx )
       {
          void * hFileName;
-         iResult = s_pAddFontResourceEx( HB_PARSTRDEF( 1, &hFileName, NULL ), ( DWORD ) hb_parnl( 2 ), NULL );
+         iResult = s_pAddFontResourceEx( HB_PARSTRDEF( 1, &hFileName, nullptr ), ( DWORD ) hb_parnl( 2 ), nullptr );
          hb_strfree( hFileName );
       }
    }
@@ -141,13 +141,13 @@ HB_FUNC( WAPI_REMOVEFONTRESOURCEEX )
             s_pRemoveFontResourceEx = ( _HB_REMOVEFONTRESOURCEEX ) HB_WINAPI_GETPROCADDRESST( hModule,
                "RemoveFontResourceEx" );
          else
-            s_pRemoveFontResourceEx = NULL;
+            s_pRemoveFontResourceEx = nullptr;
       }
 
       if( s_pRemoveFontResourceEx )
       {
          void * hFileName;
-         fResult = s_pRemoveFontResourceEx( HB_PARSTRDEF( 1, &hFileName, NULL ), ( DWORD ) hb_parnl( 2 ), NULL );
+         fResult = s_pRemoveFontResourceEx( HB_PARSTRDEF( 1, &hFileName, nullptr ), ( DWORD ) hb_parnl( 2 ), nullptr );
          hb_strfree( hFileName );
       }
    }
@@ -173,7 +173,7 @@ HB_FUNC( WAPI_REMOVEFONTMEMRESOURCEEX )
             s_pRemoveFontMemResourceEx = ( _HB_REMOVEFONTMEMRESOURCEEX ) HB_WINAPI_GETPROCADDRESST( hModule,
                "RemoveFontMemResourceEx" );
          else
-            s_pRemoveFontMemResourceEx = NULL;
+            s_pRemoveFontMemResourceEx = nullptr;
       }
 
       if( s_pRemoveFontMemResourceEx )

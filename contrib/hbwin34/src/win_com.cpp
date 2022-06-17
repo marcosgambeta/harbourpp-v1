@@ -113,9 +113,9 @@ HB_FUNC( WIN_COMOPEN )
       if( ( hCommPort = CreateFile( szName,
                                     GENERIC_READ | GENERIC_WRITE,
                                     0,
-                                    NULL,
+                                    nullptr,
                                     OPEN_EXISTING,
-                                    FILE_FLAG_NO_BUFFERING, NULL ) ) == INVALID_HANDLE_VALUE )
+                                    FILE_FLAG_NO_BUFFERING, nullptr ) ) == INVALID_HANDLE_VALUE )
       {
          s_PortData[ iPort ].dwError = GetLastError();
          hb_retnl( -1 );
@@ -196,7 +196,7 @@ HB_FUNC( WIN_COMCLOSE )
       s_PortData[ iPort ].dwError = GetLastError();
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WIN_COMWRITE )
@@ -212,7 +212,7 @@ HB_FUNC( WIN_COMWRITE )
 
       s_PortData[ iPort ].iFunction = HB_WIN_COM_FUN_WRITEFILE;
       s_PortData[ iPort ].dwError = 0;
-      if( WriteFile( hCommPort, lpBuffer, dwNumberofBytesToWrite, &dwNumberofBytesWritten, NULL ) )
+      if( WriteFile( hCommPort, lpBuffer, dwNumberofBytesToWrite, &dwNumberofBytesWritten, nullptr ) )
          hb_retnint( dwNumberofBytesWritten );
       else
       {
@@ -221,7 +221,7 @@ HB_FUNC( WIN_COMWRITE )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WIN_COMREAD )
@@ -238,7 +238,7 @@ HB_FUNC( WIN_COMREAD )
       lpBuffer = ( char * ) hb_xgrabz( dwNumberOfBytesToRead + 1 );
       s_PortData[ iPort ].iFunction = HB_WIN_COM_FUN_READFILE;
       s_PortData[ iPort ].dwError = 0;
-      if( ReadFile( hCommPort, lpBuffer, dwNumberOfBytesToRead, &dwNumberOfBytesRead, NULL ) )
+      if( ReadFile( hCommPort, lpBuffer, dwNumberOfBytesToRead, &dwNumberOfBytesRead, nullptr ) )
       {
          if( ! hb_storclen_buffer( lpBuffer, dwNumberOfBytesRead, 2 ) )
             hb_xfree( lpBuffer );
@@ -246,14 +246,14 @@ HB_FUNC( WIN_COMREAD )
       }
       else
       {
-         hb_storc( NULL, 2 );
+         hb_storc( nullptr, 2 );
          hb_xfree( lpBuffer );
          s_PortData[ iPort ].dwError = GetLastError();
          hb_retnint( -1 );
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WIN_COMRECV )
@@ -270,7 +270,7 @@ HB_FUNC( WIN_COMRECV )
       lpBuffer = ( char * ) hb_xgrabz( dwNumberOfBytesToRead + 1 );
       s_PortData[ iPort ].iFunction = HB_WIN_COM_FUN_READFILE;
       s_PortData[ iPort ].dwError = 0;
-      if( ReadFile( hCommPort, lpBuffer, dwNumberOfBytesToRead, &dwNumberOfBytesRead, NULL ) )
+      if( ReadFile( hCommPort, lpBuffer, dwNumberOfBytesToRead, &dwNumberOfBytesRead, nullptr ) )
       {
          hb_retclen_buffer( lpBuffer, dwNumberOfBytesRead );
          hb_stornint( dwNumberOfBytesRead, 3 );
@@ -284,7 +284,7 @@ HB_FUNC( WIN_COMRECV )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WIN_COMSTATUS )
@@ -320,7 +320,7 @@ HB_FUNC( WIN_COMSTATUS )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WIN_COMPURGE )
@@ -344,7 +344,7 @@ HB_FUNC( WIN_COMPURGE )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WIN_COMQUEUESTATUS )
@@ -387,7 +387,7 @@ HB_FUNC( WIN_COMQUEUESTATUS )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* If handshaking is enabled, it is an error for the application to adjust the line by
@@ -413,7 +413,7 @@ HB_FUNC( WIN_COMSETRTS )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /* If handshaking is enabled, it is an error for the application to adjust the line by
@@ -439,7 +439,7 @@ HB_FUNC( WIN_COMSETDTR )
       }
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WIN_COMRTSFLOW )
@@ -494,7 +494,7 @@ HB_FUNC( WIN_COMRTSFLOW )
          hb_retl( HB_TRUE );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WIN_COMDTRFLOW )
@@ -549,7 +549,7 @@ HB_FUNC( WIN_COMDTRFLOW )
          hb_retl( HB_TRUE );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WIN_COMXONXOFFFLOW )
@@ -593,7 +593,7 @@ HB_FUNC( WIN_COMXONXOFFFLOW )
          hb_retl( HB_TRUE );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 static int hb_win_ComSetTimeouts( HANDLE hCommPort, LPCOMMTIMEOUTS Timeouts, DWORD dwBaudRate, int iParity, int iByteSize, int iStopBits )
@@ -687,7 +687,7 @@ HB_FUNC( WIN_COMSETTIMEOUTS )
          hb_retl( HB_TRUE );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WIN_COMSETQUEUESIZE )
@@ -708,7 +708,7 @@ HB_FUNC( WIN_COMSETQUEUESIZE )
          hb_retl( HB_TRUE );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WIN_COMISVALID )
@@ -728,7 +728,7 @@ HB_FUNC( WIN_COMERRORCLEAR )
       s_PortData[ iPort ].iFunction = 0;
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WIN_COMERROR )
@@ -738,7 +738,7 @@ HB_FUNC( WIN_COMERROR )
    if( iPort >= 0 && iPort < ( int ) HB_SIZEOFARRAY( s_PortData ) )
       hb_retnint( s_PortData[ iPort ].dwError );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WIN_COMFUNCLAST )
@@ -748,7 +748,7 @@ HB_FUNC( WIN_COMFUNCLAST )
    if( iPort >= 0 && iPort < ( int ) HB_SIZEOFARRAY( s_PortData ) )
       hb_retni( s_PortData[ iPort ].iFunction );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WIN_COMDEBUGDCB )
@@ -871,7 +871,7 @@ HB_FUNC( WIN_COMDEBUGDCB )
       hb_retc( szDebugString );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_CALL_ON_STARTUP_BEGIN( _hb_wincom_init_ )

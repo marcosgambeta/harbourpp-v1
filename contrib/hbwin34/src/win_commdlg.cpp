@@ -74,13 +74,13 @@ static UINT_PTR CALLBACK CCHookProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM 
       fInit = HB_TRUE;
    }
 
-   if( ( pBlock = ( PHB_ITEM ) GetProp( hWnd, _HB_CHOOSECOLOR_CB_PROP_ ) ) != NULL &&
+   if( ( pBlock = ( PHB_ITEM ) GetProp( hWnd, _HB_CHOOSECOLOR_CB_PROP_ ) ) != nullptr &&
        hb_vmRequestReenter() )
    {
-      PHB_ITEM pWnd = hbwapi_itemPut_HANDLE( NULL, hWnd );
-      PHB_ITEM pMsg = hb_itemPutNInt( NULL, msg );
-      PHB_ITEM pLPa = hb_itemPutNInt( NULL, wParam );
-      PHB_ITEM pWPa = hb_itemPutNInt( NULL, lParam );
+      PHB_ITEM pWnd = hbwapi_itemPut_HANDLE( nullptr, hWnd );
+      PHB_ITEM pMsg = hb_itemPutNInt( nullptr, msg );
+      PHB_ITEM pLPa = hb_itemPutNInt( nullptr, wParam );
+      PHB_ITEM pWPa = hb_itemPutNInt( nullptr, lParam );
 
       hb_evalBlock( pBlock, pWnd, pMsg, pLPa, pWPa );
 
@@ -129,9 +129,9 @@ HB_FUNC( WIN_CHOOSECOLOR )
    cc.Flags          = hbwapi_par_WORD( 5 );
 #if ! defined( HB_OS_WIN_CE )
    cc.lCustData      = ( LPARAM ) ( HB_PTRUINT ) hb_param( 6, HB_IT_EVALITEM );
-   cc.lpfnHook       = cc.lCustData ? CCHookProc : NULL;
+   cc.lpfnHook       = cc.lCustData ? CCHookProc : nullptr;
 #endif
-   cc.lpTemplateName = HB_PARSTR( 7, &hTpl, NULL );
+   cc.lpTemplateName = HB_PARSTR( 7, &hTpl, nullptr );
 
    if( ChooseColor( &cc ) )
       hbwapi_ret_COLORREF( cc.rgbResult );

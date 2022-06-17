@@ -114,7 +114,7 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTS )
       hb_xfree( handles );
    }
    else
-      hb_errRT_BASE( EG_ARG, 1001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 1001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTSEX )
@@ -140,7 +140,7 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTSEX )
       hb_xfree( handles );
    }
    else
-      hb_errRT_BASE( EG_ARG, 1001, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 1001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
    /* WinCE (WinMobile6) does not support
     * WaitFor{Single,Multiple}Object[Ex]() though it supports:
@@ -192,8 +192,8 @@ HB_FUNC( WAPI_SETERRORMODE )
 HB_FUNC( WAPI_LOADLIBRARYEX )
 {
    void * hFileName;
-   HMODULE hResult = LoadLibraryEx( HB_PARSTRDEF( 1, &hFileName, NULL ),
-                                    NULL,
+   HMODULE hResult = LoadLibraryEx( HB_PARSTRDEF( 1, &hFileName, nullptr ),
+                                    nullptr,
                                     hbwapi_par_DWORD( 3 ) );
 
    hbwapi_SetLastError( GetLastError() );
@@ -205,7 +205,7 @@ HB_FUNC( WAPI_LOADLIBRARYEX )
 HB_FUNC( WAPI_LOADLIBRARY )
 {
    void * hFileName;
-   HMODULE hResult = LoadLibrary( HB_PARSTRDEF( 1, &hFileName, NULL ) );
+   HMODULE hResult = LoadLibrary( HB_PARSTRDEF( 1, &hFileName, nullptr ) );
 
    hbwapi_SetLastError( GetLastError() );
    hb_retptr( hResult );
@@ -227,7 +227,7 @@ HB_FUNC( WAPI_GETPROCADDRESS )
    DWORD dwLastError;
 #if defined( HB_OS_WIN_CE )
    void * hProcName;
-   LPCTSTR lpProcName = HB_PARSTR( 2, &hProcName, NULL );
+   LPCTSTR lpProcName = HB_PARSTR( 2, &hProcName, nullptr );
    pProc = GetProcAddress( ( HMODULE ) hb_parptr( 1 ),
                            lpProcName ? lpProcName :
                            ( LPCTSTR ) ( HB_PTRUINT ) hb_parnint( 2 ) );
@@ -247,7 +247,7 @@ HB_FUNC( WAPI_GETPROCADDRESS )
 HB_FUNC( WAPI_GETMODULEHANDLE )
 {
    void * hModuleName;
-   HMODULE hResult = GetModuleHandle( HB_PARSTR( 1, &hModuleName, NULL ) );
+   HMODULE hResult = GetModuleHandle( HB_PARSTR( 1, &hModuleName, nullptr ) );
 
    hbwapi_SetLastError( GetLastError() );
    hbwapi_ret_raw_HANDLE( hResult );
@@ -270,7 +270,7 @@ static void s_getPathName( _HB_GETPATHNAME getPathName )
 {
    void * hLongPath;
    DWORD length = 0;
-   LPCTSTR lpszLongPath = HB_PARSTR( 1, &hLongPath, NULL );
+   LPCTSTR lpszLongPath = HB_PARSTR( 1, &hLongPath, nullptr );
 
    if( lpszLongPath )
    {
@@ -285,7 +285,7 @@ static void s_getPathName( _HB_GETPATHNAME getPathName )
          {
             cchBuffer = ( DWORD ) hb_parnl( 3 );
             if( cchBuffer == 0 )
-               lpszShortPath = NULL;
+               lpszShortPath = nullptr;
             else if( cchBuffer > ( DWORD ) HB_SIZEOFARRAY( buffer ) )
                lpszShortPath = ( LPTSTR ) hb_xgrab( cchBuffer * sizeof( TCHAR ) );
          }
@@ -304,7 +304,7 @@ static void s_getPathName( _HB_GETPATHNAME getPathName )
       }
       else if( getPathName )
       {
-         length = getPathName( lpszLongPath, NULL, 0 );
+         length = getPathName( lpszLongPath, nullptr, 0 );
          hbwapi_SetLastError( GetLastError() );
       }
    }
@@ -339,7 +339,7 @@ HB_FUNC( WAPI_GETLONGPATHNAME )
          s_getPathNameAddr = ( _HB_GETPATHNAME )
             HB_WINAPI_GETPROCADDRESST( hModule, "GetLongPathName" );
       else
-         s_getPathNameAddr = NULL;
+         s_getPathNameAddr = nullptr;
 
       if( ! s_getPathNameAddr )
          s_getPathNameAddr = GetShortPathName;
@@ -359,7 +359,7 @@ HB_FUNC( WAPI_GETSYSTEMDIRECTORY )
 #if defined( HB_OS_WIN_CE )
    hb_retc_const( "\\Windows" );
 #else
-   UINT nLen = GetSystemDirectory( NULL, 0 );
+   UINT nLen = GetSystemDirectory( nullptr, 0 );
 
    if( nLen )
    {
@@ -385,7 +385,7 @@ HB_FUNC( WAPI_GETWINDOWSDIRECTORY )
 #if defined( HB_OS_WIN_CE )
    hb_retc_const( "\\Windows" );
 #else
-   UINT nLen = GetWindowsDirectory( NULL, 0 );
+   UINT nLen = GetWindowsDirectory( nullptr, 0 );
 
    if( nLen )
    {
@@ -433,11 +433,11 @@ HB_FUNC( WAPI_QUERYDOSDEVICE )
    LPTSTR lpTargetPath = ( LPTSTR ) hb_xgrab( TARGET_PATH_BUFFER_SIZE * sizeof( TCHAR ) );
    DWORD dwResult;
 
-   dwResult = QueryDosDevice( HB_PARSTR( 1, &hDeviceName, NULL ), lpTargetPath, TARGET_PATH_BUFFER_SIZE );
+   dwResult = QueryDosDevice( HB_PARSTR( 1, &hDeviceName, nullptr ), lpTargetPath, TARGET_PATH_BUFFER_SIZE );
    hbwapi_SetLastError( GetLastError() );
    if( dwResult )
    {
-      PHB_ITEM pArray = hb_itemArrayNew( 0 ), pItem = NULL;
+      PHB_ITEM pArray = hb_itemArrayNew( 0 ), pItem = nullptr;
       DWORD dwPos, dwStart;
 
       dwPos = dwStart = 0;
@@ -480,8 +480,8 @@ HB_FUNC( WAPI_GETVOLUMEINFORMATION )
 
    dwSerialNumber = dwMaxFileNameLen = dwFileSystemFlags = 0;
    dwVolNameSize = dwFSNameSize = 0;
-   lpVolNameBuf = lpFSNameBuf = NULL;
-   lpRootPath = HB_PARSTR( 1, &hRootPath, NULL );
+   lpVolNameBuf = lpFSNameBuf = nullptr;
+   lpRootPath = HB_PARSTR( 1, &hRootPath, nullptr );
    if( HB_ISBYREF( 2 ) )
    {
       dwVolNameSize = MAX_PATH + 1;
@@ -536,7 +536,7 @@ HB_FUNC( WAPI_COPYFILE )
       if( hModule )
          s_pCopyFile = ( _HB_COPYFILE ) HB_WINAPI_GETPROCADDRESST( hModule, "CopyFile" );
       else
-         s_pCopyFile = NULL;
+         s_pCopyFile = nullptr;
    }
 
    if( s_pCopyFile )
@@ -544,8 +544,8 @@ HB_FUNC( WAPI_COPYFILE )
       void * hSrc;
       void * hDst;
 
-      BOOL bResult = s_pCopyFile( HB_PARSTRDEF( 1, &hSrc, NULL ),
-                                  HB_PARSTRDEF( 2, &hDst, NULL ),
+      BOOL bResult = s_pCopyFile( HB_PARSTRDEF( 1, &hSrc, nullptr ),
+                                  HB_PARSTRDEF( 2, &hDst, nullptr ),
                                   hbwapi_par_BOOL( 3 ) );
 
       hbwapi_SetLastError( GetLastError() );

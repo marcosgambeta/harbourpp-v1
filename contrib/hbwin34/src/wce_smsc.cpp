@@ -57,7 +57,7 @@ HB_FUNC( WCE_SMSSENDMESSAGE ) /* cMessage, cNumber */
 {
 #ifdef __HB_COMPONENT_SUPPORTED__
    SMS_HANDLE smshHandle = 0;
-   HRESULT hr = SmsOpen( SMS_MSGTYPE_TEXT, SMS_MODE_SEND, &smshHandle, NULL ); /* try to open an SMS Handle */
+   HRESULT hr = SmsOpen( SMS_MSGTYPE_TEXT, SMS_MODE_SEND, &smshHandle, nullptr ); /* try to open an SMS Handle */
 
    /* Set default return value */
    hb_retnint( -1 );
@@ -92,9 +92,9 @@ HB_FUNC( WCE_SMSSENDMESSAGE ) /* cMessage, cNumber */
 
          /* Send the message, indicating success or failure */
          hb_retnint( SmsSendMessage( smshHandle,
-                                     NULL,
+                                     nullptr,
                                      &smsaDestination,
-                                     NULL,
+                                     nullptr,
                                      ( PBYTE ) sztMessage,
                                      nMessageLen * sizeof( TCHAR ),
                                      ( PBYTE ) &tpsd, 12,

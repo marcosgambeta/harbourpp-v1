@@ -64,9 +64,9 @@
 typedef BOOL      ( CALLBACK * PHB_AX_WININIT )( void );
 typedef HRESULT   ( CALLBACK * PHB_AX_GETCTRL )( HWND, IUnknown** );
 
-static HMODULE s_hLib = NULL;
+static HMODULE s_hLib = nullptr;
 
-static PHB_AX_GETCTRL s_pAtlAxGetControl = NULL;
+static PHB_AX_GETCTRL s_pAtlAxGetControl = nullptr;
 
 
 static void hb_errRT_OLE( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, HB_ERRCODE errOsCode, const char * szDescription, const char * szOperation )
@@ -93,11 +93,11 @@ static void hb_oleAxExit( void * cargo )
 
    if( s_hLib )
    {
-      s_pAtlAxGetControl = NULL;
+      s_pAtlAxGetControl = nullptr;
 
       FreeLibrary( s_hLib );
 
-      s_hLib = NULL;
+      s_hLib = nullptr;
    }
 }
 
@@ -105,14 +105,14 @@ HB_BOOL hb_oleAxInit( void )
 {
    hb_oleInit();
 
-   if( s_hLib == NULL )
+   if( s_hLib == nullptr )
    {
       PHB_AX_WININIT pAtlAxWinInit;
 
       s_hLib = hbwapi_LoadLibrarySystem( TEXT( "atl.dll" ) );
       if( ( HB_PTRUINT ) s_hLib <= 32 )
       {
-         s_hLib = NULL;
+         s_hLib = nullptr;
          return HB_FALSE;
       }
       pAtlAxWinInit      = ( PHB_AX_WININIT ) HB_WINAPI_GETPROCADDRESS( s_hLib, "AtlAxWinInit" );
@@ -121,7 +121,7 @@ HB_BOOL hb_oleAxInit( void )
       if( pAtlAxWinInit )
          ( *pAtlAxWinInit )();
 
-      hb_vmAtQuit( hb_oleAxExit, NULL );
+      hb_vmAtQuit( hb_oleAxExit, nullptr );
    }
    return HB_TRUE;
 }
@@ -135,8 +135,8 @@ HB_FUNC( WIN_AXINIT )
 
 PHB_ITEM hb_oleAxControlNew( PHB_ITEM pItem, HWND hWnd )
 {
-   IUnknown *  pUnk  = NULL;
-   IDispatch * pDisp = NULL;
+   IUnknown *  pUnk  = nullptr;
+   IDispatch * pDisp = nullptr;
 
    if( pItem )
       hb_itemClear( pItem );
@@ -163,7 +163,7 @@ PHB_ITEM hb_oleAxControlNew( PHB_ITEM pItem, HWND hWnd )
       hb_oleSetError( lOleError );
 
       if( lOleError != S_OK )
-         hb_errRT_OLE( EG_ARG, 1011, ( HB_ERRCODE ) lOleError, NULL, HB_ERR_FUNCNAME );
+         hb_errRT_OLE( EG_ARG, 1011, ( HB_ERRCODE ) lOleError, nullptr, HB_ERR_FUNCNAME );
    }
 
    return pItem;
@@ -175,7 +175,7 @@ HB_FUNC( __AXGETCONTROL )  /* ( hWnd ) --> pDisp */
    HWND hWnd = hbwapi_par_raw_HWND( 1 );
 
    if( ! hWnd )
-      hb_errRT_OLE( EG_ARG, 1012, 0, NULL, HB_ERR_FUNCNAME );
+      hb_errRT_OLE( EG_ARG, 1012, 0, nullptr, HB_ERR_FUNCNAME );
    else
       hb_oleAxControlNew( hb_stackReturnItem(), hWnd );
 }
@@ -183,7 +183,7 @@ HB_FUNC( __AXGETCONTROL )  /* ( hWnd ) --> pDisp */
 HB_FUNC( __AXDOVERB )  /* ( hWndAx, iVerb ) --> hResult */
 {
    HWND       hWnd = hbwapi_par_raw_HWND( 1 );
-   IUnknown * pUnk = NULL;
+   IUnknown * pUnk = nullptr;
    HRESULT    lOleError;
 
    if( ! hb_oleAxInit() || ! s_pAtlAxGetControl )
@@ -197,12 +197,12 @@ HB_FUNC( __AXDOVERB )  /* ( hWndAx, iVerb ) --> hResult */
 
    if( lOleError == S_OK )
    {
-      IOleObject * lpOleObject = NULL;
+      IOleObject * lpOleObject = nullptr;
 
       lOleError = HB_VTBL( pUnk )->QueryInterface( HB_THIS_( pUnk ) HB_ID_REF( IID_IOleObject ), ( void ** ) ( void * ) &lpOleObject );
       if( lOleError == S_OK )
       {
-         IOleClientSite * lpOleClientSite = NULL;
+         IOleClientSite * lpOleClientSite = nullptr;
 
          lOleError = HB_VTBL( lpOleObject )->GetClientSite( HB_THIS_( lpOleObject ) & lpOleClientSite );
          if( lOleError == S_OK )
@@ -263,7 +263,7 @@ static HRESULT STDMETHODCALLTYPE QueryInterface( IDispatch * lpThis, REFIID riid
       HB_VTBL( lpThis )->AddRef( HB_THIS( lpThis ) );
       return S_OK;
    }
-   *ppRet = NULL;
+   *ppRet = nullptr;
    return E_NOINTERFACE;
 }
 
@@ -283,13 +283,13 @@ static ULONG STDMETHODCALLTYPE Release( IDispatch * lpThis )
       if( pSink->pItemHandler )
       {
          hb_itemRelease( pSink->pItemHandler );
-         pSink->pItemHandler = NULL;
+         pSink->pItemHandler = nullptr;
       }
       if( pSink->pConnectionPoint )
       {
          HB_VTBL( pSink->pConnectionPoint )->Unadvise( HB_THIS_( pSink->pConnectionPoint ) pSink->dwCookie );
          HB_VTBL( pSink->pConnectionPoint )->Release( HB_THIS( pSink->pConnectionPoint ) );
-         pSink->pConnectionPoint = NULL;
+         pSink->pConnectionPoint = nullptr;
          pSink->dwCookie = 0;
       }
       hb_xfree( pSink );  /* TODO: GlobalAlloc()/GlobalFree() GMEM_FIXED ??? */
@@ -355,11 +355,11 @@ static HRESULT STDMETHODCALLTYPE Invoke( IDispatch * lpThis, DISPID dispid, REFI
       if( pAction && HB_IS_HASH( pAction ) )
       {
          pAction = hb_hashGetItemPtr( pAction, pKey, 0 );
-         pKey = NULL;
+         pKey = nullptr;
       }
 
-      if( pAction && hb_oleDispInvoke( NULL, pAction, pKey,
-                                       pParams, pVarResult, NULL,
+      if( pAction && hb_oleDispInvoke( nullptr, pAction, pKey,
+                                       pParams, pVarResult, nullptr,
                                        ( ( ISink * ) lpThis )->uiClass ) )
          hr = S_OK;
 
@@ -391,7 +391,7 @@ static char * GUID2String( GUID * pID )
    int         iLen;
 
    StringFromGUID2( pID, olestr, HB_SIZEOFARRAY( olestr ) );
-   iLen = WideCharToMultiByte( CP_ACP, 0, olestr, -1, strguid, sizeof( strguid ), NULL, NULL );
+   iLen = WideCharToMultiByte( CP_ACP, 0, olestr, -1, strguid, sizeof( strguid ), nullptr, nullptr );
    if( iLen )
       strguid[ iLen - 1 ] = 0;
    return strguid;
@@ -435,12 +435,12 @@ static HRESULT _get_default_sink( IDispatch * iDisp, const char * szEvent, IID *
       {
          HB_TRACE( HB_TR_DEBUG, ( "_get_default_sink() IProvideClassInfo OK" ) );
 
-         iTI = NULL;
+         iTI = nullptr;
 
          hr = HB_VTBL( iPCI )->GetClassInfo( HB_THIS_( iPCI ) & iTI );
          if( hr == S_OK )
          {
-            pTypeAttr = NULL;
+            pTypeAttr = nullptr;
 
             hr = HB_VTBL( iTI )->GetTypeAttr( HB_THIS_( iTI ) & pTypeAttr );
             if( hr == S_OK )
@@ -483,10 +483,10 @@ static HRESULT _get_default_sink( IDispatch * iDisp, const char * szEvent, IID *
    hr = HB_VTBL( iDisp )->GetTypeInfo( HB_THIS_( iDisp ) 0, LOCALE_SYSTEM_DEFAULT, &iTI );
    if( hr == S_OK )
    {
-      ITypeLib * iTL = NULL;
+      ITypeLib * iTL = nullptr;
       TYPEATTR * pTypeAttr2;
 
-      hr = HB_VTBL( iTI )->GetContainingTypeLib( HB_THIS_( iTI ) & iTL, NULL );
+      hr = HB_VTBL( iTI )->GetContainingTypeLib( HB_THIS_( iTI ) & iTL, nullptr );
       HB_VTBL( iTI )->Release( HB_THIS( iTI ) );
 
       if( hr == S_OK )
@@ -513,13 +513,13 @@ static HRESULT _get_default_sink( IDispatch * iDisp, const char * szEvent, IID *
                            {
                               BSTR bstr;
 
-                              hr = HB_VTBL( iTISink )->GetDocumentation( HB_THIS_( iTISink ) - 1, &bstr, NULL, NULL, NULL );
+                              hr = HB_VTBL( iTISink )->GetDocumentation( HB_THIS_( iTISink ) - 1, &bstr, nullptr, nullptr, nullptr );
                               if( hr == S_OK )
                               {
                                  char str[ 256 ];
                                  int  iLen;
 
-                                 iLen = WideCharToMultiByte( CP_ACP, 0, bstr, -1, str, sizeof( str ), NULL, NULL );
+                                 iLen = WideCharToMultiByte( CP_ACP, 0, bstr, -1, str, sizeof( str ), nullptr, nullptr );
                                  if( iLen > 0 )
                                  {
                                     str[ iLen - 1 ] = '\0';
@@ -543,7 +543,7 @@ static HRESULT _get_default_sink( IDispatch * iDisp, const char * szEvent, IID *
                               HB_VTBL( iTISink )->Release( HB_THIS( iTISink ) );
                            }
                         }
-                        else  /* szEvent == NULL */
+                        else  /* szEvent == nullptr */
                         {
                            hr = HB_VTBL( iTI )->GetImplTypeFlags( HB_THIS_( iTI ) j, &iFlags );
                            if( hr == S_OK && ( iFlags & IMPLTYPEFLAG_FDEFAULT ) && ( iFlags & IMPLTYPEFLAG_FSOURCE ) )
@@ -560,8 +560,8 @@ static HRESULT _get_default_sink( IDispatch * iDisp, const char * szEvent, IID *
                                     char str[ 256 ];
                                     int  iLen;
 
-                                    HB_VTBL( iTISink )->GetDocumentation( HB_THIS_( iTISink ) - 1, &bstr, NULL, NULL, NULL );
-                                    iLen = WideCharToMultiByte( CP_ACP, 0, bstr, -1, str, sizeof( str ), NULL, NULL );
+                                    HB_VTBL( iTISink )->GetDocumentation( HB_THIS_( iTISink ) - 1, &bstr, nullptr, nullptr, nullptr );
+                                    iLen = WideCharToMultiByte( CP_ACP, 0, bstr, -1, str, sizeof( str ), nullptr, nullptr );
                                     str[ iLen - 1 ] = '\0';
                                     HB_TRACE( HB_TR_DEBUG, ( "_get_default_sink() Method 3: iFlags=%d guid=%s class=%s", iFlags, GUID2String( &( pTypeAttr2->guid ) ), str ) );
 #endif
@@ -602,7 +602,7 @@ static void hb_sink_destruct( void * cargo )
       /* Unadvise() may activate pSink destructor so clear these
        * items as protection against recursive Unadvise() call.
        */
-      pSink->pConnectionPoint = NULL;
+      pSink->pConnectionPoint = nullptr;
       pSink->dwCookie = 0;
 
       HB_VTBL( pConnectionPoint )->Unadvise( HB_THIS_( pConnectionPoint ) dwCookie );
@@ -621,8 +621,8 @@ HB_FUNC( __AXREGISTERHANDLER )  /* ( pDisp, bHandler [, cIID] ) --> pSink */
 
       if( pItemBlock )
       {
-         IConnectionPointContainer* pCPC = NULL;
-         IConnectionPoint*          pCP = NULL;
+         IConnectionPointContainer* pCPC = nullptr;
+         IConnectionPoint*          pCP = nullptr;
          HRESULT                    lOleError;
          IID                        rriid;
          void*                      hCLSID;
@@ -633,7 +633,7 @@ HB_FUNC( __AXREGISTERHANDLER )  /* ( pDisp, bHandler [, cIID] ) --> pSink */
          szIID = hb_parc( 3 );
          if( szIID && szIID[ 0 ] == '{' )
          {
-            const wchar_t * wCLSID = hb_parstr_u16( 3, HB_CDP_ENDIAN_NATIVE, &hCLSID, NULL );
+            const wchar_t * wCLSID = hb_parstr_u16( 3, HB_CDP_ENDIAN_NATIVE, &hCLSID, nullptr );
             lOleError = CLSIDFromString( ( LPCOLESTR ) wCLSID, &rriid );
             hb_strfree( hCLSID );
          }
@@ -684,6 +684,6 @@ HB_FUNC( __AXREGISTERHANDLER )  /* ( pDisp, bHandler [, cIID] ) --> pSink */
             hb_ret();
       }
       else
-         hb_errRT_OLE( EG_ARG, 1015, 0, NULL, HB_ERR_FUNCNAME );
+         hb_errRT_OLE( EG_ARG, 1015, 0, nullptr, HB_ERR_FUNCNAME );
    }
 }

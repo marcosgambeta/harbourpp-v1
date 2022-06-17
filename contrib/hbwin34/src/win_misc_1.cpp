@@ -54,12 +54,12 @@
 
 HB_FUNC( WIN_LOADRESOURCE )
 {
-   HANDLE hInstance = NULL;
+   HANDLE hInstance = nullptr;
 
    /* Set default return value */
    hb_retc_null();
 
-   if( hb_winmainArgGet( &hInstance, NULL, NULL ) )
+   if( hb_winmainArgGet( &hInstance, nullptr, nullptr ) )
    {
       HRSRC hRes;
 
@@ -72,31 +72,31 @@ HB_FUNC( WIN_LOADRESOURCE )
       if( HB_ISNUM( 1 ) )
       {
          szName = MAKEINTRESOURCE( hbwapi_par_INT( 1 ) );
-         hName = NULL;
+         hName = nullptr;
       }
       else
-         szName = HB_PARSTRDEF( 1, &hName, NULL );
+         szName = HB_PARSTRDEF( 1, &hName, nullptr );
 
       if( HB_ISNUM( 2 ) )
       {
          szType = MAKEINTRESOURCE( hbwapi_par_INT( 2 ) );
-         hType = NULL;
+         hType = nullptr;
       }
       else
-         szType = HB_PARSTRDEF( 2, &hType, NULL );
+         szType = HB_PARSTRDEF( 2, &hType, nullptr );
 
       hRes = FindResource( ( HMODULE ) hInstance, szName, szType );
 
       if( hRes )
       {
-         HGLOBAL hMem = LoadResource( NULL, hRes );
+         HGLOBAL hMem = LoadResource( nullptr, hRes );
 
          if( hMem )
          {
             void * pMem = LockResource( hMem );
 
             if( pMem )
-               hb_retclen( ( char * ) pMem, SizeofResource( NULL, hRes ) );
+               hb_retclen( ( char * ) pMem, SizeofResource( nullptr, hRes ) );
          }
       }
 
@@ -129,7 +129,7 @@ HB_FUNC( WIN_ANSITOWIDE )
 {
    HB_SIZE nLen = hb_parclen( 1 );
    LPCSTR lpSrcMB = hb_parcx( 1 );
-   DWORD dwLength = MultiByteToWideChar( CP_ACP, 0, lpSrcMB, ( int ) nLen, NULL, 0 );
+   DWORD dwLength = MultiByteToWideChar( CP_ACP, 0, lpSrcMB, ( int ) nLen, nullptr, 0 );
    LPWSTR lpDstWide = ( LPWSTR ) hb_xgrab( ( dwLength + 1 ) * sizeof( wchar_t ) );
 
    MultiByteToWideChar( CP_ACP, 0, lpSrcMB, ( int ) nLen, lpDstWide, dwLength + 1 );
@@ -141,10 +141,10 @@ HB_FUNC( WIN_WIDETOANSI )
 {
    HB_SIZE nLen = hb_parclen( 1 );
    LPCWSTR lpSrcWide = ( LPCWSTR ) hb_parcx( 1 );
-   DWORD dwLength = WideCharToMultiByte( CP_ACP, 0, lpSrcWide, ( int ) nLen, NULL, 0, NULL, NULL );
+   DWORD dwLength = WideCharToMultiByte( CP_ACP, 0, lpSrcWide, ( int ) nLen, nullptr, 0, nullptr, nullptr );
    LPSTR lpDstMB = ( LPSTR ) hb_xgrab( dwLength + 1 );
 
-   WideCharToMultiByte( CP_ACP, 0, lpSrcWide, ( int ) nLen, lpDstMB, dwLength + 1, NULL, NULL );
+   WideCharToMultiByte( CP_ACP, 0, lpSrcWide, ( int ) nLen, lpDstMB, dwLength + 1, nullptr, nullptr );
 
    hb_retclen_buffer( lpDstMB, ( HB_SIZE ) dwLength );
 }
@@ -162,7 +162,7 @@ HB_FUNC( WIN_HINSTANCE )
 {
    HANDLE hInstance;
 
-   hb_winmainArgGet( &hInstance, NULL, NULL );
+   hb_winmainArgGet( &hInstance, nullptr, nullptr );
 
    hb_retptr( hInstance );
 }
@@ -171,7 +171,7 @@ HB_FUNC( WIN_HPREVINSTANCE )
 {
    HANDLE hPrevInstance;
 
-   hb_winmainArgGet( NULL, &hPrevInstance, NULL );
+   hb_winmainArgGet( nullptr, &hPrevInstance, nullptr );
 
    hb_retptr( hPrevInstance );
 }
@@ -180,14 +180,14 @@ HB_FUNC( WIN_NCMDSHOW )
 {
    int nCmdShow;
 
-   hb_winmainArgGet( NULL, NULL, &nCmdShow );
+   hb_winmainArgGet( nullptr, nullptr, &nCmdShow );
 
    hb_retni( nCmdShow );
 }
 
 HB_FUNC( WIN_SYSREFRESH )
 {
-   HANDLE hDummyEvent = CreateEvent( NULL, FALSE, FALSE, NULL );
+   HANDLE hDummyEvent = CreateEvent( nullptr, FALSE, FALSE, nullptr );
 
    if( hDummyEvent )
    {
@@ -200,7 +200,7 @@ HB_FUNC( WIN_SYSREFRESH )
       {
          MSG msg;
 
-         while( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
+         while( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) )
          {
             switch( msg.message )
             {

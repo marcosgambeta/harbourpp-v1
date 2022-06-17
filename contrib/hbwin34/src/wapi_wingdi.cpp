@@ -58,8 +58,8 @@
 
 static void s_hb_hashSetCItemNL( PHB_ITEM pHash, const char * pszKey, long v )
 {
-   PHB_ITEM pKey = hb_itemPutC( NULL, pszKey );
-   PHB_ITEM pValue = hb_itemPutNL( NULL, v );
+   PHB_ITEM pKey = hb_itemPutC( nullptr, pszKey );
+   PHB_ITEM pValue = hb_itemPutNL( nullptr, v );
 
    hb_hashAdd( pHash, pKey, pValue );
 
@@ -69,8 +69,8 @@ static void s_hb_hashSetCItemNL( PHB_ITEM pHash, const char * pszKey, long v )
 
 static void s_hb_hashSetCItemC( PHB_ITEM pHash, const char * pszKey, const TCHAR * v, HB_SIZE l )
 {
-   PHB_ITEM pKey = hb_itemPutC( NULL, pszKey );
-   PHB_ITEM pValue = HB_ITEMPUTSTRLEN( NULL, v, l );
+   PHB_ITEM pKey = hb_itemPutC( nullptr, pszKey );
+   PHB_ITEM pValue = HB_ITEMPUTSTRLEN( nullptr, v, l );
 
    hb_hashAdd( pHash, pKey, pValue );
 
@@ -101,7 +101,7 @@ POINT * hbwapi_par_POINT( POINT * p, int iParam, HB_BOOL bMandatory )
    else if( bMandatory )
       return p;
 
-   return NULL;
+   return nullptr;
 }
 
 void hbwapi_stor_SIZE( const SIZE * p, int iParam )
@@ -187,7 +187,7 @@ RECT * hbwapi_par_RECT( RECT * p, int iParam, HB_BOOL bMandatory )
    else if( bMandatory )
       return p;
 
-   return NULL;
+   return nullptr;
 }
 
 void hbwapi_stor_RECT( const RECT * p, int iParam )
@@ -291,7 +291,7 @@ LOGFONT * hbwapi_par_LOGFONT( LOGFONT * p, int iParam, HB_BOOL bMandatory )
    else if( bMandatory )
       return p;
 
-   return NULL;
+   return nullptr;
 }
 
 LOGBRUSH * hbwapi_par_LOGBRUSH( LOGBRUSH * p, int iParam )
@@ -377,9 +377,9 @@ DOCINFO * hbwapi_par_DOCINFO( DOCINFO * p, int iParam, HB_BOOL bMandatory, void 
 
    if( pStru )
    {
-      p->lpszDocName  = HB_ITEMGETSTR( hb_hashGetCItemPtr( pStru, "lpszDocName"  ), &h[ 0 ], NULL );
-      p->lpszOutput   = HB_ITEMGETSTR( hb_hashGetCItemPtr( pStru, "lpszOutput"   ), &h[ 1 ], NULL );
-      p->lpszDatatype = HB_ITEMGETSTR( hb_hashGetCItemPtr( pStru, "lpszDatatype" ), &h[ 2 ], NULL );
+      p->lpszDocName  = HB_ITEMGETSTR( hb_hashGetCItemPtr( pStru, "lpszDocName"  ), &h[ 0 ], nullptr );
+      p->lpszOutput   = HB_ITEMGETSTR( hb_hashGetCItemPtr( pStru, "lpszOutput"   ), &h[ 1 ], nullptr );
+      p->lpszDatatype = HB_ITEMGETSTR( hb_hashGetCItemPtr( pStru, "lpszDatatype" ), &h[ 2 ], nullptr );
       p->fwType       = ( DWORD ) hb_itemGetNL( hb_hashGetCItemPtr( pStru, "fwType" ) );
 
       return p;
@@ -388,9 +388,9 @@ DOCINFO * hbwapi_par_DOCINFO( DOCINFO * p, int iParam, HB_BOOL bMandatory, void 
       return p;
 
    hb_xfree( h );
-   *ph = NULL;
+   *ph = nullptr;
 
-   return NULL;
+   return nullptr;
 }
 
 void hbwapi_strfree_DOCINFO( void ** h )
@@ -408,13 +408,13 @@ HB_FUNC( __WAPI_DEVMODE_NEW )
 #if ! defined( HB_OS_WIN_CE )
    HANDLE hPrinter;
    void * hDeviceName;
-   LPCTSTR lpDeviceName = HB_PARSTR( 1, &hDeviceName, NULL );
+   LPCTSTR lpDeviceName = HB_PARSTR( 1, &hDeviceName, nullptr );
 
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 
-   if( OpenPrinter( ( LPTSTR ) HB_UNCONST( lpDeviceName ), &hPrinter, NULL ) )
+   if( OpenPrinter( ( LPTSTR ) HB_UNCONST( lpDeviceName ), &hPrinter, nullptr ) )
    {
-      LONG lSize = DocumentProperties( 0, hPrinter, ( LPTSTR ) HB_UNCONST( lpDeviceName ), NULL, NULL, 0 );
+      LONG lSize = DocumentProperties( 0, hPrinter, ( LPTSTR ) HB_UNCONST( lpDeviceName ), nullptr, nullptr, 0 );
 
       if( lSize > 0 )
       {
@@ -431,7 +431,7 @@ HB_FUNC( __WAPI_DEVMODE_NEW )
 
    hb_strfree( hDeviceName );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 
@@ -465,7 +465,7 @@ HB_FUNC( __WAPI_DEVMODE_SET )
       if( hb_hashGetCItemPtr( pStru, "dmDuplex"        ) ) pDevMode->dmFields |= DM_DUPLEX;
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
 }
 
@@ -488,7 +488,7 @@ HB_FUNC( __WAPI_DEVMODE_GET )
       s_hb_hashSetCItemNL( pStru, "dmDuplex"       , pDevMode->dmDuplex        );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #endif
 }
 
@@ -498,9 +498,9 @@ HB_FUNC( WAPI_CREATEDC )
    void * hDevice;
    void * hOutput;
 
-   hbwapi_ret_HDC( CreateDC( HB_PARSTRDEF( 1, &hDriver, NULL ),
-                             HB_PARSTRDEF( 2, &hDevice, NULL ),
-                             HB_PARSTR( 3, &hOutput, NULL ),
+   hbwapi_ret_HDC( CreateDC( HB_PARSTRDEF( 1, &hDriver, nullptr ),
+                             HB_PARSTRDEF( 2, &hDevice, nullptr ),
+                             HB_PARSTR( 3, &hOutput, nullptr ),
                              hbwapi_par_PDEVMODE( 4 ) ) );
 
    hb_strfree( hDriver );
@@ -517,7 +517,7 @@ HB_FUNC( WAPI_RESETDC )
    if( hDC )
       hb_retl( ResetDC( hDC, pDEVMODE ) == hDC );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
    hb_retl( HB_FALSE );
 #endif
@@ -526,7 +526,7 @@ HB_FUNC( WAPI_RESETDC )
 HB_FUNC( WAPI_STARTDOC )
 {
    HDC hDC = hbwapi_par_HDC( 1 );
-   void ** hDOCINFO = NULL;
+   void ** hDOCINFO = nullptr;
    DOCINFO di;
 
    if( hDC && hbwapi_par_DOCINFO( &di, 2, HB_FALSE, &hDOCINFO ) )
@@ -537,7 +537,7 @@ HB_FUNC( WAPI_STARTDOC )
       hb_xfree( hDOCINFO );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_ENDDOC )
@@ -547,7 +547,7 @@ HB_FUNC( WAPI_ENDDOC )
    if( hDC )
       hb_retni( EndDoc( hDC ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_ABORTDOC )
@@ -557,7 +557,7 @@ HB_FUNC( WAPI_ABORTDOC )
    if( hDC )
       hb_retni( AbortDoc( hDC ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_STARTPAGE )
@@ -567,7 +567,7 @@ HB_FUNC( WAPI_STARTPAGE )
    if( hDC )
       hb_retni( StartPage( hDC ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_ENDPAGE )
@@ -577,7 +577,7 @@ HB_FUNC( WAPI_ENDPAGE )
    if( hDC )
       hb_retni( EndPage( hDC ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_SETBKMODE )
@@ -587,7 +587,7 @@ HB_FUNC( WAPI_SETBKMODE )
    if( hDC )
       hb_retni( SetBkMode( hDC, hb_parni( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_GETBKMODE )
@@ -597,7 +597,7 @@ HB_FUNC( WAPI_GETBKMODE )
    if( hDC )
       hb_retni( GetBkMode( hDC ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_GETDEVICECAPS )
@@ -607,7 +607,7 @@ HB_FUNC( WAPI_GETDEVICECAPS )
    if( hDC )
       hb_retni( GetDeviceCaps( hDC, hb_parni( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_SETMAPMODE )
@@ -618,7 +618,7 @@ HB_FUNC( WAPI_SETMAPMODE )
    if( hDC )
       hb_retni( SetMapMode( hDC, hb_parni( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
    hb_retni( 0 );
 #endif
@@ -632,7 +632,7 @@ HB_FUNC( WAPI_GETMAPMODE )
    if( hDC )
       hb_retni( GetMapMode( hDC ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 #else
    hb_retni( 0 );
 #endif
@@ -645,7 +645,7 @@ HB_FUNC( WAPI_SETTEXTALIGN )
    if( hDC )
       hb_retni( ( int ) SetTextAlign( hDC, hbwapi_par_UINT( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_GETTEXTALIGN )
@@ -655,7 +655,7 @@ HB_FUNC( WAPI_GETTEXTALIGN )
    if( hDC )
       hb_retni( ( int ) GetTextAlign( hDC ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_GETTEXTEXTENTPOINT32 )
@@ -695,16 +695,16 @@ HB_FUNC( WAPI_TEXTOUT )
                                 hb_parni( 2 ) /* iRow */,
                                 hb_parni( 3 ) /* iCol */,
                                 0,
-                                NULL,
+                                nullptr,
                                 lpData,
                                 ( UINT ) nDataLen,
-                                NULL ) );
+                                nullptr ) );
 #endif
 
       hb_strfree( hData );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_EXTTEXTOUT )
@@ -738,7 +738,7 @@ HB_FUNC( WAPI_EXTTEXTOUT )
          }
       }
       else
-         lpFontWidths = NULL;
+         lpFontWidths = nullptr;
 
       hbwapi_ret_L( ExtTextOut( hDC,
                                 hb_parni( 2 ) /* iRow */,
@@ -755,7 +755,7 @@ HB_FUNC( WAPI_EXTTEXTOUT )
       hb_strfree( hData );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_SETTEXTCOLOR )
@@ -765,7 +765,7 @@ HB_FUNC( WAPI_SETTEXTCOLOR )
    if( hDC )
       hbwapi_ret_COLORREF( SetTextColor( hDC, hbwapi_par_COLORREF( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_GETTEXTCOLOR )
@@ -775,7 +775,7 @@ HB_FUNC( WAPI_GETTEXTCOLOR )
    if( hDC )
       hbwapi_ret_COLORREF( GetTextColor( hDC ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_GETTEXTFACE )
@@ -791,7 +791,7 @@ HB_FUNC( WAPI_GETTEXTFACE )
       HB_RETSTR( tszFontName );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_SETBKCOLOR )
@@ -801,7 +801,7 @@ HB_FUNC( WAPI_SETBKCOLOR )
    if( hDC )
       hbwapi_ret_COLORREF( SetBkColor( hDC, hbwapi_par_COLORREF( 2 ) ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_GETBKCOLOR )
@@ -811,7 +811,7 @@ HB_FUNC( WAPI_GETBKCOLOR )
    if( hDC )
       hbwapi_ret_COLORREF( GetBkColor( hDC ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_CREATEPEN )
@@ -837,7 +837,7 @@ HB_FUNC( WAPI_CREATEHATCHBRUSH )
    hbwapi_ret_HBRUSH( CreateHatchBrush( hb_parni( 1 ) /* fnStyle */,
                                         hbwapi_par_COLORREF( 2 ) /* crColor */ ) );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 
@@ -870,11 +870,11 @@ HB_FUNC( WAPI_CREATEFONT )
                                  ( DWORD ) hb_parnldef( 11, CLIP_DEFAULT_PRECIS ) /* fdwClipPrecision */,
                                  ( DWORD ) hb_parnldef( 12, DEFAULT_QUALITY ) /* fdwQuality */,
                                  ( DWORD ) hb_parnldef( 13, DEFAULT_PITCH | FF_DONTCARE ) /* fdwPitchAndFamily */,
-                                 HB_PARSTR( 14, &hFontFace, NULL ) /* lpszFace */ ) );
+                                 HB_PARSTR( 14, &hFontFace, nullptr ) /* lpszFace */ ) );
 
    hb_strfree( hFontFace );
 #else
-   hb_retptr( NULL );
+   hb_retptr( nullptr );
 #endif
 }
 
@@ -885,7 +885,7 @@ HB_FUNC( WAPI_CREATEFONTINDIRECT )
    if( hbwapi_par_LOGFONT( &lf, 1, HB_TRUE ) )
       hbwapi_ret_HFONT( CreateFontIndirect( &lf ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_SELECTOBJECT )
@@ -913,10 +913,10 @@ HB_FUNC( WAPI_SELECTOBJECT )
          hb_retnint( ( HB_PTRUINT ) SelectObject( hDC, h ) );
       else
 #endif
-         hb_retl( SelectObject( hDC, h ) != NULL );  /* NOTE: We don't return a raw pointer. */
+         hb_retl( SelectObject( hDC, h ) != nullptr );  /* NOTE: We don't return a raw pointer. */
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_MOVETOEX )
@@ -934,10 +934,10 @@ HB_FUNC( WAPI_MOVETOEX )
          hbwapi_stor_POINT( &xy, 4 );
       }
       else
-         hbwapi_ret_L( MoveToEx( hDC, hb_parni( 2 ) /* X */, hb_parni( 3 ) /* Y */, NULL ) );
+         hbwapi_ret_L( MoveToEx( hDC, hb_parni( 2 ) /* X */, hb_parni( 3 ) /* Y */, nullptr ) );
    }
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_LINETO )
@@ -947,7 +947,7 @@ HB_FUNC( WAPI_LINETO )
    if( hDC )
       hbwapi_ret_L( LineTo( hDC, hb_parni( 2 ) /* XEnd */, hb_parni( 3 ) /* YEnd */ ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_FILLRECT )
@@ -959,7 +959,7 @@ HB_FUNC( WAPI_FILLRECT )
    if( hDC && hbwapi_par_RECT( &rc, 2, HB_TRUE ) && hBrush )
       hb_retni( FillRect( hDC, &rc, hBrush ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_ROUNDRECT )
@@ -975,7 +975,7 @@ HB_FUNC( WAPI_ROUNDRECT )
                                hb_parni( 6 ) /* iWidth */,
                                hb_parni( 7 ) /* iHeight */ ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_RECTANGLE )
@@ -989,7 +989,7 @@ HB_FUNC( WAPI_RECTANGLE )
                                hb_parni( 4 ) /* x2 */,
                                hb_parni( 5 ) /* y2 */ ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_ARC )
@@ -1011,7 +1011,7 @@ HB_FUNC( WAPI_ARC )
                          hb_parni( 9 ) /* nYEndArc */ ) );
 #endif
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_ELLIPSE )
@@ -1025,7 +1025,7 @@ HB_FUNC( WAPI_ELLIPSE )
                              hb_parni( 4 ) /* nRightRect */,
                              hb_parni( 5 ) /* nBottomRect */ ) );
    else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+      hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( WAPI_SETDCBRUSHCOLOR )
@@ -1045,7 +1045,7 @@ HB_FUNC( WAPI_SETDCBRUSHCOLOR )
             s_pSetDCBrushColor = ( _HB_SETDCBRUSHCOLOR ) HB_WINAPI_GETPROCADDRESST( hModule,
                "SetDCBrushColor" );
          else
-            s_pSetDCBrushColor = NULL;
+            s_pSetDCBrushColor = nullptr;
       }
 
       if( s_pSetDCBrushColor )
@@ -1073,7 +1073,7 @@ HB_FUNC( WAPI_SETDCPENCOLOR )
             s_pSetDCPenColor = ( _HB_SETDCPENCOLOR ) HB_WINAPI_GETPROCADDRESST( hModule,
                "SetDCPenColor" );
          else
-            s_pSetDCPenColor = NULL;
+            s_pSetDCPenColor = nullptr;
       }
 
       if( s_pSetDCPenColor )

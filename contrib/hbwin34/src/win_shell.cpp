@@ -152,7 +152,7 @@ typedef struct
 static LPTSTR s_StringList( int iParam )
 {
    PHB_ITEM pItem = hb_param( iParam, HB_IT_ARRAY | HB_IT_STRING );
-   LPTSTR lpStr = NULL;
+   LPTSTR lpStr = nullptr;
 
    if( pItem )
    {
@@ -169,7 +169,7 @@ static LPTSTR s_StringList( int iParam )
             pArrItem = hb_arrayGetItemPtr( pItem, n + 1 );
             if( HB_IS_STRING( pArrItem ) )
             {
-               n1 = HB_ITEMCOPYSTR( pArrItem, NULL, 0 );
+               n1 = HB_ITEMCOPYSTR( pArrItem, nullptr, 0 );
                if( n1 )
                   nLen += n1 + 1;
             }
@@ -194,7 +194,7 @@ static LPTSTR s_StringList( int iParam )
       }
       else
       {
-         nLen = HB_ITEMCOPYSTR( pItem, NULL, 0 );
+         nLen = HB_ITEMCOPYSTR( pItem, nullptr, 0 );
          if( nLen )
          {
             lpStr = ( LPTSTR ) hb_xgrab( ( nLen + 2 ) * sizeof( TCHAR ) );
@@ -233,8 +233,8 @@ HB_FUNC( WIN_SHFILEOPERATION )
    fop.pTo                   = ( LPCTSTR ) pTo;
    fop.fFlags                = ( FILEOP_FLAGS ) hb_parnl( 5 );
    fop.fAnyOperationsAborted = FALSE;
-   fop.hNameMappings         = NULL;
-   fop.lpszProgressTitle     = HB_PARSTR( 8, &hProgressTitle, NULL );
+   fop.hNameMappings         = nullptr;
+   fop.lpszProgressTitle     = HB_PARSTR( 8, &hProgressTitle, nullptr );
 
    iRetVal = SHFileOperation( &fop );
    hbwapi_SetLastError( GetLastError() );
@@ -259,7 +259,7 @@ HB_FUNC( WIN_SHFILEOPERATION )
       {
          if( pArray )
          {
-            PHB_ITEM pTempItem = hb_itemNew( NULL );
+            PHB_ITEM pTempItem = hb_itemNew( nullptr );
             UINT tmp;
             LPSHNAMEMAPPING pmap = hm->lpSHNameMapping;
             HB_BOOL bIsWin9x = hb_iswin9x();

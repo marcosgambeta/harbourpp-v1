@@ -60,7 +60,7 @@
 #if ! defined( HB_OS_WIN_CE )
 static HB_BOOL hb_IsLegacyDevice( const char * pszPrinterName )
 {
-   static const char * s_pszPrnDev[] = { "lpt1", "lpt2", "lpt3", "lpt4", "lpt5", "lpt6", "com1", "com2", "com3", "com4", NULL };
+   static const char * s_pszPrnDev[] = { "lpt1", "lpt2", "lpt3", "lpt4", "lpt5", "lpt6", "com1", "com2", "com3", "com4", nullptr };
    int i;
 
    for( i = 0; s_pszPrnDev[ i ]; ++i )
@@ -87,15 +87,15 @@ HB_FUNC( WIN_PRINTEREXISTS )
       {
          DWORD dwNeeded = 0, dwReturned = 0;
 
-         EnumPrinters( _ENUMPRN_FLAGS_, NULL, 5, NULL, 0, &dwNeeded, &dwReturned );
+         EnumPrinters( _ENUMPRN_FLAGS_, nullptr, 5, nullptr, 0, &dwNeeded, &dwReturned );
          if( dwNeeded )
          {
             PRINTER_INFO_5 * pPrinterEnumBak;
             PRINTER_INFO_5 * pPrinterEnum = pPrinterEnumBak = ( PRINTER_INFO_5 * ) hb_xgrabz( dwNeeded );
 
-            if( EnumPrinters( _ENUMPRN_FLAGS_, NULL, 5, ( LPBYTE ) pPrinterEnum, dwNeeded, &dwNeeded, &dwReturned ) )
+            if( EnumPrinters( _ENUMPRN_FLAGS_, nullptr, 5, ( LPBYTE ) pPrinterEnum, dwNeeded, &dwNeeded, &dwReturned ) )
             {
-               PHB_ITEM pTemp = hb_itemNew( NULL );
+               PHB_ITEM pTemp = hb_itemNew( nullptr );
                DWORD i;
 
                for( i = 0; ! bResult && i < dwReturned; ++i, ++pPrinterEnum )
@@ -121,7 +121,7 @@ static void hb_GetDefaultPrinter( PHB_ITEM pPrinterName )
 #if ! defined( HB_OS_WIN_CE )
    HB_BOOL bResult = HB_FALSE;
 
-   hb_itemPutC( pPrinterName, NULL );
+   hb_itemPutC( pPrinterName, nullptr );
 
    if( hb_iswin2k() )  /* Windows 2000 or later */
    {
@@ -176,29 +176,29 @@ static void hb_GetDefaultPrinter( PHB_ITEM pPrinterName )
          From the SDK technical reference for EnumPrinters();
             If Level is 2 or 5, Name is a pointer to a null-terminated string that specifies
             the name of a server whose printers are to be enumerated.
-            If this string is NULL, then the function enumerates the printers installed on the local machine.
+            If this string is nullptr, then the function enumerates the printers installed on the local machine.
        */
       DWORD dwNeeded = 0, dwReturned = 0;
 
-      EnumPrinters( PRINTER_ENUM_DEFAULT, NULL, 2, NULL, 0, &dwNeeded, &dwReturned );
+      EnumPrinters( PRINTER_ENUM_DEFAULT, nullptr, 2, nullptr, 0, &dwNeeded, &dwReturned );
       if( dwNeeded )
       {
          PRINTER_INFO_2 * pPrinterInfo = ( PRINTER_INFO_2 * ) hb_xgrabz( dwNeeded );
 
-         if( EnumPrinters( PRINTER_ENUM_DEFAULT, NULL, 2, ( LPBYTE ) pPrinterInfo, dwNeeded, &dwNeeded, &dwReturned ) && dwReturned )
+         if( EnumPrinters( PRINTER_ENUM_DEFAULT, nullptr, 2, ( LPBYTE ) pPrinterInfo, dwNeeded, &dwNeeded, &dwReturned ) && dwReturned )
             HB_ITEMPUTSTR( pPrinterName, pPrinterInfo->pPrinterName );
 
          hb_xfree( pPrinterInfo );
       }
    }
 #else
-   hb_itemPutC( pPrinterName, NULL );
+   hb_itemPutC( pPrinterName, nullptr );
 #endif
 }
 
 HB_FUNC( WIN_PRINTERGETDEFAULT )
 {
-   PHB_ITEM pPrinterName = hb_itemNew( NULL );
+   PHB_ITEM pPrinterName = hb_itemNew( nullptr );
 
    hb_GetDefaultPrinter( pPrinterName );
 
@@ -211,7 +211,7 @@ static HB_BOOL hb_GetJobs( HANDLE hPrinter, JOB_INFO_2 ** ppJobInfo, DWORD * pdw
    HB_BOOL bResult = HB_FALSE;
    DWORD dwNeeded = 0;
 
-   GetPrinter( hPrinter, 2, NULL, 0, &dwNeeded );
+   GetPrinter( hPrinter, 2, nullptr, 0, &dwNeeded );
    if( dwNeeded )
    {
       PRINTER_INFO_2 * pPrinterInfo = ( PRINTER_INFO_2 * ) hb_xgrabz( dwNeeded );
@@ -221,7 +221,7 @@ static HB_BOOL hb_GetJobs( HANDLE hPrinter, JOB_INFO_2 ** ppJobInfo, DWORD * pdw
       {
          DWORD dwReturned = 0;
 
-         EnumJobs( hPrinter, 0, pPrinterInfo->cJobs, 2, NULL, 0, &dwNeeded, &dwReturned );
+         EnumJobs( hPrinter, 0, pPrinterInfo->cJobs, 2, nullptr, 0, &dwNeeded, &dwReturned );
          if( dwNeeded )
          {
             JOB_INFO_2 * pJobInfo = ( JOB_INFO_2 * ) hb_xgrabz( dwNeeded );
@@ -256,14 +256,14 @@ HB_FUNC( WIN_PRINTERSTATUS )
    if( hb_itemGetCLen( pPrinterName ) > 0 )
    {
       void * hPrinterName;
-      LPCTSTR lpPrinterName = HB_ITEMGETSTR( pPrinterName, &hPrinterName, NULL );
+      LPCTSTR lpPrinterName = HB_ITEMGETSTR( pPrinterName, &hPrinterName, nullptr );
       HANDLE hPrinter;
 
-      if( OpenPrinter( ( LPTSTR ) HB_UNCONST( lpPrinterName ), &hPrinter, NULL ) )
+      if( OpenPrinter( ( LPTSTR ) HB_UNCONST( lpPrinterName ), &hPrinter, nullptr ) )
       {
          DWORD dwNeeded = 0;
 
-         GetPrinter( hPrinter, 2, NULL, 0, &dwNeeded );
+         GetPrinter( hPrinter, 2, nullptr, 0, &dwNeeded );
          if( dwNeeded )
          {
             PRINTER_INFO_2 * pPrinterInfo = ( PRINTER_INFO_2 * ) hb_xgrabz( dwNeeded );
@@ -276,7 +276,7 @@ HB_FUNC( WIN_PRINTERSTATUS )
 
          if( nStatus == 0 )
          {
-            JOB_INFO_2 * pJobs = NULL;
+            JOB_INFO_2 * pJobs = nullptr;
             DWORD dwJobs = 0;
 
             if( hb_GetJobs( hPrinter, &pJobs, &dwJobs ) )
@@ -320,18 +320,18 @@ HB_FUNC( WIN_PRINTERPORTTONAME )
    {
       DWORD dwNeeded = 0, dwReturned = 0;
 
-      EnumPrinters( _ENUMPRN_FLAGS_, NULL, 5, NULL, 0, &dwNeeded, &dwReturned );
+      EnumPrinters( _ENUMPRN_FLAGS_, nullptr, 5, nullptr, 0, &dwNeeded, &dwReturned );
       if( dwNeeded )
       {
          PRINTER_INFO_5 * pPrinterEnumBak;
          PRINTER_INFO_5 * pPrinterEnum = pPrinterEnumBak = ( PRINTER_INFO_5 * ) hb_xgrabz( dwNeeded );
 
-         if( EnumPrinters( _ENUMPRN_FLAGS_, NULL, 5, ( LPBYTE ) pPrinterEnum, dwNeeded, &dwNeeded, &dwReturned ) )
+         if( EnumPrinters( _ENUMPRN_FLAGS_, nullptr, 5, ( LPBYTE ) pPrinterEnum, dwNeeded, &dwNeeded, &dwReturned ) )
          {
             const char * pszPortNameFind = hb_parc( 1 );
             HB_BOOL bSubStr = hb_parl( 2 );
             HB_BOOL bFound = HB_FALSE;
-            PHB_ITEM pTemp = hb_itemNew( NULL );
+            PHB_ITEM pTemp = hb_itemNew( nullptr );
             DWORD i;
 
             for( i = 0; i < dwReturned && ! bFound; ++i, ++pPrinterEnum )
@@ -369,25 +369,25 @@ HB_FUNC( WIN_PRINTFILERAW )
 
       HANDLE hPrinter;
       void * hDeviceName;
-      LPCTSTR lpDeviceName = HB_PARSTR( 1, &hDeviceName, NULL );
+      LPCTSTR lpDeviceName = HB_PARSTR( 1, &hDeviceName, nullptr );
 
-      if( OpenPrinter( ( LPTSTR ) HB_UNCONST( lpDeviceName ), &hPrinter, NULL ) != 0 )
+      if( OpenPrinter( ( LPTSTR ) HB_UNCONST( lpDeviceName ), &hPrinter, nullptr ) != 0 )
       {
          void * hDocName;
          DOC_INFO_1 DocInfo;
 
-         DocInfo.pDocName = ( LPTSTR ) HB_UNCONST( HB_PARSTR( HB_ISCHAR( 3 ) ? 3 : 2, &hDocName, NULL ) );
-         DocInfo.pOutputFile = NULL;
+         DocInfo.pDocName = ( LPTSTR ) HB_UNCONST( HB_PARSTR( HB_ISCHAR( 3 ) ? 3 : 2, &hDocName, nullptr ) );
+         DocInfo.pOutputFile = nullptr;
          DocInfo.pDatatype = ( LPTSTR ) TEXT( "RAW" );
 
          if( StartDocPrinter( hPrinter, 1, ( LPBYTE ) &DocInfo ) != 0 )
          {
             if( StartPagePrinter( hPrinter ) != 0 )
             {
-               PHB_FILE pFile = hb_fileExtOpen( pszFileName, NULL,
+               PHB_FILE pFile = hb_fileExtOpen( pszFileName, nullptr,
                                                 FO_READ | FO_SHARED | FO_PRIVATE |
-                                                FXO_SHARELOCK, NULL, NULL );
-               if( pFile != NULL )
+                                                FXO_SHARELOCK, nullptr, nullptr );
+               if( pFile != nullptr )
                {
                   HB_BYTE * pbyBuffer = ( HB_BYTE * ) hb_xgrab( HB_PRINT_BUFFER_SIZE );
                   HB_SIZE nRead;
@@ -465,17 +465,17 @@ HB_FUNC( WIN_PRINTDATARAW )
    {
       HANDLE hPrinter;
       void * hDeviceName;
-      LPCTSTR lpDeviceName = HB_PARSTR( 1, &hDeviceName, NULL );
+      LPCTSTR lpDeviceName = HB_PARSTR( 1, &hDeviceName, nullptr );
 
-      if( OpenPrinter( ( LPTSTR ) HB_UNCONST( lpDeviceName ), &hPrinter, NULL ) != 0 )
+      if( OpenPrinter( ( LPTSTR ) HB_UNCONST( lpDeviceName ), &hPrinter, nullptr ) != 0 )
       {
          void * hDocName;
          DOC_INFO_1 DocInfo;
 
-         DocInfo.pDocName = ( LPTSTR ) HB_UNCONST( HB_PARSTR( 3, &hDocName, NULL ) );
-         DocInfo.pOutputFile = NULL;
+         DocInfo.pDocName = ( LPTSTR ) HB_UNCONST( HB_PARSTR( 3, &hDocName, nullptr ) );
+         DocInfo.pOutputFile = nullptr;
          DocInfo.pDatatype = ( LPTSTR ) TEXT( "RAW" );
-         if( DocInfo.pDocName == NULL )
+         if( DocInfo.pDocName == nullptr )
             DocInfo.pDocName = DocInfo.pDatatype;
 
          if( StartDocPrinter( hPrinter, 1, ( LPBYTE ) &DocInfo ) != 0 )
@@ -534,15 +534,15 @@ HB_FUNC( WIN_PRINTERLIST )
    HB_BOOL bLocalPrintersOnly = hb_parl( 2 );
    DWORD dwNeeded = 0, dwReturned = 0;
 
-   EnumPrinters( _ENUMPRN_FLAGS_, NULL, 5, NULL, 0, &dwNeeded, &dwReturned );
+   EnumPrinters( _ENUMPRN_FLAGS_, nullptr, 5, nullptr, 0, &dwNeeded, &dwReturned );
    if( dwNeeded )
    {
       PRINTER_INFO_5 * pPrinterEnumBak;
       PRINTER_INFO_5 * pPrinterEnum = pPrinterEnumBak = ( PRINTER_INFO_5 * ) hb_xgrabz( dwNeeded );
 
-      if( EnumPrinters( _ENUMPRN_FLAGS_, NULL, 5, ( LPBYTE ) pPrinterEnum, dwNeeded, &dwNeeded, &dwReturned ) )
+      if( EnumPrinters( _ENUMPRN_FLAGS_, nullptr, 5, ( LPBYTE ) pPrinterEnum, dwNeeded, &dwNeeded, &dwReturned ) )
       {
-         PHB_ITEM pTempItem = hb_itemNew( NULL );
+         PHB_ITEM pTempItem = hb_itemNew( nullptr );
          DWORD i;
 
          for( i = 0; i < dwReturned; ++i, ++pPrinterEnum )
@@ -555,9 +555,9 @@ HB_FUNC( WIN_PRINTERLIST )
                {
                   HANDLE hPrinter;
 
-                  if( OpenPrinter( pPrinterEnum->pPrinterName, &hPrinter, NULL ) )
+                  if( OpenPrinter( pPrinterEnum->pPrinterName, &hPrinter, nullptr ) )
                   {
-                     GetPrinter( hPrinter, 2, NULL, 0, &dwNeeded );
+                     GetPrinter( hPrinter, 2, nullptr, 0, &dwNeeded );
                      if( dwNeeded )
                      {
                         hb_arrayNew( pTempItem, HB_WINPRN_LEN_ );
@@ -576,10 +576,10 @@ HB_FUNC( WIN_PRINTERLIST )
                            }
                            else
                            {
-                              hb_arraySetC( pTempItem, HB_WINPRN_PORT, NULL );
-                              hb_arraySetC( pTempItem, HB_WINPRN_DRIVER, NULL );
-                              hb_arraySetC( pTempItem, HB_WINPRN_SHARE, NULL );
-                              hb_arraySetC( pTempItem, HB_WINPRN_SERVER, NULL );
+                              hb_arraySetC( pTempItem, HB_WINPRN_PORT, nullptr );
+                              hb_arraySetC( pTempItem, HB_WINPRN_DRIVER, nullptr );
+                              hb_arraySetC( pTempItem, HB_WINPRN_SHARE, nullptr );
+                              hb_arraySetC( pTempItem, HB_WINPRN_SERVER, nullptr );
                            }
 
                            hb_xfree( pPrinterInfo2 );
@@ -590,7 +590,7 @@ HB_FUNC( WIN_PRINTERLIST )
                         else if( pPrinterEnum->Attributes & PRINTER_ATTRIBUTE_NETWORK )
                            hb_arraySetC( pTempItem, HB_WINPRN_TYPE, "NETWORK" );
                         else
-                           hb_arraySetC( pTempItem, HB_WINPRN_TYPE, NULL );
+                           hb_arraySetC( pTempItem, HB_WINPRN_TYPE, nullptr );
 
                         hb_arrayAddForward( pPrinterArray, pTempItem );
                      }

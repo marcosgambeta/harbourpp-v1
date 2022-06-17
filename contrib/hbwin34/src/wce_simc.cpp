@@ -56,7 +56,7 @@ HB_FUNC( WCE_SIMINITIALIZE ) /* hSim by reference, lNotifications */
 {
 #ifdef __HB_COMPONENT_SUPPORTED__
    HSIM hSim = 0;
-   HRESULT hResult = SimInitialize( hb_parl( 2 ) ? SIM_INIT_SIMCARD_NOTIFICATIONS : 0, NULL, 0, &hSim );
+   HRESULT hResult = SimInitialize( hb_parl( 2 ) ? SIM_INIT_SIMCARD_NOTIFICATIONS : 0, nullptr, 0, &hSim );
 
    hb_storptr( hResult == S_OK ? hSim : 0, 1 );
    hb_retnint( hResult );
@@ -128,8 +128,8 @@ HB_FUNC( WCE_SIMWRITEPHONEBOOKENTRY ) /* hSim, nLocation, nPos, cNumber, cName, 
 
    PhoneEntry.cbSize   = sizeof( PhoneEntry );
    PhoneEntry.dwParams = SIM_PARAM_PBE_ALL;
-   wcsncpy( PhoneEntry.lpszAddress, HB_PARSTRDEF( 4, &hAddress, NULL ), MAX_LENGTH_ADDRESS );
-   wcsncpy( PhoneEntry.lpszText   , HB_PARSTRDEF( 5, &hText   , NULL ), MAX_LENGTH_PHONEBOOKENTRYTEXT );
+   wcsncpy( PhoneEntry.lpszAddress, HB_PARSTRDEF( 4, &hAddress, nullptr ), MAX_LENGTH_ADDRESS );
+   wcsncpy( PhoneEntry.lpszText   , HB_PARSTRDEF( 5, &hText   , nullptr ), MAX_LENGTH_PHONEBOOKENTRYTEXT );
    PhoneEntry.dwAddressType = ( DWORD ) hb_parnl( 7 );
    PhoneEntry.dwNumPlan     = ( DWORD ) hb_parnl( 6 );
 

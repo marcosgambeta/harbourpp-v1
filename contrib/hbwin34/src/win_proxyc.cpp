@@ -140,11 +140,11 @@ HB_FUNC( __WIN_PROXYDETECT )
 
    static HB_BOOL s_fInit = HB_TRUE;
 
-   static _HB_WINHTTPOPEN                           s_pWinHttpOpen = NULL;
-   static _HB_WINHTTPSETTIMEOUTS                    s_pWinHttpSetTimeouts = NULL;
-   static _HB_WINHTTPCLOSEHANDLE                    s_pWinHttpCloseHandle = NULL;
-   static _HB_WINHTTPGETPROXYFORURL                 s_pWinHttpGetProxyForUrl = NULL;
-   static _HB_WINHTTPGETIEPROXYCONFIGFORCURRENTUSER s_pWinHttpGetIEProxyConfigForCurrentUser = NULL;
+   static _HB_WINHTTPOPEN                           s_pWinHttpOpen = nullptr;
+   static _HB_WINHTTPSETTIMEOUTS                    s_pWinHttpSetTimeouts = nullptr;
+   static _HB_WINHTTPCLOSEHANDLE                    s_pWinHttpCloseHandle = nullptr;
+   static _HB_WINHTTPGETPROXYFORURL                 s_pWinHttpGetProxyForUrl = nullptr;
+   static _HB_WINHTTPGETIEPROXYCONFIGFORCURRENTUSER s_pWinHttpGetIEProxyConfigForCurrentUser = nullptr;
 
    if( s_fInit )
    {
@@ -160,11 +160,11 @@ HB_FUNC( __WIN_PROXYDETECT )
       s_fInit = HB_FALSE;
    }
 
-   if( s_pWinHttpOpen != NULL &&
-       s_pWinHttpSetTimeouts != NULL &&
-       s_pWinHttpCloseHandle != NULL &&
-       s_pWinHttpGetProxyForUrl != NULL &&
-       s_pWinHttpGetIEProxyConfigForCurrentUser != NULL )
+   if( s_pWinHttpOpen != nullptr &&
+       s_pWinHttpSetTimeouts != nullptr &&
+       s_pWinHttpCloseHandle != nullptr &&
+       s_pWinHttpGetProxyForUrl != nullptr &&
+       s_pWinHttpGetIEProxyConfigForCurrentUser != nullptr )
    {
       WINHTTP_AUTOPROXY_OPTIONS options;
       WINHTTP_CURRENT_USER_IE_PROXY_CONFIG ieproxy;
@@ -176,7 +176,7 @@ HB_FUNC( __WIN_PROXYDETECT )
 
       if( s_pWinHttpGetIEProxyConfigForCurrentUser( &ieproxy ) )
       {
-         if( ieproxy.lpszAutoConfigUrl != NULL )
+         if( ieproxy.lpszAutoConfigUrl != nullptr )
             options.lpszAutoConfigUrl = ieproxy.lpszAutoConfigUrl;
          else
             fDetect = ieproxy.fAutoDetect;
@@ -185,23 +185,23 @@ HB_FUNC( __WIN_PROXYDETECT )
       if( fDetect )
       {
          HINTERNET hSession =
-            s_pWinHttpOpen( NULL,
+            s_pWinHttpOpen( nullptr,
                WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,
                WINHTTP_NO_PROXY_NAME,
                WINHTTP_NO_PROXY_BYPASS,
                0 );
 
-         if( hSession != NULL )
+         if( hSession != nullptr )
          {
             WINHTTP_PROXY_INFO proxy;
 
             void * hURL;
-            LPCTSTR pURL = HB_PARSTRDEF( 1, &hURL, NULL );
+            LPCTSTR pURL = HB_PARSTRDEF( 1, &hURL, nullptr );
             DWORD dwError;
 
             memset( &proxy, 0, sizeof( proxy ) );
 
-            if( options.lpszAutoConfigUrl != NULL )
+            if( options.lpszAutoConfigUrl != nullptr )
                options.dwFlags = WINHTTP_AUTOPROXY_CONFIG_URL;
             else
             {
@@ -231,7 +231,7 @@ HB_FUNC( __WIN_PROXYDETECT )
                if( proxy.dwAccessType == WINHTTP_ACCESS_TYPE_NO_PROXY )
                {
                   hb_retc_null();
-                  hb_storc( NULL, 2 );
+                  hb_storc( nullptr, 2 );
                }
                else
                {
@@ -242,9 +242,9 @@ HB_FUNC( __WIN_PROXYDETECT )
             else
                fDetect = FALSE;
 
-            if( proxy.lpszProxy != NULL )
+            if( proxy.lpszProxy != nullptr )
                GlobalFree( proxy.lpszProxy );
-            if( proxy.lpszProxyBypass != NULL )
+            if( proxy.lpszProxyBypass != nullptr )
                GlobalFree( proxy.lpszProxyBypass );
 
             hb_strfree( hURL );
@@ -262,23 +262,23 @@ HB_FUNC( __WIN_PROXYDETECT )
          HB_STORSTR( ieproxy.lpszProxyBypass, 2 );
       }
 
-      if( ieproxy.lpszAutoConfigUrl != NULL )
+      if( ieproxy.lpszAutoConfigUrl != nullptr )
          GlobalFree( ieproxy.lpszAutoConfigUrl );
-      if( ieproxy.lpszProxy != NULL )
+      if( ieproxy.lpszProxy != nullptr )
          GlobalFree( ieproxy.lpszProxy );
-      if( ieproxy.lpszProxyBypass != NULL )
+      if( ieproxy.lpszProxyBypass != nullptr )
          GlobalFree( ieproxy.lpszProxyBypass );
    }
    else
    {
       hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
       hb_retc_null();
-      hb_storc( NULL, 2 );
+      hb_storc( nullptr, 2 );
    }
 #else
    /* TODO: Proxy detection for WinCE */
    hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
    hb_retc_null();
-   hb_storc( NULL, 2 );
+   hb_storc( nullptr, 2 );
 #endif
 }

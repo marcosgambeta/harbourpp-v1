@@ -76,7 +76,7 @@ HB_FUNC( WAPI_GETUSERNAMEEX )
             s_pGetUserNameEx = ( _HB_GETUSERNAMEEX ) HB_WINAPI_GETPROCADDRESST( hModule,
                "GetUserNameEx" );
          else
-            s_pGetUserNameEx = NULL;
+            s_pGetUserNameEx = nullptr;
       }
 
       if( s_pGetUserNameEx )
@@ -108,7 +108,7 @@ HB_FUNC( WAPI_GETUSERNAMEEX )
 #endif
 
    if( ! fResult )
-      hb_storc( NULL, 2 );
+      hb_storc( nullptr, 2 );
 
    hb_retl( fResult );
 }

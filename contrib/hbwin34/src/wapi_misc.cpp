@@ -100,7 +100,7 @@ static TCHAR * hbwapi_FileNameAtSystemDir( const TCHAR * pFileName )
 #if defined( HB_OS_WIN_CE )
    return hbwapi_tstrdup( pFileName );
 #else
-   UINT nLen = GetSystemDirectory( NULL, 0 );
+   UINT nLen = GetSystemDirectory( nullptr, 0 );
 
    if( nLen )
    {
@@ -143,7 +143,7 @@ static HB_BOOL hbwapi_has_search_system32()
       HMODULE hKernel32 = GetModuleHandle( TEXT( "kernel32.dll" ) );
 
       if( hKernel32 )
-         return HB_WINAPI_GETPROCADDRESS( hKernel32, "AddDllDirectory" ) != NULL;  /* Detect KB2533623 */
+         return HB_WINAPI_GETPROCADDRESS( hKernel32, "AddDllDirectory" ) != nullptr;  /* Detect KB2533623 */
    }
 
    return HB_FALSE;
@@ -153,7 +153,7 @@ HMODULE hbwapi_LoadLibrarySystem( LPCTSTR pFileName )
 {
    TCHAR * pLibPath = hbwapi_FileNameAtSystemDir( pFileName );
 
-   HMODULE h = LoadLibraryEx( pLibPath, NULL, hbwapi_has_search_system32() ? LOAD_LIBRARY_SEARCH_SYSTEM32 : LOAD_WITH_ALTERED_SEARCH_PATH );
+   HMODULE h = LoadLibraryEx( pLibPath, nullptr, hbwapi_has_search_system32() ? LOAD_LIBRARY_SEARCH_SYSTEM32 : LOAD_WITH_ALTERED_SEARCH_PATH );
 
    hb_xfree( pLibPath );
 
@@ -177,7 +177,7 @@ HINSTANCE hbwapi_Instance( void )
 {
    HINSTANCE hInstance;
 
-   hb_winmainArgGet( &hInstance, NULL, NULL );
+   hb_winmainArgGet( &hInstance, nullptr, nullptr );
 
    return hInstance;
 }

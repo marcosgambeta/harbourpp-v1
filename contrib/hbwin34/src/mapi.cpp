@@ -115,10 +115,10 @@ HB_FUNC( WIN_MAPISENDMAIL )
 
          hString = ( void ** ) hb_xgrab( ( 4 + 2 + ( 2 * nRecpCount ) + ( 2 * nFileCount ) ) * sizeof( void * ) );
 
-         note.lpszSubject      = ( LPSTR ) HB_UNCONST( HB_PARSTR( 1, &hString[ iString++ ], NULL ) );
-         note.lpszNoteText     = ( LPSTR ) HB_UNCONST( HB_PARSTR( 2, &hString[ iString++ ], NULL ) );
-         note.lpszMessageType  = ( LPSTR ) HB_UNCONST( HB_PARSTR( 3, &hString[ iString++ ], NULL ) );
-         note.lpszDateReceived = ( LPSTR ) HB_UNCONST( HB_PARSTRDEF( 4, &hString[ iString++ ], NULL ) );
+         note.lpszSubject      = ( LPSTR ) HB_UNCONST( HB_PARSTR( 1, &hString[ iString++ ], nullptr ) );
+         note.lpszNoteText     = ( LPSTR ) HB_UNCONST( HB_PARSTR( 2, &hString[ iString++ ], nullptr ) );
+         note.lpszMessageType  = ( LPSTR ) HB_UNCONST( HB_PARSTR( 3, &hString[ iString++ ], nullptr ) );
+         note.lpszDateReceived = ( LPSTR ) HB_UNCONST( HB_PARSTRDEF( 4, &hString[ iString++ ], nullptr ) );
 
          if( nRecpCount )
             note.lpRecips = ( MapiRecipDesc * ) hb_xgrabz( nRecpCount * sizeof( MapiRecipDesc ) );
@@ -136,15 +136,15 @@ HB_FUNC( WIN_MAPISENDMAIL )
 
          if( pFrom && hb_arrayLen( pFrom ) >= 2 )
          {
-            origin.lpszName     = ( LPSTR ) HB_UNCONST( HB_ARRAYGETSTR( pFrom, 1, &hString[ iString++ ], NULL ) );
-            origin.lpszAddress  = ( LPSTR ) HB_UNCONST( HB_ARRAYGETSTR( pFrom, 2, &hString[ iString++ ], NULL ) ); /* optional */
+            origin.lpszName     = ( LPSTR ) HB_UNCONST( HB_ARRAYGETSTR( pFrom, 1, &hString[ iString++ ], nullptr ) );
+            origin.lpszAddress  = ( LPSTR ) HB_UNCONST( HB_ARRAYGETSTR( pFrom, 2, &hString[ iString++ ], nullptr ) ); /* optional */
             origin.ulRecipClass = MAPI_ORIG;
 
             note.lpOriginator = &origin;
          }
          else if( HB_ISCHAR( 8 ) )
          {
-            origin.lpszName     = ( LPSTR ) HB_UNCONST( HB_PARSTR( 8, &hString[ iString++ ], NULL ) );
+            origin.lpszName     = ( LPSTR ) HB_UNCONST( HB_PARSTR( 8, &hString[ iString++ ], nullptr ) );
             origin.ulRecipClass = MAPI_ORIG;
 
             note.lpOriginator = &origin;
@@ -158,13 +158,13 @@ HB_FUNC( WIN_MAPISENDMAIL )
             {
                if( hb_arrayGetCLen( pItem, 1 ) > 0 )
                {
-                  note.lpRecips[ note.nRecipCount ].lpszName = ( LPSTR ) HB_UNCONST( HB_ARRAYGETSTR( pItem, 1, &hString[ iString++ ], NULL ) );
+                  note.lpRecips[ note.nRecipCount ].lpszName = ( LPSTR ) HB_UNCONST( HB_ARRAYGETSTR( pItem, 1, &hString[ iString++ ], nullptr ) );
 
                   if( hb_arrayGetCLen( pItem, 2 ) > 0 )
-                     note.lpRecips[ note.nRecipCount ].lpszAddress = ( LPSTR ) HB_UNCONST( HB_ARRAYGETSTR( pItem, 2, &hString[ iString++ ], NULL ) );
+                     note.lpRecips[ note.nRecipCount ].lpszAddress = ( LPSTR ) HB_UNCONST( HB_ARRAYGETSTR( pItem, 2, &hString[ iString++ ], nullptr ) );
                }
                else if( hb_arrayGetCLen( pItem, 2 ) > 0 )
-                  note.lpRecips[ note.nRecipCount ].lpszName = ( LPSTR ) HB_UNCONST( HB_ARRAYGETSTR( pItem, 2, &hString[ iString++ ], NULL ) );
+                  note.lpRecips[ note.nRecipCount ].lpszName = ( LPSTR ) HB_UNCONST( HB_ARRAYGETSTR( pItem, 2, &hString[ iString++ ], nullptr ) );
                else
                   continue;
 
@@ -177,7 +177,7 @@ HB_FUNC( WIN_MAPISENDMAIL )
             }
             else if( HB_IS_STRING( pItem ) )
             {
-               note.lpRecips[ note.nRecipCount ].lpszName     = ( LPSTR ) HB_UNCONST( HB_ITEMGETSTR( pItem, &hString[ iString++ ], NULL ) );
+               note.lpRecips[ note.nRecipCount ].lpszName     = ( LPSTR ) HB_UNCONST( HB_ITEMGETSTR( pItem, &hString[ iString++ ], nullptr ) );
                note.lpRecips[ note.nRecipCount ].ulRecipClass = MAPI_TO;
 
                ++note.nRecipCount;
@@ -192,14 +192,14 @@ HB_FUNC( WIN_MAPISENDMAIL )
                 hb_arrayLen( pItem ) >= 1 &&
                 hb_arrayGetCLen( pItem, 1 ) > 0 )
             {
-               note.lpFiles[ note.nFileCount ].lpszPathName = ( LPSTR ) HB_UNCONST( HB_ARRAYGETSTR( pItem, 1, &hString[ iString++ ], NULL ) );
-               note.lpFiles[ note.nFileCount ].lpszFileName = ( LPSTR ) HB_UNCONST( HB_ARRAYGETSTR( pItem, 2, &hString[ iString++ ], NULL ) ); /* optional */
+               note.lpFiles[ note.nFileCount ].lpszPathName = ( LPSTR ) HB_UNCONST( HB_ARRAYGETSTR( pItem, 1, &hString[ iString++ ], nullptr ) );
+               note.lpFiles[ note.nFileCount ].lpszFileName = ( LPSTR ) HB_UNCONST( HB_ARRAYGETSTR( pItem, 2, &hString[ iString++ ], nullptr ) ); /* optional */
                note.lpFiles[ note.nFileCount ].nPosition    = ( ULONG ) -1;
                ++note.nFileCount;
             }
             else if( HB_IS_STRING( pItem ) )
             {
-               note.lpFiles[ note.nFileCount ].lpszPathName = ( LPSTR ) HB_UNCONST( HB_ITEMGETSTR( pItem, &hString[ iString++ ], NULL ) );
+               note.lpFiles[ note.nFileCount ].lpszPathName = ( LPSTR ) HB_UNCONST( HB_ITEMGETSTR( pItem, &hString[ iString++ ], nullptr ) );
                note.lpFiles[ note.nFileCount ].nPosition    = ( ULONG ) -1;
                ++note.nFileCount;
             }

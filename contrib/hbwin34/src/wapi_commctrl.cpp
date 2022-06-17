@@ -179,7 +179,7 @@ HB_FUNC( WAPI_IMAGELIST_DUPLICATE )
 #if ( _WIN32_IE >= 0x0400 )
    hbwapi_ret_raw_HANDLE( ImageList_Duplicate( hbwapi_par_raw_HIMAGELIST( 1 ) ) );
 #else
-   hbwapi_ret_raw_HANDLE( NULL );
+   hbwapi_ret_raw_HANDLE( nullptr );
 #endif
 }
 
@@ -252,11 +252,11 @@ HB_FUNC( WAPI_IMAGELIST_GETIMAGEINFO )
 HB_FUNC( WAPI_IMAGELIST_LOADIMAGE )
 {
 #if ! defined( HB_OS_WIN_CE )
-   void * hImage = NULL;
+   void * hImage = nullptr;
    LPCTSTR image;
 
    if( HB_ISCHAR( 2 ) )
-      image = HB_PARSTRDEF( 2, &hImage, NULL );
+      image = HB_PARSTRDEF( 2, &hImage, nullptr );
    else
       image = MAKEINTRESOURCE( hbwapi_par_INT( 2 ) );
 
@@ -270,7 +270,7 @@ HB_FUNC( WAPI_IMAGELIST_LOADIMAGE )
 
    hb_strfree( hImage );
 #else
-   hbwapi_ret_raw_HANDLE( NULL );
+   hbwapi_ret_raw_HANDLE( nullptr );
 #endif
 }
 
@@ -339,7 +339,7 @@ HB_FUNC( WAPI_IMAGELIST_SETCOLORTABLE )
    hbwapi_ret_NI( ImageList_SetColorTable( hbwapi_par_raw_HIMAGELIST( 1 ),
                                            hbwapi_par_INT( 2 ),
                                            hbwapi_par_INT( 3 ),
-                                           NULL ) );
+                                           nullptr ) );
 }
 #endif
 
@@ -405,7 +405,7 @@ HB_FUNC( WAPI_TABCTRL_INSERTITEM )
 
    item.mask    = TCIF_TEXT | TCIF_IMAGE;
    item.iImage  = hb_parnidef( 4, -1 );
-   item.pszText = ( LPTSTR ) HB_UNCONST( HB_PARSTRDEF( 3, &hText, NULL ) );
+   item.pszText = ( LPTSTR ) HB_UNCONST( HB_PARSTRDEF( 3, &hText, nullptr ) );
 
    hbwapi_ret_NI( TabCtrl_InsertItem( hbwapi_par_raw_HWND( 1 ), hbwapi_par_INT( 3 ), &item ) );
 
@@ -481,7 +481,7 @@ HB_FUNC( WAPI_TABCTRL_SETITEM )
 
    item.mask    = TCIF_TEXT | TCIF_IMAGE;
    item.iImage  = hb_parnidef( 4, -1 );
-   item.pszText = ( LPTSTR ) HB_UNCONST( HB_PARSTRDEF( 3, &hText, NULL ) );
+   item.pszText = ( LPTSTR ) HB_UNCONST( HB_PARSTRDEF( 3, &hText, nullptr ) );
 
    hbwapi_ret_L( TabCtrl_SetItem( hbwapi_par_raw_HWND( 1 ), hbwapi_par_INT( 2 ), &item ) );
 
@@ -677,7 +677,7 @@ HB_FUNC( WAPI_TABCTRL_GETUNICODEFORMAT )
 HB_FUNC( WAPI_TABCTRL_CREATE )
 {
    HWND hwnd = hbwapi_par_raw_HWND( 1 );
-   HWND hbutton = CreateWindowEx( 0, WC_TABCONTROL, NULL, ( LONG ) hb_parnl( 6 ) /* style */, hb_parni( 2 ), hb_parni( 3 ), hb_parni( 4 ), hb_parni( 5 ), hwnd, NULL, GetModuleHandle( NULL ), NULL );
+   HWND hbutton = CreateWindowEx( 0, WC_TABCONTROL, nullptr, ( LONG ) hb_parnl( 6 ) /* style */, hb_parni( 2 ), hb_parni( 3 ), hb_parni( 4 ), hb_parni( 5 ), hwnd, nullptr, GetModuleHandle( nullptr ), nullptr );
 
    SendMessage( hbutton, ( UINT ) WM_SETFONT, ( WPARAM ) ( HFONT ) SendMessage( hwnd, WM_GETFONT, 0, 0 ), 1 );
    hbwapi_ret_raw_HANDLE( hbutton );
@@ -693,7 +693,7 @@ HB_FUNC( WAPI_TABCTRL_ADDITEM )
 
    item.mask    = TCIF_TEXT | TCIF_IMAGE;
    item.iImage  = hb_parnidef( 3, -1 );
-   item.pszText = ( LPTSTR ) HB_UNCONST( HB_PARSTRDEF( 2, &hText, NULL ) );
+   item.pszText = ( LPTSTR ) HB_UNCONST( HB_PARSTRDEF( 2, &hText, nullptr ) );
 
    hbwapi_ret_NI( TabCtrl_InsertItem( hbwapi_par_raw_HWND( 1 ), iCount, &item ) );
 
@@ -885,7 +885,7 @@ HB_FUNC( WAPI_TREEVIEW_GETLASTVISIBLE )
 #if ( _WIN32_IE >= 0x0400 ) && ! defined( HB_OS_WIN_CE )
    hbwapi_ret_raw_HANDLE( TreeView_GetLastVisible( hbwapi_par_raw_HWND( 1 ) ) );
 #else
-   hbwapi_ret_raw_HANDLE( NULL );
+   hbwapi_ret_raw_HANDLE( nullptr );
 #endif
 }
 
@@ -981,7 +981,7 @@ HB_FUNC( WAPI_TREEVIEW_GETTOOLTIPS )
 #if ( _WIN32_IE >= 0x0300 ) && ! defined( HB_OS_WIN_CE )
    hbwapi_ret_raw_HANDLE( TreeView_GetToolTips( hbwapi_par_raw_HWND( 1 ) ) );
 #else
-   hbwapi_ret_raw_HANDLE( NULL );
+   hbwapi_ret_raw_HANDLE( nullptr );
 #endif
 }
 
@@ -1189,7 +1189,7 @@ HB_FUNC( WAPI_TREEVIEW_SETTOOLTIPS )
 #if ( _WIN32_IE >= 0x0300 ) && ! defined( HB_OS_WIN_CE )
    hbwapi_ret_raw_HANDLE( TreeView_SetToolTips( hbwapi_par_raw_HWND( 1 ), hbwapi_par_raw_HWND( 2 ) ) );
 #else
-   hbwapi_ret_raw_HANDLE( NULL );
+   hbwapi_ret_raw_HANDLE( nullptr );
 #endif
 }
 

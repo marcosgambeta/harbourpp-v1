@@ -63,9 +63,9 @@ HB_FUNC( WAPI_GETCURRENTTHREADID )
 
 HB_FUNC( WAPI_FORMATMESSAGE )
 {
-   void * hSource = NULL;
-   LPTSTR lpAllocBuff = NULL;
-   LPTSTR lpBuffer = NULL;
+   void * hSource = nullptr;
+   LPTSTR lpAllocBuff = nullptr;
+   LPTSTR lpBuffer = nullptr;
    HB_SIZE nSize = 0;
    DWORD dwFlags;
 
@@ -94,12 +94,12 @@ HB_FUNC( WAPI_FORMATMESSAGE )
    {
       DWORD dwRetVal =
          FormatMessage( dwFlags,
-                        HB_ISCHAR( 2 ) ? ( LPCVOID ) HB_PARSTR( 2, &hSource, NULL ) : hb_parptr( 2 ),
+                        HB_ISCHAR( 2 ) ? ( LPCVOID ) HB_PARSTR( 2, &hSource, nullptr ) : hb_parptr( 2 ),
                         HB_ISNUM( 3 ) ? ( DWORD ) hb_parnl( 3 ) : hbwapi_GetLastError() /* dwMessageId */,
                         ( DWORD ) hb_parnldef( 4, MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ) ) /* dwLanguageId */,
                         lpBuffer,
                         ( DWORD ) nSize,
-                        NULL /* TODO: Add support for this parameter. */ );
+                        nullptr /* TODO: Add support for this parameter. */ );
 
       hbwapi_SetLastError( GetLastError() );
       hb_retnint( dwRetVal );
@@ -111,7 +111,7 @@ HB_FUNC( WAPI_FORMATMESSAGE )
          else
             lpBuffer[ nSize - 1 ] = '\0';
 
-         HB_STORSTR( dwRetVal ? lpBuffer : NULL, 5 );
+         HB_STORSTR( dwRetVal ? lpBuffer : nullptr, 5 );
 
          if( lpAllocBuff )
             LocalFree( lpAllocBuff );
@@ -123,7 +123,7 @@ HB_FUNC( WAPI_FORMATMESSAGE )
    }
    else
    {
-      hb_storc( NULL, 5 );
+      hb_storc( nullptr, 5 );
       hbwapi_SetLastError( ERROR_EMPTY );
       hb_retnint( -1 );
    }
@@ -139,7 +139,7 @@ HB_FUNC( WAPI_OUTPUTDEBUGSTRING )
 {
    void * hOutputString;
 
-   OutputDebugString( HB_PARSTR( 1, &hOutputString, NULL ) );
+   OutputDebugString( HB_PARSTR( 1, &hOutputString, nullptr ) );
 
    hb_strfree( hOutputString );
 }

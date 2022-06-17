@@ -52,14 +52,14 @@ static HB_GARBAGE_FUNC( s_gc_HDC_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       DeleteDC( ( HDC ) *ph );
 
-      /* set pointer to NULL to avoid multiple freeing */
-      *ph = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      *ph = nullptr;
    }
 }
 
@@ -80,12 +80,12 @@ void hbwapi_ret_HDC( HDC p )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 HB_BOOL hbwapi_is_HDC( int iParam )
 {
-   return hb_parptrGC( &s_gc_HDC_funcs, iParam ) != NULL;
+   return hb_parptrGC( &s_gc_HDC_funcs, iParam ) != nullptr;
 }
 
 HDC hbwapi_par_HDC( int iParam )
@@ -99,14 +99,14 @@ static HB_GARBAGE_FUNC( s_gc_HPEN_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       DeleteObject( ( HPEN ) *ph );
 
-      /* set pointer to NULL to avoid multiple freeing */
-      *ph = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      *ph = nullptr;
    }
 }
 
@@ -127,12 +127,12 @@ void hbwapi_ret_HPEN( HPEN p )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 HB_BOOL hbwapi_is_HPEN( int iParam )
 {
-   return hb_parptrGC( &s_gc_HPEN_funcs, iParam ) != NULL;
+   return hb_parptrGC( &s_gc_HPEN_funcs, iParam ) != nullptr;
 }
 
 HPEN hbwapi_par_HPEN( int iParam )
@@ -146,14 +146,14 @@ static HB_GARBAGE_FUNC( s_gc_HBRUSH_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       DeleteObject( ( HBRUSH ) *ph );
 
-      /* set pointer to NULL to avoid multiple freeing */
-      *ph = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      *ph = nullptr;
    }
 }
 
@@ -174,12 +174,12 @@ void hbwapi_ret_HBRUSH( HBRUSH p )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 HB_BOOL hbwapi_is_HBRUSH( int iParam )
 {
-   return hb_parptrGC( &s_gc_HBRUSH_funcs, iParam ) != NULL;
+   return hb_parptrGC( &s_gc_HBRUSH_funcs, iParam ) != nullptr;
 }
 
 HBRUSH hbwapi_par_HBRUSH( int iParam )
@@ -193,14 +193,14 @@ static HB_GARBAGE_FUNC( s_gc_HFONT_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       DeleteObject( ( HFONT ) *ph );
 
-      /* set pointer to NULL to avoid multiple freeing */
-      *ph = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      *ph = nullptr;
    }
 }
 
@@ -221,12 +221,12 @@ void hbwapi_ret_HFONT( HFONT p )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 HB_BOOL hbwapi_is_HFONT( int iParam )
 {
-   return hb_parptrGC( &s_gc_HFONT_funcs, iParam ) != NULL;
+   return hb_parptrGC( &s_gc_HFONT_funcs, iParam ) != nullptr;
 }
 
 HFONT hbwapi_par_HFONT( int iParam )
@@ -240,14 +240,14 @@ static HB_GARBAGE_FUNC( s_gc_PDEVMODE_release )
 {
    void ** ph = ( void ** ) Cargo;
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
+   /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
       hb_xfree( *ph );
 
-      /* set pointer to NULL to avoid multiple freeing */
-      *ph = NULL;
+      /* set pointer to nullptr to avoid multiple freeing */
+      *ph = nullptr;
    }
 }
 
@@ -268,19 +268,19 @@ void hbwapi_ret_PDEVMODE( PDEVMODE p )
       hb_retptrGC( ph );
    }
    else
-      hb_retptr( NULL );
+      hb_retptr( nullptr );
 }
 
 HB_BOOL hbwapi_is_PDEVMODE( int iParam )
 {
-   return hb_parptrGC( &s_gc_PDEVMODE_funcs, iParam ) != NULL;
+   return hb_parptrGC( &s_gc_PDEVMODE_funcs, iParam ) != nullptr;
 }
 
 PDEVMODE hbwapi_par_PDEVMODE( int iParam )
 {
    void ** ph = ( void ** ) hb_parptrGC( &s_gc_PDEVMODE_funcs, iParam );
 
-   return ph ? ( PDEVMODE ) *ph : NULL;
+   return ph ? ( PDEVMODE ) *ph : nullptr;
 }
 
 HB_FUNC( __WAPI_TYPE )
@@ -327,7 +327,7 @@ static HB_BOOL s_handle_trace( int n )
             HB_TRACE( HB_TR_ALWAYS, ( "%s:%s:%i: __hbwapi_par*_handle(%d)", file, procname, line, n ) );
 
             if( s_iDbgUnsafeMode == 2 )
-               hb_errRT_BASE( EG_ARG, 19000, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+               hb_errRT_BASE( EG_ARG, 19000, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
          }
       }
 
@@ -344,7 +344,7 @@ void * __hbwapi_par_handle( int n )
 {
 #if defined( __HBWIN_WITH_UNSAFE_HANDLES )
    if( HB_ISNUM( n ) )
-      return s_handle_trace( n ) ? ( void * ) ( HB_PTRUINT ) hb_parnint( n ) : NULL;
+      return s_handle_trace( n ) ? ( void * ) ( HB_PTRUINT ) hb_parnint( n ) : nullptr;
    else
 #endif
       return hb_parptr( n );
@@ -354,7 +354,7 @@ void * __hbwapi_parv_handle( int n, int i )
 {
 #if defined( __HBWIN_WITH_UNSAFE_HANDLES )
    if( HB_ISNUM( n ) )
-      return s_handle_trace( n ) ? ( void * ) ( HB_PTRUINT ) hb_parvnint( n, i ) : NULL;
+      return s_handle_trace( n ) ? ( void * ) ( HB_PTRUINT ) hb_parvnint( n, i ) : nullptr;
    else
 #endif
       return hb_parvptr( n, i );
@@ -370,7 +370,7 @@ void * hbwapi_itemGet_HANDLE( PHB_ITEM pItem )
       return hb_itemGetPtr( pItem );
 }
 
-/* pArray must not be NULL */
+/* pArray must not be nullptr */
 void * hbwapi_arrayGet_HANDLE( PHB_ITEM pArray, HB_SIZE nIndex )
 {
    return hbwapi_itemGet_HANDLE( hb_arrayGetItemPtr( pArray, nIndex ) );
@@ -379,8 +379,8 @@ void * hbwapi_arrayGet_HANDLE( PHB_ITEM pArray, HB_SIZE nIndex )
 HB_BOOL hbwapi_is_HANDLE( int iParam )
 {
 #if defined( __HBWIN_WITH_UNSAFE_HANDLES )
-   return hb_param( iParam, HB_IT_POINTER | HB_IT_NUMERIC ) != NULL;
+   return hb_param( iParam, HB_IT_POINTER | HB_IT_NUMERIC ) != nullptr;
 #else
-   return hb_param( iParam, HB_IT_POINTER ) != NULL;
+   return hb_param( iParam, HB_IT_POINTER ) != nullptr;
 #endif
 }

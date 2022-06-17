@@ -57,8 +57,8 @@
 
 static SERVICE_STATUS        s_ServiceStatus;
 static SERVICE_STATUS_HANDLE s_hStatus;
-static PHB_ITEM              s_pHarbourEntryFunc = NULL;
-static PHB_ITEM              s_pHarbourControlFunc = NULL;
+static PHB_ITEM              s_pHarbourEntryFunc = nullptr;
+static PHB_ITEM              s_pHarbourControlFunc = nullptr;
 static TCHAR                 s_lpServiceName[ 256 ];
 
 /* Control handler function */
@@ -112,7 +112,7 @@ static VOID WINAPI hbwin_SvcMainFunction( DWORD dwArgc, LPTSTR * lpszArgv )
 
    if( s_hStatus != ( SERVICE_STATUS_HANDLE ) 0 )
    {
-      if( s_pHarbourEntryFunc != NULL )
+      if( s_pHarbourEntryFunc != nullptr )
       {
          if( hb_vmRequestReenterExt() )
          {
@@ -134,7 +134,7 @@ static VOID WINAPI hbwin_SvcMainFunction( DWORD dwArgc, LPTSTR * lpszArgv )
                PHB_ITEM pItem = hb_stackAllocItem();
 
                HB_ITEMPUTSTR( pItem, lpszArgv[ i ] );
-               if( hb_cmdargIsInternal( hb_itemGetCPtr( pItem ), NULL ) )
+               if( hb_cmdargIsInternal( hb_itemGetCPtr( pItem ), nullptr ) )
                   hb_stackPop();
                else
                   ++iArgCount;
@@ -221,7 +221,7 @@ HB_FUNC( WIN_SERVICESTART )
    if( s_pHarbourEntryFunc )
    {
       hb_itemRelease( s_pHarbourEntryFunc );
-      s_pHarbourEntryFunc = NULL;
+      s_pHarbourEntryFunc = nullptr;
    }
 
    pEntryFunc = hb_param( 2, HB_IT_EVALITEM );
@@ -232,7 +232,7 @@ HB_FUNC( WIN_SERVICESTART )
    if( s_pHarbourControlFunc )
    {
       hb_itemRelease( s_pHarbourControlFunc );
-      s_pHarbourControlFunc = NULL;
+      s_pHarbourControlFunc = nullptr;
    }
 
    pEntryFunc = hb_param( 3, HB_IT_EVALITEM );
@@ -243,8 +243,8 @@ HB_FUNC( WIN_SERVICESTART )
    lpServiceTable[ 0 ].lpServiceName = s_lpServiceName;
    lpServiceTable[ 0 ].lpServiceProc = ( LPSERVICE_MAIN_FUNCTION ) hbwin_SvcMainFunction;
 
-   lpServiceTable[ 1 ].lpServiceName = NULL;
-   lpServiceTable[ 1 ].lpServiceProc = NULL;
+   lpServiceTable[ 1 ].lpServiceName = nullptr;
+   lpServiceTable[ 1 ].lpServiceProc = nullptr;
 
    bRetVal = ( HB_BOOL ) StartServiceCtrlDispatcher( lpServiceTable );
    hbwapi_SetLastError( GetLastError() );
