@@ -2902,14 +2902,14 @@ HB_FUNC( WVG_GTINFOEX )
 {
    if( HB_ISPOINTER( 1 ) && HB_ISNUM( 2 ) )
    {
-      PHB_GT pGT = hb_gt_ItemBase( hb_param( 1, HB_IT_ANY ) );
+      PHB_GT pGT = hb_gt_ItemBase( hb_param( 1, Harbour::Item::ANY ) );
 
       if( pGT )
       {
          HB_GT_INFO gtInfo;
 
-         gtInfo.pNewVal  = hb_param( 3, HB_IT_ANY );
-         gtInfo.pNewVal2 = hb_param( 4, HB_IT_ANY );
+         gtInfo.pNewVal  = hb_param( 3, Harbour::Item::ANY );
+         gtInfo.pNewVal2 = hb_param( 4, Harbour::Item::ANY );
          gtInfo.pResult  = nullptr;
 
          HB_GTSELF_INFO( pGT, hb_parni( 2 ), &gtInfo );

@@ -892,7 +892,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
 
       if( iIndex < ( int ) HB_SIZEOFARRAY( _s->hDlgModeless ) )
       {
-         PHB_ITEM pFirst = hb_param( 3, HB_IT_ANY );
+         PHB_ITEM pFirst = hb_param( 3, Harbour::Item::ANY );
          PHB_ITEM pFunc  = nullptr;
          PHB_DYNS pExecSym;
          int      iType = 0;
@@ -1002,7 +1002,7 @@ HB_FUNC( WVT_CREATEDIALOGMODAL )
 
       if( iIndex < ( int ) HB_SIZEOFARRAY( _s->hDlgModal ) )
       {
-         PHB_ITEM   pFirst = hb_param( 3, HB_IT_ANY );
+         PHB_ITEM   pFirst = hb_param( 3, Harbour::Item::ANY );
          PHB_ITEM   pFunc  = nullptr;
          PHB_DYNS   pExecSym;
          int        iResource = hb_parni( 4 );

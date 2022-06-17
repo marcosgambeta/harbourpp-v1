@@ -1282,24 +1282,24 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_SETFONT:
          pInfo->pResult = hb_itemPutL( pInfo->pResult, HB_FALSE );
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_ARRAY )
+         if( hb_itemType( pInfo->pNewVal ) & Harbour::Item::ARRAY )
          {
             PHB_ITEM pSome;
 
             pSome = hb_arrayGetItemPtr( pInfo->pNewVal, 1 );
-            if( hb_itemType( pSome ) & HB_IT_STRING )
+            if( hb_itemType( pSome ) & Harbour::Item::STRING )
                hb_strncpy( pWVT->fontFace, hb_itemGetCPtr( pSome ), sizeof( pWVT->fontFace ) - 1 );
             pSome = hb_arrayGetItemPtr( pInfo->pNewVal, 2 );
-            if( hb_itemType( pSome ) & HB_IT_NUMERIC )
+            if( hb_itemType( pSome ) & Harbour::Item::NUMERIC )
                pWVT->fontHeight = hb_arrayGetNI( pInfo->pNewVal, 2 );
             pSome = hb_arrayGetItemPtr( pInfo->pNewVal, 3 );
-            if( hb_itemType( pSome ) & HB_IT_NUMERIC )
+            if( hb_itemType( pSome ) & Harbour::Item::NUMERIC )
                pWVT->fontWidth = hb_arrayGetNI( pInfo->pNewVal, 3 );
             pSome = hb_arrayGetItemPtr( pInfo->pNewVal, 4 );
-            if( hb_itemType( pSome ) & HB_IT_NUMERIC )
+            if( hb_itemType( pSome ) & Harbour::Item::NUMERIC )
                pWVT->fontWeight = hb_arrayGetNI( pInfo->pNewVal, 4 );
             pSome = hb_arrayGetItemPtr( pInfo->pNewVal, 5 );
-            if( hb_itemType( pSome ) & HB_IT_NUMERIC )
+            if( hb_itemType( pSome ) & Harbour::Item::NUMERIC )
                pWVT->fontQuality = hb_arrayGetNI( pInfo->pNewVal, 5 );
          }
          break;
@@ -1314,27 +1314,27 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_FONTWIDTH:
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, pWVT->fontWidth );
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
+         if( hb_itemType( pInfo->pNewVal ) & Harbour::Item::NUMERIC )
             pWVT->fontWidth = hb_itemGetNI( pInfo->pNewVal );
 
          break;
 
       case HB_GTI_FONTNAME:
          pInfo->pResult = hb_itemPutC( pInfo->pResult, pWVT->fontFace );
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
+         if( hb_itemType( pInfo->pNewVal ) & Harbour::Item::STRING )
             hb_strncpy( pWVT->fontFace, hb_itemGetCPtr( pInfo->pNewVal ), sizeof( pWVT->fontFace ) - 1 );
          break;
 
       case HB_GTI_FONTWEIGHT:
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, pWVT->fontWeight );
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
+         if( hb_itemType( pInfo->pNewVal ) & Harbour::Item::NUMERIC )
             pWVT->fontWeight = hb_itemGetNI( pInfo->pNewVal );
 
          break;
 
       case HB_GTI_FONTQUALITY:
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, pWVT->fontQuality );
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
+         if( hb_itemType( pInfo->pNewVal ) & Harbour::Item::NUMERIC )
             pWVT->fontQuality = hb_itemGetNI( pInfo->pNewVal );
 
          break;
@@ -1397,7 +1397,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       }
       case HB_GTI_WINTITLE:
          pInfo->pResult = HB_ITEMPUTSTR( pInfo->pResult, pWVT->lpWindowTitle );
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
+         if( hb_itemType( pInfo->pNewVal ) & Harbour::Item::STRING )
          {
             hb_strfree( pWVT->hWindowTitle );
             pWVT->lpWindowTitle = HB_ITEMGETSTR( pInfo->pNewVal, &pWVT->hWindowTitle, nullptr );
@@ -1412,7 +1412,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             pWVT->CodePage = iVal;
          break;
       case HB_GTI_ICONFILE:
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
+         if( hb_itemType( pInfo->pNewVal ) & Harbour::Item::STRING )
          {
             HICON hIconToFree = pWVT->bIconToFree ? pWVT->hIcon : nullptr;
             void * hImageName;
@@ -1441,7 +1441,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
 
       case HB_GTI_ICONRES:
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
+         if( hb_itemType( pInfo->pNewVal ) & Harbour::Item::STRING )
          {
             HICON hIconToFree = pWVT->bIconToFree ? pWVT->hIcon : nullptr;
             void * hIconName;
@@ -1459,7 +1459,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
             if( hIconToFree )
                DestroyIcon( hIconToFree );
          }
-         else if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
+         else if( hb_itemType( pInfo->pNewVal ) & Harbour::Item::NUMERIC )
          {
             HICON hIconToFree = pWVT->bIconToFree ? pWVT->hIcon : nullptr;
 
@@ -1493,11 +1493,11 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
       }
       case HB_GTI_KBDSHIFTS:
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, hb_gt_winapi_getKbdState() );
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
+         if( hb_itemType( pInfo->pNewVal ) & Harbour::Item::NUMERIC )
             hb_gt_winapi_setKbdState( hb_itemGetNI( pInfo->pNewVal ) );
          break;
       case HB_GTI_CLIPBOARDDATA:
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_STRING )
+         if( hb_itemType( pInfo->pNewVal ) & Harbour::Item::STRING )
 #if defined( UNICODE )
             hb_gt_winapi_setClipboard( CF_UNICODETEXT, pInfo->pNewVal );
 #else
@@ -1519,7 +1519,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
       case HB_GTI_CURSORBLINKRATE:
          pInfo->pResult = hb_itemPutNI( pInfo->pResult, GetCaretBlinkTime() );
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC )
+         if( hb_itemType( pInfo->pNewVal ) & Harbour::Item::NUMERIC )
             SetCaretBlinkTime( hb_itemGetNI( pInfo->pNewVal ) );
          break;
 
@@ -1535,7 +1535,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          hb_arraySetNI( pInfo->pResult, 2, rc.bottom - rc.top );
          hb_arraySetNI( pInfo->pResult, 1, rc.right - rc.left );
 
-         if( ( hb_itemType( pInfo->pNewVal ) & HB_IT_ARRAY ) && hb_arrayLen( pInfo->pNewVal ) == 2 )
+         if( ( hb_itemType( pInfo->pNewVal ) & Harbour::Item::ARRAY ) && hb_arrayLen( pInfo->pNewVal ) == 2 )
          {
             int iX, iY;
             iY = hb_arrayGetNI( pInfo->pNewVal, 2 );
@@ -1626,13 +1626,13 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                hb_arraySetNI( pInfo->pResult, 2, rect.top );
             }
 
-            if( ( hb_itemType( pInfo->pNewVal ) & HB_IT_NUMERIC ) &&
-                ( hb_itemType( pInfo->pNewVal2 ) & HB_IT_NUMERIC ) )
+            if( ( hb_itemType( pInfo->pNewVal ) & Harbour::Item::NUMERIC ) &&
+                ( hb_itemType( pInfo->pNewVal2 ) & Harbour::Item::NUMERIC ) )
             {
                i1 = hb_itemGetNI( pInfo->pNewVal );
                i2 = hb_itemGetNI( pInfo->pNewVal2 );
             }
-            else if( hb_itemType( pInfo->pNewVal ) & HB_IT_ARRAY )
+            else if( hb_itemType( pInfo->pNewVal ) & Harbour::Item::ARRAY )
             {
                i1 = hb_arrayGetNI( pInfo->pNewVal, 1 );
                i2 = hb_arrayGetNI( pInfo->pNewVal, 2 );
@@ -1710,7 +1710,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                break;
 
             case HB_GTS_KEYBOARD:
-               if( hb_itemType( pInfo->pNewVal2 ) & HB_IT_NUMERIC )
+               if( hb_itemType( pInfo->pNewVal2 ) & Harbour::Item::NUMERIC )
                   hb_gt_wvt_AddCharToInputQueue( pWVT, hb_itemGetNI( pInfo->pNewVal2 ) );
                break;
 
@@ -1726,20 +1726,20 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                break;
 
             case HB_GTS_SETTIMER:
-               if( ( hb_itemType( pInfo->pNewVal2 ) & HB_IT_ARRAY ) && pWVT->hWnd )
+               if( ( hb_itemType( pInfo->pNewVal2 ) & Harbour::Item::ARRAY ) && pWVT->hWnd )
                   SetTimer( pWVT->hWnd, hb_arrayGetNI( pInfo->pNewVal2, 1 ), hb_arrayGetNI( pInfo->pNewVal2, 2 ), nullptr );
                break;
 
             case HB_GTS_KILLTIMER:
                if( pWVT->hWnd )
                {
-                  if( hb_itemType( pInfo->pNewVal2 ) & HB_IT_NUMERIC )
+                  if( hb_itemType( pInfo->pNewVal2 ) & Harbour::Item::NUMERIC )
                      KillTimer( pWVT->hWnd, hb_itemGetNI( pInfo->pNewVal2 ) );
                }
                break;
 
             case HB_GTS_SETPOSITION:
-               if( pWVT->hWnd && ( hb_itemType( pInfo->pNewVal2 ) & HB_IT_ARRAY ) )
+               if( pWVT->hWnd && ( hb_itemType( pInfo->pNewVal2 ) & Harbour::Item::ARRAY ) )
                {
                   RECT rect = { 0, 0, 0, 0 };
                   GetWindowRect( pWVT->hWnd, &rect );
@@ -1759,7 +1759,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
                }
                if( pWVT->hWnd )
                {
-                  if( hb_itemType( pInfo->pNewVal2 ) & HB_IT_NUMERIC )
+                  if( hb_itemType( pInfo->pNewVal2 ) & Harbour::Item::NUMERIC )
                   {
                      ShowWindow( pWVT->hWnd, hb_itemGetNI( pInfo->pNewVal2 ) );
                      UpdateWindow( pWVT->hWnd );
@@ -1774,7 +1774,7 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
 
             case HB_GTS_SYSTRAYICON:
 #if ! defined( HB_OS_WIN_CE )
-               if( pWVT->hWnd && ( hb_itemType( pInfo->pNewVal2 ) & HB_IT_ARRAY ) )
+               if( pWVT->hWnd && ( hb_itemType( pInfo->pNewVal2 ) & Harbour::Item::ARRAY ) )
                {
                   int            mode = hb_arrayGetNI( pInfo->pNewVal2, 1 );
                   int            iIconType = hb_arrayGetNI( pInfo->pNewVal2, 2 );
@@ -1897,41 +1897,41 @@ static HB_BOOL hb_gt_wvt_Info( PHB_GT pGT, int iType, PHB_GT_INFO pInfo )
          break;
       }
       case HB_GTI_PRESPARAMS:
-         if( hb_itemType( pInfo->pNewVal ) & HB_IT_ARRAY )
+         if( hb_itemType( pInfo->pNewVal ) & Harbour::Item::ARRAY )
          {
             if( hb_arrayLen( pInfo->pNewVal ) == HB_GTI_PP_SIZE )
             {
                PHB_ITEM pSome;
 
                pSome = hb_arrayGetItemPtr( pInfo->pNewVal, HB_GTI_PP_EXSTYLE );
-               if( hb_itemType( pSome ) & HB_IT_NUMERIC )
+               if( hb_itemType( pSome ) & Harbour::Item::NUMERIC )
                   pWVT->pPP->exStyle = ( DWORD ) hb_itemGetNInt( pSome );
                pSome = hb_arrayGetItemPtr( pInfo->pNewVal, HB_GTI_PP_STYLE );
-               if( hb_itemType( pSome ) & HB_IT_NUMERIC )
+               if( hb_itemType( pSome ) & Harbour::Item::NUMERIC )
                   pWVT->pPP->style = ( DWORD ) hb_itemGetNInt( pSome );
                pSome = hb_arrayGetItemPtr( pInfo->pNewVal, HB_GTI_PP_X );
-               if( hb_itemType( pSome ) & HB_IT_NUMERIC )
+               if( hb_itemType( pSome ) & Harbour::Item::NUMERIC )
                   pWVT->pPP->x = hb_itemGetNI( pSome );
                pSome = hb_arrayGetItemPtr( pInfo->pNewVal, HB_GTI_PP_Y );
-               if( hb_itemType( pSome ) & HB_IT_NUMERIC )
+               if( hb_itemType( pSome ) & Harbour::Item::NUMERIC )
                   pWVT->pPP->y = hb_itemGetNI( pSome );
                pSome = hb_arrayGetItemPtr( pInfo->pNewVal, HB_GTI_PP_WIDTH );
-               if( hb_itemType( pSome ) & HB_IT_NUMERIC )
+               if( hb_itemType( pSome ) & Harbour::Item::NUMERIC )
                   pWVT->pPP->width = hb_itemGetNI( pSome );
                pSome = hb_arrayGetItemPtr( pInfo->pNewVal, HB_GTI_PP_HEIGHT );
-               if( hb_itemType( pSome ) & HB_IT_NUMERIC )
+               if( hb_itemType( pSome ) & Harbour::Item::NUMERIC )
                   pWVT->pPP->height = hb_itemGetNI( pSome );
                pSome = hb_arrayGetItemPtr( pInfo->pNewVal, HB_GTI_PP_PARENT );
-               if( hb_itemType( pSome ) & HB_IT_POINTER )
+               if( hb_itemType( pSome ) & Harbour::Item::POINTER )
                   pWVT->pPP->pParentGT = hb_itemNew( hb_arrayGetItemPtr( pInfo->pNewVal, HB_GTI_PP_PARENT ) );
                pSome = hb_arrayGetItemPtr( pInfo->pNewVal, HB_GTI_PP_VISIBLE );
-               if( hb_itemType( pSome ) & HB_IT_LOGICAL )
+               if( hb_itemType( pSome ) & Harbour::Item::LOGICAL )
                   pWVT->pPP->bVisible = hb_itemGetL( pSome );
                pSome = hb_arrayGetItemPtr( pInfo->pNewVal, HB_GTI_PP_ROWCOLS );
-               if( hb_itemType( pSome ) & HB_IT_LOGICAL )
+               if( hb_itemType( pSome ) & Harbour::Item::LOGICAL )
                   pWVT->pPP->bRowCols = hb_itemGetL( pSome );
                pSome = hb_arrayGetItemPtr( pInfo->pNewVal, HB_GTI_PP_WNDTYPE );
-               if( hb_itemType( pSome ) & HB_IT_NUMERIC )
+               if( hb_itemType( pSome ) & Harbour::Item::NUMERIC )
                   pWVT->pPP->iWndType = hb_itemGetNI( pSome );
 
                /* Flag that caller configured itself */

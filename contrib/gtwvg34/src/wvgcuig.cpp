@@ -269,7 +269,7 @@ HB_FUNC( WVG_SETGOBJDATA )
                case GOBJ_OBJDATA_BLOCK:
                   if( gObj->bBlock )
                      hb_itemRelease( gObj->bBlock );
-                  gObj->bBlock = hb_itemNew( hb_param( 3, HB_IT_EVALITEM ) );
+                  gObj->bBlock = hb_itemNew( hb_param( 3, Harbour::Item::EVALITEM ) );
                   break;
                default:
                   bSuccess = HB_FALSE;
@@ -1583,7 +1583,7 @@ HB_FUNC( WVG_OBJECT )
       gObj->iObjType = GOBJ_OBJTYPE_OBJECT;
 
       gObj->iData  = hb_parni( 1 );        /* Object to be executed */
-      gObj->bBlock = hb_itemNew( hb_param( 2, HB_IT_EVALITEM ) );
+      gObj->bBlock = hb_itemNew( hb_param( 2, Harbour::Item::EVALITEM ) );
 
       gObj->gObjNext = pWVT->gObjs;
       pWVT->gObjs    = gObj;
@@ -1691,7 +1691,7 @@ void hb_gt_wvt_PaintGObjects( PHB_GTWVT pWVT, RECT * uRect )
                hb_vmPush( gObj->bBlock );
                hb_vmSend( 0 );
 
-               pArray = hb_param( -1, HB_IT_ARRAY );
+               pArray = hb_param( -1, Harbour::Item::ARRAY );
 
                if( pArray && hb_arrayLen( pArray ) >= 3 )
                {

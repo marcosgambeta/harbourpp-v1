@@ -680,7 +680,7 @@ HB_FUNC( WVG_CHOOSEFONT )
    cf.Flags       = Flags;
    cf.rgbColors   = RGB( 0, 0, 0 );
 
-   cf.lCustData = ( HB_PTRUINT ) hb_param( 2, HB_IT_EVALITEM );
+   cf.lCustData = ( HB_PTRUINT ) hb_param( 2, Harbour::Item::EVALITEM );
    cf.lpfnHook  = ( LPCFHOOKPROC ) WvgDialogProcChooseFont;
 
    cf.lpTemplateName = nullptr;
@@ -726,7 +726,7 @@ HB_FUNC( WVG_FONTCREATE )
    LOGFONT lf;
    HFONT   hFont;
 
-   PHB_ITEM aFont = hb_param( 1, HB_IT_ARRAY );
+   PHB_ITEM aFont = hb_param( 1, Harbour::Item::ARRAY );
 
    memset( &lf, 0, sizeof( lf ) );
 
@@ -918,7 +918,7 @@ LRESULT CALLBACK ControlWindowProcedure( HWND hwnd, UINT msg, WPARAM wParam, LPA
 HB_FUNC( WVG_SETWINDOWPROCBLOCK )
 {
    HWND     hWnd   = hbwapi_par_raw_HWND( 1 );
-   PHB_ITEM pBlock = hb_itemNew( hb_param( 2, HB_IT_EVALITEM ) );
+   PHB_ITEM pBlock = hb_itemNew( hb_param( 2, Harbour::Item::EVALITEM ) );
 
 #if defined( HB_OS_WIN_CE ) && defined( __MINGW32__ )
    /* Workaround for bug in cegcc headers [as of version 0.55] */
