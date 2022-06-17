@@ -275,7 +275,7 @@ HB_FUNC( WVW_XBCREATE )
          SetScrollRange( hWnd, SB_CTL, 0, 99, FALSE );
          SetScrollPos( hWnd, SB_CTL, 0, TRUE );
 
-         hb_gt_wvw_AddControlHandle( wvw_win, WVW_CONTROL_SCROLLBAR, hWnd, nCtrlId, hb_param( 6, HB_IT_EVALITEM ), rXB, rOffXB, iStyle );
+         hb_gt_wvw_AddControlHandle( wvw_win, WVW_CONTROL_SCROLLBAR, hWnd, nCtrlId, hb_param( 6, Harbour::Item::EVALITEM ), rXB, rOffXB, iStyle );
          hb_gt_wvw_StoreControlProc( wvw_win, WVW_CONTROL_SCROLLBAR, hWnd,
             ( WNDPROC ) SetWindowLongPtr( hWnd, GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvw_XBProc ) );
 

@@ -302,7 +302,7 @@ HB_FUNC( WVW_CBCREATE )
           iBottom = iTop,
           iRight  = iLeft + iWidth - 1;
 
-      int iNumElement = HB_ISARRAY( 5 ) ? ( int ) hb_arrayLen( hb_param( 5, HB_IT_ARRAY ) ) : 0;
+      int iNumElement = HB_ISARRAY( 5 ) ? ( int ) hb_arrayLen( hb_param( 5, Harbour::Item::ARRAY ) ) : 0;
 
       RECT rXB, rOffXB;
 
@@ -411,7 +411,7 @@ HB_FUNC( WVW_CBCREATE )
          }
          SendMessage( hWnd, CB_SETDROPPEDWIDTH, ( WPARAM ) nMaxWidth + 100, 0 );
 
-         hb_gt_wvw_AddControlHandle( wvw_win, WVW_CONTROL_COMBOBOX, hWnd, nCtrlId, hb_param( 6, HB_IT_EVALITEM ),
+         hb_gt_wvw_AddControlHandle( wvw_win, WVW_CONTROL_COMBOBOX, hWnd, nCtrlId, hb_param( 6, Harbour::Item::EVALITEM ),
                                      rXB, rOffXB, hb_parnidef( 9, WVW_CB_KBD_STANDARD ) );
          hb_gt_wvw_StoreControlProc( wvw_win, WVW_CONTROL_COMBOBOX, hWnd,
             ( WNDPROC ) SetWindowLongPtr( hWnd, GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvw_CBProc ) );
@@ -520,7 +520,7 @@ HB_FUNC( WVW_CBSETCODEBLOCK )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
    PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_COMBOBOX, nullptr, hb_parni( 2 ) );
-   PHB_ITEM pBlock  = hb_param( 3, HB_IT_EVALITEM );
+   PHB_ITEM pBlock  = hb_param( 3, Harbour::Item::EVALITEM );
 
    if( pBlock && wvw_ctl && ! wvw_ctl->fBusy )
    {
@@ -575,7 +575,7 @@ HB_FUNC( WVW_CBSETFONT )
 
       if( HB_ISCHAR( 2 ) )
       {
-         HB_ITEMCOPYSTR( hb_param( 2, HB_IT_STRING ), wvw->lfCB.lfFaceName, HB_SIZEOFARRAY( wvw->lfCB.lfFaceName ) );
+         HB_ITEMCOPYSTR( hb_param( 2, Harbour::Item::STRING ), wvw->lfCB.lfFaceName, HB_SIZEOFARRAY( wvw->lfCB.lfFaceName ) );
          wvw_win->fontFace[ HB_SIZEOFARRAY( wvw->lfCB.lfFaceName ) - 1 ] = TEXT( '\0' );
       }
 

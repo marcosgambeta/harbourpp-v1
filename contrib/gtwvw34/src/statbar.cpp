@@ -350,7 +350,7 @@ HB_FUNC( WVW_SBSETFONT )
 
       if( HB_ISCHAR( 2 ) )
       {
-         HB_ITEMCOPYSTR( hb_param( 2, HB_IT_STRING ), wvw->lfSB.lfFaceName, HB_SIZEOFARRAY( wvw->lfSB.lfFaceName ) );
+         HB_ITEMCOPYSTR( hb_param( 2, Harbour::Item::STRING ), wvw->lfSB.lfFaceName, HB_SIZEOFARRAY( wvw->lfSB.lfFaceName ) );
          wvw_win->fontFace[ HB_SIZEOFARRAY( wvw->lfSB.lfFaceName ) - 1 ] = TEXT( '\0' );
       }
 

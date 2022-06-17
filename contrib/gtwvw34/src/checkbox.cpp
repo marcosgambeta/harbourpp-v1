@@ -109,7 +109,7 @@ HB_FUNC( WVW_CXCREATE )
                                         HB_PARSTR( 6, &hCaption, nullptr ),
                                         hb_parc( 7 ),
                                         ( HB_UINT ) hb_parni( 7 ),
-                                        hb_param( 8, HB_IT_EVALITEM ),
+                                        hb_param( 8, Harbour::Item::EVALITEM ),
                                         iOffTop, iOffLeft, iOffBottom, iOffRight,
                                         HB_ISNUM( 10 ) ? hb_parnd( 10 ) : 1 /* dStretch */,
                                         hb_parl( 11 ) /* bMap3Dcolors */,
@@ -206,7 +206,7 @@ HB_FUNC( WVW_CXSETCODEBLOCK )
    {
       PWVW_WIN wvw_win     = hb_gt_wvw_win_par();
       PWVW_CTL wvw_ctl     = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_CHECKBOX, nullptr, hb_parni( 2 ) );
-      PHB_ITEM pBlock      = hb_param( 3, HB_IT_EVALITEM );
+      PHB_ITEM pBlock      = hb_param( 3, Harbour::Item::EVALITEM );
       HB_BOOL  fOldSetting = wvw->fRecurseCBlock;
 
       if( pBlock && wvw_ctl && ! wvw_ctl->fBusy )
@@ -285,7 +285,7 @@ HB_FUNC( WVW_CXSETFONT )
 
       if( HB_ISCHAR( 2 ) )
       {
-         HB_ITEMCOPYSTR( hb_param( 2, HB_IT_STRING ), wvw->lfCX.lfFaceName, HB_SIZEOFARRAY( wvw->lfCX.lfFaceName ) );
+         HB_ITEMCOPYSTR( hb_param( 2, Harbour::Item::STRING ), wvw->lfCX.lfFaceName, HB_SIZEOFARRAY( wvw->lfCX.lfFaceName ) );
          wvw_win->fontFace[ HB_SIZEOFARRAY( wvw->lfCX.lfFaceName ) - 1 ] = TEXT( '\0' );
       }
 

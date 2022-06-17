@@ -772,7 +772,7 @@ HB_FUNC( WVW_TOOLBARADDBUTTONS )
 
    if( wvw_win && HB_ISARRAY( 3 ) )
    {
-      PHB_ITEM pArray   = hb_param( 3, HB_IT_ARRAY );
+      PHB_ITEM pArray   = hb_param( 3, Harbour::Item::ARRAY );
       int      iButtons = ( int ) hb_arrayLen( pArray );
 
       if( iButtons > 0 )

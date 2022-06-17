@@ -1311,7 +1311,7 @@ HB_FUNC( WVW_DRAWLABEL )
 
       if( HB_ISCHAR( 9 ) )
       {
-         HB_ITEMCOPYSTR( hb_param( 9, HB_IT_STRING ), lf.lfFaceName, HB_SIZEOFARRAY( lf.lfFaceName ) );
+         HB_ITEMCOPYSTR( hb_param( 9, Harbour::Item::STRING ), lf.lfFaceName, HB_SIZEOFARRAY( lf.lfFaceName ) );
          wvw_win->fontFace[ HB_SIZEOFARRAY( lf.lfFaceName ) - 1 ] = TEXT( '\0' );
       }
       else

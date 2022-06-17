@@ -585,7 +585,7 @@ HB_FUNC( WVW_EBCREATE )
          if( iMaxChar > 0 )
             SendMessage( hWnd, EM_LIMITTEXT, ( WPARAM ) iMaxChar, 0 );
 
-         hb_gt_wvw_AddControlHandle( wvw_win, WVW_CONTROL_EDITBOX, hWnd, nCtrlId, hb_param( 7, HB_IT_EVALITEM ), rXB, rOffXB, nEBType );
+         hb_gt_wvw_AddControlHandle( wvw_win, WVW_CONTROL_EDITBOX, hWnd, nCtrlId, hb_param( 7, Harbour::Item::EVALITEM ), rXB, rOffXB, nEBType );
          hb_gt_wvw_StoreControlProc( wvw_win, WVW_CONTROL_EDITBOX, hWnd,
             ( WNDPROC ) SetWindowLongPtr( hWnd, GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvw_EBProc ) );
 
@@ -714,7 +714,7 @@ HB_FUNC( WVW_EBSETCODEBLOCK )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
    PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_EDITBOX, nullptr, hb_parni( 2 ) );
-   PHB_ITEM pBlock  = hb_param( 3, HB_IT_EVALITEM );
+   PHB_ITEM pBlock  = hb_param( 3, Harbour::Item::EVALITEM );
 
    if( pBlock && wvw_ctl && ! wvw_ctl->fBusy )
    {
@@ -769,7 +769,7 @@ HB_FUNC( WVW_EBSETFONT )
 
       if( HB_ISCHAR( 2 ) )
       {
-         HB_ITEMCOPYSTR( hb_param( 2, HB_IT_STRING ), wvw->lfEB.lfFaceName, HB_SIZEOFARRAY( wvw->lfEB.lfFaceName ) );
+         HB_ITEMCOPYSTR( hb_param( 2, Harbour::Item::STRING ), wvw->lfEB.lfFaceName, HB_SIZEOFARRAY( wvw->lfEB.lfFaceName ) );
          wvw_win->fontFace[ HB_SIZEOFARRAY( wvw->lfEB.lfFaceName ) - 1 ] = TEXT( '\0' );
       }
 

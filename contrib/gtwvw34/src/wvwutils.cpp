@@ -98,7 +98,7 @@ HB_FUNC( WVW_GBCREATE )
                                         HB_PARSTR( 6, &hCaption, nullptr ),
                                         hb_parc( 7 ),
                                         ( HB_UINT ) hb_parni( 7 ),
-                                        hb_param( 8, HB_IT_EVALITEM ),
+                                        hb_param( 8, Harbour::Item::EVALITEM ),
                                         iOffTop, iOffLeft, iOffBottom, iOffRight,
                                         HB_ISNUM( 10 ) ? hb_parnd( 10 ) : 1 /* dStretch */,
                                         hb_parl( 11 ) /* bMap3Dcolors */,
@@ -138,7 +138,7 @@ HB_FUNC( WVW_RBCREATE )
                                         HB_PARSTR( 6, &hCaption, nullptr ),
                                         hb_parc( 7 ),
                                         ( HB_UINT ) hb_parni( 7 ),
-                                        hb_param( 8, HB_IT_EVALITEM ),
+                                        hb_param( 8, Harbour::Item::EVALITEM ),
                                         iOffTop, iOffLeft, iOffBottom, iOffRight,
                                         HB_ISNUM( 10 ) ? hb_parnd( 10 ) : 1 /* dStretch */,
                                         hb_parl( 11 ) /* bMap3Dcolors */,
@@ -279,7 +279,7 @@ HB_FUNC( WVW_ADDTOOLTIPEX )  /* changed by MAG */
 /* wvw_CreateImageList( array, cx, cy, nGrow, flags ) */
 HB_FUNC( WVW_CREATEIMAGELIST )
 {
-   PHB_ITEM pArray = hb_param( 1, HB_IT_ARRAY );
+   PHB_ITEM pArray = hb_param( 1, Harbour::Item::ARRAY );
 
    if( pArray )
    {
@@ -510,7 +510,7 @@ HB_FUNC( WVW_CREATEFONT )
 
       if( HB_ISCHAR( 1 ) )
       {
-         HB_ITEMCOPYSTR( hb_param( 1, HB_IT_STRING ), lf.lfFaceName, HB_SIZEOFARRAY( lf.lfFaceName ) );
+         HB_ITEMCOPYSTR( hb_param( 1, Harbour::Item::STRING ), lf.lfFaceName, HB_SIZEOFARRAY( lf.lfFaceName ) );
          wvw_top->fontFace[ HB_SIZEOFARRAY( lf.lfFaceName ) - 1 ] = TEXT( '\0' );
       }
       else
@@ -856,7 +856,7 @@ HB_FUNC( WVW_LOADFONT )
 
       if( HB_ISCHAR( 2 ) )
       {
-         HB_ITEMCOPYSTR( hb_param( 2, HB_IT_STRING ), lf.lfFaceName, HB_SIZEOFARRAY( lf.lfFaceName ) );
+         HB_ITEMCOPYSTR( hb_param( 2, Harbour::Item::STRING ), lf.lfFaceName, HB_SIZEOFARRAY( lf.lfFaceName ) );
          wvw_top->fontFace[ HB_SIZEOFARRAY( lf.lfFaceName ) - 1 ] = TEXT( '\0' );
       }
       else
@@ -940,7 +940,7 @@ HB_FUNC( WVW_CHOOSEFONT )
 
       if( HB_ISCHAR( 1 ) )
       {
-         HB_ITEMCOPYSTR( hb_param( 1, HB_IT_STRING ), lf.lfFaceName, HB_SIZEOFARRAY( lf.lfFaceName ) );
+         HB_ITEMCOPYSTR( hb_param( 1, Harbour::Item::STRING ), lf.lfFaceName, HB_SIZEOFARRAY( lf.lfFaceName ) );
          lf.lfFaceName[ HB_SIZEOFARRAY( lf.lfFaceName ) - 1 ] = TEXT( '\0' );
       }
 
@@ -1168,7 +1168,7 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
 
       if( iIndex < ( int ) HB_SIZEOFARRAY( wvw->a.hDlgModeless ) )
       {
-         PHB_ITEM pFirst    = hb_param( 3, HB_IT_ANY );
+         PHB_ITEM pFirst    = hb_param( 3, Harbour::Item::ANY );
          PHB_ITEM pFunc     = nullptr;
          HWND     hDlg      = nullptr;
          int      iType     = 0;
@@ -1274,7 +1274,7 @@ HB_FUNC( WVW_CREATEDIALOGMODAL )
 
       if( iIndex < ( int ) HB_SIZEOFARRAY( wvw->a.hDlgModal ) )
       {
-         PHB_ITEM pFirst    = hb_param( 3, HB_IT_ANY );
+         PHB_ITEM pFirst    = hb_param( 3, Harbour::Item::ANY );
          int      iResource = hb_parni( 4 );
          INT_PTR  iResult   = 0;
          HWND     hParent   = hbwapi_is_HANDLE( 5 ) ? hbwapi_par_raw_HWND( 5 ) : wvw_zer->hWnd;
