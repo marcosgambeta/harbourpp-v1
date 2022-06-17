@@ -60,7 +60,7 @@ static LRESULT CALLBACK hb_gt_wvw_XBProc( HWND hWnd, UINT message, WPARAM wParam
    PWVW_GLO wvw = hb_gt_wvw();
    PWVW_WIN wvw_win;
 
-   if( wvw == NULL || hWndParent == NULL )
+   if( wvw == nullptr || hWndParent == nullptr )
       return DefWindowProc( hWnd, message, wParam, lParam );
 
    if( message == WM_MOUSEACTIVATE )
@@ -80,15 +80,15 @@ static LRESULT CALLBACK hb_gt_wvw_XBProc( HWND hWnd, UINT message, WPARAM wParam
    nCtrlId = ( int ) GetWindowLong( hWnd, GWL_ID );
    if( nCtrlId == 0 )
    {
-      hb_errInternal( 10010, "ScrollBar: Control ID not found with hb_gt_wvw_FindControlId()", NULL, NULL );
+      hb_errInternal( 10010, "ScrollBar: Control ID not found with hb_gt_wvw_FindControlId()", nullptr, nullptr );
 
       return DefWindowProc( hWnd, message, wParam, lParam );
    }
 
    OldProc = hb_gt_wvw_GetControlProc( wvw_win, WVW_CONTROL_SCROLLBAR, hWnd );
-   if( OldProc == NULL )
+   if( OldProc == nullptr )
    {
-      hb_errInternal( 10011, "ScrollBar: Failed hb_gt_wvw_GetControlProc()", NULL, NULL );
+      hb_errInternal( 10011, "ScrollBar: Failed hb_gt_wvw_GetControlProc()", nullptr, nullptr );
 
       return DefWindowProc( hWnd, message, wParam, lParam );
    }
@@ -102,7 +102,7 @@ static LRESULT CALLBACK hb_gt_wvw_XBProc( HWND hWnd, UINT message, WPARAM wParam
          {
             ReleaseCapture();
 
-            InvalidateRect( hWnd, NULL, FALSE );
+            InvalidateRect( hWnd, nullptr, FALSE );
          }
          return 0;
 
@@ -259,7 +259,7 @@ HB_FUNC( WVW_XBCREATE )
       hWnd = CreateWindowEx(
          0,                                        /* no extended styles */
          TEXT( "SCROLLBAR" ),                      /* scroll bar control class */
-         NULL,                                     /* text for window title bar */
+         nullptr,                                     /* text for window title bar */
          WS_CHILD | WS_VISIBLE | ( DWORD ) iStyle, /* scroll bar styles */
          iLeft,                                    /* horizontal position */
          iTop,                                     /* vertical position */
@@ -267,8 +267,8 @@ HB_FUNC( WVW_XBCREATE )
          iBottom - iTop + 1,                       /* height */
          wvw_win->hWnd,                            /* handle to main window */
          ( HMENU ) ( HB_PTRUINT ) nCtrlId,         /* id for this scroll bar control */
-         GetModuleHandle( NULL ),                  /* instance owning this window */
-         NULL );                                   /* pointer not needed */
+         GetModuleHandle( nullptr ),                  /* instance owning this window */
+         nullptr );                                   /* pointer not needed */
 
       if( hWnd )
       {
@@ -297,7 +297,7 @@ HB_FUNC( WVW_XBDESTROY )
    {
       int      nCtrlId     = hb_parni( 2 );
       PWVW_CTL wvw_ctl     = wvw_win->ctlList;
-      PWVW_CTL wvw_ctlPrev = NULL;
+      PWVW_CTL wvw_ctlPrev = nullptr;
 
       while( wvw_ctl )
       {
@@ -336,7 +336,7 @@ HB_FUNC( WVW_XBUPDATE )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_SCROLLBAR, hb_parni( 2 ), NULL );
+   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_SCROLLBAR, hb_parni( 2 ), nullptr );
 
    if( hWnd )
    {
@@ -373,7 +373,7 @@ HB_FUNC( WVW_XBINFO )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_SCROLLBAR, hb_parni( 2 ), NULL );
+   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_SCROLLBAR, hb_parni( 2 ), nullptr );
 
    if( hWnd )
    {
@@ -414,7 +414,7 @@ HB_FUNC( WVW_XBENABLE )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd    = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_SCROLLBAR, hb_parni( 2 ), NULL );
+   HWND hWnd    = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_SCROLLBAR, hb_parni( 2 ), nullptr );
    UINT uiFlags = hbwapi_par_UINT( 3 );
 
    hb_retl( hWnd && uiFlags <= ESB_DISABLE_BOTH && EnableScrollBar( hWnd, SB_CTL, uiFlags ) );
@@ -431,7 +431,7 @@ HB_FUNC( WVW_XBVISIBLE )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_SCROLLBAR, hb_parni( 2 ), NULL );
+   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_SCROLLBAR, hb_parni( 2 ), nullptr );
 
    hb_retl( hWnd && ShowScrollBar( hWnd, SB_CTL, ( BOOL ) hb_parldef( 3, HB_TRUE ) ) );
 }

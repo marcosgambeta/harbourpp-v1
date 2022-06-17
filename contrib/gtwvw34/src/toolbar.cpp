@@ -98,7 +98,7 @@ static HB_BOOL hb_gt_wvw_AddTBButton( HWND hWndToolbar, const char * szBitmap, H
       if( ! hBitmap )
          return HB_FALSE;
 
-      tbab.hInst = NULL;
+      tbab.hInst = nullptr;
       tbab.nID   = ( UINT_PTR ) hBitmap;
       iNewBitmap = ( int ) SendMessage( hWndToolbar, TB_ADDBITMAP, ( WPARAM ) 1, ( WPARAM ) &tbab );
    }
@@ -218,7 +218,7 @@ static void hb_gt_wvw_TBMouseEvent( PWVW_WIN wvw_win, HWND hWnd, UINT message, W
          {
             int nPopupRet;
             GetCursorPos( &xy );
-            nPopupRet = ( int ) TrackPopupMenu( wvw_win->hPopup, TPM_CENTERALIGN + TPM_RETURNCMD, xy.x, xy.y, 0, hWnd, NULL );
+            nPopupRet = ( int ) TrackPopupMenu( wvw_win->hPopup, TPM_CENTERALIGN + TPM_RETURNCMD, xy.x, xy.y, 0, hWnd, nullptr );
             if( nPopupRet )
                hb_gt_wvw_AddCharToInputQueue( nPopupRet );
             return;
@@ -294,9 +294,9 @@ static LRESULT CALLBACK hb_gt_wvw_TBProc( HWND hWnd, UINT message, WPARAM wParam
    PWVW_GLO wvw = hb_gt_wvw();
    PWVW_WIN wvw_win;
 
-   if( wvw == NULL || hWndParent == NULL )
+   if( wvw == nullptr || hWndParent == nullptr )
    {
-      hb_errInternal( 10012, "ToolBar: Parent window is missing", NULL, NULL );
+      hb_errInternal( 10012, "ToolBar: Parent window is missing", nullptr, nullptr );
 
       return DefWindowProc( hWnd, message, wParam, lParam );
    }
@@ -309,7 +309,7 @@ static LRESULT CALLBACK hb_gt_wvw_TBProc( HWND hWnd, UINT message, WPARAM wParam
 
    if( nWin >= wvw->iNumWindows )
    {
-      hb_errInternal( 10013, "ToolBar: Invalid parent Window ID", NULL, NULL );
+      hb_errInternal( 10013, "ToolBar: Invalid parent Window ID", nullptr, nullptr );
 
       return DefWindowProc( hWnd, message, wParam, lParam );
    }
@@ -356,16 +356,16 @@ static LRESULT CALLBACK hb_gt_wvw_TBProc( HWND hWnd, UINT message, WPARAM wParam
 
          hOldObj = SelectObject( hdc, wvw->a.penWhite );
 
-         MoveToEx( hdc, 0, iTop, NULL );          /* Top */
+         MoveToEx( hdc, 0, iTop, nullptr );          /* Top */
          LineTo( hdc, iRight, iTop );
 
          SelectObject( hdc, wvw->a.penBlack );
 
-         MoveToEx( hdc, 0, iTop + 2, NULL );      /* Bottom */
+         MoveToEx( hdc, 0, iTop + 2, nullptr );      /* Bottom */
          LineTo( hdc, iRight, iTop + 2 );
 
          SelectObject( hdc, wvw->a.penDarkGray );
-         MoveToEx( hdc, 0, iTop + 1, NULL );      /* Middle */
+         MoveToEx( hdc, 0, iTop + 1, nullptr );      /* Middle */
          LineTo( hdc, iRight, iTop + 1 );
 
          SelectObject( wvw_win->hdc, hOldObj );
@@ -391,7 +391,7 @@ HB_FUNC( WVW_TBCREATE )
    PWVW_GLO wvw     = hb_gt_wvw();
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw && wvw_win && wvw_win->hToolBar == NULL )
+   if( wvw && wvw_win && wvw_win->hToolBar == nullptr )
    {
       HWND hWnd;
 
@@ -436,9 +436,9 @@ HB_FUNC( WVW_TBCREATE )
                               WS_CHILD | WS_VISIBLE | dwStyle,
                               WVW_ID_BASE_TOOLBAR + wvw_win->nWinId,
                               0,
-                              GetModuleHandle( NULL ),
+                              GetModuleHandle( nullptr ),
                               0,
-                              NULL,
+                              nullptr,
                               0,
                               0,
                               0,
@@ -500,7 +500,7 @@ HB_FUNC( WVW_TBCREATE )
    hb_stornl( 0, 8 );
    hb_stornl( 0, 9 );
 
-   hbwapi_ret_raw_HANDLE( NULL );
+   hbwapi_ret_raw_HANDLE( nullptr );
 }
 
 /* wvw_tbAddButton([nWinNum], nCommand, xBitmap, cLabel, nBitmapType, ;
@@ -542,7 +542,7 @@ HB_FUNC( WVW_TBADDBUTTON )
 
       HWND hWnd = wvw_win->hToolBar;
 
-      if( hWnd == NULL )
+      if( hWnd == nullptr )
       {
          hb_retl( HB_FALSE );
          return;
@@ -727,7 +727,7 @@ HB_FUNC( WVW_TBDESTROY )
    if( wvw_win && wvw_win->hToolBar )
    {
       DestroyWindow( wvw_win->hToolBar );
-      wvw_win->hToolBar  = NULL;
+      wvw_win->hToolBar  = nullptr;
       wvw_win->iTBHeight = 0;
 
       hb_gt_wvw_ResetWindow( wvw_win );
@@ -796,7 +796,7 @@ HB_FUNC( WVW_TOOLBARADDBUTTONS )
             tb[ nCount ].fsState   = ( BYTE ) hb_arrayGetNI( pTemp, 3 );
             tb[ nCount ].fsStyle   = ( BYTE ) hb_arrayGetNI( pTemp, 4 );
             tb[ nCount ].dwData    = hb_arrayGetNI( pTemp, 5 );
-            tb[ nCount ].iString   = ( INT_PTR ) HB_ARRAYGETSTR( pTemp, 6, &hStr[ nCount ], NULL );
+            tb[ nCount ].iString   = ( INT_PTR ) HB_ARRAYGETSTR( pTemp, 6, &hStr[ nCount ], nullptr );
          }
 
          SendMessage( hWndCtrl, TB_ADDBUTTONS, ( WPARAM ) iButtons, ( LPARAM ) ( LPTBBUTTON ) tb );

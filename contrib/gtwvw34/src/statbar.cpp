@@ -62,10 +62,10 @@ HB_FUNC( WVW_SBCREATE )
    PWVW_GLO wvw     = hb_gt_wvw();
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw && wvw_win && wvw_win->hStatusBar == NULL )
+   if( wvw && wvw_win && wvw_win->hStatusBar == nullptr )
    {
       HWND hWnd = CreateStatusWindow( WS_CHILD | WS_VISIBLE | WS_BORDER | SBT_TOOLTIPS,
-                                      NULL,
+                                      nullptr,
                                       wvw_win->hWnd,
                                       WVW_ID_BASE_STATUSBAR + wvw_win->nWinId );
       if( hWnd )
@@ -74,7 +74,7 @@ HB_FUNC( WVW_SBCREATE )
 
          RECT rSB;
 
-         if( wvw_win->hSBfont == NULL )
+         if( wvw_win->hSBfont == nullptr )
             wvw_win->hSBfont = CreateFontIndirect( &wvw->lfSB );
 
          memset( &rSB, 0, sizeof( rSB ) );
@@ -94,7 +94,7 @@ HB_FUNC( WVW_SBCREATE )
       hbwapi_ret_raw_HANDLE( hWnd );
    }
    else
-      hbwapi_ret_raw_HANDLE( NULL );
+      hbwapi_ret_raw_HANDLE( nullptr );
 }
 
 /* wvw_sbDestroy( [nWinNum] )
@@ -103,15 +103,15 @@ HB_FUNC( WVW_SBDESTROY )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win && wvw_win->hStatusBar != NULL )
+   if( wvw_win && wvw_win->hStatusBar != nullptr )
    {
       if( wvw_win->hSBfont )
       {
          DeleteObject( wvw_win->hSBfont );
-         wvw_win->hSBfont = NULL;
+         wvw_win->hSBfont = nullptr;
       }
       DestroyWindow( wvw_win->hStatusBar );
-      wvw_win->hStatusBar = NULL;
+      wvw_win->hStatusBar = nullptr;
       wvw_win->fSBPaint   = HB_FALSE;
       wvw_win->iSBHeight  = 0;
 
@@ -136,7 +136,7 @@ HB_FUNC( WVW_SBADDPART )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
    HWND     hWnd;
 
-   if( wvw_win && ( hWnd = wvw_win->hStatusBar ) != NULL )
+   if( wvw_win && ( hWnd = wvw_win->hStatusBar ) != nullptr )
    {
       int     piArray[ WVW_MAX_STATUS_PARTS ];
       int     iNumOfParts;
@@ -195,15 +195,15 @@ HB_FUNC( WVW_SBADDPART )
          HICON hIcon;
 
          void *  hName;
-         LPCTSTR szName = HB_PARSTR( 6, &hName, NULL );
+         LPCTSTR szName = HB_PARSTR( 6, &hName, nullptr );
 
          hIcon = ( HICON ) LoadImage( 0, szName, IMAGE_ICON, cx, cy, LR_LOADFROMFILE | LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT | LR_DEFAULTSIZE );
-         if( hIcon == NULL )
-            hIcon = ( HICON ) LoadImage( GetModuleHandle( NULL ), szName, IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_DEFAULTSIZE );
+         if( hIcon == nullptr )
+            hIcon = ( HICON ) LoadImage( GetModuleHandle( nullptr ), szName, IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_DEFAULTSIZE );
 
          hb_strfree( hName );
 
-         if( hIcon != NULL )
+         if( hIcon != nullptr )
             SendMessage( hWnd, SB_SETICON, ( WPARAM ) iNumOfParts - 1, ( LPARAM ) hIcon );
       }
 
@@ -211,7 +211,7 @@ HB_FUNC( WVW_SBADDPART )
       if( HB_ISCHAR( 7 ) )
       {
          void * hText;
-         SendMessage( hWnd, SB_SETTIPTEXT, ( WPARAM ) ( iNumOfParts - 1 ), ( LPARAM ) HB_PARSTR( 7, &hText, NULL ) );
+         SendMessage( hWnd, SB_SETTIPTEXT, ( WPARAM ) ( iNumOfParts - 1 ), ( LPARAM ) HB_PARSTR( 7, &hText, nullptr ) );
          hb_strfree( hText );
       }
 
@@ -232,7 +232,7 @@ HB_FUNC( WVW_SBREFRESH )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
    HWND     hWnd;
 
-   if( wvw_win && ( hWnd = wvw_win->hStatusBar ) != NULL )
+   if( wvw_win && ( hWnd = wvw_win->hStatusBar ) != nullptr )
    {
       int piArray[ WVW_MAX_STATUS_PARTS ];
       int iNumOfParts = ( int ) SendMessage( hWnd, SB_GETPARTS, HB_SIZEOFARRAY( piArray ), ( LPARAM ) ( LPINT ) piArray );
@@ -273,23 +273,23 @@ HB_FUNC( WVW_SBSETTEXT )
       void * hText;
 
       if( HB_ISCHAR( 4 ) )
-         wvw_win->cSBColorForeground = strtol( hb_parc( 4 ), NULL, 10 );
+         wvw_win->cSBColorForeground = strtol( hb_parc( 4 ), nullptr, 10 );
       else if( HB_ISNUM( 4 ) )
          wvw_win->cSBColorForeground = hbwapi_par_COLORREF( 4 );
 
       if( HB_ISCHAR( 5 ) )
-         wvw_win->cSBColorBackground = strtol( hb_parc( 5 ), NULL, 10 );
+         wvw_win->cSBColorBackground = strtol( hb_parc( 5 ), nullptr, 10 );
       else if( HB_ISNUM( 5 ) )
          wvw_win->cSBColorBackground = hbwapi_par_COLORREF( 5 );
 
       if( iPart == 0 && ( wvw_win->cSBColorForeground || wvw_win->cSBColorBackground ) )
       {
          wvw_win->fSBPaint = HB_TRUE;
-         SendMessage( wvw_win->hStatusBar, SB_SETTEXT, SBT_OWNERDRAW, ( LPARAM ) HB_PARSTRDEF( 3, &hText, NULL ) );
+         SendMessage( wvw_win->hStatusBar, SB_SETTEXT, SBT_OWNERDRAW, ( LPARAM ) HB_PARSTRDEF( 3, &hText, nullptr ) );
          hb_gt_wvw_ProcessMessages( wvw_win );
       }
       else
-         SendMessage( wvw_win->hStatusBar, SB_SETTEXT, iPart, ( LPARAM ) HB_PARSTRDEF( 3, &hText, NULL ) );
+         SendMessage( wvw_win->hStatusBar, SB_SETTEXT, iPart, ( LPARAM ) HB_PARSTRDEF( 3, &hText, nullptr ) );
 
       hb_strfree( hText );
    }

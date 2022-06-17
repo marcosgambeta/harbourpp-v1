@@ -89,7 +89,7 @@ HB_FUNC( WVW_CXCREATE )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = NULL;
+   HWND hWnd = nullptr;
 
    if( wvw_win && HB_ISEVALITEM( 8 ) )
    {
@@ -106,7 +106,7 @@ HB_FUNC( WVW_CXCREATE )
       void * hCaption;
 
       hb_retni( hb_gt_wvw_ButtonCreate( wvw_win, iTop, iLeft, iBottom, iRight,
-                                        HB_PARSTR( 6, &hCaption, NULL ),
+                                        HB_PARSTR( 6, &hCaption, nullptr ),
                                         hb_parc( 7 ),
                                         ( HB_UINT ) hb_parni( 7 ),
                                         hb_param( 8, HB_IT_EVALITEM ),
@@ -133,7 +133,7 @@ HB_FUNC( WVW_CXDESTROY )
    {
       int      nCtrlId     = hb_parni( 2 );
       PWVW_CTL wvw_ctl     = wvw_win->ctlList;
-      PWVW_CTL wvw_ctlPrev = NULL;
+      PWVW_CTL wvw_ctlPrev = nullptr;
 
       while( wvw_ctl )
       {
@@ -166,9 +166,9 @@ HB_FUNC( WVW_CXSETFOCUS )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_CHECKBOX, hb_parni( 2 ), NULL );
+   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_CHECKBOX, hb_parni( 2 ), nullptr );
 
-   hb_retl( hWnd && SetFocus( hWnd ) != NULL );
+   hb_retl( hWnd && SetFocus( hWnd ) != nullptr );
 }
 
 /* wvw_cxEnable( [nWinNum], nButtonId, [lToggle] )
@@ -180,7 +180,7 @@ HB_FUNC( WVW_CXENABLE )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_CHECKBOX, hb_parni( 2 ), NULL );
+   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_CHECKBOX, hb_parni( 2 ), nullptr );
 
    if( hWnd )
    {
@@ -205,7 +205,7 @@ HB_FUNC( WVW_CXSETCODEBLOCK )
    if( wvw )
    {
       PWVW_WIN wvw_win     = hb_gt_wvw_win_par();
-      PWVW_CTL wvw_ctl     = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_CHECKBOX, NULL, hb_parni( 2 ) );
+      PWVW_CTL wvw_ctl     = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_CHECKBOX, nullptr, hb_parni( 2 ) );
       PHB_ITEM pBlock      = hb_param( 3, HB_IT_EVALITEM );
       HB_BOOL  fOldSetting = wvw->fRecurseCBlock;
 
@@ -239,7 +239,7 @@ HB_FUNC( WVW_CXSETCODEBLOCK )
 HB_FUNC( WVW_CXSETCHECK )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_CHECKBOX, NULL, hb_parni( 2 ) );
+   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_CHECKBOX, nullptr, hb_parni( 2 ) );
 
    if( wvw_ctl && wvw_ctl->hWnd )
       SendMessage( wvw_ctl->hWnd, BM_SETCHECK, ( WPARAM ) hb_parnidef( 3, BST_CHECKED ), 0 );
@@ -255,7 +255,7 @@ HB_FUNC( WVW_CXSETCHECK )
 HB_FUNC( WVW_CXGETCHECK )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_CHECKBOX, NULL, hb_parni( 2 ) );
+   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_CHECKBOX, nullptr, hb_parni( 2 ) );
 
    if( wvw_ctl && wvw_ctl->hWnd )
       hb_retni( ( int ) SendMessage( wvw_ctl->hWnd, BM_GETCHECK, 0, 0 ) );
@@ -322,7 +322,7 @@ HB_FUNC( WVW_CXSETFONT )
 HB_FUNC( WVW_CXSTATUSFONT )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_PUSHBUTTON, NULL, hb_parni( 2 ) );
+   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni( 2 ) );
 
    if( wvw_ctl && wvw_ctl->hWnd )
       SendMessage( wvw_ctl->hWnd, WM_SETFONT,
@@ -336,7 +336,7 @@ HB_FUNC( WVW_CXVISIBLE )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_PUSHBUTTON, hb_parni( 2 ), NULL );
+   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_PUSHBUTTON, hb_parni( 2 ), nullptr );
 
    hb_retl( hWnd && ShowWindow( hWnd, hb_parldef( 3, HB_TRUE ) ? SW_SHOW : SW_HIDE ) == 0 );
 }

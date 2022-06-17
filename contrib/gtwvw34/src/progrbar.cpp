@@ -140,7 +140,7 @@ HB_FUNC( WVW_PGCREATE )
       hWnd = CreateWindowEx(
          0,
          PROGRESS_CLASS,
-         NULL,
+         nullptr,
          WS_CHILD | WS_VISIBLE | ( DWORD ) iStyle,
          iLeft,
          iTop,
@@ -148,8 +148,8 @@ HB_FUNC( WVW_PGCREATE )
          iBottom - iTop + 1,
          wvw_win->hWnd,
          ( HMENU ) ( HB_PTRUINT ) nCtrlId,
-         GetModuleHandle( NULL ),
-         NULL );
+         GetModuleHandle( nullptr ),
+         nullptr );
 
       if( hWnd )
       {
@@ -161,7 +161,7 @@ HB_FUNC( WVW_PGCREATE )
          SendMessage( hWnd, PBM_SETRANGE, 0, MAKELPARAM( 0, 100 ) );
          SendMessage( hWnd, PBM_SETPOS, 0, 0 );
 
-         hb_gt_wvw_AddControlHandle( wvw_win, WVW_CONTROL_PROGRESSBAR, hWnd, nCtrlId, NULL, rXB, rOffXB, iStyle );
+         hb_gt_wvw_AddControlHandle( wvw_win, WVW_CONTROL_PROGRESSBAR, hWnd, nCtrlId, nullptr, rXB, rOffXB, iStyle );
 
          hb_retni( nCtrlId );
          return;
@@ -182,7 +182,7 @@ HB_FUNC( WVW_PGDESTROY )
    {
       int      nCtrlId     = hb_parni( 2 );
       PWVW_CTL wvw_ctl     = wvw_win->ctlList;
-      PWVW_CTL wvw_ctlPrev = NULL;
+      PWVW_CTL wvw_ctlPrev = nullptr;
 
       while( wvw_ctl )
       {
@@ -220,7 +220,7 @@ HB_FUNC( WVW_PGSETRANGE )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_PROGRESSBAR, hb_parni( 2 ), NULL );
+   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_PROGRESSBAR, hb_parni( 2 ), nullptr );
    int  iMin = hb_parni( 3 );
    int  iMax = hb_parni( 4 );
 
@@ -243,7 +243,7 @@ HB_FUNC( WVW_PGSETPOS )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_PROGRESSBAR, hb_parni( 2 ), NULL );
+   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_PROGRESSBAR, hb_parni( 2 ), nullptr );
 
    if( hWnd )
    {
@@ -271,7 +271,7 @@ HB_FUNC( WVW_PGGETPOS )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_PROGRESSBAR, hb_parni( 2 ), NULL );
+   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_PROGRESSBAR, hb_parni( 2 ), nullptr );
 
    if( hWnd )
       hb_retni( ( int ) SendMessage( hWnd, PBM_GETPOS, 0, 0 ) );

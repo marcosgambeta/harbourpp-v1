@@ -98,7 +98,7 @@ HB_FUNC( WVW_NOPENWINDOW )
    if( wvw )
    {
       LPCTSTR szWinName;
-      void *  hWinName = NULL;
+      void *  hWinName = nullptr;
 
       PWVW_WIN wvw_par;
 
@@ -137,7 +137,7 @@ HB_FUNC( WVW_NOPENWINDOW )
          else
             wvw_par = hb_gt_wvw_win( wvw->iCurWindow );
 
-         hWndParent = NULL;
+         hWndParent = nullptr;
       }
       else
       {
@@ -161,8 +161,8 @@ HB_FUNC( WVW_NOPENWINDOW )
       }
       else
       {
-         PHB_ITEM pItem = hb_itemPutCPtr( NULL, hb_cmdargBaseProgName() );
-         szWinName = HB_ITEMGETSTR( pItem, &hWinName, NULL );
+         PHB_ITEM pItem = hb_itemPutCPtr( nullptr, hb_cmdargBaseProgName() );
+         szWinName = HB_ITEMGETSTR( pItem, &hWinName, nullptr );
          hb_itemRelease( pItem );
       }
 
@@ -260,7 +260,7 @@ HB_FUNC( WVW_GET_HND_WINDOW )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   hbwapi_ret_raw_HANDLE( wvw_win ? wvw_win->hWnd : NULL );
+   hbwapi_ret_raw_HANDLE( wvw_win ? wvw_win->hWnd : nullptr );
 }
 
 /* wvw_nNumWindows()
@@ -370,7 +370,7 @@ HB_FUNC( WVW_MAXMAXROW )
       int iMaxRows;
 
       /* rows and cols passed are dummy ones */
-      hb_gt_wvw_ValidWindowSize( wvw_win, 10, 10, wvw_win->hFont, wvw_win->fontWidth, &iMaxRows, NULL );
+      hb_gt_wvw_ValidWindowSize( wvw_win, 10, 10, wvw_win->hFont, wvw_win->fontWidth, &iMaxRows, nullptr );
 
       hb_retni( iMaxRows - 1 );
    }
@@ -389,7 +389,7 @@ HB_FUNC( WVW_MAXMAXCOL )
       int iMaxCols;
 
       /* rows and cols passed are dummy ones */
-      hb_gt_wvw_ValidWindowSize( wvw_win, 10, 10, wvw_win->hFont, wvw_win->fontWidth, NULL, &iMaxCols );
+      hb_gt_wvw_ValidWindowSize( wvw_win, 10, 10, wvw_win->hFont, wvw_win->fontWidth, nullptr, &iMaxCols );
 
       hb_retni( iMaxCols - 1 );
    }
@@ -485,7 +485,7 @@ HB_FUNC( WVW_SETPAINTREFRESH )
                if( wvw_win )
                {
                   if( wvw->iPaintRefresh > 0 )
-                     SetTimer( wvw_win->hWnd, WVW_ID_SYSTEM_TIMER, ( UINT ) wvw->iPaintRefresh, NULL );
+                     SetTimer( wvw_win->hWnd, WVW_ID_SYSTEM_TIMER, ( UINT ) wvw->iPaintRefresh, nullptr );
                   else
                      KillTimer( wvw_win->hWnd, WVW_ID_SYSTEM_TIMER );
                }
@@ -794,7 +794,7 @@ HB_FUNC( WVW_SETALTF4CLOSE )
 
 HB_FUNC( WVW_PROCESSMESSAGES )
 {
-   hb_gt_wvw_ProcessMessages( NULL );
+   hb_gt_wvw_ProcessMessages( nullptr );
 
    hb_retl( HB_TRUE );
 }
@@ -838,7 +838,7 @@ HB_FUNC( WVW_CLIENTTOSCREEN )
       int iTop  = hb_parni( 2 );
       int iLeft = hb_parni( 3 );
 
-      hb_gt_wvw_HBFUNCPrologue( wvw_win, &iTop, &iLeft, NULL, NULL );
+      hb_gt_wvw_HBFUNCPrologue( wvw_win, &iTop, &iLeft, nullptr, nullptr );
 
       xy = hb_gt_wvw_GetXYFromColRow( wvw_win, iLeft, iTop );
 

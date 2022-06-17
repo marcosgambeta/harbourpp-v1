@@ -72,19 +72,19 @@ HB_FUNC( WVW_STCREATE )
 
       int   iStyle = fBorder ? WS_BORDER : 0;
       int   iBox   = hb_parni( 10 );
-      HFONT hFont  = NULL;
+      HFONT hFont  = nullptr;
 
       if( iBox > 0 )
          iStyle |= iBox;
 
       if( HB_ISNUM( 8 ) )
          hFont = hbwapi_par_raw_HFONT( 8 );
-      else if( wvw_win->hSTfont == NULL )
+      else if( wvw_win->hSTfont == nullptr )
       {
          wvw_win->hSTfont = CreateFontIndirect( &wvw->lfST );
-         if( wvw_win->hSTfont == NULL )
+         if( wvw_win->hSTfont == nullptr )
          {
-            hbwapi_stor_HANDLE( NULL, 9 );
+            hbwapi_stor_HANDLE( nullptr, 9 );
             hb_retni( 0 );
             return;
          }
@@ -114,7 +114,7 @@ HB_FUNC( WVW_STCREATE )
       hWnd = CreateWindowEx(
          fBorder ? WS_EX_CLIENTEDGE : 0,
          TEXT( "STATIC" ),
-         NULL,
+         nullptr,
          WS_CHILD | WS_VISIBLE | ( DWORD ) iStyle,
          iLeft,
          iTop,
@@ -122,15 +122,15 @@ HB_FUNC( WVW_STCREATE )
          iBottom - iTop + 1,
          wvw_win->hWnd,
          ( HMENU ) ( HB_PTRUINT ) nCtrlId,
-         GetModuleHandle( NULL ),
-         NULL );
+         GetModuleHandle( nullptr ),
+         nullptr );
 
       if( hWnd )
       {
          if( HB_ISCHAR( 5 ) )
          {
             void * hText;
-            SendMessage( hWnd, WM_SETTEXT, 0, ( LPARAM ) HB_PARSTR( 5, &hText, NULL ) );
+            SendMessage( hWnd, WM_SETTEXT, 0, ( LPARAM ) HB_PARSTR( 5, &hText, nullptr ) );
             hb_strfree( hText );
          }
 
@@ -145,7 +145,7 @@ HB_FUNC( WVW_STCREATE )
       }
    }
 
-   hbwapi_stor_HANDLE( NULL, 9 );
+   hbwapi_stor_HANDLE( nullptr, 9 );
    hb_retni( 0 );
 }
 

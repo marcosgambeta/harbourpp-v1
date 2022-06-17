@@ -68,7 +68,7 @@ HB_FUNC( WVW_SETTOOLTIPACTIVE )
       {
          wvw_win->fToolTipActive = hb_parl( 2 );
 
-         if( wvw_win->fToolTipActive && wvw_win->hWndTT == NULL )
+         if( wvw_win->fToolTipActive && wvw_win->hWndTT == nullptr )
             hb_gt_wvw_CreateToolTipWindow( wvw_win );
       }
 
@@ -114,7 +114,7 @@ HB_FUNC( WVW_SETTOOLTIP )
          iBottom = xy.y - 1;
          iRight  = xy.x - 1;
 
-         ti.lpszText    = ( LPTSTR ) HB_UNCONST( HB_PARSTRDEF( 6, &hText, NULL ) );
+         ti.lpszText    = ( LPTSTR ) HB_UNCONST( HB_PARSTRDEF( 6, &hText, nullptr ) );
          ti.rect.left   = iLeft;
          ti.rect.top    = iTop;
          ti.rect.right  = iRight;
@@ -144,7 +144,7 @@ HB_FUNC( WVW_SETTOOLTIPTEXT )
       if( SendMessage( wvw_win->hWndTT, TTM_GETTOOLINFO, 0, ( LPARAM ) &ti ) )
       {
          void * hText;
-         ti.lpszText = ( LPTSTR ) HB_UNCONST( HB_PARSTRDEF( 2, &hText, NULL ) );
+         ti.lpszText = ( LPTSTR ) HB_UNCONST( HB_PARSTRDEF( 2, &hText, nullptr ) );
          SendMessage( wvw_win->hWndTT, TTM_UPDATETIPTEXT, 0, ( LPARAM ) &ti );
          hb_strfree( hText );
       }
@@ -238,7 +238,7 @@ HB_FUNC( WVW_SETTOOLTIPTITLE )
       if( iIcon > 3 )
          iIcon = 0;
 
-      SendMessage( wvw_win->hWndTT, TTM_SETTITLE, ( WPARAM ) iIcon, ( LPARAM ) HB_PARSTR( 3, &hText, NULL ) );
+      SendMessage( wvw_win->hWndTT, TTM_SETTITLE, ( WPARAM ) iIcon, ( LPARAM ) HB_PARSTR( 3, &hText, nullptr ) );
       hb_strfree( hText );
    }
 #endif
