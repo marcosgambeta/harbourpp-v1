@@ -69,7 +69,7 @@ HB_FUNC( WIN_REPORTEVENT )
       LPCTSTR * lpStrings = nullptr;
       void ** hStrings = nullptr;
 
-      PHB_ITEM pStrings = hb_param( 6, HB_IT_ARRAY );
+      PHB_ITEM pStrings = hb_param( 6, Harbour::Item::ARRAY );
 
       if( pStrings && ( wNumStrings = ( WORD ) hb_arrayLen( pStrings ) ) > 0 )
       {
@@ -88,7 +88,7 @@ HB_FUNC( WIN_REPORTEVENT )
          lpStrings = ( LPCTSTR * ) hb_xgrab( sizeof( LPCTSTR ) );
          hStrings = ( void ** ) hb_xgrab( sizeof( void * ) );
 
-         lpStrings[ 0 ] = ( LPCTSTR ) HB_ITEMGETSTR( hb_param( 6, HB_IT_STRING ), &hStrings[ 0 ], nullptr );
+         lpStrings[ 0 ] = ( LPCTSTR ) HB_ITEMGETSTR( hb_param( 6, Harbour::Item::STRING ), &hStrings[ 0 ], nullptr );
       }
 
       if( ReportEvent( hEventLog,

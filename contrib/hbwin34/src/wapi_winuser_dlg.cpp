@@ -104,7 +104,7 @@ HB_FUNC( WAPI_DIALOGBOXPARAM )
       MAKEINTRESOURCE( hbwapi_par_INT( 2 ) ),                     /* lpTemplate */
       hbwapi_par_raw_HWND( 3 ),                                   /* hWndParent */
       ( DLGPROC ) wapi_DialogFuncProc,                            /* lpDialogFunc */
-      ( LPARAM ) hb_itemGetSymbol( hb_param( 4, HB_IT_SYMBOL ) )  /* dwInitParam */
+      ( LPARAM ) hb_itemGetSymbol( hb_param( 4, Harbour::Item::SYMBOL ) )  /* dwInitParam */
       );
 
    hbwapi_SetLastError( GetLastError() );
@@ -269,7 +269,7 @@ HB_FUNC( __WAPI_DLGTEMPLATE_RAW_NEW )
    *p++ = ( short ) 0;                  /* Menu (ignored for now.) */
    *p++ = ( short ) 0x00;               /* Class also ignored */
 
-   if( hb_parinfa( 1, 11 ) == HB_IT_STRING )
+   if( hb_parinfa( 1, 11 ) == Harbour::Item::STRING )
    {
       void *  hText;
       LPCWSTR szText = hb_wstrnull( hb_parastr_u16( 1, 11, HB_CDP_ENDIAN_NATIVE, &hText, &nchar ) );
@@ -331,7 +331,7 @@ HB_FUNC( __WAPI_DLGTEMPLATE_RAW_NEW )
       *p++ = LOWORD( hb_parvnl( 9, i ) );  /* id */
       *p++ = HIWORD( hb_parvnl( 9, i ) );  /* id */
 
-      if( hb_parinfa( 10, i ) == HB_IT_STRING )
+      if( hb_parinfa( 10, i ) == Harbour::Item::STRING )
       {
          void *  hText;
          LPCWSTR szText = hb_parastr_u16( 10, i, HB_CDP_ENDIAN_NATIVE, &hText, &nchar );
@@ -352,7 +352,7 @@ HB_FUNC( __WAPI_DLGTEMPLATE_RAW_NEW )
          *p++ = ( WORD ) hb_parvni( 10, i );
       }
 
-      if( hb_parinfa( 11, i ) == HB_IT_STRING )
+      if( hb_parinfa( 11, i ) == Harbour::Item::STRING )
       {
          void *  hText;
          LPCWSTR szText = hb_parastr_u16( 11, i, HB_CDP_ENDIAN_NATIVE, &hText, &nchar );

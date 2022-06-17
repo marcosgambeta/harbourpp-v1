@@ -216,7 +216,7 @@ HB_FUNC( WIN_SERVICESTART )
 
    SERVICE_TABLE_ENTRY lpServiceTable[ 2 ];
 
-   HB_ITEMCOPYSTR( hb_param( 1, HB_IT_STRING ), s_lpServiceName, HB_SIZEOFARRAY( s_lpServiceName ) );
+   HB_ITEMCOPYSTR( hb_param( 1, Harbour::Item::STRING ), s_lpServiceName, HB_SIZEOFARRAY( s_lpServiceName ) );
 
    if( s_pHarbourEntryFunc )
    {
@@ -224,7 +224,7 @@ HB_FUNC( WIN_SERVICESTART )
       s_pHarbourEntryFunc = nullptr;
    }
 
-   pEntryFunc = hb_param( 2, HB_IT_EVALITEM );
+   pEntryFunc = hb_param( 2, Harbour::Item::EVALITEM );
 
    if( pEntryFunc )
       s_pHarbourEntryFunc = hb_itemNew( pEntryFunc );
@@ -235,7 +235,7 @@ HB_FUNC( WIN_SERVICESTART )
       s_pHarbourControlFunc = nullptr;
    }
 
-   pEntryFunc = hb_param( 3, HB_IT_EVALITEM );
+   pEntryFunc = hb_param( 3, Harbour::Item::EVALITEM );
 
    if( pEntryFunc )
       s_pHarbourControlFunc = hb_itemNew( pEntryFunc );

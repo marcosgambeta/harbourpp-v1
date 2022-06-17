@@ -51,7 +51,7 @@
 
 HB_FUNC( WIN_ANSITOOEM )
 {
-   PHB_ITEM pString = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pString = hb_param( 1, Harbour::Item::STRING );
 
    if( pString )
    {
@@ -79,7 +79,7 @@ HB_FUNC( WIN_ANSITOOEM )
 
 HB_FUNC( WIN_OEMTOANSI )
 {
-   PHB_ITEM pString = hb_param( 1, HB_IT_STRING );
+   PHB_ITEM pString = hb_param( 1, Harbour::Item::STRING );
 
    if( pString )
    {

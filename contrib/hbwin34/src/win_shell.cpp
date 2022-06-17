@@ -98,17 +98,17 @@ HB_FUNC( WIN_SHELLNOTIFYICON )
    tnid.hIcon = hbwapi_par_raw_HICON( 4 );
    if( tnid.hIcon )
       tnid.uFlags |= NIF_ICON;
-   if( HB_ITEMCOPYSTR( hb_param( 5, HB_IT_ANY ),
+   if( HB_ITEMCOPYSTR( hb_param( 5, Harbour::Item::ANY ),
                        tnid.szTip, HB_SIZEOFARRAY( tnid.szTip ) ) > 0 )
       tnid.uFlags |= NIF_TIP;
 
    #if defined( NIF_INFO ) /* did the headers provide Windows 2000 features? */
    if( hb_iswin2k() )      /* are we running on Windows 2000 or above? */
    {
-      if( HB_ITEMCOPYSTR( hb_param( 7, HB_IT_ANY ), tnid.szInfo, HB_SIZEOFARRAY( tnid.szInfo ) ) > 0 )
+      if( HB_ITEMCOPYSTR( hb_param( 7, Harbour::Item::ANY ), tnid.szInfo, HB_SIZEOFARRAY( tnid.szInfo ) ) > 0 )
          tnid.uFlags |= NIF_INFO;
       HB_WIN_V_UNION( tnid, uTimeout ) = hbwapi_par_UINT( 8 );
-      if( HB_ITEMCOPYSTR( hb_param( 9, HB_IT_ANY ), tnid.szInfoTitle, HB_SIZEOFARRAY( tnid.szInfoTitle ) ) > 0 )
+      if( HB_ITEMCOPYSTR( hb_param( 9, Harbour::Item::ANY ), tnid.szInfoTitle, HB_SIZEOFARRAY( tnid.szInfoTitle ) ) > 0 )
          tnid.uFlags |= NIF_INFO;
       tnid.dwInfoFlags = ( DWORD ) hb_parnl( 10 );
    }
@@ -151,7 +151,7 @@ typedef struct
 
 static LPTSTR s_StringList( int iParam )
 {
-   PHB_ITEM pItem = hb_param( iParam, HB_IT_ARRAY | HB_IT_STRING );
+   PHB_ITEM pItem = hb_param( iParam, Harbour::Item::ARRAY | Harbour::Item::STRING );
    LPTSTR lpStr = nullptr;
 
    if( pItem )
@@ -252,7 +252,7 @@ HB_FUNC( WIN_SHFILEOPERATION )
    if( ( fop.fFlags & FOF_WANTMAPPINGHANDLE ) != 0 )
    {
       HANDLETOMAPPINGS * hm = ( HANDLETOMAPPINGS * ) fop.hNameMappings;
-      PHB_ITEM pArray = hb_param( 7, HB_IT_ARRAY );
+      PHB_ITEM pArray = hb_param( 7, Harbour::Item::ARRAY );
 
       /* Process hNameMappings */
       if( hm )

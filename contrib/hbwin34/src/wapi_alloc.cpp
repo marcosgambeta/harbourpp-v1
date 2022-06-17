@@ -379,8 +379,8 @@ void * hbwapi_arrayGet_HANDLE( PHB_ITEM pArray, HB_SIZE nIndex )
 HB_BOOL hbwapi_is_HANDLE( int iParam )
 {
 #if defined( __HBWIN_WITH_UNSAFE_HANDLES )
-   return hb_param( iParam, HB_IT_POINTER | HB_IT_NUMERIC ) != nullptr;
+   return hb_param( iParam, Harbour::Item::POINTER | Harbour::Item::NUMERIC ) != nullptr;
 #else
-   return hb_param( iParam, HB_IT_POINTER ) != nullptr;
+   return hb_param( iParam, Harbour::Item::POINTER ) != nullptr;
 #endif
 }

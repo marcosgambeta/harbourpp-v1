@@ -101,7 +101,7 @@ HB_FUNC( WIN_PRINTDLGDC )
 
 static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
 {
-   PHB_ITEM pItem = hb_param( iParam, HB_IT_ARRAY | HB_IT_STRING );
+   PHB_ITEM pItem = hb_param( iParam, Harbour::Item::ARRAY | Harbour::Item::STRING );
    LPTSTR lpStr = nullptr;
    DWORD dwMaxIndex = 0;
 
@@ -256,7 +256,7 @@ static void s_GetFileName( HB_BOOL fSave )
    if( ofn.lpstrDefExt && ofn.lpstrDefExt[ 0 ] == '.' )
       ++ofn.lpstrDefExt;
 
-   HB_ITEMCOPYSTR( hb_param( 8, HB_IT_ANY ), ofn.lpstrFile, ofn.nMaxFile );
+   HB_ITEMCOPYSTR( hb_param( 8, Harbour::Item::ANY ), ofn.lpstrFile, ofn.nMaxFile );
 
    if( fSave ? GetSaveFileName( &ofn ) : GetOpenFileName( &ofn ) )
    {

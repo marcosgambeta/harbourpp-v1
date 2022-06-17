@@ -885,8 +885,8 @@ static void hb_oleItemToVariantRef( VARIANT * pVariant, PHB_ITEM pItem,
 
    switch( hb_itemType( pItem ) )
    {
-      case HB_IT_STRING:
-      case HB_IT_MEMO:
+      case Harbour::Item::STRING:
+      case Harbour::Item::MEMO:
          V_VT( pVariant ) = VT_BSTR;
          V_BSTR( pVariant ) = hb_oleItemToString( pItem );
          if( pVarRef )
@@ -896,7 +896,7 @@ static void hb_oleItemToVariantRef( VARIANT * pVariant, PHB_ITEM pItem,
          }
          break;
 
-      case HB_IT_LOGICAL:
+      case Harbour::Item::LOGICAL:
          V_VT( pVariant ) = VT_BOOL;
          V_BOOL( pVariant ) = hb_itemGetL( pItem ) ? VARIANT_TRUE : VARIANT_FALSE;
          if( pVarRef )
@@ -906,7 +906,7 @@ static void hb_oleItemToVariantRef( VARIANT * pVariant, PHB_ITEM pItem,
          }
          break;
 
-      case HB_IT_INTEGER:
+      case Harbour::Item::INTEGER:
          V_VT( pVariant ) = VT_I4;
          V_I4( pVariant ) = hb_itemGetNL( pItem );
          if( pVarRef )
@@ -916,7 +916,7 @@ static void hb_oleItemToVariantRef( VARIANT * pVariant, PHB_ITEM pItem,
          }
          break;
 
-      case HB_IT_LONG:
+      case Harbour::Item::LONG:
 #if HB_VMLONG_MAX == INT32_MAX || defined( HB_LONG_LONG_OFF )
          V_VT( pVariant ) = VT_I4;
          V_I4( pVariant ) = hb_itemGetNL( pItem );
@@ -946,7 +946,7 @@ static void hb_oleItemToVariantRef( VARIANT * pVariant, PHB_ITEM pItem,
 #endif
          break;
 
-      case HB_IT_DOUBLE:
+      case Harbour::Item::DOUBLE:
          V_VT( pVariant ) = VT_R8;
          V_R8( pVariant ) = hb_itemGetND( pItem );
          if( pVarRef )
@@ -956,7 +956,7 @@ static void hb_oleItemToVariantRef( VARIANT * pVariant, PHB_ITEM pItem,
          }
          break;
 
-      case HB_IT_DATE:
+      case Harbour::Item::DATE:
       {
          long lDate = hb_itemGetDL( pItem );
 
@@ -981,7 +981,7 @@ static void hb_oleItemToVariantRef( VARIANT * pVariant, PHB_ITEM pItem,
          }
          break;
       }
-      case HB_IT_TIMESTAMP:
+      case Harbour::Item::TIMESTAMP:
       {
          double dDate = hb_itemGetTD( pItem );
 
@@ -1006,7 +1006,7 @@ static void hb_oleItemToVariantRef( VARIANT * pVariant, PHB_ITEM pItem,
          }
          break;
       }
-      case HB_IT_POINTER:
+      case Harbour::Item::POINTER:
       {
          IDispatch * pDisp;
          VARIANT * pVarPtr;
@@ -1034,7 +1034,7 @@ static void hb_oleItemToVariantRef( VARIANT * pVariant, PHB_ITEM pItem,
 #endif
          break;
       }
-      case HB_IT_ARRAY: /* or OBJECT */
+      case Harbour::Item::ARRAY: /* or OBJECT */
          if( HB_IS_OBJECT( pItem ) )
          {
             IDispatch * pDisp = hb_oleItemGetDispatch( pItem );
@@ -1078,7 +1078,7 @@ static void hb_oleItemToVariantRef( VARIANT * pVariant, PHB_ITEM pItem,
          }
          break;
 
-      case HB_IT_NIL:
+      case Harbour::Item::NIL:
          if( hb_oleGetNil2NullFlag() )
             V_VT( pVariant ) = VT_NULL;
          /* fallthrough */
@@ -1795,12 +1795,12 @@ static void GetParams( DISPPARAMS * dispparam, HB_UINT uiOffset, HB_BOOL fUseRef
          if( fUseRef && HB_ISBYREF( iParam ) )
          {
             VariantInit( pRefs );
-            hb_oleItemToVariantRef( pRefs, hb_param( iParam, HB_IT_ANY ),
+            hb_oleItemToVariantRef( pRefs, hb_param( iParam, Harbour::Item::ANY ),
                                     pVariant, nullptr );
             ++pRefs;
          }
          else
-            hb_oleItemToVariantRef( pVariant, hb_param( iParam, HB_IT_ANY ), nullptr, nullptr );
+            hb_oleItemToVariantRef( pVariant, hb_param( iParam, Harbour::Item::ANY ), nullptr, nullptr );
       }
    }
 
@@ -1892,7 +1892,7 @@ static void FreeParams( DISPPARAMS * dispparam )
 
 HB_FUNC( __OLEISDISP )
 {
-   hb_retl( hb_oleItemGet( hb_param( 1, HB_IT_ANY ) ) != nullptr );
+   hb_retl( hb_oleItemGet( hb_param( 1, Harbour::Item::ANY ) ) != nullptr );
 }
 
 HB_FUNC( WIN_OLECLASSEXISTS ) /* ( cOleName | cCLSID ) */
@@ -2258,7 +2258,7 @@ HB_FUNC( WIN_OLEAUTO___ONERROR )
          FreeParams( &dispparam );
 
          /* assign method should return assigned value */
-         hb_itemReturn( hb_param( iPCount, HB_IT_ANY ) );
+         hb_itemReturn( hb_param( iPCount, Harbour::Item::ANY ) );
 
          hb_oleSetError( lOleError );
          if( lOleError != S_OK )
@@ -2290,7 +2290,7 @@ HB_FUNC( WIN_OLEAUTO___ONERROR )
       DISPID pDispIds[ HB_OLE_MAX_NAMEDARGS + 1 ];
       UINT uiNamedArgs;
 
-      lOleError = GetNamedParams( pDisp, szMethodWide, hb_param( 1, HB_IT_HASH ),
+      lOleError = GetNamedParams( pDisp, szMethodWide, hb_param( 1, Harbour::Item::HASH ),
                                   &uiNamedArgs, pArgs, pDispIds );
       if( lOleError == S_OK )
       {
@@ -2398,7 +2398,7 @@ HB_FUNC( WIN_OLEAUTO___OPINDEX )
       FreeParams( &dispparam );
 
       /* assign method should return assigned value */
-      hb_itemReturn( hb_param( hb_pcount(), HB_IT_ANY ) );
+      hb_itemReturn( hb_param( hb_pcount(), Harbour::Item::ANY ) );
    }
    else
    {
@@ -2482,7 +2482,7 @@ static void hb_oleInvokeCall( WORD wFlags )
 
    pObject = hb_stackSelfItem();
    if( HB_IS_NIL( pObject ) )
-      pObject = hb_param( ++uiOffset, HB_IT_ANY );
+      pObject = hb_param( ++uiOffset, Harbour::Item::ANY );
 
    pDisp = pObject ? hb_oleItemGetDispatch( pObject ) : nullptr;
    if( pDisp )
@@ -2599,7 +2599,7 @@ HB_FUNC( __OLEVARIANTGETTYPE )
 HB_FUNC( __OLEVARIANTNEW )
 {
    int iType = hb_parni( 1 );
-   PHB_ITEM pInit = hb_param( 2, HB_IT_ANY );
+   PHB_ITEM pInit = hb_param( 2, Harbour::Item::ANY );
    IDispatch * pDisp;
    VARIANT variant;
 
