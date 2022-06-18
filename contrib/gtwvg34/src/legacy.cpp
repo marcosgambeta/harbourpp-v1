@@ -79,17 +79,17 @@ HB_FUNC( WVT_UTILS )
 
 HB_FUNC( WVG_AND )
 {
-   hb_retnl( hb_parnl( 1 ) & hb_parnl( 2 ) );
+   hb_retnl(hb_parnl(1) & hb_parnl(2));
 }
 
 HB_FUNC( WVG_OR )
 {
-   hb_retnl( hb_parnl( 1 ) | hb_parnl( 2 ) );
+   hb_retnl(hb_parnl(1) | hb_parnl(2));
 }
 
 HB_FUNC( WVG_NOT )
 {
-   hb_retnl( ~( hb_parnl( 1 ) ) );
+   hb_retnl(~(hb_parnl(1)));
 }
 
 #endif
