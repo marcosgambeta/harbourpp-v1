@@ -20,6 +20,7 @@ CPP_SOURCES := \
    winreg.cpp \
    winspool.cpp \
    winuser.cpp \
+   winver.cpp \
 
 PRG_SOURCES := \
    struct_abc.prg \
