@@ -34,6 +34,7 @@ PRG_SOURCES := \
    struct_logbrush.prg \
    struct_logpen.prg \
    struct_msg.prg \
+   struct_nmhdr.prg \
    struct_pixelformatdescriptor.prg \
    struct_point.prg \
    struct_rect.prg \
