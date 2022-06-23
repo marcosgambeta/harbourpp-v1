@@ -621,6 +621,10 @@ HB_FUNC( WINAPI_FLATSB_GETSCROLLRANGE )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_GetScrollInfo(HWND,int code,LPSCROLLINFO)
 */
+HB_FUNC( WINAPI_FLATSB_GETSCROLLINFO )
+{
+  winapi_ret_BOOL(FlatSB_GetScrollInfo(winapi_par_HWND(1), winapi_par_int(2), static_cast<LPSCROLLINFO>(winapi_get_ptr(3))));
+}
 
 /*
 WINCOMMCTRLAPI int WINAPI FlatSB_GetScrollPos(HWND,int code)
@@ -655,6 +659,10 @@ HB_FUNC( WINAPI_FLATSB_SETSCROLLPOS )
 /*
 WINCOMMCTRLAPI int WINAPI FlatSB_SetScrollInfo(HWND,int code,LPSCROLLINFO,WINBOOL fRedraw)
 */
+HB_FUNC( WINAPI_FLATSB_SETSCROLLINFO )
+{
+  winapi_ret_int(FlatSB_SetScrollInfo(winapi_par_HWND(1), winapi_par_int(2), static_cast<LPSCROLLINFO>(winapi_get_ptr(3)), winapi_par_BOOL(4)));
+}
 
 /*
 WINCOMMCTRLAPI int WINAPI FlatSB_SetScrollRange(HWND,int code,int min,int max,WINBOOL fRedraw)

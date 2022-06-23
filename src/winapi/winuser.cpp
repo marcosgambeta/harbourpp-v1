@@ -4032,10 +4032,18 @@ HB_FUNC( WINAPI_DLGDIRSELECTCOMBOBOXEXW )
 /*
 WINUSERAPI int WINAPI SetScrollInfo(HWND hwnd,int nBar,LPCSCROLLINFO lpsi,WINBOOL redraw)
 */
+HB_FUNC( WINAPI_SETSCROLLINFO )
+{
+  winapi_ret_int(SetScrollInfo(winapi_par_HWND(1), winapi_par_int(2), static_cast<LPCSCROLLINFO>(winapi_get_ptr(3)), winapi_par_BOOL(4)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI GetScrollInfo(HWND hwnd,int nBar,LPSCROLLINFO lpsi)
 */
+HB_FUNC( WINAPI_GETSCROLLINFO )
+{
+  winapi_ret_BOOL(GetScrollInfo(winapi_par_HWND(1), winapi_par_int(2), static_cast<LPSCROLLINFO>(winapi_get_ptr(3))));
+}
 
 /*
 WINUSERAPI LRESULT WINAPI DefFrameProcA(HWND hWnd,HWND hWndMDIClient,UINT uMsg,WPARAM wParam,LPARAM lParam)

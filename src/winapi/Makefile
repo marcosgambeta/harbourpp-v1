@@ -38,6 +38,7 @@ PRG_SOURCES := \
    struct_point.prg \
    struct_rect.prg \
    struct_rgbquad.prg \
+   struct_scrollinfo.prg \
    struct_size.prg \
    struct_timecaps.prg \
 
