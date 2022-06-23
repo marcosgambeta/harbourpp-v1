@@ -25,6 +25,7 @@ PRG_SOURCES := \
    struct_abc.prg \
    struct_abcfloat.prg \
    struct_bitmapinfoheader.prg \
+   struct_capdrivercaps.prg \
    struct_coloradjustment.prg \
    struct_comstat.prg \
    struct_dcb.prg \
