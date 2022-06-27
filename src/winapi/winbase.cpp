@@ -921,14 +921,30 @@ WINBASEAPI WINBOOL WINAPI GetSystemRegistryQuota (PDWORD pdwQuotaAllowed, PDWORD
 /*
 WINBOOL WINAPI GetSystemTimes (LPFILETIME lpIdleTime, LPFILETIME lpKernelTime, LPFILETIME lpUserTime)
 */
+HB_FUNC( WINAPI_GETSYSTEMTIMES )
+{
+  winapi_ret_BOOL(GetSystemTimes(static_cast<LPFILETIME>(winapi_get_ptr(1)), static_cast<LPFILETIME>(winapi_get_ptr(2)), static_cast<LPFILETIME>(winapi_get_ptr(3))));
+}
 
 /*
 WINBASEAPI WINBOOL WINAPI FileTimeToDosDateTime (CONST FILETIME *lpFileTime, LPWORD lpFatDate, LPWORD lpFatTime)
 */
+HB_FUNC( WINAPI_FILETIMETODOSDATETIME )
+{
+  WORD FatDate;
+  WORD FatTime;
+  winapi_ret_BOOL(FileTimeToDosDateTime(static_cast<CONST FILETIME*>(winapi_get_ptr(1)), &FatDate, &FatTime));
+  winapi_stor_WORD(FatDate, 2);
+  winapi_stor_WORD(FatTime, 3);
+}
 
 /*
 WINBASEAPI WINBOOL WINAPI DosDateTimeToFileTime (WORD wFatDate, WORD wFatTime, LPFILETIME lpFileTime)
 */
+HB_FUNC( WINAPI_DOSDATETIMETOFILETIME )
+{
+  winapi_ret_BOOL(DosDateTimeToFileTime(winapi_par_WORD(1), winapi_par_WORD(2), static_cast<LPFILETIME>(winapi_get_ptr(3))));
+}
 
 /*
 WINBASEAPI WINBOOL WINAPI SetSystemTimeAdjustment (DWORD dwTimeAdjustment, WINBOOL bTimeAdjustmentDisabled)
