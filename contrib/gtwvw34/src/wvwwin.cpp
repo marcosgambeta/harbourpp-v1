@@ -133,9 +133,13 @@ HB_FUNC( WVW_NOPENWINDOW )
       if( iParentWin < 0 )
       {
          if( hb_gt_wvw_GetMainCoordMode() )
+         {
             wvw_par = hb_gt_wvw_win_top();
+         }
          else
+         {
             wvw_par = hb_gt_wvw_win( wvw->iCurWindow );
+         }
 
          hWndParent = nullptr;
       }
@@ -198,12 +202,16 @@ HB_FUNC( WVW_NOPENWINDOW )
          }
 
          if( hb_gt_wvw_GetMainCoordMode() )
+         {
             wvw->iCurWindow = nWin;
+         }
 
          hb_gtSetMode( wvw_win->ROWS, wvw_win->COLS );
 
          if( hb_gt_wvw_GetMainCoordMode() )
+         {
             hb_gt_wvw_SetCurWindow( 0 );
+         }
 
          SendMessage( wvw_win->hWnd, WM_SETFOCUS, 0, 0 );
       }
@@ -211,7 +219,9 @@ HB_FUNC( WVW_NOPENWINDOW )
       hb_retni( nWin );
    }
    else
+   {
       hb_retni( 0 );
+   }   
 }
 
 /* wvw_lCloseWindow()
@@ -228,7 +238,7 @@ HB_FUNC( WVW_LCLOSEWINDOW )
       if( wvw->iNumWindows <= 1 )
       {
          hb_errRT_TERM( EG_BOUND, 10005, "No more window to close", HB_ERR_FUNCNAME, 0, 0 );
-         hb_retl( HB_FALSE );
+         hb_retl(false);
          return;
       }
 
@@ -245,15 +255,19 @@ HB_FUNC( WVW_LCLOSEWINDOW )
             wvw->fQuickSetMode = HB_FALSE;
          }
          else
+         {
             hb_gt_wvw_SetCurWindow( 0 );
+         }
 
          SendMessage( wvw_top->hWnd, WM_SETFOCUS, 0, 0 );
 
-         hb_retl( HB_TRUE );
+         hb_retl(true);
       }
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 HB_FUNC( WVW_GET_HND_WINDOW )
@@ -287,23 +301,26 @@ HB_FUNC( WVW_XREPOSWINDOW )
 
    if( wvw )
    {
-      int     i;
       HB_BOOL fAnchored = hb_parldef( 1, HB_TRUE );
 
       /* centerize Main Window, only if not maximized */
       hb_gt_wvw_SetCentreWindow( hb_gt_wvw_win_top(), HB_TRUE, HB_TRUE );
 
       /* reposition all subwindows */
-      for( i = 1; i < wvw->iNumWindows; i++ )
+      for( int i = 1; i < wvw->iNumWindows; i++ )
       {
          PWVW_WIN wvw_win = hb_gt_wvw_win( i );
 
          if( wvw_win )
          {
             if( fAnchored )
+            {
                hb_gt_wvw_SetCentreWindow( wvw_win, HB_FALSE, HB_TRUE );
+            }
             else
+            {
                hb_gt_wvw_SetCentreWindow( wvw_win, wvw_win->CentreWindow, HB_TRUE );
+            }
          }
       }
    }
@@ -330,13 +347,19 @@ HB_FUNC( WVW_NSETCURWINDOW )
          int nWin = hb_parni( 1 );
 
          if( nWin >= 0 && nWin < wvw->iNumWindows )
+         {
             hb_gt_wvw_SetCurWindow( nWin );
+         }
          else
+         {
             hb_errRT_TERM( EG_BOUND, 10001, "Window number out of range", "wvw_nSetCurWindow()", 0, 0 );
+         }
       }
    }
    else
+   {
       hb_retni( 0 );
+   }
 }
 
 /* wvw_nRowOfs( [nWinNum] )
@@ -375,7 +398,9 @@ HB_FUNC( WVW_MAXMAXROW )
       hb_retni( iMaxRows - 1 );
    }
    else
+   {
       hb_retni( 0 );
+   }
 }
 
 /* wvw_MaxMaxCol( [nWinNum] )
@@ -394,7 +419,9 @@ HB_FUNC( WVW_MAXMAXCOL )
       hb_retni( iMaxCols - 1 );
    }
    else
+   {
       hb_retni( 0 );
+   }
 }
 
 /* wvw_UnreachedBr( [nWinNum], [nBottomPixels], [nRightPixels] )
@@ -421,8 +448,9 @@ HB_FUNC( WVW_UNREACHEDBR )
       iCols = ci.right - xy.x;
    }
    else
+   {
       iCols = iRows = 0;
-
+   }
 
    hb_storni( iRows, 2 );
    hb_storni( iCols, 3 );
@@ -445,13 +473,19 @@ HB_FUNC( WVW_SETMAINCOORD )
          wvw->fMainCoordMode = hb_parl( 1 );
 
          if( wvw->fMainCoordMode )
+         {
             hb_gt_wvw_SetCurWindow( 0 );
+         }
          else
+         {
             hb_gt_wvw_SetCurWindow( wvw->iNumWindows - 1 );
+         }
       }
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 /* GTWVW parameter setting from .prg */
@@ -485,16 +519,22 @@ HB_FUNC( WVW_SETPAINTREFRESH )
                if( wvw_win )
                {
                   if( wvw->iPaintRefresh > 0 )
+                  {
                      SetTimer( wvw_win->hWnd, WVW_ID_SYSTEM_TIMER, ( UINT ) wvw->iPaintRefresh, nullptr );
+                  }
                   else
+                  {
                      KillTimer( wvw_win->hWnd, WVW_ID_SYSTEM_TIMER );
+                  }
                }
             }
          }
       }
    }
    else
+   {
       hb_retni( 0 );
+   }
 }
 
 /* wvw_SetVertCaret( [lOn] )
@@ -526,7 +566,9 @@ HB_FUNC( WVW_SETVERTCARET )  /* TODO: do you want to make it window selective? *
       }
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 /* wvw_SetDefCentreWindow( [lCentre] )
@@ -544,10 +586,14 @@ HB_FUNC( WVW_SETDEFCENTREWINDOW )
       hb_retl( wvw->fDevCentreWindow );
 
       if( HB_ISLOG( 1 ) )
+      {
          wvw->fDevCentreWindow = hb_parl( 1 );
+      }
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 /* wvw_SetDefHCentreWindow( [lCentre] )
@@ -565,10 +611,14 @@ HB_FUNC( WVW_SETDEFHCENTREWINDOW )
       hb_retl( wvw->fDevHCentreWindow );
 
       if( HB_ISLOG( 1 ) )
+      {
          wvw->fDevHCentreWindow = hb_parl( 1 );
+      }
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 /* wvw_SetDefVCentreWindow( [lCentre] )
@@ -586,10 +636,14 @@ HB_FUNC( WVW_SETDEFVCENTREWINDOW )
       hb_retl( wvw->fDevVCentreWindow );
 
       if( HB_ISLOG( 1 ) )
+      {
          wvw->fDevVCentreWindow = hb_parl( 1 );
+      }
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 /* wvw_SetDefLineSpacing( [nLineSpacing] )
@@ -611,10 +665,14 @@ HB_FUNC( WVW_SETDEFLINESPACING )
 
       if( HB_ISNUM( 1 ) && hb_parni( 1 ) >= 0 && hb_parni( 1 ) <= 40 && /* nobody is crazy enough to use > 40 */
           fmod( hb_parnd( 1 ), 2 ) == 0 )
+      {
          wvw->iDefLineSpacing = hb_parni( 1 );
+      }
    }
    else
+   {
       hb_retni( 0 );
+   }
 }
 
 /* wvw_SetDefLSpaceColor( [nColorIndex] )
@@ -636,10 +694,14 @@ HB_FUNC( WVW_SETDEFLSPACECOLOR )
       hb_retni( wvw->iDefLSpaceColor );
 
       if( HB_ISNUM( 1 ) && hb_parni( 1 ) >= -1 && hb_parni( 1 ) <= 15 )
+      {
          wvw->iDefLSpaceColor = hb_parni( 1 );
+      }
    }
    else
+   {
       hb_retni( 0 );
+   }
 }
 
 /* wvw_SetLSpaceColor( [nWinNum], [nColorIndex] )
@@ -667,11 +729,15 @@ HB_FUNC( WVW_SETLSPACECOLOR )
          wvw_win->iLSpaceColor = hb_parni( 2 );
 
          if( wvw_win->iLSpaceColor != iOldValue )
+         {
             hb_gt_wvw_SetInvalidRect( wvw_win, 0, 0, wvw_win->COLS - 1, wvw_win->ROWS - 1 );
+         }
       }
    }
    else
+   {
       hb_retni( 0 );
+   }
 }
 
 /* wvw_AllowNonTopEvent( [lAllow] )
@@ -696,10 +762,14 @@ HB_FUNC( WVW_ALLOWNONTOPEVENT )
       hb_retl( wvw->fAllowNonTop );
 
       if( HB_ISLOG( 1 ) )
+      {
          wvw->fAllowNonTop = hb_parl( 1 );
+      }
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 /* wvw_RecurseCBlock( [lAllow] )
@@ -723,10 +793,14 @@ HB_FUNC( WVW_RECURSECBLOCK )
       hb_retl( wvw->fRecurseCBlock );
 
       if( HB_ISLOG( 1 ) )
+      {
          wvw->fRecurseCBlock = hb_parl( 1 );
+      }
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 /* wvw_NoStartupSubWindow( [lOn] )
@@ -744,10 +818,14 @@ HB_FUNC( WVW_NOSTARTUPSUBWINDOW )
       hb_retl( wvw->fNOSTARTUPSUBWINDOW );
 
       if( HB_ISLOG( 1 ) )
+      {
          wvw->fNOSTARTUPSUBWINDOW = hb_parl( 1 );
+      }
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 /* wvw_SetWindowCentre( nWinNum,   (0==MAIN)
@@ -758,7 +836,9 @@ HB_FUNC( WVW_SETWINDOWCENTRE )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win )
+   {
       hb_gt_wvw_SetCentreWindow( wvw_win, hb_parl( 2 ), hb_parl( 3 ) );
+   }
 }
 
 /* wvw_EnableShortcuts( nWinNum, lEnable )
@@ -775,7 +855,9 @@ HB_FUNC( WVW_ENABLESHORTCUTS )
       wvw_win->EnableShortCuts = hb_parldef( 2, HB_TRUE );
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 HB_FUNC( WVW_SETALTF4CLOSE )
@@ -789,14 +871,16 @@ HB_FUNC( WVW_SETALTF4CLOSE )
       wvw->a.AltF4Close = hb_parl( 1 );
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 HB_FUNC( WVW_PROCESSMESSAGES )
 {
    hb_gt_wvw_ProcessMessages( nullptr );
 
-   hb_retl( HB_TRUE );
+   hb_retl(true);
 }
 
 HB_FUNC( WVW_INVALIDATERECT )
@@ -845,7 +929,9 @@ HB_FUNC( WVW_CLIENTTOSCREEN )
       ClientToScreen( wvw_win->hWnd, &xy );
    }
    else
+   {
       memset( &xy, 0, sizeof( xy ) );
+   }
 
    hb_arraySetNL( aXY, 1, xy.x );
    hb_arraySetNL( aXY, 2, xy.y );

@@ -61,20 +61,28 @@ static LRESULT CALLBACK hb_gt_wvw_XBProc( HWND hWnd, UINT message, WPARAM wParam
    PWVW_WIN wvw_win;
 
    if( wvw == nullptr || hWndParent == nullptr )
+   {
       return DefWindowProc( hWnd, message, wParam, lParam );
-
+   }
+   
    if( message == WM_MOUSEACTIVATE )
+   {
       wvw->iScrolling = 1;
-
+   }
+   
    for( nWin = 0; nWin < wvw->iNumWindows; nWin++ )
    {
       if( wvw->pWin[ nWin ]->hWnd == hWndParent )
+      {
          break;
+      }   
    }
 
    if( nWin >= wvw->iNumWindows )
+   {
       return DefWindowProc( hWnd, message, wParam, lParam );
-
+   }
+   
    wvw_win = wvw->pWin[ nWin ];
 
    nCtrlId = ( int ) GetWindowLong( hWnd, GWL_ID );
@@ -117,8 +125,10 @@ static LRESULT CALLBACK hb_gt_wvw_XBProc( HWND hWnd, UINT message, WPARAM wParam
    }
 
    if( message == WM_CAPTURECHANGED )
+   {
       wvw->iScrolling = 0;
-
+   }
+   
    return CallWindowProc( OldProc, hWnd, message, wParam, lParam );
 }
 
@@ -252,9 +262,13 @@ HB_FUNC( WVW_XBCREATE )
 
       nCtrlId = hb_gt_wvw_LastControlId( wvw_win, WVW_CONTROL_SCROLLBAR );
       if( nCtrlId == 0 )
+      {
          nCtrlId = WVW_ID_BASE_SCROLLBAR;
+      }
       else
+      {
          nCtrlId++;
+      }
 
       hWnd = CreateWindowEx(
          0,                                        /* no extended styles */
@@ -302,7 +316,9 @@ HB_FUNC( WVW_XBDESTROY )
       while( wvw_ctl )
       {
          if( wvw_ctl->nClass == WVW_CONTROL_SCROLLBAR && wvw_ctl->nId == nCtrlId )
+         {
             break;
+         }
 
          wvw_ctlPrev = wvw_ctl;
          wvw_ctl     = wvw_ctl->pNext;
@@ -313,12 +329,18 @@ HB_FUNC( WVW_XBDESTROY )
          DestroyWindow( wvw_ctl->hWnd );
 
          if( wvw_ctlPrev )
+         {
             wvw_ctlPrev->pNext = wvw_ctl->pNext;
+         }
          else
+         {
             wvw_win->ctlList = wvw_ctl->pNext;
+         }
 
          if( wvw_ctl->pBlock )
+         {
             hb_itemRelease( wvw_ctl->pBlock );
+         }
 
          hb_xfree( wvw_ctl );
       }
@@ -345,11 +367,17 @@ HB_FUNC( WVW_XBUPDATE )
       UINT fMask = SIF_DISABLENOSCROLL;
 
       if( HB_ISNUM( 3 ) )
+      {
          fMask |= SIF_POS;
+      }
       if( HB_ISNUM( 4 ) )
+      {
          fMask |= SIF_PAGE;
+      }
       if( HB_ISNUM( 5 ) || HB_ISNUM( 6 ) )
+      {
          fMask |= SIF_RANGE;
+      }
 
       memset( &si, 0, sizeof( si ) );
 
@@ -363,7 +391,9 @@ HB_FUNC( WVW_XBUPDATE )
       hb_retni( SetScrollInfo( hWnd, SB_CTL, &si, TRUE ) );
    }
    else
+   {
       hb_retni( -1 );
+   }
 }
 
 /* wvw_xbInfo( [nWinNum], XBid )

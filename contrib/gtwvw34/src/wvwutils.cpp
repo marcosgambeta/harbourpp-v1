@@ -107,7 +107,9 @@ HB_FUNC( WVW_GBCREATE )
       hb_strfree( hCaption );
    }
    else
+   {
       hb_retni( 0 );
+   }
 
    hbwapi_stor_HANDLE( hWnd, 12 );
 }
@@ -147,7 +149,9 @@ HB_FUNC( WVW_RBCREATE )
       hb_strfree( hCaption );
    }
    else
+   {
       hb_retni( 0 );
+   }
 
    hbwapi_stor_HANDLE( hWnd, 12 );
 }
@@ -164,10 +168,12 @@ HB_FUNC( WVW_SETCONTROLTEXT )
       SetWindowText( hWnd, HB_PARSTRDEF( 3, &hText, nullptr ) );
       hb_strfree( hText );
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 HB_FUNC( WVW_MOUSE_COL )
@@ -244,13 +250,17 @@ HB_FUNC( WVW_ADDTOOLTIPEX )  /* changed by MAG */
 
       #if 0
       if( lToolTipBalloon )
+      {
          iStyle |= TTS_BALLOON;
+      }
       #endif
 
       if( ! wvw->hWndTT )
+      {
          wvw->hWndTT = CreateWindow( TOOLTIPS_CLASS, nullptr, iStyle,
                                      CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
                                      nullptr, nullptr, GetModuleHandle( nullptr ), nullptr );
+      }
       if( wvw->hWndTT )
       {
          void * hText;
@@ -273,7 +283,7 @@ HB_FUNC( WVW_ADDTOOLTIPEX )  /* changed by MAG */
       }
    }
 
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 /* wvw_CreateImageList( array, cx, cy, nGrow, flags ) */
@@ -283,7 +293,7 @@ HB_FUNC( WVW_CREATEIMAGELIST )
 
    if( pArray )
    {
-      int ul, ulLen = ( int ) hb_arrayLen( pArray );
+      int ulLen = ( int ) hb_arrayLen( pArray );
 
       HIMAGELIST himl = ImageList_Create( hb_parni( 2 ),
                                           hb_parni( 3 ),
@@ -291,7 +301,7 @@ HB_FUNC( WVW_CREATEIMAGELIST )
                                           ulLen,
                                           hb_parni( 4 ) );
 
-      for( ul = 1; ul <= ulLen; ++ul )
+      for( int ul = 1; ul <= ulLen; ++ul )
       {
          HBITMAP hbmp = ( HBITMAP ) hbwapi_arrayGet_HANDLE( pArray, ul );
          ImageList_Add( himl, hbmp, nullptr );
@@ -301,7 +311,9 @@ HB_FUNC( WVW_CREATEIMAGELIST )
       hbwapi_ret_raw_HANDLE( himl );
    }
    else
+   {
       hbwapi_ret_raw_HANDLE( nullptr );
+   }
 }
 
 HB_FUNC( WVW_IMAGELIST_ADD )
@@ -337,7 +349,9 @@ HB_FUNC( WVW_OPENIMAGE )
       SIZE_T nFileSize = ( SIZE_T ) hb_parclen( 1 );
       hG = GlobalAlloc( GPTR, nFileSize );
       if( hG )
+      {
          memcpy( hG, hb_parcx( 1 ), nFileSize );
+      }   
    }
    else
    {
@@ -350,7 +364,9 @@ HB_FUNC( WVW_OPENIMAGE )
          SIZE_T nFileSize = ( SIZE_T ) hb_fileSize( fhnd );
          hG = GlobalAlloc( GPTR, nFileSize );
          if( hG )
+         {
             hb_fileReadAt( fhnd, hG, nFileSize, 0 );
+         }
          hb_fileClose( fhnd );
       }
    }
@@ -373,10 +389,14 @@ HB_FUNC( WVW_OPENIMAGE )
          HBITMAP hBitmap = nullptr;
 
          if( HB_VTBL( pPicture )->get_Handle( HB_THIS_( pPicture ) ( OLE_HANDLE * ) & hBitmap ) == S_OK && hBitmap )
+         {
             hbwapi_ret_raw_HANDLE( CopyImage( hBitmap, IMAGE_BITMAP, 0, 0, LR_COPYRETURNORG ) );
+         }
          else
+         {
             hbwapi_ret_raw_HANDLE( nullptr );
-
+         }
+         
          HB_VTBL( pPicture )->Release( HB_THIS( pPicture ) );
 
          return;
@@ -440,7 +460,9 @@ HB_FUNC( WVW_OPENBITMAP )
             case 16:
             case 32:
                if( bmih.biCompression == BI_BITFIELDS )
+               {
                   hb_fileRead( fhnd, lpbmi->bmiColors, 3 * sizeof( RGBQUAD ), -1 );
+               }
                break;
 
             case 24:
@@ -459,14 +481,18 @@ HB_FUNC( WVW_OPENBITMAP )
             hb_fileRead( fhnd, lpvBits, bmfh.bfSize - bmfh.bfOffBits, -1 );
 
             if( ! hDC )
+            {
                hDC = GetDC( 0 );
-
+            }
+            
             /* Create a bitmap from the data stored in the .bmp file.  */
             hbm = CreateDIBitmap( hDC, &bmih, CBM_INIT, lpvBits, lpbmi, DIB_RGB_COLORS );
 
             if( ! hbwapi_is_HANDLE( 2 ) )
+            {
                ReleaseDC( 0, hDC );
-
+            }
+            
             GlobalUnlock( hmem2 );
             GlobalFree( hmem2 );
          }
@@ -514,12 +540,16 @@ HB_FUNC( WVW_CREATEFONT )
          wvw_top->fontFace[ HB_SIZEOFARRAY( lf.lfFaceName ) - 1 ] = TEXT( '\0' );
       }
       else
+      {
          HB_STRNCPY( lf.lfFaceName, wvw_top->fontFace, HB_SIZEOFARRAY( lf.lfFaceName ) - 1 );
+      }
 
       hbwapi_ret_raw_HANDLE( CreateFontIndirect( &lf ) );
    }
    else
+   {
       hbwapi_ret_raw_HANDLE( nullptr );
+   }
 }
 
 HB_FUNC( WVW_SELECTFONT )
@@ -606,7 +636,9 @@ HB_FUNC( WVW_SETBITMAPRESOURCEID )
       }
    }
    else
+   {
       hb_retni( 0 );
+   }
 }
 
 HB_FUNC( WVW_DRAWBITMAP )
@@ -622,10 +654,14 @@ HB_FUNC( WVW_DRAWBITMAP )
    SelectObject( hDCmem, hBitmap );
    GetObject( hBitmap, sizeof( bm ), ( LPVOID ) &bm );
    if( nWidthDest && ( nWidthDest != bm.bmWidth || nHeightDest != bm.bmHeight ) )
+   {
       StretchBlt( hDC, hb_parni( 4 ), hb_parni( 5 ), nWidthDest, nHeightDest, hDCmem,
                   0, 0, bm.bmWidth, bm.bmHeight, dwraster );
+   }
    else
+   {
       BitBlt( hDC, hb_parni( 4 ), hb_parni( 5 ), bm.bmWidth, bm.bmHeight, hDCmem, 0, 0, dwraster );
+   }
 
    DeleteDC( hDCmem );
 }
@@ -640,9 +676,13 @@ HB_FUNC( WVW_WINDOW2BITMAP )
    RECT    rc;
 
    if( fFull )
+   {
       GetWindowRect( hWnd, &rc );
+   }
    else
+   {
       GetClientRect( hWnd, &rc );
+   }
 
    hBitmap = CreateCompatibleBitmap( hDC, rc.right - rc.left, rc.bottom - rc.top );
    SelectObject( hDCmem, hBitmap );
@@ -683,10 +723,14 @@ HB_FUNC( WVW_SETMAXBMCACHE )
       hb_retni( wvw->a.iMaxBMcache );
 
       if( HB_ISNUM( 1 ) )
+      {
          wvw->a.iMaxBMcache = HB_MAX( hb_parni( 1 ), 0 );
+      }
    }
    else
+   {
       hb_retni( 0 );
+   }   
 }
 
 /* wvw_NumBMCache()
@@ -719,10 +763,12 @@ HB_FUNC( WVW_SETTIMER )
    {
       SetTimer( wvw_win->hWnd, WVW_ID_BASE_TIMER + wvw_win->nWinId, hbwapi_par_UINT( 2 ), nullptr );
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 /* wvw_KillTimer([nWinNum])
@@ -737,10 +783,12 @@ HB_FUNC( WVW_KILLTIMER )  /* 2004-06-02: WARNING: WVT is slightly different */
    {
       KillTimer( wvw_win->hWnd, WVW_ID_BASE_TIMER + wvw_win->nWinId );
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 /* wvw_GetPaintRect( nWinNum )   nWinNum is 0 based
@@ -758,9 +806,13 @@ HB_FUNC( WVW_GETPAINTRECT )
    RECT     rc;
 
    if( wvw_win )
+   {
       rc = wvw_win->rPaintPending;
+   }
    else
+   {
       memset( &rc, 0, sizeof( rc ) );
+   }
 
    hb_arraySetNL( info, 1, rc.top );
    hb_arraySetNL( info, 2, rc.left );
@@ -816,7 +868,9 @@ HB_FUNC( WVW_LOADPICTURE )
    if( wvw && pPicture && iSlot >= 0 && iSlot < ( int ) HB_SIZEOFARRAY( wvw->a.pPicture ) )
    {
       if( wvw->a.pPicture[ iSlot ] )
+      {
          hb_gt_wvw_DestroyPicture( wvw->a.pPicture[ iSlot ] );
+      }
 
       wvw->a.pPicture[ iSlot ] = pPicture;
 
@@ -860,22 +914,26 @@ HB_FUNC( WVW_LOADFONT )
          wvw_top->fontFace[ HB_SIZEOFARRAY( lf.lfFaceName ) - 1 ] = TEXT( '\0' );
       }
       else
+      {
          HB_STRNCPY( lf.lfFaceName, wvw_top->fontFace, HB_SIZEOFARRAY( lf.lfFaceName ) - 1 );
+      }
 
       hFont = CreateFontIndirect( &lf );
       if( hFont )
       {
          if( wvw->a.hUserFonts[ iSlot ] )
+         {
             DeleteObject( wvw->a.hUserFonts[ iSlot ] );
+         }
 
          wvw->a.hUserFonts[ iSlot ] = hFont;
 
-         hb_retl( HB_TRUE );
+         hb_retl(true);
          return;
       }
    }
 
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 /* wvw_LoadPen( nSlot, nStyle, nWidth, nRGBColor ) */
@@ -892,16 +950,18 @@ HB_FUNC( WVW_LOADPEN )
       if( hPen )
       {
          if( wvw->a.hUserPens[ iSlot ] )
+         {
             DeleteObject( wvw->a.hUserPens[ iSlot ] );
+         }
 
          wvw->a.hUserPens[ iSlot ] = hPen;
 
-         hb_retl( HB_TRUE );
+         hb_retl(true);
          return;
       }
    }
 
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 /* End of drawing primitives */
@@ -926,8 +986,10 @@ HB_FUNC( WVW_CHOOSEFONT )
       CHOOSEFONT cf;
 
       if( HB_ISNUM( 2 ) )
+      {
          iPointSize = -MulDiv( hb_parni( 2 ), GetDeviceCaps( wvw_top->hdc, LOGPIXELSY ), 72 );
-
+      }
+      
       lf.lfHeight         = iPointSize;
       lf.lfWidth          = hb_parnl( 3 );
       lf.lfWeight         = hb_parnl( 4 );
@@ -963,7 +1025,9 @@ HB_FUNC( WVW_CHOOSEFONT )
       cf.nSizeMax       = 0;
 
       if( ChooseFont( &cf ) )
+      {
          iPointSize = -MulDiv( lf.lfHeight, 72, GetDeviceCaps( wvw_top->hdc, LOGPIXELSY ) );
+      }
       else
       {
          iPointSize = 0;
@@ -1012,7 +1076,7 @@ HB_FUNC( WVW_SETMOUSEPOS )
       }
    }
 
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 /* by bdj
@@ -1085,10 +1149,12 @@ HB_FUNC( WVW_FILLRECTANGLE )
          DeleteObject( hBrush );
       }
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 HB_FUNC( WVW_LBADDSTRING )
@@ -1126,7 +1192,9 @@ HB_FUNC( WVW_DLGSETICON )
    HICON hIcon = nullptr;
 
    if( HB_ISNUM( 2 ) )
+   {
       hIcon = LoadIcon( GetModuleHandle( nullptr ), MAKEINTRESOURCE( hb_parni( 2 ) ) );
+   }
    else
    {
       void * hName;
@@ -1163,7 +1231,9 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
       for( iIndex = 0; iIndex < ( int ) HB_SIZEOFARRAY( wvw->a.hDlgModeless ); iIndex++ )
       {
          if( wvw->a.hDlgModeless[ iIndex ] == nullptr )
+         {
             break;
+         }
       }
 
       if( iIndex < ( int ) HB_SIZEOFARRAY( wvw->a.hDlgModeless ) )
@@ -1184,15 +1254,19 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
          {
             PHB_DYNS pExecSym = hb_dynsymFindName( hb_itemGetCPtr( pFirst ) );
             if( pExecSym )
+            {
                pFunc = ( PHB_ITEM ) pExecSym;
+            }
             iType = 1;
          }
 
          if( HB_ISNUM( 3 ) )
+         {
             hDlg = CreateDialogIndirect( GetModuleHandle( nullptr ),
                                          ( LPCDLGTEMPLATE ) hb_parc( 1 ),
                                          hb_parl( 2 ) ? wvw_zer->hWnd : nullptr,
                                          hbwapi_par_raw_DLGPROC( 3 ) );
+         }
          else
          {
             switch( iResource )
@@ -1243,7 +1317,9 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
          else
          {
             if( iType == 2 && pFunc )
+            {
                hb_itemRelease( pFunc );
+            }
 
             wvw->a.hDlgModeless[ iIndex ] = nullptr;
          }
@@ -1269,7 +1345,9 @@ HB_FUNC( WVW_CREATEDIALOGMODAL )
       for( iIndex = 0; iIndex < ( int ) HB_SIZEOFARRAY( wvw->a.hDlgModal ); iIndex++ )
       {
          if( wvw->a.hDlgModal[ iIndex ] == nullptr )
+         {
             break;
+         }
       }
 
       if( iIndex < ( int ) HB_SIZEOFARRAY( wvw->a.hDlgModal ) )
@@ -1447,13 +1525,17 @@ HB_FUNC( WVW_RESTSCREEN )
          SelectObject( wvw_win->hCompDC, hBmp );
 
          if( ! hb_parl( 7 ) /* fDoNotDestroyBMP */ )
+         {
             DeleteObject( ( HBITMAP ) hbwapi_parv_raw_HANDLE( 6, 3 ) );
+         }
       }
 
       hb_retl( fResult );
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 /* Pritpal Bedi <pritpal@vouchcac.com> */
@@ -1500,7 +1582,9 @@ HB_FUNC( WVW_SETFONT )
 
             size = HB_STRLEN( fontFace );
             if( size > 0 && ( size < HB_SIZEOFARRAY( wvw_win->fontFace ) - 1 ) )
+            {
                HB_STRNCPY( wvw_win->fontFace, fontFace, HB_SIZEOFARRAY( wvw_win->fontFace ) - 1 );
+            }
 
             if( wvw_win->hWnd )
             {
@@ -1531,14 +1615,20 @@ HB_FUNC( WVW_SETICON )
       void * hName;
 
       if( HB_ISNUM( 2 ) && HB_ISCHAR( 3 ) )
+      {
          hbwapi_ret_raw_HANDLE( hb_gt_wvw_SetWindowIcon( wvw_win, hb_parni( 2 ), HB_PARSTRDEF( 3, &hName, nullptr ) ) );
+      }
       else
+      {
          hbwapi_ret_raw_HANDLE( hb_gt_wvw_SetWindowIconFromFile( wvw_win, HB_PARSTRDEF( 2, &hName, nullptr ) ) );
+      }
 
       hb_strfree( hName );
    }
    else
+   {
       hbwapi_ret_raw_HANDLE( nullptr );
+   }   
 }
 
 HB_FUNC( WVW_GETWINDOWHANDLE )
@@ -1564,9 +1654,13 @@ HB_FUNC( WVW_SETCODEPAGE )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win )
+   {
       hb_retni( hb_gt_wvw_SetCodePage( wvw_win, hb_parni( 2 ) ) );
+   }
    else
+   {
       hb_retni( 0 );
+   }
 }
 
 /* wvw_CenterWindow( nWinNum, lCenter, lPaint )  (nWinNum==0==MAIN) */
@@ -1588,7 +1682,9 @@ HB_FUNC( WVW_CENTERWINDOW )
       }
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }   
 }
 
 HB_FUNC( WVW_SETMOUSEMOVE )
@@ -1600,10 +1696,14 @@ HB_FUNC( WVW_SETMOUSEMOVE )
       hb_retl( wvw_win->MouseMove );
 
       if( HB_ISLOG( 2 ) )
+      {
          wvw_win->MouseMove = hb_parl( 2 );
+      }
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 HB_FUNC( WVW_GETXYFROMROWCOL )
@@ -1614,9 +1714,13 @@ HB_FUNC( WVW_GETXYFROMROWCOL )
    POINT    xy;
 
    if( wvw_win )
+   {
       xy = hb_gt_wvw_GetXYFromColRow( wvw_win, hb_parni( 3 ), hb_parni( 2 ) );
+   }
    else
+   {
       memset( &xy, 0, sizeof( xy ) );
+   }
 
    hb_arraySetNL( aRet, 1, xy.x );
    hb_arraySetNL( aRet, 2, xy.y );
@@ -1634,9 +1738,13 @@ HB_FUNC( WVW_GETROWCOLFROMXY )
    POINT    xy;
 
    if( wvw_win )
+   {
       xy = hb_gt_wvw_GetColRowFromXY( wvw_win, hb_parni( 2 ), hb_parni( 3 ) );
+   }
    else
+   {
       memset( &xy, 0, sizeof( xy ) );
+   }
 
    hb_arraySetNL( aRet, 1, xy.y );
    hb_arraySetNL( aRet, 2, xy.x );
@@ -1687,9 +1795,13 @@ HB_FUNC( WVW_MAXIMIZE )
    if( wvw && wvw_win )
    {
       if( wvw->a.pSymWVW_SIZE )
+      {
          ShowWindow( wvw_win->hWnd, SW_MAXIMIZE );  /* app seems to be ready to handle the maximized window */
+      }
       else
+      {
          ShowWindow( wvw_win->hWnd, SW_RESTORE );   /* the old, default behaviour as in GTWVT */
+      }
    }
 }
 
@@ -1705,5 +1817,7 @@ HB_FUNC( WVW_RESTORE )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win )
+   {
       ShowWindow( wvw_win->hWnd, SW_RESTORE );
+   }
 }

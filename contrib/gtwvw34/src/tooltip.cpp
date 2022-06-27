@@ -69,13 +69,15 @@ HB_FUNC( WVW_SETTOOLTIPACTIVE )
          wvw_win->fToolTipActive = hb_parl( 2 );
 
          if( wvw_win->fToolTipActive && wvw_win->hWndTT == nullptr )
+         {
             hb_gt_wvw_CreateToolTipWindow( wvw_win );
+         }   
       }
 
       return;
    }
 #endif
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 /* wvw_SetToolTip( [nWinNum], nTop, nLeft, nBottom, nRight, cToolText ) */
@@ -181,8 +183,10 @@ HB_FUNC( WVW_SETTOOLTIPWIDTH )
       hb_retni( ( int ) SendMessage( wvw_win->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0 ) );
 
       if( HB_ISNUM( 2 ) )
+      {
          SendMessage( wvw_win->hWndTT, TTM_SETMAXTIPWIDTH, 0, ( LPARAM ) hb_parni( 2 ) );
-
+      }
+      
       return;
    }
 #endif
@@ -199,8 +203,10 @@ HB_FUNC( WVW_SETTOOLTIPBKCOLOR )
       hbwapi_ret_COLORREF( SendMessage( wvw_win->hWndTT, TTM_GETTIPBKCOLOR, 0, 0 ) );
 
       if( HB_ISNUM( 2 ) )
+      {
          SendMessage( wvw_win->hWndTT, TTM_SETTIPBKCOLOR, ( WPARAM ) hbwapi_par_COLORREF( 2 ), 0 );
-
+      }
+      
       return;
    }
 #endif
@@ -217,8 +223,10 @@ HB_FUNC( WVW_SETTOOLTIPTEXTCOLOR )
       hbwapi_ret_COLORREF( SendMessage( wvw_win->hWndTT, TTM_GETTIPTEXTCOLOR, 0, 0 ) );
 
       if( HB_ISNUM( 2 ) )
+      {
          SendMessage( wvw_win->hWndTT, TTM_SETTIPTEXTCOLOR, ( WPARAM ) hbwapi_par_COLORREF( 2 ), 0 );
-
+      }
+      
       return;
    }
 #endif
@@ -236,8 +244,10 @@ HB_FUNC( WVW_SETTOOLTIPTITLE )
 
       int iIcon = hb_parni( 2 );
       if( iIcon > 3 )
+      {
          iIcon = 0;
-
+      }
+      
       SendMessage( wvw_win->hWndTT, TTM_SETTITLE, ( WPARAM ) iIcon, ( LPARAM ) HB_PARSTR( 3, &hText, nullptr ) );
       hb_strfree( hText );
    }

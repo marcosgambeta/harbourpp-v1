@@ -73,17 +73,23 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
    PWVW_WIN wvw_win;
 
    if( wvw == nullptr || hWndParent == nullptr )
+   {
       return DefWindowProc( hWnd, message, wParam, lParam );
-
+   }
+   
    for( nWin = 0; nWin < wvw->iNumWindows; nWin++ )
    {
       if( wvw->pWin[ nWin ]->hWnd == hWndParent )
+      {
          break;
+      }   
    }
 
    if( nWin >= wvw->iNumWindows )
+   {
       return DefWindowProc( hWnd, message, wParam, lParam );
-
+   }
+   
    wvw_win = wvw->pWin[ nWin ];
 
    nCtrlId = hb_gt_wvw_FindControlId( wvw_win, WVW_CONTROL_EDITBOX, hWnd, &nEBType );
@@ -128,7 +134,9 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
                   return 0;
                }
                else
+               {
                   iKey = hb_gt_wvw_JustTranslateKey( K_F4, K_SH_F4, K_ALT_F4, K_CTRL_F4 );
+               }
                break;
             case VK_F5:
                iKey = hb_gt_wvw_JustTranslateKey( K_F5, K_SH_F5, K_ALT_F5, K_CTRL_F5 );
@@ -165,9 +173,13 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
          int     c         = ( int ) wParam;
 
          if( bCtrl && iScanCode == 28 )
+         {
             iKey = K_CTRL_RETURN;
+         }
          else if( bCtrl && c >= 1 && c <= 26 )
+         {
             iKey = s_K_Ctrl[ c - 1 ];
+         }
          else
          {
             switch( c )
@@ -187,7 +199,9 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
                default:
 #if ! defined( UNICODE )
                   if( wvw_win->CodePage == OEM_CHARSET )
+                  {
                      c = hb_gt_wvw_key_ansi_to_oem( c );
+                  }   
 #endif
                   iKey = c;
             }
@@ -339,7 +353,9 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
       hb_itemRelease( pCodeblock );
       hb_itemRelease( pKey );
       if( fCodeExec )
+      {
          return 0;
+      }   
    }
 
    switch( message )
@@ -353,8 +369,10 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
          HB_BOOL fMultiline;
 
          if( ! hb_gt_wvw_BufferedKey( ( int ) wParam ) )
+         {
             break;
-
+         }
+         
          fMultiline = ( ( nEBType & WVW_EB_MULTILINE ) == WVW_EB_MULTILINE );
 
          switch( wParam )
@@ -370,7 +388,9 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
 
             case VK_RETURN:
                if( fMultiline || bAlt || bShift || bCtrl )
+               {
                   break;
+               }
                else
                {
                   SetFocus( hWndParent );
@@ -380,7 +400,9 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
 
             case VK_ESCAPE:
                if( bAlt || bShift || bCtrl )
+               {
                   break;
+               }
                else
                {
                   SetFocus( hWndParent );
@@ -393,7 +415,9 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
             case VK_PRIOR:
             case VK_NEXT:
                if( fMultiline )
+               {
                   break;
+               }
                else
                {
                   SetFocus( hWndParent );
@@ -412,7 +436,9 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
 
             case VK_BACK:
                if( ! bAlt )
+               {
                   break;
+               }
                if( SendMessage( hWnd, EM_CANUNDO, 0, 0 ) )
                {
                   SendMessage( hWnd, EM_UNDO, 0, 0 );
@@ -548,16 +574,24 @@ HB_FUNC( WVW_EBCREATE )
 
       nCtrlId = hb_gt_wvw_LastControlId( wvw_win, WVW_CONTROL_EDITBOX );
       if( nCtrlId == 0 )
+      {
          nCtrlId = WVW_ID_BASE_EDITBOX;
+      }
       else
+      {
          nCtrlId++;
+      }
 
       dwStyle |= WS_BORDER | WS_GROUP | WS_TABSTOP;
 
       if( ( nEBType & WVW_EB_MULTILINE ) == WVW_EB_MULTILINE )
+      {
          dwStyle |= ES_AUTOVSCROLL | ES_MULTILINE | ES_WANTRETURN | WS_BORDER | WS_VSCROLL;
+      }
       else
+      {
          dwStyle |= ES_AUTOHSCROLL;
+      }
 
       hWnd = CreateWindowEx(
          0,
@@ -583,8 +617,10 @@ HB_FUNC( WVW_EBCREATE )
          hb_strfree( hText );
 
          if( iMaxChar > 0 )
+         {
             SendMessage( hWnd, EM_LIMITTEXT, ( WPARAM ) iMaxChar, 0 );
-
+         }
+         
          hb_gt_wvw_AddControlHandle( wvw_win, WVW_CONTROL_EDITBOX, hWnd, nCtrlId, hb_param( 7, Harbour::Item::EVALITEM ), rXB, rOffXB, nEBType );
          hb_gt_wvw_StoreControlProc( wvw_win, WVW_CONTROL_EDITBOX, hWnd,
             ( WNDPROC ) SetWindowLongPtr( hWnd, GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvw_EBProc ) );
@@ -614,8 +650,10 @@ HB_FUNC( WVW_EBDESTROY )
       while( wvw_ctl )
       {
          if( wvw_ctl->nClass == WVW_CONTROL_EDITBOX && wvw_ctl->nId == nCtrlId )
+         {
             break;
-
+         }
+         
          wvw_ctlPrev = wvw_ctl;
          wvw_ctl     = wvw_ctl->pNext;
       }
@@ -625,13 +663,19 @@ HB_FUNC( WVW_EBDESTROY )
          DestroyWindow( wvw_ctl->hWnd );
 
          if( wvw_ctlPrev )
+         {
             wvw_ctlPrev->pNext = wvw_ctl->pNext;
+         }
          else
+         {
             wvw_win->ctlList = wvw_ctl->pNext;
+         }
 
          if( wvw_ctl->pBlock )
+         {
             hb_itemRelease( wvw_ctl->pBlock );
-
+         }
+         
          hb_xfree( wvw_ctl );
       }
    }
@@ -678,10 +722,14 @@ HB_FUNC( WVW_EBENABLE )
       hb_retl( EnableWindow( hWnd, ( BOOL ) fEnable ) == 0 );
 
       if( ! fEnable )
+      {
          SetFocus( wvw_win->hWnd );
+      }   
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }   
 }
 
 /* wvw_ebEditable( [nWinNum], nEditId, [lEditable] )
@@ -701,10 +749,14 @@ HB_FUNC( WVW_EBEDITABLE )
       hb_retl( ( GetWindowLong( hWnd, GWL_STYLE ) & ES_READONLY ) != ES_READONLY );
 
       if( HB_ISLOG( 3 ) )
+      {
          SendMessage( hWnd, EM_SETREADONLY, ( WPARAM ) ! hb_parl( 3 ), 0 );
+      }   
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }   
 }
 
 /* wvw_ebSetCodeblock( [nWinNum], nEBid, bBlock )
@@ -725,17 +777,21 @@ HB_FUNC( WVW_EBSETCODEBLOCK )
       wvw_ctl->fBusy      = HB_TRUE;
 
       if( wvw_ctl->pBlock )
+      {
          hb_itemRelease( wvw_ctl->pBlock );
+      }
 
       wvw_ctl->pBlock = hb_itemNew( pBlock );
 
       wvw_ctl->fBusy      = HB_FALSE;
       wvw->fRecurseCBlock = fOldSetting;
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }   
 }
 
 /* wvw_ebSetFont( [nWinNum], cFontFace, nHeight, nWidth, nWeight, nQUality, ;
@@ -783,10 +839,11 @@ HB_FUNC( WVW_EBSETFONT )
 
             while( wvw_ctl )
             {
-               if( wvw_ctl->nClass == WVW_CONTROL_EDITBOX &&
-                   ( HFONT ) SendMessage( wvw_ctl->hWnd, WM_GETFONT, 0, 0 ) == hOldFont )
+               if( wvw_ctl->nClass == WVW_CONTROL_EDITBOX && ( HFONT ) SendMessage( wvw_ctl->hWnd, WM_GETFONT, 0, 0 ) == hOldFont )
+               {
                   SendMessage( wvw_ctl->hWnd, WM_SETFONT, ( WPARAM ) hFont, ( LPARAM ) TRUE );
-
+               }
+               
                wvw_ctl = wvw_ctl->pNext;
             }
 
@@ -794,13 +851,17 @@ HB_FUNC( WVW_EBSETFONT )
             DeleteObject( hOldFont );
          }
          else
+         {
             fResult = HB_FALSE;
+         }
       }
 
       hb_retl( fResult );
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }   
 }
 
 /* wvw_ebIsMultiline( [nWinNum], nEBid )
@@ -813,9 +874,13 @@ HB_FUNC( WVW_EBISMULTILINE )
    PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_EDITBOX, nullptr, hb_parni( 2 ) );
 
    if( wvw_ctl )
+   {
       hb_retl( ( wvw_ctl->nStyle & WVW_EB_MULTILINE ) == WVW_EB_MULTILINE );
+   }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }   
 }
 
 /* wvw_ebGetText( [nWinNum], nEBid, lSoftBreak )
@@ -840,8 +905,10 @@ HB_FUNC( WVW_EBGETTEXT )
       LPTSTR szText;
 
       if( hb_parl( 3 ) /* fSoftBreak */ )
+      {
          SendMessage( wvw_ctl->hWnd, EM_FMTLINES, ( WPARAM ) TRUE, 0 );
-
+      }
+      
       nLen = ( HB_SIZE ) SendMessage( wvw_ctl->hWnd, WM_GETTEXTLENGTH, 0, 0 );
 
       szText = ( LPTSTR ) hb_xgrab( ( nLen + 1 ) * sizeof( TCHAR ) );
@@ -853,7 +920,9 @@ HB_FUNC( WVW_EBGETTEXT )
       hb_xfree( szText );
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }   
 }
 
 /* wvw_ebSetText( [nWinNum], nEBid, cText )
@@ -874,7 +943,9 @@ HB_FUNC( WVW_EBSETTEXT )
       hb_strfree( hText );
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }   
 }
 
 /* wvw_ebGetSel( [nWinNum], nEBid, @nstart, @nend )
@@ -894,12 +965,12 @@ HB_FUNC( WVW_EBGETSEL )
    {
       SendMessage( wvw_ctl->hWnd, EM_GETSEL, ( WPARAM ) &dwStart, ( LPARAM ) &dwEnd );
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
    {
       dwStart = dwEnd = 0;
-      hb_retl( HB_FALSE );
+      hb_retl(false);
    }
 
    hb_stornl( dwStart, 3 );
@@ -927,8 +998,10 @@ HB_FUNC( WVW_EBSETSEL )
 
       SendMessage( wvw_ctl->hWnd, EM_SETSEL, ( WPARAM ) dwStart, ( LPARAM ) dwEnd );
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }

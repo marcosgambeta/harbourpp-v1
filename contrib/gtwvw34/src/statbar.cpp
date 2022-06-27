@@ -75,12 +75,16 @@ HB_FUNC( WVW_SBCREATE )
          RECT rSB;
 
          if( wvw_win->hSBfont == nullptr )
+         {
             wvw_win->hSBfont = CreateFontIndirect( &wvw->lfSB );
-
+         }
+         
          memset( &rSB, 0, sizeof( rSB ) );
 
          if( GetClientRect( hWnd, &rSB ) )
+         {
             wvw_win->iSBHeight = rSB.bottom;
+         }
          wvw_win->hStatusBar = hWnd;
 
          hb_gt_wvw_ResetWindow( wvw_win );
@@ -94,7 +98,9 @@ HB_FUNC( WVW_SBCREATE )
       hbwapi_ret_raw_HANDLE( hWnd );
    }
    else
+   {
       hbwapi_ret_raw_HANDLE( nullptr );
+   }
 }
 
 /* wvw_sbDestroy( [nWinNum] )
@@ -160,7 +166,9 @@ HB_FUNC( WVW_SBADDPART )
          SelectObject( hDCSB, ( HFONT ) SendMessage( hWnd, WM_GETFONT, 0, 0 ) );
 
          if( GetTextExtentPoint32( hDCSB, szText, ( int ) ( nLen + 1 ), &size ) )
+         {
             iWidth = size.cx;
+         }
 
          hb_strfree( hText );
 
@@ -168,9 +176,13 @@ HB_FUNC( WVW_SBADDPART )
       }
 
       if( ! fResetParts )
+      {
          iNumOfParts = ( int ) SendMessage( hWnd, SB_GETPARTS, HB_SIZEOFARRAY( piArray ) - 1, ( LPARAM ) ( LPINT ) piArray );
+      }
       else
+      {
          iNumOfParts = 0;
+      }
       iNumOfParts++;
 
       memset( &rSB, 0, sizeof( rSB ) );
@@ -180,9 +192,10 @@ HB_FUNC( WVW_SBADDPART )
       piArray[ iNumOfParts - 1 ] = rSB.right;
       if( ! fResetParts )
       {
-         int n;
-         for( n = 0; n < iNumOfParts - 1; n++ )
+         for( int n = 0; n < iNumOfParts - 1; n++ )
+         {
             piArray[ n ] -= iWidth + WVW_SPACE_BETWEEN_PARTS;
+         }
       }
 
       SendMessage( hWnd, SB_SETPARTS, iNumOfParts, ( LPARAM ) piArray );
@@ -199,12 +212,16 @@ HB_FUNC( WVW_SBADDPART )
 
          hIcon = ( HICON ) LoadImage( 0, szName, IMAGE_ICON, cx, cy, LR_LOADFROMFILE | LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT | LR_DEFAULTSIZE );
          if( hIcon == nullptr )
+         {
             hIcon = ( HICON ) LoadImage( GetModuleHandle( nullptr ), szName, IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_DEFAULTSIZE );
+         }
 
          hb_strfree( hName );
 
          if( hIcon != nullptr )
+         {
             SendMessage( hWnd, SB_SETICON, ( WPARAM ) iNumOfParts - 1, ( LPARAM ) hIcon );
+         }
       }
 
       SendMessage( hWnd, SB_SETTEXT, ( iNumOfParts - 1 ) | displayFlags, 0 );
@@ -218,7 +235,9 @@ HB_FUNC( WVW_SBADDPART )
       hb_retni( iNumOfParts );
    }
    else
+   {
       hb_retni( 0 );
+   }
 }
 
 /* wvw_sbRefresh( nWinNum )
@@ -238,7 +257,6 @@ HB_FUNC( WVW_SBREFRESH )
       int iNumOfParts = ( int ) SendMessage( hWnd, SB_GETPARTS, HB_SIZEOFARRAY( piArray ), ( LPARAM ) ( LPINT ) piArray );
       if( iNumOfParts > 0 )
       {
-         int  n;
          int  iDiff;
          RECT rSB;
 
@@ -247,8 +265,10 @@ HB_FUNC( WVW_SBREFRESH )
          GetClientRect( hWnd, &rSB );
          iDiff = rSB.right - piArray[ iNumOfParts - 1 ];
 
-         for( n = 0; n <= iNumOfParts - 1; n++ )
+         for( int n = 0; n <= iNumOfParts - 1; n++ )
+         {
             piArray[ n ] += iDiff;
+         }
 
          SendMessage( hWnd, SB_SETPARTS, iNumOfParts, ( LPARAM ) ( LPINT ) piArray );
 
@@ -273,14 +293,22 @@ HB_FUNC( WVW_SBSETTEXT )
       void * hText;
 
       if( HB_ISCHAR( 4 ) )
+      {
          wvw_win->cSBColorForeground = strtol( hb_parc( 4 ), nullptr, 10 );
+      }
       else if( HB_ISNUM( 4 ) )
+      {
          wvw_win->cSBColorForeground = hbwapi_par_COLORREF( 4 );
+      }
 
       if( HB_ISCHAR( 5 ) )
+      {
          wvw_win->cSBColorBackground = strtol( hb_parc( 5 ), nullptr, 10 );
+      }
       else if( HB_ISNUM( 5 ) )
+      {
          wvw_win->cSBColorBackground = hbwapi_par_COLORREF( 5 );
+      }
 
       if( iPart == 0 && ( wvw_win->cSBColorForeground || wvw_win->cSBColorBackground ) )
       {
@@ -289,7 +317,9 @@ HB_FUNC( WVW_SBSETTEXT )
          hb_gt_wvw_ProcessMessages( wvw_win );
       }
       else
+      {
          SendMessage( wvw_win->hStatusBar, SB_SETTEXT, iPart, ( LPARAM ) HB_PARSTRDEF( 3, &hText, nullptr ) );
+      }
 
       hb_strfree( hText );
    }
@@ -322,7 +352,9 @@ HB_FUNC( WVW_SBGETPARTS )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win )
+   {
       hb_retni( ( int ) SendMessage( wvw_win->hStatusBar, SB_GETPARTS, WVW_MAX_STATUS_PARTS, 0 ) );
+   }
 }
 
 /* wvw_sbSetFont( [nWinNum], cFontFace, nHeight, nWidth, nWeight, nQUality, ;
@@ -364,11 +396,15 @@ HB_FUNC( WVW_SBSETFONT )
             DeleteObject( hOldFont );
          }
          else
+         {
             fResult = HB_FALSE;
+         }
       }
 
       hb_retl( fResult );
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }

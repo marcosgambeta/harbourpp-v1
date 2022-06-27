@@ -121,7 +121,9 @@ HB_FUNC( WVW_PBCREATE )
       hb_strfree( hCaption );
    }
    else
+   {
       hb_retni( 0 );
+   }
 
    hbwapi_stor_HANDLE( hWnd, 12 );
 }
@@ -141,7 +143,9 @@ HB_FUNC( WVW_PBDESTROY )
       while( wvw_ctl )
       {
          if( wvw_ctl->nClass == WVW_CONTROL_PUSHBUTTON && wvw_ctl->nId == nCtrlId )
+         {
             break;
+         }
          wvw_ctlPrev = wvw_ctl;
          wvw_ctl     = wvw_ctl->pNext;
       }
@@ -151,13 +155,19 @@ HB_FUNC( WVW_PBDESTROY )
          DestroyWindow( wvw_ctl->hWnd );
 
          if( wvw_ctlPrev )
+         {
             wvw_ctlPrev->pNext = wvw_ctl->pNext;
+         }
          else
+         {
             wvw_win->ctlList = wvw_ctl->pNext;
+         }
 
          if( wvw_ctl->pBlock )
+         {
             hb_itemRelease( wvw_ctl->pBlock );
-
+         }
+         
          hb_xfree( wvw_ctl );
       }
    }
@@ -204,10 +214,14 @@ HB_FUNC( WVW_PBENABLE )
       hb_retl( EnableWindow( hWnd, ( BOOL ) fEnable ) == 0 );
 
       if( ! fEnable )
+      {
          SetFocus( wvw_win->hWnd );
+      }   
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 /* wvw_pbSetCodeblock( [nWinNum], nPBid, bBlock )
@@ -228,17 +242,21 @@ HB_FUNC( WVW_PBSETCODEBLOCK )
       wvw_ctl->fBusy      = HB_TRUE;
 
       if( wvw_ctl->pBlock )
+      {
          hb_itemRelease( wvw_ctl->pBlock );
+      }
 
       wvw_ctl->pBlock = hb_itemNew( pBlock );
 
       wvw_ctl->fBusy      = HB_FALSE;
       wvw->fRecurseCBlock = fOldSetting;
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 /* wvw_pbSetStyle( [nWinNum], nPBid, nStyle )
@@ -260,9 +278,11 @@ HB_FUNC( WVW_PBSETSTYLE )
    PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni( 2 ) );
 
    if( wvw_ctl && wvw_ctl->hWnd )
+   {
       SendMessage( wvw_ctl->hWnd, BM_SETSTYLE, ( WPARAM ) hb_parni( 3 ), ( LPARAM ) TRUE );
+   }
 
-   hb_retl( HB_TRUE );
+   hb_retl(true);
 }
 
 /* wvw_pbSetFont( [nWinNum], cFontFace, nHeight, nWidth, nWeight, nQUality, ;
@@ -306,9 +326,10 @@ HB_FUNC( WVW_PBSETFONT )
 
             while( wvw_ctl )
             {
-               if( wvw_ctl->nClass == WVW_CONTROL_PUSHBUTTON &&
-                   ( HFONT ) SendMessage( wvw_ctl->hWnd, WM_GETFONT, 0, 0 ) == hOldFont )
+               if( wvw_ctl->nClass == WVW_CONTROL_PUSHBUTTON && ( HFONT ) SendMessage( wvw_ctl->hWnd, WM_GETFONT, 0, 0 ) == hOldFont )
+               {
                   SendMessage( wvw_ctl->hWnd, WM_SETFONT, ( WPARAM ) hFont, ( LPARAM ) TRUE );
+               }
 
                wvw_ctl = wvw_ctl->pNext;
             }
@@ -317,13 +338,17 @@ HB_FUNC( WVW_PBSETFONT )
             DeleteObject( hOldFont );
          }
          else
+         {
             fResult = HB_FALSE;
+         }
       }
 
       hb_retl( fResult );
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 HB_FUNC( WVW_PBVISIBLE )

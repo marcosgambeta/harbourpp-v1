@@ -75,10 +75,14 @@ HB_FUNC( WVW_STCREATE )
       HFONT hFont  = nullptr;
 
       if( iBox > 0 )
+      {
          iStyle |= iBox;
+      }
 
       if( HB_ISNUM( 8 ) )
+      {
          hFont = hbwapi_par_raw_HFONT( 8 );
+      }
       else if( wvw_win->hSTfont == nullptr )
       {
          wvw_win->hSTfont = CreateFontIndirect( &wvw->lfST );
@@ -107,9 +111,13 @@ HB_FUNC( WVW_STCREATE )
 
       nCtrlId = hb_gt_wvw_LastControlId( wvw_win, WVW_CONTROL_STATIC );
       if( nCtrlId == 0 )
+      {
          nCtrlId = WVW_ID_BASE_STATIC;
+      }
       else
+      {
          nCtrlId++;
+      }
 
       hWnd = CreateWindowEx(
          fBorder ? WS_EX_CLIENTEDGE : 0,
@@ -135,9 +143,13 @@ HB_FUNC( WVW_STCREATE )
          }
 
          if( hFont )
+         {
             SendMessage( hWnd, WM_SETFONT, ( WPARAM ) hFont, ( LPARAM ) TRUE );
+         }
          else
+         {
             SendMessage( hWnd, WM_SETFONT, ( WPARAM ) wvw_win->hSTfont, ( LPARAM ) TRUE );
+         }
 
          hbwapi_stor_HANDLE( hWnd, 9 );
          hb_retni( nCtrlId );
@@ -186,9 +198,10 @@ HB_FUNC( WVW_STSETFONT )
 
             while( wvw_ctl )
             {
-               if( wvw_ctl->nClass == WVW_CONTROL_STATIC &&
-                   ( HFONT ) SendMessage( wvw_ctl->hWnd, WM_GETFONT, 0, 0 ) == hOldFont )
+               if( wvw_ctl->nClass == WVW_CONTROL_STATIC && ( HFONT ) SendMessage( wvw_ctl->hWnd, WM_GETFONT, 0, 0 ) == hOldFont )
+               {
                   SendMessage( wvw_ctl->hWnd, WM_SETFONT, ( WPARAM ) hFont, ( LPARAM ) TRUE );
+               }
 
                wvw_ctl = wvw_ctl->pNext;
             }
@@ -197,11 +210,15 @@ HB_FUNC( WVW_STSETFONT )
             DeleteObject( hOldFont );
          }
          else
+         {
             fResult = HB_FALSE;
+         }
       }
 
       hb_retl( fResult );
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }

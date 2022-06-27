@@ -128,14 +128,22 @@ HB_FUNC( WVW_PGCREATE )
 
       nCtrlId = hb_gt_wvw_LastControlId( wvw_win, WVW_CONTROL_PROGRESSBAR );
       if( nCtrlId == 0 )
+      {
          nCtrlId = WVW_ID_BASE_PROGRESSBAR;
+      }
       else
+      {
          nCtrlId++;
+      }
 
       if( hb_parl( 9 ) /* fSmooth */ )
+      {
          iStyle |= PBS_SMOOTH;
+      }
       if( hb_parl( 10 ) /* fVertical */ )
+      {
          iStyle |= PBS_VERTICAL;
+      }
 
       hWnd = CreateWindowEx(
          0,
@@ -154,9 +162,13 @@ HB_FUNC( WVW_PGCREATE )
       if( hWnd )
       {
          if( HB_ISNUM( 7 ) )
+         {
             SendMessage( hWnd, PBM_SETBKCOLOR, 0, ( LPARAM ) hbwapi_par_COLORREF( 7 ) );
+         }
          if( HB_ISNUM( 8 ) )
+         {
             SendMessage( hWnd, PBM_SETBARCOLOR, 0, ( LPARAM ) hbwapi_par_COLORREF( 8 ) );
+         }
 
          SendMessage( hWnd, PBM_SETRANGE, 0, MAKELPARAM( 0, 100 ) );
          SendMessage( hWnd, PBM_SETPOS, 0, 0 );
@@ -187,7 +199,9 @@ HB_FUNC( WVW_PGDESTROY )
       while( wvw_ctl )
       {
          if( wvw_ctl->nClass == WVW_CONTROL_PROGRESSBAR && wvw_ctl->nId == nCtrlId )
+         {
             break;
+         }
 
          wvw_ctlPrev = wvw_ctl;
          wvw_ctl     = wvw_ctl->pNext;
@@ -198,13 +212,19 @@ HB_FUNC( WVW_PGDESTROY )
          DestroyWindow( wvw_ctl->hWnd );
 
          if( wvw_ctlPrev )
+         {
             wvw_ctlPrev->pNext = wvw_ctl->pNext;
+         }
          else
+         {
             wvw_win->ctlList = wvw_ctl->pNext;
+         }
 
          if( wvw_ctl->pBlock )
+         {
             hb_itemRelease( wvw_ctl->pBlock );
-
+         }
+         
          hb_xfree( wvw_ctl );
       }
    }
@@ -229,10 +249,12 @@ HB_FUNC( WVW_PGSETRANGE )
       SendMessage( hWnd, PBM_SETRANGE, 0, MAKELPARAM( iMin, iMax ) );
       SendMessage( hWnd, PBM_SETPOS, ( WPARAM ) iMin, 0 );
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 /* wvw_pgSetPos( nWinNum, PGid, [nPos] )
@@ -256,12 +278,12 @@ HB_FUNC( WVW_PGSETPOS )
       {
          SendMessage( hWnd, PBM_SETPOS, ( WPARAM ) iPos, 0 );
 
-         hb_retl( HB_TRUE );
+         hb_retl(true);
          return;
       }
    }
 
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 }
 
 /* wvw_pgGetPos( nWinNum, PGid )
@@ -274,7 +296,11 @@ HB_FUNC( WVW_PGGETPOS )
    HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_PROGRESSBAR, hb_parni( 2 ), nullptr );
 
    if( hWnd )
+   {
       hb_retni( ( int ) SendMessage( hWnd, PBM_GETPOS, 0, 0 ) );
+   }
    else
+   {
       hb_retni( 0 );
+   }
 }

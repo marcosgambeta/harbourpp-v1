@@ -96,14 +96,18 @@ static HB_BOOL hb_gt_wvw_AddTBButton( HWND hWndToolbar, const char * szBitmap, H
       HBITMAP hBitmap = hb_gt_wvw_PrepareBitmap( szBitmap, uiBitmap, wvw_win->iTBImgWidth, wvw_win->iTBImgHeight, fMap3Dcolors, hWndToolbar );
 
       if( ! hBitmap )
+      {
          return HB_FALSE;
-
+      }
+      
       tbab.hInst = nullptr;
       tbab.nID   = ( UINT_PTR ) hBitmap;
       iNewBitmap = ( int ) SendMessage( hWndToolbar, TB_ADDBITMAP, ( WPARAM ) 1, ( WPARAM ) &tbab );
    }
    else /* system bitmap */
+   {
       iNewBitmap = ( int ) uiBitmap + iOffset;
+   }
 
    HB_STRNCPY( szBuffer, pszLabel, HB_SIZEOFARRAY( szBuffer ) - 1 );
 
@@ -114,7 +118,9 @@ static HB_BOOL hb_gt_wvw_AddTBButton( HWND hWndToolbar, const char * szBitmap, H
    tbb.fsState   = TBSTATE_ENABLED;
    tbb.fsStyle   = TBSTYLE_BUTTON;
    if( fDropdown )
+   {
       tbb.fsStyle |= BTNS_WHOLEDROPDOWN;
+   }
    tbb.dwData  = 0;
    tbb.iString = iNewString;
 
@@ -126,9 +132,13 @@ static int hb_gt_wvw_IndexToCommand( HWND hWndTB, int iIndex )
    TBBUTTON tbb;
 
    if( SendMessage( hWndTB, TB_GETBUTTON, ( WPARAM ) iIndex, ( LPARAM ) ( LPTBBUTTON ) &tbb ) )
+   {
       return tbb.idCommand;
+   }
    else
+   {
       return 0;
+   }
 }
 
 static int hb_gt_wvw_CommandToIndex( HWND hWndTB, int iCommand )
@@ -145,7 +155,9 @@ static void hb_gt_wvw_TBinitSize( PWVW_WIN wvw_win, HWND hWndTB )
    memset( &rTB, 0, sizeof( rTB ) );
 
    if( GetClientRect( hWndTB, &rTB ) )
+   {
       wvw_win->iTBHeight = rTB.bottom + 2;
+   }
 }
 
 static POINT hb_gt_wvw_TBGetColRowFromXY( PWVW_WIN wvw_win, int x, int y )
@@ -172,7 +184,9 @@ static void hb_gt_wvw_TBMouseEvent( PWVW_WIN wvw_win, HWND hWnd, UINT message, W
    if( message == WM_MOUSEMOVE || message == WM_NCMOUSEMOVE )
    {
       if( ! wvw_win->MouseMove )
+      {
          return;
+      }
    }
 
    xy.x = LOWORD( lParam );
@@ -198,7 +212,9 @@ static void hb_gt_wvw_TBMouseEvent( PWVW_WIN wvw_win, HWND hWnd, UINT message, W
          HWND hWndFocus = GetFocus();
 
          if( hb_gt_wvw_GetControlClass( wvw_win, hWndFocus ) > 0 )
+         {
             SetFocus( hWnd );
+         }
 
          keyCode = K_LBUTTONDOWN;
          break;
@@ -220,7 +236,9 @@ static void hb_gt_wvw_TBMouseEvent( PWVW_WIN wvw_win, HWND hWnd, UINT message, W
             GetCursorPos( &xy );
             nPopupRet = ( int ) TrackPopupMenu( wvw_win->hPopup, TPM_CENTERALIGN + TPM_RETURNCMD, xy.x, xy.y, 0, hWnd, nullptr );
             if( nPopupRet )
+            {
                hb_gt_wvw_AddCharToInputQueue( nPopupRet );
+            }
             return;
          }
          else
@@ -245,22 +263,34 @@ static void hb_gt_wvw_TBMouseEvent( PWVW_WIN wvw_win, HWND hWnd, UINT message, W
          keyState = ( SHORT ) wParam;
 
          if( keyState == MK_LBUTTON )
+         {
             keyCode = K_MMLEFTDOWN;
+         }
          else if( keyState == MK_RBUTTON )
+         {
             keyCode = K_MMRIGHTDOWN;
+         }
          else if( keyState == MK_MBUTTON )
+         {
             keyCode = K_MMMIDDLEDOWN;
+         }
          else
+         {
             keyCode = K_MOUSEMOVE;
+         }
          break;
 
       case WM_MOUSEWHEEL:
          keyState = HIWORD( wParam );
 
          if( keyState > 0 )
+         {
             keyCode = K_MWFORWARD;
+         }
          else
+         {
             keyCode = K_MWBACKWARD;
+         }
 
          break;
 
@@ -304,7 +334,9 @@ static LRESULT CALLBACK hb_gt_wvw_TBProc( HWND hWnd, UINT message, WPARAM wParam
    for( nWin = 0; nWin < wvw->iNumWindows; ++nWin )
    {
       if( wvw->pWin[ nWin ]->hWnd == hWndParent )
+      {
          break;
+      }
    }
 
    if( nWin >= wvw->iNumWindows )
@@ -332,7 +364,9 @@ static LRESULT CALLBACK hb_gt_wvw_TBProc( HWND hWnd, UINT message, WPARAM wParam
       case WM_NCMOUSEMOVE:
 
          if( ! hb_gt_wvw_AcceptingInput() || ( nWin != wvw->iNumWindows - 1 ) )
+         {
             return 0;
+         }
 
          hb_gt_wvw_TBMouseEvent( wvw_win, hWnd, message, wParam, lParam );
          break;
@@ -493,7 +527,9 @@ HB_FUNC( WVW_TBCREATE )
          return;
       }
       else
+      {
          hb_errRT_TERM( EG_CREATE, 10001, "Windows API CreateToolbarEx() failed", HB_ERR_FUNCNAME, 0, 0 );
+      }
    }
 
    hb_stornl( 0, 7 );
@@ -544,14 +580,14 @@ HB_FUNC( WVW_TBADDBUTTON )
 
       if( hWnd == nullptr )
       {
-         hb_retl( HB_FALSE );
+         hb_retl(false);
          return;
       }
 
       if( iCommand >= WVW_ID_BASE_PUSHBUTTON )
       {
          hb_errRT_TERM( EG_ARG, 10001, "ToolBar button command ID too high. Potential conflict with PushButton.", HB_ERR_FUNCNAME, 0, 0 );
-         hb_retl( HB_FALSE );
+         hb_retl(false);
          return;
       }
 
@@ -561,7 +597,7 @@ HB_FUNC( WVW_TBADDBUTTON )
       {
          hb_strfree( hLabel );
          hb_errRT_TERM( EG_LIMIT, 10001, "ToolBar label too long.", HB_ERR_FUNCNAME, 0, 0 );
-         hb_retl( HB_FALSE );
+         hb_retl(false);
          return;
       }
 
@@ -575,7 +611,7 @@ HB_FUNC( WVW_TBADDBUTTON )
             {
                hb_strfree( hLabel );
                hb_errRT_TERM( EG_CREATE, 10001, "Failed hb_gt_wvw_AddTBButton()", HB_ERR_FUNCNAME, 0, 0 );
-               hb_retl( HB_FALSE );
+               hb_retl(false);
                return;
             }
          }
@@ -583,7 +619,7 @@ HB_FUNC( WVW_TBADDBUTTON )
          {
             hb_strfree( hLabel );
             hb_errRT_TERM( EG_CREATE, 10002, "Failed hb_gt_wvw_AddTBButton()", HB_ERR_FUNCNAME, 0, 0 );
-            hb_retl( HB_FALSE );
+            hb_retl(false);
             return;
          }
       }
@@ -593,12 +629,16 @@ HB_FUNC( WVW_TBADDBUTTON )
       hb_gt_wvw_TBinitSize( wvw_win, hWnd );
 
       if( wvw_win->iTBHeight != iOldHeight )
+      {
          hb_gt_wvw_ResetWindow( wvw_win );
+      }
 
-      hb_retl( HB_TRUE );
+      hb_retl(true);
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
 
 /* wvw_tbButtonCount( [nWinNum] )
@@ -640,7 +680,9 @@ HB_FUNC( WVW_TBDELBUTTON )
             hb_gt_wvw_TBinitSize( wvw_win, hWnd );
 
             if( wvw_win->iTBHeight != iOldHeight )
+            {
                hb_gt_wvw_ResetWindow( wvw_win );
+            }
 
             fResult = HB_TRUE;
          }
@@ -707,7 +749,9 @@ HB_FUNC( WVW_TBENABLEBUTTON )
                hb_gt_wvw_TBinitSize( wvw_win, hWnd );
 
                if( wvw_win->iTBHeight != iOldHeight )
+               {
                   hb_gt_wvw_ResetWindow( wvw_win );
+               }
 
                fResult = HB_TRUE;
             }
@@ -763,7 +807,9 @@ HB_FUNC( WVW_TBCMD2INDEX )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win )
+   {
       hb_retni( hb_gt_wvw_CommandToIndex( wvw_win->hToolBar, hb_parni( 2 ) ) );
+   }
 }
 
 HB_FUNC( WVW_TOOLBARADDBUTTONS )
@@ -805,12 +851,16 @@ HB_FUNC( WVW_TOOLBARADDBUTTONS )
          hb_gt_wvw_TBinitSize( wvw_win, hWndCtrl );
 
          if( wvw_win->iTBHeight != iOldHeight )
+         {
             hb_gt_wvw_ResetWindow( wvw_win );
+         }
 
          hb_xfree( tb );
 
          for( nCount = 0; nCount < iButtons; ++nCount )
+         {
             hb_strfree( hStr[ nCount ] );
+         }
 
          hb_xfree( hStr );
       }
