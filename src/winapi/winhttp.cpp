@@ -234,6 +234,10 @@ WINBOOL WINAPI WinHttpTimeFromSystemTime(const SYSTEMTIME *,LPWSTR)
 /*
 WINBOOL WINAPI WinHttpTimeToSystemTime(LPCWSTR,SYSTEMTIME*)
 */
+HB_FUNC( WINAPI_WINHTTPTIMETOSYSTEMTIME )
+{
+  winapi_ret_BOOL(WinHttpTimeToSystemTime(( LPCWSTR ) hb_parc(1), static_cast<SYSTEMTIME*>(winapi_get_ptr(2))));
+}
 
 /*
 WINBOOL WINAPI WinHttpWriteData(HINTERNET,LPCVOID,DWORD,LPDWORD)
