@@ -52,11 +52,12 @@
 #define WVW_MAX_STATUS_PARTS     40  /* max # of parts in Status Bar */
 #define WVW_SPACE_BETWEEN_PARTS  2   /* pixel space between Status Bar's parts */
 
-/* wvw_sbCreate( [nWinNum] )
- * create status bar for window nWinNum, with one part.
- * returns handle to status bar of windows nWinNum
- * returns 0 if failed, eg. if there is already a status bar for this window
- */
+/*
+wvw_sbCreate([nWinNum])
+create status bar for window nWinNum, with one part.
+returns handle to status bar of windows nWinNum
+returns 0 if failed, eg. if there is already a status bar for this window
+*/
 HB_FUNC( WVW_SBCREATE )
 {
    PWVW_GLO wvw     = hb_gt_wvw();
@@ -64,10 +65,7 @@ HB_FUNC( WVW_SBCREATE )
 
    if( wvw && wvw_win && wvw_win->hStatusBar == nullptr )
    {
-      HWND hWnd = CreateStatusWindow( WS_CHILD | WS_VISIBLE | WS_BORDER | SBT_TOOLTIPS,
-                                      nullptr,
-                                      wvw_win->hWnd,
-                                      WVW_ID_BASE_STATUSBAR + wvw_win->nWinId );
+      HWND hWnd = CreateStatusWindow(WS_CHILD | WS_VISIBLE | WS_BORDER | SBT_TOOLTIPS, nullptr, wvw_win->hWnd, WVW_ID_BASE_STATUSBAR + wvw_win->nWinId);
       if( hWnd )
       {
          int piArray;
@@ -76,35 +74,37 @@ HB_FUNC( WVW_SBCREATE )
 
          if( wvw_win->hSBfont == nullptr )
          {
-            wvw_win->hSBfont = CreateFontIndirect( &wvw->lfSB );
+            wvw_win->hSBfont = CreateFontIndirect(&wvw->lfSB);
          }
-         
-         memset( &rSB, 0, sizeof( rSB ) );
 
-         if( GetClientRect( hWnd, &rSB ) )
+         memset(&rSB, 0, sizeof(rSB));
+
+         if( GetClientRect(hWnd, &rSB) )
          {
             wvw_win->iSBHeight = rSB.bottom;
          }
          wvw_win->hStatusBar = hWnd;
 
-         hb_gt_wvw_ResetWindow( wvw_win );
+         hb_gt_wvw_ResetWindow(wvw_win);
 
          piArray = rSB.right;
-         SendMessage( hWnd, WM_SETFONT, ( WPARAM ) wvw_win->hSBfont, ( LPARAM ) TRUE );
+         SendMessage(hWnd, WM_SETFONT, reinterpret_cast<WPARAM>(wvw_win->hSBfont), static_cast<LPARAM>(TRUE));
 
-         SendMessage( hWnd, SB_SETPARTS, 1, ( LPARAM ) &piArray );
+         SendMessage(hWnd, SB_SETPARTS, 1, reinterpret_cast<LPARAM>(&piArray));
       }
 
-      hbwapi_ret_raw_HANDLE( hWnd );
+      hbwapi_ret_raw_HANDLE(hWnd);
    }
    else
    {
-      hbwapi_ret_raw_HANDLE( nullptr );
+      hbwapi_ret_raw_HANDLE(nullptr);
    }
 }
 
-/* wvw_sbDestroy( [nWinNum] )
-   destroy status bar for window nWinNum */
+/*
+wvw_sbDestroy([nWinNum])
+destroy status bar for window nWinNum
+*/
 HB_FUNC( WVW_SBDESTROY )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
@@ -113,71 +113,72 @@ HB_FUNC( WVW_SBDESTROY )
    {
       if( wvw_win->hSBfont )
       {
-         DeleteObject( wvw_win->hSBfont );
+         DeleteObject(wvw_win->hSBfont);
          wvw_win->hSBfont = nullptr;
       }
-      DestroyWindow( wvw_win->hStatusBar );
+      DestroyWindow(wvw_win->hStatusBar);
       wvw_win->hStatusBar = nullptr;
       wvw_win->fSBPaint   = HB_FALSE;
       wvw_win->iSBHeight  = 0;
 
-      hb_gt_wvw_ResetWindow( wvw_win );
+      hb_gt_wvw_ResetWindow(wvw_win);
    }
 }
 
-/* wvw_sbAddPart( nWinNum, cMaxText, nWidth, nStyle, lResetParts, [cIcon], [cToolTip] )
- *  ps.
- *  lResetParts==.T. :: remove all previously created parts
- *  nStyle: 0 (default), 0x0200 (SBT_POPOUT), 0x0100 (SBT_NOBORDERS)
- *  nWidth: expected width in pixels
- *  NOTE: if cMaxText is passed, nWidth is ignored. width of cMaxText will be used instead
- *  NOTE: the leftmost part will eventually have width of remaining spaces
- *  NOTE: cIcon and cToolTip does not work currently
- *
- * returns number of parts
- * returns 0 if failed
- */
+/*
+wvw_sbAddPart(nWinNum, cMaxText, nWidth, nStyle, lResetParts, [cIcon], [cToolTip])
+ps.
+lResetParts==.T. :: remove all previously created parts
+nStyle: 0 (default), 0x0200 (SBT_POPOUT), 0x0100 (SBT_NOBORDERS)
+nWidth: expected width in pixels
+NOTE: if cMaxText is passed, nWidth is ignored. width of cMaxText will be used instead
+NOTE: the leftmost part will eventually have width of remaining spaces
+NOTE: cIcon and cToolTip does not work currently
+
+returns number of parts
+returns 0 if failed
+*/
 HB_FUNC( WVW_SBADDPART )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
    HWND     hWnd;
 
-   if( wvw_win && ( hWnd = wvw_win->hStatusBar ) != nullptr )
+   if( wvw_win && (hWnd = wvw_win->hStatusBar) != nullptr )
    {
-      int     piArray[ WVW_MAX_STATUS_PARTS ];
+      int     piArray[WVW_MAX_STATUS_PARTS];
       int     iNumOfParts;
       RECT    rSB;
-      WORD    displayFlags = ( WORD ) hb_parnl( 4 );
-      HB_BOOL fResetParts  = hb_parl( 5 );
-      int     iWidth       = hb_parni( 3 ) <= 0 ? 5 * WVW_SPACE_BETWEEN_PARTS : hb_parni( 3 );
+      WORD    displayFlags = static_cast<WORD>(hb_parnl(4));
+      HB_BOOL fResetParts  = hb_parl(5);
+      int     iWidth       = hb_parni(3) <= 0 ? 5 * WVW_SPACE_BETWEEN_PARTS : hb_parni(3);
 
-      if( HB_ISCHAR( 2 ) )
+      if( HB_ISCHAR(2) )
       {
-         HDC hDCSB = GetDC( hWnd );
+         HDC hDCSB = GetDC(hWnd);
 
          HB_SIZE nLen;
          void *  hText;
-         LPCTSTR szText = HB_PARSTR( 2, &hText, &nLen );
+         LPCTSTR szText = HB_PARSTR(2, &hText, &nLen);
 
          SIZE size;
 
-         memset( &size, 0, sizeof( size ) );
+         memset(&size, 0, sizeof(size));
 
-         SelectObject( hDCSB, ( HFONT ) SendMessage( hWnd, WM_GETFONT, 0, 0 ) );
+         SelectObject(hDCSB, reinterpret_cast<HFONT>(SendMessage(hWnd, WM_GETFONT, 0, 0)));
 
-         if( GetTextExtentPoint32( hDCSB, szText, ( int ) ( nLen + 1 ), &size ) )
+         if( GetTextExtentPoint32(hDCSB, szText, static_cast<int>(nLen + 1), &size) )
          {
             iWidth = size.cx;
          }
 
-         hb_strfree( hText );
+         hb_strfree(hText);
 
-         ReleaseDC( hWnd, hDCSB );
+         ReleaseDC(hWnd, hDCSB);
       }
 
-      if( ! fResetParts )
+      if( !fResetParts )
       {
-         iNumOfParts = ( int ) SendMessage( hWnd, SB_GETPARTS, HB_SIZEOFARRAY( piArray ) - 1, ( LPARAM ) ( LPINT ) piArray );
+         iNumOfParts = static_cast<int>(SendMessage(hWnd, SB_GETPARTS, HB_SIZEOFARRAY(piArray) - 1, reinterpret_cast<LPARAM>(static_cast<LPINT>(piArray))));
       }
       else
       {
@@ -185,22 +186,22 @@ HB_FUNC( WVW_SBADDPART )
       }
       iNumOfParts++;
 
-      memset( &rSB, 0, sizeof( rSB ) );
+      memset(&rSB, 0, sizeof(rSB));
 
-      GetClientRect( hWnd, &rSB );
+      GetClientRect(hWnd, &rSB);
 
-      piArray[ iNumOfParts - 1 ] = rSB.right;
-      if( ! fResetParts )
+      piArray[iNumOfParts - 1] = rSB.right;
+      if( !fResetParts )
       {
          for( int n = 0; n < iNumOfParts - 1; n++ )
          {
-            piArray[ n ] -= iWidth + WVW_SPACE_BETWEEN_PARTS;
+            piArray[n] -= iWidth + WVW_SPACE_BETWEEN_PARTS;
          }
       }
 
-      SendMessage( hWnd, SB_SETPARTS, iNumOfParts, ( LPARAM ) piArray );
+      SendMessage(hWnd, SB_SETPARTS, iNumOfParts, reinterpret_cast<LPARAM>(piArray));
 
-      if( HB_ISCHAR( 6 ) )
+      if( HB_ISCHAR(6) )
       {
          int cy = rSB.bottom - rSB.top - 4;
          int cx = cy;
@@ -208,157 +209,166 @@ HB_FUNC( WVW_SBADDPART )
          HICON hIcon;
 
          void *  hName;
-         LPCTSTR szName = HB_PARSTR( 6, &hName, nullptr );
+         LPCTSTR szName = HB_PARSTR(6, &hName, nullptr);
 
-         hIcon = ( HICON ) LoadImage( 0, szName, IMAGE_ICON, cx, cy, LR_LOADFROMFILE | LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT | LR_DEFAULTSIZE );
+         hIcon = static_cast<HICON>(LoadImage(0, szName, IMAGE_ICON, cx, cy, LR_LOADFROMFILE | LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT | LR_DEFAULTSIZE));
          if( hIcon == nullptr )
          {
-            hIcon = ( HICON ) LoadImage( GetModuleHandle( nullptr ), szName, IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_DEFAULTSIZE );
+            hIcon = static_cast<HICON>(LoadImage(GetModuleHandle(nullptr), szName, IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_DEFAULTSIZE));
          }
 
-         hb_strfree( hName );
+         hb_strfree(hName);
 
          if( hIcon != nullptr )
          {
-            SendMessage( hWnd, SB_SETICON, ( WPARAM ) iNumOfParts - 1, ( LPARAM ) hIcon );
+            SendMessage(hWnd, SB_SETICON, static_cast<WPARAM>(iNumOfParts) - 1, reinterpret_cast<LPARAM>(hIcon));
          }
       }
 
-      SendMessage( hWnd, SB_SETTEXT, ( iNumOfParts - 1 ) | displayFlags, 0 );
-      if( HB_ISCHAR( 7 ) )
+      SendMessage(hWnd, SB_SETTEXT, (iNumOfParts - 1) | displayFlags, 0);
+      if( HB_ISCHAR(7) )
       {
          void * hText;
-         SendMessage( hWnd, SB_SETTIPTEXT, ( WPARAM ) ( iNumOfParts - 1 ), ( LPARAM ) HB_PARSTR( 7, &hText, nullptr ) );
-         hb_strfree( hText );
+         SendMessage(hWnd, SB_SETTIPTEXT, static_cast<WPARAM>(iNumOfParts - 1), reinterpret_cast<LPARAM>(HB_PARSTR(7, &hText, nullptr)));
+         hb_strfree(hText);
       }
 
-      hb_retni( iNumOfParts );
+      hb_retni(iNumOfParts);
    }
    else
    {
-      hb_retni( 0 );
+      hb_retni(0);
    }
 }
 
-/* wvw_sbRefresh( nWinNum )
- * reinitialize StatusBar's parts, eg. after window resize
- * TODO: do it automatically, after hb_gt_wvw_ResetWindowSize()
- * returns number of parts
- * returns 0 if failed
- */
+/*
+wvw_sbRefresh(nWinNum)
+reinitialize StatusBar's parts, eg. after window resize
+TODO: do it automatically, after hb_gt_wvw_ResetWindowSize()
+returns number of parts
+returns 0 if failed
+*/
 HB_FUNC( WVW_SBREFRESH )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
    HWND     hWnd;
 
-   if( wvw_win && ( hWnd = wvw_win->hStatusBar ) != nullptr )
+   if( wvw_win && (hWnd = wvw_win->hStatusBar) != nullptr )
    {
-      int piArray[ WVW_MAX_STATUS_PARTS ];
-      int iNumOfParts = ( int ) SendMessage( hWnd, SB_GETPARTS, HB_SIZEOFARRAY( piArray ), ( LPARAM ) ( LPINT ) piArray );
+      int piArray[WVW_MAX_STATUS_PARTS];
+      int iNumOfParts = static_cast<int>(SendMessage(hWnd, SB_GETPARTS, HB_SIZEOFARRAY(piArray), reinterpret_cast<LPARAM>(static_cast<LPINT>(piArray))));
       if( iNumOfParts > 0 )
       {
          int  iDiff;
          RECT rSB;
 
-         memset( &rSB, 0, sizeof( rSB ) );
+         memset(&rSB, 0, sizeof(rSB));
 
-         GetClientRect( hWnd, &rSB );
-         iDiff = rSB.right - piArray[ iNumOfParts - 1 ];
+         GetClientRect(hWnd, &rSB);
+         iDiff = rSB.right - piArray[iNumOfParts - 1];
 
          for( int n = 0; n <= iNumOfParts - 1; n++ )
          {
-            piArray[ n ] += iDiff;
+            piArray[n] += iDiff;
          }
 
-         SendMessage( hWnd, SB_SETPARTS, iNumOfParts, ( LPARAM ) ( LPINT ) piArray );
+         SendMessage(hWnd, SB_SETPARTS, iNumOfParts, reinterpret_cast<LPARAM>(static_cast<LPINT>(piArray)));
 
-         hb_retni( iNumOfParts );
+         hb_retni(iNumOfParts);
          return;
       }
    }
 
-   hb_retni( 0 );
+   hb_retni(0);
 }
 
-/* wvw_sbSetText( [nWinNum], [nPart], cText )
-   Set Text of status bar's part #npart */
+/*
+wvw_sbSetText([nWinNum], [nPart], cText)
+Set Text of status bar's part #npart
+*/
 HB_FUNC( WVW_SBSETTEXT )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win )
    {
-      int iPart = hb_parnidef( 2, 1 );
+      int iPart = hb_parnidef(2, 1);
 
       void * hText;
 
-      if( HB_ISCHAR( 4 ) )
+      if( HB_ISCHAR(4) )
       {
-         wvw_win->cSBColorForeground = strtol( hb_parc( 4 ), nullptr, 10 );
+         wvw_win->cSBColorForeground = strtol(hb_parc(4), nullptr, 10);
       }
-      else if( HB_ISNUM( 4 ) )
+      else if( HB_ISNUM(4) )
       {
-         wvw_win->cSBColorForeground = hbwapi_par_COLORREF( 4 );
-      }
-
-      if( HB_ISCHAR( 5 ) )
-      {
-         wvw_win->cSBColorBackground = strtol( hb_parc( 5 ), nullptr, 10 );
-      }
-      else if( HB_ISNUM( 5 ) )
-      {
-         wvw_win->cSBColorBackground = hbwapi_par_COLORREF( 5 );
+         wvw_win->cSBColorForeground = hbwapi_par_COLORREF(4);
       }
 
-      if( iPart == 0 && ( wvw_win->cSBColorForeground || wvw_win->cSBColorBackground ) )
+      if( HB_ISCHAR(5) )
+      {
+         wvw_win->cSBColorBackground = strtol(hb_parc(5), nullptr, 10);
+      }
+      else if( HB_ISNUM(5) )
+      {
+         wvw_win->cSBColorBackground = hbwapi_par_COLORREF(5);
+      }
+
+      if( iPart == 0 && (wvw_win->cSBColorForeground || wvw_win->cSBColorBackground) )
       {
          wvw_win->fSBPaint = HB_TRUE;
-         SendMessage( wvw_win->hStatusBar, SB_SETTEXT, SBT_OWNERDRAW, ( LPARAM ) HB_PARSTRDEF( 3, &hText, nullptr ) );
-         hb_gt_wvw_ProcessMessages( wvw_win );
+         SendMessage(wvw_win->hStatusBar, SB_SETTEXT, SBT_OWNERDRAW, reinterpret_cast<LPARAM>(HB_PARSTRDEF(3, &hText, nullptr)));
+         hb_gt_wvw_ProcessMessages(wvw_win);
       }
       else
       {
-         SendMessage( wvw_win->hStatusBar, SB_SETTEXT, iPart, ( LPARAM ) HB_PARSTRDEF( 3, &hText, nullptr ) );
+         SendMessage(wvw_win->hStatusBar, SB_SETTEXT, iPart, reinterpret_cast<LPARAM>(HB_PARSTRDEF(3, &hText, nullptr)));
       }
 
-      hb_strfree( hText );
+      hb_strfree(hText);
    }
 }
 
-/* wvw_sbGetText( [nWinNum], [nPart] )
-   Get Text of status bar's part #npart */
+/*
+wvw_sbGetText([nWinNum], [nPart])
+Get Text of status bar's part #npart
+*/
 HB_FUNC( WVW_SBGETTEXT )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win )
    {
-      int    iPart  = hb_parnidef( 2, 1 );
-      WORD   nLen   = LOWORD( SendMessage( wvw_win->hStatusBar, SB_GETTEXTLENGTH, ( WPARAM ) iPart, 0 ) );
-      LPTSTR szText = ( LPTSTR ) hb_xgrabz( ( nLen + 1 ) * sizeof( TCHAR ) );
+      int    iPart  = hb_parnidef(2, 1);
+      WORD   nLen   = LOWORD(SendMessage(wvw_win->hStatusBar, SB_GETTEXTLENGTH, static_cast<WPARAM>(iPart), 0));
+      LPTSTR szText = static_cast<LPTSTR>(hb_xgrabz((nLen + 1) * sizeof(TCHAR)));
 
-      SendMessage( wvw_win->hStatusBar, SB_GETTEXT, ( WPARAM ) iPart, ( LPARAM ) szText );
+      SendMessage(wvw_win->hStatusBar, SB_GETTEXT, static_cast<WPARAM>(iPart), reinterpret_cast<LPARAM>(szText));
 
-      HB_RETSTRLEN( szText, nLen );
+      HB_RETSTRLEN(szText, nLen);
 
-      hb_xfree( szText );
+      hb_xfree(szText);
    }
 }
 
-/* wvw_sbGetParts( [nWinNum] )
-   Get number of parts in statusbar of window nWinNum */
+/*
+wvw_sbGetParts([nWinNum])
+Get number of parts in statusbar of window nWinNum
+*/
 HB_FUNC( WVW_SBGETPARTS )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win )
    {
-      hb_retni( ( int ) SendMessage( wvw_win->hStatusBar, SB_GETPARTS, WVW_MAX_STATUS_PARTS, 0 ) );
+      hb_retni(static_cast<int>(SendMessage(wvw_win->hStatusBar, SB_GETPARTS, WVW_MAX_STATUS_PARTS, 0)));
    }
 }
 
-/* wvw_sbSetFont( [nWinNum], cFontFace, nHeight, nWidth, nWeight, nQUality, ;
-                  lItalic, lUnderline, lStrikeout ) */
+/*
+wvw_sbSetFont([nWinNum], cFontFace, nHeight, nWidth, nWeight, nQUality, ;
+              lItalic, lUnderline, lStrikeout)
+*/
 HB_FUNC( WVW_SBSETFONT )
 {
    PWVW_GLO wvw     = hb_gt_wvw();
@@ -368,32 +378,32 @@ HB_FUNC( WVW_SBSETFONT )
    {
       HB_BOOL fResult = HB_TRUE;
 
-      wvw->lfSB.lfHeight         = hb_parnldef( 3, wvw_win->fontHeight - 2 );
-      wvw->lfSB.lfWidth          = hb_parnldef( 4, wvw->lfSB.lfWidth );
+      wvw->lfSB.lfHeight         = hb_parnldef(3, wvw_win->fontHeight - 2);
+      wvw->lfSB.lfWidth          = hb_parnldef(4, wvw->lfSB.lfWidth);
       wvw->lfSB.lfEscapement     = 0;
       wvw->lfSB.lfOrientation    = 0;
-      wvw->lfSB.lfWeight         = hb_parnldef( 5, wvw->lfSB.lfWeight );
-      wvw->lfSB.lfQuality        = ( BYTE ) hb_parnidef( 6, wvw->lfSB.lfQuality );
-      wvw->lfSB.lfItalic         = ( BYTE ) hb_parldef( 7, wvw->lfSB.lfItalic );
-      wvw->lfSB.lfUnderline      = ( BYTE ) hb_parldef( 8, wvw->lfSB.lfUnderline );
-      wvw->lfSB.lfStrikeOut      = ( BYTE ) hb_parldef( 9, wvw->lfSB.lfStrikeOut );
+      wvw->lfSB.lfWeight         = hb_parnldef(5, wvw->lfSB.lfWeight);
+      wvw->lfSB.lfQuality        = static_cast<BYTE>(hb_parnidef(6, wvw->lfSB.lfQuality));
+      wvw->lfSB.lfItalic         = static_cast<BYTE>(hb_parldef(7, wvw->lfSB.lfItalic));
+      wvw->lfSB.lfUnderline      = static_cast<BYTE>(hb_parldef(8, wvw->lfSB.lfUnderline));
+      wvw->lfSB.lfStrikeOut      = static_cast<BYTE>(hb_parldef(9, wvw->lfSB.lfStrikeOut));
       wvw->lfSB.lfCharSet        = DEFAULT_CHARSET;
       wvw->lfSB.lfPitchAndFamily = FF_DONTCARE;
 
-      if( HB_ISCHAR( 2 ) )
+      if( HB_ISCHAR(2) )
       {
-         HB_ITEMCOPYSTR( hb_param( 2, Harbour::Item::STRING ), wvw->lfSB.lfFaceName, HB_SIZEOFARRAY( wvw->lfSB.lfFaceName ) );
-         wvw_win->fontFace[ HB_SIZEOFARRAY( wvw->lfSB.lfFaceName ) - 1 ] = TEXT( '\0' );
+         HB_ITEMCOPYSTR(hb_param(2, Harbour::Item::STRING), wvw->lfSB.lfFaceName, HB_SIZEOFARRAY(wvw->lfSB.lfFaceName));
+         wvw_win->fontFace[HB_SIZEOFARRAY(wvw->lfSB.lfFaceName) - 1] = TEXT('\0');
       }
 
       if( wvw_win->hSBfont )
       {
          HFONT hOldFont = wvw_win->hSBfont;
-         HFONT hFont    = CreateFontIndirect( &wvw->lfSB );
+         HFONT hFont    = CreateFontIndirect(&wvw->lfSB);
          if( hFont )
          {
             wvw_win->hSBfont = hFont;
-            DeleteObject( hOldFont );
+            DeleteObject(hOldFont);
          }
          else
          {
@@ -401,7 +411,7 @@ HB_FUNC( WVW_SBSETFONT )
          }
       }
 
-      hb_retl( fResult );
+      hb_retl(fResult);
    }
    else
    {

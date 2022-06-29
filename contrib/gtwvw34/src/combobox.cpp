@@ -49,9 +49,9 @@
 
 #include "hbgtwvw.h"
 
-static LRESULT CALLBACK hb_gt_wvw_CBProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
+static LRESULT CALLBACK hb_gt_wvw_CBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   HWND hWndParent = GetParent( hWnd );
+   HWND hWndParent = GetParent(hWnd);
    int  nWin;
 
    int     nCtrlId;
@@ -63,12 +63,12 @@ static LRESULT CALLBACK hb_gt_wvw_CBProc( HWND hWnd, UINT message, WPARAM wParam
 
    if( wvw == nullptr || hWndParent == nullptr )
    {
-      return DefWindowProc( hWnd, message, wParam, lParam );
+      return DefWindowProc(hWnd, message, wParam, lParam);
    }
 
    for( nWin = 0; nWin < wvw->iNumWindows; nWin++ )
    {
-      if( wvw->pWin[ nWin ]->hWnd == hWndParent )
+      if( wvw->pWin[nWin]->hWnd == hWndParent )
       {
          break;
       }
@@ -76,25 +76,25 @@ static LRESULT CALLBACK hb_gt_wvw_CBProc( HWND hWnd, UINT message, WPARAM wParam
 
    if( nWin >= wvw->iNumWindows )
    {
-      return DefWindowProc( hWnd, message, wParam, lParam );
+      return DefWindowProc(hWnd, message, wParam, lParam);
    }
 
-   wvw_win = wvw->pWin[ nWin ];
+   wvw_win = wvw->pWin[nWin];
 
-   nCtrlId = hb_gt_wvw_FindControlId( wvw_win, WVW_CONTROL_COMBOBOX, hWnd, &nKbdType );
+   nCtrlId = hb_gt_wvw_FindControlId(wvw_win, WVW_CONTROL_COMBOBOX, hWnd, &nKbdType);
    if( nCtrlId == 0 )
    {
-      hb_errInternal( 10010, "ComboBox: Control ID not found with hb_gt_wvw_FindControlId()", nullptr, nullptr );
+      hb_errInternal(10010, "ComboBox: Control ID not found with hb_gt_wvw_FindControlId()", nullptr, nullptr);
 
-      return DefWindowProc( hWnd, message, wParam, lParam );
+      return DefWindowProc(hWnd, message, wParam, lParam);
    }
 
-   OldProc = hb_gt_wvw_GetControlProc( wvw_win, WVW_CONTROL_COMBOBOX, hWnd );
+   OldProc = hb_gt_wvw_GetControlProc(wvw_win, WVW_CONTROL_COMBOBOX, hWnd);
    if( OldProc == nullptr )
    {
-      hb_errInternal( 10011, "ComboBox: Failed hb_gt_wvw_GetControlProc()", nullptr, nullptr );
+      hb_errInternal(10011, "ComboBox: Failed hb_gt_wvw_GetControlProc()", nullptr, nullptr);
 
-      return DefWindowProc( hWnd, message, wParam, lParam );
+      return DefWindowProc(hWnd, message, wParam, lParam);
    }
 
    switch( message )
@@ -102,17 +102,17 @@ static LRESULT CALLBACK hb_gt_wvw_CBProc( HWND hWnd, UINT message, WPARAM wParam
       case WM_KEYDOWN:
       case WM_SYSKEYDOWN:
       {
-         HB_BOOL bAlt   = GetKeyState( VK_MENU ) & 0x8000;
-         HB_BOOL bCtrl  = GetKeyState( VK_CONTROL ) & 0x8000;
-         HB_BOOL bShift = GetKeyState( VK_SHIFT ) & 0x8000;
+         HB_BOOL bAlt   = GetKeyState(VK_MENU) & 0x8000;
+         HB_BOOL bCtrl  = GetKeyState(VK_CONTROL) & 0x8000;
+         HB_BOOL bShift = GetKeyState(VK_SHIFT) & 0x8000;
          HB_BOOL fDropped;
 
-         if( ! hb_gt_wvw_BufferedKey( ( int ) wParam ) )
+         if( !hb_gt_wvw_BufferedKey(static_cast<int>(wParam)) )
          {
             break;
          }
 
-         fDropped = ( HB_BOOL ) SendMessage( hWnd, CB_GETDROPPEDSTATE, 0, 0 );
+         fDropped = static_cast<HB_BOOL>(SendMessage(hWnd, CB_GETDROPPEDSTATE, 0, 0));
 
          if( nKbdType == WVW_CB_KBD_STANDARD )
          {
@@ -121,26 +121,26 @@ static LRESULT CALLBACK hb_gt_wvw_CBProc( HWND hWnd, UINT message, WPARAM wParam
                case VK_F4:
                   if( bAlt )
                   {
-                     SetFocus( hWndParent );
-                     PostMessage( hWndParent, message, wParam, lParam );
+                     SetFocus(hWndParent);
+                     PostMessage(hWndParent, message, wParam, lParam);
                      return 0;
                   }
                   break;
 
                case VK_ESCAPE:
-                  if( ! bCtrl && ! bAlt && ! bShift && ! fDropped )
+                  if( !bCtrl && !bAlt && !bShift && !fDropped )
                   {
-                     SetFocus( hWndParent );
-                     PostMessage( hWndParent, message, wParam, lParam );
+                     SetFocus(hWndParent);
+                     PostMessage(hWndParent, message, wParam, lParam);
                      return 0;
                   }
                   break;
 
                case VK_TAB:
-                  if( ! bCtrl && ! bAlt )
+                  if( !bCtrl && !bAlt )
                   {
-                     SetFocus( hWndParent );
-                     PostMessage( hWndParent, message, wParam, lParam );
+                     SetFocus(hWndParent);
+                     PostMessage(hWndParent, message, wParam, lParam);
                      return 0;
                   }
                   break;
@@ -153,15 +153,15 @@ static LRESULT CALLBACK hb_gt_wvw_CBProc( HWND hWnd, UINT message, WPARAM wParam
                   }
                   else
                   {
-                     SendMessage( hWnd, CB_SHOWDROPDOWN, ( WPARAM ) TRUE, 0 );
+                     SendMessage(hWnd, CB_SHOWDROPDOWN, static_cast<WPARAM>(TRUE), 0);
                      return 0;
                   }
 
                case VK_RETURN:
-                  if( ! bCtrl && ! bAlt && ! bShift && ! fDropped )
+                  if( !bCtrl && !bAlt && !bShift && !fDropped )
                   {
-                     SetFocus( hWndParent );
-                     PostMessage( hWndParent, message, wParam, lParam );
+                     SetFocus(hWndParent);
+                     PostMessage(hWndParent, message, wParam, lParam);
                      return 0;
                   }
                   break;
@@ -176,8 +176,8 @@ static LRESULT CALLBACK hb_gt_wvw_CBProc( HWND hWnd, UINT message, WPARAM wParam
                case VK_F4:
                   if( bAlt )
                   {
-                     SetFocus( hWndParent );
-                     PostMessage( hWndParent, message, wParam, lParam );
+                     SetFocus(hWndParent);
+                     PostMessage(hWndParent, message, wParam, lParam);
                      return 0;
                   }
                   break;
@@ -190,7 +190,7 @@ static LRESULT CALLBACK hb_gt_wvw_CBProc( HWND hWnd, UINT message, WPARAM wParam
                   }
                   else
                   {
-                     SendMessage( hWnd, CB_SHOWDROPDOWN, ( WPARAM ) TRUE, 0 );
+                     SendMessage(hWnd, CB_SHOWDROPDOWN, static_cast<WPARAM>(TRUE), 0);
                      return 0;
                   }
 
@@ -201,8 +201,8 @@ static LRESULT CALLBACK hb_gt_wvw_CBProc( HWND hWnd, UINT message, WPARAM wParam
                   }
                   else
                   {
-                     SetFocus( hWndParent );
-                     PostMessage( hWndParent, message, wParam, lParam );
+                     SetFocus(hWndParent);
+                     PostMessage(hWndParent, message, wParam, lParam);
                      return 0;
                   }
 
@@ -220,16 +220,16 @@ static LRESULT CALLBACK hb_gt_wvw_CBProc( HWND hWnd, UINT message, WPARAM wParam
                   }
                   else
                   {
-                     SetFocus( hWndParent );
-                     PostMessage( hWndParent, message, wParam, lParam );
+                     SetFocus(hWndParent);
+                     PostMessage(hWndParent, message, wParam, lParam);
                      return 0;
                   }
 
                case VK_TAB:
-                  if( ! bCtrl && ! bAlt )
+                  if( !bCtrl && !bAlt )
                   {
-                     SetFocus( hWndParent );
-                     PostMessage( hWndParent, message, wParam, lParam );
+                     SetFocus(hWndParent);
+                     PostMessage(hWndParent, message, wParam, lParam);
                      return 0;
                   }
                   break;
@@ -239,65 +239,66 @@ static LRESULT CALLBACK hb_gt_wvw_CBProc( HWND hWnd, UINT message, WPARAM wParam
       }
    }
 
-   return CallWindowProc( OldProc, hWnd, message, wParam, lParam );
+   return CallWindowProc(OldProc, hWnd, message, wParam, lParam);
 }
 
-static int hb_gt_wvw_GetFontDialogUnits( HWND hWnd, HFONT hFont )
+static int hb_gt_wvw_GetFontDialogUnits(HWND hWnd, HFONT hFont)
 {
-   const TCHAR tmp[] = TEXT( "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" );
+   const TCHAR tmp[] = TEXT("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
 
    SIZE sz;
 
-   HDC hDC = GetDC( hWnd );  /* get the DC to the window */
+   HDC hDC = GetDC(hWnd);  /* get the DC to the window */
 
-   SelectObject( hDC, hFont );  /* with the current font attributes, select the font */
-   GetTextExtentPoint32( hDC, tmp, HB_SIZEOFARRAY( tmp ), &sz );  /* get its length */
+   SelectObject(hDC, hFont);  /* with the current font attributes, select the font */
+   GetTextExtentPoint32(hDC, tmp, HB_SIZEOFARRAY(tmp), &sz);  /* get its length */
 
-   ReleaseDC( hWnd, hDC );
+   ReleaseDC(hWnd, hDC);
 
-   return sz.cx / HB_SIZEOFARRAY( tmp );  /* calculate the average character width */
+   return sz.cx / HB_SIZEOFARRAY(tmp);  /* calculate the average character width */
 }
 
-/* wvw_cbCreate( [nWinNum], nTop, nLeft, nWidth, aText, bBlock, nListLines, ;
- *                          nReserved, nKbdType, aOffset, @hControl, nStyle )
- * create combobox (drop-down list, no editbox) for window nWinNum
- * nTop: row of top/left corner (in character unit)
- * nLeft: col of top/left corner (in character unit)
- * nWidth: width of combobox (in character unit)
- * aText: array of drop-down list members, default = {"empty"}
- *      eg. {"yes","no"}
- * bBlock: codeblock to execute on these events:
- *        event=CBN_SELCHANGE(1): user changes selection
- *                      (not executed if selection
- *                      is changed programmatically)
- *         event=CBN_SETFOCUS
- *         event=CBN_KILLFOCUS
- *         This codeblock will be evaluated with these parameters:
- *         nWinNum: window number
- *         nCBid  : combobox id
- *         nType  : event type (CBN_SELCHANGE/CBN_SETFOCUS/CBN_KILLFOCUS supported)
- *         nIndex : index of the selected list item (0 based)
- * nListLines: number of lines for list items, default = 3
- *            (will be automatically truncated if it's > Len( aText ))
- * nReserved: reserved for future (this parameter is now ignored)
- *
- * nKbdType: WVW_CB_KBD_STANDARD (0): similar to standard windows convention
- *            ENTER/ESC: will kill focus from combobox
- *           WVW_CB_KBD_CLIPPER (1):
- *            ENTER: drop (show) the list box
- *            UP/DOWN/TAB/SHIFTTAB/ESC: kill focus
- * default is WVW_CB_KBD_STANDARD (0)
- *
- * aOffset: array {y1,x1,y2,x2} of offsets to corner pixels, to adjust
- *         dimension of combobox.
- *         defaults: {-2,-2,+2,+2}
- *         NOTES: the third element (y2) is actually ignored.
- *                height of combobox is always 1 char height
- *                (see also wvw_cbSetFont())
- *
- * returns control id of newly created combobox of windows nWinNum
- * returns 0 if failed
- */
+/*
+wvw_cbCreate([nWinNum], nTop, nLeft, nWidth, aText, bBlock, nListLines, ;
+                        nReserved, nKbdType, aOffset, @hControl, nStyle)
+create combobox (drop-down list, no editbox) for window nWinNum
+nTop: row of top/left corner (in character unit)
+nLeft: col of top/left corner (in character unit)
+nWidth: width of combobox (in character unit)
+aText: array of drop-down list members, default = {"empty"}
+     eg. {"yes","no"}
+bBlock: codeblock to execute on these events:
+       event=CBN_SELCHANGE(1): user changes selection
+                     (not executed if selection
+                     is changed programmatically)
+        event=CBN_SETFOCUS
+        event=CBN_KILLFOCUS
+        This codeblock will be evaluated with these parameters:
+        nWinNum: window number
+        nCBid  : combobox id
+        nType  : event type (CBN_SELCHANGE/CBN_SETFOCUS/CBN_KILLFOCUS supported)
+        nIndex : index of the selected list item (0 based)
+nListLines: number of lines for list items, default = 3
+           (will be automatically truncated if it's > Len(aText))
+nReserved: reserved for future (this parameter is now ignored)
+
+nKbdType: WVW_CB_KBD_STANDARD (0): similar to standard windows convention
+           ENTER/ESC: will kill focus from combobox
+          WVW_CB_KBD_CLIPPER (1):
+           ENTER: drop (show) the list box
+           UP/DOWN/TAB/SHIFTTAB/ESC: kill focus
+default is WVW_CB_KBD_STANDARD (0)
+
+aOffset: array {y1,x1,y2,x2} of offsets to corner pixels, to adjust
+        dimension of combobox.
+        defaults: {-2,-2,+2,+2}
+        NOTES: the third element (y2) is actually ignored.
+               height of combobox is always 1 char height
+               (see also wvw_cbSetFont())
+
+returns control id of newly created combobox of windows nWinNum
+returns 0 if failed
+*/
 HB_FUNC( WVW_CBCREATE )
 {
    PWVW_GLO wvw     = hb_gt_wvw();
@@ -312,31 +313,31 @@ HB_FUNC( WVW_CBCREATE )
       int iOffTop, iOffLeft, iOffBottom, iOffRight;
       int nCtrlId;
 
-      int iWidth  = hb_parni( 4 );
-      int iTop    = hb_parni( 2 ),
-          iLeft   = hb_parni( 3 ),
+      int iWidth  = hb_parni(4);
+      int iTop    = hb_parni(2),
+          iLeft   = hb_parni(3),
           iBottom = iTop,
           iRight  = iLeft + iWidth - 1;
 
-      int iNumElement = HB_ISARRAY( 5 ) ? ( int ) hb_arrayLen( hb_param( 5, Harbour::Item::ARRAY ) ) : 0;
+      int iNumElement = HB_ISARRAY(5) ? static_cast<int>(hb_arrayLen(hb_param(5, Harbour::Item::ARRAY))) : 0;
 
       RECT rXB, rOffXB;
 
       if( wvw_win->hCBfont == nullptr )
       {
-         wvw_win->hCBfont = CreateFontIndirect( &wvw->lfCB );
+         wvw_win->hCBfont = CreateFontIndirect(&wvw->lfCB);
          if( wvw_win->hCBfont == nullptr )
          {
-            hbwapi_stor_HANDLE( nullptr, 11 );
-            hb_retni( 0 );
+            hbwapi_stor_HANDLE(nullptr, 11);
+            hb_retni(0);
             return;
          }
       }
 
-      iOffTop    = hb_parvni( 10, 1 );
-      iOffLeft   = hb_parvni( 10, 2 );
-      iOffBottom = hb_parnidef( 7, 3 );  /* nListLines */
-      iOffRight  = hb_parvni( 10, 4 );
+      iOffTop    = hb_parvni(10, 1);
+      iOffLeft   = hb_parvni(10, 2);
+      iOffBottom = hb_parnidef(7, 3);  /* nListLines */
+      iOffRight  = hb_parvni(10, 4);
 
       rXB.top    = iTop;
       rXB.left   = iLeft;
@@ -348,17 +349,17 @@ HB_FUNC( WVW_CBCREATE )
       rOffXB.bottom = iOffBottom;
       rOffXB.right  = iOffRight;
 
-      hb_gt_wvw_HBFUNCPrologue( wvw_win, &iTop, &iLeft, &iBottom, &iRight );
+      hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
 
-      xy    = hb_gt_wvw_GetXYFromColRow( wvw_win, iLeft, iTop );
+      xy    = hb_gt_wvw_GetXYFromColRow(wvw_win, iLeft, iTop);
       iTop  = xy.y + iOffTop;
       iLeft = xy.x + iOffLeft;
 
-      xy      = hb_gt_wvw_GetXYFromColRow( wvw_win, iRight + 1, iBottom + 1 );
-      iBottom = xy.y - wvw_win->iLineSpacing - 1 + ( iOffBottom * hb_gt_wvw_LineHeight( wvw_win ) );
+      xy      = hb_gt_wvw_GetXYFromColRow(wvw_win, iRight + 1, iBottom + 1);
+      iBottom = xy.y - wvw_win->iLineSpacing - 1 + (iOffBottom * hb_gt_wvw_LineHeight(wvw_win));
       iRight  = xy.x - 1 + iOffRight;
 
-      nCtrlId = hb_gt_wvw_LastControlId( wvw_win, WVW_CONTROL_COMBOBOX );
+      nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_COMBOBOX);
       if( nCtrlId == 0 )
       {
          nCtrlId = WVW_ID_BASE_COMBOBOX;
@@ -367,32 +368,32 @@ HB_FUNC( WVW_CBCREATE )
       {
          nCtrlId++;
       }
-      
+
       InitCommonControls();
 
       hWnd = CreateWindowEx(
          0,
-         TEXT( "COMBOBOX" ),
+         TEXT("COMBOBOX"),
          nullptr,
-         WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_VSCROLL | hb_parni( 12 ) /* nStyle */,
+         WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_VSCROLL | hb_parni(12) /* nStyle */,
          iLeft,
          iTop,
          iRight - iLeft + 1,
          iBottom - iTop + 1,
          wvw_win->hWnd,
-         ( HMENU ) ( HB_PTRUINT ) nCtrlId,
-         GetModuleHandle( nullptr ),
-         nullptr );
+         reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(nCtrlId)),
+         GetModuleHandle(nullptr),
+         nullptr);
 
       if( hWnd )
       {
          HB_SIZE nMaxWidth = 0;
 
-         SendMessage( hWnd, WM_SETREDRAW, ( WPARAM ) TRUE, 0 );
+         SendMessage(hWnd, WM_SETREDRAW, static_cast<WPARAM>(TRUE), 0);
 
          if( iNumElement == 0 )
          {
-            if( SendMessage( hWnd, CB_ADDSTRING, 0, ( LPARAM ) TEXT( "empty" ) ) < 0 )
+            if( SendMessage(hWnd, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(TEXT("empty"))) < 0 )
             {
                /* ignore failure */
             }
@@ -403,60 +404,60 @@ HB_FUNC( WVW_CBCREATE )
             {
                void * hText;
 
-               if( SendMessage( hWnd, CB_ADDSTRING, 0, ( LPARAM ) HB_PARASTR( 5, i, &hText, nullptr ) ) < 0 )
+               if( SendMessage(hWnd, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(HB_PARASTR(5, i, &hText, nullptr))) < 0 )
                {
                   /* ignore failure */
                }
                else
                {
-                  HB_SIZE nLen = ( HB_SIZE ) SendMessage( hWnd, CB_GETLBTEXTLEN, i - 1, 0 );
-                  if( nLen != ( HB_SIZE ) CB_ERR && nLen > nMaxWidth )
+                  HB_SIZE nLen = static_cast<HB_SIZE>(SendMessage(hWnd, CB_GETLBTEXTLEN, i - 1, 0));
+                  if( nLen != static_cast<HB_SIZE>(CB_ERR) && nLen > nMaxWidth )
                   {
                      nMaxWidth = nLen;
                   }
                }
 
-               hb_strfree( hText );
+               hb_strfree(hText);
             }
          }
 
-         SendMessage( hWnd, CB_SETCURSEL, 0, 0 );
-         SendMessage( hWnd, CB_SETEXTENDEDUI, ( WPARAM ) TRUE, 0 );
+         SendMessage(hWnd, CB_SETCURSEL, 0, 0);
+         SendMessage(hWnd, CB_SETEXTENDEDUI, static_cast<WPARAM>(TRUE), 0);
 
          if( nMaxWidth > 2 )
          {
-            HFONT hFont = hb_gt_wvw_GetFont( wvw_win->fontFace, 10, wvw_win->fontWidth, wvw_win->fontWeight, wvw_win->fontQuality, wvw_win->CodePage );
-            nMaxWidth = ( nMaxWidth - 2 ) * hb_gt_wvw_GetFontDialogUnits( wvw_win->hWnd, hFont );
-            DeleteObject( hFont );
+            HFONT hFont = hb_gt_wvw_GetFont(wvw_win->fontFace, 10, wvw_win->fontWidth, wvw_win->fontWeight, wvw_win->fontQuality, wvw_win->CodePage);
+            nMaxWidth = (nMaxWidth - 2) * hb_gt_wvw_GetFontDialogUnits(wvw_win->hWnd, hFont);
+            DeleteObject(hFont);
          }
-         SendMessage( hWnd, CB_SETDROPPEDWIDTH, ( WPARAM ) nMaxWidth + 100, 0 );
+         SendMessage(hWnd, CB_SETDROPPEDWIDTH, static_cast<WPARAM>(nMaxWidth) + 100, 0);
 
-         hb_gt_wvw_AddControlHandle( wvw_win, WVW_CONTROL_COMBOBOX, hWnd, nCtrlId, hb_param( 6, Harbour::Item::EVALITEM ),
-                                     rXB, rOffXB, hb_parnidef( 9, WVW_CB_KBD_STANDARD ) );
-         hb_gt_wvw_StoreControlProc( wvw_win, WVW_CONTROL_COMBOBOX, hWnd,
-            ( WNDPROC ) SetWindowLongPtr( hWnd, GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvw_CBProc ) );
+         hb_gt_wvw_AddControlHandle(wvw_win, WVW_CONTROL_COMBOBOX, hWnd, nCtrlId, hb_param(6, Harbour::Item::EVALITEM), rXB, rOffXB, hb_parnidef(9, WVW_CB_KBD_STANDARD));
+         hb_gt_wvw_StoreControlProc(wvw_win, WVW_CONTROL_COMBOBOX, hWnd, reinterpret_cast<WNDPROC>(SetWindowLongPtr(hWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(hb_gt_wvw_CBProc))));
 
-         SendMessage( hWnd, WM_SETFONT, ( WPARAM ) wvw_win->hCBfont, ( LPARAM ) TRUE );
+         SendMessage(hWnd, WM_SETFONT, reinterpret_cast<WPARAM>(wvw_win->hCBfont), static_cast<LPARAM>(TRUE));
 
-         hbwapi_stor_HANDLE( hWnd, 11 );
-         hb_retni( nCtrlId );
+         hbwapi_stor_HANDLE(hWnd, 11);
+         hb_retni(nCtrlId);
          return;
       }
    }
 
-   hbwapi_stor_HANDLE( nullptr, 11 );
-   hb_retni( 0 );
+   hbwapi_stor_HANDLE(nullptr, 11);
+   hb_retni(0);
 }
 
-/* wvw_cbDestroy( [nWinNum], nCBid )
-   destroy combobox nCBid for window nWinNum */
+/*
+wvw_cbDestroy([nWinNum], nCBid)
+destroy combobox nCBid for window nWinNum
+*/
 HB_FUNC( WVW_CBDESTROY )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win )
    {
-      int      nCtrlId     = hb_parni( 2 );
+      int      nCtrlId     = hb_parni(2);
       PWVW_CTL wvw_ctl     = wvw_win->ctlList;
       PWVW_CTL wvw_ctlPrev = nullptr;
 
@@ -473,7 +474,7 @@ HB_FUNC( WVW_CBDESTROY )
 
       if( wvw_ctl )
       {
-         DestroyWindow( wvw_ctl->hWnd );
+         DestroyWindow(wvw_ctl->hWnd);
 
          if( wvw_ctlPrev )
          {
@@ -486,57 +487,62 @@ HB_FUNC( WVW_CBDESTROY )
 
          if( wvw_ctl->pBlock )
          {
-            hb_itemRelease( wvw_ctl->pBlock );
+            hb_itemRelease(wvw_ctl->pBlock);
          }
 
-         hb_xfree( wvw_ctl );
+         hb_xfree(wvw_ctl);
       }
    }
 }
 
-/* wvw_cbSetFocus( [nWinNum], nComboId )
-   set the focus to combobox nComboId in window nWinNum */
+/*
+wvw_cbSetFocus([nWinNum], nComboId)
+set the focus to combobox nComboId in window nWinNum 
+*/
 HB_FUNC( WVW_CBSETFOCUS )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_COMBOBOX, hb_parni( 2 ), nullptr );
+   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_COMBOBOX, hb_parni(2), nullptr);
 
-   hb_retl( hWnd && SetFocus( hWnd ) != nullptr );
+   hb_retl(hWnd && SetFocus(hWnd) != nullptr);
 }
 
-/* wvw_cbIsFocused( [nWinNum], nComboId )
-   returns .T. if the focus is on combobox nComboId in window nWinNum */
+/*
+wvw_cbIsFocused([nWinNum], nComboId)
+returns .T. if the focus is on combobox nComboId in window nWinNum
+*/
 HB_FUNC( WVW_CBISFOCUSED )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_COMBOBOX, hb_parni( 2 ), nullptr );
+   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_COMBOBOX, hb_parni(2), nullptr);
 
-   hb_retl( hWnd && GetFocus() == hWnd );
+   hb_retl(hWnd && GetFocus() == hWnd);
 }
 
-/* wvw_cbEnable( [nWinNum], nComboId, [lEnable] )
- * enable/disable button nComboId on window nWinNum
- *(lEnable defaults to .T., ie. enabling the combobox)
- * return previous state of the combobox (.T.: enabled .F.: disabled)
- *(if nComboId is invalid, this function returns .F. too)
- */
+/*
+wvw_cbEnable([nWinNum], nComboId, [lEnable])
+enable/disable button nComboId on window nWinNum
+lEnable defaults to .T., ie. enabling the combobox)
+return previous state of the combobox (.T.: enabled .F.: disabled)
+(if nComboId is invalid, this function returns .F. too)
+*/
 HB_FUNC( WVW_CBENABLE )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_COMBOBOX, hb_parni( 2 ), nullptr );
+   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_COMBOBOX, hb_parni(2), nullptr);
 
    if( hWnd )
    {
-      HB_BOOL fEnable = hb_parldef( 3, HB_TRUE );
+      HB_BOOL fEnable = hb_parldef(3, true);
 
-      hb_retl( EnableWindow( hWnd, ( BOOL ) fEnable ) == 0 );
+      hb_retl(EnableWindow(hWnd, static_cast<BOOL>(fEnable)) == 0);
 
-      if( ! fEnable )
+      if( !fEnable )
       {
-         SetFocus( wvw_win->hWnd );
+         SetFocus(wvw_win->hWnd);
       }
    }
    else
@@ -545,16 +551,18 @@ HB_FUNC( WVW_CBENABLE )
    }
 }
 
-/* wvw_cbSetCodeblock( [nWinNum], nCBid, bBlock )
-   assign (new) codeblock bBlock to combobox nCBid for window nWinNum
-   return .T. if successful */
+/*
+wvw_cbSetCodeblock([nWinNum], nCBid, bBlock)
+assign (new) codeblock bBlock to combobox nCBid for window nWinNum
+return .T. if successful
+*/
 HB_FUNC( WVW_CBSETCODEBLOCK )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_COMBOBOX, nullptr, hb_parni( 2 ) );
-   PHB_ITEM pBlock  = hb_param( 3, Harbour::Item::EVALITEM );
+   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
+   PHB_ITEM pBlock  = hb_param(3, Harbour::Item::EVALITEM);
 
-   if( pBlock && wvw_ctl && ! wvw_ctl->fBusy )
+   if( pBlock && wvw_ctl && !wvw_ctl->fBusy )
    {
       PWVW_GLO wvw         = hb_gt_wvw();
       HB_BOOL  fOldSetting = wvw->fRecurseCBlock;
@@ -564,10 +572,10 @@ HB_FUNC( WVW_CBSETCODEBLOCK )
 
       if( wvw_ctl->pBlock )
       {
-         hb_itemRelease( wvw_ctl->pBlock );
+         hb_itemRelease(wvw_ctl->pBlock);
       }
 
-      wvw_ctl->pBlock = hb_itemNew( pBlock );
+      wvw_ctl->pBlock = hb_itemNew(pBlock);
 
       wvw_ctl->fBusy      = HB_FALSE;
       wvw->fRecurseCBlock = fOldSetting;
@@ -577,17 +585,18 @@ HB_FUNC( WVW_CBSETCODEBLOCK )
    else
    {
       hb_retl(false);
-   }   
+   }
 }
 
-/* wvw_cbSetFont([nWinNum], cFontFace, nHeight, nWidth, nWeight, nQUality, ;
- *                             lItalic, lUnderline, lStrikeout
- *
- * this will initialize font for ALL comboboxes in window nWinNum
- * (including ones created later on)
- *
- * TODO: ? should nHeight be ignored, and always forced to use standard char height?
- */
+/*
+wvw_cbSetFont([nWinNum], cFontFace, nHeight, nWidth, nWeight, nQUality, ;
+                            lItalic, lUnderline, lStrikeout
+
+this will initialize font for ALL comboboxes in window nWinNum
+(including ones created later on)
+
+TODO: ? should nHeight be ignored, and always forced to use standard char height?
+*/
 HB_FUNC( WVW_CBSETFONT )
 {
    PWVW_GLO wvw     = hb_gt_wvw();
@@ -597,44 +606,44 @@ HB_FUNC( WVW_CBSETFONT )
    {
       HB_BOOL fResult = HB_TRUE;
 
-      wvw->lfCB.lfHeight         = hb_parnldef( 3, wvw_win->fontHeight - 2 );
-      wvw->lfCB.lfWidth          = hb_parnldef( 4, wvw->lfCB.lfWidth );
+      wvw->lfCB.lfHeight         = hb_parnldef(3, wvw_win->fontHeight - 2);
+      wvw->lfCB.lfWidth          = hb_parnldef(4, wvw->lfCB.lfWidth);
       wvw->lfCB.lfEscapement     = 0;
       wvw->lfCB.lfOrientation    = 0;
-      wvw->lfCB.lfWeight         = hb_parnldef( 5, wvw->lfCB.lfWeight );
-      wvw->lfCB.lfQuality        = ( BYTE ) hb_parnidef( 6, wvw->lfCB.lfQuality );
-      wvw->lfCB.lfItalic         = ( BYTE ) hb_parldef( 7, wvw->lfCB.lfItalic );
-      wvw->lfCB.lfUnderline      = ( BYTE ) hb_parldef( 8, wvw->lfCB.lfUnderline );
-      wvw->lfCB.lfStrikeOut      = ( BYTE ) hb_parldef( 9, wvw->lfCB.lfStrikeOut );
+      wvw->lfCB.lfWeight         = hb_parnldef(5, wvw->lfCB.lfWeight);
+      wvw->lfCB.lfQuality        = static_cast<BYTE>(hb_parnidef(6, wvw->lfCB.lfQuality));
+      wvw->lfCB.lfItalic         = static_cast<BYTE>(hb_parldef(7, wvw->lfCB.lfItalic));
+      wvw->lfCB.lfUnderline      = static_cast<BYTE>(hb_parldef(8, wvw->lfCB.lfUnderline));
+      wvw->lfCB.lfStrikeOut      = static_cast<BYTE>(hb_parldef(9, wvw->lfCB.lfStrikeOut));
       wvw->lfCB.lfCharSet        = DEFAULT_CHARSET;
       wvw->lfCB.lfPitchAndFamily = FF_DONTCARE;
 
-      if( HB_ISCHAR( 2 ) )
+      if( HB_ISCHAR(2) )
       {
-         HB_ITEMCOPYSTR( hb_param( 2, Harbour::Item::STRING ), wvw->lfCB.lfFaceName, HB_SIZEOFARRAY( wvw->lfCB.lfFaceName ) );
-         wvw_win->fontFace[ HB_SIZEOFARRAY( wvw->lfCB.lfFaceName ) - 1 ] = TEXT( '\0' );
+         HB_ITEMCOPYSTR(hb_param(2, Harbour::Item::STRING), wvw->lfCB.lfFaceName, HB_SIZEOFARRAY(wvw->lfCB.lfFaceName));
+         wvw_win->fontFace[HB_SIZEOFARRAY(wvw->lfCB.lfFaceName) - 1] = TEXT('\0');
       }
 
       if( wvw_win->hCBfont )
       {
          HFONT hOldFont = wvw_win->hCBfont;
-         HFONT hFont    = CreateFontIndirect( &wvw->lfCB );
+         HFONT hFont    = CreateFontIndirect(&wvw->lfCB);
          if( hFont )
          {
             PWVW_CTL wvw_ctl = wvw_win->ctlList;
 
             while( wvw_ctl )
             {
-               if( wvw_ctl->nClass == WVW_CONTROL_COMBOBOX && ( HFONT ) SendMessage( wvw_ctl->hWnd, WM_GETFONT, 0, 0 ) == hOldFont )
+               if( wvw_ctl->nClass == WVW_CONTROL_COMBOBOX && reinterpret_cast<HFONT>(SendMessage(wvw_ctl->hWnd, WM_GETFONT, 0, 0)) == hOldFont )
                {
-                  SendMessage( wvw_ctl->hWnd, WM_SETFONT, ( WPARAM ) hFont, ( LPARAM ) TRUE );
+                  SendMessage(wvw_ctl->hWnd, WM_SETFONT, reinterpret_cast<WPARAM>(hFont), static_cast<LPARAM>(TRUE));
                }
-               
+
                wvw_ctl = wvw_ctl->pNext;
             }
 
             wvw_win->hCBfont = hFont;
-            DeleteObject( hOldFont );
+            DeleteObject(hOldFont);
          }
          else
          {
@@ -642,138 +651,146 @@ HB_FUNC( WVW_CBSETFONT )
          }
       }
 
-      hb_retl( fResult );
+      hb_retl(fResult);
    }
    else
    {
       hb_retl(false);
-   }   
+   }
 }
 
-/* wvw_cbSetIndex( [nWinNum], nCBid, nIndex )
- *  set current selection of combobox nCBid in window nWinNum to nIndex
- *  (nIndex is 0 based)
- *  returns .T. if successful.
- *
- * NOTE: the better name to this function should be wvw_cbSetCurSel()
- *      but that name is already used.
- *      (wvw_cbSetCurSel() and wvw_cbAddString() is NOT related to other
- *       WVW_CB* functions)
- */
+/*
+wvw_cbSetIndex([nWinNum], nCBid, nIndex)
+set current selection of combobox nCBid in window nWinNum to nIndex
+(nIndex is 0 based)
+returns .T. if successful.
+
+NOTE: the better name to this function should be wvw_cbSetCurSel()
+      but that name is already used.
+      (wvw_cbSetCurSel() and wvw_cbAddString() is NOT related to other
+      WVW_CB* functions)
+*/
 HB_FUNC( WVW_CBSETINDEX )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_COMBOBOX, nullptr, hb_parni( 2 ) );
-   int      iIndex  = hb_parni( 3 );
+   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
+   int      iIndex  = hb_parni(3);
 
    if( wvw_ctl && iIndex >= 0 )
    {
-      hb_retl( ( HB_BOOL ) SendMessage( wvw_ctl->hWnd, CB_SETCURSEL, ( WPARAM ) iIndex, 0 ) == iIndex );
+      hb_retl(static_cast<HB_BOOL>(SendMessage(wvw_ctl->hWnd, CB_SETCURSEL, static_cast<WPARAM>(iIndex), 0)) == iIndex);
    }
    else
    {
       hb_retl(false);
-   }   
+   }
 }
 
-/* wvw_cbGetIndex( [nWinNum], nCBid )
- *  get current selection of combobox nCBid in window nWinNum
- *  return nIndex (0 based)
- *  returns CB_ERR (-1) if none selected
- *
- * NOTE: the better name to this function should be WVW_CBgetCurSel()
- *      but that name is potentially misleading to wvw_cbSetCurSel
- *      which is not our family of wvw_cb*() functions
- *      (wvw_cbSetCurSel() and wvw_cbAddString() is NOT related to other
- *       WVW_CB* functions)
- */
+/*
+wvw_cbGetIndex([nWinNum], nCBid)
+get current selection of combobox nCBid in window nWinNum
+return nIndex (0 based)
+returns CB_ERR (-1) if none selected
+
+NOTE: the better name to this function should be WVW_CBgetCurSel()
+      but that name is potentially misleading to wvw_cbSetCurSel
+      which is not our family of wvw_cb*() functions
+      (wvw_cbSetCurSel() and wvw_cbAddString() is NOT related to other
+      WVW_CB* functions)
+*/
 HB_FUNC( WVW_CBGETINDEX )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_COMBOBOX, nullptr, hb_parni( 2 ) );
+   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
 
    if( wvw_ctl )
    {
-      hb_retni( ( int ) SendMessage( wvw_ctl->hWnd, CB_GETCURSEL, 0, 0 ) );
+      hb_retni(static_cast<int>(SendMessage(wvw_ctl->hWnd, CB_GETCURSEL, 0, 0)));
    }
    else
    {
-      hb_retni( CB_ERR );
-   }   
+      hb_retni(CB_ERR);
+   }
 }
 
-/* wvw_cbFindString( [nWinNum], nCBid, cString )
-    find index of cString in combobox nCBid in window nWinNum
-    returns index of cString (0 based)
-    returns CB_ERR (-1) if string not found
-   NOTE:case insensitive */
+/*
+wvw_cbFindString([nWinNum], nCBid, cString)
+find index of cString in combobox nCBid in window nWinNum
+returns index of cString (0 based)
+returns CB_ERR (-1) if string not found
+NOTE:case insensitive
+*/
 HB_FUNC( WVW_CBFINDSTRING )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_COMBOBOX, nullptr, hb_parni( 2 ) );
+   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
 
    if( wvw_ctl )
    {
       void * hStr;
-      hb_retni( ( int ) SendMessage( wvw_ctl->hWnd, CB_FINDSTRING, ( WPARAM ) -1, ( LPARAM ) HB_PARSTRDEF( 3, &hStr, nullptr ) ) );
-      hb_strfree( hStr );
+      hb_retni(static_cast<int>(SendMessage(wvw_ctl->hWnd, CB_FINDSTRING, static_cast<WPARAM>(-1), reinterpret_cast<LPARAM>(HB_PARSTRDEF(3, &hStr, nullptr)))));
+      hb_strfree(hStr);
    }
    else
    {
-      hb_retni( CB_ERR );
-   }   
+      hb_retni(CB_ERR);
+   }
 }
 
-/* wvw_cbGetCurText( [nWinNum], nCBid )
-   get current selected cString in combobox nCBid in window nWinNum
-   returns "" if none selected */
+/*
+wvw_cbGetCurText([nWinNum], nCBid)
+get current selected cString in combobox nCBid in window nWinNum
+returns "" if none selected
+*/
 HB_FUNC( WVW_CBGETCURTEXT )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_COMBOBOX, nullptr, hb_parni( 2 ) );
+   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
 
    if( wvw_ctl )
    {
-      int iCurSel = ( int ) SendMessage( wvw_ctl->hWnd, CB_GETCURSEL, 0, 0 );
-      HB_SIZE nTextLen = ( HB_SIZE ) SendMessage( wvw_ctl->hWnd, CB_GETLBTEXTLEN, ( WPARAM ) iCurSel, 0 );
-      if( nTextLen == ( HB_SIZE ) CB_ERR )
+      int iCurSel = static_cast<int>(SendMessage(wvw_ctl->hWnd, CB_GETCURSEL, 0, 0));
+      HB_SIZE nTextLen = static_cast<HB_SIZE>(SendMessage(wvw_ctl->hWnd, CB_GETLBTEXTLEN, static_cast<WPARAM>(iCurSel), 0));
+      if( nTextLen == static_cast<HB_SIZE>(CB_ERR) )
       {
          hb_retc_null();
       }
       else
       {
-         LPTSTR lptstr = ( LPTSTR ) hb_xgrab( ( nTextLen + 1 ) * sizeof( TCHAR ) );
+         LPTSTR lptstr = static_cast<LPTSTR>(hb_xgrab((nTextLen + 1) * sizeof(TCHAR)));
 
-         if( SendMessage( wvw_ctl->hWnd, CB_GETLBTEXT, ( WPARAM ) iCurSel, ( LPARAM ) lptstr ) == CB_ERR )
+         if( SendMessage(wvw_ctl->hWnd, CB_GETLBTEXT, static_cast<WPARAM>(iCurSel), reinterpret_cast<LPARAM>(lptstr)) == CB_ERR )
          {
             hb_retc_null();
          }
          else
          {
-            HB_RETSTRLEN( lptstr, nTextLen );
+            HB_RETSTRLEN(lptstr, nTextLen);
          }
 
-         hb_xfree( lptstr );
+         hb_xfree(lptstr);
       }
    }
    else
    {
       hb_retc_null();
-   }   
+   }
 }
 
-/* wvw_cbIsDropped( [nWinNum], nCBid )
-   get current dropped state of combobox nCBid in window nWinNum
-   returns .T. if listbox is being shown, otherwise .F.
-   Also returns .F. if nCBid not valid */
+/*
+wvw_cbIsDropped([nWinNum], nCBid)
+get current dropped state of combobox nCBid in window nWinNum
+returns .T. if listbox is being shown, otherwise .F.
+Also returns .F. if nCBid not valid
+*/
 HB_FUNC( WVW_CBISDROPPED )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_COMBOBOX, nullptr, hb_parni( 2 ) );
+   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
 
    if( wvw_ctl )
    {
-      hb_retl( ( HB_BOOL ) SendMessage( wvw_ctl->hWnd, CB_GETDROPPEDSTATE, 0, 0 ) );
+      hb_retl(static_cast<HB_BOOL>(SendMessage(wvw_ctl->hWnd, CB_GETDROPPEDSTATE, 0, 0)));
    }
    else
    {
@@ -785,7 +802,7 @@ HB_FUNC( WVW_CBVISIBLE )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_COMBOBOX, hb_parni( 2 ), nullptr );
+   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_COMBOBOX, hb_parni(2), nullptr);
 
-   hb_retl( hWnd && ShowWindow( hWnd, hb_parldef( 3, HB_TRUE ) ? SW_SHOW : SW_HIDE ) == 0 );
+   hb_retl(hWnd && ShowWindow(hWnd, hb_parldef(3, true) ? SW_SHOW : SW_HIDE) == 0);
 }

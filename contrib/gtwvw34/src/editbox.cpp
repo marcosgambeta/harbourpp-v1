@@ -59,9 +59,9 @@ static const int s_K_Ctrl[] =
    K_CTRL_Y, K_CTRL_Z
 };
 
-static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
+static LRESULT CALLBACK hb_gt_wvw_EBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   HWND hWndParent = GetParent( hWnd );
+   HWND hWndParent = GetParent(hWnd);
    int  nWin;
 
    int     nCtrlId;
@@ -74,12 +74,12 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
 
    if( wvw == nullptr || hWndParent == nullptr )
    {
-      return DefWindowProc( hWnd, message, wParam, lParam );
+      return DefWindowProc(hWnd, message, wParam, lParam);
    }
    
    for( nWin = 0; nWin < wvw->iNumWindows; nWin++ )
    {
-      if( wvw->pWin[ nWin ]->hWnd == hWndParent )
+      if( wvw->pWin[nWin]->hWnd == hWndParent )
       {
          break;
       }   
@@ -87,25 +87,25 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
 
    if( nWin >= wvw->iNumWindows )
    {
-      return DefWindowProc( hWnd, message, wParam, lParam );
+      return DefWindowProc(hWnd, message, wParam, lParam);
    }
    
-   wvw_win = wvw->pWin[ nWin ];
+   wvw_win = wvw->pWin[nWin];
 
-   nCtrlId = hb_gt_wvw_FindControlId( wvw_win, WVW_CONTROL_EDITBOX, hWnd, &nEBType );
+   nCtrlId = hb_gt_wvw_FindControlId(wvw_win, WVW_CONTROL_EDITBOX, hWnd, &nEBType);
    if( nCtrlId == 0 )
    {
-      hb_errInternal( 10010, "EditBox: Control ID not found with hb_gt_wvw_FindControlId()", nullptr, nullptr );
+      hb_errInternal(10010, "EditBox: Control ID not found with hb_gt_wvw_FindControlId()", nullptr, nullptr);
 
-      return DefWindowProc( hWnd, message, wParam, lParam );
+      return DefWindowProc(hWnd, message, wParam, lParam);
    }
 
-   OldProc = hb_gt_wvw_GetControlProc( wvw_win, WVW_CONTROL_EDITBOX, hWnd );
+   OldProc = hb_gt_wvw_GetControlProc(wvw_win, WVW_CONTROL_EDITBOX, hWnd);
    if( OldProc == nullptr )
    {
-      hb_errInternal( 10011, "EditBox: Failed hb_gt_wvw_GetControlProc()", nullptr, nullptr );
+      hb_errInternal(10011, "EditBox: Failed hb_gt_wvw_GetControlProc()", nullptr, nullptr);
 
-      return DefWindowProc( hWnd, message, wParam, lParam );
+      return DefWindowProc(hWnd, message, wParam, lParam);
    }
 
    iKey = 0;
@@ -114,53 +114,53 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
       case WM_KEYDOWN:
       case WM_SYSKEYDOWN:
       {
-         HB_BOOL bAlt = GetKeyState( VK_MENU ) & 0x8000;
+         HB_BOOL bAlt = GetKeyState(VK_MENU) & 0x8000;
          switch( wParam )
          {
             case VK_F1:
-               iKey = hb_gt_wvw_JustTranslateKey( K_F1, K_SH_F1, K_ALT_F1, K_CTRL_F1 );
+               iKey = hb_gt_wvw_JustTranslateKey(K_F1, K_SH_F1, K_ALT_F1, K_CTRL_F1);
                break;
             case VK_F2:
-               iKey = hb_gt_wvw_JustTranslateKey( K_F2, K_SH_F2, K_ALT_F2, K_CTRL_F2 );
+               iKey = hb_gt_wvw_JustTranslateKey(K_F2, K_SH_F2, K_ALT_F2, K_CTRL_F2);
                break;
             case VK_F3:
-               iKey = hb_gt_wvw_JustTranslateKey( K_F3, K_SH_F3, K_ALT_F3, K_CTRL_F3 );
+               iKey = hb_gt_wvw_JustTranslateKey(K_F3, K_SH_F3, K_ALT_F3, K_CTRL_F3);
                break;
             case VK_F4:
                if( bAlt )
                {
-                  SetFocus( hWndParent );
-                  PostMessage( hWndParent, message, wParam, lParam );
+                  SetFocus(hWndParent);
+                  PostMessage(hWndParent, message, wParam, lParam);
                   return 0;
                }
                else
                {
-                  iKey = hb_gt_wvw_JustTranslateKey( K_F4, K_SH_F4, K_ALT_F4, K_CTRL_F4 );
+                  iKey = hb_gt_wvw_JustTranslateKey(K_F4, K_SH_F4, K_ALT_F4, K_CTRL_F4);
                }
                break;
             case VK_F5:
-               iKey = hb_gt_wvw_JustTranslateKey( K_F5, K_SH_F5, K_ALT_F5, K_CTRL_F5 );
+               iKey = hb_gt_wvw_JustTranslateKey(K_F5, K_SH_F5, K_ALT_F5, K_CTRL_F5);
                break;
             case VK_F6:
-               iKey = hb_gt_wvw_JustTranslateKey( K_F6, K_SH_F6, K_ALT_F6, K_CTRL_F6 );
+               iKey = hb_gt_wvw_JustTranslateKey(K_F6, K_SH_F6, K_ALT_F6, K_CTRL_F6);
                break;
             case VK_F7:
-               iKey = hb_gt_wvw_JustTranslateKey( K_F7, K_SH_F7, K_ALT_F7, K_CTRL_F7 );
+               iKey = hb_gt_wvw_JustTranslateKey(K_F7, K_SH_F7, K_ALT_F7, K_CTRL_F7);
                break;
             case VK_F8:
-               iKey = hb_gt_wvw_JustTranslateKey( K_F8, K_SH_F8, K_ALT_F8, K_CTRL_F8 );
+               iKey = hb_gt_wvw_JustTranslateKey(K_F8, K_SH_F8, K_ALT_F8, K_CTRL_F8);
                break;
             case VK_F9:
-               iKey = hb_gt_wvw_JustTranslateKey( K_F9, K_SH_F9, K_ALT_F9, K_CTRL_F9 );
+               iKey = hb_gt_wvw_JustTranslateKey(K_F9, K_SH_F9, K_ALT_F9, K_CTRL_F9);
                break;
             case VK_F10:
-               iKey = hb_gt_wvw_JustTranslateKey( K_F10, K_SH_F10, K_ALT_F10, K_CTRL_F10 );
+               iKey = hb_gt_wvw_JustTranslateKey(K_F10, K_SH_F10, K_ALT_F10, K_CTRL_F10);
                break;
             case VK_F11:
-               iKey = hb_gt_wvw_JustTranslateKey( K_F11, K_SH_F11, K_ALT_F11, K_CTRL_F11 );
+               iKey = hb_gt_wvw_JustTranslateKey(K_F11, K_SH_F11, K_ALT_F11, K_CTRL_F11);
                break;
             case VK_F12:
-               iKey = hb_gt_wvw_JustTranslateKey( K_F12, K_SH_F12, K_ALT_F12, K_CTRL_F12 );
+               iKey = hb_gt_wvw_JustTranslateKey(K_F12, K_SH_F12, K_ALT_F12, K_CTRL_F12);
                break;
          }
          break;
@@ -168,9 +168,9 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
 
       case WM_CHAR:
       {
-         HB_BOOL bCtrl     = GetKeyState( VK_CONTROL ) & 0x8000;
-         int     iScanCode = HB_LOBYTE( HIWORD( lParam ) );
-         int     c         = ( int ) wParam;
+         HB_BOOL bCtrl     = GetKeyState(VK_CONTROL) & 0x8000;
+         int     iScanCode = HB_LOBYTE(HIWORD(lParam));
+         int     c         = static_cast<int>(wParam);
 
          if( bCtrl && iScanCode == 28 )
          {
@@ -178,29 +178,29 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
          }
          else if( bCtrl && c >= 1 && c <= 26 )
          {
-            iKey = s_K_Ctrl[ c - 1 ];
+            iKey = s_K_Ctrl[c - 1];
          }
          else
          {
             switch( c )
             {
                case VK_BACK:
-                  iKey = hb_gt_wvw_JustTranslateKey( K_BS, K_SH_BS, K_ALT_BS, K_CTRL_BS );
+                  iKey = hb_gt_wvw_JustTranslateKey(K_BS, K_SH_BS, K_ALT_BS, K_CTRL_BS);
                   break;
                case VK_TAB:
-                  iKey = hb_gt_wvw_JustTranslateKey( K_TAB, K_SH_TAB, K_ALT_TAB, K_CTRL_TAB );
+                  iKey = hb_gt_wvw_JustTranslateKey(K_TAB, K_SH_TAB, K_ALT_TAB, K_CTRL_TAB);
                   break;
                case VK_RETURN:
-                  iKey = hb_gt_wvw_JustTranslateKey( K_RETURN, K_SH_RETURN, K_ALT_RETURN, K_CTRL_RETURN );
+                  iKey = hb_gt_wvw_JustTranslateKey(K_RETURN, K_SH_RETURN, K_ALT_RETURN, K_CTRL_RETURN);
                   break;
                case VK_ESCAPE:
                   iKey = K_ESC;
                   break;
                default:
-#if ! defined( UNICODE )
+#if !defined(UNICODE)
                   if( wvw_win->CodePage == OEM_CHARSET )
                   {
-                     c = hb_gt_wvw_key_ansi_to_oem( c );
+                     c = hb_gt_wvw_key_ansi_to_oem(c);
                   }   
 #endif
                   iKey = c;
@@ -212,7 +212,7 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
       case WM_SYSCHAR:
       {
          int c;
-         switch( HB_LOBYTE( HIWORD( lParam ) ) )
+         switch( HB_LOBYTE(HIWORD(lParam)) )
          {
             case  2:
                c = K_ALT_1;
@@ -329,7 +329,7 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
                c = K_ALT_M;
                break;
             default:
-               c = ( int ) wParam;
+               c = static_cast<int>(wParam);
          }
          iKey = c;
          break;
@@ -339,19 +339,19 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
    if( iKey != 0 )
    {
       HB_BOOL  fCodeExec  = HB_FALSE;
-      PHB_ITEM pKey       = hb_itemPutNI( nullptr, iKey );
-      PHB_ITEM pCodeblock = hb_itemDoC( "SETKEY", 1, pKey );
-      if( HB_IS_EVALITEM( pCodeblock ) )
+      PHB_ITEM pKey       = hb_itemPutNI(nullptr, iKey);
+      PHB_ITEM pCodeblock = hb_itemDoC("SETKEY", 1, pKey);
+      if( HB_IS_EVALITEM(pCodeblock) )
       {
          PHB_ITEM pReturn;
-         SetFocus( hWndParent );
-         pReturn = hb_itemDo( pCodeblock, 0 );
-         hb_itemRelease( pReturn );
-         SetFocus( hWnd );
+         SetFocus(hWndParent);
+         pReturn = hb_itemDo(pCodeblock, 0);
+         hb_itemRelease(pReturn);
+         SetFocus(hWnd);
          fCodeExec = HB_TRUE;
       }
-      hb_itemRelease( pCodeblock );
-      hb_itemRelease( pKey );
+      hb_itemRelease(pCodeblock);
+      hb_itemRelease(pKey);
       if( fCodeExec )
       {
          return 0;
@@ -363,25 +363,25 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
       case WM_KEYDOWN:
       case WM_SYSKEYDOWN:
       {
-         HB_BOOL bAlt   = GetKeyState( VK_MENU ) & 0x8000;
-         HB_BOOL bCtrl  = GetKeyState( VK_CONTROL ) & 0x8000;
-         HB_BOOL bShift = GetKeyState( VK_SHIFT ) & 0x8000;
+         HB_BOOL bAlt   = GetKeyState(VK_MENU) & 0x8000;
+         HB_BOOL bCtrl  = GetKeyState(VK_CONTROL) & 0x8000;
+         HB_BOOL bShift = GetKeyState(VK_SHIFT) & 0x8000;
          HB_BOOL fMultiline;
 
-         if( ! hb_gt_wvw_BufferedKey( ( int ) wParam ) )
+         if( !hb_gt_wvw_BufferedKey(static_cast<int>(wParam)) )
          {
             break;
          }
          
-         fMultiline = ( ( nEBType & WVW_EB_MULTILINE ) == WVW_EB_MULTILINE );
+         fMultiline = ((nEBType & WVW_EB_MULTILINE) == WVW_EB_MULTILINE);
 
          switch( wParam )
          {
             case VK_F4:
                if( bAlt )
                {
-                  SetFocus( hWndParent );
-                  PostMessage( hWndParent, message, wParam, lParam );
+                  SetFocus(hWndParent);
+                  PostMessage(hWndParent, message, wParam, lParam);
                   return 0;
                }
                break;
@@ -393,8 +393,8 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
                }
                else
                {
-                  SetFocus( hWndParent );
-                  PostMessage( hWndParent, message, wParam, lParam );
+                  SetFocus(hWndParent);
+                  PostMessage(hWndParent, message, wParam, lParam);
                   return 0;
                }
 
@@ -405,8 +405,8 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
                }
                else
                {
-                  SetFocus( hWndParent );
-                  PostMessage( hWndParent, message, wParam, lParam );
+                  SetFocus(hWndParent);
+                  PostMessage(hWndParent, message, wParam, lParam);
                   return 0;
                }
 
@@ -420,28 +420,28 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
                }
                else
                {
-                  SetFocus( hWndParent );
-                  PostMessage( hWndParent, message, wParam, lParam );
+                  SetFocus(hWndParent);
+                  PostMessage(hWndParent, message, wParam, lParam);
                   return 0;
                }
 
             case VK_TAB:
-               if( ! bCtrl && ! bAlt )
+               if( !bCtrl && !bAlt )
                {
-                  SetFocus( hWndParent );
-                  PostMessage( hWndParent, message, wParam, lParam );
+                  SetFocus(hWndParent);
+                  PostMessage(hWndParent, message, wParam, lParam);
                   return 0;
                }
                break;
 
             case VK_BACK:
-               if( ! bAlt )
+               if( !bAlt )
                {
                   break;
                }
-               if( SendMessage( hWnd, EM_CANUNDO, 0, 0 ) )
+               if( SendMessage(hWnd, EM_CANUNDO, 0, 0) )
                {
-                  SendMessage( hWnd, EM_UNDO, 0, 0 );
+                  SendMessage(hWnd, EM_UNDO, 0, 0);
                   return 0;
                }
                break;
@@ -457,10 +457,10 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
                return 0;
             case 1:
             {
-               HB_BOOL bCtrl = GetKeyState( VK_CONTROL ) & 0x8000;
+               HB_BOOL bCtrl = GetKeyState(VK_CONTROL) & 0x8000;
                if( bCtrl )
                {
-                  SendMessage( hWnd, EM_SETSEL, 0, ( LPARAM ) -1 );
+                  SendMessage(hWnd, EM_SETSEL, 0, static_cast<LPARAM>(-1));
                   return 0;
                }
                break;
@@ -470,48 +470,49 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc( HWND hWnd, UINT message, WPARAM wParam
       }
    }
 
-   return CallWindowProc( OldProc, hWnd, message, wParam, lParam );
+   return CallWindowProc(OldProc, hWnd, message, wParam, lParam);
 }
 
-/* wvw_ebCreate( [nWinNum], nTop, nLeft, nBottom, nRight, cText, bBlock, ;
- *                          lMultiline, nMoreStyle, nMaxChar, nReserved, aOffset )
- * create editbox for window nWinNum
- * nTop: row of top/left corner (in character unit)
- * nLeft: col of top/left corner (in character unit)
- * nBottom: row of bottom/right corner (in character unit)
- * nRight: col of bottom/right corner (in character unit)
- * cText: initial text to display, default = ""
- *      WARNING!! must be of "C" typed!
- * bBlock: codeblock to execute on these events:
- *         event=EN_SETFOCUS(...): editbox got focus
- *         event=EN_KILLFOCUS(...): editbox lose focus
- *         This codeblock will be evaluated with these parameters:
- *         nWinNum: window number
- *         nEBid  : editbox id
- *         nType  : event type (EN_SETFOCUS/EN_KILLFOCUS supported)
- *
- *
- * lMultiline: .F. :: single line editbox (default)
- *             .T. :: multi line editbox
- * mapped internally into two types of editbox:
- *         WVW_EB_SINGLELINE (1): single line editbox
- *         WVW_EB_MULTILINE (2): multi line editbox
- *         default is WVW_EB_SINGLELINE (1)
- *
- * nMoreStyle: more style that will be added to the predefined style
- *            some examples: ES_PASSWORD, ES_READONLY
- *
- * nMaxChar: (FUTURE FEATURE) maximum number of chars allowed
- *
- * nReserved: reserved for future use
- *
- * aOffset: array {y1,x1,y2,x2} of offsets to corner pixels, to adjust
- *         dimension of editbox.
- *         defaults: {-2,-2,+2,+2}
- *
- * returns control id of newly created editbox of windows nWinNum
- * returns 0 if failed
- */
+/*
+wvw_ebCreate([nWinNum], nTop, nLeft, nBottom, nRight, cText, bBlock, ;
+                        lMultiline, nMoreStyle, nMaxChar, nReserved, aOffset)
+create editbox for window nWinNum
+nTop: row of top/left corner (in character unit)
+nLeft: col of top/left corner (in character unit)
+nBottom: row of bottom/right corner (in character unit)
+nRight: col of bottom/right corner (in character unit)
+cText: initial text to display, default = ""
+     WARNING!! must be of "C" typed!
+bBlock: codeblock to execute on these events:
+        event=EN_SETFOCUS(...): editbox got focus
+        event=EN_KILLFOCUS(...): editbox lose focus
+        This codeblock will be evaluated with these parameters:
+        nWinNum: window number
+        nEBid  : editbox id
+        nType  : event type (EN_SETFOCUS/EN_KILLFOCUS supported)
+
+
+lMultiline: .F. :: single line editbox (default)
+            .T. :: multi line editbox
+mapped internally into two types of editbox:
+        WVW_EB_SINGLELINE (1): single line editbox
+        WVW_EB_MULTILINE (2): multi line editbox
+        default is WVW_EB_SINGLELINE (1)
+
+nMoreStyle: more style that will be added to the predefined style
+           some examples: ES_PASSWORD, ES_READONLY
+
+nMaxChar: (FUTURE FEATURE) maximum number of chars allowed
+
+nReserved: reserved for future use
+
+aOffset: array {y1,x1,y2,x2} of offsets to corner pixels, to adjust
+        dimension of editbox.
+        defaults: {-2,-2,+2,+2}
+
+returns control id of newly created editbox of windows nWinNum
+returns 0 if failed
+*/
 HB_FUNC( WVW_EBCREATE )
 {
    PWVW_GLO wvw     = hb_gt_wvw();
@@ -519,10 +520,10 @@ HB_FUNC( WVW_EBCREATE )
 
    if( wvw && wvw_win )
    {
-      int iTop    = hb_parni( 2 ),
-          iLeft   = hb_parni( 3 ),
-          iBottom = hb_parni( 4 ),
-          iRight  = hb_parni( 5 );
+      int iTop    = hb_parni(2),
+          iLeft   = hb_parni(3),
+          iBottom = hb_parni(4),
+          iRight  = hb_parni(5);
 
       HWND  hWnd;
       POINT xy;
@@ -530,27 +531,27 @@ HB_FUNC( WVW_EBCREATE )
       int iOffTop, iOffLeft, iOffBottom, iOffRight;
       int nCtrlId;
 
-      int nEBType = hb_parl( 8 ) ? WVW_EB_MULTILINE : WVW_EB_SINGLELINE;
+      int nEBType = hb_parl(8) ? WVW_EB_MULTILINE : WVW_EB_SINGLELINE;
 
-      DWORD dwStyle  = ( DWORD ) hb_parnl( 9 );
-      int   iMaxChar = hb_parni( 10 ) > 0 ? hb_parni( 10 ) : 0;
+      DWORD dwStyle  = static_cast<DWORD>(hb_parnl(9));
+      int   iMaxChar = hb_parni(10) > 0 ? hb_parni(10) : 0;
 
       RECT rXB, rOffXB;
 
       if( wvw_win->hEBfont == nullptr )
       {
-         wvw_win->hEBfont = CreateFontIndirect( &wvw->lfEB );
+         wvw_win->hEBfont = CreateFontIndirect(&wvw->lfEB);
          if( wvw_win->hEBfont == nullptr )
          {
-            hb_retni( 0 );
+            hb_retni(0);
             return;
          }
       }
 
-      iOffTop    = hb_parvni( 12, 1 );
-      iOffLeft   = hb_parvni( 12, 2 );
-      iOffBottom = hb_parvni( 12, 3 );
-      iOffRight  = hb_parvni( 12, 4 );
+      iOffTop    = hb_parvni(12, 1);
+      iOffLeft   = hb_parvni(12, 2);
+      iOffBottom = hb_parvni(12, 3);
+      iOffRight  = hb_parvni(12, 4);
 
       rXB.top    = iTop;
       rXB.left   = iLeft;
@@ -562,17 +563,17 @@ HB_FUNC( WVW_EBCREATE )
       rOffXB.bottom = iOffBottom;
       rOffXB.right  = iOffRight;
 
-      hb_gt_wvw_HBFUNCPrologue( wvw_win, &iTop, &iLeft, &iBottom, &iRight );
+      hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
 
-      xy    = hb_gt_wvw_GetXYFromColRow( wvw_win, iLeft, iTop );
+      xy    = hb_gt_wvw_GetXYFromColRow(wvw_win, iLeft, iTop);
       iTop  = xy.y + iOffTop;
       iLeft = xy.x + iOffLeft;
 
-      xy      = hb_gt_wvw_GetXYFromColRow( wvw_win, iRight + 1, iBottom + 1 );
+      xy      = hb_gt_wvw_GetXYFromColRow(wvw_win, iRight + 1, iBottom + 1);
       iBottom = xy.y - wvw_win->iLineSpacing - 1 + iOffBottom;
       iRight  = xy.x - 1 + iOffRight;
 
-      nCtrlId = hb_gt_wvw_LastControlId( wvw_win, WVW_CONTROL_EDITBOX );
+      nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_EDITBOX);
       if( nCtrlId == 0 )
       {
          nCtrlId = WVW_ID_BASE_EDITBOX;
@@ -584,7 +585,7 @@ HB_FUNC( WVW_EBCREATE )
 
       dwStyle |= WS_BORDER | WS_GROUP | WS_TABSTOP;
 
-      if( ( nEBType & WVW_EB_MULTILINE ) == WVW_EB_MULTILINE )
+      if( (nEBType & WVW_EB_MULTILINE) == WVW_EB_MULTILINE )
       {
          dwStyle |= ES_AUTOVSCROLL | ES_MULTILINE | ES_WANTRETURN | WS_BORDER | WS_VSCROLL;
       }
@@ -595,55 +596,56 @@ HB_FUNC( WVW_EBCREATE )
 
       hWnd = CreateWindowEx(
          0,
-         TEXT( "EDIT" ),
+         TEXT("EDIT"),
          nullptr,
-         WS_CHILD | WS_VISIBLE | ( DWORD ) dwStyle,
+         WS_CHILD | WS_VISIBLE | static_cast<DWORD>(dwStyle),
          iLeft,
          iTop,
          iRight - iLeft + 1,
          iBottom - iTop + 1,
          wvw_win->hWnd,
-         ( HMENU ) ( HB_PTRUINT ) nCtrlId,
-         GetModuleHandle( nullptr ),
-         nullptr );
+         reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(nCtrlId)),
+         GetModuleHandle(nullptr),
+         nullptr);
 
       if( hWnd )
       {
          void *  hText;
-         LPCTSTR szText = HB_PARSTRDEF( 6, &hText, nullptr );
+         LPCTSTR szText = HB_PARSTRDEF(6, &hText, nullptr);
 
-         SendMessage( hWnd, WM_SETTEXT, 0, ( LPARAM ) szText );
+         SendMessage(hWnd, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(szText));
 
-         hb_strfree( hText );
+         hb_strfree(hText);
 
          if( iMaxChar > 0 )
          {
-            SendMessage( hWnd, EM_LIMITTEXT, ( WPARAM ) iMaxChar, 0 );
+            SendMessage(hWnd, EM_LIMITTEXT, static_cast<WPARAM>(iMaxChar), 0);
          }
-         
-         hb_gt_wvw_AddControlHandle( wvw_win, WVW_CONTROL_EDITBOX, hWnd, nCtrlId, hb_param( 7, Harbour::Item::EVALITEM ), rXB, rOffXB, nEBType );
-         hb_gt_wvw_StoreControlProc( wvw_win, WVW_CONTROL_EDITBOX, hWnd,
-            ( WNDPROC ) SetWindowLongPtr( hWnd, GWLP_WNDPROC, ( LONG_PTR ) hb_gt_wvw_EBProc ) );
 
-         SendMessage( hWnd, WM_SETFONT, ( WPARAM ) wvw_win->hEBfont, ( LPARAM ) TRUE );
+         hb_gt_wvw_AddControlHandle(wvw_win, WVW_CONTROL_EDITBOX, hWnd, nCtrlId, hb_param(7, Harbour::Item::EVALITEM), rXB, rOffXB, nEBType);
+         hb_gt_wvw_StoreControlProc(wvw_win, WVW_CONTROL_EDITBOX, hWnd, reinterpret_cast<WNDPROC>(SetWindowLongPtr(hWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(hb_gt_wvw_EBProc))));
 
-         hb_retni( nCtrlId );
+         SendMessage(hWnd, WM_SETFONT, reinterpret_cast<WPARAM>(wvw_win->hEBfont), static_cast<LPARAM>(TRUE));
+
+         hb_retni(nCtrlId);
          return;
       }
    }
 
-   hb_retni( 0 );
+   hb_retni(0);
 }
 
-/* wvw_ebDestroy( [nWinNum], nEBid )
-   destroy editbox nEBid for window nWinNum */
+/*
+wvw_ebDestroy([nWinNum], nEBid)
+destroy editbox nEBid for window nWinNum
+*/
 HB_FUNC( WVW_EBDESTROY )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win )
    {
-      int      nCtrlId     = hb_parni( 2 );
+      int      nCtrlId     = hb_parni(2);
       PWVW_CTL wvw_ctl     = wvw_win->ctlList;
       PWVW_CTL wvw_ctlPrev = nullptr;
 
@@ -653,14 +655,14 @@ HB_FUNC( WVW_EBDESTROY )
          {
             break;
          }
-         
+
          wvw_ctlPrev = wvw_ctl;
          wvw_ctl     = wvw_ctl->pNext;
       }
 
       if( wvw_ctl )
       {
-         DestroyWindow( wvw_ctl->hWnd );
+         DestroyWindow(wvw_ctl->hWnd);
 
          if( wvw_ctlPrev )
          {
@@ -673,102 +675,110 @@ HB_FUNC( WVW_EBDESTROY )
 
          if( wvw_ctl->pBlock )
          {
-            hb_itemRelease( wvw_ctl->pBlock );
+            hb_itemRelease(wvw_ctl->pBlock);
          }
-         
-         hb_xfree( wvw_ctl );
+
+         hb_xfree(wvw_ctl);
       }
    }
 }
 
-/* wvw_ebSetFocus( [nWinNum], nEditId )
-   set the focus to editbox nEditId in window nWinNum */
+/*
+wvw_ebSetFocus([nWinNum], nEditId)
+set the focus to editbox nEditId in window nWinNum
+*/
 HB_FUNC( WVW_EBSETFOCUS )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_EDITBOX, hb_parni( 2 ), nullptr );
+   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_EDITBOX, hb_parni(2), nullptr);
 
-   hb_retl( hWnd && SetFocus( hWnd ) != nullptr );
+   hb_retl(hWnd && SetFocus(hWnd) != nullptr);
 }
 
-/* wvw_ebIsFocused( [nWinNum], nEditId )
-   returns .T. if the focus is on editbox nEditId in window nWinNum */
+/*
+wvw_ebIsFocused([nWinNum], nEditId)
+returns .T. if the focus is on editbox nEditId in window nWinNum
+*/
 HB_FUNC( WVW_EBISFOCUSED )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_EDITBOX, hb_parni( 2 ), nullptr );
+   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_EDITBOX, hb_parni(2), nullptr);
 
-   hb_retl( hWnd && GetFocus() == hWnd );
+   hb_retl(hWnd && GetFocus() == hWnd);
 }
 
-/* wvw_ebEnable( [nWinNum], nEditId, [lEnable] )
- *  enable/disable editbox nEditId on window nWinNum
- * (lEnable defaults to .T., ie. enabling the editbox)
- *  return previous state of the editbox (.T.: enabled .F.: disabled)
- * (if nEditId is invalid, this function returns .F. too)
- */
+/*
+wvw_ebEnable([nWinNum], nEditId, [lEnable])
+enable/disable editbox nEditId on window nWinNum
+(lEnable defaults to .T., ie. enabling the editbox)
+return previous state of the editbox (.T.: enabled .F.: disabled)
+(if nEditId is invalid, this function returns .F. too)
+*/
 HB_FUNC( WVW_EBENABLE )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_EDITBOX, hb_parni( 2 ), nullptr );
+   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_EDITBOX, hb_parni(2), nullptr);
 
    if( hWnd )
    {
-      HB_BOOL fEnable = hb_parldef( 3, HB_TRUE );
+      HB_BOOL fEnable = hb_parldef(3, true);
 
-      hb_retl( EnableWindow( hWnd, ( BOOL ) fEnable ) == 0 );
+      hb_retl(EnableWindow(hWnd, static_cast<BOOL>(fEnable)) == 0);
 
-      if( ! fEnable )
+      if( !fEnable )
       {
-         SetFocus( wvw_win->hWnd );
-      }   
+         SetFocus(wvw_win->hWnd);
+      }
    }
    else
    {
       hb_retl(false);
-   }   
+   }
 }
 
-/* wvw_ebEditable( [nWinNum], nEditId, [lEditable] )
- *  get/set editability attribute from editbox nEditId on window nWinNum
- * (if lEditable is not specified, no change to editability)
- *  return previous state of the editbox (.T.: editable .F.: not editable)
- * (if nEditId is invalid, this function returns .F. too)
- */
+/*
+wvw_ebEditable([nWinNum], nEditId, [lEditable])
+get/set editability attribute from editbox nEditId on window nWinNum
+(if lEditable is not specified, no change to editability)
+return previous state of the editbox (.T.: editable .F.: not editable)
+(if nEditId is invalid, this function returns .F. too)
+*/
 HB_FUNC( WVW_EBEDITABLE )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_EDITBOX, hb_parni( 2 ), nullptr );
+   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_EDITBOX, hb_parni(2), nullptr);
 
    if( hWnd )
    {
-      hb_retl( ( GetWindowLong( hWnd, GWL_STYLE ) & ES_READONLY ) != ES_READONLY );
+      hb_retl((GetWindowLong(hWnd, GWL_STYLE) & ES_READONLY) != ES_READONLY);
 
-      if( HB_ISLOG( 3 ) )
+      if( HB_ISLOG(3) )
       {
-         SendMessage( hWnd, EM_SETREADONLY, ( WPARAM ) ! hb_parl( 3 ), 0 );
-      }   
+         SendMessage(hWnd, EM_SETREADONLY, static_cast<WPARAM>(!hb_parl(3)), 0);
+      }
    }
    else
    {
       hb_retl(false);
-   }   
+   }
 }
 
-/* wvw_ebSetCodeblock( [nWinNum], nEBid, bBlock )
-   assign (new) codeblock bBlock to editbox nEBid for window nWinNum
-   return .T. if successful */
+/*
+wvw_ebSetCodeblock([nWinNum], nEBid, bBlock)
+assign (new) codeblock bBlock to editbox nEBid for window nWinNum
+return .T. if successful
+*/
 HB_FUNC( WVW_EBSETCODEBLOCK )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_EDITBOX, nullptr, hb_parni( 2 ) );
-   PHB_ITEM pBlock  = hb_param( 3, Harbour::Item::EVALITEM );
+   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_EDITBOX, nullptr, hb_parni(2));
+   PHB_ITEM pBlock  = hb_param(3, Harbour::Item::EVALITEM);
 
-   if( pBlock && wvw_ctl && ! wvw_ctl->fBusy )
+   if( pBlock && wvw_ctl && !wvw_ctl->fBusy )
    {
       PWVW_GLO wvw         = hb_gt_wvw();
       HB_BOOL  fOldSetting = wvw->fRecurseCBlock;
@@ -778,10 +788,10 @@ HB_FUNC( WVW_EBSETCODEBLOCK )
 
       if( wvw_ctl->pBlock )
       {
-         hb_itemRelease( wvw_ctl->pBlock );
+         hb_itemRelease(wvw_ctl->pBlock);
       }
 
-      wvw_ctl->pBlock = hb_itemNew( pBlock );
+      wvw_ctl->pBlock = hb_itemNew(pBlock);
 
       wvw_ctl->fBusy      = HB_FALSE;
       wvw->fRecurseCBlock = fOldSetting;
@@ -791,17 +801,18 @@ HB_FUNC( WVW_EBSETCODEBLOCK )
    else
    {
       hb_retl(false);
-   }   
+   }
 }
 
-/* wvw_ebSetFont( [nWinNum], cFontFace, nHeight, nWidth, nWeight, nQUality, ;
- *                           lItalic, lUnderline, lStrikeout )
- *
- * this will initialize font for ALL editboxes in window nWinNum
- * (including ones created later on)
- *
- * TODO: ? should nHeight be ignored, and always forced to use standard char height?
- */
+/*
+wvw_ebSetFont([nWinNum], cFontFace, nHeight, nWidth, nWeight, nQUality, ;
+                         lItalic, lUnderline, lStrikeout)
+
+this will initialize font for ALL editboxes in window nWinNum
+(including ones created later on)
+
+TODO: ? should nHeight be ignored, and always forced to use standard char height?
+*/
 HB_FUNC( WVW_EBSETFONT )
 {
    PWVW_GLO wvw     = hb_gt_wvw();
@@ -811,44 +822,44 @@ HB_FUNC( WVW_EBSETFONT )
    {
       HB_BOOL fResult = HB_TRUE;
 
-      wvw->lfEB.lfHeight         = hb_parnldef( 3, wvw_win->fontHeight - 2 );
-      wvw->lfEB.lfWidth          = hb_parnldef( 4, wvw->lfEB.lfWidth );
+      wvw->lfEB.lfHeight         = hb_parnldef(3, wvw_win->fontHeight - 2);
+      wvw->lfEB.lfWidth          = hb_parnldef(4, wvw->lfEB.lfWidth);
       wvw->lfEB.lfEscapement     = 0;
       wvw->lfEB.lfOrientation    = 0;
-      wvw->lfEB.lfWeight         = hb_parnldef( 5, wvw->lfEB.lfWeight );
-      wvw->lfEB.lfQuality        = ( BYTE ) hb_parnidef( 6, wvw->lfEB.lfQuality );
-      wvw->lfEB.lfItalic         = ( BYTE ) hb_parldef( 7, wvw->lfEB.lfItalic );
-      wvw->lfEB.lfUnderline      = ( BYTE ) hb_parldef( 8, wvw->lfEB.lfUnderline );
-      wvw->lfEB.lfStrikeOut      = ( BYTE ) hb_parldef( 9, wvw->lfEB.lfStrikeOut );
+      wvw->lfEB.lfWeight         = hb_parnldef(5, wvw->lfEB.lfWeight);
+      wvw->lfEB.lfQuality        = static_cast<BYTE>(hb_parnidef(6, wvw->lfEB.lfQuality));
+      wvw->lfEB.lfItalic         = static_cast<BYTE>(hb_parldef(7, wvw->lfEB.lfItalic));
+      wvw->lfEB.lfUnderline      = static_cast<BYTE>(hb_parldef(8, wvw->lfEB.lfUnderline));
+      wvw->lfEB.lfStrikeOut      = static_cast<BYTE>(hb_parldef(9, wvw->lfEB.lfStrikeOut));
       wvw->lfEB.lfCharSet        = DEFAULT_CHARSET;
       wvw->lfEB.lfPitchAndFamily = FF_DONTCARE;
 
-      if( HB_ISCHAR( 2 ) )
+      if( HB_ISCHAR(2) )
       {
-         HB_ITEMCOPYSTR( hb_param( 2, Harbour::Item::STRING ), wvw->lfEB.lfFaceName, HB_SIZEOFARRAY( wvw->lfEB.lfFaceName ) );
-         wvw_win->fontFace[ HB_SIZEOFARRAY( wvw->lfEB.lfFaceName ) - 1 ] = TEXT( '\0' );
+         HB_ITEMCOPYSTR(hb_param(2, Harbour::Item::STRING), wvw->lfEB.lfFaceName, HB_SIZEOFARRAY(wvw->lfEB.lfFaceName));
+         wvw_win->fontFace[HB_SIZEOFARRAY(wvw->lfEB.lfFaceName) - 1] = TEXT('\0');
       }
 
       if( wvw_win->hEBfont )
       {
          HFONT hOldFont = wvw_win->hEBfont;
-         HFONT hFont    = CreateFontIndirect( &wvw->lfEB );
+         HFONT hFont    = CreateFontIndirect(&wvw->lfEB);
          if( hFont )
          {
             PWVW_CTL wvw_ctl = wvw_win->ctlList;
 
             while( wvw_ctl )
             {
-               if( wvw_ctl->nClass == WVW_CONTROL_EDITBOX && ( HFONT ) SendMessage( wvw_ctl->hWnd, WM_GETFONT, 0, 0 ) == hOldFont )
+               if( wvw_ctl->nClass == WVW_CONTROL_EDITBOX && reinterpret_cast<HFONT>(SendMessage(wvw_ctl->hWnd, WM_GETFONT, 0, 0)) == hOldFont )
                {
-                  SendMessage( wvw_ctl->hWnd, WM_SETFONT, ( WPARAM ) hFont, ( LPARAM ) TRUE );
+                  SendMessage(wvw_ctl->hWnd, WM_SETFONT, reinterpret_cast<WPARAM>(hFont), static_cast<LPARAM>(TRUE));
                }
-               
+
                wvw_ctl = wvw_ctl->pNext;
             }
 
             wvw_win->hEBfont = hFont;
-            DeleteObject( hOldFont );
+            DeleteObject(hOldFont);
          }
          else
          {
@@ -856,114 +867,120 @@ HB_FUNC( WVW_EBSETFONT )
          }
       }
 
-      hb_retl( fResult );
+      hb_retl(fResult);
    }
    else
    {
       hb_retl(false);
-   }   
+   }
 }
 
-/* wvw_ebIsMultiline( [nWinNum], nEBid )
-   returns .T. if editbox nEBid in window nWinNum is multiline
-   otherwise .F.
-   Also returns .F. if nEBid not valid */
+/*
+wvw_ebIsMultiline([nWinNum], nEBid)
+returns .T. if editbox nEBid in window nWinNum is multiline
+otherwise .F.
+Also returns .F. if nEBid not valid
+*/
 HB_FUNC( WVW_EBISMULTILINE )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_EDITBOX, nullptr, hb_parni( 2 ) );
+   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_EDITBOX, nullptr, hb_parni(2));
 
    if( wvw_ctl )
    {
-      hb_retl( ( wvw_ctl->nStyle & WVW_EB_MULTILINE ) == WVW_EB_MULTILINE );
+      hb_retl((wvw_ctl->nStyle & WVW_EB_MULTILINE) == WVW_EB_MULTILINE);
    }
    else
    {
       hb_retl(false);
-   }   
+   }
 }
 
-/* wvw_ebGetText( [nWinNum], nEBid, lSoftBreak )
- * returns current text from editbox nEBid in window nWinNum
- * lSoftBreak: Default is .F.
- *             insert soft line break character (CR+CR+LF) at wordwrap positions
- *             can be useful to convert the text to MEMO format
- *             eg. converting editbox's softbreaks into memoline softbreak:
- *                cStr := wvw_ebGetText( NIL, nEBid, .T. )
- *                cStr := StrTran( cStr, CR + CR + LF, Chr( 141 ) + LF )
- *
- * returns "" in case of error (eg. nEBid not valid)
- */
+/*
+wvw_ebGetText([nWinNum], nEBid, lSoftBreak)
+returns current text from editbox nEBid in window nWinNum
+lSoftBreak: Default is .F.
+            insert soft line break character (CR+CR+LF) at wordwrap positions
+            can be useful to convert the text to MEMO format
+            eg. converting editbox's softbreaks into memoline softbreak:
+               cStr := wvw_ebGetText(NIL, nEBid, .T.)
+               cStr := StrTran(cStr, CR + CR + LF, Chr(141) + LF)
+
+returns "" in case of error (eg. nEBid not valid)
+*/
 HB_FUNC( WVW_EBGETTEXT )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_EDITBOX, nullptr, hb_parni( 2 ) );
+   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_EDITBOX, nullptr, hb_parni(2));
 
    if( wvw_ctl )
    {
       HB_SIZE nLen;
       LPTSTR szText;
 
-      if( hb_parl( 3 ) /* fSoftBreak */ )
+      if( hb_parl(3) /* fSoftBreak */ )
       {
-         SendMessage( wvw_ctl->hWnd, EM_FMTLINES, ( WPARAM ) TRUE, 0 );
+         SendMessage(wvw_ctl->hWnd, EM_FMTLINES, static_cast<WPARAM>(TRUE), 0);
       }
-      
-      nLen = ( HB_SIZE ) SendMessage( wvw_ctl->hWnd, WM_GETTEXTLENGTH, 0, 0 );
 
-      szText = ( LPTSTR ) hb_xgrab( ( nLen + 1 ) * sizeof( TCHAR ) );
+      nLen = static_cast<HB_SIZE>(SendMessage(wvw_ctl->hWnd, WM_GETTEXTLENGTH, 0, 0));
 
-      SendMessage( wvw_ctl->hWnd, WM_GETTEXT, ( WPARAM ) ( nLen + 1 ), ( LPARAM ) szText );
+      szText = static_cast<LPTSTR>(hb_xgrab((nLen + 1) * sizeof(TCHAR)));
 
-      HB_RETSTRLEN( szText, nLen );
+      SendMessage(wvw_ctl->hWnd, WM_GETTEXT, static_cast<WPARAM>(nLen + 1), reinterpret_cast<LPARAM>(szText));
 
-      hb_xfree( szText );
+      HB_RETSTRLEN(szText, nLen);
+
+      hb_xfree(szText);
    }
    else
    {
       hb_retl(false);
-   }   
+   }
 }
 
-/* wvw_ebSetText( [nWinNum], nEBid, cText )
-   set current text of editbox nEBid in window nWinNum
-   returns .T. if successful, .F. in case of error (eg. nEBid not valid) */
+/*
+wvw_ebSetText([nWinNum], nEBid, cText)
+set current text of editbox nEBid in window nWinNum
+returns .T. if successful, .F. in case of error (eg. nEBid not valid)
+*/
 HB_FUNC( WVW_EBSETTEXT )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_EDITBOX, nullptr, hb_parni( 2 ) );
+   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_EDITBOX, nullptr, hb_parni(2));
 
    if( wvw_ctl )
    {
       void *  hText;
-      LPCTSTR szText = HB_PARSTRDEF( 3, &hText, nullptr );
+      LPCTSTR szText = HB_PARSTRDEF(3, &hText, nullptr);
 
-      hb_retl( ( HB_BOOL ) SendMessage( wvw_ctl->hWnd, WM_SETTEXT, 0, ( LPARAM ) szText ) );
+      hb_retl(static_cast<HB_BOOL>(SendMessage(wvw_ctl->hWnd, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(szText))));
 
-      hb_strfree( hText );
+      hb_strfree(hText);
    }
    else
    {
       hb_retl(false);
-   }   
+   }
 }
 
-/* wvw_ebGetSel( [nWinNum], nEBid, @nstart, @nend )
- * get selected text editbox nEBid in window nWinNum
- * the start selected text (0-based) is in nstart
- * the end selected text (0-based) is in nend
- * returns .T. if operation successful
- * returns .F. if not (eg. nEBid not valid)
- */
+/*
+wvw_ebGetSel( [nWinNum], nEBid, @nstart, @nend )
+get selected text editbox nEBid in window nWinNum
+the start selected text (0-based) is in nstart
+the end selected text (0-based) is in nend
+returns .T. if operation successful
+returns .F. if not (eg. nEBid not valid)
+*/
 HB_FUNC( WVW_EBGETSEL )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_EDITBOX, nullptr, hb_parni( 2 ) );
+   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_EDITBOX, nullptr, hb_parni(2));
    DWORD    dwStart, dwEnd;
 
    if( wvw_ctl )
    {
-      SendMessage( wvw_ctl->hWnd, EM_GETSEL, ( WPARAM ) &dwStart, ( LPARAM ) &dwEnd );
+      SendMessage(wvw_ctl->hWnd, EM_GETSEL, reinterpret_cast<WPARAM>(&dwStart), reinterpret_cast<LPARAM>(&dwEnd));
 
       hb_retl(true);
    }
@@ -973,30 +990,31 @@ HB_FUNC( WVW_EBGETSEL )
       hb_retl(false);
    }
 
-   hb_stornl( dwStart, 3 );
-   hb_stornl( dwEnd, 4 );
+   hb_stornl(dwStart, 3);
+   hb_stornl(dwEnd, 4);
 }
 
-/* wvw_ebSetSel( [nWinNum], nEBid, nstart, nend )
- * set selected text editbox nEBid in window nWinNum
- * the start selected text (0-based) is in nstart
- * the end selected text (0-based) is in nend
- * notes: nstart may be > nend (flipped selection)
- * notes: to select all text: wvw_ebSetSel(nwinnum, nebid, 0, -1)
- * returns .T. if operation successful
- * returns .F. if not (eg. nEBid not valid)
- */
+/*
+wvw_ebSetSel([nWinNum], nEBid, nstart, nend)
+set selected text editbox nEBid in window nWinNum
+the start selected text (0-based) is in nstart
+the end selected text (0-based) is in nend
+notes: nstart may be > nend (flipped selection)
+notes: to select all text: wvw_ebSetSel(nwinnum, nebid, 0, -1)
+returns .T. if operation successful
+returns .F. if not (eg. nEBid not valid)
+*/
 HB_FUNC( WVW_EBSETSEL )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl( wvw_win, WVW_CONTROL_EDITBOX, nullptr, hb_parni( 2 ) );
+   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_EDITBOX, nullptr, hb_parni(2));
 
    if( wvw_ctl )
    {
-      DWORD dwStart = ( DWORD ) hb_parnl( 3 );
-      DWORD dwEnd   = ( DWORD ) hb_parnl( 4 );
+      DWORD dwStart = static_cast<DWORD>(hb_parnl(3));
+      DWORD dwEnd   = static_cast<DWORD>(hb_parnl(4));
 
-      SendMessage( wvw_ctl->hWnd, EM_SETSEL, ( WPARAM ) dwStart, ( LPARAM ) dwEnd );
+      SendMessage(wvw_ctl->hWnd, EM_SETSEL, static_cast<WPARAM>(dwStart), static_cast<LPARAM>(dwEnd));
 
       hb_retl(true);
    }

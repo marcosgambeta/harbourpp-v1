@@ -49,36 +49,37 @@
 
 #include "hbgtwvw.h"
 
-/* wvw_pgCreate( [nWinNum], nTop, nLeft, nBottom, nRight, [aOffset],
- *                         [nBackColor], [nBarColor], [lSmooth], [lVertical])
- * create progress bar for window nWinNum
- * nTop: row of top/left corner (in character unit)
- * nLeft: col of top/left corner (in character unit)
- * nBottom: row of bottom/right corner (in character unit)
- * nRight: col of bottom/right corner (in character unit)
- * aOffset: array {y1,x1,y2,x2} of offsets to corner pixels, to adjust
- *        dimension of progress bar. defaults: {0, 0, 0, 0}
- * nBackColor: color of background (as RGB value)
- * nBarColor: color of bar (as RGB value)
- * lSmooth: if .T., draw as smooth bar (default is .F.)
- * lVertical: if .T., draw as vertical progress bar (default is .F.)
- *
- * returns control id of newly created progress bar of windows nWinNum
- * returns 0 if failed
- *
- * example:
- * wvw_pgCreate( , 5, 10, 5, 30)
- *  :: creates horizontal progressbar on current window at (5,10) to (5,30)
- *     colors using default ones.
- *
- * wvw_pgCreate( , 5, 10, 5, 30, {-1, 0, +1, 0} )
- *  :: same as above, but the bar is enlarged 1 pixel to the top
- *     and 1 pixel to the bottom
- *
- * NOTES:
- * ProgressRange is initially set as 0 - 100.
- * Initial ProgressPos is 0
- */
+/*
+wvw_pgCreate([nWinNum], nTop, nLeft, nBottom, nRight, [aOffset],
+                        [nBackColor], [nBarColor], [lSmooth], [lVertical])
+create progress bar for window nWinNum
+nTop: row of top/left corner (in character unit)
+nLeft: col of top/left corner (in character unit)
+nBottom: row of bottom/right corner (in character unit)
+nRight: col of bottom/right corner (in character unit)
+aOffset: array {y1,x1,y2,x2} of offsets to corner pixels, to adjust
+       dimension of progress bar. defaults: {0, 0, 0, 0}
+nBackColor: color of background (as RGB value)
+nBarColor: color of bar (as RGB value)
+lSmooth: if .T., draw as smooth bar (default is .F.)
+lVertical: if .T., draw as vertical progress bar (default is .F.)
+
+returns control id of newly created progress bar of windows nWinNum
+returns 0 if failed
+
+example:
+wvw_pgCreate(, 5, 10, 5, 30)
+ :: creates horizontal progressbar on current window at (5,10) to (5,30)
+    colors using default ones.
+
+wvw_pgCreate(, 5, 10, 5, 30, {-1, 0, +1, 0})
+ :: same as above, but the bar is enlarged 1 pixel to the top
+    and 1 pixel to the bottom
+
+NOTES:
+ProgressRange is initially set as 0 - 100.
+Initial ProgressPos is 0
+*/
 HB_FUNC( WVW_PGCREATE )
 {
    PWVW_GLO wvw     = hb_gt_wvw();
@@ -86,15 +87,15 @@ HB_FUNC( WVW_PGCREATE )
 
    if( wvw && wvw_win )
    {
-      int iTop    = hb_parni( 2 ),
-          iLeft   = hb_parni( 3 ),
-          iBottom = hb_parni( 4 ),
-          iRight  = hb_parni( 5 );
+      int iTop    = hb_parni(2),
+          iLeft   = hb_parni(3),
+          iBottom = hb_parni(4),
+          iRight  = hb_parni(5);
 
-      int iOffTop    = hb_parvni( 6, 1 );
-      int iOffLeft   = hb_parvni( 6, 2 );
-      int iOffBottom = hb_parvni( 6, 3 );
-      int iOffRight  = hb_parvni( 6, 4 );
+      int iOffTop    = hb_parvni(6, 1);
+      int iOffLeft   = hb_parvni(6, 2);
+      int iOffBottom = hb_parvni(6, 3);
+      int iOffRight  = hb_parvni(6, 4);
 
       HWND  hWnd;
       POINT xy;
@@ -116,17 +117,17 @@ HB_FUNC( WVW_PGCREATE )
       rOffXB.bottom = iOffBottom;
       rOffXB.right  = iOffRight;
 
-      hb_gt_wvw_HBFUNCPrologue( wvw_win, &iTop, &iLeft, &iBottom, &iRight );
+      hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
 
-      xy    = hb_gt_wvw_GetXYFromColRow( wvw_win, iLeft, iTop );
+      xy    = hb_gt_wvw_GetXYFromColRow(wvw_win, iLeft, iTop);
       iTop  = xy.y + iOffTop;
       iLeft = xy.x + iOffLeft;
 
-      xy      = hb_gt_wvw_GetXYFromColRow( wvw_win, iRight + 1, iBottom + 1 );
+      xy      = hb_gt_wvw_GetXYFromColRow(wvw_win, iRight + 1, iBottom + 1);
       iBottom = xy.y - wvw_win->iLineSpacing - 1 + iOffBottom;
       iRight  = xy.x - 1 + iOffRight;
 
-      nCtrlId = hb_gt_wvw_LastControlId( wvw_win, WVW_CONTROL_PROGRESSBAR );
+      nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_PROGRESSBAR);
       if( nCtrlId == 0 )
       {
          nCtrlId = WVW_ID_BASE_PROGRESSBAR;
@@ -136,11 +137,11 @@ HB_FUNC( WVW_PGCREATE )
          nCtrlId++;
       }
 
-      if( hb_parl( 9 ) /* fSmooth */ )
+      if( hb_parl(9) /* fSmooth */ )
       {
          iStyle |= PBS_SMOOTH;
       }
-      if( hb_parl( 10 ) /* fVertical */ )
+      if( hb_parl(10) /* fVertical */ )
       {
          iStyle |= PBS_VERTICAL;
       }
@@ -149,50 +150,52 @@ HB_FUNC( WVW_PGCREATE )
          0,
          PROGRESS_CLASS,
          nullptr,
-         WS_CHILD | WS_VISIBLE | ( DWORD ) iStyle,
+         WS_CHILD | WS_VISIBLE | static_cast<DWORD>(iStyle),
          iLeft,
          iTop,
          iRight - iLeft + 1,
          iBottom - iTop + 1,
          wvw_win->hWnd,
-         ( HMENU ) ( HB_PTRUINT ) nCtrlId,
-         GetModuleHandle( nullptr ),
-         nullptr );
+         reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(nCtrlId)),
+         GetModuleHandle(nullptr),
+         nullptr);
 
       if( hWnd )
       {
-         if( HB_ISNUM( 7 ) )
+         if( HB_ISNUM(7) )
          {
-            SendMessage( hWnd, PBM_SETBKCOLOR, 0, ( LPARAM ) hbwapi_par_COLORREF( 7 ) );
+            SendMessage(hWnd, PBM_SETBKCOLOR, 0, static_cast<LPARAM>(hbwapi_par_COLORREF(7)));
          }
-         if( HB_ISNUM( 8 ) )
+         if( HB_ISNUM(8) )
          {
-            SendMessage( hWnd, PBM_SETBARCOLOR, 0, ( LPARAM ) hbwapi_par_COLORREF( 8 ) );
+            SendMessage(hWnd, PBM_SETBARCOLOR, 0, static_cast<LPARAM>(hbwapi_par_COLORREF(8)));
          }
 
-         SendMessage( hWnd, PBM_SETRANGE, 0, MAKELPARAM( 0, 100 ) );
-         SendMessage( hWnd, PBM_SETPOS, 0, 0 );
+         SendMessage(hWnd, PBM_SETRANGE, 0, MAKELPARAM(0, 100));
+         SendMessage(hWnd, PBM_SETPOS, 0, 0);
 
-         hb_gt_wvw_AddControlHandle( wvw_win, WVW_CONTROL_PROGRESSBAR, hWnd, nCtrlId, nullptr, rXB, rOffXB, iStyle );
+         hb_gt_wvw_AddControlHandle(wvw_win, WVW_CONTROL_PROGRESSBAR, hWnd, nCtrlId, nullptr, rXB, rOffXB, iStyle);
 
-         hb_retni( nCtrlId );
+         hb_retni(nCtrlId);
          return;
       }
    }
 
-   hb_retni( 0 );
+   hb_retni(0);
 }
 
-/* wvw_pgDestroy( [nWinNum], nPGid )
-   destroy progressbar nPGid for window nWinNum
-   This function has no return value. */
+/*
+wvw_pgDestroy([nWinNum], nPGid)
+destroy progressbar nPGid for window nWinNum
+This function has no return value.
+*/
 HB_FUNC( WVW_PGDESTROY )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win )
    {
-      int      nCtrlId     = hb_parni( 2 );
+      int      nCtrlId     = hb_parni(2);
       PWVW_CTL wvw_ctl     = wvw_win->ctlList;
       PWVW_CTL wvw_ctlPrev = nullptr;
 
@@ -209,7 +212,7 @@ HB_FUNC( WVW_PGDESTROY )
 
       if( wvw_ctl )
       {
-         DestroyWindow( wvw_ctl->hWnd );
+         DestroyWindow(wvw_ctl->hWnd);
 
          if( wvw_ctlPrev )
          {
@@ -222,32 +225,34 @@ HB_FUNC( WVW_PGDESTROY )
 
          if( wvw_ctl->pBlock )
          {
-            hb_itemRelease( wvw_ctl->pBlock );
+            hb_itemRelease(wvw_ctl->pBlock);
          }
-         
-         hb_xfree( wvw_ctl );
+
+         hb_xfree(wvw_ctl);
       }
    }
 }
 
-/* wvw_pgSetRange( nWinNum, PGid, [nMin], [nMax] )
-    update progressbar data range (default is 0-100)
-    nMin: a number in range of -32767 to +32767
-    nMax: a number in range of -32767 to +32767
-   Remark: progress position is reset to nMin
-   returns .T. if operation considered successful */
+/*
+wvw_pgSetRange(nWinNum, PGid, [nMin], [nMax])
+update progressbar data range (default is 0-100)
+nMin: a number in range of -32767 to +32767
+nMax: a number in range of -32767 to +32767
+Remark: progress position is reset to nMin
+returns .T. if operation considered successful
+*/
 HB_FUNC( WVW_PGSETRANGE )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_PROGRESSBAR, hb_parni( 2 ), nullptr );
-   int  iMin = hb_parni( 3 );
-   int  iMax = hb_parni( 4 );
+   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
+   int  iMin = hb_parni(3);
+   int  iMax = hb_parni(4);
 
    if( hWnd && iMin <= iMax )
    {
-      SendMessage( hWnd, PBM_SETRANGE, 0, MAKELPARAM( iMin, iMax ) );
-      SendMessage( hWnd, PBM_SETPOS, ( WPARAM ) iMin, 0 );
+      SendMessage(hWnd, PBM_SETRANGE, 0, MAKELPARAM(iMin, iMax));
+      SendMessage(hWnd, PBM_SETPOS, static_cast<WPARAM>(iMin), 0);
 
       hb_retl(true);
    }
@@ -257,26 +262,28 @@ HB_FUNC( WVW_PGSETRANGE )
    }
 }
 
-/* wvw_pgSetPos( nWinNum, PGid, [nPos] )
-   update progressbar position within current range
-   nPos: a number in range of current range
-   returns .T. if operation considered successful */
+/*
+wvw_pgSetPos(nWinNum, PGid, [nPos])
+update progressbar position within current range
+nPos: a number in range of current range
+returns .T. if operation considered successful
+*/
 HB_FUNC( WVW_PGSETPOS )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_PROGRESSBAR, hb_parni( 2 ), nullptr );
+   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
 
    if( hWnd )
    {
-      int     iPos = hb_parni( 3 );
+      int     iPos = hb_parni(3);
       PBRANGE pbrange;
 
-      SendMessage( hWnd, PBM_GETRANGE, ( WPARAM ) TRUE, ( LPARAM ) &pbrange );
+      SendMessage(hWnd, PBM_GETRANGE, static_cast<WPARAM>(TRUE), reinterpret_cast<LPARAM>(&pbrange));
 
       if( iPos >= pbrange.iLow && iPos <= pbrange.iHigh )
       {
-         SendMessage( hWnd, PBM_SETPOS, ( WPARAM ) iPos, 0 );
+         SendMessage(hWnd, PBM_SETPOS, static_cast<WPARAM>(iPos), 0);
 
          hb_retl(true);
          return;
@@ -286,21 +293,23 @@ HB_FUNC( WVW_PGSETPOS )
    hb_retl(false);
 }
 
-/* wvw_pgGetPos( nWinNum, PGid )
-   get progressbar current position
-   returns 0 if operation failed */
+/*
+wvw_pgGetPos(nWinNum, PGid)
+get progressbar current position
+returns 0 if operation failed
+*/
 HB_FUNC( WVW_PGGETPOS )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle( wvw_win, WVW_CONTROL_PROGRESSBAR, hb_parni( 2 ), nullptr );
+   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
 
    if( hWnd )
    {
-      hb_retni( ( int ) SendMessage( hWnd, PBM_GETPOS, 0, 0 ) );
+      hb_retni(static_cast<int>(SendMessage(hWnd, PBM_GETPOS, 0, 0)));
    }
    else
    {
-      hb_retni( 0 );
+      hb_retni(0);
    }
 }
