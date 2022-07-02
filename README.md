@@ -1,5 +1,32 @@
 # Harbour++
 
+## English
+
+Harbour++ is derived from the Harbor project, having as main goal the transition
+from the C language to the C++ language, using C++11 as the minimum standard.
+
+The source codebase was the Harbour 3.2.0dev. Harbour 3.4 features are being reviewed and,
+if appropriate, implemented in Harbour++.
+
+To help the migration of the applications, the series 1 of Harbour++ (versions 1.#.#)
+will keep the most compatibility possible with CA-Clipper/Harbour commands, classes and functions.
+
+This project is a work in progress.
+
+### Requisites
+* C++ compiler
+* C++11 or upper (C++14, C++17, C++20, ...)
+
+### Related projects
+
+https://github.com/harbourplusplus/hwguipp  
+HWGUI for Harbour++
+
+https://github.com/harbourplusplus/hmgextpp  
+Harbour MiniGUI Extended for Harbour++
+
+## Portuguese
+
 Harbour++ é um projeto derivado do projeto Harbour, tendo como objetivo principal
 a transição da linguagem C para a linguagem C++, usando o C++11 como padrão mínimo.
 
@@ -11,19 +38,19 @@ o máximo possível de compatibilidade com os comandos, classes e funções do C
 
 Este projeto é um trabalho em progresso.
 
-## Requisitos
+### Requisitos
 * Compilador C++
 * Padrão C++11 ou superior (C++14, C++17, C++20, ...)
 
-## Compilação
+### Compilação
 
 O projeto está sendo desenvolvido e testado com os compiladores GCC (MinGW) e Microsoft Visual C++ (MSVC).
 
-### MinGW
+#### MinGW
 * Definir o padrão, conforme abaixo:  
 set HB_USER_CFLAGS=-std=c++11
 
-#### Exemplo
+##### Exemplo
 ```Batch
 set PATH=C:\MinGW810\bin;%PATH%
 set HB_INSTALL_PREFIX=C:\HarbourPP
@@ -31,11 +58,11 @@ set HB_USER_CFLAGS=-std=c++11
 win-make install 1>log1.log 2>log2.log
 ```
 
-### Visual C++
+#### Visual C++
 * Se necessário, definir o padrão conforme abaixo:  
 set HB_USER_CFLAGS=/std=c++11
 
-#### Exemplo
+##### Exemplo
 ```Batch
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars32.bat"
 set HB_INSTALL_PREFIX=C:\HarbourPP
@@ -43,7 +70,7 @@ set HB_USER_CFLAGS=/std=c++11
 win-make install 1>log1.log 2>log2.log
 ```
 
-## Contato
+### Contato
 
 Envie sua mensagem para:
 
@@ -51,13 +78,13 @@ marcosgambeta@outlook.com
 
 Questões sobre o projeto serão respondidas **somente por email**.  
 
-## Mais informações e conteúdo extra
+### Mais informações e conteúdo extra
 
 Siga o blog abaixo para se manter informado:
 
 https://magsoftinfo.com/blog/
 
-## Donativos
+### Donativos
 
 O desenvolvimento deste projeto é apoiado por donativos. Se desejar contribuir,
 utilize a chave PIX abaixo:
