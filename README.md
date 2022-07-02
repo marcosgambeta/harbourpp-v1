@@ -2,7 +2,7 @@
 
 ## English
 
-Harbour++ is derived from the Harbor project, having as main goal the transition
+Harbour++ is derived from the Harbour project, having as main goal the transition
 from the C language to the C++ language, using C++11 as the minimum standard.
 
 The source codebase was the Harbour 3.2.0dev. Harbour 3.4 features are being reviewed and,
