@@ -4117,6 +4117,22 @@ STATIC FUNCTION __hbmk( aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExit
             EXIT
          CASE _WARN_NO  ; AAdd(hbmk[ _HBMK_aOPTC ], "-w")                 ; EXIT
          ENDSWITCH
+         // NOTE: code imported from Harbour 3.4
+         SWITCH hbmk[ _HBMK_cCOMP ]
+         CASE "mingw64"
+            AAdd( hbmk[ _HBMK_aOPTC ], "-m64" )
+            AAdd( hbmk[ _HBMK_aOPTL ], "-m64" )
+            AAdd( hbmk[ _HBMK_aOPTD ], "-m64" )
+            AAdd( hbmk[ _HBMK_aOPTRES ], "--target=pe-x86-64" )
+            EXIT
+         CASE "mingw"
+            AAdd( hbmk[ _HBMK_aOPTC ], "-m32" )
+            AAdd( hbmk[ _HBMK_aOPTL ], "-m32" )
+            AAdd( hbmk[ _HBMK_aOPTD ], "-m32" )
+            AAdd( hbmk[ _HBMK_aOPTRES ], "--target=pe-i386" )
+            EXIT
+         ENDSWITCH
+         //
          IF hbmk[ _HBMK_lHARDEN ]
             IF hbmk[ _HBMK_cPLAT ] == "win"
                /* It is also supported by official mingw 4.4.x and mingw64 4.4.x,
