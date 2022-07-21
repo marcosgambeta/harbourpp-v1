@@ -77,9 +77,9 @@ HB_FUNC( HB_BASE64ENCODE )
 
          while( len-- > 0 )
          {
-            #define ADD_EOL()       do { if( --lln == 0 ) { *p++ = '\r'; *p++ = '\n'; lln = lin; } } while(0)
-            #define ADD_CHAR(c)     do { *p++ = s_b64chars[( c ) & 0x3F]; ADD_EOL(); } while(0)
-            #define ADD_EQ()        do { *p++ = '='; ADD_EOL(); } while(0)
+            #define ADD_EOL()       do { if( --lln == 0 ) { *p++ = '\r'; *p++ = '\n'; lln = lin; } } while(false)
+            #define ADD_CHAR(c)     do { *p++ = s_b64chars[( c ) & 0x3F]; ADD_EOL(); } while(false)
+            #define ADD_EQ()        do { *p++ = '='; ADD_EOL(); } while(false)
             static const char s_b64chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
             int x, y;
 

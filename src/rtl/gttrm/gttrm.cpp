@@ -229,13 +229,13 @@ static HB_GT_FUNCS SuperTable;
       { \
          (dst).tv_usec -= 1000000; (dst).tv_sec++; \
       } \
-   } while(0)
+   } while(false)
 
 #else
 
-#define TIMEVAL_GET(tv)           do { (tv) = hb_dateSeconds(); } while(0)
+#define TIMEVAL_GET(tv)           do { (tv) = hb_dateSeconds(); } while(false)
 #define TIMEVAL_LESS(tv1, tv2)    ((tv1) < (tv2))
-#define TIMEVAL_ADD(dst, src, n)  do { (dst) = (src) + n / 1000; } while(0)
+#define TIMEVAL_ADD(dst, src, n)  do { (dst) = (src) + n / 1000; } while(false)
 
 #endif
 

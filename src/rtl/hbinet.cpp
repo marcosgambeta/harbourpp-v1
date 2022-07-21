@@ -101,7 +101,7 @@ using PHB_SOCKET_STRUCT = HB_SOCKET_STRUCT *;
       s->iTimeLimit = -1; \
       s->iError     = HB_INET_ERR_OK; \
       p = hb_itemPutPtrGC(p, s); \
-   } while(0)
+   } while(false)
 
 static const char * const s_inetCRLF = "\r\n";
 

@@ -80,7 +80,7 @@ using HB_FILE = _HB_FILE;
 
 static HB_CRITICAL_NEW(s_iousrMtx);
 #define HB_IOUSR_LOCK()       do { hb_threadEnterCriticalSection(&s_iousrMtx)
-#define HB_IOUSR_UNLOCK()     hb_threadLeaveCriticalSection(&s_iousrMtx); } while(0)
+#define HB_IOUSR_UNLOCK()     hb_threadLeaveCriticalSection(&s_iousrMtx); } while(false)
 
 static int s_iCount = 0;
 static PHB_IOUSR s_ioUsrs[HB_FILE_TYPE_MAX];

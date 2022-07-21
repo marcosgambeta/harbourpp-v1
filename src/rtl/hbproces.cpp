@@ -87,7 +87,7 @@
       (ret) = (exp); \
       hb_fsSetIOError(( ret ) != -1, 0); \
    } \
-   while(0)
+   while(false)
 #endif
 
 #if defined(HB_PROCESS_USEFILES) || defined(HB_OS_UNIX)

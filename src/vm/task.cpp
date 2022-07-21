@@ -89,14 +89,14 @@
 #     if defined(HB_OS_LINUX)
 #        if defined(JB_SP)
 #           define HB_TASK_STACK_INIT(jmp, sp)      \
-                  do { (jmp)[0].__jmpbuf[JB_SP] = (int) (sp); } while(0)
+                  do { (jmp)[0].__jmpbuf[JB_SP] = (int) (sp); } while(false)
 #        else
 #           define HB_TASK_STACK_INIT(jmp, sp)      \
-                  do { (jmp)[0].__jmpbuf[4] = (int) (sp); } while(0)
+                  do { (jmp)[0].__jmpbuf[4] = (int) (sp); } while(false)
 #        endif
 #     elif defined(HB_OS_WIN)
 #        define HB_TASK_STACK_INIT(jmp, sp)      \
-                  do { (jmp)[7] = (unsigned) (sp); } while(0)
+                  do { (jmp)[7] = (unsigned) (sp); } while(false)
 #     endif
 #  endif
 

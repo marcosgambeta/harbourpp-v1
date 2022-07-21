@@ -80,7 +80,7 @@ static HB_BOOL hb_clsSetScope(HB_BOOL fScope)
          hb_xfree(array); \
       else if( index < length ) \
          memmove(array + index, array + index + 1, sizeof(type) * (length - index)); \
-   } while(0)
+   } while(false)
 
 #define HB_DBGCOMMON_LOCK()       hb_threadEnterCriticalSectionGC(&s_dbgMtx)
 #define HB_DBGCOMMON_UNLOCK()     hb_threadLeaveCriticalSection(&s_dbgMtx)

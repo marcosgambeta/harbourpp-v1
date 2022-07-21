@@ -423,19 +423,19 @@ static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int iCmdShow)
                MoveToEx(pWVT->hBmpDC, x1, y1, nullptr); \
                LineTo(pWVT->hBmpDC, x2, y2); \
                SetPixel(pWVT->hBmpDC, x2, y2, BLACK); \
-            } while(0)
+            } while(false)
 #define hb_bm_point(x, y)         SetPixel(pWVT->hBmpDC, x, y, BLACK)
 #define hb_bm_rect(x, y, w, h)    Rectangle( pWVT->hBmpDC, x, y, (x)+(w), (y)+(h) )
 #define hb_bm_polygon(pts, n)     Polygon(pWVT->hBmpDC, pts, n)
 #define hb_bm_invertrect(x, y, w, h)    do { \
                SetRect(&rc, 0, 0, cellx, celly); \
                InvertRect(pWVT->hBmpDC, &rc); \
-            } while(0)
+            } while(false)
 #define hb_bm_text(ch)                  do { \
                SetTextAlign(pWVT->hBmpDC, TA_LEFT); \
                SetRect(&rc, 0, 0, cellx, celly); \
                ExtTextOut(pWVT->hBmpDC, 0, 0, ETO_CLIPPED | ETO_OPAQUE, &rc, ch, 1, pWVT->FixedFont ? nullptr : pWVT->FixedSize); \
-            } while(0)
+            } while(false)
 
 static HBITMAP hb_gt_wvt_bitmap_char(PHB_GTWVT pWVT, int cellx, int celly)
 {
@@ -4721,7 +4721,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
       hOldPen   = static_cast<HPEN>(SelectObject(hdc, hPen)); \
       hBrush    = CreateSolidBrush( color ); \
       hOldBrush = static_cast<HBRUSH>(SelectObject(hdc, hBrush)); \
-   } while(0)
+   } while(false)
 
 #define ClearGFXContext() \
    do { \
@@ -4730,7 +4730,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
       DeleteObject(hBrush); \
       DeleteObject(hPen); \
       ReleaseDC(pWVT->hWnd, hdc); \
-   } while(0)
+   } while(false)
 
 static int hb_gt_wvt_gfx_Primitive(PHB_GT pGT, int iType, int iTop, int iLeft, int iBottom, int iRight, int iColor)
 {

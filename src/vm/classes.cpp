@@ -364,8 +364,8 @@ static HB_USHORT s_uiObjectClass    = 0;
 #else
 
 #  define HB_CLASS_POOL_SIZE  0
-#  define HB_CLASS_LOCK()     do {} while(0)
-#  define HB_CLASS_UNLOCK()   do {} while(0)
+#  define HB_CLASS_LOCK()     do {} while(false)
+#  define HB_CLASS_UNLOCK()   do {} while(false)
 
 #endif
 

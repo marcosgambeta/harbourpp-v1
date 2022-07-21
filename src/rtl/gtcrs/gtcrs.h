@@ -231,4 +231,4 @@
       { \
          ( dst ).tv_usec -= 1000000; ( dst ).tv_sec++; \
       } \
-   } while( 0 )
+   } while(false)

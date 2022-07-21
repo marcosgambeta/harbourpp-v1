@@ -78,7 +78,7 @@ HB_EXTERN_BEGIN
    do \
    { \
       MessageBox(nullptr, TEXT("Function '") TEXT(func) TEXT("' not found!"), TEXT(func), MB_OK | MB_ICONERROR); \
-   } while(0)
+   } while(false)
 
 typedef PHB_FUNC (*HB_PROC_GET)(const char * szFuncName);
 

@@ -83,8 +83,8 @@
 
 #else
 
-#  define HB_GC_LOCK()       do {} while(0)
-#  define HB_GC_UNLOCK()     do {} while(0)
+#  define HB_GC_LOCK()       do {} while(false)
+#  define HB_GC_UNLOCK()     do {} while(false)
 
 #endif /* HB_MT_VM */
 
@@ -140,8 +140,8 @@ static HB_PTRUINT s_ulBlocksCheck = 0;
 #  define HB_GC_AUTO_INC()    ++s_ulBlocks
 #  define HB_GC_AUTO_DEC()    --s_ulBlocks
 #else
-#  define HB_GC_AUTO_INC()    do {} while(0)
-#  define HB_GC_AUTO_DEC()    do {} while(0)
+#  define HB_GC_AUTO_INC()    do {} while(false)
+#  define HB_GC_AUTO_DEC()    do {} while(false)
 #endif
 
 /* pointer to memory block that will be checked in next step */

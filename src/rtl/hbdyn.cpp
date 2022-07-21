@@ -461,7 +461,7 @@ static PHB_ITEM hb_u64ret(PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVAL
          case 15: ret.t._ret_ = ((_type_##P15) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14]); break; \
       } \
    } \
-   while(0)
+   while(false)
 
 HB_DYN_CTYPE_DECL(HB_U64, FX64_64);
 HB_DYN_CTYPE_DECL(double, FX64_DB);
@@ -901,7 +901,7 @@ static PHB_ITEM hb_u32ret(PHB_ITEM pItem, int iRetType, int iEncoding, HB_DYNVAL
          case 29: ret.t._ret_ = ((_type_##P29) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24], rawpar[25], rawpar[26], rawpar[27], rawpar[28]); break; \
          case 30: ret.t._ret_ = ((_type_##P30) * pFunction)(rawpar[0], rawpar[1], rawpar[2], rawpar[3], rawpar[4], rawpar[5], rawpar[6], rawpar[7], rawpar[8], rawpar[9], rawpar[10], rawpar[11], rawpar[12], rawpar[13], rawpar[14], rawpar[15], rawpar[16], rawpar[17], rawpar[18], rawpar[19], rawpar[20], rawpar[21], rawpar[22], rawpar[23], rawpar[24], rawpar[25], rawpar[26], rawpar[27], rawpar[28], rawpar[29]); break; \
       } \
-   } while(0)
+   } while(false)
 
 
 #if defined(HB_OS_WIN)

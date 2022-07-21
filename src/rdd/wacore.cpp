@@ -60,7 +60,7 @@
       pRddInfo->pCurrArea  = ((pRddInfo->uiCurrArea < pRddInfo->uiWaNumMax) ? \
                               pRddInfo->waList[pRddInfo->waNums[pRddInfo->uiCurrArea]] : \
                               nullptr); \
-   } while(0)
+   } while(false)
 
 /*
  * Insert new WorkArea node at current WA position

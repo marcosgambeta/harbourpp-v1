@@ -61,7 +61,7 @@
 
 #if !defined(HB_MT_VM)
 #  define hb_dynsymGetMemvar(p)     (static_cast<PHB_ITEM>((p)->pMemvar))
-#  define hb_dynsymSetMemvar(p, h)  do { (p)->pMemvar = (h); } while(0)
+#  define hb_dynsymSetMemvar(p, h)  do { (p)->pMemvar = (h); } while(false)
 #endif
 
 #define TABLE_INITHB_VALUE    100

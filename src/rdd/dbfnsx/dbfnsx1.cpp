@@ -79,10 +79,10 @@ static HB_USHORT s_uiRddId;
 #define hb_nsxIsLeaf(p)                 (((p)->data.buffer[0] & NSX_LEAFPAGE) != 0)
 #define hb_nsxIsRoot(p)                 (((p)->data.buffer[0] & NSX_ROOTPAGE) != 0)
 #define hb_nsxPageType(p)               (hb_nsxPageBuffer(p)[0])
-#define hb_nsxSetPageType(p, t)         do { hb_nsxPageBuffer(p)[0] = (t); } while(0)
+#define hb_nsxSetPageType(p, t)         do { hb_nsxPageBuffer(p)[0] = (t); } while(false)
 #define hb_nsxGetKeyRecSize(p)          (hb_nsxPageBuffer(p)[1])
 #define hb_nsxGetKeyRecSizePtr(p)       ((p)[1])
-#define hb_nsxSetKeyRecSize(p, n)       do { hb_nsxPageBuffer(p)[1] = (n); } while(0)
+#define hb_nsxSetKeyRecSize(p, n)       do { hb_nsxPageBuffer(p)[1] = (n); } while(false)
 #define hb_nsxGetBranchKeyPtr(p, l, n)  (hb_nsxPageBuffer(p) + (n) * ((l) + 8) + 8)
 #define hb_nsxBranchKeyVal(p)           ((p) + 8)
 #define hb_nsxBranchKeySize(p, l)       ((l) + 8)
@@ -115,8 +115,8 @@ static HB_USHORT s_uiRddId;
 
 #define hb_nsxBranchKeyPage(p)          HB_GET_LE_UINT32(p)
 #define hb_nsxBranchKeyRec(p)           HB_GET_LE_UINT32((p) + 4)
-#define hb_nsxBranchKeySetPage(p, u)    do { HB_PUT_LE_UINT32((p), (u)); } while(0)
-#define hb_nsxBranchKeySetRec(p, u)     do { HB_PUT_LE_UINT32((p) + 4, (u)); } while(0)
+#define hb_nsxBranchKeySetPage(p, u)    do { HB_PUT_LE_UINT32((p), (u)); } while(false)
+#define hb_nsxBranchKeySetRec(p, u)     do { HB_PUT_LE_UINT32((p) + 4, (u)); } while(false)
 
 #else
 

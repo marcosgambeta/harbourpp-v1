@@ -62,13 +62,13 @@ using PHB_GENC_FUNC = HB_GENC_FUNC_ *;
       { \
          fprintf(cargo->yyc, "lab%05" HB_PFS "u: ;\n", nLab); \
       } \
-   } while(0)
+   } while(false)
 
 #define HB_GENC_ERROR(s) \
    do \
    { \
       fprintf(cargo->yyc, "\t#error: \"" s "\"\n"); \
-   } while(0)
+   } while(false)
 
 void hb_compGenCString(FILE * yyc, const HB_BYTE * pText, HB_SIZE nLen)
 {
@@ -1411,14 +1411,14 @@ static HB_GENC_FUNC(hb_p_seqalways)
 static HB_GENC_FUNC(hb_p_alwaysbegin)
 {
    HB_GENC_LABEL();
-   fprintf(cargo->yyc, "\t} while(0);\n\tif( hb_xvmAlwaysBegin() ) break;\n\tdo {\n");
+   fprintf(cargo->yyc, "\t} while(false);\n\tif( hb_xvmAlwaysBegin() ) break;\n\tdo {\n");
    return 4;
 }
 
 static HB_GENC_FUNC(hb_p_alwaysend)
 {
    HB_GENC_LABEL();
-   fprintf(cargo->yyc, "\t} while(0);\n\tif( hb_xvmAlwaysEnd() ) break;\n");
+   fprintf(cargo->yyc, "\t} while(false);\n\tif( hb_xvmAlwaysEnd() ) break;\n");
    cargo->iNestedBlock--;
    return 1;
 }
@@ -2183,7 +2183,7 @@ void hb_compGenCRealCode(HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc)
 
    hb_compPCodeEval(pFunc, reinterpret_cast<const PHB_PCODE_FUNC*>(pFuncTable), static_cast<void*>(&label_info));
 
-   fprintf(yyc, "   } while(0);\n");
+   fprintf(yyc, "   } while(false);\n");
    if( label_info.fEndRequest )
    {
       fprintf(yyc, "   hb_xvmExitProc();\n");

@@ -211,7 +211,7 @@
 
    static HB_CRITICAL_NEW(s_fmMtx);
 #  define HB_FM_LOCK()           do { hb_threadEnterCriticalSection(&s_fmMtx)
-#  define HB_FM_UNLOCK()         hb_threadLeaveCriticalSection(&s_fmMtx); } while(0)
+#  define HB_FM_UNLOCK()         hb_threadLeaveCriticalSection(&s_fmMtx); } while(false)
 
 #else
 

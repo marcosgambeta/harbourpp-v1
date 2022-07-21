@@ -194,19 +194,19 @@
 
 #if defined(HB_OS_WIN)
 
-   #define HB_FS_GETDRIVE(n)  do { n = fs_win_get_drive(); } while(0)
+   #define HB_FS_GETDRIVE(n)  do { n = fs_win_get_drive(); } while(false)
    #define HB_FS_SETDRIVE(n)  fs_win_set_drive( n )
 
 #elif defined(__BORLANDC__)
    /* 0 based version */
 
-   #define HB_FS_GETDRIVE(n)  do { n = getdisk(); } while(0)
+   #define HB_FS_GETDRIVE(n)  do { n = getdisk(); } while(false)
    #define HB_FS_SETDRIVE(n)  setdisk(n)
 
 #else /* _MSC_VER */
    /* 1 based version */
 
-   #define HB_FS_GETDRIVE(n)  do { n = _getdrive() - 1; } while(0)
+   #define HB_FS_GETDRIVE(n)  do { n = _getdrive() - 1; } while(false)
    #define HB_FS_SETDRIVE(n)  _chdrive((n) + 1)
 
 #endif
@@ -270,7 +270,7 @@
       (ret) = (exp); \
       hb_fsSetIOError((ret) != -1, 0); \
    } \
-   while(0)
+   while(false)
 #endif
 
 static HB_BOOL s_fUseWaitLocks = HB_TRUE;

@@ -87,7 +87,7 @@ static void hb_macroFlagsSet(int flag)
 
 static int s_macroFlags = HB_SM_DEFAULT;
 #  define hb_macroFlags()        s_macroFlags
-#  define hb_macroFlagsSet(f)  do { s_macroFlags = (f); } while(0)
+#  define hb_macroFlagsSet(f)  do { s_macroFlags = (f); } while(false)
 
 #endif
 

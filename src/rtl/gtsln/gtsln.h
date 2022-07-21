@@ -90,7 +90,7 @@
 #define HB_SLN_SET_ACSC( slch )  \
    do { \
       ( slch ).color |= SLSMG_ACS_MASK; \
-   } while( 0 )
+   } while(false)
 #define HB_SLN_BUILD_CHAR( slch, ch, clr, attr )  \
    do { \
       SLsmg_Char_Type * outTab = ( ( attr ) & HB_GT_ATTR_BOX ) ? \
@@ -99,14 +99,14 @@
                        s_colorTab[ ( HB_BYTE ) ( clr ) ]; \
       ( slch ).nchars      = 1; \
       ( slch ).wchars[ 0 ] = outTab[ ( HB_BYTE ) ( ch ) ].wchars[ 0 ]; \
-   } while( 0 )
+   } while(false)
 
 #define HB_SLN_BUILD_RAWCHAR( slch, ch, attr )  \
    do { \
       ( slch ).color       = ( attr ); \
       ( slch ).nchars      = 1; \
       ( slch ).wchars[ 0 ] = ( SLwchar_Type ) ( ch ); \
-   } while( 0 )
+   } while(false)
 
 #define HB_SLN_IS_CHAR( slch )             ( ( slch ).wchars[ 0 ] != 0 )
 
@@ -139,18 +139,18 @@
 #define HB_SLN_SET_ACSC( slch )  \
    do { \
       ( slch ) = SLSMG_BUILD_CHAR( ( slch ), 0x80 ); \
-   } while( 0 )
+   } while(false)
 #define HB_SLN_BUILD_CHAR( slch, ch, clr, attr )  \
    do { \
       ( slch ) = ( ( ( attr ) & HB_GT_ATTR_BOX ) ? \
                    s_outboxTab : s_outputTab )[ ( HB_BYTE ) ( ch ) ] | \
                  s_colorTab[ ( HB_BYTE ) ( clr ) ]; \
-   } while( 0 )
+   } while(false)
 
 #define HB_SLN_BUILD_RAWCHAR( slch, ch, attr )  \
    do { \
       ( slch ) = SLSMG_BUILD_CHAR( ( ch ), ( attr ) ); \
-   } while( 0 )
+   } while(false)
 
 #define HB_SLN_IS_CHAR( slch )  ( ( slch ) != 0 )
 

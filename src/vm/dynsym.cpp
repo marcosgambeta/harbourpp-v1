@@ -79,8 +79,8 @@ using PHB_SYM_HOLDER = HB_SYM_HOLDER *;
 
 #else
 
-#  define HB_DYNSYM_LOCK()      do {} while(0)
-#  define HB_DYNSYM_UNLOCK()    do {} while(0)
+#  define HB_DYNSYM_LOCK()      do {} while(false)
+#  define HB_DYNSYM_UNLOCK()    do {} while(false)
 
 #  define hb_dynsymHandles(p)     (p)
 
