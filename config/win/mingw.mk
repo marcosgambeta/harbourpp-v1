@@ -62,17 +62,17 @@ ifneq ($(HB_BUILD_OPTIM),no)
    endif
 endif
 
-#ifeq ($(HB_COMPILER),mingw64)
-#   CFLAGS += -m64
-#   DFLAGS += -m64
-#   LDFLAGS += -m64
-#   RCFLAGS += -m64
-#else
-#   CFLAGS += -m32
-#   DFLAGS += -m32
-#   LDFLAGS += -m32
-#   RCFLAGS += -m32
-#endif
+ifeq ($(HB_COMPILER),mingw64)
+   CFLAGS += -m64
+   DFLAGS += -m64
+   LDFLAGS += -m64
+   RCFLAGS += --target=pe-x86-64
+else
+   CFLAGS += -m32
+   DFLAGS += -m32
+   LDFLAGS += -m32
+   RCFLAGS += --target=pe-i386
+endif
 
 ifeq ($(HB_BUILD_DEBUG),yes)
    CFLAGS += -g
