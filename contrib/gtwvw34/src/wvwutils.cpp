@@ -1285,16 +1285,16 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
                case 0:
                {
                   void * hText;
-                  hDlg = CreateDialog(GetModuleHandle(nullptr), HB_PARSTRDEF(1, &hText, nullptr), hb_parl(2) ? wvw_zer->hWnd : nullptr, static_cast<DLGPROC>(hb_gt_wvw_DlgProcMLess));
+                  hDlg = CreateDialog(GetModuleHandle(nullptr), HB_PARSTRDEF(1, &hText, nullptr), hb_parl(2) ? wvw_zer->hWnd : nullptr, reinterpret_cast<DLGPROC>(hb_gt_wvw_DlgProcMLess));
                   hb_strfree(hText);
                   break;
                }
                case 1:
-                  hDlg = CreateDialog(GetModuleHandle(nullptr), MAKEINTRESOURCE(hb_parni(1)), hb_parl(2) ? wvw_zer->hWnd : nullptr, static_cast<DLGPROC>(hb_gt_wvw_DlgProcMLess));
+                  hDlg = CreateDialog(GetModuleHandle(nullptr), MAKEINTRESOURCE(hb_parni(1)), hb_parl(2) ? wvw_zer->hWnd : nullptr, reinterpret_cast<DLGPROC>(hb_gt_wvw_DlgProcMLess));
                   break;
 
                case 2:
-                  hDlg = CreateDialogIndirect(GetModuleHandle(nullptr), reinterpret_cast<LPCDLGTEMPLATE>(hb_parc(1)), hb_parl(2) ? wvw_zer->hWnd : nullptr, static_cast<DLGPROC>(hb_gt_wvw_DlgProcMLess));
+                  hDlg = CreateDialogIndirect(GetModuleHandle(nullptr), reinterpret_cast<LPCDLGTEMPLATE>(hb_parc(1)), hb_parl(2) ? wvw_zer->hWnd : nullptr, reinterpret_cast<DLGPROC>(hb_gt_wvw_DlgProcMLess));
                   break;
             }
          }
@@ -1374,16 +1374,16 @@ HB_FUNC( WVW_CREATEDIALOGMODAL )
             case 0:
             {
                void * hText;
-               iResult = DialogBoxParam(GetModuleHandle(nullptr), HB_PARSTRDEF(1, &hText, nullptr), hParent, static_cast<DLGPROC>(hb_gt_wvw_DlgProcModal), static_cast<LPARAM>(static_cast<DWORD>(iIndex)) + 1);
+               iResult = DialogBoxParam(GetModuleHandle(nullptr), HB_PARSTRDEF(1, &hText, nullptr), hParent, reinterpret_cast<DLGPROC>(hb_gt_wvw_DlgProcModal), static_cast<LPARAM>(static_cast<DWORD>(iIndex)) + 1);
                hb_strfree(hText);
                break;
             }
             case 1:
-               iResult = DialogBoxParam(GetModuleHandle(nullptr), MAKEINTRESOURCE(hb_parni(1)), hParent, static_cast<DLGPROC>(hb_gt_wvw_DlgProcModal), static_cast<LPARAM>(static_cast<DWORD>(iIndex)) + 1);
+               iResult = DialogBoxParam(GetModuleHandle(nullptr), MAKEINTRESOURCE(hb_parni(1)), hParent, reinterpret_cast<DLGPROC>(hb_gt_wvw_DlgProcModal), static_cast<LPARAM>(static_cast<DWORD>(iIndex)) + 1);
                break;
 
             case 2:
-               iResult = DialogBoxIndirectParam(GetModuleHandle(nullptr), reinterpret_cast<LPCDLGTEMPLATE>(hb_parc(1)), hParent, static_cast<DLGPROC>(hb_gt_wvw_DlgProcModal), static_cast<LPARAM>(static_cast<DWORD>(iIndex)) + 1);
+               iResult = DialogBoxIndirectParam(GetModuleHandle(nullptr), reinterpret_cast<LPCDLGTEMPLATE>(hb_parc(1)), hParent, reinterpret_cast<DLGPROC>(hb_gt_wvw_DlgProcModal), static_cast<LPARAM>(static_cast<DWORD>(iIndex)) + 1);
                break;
          }
 
