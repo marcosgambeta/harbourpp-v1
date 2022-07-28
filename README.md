@@ -87,15 +87,3 @@ https://magsoftinfo.com/blog/
 ### Grupo de usuários no Facebook
 
 https://www.facebook.com/groups/575158780741473
-
-### Donativos
-
-O desenvolvimento deste projeto é apoiado por donativos. Se desejar contribuir,
-utilize a chave PIX abaixo:
-
-marcosgambeta@outlook.com
-
-Valor sugerido: R$ 10,00/mês por desenvolvedor.
-
-Os donativos recebidos ajudarão a investir mais tempo e recursos no desenvolvimento
-deste e de outros projetos relacionados com o Harbour++.
