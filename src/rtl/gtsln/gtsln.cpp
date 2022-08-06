@@ -227,10 +227,10 @@ static void hb_sln_setACSCtrans(void)
    HB_SLN_BUILD_RAWCHAR(chArrow[3], '^', 0);
 
    /* init an alternate chars table */
-   if( (p = static_cast<unsigned char*>(SLtt_Graphics_Char_Pairs)) )
+   if( (p = reinterpret_cast<unsigned char*>(SLtt_Graphics_Char_Pairs)) )
    {
       SLsmg_Char_Type SLch;
-      int i, len = strlen(static_cast<char*>(p));
+      int i, len = strlen(reinterpret_cast<char*>(p));
 
       memset(&SLch, 0, sizeof(SLsmg_Char_Type));
       for( i = 0; i < len; i += 2 )
