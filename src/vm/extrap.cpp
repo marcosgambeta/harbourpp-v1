@@ -70,7 +70,11 @@
 #endif
 
 #if defined(HB_SIGNAL_EXCEPTION_HANDLER)
-   static HB_BYTE * s_signal_stack[SIGSTKSZ];
+#if defined(__GLIBC__) && defined(__GLIBC_MINOR__) && (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 34)
+   static HB_BYTE * s_signal_stack[32768];
+#else
+   static HB_BYTE * s_signal_stack[SIGSTKSZ]; // TODO: error: size of array ‘s_signal_stack’ is not an integral constant-expression
+#endif
 #endif
 
 #if defined(HB_OS_WIN)
