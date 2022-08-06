@@ -255,7 +255,7 @@ int hb_sln_Init_Terminal(int phase)
 #endif
 
       /* get Dead key definition */
-      p = static_cast<unsigned const char*>(getenv(s_DeadKeyEnvName));
+      p = reinterpret_cast<unsigned const char*>(getenv(s_DeadKeyEnvName));
       if( p && *p )
       {
          s_iDeadKey = static_cast<int>(*p);
