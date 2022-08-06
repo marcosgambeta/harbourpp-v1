@@ -1466,7 +1466,7 @@ static char * tiGetS(const char * capname)
    ptr = tigetstr(const_cast<char*>(capname));
    if( ptr )
    {
-      if( ptr == static_cast<char*>(-1) )
+      if( ptr == reinterpret_cast<char*>(-1) )
       {
          ptr = nullptr;
       }
@@ -1484,7 +1484,7 @@ static void get_acsc(InOutBase * ioBase, unsigned char c, chtype * pch)
 
    if( ioBase->acsc != nullptr )
    {
-      for( ptr = static_cast<unsigned char*>(ioBase->acsc); *ptr && *(ptr + 1); ptr += 2 )
+      for( ptr = reinterpret_cast<unsigned char*>(ioBase->acsc); *ptr && *(ptr + 1); ptr += 2 )
       {
          if( *ptr == c )
          {
@@ -1801,7 +1801,7 @@ static int gt_getsize(InOutBase * ioBase, int * rows, int * cols)
    {
       struct winsize win;
 
-      if( ioctl(ioBase->base_outfd, TIOCGWINSZ, static_cast<char*>(&win)) != -1 )
+      if( ioctl(ioBase->base_outfd, TIOCGWINSZ, reinterpret_cast<char*>(&win)) != -1 )
       {
          *rows = win.ws_row;
          *cols = win.ws_col;
@@ -1885,11 +1885,11 @@ static int gt_setsize( InOutBase * ioBase, int rows, int cols )
       {
          struct winsize win;
 
-         if( ioctl(ioBase->base_outfd, TIOCGWINSZ, static_cast<char*>(&win)) != -1 )
+         if( ioctl(ioBase->base_outfd, TIOCGWINSZ, reinterpret_cast<char*>(&win)) != -1 )
          {
             win.ws_row = rows;
             win.ws_col = cols;
-            ioctl(ioBase->base_outfd, TIOCSWINSZ, static_cast<char*>(&win));
+            ioctl(ioBase->base_outfd, TIOCSWINSZ, reinterpret_cast<char*>(&win));
          }
          ret = gt_resize(ioBase);
       }
