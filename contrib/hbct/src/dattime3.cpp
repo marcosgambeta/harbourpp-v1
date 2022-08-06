@@ -71,7 +71,7 @@ struct CT_DATE
 
 using PCT_DATE = CT_DATE *;
 
-static void s_ct_date_init( void * cargo )
+static void s_ct_date_init(void * cargo)
 {
    PCT_DATE ct_date = static_cast<PCT_DATE>(cargo);
 
@@ -101,7 +101,7 @@ HB_FUNC( WAITPERIOD )
    hb_retl(d < ct_date->dTimeCounter);
 }
 
-static HB_BOOL _hb_timeValid( const char * szTime, HB_SIZE nLen, int * piDecode )
+static HB_BOOL _hb_timeValid(const char * szTime, HB_SIZE nLen, int * piDecode)
 {
    HB_BOOL fValid = HB_FALSE;
 
@@ -142,7 +142,7 @@ HB_FUNC( SETTIME )
    int     iTime[4];
 
    iTime[0] = iTime[1] = iTime[2] = iTime[3] = 0;
-   if( _hb_timeValid( hb_parc(1), hb_parclen(1), iTime ) )
+   if( _hb_timeValid(hb_parc(1), hb_parclen(1), iTime) )
    {
 #if defined(HB_OS_WIN)
       SYSTEMTIME st;
@@ -153,14 +153,20 @@ HB_FUNC( SETTIME )
       st.wMilliseconds = static_cast<WORD>(iTime[3]) * 10;
       fResult = SetLocalTime(&st);
 #elif defined(HB_OS_LINUX) && !defined(HB_OS_ANDROID)
-      /* stime() exists only in SVr4, SVID, X/OPEN and Linux */
       HB_ULONG lNewTime;
       time_t   tm;
 
       lNewTime = iTime[0] * 3600 + iTime[1] * 60 + iTime[2];
       tm       = time(nullptr);
       tm      += lNewTime - (tm % 86400);
-      fResult  = stime( &tm ) == 0;
+#if (defined(__GLIBC__) && ((__GLIBC__ > 2) || ((__GLIBC__ == 2) && (__GLIBC_MINOR__ >= 31))))
+      /* stime() is deprecated since glibc 2.31 */
+      struct timespec ts = {tm, 0};
+      fResult = clock_settime(CLOCK_REALTIME, &ts) == 0;
+#else
+      /* stime() exists only in SVr4, SVID, X/OPEN and Linux */
+      fResult  = stime(&tm) == 0;
+#endif
 #endif
    }
 
@@ -189,13 +195,19 @@ HB_FUNC( SETDATE )
          fResult       = SetLocalTime(&st);
 #elif defined(HB_OS_LINUX) && !defined(HB_OS_ANDROID)
          /* stime() exists only in SVr4, SVID, X/OPEN and Linux */
-         long   lNewDate;
+         long lNewDate = lDate - hb_dateEncode(1970, 1, 1);
+#if (defined(__GLIBC__) && ((__GLIBC__ > 2) || ((__GLIBC__ == 2) && (__GLIBC_MINOR__ >= 31))))
+         /* stime() is deprecated since glibc 2.31 */
+         struct timespec ts = {0};
+         clock_gettime(CLOCK_REALTIME, &ts);  /* keep tv_nsec */
+         ts.tv_sec = lNewDate * 86400 + (ts.tv_sec % 86400);
+         fResult  = clock_settime(CLOCK_REALTIME, &ts) == 0;
+#else
          time_t tm;
-
-         lNewDate = lDate - hb_dateEncode(1970, 1, 1);
          tm       = time(nullptr);
          tm       = lNewDate * 86400 + (tm % 86400);
          fResult  = stime(&tm) == 0;
+#endif
 #endif
       }
    }
