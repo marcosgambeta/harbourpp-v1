@@ -1786,7 +1786,7 @@ static int hb_socketSelectWRE( HB_SOCKET sd, HB_MAXINT timeout )
    if( iResult > 0 )
    {
       socklen_t len = sizeof(iError);
-      if( getsockopt(sd, SOL_SOCKET, SO_ERROR, static_cast<char*>(&iError), &len) != 0 )
+      if( getsockopt(sd, SOL_SOCKET, SO_ERROR, reinterpret_cast<char*>(&iError), &len) != 0 )
       {
          iResult = -1;
          iError = HB_SOCK_GETERROR();
@@ -2820,7 +2820,7 @@ int hb_socketSetReuseAddr(HB_SOCKET sd, HB_BOOL fReuse)
    #else
    {
       int val = fReuse ? 1 : 0;
-      ret = setsockopt(sd, SOL_SOCKET, SO_REUSEADDR, static_cast<const char*>(&val), sizeof(val));
+      ret = setsockopt(sd, SOL_SOCKET, SO_REUSEADDR, reinterpret_cast<const char*>(&val), sizeof(val));
       hb_socketSetOsError(ret != -1 ? 0 : HB_SOCK_GETERROR());
    }
    #endif
@@ -2926,7 +2926,7 @@ int hb_socketSetMulticast(HB_SOCKET sd, int af, const char * szAddr)
 #if !defined(IPV6_JOIN_GROUP) && defined(IPV6_ADD_MEMBERSHIP)
 #  define IPV6_JOIN_GROUP  IPV6_ADD_MEMBERSHIP
 #endif
-         ret = setsockopt(sd, IPPROTO_IPV6, IPV6_JOIN_GROUP, static_cast<const char*>(&mreq), sizeof(mreq));
+         ret = setsockopt(sd, IPPROTO_IPV6, IPV6_JOIN_GROUP, reinterpret_cast<const char*>(&mreq), sizeof(mreq));
          hb_socketSetOsError(ret != -1 ? 0 : HB_SOCK_GETERROR());
          return ret;
       }
@@ -3786,7 +3786,7 @@ PHB_ITEM hb_socketGetIFaces(int af, HB_BOOL fNoAliases)
       {
          for( ptr = static_cast<char*>(ifc.ifc_buf), size = ifc.ifc_len; size > 0; )
          {
-            pifr = static_cast<struct ifreq*>(ptr);
+            pifr = reinterpret_cast<struct ifreq*>(ptr);
             family = pifr->ifr_addr.sa_family;
 #  if defined(HB_HAS_SOCKADDR_SA_LEN)
             len = pifr->ifr_addr.sa_len;
@@ -3923,7 +3923,7 @@ PHB_ITEM hb_socketGetIFaces(int af, HB_BOOL fNoAliases)
                {
                   char hwaddr[24];
                   unsigned char * data;
-                  data = static_cast<unsigned char*>(&pifr->ifr_hwaddr.sa_data[0]);
+                  data = reinterpret_cast<unsigned char*>(&pifr->ifr_hwaddr.sa_data[0]);
                   hb_snprintf(hwaddr, sizeof(hwaddr), "%02X:%02X:%02X:%02X:%02X:%02X", data[0], data[1], data[2], data[3], data[4], data[5]);
                   hb_arraySetC(pItem, HB_SOCKET_IFINFO_HWADDR, hwaddr);
                }

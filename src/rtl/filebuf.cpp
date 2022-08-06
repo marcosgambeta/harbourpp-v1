@@ -954,7 +954,7 @@ struct HB_FILEPOS
 
 using PHB_FILEPOS = HB_FILEPOS *;
 
-#define _PHB_FILEPOS  ( static_cast<PHB_FILEPOS>(pFilePos) )
+#define _PHB_FILEPOS  ( reinterpret_cast<PHB_FILEPOS>(pFilePos) )
 #define _PHB_FILE     _PHB_FILEPOS->pFile
 
 static void s_fileposClose(PHB_FILE pFilePos)
@@ -1126,7 +1126,7 @@ static PHB_FILE hb_fileposNew(PHB_FILE pFile)
    pFilePos->pFile    = pFile;
    pFilePos->seek_pos = 0;
 
-   return static_cast<PHB_FILE>(pFilePos);
+   return reinterpret_cast<PHB_FILE>(pFilePos);
 }
 
 #endif /* HB_OS_UNIX */
@@ -1563,7 +1563,7 @@ HB_BOOL hb_fileDetach( PHB_FILE pFile )
 #if defined(HB_OS_UNIX)
       else if( pFile->pFuncs == s_fileposMethods() )
       {
-         PHB_FILEPOS pFilePos = static_cast<PHB_FILEPOS>(pFile);
+         PHB_FILEPOS pFilePos = reinterpret_cast<PHB_FILEPOS>(pFile);
 
          pFilePos->pFile->hFile = FS_ERROR;
          s_fileposClose(pFile);

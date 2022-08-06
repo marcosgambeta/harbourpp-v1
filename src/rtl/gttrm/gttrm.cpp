@@ -565,7 +565,7 @@ static int hb_gt_trm_getSize(PHB_GTTRM pTerm, int * piRows, int * piCols)
    {
       struct winsize win;
 
-      if( ioctl(pTerm->hFileno, TIOCGWINSZ, static_cast<char*>(&win)) != -1 )
+      if( ioctl(pTerm->hFileno, TIOCGWINSZ, reinterpret_cast<char*>(&win)) != -1 )
       {
          *piRows = win.ws_row;
          *piCols = win.ws_col;
@@ -2410,7 +2410,7 @@ static int hb_gt_trm_AnsiGetAcsc(PHB_GTTRM pTerm, unsigned char c)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_AnsiGetAcsc(%p,%d)", static_cast<void*>(pTerm), c));
 #endif
 
-   for( const unsigned char * ptr = static_cast<const unsigned char*>(pTerm->szAcsc); *ptr && *( ptr + 1 ); ptr += 2 )
+   for( const unsigned char * ptr = reinterpret_cast<const unsigned char*>(pTerm->szAcsc); *ptr && *( ptr + 1 ); ptr += 2 )
    {
       if( *ptr == c )
       {

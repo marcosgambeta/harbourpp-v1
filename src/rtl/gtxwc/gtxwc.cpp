@@ -2644,7 +2644,7 @@ static void hb_gt_xwc_MotifWmHints(PXWND_DEF wnd)
                                &prop_return);
    if( result == Success && actual_type_return == s_atomMotifHints && actual_format_return == 32 && nitems_return >= MWM_HINTS_ITEMS )
    {
-      PXWC_MWMHints pmwmhints = static_cast<PXWC_MWMHints>(prop_return);
+      PXWC_MWMHints pmwmhints = reinterpret_cast<PXWC_MWMHints>(prop_return);
 
       mwmhints.flags       = pmwmhints->flags;
       mwmhints.functions   = pmwmhints->functions;
@@ -2712,7 +2712,7 @@ static void hb_gt_xwc_MotifWmHints(PXWND_DEF wnd)
       mwmhints.flags |= MWM_HINTS_FUNCTIONS;
    }
 
-   XChangeProperty(wnd->dpy, wnd->window, s_atomMotifHints, s_atomMotifHints, 32, PropModeReplace, static_cast<unsigned char*>(&mwmhints), MWM_HINTS_ITEMS);
+   XChangeProperty(wnd->dpy, wnd->window, s_atomMotifHints, s_atomMotifHints, 32, PropModeReplace, reinterpret_cast<unsigned char*>(&mwmhints), MWM_HINTS_ITEMS);
 }
 
 /* *********************************************************************** */
@@ -2737,7 +2737,7 @@ static void hb_gt_xwc_UpdateWindowCords(PXWND_DEF wnd, int * pX, int * pY)
             if( actual_type_return == s_atomCardinal && nitems_return == 4 && actual_format_return == 32 )
             {
                /* _NET_FRAME_EXTENTS: left, right, top, bottom, CARDINAL[4]/32 */
-               long * fe = static_cast<long*>(prop_return);
+               long * fe = reinterpret_cast<long*>(prop_return);
 
                wnd->iCordLeft = fe[0];
                wnd->iCordTop  = fe[2];
@@ -3199,7 +3199,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent * evt)
                }
                else
                {
-                  Time evtTime = (static_cast<XButtonEvent*>(evt))->time;
+                  Time evtTime = (reinterpret_cast<XButtonEvent*>(evt))->time;
                   if( evtTime - wnd->mouseButtonsTime[button] < static_cast<Time>(HB_GTSELF_MOUSEGETDOUBLECLICKSPEED(wnd->pGT)) )
                   {
                      key = s_mouseDblPressKeys[button];
@@ -3399,7 +3399,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent * evt)
                   }
 
                   wnd->ClipboardSize = text.nitems;
-                  wnd->ClipboardData = static_cast<unsigned char*>(hb_cdpnDup(static_cast<const char*>(text.value), &wnd->ClipboardSize, HB_GTSELF_INCP(wnd->pGT), wnd->utf8CDP));
+                  wnd->ClipboardData = reinterpret_cast<unsigned char*>(hb_cdpnDup(reinterpret_cast<const char*>(text.value), &wnd->ClipboardSize, HB_GTSELF_INCP(wnd->pGT), wnd->utf8CDP));
                   wnd->ClipboardTime = evt->xselection.time;
                   wnd->ClipboardRcvd = HB_TRUE;
                }
@@ -3412,7 +3412,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent * evt)
 #endif
                   for( unsigned long nItem = 0; nItem < text.nitems; ++nItem )
                   {
-                     aValue = static_cast<Atom>(( static_cast<long*>(text.value) )[nItem]);
+                     aValue = static_cast<Atom>(( reinterpret_cast<long*>(text.value) )[nItem]);
                      if( aValue == s_atomUTF8String )
                      {
                         aNextRequest = s_atomUTF8String;
@@ -3470,12 +3470,12 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent * evt)
          if( req->target == s_atomTimestamp )
          {
             long timeStamp = wnd->ClipboardTime;
-            XChangeProperty(wnd->dpy, req->requestor, req->property, s_atomInteger, 32, PropModeReplace, static_cast<unsigned char*>(&timeStamp), 1);
+            XChangeProperty(wnd->dpy, req->requestor, req->property, s_atomInteger, 32, PropModeReplace, reinterpret_cast<unsigned char*>(&timeStamp), 1);
          }
          else if( req->target == s_atomTargets )
          {
             Atom aProp[] = { s_atomTimestamp, s_atomTargets, s_atomString,    s_atomUTF8String, s_atomText };
-            XChangeProperty(wnd->dpy, req->requestor, req->property, s_atomAtom, 32, PropModeReplace, static_cast<unsigned char*>(aProp), HB_SIZEOFARRAY(aProp));
+            XChangeProperty(wnd->dpy, req->requestor, req->property, s_atomAtom, 32, PropModeReplace, reinterpret_cast<unsigned char*>(aProp), HB_SIZEOFARRAY(aProp));
          }
          else if( req->target == s_atomString || req->target == s_atomText )
          {
@@ -3485,7 +3485,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent * evt)
             if( cdpin && cdpin != wnd->utf8CDP )
             {
                HB_SIZE nLen = wnd->ClipboardSize;
-               unsigned char * pBuffer = static_cast<unsigned char*>(hb_cdpnDup(static_cast<const char*>(wnd->ClipboardData), &nLen, wnd->utf8CDP, cdpin));
+               unsigned char * pBuffer = reinterpret_cast<unsigned char*>(hb_cdpnDup(reinterpret_cast<const char*>(wnd->ClipboardData), &nLen, wnd->utf8CDP, cdpin));
 
                XChangeProperty(wnd->dpy, req->requestor, req->property, s_atomString, 8, PropModeReplace, pBuffer, nLen);
                hb_xfree(pBuffer);
@@ -3653,7 +3653,7 @@ static int hb_gt_xwc_GetColormapSize(PXWND_DEF wnd)
    {
       iCMapSize = visInfoPtr->colormap_size;
    }
-   XFree(static_cast<char*>(visInfoPtr));
+   XFree(reinterpret_cast<char*>(visInfoPtr));
 
    return iCMapSize;
 }
@@ -3800,13 +3800,13 @@ static void hb_gt_xwc_DrawString(PXWND_DEF wnd, int col, int row, HB_BYTE color,
       XSetForeground(wnd->dpy, wnd->gc, wnd->colors[color >> 4].pixel);
       XFillRectangle(wnd->dpy, wnd->drw, wnd->gc, col * wnd->fontWidth, row * wnd->fontHeight, wnd->fontWidth * len, wnd->fontHeight);
       XSetForeground(wnd->dpy, wnd->gc, wnd->colors[color & 0x0F].pixel);
-      XDrawString16(wnd->dpy, wnd->drw, wnd->gc, col * wnd->fontWidth, row * wnd->fontHeight + wnd->xfs->ascent, static_cast<XChar2b*>(usChBuf), len);
+      XDrawString16(wnd->dpy, wnd->drw, wnd->gc, col * wnd->fontWidth, row * wnd->fontHeight + wnd->xfs->ascent, reinterpret_cast<XChar2b*>(usChBuf), len);
    }
    else
    {
       XSetBackground(wnd->dpy, wnd->gc, wnd->colors[color >> 4].pixel);
       XSetForeground(wnd->dpy, wnd->gc, wnd->colors[color & 0x0F].pixel);
-      XDrawImageString16(wnd->dpy, wnd->drw, wnd->gc, col * wnd->fontWidth, row * wnd->fontHeight + wnd->xfs->ascent, static_cast<XChar2b*>(usChBuf), len);
+      XDrawImageString16(wnd->dpy, wnd->drw, wnd->gc, col * wnd->fontWidth, row * wnd->fontHeight + wnd->xfs->ascent, reinterpret_cast<XChar2b*>(usChBuf), len);
    }
 }
 
@@ -4360,7 +4360,7 @@ static void hb_gt_xwc_SetTitle( PXWND_DEF wnd, const char * szTitle )
       char * pBuffer;
 
       pBuffer = hb_cdpDup(szTitle, HB_GTSELF_HOSTCP(wnd->pGT), wnd->utf8CDP);
-      text.value = static_cast<unsigned char*>(pBuffer);
+      text.value = reinterpret_cast<unsigned char*>(pBuffer);
       text.encoding = s_atomUTF8String;
       text.format = 8;
       text.nitems = strlen(pBuffer);
@@ -4542,7 +4542,7 @@ static void hb_gt_xwc_SetSelection(PXWND_DEF wnd, const char * szData, HB_SIZE n
       }
       else
       {
-         wnd->ClipboardData = static_cast<unsigned char*>(const_cast<char*>(szData));
+         wnd->ClipboardData = reinterpret_cast<unsigned char*>(const_cast<char*>(szData));
       }
 
       XSetSelectionOwner(wnd->dpy, s_atomPrimary, wnd->window, wnd->ClipboardTime);
@@ -5668,7 +5668,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          {
             hb_gt_xwc_RealRefresh(wnd, false);
             hb_gt_xwc_RequestSelection(wnd);
-            pInfo->pResult = hb_itemPutStrLenUTF8(pInfo->pResult, static_cast<char*>(wnd->ClipboardData), wnd->ClipboardSize);
+            pInfo->pResult = hb_itemPutStrLenUTF8(pInfo->pResult, reinterpret_cast<char*>(wnd->ClipboardData), wnd->ClipboardSize);
          }
          break;
       }

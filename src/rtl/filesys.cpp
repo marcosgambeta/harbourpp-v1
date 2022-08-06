@@ -776,7 +776,7 @@ int hb_fsPoll(PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut)
 
    if( s_fSamePoll )
    {
-      pfds = static_cast<struct pollfd*>(pPollSet);
+      pfds = reinterpret_cast<struct pollfd*>(pPollSet);
    }
    else
    {
