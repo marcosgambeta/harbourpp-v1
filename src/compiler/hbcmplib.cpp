@@ -113,7 +113,7 @@ static int s_pp_openFile(void * cargo, char * szFileName, HB_BOOL fBefore, HB_BO
 static void hb_compGenArgList(int iFirst, int iLast, int * pArgC, const char *** pArgV, PHB_ITEM * pIncItem, PHB_PP_OPEN_FUNC * pOpenFunc, PHB_PP_MSG_FUNC * pMsgFunc)
 {
    PHB_ITEM pParam;
-   int argc = 1, i;
+   int argc = 1;
    const char ** argv;
 
    if( pMsgFunc )
@@ -140,7 +140,7 @@ static void hb_compGenArgList(int iFirst, int iLast, int * pArgC, const char ***
       }
    }
 
-   for( i = iFirst; i <= iLast; ++i )
+   for( int i = iFirst; i <= iLast; ++i )
    {
       pParam = hb_param(i, Harbour::Item::ARRAY | Harbour::Item::STRING);
       if( pParam )
@@ -169,7 +169,7 @@ static void hb_compGenArgList(int iFirst, int iLast, int * pArgC, const char ***
 
    argv = static_cast<const char**>(hb_xgrab(sizeof(char*) * (argc + 1)));
    argc = 0;
-   for( i = iFirst; i <= iLast; ++i )
+   for( int i = iFirst; i <= iLast; ++i )
    {
       pParam = hb_param(i, Harbour::Item::ARRAY | Harbour::Item::STRING);
       if( pParam )

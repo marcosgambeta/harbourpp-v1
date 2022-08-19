@@ -151,9 +151,7 @@ void hb_compPrintModes(HB_COMP_DECL)
    for( int iLine = 0; iLine < static_cast<int>(HB_SIZEOFARRAY(s_szOptions)); iLine++ )
    {
       hb_compOutStd(HB_COMP_PARAM, s_szOptions[iLine]);
-      if( iLine < static_cast<int>(HB_SIZEOFARRAY(s_flags)) &&
-          (s_flags[iLine] < 0 ? HB_COMP_ISSUPPORTED(~s_flags[iLine]) == 0 :
-                                   HB_COMP_ISSUPPORTED(s_flags[iLine]) != 0) )
+      if( iLine < static_cast<int>(HB_SIZEOFARRAY(s_flags)) && (s_flags[iLine] < 0 ? HB_COMP_ISSUPPORTED(~s_flags[iLine]) == 0 : HB_COMP_ISSUPPORTED(s_flags[iLine]) != 0) )
       {
          hb_compOutStd(HB_COMP_PARAM, " (default)");
       }
@@ -261,7 +259,7 @@ void hb_compPrintLogo(HB_COMP_DECL)
 {
    char * szVer = hb_verHarbour();
 
-   #define HB_VER_COMMIT_YEAR  "2020"
+   #define HB_VER_COMMIT_YEAR  "2022"
    #define HB_VER_ORIGIN_URL   "https://harbour.github.io/"
 
    hb_compOutStd(HB_COMP_PARAM, szVer);

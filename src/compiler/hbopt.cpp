@@ -304,7 +304,7 @@ static HB_OPT_FUNC(hb_p_duplicate)
             HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 2];
             HB_ISIZ nOffset = HB_PCODE_MKINT24(pAddr), nLastOffset = 0;
             HB_SIZE nNewPos = nPCodePos + 1 + nOffset;
-            HB_BOOL fNot = HB_FALSE, fOK = HB_TRUE, fRepeat = HB_TRUE;
+            bool fNot = false, fOK = true, fRepeat = true;
 
             do
             {
@@ -328,9 +328,7 @@ static HB_OPT_FUNC(hb_p_duplicate)
                   fNot = !fNot;
                   fOK  = !fOK;
                }
-               else if( pFunc->pCode[nNewPos] == HB_P_DUPLICATE &&
-                        (pFunc->pCode[nNewPos + 1] == HB_P_JUMPTRUEFAR ||
-                         pFunc->pCode[nNewPos + 1] == HB_P_JUMPFALSEFAR) )
+               else if( pFunc->pCode[nNewPos] == HB_P_DUPLICATE && (pFunc->pCode[nNewPos + 1] == HB_P_JUMPTRUEFAR || pFunc->pCode[nNewPos + 1] == HB_P_JUMPFALSEFAR) )
                {
                   HB_ISIZ nJump;
                   if( pFunc->pCode[nNewPos + 1] != pFunc->pCode[nPCodePos + 1] )
@@ -344,10 +342,10 @@ static HB_OPT_FUNC(hb_p_duplicate)
                }
                else
                {
-                  fRepeat = HB_FALSE;
+                  fRepeat = false;
                   if( pFunc->pCode[nNewPos] == HB_P_POP )
                   {
-                     fOK = HB_TRUE;
+                     fOK = true;
                   }
                }
 
@@ -358,10 +356,8 @@ static HB_OPT_FUNC(hb_p_duplicate)
             }
             while( fRepeat );
 
-            if( (pFunc->pCode[nNewPos] == HB_P_JUMPTRUEFAR ||
-                 pFunc->pCode[nNewPos] == HB_P_JUMPFALSEFAR) &&
-                 !hb_compHasJump(pFunc, nPCodePos + 1) &&
-                 !hb_compHasJump(pFunc, nPCodePos + 5) )
+            if( (pFunc->pCode[nNewPos] == HB_P_JUMPTRUEFAR || pFunc->pCode[nNewPos] == HB_P_JUMPFALSEFAR) &&
+                 !hb_compHasJump(pFunc, nPCodePos + 1) && !hb_compHasJump(pFunc, nPCodePos + 5) )
             {
                if( pFunc->pCode[nNewPos] != pFunc->pCode[nPCodePos + 1] )
                {
@@ -489,11 +485,11 @@ static HB_OPT_FUNC(hb_p_jumpfar)
    }
    else
    {
-      HB_BOOL fLine = HB_FALSE;
+      bool fLine = false;
 
       if( pFunc->pCode[nNewPos] == HB_P_LINE )
       {
-         fLine = HB_TRUE;
+         fLine = true;
          nNewPos += 3;
          nOffset += 3;
       }
@@ -510,9 +506,7 @@ static HB_OPT_FUNC(hb_p_jumpfar)
 
          case HB_P_JUMPFALSEFAR:
             nNewPos += HB_PCODE_MKINT24(&pFunc->pCode[nNewPos + 1]);
-            if( nNewPos == nPCodePos + 4 && (!fLine ||
-                (pFunc->pCode[nNewPos] == HB_P_LINE &&
-                 pFunc->pCode[nPCodePos + nOffset + 4] == HB_P_LINE)) )
+            if( nNewPos == nPCodePos + 4 && (!fLine || (pFunc->pCode[nNewPos] == HB_P_LINE && pFunc->pCode[nPCodePos + nOffset + 4] == HB_P_LINE)) )
             {
                pFunc->pCode[nPCodePos] = HB_P_JUMPTRUEFAR;
                HB_PUT_LE_UINT24(pAddr, nOffset + 4);
@@ -521,9 +515,7 @@ static HB_OPT_FUNC(hb_p_jumpfar)
 
          case HB_P_JUMPTRUEFAR:
             nNewPos += HB_PCODE_MKINT24(&pFunc->pCode[nNewPos + 1]);
-            if( nNewPos == nPCodePos + 4 && (!fLine ||
-                (pFunc->pCode[nNewPos] == HB_P_LINE &&
-                 pFunc->pCode[nPCodePos + nOffset + 4] == HB_P_LINE)) )
+            if( nNewPos == nPCodePos + 4 && (!fLine || (pFunc->pCode[nNewPos] == HB_P_LINE && pFunc->pCode[nPCodePos + nOffset + 4] == HB_P_LINE)) )
             {
                pFunc->pCode[nPCodePos] = HB_P_JUMPFALSEFAR;
                HB_PUT_LE_UINT24(pAddr, nOffset + 4);
@@ -539,7 +531,7 @@ static HB_OPT_FUNC(hb_p_jumpfalsefar)
    HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 1];
    HB_ISIZ nOffset = HB_PCODE_MKINT24(pAddr);
    HB_SIZE nNewPos = nPCodePos + nOffset;
-   HB_BOOL fLine = HB_FALSE;
+   bool fLine = false;
 
    HB_SYMBOL_UNUSED(cargo);
 
@@ -548,13 +540,10 @@ static HB_OPT_FUNC(hb_p_jumpfalsefar)
       hb_compNOOPfill(pFunc, nPCodePos, 4, false, false);
       pFunc->pCode[nPCodePos + 4] = HB_P_JUMPTRUEFAR;
    }
-   else if( nOffset == 11 && pFunc->pCode[nPCodePos + 4] == HB_P_LINE &&
-            pFunc->pCode[nPCodePos + 11] == HB_P_LINE &&
-            pFunc->pCode[nPCodePos + 7] == HB_P_JUMPFAR &&
-            pFunc->pCode[nPCodePos + 7 +
-               HB_PCODE_MKINT24(&pFunc->pCode[nPCodePos + 8])] == HB_P_LINE &&
-            !hb_compHasJump(pFunc, nPCodePos + 4) &&
-            !hb_compHasJump(pFunc, nPCodePos + 7) )
+   else if( nOffset == 11 && pFunc->pCode[nPCodePos + 4] == HB_P_LINE && pFunc->pCode[nPCodePos + 11] == HB_P_LINE &&
+            pFunc->pCode[nPCodePos + 7] == HB_P_JUMPFAR && pFunc->pCode[nPCodePos + 7 +
+            HB_PCODE_MKINT24(&pFunc->pCode[nPCodePos + 8])] == HB_P_LINE &&
+            !hb_compHasJump(pFunc, nPCodePos + 4) && !hb_compHasJump(pFunc, nPCodePos + 7) )
    {
       hb_compNOOPfill(pFunc, nPCodePos, 7, false, false);
       pFunc->pCode[nPCodePos + 7] = HB_P_JUMPTRUEFAR;
@@ -563,7 +552,7 @@ static HB_OPT_FUNC(hb_p_jumpfalsefar)
    {
       if( pFunc->pCode[nNewPos] == HB_P_LINE )
       {
-         fLine = HB_TRUE;
+         fLine = true;
          nNewPos += 3;
          nOffset += 3;
       }
@@ -584,7 +573,7 @@ static HB_OPT_FUNC(hb_p_jumptruefar)
    HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 1];
    HB_ISIZ nOffset = HB_PCODE_MKINT24(pAddr);
    HB_SIZE nNewPos = nPCodePos + nOffset;
-   HB_BOOL fLine = HB_FALSE;
+   bool fLine = false;
 
    HB_SYMBOL_UNUSED(cargo);
 
@@ -593,11 +582,9 @@ static HB_OPT_FUNC(hb_p_jumptruefar)
       hb_compNOOPfill(pFunc, nPCodePos, 4, false, false);
       pFunc->pCode[nPCodePos + 4] = HB_P_JUMPFALSEFAR;
    }
-   else if( nOffset == 11 && pFunc->pCode[nPCodePos + 4] == HB_P_LINE &&
-            pFunc->pCode[nPCodePos + 11] == HB_P_LINE &&
-            pFunc->pCode[nPCodePos + 7] == HB_P_JUMPFAR &&
-            pFunc->pCode[nPCodePos + 7 +
-               HB_PCODE_MKINT24(&pFunc->pCode[nPCodePos + 8])] == HB_P_LINE &&
+   else if( nOffset == 11 && pFunc->pCode[nPCodePos + 4] == HB_P_LINE && pFunc->pCode[nPCodePos + 11] == HB_P_LINE &&
+            pFunc->pCode[nPCodePos + 7] == HB_P_JUMPFAR && pFunc->pCode[nPCodePos + 7 +
+            HB_PCODE_MKINT24(&pFunc->pCode[nPCodePos + 8])] == HB_P_LINE &&
             !hb_compHasJump(pFunc, nPCodePos + 4) && !hb_compHasJump(pFunc, nPCodePos + 7) )
    {
       hb_compNOOPfill(pFunc, nPCodePos, 7, false, false);
@@ -607,7 +594,7 @@ static HB_OPT_FUNC(hb_p_jumptruefar)
    {
       if( pFunc->pCode[nNewPos] == HB_P_LINE )
       {
-         fLine = HB_TRUE;
+         fLine = true;
          nNewPos += 3;
          nOffset += 3;
       }
@@ -743,189 +730,189 @@ static HB_OPT_FUNC(hb_p_endproc)
  */
 static const PHB_OPT_FUNC s_opt_table[] =
 {
-   nullptr,                       /* HB_P_AND                   */
-   nullptr,                       /* HB_P_ARRAYPUSH             */
-   nullptr,                       /* HB_P_ARRAYPOP              */
-   nullptr,                       /* HB_P_ARRAYDIM              */
-   nullptr,                       /* HB_P_ARRAYGEN              */
-   nullptr,                       /* HB_P_EQUAL                 */
+   nullptr,                    /* HB_P_AND                   */
+   nullptr,                    /* HB_P_ARRAYPUSH             */
+   nullptr,                    /* HB_P_ARRAYPOP              */
+   nullptr,                    /* HB_P_ARRAYDIM              */
+   nullptr,                    /* HB_P_ARRAYGEN              */
+   nullptr,                    /* HB_P_EQUAL                 */
    hb_p_endblock,              /* HB_P_ENDBLOCK              */
    hb_p_endproc,               /* HB_P_ENDPROC               */
-   nullptr,                       /* HB_P_EXACTLYEQUAL          */
+   nullptr,                    /* HB_P_EXACTLYEQUAL          */
    hb_p_false,                 /* HB_P_FALSE                 */
-   nullptr,                       /* HB_P_FORTEST               */
+   nullptr,                    /* HB_P_FORTEST               */
    hb_p_function,              /* HB_P_FUNCTION              */
    hb_p_functionshort,         /* HB_P_FUNCTIONSHORT         */
-   nullptr,                       /* HB_P_FRAME                 */
-   nullptr,                       /* HB_P_FUNCPTR               */
-   nullptr,                       /* HB_P_GREATER               */
-   nullptr,                       /* HB_P_GREATEREQUAL          */
-   nullptr,                       /* HB_P_DEC                   */
-   nullptr,                       /* HB_P_DIVIDE                */
-   nullptr,                       /* HB_P_DO                    */
-   nullptr,                       /* HB_P_DOSHORT               */
+   nullptr,                    /* HB_P_FRAME                 */
+   nullptr,                    /* HB_P_FUNCPTR               */
+   nullptr,                    /* HB_P_GREATER               */
+   nullptr,                    /* HB_P_GREATEREQUAL          */
+   nullptr,                    /* HB_P_DEC                   */
+   nullptr,                    /* HB_P_DIVIDE                */
+   nullptr,                    /* HB_P_DO                    */
+   nullptr,                    /* HB_P_DOSHORT               */
    hb_p_duplicate,             /* HB_P_DUPLICATE             */
-   nullptr,                       /* HB_P_PUSHTIMESTAMP         */
-   nullptr,                       /* HB_P_INC                   */
-   nullptr,                       /* HB_P_INSTRING              */
-   nullptr,                       /* HB_P_JUMPNEAR              */
-   nullptr,                       /* HB_P_JUMP                  */
+   nullptr,                    /* HB_P_PUSHTIMESTAMP         */
+   nullptr,                    /* HB_P_INC                   */
+   nullptr,                    /* HB_P_INSTRING              */
+   nullptr,                    /* HB_P_JUMPNEAR              */
+   nullptr,                    /* HB_P_JUMP                  */
    hb_p_jumpfar,               /* HB_P_JUMPFAR               */
-   nullptr,                       /* HB_P_JUMPFALSENEAR         */
-   nullptr,                       /* HB_P_JUMPFALSE             */
+   nullptr,                    /* HB_P_JUMPFALSENEAR         */
+   nullptr,                    /* HB_P_JUMPFALSE             */
    hb_p_jumpfalsefar,          /* HB_P_JUMPFALSEFAR          */
-   nullptr,                       /* HB_P_JUMPTRUENEAR          */
-   nullptr,                       /* HB_P_JUMPTRUE              */
+   nullptr,                    /* HB_P_JUMPTRUENEAR          */
+   nullptr,                    /* HB_P_JUMPTRUE              */
    hb_p_jumptruefar,           /* HB_P_JUMPTRUEFAR           */
-   nullptr,                       /* HB_P_LESSEQUAL             */
-   nullptr,                       /* HB_P_LESS                  */
-   nullptr,                       /* HB_P_LINE                  */
-   nullptr,                       /* HB_P_LOCALNAME             */
-   nullptr,                       /* HB_P_MACROPOP              */
-   nullptr,                       /* HB_P_MACROPOPALIASED       */
-   nullptr,                       /* HB_P_MACROPUSH             */
-   nullptr,                       /* HB_P_MACROARRAYGEN         */
-   nullptr,                       /* HB_P_MACROPUSHLIST         */
-   nullptr,                       /* HB_P_MACROPUSHINDEX        */
-   nullptr,                       /* HB_P_MACROPUSHPARE         */
-   nullptr,                       /* HB_P_MACROPUSHALIASED      */
-   nullptr,                       /* HB_P_MACROSYMBOL           */
-   nullptr,                       /* HB_P_MACROTEXT             */
-   nullptr,                       /* HB_P_MESSAGE               */
-   nullptr,                       /* HB_P_MINUS                 */
-   nullptr,                       /* HB_P_MODULUS               */
-   nullptr,                       /* HB_P_MODULENAME            */
+   nullptr,                    /* HB_P_LESSEQUAL             */
+   nullptr,                    /* HB_P_LESS                  */
+   nullptr,                    /* HB_P_LINE                  */
+   nullptr,                    /* HB_P_LOCALNAME             */
+   nullptr,                    /* HB_P_MACROPOP              */
+   nullptr,                    /* HB_P_MACROPOPALIASED       */
+   nullptr,                    /* HB_P_MACROPUSH             */
+   nullptr,                    /* HB_P_MACROARRAYGEN         */
+   nullptr,                    /* HB_P_MACROPUSHLIST         */
+   nullptr,                    /* HB_P_MACROPUSHINDEX        */
+   nullptr,                    /* HB_P_MACROPUSHPARE         */
+   nullptr,                    /* HB_P_MACROPUSHALIASED      */
+   nullptr,                    /* HB_P_MACROSYMBOL           */
+   nullptr,                    /* HB_P_MACROTEXT             */
+   nullptr,                    /* HB_P_MESSAGE               */
+   nullptr,                    /* HB_P_MINUS                 */
+   nullptr,                    /* HB_P_MODULUS               */
+   nullptr,                    /* HB_P_MODULENAME            */
                                /* start: pcodes generated by macro compiler */
-   nullptr,                       /* HB_P_MMESSAGE              */
-   nullptr,                       /* HB_P_MPOPALIASEDFIELD      */
-   nullptr,                       /* HB_P_MPOPALIASEDVAR        */
-   nullptr,                       /* HB_P_MPOPFIELD             */
-   nullptr,                       /* HB_P_MPOPMEMVAR            */
-   nullptr,                       /* HB_P_MPUSHALIASEDFIELD     */
-   nullptr,                       /* HB_P_MPUSHALIASEDVAR       */
-   nullptr,                       /* HB_P_MPUSHBLOCK            */
-   nullptr,                       /* HB_P_MPUSHFIELD            */
-   nullptr,                       /* HB_P_MPUSHMEMVAR           */
-   nullptr,                       /* HB_P_MPUSHMEMVARREF        */
-   nullptr,                       /* HB_P_MPUSHSYM              */
-   nullptr,                       /* HB_P_MPUSHVARIABLE         */
+   nullptr,                    /* HB_P_MMESSAGE              */
+   nullptr,                    /* HB_P_MPOPALIASEDFIELD      */
+   nullptr,                    /* HB_P_MPOPALIASEDVAR        */
+   nullptr,                    /* HB_P_MPOPFIELD             */
+   nullptr,                    /* HB_P_MPOPMEMVAR            */
+   nullptr,                    /* HB_P_MPUSHALIASEDFIELD     */
+   nullptr,                    /* HB_P_MPUSHALIASEDVAR       */
+   nullptr,                    /* HB_P_MPUSHBLOCK            */
+   nullptr,                    /* HB_P_MPUSHFIELD            */
+   nullptr,                    /* HB_P_MPUSHMEMVAR           */
+   nullptr,                    /* HB_P_MPUSHMEMVARREF        */
+   nullptr,                    /* HB_P_MPUSHSYM              */
+   nullptr,                    /* HB_P_MPUSHVARIABLE         */
                                /* end: */
-   nullptr,                       /* HB_P_MULT                  */
-   nullptr,                       /* HB_P_NEGATE                */
-   nullptr,                       /* HB_P_NOOP                  */
+   nullptr,                    /* HB_P_MULT                  */
+   nullptr,                    /* HB_P_NEGATE                */
+   nullptr,                    /* HB_P_NOOP                  */
    hb_p_not,                   /* HB_P_NOT                   */
-   nullptr,                       /* HB_P_NOTEQUAL              */
-   nullptr,                       /* HB_P_OR                    */
-   nullptr,                       /* HB_P_PARAMETER             */
-   nullptr,                       /* HB_P_PLUS                  */
-   nullptr,                       /* HB_P_POP                   */
-   nullptr,                       /* HB_P_POPALIAS              */
-   nullptr,                       /* HB_P_POPALIASEDFIELD       */
-   nullptr,                       /* HB_P_POPALIASEDFIELDNEAR   */
-   nullptr,                       /* HB_P_POPALIASEDVAR         */
-   nullptr,                       /* HB_P_POPFIELD              */
+   nullptr,                    /* HB_P_NOTEQUAL              */
+   nullptr,                    /* HB_P_OR                    */
+   nullptr,                    /* HB_P_PARAMETER             */
+   nullptr,                    /* HB_P_PLUS                  */
+   nullptr,                    /* HB_P_POP                   */
+   nullptr,                    /* HB_P_POPALIAS              */
+   nullptr,                    /* HB_P_POPALIASEDFIELD       */
+   nullptr,                    /* HB_P_POPALIASEDFIELDNEAR   */
+   nullptr,                    /* HB_P_POPALIASEDVAR         */
+   nullptr,                    /* HB_P_POPFIELD              */
    hb_p_poplocal,              /* HB_P_POPLOCAL              */
-   nullptr,                       /* HB_P_POPLOCALNEAR          */
-   nullptr,                       /* HB_P_POPMEMVAR             */
-   nullptr,                       /* HB_P_POPSTATIC             */
-   nullptr,                       /* HB_P_POPVARIABLE           */
-   nullptr,                       /* HB_P_POWER                 */
-   nullptr,                       /* HB_P_PUSHALIAS             */
-   nullptr,                       /* HB_P_PUSHALIASEDFIELD      */
-   nullptr,                       /* HB_P_PUSHALIASEDFIELDNEAR  */
-   nullptr,                       /* HB_P_PUSHALIASEDVAR        */
-   nullptr,                       /* HB_P_PUSHBLOCK             */
-   nullptr,                       /* HB_P_PUSHBLOCKSHORT        */
-   nullptr,                       /* HB_P_PUSHFIELD             */
-   nullptr,                       /* HB_P_PUSHBYTE              */
-   nullptr,                       /* HB_P_PUSHINT               */
+   nullptr,                    /* HB_P_POPLOCALNEAR          */
+   nullptr,                    /* HB_P_POPMEMVAR             */
+   nullptr,                    /* HB_P_POPSTATIC             */
+   nullptr,                    /* HB_P_POPVARIABLE           */
+   nullptr,                    /* HB_P_POWER                 */
+   nullptr,                    /* HB_P_PUSHALIAS             */
+   nullptr,                    /* HB_P_PUSHALIASEDFIELD      */
+   nullptr,                    /* HB_P_PUSHALIASEDFIELDNEAR  */
+   nullptr,                    /* HB_P_PUSHALIASEDVAR        */
+   nullptr,                    /* HB_P_PUSHBLOCK             */
+   nullptr,                    /* HB_P_PUSHBLOCKSHORT        */
+   nullptr,                    /* HB_P_PUSHFIELD             */
+   nullptr,                    /* HB_P_PUSHBYTE              */
+   nullptr,                    /* HB_P_PUSHINT               */
    hb_p_pushlocal,             /* HB_P_PUSHLOCAL             */
    hb_p_pushlocalnear,         /* HB_P_PUSHLOCALNEAR         */
-   nullptr,                       /* HB_P_PUSHLOCALREF          */
-   nullptr,                       /* HB_P_PUSHLONG              */
+   nullptr,                    /* HB_P_PUSHLOCALREF          */
+   nullptr,                    /* HB_P_PUSHLONG              */
    hb_p_pushmemvar,            /* HB_P_PUSHMEMVAR            */
-   nullptr,                       /* HB_P_PUSHMEMVARREF         */
+   nullptr,                    /* HB_P_PUSHMEMVARREF         */
    hb_p_pushnil,               /* HB_P_PUSHNIL               */
-   nullptr,                       /* HB_P_PUSHDOUBLE            */
-   nullptr,                       /* HB_P_PUSHSELF              */
+   nullptr,                    /* HB_P_PUSHDOUBLE            */
+   nullptr,                    /* HB_P_PUSHSELF              */
    hb_p_pushstatic,            /* HB_P_PUSHSTATIC            */
-   nullptr,                       /* HB_P_PUSHSTATICREF         */
-   nullptr,                       /* HB_P_PUSHSTR               */
-   nullptr,                       /* HB_P_PUSHSTRSHORT          */
-   nullptr,                       /* HB_P_PUSHSYM               */
-   nullptr,                       /* HB_P_PUSHSYMNEAR           */
-   nullptr,                       /* HB_P_PUSHVARIABLE          */
-   nullptr,                       /* HB_P_RETVALUE              */
-   nullptr,                       /* HB_P_SEND                  */
-   nullptr,                       /* HB_P_SENDSHORT             */
-   nullptr,                       /* HB_P_SEQBEGIN              */
-   nullptr,                       /* HB_P_SEQEND                */
-   nullptr,                       /* HB_P_SEQRECOVER            */
-   nullptr,                       /* HB_P_SFRAME                */
-   nullptr,                       /* HB_P_STATICS               */
-   nullptr,                       /* HB_P_STATICNAME            */
-   nullptr,                       /* HB_P_SWAPALIAS             */
+   nullptr,                    /* HB_P_PUSHSTATICREF         */
+   nullptr,                    /* HB_P_PUSHSTR               */
+   nullptr,                    /* HB_P_PUSHSTRSHORT          */
+   nullptr,                    /* HB_P_PUSHSYM               */
+   nullptr,                    /* HB_P_PUSHSYMNEAR           */
+   nullptr,                    /* HB_P_PUSHVARIABLE          */
+   nullptr,                    /* HB_P_RETVALUE              */
+   nullptr,                    /* HB_P_SEND                  */
+   nullptr,                    /* HB_P_SENDSHORT             */
+   nullptr,                    /* HB_P_SEQBEGIN              */
+   nullptr,                    /* HB_P_SEQEND                */
+   nullptr,                    /* HB_P_SEQRECOVER            */
+   nullptr,                    /* HB_P_SFRAME                */
+   nullptr,                    /* HB_P_STATICS               */
+   nullptr,                    /* HB_P_STATICNAME            */
+   nullptr,                    /* HB_P_SWAPALIAS             */
    hb_p_true,                  /* HB_P_TRUE                  */
-   nullptr,                       /* HB_P_ZERO                  */
-   nullptr,                       /* HB_P_ONE                   */
+   nullptr,                    /* HB_P_ZERO                  */
+   nullptr,                    /* HB_P_ONE                   */
    hb_p_macrofunc,             /* HB_P_MACROFUNC             */
-   nullptr,                       /* HB_P_MACRODO               */
-   nullptr,                       /* HB_P_MPUSHSTR              */
-   nullptr,                       /* HB_P_LOCALNEARADDINT       */
-   nullptr,                       /* HB_P_MACROPUSHREF          */
-   nullptr,                       /* HB_P_PUSHLONGLONG          */
-   nullptr,                       /* HB_P_ENUMSTART             */
-   nullptr,                       /* HB_P_ENUMNEXT              */
-   nullptr,                       /* HB_P_ENUMPREV              */
-   nullptr,                       /* HB_P_ENUMEND               */
+   nullptr,                    /* HB_P_MACRODO               */
+   nullptr,                    /* HB_P_MPUSHSTR              */
+   nullptr,                    /* HB_P_LOCALNEARADDINT       */
+   nullptr,                    /* HB_P_MACROPUSHREF          */
+   nullptr,                    /* HB_P_PUSHLONGLONG          */
+   nullptr,                    /* HB_P_ENUMSTART             */
+   nullptr,                    /* HB_P_ENUMNEXT              */
+   nullptr,                    /* HB_P_ENUMPREV              */
+   nullptr,                    /* HB_P_ENUMEND               */
    hb_p_switch,                /* HB_P_SWITCH                */
-   nullptr,                       /* HB_P_PUSHDATE              */
-   nullptr,                       /* HB_P_PLUSEQPOP             */
-   nullptr,                       /* HB_P_MINUSEQPOP            */
-   nullptr,                       /* HB_P_MULTEQPOP             */
-   nullptr,                       /* HB_P_DIVEQPOP              */
-   nullptr,                       /* HB_P_PLUSEQ                */
-   nullptr,                       /* HB_P_MINUSEQ               */
-   nullptr,                       /* HB_P_MULTEQ                */
-   nullptr,                       /* HB_P_DIVEQ                 */
-   nullptr,                       /* HB_P_WITHOBJECTSTART       */
-   nullptr,                       /* HB_P_WITHOBJECTMESSAGE     */
-   nullptr,                       /* HB_P_WITHOBJECTEND         */
-   nullptr,                       /* HB_P_MACROSEND             */
-   nullptr,                       /* HB_P_PUSHOVARREF           */
-   nullptr,                       /* HB_P_ARRAYPUSHREF          */
-   nullptr,                       /* HB_P_VFRAME                */
-   nullptr,                       /* HB_P_LARGEFRAME            */
-   nullptr,                       /* HB_P_LARGEVFRAME           */
-   nullptr,                       /* HB_P_PUSHSTRHIDDEN         */
+   nullptr,                    /* HB_P_PUSHDATE              */
+   nullptr,                    /* HB_P_PLUSEQPOP             */
+   nullptr,                    /* HB_P_MINUSEQPOP            */
+   nullptr,                    /* HB_P_MULTEQPOP             */
+   nullptr,                    /* HB_P_DIVEQPOP              */
+   nullptr,                    /* HB_P_PLUSEQ                */
+   nullptr,                    /* HB_P_MINUSEQ               */
+   nullptr,                    /* HB_P_MULTEQ                */
+   nullptr,                    /* HB_P_DIVEQ                 */
+   nullptr,                    /* HB_P_WITHOBJECTSTART       */
+   nullptr,                    /* HB_P_WITHOBJECTMESSAGE     */
+   nullptr,                    /* HB_P_WITHOBJECTEND         */
+   nullptr,                    /* HB_P_MACROSEND             */
+   nullptr,                    /* HB_P_PUSHOVARREF           */
+   nullptr,                    /* HB_P_ARRAYPUSHREF          */
+   nullptr,                    /* HB_P_VFRAME                */
+   nullptr,                    /* HB_P_LARGEFRAME            */
+   nullptr,                    /* HB_P_LARGEVFRAME           */
+   nullptr,                    /* HB_P_PUSHSTRHIDDEN         */
    hb_p_localaddint,           /* HB_P_LOCALADDINT           */
-   nullptr,                       /* HB_P_MODEQPOP              */
-   nullptr,                       /* HB_P_EXPEQPOP              */
-   nullptr,                       /* HB_P_MODEQ                 */
-   nullptr,                       /* HB_P_EXPEQ                 */
-   nullptr,                       /* HB_P_DUPLUNREF             */
-   nullptr,                       /* HB_P_MPUSHBLOCKLARGE       */
-   nullptr,                       /* HB_P_MPUSHSTRLARGE         */
-   nullptr,                       /* HB_P_PUSHBLOCKLARGE        */
-   nullptr,                       /* HB_P_PUSHSTRLARGE          */
-   nullptr,                       /* HB_P_SWAP                  */
-   nullptr,                       /* HB_P_PUSHVPARAMS           */
-   nullptr,                       /* HB_P_PUSHUNREF             */
-   nullptr,                       /* HB_P_SEQALWAYS             */
-   nullptr,                       /* HB_P_ALWAYSBEGIN           */
-   nullptr,                       /* HB_P_ALWAYSEND             */
-   nullptr,                       /* HB_P_DECEQPOP              */
-   nullptr,                       /* HB_P_INCEQPOP              */
-   nullptr,                       /* HB_P_DECEQ                 */
-   nullptr,                       /* HB_P_INCEQ                 */
-   nullptr,                       /* HB_P_LOCALDEC              */
-   nullptr,                       /* HB_P_LOCALINC              */
-   nullptr,                       /* HB_P_LOCALINCPUSH          */
-   nullptr,                       /* HB_P_PUSHFUNCSYM           */
-   nullptr,                       /* HB_P_HASHGEN               */
-   nullptr,                       /* HB_P_SEQBLOCK              */
-   nullptr,                       /* HB_P_THREADSTATICS         */
-   nullptr                        /* HB_P_PUSHAPARAMS           */
+   nullptr,                    /* HB_P_MODEQPOP              */
+   nullptr,                    /* HB_P_EXPEQPOP              */
+   nullptr,                    /* HB_P_MODEQ                 */
+   nullptr,                    /* HB_P_EXPEQ                 */
+   nullptr,                    /* HB_P_DUPLUNREF             */
+   nullptr,                    /* HB_P_MPUSHBLOCKLARGE       */
+   nullptr,                    /* HB_P_MPUSHSTRLARGE         */
+   nullptr,                    /* HB_P_PUSHBLOCKLARGE        */
+   nullptr,                    /* HB_P_PUSHSTRLARGE          */
+   nullptr,                    /* HB_P_SWAP                  */
+   nullptr,                    /* HB_P_PUSHVPARAMS           */
+   nullptr,                    /* HB_P_PUSHUNREF             */
+   nullptr,                    /* HB_P_SEQALWAYS             */
+   nullptr,                    /* HB_P_ALWAYSBEGIN           */
+   nullptr,                    /* HB_P_ALWAYSEND             */
+   nullptr,                    /* HB_P_DECEQPOP              */
+   nullptr,                    /* HB_P_INCEQPOP              */
+   nullptr,                    /* HB_P_DECEQ                 */
+   nullptr,                    /* HB_P_INCEQ                 */
+   nullptr,                    /* HB_P_LOCALDEC              */
+   nullptr,                    /* HB_P_LOCALINC              */
+   nullptr,                    /* HB_P_LOCALINCPUSH          */
+   nullptr,                    /* HB_P_PUSHFUNCSYM           */
+   nullptr,                    /* HB_P_HASHGEN               */
+   nullptr,                    /* HB_P_SEQBLOCK              */
+   nullptr,                    /* HB_P_THREADSTATICS         */
+   nullptr                     /* HB_P_PUSHAPARAMS           */
 };
 
 void hb_compOptimizePCode(HB_COMP_DECL, PHB_HFUNC pFunc)
@@ -1054,13 +1041,13 @@ static void hb_compPCodeEnumScanLocals(PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocals)
 {
    HB_SIZE nPos = 0, nLastPos = 0;
    HB_SHORT isVar = 0;
-   HB_BOOL fWasJump = 0;
+   bool fWasJump = false;
 
    while( nPos < pFunc->nPCodePos )
    {
       if( hb_compIsJump(pFunc->pCode[nPos]) )
       {
-         fWasJump = 1;
+         fWasJump = true;
       }
 
       switch( pFunc->pCode[nPos] )
@@ -1715,7 +1702,7 @@ void hb_compPCodeTraceOptimizer(HB_COMP_DECL)
       {
          pVar = pVar->pNext;
       }
-      
+
       for( usIndex = pFunc->wParamCount; usIndex < usLocalCount; usIndex++ )
       {
          if( pLocals[usIndex].bFlags == (OPT_LOCAL_FLAG_PUSH | OPT_LOCAL_FLAG_POPSELF) ||
@@ -1737,13 +1724,13 @@ void hb_compPCodeTraceOptimizer(HB_COMP_DECL)
    /* Delete unused */
    if( HB_COMP_ISSUPPORTED(HB_COMPFLAG_OPTJUMP) && !HB_COMP_PARAM->fDebugInfo )
    {
-      HB_BOOL fBool = HB_FALSE;
+      bool fBool = false;
 
       for( usIndex = pFunc->wParamCount; usIndex < usLocalCount; usIndex++ )
       {
          if( pLocals[usIndex].bFlags == 0 )
          {
-            fBool = HB_TRUE;
+            fBool = true;
             break;
          }
       }

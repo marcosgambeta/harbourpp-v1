@@ -33,8 +33,8 @@ static void hb_writeEndInit(HB_COMP_DECL, FILE * yyc, const char * szModulname, 
 struct HB_stru_genc_info
 {
    HB_COMP_DECL;
-   FILE *  yyc;
-   HB_BOOL bVerbose;
+   FILE * yyc;
+   bool bVerbose;
    HB_SIZE nEndBlockPos;
 };
 using HB_GENC_INFO = HB_stru_genc_info;
@@ -185,12 +185,12 @@ static void hb_compFuncUsed(HB_COMP_DECL, PHB_HSYMBOL pSym)
 
 void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName)       /* generates the C++ language output */
 {
-   char        szFileName[HB_PATH_MAX];
+   char szFileName[HB_PATH_MAX];
    PHB_HSYMBOL pSym;
-   PHB_HFUNC   pFunc;
+   PHB_HFUNC pFunc;
    PHB_HINLINE pInline;
-   FILE *      yyc; /* file handle for C++ output */
-   HB_BOOL     fHasHbInline = HB_FALSE;
+   FILE * yyc; /* file handle for C++ output */
+   bool fHasHbInline = false;
 
    hb_fsFNameMerge(szFileName, pFileName);
    if( !pFileName->szExtension )
@@ -242,7 +242,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName)       /* generates the C
       {
          if( pInline->szName )
          {
-            fHasHbInline = HB_TRUE;
+            fHasHbInline = true;
             break;
          }
          pInline = pInline->pNext;
@@ -491,7 +491,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName)       /* generates the C
             if( !fHasHbInline )
             {
                hb_compGenCStdHeaders(HB_COMP_PARAM, yyc, false);
-               fHasHbInline = HB_TRUE;
+               fHasHbInline = true;
             }
             fprintf(yyc, "#line %i ", pInline->iLine);
             hb_compGenCString(yyc, reinterpret_cast<const HB_BYTE*>(pInline->szFileName), strlen(pInline->szFileName));

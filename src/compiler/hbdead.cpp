@@ -56,7 +56,7 @@ struct _HB_CODETRACE_INFO
    HB_SIZE   nJumpSize;
    HB_SIZE   nJumpCount;
    HB_SIZE   nPCodeSize;
-   HB_BOOL   fFinished;
+   bool      fFinished;
 };
 
 using HB_CODETRACE_INFO = _HB_CODETRACE_INFO;
@@ -109,7 +109,7 @@ static HB_SIZE hb_compCodeTraceNextPos(PHB_CODETRACE_INFO pInfo, HB_SIZE nPCodeP
       }
    }
 
-   pInfo->fFinished = HB_TRUE;
+   pInfo->fFinished = true;
    return pInfo->nPCodeSize;
 }
 
@@ -534,7 +534,7 @@ void hb_compCodeTraceMarkDead(HB_COMP_DECL, PHB_HFUNC pFunc)
    code_info.nJumpSize = 0;
    code_info.nJumpCount = 0;
    code_info.nPCodeSize = pFunc->nPCodePos;
-   code_info.fFinished = HB_FALSE;
+   code_info.fFinished = false;
 
    code_info.pCodeMark = static_cast<HB_BYTE*>(hb_xgrabz(code_info.nPCodeSize));
 

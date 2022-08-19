@@ -362,11 +362,10 @@ HB_BOOL hb_compI18nSave(HB_COMP_DECL, HB_BOOL fFinal)
    for( HB_UINT uiIndex = 0; uiIndex < pI18n->uiCount; uiIndex++ )
    {
       PHB_I18NSTRING pString = &pI18n->pString[uiIndex];
-      HB_UINT uiLine;
 
       fprintf(file, "#: %s:%u", hb_compI18nFileName(szFileName, pString->pPos.szFile), pString->pPos.uiLine);
 
-      for( uiLine = 0; uiLine < pString->uiPosCount; ++uiLine )
+      for( HB_UINT uiLine = 0; uiLine < pString->uiPosCount; ++uiLine )
       {
          fprintf(file, " %s:%u", hb_compI18nFileName(szFileName, pString->pPosLst[uiLine].szFile), pString->pPosLst[uiLine].uiLine);
       }
@@ -382,7 +381,7 @@ HB_BOOL hb_compI18nSave(HB_COMP_DECL, HB_BOOL fFinal)
 
       fprintf(file, "msgid \"");
       hb_compI18nEscapeString(file, pString->szText);
-      for( uiLine = 0; uiLine < pString->uiPlurals; ++uiLine )
+      for( HB_UINT uiLine = 0; uiLine < pString->uiPlurals; ++uiLine )
       {
          if( uiLine == 0 )
          {
