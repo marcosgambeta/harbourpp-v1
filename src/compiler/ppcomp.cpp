@@ -107,7 +107,7 @@ static void hb_pp_hb_inLine(void * cargo, char * szFunc, char * pBuffer, HB_SIZE
 static HB_BOOL hb_pp_CompilerSwitch(void * cargo, const char * szSwitch, int * piValue, HB_BOOL fSet)
 {
    HB_COMP_DECL = static_cast<PHB_COMP>(cargo);
-   HB_BOOL fError = HB_FALSE;
+   bool fError = false;
    int iValue, i;
 
    iValue = *piValue;
@@ -174,7 +174,7 @@ static HB_BOOL hb_pp_CompilerSwitch(void * cargo, const char * szSwitch, int * p
          case 'N':
             if( fSet )
             {
-               fError = HB_TRUE;
+               fError = true;
             }
             else
             {
@@ -228,7 +228,7 @@ static HB_BOOL hb_pp_CompilerSwitch(void * cargo, const char * szSwitch, int * p
                }
                else
                {
-                  fError = HB_TRUE;
+                  fError = true;
                }
             }
             else
@@ -257,7 +257,7 @@ static HB_BOOL hb_pp_CompilerSwitch(void * cargo, const char * szSwitch, int * p
             break;
 
          default:
-            fError = HB_TRUE;
+            fError = true;
       }
    }
    else if( i == 2 )
@@ -330,7 +330,7 @@ static HB_BOOL hb_pp_CompilerSwitch(void * cargo, const char * szSwitch, int * p
                iFlag = HB_COMPFLAG_ARRSTR;
                break;
             default:
-               fError = HB_TRUE;
+               fError = true;
          }
          if( !fError && iFlag )
          {
@@ -399,7 +399,7 @@ static HB_BOOL hb_pp_CompilerSwitch(void * cargo, const char * szSwitch, int * p
       }
       else
       {
-         fError = HB_TRUE;
+         fError = true;
       }
    }
    /* xHarbour extension */
@@ -419,7 +419,7 @@ static HB_BOOL hb_pp_CompilerSwitch(void * cargo, const char * szSwitch, int * p
    }
    else
    {
-      fError = HB_TRUE;
+      fError = true;
    }
 
    *piValue = iValue;
