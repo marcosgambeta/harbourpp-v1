@@ -401,7 +401,7 @@ void hb_compVariableAdd(HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarTy
 {
    PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
    PHB_HVAR pVar;
-   HB_BOOL bFreeVar = HB_TRUE;
+   bool bFreeVar = true;
 
    if( (pFunc->funFlags & HB_FUNF_FILE_DECL) != 0 &&
        (HB_COMP_PARAM->iVarScope == HB_VSCOMP_LOCAL ||
@@ -526,7 +526,7 @@ void hb_compVariableAdd(HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarTy
          }
 
          hb_compVarListAdd(&pFunc->pMemvars, pVar);
-         bFreeVar = HB_FALSE;
+         bFreeVar = false;
       }
 
       switch( HB_COMP_PARAM->iVarScope )
@@ -562,7 +562,7 @@ void hb_compVariableAdd(HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarTy
                {
                   /* add this variable to the list of PRIVATE variables. */
                   hb_compVarListAdd(&pFunc->pPrivates, pVar);
-                  bFreeVar = HB_FALSE;
+                  bFreeVar = false;
                }
             }
             if( bFreeVar )
@@ -591,7 +591,7 @@ void hb_compVariableAdd(HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarTy
                {
                   /* add this variable to the list of PRIVATE variables. */
                   hb_compVarListAdd(&pFunc->pPrivates, pVar);
-                  bFreeVar = HB_FALSE;
+                  bFreeVar = false;
                }
             }
             if( bFreeVar )
@@ -739,7 +739,9 @@ static HB_USHORT hb_compVariableGetPos(PHB_HVAR pVars, const char * szVarName)
 PHB_HVAR hb_compVariableFind(HB_COMP_DECL, const char * szVarName, int * piPos, int * piScope)
 {
    PHB_HFUNC pFunc, pGlobal, pOutBlock = nullptr;
-   HB_BOOL fStatic = HB_FALSE, fBlock = HB_FALSE, fGlobal = HB_FALSE;
+   bool fStatic = false;
+   bool fBlock = false;
+   bool fGlobal = false;
    PHB_HVAR pVar = nullptr;
    int iPos = 0, iScope = 0, iLevel = 0;
 
@@ -772,7 +774,7 @@ PHB_HVAR hb_compVariableFind(HB_COMP_DECL, const char * szVarName, int * piPos, 
       if( (pFunc->cScope & HB_FS_INITEXIT) == HB_FS_INITEXIT )
       {
          /* static initialization function */
-         fStatic = HB_TRUE;
+         fStatic = true;
       }
       else if( pFunc->szName )
       {
@@ -871,7 +873,7 @@ PHB_HVAR hb_compVariableFind(HB_COMP_DECL, const char * szVarName, int * piPos, 
       else
       {
          /* codeblock */
-         fBlock = HB_TRUE;
+         fBlock = true;
          /* check local parameters */
          pVar = hb_compVariableGet(pFunc->pLocals, szVarName, piPos);
          if( pVar )
@@ -932,7 +934,7 @@ PHB_HVAR hb_compVariableFind(HB_COMP_DECL, const char * szVarName, int * piPos, 
           * [druzus]
           */
          pFunc = pGlobal;
-         fGlobal = HB_TRUE;
+         fGlobal = true;
       }
       ++iLevel;
    }
@@ -1505,7 +1507,7 @@ static void hb_compOptimizeJumps(HB_COMP_DECL)
    HB_BYTE * pCode = HB_COMP_PARAM->functions.pLast->pCode;
    HB_SIZE * pNOOPs, * pJumps;
    HB_SIZE nOptimized, nNextByte, nBytes2Copy, nJumpAddr, nNOOP, nJump;
-   HB_BOOL fLineStrip = HB_COMP_PARAM->fLineNumbers;
+   bool fLineStrip = HB_COMP_PARAM->fLineNumbers;
 
    if( !HB_COMP_ISSUPPORTED(HB_COMPFLAG_OPTJUMP) )
    {
@@ -1522,7 +1524,7 @@ static void hb_compOptimizeJumps(HB_COMP_DECL)
       if( iPass == 3 && fLineStrip )
       {
          hb_compStripFuncLines(HB_COMP_PARAM, HB_COMP_PARAM->functions.pLast);
-         fLineStrip = HB_FALSE;
+         fLineStrip = false;
       }
 
       if( HB_COMP_PARAM->functions.pLast->nJumps > 0 )
