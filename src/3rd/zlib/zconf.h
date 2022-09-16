@@ -174,18 +174,7 @@
 #if defined(_WINDOWS) && !defined(WINDOWS)
 #  define WINDOWS
 #endif
-#if defined(__CEGCC__) || defined(__MINGW32CE__) || \
-    defined(UNDER_CE) || defined(_WIN32_WCE)
-#  ifndef _WINCE
-#    define _WINCE
-#  endif
-#endif
-#if defined(_WINCE)
-#  ifndef NO_ERRNO_H
-#    define NO_ERRNO_H
-#  endif
-#endif
-#if defined(_WIN32) || defined(_WINCE) || defined(__WIN32__)
+#if defined(_WIN32) || defined(_WIN32_WCE) || defined(__WIN32__)
 #  ifndef WIN32
 #    define WIN32
 #  endif
@@ -380,16 +369,6 @@
 #    else
 #      define ZEXPORT   __declspec(dllimport)
 #      define ZEXPORTVA __declspec(dllimport)
-#    endif
-#  endif
-#endif
-
-#if ( defined(__OS2__) || defined(__DOS__) ) && defined(__WATCOMC__)
-#  ifdef ZLIB_DLL
-#    ifdef ZLIB_INTERNAL
-#      define ZEXTERN   extern __declspec(dllexport)
-#    else
-#      define ZEXPORT   extern __declspec(dllimport)
 #    endif
 #  endif
 #endif

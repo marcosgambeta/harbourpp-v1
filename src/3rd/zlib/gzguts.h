@@ -1,5 +1,5 @@
 /* gzguts.h -- zlib internal header definitions for gz* operations
- * Copyright (C) 2004, 2005, 2010, 2011, 2012, 2013, 2016 Mark Adler
+ * Copyright (C) 2004-2019 Mark Adler
  * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
@@ -35,12 +35,11 @@
 #  include <stddef.h>
 #endif
 
-#if defined(__TURBOC__) || defined(_MSC_VER) || defined(_WIN32) || \
-    defined(__XCC__) || defined(__POCC__)
+#if defined(__TURBOC__) || defined(_MSC_VER) || defined(_WIN32)
 #  include <io.h>
 #endif
 
-#if defined(_WIN32) || defined(__CYGWIN__)
+#if defined(_WIN32)
 #  define WIDECHAR
 #endif
 
@@ -55,8 +54,7 @@
 #  define NO_GZCOMPRESS
 #endif
 
-#if defined(STDC99) || (defined(__TURBOC__) && __TURBOC__ >= 0x550) || \
-    defined(__WATCOMC__)
+#if defined(STDC99) || (defined(__TURBOC__) && __TURBOC__ >= 0x550)
 #  ifndef HAVE_VSNPRINTF
 #    define HAVE_VSNPRINTF
 #  endif
@@ -192,6 +190,7 @@ typedef struct {
         /* just for writing */
     int level;              /* compression level */
     int strategy;           /* compression strategy */
+    int reset;              /* true if a reset is pending after a Z_FINISH */
         /* seek request */
     z_off64_t skip;         /* amount to skip (already rewound if backwards) */
     int seek;               /* true if seek request pending */
