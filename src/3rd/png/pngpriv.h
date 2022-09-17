@@ -69,7 +69,7 @@
  * before png.h is included, but load the configuration now if it is available.
  */
 #ifndef PNGLCONF_H
-#  include "pnglconf.h"
+#  include "pnglibconf.h"
 #endif
 
 /* Local renames may change non-exported API functions from png.h */
@@ -806,7 +806,7 @@
  */
 #ifndef PNG_VERSION_INFO_ONLY
 
-#include "pngstru.h"
+#include "pngstruct.h"
 #include "pnginfo.h"
 
 /* Validate the include paths - the include path used to generate pnglibconf.h
