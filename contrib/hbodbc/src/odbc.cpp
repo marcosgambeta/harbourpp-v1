@@ -438,7 +438,7 @@ HB_FUNC( SQLDRIVERCONNECT )  /* hDbc, @cConnectString --> nRetCode */
 
       hb_strfree(hConnStr);
 
-      O_HB_STORSTR(static_cast<O_HB_CHAR*>(buffer), 3);
+      O_HB_STORSTR(reinterpret_cast<O_HB_CHAR*>(buffer), 3);
 
       hb_retni(ret);
    }
@@ -872,7 +872,7 @@ HB_FUNC( SQLDESCRIBECOL )  /* hStmt, nCol, @cName, nLen, @nBufferLen, @nDataType
                               static_cast<SQLSMALLINT*>(&iDecimals),
                               static_cast<SQLSMALLINT*>(&iNullable)));
 
-      O_HB_STORSTRLEN(static_cast<O_HB_CHAR*>(buffer), static_cast<HB_SIZE>(iBufLen), 3);
+      O_HB_STORSTRLEN(reinterpret_cast<O_HB_CHAR*>(buffer), static_cast<HB_SIZE>(iBufLen), 3);
       hb_storni(static_cast<int>(iBufLen), 5);
       hb_storni(static_cast<int>(iDataType), 6);
       hb_stornint(nColSize, 7);
@@ -967,9 +967,9 @@ HB_FUNC( SQLERROR )  /* hEnv, hDbc, hStmt, @cErrorClass, @nType, @cErrorMsg */
                         static_cast<SQLSMALLINT>(HB_SIZEOFARRAY(szErrorMsg)),
                         static_cast<SQLSMALLINT*>(&iLen)));
 
-      O_HB_STORSTR(static_cast<O_HB_CHAR*>(buffer), 4);
+      O_HB_STORSTR(reinterpret_cast<O_HB_CHAR*>(buffer), 4);
       hb_stornl(static_cast<long>(lError), 5);
-      O_HB_STORSTRLEN(static_cast<O_HB_CHAR*>(szErrorMsg), iLen, 6);
+      O_HB_STORSTRLEN(reinterpret_cast<O_HB_CHAR*>(szErrorMsg), iLen, 6);
    }
    else
    {
@@ -1018,9 +1018,9 @@ HB_FUNC( SQLGETDIAGREC )  /* nHandleType, hHandle, nRecNumber, @cSQLState, @nErr
                              static_cast<SQLSMALLINT>(HB_SIZEOFARRAY(szErrorMsg)),
                              static_cast<SQLSMALLINT*>(&iLen)));
 
-      O_HB_STORSTR(static_cast<O_HB_CHAR*>(szSQLState), 4);
+      O_HB_STORSTR(reinterpret_cast<O_HB_CHAR*>(szSQLState), 4);
       hb_stornl(static_cast<long>(lError), 5);
-      O_HB_STORSTRLEN(static_cast<O_HB_CHAR*>(szErrorMsg), iLen, 6);
+      O_HB_STORSTRLEN(reinterpret_cast<O_HB_CHAR*>(szErrorMsg), iLen, 6);
    }
    else
    {
