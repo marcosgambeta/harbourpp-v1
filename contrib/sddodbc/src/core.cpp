@@ -201,7 +201,7 @@ static char * odbcGetError(SQLHENV hEnv, SQLHDBC hConn, SQLHSTMT hStmt, HB_ERRCO
 
       szError[5] = ' ';
 
-      pRet  = O_HB_ITEMPUTSTR(nullptr, static_cast<O_HB_CHAR*>(szError));
+      pRet  = O_HB_ITEMPUTSTR(nullptr, reinterpret_cast<O_HB_CHAR*>(szError));
       szRet = hb_strdup( hb_itemGetCPtr(pRet) );
       hb_itemRelease(pRet);
    }
