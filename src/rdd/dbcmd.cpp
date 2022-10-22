@@ -2580,6 +2580,65 @@ HB_FUNC( HB_FIELDTYPE )
    hb_retc_null();
 }
 
+HB_FUNC( HB_FIELDGET )
+{
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+
+   if( pArea != nullptr )
+   {
+      HB_USHORT uiField;
+      const char * szField = hb_parc(1);
+
+      if( szField )
+      {
+         uiField = hb_rddFieldIndex(pArea, szField);
+      }
+      else
+      {
+         uiField = static_cast<HB_FIELDNO>(hb_parni(1));
+      }
+
+      if( uiField > 0 )
+      {
+         PHB_ITEM pItem = hb_itemNew(nullptr);
+         SELF_GETVALUE(pArea, uiField, pItem);
+         hb_itemReturnRelease(pItem);
+      }
+   }
+}
+
+HB_FUNC( HB_FIELDPUT )
+{
+   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+
+   if( pArea != nullptr )
+   {
+      HB_USHORT uiField;
+      const char * szField = hb_parc(1);
+
+      if( szField )
+      {
+         uiField = hb_rddFieldIndex(pArea, szField);
+      }
+      else
+      {
+         uiField = static_cast<HB_FIELDNO>(hb_parni(1));
+      }
+
+      if( uiField > 0 )
+      {
+         PHB_ITEM pItem = hb_param(2, Harbour::Item::ANY);
+         if( pItem && !HB_IS_NIL(pItem) )
+         {
+            if( SELF_PUTVALUE(pArea, uiField, pItem) == HB_SUCCESS )
+            {
+               hb_itemReturn(pItem);
+            }
+         }
+      }
+   }
+}
+
 HB_FUNC( HB_WAEVAL )
 {
    PHB_ITEM pBlock = hb_param(1, Harbour::Item::BLOCK);
