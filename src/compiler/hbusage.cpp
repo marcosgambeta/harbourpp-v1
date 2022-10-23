@@ -45,6 +45,7 @@
  */
 
 #include "hbcomp.h"
+#include <string>
 
 void hb_compPrintUsage(HB_COMP_DECL, const char * szSelf)
 {
@@ -101,10 +102,11 @@ void hb_compPrintUsage(HB_COMP_DECL, const char * szSelf)
       "\n          @<file>          compile list of modules in <file>",
       "\n"
    };
-   char buffer[256];
-
-   hb_snprintf(buffer, sizeof(buffer), "\nSyntax:  %s <file[s][.prg]|@file> [options]\n", szSelf);
-   hb_compOutStd(HB_COMP_PARAM, buffer);
+   std::string buffer;
+   buffer.append("\nSyntax:  ");
+   buffer.append(szSelf);
+   buffer.append(" <file[s][.prg]|@file> [options]\n");
+   hb_compOutStd(HB_COMP_PARAM, buffer.data());
 
    for( int iLine = 0; iLine < static_cast<int>(HB_SIZEOFARRAY(s_szOptions)); iLine++ )
    {
