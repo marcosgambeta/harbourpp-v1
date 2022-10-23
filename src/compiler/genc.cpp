@@ -23,6 +23,7 @@
 #include "hbcomp.h"
 #include "hbdate.h"
 #include "hbassert.h"
+#include <string>
 
 static void hb_compGenCReadable(HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc);
 static void hb_compGenCCompact(PHB_HFUNC pFunc, FILE * yyc);
@@ -208,9 +209,11 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName)       /* generates the C
 
    if( !HB_COMP_PARAM->fQuiet )
    {
-      char buffer[80 + HB_PATH_MAX - 1];
-      hb_snprintf(buffer, sizeof(buffer), "Generating C++ source output to \'%s\'... ", szFileName);
-      hb_compOutStd(HB_COMP_PARAM, buffer);
+      std::string buffer;
+      buffer.append("Generating C++ source output to '");
+      buffer.append(szFileName);
+      buffer.append("'... ");
+      hb_compOutStd(HB_COMP_PARAM, buffer.data());
    }
 
    {
