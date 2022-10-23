@@ -46,6 +46,7 @@
 
 #include "hbcomp.h"
 #include "hbset.h"
+#include <string>
 
 static char s_szUndefineMarker[1] = "";
 
@@ -122,9 +123,11 @@ static const char * hb_compChkAddDefine(HB_COMP_DECL, const char * szSwitch, boo
 
 static void hb_compChkIgnoredInfo(HB_COMP_DECL, const char * szSwitch)
 {
-   char buffer[64];
-   hb_snprintf(buffer, sizeof(buffer), "Ignored unsupported command-line option: %s\n", szSwitch);
-   hb_compOutStd(HB_COMP_PARAM, buffer);
+   std::string buffer;
+   buffer.append("Ignored unsupported command-line option: ");
+   buffer.append(szSwitch);
+   buffer.append("\n");
+   hb_compOutStd(HB_COMP_PARAM, buffer.data());
 }
 
 static char * hb_compChkOptionDup(const char * szSwitch)
