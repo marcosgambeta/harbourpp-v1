@@ -1604,6 +1604,7 @@ DYNAMIC __TypeFile
 DYNAMIC __vmCountThreads
 DYNAMIC __vmItemID
 DYNAMIC __vmItemRefs
+DYNAMIC __vmKeyPool
 DYNAMIC __vmModulesVerify
 DYNAMIC __vmNoInternals
 DYNAMIC __Wait

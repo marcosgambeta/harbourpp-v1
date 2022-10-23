@@ -1935,6 +1935,7 @@ HB_FUN___TYPEFILE
 HB_FUN___VMCOUNTTHREADS
 HB_FUN___VMITEMID
 HB_FUN___VMITEMREFS
+HB_FUN___VMKEYPOOL
 HB_FUN___VMMODULESVERIFY
 HB_FUN___VMNOINTERNALS
 HB_FUN___WAIT
@@ -3580,6 +3581,7 @@ hb_vmResumeThreads
 hb_vmSend
 hb_vmSetCDP
 hb_vmSetDefaultGT
+hb_vmSetKeyPool
 hb_vmSetLang
 hb_vmSetLinkedMain
 hb_vmSuspendThreads
