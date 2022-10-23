@@ -23,6 +23,7 @@
  */
 
 #include "hbcomp.h"
+#include <string>
 
 #define SYM_NOLINK    0             /* symbol does not have to be linked */
 #define SYM_FUNC      1             /* function defined in this module   */
@@ -161,9 +162,11 @@ void hb_compGenPortObj(HB_COMP_DECL, PHB_FNAME pFileName)
 
    if( !HB_COMP_PARAM->fQuiet )
    {
-      char buffer[80 + HB_PATH_MAX - 1];
-      hb_snprintf(buffer, sizeof(buffer), "Generating Harbour Portable Object output to \'%s\'... ", szFileName);
-      hb_compOutStd(HB_COMP_PARAM, buffer);
+      std::string buffer;
+      buffer.append("Generating Harbour Portable Object output to '");
+      buffer.append(szFileName);
+      buffer.append("'... ");
+      hb_compOutStd(HB_COMP_PARAM, buffer.data());
    }
 
    hb_compGenBufPortObj(HB_COMP_PARAM, &pHrbBody, &nSize);
