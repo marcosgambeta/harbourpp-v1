@@ -44,12 +44,17 @@
  *
  */
 
-#include "hbcomp.h"
 #include <string>
+#include <array>
+#include "hbcomp.h"
 
 void hb_compPrintUsage(HB_COMP_DECL, const char * szSelf)
 {
-   static const char * s_szOptions[] =
+#ifdef YYDEBUG
+   std::array<std::string, 46> options =
+#else
+   std::array<std::string, 45> options =
+#endif
    {
       "\nOptions:  -a               automatic memvar declaration",
       "\n          -b               debug info",
@@ -108,16 +113,16 @@ void hb_compPrintUsage(HB_COMP_DECL, const char * szSelf)
    buffer.append(" <file[s][.prg]|@file> [options]\n");
    hb_compOutStd(HB_COMP_PARAM, buffer.data());
 
-   for( int iLine = 0; iLine < static_cast<int>(HB_SIZEOFARRAY(s_szOptions)); iLine++ )
+   for( auto option : options )
    {
-      hb_compOutStd(HB_COMP_PARAM, s_szOptions[iLine]);
+      hb_compOutStd(HB_COMP_PARAM, option.data());
    }
 }
 
 /* List of compatibility/features modes */
 void hb_compPrintModes(HB_COMP_DECL)
 {
-   static const char * s_szOptions[] =
+   std::array<std::string, 13> options =
    {
       "\nOptions:  c               clear all flags (strict Clipper mode)",
       "\n          h[-]            Harbour mode",
@@ -133,7 +138,7 @@ void hb_compPrintModes(HB_COMP_DECL)
       "\n          ?               this info",
       "\n"
    };
-   static const int s_flags[] =
+   std::array<int, 11> flags =
    {
       0,
       HB_COMPFLAG_HARBOUR,
@@ -150,10 +155,10 @@ void hb_compPrintModes(HB_COMP_DECL)
 
    hb_compOutStd(HB_COMP_PARAM, "\nCompatibility flags: -k[options]\n");
 
-   for( int iLine = 0; iLine < static_cast<int>(HB_SIZEOFARRAY(s_szOptions)); iLine++ )
+   for( unsigned int iLine = 0; iLine < options.size(); iLine++ )
    {
-      hb_compOutStd(HB_COMP_PARAM, s_szOptions[iLine]);
-      if( iLine < static_cast<int>(HB_SIZEOFARRAY(s_flags)) && (s_flags[iLine] < 0 ? HB_COMP_ISSUPPORTED(~s_flags[iLine]) == 0 : HB_COMP_ISSUPPORTED(s_flags[iLine]) != 0) )
+      hb_compOutStd(HB_COMP_PARAM, options.at(iLine).data());
+      if( iLine < flags.size() && (flags.at(iLine) < 0 ? HB_COMP_ISSUPPORTED(~flags.at(iLine)) == 0 : HB_COMP_ISSUPPORTED(flags.at(iLine)) != 0) )
       {
          hb_compOutStd(HB_COMP_PARAM, " (default)");
       }
