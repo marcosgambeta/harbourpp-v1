@@ -18,7 +18,7 @@
  * Include necessary headers...
  */
 
-#include "mxml_private.h"
+#include "mxml-private.h"
 
 
 /*
