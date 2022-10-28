@@ -1,9 +1,7 @@
 /*
- * "$Id: mxml.h 451 2014-01-04 21:50:06Z msweet $"
+ * Header file for Mini-XML, a small XML file parsing library.
  *
- * Header file for Mini-XML, a small XML-like file parsing library.
- *
- * Copyright 2003-2014 by Michael R Sweet.
+ * Copyright 2003-2017 by Michael R Sweet.
  *
  * These coded instructions, statements, and computer programs are the
  * property of Michael R Sweet and are protected by Federal copyright
@@ -11,7 +9,7 @@
  * which should have been included with this file.  If this file is
  * missing or damaged, see the license at:
  *
- *     http://www.msweet.org/projects.php/Mini-XML
+ *     https://michaelrsweet.github.io/mxml
  */
 
 /*
@@ -29,23 +27,15 @@
 #  include <stdlib.h>
 #  include <string.h>
 #  include <ctype.h>
-#  if defined( UNDER_CE ) || defined( __CEGCC__ ) || defined( __MINGW32CE__ ) || \
-      defined( _WINCE )
-#     include <io.h>
-#     if !defined( UNDER_CE )
-#        define UNDER_CE
-#     endif
-#     define strerror(e)      ""
-#  else
-#     include <errno.h>
-#  endif
+#  include <errno.h>
+
 
 /*
  * Constants...
  */
 
 #  define MXML_MAJOR_VERSION	2	/* Major version number */
-#  define MXML_MINOR_VERSION	8	/* Minor version number */
+#  define MXML_MINOR_VERSION	12	/* Minor version number */
 
 #  define MXML_TAB		8	/* Tabs every N columns */
 
@@ -206,6 +196,8 @@ extern void		mxmlDelete(mxml_node_t *node);
 extern void		mxmlElementDeleteAttr(mxml_node_t *node,
 			                      const char *name);
 extern const char	*mxmlElementGetAttr(mxml_node_t *node, const char *name);
+extern const char       *mxmlElementGetAttrByIndex(mxml_node_t *node, int idx, const char **name);
+extern int              mxmlElementGetAttrCount(mxml_node_t *node);
 extern void		mxmlElementSetAttr(mxml_node_t *node, const char *name,
 			                   const char *value);
 extern void		mxmlElementSetAttrf(mxml_node_t *node, const char *name,
@@ -219,7 +211,7 @@ extern const char	*mxmlEntityGetName(int val);
 extern int		mxmlEntityGetValue(const char *name);
 extern void		mxmlEntityRemoveCallback(mxml_entity_cb_t cb);
 extern mxml_node_t	*mxmlFindElement(mxml_node_t *node, mxml_node_t *top,
-			                 const char *name, const char *attr,
+			                 const char *element, const char *attr,
 					 const char *value, int descend);
 extern mxml_node_t	*mxmlFindPath(mxml_node_t *node, const char *path);
 extern const char	*mxmlGetCDATA(mxml_node_t *node);
@@ -258,11 +250,14 @@ extern mxml_node_t	*mxmlNewCustom(mxml_node_t *parent, void *data,
 extern mxml_node_t	*mxmlNewElement(mxml_node_t *parent, const char *name);
 extern mxml_node_t	*mxmlNewInteger(mxml_node_t *parent, int integer);
 extern mxml_node_t	*mxmlNewOpaque(mxml_node_t *parent, const char *opaque);
+extern mxml_node_t	*mxmlNewOpaquef(mxml_node_t *parent, const char *format, ...)
+#    ifdef __GNUC__
+__attribute__ ((__format__ (__printf__, 2, 3)))
+#    endif /* __GNUC__ */
+;
 extern mxml_node_t	*mxmlNewReal(mxml_node_t *parent, double real);
-extern mxml_node_t	*mxmlNewText(mxml_node_t *parent, int whitespace,
-			             const char *string);
-extern mxml_node_t	*mxmlNewTextf(mxml_node_t *parent, int whitespace,
-			              const char *format, ...)
+extern mxml_node_t	*mxmlNewText(mxml_node_t *parent, int whitespace, const char *string);
+extern mxml_node_t	*mxmlNewTextf(mxml_node_t *parent, int whitespace, const char *format, ...)
 #    ifdef __GNUC__
 __attribute__ ((__format__ (__printf__, 3, 4)))
 #    endif /* __GNUC__ */
@@ -297,6 +292,11 @@ extern int		mxmlSetElement(mxml_node_t *node, const char *name);
 extern void		mxmlSetErrorCallback(mxml_error_cb_t cb);
 extern int		mxmlSetInteger(mxml_node_t *node, int integer);
 extern int		mxmlSetOpaque(mxml_node_t *node, const char *opaque);
+extern int		mxmlSetOpaquef(mxml_node_t *node, const char *format, ...)
+#    ifdef __GNUC__
+__attribute__ ((__format__ (__printf__, 2, 3)))
+#    endif /* __GNUC__ */
+;
 extern int		mxmlSetReal(mxml_node_t *node, double real);
 extern int		mxmlSetText(mxml_node_t *node, int whitespace,
 			            const char *string);
@@ -333,8 +333,3 @@ extern mxml_type_t	mxml_real_cb(mxml_node_t *node);
 }
 #  endif /* __cplusplus */
 #endif /* !_mxml_h_ */
-
-
-/*
- * End of "$Id: mxml.h 451 2014-01-04 21:50:06Z msweet $".
- */

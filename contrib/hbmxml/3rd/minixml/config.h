@@ -1,9 +1,7 @@
 /*
- * "$Id: config.h.in 451 2014-01-04 21:50:06Z msweet $"
+ * Configuration file for Mini-XML, a small XML file parsing library.
  *
- * Configuration file for Mini-XML, a small XML-like file parsing library.
- *
- * Copyright 2003-2014 by Michael R Sweet.
+ * Copyright 2003-2017 by Michael R Sweet.
  *
  * These coded instructions, statements, and computer programs are the
  * property of Michael R Sweet and are protected by Federal copyright
@@ -11,116 +9,101 @@
  * which should have been included with this file.  If this file is
  * missing or damaged, see the license at:
  *
- *     http://www.msweet.org/projects.php/Mini-XML
+ *     https://michaelrsweet.github.io/mxml
  */
 
 /*
  * Include necessary headers...
  */
 
-#define _CRT_SECURE_NO_DEPRECATE
-#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdarg.h>
+#include <ctype.h>
 
-#include "hbdefs.h"
-#include "hb_io.h"
-
-#include "hbapi.h"
-#define HAVE_SNPRINTF 1
-#undef snprintf
-#define snprintf hb_snprintf
-
-#define HAVE_VSNPRINTF 1
-#undef vsnprintf
-#define vsnprintf hb_vsnprintf
-
-#if defined ( _MSC_VER )
-#define close      _close
-#define open       _open
-#define read       _read
-/* #define snprintf   _snprintf */
-#define strdup     _strdup
-/* #define vsnprintf  _vsnprintf */
-#define write      _write
-#endif
 
 /*
  * Version number...
  */
 
-#define MXML_VERSION "Mini-XML v2.7"
+#define MXML_VERSION	"Mini-XML v2.12"
 
 
 /*
  * Inline function support...
  */
 
-#define inline _HB_INLINE_
+#define inline
 
 
 /*
  * Long long support...
  */
 
-#ifndef __BORLANDC__
 #define HAVE_LONG_LONG 1
-#endif
 
 
 /*
- * Do we have the snprintf() and vsnprintf() functions?
+ * Do we have <zlib.h>?
  */
 
-/* #define HAVE_SNPRINTF 1 */
-/* #define HAVE_VSNPRINTF 1 */
+#undef HAVE_ZLIB_H
+
+
+/*
+ * Do we have the *printf() functions?
+ */
+
+#define HAVE_SNPRINTF 1
+#undef HAVE_VASPRINTF
+#define HAVE_VSNPRINTF 1
 
 
 /*
  * Do we have the strXXX() functions?
  */
 
-/* #define HAVE_STRDUP 1 */
+#define HAVE_STRDUP 1
+#define HAVE_STRLCAT 1
+#define HAVE_STRLCPY 1
 
 
 /*
  * Do we have threading support?
  */
 
-/* #undef HAVE_PTHREAD_H */
+#undef HAVE_PTHREAD_H
 
 
 /*
  * Define prototypes for string functions as needed...
  */
 
-#  ifdef __cplusplus
-extern "C" {
-#  endif /* __cplusplus */
-
 #  ifndef HAVE_STRDUP
 extern char	*_mxml_strdup(const char *);
-#    undef strdup
 #    define strdup _mxml_strdup
 #  endif /* !HAVE_STRDUP */
+
+#  ifndef HAVE_STRLCAT
+extern size_t	_mxml_strlcat(char *, const char *, size_t);
+#    define strlcat _mxml_strlcat
+#  endif /* !HAVE_STRLCAT */
+
+#  ifndef HAVE_STRLCPY
+extern size_t	_mxml_strlcpy(char *, const char *, size_t);
+#    define strlcpy _mxml_strlcpy
+#  endif /* !HAVE_STRLCPY */
 
 extern char	*_mxml_strdupf(const char *, ...);
 extern char	*_mxml_vstrdupf(const char *, va_list);
 
 #  ifndef HAVE_SNPRINTF
 extern int	_mxml_snprintf(char *, size_t, const char *, ...);
-#    undef snprintf
 #    define snprintf _mxml_snprintf
 #  endif /* !HAVE_SNPRINTF */
 
 #  ifndef HAVE_VSNPRINTF
 extern int	_mxml_vsnprintf(char *, size_t, const char *, va_list);
-#    undef vsnprintf
 #    define vsnprintf _mxml_vsnprintf
 #  endif /* !HAVE_VSNPRINTF */
-
-#  ifdef __cplusplus
-}
-#  endif /* __cplusplus */
-
-/*
- * End of "$Id: config.h.in 451 2014-01-04 21:50:06Z msweet $".
- */
