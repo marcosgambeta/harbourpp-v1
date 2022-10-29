@@ -50,6 +50,6 @@ FUNCTION __Input( xPrompt )
 
    LOCAL cString := __Accept( xPrompt )
 
-   RETURN iif( Empty( cString ), NIL, &cString )
+   RETURN iif( Empty(cString), NIL, &cString )
 
 #endif

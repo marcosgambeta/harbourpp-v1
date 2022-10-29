@@ -46,8 +46,8 @@
 
 PROCEDURE DevOutPict( xValue, cPicture, cColor )
 
-   IF ValType( xValue ) $ "CMNDTL"
-      DevOut( Transform( xValue, cPicture ), cColor )
+   IF ValType(xValue) $ "CMNDTL"
+      DevOut(Transform(xValue, cPicture), cColor)
    ENDIF
 
    RETURN

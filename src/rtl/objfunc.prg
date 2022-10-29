@@ -94,7 +94,7 @@ FUNCTION __objGetMsgList( oObject, lDataMethod, nClassType )
          /* Find position of matching set function in array with all symbols */
          /* If found: DATA, else: METHOD */
          IF ( AScan( aInfo, {| tmp | tmp == ( "_" + cName ) }, nFirst ) > 0 ) == lDataMethod
-            AAdd( aData, cName )
+            AAdd(aData, cName)
          ENDIF
       ENDIF
    NEXT
@@ -123,7 +123,7 @@ FUNCTION __objGetValueList( oObject, aExcept )
    aData := {}
    FOR EACH cSymbol IN __objGetMsgList( oObject )
       IF hb_AScan( aExcept, cSymbol,,, .T. ) == 0
-         AAdd( aData, { cSymbol, __objSendMsg( oObject, cSymbol ) } )
+         AAdd(aData, { cSymbol, __objSendMsg( oObject, cSymbol ) })
       ENDIF
    NEXT
 

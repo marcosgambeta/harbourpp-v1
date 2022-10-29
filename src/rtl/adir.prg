@@ -69,32 +69,32 @@ FUNCTION ADir( cFileMask, aName, aSize, aDate, aTime, aAttr )
 
    hb_FNameSplit( cFileMask, @cDir, @cName, @cExt )
 
-   IF Empty( cDir )
+   IF Empty(cDir)
       cFileMask := hb_FNameMerge( __DefPath(), cName, cExt )
    ENDIF
 
    //
 
    IF HB_ISARRAY( aName )
-      nNameLen := Len( aName )
+      nNameLen := Len(aName)
    ENDIF
    IF HB_ISARRAY( aSize )
-      nSizeLen := Len( aSize )
+      nSizeLen := Len(aSize)
    ENDIF
    IF HB_ISARRAY( aDate )
-      nDateLen := Len( aDate )
+      nDateLen := Len(aDate)
    ENDIF
    IF HB_ISARRAY( aTime )
-      nTimeLen := Len( aTime )
+      nTimeLen := Len(aTime)
    ENDIF
    IF HB_ISARRAY( aAttr )
-      nAttrLen := Len( aAttr )
+      nAttrLen := Len(aAttr)
    ENDIF
 
    //
 
    aDir := Directory( cFileMask, iif( HB_ISARRAY( aAttr ), "HSD", ) )
-   nDirLen := Len( aDir )
+   nDirLen := Len(aDir)
 
    FOR nDirPos := 1 TO nDirLen
 

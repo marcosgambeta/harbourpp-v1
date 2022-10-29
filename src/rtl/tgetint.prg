@@ -99,7 +99,7 @@ FUNCTION __GetA( bGetArray, cVarName, cPicture, bValid, bWhen, aIndex )
       ENDIF
    ENDIF
 
-   IF ! ValType( Eval( bGetArray ) ) $ "AH"
+   IF ! ValType(Eval( bGetArray )) $ "AH"
       RETURN NIL
    ENDIF
 

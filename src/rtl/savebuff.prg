@@ -48,7 +48,7 @@
 
 FUNCTION __XSaveGetChar( cSaveScreen, nPos )
    RETURN iif( hb_gtInfo( HB_GTI_COMPATBUFFER ), ;
-      Chr( hb_BPeek( cSaveScreen, nPos * 2 + 1 ) ), ;
+      Chr(hb_BPeek( cSaveScreen, nPos * 2 + 1 )), ;
       hb_UChar( hb_BPeek( cSaveScreen, nPos * 4 + 2 ) * 256 + hb_BPeek( cSaveScreen, nPos * 4 + 1 ) ) )
 
 FUNCTION __XSaveGetColor( cSaveScreen, nPos )

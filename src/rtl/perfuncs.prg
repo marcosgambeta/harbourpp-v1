@@ -50,9 +50,9 @@ FUNCTION hb_SetObject( oSelf, bConstructor )
 
    IF t_aObjects == NIL
       t_aObjects := {}
-      AAdd( t_aObjects, oSelf )
+      AAdd(t_aObjects, oSelf)
    ELSE
-      AAdd( t_aObjects, oSelf := Eval( bConstructor ) )
+      AAdd(t_aObjects, oSelf := Eval( bConstructor ))
    ENDIF
 
    RETURN oSelf
@@ -61,8 +61,8 @@ FUNCTION hb_EndObject()
 
    LOCAL oSelf
 
-   IF Len( t_aObjects ) > 1
-      ASize( t_aObjects, Len( t_aObjects ) - 1 )
+   IF Len(t_aObjects) > 1
+      ASize( t_aObjects, Len(t_aObjects) - 1 )
       oSelf := ATail( t_aObjects )
    ELSE
       oSelf := t_aObjects[ 1 ]

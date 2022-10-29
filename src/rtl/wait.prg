@@ -53,7 +53,7 @@ FUNCTION __Wait( xPrompt )
    LOCAL bBlock
 
    /* TODO: Here we can use Lang API to localize default message */
-   QOut( iif( xPrompt == NIL, "Press any key to continue...", xPrompt ) )
+   QOut(iif( xPrompt == NIL, "Press any key to continue...", xPrompt ))
 
    DO WHILE .T.
 
@@ -63,10 +63,10 @@ FUNCTION __Wait( xPrompt )
          Eval( bBlock, ProcName( 1 ), ProcLine( 1 ), "" )
       ELSE
          cKey := hb_keyChar( nKey )
-         IF Len( cKey ) > 0
-            QQOut( cKey )
+         IF Len(cKey) > 0
+            QQOut(cKey)
          ELSE
-            cKey := Chr( 0 )
+            cKey := Chr(0)
          ENDIF
 
          EXIT

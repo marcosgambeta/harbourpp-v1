@@ -77,7 +77,7 @@ FUNCTION Browse( nTop, nLeft, nBottom, nRight )
    hb_DispBox( nTop, nLeft, nBottom, nRight, HB_B_DOUBLE_SINGLE_UNI )
    hb_DispOutAtBox( nTop + 3, nLeft, hb_UTF8ToStrBox( "╞" ) )
    hb_DispOutAtBox( nTop + 3, nRight, hb_UTF8ToStrBox( "╡" ) )
-   hb_DispOutAt( nTop + 1, nLeft + 1, Space( nRight - nLeft - 1 ) )
+   hb_DispOutAt(nTop + 1, nLeft + 1, Space(nRight - nLeft - 1))
 
    oBrw := TBrowseDB( nTop + 2, nLeft + 1, nBottom - 1, nRight - 1 )
    oBrw:HeadSep := " " + hb_UTF8ToStrBox( "═" )
@@ -290,18 +290,18 @@ STATIC PROCEDURE StatLine( oBrw, lAppend )
    LOCAL nRecNo := RecNo()
    LOCAL nLastRec := LastRec()
 
-   hb_DispOutAt( nTop, nRight - 27, "Record " )
+   hb_DispOutAt(nTop, nRight - 27, "Record ")
 
    IF nLastRec == 0 .AND. ! lAppend
-      hb_DispOutAt( nTop, nRight - 20, "<none>               " )
+      hb_DispOutAt(nTop, nRight - 20, "<none>               ")
    ELSEIF nRecNo == nLastRec + 1
-      hb_DispOutAt( nTop, nRight - 40, "         " )
-      hb_DispOutAt( nTop, nRight - 20, "                <new>" )
+      hb_DispOutAt(nTop, nRight - 40, "         ")
+      hb_DispOutAt(nTop, nRight - 20, "                <new>")
    ELSE
-      hb_DispOutAt( nTop, nRight - 40, iif( Deleted(), "<Deleted>", "         " ) )
-      hb_DispOutAt( nTop, nRight - 20, PadR( hb_ntos( nRecNo ) + "/" + ;
-         hb_ntos( nLastRec ), 16 ) + ;
-         iif( oBrw:HitTop, "<bof>", "     " ) )
+      hb_DispOutAt(nTop, nRight - 40, iif( Deleted(), "<Deleted>", "         " ))
+      hb_DispOutAt(nTop, nRight - 20, PadR(hb_ntos(nRecNo) + "/" + ;
+         hb_ntos(nLastRec), 16) + ;
+         iif( oBrw:HitTop, "<bof>", "     " ))
    ENDIF
 
    RETURN
@@ -323,7 +323,7 @@ STATIC FUNCTION DoGet( oBrw, lAppend )
    bIns := SetKey( K_INS, {|| SetCursor( iif( ReadInsert( ! ReadInsert() ), ;
       SC_NORMAL, SC_INSERT ) ) } )
    nCursor := SetCursor( iif( ReadInsert(), SC_INSERT, SC_NORMAL ) )
-   IF ! Empty( cIndexKey := IndexKey( 0 ) )
+   IF ! Empty(cIndexKey := IndexKey( 0 ))
       xKeyValue := Eval( bIndexKey := hb_macroBlock( cIndexKey ) )
    ENDIF
 
@@ -339,11 +339,11 @@ STATIC FUNCTION DoGet( oBrw, lAppend )
       ENDIF
       Eval( oCol:Block, xValue )
 
-      IF ! lAppend .AND. ! Empty( cForExp := ordFor( IndexOrd() ) ) .AND. ;
+      IF ! lAppend .AND. ! Empty(cForExp := ordFor( IndexOrd() )) .AND. ;
          ! Eval( hb_macroBlock( cForExp ) )
          dbGoTop()
       ENDIF
-      IF ! lAppend .AND. ! Empty( bIndexKey ) .AND. ! xKeyValue == Eval( bIndexKey )
+      IF ! lAppend .AND. ! Empty(bIndexKey) .AND. ! xKeyValue == Eval( bIndexKey )
          lSuccess := .T.
       ENDIF
    ENDIF

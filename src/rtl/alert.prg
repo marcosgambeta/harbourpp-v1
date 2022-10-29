@@ -48,31 +48,31 @@ FUNCTION Alert( cMessage, aOptions, cColorNorm )
       RETURN NIL
    ENDIF
 
-   cMessage := StrTran( cMessage, ";", Chr( 10 ) )
+   cMessage := StrTran(cMessage, ";", Chr(10))
 
-   IF ! HB_ISSTRING( cColorNorm ) .OR. Empty( cColorNorm )
+   IF ! HB_ISSTRING( cColorNorm ) .OR. Empty(cColorNorm)
       cColorNorm := "W+/R"  // first pair color (Box line and Text)
       cColorHigh := "W+/B"  // second pair color (Options buttons)
    ELSE
       cColorNorm := hb_ColorIndex( cColorNorm, CLR_STANDARD )
       cColorHigh := hb_StrReplace( ;
-         iif( ( nPos := At( "/", cColorNorm ) ) > 0, ;
-            SubStr( cColorNorm, nPos + 1 ) + "/" + Left( cColorNorm, nPos - 1 ), ;
+         iif( ( nPos := At("/", cColorNorm) ) > 0, ;
+            SubStr(cColorNorm, nPos + 1) + "/" + Left(cColorNorm, nPos - 1), ;
             "N/" + cColorNorm ), "+*" )
    ENDIF
 
    aOptionsOK := {}
    FOR EACH cOption IN hb_defaultValue( aOptions, {} )
-      IF HB_ISSTRING( cOption ) .AND. ! Empty( cOption )
-         AAdd( aOptionsOK, cOption )
+      IF HB_ISSTRING( cOption ) .AND. ! Empty(cOption)
+         AAdd(aOptionsOK, cOption)
       ENDIF
    NEXT
 
    DO CASE
-   CASE Len( aOptionsOK ) == 0
+   CASE Len(aOptionsOK) == 0
       aOptionsOK := { "Ok" }
 #ifdef HB_CLP_STRICT
-   CASE Len( aOptionsOK ) > 4  /* NOTE: Clipper allows only four options [vszakats] */
+   CASE Len(aOptionsOK) > 4  /* NOTE: Clipper allows only four options [vszakats] */
       ASize( aOptionsOK, 4 )
 #endif
    ENDCASE
@@ -110,37 +110,37 @@ FUNCTION hb_Alert( xMessage, aOptions, cColorNorm, nDelay )
    CASE HB_ISARRAY( xMessage )
       cMessage := ""
       FOR EACH cString IN xMessage
-         cMessage += iif( cString:__enumIsFirst(), "", Chr( 10 ) ) + hb_CStr( cString )
+         cMessage += iif( cString:__enumIsFirst(), "", Chr(10) ) + hb_CStr(cString)
       NEXT
    CASE HB_ISSTRING( xMessage )
-      cMessage := StrTran( xMessage, ";", Chr( 10 ) )
+      cMessage := StrTran(xMessage, ";", Chr(10))
    OTHERWISE
-      cMessage := hb_CStr( xMessage )
+      cMessage := hb_CStr(xMessage)
    ENDCASE
 
-   IF ! HB_ISSTRING( cColorNorm ) .OR. Empty( cColorNorm )
+   IF ! HB_ISSTRING( cColorNorm ) .OR. Empty(cColorNorm)
       cColorNorm := "W+/R"  // first pair color (Box line and Text)
       cColorHigh := "W+/B"  // second pair color (Options buttons)
    ELSE
       cColorNorm := hb_ColorIndex( cColorNorm, CLR_STANDARD )
       cColorHigh := hb_StrReplace( ;
-         iif( ( nPos := At( "/", cColorNorm ) ) > 0, ;
-            SubStr( cColorNorm, nPos + 1 ) + "/" + Left( cColorNorm, nPos - 1 ), ;
+         iif( ( nPos := At("/", cColorNorm) ) > 0, ;
+            SubStr(cColorNorm, nPos + 1) + "/" + Left(cColorNorm, nPos - 1), ;
             "N/" + cColorNorm ), "+*" )
    ENDIF
 
    aOptionsOK := {}
    FOR EACH cString IN hb_defaultValue( aOptions, {} )
-      IF HB_ISSTRING( cString ) .AND. ! Empty( cString )
-         AAdd( aOptionsOK, cString )
+      IF HB_ISSTRING( cString ) .AND. ! Empty(cString)
+         AAdd(aOptionsOK, cString)
       ENDIF
    NEXT
 
    DO CASE
-   CASE Len( aOptionsOK ) == 0
+   CASE Len(aOptionsOK) == 0
       aOptionsOK := { "Ok" }
 #ifdef HB_CLP_STRICT
-   CASE Len( aOptionsOK ) > 4  /* NOTE: Clipper allows only four options [vszakats] */
+   CASE Len(aOptionsOK) > 4  /* NOTE: Clipper allows only four options [vszakats] */
       ASize( aOptionsOK, 4 )
 #endif
    ENDCASE

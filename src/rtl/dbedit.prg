@@ -100,7 +100,7 @@ FUNCTION dbEdit( nTop, nLeft, nBottom, nRight, ;
    IF HB_ISARRAY( acColumns )
       nColCount := 0
       FOR EACH aCol IN acColumns
-         IF HB_ISSTRING( aCol ) .AND. ! Empty( aCol )
+         IF HB_ISSTRING( aCol ) .AND. ! Empty(aCol)
             nColCount++
          ELSE
             EXIT
@@ -120,9 +120,9 @@ FUNCTION dbEdit( nTop, nLeft, nBottom, nRight, ;
 
       IF HB_ISARRAY( acColumns )
          cBlock := acColumns[ nPos ]
-         IF ( nAliasPos := At( "->", cBlock ) ) > 0
-            cHeading := Left( cBlock, nAliasPos - 1 ) + "->;" + ;
-                        SubStr( cBlock, nAliasPos + 2 )
+         IF ( nAliasPos := At("->", cBlock) ) > 0
+            cHeading := Left(cBlock, nAliasPos - 1) + "->;" + ;
+                        SubStr(cBlock, nAliasPos + 2)
          ELSE
             cHeading := cBlock
          ENDIF
@@ -143,7 +143,7 @@ FUNCTION dbEdit( nTop, nLeft, nBottom, nRight, ;
       bBlock := iif( Type( cBlock ) == "M", {|| "  <Memo>  " }, hb_macroBlock( cBlock ) )
 
       DO CASE
-      CASE HB_ISARRAY( xColumnHeaders ) .AND. Len( xColumnHeaders ) >= nPos .AND. HB_ISSTRING( xColumnHeaders[ nPos ] )
+      CASE HB_ISARRAY( xColumnHeaders ) .AND. Len(xColumnHeaders) >= nPos .AND. HB_ISSTRING( xColumnHeaders[ nPos ] )
          cHeading := xColumnHeaders[ nPos ]
       CASE HB_ISSTRING( xColumnHeaders )
          cHeading := xColumnHeaders
@@ -152,28 +152,28 @@ FUNCTION dbEdit( nTop, nLeft, nBottom, nRight, ;
       oColumn := TBColumnNew( cHeading, bBlock )
 
       DO CASE
-      CASE HB_ISARRAY( xColumnSayPictures ) .AND. nPos <= Len( xColumnSayPictures ) .AND. HB_ISSTRING( xColumnSayPictures[ nPos ] ) .AND. ! Empty( xColumnSayPictures[ nPos ] )
+      CASE HB_ISARRAY( xColumnSayPictures ) .AND. nPos <= Len(xColumnSayPictures) .AND. HB_ISSTRING( xColumnSayPictures[ nPos ] ) .AND. ! Empty(xColumnSayPictures[ nPos ])
          oColumn:picture := xColumnSayPictures[ nPos ]
-      CASE HB_ISSTRING( xColumnSayPictures ) .AND. ! Empty( xColumnSayPictures )
+      CASE HB_ISSTRING( xColumnSayPictures ) .AND. ! Empty(xColumnSayPictures)
          oColumn:picture := xColumnSayPictures
       ENDCASE
 
       DO CASE
-      CASE HB_ISARRAY( xColumnFootings ) .AND. nPos <= Len( xColumnFootings ) .AND. HB_ISSTRING( xColumnFootings[ nPos ] )
+      CASE HB_ISARRAY( xColumnFootings ) .AND. nPos <= Len(xColumnFootings) .AND. HB_ISSTRING( xColumnFootings[ nPos ] )
          oColumn:footing := xColumnFootings[ nPos ]
       CASE HB_ISSTRING( xColumnFootings )
          oColumn:footing := xColumnFootings
       ENDCASE
 
-      IF HB_ISARRAY( xHeadingSeparators ) .AND. nPos <= Len( xHeadingSeparators ) .AND. HB_ISSTRING( xHeadingSeparators[ nPos ] )
+      IF HB_ISARRAY( xHeadingSeparators ) .AND. nPos <= Len(xHeadingSeparators) .AND. HB_ISSTRING( xHeadingSeparators[ nPos ] )
          oColumn:headSep := xHeadingSeparators[ nPos ]
       ENDIF
 
-      IF HB_ISARRAY( xColumnSeparators ) .AND. nPos <= Len( xColumnSeparators ) .AND. HB_ISSTRING( xColumnSeparators[ nPos ] )
+      IF HB_ISARRAY( xColumnSeparators ) .AND. nPos <= Len(xColumnSeparators) .AND. HB_ISSTRING( xColumnSeparators[ nPos ] )
          oColumn:colSep := xColumnSeparators[ nPos ]
       ENDIF
 
-      IF HB_ISARRAY( xFootingSeparators ) .AND. nPos <= Len( xFootingSeparators ) .AND. HB_ISSTRING( xFootingSeparators[ nPos ] )
+      IF HB_ISARRAY( xFootingSeparators ) .AND. nPos <= Len(xFootingSeparators) .AND. HB_ISSTRING( xFootingSeparators[ nPos ] )
          oColumn:footSep := xFootingSeparators[ nPos ]
       ENDIF
 
@@ -305,7 +305,7 @@ STATIC FUNCTION CallUser( oBrowse, xUserFunc, nKey, lAppend, lFlag )
             replicating this behavior. */
    nAction := iif( HB_ISEVALITEM( xUserFunc ), ;
                                  Eval( xUserFunc, nMode, oBrowse:colPos ), ;
-              iif( HB_ISSTRING( xUserFunc ) .AND. ! Empty( xUserFunc ), ;
+              iif( HB_ISSTRING( xUserFunc ) .AND. ! Empty(xUserFunc), ;
                                  &xUserFunc( nMode, oBrowse:colPos ), ;  /* NOTE: Macro operator! */
               iif( nKey == K_ENTER .OR. nKey == K_ESC, DE_ABORT, DE_CONT ) ) )
 
@@ -334,7 +334,7 @@ STATIC FUNCTION CallUser( oBrowse, xUserFunc, nKey, lAppend, lFlag )
          lAppend := .F.
 
          IF ( Set( _SET_DELETED ) .AND. Deleted() ) .OR. ;
-            ( ! Empty( dbFilter() ) .AND. ! Eval( hb_macroBlock( dbFilter() ) ) )
+            ( ! Empty(dbFilter()) .AND. ! Eval( hb_macroBlock( dbFilter() ) ) )
             dbSkip()
          ENDIF
          IF Eof()

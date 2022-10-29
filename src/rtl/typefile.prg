@@ -81,13 +81,13 @@ PROCEDURE __TypeFile( cFile, lPrint )
 
    hb_FNameSplit( cFile, @cDir, @cName, @cExt )
 
-   IF Empty( cDir )
+   IF Empty(cDir)
 
-      cTmp := StrTran( Set( _SET_DEFAULT ) + ";" + Set( _SET_PATH ), ",", ";" )
+      cTmp := StrTran(Set( _SET_DEFAULT ) + ";" + Set( _SET_PATH ), ",", ";")
 
-      i := Len( cTmp )
-      DO WHILE SubStr( cTmp, i, 1 ) == ";"            /* remove last ";" */
-         cTmp := Left( cTmp, --i )
+      i := Len(cTmp)
+      DO WHILE SubStr(cTmp, i, 1) == ";"            /* remove last ";" */
+         cTmp := Left(cTmp, --i)
       ENDDO
 
       FOR EACH cPath IN hb_ATokens( cTmp, ";" )
@@ -124,7 +124,7 @@ PROCEDURE __TypeFile( cFile, lPrint )
    ENDIF
 
    nSize   := FSeek( nHandle, 0, FS_END )
-   nBuffer := Min( nSize, BUFFER_LENGTH )
+   nBuffer := Min(nSize, BUFFER_LENGTH)
 
    FSeek( nHandle, 0 )  /* go top */
 
@@ -133,13 +133,13 @@ PROCEDURE __TypeFile( cFile, lPrint )
       "without any headings or formatting" */
 
    nHasRead := 0
-   cBuffer := Space( nBuffer )
+   cBuffer := Space(nBuffer)
    QOut()  /* starting a new line */
    DO WHILE ( nRead := FRead( nHandle, @cBuffer, nBuffer ) ) > 0
       nHasRead += nRead
-      QQOut( cBuffer )
-      nBuffer := Min( nSize - nHasRead, nBuffer )
-      cBuffer := Space( nBuffer )
+      QQOut(cBuffer)
+      nBuffer := Min(nSize - nHasRead, nBuffer)
+      cBuffer := Space(nBuffer)
    ENDDO
 
    FClose( nHandle )

@@ -71,7 +71,7 @@ METHOD IsScalar() CLASS ScalarObject
 
 METHOD AsString() CLASS ScalarObject
 
-   SWITCH ValType( Self )
+   SWITCH ValType(Self)
    CASE "B" ; RETURN "{ || ... }"
    CASE "M"
    CASE "C" ; RETURN Self
@@ -79,7 +79,7 @@ METHOD AsString() CLASS ScalarObject
    CASE "T" ; RETURN hb_TToC( Self )
    CASE "H" ; RETURN "{ ... => ... }"
    CASE "L" ; RETURN iif( Self, ".T.", ".F." )
-   CASE "N" ; RETURN hb_ntos( Self )
+   CASE "N" ; RETURN hb_ntos(Self)
    CASE "S" ; RETURN "@" + ::name + "()"
    CASE "P" ; RETURN "<0x...>"
    CASE "U" ; RETURN "NIL"
@@ -89,7 +89,7 @@ METHOD AsString() CLASS ScalarObject
 
 METHOD AsExpStr() CLASS ScalarObject
 
-   SWITCH ValType( Self )
+   SWITCH ValType(Self)
    CASE "M"
    CASE "C" ; RETURN '"' + Self + '"'
    CASE "D" ; RETURN 'CToD("' + DToC( Self ) + '")'
@@ -156,7 +156,7 @@ METHOD AtPut( n, x ) CLASS Array
 
 METHOD Add( x ) CLASS Array
 
-   AAdd( Self, x )
+   AAdd(Self, x)
 
    RETURN .T.
 
@@ -167,18 +167,18 @@ METHOD Collect( b ) CLASS Array
 
    FOR EACH elem IN Self
       IF Eval( b, elem )
-         AAdd( result, elem )
+         AAdd(result, elem)
       ENDIF
    NEXT
 
    RETURN result
 
 METHOD Copy() CLASS Array
-   RETURN ACopy( Self, Array( Len( Self ) ) )
+   RETURN ACopy( Self, Array( Len(Self) ) )
 
 METHOD DeleteAt( n ) CLASS Array
 
-   IF n >= 1 .AND. n <= Len( Self )
+   IF n >= 1 .AND. n <= Len(Self)
       hb_ADel( Self, n, .T. )
    ENDIF
 
@@ -187,7 +187,7 @@ METHOD DeleteAt( n ) CLASS Array
 METHOD InsertAt( n, x ) CLASS Array
 
    DO CASE
-   CASE n > Len( Self )
+   CASE n > Len(Self)
       ASize( Self, n )
       Self[ n ] := x
    CASE n >= 1
@@ -203,7 +203,7 @@ METHOD Do( b ) CLASS Array
 
    LOCAL i
 
-   FOR i := 1 TO Len( Self )
+   FOR i := 1 TO Len(Self)
       b:Eval( Self[ i ], i )
    NEXT
 
@@ -223,7 +223,7 @@ METHOD IndexOf( x ) CLASS Array
 
 METHOD PROCEDURE Remove( e ) CLASS Array
 
-   ::DeleteAt( ::IndexOf( e ) )
+   ::DeleteAt(::IndexOf( e ))
 
    RETURN
 
@@ -379,7 +379,7 @@ CREATE CLASS Numeric INHERIT HBScalar FUNCTION __HBNumeric
 ENDCLASS
 
 METHOD AsString() CLASS Numeric
-   RETURN hb_ntos( Self )
+   RETURN hb_ntos(Self)
 
 /* --- */
 

@@ -156,23 +156,23 @@ METHOD display() CLASS RadioButtn
    DispBegin()
 
    cColor := iif( ::lBuffer, hb_ColorIndex( ::cColorSpec, 3 ), hb_ColorIndex( ::cColorSpec, 1 ) )
-   hb_DispOutAt( ::nRow, ::nCol, Left( cStyle, 1 ) + ;
-      iif( ::lBuffer, SubStr( cStyle, 2, 1 ), SubStr( cStyle, 3, 1 ) ) + ;
-      Right( cStyle, 1 ), cColor )
+   hb_DispOutAt(::nRow, ::nCol, Left(cStyle, 1) + ;
+      iif( ::lBuffer, SubStr(cStyle, 2, 1), SubStr(cStyle, 3, 1) ) + ;
+      Right(cStyle, 1), cColor)
 
-   IF ! Empty( cOldCaption := ::cCaption )
+   IF ! Empty(cOldCaption := ::cCaption)
 
-      IF ( nPos := At( "&", cOldCaption ) ) == 0
-      ELSEIF nPos == Len( cOldCaption )
+      IF ( nPos := At("&", cOldCaption) ) == 0
+      ELSEIF nPos == Len(cOldCaption)
          nPos := 0
       ELSE
          cOldCaption := Stuff( cOldCaption, nPos, 1, "" )
       ENDIF
 
-      hb_DispOutAt( ::nCapRow, ::nCapCol, cOldCaption, hb_ColorIndex( ::cColorSpec, 4 ) )
+      hb_DispOutAt(::nCapRow, ::nCapCol, cOldCaption, hb_ColorIndex( ::cColorSpec, 4 ))
 
       IF nPos != 0
-         hb_DispOutAt( ::nCapRow, ::nCapCol + nPos - 1, SubStr( cOldCaption, nPos, 1 ), iif( ::lHasfocus, hb_ColorIndex( ::cColorSpec, 6 ), hb_ColorIndex( ::cColorSpec, 5 ) ) )
+         hb_DispOutAt(::nCapRow, ::nCapCol + nPos - 1, SubStr(cOldCaption, nPos, 1), iif( ::lHasfocus, hb_ColorIndex( ::cColorSpec, 6 ), hb_ColorIndex( ::cColorSpec, 5 ) ))
       ENDIF
    ENDIF
 
@@ -193,7 +193,7 @@ METHOD isAccel( xKey ) CLASS RadioButtn
       RETURN .F.
    ENDCASE
 
-   RETURN Len( cKey ) > 0 .AND. hb_AtI( "&" + cKey, ::cCaption ) > 0
+   RETURN Len(cKey) > 0 .AND. hb_AtI( "&" + cKey, ::cCaption ) > 0
 
 METHOD hitTest( nMRow, nMCol ) CLASS RadioButtn
 
@@ -206,9 +206,9 @@ METHOD hitTest( nMRow, nMCol ) CLASS RadioButtn
       RETURN HTCLIENT
    ENDIF
 
-   nLen := Len( ::cCaption )
+   nLen := Len(::cCaption)
 
-   IF ( nPos := At( "&", ::cCaption ) ) == 0 .AND. nPos < nLen
+   IF ( nPos := At("&", ::cCaption) ) == 0 .AND. nPos < nLen
       nLen--
    ENDIF
 
@@ -223,7 +223,7 @@ METHOD hitTest( nMRow, nMCol ) CLASS RadioButtn
 METHOD bitmaps( aBitmaps ) CLASS RadioButtn
 
    IF aBitmaps != NIL
-      ::aBitmaps := __eInstVar53( Self, "BITMAPS", aBitmaps, "A", 1001, {|| Len( aBitmaps ) == 2 } )
+      ::aBitmaps := __eInstVar53( Self, "BITMAPS", aBitmaps, "A", 1001, {|| Len(aBitmaps) == 2 } )
    ENDIF
 
    RETURN ::aBitmaps
@@ -275,7 +275,7 @@ METHOD colorSpec( cColorSpec ) CLASS RadioButtn
 
    IF cColorSpec != NIL
       ::cColorSpec := __eInstVar53( Self, "COLORSPEC", cColorSpec, "C", 1001, ;
-         {|| ! Empty( hb_ColorIndex( cColorSpec, 6 ) ) .AND. Empty( hb_ColorIndex( cColorSpec, 7 ) ) } )
+         {|| ! Empty(hb_ColorIndex( cColorSpec, 6 )) .AND. Empty(hb_ColorIndex( cColorSpec, 7 )) } )
    ENDIF
 
    RETURN ::cColorSpec
@@ -310,7 +310,7 @@ METHOD sBlock( bSBlock ) CLASS RadioButtn
 METHOD style( cStyle ) CLASS RadioButtn
 
    IF cStyle != NIL
-      ::cStyle := __eInstVar53( Self, "STYLE", cStyle, "C", 1001, {|| Len( cStyle ) == 0 .OR. Len( cStyle ) == 4 } )
+      ::cStyle := __eInstVar53( Self, "STYLE", cStyle, "C", 1001, {|| Len(cStyle) == 0 .OR. Len(cStyle) == 4 } )
    ENDIF
 
    RETURN ::cStyle

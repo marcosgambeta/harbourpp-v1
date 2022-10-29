@@ -172,15 +172,15 @@ METHOD killFocus() CLASS PushButton
 METHOD hitTest( nMRow, nMCol ) CLASS PushButton
 
    LOCAL nCurrentPos := 1
-   LOCAL nLen := Len( ::cCaption )
+   LOCAL nLen := Len(::cCaption)
    LOCAL nStyleLen
    LOCAL nAccelPos
 
-   IF ( nAccelPos := At( "&", ::cCaption ) ) > 0 .AND. nAccelPos < nLen
+   IF ( nAccelPos := At("&", ::cCaption) ) > 0 .AND. nAccelPos < nLen
       nLen--
    ENDIF
 
-   IF ( nStyleLen := Len( ::cStyle ) ) == 2
+   IF ( nStyleLen := Len(::cStyle) ) == 2
       nLen += 2
    ELSEIF nStyleLen == 8
       nCurrentPos := 3
@@ -216,32 +216,32 @@ METHOD display() CLASS PushButton
       cColor := hb_ColorIndex( ::cColorSpec, 0 )
    ENDCASE
 
-   IF ( nPos := At( "&", cCaption ) ) == 0
-   ELSEIF nPos == Len( cCaption )
+   IF ( nPos := At("&", cCaption) ) == 0
+   ELSEIF nPos == Len(cCaption)
       nPos := 0
    ELSE
       cCaption := Stuff( cCaption, nPos, 1, "" )
    ENDIF
 
-   IF ! Empty( cStyle )
+   IF ! Empty(cStyle)
 
       nCol++
 
-      IF Len( cStyle ) == 2
-         hb_DispOutAt( ::nRow, ::nCol, SubStr( cStyle, 1, 1 ), cColor )
-         hb_DispOutAt( ::nRow, ::nCol + Len( cCaption ) + 1, SubStr( cStyle, 2, 1 ), cColor )
+      IF Len(cStyle) == 2
+         hb_DispOutAt(::nRow, ::nCol, SubStr(cStyle, 1, 1), cColor)
+         hb_DispOutAt(::nRow, ::nCol + Len(cCaption) + 1, SubStr(cStyle, 2, 1), cColor)
       ELSE
          nRow++
-         hb_DispBox( ::nRow, ::nCol, ::nRow + 2, ::nCol + Len( cCaption ) + 1, cStyle, cColor )
+         hb_DispBox( ::nRow, ::nCol, ::nRow + 2, ::nCol + Len(cCaption) + 1, cStyle, cColor )
       ENDIF
    ENDIF
 
-   IF ! Empty( cCaption )
+   IF ! Empty(cCaption)
 
-      hb_DispOutAt( nRow, nCol, cCaption, cColor )
+      hb_DispOutAt(nRow, nCol, cCaption, cColor)
 
       IF nPos != 0
-         hb_DispOutAt( nRow, nCol + nPos - 1, SubStr( cCaption, nPos, 1 ), hb_ColorIndex( ::cColorSpec, 3 ) )
+         hb_DispOutAt(nRow, nCol + nPos - 1, SubStr(cCaption, nPos, 1), hb_ColorIndex( ::cColorSpec, 3 ))
       ENDIF
    ENDIF
 
@@ -280,7 +280,7 @@ METHOD colorSpec( cColorSpec ) CLASS PushButton
 
    IF cColorSpec != NIL
       ::cColorSpec := __eInstVar53( Self, "COLORSPEC", cColorSpec, "C", 1001, ;
-         {|| ! Empty( hb_ColorIndex( cColorSpec, 3 ) ) .AND. Empty( hb_ColorIndex( cColorSpec, 5 ) ) } )
+         {|| ! Empty(hb_ColorIndex( cColorSpec, 3 )) .AND. Empty(hb_ColorIndex( cColorSpec, 5 )) } )
    ENDIF
 
    RETURN ::cColorSpec
@@ -326,7 +326,7 @@ METHOD typeOut() CLASS PushButton
 METHOD style( cStyle ) CLASS PushButton
 
    IF cStyle != NIL
-      ::cStyle := __eInstVar53( Self, "STYLE", cStyle, "C", 1001, {|| Len( cStyle ) == 0 .OR. Len( cStyle ) == 2 .OR. Len( cStyle ) == 8 } )
+      ::cStyle := __eInstVar53( Self, "STYLE", cStyle, "C", 1001, {|| Len(cStyle) == 0 .OR. Len(cStyle) == 2 .OR. Len(cStyle) == 8 } )
    ENDIF
 
    RETURN ::cStyle

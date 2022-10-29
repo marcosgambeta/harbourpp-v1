@@ -54,7 +54,7 @@ FUNCTION __eInstVar52( oVar, cMethod, xValue, cType, nSubCode, xMin, xMax )
    LOCAL oError
    LOCAL lError
 
-   IF ValType( xValue ) == cType
+   IF ValType(xValue) == cType
       lError := .F.
       IF xMin != NIL
          lError := ! xValue >= xMin
@@ -83,7 +83,7 @@ FUNCTION __eInstVar52( oVar, cMethod, xValue, cType, nSubCode, xMin, xMax )
       oError:subcode := nSubCode
       oError:args := { xValue }
       xValue := Eval( ErrorBlock(), oError )
-      IF ! ValType( xValue ) == cType
+      IF ! ValType(xValue) == cType
          __errInHandler()
       ENDIF
    ENDIF

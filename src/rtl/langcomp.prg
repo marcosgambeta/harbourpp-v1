@@ -150,10 +150,10 @@ FUNCTION hb_langSelect( cLangID, cCP )
       ENDIF
 
 #ifdef HB_LEGACY_LEVEL4
-      IF Empty( cLangIDBase )
+      IF Empty(cLangIDBase)
 #endif
          /* Support standard ISO language IDs */
-         IF Empty( tmp := __LangStdToLangHb( cLangID ) )
+         IF Empty(tmp := __LangStdToLangHb( cLangID ))
             /* Normal case */
             cLangIDBase := cLangID
          ELSE
@@ -179,7 +179,7 @@ STATIC FUNCTION __LangStdToLangHb( cLangStd )
    LOCAL cLangHb := ""
 
    IF HB_ISSTRING( cLangStd )
-      SWITCH Lower( StrTran( cLangStd, "_", "-" ) )
+      SWITCH Lower( StrTran(cLangStd, "_", "-") )
 #if 0
       CASE "af-za"      ; EXIT
       CASE "af"         ; EXIT

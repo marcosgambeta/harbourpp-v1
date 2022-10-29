@@ -243,7 +243,7 @@ METHOD gatherFunctions() CLASS HBProfile
          // If we're not ignoring the symbol...
          IF ! ::ignoreSymbol( cName := __dynsGetName( n ) )
             // Yes, it is, add it to the profile.
-            AAdd( ::aProfile, HBProfileFunction():new( cName, __dynsGetPrf( n ) ) )
+            AAdd(::aProfile, HBProfileFunction():new( cName, __dynsGetPrf( n ) ))
          ENDIF
       ENDIF
    NEXT
@@ -262,20 +262,20 @@ METHOD gatherMethods() CLASS HBProfile
    LOCAL nMember
 
    // For each class in the environment...
-   DO WHILE ! Empty( cClass := __className( n ) )
+   DO WHILE ! Empty(cClass := __className( n ))
 
       // If we're not ignoring the class' methods...
       IF ! ::ignoreSymbol( cClass )
 
          // Collect class members.
-         nMembers := Len( aMembers := __classSel( n ) )
+         nMembers := Len(aMembers := __classSel( n ))
 
          FOR nMember := 1 TO nMembers
 
             // If we've got a member name...
-            IF ! Empty( aMembers[ nMember ] )
+            IF ! Empty(aMembers[ nMember ])
                // Add it to the profile.
-               AAdd( ::aProfile, HBProfileMethod():new( cClass + ":" + aMembers[ nMember ], __GetMsgPrf( n, aMembers[ nMember ] ) ) )
+               AAdd(::aProfile, HBProfileMethod():new( cClass + ":" + aMembers[ nMember ], __GetMsgPrf( n, aMembers[ nMember ] ) ))
             ENDIF
          NEXT
       ENDIF
@@ -421,9 +421,9 @@ METHOD gatherOPCodes() CLASS HBProfileLowLevel
    // Loop over all the Harbour OP codes. Note that they start at 0.
    FOR nOP := 0 TO nMax - 1
       // If we're not ignoring this opcode.
-      IF ! ::ignoreSymbol( cName := "OPCODE( " + Str( nOP, 3 ) + " )" )
+      IF ! ::ignoreSymbol( cName := "OPCODE( " + Str(nOP, 3) + " )" )
          // Add it to the profile.
-         AAdd( ::aProfile, HBProfileOpcode():new( cName, __opGetPrf( nOP ) ) )
+         AAdd(::aProfile, HBProfileOpcode():new( cName, __opGetPrf( nOP ) ))
       ENDIF
    NEXT
 
@@ -464,7 +464,7 @@ METHOD init( oProfile ) CLASS HBProfileReport
 
 METHOD writeLines( aLines ) CLASS HBProfileReport
 
-   AEval( aLines, {| c | QOut( c ) } )
+   AEval( aLines, {| c | QOut(c) } )
 
    RETURN Self
 
@@ -481,11 +481,11 @@ METHOD emitHeader() CLASS HBProfileReport
 
 METHOD line( oEntity ) CLASS HBProfileReport
    RETURN { ;
-      PadR( oEntity:cName,      35 ) + " " + ;
-      PadR( oEntity:describe(),  8 ) + " " + ;
-      Str( oEntity:nCalls,      10 ) + " " + ;
-      Str( oEntity:nTicks,      11 ) + " " + ;
-      Str( oEntity:nSeconds,    11, 2 ) }
+      PadR(oEntity:cName,      35) + " " + ;
+      PadR(oEntity:describe(),  8) + " " + ;
+      Str(oEntity:nCalls,      10) + " " + ;
+      Str(oEntity:nTicks,      11) + " " + ;
+      Str(oEntity:nSeconds,    11, 2) }
 
 METHOD emitLine( oEntity ) CLASS HBProfileReport
 
@@ -566,7 +566,7 @@ ENDCLASS
 
 METHOD writeLines( aLines ) CLASS HBProfileReportToArray
 
-   AEval( aLines, {| c | AAdd( ::aReport, c ) } )
+   AEval( aLines, {| c | AAdd(::aReport, c) } )
 
    RETURN Self
 
@@ -625,7 +625,7 @@ METHOD emitHeader() CLASS HBProfileReportToTBrowse
 METHOD emitLine( oEntity ) CLASS HBProfileReportToTBrowse
 
    // Don't "emit" anything, simply add the entity to the array.
-   AAdd( ::aReport, oEntity )
+   AAdd(::aReport, oEntity)
 
    RETURN Self
 
@@ -641,11 +641,11 @@ METHOD generate( bFilter, nTop, nLeft, nBottom, nRight ) CLASS HBProfileReportTo
    oBrowse := TBrowseNew( nTop, nLeft, nBottom, nRight )  // Build the browse.
 
    oBrowse:goTopBlock    := {|| ::nEntity := 1 }
-   oBrowse:goBottomBlock := {|| ::nEntity := Len( ::aReport ) }
+   oBrowse:goBottomBlock := {|| ::nEntity := Len(::aReport) }
    oBrowse:skipBlock     := {| nSkip, nPos | nPos := ::nEntity, ;
       ::nEntity := iif( nSkip > 0, ;
-      Min( Len( ::aReport ), ::nEntity + nSkip ), ;
-      Max( 1, ::nEntity + nSkip ) ), ::nEntity - nPos }
+      Min(Len(::aReport), ::nEntity + nSkip), ;
+      Max(1, ::nEntity + nSkip) ), ::nEntity - nPos }
 
    ::addColumns( oBrowse )
 
@@ -655,13 +655,13 @@ METHOD generate( bFilter, nTop, nLeft, nBottom, nRight ) CLASS HBProfileReportTo
 
 METHOD addColumns( oBrowse ) CLASS HBProfileReportToTBrowse
 
-   oBrowse:addColumn( TBColumnNew( "Name",         {|| PadR( ::currentEntity():cName,        35    ) } ) )
-   oBrowse:addColumn( TBColumnNew( "Type",         {|| PadR( ::currentEntity():describe(),    8    ) } ) )
-   oBrowse:addColumn( TBColumnNew( "Calls",        {|| PadL( ::currentEntity():nCalls,       10    ) } ) )
-   oBrowse:addColumn( TBColumnNew( "Ticks",        {|| PadL( ::currentEntity():nTicks,       11    ) } ) )
-   oBrowse:addColumn( TBColumnNew( "Seconds",      {|| Str(  ::currentEntity():nSeconds,     11, 2 ) } ) )
-   oBrowse:addColumn( TBColumnNew( "Mean;Ticks",   {|| Str(  ::currentEntity():nMeanTicks,   11, 2 ) } ) )
-   oBrowse:addColumn( TBColumnNew( "Mean;Seconds", {|| Str(  ::currentEntity():nMeanSeconds, 11, 2 ) } ) )
+   oBrowse:addColumn(TBColumnNew("Name",         {||PadR(::currentEntity():cName,        35   )}))
+   oBrowse:addColumn(TBColumnNew("Type",         {||PadR(::currentEntity():describe(),    8   )}))
+   oBrowse:addColumn(TBColumnNew("Calls",        {||PadL(::currentEntity():nCalls,       10   )}))
+   oBrowse:addColumn(TBColumnNew("Ticks",        {||PadL(::currentEntity():nTicks,       11   )}))
+   oBrowse:addColumn(TBColumnNew("Seconds",      {||Str( ::currentEntity():nSeconds,     11, 2)}))
+   oBrowse:addColumn(TBColumnNew("Mean;Ticks",   {||Str( ::currentEntity():nMeanTicks,   11, 2)}))
+   oBrowse:addColumn(TBColumnNew("Mean;Seconds", {||Str( ::currentEntity():nMeanSeconds, 11, 2)}))
 
    RETURN Self
 

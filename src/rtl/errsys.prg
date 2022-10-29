@@ -91,22 +91,22 @@ STATIC FUNCTION DefError( oError )
    ENDIF
 
    cMessage := ErrorMessage( oError )
-   IF ! Empty( oError:osCode )
-      cOSError := hb_StrFormat( "(DOS Error %1$d)", oError:osCode )
+   IF ! Empty(oError:osCode)
+      cOSError := hb_StrFormat("(DOS Error %1$d)", oError:osCode)
    ENDIF
 
    // Build buttons
 
    aOptions := {}
 
-   AAdd( aOptions, "Quit" )
+   AAdd(aOptions, "Quit")
 
    IF oError:canRetry
-      AAdd( aOptions, "Retry" )
+      AAdd(aOptions, "Retry")
    ENDIF
 
    IF oError:canDefault
-      AAdd( aOptions, "Default" )
+      AAdd(aOptions, "Default")
    ENDIF
 
    // Show alert box
@@ -115,7 +115,7 @@ STATIC FUNCTION DefError( oError )
       iif( cOSError == NIL, "", ";" + cOSError ), aOptions ) ) == 0
    ENDDO
 
-   IF ! Empty( nChoice )  /* Alert() may return NIL */
+   IF ! Empty(nChoice)  /* Alert() may return NIL */
       SWITCH aOptions[ nChoice ]
       CASE "Break"
          Break( oError )
@@ -136,11 +136,11 @@ STATIC FUNCTION DefError( oError )
    OutErr( cMessage )
 
    n := 1
-   DO WHILE ! Empty( ProcName( ++n ) )
+   DO WHILE ! Empty(ProcName( ++n ))
       OutErr( hb_eol() )
-      OutErr( hb_StrFormat( "Called from %1$s(%2$d)  ", ;
+      OutErr( hb_StrFormat("Called from %1$s(%2$d)  ", ;
          ProcName( n ), ;
-         ProcLine( n ) ) )
+         ProcLine( n )) )
    ENDDO
 
    ErrorLevel( 1 )
@@ -162,7 +162,7 @@ STATIC FUNCTION ErrorMessage( oError )
 
    // add subsystem's error code if available
    IF HB_ISNUMERIC( oError:subCode )
-      cMessage += "/" + hb_ntos( oError:subCode )
+      cMessage += "/" + hb_ntos(oError:subCode)
    ELSE
       cMessage += "/???"
    ENDIF
@@ -174,9 +174,9 @@ STATIC FUNCTION ErrorMessage( oError )
 
    // add either filename or operation
    DO CASE
-   CASE ! Empty( oError:filename )
+   CASE ! Empty(oError:filename)
       cMessage += ": " + oError:filename
-   CASE ! Empty( oError:operation )
+   CASE ! Empty(oError:operation)
       cMessage += ": " + oError:operation
    ENDCASE
 

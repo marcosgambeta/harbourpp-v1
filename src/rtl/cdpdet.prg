@@ -57,7 +57,7 @@ FUNCTION hb_cdpTerm()
    cLang := hb_UserLang()
 #elif defined( __PLATFORM__UNIX )
    LOCAL tmp
-   cCP := __UnixParseLangCP( iif( Empty( tmp := GetEnv( "LANG" ) ), ;
+   cCP := __UnixParseLangCP( iif( Empty(tmp := GetEnv( "LANG" )), ;
                                   GetEnv( "LC_CTYPE" ), tmp ), @cLang )
 #elif defined( __PLATFORM__DOS )
    /* TODO */
@@ -79,7 +79,7 @@ FUNCTION hb_cdpOS()
    cLang := hb_UserLang()
 #elif defined( __PLATFORM__UNIX )
    LOCAL tmp
-   cCP := __UnixParseLangCP( iif( Empty( tmp := GetEnv( "LANG" ) ), ;
+   cCP := __UnixParseLangCP( iif( Empty(tmp := GetEnv( "LANG" )), ;
                                   GetEnv( "LC_CTYPE" ), tmp ), @cLang )
 #elif defined( __PLATFORM__DOS )
    /* TODO */
@@ -123,7 +123,7 @@ STATIC FUNCTION __CPWinToCPStd( nCPWin )
    CASE 1255
    CASE 1256
    CASE 1257
-   CASE 1258  ; RETURN "cp" + hb_ntos( nCPWin )
+   CASE 1258  ; RETURN "cp" + hb_ntos(nCPWin)
    CASE 28591
    CASE 28592
    CASE 28593
@@ -134,7 +134,7 @@ STATIC FUNCTION __CPWinToCPStd( nCPWin )
    CASE 28598
    CASE 28599
    CASE 28603
-   CASE 28605 ; RETURN "iso8859-" + hb_ntos( nCPWin - 28590 )
+   CASE 28605 ; RETURN "iso8859-" + hb_ntos(nCPWin - 28590)
    CASE 20866 ; RETURN "koi-8"
    CASE 21866 ; RETURN "koi-8u"
    CASE 936   ; RETURN "GBK"
@@ -153,11 +153,11 @@ STATIC FUNCTION __UnixParseLangCP( cString, /* @ */ cLang )
    LOCAL tmp
    LOCAL cCP
 
-   IF ( tmp := At( ".", cString ) ) > 0
-      cLang := Left( cString, tmp - 1 )
-      cCP := SubStr( cString, tmp + 1 )
-      IF ( tmp := At( "@", cString ) ) > 0
-         cCP := Left( cString, tmp - 1 )
+   IF ( tmp := At(".", cString) ) > 0
+      cLang := Left(cString, tmp - 1)
+      cCP := SubStr(cString, tmp + 1)
+      IF ( tmp := At("@", cString) ) > 0
+         cCP := Left(cString, tmp - 1)
       ENDIF
    ELSE
       cLang := cString
@@ -167,7 +167,7 @@ STATIC FUNCTION __UnixParseLangCP( cString, /* @ */ cLang )
    /* Tricks to make the manual translation table shorter */
    cCP := hb_StrReplace( Lower( cCP ), { "_" => "", "-" => "", "ibm" => "cp", "windows" => "cp" } )
    IF hb_LeftEq( cCP, "iso8859" )
-      cCP := Stuff( cCP, Len( "iso8859" ) + 1, 0, "-" )
+      cCP := Stuff( cCP, Len("iso8859") + 1, 0, "-" )
    ENDIF
 
    /* Convert Unix CP name to Harbour CP ID */
@@ -497,4 +497,4 @@ STATIC FUNCTION __LangStdToCPCtryHb( cCtryStd )
 #endif
    ENDSWITCH
 
-   RETURN Left( hb_cdpSelect(), 2 )  /* Caller assumes this never returns strings shorter than two chars */
+   RETURN Left(hb_cdpSelect(), 2)  /* Caller assumes this never returns strings shorter than two chars */

@@ -55,7 +55,7 @@ PROCEDURE __Dir( cFileMask )
    LOCAL cName
    LOCAL cExt
 
-   IF Empty( cFileMask )
+   IF Empty(cFileMask)
 
       /* NOTE: Although Cl*pper has this string in the national language
                module, it will not use it from there.
@@ -63,18 +63,18 @@ PROCEDURE __Dir( cFileMask )
                incompatibility. */
 
 #ifdef HB_CLP_STRICT
-      QOut( "Database Files    # Records    Last Update     Size" )
+      QOut("Database Files    # Records    Last Update     Size")
 #else
-      QOut( __natMsg( _DIR_HEADER ) )
+      QOut(__natMsg( _DIR_HEADER ))
 #endif
 
       AEval( Directory( hb_FNameMerge( Set( _SET_DEFAULT ), "*", ".dbf" ) ), ;
              {| aDirEntry | PutDbf( aDirEntry ) } )
    ELSE
 
-      hb_FNameSplit( iif( Set( _SET_TRIMFILENAME ), AllTrim( cFileMask ), cFileMask ), ;
+      hb_FNameSplit( iif( Set( _SET_TRIMFILENAME ), AllTrim(cFileMask), cFileMask ), ;
                      @cPath, @cName, @cExt )
-      IF Empty( cPath )
+      IF Empty(cPath)
          cPath := Set( _SET_DEFAULT )
       ENDIF
 
@@ -101,10 +101,10 @@ STATIC PROCEDURE PutDBF( aDirEntry )
 
    IF ( fhnd := FOpen( aDirEntry[ F_NAME ] ) ) != F_ERROR
 
-      buffer := hb_FReadLen( fhnd, 8 )
+      buffer := hb_FReadLen(fhnd, 8)
 
-      IF hb_BLen( buffer ) == 8 .AND. hb_BAt( hb_BLeft( buffer, 1 ), _DBF_HEAD_MARK ) > 0
-         nRecCount := Bin2L( hb_BSubStr( buffer, 5, 4 ) )
+      IF hb_BLen(buffer) == 8 .AND. hb_BAt(hb_BLeft(buffer, 1), _DBF_HEAD_MARK) > 0
+         nRecCount := Bin2L( hb_BSubStr(buffer, 5, 4) )
          dLastUpdate := hb_Date( hb_BPeek( buffer, 2 ) + 1900, ;
                                  hb_BPeek( buffer, 3 ), ;
                                  hb_BPeek( buffer, 4 ) )
@@ -114,11 +114,11 @@ STATIC PROCEDURE PutDBF( aDirEntry )
 
    ENDIF
 
-   QOut( ;
-      PadR( aDirEntry[ F_NAME ], 15 ) + ;
-      Str( nRecCount, 12 ) + "    " + ;
+   QOut(;
+      PadR(aDirEntry[ F_NAME ], 15) + ;
+      Str(nRecCount, 12) + "    " + ;
       DToC( dLastUpdate ) + ;
-      Str( aDirEntry[ F_SIZE ], 12 ) )
+      Str(aDirEntry[ F_SIZE ], 12))
 
    RETURN
 
@@ -131,10 +131,10 @@ STATIC PROCEDURE PutNormal( aDirEntry )
    /* Strict MS-DOS like formatting, it does not play well with long
       filenames which do not stick to 8.3 MS-DOS convention */
 
-   QOut( ;
-      PadR( cName, 8 ), ;
-      PadR( SubStr( cExt, 2 ), 3 ), ;
-      Str( aDirEntry[ F_SIZE ], 8 ), "", ;
-      aDirEntry[ F_DATE ] )
+   QOut(;
+      PadR(cName, 8), ;
+      PadR(SubStr(cExt, 2), 3), ;
+      Str(aDirEntry[ F_SIZE ], 8), "", ;
+      aDirEntry[ F_DATE ])
 
    RETURN

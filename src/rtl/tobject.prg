@@ -87,7 +87,7 @@ FUNCTION HBObject()
 
          oClass:AddInline( "asString"       , {| Self | ::class:name + " object"   }, HB_OO_CLSTP_EXPORTED )
          oClass:AddInline( "asExpStr"       , {| Self |                            }, HB_OO_CLSTP_EXPORTED )
-         oClass:AddInline( "basicSize"      , {| Self | Len( Self )                }, HB_OO_CLSTP_EXPORTED )
+         oClass:AddInline( "basicSize"      , {| Self | Len(Self)                  }, HB_OO_CLSTP_EXPORTED )
          oClass:AddInline( "become"         , {| Self |                            }, HB_OO_CLSTP_EXPORTED )
          oClass:AddInline( "isEqual"        , {| Self |                            }, HB_OO_CLSTP_EXPORTED )
          oClass:AddInline( "isScalar"       , {| Self |                            }, HB_OO_CLSTP_EXPORTED )
@@ -100,7 +100,7 @@ FUNCTION HBObject()
          oClass:AddInline( "error"          , {| Self |                            }, HB_OO_CLSTP_EXPORTED )
          oClass:AddInline( "hash"           , {| Self |                            }, HB_OO_CLSTP_EXPORTED )
          oClass:AddInline( "null"           , {| Self |                            }, HB_OO_CLSTP_EXPORTED )
-         oClass:AddInline( "size"           , {| Self | Len( Self )                }, HB_OO_CLSTP_EXPORTED )
+         oClass:AddInline( "size"           , {| Self | Len(Self)                  }, HB_OO_CLSTP_EXPORTED )
 
          /* No idea when those two could occur !!? */
          oClass:AddInline( "wrongClass"     , {| Self |                            }, HB_OO_CLSTP_EXPORTED )

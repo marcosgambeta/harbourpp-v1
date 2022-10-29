@@ -30,20 +30,20 @@ FUNCTION __AtPrompt( nRow, nCol, cPrompt, cMsg, cColor )
    ENDIF
 
    // add the current level empty array.
-   DO WHILE Len( t_aLevel ) < t_nPointer
-      AAdd( t_aLevel, {} )
+   DO WHILE Len(t_aLevel) < t_nPointer
+      AAdd(t_aLevel, {})
    ENDDO
 
    // add to the static array
-   AAdd( t_aLevel[ t_nPointer ], { ;
+   AAdd(t_aLevel[ t_nPointer ], { ;
       nRow, ;      // _ITM_ROW
       nCol, ;      // _ITM_COL
       cPrompt, ;   // _ITM_PROMPT
       cMsg, ;      // _ITM_MSG
-      cColor } )   // _ITM_COLOR
+      cColor })    // _ITM_COLOR
 
    // put this prompt on the screen right now
-   DispOutAt( nRow, nCol, cPrompt, cColor )
+   DispOutAt(nRow, nCol, cPrompt, cColor)
 
    RETURN .F.
 
@@ -88,7 +88,7 @@ FUNCTION __MenuTo( bBlock, cVariable )
 
    // if no prompts were defined, exit with 0
 
-   IF t_nPointer < 1 .OR. t_nPointer > Len( t_aLevel )
+   IF t_nPointer < 1 .OR. t_nPointer > Len(t_aLevel)
 
       n := 0
 
@@ -97,7 +97,7 @@ FUNCTION __MenuTo( bBlock, cVariable )
       t_nPointer++
       nPointer := t_nPointer
 
-      nArrLen := Len( t_aLevel[ nPointer - 1 ] )
+      nArrLen := Len(t_aLevel[ nPointer - 1 ])
 
       // put choice in a valid range
 
@@ -128,8 +128,8 @@ FUNCTION __MenuTo( bBlock, cVariable )
          // should we display messages?
          IF nMsgRow > 0
 
-            IF ! Empty( xMsg )
-               DispOutAt( nMsgRow, nMsgCol, Space( Len( xMsg ) ) )
+            IF ! Empty(xMsg)
+               DispOutAt(nMsgRow, nMsgCol, Space(Len(xMsg)))
             ENDIF
 
             xMsg := t_aLevel[ nPointer - 1 ][ n ][ _ITM_MSG ]
@@ -142,10 +142,10 @@ FUNCTION __MenuTo( bBlock, cVariable )
             hb_default( @xMsg, "" )
 
             IF lMsgCenter
-               nMsgCol := Int( ( MaxCol() - Len( xMsg ) ) / 2 )
+               nMsgCol := Int(( MaxCol() - Len(xMsg) ) / 2)
             ENDIF
 
-            DispOutAt( nMsgRow, nMsgCol, xMsg )
+            DispOutAt(nMsgRow, nMsgCol, xMsg)
 
          ENDIF
 
@@ -153,9 +153,9 @@ FUNCTION __MenuTo( bBlock, cVariable )
          q := n
 
          cColor := t_aLevel[ t_nPointer - 1 ][ n ][ _ITM_COLOR ]
-         cColorNormal := hb_ColorIndex( iif( Empty( hb_ColorIndex( cColor, CLR_STANDARD ) ), SetColor(), cColor ), CLR_STANDARD )
+         cColorNormal := hb_ColorIndex( iif( Empty(hb_ColorIndex( cColor, CLR_STANDARD )), SetColor(), cColor ), CLR_STANDARD )
          IF Set( _SET_INTENSITY )
-            cColorSelect := hb_ColorIndex( iif( Empty( hb_ColorIndex( cColor, CLR_ENHANCED ) ), SetColor(), cColor ), CLR_ENHANCED )
+            cColorSelect := hb_ColorIndex( iif( Empty(hb_ColorIndex( cColor, CLR_ENHANCED )), SetColor(), cColor ), CLR_ENHANCED )
          ELSE
             cColorSelect := cColorNormal
          ENDIF
@@ -170,7 +170,7 @@ FUNCTION __MenuTo( bBlock, cVariable )
                t_aLevel[ nPointer - 1 ][ n ][ _ITM_ROW ], ;
                t_aLevel[ nPointer - 1 ][ n ][ _ITM_COL ], ;
                t_aLevel[ nPointer - 1 ][ n ][ _ITM_PROMPT ], ;
-               cColorSelect )
+               cColorSelect)
 #ifndef HB_CLP_STRICT
          ENDIF
 #endif
@@ -248,9 +248,9 @@ FUNCTION __MenuTo( bBlock, cVariable )
             EXIT
          OTHERWISE
             // did user hit a hot key?
-            IF Len( cKey := Upper( hb_keyChar( nKey ) ) ) > 0
+            IF Len(cKey := Upper( hb_keyChar( nKey ) )) > 0
                FOR y := 1 TO nArrLen
-                  IF hb_LeftEqI( LTrim( t_aLevel[ nPointer - 1 ][ y ][ _ITM_PROMPT ] ), cKey )
+                  IF hb_LeftEqI( LTrim(t_aLevel[ nPointer - 1 ][ y ][ _ITM_PROMPT ]), cKey )
                      n := y
                      lExit := .T.
                      EXIT
@@ -269,7 +269,7 @@ FUNCTION __MenuTo( bBlock, cVariable )
                   t_aLevel[ nPointer - 1 ][ q ][ _ITM_ROW ], ;
                   t_aLevel[ nPointer - 1 ][ q ][ _ITM_COL ], ;
                   t_aLevel[ nPointer - 1 ][ q ][ _ITM_PROMPT ], ;
-                  cColorNormal )
+                  cColorNormal)
 #ifndef HB_CLP_STRICT
             ENDIF
 #endif
@@ -305,7 +305,7 @@ STATIC FUNCTION HitTest( aMenu, nMRow, nMCol )
    FOR EACH aMenuItem IN aMenu
       IF nMRow == aMenuItem[ _ITM_ROW ] .AND. ;
          nMCol >= aMenuItem[ _ITM_COL ] .AND. ;
-         nMCol < aMenuItem[ _ITM_COL ] + Len( aMenuItem[ _ITM_PROMPT ] )
+         nMCol < aMenuItem[ _ITM_COL ] + Len(aMenuItem[ _ITM_PROMPT ])
 
          RETURN aMenuItem:__enumIndex()
       ENDIF

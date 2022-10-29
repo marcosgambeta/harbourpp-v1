@@ -93,7 +93,7 @@ PROCEDURE hb_mvSave( cFileName, cMask, lIncludeMask )
       ENDIF
 
       IF ! HB_ISSTRING( cMask ) .OR. ;
-         Empty( cMask ) .OR. hb_LeftEq( cMask, "*" )
+         Empty(cMask) .OR. hb_LeftEq( cMask, "*" )
          cMask := "*"
       ENDIF
 
@@ -105,10 +105,10 @@ PROCEDURE hb_mvSave( cFileName, cMask, lIncludeMask )
          nCount := __mvDbgInfo( nScope )
          FOR tmp := 1 TO nCount
             xValue := __mvDbgInfo( nScope, tmp, @cName )
-            IF ValType( xValue ) $ "CNDTL"
+            IF ValType(xValue) $ "CNDTL"
                lMatch := hb_WildMatchI( cMask, cName )
                IF iif( lIncludeMask, lMatch, ! lMatch )
-                  AAdd( aVars, { cName, xValue } )
+                  AAdd(aVars, { cName, xValue })
                ENDIF
             ENDIF
          NEXT
@@ -184,7 +184,7 @@ FUNCTION hb_mvRestore( cFileName, lAdditive, cMask, lIncludeMask )
       ENDIF
 
       IF ! HB_ISSTRING( cFileName ) .OR. ;
-         Empty( cMask ) .OR. hb_LeftEq( cMask, "*" )
+         Empty(cMask) .OR. hb_LeftEq( cMask, "*" )
          cMask := "*"
       ENDIF
 
@@ -219,11 +219,11 @@ FUNCTION hb_mvRestore( cFileName, lAdditive, cMask, lIncludeMask )
 
       xValue := NIL
 
-      IF hb_FReadLen( fhnd, _HBMEM_SIG_LEN ) == _HBMEM_SIGNATURE
+      IF hb_FReadLen(fhnd, _HBMEM_SIG_LEN) == _HBMEM_SIGNATURE
 
-         cBuffer := Space( FSeek( fhnd, 0, FS_END ) - _HBMEM_SIG_LEN )
+         cBuffer := Space(FSeek( fhnd, 0, FS_END ) - _HBMEM_SIG_LEN)
          FSeek( fhnd, _HBMEM_SIG_LEN, FS_SET )
-         FRead( fhnd, @cBuffer, Len( cBuffer ) )
+         FRead( fhnd, @cBuffer, Len(cBuffer) )
          FClose( fhnd )
 
          aVars := hb_Deserialize( cBuffer )
@@ -231,9 +231,9 @@ FUNCTION hb_mvRestore( cFileName, lAdditive, cMask, lIncludeMask )
 
          IF HB_ISARRAY( aVars )
             FOR EACH item IN aVars
-               IF HB_ISARRAY( item ) .AND. Len( item ) == 2 .AND. ;
+               IF HB_ISARRAY( item ) .AND. Len(item) == 2 .AND. ;
                   HB_ISSTRING( item[ 1 ] ) .AND. ;
-                  ! Empty( item[ 1 ] )
+                  ! Empty(item[ 1 ])
 
                   cName := item[ 1 ]
                   lMatch := hb_WildMatchI( cMask, cName )

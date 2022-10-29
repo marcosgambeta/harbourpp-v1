@@ -175,7 +175,7 @@ METHOD KeyboardHook( nKey ) CLASS HBMemoEditor
 
          nRow := Row()
          nCol := Col()
-         hb_DispOutAt( 0, MaxCol() - 19, "Abort Edit? (Y/N)" )
+         hb_DispOutAt(0, MaxCol() - 19, "Abort Edit? (Y/N)")
          SetPos( 0, MaxCol() - 2 )
 
          nYesNoKey := Inkey( 0 )
@@ -228,7 +228,7 @@ METHOD HandleUserKey( nKey, nUdfReturn ) CLASS HBMemoEditor
    CASE ME_DATA
       IF HB_ISNUMERIC( nKey )
          /* TODO: convert nKey >=1 .and. nKey <= 31 to key value with unicode character */
-         IF HB_ULen( hb_keyChar( nKey ) ) > 0
+         IF HB_ULen(hb_keyChar( nKey )) > 0
             ::super:Edit( nKey )
          ENDIF
       ELSE
@@ -304,7 +304,7 @@ METHOD InsertState( lInsState ) CLASS HBMemoEditor
       Set( _SET_INSERT, lInsState )
       SetCursor( iif( lInsState, SC_INSERT, SC_NORMAL ) )
       IF Set( _SET_SCOREBOARD )
-         hb_DispOutAt( 0, MaxCol() - 19, iif( lInsState, "<insert>", "        " ) )
+         hb_DispOutAt(0, MaxCol() - 19, iif( lInsState, "<insert>", "        " ))
       ENDIF
    ENDIF
 

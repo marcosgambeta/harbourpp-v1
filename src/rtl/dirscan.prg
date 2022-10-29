@@ -58,15 +58,15 @@ STATIC FUNCTION hb_doScan( cPath, cMask, cAttr, cPathSep )
       lMatch := hb_FileMatch( aFile[ F_NAME ], cMask )
       IF "D" $ aFile[ F_ATTR ]
          IF lMatch .AND. "D" $ cAttr
-            AAdd( aResult, aFile )
+            AAdd(aResult, aFile)
          ENDIF
          IF !( aFile[ F_NAME ] == "." .OR. aFile[ F_NAME ] == ".." .OR. aFile[ F_NAME ] == "" )
             AEval( hb_DoScan( cPath + aFile[ F_NAME ] + cPathSep, cMask, cAttr, cPathSep ), ;
                {| x | x[ F_NAME ] := aFile[ F_NAME ] + cPathSep + x[ F_NAME ], ;
-               AAdd( aResult, x ) } )
+               AAdd(aResult, x) } )
          ENDIF
       ELSEIF lMatch
-         AAdd( aResult, aFile )
+         AAdd(aResult, aFile)
       ENDIF
    NEXT
 
@@ -82,7 +82,7 @@ FUNCTION hb_DirRemoveAll( cDir )
 
    LOCAL aFile, cPath, cFile, nAttr
 
-   IF ! Empty( cDir ) .AND. hb_vfDirExists( cDir )
+   IF ! Empty(cDir) .AND. hb_vfDirExists( cDir )
       cPath := hb_DirSepDel( cDir )
       IF hb_vfAttrGet( cPath, @nAttr ) .AND. ! hb_bitAnd( nAttr, HB_FA_READONLY ) == 0
          hb_vfAttrSet( cPath, hb_bitXor( nAttr, HB_FA_READONLY ) )
@@ -114,10 +114,10 @@ FUNCTION hb_FileDelete( cFileMask, cAttr )
 
    LOCAL lAny := .F., aFile, cPath, cFile, cAttrMask, nAttr
 
-   IF HB_ISSTRING( cFileMask ) .AND. ! Empty( cFileMask ) .AND. ;
+   IF HB_ISSTRING( cFileMask ) .AND. ! Empty(cFileMask) .AND. ;
       ! hb_vfDirExists( cFileMask )
       cPath := hb_FNameDir( cFileMask )
-      cAttrMask := StrTran( hb_defaultValue( cAttr, "" ), "D" ) + "L"
+      cAttrMask := StrTran(hb_defaultValue( cAttr, "" ), "D") + "L"
       FOR EACH aFile IN hb_vfDirectory( cFileMask, cAttrMask )
          cFile := cPath + aFile[ F_NAME ]
          IF "R" $ aFile[ F_ATTR ] .AND. hb_vfAttrGet( cFile, @nAttr )

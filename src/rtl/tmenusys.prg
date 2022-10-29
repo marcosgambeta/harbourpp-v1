@@ -580,9 +580,9 @@ METHOD ShowMsg( lMode ) CLASS HBMenuSys
 
       IF ::lMsgFlag .AND. ;
          ( nCurrent := ::oMenu:current ) != 0 .AND. ;
-         ! Empty( cMsg := ::oMenu:getItem( nCurrent ):message )
+         ! Empty(cMsg := ::oMenu:getItem( nCurrent ):message)
 
-         hb_DispOutAt( ::nMsgRow, ::nMsgLeft, PadC( cMsg, ::nMsgRight - ::nMsgLeft + 1 ), ::cMsgColor )
+         hb_DispOutAt(::nMsgRow, ::nMsgLeft, PadC( cMsg, ::nMsgRight - ::nMsgLeft + 1 ), ::cMsgColor)
       ENDIF
 
       ::cOldMessage := cMsg

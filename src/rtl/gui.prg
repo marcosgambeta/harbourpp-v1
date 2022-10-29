@@ -68,11 +68,11 @@ FUNCTION _GetNumCol( cColor )
 
    LOCAL nPos
 
-   IF ( nPos := At( "/", cColor ) ) > 0
-      cColor := Left( cColor, nPos - 1 )
+   IF ( nPos := At("/", cColor) ) > 0
+      cColor := Left(cColor, nPos - 1)
    ENDIF
-   IF ( nPos := At( ",", cColor ) ) > 0
-      cColor := Left( cColor, nPos - 1 )
+   IF ( nPos := At(",", cColor) ) > 0
+      cColor := Left(cColor, nPos - 1)
    ENDIF
 
    RETURN hb_AScan( { "B", "G", "BG", "R", "RB", "GR", "W", "N+", "B+", "G+", "BG+", "R+", "RB+", "GR+", "W+" }, cColor,,, .T. )
@@ -88,14 +88,14 @@ FUNCTION __Caption( cCaption )
 
    LOCAL nPos
 
-   RETURN iif( ( nPos := At( "&", cCaption ) ) > 0, Stuff( cCaption, nPos, 1, "" ), cCaption )
+   RETURN iif( ( nPos := At("&", cCaption) ) > 0, Stuff( cCaption, nPos, 1, "" ), cCaption )
 
 FUNCTION __CapLength( cCaption )
 
-   LOCAL nCaptionLen := Len( cCaption )
+   LOCAL nCaptionLen := Len(cCaption)
    LOCAL nPos
 
-   RETURN iif( ( nPos := At( "&", cCaption ) ) > 0 .AND. nPos < nCaptionLen, nCaptionLen - 1, nCaptionLen )
+   RETURN iif( ( nPos := At("&", cCaption) ) > 0 .AND. nPos < nCaptionLen, nCaptionLen - 1, nCaptionLen )
 
 FUNCTION __CapMetrics( o )
    RETURN __CapLength( o:caption ) + iif( o:isPopup(), 3, 2 )

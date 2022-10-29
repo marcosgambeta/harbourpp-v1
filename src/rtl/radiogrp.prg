@@ -132,7 +132,7 @@ ENDCLASS
 METHOD addItem( oRadioButton ) CLASS RadioGroup
 
    IF HB_ISOBJECT( oRadioButton ) .AND. oRadioButton:ClassName() == "RADIOBUTTN"
-      AAdd( ::aItems, oRadioButton )
+      AAdd(::aItems, oRadioButton)
       ::nItemCount++
    ENDIF
 
@@ -171,26 +171,26 @@ METHOD display() CLASS RadioGroup
    ENDIF
 
    DO CASE
-   CASE ! Empty( cSelBox )
+   CASE ! Empty(cSelBox)
       hb_DispBox( ::nTop, ::nLeft, ::nBottom, ::nRight, cSelBox, hb_ColorIndex( ::cColorSpec, 0 ) )
-   CASE ! Empty( cUnSelBox )
+   CASE ! Empty(cUnSelBox)
       hb_DispBox( ::nTop, ::nLeft, ::nBottom, ::nRight, cUnSelBox, hb_ColorIndex( ::cColorSpec, 0 ) )
    ENDCASE
 
-   IF ! Empty( cCaption := ::cCaption )
+   IF ! Empty(cCaption := ::cCaption)
 
-      IF ( nPos := At( "&", cCaption ) ) > 0
-         IF nPos == Len( cCaption )
+      IF ( nPos := At("&", cCaption) ) > 0
+         IF nPos == Len(cCaption)
             nPos := 0
          ELSE
             cCaption := Stuff( cCaption, nPos, 1, "" )
          ENDIF
       ENDIF
 
-      hb_DispOutAt( ::nCapRow, ::nCapCol, cCaption, hb_ColorIndex( ::cColorSpec, 1 ) )
+      hb_DispOutAt(::nCapRow, ::nCapCol, cCaption, hb_ColorIndex( ::cColorSpec, 1 ))
 
       IF nPos > 0
-         hb_DispOutAt( ::nCapRow, ::nCapCol + nPos - 1, SubStr( cCaption, nPos, 1 ), hb_ColorIndex( ::cColorSpec, 2 ) )
+         hb_DispOutAt(::nCapRow, ::nCapCol + nPos - 1, SubStr(cCaption, nPos, 1), hb_ColorIndex( ::cColorSpec, 2 ))
       ENDIF
    ENDIF
 
@@ -213,7 +213,7 @@ METHOD getAccel( xKey ) CLASS RadioGroup
       RETURN 0
    ENDCASE
 
-   IF Len( cKey ) > 0
+   IF Len(cKey) > 0
       cKey := Lower( cKey )
       RETURN AScan( ::aItems, {| o | o:isAccel( cKey ) } )
    ENDIF
@@ -230,7 +230,7 @@ METHOD hitTest( nMRow, nMCol ) CLASS RadioGroup
    LOCAL item
 
    DO CASE
-   CASE Empty( ::cColdbox + ::cHotBox )
+   CASE Empty(::cColdbox + ::cHotBox)
    CASE nMRow == ::nTop
       DO CASE
       CASE nMCol == ::nLeft
@@ -265,14 +265,14 @@ METHOD hitTest( nMRow, nMCol ) CLASS RadioGroup
       ENDIF
    ENDCASE
 
-   nLen := Len( ::cCaption )
+   nLen := Len(::cCaption)
 
-   IF ( nPos := At( "&", ::cCaption ) ) > 0 .AND. nPos < nLen
+   IF ( nPos := At("&", ::cCaption) ) > 0 .AND. nPos < nLen
       nLen--
    ENDIF
 
    DO CASE
-   CASE Empty( ::cCaption )
+   CASE Empty(::cCaption)
    CASE nMRow != ::nCapRow
    CASE nMCol < ::nCapCol
    CASE nMCol < ::nCapCol + nLen
@@ -404,7 +404,7 @@ METHOD select( xValue ) CLASS RadioGroup
    LOCAL nPos
    LOCAL nLen
 
-   SWITCH ValType( xValue )
+   SWITCH ValType(xValue)
    CASE "C"
 
       nLen := ::nItemCount
@@ -527,7 +527,7 @@ METHOD caption( cCaption ) CLASS RadioGroup
 METHOD coldBox( cColdBox ) CLASS RadioGroup
 
    IF cColdBox != NIL
-      ::cColdBox := __eInstVar53( Self, "COLDBOX", cColdBox, "C", 1001, {|| Len( cColdBox ) == 0 .OR. Len( cColdBox ) == 8 } )
+      ::cColdBox := __eInstVar53( Self, "COLDBOX", cColdBox, "C", 1001, {|| Len(cColdBox) == 0 .OR. Len(cColdBox) == 8 } )
    ENDIF
 
    RETURN ::cColdBox
@@ -536,7 +536,7 @@ METHOD colorSpec( cColorSpec ) CLASS RadioGroup
 
    IF cColorSpec != NIL
       ::cColorSpec := __eInstVar53( Self, "COLORSPEC", cColorSpec, "C", 1001, ;
-         {|| ! Empty( hb_ColorIndex( cColorSpec, 2 ) ) .AND. Empty( hb_ColorIndex( cColorSpec, 3 ) ) } )
+         {|| ! Empty(hb_ColorIndex( cColorSpec, 2 )) .AND. Empty(hb_ColorIndex( cColorSpec, 3 )) } )
    ENDIF
 
    RETURN ::cColorSpec
@@ -555,7 +555,7 @@ METHOD hasFocus() CLASS RadioGroup
 METHOD hotBox( cHotBox ) CLASS RadioGroup
 
    IF cHotBox != NIL
-      ::cHotBox := __eInstVar53( Self, "HOTBOX", cHotBox, "C", 1001, {|| Len( cHotBox ) == 0 .OR. Len( cHotBox ) == 8 } )
+      ::cHotBox := __eInstVar53( Self, "HOTBOX", cHotBox, "C", 1001, {|| Len(cHotBox) == 0 .OR. Len(cHotBox) == 8 } )
    ENDIF
 
    RETURN ::cHotBox

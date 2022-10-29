@@ -44,22 +44,22 @@
  *
  */
 
-FUNCTION hb_CStr( xVal )
+FUNCTION hb_CStr(xVal)
 
-   LOCAL v := ValType( xVal )
+   LOCAL v := ValType(xVal)
 
    SWITCH v
    CASE "C"
    CASE "M" ; RETURN xVal
-   CASE "N" ; RETURN Str( xVal )
-   CASE "D" ; RETURN iif( Empty( xVal ), "0d00000000", "0d" + DToS( xVal ) )
+   CASE "N" ; RETURN Str(xVal)
+   CASE "D" ; RETURN iif( Empty(xVal), "0d00000000", "0d" + DToS(xVal) )
    CASE "T" ; RETURN 't"' + hb_TSToStr( xVal, .T. ) + '"'
    CASE "L" ; RETURN iif( xVal, ".T.", ".F." )
    CASE "S" ; RETURN "@" + xVal:name + "()"
    CASE "B" ; RETURN "{|| ... }"
    CASE "O" ; RETURN "{ " + xVal:className() + " Object }"
-   CASE "A" ; RETURN "{ Array of " + hb_ntos( Len( xVal ) ) + " Items }"
-   CASE "H" ; RETURN "{ Hash of " + hb_ntos( Len( xVal ) ) + " Items }"
+   CASE "A" ; RETURN "{ Array of " + hb_ntos(Len(xVal)) + " Items }"
+   CASE "H" ; RETURN "{ Hash of " + hb_ntos(Len(xVal)) + " Items }"
    CASE "P" ; RETURN "<pointer>"
    OTHERWISE
       IF xVal == NIL
@@ -69,21 +69,21 @@ FUNCTION hb_CStr( xVal )
 
    RETURN "???:" + v
 
-FUNCTION hb_ValToExp( xVal, lRaw )
+FUNCTION hb_ValToExp(xVal, lRaw)
 
-   RETURN s_valToExp( xVal, hb_defaultValue( lRaw, .F. ) )
+   RETURN s_valToExp(xVal, hb_defaultValue(lRaw, .F.))
 
-STATIC FUNCTION s_valToExp( xVal, lRaw, cInd, hRefs, cRefs, cObjs )
+STATIC FUNCTION s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
 
    LOCAL cVal, cKey, cClass
    LOCAL tmp
-   LOCAL v := ValType( xVal )
+   LOCAL v := ValType(xVal)
 
    SWITCH v
    CASE "C"
-   CASE "M" ; RETURN hb_StrToExp( xVal )
-   CASE "N" ; RETURN hb_ntos( xVal )
-   CASE "D" ; RETURN iif( Empty( xVal ), "0d00000000", "0d" + DToS( xVal ) )
+   CASE "M" ; RETURN hb_StrToExp(xVal)
+   CASE "N" ; RETURN hb_ntos(xVal)
+   CASE "D" ; RETURN iif( Empty(xVal), "0d00000000", "0d" + DToS(xVal) )
    CASE "T" ; RETURN 't"' + hb_TSToStr( xVal, .T. ) + '"'
    CASE "L" ; RETURN iif( xVal, ".T.", ".F." )
    CASE "S" ; RETURN "@" + xVal:name + "()"
@@ -107,15 +107,15 @@ STATIC FUNCTION s_valToExp( xVal, lRaw, cInd, hRefs, cRefs, cObjs )
       ENDIF
 
       IF v == "H"
-         IF Empty( xVal )
+         IF Empty(xVal)
             cVal := "{=>}"
          ELSE
             cVal := "{"
             FOR EACH tmp IN xVal
-               cKey := s_valToExp( tmp:__enumKey(), lRaw )
+               cKey := s_valToExp(tmp:__enumKey(), lRaw)
                cVal += iif( tmp:__enumIsFirst(), "", ", " ) + ;
                   cKey + "=>" + ;
-                  s_valToExp( tmp, lRaw, cInd + cKey, hRefs, @cRefs, @cObjs )
+                  s_valToExp(tmp, lRaw, cInd + cKey, hRefs, @cRefs, @cObjs)
             NEXT
             cVal += "}"
          ENDIF
@@ -125,14 +125,14 @@ STATIC FUNCTION s_valToExp( xVal, lRaw, cInd, hRefs, cRefs, cObjs )
             FOR EACH tmp IN __objGetIVars( xVal )
                cVal += iif( tmp:__enumIsFirst(), '{"', ', {"' ) + ;
                        tmp[ 1 ] + '", ' + ;
-                       s_valToExp( tmp[ 2 ], lRaw, ;
-                                   cInd + hb_ntos( tmp:__enumIndex() ) + ",2", ;
-                                   hRefs, @cRefs, @cObjs ) + "}"
+                       s_valToExp(tmp[ 2 ], lRaw, ;
+                                  cInd + hb_ntos(tmp:__enumIndex()) + ",2", ;
+                                  hRefs, @cRefs, @cObjs) + "}"
             NEXT
          ELSE
             FOR EACH tmp IN xVal
                cVal += iif( tmp:__enumIsFirst(), "", ", " ) + ;
-                  s_valToExp( tmp, lRaw, cInd + hb_ntos( tmp:__enumIndex() ), hRefs, @cRefs, @cObjs )
+                  s_valToExp(tmp, lRaw, cInd + hb_ntos(tmp:__enumIndex()), hRefs, @cRefs, @cObjs)
             NEXT
          ENDIF
          cVal += "}"
@@ -151,10 +151,10 @@ STATIC FUNCTION s_valToExp( xVal, lRaw, cInd, hRefs, cRefs, cObjs )
          cObjs += "}"
       ENDIF
       IF cInd == ""
-         IF ! Empty( cRefs )
+         IF ! Empty(cRefs)
             cVal := "__itemSetRef( " + cVal + ", {" + cRefs + "} )"
          ENDIF
-         IF ! Empty( cObjs )
+         IF ! Empty(cObjs)
             cVal := iif( lRaw, "__itemSetObjRaw( ", ;
                                "__itemSetObj( " ) + cVal + ", {" + cObjs + "} )"
          ENDIF

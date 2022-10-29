@@ -188,7 +188,7 @@ METHOD setStyle( nStyle, lNewValue ) CLASS TBColumn
    /* NOTE: CA-Cl*pper 5.3 does no checks on the value of nStyle, so in case
             it is zero or non-numeric, a regular RTE will happen. [vszakats] */
 
-   IF nStyle > Len( ::aSetStyle ) .AND. nStyle <= 4096  /* Some reasonable limit for maximum number of styles */
+   IF nStyle > Len(::aSetStyle) .AND. nStyle <= 4096  /* Some reasonable limit for maximum number of styles */
       ASize( ::aSetStyle, nStyle )
    ENDIF
 

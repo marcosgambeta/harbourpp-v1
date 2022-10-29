@@ -104,9 +104,9 @@ METHOD addItem( oItem ) CLASS TopBarMenu
    IF HB_ISOBJECT( oItem ) .AND. oItem:ClassName() == "MENUITEM"
 
       ::nItemCount++
-      AAdd( ::aItems, oItem )
+      AAdd(::aItems, oItem)
 
-      ::nWidth := Max( __CapMetrics( oItem ), ::nWidth )
+      ::nWidth := Max(__CapMetrics( oItem ), ::nWidth)
    ENDIF
 
    RETURN Self
@@ -119,7 +119,7 @@ METHOD delItem( nPos ) CLASS TopBarMenu
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount
 
-      nLen := Len( ::aItems[ nPos ]:caption )
+      nLen := Len(::aItems[ nPos ]:caption)
 
       hb_ADel( ::aItems, nPos, .T. )
       ::nItemCount--
@@ -127,7 +127,7 @@ METHOD delItem( nPos ) CLASS TopBarMenu
       IF ::nWidth == nLen + 2
          nWidth := 0
          FOR EACH item IN ::aItems
-            nWidth := Max( __CapMetrics( item ), nWidth )
+            nWidth := Max(__CapMetrics( item ), nWidth)
          NEXT
          ::nWidth := nWidth
       ENDIF
@@ -153,12 +153,12 @@ METHOD display() CLASS TopBarMenu
 
    DispBegin()
 
-   hb_DispOutAt( nRow, nLeft, Space( nRight - nLeft + 1 ), cColor1 )
+   hb_DispOutAt(nRow, nLeft, Space(nRight - nLeft + 1), cColor1)
 
    FOR EACH item IN ::aItems
 
-      cCaption := " " + RTrim( item:caption ) + " "
-      nCaptionLen := Len( cCaption )
+      cCaption := " " + RTrim(item:caption) + " "
+      nCaptionLen := Len(cCaption)
 
       IF nCaptionLen == 0
          LOOP
@@ -179,8 +179,8 @@ METHOD display() CLASS TopBarMenu
          oPopUp:right := NIL
       ENDIF
 
-      IF ( nPos := At( "&", cCaption ) ) > 0
-         IF nPos == Len( cCaption )
+      IF ( nPos := At("&", cCaption) ) > 0
+         IF nPos == Len(cCaption)
             nPos := 0
          ELSE
             cCaption := Stuff( cCaption, nPos, 1, "" )
@@ -188,13 +188,13 @@ METHOD display() CLASS TopBarMenu
          ENDIF
       ENDIF
 
-      hb_DispOutAt( nRow, nLeft, cCaption, ;
+      hb_DispOutAt(nRow, nLeft, cCaption, ;
          iif( item:__enumIndex() == nCurrent, cColor2, ;
-            iif( item:enabled, cColor1, hb_ColorIndex( ::cColorSpec, 4 ) ) ) )
+            iif( item:enabled, cColor1, hb_ColorIndex( ::cColorSpec, 4 ) ) ))
 
       IF item:enabled .AND. nPos > 0
-         hb_DispOutAt( nRow, nLeft + nPos - 1, SubStr( cCaption, nPos, 1 ), ;
-            iif( item:__enumIndex() == nCurrent, hb_ColorIndex( ::cColorSpec, 3 ), hb_ColorIndex( ::cColorSpec, 2 ) ) )
+         hb_DispOutAt(nRow, nLeft + nPos - 1, SubStr(cCaption, nPos, 1), ;
+            iif( item:__enumIndex() == nCurrent, hb_ColorIndex( ::cColorSpec, 3 ), hb_ColorIndex( ::cColorSpec, 2 ) ))
       ENDIF
 
       nLeft += nCaptionLen
@@ -281,7 +281,7 @@ METHOD getAccel( nKey ) CLASS TopBarMenu
    LOCAL item
 
    IF nIndex > 0
-      cKey := "&" + SubStr( "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", nIndex, 1 )
+      cKey := "&" + SubStr("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", nIndex, 1)
       FOR EACH item IN ::aItems
          IF hb_AtI( cKey, item:caption ) > 0
             RETURN item:__enumIndex()
@@ -321,7 +321,7 @@ METHOD hitTest( nMRow, nMCol ) CLASS TopBarMenu
 
          nColumn := item:__col
 
-         IF nMCol >= nColumn .AND. nMCol <= nColumn + Len( item:caption )
+         IF nMCol >= nColumn .AND. nMCol <= nColumn + Len(item:caption)
             RETURN item:__enumIndex()
          ENDIF
       NEXT
@@ -337,7 +337,7 @@ METHOD insItem( nPos, oItem ) CLASS TopBarMenu
       hb_AIns( ::aItems, nPos, oItem, .T. )
       ::nItemCount++
 
-      ::nWidth := Max( __CapMetrics( oItem ), ::nWidth )
+      ::nWidth := Max(__CapMetrics( oItem ), ::nWidth)
    ENDIF
 
    RETURN Self
@@ -369,7 +369,7 @@ METHOD setItem( nPos, oItem ) CLASS TopBarMenu
 
       ::aItems[ nPos ] := oItem
 
-      ::nWidth := Max( __CapMetrics( oItem ), ::nWidth )
+      ::nWidth := Max(__CapMetrics( oItem ), ::nWidth)
    ENDIF
 
    RETURN Self
@@ -378,7 +378,7 @@ METHOD colorSpec( cColorSpec ) CLASS TopBarMenu
 
    IF cColorSpec != NIL
       ::cColorSpec := __eInstVar53( Self, "COLORSPEC", cColorSpec, "C", 1001, ;
-         {|| ! Empty( hb_ColorIndex( cColorSpec, 5 ) ) .AND. Empty( hb_ColorIndex( cColorSpec, 6 ) ) } )
+         {|| ! Empty(hb_ColorIndex( cColorSpec, 5 )) .AND. Empty(hb_ColorIndex( cColorSpec, 6 )) } )
    ENDIF
 
    RETURN ::cColorSpec

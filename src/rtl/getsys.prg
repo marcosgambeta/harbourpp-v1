@@ -61,7 +61,7 @@ FUNCTION ReadModal( GetList )
    LOCAL oGetList
    LOCAL oSaveGetList
 
-   IF Empty( GetList )
+   IF Empty(GetList)
       SetPos( MaxRow() - 1, 0 )
       RETURN .F.
    ENDIF
@@ -258,13 +258,13 @@ FUNCTION ReadKill( lKill )
 
    RETURN .F.
 
-FUNCTION ReadFormat( bFormat )
+FUNCTION ReadFormat(bFormat)
 
    LOCAL oGetList := __GetListActive()
 
    IF oGetList != NIL
       IF PCount() > 0
-         RETURN oGetList:SetFormat( bFormat )
+         RETURN oGetList:SetFormat(bFormat)
       ELSE
          RETURN oGetList:SetFormat()
       ENDIF
@@ -272,13 +272,13 @@ FUNCTION ReadFormat( bFormat )
 
    RETURN NIL
 
-PROCEDURE __SetFormat( bFormat )
+PROCEDURE __SetFormat(bFormat)
 
    LOCAL oGetList := __GetListActive()
 
    IF oGetList != NIL
       IF HB_ISEVALITEM( bFormat )
-         oGetList:SetFormat( bFormat )
+         oGetList:SetFormat(bFormat)
       ELSE
          oGetList:SetFormat()
       ENDIF
@@ -312,16 +312,16 @@ FUNCTION RangeCheck( oGet, xDummy, xLow, xHigh )
 
    IF Set( _SET_SCOREBOARD )
 
-      cMessage := Left( __natMsg( _GET_RANGE_FROM ) + LTrim( Transform( xLow, "" ) ) + ;
-         __natMsg( _GET_RANGE_TO ) + LTrim( Transform( xHigh, "" ) ), MaxCol() )
+      cMessage := Left(__natMsg( _GET_RANGE_FROM ) + LTrim(Transform(xLow, "")) + ;
+         __natMsg( _GET_RANGE_TO ) + LTrim(Transform(xHigh, "")), MaxCol())
 
-      hb_DispOutAt( SCORE_ROW, Min( 60, MaxCol() - Len( cMessage ) ), cMessage )
+      hb_DispOutAt(SCORE_ROW, Min(60, MaxCol() - Len(cMessage)), cMessage)
 
       DO WHILE ( nKey := Inkey( 0 ) ) == 0
       ENDDO
       hb_keyIns( nKey )
 
-      hb_DispOutAt( SCORE_ROW, Min( 60, MaxCol() - Len( cMessage ) ), Space( Len( cMessage ) ) )
+      hb_DispOutAt(SCORE_ROW, Min(60, MaxCol() - Len(cMessage)), Space(Len(cMessage)))
 
    ENDIF
 

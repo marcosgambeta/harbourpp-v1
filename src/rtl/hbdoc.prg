@@ -51,7 +51,7 @@
 #define _HBDOC_SRC_SUBDIR       "doc"
 #define _HBDOC_SRC_EXT          ".txt"
 
-#define _HBDOC_ADD_MSG( a, m )  IF HB_ISARRAY( a ); AAdd( a, m ); ENDIF
+#define _HBDOC_ADD_MSG( a, m )  IF HB_ISARRAY( a ); AAdd(a, m); ENDIF
 
 REQUEST hb_ZCompress
 
@@ -133,7 +133,7 @@ FUNCTION __hbdoc_LoadDir( cDir, cName, aErrMsg )
          NEXT
 
          IF nCount == 0
-            _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat( "Warning: Component (%1$s) has no language subdirs", cDir ) )
+            _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat("Warning: Component (%1$s) has no language subdirs", cDir) )
          ENDIF
       ENDIF
    ENDIF
@@ -154,7 +154,7 @@ STATIC PROCEDURE __hbdoc__read_langdir( aEntry, cDir, hMeta, aErrMsg )
    NEXT
 
    IF nCount == 0
-      _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat( "Warning: Component (%1$s) has no documentation files", cDir ) )
+      _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat("Warning: Component (%1$s) has no documentation files", cDir) )
    ENDIF
 
    RETURN
@@ -196,21 +196,21 @@ STATIC PROCEDURE __hbdoc__read_stream( aEntry, cFile, cFileName, hMeta, aErrMsg 
    LOCAL nLine
    LOCAL nStartCol
 
-   cFile := StrTran( cFile, Chr( 13 ) )
-   cFile := StrTran( cFile, Chr( 9 ), " " )
+   cFile := StrTran(cFile, Chr(13))
+   cFile := StrTran(cFile, Chr(9), " ")
 
    nLine := 0
-   FOR EACH cLine IN hb_ATokens( cFile, Chr( 10 ) )
+   FOR EACH cLine IN hb_ATokens( cFile, Chr(10) )
 
-      cLine := SubStr( cLine, 4 )
+      cLine := SubStr(cLine, 4)
       ++nLine
 
-      SWITCH AllTrim( cLine )
+      SWITCH AllTrim(cLine)
       CASE "$DOC$"
          IF hEntry != NIL
-            _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat( "Warning: %1$s: %2$d: $DOC$ without $END$", cFileName, nLine ) )
-         ELSEIF ! Empty( hEntry )
-            AAdd( aEntry, hEntry )
+            _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: $DOC$ without $END$", cFileName, nLine) )
+         ELSEIF ! Empty(hEntry)
+            AAdd(aEntry, hEntry)
          ENDIF
          hEntry := { => }
          IF HB_ISHASH( hMeta )
@@ -221,41 +221,41 @@ STATIC PROCEDURE __hbdoc__read_stream( aEntry, cFile, cFileName, hMeta, aErrMsg 
          EXIT
       CASE "$END$"
          IF hEntry == NIL
-            _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat( "Warning: %1$s: %2$d: $END$ without $DOC$", cFileName, nLine ) )
-         ELSEIF ! Empty( hEntry )
-            AAdd( aEntry, hEntry )
+            _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: $END$ without $DOC$", cFileName, nLine) )
+         ELSEIF ! Empty(hEntry)
+            AAdd(aEntry, hEntry)
          ENDIF
          hEntry := NIL
          EXIT
       OTHERWISE
          IF hEntry == NIL
             /* Ignore line outside entry. Don't warn, this is normal. */
-         ELSEIF Left( LTrim( cLine ), 1 ) == "$" .AND. Right( RTrim( cLine ), 1 ) == "$"
-            cLine := AllTrim( cLine )
-            cSection := SubStr( cLine, 2, Len( cLine ) - 2 )
+         ELSEIF Left(LTrim(cLine), 1) == "$" .AND. Right(RTrim(cLine), 1) == "$"
+            cLine := AllTrim(cLine)
+            cSection := SubStr(cLine, 2, Len(cLine) - 2)
             IF cSection $ hEntry
-               _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat( "Warning: %1$s: %2$d: Duplicate sections inside the same entry", cFileName, nLine ) )
+               _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: Duplicate sections inside the same entry", cFileName, nLine) )
             ELSE
                hEntry[ cSection ] := ""
             ENDIF
-         ELSEIF ! Empty( cSection )
-            IF Empty( hEntry[ cSection ] )
+         ELSEIF ! Empty(cSection)
+            IF Empty(hEntry[ cSection ])
                /* some "heuristics" to detect in which column the real content starts,
                   we assume the first line of content is correct, and use this with all
                   consecutive lines. [vszakats] */
-               nStartCol := Len( cLine ) - Len( LTrim( cLine ) ) + 1
+               nStartCol := Len(cLine) - Len(LTrim(cLine)) + 1
             ELSE
-               hEntry[ cSection ] += Chr( 10 )
+               hEntry[ cSection ] += Chr(10)
             ENDIF
-            hEntry[ cSection ] += SubStr( cLine, nStartCol )
-         ELSEIF ! Empty( cLine )
-            _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat( "Warning: %1$s: %2$d: Content outside section", cFileName, nLine ) )
+            hEntry[ cSection ] += SubStr(cLine, nStartCol)
+         ELSEIF ! Empty(cLine)
+            _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: Content outside section", cFileName, nLine) )
          ENDIF
       ENDSWITCH
    NEXT
 
    IF hEntry != NIL
-      _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat( "Warning: %1$s: %2$d: $DOC$ without $END$", cFileName, nLine ) )
+      _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: $DOC$ without $END$", cFileName, nLine) )
    ENDIF
 
    RETURN
@@ -275,9 +275,9 @@ FUNCTION __hbdoc_ToSource( aEntry )
          FOR EACH item IN hEntry
             IF HB_ISSTRING( item ) .AND. ! hb_LeftEq( item:__enumKey(), "_" )
                cSource += "   $" + item:__enumKey() + "$" + hb_eol()
-               FOR EACH cLine IN hb_ATokens( StrTran( item, Chr( 13 ) ), Chr( 10 ) )
-                  cLineOut := iif( Len( cLine ) == 0, "", Space( 4 ) + cLine )
-                  cSource += iif( Empty( cLineOut ), "", "  " + cLineOut ) + hb_eol()
+               FOR EACH cLine IN hb_ATokens( StrTran(item, Chr(13)), Chr(10) )
+                  cLineOut := iif( Len(cLine) == 0, "", Space(4) + cLine )
+                  cSource += iif( Empty(cLineOut), "", "  " + cLineOut ) + hb_eol()
                NEXT
             ENDIF
          NEXT
@@ -288,7 +288,7 @@ FUNCTION __hbdoc_ToSource( aEntry )
 
    RETURN cSource
 
-FUNCTION __hbdoc_FilterOut( cFile )
+FUNCTION __hbdoc_FilterOut(cFile)
 
    LOCAL lEntry := .F.
    LOCAL cLine
@@ -296,12 +296,12 @@ FUNCTION __hbdoc_FilterOut( cFile )
    LOCAL nToSkip := 0
    LOCAL nEmpty := 0
 
-   cFile := StrTran( cFile, Chr( 13 ) )
-   cFile := StrTran( cFile, Chr( 9 ), " " )
+   cFile := StrTran(cFile, Chr(13))
+   cFile := StrTran(cFile, Chr(9), " ")
 
-   FOR EACH cLine IN hb_ATokens( cFile, Chr( 10 ) )
+   FOR EACH cLine IN hb_ATokens( cFile, Chr(10) )
 
-      SWITCH AllTrim( SubStr( cLine, 4 ) )
+      SWITCH AllTrim(SubStr(cLine, 4))
       CASE "$DOC$"
          lEntry := .T.
          EXIT
@@ -314,7 +314,7 @@ FUNCTION __hbdoc_FilterOut( cFile )
             IF nToSkip > 0
                nToSkip--
             ELSE
-               IF Empty( cLine )
+               IF Empty(cLine)
                   nEmpty++
                ELSE
                   nEmpty := 0
@@ -391,11 +391,11 @@ FUNCTION __hbdoc_LoadHBD( cFileName )
 
       IF ( fhnd := FOpen( cFileName ) ) != F_ERROR
 
-         IF hb_FReadLen( fhnd, _HBDOC_SIG_LEN ) == _HBDOC_SIGNATURE
+         IF hb_FReadLen(fhnd, _HBDOC_SIG_LEN) == _HBDOC_SIGNATURE
 
-            cBuffer := Space( FSeek( fhnd, 0, FS_END ) - _HBDOC_SIG_LEN )
+            cBuffer := Space(FSeek( fhnd, 0, FS_END ) - _HBDOC_SIG_LEN)
             FSeek( fhnd, _HBDOC_SIG_LEN, FS_SET )
-            FRead( fhnd, @cBuffer, hb_BLen( cBuffer ) )
+            FRead( fhnd, @cBuffer, hb_BLen(cBuffer) )
             FClose( fhnd )
 
             aEntry := hb_Deserialize( cBuffer )

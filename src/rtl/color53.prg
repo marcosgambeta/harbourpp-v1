@@ -54,7 +54,7 @@ FUNCTION GetClrPair( cColor, nColor )
       RETURN ""
    ENDIF
 
-   RETURN SubStr( cColor, nPos, GetPairLen( cColor, nColor ) )
+   RETURN SubStr(cColor, nPos, GetPairLen(cColor, nColor))
 
 FUNCTION SetClrPair( cColor, nColor, cNewColor )
 
@@ -64,7 +64,7 @@ FUNCTION SetClrPair( cColor, nColor, cNewColor )
       RETURN ""
    ENDIF
 
-   RETURN Stuff( cColor, nPos, GetPairLen( cColor, nColor ), cNewColor )
+   RETURN Stuff( cColor, nPos, GetPairLen(cColor, nColor), cNewColor )
 
 FUNCTION GetPairPos( cColor, nColor )
 
@@ -73,7 +73,7 @@ FUNCTION GetPairPos( cColor, nColor )
    LOCAL n
 
    FOR n := 2 TO nColor
-      IF ( nSep := At( ",", SubStr( cColor, nPos ) ) ) == 0
+      IF ( nSep := At(",", SubStr(cColor, nPos)) ) == 0
          RETURN 0
       ENDIF
       nPos += nSep
@@ -81,7 +81,7 @@ FUNCTION GetPairPos( cColor, nColor )
 
    RETURN nPos
 
-FUNCTION GetPairLen( cColor, nColor )
+FUNCTION GetPairLen(cColor, nColor)
 
    LOCAL nPos
    LOCAL nLen
@@ -90,28 +90,28 @@ FUNCTION GetPairLen( cColor, nColor )
       RETURN 0
    ENDIF
 
-   RETURN iif( ( nLen := At( ",", SubStr( cColor, nPos ) ) ) == 0, ;
-               Len( cColor ) - nPos + 1, nLen - 1 )
+   RETURN iif( ( nLen := At(",", SubStr(cColor, nPos)) ) == 0, ;
+               Len(cColor) - nPos + 1, nLen - 1 )
 
 FUNCTION GetClrFore( cColor )
 
    LOCAL nPos
 
-   IF ( nPos := At( "/", cColor ) ) == 0
+   IF ( nPos := At("/", cColor) ) == 0
       RETURN ""
    ENDIF
 
-   RETURN Left( cColor, nPos - 1 )
+   RETURN Left(cColor, nPos - 1)
 
 FUNCTION GetClrBack( cColor )
 
    LOCAL nPos
 
-   IF ( nPos := At( "/", cColor ) ) == 0
+   IF ( nPos := At("/", cColor) ) == 0
       RETURN ""
    ENDIF
 
-   RETURN SubStr( cColor, nPos + 1 )
+   RETURN SubStr(cColor, nPos + 1)
 
 FUNCTION RadGrDefCo( cColor )
    RETURN iif( IsDefColor(), ;

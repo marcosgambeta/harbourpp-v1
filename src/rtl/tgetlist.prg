@@ -514,7 +514,7 @@ METHOD GetApplyKey( nKey, oGet, oMenu, aMsg ) CLASS HBGetList
 
             IF oGet:typeOut
                IF Set( _SET_BELL )
-                  QQOut( Chr( 7 ) )
+                  QQOut(Chr(7))
                ENDIF
                IF ! Set( _SET_CONFIRM )
                   oGet:exitState := GE_ENTER
@@ -600,7 +600,7 @@ METHOD GetPostValidate( oGet, aMsg ) CLASS HBGetList
       lUpdated := ::lUpdated
 
       IF HB_ISSTRING( oGet:buffer )
-         SetPos( oGet:row, oGet:col + Len( oGet:buffer ) )
+         SetPos( oGet:row, oGet:col + Len(oGet:buffer) )
       ENDIF
       lValid := Eval( oGet:postBlock, oGet, aMsg )
       SetPos( oGet:row, oGet:col )
@@ -702,7 +702,7 @@ METHOD Settle( nPos, lInit ) CLASS HBGetList
       EXIT
 
    CASE GE_BOTTOM
-      nPos := Len( ::aGetList )
+      nPos := Len(::aGetList)
       ::lBumpBot := .T.
       nExitState := GE_UP
       EXIT
@@ -726,7 +726,7 @@ METHOD Settle( nPos, lInit ) CLASS HBGetList
          nExitState := GE_DOWN
       ENDIF
 
-   ELSEIF nPos == Len( ::aGetList ) + 1
+   ELSEIF nPos == Len(::aGetList) + 1
       IF ! Set( _SET_EXIT ) .AND. nExitState != GE_ENTER .AND. ! ::lBumpTop
          ::lBumpBot := .T.
          nPos       := ::nLastPos
@@ -789,11 +789,11 @@ METHOD ShowScoreboard() CLASS HBGetList
 
    IF Set( _SET_SCOREBOARD )
 
-      hb_DispOutAt( SCORE_ROW, SCORE_COL, iif( Set( _SET_INSERT ), ;
+      hb_DispOutAt(SCORE_ROW, SCORE_COL, iif( Set( _SET_INSERT ), ;
          __natMsg( _GET_INSERT_ON ), ;
-         iif( Len( __natMsg( _GET_INSERT_OFF ) ) == Len( __natMsg( _GET_INSERT_ON ) ), ;
+         iif( Len(__natMsg( _GET_INSERT_OFF )) == Len(__natMsg( _GET_INSERT_ON )), ;
             __natMsg( _GET_INSERT_OFF ), ;
-            Space( Len( __natMsg( _GET_INSERT_ON ) ) ) ) ) )
+            Space(Len(__natMsg( _GET_INSERT_ON ))) ) ))
 
    ENDIF
 
@@ -805,13 +805,13 @@ METHOD DateMsg() CLASS HBGetList
 
    IF Set( _SET_SCOREBOARD )
 
-      hb_DispOutAt( SCORE_ROW, SCORE_COL, __natMsg( _GET_INVD_DATE ) )
+      hb_DispOutAt(SCORE_ROW, SCORE_COL, __natMsg( _GET_INVD_DATE ))
 
       DO WHILE ( nKey := Inkey( 0 ) ) == 0
       ENDDO
       hb_keyIns( nKey )
 
-      hb_DispOutAt( SCORE_ROW, SCORE_COL, Space( Len( __natMsg( _GET_INVD_DATE ) ) ) )
+      hb_DispOutAt(SCORE_ROW, SCORE_COL, Space(Len(__natMsg( _GET_INVD_DATE ))))
 
    ENDIF
 
@@ -1416,16 +1416,16 @@ METHOD Accelerator( nKey, aMsg ) CLASS HBGetList
    LOCAL lGUI
 
    DO CASE
-   CASE nKey >= K_ALT_Q .AND. nKey <= K_ALT_P ; cKey := SubStr( "qwertyuiop", nKey - K_ALT_Q + 1, 1 )
-   CASE nKey >= K_ALT_A .AND. nKey <= K_ALT_L ; cKey := SubStr( "asdfghjkl", nKey - K_ALT_A + 1, 1 )
-   CASE nKey >= K_ALT_Z .AND. nKey <= K_ALT_M ; cKey := SubStr( "zxcvbnm", nKey - K_ALT_Z + 1, 1 )
-   CASE nKey >= K_ALT_1 .AND. nKey <= K_ALT_0 ; cKey := SubStr( "1234567890", nKey - K_ALT_1 + 1, 1 )
+   CASE nKey >= K_ALT_Q .AND. nKey <= K_ALT_P ; cKey := SubStr("qwertyuiop", nKey - K_ALT_Q + 1, 1)
+   CASE nKey >= K_ALT_A .AND. nKey <= K_ALT_L ; cKey := SubStr("asdfghjkl", nKey - K_ALT_A + 1, 1)
+   CASE nKey >= K_ALT_Z .AND. nKey <= K_ALT_M ; cKey := SubStr("zxcvbnm", nKey - K_ALT_Z + 1, 1)
+   CASE nKey >= K_ALT_1 .AND. nKey <= K_ALT_0 ; cKey := SubStr("1234567890", nKey - K_ALT_1 + 1, 1)
    OTHERWISE
       RETURN 0
    ENDCASE
 
    nStart := ::nPos + 1
-   nEnd   := Len( ::aGetList )
+   nEnd   := Len(::aGetList)
 
    FOR nIteration := 1 TO 2
       FOR nGet := nStart TO nEnd
@@ -1440,9 +1440,9 @@ METHOD Accelerator( nKey, aMsg ) CLASS HBGetList
             cCaption := oGet:caption
          ENDIF
 
-         IF ( nHotPos := At( "&", cCaption ) ) == 0
-         ELSEIF nHotPos == Len( cCaption )
-         ELSEIF Lower( SubStr( cCaption, nHotPos + 1, 1 ) ) == cKey
+         IF ( nHotPos := At("&", cCaption) ) == 0
+         ELSEIF nHotPos == Len(cCaption)
+         ELSEIF Lower( SubStr(cCaption, nHotPos + 1, 1) ) == cKey
 
             // Test the current GUI-GET or Get PostValidation:
             lGUI := HB_ISOBJECT( ::aGetList[ ::nPos ]:control )
@@ -1615,15 +1615,15 @@ METHOD ShowGetMsg( oGet, aMsg ) CLASS HBGetList
    LOCAL cMsg
    LOCAL lMOldState
 
-   IF ! Empty( aMsg ) .AND. aMsg[ MSGFLAG ]
+   IF ! Empty(aMsg) .AND. aMsg[ MSGFLAG ]
 
       hb_default( @oGet, ::oGet )
 
       cMsg := iif( HB_ISOBJECT( oGet:control ), oGet:control:message, oGet:message )
 
-      IF ! Empty( cMsg )
+      IF ! Empty(cMsg)
          lMOldState := MSetCursor( .F. )
-         hb_DispOutAt( aMsg[ MSGROW ], aMsg[ MSGLEFT ], PadC( cMsg, aMsg[ MSGRIGHT ] - aMsg[ MSGLEFT ] + 1 ), aMsg[ MSGCOLOR ] )
+         hb_DispOutAt(aMsg[ MSGROW ], aMsg[ MSGLEFT ], PadC( cMsg, aMsg[ MSGRIGHT ] - aMsg[ MSGLEFT ] + 1 ), aMsg[ MSGCOLOR ])
          MSetCursor( lMOldState )
       ENDIF
    ENDIF
@@ -1641,7 +1641,7 @@ METHOD EraseGetMsg( aMsg ) CLASS HBGetList
    LOCAL nCol := Col()
    LOCAL lMOldState
 
-   IF ! Empty( aMsg ) .AND. aMsg[ MSGFLAG ]
+   IF ! Empty(aMsg) .AND. aMsg[ MSGFLAG ]
       lMOldState := MSetCursor( .F. )
       RestScreen( aMsg[ MSGROW ], aMsg[ MSGLEFT ], aMsg[ MSGROW ], aMsg[ MSGRIGHT ], ::cMsgSaveS )
       MSetCursor( lMOldState )
@@ -1660,7 +1660,7 @@ METHOD New( GetList ) CLASS HBGetList
 
    ::aGetList := GetList
 
-   IF HB_ISARRAY( GetList ) .AND. Len( GetList ) >= 1
+   IF HB_ISARRAY( GetList ) .AND. Len(GetList) >= 1
       ::oGet := GetList[ 1 ]
    ENDIF
 
