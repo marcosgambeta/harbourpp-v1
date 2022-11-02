@@ -74,8 +74,8 @@ CREATE CLASS TBColumn
 #endif
    /* --- End of CA-Cl*pper compatible TBColumn instance area --- */
 
-   METHOD block( bBlock ) SETGET                     /* Code block to retrieve data for the column */
-   METHOD colorBlock( bColorBlock ) SETGET           /* Code block that determines color of data items */
+   METHOD block(bBlock) SETGET                     /* Code block to retrieve data for the column */
+   METHOD colorBlock(bColorBlock) SETGET           /* Code block that determines color of data items */
    METHOD defColor( aDefColor ) SETGET               /* Array of numeric indexes into the color table */
    METHOD colSep( cColSep ) SETGET                   /* Column separator character */
    METHOD heading( cHeading ) SETGET                 /* Column heading */
@@ -84,8 +84,8 @@ CREATE CLASS TBColumn
    METHOD footSep( cFootSep ) SETGET                 /* Footing separator character */
    METHOD width( nWidth ) SETGET                     /* Column display width */
 #ifdef HB_COMPAT_C53
-   METHOD preBlock( bPreBlock ) SETGET               /* Code block determining editing */
-   METHOD postBlock( bPostBlock ) SETGET             /* Code block validating values */
+   METHOD preBlock(bPreBlock) SETGET               /* Code block determining editing */
+   METHOD postBlock(bPostBlock) SETGET             /* Code block validating values */
    METHOD setStyle( nStyle, lNewValue )
 #endif
 
@@ -93,7 +93,7 @@ CREATE CLASS TBColumn
 
 ENDCLASS
 
-METHOD block( bBlock ) CLASS TBColumn
+METHOD block(bBlock) CLASS TBColumn
 
    IF bBlock != NIL
       ::bBlock := __eInstVar53( Self, "BLOCK", bBlock, "B", 1001 )
@@ -101,7 +101,7 @@ METHOD block( bBlock ) CLASS TBColumn
 
    RETURN ::bBlock
 
-METHOD colorBlock( bColorBlock ) CLASS TBColumn
+METHOD colorBlock(bColorBlock) CLASS TBColumn
 
    IF bColorBlock != NIL
       ::bColorBlock := __eInstVar53( Self, "COLORBLOCK", bColorBlock, "B", 1001 )
@@ -167,7 +167,7 @@ METHOD width( nWidth ) CLASS TBColumn
 
 #ifdef HB_COMPAT_C53
 
-METHOD preBlock( bPreBlock ) CLASS TBColumn
+METHOD preBlock(bPreBlock) CLASS TBColumn
 
    IF bPreBlock != NIL
       ::bPreBlock := __eInstVar53( Self, "PREBLOCK", bPreBlock, "B", 1001 )
@@ -175,7 +175,7 @@ METHOD preBlock( bPreBlock ) CLASS TBColumn
 
    RETURN ::bPreBlock
 
-METHOD postBlock( bPostBlock ) CLASS TBColumn
+METHOD postBlock(bPostBlock) CLASS TBColumn
 
    IF bPostBlock != NIL
       ::bPostBlock := __eInstVar53( Self, "POSTBLOCK", bPostBlock, "B", 1001 )
@@ -189,14 +189,14 @@ METHOD setStyle( nStyle, lNewValue ) CLASS TBColumn
             it is zero or non-numeric, a regular RTE will happen. [vszakats] */
 
    IF nStyle > Len(::aSetStyle) .AND. nStyle <= 4096  /* Some reasonable limit for maximum number of styles */
-      ASize( ::aSetStyle, nStyle )
+      ASize(::aSetStyle, nStyle)
    ENDIF
 
-   IF HB_ISLOGICAL( lNewValue )
-      ::aSetStyle[ nStyle ] := lNewValue
+   IF HB_ISLOGICAL(lNewValue)
+      ::aSetStyle[nStyle] := lNewValue
    ENDIF
 
-   RETURN ::aSetStyle[ nStyle ]
+   RETURN ::aSetStyle[nStyle]
 
 #endif
 

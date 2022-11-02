@@ -62,8 +62,8 @@ FUNCTION MenuModal( oTopMenu, nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColo
 /* Dummy function */
 FUNCTION ShowMsg( aMsg, lMode )
 
-   HB_SYMBOL_UNUSED( aMsg )
-   HB_SYMBOL_UNUSED( lMode )
+   HB_SYMBOL_UNUSED(aMsg)
+   HB_SYMBOL_UNUSED(lMode)
 
    RETURN .F.
 
@@ -84,12 +84,10 @@ FUNCTION IsShortcut( oMenu, nKey, /* @ */ nID )
 
    // Test and assign top menu item shortCut, enabled, and ! PopUp:
    // Changed by enclosing assignment before ':Enabled':
-   CASE ( nShortCut := oMenu:getShortCt( nKey ) ) > 0 .AND. ;
-        ( oItem := oMenu:getItem( nShortcut ) ):enabled .AND. ;
-        ! oItem:isPopUp()
+   CASE ( nShortCut := oMenu:getShortCt( nKey ) ) > 0 .AND. ( oItem := oMenu:getItem( nShortcut ) ):enabled .AND. ! oItem:isPopUp()
 
       oMenu:select( nShortCut )
-      Eval( oItem:data, oItem )
+      Eval(oItem:data, oItem)
       nID := oItem:ID
 
       RETURN .T.
@@ -107,9 +105,7 @@ FUNCTION IsShortcut( oMenu, nKey, /* @ */ nID )
       // Loop to wrap around through TopMenu from Current Item:
       FOR i := 1 TO nTotal
 
-         IF ( oItem := oMenu:getItem( nItem ) ):enabled .AND. ;
-            oItem:isPopUp() .AND. ;
-            IsQuick( oItem:data, nKey, @nID )
+         IF ( oItem := oMenu:getItem( nItem ) ):enabled .AND. oItem:isPopUp() .AND. IsQuick( oItem:data, nKey, @nID )
 
             RETURN .T.
          ENDIF
@@ -138,9 +134,7 @@ FUNCTION IsQuick( oMenu, nKey, /* @ */ nID )
 
       FOR nItem := 1 TO nTotal
 
-         IF ( oItem := oMenu:getItem( nItem ) ):enabled .AND. ;
-            oItem:isPopUp() .AND. ;
-            IsQuick( oItem:data, nKey, @nID )
+         IF ( oItem := oMenu:getItem( nItem ) ):enabled .AND. oItem:isPopUp() .AND. IsQuick( oItem:data, nKey, @nID )
 
             RETURN .T.
          ENDIF
@@ -149,7 +143,7 @@ FUNCTION IsQuick( oMenu, nKey, /* @ */ nID )
    ELSEIF !( oItem := oMenu:getItem( nShortCut ) ):isPopUp() .AND. oItem:enabled
 
       oMenu:select( nShortCut )
-      Eval( oItem:data, oItem )
+      Eval(oItem:data, oItem)
       nID := oItem:ID
 
       RETURN .T.

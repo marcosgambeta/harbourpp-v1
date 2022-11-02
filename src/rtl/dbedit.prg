@@ -57,11 +57,8 @@
 /* NOTE: Harbour is multithreading ready and Clipper only reentrant safe
          [vszakats] */
 
-FUNCTION dbEdit( nTop, nLeft, nBottom, nRight, ;
-      acColumns, xUserFunc, ;
-      xColumnSayPictures, xColumnHeaders, ;
-      xHeadingSeparators, xColumnSeparators, ;
-      xFootingSeparators, xColumnFootings )
+FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPictures, xColumnHeaders, ;
+      xHeadingSeparators, xColumnSeparators, xFootingSeparators, xColumnFootings)
 
    LOCAL nOldCUrsor, nKey, lContinue, nPos, nAliasPos, nColCount
    LOCAL lDoIdleCall, lAppend, lFlag
@@ -77,30 +74,30 @@ FUNCTION dbEdit( nTop, nLeft, nBottom, nRight, ;
       dbGoBottom()
    ENDIF
 
-   IF ! HB_ISNUMERIC( nTop ) .OR. nTop < 0
+   IF ! HB_ISNUMERIC(nTop) .OR. nTop < 0
       nTop := 0
    ENDIF
-   IF ! HB_ISNUMERIC( nLeft ) .OR. nLeft < 0
+   IF ! HB_ISNUMERIC(nLeft) .OR. nLeft < 0
       nLeft := 0
    ENDIF
-   IF ! HB_ISNUMERIC( nBottom ) .OR. nBottom > MaxRow() .OR. nBottom < nTop
+   IF ! HB_ISNUMERIC(nBottom) .OR. nBottom > MaxRow() .OR. nBottom < nTop
       nBottom := MaxRow()
    ENDIF
-   IF ! HB_ISNUMERIC( nRight ) .OR. nRight > MaxCol() .OR. nRight < nLeft
+   IF ! HB_ISNUMERIC(nRight) .OR. nRight > MaxCol() .OR. nRight < nLeft
       nRight := MaxCol()
    ENDIF
 
-   oBrowse := TBrowseDB( nTop, nLeft, nBottom, nRight )
-   oBrowse:headSep   := iif( HB_ISSTRING( xHeadingSeparators ), xHeadingSeparators, hb_UTF8ToStrBox( "═╤═" ) )
-   oBrowse:colSep    := iif( HB_ISSTRING( xColumnSeparators ), xColumnSeparators, hb_UTF8ToStrBox( " │ " ) )
+   oBrowse := TBrowseDB(nTop, nLeft, nBottom, nRight)
+   oBrowse:headSep   := iif( HB_ISSTRING(xHeadingSeparators), xHeadingSeparators, hb_UTF8ToStrBox( "═╤═" ) )
+   oBrowse:colSep    := iif( HB_ISSTRING(xColumnSeparators), xColumnSeparators, hb_UTF8ToStrBox( " │ " ) )
    oBrowse:footSep   := hb_defaultValue( xFootingSeparators, "" )
-   oBrowse:skipBlock := {| nRecs | Skipped( nRecs, lAppend ) }
+   oBrowse:skipBlock := {| nRecs | Skipped(nRecs, lAppend) }
    oBrowse:autoLite  := .F.  /* Set to .F. just like in CA-Cl*pper. [vszakats] */
 
-   IF HB_ISARRAY( acColumns )
+   IF HB_ISARRAY(acColumns)
       nColCount := 0
       FOR EACH aCol IN acColumns
-         IF HB_ISSTRING( aCol ) .AND. ! Empty(aCol)
+         IF HB_ISSTRING(aCol) .AND. ! Empty(aCol)
             nColCount++
          ELSE
             EXIT
@@ -118,11 +115,10 @@ FUNCTION dbEdit( nTop, nLeft, nBottom, nRight, ;
 
    FOR nPos := 1 TO nColCount
 
-      IF HB_ISARRAY( acColumns )
-         cBlock := acColumns[ nPos ]
+      IF HB_ISARRAY(acColumns)
+         cBlock := acColumns[nPos]
          IF ( nAliasPos := At("->", cBlock) ) > 0
-            cHeading := Left(cBlock, nAliasPos - 1) + "->;" + ;
-                        SubStr(cBlock, nAliasPos + 2)
+            cHeading := Left(cBlock, nAliasPos - 1) + "->;" + SubStr(cBlock, nAliasPos + 2)
          ELSE
             cHeading := cBlock
          ENDIF
@@ -140,47 +136,47 @@ FUNCTION dbEdit( nTop, nLeft, nBottom, nRight, ;
          creating codeblocks which are able to _assign_ values, as dbEdit()
          is a read-only function. [vszakats] */
 
-      bBlock := iif( Type( cBlock ) == "M", {|| "  <Memo>  " }, hb_macroBlock( cBlock ) )
+      bBlock := iif( Type( cBlock ) == "M", {|| "  <Memo>  " }, hb_macroBlock(cBlock) )
 
       DO CASE
-      CASE HB_ISARRAY( xColumnHeaders ) .AND. Len(xColumnHeaders) >= nPos .AND. HB_ISSTRING( xColumnHeaders[ nPos ] )
-         cHeading := xColumnHeaders[ nPos ]
-      CASE HB_ISSTRING( xColumnHeaders )
+      CASE HB_ISARRAY(xColumnHeaders) .AND. Len(xColumnHeaders) >= nPos .AND. HB_ISSTRING(xColumnHeaders[nPos])
+         cHeading := xColumnHeaders[nPos]
+      CASE HB_ISSTRING(xColumnHeaders)
          cHeading := xColumnHeaders
       ENDCASE
 
       oColumn := TBColumnNew( cHeading, bBlock )
 
       DO CASE
-      CASE HB_ISARRAY( xColumnSayPictures ) .AND. nPos <= Len(xColumnSayPictures) .AND. HB_ISSTRING( xColumnSayPictures[ nPos ] ) .AND. ! Empty(xColumnSayPictures[ nPos ])
-         oColumn:picture := xColumnSayPictures[ nPos ]
-      CASE HB_ISSTRING( xColumnSayPictures ) .AND. ! Empty(xColumnSayPictures)
+      CASE HB_ISARRAY(xColumnSayPictures) .AND. nPos <= Len(xColumnSayPictures) .AND. HB_ISSTRING(xColumnSayPictures[nPos]) .AND. ! Empty(xColumnSayPictures[nPos])
+         oColumn:picture := xColumnSayPictures[nPos]
+      CASE HB_ISSTRING(xColumnSayPictures) .AND. ! Empty(xColumnSayPictures)
          oColumn:picture := xColumnSayPictures
       ENDCASE
 
       DO CASE
-      CASE HB_ISARRAY( xColumnFootings ) .AND. nPos <= Len(xColumnFootings) .AND. HB_ISSTRING( xColumnFootings[ nPos ] )
-         oColumn:footing := xColumnFootings[ nPos ]
-      CASE HB_ISSTRING( xColumnFootings )
+      CASE HB_ISARRAY(xColumnFootings) .AND. nPos <= Len(xColumnFootings) .AND. HB_ISSTRING(xColumnFootings[nPos])
+         oColumn:footing := xColumnFootings[nPos]
+      CASE HB_ISSTRING(xColumnFootings)
          oColumn:footing := xColumnFootings
       ENDCASE
 
-      IF HB_ISARRAY( xHeadingSeparators ) .AND. nPos <= Len(xHeadingSeparators) .AND. HB_ISSTRING( xHeadingSeparators[ nPos ] )
-         oColumn:headSep := xHeadingSeparators[ nPos ]
+      IF HB_ISARRAY(xHeadingSeparators) .AND. nPos <= Len(xHeadingSeparators) .AND. HB_ISSTRING(xHeadingSeparators[nPos])
+         oColumn:headSep := xHeadingSeparators[nPos]
       ENDIF
 
-      IF HB_ISARRAY( xColumnSeparators ) .AND. nPos <= Len(xColumnSeparators) .AND. HB_ISSTRING( xColumnSeparators[ nPos ] )
-         oColumn:colSep := xColumnSeparators[ nPos ]
+      IF HB_ISARRAY(xColumnSeparators) .AND. nPos <= Len(xColumnSeparators) .AND. HB_ISSTRING(xColumnSeparators[nPos])
+         oColumn:colSep := xColumnSeparators[nPos]
       ENDIF
 
-      IF HB_ISARRAY( xFootingSeparators ) .AND. nPos <= Len(xFootingSeparators) .AND. HB_ISSTRING( xFootingSeparators[ nPos ] )
-         oColumn:footSep := xFootingSeparators[ nPos ]
+      IF HB_ISARRAY(xFootingSeparators) .AND. nPos <= Len(xFootingSeparators) .AND. HB_ISSTRING(xFootingSeparators[nPos])
+         oColumn:footSep := xFootingSeparators[nPos]
       ENDIF
 
       oBrowse:addColumn( oColumn )
    NEXT
 
-   nOldCUrsor := SetCursor( SC_NONE )
+   nOldCUrsor := SetCursor(SC_NONE)
 
    /* Go into the processing loop */
 
@@ -215,14 +211,14 @@ FUNCTION dbEdit( nTop, nLeft, nBottom, nRight, ;
          IF lContinue .AND. lFlag
             oBrowse:hiLite()
 #ifdef HB_COMPAT_C53
-            DO WHILE ( nKey := Inkey( 0 ) ) == K_MOUSEMOVE
+            DO WHILE ( nKey := Inkey(0) ) == K_MOUSEMOVE
             ENDDO
 #else
-            nKey := Inkey( 0 )
+            nKey := Inkey(0)
 #endif
             oBrowse:deHilite()
-            IF ( bBlock := SetKey( nKey ) ) != NIL
-               Eval( bBlock, ProcName( 1 ), ProcLine( 1 ), "" )
+            IF ( bBlock := SetKey(nKey) ) != NIL
+               Eval(bBlock, ProcName(1), ProcLine(1), "")
                LOOP
             ENDIF
          ELSE
@@ -277,7 +273,7 @@ FUNCTION dbEdit( nTop, nLeft, nBottom, nRight, ;
       ENDIF
    ENDDO
 
-   SetCursor( nOldCUrsor )
+   SetCursor(nOldCUrsor)
 
    RETURN .T.
 
@@ -303,10 +299,10 @@ STATIC FUNCTION CallUser( oBrowse, xUserFunc, nKey, lAppend, lFlag )
    /* NOTE: CA-Cl*pper won't check the type of the return value here,
             and will crash if it's a non-NIL, non-numeric type. We're
             replicating this behavior. */
-   nAction := iif( HB_ISEVALITEM( xUserFunc ), ;
-                                 Eval( xUserFunc, nMode, oBrowse:colPos ), ;
-              iif( HB_ISSTRING( xUserFunc ) .AND. ! Empty(xUserFunc), ;
-                                 &xUserFunc( nMode, oBrowse:colPos ), ;  /* NOTE: Macro operator! */
+   nAction := iif( HB_ISEVALITEM(xUserFunc), ;
+                                 Eval(xUserFunc, nMode, oBrowse:colPos), ;
+              iif( HB_ISSTRING(xUserFunc) .AND. ! Empty(xUserFunc), ;
+                                 &xUserFunc(nMode, oBrowse:colPos), ;  /* NOTE: Macro operator! */
               iif( nKey == K_ENTER .OR. nKey == K_ESC, DE_ABORT, DE_CONT ) ) )
 
    IF ! lAppend .AND. Eof() .AND. ! IsDbEmpty()
@@ -333,8 +329,7 @@ STATIC FUNCTION CallUser( oBrowse, xUserFunc, nKey, lAppend, lFlag )
 
          lAppend := .F.
 
-         IF ( Set( _SET_DELETED ) .AND. Deleted() ) .OR. ;
-            ( ! Empty(dbFilter()) .AND. ! Eval( hb_macroBlock( dbFilter() ) ) )
+         IF ( Set(_SET_DELETED) .AND. Deleted() ) .OR. ( ! Empty(dbFilter()) .AND. ! Eval(hb_macroBlock(dbFilter())) )
             dbSkip()
          ENDIF
          IF Eof()
@@ -360,11 +355,10 @@ STATIC FUNCTION CallUser( oBrowse, xUserFunc, nKey, lAppend, lFlag )
 /* helper function to detect empty tables. It's not perfect but
    it functionally uses the same conditions as CA-Cl*pper */
 STATIC FUNCTION IsDbEmpty()
-   RETURN LastRec() == 0 .OR. ;
-      ( Bof() .AND. ( Eof() .OR. RecNo() == LastRec() + 1 ) )
+   RETURN LastRec() == 0 .OR. ( Bof() .AND. ( Eof() .OR. RecNo() == LastRec() + 1 ) )
 
 /* Helper function: TBrowse skipBlock */
-STATIC FUNCTION Skipped( nRecs, lAppend )
+STATIC FUNCTION Skipped(nRecs, lAppend)
 
    LOCAL nSkipped := 0
 

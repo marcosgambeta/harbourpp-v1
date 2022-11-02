@@ -76,7 +76,7 @@ CREATE CLASS TopBarMenu FUNCTION HBTopBarMenu
    METHOD select( nPos )
    METHOD setItem( nPos, oItem )
 
-   METHOD colorSpec( cColorSpec ) SETGET
+   METHOD colorSpec(cColorSpec) SETGET
    METHOD current() SETGET
    METHOD itemCount() SETGET
    METHOD left( nLeft ) SETGET
@@ -101,7 +101,7 @@ ENDCLASS
 
 METHOD addItem( oItem ) CLASS TopBarMenu
 
-   IF HB_ISOBJECT( oItem ) .AND. oItem:ClassName() == "MENUITEM"
+   IF HB_ISOBJECT(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
       ::nItemCount++
       AAdd(::aItems, oItem)
@@ -119,9 +119,9 @@ METHOD delItem( nPos ) CLASS TopBarMenu
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount
 
-      nLen := Len(::aItems[ nPos ]:caption)
+      nLen := Len(::aItems[nPos]:caption)
 
-      hb_ADel( ::aItems, nPos, .T. )
+      hb_ADel(::aItems, nPos, .T.)
       ::nItemCount--
 
       IF ::nWidth == nLen + 2
@@ -143,8 +143,8 @@ METHOD display() CLASS TopBarMenu
    LOCAL nCurrent := ::nCurrent
    LOCAL item
 
-   LOCAL cColor1 := hb_ColorIndex( ::cColorSpec, 0 )
-   LOCAL cColor2 := hb_ColorIndex( ::cColorSpec, 1 )
+   LOCAL cColor1 := hb_ColorIndex(::cColorSpec, 0)
+   LOCAL cColor2 := hb_ColorIndex(::cColorSpec, 1)
 
    LOCAL oPopUp
    LOCAL cCaption
@@ -188,23 +188,18 @@ METHOD display() CLASS TopBarMenu
          ENDIF
       ENDIF
 
-      hb_DispOutAt(nRow, nLeft, cCaption, ;
-         iif( item:__enumIndex() == nCurrent, cColor2, ;
-            iif( item:enabled, cColor1, hb_ColorIndex( ::cColorSpec, 4 ) ) ))
+      hb_DispOutAt(nRow, nLeft, cCaption, iif( item:__enumIndex() == nCurrent, cColor2, iif( item:enabled, cColor1, hb_ColorIndex(::cColorSpec, 4) ) ))
 
       IF item:enabled .AND. nPos > 0
-         hb_DispOutAt(nRow, nLeft + nPos - 1, SubStr(cCaption, nPos, 1), ;
-            iif( item:__enumIndex() == nCurrent, hb_ColorIndex( ::cColorSpec, 3 ), hb_ColorIndex( ::cColorSpec, 2 ) ))
+         hb_DispOutAt(nRow, nLeft + nPos - 1, SubStr(cCaption, nPos, 1), iif( item:__enumIndex() == nCurrent, hb_ColorIndex(::cColorSpec, 3), hb_ColorIndex(::cColorSpec, 2) ))
       ENDIF
 
       nLeft += nCaptionLen
    NEXT
 
-   IF nCurrent != 0 .AND. ;
-      ::aItems[ nCurrent ]:isPopUp() .AND. ;
-      ::aItems[ nCurrent ]:data:isOpen
+   IF nCurrent != 0 .AND. ::aItems[nCurrent]:isPopUp() .AND. ::aItems[nCurrent]:data:isOpen
 
-      ::aItems[ nCurrent ]:data:display()
+      ::aItems[nCurrent]:data:display()
    ENDIF
 
    DispEnd()
@@ -224,7 +219,7 @@ METHOD getFirst() CLASS TopBarMenu
    RETURN 0
 
 METHOD getItem( nPos ) CLASS TopBarMenu
-   RETURN iif( nPos >= 1 .AND. nPos <= ::nItemCount, ::aItems[ nPos ], NIL )
+   RETURN iif( nPos >= 1 .AND. nPos <= ::nItemCount, ::aItems[nPos], NIL )
 
 METHOD getLast() CLASS TopBarMenu
 
@@ -243,7 +238,7 @@ METHOD getNext() CLASS TopBarMenu
    LOCAL n
 
    FOR n := ::nCurrent + 1 TO ::nItemCount
-      IF ::aItems[ n ]:enabled
+      IF ::aItems[n]:enabled
          RETURN n
       ENDIF
    NEXT
@@ -255,7 +250,7 @@ METHOD getPrev() CLASS TopBarMenu
    LOCAL n
 
    FOR n := ::nCurrent - 1 TO 1 STEP -1
-      IF ::aItems[ n ]:enabled
+      IF ::aItems[n]:enabled
          RETURN n
       ENDIF
    NEXT
@@ -269,13 +264,13 @@ METHOD getPrev() CLASS TopBarMenu
 
 METHOD getAccel( nKey ) CLASS TopBarMenu
 
-   LOCAL nIndex := AScan( { ;
+   LOCAL nIndex := AScan({ ;
       K_ALT_A, K_ALT_B, K_ALT_C, K_ALT_D, K_ALT_E, K_ALT_F, ;
       K_ALT_G, K_ALT_H, K_ALT_I, K_ALT_J, K_ALT_K, K_ALT_L, ;
       K_ALT_M, K_ALT_N, K_ALT_O, K_ALT_P, K_ALT_Q, K_ALT_R, ;
       K_ALT_S, K_ALT_T, K_ALT_U, K_ALT_V, K_ALT_W, K_ALT_X, ;
       K_ALT_Y, K_ALT_Z, K_ALT_1, K_ALT_2, K_ALT_3, K_ALT_4, ;
-      K_ALT_5, K_ALT_6, K_ALT_7, K_ALT_8, K_ALT_9, K_ALT_0 }, nKey )
+      K_ALT_5, K_ALT_6, K_ALT_7, K_ALT_8, K_ALT_9, K_ALT_0 }, nKey)
 
    LOCAL cKey
    LOCAL item
@@ -331,8 +326,7 @@ METHOD hitTest( nMRow, nMCol ) CLASS TopBarMenu
 
 METHOD insItem( nPos, oItem ) CLASS TopBarMenu
 
-   IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. ;
-      HB_ISOBJECT( oItem ) .AND. oItem:ClassName() == "MENUITEM"
+   IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. HB_ISOBJECT(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
       hb_AIns( ::aItems, nPos, oItem, .T. )
       ::nItemCount++
@@ -344,16 +338,12 @@ METHOD insItem( nPos, oItem ) CLASS TopBarMenu
 
 METHOD select( nPos ) CLASS TopBarMenu
 
-   IF ( nPos >= 1 .AND. nPos <= ::nItemCount .AND. ;
-      ::nCurrent != nPos .AND. ;
-      ::aItems[ nPos ]:enabled ) .OR. nPos == 0
+   IF ( nPos >= 1 .AND. nPos <= ::nItemCount .AND. ::nCurrent != nPos .AND. ::aItems[nPos]:enabled ) .OR. nPos == 0
 
 #if 0
-      IF ::isOpen() .AND. ;
-         ::nCurrent > 0 .AND. ;
-         ::aItems[ ::nCurrent ]:isPopUp()
+      IF ::isOpen() .AND. ::nCurrent > 0 .AND. ::aItems[::nCurrent]:isPopUp()
 
-         ::aItems[ ::nCurrent ]:data:close()
+         ::aItems[::nCurrent]:data:close()
       ENDIF
 #endif
 
@@ -364,21 +354,20 @@ METHOD select( nPos ) CLASS TopBarMenu
 
 METHOD setItem( nPos, oItem ) CLASS TopBarMenu
 
-   IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. ;
-      HB_ISOBJECT( oItem ) .AND. oItem:ClassName() == "MENUITEM"
+   IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. HB_ISOBJECT(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
-      ::aItems[ nPos ] := oItem
+      ::aItems[nPos] := oItem
 
       ::nWidth := Max(__CapMetrics( oItem ), ::nWidth)
    ENDIF
 
    RETURN Self
 
-METHOD colorSpec( cColorSpec ) CLASS TopBarMenu
+METHOD colorSpec(cColorSpec) CLASS TopBarMenu
 
    IF cColorSpec != NIL
-      ::cColorSpec := __eInstVar53( Self, "COLORSPEC", cColorSpec, "C", 1001, ;
-         {|| ! Empty(hb_ColorIndex( cColorSpec, 5 )) .AND. Empty(hb_ColorIndex( cColorSpec, 6 )) } )
+      ::cColorSpec := __eInstVar53( Self, "COLORSPEC", cColorSpec, "C", 1001, {|| ! Empty(hb_ColorIndex(cColorSpec, 5)) .AND. Empty(hb_ColorIndex(cColorSpec, 6)) } )
+
    ENDIF
 
    RETURN ::cColorSpec
@@ -420,9 +409,7 @@ METHOD New( nRow, nLeft, nRight ) CLASS TopBarMenu
 
    LOCAL cColor
 
-   IF ! HB_ISNUMERIC( nRow ) .OR. ;
-      ! HB_ISNUMERIC( nLeft ) .OR. ;
-      ! HB_ISNUMERIC( nRight )
+   IF ! HB_ISNUMERIC(nRow) .OR. ! HB_ISNUMERIC(nLeft) .OR. ! HB_ISNUMERIC(nRight)
       RETURN NIL
    ENDIF
 
@@ -435,12 +422,12 @@ METHOD New( nRow, nLeft, nRight ) CLASS TopBarMenu
    ELSE
       cColor := SetColor()
       ::cColorSpec := ;
-         hb_ColorIndex( cColor, CLR_UNSELECTED ) + "," + ;
-         hb_ColorIndex( cColor, CLR_ENHANCED   ) + "," + ;
-         hb_ColorIndex( cColor, CLR_BACKGROUND ) + "," + ;
-         hb_ColorIndex( cColor, CLR_ENHANCED   ) + "," + ;
-         hb_ColorIndex( cColor, CLR_STANDARD   ) + "," + ;
-         hb_ColorIndex( cColor, CLR_BORDER     )
+         hb_ColorIndex(cColor, CLR_UNSELECTED) + "," + ;
+         hb_ColorIndex(cColor, CLR_ENHANCED) + "," + ;
+         hb_ColorIndex(cColor, CLR_BACKGROUND) + "," + ;
+         hb_ColorIndex(cColor, CLR_ENHANCED) + "," + ;
+         hb_ColorIndex(cColor, CLR_STANDARD) + "," + ;
+         hb_ColorIndex(cColor, CLR_BORDER)
    ENDIF
 
    RETURN Self

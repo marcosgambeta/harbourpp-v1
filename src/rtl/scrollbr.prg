@@ -66,12 +66,12 @@ CREATE CLASS ScrollBar FUNCTION HBScrollBar
 
    METHOD barLength() SETGET
    METHOD bitmaps( aBitmaps ) SETGET
-   METHOD colorSpec( cColorSpec ) SETGET
+   METHOD colorSpec(cColorSpec) SETGET
    METHOD current( nCurrent ) SETGET
-   METHOD end( nEnd ) SETGET
-   METHOD offset( nOffset ) SETGET
+   METHOD end(nEnd) SETGET
+   METHOD offset(nOffset) SETGET
    METHOD orient( nOrient ) SETGET
-   METHOD sBlock( bSBlock ) SETGET
+   METHOD sBlock(bSBlock) SETGET
    METHOD start( nStart ) SETGET
    METHOD style( cStyle ) SETGET
    METHOD thumbPos( nThumbPos ) SETGET
@@ -122,7 +122,7 @@ METHOD display() CLASS ScrollBar
 
       DispBegin()
 
-      cColor := hb_ColorIndex( ::cColorSpec, 0 )
+      cColor := hb_ColorIndex(::cColorSpec, 0)
 
       IF ::nOrient == SCROLL_VERTICAL
 
@@ -130,15 +130,15 @@ METHOD display() CLASS ScrollBar
             hb_DispOutAt(nPos, nOffset, SubStr(cStyle, 2, 1), cColor)
          NEXT
 
-         cColor := hb_ColorIndex( ::cColorSpec, 1 )
+         cColor := hb_ColorIndex(::cColorSpec, 1)
          hb_DispOutAt(nStart, nOffset, SubStr(cStyle, 1, 1), cColor)
          hb_DispOutAt(nStart + ::nThumbPos, nOffset, SubStr(cStyle, 3, 1), cColor)
          hb_DispOutAt(nEnd + 1, nOffset, SubStr(cStyle, 4, 1), cColor)
       ELSE
 
-         hb_DispOutAt(nOffset, nStart + 1, Replicate( SubStr(cStyle, 2, 1), nEnd - nStart ), cColor)
+         hb_DispOutAt(nOffset, nStart + 1, Replicate(SubStr(cStyle, 2, 1), nEnd - nStart), cColor)
 
-         cColor := hb_ColorIndex( ::cColorSpec, 1 )
+         cColor := hb_ColorIndex(::cColorSpec, 1)
          hb_DispOutAt(nOffset, nStart, SubStr(cStyle, 1, 1), cColor)
          hb_DispOutAt(nOffset, nStart + ::nThumbPos, SubStr(cStyle, 3, 1), cColor)
          hb_DispOutAt(nOffset, nEnd + 1, SubStr(cStyle, 4, 1), cColor)
@@ -156,8 +156,8 @@ METHOD update() CLASS ScrollBar
 
    LOCAL nOldThumbPos := ::nThumbPos
 
-   IF HB_ISEVALITEM( ::bSBlock )
-      Eval( ::bSBlock )
+   IF HB_ISEVALITEM(::bSBlock)
+      Eval(::bSBlock)
    ENDIF
 
    IF ::CalcThumbPos() .AND. nOldThumbPos != ::nThumbPos
@@ -165,11 +165,11 @@ METHOD update() CLASS ScrollBar
       DispBegin()
 
       IF ::nOrient == SCROLL_VERTICAL
-         hb_DispOutAt(::nStart + nOldThumbPos, ::nOffSet, SubStr(::cStyle, 2, 1), hb_ColorIndex( ::cColorSpec, 0 ))
-         hb_DispOutAt(::nStart + ::nThumbPos, ::nOffset, SubStr(::cStyle, 3, 1), hb_ColorIndex( ::cColorSpec, 1 ))
+         hb_DispOutAt(::nStart + nOldThumbPos, ::nOffSet, SubStr(::cStyle, 2, 1), hb_ColorIndex(::cColorSpec, 0))
+         hb_DispOutAt(::nStart + ::nThumbPos, ::nOffset, SubStr(::cStyle, 3, 1), hb_ColorIndex(::cColorSpec, 1))
       ELSE
-         hb_DispOutAt(::nOffset, ::nStart + nOldThumbPos, SubStr(::cStyle, 2, 1), hb_ColorIndex( ::cColorSpec, 0 ))
-         hb_DispOutAt(::nOffset, ::nStart + ::nThumbPos, SubStr(::cStyle, 3, 1), hb_ColorIndex( ::cColorSpec, 1 ))
+         hb_DispOutAt(::nOffset, ::nStart + nOldThumbPos, SubStr(::cStyle, 2, 1), hb_ColorIndex(::cColorSpec, 0))
+         hb_DispOutAt(::nOffset, ::nStart + ::nThumbPos, SubStr(::cStyle, 3, 1), hb_ColorIndex(::cColorSpec, 1))
       ENDIF
 
       DispEnd()
@@ -243,19 +243,16 @@ METHOD barLength() CLASS ScrollBar
 
 METHOD bitmaps( aBitmaps ) CLASS ScrollBar
 
-   IF HB_ISARRAY( aBitmaps ) .AND. ;
-      Len(aBitmaps) == 3
+   IF HB_ISARRAY(aBitmaps) .AND. Len(aBitmaps) == 3
 
       ::aBitmaps := aBitmaps
    ENDIF
 
    RETURN ::aBitmaps
 
-METHOD colorSpec( cColorSpec ) CLASS ScrollBar
+METHOD colorSpec(cColorSpec) CLASS ScrollBar
 
-   IF HB_ISSTRING( cColorSpec ) .AND. ;
-      ! Empty(hb_ColorIndex( cColorSpec, 1 )) .AND. ;
-      Empty(hb_ColorIndex( cColorSpec, 2 ))
+   IF HB_ISSTRING(cColorSpec) .AND. ! Empty(hb_ColorIndex(cColorSpec, 1)) .AND. Empty(hb_ColorIndex(cColorSpec, 2))
 
       ::cColorSpec := cColorSpec
    ENDIF
@@ -264,20 +261,16 @@ METHOD colorSpec( cColorSpec ) CLASS ScrollBar
 
 METHOD current( nCurrent ) CLASS ScrollBar
 
-   IF HB_ISNUMERIC( nCurrent ) .AND. ;
-      nCurrent <= ::nTotal .AND. ;
-      nCurrent != ::nCurrent
+   IF HB_ISNUMERIC(nCurrent) .AND. nCurrent <= ::nTotal .AND. nCurrent != ::nCurrent
 
       ::nCurrent := nCurrent
    ENDIF
 
    RETURN ::nCurrent
 
-METHOD end( nEnd ) CLASS ScrollBar
+METHOD end(nEnd) CLASS ScrollBar
 
-   IF HB_ISNUMERIC( nEnd ) .AND. ;
-      nEnd >= ::nStart .AND. ;
-      nEnd != ::nEnd
+   IF HB_ISNUMERIC(nEnd) .AND. nEnd >= ::nStart .AND. nEnd != ::nEnd
 
       ::nEnd := nEnd
       ::nBarLength := nEnd - ::nStart - 1
@@ -285,10 +278,9 @@ METHOD end( nEnd ) CLASS ScrollBar
 
    RETURN ::nEnd
 
-METHOD offset( nOffset ) CLASS ScrollBar
+METHOD offset(nOffset) CLASS ScrollBar
 
-   IF HB_ISNUMERIC( nOffset ) .AND. ;
-      nOffset != ::nOffset
+   IF HB_ISNUMERIC(nOffset) .AND. nOffset != ::nOffset
 
       ::nOffset := nOffset
    ENDIF
@@ -297,17 +289,16 @@ METHOD offset( nOffset ) CLASS ScrollBar
 
 METHOD orient( nOrient ) CLASS ScrollBar
 
-   IF HB_ISNUMERIC( nOrient ) .AND. ;
-      ( nOrient == SCROLL_VERTICAL .OR. nOrient == SCROLL_HORIZONTAL )
+   IF HB_ISNUMERIC(nOrient) .AND. ( nOrient == SCROLL_VERTICAL .OR. nOrient == SCROLL_HORIZONTAL )
 
       ::nOrient := nOrient
    ENDIF
 
    RETURN ::nOrient
 
-METHOD sBlock( bSBlock ) CLASS ScrollBar
+METHOD sBlock(bSBlock) CLASS ScrollBar
 
-   IF HB_ISEVALITEM( bSBlock )
+   IF HB_ISEVALITEM(bSBlock)
       ::bSBlock := bSBlock
    ENDIF
 
@@ -315,9 +306,7 @@ METHOD sBlock( bSBlock ) CLASS ScrollBar
 
 METHOD start( nStart ) CLASS ScrollBar
 
-   IF HB_ISNUMERIC( nStart ) .AND. ;
-      nStart <= ::nEnd .AND. ;
-      nStart != ::nStart
+   IF HB_ISNUMERIC(nStart) .AND. nStart <= ::nEnd .AND. nStart != ::nStart
 
       ::nStart := nStart
       ::nBarLength := ::nEnd - nStart - 1
@@ -327,8 +316,7 @@ METHOD start( nStart ) CLASS ScrollBar
 
 METHOD style( cStyle ) CLASS ScrollBar
 
-   IF HB_ISSTRING( cStyle ) .AND. ;
-      Len(cStyle) == 4
+   IF HB_ISSTRING(cStyle) .AND. Len(cStyle) == 4
 
       ::cStyle := cStyle
    ENDIF
@@ -337,7 +325,7 @@ METHOD style( cStyle ) CLASS ScrollBar
 
 METHOD thumbPos( nThumbPos ) CLASS ScrollBar
 
-   IF HB_ISNUMERIC( nThumbPos )
+   IF HB_ISNUMERIC(nThumbPos)
 
       DO CASE
       CASE nThumbPos < 1
@@ -357,9 +345,7 @@ METHOD thumbPos( nThumbPos ) CLASS ScrollBar
 
 METHOD total( nTotal ) CLASS ScrollBar
 
-   IF HB_ISNUMERIC( nTotal ) .AND. ;
-      nTotal >= 2 .AND. ;
-      nTotal != ::nTotal
+   IF HB_ISNUMERIC(nTotal) .AND. nTotal >= 2 .AND. nTotal != ::nTotal
 
       ::nTotal := nTotal
    ENDIF
@@ -397,11 +383,11 @@ METHOD New( nStart, nEnd, nOffset, bSBlock, nOrient ) CLASS ScrollBar
 
    __defaultNIL( @nOrient, SCROLL_VERTICAL )
 
-   IF ! HB_ISNUMERIC( nStart ) .OR. ;
-      ! HB_ISNUMERIC( nEnd ) .OR. ;
-      ! HB_ISNUMERIC( nOffset ) .OR. ;
+   IF ! HB_ISNUMERIC(nStart) .OR. ;
+      ! HB_ISNUMERIC(nEnd) .OR. ;
+      ! HB_ISNUMERIC(nOffset) .OR. ;
       ! ValType(bSBlock) $ "BU" .OR. ;
-      ! HB_ISNUMERIC( nOrient ) .OR. ;
+      ! HB_ISNUMERIC(nOrient) .OR. ;
       ( nOrient != SCROLL_VERTICAL .AND. nOrient != SCROLL_HORIZONTAL )
       RETURN NIL
    ENDIF
@@ -426,8 +412,8 @@ METHOD New( nStart, nEnd, nOffset, bSBlock, nOrient ) CLASS ScrollBar
 
    cColor := SetColor()
    ::cColorSpec := ;
-      hb_ColorIndex( cColor, CLR_UNSELECTED ) + "," + ;
-      hb_ColorIndex( cColor, CLR_ENHANCED )
+      hb_ColorIndex(cColor, CLR_UNSELECTED) + "," + ;
+      hb_ColorIndex(cColor, CLR_ENHANCED)
 
    RETURN Self
 

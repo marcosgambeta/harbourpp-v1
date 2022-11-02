@@ -68,29 +68,26 @@ PROCEDURE __Dir( cFileMask )
       QOut(__natMsg( _DIR_HEADER ))
 #endif
 
-      AEval( Directory( hb_FNameMerge( Set( _SET_DEFAULT ), "*", ".dbf" ) ), ;
-             {| aDirEntry | PutDbf( aDirEntry ) } )
+      AEval(Directory( hb_FNameMerge( Set(_SET_DEFAULT), "*", ".dbf" ) ), {| aDirEntry | PutDbf( aDirEntry ) })
    ELSE
 
-      hb_FNameSplit( iif( Set( _SET_TRIMFILENAME ), AllTrim(cFileMask), cFileMask ), ;
-                     @cPath, @cName, @cExt )
+      hb_FNameSplit( iif( Set(_SET_TRIMFILENAME), AllTrim(cFileMask), cFileMask ), @cPath, @cName, @cExt )
       IF Empty(cPath)
-         cPath := Set( _SET_DEFAULT )
+         cPath := Set(_SET_DEFAULT)
       ENDIF
 
-      AEval( Directory( hb_FNameMerge( cPath, cName, cExt ) ), ;
-             {| aDirEntry | PutNormal( aDirEntry ) } )
+      AEval(Directory( hb_FNameMerge( cPath, cName, cExt ) ), {| aDirEntry | PutNormal( aDirEntry ) })
    ENDIF
 
    QOut()
 
    RETURN
 
-#define _DBF_HEAD_MARK  hb_BChar( 0x03 ) + hb_BChar( 0x06 ) + ;
-                        hb_BChar( 0x30 ) + hb_BChar( 0x31 ) + ;
-                        hb_BChar( 0x83 ) + hb_BChar( 0x86 ) + ;
-                        hb_BChar( 0xE5 ) + hb_BChar( 0xE6 ) + ;
-                        hb_BChar( 0xF5 ) + hb_BChar( 0xF6 )
+#define _DBF_HEAD_MARK  hb_BChar(0x03) + hb_BChar(0x06) + ;
+                        hb_BChar(0x30) + hb_BChar(0x31) + ;
+                        hb_BChar(0x83) + hb_BChar(0x86) + ;
+                        hb_BChar(0xE5) + hb_BChar(0xE6) + ;
+                        hb_BChar(0xF5) + hb_BChar(0xF6)
 
 STATIC PROCEDURE PutDBF( aDirEntry )
 
@@ -99,26 +96,20 @@ STATIC PROCEDURE PutDBF( aDirEntry )
    LOCAL nRecCount := 0
    LOCAL dLastUpdate := hb_SToD()
 
-   IF ( fhnd := FOpen( aDirEntry[ F_NAME ] ) ) != F_ERROR
+   IF ( fhnd := FOpen(aDirEntry[F_NAME]) ) != F_ERROR
 
       buffer := hb_FReadLen(fhnd, 8)
 
       IF hb_BLen(buffer) == 8 .AND. hb_BAt(hb_BLeft(buffer, 1), _DBF_HEAD_MARK) > 0
          nRecCount := Bin2L( hb_BSubStr(buffer, 5, 4) )
-         dLastUpdate := hb_Date( hb_BPeek( buffer, 2 ) + 1900, ;
-                                 hb_BPeek( buffer, 3 ), ;
-                                 hb_BPeek( buffer, 4 ) )
+         dLastUpdate := hb_Date( hb_BPeek( buffer, 2 ) + 1900, hb_BPeek( buffer, 3 ), hb_BPeek( buffer, 4 ) )
       ENDIF
 
-      FClose( fhnd )
+      FClose(fhnd)
 
    ENDIF
 
-   QOut(;
-      PadR(aDirEntry[ F_NAME ], 15) + ;
-      Str(nRecCount, 12) + "    " + ;
-      DToC( dLastUpdate ) + ;
-      Str(aDirEntry[ F_SIZE ], 12))
+   QOut(PadR(aDirEntry[F_NAME], 15) + Str(nRecCount, 12) + "    " + DToC(dLastUpdate) + Str(aDirEntry[F_SIZE], 12))
 
    RETURN
 
@@ -126,15 +117,11 @@ STATIC PROCEDURE PutNormal( aDirEntry )
 
    LOCAL cName, cExt
 
-   hb_FNameSplit( aDirEntry[ F_NAME ],, @cName, @cExt )
+   hb_FNameSplit( aDirEntry[F_NAME],, @cName, @cExt )
 
    /* Strict MS-DOS like formatting, it does not play well with long
       filenames which do not stick to 8.3 MS-DOS convention */
 
-   QOut(;
-      PadR(cName, 8), ;
-      PadR(SubStr(cExt, 2), 3), ;
-      Str(aDirEntry[ F_SIZE ], 8), "", ;
-      aDirEntry[ F_DATE ])
+   QOut(PadR(cName, 8), PadR(SubStr(cExt, 2), 3), Str(aDirEntry[F_SIZE], 8), "", aDirEntry[F_DATE])
 
    RETURN

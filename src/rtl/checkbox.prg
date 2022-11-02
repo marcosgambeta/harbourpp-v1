@@ -77,12 +77,12 @@ CREATE CLASS CheckBox FUNCTION HBCheckBox
    METHOD capRow( nCapRow ) SETGET
    METHOD caption( cCaption ) SETGET
    METHOD col( nCol ) SETGET
-   METHOD colorSpec( cColorSpec ) SETGET
-   METHOD fBlock( bFBlock ) SETGET
+   METHOD colorSpec(cColorSpec) SETGET
+   METHOD fBlock(bFBlock) SETGET
    METHOD hasFocus() SETGET
    METHOD message( cMessage ) SETGET
    METHOD row( nRow ) SETGET
-   METHOD sBlock( bSBlock ) SETGET
+   METHOD sBlock(bSBlock) SETGET
    METHOD style( cStyle ) SETGET
    METHOD typeOut() SETGET
 
@@ -111,12 +111,12 @@ ENDCLASS
 METHOD setFocus() CLASS CheckBox
 
    IF ! ::lHasFocus
-      ::nCursor := SetCursor( SC_NONE )
+      ::nCursor := SetCursor(SC_NONE)
       ::lHasFocus := .T.
       ::display()
 
-      IF HB_ISEVALITEM( ::bFBlock )
-         Eval( ::bFBlock )
+      IF HB_ISEVALITEM(::bFBlock)
+         Eval(::bFBlock)
       ENDIF
    ENDIF
 
@@ -126,13 +126,13 @@ METHOD select( lState ) CLASS CheckBox
 
    LOCAL lOldState := ::lBuffer
 
-   ::lBuffer := iif( HB_ISLOGICAL( lState ), lState, ! ::lBuffer )
+   ::lBuffer := iif( HB_ISLOGICAL(lState), lState, ! ::lBuffer )
 
    IF lOldState != ::lBuffer
       ::display()
 
-      IF HB_ISEVALITEM( ::bSBlock )
-         Eval( ::bSBlock )
+      IF HB_ISEVALITEM(::bSBlock)
+         Eval(::bSBlock)
       ENDIF
    ENDIF
 
@@ -143,12 +143,12 @@ METHOD killFocus() CLASS CheckBox
    IF ::lHasFocus
       ::lHasFocus := .F.
 
-      IF HB_ISEVALITEM( ::bFBlock )
-         Eval( ::bFBlock )
+      IF HB_ISEVALITEM(::bFBlock)
+         Eval(::bFBlock)
       ENDIF
 
       ::display()
-      SetCursor( ::nCursor )
+      SetCursor(::nCursor)
    ENDIF
 
    RETURN Self
@@ -158,22 +158,17 @@ METHOD hitTest( nMRow, nMCol ) CLASS CheckBox
    LOCAL nPosAccel
    LOCAL nLenCaption
 
-   IF nMRow == ::nRow .AND. ;
-      nMCol >= ::nCol .AND. ;
-      nMCol < ::nCol + 3
+   IF nMRow == ::nRow .AND. nMCol >= ::nCol .AND. nMCol < ::nCol + 3
       RETURN HTCLIENT
    ENDIF
 
    nLenCaption := Len(::cCaption)
 
-   IF ( nPosAccel := At("&", ::cCaption) ) > 0 .AND. ;
-      nPosAccel < nLenCaption
+   IF ( nPosAccel := At("&", ::cCaption) ) > 0 .AND. nPosAccel < nLenCaption
       nLenCaption--
    ENDIF
 
-   IF nMRow == ::nCapRow .AND. ;
-      nMCol >= ::nCapCol .AND. ;
-      nMCol < ::nCapCol + nLenCaption
+   IF nMRow == ::nCapRow .AND. nMCol >= ::nCapCol .AND. nMCol < ::nCapCol + nLenCaption
       RETURN HTCAPTION
    ENDIF
 
@@ -188,10 +183,9 @@ METHOD display() CLASS CheckBox
 
    DispBegin()
 
-   hb_DispOutAt(::nRow, ::nCol + 1, iif( ::lBuffer, SubStr(cStyle, 2, 1), SubStr(cStyle, 3, 1) ), ;
-      hb_ColorIndex( ::cColorSpec, iif( ::lHasFocus, 1, 0 ) ))
+   hb_DispOutAt(::nRow, ::nCol + 1, iif( ::lBuffer, SubStr(cStyle, 2, 1), SubStr(cStyle, 3, 1) ), hb_ColorIndex(::cColorSpec, iif( ::lHasFocus, 1, 0 )))
 
-   cColor := hb_ColorIndex( ::cColorSpec, 2 )
+   cColor := hb_ColorIndex(::cColorSpec, 2)
    hb_DispOutAt(::nRow, ::nCol, Left(cStyle, 1), cColor)
    hb_DispOutAt(::nRow, ::nCol + 2, Right(cStyle, 1), cColor)
 
@@ -205,14 +199,13 @@ METHOD display() CLASS CheckBox
       ENDIF
 
       IF ::lHasFocus
-         cColor := hb_ColorIndex( ::cColorSpec, 3 )
+         cColor := hb_ColorIndex(::cColorSpec, 3)
       ENDIF
 
       hb_DispOutAt(::nCapRow, ::nCapCol, cCaption, cColor)
 
       IF ! ::lHasFocus .AND. nPos != 0
-         hb_DispOutAt(::nCapRow, ::nCapCol + nPos - 1, SubStr(cCaption, nPos, 1), ;
-            hb_ColorIndex( ::cColorSpec, 3 ))
+         hb_DispOutAt(::nCapRow, ::nCapCol + nPos - 1, SubStr(cCaption, nPos, 1), hb_ColorIndex(::cColorSpec, 3))
       ENDIF
    ENDIF
 
@@ -263,16 +256,15 @@ METHOD col( nCol ) CLASS CheckBox
 
    RETURN ::nCol
 
-METHOD colorSpec( cColorSpec ) CLASS CheckBox
+METHOD colorSpec(cColorSpec) CLASS CheckBox
 
    IF cColorSpec != NIL
-      ::cColorSpec := __eInstVar53( Self, "COLORSPEC", cColorSpec, "C", 1001, ;
-         {|| ! Empty(hb_ColorIndex( cColorSpec, 3 )) .AND. Empty(hb_ColorIndex( cColorSpec, 4 )) } )
+      ::cColorSpec := __eInstVar53( Self, "COLORSPEC", cColorSpec, "C", 1001, {|| ! Empty(hb_ColorIndex(cColorSpec, 3)) .AND. Empty(hb_ColorIndex(cColorSpec, 4)) } )
    ENDIF
 
    RETURN ::cColorSpec
 
-METHOD fBlock( bFBlock ) CLASS CheckBox
+METHOD fBlock(bFBlock) CLASS CheckBox
 
    IF PCount() > 0
       ::bFBlock := iif( bFBlock == NIL, NIL, __eInstVar53( Self, "FBLOCK", bFBlock, "B", 1001 ) )
@@ -299,7 +291,7 @@ METHOD row( nRow ) CLASS CheckBox
 
    RETURN ::nRow
 
-METHOD sBlock( bSBlock ) CLASS CheckBox
+METHOD sBlock(bSBlock) CLASS CheckBox
 
    IF PCount() > 0
       ::bSBlock := iif( bSBlock == NIL, NIL, __eInstVar53( Self, "SBLOCK", bSBlock, "B", 1001 ) )
@@ -335,10 +327,10 @@ METHOD New( nRow, nCol, cCaption ) CLASS CheckBox
    ELSE
       cColor := SetColor()
       ::cColorSpec := ;
-         hb_ColorIndex( cColor, CLR_UNSELECTED ) + "," + ;
-         hb_ColorIndex( cColor, CLR_ENHANCED   ) + "," + ;
-         hb_ColorIndex( cColor, CLR_STANDARD   ) + "," + ;
-         hb_ColorIndex( cColor, CLR_BACKGROUND )
+         hb_ColorIndex(cColor, CLR_UNSELECTED) + "," + ;
+         hb_ColorIndex(cColor, CLR_ENHANCED) + "," + ;
+         hb_ColorIndex(cColor, CLR_STANDARD) + "," + ;
+         hb_ColorIndex(cColor, CLR_BACKGROUND)
    ENDIF
 
    RETURN Self

@@ -53,7 +53,7 @@ CREATE CLASS hb_PopupMenu INHERIT HBPopupMenu
 
    EXPORTED:
 
-   METHOD shadowed( lShadowed ) SETGET
+   METHOD shadowed(lShadowed) SETGET
 
    METHOD setCoors( nRow, nCol, lTop )
    METHOD isShortCut( nKey, /* @ */ nID )
@@ -61,7 +61,7 @@ CREATE CLASS hb_PopupMenu INHERIT HBPopupMenu
 
 ENDCLASS
 
-METHOD shadowed( lShadowed ) CLASS hb_PopupMenu
+METHOD shadowed(lShadowed) CLASS hb_PopupMenu
 
    IF lShadowed != NIL
       ::lShadowed := __eInstVar53( Self, "SHADOWED", lShadowed, "L", 1001 )
@@ -130,12 +130,10 @@ METHOD isShortCut( nKey, /* @ */ nID ) CLASS hb_PopupMenu
    DO CASE
    // Test and assign top menu item shortCut, enabled, and ! PopUp:
    // Changed by enclosing assignment before ':Enabled':
-   CASE ( nShortCut := ::getShortCt( nKey ) ) > 0 .AND. ;
-        ( oItem := ::getItem( nShortcut ) ):enabled .AND. ;
-        ! oItem:isPopUp()
+   CASE ( nShortCut := ::getShortCt( nKey ) ) > 0 .AND. ( oItem := ::getItem( nShortcut ) ):enabled .AND. ! oItem:isPopUp()
 
       ::select( nShortCut )
-      Eval( oItem:data, oItem )
+      Eval(oItem:data, oItem)
       nID := oItem:id
 
       RETURN .T.
@@ -150,9 +148,7 @@ METHOD isShortCut( nKey, /* @ */ nID ) CLASS hb_PopupMenu
 
       // Loop to wrap around through TopMenu from Current Item:
       FOR i := 1 TO nTotal
-         IF ( oItem := ::getItem( nItem ) ):enabled .AND. ;
-            oItem:isPopUp() .AND. ;
-            oItem:data:isQuick( nKey, @nID )
+         IF ( oItem := ::getItem( nItem ) ):enabled .AND. oItem:isPopUp() .AND. oItem:data:isQuick( nKey, @nID )
             RETURN .T.
          ENDIF
          IF ++nItem > nTotal
@@ -172,9 +168,7 @@ METHOD isQuick( nKey, /* @ */ nID ) CLASS hb_PopupMenu
    IF ( nShortCut := ::getShortCt( nKey ) ) == 0
 
       FOR EACH oItem IN ::aItems
-         IF oItem:Enabled .AND. ;
-            oItem:isPopUp() .AND. ;
-            oItem:data:isQuick( nKey, @nID )
+         IF oItem:Enabled .AND. oItem:isPopUp() .AND. oItem:data:isQuick( nKey, @nID )
             RETURN .T.
          ENDIF
       NEXT
@@ -183,7 +177,7 @@ METHOD isQuick( nKey, /* @ */ nID ) CLASS hb_PopupMenu
 
       IF oItem:enabled
          ::select( nShortCut )
-         Eval( oItem:data, oItem )
+         Eval(oItem:data, oItem)
          nID := oItem:id
          RETURN .T.
       ENDIF

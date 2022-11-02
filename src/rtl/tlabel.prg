@@ -100,8 +100,7 @@ CREATE CLASS HBLabelForm
    VAR lOneMoreBand AS LOGICAL INIT .T.
    VAR nCurrentCol  AS NUMERIC // The current column in the band
 
-   METHOD New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, ;
-               bWhile, nNext, nRecord, lRest, lSample )
+   METHOD New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample )
 
    METHOD ExecuteLabel()
    METHOD SampleLabels()
@@ -109,8 +108,7 @@ CREATE CLASS HBLabelForm
 
 ENDCLASS
 
-METHOD New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, ;
-      bWhile, nNext, nRecord, lRest, lSample ) CLASS HBLabelForm
+METHOD New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample ) CLASS HBLabelForm
 
    LOCAL lPrintOn := .F.               // PRINTER status
    LOCAL lConsoleOn                    // CONSOLE status
@@ -128,11 +126,11 @@ METHOD New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, ;
       err:severity := ES_ERROR
       err:genCode := EG_ARG
       err:subSystem := "FRMLBL"
-      Eval( ErrorBlock(), err )
+      Eval(ErrorBlock(), err)
    ELSE
       /* NOTE: CA-Cl*pper does an RTrim() on the filename here,
                but in Harbour we're using _SET_TRIMFILENAME. [vszakats] */
-      IF Set( _SET_DEFEXTENSIONS )
+      IF Set(_SET_DEFEXTENSIONS)
          cLBLName := hb_FNameExtSetDef( cLBLName, ".lbl" )
       ENDIF
    ENDIF
@@ -142,31 +140,31 @@ METHOD New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, ;
 
    // Set output devices
    IF lPrinter             // To the printer
-      lPrintOn := Set( _SET_PRINTER, lPrinter )
+      lPrintOn := Set(_SET_PRINTER, lPrinter)
    ENDIF
 
-   lConsoleOn := Set( _SET_CONSOLE )
-   Set( _SET_CONSOLE, ! lNoConsole .AND. lConsoleOn )
+   lConsoleOn := Set(_SET_CONSOLE)
+   Set(_SET_CONSOLE, ! lNoConsole .AND. lConsoleOn)
 
    IF ! Empty(cAltFile)         // To file
-      lExtraState := Set( _SET_EXTRA, .T. )
-      cExtraFile  := Set( _SET_EXTRAFILE, cAltFile )
+      lExtraState := Set(_SET_EXTRA, .T.)
+      cExtraFile  := Set(_SET_EXTRAFILE, cAltFile)
    ENDIF
 
-   OldMargin := Set( _SET_MARGIN, 0 )
+   OldMargin := Set(_SET_MARGIN, 0)
 
    BEGIN SEQUENCE
 
       ::aLabelData := ::LoadLabel( cLBLName )  // Load the (.lbl) into an array
 
       // Add to the left margin if a SET MARGIN has been defined
-      ::aLabelData[ LBL_LMARGIN ] += OldMargin
+      ::aLabelData[LBL_LMARGIN] += OldMargin
 
-      ASize( ::aBandToPrint, Len(::aLabelData[ LBL_FIELDS ]) )
-      AFill( ::aBandToPrint, Space(::aLabelData[ LBL_LMARGIN ]) )
+      ASize(::aBandToPrint, Len(::aLabelData[LBL_FIELDS]))
+      AFill(::aBandToPrint, Space(::aLabelData[LBL_LMARGIN]))
 
       // Create enough space for a blank record
-      ::cBlank := Space(::aLabelData[ LBL_WIDTH ] + ::aLabelData[ LBL_SPACES ])
+      ::cBlank := Space(::aLabelData[LBL_WIDTH] + ::aLabelData[LBL_SPACES])
 
       // Handle sample labels
       IF lSample
@@ -174,12 +172,12 @@ METHOD New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, ;
       ENDIF
 
       // Execute the actual label run based on matching records
-      dbEval( {|| ::ExecuteLabel() }, bFor, bWhile, nNext, nRecord, lRest )
+      dbEval({|| ::ExecuteLabel() }, bFor, bWhile, nNext, nRecord, lRest)
 
       // Print the last band if there is one
       IF ::lOneMoreBand
          // Print the band
-         AEval( ::aBandToPrint, {| BandLine | PrintIt( BandLine ) } )
+         AEval(::aBandToPrint, {| BandLine | PrintIt( BandLine ) })
       ENDIF
 
    RECOVER USING xBreakVal
@@ -196,19 +194,19 @@ METHOD New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, ;
    ::lOneMoreBand := .T.
 
    // clean up
-   Set( _SET_PRINTER, lPrintOn ) // Set the printer back to prior state
-   Set( _SET_CONSOLE, lConsoleOn )  // Set the console back to prior state
+   Set(_SET_PRINTER, lPrintOn) // Set the printer back to prior state
+   Set(_SET_CONSOLE, lConsoleOn)  // Set the console back to prior state
 
    IF ! Empty(cAltFile)           // Set extrafile back
-      Set( _SET_EXTRAFILE, cExtraFile )
-      Set( _SET_EXTRA, lExtraState )
+      Set(_SET_EXTRAFILE, cExtraFile)
+      Set(_SET_EXTRA, lExtraState)
    ENDIF
 
    IF lBroke
       BREAK xBreakVal               // continue breaking
    ENDIF
 
-   Set( _SET_MARGIN, OldMargin )
+   Set(_SET_MARGIN, OldMargin)
 
    RETURN Self
 
@@ -219,15 +217,13 @@ METHOD ExecuteLabel() CLASS HBLabelForm
 
    // Load the current record into aBuffer
 
-   FOR EACH aField IN ::aLabelData[ LBL_FIELDS ]
+   FOR EACH aField IN ::aLabelData[LBL_FIELDS]
 
       IF aField != NIL
 
-         cBuffer := ;
-            PadR(Eval( aField[ LF_EXP ] ), ::aLabelData[ LBL_WIDTH ]) + ;
-            Space(::aLabelData[ LBL_SPACES ])
+         cBuffer := PadR(Eval(aField[LF_EXP]), ::aLabelData[LBL_WIDTH]) + Space(::aLabelData[LBL_SPACES])
 
-         IF aField[ LF_BLANK ]
+         IF aField[LF_BLANK]
             IF ! Empty(cBuffer)
                AAdd(aBuffer, cBuffer)
             ENDIF
@@ -239,15 +235,14 @@ METHOD ExecuteLabel() CLASS HBLabelForm
       ENDIF
    NEXT
 
-   ASize( aBuffer, Len(::aLabelData[ LBL_FIELDS ]) )
+   ASize(aBuffer, Len(::aLabelData[LBL_FIELDS]))
 
    // Add aBuffer to ::aBandToPrint
-   FOR nField := 1 TO Len(::aLabelData[ LBL_FIELDS ])
-      ::aBandToPrint[ nField ] += ;
-         iif( aBuffer[ nField ] == NIL, ::cBlank, aBuffer[ nField ] )
+   FOR nField := 1 TO Len(::aLabelData[LBL_FIELDS])
+      ::aBandToPrint[nField] += iif( aBuffer[nField] == NIL, ::cBlank, aBuffer[nField] )
    NEXT
 
-   IF ::nCurrentCol == ::aLabelData[ LBL_ACROSS ]
+   IF ::nCurrentCol == ::aLabelData[LBL_ACROSS]
 
       // trim
       FOR EACH item IN ::aBandToPrint
@@ -258,20 +253,20 @@ METHOD ExecuteLabel() CLASS HBLabelForm
       ::nCurrentCol := 1
 
       // Print the band
-      AEval( ::aBandToPrint, {| BandLine | PrintIt( BandLine ) } )
+      AEval(::aBandToPrint, {| BandLine | PrintIt( BandLine ) })
 
-      nMoreLines := ::aLabelData[ LBL_HEIGHT ] - Len(::aBandToPrint)
+      nMoreLines := ::aLabelData[LBL_HEIGHT] - Len(::aBandToPrint)
       FOR nField := 1 TO nMoreLines
          PrintIt()
       NEXT
 
       // Add the spaces between the label lines
-      FOR nField := 1 TO ::aLabelData[ LBL_LINES ]
+      FOR nField := 1 TO ::aLabelData[LBL_LINES]
          PrintIt()
       NEXT
 
       // Clear out the band
-      AFill( ::aBandToPrint, Space(::aLabelData[ LBL_LMARGIN ]) )
+      AFill(::aBandToPrint, Space(::aLabelData[LBL_LMARGIN]))
    ELSE
       ::lOneMoreBand := .T.
       ::nCurrentCol++
@@ -286,31 +281,31 @@ METHOD SampleLabels() CLASS HBLabelForm
 
    // Create the sample label row
 
-   ASize( aBand, ::aLabelData[ LBL_HEIGHT ] )
-   AFill( aBand, Space(::aLabelData[ LBL_LMARGIN ]) + ;
-      Replicate( Replicate( "*", ::aLabelData[ LBL_WIDTH ] ) + ;
-      Space(::aLabelData[ LBL_SPACES ]), ::aLabelData[ LBL_ACROSS ] ) )
+   ASize(aBand, ::aLabelData[LBL_HEIGHT])
+   AFill(aBand, Space(::aLabelData[LBL_LMARGIN]) + ;
+      Replicate(Replicate("*", ::aLabelData[LBL_WIDTH]) + ;
+      Space(::aLabelData[LBL_SPACES]), ::aLabelData[LBL_ACROSS]))
 
    // Prints sample labels
    DO WHILE lMoreSamples
 
       // Print the samples
-      AEval( aBand, {| BandLine | PrintIt( BandLine ) } )
+      AEval(aBand, {| BandLine | PrintIt( BandLine ) })
 
       // Add the spaces between the label lines
-      FOR nField := 1 TO ::aLabelData[ LBL_LINES ]
+      FOR nField := 1 TO ::aLabelData[LBL_LINES]
          PrintIt()
       NEXT
 
       // Prompt for more
       DispOutAt(Row(), 0, __natMsg( _LF_SAMPLES ) + " (" + __natMsg( _LF_YN ) + ")")
-      cKey := hb_keyChar( Inkey( 0 ) )
+      cKey := hb_keyChar(Inkey(0))
       DispOut(cKey)
       IF Row() == MaxRow()
-         Scroll( 0, 0, MaxRow(), MaxCol(), 1 )
-         SetPos( MaxRow(), 0 )
+         Scroll(0, 0, MaxRow(), MaxCol(), 1)
+         SetPos(MaxRow(), 0)
       ELSE
-         SetPos( Row() + 1, 0 )
+         SetPos(Row() + 1, 0)
       ENDIF
       IF __natIsNegative( cKey )    // Don't give sample labels
          lMoreSamples := .F.
@@ -331,24 +326,23 @@ METHOD LoadLabel( cLblFile ) CLASS HBLabelForm
    LOCAL cPath             // iteration variable
 
    // Create and initialize default label array
-   LOCAL aLabel[ LBL_COUNT ]
+   LOCAL aLabel[LBL_COUNT]
 
-   aLabel[ LBL_REMARK ]  := Space(60)    // Label remark
-   aLabel[ LBL_HEIGHT ]  := 5            // Label height
-   aLabel[ LBL_WIDTH ]   := 35           // Label width
-   aLabel[ LBL_LMARGIN ] := 0            // Left margin
-   aLabel[ LBL_LINES ]   := 1            // Lines between labels
-   aLabel[ LBL_SPACES ]  := 0            // Spaces between labels
-   aLabel[ LBL_ACROSS ]  := 1            // Number of labels across
-   aLabel[ LBL_FIELDS ]  := {}           // Array of label fields
+   aLabel[LBL_REMARK]  := Space(60)    // Label remark
+   aLabel[LBL_HEIGHT]  := 5            // Label height
+   aLabel[LBL_WIDTH]   := 35           // Label width
+   aLabel[LBL_LMARGIN] := 0            // Left margin
+   aLabel[LBL_LINES]   := 1            // Lines between labels
+   aLabel[LBL_SPACES]  := 0            // Spaces between labels
+   aLabel[LBL_ACROSS]  := 1            // Number of labels across
+   aLabel[LBL_FIELDS]  := {}           // Array of label fields
 
    // Open the label file
-   IF ( nHandle := FOpen( cLblFile ) ) == F_ERROR .AND. ;
-      Empty(hb_FNameDir( cLblFile ))
+   IF ( nHandle := FOpen(cLblFile) ) == F_ERROR .AND. Empty(hb_FNameDir( cLblFile ))
 
       // Search through default path; attempt to open label file
-      FOR EACH cPath IN hb_ATokens( StrTran(Set( _SET_DEFAULT ), ",", ";"), ";" )
-         IF ( nHandle := FOpen( hb_DirSepAdd( cPath ) + cLblFile ) ) != F_ERROR
+      FOR EACH cPath IN hb_ATokens(StrTran(Set(_SET_DEFAULT), ",", ";"), ";")
+         IF ( nHandle := FOpen(hb_DirSepAdd(cPath) + cLblFile) ) != F_ERROR
             EXIT
          ENDIF
       NEXT
@@ -362,45 +356,43 @@ METHOD LoadLabel( cLblFile ) CLASS HBLabelForm
       err:subSystem := "FRMLBL"
       err:osCode := FError()
       err:filename := cLblFile
-      Eval( ErrorBlock(), err )
+      Eval(ErrorBlock(), err)
    ELSE
-      IF FRead( nHandle, @cBuff, BUFFSIZE ) > 0 .AND. FError() == 0
+      IF FRead(nHandle, @cBuff, BUFFSIZE) > 0 .AND. FError() == 0
          // Load label dimension into aLabel
-         aLabel[ LBL_REMARK  ] := hb_BSubStr(cBuff, REMARKOFFSET, REMARKSIZE)
-         aLabel[ LBL_HEIGHT  ] := Bin2W( hb_BSubStr(cBuff, HEIGHTOFFSET, HEIGHTSIZE) )
-         aLabel[ LBL_WIDTH   ] := Bin2W( hb_BSubStr(cBuff, WIDTHOFFSET, WIDTHSIZE) )
-         aLabel[ LBL_LMARGIN ] := Bin2W( hb_BSubStr(cBuff, LMARGINOFFSET, LMARGINSIZE) )
-         aLabel[ LBL_LINES   ] := Bin2W( hb_BSubStr(cBuff, LINESOFFSET, LINESSIZE) )
-         aLabel[ LBL_SPACES  ] := Bin2W( hb_BSubStr(cBuff, SPACESOFFSET, SPACESSIZE) )
-         aLabel[ LBL_ACROSS  ] := Bin2W( hb_BSubStr(cBuff, ACROSSOFFSET, ACROSSSIZE) )
+         aLabel[LBL_REMARK]  := hb_BSubStr(cBuff, REMARKOFFSET, REMARKSIZE)
+         aLabel[LBL_HEIGHT]  := Bin2W(hb_BSubStr(cBuff, HEIGHTOFFSET, HEIGHTSIZE))
+         aLabel[LBL_WIDTH]   := Bin2W(hb_BSubStr(cBuff, WIDTHOFFSET, WIDTHSIZE))
+         aLabel[LBL_LMARGIN] := Bin2W(hb_BSubStr(cBuff, LMARGINOFFSET, LMARGINSIZE))
+         aLabel[LBL_LINES]   := Bin2W(hb_BSubStr(cBuff, LINESOFFSET, LINESSIZE))
+         aLabel[LBL_SPACES]  := Bin2W(hb_BSubStr(cBuff, SPACESOFFSET, SPACESSIZE))
+         aLabel[LBL_ACROSS]  := Bin2W(hb_BSubStr(cBuff, ACROSSOFFSET, ACROSSSIZE))
 
-         FOR i := 1 TO aLabel[ LBL_HEIGHT ]
+         FOR i := 1 TO aLabel[LBL_HEIGHT]
 
             // Get the text of the expression
             cFieldText := RTrim(hb_BSubStr(cBuff, nOffset, FIELDSIZE))
             nOffset += FIELDSIZE
 
             IF Empty(cFieldText)
-               AAdd(aLabel[ LBL_FIELDS ], NIL)
+               AAdd(aLabel[LBL_FIELDS], NIL)
             ELSE
-               AAdd(aLabel[ LBL_FIELDS ], { ;
-                  /* LF_EXP */ hb_macroBlock( cFieldText ), ;
+               AAdd(aLabel[LBL_FIELDS], { ;
+                  /* LF_EXP */ hb_macroBlock(cFieldText), ;
                   /* LF_TEXT */ cFieldText, ;
                   /* LF_BLANK */ .T. })
             ENDIF
          NEXT
       ENDIF
 
-      FClose( nHandle )  // Close file
+      FClose(nHandle)  // Close file
    ENDIF
 
    RETURN aLabel
 
-FUNCTION __LabelForm( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, ;
-      bWhile, nNext, nRecord, lRest, lSample )
+FUNCTION __LabelForm( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample )
 
-   RETURN HBLabelForm():New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, ;
-      bWhile, nNext, nRecord, lRest, lSample )
+   RETURN HBLabelForm():New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample )
 
 STATIC PROCEDURE PrintIt( cString )
 

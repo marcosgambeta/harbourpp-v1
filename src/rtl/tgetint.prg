@@ -46,24 +46,24 @@
 
 REQUEST HB_PValue
 
-FUNCTION __Get( bSetGet, cVarName, cPicture, bValid, bWhen )
+FUNCTION __Get(bSetGet, cVarName, cPicture, bValid, bWhen)
 
    LOCAL oGet
 
-   IF ! HB_ISSTRING( cVarName )
+   IF ! HB_ISSTRING(cVarName)
       RETURN NIL
    ENDIF
 
-   IF ! HB_ISEVALITEM( bSetGet )
+   IF ! HB_ISEVALITEM(bSetGet)
       IF FieldPos( cVarName ) > 0
-         bSetGet := FieldWBlock( cVarName, Select() )
-      ELSEIF ( bSetGet := MemVarBlock( cVarName ) ) == NIL
+         bSetGet := FieldWBlock(cVarName, Select())
+      ELSEIF ( bSetGet := MemVarBlock(cVarName) ) == NIL
          /* If cVarName is not a field name in current workarea then
           * CA-Cl*pper always tries to create SET/GET block for memvar.
           * If it cannot (i.e. cVarName is complex expression) then it
           * macrocompile simple SET/GET block for it. [druzus]
           */
-         bSetGet := hb_macroBlock( "iif(HB_PValue(1)==NIL," + cVarName + "," + cVarName + ":=hb_PValue(1))" )
+         bSetGet := hb_macroBlock("iif(HB_PValue(1)==NIL," + cVarName + "," + cVarName + ":=hb_PValue(1))")
       ENDIF
    ENDIF
 
@@ -71,7 +71,7 @@ FUNCTION __Get( bSetGet, cVarName, cPicture, bValid, bWhen )
     * CA-Cl*pper so user can create memvar dynamically in his
     * custom error handler. [druzus]
     */
-   Eval( bSetGet )
+   Eval(bSetGet)
 
    oGet := GetNew( ,, bSetGet, cVarName, cPicture )
 
@@ -80,26 +80,26 @@ FUNCTION __Get( bSetGet, cVarName, cPicture, bValid, bWhen )
 
    RETURN oGet
 
-FUNCTION __GetA( bGetArray, cVarName, cPicture, bValid, bWhen, aIndex )
+FUNCTION __GetA(bGetArray, cVarName, cPicture, bValid, bWhen, aIndex)
 
    LOCAL oGet
 
-   IF ! HB_ISSTRING( cVarName ) .OR. ! HB_ISARRAY( aIndex )
+   IF ! HB_ISSTRING(cVarName) .OR. ! HB_ISARRAY(aIndex)
       RETURN NIL
    ENDIF
 
-   IF ! HB_ISEVALITEM( bGetArray )
+   IF ! HB_ISEVALITEM(bGetArray)
       /* CA-Cl*pper creates standard SET/GET block here */
       IF FieldPos( cVarName ) > 0
-         bGetArray := FieldWBlock( cVarName, Select() )
+         bGetArray := FieldWBlock(cVarName, Select())
       ELSE
-         DO WHILE ( bGetArray := MemVarBlock( cVarName ) ) == NIL
-            __mvGet( cVarName )
+         DO WHILE ( bGetArray := MemVarBlock(cVarName) ) == NIL
+            __mvGet(cVarName)
          ENDDO
       ENDIF
    ENDIF
 
-   IF ! ValType(Eval( bGetArray )) $ "AH"
+   IF ! ValType(Eval(bGetArray)) $ "AH"
       RETURN NIL
    ENDIF
 

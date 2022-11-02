@@ -60,14 +60,14 @@ FUNCTION hb_langSelect( cLangID, cCP )
    LOCAL cCPDef
    LOCAL cLangIDBase
 
-   IF HB_ISSTRING( cLangID )
+   IF HB_ISSTRING(cLangID)
 
       cCPDef := hb_cdpSelect()
 
 #ifdef HB_LEGACY_LEVEL4
 
       /* Emulate legacy Harbour language modules for compatibility */
-      SWITCH Upper( cLangID )
+      SWITCH Upper(cLangID)
       CASE "BE866"  ; cCPDef := "BG866" ; cLangIDBase := "be" ; EXIT
       CASE "BEWIN"  ; cCPDef := "BGWIN" ; cLangIDBase := "be" ; EXIT
       CASE "BG866"  ; cCPDef := "BG866" ; cLangIDBase := "bg" ; EXIT
@@ -145,7 +145,7 @@ FUNCTION hb_langSelect( cLangID, cCP )
 
 #endif
 
-      IF ! HB_ISSTRING( cCP )
+      IF ! HB_ISSTRING(cCP)
          cCP := cCPDef
       ENDIF
 
@@ -153,7 +153,7 @@ FUNCTION hb_langSelect( cLangID, cCP )
       IF Empty(cLangIDBase)
 #endif
          /* Support standard ISO language IDs */
-         IF Empty(tmp := __LangStdToLangHb( cLangID ))
+         IF Empty(tmp := __LangStdToLangHb(cLangID))
             /* Normal case */
             cLangIDBase := cLangID
          ELSE
@@ -174,12 +174,12 @@ FUNCTION hb_langSelect( cLangID, cCP )
 
    RETURN __hb_langSelect( cLangID )
 
-STATIC FUNCTION __LangStdToLangHb( cLangStd )
+STATIC FUNCTION __LangStdToLangHb(cLangStd)
 
    LOCAL cLangHb := ""
 
-   IF HB_ISSTRING( cLangStd )
-      SWITCH Lower( StrTran(cLangStd, "_", "-") )
+   IF HB_ISSTRING(cLangStd)
+      SWITCH Lower(StrTran(cLangStd, "_", "-"))
 #if 0
       CASE "af-za"      ; EXIT
       CASE "af"         ; EXIT

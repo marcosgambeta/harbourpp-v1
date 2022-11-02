@@ -51,48 +51,46 @@ FUNCTION hb_cdpTerm()
    LOCAL cCP
    LOCAL cLang
 
-#if defined( __PLATFORM__WINDOWS )
+#if defined(__PLATFORM__WINDOWS)
    LOCAL tmp
-   cCP := __CPWinToCPStd( iif( ( tmp := __wapi_GetConsoleOutputCP() ) == 0, __wapi_GetOEMCP(), tmp ) )
+   cCP := __CPWinToCPStd(iif( ( tmp := __wapi_GetConsoleOutputCP() ) == 0, __wapi_GetOEMCP(), tmp ))
    cLang := hb_UserLang()
-#elif defined( __PLATFORM__UNIX )
+#elif defined(__PLATFORM__UNIX)
    LOCAL tmp
-   cCP := __UnixParseLangCP( iif( Empty(tmp := GetEnv( "LANG" )), ;
-                                  GetEnv( "LC_CTYPE" ), tmp ), @cLang )
-#elif defined( __PLATFORM__DOS )
+   cCP := __UnixParseLangCP( iif( Empty(tmp := GetEnv( "LANG" )), GetEnv( "LC_CTYPE" ), tmp ), @cLang )
+#elif defined(__PLATFORM__DOS)
    /* TODO */
    cCP := cLang := NIL
-#elif defined( __PLATFORM__OS2 )
+#elif defined(__PLATFORM__OS2)
    /* TODO */
    cCP := cLang := NIL
 #endif
 
-   RETURN __CPStdToHb( cCP, cLang )
+   RETURN __CPStdToHb(cCP, cLang)
 
 FUNCTION hb_cdpOS()
 
    LOCAL cCP
    LOCAL cLang
 
-#if defined( __PLATFORM__WINDOWS )
-   cCP := __CPWinToCPStd( __wapi_GetACP() )
+#if defined(__PLATFORM__WINDOWS)
+   cCP := __CPWinToCPStd(__wapi_GetACP())
    cLang := hb_UserLang()
-#elif defined( __PLATFORM__UNIX )
+#elif defined(__PLATFORM__UNIX)
    LOCAL tmp
-   cCP := __UnixParseLangCP( iif( Empty(tmp := GetEnv( "LANG" )), ;
-                                  GetEnv( "LC_CTYPE" ), tmp ), @cLang )
-#elif defined( __PLATFORM__DOS )
+   cCP := __UnixParseLangCP( iif( Empty(tmp := GetEnv( "LANG" )), GetEnv( "LC_CTYPE" ), tmp ), @cLang )
+#elif defined(__PLATFORM__DOS)
    /* TODO */
    cCP := cLang := NIL
-#elif defined( __PLATFORM__OS2 )
+#elif defined(__PLATFORM__OS2)
    /* TODO */
    cCP := cLang := NIL
 #endif
 
-   RETURN __CPStdToHb( cCP, cLang )
+   RETURN __CPStdToHb(cCP, cLang)
 
-#if defined( __PLATFORM__WINDOWS )
-STATIC FUNCTION __CPWinToCPStd( nCPWin )
+#if defined(__PLATFORM__WINDOWS)
+STATIC FUNCTION __CPWinToCPStd(nCPWin)
 
    SWITCH nCPWin
    CASE 65001 ; RETURN "utf8"
@@ -143,7 +141,7 @@ STATIC FUNCTION __CPWinToCPStd( nCPWin )
 
    RETURN NIL
 
-#elif defined( __PLATFORM__UNIX )
+#elif defined(__PLATFORM__UNIX)
 
 /* language[_territory][.codeset] */
 /* [language[_territory][.codeset][@modifier]] */
@@ -165,7 +163,7 @@ STATIC FUNCTION __UnixParseLangCP( cString, /* @ */ cLang )
    ENDIF
 
    /* Tricks to make the manual translation table shorter */
-   cCP := hb_StrReplace( Lower( cCP ), { "_" => "", "-" => "", "ibm" => "cp", "windows" => "cp" } )
+   cCP := hb_StrReplace( Lower(cCP), { "_" => "", "-" => "", "ibm" => "cp", "windows" => "cp" } )
    IF hb_LeftEq( cCP, "iso8859" )
       cCP := Stuff( cCP, Len("iso8859") + 1, 0, "-" )
    ENDIF
@@ -221,29 +219,29 @@ STATIC FUNCTION __UnixParseLangCP( cString, /* @ */ cLang )
 
 #endif
 
-STATIC FUNCTION __CPStdToHb( cCPStd, cCtryStd )
+STATIC FUNCTION __CPStdToHb(cCPStd, cCtryStd)
 
    LOCAL cCtryHb
    LOCAL cdp
    LOCAL aCP
 
    IF cCPStd != NIL
-      SWITCH cCPStd := Lower( cCPStd )
+      SWITCH cCPStd := Lower(cCPStd)
       CASE "utf8"
          RETURN "UTF8"
       CASE "utf16"
          RETURN "UTF16LE"
       OTHERWISE
          aCP := hb_cdpList()
-         cCtryHb := __LangStdToCPCtryHb( cCtryStd )
+         cCtryHb := __LangStdToCPCtryHb(cCtryStd)
          FOR EACH cdp IN aCP
-            IF hb_LeftEq( cdp, cCtryHb ) .AND. cCPStd == hb_cdpUniID( cdp )
+            IF hb_LeftEq( cdp, cCtryHb ) .AND. cCPStd == hb_cdpUniID(cdp)
                RETURN cdp
             ENDIF
          NEXT
          FOR EACH cdp IN aCP
-            IF cCPStd == hb_cdpUniID( cdp )
-               RETURN hb_cdpUniID( cdp )
+            IF cCPStd == hb_cdpUniID(cdp)
+               RETURN hb_cdpUniID(cdp)
             ENDIF
          NEXT
       ENDSWITCH
@@ -251,9 +249,9 @@ STATIC FUNCTION __CPStdToHb( cCPStd, cCtryStd )
 
    RETURN NIL
 
-STATIC FUNCTION __LangStdToCPCtryHb( cCtryStd )
+STATIC FUNCTION __LangStdToCPCtryHb(cCtryStd)
 
-   SWITCH Lower( cCtryStd )
+   SWITCH Lower(cCtryStd)
 #if 0
    CASE "af-za"      ; EXIT
    CASE "af"         ; EXIT

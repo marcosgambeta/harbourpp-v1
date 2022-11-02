@@ -82,12 +82,12 @@ CREATE CLASS PushButton FUNCTION HBPushButton
    METHOD buffer() SETGET
    METHOD caption( cCaption ) SETGET
    METHOD col( nCol ) SETGET
-   METHOD colorSpec( cColorSpec ) SETGET
-   METHOD fBlock( bFBlock ) SETGET
+   METHOD colorSpec(cColorSpec) SETGET
+   METHOD fBlock(bFBlock) SETGET
    METHOD hasFocus() SETGET
    METHOD message( cMessage ) SETGET
    METHOD row( nRow ) SETGET
-   METHOD sBlock( bSBlock ) SETGET
+   METHOD sBlock(bSBlock) SETGET
    METHOD typeOut() SETGET
    METHOD style( cStyle ) SETGET
 
@@ -116,8 +116,8 @@ METHOD setFocus() CLASS PushButton
       ::lHasFocus := .T.
       ::display()
 
-      IF HB_ISEVALITEM( ::bFBlock )
-         Eval( ::bFBlock )
+      IF HB_ISEVALITEM(::bFBlock)
+         Eval(::bFBlock)
       ENDIF
    ENDIF
 
@@ -131,22 +131,22 @@ METHOD select( nPos ) CLASS PushButton
       ::lbuffer := .T.
       ::display()
 
-      IF HB_ISNUMERIC( nPos )
+      IF HB_ISNUMERIC(nPos)
 
          IF nPos == 32
 
-            Inkey( 0.4 )
+            Inkey(0.4)
             DO WHILE nCurPos == 32
-               nCurPos := Inkey( 0.1 )
+               nCurPos := Inkey(0.1)
             ENDDO
          ELSE
-            DO WHILE nPos == Inkey( 0 )
+            DO WHILE nPos == Inkey(0)
             ENDDO
          ENDIF
       ENDIF
 
-      IF HB_ISEVALITEM( ::bSBlock )
-         Eval( ::bSBlock )
+      IF HB_ISEVALITEM(::bSBlock)
+         Eval(::bSBlock)
       ENDIF
 
       ::lBuffer := .F.
@@ -160,8 +160,8 @@ METHOD killFocus() CLASS PushButton
    IF ::lHasFocus
       ::lHasFocus := .F.
 
-      IF HB_ISEVALITEM( ::bFBlock )
-         Eval( ::bFBlock )
+      IF HB_ISEVALITEM(::bFBlock)
+         Eval(::bFBlock)
       ENDIF
 
       ::display()
@@ -187,10 +187,7 @@ METHOD hitTest( nMRow, nMCol ) CLASS PushButton
       nLen += 2
    ENDIF
 
-   IF nMRow >= ::Row .AND. ;
-      nMCol >= ::Col .AND. ;
-      nMRow < ::Row + nCurrentPos .AND. ;
-      nMCol < ::Col + nLen
+   IF nMRow >= ::Row .AND. nMCol >= ::Col .AND. nMRow < ::Row + nCurrentPos .AND. nMCol < ::Col + nLen
       RETURN HTCLIENT
    ENDIF
 
@@ -209,11 +206,11 @@ METHOD display() CLASS PushButton
 
    DO CASE
    CASE ::lBuffer
-      cColor := hb_ColorIndex( ::cColorSpec, 2 )
+      cColor := hb_ColorIndex(::cColorSpec, 2)
    CASE ::lHasFocus
-      cColor := hb_ColorIndex( ::cColorSpec, 1 )
+      cColor := hb_ColorIndex(::cColorSpec, 1)
    OTHERWISE
-      cColor := hb_ColorIndex( ::cColorSpec, 0 )
+      cColor := hb_ColorIndex(::cColorSpec, 0)
    ENDCASE
 
    IF ( nPos := At("&", cCaption) ) == 0
@@ -241,7 +238,7 @@ METHOD display() CLASS PushButton
       hb_DispOutAt(nRow, nCol, cCaption, cColor)
 
       IF nPos != 0
-         hb_DispOutAt(nRow, nCol + nPos - 1, SubStr(cCaption, nPos, 1), hb_ColorIndex( ::cColorSpec, 3 ))
+         hb_DispOutAt(nRow, nCol + nPos - 1, SubStr(cCaption, nPos, 1), hb_ColorIndex(::cColorSpec, 3))
       ENDIF
    ENDIF
 
@@ -276,16 +273,15 @@ METHOD col( nCol ) CLASS PushButton
 
    RETURN ::nCol
 
-METHOD colorSpec( cColorSpec ) CLASS PushButton
+METHOD colorSpec(cColorSpec) CLASS PushButton
 
    IF cColorSpec != NIL
-      ::cColorSpec := __eInstVar53( Self, "COLORSPEC", cColorSpec, "C", 1001, ;
-         {|| ! Empty(hb_ColorIndex( cColorSpec, 3 )) .AND. Empty(hb_ColorIndex( cColorSpec, 5 )) } )
+      ::cColorSpec := __eInstVar53( Self, "COLORSPEC", cColorSpec, "C", 1001, {|| ! Empty(hb_ColorIndex(cColorSpec, 3)) .AND. Empty(hb_ColorIndex(cColorSpec, 5)) } )
    ENDIF
 
    RETURN ::cColorSpec
 
-METHOD fBlock( bFBlock ) CLASS PushButton
+METHOD fBlock(bFBlock) CLASS PushButton
 
    IF PCount() > 0
       ::bFBlock := iif( bFBlock == NIL, NIL, __eInstVar53( Self, "FBLOCK", bFBlock, "B", 1001 ) )
@@ -312,7 +308,7 @@ METHOD row( nRow ) CLASS PushButton
 
    RETURN ::nRow
 
-METHOD sBlock( bSBlock ) CLASS PushButton
+METHOD sBlock(bSBlock) CLASS PushButton
 
    IF PCount() > 0
       ::bSBlock := iif( bSBlock == NIL, NIL, __eInstVar53( Self, "SBLOCK", bSBlock, "B", 1001 ) )
@@ -335,8 +331,7 @@ METHOD New( nRow, nCol, cCaption ) CLASS PushButton
 
    LOCAL cColor
 
-   IF ! HB_ISNUMERIC( nRow ) .OR. ;
-      ! HB_ISNUMERIC( nCol )
+   IF ! HB_ISNUMERIC(nRow) .OR. ! HB_ISNUMERIC(nCol)
       RETURN NIL
    ENDIF
 
@@ -351,10 +346,10 @@ METHOD New( nRow, nCol, cCaption ) CLASS PushButton
    ELSE
       cColor := SetColor()
       ::cColorSpec := ;
-         hb_ColorIndex( cColor, CLR_UNSELECTED ) + "," + ;
-         hb_ColorIndex( cColor, CLR_ENHANCED   ) + "," + ;
-         hb_ColorIndex( cColor, CLR_STANDARD   ) + "," + ;
-         hb_ColorIndex( cColor, CLR_BACKGROUND )
+         hb_ColorIndex(cColor, CLR_UNSELECTED) + "," + ;
+         hb_ColorIndex(cColor, CLR_ENHANCED) + "," + ;
+         hb_ColorIndex(cColor, CLR_STANDARD) + "," + ;
+         hb_ColorIndex(cColor, CLR_BACKGROUND)
    ENDIF
 
    RETURN Self

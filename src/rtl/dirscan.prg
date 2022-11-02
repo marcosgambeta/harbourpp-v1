@@ -55,15 +55,15 @@ STATIC FUNCTION hb_doScan( cPath, cMask, cAttr, cPathSep )
    LOCAL aResult := {}
 
    FOR EACH aFile IN hb_vfDirectory( cPath + hb_osFileMask(), cAttr + "D" )
-      lMatch := hb_FileMatch( aFile[ F_NAME ], cMask )
-      IF "D" $ aFile[ F_ATTR ]
+      lMatch := hb_FileMatch( aFile[F_NAME], cMask )
+      IF "D" $ aFile[F_ATTR]
          IF lMatch .AND. "D" $ cAttr
             AAdd(aResult, aFile)
          ENDIF
-         IF !( aFile[ F_NAME ] == "." .OR. aFile[ F_NAME ] == ".." .OR. aFile[ F_NAME ] == "" )
-            AEval( hb_DoScan( cPath + aFile[ F_NAME ] + cPathSep, cMask, cAttr, cPathSep ), ;
-               {| x | x[ F_NAME ] := aFile[ F_NAME ] + cPathSep + x[ F_NAME ], ;
-               AAdd(aResult, x) } )
+         IF !( aFile[F_NAME] == "." .OR. aFile[F_NAME] == ".." .OR. aFile[F_NAME] == "" )
+            AEval(hb_DoScan( cPath + aFile[F_NAME] + cPathSep, cMask, cAttr, cPathSep ), ;
+               {| x | x[F_NAME] := aFile[F_NAME] + cPathSep + x[F_NAME], ;
+               AAdd(aResult, x) })
          ENDIF
       ELSEIF lMatch
          AAdd(aResult, aFile)
@@ -73,8 +73,8 @@ STATIC FUNCTION hb_doScan( cPath, cMask, cAttr, cPathSep )
    RETURN aResult
 
 FUNCTION hb_DirScan( cPath, cFileMask, cAttr )
-   RETURN hb_DoScan( hb_DirSepAdd( hb_defaultValue( cPath, "" ) ), ;
-      iif( HB_ISSTRING( cFileMask ), cFileMask, hb_osFileMask() ), ;
+   RETURN hb_DoScan( hb_DirSepAdd(hb_defaultValue( cPath, "" )), ;
+      iif( HB_ISSTRING(cFileMask), cFileMask, hb_osFileMask() ), ;
       hb_defaultValue( cAttr, "" ), ;
       hb_ps() )
 
@@ -84,21 +84,21 @@ FUNCTION hb_DirRemoveAll( cDir )
 
    IF ! Empty(cDir) .AND. hb_vfDirExists( cDir )
       cPath := hb_DirSepDel( cDir )
-      IF hb_vfAttrGet( cPath, @nAttr ) .AND. ! hb_bitAnd( nAttr, HB_FA_READONLY ) == 0
-         hb_vfAttrSet( cPath, hb_bitXor( nAttr, HB_FA_READONLY ) )
+      IF hb_vfAttrGet(cPath, @nAttr) .AND. ! hb_bitAnd(nAttr, HB_FA_READONLY) == 0
+         hb_vfAttrSet(cPath, hb_bitXor( nAttr, HB_FA_READONLY ))
       ENDIF
-      cPath := hb_DirSepAdd( cPath )
+      cPath := hb_DirSepAdd(cPath)
       FOR EACH aFile IN hb_vfDirectory( cPath + hb_osFileMask(), "HSDL" )
-         IF "D" $ aFile[ F_ATTR ] .AND. ! "L" $ aFile[ F_ATTR ]
-            IF !( aFile[ F_NAME ] == "." .OR. aFile[ F_NAME ] == ".." .OR. aFile[ F_NAME ] == "" )
-               IF ! hb_DirRemoveAll( cPath + aFile[ F_NAME ] )
+         IF "D" $ aFile[F_ATTR] .AND. ! "L" $ aFile[F_ATTR]
+            IF !( aFile[F_NAME] == "." .OR. aFile[F_NAME] == ".." .OR. aFile[F_NAME] == "" )
+               IF ! hb_DirRemoveAll( cPath + aFile[F_NAME] )
                   RETURN .F.
                ENDIF
             ENDIF
          ELSE
-            cFile := cPath + aFile[ F_NAME ]
-            IF "R" $ aFile[ F_ATTR ] .AND. hb_vfAttrGet( cFile, @nAttr )
-               hb_vfAttrSet( cFile, hb_bitAnd( nAttr, hb_bitNot( HB_FA_READONLY ) ) )
+            cFile := cPath + aFile[F_NAME]
+            IF "R" $ aFile[F_ATTR] .AND. hb_vfAttrGet(cFile, @nAttr)
+               hb_vfAttrSet(cFile, hb_bitAnd(nAttr, hb_bitNot( HB_FA_READONLY )))
             ENDIF
             IF ! hb_vfErase( cFile ) == 0
                RETURN .F.
@@ -114,14 +114,13 @@ FUNCTION hb_FileDelete( cFileMask, cAttr )
 
    LOCAL lAny := .F., aFile, cPath, cFile, cAttrMask, nAttr
 
-   IF HB_ISSTRING( cFileMask ) .AND. ! Empty(cFileMask) .AND. ;
-      ! hb_vfDirExists( cFileMask )
+   IF HB_ISSTRING(cFileMask) .AND. ! Empty(cFileMask) .AND. ! hb_vfDirExists( cFileMask )
       cPath := hb_FNameDir( cFileMask )
       cAttrMask := StrTran(hb_defaultValue( cAttr, "" ), "D") + "L"
       FOR EACH aFile IN hb_vfDirectory( cFileMask, cAttrMask )
-         cFile := cPath + aFile[ F_NAME ]
-         IF "R" $ aFile[ F_ATTR ] .AND. hb_vfAttrGet( cFile, @nAttr )
-            hb_vfAttrSet( cFile, hb_bitAnd( nAttr, hb_bitNot( HB_FA_READONLY ) ) )
+         cFile := cPath + aFile[F_NAME]
+         IF "R" $ aFile[F_ATTR] .AND. hb_vfAttrGet(cFile, @nAttr)
+            hb_vfAttrSet(cFile, hb_bitAnd(nAttr, hb_bitNot( HB_FA_READONLY )))
          ENDIF
          IF hb_vfErase( cFile ) == 0
             lAny := .T.

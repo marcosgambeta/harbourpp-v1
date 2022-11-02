@@ -53,8 +53,7 @@ FUNCTION __eInstVar53( oVar, cMethod, xValue, cType, nSubCode, bValid )
 
    LOCAL oError
 
-   IF ! ValType(xValue) == cType .OR. ;
-      ( bValid != NIL .AND. ! Eval( bValid, oVar, xValue ) )
+   IF ! ValType(xValue) == cType .OR. ( bValid != NIL .AND. ! Eval(bValid, oVar, xValue) )
       oError := ErrorNew()
       oError:description := hb_langErrMsg( EG_ARG )
       oError:gencode := EG_ARG
@@ -62,13 +61,13 @@ FUNCTION __eInstVar53( oVar, cMethod, xValue, cType, nSubCode, bValid )
       oError:cansubstitute := .T.
       oError:subsystem := oVar:className
 #ifdef HB_CLP_STRICT
-      HB_SYMBOL_UNUSED( cMethod )
+      HB_SYMBOL_UNUSED(cMethod)
 #else
       oError:operation := cMethod
 #endif
       oError:subcode := nSubCode
       oError:args := { xValue }
-      xValue := Eval( ErrorBlock(), oError )
+      xValue := Eval(ErrorBlock(), oError)
       IF ! ValType(xValue) == cType
          __errInHandler()
       ENDIF

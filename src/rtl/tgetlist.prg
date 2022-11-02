@@ -81,18 +81,18 @@ CREATE CLASS HBGetList
 #endif
    METHOD Settle( nPos, lInit )
    METHOD Reader( oMenu, aMsg )
-   METHOD GetApplyKey( nKey, oGet, oMenu, aMsg )
+   METHOD GetApplyKey(nKey, oGet, oMenu, aMsg)
    METHOD GetPreValidate( oGet, aMsg )
    METHOD GetPostValidate( oGet, aMsg )
-   METHOD GetDoSetKey( bKeyBlock, oGet )
+   METHOD GetDoSetKey(bKeyBlock, oGet)
    METHOD PostActiveGet()
    METHOD GetReadVar()
    METHOD SetFormat( bFormat )
-   METHOD KillRead( lKill )
+   METHOD KillRead(lKill)
    METHOD GetActive( oGet )
    METHOD DateMsg()
    METHOD ShowScoreBoard()
-   METHOD ReadUpdated( lUpdated )
+   METHOD ReadUpdated(lUpdated)
    METHOD ReadVar( cNewVarName )
    METHOD SetFocus()
    METHOD Updated()                                  // returns ::lUpdated
@@ -100,10 +100,10 @@ CREATE CLASS HBGetList
 
 #ifdef HB_COMPAT_C53
    METHOD GUIReader( oGet, oMenu, aMsg )
-   METHOD GUIApplyKey( oGet, oGUI, nKey, oMenu, aMsg )
+   METHOD GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg)
    METHOD GUIPreValidate( oGet, oGUI, aMsg )
    METHOD GUIPostValidate( oGet, oGUI, aMsg )
-   METHOD TBApplyKey( oGet, oTB, nKey, oMenu, aMsg )
+   METHOD TBApplyKey(oGet, oTB, nKey, oMenu, aMsg)
    METHOD TBReader( oGet, oMenu, aMsg )
    METHOD Accelerator( nKey, aMsg )
    METHOD hitTest( nMRow, nMCol, aMsg )
@@ -154,7 +154,7 @@ METHOD ReadModal() CLASS HBGetList
 #endif
 
 #ifdef HB_COMPAT_C53
-   ::nSaveCursor   := SetCursor( SC_NONE )
+   ::nSaveCursor   := SetCursor(SC_NONE)
 #endif
    ::cReadProcName := ProcName( 2 )
    ::nReadProcLine := ProcLine( 2 )
@@ -162,15 +162,13 @@ METHOD ReadModal() CLASS HBGetList
 #ifdef HB_COMPAT_C53
    ::nPos := ::Settle( hb_defaultValue( nPos, 0 ), .T. )
 
-   IF ( lMsgFlag := HB_ISNUMERIC( nMsgRow ) .AND. ;
-                    HB_ISNUMERIC( nMsgLeft ) .AND. ;
-                    HB_ISNUMERIC( nMsgRight ) )
+   IF ( lMsgFlag := HB_ISNUMERIC(nMsgRow) .AND. HB_ISNUMERIC(nMsgLeft) .AND. HB_ISNUMERIC(nMsgRight) )
 
-      IF ! HB_ISSTRING( cMsgColor )
+      IF ! HB_ISSTRING(cMsgColor)
          cMsgColor := GetClrPair( SetColor(), 1 )
       ENDIF
 
-      Scroll( nMsgRow, nMsgLeft, nMsgRow, nMsgRight )
+      Scroll(nMsgRow, nMsgLeft, nMsgRow, nMsgRight)
 
       ::cMsgSaveS := SaveScreen( nMsgRow, nMsgLeft, nMsgRow, nMsgRight )
    ENDIF
@@ -186,18 +184,18 @@ METHOD ReadModal() CLASS HBGetList
 
    DO WHILE ::nPos != 0
 
-      ::oGet := ::aGetList[ ::nPos ]
+      ::oGet := ::aGetList[::nPos]
       ::PostActiveGet()
 
 #ifdef HB_COMPAT_C53
-      IF HB_ISEVALITEM( ::oGet:reader )
-         Eval( ::oGet:reader, ::oGet, Self, oMenu, aMsg )
+      IF HB_ISEVALITEM(::oGet:reader)
+         Eval(::oGet:reader, ::oGet, Self, oMenu, aMsg)
       ELSE
          ::Reader( oMenu, aMsg )
       ENDIF
 #else
-      IF HB_ISEVALITEM( ::oGet:reader )
-         Eval( ::oGet:reader, ::oGet )
+      IF HB_ISEVALITEM(::oGet:reader)
+         Eval(::oGet:reader, ::oGet)
       ELSE
          ::Reader()
       ENDIF
@@ -212,7 +210,7 @@ METHOD ReadModal() CLASS HBGetList
       RestScreen( nMsgRow, nMsgLeft, nMsgRow, nMsgRight, ::cMsgSaveS )
    ENDIF
 
-   SetCursor( ::nSaveCursor )
+   SetCursor(::nSaveCursor)
 #endif
 
    RETURN Self
@@ -227,7 +225,7 @@ METHOD SetFocus() CLASS HBGetList
 
    __GetListSetActive( Self )
    __GetListLast( Self )
-   ::aGetList[ ::nPos ]:setFocus()
+   ::aGetList[::nPos]:setFocus()
 
    RETURN Self
 
@@ -266,23 +264,21 @@ METHOD Reader( oMenu, aMsg ) CLASS HBGetList
 
          DO WHILE oGet:exitState == GE_NOEXIT .AND. ! ::lKillRead
 #ifdef HB_COMPAT_C53
-            SetCursor( iif( ::nSaveCursor == SC_NONE, SC_NORMAL, ::nSaveCursor ) )
-            nKey := Inkey( 0 )
-            SetCursor( SC_NONE )
-            ::GetApplyKey( nKey, oGet, oMenu, aMsg )
+            SetCursor(iif( ::nSaveCursor == SC_NONE, SC_NORMAL, ::nSaveCursor ))
+            nKey := Inkey(0)
+            SetCursor(SC_NONE)
+            ::GetApplyKey(nKey, oGet, oMenu, aMsg)
 #else
-            ::GetApplyKey( Inkey( 0 ), oGet, oMenu, aMsg )
+            ::GetApplyKey(Inkey(0), oGet, oMenu, aMsg)
 #endif
             nRow := Row()
             nCol := Col()
             ::ShowGetMsg( oGet, aMsg )
-            SetPos( nRow, nCol )
+            SetPos(nRow, nCol)
          ENDDO
 
 #ifdef HB_COMPAT_C53
-         IF ! ::nLastExitState == GE_SHORTCUT .AND. ;
-            ! ::nLastExitState == GE_MOUSEHIT .AND. ;
-            ! ::GetPostValidate( oGet, aMsg )
+         IF ! ::nLastExitState == GE_SHORTCUT .AND. ! ::nLastExitState == GE_MOUSEHIT .AND. ! ::GetPostValidate( oGet, aMsg )
 #else
          IF ! ::GetPostValidate( oGet, aMsg )
 #endif
@@ -297,8 +293,8 @@ METHOD Reader( oMenu, aMsg ) CLASS HBGetList
 #endif
       oGet:killFocus()
 #ifdef HB_COMPAT_C53
-      SetCursor( nOldCursor )
-      SetPos( nRow, nCol )
+      SetCursor(nOldCursor)
+      SetPos(nRow, nCol)
 #endif
 
       ::EraseGetMsg( aMsg )
@@ -306,7 +302,7 @@ METHOD Reader( oMenu, aMsg ) CLASS HBGetList
 
    RETURN Self
 
-METHOD GetApplyKey( nKey, oGet, oMenu, aMsg ) CLASS HBGetList
+METHOD GetApplyKey(nKey, oGet, oMenu, aMsg) CLASS HBGetList
 
    LOCAL cKey
    LOCAL bKeyBlock
@@ -320,8 +316,8 @@ METHOD GetApplyKey( nKey, oGet, oMenu, aMsg ) CLASS HBGetList
 
    hb_default( @oGet, ::oGet )
 
-   IF ( bKeyBlock := SetKey( nKey ) ) != NIL
-      IF ::GetDoSetKey( bKeyBlock, oGet )
+   IF ( bKeyBlock := SetKey(nKey) ) != NIL
+      IF ::GetDoSetKey(bKeyBlock, oGet)
          RETURN Self
       ENDIF
    ENDIF
@@ -332,16 +328,16 @@ METHOD GetApplyKey( nKey, oGet, oMenu, aMsg ) CLASS HBGetList
       oGet:exitState := GE_SHORTCUT
       ::nNextGet := nHotItem
       ::nLastExitState := GE_SHORTCUT
-   ELSEIF ! HB_ISOBJECT( oMenu )
+   ELSEIF ! HB_ISOBJECT(oMenu)
    ELSEIF ( nHotItem := oMenu:getAccel( nKey ) ) != 0
-      ::nMenuID := MenuModal( oMenu, nHotItem, aMsg[ MSGROW ], aMsg[ MSGLEFT ], aMsg[ MSGRIGHT ], aMsg[ MSGCOLOR ] )
+      ::nMenuID := MenuModal( oMenu, nHotItem, aMsg[MSGROW], aMsg[MSGLEFT], aMsg[MSGRIGHT], aMsg[MSGCOLOR] )
       nKey := 0
    ELSEIF IsShortcut( oMenu, nKey )
       nKey := 0
    ENDIF
 #else
-   HB_SYMBOL_UNUSED( oMenu )
-   HB_SYMBOL_UNUSED( aMsg )
+   HB_SYMBOL_UNUSED(oMenu)
+   HB_SYMBOL_UNUSED(aMsg)
 #endif
 
    SWITCH nKey
@@ -366,7 +362,7 @@ METHOD GetApplyKey( nKey, oGet, oMenu, aMsg ) CLASS HBGetList
       EXIT
 
    CASE K_ESC
-      IF Set( _SET_ESCAPE )
+      IF Set(_SET_ESCAPE)
          oGet:undo()
          oGet:exitState := GE_ESCAPE
       ENDIF
@@ -401,12 +397,12 @@ METHOD GetApplyKey( nKey, oGet, oMenu, aMsg ) CLASS HBGetList
       nMRow := MRow()
       nMCol := MCol()
 
-      IF ! HB_ISOBJECT( oMenu )
+      IF ! HB_ISOBJECT(oMenu)
          nButton := 0
       ELSEIF ! oMenu:ClassName() == "TOPBARMENU"
          nButton := 0
       ELSEIF ( nButton := oMenu:hitTest( nMRow, nMCol ) ) != 0
-         ::nMenuID := MenuModal( oMenu, nHotItem, aMsg[ MSGROW ], aMsg[ MSGLEFT ], aMsg[ MSGRIGHT ], aMsg[ MSGCOLOR ] )
+         ::nMenuID := MenuModal( oMenu, nHotItem, aMsg[MSGROW], aMsg[MSGLEFT], aMsg[MSGRIGHT], aMsg[MSGCOLOR] )
          nButton := 1
       ENDIF
 
@@ -496,27 +492,27 @@ METHOD GetApplyKey( nKey, oGet, oMenu, aMsg ) CLASS HBGetList
       EXIT
 
    CASE K_INS
-      Set( _SET_INSERT, ! Set( _SET_INSERT ) )
+      Set(_SET_INSERT, ! Set(_SET_INSERT))
       ::ShowScoreboard()
       EXIT
 
    OTHERWISE
 
-      IF ! ( cKey := hb_keyChar( nKey ) ) == ""
+      IF ! ( cKey := hb_keyChar(nKey) ) == ""
          IF oGet:type == "N" .AND. ( cKey == "." .OR. cKey == "," )
             oGet:toDecPos()
          ELSE
-            IF Set( _SET_INSERT )
+            IF Set(_SET_INSERT)
                oGet:insert( cKey )
             ELSE
                oGet:overStrike( cKey )
             ENDIF
 
             IF oGet:typeOut
-               IF Set( _SET_BELL )
+               IF Set(_SET_BELL)
                   QQOut(Chr(7))
                ENDIF
-               IF ! Set( _SET_CONFIRM )
+               IF ! Set(_SET_CONFIRM)
                   oGet:exitState := GE_ENTER
                ENDIF
             ENDIF
@@ -537,9 +533,9 @@ METHOD GetPreValidate( oGet, aMsg ) CLASS HBGetList
 
       lUpdated := ::lUpdated
 
-      lWhen := Eval( oGet:preBlock, oGet, aMsg )
+      lWhen := Eval(oGet:preBlock, oGet, aMsg)
 
-      IF ! HB_ISOBJECT( oGet:control ) .AND. ! lWhen
+      IF ! HB_ISOBJECT(oGet:control) .AND. ! lWhen
          oGet:display()
       ENDIF
 
@@ -592,18 +588,18 @@ METHOD GetPostValidate( oGet, aMsg ) CLASS HBGetList
 #endif
    oGet:reset()
 #ifdef HB_COMPAT_C53
-   SetCursor( nOldCursor )
+   SetCursor(nOldCursor)
 #endif
 
    IF oGet:postBlock != NIL
 
       lUpdated := ::lUpdated
 
-      IF HB_ISSTRING( oGet:buffer )
-         SetPos( oGet:row, oGet:col + Len(oGet:buffer) )
+      IF HB_ISSTRING(oGet:buffer)
+         SetPos(oGet:row, oGet:col + Len(oGet:buffer))
       ENDIF
-      lValid := Eval( oGet:postBlock, oGet, aMsg )
-      SetPos( oGet:row, oGet:col )
+      lValid := Eval(oGet:postBlock, oGet, aMsg)
+      SetPos(oGet:row, oGet:col)
 
       ::ShowScoreBoard()
       oGet:updateBuffer()
@@ -624,7 +620,7 @@ METHOD GetPostValidate( oGet, aMsg ) CLASS HBGetList
 
    RETURN lValid
 
-METHOD GetDoSetKey( bKeyBlock, oGet ) CLASS HBGetList
+METHOD GetDoSetKey(bKeyBlock, oGet) CLASS HBGetList
 
    LOCAL lUpdated
    LOCAL lSetKey
@@ -638,7 +634,7 @@ METHOD GetDoSetKey( bKeyBlock, oGet ) CLASS HBGetList
 
    lUpdated := ::lUpdated
 
-   lSetKey := Eval( bKeyBlock, ::cReadProcName, ::nReadProcLine, ::ReadVar() )
+   lSetKey := Eval(bKeyBlock, ::cReadProcName, ::nReadProcLine, ::ReadVar())
 
    ::ShowScoreboard()
    oGet:updateBuffer()
@@ -664,7 +660,7 @@ METHOD Settle( nPos, lInit ) CLASS HBGetList
    ELSEIF nPos > 0 .AND. hb_defaultValue( lInit, .F. )  /* NOTE: Never .T. in C5.2 mode. */
       nExitState := GE_NOEXIT
    ELSE
-      nExitState := ::aGetList[ nPos ]:exitState
+      nExitState := ::aGetList[nPos]:exitState
    ENDIF
 
    IF nExitState == GE_ESCAPE .OR. nExitState == GE_WRITE
@@ -720,14 +716,14 @@ METHOD Settle( nPos, lInit ) CLASS HBGetList
    ENDSWITCH
 
    IF nPos == 0
-      IF ! Set( _SET_EXIT ) .AND. ! ::lBumpBot
+      IF ! Set(_SET_EXIT) .AND. ! ::lBumpBot
          ::lBumpTop := .T.
          nPos       := ::nLastPos
          nExitState := GE_DOWN
       ENDIF
 
    ELSEIF nPos == Len(::aGetList) + 1
-      IF ! Set( _SET_EXIT ) .AND. nExitState != GE_ENTER .AND. ! ::lBumpTop
+      IF ! Set(_SET_EXIT) .AND. nExitState != GE_ENTER .AND. ! ::lBumpTop
          ::lBumpBot := .T.
          nPos       := ::nLastPos
          nExitState := GE_UP
@@ -739,7 +735,7 @@ METHOD Settle( nPos, lInit ) CLASS HBGetList
    ::nLastExitState := nExitState
 
    IF nPos != 0
-      ::aGetList[ nPos ]:exitState := nExitState
+      ::aGetList[nPos]:exitState := nExitState
    ENDIF
 
    RETURN nPos
@@ -759,13 +755,13 @@ METHOD SetFormat( bFormat ) CLASS HBGetList
 
    LOCAL bSavFormat := ::bFormat
 
-   IF HB_ISEVALITEM( bFormat )
+   IF HB_ISEVALITEM(bFormat)
       ::bFormat := bFormat
    ENDIF
 
    RETURN bSavFormat
 
-METHOD KillRead( lKill ) CLASS HBGetList
+METHOD KillRead(lKill) CLASS HBGetList
 
    LOCAL lSavKill := ::lKillRead
 
@@ -787,9 +783,9 @@ METHOD GetActive( oGet ) CLASS HBGetList
 
 METHOD ShowScoreboard() CLASS HBGetList
 
-   IF Set( _SET_SCOREBOARD )
+   IF Set(_SET_SCOREBOARD)
 
-      hb_DispOutAt(SCORE_ROW, SCORE_COL, iif( Set( _SET_INSERT ), ;
+      hb_DispOutAt(SCORE_ROW, SCORE_COL, iif( Set(_SET_INSERT), ;
          __natMsg( _GET_INSERT_ON ), ;
          iif( Len(__natMsg( _GET_INSERT_OFF )) == Len(__natMsg( _GET_INSERT_ON )), ;
             __natMsg( _GET_INSERT_OFF ), ;
@@ -803,11 +799,11 @@ METHOD DateMsg() CLASS HBGetList
 
    LOCAL nKey
 
-   IF Set( _SET_SCOREBOARD )
+   IF Set(_SET_SCOREBOARD)
 
       hb_DispOutAt(SCORE_ROW, SCORE_COL, __natMsg( _GET_INVD_DATE ))
 
-      DO WHILE ( nKey := Inkey( 0 ) ) == 0
+      DO WHILE ( nKey := Inkey(0) ) == 0
       ENDDO
       hb_keyIns( nKey )
 
@@ -821,13 +817,13 @@ METHOD ReadVar( cNewVarName ) CLASS HBGetList
 
    LOCAL cOldName := ::cVarName
 
-   IF HB_ISSTRING( cNewVarName )
+   IF HB_ISSTRING(cNewVarName)
       ::cVarName := cNewVarName
    ENDIF
 
    RETURN cOldName
 
-METHOD ReadUpdated( lUpdated ) CLASS HBGetList
+METHOD ReadUpdated(lUpdated) CLASS HBGetList
 
    LOCAL lSavUpdated := ::lUpdated
 
@@ -843,10 +839,7 @@ METHOD GUIReader( oGet, oMenu, aMsg ) CLASS HBGetList
 
    LOCAL oGUI
 
-   IF HB_ISOBJECT( oGet:control ) .AND. ;
-      ::nLastExitState == GE_SHORTCUT .OR. ;
-      ::nLastExitState == GE_MOUSEHIT .OR. ;
-      ::GetPreValidate( oGet, aMsg )
+   IF HB_ISOBJECT(oGet:control) .AND. ::nLastExitState == GE_SHORTCUT .OR. ::nLastExitState == GE_MOUSEHIT .OR. ::GetPreValidate( oGet, aMsg )
 
       ::ShowGetMsg( oGet, aMsg )
 
@@ -867,9 +860,8 @@ METHOD GUIReader( oGet, oMenu, aMsg ) CLASS HBGetList
             oGUI:Select( K_LBUTTONDOWN )
          CASE ::nHitCode == HTDROPBUTTON
             oGUI:Open()
-         CASE ::nHitCode >= HTSCROLLFIRST .AND. ;
-              ::nHitCode <= HTSCROLLLAST
-            oGUI:Scroll( ::nHitCode )
+         CASE ::nHitCode >= HTSCROLLFIRST .AND. ::nHitCode <= HTSCROLLLAST
+            oGUI:Scroll(::nHitCode)
          ENDCASE
       ENDIF
 
@@ -884,14 +876,12 @@ METHOD GUIReader( oGet, oMenu, aMsg ) CLASS HBGetList
 
          // Apply keystrokes until exit
          DO WHILE oGet:exitState == GE_NOEXIT .AND. ! ::lKillRead
-            ::GUIApplyKey( oGet, oGUI, Inkey( 0 ), oMenu, aMsg )
+            ::GUIApplyKey(oGet, oGUI, Inkey(0), oMenu, aMsg)
 
             ::ShowGetMsg( oGet, aMsg )
          ENDDO
 
-         IF ::nLastExitState != GE_SHORTCUT .AND. ;
-            ::nLastExitState != GE_MOUSEHIT .AND. ;
-            ! ::GetPostValidate( oGet, aMsg )
+         IF ::nLastExitState != GE_SHORTCUT .AND. ::nLastExitState != GE_MOUSEHIT .AND. ! ::GetPostValidate( oGet, aMsg )
             oGet:exitState := GE_NOEXIT
          ENDIF
       ENDDO
@@ -900,21 +890,19 @@ METHOD GUIReader( oGet, oMenu, aMsg ) CLASS HBGetList
       SWITCH oGUI:ClassName()
       CASE "LISTBOX"
       CASE "RADIOGROUP"
-         IF HB_ISNUMERIC( oGet:varGet() )
-            oGet:varPut( oGUI:value )
+         IF HB_ISNUMERIC(oGet:varGet())
+            oGet:varPut(oGUI:value)
             EXIT
          ENDIF
          /* fallthrough */
       OTHERWISE
-         oGet:varPut( oGUI:buffer )
+         oGet:varPut(oGUI:buffer)
       ENDSWITCH
       oGUI:killFocus()
 
       ::EraseGetMsg( aMsg )
 
-      IF oGUI:ClassName() == "LISTBOX" .AND. ;
-         oGUI:dropDown .AND. ;
-         oGUI:isOpen
+      IF oGUI:ClassName() == "LISTBOX" .AND. oGUI:dropDown .AND. oGUI:isOpen
 
          oGUI:Close()
       ENDIF
@@ -923,7 +911,7 @@ METHOD GUIReader( oGet, oMenu, aMsg ) CLASS HBGetList
 
    RETURN Self
 
-METHOD GUIApplyKey( oGet, oGUI, nKey, oMenu, aMsg ) CLASS HBGetList
+METHOD GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg) CLASS HBGetList
 
    LOCAL bKeyBlock
    LOCAL oTheClass
@@ -935,8 +923,8 @@ METHOD GUIApplyKey( oGet, oGUI, nKey, oMenu, aMsg ) CLASS HBGetList
    LOCAL cKey
 
    // Check for SET KEY first
-   IF ( bKeyBlock := SetKey( nKey ) ) != NIL
-      IF ::GetDoSetKey( bKeyBlock, oGet )
+   IF ( bKeyBlock := SetKey(nKey) ) != NIL
+      IF ::GetDoSetKey(bKeyBlock, oGet)
          RETURN Self
       ENDIF
    ENDIF
@@ -944,9 +932,9 @@ METHOD GUIApplyKey( oGet, oGUI, nKey, oMenu, aMsg ) CLASS HBGetList
    IF ( nHotItem := ::Accelerator( nKey, aMsg ) ) != 0
       oGet:exitState := GE_SHORTCUT
       ::nNextGet := nHotItem
-   ELSEIF ! HB_ISOBJECT( oMenu )
+   ELSEIF ! HB_ISOBJECT(oMenu)
    ELSEIF ( nHotItem := oMenu:getAccel( nKey ) ) != 0
-      ::nMenuID := MenuModal( oMenu, nHotItem, aMsg[ MSGROW ], aMsg[ MSGLEFT ], aMsg[ MSGRIGHT ], aMsg[ MSGCOLOR ] )
+      ::nMenuID := MenuModal( oMenu, nHotItem, aMsg[MSGROW], aMsg[MSGLEFT], aMsg[MSGRIGHT], aMsg[MSGCOLOR] )
       nKey := 0
    ELSEIF IsShortcut( oMenu, nKey )
       nKey := 0
@@ -967,8 +955,8 @@ METHOD GUIApplyKey( oGet, oGUI, nKey, oMenu, aMsg ) CLASS HBGetList
 
       ENDIF
 
-      IF HB_ISNUMERIC( oGet:varGet() )
-         oGet:varPut( oGUI:Value )
+      IF HB_ISNUMERIC(oGet:varGet())
+         oGet:varPut(oGUI:Value)
       ENDIF
 
    ELSEIF oTheClass == "CHECKBOX"
@@ -1002,14 +990,13 @@ METHOD GUIApplyKey( oGet, oGUI, nKey, oMenu, aMsg ) CLASS HBGetList
             nKey := 0
          ENDIF
 
-      ELSEIF !( ( cKey := hb_keyChar( nKey ) ) == "" ) .AND. ;
-             ( nButton := oGUI:FindText( cKey, oGUI:Value + 1, .F., .F. ) ) != 0
+      ELSEIF !( ( cKey := hb_keyChar(nKey) ) == "" ) .AND. ( nButton := oGUI:FindText( cKey, oGUI:Value + 1, .F., .F. ) ) != 0
          oGUI:Select( nButton )
 
       ENDIF
 
-      IF HB_ISNUMERIC( oGet:varGet() )
-         oGet:varPut( oGUI:Value )
+      IF HB_ISNUMERIC(oGet:varGet())
+         oGet:varPut(oGUI:Value)
       ENDIF
 
    ENDIF
@@ -1036,7 +1023,7 @@ METHOD GUIApplyKey( oGet, oGUI, nKey, oMenu, aMsg ) CLASS HBGetList
       EXIT
 
    CASE K_ESC
-      IF Set( _SET_ESCAPE )
+      IF Set(_SET_ESCAPE)
          oGet:exitState := GE_ESCAPE
       ENDIF
       EXIT
@@ -1076,12 +1063,12 @@ METHOD GUIApplyKey( oGet, oGUI, nKey, oMenu, aMsg ) CLASS HBGetList
       nMRow := MRow()
       nMCol := MCol()
 
-      IF ! HB_ISOBJECT( oMenu )
+      IF ! HB_ISOBJECT(oMenu)
          nButton := 0
       ELSEIF ! oMenu:ClassName() == "TOPBARMENU"
          nButton := 0
       ELSEIF ( nButton := oMenu:hitTest( nMRow, nMCol ) ) != 0
-         ::nMenuID := MenuModal( oMenu, nHotItem, aMsg[ MSGROW ], aMsg[ MSGLEFT ], aMsg[ MSGRIGHT ], aMsg[ MSGCOLOR ] )
+         ::nMenuID := MenuModal( oMenu, nHotItem, aMsg[MSGROW], aMsg[MSGLEFT], aMsg[MSGRIGHT], aMsg[MSGCOLOR] )
          nButton := 1
       ENDIF
 
@@ -1106,7 +1093,7 @@ METHOD GUIApplyKey( oGet, oGUI, nKey, oMenu, aMsg ) CLASS HBGetList
          ENDIF
 
       ELSEIF nButton >= HTSCROLLFIRST .AND. nButton <= HTSCROLLLAST
-         oGUI:Scroll( nButton )
+         oGUI:Scroll(nButton)
          lClose := .F.
 
       ENDIF
@@ -1136,7 +1123,7 @@ METHOD GUIPreValidate( oGet, oGUI, aMsg ) CLASS HBGetList
 
       lUpdated := ::lUpdated
 
-      lWhen := Eval( oGet:preBlock, oGet, aMsg )
+      lWhen := Eval(oGet:preBlock, oGet, aMsg)
 
       IF ! oGUI:ClassName() == "TBROWSE"
          oGet:display()
@@ -1177,7 +1164,7 @@ METHOD GUIPostValidate( oGet, oGUI, aMsg ) CLASS HBGetList
       SWITCH oGUI:ClassName()
       CASE "LISTBOX"
       CASE "RADIOGROUP"
-         IF HB_ISNUMERIC( oGet:varGet() )
+         IF HB_ISNUMERIC(oGet:varGet())
             xNewValue := oGUI:value
             EXIT
          ENDIF
@@ -1188,7 +1175,7 @@ METHOD GUIPostValidate( oGet, oGUI, aMsg ) CLASS HBGetList
    ENDIF
 
    IF ! xOldValue == xNewValue
-      oGet:varPut( xNewValue )
+      oGet:varPut(xNewValue)
       ::lUpdated := .T.
    ENDIF
 
@@ -1197,10 +1184,10 @@ METHOD GUIPostValidate( oGet, oGUI, aMsg ) CLASS HBGetList
 
       lUpdated := ::lUpdated
 
-      lValid := Eval( oGet:postBlock, oGet, aMsg )
+      lValid := Eval(oGet:postBlock, oGet, aMsg)
 
       // Reset S'87 compatibility cursor position
-      SetPos( oGet:row, oGet:col )
+      SetPos(oGet:row, oGet:col)
 
       ::ShowScoreBoard()
       IF ! oGUI:ClassName() == "TBROWSE"
@@ -1220,7 +1207,7 @@ METHOD GUIPostValidate( oGet, oGUI, aMsg ) CLASS HBGetList
 
    RETURN lValid
 
-METHOD TBApplyKey( oGet, oTB, nKey, oMenu, aMsg ) CLASS HBGetList
+METHOD TBApplyKey(oGet, oTB, nKey, oMenu, aMsg) CLASS HBGetList
 
    LOCAL bKeyBlock
    LOCAL nMRow
@@ -1229,8 +1216,8 @@ METHOD TBApplyKey( oGet, oTB, nKey, oMenu, aMsg ) CLASS HBGetList
    LOCAL nHotItem
 
    // Check for SET KEY first
-   IF ( bKeyBlock := SetKey( nKey ) ) != NIL
-      IF ::GetDoSetKey( bKeyBlock, oGet )
+   IF ( bKeyBlock := SetKey(nKey) ) != NIL
+      IF ::GetDoSetKey(bKeyBlock, oGet)
          RETURN Self
       ENDIF
    ENDIF
@@ -1238,9 +1225,9 @@ METHOD TBApplyKey( oGet, oTB, nKey, oMenu, aMsg ) CLASS HBGetList
    IF ( nHotItem := ::Accelerator( nKey, aMsg ) ) != 0
       oGet:exitState := GE_SHORTCUT
       ::nNextGet := nHotItem
-   ELSEIF ! HB_ISOBJECT( oMenu )
+   ELSEIF ! HB_ISOBJECT(oMenu)
    ELSEIF ( nHotItem := oMenu:getAccel( nKey ) ) != 0
-      ::nMenuID := MenuModal( oMenu, nHotItem, aMsg[ MSGROW ], aMsg[ MSGLEFT ], aMsg[ MSGRIGHT ], aMsg[ MSGCOLOR ] )
+      ::nMenuID := MenuModal( oMenu, nHotItem, aMsg[MSGROW], aMsg[MSGLEFT], aMsg[MSGRIGHT], aMsg[MSGCOLOR] )
       nKey := 0
    ELSEIF IsShortcut( oMenu, nKey )
       nKey := 0
@@ -1265,7 +1252,7 @@ METHOD TBApplyKey( oGet, oTB, nKey, oMenu, aMsg ) CLASS HBGetList
       EXIT
 
    CASE K_ESC
-      IF Set( _SET_ESCAPE )
+      IF Set(_SET_ESCAPE)
          oGet:exitState := GE_ESCAPE
       ENDIF
       EXIT
@@ -1292,12 +1279,12 @@ METHOD TBApplyKey( oGet, oTB, nKey, oMenu, aMsg ) CLASS HBGetList
       nMRow := MRow()
       nMCol := MCol()
 
-      IF ! HB_ISOBJECT( oMenu )
+      IF ! HB_ISOBJECT(oMenu)
          nButton := 0
       ELSEIF ! oMenu:ClassName() == "TOPBARMENU"
          nButton := 0
       ELSEIF ( nButton := oMenu:hitTest( nMRow, nMCol ) ) != 0
-         ::nMenuID := MenuModal( oMenu, nHotItem, aMsg[ MSGROW ], aMsg[ MSGLEFT ], aMsg[ MSGRIGHT ], aMsg[ MSGCOLOR ] )
+         ::nMenuID := MenuModal( oMenu, nHotItem, aMsg[MSGROW], aMsg[MSGLEFT], aMsg[MSGRIGHT], aMsg[MSGCOLOR] )
          nButton := 1
       ENDIF
 
@@ -1327,7 +1314,7 @@ METHOD TBReader( oGet, oMenu, aMsg ) CLASS HBGetList
 // LOCAL oGUI := oGet:control
 
    // Read the GET if the WHEN condition is satisfied
-   IF HB_ISOBJECT( oGet:control ) .AND. ;
+   IF HB_ISOBJECT(oGet:control) .AND. ;
       ::nLastExitState == GE_SHORTCUT .OR. ;
       ::nLastExitState == GE_MOUSEHIT .OR. ;
       ::GetPreValidate( oGet, aMsg )
@@ -1335,7 +1322,7 @@ METHOD TBReader( oGet, oMenu, aMsg ) CLASS HBGetList
       ::ShowGetMsg( oGet, aMsg )
       ::nLastExitState := 0
 
-      nSaveCursor := SetCursor( SC_NONE )
+      nSaveCursor := SetCursor(SC_NONE)
 
       // Activate the GET for reading
       oTB := oGet:control
@@ -1366,16 +1353,16 @@ METHOD TBReader( oGet, oMenu, aMsg ) CLASS HBGetList
             ENDDO
 
             IF nKey == 0
-               nKey := Inkey( 0 )
+               nKey := Inkey(0)
             ENDIF
 
-            nProcessed := oTB:ApplyKey( nKey )
+            nProcessed := oTB:ApplyKey(nKey)
             IF nProcessed == TBR_EXIT
                oGet:exitState := GE_ESCAPE
                EXIT
 
             ELSEIF nProcessed == TBR_EXCEPTION
-               ::TBApplyKey( oGet, oTB, nKey, oMenu, aMsg )
+               ::TBApplyKey(oGet, oTB, nKey, oMenu, aMsg)
 
                ::ShowGetMsg( oGet, aMsg )
 
@@ -1398,7 +1385,7 @@ METHOD TBReader( oGet, oMenu, aMsg ) CLASS HBGetList
 
       ::EraseGetMsg( aMsg )
 
-      SetCursor( nSaveCursor )
+      SetCursor(nSaveCursor)
    ENDIF
 
    RETURN Self
@@ -1430,10 +1417,9 @@ METHOD Accelerator( nKey, aMsg ) CLASS HBGetList
    FOR nIteration := 1 TO 2
       FOR nGet := nStart TO nEnd
 
-         oGet  := ::aGetList[ nGet ]
+         oGet  := ::aGetList[nGet]
 
-         IF HB_ISOBJECT( oGet:control ) .AND. ;
-            ! oGet:Control:ClassName() == "TBROWSE"
+         IF HB_ISOBJECT(oGet:control) .AND. ! oGet:Control:ClassName() == "TBROWSE"
 
             cCaption := oGet:control:caption
          ELSE
@@ -1442,21 +1428,21 @@ METHOD Accelerator( nKey, aMsg ) CLASS HBGetList
 
          IF ( nHotPos := At("&", cCaption) ) == 0
          ELSEIF nHotPos == Len(cCaption)
-         ELSEIF Lower( SubStr(cCaption, nHotPos + 1, 1) ) == cKey
+         ELSEIF Lower(SubStr(cCaption, nHotPos + 1, 1)) == cKey
 
             // Test the current GUI-GET or Get PostValidation:
-            lGUI := HB_ISOBJECT( ::aGetList[ ::nPos ]:control )
+            lGUI := HB_ISOBJECT(::aGetList[::nPos]:control)
 
-            IF lGUI .AND. ! ::GUIPostValidate( ::aGetList[ ::nPos ], ::aGetList[ ::nPos ]:control, aMsg )
+            IF lGUI .AND. ! ::GUIPostValidate( ::aGetList[::nPos], ::aGetList[::nPos]:control, aMsg )
                RETURN 0
 
-            ELSEIF ! lGUI .AND. ! ::GetPostValidate( ::aGetList[ ::nPos ], aMsg )
+            ELSEIF ! lGUI .AND. ! ::GetPostValidate( ::aGetList[::nPos], aMsg )
                RETURN 0
 
             ENDIF
 
             // Test the next GUI-GET or Get PreValidation:
-            lGUI := HB_ISOBJECT( oGet:control )
+            lGUI := HB_ISOBJECT(oGet:control)
 
             IF lGUI .AND. ! ::GUIPreValidate( oGet, oGet:control, aMsg )
                // RETURN 0  // Commented out.
@@ -1497,15 +1483,15 @@ METHOD HitTest( nMRow, nMCol, aMsg ) CLASS HBGetList
    IF ::nNextGet != 0  // Changed.
 
       // Test the current GUI-GET or Get PostValidation:
-      lGUI := HB_ISOBJECT( ::aGetList[ ::nPos ]:control )
+      lGUI := HB_ISOBJECT(::aGetList[::nPos]:control)
 
-      IF lGUI .AND. ! ::GUIPostValidate( ::aGetList[ ::nPos ], ::aGetList[ ::nPos ]:control, aMsg )
+      IF lGUI .AND. ! ::GUIPostValidate( ::aGetList[::nPos], ::aGetList[::nPos]:control, aMsg )
 
          ::nNextGet := 0
          // EXIT  // Commented out.
          RETURN 0  // Changed.
 
-      ELSEIF ! lGUI .AND. ! ::GetPostValidate( ::aGetList[ ::nPos ], aMsg )
+      ELSEIF ! lGUI .AND. ! ::GetPostValidate( ::aGetList[::nPos], aMsg )
 
          ::nNextGet := 0
          // EXIT  // Commented out.
@@ -1514,15 +1500,15 @@ METHOD HitTest( nMRow, nMCol, aMsg ) CLASS HBGetList
       ENDIF
 
       // Test the next GUI-GET or Get PreValidation:
-      lGUI := HB_ISOBJECT( ::aGetList[ ::nNextGet ]:control )
+      lGUI := HB_ISOBJECT(::aGetList[::nNextGet]:control)
 
-      IF lGUI .AND. ! ::GUIPreValidate( ::aGetList[ ::nNextGet ], ::aGetList[ ::nNextGet ]:control, aMsg )
+      IF lGUI .AND. ! ::GUIPreValidate( ::aGetList[::nNextGet], ::aGetList[::nNextGet]:control, aMsg )
 
          ::nNextGet := 0
          // EXIT  // Commented out.
          RETURN ::nNextGet  // Changed.
 
-      ELSEIF ! lGUI .AND. ! ::GetPreValidate( ::aGetList[ ::nNextGet ], aMsg )
+      ELSEIF ! lGUI .AND. ! ::GetPreValidate( ::aGetList[::nNextGet], aMsg )
 
          ::nNextGet := 0
          // EXIT  // Commented out.
@@ -1615,21 +1601,21 @@ METHOD ShowGetMsg( oGet, aMsg ) CLASS HBGetList
    LOCAL cMsg
    LOCAL lMOldState
 
-   IF ! Empty(aMsg) .AND. aMsg[ MSGFLAG ]
+   IF ! Empty(aMsg) .AND. aMsg[MSGFLAG]
 
       hb_default( @oGet, ::oGet )
 
-      cMsg := iif( HB_ISOBJECT( oGet:control ), oGet:control:message, oGet:message )
+      cMsg := iif( HB_ISOBJECT(oGet:control), oGet:control:message, oGet:message )
 
       IF ! Empty(cMsg)
-         lMOldState := MSetCursor( .F. )
-         hb_DispOutAt(aMsg[ MSGROW ], aMsg[ MSGLEFT ], PadC( cMsg, aMsg[ MSGRIGHT ] - aMsg[ MSGLEFT ] + 1 ), aMsg[ MSGCOLOR ])
-         MSetCursor( lMOldState )
+         lMOldState := MSetCursor(.F.)
+         hb_DispOutAt(aMsg[MSGROW], aMsg[MSGLEFT], PadC(cMsg, aMsg[MSGRIGHT] - aMsg[MSGLEFT] + 1), aMsg[MSGCOLOR])
+         MSetCursor(lMOldState)
       ENDIF
    ENDIF
 #else
-   HB_SYMBOL_UNUSED( oGet )
-   HB_SYMBOL_UNUSED( aMsg )
+   HB_SYMBOL_UNUSED(oGet)
+   HB_SYMBOL_UNUSED(aMsg)
 #endif
 
    RETURN Self
@@ -1641,15 +1627,15 @@ METHOD EraseGetMsg( aMsg ) CLASS HBGetList
    LOCAL nCol := Col()
    LOCAL lMOldState
 
-   IF ! Empty(aMsg) .AND. aMsg[ MSGFLAG ]
-      lMOldState := MSetCursor( .F. )
-      RestScreen( aMsg[ MSGROW ], aMsg[ MSGLEFT ], aMsg[ MSGROW ], aMsg[ MSGRIGHT ], ::cMsgSaveS )
-      MSetCursor( lMOldState )
+   IF ! Empty(aMsg) .AND. aMsg[MSGFLAG]
+      lMOldState := MSetCursor(.F.)
+      RestScreen( aMsg[MSGROW], aMsg[MSGLEFT], aMsg[MSGROW], aMsg[MSGRIGHT], ::cMsgSaveS )
+      MSetCursor(lMOldState)
    ENDIF
 
-   SetPos( nRow, nCol )
+   SetPos(nRow, nCol)
 #else
-   HB_SYMBOL_UNUSED( aMsg )
+   HB_SYMBOL_UNUSED(aMsg)
 #endif
 
    RETURN Self
@@ -1660,8 +1646,8 @@ METHOD New( GetList ) CLASS HBGetList
 
    ::aGetList := GetList
 
-   IF HB_ISARRAY( GetList ) .AND. Len(GetList) >= 1
-      ::oGet := GetList[ 1 ]
+   IF HB_ISARRAY(GetList) .AND. Len(GetList) >= 1
+      ::oGet := GetList[1]
    ENDIF
 
    RETURN Self

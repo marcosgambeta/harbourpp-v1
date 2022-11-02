@@ -61,7 +61,7 @@ FUNCTION ADir( cFileMask, aName, aSize, aDate, aTime, aAttr )
    LOCAL cExt
 
    // CA-Cl*pper would fail on this case.
-   IF ! HB_ISSTRING( cFileMask )
+   IF ! HB_ISSTRING(cFileMask)
       RETURN 0
    ENDIF
 
@@ -75,45 +75,45 @@ FUNCTION ADir( cFileMask, aName, aSize, aDate, aTime, aAttr )
 
    //
 
-   IF HB_ISARRAY( aName )
+   IF HB_ISARRAY(aName)
       nNameLen := Len(aName)
    ENDIF
-   IF HB_ISARRAY( aSize )
+   IF HB_ISARRAY(aSize)
       nSizeLen := Len(aSize)
    ENDIF
-   IF HB_ISARRAY( aDate )
+   IF HB_ISARRAY(aDate)
       nDateLen := Len(aDate)
    ENDIF
-   IF HB_ISARRAY( aTime )
+   IF HB_ISARRAY(aTime)
       nTimeLen := Len(aTime)
    ENDIF
-   IF HB_ISARRAY( aAttr )
+   IF HB_ISARRAY(aAttr)
       nAttrLen := Len(aAttr)
    ENDIF
 
    //
 
-   aDir := Directory( cFileMask, iif( HB_ISARRAY( aAttr ), "HSD", ) )
+   aDir := Directory( cFileMask, iif( HB_ISARRAY(aAttr), "HSD", ) )
    nDirLen := Len(aDir)
 
    FOR nDirPos := 1 TO nDirLen
 
-      aFileInfo := aDir[ nDirPos ]
+      aFileInfo := aDir[nDirPos]
 
       IF nNameLen != NIL .AND. nNameLen >= nDirPos
-         aName[ nDirPos ] := aFileInfo[ F_NAME ]
+         aName[nDirPos] := aFileInfo[F_NAME]
       ENDIF
       IF nSizeLen != NIL .AND. nSizeLen >= nDirPos
-         aSize[ nDirPos ] := aFileInfo[ F_SIZE ]
+         aSize[nDirPos] := aFileInfo[F_SIZE]
       ENDIF
       IF nDateLen != NIL .AND. nDateLen >= nDirPos
-         aDate[ nDirPos ] := aFileInfo[ F_DATE ]
+         aDate[nDirPos] := aFileInfo[F_DATE]
       ENDIF
       IF nTimeLen != NIL .AND. nTimeLen >= nDirPos
-         aTime[ nDirPos ] := aFileInfo[ F_TIME ]
+         aTime[nDirPos] := aFileInfo[F_TIME]
       ENDIF
       IF nAttrLen != NIL .AND. nAttrLen >= nDirPos
-         aAttr[ nDirPos ] := aFileInfo[ F_ATTR ]
+         aAttr[nDirPos] := aFileInfo[F_ATTR]
       ENDIF
 
    NEXT

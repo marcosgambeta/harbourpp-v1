@@ -50,12 +50,12 @@ CREATE CLASS hb_Get INHERIT Get
 
    EXPORTED:
 
-   METHOD hideInput( lHideInput ) SETGET
+   METHOD hideInput(lHideInput) SETGET
    METHOD style( cStyle ) SETGET
 
 ENDCLASS
 
-METHOD hideInput( lHideInput ) CLASS hb_Get
+METHOD hideInput(lHideInput) CLASS hb_Get
 
    IF lHideInput != NIL
       ::lHideInput := __eInstVar53( Self, "HIDEINPUT", lHideInput, "L", 1001 )

@@ -60,10 +60,10 @@ PROCEDURE __SetFunction( nFunctionKey, xKeySeq )
    OTHERWISE               ; nFunctionKey := -nFunctionKey + 1
    ENDCASE
 
-   IF HB_ISSTRING( xKeySeq )
-      SetKey( nFunctionKey, {|| __Keyboard(), hb_keyPut( xKeySeq ) } )
+   IF HB_ISSTRING(xKeySeq)
+      SetKey(nFunctionKey, {|| __Keyboard(), hb_keyPut(xKeySeq) })
    ELSE
-      SetKey( nFunctionKey, NIL )
+      SetKey(nFunctionKey, NIL)
    ENDIF
 
    RETURN

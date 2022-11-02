@@ -46,7 +46,7 @@
 
 #ifdef HB_CLP_UNDOC
 
-FUNCTION __Input( xPrompt )
+FUNCTION __Input(xPrompt)
 
    LOCAL cString := __Accept( xPrompt )
 

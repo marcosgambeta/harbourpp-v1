@@ -49,14 +49,11 @@
 #define LLG_VIDEO_TXT   3
 
 FUNCTION _IsGraphic()
-   RETURN ;
-      Set( _SET_VIDEOMODE ) != NIL .AND. ;
-      Set( _SET_VIDEOMODE ) != 0 .AND. ;
-      Set( _SET_VIDEOMODE ) != LLG_VIDEO_TXT
+   RETURN Set(_SET_VIDEOMODE) != NIL .AND. Set(_SET_VIDEOMODE) != 0 .AND. Set(_SET_VIDEOMODE) != LLG_VIDEO_TXT
 
 FUNCTION _SetVideoMode( nMode )
 
-   HB_SYMBOL_UNUSED( nMode )
+   HB_SYMBOL_UNUSED(nMode)
 
    RETURN 0
 
@@ -75,10 +72,10 @@ FUNCTION _GetNumCol( cColor )
       cColor := Left(cColor, nPos - 1)
    ENDIF
 
-   RETURN hb_AScan( { "B", "G", "BG", "R", "RB", "GR", "W", "N+", "B+", "G+", "BG+", "R+", "RB+", "GR+", "W+" }, cColor,,, .T. )
+   RETURN hb_AScan({ "B", "G", "BG", "R", "RB", "GR", "W", "N+", "B+", "G+", "BG+", "R+", "RB+", "GR+", "W+" }, cColor,,, .T.)
 
 FUNCTION __GUIColor( cColor, nPos )
-   RETURN hb_ColorIndex( cColor, nPos - 1 )
+   RETURN hb_ColorIndex(cColor, nPos - 1)
 
 FUNCTION IsDefColor()
    RETURN SetColor() == "W/N,N/W,N/N,N/N,N/W" /* NOTE: Color must match with the one in set.c */

@@ -57,7 +57,7 @@ FUNCTION ReadVar( cVarName )
 
    cOldVarName := t_cVarName
 
-   IF HB_ISSTRING( cVarName )
+   IF HB_ISSTRING(cVarName)
       t_cVarName := cVarName
    ENDIF
 

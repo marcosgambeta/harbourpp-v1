@@ -76,11 +76,11 @@ STATIC s_cHalfLineComment := "#"
 
 PROCEDURE hb_iniSetComment( cLc, cHlc )
 
-   IF HB_ISSTRING( cLc )
+   IF HB_ISSTRING(cLc)
       s_cLineComment := cLc
    ENDIF
 
-   IF HB_ISSTRING( cHlc )
+   IF HB_ISSTRING(cHlc)
       s_cHalfLineComment := cHlc
    ENDIF
 
@@ -91,13 +91,13 @@ FUNCTION hb_iniNew( lAutoMain )
    LOCAL hIni := { => }
 
    IF hb_defaultValue( lAutoMain, .T. )
-      hIni[ "MAIN" ] := { => }
+      hIni["MAIN"] := { => }
    ENDIF
 
    RETURN hIni
 
-FUNCTION hb_iniRead( cFileSpec, lKeyCaseSens, cSplitters, lAutoMain )
-   RETURN hb_iniReadStr(iif( HB_ISSTRING( cFileSpec ), hb_iniFileLow( cFileSpec ), "" ), lKeyCaseSens, cSplitters, lAutoMain)
+FUNCTION hb_iniRead(cFileSpec, lKeyCaseSens, cSplitters, lAutoMain)
+   RETURN hb_iniReadStr(iif( HB_ISSTRING(cFileSpec), hb_iniFileLow( cFileSpec ), "" ), lKeyCaseSens, cSplitters, lAutoMain)
 
 FUNCTION hb_iniReadStr(cData, lKeyCaseSens, cSplitters, lAutoMain)
 
@@ -110,18 +110,17 @@ FUNCTION hb_iniReadStr(cData, lKeyCaseSens, cSplitters, lAutoMain)
    hb_HCaseMatch( hIni, lKeyCaseSens )
 
    IF lAutoMain
-      hIni[ "MAIN" ] := { => }
+      hIni["MAIN"] := { => }
    ENDIF
 
-   RETURN hb_iniStringLow( hIni, hb_defaultValue( cData, "" ), lKeyCaseSens, ;
-                           hb_defaultValue( cSplitters, "=" ), lAutoMain )
+   RETURN hb_iniStringLow( hIni, hb_defaultValue( cData, "" ), lKeyCaseSens, hb_defaultValue( cSplitters, "=" ), lAutoMain )
 
 STATIC FUNCTION hb_iniFileLow( cFileSpec )
 
    LOCAL cFile, nLen
    LOCAL hFile
    LOCAL cData
-   LOCAL aFiles := hb_ATokens( cFileSpec, hb_osPathListSeparator() )
+   LOCAL aFiles := hb_ATokens(cFileSpec, hb_osPathListSeparator())
 
    IF Empty(aFiles)
       aFiles := { cFileSpec }
@@ -130,7 +129,7 @@ STATIC FUNCTION hb_iniFileLow( cFileSpec )
    hFile := F_ERROR
    FOR EACH cFile IN aFiles
       IF ! Empty(cFile) .AND. hb_FileExists( cFile )
-         IF ( hFile := FOpen( cFile ) ) != F_ERROR
+         IF ( hFile := FOpen(cFile) ) != F_ERROR
             EXIT
          ENDIF
       ENDIF
@@ -141,11 +140,11 @@ STATIC FUNCTION hb_iniFileLow( cFileSpec )
    ENDIF
 
    /* we'll read the whole file, then we'll break it in lines. */
-   cData := Space(FSeek( hFile, 0, FS_END ))
-   FSeek( hFile, 0, FS_SET )
-   nLen := FRead( hFile, @cData, hb_BLen(cData) )
+   cData := Space(FSeek(hFile, 0, FS_END))
+   FSeek(hFile, 0, FS_SET)
+   nLen := FRead(hFile, @cData, hb_BLen(cData))
    cData := hb_BLeft(cData, nLen)
-   FClose( hFile )
+   FClose(hFile)
 
    RETURN cData
 
@@ -161,10 +160,10 @@ STATIC FUNCTION hb_iniStringLow( hIni, cData, lKeyCaseSens, cSplitters, lAutoMai
    reSplitters := hb_regexComp( cSplitters )
 
    /* Always begin with the 'MAIN' section */
-   hCurrentSection := iif( lAutoMain, hIni[ "MAIN" ], hIni )
+   hCurrentSection := iif( lAutoMain, hIni["MAIN"], hIni )
 
    cLine := ""
-   FOR EACH cData IN hb_ATokens( cData, .T. )
+   FOR EACH cData IN hb_ATokens(cData, .T.)
       cLine += AllTrim(cData)
 
       /* Sum up lines terminating with "<space>||" ...*/
@@ -183,7 +182,7 @@ STATIC FUNCTION hb_iniStringLow( hIni, cData, lKeyCaseSens, cSplitters, lAutoMai
 
       /* remove eventual comments */
       IF ! Empty(aKeyVal := hb_regexSplit( reComment, cLine ))
-         IF Empty(cLine := AllTrim(aKeyVal[ 1 ]))
+         IF Empty(cLine := AllTrim(aKeyVal[1]))
             /* Skip all comment lines */
             LOOP
          ENDIF
@@ -192,20 +191,20 @@ STATIC FUNCTION hb_iniStringLow( hIni, cData, lKeyCaseSens, cSplitters, lAutoMai
       /* Is it an "INCLUDE" statement ? */
       IF ! Empty(aKeyVal := hb_regex( reInclude, cLine ))
          /* ignore void includes */
-         aKeyVal[ 2 ] := AllTrim(aKeyVal[ 2 ])
-         IF Len(aKeyVal[ 2 ]) == 0
+         aKeyVal[2] := AllTrim(aKeyVal[2])
+         IF Len(aKeyVal[2]) == 0
             LOOP
          ENDIF
-         hb_iniStringLow( hIni, hb_iniFileLow( aKeyVal[ 2 ] ), lKeyCaseSens, cSplitters, lAutoMain )
+         hb_iniStringLow( hIni, hb_iniFileLow( aKeyVal[2] ), lKeyCaseSens, cSplitters, lAutoMain )
       /* Is it a NEW section? */
       ELSEIF ! Empty(aKeyVal := hb_regex( reSection, cLine ))
-         cLine := AllTrim(aKeyVal[ 2 ])
+         cLine := AllTrim(aKeyVal[2])
          IF Len(cLine) != 0
             hCurrentSection := { => }
             IF ! lKeyCaseSens
-               cLine := Upper( cLine )
+               cLine := Upper(cLine)
             ENDIF
-            hIni[ cLine ] := hCurrentSection
+            hIni[cLine] := hCurrentSection
          ENDIF
       /* Is it a valid key */
       ELSEIF Len(aKeyVal := hb_regexSplit( reSplitters, cLine,,, 1 )) == 1
@@ -213,9 +212,9 @@ STATIC FUNCTION hb_iniStringLow( hIni, cData, lKeyCaseSens, cSplitters, lAutoMai
       ELSE
          /* If not case sensitive, use upper keys */
          IF ! lKeyCaseSens
-            aKeyVal[ 1 ] := Upper( aKeyVal[ 1 ] )
+            aKeyVal[1] := Upper(aKeyVal[1])
          ENDIF
-         hCurrentSection[ AllTrim(aKeyVal[ 1 ]) ] := AllTrim(aKeyVal[ 2 ])
+         hCurrentSection[AllTrim(aKeyVal[1])] := AllTrim(aKeyVal[2])
       ENDIF
 
       cLine := ""
@@ -231,14 +230,14 @@ FUNCTION hb_iniWrite( xFileName, hIni, cCommentBegin, cCommentEnd, lAutoMain )
 
    cBuffer := hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
 
-   IF ! HB_ISSTRING( cBuffer )
+   IF ! HB_ISSTRING(cBuffer)
       RETURN .F.
    ENDIF
 
-   IF HB_ISSTRING( xFileName )
-      hFile := FCreate( xFileName )
+   IF HB_ISSTRING(xFileName)
+      hFile := FCreate(xFileName)
       lClose := .T.
-   ELSEIF HB_ISNUMERIC( xFileName )
+   ELSEIF HB_ISNUMERIC(xFileName)
       hFile := xFileName
       lClose := .F.
    ELSE
@@ -249,15 +248,15 @@ FUNCTION hb_iniWrite( xFileName, hIni, cCommentBegin, cCommentEnd, lAutoMain )
       RETURN .F.
    ENDIF
 
-   IF FWrite( hFile, cBuffer ) != hb_BLen(cBuffer)
+   IF FWrite(hFile, cBuffer) != hb_BLen(cBuffer)
       IF lClose
-         FClose( hFile )
+         FClose(hFile)
       ENDIF
       RETURN .F.
    ENDIF
 
    IF lClose
-      FClose( hFile )
+      FClose(hFile)
    ENDIF
 
    RETURN .T.
@@ -268,11 +267,11 @@ FUNCTION hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
    LOCAL cSection
    LOCAL cBuffer := ""
 
-   IF ! HB_ISHASH( hIni )
+   IF ! HB_ISHASH(hIni)
       RETURN NIL
    ENDIF
 
-   IF HB_ISSTRING( cCommentBegin ) .AND. ! Empty(cCommentBegin)
+   IF HB_ISSTRING(cCommentBegin) .AND. ! Empty(cCommentBegin)
       cBuffer += cCommentBegin + cNewLine
    ENDIF
 
@@ -286,12 +285,11 @@ FUNCTION hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
    /* Write top-level section */
    IF lAutoMain
       /* When lAutoMain is on, write the 'main' section */
-      hb_HEval( hIni[ "MAIN" ], {| cKey, xVal | ;
-         cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine } )
+      hb_HEval(hIni["MAIN"], {| cKey, xVal | ;
+         cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine })
    ELSE
       /* When lAutoMain is off, just write all the top-level variables. */
-      hb_HEval( hIni, {| cKey, xVal | iif( HB_ISHASH( xVal ), /* nothing */, ;
-         cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine ) } )
+      hb_HEval(hIni, {| cKey, xVal | iif( HB_ISHASH(xVal), /* nothing */, cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine ) })
    ENDIF
 
    FOR EACH cSection IN hIni
@@ -304,19 +302,17 @@ FUNCTION hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
          ENDIF
       ELSE
          /* When lAutoMain is off, skip all the top-level variables. */
-         IF ! HB_ISHASH( cSection )
+         IF ! HB_ISHASH(cSection)
             LOOP
          ENDIF
       ENDIF
 
       cBuffer += cNewLine + "[" + hb_CStr(cSection:__enumKey) + "]" + cNewLine
 
-      hb_HEval( cSection, ;
-         {| cKey, xVal | cBuffer += hb_CStr(cKey) + "=" + ;
-         hb_CStr(xVal) + cNewLine } )
+      hb_HEval(cSection, {| cKey, xVal | cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine })
    NEXT
 
-   IF HB_ISSTRING( cCommentEnd ) .AND. ! Empty(cCommentEnd)
+   IF HB_ISSTRING(cCommentEnd) .AND. ! Empty(cCommentEnd)
       cBuffer += cCommentEnd + cNewLine
    ENDIF
 

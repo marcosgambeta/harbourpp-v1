@@ -49,7 +49,7 @@
 
 PROCEDURE GUIReader( oGet, oGetlist, oMenu, aMsg )
 
-   IF ! HB_ISOBJECT( oGetList )
+   IF ! HB_ISOBJECT(oGetList)
       oGetList := __GetListActive()
    ENDIF
 
@@ -59,14 +59,14 @@ PROCEDURE GUIReader( oGet, oGetlist, oMenu, aMsg )
 
    RETURN
 
-PROCEDURE GUIApplyKey( oGet, oGUI, oGetList, nKey, oMenu, aMsg )
+PROCEDURE GUIApplyKey(oGet, oGUI, oGetList, nKey, oMenu, aMsg)
 
-   IF ! HB_ISOBJECT( oGetList )
+   IF ! HB_ISOBJECT(oGetList)
       oGetList := __GetListActive()
    ENDIF
 
    IF oGetList != NIL
-      oGetList:GUIApplyKey( oGet, oGUI, nKey, oMenu, aMsg )
+      oGetList:GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg)
    ENDIF
 
    RETURN
@@ -85,7 +85,7 @@ FUNCTION GUIPostValidate( oGet, oGUI, aMsg )
 
 PROCEDURE TBReader( oGet, oGetList, oMenu, aMsg )
 
-   IF ! HB_ISOBJECT( oGetList )
+   IF ! HB_ISOBJECT(oGetList)
       oGetList := __GetListActive()
    ENDIF
 
@@ -95,21 +95,21 @@ PROCEDURE TBReader( oGet, oGetList, oMenu, aMsg )
 
    RETURN
 
-PROCEDURE TBApplyKey( oGet, oTB, oGetList, nKey, aMsg )
+PROCEDURE TBApplyKey(oGet, oTB, oGetList, nKey, aMsg)
 
-   IF ! HB_ISOBJECT( oGetList )
+   IF ! HB_ISOBJECT(oGetList)
       oGetList := __GetListActive()
    ENDIF
 
    IF oGetList != NIL
-      oGetList:TBApplyKey( oGet, oTB, nKey, aMsg )
+      oGetList:TBApplyKey(oGet, oTB, nKey, aMsg)
    ENDIF
 
    RETURN
 
 FUNCTION Accelerator( oGetList, nKey, aMsg )
 
-   IF ! HB_ISOBJECT( oGetList )
+   IF ! HB_ISOBJECT(oGetList)
       oGetList := __GetListActive()
    ENDIF
 
@@ -117,7 +117,7 @@ FUNCTION Accelerator( oGetList, nKey, aMsg )
 
 FUNCTION HitTest( oGetList, nMRow, nMCol, aMsg )
 
-   IF ! HB_ISOBJECT( oGetList )
+   IF ! HB_ISOBJECT(oGetList)
       oGetList := __GetListActive()
    ENDIF
 
@@ -137,7 +137,7 @@ PROCEDURE EraseGetMsg( oGet, aMsg )
 
    LOCAL oGetList := __GetListActive()
 
-   HB_SYMBOL_UNUSED( oGet )
+   HB_SYMBOL_UNUSED(oGet)
 
    IF oGetList != NIL
       oGetList:EraseGetMsg( aMsg )

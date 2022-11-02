@@ -73,16 +73,16 @@ CREATE CLASS RadioButtn FUNCTION HBRadioButton
 
    METHOD bitmaps( aBitmaps ) SETGET
    METHOD buffer() SETGET
-   METHOD data( cData ) SETGET               /* NOTE: Undocumented CA-Cl*pper 5.3 method. */
+   METHOD data(cData) SETGET               /* NOTE: Undocumented CA-Cl*pper 5.3 method. */
    METHOD capCol( nCapCol ) SETGET
    METHOD capRow( nCapRow ) SETGET
    METHOD caption( cCaption ) SETGET
    METHOD col( nCol ) SETGET
-   METHOD colorSpec( cColorSpec ) SETGET
-   METHOD fBlock( bFBlock ) SETGET
+   METHOD colorSpec(cColorSpec) SETGET
+   METHOD fBlock(bFBlock) SETGET
    METHOD hasFocus() SETGET
    METHOD row( nRow ) SETGET
-   METHOD sBlock( bSBlock ) SETGET
+   METHOD sBlock(bSBlock) SETGET
    METHOD style( cStyle ) SETGET
 
    METHOD New( nRow, nCol, cCaption, cData )  /* NOTE: This method is a Harbour extension [vszakats] */
@@ -111,8 +111,8 @@ METHOD setFocus() CLASS RadioButtn
       ::lHasFocus := .T.
       ::display()
 
-      IF HB_ISEVALITEM( ::bFBlock )
-         Eval( ::bFBlock )
+      IF HB_ISEVALITEM(::bFBlock)
+         Eval(::bFBlock)
       ENDIF
    ENDIF
 
@@ -122,12 +122,11 @@ METHOD select( lState ) CLASS RadioButtn
 
    LOCAL lOldState := ::lBuffer
 
-   ::lBuffer := iif( HB_ISLOGICAL( lState ), lState, ! ::lBuffer )
+   ::lBuffer := iif( HB_ISLOGICAL(lState), lState, ! ::lBuffer )
 
-   IF lOldState != ::lBuffer .AND. ;
-      HB_ISEVALITEM( ::bSBlock )
+   IF lOldState != ::lBuffer .AND. HB_ISEVALITEM(::bSBlock)
 
-      Eval( ::bSBlock )
+      Eval(::bSBlock)
    ENDIF
 
    RETURN Self
@@ -137,8 +136,8 @@ METHOD killFocus() CLASS RadioButtn
    IF ::lHasFocus
       ::lHasFocus := .F.
 
-      IF HB_ISEVALITEM( ::bFBlock )
-         Eval( ::bFBlock )
+      IF HB_ISEVALITEM(::bFBlock)
+         Eval(::bFBlock)
       ENDIF
 
       ::display()
@@ -155,10 +154,8 @@ METHOD display() CLASS RadioButtn
 
    DispBegin()
 
-   cColor := iif( ::lBuffer, hb_ColorIndex( ::cColorSpec, 3 ), hb_ColorIndex( ::cColorSpec, 1 ) )
-   hb_DispOutAt(::nRow, ::nCol, Left(cStyle, 1) + ;
-      iif( ::lBuffer, SubStr(cStyle, 2, 1), SubStr(cStyle, 3, 1) ) + ;
-      Right(cStyle, 1), cColor)
+   cColor := iif( ::lBuffer, hb_ColorIndex(::cColorSpec, 3), hb_ColorIndex(::cColorSpec, 1) )
+   hb_DispOutAt(::nRow, ::nCol, Left(cStyle, 1) + iif( ::lBuffer, SubStr(cStyle, 2, 1), SubStr(cStyle, 3, 1) ) + Right(cStyle, 1), cColor)
 
    IF ! Empty(cOldCaption := ::cCaption)
 
@@ -169,10 +166,10 @@ METHOD display() CLASS RadioButtn
          cOldCaption := Stuff( cOldCaption, nPos, 1, "" )
       ENDIF
 
-      hb_DispOutAt(::nCapRow, ::nCapCol, cOldCaption, hb_ColorIndex( ::cColorSpec, 4 ))
+      hb_DispOutAt(::nCapRow, ::nCapCol, cOldCaption, hb_ColorIndex(::cColorSpec, 4))
 
       IF nPos != 0
-         hb_DispOutAt(::nCapRow, ::nCapCol + nPos - 1, SubStr(cOldCaption, nPos, 1), iif( ::lHasfocus, hb_ColorIndex( ::cColorSpec, 6 ), hb_ColorIndex( ::cColorSpec, 5 ) ))
+         hb_DispOutAt(::nCapRow, ::nCapCol + nPos - 1, SubStr(cOldCaption, nPos, 1), iif( ::lHasfocus, hb_ColorIndex(::cColorSpec, 6), hb_ColorIndex(::cColorSpec, 5) ))
       ENDIF
    ENDIF
 
@@ -185,10 +182,10 @@ METHOD isAccel( xKey ) CLASS RadioButtn
    LOCAL cKey
 
    DO CASE
-   CASE HB_ISSTRING( xKey )
+   CASE HB_ISSTRING(xKey)
       cKey := xKey
-   CASE HB_ISNUMERIC( xKey )
-      cKey := hb_keyChar( xKey )
+   CASE HB_ISNUMERIC(xKey)
+      cKey := hb_keyChar(xKey)
    OTHERWISE
       RETURN .F.
    ENDCASE
@@ -200,9 +197,7 @@ METHOD hitTest( nMRow, nMCol ) CLASS RadioButtn
    LOCAL nPos
    LOCAL nLen
 
-   IF nMRow == ::Row .AND. ;
-      nMCol >= ::Col .AND. ;
-      nMCol < ::Col + 3
+   IF nMRow == ::Row .AND. nMCol >= ::Col .AND. nMCol < ::Col + 3
       RETURN HTCLIENT
    ENDIF
 
@@ -212,9 +207,7 @@ METHOD hitTest( nMRow, nMCol ) CLASS RadioButtn
       nLen--
    ENDIF
 
-   IF nMRow == ::CapRow .AND. ;
-      nMCol >= ::CapCol .AND. ;
-      nMCol < ::CapCol + nLen
+   IF nMRow == ::CapRow .AND. nMCol >= ::CapCol .AND. nMCol < ::CapCol + nLen
       RETURN HTCLIENT
    ENDIF
 
@@ -231,7 +224,7 @@ METHOD bitmaps( aBitmaps ) CLASS RadioButtn
 METHOD buffer() CLASS RadioButtn
    RETURN ::lBuffer
 
-METHOD data( cData ) CLASS RadioButtn
+METHOD data(cData) CLASS RadioButtn
 
    IF PCount() > 0
       ::cData := iif( cData == NIL, NIL, __eInstVar53( Self, "DATA", cData, "C", 1001 ) )
@@ -271,16 +264,15 @@ METHOD col( nCol ) CLASS RadioButtn
 
    RETURN ::nCol
 
-METHOD colorSpec( cColorSpec ) CLASS RadioButtn
+METHOD colorSpec(cColorSpec) CLASS RadioButtn
 
    IF cColorSpec != NIL
-      ::cColorSpec := __eInstVar53( Self, "COLORSPEC", cColorSpec, "C", 1001, ;
-         {|| ! Empty(hb_ColorIndex( cColorSpec, 6 )) .AND. Empty(hb_ColorIndex( cColorSpec, 7 )) } )
+      ::cColorSpec := __eInstVar53( Self, "COLORSPEC", cColorSpec, "C", 1001, {|| ! Empty(hb_ColorIndex(cColorSpec, 6)) .AND. Empty(hb_ColorIndex(cColorSpec, 7)) } )
    ENDIF
 
    RETURN ::cColorSpec
 
-METHOD fBlock( bFBlock ) CLASS RadioButtn
+METHOD fBlock(bFBlock) CLASS RadioButtn
 
    IF PCount() > 0
       ::bFBlock := iif( bFBlock == NIL, NIL, __eInstVar53( Self, "FBLOCK", bFBlock, "B", 1001 ) )
@@ -299,7 +291,7 @@ METHOD row( nRow ) CLASS RadioButtn
 
    RETURN ::nRow
 
-METHOD sBlock( bSBlock ) CLASS RadioButtn
+METHOD sBlock(bSBlock) CLASS RadioButtn
 
    IF PCount() > 0
       ::bSBlock := iif( bSBlock == NIL, NIL, __eInstVar53( Self, "SBLOCK", bSBlock, "B", 1001 ) )
@@ -319,8 +311,7 @@ METHOD New( nRow, nCol, cCaption, cData ) CLASS RadioButtn
 
    LOCAL cColor
 
-   IF ! HB_ISNUMERIC( nRow ) .OR. ;
-      ! HB_ISNUMERIC( nCol )
+   IF ! HB_ISNUMERIC(nRow) .OR. ! HB_ISNUMERIC(nCol)
       RETURN NIL
    ENDIF
 
@@ -336,13 +327,13 @@ METHOD New( nRow, nCol, cCaption, cData ) CLASS RadioButtn
    ELSE
       cColor := SetColor()
       ::cColorSpec := ;
-         hb_ColorIndex( cColor, CLR_UNSELECTED ) + "," + ;
-         hb_ColorIndex( cColor, CLR_UNSELECTED ) + "," + ;
-         hb_ColorIndex( cColor, CLR_ENHANCED   ) + "," + ;
-         hb_ColorIndex( cColor, CLR_ENHANCED   ) + "," + ;
-         hb_ColorIndex( cColor, CLR_STANDARD   ) + "," + ;
-         hb_ColorIndex( cColor, CLR_STANDARD   ) + "," + ;
-         hb_ColorIndex( cColor, CLR_BACKGROUND )
+         hb_ColorIndex(cColor, CLR_UNSELECTED) + "," + ;
+         hb_ColorIndex(cColor, CLR_UNSELECTED) + "," + ;
+         hb_ColorIndex(cColor, CLR_ENHANCED) + "," + ;
+         hb_ColorIndex(cColor, CLR_ENHANCED) + "," + ;
+         hb_ColorIndex(cColor, CLR_STANDARD) + "," + ;
+         hb_ColorIndex(cColor, CLR_STANDARD) + "," + ;
+         hb_ColorIndex(cColor, CLR_BACKGROUND)
    ENDIF
 
    RETURN Self

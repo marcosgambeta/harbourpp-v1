@@ -63,7 +63,7 @@ CREATE CLASS HBMemoEditor INHERIT HBEditor
    METHOD KeyboardHook( nKey )               // Gets called every time there is a key not handled directly by HBEditor
    METHOD IdleHook()                         // Gets called every time there are no more keys to handle
 
-   METHOD HandleUserKey( nKey, nUdfReturn )  // Handles keys returned to MemoEdit() by user function
+   METHOD HandleUserKey(nKey, nUdfReturn)  // Handles keys returned to MemoEdit() by user function
    METHOD xDo( nStatus )                     // Calls xUserFunction saving and restoring cursor position and shape
 
    METHOD MoveCursor( nKey )                 // Redefined to properly managed CTRL-W
@@ -77,9 +77,9 @@ ENDCLASS
 
 METHOD UserFunctionIsValid() CLASS HBMemoEditor
 #ifdef HB_CLP_STRICT
-   RETURN HB_ISSTRING( ::xUserFunction )
+   RETURN HB_ISSTRING(::xUserFunction)
 #else
-   RETURN HB_ISSTRING( ::xUserFunction ) .OR. HB_ISEVALITEM( ::xUserFunction )
+   RETURN HB_ISSTRING(::xUserFunction) .OR. HB_ISEVALITEM(::xUserFunction)
 #endif
 
 METHOD MemoInit( xUserFunction ) CLASS HBMemoEditor
@@ -100,7 +100,7 @@ METHOD MemoInit( xUserFunction ) CLASS HBMemoEditor
          CASE ME_TOGGLESCROLL
             // At this time there is no input from user of MemoEdit() only handling
             // of values returned by ::xUserFunction, so I pass NIL as the key code.
-            ::HandleUserKey( , nUdfReturn )
+            ::HandleUserKey(NIL, nUdfReturn)
             LOOP
          ENDSWITCH
          EXIT
@@ -115,8 +115,7 @@ METHOD Edit() CLASS HBMemoEditor
 
    // NOTE: K_ALT_W is not compatible with Cl*pper exit memo and save key, but I cannot discriminate
    //       K_CTRL_W and K_CTRL_END from Harbour code.
-   LOCAL hConfigurableKeys := { K_CTRL_Y =>, K_CTRL_T =>, K_CTRL_B =>, ;
-                                K_CTRL_V =>, K_ALT_W =>, K_ESC => }
+   LOCAL hConfigurableKeys := { K_CTRL_Y =>, K_CTRL_T =>, K_CTRL_B =>, K_CTRL_V =>, K_ALT_W =>, K_ESC => }
    LOCAL bKeyBlock
 
    // If I have an user function I need to trap configurable keys and ask to
@@ -127,20 +126,20 @@ METHOD Edit() CLASS HBMemoEditor
 
          // I need to test this condition here since I never block inside HBEditor:Edit()
          // if there is an user function
-         IF ( nKey := Inkey(, hb_bitOr( Set( _SET_EVENTMASK ), HB_INKEY_EXT ) ) ) == 0
+         IF ( nKey := Inkey(, hb_bitOr( Set(_SET_EVENTMASK), HB_INKEY_EXT ) ) ) == 0
             ::IdleHook()
-            nKey := Inkey( 0, hb_bitOr( Set( _SET_EVENTMASK ), HB_INKEY_EXT ) )
+            nKey := Inkey(0, hb_bitOr( Set(_SET_EVENTMASK), HB_INKEY_EXT ))
          ENDIF
-         nKeyStd := hb_keyStd( nKey )
+         nKeyStd := hb_keyStd(nKey)
 
-         IF ( bKeyBlock := SetKey( nKeyStd ) ) != NIL
-            Eval( bKeyBlock )
+         IF ( bKeyBlock := SetKey(nKeyStd) ) != NIL
+            Eval(bKeyBlock)
             LOOP
          ENDIF
 
          // Is it a configurable key?
          IF nKeyStd $ hConfigurableKeys
-            ::HandleUserKey( nKey, ::xDo( iif( ::lDirty, ME_UNKEYX, ME_UNKEY ) ) )
+            ::HandleUserKey(nKey, ::xDo( iif( ::lDirty, ME_UNKEYX, ME_UNKEY ) ))
          ELSE
             ::super:Edit( nKey )
          ENDIF
@@ -165,25 +164,25 @@ METHOD KeyboardHook( nKey ) CLASS HBMemoEditor
    IF ::UserFunctionIsValid() .AND. ! ::lCallKeyboardHook  // To avoid recursive calls in endless loop. [jarabal]
 
       ::lCallKeyboardHook := .T.
-      ::HandleUserKey( nKey, ::xDo( iif( ::lDirty, ME_UNKEYX, ME_UNKEY ) ) )
+      ::HandleUserKey(nKey, ::xDo( iif( ::lDirty, ME_UNKEYX, ME_UNKEY ) ))
       ::lCallKeyboardHook := .F.
 
-   ELSEIF hb_keyStd( nKey ) == K_ESC
+   ELSEIF hb_keyStd(nKey) == K_ESC
 
-      IF ::lDirty .AND. Set( _SET_SCOREBOARD )
+      IF ::lDirty .AND. Set(_SET_SCOREBOARD)
          cBackScr := SaveScreen( 0, MaxCol() - 19, 0, MaxCol() )
 
          nRow := Row()
          nCol := Col()
          hb_DispOutAt(0, MaxCol() - 19, "Abort Edit? (Y/N)")
-         SetPos( 0, MaxCol() - 2 )
+         SetPos(0, MaxCol() - 2)
 
-         nYesNoKey := Inkey( 0 )
+         nYesNoKey := Inkey(0)
 
          RestScreen( 0, MaxCol() - 19, 0, MaxCol(), cBackScr )
-         SetPos( nRow, nCol )
+         SetPos(nRow, nCol)
 
-         IF Upper( hb_keyChar( nYesNoKey ) ) == "Y"
+         IF Upper(hb_keyChar(nYesNoKey)) == "Y"
             hb_keySetLast( K_ESC )  /* Cl*pper compatibility */
             ::lSaved := .F.
             ::lExitEdit := .T.
@@ -204,17 +203,17 @@ METHOD IdleHook() CLASS HBMemoEditor
 
    RETURN Self
 
-METHOD HandleUserKey( nKey, nUdfReturn ) CLASS HBMemoEditor
+METHOD HandleUserKey(nKey, nUdfReturn) CLASS HBMemoEditor
 
    SWITCH nUdfReturn
    CASE ME_DEFAULT
 
       // I won't reach this point during ME_INIT since ME_DEFAULT ends initialization phase of MemoEdit()
 
-      IF HB_ISNUMERIC( nKey )
+      IF HB_ISNUMERIC(nKey)
          // HBEditor is not able to handle keys with a value higher than 256, but I have to tell him
          // that user wants to save text
-         IF hb_keyStd( nKey ) == K_ESC
+         IF hb_keyStd(nKey) == K_ESC
             ::lSaved := .F.
             ::lExitEdit := .T.
          ELSE
@@ -226,9 +225,9 @@ METHOD HandleUserKey( nKey, nUdfReturn ) CLASS HBMemoEditor
       EXIT
 
    CASE ME_DATA
-      IF HB_ISNUMERIC( nKey )
+      IF HB_ISNUMERIC(nKey)
          /* TODO: convert nKey >=1 .and. nKey <= 31 to key value with unicode character */
-         IF HB_ULen(hb_keyChar( nKey )) > 0
+         IF HB_ULen(hb_keyChar(nKey)) > 0
             ::super:Edit( nKey )
          ENDIF
       ELSE
@@ -283,8 +282,8 @@ METHOD xDo( nStatus ) CLASS HBMemoEditor
 
    LOCAL xResult := Do( ::xUserFunction, nStatus, ::nRow, ::nCol - 1 )
 
-   SetPos( nOldRow, nOldCol )
-   SetCursor( nOldCur )
+   SetPos(nOldRow, nOldCol)
+   SetCursor(nOldCur)
 
    RETURN hb_defaultValue( xResult, ME_DEFAULT )
 
@@ -300,10 +299,10 @@ METHOD MoveCursor( nKey ) CLASS HBMemoEditor
 
 METHOD InsertState( lInsState ) CLASS HBMemoEditor
 
-   IF HB_ISLOGICAL( lInsState ) .AND. ::lEditAllow
-      Set( _SET_INSERT, lInsState )
-      SetCursor( iif( lInsState, SC_INSERT, SC_NORMAL ) )
-      IF Set( _SET_SCOREBOARD )
+   IF HB_ISLOGICAL(lInsState) .AND. ::lEditAllow
+      Set(_SET_INSERT, lInsState)
+      SetCursor(iif( lInsState, SC_INSERT, SC_NORMAL ))
+      IF Set(_SET_SCOREBOARD)
          hb_DispOutAt(0, MaxCol() - 19, iif( lInsState, "<insert>", "        " ))
       ENDIF
    ENDIF
@@ -355,14 +354,14 @@ FUNCTION MemoEdit( ;
 
    /* Contrary to what the NG says, any logical value will make it pass
       through without any editing. */
-   IF ! HB_ISLOGICAL( xUserFunction )
+   IF ! HB_ISLOGICAL(xUserFunction)
       nOldCursor := SetCursor()
-      oEd:InsertState( Set( _SET_INSERT ) )
+      oEd:InsertState( Set(_SET_INSERT) )
       oEd:Edit()
       IF oEd:Saved()
-         cString := oEd:GetText( .T. )
+         cString := oEd:GetText(.T.)
       ENDIF
-      SetCursor( nOldCursor )
+      SetCursor(nOldCursor)
    ENDIF
 
    RETURN cString

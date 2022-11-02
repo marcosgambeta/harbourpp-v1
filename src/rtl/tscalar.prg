@@ -75,8 +75,8 @@ METHOD AsString() CLASS ScalarObject
    CASE "B" ; RETURN "{ || ... }"
    CASE "M"
    CASE "C" ; RETURN Self
-   CASE "D" ; RETURN DToC( Self )
-   CASE "T" ; RETURN hb_TToC( Self )
+   CASE "D" ; RETURN DToC(Self)
+   CASE "T" ; RETURN hb_TToC(Self)
    CASE "H" ; RETURN "{ ... => ... }"
    CASE "L" ; RETURN iif( Self, ".T.", ".F." )
    CASE "N" ; RETURN hb_ntos(Self)
@@ -115,8 +115,8 @@ CREATE CLASS Array INHERIT HBScalar FUNCTION __HBArray
 
    METHOD AsString()
    METHOD At( n )
-   METHOD AtPut( n, x )
-   METHOD Add( x )
+   METHOD AtPut(n, x)
+   METHOD Add(x)
    METHOD AddAll( aOtherCollection )
    METHOD Collect( b )
    METHOD Copy()
@@ -141,7 +141,7 @@ METHOD Init( nElements ) CLASS Array
 
 METHOD AddAll( aOtherCollection ) CLASS Array
 
-   aOtherCollection:Do( {| e | ::Add( e ) } )
+   aOtherCollection:Do( {| e | ::Add(e) } )
 
    RETURN Self
 
@@ -149,12 +149,12 @@ METHOD AsString() CLASS Array
    RETURN "{ ... }"
 
 METHOD At( n ) CLASS Array
-   RETURN Self[ n ]
+   RETURN Self[n]
 
-METHOD AtPut( n, x ) CLASS Array
-   RETURN Self[ n ] := x
+METHOD AtPut(n, x) CLASS Array
+   RETURN Self[n] := x
 
-METHOD Add( x ) CLASS Array
+METHOD Add(x) CLASS Array
 
    AAdd(Self, x)
 
@@ -166,7 +166,7 @@ METHOD Collect( b ) CLASS Array
    LOCAL result := {}
 
    FOR EACH elem IN Self
-      IF Eval( b, elem )
+      IF Eval(b, elem)
          AAdd(result, elem)
       ENDIF
    NEXT
@@ -179,7 +179,7 @@ METHOD Copy() CLASS Array
 METHOD DeleteAt( n ) CLASS Array
 
    IF n >= 1 .AND. n <= Len(Self)
-      hb_ADel( Self, n, .T. )
+      hb_ADel(Self, n, .T.)
    ENDIF
 
    RETURN Self
@@ -188,8 +188,8 @@ METHOD InsertAt( n, x ) CLASS Array
 
    DO CASE
    CASE n > Len(Self)
-      ASize( Self, n )
-      Self[ n ] := x
+      ASize(Self, n)
+      Self[n] := x
    CASE n >= 1
       hb_AIns( Self, n, x, .T. )
    ENDCASE
@@ -204,7 +204,7 @@ METHOD Do( b ) CLASS Array
    LOCAL i
 
    FOR i := 1 TO Len(Self)
-      b:Eval( Self[ i ], i )
+      b:Eval(Self[i], i)
    NEXT
 
    RETURN Self
@@ -228,11 +228,11 @@ METHOD PROCEDURE Remove( e ) CLASS Array
    RETURN
 
 METHOD Scan( b ) CLASS Array
-   RETURN AScan( Self, b )
+   RETURN AScan(Self, b)
 
 METHOD _Size( newSize ) CLASS Array
 
-   ASize( Self, newSize )
+   ASize(Self, newSize)
 
    RETURN newSize  // so that assignment works according to standard rules
 
@@ -275,7 +275,7 @@ CREATE CLASS Date INHERIT HBScalar FUNCTION __HBDate
 ENDCLASS
 
 METHOD AsString() CLASS Date
-   RETURN DToC( Self )
+   RETURN DToC(Self)
 
 METHOD AsExpStr() CLASS Date
    RETURN 'CToD("' + ::AsString() + '")'
@@ -314,10 +314,10 @@ METHOD AsExpStr() CLASS TimeStamp
    RETURN 'hb_SToT("' + ::AsString() + '")'
 
 METHOD Date() CLASS TimeStamp
-   RETURN hb_TToC( Self,, "" )
+   RETURN hb_TToC(Self, NIL, "")
 
 METHOD Time() CLASS TimeStamp
-   RETURN hb_TToC( Self, "", "hh:mm:ss" )
+   RETURN hb_TToC(Self, "", "hh:mm:ss")
 
 METHOD Year() CLASS TimeStamp
    RETURN Year( Self )
@@ -335,7 +335,7 @@ METHOD Minute() CLASS TimeStamp
    RETURN hb_Minute( Self )
 
 METHOD Sec() CLASS TimeStamp
-   RETURN hb_Sec( Self )
+   RETURN hb_Sec(Self)
 
 /* --- */
 

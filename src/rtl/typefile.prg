@@ -59,7 +59,7 @@ PROCEDURE __TypeFile( cFile, lPrint )
    LOCAL nBuffer
    LOCAL oErr
    LOCAL nRetries
-   LOCAL aSaveSet[ 2 ]
+   LOCAL aSaveSet[2]
    LOCAL cDir, cName, cExt
    LOCAL cTmp
    LOCAL cPath
@@ -67,14 +67,14 @@ PROCEDURE __TypeFile( cFile, lPrint )
 
    hb_default( @lPrint, .F. )
 
-   IF ! HB_ISSTRING( cFile )
+   IF ! HB_ISSTRING(cFile)
       oErr := ErrorNew()
       oErr:severity    := ES_ERROR
       oErr:genCode     := EG_ARG
       oErr:subSystem   := "BASE"
       oErr:SubCode     := 2009
       oErr:Description := ProcName()
-      Eval( ErrorBlock(), oErr )
+      Eval(ErrorBlock(), oErr)
    ENDIF
 
    /* If no drive/dir specified, search the SET DEFAULT and PATH directories */
@@ -83,14 +83,14 @@ PROCEDURE __TypeFile( cFile, lPrint )
 
    IF Empty(cDir)
 
-      cTmp := StrTran(Set( _SET_DEFAULT ) + ";" + Set( _SET_PATH ), ",", ";")
+      cTmp := StrTran(Set(_SET_DEFAULT) + ";" + Set(_SET_PATH), ",", ";")
 
       i := Len(cTmp)
       DO WHILE SubStr(cTmp, i, 1) == ";"            /* remove last ";" */
          cTmp := Left(cTmp, --i)
       ENDDO
 
-      FOR EACH cPath IN hb_ATokens( cTmp, ";" )
+      FOR EACH cPath IN hb_ATokens(cTmp, ";")
          IF hb_FileExists( cTmp := hb_FNameMerge( cPath, cName, cExt ) )
             cFile := cTmp
             EXIT
@@ -99,7 +99,7 @@ PROCEDURE __TypeFile( cFile, lPrint )
    ENDIF
 
    nRetries := 0
-   DO WHILE ( nHandle := FOpen( cFile, FO_READWRITE ) ) == F_ERROR
+   DO WHILE ( nHandle := FOpen(cFile, FO_READWRITE) ) == F_ERROR
       oErr := ErrorNew()
       oErr:severity    := ES_ERROR
       oErr:genCode     := EG_OPEN
@@ -110,7 +110,7 @@ PROCEDURE __TypeFile( cFile, lPrint )
       oErr:fileName    := cFile
       oErr:OsCode      := FError()
       oErr:tries       := ++nRetries
-      IF ! hb_defaultValue( Eval( ErrorBlock(), oErr ), .T. )  /* user select "Default" */
+      IF ! hb_defaultValue( Eval(ErrorBlock(), oErr), .T. )  /* user select "Default" */
          RETURN
       ENDIF
    ENDDO
@@ -119,14 +119,14 @@ PROCEDURE __TypeFile( cFile, lPrint )
             suppress output to screen. [ckedem] */
 
    IF lPrint
-      aSaveSet[ 1 ] := Set( _SET_DEVICE, "PRINTER" )
-      aSaveSet[ 2 ] := Set( _SET_PRINTER, .T. )
+      aSaveSet[1] := Set(_SET_DEVICE, "PRINTER")
+      aSaveSet[2] := Set(_SET_PRINTER, .T.)
    ENDIF
 
-   nSize   := FSeek( nHandle, 0, FS_END )
+   nSize   := FSeek(nHandle, 0, FS_END)
    nBuffer := Min(nSize, BUFFER_LENGTH)
 
-   FSeek( nHandle, 0 )  /* go top */
+   FSeek(nHandle, 0)  /* go top */
 
    /* Here we try to read a line at a time but I think we could just
       display the whole buffer since it said:
@@ -135,18 +135,18 @@ PROCEDURE __TypeFile( cFile, lPrint )
    nHasRead := 0
    cBuffer := Space(nBuffer)
    QOut()  /* starting a new line */
-   DO WHILE ( nRead := FRead( nHandle, @cBuffer, nBuffer ) ) > 0
+   DO WHILE ( nRead := FRead(nHandle, @cBuffer, nBuffer) ) > 0
       nHasRead += nRead
       QQOut(cBuffer)
       nBuffer := Min(nSize - nHasRead, nBuffer)
       cBuffer := Space(nBuffer)
    ENDDO
 
-   FClose( nHandle )
+   FClose(nHandle)
 
    IF lPrint
-      Set( _SET_DEVICE,  aSaveSet[ 1 ] )
-      Set( _SET_PRINTER, aSaveSet[ 2 ] )
+      Set(_SET_DEVICE,  aSaveSet[1])
+      Set(_SET_PRINTER, aSaveSet[2])
    ENDIF
 
    RETURN

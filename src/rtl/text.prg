@@ -54,10 +54,10 @@ PROCEDURE __TextSave( cFile )
    t_cFile := cFile
 
    IF t_cFile == "PRINTER"
-      t_lOldPrinter := Set( _SET_PRINTER, .T. )
+      t_lOldPrinter := Set(_SET_PRINTER, .T.)
    ELSE
-      t_lOldExtra := Set( _SET_EXTRA, .T. )
-      t_cOldExtraFile := Set( _SET_EXTRAFILE, cFile )
+      t_lOldExtra := Set(_SET_EXTRA, .T.)
+      t_cOldExtraFile := Set(_SET_EXTRAFILE, cFile)
    ENDIF
 
    RETURN
@@ -65,10 +65,10 @@ PROCEDURE __TextSave( cFile )
 PROCEDURE __TextRestore()
 
    IF t_cFile == "PRINTER"
-      Set( _SET_PRINTER, t_lOldPrinter )
+      Set(_SET_PRINTER, t_lOldPrinter)
    ELSE
-      Set( _SET_EXTRAFILE, t_cOldExtraFile )
-      Set( _SET_EXTRA, t_lOldExtra )
+      Set(_SET_EXTRAFILE, t_cOldExtraFile)
+      Set(_SET_EXTRA, t_lOldExtra)
    ENDIF
 
    RETURN

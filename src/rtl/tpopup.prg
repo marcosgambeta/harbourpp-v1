@@ -85,7 +85,7 @@ CREATE CLASS PopupMenu FUNCTION HBPopupMenu
 
    METHOD border( cBorder ) SETGET
    METHOD bottom( nBottom ) SETGET
-   METHOD colorSpec( cColorSpec ) SETGET
+   METHOD colorSpec(cColorSpec) SETGET
    METHOD current() SETGET
    METHOD itemCount() SETGET
    METHOD left( nLeft ) SETGET
@@ -118,7 +118,7 @@ ENDCLASS
 
 METHOD addItem( oItem ) CLASS PopupMenu
 
-   IF HB_ISOBJECT( oItem ) .AND. oItem:ClassName() == "MENUITEM"
+   IF HB_ISOBJECT(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
       AAdd(::aItems, oItem)
       ::nItemCount++
@@ -137,14 +137,12 @@ METHOD close( lCloseChild ) CLASS PopupMenu
 
       ::setMetrics()
 
-      IF ::nCurrent > 0 .AND. ;
-         ::aItems[ ::nCurrent ]:isPopUp() .AND. ;
-         ::aItems[ ::nCurrent ]:data:isOpen()
+      IF ::nCurrent > 0 .AND. ::aItems[::nCurrent]:isPopUp() .AND. ::aItems[::nCurrent]:data:isOpen()
 
-         ::aItems[ ::nCurrent ]:data:Close()
+         ::aItems[::nCurrent]:data:Close()
       ENDIF
 
-      RestScreen( ::aSaveScr[ 1 ], ::aSaveScr[ 2 ], ::aSaveScr[ 3 ], ::aSaveScr[ 4 ], ::aSaveScr[ 5 ] )
+      RestScreen( ::aSaveScr[1], ::aSaveScr[2], ::aSaveScr[3], ::aSaveScr[4], ::aSaveScr[5] )
 
       ::aSaveScr := NIL
       ::nCurrent := 0
@@ -160,9 +158,9 @@ METHOD delItem( nPos ) CLASS PopupMenu
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount
 
-      nLen := Len(::aItems[ nPos ]:caption)
+      nLen := Len(::aItems[nPos]:caption)
 
-      hb_ADel( ::aItems, nPos, .T. )
+      hb_ADel(::aItems, nPos, .T.)
       ::nItemCount--
 
       IF ::nWidth == nLen + 2
@@ -199,9 +197,7 @@ METHOD display() CLASS PopupMenu
 
       DispBegin()
 
-      hb_DispBox( nTop, nLeft, ::nBottom, ::nRight, ;
-                  SubStr(::cBorder, 1, 8) + " ", ;
-                  hb_ColorIndex( ::cColorSpec, 5 ) )
+      hb_DispBox( nTop, nLeft, ::nBottom, ::nRight, SubStr(::cBorder, 1, 8) + " ", hb_ColorIndex(::cColorSpec, 5) )
 
       IF ::lShadowed
          hb_Shadow( nTop, nLeft, ::nBottom, ::nRight )
@@ -214,7 +210,7 @@ METHOD display() CLASS PopupMenu
 
          IF item:__issep
 
-            hb_DispOutAtBox( nTop, nLeft - 1, SubStr(::cBorder, 9, 1) + Replicate( SubStr(::cBorder, 10, 1), nWidth ) + SubStr(::cBorder, 11, 1), hb_ColorIndex( ::cColorSpec, 5 ) )
+            hb_DispOutAtBox( nTop, nLeft - 1, SubStr(::cBorder, 9, 1) + Replicate(SubStr(::cBorder, 10, 1), nWidth) + SubStr(::cBorder, 11, 1), hb_ColorIndex(::cColorSpec, 5) )
 
          ELSE
             cCaption := PadR(item:caption, nWidth - 1)
@@ -254,10 +250,10 @@ METHOD display() CLASS PopupMenu
                cCaption := Stuff( cCaption, nHotKeyPos, 1, "" )
             ENDIF
 
-            hb_DispOutAt(nTop, nLeft, cCaption, hb_ColorIndex( ::cColorSpec, iif( item:__enumIndex() == nCurrent, 1, iif( item:enabled, 0, 4 ) ) ))
+            hb_DispOutAt(nTop, nLeft, cCaption, hb_ColorIndex(::cColorSpec, iif( item:__enumIndex() == nCurrent, 1, iif( item:enabled, 0, 4 ) )))
 
             IF item:enabled .AND. nHotKeyPos != 0
-               hb_DispOutAt(nTop, nLeft + nHotKeyPos - 1, SubStr(cCaption, nHotKeyPos, 1), hb_ColorIndex( ::cColorSpec, iif( item:__enumIndex() == nCurrent, 3, 2 ) ))
+               hb_DispOutAt(nTop, nLeft + nHotKeyPos - 1, SubStr(cCaption, nHotKeyPos, 1), hb_ColorIndex(::cColorSpec, iif( item:__enumIndex() == nCurrent, 3, 2 )))
             ENDIF
          ENDIF
       NEXT
@@ -274,10 +270,10 @@ METHOD getAccel( xKey ) CLASS PopupMenu
    LOCAL item
 
    DO CASE
-   CASE HB_ISSTRING( xKey )
+   CASE HB_ISSTRING(xKey)
       cKey := xKey
-   CASE HB_ISNUMERIC( xKey )
-      cKey := hb_keyChar( xKey )
+   CASE HB_ISNUMERIC(xKey)
+      cKey := hb_keyChar(xKey)
    OTHERWISE
       RETURN 0
    ENDCASE
@@ -306,7 +302,7 @@ METHOD getFirst() CLASS PopupMenu
    RETURN 0
 
 METHOD getItem( nPos ) CLASS PopupMenu
-   RETURN iif( nPos >= 1 .AND. nPos <= ::nItemCount, ::aItems[ nPos ], NIL )
+   RETURN iif( nPos >= 1 .AND. nPos <= ::nItemCount, ::aItems[nPos], NIL )
 
 METHOD getLast() CLASS PopupMenu
 
@@ -325,7 +321,7 @@ METHOD getNext() CLASS PopupMenu
    LOCAL nPos
 
    FOR nPos := ::nCurrent + 1 TO ::nItemCount
-      IF ::aItems[ nPos ]:enabled
+      IF ::aItems[nPos]:enabled
          RETURN nPos
       ENDIF
    NEXT
@@ -337,7 +333,7 @@ METHOD getPrev() CLASS PopupMenu
    LOCAL nPos
 
    FOR nPos := ::nCurrent - 1 TO 1 STEP -1
-      IF ::aItems[ nPos ]:enabled
+      IF ::aItems[nPos]:enabled
          RETURN nPos
       ENDIF
    NEXT
@@ -397,14 +393,11 @@ METHOD hitTest( nMRow, nMCol ) CLASS PopupMenu
       ELSE
          RETURN HTNOWHERE
       ENDIF
-   CASE nMRow > ::nTop .AND. ;
-        nMRow < ::nBottom .AND. ;
-        nMCol > ::nLeft .AND. ;
-        nMCol < ::nRight
+   CASE nMRow > ::nTop .AND. nMRow < ::nBottom .AND. nMCol > ::nLeft .AND. nMCol < ::nRight
 
       nPos := nMRow - ::nTop
       DO CASE
-      CASE ::aItems[ nPos ]:__issep
+      CASE ::aItems[nPos]:__issep
          RETURN HTSEPARATOR
       OTHERWISE
          RETURN nPos
@@ -415,8 +408,7 @@ METHOD hitTest( nMRow, nMCol ) CLASS PopupMenu
 
 METHOD insItem( nPos, oItem ) CLASS PopupMenu
 
-   IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. ;
-      HB_ISOBJECT( oItem ) .AND. oItem:ClassName() == "MENUITEM"
+   IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. HB_ISOBJECT(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
       hb_AIns( ::aItems, nPos, oItem, .T. )
       ::nItemCount++
@@ -469,16 +461,12 @@ METHOD open() CLASS PopupMenu
 
 METHOD select( nPos ) CLASS PopupMenu
 
-   IF ( nPos >= 1 .AND. nPos <= ::nItemCount .AND. ;
-      ::nCurrent != nPos .AND. ;
-      ::aItems[ nPos ]:enabled ) .OR. nPos == 0
+   IF ( nPos >= 1 .AND. nPos <= ::nItemCount .AND. ::nCurrent != nPos .AND. ::aItems[nPos]:enabled ) .OR. nPos == 0
 
 #if 0
-      IF ::isOpen() .AND. ;
-         ::nCurrent > 0 .AND. ;
-         ::aItems[ ::nCurrent ]:isPopUp()
+      IF ::isOpen() .AND. ::nCurrent > 0 .AND. ::aItems[::nCurrent]:isPopUp()
 
-         ::aItems[ ::nCurrent ]:data:close()
+         ::aItems[::nCurrent]:data:close()
       ENDIF
 #endif
 
@@ -489,10 +477,9 @@ METHOD select( nPos ) CLASS PopupMenu
 
 METHOD setItem( nPos, oItem ) CLASS PopupMenu
 
-   IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. ;
-      HB_ISOBJECT( oItem ) .AND. oItem:ClassName() == "MENUITEM"
+   IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. HB_ISOBJECT(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
-      ::aItems[ nPos ] := oItem
+      ::aItems[nPos] := oItem
       ::nWidth := Max(__CapMetrics(oItem), ::nWidth)
    ENDIF
 
@@ -541,11 +528,11 @@ METHOD bottom( nBottom ) CLASS PopupMenu
 
    RETURN ::nBottom
 
-METHOD colorSpec( cColorSpec ) CLASS PopupMenu
+METHOD colorSpec(cColorSpec) CLASS PopupMenu
 
    IF cColorSpec != NIL
       ::cColorSpec := __eInstVar53( Self, "COLORSPEC", cColorSpec, "C", 1001, ;
-         {|| ! Empty(hb_ColorIndex( cColorSpec, 5 )) .AND. Empty(hb_ColorIndex( cColorSpec, 6 )) } )
+         {|| ! Empty(hb_ColorIndex(cColorSpec, 5)) .AND. Empty(hb_ColorIndex(cColorSpec, 6)) } )
    ENDIF
 
    RETURN ::cColorSpec
@@ -605,16 +592,16 @@ METHOD New( nTop, nLeft, nBottom, nRight ) CLASS PopupMenu
 
    LOCAL cColor
 
-   IF HB_ISNUMERIC( nTop )
+   IF HB_ISNUMERIC(nTop)
       ::nTop := nTop
    ENDIF
-   IF HB_ISNUMERIC( nLeft )
+   IF HB_ISNUMERIC(nLeft)
       ::nLeft := nLeft
    ENDIF
-   IF HB_ISNUMERIC( nBottom )
+   IF HB_ISNUMERIC(nBottom)
       ::nBottom := nBottom
    ENDIF
-   IF HB_ISNUMERIC( nRight )
+   IF HB_ISNUMERIC(nRight)
       ::nRight := nRight
    ENDIF
 
@@ -623,12 +610,12 @@ METHOD New( nTop, nLeft, nBottom, nRight ) CLASS PopupMenu
    ELSE
       cColor := SetColor()
       ::cColorSpec := ;
-         hb_ColorIndex( cColor, CLR_UNSELECTED ) + "," + ;
-         hb_ColorIndex( cColor, CLR_ENHANCED   ) + "," + ;
-         hb_ColorIndex( cColor, CLR_BACKGROUND ) + "," + ;
-         hb_ColorIndex( cColor, CLR_ENHANCED   ) + "," + ;
-         hb_ColorIndex( cColor, CLR_STANDARD   ) + "," + ;
-         hb_ColorIndex( cColor, CLR_BORDER     )
+         hb_ColorIndex(cColor, CLR_UNSELECTED) + "," + ;
+         hb_ColorIndex(cColor, CLR_ENHANCED) + "," + ;
+         hb_ColorIndex(cColor, CLR_BACKGROUND) + "," + ;
+         hb_ColorIndex(cColor, CLR_ENHANCED) + "," + ;
+         hb_ColorIndex(cColor, CLR_STANDARD) + "," + ;
+         hb_ColorIndex(cColor, CLR_BORDER)
    ENDIF
 
    RETURN Self

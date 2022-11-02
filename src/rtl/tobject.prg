@@ -67,20 +67,20 @@ FUNCTION HBObject()
          /* Class(y) */
          oClass:AddInline( "ISKINDOF"        , {| Self, xPar1 | __objDerivedFrom( Self, xPar1 ) }, HB_OO_CLSTP_EXPORTED )
 
-         oClass:AddMethod( "NEW"  , @HBObject_New()   , HB_OO_CLSTP_EXPORTED )
-         oClass:AddMethod( "INIT" , @HBObject_Init()  , HB_OO_CLSTP_EXPORTED )
+         oClass:AddMethod("NEW"  , @HBObject_New()   , HB_OO_CLSTP_EXPORTED)
+         oClass:AddMethod("INIT" , @HBObject_Init()  , HB_OO_CLSTP_EXPORTED)
 
-         oClass:AddMethod( "ERROR", @HBObject_Error() , HB_OO_CLSTP_EXPORTED )
+         oClass:AddMethod("ERROR", @HBObject_Error() , HB_OO_CLSTP_EXPORTED)
 
          oClass:SetOnError( @HBObject_DftonError() )
 
          oClass:AddInline( "MSGNOTFOUND"     , {| Self, cMsg | ::Error( "Message not found", ::className(), cMsg, iif( hb_LeftEq( cMsg, "_" ), 1005, 1004 ) ) }, HB_OO_CLSTP_EXPORTED )
 
 #if 0
-         oClass:AddMultiData( , , HB_OO_CLSTP_EXPORTED, { "CLASS" }, .F. )
+         oClass:AddMultiData(NIL, NIL, HB_OO_CLSTP_EXPORTED, {"CLASS"}, .F.)
 
          oClass:AddInline( "ADDMETHOD" , {| Self, cMeth, pFunc, nScopeMeth         | __clsAddMsg( __classH( Self ), cMeth, pFunc, HB_OO_MSG_METHOD, , iif( nScopeMeth == NIL, 1, nScopeMeth ) ) }, HB_OO_CLSTP_EXPORTED )
-         oClass:AddInline( "ADDVAR"    , {| Self, cVAR, nScopeMeth, uiData, hClass | __clsAddMsg( hClass := __classH( Self ),       cVar , uidata := __cls_IncData( hClass ), HB_OO_MSG_ACCESS, , iif( nScopeMeth == NIL, 1, nScopeMeth ) )  , ;
+         oClass:AddInline( "ADDVAR"    , {| Self, cVAR, nScopeMeth, uiData, hClass | __clsAddMsg( hClass := __classH( Self ),       cVar , uidata := __cls_IncData(hClass), HB_OO_MSG_ACCESS, , iif( nScopeMeth == NIL, 1, nScopeMeth ) )  , ;
                                                                                      __clsAddMsg( hClass                    , "_" + cVar , uiData                           , HB_OO_MSG_ASSIGN, , iif( nScopeMeth == NIL, 1, nScopeMeth ) ) }, HB_OO_CLSTP_EXPORTED )
 
          /* These ones exist within Class(y), so we will probably try to implement it */
@@ -139,7 +139,7 @@ STATIC FUNCTION HBObject_Init()
    RETURN QSelf()
 
 STATIC FUNCTION HBObject_Dftonerror( ... )
-   RETURN QSelf():MsgNotFound( __GetMessage(), ... )
+   RETURN QSelf():MsgNotFound(__GetMessage(), ...)
 
 STATIC FUNCTION HBObject_Error( cDesc, cClass, cMsg, nCode )
 

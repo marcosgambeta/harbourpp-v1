@@ -47,23 +47,23 @@
 #define ALTD_DISABLE  0
 #define ALTD_ENABLE   1
 
-PROCEDURE AltD( nAction )
+PROCEDURE AltD(nAction)
 
    IF PCount() == 0
 
       /* do not activate the debugger immediately because the module
          where AltD() was called can have no debugger info - stop
          on first LINE with debugged info */
-      __dbgInvokeDebug( Set( _SET_DEBUG ) )
+      __dbgInvokeDebug( Set(_SET_DEBUG) )
 
-   ELSEIF HB_ISNUMERIC( nAction )
+   ELSEIF HB_ISNUMERIC(nAction)
 
       SWITCH nAction
       CASE ALTD_DISABLE
-         Set( _SET_DEBUG, .F. )
+         Set(_SET_DEBUG, .F.)
          EXIT
       CASE ALTD_ENABLE
-         Set( _SET_DEBUG, .T. )
+         Set(_SET_DEBUG, .T.)
          EXIT
       ENDSWITCH
 

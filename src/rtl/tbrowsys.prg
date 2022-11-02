@@ -49,8 +49,8 @@
 #include "button.ch"
 #include "tbrowse.ch"
 
-FUNCTION TApplyKey( nKey, oBrowse )
-   RETURN oBrowse:applyKey( nKey )
+FUNCTION TApplyKey(nKey, oBrowse)
+   RETURN oBrowse:applyKey(nKey)
 
 PROCEDURE TBAddCol() /* TODO */
    RETURN

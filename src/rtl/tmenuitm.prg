@@ -62,10 +62,10 @@ CREATE CLASS MenuItem FUNCTION HBMenuItem
    VAR cargo
 
    METHOD caption( cCaption ) SETGET
-   METHOD checked( lChecked ) SETGET
-   METHOD data( boData ) SETGET
-   METHOD enabled( lEnabled ) SETGET
-   METHOD id( nID ) SETGET
+   METHOD checked(lChecked) SETGET
+   METHOD data(boData) SETGET
+   METHOD enabled(lEnabled) SETGET
+   METHOD id(nID) SETGET
    METHOD message( cMessage ) SETGET
    METHOD shortcut( nShortcut ) SETGET
    METHOD style( cStyle ) SETGET
@@ -108,7 +108,7 @@ METHOD caption( cCaption ) CLASS MenuItem
 
    RETURN ::cCaption
 
-METHOD checked( lChecked ) CLASS MenuItem
+METHOD checked(lChecked) CLASS MenuItem
 
    IF lChecked != NIL .AND. ! ::__issep
       ::lChecked := __eInstVar53( Self, "CHECKED", lChecked, "L", 1001 )
@@ -116,10 +116,10 @@ METHOD checked( lChecked ) CLASS MenuItem
 
    RETURN ::lChecked
 
-METHOD data( boData ) CLASS MenuItem
+METHOD data(boData) CLASS MenuItem
 
    IF boData != NIL
-      IF HB_ISEVALITEM( boData )
+      IF HB_ISEVALITEM(boData)
          ::boData := boData
       ELSE
          ::boData := __eInstVar53( Self, "DATA", boData, "O", 1001, {|| IS_IN( boData:ClassName(), "POPUPMENU|HB_POPUPMENU" ) } )
@@ -128,7 +128,7 @@ METHOD data( boData ) CLASS MenuItem
 
    RETURN ::boData
 
-METHOD enabled( lEnabled ) CLASS MenuItem
+METHOD enabled(lEnabled) CLASS MenuItem
 
    IF lEnabled != NIL .AND. ! ::__issep
       ::lEnabled := __eInstVar53( Self, "ENABLED", lEnabled, "L", 1001 )
@@ -136,7 +136,7 @@ METHOD enabled( lEnabled ) CLASS MenuItem
 
    RETURN ::lEnabled
 
-METHOD id( nID ) CLASS MenuItem
+METHOD id(nID) CLASS MenuItem
 
    IF nID != NIL
       ::nID := __eInstVar53( Self, "ID", nID, "N", 1001 )
@@ -169,7 +169,7 @@ METHOD style( cStyle ) CLASS MenuItem
    RETURN ::cStyle
 
 METHOD isPopUp() CLASS MenuItem
-   RETURN HB_ISOBJECT( ::data ) .AND. IS_IN( ::data:ClassName(), "POPUPMENU|HB_POPUPMENU" )
+   RETURN HB_ISOBJECT(::data) .AND. IS_IN( ::data:ClassName(), "POPUPMENU|HB_POPUPMENU" )
 
 METHOD New( cCaption, boData, nShortcut, cMessage, nID ) CLASS MenuItem
 
@@ -188,9 +188,9 @@ FUNCTION MenuItem( cCaption, boData, nShortcut, cMessage, nID )
 
 FUNCTION __MIColumn( o, nColumn )
 
-   IF HB_ISOBJECT( o ) .AND. o:ClassName() == "MENUITEM"
+   IF HB_ISOBJECT(o) .AND. o:ClassName() == "MENUITEM"
 
-      IF HB_ISNUMERIC( nColumn )
+      IF HB_ISNUMERIC(nColumn)
          o:__col := nColumn
       ENDIF
 
@@ -201,9 +201,9 @@ FUNCTION __MIColumn( o, nColumn )
 
 FUNCTION __MIRow( o, nRow )
 
-   IF HB_ISOBJECT( o ) .AND. o:ClassName() == "MENUITEM"
+   IF HB_ISOBJECT(o) .AND. o:ClassName() == "MENUITEM"
 
-      IF HB_ISNUMERIC( nRow )
+      IF HB_ISNUMERIC(nRow)
          o:__row := nRow
       ENDIF
 

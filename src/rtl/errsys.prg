@@ -48,7 +48,7 @@
 
 PROCEDURE ErrorSys()
 
-   ErrorBlock( {| oError | DefError( oError ) } )
+   ErrorBlock({| oError | DefError( oError ) })
 
    RETURN
 
@@ -63,30 +63,25 @@ STATIC FUNCTION DefError( oError )
    LOCAL n
 
    // By default, division by zero results in zero
-   IF oError:genCode == EG_ZERODIV .AND. ;
-      oError:canSubstitute
+   IF oError:genCode == EG_ZERODIV .AND. oError:canSubstitute
       RETURN 0
    ENDIF
 
    // By default, retry on RDD lock error failure
-   IF oError:genCode == EG_LOCK .AND. ;
-      oError:canRetry
+   IF oError:genCode == EG_LOCK .AND. oError:canRetry
       // oError:tries++
       RETURN .T.
    ENDIF
 
    // Set NetErr() of there was a database open error
-   IF oError:genCode == EG_OPEN .AND. ;
-      oError:osCode == 32 .AND. ;
-      oError:canDefault
-      NetErr( .T. )
+   IF oError:genCode == EG_OPEN .AND. oError:osCode == 32 .AND. oError:canDefault
+      NetErr(.T.)
       RETURN .F.
    ENDIF
 
    // Set NetErr() if there was a lock error on dbAppend()
-   IF oError:genCode == EG_APPENDLOCK .AND. ;
-      oError:canDefault
-      NetErr( .T. )
+   IF oError:genCode == EG_APPENDLOCK .AND. oError:canDefault
+      NetErr(.T.)
       RETURN .F.
    ENDIF
 
@@ -111,12 +106,11 @@ STATIC FUNCTION DefError( oError )
 
    // Show alert box
 
-   DO WHILE ( nChoice := Alert( cMessage + ;
-      iif( cOSError == NIL, "", ";" + cOSError ), aOptions ) ) == 0
+   DO WHILE ( nChoice := Alert( cMessage + iif( cOSError == NIL, "", ";" + cOSError ), aOptions ) ) == 0
    ENDDO
 
    IF ! Empty(nChoice)  /* Alert() may return NIL */
-      SWITCH aOptions[ nChoice ]
+      SWITCH aOptions[nChoice]
       CASE "Break"
          Break( oError )
       CASE "Retry"
@@ -138,12 +132,10 @@ STATIC FUNCTION DefError( oError )
    n := 1
    DO WHILE ! Empty(ProcName( ++n ))
       OutErr( hb_eol() )
-      OutErr( hb_StrFormat("Called from %1$s(%2$d)  ", ;
-         ProcName( n ), ;
-         ProcLine( n )) )
+      OutErr( hb_StrFormat("Called from %1$s(%2$d)  ", ProcName( n ), ProcLine( n )) )
    ENDDO
 
-   ErrorLevel( 1 )
+   ErrorLevel(1)
    QUIT
 
    RETURN .F.
@@ -154,21 +146,21 @@ STATIC FUNCTION ErrorMessage( oError )
    LOCAL cMessage := iif( oError:severity > ES_WARNING, "Error", "Warning" ) + " "
 
    // add subsystem name if available
-   IF HB_ISSTRING( oError:subsystem )
+   IF HB_ISSTRING(oError:subsystem)
       cMessage += oError:subsystem()
    ELSE
       cMessage += "???"
    ENDIF
 
    // add subsystem's error code if available
-   IF HB_ISNUMERIC( oError:subCode )
+   IF HB_ISNUMERIC(oError:subCode)
       cMessage += "/" + hb_ntos(oError:subCode)
    ELSE
       cMessage += "/???"
    ENDIF
 
    // add error description if available
-   IF HB_ISSTRING( oError:description )
+   IF HB_ISSTRING(oError:description)
       cMessage += "  " + oError:description
    ENDIF
 

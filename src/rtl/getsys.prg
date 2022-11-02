@@ -62,7 +62,7 @@ FUNCTION ReadModal( GetList )
    LOCAL oSaveGetList
 
    IF Empty(GetList)
-      SetPos( MaxRow() - 1, 0 )
+      SetPos(MaxRow() - 1, 0)
       RETURN .F.
    ENDIF
 
@@ -91,14 +91,14 @@ FUNCTION ReadModal( GetList )
 // GetActive( oSaveGetList:ReadStats( SOACTIVEGET ) )
 #endif
 
-   SetPos( MaxRow() - 1, 0 )
+   SetPos(MaxRow() - 1, 0)
 
    RETURN oGetList:Updated()
 
 #ifdef HB_COMPAT_C53
 PROCEDURE GetReader( oGet, oGetList, oMenu, aMsg )
 
-   HB_SYMBOL_UNUSED( oGetList )
+   HB_SYMBOL_UNUSED(oGetList)
 
    oGet:Reader( oMenu, aMsg )
 
@@ -141,33 +141,33 @@ FUNCTION GetActive( oGet )
 
    RETURN NIL
 
-PROCEDURE GetDoSetKey( bKeyBlock, oGet )
+PROCEDURE GetDoSetKey(bKeyBlock, oGet)
 
    LOCAL oGetList := __GetListActive()
 
    IF oGetList != NIL
-      oGetList:GetDoSetKey( bKeyBlock, oGet )
+      oGetList:GetDoSetKey(bKeyBlock, oGet)
    ENDIF
 
    RETURN
 
 #ifdef HB_COMPAT_C53
-PROCEDURE GetApplyKey( oGet, nKey, oGetList, oMenu, aMsg )
+PROCEDURE GetApplyKey(oGet, nKey, oGetList, oMenu, aMsg)
 
-   IF ! HB_ISOBJECT( oGetList )
+   IF ! HB_ISOBJECT(oGetList)
       oGetList := __GetListActive()
    ENDIF
 #else
-PROCEDURE GetApplyKey( oGet, nKey )
+PROCEDURE GetApplyKey(oGet, nKey)
 
    LOCAL oGetList := __GetListActive()
 #endif
 
    IF oGetList != NIL
 #ifdef HB_COMPAT_C53
-      oGetList:GetApplyKey( nKey, oGet, oMenu, aMsg )
+      oGetList:GetApplyKey(nKey, oGet, oMenu, aMsg)
 #else
-      oGetList:GetApplyKey( nKey, oGet )
+      oGetList:GetApplyKey(nKey, oGet)
 #endif
    ENDIF
 
@@ -209,10 +209,10 @@ FUNCTION GetPostValidate( oGet )
    RETURN .F.
 
 FUNCTION ReadExit( lExit )
-   RETURN Set( _SET_EXIT, lExit )
+   RETURN Set(_SET_EXIT, lExit)
 
 FUNCTION ReadInsert( lInsert )
-   RETURN Set( _SET_INSERT, lInsert )
+   RETURN Set(_SET_INSERT, lInsert)
 
 FUNCTION Updated()
 
@@ -225,18 +225,18 @@ PROCEDURE __KillRead()
    LOCAL oGetList := __GetListActive()
 
    IF oGetList != NIL
-      oGetList:KillRead( .T. )
+      oGetList:KillRead(.T.)
    ENDIF
 
    RETURN
 
-FUNCTION ReadUpdated( lUpdated )
+FUNCTION ReadUpdated(lUpdated)
 
    LOCAL oGetList := __GetListLast()
 
    IF oGetList != NIL
       IF PCount() > 0
-         RETURN oGetList:ReadUpdated( lUpdated )
+         RETURN oGetList:ReadUpdated(lUpdated)
       ELSE
          RETURN oGetList:ReadUpdated()
       ENDIF
@@ -250,7 +250,7 @@ FUNCTION ReadKill( lKill )
 
    IF oGetList != NIL
       IF PCount() > 0
-         RETURN oGetList:KillRead( lKill )
+         RETURN oGetList:KillRead(lKill)
       ELSE
          RETURN oGetList:KillRead()
       ENDIF
@@ -277,7 +277,7 @@ PROCEDURE __SetFormat(bFormat)
    LOCAL oGetList := __GetListActive()
 
    IF oGetList != NIL
-      IF HB_ISEVALITEM( bFormat )
+      IF HB_ISEVALITEM(bFormat)
          oGetList:SetFormat(bFormat)
       ELSE
          oGetList:SetFormat()
@@ -298,7 +298,7 @@ FUNCTION RangeCheck( oGet, xDummy, xLow, xHigh )
    LOCAL cMessage
    LOCAL nKey
 
-   HB_SYMBOL_UNUSED( xDummy )
+   HB_SYMBOL_UNUSED(xDummy)
 
    IF ! oGet:changed
       RETURN .T.
@@ -310,14 +310,13 @@ FUNCTION RangeCheck( oGet, xDummy, xLow, xHigh )
       RETURN .T.
    ENDIF
 
-   IF Set( _SET_SCOREBOARD )
+   IF Set(_SET_SCOREBOARD)
 
-      cMessage := Left(__natMsg( _GET_RANGE_FROM ) + LTrim(Transform(xLow, "")) + ;
-         __natMsg( _GET_RANGE_TO ) + LTrim(Transform(xHigh, "")), MaxCol())
+      cMessage := Left(__natMsg( _GET_RANGE_FROM ) + LTrim(Transform(xLow, "")) + __natMsg( _GET_RANGE_TO ) + LTrim(Transform(xHigh, "")), MaxCol())
 
       hb_DispOutAt(SCORE_ROW, Min(60, MaxCol() - Len(cMessage)), cMessage)
 
-      DO WHILE ( nKey := Inkey( 0 ) ) == 0
+      DO WHILE ( nKey := Inkey(0) ) == 0
       ENDDO
       hb_keyIns( nKey )
 

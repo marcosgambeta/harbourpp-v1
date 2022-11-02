@@ -35,7 +35,7 @@ FUNCTION __AtPrompt( nRow, nCol, cPrompt, cMsg, cColor )
    ENDDO
 
    // add to the static array
-   AAdd(t_aLevel[ t_nPointer ], { ;
+   AAdd(t_aLevel[t_nPointer], { ;
       nRow, ;      // _ITM_ROW
       nCol, ;      // _ITM_COL
       cPrompt, ;   // _ITM_PROMPT
@@ -81,10 +81,10 @@ FUNCTION __MenuTo( bBlock, cVariable )
    lDeclared := ! __mvExist( cVariable )
 
    IF lDeclared
-      __mvPublic( cVariable )
+      __mvPublic(cVariable)
    ENDIF
 
-   n := Eval( bBlock )
+   n := Eval(bBlock)
 
    // if no prompts were defined, exit with 0
 
@@ -97,11 +97,11 @@ FUNCTION __MenuTo( bBlock, cVariable )
       t_nPointer++
       nPointer := t_nPointer
 
-      nArrLen := Len(t_aLevel[ nPointer - 1 ])
+      nArrLen := Len(t_aLevel[nPointer - 1])
 
       // put choice in a valid range
 
-      IF ! HB_ISNUMERIC( n ) .OR. n < 1
+      IF ! HB_ISNUMERIC(n) .OR. n < 1
          n := 1
       ENDIF
 
@@ -115,12 +115,12 @@ FUNCTION __MenuTo( bBlock, cVariable )
       nHiLited := 0
 #endif
 
-      nSaveCursor := SetCursor( iif( Set( _SET_INTENSITY ), SC_NONE, NIL ) )
-      cSaveReadVar := ReadVar( hb_asciiUpper( cVariable ) )
+      nSaveCursor := SetCursor(iif( Set(_SET_INTENSITY), SC_NONE, NIL ))
+      cSaveReadVar := ReadVar( hb_asciiUpper(cVariable) )
       xMsg := ""
       nMsgCol := 0
-      nMsgRow := Set( _SET_MESSAGE )
-      lMsgCenter := Set( _SET_MCENTER )
+      nMsgRow := Set(_SET_MESSAGE)
+      lMsgCenter := Set(_SET_MCENTER)
       lExit := .F.
 
       DO WHILE n != 0
@@ -132,11 +132,11 @@ FUNCTION __MenuTo( bBlock, cVariable )
                DispOutAt(nMsgRow, nMsgCol, Space(Len(xMsg)))
             ENDIF
 
-            xMsg := t_aLevel[ nPointer - 1 ][ n ][ _ITM_MSG ]
+            xMsg := t_aLevel[nPointer - 1][n][_ITM_MSG]
 
             // Codeblock messages (yes, they are documented!)
-            IF HB_ISEVALITEM( xMsg )
-               xMsg := Eval( xMsg )
+            IF HB_ISEVALITEM(xMsg)
+               xMsg := Eval(xMsg)
             ENDIF
 
             hb_default( @xMsg, "" )
@@ -152,10 +152,10 @@ FUNCTION __MenuTo( bBlock, cVariable )
          // save the current row
          q := n
 
-         cColor := t_aLevel[ t_nPointer - 1 ][ n ][ _ITM_COLOR ]
-         cColorNormal := hb_ColorIndex( iif( Empty(hb_ColorIndex( cColor, CLR_STANDARD )), SetColor(), cColor ), CLR_STANDARD )
-         IF Set( _SET_INTENSITY )
-            cColorSelect := hb_ColorIndex( iif( Empty(hb_ColorIndex( cColor, CLR_ENHANCED )), SetColor(), cColor ), CLR_ENHANCED )
+         cColor := t_aLevel[t_nPointer - 1][n][_ITM_COLOR]
+         cColorNormal := hb_ColorIndex(iif( Empty(hb_ColorIndex(cColor, CLR_STANDARD)), SetColor(), cColor ), CLR_STANDARD)
+         IF Set(_SET_INTENSITY)
+            cColorSelect := hb_ColorIndex(iif( Empty(hb_ColorIndex(cColor, CLR_ENHANCED)), SetColor(), cColor ), CLR_ENHANCED)
          ELSE
             cColorSelect := cColorNormal
          ENDIF
@@ -167,9 +167,9 @@ FUNCTION __MenuTo( bBlock, cVariable )
 #endif
             // highlight the prompt
             DispOutAt( ;
-               t_aLevel[ nPointer - 1 ][ n ][ _ITM_ROW ], ;
-               t_aLevel[ nPointer - 1 ][ n ][ _ITM_COL ], ;
-               t_aLevel[ nPointer - 1 ][ n ][ _ITM_PROMPT ], ;
+               t_aLevel[nPointer - 1][n][_ITM_ROW], ;
+               t_aLevel[nPointer - 1][n][_ITM_COL], ;
+               t_aLevel[nPointer - 1][n][_ITM_PROMPT], ;
                cColorSelect)
 #ifndef HB_CLP_STRICT
          ENDIF
@@ -183,13 +183,13 @@ FUNCTION __MenuTo( bBlock, cVariable )
          DO WHILE nKey == 0
 
             // wait for a keystroke
-            nKey := Inkey( 0 )
+            nKey := Inkey(0)
 
-            IF ( bAction := SetKey( nKey ) ) != NIL
+            IF ( bAction := SetKey(nKey) ) != NIL
 
-               Eval( bBlock, n )
-               Eval( bAction, ProcName( 1 ), ProcLine( 1 ), hb_asciiUpper( cVariable ) )
-               n := Eval( bBlock )
+               Eval(bBlock, n)
+               Eval(bAction, ProcName(1), ProcLine(1), hb_asciiUpper(cVariable))
+               n := Eval(bBlock)
 
                IF n < 1
                   n := 1
@@ -209,8 +209,7 @@ FUNCTION __MenuTo( bBlock, cVariable )
             EXIT
          CASE K_LBUTTONDOWN
          CASE K_LDBLCLK
-            IF ( nMouseClik := HitTest( t_aLevel[ nPointer - 1 ], ;
-               MRow(), MCol() ) ) > 0
+            IF ( nMouseClik := HitTest( t_aLevel[nPointer - 1], MRow(), MCol() ) ) > 0
                n := nMouseClik
             ENDIF
             /* QUESTION: Clipper does this, but shouldn't we only
@@ -223,13 +222,13 @@ FUNCTION __MenuTo( bBlock, cVariable )
          CASE K_DOWN
          CASE K_RIGHT
             IF ++n > nArrLen
-               n := iif( Set( _SET_WRAP ), 1, nArrLen )
+               n := iif( Set(_SET_WRAP), 1, nArrLen )
             ENDIF
             EXIT
          CASE K_UP
          CASE K_LEFT
             IF --n < 1
-               n := iif( Set( _SET_WRAP ), nArrLen, 1 )
+               n := iif( Set(_SET_WRAP), nArrLen, 1 )
             ENDIF
             EXIT
          CASE K_HOME
@@ -248,9 +247,9 @@ FUNCTION __MenuTo( bBlock, cVariable )
             EXIT
          OTHERWISE
             // did user hit a hot key?
-            IF Len(cKey := Upper( hb_keyChar( nKey ) )) > 0
+            IF Len(cKey := Upper(hb_keyChar(nKey))) > 0
                FOR y := 1 TO nArrLen
-                  IF hb_LeftEqI( LTrim(t_aLevel[ nPointer - 1 ][ y ][ _ITM_PROMPT ]), cKey )
+                  IF hb_LeftEqI( LTrim(t_aLevel[nPointer - 1][y][_ITM_PROMPT]), cKey )
                      n := y
                      lExit := .T.
                      EXIT
@@ -265,11 +264,7 @@ FUNCTION __MenuTo( bBlock, cVariable )
             IF nHiLited != n
                nHiLited := 0
 #endif
-               DispOutAt( ;
-                  t_aLevel[ nPointer - 1 ][ q ][ _ITM_ROW ], ;
-                  t_aLevel[ nPointer - 1 ][ q ][ _ITM_COL ], ;
-                  t_aLevel[ nPointer - 1 ][ q ][ _ITM_PROMPT ], ;
-                  cColorNormal)
+               DispOutAt(t_aLevel[nPointer - 1][q][_ITM_ROW], t_aLevel[nPointer - 1][q][_ITM_COL], t_aLevel[nPointer - 1][q][_ITM_PROMPT], cColorNormal)
 #ifndef HB_CLP_STRICT
             ENDIF
 #endif
@@ -278,21 +273,21 @@ FUNCTION __MenuTo( bBlock, cVariable )
       ENDDO
 
       ReadVar( cSaveReadVar )
-      SetCursor( nSaveCursor )
+      SetCursor(nSaveCursor)
 
       t_nPointer := nPointer
       t_nPointer--
-      ASize( t_aLevel, t_nPointer - 1 )
+      ASize(t_aLevel, t_nPointer - 1)
 
    ENDIF
 
-   Eval( bBlock, n )
+   Eval(bBlock, n)
 
    IF lDeclared
       __mvXRelease( cVariable )
    ENDIF
 
-   SetPos( MaxRow() - 1, 0 )
+   SetPos(MaxRow() - 1, 0)
 
    RETURN n
 
@@ -303,9 +298,7 @@ STATIC FUNCTION HitTest( aMenu, nMRow, nMCol )
    LOCAL aMenuItem
 
    FOR EACH aMenuItem IN aMenu
-      IF nMRow == aMenuItem[ _ITM_ROW ] .AND. ;
-         nMCol >= aMenuItem[ _ITM_COL ] .AND. ;
-         nMCol < aMenuItem[ _ITM_COL ] + Len(aMenuItem[ _ITM_PROMPT ])
+      IF nMRow == aMenuItem[_ITM_ROW] .AND. nMCol >= aMenuItem[_ITM_COL] .AND. nMCol < aMenuItem[_ITM_COL] + Len(aMenuItem[_ITM_PROMPT])
 
          RETURN aMenuItem:__enumIndex()
       ENDIF

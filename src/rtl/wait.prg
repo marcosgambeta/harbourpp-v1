@@ -57,12 +57,12 @@ FUNCTION __Wait( xPrompt )
 
    DO WHILE .T.
 
-      nKey := Inkey( 0 )
+      nKey := Inkey(0)
 
-      IF ( bBlock := SetKey( nKey ) ) != NIL
-         Eval( bBlock, ProcName( 1 ), ProcLine( 1 ), "" )
+      IF ( bBlock := SetKey(nKey) ) != NIL
+         Eval(bBlock, ProcName(1), ProcLine(1), "")
       ELSE
-         cKey := hb_keyChar( nKey )
+         cKey := hb_keyChar(nKey)
          IF Len(cKey) > 0
             QQOut(cKey)
          ELSE
