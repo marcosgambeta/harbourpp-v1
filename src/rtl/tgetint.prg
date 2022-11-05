@@ -50,12 +50,12 @@ FUNCTION __Get(bSetGet, cVarName, cPicture, bValid, bWhen)
 
    LOCAL oGet
 
-   IF ! HB_ISSTRING(cVarName)
+   IF !HB_ISSTRING(cVarName)
       RETURN NIL
    ENDIF
 
-   IF ! HB_ISEVALITEM(bSetGet)
-      IF FieldPos( cVarName ) > 0
+   IF !HB_ISEVALITEM(bSetGet)
+      IF FieldPos(cVarName) > 0
          bSetGet := FieldWBlock(cVarName, Select())
       ELSEIF ( bSetGet := MemVarBlock(cVarName) ) == NIL
          /* If cVarName is not a field name in current workarea then
@@ -84,13 +84,13 @@ FUNCTION __GetA(bGetArray, cVarName, cPicture, bValid, bWhen, aIndex)
 
    LOCAL oGet
 
-   IF ! HB_ISSTRING(cVarName) .OR. ! HB_ISARRAY(aIndex)
+   IF !HB_ISSTRING(cVarName) .OR. !HB_ISARRAY(aIndex)
       RETURN NIL
    ENDIF
 
-   IF ! HB_ISEVALITEM(bGetArray)
+   IF !HB_ISEVALITEM(bGetArray)
       /* CA-Cl*pper creates standard SET/GET block here */
-      IF FieldPos( cVarName ) > 0
+      IF FieldPos(cVarName) > 0
          bGetArray := FieldWBlock(cVarName, Select())
       ELSE
          DO WHILE ( bGetArray := MemVarBlock(cVarName) ) == NIL
@@ -99,7 +99,7 @@ FUNCTION __GetA(bGetArray, cVarName, cPicture, bValid, bWhen, aIndex)
       ENDIF
    ENDIF
 
-   IF ! ValType(Eval(bGetArray)) $ "AH"
+   IF !ValType(Eval(bGetArray)) $ "AH"
       RETURN NIL
    ENDIF
 

@@ -46,27 +46,27 @@
 
 #ifdef HB_COMPAT_C53
 
-FUNCTION GetClrPair( cColor, nColor )
+FUNCTION GetClrPair(cColor, nColor)
 
    LOCAL nPos
 
-   IF ( nPos := GetPairPos( cColor, nColor ) ) == 0
+   IF ( nPos := GetPairPos(cColor, nColor) ) == 0
       RETURN ""
    ENDIF
 
    RETURN SubStr(cColor, nPos, GetPairLen(cColor, nColor))
 
-FUNCTION SetClrPair( cColor, nColor, cNewColor )
+FUNCTION SetClrPair(cColor, nColor, cNewColor)
 
    LOCAL nPos
 
-   IF ( nPos := GetPairPos( cColor, nColor ) ) == 0
+   IF ( nPos := GetPairPos(cColor, nColor) ) == 0
       RETURN ""
    ENDIF
 
-   RETURN Stuff( cColor, nPos, GetPairLen(cColor, nColor), cNewColor )
+   RETURN Stuff(cColor, nPos, GetPairLen(cColor, nColor), cNewColor)
 
-FUNCTION GetPairPos( cColor, nColor )
+FUNCTION GetPairPos(cColor, nColor)
 
    LOCAL nPos := 1
    LOCAL nSep
@@ -86,13 +86,13 @@ FUNCTION GetPairLen(cColor, nColor)
    LOCAL nPos
    LOCAL nLen
 
-   IF ( nPos := GetPairPos( cColor, nColor ) ) == 0
+   IF ( nPos := GetPairPos(cColor, nColor) ) == 0
       RETURN 0
    ENDIF
 
-   RETURN iif( ( nLen := At(",", SubStr(cColor, nPos)) ) == 0, Len(cColor) - nPos + 1, nLen - 1 )
+   RETURN iif((nLen := At(",", SubStr(cColor, nPos))) == 0, Len(cColor) - nPos + 1, nLen - 1)
 
-FUNCTION GetClrFore( cColor )
+FUNCTION GetClrFore(cColor)
 
    LOCAL nPos
 
@@ -102,7 +102,7 @@ FUNCTION GetClrFore( cColor )
 
    RETURN Left(cColor, nPos - 1)
 
-FUNCTION GetClrBack( cColor )
+FUNCTION GetClrBack(cColor)
 
    LOCAL nPos
 
@@ -112,26 +112,26 @@ FUNCTION GetClrBack( cColor )
 
    RETURN SubStr(cColor, nPos + 1)
 
-FUNCTION RadGrDefCo( cColor )
-   RETURN iif( IsDefColor(), ApplyDefau( cColor, "W/N", "W/N", "W+/N" ), ApplyDefau( cColor, 3, 1, 4 ) )
+FUNCTION RadGrDefCo(cColor)
+   RETURN iif(IsDefColor(), ApplyDefau( cColor, "W/N", "W/N", "W+/N" ), ApplyDefau( cColor, 3, 1, 4 ))
 
-FUNCTION RadItDefCo( cColor )
-   RETURN iif( IsDefColor(), ApplyDefau( cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N" ), ApplyDefau( cColor, 5, 5, 2, 2, 1, 1, 4 ) )
+FUNCTION RadItDefCo(cColor)
+   RETURN iif(IsDefColor(), ApplyDefau( cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N" ), ApplyDefau( cColor, 5, 5, 2, 2, 1, 1, 4 ))
 
-FUNCTION ListBDefCo( cColor )
-   RETURN iif( IsDefColor(), ApplyDefau( cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N" ), ApplyDefau( cColor, 5, 5, 5, 2, 3, 1, 4 ) )
+FUNCTION ListBDefCo(cColor)
+   RETURN iif(IsDefColor(), ApplyDefau( cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N" ), ApplyDefau( cColor, 5, 5, 5, 2, 3, 1, 4 ))
 
-FUNCTION ComboDefCo( cColor )
-   RETURN iif( IsDefColor(), ApplyDefau( cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N", "W/N" ), ApplyDefau( cColor, 5, 5, 5, 2, 3, 1, 4, 1 ) )
+FUNCTION ComboDefCo(cColor)
+   RETURN iif(IsDefColor(), ApplyDefau( cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N", "W/N" ), ApplyDefau( cColor, 5, 5, 5, 2, 3, 1, 4, 1 ))
 
-FUNCTION CheckDefCo( cColor )
-   RETURN iif( IsDefColor(), ApplyDefau( cColor, "W/N", "W+/N", "W/N", "W+/N" ), ApplyDefau( cColor, 5, 2, 1, 4 ) )
+FUNCTION CheckDefCo(cColor)
+   RETURN iif(IsDefColor(), ApplyDefau( cColor, "W/N", "W+/N", "W/N", "W+/N" ), ApplyDefau( cColor, 5, 2, 1, 4 ))
 
-FUNCTION ButtnDefCo( cColor )
-   RETURN iif( IsDefColor(), ApplyDefau( cColor, "W/N", "N/W", "W+/N", "W+/N" ), ApplyDefau( cColor, 5, 2, 1, 4 ) )
+FUNCTION ButtnDefCo(cColor)
+   RETURN iif(IsDefColor(), ApplyDefau( cColor, "W/N", "N/W", "W+/N", "W+/N" ), ApplyDefau( cColor, 5, 2, 1, 4 ))
 
-FUNCTION MenuDefCol( cColor )
-   RETURN iif( IsDefColor(), ApplyDefau( cColor, "N/W", "W/N", "W+/W", "W+/N", "N+/W", "W/N" ), ApplyDefau( cColor, 5, 2, 4, 2, 1, 3 ) )
+FUNCTION MenuDefCol(cColor)
+   RETURN iif(IsDefColor(), ApplyDefau( cColor, "N/W", "W/N", "W+/W", "W+/N", "N+/W", "W/N" ), ApplyDefau( cColor, 5, 2, 4, 2, 1, 3 ))
 
 FUNCTION ApplyDefau( cColor, xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xClr8 )
 
@@ -155,7 +155,7 @@ FUNCTION ApplyDefau( cColor, xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xC
 
    cSetColor := SetColor()
 
-   aSetColor := { GetClrPair( cSetColor, 1 ), GetClrPair( cSetColor, 2 ), GetClrPair( cSetColor, 3 ), GetClrPair( cSetColor, 4 ), GetClrPair( cSetColor, 5 ) }
+   aSetColor := { GetClrPair(cSetColor, 1), GetClrPair(cSetColor, 2), GetClrPair(cSetColor, 3), GetClrPair(cSetColor, 4), GetClrPair(cSetColor, 5) }
 
    aNewColor := { xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xClr8 }
 
@@ -165,20 +165,20 @@ FUNCTION ApplyDefau( cColor, xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xC
    FOR n := 1 TO nColors
 
       xNewColor := aNewColor[n]
-      cClrToSet := GetClrPair( cClrDefa, n )
+      cClrToSet := GetClrPair(cClrDefa, n)
 
       IF "/" $ cClrToSet
 
-         IF ( cClrFore := GetClrFore( cClrToSet ) ) == ""
-            cClrFore := GetClrFore( iif( HB_ISNUMERIC(xNewColor), aSetColor[xNewColor], xNewColor ) )
+         IF ( cClrFore := GetClrFore(cClrToSet) ) == ""
+            cClrFore := GetClrFore(iif(HB_ISNUMERIC(xNewColor), aSetColor[xNewColor], xNewColor))
          ENDIF
-         IF ( cClrBack := GetClrBack( cClrToSet ) ) == ""
-            cClrBack := GetClrBack( iif( HB_ISNUMERIC(xNewColor), aSetColor[xNewColor], xNewColor ) )
+         IF ( cClrBack := GetClrBack(cClrToSet) ) == ""
+            cClrBack := GetClrBack(iif(HB_ISNUMERIC(xNewColor), aSetColor[xNewColor], xNewColor))
          ENDIF
 
-         cClrDefa := SetClrPair( cClrDefa, n, cClrFore + "/" + cClrBack )
+         cClrDefa := SetClrPair(cClrDefa, n, cClrFore + "/" + cClrBack)
       ELSE
-         cClrDefa := SetClrPair( cClrDefa, n, iif( HB_ISNUMERIC(xNewColor), aSetColor[xNewColor], xNewColor ) )
+         cClrDefa := SetClrPair(cClrDefa, n, iif(HB_ISNUMERIC(xNewColor), aSetColor[xNewColor], xNewColor))
       ENDIF
    NEXT
 

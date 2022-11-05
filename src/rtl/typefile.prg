@@ -49,7 +49,7 @@
 
 #define BUFFER_LENGTH  8192
 
-PROCEDURE __TypeFile( cFile, lPrint )
+PROCEDURE __TypeFile(cFile, lPrint)
 
    LOCAL nHandle
    LOCAL cBuffer
@@ -67,7 +67,7 @@ PROCEDURE __TypeFile( cFile, lPrint )
 
    hb_default( @lPrint, .F. )
 
-   IF ! HB_ISSTRING(cFile)
+   IF !HB_ISSTRING(cFile)
       oErr := ErrorNew()
       oErr:severity    := ES_ERROR
       oErr:genCode     := EG_ARG
@@ -91,7 +91,7 @@ PROCEDURE __TypeFile( cFile, lPrint )
       ENDDO
 
       FOR EACH cPath IN hb_ATokens(cTmp, ";")
-         IF hb_FileExists( cTmp := hb_FNameMerge( cPath, cName, cExt ) )
+         IF hb_FileExists(cTmp := hb_FNameMerge(cPath, cName, cExt))
             cFile := cTmp
             EXIT
          ENDIF
@@ -110,7 +110,7 @@ PROCEDURE __TypeFile( cFile, lPrint )
       oErr:fileName    := cFile
       oErr:OsCode      := FError()
       oErr:tries       := ++nRetries
-      IF ! hb_defaultValue( Eval(ErrorBlock(), oErr), .T. )  /* user select "Default" */
+      IF !hb_defaultValue(Eval(ErrorBlock(), oErr), .T.)  /* user select "Default" */
          RETURN
       ENDIF
    ENDDO

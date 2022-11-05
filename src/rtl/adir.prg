@@ -46,7 +46,7 @@
 
 #include "directry.ch"
 
-FUNCTION ADir( cFileMask, aName, aSize, aDate, aTime, aAttr )
+FUNCTION ADir(cFileMask, aName, aSize, aDate, aTime, aAttr)
 
    LOCAL aDir
    LOCAL nDirLen
@@ -61,7 +61,7 @@ FUNCTION ADir( cFileMask, aName, aSize, aDate, aTime, aAttr )
    LOCAL cExt
 
    // CA-Cl*pper would fail on this case.
-   IF ! HB_ISSTRING(cFileMask)
+   IF !HB_ISSTRING(cFileMask)
       RETURN 0
    ENDIF
 
@@ -70,7 +70,7 @@ FUNCTION ADir( cFileMask, aName, aSize, aDate, aTime, aAttr )
    hb_FNameSplit( cFileMask, @cDir, @cName, @cExt )
 
    IF Empty(cDir)
-      cFileMask := hb_FNameMerge( __DefPath(), cName, cExt )
+      cFileMask := hb_FNameMerge(__DefPath(), cName, cExt)
    ENDIF
 
    //
@@ -93,7 +93,7 @@ FUNCTION ADir( cFileMask, aName, aSize, aDate, aTime, aAttr )
 
    //
 
-   aDir := Directory( cFileMask, iif( HB_ISARRAY(aAttr), "HSD", ) )
+   aDir := Directory( cFileMask, iif(HB_ISARRAY(aAttr), "HSD", NIL) )
    nDirLen := Len(aDir)
 
    FOR nDirPos := 1 TO nDirLen

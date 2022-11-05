@@ -51,16 +51,16 @@
 #define _HBDOC_SRC_SUBDIR       "doc"
 #define _HBDOC_SRC_EXT          ".txt"
 
-#define _HBDOC_ADD_MSG( a, m )  IF HB_ISARRAY(a); AAdd(a, m); ENDIF
+#define _HBDOC_ADD_MSG(a, m)  IF HB_ISARRAY(a); AAdd(a, m); ENDIF
 
 REQUEST hb_ZCompress
 
-FUNCTION __hbdoc_FromSource( cFile, aErrMsg )
+FUNCTION __hbdoc_FromSource(cFile, aErrMsg)
 
    LOCAL aEntry := {}
 
    IF HB_ISSTRING(cFile)
-      __hbdoc__read_stream( aEntry, cFile, "(stream)",, aErrMsg )
+      __hbdoc__read_stream(aEntry, cFile, "(stream)", NIL, aErrMsg)
    ENDIF
 
    RETURN aEntry
@@ -79,7 +79,7 @@ FUNCTION __hbdoc_DirLastModified(cDir)
 
       cDir := hb_DirSepAdd(cDir)
 
-      IF hb_DirExists( cDir + _HBDOC_SRC_SUBDIR )
+      IF hb_DirExists(cDir + _HBDOC_SRC_SUBDIR)
 
          FOR EACH aFile IN Directory( cDir + _HBDOC_SRC_SUBDIR + hb_ps() + hb_osFileMask(), "D" )
             IF "D" $ aFile[F_ATTR] .AND. !( aFile[F_NAME] == "." ) .AND. !( aFile[F_NAME] == ".." )
@@ -87,7 +87,7 @@ FUNCTION __hbdoc_DirLastModified(cDir)
                cDocDir := cDir + _HBDOC_SRC_SUBDIR + hb_ps() + aFile[F_NAME]
 
                FOR EACH aDocFile IN Directory( cDocDir + hb_ps() + "*" + _HBDOC_SRC_EXT )
-                  IF hb_FGetDateTime( cDocDir + hb_ps() + aDocFile[F_NAME], @tDoc ) .AND. tLast < tDoc
+                  IF hb_FGetDateTime(cDocDir + hb_ps() + aDocFile[F_NAME], @tDoc) .AND. tLast < tDoc
                      tLast := tDoc
                   ENDIF
                NEXT
@@ -98,7 +98,7 @@ FUNCTION __hbdoc_DirLastModified(cDir)
 
    RETURN tLast
 
-FUNCTION __hbdoc_LoadDir( cDir, cName, aErrMsg )
+FUNCTION __hbdoc_LoadDir(cDir, cName, aErrMsg)
 
    LOCAL hMeta
    LOCAL nCount
@@ -109,7 +109,7 @@ FUNCTION __hbdoc_LoadDir( cDir, cName, aErrMsg )
 
       cDir := hb_DirSepAdd(cDir)
 
-      IF hb_DirExists( cDir + _HBDOC_SRC_SUBDIR )
+      IF hb_DirExists(cDir + _HBDOC_SRC_SUBDIR)
 
          aEntry := {}
          hMeta := { => }
@@ -122,39 +122,39 @@ FUNCTION __hbdoc_LoadDir( cDir, cName, aErrMsg )
          FOR EACH aFile IN Directory( cDir + _HBDOC_SRC_SUBDIR + hb_ps() + hb_osFileMask(), "D" )
             IF "D" $ aFile[F_ATTR] .AND. !( aFile[F_NAME] == "." ) .AND. !( aFile[F_NAME] == ".." )
 
-               __hbdoc__read_langdir( aEntry, cDir + _HBDOC_SRC_SUBDIR + hb_ps() + aFile[F_NAME], hMeta, aErrMsg )
+               __hbdoc__read_langdir(aEntry, cDir + _HBDOC_SRC_SUBDIR + hb_ps() + aFile[F_NAME], hMeta, aErrMsg)
                ++nCount
             ENDIF
          NEXT
 
          IF nCount == 0
-            _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat("Warning: Component (%1$s) has no language subdirs", cDir) )
+            _HBDOC_ADD_MSG(aErrMsg, hb_StrFormat("Warning: Component (%1$s) has no language subdirs", cDir))
          ENDIF
       ENDIF
    ENDIF
 
    RETURN aEntry
 
-STATIC PROCEDURE __hbdoc__read_langdir( aEntry, cDir, hMeta, aErrMsg )
+STATIC PROCEDURE __hbdoc__read_langdir(aEntry, cDir, hMeta, aErrMsg)
 
    LOCAL aFile
    LOCAL nCount
 
-   hMeta["_LANG"] := hb_FNameName( hb_DirSepDel( cDir ) )
+   hMeta["_LANG"] := hb_FNameName(hb_DirSepDel(cDir))
 
    nCount := 0
    FOR EACH aFile IN Directory( cDir + hb_ps() + "*" + _HBDOC_SRC_EXT )
-      __hbdoc__read_file( aEntry, cDir + hb_ps() + aFile[F_NAME], hMeta, aErrMsg )
+      __hbdoc__read_file(aEntry, cDir + hb_ps() + aFile[F_NAME], hMeta, aErrMsg)
       ++nCount
    NEXT
 
    IF nCount == 0
-      _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat("Warning: Component (%1$s) has no documentation files", cDir) )
+      _HBDOC_ADD_MSG(aErrMsg, hb_StrFormat("Warning: Component (%1$s) has no documentation files", cDir))
    ENDIF
 
    RETURN
 
-STATIC PROCEDURE __hbdoc__read_file( aEntry, cFileName, hMeta, aErrMsg )
+STATIC PROCEDURE __hbdoc__read_file(aEntry, cFileName, hMeta, aErrMsg)
 
    LOCAL aFilenameTemplateMap := { ;
       "FUNCTION"   => "func_"  , ;
@@ -166,23 +166,23 @@ STATIC PROCEDURE __hbdoc__read_file( aEntry, cFileName, hMeta, aErrMsg )
    LOCAL tmp
 
    IF "TEMPLATE" $ hMeta
-      hb_HDel( hMeta, "TEMPLATE" )
+      hb_HDel(hMeta, "TEMPLATE")
    ENDIF
 
    /* Preselect the default template based on source filename */
    FOR EACH tmp IN aFilenameTemplateMap
-      IF hb_LeftEqI( cFileName, tmp )
+      IF hb_LeftEqI(cFileName, tmp)
          hMeta["TEMPLATE"] := tmp:__enumKey()
       ENDIF
    NEXT
 
    hMeta["_DOCSOURCE"] := cFileName
 
-   __hbdoc__read_stream( aEntry, MemoRead(cFileName), cFileName, hMeta, aErrMsg )
+   __hbdoc__read_stream(aEntry, MemoRead(cFileName), cFileName, hMeta, aErrMsg)
 
    RETURN
 
-STATIC PROCEDURE __hbdoc__read_stream( aEntry, cFile, cFileName, hMeta, aErrMsg )
+STATIC PROCEDURE __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
 
    LOCAL hEntry := NIL
    LOCAL cLine
@@ -203,8 +203,8 @@ STATIC PROCEDURE __hbdoc__read_stream( aEntry, cFile, cFileName, hMeta, aErrMsg 
       SWITCH AllTrim(cLine)
       CASE "$DOC$"
          IF hEntry != NIL
-            _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: $DOC$ without $END$", cFileName, nLine) )
-         ELSEIF ! Empty(hEntry)
+            _HBDOC_ADD_MSG(aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: $DOC$ without $END$", cFileName, nLine))
+         ELSEIF !Empty(hEntry)
             AAdd(aEntry, hEntry)
          ENDIF
          hEntry := { => }
@@ -216,8 +216,8 @@ STATIC PROCEDURE __hbdoc__read_stream( aEntry, cFile, cFileName, hMeta, aErrMsg 
          EXIT
       CASE "$END$"
          IF hEntry == NIL
-            _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: $END$ without $DOC$", cFileName, nLine) )
-         ELSEIF ! Empty(hEntry)
+            _HBDOC_ADD_MSG(aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: $END$ without $DOC$", cFileName, nLine))
+         ELSEIF !Empty(hEntry)
             AAdd(aEntry, hEntry)
          ENDIF
          hEntry := NIL
@@ -229,11 +229,11 @@ STATIC PROCEDURE __hbdoc__read_stream( aEntry, cFile, cFileName, hMeta, aErrMsg 
             cLine := AllTrim(cLine)
             cSection := SubStr(cLine, 2, Len(cLine) - 2)
             IF cSection $ hEntry
-               _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: Duplicate sections inside the same entry", cFileName, nLine) )
+               _HBDOC_ADD_MSG(aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: Duplicate sections inside the same entry", cFileName, nLine))
             ELSE
                hEntry[cSection] := ""
             ENDIF
-         ELSEIF ! Empty(cSection)
+         ELSEIF !Empty(cSection)
             IF Empty(hEntry[cSection])
                /* some "heuristics" to detect in which column the real content starts,
                   we assume the first line of content is correct, and use this with all
@@ -243,19 +243,19 @@ STATIC PROCEDURE __hbdoc__read_stream( aEntry, cFile, cFileName, hMeta, aErrMsg 
                hEntry[cSection] += Chr(10)
             ENDIF
             hEntry[cSection] += SubStr(cLine, nStartCol)
-         ELSEIF ! Empty(cLine)
-            _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: Content outside section", cFileName, nLine) )
+         ELSEIF !Empty(cLine)
+            _HBDOC_ADD_MSG(aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: Content outside section", cFileName, nLine))
          ENDIF
       ENDSWITCH
    NEXT
 
    IF hEntry != NIL
-      _HBDOC_ADD_MSG( aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: $DOC$ without $END$", cFileName, nLine) )
+      _HBDOC_ADD_MSG(aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: $DOC$ without $END$", cFileName, nLine))
    ENDIF
 
    RETURN
 
-FUNCTION __hbdoc_ToSource( aEntry )
+FUNCTION __hbdoc_ToSource(aEntry)
 
    LOCAL cSource := ""
    LOCAL hEntry
@@ -268,11 +268,11 @@ FUNCTION __hbdoc_ToSource( aEntry )
          cSource += hb_eol()
          cSource += "/* $DOC$" + hb_eol()
          FOR EACH item IN hEntry
-            IF HB_ISSTRING(item) .AND. ! hb_LeftEq( item:__enumKey(), "_" )
+            IF HB_ISSTRING(item) .AND. !hb_LeftEq(item:__enumKey(), "_")
                cSource += "   $" + item:__enumKey() + "$" + hb_eol()
                FOR EACH cLine IN hb_ATokens(StrTran(item, Chr(13)), Chr(10))
-                  cLineOut := iif( Len(cLine) == 0, "", Space(4) + cLine )
-                  cSource += iif( Empty(cLineOut), "", "  " + cLineOut ) + hb_eol()
+                  cLineOut := iif(Len(cLine) == 0, "", Space(4) + cLine)
+                  cSource += iif(Empty(cLineOut), "", "  " + cLineOut) + hb_eol()
                NEXT
             ENDIF
          NEXT
@@ -305,7 +305,7 @@ FUNCTION __hbdoc_FilterOut(cFile)
          nToSkip := 1
          EXIT
       OTHERWISE
-         IF ! lEntry
+         IF !lEntry
             IF nToSkip > 0
                nToSkip--
             ELSE
@@ -316,7 +316,7 @@ FUNCTION __hbdoc_FilterOut(cFile)
                ENDIF
                IF nEmpty < 2
                   cOK += cLine
-                  IF ! cLine:__enumIsLast()
+                  IF !cLine:__enumIsLast()
                      cOK += hb_eol()
                   ENDIF
                ENDIF
@@ -351,12 +351,12 @@ FUNCTION __hbdoc_SaveHBD(cFileName, aEntry)
    IF HB_ISSTRING(cFileName) .AND. HB_ISARRAY(aEntry)
 
       IF Set(_SET_DEFEXTENSIONS)
-         cFileName := hb_FNameExtSetDef( cFileName, _HBDOC_EXT )
+         cFileName := hb_FNameExtSetDef(cFileName, _HBDOC_EXT)
       ENDIF
 
       IF ( fhnd := hb_FCreate(cFileName,, FO_CREAT + FO_TRUNC + FO_READWRITE + FO_EXCLUSIVE) ) != F_ERROR
          FWrite(fhnd, _HBDOC_SIGNATURE)
-         FWrite(fhnd, hb_Serialize( aEntry, HB_SERIALIZE_COMPRESS ))
+         FWrite(fhnd, hb_Serialize(aEntry, HB_SERIALIZE_COMPRESS))
          FClose(fhnd)
          RETURN .T.
       ENDIF
@@ -374,7 +374,7 @@ FUNCTION __hbdoc_LoadHBD(cFileName)
    IF HB_ISSTRING(cFileName)
 
       IF Set(_SET_DEFEXTENSIONS)
-         cFileName := hb_FNameExtSetDef( cFileName, _HBDOC_EXT )
+         cFileName := hb_FNameExtSetDef(cFileName, _HBDOC_EXT)
       ENDIF
 
       IF ( fhnd := FOpen(cFileName) ) != F_ERROR
@@ -386,10 +386,10 @@ FUNCTION __hbdoc_LoadHBD(cFileName)
             FRead(fhnd, @cBuffer, hb_BLen(cBuffer))
             FClose(fhnd)
 
-            aEntry := hb_Deserialize( cBuffer )
+            aEntry := hb_Deserialize(cBuffer)
             cBuffer := NIL
 
-            IF ! HB_ISARRAY(aEntry)
+            IF !HB_ISARRAY(aEntry)
                aEntry := NIL
             ENDIF
          ELSE

@@ -58,7 +58,7 @@ ENDCLASS
 /* Creates a new line of text */
 METHOD New( cLine, lSoftCR ) CLASS HBTextLine
 
-   ::cText := hb_defaultValue( cLine, "" )
-   ::lSoftCR := hb_defaultValue( lSoftCR, .F. )
+   ::cText := hb_defaultValue(cLine, "")
+   ::lSoftCR := hb_defaultValue(lSoftCR, .F.)
 
    RETURN Self

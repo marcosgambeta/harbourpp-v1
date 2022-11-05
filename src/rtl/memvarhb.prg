@@ -65,7 +65,7 @@
 #define _HBMEM_SIG_LEN   6
 #define _HBMEM_SIGNATURE (hb_BChar(0xC0) + hb_BChar(0x48) + hb_BChar(0x42) + hb_BChar(0x56) + hb_BChar(0x01) + hb_BChar(0x00))
 
-PROCEDURE hb_mvSave( cFileName, cMask, lIncludeMask )
+PROCEDURE hb_mvSave(cFileName, cMask, lIncludeMask)
 
    LOCAL nCount
    LOCAL xValue
@@ -83,10 +83,10 @@ PROCEDURE hb_mvSave( cFileName, cMask, lIncludeMask )
    IF HB_ISSTRING(cFileName)
 
       IF Set(_SET_DEFEXTENSIONS)
-         cFileName := hb_FNameExtSetDef( cFileName, _HBMEM_EXT )
+         cFileName := hb_FNameExtSetDef(cFileName, _HBMEM_EXT)
       ENDIF
 
-      IF ! HB_ISSTRING(cMask) .OR. Empty(cMask) .OR. hb_LeftEq( cMask, "*" )
+      IF !HB_ISSTRING(cMask) .OR. Empty(cMask) .OR. hb_LeftEq(cMask, "*")
          cMask := "*"
       ENDIF
 
@@ -95,12 +95,12 @@ PROCEDURE hb_mvSave( cFileName, cMask, lIncludeMask )
       aVars := {}
 
       FOR EACH nScope IN { HB_MV_PUBLIC, HB_MV_PRIVATE }
-         nCount := __mvDbgInfo( nScope )
+         nCount := __mvDbgInfo(nScope)
          FOR tmp := 1 TO nCount
-            xValue := __mvDbgInfo( nScope, tmp, @cName )
+            xValue := __mvDbgInfo(nScope, tmp, @cName)
             IF ValType(xValue) $ "CNDTL"
-               lMatch := hb_WildMatchI( cMask, cName )
-               IF iif( lIncludeMask, lMatch, ! lMatch )
+               lMatch := hb_WildMatchI(cMask, cName)
+               IF iif(lIncludeMask, lMatch, !lMatch)
                   AAdd(aVars, { cName, xValue })
                ENDIF
             ENDIF
@@ -122,7 +122,7 @@ PROCEDURE hb_mvSave( cFileName, cMask, lIncludeMask )
             oError:osCode      := FError()
             oError:tries       := ++nRetries
 
-            IF hb_defaultValue( Eval(ErrorBlock(), oError), .F. )
+            IF hb_defaultValue(Eval(ErrorBlock(), oError), .F.)
                LOOP
             ENDIF
          ENDIF
@@ -131,7 +131,7 @@ PROCEDURE hb_mvSave( cFileName, cMask, lIncludeMask )
 
       IF fhnd != F_ERROR
          FWrite(fhnd, _HBMEM_SIGNATURE)
-         FWrite(fhnd, hb_Serialize( aVars ))
+         FWrite(fhnd, hb_Serialize(aVars))
          FClose(fhnd)
       ENDIF
    ELSE
@@ -151,7 +151,7 @@ PROCEDURE hb_mvSave( cFileName, cMask, lIncludeMask )
 
    RETURN
 
-FUNCTION hb_mvRestore( cFileName, lAdditive, cMask, lIncludeMask )
+FUNCTION hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
 
    LOCAL item
    LOCAL cName
@@ -168,15 +168,15 @@ FUNCTION hb_mvRestore( cFileName, lAdditive, cMask, lIncludeMask )
 
    IF HB_ISSTRING(cFileName)
 
-      IF ! hb_defaultValue( lAdditive, .T. )
+      IF !hb_defaultValue(lAdditive, .T.)
          __mvClear()
       ENDIF
 
       IF Set(_SET_DEFEXTENSIONS)
-         cFileName := hb_FNameExtSetDef( cFileName, _HBMEM_EXT )
+         cFileName := hb_FNameExtSetDef(cFileName, _HBMEM_EXT)
       ENDIF
 
-      IF ! HB_ISSTRING(cFileName) .OR. Empty(cMask) .OR. hb_LeftEq( cMask, "*" )
+      IF !HB_ISSTRING(cFileName) .OR. Empty(cMask) .OR. hb_LeftEq(cMask, "*")
          cMask := "*"
       ENDIF
 
@@ -198,7 +198,7 @@ FUNCTION hb_mvRestore( cFileName, lAdditive, cMask, lIncludeMask )
             oError:osCode      := FError()
             oError:tries       := ++nRetries
 
-            IF hb_defaultValue( Eval(ErrorBlock(), oError), .F. )
+            IF hb_defaultValue(Eval(ErrorBlock(), oError), .F.)
                LOOP
             ENDIF
          ENDIF
@@ -218,16 +218,16 @@ FUNCTION hb_mvRestore( cFileName, lAdditive, cMask, lIncludeMask )
          FRead(fhnd, @cBuffer, Len(cBuffer))
          FClose(fhnd)
 
-         aVars := hb_Deserialize( cBuffer )
+         aVars := hb_Deserialize(cBuffer)
          cBuffer := NIL
 
          IF HB_ISARRAY(aVars)
             FOR EACH item IN aVars
-               IF HB_ISARRAY(item) .AND. Len(item) == 2 .AND. HB_ISSTRING(item[1]) .AND. ! Empty(item[1])
+               IF HB_ISARRAY(item) .AND. Len(item) == 2 .AND. HB_ISSTRING(item[1]) .AND. !Empty(item[1])
 
                   cName := item[1]
-                  lMatch := hb_WildMatchI( cMask, cName )
-                  IF iif( lIncludeMask, lMatch, ! lMatch )
+                  lMatch := hb_WildMatchI(cMask, cName)
+                  IF iif(lIncludeMask, lMatch, !lMatch)
                      IF xValue == NIL
                         xValue := item[2]
                      ENDIF

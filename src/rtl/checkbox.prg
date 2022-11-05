@@ -71,19 +71,19 @@ CREATE CLASS CheckBox FUNCTION HBCheckBox
    METHOD select( lState )
    METHOD setFocus()
 
-   METHOD bitmaps( aBitmaps ) SETGET
+   METHOD bitmaps(aBitmaps) SETGET
    METHOD buffer() SETGET
-   METHOD capCol( nCapCol ) SETGET
+   METHOD capCol(nCapCol) SETGET
    METHOD capRow( nCapRow ) SETGET
-   METHOD caption( cCaption ) SETGET
-   METHOD col( nCol ) SETGET
+   METHOD caption(cCaption) SETGET
+   METHOD col(nCol) SETGET
    METHOD colorSpec(cColorSpec) SETGET
    METHOD fBlock(bFBlock) SETGET
    METHOD hasFocus() SETGET
-   METHOD message( cMessage ) SETGET
+   METHOD message(cMessage) SETGET
    METHOD row( nRow ) SETGET
    METHOD sBlock(bSBlock) SETGET
-   METHOD style( cStyle ) SETGET
+   METHOD style(cStyle) SETGET
    METHOD typeOut() SETGET
 
    METHOD New( nRow, nCol, cCaption ) /* NOTE: This method is a Harbour extension [vszakats] */
@@ -110,7 +110,7 @@ ENDCLASS
 
 METHOD setFocus() CLASS CheckBox
 
-   IF ! ::lHasFocus
+   IF !::lHasFocus
       ::nCursor := SetCursor(SC_NONE)
       ::lHasFocus := .T.
       ::display()
@@ -126,7 +126,7 @@ METHOD select( lState ) CLASS CheckBox
 
    LOCAL lOldState := ::lBuffer
 
-   ::lBuffer := iif( HB_ISLOGICAL(lState), lState, ! ::lBuffer )
+   ::lBuffer := iif(HB_ISLOGICAL(lState), lState, !::lBuffer)
 
    IF lOldState != ::lBuffer
       ::display()
@@ -183,19 +183,19 @@ METHOD display() CLASS CheckBox
 
    DispBegin()
 
-   hb_DispOutAt(::nRow, ::nCol + 1, iif( ::lBuffer, SubStr(cStyle, 2, 1), SubStr(cStyle, 3, 1) ), hb_ColorIndex(::cColorSpec, iif( ::lHasFocus, 1, 0 )))
+   hb_DispOutAt(::nRow, ::nCol + 1, iif(::lBuffer, SubStr(cStyle, 2, 1), SubStr(cStyle, 3, 1)), hb_ColorIndex(::cColorSpec, iif(::lHasFocus, 1, 0)))
 
    cColor := hb_ColorIndex(::cColorSpec, 2)
    hb_DispOutAt(::nRow, ::nCol, Left(cStyle, 1), cColor)
    hb_DispOutAt(::nRow, ::nCol + 2, Right(cStyle, 1), cColor)
 
-   IF ! Empty(cCaption := ::cCaption)
+   IF !Empty(cCaption := ::cCaption)
 
       IF ( nPos := At("&", cCaption) ) == 0
       ELSEIF nPos == Len(cCaption)
          nPos := 0
       ELSE
-         cCaption := Stuff( cCaption, nPos, 1, "" )
+         cCaption := Stuff(cCaption, nPos, 1, "")
       ENDIF
 
       IF ::lHasFocus
@@ -204,7 +204,7 @@ METHOD display() CLASS CheckBox
 
       hb_DispOutAt(::nCapRow, ::nCapCol, cCaption, cColor)
 
-      IF ! ::lHasFocus .AND. nPos != 0
+      IF !::lHasFocus .AND. nPos != 0
          hb_DispOutAt(::nCapRow, ::nCapCol + nPos - 1, SubStr(cCaption, nPos, 1), hb_ColorIndex(::cColorSpec, 3))
       ENDIF
    ENDIF
@@ -213,7 +213,7 @@ METHOD display() CLASS CheckBox
 
    RETURN Self
 
-METHOD bitmaps( aBitmaps ) CLASS CheckBox
+METHOD bitmaps(aBitmaps) CLASS CheckBox
 
    IF aBitmaps != NIL
       ::aBitmaps := __eInstVar53( Self, "BITMAPS", aBitmaps, "A", 1001 )
@@ -224,7 +224,7 @@ METHOD bitmaps( aBitmaps ) CLASS CheckBox
 METHOD buffer() CLASS CheckBox
    RETURN ::lBuffer
 
-METHOD capCol( nCapCol ) CLASS CheckBox
+METHOD capCol(nCapCol) CLASS CheckBox
 
    IF nCapCol != NIL
       ::nCapCol := __eInstVar53( Self, "CAPCOL", nCapCol, "N", 1001 )
@@ -240,7 +240,7 @@ METHOD capRow( nCapRow ) CLASS CheckBox
 
    RETURN ::nCapRow
 
-METHOD caption( cCaption ) CLASS CheckBox
+METHOD caption(cCaption) CLASS CheckBox
 
    IF cCaption != NIL
       ::cCaption := __eInstVar53( Self, "CAPTION", cCaption, "C", 1001 )
@@ -248,7 +248,7 @@ METHOD caption( cCaption ) CLASS CheckBox
 
    RETURN ::cCaption
 
-METHOD col( nCol ) CLASS CheckBox
+METHOD col(nCol) CLASS CheckBox
 
    IF nCol != NIL
       ::nCol := __eInstVar53( Self, "COL", nCol, "N", 1001 )
@@ -259,7 +259,7 @@ METHOD col( nCol ) CLASS CheckBox
 METHOD colorSpec(cColorSpec) CLASS CheckBox
 
    IF cColorSpec != NIL
-      ::cColorSpec := __eInstVar53( Self, "COLORSPEC", cColorSpec, "C", 1001, {|| ! Empty(hb_ColorIndex(cColorSpec, 3)) .AND. Empty(hb_ColorIndex(cColorSpec, 4)) } )
+      ::cColorSpec := __eInstVar53( Self, "COLORSPEC", cColorSpec, "C", 1001, {|| !Empty(hb_ColorIndex(cColorSpec, 3)) .AND. Empty(hb_ColorIndex(cColorSpec, 4)) } )
    ENDIF
 
    RETURN ::cColorSpec
@@ -267,7 +267,7 @@ METHOD colorSpec(cColorSpec) CLASS CheckBox
 METHOD fBlock(bFBlock) CLASS CheckBox
 
    IF PCount() > 0
-      ::bFBlock := iif( bFBlock == NIL, NIL, __eInstVar53( Self, "FBLOCK", bFBlock, "B", 1001 ) )
+      ::bFBlock := iif(bFBlock == NIL, NIL, __eInstVar53(Self, "FBLOCK", bFBlock, "B", 1001))
    ENDIF
 
    RETURN ::bFBlock
@@ -275,7 +275,7 @@ METHOD fBlock(bFBlock) CLASS CheckBox
 METHOD hasFocus() CLASS CheckBox
    RETURN ::lHasFocus
 
-METHOD message( cMessage ) CLASS CheckBox
+METHOD message(cMessage) CLASS CheckBox
 
    IF cMessage != NIL
       ::cMessage := __eInstVar53( Self, "MESSAGE", cMessage, "C", 1001 )
@@ -294,12 +294,12 @@ METHOD row( nRow ) CLASS CheckBox
 METHOD sBlock(bSBlock) CLASS CheckBox
 
    IF PCount() > 0
-      ::bSBlock := iif( bSBlock == NIL, NIL, __eInstVar53( Self, "SBLOCK", bSBlock, "B", 1001 ) )
+      ::bSBlock := iif(bSBlock == NIL, NIL, __eInstVar53(Self, "SBLOCK", bSBlock, "B", 1001))
    ENDIF
 
    RETURN ::bSBlock
 
-METHOD style( cStyle ) CLASS CheckBox
+METHOD style(cStyle) CLASS CheckBox
 
    IF cStyle != NIL
       ::cStyle := __eInstVar53( Self, "STYLE", cStyle, "C", 1001, {|| Len(cStyle) == 0 .OR. Len(cStyle) == 4 } )
@@ -314,7 +314,7 @@ METHOD New( nRow, nCol, cCaption ) CLASS CheckBox
 
    LOCAL cColor
 
-   __defaultNIL( @cCaption, "" )
+   __defaultNIL(@cCaption, "")
 
    ::caption := cCaption
    ::capRow  := nRow

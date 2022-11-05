@@ -48,7 +48,7 @@
 
 #include "button.ch"
 
-#define IS_IN( str, list )  ( "|" + ( str ) + "|" $ "|" + ( list ) + "|" )
+#define IS_IN(str, list)  ( "|" + ( str ) + "|" $ "|" + ( list ) + "|" )
 
 /* NOTE: Harbour doesn't support CA-Cl*pper 5.3 GUI functionality, but
          it has all related variables and methods. */
@@ -61,14 +61,14 @@ CREATE CLASS MenuItem FUNCTION HBMenuItem
 
    VAR cargo
 
-   METHOD caption( cCaption ) SETGET
+   METHOD caption(cCaption) SETGET
    METHOD checked(lChecked) SETGET
    METHOD data(boData) SETGET
    METHOD enabled(lEnabled) SETGET
    METHOD id(nID) SETGET
-   METHOD message( cMessage ) SETGET
+   METHOD message(cMessage) SETGET
    METHOD shortcut( nShortcut ) SETGET
-   METHOD style( cStyle ) SETGET
+   METHOD style(cStyle) SETGET
 
    VAR __col      INIT -1  AS NUMERIC                   /* NOTE: This is a Harbour extension. */
    VAR __row      INIT -1  AS NUMERIC                   /* NOTE: This is a Harbour extension. */
@@ -91,7 +91,7 @@ CREATE CLASS MenuItem FUNCTION HBMenuItem
 
 ENDCLASS
 
-METHOD caption( cCaption ) CLASS MenuItem
+METHOD caption(cCaption) CLASS MenuItem
 
    IF cCaption != NIL
 
@@ -110,7 +110,7 @@ METHOD caption( cCaption ) CLASS MenuItem
 
 METHOD checked(lChecked) CLASS MenuItem
 
-   IF lChecked != NIL .AND. ! ::__issep
+   IF lChecked != NIL .AND. !::__issep
       ::lChecked := __eInstVar53( Self, "CHECKED", lChecked, "L", 1001 )
    ENDIF
 
@@ -122,7 +122,7 @@ METHOD data(boData) CLASS MenuItem
       IF HB_ISEVALITEM(boData)
          ::boData := boData
       ELSE
-         ::boData := __eInstVar53( Self, "DATA", boData, "O", 1001, {|| IS_IN( boData:ClassName(), "POPUPMENU|HB_POPUPMENU" ) } )
+         ::boData := __eInstVar53( Self, "DATA", boData, "O", 1001, {|| IS_IN(boData:ClassName(), "POPUPMENU|HB_POPUPMENU") } )
       ENDIF
    ENDIF
 
@@ -130,7 +130,7 @@ METHOD data(boData) CLASS MenuItem
 
 METHOD enabled(lEnabled) CLASS MenuItem
 
-   IF lEnabled != NIL .AND. ! ::__issep
+   IF lEnabled != NIL .AND. !::__issep
       ::lEnabled := __eInstVar53( Self, "ENABLED", lEnabled, "L", 1001 )
    ENDIF
 
@@ -144,7 +144,7 @@ METHOD id(nID) CLASS MenuItem
 
    RETURN ::nID
 
-METHOD message( cMessage ) CLASS MenuItem
+METHOD message(cMessage) CLASS MenuItem
 
    IF cMessage != NIL
       ::cMessage := __eInstVar53( Self, "MESSAGE", cMessage, "C", 1001 )
@@ -160,7 +160,7 @@ METHOD shortcut( nShortcut ) CLASS MenuItem
 
    RETURN ::nShortcut
 
-METHOD style( cStyle ) CLASS MenuItem
+METHOD style(cStyle) CLASS MenuItem
 
    IF cStyle != NIL
       ::cStyle := __eInstVar53( Self, "STYLE", cStyle, "C", 1001, {|| Len(cStyle) == 2 } )
@@ -169,24 +169,24 @@ METHOD style( cStyle ) CLASS MenuItem
    RETURN ::cStyle
 
 METHOD isPopUp() CLASS MenuItem
-   RETURN HB_ISOBJECT(::data) .AND. IS_IN( ::data:ClassName(), "POPUPMENU|HB_POPUPMENU" )
+   RETURN HB_ISOBJECT(::data) .AND. IS_IN(::data:ClassName(), "POPUPMENU|HB_POPUPMENU")
 
 METHOD New( cCaption, boData, nShortcut, cMessage, nID ) CLASS MenuItem
 
    ::data      := boData
-   ::nID       := hb_defaultValue( nID, 0 )
-   ::cMessage  := hb_defaultValue( cMessage, "" )
-   ::nShortcut := hb_defaultValue( nShortcut, 0 )
+   ::nID       := hb_defaultValue(nID, 0)
+   ::cMessage  := hb_defaultValue(cMessage, "")
+   ::nShortcut := hb_defaultValue(nShortcut, 0)
    ::caption   := cCaption
 
    RETURN Self
 
-FUNCTION MenuItem( cCaption, boData, nShortcut, cMessage, nID )
+FUNCTION MenuItem(cCaption, boData, nShortcut, cMessage, nID)
    RETURN HBMenuItem():New( cCaption, boData, nShortcut, cMessage, nID )
 
 #ifdef HB_CLP_UNDOC
 
-FUNCTION __MIColumn( o, nColumn )
+FUNCTION __MIColumn(o, nColumn)
 
    IF HB_ISOBJECT(o) .AND. o:ClassName() == "MENUITEM"
 

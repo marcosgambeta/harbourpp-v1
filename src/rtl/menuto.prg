@@ -47,7 +47,7 @@ FUNCTION __AtPrompt( nRow, nCol, cPrompt, cMsg, cColor )
 
    RETURN .F.
 
-FUNCTION __MenuTo( bBlock, cVariable )
+FUNCTION __MenuTo(bBlock, cVariable)
 
    LOCAL nKey
    LOCAL cKey
@@ -78,7 +78,7 @@ FUNCTION __MenuTo( bBlock, cVariable )
 #endif
 
    // Detect if a memvar was passed
-   lDeclared := ! __mvExist( cVariable )
+   lDeclared := !__mvExist( cVariable )
 
    IF lDeclared
       __mvPublic(cVariable)
@@ -101,7 +101,7 @@ FUNCTION __MenuTo( bBlock, cVariable )
 
       // put choice in a valid range
 
-      IF ! HB_ISNUMERIC(n) .OR. n < 1
+      IF !HB_ISNUMERIC(n) .OR. n < 1
          n := 1
       ENDIF
 
@@ -115,8 +115,8 @@ FUNCTION __MenuTo( bBlock, cVariable )
       nHiLited := 0
 #endif
 
-      nSaveCursor := SetCursor(iif( Set(_SET_INTENSITY), SC_NONE, NIL ))
-      cSaveReadVar := ReadVar( hb_asciiUpper(cVariable) )
+      nSaveCursor := SetCursor(iif(Set(_SET_INTENSITY), SC_NONE, NIL))
+      cSaveReadVar := ReadVar(hb_asciiUpper(cVariable))
       xMsg := ""
       nMsgCol := 0
       nMsgRow := Set(_SET_MESSAGE)
@@ -128,7 +128,7 @@ FUNCTION __MenuTo( bBlock, cVariable )
          // should we display messages?
          IF nMsgRow > 0
 
-            IF ! Empty(xMsg)
+            IF !Empty(xMsg)
                DispOutAt(nMsgRow, nMsgCol, Space(Len(xMsg)))
             ENDIF
 
@@ -153,9 +153,9 @@ FUNCTION __MenuTo( bBlock, cVariable )
          q := n
 
          cColor := t_aLevel[t_nPointer - 1][n][_ITM_COLOR]
-         cColorNormal := hb_ColorIndex(iif( Empty(hb_ColorIndex(cColor, CLR_STANDARD)), SetColor(), cColor ), CLR_STANDARD)
+         cColorNormal := hb_ColorIndex(iif(Empty(hb_ColorIndex(cColor, CLR_STANDARD)), SetColor(), cColor), CLR_STANDARD)
          IF Set(_SET_INTENSITY)
-            cColorSelect := hb_ColorIndex(iif( Empty(hb_ColorIndex(cColor, CLR_ENHANCED)), SetColor(), cColor ), CLR_ENHANCED)
+            cColorSelect := hb_ColorIndex(iif(Empty(hb_ColorIndex(cColor, CLR_ENHANCED)), SetColor(), cColor), CLR_ENHANCED)
          ELSE
             cColorSelect := cColorNormal
          ENDIF
@@ -222,13 +222,13 @@ FUNCTION __MenuTo( bBlock, cVariable )
          CASE K_DOWN
          CASE K_RIGHT
             IF ++n > nArrLen
-               n := iif( Set(_SET_WRAP), 1, nArrLen )
+               n := iif(Set(_SET_WRAP), 1, nArrLen)
             ENDIF
             EXIT
          CASE K_UP
          CASE K_LEFT
             IF --n < 1
-               n := iif( Set(_SET_WRAP), nArrLen, 1 )
+               n := iif(Set(_SET_WRAP), nArrLen, 1)
             ENDIF
             EXIT
          CASE K_HOME
@@ -249,7 +249,7 @@ FUNCTION __MenuTo( bBlock, cVariable )
             // did user hit a hot key?
             IF Len(cKey := Upper(hb_keyChar(nKey))) > 0
                FOR y := 1 TO nArrLen
-                  IF hb_LeftEqI( LTrim(t_aLevel[nPointer - 1][y][_ITM_PROMPT]), cKey )
+                  IF hb_LeftEqI(LTrim(t_aLevel[nPointer - 1][y][_ITM_PROMPT]), cKey)
                      n := y
                      lExit := .T.
                      EXIT
@@ -272,7 +272,7 @@ FUNCTION __MenuTo( bBlock, cVariable )
 
       ENDDO
 
-      ReadVar( cSaveReadVar )
+      ReadVar(cSaveReadVar)
       SetCursor(nSaveCursor)
 
       t_nPointer := nPointer
@@ -284,7 +284,7 @@ FUNCTION __MenuTo( bBlock, cVariable )
    Eval(bBlock, n)
 
    IF lDeclared
-      __mvXRelease( cVariable )
+      __mvXRelease(cVariable)
    ENDIF
 
    SetPos(MaxRow() - 1, 0)

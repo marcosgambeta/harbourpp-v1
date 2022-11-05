@@ -68,36 +68,36 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
    LOCAL oColumn
    LOCAL aCol
 
-   IF ! Used()
+   IF !Used()
       RETURN .F.
    ELSEIF Eof()
       dbGoBottom()
    ENDIF
 
-   IF ! HB_ISNUMERIC(nTop) .OR. nTop < 0
+   IF !HB_ISNUMERIC(nTop) .OR. nTop < 0
       nTop := 0
    ENDIF
-   IF ! HB_ISNUMERIC(nLeft) .OR. nLeft < 0
+   IF !HB_ISNUMERIC(nLeft) .OR. nLeft < 0
       nLeft := 0
    ENDIF
-   IF ! HB_ISNUMERIC(nBottom) .OR. nBottom > MaxRow() .OR. nBottom < nTop
+   IF !HB_ISNUMERIC(nBottom) .OR. nBottom > MaxRow() .OR. nBottom < nTop
       nBottom := MaxRow()
    ENDIF
-   IF ! HB_ISNUMERIC(nRight) .OR. nRight > MaxCol() .OR. nRight < nLeft
+   IF !HB_ISNUMERIC(nRight) .OR. nRight > MaxCol() .OR. nRight < nLeft
       nRight := MaxCol()
    ENDIF
 
    oBrowse := TBrowseDB(nTop, nLeft, nBottom, nRight)
-   oBrowse:headSep   := iif( HB_ISSTRING(xHeadingSeparators), xHeadingSeparators, hb_UTF8ToStrBox( "═╤═" ) )
-   oBrowse:colSep    := iif( HB_ISSTRING(xColumnSeparators), xColumnSeparators, hb_UTF8ToStrBox( " │ " ) )
-   oBrowse:footSep   := hb_defaultValue( xFootingSeparators, "" )
+   oBrowse:headSep   := iif(HB_ISSTRING(xHeadingSeparators), xHeadingSeparators, hb_UTF8ToStrBox( "═╤═" ))
+   oBrowse:colSep    := iif(HB_ISSTRING(xColumnSeparators), xColumnSeparators, hb_UTF8ToStrBox( " │ " ))
+   oBrowse:footSep   := hb_defaultValue(xFootingSeparators, "")
    oBrowse:skipBlock := {| nRecs | Skipped(nRecs, lAppend) }
    oBrowse:autoLite  := .F.  /* Set to .F. just like in CA-Cl*pper. [vszakats] */
 
    IF HB_ISARRAY(acColumns)
       nColCount := 0
       FOR EACH aCol IN acColumns
-         IF HB_ISSTRING(aCol) .AND. ! Empty(aCol)
+         IF HB_ISSTRING(aCol) .AND. !Empty(aCol)
             nColCount++
          ELSE
             EXIT
@@ -123,7 +123,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
             cHeading := cBlock
          ENDIF
       ELSE
-         cBlock := FieldName( nPos )
+         cBlock := FieldName(nPos)
          cHeading := cBlock
       ENDIF
 
@@ -136,7 +136,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
          creating codeblocks which are able to _assign_ values, as dbEdit()
          is a read-only function. [vszakats] */
 
-      bBlock := iif( Type( cBlock ) == "M", {|| "  <Memo>  " }, hb_macroBlock(cBlock) )
+      bBlock := iif(Type(cBlock) == "M", {|| "  <Memo>  " }, hb_macroBlock(cBlock))
 
       DO CASE
       CASE HB_ISARRAY(xColumnHeaders) .AND. Len(xColumnHeaders) >= nPos .AND. HB_ISSTRING(xColumnHeaders[nPos])
@@ -148,9 +148,9 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
       oColumn := TBColumnNew( cHeading, bBlock )
 
       DO CASE
-      CASE HB_ISARRAY(xColumnSayPictures) .AND. nPos <= Len(xColumnSayPictures) .AND. HB_ISSTRING(xColumnSayPictures[nPos]) .AND. ! Empty(xColumnSayPictures[nPos])
+      CASE HB_ISARRAY(xColumnSayPictures) .AND. nPos <= Len(xColumnSayPictures) .AND. HB_ISSTRING(xColumnSayPictures[nPos]) .AND. !Empty(xColumnSayPictures[nPos])
          oColumn:picture := xColumnSayPictures[nPos]
-      CASE HB_ISSTRING(xColumnSayPictures) .AND. ! Empty(xColumnSayPictures)
+      CASE HB_ISSTRING(xColumnSayPictures) .AND. !Empty(xColumnSayPictures)
          oColumn:picture := xColumnSayPictures
       ENDCASE
 
@@ -173,7 +173,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
          oColumn:footSep := xFootingSeparators[nPos]
       ENDIF
 
-      oBrowse:addColumn( oColumn )
+      oBrowse:addColumn(oColumn)
    NEXT
 
    nOldCUrsor := SetCursor(SC_NONE)
@@ -205,7 +205,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
 
       IF nKey == 0
          IF lDoIdleCall
-            lContinue := CallUser( oBrowse, xUserFunc, 0, @lAppend, @lFlag )
+            lContinue := CallUser(oBrowse, xUserFunc, 0, @lAppend, @lFlag)
             oBrowse:forceStable()
          ENDIF
          IF lContinue .AND. lFlag
@@ -249,7 +249,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
 #ifdef HB_COMPAT_C53
          CASE K_LBUTTONDOWN
          CASE K_LDBLCLK
-            TBMouse( oBrowse, MRow(), MCol() )
+            TBMouse(oBrowse, MRow(), MCol())
             EXIT
 #endif
          CASE K_DOWN          ; oBrowse:down()     ; EXIT
@@ -267,7 +267,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
          CASE K_CTRL_HOME     ; oBrowse:panHome()  ; EXIT
          CASE K_CTRL_END      ; oBrowse:panEnd()   ; EXIT
          OTHERWISE
-            lContinue := CallUser( oBrowse, xUserFunc, nKey, @lAppend, @lFlag )
+            lContinue := CallUser(oBrowse, xUserFunc, nKey, @lAppend, @lFlag)
             lDoIdleCall := .F.
          ENDSWITCH
       ENDIF
@@ -281,16 +281,16 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
 /* NOTE: CA-Cl*pper uses intermediate function CallUser()
          to execute user function. We're replicating this behavior
          for code which may check ProcName() results in user function */
-STATIC FUNCTION CallUser( oBrowse, xUserFunc, nKey, lAppend, lFlag )
+STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
 
    LOCAL nPrevRecNo
 
    LOCAL nAction
    LOCAL nMode := ;
-      iif( nKey != 0,                   DE_EXCEPT,    ;
-      iif( ! lAppend .AND. IsDbEmpty(), DE_EMPTY,     ;
-      iif( oBrowse:hitBottom,           DE_HITBOTTOM, ;
-      iif( oBrowse:hitTop,              DE_HITTOP, DE_IDLE ) ) ) )
+      iif(nKey != 0,                   DE_EXCEPT,    ;
+      iif(!lAppend .AND. IsDbEmpty(), DE_EMPTY,     ;
+      iif(oBrowse:hitBottom,           DE_HITBOTTOM, ;
+      iif( oBrowse:hitTop,              DE_HITTOP, DE_IDLE ))))
 
    oBrowse:forceStable()
 
@@ -299,14 +299,14 @@ STATIC FUNCTION CallUser( oBrowse, xUserFunc, nKey, lAppend, lFlag )
    /* NOTE: CA-Cl*pper won't check the type of the return value here,
             and will crash if it's a non-NIL, non-numeric type. We're
             replicating this behavior. */
-   nAction := iif( HB_ISEVALITEM(xUserFunc), ;
+   nAction := iif(HB_ISEVALITEM(xUserFunc), ;
                                  Eval(xUserFunc, nMode, oBrowse:colPos), ;
-              iif( HB_ISSTRING(xUserFunc) .AND. ! Empty(xUserFunc), ;
+              iif( HB_ISSTRING(xUserFunc) .AND. !Empty(xUserFunc), ;
                                  &xUserFunc(nMode, oBrowse:colPos), ;  /* NOTE: Macro operator! */
-              iif( nKey == K_ENTER .OR. nKey == K_ESC, DE_ABORT, DE_CONT ) ) )
+              iif( nKey == K_ENTER .OR. nKey == K_ESC, DE_ABORT, DE_CONT ) ))
 
-   IF ! lAppend .AND. Eof() .AND. ! IsDbEmpty()
-      dbSkip( -1 )
+   IF !lAppend .AND. Eof() .AND. !IsDbEmpty()
+      dbSkip(-1)
    ENDIF
 
 #ifdef HB_CLP_UNDOC
@@ -329,7 +329,7 @@ STATIC FUNCTION CallUser( oBrowse, xUserFunc, nKey, lAppend, lFlag )
 
          lAppend := .F.
 
-         IF ( Set(_SET_DELETED) .AND. Deleted() ) .OR. ( ! Empty(dbFilter()) .AND. ! Eval(hb_macroBlock(dbFilter())) )
+         IF ( Set(_SET_DELETED) .AND. Deleted() ) .OR. ( !Empty(dbFilter()) .AND. !Eval(hb_macroBlock(dbFilter())) )
             dbSkip()
          ENDIF
          IF Eof()
@@ -365,11 +365,11 @@ STATIC FUNCTION Skipped(nRecs, lAppend)
    IF LastRec() != 0
       DO CASE
       CASE nRecs == 0
-         IF Eof() .AND. ! lAppend
-            dbSkip( -1 )
+         IF Eof() .AND. !lAppend
+            dbSkip(-1)
             nSkipped := -1
          ELSE
-            dbSkip( 0 )
+            dbSkip(0)
          ENDIF
       CASE nRecs > 0 .AND. RecNo() != LastRec() + 1
          DO WHILE nSkipped < nRecs
@@ -378,7 +378,7 @@ STATIC FUNCTION Skipped(nRecs, lAppend)
                IF lAppend
                   nSkipped++
                ELSE
-                  dbSkip( -1 )
+                  dbSkip(-1)
                ENDIF
                EXIT
             ENDIF
@@ -386,7 +386,7 @@ STATIC FUNCTION Skipped(nRecs, lAppend)
          ENDDO
       CASE nRecs < 0
          DO WHILE nSkipped > nRecs
-            dbSkip( -1 )
+            dbSkip(-1)
             IF Bof()
                EXIT
             ENDIF

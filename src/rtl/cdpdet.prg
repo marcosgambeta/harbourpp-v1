@@ -53,11 +53,11 @@ FUNCTION hb_cdpTerm()
 
 #if defined(__PLATFORM__WINDOWS)
    LOCAL tmp
-   cCP := __CPWinToCPStd(iif( ( tmp := __wapi_GetConsoleOutputCP() ) == 0, __wapi_GetOEMCP(), tmp ))
+   cCP := __CPWinToCPStd(iif((tmp := __wapi_GetConsoleOutputCP()) == 0, __wapi_GetOEMCP(), tmp))
    cLang := hb_UserLang()
 #elif defined(__PLATFORM__UNIX)
    LOCAL tmp
-   cCP := __UnixParseLangCP( iif( Empty(tmp := GetEnv( "LANG" )), GetEnv( "LC_CTYPE" ), tmp ), @cLang )
+   cCP := __UnixParseLangCP(iif(Empty(tmp := GetEnv("LANG")), GetEnv("LC_CTYPE"), tmp), @cLang)
 #elif defined(__PLATFORM__DOS)
    /* TODO */
    cCP := cLang := NIL
@@ -78,7 +78,7 @@ FUNCTION hb_cdpOS()
    cLang := hb_UserLang()
 #elif defined(__PLATFORM__UNIX)
    LOCAL tmp
-   cCP := __UnixParseLangCP( iif( Empty(tmp := GetEnv( "LANG" )), GetEnv( "LC_CTYPE" ), tmp ), @cLang )
+   cCP := __UnixParseLangCP(iif(Empty(tmp := GetEnv("LANG")), GetEnv("LC_CTYPE"), tmp), @cLang)
 #elif defined(__PLATFORM__DOS)
    /* TODO */
    cCP := cLang := NIL
@@ -146,7 +146,7 @@ STATIC FUNCTION __CPWinToCPStd(nCPWin)
 /* language[_territory][.codeset] */
 /* [language[_territory][.codeset][@modifier]] */
 /* TODO: handle "C"/"POSIX" values and values starting with "/" */
-STATIC FUNCTION __UnixParseLangCP( cString, /* @ */ cLang )
+STATIC FUNCTION __UnixParseLangCP(cString, /* @ */ cLang)
 
    LOCAL tmp
    LOCAL cCP
@@ -163,9 +163,9 @@ STATIC FUNCTION __UnixParseLangCP( cString, /* @ */ cLang )
    ENDIF
 
    /* Tricks to make the manual translation table shorter */
-   cCP := hb_StrReplace( Lower(cCP), { "_" => "", "-" => "", "ibm" => "cp", "windows" => "cp" } )
-   IF hb_LeftEq( cCP, "iso8859" )
-      cCP := Stuff( cCP, Len("iso8859") + 1, 0, "-" )
+   cCP := hb_StrReplace(Lower(cCP), { "_" => "", "-" => "", "ibm" => "cp", "windows" => "cp" })
+   IF hb_LeftEq(cCP, "iso8859")
+      cCP := Stuff(cCP, Len("iso8859") + 1, 0, "-")
    ENDIF
 
    /* Convert Unix CP name to Harbour CP ID */
@@ -235,7 +235,7 @@ STATIC FUNCTION __CPStdToHb(cCPStd, cCtryStd)
          aCP := hb_cdpList()
          cCtryHb := __LangStdToCPCtryHb(cCtryStd)
          FOR EACH cdp IN aCP
-            IF hb_LeftEq( cdp, cCtryHb ) .AND. cCPStd == hb_cdpUniID(cdp)
+            IF hb_LeftEq(cdp, cCtryHb) .AND. cCPStd == hb_cdpUniID(cdp)
                RETURN cdp
             ENDIF
          NEXT

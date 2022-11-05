@@ -44,7 +44,7 @@
  *
  */
 
-FUNCTION hb_libName( cLibName, cLibDir )
+FUNCTION hb_libName(cLibName, cLibDir)
 
    LOCAL cDir, cName, cExt
 
@@ -59,7 +59,7 @@ FUNCTION hb_libName( cLibName, cLibDir )
          cExt := hb_libExt()
       ENDIF
 
-      RETURN hb_FNameMerge( cDir, hb_libPrefix() + cName, cExt )
+      RETURN hb_FNameMerge(cDir, hb_libPrefix() + cName, cExt)
    ENDIF
 
    RETURN ""

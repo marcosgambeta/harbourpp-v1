@@ -44,19 +44,19 @@
  *
  */
 
-#define _ISDRIVESPEC(cDir) ( ! Empty(hb_osDriveSeparator()) .AND. Right(cDir, Len(hb_osDriveSeparator())) == hb_osDriveSeparator() )
+#define _ISDRIVESPEC(cDir) ( !Empty(hb_osDriveSeparator()) .AND. Right(cDir, Len(hb_osDriveSeparator())) == hb_osDriveSeparator() )
 
 /* NOTE: Can hurt if there are symlinks on the way. */
-FUNCTION hb_PathNormalize( cPath )
+FUNCTION hb_PathNormalize(cPath)
 
    LOCAL aDir
    LOCAL cDir
 
-   IF ! HB_ISSTRING(cPath)
+   IF !HB_ISSTRING(cPath)
       RETURN ""
    ENDIF
 
-   IF ! Empty(cPath)
+   IF !Empty(cPath)
 
       aDir := hb_ATokens(cPath, hb_ps())
 
@@ -64,15 +64,15 @@ FUNCTION hb_PathNormalize( cPath )
 
          IF cDir == "." .OR. ;
             ( Empty(cDir) .AND. ;
-            ! cDir:__enumIsLast() .AND. ;
+            !cDir:__enumIsLast() .AND. ;
             ( cDir:__enumIndex() > 2 .OR. ;
-            ( cDir:__enumIndex() == 2 .AND. ! Empty(aDir[1]) ) ) )
+            ( cDir:__enumIndex() == 2 .AND. !Empty(aDir[1]) ) ) )
 
             hb_ADel(aDir, cDir:__enumIndex(), .T.)
 
-         ELSEIF !( cDir == ".." ) .AND. ! Empty(cDir) .AND. ! _ISDRIVESPEC(cDir)
+         ELSEIF !( cDir == ".." ) .AND. !Empty(cDir) .AND. !_ISDRIVESPEC(cDir)
 
-            IF ! cDir:__enumIsLast() .AND. aDir[cDir:__enumIndex() + 1] == ".."
+            IF !cDir:__enumIsLast() .AND. aDir[cDir:__enumIndex() + 1] == ".."
                hb_ADel(aDir, cDir:__enumIndex() + 1, .T.)
                hb_ADel(aDir, cDir:__enumIndex(), .T.)
             ENDIF
@@ -82,7 +82,7 @@ FUNCTION hb_PathNormalize( cPath )
       cPath := ""
       FOR EACH cDir IN aDir
          cPath += cDir
-         IF ! cDir:__enumIsLast()
+         IF !cDir:__enumIsLast()
             cPath += hb_ps()
          ENDIF
       NEXT
@@ -94,32 +94,32 @@ FUNCTION hb_PathNormalize( cPath )
 
    RETURN cPath
 
-FUNCTION hb_PathJoin( cPathA, cPathR )
+FUNCTION hb_PathJoin(cPathA, cPathR)
 
    LOCAL cDirA
    LOCAL cDirR, cDriveR, cNameR, cExtR
 
-   IF ! HB_ISSTRING(cPathR)
+   IF !HB_ISSTRING(cPathR)
       RETURN ""
    ENDIF
 
-   IF ! HB_ISSTRING(cPathA) .OR. Empty(cPathA)
+   IF !HB_ISSTRING(cPathA) .OR. Empty(cPathA)
       RETURN cPathR
    ENDIF
 
    hb_FNameSplit( cPathR, @cDirR, @cNameR, @cExtR, @cDriveR )
 
-   IF ! Empty(cDriveR) .OR. ( ! Empty(cDirR) .AND. Left(cDirR, 1) $ hb_osPathDelimiters() )
+   IF !Empty(cDriveR) .OR. ( !Empty(cDirR) .AND. Left(cDirR, 1) $ hb_osPathDelimiters() )
       RETURN cPathR
    ENDIF
 
-   IF Empty(cDirA := hb_FNameDir( cPathA ))
+   IF Empty(cDirA := hb_FNameDir(cPathA))
       RETURN cPathR
    ENDIF
 
-   RETURN hb_FNameMerge( cDirA + cDirR, cNameR, cExtR )
+   RETURN hb_FNameMerge(cDirA + cDirR, cNameR, cExtR)
 
-FUNCTION hb_PathRelativize( cPathBase, cPathTarget, lForceRelative )
+FUNCTION hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
 
    LOCAL tmp
 
@@ -131,17 +131,17 @@ FUNCTION hb_PathRelativize( cPathBase, cPathTarget, lForceRelative )
 
    LOCAL cTargetFileName
 
-   IF ! HB_ISSTRING(cPathBase) .OR. ! HB_ISSTRING(cPathTarget)
+   IF !HB_ISSTRING(cPathBase) .OR. !HB_ISSTRING(cPathTarget)
       RETURN ""
    ENDIF
 
-   cPathBase   := hb_PathJoin( hb_DirBase(), hb_DirSepAdd(cPathBase) )
-   cPathTarget := hb_PathJoin( hb_DirBase(), cPathTarget )
+   cPathBase   := hb_PathJoin(hb_DirBase(), hb_DirSepAdd(cPathBase))
+   cPathTarget := hb_PathJoin(hb_DirBase(), cPathTarget)
 
    /* TODO: Optimize to operate on strings instead of arrays */
 
-   aPathBase   := s_FN_ToArray( cPathBase )
-   aPathTarget := s_FN_ToArray( cPathTarget, @cTargetFileName )
+   aPathBase   := s_FN_ToArray(cPathBase)
+   aPathTarget := s_FN_ToArray(cPathTarget, @cTargetFileName)
 
    tmp := 1
    cTestBase := ""
@@ -149,7 +149,7 @@ FUNCTION hb_PathRelativize( cPathBase, cPathTarget, lForceRelative )
    DO WHILE tmp <= Len(aPathTarget) .AND. tmp <= Len(aPathBase)
       cTestBase   += aPathBase[tmp]
       cTestTarget += aPathTarget[tmp]
-      IF ! hb_FileMatch( cTestBase, cTestTarget )
+      IF !hb_FileMatch(cTestBase, cTestTarget)
          EXIT
       ENDIF
       ++tmp
@@ -160,37 +160,37 @@ FUNCTION hb_PathRelativize( cPathBase, cPathTarget, lForceRelative )
    ENDIF
 
    IF tmp == Len(aPathBase)
-      RETURN s_FN_FromArray( aPathTarget, tmp, cTargetFileName, "" )
+      RETURN s_FN_FromArray(aPathTarget, tmp, cTargetFileName, "")
    ENDIF
 
    /* Different drive spec. There is no way to solve that using relative dirs. */
-   IF ! Empty(hb_osDriveSeparator()) .AND. tmp == 1 .AND. ( ;
+   IF !Empty(hb_osDriveSeparator()) .AND. tmp == 1 .AND. ( ;
       Right(aPathBase[1]  , Len(hb_osDriveSeparator())) == hb_osDriveSeparator() .OR. ;
       Right(aPathTarget[1], Len(hb_osDriveSeparator())) == hb_osDriveSeparator() )
       RETURN cPathTarget
    ENDIF
 
    /* Force to return relative paths even when base is different. */
-   IF hb_defaultValue( lForceRelative, .T. ) .AND. ;
-      hb_DirExists( cPathBase + ( cTestTarget := s_FN_FromArray( aPathTarget, tmp, cTargetFileName, Replicate(".." + hb_ps(), Len(aPathBase) - tmp) ) ) )
+   IF hb_defaultValue(lForceRelative, .T.) .AND. ;
+      hb_DirExists(cPathBase + ( cTestTarget := s_FN_FromArray(aPathTarget, tmp, cTargetFileName, Replicate(".." + hb_ps(), Len(aPathBase) - tmp)) ))
       RETURN cTestTarget
    ENDIF
 
    RETURN cPathTarget
 
-STATIC FUNCTION s_FN_ToArray( cPath, /* @ */ cFileName  )
+STATIC FUNCTION s_FN_ToArray(cPath, /* @ */ cFileName)
 
    LOCAL cDir, cName, cExt
 
    hb_FNameSplit( cPath, @cDir, @cName, @cExt )
 
-   IF ! Empty(cName) .OR. ! Empty(cExt)
+   IF !Empty(cName) .OR. !Empty(cExt)
       cFileName := cName + cExt
    ENDIF
 
    RETURN hb_ATokens(cDir, hb_ps())
 
-STATIC FUNCTION s_FN_FromArray( aPath, nFrom, cFileName, cDirPrefix )
+STATIC FUNCTION s_FN_FromArray(aPath, nFrom, cFileName, cDirPrefix)
 
    LOCAL nTo := Len(aPath)
    LOCAL cDir
@@ -212,46 +212,46 @@ STATIC FUNCTION s_FN_FromArray( aPath, nFrom, cFileName, cDirPrefix )
       ENDIF
    NEXT
 
-   RETURN hb_FNameMerge( hb_DirSepDel( hb_DirSepAdd(cDirPrefix) + cDir ), cFileName )
+   RETURN hb_FNameMerge(hb_DirSepDel(hb_DirSepAdd(cDirPrefix) + cDir), cFileName)
 
 FUNCTION hb_DirSepAdd(cDir)
 
-   IF ! HB_ISSTRING(cDir)
+   IF !HB_ISSTRING(cDir)
       RETURN ""
    ENDIF
 
-   IF ! Empty(cDir) .AND. ! _ISDRIVESPEC(cDir) .AND. ! Right(cDir, 1) == hb_ps()
+   IF !Empty(cDir) .AND. !_ISDRIVESPEC(cDir) .AND. !Right(cDir, 1) == hb_ps()
 
       cDir += hb_ps()
    ENDIF
 
    RETURN cDir
 
-FUNCTION hb_DirSepDel( cDir )
+FUNCTION hb_DirSepDel(cDir)
 
-   IF ! HB_ISSTRING(cDir)
+   IF !HB_ISSTRING(cDir)
       RETURN ""
    ENDIF
 
    IF Empty(hb_osDriveSeparator())
-      DO WHILE Len(cDir) > 1 .AND. Right(cDir, 1) == hb_ps() .AND. ! cDir == hb_ps() + hb_ps()
+      DO WHILE Len(cDir) > 1 .AND. Right(cDir, 1) == hb_ps() .AND. !cDir == hb_ps() + hb_ps()
 
-         cDir := hb_StrShrink( cDir )
+         cDir := hb_StrShrink(cDir)
       ENDDO
    ELSE
-      DO WHILE Len(cDir) > 1 .AND. Right(cDir, 1) == hb_ps() .AND. ! cDir == hb_ps() + hb_ps() .AND. ;
-         ! Right(cDir, Len(hb_osDriveSeparator()) + 1) == hb_osDriveSeparator() + hb_ps()
+      DO WHILE Len(cDir) > 1 .AND. Right(cDir, 1) == hb_ps() .AND. !cDir == hb_ps() + hb_ps() .AND. ;
+         !Right(cDir, Len(hb_osDriveSeparator()) + 1) == hb_osDriveSeparator() + hb_ps()
 
-         cDir := hb_StrShrink( cDir )
+         cDir := hb_StrShrink(cDir)
       ENDDO
    ENDIF
 
    RETURN cDir
 
-FUNCTION hb_DirSepToOS( cFileName )
+FUNCTION hb_DirSepToOS(cFileName)
 
    IF HB_ISSTRING(cFileName)
-      RETURN StrTran(cFileName, iif( hb_ps() == "\", "/", "\" ), hb_ps())
+      RETURN StrTran(cFileName, iif(hb_ps() == "\", "/", "\"), hb_ps())
    ENDIF
 
    RETURN ""
@@ -262,17 +262,17 @@ FUNCTION hb_DirBuild(cDir)
    LOCAL cDirItem
    LOCAL tmp
 
-   IF ! HB_ISSTRING(cDir)
+   IF !HB_ISSTRING(cDir)
       RETURN .F.
    ENDIF
 
-   cDir := hb_PathNormalize( cDir )
+   cDir := hb_PathNormalize(cDir)
 
-   IF ! hb_DirExists( cDir )
+   IF !hb_DirExists(cDir)
 
       cDir := hb_DirSepAdd(cDir)
 
-      IF ! Empty(hb_osDriveSeparator()) .AND. ( tmp := At(hb_osDriveSeparator(), cDir) ) > 0
+      IF !Empty(hb_osDriveSeparator()) .AND. ( tmp := At(hb_osDriveSeparator(), cDir) ) > 0
          cDirTemp := Left(cDir, tmp)
          cDir := SubStr(cDir, tmp + 1)
       ELSEIF Left(cDir, 1) == hb_ps()
@@ -283,15 +283,15 @@ FUNCTION hb_DirBuild(cDir)
       ENDIF
 
       FOR EACH cDirItem IN hb_ATokens(cDir, hb_ps())
-         IF !( Right(cDirTemp, 1) == hb_ps() ) .AND. ! Empty(cDirTemp)
+         IF !( Right(cDirTemp, 1) == hb_ps() ) .AND. !Empty(cDirTemp)
             cDirTemp += hb_ps()
          ENDIF
-         IF ! Empty(cDirItem)  /* Skip root path, if any */
+         IF !Empty(cDirItem)  /* Skip root path, if any */
             cDirTemp += cDirItem
-            IF hb_FileExists( cDirTemp )
+            IF hb_FileExists(cDirTemp)
                RETURN .F.
-            ELSEIF ! hb_DirExists( cDirTemp )
-               IF hb_DirCreate( cDirTemp ) != 0
+            ELSEIF !hb_DirExists(cDirTemp)
+               IF hb_DirCreate(cDirTemp) != 0
                   RETURN .F.
                ENDIF
             ENDIF
@@ -306,18 +306,18 @@ FUNCTION hb_DirUnbuild(cDir)
    LOCAL cDirTemp
    LOCAL tmp
 
-   IF ! HB_ISSTRING(cDir)
+   IF !HB_ISSTRING(cDir)
       RETURN .F.
    ENDIF
 
-   IF hb_DirExists( cDir )
+   IF hb_DirExists(cDir)
 
-      cDir := hb_DirSepDel( cDir )
+      cDir := hb_DirSepDel(cDir)
 
       cDirTemp := cDir
-      DO WHILE ! Empty(cDirTemp)
-         IF hb_DirExists( cDirTemp )
-            IF hb_DirDelete( cDirTemp ) != 0
+      DO WHILE !Empty(cDirTemp)
+         IF hb_DirExists(cDirTemp)
+            IF hb_DirDelete(cDirTemp) != 0
                RETURN .F.
             ENDIF
          ENDIF
@@ -325,7 +325,7 @@ FUNCTION hb_DirUnbuild(cDir)
             EXIT
          ENDIF
          cDirTemp := Left(cDirTemp, tmp - 1)
-         IF ! Empty(hb_osDriveSeparator()) .AND. Right(cDirTemp, Len(hb_osDriveSeparator())) == hb_osDriveSeparator()
+         IF !Empty(hb_osDriveSeparator()) .AND. Right(cDirTemp, Len(hb_osDriveSeparator())) == hb_osDriveSeparator()
             EXIT
          ENDIF
       ENDDO

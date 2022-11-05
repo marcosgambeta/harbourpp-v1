@@ -49,7 +49,7 @@
 
 #define _DIR_HEADER  1
 
-PROCEDURE __Dir( cFileMask )
+PROCEDURE __Dir(cFileMask)
 
    LOCAL cPath
    LOCAL cName
@@ -65,18 +65,18 @@ PROCEDURE __Dir( cFileMask )
 #ifdef HB_CLP_STRICT
       QOut("Database Files    # Records    Last Update     Size")
 #else
-      QOut(__natMsg( _DIR_HEADER ))
+      QOut(__natMsg(_DIR_HEADER))
 #endif
 
-      AEval(Directory( hb_FNameMerge( Set(_SET_DEFAULT), "*", ".dbf" ) ), {| aDirEntry | PutDbf( aDirEntry ) })
+      AEval(Directory( hb_FNameMerge(Set(_SET_DEFAULT), "*", ".dbf") ), {| aDirEntry | PutDbf(aDirEntry) })
    ELSE
 
-      hb_FNameSplit( iif( Set(_SET_TRIMFILENAME), AllTrim(cFileMask), cFileMask ), @cPath, @cName, @cExt )
+      hb_FNameSplit( iif(Set(_SET_TRIMFILENAME), AllTrim(cFileMask), cFileMask), @cPath, @cName, @cExt )
       IF Empty(cPath)
          cPath := Set(_SET_DEFAULT)
       ENDIF
 
-      AEval(Directory( hb_FNameMerge( cPath, cName, cExt ) ), {| aDirEntry | PutNormal( aDirEntry ) })
+      AEval(Directory( hb_FNameMerge(cPath, cName, cExt) ), {| aDirEntry | PutNormal(aDirEntry) })
    ENDIF
 
    QOut()
@@ -89,7 +89,7 @@ PROCEDURE __Dir( cFileMask )
                         hb_BChar(0xE5) + hb_BChar(0xE6) + ;
                         hb_BChar(0xF5) + hb_BChar(0xF6)
 
-STATIC PROCEDURE PutDBF( aDirEntry )
+STATIC PROCEDURE PutDBF(aDirEntry)
 
    LOCAL fhnd
    LOCAL buffer
@@ -101,8 +101,8 @@ STATIC PROCEDURE PutDBF( aDirEntry )
       buffer := hb_FReadLen(fhnd, 8)
 
       IF hb_BLen(buffer) == 8 .AND. hb_BAt(hb_BLeft(buffer, 1), _DBF_HEAD_MARK) > 0
-         nRecCount := Bin2L( hb_BSubStr(buffer, 5, 4) )
-         dLastUpdate := hb_Date( hb_BPeek( buffer, 2 ) + 1900, hb_BPeek( buffer, 3 ), hb_BPeek( buffer, 4 ) )
+         nRecCount := Bin2L(hb_BSubStr(buffer, 5, 4))
+         dLastUpdate := hb_Date(hb_BPeek(buffer, 2) + 1900, hb_BPeek(buffer, 3), hb_BPeek(buffer, 4))
       ENDIF
 
       FClose(fhnd)
@@ -113,7 +113,7 @@ STATIC PROCEDURE PutDBF( aDirEntry )
 
    RETURN
 
-STATIC PROCEDURE PutNormal( aDirEntry )
+STATIC PROCEDURE PutNormal(aDirEntry)
 
    LOCAL cName, cExt
 

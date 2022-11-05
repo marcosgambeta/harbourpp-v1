@@ -53,9 +53,9 @@
 #define SOACTIVEGET     8
 #define SXREADVAR       9
 
-FUNCTION ReadModal( GetList, nPos, oMenu, nMsgRow, nMsgLeft, nMsgRight, cMsgColor )
+FUNCTION ReadModal(GetList, nPos, oMenu, nMsgRow, nMsgLeft, nMsgRight, cMsgColor)
 #else
-FUNCTION ReadModal( GetList )
+FUNCTION ReadModal(GetList)
 #endif
 
    LOCAL oGetList
@@ -70,25 +70,25 @@ FUNCTION ReadModal( GetList )
 
    oSaveGetList := __GetListActive()
 #ifdef HB_COMPAT_C53
-// oSaveGetList:ReadStats( SLUPDATED, .F. )
-// oSaveGetList:ReadStats( SXREADVAR, ReadVar( "" ) )
-// oSaveGetList:ReadStats( SOACTIVEGET, GetActive( NIL ) )
+// oSaveGetList:ReadStats(SLUPDATED, .F.)
+// oSaveGetList:ReadStats(SXREADVAR, ReadVar(""))
+// oSaveGetList:ReadStats(SOACTIVEGET, GetActive(NIL))
 #endif
 
-   __GetListSetActive( oGetList )
+   __GetListSetActive(oGetList)
    __GetListLast( oGetList )
 
 #ifdef HB_COMPAT_C53
-   oGetList:ReadModal( nPos, oMenu, nMsgRow, nMsgLeft, nMsgRight, cMsgColor )
+   oGetList:ReadModal(nPos, oMenu, nMsgRow, nMsgLeft, nMsgRight, cMsgColor)
 #else
    oGetList:ReadModal()
 #endif
 
-   __GetListSetActive( oSaveGetList )
+   __GetListSetActive(oSaveGetList)
 #ifdef HB_COMPAT_C53
-// oSaveGetList:ReadStats( SLUPDATED, oGetList:Updated() )
-// ReadVar( oSaveGetList:ReadStats( SXREADVAR ) )
-// GetActive( oSaveGetList:ReadStats( SOACTIVEGET ) )
+// oSaveGetList:ReadStats(SLUPDATED, oGetList:Updated())
+// ReadVar(oSaveGetList:ReadStats(SXREADVAR))
+// GetActive(oSaveGetList:ReadStats(SOACTIVEGET))
 #endif
 
    SetPos(MaxRow() - 1, 0)
@@ -96,22 +96,22 @@ FUNCTION ReadModal( GetList )
    RETURN oGetList:Updated()
 
 #ifdef HB_COMPAT_C53
-PROCEDURE GetReader( oGet, oGetList, oMenu, aMsg )
+PROCEDURE GetReader(oGet, oGetList, oMenu, aMsg)
 
    HB_SYMBOL_UNUSED(oGetList)
 
-   oGet:Reader( oMenu, aMsg )
+   oGet:Reader(oMenu, aMsg)
 
    RETURN
 #else
-PROCEDURE GetReader( oGet )
+PROCEDURE GetReader(oGet)
 
    oGet:Reader()
 
    RETURN
 #endif
 
-FUNCTION GetActive( oGet )
+FUNCTION GetActive(oGet)
 
    LOCAL oGetList := __GetListActive()
 
@@ -133,7 +133,7 @@ FUNCTION GetActive( oGet )
       ENDIF
    ELSE
       IF PCount() > 0
-         RETURN oGetList:GetActive( oGet )
+         RETURN oGetList:GetActive(oGet)
       ELSE
          RETURN oGetList:GetActive()
       ENDIF
@@ -154,7 +154,7 @@ PROCEDURE GetDoSetKey(bKeyBlock, oGet)
 #ifdef HB_COMPAT_C53
 PROCEDURE GetApplyKey(oGet, nKey, oGetList, oMenu, aMsg)
 
-   IF ! HB_ISOBJECT(oGetList)
+   IF !HB_ISOBJECT(oGetList)
       oGetList := __GetListActive()
    ENDIF
 #else
@@ -174,35 +174,35 @@ PROCEDURE GetApplyKey(oGet, nKey)
    RETURN
 
 #ifdef HB_COMPAT_C53
-FUNCTION GetPreValidate( oGet, aMsg )
+FUNCTION GetPreValidate(oGet, aMsg)
 #else
-FUNCTION GetPreValidate( oGet )
+FUNCTION GetPreValidate(oGet)
 #endif
    LOCAL oGetList := __GetListActive()
 
    IF oGetList != NIL
 #ifdef HB_COMPAT_C53
-      RETURN oGetList:GetPreValidate( oGet, aMsg )
+      RETURN oGetList:GetPreValidate(oGet, aMsg)
 #else
-      RETURN oGetList:GetPreValidate( oGet )
+      RETURN oGetList:GetPreValidate(oGet)
 #endif
    ENDIF
 
    RETURN .F.
 
 #ifdef HB_COMPAT_C53
-FUNCTION GetPostValidate( oGet, aMsg )
+FUNCTION GetPostValidate(oGet, aMsg)
 #else
-FUNCTION GetPostValidate( oGet )
+FUNCTION GetPostValidate(oGet)
 #endif
 
    LOCAL oGetList := __GetListActive()
 
    IF oGetList != NIL
 #ifdef HB_COMPAT_C53
-      RETURN oGetList:GetPostValidate( oGet, aMsg )
+      RETURN oGetList:GetPostValidate(oGet, aMsg)
 #else
-      RETURN oGetList:GetPostValidate( oGet )
+      RETURN oGetList:GetPostValidate(oGet)
 #endif
    ENDIF
 
@@ -218,7 +218,7 @@ FUNCTION Updated()
 
    LOCAL oGetList := __GetListLast()
 
-   RETURN iif( oGetList != NIL, oGetList:Updated(), .F. )
+   RETURN iif(oGetList != NIL, oGetList:Updated(), .F.)
 
 PROCEDURE __KillRead()
 
@@ -244,7 +244,7 @@ FUNCTION ReadUpdated(lUpdated)
 
    RETURN .F.
 
-FUNCTION ReadKill( lKill )
+FUNCTION ReadKill(lKill)
 
    LOCAL oGetList := __GetListActive()
 
@@ -292,7 +292,7 @@ PROCEDURE __SetFormat(bFormat)
 #define _GET_RANGE_FROM 10
 #define _GET_RANGE_TO   11
 
-FUNCTION RangeCheck( oGet, xDummy, xLow, xHigh )
+FUNCTION RangeCheck(oGet, xDummy, xLow, xHigh)
 
    LOCAL xValue
    LOCAL cMessage
@@ -300,7 +300,7 @@ FUNCTION RangeCheck( oGet, xDummy, xLow, xHigh )
 
    HB_SYMBOL_UNUSED(xDummy)
 
-   IF ! oGet:changed
+   IF !oGet:changed
       RETURN .T.
    ENDIF
 
@@ -312,13 +312,13 @@ FUNCTION RangeCheck( oGet, xDummy, xLow, xHigh )
 
    IF Set(_SET_SCOREBOARD)
 
-      cMessage := Left(__natMsg( _GET_RANGE_FROM ) + LTrim(Transform(xLow, "")) + __natMsg( _GET_RANGE_TO ) + LTrim(Transform(xHigh, "")), MaxCol())
+      cMessage := Left(__natMsg(_GET_RANGE_FROM) + LTrim(Transform(xLow, "")) + __natMsg(_GET_RANGE_TO) + LTrim(Transform(xHigh, "")), MaxCol())
 
       hb_DispOutAt(SCORE_ROW, Min(60, MaxCol() - Len(cMessage)), cMessage)
 
       DO WHILE ( nKey := Inkey(0) ) == 0
       ENDDO
-      hb_keyIns( nKey )
+      hb_keyIns(nKey)
 
       hb_DispOutAt(SCORE_ROW, Min(60, MaxCol() - Len(cMessage)), Space(Len(cMessage)))
 

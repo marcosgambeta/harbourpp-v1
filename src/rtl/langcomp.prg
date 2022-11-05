@@ -145,7 +145,7 @@ FUNCTION hb_langSelect( cLangID, cCP )
 
 #endif
 
-      IF ! HB_ISSTRING(cCP)
+      IF !HB_ISSTRING(cCP)
          cCP := cCPDef
       ENDIF
 
@@ -166,7 +166,7 @@ FUNCTION hb_langSelect( cLangID, cCP )
       ENDIF
 #endif
 
-      IF ! hb_cdpIsUTF8( cCP )
+      IF !hb_cdpIsUTF8( cCP )
          cLangID += "." + cCP
          hb_langNew( cLangID, cCP, cLangIDBase, "UTF8" )
       ENDIF

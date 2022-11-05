@@ -78,7 +78,7 @@ METHOD AsString() CLASS ScalarObject
    CASE "D" ; RETURN DToC(Self)
    CASE "T" ; RETURN hb_TToC(Self)
    CASE "H" ; RETURN "{ ... => ... }"
-   CASE "L" ; RETURN iif( Self, ".T.", ".F." )
+   CASE "L" ; RETURN iif(Self, ".T.", ".F.")
    CASE "N" ; RETURN hb_ntos(Self)
    CASE "S" ; RETURN "@" + ::name + "()"
    CASE "P" ; RETURN "<0x...>"
@@ -102,7 +102,7 @@ METHOD PROCEDURE BecomeErr() CLASS ScalarObject
 
 #if 0
    // Not implemented yet
-   ::error( CSYERR_BECOME, "Message 'become' illegally sent to scalar", ::ClassName() )
+   ::error(CSYERR_BECOME, "Message 'become' illegally sent to scalar", ::ClassName())
 #endif
 
    RETURN
@@ -117,17 +117,17 @@ CREATE CLASS Array INHERIT HBScalar FUNCTION __HBArray
    METHOD At( n )
    METHOD AtPut(n, x)
    METHOD Add(x)
-   METHOD AddAll( aOtherCollection )
+   METHOD AddAll(aOtherCollection)
    METHOD Collect( b )
    METHOD Copy()
-   METHOD Do( b )
+   METHOD Do(b)
    METHOD DeleteAt( n )
    METHOD InsertAt( n, x )
-   METHOD IndexOf( x )
+   METHOD IndexOf(x)
    METHOD IsScalar()
-   METHOD Remove( e )
-   METHOD Scan( b )
-   METHOD _Size( newSize )  // assignment method
+   METHOD Remove(e)
+   METHOD Scan(b)
+   METHOD _Size(newSize)  // assignment method
 
    MESSAGE Append  METHOD Add
 
@@ -135,13 +135,13 @@ ENDCLASS
 
 METHOD Init( nElements ) CLASS Array
 
-   ::size := iif( nElements == NIL, 0, nElements )
+   ::size := iif(nElements == NIL, 0, nElements)
 
    RETURN Self
 
-METHOD AddAll( aOtherCollection ) CLASS Array
+METHOD AddAll(aOtherCollection) CLASS Array
 
-   aOtherCollection:Do( {| e | ::Add(e) } )
+   aOtherCollection:Do({| e | ::Add(e) })
 
    RETURN Self
 
@@ -174,7 +174,7 @@ METHOD Collect( b ) CLASS Array
    RETURN result
 
 METHOD Copy() CLASS Array
-   RETURN ACopy( Self, Array( Len(Self) ) )
+   RETURN ACopy( Self, Array(Len(Self)) )
 
 METHOD DeleteAt( n ) CLASS Array
 
@@ -191,7 +191,7 @@ METHOD InsertAt( n, x ) CLASS Array
       ASize(Self, n)
       Self[n] := x
    CASE n >= 1
-      hb_AIns( Self, n, x, .T. )
+      hb_AIns(Self, n, x, .T.)
    ENDCASE
 
    RETURN Self
@@ -199,7 +199,7 @@ METHOD InsertAt( n, x ) CLASS Array
 METHOD IsScalar() CLASS Array
    RETURN .T.
 
-METHOD Do( b ) CLASS Array
+METHOD Do(b) CLASS Array
 
    LOCAL i
 
@@ -209,7 +209,7 @@ METHOD Do( b ) CLASS Array
 
    RETURN Self
 
-METHOD IndexOf( x ) CLASS Array
+METHOD IndexOf(x) CLASS Array
 
    LOCAL elem
 
@@ -221,16 +221,16 @@ METHOD IndexOf( x ) CLASS Array
 
    RETURN 0
 
-METHOD PROCEDURE Remove( e ) CLASS Array
+METHOD PROCEDURE Remove(e) CLASS Array
 
-   ::DeleteAt(::IndexOf( e ))
+   ::DeleteAt(::IndexOf(e))
 
    RETURN
 
-METHOD Scan( b ) CLASS Array
+METHOD Scan(b) CLASS Array
    RETURN AScan(Self, b)
 
-METHOD _Size( newSize ) CLASS Array
+METHOD _Size(newSize) CLASS Array
 
    ASize(Self, newSize)
 
@@ -281,10 +281,10 @@ METHOD AsExpStr() CLASS Date
    RETURN 'CToD("' + ::AsString() + '")'
 
 METHOD Year() CLASS Date
-   RETURN Year( Self )
+   RETURN Year(Self)
 
 METHOD Month() CLASS Date
-   RETURN Month( Self )
+   RETURN Month(Self)
 
 METHOD Day() CLASS Date
    RETURN Day( Self )
@@ -308,7 +308,7 @@ CREATE CLASS TimeStamp INHERIT HBScalar FUNCTION __HBTimeStamp
 ENDCLASS
 
 METHOD AsString() CLASS TimeStamp
-   RETURN hb_TToS( Self )
+   RETURN hb_TToS(Self)
 
 METHOD AsExpStr() CLASS TimeStamp
    RETURN 'hb_SToT("' + ::AsString() + '")'
@@ -320,19 +320,19 @@ METHOD Time() CLASS TimeStamp
    RETURN hb_TToC(Self, "", "hh:mm:ss")
 
 METHOD Year() CLASS TimeStamp
-   RETURN Year( Self )
+   RETURN Year(Self)
 
 METHOD Month() CLASS TimeStamp
-   RETURN Month( Self )
+   RETURN Month(Self)
 
 METHOD Day() CLASS TimeStamp
    RETURN Day( Self )
 
 METHOD Hour() CLASS TimeStamp
-   RETURN hb_Hour( Self )
+   RETURN hb_Hour(Self)
 
 METHOD Minute() CLASS TimeStamp
-   RETURN hb_Minute( Self )
+   RETURN hb_Minute(Self)
 
 METHOD Sec() CLASS TimeStamp
    RETURN hb_Sec(Self)
@@ -357,7 +357,7 @@ CREATE CLASS Logical INHERIT HBScalar FUNCTION __HBLogical
 ENDCLASS
 
 METHOD AsString() CLASS Logical
-   RETURN iif( Self, ".T.", ".F." )
+   RETURN iif(Self, ".T.", ".F.")
 
 /* --- */
 

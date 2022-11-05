@@ -48,7 +48,7 @@ FUNCTION TBrowseDB(nTop, nLeft, nBottom, nRight)
 
    LOCAL oBrowse := TBrowseNew( nTop, nLeft, nBottom, nRight )
 
-   oBrowse:SkipBlock     := {| nRecs | __dbSkipper( nRecs ) }
+   oBrowse:SkipBlock     := {| nRecs | __dbSkipper(nRecs) }
    oBrowse:GoTopBlock    := {|| dbGoTop() }
    oBrowse:GoBottomBlock := {|| dbGoBottom() }
 
@@ -56,26 +56,26 @@ FUNCTION TBrowseDB(nTop, nLeft, nBottom, nRight)
 
 #ifdef HB_CLP_STRICT
 
-FUNCTION __dbSkipper( nRecs )
+FUNCTION __dbSkipper(nRecs)
 
    LOCAL nSkipped := 0
 
    IF LastRec() != 0
       DO CASE
       CASE nRecs == 0
-         dbSkip( 0 )
+         dbSkip(0)
       CASE nRecs > 0 .AND. RecNo() != LastRec() + 1
          DO WHILE nSkipped < nRecs
             dbSkip()
             IF Eof()
-               dbSkip( -1 )
+               dbSkip(-1)
                EXIT
             ENDIF
             ++nSkipped
          ENDDO
       CASE nRecs < 0
          DO WHILE nSkipped > nRecs
-            dbSkip( -1 )
+            dbSkip(-1)
             IF Bof()
                EXIT
             ENDIF

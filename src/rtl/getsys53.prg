@@ -47,21 +47,21 @@
 
 #ifdef HB_COMPAT_C53
 
-PROCEDURE GUIReader( oGet, oGetlist, oMenu, aMsg )
+PROCEDURE GUIReader(oGet, oGetlist, oMenu, aMsg)
 
-   IF ! HB_ISOBJECT(oGetList)
+   IF !HB_ISOBJECT(oGetList)
       oGetList := __GetListActive()
    ENDIF
 
    IF oGetList != NIL
-      oGetlist:GUIReader( oGet, oMenu, aMsg )
+      oGetlist:GUIReader(oGet, oMenu, aMsg)
    ENDIF
 
    RETURN
 
 PROCEDURE GUIApplyKey(oGet, oGUI, oGetList, nKey, oMenu, aMsg)
 
-   IF ! HB_ISOBJECT(oGetList)
+   IF !HB_ISOBJECT(oGetList)
       oGetList := __GetListActive()
    ENDIF
 
@@ -71,33 +71,33 @@ PROCEDURE GUIApplyKey(oGet, oGUI, oGetList, nKey, oMenu, aMsg)
 
    RETURN
 
-FUNCTION GUIPreValidate( oGet, oGUI, aMsg )
+FUNCTION GUIPreValidate(oGet, oGUI, aMsg)
 
    LOCAL oGetList := __GetListActive()
 
-   RETURN iif( oGetList != NIL, oGetList:GUIPreValidate( oGet, oGUI, aMsg ), .F. )
+   RETURN iif(oGetList != NIL, oGetList:GUIPreValidate(oGet, oGUI, aMsg), .F.)
 
-FUNCTION GUIPostValidate( oGet, oGUI, aMsg )
+FUNCTION GUIPostValidate(oGet, oGUI, aMsg)
 
    LOCAL oGetList := __GetListActive()
 
-   RETURN iif( oGetList != NIL, oGetList:GUIPostValidate( oGet, oGUI, aMsg ), .F. )
+   RETURN iif(oGetList != NIL, oGetList:GUIPostValidate(oGet, oGUI, aMsg), .F.)
 
-PROCEDURE TBReader( oGet, oGetList, oMenu, aMsg )
+PROCEDURE TBReader(oGet, oGetList, oMenu, aMsg)
 
-   IF ! HB_ISOBJECT(oGetList)
+   IF !HB_ISOBJECT(oGetList)
       oGetList := __GetListActive()
    ENDIF
 
    IF oGetList != NIL
-      oGetlist:TBReader( oGet, oMenu, aMsg )
+      oGetlist:TBReader(oGet, oMenu, aMsg)
    ENDIF
 
    RETURN
 
 PROCEDURE TBApplyKey(oGet, oTB, oGetList, nKey, aMsg)
 
-   IF ! HB_ISOBJECT(oGetList)
+   IF !HB_ISOBJECT(oGetList)
       oGetList := __GetListActive()
    ENDIF
 
@@ -107,53 +107,53 @@ PROCEDURE TBApplyKey(oGet, oTB, oGetList, nKey, aMsg)
 
    RETURN
 
-FUNCTION Accelerator( oGetList, nKey, aMsg )
+FUNCTION Accelerator(oGetList, nKey, aMsg)
 
-   IF ! HB_ISOBJECT(oGetList)
+   IF !HB_ISOBJECT(oGetList)
       oGetList := __GetListActive()
    ENDIF
 
-   RETURN iif( oGetList != NIL, oGetlist:Accelerator( nKey, aMsg ), 0 )
+   RETURN iif(oGetList != NIL, oGetlist:Accelerator(nKey, aMsg), 0)
 
 FUNCTION HitTest( oGetList, nMRow, nMCol, aMsg )
 
-   IF ! HB_ISOBJECT(oGetList)
+   IF !HB_ISOBJECT(oGetList)
       oGetList := __GetListActive()
    ENDIF
 
-   RETURN iif( oGetList != NIL, oGetlist:hitTest( nMRow, nMCol, aMsg ), 0 )
+   RETURN iif(oGetList != NIL, oGetlist:hitTest(nMRow, nMCol, aMsg), 0)
 
-PROCEDURE ShowGetMsg( oGet, aMsg )
+PROCEDURE ShowGetMsg(oGet, aMsg)
 
    LOCAL oGetList := __GetListActive()
 
    IF oGetList != NIL
-      oGetList:ShowGetMsg( oGet, aMsg )
+      oGetList:ShowGetMsg(oGet, aMsg)
    ENDIF
 
    RETURN
 
-PROCEDURE EraseGetMsg( oGet, aMsg )
+PROCEDURE EraseGetMsg(oGet, aMsg)
 
    LOCAL oGetList := __GetListActive()
 
    HB_SYMBOL_UNUSED(oGet)
 
    IF oGetList != NIL
-      oGetList:EraseGetMsg( aMsg )
+      oGetList:EraseGetMsg(aMsg)
    ENDIF
 
    RETURN
 
-FUNCTION ReadStats( nElement, xNewValue )
+FUNCTION ReadStats(nElement, xNewValue)
 
    LOCAL oGetList := __GetListActive()
 
    IF oGetList != NIL
       IF PCount() > 1
-         RETURN oGetList:ReadStats( nElement, xNewValue )
+         RETURN oGetList:ReadStats(nElement, xNewValue)
       ELSE
-         RETURN oGetList:ReadStats( nElement )
+         RETURN oGetList:ReadStats(nElement)
       ENDIF
    ENDIF
 

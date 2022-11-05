@@ -49,7 +49,7 @@ THREAD STATIC t_lOldPrinter
 THREAD STATIC t_lOldExtra
 THREAD STATIC t_cOldExtraFile
 
-PROCEDURE __TextSave( cFile )
+PROCEDURE __TextSave(cFile)
 
    t_cFile := cFile
 

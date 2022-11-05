@@ -48,11 +48,11 @@
 
 PROCEDURE ErrorSys()
 
-   ErrorBlock({| oError | DefError( oError ) })
+   ErrorBlock({| oError | DefError(oError) })
 
    RETURN
 
-STATIC FUNCTION DefError( oError )
+STATIC FUNCTION DefError(oError)
 
    LOCAL cMessage
    LOCAL cOSError
@@ -85,8 +85,8 @@ STATIC FUNCTION DefError( oError )
       RETURN .F.
    ENDIF
 
-   cMessage := ErrorMessage( oError )
-   IF ! Empty(oError:osCode)
+   cMessage := ErrorMessage(oError)
+   IF !Empty(oError:osCode)
       cOSError := hb_StrFormat("(DOS Error %1$d)", oError:osCode)
    ENDIF
 
@@ -106,13 +106,13 @@ STATIC FUNCTION DefError( oError )
 
    // Show alert box
 
-   DO WHILE ( nChoice := Alert( cMessage + iif( cOSError == NIL, "", ";" + cOSError ), aOptions ) ) == 0
+   DO WHILE ( nChoice := Alert( cMessage + iif(cOSError == NIL, "", ";" + cOSError), aOptions ) ) == 0
    ENDDO
 
-   IF ! Empty(nChoice)  /* Alert() may return NIL */
+   IF !Empty(nChoice)  /* Alert() may return NIL */
       SWITCH aOptions[nChoice]
       CASE "Break"
-         Break( oError )
+         Break(oError)
       CASE "Retry"
          RETURN .T.
       CASE "Default"
@@ -126,13 +126,13 @@ STATIC FUNCTION DefError( oError )
       cMessage += " " + cOSError
    ENDIF
 
-   OutErr( hb_eol() )
-   OutErr( cMessage )
+   OutErr(hb_eol())
+   OutErr(cMessage)
 
    n := 1
-   DO WHILE ! Empty(ProcName( ++n ))
-      OutErr( hb_eol() )
-      OutErr( hb_StrFormat("Called from %1$s(%2$d)  ", ProcName( n ), ProcLine( n )) )
+   DO WHILE !Empty(ProcName(++n))
+      OutErr(hb_eol())
+      OutErr(hb_StrFormat("Called from %1$s(%2$d)  ", ProcName(n), ProcLine(n)))
    ENDDO
 
    ErrorLevel(1)
@@ -140,10 +140,10 @@ STATIC FUNCTION DefError( oError )
 
    RETURN .F.
 
-STATIC FUNCTION ErrorMessage( oError )
+STATIC FUNCTION ErrorMessage(oError)
 
    // start error message
-   LOCAL cMessage := iif( oError:severity > ES_WARNING, "Error", "Warning" ) + " "
+   LOCAL cMessage := iif(oError:severity > ES_WARNING, "Error", "Warning") + " "
 
    // add subsystem name if available
    IF HB_ISSTRING(oError:subsystem)
@@ -166,9 +166,9 @@ STATIC FUNCTION ErrorMessage( oError )
 
    // add either filename or operation
    DO CASE
-   CASE ! Empty(oError:filename)
+   CASE !Empty(oError:filename)
       cMessage += ": " + oError:filename
-   CASE ! Empty(oError:operation)
+   CASE !Empty(oError:operation)
       cMessage += ": " + oError:operation
    ENDCASE
 

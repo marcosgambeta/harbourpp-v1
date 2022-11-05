@@ -65,7 +65,7 @@ CREATE CLASS ScrollBar FUNCTION HBScrollBar
    VAR cargo
 
    METHOD barLength() SETGET
-   METHOD bitmaps( aBitmaps ) SETGET
+   METHOD bitmaps(aBitmaps) SETGET
    METHOD colorSpec(cColorSpec) SETGET
    METHOD current( nCurrent ) SETGET
    METHOD end(nEnd) SETGET
@@ -73,9 +73,9 @@ CREATE CLASS ScrollBar FUNCTION HBScrollBar
    METHOD orient( nOrient ) SETGET
    METHOD sBlock(bSBlock) SETGET
    METHOD start( nStart ) SETGET
-   METHOD style( cStyle ) SETGET
-   METHOD thumbPos( nThumbPos ) SETGET
-   METHOD total( nTotal ) SETGET
+   METHOD style(cStyle) SETGET
+   METHOD thumbPos(nThumbPos) SETGET
+   METHOD total(nTotal) SETGET
 
    METHOD display()
    METHOD update()
@@ -241,7 +241,7 @@ METHOD hitTest( nMRow, nMCol ) CLASS ScrollBar
 METHOD barLength() CLASS ScrollBar
    RETURN ::nBarLength
 
-METHOD bitmaps( aBitmaps ) CLASS ScrollBar
+METHOD bitmaps(aBitmaps) CLASS ScrollBar
 
    IF HB_ISARRAY(aBitmaps) .AND. Len(aBitmaps) == 3
 
@@ -252,7 +252,7 @@ METHOD bitmaps( aBitmaps ) CLASS ScrollBar
 
 METHOD colorSpec(cColorSpec) CLASS ScrollBar
 
-   IF HB_ISSTRING(cColorSpec) .AND. ! Empty(hb_ColorIndex(cColorSpec, 1)) .AND. Empty(hb_ColorIndex(cColorSpec, 2))
+   IF HB_ISSTRING(cColorSpec) .AND. !Empty(hb_ColorIndex(cColorSpec, 1)) .AND. Empty(hb_ColorIndex(cColorSpec, 2))
 
       ::cColorSpec := cColorSpec
    ENDIF
@@ -314,7 +314,7 @@ METHOD start( nStart ) CLASS ScrollBar
 
    RETURN ::nStart
 
-METHOD style( cStyle ) CLASS ScrollBar
+METHOD style(cStyle) CLASS ScrollBar
 
    IF HB_ISSTRING(cStyle) .AND. Len(cStyle) == 4
 
@@ -323,7 +323,7 @@ METHOD style( cStyle ) CLASS ScrollBar
 
    RETURN ::cStyle
 
-METHOD thumbPos( nThumbPos ) CLASS ScrollBar
+METHOD thumbPos(nThumbPos) CLASS ScrollBar
 
    IF HB_ISNUMERIC(nThumbPos)
 
@@ -343,7 +343,7 @@ METHOD thumbPos( nThumbPos ) CLASS ScrollBar
 
    RETURN ::nThumbPos
 
-METHOD total( nTotal ) CLASS ScrollBar
+METHOD total(nTotal) CLASS ScrollBar
 
    IF HB_ISNUMERIC(nTotal) .AND. nTotal >= 2 .AND. nTotal != ::nTotal
 
@@ -361,7 +361,7 @@ METHOD CalcThumbPos() CLASS ScrollBar
       RETURN .F.
    ENDIF
 
-   IF ! ::lOverride
+   IF !::lOverride
       ::nThumbPos := Min(Max(Round(::nCurrent * ( ( nBarLength - 1 ) / nTotal ) + 1, 0), 1), nBarLength)
    ENDIF
 
@@ -381,13 +381,13 @@ METHOD New( nStart, nEnd, nOffset, bSBlock, nOrient ) CLASS ScrollBar
 
    LOCAL cColor
 
-   __defaultNIL( @nOrient, SCROLL_VERTICAL )
+   __defaultNIL(@nOrient, SCROLL_VERTICAL)
 
-   IF ! HB_ISNUMERIC(nStart) .OR. ;
-      ! HB_ISNUMERIC(nEnd) .OR. ;
-      ! HB_ISNUMERIC(nOffset) .OR. ;
-      ! ValType(bSBlock) $ "BU" .OR. ;
-      ! HB_ISNUMERIC(nOrient) .OR. ;
+   IF !HB_ISNUMERIC(nStart) .OR. ;
+      !HB_ISNUMERIC(nEnd) .OR. ;
+      !HB_ISNUMERIC(nOffset) .OR. ;
+      !ValType(bSBlock) $ "BU" .OR. ;
+      !HB_ISNUMERIC(nOrient) .OR. ;
       ( nOrient != SCROLL_VERTICAL .AND. nOrient != SCROLL_HORIZONTAL )
       RETURN NIL
    ENDIF
@@ -417,7 +417,7 @@ METHOD New( nStart, nEnd, nOffset, bSBlock, nOrient ) CLASS ScrollBar
 
    RETURN Self
 
-FUNCTION ScrollBar( nStart, nEnd, nOffset, bSBlock, nOrient )
+FUNCTION ScrollBar(nStart, nEnd, nOffset, bSBlock, nOrient)
    RETURN HBScrollBar():New( nStart, nEnd, nOffset, bSBlock, nOrient )
 
 #endif

@@ -44,7 +44,7 @@
  *
  */
 
-FUNCTION ReadVar( cVarName )
+FUNCTION ReadVar(cVarName)
 
    THREAD STATIC t_cVarName := ""
 
@@ -52,7 +52,7 @@ FUNCTION ReadVar( cVarName )
    LOCAL oGetList
 
    IF ( oGetList := __GetListActive() ) != NIL
-      RETURN oGetList:ReadVar( cVarName )
+      RETURN oGetList:ReadVar(cVarName)
    ENDIF
 
    cOldVarName := t_cVarName

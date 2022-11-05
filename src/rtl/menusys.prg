@@ -56,11 +56,11 @@
 #ifdef HB_COMPAT_C53
 
 /* Standard Menu System Modal handling for Menu Items */
-FUNCTION MenuModal( oTopMenu, nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList )
-   RETURN HBMenuSys():New( oTopMenu ):modal( nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList )
+FUNCTION MenuModal(oTopMenu, nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList)
+   RETURN HBMenuSys():New( oTopMenu ):modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList)
 
 /* Dummy function */
-FUNCTION ShowMsg( aMsg, lMode )
+FUNCTION ShowMsg(aMsg, lMode)
 
    HB_SYMBOL_UNUSED(aMsg)
    HB_SYMBOL_UNUSED(lMode)
@@ -78,13 +78,13 @@ FUNCTION IsShortcut( oMenu, nKey, /* @ */ nID )
 
    DO CASE
    // Test for top menu item not a TopBar Menu:
-   CASE ! oMenu:ClassName() == "TOPBARMENU"
+   CASE !oMenu:ClassName() == "TOPBARMENU"
 
-      RETURN IsQuick( oMenu, nKey, @nID )
+      RETURN IsQuick(oMenu, nKey, @nID)
 
    // Test and assign top menu item shortCut, enabled, and ! PopUp:
    // Changed by enclosing assignment before ':Enabled':
-   CASE ( nShortCut := oMenu:getShortCt( nKey ) ) > 0 .AND. ( oItem := oMenu:getItem( nShortcut ) ):enabled .AND. ! oItem:isPopUp()
+   CASE ( nShortCut := oMenu:getShortCt( nKey ) ) > 0 .AND. ( oItem := oMenu:getItem(nShortcut) ):enabled .AND. !oItem:isPopUp()
 
       oMenu:select( nShortCut )
       Eval(oItem:data, oItem)
@@ -105,7 +105,7 @@ FUNCTION IsShortcut( oMenu, nKey, /* @ */ nID )
       // Loop to wrap around through TopMenu from Current Item:
       FOR i := 1 TO nTotal
 
-         IF ( oItem := oMenu:getItem( nItem ) ):enabled .AND. oItem:isPopUp() .AND. IsQuick( oItem:data, nKey, @nID )
+         IF ( oItem := oMenu:getItem(nItem) ):enabled .AND. oItem:isPopUp() .AND. IsQuick(oItem:data, nKey, @nID)
 
             RETURN .T.
          ENDIF
@@ -121,7 +121,7 @@ FUNCTION IsShortcut( oMenu, nKey, /* @ */ nID )
 
 /* Navigates to the next Get or Menu Item from the
    Current if more than one uses the same ShortCut. */
-FUNCTION IsQuick( oMenu, nKey, /* @ */ nID )
+FUNCTION IsQuick(oMenu, nKey, /* @ */ nID)
 
    LOCAL nItem
    LOCAL nTotal
@@ -134,13 +134,13 @@ FUNCTION IsQuick( oMenu, nKey, /* @ */ nID )
 
       FOR nItem := 1 TO nTotal
 
-         IF ( oItem := oMenu:getItem( nItem ) ):enabled .AND. oItem:isPopUp() .AND. IsQuick( oItem:data, nKey, @nID )
+         IF ( oItem := oMenu:getItem(nItem) ):enabled .AND. oItem:isPopUp() .AND. IsQuick(oItem:data, nKey, @nID)
 
             RETURN .T.
          ENDIF
       NEXT
 
-   ELSEIF !( oItem := oMenu:getItem( nShortCut ) ):isPopUp() .AND. oItem:enabled
+   ELSEIF !( oItem := oMenu:getItem(nShortCut) ):isPopUp() .AND. oItem:enabled
 
       oMenu:select( nShortCut )
       Eval(oItem:data, oItem)

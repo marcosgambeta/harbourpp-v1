@@ -48,7 +48,7 @@
 
 THREAD STATIC t_oGetListActive
 
-PROCEDURE __GetListSetActive( oGetList )
+PROCEDURE __GetListSetActive(oGetList)
 
    IF t_oGetListActive != NIL
       t_oGetListActive:HasFocus := .F.

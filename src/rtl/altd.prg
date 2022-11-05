@@ -54,7 +54,7 @@ PROCEDURE AltD(nAction)
       /* do not activate the debugger immediately because the module
          where AltD() was called can have no debugger info - stop
          on first LINE with debugged info */
-      __dbgInvokeDebug( Set(_SET_DEBUG) )
+      __dbgInvokeDebug(Set(_SET_DEBUG))
 
    ELSEIF HB_ISNUMERIC(nAction)
 

@@ -52,7 +52,7 @@ CREATE CLASS Symbol
 
    METHOD New( cSymName )     // Constructor. cSymName may already exists or not
    METHOD name()              // retrieves the symbol name
-   METHOD isEqual( oSymbol )  // Compares two symbol objects
+   METHOD isEqual(oSymbol)  // Compares two symbol objects
    METHOD exec(...)         // Executes the function referred to by the
                               // Symbol object, with an optional parameters list
    PROTECTED:
@@ -63,14 +63,14 @@ ENDCLASS
 
 METHOD New( cSymName ) CLASS Symbol
 
-   ::nSym := __dynsN2Sym( cSymName )
+   ::nSym := __dynsN2Sym(cSymName)
 
    RETURN Self
 
 METHOD name() CLASS Symbol
    RETURN ::nSym:Name
 
-METHOD isEqual( oSymbol ) CLASS Symbol
+METHOD isEqual(oSymbol) CLASS Symbol
    RETURN ::ClassH == oSymbol:ClassH .AND. ::nSym:Name == oSymbol:nSym:Name
 
 METHOD exec(...) CLASS Symbol

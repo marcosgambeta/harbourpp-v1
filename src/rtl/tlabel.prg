@@ -104,7 +104,7 @@ CREATE CLASS HBLabelForm
 
    METHOD ExecuteLabel()
    METHOD SampleLabels()
-   METHOD LoadLabel( cLblFile )
+   METHOD LoadLabel(cLblFile)
 
 ENDCLASS
 
@@ -117,7 +117,7 @@ METHOD New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nReco
    LOCAL err
    LOCAL OldMargin
 
-   ::aBandToPrint := {}  // Array( 5 )
+   ::aBandToPrint := {}  // Array(5)
    ::nCurrentCol := 1
 
    // Resolve parameters
@@ -131,12 +131,12 @@ METHOD New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nReco
       /* NOTE: CA-Cl*pper does an RTrim() on the filename here,
                but in Harbour we're using _SET_TRIMFILENAME. [vszakats] */
       IF Set(_SET_DEFEXTENSIONS)
-         cLBLName := hb_FNameExtSetDef( cLBLName, ".lbl" )
+         cLBLName := hb_FNameExtSetDef(cLBLName, ".lbl")
       ENDIF
    ENDIF
 
-   __defaultNIL( @lPrinter, .F. )
-   __defaultNIL( @lSample, .F. )
+   __defaultNIL(@lPrinter, .F.)
+   __defaultNIL(@lSample, .F.)
 
    // Set output devices
    IF lPrinter             // To the printer
@@ -144,9 +144,9 @@ METHOD New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nReco
    ENDIF
 
    lConsoleOn := Set(_SET_CONSOLE)
-   Set(_SET_CONSOLE, ! lNoConsole .AND. lConsoleOn)
+   Set(_SET_CONSOLE, !lNoConsole .AND. lConsoleOn)
 
-   IF ! Empty(cAltFile)         // To file
+   IF !Empty(cAltFile)         // To file
       lExtraState := Set(_SET_EXTRA, .T.)
       cExtraFile  := Set(_SET_EXTRAFILE, cAltFile)
    ENDIF
@@ -155,7 +155,7 @@ METHOD New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nReco
 
    BEGIN SEQUENCE
 
-      ::aLabelData := ::LoadLabel( cLBLName )  // Load the (.lbl) into an array
+      ::aLabelData := ::LoadLabel(cLBLName)  // Load the (.lbl) into an array
 
       // Add to the left margin if a SET MARGIN has been defined
       ::aLabelData[LBL_LMARGIN] += OldMargin
@@ -197,7 +197,7 @@ METHOD New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nReco
    Set(_SET_PRINTER, lPrintOn) // Set the printer back to prior state
    Set(_SET_CONSOLE, lConsoleOn)  // Set the console back to prior state
 
-   IF ! Empty(cAltFile)           // Set extrafile back
+   IF !Empty(cAltFile)           // Set extrafile back
       Set(_SET_EXTRAFILE, cExtraFile)
       Set(_SET_EXTRA, lExtraState)
    ENDIF
@@ -224,7 +224,7 @@ METHOD ExecuteLabel() CLASS HBLabelForm
          cBuffer := PadR(Eval(aField[LF_EXP]), ::aLabelData[LBL_WIDTH]) + Space(::aLabelData[LBL_SPACES])
 
          IF aField[LF_BLANK]
-            IF ! Empty(cBuffer)
+            IF !Empty(cBuffer)
                AAdd(aBuffer, cBuffer)
             ENDIF
          ELSE
@@ -239,7 +239,7 @@ METHOD ExecuteLabel() CLASS HBLabelForm
 
    // Add aBuffer to ::aBandToPrint
    FOR nField := 1 TO Len(::aLabelData[LBL_FIELDS])
-      ::aBandToPrint[nField] += iif( aBuffer[nField] == NIL, ::cBlank, aBuffer[nField] )
+      ::aBandToPrint[nField] += iif(aBuffer[nField] == NIL, ::cBlank, aBuffer[nField])
    NEXT
 
    IF ::nCurrentCol == ::aLabelData[LBL_ACROSS]
@@ -298,7 +298,7 @@ METHOD SampleLabels() CLASS HBLabelForm
       NEXT
 
       // Prompt for more
-      DispOutAt(Row(), 0, __natMsg( _LF_SAMPLES ) + " (" + __natMsg( _LF_YN ) + ")")
+      DispOutAt(Row(), 0, __natMsg(_LF_SAMPLES) + " (" + __natMsg(_LF_YN) + ")")
       cKey := hb_keyChar(Inkey(0))
       DispOut(cKey)
       IF Row() == MaxRow()
@@ -307,14 +307,14 @@ METHOD SampleLabels() CLASS HBLabelForm
       ELSE
          SetPos(Row() + 1, 0)
       ENDIF
-      IF __natIsNegative( cKey )    // Don't give sample labels
+      IF __natIsNegative(cKey)    // Don't give sample labels
          lMoreSamples := .F.
       ENDIF
    ENDDO
 
    RETURN Self
 
-METHOD LoadLabel( cLblFile ) CLASS HBLabelForm
+METHOD LoadLabel(cLblFile) CLASS HBLabelForm
 
    LOCAL i                              // Counters
    LOCAL cBuff      := Space(BUFFSIZE)  // File buffer
@@ -338,7 +338,7 @@ METHOD LoadLabel( cLblFile ) CLASS HBLabelForm
    aLabel[LBL_FIELDS]  := {}           // Array of label fields
 
    // Open the label file
-   IF ( nHandle := FOpen(cLblFile) ) == F_ERROR .AND. Empty(hb_FNameDir( cLblFile ))
+   IF ( nHandle := FOpen(cLblFile) ) == F_ERROR .AND. Empty(hb_FNameDir(cLblFile))
 
       // Search through default path; attempt to open label file
       FOR EACH cPath IN hb_ATokens(StrTran(Set(_SET_DEFAULT), ",", ";"), ";")
@@ -390,13 +390,13 @@ METHOD LoadLabel( cLblFile ) CLASS HBLabelForm
 
    RETURN aLabel
 
-FUNCTION __LabelForm( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample )
+FUNCTION __LabelForm(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample)
 
    RETURN HBLabelForm():New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample )
 
 STATIC PROCEDURE PrintIt( cString )
 
-   QQOut(hb_defaultValue( cString, "" ))
+   QQOut(hb_defaultValue(cString, ""))
    QOut()
 
    RETURN

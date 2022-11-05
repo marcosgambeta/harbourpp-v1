@@ -74,19 +74,19 @@ CREATE CLASS TBColumn
 #endif
    /* --- End of CA-Cl*pper compatible TBColumn instance area --- */
 
-   METHOD block(bBlock) SETGET                     /* Code block to retrieve data for the column */
-   METHOD colorBlock(bColorBlock) SETGET           /* Code block that determines color of data items */
-   METHOD defColor( aDefColor ) SETGET               /* Array of numeric indexes into the color table */
-   METHOD colSep( cColSep ) SETGET                   /* Column separator character */
-   METHOD heading( cHeading ) SETGET                 /* Column heading */
-   METHOD footing( cFooting ) SETGET                 /* Column footing */
-   METHOD headSep( cHeadSep ) SETGET                 /* Heading separator character */
-   METHOD footSep( cFootSep ) SETGET                 /* Footing separator character */
-   METHOD width( nWidth ) SETGET                     /* Column display width */
+   METHOD block(bBlock) SETGET                       /* Code block to retrieve data for the column */
+   METHOD colorBlock(bColorBlock) SETGET             /* Code block that determines color of data items */
+   METHOD defColor(aDefColor) SETGET               /* Array of numeric indexes into the color table */
+   METHOD colSep(cColSep) SETGET                   /* Column separator character */
+   METHOD heading(cHeading) SETGET                   /* Column heading */
+   METHOD footing(cFooting) SETGET                   /* Column footing */
+   METHOD headSep(cHeadSep) SETGET                   /* Heading separator character */
+   METHOD footSep(cFootSep) SETGET                   /* Footing separator character */
+   METHOD width(nWidth) SETGET                     /* Column display width */
 #ifdef HB_COMPAT_C53
-   METHOD preBlock(bPreBlock) SETGET               /* Code block determining editing */
-   METHOD postBlock(bPostBlock) SETGET             /* Code block validating values */
-   METHOD setStyle( nStyle, lNewValue )
+   METHOD preBlock(bPreBlock) SETGET                 /* Code block determining editing */
+   METHOD postBlock(bPostBlock) SETGET               /* Code block validating values */
+   METHOD setStyle(nStyle, lNewValue)
 #endif
 
    METHOD New( cHeading, bBlock )                    /* NOTE: This method is a Harbour extension [vszakats] */
@@ -109,7 +109,7 @@ METHOD colorBlock(bColorBlock) CLASS TBColumn
 
    RETURN ::bColorBlock
 
-METHOD defColor( aDefColor ) CLASS TBColumn
+METHOD defColor(aDefColor) CLASS TBColumn
 
    IF aDefColor != NIL
       ::aDefColor := __eInstVar53( Self, "DEFCOLOR", aDefColor, "A", 1001 )
@@ -117,7 +117,7 @@ METHOD defColor( aDefColor ) CLASS TBColumn
 
    RETURN ::aDefColor
 
-METHOD colSep( cColSep ) CLASS TBColumn
+METHOD colSep(cColSep) CLASS TBColumn
 
    IF cColSep != NIL
       ::cColSep := __eInstVar53( Self, "COLSEP", cColSep, "C", 1001 )
@@ -125,7 +125,7 @@ METHOD colSep( cColSep ) CLASS TBColumn
 
    RETURN ::cColSep
 
-METHOD heading( cHeading ) CLASS TBColumn
+METHOD heading(cHeading) CLASS TBColumn
 
    IF cHeading != NIL
       ::cHeading := __eInstVar53( Self, "HEADING", cHeading, "C", 1001 )
@@ -133,7 +133,7 @@ METHOD heading( cHeading ) CLASS TBColumn
 
    RETURN ::cHeading
 
-METHOD footing( cFooting ) CLASS TBColumn
+METHOD footing(cFooting) CLASS TBColumn
 
    IF cFooting != NIL
       ::cFooting := __eInstVar53( Self, "FOOTING", cFooting, "C", 1001 )
@@ -141,7 +141,7 @@ METHOD footing( cFooting ) CLASS TBColumn
 
    RETURN ::cFooting
 
-METHOD headSep( cHeadSep ) CLASS TBColumn
+METHOD headSep(cHeadSep) CLASS TBColumn
 
    IF cHeadSep != NIL
       ::cHeadSep := __eInstVar53( Self, "HEADSEP", cHeadSep, "C", 1001 )
@@ -149,7 +149,7 @@ METHOD headSep( cHeadSep ) CLASS TBColumn
 
    RETURN ::cHeadSep
 
-METHOD footSep( cFootSep ) CLASS TBColumn
+METHOD footSep(cFootSep) CLASS TBColumn
 
    IF cFootSep != NIL
       ::cFootSep := __eInstVar53( Self, "FOOTSEP", cFootSep, "C", 1001 )
@@ -157,7 +157,7 @@ METHOD footSep( cFootSep ) CLASS TBColumn
 
    RETURN ::cFootSep
 
-METHOD width( nWidth ) CLASS TBColumn
+METHOD width(nWidth) CLASS TBColumn
 
    IF nWidth != NIL
       ::nWidth := __eInstVar53( Self, "WIDTH", nWidth, "N", 1001 )
@@ -183,7 +183,7 @@ METHOD postBlock(bPostBlock) CLASS TBColumn
 
    RETURN ::bPostBlock
 
-METHOD setStyle( nStyle, lNewValue ) CLASS TBColumn
+METHOD setStyle(nStyle, lNewValue) CLASS TBColumn
 
    /* NOTE: CA-Cl*pper 5.3 does no checks on the value of nStyle, so in case
             it is zero or non-numeric, a regular RTE will happen. [vszakats] */
