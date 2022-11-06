@@ -66,7 +66,7 @@ FUNCTION ReadModal(GetList)
       RETURN .F.
    ENDIF
 
-   oGetList := HBGetList():New( GetList )
+   oGetList := HBGetList():New(GetList)
 
    oSaveGetList := __GetListActive()
 #ifdef HB_COMPAT_C53
@@ -76,7 +76,7 @@ FUNCTION ReadModal(GetList)
 #endif
 
    __GetListSetActive(oGetList)
-   __GetListLast( oGetList )
+   __GetListLast(oGetList)
 
 #ifdef HB_COMPAT_C53
    oGetList:ReadModal(nPos, oMenu, nMsgRow, nMsgLeft, nMsgRight, cMsgColor)
@@ -208,10 +208,10 @@ FUNCTION GetPostValidate(oGet)
 
    RETURN .F.
 
-FUNCTION ReadExit( lExit )
+FUNCTION ReadExit(lExit)
    RETURN Set(_SET_EXIT, lExit)
 
-FUNCTION ReadInsert( lInsert )
+FUNCTION ReadInsert(lInsert)
    RETURN Set(_SET_INSERT, lInsert)
 
 FUNCTION Updated()

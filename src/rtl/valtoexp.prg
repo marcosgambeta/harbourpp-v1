@@ -94,7 +94,7 @@ STATIC FUNCTION s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
       tmp := __vmItemID(xVal)
       IF cInd == NIL
          cInd := cRefs := ""
-         hRefs := { tmp => cInd }
+         hRefs := {tmp => cInd}
       ELSEIF tmp $ hRefs
          IF !( cRefs == "" )
             cRefs += ","
@@ -186,7 +186,7 @@ FUNCTION __itemSetObj(xVal, aObjs)
 
    RETURN xVal
 
-FUNCTION __itemSetObjRaw( xVal, aObjs )
+FUNCTION __itemSetObjRaw(xVal, aObjs)
 
    LOCAL aRef
 

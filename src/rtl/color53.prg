@@ -113,27 +113,27 @@ FUNCTION GetClrBack(cColor)
    RETURN SubStr(cColor, nPos + 1)
 
 FUNCTION RadGrDefCo(cColor)
-   RETURN iif(IsDefColor(), ApplyDefau( cColor, "W/N", "W/N", "W+/N" ), ApplyDefau( cColor, 3, 1, 4 ))
+   RETURN iif(IsDefColor(), ApplyDefau(cColor, "W/N", "W/N", "W+/N"), ApplyDefau(cColor, 3, 1, 4))
 
 FUNCTION RadItDefCo(cColor)
-   RETURN iif(IsDefColor(), ApplyDefau( cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N" ), ApplyDefau( cColor, 5, 5, 2, 2, 1, 1, 4 ))
+   RETURN iif(IsDefColor(), ApplyDefau(cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N"), ApplyDefau(cColor, 5, 5, 2, 2, 1, 1, 4))
 
 FUNCTION ListBDefCo(cColor)
-   RETURN iif(IsDefColor(), ApplyDefau( cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N" ), ApplyDefau( cColor, 5, 5, 5, 2, 3, 1, 4 ))
+   RETURN iif(IsDefColor(), ApplyDefau(cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N"), ApplyDefau(cColor, 5, 5, 5, 2, 3, 1, 4))
 
 FUNCTION ComboDefCo(cColor)
-   RETURN iif(IsDefColor(), ApplyDefau( cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N", "W/N" ), ApplyDefau( cColor, 5, 5, 5, 2, 3, 1, 4, 1 ))
+   RETURN iif(IsDefColor(), ApplyDefau(cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N", "W/N"), ApplyDefau(cColor, 5, 5, 5, 2, 3, 1, 4, 1))
 
 FUNCTION CheckDefCo(cColor)
-   RETURN iif(IsDefColor(), ApplyDefau( cColor, "W/N", "W+/N", "W/N", "W+/N" ), ApplyDefau( cColor, 5, 2, 1, 4 ))
+   RETURN iif(IsDefColor(), ApplyDefau(cColor, "W/N", "W+/N", "W/N", "W+/N"), ApplyDefau(cColor, 5, 2, 1, 4))
 
 FUNCTION ButtnDefCo(cColor)
-   RETURN iif(IsDefColor(), ApplyDefau( cColor, "W/N", "N/W", "W+/N", "W+/N" ), ApplyDefau( cColor, 5, 2, 1, 4 ))
+   RETURN iif(IsDefColor(), ApplyDefau(cColor, "W/N", "N/W", "W+/N", "W+/N"), ApplyDefau(cColor, 5, 2, 1, 4))
 
 FUNCTION MenuDefCol(cColor)
-   RETURN iif(IsDefColor(), ApplyDefau( cColor, "N/W", "W/N", "W+/W", "W+/N", "N+/W", "W/N" ), ApplyDefau( cColor, 5, 2, 4, 2, 1, 3 ))
+   RETURN iif(IsDefColor(), ApplyDefau(cColor, "N/W", "W/N", "W+/W", "W+/N", "N+/W", "W/N"), ApplyDefau(cColor, 5, 2, 4, 2, 1, 3))
 
-FUNCTION ApplyDefau( cColor, xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xClr8 )
+FUNCTION ApplyDefau(cColor, xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xClr8)
 
    LOCAL cSetColor
    LOCAL aSetColor
@@ -155,9 +155,9 @@ FUNCTION ApplyDefau( cColor, xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xC
 
    cSetColor := SetColor()
 
-   aSetColor := { GetClrPair(cSetColor, 1), GetClrPair(cSetColor, 2), GetClrPair(cSetColor, 3), GetClrPair(cSetColor, 4), GetClrPair(cSetColor, 5) }
+   aSetColor := {GetClrPair(cSetColor, 1), GetClrPair(cSetColor, 2), GetClrPair(cSetColor, 3), GetClrPair(cSetColor, 4), GetClrPair(cSetColor, 5)}
 
-   aNewColor := { xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xClr8 }
+   aNewColor := {xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xClr8}
 
    nColors  := PCount() - 1
    cClrDefa := cColor

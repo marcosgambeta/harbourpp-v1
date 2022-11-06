@@ -46,7 +46,7 @@
 
 #include "inkey.ch"
 
-FUNCTION __Wait( xPrompt )
+FUNCTION __Wait(xPrompt)
 
    LOCAL nKey
    LOCAL cKey

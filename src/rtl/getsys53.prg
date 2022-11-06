@@ -115,7 +115,7 @@ FUNCTION Accelerator(oGetList, nKey, aMsg)
 
    RETURN iif(oGetList != NIL, oGetlist:Accelerator(nKey, aMsg), 0)
 
-FUNCTION HitTest( oGetList, nMRow, nMCol, aMsg )
+FUNCTION HitTest(oGetList, nMRow, nMCol, aMsg)
 
    IF !HB_ISOBJECT(oGetList)
       oGetList := __GetListActive()

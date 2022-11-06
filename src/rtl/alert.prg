@@ -18,14 +18,14 @@
 /* NOTE: Clipper will return NIL if the first parameter is not a string, but
          this is not documented. [vszakats] */
 
-/* NOTE: Clipper handles these buttons { "Ok", "", "Cancel" } in a buggy way.
+/* NOTE: Clipper handles these buttons {"Ok", "", "Cancel"} in a buggy way.
          This is fixed. [vszakats] */
 
 #ifdef HB_CLP_UNDOC
 STATIC s_lNoAlert
 #endif
 
-FUNCTION Alert( cMessage, aOptions, cColorNorm )
+FUNCTION Alert(cMessage, aOptions, cColorNorm)
 
    LOCAL cColorHigh
    LOCAL aOptionsOK
@@ -67,19 +67,19 @@ FUNCTION Alert( cMessage, aOptions, cColorNorm )
 
    DO CASE
    CASE Len(aOptionsOK) == 0
-      aOptionsOK := { "Ok" }
+      aOptionsOK := {"Ok"}
 #ifdef HB_CLP_STRICT
    CASE Len(aOptionsOK) > 4  /* NOTE: Clipper allows only four options [vszakats] */
       ASize(aOptionsOK, 4)
 #endif
    ENDCASE
 
-   RETURN hb_gtAlert( cMessage, aOptionsOK, cColorNorm, cColorHigh )
+   RETURN hb_gtAlert(cMessage, aOptionsOK, cColorNorm, cColorHigh)
 
 /* NOTE: xMessage can be of any type. This is a Harbour extension over Alert(). */
 /* NOTE: nDelay parameter is a Harbour extension over Alert(). */
 
-FUNCTION hb_Alert( xMessage, aOptions, cColorNorm, nDelay )
+FUNCTION hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
 
    LOCAL cMessage
    LOCAL cColorHigh
@@ -132,14 +132,14 @@ FUNCTION hb_Alert( xMessage, aOptions, cColorNorm, nDelay )
 
    DO CASE
    CASE Len(aOptionsOK) == 0
-      aOptionsOK := { "Ok" }
+      aOptionsOK := {"Ok"}
 #ifdef HB_CLP_STRICT
    CASE Len(aOptionsOK) > 4  /* NOTE: Clipper allows only four options [vszakats] */
       ASize(aOptionsOK, 4)
 #endif
    ENDCASE
 
-   RETURN hb_gtAlert( cMessage, aOptionsOK, cColorNorm, cColorHigh, nDelay )
+   RETURN hb_gtAlert(cMessage, aOptionsOK, cColorNorm, cColorHigh, nDelay)
 
 #ifdef HB_CLP_UNDOC
 

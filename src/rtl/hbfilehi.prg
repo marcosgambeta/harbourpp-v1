@@ -107,7 +107,7 @@ FUNCTION hb_PathJoin(cPathA, cPathR)
       RETURN cPathR
    ENDIF
 
-   hb_FNameSplit( cPathR, @cDirR, @cNameR, @cExtR, @cDriveR )
+   hb_FNameSplit(cPathR, @cDirR, @cNameR, @cExtR, @cDriveR)
 
    IF !Empty(cDriveR) .OR. ( !Empty(cDirR) .AND. Left(cDirR, 1) $ hb_osPathDelimiters() )
       RETURN cPathR
@@ -182,7 +182,7 @@ STATIC FUNCTION s_FN_ToArray(cPath, /* @ */ cFileName)
 
    LOCAL cDir, cName, cExt
 
-   hb_FNameSplit( cPath, @cDir, @cName, @cExt )
+   hb_FNameSplit(cPath, @cDir, @cName, @cExt)
 
    IF !Empty(cName) .OR. !Empty(cExt)
       cFileName := cName + cExt

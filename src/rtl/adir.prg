@@ -67,7 +67,7 @@ FUNCTION ADir(cFileMask, aName, aSize, aDate, aTime, aAttr)
 
    // If no drive/dir specified, use the SET DEFAULT setting.
 
-   hb_FNameSplit( cFileMask, @cDir, @cName, @cExt )
+   hb_FNameSplit(cFileMask, @cDir, @cName, @cExt)
 
    IF Empty(cDir)
       cFileMask := hb_FNameMerge(__DefPath(), cName, cExt)
@@ -93,7 +93,7 @@ FUNCTION ADir(cFileMask, aName, aSize, aDate, aTime, aAttr)
 
    //
 
-   aDir := Directory( cFileMask, iif(HB_ISARRAY(aAttr), "HSD", NIL) )
+   aDir := Directory(cFileMask, iif(HB_ISARRAY(aAttr), "HSD", NIL))
    nDirLen := Len(aDir)
 
    FOR nDirPos := 1 TO nDirLen

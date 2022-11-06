@@ -59,8 +59,8 @@ CREATE CLASS TBColumn
    VAR cargo                                         /* 01. User-definable variable */
    VAR nWidth       PROTECTED                        /* 02. */
    VAR bBlock       PROTECTED                        /* 03. */
-   VAR aDefColor    PROTECTED INIT { 1, 2 }          /* 04. NOTE: Default value for both CA-Cl*pper 5.2 and 5.3. */
-   VAR bColorBlock  PROTECTED INIT {|| NIL }         /* 05. */
+   VAR aDefColor    PROTECTED INIT {1, 2}            /* 04. NOTE: Default value for both CA-Cl*pper 5.2 and 5.3. */
+   VAR bColorBlock  PROTECTED INIT {||NIL}           /* 05. */
    VAR cHeading     PROTECTED INIT ""                /* 06. */
    VAR cHeadSep     PROTECTED                        /* 07. */
    VAR cColSep      PROTECTED                        /* 08. */
@@ -70,7 +70,7 @@ CREATE CLASS TBColumn
 #ifdef HB_COMPAT_C53
    VAR bPreBlock    PROTECTED                        /* 12. */
    VAR bPostBlock   PROTECTED                        /* 13. */
-   VAR aSetStyle    PROTECTED INIT { .F., .F., .F. } /* 14. TBC_READWRITE, TBC_MOVE, TBC_SIZE */
+   VAR aSetStyle    PROTECTED INIT {.F., .F., .F.}   /* 14. TBC_READWRITE, TBC_MOVE, TBC_SIZE */
 #endif
    /* --- End of CA-Cl*pper compatible TBColumn instance area --- */
 
@@ -89,14 +89,14 @@ CREATE CLASS TBColumn
    METHOD setStyle(nStyle, lNewValue)
 #endif
 
-   METHOD New( cHeading, bBlock )                    /* NOTE: This method is a Harbour extension [vszakats] */
+   METHOD New(cHeading, bBlock)                    /* NOTE: This method is a Harbour extension [vszakats] */
 
 ENDCLASS
 
 METHOD block(bBlock) CLASS TBColumn
 
    IF bBlock != NIL
-      ::bBlock := __eInstVar53( Self, "BLOCK", bBlock, "B", 1001 )
+      ::bBlock := __eInstVar53(Self, "BLOCK", bBlock, "B", 1001)
    ENDIF
 
    RETURN ::bBlock
@@ -104,7 +104,7 @@ METHOD block(bBlock) CLASS TBColumn
 METHOD colorBlock(bColorBlock) CLASS TBColumn
 
    IF bColorBlock != NIL
-      ::bColorBlock := __eInstVar53( Self, "COLORBLOCK", bColorBlock, "B", 1001 )
+      ::bColorBlock := __eInstVar53(Self, "COLORBLOCK", bColorBlock, "B", 1001)
    ENDIF
 
    RETURN ::bColorBlock
@@ -112,7 +112,7 @@ METHOD colorBlock(bColorBlock) CLASS TBColumn
 METHOD defColor(aDefColor) CLASS TBColumn
 
    IF aDefColor != NIL
-      ::aDefColor := __eInstVar53( Self, "DEFCOLOR", aDefColor, "A", 1001 )
+      ::aDefColor := __eInstVar53(Self, "DEFCOLOR", aDefColor, "A", 1001)
    ENDIF
 
    RETURN ::aDefColor
@@ -120,7 +120,7 @@ METHOD defColor(aDefColor) CLASS TBColumn
 METHOD colSep(cColSep) CLASS TBColumn
 
    IF cColSep != NIL
-      ::cColSep := __eInstVar53( Self, "COLSEP", cColSep, "C", 1001 )
+      ::cColSep := __eInstVar53(Self, "COLSEP", cColSep, "C", 1001)
    ENDIF
 
    RETURN ::cColSep
@@ -128,7 +128,7 @@ METHOD colSep(cColSep) CLASS TBColumn
 METHOD heading(cHeading) CLASS TBColumn
 
    IF cHeading != NIL
-      ::cHeading := __eInstVar53( Self, "HEADING", cHeading, "C", 1001 )
+      ::cHeading := __eInstVar53(Self, "HEADING", cHeading, "C", 1001)
    ENDIF
 
    RETURN ::cHeading
@@ -136,7 +136,7 @@ METHOD heading(cHeading) CLASS TBColumn
 METHOD footing(cFooting) CLASS TBColumn
 
    IF cFooting != NIL
-      ::cFooting := __eInstVar53( Self, "FOOTING", cFooting, "C", 1001 )
+      ::cFooting := __eInstVar53(Self, "FOOTING", cFooting, "C", 1001)
    ENDIF
 
    RETURN ::cFooting
@@ -144,7 +144,7 @@ METHOD footing(cFooting) CLASS TBColumn
 METHOD headSep(cHeadSep) CLASS TBColumn
 
    IF cHeadSep != NIL
-      ::cHeadSep := __eInstVar53( Self, "HEADSEP", cHeadSep, "C", 1001 )
+      ::cHeadSep := __eInstVar53(Self, "HEADSEP", cHeadSep, "C", 1001)
    ENDIF
 
    RETURN ::cHeadSep
@@ -152,7 +152,7 @@ METHOD headSep(cHeadSep) CLASS TBColumn
 METHOD footSep(cFootSep) CLASS TBColumn
 
    IF cFootSep != NIL
-      ::cFootSep := __eInstVar53( Self, "FOOTSEP", cFootSep, "C", 1001 )
+      ::cFootSep := __eInstVar53(Self, "FOOTSEP", cFootSep, "C", 1001)
    ENDIF
 
    RETURN ::cFootSep
@@ -160,7 +160,7 @@ METHOD footSep(cFootSep) CLASS TBColumn
 METHOD width(nWidth) CLASS TBColumn
 
    IF nWidth != NIL
-      ::nWidth := __eInstVar53( Self, "WIDTH", nWidth, "N", 1001 )
+      ::nWidth := __eInstVar53(Self, "WIDTH", nWidth, "N", 1001)
    ENDIF
 
    RETURN ::nWidth
@@ -170,7 +170,7 @@ METHOD width(nWidth) CLASS TBColumn
 METHOD preBlock(bPreBlock) CLASS TBColumn
 
    IF bPreBlock != NIL
-      ::bPreBlock := __eInstVar53( Self, "PREBLOCK", bPreBlock, "B", 1001 )
+      ::bPreBlock := __eInstVar53(Self, "PREBLOCK", bPreBlock, "B", 1001)
    ENDIF
 
    RETURN ::bPreBlock
@@ -178,7 +178,7 @@ METHOD preBlock(bPreBlock) CLASS TBColumn
 METHOD postBlock(bPostBlock) CLASS TBColumn
 
    IF bPostBlock != NIL
-      ::bPostBlock := __eInstVar53( Self, "POSTBLOCK", bPostBlock, "B", 1001 )
+      ::bPostBlock := __eInstVar53(Self, "POSTBLOCK", bPostBlock, "B", 1001)
    ENDIF
 
    RETURN ::bPostBlock
@@ -200,12 +200,12 @@ METHOD setStyle(nStyle, lNewValue) CLASS TBColumn
 
 #endif
 
-METHOD New( cHeading, bBlock ) CLASS TBColumn
+METHOD New(cHeading, bBlock) CLASS TBColumn
 
    ::cHeading := cHeading  /* NOTE: CA-Cl*pper allows any type here. [vszakats] */
    ::bBlock := bBlock      /* NOTE: CA-Cl*pper allows any type here. [vszakats] */
 
    RETURN Self
 
-FUNCTION TBColumnNew( cHeading, bBlock )
-   RETURN TBColumn():New( cHeading, bBlock )
+FUNCTION TBColumnNew(cHeading, bBlock)
+   RETURN TBColumn():New(cHeading, bBlock)

@@ -72,7 +72,7 @@ FUNCTION _GetNumCol(cColor)
       cColor := Left(cColor, nPos - 1)
    ENDIF
 
-   RETURN hb_AScan({ "B", "G", "BG", "R", "RB", "GR", "W", "N+", "B+", "G+", "BG+", "R+", "RB+", "GR+", "W+" }, cColor,,, .T.)
+   RETURN hb_AScan({"B", "G", "BG", "R", "RB", "GR", "W", "N+", "B+", "G+", "BG+", "R+", "RB+", "GR+", "W+"}, cColor, NIL, NIL, .T.)
 
 FUNCTION __GUIColor(cColor, nPos)
    RETURN hb_ColorIndex(cColor, nPos - 1)

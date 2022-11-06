@@ -50,7 +50,7 @@ FUNCTION hb_libName(cLibName, cLibDir)
 
    IF HB_ISSTRING(cLibName)
 
-      hb_FNameSplit( cLibName, @cDir, @cName, @cExt )
+      hb_FNameSplit(cLibName, @cDir, @cName, @cExt)
 
       IF Empty(cDir) .AND. HB_ISSTRING(cLibDir)
          cDir := cLibDir

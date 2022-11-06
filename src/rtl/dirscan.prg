@@ -54,7 +54,7 @@ STATIC FUNCTION hb_doScan(cPath, cMask, cAttr, cPathSep)
    LOCAL lMatch
    LOCAL aResult := {}
 
-   FOR EACH aFile IN hb_vfDirectory( cPath + hb_osFileMask(), cAttr + "D" )
+   FOR EACH aFile IN hb_vfDirectory(cPath + hb_osFileMask(), cAttr + "D")
       lMatch := hb_FileMatch(aFile[F_NAME], cMask)
       IF "D" $ aFile[F_ATTR]
          IF lMatch .AND. "D" $ cAttr
@@ -62,8 +62,7 @@ STATIC FUNCTION hb_doScan(cPath, cMask, cAttr, cPathSep)
          ENDIF
          IF !( aFile[F_NAME] == "." .OR. aFile[F_NAME] == ".." .OR. aFile[F_NAME] == "" )
             AEval(hb_DoScan(cPath + aFile[F_NAME] + cPathSep, cMask, cAttr, cPathSep), ;
-               {| x | x[F_NAME] := aFile[F_NAME] + cPathSep + x[F_NAME], ;
-               AAdd(aResult, x) })
+               {|x|x[F_NAME] := aFile[F_NAME] + cPathSep + x[F_NAME], AAdd(aResult, x)})
          ENDIF
       ELSEIF lMatch
          AAdd(aResult, aFile)
@@ -88,7 +87,7 @@ FUNCTION hb_DirRemoveAll(cDir)
          hb_vfAttrSet(cPath, hb_bitXor(nAttr, HB_FA_READONLY))
       ENDIF
       cPath := hb_DirSepAdd(cPath)
-      FOR EACH aFile IN hb_vfDirectory( cPath + hb_osFileMask(), "HSDL" )
+      FOR EACH aFile IN hb_vfDirectory(cPath + hb_osFileMask(), "HSDL")
          IF "D" $ aFile[F_ATTR] .AND. !"L" $ aFile[F_ATTR]
             IF !( aFile[F_NAME] == "." .OR. aFile[F_NAME] == ".." .OR. aFile[F_NAME] == "" )
                IF !hb_DirRemoveAll(cPath + aFile[F_NAME])
@@ -98,7 +97,7 @@ FUNCTION hb_DirRemoveAll(cDir)
          ELSE
             cFile := cPath + aFile[F_NAME]
             IF "R" $ aFile[F_ATTR] .AND. hb_vfAttrGet(cFile, @nAttr)
-               hb_vfAttrSet(cFile, hb_bitAnd(nAttr, hb_bitNot( HB_FA_READONLY )))
+               hb_vfAttrSet(cFile, hb_bitAnd(nAttr, hb_bitNot(HB_FA_READONLY)))
             ENDIF
             IF !hb_vfErase(cFile) == 0
                RETURN .F.
@@ -117,10 +116,10 @@ FUNCTION hb_FileDelete(cFileMask, cAttr)
    IF HB_ISSTRING(cFileMask) .AND. !Empty(cFileMask) .AND. !hb_vfDirExists(cFileMask)
       cPath := hb_FNameDir(cFileMask)
       cAttrMask := StrTran(hb_defaultValue(cAttr, ""), "D") + "L"
-      FOR EACH aFile IN hb_vfDirectory( cFileMask, cAttrMask )
+      FOR EACH aFile IN hb_vfDirectory(cFileMask, cAttrMask)
          cFile := cPath + aFile[F_NAME]
          IF "R" $ aFile[F_ATTR] .AND. hb_vfAttrGet(cFile, @nAttr)
-            hb_vfAttrSet(cFile, hb_bitAnd(nAttr, hb_bitNot( HB_FA_READONLY )))
+            hb_vfAttrSet(cFile, hb_bitAnd(nAttr, hb_bitNot(HB_FA_READONLY)))
          ENDIF
          IF hb_vfErase(cFile) == 0
             lAny := .T.

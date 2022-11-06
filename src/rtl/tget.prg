@@ -99,7 +99,7 @@ CREATE CLASS Get
    VAR rejected       INIT .F. READONLY
    VAR typeOut        INIT .F. READONLY
 
-   METHOD New( nRow, nCol, bVarBlock, cVarName, cPicture, cColorSpec ) /* NOTE: This method is a Harbour extension [vszakats] */
+   METHOD New(nRow, nCol, bVarBlock, cVarName, cPicture, cColorSpec) /* NOTE: This method is a Harbour extension [vszakats] */
 
    METHOD assign()
    METHOD badDate()
@@ -117,11 +117,11 @@ CREATE CLASS Get
    ASSIGN colorSpec METHOD setColorSpec(cColorSpec)
    METHOD display()
 #ifdef HB_COMPAT_C53
-   METHOD hitTest( nMRow, nMCol )
+   METHOD hitTest(nMRow, nMCol)
    METHOD control(oControl) SETGET    /* NOTE: Undocumented CA-Cl*pper 5.3 method. */
    METHOD message(cMessage) SETGET    /* NOTE: Undocumented CA-Cl*pper 5.3 method. */
    METHOD caption(cCaption) SETGET    /* NOTE: Undocumented CA-Cl*pper 5.3 method. */
-   METHOD capRow( nCapRow ) SETGET      /* NOTE: Undocumented CA-Cl*pper 5.3 method. */
+   METHOD capRow(nCapRow) SETGET      /* NOTE: Undocumented CA-Cl*pper 5.3 method. */
    METHOD capCol(nCapCol) SETGET      /* NOTE: Undocumented CA-Cl*pper 5.3 method. */
 #endif
    METHOD killFocus()
@@ -136,7 +136,7 @@ CREATE CLASS Get
 #endif
    METHOD reset()
    ACCESS row METHOD getRow()
-   ASSIGN row METHOD setRow( nRow )
+   ASSIGN row METHOD setRow(nRow)
    METHOD setFocus()
    METHOD type()
    METHOD undo()
@@ -161,10 +161,10 @@ CREATE CLASS Get
    METHOD delWordLeft()
    METHOD delWordRight()
 
-   METHOD insert( cChar )
+   METHOD insert(cChar)
    METHOD overStrike(cChar)
 
-   METHOD subScript( xValue ) SETGET
+   METHOD subScript(xValue) SETGET
    METHOD postBlock(xValue) SETGET
    METHOD preBlock(xValue) SETGET
    METHOD cargo(xValue) SETGET
@@ -618,7 +618,7 @@ METHOD overStrike(cChar) CLASS Get
 /* NOTE: CA-Cl*pper will corrupt memory if cChar contains
          multiple chars. [vszakats] */
 
-METHOD insert( cChar ) CLASS Get
+METHOD insert(cChar) CLASS Get
 
    LOCAL nFor
    LOCAL nMaxEdit
@@ -667,7 +667,7 @@ METHOD insert( cChar ) CLASS Get
                   ENDIF
                NEXT
                nMaxEdit := nFor
-               ::cBuffer := Left(Stuff(Left( ::cBuffer, nMaxEdit - 2 ), ::nPos, 0, cChar) + SubStr(::cBuffer, nMaxEdit), ::nMaxLen)
+               ::cBuffer := Left(Stuff(Left(::cBuffer, nMaxEdit - 2), ::nPos, 0, cChar) + SubStr(::cBuffer, nMaxEdit), ::nMaxLen)
             ELSE
                ::cBuffer := Left(Stuff(::cBuffer, ::nPos, 0, cChar), ::nMaxEdit)
             ENDIF
@@ -1053,7 +1053,7 @@ METHOD picture(cPicture) CLASS Get
 
                IF ( nAt := At("S", ::cPicFunc) ) > 0
                   FOR nFor := nAt + 1 TO Len(::cPicFunc)
-                     IF IsDigit( SubStr(::cPicFunc, nFor, 1) )
+                     IF IsDigit(SubStr(::cPicFunc, nFor, 1))
                         cNum += SubStr(::cPicFunc, nFor, 1)
                      ELSE
                         EXIT
@@ -1156,7 +1156,7 @@ METHOD PutMask(xValue, lEdit) CLASS Get
    LOCAL cPicMask := ::cPicMask
    LOCAL nFor
 
-   hb_default( @lEdit, ::hasFocus )
+   hb_default(@lEdit, ::hasFocus)
 
    IF !( ValType(xValue) $ "CNDTL" )
       xValue := ""
@@ -1264,7 +1264,7 @@ METHOD unTransform() CLASS Get
             ENDIF
             IF !lMinus
                FOR nFor := 1 TO ::nMaxLen
-                  IF ::IsEditable(nFor) .AND. IsDigit( SubStr(cBuffer, nFor, 1) )
+                  IF ::IsEditable(nFor) .AND. IsDigit(SubStr(cBuffer, nFor, 1))
                      EXIT
                   ENDIF
                   IF SubStr(cBuffer, nFor, 1) $ "-(" .AND. !( SubStr(cBuffer, nFor, 1) == SubStr(::cPicMask, nFor, 1) )
@@ -1321,7 +1321,7 @@ METHOD unTransform() CLASS Get
 
             IF lMinus
                FOR nFor := 1 TO Len(cBuffer)
-                  IF IsDigit( SubStr(cBuffer, nFor, 1) ) .OR. SubStr(cBuffer, nFor, 1) == "."
+                  IF IsDigit(SubStr(cBuffer, nFor, 1)) .OR. SubStr(cBuffer, nFor, 1) == "."
                      EXIT
                   ENDIF
                NEXT
@@ -1353,7 +1353,7 @@ METHOD unTransform() CLASS Get
 
          CASE "T"
 
-            xValue := hb_CToT( cBuffer )
+            xValue := hb_CToT(cBuffer)
             EXIT
 
          ENDSWITCH
@@ -1456,10 +1456,10 @@ METHOD reform() CLASS Get
 
 #ifdef HB_COMPAT_C53
 
-METHOD hitTest( nMRow, nMCol ) CLASS Get
+METHOD hitTest(nMRow, nMCol) CLASS Get
 
    IF HB_ISOBJECT(::oControl)
-      RETURN ::oControl:hitTest( nMRow, nMCol )
+      RETURN ::oControl:hitTest(nMRow, nMCol)
    ELSE
       DO CASE
       CASE nMRow == ::nRow .AND. nMCol >= ::nCol .AND. nMCol < ::nCol + iif(::nDispLen == NIL, 0, ::nDispLen)
@@ -1487,7 +1487,7 @@ METHOD caption(cCaption) CLASS Get
 
    RETURN ::cCaption
 
-METHOD capRow( nCapRow ) CLASS Get
+METHOD capRow(nCapRow) CLASS Get
 
    IF HB_ISNUMERIC(nCapRow)
       ::nCapRow := Int(nCapRow)
@@ -1751,12 +1751,12 @@ METHOD Input(cChar) CLASS Get
          ENDIF
 
       CASE cPic == "N"
-         IF !IsAlpha(cChar) .AND. !IsDigit( cChar )
+         IF !IsAlpha(cChar) .AND. !IsDigit(cChar)
             cChar := ""
          ENDIF
 
       CASE cPic == "9"
-         IF !IsDigit( cChar ) .AND. !cChar $ "-+"
+         IF !IsDigit(cChar) .AND. !cChar $ "-+"
             cChar := ""
          ENDIF
          IF !( ::cType == "N" ) .AND. cChar $ "-+"
@@ -1770,7 +1770,7 @@ METHOD Input(cChar) CLASS Get
          ENDIF
 
       CASE cPic == "#"
-         IF !IsDigit( cChar ) .AND. !( cChar == " " ) .AND. !( cChar $ ".+-" )
+         IF !IsDigit(cChar) .AND. !( cChar == " " ) .AND. !( cChar $ ".+-" )
             cChar := ""
          ENDIF
 
@@ -1781,7 +1781,7 @@ METHOD Input(cChar) CLASS Get
          ENDIF
 
       CASE ( cPic == "$" .OR. cPic == "*" ) .AND. ::cType == "N"
-         IF !IsDigit( cChar ) .AND. !( cChar == "-" )
+         IF !IsDigit(cChar) .AND. !( cChar == "-" )
             cChar := ""
          ENDIF
       OTHERWISE
@@ -1840,7 +1840,7 @@ METHOD setMinus(lMinus) CLASS Get
 METHOD getRow() CLASS Get
    RETURN ::nRow
 
-METHOD setRow( nRow ) CLASS Get
+METHOD setRow(nRow) CLASS Get
    RETURN ::nRow := iif(HB_ISNUMERIC(nRow), Int(nRow), 0)
 
 /* NOTE: CA-Cl*pper has a bug where negative nCol value will be translated to 16bit unsigned int,
@@ -1860,7 +1860,7 @@ METHOD name(cName) CLASS Get
 
    RETURN ::cName
 
-METHOD SubScript( xValue ) CLASS Get
+METHOD SubScript(xValue) CLASS Get
 
    IF xValue != NIL
       ::xSubScript := xValue
@@ -1910,7 +1910,7 @@ METHOD Reader(xValue) CLASS Get
 
 /* ------------------------------------------------------------------------- */
 
-METHOD New( nRow, nCol, bVarBlock, cVarName, cPicture, cColorSpec ) CLASS Get
+METHOD New(nRow, nCol, bVarBlock, cVarName, cPicture, cColorSpec) CLASS Get
 
    IF nRow == NIL
       nRow := Row()
@@ -1946,5 +1946,5 @@ METHOD New( nRow, nCol, bVarBlock, cVarName, cPicture, cColorSpec ) CLASS Get
 
    RETURN Self
 
-FUNCTION GetNew( nRow, nCol, bVarBlock, cVarName, cPicture, cColor )
-   RETURN Get():New( nRow, nCol, bVarBlock, cVarName, cPicture, cColor )
+FUNCTION GetNew(nRow, nCol, bVarBlock, cVarName, cPicture, cColor)
+   RETURN Get():New(nRow, nCol, bVarBlock, cVarName, cPicture, cColor)

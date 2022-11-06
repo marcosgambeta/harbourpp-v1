@@ -49,9 +49,9 @@
 
 FUNCTION _eInstVar(...)
 #ifdef HB_COMPAT_C53
-   RETURN __eInstVar53( ... )
+   RETURN __eInstVar53(...)
 #else
-   RETURN __eInstVar52( ... )
+   RETURN __eInstVar52(...)
 #endif
 
 #endif

@@ -88,10 +88,10 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
    ENDIF
 
    oBrowse := TBrowseDB(nTop, nLeft, nBottom, nRight)
-   oBrowse:headSep   := iif(HB_ISSTRING(xHeadingSeparators), xHeadingSeparators, hb_UTF8ToStrBox( "═╤═" ))
-   oBrowse:colSep    := iif(HB_ISSTRING(xColumnSeparators), xColumnSeparators, hb_UTF8ToStrBox( " │ " ))
+   oBrowse:headSep   := iif(HB_ISSTRING(xHeadingSeparators), xHeadingSeparators, hb_UTF8ToStrBox("═╤═"))
+   oBrowse:colSep    := iif(HB_ISSTRING(xColumnSeparators), xColumnSeparators, hb_UTF8ToStrBox(" │ "))
    oBrowse:footSep   := hb_defaultValue(xFootingSeparators, "")
-   oBrowse:skipBlock := {| nRecs | Skipped(nRecs, lAppend) }
+   oBrowse:skipBlock := {|nRecs|Skipped(nRecs, lAppend)}
    oBrowse:autoLite  := .F.  /* Set to .F. just like in CA-Cl*pper. [vszakats] */
 
    IF HB_ISARRAY(acColumns)
@@ -136,7 +136,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
          creating codeblocks which are able to _assign_ values, as dbEdit()
          is a read-only function. [vszakats] */
 
-      bBlock := iif(Type(cBlock) == "M", {|| "  <Memo>  " }, hb_macroBlock(cBlock))
+      bBlock := iif(Type(cBlock) == "M", {||"  <Memo>  "}, hb_macroBlock(cBlock))
 
       DO CASE
       CASE HB_ISARRAY(xColumnHeaders) .AND. Len(xColumnHeaders) >= nPos .AND. HB_ISSTRING(xColumnHeaders[nPos])
@@ -145,7 +145,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
          cHeading := xColumnHeaders
       ENDCASE
 
-      oColumn := TBColumnNew( cHeading, bBlock )
+      oColumn := TBColumnNew(cHeading, bBlock)
 
       DO CASE
       CASE HB_ISARRAY(xColumnSayPictures) .AND. nPos <= Len(xColumnSayPictures) .AND. HB_ISSTRING(xColumnSayPictures[nPos]) .AND. !Empty(xColumnSayPictures[nPos])
@@ -287,10 +287,10 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
 
    LOCAL nAction
    LOCAL nMode := ;
-      iif(nKey != 0,                   DE_EXCEPT,    ;
+      iif(nKey != 0,                  DE_EXCEPT,    ;
       iif(!lAppend .AND. IsDbEmpty(), DE_EMPTY,     ;
-      iif(oBrowse:hitBottom,           DE_HITBOTTOM, ;
-      iif( oBrowse:hitTop,              DE_HITTOP, DE_IDLE ))))
+      iif(oBrowse:hitBottom,          DE_HITBOTTOM, ;
+      iif( oBrowse:hitTop,            DE_HITTOP, DE_IDLE ))))
 
    oBrowse:forceStable()
 

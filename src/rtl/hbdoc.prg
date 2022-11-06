@@ -81,12 +81,12 @@ FUNCTION __hbdoc_DirLastModified(cDir)
 
       IF hb_DirExists(cDir + _HBDOC_SRC_SUBDIR)
 
-         FOR EACH aFile IN Directory( cDir + _HBDOC_SRC_SUBDIR + hb_ps() + hb_osFileMask(), "D" )
+         FOR EACH aFile IN Directory(cDir + _HBDOC_SRC_SUBDIR + hb_ps() + hb_osFileMask(), "D")
             IF "D" $ aFile[F_ATTR] .AND. !( aFile[F_NAME] == "." ) .AND. !( aFile[F_NAME] == ".." )
 
                cDocDir := cDir + _HBDOC_SRC_SUBDIR + hb_ps() + aFile[F_NAME]
 
-               FOR EACH aDocFile IN Directory( cDocDir + hb_ps() + "*" + _HBDOC_SRC_EXT )
+               FOR EACH aDocFile IN Directory(cDocDir + hb_ps() + "*" + _HBDOC_SRC_EXT)
                   IF hb_FGetDateTime(cDocDir + hb_ps() + aDocFile[F_NAME], @tDoc) .AND. tLast < tDoc
                      tLast := tDoc
                   ENDIF
@@ -112,14 +112,14 @@ FUNCTION __hbdoc_LoadDir(cDir, cName, aErrMsg)
       IF hb_DirExists(cDir + _HBDOC_SRC_SUBDIR)
 
          aEntry := {}
-         hMeta := { => }
+         hMeta := {=>}
 
          IF HB_ISSTRING(cName)
             hMeta["_COMPONENT"] := cName
          ENDIF
 
          nCount := 0
-         FOR EACH aFile IN Directory( cDir + _HBDOC_SRC_SUBDIR + hb_ps() + hb_osFileMask(), "D" )
+         FOR EACH aFile IN Directory(cDir + _HBDOC_SRC_SUBDIR + hb_ps() + hb_osFileMask(), "D")
             IF "D" $ aFile[F_ATTR] .AND. !( aFile[F_NAME] == "." ) .AND. !( aFile[F_NAME] == ".." )
 
                __hbdoc__read_langdir(aEntry, cDir + _HBDOC_SRC_SUBDIR + hb_ps() + aFile[F_NAME], hMeta, aErrMsg)
@@ -143,7 +143,7 @@ STATIC PROCEDURE __hbdoc__read_langdir(aEntry, cDir, hMeta, aErrMsg)
    hMeta["_LANG"] := hb_FNameName(hb_DirSepDel(cDir))
 
    nCount := 0
-   FOR EACH aFile IN Directory( cDir + hb_ps() + "*" + _HBDOC_SRC_EXT )
+   FOR EACH aFile IN Directory(cDir + hb_ps() + "*" + _HBDOC_SRC_EXT)
       __hbdoc__read_file(aEntry, cDir + hb_ps() + aFile[F_NAME], hMeta, aErrMsg)
       ++nCount
    NEXT
@@ -207,7 +207,7 @@ STATIC PROCEDURE __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
          ELSEIF !Empty(hEntry)
             AAdd(aEntry, hEntry)
          ENDIF
-         hEntry := { => }
+         hEntry := {=>}
          IF HB_ISHASH(hMeta)
             FOR EACH tmp IN hMeta
                hEntry[tmp:__enumKey()] := tmp
@@ -354,7 +354,7 @@ FUNCTION __hbdoc_SaveHBD(cFileName, aEntry)
          cFileName := hb_FNameExtSetDef(cFileName, _HBDOC_EXT)
       ENDIF
 
-      IF ( fhnd := hb_FCreate(cFileName,, FO_CREAT + FO_TRUNC + FO_READWRITE + FO_EXCLUSIVE) ) != F_ERROR
+      IF ( fhnd := hb_FCreate(cFileName, NIL, FO_CREAT + FO_TRUNC + FO_READWRITE + FO_EXCLUSIVE) ) != F_ERROR
          FWrite(fhnd, _HBDOC_SIGNATURE)
          FWrite(fhnd, hb_Serialize(aEntry, HB_SERIALIZE_COMPRESS))
          FClose(fhnd)

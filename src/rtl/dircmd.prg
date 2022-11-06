@@ -68,15 +68,15 @@ PROCEDURE __Dir(cFileMask)
       QOut(__natMsg(_DIR_HEADER))
 #endif
 
-      AEval(Directory( hb_FNameMerge(Set(_SET_DEFAULT), "*", ".dbf") ), {| aDirEntry | PutDbf(aDirEntry) })
+      AEval(Directory(hb_FNameMerge(Set(_SET_DEFAULT), "*", ".dbf")), {|aDirEntry|PutDbf(aDirEntry)})
    ELSE
 
-      hb_FNameSplit( iif(Set(_SET_TRIMFILENAME), AllTrim(cFileMask), cFileMask), @cPath, @cName, @cExt )
+      hb_FNameSplit(iif(Set(_SET_TRIMFILENAME), AllTrim(cFileMask), cFileMask), @cPath, @cName, @cExt)
       IF Empty(cPath)
          cPath := Set(_SET_DEFAULT)
       ENDIF
 
-      AEval(Directory( hb_FNameMerge(cPath, cName, cExt) ), {| aDirEntry | PutNormal(aDirEntry) })
+      AEval(Directory(hb_FNameMerge(cPath, cName, cExt)), {|aDirEntry|PutNormal(aDirEntry)})
    ENDIF
 
    QOut()
@@ -117,7 +117,7 @@ STATIC PROCEDURE PutNormal(aDirEntry)
 
    LOCAL cName, cExt
 
-   hb_FNameSplit( aDirEntry[F_NAME],, @cName, @cExt )
+   hb_FNameSplit(aDirEntry[F_NAME], NIL, @cName, @cExt)
 
    /* Strict MS-DOS like formatting, it does not play well with long
       filenames which do not stick to 8.3 MS-DOS convention */

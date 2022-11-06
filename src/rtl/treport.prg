@@ -156,7 +156,7 @@ CREATE CLASS HBReportForm
    VAR cOffsetsBuff   AS STRING
    VAR cLengthsBuff   AS STRING
 
-   METHOD New( cFrmName AS STRING, ;
+   METHOD New(cFrmName AS STRING, ;
       lPrinter AS LOGICAL, ;
       cAltFile AS STRING, ;
       lNoConsole AS LOGICAL, ;
@@ -168,19 +168,19 @@ CREATE CLASS HBReportForm
       lPlain AS LOGICAL, ;
       cHeading AS STRING, ;
       lBEject AS LOGICAL, ;
-      lSummary AS LOGICAL )
+      lSummary AS LOGICAL)
 
    METHOD ExecuteReport()
    METHOD ReportHeader()
    METHOD EjectPage()
-   METHOD PrintIt( cString AS STRING )
+   METHOD PrintIt(cString AS STRING)
    METHOD LoadReportFile(cFrmFile AS STRING)
    METHOD GetExpr(nPointer AS NUMERIC)
    METHOD GetColumn(cFieldsBuffer AS STRING, nOffset AS NUMERIC)
 
 ENDCLASS
 
-METHOD PROCEDURE New( cFrmName AS STRING, ;
+METHOD PROCEDURE New(cFrmName AS STRING, ;
       lPrinter AS LOGICAL, ;
       cAltFile AS STRING, ;
       lNoConsole AS LOGICAL, ;
@@ -192,7 +192,7 @@ METHOD PROCEDURE New( cFrmName AS STRING, ;
       lPlain AS LOGICAL, ;
       cHeading AS STRING, ;
       lBEject AS LOGICAL, ;
-      lSummary AS LOGICAL ) CLASS HBReportForm
+      lSummary AS LOGICAL) CLASS HBReportForm
 
    LOCAL lPrintOn, lConsoleOn // Status of PRINTER and CONSOLE
    LOCAL cExtraFile, lExtraState // Status of EXTRA
@@ -292,7 +292,7 @@ METHOD PROCEDURE New( cFrmName AS STRING, ;
       ::aGroupTotals := Array(Len(::aReportData[RPT_GROUPS]))
 
       // Execute the actual report based on matching records
-      dbEval({|| ::ExecuteReport() }, bFor, bWhile, nNext, nRecord, lRest)
+      dbEval({||::ExecuteReport()}, bFor, bWhile, nNext, nRecord, lRest)
 
       // Generate any totals that may have been identified
       // Make a pass through all the groups
@@ -363,7 +363,7 @@ METHOD PROCEDURE New( cFrmName AS STRING, ;
          ENDIF
 
          // Print the first line
-         ::PrintIt( Space(::aReportData[RPT_LMARGIN]) + __natMsg(_RFRM_TOTAL) )
+         ::PrintIt(Space(::aReportData[RPT_LMARGIN]) + __natMsg(_RFRM_TOTAL))
 
          // Print the second line
          QQOut(Space(::aReportData[RPT_LMARGIN]))
@@ -419,7 +419,7 @@ METHOD PROCEDURE New( cFrmName AS STRING, ;
 
    RETURN
 
-METHOD PrintIt( cString AS STRING ) CLASS HBReportForm
+METHOD PrintIt(cString AS STRING) CLASS HBReportForm
 
    QQOut(hb_defaultValue(cString, ""))
    QOut()
@@ -453,7 +453,7 @@ METHOD ReportHeader() CLASS HBReportForm
          aTempPgHeader := ParseHeader(::aReportData[RPT_HEADING], Occurs(";", ::aReportData[RPT_HEADING]) + 1)
 
          FOR EACH cLine IN aTempPgHeader
-            nLinesInHeader := Max(XMLCOUNT( LTrim(cLine), nHeadingLength ), 1)
+            nLinesInHeader := Max(XMLCOUNT(LTrim(cLine), nHeadingLength), 1)
 
             FOR nHeadLine := 1 TO nLinesInHeader
                AAdd(aPageHeader, Space(15) + PadC(RTrim(XMEMOLINE(LTrim(cLine), nHeadingLength, nHeadLine)), nHeadingLength))
@@ -468,7 +468,7 @@ METHOD ReportHeader() CLASS HBReportForm
 
    FOR EACH cLine IN ::aReportData[RPT_HEADER]
 
-      nLinesInHeader := Max(XMLCOUNT( LTrim(cLine) ), 1)
+      nLinesInHeader := Max(XMLCOUNT(LTrim(cLine)), 1)
 
       FOR nHeadLine := 1 TO nLinesInHeader
 
@@ -512,8 +512,7 @@ METHOD ReportHeader() CLASS HBReportForm
    // Insert the two blank lines between the heading and the actual data
    AAdd(aPageHeader, "")
    AAdd(aPageHeader, "")
-   AEval(aPageHeader, {| HeaderLine | ;
-      ::PrintIt( Space(::aReportData[RPT_LMARGIN]) + HeaderLine ) })
+   AEval(aPageHeader, {|HeaderLine|::PrintIt(Space(::aReportData[RPT_LMARGIN]) + HeaderLine)})
 
    // Set the page number and number of available lines
    ::nPageNumber++
@@ -617,7 +616,7 @@ METHOD PROCEDURE ExecuteReport() CLASS HBReportForm
          ENDIF
       ENDIF
 
-      AEval(aRecordHeader, {| HeaderLine | ::PrintIt( Space(::aReportData[RPT_LMARGIN]) + HeaderLine ) })
+      AEval(aRecordHeader, {|HeaderLine|::PrintIt(Space(::aReportData[RPT_LMARGIN]) + HeaderLine)})
 
       aRecordHeader := {}
 
@@ -671,7 +670,7 @@ METHOD PROCEDURE ExecuteReport() CLASS HBReportForm
       ENDIF
 
       // Send aRecordHeader to the output device, resetting nLinesLeft
-      AEval(aRecordHeader, {| HeaderLine | ::PrintIt( Space(::aReportData[RPT_LMARGIN]) + HeaderLine ) })
+      AEval(aRecordHeader, {|HeaderLine|::PrintIt(Space(::aReportData[RPT_LMARGIN]) + HeaderLine)})
 
       ::nLinesLeft -= Len(aRecordHeader)
 
@@ -709,9 +708,9 @@ METHOD PROCEDURE ExecuteReport() CLASS HBReportForm
       FOR EACH aCol IN ::aReportData[RPT_COLUMNS]
          DO CASE
          CASE aCol[RCT_TYPE] $ "M"
-            nMaxLines := Max(XMLCOUNT( Eval(aCol[RCT_EXP]), aCol[RCT_WIDTH] ), nMaxLines)
+            nMaxLines := Max(XMLCOUNT(Eval(aCol[RCT_EXP]), aCol[RCT_WIDTH]), nMaxLines)
          CASE aCol[RCT_TYPE] $ "C"
-            nMaxLines := Max(XMLCOUNT( StrTran(Eval(aCol[RCT_EXP]), ";", hb_eol()), aCol[RCT_WIDTH] ), nMaxLines)
+            nMaxLines := Max(XMLCOUNT(StrTran(Eval(aCol[RCT_EXP]), ";", hb_eol()), aCol[RCT_WIDTH]), nMaxLines)
          ENDCASE
       NEXT
 
@@ -757,7 +756,7 @@ METHOD PROCEDURE ExecuteReport() CLASS HBReportForm
             // This record is HUGE!  Break it up...
             nLine := 1
             DO WHILE nLine < Len(aRecordToPrint)
-               ::PrintIt( Space(::aReportData[RPT_LMARGIN]) + aRecordToPrint[nLine] )
+               ::PrintIt(Space(::aReportData[RPT_LMARGIN]) + aRecordToPrint[nLine])
                nLine++
                ::nLinesLeft--
                IF ::nLinesLeft == 0
@@ -776,12 +775,12 @@ METHOD PROCEDURE ExecuteReport() CLASS HBReportForm
             ELSE
                ::ReportHeader()
             ENDIF
-            AEval(aRecordToPrint, {| RecordLine | ::PrintIt( Space(::aReportData[RPT_LMARGIN]) + RecordLine ) })
+            AEval(aRecordToPrint, {|RecordLine|::PrintIt(Space(::aReportData[RPT_LMARGIN]) + RecordLine)})
             ::nLinesLeft -= Len(aRecordToPrint)
          ENDIF
       ELSE
          // Send aRecordToPrint to the output device, resetting ::nLinesLeft
-         AEval(aRecordToPrint, {| RecordLine | ::PrintIt( Space(::aReportData[RPT_LMARGIN]) + RecordLine ) })
+         AEval(aRecordToPrint, {|RecordLine|::PrintIt(Space(::aReportData[RPT_LMARGIN]) + RecordLine)})
          ::nLinesLeft -= Len(aRecordToPrint)
       ENDIF
 
@@ -1048,21 +1047,21 @@ STATIC FUNCTION Occurs(cSearch, cTarget)
 
    RETURN nCount
 
-STATIC FUNCTION XMLCOUNT( cString, nLineLength, nTabSize, lWrap )
+STATIC FUNCTION XMLCOUNT(cString, nLineLength, nTabSize, lWrap)
 
-   hb_default( @nLineLength, 79 )
-   hb_default( @nTabSize, 4 )
+   hb_default(@nLineLength, 79)
+   hb_default(@nTabSize, 4)
 
    IF nTabSize >= nLineLength
       nTabSize := nLineLength - 1
    ENDIF
 
-   RETURN MLCount( RTrim(cString), nLineLength, nTabSize, lWrap )
+   RETURN MLCount(RTrim(cString), nLineLength, nTabSize, lWrap)
 
 STATIC FUNCTION XMEMOLINE(cString, nLineLength, nLineNumber, nTabSize, lWrap)
 
-   hb_default( @nLineLength, 79 )
-   hb_default( @nTabSize, 4 )
+   hb_default(@nLineLength, 79)
+   hb_default(@nTabSize, 4)
 
    IF nTabSize >= nLineLength
       nTabSize := nLineLength - 1
@@ -1183,6 +1182,6 @@ STATIC FUNCTION MakeAStr(uVar, cType)
 
 PROCEDURE __ReportForm(cFRMName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lPlain, cHeading, lBEject, lSummary)
 
-   HBReportForm():New( cFrmName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lPlain, cHeading, lBEject, lSummary )
+   HBReportForm():New(cFrmName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lPlain, cHeading, lBEject, lSummary)
 
    RETURN

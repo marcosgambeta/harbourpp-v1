@@ -46,7 +46,7 @@
 
 THREAD STATIC t_aObjects
 
-FUNCTION hb_SetObject( oSelf, bConstructor )
+FUNCTION hb_SetObject(oSelf, bConstructor)
 
    IF t_aObjects == NIL
       t_aObjects := {}

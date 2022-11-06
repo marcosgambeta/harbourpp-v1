@@ -75,12 +75,12 @@ CREATE CLASS PopupMenu FUNCTION HBPopupMenu
    METHOD getLast()
    METHOD getNext()
    METHOD getPrev()
-   METHOD getShortCt( nKey )
-   METHOD hitTest( nMRow, nMCol )
+   METHOD getShortCt(nKey)
+   METHOD hitTest(nMRow, nMCol)
    METHOD insItem(nPos, oItem)
    METHOD isOpen()
    METHOD open()
-   METHOD select( nPos )
+   METHOD select(nPos)
    METHOD setItem(nPos, oItem)
 
    METHOD border(cBorder) SETGET
@@ -88,12 +88,12 @@ CREATE CLASS PopupMenu FUNCTION HBPopupMenu
    METHOD colorSpec(cColorSpec) SETGET
    METHOD current() SETGET
    METHOD itemCount() SETGET
-   METHOD left( nLeft ) SETGET
-   METHOD right( nRight ) SETGET
+   METHOD left(nLeft) SETGET
+   METHOD right(nRight) SETGET
    METHOD top(nTop) SETGET
    METHOD width() SETGET
 
-   METHOD New( nTop, nLeft, nBottom, nRight ) /* NOTE: This method is a Harbour extension [vszakats] */
+   METHOD New(nTop, nLeft, nBottom, nRight) /* NOTE: This method is a Harbour extension [vszakats] */
 
    PROTECTED:
 
@@ -197,10 +197,10 @@ METHOD display() CLASS PopupMenu
 
       DispBegin()
 
-      hb_DispBox( nTop, nLeft, ::nBottom, ::nRight, SubStr(::cBorder, 1, 8) + " ", hb_ColorIndex(::cColorSpec, 5) )
+      hb_DispBox(nTop, nLeft, ::nBottom, ::nRight, SubStr(::cBorder, 1, 8) + " ", hb_ColorIndex(::cColorSpec, 5))
 
       IF ::lShadowed
-         hb_Shadow( nTop, nLeft, ::nBottom, ::nRight )
+         hb_Shadow(nTop, nLeft, ::nBottom, ::nRight)
       ENDIF
 
       nLeft++
@@ -210,7 +210,7 @@ METHOD display() CLASS PopupMenu
 
          IF item:__issep
 
-            hb_DispOutAtBox( nTop, nLeft - 1, SubStr(::cBorder, 9, 1) + Replicate(SubStr(::cBorder, 10, 1), nWidth) + SubStr(::cBorder, 11, 1), hb_ColorIndex(::cColorSpec, 5) )
+            hb_DispOutAtBox(nTop, nLeft - 1, SubStr(::cBorder, 9, 1) + Replicate(SubStr(::cBorder, 10, 1), nWidth) + SubStr(::cBorder, 11, 1), hb_ColorIndex(::cColorSpec, 5))
 
          ELSE
             cCaption := PadR(item:caption, nWidth - 1)
@@ -343,7 +343,7 @@ METHOD getPrev() CLASS PopupMenu
 /* NOTE: This method corrects a bug in Cl*pper:
          1) when a menuitem is disabled it will ignore the key [jlalin] */
 
-METHOD getShortCt( nKey ) CLASS PopupMenu
+METHOD getShortCt(nKey) CLASS PopupMenu
 
    LOCAL item
 
@@ -358,7 +358,7 @@ METHOD getShortCt( nKey ) CLASS PopupMenu
 /* NOTE: This method corrects one bug in CA-Cl*pper:
          1) when a menuitem is disabled it will ignore the click [jlalin] */
 
-METHOD hitTest( nMRow, nMCol ) CLASS PopupMenu
+METHOD hitTest(nMRow, nMCol) CLASS PopupMenu
 
    LOCAL nPos
 
@@ -453,13 +453,13 @@ METHOD open() CLASS PopupMenu
       nRight  += 2
    ENDIF
 
-   ::aSaveScr := { nTop, nLeft, nBottom, nRight, SaveScreen(nTop, nLeft, nBottom, nRight) }
+   ::aSaveScr := {nTop, nLeft, nBottom, nRight, SaveScreen(nTop, nLeft, nBottom, nRight)}
 
    ::display()
 
    RETURN Self
 
-METHOD select( nPos ) CLASS PopupMenu
+METHOD select(nPos) CLASS PopupMenu
 
    IF ( nPos >= 1 .AND. nPos <= ::nItemCount .AND. ::nCurrent != nPos .AND. ::aItems[nPos]:enabled ) .OR. nPos == 0
 
@@ -509,7 +509,7 @@ METHOD setMetrics() CLASS PopupMenu
 METHOD border(cBorder) CLASS PopupMenu
 
    IF cBorder != NIL
-      ::cBorder := __eInstVar53( Self, "BORDER", cBorder, "C", 1001, {|| Len(cBorder) == 0 .OR. Len(cBorder) == 11 } )
+      ::cBorder := __eInstVar53(Self, "BORDER", cBorder, "C", 1001, {||Len(cBorder) == 0 .OR. Len(cBorder) == 11})
    ENDIF
 
    RETURN ::cBorder
@@ -518,7 +518,7 @@ METHOD bottom(nBottom) CLASS PopupMenu
 
 #ifdef HB_CLP_STRICT
    IF nBottom != NIL
-      ::nBottom := __eInstVar53( Self, "BOTTOM", nBottom, "N", 1001 )
+      ::nBottom := __eInstVar53(Self, "BOTTOM", nBottom, "N", 1001)
    ENDIF
 #else
    IF PCount() > 0
@@ -531,8 +531,8 @@ METHOD bottom(nBottom) CLASS PopupMenu
 METHOD colorSpec(cColorSpec) CLASS PopupMenu
 
    IF cColorSpec != NIL
-      ::cColorSpec := __eInstVar53( Self, "COLORSPEC", cColorSpec, "C", 1001, ;
-         {|| !Empty(hb_ColorIndex(cColorSpec, 5)) .AND. Empty(hb_ColorIndex(cColorSpec, 6)) } )
+      ::cColorSpec := __eInstVar53(Self, "COLORSPEC", cColorSpec, "C", 1001, ;
+         {||!Empty(hb_ColorIndex(cColorSpec, 5)) .AND. Empty(hb_ColorIndex(cColorSpec, 6))})
    ENDIF
 
    RETURN ::cColorSpec
@@ -543,11 +543,11 @@ METHOD current() CLASS PopupMenu
 METHOD itemCount() CLASS PopupMenu
    RETURN ::nItemCount
 
-METHOD left( nLeft ) CLASS PopupMenu
+METHOD left(nLeft) CLASS PopupMenu
 
 #ifdef HB_CLP_STRICT
    IF nLeft != NIL
-      ::nLeft := __eInstVar53( Self, "LEFT", nLeft, "N", 1001 )
+      ::nLeft := __eInstVar53(Self, "LEFT", nLeft, "N", 1001)
    ENDIF
 #else
    IF PCount() > 0
@@ -557,11 +557,11 @@ METHOD left( nLeft ) CLASS PopupMenu
 
    RETURN ::nLeft
 
-METHOD right( nRight ) CLASS PopupMenu
+METHOD right(nRight) CLASS PopupMenu
 
 #ifdef HB_CLP_STRICT
    IF nRight != NIL
-      ::nRight := __eInstVar53( Self, "RIGHT", nRight, "N", 1001 )
+      ::nRight := __eInstVar53(Self, "RIGHT", nRight, "N", 1001)
    ENDIF
 #else
    IF PCount() > 0
@@ -575,7 +575,7 @@ METHOD top(nTop) CLASS PopupMenu
 
 #ifdef HB_CLP_STRICT
    IF nTop != NIL
-      ::nTop := __eInstVar53( Self, "TOP", nTop, "N", 1001 )
+      ::nTop := __eInstVar53(Self, "TOP", nTop, "N", 1001)
    ENDIF
 #else
    IF PCount() > 0
@@ -588,7 +588,7 @@ METHOD top(nTop) CLASS PopupMenu
 METHOD width() CLASS PopupMenu
    RETURN ::nWidth
 
-METHOD New( nTop, nLeft, nBottom, nRight ) CLASS PopupMenu
+METHOD New(nTop, nLeft, nBottom, nRight) CLASS PopupMenu
 
    LOCAL cColor
 
@@ -621,6 +621,6 @@ METHOD New( nTop, nLeft, nBottom, nRight ) CLASS PopupMenu
    RETURN Self
 
 FUNCTION Popup(nTop, nLeft, nBottom, nRight)
-   RETURN HBPopupMenu():New( nTop, nLeft, nBottom, nRight )
+   RETURN HBPopupMenu():New(nTop, nLeft, nBottom, nRight)
 
 #endif

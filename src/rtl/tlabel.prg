@@ -100,7 +100,7 @@ CREATE CLASS HBLabelForm
    VAR lOneMoreBand AS LOGICAL INIT .T.
    VAR nCurrentCol  AS NUMERIC // The current column in the band
 
-   METHOD New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample )
+   METHOD New(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample)
 
    METHOD ExecuteLabel()
    METHOD SampleLabels()
@@ -108,7 +108,7 @@ CREATE CLASS HBLabelForm
 
 ENDCLASS
 
-METHOD New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample ) CLASS HBLabelForm
+METHOD New(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample) CLASS HBLabelForm
 
    LOCAL lPrintOn := .F.               // PRINTER status
    LOCAL lConsoleOn                    // CONSOLE status
@@ -172,12 +172,12 @@ METHOD New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nReco
       ENDIF
 
       // Execute the actual label run based on matching records
-      dbEval({|| ::ExecuteLabel() }, bFor, bWhile, nNext, nRecord, lRest)
+      dbEval({||::ExecuteLabel()}, bFor, bWhile, nNext, nRecord, lRest)
 
       // Print the last band if there is one
       IF ::lOneMoreBand
          // Print the band
-         AEval(::aBandToPrint, {| BandLine | PrintIt( BandLine ) })
+         AEval(::aBandToPrint, {|BandLine|PrintIt(BandLine)})
       ENDIF
 
    RECOVER USING xBreakVal
@@ -253,7 +253,7 @@ METHOD ExecuteLabel() CLASS HBLabelForm
       ::nCurrentCol := 1
 
       // Print the band
-      AEval(::aBandToPrint, {| BandLine | PrintIt( BandLine ) })
+      AEval(::aBandToPrint, {|BandLine|PrintIt(BandLine)})
 
       nMoreLines := ::aLabelData[LBL_HEIGHT] - Len(::aBandToPrint)
       FOR nField := 1 TO nMoreLines
@@ -290,7 +290,7 @@ METHOD SampleLabels() CLASS HBLabelForm
    DO WHILE lMoreSamples
 
       // Print the samples
-      AEval(aBand, {| BandLine | PrintIt( BandLine ) })
+      AEval(aBand, {|BandLine|PrintIt(BandLine)})
 
       // Add the spaces between the label lines
       FOR nField := 1 TO ::aLabelData[LBL_LINES]
@@ -380,7 +380,7 @@ METHOD LoadLabel(cLblFile) CLASS HBLabelForm
                AAdd(aLabel[LBL_FIELDS], { ;
                   /* LF_EXP */ hb_macroBlock(cFieldText), ;
                   /* LF_TEXT */ cFieldText, ;
-                  /* LF_BLANK */ .T. })
+                  /* LF_BLANK */ .T.})
             ENDIF
          NEXT
       ENDIF
@@ -392,9 +392,9 @@ METHOD LoadLabel(cLblFile) CLASS HBLabelForm
 
 FUNCTION __LabelForm(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample)
 
-   RETURN HBLabelForm():New( cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample )
+   RETURN HBLabelForm():New(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample)
 
-STATIC PROCEDURE PrintIt( cString )
+STATIC PROCEDURE PrintIt(cString)
 
    QQOut(hb_defaultValue(cString, ""))
    QOut()

@@ -104,14 +104,14 @@ CREATE CLASS HBProfileEntity
    ACCESS nMeanTicks
    ACCESS nMeanSeconds
 
-   METHOD init( cName, aInfo )
+   METHOD init(cName, aInfo)
    METHOD describe()
 
 ENDCLASS
 
 //
 
-METHOD init( cName, aInfo ) CLASS HBProfileEntity
+METHOD init(cName, aInfo) CLASS HBProfileEntity
 
    ::cName  := cName
    ::nCalls := aInfo[1]
@@ -187,7 +187,7 @@ CREATE CLASS HBProfile
    METHOD init()
    METHOD gather()
    METHOD forEach(b)
-   METHOD sort( b )
+   METHOD sort(b)
    METHOD nameSort()
    METHOD callSort()
    METHOD timeSort()
@@ -243,7 +243,7 @@ METHOD gatherFunctions() CLASS HBProfile
          // If we're not ignoring the symbol...
          IF !::ignoreSymbol(cName := __dynsGetName(n))
             // Yes, it is, add it to the profile.
-            AAdd(::aProfile, HBProfileFunction():new( cName, __dynsGetPrf(n) ))
+            AAdd(::aProfile, HBProfileFunction():new(cName, __dynsGetPrf(n)))
          ENDIF
       ENDIF
    NEXT
@@ -275,7 +275,7 @@ METHOD gatherMethods() CLASS HBProfile
             // If we've got a member name...
             IF !Empty(aMembers[nMember])
                // Add it to the profile.
-               AAdd(::aProfile, HBProfileMethod():new( cClass + ":" + aMembers[nMember], __GetMsgPrf(n, aMembers[nMember]) ))
+               AAdd(::aProfile, HBProfileMethod():new(cClass + ":" + aMembers[nMember], __GetMsgPrf(n, aMembers[nMember])))
             ENDIF
          NEXT
       ENDIF
@@ -309,11 +309,11 @@ METHOD forEach(b) CLASS HBProfile
 
    RETURN Self
 
-METHOD sort( b ) CLASS HBProfile
+METHOD sort(b) CLASS HBProfile
 
    LOCAL lProfile := __SetProfiler(.F.)
 
-   ASort( ::aProfile, , , b )
+   ASort(::aProfile, NIL, NIL, b)
 
    __SetProfiler(lProfile)
 
@@ -323,7 +323,7 @@ METHOD nameSort() CLASS HBProfile
 
    LOCAL lProfile := __SetProfiler(.F.)
 
-   ::sort( {| oX, oY | oX:cName < oY:cName } )
+   ::sort({|oX, oY|oX:cName < oY:cName})
 
    __SetProfiler(lProfile)
 
@@ -333,7 +333,7 @@ METHOD callSort() CLASS HBProfile
 
    LOCAL lProfile := __SetProfiler(.F.)
 
-   ::sort( {| oX, oY | oX:nCalls > oY:nCalls } )
+   ::sort({|oX, oY|oX:nCalls > oY:nCalls})
 
    __SetProfiler(lProfile)
 
@@ -343,7 +343,7 @@ METHOD timeSort() CLASS HBProfile
 
    LOCAL lProfile := __SetProfiler(.F.)
 
-   ::sort( {| oX, oY | oX:nTicks > oY:nTicks } )
+   ::sort({|oX, oY|oX:nTicks > oY:nTicks})
 
    __SetProfiler(lProfile)
 
@@ -354,7 +354,7 @@ METHOD totalCalls() CLASS HBProfile
    LOCAL lProfile := __SetProfiler(.F.)
    LOCAL nCalls   := 0
 
-   ::forEach({| o | nCalls += o:nCalls })
+   ::forEach({|o|nCalls += o:nCalls})
 
    __SetProfiler(lProfile)
 
@@ -365,7 +365,7 @@ METHOD totalTicks() CLASS HBProfile
    LOCAL lProfile := __SetProfiler(.F.)
    LOCAL nTicks   := 0
 
-   ::forEach({| o | nTicks += o:nTicks })
+   ::forEach({|o|nTicks += o:nTicks})
 
    __SetProfiler(lProfile)
 
@@ -376,7 +376,7 @@ METHOD totalSeconds() CLASS HBProfile
    LOCAL lProfile := __SetProfiler(.F.)
    LOCAL nSeconds := 0
 
-   ::forEach({| o | nSeconds += o:nSeconds })
+   ::forEach({|o|nSeconds += o:nSeconds})
 
    __SetProfiler(lProfile)
 
@@ -423,7 +423,7 @@ METHOD gatherOPCodes() CLASS HBProfileLowLevel
       // If we're not ignoring this opcode.
       IF !::ignoreSymbol(cName := "OPCODE( " + Str(nOP, 3) + " )")
          // Add it to the profile.
-         AAdd(::aProfile, HBProfileOpcode():new( cName, __opGetPrf(nOP) ))
+         AAdd(::aProfile, HBProfileOpcode():new(cName, __opGetPrf(nOP)))
       ENDIF
    NEXT
 
@@ -445,14 +445,14 @@ CREATE CLASS HBProfileReport
 
    EXPORTED:
 
-   METHOD init( oProfile )
+   METHOD init(oProfile)
    METHOD generate(bFilter)
 
 ENDCLASS
 
 //
 
-METHOD init( oProfile ) CLASS HBProfileReport
+METHOD init(oProfile) CLASS HBProfileReport
 
    LOCAL lProfile := __SetProfiler(.F.)
 
@@ -464,14 +464,14 @@ METHOD init( oProfile ) CLASS HBProfileReport
 
 METHOD writeLines(aLines) CLASS HBProfileReport
 
-   AEval(aLines, {| c | QOut(c) })
+   AEval(aLines, {|c|QOut(c)})
 
    RETURN Self
 
 METHOD header() CLASS HBProfileReport
    RETURN { ;
       "Name                                Type       Calls    Ticks       Seconds", ;
-      "=================================== ========== ======== =========== ===========" }
+      "=================================== ========== ======== =========== ==========="}
 
 METHOD emitHeader() CLASS HBProfileReport
 
@@ -485,7 +485,7 @@ METHOD line(oEntity) CLASS HBProfileReport
       PadR(oEntity:describe(),  8) + " " + ;
       Str(oEntity:nCalls,      10) + " " + ;
       Str(oEntity:nTicks,      11) + " " + ;
-      Str(oEntity:nSeconds,    11, 2) }
+      Str(oEntity:nSeconds,    11, 2)}
 
 METHOD emitLine(oEntity) CLASS HBProfileReport
 
@@ -497,9 +497,9 @@ METHOD generate(bFilter) CLASS HBProfileReport
 
    LOCAL lProfile := __SetProfiler(.F.)
 
-   hb_default( @bFilter, {|| .T. } )
+   hb_default(@bFilter, {||.T.})
 
-   ::emitHeader():oProfile:forEach({| o | iif(Eval(bFilter, o), ::emitLine(o), NIL) })
+   ::emitHeader():oProfile:forEach({|o|iif(Eval(bFilter, o), ::emitLine(o), NIL)})
 
    __SetProfiler(lProfile)
 
@@ -526,7 +526,7 @@ ENDCLASS
 METHOD writeLines(aLines) CLASS HBProfileReportToFile
 
    IF ::hFile != F_ERROR
-      AEval(aLines, {| c | FWrite(::hFile, c + hb_eol()) })
+      AEval(aLines, {|c|FWrite(::hFile, c + hb_eol())})
    ENDIF
 
    RETURN Self
@@ -566,7 +566,7 @@ ENDCLASS
 
 METHOD writeLines(aLines) CLASS HBProfileReportToArray
 
-   AEval(aLines, {| c | AAdd(::aReport, c) })
+   AEval(aLines, {|c|AAdd(::aReport, c)})
 
    RETURN Self
 
@@ -593,7 +593,7 @@ METHOD generate(bFilter) CLASS HBProfileReportToString
 
    LOCAL cReport := ""
 
-   AEval(::super:generate(bFilter), {| c | cReport += c + hb_eol() })
+   AEval(::super:generate(bFilter), {|c|cReport += c + hb_eol()})
 
    RETURN cReport
 
@@ -638,14 +638,14 @@ METHOD generate(bFilter, nTop, nLeft, nBottom, nRight) CLASS HBProfileReportToTB
 
    ::super:generate(bFilter)  // Generate the array.
 
-   oBrowse := TBrowseNew( nTop, nLeft, nBottom, nRight )  // Build the browse.
+   oBrowse := TBrowseNew(nTop, nLeft, nBottom, nRight)  // Build the browse.
 
-   oBrowse:goTopBlock    := {|| ::nEntity := 1 }
-   oBrowse:goBottomBlock := {|| ::nEntity := Len(::aReport) }
-   oBrowse:skipBlock     := {| nSkip, nPos | nPos := ::nEntity, ;
+   oBrowse:goTopBlock    := {||::nEntity := 1}
+   oBrowse:goBottomBlock := {||::nEntity := Len(::aReport)}
+   oBrowse:skipBlock     := {|nSkip, nPos|nPos := ::nEntity, ;
       ::nEntity := iif(nSkip > 0, ;
       Min(Len(::aReport), ::nEntity + nSkip), ;
-      Max(1, ::nEntity + nSkip)), ::nEntity - nPos }
+      Max(1, ::nEntity + nSkip)), ::nEntity - nPos}
 
    ::addColumns(oBrowse)
 

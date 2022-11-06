@@ -70,20 +70,20 @@ CREATE CLASS TopBarMenu FUNCTION HBTopBarMenu
    METHOD getNext()
    METHOD getPrev()
    METHOD getAccel(nKey)
-   METHOD getShortCt( nKey )                        /* NOTE: This method exists but it is not documented in the manuals nor the NG's [jlalin] */
-   METHOD hitTest( nMRow, nMCol )
+   METHOD getShortCt(nKey)                        /* NOTE: This method exists but it is not documented in the manuals nor the NG's [jlalin] */
+   METHOD hitTest(nMRow, nMCol)
    METHOD insItem(nPos, oItem)
-   METHOD select( nPos )
+   METHOD select(nPos)
    METHOD setItem(nPos, oItem)
 
    METHOD colorSpec(cColorSpec) SETGET
    METHOD current() SETGET
    METHOD itemCount() SETGET
-   METHOD left( nLeft ) SETGET
-   METHOD right( nRight ) SETGET
-   METHOD row( nRow ) SETGET
+   METHOD left(nLeft) SETGET
+   METHOD right(nRight) SETGET
+   METHOD row(nRow) SETGET
 
-   METHOD New( nRow, nLeft, nRight )                /* NOTE: This method is a Harbour extension [vszakats] */
+   METHOD New(nRow, nLeft, nRight)                /* NOTE: This method is a Harbour extension [vszakats] */
 
    PROTECTED:
 
@@ -270,7 +270,7 @@ METHOD getAccel(nKey) CLASS TopBarMenu
       K_ALT_M, K_ALT_N, K_ALT_O, K_ALT_P, K_ALT_Q, K_ALT_R, ;
       K_ALT_S, K_ALT_T, K_ALT_U, K_ALT_V, K_ALT_W, K_ALT_X, ;
       K_ALT_Y, K_ALT_Z, K_ALT_1, K_ALT_2, K_ALT_3, K_ALT_4, ;
-      K_ALT_5, K_ALT_6, K_ALT_7, K_ALT_8, K_ALT_9, K_ALT_0 }, nKey)
+      K_ALT_5, K_ALT_6, K_ALT_7, K_ALT_8, K_ALT_9, K_ALT_0}, nKey)
 
    LOCAL cKey
    LOCAL item
@@ -286,7 +286,7 @@ METHOD getAccel(nKey) CLASS TopBarMenu
 
    RETURN 0
 
-METHOD getShortCt( nKey ) CLASS TopBarMenu
+METHOD getShortCt(nKey) CLASS TopBarMenu
 
    LOCAL item
 
@@ -305,7 +305,7 @@ METHOD getShortCt( nKey ) CLASS TopBarMenu
          This method correct a bug in Cl*pper:
          when click on a disabled menuitem it will ignore it [jlalin] */
 
-METHOD hitTest( nMRow, nMCol ) CLASS TopBarMenu
+METHOD hitTest(nMRow, nMCol) CLASS TopBarMenu
 
    LOCAL nColumn
    LOCAL item
@@ -336,7 +336,7 @@ METHOD insItem(nPos, oItem) CLASS TopBarMenu
 
    RETURN Self
 
-METHOD select( nPos ) CLASS TopBarMenu
+METHOD select(nPos) CLASS TopBarMenu
 
    IF ( nPos >= 1 .AND. nPos <= ::nItemCount .AND. ::nCurrent != nPos .AND. ::aItems[nPos]:enabled ) .OR. nPos == 0
 
@@ -366,7 +366,7 @@ METHOD setItem(nPos, oItem) CLASS TopBarMenu
 METHOD colorSpec(cColorSpec) CLASS TopBarMenu
 
    IF cColorSpec != NIL
-      ::cColorSpec := __eInstVar53( Self, "COLORSPEC", cColorSpec, "C", 1001, {|| !Empty(hb_ColorIndex(cColorSpec, 5)) .AND. Empty(hb_ColorIndex(cColorSpec, 6)) } )
+      ::cColorSpec := __eInstVar53(Self, "COLORSPEC", cColorSpec, "C", 1001, {||!Empty(hb_ColorIndex(cColorSpec, 5)) .AND. Empty(hb_ColorIndex(cColorSpec, 6))})
 
    ENDIF
 
@@ -378,34 +378,34 @@ METHOD current() CLASS TopBarMenu
 METHOD itemCount() CLASS TopBarMenu
    RETURN ::nItemCount
 
-METHOD left( nLeft ) CLASS TopBarMenu
+METHOD left(nLeft) CLASS TopBarMenu
 
    IF nLeft != NIL
-      ::nLeft := __eInstVar53( Self, "LEFT", nLeft, "N", 1001 )
+      ::nLeft := __eInstVar53(Self, "LEFT", nLeft, "N", 1001)
    ENDIF
 
    RETURN ::nLeft
 
-METHOD right( nRight ) CLASS TopBarMenu
+METHOD right(nRight) CLASS TopBarMenu
 
    IF nRight != NIL
-      ::nRight := __eInstVar53( Self, "RIGHT", nRight, "N", 1001 )
+      ::nRight := __eInstVar53(Self, "RIGHT", nRight, "N", 1001)
    ENDIF
 
    RETURN ::nRight
 
-METHOD row( nRow ) CLASS TopBarMenu
+METHOD row(nRow) CLASS TopBarMenu
 
    IF nRow != NIL
       /* NOTE: CA-Cl*pper 5.3 has a bug, where it would show "TOP" in case of an error. */
-      ::nRow := __eInstVar53( Self, "ROW", nRow, "N", 1001 )
+      ::nRow := __eInstVar53(Self, "ROW", nRow, "N", 1001)
    ENDIF
 
    RETURN ::nRow
 
 /* -------------------------------------------- */
 
-METHOD New( nRow, nLeft, nRight ) CLASS TopBarMenu
+METHOD New(nRow, nLeft, nRight) CLASS TopBarMenu
 
    LOCAL cColor
 
@@ -435,6 +435,6 @@ METHOD New( nRow, nLeft, nRight ) CLASS TopBarMenu
 /* -------------------------------------------- */
 
 FUNCTION TopBar(nRow, nLeft, nRight)
-   RETURN HBTopBarMenu():New( nRow, nLeft, nRight )
+   RETURN HBTopBarMenu():New(nRow, nLeft, nRight)
 
 #endif

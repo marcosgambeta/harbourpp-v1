@@ -56,7 +56,7 @@ CREATE CLASS hb_PopupMenu INHERIT HBPopupMenu
    METHOD shadowed(lShadowed) SETGET
 
    METHOD setCoors(nRow, nCol, lTop)
-   METHOD isShortCut( nKey, /* @ */ nID )
+   METHOD isShortCut(nKey, /* @ */ nID)
    METHOD isQuick(nKey, /* @ */ nID)
 
 ENDCLASS
@@ -64,7 +64,7 @@ ENDCLASS
 METHOD shadowed(lShadowed) CLASS hb_PopupMenu
 
    IF lShadowed != NIL
-      ::lShadowed := __eInstVar53( Self, "SHADOWED", lShadowed, "L", 1001 )
+      ::lShadowed := __eInstVar53(Self, "SHADOWED", lShadowed, "L", 1001)
    ENDIF
 
    RETURN ::lShadowed
@@ -119,7 +119,7 @@ METHOD setCoors(nRow, nCol, lTop) CLASS hb_PopupMenu
 
    RETURN Self
 
-METHOD isShortCut( nKey, /* @ */ nID ) CLASS hb_PopupMenu
+METHOD isShortCut(nKey, /* @ */ nID) CLASS hb_PopupMenu
 
    LOCAL nItem
    LOCAL nTotal
@@ -130,9 +130,9 @@ METHOD isShortCut( nKey, /* @ */ nID ) CLASS hb_PopupMenu
    DO CASE
    // Test and assign top menu item shortCut, enabled, and ! PopUp:
    // Changed by enclosing assignment before ':Enabled':
-   CASE ( nShortCut := ::getShortCt( nKey ) ) > 0 .AND. ( oItem := ::getItem(nShortcut) ):enabled .AND. !oItem:isPopUp()
+   CASE ( nShortCut := ::getShortCt(nKey) ) > 0 .AND. ( oItem := ::getItem(nShortcut) ):enabled .AND. !oItem:isPopUp()
 
-      ::select( nShortCut )
+      ::select(nShortCut)
       Eval(oItem:data, oItem)
       nID := oItem:id
 
@@ -165,7 +165,7 @@ METHOD isQuick(nKey, /* @ */ nID) CLASS hb_PopupMenu
    LOCAL nShortCut
    LOCAL oItem
 
-   IF ( nShortCut := ::getShortCt( nKey ) ) == 0
+   IF ( nShortCut := ::getShortCt(nKey) ) == 0
 
       FOR EACH oItem IN ::aItems
          IF oItem:Enabled .AND. oItem:isPopUp() .AND. oItem:data:isQuick(nKey, @nID)
@@ -176,7 +176,7 @@ METHOD isQuick(nKey, /* @ */ nID) CLASS hb_PopupMenu
    ELSEIF !( oItem := ::getItem(nShortCut) ):IsPopUp()
 
       IF oItem:enabled
-         ::select( nShortCut )
+         ::select(nShortCut)
          Eval(oItem:data, oItem)
          nID := oItem:id
          RETURN .T.

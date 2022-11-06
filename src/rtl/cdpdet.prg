@@ -163,7 +163,7 @@ STATIC FUNCTION __UnixParseLangCP(cString, /* @ */ cLang)
    ENDIF
 
    /* Tricks to make the manual translation table shorter */
-   cCP := hb_StrReplace(Lower(cCP), { "_" => "", "-" => "", "ibm" => "cp", "windows" => "cp" })
+   cCP := hb_StrReplace(Lower(cCP), {"_" => "", "-" => "", "ibm" => "cp", "windows" => "cp"})
    IF hb_LeftEq(cCP, "iso8859")
       cCP := Stuff(cCP, Len("iso8859") + 1, 0, "-")
    ENDIF

@@ -44,7 +44,7 @@
  *
  */
 
-PROCEDURE DevOutPict( xValue, cPicture, cColor )
+PROCEDURE DevOutPict(xValue, cPicture, cColor)
 
    IF ValType(xValue) $ "CMNDTL"
       DevOut(Transform(xValue, cPicture), cColor)

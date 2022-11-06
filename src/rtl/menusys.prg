@@ -57,7 +57,7 @@
 
 /* Standard Menu System Modal handling for Menu Items */
 FUNCTION MenuModal(oTopMenu, nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList)
-   RETURN HBMenuSys():New( oTopMenu ):modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList)
+   RETURN HBMenuSys():New(oTopMenu):modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList)
 
 /* Dummy function */
 FUNCTION ShowMsg(aMsg, lMode)
@@ -68,7 +68,7 @@ FUNCTION ShowMsg(aMsg, lMode)
    RETURN .F.
 
 /* ShortCut processing for initial Get or Menu Item. */
-FUNCTION IsShortcut( oMenu, nKey, /* @ */ nID )
+FUNCTION IsShortcut(oMenu, nKey, /* @ */ nID)
 
    LOCAL nItem
    LOCAL nTotal
@@ -84,9 +84,9 @@ FUNCTION IsShortcut( oMenu, nKey, /* @ */ nID )
 
    // Test and assign top menu item shortCut, enabled, and ! PopUp:
    // Changed by enclosing assignment before ':Enabled':
-   CASE ( nShortCut := oMenu:getShortCt( nKey ) ) > 0 .AND. ( oItem := oMenu:getItem(nShortcut) ):enabled .AND. !oItem:isPopUp()
+   CASE ( nShortCut := oMenu:getShortCt(nKey) ) > 0 .AND. ( oItem := oMenu:getItem(nShortcut) ):enabled .AND. !oItem:isPopUp()
 
-      oMenu:select( nShortCut )
+      oMenu:select(nShortCut)
       Eval(oItem:data, oItem)
       nID := oItem:ID
 
@@ -128,7 +128,7 @@ FUNCTION IsQuick(oMenu, nKey, /* @ */ nID)
    LOCAL nShortCut
    LOCAL oItem
 
-   IF ( nShortCut := oMenu:getShortCt( nKey ) ) == 0
+   IF ( nShortCut := oMenu:getShortCt(nKey) ) == 0
 
       nTotal := oMenu:itemCount
 
@@ -142,7 +142,7 @@ FUNCTION IsQuick(oMenu, nKey, /* @ */ nID)
 
    ELSEIF !( oItem := oMenu:getItem(nShortCut) ):isPopUp() .AND. oItem:enabled
 
-      oMenu:select( nShortCut )
+      oMenu:select(nShortCut)
       Eval(oItem:data, oItem)
       nID := oItem:ID
 

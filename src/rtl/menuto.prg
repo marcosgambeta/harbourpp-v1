@@ -23,7 +23,7 @@ THREAD STATIC t_nPointer := 1
 
 /* NOTE: <cColor> parameter is a Harbour extension. */
 
-FUNCTION __AtPrompt( nRow, nCol, cPrompt, cMsg, cColor )
+FUNCTION __AtPrompt(nRow, nCol, cPrompt, cMsg, cColor)
 
    IF t_nPointer < 1
       t_nPointer := 1
@@ -40,7 +40,7 @@ FUNCTION __AtPrompt( nRow, nCol, cPrompt, cMsg, cColor )
       nCol, ;      // _ITM_COL
       cPrompt, ;   // _ITM_PROMPT
       cMsg, ;      // _ITM_MSG
-      cColor })    // _ITM_COLOR
+      cColor})    // _ITM_COLOR
 
    // put this prompt on the screen right now
    DispOutAt(nRow, nCol, cPrompt, cColor)
@@ -78,7 +78,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
 #endif
 
    // Detect if a memvar was passed
-   lDeclared := !__mvExist( cVariable )
+   lDeclared := !__mvExist(cVariable)
 
    IF lDeclared
       __mvPublic(cVariable)
@@ -139,7 +139,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
                xMsg := Eval(xMsg)
             ENDIF
 
-            hb_default( @xMsg, "" )
+            hb_default(@xMsg, "")
 
             IF lMsgCenter
                nMsgCol := Int(( MaxCol() - Len(xMsg) ) / 2)
@@ -166,11 +166,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
             nHiLited := n
 #endif
             // highlight the prompt
-            DispOutAt( ;
-               t_aLevel[nPointer - 1][n][_ITM_ROW], ;
-               t_aLevel[nPointer - 1][n][_ITM_COL], ;
-               t_aLevel[nPointer - 1][n][_ITM_PROMPT], ;
-               cColorSelect)
+            DispOutAt(t_aLevel[nPointer - 1][n][_ITM_ROW], t_aLevel[nPointer - 1][n][_ITM_COL], t_aLevel[nPointer - 1][n][_ITM_PROMPT], cColorSelect)
 #ifndef HB_CLP_STRICT
          ENDIF
 #endif
@@ -209,7 +205,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
             EXIT
          CASE K_LBUTTONDOWN
          CASE K_LDBLCLK
-            IF ( nMouseClik := HitTest( t_aLevel[nPointer - 1], MRow(), MCol() ) ) > 0
+            IF ( nMouseClik := HitTest(t_aLevel[nPointer - 1], MRow(), MCol()) ) > 0
                n := nMouseClik
             ENDIF
             /* QUESTION: Clipper does this, but shouldn't we only
@@ -293,7 +289,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
 
 #ifdef HB_COMPAT_C53
 
-STATIC FUNCTION HitTest( aMenu, nMRow, nMCol )
+STATIC FUNCTION HitTest(aMenu, nMRow, nMCol)
 
    LOCAL aMenuItem
 

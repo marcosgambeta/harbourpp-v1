@@ -65,7 +65,7 @@ PROCEDURE __TypeFile(cFile, lPrint)
    LOCAL cPath
    LOCAL i
 
-   hb_default( @lPrint, .F. )
+   hb_default(@lPrint, .F.)
 
    IF !HB_ISSTRING(cFile)
       oErr := ErrorNew()
@@ -79,7 +79,7 @@ PROCEDURE __TypeFile(cFile, lPrint)
 
    /* If no drive/dir specified, search the SET DEFAULT and PATH directories */
 
-   hb_FNameSplit( cFile, @cDir, @cName, @cExt )
+   hb_FNameSplit(cFile, @cDir, @cName, @cExt)
 
    IF Empty(cDir)
 

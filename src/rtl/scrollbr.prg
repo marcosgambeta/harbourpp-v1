@@ -67,21 +67,21 @@ CREATE CLASS ScrollBar FUNCTION HBScrollBar
    METHOD barLength() SETGET
    METHOD bitmaps(aBitmaps) SETGET
    METHOD colorSpec(cColorSpec) SETGET
-   METHOD current( nCurrent ) SETGET
+   METHOD current(nCurrent) SETGET
    METHOD end(nEnd) SETGET
    METHOD offset(nOffset) SETGET
-   METHOD orient( nOrient ) SETGET
+   METHOD orient(nOrient) SETGET
    METHOD sBlock(bSBlock) SETGET
-   METHOD start( nStart ) SETGET
+   METHOD start(nStart) SETGET
    METHOD style(cStyle) SETGET
    METHOD thumbPos(nThumbPos) SETGET
    METHOD total(nTotal) SETGET
 
    METHOD display()
    METHOD update()
-   METHOD hitTest( nMRow, nMCol )
+   METHOD hitTest(nMRow, nMCol)
 
-   METHOD New( nStart, nEnd, nOffset, bSBlock, nOrient )  /* NOTE: This method is a Harbour extension [vszakats] */
+   METHOD New(nStart, nEnd, nOffset, bSBlock, nOrient)  /* NOTE: This method is a Harbour extension [vszakats] */
 
    PROTECTED:
 
@@ -179,7 +179,7 @@ METHOD update() CLASS ScrollBar
 
    RETURN .F.
 
-METHOD hitTest( nMRow, nMCol ) CLASS ScrollBar
+METHOD hitTest(nMRow, nMCol) CLASS ScrollBar
 
    IF ::nOrient == SCROLL_VERTICAL
 
@@ -259,7 +259,7 @@ METHOD colorSpec(cColorSpec) CLASS ScrollBar
 
    RETURN ::cColorSpec
 
-METHOD current( nCurrent ) CLASS ScrollBar
+METHOD current(nCurrent) CLASS ScrollBar
 
    IF HB_ISNUMERIC(nCurrent) .AND. nCurrent <= ::nTotal .AND. nCurrent != ::nCurrent
 
@@ -287,7 +287,7 @@ METHOD offset(nOffset) CLASS ScrollBar
 
    RETURN ::nOffset
 
-METHOD orient( nOrient ) CLASS ScrollBar
+METHOD orient(nOrient) CLASS ScrollBar
 
    IF HB_ISNUMERIC(nOrient) .AND. ( nOrient == SCROLL_VERTICAL .OR. nOrient == SCROLL_HORIZONTAL )
 
@@ -304,7 +304,7 @@ METHOD sBlock(bSBlock) CLASS ScrollBar
 
    RETURN ::bSBlock
 
-METHOD start( nStart ) CLASS ScrollBar
+METHOD start(nStart) CLASS ScrollBar
 
    IF HB_ISNUMERIC(nStart) .AND. nStart <= ::nEnd .AND. nStart != ::nStart
 
@@ -377,7 +377,7 @@ METHOD CalcThumbPos() CLASS ScrollBar
 #define SB_THUMB        hb_UTF8ToStr("░")
 #define SB_TRACK        hb_UTF8ToStr("▓")
 
-METHOD New( nStart, nEnd, nOffset, bSBlock, nOrient ) CLASS ScrollBar
+METHOD New(nStart, nEnd, nOffset, bSBlock, nOrient) CLASS ScrollBar
 
    LOCAL cColor
 
@@ -402,22 +402,20 @@ METHOD New( nStart, nEnd, nOffset, bSBlock, nOrient ) CLASS ScrollBar
    SWITCH nOrient
    CASE SCROLL_VERTICAL
       ::cStyle := SB_UPARROW + SB_THUMB + SB_TRACK + SB_DNARROW
-      ::aBitmaps := { "arrow_u.bmu", "arrow_d.bmu", "arrow_e.bmu" }
+      ::aBitmaps := {"arrow_u.bmu", "arrow_d.bmu", "arrow_e.bmu"}
       EXIT
    CASE SCROLL_HORIZONTAL
       ::cStyle := SB_LEFTARROW + SB_THUMB + SB_TRACK + SB_RIGHTARROW
-      ::aBitmaps := { "arrow_l.bmu", "arrow_r.bmu", "arrow_e.bmu" }
+      ::aBitmaps := {"arrow_l.bmu", "arrow_r.bmu", "arrow_e.bmu"}
       EXIT
    ENDSWITCH
 
    cColor := SetColor()
-   ::cColorSpec := ;
-      hb_ColorIndex(cColor, CLR_UNSELECTED) + "," + ;
-      hb_ColorIndex(cColor, CLR_ENHANCED)
+   ::cColorSpec := hb_ColorIndex(cColor, CLR_UNSELECTED) + "," + hb_ColorIndex(cColor, CLR_ENHANCED)
 
    RETURN Self
 
 FUNCTION ScrollBar(nStart, nEnd, nOffset, bSBlock, nOrient)
-   RETURN HBScrollBar():New( nStart, nEnd, nOffset, bSBlock, nOrient )
+   RETURN HBScrollBar():New(nStart, nEnd, nOffset, bSBlock, nOrient)
 
 #endif

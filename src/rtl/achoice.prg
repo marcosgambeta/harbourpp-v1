@@ -45,8 +45,8 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
    nTop := Int(hb_defaultValue(nTop, 0))
    nBottom := Int(hb_defaultValue(nBottom, 0))
 
-   hb_default( @nLeft, 0 )
-   hb_default( @nRight, 0 )
+   hb_default(@nLeft, 0)
+   hb_default(@nRight, 0)
 
    IF nRight > MaxCol()
       nRight := MaxCol()
@@ -63,7 +63,7 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
 
    nSaveCsr := SetCursor(SC_NONE)
 
-   ColorSelect( CLR_STANDARD )
+   ColorSelect(CLR_STANDARD)
 
    /* NOTE: Undocumented parameter passing handled. AChoice()
             is called in such way in rldialg.prg from RL tool
@@ -81,8 +81,8 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
       xSelect := .T.               // Array or logical, what is selectable
    ENDIF
 
-   hb_default( @nPos, 1 )          // The number of the selected item
-   hb_default( @nHiLiteRow, 0 )    // The row to be highlighted
+   hb_default(@nPos, 1)          // The number of the selected item
+   hb_default(@nHiLiteRow, 0)    // The row to be highlighted
 
    nNumCols := nRight - nLeft + 1
    nNumRows := nBottom - nTop + 1
@@ -130,7 +130,7 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
 
          Eval(bAction, ProcName(1), ProcLine(1), "")
          IF NextKey() == 0
-            hb_keySetLast( 255 )
+            hb_keySetLast(255)
             nKey := 0
          ENDIF
 
@@ -140,7 +140,7 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
             nPos := 0
             nAtTop := Max(1, nPos - nNumRows + 1)
          ELSE
-            DO WHILE nPos < nLastItem .AND. !Ach_Select( alSelect, nPos )
+            DO WHILE nPos < nLastItem .AND. !Ach_Select(alSelect, nPos)
                nPos++
             ENDDO
 
@@ -172,12 +172,12 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
          lFinished := .T.
 
       CASE nKey == K_LDBLCLK .OR. nKey == K_LBUTTONDOWN
-         nAux := HitTest( nTop, nLeft, nBottom, nRight, MRow(), MCol() )
+         nAux := HitTest(nTop, nLeft, nBottom, nRight, MRow(), MCol())
          IF nAux != 0 .AND. ( nNewPos := nAtTop + nAux - 1 ) <= nItems
-            IF Ach_Select( alSelect, nNewPos )
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .F., nNumCols)
+            IF Ach_Select(alSelect, nNewPos)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .F., nNumCols)
                nPos := nNewPos
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .T., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .T., nNumCols)
                IF nKey == K_LDBLCLK
                   hb_keyIns(K_ENTER)
                ENDIF
@@ -198,26 +198,26 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
             ENDIF
          ELSE
             nNewPos := nPos - 1
-            DO WHILE !Ach_Select( alSelect, nNewPos )
+            DO WHILE !Ach_Select(alSelect, nNewPos)
                nNewPos--
             ENDDO
             IF INRANGE(nAtTop, nNewPos, nAtTop + nNumRows - 1)
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .F., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .F., nNumCols)
                nPos := nNewPos
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .T., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .T., nNumCols)
             ELSE
                DispBegin()
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .F., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .F., nNumCols)
                Scroll(nTop, nLeft, nBottom, nRight, nNewPos - (nAtTop + nNumRows - 1))
                nAtTop := nNewPos
                nPos   := Max(nPos, nAtTop + nNumRows - 1)
                DO WHILE nPos > nNewPos
                   IF nTop + nPos - nAtTop <= nBottom
-                     DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .F., nNumCols)
+                     DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .F., nNumCols)
                   ENDIF
                   nPos--
                ENDDO
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .T., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .T., nNumCols)
                DispEnd()
             ENDIF
          ENDIF
@@ -239,25 +239,25 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
 
             nNewPos := nPos + 1
 
-            DO WHILE !Ach_Select( alSelect, nNewPos )
+            DO WHILE !Ach_Select(alSelect, nNewPos)
                nNewPos++
             ENDDO
 
             IF INRANGE(nAtTop, nNewPos, nAtTop + nNumRows - 1)
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .F., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .F., nNumCols)
                nPos := nNewPos
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .T., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .T., nNumCols)
             ELSE
                DispBegin()
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .F., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .F., nNumCols)
                Scroll(nTop, nLeft, nBottom, nRight, nNewPos - (nAtTop + nNumRows - 1))
                nAtTop := nNewPos - nNumRows + 1
                nPos   := Max(nPos, nAtTop)
                DO WHILE nPos < nNewPos
-                  DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .F., nNumCols)
+                  DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .F., nNumCols)
                   nPos++
                ENDDO
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .T., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .T., nNumCols)
                DispEnd()
             ENDIF
          ENDIF
@@ -288,9 +288,9 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
             ENDIF
          ELSE
             IF INRANGE(nAtTop, nLastItem, nAtTop + nNumRows - 1)
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .F., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .F., nNumCols)
                nPos := nLastItem
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .T., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .T., nNumCols)
             ELSE
                nPos   := nLastItem
                nAtTop := Max(1, nPos - nNumRows + 1)
@@ -309,13 +309,13 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
             ENDIF
          ELSE
             nNewPos := nAtTop
-            DO WHILE !Ach_Select( alSelect, nNewPos )
+            DO WHILE !Ach_Select(alSelect, nNewPos)
                nNewPos++
             ENDDO
             IF nNewPos != nPos
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .F., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .F., nNumCols)
                nPos := nNewPos
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .T., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .T., nNumCols)
             ENDIF
          ENDIF
 
@@ -330,13 +330,13 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
             ENDIF
          ELSE
             nNewPos := Min(nAtTop + nNumRows - 1, nItems)
-            DO WHILE !Ach_Select( alSelect, nNewPos )
+            DO WHILE !Ach_Select(alSelect, nNewPos)
                nNewPos--
             ENDDO
             IF nNewPos != nPos
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .F., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .F., nNumCols)
                nPos := nNewPos
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .T., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .T., nNumCols)
             ENDIF
          ENDIF
 
@@ -360,7 +360,7 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
                ELSE
                   nPos   := Max(nFrstItem, nPos - nNumRows + 1)
                   nAtTop := Max(1, nAtTop - nNumRows + 1)
-                  DO WHILE nPos > nFrstItem .AND. !Ach_Select( alSelect, nPos )
+                  DO WHILE nPos > nFrstItem .AND. !Ach_Select(alSelect, nPos)
                      nPos--
                      nAtTop--
                   ENDDO
@@ -385,9 +385,9 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
          ELSE
             IF INRANGE(nAtTop, nLastItem, nAtTop + nNumRows - 1)
                // On the same page as nLastItem
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .F., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .F., nNumCols)
                nPos := nLastItem
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .T., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .T., nNumCols)
             ELSE
                nGap := nPos - nAtTop
                nPos := Min(nLastItem, nPos + nNumRows - 1)
@@ -400,7 +400,7 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
                   nAtTop := nPos - nGap
                ENDIF
                // Make sure that the item is selectable
-               DO WHILE nPos < nLastItem .AND. !Ach_Select( alSelect, nPos )
+               DO WHILE nPos < nLastItem .AND. !Ach_Select(alSelect, nPos)
                   nPos++
                   nAtTop++
                ENDDO
@@ -443,13 +443,13 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
 
          // Find next selectable item
          FOR nNewPos := nPos + 1 TO nItems
-            IF Ach_Select( alSelect, nNewPos ) .AND. hb_LeftEqI(acItems[nNewPos], cKey)
+            IF Ach_Select(alSelect, nNewPos) .AND. hb_LeftEqI(acItems[nNewPos], cKey)
                EXIT
             ENDIF
          NEXT
          IF nNewPos == nItems + 1
             FOR nNewPos := 1 TO nPos - 1
-               IF Ach_Select( alSelect, nNewPos ) .AND. hb_LeftEqI(acItems[nNewPos], cKey)
+               IF Ach_Select(alSelect, nNewPos) .AND. hb_LeftEqI(acItems[nNewPos], cKey)
                   EXIT
                ENDIF
             NEXT
@@ -458,9 +458,9 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
          IF nNewPos != nPos
             IF INRANGE(nAtTop, nNewPos, nAtTop + nNumRows - 1)
                // On same page
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .F., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .F., nNumCols)
                nPos := nNewPos
-               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select( alSelect, nPos ), .T., nNumCols)
+               DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), .T., nNumCols)
             ELSE
                // On different page
                nPos   := nNewPos
@@ -524,7 +524,7 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
                   nPos := 0
                   nAtTop := Max(1, nPos - nNumRows + 1)
                ELSE
-                  DO WHILE nPos < nLastItem .AND. !Ach_Select( alSelect, nPos )
+                  DO WHILE nPos < nLastItem .AND. !Ach_Select(alSelect, nPos)
                      nPos++
                   ENDDO
 
@@ -559,7 +559,7 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
 
    RETURN nPos
 
-STATIC FUNCTION HitTest( nTop, nLeft, nBottom, nRight, mRow, mCol )
+STATIC FUNCTION HitTest(nTop, nLeft, nBottom, nRight, mRow, mCol)
 
    IF mCol >= nLeft .AND. mCol <= nRight .AND. mRow >= nTop .AND. mRow <= nBottom
       RETURN mRow - nTop + 1
@@ -573,7 +573,7 @@ STATIC PROCEDURE DispPage(acItems, alSelect, nTop, nLeft, nRight, nNumRows, nPos
    LOCAL nRow       // Screen row
    LOCAL nIndex     // Array index
 
-   hb_default( @nRowsClr, nArrLen )
+   hb_default(@nRowsClr, nArrLen)
 
    DispBegin()
 
@@ -583,9 +583,9 @@ STATIC PROCEDURE DispPage(acItems, alSelect, nTop, nLeft, nRight, nNumRows, nPos
       nIndex := nCntr + nAtTop - 1
 
       IF INRANGE(1, nIndex, nArrLen)
-         DispLine(acItems[nIndex], nRow, nLeft, Ach_Select( alSelect, nIndex ), nIndex == nPos, nRight - nLeft + 1)
+         DispLine(acItems[nIndex], nRow, nLeft, Ach_Select(alSelect, nIndex), nIndex == nPos, nRight - nLeft + 1)
       ELSE
-         ColorSelect( CLR_STANDARD )
+         ColorSelect(CLR_STANDARD)
          hb_DispOutAt(nRow, nLeft, Space(nRight - nLeft + 1))
       ENDIF
    NEXT
@@ -596,14 +596,14 @@ STATIC PROCEDURE DispPage(acItems, alSelect, nTop, nLeft, nRight, nNumRows, nPos
 
 STATIC PROCEDURE DispLine(cLine, nRow, nCol, lSelect, lHiLite, nNumCols)
 
-   ColorSelect( iif(lSelect .AND. HB_ISSTRING(cLine), iif(lHiLite, CLR_ENHANCED, CLR_STANDARD), CLR_UNSELECTED) )
+   ColorSelect(iif(lSelect .AND. HB_ISSTRING(cLine), iif(lHiLite, CLR_ENHANCED, CLR_STANDARD), CLR_UNSELECTED))
 
    hb_DispOutAt(nRow, nCol, iif(HB_ISSTRING(cLine), PadR(cLine, nNumCols), Space(nNumCols)))
    IF lHiLite
       SetPos(nRow, nCol)
    ENDIF
 
-   ColorSelect( CLR_STANDARD )
+   ColorSelect(CLR_STANDARD)
 
    RETURN
 
@@ -616,7 +616,7 @@ STATIC FUNCTION Ach_Limits(/* @ */ nFrstItem, /* @ */ nLastItem, /* @ */ nItems,
    FOR nCntr := 1 TO Len(acItems)
       IF HB_ISSTRING(acItems[nCntr]) .AND. Len(acItems[nCntr]) > 0
          nItems++
-         IF Ach_Select( alSelect, nCntr )
+         IF Ach_Select(alSelect, nCntr)
             IF nFrstItem == 0
                nFrstItem := nLastItem := nCntr
             ELSE
@@ -635,7 +635,7 @@ STATIC FUNCTION Ach_Limits(/* @ */ nFrstItem, /* @ */ nLastItem, /* @ */ nItems,
 
    RETURN AC_IDLE
 
-STATIC FUNCTION Ach_Select( alSelect, nPos )
+STATIC FUNCTION Ach_Select(alSelect, nPos)
 
    LOCAL sel
 

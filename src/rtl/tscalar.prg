@@ -111,18 +111,18 @@ METHOD PROCEDURE BecomeErr() CLASS ScalarObject
 
 CREATE CLASS Array INHERIT HBScalar FUNCTION __HBArray
 
-   METHOD Init( nElements )
+   METHOD Init(nElements)
 
    METHOD AsString()
-   METHOD At( n )
+   METHOD At(n)
    METHOD AtPut(n, x)
    METHOD Add(x)
    METHOD AddAll(aOtherCollection)
-   METHOD Collect( b )
+   METHOD Collect(b)
    METHOD Copy()
    METHOD Do(b)
-   METHOD DeleteAt( n )
-   METHOD InsertAt( n, x )
+   METHOD DeleteAt(n)
+   METHOD InsertAt(n, x)
    METHOD IndexOf(x)
    METHOD IsScalar()
    METHOD Remove(e)
@@ -133,7 +133,7 @@ CREATE CLASS Array INHERIT HBScalar FUNCTION __HBArray
 
 ENDCLASS
 
-METHOD Init( nElements ) CLASS Array
+METHOD Init(nElements) CLASS Array
 
    ::size := iif(nElements == NIL, 0, nElements)
 
@@ -141,14 +141,14 @@ METHOD Init( nElements ) CLASS Array
 
 METHOD AddAll(aOtherCollection) CLASS Array
 
-   aOtherCollection:Do({| e | ::Add(e) })
+   aOtherCollection:Do({|e|::Add(e)})
 
    RETURN Self
 
 METHOD AsString() CLASS Array
    RETURN "{ ... }"
 
-METHOD At( n ) CLASS Array
+METHOD At(n) CLASS Array
    RETURN Self[n]
 
 METHOD AtPut(n, x) CLASS Array
@@ -160,7 +160,7 @@ METHOD Add(x) CLASS Array
 
    RETURN .T.
 
-METHOD Collect( b ) CLASS Array
+METHOD Collect(b) CLASS Array
 
    LOCAL elem
    LOCAL result := {}
@@ -174,9 +174,9 @@ METHOD Collect( b ) CLASS Array
    RETURN result
 
 METHOD Copy() CLASS Array
-   RETURN ACopy( Self, Array(Len(Self)) )
+   RETURN ACopy(Self, Array(Len(Self)))
 
-METHOD DeleteAt( n ) CLASS Array
+METHOD DeleteAt(n) CLASS Array
 
    IF n >= 1 .AND. n <= Len(Self)
       hb_ADel(Self, n, .T.)
@@ -184,7 +184,7 @@ METHOD DeleteAt( n ) CLASS Array
 
    RETURN Self
 
-METHOD InsertAt( n, x ) CLASS Array
+METHOD InsertAt(n, x) CLASS Array
 
    DO CASE
    CASE n > Len(Self)
@@ -287,7 +287,7 @@ METHOD Month() CLASS Date
    RETURN Month(Self)
 
 METHOD Day() CLASS Date
-   RETURN Day( Self )
+   RETURN Day(Self)
 
 /* --- */
 
@@ -326,7 +326,7 @@ METHOD Month() CLASS TimeStamp
    RETURN Month(Self)
 
 METHOD Day() CLASS TimeStamp
-   RETURN Day( Self )
+   RETURN Day(Self)
 
 METHOD Hour() CLASS TimeStamp
    RETURN hb_Hour(Self)

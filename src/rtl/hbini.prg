@@ -59,10 +59,10 @@
  * On error, the function returns NIL. On success, you will have an hash
  * array of this form:
  *
- *    { "MAIN" => { "Key1" => "Val1", ... , "KeyN" => "ValN" },
- *      "Section1" => { "Key1" => "Val1", ... , "KeyN" => "ValN" },
- *      ...
- *      "SectionN" => { "Key1" => "Val1", ... , "KeyN" => "ValN" }
+ *    {"MAIN" => {"Key1" => "Val1", ... , "KeyN" => "ValN"},
+ *     "Section1" => {"Key1" => "Val1", ... , "KeyN" => "ValN"},
+ *     ...
+ *     "SectionN" => {"Key1" => "Val1", ... , "KeyN" => "ValN"}
  *    }
  *
  * 'MAIN' is the default section (variables that are declared without a section).
@@ -74,7 +74,7 @@
 STATIC s_cLineComment := ";"
 STATIC s_cHalfLineComment := "#"
 
-PROCEDURE hb_iniSetComment( cLc, cHlc )
+PROCEDURE hb_iniSetComment(cLc, cHlc)
 
    IF HB_ISSTRING(cLc)
       s_cLineComment := cLc
@@ -86,36 +86,36 @@ PROCEDURE hb_iniSetComment( cLc, cHlc )
 
    RETURN
 
-FUNCTION hb_iniNew( lAutoMain )
+FUNCTION hb_iniNew(lAutoMain)
 
-   LOCAL hIni := { => }
+   LOCAL hIni := {=>}
 
    IF hb_defaultValue(lAutoMain, .T.)
-      hIni["MAIN"] := { => }
+      hIni["MAIN"] := {=>}
    ENDIF
 
    RETURN hIni
 
 FUNCTION hb_iniRead(cFileSpec, lKeyCaseSens, cSplitters, lAutoMain)
-   RETURN hb_iniReadStr(iif(HB_ISSTRING(cFileSpec), hb_iniFileLow( cFileSpec ), ""), lKeyCaseSens, cSplitters, lAutoMain)
+   RETURN hb_iniReadStr(iif(HB_ISSTRING(cFileSpec), hb_iniFileLow(cFileSpec), ""), lKeyCaseSens, cSplitters, lAutoMain)
 
 FUNCTION hb_iniReadStr(cData, lKeyCaseSens, cSplitters, lAutoMain)
 
-   LOCAL hIni := { => }
+   LOCAL hIni := {=>}
 
    /* Default case sensitiveness for keys */
-   hb_default( @lKeyCaseSens, .T. )
-   hb_default( @lAutoMain, .T. )
+   hb_default(@lKeyCaseSens, .T.)
+   hb_default(@lAutoMain, .T.)
 
    hb_HCaseMatch(hIni, lKeyCaseSens)
 
    IF lAutoMain
-      hIni["MAIN"] := { => }
+      hIni["MAIN"] := {=>}
    ENDIF
 
-   RETURN hb_iniStringLow( hIni, hb_defaultValue(cData, ""), lKeyCaseSens, hb_defaultValue(cSplitters, "="), lAutoMain )
+   RETURN hb_iniStringLow(hIni, hb_defaultValue(cData, ""), lKeyCaseSens, hb_defaultValue(cSplitters, "="), lAutoMain)
 
-STATIC FUNCTION hb_iniFileLow( cFileSpec )
+STATIC FUNCTION hb_iniFileLow(cFileSpec)
 
    LOCAL cFile, nLen
    LOCAL hFile
@@ -123,7 +123,7 @@ STATIC FUNCTION hb_iniFileLow( cFileSpec )
    LOCAL aFiles := hb_ATokens(cFileSpec, hb_osPathListSeparator())
 
    IF Empty(aFiles)
-      aFiles := { cFileSpec }
+      aFiles := {cFileSpec}
    ENDIF
 
    hFile := F_ERROR
@@ -148,7 +148,7 @@ STATIC FUNCTION hb_iniFileLow( cFileSpec )
 
    RETURN cData
 
-STATIC FUNCTION hb_iniStringLow( hIni, cData, lKeyCaseSens, cSplitters, lAutoMain )
+STATIC FUNCTION hb_iniStringLow(hIni, cData, lKeyCaseSens, cSplitters, lAutoMain)
 
    LOCAL aKeyVal, hCurrentSection
    LOCAL cLine
@@ -181,7 +181,7 @@ STATIC FUNCTION hb_iniStringLow( hIni, cData, lKeyCaseSens, cSplitters, lAutoMai
       ENDIF
 
       /* remove eventual comments */
-      IF !Empty(aKeyVal := hb_regexSplit( reComment, cLine ))
+      IF !Empty(aKeyVal := hb_regexSplit(reComment, cLine))
          IF Empty(cLine := AllTrim(aKeyVal[1]))
             /* Skip all comment lines */
             LOOP
@@ -189,25 +189,25 @@ STATIC FUNCTION hb_iniStringLow( hIni, cData, lKeyCaseSens, cSplitters, lAutoMai
       ENDIF
 
       /* Is it an "INCLUDE" statement ? */
-      IF !Empty(aKeyVal := hb_regex( reInclude, cLine ))
+      IF !Empty(aKeyVal := hb_regex(reInclude, cLine))
          /* ignore void includes */
          aKeyVal[2] := AllTrim(aKeyVal[2])
          IF Len(aKeyVal[2]) == 0
             LOOP
          ENDIF
-         hb_iniStringLow( hIni, hb_iniFileLow( aKeyVal[2] ), lKeyCaseSens, cSplitters, lAutoMain )
+         hb_iniStringLow(hIni, hb_iniFileLow(aKeyVal[2]), lKeyCaseSens, cSplitters, lAutoMain)
       /* Is it a NEW section? */
-      ELSEIF !Empty(aKeyVal := hb_regex( reSection, cLine ))
+      ELSEIF !Empty(aKeyVal := hb_regex(reSection, cLine))
          cLine := AllTrim(aKeyVal[2])
          IF Len(cLine) != 0
-            hCurrentSection := { => }
+            hCurrentSection := {=>}
             IF !lKeyCaseSens
                cLine := Upper(cLine)
             ENDIF
             hIni[cLine] := hCurrentSection
          ENDIF
       /* Is it a valid key */
-      ELSEIF Len(aKeyVal := hb_regexSplit( reSplitters, cLine,,, 1 )) == 1
+      ELSEIF Len(aKeyVal := hb_regexSplit(reSplitters, cLine, NIL, NIL, 1)) == 1
          /* TODO: Signal error */
       ELSE
          /* If not case sensitive, use upper keys */
@@ -275,7 +275,7 @@ FUNCTION hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
       cBuffer += cCommentBegin + cNewLine
    ENDIF
 
-   hb_default( @lAutoMain, .T. )
+   hb_default(@lAutoMain, .T.)
 
    // Fix if lAutoMain is .T. but I haven't a MAIN section
    IF lAutoMain .AND. !( "MAIN" $ hIni )
@@ -285,11 +285,10 @@ FUNCTION hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
    /* Write top-level section */
    IF lAutoMain
       /* When lAutoMain is on, write the 'main' section */
-      hb_HEval(hIni["MAIN"], {| cKey, xVal | ;
-         cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine })
+      hb_HEval(hIni["MAIN"], {|cKey, xVal|cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine})
    ELSE
       /* When lAutoMain is off, just write all the top-level variables. */
-      hb_HEval(hIni, {| cKey, xVal | iif(HB_ISHASH(xVal), /* nothing */, cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine) })
+      hb_HEval(hIni, {|cKey, xVal|iif(HB_ISHASH(xVal), /* nothing */, cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine)})
    ENDIF
 
    FOR EACH cSection IN hIni
@@ -309,7 +308,7 @@ FUNCTION hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
 
       cBuffer += cNewLine + "[" + hb_CStr(cSection:__enumKey) + "]" + cNewLine
 
-      hb_HEval(cSection, {| cKey, xVal | cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine })
+      hb_HEval(cSection, {|cKey, xVal|cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine})
    NEXT
 
    IF HB_ISSTRING(cCommentEnd) .AND. !Empty(cCommentEnd)

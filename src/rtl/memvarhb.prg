@@ -90,18 +90,18 @@ PROCEDURE hb_mvSave(cFileName, cMask, lIncludeMask)
          cMask := "*"
       ENDIF
 
-      hb_default( @lIncludeMask, .T. )
+      hb_default(@lIncludeMask, .T.)
 
       aVars := {}
 
-      FOR EACH nScope IN { HB_MV_PUBLIC, HB_MV_PRIVATE }
+      FOR EACH nScope IN {HB_MV_PUBLIC, HB_MV_PRIVATE}
          nCount := __mvDbgInfo(nScope)
          FOR tmp := 1 TO nCount
             xValue := __mvDbgInfo(nScope, tmp, @cName)
             IF ValType(xValue) $ "CNDTL"
                lMatch := hb_WildMatchI(cMask, cName)
                IF iif(lIncludeMask, lMatch, !lMatch)
-                  AAdd(aVars, { cName, xValue })
+                  AAdd(aVars, {cName, xValue})
                ENDIF
             ENDIF
          NEXT
@@ -180,7 +180,7 @@ FUNCTION hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
          cMask := "*"
       ENDIF
 
-      hb_default( @lIncludeMask, .T. )
+      hb_default(@lIncludeMask, .T.)
 
       nRetries := 0
       DO WHILE .T.

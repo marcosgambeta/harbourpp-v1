@@ -76,9 +76,9 @@ FUNCTION HBClass()
       BEGIN SEQUENCE
 
 #if 0
-         hClass := __clsNew( "HBCLASS", 17,, @HBClass() )
+         hClass := __clsNew("HBCLASS", 17, NIL, @HBClass())
 #else
-         hClass := __clsNew( "HBCLASS", 16,, @HBClass() )
+         hClass := __clsNew("HBCLASS", 16, NIL, @HBClass())
 #endif
 
          __clsAddMsg(hClass, "New"            , @New()            , HB_OO_MSG_METHOD)
@@ -98,7 +98,7 @@ FUNCTION HBClass()
          __clsAddMsg(hClass, "SetOnError"     , @SetOnError()     , HB_OO_MSG_METHOD)
          __clsAddMsg(hClass, "SetDestructor"  , @SetDestructor()  , HB_OO_MSG_METHOD)
          __clsAddMsg(hClass, "InitClass"      , @InitClass()      , HB_OO_MSG_METHOD)
-         __clsAddMsg(hClass, "cSuper"         , {| Self | iif(Empty(::asSuper), NIL, ::asSuper[1]:name) }, HB_OO_MSG_INLINE)
+         __clsAddMsg(hClass, "cSuper"         , {|Self|iif(Empty(::asSuper), NIL, ::asSuper[1]:name)}, HB_OO_MSG_INLINE)
          __clsAddMsg(hClass, "hClass"         ,  1, HB_OO_MSG_ACCESS)
          __clsAddMsg(hClass, "_hClass"        ,  1, HB_OO_MSG_ASSIGN)
          __clsAddMsg(hClass, "cName"          ,  2, HB_OO_MSG_ACCESS)
@@ -145,25 +145,25 @@ FUNCTION HBClass()
 
    ENDIF
 
-   RETURN __clsInst( s_hClass )
+   RETURN __clsInst(s_hClass)
 
 /* xSuper is used here as the new preprocessor file (hbclass.ch) send here
    always an array (if no superclass, this will be an empty one)
    In case of direct class creation (without the help of preprocessor) xSuper can be
    either NIL or contain the name of the superclass. */
 
-STATIC FUNCTION New( cClassName, xSuper, sClassFunc, lModuleFriendly )
+STATIC FUNCTION New(cClassName, xSuper, sClassFunc, lModuleFriendly)
 
    LOCAL Self := QSelf()
    LOCAL i
 
    DO CASE
    CASE HB_ISSYMBOL(xSuper)
-      ::asSuper := { xSuper }
+      ::asSuper := {xSuper}
    CASE Empty(xSuper)
       ::asSuper := {}
    CASE HB_ISSTRING(xSuper)
-      ::asSuper := { __dynsN2Sym(xSuper) }
+      ::asSuper := {__dynsN2Sym(xSuper)}
    CASE HB_ISARRAY(xSuper)
       ::asSuper := {}
       FOR EACH i IN xSuper
@@ -210,7 +210,7 @@ STATIC PROCEDURE Create(/* MetaClass */)
       ENDIF
    NEXT
 
-   ::hClass := hClass := __clsNew( ::cName, Len(::aDatas), ahSuper, ::sClassFunc, ::lModFriendly )
+   ::hClass := hClass := __clsNew(::cName, Len(::aDatas), ahSuper, ::sClassFunc, ::lModFriendly)
 
    IF !Empty(ahSuper) .AND. ahSuper[1] != 0
       __clsAddMsg(hClass, "SUPER", 0, HB_OO_MSG_SUPER, ahSuper[1], HB_OO_CLSTP_EXPORTED + HB_OO_CLSTP_NONVIRTUAL)
@@ -276,7 +276,7 @@ STATIC PROCEDURE Create(/* MetaClass */)
    RETURN
 
 STATIC FUNCTION Instance()
-   RETURN __clsInst( QSelf():hClass )
+   RETURN __clsInst(QSelf():hClass)
 
 STATIC PROCEDURE AddData(cData, xInit, cType, nScope, lNoinit)
 
@@ -305,7 +305,7 @@ STATIC PROCEDURE AddData(cData, xInit, cType, nScope, lNoinit)
       ENDSWITCH
    ENDIF
 
-   AAdd(QSelf():aDatas, { cData, xInit, cType, hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED) })
+   AAdd(QSelf():aDatas, {cData, xInit, cType, hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED)})
 
    RETURN
 
@@ -348,7 +348,7 @@ STATIC PROCEDURE AddClassData(cData, xInit, cType, nScope, lNoInit)
       ENDSWITCH
    ENDIF
 
-   AAdd(QSelf():aClsDatas, { cData, xInit, cType, hb_bitOr(hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED), HB_OO_CLSTP_CLASS) })
+   AAdd(QSelf():aClsDatas, {cData, xInit, cType, hb_bitOr(hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED), HB_OO_CLSTP_CLASS)})
 
    RETURN
 
@@ -366,19 +366,19 @@ STATIC PROCEDURE AddMultiClsData(cType, xInit, nScope, aData, lNoInit)
 
 STATIC PROCEDURE AddInline(cMethod, bCode, nScope)
 
-   AAdd(QSelf():aInlines, { cMethod, bCode, hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED) })
+   AAdd(QSelf():aInlines, {cMethod, bCode, hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED)})
 
    RETURN
 
 STATIC PROCEDURE AddMethod(cMethod, sFuncSym, nScope)
 
-   AAdd(QSelf():aMethods, { cMethod, sFuncSym, hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED) })
+   AAdd(QSelf():aMethods, {cMethod, sFuncSym, hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED)})
 
    RETURN
 
 STATIC PROCEDURE AddClsMethod(cMethod, sFuncSym, nScope)
 
-   AAdd(QSelf():aClsMethods, { cMethod, sFuncSym, hb_bitOr(hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED), HB_OO_CLSTP_CLASS) })
+   AAdd(QSelf():aClsMethods, {cMethod, sFuncSym, hb_bitOr(hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED), HB_OO_CLSTP_CLASS)})
 
    RETURN
 
@@ -394,10 +394,10 @@ STATIC PROCEDURE AddDelegate(xMethod, cDelegMsg, cObject, nScope)
 
    DO CASE
    CASE HB_ISSTRING(xMethod)
-      AAdd(QSelf():aDelegates, { xMethod, cDelegMsg, cObject, nScope })
+      AAdd(QSelf():aDelegates, {xMethod, cDelegMsg, cObject, nScope})
    CASE HB_ISARRAY(xMethod)
       FOR EACH mth IN xMethod
-         AAdd(QSelf():aDelegates, { mth, cDelegMsg, cObject, nScope })
+         AAdd(QSelf():aDelegates, {mth, cDelegMsg, cObject, nScope})
       NEXT
    ENDCASE
 
@@ -407,7 +407,7 @@ STATIC PROCEDURE AddFriendClass(...)
 
    LOCAL Self := QSelf()
 
-   AEval(hb_AParams(), {| sClass | AAdd(::asFriendClass, sClass) })
+   AEval(hb_AParams(), {|sClass|AAdd(::asFriendClass, sClass)})
 
    RETURN
 
@@ -415,7 +415,7 @@ STATIC PROCEDURE AddFriendFunc(...)
 
    LOCAL Self := QSelf()
 
-   AEval(hb_AParams(), {| sFunc | AAdd(::asFriendFunc, sFunc) })
+   AEval(hb_AParams(), {|sFunc|AAdd(::asFriendFunc, sFunc)})
 
    RETURN
 

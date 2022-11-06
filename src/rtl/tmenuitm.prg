@@ -67,7 +67,7 @@ CREATE CLASS MenuItem FUNCTION HBMenuItem
    METHOD enabled(lEnabled) SETGET
    METHOD id(nID) SETGET
    METHOD message(cMessage) SETGET
-   METHOD shortcut( nShortcut ) SETGET
+   METHOD shortcut(nShortcut) SETGET
    METHOD style(cStyle) SETGET
 
    VAR __col      INIT -1  AS NUMERIC                   /* NOTE: This is a Harbour extension. */
@@ -76,7 +76,7 @@ CREATE CLASS MenuItem FUNCTION HBMenuItem
 
    METHOD isPopUp()
 
-   METHOD New( cCaption, boData, nShortcut, cMessage, nID ) /* NOTE: This method is a Harbour extension [vszakats] */
+   METHOD New(cCaption, boData, nShortcut, cMessage, nID) /* NOTE: This method is a Harbour extension [vszakats] */
 
    PROTECTED:
 
@@ -95,7 +95,7 @@ METHOD caption(cCaption) CLASS MenuItem
 
    IF cCaption != NIL
 
-      ::cCaption := __eInstVar53( Self, "CAPTION", cCaption, "C", 1001 )
+      ::cCaption := __eInstVar53(Self, "CAPTION", cCaption, "C", 1001)
 
       IF ::cCaption == HB_MENU_SEPARATOR_UNI
          ::__issep  := .T.
@@ -111,7 +111,7 @@ METHOD caption(cCaption) CLASS MenuItem
 METHOD checked(lChecked) CLASS MenuItem
 
    IF lChecked != NIL .AND. !::__issep
-      ::lChecked := __eInstVar53( Self, "CHECKED", lChecked, "L", 1001 )
+      ::lChecked := __eInstVar53(Self, "CHECKED", lChecked, "L", 1001)
    ENDIF
 
    RETURN ::lChecked
@@ -122,7 +122,7 @@ METHOD data(boData) CLASS MenuItem
       IF HB_ISEVALITEM(boData)
          ::boData := boData
       ELSE
-         ::boData := __eInstVar53( Self, "DATA", boData, "O", 1001, {|| IS_IN(boData:ClassName(), "POPUPMENU|HB_POPUPMENU") } )
+         ::boData := __eInstVar53(Self, "DATA", boData, "O", 1001, {||IS_IN(boData:ClassName(), "POPUPMENU|HB_POPUPMENU")})
       ENDIF
    ENDIF
 
@@ -131,7 +131,7 @@ METHOD data(boData) CLASS MenuItem
 METHOD enabled(lEnabled) CLASS MenuItem
 
    IF lEnabled != NIL .AND. !::__issep
-      ::lEnabled := __eInstVar53( Self, "ENABLED", lEnabled, "L", 1001 )
+      ::lEnabled := __eInstVar53(Self, "ENABLED", lEnabled, "L", 1001)
    ENDIF
 
    RETURN ::lEnabled
@@ -139,7 +139,7 @@ METHOD enabled(lEnabled) CLASS MenuItem
 METHOD id(nID) CLASS MenuItem
 
    IF nID != NIL
-      ::nID := __eInstVar53( Self, "ID", nID, "N", 1001 )
+      ::nID := __eInstVar53(Self, "ID", nID, "N", 1001)
    ENDIF
 
    RETURN ::nID
@@ -147,15 +147,15 @@ METHOD id(nID) CLASS MenuItem
 METHOD message(cMessage) CLASS MenuItem
 
    IF cMessage != NIL
-      ::cMessage := __eInstVar53( Self, "MESSAGE", cMessage, "C", 1001 )
+      ::cMessage := __eInstVar53(Self, "MESSAGE", cMessage, "C", 1001)
    ENDIF
 
    RETURN ::cMessage
 
-METHOD shortcut( nShortcut ) CLASS MenuItem
+METHOD shortcut(nShortcut) CLASS MenuItem
 
    IF nShortcut != NIL
-      ::nShortcut := __eInstVar53( Self, "SHORTCUT", nShortcut, "N", 1001 )
+      ::nShortcut := __eInstVar53(Self, "SHORTCUT", nShortcut, "N", 1001)
    ENDIF
 
    RETURN ::nShortcut
@@ -163,7 +163,7 @@ METHOD shortcut( nShortcut ) CLASS MenuItem
 METHOD style(cStyle) CLASS MenuItem
 
    IF cStyle != NIL
-      ::cStyle := __eInstVar53( Self, "STYLE", cStyle, "C", 1001, {|| Len(cStyle) == 2 } )
+      ::cStyle := __eInstVar53(Self, "STYLE", cStyle, "C", 1001, {||Len(cStyle) == 2})
    ENDIF
 
    RETURN ::cStyle
@@ -171,7 +171,7 @@ METHOD style(cStyle) CLASS MenuItem
 METHOD isPopUp() CLASS MenuItem
    RETURN HB_ISOBJECT(::data) .AND. IS_IN(::data:ClassName(), "POPUPMENU|HB_POPUPMENU")
 
-METHOD New( cCaption, boData, nShortcut, cMessage, nID ) CLASS MenuItem
+METHOD New(cCaption, boData, nShortcut, cMessage, nID) CLASS MenuItem
 
    ::data      := boData
    ::nID       := hb_defaultValue(nID, 0)
@@ -182,7 +182,7 @@ METHOD New( cCaption, boData, nShortcut, cMessage, nID ) CLASS MenuItem
    RETURN Self
 
 FUNCTION MenuItem(cCaption, boData, nShortcut, cMessage, nID)
-   RETURN HBMenuItem():New( cCaption, boData, nShortcut, cMessage, nID )
+   RETURN HBMenuItem():New(cCaption, boData, nShortcut, cMessage, nID)
 
 #ifdef HB_CLP_UNDOC
 
@@ -199,7 +199,7 @@ FUNCTION __MIColumn(o, nColumn)
 
    RETURN -1
 
-FUNCTION __MIRow( o, nRow )
+FUNCTION __MIRow(o, nRow)
 
    IF HB_ISOBJECT(o) .AND. o:ClassName() == "MENUITEM"
 

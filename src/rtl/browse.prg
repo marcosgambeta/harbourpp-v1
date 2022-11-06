@@ -74,14 +74,14 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
    nOldCursor := SetCursor(SC_NONE)
    cOldScreen := SaveScreen(nTop, nLeft, nBottom, nRight)
 
-   hb_DispBox( nTop, nLeft, nBottom, nRight, HB_B_DOUBLE_SINGLE_UNI )
-   hb_DispOutAtBox( nTop + 3, nLeft, hb_UTF8ToStrBox( "╞" ) )
-   hb_DispOutAtBox( nTop + 3, nRight, hb_UTF8ToStrBox( "╡" ) )
+   hb_DispBox(nTop, nLeft, nBottom, nRight, HB_B_DOUBLE_SINGLE_UNI)
+   hb_DispOutAtBox(nTop + 3, nLeft, hb_UTF8ToStrBox("╞"))
+   hb_DispOutAtBox(nTop + 3, nRight, hb_UTF8ToStrBox("╡"))
    hb_DispOutAt(nTop + 1, nLeft + 1, Space(nRight - nLeft - 1))
 
    oBrw := TBrowseDB(nTop + 2, nLeft + 1, nBottom - 1, nRight - 1)
-   oBrw:HeadSep := " " + hb_UTF8ToStrBox( "═" )
-   oBrw:SkipBlock := {| nRecs | Skipped(nRecs, lAppend) }
+   oBrw:HeadSep := " " + hb_UTF8ToStrBox("═")
+   oBrw:SkipBlock := {|nRecs|Skipped(nRecs, lAppend)}
 
    FOR n := 1 TO FCount()
       oBrw:AddColumn(TBColumnNew(FieldName(n), FieldBlock(FieldName(n))))
@@ -122,7 +122,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
             ENDIF
             oBrw:Down()
             oBrw:ForceStable()
-            oBrw:ColorRect( { oBrw:RowPos, 1, oBrw:RowPos, oBrw:ColCount }, { 2, 2 } )
+            oBrw:ColorRect({oBrw:RowPos, 1, oBrw:RowPos, oBrw:ColCount}, {2, 2})
          ENDIF
 
          StatLine(oBrw, lAppend)
@@ -232,7 +232,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
 
       CASE K_INS
          IF lAppend
-            SetCursor(iif(ReadInsert( !ReadInsert() ), SC_NORMAL, SC_INSERT))
+            SetCursor(iif(ReadInsert(!ReadInsert()), SC_NORMAL, SC_INSERT))
          ENDIF
          EXIT
 
@@ -316,7 +316,7 @@ STATIC FUNCTION DoGet(oBrw, lAppend)
 
    lScore := Set(_SET_SCOREBOARD, .F.)
    lExit := Set(_SET_EXIT, .T.)
-   bIns := SetKey(K_INS, {|| SetCursor(iif(ReadInsert( !ReadInsert() ), SC_NORMAL, SC_INSERT)) })
+   bIns := SetKey(K_INS, {||SetCursor(iif(ReadInsert(!ReadInsert()), SC_NORMAL, SC_INSERT))})
    nCursor := SetCursor(iif(ReadInsert(), SC_INSERT, SC_NORMAL))
    IF !Empty(cIndexKey := IndexKey(0))
       xKeyValue := Eval(bIndexKey := hb_macroBlock(cIndexKey))
@@ -324,9 +324,9 @@ STATIC FUNCTION DoGet(oBrw, lAppend)
 
    oCol := oBrw:GetColumn(oBrw:ColPos)
    xValue := Eval(oCol:Block)
-   oGet := GetNew( Row(), Col(), {| xNewVal | iif(PCount() == 0, xValue, xValue := xNewVal) }, "mGetVar", NIL, oBrw:ColorSpec )
+   oGet := GetNew(Row(), Col(), {|xNewVal|iif(PCount() == 0, xValue, xValue := xNewVal)}, "mGetVar", NIL, oBrw:ColorSpec)
    lSuccess := .F.
-   IF ReadModal({ oGet })
+   IF ReadModal({oGet})
       IF lAppend .AND. RecNo() == LastRec() + 1
          dbAppend()
       ENDIF
@@ -349,7 +349,7 @@ STATIC FUNCTION DoGet(oBrw, lAppend)
    ENDIF
 
    IF lAppend
-      oBrw:ColorRect( { oBrw:RowPos, 1, oBrw:RowPos, oBrw:ColCount }, { 2, 2 } )
+      oBrw:ColorRect({oBrw:RowPos, 1, oBrw:RowPos, oBrw:ColCount}, {2, 2})
    ENDIF
 
    SetCursor(nCursor)

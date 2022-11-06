@@ -67,7 +67,7 @@ PROCEDURE __GetListSetActive(oGetList)
 FUNCTION __GetListActive()
    RETURN t_oGetListActive
 
-FUNCTION __GetListLast( oGetListLast )
+FUNCTION __GetListLast(oGetListLast)
 
    THREAD STATIC t_oGetListLast
 

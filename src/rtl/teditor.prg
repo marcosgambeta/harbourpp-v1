@@ -68,7 +68,7 @@ CREATE CLASS HBEditor
    EXPORTED:
 
    METHOD LoadFile(cFileName)                            // Load cFileName into active editor
-   METHOD LoadText( cText )                              // Load cText into active editor
+   METHOD LoadText(cText)                                // Load cText into active editor
    METHOD SaveFile()                                     // Save active file (not for MemoEdit() emulation)
 
    METHOD AddLine(cLine, lSoftCR)                        // Add a new Line of text at end of current text
@@ -80,7 +80,7 @@ CREATE CLASS HBEditor
    METHOD GotoLine(nRow)                                 // Put line nRow at cursor position
    METHOD LineCount()                                    // Returns number of lines in text.
 
-   METHOD GetText( lSoftCR )                             // Returns aText as a string (for MemoEdit())
+   METHOD GetText(lSoftCR)                               // Returns aText as a string (for MemoEdit())
 
    METHOD Display()                                      // Redraw a window
    METHOD RefreshLine()                                  // Redraw a line
@@ -89,7 +89,7 @@ CREATE CLASS HBEditor
    METHOD GoTo(nRow, nCol, nRefreshMode)               // Set current Column and Row in Edited Text
    METHOD MoveCursor(nKey)                             // Move cursor inside text / window (needs a movement key)
    METHOD InsertState(lInsState)                         // Changes insert state and insertion / overstrike mode of editor
-   METHOD Edit( nPassedKey )                             // Handles input (can receive a key in which case handles only this key and then exits)
+   METHOD Edit(nPassedKey)                               // Handles input (can receive a key in which case handles only this key and then exits)
    METHOD ExitState()                                    // Returns ::lExitEdit
 
    METHOD KeyboardHook(nKey)                             // Gets called every time there is a key not handled directly by HBEditor
@@ -108,13 +108,13 @@ CREATE CLASS HBEditor
    METHOD Changed()                                      // Returns ::lDirty
    METHOD IsWordWrap()                                   // Returns ::lWordWrap
    METHOD WordWrapCol()                                  // Returns ::nWordWrapCol
-   METHOD hitTest( nMRow, nMCol )                        // UI control compatible method
+   METHOD hitTest(nMRow, nMCol)                          // UI control compatible method
 
    MESSAGE RefreshWindow() METHOD Display()              // for compatibility
 
-   METHOD New( cText, nTop, nLeft, nBottom, ;            // Constructor
-               nRight, lEditMode, nLineLength, nTabSize, ;
-               nTextRow, nTextCol, nWndRow, nWndCol )
+   METHOD New(cText, nTop, nLeft, nBottom, ;            // Constructor
+              nRight, lEditMode, nLineLength, nTabSize, ;
+              nTextRow, nTextCol, nWndRow, nWndCol)
 
    PROTECTED:
 
@@ -145,12 +145,12 @@ CREATE CLASS HBEditor
 
    VAR cColorSpec     AS CHARACTER                       // Color string used for screen writes
 
-   METHOD BrowseText( nPassedKey )
+   METHOD BrowseText(nPassedKey)
 
 ENDCLASS
 
 
-METHOD New( cText, nTop, nLeft, nBottom, nRight, lEditMode, nLineLength, nTabSize, nTextRow, nTextCol, nWndRow, nWndCol ) CLASS HBEditor
+METHOD New(cText, nTop, nLeft, nBottom, nRight, lEditMode, nLineLength, nTabSize, nTextRow, nTextCol, nWndRow, nWndCol) CLASS HBEditor
 
    ::cColorSpec := SetColor()
 
@@ -165,7 +165,7 @@ METHOD New( cText, nTop, nLeft, nBottom, nRight, lEditMode, nLineLength, nTabSiz
       ::nTabWidth := Max(nTabSize, 2)
    ENDIF
 
-   ::LoadText( hb_defaultValue(cText, "") )
+   ::LoadText(hb_defaultValue(cText, ""))
    ::InsertState(Set(_SET_INSERT))
 
    ::nRow := hb_defaultValue(nTextRow, 1)
@@ -200,9 +200,9 @@ METHOD Resize(nTop, nLeft, nBottom, nRight) CLASS HBEditor
    RETURN ::Goto(::nRow, ::nCol)
 
 METHOD LoadFile(cFileName) CLASS HBEditor
-   RETURN ::LoadText( hb_MemoRead(::cFile := cFileName) )
+   RETURN ::LoadText(hb_MemoRead(::cFile := cFileName))
 
-METHOD LoadText( cText ) CLASS HBEditor
+METHOD LoadText(cText) CLASS HBEditor
 
    ::aText := Text2Array(cText, iif(::lWordWrap, ::nWordWrapCol, NIL), ::nTabWidth)
    ::lDirty := .F.
@@ -211,19 +211,19 @@ METHOD LoadText( cText ) CLASS HBEditor
 
 // Saves file being edited, if there is no file name does nothing, returns .T. if OK
 METHOD SaveFile() CLASS HBEditor
-   RETURN !::cFile == "" .AND. !::lDirty := !hb_MemoWrit( ::cFile, ::GetText() )
+   RETURN !::cFile == "" .AND. !::lDirty := !hb_MemoWrit(::cFile, ::GetText())
 
 // Add a new Line of text at end of current text
 METHOD AddLine(cLine, lSoftCR) CLASS HBEditor
 
-   AAdd(::aText, HBTextLine():New( cLine, lSoftCR ))
+   AAdd(::aText, HBTextLine():New(cLine, lSoftCR))
 
    RETURN Self
 
 // Insert a line of text at a defined row
 METHOD InsertLine(cLine, lSoftCR, nRow) CLASS HBEditor
 
-   hb_AIns(::aText, nRow, HBTextLine():New( cLine, lSoftCR ), .T.)
+   hb_AIns(::aText, nRow, HBTextLine():New(cLine, lSoftCR), .T.)
 
    RETURN Self
 
@@ -243,7 +243,7 @@ METHOD LineLen(nRow) CLASS HBEditor
    RETURN hb_ULen(::GetLine(nRow))
 
 // Converts an array of text lines to a String
-METHOD GetText( lSoftCR ) CLASS HBEditor
+METHOD GetText(lSoftCR) CLASS HBEditor
 
    LOCAL cText, cEOL, cSoftCR, oLine
 
@@ -298,7 +298,7 @@ METHOD GoTo(nRow, nCol, nRefreshMode)
 
    LOCAL nFirstRow := ::nFirstRow, nFirstCol := ::nFirstCol
 
-   hb_default( @nRefreshMode, _REFRESH_NONE )
+   hb_default(@nRefreshMode, _REFRESH_NONE)
 
    IF nRow < 1
       nRow := 1
@@ -444,7 +444,7 @@ METHOD MoveCursor(nKey) CLASS HBEditor
    RETURN .T.
 
 // Edits text
-METHOD Edit( nPassedKey ) CLASS HBEditor
+METHOD Edit(nPassedKey) CLASS HBEditor
 
    LOCAL nKey, nKeyStd, nPos
    LOCAL cKey
@@ -452,7 +452,7 @@ METHOD Edit( nPassedKey ) CLASS HBEditor
    LOCAL oLine
 
    IF !::lEditAllow
-      RETURN ::BrowseText( nPassedKey )
+      RETURN ::BrowseText(nPassedKey)
    ENDIF
 
    DO WHILE !::lExitEdit
@@ -471,7 +471,7 @@ METHOD Edit( nPassedKey ) CLASS HBEditor
       CASE ( bKeyBlock := SetKey(nKeyStd) ) != NIL
          Eval(bKeyBlock)
 
-      CASE !HB_ISNULL(cKey := iif(nKeyStd == K_TAB .AND. Set(_SET_INSERT), Space(TabCount( ::nTabWidth, ::nCol )), hb_keyChar(nKey)))
+      CASE !HB_ISNULL(cKey := iif(nKeyStd == K_TAB .AND. Set(_SET_INSERT), Space(TabCount(::nTabWidth, ::nCol)), hb_keyChar(nKey)))
          ::lDirty := .T.
          oLine := ::aText[::nRow]
          IF ( nPos := ::nCol - hb_ULen(oLine:cText) - 1 ) > 0
@@ -583,7 +583,7 @@ METHOD Edit( nPassedKey ) CLASS HBEditor
    RETURN Self
 
 // browse text without editing
-METHOD BrowseText( nPassedKey ) CLASS HBEditor
+METHOD BrowseText(nPassedKey) CLASS HBEditor
 
    LOCAL nKey, nKeyStd
    LOCAL bKeyBlock
@@ -643,7 +643,7 @@ METHOD ReformParagraph() CLASS HBEditor
    ENDDO
 
    nLine := ::nRow
-   hb_MLEval(cText, {| cLine, lSoftCR | ::InsertLine(cLine, lSoftCR, nLine++) }, ::nWordWrapCol + 1, ::nTabWidth,, nCol, @nRow, @nCol)
+   hb_MLEval(cText, {|cLine, lSoftCR|::InsertLine(cLine, lSoftCR, nLine++)}, ::nWordWrapCol + 1, ::nTabWidth, NIL, nCol, @nRow, @nCol)
    IF nRow > 0
       ::nRow += nRow - 1
       ::nCol := nCol + 1
@@ -710,7 +710,7 @@ METHOD IsWordWrap() CLASS HBEditor
 METHOD WordWrapCol() CLASS HBEditor
    RETURN ::nWordWrapCol
 
-METHOD hitTest( nMRow, nMCol ) CLASS HBEditor
+METHOD hitTest(nMRow, nMCol) CLASS HBEditor
 
    IF nMRow >= ::nTop .AND. nMRow <= ::nBottom .AND. nMCol >= ::nLeft .AND. nMCol <= ::nRight
       RETURN HTCLIENT
@@ -723,7 +723,7 @@ STATIC FUNCTION Text2Array(cText, nWordWrapCol, nTabWidth)
 
    LOCAL aArray := {}
 
-   hb_MLEval(cText, {| cLine, lSoftCR | AAdd(aArray, HBTextLine():New( cLine, lSoftCR )) }, ;
+   hb_MLEval(cText, {|cLine, lSoftCR|AAdd(aArray, HBTextLine():New(cLine, lSoftCR))}, ;
              iif(nWordWrapCol != NIL, nWordWrapCol + 1, 0xFFFF), nTabWidth, nWordWrapCol != NIL)
 
    IF Empty(aArray)
@@ -735,7 +735,7 @@ STATIC FUNCTION Text2Array(cText, nWordWrapCol, nTabWidth)
 STATIC FUNCTION SubStrPad(cText, nFrom, nLen)
    RETURN hb_UPadR(hb_USubStr(cText, nFrom, nLen), nLen)
 
-STATIC FUNCTION TabCount( nTabWidth, nCol )
+STATIC FUNCTION TabCount(nTabWidth, nCol)
    RETURN Int(nTabWidth - ( nCol - 1 ) % nTabWidth)
 
 STATIC FUNCTION SkipWord(cText, nPos)

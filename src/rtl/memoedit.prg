@@ -58,8 +58,8 @@ CREATE CLASS HBMemoEditor INHERIT HBEditor
 
    VAR xUserFunction                         // User Function called to change default MemoEdit() behaviour
 
-   METHOD MemoInit( xUserFunction )          // This method is called after ::New() returns to perform ME_INIT actions
-   METHOD Edit()                             // Calls ::super:Edit( nKey ) but is needed to handle configurable keys
+   METHOD MemoInit(xUserFunction)            // This method is called after ::New() returns to perform ME_INIT actions
+   METHOD Edit()                             // Calls ::super:Edit(nKey) but is needed to handle configurable keys
    METHOD KeyboardHook(nKey)                 // Gets called every time there is a key not handled directly by HBEditor
    METHOD IdleHook()                         // Gets called every time there are no more keys to handle
 
@@ -82,7 +82,7 @@ METHOD UserFunctionIsValid() CLASS HBMemoEditor
    RETURN HB_ISSTRING(::xUserFunction) .OR. HB_ISEVALITEM(::xUserFunction)
 #endif
 
-METHOD MemoInit( xUserFunction ) CLASS HBMemoEditor
+METHOD MemoInit(xUserFunction) CLASS HBMemoEditor
 
    LOCAL nUdfReturn
 
@@ -115,7 +115,7 @@ METHOD Edit() CLASS HBMemoEditor
 
    // NOTE: K_ALT_W is not compatible with Cl*pper exit memo and save key, but I cannot discriminate
    //       K_CTRL_W and K_CTRL_END from Harbour code.
-   LOCAL hConfigurableKeys := { K_CTRL_Y =>, K_CTRL_T =>, K_CTRL_B =>, K_CTRL_V =>, K_ALT_W =>, K_ESC => }
+   LOCAL hConfigurableKeys := {K_CTRL_Y =>, K_CTRL_T =>, K_CTRL_B =>, K_CTRL_V =>, K_ALT_W =>, K_ESC =>}
    LOCAL bKeyBlock
 
    // If I have an user function I need to trap configurable keys and ask to
@@ -126,7 +126,7 @@ METHOD Edit() CLASS HBMemoEditor
 
          // I need to test this condition here since I never block inside HBEditor:Edit()
          // if there is an user function
-         IF ( nKey := Inkey(, hb_bitOr(Set(_SET_EVENTMASK), HB_INKEY_EXT) ) ) == 0
+         IF ( nKey := Inkey(NIL, hb_bitOr(Set(_SET_EVENTMASK), HB_INKEY_EXT) ) ) == 0
             ::IdleHook()
             nKey := Inkey(0, hb_bitOr(Set(_SET_EVENTMASK), HB_INKEY_EXT))
          ENDIF
@@ -141,7 +141,7 @@ METHOD Edit() CLASS HBMemoEditor
          IF nKeyStd $ hConfigurableKeys
             ::HandleUserKey(nKey, ::xDo(iif(::lDirty, ME_UNKEYX, ME_UNKEY)))
          ELSE
-            ::super:Edit( nKey )
+            ::super:Edit(nKey)
          ENDIF
       ENDDO
    ELSE
@@ -183,7 +183,7 @@ METHOD KeyboardHook(nKey) CLASS HBMemoEditor
          SetPos(nRow, nCol)
 
          IF Upper(hb_keyChar(nYesNoKey)) == "Y"
-            hb_keySetLast( K_ESC )  /* Cl*pper compatibility */
+            hb_keySetLast(K_ESC)  /* Cl*pper compatibility */
             ::lSaved := .F.
             ::lExitEdit := .T.
          ENDIF
@@ -217,7 +217,7 @@ METHOD HandleUserKey(nKey, nUdfReturn) CLASS HBMemoEditor
             ::lSaved := .F.
             ::lExitEdit := .T.
          ELSE
-            ::super:Edit( nKey )
+            ::super:Edit(nKey)
          ENDIF
       ELSE
          RETURN .F.
@@ -228,7 +228,7 @@ METHOD HandleUserKey(nKey, nUdfReturn) CLASS HBMemoEditor
       IF HB_ISNUMERIC(nKey)
          /* TODO: convert nKey >=1 .and. nKey <= 31 to key value with unicode character */
          IF HB_ULen(hb_keyChar(nKey)) > 0
-            ::super:Edit( nKey )
+            ::super:Edit(nKey)
          ENDIF
       ELSE
          RETURN .F.
@@ -265,7 +265,7 @@ METHOD HandleUserKey(nKey, nUdfReturn) CLASS HBMemoEditor
 
       // FIXME: Not CA-Cl*pper compatible, see teditor.prg
       IF ( nUdfReturn >= 1 .AND. nUdfReturn <= 31 ) .OR. nUdfReturn == K_ALT_W
-         ::super:Edit( nUdfReturn )
+         ::super:Edit(nUdfReturn)
       ELSE
          RETURN .F.
       ENDIF
@@ -311,33 +311,19 @@ METHOD InsertState(lInsState) CLASS HBMemoEditor
 
 /* ------------------------------------------ */
 
-FUNCTION MemoEdit( ;
-   cString, ;
-   nTop, ;
-   nLeft, ;
-   nBottom, ;
-   nRight, ;
-   lEditMode, ;
-   xUserFunction, ;
-   nLineLength, ;
-   nTabSize, ;
-   nTextBuffRow, ;
-   nTextBuffColumn, ;
-   nWindowRow, ;
-   nWindowColumn )
+FUNCTION MemoEdit(cString, nTop, nLeft, nBottom, nRight, lEditMode, xUserFunction, nLineLength, nTabSize, nTextBuffRow, nTextBuffColumn, nWindowRow, nWindowColumn)
 
    LOCAL oEd
-
    LOCAL nOldCursor
 
-   hb_default( @nLeft           , 0 )
-   hb_default( @nRight          , MaxCol() )
-   hb_default( @nLineLength     , nRight - nLeft )
-   hb_default( @nTextBuffColumn , 0 )
-   hb_default( @nWindowColumn   , nTextBuffColumn )
-   hb_default( @cString         , "" )
+   hb_default(@nLeft           , 0)
+   hb_default(@nRight          , MaxCol())
+   hb_default(@nLineLength     , nRight - nLeft)
+   hb_default(@nTextBuffColumn , 0)
+   hb_default(@nWindowColumn   , nTextBuffColumn)
+   hb_default(@cString         , "")
 
-   oEd := HBMemoEditor():New( cString, ;
+   oEd := HBMemoEditor():New(cString, ;
       hb_defaultValue(nTop, 0), ;
       nLeft, ;
       hb_defaultValue(nBottom, MaxRow()), ;
@@ -348,8 +334,8 @@ FUNCTION MemoEdit( ;
       hb_defaultValue(nTextBuffRow, 1), ;
       nTextBuffColumn, ;
       hb_defaultValue(nWindowRow, 0), ;
-      nWindowColumn )
-   oEd:MemoInit( xUserFunction )
+      nWindowColumn)
+   oEd:MemoInit(xUserFunction)
    oEd:display()
 
    /* Contrary to what the NG says, any logical value will make it pass
