@@ -1,15 +1,12 @@
 /*
  * String functions for Mini-XML, a small XML file parsing library.
  *
- * Copyright 2003-2018 by Michael R Sweet.
+ * https://www.msweet.org/mxml
  *
- * These coded instructions, statements, and computer programs are the
- * property of Michael R Sweet and are protected by Federal copyright
- * law.  Distribution and use rights are outlined in the file "COPYING"
- * which should have been included with this file.  If this file is
- * missing or damaged, see the license at:
+ * Copyright © 2003-2019 by Michael R Sweet.
  *
- *     https://michaelrsweet.github.io/mxml
+ * Licensed under Apache License v2.0.  See the file "LICENSE" for more
+ * information.
  */
 
 /*
@@ -117,7 +114,7 @@ _mxml_strdupf(const char *format,	/* I - Printf-style format string */
 size_t					/* O - Number of bytes copied */
 _mxml_strlcat(char       *dst,		/* I - Destination buffer */
               const char *src,		/* I - Source string */
-              size_t     dstsize)	/* I - Size of destinatipon buffer */
+              size_t     dstsize)	/* I - Size of destination buffer */
 {
   size_t	srclen;			/* Length of source string */
   size_t	dstlen;			/* Length of destination string */
@@ -163,7 +160,7 @@ _mxml_strlcat(char       *dst,		/* I - Destination buffer */
 size_t					/* O - Number of bytes copied */
 _mxml_strlcpy(char       *dst,		/* I - Destination buffer */
               const char *src,		/* I - Source string */
-              size_t     dstsize)	/* I - Size of destinatipon buffer */
+              size_t     dstsize)	/* I - Size of destination buffer */
 {
   size_t        srclen;                 /* Length of source string */
 
@@ -377,11 +374,11 @@ _mxml_vsnprintf(char       *buffer,	/* O - Output buffer */
 	    if ((width + 2) > sizeof(temp))
 	      break;
 
-#ifdef HAVE_LONG_LONG
+#ifdef HAVE_LONG_LONG_INT
 	    if (size == 'L')
 	      sprintf(temp, tformat, va_arg(ap, long long));
 	    else
-#endif /* HAVE_LONG_LONG */
+#endif /* HAVE_LONG_LONG_INT */
 	    sprintf(temp, tformat, va_arg(ap, int));
 
             bytes += strlen(temp);
@@ -520,8 +517,10 @@ _mxml_vstrdupf(const char *format,	/* I - Printf-style format string */
 
 #else
   int		bytes;			/* Number of bytes required */
-  char		*buffer,		/* String buffer */
-		temp[256];		/* Small buffer for first vsnprintf */
+  char		*buffer;		/* String buffer */
+#  ifndef _WIN32
+  char		temp[256];		/* Small buffer for first vsnprintf */
+#  endif /* !_WIN32 */
 
 
  /*
@@ -529,17 +528,14 @@ _mxml_vstrdupf(const char *format,	/* I - Printf-style format string */
   * needed...
   */
 
-#  ifdef WIN32
+#  ifdef _WIN32
   bytes = _vscprintf(format, ap);
 
 #  else
   va_list	apcopy;			/* Copy of argument list */
 
   va_copy(apcopy, ap);
-  bytes = vsnprintf(temp, sizeof(temp), format, apcopy);
-#  endif /* WIN32 */
-
-  if (bytes < sizeof(temp))
+  if ((bytes = vsnprintf(temp, sizeof(temp), format, apcopy)) < sizeof(temp))
   {
    /*
     * Hey, the formatted string fits in the tiny buffer, so just dup that...
@@ -547,10 +543,10 @@ _mxml_vstrdupf(const char *format,	/* I - Printf-style format string */
 
     return (strdup(temp));
   }
+#  endif /* _WIN32 */
 
  /*
-  * Allocate memory for the whole thing and reformat to the new, larger
-  * buffer...
+  * Allocate memory for the whole thing and reformat to the new buffer...
   */
 
   if ((buffer = calloc(1, bytes + 1)) != NULL)

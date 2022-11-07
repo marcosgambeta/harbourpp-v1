@@ -139,7 +139,7 @@ static HB_TSD_NEW(s_error_cb_var, sizeof(HB_ERROR_CB_VAR), hb_error_cb_var_init,
 
 static void hbmxml_release(mxml_node_t * node)
 {
-   if( mxmlGetRefCount(node) <= (node->parent ? 2 : 1) )
+   if( mxmlGetRefCount(node) <= (mxmlGetParent(node) ? 2 : 1) )
    {
       void * user_data;
 
@@ -273,7 +273,7 @@ HB_FUNC( HB_MXMLVERSION )
 
 static void mxmlAddRef(mxml_node_t * parent, int where, mxml_node_t * child, mxml_node_t * node)
 {
-   mxml_node_t * old_parent = node->parent;
+   mxml_node_t * old_parent = mxmlGetParent(node);
 
    mxmlAdd(parent, where, (child != nullptr) ? child : MXML_ADD_TO_PARENT, node);
    if( !old_parent )
@@ -1102,7 +1102,7 @@ HB_FUNC( MXMLNEWXML )
 
 static void mxmlRemoveRef(mxml_node_t * node)
 {
-   if( node->parent )
+   if( mxmlGetParent(node) )
    {
       mxmlRemove(node);
       mxmlRelease(node);
@@ -1961,7 +1961,7 @@ HB_FUNC( HB_MXMLGETATTRSCOUNT )
 
    if( node && mxmlGetType(node) == MXML_ELEMENT )
    {
-      hb_retni(node->value.element.num_attrs);
+      hb_retni(mxmlElementGetAttrCount(node));
    }
    else
    {
@@ -1977,18 +1977,18 @@ HB_FUNC( HB_MXMLGETATTRSARRAY )
    {
       PHB_ITEM pAttrs = hb_itemArrayNew(0);
       PHB_ITEM pAttr = hb_itemNew(nullptr);
-      int i;
-      mxml_attr_t * attr;
+      int i, count;
+      const char *name, *value;
 
-      for( i = node->value.element.num_attrs, attr = node->value.element.attrs; i > 0; i--, attr++ )
+      for( i = 0, count = mxmlElementGetAttrCount(node); i < count; i++ )
       {
+         value = mxmlElementGetAttrByIndex(node, i, &name);
          hb_arrayNew(pAttr, 2);
-
-         hb_arraySetStrUTF8(pAttr, 1, attr->name);
-         hb_arraySetStrUTF8(pAttr, 2, attr->value);
-
+         hb_arraySetStrUTF8(pAttr, 1, name);
+         hb_arraySetStrUTF8(pAttr, 2, value);
          hb_arrayAddForward(pAttrs, pAttr);
       }
+
       hb_itemRelease(pAttr);
 
       hb_itemReturnRelease(pAttrs);
@@ -2008,16 +2008,18 @@ HB_FUNC( HB_MXMLGETATTRS )
       PHB_ITEM pAttrs = hb_hashNew(hb_itemNew(nullptr));
       PHB_ITEM pKey = nullptr;
       PHB_ITEM pValue = nullptr;
-      int i;
-      mxml_attr_t * attr;
+      int i, count;
+      const char *name, *value;
 
-      for( i = node->value.element.num_attrs, attr = node->value.element.attrs; i > 0; i--, attr++ )
+      for( i = 0, count = mxmlElementGetAttrCount(node); i < count; i++ )
       {
-         pKey = hb_itemPutStrUTF8(pKey, attr->name);
-         pValue = hb_itemPutStrUTF8(pValue, attr->value);
+         value = mxmlElementGetAttrByIndex(node, i, &name);
+         pKey = hb_itemPutStrUTF8(pKey, name);
+         pValue = hb_itemPutStrUTF8(pValue, value);
 
          hb_hashAdd(pAttrs, pKey, pValue);
       }
+
       hb_itemRelease(pKey);
       hb_itemRelease(pValue);
 

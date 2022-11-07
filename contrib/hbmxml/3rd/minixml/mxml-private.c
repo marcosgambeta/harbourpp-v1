@@ -1,15 +1,12 @@
 /*
  * Private functions for Mini-XML, a small XML file parsing library.
  *
- * Copyright 2003-2017 by Michael R Sweet.
+ * https://www.msweet.org/mxml
  *
- * These coded instructions, statements, and computer programs are the
- * property of Michael R Sweet and are protected by Federal copyright
- * law.  Distribution and use rights are outlined in the file "COPYING"
- * which should have been included with this file.  If this file is
- * missing or damaged, see the license at:
+ * Copyright © 2003-2022 by Michael R Sweet.
  *
- *     https://michaelrsweet.github.io/mxml
+ * Licensed under Apache License v2.0.  See the file "LICENSE" for more
+ * information.
  */
 
 /*
@@ -29,7 +26,7 @@
  * be unloaded safely, although since there is no standard way to do so I
  * can't even provide any guarantees that you can do it safely on all platforms.
  *
- * This code currently supports AIX, HP-UX, Linux, Mac OS X, Solaris, and
+ * This code currently supports AIX, HP-UX, Linux, macOS, Solaris, and
  * Windows.  It might work on the BSDs and IRIX, but I haven't tested that.
  */
 
@@ -39,7 +36,7 @@
 #elif defined(__hpux)
 #  pragma FINI _mxml_fini
 #  define _MXML_FINI _mxml_fini
-#elif defined(__GNUC__) /* Linux and Mac OS X */
+#elif defined(__GNUC__) /* Linux and macOS */
 #  define _MXML_FINI __attribute((destructor)) _mxml_fini
 #else
 #  define _MXML_FINI _fini
@@ -143,7 +140,9 @@ mxml_real_cb(mxml_node_t *node)		/* I - Current node */
 #ifdef HAVE_PTHREAD_H			/**** POSIX threading ****/
 #  include <pthread.h>
 
-static pthread_key_t	_mxml_key = -1;	/* Thread local storage key */
+static int		_mxml_initialized = 0;
+					/* Have we been initialized? */
+static pthread_key_t	_mxml_key;	/* Thread local storage key */
 static pthread_once_t	_mxml_key_once = PTHREAD_ONCE_INIT;
 					/* One-time initialization object */
 static void		_mxml_init(void);
@@ -168,17 +167,8 @@ _mxml_destructor(void *g)		/* I - Global data */
 static void
 _MXML_FINI(void)
 {
-  _mxml_global_t	*global;	/* Global data */
-
-
-  if (_mxml_key != -1)
-  {
-    if ((global = (_mxml_global_t *)pthread_getspecific(_mxml_key)) != NULL)
-      _mxml_destructor(global);
-
+  if (_mxml_initialized)
     pthread_key_delete(_mxml_key);
-    _mxml_key = -1;
-  }
 }
 
 
@@ -215,11 +205,12 @@ _mxml_global(void)
 static void
 _mxml_init(void)
 {
+  _mxml_initialized = 1;
   pthread_key_create(&_mxml_key, _mxml_destructor);
 }
 
 
-#elif defined(WIN32) && defined(MXML1_EXPORTS) /**** WIN32 threading ****/
+#elif defined(_WIN32) && defined(MXML1_EXPORTS) /**** WIN32 threading ****/
 #  include <windows.h>
 
 static DWORD _mxml_tls_index;		/* Index for global storage */

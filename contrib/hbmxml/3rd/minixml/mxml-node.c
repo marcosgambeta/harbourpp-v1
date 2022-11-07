@@ -1,15 +1,12 @@
 /*
  * Node support code for Mini-XML, a small XML file parsing library.
  *
- * Copyright 2003-2018 by Michael R Sweet.
+ * https://www.msweet.org/mxml
  *
- * These coded instructions, statements, and computer programs are the
- * property of Michael R Sweet and are protected by Federal copyright
- * law.  Distribution and use rights are outlined in the file "COPYING"
- * which should have been included with this file.  If this file is
- * missing or damaged, see the license at:
+ * Copyright © 2003-2021 by Michael R Sweet.
  *
- *     https://michaelrsweet.github.io/mxml
+ * Licensed under Apache License v2.0.  See the file "LICENSE" for more
+ * information.
  */
 
 /*
@@ -17,7 +14,7 @@
  */
 
 #include "config.h"
-#include "mxml.h"
+#include "mxml-private.h"
 
 
 /*
@@ -775,17 +772,14 @@ mxml_free(mxml_node_t *node)		/* I - Node */
   switch (node->type)
   {
     case MXML_ELEMENT :
-        if (node->value.element.name)
-	  free(node->value.element.name);
+	free(node->value.element.name);
 
 	if (node->value.element.num_attrs)
 	{
 	  for (i = 0; i < node->value.element.num_attrs; i ++)
 	  {
-	    if (node->value.element.attrs[i].name)
-	      free(node->value.element.attrs[i].name);
-	    if (node->value.element.attrs[i].value)
-	      free(node->value.element.attrs[i].value);
+	    free(node->value.element.attrs[i].name);
+	    free(node->value.element.attrs[i].value);
 	  }
 
           free(node->value.element.attrs);
@@ -795,15 +789,13 @@ mxml_free(mxml_node_t *node)		/* I - Node */
        /* Nothing to do */
         break;
     case MXML_OPAQUE :
-        if (node->value.opaque)
-	  free(node->value.opaque);
+	free(node->value.opaque);
         break;
     case MXML_REAL :
        /* Nothing to do */
         break;
     case MXML_TEXT :
-        if (node->value.text.string)
-	  free(node->value.text.string);
+	free(node->value.text.string);
         break;
     case MXML_CUSTOM :
         if (node->value.custom.data &&

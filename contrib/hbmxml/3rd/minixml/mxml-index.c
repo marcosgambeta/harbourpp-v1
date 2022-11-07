@@ -1,15 +1,12 @@
 /*
  * Index support code for Mini-XML, a small XML file parsing library.
  *
- * Copyright 2003-2017 by Michael R Sweet.
+ * https://www.msweet.org/mxml
  *
- * These coded instructions, statements, and computer programs are the
- * property of Michael R Sweet and are protected by Federal copyright
- * law.  Distribution and use rights are outlined in the file "COPYING"
- * which should have been included with this file.  If this file is
- * missing or damaged, see the license at:
+ * Copyright © 2003-2021 by Michael R Sweet.
  *
- *     https://michaelrsweet.github.io/mxml
+ * Licensed under Apache License v2.0.  See the file "LICENSE" for more
+ * information.
  */
 
 /*
@@ -17,7 +14,7 @@
  */
 
 #include "config.h"
-#include "mxml.h"
+#include "mxml-private.h"
 
 
 /*
@@ -49,12 +46,8 @@ mxmlIndexDelete(mxml_index_t *ind)	/* I - Index to delete */
   * Free memory...
   */
 
-  if (ind->attr)
-    free(ind->attr);
-
-  if (ind->alloc_nodes)
-    free(ind->nodes);
-
+  free(ind->attr);
+  free(ind->nodes);
   free(ind);
 }
 
@@ -333,13 +326,19 @@ mxmlIndexNew(mxml_node_t *node,		/* I - XML node tree */
 
   if ((ind = calloc(1, sizeof(mxml_index_t))) == NULL)
   {
-    mxml_error("Unable to allocate %d bytes for index - %s",
-               sizeof(mxml_index_t), strerror(errno));
+    mxml_error("Unable to allocate memory for index.");
     return (NULL);
   }
 
   if (attr)
-    ind->attr = strdup(attr);
+  {
+    if ((ind->attr = strdup(attr)) == NULL)
+    {
+      mxml_error("Unable to allocate memory for index attribute.");
+      free(ind);
+      return (NULL);
+    }
+  }
 
   if (!element && !attr)
     current = node;
@@ -361,10 +360,7 @@ mxmlIndexNew(mxml_node_t *node,		/* I - XML node tree */
         * Unable to allocate memory for the index, so abort...
 	*/
 
-        mxml_error("Unable to allocate %d bytes for index: %s",
-	           (ind->alloc_nodes + 64) * sizeof(mxml_node_t *),
-		   strerror(errno));
-
+        mxml_error("Unable to allocate memory for index nodes.");
         mxmlIndexDelete(ind);
 	return (NULL);
       }

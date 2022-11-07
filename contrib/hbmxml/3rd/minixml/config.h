@@ -1,15 +1,12 @@
 /*
  * Configuration file for Mini-XML, a small XML file parsing library.
  *
- * Copyright 2003-2017 by Michael R Sweet.
+ * https://www.msweet.org/mxml
  *
- * These coded instructions, statements, and computer programs are the
- * property of Michael R Sweet and are protected by Federal copyright
- * law.  Distribution and use rights are outlined in the file "COPYING"
- * which should have been included with this file.  If this file is
- * missing or damaged, see the license at:
+ * Copyright © 2003-2020 by Michael R Sweet.
  *
- *     https://michaelrsweet.github.io/mxml
+ * Licensed under Apache License v2.0.  See the file "LICENSE" for more
+ * information.
  */
 
 /*
@@ -27,7 +24,7 @@
  * Version number...
  */
 
-#define MXML_VERSION	"Mini-XML v2.12"
+#define MXML_VERSION	"Mini-XML v3.3.1"
 
 
 /*
@@ -41,14 +38,7 @@
  * Long long support...
  */
 
-#define HAVE_LONG_LONG 1
-
-
-/*
- * Do we have <zlib.h>?
- */
-
-#undef HAVE_ZLIB_H
+#define HAVE_LONG_LONG_INT 1
 
 
 /*
