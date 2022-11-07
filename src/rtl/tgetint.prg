@@ -57,7 +57,7 @@ FUNCTION __Get(bSetGet, cVarName, cPicture, bValid, bWhen)
    IF !HB_ISEVALITEM(bSetGet)
       IF FieldPos(cVarName) > 0
          bSetGet := FieldWBlock(cVarName, Select())
-      ELSEIF ( bSetGet := MemVarBlock(cVarName) ) == NIL
+      ELSEIF (bSetGet := MemVarBlock(cVarName)) == NIL
          /* If cVarName is not a field name in current workarea then
           * CA-Cl*pper always tries to create SET/GET block for memvar.
           * If it cannot (i.e. cVarName is complex expression) then it
@@ -93,7 +93,7 @@ FUNCTION __GetA(bGetArray, cVarName, cPicture, bValid, bWhen, aIndex)
       IF FieldPos(cVarName) > 0
          bGetArray := FieldWBlock(cVarName, Select())
       ELSE
-         DO WHILE ( bGetArray := MemVarBlock(cVarName) ) == NIL
+         DO WHILE (bGetArray := MemVarBlock(cVarName)) == NIL
             __mvGet(cVarName)
          ENDDO
       ENDIF

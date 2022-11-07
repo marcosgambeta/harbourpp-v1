@@ -248,7 +248,7 @@ METHOD GetText(lSoftCR) CLASS HBEditor
    LOCAL cText, cEOL, cSoftCR, oLine
 
    cEOL := hb_eol()
-   cSoftCR := iif(::lWordWrap, iif( hb_defaultValue(lSoftCR, .F.), Chr(141) + Chr(10), "" ), cEOL)
+   cSoftCR := iif(::lWordWrap, iif(hb_defaultValue(lSoftCR, .F.), Chr(141) + Chr(10), ""), cEOL)
    cText := ""
    FOR EACH oLine IN ::aText
       cText += oLine:cText
@@ -458,7 +458,7 @@ METHOD Edit(nPassedKey) CLASS HBEditor
    DO WHILE !::lExitEdit
 
       IF nPassedKey == NIL
-         IF ( nKey := Inkey(NIL, hb_bitOr(Set(_SET_EVENTMASK), HB_INKEY_EXT)) ) == 0
+         IF (nKey := Inkey(NIL, hb_bitOr(Set(_SET_EVENTMASK), HB_INKEY_EXT))) == 0
             ::IdleHook()
             nKey := Inkey(0, hb_bitOr(Set(_SET_EVENTMASK), HB_INKEY_EXT))
          ENDIF
@@ -468,16 +468,16 @@ METHOD Edit(nPassedKey) CLASS HBEditor
       nKeyStd := hb_keyStd(nKey)
 
       DO CASE
-      CASE ( bKeyBlock := SetKey(nKeyStd) ) != NIL
+      CASE (bKeyBlock := SetKey(nKeyStd)) != NIL
          Eval(bKeyBlock)
 
       CASE !HB_ISNULL(cKey := iif(nKeyStd == K_TAB .AND. Set(_SET_INSERT), Space(TabCount(::nTabWidth, ::nCol)), hb_keyChar(nKey)))
          ::lDirty := .T.
          oLine := ::aText[::nRow]
-         IF ( nPos := ::nCol - hb_ULen(oLine:cText) - 1 ) > 0
+         IF (nPos := ::nCol - hb_ULen(oLine:cText) - 1) > 0
             oLine:cText += Space(nPos)
          ENDIF
-         oLine:cText := hb_UStuff(oLine:cText, ::nCol, iif( Set(_SET_INSERT), 0, 1 ), cKey)
+         oLine:cText := hb_UStuff(oLine:cText, ::nCol, iif(Set(_SET_INSERT), 0, 1), cKey)
          ::nCol += hb_ULen(cKey)
          IF ::lWordWrap .AND. hb_ULen(oLine:cText) > ::nWordWrapCol
             ::ReformParagraph()
@@ -544,7 +544,7 @@ METHOD Edit(nPassedKey) CLASS HBEditor
          ENDIF
 
       CASE nKeyStd == K_CTRL_T
-         IF ( nPos := SkipWord(::GetLine(::nRow), ::nCol) - ::nCol ) > 0
+         IF (nPos := SkipWord(::GetLine(::nRow), ::nCol) - ::nCol) > 0
             ::lDirty := .T.
             ::aText[::nRow]:cText := hb_UStuff(::aText[::nRow]:cText, ::nCol, nPos, "")
             ::GoTo(::nRow, ::nCol, _REFRESH_LINE)
@@ -590,7 +590,7 @@ METHOD BrowseText(nPassedKey) CLASS HBEditor
 
    DO WHILE !::lExitEdit
       IF nPassedKey == NIL
-         IF ( nKey := Inkey(NIL, hb_bitOr(Set(_SET_EVENTMASK), HB_INKEY_EXT)) ) == 0
+         IF (nKey := Inkey(NIL, hb_bitOr(Set(_SET_EVENTMASK), HB_INKEY_EXT))) == 0
             ::IdleHook()
             nKey := Inkey(0, hb_bitOr(Set(_SET_EVENTMASK), HB_INKEY_EXT))
          ENDIF
@@ -599,7 +599,7 @@ METHOD BrowseText(nPassedKey) CLASS HBEditor
       ENDIF
 
       nKeyStd := hb_keyStd(nKey)
-      IF ( bKeyBlock := SetKey(nKeyStd) ) != NIL
+      IF (bKeyBlock := SetKey(nKeyStd)) != NIL
          Eval(bKeyBlock)
       ELSEIF nKeyStd == K_ESC
          ::lExitEdit := .T.
@@ -736,14 +736,14 @@ STATIC FUNCTION SubStrPad(cText, nFrom, nLen)
    RETURN hb_UPadR(hb_USubStr(cText, nFrom, nLen), nLen)
 
 STATIC FUNCTION TabCount(nTabWidth, nCol)
-   RETURN Int(nTabWidth - ( nCol - 1 ) % nTabWidth)
+   RETURN Int(nTabWidth - (nCol - 1) % nTabWidth)
 
 STATIC FUNCTION SkipWord(cText, nPos)
 
    DO WHILE nPos < hb_ULen(cText) .AND. hb_USubStr(cText, nPos, 1) == " "
       ++nPos
    ENDDO
-   IF ( nPos := hb_UAt(" ", cText, nPos) ) == 0
+   IF (nPos := hb_UAt(" ", cText, nPos)) == 0
       nPos := hb_ULen(cText) + 1
    ENDIF
 
@@ -751,7 +751,7 @@ STATIC FUNCTION SkipWord(cText, nPos)
 
 STATIC FUNCTION NextWord(cText, nPos)
 
-   IF ( nPos := hb_UAt(" ", cText, nPos) ) == 0
+   IF (nPos := hb_UAt(" ", cText, nPos)) == 0
       nPos := hb_ULen(cText) + 1
    ELSE
       DO WHILE hb_USubStr(cText, ++nPos, 1) == " "

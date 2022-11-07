@@ -151,10 +151,10 @@ STATIC FUNCTION __UnixParseLangCP(cString, /* @ */ cLang)
    LOCAL tmp
    LOCAL cCP
 
-   IF ( tmp := At(".", cString) ) > 0
+   IF (tmp := At(".", cString)) > 0
       cLang := Left(cString, tmp - 1)
       cCP := SubStr(cString, tmp + 1)
-      IF ( tmp := At("@", cString) ) > 0
+      IF (tmp := At("@", cString)) > 0
          cCP := Left(cString, tmp - 1)
       ENDIF
    ELSE

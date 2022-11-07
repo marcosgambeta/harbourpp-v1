@@ -109,7 +109,7 @@ PROCEDURE hb_mvSave(cFileName, cMask, lIncludeMask)
 
       nRetries := 0
       DO WHILE .T.
-         IF ( fhnd := hb_FCreate(cFileName, FC_NORMAL, FO_CREAT + FO_TRUNC + FO_READWRITE + FO_EXCLUSIVE) ) == F_ERROR
+         IF (fhnd := hb_FCreate(cFileName, FC_NORMAL, FO_CREAT + FO_TRUNC + FO_READWRITE + FO_EXCLUSIVE)) == F_ERROR
             oError := ErrorNew()
 
             oError:severity    := ES_ERROR
@@ -185,7 +185,7 @@ FUNCTION hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
       nRetries := 0
       DO WHILE .T.
 
-         IF ( fhnd := FOpen(cFileName) ) == F_ERROR
+         IF (fhnd := FOpen(cFileName)) == F_ERROR
             oError := ErrorNew()
 
             oError:severity    := ES_ERROR

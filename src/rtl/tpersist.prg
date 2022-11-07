@@ -90,12 +90,12 @@ METHOD LoadFromText(cObjectText, lIgnoreErrors) CLASS HBPersistent
             /* ignore comments and empty lines */
          ELSEIF hb_LeftEq(cLine, "::")
 
-            IF ( nPos := At(":=", cLine) ) > 0
+            IF (nPos := At(":=", cLine)) > 0
                cProp := RTrim(SubStr(cLine, 3, nPos - 3))
-               uValue := &( LTrim(SubStr(cLine, nPos + 2)) )
-            ELSEIF ( nPos := At("=", cLine) ) > 0 /* fix for older versions */
+               uValue := &(LTrim(SubStr(cLine, nPos + 2)))
+            ELSEIF (nPos := At("=", cLine)) > 0 /* fix for older versions */
                cProp := RTrim(SubStr(cLine, 3, nPos - 3))
-               uValue := &( LTrim(SubStr(cLine, nPos + 1)) )
+               uValue := &(LTrim(SubStr(cLine, nPos + 1)))
             ENDIF
          ELSE
             aWords := hb_ATokens(hb_asciiUpper(cLine))
@@ -105,7 +105,7 @@ METHOD LoadFromText(cObjectText, lIgnoreErrors) CLASS HBPersistent
                   lStart := .F.
                ELSEIF aWords[Len(aWords) - 1] == "AS" .AND. hb_LeftEq(aWords[2], "::")
                   cProp := SubStr(AllTrim(SubStr(cLine, 7, RAt(" AS ", cLine) - 7)), 3)
-                  uValue := &( aTail(aWords) )():CreateNew()
+                  uValue := &(aTail(aWords))():CreateNew()
                ENDIF
                EXIT
             CASE "ENDOBJECT"
@@ -121,7 +121,7 @@ METHOD LoadFromText(cObjectText, lIgnoreErrors) CLASS HBPersistent
          ENDIF
 
          IF !Empty(cProp)
-            IF ( nPos := At("[", cProp) ) > 0
+            IF (nPos := At("[", cProp)) > 0
                cInd := hb_StrReplace(SubStr(cProp, nPos + 1, Len(cProp) - nPos - 1), {" " => "", "][" => ","})
                cProp := Left(cProp, nPos - 1)
                ATail(aObjects):&cProp[&cInd] := uValue
@@ -141,7 +141,7 @@ METHOD LoadFromText(cObjectText, lIgnoreErrors) CLASS HBPersistent
 
 METHOD SaveToText(cObjectName, nIndent) CLASS HBPersistent
 
-   LOCAL oNew := &( ::ClassName() + "()" ):CreateNew()
+   LOCAL oNew := &(::ClassName() + "()"):CreateNew()
    LOCAL cProp
    LOCAL uValue
    LOCAL uNewValue
@@ -168,7 +168,7 @@ METHOD SaveToText(cObjectName, nIndent) CLASS HBPersistent
       uValue := Self:&cProp
       uNewValue := oNew:&cProp
 
-      IF !( ( cType := ValType(uValue) ) == ValType(uNewValue) ) .OR. !( uValue == uNewValue )
+      IF !((cType := ValType(uValue)) == ValType(uNewValue)) .OR. !(uValue == uNewValue)
 
          SWITCH cType
          CASE "A"

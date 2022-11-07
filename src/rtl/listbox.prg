@@ -170,7 +170,7 @@ METHOD addItem(cText, xData) CLASS ListBox
       IF ::nItemCount == 1
          ::nTopItem := 1
          IF ::oVScroll != NIL
-            ::oVScroll:total := ( ::nItemCount - ( ::nBottom - ::nTop - 2 ) )
+            ::oVScroll:total := (::nItemCount - (::nBottom - ::nTop - 2))
          ENDIF
       ENDIF
    ENDIF
@@ -212,7 +212,7 @@ METHOD delItem(nPos) CLASS ListBox
       ENDIF
 
       IF ::oVScroll != NIL
-         ::oVScroll:total := ::nItemCount - ( ::nBottom - ::nTop - 2 )
+         ::oVScroll:total := ::nItemCount - (::nBottom - ::nTop - 2)
       ENDIF
    ENDIF
 
@@ -286,7 +286,7 @@ METHOD display() CLASS ListBox
 
    IF !Empty(cCaption := ::cCaption)
 
-      IF ( nPos := At("&", cCaption) ) == 0
+      IF (nPos := At("&", cCaption)) == 0
       ELSEIF nPos == Len(cCaption)
          nPos := 0
       ELSE
@@ -337,7 +337,7 @@ METHOD findText(cText, nPos, lCaseSensitive, lExact) CLASS ListBox
       ENDIF
    ENDIF
 
-   IF ( nPosFound := AScan(::aItems, bSearch, nPos, Len(::aItems) - nPos + 1) ) == 0 .AND. nPos > 1
+   IF (nPosFound := AScan(::aItems, bSearch, nPos, Len(::aItems) - nPos + 1)) == 0 .AND. nPos > 1
       nPosFound := AScan(::aItems, bSearch, 1, nPos - 1)
    ENDIF
 
@@ -375,7 +375,7 @@ METHOD findData(xData, nPos, lCaseSensitive, lExact) CLASS ListBox
       ENDIF
    ENDIF
 
-   IF ( nPosFound := AScan(::aItems, bSearch, nPos, Len(::aItems) - nPos + 1) ) == 0 .AND. nPos > 1
+   IF (nPosFound := AScan(::aItems, bSearch, nPos, Len(::aItems) - nPos + 1)) == 0 .AND. nPos > 1
       nPosFound := AScan(::aItems, bSearch, 1, nPos - 1)
    ENDIF
 
@@ -397,7 +397,7 @@ METHOD hitTest(nMRow, nMCol) CLASS ListBox
    LOCAL nHit := 0
 
    /* Check hit on the scrollbar */
-   IF ::lIsOpen .AND. ::oVScroll != NIL .AND. ( nHit := ::oVScroll:hitTest(nMRow, nMCol) ) != 0
+   IF ::lIsOpen .AND. ::oVScroll != NIL .AND. (nHit := ::oVScroll:hitTest(nMRow, nMCol)) != 0
 
       RETURN nHit
    ENDIF
@@ -451,7 +451,7 @@ METHOD hitTest(nMRow, nMCol) CLASS ListBox
    CASE nMRow > ::nBottom - nRet
    CASE nMCol < ::nLeft + nRet
    CASE nMCol <= ::nRight - nRet
-      RETURN ::nTopItem + nMRow - ( nTop + nRet )
+      RETURN ::nTopItem + nMRow - (nTop + nRet)
    ENDCASE
 
    DO CASE
@@ -486,7 +486,7 @@ METHOD insItem(nPos, cText, xData) CLASS ListBox
       ENDIF
 
       IF ::oVScroll != NIL
-         ::oVScroll:total := ::nItemCount - ( ::nBottom - ::nTop - 2 )
+         ::oVScroll:total := ::nItemCount - (::nBottom - ::nTop - 2)
       ENDIF
    ENDIF
 
@@ -547,7 +547,7 @@ METHOD prevItem() CLASS ListBox
 
    IF ::lHasFocus .AND. ::nItemCount > 0
 
-      IF ( nOldValue := ::nValue ) == 0
+      IF (nOldValue := ::nValue) == 0
          ::changeItem(nOldValue, 1)
       ELSEIF nOldValue > 1
          ::changeItem(nOldValue, nOldValue - 1)
@@ -578,7 +578,7 @@ METHOD scroll(nMethod) CLASS ListBox
 
          nPrevMRow := MRow()
 
-         DO WHILE ( ( nKey := Inkey(0) ) != K_LBUTTONUP )
+         DO WHILE ((nKey := Inkey(0)) != K_LBUTTONUP)
 
             IF nKey == K_MOUSEMOVE
 
@@ -592,7 +592,7 @@ METHOD scroll(nMethod) CLASS ListBox
                ENDIF
 
                IF nMRow != nPrevMRow
-                  nThumbPos  := ::oVScroll:thumbPos() + ( nMRow - nPrevMRow )
+                  nThumbPos  := ::oVScroll:thumbPos() + (nMRow - nPrevMRow)
                   nBarLength := ::oVScroll:barLength()
                   nTotal     := ::oVScroll:total()
                   nSize      := Min(Max((nThumbPos * (nTotal - nBarLength - 2) + 2 * nBarLength + 1 - nTotal) / (nBarLength - 1), 1), nTotal)
@@ -624,7 +624,7 @@ METHOD scroll(nMethod) CLASS ListBox
 
       CASE HTSCROLLUNITINC
 
-         IF ( ::nTopItem + ::nBottom - ::nTop ) <= ::nItemCount + 1
+         IF (::nTopItem + ::nBottom - ::nTop) <= ::nItemCount + 1
             ::nTopItem++
             ::oVScroll:current := ::scrollbarPos()
             ::display()
@@ -700,7 +700,7 @@ METHOD select(xPos) CLASS ListBox
 
    ::cTextValue := iif(nPos == 0, "", _LISTBOX_ITEMDATA(::aItems[nPos]))
 
-   nValue := ::nValue - ( ::nBottom - ::nTop - iif(Empty(::cHotBox + ::cColdBox), 0, 2) )
+   nValue := ::nValue - (::nBottom - ::nTop - iif(Empty(::cHotBox + ::cColdBox), 0, 2))
    IF ::nTopItem <= nValue
       ::nTopItem := nValue
       IF ::oVScroll != NIL
@@ -787,7 +787,7 @@ METHOD changeItem(nOldPos, nNewPos) CLASS ListBox
             ::oVScroll:current := ::scrollbarPos()
          ENDIF
       ELSE
-         nValue := ::nValue - ( ::nBottom - ::nTop - ( iif(Empty(::cHotBox + ::cColdBox), 0, 2) + iif(::lDropDown, 1, 0) ) )
+         nValue := ::nValue - (::nBottom - ::nTop - (iif(Empty(::cHotBox + ::cColdBox), 0, 2) + iif(::lDropDown, 1, 0)))
 
          IF ::nTopItem <= nValue
             ::nTopItem := nValue
@@ -818,7 +818,7 @@ METHOD scrollbarPos() CLASS ListBox
       RETURN 0
    ENDIF
 #endif
-   RETURN ( ( nCount - nLength ) * ::nTopItem + nLength - nSize ) / ( nCount - nSize )
+   RETURN ((nCount - nLength) * ::nTopItem + nLength - nSize) / (nCount - nSize)
 
 /* --- */
 
@@ -994,7 +994,7 @@ METHOD topItem(nTopItem) CLASS ListBox
 
       __eInstVar53(Self, "TOPITEM", nTopItem, "N", 1001, {||nTopItem > 0 .AND. nTopItem <= ::nItemCount})
 
-      nTopItem := Min(nTopItem, ::nItemCount - ( ::nBottom - ::nTop - iif(Empty(::cHotBox + ::cColdBox), 0, 2) ))
+      nTopItem := Min(nTopItem, ::nItemCount - (::nBottom - ::nTop - iif(Empty(::cHotBox + ::cColdBox), 0, 2)))
 
       IF ::nTopItem != nTopItem
          ::nTopItem := nTopItem
@@ -1069,12 +1069,12 @@ METHOD New(nTop, nLeft, nBottom, nRight, lDropDown) CLASS ListBox
 FUNCTION ListBox(nTop, nLeft, nBottom, nRight, lDropDown)
    RETURN HBListBox():New(nTop, nLeft, nBottom, nRight, lDropDown)
 
-FUNCTION _ListBox_( nTop, nLeft, nBottom, nRight, xPos, aItems, cCaption, cMessage, cColorSpec, bFBlock, bSBlock, lDropDown, lScrollBar, cBitmap )
+FUNCTION _ListBox_(nTop, nLeft, nBottom, nRight, xPos, aItems, cCaption, cMessage, cColorSpec, bFBlock, bSBlock, lDropDown, lScrollBar, cBitmap)
 
    LOCAL o
    LOCAL xItem
 
-   IF ( o := HBListBox():New(nTop, nLeft, nBottom, nRight, lDropDown) ) != NIL
+   IF (o := HBListBox():New(nTop, nLeft, nBottom, nRight, lDropDown)) != NIL
 
       IF HB_ISSTRING(cCaption)
          o:caption := cCaption

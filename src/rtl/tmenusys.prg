@@ -50,7 +50,7 @@
 #include "inkey.ch"
 #include "setcurs.ch"
 
-#define IS_IN(str, list)  ( "|" + ( str ) + "|" $ "|" + ( list ) + "|" )
+#define IS_IN(str, list)  ("|" + (str) + "|" $ "|" + (list) + "|")
 
 /* NOTE: Harbour doesn't support CA-Cl*pper 5.3 GUI functionality, but
          it has all related variables and methods. */
@@ -125,7 +125,7 @@ METHOD Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList) CLASS
    ::nMsgRight  := nMsgRight
    ::cMsgColor  := cMsgColor
 
-   IF ( ::lMsgFlag := HB_ISNUMERIC(::nMsgRow) .AND. HB_ISNUMERIC(::nMsgLeft) .AND. HB_ISNUMERIC(::nMsgRight) )
+   IF (::lMsgFlag := HB_ISNUMERIC(::nMsgRow) .AND. HB_ISNUMERIC(::nMsgLeft) .AND. HB_ISNUMERIC(::nMsgRight))
 
       IF !HB_ISSTRING(::cMsgColor)
          ::cMsgColor := GetClrPair(SetColor(), 1)
@@ -153,7 +153,7 @@ METHOD Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList) CLASS
          IF nKey == K_LBUTTONDOWN .OR. nKey == K_LDBLCLK
             nSelection := oTopMenu:hitTest(MRow(), MCol())
 
-         ELSEIF ( nSelection := oTopMenu:getAccel(nKey) ) != 0
+         ELSEIF (nSelection := oTopMenu:getAccel(nKey)) != 0
 
          ELSEIF IsShortcut(oTopMenu, nKey, @nReturn)
             RETURN nReturn
@@ -182,7 +182,7 @@ METHOD Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList) CLASS
 
       nKey := Inkey(0)
 
-      IF ( bKeyBlock := SetKey(nKey) ) != NIL
+      IF (bKeyBlock := SetKey(nKey)) != NIL
          Eval(bKeyBlock, ProcName(1), ProcLine(1), "")
          LOOP
       ENDIF
@@ -248,7 +248,7 @@ METHOD Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList) CLASS
 
       CASE nKey == K_LEFT
 
-         IF ( lSubMenu := ( ::nMenuLevel > 1 ) )
+         IF (lSubMenu := (::nMenuLevel > 1))
             ::PopMenu()
          ENDIF
 
@@ -267,7 +267,7 @@ METHOD Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList) CLASS
 
       CASE nKey == K_RIGHT
 
-         IF ( lSubMenu := ( ::nMenuLevel > 1 ) )
+         IF (lSubMenu := (::nMenuLevel > 1))
             ::PopMenu()
          ENDIF
 
@@ -339,7 +339,7 @@ METHOD Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList) CLASS
             ::oMenu      := ::aMenuList[::nMenuLevel]
 
             nMenuItem := ::oMenu:current
-            IF ( oMenuItem := ::oMenu:getItem(::oMenu:Current) ):isPopUp()
+            IF (oMenuItem := ::oMenu:getItem(::oMenu:Current)):isPopUp()
                oMenuItem:data:close()
             ENDIF
 
@@ -369,7 +369,7 @@ METHOD Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList) CLASS
             ENDIF
          ENDIF
 
-      CASE ( nNewItem := ::oMenu:getAccel(nKey) ) != 0
+      CASE (nNewItem := ::oMenu:getAccel(nKey)) != 0
 
          IF ::oMenu:getItem(nNewItem):enabled
             ::oMenu:select(nNewItem)
@@ -391,7 +391,7 @@ METHOD Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList) CLASS
             EXIT
          ENDIF
 
-      CASE GetList != NIL .AND. ( nNewItem := Accelerator(GetList, nKey, ::GetMsgArray()) ) != 0
+      CASE GetList != NIL .AND. (nNewItem := Accelerator(GetList, nKey, ::GetMsgArray())) != 0
 
          GetActive():ExitState := GE_SHORTCUT
          ReadStats(SNNEXTGET, nNewItem)  // reset get system values
@@ -402,7 +402,7 @@ METHOD Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList) CLASS
          nReturn := -1
          EXIT
 
-      CASE ( nNewItem := oTopMenu:getAccel(nKey) ) != 0  // check for the top menu item accelerator key
+      CASE (nNewItem := oTopMenu:getAccel(nKey)) != 0  // check for the top menu item accelerator key
 
          IF oTopMenu:getItem(nNewItem):enabled
             ::PopAll()
@@ -473,7 +473,7 @@ METHOD PopChild(nNewLevel) CLASS HBMenuSys
    LOCAL oOldMenuItem
    LOCAL nCurrent
 
-   IF ( nCurrent := ::oMenu:current ) != 0
+   IF (nCurrent := ::oMenu:current) != 0
       oOldMenuItem := ::oMenu:getItem(nCurrent)
       IF oOldMenuItem:isPopUp
          oOldMenuItem:data:close()
@@ -573,7 +573,7 @@ METHOD ShowMsg(lMode) CLASS HBMenuSys
          ::cMsgColor := GetClrPair(SetColor(), 1)
       ENDIF
 
-      IF ::lMsgFlag .AND. ( nCurrent := ::oMenu:current ) != 0 .AND. !Empty(cMsg := ::oMenu:getItem(nCurrent):message)
+      IF ::lMsgFlag .AND. (nCurrent := ::oMenu:current) != 0 .AND. !Empty(cMsg := ::oMenu:getItem(nCurrent):message)
 
          hb_DispOutAt(::nMsgRow, ::nMsgLeft, PadC(cMsg, ::nMsgRight - ::nMsgLeft + 1), ::cMsgColor)
       ENDIF

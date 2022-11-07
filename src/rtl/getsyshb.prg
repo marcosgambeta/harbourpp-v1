@@ -44,7 +44,7 @@
  *
  */
 
-FUNCTION hb_GetReadVar( oGet )
+FUNCTION hb_GetReadVar(oGet)
 
    LOCAL cName := hb_asciiUpper(oGet:name)
    LOCAL xSubScript

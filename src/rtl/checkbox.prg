@@ -164,7 +164,7 @@ METHOD hitTest(nMRow, nMCol) CLASS CheckBox
 
    nLenCaption := Len(::cCaption)
 
-   IF ( nPosAccel := At("&", ::cCaption) ) > 0 .AND. nPosAccel < nLenCaption
+   IF (nPosAccel := At("&", ::cCaption)) > 0 .AND. nPosAccel < nLenCaption
       nLenCaption--
    ENDIF
 
@@ -191,7 +191,7 @@ METHOD display() CLASS CheckBox
 
    IF !Empty(cCaption := ::cCaption)
 
-      IF ( nPos := At("&", cCaption) ) == 0
+      IF (nPos := At("&", cCaption)) == 0
       ELSEIF nPos == Len(cCaption)
          nPos := 0
       ELSE
@@ -335,7 +335,7 @@ METHOD New(nRow, nCol, cCaption) CLASS CheckBox
 
    RETURN Self
 
-FUNCTION _CheckBox_( lState, cCaption, cMessage, cColorSpec, bFBlock, bSBlock, cStyle, aBitmaps )
+FUNCTION _CheckBox_(lState, cCaption, cMessage, cColorSpec, bFBlock, bSBlock, cStyle, aBitmaps)
 
    LOCAL o := HBCheckBox():New(Row(), Col(), cCaption)
 

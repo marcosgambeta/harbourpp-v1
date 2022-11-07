@@ -179,7 +179,7 @@ METHOD display() CLASS TopBarMenu
          oPopUp:right := NIL
       ENDIF
 
-      IF ( nPos := At("&", cCaption) ) > 0
+      IF (nPos := At("&", cCaption)) > 0
          IF nPos == Len(cCaption)
             nPos := 0
          ELSE
@@ -188,7 +188,7 @@ METHOD display() CLASS TopBarMenu
          ENDIF
       ENDIF
 
-      hb_DispOutAt(nRow, nLeft, cCaption, iif(item:__enumIndex() == nCurrent, cColor2, iif( item:enabled, cColor1, hb_ColorIndex(::cColorSpec, 4) )))
+      hb_DispOutAt(nRow, nLeft, cCaption, iif(item:__enumIndex() == nCurrent, cColor2, iif(item:enabled, cColor1, hb_ColorIndex(::cColorSpec, 4))))
 
       IF item:enabled .AND. nPos > 0
          hb_DispOutAt(nRow, nLeft + nPos - 1, SubStr(cCaption, nPos, 1), iif(item:__enumIndex() == nCurrent, hb_ColorIndex(::cColorSpec, 3), hb_ColorIndex(::cColorSpec, 2)))
@@ -338,7 +338,7 @@ METHOD insItem(nPos, oItem) CLASS TopBarMenu
 
 METHOD select(nPos) CLASS TopBarMenu
 
-   IF ( nPos >= 1 .AND. nPos <= ::nItemCount .AND. ::nCurrent != nPos .AND. ::aItems[nPos]:enabled ) .OR. nPos == 0
+   IF (nPos >= 1 .AND. nPos <= ::nItemCount .AND. ::nCurrent != nPos .AND. ::aItems[nPos]:enabled) .OR. nPos == 0
 
 #if 0
       IF ::isOpen() .AND. ::nCurrent > 0 .AND. ::aItems[::nCurrent]:isPopUp()

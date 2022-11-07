@@ -105,13 +105,13 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
    DO WHILE lContinue
 
       DO WHILE !lKeyPressed .AND. !oBrw:Stabilize()
-         lKeyPressed := ( nKey := Inkey() ) != 0
+         lKeyPressed := (nKey := Inkey()) != 0
       ENDDO
 
       IF lKeyPressed
          lKeyPressed := .F.
       ELSE
-         IF oBrw:HitBottom .AND. ( !lAppend .OR. RecNo() != LastRec() + 1 )
+         IF oBrw:HitBottom .AND. (!lAppend .OR. RecNo() != LastRec() + 1)
             IF lAppend
                oBrw:RefreshCurrent()
                oBrw:ForceStable()
@@ -130,7 +130,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
          oBrw:ForceStable()
 
          nKey := Inkey(0)
-         IF ( bAction := SetKey(nKey) ) != NIL
+         IF (bAction := SetKey(nKey)) != NIL
             Eval(bAction, ProcName(1), ProcLine(1), "")
             LOOP
          ENDIF
@@ -248,7 +248,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
 
       CASE K_ENTER
          IF lAppend .OR. RecNo() != LastRec() + 1
-            lKeyPressed := ( nKey := DoGet(oBrw, lAppend) ) != 0
+            lKeyPressed := (nKey := DoGet(oBrw, lAppend)) != 0
          ELSE
             nKey := K_DOWN
             lKeyPressed := .T.
@@ -373,7 +373,7 @@ STATIC FUNCTION ExitKey(lAppend)
       RETURN nKey
    ENDSWITCH
 
-   RETURN iif(nKey == K_ENTER .OR. !( hb_keyChar(nKey) == "" ), K_RIGHT, 0)
+   RETURN iif(nKey == K_ENTER .OR. !(hb_keyChar(nKey) == ""), K_RIGHT, 0)
 
 STATIC PROCEDURE FreshOrder(oBrw)
 

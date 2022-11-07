@@ -106,7 +106,7 @@ STATIC FUNCTION DefError(oError)
 
    // Show alert box
 
-   DO WHILE ( nChoice := Alert(cMessage + iif(cOSError == NIL, "", ";" + cOSError), aOptions) ) == 0
+   DO WHILE (nChoice := Alert(cMessage + iif(cOSError == NIL, "", ";" + cOSError), aOptions)) == 0
    ENDDO
 
    IF !Empty(nChoice)  /* Alert() may return NIL */

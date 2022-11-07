@@ -50,7 +50,7 @@ FUNCTION GetClrPair(cColor, nColor)
 
    LOCAL nPos
 
-   IF ( nPos := GetPairPos(cColor, nColor) ) == 0
+   IF (nPos := GetPairPos(cColor, nColor)) == 0
       RETURN ""
    ENDIF
 
@@ -60,7 +60,7 @@ FUNCTION SetClrPair(cColor, nColor, cNewColor)
 
    LOCAL nPos
 
-   IF ( nPos := GetPairPos(cColor, nColor) ) == 0
+   IF (nPos := GetPairPos(cColor, nColor)) == 0
       RETURN ""
    ENDIF
 
@@ -73,7 +73,7 @@ FUNCTION GetPairPos(cColor, nColor)
    LOCAL n
 
    FOR n := 2 TO nColor
-      IF ( nSep := At(",", SubStr(cColor, nPos)) ) == 0
+      IF (nSep := At(",", SubStr(cColor, nPos))) == 0
          RETURN 0
       ENDIF
       nPos += nSep
@@ -86,7 +86,7 @@ FUNCTION GetPairLen(cColor, nColor)
    LOCAL nPos
    LOCAL nLen
 
-   IF ( nPos := GetPairPos(cColor, nColor) ) == 0
+   IF (nPos := GetPairPos(cColor, nColor)) == 0
       RETURN 0
    ENDIF
 
@@ -96,7 +96,7 @@ FUNCTION GetClrFore(cColor)
 
    LOCAL nPos
 
-   IF ( nPos := At("/", cColor) ) == 0
+   IF (nPos := At("/", cColor)) == 0
       RETURN ""
    ENDIF
 
@@ -106,7 +106,7 @@ FUNCTION GetClrBack(cColor)
 
    LOCAL nPos
 
-   IF ( nPos := At("/", cColor) ) == 0
+   IF (nPos := At("/", cColor)) == 0
       RETURN ""
    ENDIF
 
@@ -169,10 +169,10 @@ FUNCTION ApplyDefau(cColor, xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xCl
 
       IF "/" $ cClrToSet
 
-         IF ( cClrFore := GetClrFore(cClrToSet) ) == ""
+         IF (cClrFore := GetClrFore(cClrToSet)) == ""
             cClrFore := GetClrFore(iif(HB_ISNUMERIC(xNewColor), aSetColor[xNewColor], xNewColor))
          ENDIF
-         IF ( cClrBack := GetClrBack(cClrToSet) ) == ""
+         IF (cClrBack := GetClrBack(cClrToSet)) == ""
             cClrBack := GetClrBack(iif(HB_ISNUMERIC(xNewColor), aSetColor[xNewColor], xNewColor))
          ENDIF
 

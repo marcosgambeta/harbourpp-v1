@@ -99,7 +99,7 @@ PROCEDURE __TypeFile(cFile, lPrint)
    ENDIF
 
    nRetries := 0
-   DO WHILE ( nHandle := FOpen(cFile, FO_READWRITE) ) == F_ERROR
+   DO WHILE (nHandle := FOpen(cFile, FO_READWRITE)) == F_ERROR
       oErr := ErrorNew()
       oErr:severity    := ES_ERROR
       oErr:genCode     := EG_OPEN
@@ -135,7 +135,7 @@ PROCEDURE __TypeFile(cFile, lPrint)
    nHasRead := 0
    cBuffer := Space(nBuffer)
    QOut()  /* starting a new line */
-   DO WHILE ( nRead := FRead(nHandle, @cBuffer, nBuffer) ) > 0
+   DO WHILE (nRead := FRead(nHandle, @cBuffer, nBuffer)) > 0
       nHasRead += nRead
       QQOut(cBuffer)
       nBuffer := Min(nSize - nHasRead, nBuffer)

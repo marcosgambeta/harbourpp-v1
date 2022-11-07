@@ -96,7 +96,7 @@ STATIC PROCEDURE PutDBF(aDirEntry)
    LOCAL nRecCount := 0
    LOCAL dLastUpdate := hb_SToD()
 
-   IF ( fhnd := FOpen(aDirEntry[F_NAME]) ) != F_ERROR
+   IF (fhnd := FOpen(aDirEntry[F_NAME])) != F_ERROR
 
       buffer := hb_FReadLen(fhnd, 8)
 

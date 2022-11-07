@@ -159,7 +159,7 @@ METHOD display() CLASS RadioButtn
 
    IF !Empty(cOldCaption := ::cCaption)
 
-      IF ( nPos := At("&", cOldCaption) ) == 0
+      IF (nPos := At("&", cOldCaption)) == 0
       ELSEIF nPos == Len(cOldCaption)
          nPos := 0
       ELSE
@@ -203,7 +203,7 @@ METHOD hitTest(nMRow, nMCol) CLASS RadioButtn
 
    nLen := Len(::cCaption)
 
-   IF ( nPos := At("&", ::cCaption) ) == 0 .AND. nPos < nLen
+   IF (nPos := At("&", ::cCaption)) == 0 .AND. nPos < nLen
       nLen--
    ENDIF
 

@@ -176,11 +176,11 @@ METHOD hitTest(nMRow, nMCol) CLASS PushButton
    LOCAL nStyleLen
    LOCAL nAccelPos
 
-   IF ( nAccelPos := At("&", ::cCaption) ) > 0 .AND. nAccelPos < nLen
+   IF (nAccelPos := At("&", ::cCaption)) > 0 .AND. nAccelPos < nLen
       nLen--
    ENDIF
 
-   IF ( nStyleLen := Len(::cStyle) ) == 2
+   IF (nStyleLen := Len(::cStyle)) == 2
       nLen += 2
    ELSEIF nStyleLen == 8
       nCurrentPos := 3
@@ -213,7 +213,7 @@ METHOD display() CLASS PushButton
       cColor := hb_ColorIndex(::cColorSpec, 0)
    ENDCASE
 
-   IF ( nPos := At("&", cCaption) ) == 0
+   IF (nPos := At("&", cCaption)) == 0
    ELSEIF nPos == Len(cCaption)
       nPos := 0
    ELSE
@@ -357,7 +357,7 @@ METHOD New(nRow, nCol, cCaption) CLASS PushButton
 FUNCTION PushButton(nRow, nCol, cCaption)
    RETURN HBPushButton():New(nRow, nCol, cCaption)
 
-FUNCTION _PushButt_( cCaption, cMessage, cColorSpec, bFBlock, bSBlock, cStyle, nSizeX, nSizeY, nCapXOff, nCapYOff, cBitmap, nBmpXOff, nBmpYOff )
+FUNCTION _PushButt_(cCaption, cMessage, cColorSpec, bFBlock, bSBlock, cStyle, nSizeX, nSizeY, nCapXOff, nCapYOff, cBitmap, nBmpXOff, nBmpYOff)
 
    LOCAL o := HBPushButton():New(Row(), Col(), cCaption)
 

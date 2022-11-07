@@ -117,7 +117,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
 
       IF HB_ISARRAY(acColumns)
          cBlock := acColumns[nPos]
-         IF ( nAliasPos := At("->", cBlock) ) > 0
+         IF (nAliasPos := At("->", cBlock)) > 0
             cHeading := Left(cBlock, nAliasPos - 1) + "->;" + SubStr(cBlock, nAliasPos + 2)
          ELSE
             cHeading := cBlock
@@ -211,13 +211,13 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
          IF lContinue .AND. lFlag
             oBrowse:hiLite()
 #ifdef HB_COMPAT_C53
-            DO WHILE ( nKey := Inkey(0) ) == K_MOUSEMOVE
+            DO WHILE (nKey := Inkey(0)) == K_MOUSEMOVE
             ENDDO
 #else
             nKey := Inkey(0)
 #endif
             oBrowse:deHilite()
-            IF ( bBlock := SetKey(nKey) ) != NIL
+            IF (bBlock := SetKey(nKey)) != NIL
                Eval(bBlock, ProcName(1), ProcLine(1), "")
                LOOP
             ENDIF
@@ -290,7 +290,7 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
       iif(nKey != 0,                  DE_EXCEPT,    ;
       iif(!lAppend .AND. IsDbEmpty(), DE_EMPTY,     ;
       iif(oBrowse:hitBottom,          DE_HITBOTTOM, ;
-      iif( oBrowse:hitTop,            DE_HITTOP, DE_IDLE ))))
+      iif(oBrowse:hitTop,             DE_HITTOP, DE_IDLE))))
 
    oBrowse:forceStable()
 
@@ -301,9 +301,9 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
             replicating this behavior. */
    nAction := iif(HB_ISEVALITEM(xUserFunc), ;
                                  Eval(xUserFunc, nMode, oBrowse:colPos), ;
-              iif( HB_ISSTRING(xUserFunc) .AND. !Empty(xUserFunc), ;
+              iif(HB_ISSTRING(xUserFunc) .AND. !Empty(xUserFunc), ;
                                  &xUserFunc(nMode, oBrowse:colPos), ;  /* NOTE: Macro operator! */
-              iif( nKey == K_ENTER .OR. nKey == K_ESC, DE_ABORT, DE_CONT ) ))
+              iif(nKey == K_ENTER .OR. nKey == K_ESC, DE_ABORT, DE_CONT)))
 
    IF !lAppend .AND. Eof() .AND. !IsDbEmpty()
       dbSkip(-1)
@@ -312,7 +312,7 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
 #ifdef HB_CLP_UNDOC
    IF nAction == DE_APPEND
 
-      IF ( lAppend := !( lAppend .AND. Eof() ) )
+      IF (lAppend := !(lAppend .AND. Eof()))
          dbGoBottom()
          oBrowse:down()
       ELSE
@@ -329,7 +329,7 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
 
          lAppend := .F.
 
-         IF ( Set(_SET_DELETED) .AND. Deleted() ) .OR. ( !Empty(dbFilter()) .AND. !Eval(hb_macroBlock(dbFilter())) )
+         IF (Set(_SET_DELETED) .AND. Deleted()) .OR. (!Empty(dbFilter()) .AND. !Eval(hb_macroBlock(dbFilter())))
             dbSkip()
          ENDIF
          IF Eof()
@@ -355,7 +355,7 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
 /* helper function to detect empty tables. It's not perfect but
    it functionally uses the same conditions as CA-Cl*pper */
 STATIC FUNCTION IsDbEmpty()
-   RETURN LastRec() == 0 .OR. ( Bof() .AND. ( Eof() .OR. RecNo() == LastRec() + 1 ) )
+   RETURN LastRec() == 0 .OR. (Bof() .AND. (Eof() .OR. RecNo() == LastRec() + 1))
 
 /* Helper function: TBrowse skipBlock */
 STATIC FUNCTION Skipped(nRecs, lAppend)

@@ -126,13 +126,13 @@ METHOD Edit() CLASS HBMemoEditor
 
          // I need to test this condition here since I never block inside HBEditor:Edit()
          // if there is an user function
-         IF ( nKey := Inkey(NIL, hb_bitOr(Set(_SET_EVENTMASK), HB_INKEY_EXT) ) ) == 0
+         IF (nKey := Inkey(NIL, hb_bitOr(Set(_SET_EVENTMASK), HB_INKEY_EXT))) == 0
             ::IdleHook()
             nKey := Inkey(0, hb_bitOr(Set(_SET_EVENTMASK), HB_INKEY_EXT))
          ENDIF
          nKeyStd := hb_keyStd(nKey)
 
-         IF ( bKeyBlock := SetKey(nKeyStd) ) != NIL
+         IF (bKeyBlock := SetKey(nKeyStd)) != NIL
             Eval(bKeyBlock)
             LOOP
          ENDIF
@@ -264,7 +264,7 @@ METHOD HandleUserKey(nKey, nUdfReturn) CLASS HBMemoEditor
    OTHERWISE
 
       // FIXME: Not CA-Cl*pper compatible, see teditor.prg
-      IF ( nUdfReturn >= 1 .AND. nUdfReturn <= 31 ) .OR. nUdfReturn == K_ALT_W
+      IF (nUdfReturn >= 1 .AND. nUdfReturn <= 31) .OR. nUdfReturn == K_ALT_W
          ::super:Edit(nUdfReturn)
       ELSE
          RETURN .F.

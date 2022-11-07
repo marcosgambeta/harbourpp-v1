@@ -65,10 +65,10 @@ FUNCTION _GetNumCol(cColor)
 
    LOCAL nPos
 
-   IF ( nPos := At("/", cColor) ) > 0
+   IF (nPos := At("/", cColor)) > 0
       cColor := Left(cColor, nPos - 1)
    ENDIF
-   IF ( nPos := At(",", cColor) ) > 0
+   IF (nPos := At(",", cColor)) > 0
       cColor := Left(cColor, nPos - 1)
    ENDIF
 

@@ -338,11 +338,11 @@ METHOD LoadLabel(cLblFile) CLASS HBLabelForm
    aLabel[LBL_FIELDS]  := {}           // Array of label fields
 
    // Open the label file
-   IF ( nHandle := FOpen(cLblFile) ) == F_ERROR .AND. Empty(hb_FNameDir(cLblFile))
+   IF (nHandle := FOpen(cLblFile)) == F_ERROR .AND. Empty(hb_FNameDir(cLblFile))
 
       // Search through default path; attempt to open label file
       FOR EACH cPath IN hb_ATokens(StrTran(Set(_SET_DEFAULT), ",", ";"), ";")
-         IF ( nHandle := FOpen(hb_DirSepAdd(cPath) + cLblFile) ) != F_ERROR
+         IF (nHandle := FOpen(hb_DirSepAdd(cPath) + cLblFile)) != F_ERROR
             EXIT
          ENDIF
       NEXT

@@ -205,7 +205,7 @@ STATIC PROCEDURE Create(/* MetaClass */)
 #endif
 
    FOR EACH n IN ::asSuper
-      IF ( hClass := __clsInstSuper(n) ) != 0  /* Super handle available */
+      IF (hClass := __clsInstSuper(n)) != 0  /* Super handle available */
          AAdd(ahSuper, hClass)
       ENDIF
    NEXT

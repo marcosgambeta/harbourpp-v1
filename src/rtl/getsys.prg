@@ -316,7 +316,7 @@ FUNCTION RangeCheck(oGet, xDummy, xLow, xHigh)
 
       hb_DispOutAt(SCORE_ROW, Min(60, MaxCol() - Len(cMessage)), cMessage)
 
-      DO WHILE ( nKey := Inkey(0) ) == 0
+      DO WHILE (nKey := Inkey(0)) == 0
       ENDDO
       hb_keyIns(nKey)
 

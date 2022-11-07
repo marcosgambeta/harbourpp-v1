@@ -44,7 +44,7 @@
  *
  */
 
-#define _ISDRIVESPEC(cDir) ( !Empty(hb_osDriveSeparator()) .AND. Right(cDir, Len(hb_osDriveSeparator())) == hb_osDriveSeparator() )
+#define _ISDRIVESPEC(cDir) (!Empty(hb_osDriveSeparator()) .AND. Right(cDir, Len(hb_osDriveSeparator())) == hb_osDriveSeparator())
 
 /* NOTE: Can hurt if there are symlinks on the way. */
 FUNCTION hb_PathNormalize(cPath)
@@ -63,14 +63,14 @@ FUNCTION hb_PathNormalize(cPath)
       FOR EACH cDir IN aDir DESCEND
 
          IF cDir == "." .OR. ;
-            ( Empty(cDir) .AND. ;
+            (Empty(cDir) .AND. ;
             !cDir:__enumIsLast() .AND. ;
-            ( cDir:__enumIndex() > 2 .OR. ;
-            ( cDir:__enumIndex() == 2 .AND. !Empty(aDir[1]) ) ) )
+            (cDir:__enumIndex() > 2 .OR. ;
+            (cDir:__enumIndex() == 2 .AND. !Empty(aDir[1]))))
 
             hb_ADel(aDir, cDir:__enumIndex(), .T.)
 
-         ELSEIF !( cDir == ".." ) .AND. !Empty(cDir) .AND. !_ISDRIVESPEC(cDir)
+         ELSEIF !(cDir == "..") .AND. !Empty(cDir) .AND. !_ISDRIVESPEC(cDir)
 
             IF !cDir:__enumIsLast() .AND. aDir[cDir:__enumIndex() + 1] == ".."
                hb_ADel(aDir, cDir:__enumIndex() + 1, .T.)
@@ -109,7 +109,7 @@ FUNCTION hb_PathJoin(cPathA, cPathR)
 
    hb_FNameSplit(cPathR, @cDirR, @cNameR, @cExtR, @cDriveR)
 
-   IF !Empty(cDriveR) .OR. ( !Empty(cDirR) .AND. Left(cDirR, 1) $ hb_osPathDelimiters() )
+   IF !Empty(cDriveR) .OR. (!Empty(cDirR) .AND. Left(cDirR, 1) $ hb_osPathDelimiters())
       RETURN cPathR
    ENDIF
 
@@ -166,13 +166,13 @@ FUNCTION hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
    /* Different drive spec. There is no way to solve that using relative dirs. */
    IF !Empty(hb_osDriveSeparator()) .AND. tmp == 1 .AND. ( ;
       Right(aPathBase[1]  , Len(hb_osDriveSeparator())) == hb_osDriveSeparator() .OR. ;
-      Right(aPathTarget[1], Len(hb_osDriveSeparator())) == hb_osDriveSeparator() )
+      Right(aPathTarget[1], Len(hb_osDriveSeparator())) == hb_osDriveSeparator())
       RETURN cPathTarget
    ENDIF
 
    /* Force to return relative paths even when base is different. */
    IF hb_defaultValue(lForceRelative, .T.) .AND. ;
-      hb_DirExists(cPathBase + ( cTestTarget := s_FN_FromArray(aPathTarget, tmp, cTargetFileName, Replicate(".." + hb_ps(), Len(aPathBase) - tmp)) ))
+      hb_DirExists(cPathBase + (cTestTarget := s_FN_FromArray(aPathTarget, tmp, cTargetFileName, Replicate(".." + hb_ps(), Len(aPathBase) - tmp))))
       RETURN cTestTarget
    ENDIF
 
@@ -272,7 +272,7 @@ FUNCTION hb_DirBuild(cDir)
 
       cDir := hb_DirSepAdd(cDir)
 
-      IF !Empty(hb_osDriveSeparator()) .AND. ( tmp := At(hb_osDriveSeparator(), cDir) ) > 0
+      IF !Empty(hb_osDriveSeparator()) .AND. (tmp := At(hb_osDriveSeparator(), cDir)) > 0
          cDirTemp := Left(cDir, tmp)
          cDir := SubStr(cDir, tmp + 1)
       ELSEIF Left(cDir, 1) == hb_ps()
@@ -283,7 +283,7 @@ FUNCTION hb_DirBuild(cDir)
       ENDIF
 
       FOR EACH cDirItem IN hb_ATokens(cDir, hb_ps())
-         IF !( Right(cDirTemp, 1) == hb_ps() ) .AND. !Empty(cDirTemp)
+         IF !(Right(cDirTemp, 1) == hb_ps()) .AND. !Empty(cDirTemp)
             cDirTemp += hb_ps()
          ENDIF
          IF !Empty(cDirItem)  /* Skip root path, if any */
@@ -321,7 +321,7 @@ FUNCTION hb_DirUnbuild(cDir)
                RETURN .F.
             ENDIF
          ENDIF
-         IF ( tmp := RAt(hb_ps(), cDirTemp) ) == 0
+         IF (tmp := RAt(hb_ps(), cDirTemp)) == 0
             EXIT
          ENDIF
          cDirTemp := Left(cDirTemp, tmp - 1)

@@ -60,7 +60,7 @@ STATIC FUNCTION hb_doScan(cPath, cMask, cAttr, cPathSep)
          IF lMatch .AND. "D" $ cAttr
             AAdd(aResult, aFile)
          ENDIF
-         IF !( aFile[F_NAME] == "." .OR. aFile[F_NAME] == ".." .OR. aFile[F_NAME] == "" )
+         IF !(aFile[F_NAME] == "." .OR. aFile[F_NAME] == ".." .OR. aFile[F_NAME] == "")
             AEval(hb_DoScan(cPath + aFile[F_NAME] + cPathSep, cMask, cAttr, cPathSep), ;
                {|x|x[F_NAME] := aFile[F_NAME] + cPathSep + x[F_NAME], AAdd(aResult, x)})
          ENDIF
@@ -89,7 +89,7 @@ FUNCTION hb_DirRemoveAll(cDir)
       cPath := hb_DirSepAdd(cPath)
       FOR EACH aFile IN hb_vfDirectory(cPath + hb_osFileMask(), "HSDL")
          IF "D" $ aFile[F_ATTR] .AND. !"L" $ aFile[F_ATTR]
-            IF !( aFile[F_NAME] == "." .OR. aFile[F_NAME] == ".." .OR. aFile[F_NAME] == "" )
+            IF !(aFile[F_NAME] == "." .OR. aFile[F_NAME] == ".." .OR. aFile[F_NAME] == "")
                IF !hb_DirRemoveAll(cPath + aFile[F_NAME])
                   RETURN .F.
                ENDIF

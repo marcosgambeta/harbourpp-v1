@@ -473,8 +473,8 @@ METHOD ReportHeader() CLASS HBReportForm
       FOR nHeadLine := 1 TO nLinesInHeader
 
          cHeader := RTrim(XMEMOLINE(LTrim(cLine), NIL, nHeadLine))
-         AAdd(aPageHeader, Space(( nRPageSize - ::aReportData[RPT_LMARGIN] - ;
-            Len(cHeader) ) / 2) + cHeader)
+         AAdd(aPageHeader, Space((nRPageSize - ::aReportData[RPT_LMARGIN] - ;
+            Len(cHeader)) / 2) + cHeader)
       NEXT
    NEXT
 
@@ -635,7 +635,7 @@ METHOD PROCEDURE ExecuteReport() CLASS HBReportForm
    // Cycle through the groups
    FOR nGroup := 1 TO Len(::aReportData[RPT_GROUPS])
       // If the group has changed
-      IF !( MakeAStr(Eval(::aReportData[RPT_GROUPS][nGroup][RGT_EXP]), ::aReportData[RPT_GROUPS][nGroup][RGT_TYPE]) == ::aGroupTotals[nGroup] )
+      IF !(MakeAStr(Eval(::aReportData[RPT_GROUPS][nGroup][RGT_EXP]), ::aReportData[RPT_GROUPS][nGroup][RGT_TYPE]) == ::aGroupTotals[nGroup])
 
          AAdd(aRecordHeader, "")   // The blank line
 
@@ -843,11 +843,11 @@ METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
    aReport[RPT_HEADING]   := ""
 
    // Open the report file
-   IF ( nFrmHandle := FOpen(cFrmFile) ) == F_ERROR .AND. Empty(hb_FNameDir(cFrmFile))
+   IF (nFrmHandle := FOpen(cFrmFile)) == F_ERROR .AND. Empty(hb_FNameDir(cFrmFile))
 
       // Search through default path; attempt to open report file
       FOR EACH cPath IN hb_ATokens(StrTran(Set(_SET_DEFAULT), ",", ";"), ";")
-         IF ( nFrmHandle := FOpen(hb_DirSepAdd(cPath) + cFrmFile) ) != F_ERROR
+         IF (nFrmHandle := FOpen(hb_DirSepAdd(cPath) + cFrmFile)) != F_ERROR
             EXIT
          ENDIF
       NEXT
@@ -918,7 +918,7 @@ METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
             // Page heading, report title
             // Retrieve the header stored in the .frm file
             nHeaderIndex := 4
-            aHeader := ParseHeader(::GetExpr( Bin2W(hb_BSubStr(cParamsBuff, PAGE_HDR_OFFSET, 2)) ), nHeaderIndex)
+            aHeader := ParseHeader(::GetExpr(Bin2W(hb_BSubStr(cParamsBuff, PAGE_HDR_OFFSET, 2))), nHeaderIndex)
 
             // certain that we have retrieved all heading entries from the .frm file, we
             // now retract the empty headings
@@ -1007,7 +1007,7 @@ METHOD GetExpr(nPointer AS NUMERIC) CLASS HBReportForm
 
       // Calculate offset into OFFSETS_BUFF
       IF nPointer > 1
-         nOffsetOffset := ( nPointer * 2 ) - 1
+         nOffsetOffset := (nPointer * 2) - 1
       ENDIF
 
       nExprOffset := Bin2W(hb_BSubStr(::cOffsetsBuff, nOffsetOffset, 2))
@@ -1036,7 +1036,7 @@ STATIC FUNCTION Occurs(cSearch, cTarget)
    LOCAL nPos, nCount := 0
 
    DO WHILE !Empty(cTarget)
-      IF ( nPos := At(cSearch, cTarget) ) > 0
+      IF (nPos := At(cSearch, cTarget)) > 0
          nCount++
          cTarget := SubStr(cTarget, nPos + 1)
       ELSE
@@ -1082,7 +1082,7 @@ STATIC FUNCTION ParseHeader(cHeaderString, nFields)
       cItem := Left(cHeaderString, nHeaderLen)
 
       // check for explicit delimiter
-      IF ( nPos := At(";", cItem) ) > 0
+      IF (nPos := At(";", cItem)) > 0
          // delimiter present
          AAdd(aPageHeader, Left(cItem, nPos - 1))
       ELSE

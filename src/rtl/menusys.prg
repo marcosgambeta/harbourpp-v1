@@ -84,7 +84,7 @@ FUNCTION IsShortcut(oMenu, nKey, /* @ */ nID)
 
    // Test and assign top menu item shortCut, enabled, and ! PopUp:
    // Changed by enclosing assignment before ':Enabled':
-   CASE ( nShortCut := oMenu:getShortCt(nKey) ) > 0 .AND. ( oItem := oMenu:getItem(nShortcut) ):enabled .AND. !oItem:isPopUp()
+   CASE (nShortCut := oMenu:getShortCt(nKey)) > 0 .AND. (oItem := oMenu:getItem(nShortcut)):enabled .AND. !oItem:isPopUp()
 
       oMenu:select(nShortCut)
       Eval(oItem:data, oItem)
@@ -105,7 +105,7 @@ FUNCTION IsShortcut(oMenu, nKey, /* @ */ nID)
       // Loop to wrap around through TopMenu from Current Item:
       FOR i := 1 TO nTotal
 
-         IF ( oItem := oMenu:getItem(nItem) ):enabled .AND. oItem:isPopUp() .AND. IsQuick(oItem:data, nKey, @nID)
+         IF (oItem := oMenu:getItem(nItem)):enabled .AND. oItem:isPopUp() .AND. IsQuick(oItem:data, nKey, @nID)
 
             RETURN .T.
          ENDIF
@@ -128,19 +128,19 @@ FUNCTION IsQuick(oMenu, nKey, /* @ */ nID)
    LOCAL nShortCut
    LOCAL oItem
 
-   IF ( nShortCut := oMenu:getShortCt(nKey) ) == 0
+   IF (nShortCut := oMenu:getShortCt(nKey)) == 0
 
       nTotal := oMenu:itemCount
 
       FOR nItem := 1 TO nTotal
 
-         IF ( oItem := oMenu:getItem(nItem) ):enabled .AND. oItem:isPopUp() .AND. IsQuick(oItem:data, nKey, @nID)
+         IF (oItem := oMenu:getItem(nItem)):enabled .AND. oItem:isPopUp() .AND. IsQuick(oItem:data, nKey, @nID)
 
             RETURN .T.
          ENDIF
       NEXT
 
-   ELSEIF !( oItem := oMenu:getItem(nShortCut) ):isPopUp() .AND. oItem:enabled
+   ELSEIF !(oItem := oMenu:getItem(nShortCut)):isPopUp() .AND. oItem:enabled
 
       oMenu:select(nShortCut)
       Eval(oItem:data, oItem)

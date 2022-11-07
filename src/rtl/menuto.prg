@@ -142,7 +142,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
             hb_default(@xMsg, "")
 
             IF lMsgCenter
-               nMsgCol := Int(( MaxCol() - Len(xMsg) ) / 2)
+               nMsgCol := Int((MaxCol() - Len(xMsg)) / 2)
             ENDIF
 
             DispOutAt(nMsgRow, nMsgCol, xMsg)
@@ -181,7 +181,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
             // wait for a keystroke
             nKey := Inkey(0)
 
-            IF ( bAction := SetKey(nKey) ) != NIL
+            IF (bAction := SetKey(nKey)) != NIL
 
                Eval(bBlock, n)
                Eval(bAction, ProcName(1), ProcLine(1), hb_asciiUpper(cVariable))
@@ -205,7 +205,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
             EXIT
          CASE K_LBUTTONDOWN
          CASE K_LDBLCLK
-            IF ( nMouseClik := HitTest(t_aLevel[nPointer - 1], MRow(), MCol()) ) > 0
+            IF (nMouseClik := HitTest(t_aLevel[nPointer - 1], MRow(), MCol())) > 0
                n := nMouseClik
             ENDIF
             /* QUESTION: Clipper does this, but shouldn't we only

@@ -237,8 +237,8 @@ METHOD display() CLASS PopupMenu
             item:__row := nTop
             item:__col := nLeft
 
-            IF ( nHotKeyPos := At("&", cCaption) ) == 0
-               IF ( nCharPos := RAt(SubStr(item:style, 2, 1), cCaption) ) > 0
+            IF (nHotKeyPos := At("&", cCaption)) == 0
+               IF (nCharPos := RAt(SubStr(item:style, 2, 1), cCaption)) > 0
                   cCaption := Stuff(cCaption, nCharPos - 1, 1, "")
                ELSE
                   cCaption := hb_StrShrink(cCaption)
@@ -250,10 +250,10 @@ METHOD display() CLASS PopupMenu
                cCaption := Stuff(cCaption, nHotKeyPos, 1, "")
             ENDIF
 
-            hb_DispOutAt(nTop, nLeft, cCaption, hb_ColorIndex(::cColorSpec, iif(item:__enumIndex() == nCurrent, 1, iif( item:enabled, 0, 4 ))))
+            hb_DispOutAt(nTop, nLeft, cCaption, hb_ColorIndex(::cColorSpec, iif(item:__enumIndex() == nCurrent, 1, iif(item:enabled, 0, 4))))
 
             IF item:enabled .AND. nHotKeyPos != 0
-               hb_DispOutAt(nTop, nLeft + nHotKeyPos - 1, SubStr(cCaption, nHotKeyPos, 1), hb_ColorIndex(::cColorSpec, iif(item:__enumIndex() == nCurrent, 3, 2 )))
+               hb_DispOutAt(nTop, nLeft + nHotKeyPos - 1, SubStr(cCaption, nHotKeyPos, 1), hb_ColorIndex(::cColorSpec, iif(item:__enumIndex() == nCurrent, 3, 2)))
             ENDIF
          ENDIF
       NEXT
@@ -433,10 +433,10 @@ METHOD open() CLASS PopupMenu
    nTop := ::nTop
    nLeft := ::nLeft
 
-   IF ( nBottom := ::nBottom ) < 0
+   IF (nBottom := ::nBottom) < 0
       nBottom := nTop + ::nItemCount + 1
    ENDIF
-   IF ( nRight := ::nRight ) < 0
+   IF (nRight := ::nRight) < 0
       nRight := nLeft + ::nWidth + 1
    ENDIF
 
@@ -461,7 +461,7 @@ METHOD open() CLASS PopupMenu
 
 METHOD select(nPos) CLASS PopupMenu
 
-   IF ( nPos >= 1 .AND. nPos <= ::nItemCount .AND. ::nCurrent != nPos .AND. ::aItems[nPos]:enabled ) .OR. nPos == 0
+   IF (nPos >= 1 .AND. nPos <= ::nItemCount .AND. ::nCurrent != nPos .AND. ::aItems[nPos]:enabled) .OR. nPos == 0
 
 #if 0
       IF ::isOpen() .AND. ::nCurrent > 0 .AND. ::aItems[::nCurrent]:isPopUp()
@@ -489,14 +489,14 @@ METHOD setMetrics() CLASS PopupMenu
 
    IF ::nTop != NIL
    ELSEIF ::nBottom == NIL
-      ::nTop := Int(( MaxRow() - ( ::nItemCount + 2 ) ) / 2)
+      ::nTop := Int((MaxRow() - (::nItemCount + 2)) / 2)
    ELSE
       ::nTop := ::nBottom - ::nItemCount - 1
    ENDIF
 
    IF ::nLeft != NIL
    ELSEIF ::nRight == NIL
-      ::nLeft := Int(( MaxCol() - ( ::nWidth + 2 ) ) / 2)
+      ::nLeft := Int((MaxCol() - (::nWidth + 2)) / 2)
    ELSE
       ::nLeft := ::nRight - ::nWidth - 1
    ENDIF

@@ -130,7 +130,7 @@ METHOD isShortCut(nKey, /* @ */ nID) CLASS hb_PopupMenu
    DO CASE
    // Test and assign top menu item shortCut, enabled, and ! PopUp:
    // Changed by enclosing assignment before ':Enabled':
-   CASE ( nShortCut := ::getShortCt(nKey) ) > 0 .AND. ( oItem := ::getItem(nShortcut) ):enabled .AND. !oItem:isPopUp()
+   CASE (nShortCut := ::getShortCt(nKey)) > 0 .AND. (oItem := ::getItem(nShortcut)):enabled .AND. !oItem:isPopUp()
 
       ::select(nShortCut)
       Eval(oItem:data, oItem)
@@ -148,7 +148,7 @@ METHOD isShortCut(nKey, /* @ */ nID) CLASS hb_PopupMenu
 
       // Loop to wrap around through TopMenu from Current Item:
       FOR i := 1 TO nTotal
-         IF ( oItem := ::getItem(nItem) ):enabled .AND. oItem:isPopUp() .AND. oItem:data:isQuick(nKey, @nID)
+         IF (oItem := ::getItem(nItem)):enabled .AND. oItem:isPopUp() .AND. oItem:data:isQuick(nKey, @nID)
             RETURN .T.
          ENDIF
          IF ++nItem > nTotal
@@ -165,7 +165,7 @@ METHOD isQuick(nKey, /* @ */ nID) CLASS hb_PopupMenu
    LOCAL nShortCut
    LOCAL oItem
 
-   IF ( nShortCut := ::getShortCt(nKey) ) == 0
+   IF (nShortCut := ::getShortCt(nKey)) == 0
 
       FOR EACH oItem IN ::aItems
          IF oItem:Enabled .AND. oItem:isPopUp() .AND. oItem:data:isQuick(nKey, @nID)
@@ -173,7 +173,7 @@ METHOD isQuick(nKey, /* @ */ nID) CLASS hb_PopupMenu
          ENDIF
       NEXT
 
-   ELSEIF !( oItem := ::getItem(nShortCut) ):IsPopUp()
+   ELSEIF !(oItem := ::getItem(nShortCut)):IsPopUp()
 
       IF oItem:enabled
          ::select(nShortCut)

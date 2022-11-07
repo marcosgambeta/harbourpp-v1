@@ -160,9 +160,9 @@ METHOD ReadModal() CLASS HBGetList
    ::nReadProcLine := ProcLine(2)
 
 #ifdef HB_COMPAT_C53
-   ::nPos := ::Settle(hb_defaultValue( nPos, 0 ), .T.)
+   ::nPos := ::Settle(hb_defaultValue(nPos, 0), .T.)
 
-   IF ( lMsgFlag := HB_ISNUMERIC(nMsgRow) .AND. HB_ISNUMERIC(nMsgLeft) .AND. HB_ISNUMERIC(nMsgRight) )
+   IF (lMsgFlag := HB_ISNUMERIC(nMsgRow) .AND. HB_ISNUMERIC(nMsgLeft) .AND. HB_ISNUMERIC(nMsgRight))
 
       IF !HB_ISSTRING(cMsgColor)
          cMsgColor := GetClrPair(SetColor(), 1)
@@ -314,20 +314,20 @@ METHOD GetApplyKey(nKey, oGet, oMenu, aMsg) CLASS HBGetList
 
    hb_default(@oGet, ::oGet)
 
-   IF ( bKeyBlock := SetKey(nKey) ) != NIL
+   IF (bKeyBlock := SetKey(nKey)) != NIL
       IF ::GetDoSetKey(bKeyBlock, oGet)
          RETURN Self
       ENDIF
    ENDIF
 
 #ifdef HB_COMPAT_C53
-   IF ::aGetList != NIL .AND. ( nHotItem := ::Accelerator(nKey, aMsg) ) != 0
+   IF ::aGetList != NIL .AND. (nHotItem := ::Accelerator(nKey, aMsg)) != 0
 
       oGet:exitState := GE_SHORTCUT
       ::nNextGet := nHotItem
       ::nLastExitState := GE_SHORTCUT
    ELSEIF !HB_ISOBJECT(oMenu)
-   ELSEIF ( nHotItem := oMenu:getAccel(nKey) ) != 0
+   ELSEIF (nHotItem := oMenu:getAccel(nKey)) != 0
       ::nMenuID := MenuModal(oMenu, nHotItem, aMsg[MSGROW], aMsg[MSGLEFT], aMsg[MSGRIGHT], aMsg[MSGCOLOR])
       nKey := 0
    ELSEIF IsShortcut(oMenu, nKey)
@@ -399,13 +399,13 @@ METHOD GetApplyKey(nKey, oGet, oMenu, aMsg) CLASS HBGetList
          nButton := 0
       ELSEIF !oMenu:ClassName() == "TOPBARMENU"
          nButton := 0
-      ELSEIF ( nButton := oMenu:hitTest(nMRow, nMCol) ) != 0
+      ELSEIF (nButton := oMenu:hitTest(nMRow, nMCol)) != 0
          ::nMenuID := MenuModal(oMenu, nHotItem, aMsg[MSGROW], aMsg[MSGLEFT], aMsg[MSGRIGHT], aMsg[MSGCOLOR])
          nButton := 1
       ENDIF
 
       IF nButton != 0
-      ELSEIF ( nButton := oGet:hitTest(nMRow, nMCol) ) == HTCLIENT
+      ELSEIF (nButton := oGet:hitTest(nMRow, nMCol)) == HTCLIENT
 
          DO WHILE oGet:col + oGet:pos - 1 > nMCol
             oGet:left()
@@ -496,8 +496,8 @@ METHOD GetApplyKey(nKey, oGet, oMenu, aMsg) CLASS HBGetList
 
    OTHERWISE
 
-      IF !( cKey := hb_keyChar(nKey) ) == ""
-         IF oGet:type == "N" .AND. ( cKey == "." .OR. cKey == "," )
+      IF !(cKey := hb_keyChar(nKey)) == ""
+         IF oGet:type == "N" .AND. (cKey == "." .OR. cKey == ",")
             oGet:toDecPos()
          ELSE
             IF Set(_SET_INSERT)
@@ -801,7 +801,7 @@ METHOD DateMsg() CLASS HBGetList
 
       hb_DispOutAt(SCORE_ROW, SCORE_COL, __natMsg(_GET_INVD_DATE))
 
-      DO WHILE ( nKey := Inkey(0) ) == 0
+      DO WHILE (nKey := Inkey(0)) == 0
       ENDDO
       hb_keyIns(nKey)
 
@@ -921,17 +921,17 @@ METHOD GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg) CLASS HBGetList
    LOCAL cKey
 
    // Check for SET KEY first
-   IF ( bKeyBlock := SetKey(nKey) ) != NIL
+   IF (bKeyBlock := SetKey(nKey)) != NIL
       IF ::GetDoSetKey(bKeyBlock, oGet)
          RETURN Self
       ENDIF
    ENDIF
 
-   IF ( nHotItem := ::Accelerator(nKey, aMsg) ) != 0
+   IF (nHotItem := ::Accelerator(nKey, aMsg)) != 0
       oGet:exitState := GE_SHORTCUT
       ::nNextGet := nHotItem
    ELSEIF !HB_ISOBJECT(oMenu)
-   ELSEIF ( nHotItem := oMenu:getAccel(nKey) ) != 0
+   ELSEIF (nHotItem := oMenu:getAccel(nKey)) != 0
       ::nMenuID := MenuModal(oMenu, nHotItem, aMsg[MSGROW], aMsg[MSGLEFT], aMsg[MSGRIGHT], aMsg[MSGCOLOR])
       nKey := 0
    ELSEIF IsShortcut(oMenu, nKey)
@@ -939,7 +939,7 @@ METHOD GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg) CLASS HBGetList
    ENDIF
 
    IF nKey == 0
-   ELSEIF ( oTheClass := oGUI:ClassName() ) == "RADIOGROUP"
+   ELSEIF (oTheClass := oGUI:ClassName()) == "RADIOGROUP"
       IF nKey == K_UP
          oGUI:PrevItem()
          nKey := 0
@@ -948,7 +948,7 @@ METHOD GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg) CLASS HBGetList
          oGUI:NextItem()
          nKey := 0
 
-      ELSEIF ( nHotItem := oGUI:getAccel(nKey) ) != 0
+      ELSEIF (nHotItem := oGUI:getAccel(nKey)) != 0
          oGUI:Select(nHotItem)
 
       ENDIF
@@ -988,7 +988,7 @@ METHOD GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg) CLASS HBGetList
             nKey := 0
          ENDIF
 
-      ELSEIF !( ( cKey := hb_keyChar(nKey) ) == "" ) .AND. ( nButton := oGUI:FindText(cKey, oGUI:Value + 1, .F., .F.) ) != 0
+      ELSEIF !((cKey := hb_keyChar(nKey)) == "") .AND. (nButton := oGUI:FindText(cKey, oGUI:Value + 1, .F., .F.)) != 0
          oGUI:Select(nButton)
 
       ENDIF
@@ -1065,7 +1065,7 @@ METHOD GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg) CLASS HBGetList
          nButton := 0
       ELSEIF !oMenu:ClassName() == "TOPBARMENU"
          nButton := 0
-      ELSEIF ( nButton := oMenu:hitTest(nMRow, nMCol) ) != 0
+      ELSEIF (nButton := oMenu:hitTest(nMRow, nMCol)) != 0
          ::nMenuID := MenuModal(oMenu, nHotItem, aMsg[MSGROW], aMsg[MSGLEFT], aMsg[MSGRIGHT], aMsg[MSGCOLOR])
          nButton := 1
       ENDIF
@@ -1073,7 +1073,7 @@ METHOD GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg) CLASS HBGetList
       lClose := .T.
 
       IF nButton != 0
-      ELSEIF ( nButton := oGUI:hitTest(nMRow, nMCol) ) == HTNOWHERE
+      ELSEIF (nButton := oGUI:hitTest(nMRow, nMCol)) == HTNOWHERE
          IF ::HitTest(nMRow, nMCol, aMsg) != 0
             oGet:exitState := GE_MOUSEHIT
             ::nLastExitState := GE_MOUSEHIT
@@ -1214,17 +1214,17 @@ METHOD TBApplyKey(oGet, oTB, nKey, oMenu, aMsg) CLASS HBGetList
    LOCAL nHotItem
 
    // Check for SET KEY first
-   IF ( bKeyBlock := SetKey(nKey) ) != NIL
+   IF (bKeyBlock := SetKey(nKey)) != NIL
       IF ::GetDoSetKey(bKeyBlock, oGet)
          RETURN Self
       ENDIF
    ENDIF
 
-   IF ( nHotItem := ::Accelerator(nKey, aMsg) ) != 0
+   IF (nHotItem := ::Accelerator(nKey, aMsg)) != 0
       oGet:exitState := GE_SHORTCUT
       ::nNextGet := nHotItem
    ELSEIF !HB_ISOBJECT(oMenu)
-   ELSEIF ( nHotItem := oMenu:getAccel(nKey) ) != 0
+   ELSEIF (nHotItem := oMenu:getAccel(nKey)) != 0
       ::nMenuID := MenuModal(oMenu, nHotItem, aMsg[MSGROW], aMsg[MSGLEFT], aMsg[MSGRIGHT], aMsg[MSGCOLOR])
       nKey := 0
    ELSEIF IsShortcut(oMenu, nKey)
@@ -1281,7 +1281,7 @@ METHOD TBApplyKey(oGet, oTB, nKey, oMenu, aMsg) CLASS HBGetList
          nButton := 0
       ELSEIF !oMenu:ClassName() == "TOPBARMENU"
          nButton := 0
-      ELSEIF ( nButton := oMenu:hitTest(nMRow, nMCol) ) != 0
+      ELSEIF (nButton := oMenu:hitTest(nMRow, nMCol)) != 0
          ::nMenuID := MenuModal(oMenu, nHotItem, aMsg[MSGROW], aMsg[MSGLEFT], aMsg[MSGRIGHT], aMsg[MSGCOLOR])
          nButton := 1
       ENDIF
@@ -1421,7 +1421,7 @@ METHOD Accelerator(nKey, aMsg) CLASS HBGetList
             cCaption := oGet:caption
          ENDIF
 
-         IF ( nHotPos := At("&", cCaption) ) == 0
+         IF (nHotPos := At("&", cCaption)) == 0
          ELSEIF nHotPos == Len(cCaption)
          ELSEIF Lower(SubStr(cCaption, nHotPos + 1, 1)) == cKey
 
@@ -1467,7 +1467,7 @@ METHOD HitTest(nMRow, nMCol, aMsg) CLASS HBGetList
    ::nNextGet := 0
 
    FOR EACH oGet IN ::aGetList
-      IF ( ::nHitCode := oGet:hitTest(nMRow, nMCol) ) != HTNOWHERE
+      IF (::nHitCode := oGet:hitTest(nMRow, nMCol)) != HTNOWHERE
          ::nNextGet := oGet:__enumIndex()
          EXIT
       ENDIF

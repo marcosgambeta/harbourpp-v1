@@ -289,7 +289,7 @@ METHOD offset(nOffset) CLASS ScrollBar
 
 METHOD orient(nOrient) CLASS ScrollBar
 
-   IF HB_ISNUMERIC(nOrient) .AND. ( nOrient == SCROLL_VERTICAL .OR. nOrient == SCROLL_HORIZONTAL )
+   IF HB_ISNUMERIC(nOrient) .AND. (nOrient == SCROLL_VERTICAL .OR. nOrient == SCROLL_HORIZONTAL)
 
       ::nOrient := nOrient
    ENDIF
@@ -338,7 +338,7 @@ METHOD thumbPos(nThumbPos) CLASS ScrollBar
          ::nThumbPos := nThumbPos
       ENDCASE
 
-      ::lOverride := ( nThumbPos != 0 )
+      ::lOverride := (nThumbPos != 0)
    ENDIF
 
    RETURN ::nThumbPos
@@ -362,7 +362,7 @@ METHOD CalcThumbPos() CLASS ScrollBar
    ENDIF
 
    IF !::lOverride
-      ::nThumbPos := Min(Max(Round(::nCurrent * ( ( nBarLength - 1 ) / nTotal ) + 1, 0), 1), nBarLength)
+      ::nThumbPos := Min(Max(Round(::nCurrent * ((nBarLength - 1) / nTotal) + 1, 0), 1), nBarLength)
    ENDIF
 
    RETURN .T.
@@ -388,7 +388,7 @@ METHOD New(nStart, nEnd, nOffset, bSBlock, nOrient) CLASS ScrollBar
       !HB_ISNUMERIC(nOffset) .OR. ;
       !ValType(bSBlock) $ "BU" .OR. ;
       !HB_ISNUMERIC(nOrient) .OR. ;
-      ( nOrient != SCROLL_VERTICAL .AND. nOrient != SCROLL_HORIZONTAL )
+      (nOrient != SCROLL_VERTICAL .AND. nOrient != SCROLL_HORIZONTAL)
       RETURN NIL
    ENDIF
 

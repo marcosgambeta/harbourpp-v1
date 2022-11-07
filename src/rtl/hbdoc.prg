@@ -82,7 +82,7 @@ FUNCTION __hbdoc_DirLastModified(cDir)
       IF hb_DirExists(cDir + _HBDOC_SRC_SUBDIR)
 
          FOR EACH aFile IN Directory(cDir + _HBDOC_SRC_SUBDIR + hb_ps() + hb_osFileMask(), "D")
-            IF "D" $ aFile[F_ATTR] .AND. !( aFile[F_NAME] == "." ) .AND. !( aFile[F_NAME] == ".." )
+            IF "D" $ aFile[F_ATTR] .AND. !(aFile[F_NAME] == ".") .AND. !(aFile[F_NAME] == "..")
 
                cDocDir := cDir + _HBDOC_SRC_SUBDIR + hb_ps() + aFile[F_NAME]
 
@@ -120,7 +120,7 @@ FUNCTION __hbdoc_LoadDir(cDir, cName, aErrMsg)
 
          nCount := 0
          FOR EACH aFile IN Directory(cDir + _HBDOC_SRC_SUBDIR + hb_ps() + hb_osFileMask(), "D")
-            IF "D" $ aFile[F_ATTR] .AND. !( aFile[F_NAME] == "." ) .AND. !( aFile[F_NAME] == ".." )
+            IF "D" $ aFile[F_ATTR] .AND. !(aFile[F_NAME] == ".") .AND. !(aFile[F_NAME] == "..")
 
                __hbdoc__read_langdir(aEntry, cDir + _HBDOC_SRC_SUBDIR + hb_ps() + aFile[F_NAME], hMeta, aErrMsg)
                ++nCount
@@ -354,7 +354,7 @@ FUNCTION __hbdoc_SaveHBD(cFileName, aEntry)
          cFileName := hb_FNameExtSetDef(cFileName, _HBDOC_EXT)
       ENDIF
 
-      IF ( fhnd := hb_FCreate(cFileName, NIL, FO_CREAT + FO_TRUNC + FO_READWRITE + FO_EXCLUSIVE) ) != F_ERROR
+      IF (fhnd := hb_FCreate(cFileName, NIL, FO_CREAT + FO_TRUNC + FO_READWRITE + FO_EXCLUSIVE)) != F_ERROR
          FWrite(fhnd, _HBDOC_SIGNATURE)
          FWrite(fhnd, hb_Serialize(aEntry, HB_SERIALIZE_COMPRESS))
          FClose(fhnd)
@@ -377,7 +377,7 @@ FUNCTION __hbdoc_LoadHBD(cFileName)
          cFileName := hb_FNameExtSetDef(cFileName, _HBDOC_EXT)
       ENDIF
 
-      IF ( fhnd := FOpen(cFileName) ) != F_ERROR
+      IF (fhnd := FOpen(cFileName)) != F_ERROR
 
          IF hb_FReadLen(fhnd, _HBDOC_SIG_LEN) == _HBDOC_SIGNATURE
 

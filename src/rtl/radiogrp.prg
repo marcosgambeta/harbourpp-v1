@@ -179,7 +179,7 @@ METHOD display() CLASS RadioGroup
 
    IF !Empty(cCaption := ::cCaption)
 
-      IF ( nPos := At("&", cCaption) ) > 0
+      IF (nPos := At("&", cCaption)) > 0
          IF nPos == Len(cCaption)
             nPos := 0
          ELSE
@@ -265,7 +265,7 @@ METHOD hitTest(nMRow, nMCol) CLASS RadioGroup
 
    nLen := Len(::cCaption)
 
-   IF ( nPos := At("&", ::cCaption) ) > 0 .AND. nPos < nLen
+   IF (nPos := At("&", ::cCaption)) > 0 .AND. nPos < nLen
       nLen--
    ENDIF
 
@@ -630,11 +630,11 @@ METHOD New(nTop, nLeft, nBottom, nRight) CLASS RadioGroup
 FUNCTION RadioGroup(nTop, nLeft, nBottom, nRight)
    RETURN HBRadioGroup():New(nTop, nLeft, nBottom, nRight)
 
-FUNCTION _RadioGrp_( nTop, nLeft, nBottom, nRight, xValue, aItems, cCaption, cMessage, cColorSpec, bFBlock )
+FUNCTION _RadioGrp_(nTop, nLeft, nBottom, nRight, xValue, aItems, cCaption, cMessage, cColorSpec, bFBlock)
 
    LOCAL o
 
-   IF ( o := RadioGroup(nTop, nLeft, nBottom, nRight) ) != NIL
+   IF (o := RadioGroup(nTop, nLeft, nBottom, nRight)) != NIL
 
       o:caption := cCaption
       o:message := cMessage
