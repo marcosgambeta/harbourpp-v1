@@ -29,23 +29,22 @@ mxml-set.c
 mxml-string.c
 
 # ORIGIN http://www.minixml.org
-# VER    2.12
-# URL    https://github.com/michaelrsweet/mxml/releases/tag/v2.12
+# VER    3.3.1
+# URL    https://github.com/michaelrsweet/mxml/releases/tag/v3.3.1
 # DIFF   mxml.diff (not used - using original files)
 #
-# MAP    COPYING
+# MAP    LICENSE
+# MAP    NOTICE
 # MAP    config.h.in     config.h
-# MAP    mxml-attr.c     mxml-attr.c
-# MAP    mxml-entity.c   mxml-entity.c
-# MAP    mxml-file.c     mxml-file.c
-# MAP    mxml-get.c      mxml-get.c
-# MAP    mxml-index.c    mxml-index.c
-# MAP    mxml-node.c     mxml-node.c
-# MAP    mxml-private.c  mxml-private.c
-# MAP    mxml-private.h  mxml-private.h
-# MAP    mxml-search.c   mxml-search.c
-# MAP    mxml-set.c      mxml-set.c
-# MAP    mxml-string.c   mxml-string.c
-# MAP    mxml.h          mxml.h
-
-# TODO: update to v3
+# MAP    mxml-attr.c
+# MAP    mxml-entity.c
+# MAP    mxml-file.c
+# MAP    mxml-get.c
+# MAP    mxml-index.c
+# MAP    mxml-node.c
+# MAP    mxml-private.c
+# MAP    mxml-private.h
+# MAP    mxml-search.c
+# MAP    mxml-set.c
+# MAP    mxml-string.c
+# MAP    mxml.h
