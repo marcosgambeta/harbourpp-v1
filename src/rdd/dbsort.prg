@@ -47,8 +47,7 @@
 /* NOTE: Compared to CA-Cl*pper, Harbour has three extra parameters
          (cRDD, nConnection, cCodePage). */
 
-FUNCTION __dbSort( cToFileName, aFields, bFor, bWhile, nNext, nRecord, lRest, ;
-                   cRDD, nConnection, cCodePage )
+FUNCTION __dbSort(cToFileName, aFields, bFor, bWhile, nNext, nRecord, lRest, cRDD, nConnection, cCodePage)
 
    LOCAL nOldArea
    LOCAL nToArea
@@ -57,7 +56,7 @@ FUNCTION __dbSort( cToFileName, aFields, bFor, bWhile, nNext, nRecord, lRest, ;
    LOCAL oError
    LOCAL lError := .F.
 
-   IF Empty( aStruct := dbStruct() )
+   IF Empty(aStruct := dbStruct())
       RETURN .F.
    ENDIF
 
@@ -65,24 +64,24 @@ FUNCTION __dbSort( cToFileName, aFields, bFor, bWhile, nNext, nRecord, lRest, ;
 
    BEGIN SEQUENCE
 
-      dbCreate( cToFileName, aStruct, cRDD, .T., "", , cCodePage, nConnection )
+      dbCreate(cToFileName, aStruct, cRDD, .T., "", NIL, cCodePage, nConnection)
       nToArea := Select()
-      dbSelectArea( nOldArea )
-      __dbArrange( nToArea, aStruct, bFor, bWhile, nNext, nRecord, lRest, aFields )
+      dbSelectArea(nOldArea)
+      __dbArrange(nToArea, aStruct, bFor, bWhile, nNext, nRecord, lRest, aFields)
 
    RECOVER USING oError
       lError := .T.
    END SEQUENCE
 
    IF nToArea != NIL
-      dbSelectArea( nToArea )
+      dbSelectArea(nToArea)
       dbCloseArea()
    ENDIF
 
-   dbSelectArea( nOldArea )
+   dbSelectArea(nOldArea)
 
    IF lError
-      Break( oError )
+      Break(oError)
    ENDIF
 
    RETURN .T.

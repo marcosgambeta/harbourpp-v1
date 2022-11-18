@@ -81,68 +81,65 @@ CREATE CLASS HBDbWindow // Debugger windows and dialogs
    VAR Cargo
    VAR Browser
 
-   METHOD New( nTop, nLeft, nBottom, nRight, cCaption, cColor )
+   METHOD New(nTop, nLeft, nBottom, nRight, cCaption, cColor)
 
    METHOD Hide()
-   METHOD IsOver( nRow, nCol )
+   METHOD IsOver(nRow, nCol)
    METHOD nWidth() INLINE ::nRight - ::nLeft + 1
    METHOD Clear()
-   METHOD ScrollUp( nLines )
-   METHOD SetCaption( cCaption )
+   METHOD ScrollUp(nLines)
+   METHOD SetCaption(cCaption)
    METHOD ShowCaption()
-   METHOD SetFocus( lOnOff )
-   METHOD Show( lFocused )
+   METHOD SetFocus(lOnOff)
+   METHOD Show(lFocused)
    METHOD ShowModal()
-   METHOD LButtonDown( nMRow, nMCol )
-   METHOD LDblClick( nMRow, nMCol )
+   METHOD LButtonDown(nMRow, nMCol)
+   METHOD LDblClick(nMRow, nMCol)
    METHOD LoadColors()
 
    METHOD Move()
-   METHOD KeyPressed( nKey )
+   METHOD KeyPressed(nKey)
    METHOD Refresh()
-   METHOD Resize( nTop, nLeft, nBottom, nRight )
+   METHOD Resize(nTop, nLeft, nBottom, nRight)
 
 ENDCLASS
 
-METHOD New( nTop, nLeft, nBottom, nRight, cCaption, cColor ) CLASS HBDbWindow
+METHOD New(nTop, nLeft, nBottom, nRight, cCaption, cColor) CLASS HBDbWindow
 
    ::nTop     := nTop
    ::nLeft    := nLeft
    ::nBottom  := nBottom
    ::nRight   := nRight
    ::cCaption := cCaption
-   ::cColor   := hb_defaultValue( cColor, __dbgColors()[ 1 ] )
+   ::cColor   := hb_defaultValue(cColor, __dbgColors()[1])
 
    RETURN Self
 
 METHOD PROCEDURE Clear() CLASS HBDbWindow
 
-   hb_Scroll( ::nTop + 1, ::nLeft + 1, ::nBottom - 1, ::nRight - 1,,, ::cColor )
+   hb_Scroll(::nTop + 1, ::nLeft + 1, ::nBottom - 1, ::nRight - 1, NIL, NIL, ::cColor)
 
    RETURN
 
 METHOD PROCEDURE Hide() CLASS HBDbWindow
 
-   __dbgRestScreen( ::nTop, ::nLeft, ::nBottom + iif( ::lShadow, 1, 0 ), ;
-                    ::nRight + iif( ::lShadow, 2, 0 ), ::cBackImage )
+   __dbgRestScreen(::nTop, ::nLeft, ::nBottom + iif(::lShadow, 1, 0), ::nRight + iif(::lShadow, 2, 0), ::cBackImage)
    ::cBackImage := NIL
    ::lVisible := .F.
 
    RETURN
 
-METHOD IsOver( nRow, nCol ) CLASS HBDbWindow
+METHOD IsOver(nRow, nCol) CLASS HBDbWindow
 
-   RETURN ;
-      nRow >= ::nTop .AND. nRow <= ::nBottom .AND. ;
-      nCol >= ::nLeft .AND. nCol <= ::nRight
+   RETURN nRow >= ::nTop .AND. nRow <= ::nBottom .AND. nCol >= ::nLeft .AND. nCol <= ::nRight
 
-METHOD PROCEDURE ScrollUp( nLines ) CLASS HBDbWindow
+METHOD PROCEDURE ScrollUp(nLines) CLASS HBDbWindow
 
-   hb_Scroll( ::nTop + 1, ::nLeft + 1, ::nBottom - 1, ::nRight - 1, hb_defaultValue( nLines, 1 ),, ::cColor )
+   hb_Scroll(::nTop + 1, ::nLeft + 1, ::nBottom - 1, ::nRight - 1, hb_defaultValue(nLines, 1), NIL, ::cColor)
 
    RETURN
 
-METHOD PROCEDURE SetCaption( cCaption ) CLASS HBDbWindow
+METHOD PROCEDURE SetCaption(cCaption) CLASS HBDbWindow
 
    ::cCaption := cCaption
 
@@ -150,24 +147,22 @@ METHOD PROCEDURE SetCaption( cCaption ) CLASS HBDbWindow
 
 METHOD PROCEDURE ShowCaption() CLASS HBDbWindow
 
-   IF ! Empty( ::cCaption )
-      hb_DispOutAt( ::nTop, ::nLeft + ( ( ::nRight - ::nLeft ) / 2 ) - ;
-         ( ( Len( ::cCaption ) + 2 ) / 2 ), ;
-         " " + ::cCaption + " ", ::cColor )
+   IF !Empty(::cCaption)
+      hb_DispOutAt(::nTop, ::nLeft + ((::nRight - ::nLeft) / 2) - ((Len(::cCaption) + 2) / 2), " " + ::cCaption + " ", ::cColor)
    ENDIF
 
    RETURN
 
-METHOD PROCEDURE SetFocus( lOnOff ) CLASS HBDbWindow
+METHOD PROCEDURE SetFocus(lOnOff) CLASS HBDbWindow
 
-   IF ! lOnOff .AND. HB_ISEVALITEM( ::bLostFocus )
-      Eval( ::bLostFocus, Self )
+   IF !lOnOff .AND. HB_ISEVALITEM(::bLostFocus)
+      Eval(::bLostFocus, Self)
    ENDIF
 
    ::lFocused := lOnOff
 
-   IF lOnOff .AND. HB_ISEVALITEM( ::bGotFocus )
-      Eval( ::bGotFocus, Self )
+   IF lOnOff .AND. HB_ISEVALITEM(::bGotFocus)
+      Eval(::bGotFocus, Self)
    ENDIF
 
    RETURN
@@ -176,29 +171,27 @@ METHOD PROCEDURE Refresh() CLASS HBDbWindow
 
    DispBegin()
 
-   hb_DispBox( ::nTop, ::nLeft, ::nBottom, ::nRight, iif( ::lFocused, HB_B_DOUBLE_UNI, HB_B_SINGLE_UNI ), ::cColor )
-   hb_DispOutAtBox( ::nTop, ::nLeft + 1, hb_UTF8ToStrBox( "[■]" ), ::cColor )
+   hb_DispBox(::nTop, ::nLeft, ::nBottom, ::nRight, iif(::lFocused, HB_B_DOUBLE_UNI, HB_B_SINGLE_UNI), ::cColor)
+   hb_DispOutAtBox(::nTop, ::nLeft + 1, hb_UTF8ToStrBox("[■]"), ::cColor)
 
-   ::ShowCaption( ::cCaption )
+   ::ShowCaption(::cCaption)
 
-   IF HB_ISEVALITEM( ::bPainted )
-      Eval( ::bPainted, Self )
+   IF HB_ISEVALITEM(::bPainted)
+      Eval(::bPainted, Self)
    ENDIF
 
    DispEnd()
 
    RETURN
 
-METHOD PROCEDURE Show( lFocused ) CLASS HBDbWindow
+METHOD PROCEDURE Show(lFocused) CLASS HBDbWindow
 
-   ::cBackImage := __dbgSaveScreen( ::nTop, ::nLeft, ;
-                                    ::nBottom + iif( ::lShadow, 1, 0 ), ;
-                                    ::nRight + iif( ::lShadow, 2, 0 ) )
-   hb_Scroll( ::nTop, ::nLeft, ::nBottom, ::nRight,,, ::cColor )
-   ::SetFocus( hb_defaultValue( lFocused, ::lFocused ) )
+   ::cBackImage := __dbgSaveScreen(::nTop, ::nLeft, ::nBottom + iif(::lShadow, 1, 0), ::nRight + iif(::lShadow, 2, 0))
+   hb_Scroll(::nTop, ::nLeft, ::nBottom, ::nRight, NIL, NIL, ::cColor)
+   ::SetFocus(hb_defaultValue(lFocused, ::lFocused))
 
    IF ::lShadow
-      hb_Shadow( ::nTop, ::nLeft, ::nBottom, ::nRight )
+      hb_Shadow(::nTop, ::nLeft, ::nBottom, ::nRight)
    ENDIF
 
    ::Refresh()
@@ -214,11 +207,11 @@ METHOD PROCEDURE ShowModal() CLASS HBDbWindow
    ::lShadow := .T.
    ::Show()
 
-   DO WHILE ! lExit
+   DO WHILE !lExit
       nKey := __dbgInkey()
 
-      IF HB_ISEVALITEM( ::bKeyPressed )
-         Eval( ::bKeyPressed, nKey )
+      IF HB_ISEVALITEM(::bKeyPressed)
+         Eval(::bKeyPressed, nKey)
       ENDIF
 
       SWITCH nKey
@@ -240,18 +233,18 @@ METHOD PROCEDURE ShowModal() CLASS HBDbWindow
 
    RETURN
 
-METHOD PROCEDURE LButtonDown( nMRow, nMCol ) CLASS HBDbWindow
+METHOD PROCEDURE LButtonDown(nMRow, nMCol) CLASS HBDbWindow
 
-   IF HB_ISEVALITEM( ::bLButtonDown )
-      Eval( ::bLButtonDown, nMRow, nMCol )
+   IF HB_ISEVALITEM(::bLButtonDown)
+      Eval(::bLButtonDown, nMRow, nMCol)
    ENDIF
 
    RETURN
 
-METHOD PROCEDURE LDblClick( nMRow, nMCol ) CLASS HBDbWindow
+METHOD PROCEDURE LDblClick(nMRow, nMCol) CLASS HBDbWindow
 
-   IF HB_ISEVALITEM( ::bLDblClick )
-      Eval( ::bLDblClick, nMRow, nMCol )
+   IF HB_ISEVALITEM(::bLDblClick)
+      Eval(::bLDblClick, nMRow, nMCol)
    ENDIF
 
    RETURN
@@ -265,8 +258,8 @@ METHOD PROCEDURE Move() CLASS HBDbWindow
    LOCAL nKey
 
    DO WHILE .T.
-      __dbgRestScreen( ,,,, ::cBackImage )
-      hb_DispBox( ::nTop, ::nLeft, ::nRight, ::nBottom, Replicate( hb_UTF8ToStrBox( "░" ), 8 ) + " ", ::cColor )
+      __dbgRestScreen(NIL, NIL, NIL, NIL, ::cBackImage)
+      hb_DispBox(::nTop, ::nLeft, ::nRight, ::nBottom, Replicate(hb_UTF8ToStrBox("░"), 8) + " ", ::cColor)
 
       SWITCH nKey := __dbgInkey()
       CASE K_UP
@@ -317,15 +310,15 @@ METHOD PROCEDURE Move() CLASS HBDbWindow
    ENDDO
 
 #if 0
-   hb_keySetLast( 0 )
+   hb_keySetLast(0)
 #endif
 
    RETURN
 
-METHOD PROCEDURE KeyPressed( nKey ) CLASS HBDbWindow
+METHOD PROCEDURE KeyPressed(nKey) CLASS HBDbWindow
 
-   IF HB_ISEVALITEM( ::bKeyPressed )
-      Eval( ::bKeyPressed, nKey, Self )
+   IF HB_ISEVALITEM(::bKeyPressed)
+      Eval(::bKeyPressed, nKey, Self)
    ENDIF
 
    RETURN
@@ -334,48 +327,48 @@ METHOD PROCEDURE LoadColors() CLASS HBDbWindow
 
    LOCAL aClr := __dbgColors()
 
-   ::cColor := aClr[ 1 ]
+   ::cColor := aClr[1]
 
    IF ::Browser != NIL
-      ::Browser:ColorSpec := aClr[ 2 ] + "," + aClr[ 5 ] + "," + aClr[ 3 ] + "," + aClr[ 6 ]
+      ::Browser:ColorSpec := aClr[2] + "," + aClr[5] + "," + aClr[3] + "," + aClr[6]
    ENDIF
 
    RETURN
 
-METHOD Resize( nTop, nLeft, nBottom, nRight ) CLASS HBDbWindow
+METHOD Resize(nTop, nLeft, nBottom, nRight) CLASS HBDbWindow
 
    LOCAL lShow
 
-   IF ( ! HB_ISNUMERIC( nTop ) .OR. nTop == ::nTop ) .AND. ;
-      ( ! HB_ISNUMERIC( nLeft ) .OR. nLeft == ::nLeft ) .AND. ;
-      ( ! HB_ISNUMERIC( nBottom ) .OR. nBottom == ::nBottom ) .AND. ;
-      ( ! HB_ISNUMERIC( nRight ) .OR. nRight == ::nRight )
+   IF (!HB_ISNUMERIC(nTop) .OR. nTop == ::nTop) .AND. ;
+      (!HB_ISNUMERIC(nLeft) .OR. nLeft == ::nLeft) .AND. ;
+      (!HB_ISNUMERIC(nBottom) .OR. nBottom == ::nBottom) .AND. ;
+      (!HB_ISNUMERIC(nRight) .OR. nRight == ::nRight)
       RETURN Self
    ENDIF
 
-   IF ( lShow := ::lVisible )
+   IF (lShow := ::lVisible)
       ::Hide()
    ENDIF
 
-   IF HB_ISNUMERIC( nTop )
+   IF HB_ISNUMERIC(nTop)
       ::nTop := nTop
    ENDIF
-   IF HB_ISNUMERIC( nBottom )
+   IF HB_ISNUMERIC(nBottom)
       ::nBottom := nBottom
    ENDIF
-   IF HB_ISNUMERIC( nLeft )
+   IF HB_ISNUMERIC(nLeft)
       ::nLeft := nLeft
    ENDIF
-   IF HB_ISNUMERIC( nRight )
+   IF HB_ISNUMERIC(nRight)
       ::nRight := nRight
    ENDIF
 
    IF ::Browser != NIL
-      ::Browser:Resize( ::nTop + 1, ::nLeft + 1, ::nBottom - 1, ::nRight - 1 )
+      ::Browser:Resize(::nTop + 1, ::nLeft + 1, ::nBottom - 1, ::nRight - 1)
    ENDIF
 
    IF lShow
-      ::Show( ::lFocused )
+      ::Show(::lFocused)
    ENDIF
 
    RETURN Self

@@ -63,35 +63,33 @@ CREATE CLASS HBDbMenuItem
    VAR Ident
 
    ACCESS Checked()           INLINE ::lChecked
-   ASSIGN Checked( lChecked ) INLINE ::lChecked := lChecked
+   ASSIGN Checked(lChecked) INLINE ::lChecked := lChecked
 
-   METHOD New( cPrompt, bAction, lChecked, xIdent )
-   METHOD Display( cClrText, cClrHotKey )
-   METHOD Toggle() INLINE ::lChecked := ! ::lChecked
+   METHOD New(cPrompt, bAction, lChecked, xIdent)
+   METHOD Display(cClrText, cClrHotKey)
+   METHOD Toggle() INLINE ::lChecked := !::lChecked
 
 ENDCLASS
 
-METHOD New( cPrompt, bAction, lChecked, xIdent ) CLASS HBDbMenuItem
+METHOD New(cPrompt, bAction, lChecked, xIdent) CLASS HBDbMenuItem
 
    ::cPrompt  := cPrompt
    ::bAction  := bAction
-   ::lChecked := hb_defaultValue( lChecked, .F. )
+   ::lChecked := hb_defaultValue(lChecked, .F.)
    ::Ident    := xIdent
 
    RETURN Self
 
-METHOD Display( cClrText, cClrHotKey ) CLASS HBDbMenuItem
+METHOD Display(cClrText, cClrHotKey) CLASS HBDbMenuItem
 
    LOCAL nAt
 
-   hb_DispOutAt( ::nRow, ::nCol, StrTran( ::cPrompt, "~" ), cClrText )
+   hb_DispOutAt(::nRow, ::nCol, StrTran(::cPrompt, "~"), cClrText)
 
-   hb_DispOutAt( ::nRow, ::nCol + ;
-      ( nAt := At( "~", ::cPrompt ) ) - 1, ;
-      SubStr( ::cPrompt, nAt + 1, 1 ), cClrHotKey )
+   hb_DispOutAt(::nRow, ::nCol + (nAt := At("~", ::cPrompt)) - 1, SubStr(::cPrompt, nAt + 1, 1), cClrHotKey)
 
    IF ::lChecked
-      hb_DispOutAtBox( ::nRow, ::nCol, hb_UTF8ToStrBox( "√" ), cClrText )
+      hb_DispOutAtBox(::nRow, ::nCol, hb_UTF8ToStrBox("√"), cClrText)
    ENDIF
 
    RETURN Self

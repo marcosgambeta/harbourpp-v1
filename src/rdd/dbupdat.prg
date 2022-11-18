@@ -44,7 +44,7 @@
  *
  */
 
-FUNCTION __dbUpdate( cAlias, bKey, lRandom, bAssign )
+FUNCTION __dbUpdate(cAlias, bKey, lRandom, bAssign)
 
    LOCAL nOldArea := Select()
    LOCAL xKey
@@ -52,34 +52,34 @@ FUNCTION __dbUpdate( cAlias, bKey, lRandom, bAssign )
    LOCAL oError
    LOCAL lError := .F.
 
-   __defaultNIL( @lRandom, .F. )
+   __defaultNIL(@lRandom, .F.)
 
    dbGoTop()
 
    BEGIN SEQUENCE
 
-      dbSelectArea( cAlias )
+      dbSelectArea(cAlias)
       dbGoTop()
-      DO WHILE ! Eof()
+      DO WHILE !Eof()
 
-         xKey := Eval( bKey )
+         xKey := Eval(bKey)
 
-         dbSelectArea( nOldArea )
+         dbSelectArea(nOldArea)
          IF lRandom
-            IF dbSeek( xKey )
-               Eval( bAssign )
+            IF dbSeek(xKey)
+               Eval(bAssign)
             ENDIF
          ELSE
-            DO WHILE Eval( bKey ) < xKey .AND. ! Eof()
+            DO WHILE Eval(bKey) < xKey .AND. !Eof()
                dbSkip()
             ENDDO
 
-            IF Eval( bKey ) == xKey .AND. ! Eof()
-               Eval( bAssign )
+            IF Eval(bKey) == xKey .AND. !Eof()
+               Eval(bAssign)
             ENDIF
          ENDIF
 
-         dbSelectArea( cAlias )
+         dbSelectArea(cAlias)
          dbSkip()
       ENDDO
 
@@ -87,10 +87,10 @@ FUNCTION __dbUpdate( cAlias, bKey, lRandom, bAssign )
       lError := .T.
    END SEQUENCE
 
-   dbSelectArea( nOldArea )
+   dbSelectArea(nOldArea)
 
    IF lError
-      Break( oError )
+      Break(oError)
    ENDIF
 
    RETURN .T.

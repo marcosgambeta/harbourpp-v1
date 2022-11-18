@@ -75,25 +75,25 @@ CREATE CLASS HBBrwText
    VAR nWidth
    VAR nHeight
 
-   METHOD New( nTop, nLeft, nBottom, nRight, cFileName, cColors, lLineNumbers )
+   METHOD New(nTop, nLeft, nBottom, nRight, cFileName, cColors, lLineNumbers)
 
    METHOD RefreshAll() INLINE ::oBrw:ForceStable():RefreshAll(), Self
    METHOD ForceStable() INLINE ::oBrw:ForceStable(), Self
    METHOD RefreshCurrent() INLINE ::oBrw:RefreshCurrent(), Self
-   METHOD GotoLine( n )
-   METHOD SetActiveLine( n )
+   METHOD GotoLine(n)
+   METHOD SetActiveLine(n)
    METHOD GetLine()
    METHOD GetLineText()
    METHOD GetLineColor()
-   METHOD Search( cString, lCaseSensitive, nMode )
+   METHOD Search(cString, lCaseSensitive, nMode)
 
    METHOD GoFirst()
    METHOD GoLast()
-   METHOD Skip( n )
+   METHOD Skip(n)
    METHOD GoNext()
    METHOD GoPrev()
 
-   METHOD Resize( nTop, nLeft, nBottom, nRight )
+   METHOD Resize(nTop, nLeft, nBottom, nRight)
 
    METHOD Up() INLINE ::oBrw:Up():ForceStable(), Self
    METHOD Down() INLINE ::oBrw:Down():ForceStable(), Self
@@ -102,21 +102,21 @@ CREATE CLASS HBBrwText
    METHOD GoTop() INLINE ::oBrw:GoTop():ForceStable(), Self
    METHOD GoBottom() INLINE ::oBrw:GoBottom():ForceStable(), Self
 
-   METHOD Home() INLINE iif( ::nLineOffset > 1, ( ::nLineOffset := 1, ::oBrw:RefreshAll():ForceStable() ), ), Self
-   METHOD End() INLINE ::nLineOffset := Max( 1, ::nMaxLineLen - ( ::nWidth - iif( ::lLineNumbers, ::nLineNoLen, 0 ) ) + 1 ), ::oBrw:RefreshAll():ForceStable(), Self
+   METHOD Home() INLINE iif(::nLineOffset > 1, (::nLineOffset := 1, ::oBrw:RefreshAll():ForceStable()), NIL), Self
+   METHOD End() INLINE ::nLineOffset := Max(1, ::nMaxLineLen - (::nWidth - iif(::lLineNumbers, ::nLineNoLen, 0)) + 1), ::oBrw:RefreshAll():ForceStable(), Self
 
-   METHOD Right() INLINE iif( ::nLineOffset < ::nMaxLineLen + iif( ::lLineNumbers, ::nLineNoLen, 0 ), ( ::nLineOffset++, ::oBrw:RefreshAll():ForceStable() ), ), Self
-   METHOD Left() INLINE iif( ::nLineOffset > 1, ( ::nLineOffset--, ::oBrw:RefreshAll():ForceStable() ), ), Self
+   METHOD Right() INLINE iif(::nLineOffset < ::nMaxLineLen + iif(::lLineNumbers, ::nLineNoLen, 0), (::nLineOffset++, ::oBrw:RefreshAll():ForceStable()), NIL), Self
+   METHOD Left() INLINE iif(::nLineOffset > 1, (::nLineOffset--, ::oBrw:RefreshAll():ForceStable()), NIL), Self
 
    METHOD RowPos() INLINE ::nRow
 
-   METHOD LoadFile( cFileName )
+   METHOD LoadFile(cFileName)
 
    VAR colorSpec IS colorSpec IN oBrw
 
 ENDCLASS
 
-METHOD New( nTop, nLeft, nBottom, nRight, cFileName, cColors, lLineNumbers ) CLASS HBBrwText
+METHOD New(nTop, nLeft, nBottom, nRight, cFileName, cColors, lLineNumbers) CLASS HBBrwText
 
    LOCAL oCol
 
@@ -130,34 +130,34 @@ METHOD New( nTop, nLeft, nBottom, nRight, cFileName, cColors, lLineNumbers ) CLA
 
    ::lLineNumbers := lLineNumbers
 
-   ::oBrw := HBDbBrowser():New( ::nTop, ::nLeft, ::nBottom, ::nRight )
+   ::oBrw := HBDbBrowser():New(::nTop, ::nLeft, ::nBottom, ::nRight)
 
    ::oBrw:colorSpec := cColors
 
-   oCol := HBDbColumnNew( "", {|| ::GetLineText() } )
+   oCol := HBDbColumnNew("", {|| ::GetLineText() })
 
    oCol:colorBlock := {|| ::GetLineColor() }
 
-   ::oBrw:AddColumn( oCol )
+   ::oBrw:AddColumn(oCol)
 
    ::oBrw:goTopBlock := {|| ::nRow := 1 }
    ::oBrw:goBottomBlock := {|| ::nRow := ::nRows }
-   ::oBrw:skipBlock := {| n | ::Skip( n ) }
+   ::oBrw:skipBlock := {| n | ::Skip(n) }
 
-   IF ! Empty( cFileName )
-      ::LoadFile( cFileName )
+   IF !Empty(cFileName)
+      ::LoadFile(cFileName)
    ENDIF
 
    RETURN Self
 
-METHOD GotoLine( n ) CLASS HBBrwText
+METHOD GotoLine(n) CLASS HBBrwText
 
-   ::oBrw:MoveCursor( n - ::nRow )
+   ::oBrw:MoveCursor(n - ::nRow)
    ::RefreshAll()
 
    RETURN Self
 
-METHOD SetActiveLine( n ) CLASS HBBrwText
+METHOD SetActiveLine(n) CLASS HBBrwText
 
    ::nActiveLine := n
    ::RefreshAll()
@@ -165,99 +165,98 @@ METHOD SetActiveLine( n ) CLASS HBBrwText
    RETURN Self
 
 METHOD GetLine() CLASS HBBrwText
-   RETURN iif( ::lLineNumbers, PadR( hb_ntos( ::nRow ) + ":", ::nLineNoLen ), "" ) + ;
-      MemoLine( ::aRows[ ::nRow ], ::nMaxLineLen, 1, ::nTabWidth, .F. )
+   RETURN iif(::lLineNumbers, PadR(hb_ntos(::nRow) + ":", ::nLineNoLen), "") + ;
+      MemoLine(::aRows[::nRow], ::nMaxLineLen, 1, ::nTabWidth, .F.)
 
 METHOD GetLineText() CLASS HBBrwText
-   RETURN PadR( SubStr( ::GetLine(), ::nLineOffset ), ::nWidth )
+   RETURN PadR(SubStr(::GetLine(), ::nLineOffset), ::nWidth)
 
 METHOD GetLineColor() CLASS HBBrwText
 
    LOCAL aColor
 
-   IF __dbgIsBreak( __dbg():pInfo, ::cFileName, ::nRow ) >= 0
-      aColor := iif( ::nRow == ::nActiveLine, { 4, 4 }, { 3, 3 } )
+   IF __dbgIsBreak(__dbg():pInfo, ::cFileName, ::nRow) >= 0
+      aColor := iif(::nRow == ::nActiveLine, { 4, 4 }, { 3, 3 })
    ELSE
-      aColor := iif( ::nRow == ::nActiveLine, { 2, 2 }, { 1, 1 } )
+      aColor := iif(::nRow == ::nActiveLine, { 2, 2 }, { 1, 1 })
    ENDIF
 
    RETURN aColor
 
-METHOD PROCEDURE LoadFile( cFileName ) CLASS HBBrwText
+METHOD PROCEDURE LoadFile(cFileName) CLASS HBBrwText
 
    LOCAL nMaxLineLen := 0
    LOCAL cLine
 
    ::cFileName := cFileName
-   ::aRows := __dbgTextToArray( MemoRead( cFileName ) )
-   ::nRows := Len( ::aRows )
-   ::nLineNoLen := Len( hb_ntos( ::nRows ) ) + 2
+   ::aRows := __dbgTextToArray(MemoRead(cFileName))
+   ::nRows := Len(::aRows)
+   ::nLineNoLen := Len(hb_ntos(::nRows)) + 2
 
    FOR EACH cLine IN ::aRows
-      nMaxLineLen := Max( nMaxLineLen, ;
-         Len( RTrim( MemoLine( cLine, Len( cLine ) + 256, 1, ::nTabWidth, .F. ) ) ) )
+      nMaxLineLen := Max(nMaxLineLen, Len(RTrim(MemoLine(cLine, Len(cLine) + 256, 1, ::nTabWidth, .F.))))
    NEXT
    ::nMaxLineLen := nMaxLineLen
    ::nLineOffset := 1
 
    RETURN
 
-METHOD Resize( nTop, nLeft, nBottom, nRight ) CLASS HBBrwText
+METHOD Resize(nTop, nLeft, nBottom, nRight) CLASS HBBrwText
 
    LOCAL lResize := .F.
 
-   IF HB_ISNUMERIC( nTop ) .AND. nTop != ::nTop
+   IF HB_ISNUMERIC(nTop) .AND. nTop != ::nTop
       ::nTop := nTop
       lResize := .T.
    ENDIF
-   IF HB_ISNUMERIC( nLeft ) .AND. nLeft != ::nLeft
+   IF HB_ISNUMERIC(nLeft) .AND. nLeft != ::nLeft
       ::nLeft := nLeft
       lResize := .T.
    ENDIF
-   IF HB_ISNUMERIC( nBottom ) .AND. nBottom != ::nBottom
+   IF HB_ISNUMERIC(nBottom) .AND. nBottom != ::nBottom
       ::nBottom := nBottom
       lResize := .T.
    ENDIF
-   IF HB_ISNUMERIC( nRight ) .AND. nRight != ::nRight
+   IF HB_ISNUMERIC(nRight) .AND. nRight != ::nRight
       ::nRight := nRight
       lResize := .T.
    ENDIF
    IF lResize
-      ::oBrw:Resize( nTop, nLeft, nBottom, nRight )
+      ::oBrw:Resize(nTop, nLeft, nBottom, nRight)
       ::nWidth := ::nRight - ::nLeft + 1
    ENDIF
 
    RETURN Self
 
-METHOD Search( cString, lCaseSensitive, nMode ) CLASS HBBrwText
+METHOD Search(cString, lCaseSensitive, nMode) CLASS HBBrwText
 
    LOCAL bMove
    LOCAL lFound := .F.
    LOCAL n
 
-   IF ! lCaseSensitive
-      cString := Upper( cString )
+   IF !lCaseSensitive
+      cString := Upper(cString)
    ENDIF
 
-   SWITCH hb_defaultValue( nMode, 0 )
+   SWITCH hb_defaultValue(nMode, 0)
    CASE 0  // From Top
       ::GoTop()
-      bMove := {|| ::Skip( 1 ) }
+      bMove := {|| ::Skip(1) }
       EXIT
    CASE 1  // Forward
-      bMove := {|| ::Skip( 1 ) }
+      bMove := {|| ::Skip(1) }
       EXIT
    CASE 2  // Backward
-      bMove := {|| ::Skip( -1 ) }
+      bMove := {|| ::Skip(-1) }
       EXIT
    ENDSWITCH
 
    n := ::nRow
 
-   DO WHILE Eval( bMove ) != 0
-      IF cString $ iif( lCaseSensitive, ::aRows[ ::nRow ], Upper( ::aRows[ ::nRow ] ) )
+   DO WHILE Eval(bMove) != 0
+      IF cString $ iif(lCaseSensitive, ::aRows[::nRow], Upper(::aRows[::nRow]))
          lFound := .T.
-         ::oBrw:MoveCursor( ::nRow - n )
+         ::oBrw:MoveCursor(::nRow - n)
          ::RefreshAll()
          EXIT
       ENDIF
@@ -277,18 +276,18 @@ METHOD GoLast() CLASS HBBrwText
 
    RETURN .T.
 
-METHOD Skip( n ) CLASS HBBrwText
+METHOD Skip(n) CLASS HBBrwText
 
    LOCAL nSkipped := 0
 
    IF n > 0
       IF ::nRow < ::nRows
-         nSkipped := Min( ::nRows - ::nRow, n )
+         nSkipped := Min(::nRows - ::nRow, n)
          ::nRow += nSkipped
       ENDIF
    ELSEIF n < 0
       IF ::nRow > 1
-         nSkipped := Max( 1 - ::nRow, n )
+         nSkipped := Max(1 - ::nRow, n)
          ::nRow += nSkipped
       ENDIF
    ENDIF

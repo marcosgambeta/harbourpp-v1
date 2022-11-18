@@ -92,8 +92,8 @@ METHOD AsExpStr() CLASS ScalarObject
    SWITCH ValType(Self)
    CASE "M"
    CASE "C" ; RETURN '"' + Self + '"'
-   CASE "D" ; RETURN 'CToD("' + DToC( Self ) + '")'
-   CASE "T" ; RETURN 'hb_CToT("' + hb_TToC( Self ) + '")'
+   CASE "D" ; RETURN 'CToD("' + DToC(Self) + '")'
+   CASE "T" ; RETURN 'hb_CToT("' + hb_TToC(Self) + '")'
    ENDSWITCH
 
    RETURN ::AsString()

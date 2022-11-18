@@ -55,9 +55,9 @@
 
 MEMVAR SxIniInfo
 
-STATIC FUNCTION _sx_INIlogical( cVal )
+STATIC FUNCTION _sx_INIlogical(cVal)
 
-   SWITCH Upper( cVal )
+   SWITCH Upper(cVal)
    CASE ".T."
    CASE "TRUE"
    CASE "YES"
@@ -72,7 +72,7 @@ STATIC FUNCTION _sx_INIlogical( cVal )
 
    RETURN NIL
 
-FUNCTION _sx_IniInit( nArea )
+FUNCTION _sx_IniInit(nArea)
 
    LOCAL xShared, xReadOnly, xAlias, xTrigger
    LOCAL hIni, item, sect, h, a
@@ -82,27 +82,27 @@ FUNCTION _sx_IniInit( nArea )
     * by workarea number. In Harbour we are using hash arrays.
     */
 
-   IF hb_LeftEq( Type( "SxIniInfo" ), "U" )
+   IF hb_LeftEq(Type("SxIniInfo"), "U")
       PUBLIC SxIniInfo := { => }
-      hb_HCaseMatch( SxIniInfo, .F. )
-      hb_HAutoAdd( SxIniInfo, HB_HAUTOADD_ASSIGN )
+      hb_HCaseMatch(SxIniInfo, .F.)
+      hb_HAutoAdd(SxIniInfo, HB_HAUTOADD_ASSIGN)
    ENDIF
 
    IF nArea == NIL
       RETURN .F.
    ENDIF
 
-   hIni := hb_iniRead( hb_FNameExtSet( ( nArea )->( dbInfo( DBI_FULLPATH ) ), ".ini" ), .F.,, .F. )
+   hIni := hb_iniRead(hb_FNameExtSet((nArea)->(dbInfo(DBI_FULLPATH)), ".ini"), .F., NIL, .F.)
 
-   IF ! Empty( hIni )
+   IF !Empty(hIni)
       IF HB_SIX_SECTION $ hIni
-         FOR EACH item IN hIni[ HB_SIX_SECTION ]
+         FOR EACH item IN hIni[HB_SIX_SECTION]
             SWITCH item:__enumKey()
             CASE "SHARED"
-               xShared := _sx_INIlogical( item )
+               xShared := _sx_INIlogical(item)
                EXIT
             CASE "READONLY"
-               xReadOnly := _sx_INIlogical( item )
+               xReadOnly := _sx_INIlogical(item)
                EXIT
             CASE "ALIAS"
                xAlias := item
@@ -113,15 +113,15 @@ FUNCTION _sx_IniInit( nArea )
             ENDSWITCH
          NEXT
          IF xTrigger != NIL
-            ( nArea )->( sx_SetTrigger( TRIGGER_INSTALL, xTrigger ) )
+            (nArea)->(sx_SetTrigger(TRIGGER_INSTALL, xTrigger))
          ENDIF
-         _sxOpenInit( nArea, xShared, xReadOnly, xAlias )
+         _sxOpenInit(nArea, xShared, xReadOnly, xAlias)
       ENDIF
 
       /* convert hash array into normal array */
       FOR EACH item IN hIni
-         IF HB_ISHASH( item )
-            sect := Array( Len( item ) )
+         IF HB_ISHASH(item)
+            sect := Array(Len(item))
             FOR EACH h, a IN item, sect
                a := { h:__enumKey(), h }
             NEXT
@@ -129,21 +129,21 @@ FUNCTION _sx_IniInit( nArea )
          ENDIF
       NEXT
 
-      SxIniInfo[ nArea ] := hIni
+      SxIniInfo[nArea] := hIni
 
    ENDIF
 
    RETURN .F.
 
-FUNCTION sx_IniHeader( cHeaderName, nArea )
+FUNCTION sx_IniHeader(cHeaderName, nArea)
 
    IF nArea == NIL
       nArea := Select()
    ENDIF
 
    IF nArea $ SxIniInfo .AND. ;
-      cHeaderName $ SxIniInfo[ nArea ]
-      RETURN SxIniInfo[ nArea ][ cHeaderName ]
+      cHeaderName $ SxIniInfo[nArea]
+      RETURN SxIniInfo[nArea][cHeaderName]
    ENDIF
 
    RETURN {}

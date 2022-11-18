@@ -50,12 +50,12 @@
 #xcommand MENUITEM [ <oMenuItem> PROMPT ] <cPrompt> ;
           [ IDENT <nIdent> ] [ ACTION <uAction,...> ] ;
           [ CHECKED <bChecked> ] => ;
-   [ <oMenuItem> := ] HBDbMenu():AddItem( HBDbMenuItem():New( <cPrompt>, ;
-   [{|| <uAction> }], [<bChecked>], [<nIdent>] ) )
-#xcommand SEPARATOR => HBDbMenu():AddItem( HBDbMenuItem():New( "-" ) )
-#xcommand ENDMENU => ATail( HBDbMenu():aMenus ):Build()
+   [ <oMenuItem> := ] HBDbMenu():AddItem(HBDbMenuItem():New(<cPrompt>, ;
+   [{|| <uAction> }], [<bChecked>], [<nIdent>]))
+#xcommand SEPARATOR => HBDbMenu():AddItem(HBDbMenuItem():New("-"))
+#xcommand ENDMENU => ATail(HBDbMenu():aMenus):Build()
 
-FUNCTION __dbgBuildMenu( oDebugger )  // Builds the debugger pulldown menu
+FUNCTION __dbgBuildMenu(oDebugger)  // Builds the debugger pulldown menu
 
    LOCAL oMenu
 
@@ -95,7 +95,7 @@ FUNCTION __dbgBuildMenu( oDebugger )  // Builds the debugger pulldown menu
       MENUITEM " ~Run "
       MENU
          MENUITEM " ~Animate" IDENT "ANIMATE" ;
-            ACTION ( oDebugger:ToggleAnimate(), oDebugger:Animate() ) ;
+            ACTION (oDebugger:ToggleAnimate(), oDebugger:Animate()) ;
             CHECKED oDebugger:lAnimate
          MENUITEM " ~Step              F8 " ACTION oDebugger:Step()
          MENUITEM " ~Trace            F10"  ACTION oDebugger:Trace()
@@ -193,10 +193,10 @@ FUNCTION __dbgBuildMenu( oDebugger )  // Builds the debugger pulldown menu
       MENU
          MENUITEM " ~About Help "           ACTION oDebugger:ShowHelp()
          SEPARATOR
-         MENUITEM " ~Keys"                  ACTION oDebugger:ShowHelp( "Keys" )
-         MENUITEM " ~Windows"               ACTION oDebugger:ShowHelp( "Windows" )
-         MENUITEM " ~Menus"                 ACTION oDebugger:ShowHelp( "Menus" )
-         MENUITEM " ~Commands"              ACTION oDebugger:ShowHelp( "Commands" )
+         MENUITEM " ~Keys"                  ACTION oDebugger:ShowHelp("Keys")
+         MENUITEM " ~Windows"               ACTION oDebugger:ShowHelp("Windows")
+         MENUITEM " ~Menus"                 ACTION oDebugger:ShowHelp("Menus")
+         MENUITEM " ~Commands"              ACTION oDebugger:ShowHelp("Commands")
       ENDMENU
 
    ENDMENU

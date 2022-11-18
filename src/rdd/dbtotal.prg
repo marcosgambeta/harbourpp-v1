@@ -54,9 +54,7 @@
          - won't crash with "No exported method: EVAL" if xKey is not
            block and table is not indexed. */
 
-FUNCTION __dbTotal( cFile, xKey, aFields, ;
-                    xFor, xWhile, nNext, nRec, lRest, ;
-                    cRDD, nConnection, cCodePage )
+FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD, nConnection, cCodePage)
 
    LOCAL nOldArea
    LOCAL nNewArea
@@ -75,33 +73,33 @@ FUNCTION __dbTotal( cFile, xKey, aFields, ;
    LOCAL lError := .F.
 
    DO CASE
-   CASE HB_ISEVALITEM( xWhile )
+   CASE HB_ISEVALITEM(xWhile)
       bWhileBlock := xWhile
       lRest := .T.
-   CASE HB_ISSTRING( xWhile ) .AND. ! Empty( xWhile )
-      bWhileBlock := hb_macroBlock( xWhile )
+   CASE HB_ISSTRING(xWhile) .AND. !Empty(xWhile)
+      bWhileBlock := hb_macroBlock(xWhile)
       lRest := .T.
    OTHERWISE
       bWhileBlock := {|| .T. }
    ENDCASE
 
    DO CASE
-   CASE HB_ISEVALITEM( xFor )
+   CASE HB_ISEVALITEM(xFor)
       bForBlock := xFor
-   CASE HB_ISSTRING( xFor ) .AND. ! Empty( xFor )
-      bForBlock := hb_macroBlock( xFor )
+   CASE HB_ISSTRING(xFor) .AND. !Empty(xFor)
+      bForBlock := hb_macroBlock(xFor)
    OTHERWISE
       bForBlock := {|| .T. }
    ENDCASE
 
-   __defaultNIL( @lRest, .F. )
+   __defaultNIL(@lRest, .F.)
 
    IF nRec != NIL
-      dbGoto( nRec )
+      dbGoto(nRec)
       nNext := 1
    ELSEIF nNext == NIL
       nNext := -1
-      IF ! lRest
+      IF !lRest
          dbGoTop()
       ENDIF
    ELSE
@@ -111,62 +109,62 @@ FUNCTION __dbTotal( cFile, xKey, aFields, ;
    nOldArea := Select()
 
    aNewDbStruct := {}
-   AEval( dbStruct(), {| aField | iif( aField[ DBS_TYPE ] == "M", NIL, AAdd( aNewDbStruct, aField ) ) } )
-   IF Empty( aNewDbStruct )
+   AEval(dbStruct(), {| aField | iif(aField[DBS_TYPE] == "M", NIL, AAdd(aNewDbStruct, aField)) })
+   IF Empty(aNewDbStruct)
       RETURN .F.
    ENDIF
 
    BEGIN SEQUENCE
 
-      IF HB_ISEVALITEM( xKey )
+      IF HB_ISEVALITEM(xKey)
          bKeyBlock := xKey
       ELSE
-         IF Empty( xKey )
+         IF Empty(xKey)
             xKey := ordKey()
          ENDIF
-         IF HB_ISSTRING( xKey ) .AND. ! Empty( xKey )
-            bKeyBlock := hb_macroBlock( xKey )
+         IF HB_ISSTRING(xKey) .AND. !Empty(xKey)
+            bKeyBlock := hb_macroBlock(xKey)
          ELSE
             bKeyBlock := {|| NIL }
          ENDIF
       ENDIF
 
       aGetField := {}
-      AEval( aFields, {| cField | AAdd( aGetField, __GetField( cField ) ) } )
-      aFieldsSum := Array( Len( aGetField ) )
+      AEval(aFields, {| cField | AAdd(aGetField, __GetField(cField)) })
+      aFieldsSum := Array(Len(aGetField))
 
       /* Keep it open after creating it. */
-      dbCreate( cFile, aNewDbStruct, cRDD, .T., "", , cCodePage, nConnection )
+      dbCreate(cFile, aNewDbStruct, cRDD, .T., "", NIL, cCodePage, nConnection)
       nNewArea := Select()
 
-      dbSelectArea( nOldArea )
-      DO WHILE ! Eof() .AND. nNext != 0 .AND. Eval( bWhileBlock )
+      dbSelectArea(nOldArea)
+      DO WHILE !Eof() .AND. nNext != 0 .AND. Eval(bWhileBlock)
 
          lDbTransRecord := .F.
 
-         AFill( aFieldsSum, 0 )
+         AFill(aFieldsSum, 0)
 
-         xCurKey := Eval( bKeyBlock )
+         xCurKey := Eval(bKeyBlock)
 
-         DO WHILE ! Eof() .AND. nNext-- != 0 .AND. Eval( bWhileBlock ) .AND. ;
-               xCurKey == Eval( bKeyBlock )
+         DO WHILE !Eof() .AND. nNext-- != 0 .AND. Eval(bWhileBlock) .AND. ;
+               xCurKey == Eval(bKeyBlock)
 
-            IF Eval( bForBlock )
-               IF ! lDbTransRecord
-                  __dbTransRec( nNewArea, aNewDbStruct )
-                  dbSelectArea( nOldArea )
+            IF Eval(bForBlock)
+               IF !lDbTransRecord
+                  __dbTransRec(nNewArea, aNewDbStruct)
+                  dbSelectArea(nOldArea)
                   lDbTransRecord := .T.
                ENDIF
-               AEval( aGetField, {| bFieldBlock, nFieldPos | aFieldsSum[ nFieldPos ] += Eval( bFieldBlock ) } )
+               AEval(aGetField, {| bFieldBlock, nFieldPos | aFieldsSum[nFieldPos] += Eval(bFieldBlock) })
             ENDIF
 
             dbSkip()
          ENDDO
 
          IF lDbTransRecord
-            dbSelectArea( nNewArea )
-            AEval( aGetField, {| bFieldBlock, nFieldPos | Eval( bFieldBlock, aFieldsSum[ nFieldPos ] ) } )
-            dbSelectArea( nOldArea )
+            dbSelectArea(nNewArea)
+            AEval(aGetField, {| bFieldBlock, nFieldPos | Eval(bFieldBlock, aFieldsSum[nFieldPos]) })
+            dbSelectArea(nOldArea)
          ENDIF
 
       ENDDO
@@ -176,28 +174,28 @@ FUNCTION __dbTotal( cFile, xKey, aFields, ;
    END SEQUENCE
 
    IF nNewArea != NIL
-      dbSelectArea( nNewArea )
+      dbSelectArea(nNewArea)
       dbCloseArea()
    ENDIF
 
-   dbSelectArea( nOldArea )
+   dbSelectArea(nOldArea)
 
    IF lError
-      Break( oError )
+      Break(oError)
    ENDIF
 
    RETURN .T.
 
-STATIC FUNCTION __GetField( cField )
+STATIC FUNCTION __GetField(cField)
 
    LOCAL nCurrArea := Select()
    LOCAL nPos
    LOCAL oError
 
    /* Is the field aliased? */
-   IF ( nPos := At( "->", cField ) ) > 0
+   IF (nPos := At("->", cField)) > 0
 
-      IF Select( Left( cField, nPos - 1 ) ) != nCurrArea
+      IF Select(Left(cField, nPos - 1)) != nCurrArea
 
          oError := ErrorNew()
          oError:severity   := ES_ERROR
@@ -207,17 +205,17 @@ STATIC FUNCTION __GetField( cField )
          oError:operation  := cField
          oError:subCode    := 1101
 
-         IF hb_defaultValue( Eval( ErrorBlock(), oError ), .T. )
+         IF hb_defaultValue(Eval(ErrorBlock(), oError), .T.)
             __errInHandler()
          ENDIF
 
-         Break( oError )
+         Break(oError)
       ENDIF
 
-      cField := SubStr( cField, nPos + 2 )
+      cField := SubStr(cField, nPos + 2)
    ENDIF
 
-   RETURN FieldBlock( cField )
+   RETURN FieldBlock(cField)
 
-FUNCTION __dbTransRec( nDstArea, aFieldsStru )
-   RETURN __dbTrans( nDstArea, aFieldsStru, , , 1 )
+FUNCTION __dbTransRec(nDstArea, aFieldsStru)
+   RETURN __dbTrans(nDstArea, aFieldsStru, NIL, NIL, 1)

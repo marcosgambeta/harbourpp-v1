@@ -48,11 +48,11 @@
 
 /* NOTE: The fifth parameters (cOrderName) is undocumented. */
 
-FUNCTION dbCreateIndex( cOrderBagName, cKeyExpr, bKeyExpr, lUnique, cOrderName )
-   RETURN ordCreate( cOrderBagName, cOrderName, cKeyExpr, bKeyExpr, lUnique )
+FUNCTION dbCreateIndex(cOrderBagName, cKeyExpr, bKeyExpr, lUnique, cOrderName)
+   RETURN ordCreate(cOrderBagName, cOrderName, cKeyExpr, bKeyExpr, lUnique)
 
-FUNCTION dbSetIndex( cIndexName )
-   RETURN ordListAdd( cIndexName )
+FUNCTION dbSetIndex(cIndexName)
+   RETURN ordListAdd(cIndexName)
 
 FUNCTION dbClearIndex()
    RETURN ordListClear()
@@ -60,30 +60,30 @@ FUNCTION dbClearIndex()
 FUNCTION dbReindex()
    RETURN ordListRebuild()
 
-PROCEDURE dbSetOrder( nOrderNum )
+PROCEDURE dbSetOrder(nOrderNum)
 
-   IF HB_ISSTRING( nOrderNum ) .AND. ! Empty( Val( nOrderNum ) )
-      nOrderNum := Val( nOrderNum )
+   IF HB_ISSTRING(nOrderNum) .AND. !Empty(Val(nOrderNum))
+      nOrderNum := Val(nOrderNum)
    ENDIF
 
-   ordSetFocus( nOrderNum )
+   ordSetFocus(nOrderNum)
 
    RETURN
 
 FUNCTION IndexExt()
    RETURN ordBagExt()
 
-FUNCTION IndexKey( nOrder )
+FUNCTION IndexKey(nOrder)
 
-   IF ! HB_ISNUMERIC( nOrder )
-      RETURN ordKey( nOrder )
+   IF !HB_ISNUMERIC(nOrder)
+      RETURN ordKey(nOrder)
    ENDIF
 
    IF Used()
-      RETURN ordKey( nOrder )
+      RETURN ordKey(nOrder)
    ENDIF
 
    RETURN ""
 
-FUNCTION ordSetRelation( xArea, bRelation, cRelation )
-   RETURN dbSetRelation( xArea, bRelation, cRelation, .T. )
+FUNCTION ordSetRelation(xArea, bRelation, cRelation)
+   RETURN dbSetRelation(xArea, bRelation, cRelation, .T.)

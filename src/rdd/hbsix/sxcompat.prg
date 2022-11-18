@@ -81,50 +81,50 @@
 #include "ord.ch"
 #include "hbsxdef.ch"
 
-FUNCTION sxChar( nLen, /* @ */ xKeyVal )
+FUNCTION sxChar(nLen, /* @ */ xKeyVal)
 
-   SWITCH ValType( xKeyVal )
+   SWITCH ValType(xKeyVal)
    CASE "C"
    CASE "M"
       EXIT
    CASE "N"
-      xKeyVal := Str( xKeyVal )
+      xKeyVal := Str(xKeyVal)
       EXIT
    CASE "D"
-      xKeyVal := DToS( xKeyVal )
+      xKeyVal := DToS(xKeyVal)
       EXIT
    CASE "T"
-      xKeyVal := hb_TToS( xKeyVal )
+      xKeyVal := hb_TToS(xKeyVal)
       EXIT
    CASE "L"
-      xKeyVal := iif( xKeyVal, "T", "F" )
+      xKeyVal := iif(xKeyVal, "T", "F")
       EXIT
    OTHERWISE
-      xKeyVal := iif( HB_ISNUMERIC( nLen ), "", Space( 10 ) )
+      xKeyVal := iif(HB_ISNUMERIC(nLen), "", Space(10))
       EXIT
    ENDSWITCH
 
-   IF HB_ISNUMERIC( nLen )
-      xKeyVal := PadR( LTrim( xKeyVal ), nLen )
+   IF HB_ISNUMERIC(nLen)
+      xKeyVal := PadR(LTrim(xKeyVal), nLen)
    ENDIF
 
    RETURN xKeyVal
 
-FUNCTION sxNum( /* @ */ xKeyVal )
+FUNCTION sxNum(/* @ */ xKeyVal)
 
-   SWITCH ValType( xKeyVal )
+   SWITCH ValType(xKeyVal)
    CASE "N"
       EXIT
    CASE "C"
    CASE "M"
-      xKeyVal := Val( xKeyVal )
+      xKeyVal := Val(xKeyVal)
       EXIT
    CASE "T"
    CASE "D"
       xKeyVal := xKeyVal - hb_SToD()
       EXIT
    CASE "L"
-      xKeyVal := iif( xKeyVal, 1, 0 )
+      xKeyVal := iif(xKeyVal, 1, 0)
       EXIT
    OTHERWISE
       xKeyVal := 0.00
@@ -133,17 +133,17 @@ FUNCTION sxNum( /* @ */ xKeyVal )
 
    RETURN xKeyVal
 
-FUNCTION sxDate( /* @ */ xKeyVal )
+FUNCTION sxDate(/* @ */ xKeyVal)
 
-   SWITCH ValType( xKeyVal )
+   SWITCH ValType(xKeyVal)
    CASE "D"
       EXIT
    CASE "T"
-      xKeyVal := hb_TToD( xKeyVal )
+      xKeyVal := hb_TToD(xKeyVal)
       EXIT
    CASE "C"
    CASE "M"
-      xKeyVal := CToD( xKeyVal )
+      xKeyVal := CToD(xKeyVal)
       EXIT
    CASE "N"
       xKeyVal := hb_SToD() + xKeyVal
@@ -155,9 +155,9 @@ FUNCTION sxDate( /* @ */ xKeyVal )
 
    RETURN xKeyVal
 
-FUNCTION sxLog( /* @ */ xKeyVal )
+FUNCTION sxLog(/* @ */ xKeyVal)
 
-   SWITCH ValType( xKeyVal )
+   SWITCH ValType(xKeyVal)
    CASE "L"
       EXIT
    CASE "C"
@@ -182,347 +182,345 @@ FUNCTION sxLog( /* @ */ xKeyVal )
 
    RETURN xKeyVal
 
-FUNCTION sx_Compress( xVal )
+FUNCTION sx_Compress(xVal)
 
    LOCAL xRetVal
 
-   SWITCH ValType( xVal )
+   SWITCH ValType(xVal)
    CASE "C"
    CASE "M"
-      RETURN _sx_StrCompress( xVal )
+      RETURN _sx_StrCompress(xVal)
    CASE "A"
-      xRetVal := Array( Len( xVal ) )
-      AEval( xVal, {| x, i | xRetVal[ i ] := sx_Compress( x ) } )
+      xRetVal := Array(Len(xVal))
+      AEval(xVal, {| x, i | xRetVal[i] := sx_Compress(x) })
       RETURN xRetVal
    ENDSWITCH
 
    RETURN xVal
 
-FUNCTION sx_Decompress( xVal )
+FUNCTION sx_Decompress(xVal)
 
    LOCAL xRetVal
 
-   SWITCH ValType( xVal )
+   SWITCH ValType(xVal)
    CASE "C"
    CASE "M"
-      RETURN _sx_StrDecompress( xVal )
+      RETURN _sx_StrDecompress(xVal)
    CASE "A"
-      xRetVal := Array( Len( xVal ) )
-      AEval( xVal, {| x, i | xRetVal[ i ] := sx_Decompress( x ) } )
+      xRetVal := Array(Len(xVal))
+      AEval(xVal, {| x, i | xRetVal[i] := sx_Decompress(x) })
       RETURN xRetVal
    ENDSWITCH
 
    RETURN xVal
 
-FUNCTION sx_TagInfo( cIndex )
+FUNCTION sx_TagInfo(cIndex)
 
    LOCAL aInfo, nOrds, nFirst, i
 
-   IF Used() .AND. ( nOrds := ordCount( cIndex ) ) > 0
-      aInfo := Array( nOrds, 6 )
-      IF HB_ISSTRING( cIndex )
-         nFirst := dbOrderInfo( DBOI_BAGORDER, cIndex )
+   IF Used() .AND. (nOrds := ordCount(cIndex)) > 0
+      aInfo := Array(nOrds, 6)
+      IF HB_ISSTRING(cIndex)
+         nFirst := dbOrderInfo(DBOI_BAGORDER, cIndex)
          nOrds += nFirst - 1
       ELSE
          nFirst := 1
       ENDIF
       FOR i := nFirst TO nOrds
-         aInfo[ i ][ 1 ] := ordName( i )
-         aInfo[ i ][ 2 ] := ordKey( i )
-         aInfo[ i ][ 3 ] := ordFor( i )
-         aInfo[ i ][ 4 ] := ordIsUnique( i )
-         aInfo[ i ][ 5 ] := ordDescend( i )
-         aInfo[ i ][ 6 ] := ordCustom( i )
+         aInfo[i][1] := ordName(i)
+         aInfo[i][2] := ordKey(i)
+         aInfo[i][3] := ordFor(i)
+         aInfo[i][4] := ordIsUnique(i)
+         aInfo[i][5] := ordDescend(i)
+         aInfo[i][6] := ordCustom(i)
       NEXT
       RETURN aInfo
    ENDIF
 
    RETURN {}
 
-FUNCTION sx_TagCount( xIndex )
+FUNCTION sx_TagCount(xIndex)
 
    LOCAL nTags := 0, cIndex, nOrder
 
    IF Used()
       DO CASE
-      CASE HB_ISNUMERIC( xIndex )
-         IF ( nOrder := sx_TagOrder( 1, xIndex ) ) != 0
-            cIndex := dbOrderInfo( DBOI_FULLPATH,, nOrder )
+      CASE HB_ISNUMERIC(xIndex)
+         IF (nOrder := sx_TagOrder(1, xIndex)) != 0
+            cIndex := dbOrderInfo(DBOI_FULLPATH, NIL, nOrder)
          ENDIF
-      CASE HB_ISSTRING( xIndex ) .AND. ! Empty( xIndex )
+      CASE HB_ISSTRING(xIndex) .AND. !Empty(xIndex)
          cIndex := xIndex
       OTHERWISE
-         cIndex := dbOrderInfo( DBOI_FULLPATH )
+         cIndex := dbOrderInfo(DBOI_FULLPATH)
       ENDCASE
-      IF ! Empty( cIndex )
-         nTags := ordCount( cIndex )
+      IF !Empty(cIndex)
+         nTags := ordCount(cIndex)
       ENDIF
    ENDIF
 
    RETURN nTags
 
-FUNCTION sx_Tags( xIndex )
+FUNCTION sx_Tags(xIndex)
 
    LOCAL aTagNames := {}, nOrder, nTags
 
    IF Used()
       DO CASE
-      CASE HB_ISNUMERIC( xIndex )
-         nOrder := sx_TagOrder( 1, xIndex )
-      CASE HB_ISSTRING( xIndex ) .AND. ! Empty( xIndex )
-         nOrder := dbOrderInfo( DBOI_BAGORDER, xIndex )
+      CASE HB_ISNUMERIC(xIndex)
+         nOrder := sx_TagOrder(1, xIndex)
+      CASE HB_ISSTRING(xIndex) .AND. !Empty(xIndex)
+         nOrder := dbOrderInfo(DBOI_BAGORDER, xIndex)
       OTHERWISE
          nOrder := ordNumber()
       ENDCASE
       IF nOrder != 0
-         nTags := ordCount( dbOrderInfo( DBOI_FULLPATH,, nOrder ) )
+         nTags := ordCount(dbOrderInfo(DBOI_FULLPATH, NIL, nOrder))
          DO WHILE --nTags >= 0
-            AAdd( aTagNames, ordName( nOrder++ ) )
+            AAdd(aTagNames, ordName(nOrder++))
          ENDDO
       ENDIF
    ENDIF
 
    RETURN aTagNames
 
-FUNCTION sx_SetTag( xTag, xIndex )
+FUNCTION sx_SetTag(xTag, xIndex)
 
    LOCAL lRet := .F., nOrder := 0, nOldOrd, cIndex
 
-   IF Used() .AND. ValType( xTag ) $ "CN"
-      IF HB_ISNUMERIC( xTag )
-         IF Empty( xIndex ) .OR. ! ValType( xIndex ) $ "CN"
+   IF Used() .AND. ValType(xTag) $ "CN"
+      IF HB_ISNUMERIC(xTag)
+         IF Empty(xIndex) .OR. !ValType(xIndex) $ "CN"
             nOrder := xTag
-         ELSEIF HB_ISSTRING( xIndex )
-            IF xTag >= 1 .AND. xTag <= ordCount( xIndex )
-               nOrder := dbOrderInfo( DBOI_BAGORDER, xIndex ) + xTag - 1
+         ELSEIF HB_ISSTRING(xIndex)
+            IF xTag >= 1 .AND. xTag <= ordCount(xIndex)
+               nOrder := dbOrderInfo(DBOI_BAGORDER, xIndex) + xTag - 1
             ENDIF
          ELSE
-            nOrder := sx_TagOrder( xTag, xIndex )
+            nOrder := sx_TagOrder(xTag, xIndex)
          ENDIF
       ELSE
-         IF Empty( xIndex ) .OR. ! ValType( xIndex ) $ "CN"
-            nOrder := ordNumber( xTag )
-         ELSEIF HB_ISSTRING( xIndex )
-            nOrder := sx_TagOrder( xTag, xIndex )
+         IF Empty(xIndex) .OR. !ValType(xIndex) $ "CN"
+            nOrder := ordNumber(xTag)
+         ELSEIF HB_ISSTRING(xIndex)
+            nOrder := sx_TagOrder(xTag, xIndex)
          ELSE
-            nOrder := sx_TagOrder( 1, xIndex )
+            nOrder := sx_TagOrder(1, xIndex)
             IF nOrder != 0
-               cIndex := dbOrderInfo( DBOI_FULLPATH,, nOrder )
-               IF Empty( cIndex )
+               cIndex := dbOrderInfo(DBOI_FULLPATH, NIL, nOrder)
+               IF Empty(cIndex)
                   nOrder := 0
                ELSE
-                  nOrder := sx_TagOrder( xTag, cIndex )
+                  nOrder := sx_TagOrder(xTag, cIndex)
                ENDIF
             ENDIF
          ENDIF
       ENDIF
       IF nOrder != 0
          nOldOrd := ordNumber()
-         ordSetFocus( nOrder )
+         ordSetFocus(nOrder)
          lRet := nOrder == ordNumber()
-         IF ! lRet
-            ordSetFocus( nOldOrd )
+         IF !lRet
+            ordSetFocus(nOldOrd)
          ENDIF
-      ELSEIF Empty( xTag )
-         ordSetFocus( 0 )
+      ELSEIF Empty(xTag)
+         ordSetFocus(0)
          lRet := .T.
       ENDIF
    ENDIF
 
    RETURN lRet
 
-FUNCTION sx_KillTag( xTag, xIndex )
+FUNCTION sx_KillTag(xTag, xIndex)
 
    LOCAL lRet := .F., nOrder, cIndex
 
-   IF HB_ISLOGICAL( xTag )
+   IF HB_ISLOGICAL(xTag)
       IF xTag
          DO CASE
-         CASE Empty( xIndex )
+         CASE Empty(xIndex)
             cIndex := sx_IndexName()
-         CASE HB_ISNUMERIC( xIndex )
-            cIndex := sx_IndexName( 1, xIndex )
-         CASE HB_ISSTRING( xIndex )
-            nOrder := dbOrderInfo( DBOI_BAGORDER, xIndex )
+         CASE HB_ISNUMERIC(xIndex)
+            cIndex := sx_IndexName(1, xIndex)
+         CASE HB_ISSTRING(xIndex)
+            nOrder := dbOrderInfo(DBOI_BAGORDER, xIndex)
             IF nOrder != 0
-               cIndex := dbOrderInfo( DBOI_FULLPATH,, nOrder )
+               cIndex := dbOrderInfo(DBOI_FULLPATH, NIL, nOrder)
             ENDIF
          ENDCASE
-         IF ! Empty( cIndex )
-            IF ordBagClear( cIndex )
-               lRet := FErase( cIndex ) != F_ERROR
+         IF !Empty(cIndex)
+            IF ordBagClear(cIndex)
+               lRet := FErase(cIndex) != F_ERROR
             ENDIF
          ENDIF
       ENDIF
    ELSE
-      IF HB_ISNUMERIC( xTag )
-         IF Empty( xIndex ) .OR. ! ValType( xIndex ) $ "CN"
+      IF HB_ISNUMERIC(xTag)
+         IF Empty(xIndex) .OR. !ValType(xIndex) $ "CN"
             nOrder := xTag
-         ELSEIF HB_ISSTRING( xIndex )
-            IF xTag >= 1 .AND. xTag <= ordCount( xIndex )
-               nOrder := dbOrderInfo( DBOI_BAGORDER, xIndex ) + xTag - 1
+         ELSEIF HB_ISSTRING(xIndex)
+            IF xTag >= 1 .AND. xTag <= ordCount(xIndex)
+               nOrder := dbOrderInfo(DBOI_BAGORDER, xIndex) + xTag - 1
             ELSE
                nOrder := 0
             ENDIF
          ELSE
-            nOrder := sx_TagOrder( xTag, xIndex )
+            nOrder := sx_TagOrder(xTag, xIndex)
          ENDIF
       ELSE
-         IF Empty( xIndex ) .OR. ! ValType( xIndex ) $ "CN"
-            nOrder := ordNumber( xTag )
-         ELSEIF HB_ISSTRING( xIndex )
-            nOrder := sx_TagOrder( xTag, xIndex )
+         IF Empty(xIndex) .OR. !ValType(xIndex) $ "CN"
+            nOrder := ordNumber(xTag)
+         ELSEIF HB_ISSTRING(xIndex)
+            nOrder := sx_TagOrder(xTag, xIndex)
          ELSE
-            IF ( nOrder := sx_TagOrder( 1, xIndex ) ) != 0
-               cIndex := dbOrderInfo( DBOI_FULLPATH,, nOrder )
-               IF Empty( cIndex )
+            IF (nOrder := sx_TagOrder(1, xIndex)) != 0
+               cIndex := dbOrderInfo(DBOI_FULLPATH, NIL, nOrder)
+               IF Empty(cIndex)
                   nOrder := 0
                ELSE
-                  nOrder := sx_TagOrder( xTag, cIndex )
+                  nOrder := sx_TagOrder(xTag, cIndex)
                ENDIF
             ENDIF
          ENDIF
       ENDIF
       IF nOrder != 0
-         lRet := ordDestroy( nOrder )
+         lRet := ordDestroy(nOrder)
       ENDIF
    ENDIF
 
    RETURN lRet
 
 FUNCTION sx_FileOrder()
-   RETURN dbOrderInfo( DBOI_BAGNUMBER )
+   RETURN dbOrderInfo(DBOI_BAGNUMBER)
 
-FUNCTION sx_SetFileOrd( nIndex )
-   RETURN iif( HB_ISNUMERIC( nIndex ), ;
-      ordSetFocus( sx_TagOrder( 1, nIndex ) ), ;
-      ordSetFocus() )
+FUNCTION sx_SetFileOrd(nIndex)
+   RETURN iif(HB_ISNUMERIC(nIndex), ordSetFocus(sx_TagOrder(1, nIndex)), ordSetFocus())
 
 FUNCTION rdd_Count()
-   RETURN Len( rddList() )
+   RETURN Len(rddList())
 
-FUNCTION rdd_Name( nRDD )
+FUNCTION rdd_Name(nRDD)
 
    LOCAL aRDD
 
-   IF HB_ISNUMERIC( nRDD ) .AND. nRDD >= 1
+   IF HB_ISNUMERIC(nRDD) .AND. nRDD >= 1
       aRDD := rddList()
-      IF nRDD <= Len( aRDD )
-         RETURN aRDD[ nRDD ]
+      IF nRDD <= Len(aRDD)
+         RETURN aRDD[nRDD]
       ENDIF
    ENDIF
 
    RETURN ""
 
-FUNCTION rdd_Info( xID )
+FUNCTION rdd_Info(xID)
 
    LOCAL cRDD
 
    DO CASE
-   CASE HB_ISNUMERIC( xID )
-      IF ! Alias( xID ) == ""
-         ( xID )->( rddName() )
+   CASE HB_ISNUMERIC(xID)
+      IF !Alias(xID) == ""
+         (xID)->(rddName())
       ENDIF
-   CASE HB_ISSTRING( xID )
-      cRDD := Upper( AllTrim( xID ) )
-      IF AScan( rddList(), {| x | Upper( x ) == cRDD } ) == 0
+   CASE HB_ISSTRING(xID)
+      cRDD := Upper(AllTrim(xID))
+      IF AScan(rddList(), {| x | Upper(x) == cRDD }) == 0
          cRDD := NIL
       ENDIF
    CASE xID == NIL
       cRDD := rddSetDefault()
    ENDCASE
 
-   IF Empty( cRDD )
+   IF Empty(cRDD)
       RETURN {}
    ENDIF
 
    RETURN { ;
       cRDD, ;
       .T., ;
-      hb_rddInfo( RDDI_TABLEEXT, , cRDD ), ;
-      hb_rddInfo( RDDI_ORDBAGEXT, , cRDD ), ;
-      hb_rddInfo( RDDI_ORDEREXT, , cRDD ), ;
-      hb_rddInfo( RDDI_MEMOEXT, , cRDD ) }
+      hb_rddInfo(RDDI_TABLEEXT, NIL, cRDD), ;
+      hb_rddInfo(RDDI_ORDBAGEXT, NIL, cRDD), ;
+      hb_rddInfo(RDDI_ORDEREXT, NIL, cRDD), ;
+      hb_rddInfo(RDDI_MEMOEXT, NIL, cRDD) }
 
-FUNCTION sx_IsDBT( cRDD )
-   RETURN hb_rddInfo( RDDI_MEMOTYPE, , cRDD ) == DB_MEMO_DBT
+FUNCTION sx_IsDBT(cRDD)
+   RETURN hb_rddInfo(RDDI_MEMOTYPE, NIL, cRDD) == DB_MEMO_DBT
 
-FUNCTION sx_MemoExt( cNewExt, cRDD )
-   RETURN hb_rddInfo( RDDI_MEMOEXT, cNewExt, cRDD )
+FUNCTION sx_MemoExt(cNewExt, cRDD)
+   RETURN hb_rddInfo(RDDI_MEMOEXT, cNewExt, cRDD)
 
-FUNCTION sx_MemoBlk( nNewBlock, cRDD )
-   RETURN hb_rddInfo( RDDI_MEMOBLOCKSIZE, nNewBlock, cRDD )
+FUNCTION sx_MemoBlk(nNewBlock, cRDD)
+   RETURN hb_rddInfo(RDDI_MEMOBLOCKSIZE, nNewBlock, cRDD)
 
-FUNCTION sx_SetMemoBlock( nNewBlock, cRDD )
-   RETURN hb_rddInfo( RDDI_MEMOBLOCKSIZE, nNewBlock, cRDD )
+FUNCTION sx_SetMemoBlock(nNewBlock, cRDD)
+   RETURN hb_rddInfo(RDDI_MEMOBLOCKSIZE, nNewBlock, cRDD)
 
-FUNCTION sx_StrXCheck( lStrict, cRDD )
-   RETURN hb_rddInfo( RDDI_STRICTSTRUCT, lStrict, cRDD )
+FUNCTION sx_StrXCheck(lStrict, cRDD)
+   RETURN hb_rddInfo(RDDI_STRICTSTRUCT, lStrict, cRDD)
 
-FUNCTION sx_LockRetry( nRetry, cRDD )
-   RETURN hb_rddInfo( RDDI_LOCKRETRY, nRetry, cRDD )
+FUNCTION sx_LockRetry(nRetry, cRDD)
+   RETURN hb_rddInfo(RDDI_LOCKRETRY, nRetry, cRDD)
 
-FUNCTION sx_AutoOpen( lAuto, cRDD )
-   RETURN hb_rddInfo( RDDI_AUTOOPEN, lAuto, cRDD )
+FUNCTION sx_AutoOpen(lAuto, cRDD)
+   RETURN hb_rddInfo(RDDI_AUTOOPEN, lAuto, cRDD)
 
-FUNCTION sx_AutoShare( lAuto, cRDD )
-   RETURN hb_rddInfo( RDDI_AUTOSHARE, lAuto, cRDD )
+FUNCTION sx_AutoShare(lAuto, cRDD)
+   RETURN hb_rddInfo(RDDI_AUTOSHARE, lAuto, cRDD)
 
-FUNCTION sx_Blob2File( cFileName, cFldName )
-   RETURN dbFileGet( cFldName, cFileName, FILEGET_OVERWRITE )
+FUNCTION sx_Blob2File(cFileName, cFldName)
+   RETURN dbFileGet(cFldName, cFileName, FILEGET_OVERWRITE)
 
-FUNCTION sx_File2Blob( cFileName, cFldName, nActionCode )
+FUNCTION sx_File2Blob(cFileName, cFldName, nActionCode)
 
    LOCAL nAction := 0
 
-   IF hb_bitAnd( nActionCode, BLOB_FILECOMPRESS ) != 0
-      nAction := hb_bitOr( nAction, FILEPUT_COMPRESS )
+   IF hb_bitAnd(nActionCode, BLOB_FILECOMPRESS) != 0
+      nAction := hb_bitOr(nAction, FILEPUT_COMPRESS)
    ENDIF
-   IF hb_bitAnd( nActionCode, BLOB_FILEENCRYPT ) != 0
-      nAction := hb_bitOr( nAction, FILEPUT_ENCRYPT )
+   IF hb_bitAnd(nActionCode, BLOB_FILEENCRYPT) != 0
+      nAction := hb_bitOr(nAction, FILEPUT_ENCRYPT)
    ENDIF
 
-   RETURN dbFilePut( cFldName, cFileName, nAction )
+   RETURN dbFilePut(cFldName, cFileName, nAction)
 
-FUNCTION sx_dbCreate( cFileName, aStruct, cRDD )
+FUNCTION sx_dbCreate(cFileName, aStruct, cRDD)
 
    LOCAL aField, aDbStruct
 
-   aDbStruct := AClone( aStruct )
+   aDbStruct := AClone(aStruct)
    FOR EACH aField IN aDbStruct
-      SWITCH aField[ DBS_TYPE ]
+      SWITCH aField[DBS_TYPE]
       CASE "V"
-         aField[ DBS_LEN ] += 6
+         aField[DBS_LEN] += 6
          EXIT
       CASE "D"
-         IF aField[ DBS_LEN ] == 3
-            aField[ DBS_TYPE ] := "V"
+         IF aField[DBS_LEN] == 3
+            aField[DBS_TYPE] := "V"
          ENDIF
          EXIT
       CASE "I"
-         IF aField[ DBS_LEN ] == 4
-            aField[ DBS_TYPE ] := "V"
+         IF aField[DBS_LEN] == 4
+            aField[DBS_TYPE] := "V"
          ENDIF
          EXIT
       ENDSWITCH
    NEXT
 
-   RETURN dbCreate( cFileName, aDbStruct, cRDD )
+   RETURN dbCreate(cFileName, aDbStruct, cRDD)
 
-FUNCTION sx_VSigLen( xField )
+FUNCTION sx_VSigLen(xField)
 
    LOCAL nResult := 0, nField := 0
 
    IF Used()
       DO CASE
-      CASE HB_ISSTRING( xField )
-         nField := FieldPos( xField )
-      CASE HB_ISNUMERIC( xField )
+      CASE HB_ISSTRING(xField)
+         nField := FieldPos(xField)
+      CASE HB_ISNUMERIC(xField)
          nField := xField
       ENDCASE
       IF nField >= 1 .AND. nField <= FCount()
-         nResult := FieldLen( nField )
-         IF FieldType( nField ) == "V" .AND. nResult >= 6
+         nResult := FieldLen(nField)
+         IF FieldType(nField) == "V" .AND. nResult >= 6
             nResult -= 6
          ENDIF
       ENDIF
@@ -530,28 +528,28 @@ FUNCTION sx_VSigLen( xField )
 
    RETURN nResult
 
-FUNCTION sx_VFGet( cExpr, nLen )
+FUNCTION sx_VFGet(cExpr, nLen)
 
    /* Our RDDs does not use any internal flags to cut V-Fields so
       we can simply evaluate given expression */
 
    IF Used() .AND. PCount() == 2
-      RETURN PadR( &cExpr, nLen )  /* NOTE: Macro operator! */
+      RETURN PadR(&cExpr, nLen)  /* NOTE: Macro operator! */
    ENDIF
 
    RETURN NIL
 
-FUNCTION sx_IsLocked( xRec )
+FUNCTION sx_IsLocked(xRec)
 
    LOCAL xRecord
 
    IF Used()
-      xRecord := iif( xRec == NIL, RecNo(), xRec )
+      xRecord := iif(xRec == NIL, RecNo(), xRec)
       /* Don't be confused by function name.
          Even if it looks strange and results are not very usable due
          to possible race condition then this is what SIX3 exactly does. */
-      IF sx_Rlock( xRecord )
-         sx_Unlock( xRecord )
+      IF sx_Rlock(xRecord)
+         sx_Unlock(xRecord)
       ELSE
          RETURN .T.
       ENDIF
@@ -559,30 +557,30 @@ FUNCTION sx_IsLocked( xRec )
 
    RETURN .F.
 
-FUNCTION sx_SetTrigger( nAction, cTriggerName, cRDD /* Harbour extensions */ )
+FUNCTION sx_SetTrigger(nAction, cTriggerName, cRDD /* Harbour extensions */)
 
    LOCAL cPrevTrigger := ""
 
-   IF HB_ISNUMERIC( nAction )
+   IF HB_ISNUMERIC(nAction)
       IF nAction == TRIGGER_PENDING
-         IF HB_ISSTRING( cTriggerName )
-            hb_rddInfo( RDDI_PENDINGTRIGGER, cTriggerName, cRDD )
+         IF HB_ISSTRING(cTriggerName)
+            hb_rddInfo(RDDI_PENDINGTRIGGER, cTriggerName, cRDD)
          ENDIF
       ELSEIF Used()
-         cPrevTrigger := dbInfo( DBI_TRIGGER )
+         cPrevTrigger := dbInfo(DBI_TRIGGER)
          SWITCH nAction
          CASE TRIGGER_ENABLE
-            dbInfo( DBI_TRIGGER, .T. )
+            dbInfo(DBI_TRIGGER, .T.)
             EXIT
          CASE TRIGGER_DISABLE
-            dbInfo( DBI_TRIGGER, .F. )
+            dbInfo(DBI_TRIGGER, .F.)
             EXIT
          CASE TRIGGER_REMOVE
-            dbInfo( DBI_TRIGGER, "" )
+            dbInfo(DBI_TRIGGER, "")
             EXIT
          CASE TRIGGER_INSTALL
-            IF HB_ISSTRING( cTriggerName )
-               dbInfo( DBI_TRIGGER, cTriggerName )
+            IF HB_ISSTRING(cTriggerName)
+               dbInfo(DBI_TRIGGER, cTriggerName)
             ENDIF
             EXIT
          ENDSWITCH

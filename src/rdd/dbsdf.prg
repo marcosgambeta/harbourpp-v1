@@ -50,7 +50,7 @@
 
 REQUEST SDF
 
-FUNCTION __dbSDF( lExport, cFile, aFields, bFor, bWhile, nNext, nRecord, lRest, cCodePage )
-   RETURN iif( lExport, ;
-      __dbCopy( cFile, aFields, bFor, bWhile, nNext, nRecord, lRest, "SDF", , cCodePage ), ;
-      __dbApp( cFile, aFields, bFor, bWhile, nNext, nRecord, lRest, "SDF", , cCodePage ) )
+FUNCTION __dbSDF(lExport, cFile, aFields, bFor, bWhile, nNext, nRecord, lRest, cCodePage)
+   RETURN iif(lExport, ;
+      __dbCopy(cFile, aFields, bFor, bWhile, nNext, nRecord, lRest, "SDF", NIL, cCodePage), ;
+      __dbApp(cFile, aFields, bFor, bWhile, nNext, nRecord, lRest, "SDF", NIL, cCodePage))

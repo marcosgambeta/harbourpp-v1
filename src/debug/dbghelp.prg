@@ -54,49 +54,49 @@
 #include "box.ch"
 #include "inkey.ch"
 
-PROCEDURE __dbgHelp( cTopic )
+PROCEDURE __dbgHelp(cTopic)
 
-   LOCAL cColor := iif( __dbg():lMonoDisplay, "N/W, W/N, W+/W, W+/N", "N/W, N/BG, R/W, R/BG" )
+   LOCAL cColor := iif(__dbg():lMonoDisplay, "N/W, W/N, W+/W, W+/N", "N/W, N/BG, R/W, R/BG")
    LOCAL oBrw
    LOCAL nTopic
    LOCAL aTopics := GetTopics()
 
-   LOCAL oDlg := HBDbWindow():New( 2, 2, MaxRow() - 2, MaxCol() - 2, "Help", cColor )
+   LOCAL oDlg := HBDbWindow():New(2, 2, MaxRow() - 2, MaxCol() - 2, "Help", cColor)
 
-   oBrw := HBDbBrowser():New( oDlg:nTop + 1, oDlg:nLeft + 1, oDlg:nBottom - 1, oDlg:nLeft + 12 )
+   oBrw := HBDbBrowser():New(oDlg:nTop + 1, oDlg:nLeft + 1, oDlg:nBottom - 1, oDlg:nLeft + 12)
    oBrw:Cargo := 1
-   oBrw:AddColumn( HBDbColumnNew( "", {|| aTopics[ oBrw:Cargo ][ 1 ] }, 12 ) )
-   oBrw:ColorSpec := StrTran( __dbg():ClrModal(), ", R/W" )
+   oBrw:AddColumn(HBDbColumnNew("", {|| aTopics[oBrw:Cargo][1] }, 12))
+   oBrw:ColorSpec := StrTran(__dbg():ClrModal(), ", R/W")
    oBrw:SkipBlock := {| nSkip, nOld | nOld := oBrw:Cargo, oBrw:Cargo += nSkip, ;
-      oBrw:Cargo := Min( Max( oBrw:Cargo, 1 ), Len( aTopics ) ), ;
+      oBrw:Cargo := Min(Max(oBrw:Cargo, 1), Len(aTopics)), ;
       oBrw:Cargo - nOld }
    oBrw:GoTopBlock := {|| oBrw:Cargo := 1 }
-   oBrw:GoBottomBlock := {|| oBrw:Cargo := Len( aTopics ) }
+   oBrw:GoBottomBlock := {|| oBrw:Cargo := Len(aTopics) }
 
-   IF HB_ISSTRING( cTopic ) .AND. ;
-      ( nTopic := AScan( aTopics, {| x | hb_LeftEqI( x[ 1 ], cTopic ) } ) ) > 1
+   IF HB_ISSTRING(cTopic) .AND. ;
+      (nTopic := AScan(aTopics, {| x | hb_LeftEqI(x[1], cTopic) })) > 1
       oBrw:nFirstVisible := nTopic
    ENDIF
 
-   oDlg:bPainted := {|| PaintWindow( oDlg, oBrw, aTopics ) }
-   oDlg:bKeyPressed := {| nKey | ProcessKey( nKey, oDlg, oBrw, aTopics, oDlg:cColor ) }
+   oDlg:bPainted := {|| PaintWindow(oDlg, oBrw, aTopics) }
+   oDlg:bKeyPressed := {| nKey | ProcessKey(nKey, oDlg, oBrw, aTopics, oDlg:cColor) }
 
    oDlg:ShowModal()
 
    RETURN
 
-STATIC PROCEDURE PaintWindow( oDlg, oBrw, aTopics )
+STATIC PROCEDURE PaintWindow(oDlg, oBrw, aTopics)
 
-   hb_DispBox( oDlg:nTop + 1, oDlg:nLeft + 13, oDlg:nBottom - 1, oDlg:nLeft + 13, HB_B_SINGLE_UNI, oDlg:cColor )
-   hb_DispOutAtBox( oDlg:nTop, oDlg:nLeft + 13, hb_UTF8ToStrBox( "┬" ), oDlg:cColor )
-   hb_DispOutAtBox( oDlg:nBottom, oDlg:nLeft + 13, hb_UTF8ToStrBox( "┴" ), oDlg:cColor )
+   hb_DispBox(oDlg:nTop + 1, oDlg:nLeft + 13, oDlg:nBottom - 1, oDlg:nLeft + 13, HB_B_SINGLE_UNI, oDlg:cColor)
+   hb_DispOutAtBox(oDlg:nTop, oDlg:nLeft + 13, hb_UTF8ToStrBox("┬"), oDlg:cColor)
+   hb_DispOutAtBox(oDlg:nBottom, oDlg:nLeft + 13, hb_UTF8ToStrBox("┴"), oDlg:cColor)
 
    oBrw:ForceStable()
-   ShowTopic( oDlg, aTopics, oBrw:Cargo, 0 )  // Start on page 1
+   ShowTopic(oDlg, aTopics, oBrw:Cargo, 0)  // Start on page 1
 
    RETURN
 
-STATIC PROCEDURE ProcessKey( nKey, oDlg, oBrw, aTopics )
+STATIC PROCEDURE ProcessKey(nKey, oDlg, oBrw, aTopics)
 
    LOCAL n
    LOCAL nSkip
@@ -107,16 +107,16 @@ STATIC PROCEDURE ProcessKey( nKey, oDlg, oBrw, aTopics )
       IF oBrw:Cargo > 1
          oBrw:Up()
          oBrw:ForceStable()
-         ShowTopic( oDlg, aTopics, oBrw:Cargo, 0 )  // Start on page 1
+         ShowTopic(oDlg, aTopics, oBrw:Cargo, 0)  // Start on page 1
       ENDIF
       EXIT
 
    CASE K_DOWN
 
-      IF oBrw:Cargo < Len( aTopics )
+      IF oBrw:Cargo < Len(aTopics)
          oBrw:Down()
          oBrw:ForceStable()
-         ShowTopic( oDlg, aTopics, oBrw:Cargo, 0 )  // Start on page 1
+         ShowTopic(oDlg, aTopics, oBrw:Cargo, 0)  // Start on page 1
       ENDIF
       EXIT
 
@@ -125,23 +125,23 @@ STATIC PROCEDURE ProcessKey( nKey, oDlg, oBrw, aTopics )
       IF oBrw:Cargo > 1
          oBrw:GoTop()
          oBrw:ForceStable()
-         ShowTopic( oDlg, aTopics, oBrw:Cargo, 0 )  // Start on page 1
+         ShowTopic(oDlg, aTopics, oBrw:Cargo, 0)  // Start on page 1
       ENDIF
       EXIT
 
    CASE K_END
 
-      IF oBrw:Cargo < Len( aTopics )
+      IF oBrw:Cargo < Len(aTopics)
          oBrw:GoBottom()
          oBrw:ForceStable()
-         ShowTopic( oDlg, aTopics, oBrw:Cargo, 0 )  // Start on page 1
+         ShowTopic(oDlg, aTopics, oBrw:Cargo, 0)  // Start on page 1
       ENDIF
       EXIT
 
    CASE K_PGUP
    CASE K_CTRL_B
 
-      ShowTopic( oDlg, aTopics, oBrw:Cargo, -1 )  // Skip to previous page
+      ShowTopic(oDlg, aTopics, oBrw:Cargo, -1)  // Skip to previous page
       EXIT
 
    CASE K_PGDN
@@ -150,12 +150,12 @@ STATIC PROCEDURE ProcessKey( nKey, oDlg, oBrw, aTopics )
 #endif
    CASE K_SPACE
 
-      ShowTopic( oDlg, aTopics, oBrw:Cargo, 1 )  // Skip to next page
+      ShowTopic(oDlg, aTopics, oBrw:Cargo, 1)  // Skip to next page
       EXIT
 
    CASE K_LBUTTONDOWN
 
-      IF ( nSkip := MRow() - oDlg:nTop - oBrw:RowPos ) != 0
+      IF (nSkip := MRow() - oDlg:nTop - oBrw:RowPos) != 0
          IF nSkip > 0
             FOR n := 1 TO nSkip
                oBrw:Down()
@@ -168,7 +168,7 @@ STATIC PROCEDURE ProcessKey( nKey, oDlg, oBrw, aTopics )
             NEXT
          ENDIF
          oBrw:ForceStable()
-         ShowTopic( oDlg, aTopics, oBrw:Cargo, 0 )  // Start on page 1
+         ShowTopic(oDlg, aTopics, oBrw:Cargo, 0)  // Start on page 1
       ENDIF
       EXIT
 
@@ -176,7 +176,7 @@ STATIC PROCEDURE ProcessKey( nKey, oDlg, oBrw, aTopics )
 
    RETURN
 
-STATIC PROCEDURE ShowTopic( oDlg, aTopics, nTopic, nPageOp )
+STATIC PROCEDURE ShowTopic(oDlg, aTopics, nTopic, nPageOp)
 
    LOCAL oDebug := __dbg()
    LOCAL nRows  := oDlg:nBottom - oDlg:nTop - 1
@@ -184,11 +184,11 @@ STATIC PROCEDURE ShowTopic( oDlg, aTopics, nTopic, nPageOp )
    LOCAL nRowsToPaint
    LOCAL n
 
-   IF nTopic > Len( aTopics )
+   IF nTopic > Len(aTopics)
       nTopic := 1
    ENDIF
 
-   nPages := Int( ( Len( aTopics[ nTopic ][ 2 ] ) + nRows - 1 ) / nRows )
+   nPages := Int((Len(aTopics[nTopic][2]) + nRows - 1) / nRows)
 
    IF nPages <= 1
       IF nPageOp == -1 .OR. nPageOp == 1
@@ -223,15 +223,15 @@ STATIC PROCEDURE ShowTopic( oDlg, aTopics, nTopic, nPageOp )
       ENDSWITCH
    ENDIF
 
-   hb_Scroll( oDlg:nTop + 1, oDlg:nLeft + 14, oDlg:nBottom - 1, oDlg:nRight - 1,,, oDlg:cColor )
+   hb_Scroll(oDlg:nTop + 1, oDlg:nLeft + 14, oDlg:nBottom - 1, oDlg:nRight - 1, NIL, NIL, oDlg:cColor)
 
-   nRowsToPaint := Min( nRows, Len( aTopics[ nTopic ][ 2 ] ) - ( ( oDebug:nHelpPage - 1 ) * nRows ) )
+   nRowsToPaint := Min(nRows, Len(aTopics[nTopic][2]) - ((oDebug:nHelpPage - 1) * nRows))
 
    FOR n := 1 TO nRowsToPaint
-      hb_DispOutAt( 2 + n, 16, aTopics[ nTopic ][ 2 ][ ( ( oDebug:nHelpPage - 1 ) * nRows ) + n ], oDlg:cColor )
+      hb_DispOutAt(2 + n, 16, aTopics[nTopic][2][((oDebug:nHelpPage - 1) * nRows) + n], oDlg:cColor)
    NEXT
 
-   hb_DispOutAt( oDlg:nBottom, oDlg:nRight - 16, " Page " + Str( oDebug:nHelpPage, 1 ) + " of " + Str( nPages, 1 ) + " ", oDlg:cColor )
+   hb_DispOutAt(oDlg:nBottom, oDlg:nRight - 16, " Page " + Str(oDebug:nHelpPage, 1) + " of " + Str(nPages, 1) + " ", oDlg:cColor)
 
    RETURN
 
@@ -240,12 +240,12 @@ STATIC FUNCTION GetTopics()
    LOCAL aTopics := {}
    LOCAL cLine
 
-   FOR EACH cLine IN hb_ATokens( help_en(), .T. )
-      IF hb_LeftEq( cLine, "--" )
-         AAdd( aTopics, { PadR( SubStr( cLine, Len( "--" ) + 1 ), 12 ), {} } )
-      ELSEIF ! Empty( aTopics ) .AND. ;
-         ( ! Empty( cLine ) .OR. ! cLine:__enumIsLast() )  /* skip last EOL */
-         AAdd( ATail( aTopics )[ 2 ], cLine )
+   FOR EACH cLine IN hb_ATokens(help_en(), .T.)
+      IF hb_LeftEq(cLine, "--")
+         AAdd(aTopics, { PadR(SubStr(cLine, Len("--") + 1), 12), {} })
+      ELSEIF !Empty(aTopics) .AND. ;
+         (!Empty(cLine) .OR. !cLine:__enumIsLast())  /* skip last EOL */
+         AAdd(ATail(aTopics)[2], cLine)
       ENDIF
    NEXT
 

@@ -60,83 +60,79 @@ CREATE CLASS HBDbHash
    VAR nCurWindow INIT 0
    VAR lEditable
 
-   METHOD New( hHash, cVarName, lEditable )
+   METHOD New(hHash, cVarName, lEditable)
 
-   METHOD addWindows( hHash, nRow )
-   METHOD doGet( oBrowse, pItem, nSet )
-   METHOD SetsKeyPressed( nKey, oBrwSets, oWnd, cName, hHash )
+   METHOD addWindows(hHash, nRow)
+   METHOD doGet(oBrowse, pItem, nSet)
+   METHOD SetsKeyPressed(nKey, oBrwSets, oWnd, cName, hHash)
 
 ENDCLASS
 
-METHOD New( hHash, cVarName, lEditable ) CLASS HBDbHash
+METHOD New(hHash, cVarName, lEditable) CLASS HBDbHash
 
    ::hashName := cVarName
    ::TheHash := hHash
-   ::lEditable := hb_defaultValue( lEditable, .T. )
+   ::lEditable := hb_defaultValue(lEditable, .T.)
 
-   ::addWindows( ::TheHash )
+   ::addWindows(::TheHash)
 
    RETURN Self
 
-METHOD addWindows( hHash, nRow ) CLASS HBDbHash
+METHOD addWindows(hHash, nRow) CLASS HBDbHash
 
    LOCAL oBrwSets
-   LOCAL nSize := Len( hHash )
+   LOCAL nSize := Len(hHash)
    LOCAL oWndSets
    LOCAL nColWidth
    LOCAL oCol
    LOCAL nKeyLen
 
    IF nSize < MaxRow() - 2
-      IF HB_ISNUMERIC( nRow )
-         oWndSets := HBDbWindow():New( GetTopPos( nRow ), 5, getBottomPos( nRow + nSize + 1 ), MaxCol() - 5, ;
-            ::hashName + "[1.." + hb_ntos( nSize ) + "]", "N/W" )
+      IF HB_ISNUMERIC(nRow)
+         oWndSets := HBDbWindow():New(GetTopPos(nRow), 5, getBottomPos(nRow + nSize + 1), MaxCol() - 5, ::hashName + "[1.." + hb_ntos(nSize) + "]", "N/W")
       ELSE
-         oWndSets := HBDbWindow():New( 1, 5, 2 + nSize, MaxCol() - 5, ;
-            ::hashName + "[1.." + hb_ntos( nSize ) + "]", "N/W" )
+         oWndSets := HBDbWindow():New(1, 5, 2 + nSize, MaxCol() - 5, ::hashName + "[1.." + hb_ntos(nSize) + "]", "N/W")
       ENDIF
    ELSE
-      oWndSets := HBDbWindow():New( 1, 5, MaxRow() - 2, MaxCol() - 5, ;
-         ::hashName + "[1.." + hb_ntos( nSize ) + "]", "N/W" )
+      oWndSets := HBDbWindow():New(1, 5, MaxRow() - 2, MaxCol() - 5, ::hashName + "[1.." + hb_ntos(nSize) + "]", "N/W")
    ENDIF
    ::nCurWindow++
    oWndSets:lFocused := .T.
-   AAdd( ::aWindows, oWndSets )
+   AAdd(::aWindows, oWndSets)
 
-   oBrwSets := HBDbBrowser():New( oWndSets:nTop + 1, oWndSets:nLeft + 1, oWndSets:nBottom - 1, oWndSets:nRight - 1 )
+   oBrwSets := HBDbBrowser():New(oWndSets:nTop + 1, oWndSets:nLeft + 1, oWndSets:nBottom - 1, oWndSets:nRight - 1)
    oBrwSets:ColorSpec := __dbg():ClrModal()
    oBrwSets:Cargo := { 1, {} }  // Actual highlighted row
-   AAdd( oBrwSets:Cargo[ 2 ], hHash )
+   AAdd(oBrwSets:Cargo[2], hHash)
 
-   oBrwSets:AddColumn( oCol := HBDbColumnNew( "", {|| ::hashName + "[" + HashKeyString( hHash, oBrwSets:cargo[ 1 ] ) + "]" } ) )
+   oBrwSets:AddColumn(oCol := HBDbColumnNew("", {|| ::hashName + "[" + HashKeyString(hHash, oBrwSets:cargo[1]) + "]" }))
 
    // calculate max key length
    nKeyLen := 0
-   hb_HEval( hHash, {| k, v, p | HB_SYMBOL_UNUSED( k ), HB_SYMBOL_UNUSED( v ), nKeyLen := Max( nKeyLen, Len( ::hashName + HashKeyString( hHash, p ) ) + 2 ) } )
+   hb_HEval(hHash, {| k, v, p | HB_SYMBOL_UNUSED(k), HB_SYMBOL_UNUSED(v), nKeyLen := Max(nKeyLen, Len(::hashName + HashKeyString(hHash, p)) + 2) })
    oCol:width := nKeyLen
    oCol:DefColor := { 1, 2 }
    nColWidth := oCol:Width
 
-   oBrwSets:AddColumn( oCol := HBDbColumnNew( "", {|| __dbgValToExp( hb_HValueAt( hHash, oBrwSets:cargo[ 1 ] ) ) } ) )
+   oBrwSets:AddColumn(oCol := HBDbColumnNew("", {|| __dbgValToExp(hb_HValueAt(hHash, oBrwSets:cargo[1])) }))
 
    oCol:width := oWndSets:nRight - oWndSets:nLeft - nColWidth - 2
    oCol:DefColor := { 1, 3 }
 
-   oBrwSets:goTopBlock := {|| oBrwSets:cargo[ 1 ] := 1 }
-   oBrwSets:goBottomBlock := {|| oBrwSets:cargo[ 1 ] := Len( oBrwSets:cargo[ 2 ][ 1 ] ) }
-   oBrwSets:skipBlock := {| nPos | nPos := HashBrowseSkip( nPos, oBrwSets ), ;
-                                   oBrwSets:cargo[ 1 ] := oBrwSets:cargo[ 1 ] + nPos, nPos }
+   oBrwSets:goTopBlock := {|| oBrwSets:cargo[1] := 1 }
+   oBrwSets:goBottomBlock := {|| oBrwSets:cargo[1] := Len(oBrwSets:cargo[2][1]) }
+   oBrwSets:skipBlock := {|nPos|nPos := HashBrowseSkip(nPos, oBrwSets), oBrwSets:cargo[1] := oBrwSets:cargo[1] + nPos, nPos}
    oBrwSets:colPos := 2
 
-   ::aWindows[ ::nCurWindow ]:bPainted    := {|| oBrwSets:forcestable() }
-   ::aWindows[ ::nCurWindow ]:bKeyPressed := ;
-      {| nKey | ::SetsKeyPressed( nKey, oBrwSets, ::aWindows[ ::nCurWindow ], ::hashName, hHash ) }
+   ::aWindows[::nCurWindow]:bPainted    := {|| oBrwSets:forcestable() }
+   ::aWindows[::nCurWindow]:bKeyPressed := ;
+      {| nKey | ::SetsKeyPressed(nKey, oBrwSets, ::aWindows[::nCurWindow], ::hashName, hHash) }
 
-   ::aWindows[ ::nCurWindow ]:ShowModal()
+   ::aWindows[::nCurWindow]:ShowModal()
 
    RETURN Self
 
-METHOD PROCEDURE doGet( oBrowse, pItem, nSet ) CLASS HBDbHash
+METHOD PROCEDURE doGet(oBrowse, pItem, nSet) CLASS HBDbHash
 
    LOCAL oErr
    LOCAL cValue
@@ -145,23 +141,21 @@ METHOD PROCEDURE doGet( oBrowse, pItem, nSet ) CLASS HBDbHash
    oBrowse:forceStable()
    // if confirming new record, append blank
 
-   cValue := __dbgValToExp( hb_HValueAt( pItem, nSet ) )
+   cValue := __dbgValToExp(hb_HValueAt(pItem, nSet))
 
-   IF __dbgInput( Row(), oBrowse:nLeft + oBrowse:GetColumn( 1 ):width + 1, ;
-                  oBrowse:getColumn( 2 ):Width, @cValue, ;
-                  __dbgExprValidBlock(), __dbgColors()[ 2 ], 256 )
+   IF __dbgInput(Row(), oBrowse:nLeft + oBrowse:GetColumn(1):width + 1, oBrowse:getColumn(2):Width, @cValue, __dbgExprValidBlock(), __dbgColors()[2], 256)
       BEGIN SEQUENCE WITH __BreakBlock()
-         hb_HValueAt( pItem, nSet, &cValue )
+         hb_HValueAt(pItem, nSet, &cValue)
       RECOVER USING oErr
-         __dbgAlert( oErr:description )
+         __dbgAlert(oErr:description)
       END SEQUENCE
    ENDIF
 
    RETURN
 
-METHOD SetsKeyPressed( nKey, oBrwSets, oWnd, cName, hHash ) CLASS HBDbHash
+METHOD SetsKeyPressed(nKey, oBrwSets, oWnd, cName, hHash) CLASS HBDbHash
 
-   LOCAL nSet := oBrwSets:cargo[ 1 ]
+   LOCAL nSet := oBrwSets:cargo[1]
    LOCAL cOldname := ::hashName
    LOCAL uValue
 
@@ -195,38 +189,38 @@ METHOD SetsKeyPressed( nKey, oBrwSets, oWnd, cName, hHash ) CLASS HBDbHash
       EXIT
 
    CASE K_ENTER
-      uValue := hb_HValueAt( hHash, nSet )
+      uValue := hb_HValueAt(hHash, nSet)
 
-      IF HB_ISHASH( uValue )
+      IF HB_ISHASH(uValue)
 
-         IF Len( uValue ) == 0
-            __dbgAlert( "Hash is empty" )
+         IF Len(uValue) == 0
+            __dbgAlert("Hash is empty")
          ELSE
-            SetPos( ownd:nBottom, ownd:nLeft )
-            ::aWindows[ ::nCurwindow ]:lFocused := .F.
+            SetPos(ownd:nBottom, ownd:nLeft)
+            ::aWindows[::nCurwindow]:lFocused := .F.
 
-            ::hashName := ::hashName + "[" + HashKeyString( hHash, nSet ) + "]"
-            ::AddWindows( hb_HValueAt( hHash, nSet ), oBrwSets:RowPos + oBrwSets:nTop )
+            ::hashName := ::hashName + "[" + HashKeyString(hHash, nSet) + "]"
+            ::AddWindows(hb_HValueAt(hHash, nSet), oBrwSets:RowPos + oBrwSets:nTop)
             ::hashName := cOldName
 
-            hb_ADel( ::aWindows, ::nCurWindow, .T. )
+            hb_ADel(::aWindows, ::nCurWindow, .T.)
             IF ::nCurwindow == 0
                ::nCurwindow := 1
             ELSE
                ::nCurwindow--
             ENDIF
          ENDIF
-      ELSEIF HB_ISPOINTER( uValue ) .OR. ! ::lEditable
-         __dbgAlert( "Value cannot be edited" )
+      ELSEIF HB_ISPOINTER(uValue) .OR. !::lEditable
+         __dbgAlert("Value cannot be edited")
       ELSE
          oBrwSets:RefreshCurrent()
          DO CASE
-         CASE HB_ISOBJECT( uValue )
-            __dbgObject( uValue, cName + "[" + HashKeyString( hHash, nSet ) + "]" )
-         CASE HB_ISARRAY( uValue )
-            __dbgArrays( uValue, cName + "[" + HashKeyString( hHash, nSet ) + "]" )
+         CASE HB_ISOBJECT(uValue)
+            __dbgObject(uValue, cName + "[" + HashKeyString(hHash, nSet) + "]")
+         CASE HB_ISARRAY(uValue)
+            __dbgArrays(uValue, cName + "[" + HashKeyString(hHash, nSet) + "]")
          OTHERWISE
-            ::doGet( oBrwSets, hHash, nSet )
+            ::doGet(oBrwSets, hHash, nSet)
          ENDCASE
          oBrwSets:RefreshCurrent()
          oBrwSets:ForceStable()
@@ -237,25 +231,24 @@ METHOD SetsKeyPressed( nKey, oBrwSets, oWnd, cName, hHash ) CLASS HBDbHash
 
    oBrwSets:forcestable()
 
-   ::aWindows[ ::nCurwindow ]:SetCaption( cName + "[" + hb_ntos( oBrwSets:cargo[ 1 ] ) + ".." + ;
-      hb_ntos( Len( hHash ) ) + "]" )
+   ::aWindows[::nCurwindow]:SetCaption(cName + "[" + hb_ntos(oBrwSets:cargo[1]) + ".." + hb_ntos(Len(hHash)) + "]")
 
    RETURN Self
 
-FUNCTION __dbgHashes( hHash, cVarName, lEditable )
-   RETURN HBDbHash():New( hHash, cVarName, lEditable )
+FUNCTION __dbgHashes(hHash, cVarName, lEditable)
+   RETURN HBDbHash():New(hHash, cVarName, lEditable)
 
-STATIC FUNCTION GetTopPos( nPos )
-   RETURN iif( ( MaxRow() - nPos ) < 5, MaxRow() - nPos, nPos )
+STATIC FUNCTION GetTopPos(nPos)
+   RETURN iif((MaxRow() - nPos) < 5, MaxRow() - nPos, nPos)
 
-STATIC FUNCTION GetBottomPos( nPos )
-   RETURN iif( nPos < MaxRow() - 2, nPos, MaxRow() - 2 )
+STATIC FUNCTION GetBottomPos(nPos)
+   RETURN iif(nPos < MaxRow() - 2, nPos, MaxRow() - 2)
 
-STATIC FUNCTION HashBrowseSkip( nPos, oBrwSets )
+STATIC FUNCTION HashBrowseSkip(nPos, oBrwSets)
    RETURN ;
-      iif( oBrwSets:cargo[ 1 ] + nPos < 1, -oBrwSets:cargo[ 1 ] + 1, ;
-      iif( oBrwSets:cargo[ 1 ] + nPos > Len( oBrwSets:cargo[ 2 ][ 1 ] ), ;
-      Len( oBrwSets:cargo[ 2 ][ 1 ] ) - oBrwSets:cargo[ 1 ], nPos ) )
+      iif(oBrwSets:cargo[1] + nPos < 1, -oBrwSets:cargo[1] + 1, ;
+      iif(oBrwSets:cargo[1] + nPos > Len(oBrwSets:cargo[2][1]), ;
+      Len(oBrwSets:cargo[2][1]) - oBrwSets:cargo[1], nPos))
 
-STATIC FUNCTION HashKeyString( hHash, nAt )
-   RETURN __dbgValToExp( hb_HKeyAt( hHash, nAt ) )
+STATIC FUNCTION HashKeyString(hHash, nAt)
+   RETURN __dbgValToExp(hb_HKeyAt(hHash, nAt))

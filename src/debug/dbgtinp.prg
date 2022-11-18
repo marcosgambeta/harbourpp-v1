@@ -69,40 +69,39 @@ CREATE CLASS HBDbInput
 
    EXPORTED:
 
-   METHOD new( nRow, nCol, nWidth, cValue, cColor, nSize )
-   METHOD applyKey( nKey )
+   METHOD new(nRow, nCol, nWidth, cValue, cColor, nSize)
+   METHOD applyKey(nKey)
    METHOD getValue()
-   METHOD setValue( cValue )
+   METHOD setValue(cValue)
    METHOD display()
    METHOD showCursor()
-   METHOD newPos( nRow, nCol )
-   METHOD setColor( cColor )
+   METHOD newPos(nRow, nCol)
+   METHOD setColor(cColor)
 
 ENDCLASS
 
-METHOD new( nRow, nCol, nWidth, cValue, cColor, nSize ) CLASS HBDbInput
+METHOD new(nRow, nCol, nWidth, cValue, cColor, nSize) CLASS HBDbInput
 
    ::nRow   := nRow
    ::nCol   := nCol
    ::nWidth := nWidth
-   ::nSize  := iif( HB_ISNUMERIC( nSize ), nSize, nWidth )
-   ::cValue := PadR( cValue, ::nSize )
+   ::nSize  := iif(HB_ISNUMERIC(nSize), nSize, nWidth)
+   ::cValue := PadR(cValue, ::nSize)
 
-   ::setColor( cColor )
+   ::setColor(cColor)
 
    RETURN Self
 
-METHOD SetColor( cColor ) CLASS HBDbInput
+METHOD SetColor(cColor) CLASS HBDbInput
 
-   ::acColor := { hb_ColorIndex( cColor, CLR_STANDARD ), ;
-                  hb_ColorIndex( cColor, CLR_ENHANCED ) }
-   IF hb_ColorToN( ::acColor[ 2 ] ) == -1
-      ::acColor[ 2 ] := ::acColor[ 1 ]
+   ::acColor := {hb_ColorIndex(cColor, CLR_STANDARD), hb_ColorIndex(cColor, CLR_ENHANCED)}
+   IF hb_ColorToN(::acColor[2]) == -1
+      ::acColor[2] := ::acColor[1]
    ENDIF
 
    RETURN Self
 
-METHOD newPos( nRow, nCol ) CLASS HBDbInput
+METHOD newPos(nRow, nCol) CLASS HBDbInput
 
    ::nRow := nRow
    ::nCol := nCol
@@ -112,10 +111,10 @@ METHOD newPos( nRow, nCol ) CLASS HBDbInput
 METHOD getValue() CLASS HBDbInput
    RETURN ::cValue
 
-METHOD setValue( cValue ) CLASS HBDbInput
+METHOD setValue(cValue) CLASS HBDbInput
 
-   ::cValue := PadR( cValue, ::nSize )
-   ::nPos := Min( ::nSize, Len( RTrim( ::cValue ) ) + 1 )
+   ::cValue := PadR(cValue, ::nSize)
+   ::nPos := Min(::nSize, Len(RTrim(::cValue)) + 1)
 
    RETURN Self
 
@@ -126,19 +125,18 @@ METHOD display() CLASS HBDbInput
    ELSEIF ::nPos - ::nFirst >= ::nWidth
       ::nFirst := ::nPos - ::nWidth + 1
    ENDIF
-   hb_DispOutAt( ::nRow, ::nCol, SubStr( ::cValue, ::nFirst, ::nWidth ), ;
-                 ::acColor[ 2 ] )
+   hb_DispOutAt(::nRow, ::nCol, SubStr(::cValue, ::nFirst, ::nWidth), ::acColor[2])
 
    RETURN Self
 
 METHOD showCursor() CLASS HBDbInput
 
-   SetPos( ::nRow, ::nCol + ::nPos - ::nFirst )
-   SetCursor( iif( Set( _SET_INSERT ), SC_INSERT, SC_NORMAL ) )
+   SetPos(::nRow, ::nCol + ::nPos - ::nFirst)
+   SetCursor(iif(Set(_SET_INSERT), SC_INSERT, SC_NORMAL))
 
    RETURN Self
 
-METHOD applyKey( nKey ) CLASS HBDbInput
+METHOD applyKey(nKey) CLASS HBDbInput
 
    LOCAL lUpdate := .T.
 
@@ -147,7 +145,7 @@ METHOD applyKey( nKey ) CLASS HBDbInput
       ::nPos := 1
       EXIT
    CASE K_END
-      ::nPos := Len( RTrim( ::cValue ) ) + 1
+      ::nPos := Len(RTrim(::cValue)) + 1
       IF ::nPos > ::nSize
          ::nPos := ::nSize
       ENDIF
@@ -163,29 +161,29 @@ METHOD applyKey( nKey ) CLASS HBDbInput
       ENDIF
       EXIT
    CASE K_DEL
-      ::cValue := Stuff( ::cValue, ::nPos, 1, "" ) + " "
+      ::cValue := Stuff(::cValue, ::nPos, 1, "") + " "
       EXIT
    CASE K_BS
       IF ::nPos > 1
-         ::cValue := Stuff( ::cValue, --::nPos, 1, "" ) + " "
+         ::cValue := Stuff(::cValue, --::nPos, 1, "") + " "
       ENDIF
       EXIT
    CASE K_CTRL_Y
    CASE K_CTRL_DEL
-      ::cValue := Space( ::nSize )
+      ::cValue := Space(::nSize)
       ::nPos := 1
       EXIT
    CASE K_INS
-      Set( _SET_INSERT, ! Set( _SET_INSERT ) )
+      Set(_SET_INSERT, !Set(_SET_INSERT))
       EXIT
    OTHERWISE
-      IF hb_keyChar( nKey ) == ""
+      IF hb_keyChar(nKey) == ""
          lUpdate := .F.
       ELSE
-         IF Set( _SET_INSERT )
-            ::cValue := Left( Stuff( ::cValue, ::nPos, 0, hb_keyChar( nKey ) ), ::nSize )
+         IF Set(_SET_INSERT)
+            ::cValue := Left(Stuff(::cValue, ::nPos, 0, hb_keyChar(nKey)), ::nSize)
          ELSE
-            ::cValue := Stuff( ::cValue, ::nPos, 1, hb_keyChar( nKey ) )
+            ::cValue := Stuff(::cValue, ::nPos, 1, hb_keyChar(nKey))
          ENDIF
          IF ::nPos < ::nSize
             ::nPos++

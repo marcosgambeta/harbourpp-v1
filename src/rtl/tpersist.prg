@@ -213,12 +213,12 @@ STATIC FUNCTION ArrayToText(aArray, cName, nIndent)
 
       SWITCH ValType(uValue)
       CASE "A"
-         cArray += ArrayToText(uValue, cName + "[ " + hb_ntos(uValue:__enumIndex()) + " ]", nIndent + _INDENT) + hb_eol()
+         cArray += ArrayToText(uValue, cName + "[" + hb_ntos(uValue:__enumIndex()) + "]", nIndent + _INDENT) + hb_eol()
          EXIT
 
       CASE "O"
          IF __objDerivedFrom(uValue, "HBPersistent")
-            cArray += uValue:SaveToText(cName + "[ " + hb_ntos(uValue:__enumIndex()) + " ]", nIndent)
+            cArray += uValue:SaveToText(cName + "[" + hb_ntos(uValue:__enumIndex()) + "]", nIndent)
          ENDIF
          EXIT
 
@@ -231,7 +231,7 @@ STATIC FUNCTION ArrayToText(aArray, cName, nIndent)
          IF uValue:__enumIsFirst()
             cArray += hb_eol()
          ENDIF
-         cArray += Space(nIndent + _INDENT) + "::" + cName + "[ " + hb_ntos(uValue:__enumIndex()) + " ] := " + hb_ValToExp(uValue) + hb_eol()
+         cArray += Space(nIndent + _INDENT) + "::" + cName + "[" + hb_ntos(uValue:__enumIndex()) + "] := " + hb_ValToExp(uValue) + hb_eol()
       ENDSWITCH
    NEXT
 

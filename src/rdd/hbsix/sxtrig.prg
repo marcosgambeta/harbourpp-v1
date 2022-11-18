@@ -49,18 +49,18 @@
 
 #include "hbsxdef.ch"
 
-FUNCTION sx_DefTrigger( nEvent, nArea, nFieldPos, xTrigVal )
+FUNCTION sx_DefTrigger(nEvent, nArea, nFieldPos, xTrigVal)
 
-   HB_SYMBOL_UNUSED( nArea )
-   HB_SYMBOL_UNUSED( nFieldPos )
-   HB_SYMBOL_UNUSED( xTrigVal )
+   HB_SYMBOL_UNUSED(nArea)
+   HB_SYMBOL_UNUSED(nFieldPos)
+   HB_SYMBOL_UNUSED(xTrigVal)
 
    SWITCH nEvent
    CASE EVENT_PREUSE
 #if 0
-      _sx_IniInit( nArea )
+      _sx_IniInit(nArea)
 #endif
-      sx_SetTrigger( TRIGGER_REMOVE )
+      sx_SetTrigger(TRIGGER_REMOVE)
       EXIT
    CASE EVENT_POSTUSE
       EXIT

@@ -46,10 +46,10 @@
 
 #include "dbstruct.ch"
 
-FUNCTION __dbCopyStruct( cFileName, aFieldList )
-   RETURN dbCreate( cFileName, __dbStructFilter( dbStruct(), aFieldList ) )
+FUNCTION __dbCopyStruct(cFileName, aFieldList)
+   RETURN dbCreate(cFileName, __dbStructFilter(dbStruct(), aFieldList))
 
-FUNCTION __dbCopyXStruct( cFileName )
+FUNCTION __dbCopyXStruct(cFileName)
 
    LOCAL nOldArea
    LOCAL aStruct
@@ -57,7 +57,7 @@ FUNCTION __dbCopyXStruct( cFileName )
    LOCAL oError
    LOCAL lError := .F.
 
-   IF Empty( aStruct := dbStruct() )
+   IF Empty(aStruct := dbStruct())
       RETURN .F.
    ENDIF
 
@@ -65,17 +65,17 @@ FUNCTION __dbCopyXStruct( cFileName )
 
    BEGIN SEQUENCE
 
-      dbSelectArea( 0 )
-      __dbCreate( cFileName, , , .F. )
+      dbSelectArea(0)
+      __dbCreate(cFileName, NIL, NIL, .F.)
 
-      AEval( aStruct, {| aField | ;
-         iif( aField[ DBS_TYPE ] == "C" .AND. aField[ DBS_LEN ] > 255, ;
-            ( aField[ DBS_DEC ] := Int( aField[ DBS_LEN ] / 256 ), aField[ DBS_LEN ] := aField[ DBS_LEN ] % 256 ), ), ;
+      AEval(aStruct, {| aField | ;
+         iif(aField[DBS_TYPE] == "C" .AND. aField[DBS_LEN] > 255, ;
+            (aField[DBS_DEC] := Int(aField[DBS_LEN] / 256), aField[DBS_LEN] := aField[DBS_LEN] % 256), NIL), ;
          dbAppend(), ;
-         FIELD->FIELD_NAME := aField[ DBS_NAME ], ;
-         FIELD->FIELD_TYPE := aField[ DBS_TYPE ], ;
-         FIELD->FIELD_LEN := aField[ DBS_LEN ], ;
-         FIELD->FIELD_DEC := aField[ DBS_DEC ] } )
+         FIELD->FIELD_NAME := aField[DBS_NAME], ;
+         FIELD->FIELD_TYPE := aField[DBS_TYPE], ;
+         FIELD->FIELD_LEN := aField[DBS_LEN], ;
+         FIELD->FIELD_DEC := aField[DBS_DEC] })
 
    /* NOTE: CA-Cl*pper has a bug, where only a plain RECOVER statement is
             used here (without the USING keyword), so oError will always be NIL. */
@@ -85,11 +85,11 @@ FUNCTION __dbCopyXStruct( cFileName )
 
    IF Select() != nOldArea
       dbCloseArea()
-      dbSelectArea( nOldArea )
+      dbSelectArea(nOldArea)
    ENDIF
 
    IF lError
-      Break( oError )
+      Break(oError)
    ENDIF
 
    RETURN .T.
@@ -97,85 +97,84 @@ FUNCTION __dbCopyXStruct( cFileName )
 /* NOTE: Compared to CA-Cl*pper, Harbour:
          (cCodePage, nConnection). */
 
-FUNCTION __dbCreate( cFileName, cFileFrom, cRDD, lNew, cAlias, cCodePage, nConnection )
+FUNCTION __dbCreate(cFileName, cFileFrom, cRDD, lNew, cAlias, cCodePage, nConnection)
 
    LOCAL nOldArea := Select()
    LOCAL aStruct := {}
 
    LOCAL oError
 
-   __defaultNIL( @lNew, .F. )
+   __defaultNIL(@lNew, .F.)
 
    IF cAlias == NIL
-      hb_FNameSplit( cFileName, , @cAlias )
+      hb_FNameSplit(cFileName, NIL, @cAlias)
    ENDIF
 
-   IF Used() .AND. ! lNew
+   IF Used() .AND. !lNew
       dbCloseArea()
    ENDIF
 
    BEGIN SEQUENCE
 
-      IF Empty( cFileFrom )
+      IF Empty(cFileFrom)
 
-         dbCreate( cFileName, { ;
+         dbCreate(cFileName, { ;
             { "FIELD_NAME", "C", 10, 0 }, ;
             { "FIELD_TYPE", "C",  1, 0 }, ;
             { "FIELD_LEN" , "N",  3, 0 }, ;
             { "FIELD_DEC" , "N",  3, 0 } }, ;
-            cRDD, .F., cAlias, , cCodePage, nConnection )
+            cRDD, .F., cAlias, NIL, cCodePage, nConnection)
       ELSE
-         dbUseArea( lNew, , cFileFrom, "" )
+         dbUseArea(lNew, NIL, cFileFrom, "")
 
-         dbEval( {|| AAdd( aStruct, { ;
+         dbEval({|| AAdd(aStruct, { ;
             FIELD->FIELD_NAME ,;
             FIELD->FIELD_TYPE ,;
             FIELD->FIELD_LEN ,;
-            FIELD->FIELD_DEC } ) } )
+            FIELD->FIELD_DEC }) })
          dbCloseArea()
 
          IF lNew
-            dbSelectArea( nOldArea )
+            dbSelectArea(nOldArea)
          ENDIF
 
          /* Type detection is more in sync with dbCreate() logic in Harbour, as lowercase "C"
             and padded/continued strings ("C ", "C...") are also accepted. */
 
-         AEval( aStruct, {| aField | iif( hb_LeftEqI( aField[ DBS_TYPE ], "C" ) .AND. aField[ DBS_DEC ] != 0, ;
-            ( aField[ DBS_LEN ] += aField[ DBS_DEC ] * 256, ;
-              aField[ DBS_DEC ] := 0 ), NIL ) } )
+         AEval(aStruct, {| aField | iif(hb_LeftEqI(aField[DBS_TYPE], "C") .AND. aField[DBS_DEC] != 0, ;
+            (aField[DBS_LEN] += aField[DBS_DEC] * 256, aField[DBS_DEC] := 0), NIL) })
 
-         dbCreate( cFileName, aStruct, cRDD, lNew, cAlias, , cCodePage, nConnection )
+         dbCreate(cFileName, aStruct, cRDD, lNew, cAlias, NIL, cCodePage, nConnection)
 
       ENDIF
 
    RECOVER USING oError
       dbCloseArea()
-      Break( oError )
+      Break(oError)
    END SEQUENCE
 
    RETURN Used()
 
 /* NOTE: Internal helper function, CA-Cl*pper name is: __FLedit() */
 
-FUNCTION __dbStructFilter( aStruct, aFieldList )
+FUNCTION __dbStructFilter(aStruct, aFieldList)
 
    LOCAL aStructFiltered
    LOCAL bFindName
    LOCAL cName
 
-   IF Empty( aFieldList )
+   IF Empty(aFieldList)
       RETURN aStruct
    ENDIF
 
    /* Build a filtered list of the requested fields. */
 
    aStructFiltered := {}
-   bFindName := {| aField | aField[ DBS_NAME ] == cName }
+   bFindName := {| aField | aField[DBS_NAME] == cName }
 
-   AEval( aFieldList, {| cFieldName, nIndex | ;
-      cName := RTrim( Upper( cFieldName ) ), ;
-      nIndex := AScan( aStruct, bFindName ), ;
-      iif( nIndex == 0, NIL, AAdd( aStructFiltered, aStruct[ nIndex ] ) ) } )
+   AEval(aFieldList, {| cFieldName, nIndex | ;
+      cName := RTrim(Upper(cFieldName)), ;
+      nIndex := AScan(aStruct, bFindName), ;
+      iif(nIndex == 0, NIL, AAdd(aStructFiltered, aStruct[nIndex])) })
 
    RETURN aStructFiltered

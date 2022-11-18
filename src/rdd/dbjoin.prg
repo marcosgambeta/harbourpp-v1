@@ -49,10 +49,10 @@
 /* NOTE: Compared to CA-Cl*pper, Harbour has three extra parameters
          (cRDD, nConnection, cCodePage). */
 
-FUNCTION __dbJoin( cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage )
+FUNCTION __dbJoin(cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage)
 
    LOCAL nMaster := Select()
-   LOCAL nDetail := Select( cAlias )
+   LOCAL nDetail := Select(cAlias)
    LOCAL nResult
    LOCAL aStruct
    LOCAL aJoinList
@@ -60,8 +60,8 @@ FUNCTION __dbJoin( cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage )
    LOCAL oError
    LOCAL lError := .F.
 
-   dbSelectArea( nMaster )
-   IF Empty( aStruct := __FieldTwo( cAlias, aFields ) )
+   dbSelectArea(nMaster)
+   IF Empty(aStruct := __FieldTwo(cAlias, aFields))
       /* NOTE: CA-Cl*pper will leave the wrong workarea (cAlias) selected here.
                Harbour is bug compatible. [vszakats] */
       RETURN .F.
@@ -69,28 +69,28 @@ FUNCTION __dbJoin( cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage )
 
    BEGIN SEQUENCE
 
-      dbCreate( cFile, aStruct, cRDD, .T., "", , cCodePage, nConnection )
+      dbCreate(cFile, aStruct, cRDD, .T., "", NIL, cCodePage, nConnection)
       nResult := Select()
-      aJoinList := __JoinList( nMaster, nDetail, nResult, aStruct )
+      aJoinList := __JoinList(nMaster, nDetail, nResult, aStruct)
 
-      dbSelectArea( nMaster )
+      dbSelectArea(nMaster)
       dbGoTop()
-      DO WHILE ! Eof()
+      DO WHILE !Eof()
 
-         dbSelectArea( nDetail )
+         dbSelectArea(nDetail)
          dbGoTop()
-         DO WHILE ! Eof()
+         DO WHILE !Eof()
 
-            dbSelectArea( nMaster )
-            IF Eval( bFor )
-               __doJoinList( aJoinList )
+            dbSelectArea(nMaster)
+            IF Eval(bFor)
+               __doJoinList(aJoinList)
             ENDIF
 
-            dbSelectArea( nDetail )
+            dbSelectArea(nDetail)
             dbSkip()
          ENDDO
 
-         dbSelectArea( nMaster )
+         dbSelectArea(nMaster)
          dbSkip()
       ENDDO
 
@@ -99,73 +99,71 @@ FUNCTION __dbJoin( cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage )
    END SEQUENCE
 
    IF nResult != NIL
-      dbSelectArea( nResult )
+      dbSelectArea(nResult)
       dbCloseArea()
    ENDIF
 
-   dbSelectArea( nMaster )
+   dbSelectArea(nMaster)
 
    IF lError
-      Break( oError )
+      Break(oError)
    ENDIF
 
    RETURN .T.
 
-STATIC FUNCTION __FieldTwo( cAlias, aFields )
+STATIC FUNCTION __FieldTwo(cAlias, aFields)
 
    LOCAL aFldTemp
    LOCAL bFind
    LOCAL aStruct
    LOCAL cField
 
-   IF Empty( aFields )
+   IF Empty(aFields)
       RETURN dbStruct()
    ENDIF
 
    aFldTemp := {}
-   AEval( aFields, {| cFld | AAdd( aFldTemp, RTrim( Upper( cFld ) ) ) } )
+   AEval(aFields, {| cFld | AAdd(aFldTemp, RTrim(Upper(cFld))) })
 
    aFields := aFldTemp
 
    aStruct := {}
    bFind := {| cFld | cFld == cField }
-   AEval( dbStruct(), {| aFld | cField := aFld[ DBS_NAME ], ;
-      iif( AScan( aFields, bFind ) == 0, NIL, AAdd( aStruct, aFld ) ) } )
+   AEval(dbStruct(), {|aFld|cField := aFld[DBS_NAME], iif(AScan(aFields, bFind) == 0, NIL, AAdd(aStruct, aFld))})
 
-   dbSelectArea( cAlias )
-   bFind := {| cFld | "->" $ cFld .AND. SubStr( cFld, At( "->", cFld ) + 2 ) == cField }
-   AEval( dbStruct(), {| aFld | cField := aFld[ DBS_NAME ], ;
-      iif( AScan( aFields, bFind ) == 0, NIL, AAdd( aStruct, aFld ) ) } )
+   dbSelectArea(cAlias)
+   bFind := {| cFld | "->" $ cFld .AND. SubStr(cFld, At("->", cFld) + 2) == cField }
+   AEval(dbStruct(), {|aFld|cField := aFld[DBS_NAME], iif(AScan(aFields, bFind) == 0, NIL, AAdd(aStruct, aFld))})
 
    RETURN aStruct
 
-STATIC FUNCTION __JoinList( nMaster, nDetail, nResult, aStruct )
+STATIC FUNCTION __JoinList(nMaster, nDetail, nResult, aStruct)
 
    LOCAL aList := {}
    LOCAL nPos
    LOCAL i
 
-   FOR i := 1 TO Len( aStruct )
+   FOR i := 1 TO Len(aStruct)
       DO CASE
-      CASE ( nPos := ( nMaster )->( FieldPos( aStruct[ i ][ DBS_NAME ] ) ) ) != 0
-         AAdd( aList, { nResult, nMaster, nPos, i } )
-      CASE ( nPos := ( nDetail )->( FieldPos( aStruct[ i ][ DBS_NAME ] ) ) ) != 0
-         AAdd( aList, { nResult, nDetail, nPos, i } )
+      CASE (nPos := (nMaster)->(FieldPos(aStruct[i][DBS_NAME]))) != 0
+         AAdd(aList, { nResult, nMaster, nPos, i })
+      CASE (nPos := (nDetail)->(FieldPos(aStruct[i][DBS_NAME]))) != 0
+         AAdd(aList, { nResult, nDetail, nPos, i })
       ENDCASE
    NEXT
 
    RETURN aList
 
-STATIC PROCEDURE __doJoinList( aList )
+STATIC PROCEDURE __doJoinList(aList)
 
    LOCAL aJoin
 
-   IF Len( aList ) > 0
+   IF Len(aList) > 0
 
-      ( aList[ 1 ][ 1 ] )->( dbAppend() )
+      (aList[1][1])->(dbAppend())
 
       FOR EACH aJoin IN aList
-         ( aJoin[ 1 ] )->( FieldPut( aJoin[ 4 ], ( aJoin[ 2 ] )->( FieldGet( aJoin[ 3 ] ) ) ) )
+         (aJoin[1])->(FieldPut(aJoin[4], (aJoin[2])->(FieldGet(aJoin[3]))))
       NEXT
    ENDIF
 

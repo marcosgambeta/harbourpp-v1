@@ -48,10 +48,10 @@
 
 #ifdef HB_CLP_UNDOC
 
-FUNCTION _dtxCondSet( cFor, bFor, lAll, bWhile, bEval, nEvery, xDummy, nRecNo, nNext, nRecord, lRest )
+FUNCTION _dtxCondSet(cFor, bFor, lAll, bWhile, bEval, nEvery, xDummy, nRecNo, nNext, nRecord, lRest)
 
-   HB_SYMBOL_UNUSED( xDummy )
+   HB_SYMBOL_UNUSED(xDummy)
 
-   RETURN ordCondSet( cFor, bFor, lAll, bWhile, bEval, nEvery, nRecNo, nNext, nRecord, lRest )
+   RETURN ordCondSet(cFor, bFor, lAll, bWhile, bEval, nEvery, nRecNo, nNext, nRecord, lRest)
 
 #endif
