@@ -51,8 +51,13 @@
 FUNCTION Browse(nTop, nLeft, nBottom, nRight)
 
    LOCAL oBrw
-   LOCAL lContinue, lAppend, lKeyPressed, lRefresh
-   LOCAL n, nOldCursor, nKey
+   LOCAL lContinue
+   LOCAL lAppend
+   LOCAL lKeyPressed
+   LOCAL lRefresh
+   LOCAL n
+   LOCAL nOldCursor
+   LOCAL nKey
    LOCAL cOldScreen
    LOCAL bAction
 
@@ -284,7 +289,6 @@ STATIC PROCEDURE StatLine(oBrw, lAppend)
 
    LOCAL nTop   := oBrw:nTop - 1
    LOCAL nRight := oBrw:nRight
-
    LOCAL nRecNo := RecNo()
    LOCAL nLastRec := LastRec()
 
@@ -304,11 +308,19 @@ STATIC PROCEDURE StatLine(oBrw, lAppend)
 
 STATIC FUNCTION DoGet(oBrw, lAppend)
 
-   LOCAL lScore, lExit, bIns, nCursor
-   LOCAL oCol, oGet
-   LOCAL cIndexKey, cForExp, xKeyValue
+   LOCAL lScore
+   LOCAL lExit
+   LOCAL bIns
+   LOCAL nCursor
+   LOCAL oCol
+   LOCAL oGet
+   LOCAL cIndexKey
+   LOCAL cForExp
+   LOCAL xKeyValue
    LOCAL bIndexKey
-   LOCAL lSuccess, nKey, xValue
+   LOCAL lSuccess
+   LOCAL nKey
+   LOCAL xValue
 
    oBrw:HitTop := .F.
    StatLine(oBrw, lAppend)

@@ -60,9 +60,17 @@
 FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPictures, xColumnHeaders, ;
       xHeadingSeparators, xColumnSeparators, xFootingSeparators, xColumnFootings)
 
-   LOCAL nOldCUrsor, nKey, lContinue, nPos, nAliasPos, nColCount
-   LOCAL lDoIdleCall, lAppend, lFlag
-   LOCAL cHeading, cBlock
+   LOCAL nOldCUrsor
+   LOCAL nKey
+   LOCAL lContinue
+   LOCAL nPos
+   LOCAL nAliasPos
+   LOCAL nColCount
+   LOCAL lDoIdleCall
+   LOCAL lAppend
+   LOCAL lFlag
+   LOCAL cHeading
+   LOCAL cBlock
    LOCAL bBlock
    LOCAL oBrowse
    LOCAL oColumn
@@ -284,7 +292,6 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
 STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
 
    LOCAL nPrevRecNo
-
    LOCAL nAction
    LOCAL nMode := ;
       iif(nKey != 0,                  DE_EXCEPT,    ;

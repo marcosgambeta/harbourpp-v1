@@ -458,10 +458,13 @@ METHOD dispFrames() CLASS TBrowse
 
 METHOD dispRow(nRow) CLASS TBrowse
 
-   LOCAL nRowPos, nColPos
+   LOCAL nRowPos
+   LOCAL nColPos
    LOCAL aCol
    LOCAL lFirst
-   LOCAL cValue, cColor, cStdColor
+   LOCAL cValue
+   LOCAL cColor
+   LOCAL cStdColor
    LOCAL aColors
 
    IF nRow >= 1 .AND. nRow <= ::rowCount
@@ -543,7 +546,8 @@ METHOD colorRect(aRect, aColors) CLASS TBrowse
 METHOD scrollBuffer(nRows) CLASS TBrowse
 
    LOCAL nRowCount := ::rowCount
-   LOCAL aValues, aColors
+   LOCAL aValues
+   LOCAL aColors
 
    /* Store last scroll value to chose refresh order. [druzus] */
    ::nLastScroll := nRows
@@ -586,7 +590,9 @@ METHOD readRecord(nRow) CLASS TBrowse
    LOCAL oCol
    LOCAL cValue
    LOCAL aColor
-   LOCAL nColors, nToMove, nMoved
+   LOCAL nColors
+   LOCAL nToMove
+   LOCAL nMoved
    LOCAL nRowCount := ::rowCount
    LOCAL lRead := .F.
 
@@ -723,8 +729,12 @@ METHOD setPosition() CLASS TBrowse
 
 METHOD stabilize() CLASS TBrowse
 
-   LOCAL nRowCount, nToMove, nMoved
-   LOCAL lDisp, lRead, lStat
+   LOCAL nRowCount
+   LOCAL nToMove
+   LOCAL nMoved
+   LOCAL lDisp
+   LOCAL lRead
+   LOCAL lStat
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -878,6 +888,7 @@ METHOD cellColor(nRow, nCol) CLASS TBrowse
 
 
 STATIC FUNCTION _DECODECOLORS(cColorSpec)
+
    LOCAL aColors := {}
    LOCAL nColors := hb_tokenCount(cColorSpec, ",")
    LOCAL cColor
@@ -953,7 +964,8 @@ STATIC FUNCTION _CELLCOLORS(aCol, xValue, nMaxColorIndex)
    LOCAL aColors := {aCol[_TBCI_DEFCOLOR][_TBC_CLR_STANDARD], aCol[_TBCI_DEFCOLOR][_TBC_CLR_SELECTED]}
    LOCAL xColor := Eval(aCol[_TBCI_COLOBJECT]:colorBlock, xValue)
    LOCAL nColorIndex
-   LOCAL nPos, nMax
+   LOCAL nPos
+   LOCAL nMax
 
    IF HB_ISARRAY(xColor)
       nMax := Min(Len(xColor), 2)
@@ -974,7 +986,8 @@ STATIC FUNCTION _CELLCOLORS(aCol, xValue, nMaxColorIndex)
 METHOD setCursorPos() CLASS TBrowse
 
    LOCAL aCol
-   LOCAL nRow, nCol
+   LOCAL nRow
+   LOCAL nCol
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -1237,16 +1250,23 @@ METHOD configure(nMode) CLASS TBrowse
 METHOD doConfigure() CLASS TBrowse
 
    LOCAL oCol
-   LOCAL aCol, aVal
-   LOCAL nWidth, nHeight, nColCount, nRowCount
+   LOCAL aCol
+   LOCAL aVal
+   LOCAL nWidth
+   LOCAL nHeight
+   LOCAL nColCount
+   LOCAL nRowCount
    LOCAL xValue
    LOCAL cType
    LOCAL cColSep
-   LOCAL cHeadSep, cHeading
+   LOCAL cHeadSep
+   LOCAL cHeading
    LOCAL nHeadHeight
-   LOCAL cFootSep, cFooting
+   LOCAL cFootSep
+   LOCAL cFooting
    LOCAL nFootHeight
-   LOCAL lHeadSep, lFootSep
+   LOCAL lHeadSep
+   LOCAL lFootSep
 
    /* TODO: I do not know yet the exact flags behavior (::nConfigure)
     *       and internal conditions so I'll reconfigure all elements.
@@ -1498,7 +1518,9 @@ STATIC FUNCTION _MAXFREEZE(nColumns, aColData, nWidth)
 
    LOCAL aCol
    LOCAL lFirst
-   LOCAL nCol, nColWidth, nTot
+   LOCAL nCol
+   LOCAL nColWidth
+   LOCAL nTot
 
    IF nColumns > Len(aColData) .OR. nColumns < 1
       RETURN 0
@@ -1568,7 +1590,8 @@ STATIC FUNCTION _PREVCOLUMN(aColData, nCol)
 STATIC FUNCTION _SETCOLUMNS(nFrom, nTo, nStep, aColData, nFirst, nWidth, lFirst)
 
    LOCAL aCol
-   LOCAL nCol, nColWidth
+   LOCAL nCol
+   LOCAL nColWidth
    LOCAL nLast := 0
 
    IF nWidth > 0
@@ -1606,8 +1629,11 @@ STATIC FUNCTION _SETCOLUMNS(nFrom, nTo, nStep, aColData, nFirst, nWidth, lFirst)
 
 STATIC PROCEDURE _SETVISIBLE(aColData, nWidth, nFrozen, nLeft, nRight)
 
-   LOCAL nPos, nFirst
-   LOCAL lLeft, lRight, lFirst
+   LOCAL nPos
+   LOCAL nFirst
+   LOCAL lLeft
+   LOCAL lRight
+   LOCAL lFirst
    LOCAL nColCount := Len(aColData)
 
    /* Check if frozen columns are still valid, if not reset it to 0
@@ -1671,8 +1697,15 @@ STATIC PROCEDURE _SETVISIBLE(aColData, nWidth, nFrozen, nLeft, nRight)
 /* set visible columns */
 METHOD setVisible() CLASS TBrowse
 
-   LOCAL nCol, nLeft, nFrozen, nLast, nColumns, nWidth, nColPos
-   LOCAL lFirst, lFrames
+   LOCAL nCol
+   LOCAL nLeft
+   LOCAL nFrozen
+   LOCAL nLast
+   LOCAL nColumns
+   LOCAL nWidth
+   LOCAL nColPos
+   LOCAL lFirst
+   LOCAL lFrames
    LOCAL aCol
 
    nColPos := ::nColPos
@@ -1775,7 +1808,8 @@ METHOD setVisible() CLASS TBrowse
 
 METHOD hiLite() CLASS TBrowse
 
-   LOCAL cValue, cColor
+   LOCAL cValue
+   LOCAL cColor
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -1802,7 +1836,8 @@ METHOD hiLite() CLASS TBrowse
 
 METHOD deHilite() CLASS TBrowse
 
-   LOCAL cValue, cColor
+   LOCAL cValue
+   LOCAL cColor
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -2333,7 +2368,12 @@ METHOD nCol() CLASS TBrowse
 
 METHOD hitTest(mRow, mCol) CLASS TBrowse
 
-   LOCAL nTop, nLeft, nBottom, nRight, nRet, nCol
+   LOCAL nTop
+   LOCAL nLeft
+   LOCAL nBottom
+   LOCAL nRight
+   LOCAL nRet
+   LOCAL nCol
    LOCAL lFirst
    LOCAL aCol
 
@@ -2434,7 +2474,12 @@ METHOD hitTest(mRow, mCol) CLASS TBrowse
 #ifndef HB_BRW_STATICMOUSE
 STATIC PROCEDURE _mBrwPos(oBrw, mRow, mCol)
 
-   LOCAL nTop, nLeft, nBottom, nPos, nCol, aCol
+   LOCAL nTop
+   LOCAL nLeft
+   LOCAL nBottom
+   LOCAL nPos
+   LOCAL nCol
+   LOCAL aCol
 
    mRow := MRow()
    mCol := MCol()
@@ -2484,7 +2529,8 @@ STATIC PROCEDURE _mBrwPos(oBrw, mRow, mCol)
 
 METHOD mRowPos() CLASS TBrowse
 
-   LOCAL mRow, mCol
+   LOCAL mRow
+   LOCAL mCol
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -2497,7 +2543,8 @@ METHOD mRowPos() CLASS TBrowse
 
 METHOD mColPos() CLASS TBrowse
 
-   LOCAL mRow, mCol
+   LOCAL mRow
+   LOCAL mCol
 
    IF ::nConfigure != 0
       ::doConfigure()

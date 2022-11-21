@@ -117,7 +117,8 @@ FUNCTION hb_iniReadStr(cData, lKeyCaseSens, cSplitters, lAutoMain)
 
 STATIC FUNCTION hb_iniFileLow(cFileSpec)
 
-   LOCAL cFile, nLen
+   LOCAL cFile
+   LOCAL nLen
    LOCAL hFile
    LOCAL cData
    LOCAL aFiles := hb_ATokens(cFileSpec, hb_osPathListSeparator())
@@ -150,9 +151,13 @@ STATIC FUNCTION hb_iniFileLow(cFileSpec)
 
 STATIC FUNCTION hb_iniStringLow(hIni, cData, lKeyCaseSens, cSplitters, lAutoMain)
 
-   LOCAL aKeyVal, hCurrentSection
+   LOCAL aKeyVal
+   LOCAL hCurrentSection
    LOCAL cLine
-   LOCAL reComment, reInclude, reSection, reSplitters
+   LOCAL reComment
+   LOCAL reInclude
+   LOCAL reSection
+   LOCAL reSplitters
 
    reComment := hb_regexComp(s_cHalfLineComment + "|^[ \t]*" + s_cLineComment)
    reInclude := hb_regexComp("include (.*)")

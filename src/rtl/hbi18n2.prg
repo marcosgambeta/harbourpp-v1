@@ -91,9 +91,16 @@ STATIC FUNCTION __i18n_strDecode(cLine, cValue, lCont)
 
 FUNCTION __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
 
-   LOCAL cLine, cValue
-   LOCAL nMode, nIndex, nOldIndex, nLine, n
-   LOCAL aTrans, aItem, aLines
+   LOCAL cLine
+   LOCAL cValue
+   LOCAL nMode
+   LOCAL nIndex
+   LOCAL nOldIndex
+   LOCAL nLine
+   LOCAL n
+   LOCAL aTrans
+   LOCAL aItem
+   LOCAL aLines
    LOCAL lCont
    LOCAL hFile
 
@@ -364,8 +371,11 @@ FUNCTION __i18n_potArraySave(cFile, aTrans, /* @ */ cErrorMsg, lVersionNo, lSour
 
    LOCAL aItem
    LOCAL hFile
-   LOCAL lRet, lPlural
-   LOCAL cEOL, cPOT, cFlg
+   LOCAL lRet
+   LOCAL lPlural
+   LOCAL cEOL
+   LOCAL cPOT
+   LOCAL cFlg
    LOCAL msg
 
    hb_default(@lVersionNo, .T.)
@@ -434,7 +444,8 @@ FUNCTION __i18n_potArrayToHash(aTrans, lEmpty, hI18N)
 
    LOCAL aItem
    LOCAL cContext
-   LOCAL hTrans, hContext
+   LOCAL hTrans
+   LOCAL hContext
 
    hb_default(@lEmpty, .F.)
    IF !HB_ISHASH(hI18N)
@@ -493,7 +504,9 @@ FUNCTION __i18n_potArrayTrans(aTrans, hI18N)
 
 FUNCTION __i18n_hashJoin(hTrans, hTrans2)
 
-   LOCAL hContext, hCtx, hDstCtx
+   LOCAL hContext
+   LOCAL hCtx
+   LOCAL hDstCtx
    LOCAL xTrans
 
    hContext := hTrans["CONTEXT"]
@@ -514,7 +527,9 @@ FUNCTION __i18n_hashJoin(hTrans, hTrans2)
 
 FUNCTION __i18n_potArrayJoin(aTrans, aTrans2, hIndex)
 
-   LOCAL aItem, aDest, aSrc
+   LOCAL aItem
+   LOCAL aDest
+   LOCAL aSrc
    LOCAL ctx
 
    IF !HB_ISHASH(hIndex)
@@ -579,8 +594,13 @@ FUNCTION hb_i18n_SavePOT(cFile, pI18N, /* @ */ cErrorMsg)
    LOCAL hI18N
    LOCAL hFile
    LOCAL lRet := .T.
-   LOCAL cEOL, cPOT, cFlg
-   LOCAL context, trans, msgctxt, msgstr
+   LOCAL cEOL
+   LOCAL cPOT
+   LOCAL cFlg
+   LOCAL context
+   LOCAL trans
+   LOCAL msgctxt
+   LOCAL msgstr
 
    IF HB_ISPOINTER(pI18N)
       hI18N := __i18n_hashTable(pI18N)

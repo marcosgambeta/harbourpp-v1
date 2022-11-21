@@ -52,7 +52,6 @@ FUNCTION __dbSort(cToFileName, aFields, bFor, bWhile, nNext, nRecord, lRest, cRD
    LOCAL nOldArea
    LOCAL nToArea
    LOCAL aStruct
-
    LOCAL oError
    LOCAL lError := .F.
 

@@ -115,7 +115,8 @@ STATIC PROCEDURE PutDBF(aDirEntry)
 
 STATIC PROCEDURE PutNormal(aDirEntry)
 
-   LOCAL cName, cExt
+   LOCAL cName
+   LOCAL cExt
 
    hb_FNameSplit(aDirEntry[F_NAME], NIL, @cName, @cExt)
 

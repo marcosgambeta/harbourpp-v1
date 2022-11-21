@@ -111,8 +111,8 @@ METHOD MemoInit(xUserFunction) CLASS HBMemoEditor
 
 METHOD Edit() CLASS HBMemoEditor
 
-   LOCAL nKey, nKeyStd
-
+   LOCAL nKey
+   LOCAL nKeyStd
    // NOTE: K_ALT_W is not compatible with Cl*pper exit memo and save key, but I cannot discriminate
    //       K_CTRL_W and K_CTRL_END from Harbour code.
    LOCAL hConfigurableKeys := {K_CTRL_Y =>, K_CTRL_T =>, K_CTRL_B =>, K_CTRL_V =>, K_ALT_W =>, K_ESC =>}
@@ -279,7 +279,6 @@ METHOD xDo(nStatus) CLASS HBMemoEditor
    LOCAL nOldRow := ::Row()
    LOCAL nOldCol := ::Col()
    LOCAL nOldCur := SetCursor()
-
    LOCAL xResult := Do(::xUserFunction, nStatus, ::nRow, ::nCol - 1)
 
    SetPos(nOldRow, nOldCol)

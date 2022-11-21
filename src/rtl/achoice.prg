@@ -30,14 +30,13 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
    LOCAL nAtTop             // The number of the item at the top
    LOCAL nItems    := 0     // The number of items
    LOCAL nGap               // The number of lines between top and current lines
-
    // Block used to search for items
    LOCAL lUserFunc          // Is a user function to be used?
    LOCAL nUserFunc          // Return value from user function
    LOCAL nSaveCsr
    LOCAL nFrstItem := 0
    LOCAL nLastItem := 0
-
+   //
    LOCAL bAction
    LOCAL cKey
    LOCAL nAux

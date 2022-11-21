@@ -245,7 +245,10 @@ METHOD LineLen(nRow) CLASS HBEditor
 // Converts an array of text lines to a String
 METHOD GetText(lSoftCR) CLASS HBEditor
 
-   LOCAL cText, cEOL, cSoftCR, oLine
+   LOCAL cText
+   LOCAL cEOL
+   LOCAL cSoftCR
+   LOCAL oLine
 
    cEOL := hb_eol()
    cSoftCR := iif(::lWordWrap, iif(hb_defaultValue(lSoftCR, .F.), Chr(141) + Chr(10), ""), cEOL)
@@ -267,7 +270,9 @@ METHOD LineCount() CLASS HBEditor
 
 METHOD Display() CLASS HBEditor
 
-   LOCAL nRow, nLine, nCount
+   LOCAL nRow
+   LOCAL nLine
+   LOCAL nCount
 
    DispBegin()
    nRow := ::nTop
@@ -296,7 +301,8 @@ METHOD LineColor(nRow) CLASS HBEditor
 // Set current column and row in edited text
 METHOD GoTo(nRow, nCol, nRefreshMode)
 
-   LOCAL nFirstRow := ::nFirstRow, nFirstCol := ::nFirstCol
+   LOCAL nFirstRow := ::nFirstRow
+   LOCAL nFirstCol := ::nFirstCol
 
    hb_default(@nRefreshMode, _REFRESH_NONE)
 
@@ -446,7 +452,9 @@ METHOD MoveCursor(nKey) CLASS HBEditor
 // Edits text
 METHOD Edit(nPassedKey) CLASS HBEditor
 
-   LOCAL nKey, nKeyStd, nPos
+   LOCAL nKey
+   LOCAL nKeyStd
+   LOCAL nPos
    LOCAL cKey
    LOCAL bKeyBlock
    LOCAL oLine
@@ -585,7 +593,8 @@ METHOD Edit(nPassedKey) CLASS HBEditor
 // browse text without editing
 METHOD BrowseText(nPassedKey) CLASS HBEditor
 
-   LOCAL nKey, nKeyStd
+   LOCAL nKey
+   LOCAL nKeyStd
    LOCAL bKeyBlock
 
    DO WHILE !::lExitEdit
@@ -633,7 +642,9 @@ METHOD ReformParagraph() CLASS HBEditor
 
    LOCAL lNext := .T.
    LOCAL cText := ""
-   LOCAL nLine, nRow, nCol
+   LOCAL nLine
+   LOCAL nRow
+   LOCAL nCol
 
    nCol := Min(hb_ULen(::aText[::nRow]:cText) + 1, ::nCol)
    DO WHILE lNext .AND. ::nRow <= Len(::aText)

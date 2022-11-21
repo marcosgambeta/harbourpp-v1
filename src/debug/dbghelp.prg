@@ -60,7 +60,6 @@ PROCEDURE __dbgHelp(cTopic)
    LOCAL oBrw
    LOCAL nTopic
    LOCAL aTopics := GetTopics()
-
    LOCAL oDlg := HBDbWindow():New(2, 2, MaxRow() - 2, MaxCol() - 2, "Help", cColor)
 
    oBrw := HBDbBrowser():New(oDlg:nTop + 1, oDlg:nLeft + 1, oDlg:nBottom - 1, oDlg:nLeft + 12)

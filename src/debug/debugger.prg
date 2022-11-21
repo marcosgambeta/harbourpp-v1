@@ -695,7 +695,6 @@ METHOD PROCEDURE Colors() CLASS HBDebugger
       "Border", "Text", "Text High", "Text PPO", "Text Selected", ;
       "Text High Sel.", "Text PPO Sel.", "Menu", "Menu High", ;
       "Menu Selected", "Menu High Sel." }
-
    LOCAL oBrwColors := HBDbBrowser():New(oWndColors:nTop + 1, oWndColors:nLeft + 1, oWndColors:nBottom - 1, oWndColors:nRight - 1)
    LOCAL nWidth := oWndColors:nRight - oWndColors:nLeft - 1
    LOCAL oCol
@@ -736,7 +735,9 @@ METHOD PROCEDURE Colors() CLASS HBDebugger
 
 METHOD PROCEDURE CommandWindowDisplay(cLine, lCmd) CLASS HBDebugger
 
-   LOCAL n, nRow, nSize
+   LOCAL n
+   LOCAL nRow
+   LOCAL nSize
 
    IF cLine != NIL
       cLine := iif(lCmd, "> ", "      ") + cLine
@@ -1271,7 +1272,6 @@ METHOD PROCEDURE EditVar(nVar) CLASS HBDebugger
    LOCAL cVarName := ::aVars[nVar][1]
    LOCAL cVarStr
    LOCAL oErr
-
    LOCAL uVarValue := ::VarGetValue(::aVars[nVar])
 
    IF ValType(uVarValue) $ "AHOPB"
@@ -1826,7 +1826,6 @@ METHOD PROCEDURE LoadVars() CLASS HBDebugger  // updates monitored variables
    LOCAL xValue
    LOCAL cName
    LOCAL hSkip
-
    LOCAL aBVars := {}
 
    IF ::lShowPublics
@@ -2381,7 +2380,8 @@ METHOD PROCEDURE SaveSettings(cFileName) CLASS HBDebugger
    LOCAL cInfo := ""
    LOCAL n
    LOCAL oWnd
-   LOCAL aBreak, aWatch
+   LOCAL aBreak
+   LOCAL aWatch
 
    IF Empty(cFileName)
       ::cSettingsFileName := ::InputBox("File name", ::cSettingsFileName)
@@ -2981,7 +2981,8 @@ METHOD BreakPointFunc(cFuncName) CLASS HBDebugger
 
 METHOD BreakPointList() CLASS HBDebugger
 
-   LOCAL aBreak, cType
+   LOCAL aBreak
+   LOCAL cType
 
    FOR EACH aBreak IN __dbgGetBreakPoints(::pInfo)
       cType := iif(aBreak[HB_DBG_BP_FUNC] != NIL, ;
@@ -3160,7 +3161,8 @@ METHOD WatchpointAdd(cExpr) CLASS HBDebugger
 
 METHOD WatchpointDel(xPos) CLASS HBDebugger
 
-   LOCAL nPos := -1, lAll := .F.
+   LOCAL nPos := -1
+   LOCAL lAll := .F.
 
    IF ::oWndPnt != NIL .AND. ::oWndPnt:lVisible
       DO CASE
@@ -3363,7 +3365,8 @@ METHOD PROCEDURE WatchpointsShow() CLASS HBDebugger
 
 METHOD PROCEDURE WatchpointList() CLASS HBDebugger
 
-   LOCAL aWatch, cType
+   LOCAL aWatch
+   LOCAL cType
 
    FOR EACH aWatch IN ::aWatch
       SWITCH aWatch[WP_TYPE]
@@ -3620,7 +3623,8 @@ FUNCTION __dbgAlert(cMessage)
 FUNCTION __dbgInkey()
 
    LOCAL nKey
-   LOCAL lDebug, lCancel
+   LOCAL lDebug
+   LOCAL lCancel
 
    lDebug := Set(_SET_DEBUG, .F.)
    lCancel := Set(_SET_CANCEL, .F.)

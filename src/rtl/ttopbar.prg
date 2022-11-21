@@ -142,10 +142,8 @@ METHOD display() CLASS TopBarMenu
    LOCAL nRight := ::nRight
    LOCAL nCurrent := ::nCurrent
    LOCAL item
-
    LOCAL cColor1 := hb_ColorIndex(::cColorSpec, 0)
    LOCAL cColor2 := hb_ColorIndex(::cColorSpec, 1)
-
    LOCAL oPopUp
    LOCAL cCaption
    LOCAL nCaptionLen
@@ -271,7 +269,6 @@ METHOD getAccel(nKey) CLASS TopBarMenu
       K_ALT_S, K_ALT_T, K_ALT_U, K_ALT_V, K_ALT_W, K_ALT_X, ;
       K_ALT_Y, K_ALT_Z, K_ALT_1, K_ALT_2, K_ALT_3, K_ALT_4, ;
       K_ALT_5, K_ALT_6, K_ALT_7, K_ALT_8, K_ALT_9, K_ALT_0}, nKey)
-
    LOCAL cKey
    LOCAL item
 

@@ -305,7 +305,6 @@ METHOD insItem(nPos, oRadioButton) CLASS RadioGroup
 METHOD killFocus() CLASS RadioGroup
 
    LOCAL item
-
    LOCAL nOldMCur
 
    IF ::lHasFocus
@@ -337,7 +336,6 @@ METHOD killFocus() CLASS RadioGroup
 METHOD setFocus() CLASS RadioGroup
 
    LOCAL item
-
    LOCAL nOldMCur
 
    IF !::lHasFocus

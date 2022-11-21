@@ -112,8 +112,10 @@ METHOD New(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecor
 
    LOCAL lPrintOn := .F.               // PRINTER status
    LOCAL lConsoleOn                    // CONSOLE status
-   LOCAL cExtraFile, lExtraState       // EXTRA file status
-   LOCAL xBreakVal, lBroke := .F.
+   LOCAL cExtraFile
+   LOCAL lExtraState       // EXTRA file status
+   LOCAL xBreakVal
+   LOCAL lBroke := .F.
    LOCAL err
    LOCAL OldMargin
 
@@ -212,7 +214,11 @@ METHOD New(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecor
 
 METHOD ExecuteLabel() CLASS HBLabelForm
 
-   LOCAL nField, aField, nMoreLines, aBuffer := {}, cBuffer
+   LOCAL nField
+   LOCAL aField
+   LOCAL nMoreLines
+   LOCAL aBuffer := {}
+   LOCAL cBuffer
    LOCAL item
 
    // Load the current record into aBuffer
@@ -276,7 +282,9 @@ METHOD ExecuteLabel() CLASS HBLabelForm
 
 METHOD SampleLabels() CLASS HBLabelForm
 
-   LOCAL cKey, lMoreSamples := .T., nField
+   LOCAL cKey
+   LOCAL lMoreSamples := .T.
+   LOCAL nField
    LOCAL aBand := {}
 
    // Create the sample label row
@@ -322,9 +330,7 @@ METHOD LoadLabel(cLblFile) CLASS HBLabelForm
    LOCAL nOffset    := FILEOFFSET       // Offset into file
    LOCAL cFieldText                     // Text expression container
    LOCAL err                            // error object
-
    LOCAL cPath             // iteration variable
-
    // Create and initialize default label array
    LOCAL aLabel[LBL_COUNT]
 

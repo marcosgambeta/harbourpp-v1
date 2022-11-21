@@ -162,7 +162,10 @@ METHOD MoveCursor(nSkip) CLASS HBDbBrowser
 
 METHOD DispRow(nRow, lHiLite) CLASS HBDbBrowser
 
-   LOCAL nColX, nWid, aClr, nClr
+   LOCAL nColX
+   LOCAL nWid
+   LOCAL aClr
+   LOCAL nClr
    LOCAL xData
    LOCAL oCol
 

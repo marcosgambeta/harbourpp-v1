@@ -56,7 +56,6 @@ FUNCTION __dbJoin(cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage)
    LOCAL nResult
    LOCAL aStruct
    LOCAL aJoinList
-
    LOCAL oError
    LOCAL lError := .F.
 

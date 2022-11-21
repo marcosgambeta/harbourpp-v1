@@ -68,11 +68,9 @@ FUNCTION __hbdoc_FromSource(cFile, aErrMsg)
 FUNCTION __hbdoc_DirLastModified(cDir)
 
    LOCAL aFile
-
    LOCAL cDocDir
    LOCAL aDocFile
    LOCAL tDoc
-
    LOCAL tLast := 0d0
 
    IF HB_ISSTRING(cDir)
@@ -162,7 +160,6 @@ STATIC PROCEDURE __hbdoc__read_file(aEntry, cFileName, hMeta, aErrMsg)
       "CLASS"      => "class_" , ;
       "COMMAND"    => "cmd_"   , ;
       "PP"         => "pp_"    }
-
    LOCAL tmp
 
    IF "TEMPLATE" $ hMeta
@@ -368,7 +365,6 @@ FUNCTION __hbdoc_LoadHBD(cFileName)
 
    LOCAL fhnd
    LOCAL aEntry := NIL
-
    LOCAL cBuffer
 
    IF HB_ISSTRING(cFileName)

@@ -48,7 +48,6 @@ FUNCTION __dbUpdate(cAlias, bKey, lRandom, bAssign)
 
    LOCAL nOldArea := Select()
    LOCAL xKey
-
    LOCAL oError
    LOCAL lError := .F.
 

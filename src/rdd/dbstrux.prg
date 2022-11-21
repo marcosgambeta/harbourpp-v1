@@ -53,7 +53,6 @@ FUNCTION __dbCopyXStruct(cFileName)
 
    LOCAL nOldArea
    LOCAL aStruct
-
    LOCAL oError
    LOCAL lError := .F.
 
@@ -101,7 +100,6 @@ FUNCTION __dbCreate(cFileName, cFileFrom, cRDD, lNew, cAlias, cCodePage, nConnec
 
    LOCAL nOldArea := Select()
    LOCAL aStruct := {}
-
    LOCAL oError
 
    __defaultNIL(@lNew, .F.)

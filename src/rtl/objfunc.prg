@@ -159,7 +159,8 @@ FUNCTION __objAddInline(oObject, cSymbol, bInline)
 
 FUNCTION __objAddData(oObject, cSymbol)
 
-   LOCAL nSeq, hClass
+   LOCAL nSeq
+   LOCAL hClass
 
    IF !HB_ISOBJECT(oObject) .OR. !HB_ISSTRING(cSymbol)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))

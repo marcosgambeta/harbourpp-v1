@@ -97,7 +97,10 @@ FUNCTION hb_PathNormalize(cPath)
 FUNCTION hb_PathJoin(cPathA, cPathR)
 
    LOCAL cDirA
-   LOCAL cDirR, cDriveR, cNameR, cExtR
+   LOCAL cDirR
+   LOCAL cDriveR
+   LOCAL cNameR
+   LOCAL cExtR
 
    IF !HB_ISSTRING(cPathR)
       RETURN ""
@@ -122,13 +125,10 @@ FUNCTION hb_PathJoin(cPathA, cPathR)
 FUNCTION hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
 
    LOCAL tmp
-
    LOCAL aPathBase
    LOCAL aPathTarget
-
    LOCAL cTestBase
    LOCAL cTestTarget
-
    LOCAL cTargetFileName
 
    IF !HB_ISSTRING(cPathBase) .OR. !HB_ISSTRING(cPathTarget)
@@ -180,7 +180,9 @@ FUNCTION hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
 
 STATIC FUNCTION s_FN_ToArray(cPath, /* @ */ cFileName)
 
-   LOCAL cDir, cName, cExt
+   LOCAL cDir
+   LOCAL cName
+   LOCAL cExt
 
    hb_FNameSplit(cPath, @cDir, @cName, @cExt)
 

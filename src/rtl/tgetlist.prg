@@ -304,7 +304,6 @@ METHOD GetApplyKey(nKey, oGet, oMenu, aMsg) CLASS HBGetList
 
    LOCAL cKey
    LOCAL bKeyBlock
-
 #ifdef HB_COMPAT_C53
    LOCAL nMRow
    LOCAL nMCol

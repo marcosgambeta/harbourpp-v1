@@ -216,7 +216,10 @@ FUNCTION sx_Decompress(xVal)
 
 FUNCTION sx_TagInfo(cIndex)
 
-   LOCAL aInfo, nOrds, nFirst, i
+   LOCAL aInfo
+   LOCAL nOrds
+   LOCAL nFirst
+   LOCAL i
 
    IF Used() .AND. (nOrds := ordCount(cIndex)) > 0
       aInfo := Array(nOrds, 6)
@@ -241,7 +244,9 @@ FUNCTION sx_TagInfo(cIndex)
 
 FUNCTION sx_TagCount(xIndex)
 
-   LOCAL nTags := 0, cIndex, nOrder
+   LOCAL nTags := 0
+   LOCAL cIndex
+   LOCAL nOrder
 
    IF Used()
       DO CASE
@@ -263,7 +268,9 @@ FUNCTION sx_TagCount(xIndex)
 
 FUNCTION sx_Tags(xIndex)
 
-   LOCAL aTagNames := {}, nOrder, nTags
+   LOCAL aTagNames := {}
+   LOCAL nOrder
+   LOCAL nTags
 
    IF Used()
       DO CASE
@@ -286,7 +293,10 @@ FUNCTION sx_Tags(xIndex)
 
 FUNCTION sx_SetTag(xTag, xIndex)
 
-   LOCAL lRet := .F., nOrder := 0, nOldOrd, cIndex
+   LOCAL lRet := .F.
+   LOCAL nOrder := 0
+   LOCAL nOldOrd
+   LOCAL cIndex
 
    IF Used() .AND. ValType(xTag) $ "CN"
       IF HB_ISNUMERIC(xTag)
@@ -333,7 +343,9 @@ FUNCTION sx_SetTag(xTag, xIndex)
 
 FUNCTION sx_KillTag(xTag, xIndex)
 
-   LOCAL lRet := .F., nOrder, cIndex
+   LOCAL lRet := .F.
+   LOCAL nOrder
+   LOCAL cIndex
 
    IF HB_ISLOGICAL(xTag)
       IF xTag
@@ -484,7 +496,8 @@ FUNCTION sx_File2Blob(cFileName, cFldName, nActionCode)
 
 FUNCTION sx_dbCreate(cFileName, aStruct, cRDD)
 
-   LOCAL aField, aDbStruct
+   LOCAL aField
+   LOCAL aDbStruct
 
    aDbStruct := AClone(aStruct)
    FOR EACH aField IN aDbStruct
@@ -509,7 +522,8 @@ FUNCTION sx_dbCreate(cFileName, aStruct, cRDD)
 
 FUNCTION sx_VSigLen(xField)
 
-   LOCAL nResult := 0, nField := 0
+   LOCAL nResult := 0
+   LOCAL nField := 0
 
    IF Used()
       DO CASE

@@ -102,9 +102,7 @@ ENDCLASS
 METHOD Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList) CLASS HBMenuSys
 
    LOCAL oTopMenu := ::oMenu
-
    LOCAL nReturn := 0
-
    LOCAL nKey
    LOCAL nNewItem
    LOCAL lLeftDown

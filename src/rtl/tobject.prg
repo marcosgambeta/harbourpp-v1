@@ -53,6 +53,7 @@
 FUNCTION HBObject()
 
    STATIC s_oClass
+
    LOCAL oClass
 
    IF s_oClass == NIL .AND. __clsLockDef(@s_oClass)

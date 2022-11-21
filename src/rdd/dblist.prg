@@ -51,10 +51,8 @@ PROCEDURE __dbList(lOff, abEval, lAll, bFor, bWhile, nNext, nRecord, lRest, lToP
    LOCAL lOldPrinter
    LOCAL lOldExtra
    LOCAL cOldExtraFile
-
    LOCAL oError
    LOCAL lError := .F.
-
    LOCAL bOutBlock
 
    /* Choose the output style */

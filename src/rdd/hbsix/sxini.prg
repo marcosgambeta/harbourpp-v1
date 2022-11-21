@@ -74,8 +74,15 @@ STATIC FUNCTION _sx_INIlogical(cVal)
 
 FUNCTION _sx_IniInit(nArea)
 
-   LOCAL xShared, xReadOnly, xAlias, xTrigger
-   LOCAL hIni, item, sect, h, a
+   LOCAL xShared
+   LOCAL xReadOnly
+   LOCAL xAlias
+   LOCAL xTrigger
+   LOCAL hIni
+   LOCAL item
+   LOCAL sect
+   LOCAL h
+   LOCAL a
 
    /* SIX3 keeps information about ini sections in array[250] stored
     * in public variable called "SxIniInfo". This array is indexed

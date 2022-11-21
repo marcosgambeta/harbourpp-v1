@@ -58,17 +58,14 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
 
    LOCAL nOldArea
    LOCAL nNewArea
-
    LOCAL aNewDbStruct
    LOCAL aGetField
    LOCAL aFieldsSum
    LOCAL lDbTransRecord
    LOCAL xCurKey
-
    LOCAL bWhileBlock
    LOCAL bForBlock
    LOCAL bKeyBlock
-
    LOCAL oError
    LOCAL lError := .F.
 

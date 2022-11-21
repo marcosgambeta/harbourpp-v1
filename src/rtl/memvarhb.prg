@@ -72,11 +72,9 @@ PROCEDURE hb_mvSave(cFileName, cMask, lIncludeMask)
    LOCAL cName
    LOCAL nScope
    LOCAL lMatch
-
    LOCAL aVars
    LOCAL fhnd
    LOCAL tmp
-
    LOCAL oError
    LOCAL nRetries
 
@@ -156,13 +154,10 @@ FUNCTION hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
    LOCAL item
    LOCAL cName
    LOCAL lMatch
-
    LOCAL aVars
    LOCAL cBuffer
    LOCAL xValue
-
    LOCAL fhnd
-
    LOCAL oError
    LOCAL nRetries
 

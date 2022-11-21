@@ -114,7 +114,6 @@ PROCEDURE GetReader(oGet)
 FUNCTION GetActive(oGet)
 
    LOCAL oGetList := __GetListActive()
-
    LOCAL oGetActiveOld
 
    THREAD STATIC t_oGetActive

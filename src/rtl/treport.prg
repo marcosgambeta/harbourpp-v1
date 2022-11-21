@@ -194,12 +194,16 @@ METHOD PROCEDURE New(cFrmName AS STRING, ;
       lBEject AS LOGICAL, ;
       lSummary AS LOGICAL) CLASS HBReportForm
 
-   LOCAL lPrintOn, lConsoleOn // Status of PRINTER and CONSOLE
-   LOCAL cExtraFile, lExtraState // Status of EXTRA
-   LOCAL nCol, aCol, nGroup
-   LOCAL xBreakVal, lBroke := .F.
+   LOCAL lPrintOn // Status of PRINTER
+   LOCAL lConsoleOn // Status of CONSOLE
+   LOCAL cExtraFile // Status of EXTRA
+   LOCAL lExtraState // Status of EXTRA
+   LOCAL nCol
+   LOCAL aCol
+   LOCAL nGroup
+   LOCAL xBreakVal
+   LOCAL lBroke := .F.
    LOCAL err
-
    LOCAL lAnyTotals
    LOCAL lAnySubTotals
 
@@ -439,7 +443,11 @@ METHOD ReportHeader() CLASS HBReportForm
    LOCAL nLinesInHeader
    LOCAL aPageHeader    := {}
    LOCAL nHeadingLength := ::aReportData[RPT_WIDTH] - ::aReportData[RPT_LMARGIN] - 30
-   LOCAL aCol, nLine, cLine, nMaxColLength, cHeader
+   LOCAL aCol
+   LOCAL nLine
+   LOCAL cLine
+   LOCAL nMaxColLength
+   LOCAL cHeader
    LOCAL nHeadline
    LOCAL nRPageSize
    LOCAL aTempPgHeader
@@ -535,7 +543,6 @@ METHOD PROCEDURE ExecuteReport() CLASS HBReportForm
    LOCAL nMaxLines                     // Number of lines needed by record
    LOCAL nLine                         // Counter for each record line
    LOCAL cLine                         // Current line of text for parsing
-
    LOCAL lAnySubTotals
 
    // Add to the main column totals
@@ -812,12 +819,9 @@ METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
    LOCAL nCount
    LOCAL nFrmHandle                 // (.frm) file handle
    LOCAL nOptionByte                // Contains option byte
-
    LOCAL aReport[RPT_COUNT]         // Create report array
    LOCAL err                        // error object
-
    LOCAL cPath                      // iteration variable
-
    LOCAL aHeader                    // temporary storage for report form headings
    LOCAL nHeaderIndex               // index into temporary header array
 
@@ -1033,7 +1037,8 @@ METHOD GetExpr(nPointer AS NUMERIC) CLASS HBReportForm
 
 STATIC FUNCTION Occurs(cSearch, cTarget)
 
-   LOCAL nPos, nCount := 0
+   LOCAL nPos
+   LOCAL nCount := 0
 
    DO WHILE !Empty(cTarget)
       IF (nPos := At(cSearch, cTarget)) > 0

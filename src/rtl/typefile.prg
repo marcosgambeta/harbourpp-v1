@@ -60,7 +60,9 @@ PROCEDURE __TypeFile(cFile, lPrint)
    LOCAL oErr
    LOCAL nRetries
    LOCAL aSaveSet[2]
-   LOCAL cDir, cName, cExt
+   LOCAL cDir
+   LOCAL cName
+   LOCAL cExt
    LOCAL cTmp
    LOCAL cPath
    LOCAL i

@@ -75,7 +75,9 @@ FUNCTION hb_ValToExp(xVal, lRaw)
 
 STATIC FUNCTION s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
 
-   LOCAL cVal, cKey, cClass
+   LOCAL cVal
+   LOCAL cKey
+   LOCAL cClass
    LOCAL tmp
    LOCAL v := ValType(xVal)
 

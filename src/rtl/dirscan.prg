@@ -79,7 +79,10 @@ FUNCTION hb_DirScan(cPath, cFileMask, cAttr)
 
 FUNCTION hb_DirRemoveAll(cDir)
 
-   LOCAL aFile, cPath, cFile, nAttr
+   LOCAL aFile
+   LOCAL cPath
+   LOCAL cFile
+   LOCAL nAttr
 
    IF !Empty(cDir) .AND. hb_vfDirExists(cDir)
       cPath := hb_DirSepDel(cDir)
@@ -111,7 +114,12 @@ FUNCTION hb_DirRemoveAll(cDir)
 
 FUNCTION hb_FileDelete(cFileMask, cAttr)
 
-   LOCAL lAny := .F., aFile, cPath, cFile, cAttrMask, nAttr
+   LOCAL lAny := .F.
+   LOCAL aFile
+   LOCAL cPath
+   LOCAL cFile
+   LOCAL cAttrMask
+   LOCAL nAttr
 
    IF HB_ISSTRING(cFileMask) .AND. !Empty(cFileMask) .AND. !hb_vfDirExists(cFileMask)
       cPath := hb_FNameDir(cFileMask)

@@ -62,13 +62,11 @@ FUNCTION __MenuTo(bBlock, cVariable)
    LOCAL lMsgCenter
    LOCAL nSaveCursor
    LOCAL cSaveReadVar
-
    LOCAL lDeclared
    LOCAL bAction
 #ifdef HB_COMPAT_C53
    LOCAL nMouseClik
 #endif
-
    LOCAL nPointer
    LOCAL cColor
    LOCAL cColorSelect

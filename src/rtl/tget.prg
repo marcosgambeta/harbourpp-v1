@@ -248,7 +248,6 @@ METHOD display() CLASS Get
    LOCAL nDispPos
    LOCAL nRowPos
    LOCAL nColPos
-
 #ifdef HB_COMPAT_C53
    LOCAL nPos
    LOCAL cCaption

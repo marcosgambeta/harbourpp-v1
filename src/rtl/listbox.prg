@@ -808,9 +808,9 @@ METHOD changeItem(nOldPos, nNewPos) CLASS ListBox
 
 METHOD scrollbarPos() CLASS ListBox
 
-   LOCAL nSize     := ::nBottom - ::nTop - iif(::lDropDown, 2, 1)
-   LOCAL nCount    := ::nItemCount
-   LOCAL nLength   := ::oVScroll:barLength
+   LOCAL nSize   := ::nBottom - ::nTop - iif(::lDropDown, 2, 1)
+   LOCAL nCount  := ::nItemCount
+   LOCAL nLength := ::oVScroll:barLength
 
 #ifndef HB_CLP_STRICT
    /* NOTE: Cl*pper will RTE with non default division by zero error handler */

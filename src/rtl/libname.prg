@@ -46,7 +46,9 @@
 
 FUNCTION hb_libName(cLibName, cLibDir)
 
-   LOCAL cDir, cName, cExt
+   LOCAL cDir
+   LOCAL cName
+   LOCAL cExt
 
    IF HB_ISSTRING(cLibName)
 

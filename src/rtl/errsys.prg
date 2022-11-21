@@ -56,10 +56,8 @@ STATIC FUNCTION DefError(oError)
 
    LOCAL cMessage
    LOCAL cOSError
-
    LOCAL aOptions
    LOCAL nChoice
-
    LOCAL n
 
    // By default, division by zero results in zero

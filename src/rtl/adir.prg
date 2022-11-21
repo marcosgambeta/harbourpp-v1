@@ -51,11 +51,12 @@ FUNCTION ADir(cFileMask, aName, aSize, aDate, aTime, aAttr)
    LOCAL aDir
    LOCAL nDirLen
    LOCAL nDirPos
-
-   LOCAL nNameLen, nSizeLen, nDateLen, nTimeLen, nAttrLen
-
+   LOCAL nNameLen
+   LOCAL nSizeLen
+   LOCAL nDateLen
+   LOCAL nTimeLen
+   LOCAL nAttrLen
    LOCAL aFileInfo
-
    LOCAL cDir
    LOCAL cName
    LOCAL cExt

@@ -76,8 +76,10 @@ ENDCLASS
 
 METHOD New(oObject, cVarName, lEditable) CLASS HBDbObject
 
-   LOCAL cMsg, cMsgAcc
-   LOCAL aMessages, aMethods
+   LOCAL cMsg
+   LOCAL cMsgAcc
+   LOCAL aMessages
+   LOCAL aMethods
    LOCAL xValue
 
    __dbgSetGo(__dbg():pInfo)

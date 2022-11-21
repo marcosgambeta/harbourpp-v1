@@ -57,19 +57,15 @@ PROCEDURE __dbgShowWorkAreas()
 
    LOCAL oDlg
    LOCAL oCol
-
    LOCAL aAlias := {}
    LOCAL aBrw[3]
    LOCAL aStruc
    LOCAL aInfo
-
    LOCAL cColor := iif(__dbg():lMonoDisplay, "N/W, W/N, W+/W, W+/N", "N/W, N/BG, R/W, R/BG")
-
    LOCAL n1
    LOCAL n2
    LOCAL n3 := 1
    LOCAL cur_id
-
    LOCAL nOldArea := Select()
 
    hb_WAEval({|| AAdd(aAlias, { Select(), Alias() }) })
@@ -309,7 +305,6 @@ STATIC FUNCTION DbfInfo()
    LOCAL nFor
    LOCAL xValue
    LOCAL cValue
-
    LOCAL aInfo := { ;
       "[" + hb_ntos(Select(Alias())) + "] " + Alias(), ;
       Space(4) + "Current Driver", ;
