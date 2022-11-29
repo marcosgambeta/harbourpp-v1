@@ -486,7 +486,7 @@ METHOD WvgWindow:setPos( aPos, lPaint )
 
       OTHERWISE
          aPosSz := ::getPosAndSize( aPos )
-         wvg_SetWindowPosition( ::hWnd, aPosSz[ 1 ], aPosSz[ 2 ], lPaint )
+         wvg_SetWindowPosition( ::hWnd, aPosSz[1], aPosSz[2], lPaint )
 
       ENDSWITCH
    ENDIF
@@ -513,7 +513,7 @@ METHOD WvgWindow:setPosAndSize( aPos, aSize, lPaint )
 
       OTHERWISE
          aPosSz := ::getPosAndSize( aPos, aSize )
-         wvg_SetWindowPosAndSize( ::hWnd, aPosSz[ 1 ], aPosSz[ 2 ], aPosSz[ 3 ], aPosSz[ 4 ], lPaint )
+         wvg_SetWindowPosAndSize( ::hWnd, aPosSz[1], aPosSz[2], aPosSz[3], aPosSz[4], lPaint )
 
       ENDSWITCH
    ENDIF
@@ -534,7 +534,7 @@ METHOD WvgWindow:setSize( aSize, lPaint )
 
       OTHERWISE
          aPosSz := ::getPosAndSize( , aSize )
-         wvg_SetWindowSize( ::hWnd, aPosSz[ 3 ], aPosSz[ 4 ], lPaint )
+         wvg_SetWindowSize( ::hWnd, aPosSz[3], aPosSz[4], lPaint )
 
       ENDSWITCH
    ENDIF
@@ -599,7 +599,7 @@ METHOD WvgWindow:setFontCompoundName( xFont )
          s := Lower( cFont )
          n := AScan( aAttr, {| e | At( e, cFont ) > 0 } )
          IF n > 0
-            cAttr := aAttr[ n ]
+            cAttr := aAttr[n]
             n := At( cAttr, s )
             cFont := SubStr( cFont, 1, n - 1 )
          ELSE
@@ -630,7 +630,7 @@ METHOD WvgWindow:currentPos()
 
    LOCAL aRect := wvg_GetWindowRect( ::hWnd )
 
-   RETURN { aRect[ 1 ], aRect[ 2 ] }
+   RETURN { aRect[1], aRect[2] }
 
 METHOD WvgWindow:currentSize()
 
@@ -638,7 +638,7 @@ METHOD WvgWindow:currentSize()
 
    aRect := wvg_GetClientRect( ::hWnd )
 
-   RETURN { aRect[ 3 ] - aRect[ 1 ], aRect[ 4 ] - aRect[ 2 ] }
+   RETURN { aRect[3] - aRect[1], aRect[4] - aRect[2] }
 
 METHOD WvgWindow:getHWND()
    RETURN ::hWnd
@@ -1122,7 +1122,7 @@ METHOD WvgWindow:findObjectByHandle( hWnd )
 
    IF Len( ::aChildren ) > 0
       IF ( nObj := AScan( ::aChildren, {| o | o:hWnd == hWnd } ) ) > 0
-         RETURN ::aChildren[ nObj ]
+         RETURN ::aChildren[nObj]
       ENDIF
    ENDIF
 
@@ -1139,43 +1139,43 @@ METHOD WvgWindow:getPosAndSize( aPs, aSz )
    aSize := AClone( aSz )
 
    IF ::isParentCrt()
-      IF HB_ISBLOCK( aPos[ 1 ] )
-         aPos[ 1 ] := Eval( aPos[ 1 ] )
+      IF HB_ISBLOCK( aPos[1] )
+         aPos[1] := Eval( aPos[1] )
       ENDIF
-      IF HB_ISBLOCK( aPos[ 2 ] )
-         aPos[ 2 ] := Eval( aPos[ 2 ] )
+      IF HB_ISBLOCK( aPos[2] )
+         aPos[2] := Eval( aPos[2] )
       ENDIF
-      IF HB_ISBLOCK( aSize[ 1 ] )
-         aSize[ 1 ] := Eval( aSize[ 1 ] )
+      IF HB_ISBLOCK( aSize[1] )
+         aSize[1] := Eval( aSize[1] )
       ENDIF
-      IF HB_ISBLOCK( aSize[ 2 ] )
-         aSize[ 2 ] := Eval( aSize[ 2 ] )
+      IF HB_ISBLOCK( aSize[2] )
+         aSize[2] := Eval( aSize[2] )
       ENDIF
 
-      IF aPos[ 1 ] < 0 .OR. aPos[ 2 ] < 0 .OR. aSize[ 1 ] < 0 .OR. aSize[ 2 ] < 0
+      IF aPos[1] < 0 .OR. aPos[2] < 0 .OR. aSize[1] < 0 .OR. aSize[2] < 0
          aFontInfo := wvt_GetFontInfo()
 
-         nX := aPos[ 2 ]
+         nX := aPos[2]
          IF nX < 0
-            nX := Int( Abs( aPos[ 2 ] ) * aFontInfo[ 7 ] )
+            nX := Int( Abs( aPos[2] ) * aFontInfo[7] )
          ENDIF
-         nY := aPos[ 1 ]
+         nY := aPos[1]
          IF nY < 0
-            nY := Int( Abs( aPos[ 1 ] ) * aFontInfo[ 6 ] )
+            nY := Int( Abs( aPos[1] ) * aFontInfo[6] )
          ENDIF
-         nW := aSize[ 2 ]
+         nW := aSize[2]
          IF nW < 0
-            nW := Int( Abs( aSize[ 2 ] ) * aFontInfo[ 7 ] )
+            nW := Int( Abs( aSize[2] ) * aFontInfo[7] )
          ENDIF
-         nH := aSize[ 1 ]
+         nH := aSize[1]
          IF nH < 0
-            nH := Int( Abs( aSize[ 1 ] ) * aFontInfo[ 6 ] )
+            nH := Int( Abs( aSize[1] ) * aFontInfo[6] )
          ENDIF
          RETURN { nX, nY, nW, nH }
       ENDIF
    ENDIF
 
-   RETURN { aPos[ 1 ], aPos[ 2 ], aSize[ 1 ], aSize[ 2 ] }
+   RETURN { aPos[1], aPos[2], aSize[1], aSize[2] }
 
 METHOD WvgWindow:toolTipText( cText )
 
@@ -1201,8 +1201,8 @@ METHOD WvgWindow:createControl()
       ::className(), ;
       "", ;                              /* window name */
       ::style, ;
-      aPosSz[ 1 ], aPosSz[ 2 ], ;
-      aPosSz[ 3 ], aPosSz[ 4 ], ;
+      aPosSz[1], aPosSz[2], ;
+      aPosSz[3], aPosSz[4], ;
       ::oParent:hWnd, ;
       ::nID, ;                           /* hMenu       */
       NIL, ;                             /* hInstance   */

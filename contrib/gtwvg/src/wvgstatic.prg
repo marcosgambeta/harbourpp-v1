@@ -228,13 +228,13 @@ METHOD WvgStatic:handleEvent( nMessage, aNM )
 
    CASE nMessage == HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC( ::clr_FG )
-         wvg_SetTextColor( aNM[ 1 ], ::clr_FG )
+         wvg_SetTextColor( aNM[1], ::clr_FG )
       ENDIF
       IF HB_ISNUMERIC( ::hBrushBG )
-         wvg_SetBkMode( aNM[ 1 ], 1 )
+         wvg_SetBkMode( aNM[1], 1 )
          RETURN ::hBrushBG
       ELSE
-         RETURN wvg_GetCurrentBrush( aNM[ 1 ] )
+         RETURN wvg_GetCurrentBrush( aNM[1] )
       ENDIF
 
    CASE nMessage == HB_GTE_ANY

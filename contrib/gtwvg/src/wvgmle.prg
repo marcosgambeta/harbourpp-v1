@@ -163,69 +163,69 @@ METHOD WvgMLE:handleEvent( nMessage, aNM )
 
    CASE nMessage == HB_GTE_COMMAND
       DO CASE
-      CASE aNM[ NMH_code ] == EN_KILLFOCUS
+      CASE aNM[NMH_code] == EN_KILLFOCUS
          IF HB_ISBLOCK( ::sl_killInputFocus )
             Eval( ::sl_killInputFocus, , , Self )
          ENDIF
 
-      CASE aNM[ NMH_code ] == EN_SETFOCUS
+      CASE aNM[NMH_code] == EN_SETFOCUS
          IF HB_ISBLOCK( ::sl_setInputFocus )
             Eval( ::sl_setInputFocus, , , Self )
          ENDIF
 
-      CASE aNM[ NMH_code ] == EN_HSCROLL
+      CASE aNM[NMH_code] == EN_HSCROLL
          IF HB_ISBLOCK( ::sl_hScroll )
             Eval( ::sl_hScroll, , , Self )
          ENDIF
 
-      CASE aNM[ NMH_code ] == EN_VSCROLL
+      CASE aNM[NMH_code] == EN_VSCROLL
          IF HB_ISBLOCK( ::sl_vScroll )
             Eval( ::sl_vScroll, , , Self )
          ENDIF
 
-      CASE aNM[ NMH_code ] == EN_CHANGE
-      CASE aNM[ NMH_code ] == EN_UPDATE
-      CASE aNM[ NMH_code ] == EN_MAXTEXT
+      CASE aNM[NMH_code] == EN_CHANGE
+      CASE aNM[NMH_code] == EN_UPDATE
+      CASE aNM[NMH_code] == EN_MAXTEXT
 
       ENDCASE
 
    CASE nMessage ==  HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC( ::clr_FG )
-         wvg_SetTextColor( aNM[ 1 ], ::clr_FG )
+         wvg_SetTextColor( aNM[1], ::clr_FG )
       ENDIF
       IF HB_ISNUMERIC( ::hBrushBG )
-         wvg_SetBkMode( aNM[ 1 ], 1 )
+         wvg_SetBkMode( aNM[1], 1 )
          RETURN ::hBrushBG
       ELSE
-         RETURN wvg_GetCurrentBrush( aNM[ 1 ] )
+         RETURN wvg_GetCurrentBrush( aNM[1] )
       ENDIF
 
    CASE nMessage ==  HB_GTE_ANY
       IF ::isParentCrt()
 
          DO CASE
-         CASE aNM[ NMH_code ] == WM_KEYDOWN
-            IF aNM[ 2 ] == VK_TAB
+         CASE aNM[NMH_code] == WM_KEYDOWN
+            IF aNM[2] == VK_TAB
                ::oParent:setFocus()
                RETURN EVENT_HANDELLED
             ENDIF
 
-         CASE aNM[ NMH_code ] == WM_KILLFOCUS
+         CASE aNM[NMH_code] == WM_KILLFOCUS
             IF HB_ISBLOCK( ::sl_killInputFocus )
                Eval( ::sl_killInputFocus, , , Self )
             ENDIF
 
-         CASE aNM[ NMH_code ] == WM_SETFOCUS
+         CASE aNM[NMH_code] == WM_SETFOCUS
             IF HB_ISBLOCK( ::sl_setInputFocus )
                Eval( ::sl_setInputFocus, , , Self )
             ENDIF
 
-         CASE aNM[ NMH_code ] == WM_HSCROLL
+         CASE aNM[NMH_code] == WM_HSCROLL
             IF HB_ISBLOCK( ::sl_hScroll )
                Eval( ::sl_hScroll, , , Self )
             ENDIF
 
-         CASE aNM[ NMH_code ] == WM_VSCROLL
+         CASE aNM[NMH_code] == WM_VSCROLL
             IF HB_ISBLOCK( ::sl_vScroll )
                Eval( ::sl_vScroll, , , Self )
             ENDIF

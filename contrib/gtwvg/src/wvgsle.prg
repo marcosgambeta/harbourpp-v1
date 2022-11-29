@@ -117,7 +117,7 @@ METHOD WvgSLE:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
-   ::style += es_[ ::align ]
+   ::style += es_[::align]
    ::style += ES_AUTOHSCROLL
 
    IF ::tabStop
@@ -167,18 +167,18 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
 
    CASE nMessage == HB_GTE_COMMAND
       DO CASE
-      CASE aNM[ NMH_code ] == EN_CHANGE
+      CASE aNM[NMH_code] == EN_CHANGE
 
-      CASE aNM[ NMH_code ] == EN_UPDATE
+      CASE aNM[NMH_code] == EN_UPDATE
 
-      CASE aNM[ NMH_code ] == EN_MAXTEXT
+      CASE aNM[NMH_code] == EN_MAXTEXT
 
-      CASE aNM[ NMH_code ] == EN_KILLFOCUS
+      CASE aNM[NMH_code] == EN_KILLFOCUS
          IF HB_ISBLOCK( ::sl_killInputFocus )
             Eval( ::sl_killInputFocus, , , Self )
          ENDIF
 
-      CASE aNM[ NMH_code ] == EN_SETFOCUS
+      CASE aNM[NMH_code] == EN_SETFOCUS
          IF HB_ISBLOCK( ::sl_setInputFocus )
             Eval( ::sl_setInputFocus, , , Self )
          ENDIF
@@ -187,42 +187,42 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
 
    CASE nMessage == HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC( ::clr_FG )
-         wvg_SetTextColor( aNM[ 1 ], ::clr_FG )
+         wvg_SetTextColor( aNM[1], ::clr_FG )
       ENDIF
       IF HB_ISNUMERIC( ::hBrushBG )
-         wvg_SetBkMode( aNM[ 1 ], 1 )
+         wvg_SetBkMode( aNM[1], 1 )
          RETURN ::hBrushBG
       ELSE
-         RETURN wvg_GetCurrentBrush( aNM[ 1 ] )
+         RETURN wvg_GetCurrentBrush( aNM[1] )
       ENDIF
 
    CASE nMessage == HB_GTE_ANY
       DO CASE
-      CASE aNM[ NMH_code ] == WM_KILLFOCUS
+      CASE aNM[NMH_code] == WM_KILLFOCUS
          IF HB_ISBLOCK( ::sl_killInputFocus )
             Eval( ::sl_killInputFocus, , , Self )
          ENDIF
 
-      CASE aNM[ NMH_code ] == WM_SETFOCUS
+      CASE aNM[NMH_code] == WM_SETFOCUS
          IF HB_ISBLOCK( ::sl_setInputFocus )
             Eval( ::sl_setInputFocus, , , Self )
          ENDIF
 
-      CASE aNM[ NMH_code ] == WM_KEYDOWN
+      CASE aNM[NMH_code] == WM_KEYDOWN
          DO CASE
-         CASE aNM[ 2 ] == K_ENTER
+         CASE aNM[2] == K_ENTER
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
             IF HB_ISBLOCK( ::sl_returnPressed )
                Eval( ::sl_returnPressed, , , Self )
             ENDIF
-         CASE aNM[ 2 ] == VK_TAB
+         CASE aNM[2] == VK_TAB
             IF ::isParentCrt()
                ::oParent:setFocus()
                RETURN EVENT_HANDELLED
             ENDIF
-         CASE aNM[ 2 ] == 65
+         CASE aNM[2] == 65
             // RETURN EVENT_HANDELLED
          ENDCASE
 

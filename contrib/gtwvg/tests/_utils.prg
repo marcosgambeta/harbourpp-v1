@@ -36,25 +36,25 @@ THREAD STATIC t_pic_ := {, , , , , , , , , , , , , , , , , , , }
 PROCEDURE WvtSetKeys( lSet )
 
    IF lSet
-      t_keys_[  2 ] := SetKey( K_F2, {|| WvtNextGets()         } )
-      t_keys_[  3 ] := SetKey( K_F3, {|| WvtWindowExpand( 1 )  } )
-      t_keys_[  4 ] := SetKey( K_F4, {|| WvtWindowExpand( -1 ) } )
-      t_keys_[  5 ] := SetKey( K_F5, {|| WvtMyBrowse()         } )
-      t_keys_[  6 ] := SetKey( K_F6, {|| wvt_Minimize()        } )
-      t_keys_[  7 ] := SetKey( K_F7, {|| WvtPartialScreen()    } )
-      t_keys_[  8 ] := SetKey( K_F8, {|| WvtLines()            } )
-      t_keys_[  9 ] := SetKey( K_F9, {|| wvt_ChooseFont()      } )
-      t_keys_[ 10 ] := SetKey( K_F10, {|| wvt_ChooseColor()     } )
+      t_keys_[ 2] := SetKey( K_F2, {|| WvtNextGets()         } )
+      t_keys_[ 3] := SetKey( K_F3, {|| WvtWindowExpand( 1 )  } )
+      t_keys_[ 4] := SetKey( K_F4, {|| WvtWindowExpand( -1 ) } )
+      t_keys_[ 5] := SetKey( K_F5, {|| WvtMyBrowse()         } )
+      t_keys_[ 6] := SetKey( K_F6, {|| wvt_Minimize()        } )
+      t_keys_[ 7] := SetKey( K_F7, {|| WvtPartialScreen()    } )
+      t_keys_[ 8] := SetKey( K_F8, {|| WvtLines()            } )
+      t_keys_[ 9] := SetKey( K_F9, {|| wvt_ChooseFont()      } )
+      t_keys_[10] := SetKey( K_F10, {|| wvt_ChooseColor()     } )
    ELSE
-      SetKey( K_F2,  t_keys_[ 2 ] )
-      SetKey( K_F3,  t_keys_[ 3 ] )
-      SetKey( K_F4,  t_keys_[ 4 ] )
-      SetKey( K_F5,  t_keys_[ 5 ] )
-      SetKey( K_F6,  t_keys_[ 6 ] )
-      SetKey( K_F7,  t_keys_[ 7 ] )
-      SetKey( K_F8,  t_keys_[ 8 ] )
-      SetKey( K_F9,  t_keys_[ 9 ] )
-      SetKey( K_F10, t_keys_[ 10 ] )
+      SetKey( K_F2,  t_keys_[ 2] )
+      SetKey( K_F3,  t_keys_[ 3] )
+      SetKey( K_F4,  t_keys_[ 4] )
+      SetKey( K_F5,  t_keys_[ 5] )
+      SetKey( K_F6,  t_keys_[ 6] )
+      SetKey( K_F7,  t_keys_[ 7] )
+      SetKey( K_F8,  t_keys_[ 8] )
+      SetKey( K_F9,  t_keys_[ 9] )
+      SetKey( K_F10, t_keys_[10] )
    ENDIF
 
    RETURN
@@ -132,29 +132,29 @@ FUNCTION Wvt_Mouse( nKey, nRow, nCol )
    IF nKey == -1000001
       FOR nObj := 1 TO nLen
          DO CASE
-         CASE aObjects[ nObj ][ WVT_OBJ_STATE ] == OBJ_STATE_DISP
-            Eval( aObjects[ nObj ][ WVT_OBJ_ONDISP ] )
-         CASE aObjects[ nObj ][ WVT_OBJ_STATE ] == OBJ_STATE_MOUSEOVER
-            Eval( aObjects[ nObj ][ WVT_OBJ_ONMOUSEOVER ] )
-         CASE aObjects[ nObj ][ WVT_OBJ_STATE ] == OBJ_STATE_BUTTONDOWN
-            Eval( aObjects[ nObj ][ WVT_OBJ_ONBUTTONDOWN ] )
-         CASE aObjects[ nObj ][ WVT_OBJ_STATE ] == OBJ_STATE_BUTTONUP
-            Eval( aObjects[ nObj ][ WVT_OBJ_ONDISP ] )
-         CASE aObjects[ nObj ][ WVT_OBJ_STATE ] == OBJ_STATE_HIDE
+         CASE aObjects[nObj][WVT_OBJ_STATE] == OBJ_STATE_DISP
+            Eval( aObjects[nObj][WVT_OBJ_ONDISP] )
+         CASE aObjects[nObj][WVT_OBJ_STATE] == OBJ_STATE_MOUSEOVER
+            Eval( aObjects[nObj][WVT_OBJ_ONMOUSEOVER] )
+         CASE aObjects[nObj][WVT_OBJ_STATE] == OBJ_STATE_BUTTONDOWN
+            Eval( aObjects[nObj][WVT_OBJ_ONBUTTONDOWN] )
+         CASE aObjects[nObj][WVT_OBJ_STATE] == OBJ_STATE_BUTTONUP
+            Eval( aObjects[nObj][WVT_OBJ_ONDISP] )
+         CASE aObjects[nObj][WVT_OBJ_STATE] == OBJ_STATE_HIDE
 
          ENDCASE
       NEXT
       RETURN NIL
    ENDIF
 
-   nObj := AScan( aObjects, {| e_ | e_[ WVT_OBJ_ROW   ] <= nRow .AND. ;
-      e_[ WVT_OBJ_ROWTO ] >= nRow .AND. ;
-      e_[ WVT_OBJ_COL   ] <= nCol .AND. ;
-      e_[ WVT_OBJ_COLTO ] >= nCol     } )
+   nObj := AScan( aObjects, {| e_ | e_[WVT_OBJ_ROW] <= nRow .AND. ;
+      e_[WVT_OBJ_ROWTO] >= nRow .AND. ;
+      e_[WVT_OBJ_COL] <= nCol .AND. ;
+      e_[WVT_OBJ_COLTO] >= nCol     } )
    IF nObj == 0
       IF s_nLastObj > 0
-         aObjects[ s_nLastObj ][ WVT_OBJ_STATE ] := OBJ_STATE_DISP
-         Eval( aObjects[ s_nLastObj ][ WVT_OBJ_ONDISP ] )
+         aObjects[s_nLastObj][WVT_OBJ_STATE] := OBJ_STATE_DISP
+         Eval( aObjects[s_nLastObj][WVT_OBJ_ONDISP] )
          s_nLastObj := 0
       ENDIF
       RETURN NIL
@@ -169,23 +169,23 @@ FUNCTION Wvt_Mouse( nKey, nRow, nCol )
 
    DO CASE
    CASE nKey == K_MOUSEMOVE
-      IF aObjects[ s_nLastObj ][ WVT_OBJ_STATE ] != OBJ_STATE_MOUSEOVER
-         aObjects[ s_nLastObj ][ WVT_OBJ_STATE ] := OBJ_STATE_MOUSEOVER
-         IF aObjects[ nObj ][ WVT_OBJ_ONMOUSEOVER ] != NIL
-            Eval( aObjects[ nObj ][ WVT_OBJ_ONMOUSEOVER ] )
+      IF aObjects[s_nLastObj][WVT_OBJ_STATE] != OBJ_STATE_MOUSEOVER
+         aObjects[s_nLastObj][WVT_OBJ_STATE] := OBJ_STATE_MOUSEOVER
+         IF aObjects[nObj][WVT_OBJ_ONMOUSEOVER] != NIL
+            Eval( aObjects[nObj][WVT_OBJ_ONMOUSEOVER] )
          ENDIF
       ENDIF
 
    CASE nKey == K_LBUTTONDOWN
-      aObjects[ s_nLastObj ][ WVT_OBJ_STATE ] := OBJ_STATE_BUTTONDOWN
-      IF aObjects[ nObj ][ WVT_OBJ_ONBUTTONDOWN ] != NIL
-         Eval( aObjects[ nObj ][ WVT_OBJ_ONBUTTONDOWN ] )
+      aObjects[s_nLastObj][WVT_OBJ_STATE] := OBJ_STATE_BUTTONDOWN
+      IF aObjects[nObj][WVT_OBJ_ONBUTTONDOWN] != NIL
+         Eval( aObjects[nObj][WVT_OBJ_ONBUTTONDOWN] )
       ENDIF
 
    CASE nKey == K_LBUTTONUP
-      aObjects[ s_nLastObj ][ WVT_OBJ_STATE ] := OBJ_STATE_DISP
-      IF aObjects[ nObj ][ WVT_OBJ_ONBUTTONUP ] != NIL
-         Eval( aObjects[ nObj ][ WVT_OBJ_ONBUTTONUP ] )
+      aObjects[s_nLastObj][WVT_OBJ_STATE] := OBJ_STATE_DISP
+      IF aObjects[nObj][WVT_OBJ_ONBUTTONUP] != NIL
+         Eval( aObjects[nObj][WVT_OBJ_ONBUTTONUP] )
       ENDIF
 
    ENDCASE
@@ -222,12 +222,12 @@ FUNCTION WvtSetObjects( aObject )
       IF Empty( aObject )
          t_aObjects := {}
       ELSE
-         IF HB_ISARRAY( aObject[ 1 ] )
+         IF HB_ISARRAY( aObject[1] )
             AEval( aObject, {| e_ | AAdd( t_aObjects, e_ ) } )
          ELSE
             ASize( aObject, WVT_OBJ_VRBLS )
 
-            hb_default( @aObject[ WVT_OBJ_STATE ], OBJ_STATE_DISP )
+            hb_default( @aObject[WVT_OBJ_STATE], OBJ_STATE_DISP )
 
             AAdd( t_aObjects, aObject )
          ENDIF
@@ -299,7 +299,7 @@ FUNCTION BuildWvgToolBar( oDA, nActiveX )
 
    hb_default( @nActiveX, 0 )
 
-   oTBar := WvgToolBar():new( oDA, , { 0, 0 }, { oDA:currentSize()[ 1 ], 30 }, , .T. )
+   oTBar := WvgToolBar():new( oDA, , { 0, 0 }, { oDA:currentSize()[1], 30 }, , .T. )
 
    oTBar:style        := WVGTOOLBAR_STYLE_FLAT
    oTBar:borderStyle  := WVGFRAME_RECT
@@ -330,9 +330,9 @@ FUNCTION SetGT( nIndex, pGT )
    LOCAL oldGT
    STATIC s_pGT_ := { NIL, NIL, NIL }
 
-   oldGT := s_pGT_[ nIndex ]
+   oldGT := s_pGT_[nIndex]
    IF PCount() == 2
-      s_pGT_[ nIndex ] := pGT
+      s_pGT_[nIndex] := pGT
    ENDIF
 
    RETURN oldGT
@@ -374,11 +374,11 @@ FUNCTION Popups( nID, lDestroy )
    ENDIF
 
    IF lDestroy != NIL
-      Wvt_DestroyMenu( t_hPop_[ nID ] )
+      Wvt_DestroyMenu( t_hPop_[nID] )
       RETURN NIL
    ENDIF
 
-   hPop := t_hPop_[ nID ]
+   hPop := t_hPop_[nID]
 
    DO CASE
    CASE nID == 1   //  Data Entry Module
@@ -426,9 +426,9 @@ FUNCTION Popups( nID, lDestroy )
 
    ENDCASE
 
-   t_hPop_[ nID ] := hPop
+   t_hPop_[nID] := hPop
 
-   RETURN wvt_SetPopupMenu( t_hPop_[ nID ] )
+   RETURN wvt_SetPopupMenu( t_hPop_[nID] )
 
 FUNCTION DispStatusMsg( cMsg )
 
@@ -450,9 +450,9 @@ FUNCTION ClearStatusMsg()
 PROCEDURE WvtPictures( nSlot, cFilePic )
 
    IF nSlot != NIL .AND. nSlot <= 20 .AND. hb_FileExists( cFilePic )
-      IF !( t_pic_[ nSlot ] == cFilePic )
+      IF !( t_pic_[nSlot] == cFilePic )
          IF wvt_LoadPicture( cFilePic, nSlot )
-            t_pic_[ nSlot ] := cFilePic
+            t_pic_[nSlot] := cFilePic
          ENDIF
       ENDIF
    ENDIF
@@ -461,7 +461,7 @@ PROCEDURE WvtPictures( nSlot, cFilePic )
 
 PROCEDURE WvtExePicture( nTop, nLeft, nBottom, nRight, nSlot, aOffset )
 
-   IF t_pic_[ nSlot ] != NIL
+   IF t_pic_[nSlot] != NIL
       wvt_DrawPicture( nTop, nLeft, nBottom, nRight, nSlot, aOffSet )
    ENDIF
 

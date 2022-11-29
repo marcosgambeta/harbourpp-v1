@@ -264,7 +264,7 @@ PROCEDURE WvtNextGets_X()
 
    // Change the values of palette arbitrarly though you can fine-tune
    // these values with realistic values.
-   aNewPalette[ 8 ] := aNewPalette[ 8 ] + ( 100000 * ++s_nPalletMultiplier )
+   aNewPalette[8] := aNewPalette[8] + ( 100000 * ++s_nPalletMultiplier )
 
    Wvt_SetPalette( aNewPalette )
 

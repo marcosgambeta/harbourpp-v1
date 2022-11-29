@@ -127,7 +127,7 @@ METHOD WvgCheckBox:handleEvent( nMessage, aNM )
       ::sendMessage( WM_SIZE, 0, 0 )
 
    CASE nMessage == HB_GTE_COMMAND
-      IF aNM[ NMH_code ] == BN_CLICKED
+      IF aNM[NMH_code] == BN_CLICKED
          ::editBuffer := ( wvg_Button_GetCheck( ::hWnd ) == BST_CHECKED )
          IF HB_ISBLOCK( ::sl_lbClick )
             IF ::isParentCrt()
@@ -142,19 +142,19 @@ METHOD WvgCheckBox:handleEvent( nMessage, aNM )
 
    CASE nMessage == HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC( ::clr_FG )
-         wvg_SetTextColor( aNM[ 1 ], ::clr_FG )
+         wvg_SetTextColor( aNM[1], ::clr_FG )
       ENDIF
       IF HB_ISNUMERIC( ::hBrushBG )
-         wvg_SetBkMode( aNM[ 1 ], 1 )
+         wvg_SetBkMode( aNM[1], 1 )
          RETURN ::hBrushBG
       ELSE
-         RETURN wvg_GetCurrentBrush( aNM[ 1 ] )
+         RETURN wvg_GetCurrentBrush( aNM[1] )
       ENDIF
 
 #if 0  /* This should never be reached as parent is processing the events */
    CASE nMessage == HB_GTE_ANY
       IF ::isParentCrt()
-         IF aNM[ 1 ] == WM_LBUTTONUP
+         IF aNM[1] == WM_LBUTTONUP
             IF HB_ISBLOCK( ::sl_lbClick )
                ::oParent:setFocus()
                ::sendMessage( BM_SETCHECK, iif( wvg_Button_GetCheck( ::hWnd ) == BST_CHECKED, BST_UNCHECKED, BST_CHECKED ), 0 )

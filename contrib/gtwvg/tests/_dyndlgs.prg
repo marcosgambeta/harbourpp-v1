@@ -195,14 +195,14 @@ FUNCTION DynDlgProc( hDlg, nMsg, wParam, lParam )
       ENDIF
 
       IF Len( aHFonts ) > 0
-         wvg_SendMessage( wvg_GetDlgItem( hDlg, ID_MLE ), WM_SETFONT, ahFonts[ 1 ], 0 )
+         wvg_SendMessage( wvg_GetDlgItem( hDlg, ID_MLE ), WM_SETFONT, ahFonts[1], 0 )
       ENDIF
 
       IF Empty( SetIcons() )
          SetIcons( wvg_LoadIcon( "resources\vr_1.ico" ) )
       ENDIF
       IF ! Empty( SetIcons() )
-         wvg_SendMessage( wvg_GetDlgItem( hDlg, ID_ICO_VOUCH ), STM_SETIMAGE, IMAGE_ICON, SetIcons()[ 1 ] )
+         wvg_SendMessage( wvg_GetDlgItem( hDlg, ID_ICO_VOUCH ), STM_SETIMAGE, IMAGE_ICON, SetIcons()[1] )
       ENDIF
 
       /*
@@ -328,9 +328,9 @@ STATIC PROCEDURE DrawSlide( hDlg, nSlide )
    hDC   := wvg_GetDC( hDlg )
    aRect := wvg_GetClientRect( hDlg )
 
-   win_Rectangle( hDC, aRect[ 1 ] + 10, aRect[ 2 ] + 10, aRect[ 3 ] - 10, aRect[ 4 ] - 10 )
-   wvg_DrawImage( hDC, aRect[ 1 ] + 10, aRect[ 2 ] + 10, aRect[ 3 ] - aRect[ 1 ] - 20, ;
-      aRect[ 4 ] - aRect[ 2 ] - 20, t_aSlides[ nSlide ] )
+   win_Rectangle( hDC, aRect[1] + 10, aRect[2] + 10, aRect[3] - 10, aRect[4] - 10 )
+   wvg_DrawImage( hDC, aRect[1] + 10, aRect[2] + 10, aRect[3] - aRect[1] - 20, ;
+      aRect[4] - aRect[2] - 20, t_aSlides[nSlide] )
 
    wvg_ReleaseDC( hDlg, hDC )
 

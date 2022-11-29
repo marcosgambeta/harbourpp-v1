@@ -150,8 +150,8 @@ METHOD WvgPartHandler:childFromName( nNameId )
    LOCAL i, oWvg
 
    FOR i := 1 TO Len( ::aChildren )
-      IF ::aChildren[ i ]:nNameID != NIL .AND. ::aChildren[ i ]:nNameID == nNameID
-         oWvg := ::aChildren[ i ]
+      IF ::aChildren[i]:nNameID != NIL .AND. ::aChildren[i]:nNameID == nNameID
+         oWvg := ::aChildren[i]
       ENDIF
    NEXT
 
@@ -216,11 +216,11 @@ METHOD PROCEDURE WvgPartHandler:notifierBlock( ... )
 
    LOCAL a_ := hb_AParams()
 
-   IF ! Empty( a_ ) .AND. HB_ISBLOCK( a_[ 1 ] )
-      ::sb_notifier := a_[ 1 ]
+   IF ! Empty( a_ ) .AND. HB_ISBLOCK( a_[1] )
+      ::sb_notifier := a_[1]
 
-   ELSEIF ! Empty( a_ ) .AND. HB_ISBLOCK( ::sb_notifier ) .AND. HB_ISNUMERIC( a_[ 1 ] ) .AND. HB_ISARRAY( a_[ 2 ] )
-      Eval( ::sb_notifier, a_[ 1 ], a_[ 2 ], Self )
+   ELSEIF ! Empty( a_ ) .AND. HB_ISBLOCK( ::sb_notifier ) .AND. HB_ISNUMERIC( a_[1] ) .AND. HB_ISARRAY( a_[2] )
+      Eval( ::sb_notifier, a_[1], a_[2], Self )
 
    ENDIF
 
@@ -236,15 +236,15 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
    CASE nEvent == HB_GTE_MOUSE
 
       DO CASE
-      CASE xParams[ 1 ] == WM_MOUSEHOVER
-         aPos := { xParams[ 3 ], xParams[ 4 ] }
-      CASE xParams[ 1 ] == WM_MOUSELEAVE
+      CASE xParams[1] == WM_MOUSEHOVER
+         aPos := { xParams[3], xParams[4] }
+      CASE xParams[1] == WM_MOUSELEAVE
          /* Nothing */
       OTHERWISE
-         aPos := iif( ::mouseMode == 2, { xParams[ 3 ], xParams[ 4 ] }, { xParams[ 5 ], xParams[ 6 ] } )
+         aPos := iif( ::mouseMode == 2, { xParams[3], xParams[4] }, { xParams[5], xParams[6] } )
       ENDCASE
 
-      SWITCH xParams[ 1 ]
+      SWITCH xParams[1]
       CASE WM_MOUSEHOVER
          IF HB_ISBLOCK( ::sl_enter )
             Eval( ::sl_enter, aPos, , Self )
@@ -352,24 +352,24 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
 
    CASE nEvent == HB_GTE_MENU
       DO CASE
-      CASE xParams[ 1 ] == 0                             /* menu selected */
+      CASE xParams[1] == 0                             /* menu selected */
          IF HB_ISOBJECT( ::oMenu )
-            IF ! Empty( aMenuItem := ::oMenu:FindMenuItemById( xParams[ 2 ] ) )
+            IF ! Empty( aMenuItem := ::oMenu:FindMenuItemById( xParams[2] ) )
                DO CASE
-               CASE HB_ISBLOCK( aMenuItem[ 2 ] )
-                  Eval( aMenuItem[ 2 ], aMenuItem[ 1 ], , aMenuItem[ 4 ] )
-               CASE HB_ISBLOCK( aMenuItem[ 3 ] )
-                  Eval( aMenuItem[ 3 ], aMenuItem[ 1 ], , aMenuItem[ 4 ] )
+               CASE HB_ISBLOCK( aMenuItem[2] )
+                  Eval( aMenuItem[2], aMenuItem[1], , aMenuItem[4] )
+               CASE HB_ISBLOCK( aMenuItem[3] )
+                  Eval( aMenuItem[3], aMenuItem[1], , aMenuItem[4] )
                ENDCASE
             ENDIF
          ENDIF
 
-      CASE xParams[ 1 ] == 1 .AND. HB_ISOBJECT( ::oMenu ) /* enter menu loop */
+      CASE xParams[1] == 1 .AND. HB_ISOBJECT( ::oMenu ) /* enter menu loop */
          IF HB_ISBLOCK( ::oMenu:sl_beginMenu )
             Eval( ::oMenu:sl_beginMenu, , , Self )
          ENDIF
 
-      CASE xParams[ 1 ] == 2 .AND. HB_ISOBJECT( ::oMenu ) /* exit menu loop */
+      CASE xParams[1] == 2 .AND. HB_ISOBJECT( ::oMenu ) /* exit menu loop */
          IF HB_ISBLOCK( ::oMenu:sl_endMenu )
             Eval( ::oMenu:sl_endMenu, , , Self )
          ENDIF
@@ -377,38 +377,38 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
       ENDCASE
 
    CASE nEvent == HB_GTE_NOTIFY
-      nCtrlID := xParams[ 1 ]
+      nCtrlID := xParams[1]
       IF ( nIndex := AScan( ::aChildren, {| o | o:nID == nCtrlID } ) ) > 0
-         RETURN ::aChildren[ nIndex ]:handleEvent( HB_GTE_NOTIFY, xParams )
+         RETURN ::aChildren[nIndex]:handleEvent( HB_GTE_NOTIFY, xParams )
       ENDIF
 
    CASE nEvent == HB_GTE_COMMAND
-      nCtrlID := xParams[ 2 ]
+      nCtrlID := xParams[2]
       IF ( nIndex := AScan( ::aChildren, {| o | o:nID == nCtrlID } ) ) > 0
-         RETURN ::aChildren[ nIndex ]:handleEvent( HB_GTE_COMMAND, xParams )
+         RETURN ::aChildren[nIndex]:handleEvent( HB_GTE_COMMAND, xParams )
       ENDIF
 
    CASE nEvent == HB_GTE_CTLCOLOR
-      oObj := ::findObjectByHandle( xParams[ 2 ] )
+      oObj := ::findObjectByHandle( xParams[2] )
       IF HB_ISOBJECT( oObj )
          RETURN oObj:handleEvent( HB_GTE_CTLCOLOR, xParams )
       ENDIF
 
    CASE nEvent == HB_GTE_HSCROLL
-      IF xParams[ 3 ] == ::hWnd
+      IF xParams[3] == ::hWnd
          RETURN ::handleEvent( HB_GTE_VSCROLL, xParams )
       ELSE
-         oObj := ::findObjectByHandle( xParams[ 3 ] )
+         oObj := ::findObjectByHandle( xParams[3] )
          IF HB_ISOBJECT( oObj )
             RETURN oObj:handleEvent( HB_GTE_VSCROLL, xParams )
          ENDIF
       ENDIF
 
    CASE nEvent == HB_GTE_VSCROLL
-      IF xParams[ 3 ] == ::hWnd
+      IF xParams[3] == ::hWnd
          RETURN ::handleEvent( HB_GTE_VSCROLL, xParams )
       ELSE
-         oObj := ::findObjectByHandle( xParams[ 3 ] )
+         oObj := ::findObjectByHandle( xParams[3] )
          IF HB_ISOBJECT( oObj )
             RETURN oObj:handleEvent( HB_GTE_VSCROLL, xParams )
          ENDIF
@@ -421,15 +421,15 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
          ENDIF
       ENDIF
       IF HB_ISBLOCK( ::sl_resize )
-         Eval( ::sl_resize, { xParams[ 1 ], xParams[ 2 ] }, { xParams[ 3 ], xParams[ 4 ] }, Self )
+         Eval( ::sl_resize, { xParams[1], xParams[2] }, { xParams[3], xParams[4] }, Self )
       ENDIF
       AEval( ::aChildren, {| o | o:handleEvent( HB_GTE_RESIZED, { 0, 0, 0, 0, 0 } ) } )
 
    CASE nEvent == HB_GTE_KEYTOITEM
-      IF xParams[ 3 ] == ::hWnd
+      IF xParams[3] == ::hWnd
          RETURN ::handleEvent( HB_GTE_KEYTOITEM, xParams )
       ELSE
-         oObj := ::findObjectByHandle( xParams[ 3 ] )
+         oObj := ::findObjectByHandle( xParams[3] )
          IF HB_ISOBJECT( oObj )
             RETURN oObj:handleEvent( HB_GTE_KEYTOITEM, xParams )
          ENDIF
@@ -461,17 +461,17 @@ METHOD WvgPartHandler:controlWndProc( hWnd, nMessage, nwParam, nlParam )
          IF HB_ISOBJECT( ::oMenu )
             IF ! Empty( aMenuItem := ::oMenu:FindMenuItemById( nCtrlID ) )
                DO CASE
-               CASE HB_ISBLOCK( aMenuItem[ 2 ] )
-                  Eval( aMenuItem[ 2 ], aMenuItem[ 1 ], , aMenuItem[ 4 ] )
-               CASE HB_ISBLOCK( aMenuItem[ 3 ] )
-                  Eval( aMenuItem[ 3 ], aMenuItem[ 1 ], , aMenuItem[ 4 ] )
+               CASE HB_ISBLOCK( aMenuItem[2] )
+                  Eval( aMenuItem[2], aMenuItem[1], , aMenuItem[4] )
+               CASE HB_ISBLOCK( aMenuItem[3] )
+                  Eval( aMenuItem[3], aMenuItem[1], , aMenuItem[4] )
                ENDCASE
             ENDIF
          ENDIF
          RETURN 0
       ELSE
          IF ( nObj := AScan( ::aChildren, {| o | o:nID == nCtrlID } ) ) > 0
-            nReturn := ::aChildren[ nObj ]:handleEvent( HB_GTE_COMMAND, { nNotifctn, nCtrlID, hWndCtrl } )
+            nReturn := ::aChildren[nObj]:handleEvent( HB_GTE_COMMAND, { nNotifctn, nCtrlID, hWndCtrl } )
             IF HB_ISNUMERIC( nReturn ) .AND. nReturn == 0
                RETURN 0
             ENDIF
@@ -481,7 +481,7 @@ METHOD WvgPartHandler:controlWndProc( hWnd, nMessage, nwParam, nlParam )
 
    CASE WM_NOTIFY
       IF ( nObj := AScan( ::aChildren, {| o | o:nID == nwParam } ) ) > 0
-         nReturn := ::aChildren[ nObj ]:handleEvent( HB_GTE_NOTIFY, { nwParam, nlParam } )
+         nReturn := ::aChildren[nObj]:handleEvent( HB_GTE_NOTIFY, { nwParam, nlParam } )
          DO CASE
          CASE HB_ISNUMERIC( nReturn ) .AND. nReturn == EVENT_HANDELLED
             RETURN 0

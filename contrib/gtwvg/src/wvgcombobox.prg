@@ -142,13 +142,13 @@ METHOD WvgComboBox:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    IF ! Empty( ::aInfo := ::sendCBMessage( CB_GETCOMBOBOXINFO ) )
       ::oSLE := WvgSLE():new()
       ::oSLE:oParent := Self
-      ::oSLE:hWnd := ::aInfo[ 5 ]
-      ::oSLE:pWnd := win_N2P( ::aInfo[ 5 ] )
+      ::oSLE:hWnd := ::aInfo[5]
+      ::oSLE:pWnd := win_N2P( ::aInfo[5] )
 
       ::oListBox := WvgListBox():new()
       ::oListBox:oParent := Self
-      ::oListBox:hWnd := ::aInfo[ 6 ]
-      ::oListBox:pWnd := win_N2P( ::aInfo[ 6 ] )
+      ::oListBox:hWnd := ::aInfo[6]
+      ::oListBox:pWnd := win_N2P( ::aInfo[6] )
    ENDIF
 
    RETURN Self
@@ -185,7 +185,7 @@ METHOD WvgComboBox:handleEvent( nMessage, aNM )
 
    CASE nMessage == HB_GTE_COMMAND
       DO CASE
-      CASE aNM[ 1 ] == CBN_SELCHANGE
+      CASE aNM[1] == CBN_SELCHANGE
          ::nCurSelected := ::editBuffer := wvg_lbGetCurSel( ::hWnd ) + 1
          IF ::isParentCrt()
             ::oParent:setFocus()
@@ -197,7 +197,7 @@ METHOD WvgComboBox:handleEvent( nMessage, aNM )
             ENDIF
          ENDIF
 
-      CASE aNM[ 1 ] == CBN_DBLCLK
+      CASE aNM[1] == CBN_DBLCLK
          ::editBuffer := ::nCurSelected
          IF ::isParentCrt()
             ::oParent:setFocus()
@@ -209,16 +209,16 @@ METHOD WvgComboBox:handleEvent( nMessage, aNM )
             ENDIF
          ENDIF
 
-      CASE aNM[ 1 ] == CBN_KILLFOCUS
+      CASE aNM[1] == CBN_KILLFOCUS
          ::killInputFocus()
 
-      CASE aNM[ 1 ] == CBN_SETFOCUS
+      CASE aNM[1] == CBN_SETFOCUS
          ::setInputFocus()
 
       ENDCASE
 
    CASE nMessage == HB_GTE_KEYTOITEM
-      IF aNM[ 1 ] == K_ENTER
+      IF aNM[1] == K_ENTER
          IF ::isParentCrt()
             ::oParent:setFocus()
          ENDIF
@@ -232,13 +232,13 @@ METHOD WvgComboBox:handleEvent( nMessage, aNM )
 
    CASE nMessage == HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC( ::clr_FG )
-         wvg_SetTextColor( aNM[ 1 ], ::clr_FG )
+         wvg_SetTextColor( aNM[1], ::clr_FG )
       ENDIF
       IF HB_ISNUMERIC( ::hBrushBG )
-         wvg_SetBkMode( aNM[ 1 ], 1 )
+         wvg_SetBkMode( aNM[1], 1 )
          RETURN ::hBrushBG
       ELSE
-         RETURN wvg_GetCurrentBrush( aNM[ 1 ] )
+         RETURN wvg_GetCurrentBrush( aNM[1] )
       ENDIF
 
    ENDCASE
@@ -290,8 +290,8 @@ METHOD WvgComboBox:itemMarked( ... )
 
    LOCAL a_ := hb_AParams()
 
-   IF Len( a_ ) == 1 .AND. HB_ISBLOCK( a_[ 1 ] )
-      ::sl_itemMarked := a_[ 1 ]
+   IF Len( a_ ) == 1 .AND. HB_ISBLOCK( a_[1] )
+      ::sl_itemMarked := a_[1]
    ELSEIF Len( a_ ) >= 0 .AND. HB_ISBLOCK( ::sl_itemMarked )
       Eval( ::sl_itemMarked, , , Self )
    ENDIF
@@ -302,8 +302,8 @@ METHOD WvgComboBox:itemSelected( ... )
 
    LOCAL a_ := hb_AParams()
 
-   IF Len( a_ ) == 1 .AND. HB_ISBLOCK( a_[ 1 ] )
-      ::sl_itemSelected := a_[ 1 ]
+   IF Len( a_ ) == 1 .AND. HB_ISBLOCK( a_[1] )
+      ::sl_itemSelected := a_[1]
    ELSEIF Len( a_ ) >= 0 .AND. HB_ISBLOCK( ::sl_itemSelected )
       Eval( ::sl_itemSelected, , , Self )
    ENDIF
@@ -314,10 +314,10 @@ METHOD WvgComboBox:drawItem( ... )
 
    LOCAL a_ := hb_AParams()
 
-   IF Len( a_ ) == 1 .AND. HB_ISBLOCK( a_[ 1 ] )
-      ::sl_xbePDrawItem := a_[ 1 ]
+   IF Len( a_ ) == 1 .AND. HB_ISBLOCK( a_[1] )
+      ::sl_xbePDrawItem := a_[1]
    ELSEIF Len( a_ ) >= 2 .AND. HB_ISBLOCK( ::sl_xbePDrawItem )
-      Eval( ::sl_xbePDrawItem, a_[ 1 ], a_[ 2 ], Self )
+      Eval( ::sl_xbePDrawItem, a_[1], a_[2], Self )
    ENDIF
 
    RETURN Self

@@ -130,16 +130,16 @@ METHOD WvgStatusBar:handleEvent( nMessage, aNM )
       ENDIF
 
    CASE nMessage == HB_GTE_NOTIFY
-      aNMH := wvg_GetNMMouseInfo( aNM[ 2 ] )
+      aNMH := wvg_GetNMMouseInfo( aNM[2] )
 
       DO CASE
-      CASE aNMH[ NMH_code ] == NM_CLICK
+      CASE aNMH[NMH_code] == NM_CLICK
 
          IF HB_ISBLOCK( ::sl_lbClick )
-            IF aNMH[ NMH_dwItemSpec ] >= 0
-               nObj := aNMH[ NMH_dwItemSpec ] + 1
+            IF aNMH[NMH_dwItemSpec] >= 0
+               nObj := aNMH[NMH_dwItemSpec] + 1
 
-               Eval( ::sl_lbClick, ::aItems[ nObj ], , Self )
+               Eval( ::sl_lbClick, ::aItems[nObj], , Self )
             ENDIF
 
             nHandled := 0
@@ -149,13 +149,13 @@ METHOD WvgStatusBar:handleEvent( nMessage, aNM )
 
    CASE nMessage == HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC( ::clr_FG )
-         wvg_SetTextColor( aNM[ 1 ], ::clr_FG )
+         wvg_SetTextColor( aNM[1], ::clr_FG )
       ENDIF
       IF HB_ISNUMERIC( ::hBrushBG )
-         wvg_SetBkMode( aNM[ 1 ], 1 )
+         wvg_SetBkMode( aNM[1], 1 )
          RETURN ::hBrushBG
       ELSE
-         RETURN wvg_GetCurrentBrush( aNM[ 1 ] )
+         RETURN wvg_GetCurrentBrush( aNM[1] )
       ENDIF
 
    ENDCASE
@@ -236,7 +236,7 @@ METHOD WvgStatusBar:getItem( nItemORcKey )
    ENDCASE
 
    IF nIndex > 0
-      oPanel := ::aItems[ nIndex ]
+      oPanel := ::aItems[nIndex]
    ENDIF
 
    RETURN oPanel

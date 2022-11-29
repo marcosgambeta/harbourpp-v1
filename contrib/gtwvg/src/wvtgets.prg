@@ -115,13 +115,13 @@ METHOD WvtGets:Create()
 
    FOR i := 1 TO Len( ::aGetList )
 
-      __defaultNIL( @::aGetList[ i ][ 7 ], "N/W*,N/W*,,,N/GR*" )
-      __defaultNIL( @::aGetList[ i ][ 5 ], {|| .T. } )
-      __defaultNIL( @::aGetList[ i ][ 6 ], {|| .T. } )
+      __defaultNIL( @::aGetList[i][7], "N/W*,N/W*,,,N/GR*" )
+      __defaultNIL( @::aGetList[i][5], {|| .T. } )
+      __defaultNIL( @::aGetList[i][6], {|| .T. } )
 
-      AAdd( ::GetList, Get():New( ::aGetList[ i ][ 1 ], ::aGetList[ i ][ 2 ], {| v | iif( PCount() == 0, ::aGetList[ i ][ 3 ], ::aGetList[ i ][ 3 ] := v ) }, "::aGetList[ i ][ 3 ]", ::aGetList[ i ][ 7 ] ) )
+      AAdd( ::GetList, Get():New( ::aGetList[i][1], ::aGetList[i][2], {| v | iif( PCount() == 0, ::aGetList[i][3], ::aGetList[i][3] := v ) }, "::aGetList[i][3]", ::aGetList[i][7] ) )
 
-      ::GetList[ i ]:Display()
+      ::GetList[i]:Display()
       ::PaintBlock( i )
    NEXT
    SetPos( nCurRow, nCurCol )
@@ -135,13 +135,13 @@ METHOD WvtGets:PaintBlock( nIndex )
 
    LOCAL nLen, bPaint
 
-   nLen   := Len( Transform( ::aGetList[ nIndex ][ 3 ], ::aGetList[ nIndex ][ 4 ] ) )
+   nLen   := Len( Transform( ::aGetList[nIndex][3], ::aGetList[nIndex][4] ) )
 
-   bPaint := {|| wvt_DrawBoxGet( ::aGetList[ nIndex ][ 1 ], ::aGetList[ nIndex ][ 2 ], nLen ) }
+   bPaint := {|| wvt_DrawBoxGet( ::aGetList[nIndex][1], ::aGetList[nIndex][2], nLen ) }
 
    AAdd( ::aPaint, { bPaint, ;
-      { WVT_BLOCK_GETS, ::aGetList[ nIndex ][ 1 ] - 1, ::aGetList[ nIndex ][ 2 ] - 1, ;
-      ::aGetList[ nIndex ][ 1 ] - 1,  ::aGetList[ nIndex ][ 2 ] + nLen } } )
+      { WVT_BLOCK_GETS, ::aGetList[nIndex][1] - 1, ::aGetList[nIndex][2] - 1, ;
+      ::aGetList[nIndex][1] - 1,  ::aGetList[nIndex][2] + nLen } } )
 
    RETURN Self
 

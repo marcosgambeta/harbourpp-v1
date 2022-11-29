@@ -113,7 +113,7 @@ METHOD WvgRadioButton:handleEvent( nMessage, aNM )
    SWITCH nMessage
 
    CASE HB_GTE_COMMAND
-      IF aNM[ NMH_code ] == BN_CLICKED
+      IF aNM[NMH_code] == BN_CLICKED
          ::editBuffer := ( wvg_Button_GetCheck( ::hWnd ) == BST_CHECKED )
 
          IF HB_ISBLOCK( ::sl_lbClick )

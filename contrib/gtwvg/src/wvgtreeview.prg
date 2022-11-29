@@ -167,10 +167,10 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
       EXIT
 
    CASE HB_GTE_NOTIFY
-      aHdr := wvg_GetNMTreeViewInfo( aNM[ 2 ] )
+      aHdr := wvg_GetNMTreeViewInfo( aNM[2] )
 
       DO CASE
-      CASE aHdr[ NMH_code ] == NM_DBLCLK .OR. aHdr[ NMH_code ] == NM_RETURN
+      CASE aHdr[NMH_code] == NM_DBLCLK .OR. aHdr[NMH_code] == NM_RETURN
          ::editBuffer := ::oItemSelected
          IF ::isParentCrt()
             ::oParent:setFocus()
@@ -187,8 +187,8 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
          ENDIF
          RETURN .F.
 
-      CASE aHdr[ NMH_code ] == TVN_SELCHANGED
-         ::getSelectionInfo( aNM[ 2 ] )
+      CASE aHdr[NMH_code] == TVN_SELCHANGED
+         ::getSelectionInfo( aNM[2] )
          IF ::isParentCrt()
             ::oParent:setFocus()
          ENDIF
@@ -212,9 +212,9 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
 
 #if 0  /* It must never reach here */
    CASE HB_GTE_ANY
-      IF aNM[ 1 ] == WM_LBUTTONDOWN
-         aHdr := wvg_GetNMTreeViewInfo( aNM[ 3 ] )
-         ::getSelectionInfo( aNM[ 2 ] )
+      IF aNM[1] == WM_LBUTTONDOWN
+         aHdr := wvg_GetNMTreeViewInfo( aNM[3] )
+         ::getSelectionInfo( aNM[2] )
          IF HB_ISBLOCK( ::sl_lbClick )
             IF ::isParentCrt()
                ::oParent:setFocus()
@@ -226,7 +226,7 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
          ENDIF
          RETURN EVENT_HANDELLED
 
-      ELSEIF aNM[ 1 ] == WM_LBUTTONDBLCLK .OR. ( aNM[ 1 ] == WM_KEYDOWN .AND. aNM[ 2 ] == K_ENTER )
+      ELSEIF aNM[1] == WM_LBUTTONDBLCLK .OR. ( aNM[1] == WM_KEYDOWN .AND. aNM[2] == K_ENTER )
          ::editBuffer := ::oItemSelected
          IF HB_ISBLOCK( ::sl_itemSelected )
             IF ::isParentCrt()
@@ -267,7 +267,7 @@ METHOD WvgTreeView:getSelectionInfo( nlParam )
    ::textItemSelected   := RTrim( cText   )
 
    IF ( n := AScan( ::aItems, {| o | o:hItem == hItemSelected } ) ) > 0
-      ::oItemSelected      := ::aItems[ n ]
+      ::oItemSelected      := ::aItems[n]
    ENDIF
 
    RETURN Self

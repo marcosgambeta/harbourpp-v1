@@ -112,21 +112,21 @@ STATIC PROCEDURE MyDialogOne( oCrt )
    oDlg:AddObject( oText )
 
    oImg := WvtImage():New( oDlg, 102, 20, oDlg:MaxCol() - 40, 37, oDlg:MaxCol() - 2 )
-   oImg:cImage  := aImg_[ 5 ]
+   oImg:cImage  := aImg_[5]
    oImg:Tooltip := "WvtImage():New()"
    oDlg:AddObject( oImg )
 
    oTBar := WvtToolBar():New( oDlg, 103, 0, 0, 2 )
    oTBar:lFloating := .F.
    oTBar:Tooltip   := "Toolbar"
-   oTBar:AddButton( aImg_[ 1 ], {|| oImg:SetImage( aImg_[ 1 ] ) }, "Lock" )
-   oTBar:AddButton( aImg_[ 2 ], {|| oImg:SetImage( aImg_[ 2 ] ), oText:SetText( "Harbour" ) }, "New" )
-   oTBar:AddButton( aImg_[ 3 ], {|| oImg:SetImage( aImg_[ 3 ] ) }, "Calculator" )
+   oTBar:AddButton( aImg_[1], {|| oImg:SetImage( aImg_[1] ) }, "Lock" )
+   oTBar:AddButton( aImg_[2], {|| oImg:SetImage( aImg_[2] ), oText:SetText( "Harbour" ) }, "New" )
+   oTBar:AddButton( aImg_[3], {|| oImg:SetImage( aImg_[3] ) }, "Calculator" )
    oTBar:AddButton()
-   oTBar:AddButton( aImg_[ 5 ], {|| oImg:SetImage( aImg_[ 5 ] ) }, "Restore" )
-   oTBar:AddButton( aImg_[ 4 ], {|| oImg:SetImage( aImg_[ 4 ] ), oText:SetText( "Vouch" )    }, "Calendar" )
-   oTBar:AddButton( aImg_[ 6 ], {|| oImg:SetImage( aImg_[ 6 ] ) }, "Notes" )
-   oTBar:AddButton( aImg_[ 7 ], {|| oImg:SetImage( aImg_[ 7 ] ) }, "Press to Send Browse on Top" )
+   oTBar:AddButton( aImg_[5], {|| oImg:SetImage( aImg_[5] ) }, "Restore" )
+   oTBar:AddButton( aImg_[4], {|| oImg:SetImage( aImg_[4] ), oText:SetText( "Vouch" )    }, "Calendar" )
+   oTBar:AddButton( aImg_[6], {|| oImg:SetImage( aImg_[6] ) }, "Notes" )
+   oTBar:AddButton( aImg_[7], {|| oImg:SetImage( aImg_[7] ) }, "Press to Send Browse on Top" )
    oTBar:AddButton()
    oDlg:AddObject( oTBar )
 
@@ -145,7 +145,7 @@ STATIC PROCEDURE MyDialogOne( oCrt )
    oDlg:AddObject( oBtn )
 
    oBtn2 := WvtPushButton():New( oDlg, 124, 9, 129, 12, 137 )
-   oBtn2:cFileImage := aImg_[ 3 ]
+   oBtn2:cFileImage := aImg_[3]
    oBtn2:block      := {|| ExeProgressBar( oPBar2, oPBar3 ) }
    oBtn2:Tooltip    := "Execute Progress Bar"
    oDlg:AddObject( oBtn2 )
@@ -260,17 +260,17 @@ STATIC PROCEDURE MyDialogOne( oCrt )
       PadR( "Wvtgui is a classical example of Harbour capabilities...", 65 ) }
 
    oGet1 := WvtGets():New( oDlg, , 4, 2, 37, 62 )
-   oGet1:AddGets( nGetRow +  0, nGetCol, aGets_[ 1 ], "@ "       , "N/W*,N/GR*" )
-   oGet1:AddGets( nGetRow +  2, nGetCol, aGets_[ 2 ], "@ "       , "N/W*,N/GR*" )
-   oGet1:AddGets( nGetRow +  4, nGetCol, aGets_[ 3 ], "@ "       , "N/W*,N/GR*" )
-   oGet1:AddGets( nGetRow +  6, nGetCol, aGets_[ 4 ], "@ "       , "N/W*,N/GR*" )
-   oGet1:AddGets( nGetRow +  8, nGetCol, aGets_[ 5 ], "@ "       , "N/W*,N/GR*" )
-   oGet1:AddGets( nGetRow + 10, nGetCol, aGets_[ 6 ], "@ "       , "N/W*,N/GR*" )
-   oGet1:AddGets( nGetRow + 12, nGetCol, aGets_[ 7 ], "@ "       , "N/W*,N/GR*" )
-   oGet1:AddGets( nGetRow + 14, nGetCol, aGets_[ 8 ], "@Y"       , "N/W*,N/GR*" )
-   oGet1:AddGets( nGetRow + 16, nGetCol, aGets_[ 9 ], "@Z 99"    , "N/W*,N/GR*" )
-   oGet1:AddGets( nGetRow + 18, nGetCol, aGets_[ 10], "@Z 999999", "N/W*,N/GR*" )
-   oGet1:AddGets( nGetRow + 20, nGetCol, aGets_[ 11], "@S35"     , "N/W*,N/GR*" )
+   oGet1:AddGets( nGetRow +  0, nGetCol, aGets_[ 1], "@ "       , "N/W*,N/GR*" )
+   oGet1:AddGets( nGetRow +  2, nGetCol, aGets_[ 2], "@ "       , "N/W*,N/GR*" )
+   oGet1:AddGets( nGetRow +  4, nGetCol, aGets_[ 3], "@ "       , "N/W*,N/GR*" )
+   oGet1:AddGets( nGetRow +  6, nGetCol, aGets_[ 4], "@ "       , "N/W*,N/GR*" )
+   oGet1:AddGets( nGetRow +  8, nGetCol, aGets_[ 5], "@ "       , "N/W*,N/GR*" )
+   oGet1:AddGets( nGetRow + 10, nGetCol, aGets_[ 6], "@ "       , "N/W*,N/GR*" )
+   oGet1:AddGets( nGetRow + 12, nGetCol, aGets_[ 7], "@ "       , "N/W*,N/GR*" )
+   oGet1:AddGets( nGetRow + 14, nGetCol, aGets_[ 8], "@Y"       , "N/W*,N/GR*" )
+   oGet1:AddGets( nGetRow + 16, nGetCol, aGets_[ 9], "@Z 99"    , "N/W*,N/GR*" )
+   oGet1:AddGets( nGetRow + 18, nGetCol, aGets_[10], "@Z 999999", "N/W*,N/GR*" )
+   oGet1:AddGets( nGetRow + 20, nGetCol, aGets_[11], "@S35"     , "N/W*,N/GR*" )
    oGet1:cDesc     := "test.dbf Fields"
    oGet1:Tooltip   := "Double Click to Activate ReadModal()"
    oGet1:bOnCreate := bBlock1

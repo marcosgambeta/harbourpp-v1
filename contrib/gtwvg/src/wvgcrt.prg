@@ -277,8 +277,8 @@ METHOD WvgCrt:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ::aPresParams := aPresParams
    ::visible     := lVisible
 
-   ::maxRow := ::aSize[ 1 ]
-   ::maxCol := ::aSize[ 2 ]
+   ::maxRow := ::aSize[1]
+   ::maxCol := ::aSize[2]
 
    ::WvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
@@ -301,7 +301,7 @@ METHOD WvgCrt:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ENDIF
 
    hb_gtInfo( HB_GTI_RESIZABLE, ::resizable )
-   hb_gtInfo( HB_GTI_PRESPARAMS, { ::exStyle, ::style, ::aPos[ 1 ], ::aPos[ 2 ], ;
+   hb_gtInfo( HB_GTI_PRESPARAMS, { ::exStyle, ::style, ::aPos[1], ::aPos[2], ;
       ::maxRow + 1, ::maxCol + 1, ::pGTp, .F., lRowCol, HB_WNDTYPE_CRT } )
    hb_gtInfo( HB_GTI_SETFONT, { ::fontName, ::fontHeight, ::fontWidth } )
 
@@ -512,8 +512,8 @@ METHOD WvgCrt:setSize( aSize, lPaint )
    IF HB_ISARRAY( aSize )
       __defaultNIL( @lPaint, .T. )
 
-      hb_gtInfo( HB_GTI_SCREENHEIGHT, aSize[ 1 ] )
-      hb_gtInfo( HB_GTI_SCREENWIDTH , aSize[ 2 ] )
+      hb_gtInfo( HB_GTI_SCREENHEIGHT, aSize[1] )
+      hb_gtInfo( HB_GTI_SCREENWIDTH , aSize[2] )
    ENDIF
 
    RETURN Self

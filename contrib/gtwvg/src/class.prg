@@ -111,15 +111,15 @@ METHOD TBrowseWvg:SetVisible()
 
    lFirst := .T.
    FOR EACH aCol IN ::aColData
-      IF aCol[ _TBCI_COLPOS ] != NIL
+      IF aCol[_TBCI_COLPOS] != NIL
          IF lFirst
             lFirst := .F.
 
          ELSE
-            nColPos := aCol[ _TBCI_COLPOS ]
+            nColPos := aCol[_TBCI_COLPOS]
 
-            IF aCol[ _TBCI_SEPWIDTH ] > 0
-               nColPos += Int( aCol[ _TBCI_SEPWIDTH ] / 2 )
+            IF aCol[_TBCI_SEPWIDTH] > 0
+               nColPos += Int( aCol[_TBCI_SEPWIDTH] / 2 )
             ENDIF
 
             AAdd( ::aColumnsSep, nColPos )

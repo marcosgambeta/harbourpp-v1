@@ -123,7 +123,7 @@ METHOD WvtStatusBar:PaintBlock()
    AEval( ::aPanels, {| o | AAdd( a_, o:nTop ), AAdd( a_, o:nLeft ), ;
       AAdd( a_, o:nBottom ), AAdd( a_, o:nRight ) } )
 
-   a_[ Len( a_ ) ]++
+   a_[Len( a_ )]++
    nPanels := Len( ::aPanels )
 
    ::bPaint  := {|| wvt_DrawStatusBar( nPanels, a_ ) }
@@ -147,8 +147,8 @@ METHOD WvtStatusBar:SetPanels( aPanels )
 
    IF aPanels != NIL
       FOR i := 1 TO Len( aPanels )
-         IF ::oParent:MaxCol() > aPanels[ i ]
-            oPanel := WvtPanel():New( ::oParent, ++nID, ::nTop, aPanels[ i ] )
+         IF ::oParent:MaxCol() > aPanels[i]
+            oPanel := WvtPanel():New( ::oParent, ++nID, ::nTop, aPanels[i] )
             AAdd( ::aPanels, oPanel )
          ENDIF
       NEXT
@@ -157,8 +157,8 @@ METHOD WvtStatusBar:SetPanels( aPanels )
    ATail( ::aPanels ):nRight := nLastCol
 
    FOR i := Len( ::aPanels ) - 1 TO 1 STEP -1
-      oPanel        := ::aPanels[ i ]
-      oPanel:nRight := ::aPanels[ i + 1 ]:nLeft
+      oPanel        := ::aPanels[i]
+      oPanel:nRight := ::aPanels[i + 1]:nLeft
       oPanel:cColor := ::cColor
    NEXT
 
@@ -169,7 +169,7 @@ METHOD WvtStatusBar:Update( nPanel, cText, cColor )
    LOCAL oPanel
 
    IF nPanel > 0 .AND. nPanel <= Len( ::aPanels )
-      oPanel        := ::aPanels[ nPanel ]
+      oPanel        := ::aPanels[nPanel]
       oPanel:Text   := cText
       oPanel:cColor := iif( cColor == NIL, "N/W", cColor )
       oPanel:Refresh()
@@ -184,7 +184,7 @@ METHOD WvtStatusBar:SetText( nPanel, cText, cColor )
    __defaultNIL( @cColor, ::cColor )
 
    IF nPanel > 0 .AND. nPanel <= Len( ::aPanels )
-      oPanel        := ::aPanels[ nPanel ]
+      oPanel        := ::aPanels[nPanel]
       oPanel:Text   := cText
       oPanel:cColor := cColor
    ENDIF
@@ -194,7 +194,7 @@ METHOD WvtStatusBar:SetText( nPanel, cText, cColor )
 METHOD WvtStatusBar:SetIcon( nPanel, cIconFile )
 
    IF nPanel > 0 .AND. nPanel <= Len( ::aPanels )
-      ::aPanels[ nPanel ]:cIconFile := cIconFile
+      ::aPanels[nPanel]:cIconFile := cIconFile
    ENDIF
 
    RETURN Self
@@ -204,7 +204,7 @@ METHOD WvtStatusBar:Refresh()
    LOCAL i
 
    FOR i := 1 TO Len( ::aPanels )
-      ::aPanels[ i ]:Refresh()
+      ::aPanels[i]:Refresh()
    NEXT
 
    RETURN NIL
