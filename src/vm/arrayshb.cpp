@@ -83,13 +83,13 @@ HB_FUNC( ARRAY )
 
    if( iPCount > 0 )
    {
-      HB_BOOL bError = HB_FALSE;
+      bool bError = false;
 
       for( int iParam = 1; iParam <= iPCount; iParam++ )
       {
          if( !HB_ISNUM(iParam) )
          {
-            bError = HB_TRUE;
+            bError = true;
             break;
          }
 
@@ -100,7 +100,7 @@ HB_FUNC( ARRAY )
 #else
             hb_errRT_BASE(EG_BOUND, 1131, nullptr, hb_langDGetErrorDesc(EG_ARRDIMENSION), HB_ERR_ARGS_BASEPARAMS);
 #endif
-            bError = HB_TRUE;
+            bError = true;
             break;
          }
       }
