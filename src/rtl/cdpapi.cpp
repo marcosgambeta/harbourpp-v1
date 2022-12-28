@@ -934,7 +934,9 @@ int hb_charUpper(int iChar)
 
 char * hb_strLower(char * szText, HB_SIZE nLen)
 {
+#if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_strLower(%s, %" HB_PFS "u)", szText, nLen));
+#endif
 
    { /* TODO: eliminar bloco */
       PHB_CODEPAGE cdp = hb_vmCDP();
@@ -961,7 +963,9 @@ char * hb_strLower(char * szText, HB_SIZE nLen)
 
 char * hb_strUpper(char * szText, HB_SIZE nLen)
 {
+#if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_strUpper(%s, %" HB_PFS "u)", szText, nLen));
+#endif
 
    {
       PHB_CODEPAGE cdp = hb_vmCDP();
@@ -3651,7 +3655,9 @@ static PHB_CODEPAGE * hb_cdpFindPos(const char * id)
 
 HB_BOOL hb_cdpRegisterRaw(PHB_CODEPAGE cdp)
 {
+#if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cdpRegisterRaw(%p)", static_cast<void*>(cdp)));
+#endif
 
    PHB_CODEPAGE * cdp_ptr;
 
@@ -3691,7 +3697,9 @@ HB_BOOL hb_cdpRegisterNew(const char * id, const char * info,
                           unsigned int nCaseSort,
                           HB_BOOL fUtf8)
 {
+#if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cdpRegisterNew(%s,%s,%s,%s,%u,%u,%d)", id, info, pszUpper, pszLower, nACSort, nCaseSort, fUtf8));
+#endif
 
    PHB_CODEPAGE * cdp_ptr;
 
@@ -3706,7 +3714,9 @@ HB_BOOL hb_cdpRegisterNew(const char * id, const char * info,
 
 void hb_cdpReleaseAll(void)
 {
+#if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cdpReleaseAll()"));
+#endif
 
    while( s_cdpList )
    {
@@ -3731,14 +3741,18 @@ void hb_cdpReleaseAll(void)
 
 PHB_CODEPAGE hb_cdpFind(const char * id)
 {
+#if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cdpFind(%s)", id));
+#endif
 
    return id ? *hb_cdpFindPos(id) : nullptr;
 }
 
 PHB_CODEPAGE hb_cdpFindExt(const char * id)
 {
+#if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cdpFindExt(%s)", id));
+#endif
 
    if( id )
    {
@@ -3756,7 +3770,9 @@ PHB_CODEPAGE hb_cdpFindExt(const char * id)
 
 HB_BOOL hb_cdpIsUTF8(PHB_CODEPAGE cdp)
 {
+#if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cdpIsUTF8(%p)", static_cast<void*>(cdp)));
+#endif
 
    if( cdp == nullptr )
    {
@@ -3768,7 +3784,9 @@ HB_BOOL hb_cdpIsUTF8(PHB_CODEPAGE cdp)
 
 PHB_CODEPAGE hb_cdpSelect(PHB_CODEPAGE cdp)
 {
+#if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cdpSelect(%p)", static_cast<void*>(cdp)));
+#endif
 
    PHB_CODEPAGE cdpOld;
 
@@ -3783,7 +3801,9 @@ PHB_CODEPAGE hb_cdpSelect(PHB_CODEPAGE cdp)
 
 const char * hb_cdpID(void)
 {
+#if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cdpID()"));
+#endif
 
    PHB_CODEPAGE cdp;
 
@@ -3794,7 +3814,9 @@ const char * hb_cdpID(void)
 
 const char * hb_cdpSelectID(const char * id)
 {
+#if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_cdpSelectID(%s)", id));
+#endif
 
    PHB_CODEPAGE cdp;
 
