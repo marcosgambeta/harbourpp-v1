@@ -124,7 +124,7 @@ HB_FUNC( HB_CDPISCHARIDX )
 {
    const char * id = hb_parc(1);
    PHB_CODEPAGE cdp = id ? hb_cdpFindExt(id) : hb_vmCDP();
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
    if( cdp )
    {
