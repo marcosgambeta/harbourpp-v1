@@ -60,13 +60,13 @@
    #define BUFFER_SIZE  65536
 #endif
 
-static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
+static bool hb_copyfile( const char * pszSource, const char * pszDest )
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_copyfile(%s, %s)", pszSource, pszDest));
 #endif
 
-   HB_BOOL bRetVal = HB_FALSE;
+   bool bRetVal = false;
    PHB_FILE pSource;
    PHB_ITEM pError = nullptr;
 
@@ -120,7 +120,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
          HB_SIZE nRead;
 
          buffer = static_cast<HB_UCHAR*>(hb_xgrab(BUFFER_SIZE));
-         bRetVal = HB_TRUE;
+         bRetVal = true;
 
          while( (nRead = hb_fileRead(pSource, buffer, BUFFER_SIZE, -1)) != 0 && nRead != static_cast<HB_SIZE>(FS_ERROR) )
          {
@@ -138,7 +138,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest )
                   pError = hb_errRT_FileError(pError, nullptr, EG_WRITE, 2016, pszDest);
                   if( hb_errLaunch(pError) != E_RETRY )
                   {
-                     bRetVal = HB_FALSE;
+                     bRetVal = false;
                      break;
                   }
                }
