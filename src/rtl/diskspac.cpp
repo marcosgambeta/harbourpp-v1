@@ -106,49 +106,15 @@ HB_FUNC( DISKSPACE )
          lpPath[2] = TEXT('\\');
          lpPath[3] = TEXT('\0');
 
-         /* NOTE: We need to call this function dynamically to maintain support
-                  Win95 first edition. It was introduced in Win95B (aka OSR2) [vszakats] */
+         bError = GetDiskFreeSpaceEx(lpPath,
+                                     static_cast<PULARGE_INTEGER>(&i64FreeBytesToCaller),
+                                     static_cast<PULARGE_INTEGER>(&i64TotalBytes),
+                                     static_cast<PULARGE_INTEGER>(&i64FreeBytes)) ? false : true;
+         if( !bError )
          {
-            typedef BOOL ( WINAPI * P_GDFSE )( LPCTSTR, PULARGE_INTEGER, PULARGE_INTEGER, PULARGE_INTEGER );
-
-            static P_GDFSE s_pGetDiskFreeSpaceEx = nullptr;
-            static bool s_fInit = false;
-
-            if( !s_fInit )
-            {
-               HMODULE hModule = GetModuleHandle(HB_WINAPI_KERNEL32_DLL());
-               if( hModule )
-               {
-                  s_pGetDiskFreeSpaceEx = reinterpret_cast<P_GDFSE>(HB_WINAPI_GETPROCADDRESST(hModule, "GetDiskFreeSpaceEx"));
-               }
-               s_fInit = true;
-            }
-
-            if( s_pGetDiskFreeSpaceEx )
-            {
-               bError = s_pGetDiskFreeSpaceEx(lpPath,
-                                              static_cast<PULARGE_INTEGER>(&i64FreeBytesToCaller),
-                                              static_cast<PULARGE_INTEGER>(&i64TotalBytes),
-                                              static_cast<PULARGE_INTEGER>(&i64FreeBytes)) ? false : true;
-               if( !bError )
-               {
-                  dSpace = HB_GET_LARGE_UINT(i64FreeBytesToCaller);
-               }
-            }
-            else
-            {
-               DWORD dwSectorsPerCluster;
-               DWORD dwBytesPerSector;
-               DWORD dwNumberOfFreeClusters;
-               DWORD dwTotalNumberOfClusters;
-
-               bError = GetDiskFreeSpace( lpPath, &dwSectorsPerCluster, &dwBytesPerSector, &dwNumberOfFreeClusters, &dwTotalNumberOfClusters ) ? false : true;
-               if( !bError )
-               {
-                  dSpace = static_cast<double>(dwNumberOfFreeClusters) * static_cast<double>(dwSectorsPerCluster) * static_cast<double>(dwBytesPerSector);
-               }
-            }
+            dSpace = HB_GET_LARGE_UINT(i64FreeBytesToCaller);
          }
+
          SetErrorMode( uiErrMode );
       }
       else
