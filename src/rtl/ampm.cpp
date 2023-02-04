@@ -48,10 +48,10 @@
 
 HB_FUNC( AMPM )
 {
-   HB_SIZE nTimeLen  = hb_parclen(1);
-   char *  pszResult = static_cast<char*>(hb_xgrab(HB_MAX(nTimeLen, 2) + 3 + 1));
-   int     iHour     = 0;
-   HB_BOOL bAM;
+   HB_SIZE nTimeLen = hb_parclen(1);
+   char * pszResult = static_cast<char*>(hb_xgrab(HB_MAX(nTimeLen, 2) + 3 + 1));
+   int iHour = 0;
+   bool bAM = false;
 
    if( nTimeLen )
    {
@@ -66,10 +66,10 @@ HB_FUNC( AMPM )
       {
          nTimeLen = 2;
       }
-      
+
       pszResult[0] = '1';
       pszResult[1] = '2';
-      bAM = HB_TRUE;
+      bAM = true;
    }
    else if( iHour > 12 )
    {
@@ -77,7 +77,7 @@ HB_FUNC( AMPM )
       {
          nTimeLen = 2;
       }
-      
+
       iHour -= 12;
       pszResult[0] = static_cast<char>(iHour / 10) + '0';
       pszResult[1] = static_cast<char>(iHour % 10) + '0';
@@ -86,14 +86,14 @@ HB_FUNC( AMPM )
       {
          pszResult[0] = ' ';
       }
-      
-      bAM = HB_FALSE;
+
+      bAM = false;
    }
    else
    {
       bAM = (iHour != 12);
    }
-   
+
    memcpy(pszResult + nTimeLen, bAM ? " am" : " pm", 4);
 
    hb_retclen_buffer(pszResult, nTimeLen + 3);
