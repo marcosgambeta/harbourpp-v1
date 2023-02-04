@@ -73,7 +73,7 @@
 HB_FUNC( DISKSPACE )
 {
    double dSpace = 0.0;
-   HB_BOOL bError;
+   bool bError = false;
 
 #if defined(HB_OS_WIN)
    {
@@ -112,7 +112,7 @@ HB_FUNC( DISKSPACE )
             typedef BOOL ( WINAPI * P_GDFSE )( LPCTSTR, PULARGE_INTEGER, PULARGE_INTEGER, PULARGE_INTEGER );
 
             static P_GDFSE s_pGetDiskFreeSpaceEx = nullptr;
-            static HB_BOOL s_fInit = HB_FALSE;
+            static bool s_fInit = false;
 
             if( !s_fInit )
             {
@@ -121,7 +121,7 @@ HB_FUNC( DISKSPACE )
                {
                   s_pGetDiskFreeSpaceEx = reinterpret_cast<P_GDFSE>(HB_WINAPI_GETPROCADDRESST(hModule, "GetDiskFreeSpaceEx"));
                }
-               s_fInit = HB_TRUE;
+               s_fInit = true;
             }
 
             if( s_pGetDiskFreeSpaceEx )
@@ -129,7 +129,7 @@ HB_FUNC( DISKSPACE )
                bError = s_pGetDiskFreeSpaceEx(lpPath,
                                               static_cast<PULARGE_INTEGER>(&i64FreeBytesToCaller),
                                               static_cast<PULARGE_INTEGER>(&i64TotalBytes),
-                                              static_cast<PULARGE_INTEGER>(&i64FreeBytes)) ? HB_FALSE : HB_TRUE;
+                                              static_cast<PULARGE_INTEGER>(&i64FreeBytes)) ? false : true;
                if( !bError )
                {
                   dSpace = HB_GET_LARGE_UINT(i64FreeBytesToCaller);
@@ -142,7 +142,7 @@ HB_FUNC( DISKSPACE )
                DWORD dwNumberOfFreeClusters;
                DWORD dwTotalNumberOfClusters;
 
-               bError = GetDiskFreeSpace( lpPath, &dwSectorsPerCluster, &dwBytesPerSector, &dwNumberOfFreeClusters, &dwTotalNumberOfClusters ) ? HB_FALSE : HB_TRUE;
+               bError = GetDiskFreeSpace( lpPath, &dwSectorsPerCluster, &dwBytesPerSector, &dwNumberOfFreeClusters, &dwTotalNumberOfClusters ) ? false : true;
                if( !bError )
                {
                   dSpace = static_cast<double>(dwNumberOfFreeClusters) * static_cast<double>(dwSectorsPerCluster) * static_cast<double>(dwBytesPerSector);
@@ -153,7 +153,7 @@ HB_FUNC( DISKSPACE )
       }
       else
       {
-         bError = HB_TRUE;
+         bError = true;
       }
    }
 #elif defined(HB_OS_UNIX)
@@ -174,7 +174,7 @@ HB_FUNC( DISKSPACE )
 #if defined(__CEGCC__)
          int iTODO;
 
-         bError = HB_FALSE;
+         bError = false;
 #else
 #if defined(HB_OS_DARWIN) || defined(HB_OS_ANDROID) || defined(HB_OS_VXWORKS)
          struct statfs st;
@@ -203,7 +203,7 @@ HB_FUNC( DISKSPACE )
       }
    }
 #else
-   bError = HB_FALSE;
+   bError = false;
 #endif
 
    if( bError )
