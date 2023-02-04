@@ -90,14 +90,14 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
 
       {
          UINT uiErrMode = SetErrorMode( SEM_FAILCRITICALERRORS );
-         HB_BOOL fResult;
+         bool fResult = false;
 
 #if !defined(HB_OS_WIN_64)
          /* NOTE: We need to call this function dynamically to maintain support
                   Win95 first edition. It was introduced in Win95B (aka OSR2) [vszakats] */
          typedef BOOL ( WINAPI * P_GDFSE )( LPCTSTR, PULARGE_INTEGER, PULARGE_INTEGER, PULARGE_INTEGER );
          static P_GDFSE s_pGetDiskFreeSpaceEx = nullptr;
-         static HB_BOOL s_fInit = HB_FALSE;
+         static bool s_fInit = false;
 
          if( !s_fInit )
          {
@@ -106,7 +106,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
             {
                s_pGetDiskFreeSpaceEx = reinterpret_cast<P_GDFSE>(HB_WINAPI_GETPROCADDRESST(hModule, "GetDiskFreeSpaceEx"));
             }
-            s_fInit = HB_TRUE;
+            s_fInit = true;
          }
 
          if( !s_pGetDiskFreeSpaceEx )
@@ -116,7 +116,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
             DWORD dwNumberOfFreeClusters;
             DWORD dwTotalNumberOfClusters;
 
-            fResult = GetDiskFreeSpace(lpPath, &dwSectorsPerCluster, &dwBytesPerSector, &dwNumberOfFreeClusters, &dwTotalNumberOfClusters) ? HB_TRUE : HB_FALSE;
+            fResult = GetDiskFreeSpace(lpPath, &dwSectorsPerCluster, &dwBytesPerSector, &dwNumberOfFreeClusters, &dwTotalNumberOfClusters) ? true : false;
             hb_fsSetIOError(fResult, 0);
 
             if( fResult )
