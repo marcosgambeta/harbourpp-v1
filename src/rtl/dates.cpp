@@ -73,10 +73,10 @@ char * hb_dateFormat(const char * szDate, char * szFormattedDate, const char * s
    if( szDate && strlen(szDate) == 8 ) /* A valid date is always 8 characters */
    {
       const char * szPtr;
-      HB_BOOL used_d, used_m, used_y;
+      bool used_d, used_m, used_y;
 
       format_count = 0;
-      used_d = used_m = used_y = HB_FALSE;
+      used_d = used_m = used_y = false;
       szPtr = szDateFormat;
 
       while( format_count < size )
@@ -135,7 +135,7 @@ char * hb_dateFormat(const char * szDate, char * szFormattedDate, const char * s
                         szFormattedDate[format_count++] = static_cast<char>(digit);
                      }
                }
-               used_d = HB_TRUE;
+               used_d = true;
                break;
 
             case 'M':
@@ -179,7 +179,7 @@ char * hb_dateFormat(const char * szDate, char * szFormattedDate, const char * s
                         szFormattedDate[format_count++] = static_cast<char>(digit);
                      }
                }
-               used_m = HB_TRUE;
+               used_m = true;
                break;
 
             case 'Y':
@@ -217,7 +217,7 @@ char * hb_dateFormat(const char * szDate, char * szFormattedDate, const char * s
                         szFormattedDate[format_count++] = static_cast<char>(digit);
                      }
                }
-               used_y = HB_TRUE;
+               used_y = true;
                break;
 
             default:
