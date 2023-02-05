@@ -102,7 +102,7 @@ static void hb_errorDataRelease(void * Cargo)
 
 static HB_TSD_NEW(s_errData, sizeof(HB_ERRDATA), nullptr, hb_errorDataRelease);
 
-static HB_BOOL hb_errGetNumCode(int * piValue, const char * szOperation)
+static bool hb_errGetNumCode(int * piValue, const char * szOperation)
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::NUMERIC);
 
@@ -175,7 +175,7 @@ HB_FUNC_STATIC( _CANDEFAULT )
    if( HB_ISLOG(1) )
    {
       PHB_ITEM pError = hb_stackSelfItem();
-      HB_BOOL fCan = hb_parl(1);
+      bool fCan = hb_parl(1);
 
       if( fCan )
       {
@@ -200,7 +200,7 @@ HB_FUNC_STATIC( _CANRETRY )
    if( HB_ISLOG(1) )
    {
       PHB_ITEM pError = hb_stackSelfItem();
-      HB_BOOL fCan = hb_parl(1);
+      bool fCan = hb_parl(1);
 
       if( fCan )
       {
@@ -225,7 +225,7 @@ HB_FUNC_STATIC( _CANSUBST )
    if( HB_ISLOG(1) )
    {
       PHB_ITEM pError = hb_stackSelfItem();
-      HB_BOOL fCan = hb_parl(1);
+      bool fCan = hb_parl(1);
 
       if( fCan )
       {
@@ -601,13 +601,13 @@ HB_USHORT hb_errLaunch(PHB_ITEM pError)
       }
       else if( pResult )
       {
-         HB_BOOL bFailure = HB_FALSE;
+         bool bFailure = false;
 
          /* If the error block didn't return a logical value, */
          /* or the canSubstitute flag has been set, consider it as a failure */
          if( !HB_IS_LOGICAL(pResult) || (uiFlags & EF_CANSUBSTITUTE) )
          {
-            bFailure = HB_TRUE;
+            bFailure = true;
          }
          else
          {
@@ -615,7 +615,7 @@ HB_USHORT hb_errLaunch(PHB_ITEM pError)
 
             if( (uiAction == E_DEFAULT && !(uiFlags & EF_CANDEFAULT)) || (uiAction == E_RETRY && !(uiFlags & EF_CANRETRY)) )
             {
-               bFailure = HB_TRUE;
+               bFailure = true;
             }
          }
 
