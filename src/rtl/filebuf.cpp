@@ -240,11 +240,11 @@ static void hb_fileDeleteLock(PHB_FILE pFile, HB_UINT uiPos)
 
 static HB_BOOL hb_fileSetLock(PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nStart, HB_FOFFSET nLen)
 {
-   HB_BOOL fLJoin, fRJoin;
+   bool fLJoin, fRJoin;
    HB_UINT uiPos;
 
    uiPos = hb_fileFindOffset(pFile, nStart);
-   fLJoin = fRJoin = HB_FALSE;
+   fLJoin = fRJoin = false;
    if( uiPos < pFile->uiLocks )
    {
       PHB_FLOCK pLock = &pFile->pLocks[uiPos];
@@ -255,7 +255,7 @@ static HB_BOOL hb_fileSetLock(PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nSt
       }
       if( nEnd == pLock->start )
       {
-         fRJoin = HB_TRUE;
+         fRJoin = true;
       }
    }
    if( uiPos > 0 )
@@ -263,7 +263,7 @@ static HB_BOOL hb_fileSetLock(PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nSt
       PHB_FLOCK pLock = &pFile->pLocks[uiPos - 1];
       if( pLock->start + pLock->len == nStart )
       {
-         fLJoin = HB_TRUE;
+         fLJoin = true;
       }
    }
    if( fLJoin )
@@ -297,7 +297,7 @@ static HB_BOOL hb_fileSetLock(PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nSt
 
 static HB_BOOL hb_fileUnlock(PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nStart, HB_FOFFSET nLen)
 {
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
    HB_UINT uiPos;
 
    uiPos = hb_fileFindOffset(pFile, nStart);
@@ -332,7 +332,7 @@ static HB_BOOL hb_fileUnlock(PHB_FILE pFile, HB_BOOL * pfLockFS, HB_FOFFSET nSta
             pLock = &pFile->pLocks[uiPos];
             pLock->len = nStart - pLock->start;
          }
-         fResult = HB_TRUE;
+         fResult = true;
       }
    }
    return fResult;
@@ -483,14 +483,14 @@ static PHB_FILE s_fileExtOpen(PHB_FILE_FUNCS pFuncs, const char * pszFileName, c
 {
    PHB_FILE pFile = nullptr;
 #if defined(HB_OS_UNIX)
-   HB_BOOL fSeek = HB_FALSE;
+   bool fSeek = false;
 #  if defined(HB_USE_LARGEFILE64)
    struct stat64 statbuf;
 #  else
    struct stat statbuf;
 #  endif
 #endif
-   HB_BOOL fResult, fShared;
+   bool fResult, fShared;
    int iMode;
    char * pszFile;
 
@@ -502,7 +502,7 @@ static PHB_FILE s_fileExtOpen(PHB_FILE_FUNCS pFuncs, const char * pszFileName, c
 
    hb_vmUnlock();
 #if !defined(HB_OS_UNIX)
-   fResult = HB_TRUE;
+   fResult = true;
 #else
 #  if defined(HB_USE_SHARELOCKS) && !defined(HB_USE_BSDLOCKS)
    if( nExFlags & FXO_SHARELOCK )
@@ -522,7 +522,7 @@ static PHB_FILE s_fileExtOpen(PHB_FILE_FUNCS pFuncs, const char * pszFileName, c
       else if( iMode == FO_READ && !fShared )
       {
          nExFlags &= ~ static_cast<HB_FATTR>(FO_DENYREAD | FO_DENYWRITE | FO_EXCLUSIVE);
-         fShared = HB_TRUE;
+         fShared = true;
       }
    }
 #  endif
@@ -543,7 +543,7 @@ static PHB_FILE s_fileExtOpen(PHB_FILE_FUNCS pFuncs, const char * pszFileName, c
       {
          if( !fShared || !pFile->shared || (nExFlags & FXO_TRUNCATE) != 0 )
          {
-            fResult = HB_FALSE;
+            fResult = false;
             pFile = nullptr;
          }
          else if( pFile->mode != FO_READWRITE && pFile->mode != iMode )
@@ -567,7 +567,7 @@ static PHB_FILE s_fileExtOpen(PHB_FILE_FUNCS pFuncs, const char * pszFileName, c
    }
    else
    {
-      fResult = HB_TRUE;
+      fResult = true;
    }
 
    if( fResult && pFile == nullptr )
@@ -613,7 +613,7 @@ static PHB_FILE s_fileExtOpen(PHB_FILE_FUNCS pFuncs, const char * pszFileName, c
 
             if( !fShared || !pFile->shared || pFile->mode != FO_READWRITE )
             {
-               fResult = HB_FALSE;
+               fResult = false;
                if( pFile->hFileRO == FS_ERROR && pFile->uiLocks != 0 )
                {
                   pFile->hFileRO = hFile;
@@ -740,7 +740,8 @@ static void s_fileClose(PHB_FILE pFile)
 
 static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
 {
-   HB_BOOL fResult, fLockFS = HB_FALSE;
+   bool fResult = false;
+   HB_BOOL fLockFS = HB_FALSE;
 
    hb_vmUnlock();
    if( (iType & FL_MASK) == FL_UNLOCK )
@@ -797,7 +798,7 @@ static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, in
 
 static int s_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
 {
-   HB_BOOL fLocked;
+   bool fLocked = false;
    int iResult;
 
    hb_vmUnlock();
@@ -1160,7 +1161,7 @@ static int s_fileFindDrv(const char * pszFileName)
 
 HB_BOOL hb_fileRegisterFull(const HB_FILE_FUNCS * pFuncs)
 {
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
    hb_vmUnlock();
    hb_threadEnterCriticalSection(&s_lockMtx);
@@ -1169,7 +1170,7 @@ HB_BOOL hb_fileRegisterFull(const HB_FILE_FUNCS * pFuncs)
    {
       s_pFileTypes[s_iFileTypes] = pFuncs;
       s_iFileTypes++;
-      fResult = HB_TRUE;
+      fResult = true;
    }
 
    hb_threadLeaveCriticalSection(&s_lockMtx);
@@ -1375,7 +1376,9 @@ HB_BOOL hb_fileAttrGet(const char * pszFileName, HB_FATTR * pulAttr)
    int i = s_fileFindDrv(pszFileName);
 
    if( i >= 0 )
+   {
       return s_pFileTypes[i]->AttrGet(s_pFileTypes[i], pszFileName, pulAttr);
+   }
 
    return hb_fsGetAttr(pszFileName, pulAttr);
 }
