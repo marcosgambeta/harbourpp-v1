@@ -60,7 +60,7 @@
 
 HB_BOOL hb_fsLink(const char * pszExisting, const char * pszNewFile)
 {
-   HB_BOOL fResult;
+   bool fResult = false;
 
    if( pszExisting && pszNewFile )
    {
@@ -104,7 +104,7 @@ HB_BOOL hb_fsLink(const char * pszExisting, const char * pszNewFile)
          else
          {
             hb_fsSetError(1);
-            fResult = HB_FALSE;
+            fResult = false;
          }
       }
 #elif defined(HB_OS_UNIX)
@@ -130,7 +130,7 @@ HB_BOOL hb_fsLink(const char * pszExisting, const char * pszNewFile)
 #else
       {
          hb_fsSetError(1);
-         fResult = HB_FALSE;
+         fResult = false;
       }
 #endif
 
@@ -139,7 +139,7 @@ HB_BOOL hb_fsLink(const char * pszExisting, const char * pszNewFile)
    else
    {
       hb_fsSetError(2);
-      fResult = HB_FALSE;
+      fResult = false;
    }
 
    return fResult;
@@ -147,7 +147,7 @@ HB_BOOL hb_fsLink(const char * pszExisting, const char * pszNewFile)
 
 HB_BOOL hb_fsLinkSym(const char * pszTarget, const char * pszNewFile)
 {
-   HB_BOOL fResult;
+   bool fResult = false;
 
    if( pszTarget && pszNewFile )
    {
@@ -177,7 +177,7 @@ HB_BOOL hb_fsLinkSym(const char * pszTarget, const char * pszNewFile)
             LPCTSTR lpSymlinkFileName, lpTargetFileName;
             LPTSTR lpSymlinkFileNameFree, lpTargetFileNameFree;
             DWORD dwAttr;
-            HB_BOOL fDir;
+            bool fDir;
 
             lpSymlinkFileName = HB_FSNAMECONV(pszNewFile, &lpSymlinkFileNameFree);
             lpTargetFileName = HB_FSNAMECONV(pszTarget, &lpTargetFileNameFree);
@@ -200,7 +200,7 @@ HB_BOOL hb_fsLinkSym(const char * pszTarget, const char * pszNewFile)
          else
          {
             hb_fsSetError(1);
-            fResult = HB_FALSE;
+            fResult = false;
          }
       }
 #elif defined(HB_OS_UNIX)
@@ -226,7 +226,7 @@ HB_BOOL hb_fsLinkSym(const char * pszTarget, const char * pszNewFile)
 #else
       {
          hb_fsSetError(1);
-         fResult = HB_FALSE;
+         fResult = false;
       }
 #endif
 
@@ -235,7 +235,7 @@ HB_BOOL hb_fsLinkSym(const char * pszTarget, const char * pszNewFile)
    else
    {
       hb_fsSetError(2);
-      fResult = HB_FALSE;
+      fResult = false;
    }
 
    return fResult;
@@ -386,7 +386,7 @@ char * hb_fsLinkRead(const char * pszFile)
 HB_FUNC( HB_FLINK )
 {
    HB_ERRCODE uiError = 2;
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
    const char * pszExisting = hb_parc(1), * pszNewFile = hb_parc(2);
 
    if( pszExisting && pszNewFile )
@@ -401,7 +401,7 @@ HB_FUNC( HB_FLINK )
 HB_FUNC( HB_FLINKSYM )
 {
    HB_ERRCODE uiError = 2;
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
    const char * pszTarget = hb_parc(1), * pszNewFile = hb_parc(2);
 
    if( pszTarget && pszNewFile )
