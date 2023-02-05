@@ -51,7 +51,7 @@
 
 HB_BOOL hb_fsCopy(const char * pszSource, const char * pszDest)
 {
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
    PHB_FILE pSrcFile;
 
    if( (pSrcFile = hb_fileExtOpen(pszSource, nullptr, FO_READ | FO_SHARED | FXO_SHARELOCK, nullptr, nullptr)) != nullptr )
@@ -91,7 +91,7 @@ HB_BOOL hb_fsCopy(const char * pszSource, const char * pszDest)
       {
          errCode = hb_fsError();
       }
-      
+
       hb_fileClose(pSrcFile);
 
       if( fResult )
@@ -101,7 +101,7 @@ HB_BOOL hb_fsCopy(const char * pszSource, const char * pszDest)
          if( hb_fileAttrGet(pszSource, &ulAttr) )
          {
             hb_fileAttrSet(pszDest, ulAttr);
-         }   
+         }
       }
       hb_fsSetError(errCode);
    }
@@ -112,7 +112,7 @@ HB_BOOL hb_fsCopy(const char * pszSource, const char * pszDest)
 HB_FUNC( HB_FCOPY )
 {
    HB_ERRCODE errCode = 2; /* file not found */
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
    const char * pszSource = hb_parc(1), * pszDest = hb_parc(2);
 
    if( pszSource && pszDest )
