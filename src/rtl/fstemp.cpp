@@ -95,9 +95,9 @@
 #endif
 
 #if !defined(HB_OS_WIN)
-static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_BOOL fTrans )
+static bool fsGetTempDirByCase(char * pszName, const char * pszTempDir, bool fTrans)
 {
-   HB_BOOL fOK = HB_FALSE;
+   bool fOK = false;
 
    if( pszTempDir && *pszTempDir != '\0' )
    {
@@ -125,7 +125,7 @@ static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_B
             hb_xfree(pTmp);
             break;
          default:
-            fOK = HB_TRUE;
+            fOK = true;
             break;
       }
    }
@@ -134,7 +134,7 @@ static HB_BOOL fsGetTempDirByCase( char * pszName, const char * pszTempDir, HB_B
    {
       if( !hb_fsDirExists(pszTempDir) )
       {
-         fOK = HB_FALSE;
+         fOK = false;
       }
    }
 
@@ -245,9 +245,9 @@ HB_FHANDLE hb_fsCreateTempEx(char * pszName, const char * pszDir, const char * p
 /* NOTE: The buffer must be at least HB_PATH_MAX chars long */
 #if !defined(HB_OS_UNIX)
 
-static HB_BOOL hb_fsTempName(char * pszBuffer, const char * pszDir, const char * pszPrefix)
+static bool hb_fsTempName(char * pszBuffer, const char * pszDir, const char * pszPrefix)
 {
-   HB_BOOL fResult;
+   bool fResult = false;
 
    pszBuffer[0] = '\0';
 
