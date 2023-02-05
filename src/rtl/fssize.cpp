@@ -101,7 +101,7 @@ HB_FOFFSET hb_fsFSize(const char * pszFileName, HB_BOOL bUseDirEntry)
          LPCTSTR lpFileName;
          LPTSTR lpFree;
          WIN32_FILE_ATTRIBUTE_DATA attrex;
-         HB_BOOL fResult;
+         bool fResult;
 
          lpFileName = HB_FSNAMECONV(pszFileName, &lpFree);
          memset(&attrex, 0, sizeof(attrex));
@@ -129,7 +129,7 @@ HB_FOFFSET hb_fsFSize(const char * pszFileName, HB_BOOL bUseDirEntry)
       }
 #elif defined(HB_USE_LARGEFILE64)
       char * pszFree;
-      HB_BOOL fResult;
+      bool fResult;
       struct stat64 statbuf;
       pszFileName = hb_fsNameConv(pszFileName, &pszFree);
       statbuf.st_size = 0;
@@ -147,7 +147,7 @@ HB_FOFFSET hb_fsFSize(const char * pszFileName, HB_BOOL bUseDirEntry)
       }
 #else
       char * pszFree;
-      HB_BOOL fResult;
+      bool fResult;
       struct stat statbuf;
       pszFileName = hb_fsNameConv(pszFileName, &pszFree);
       statbuf.st_size = 0;
