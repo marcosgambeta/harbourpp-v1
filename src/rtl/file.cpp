@@ -70,7 +70,7 @@ HB_BOOL hb_fsIsDirectory(const char * pszFileName)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsIsDirectory(%s)", pszFileName));
 #endif
 
-   HB_BOOL bResult = HB_FALSE;
+   bool bResult = false;
    char * pszFree = nullptr;
    int iLen;
 
@@ -94,7 +94,7 @@ HB_BOOL hb_fsIsDirectory(const char * pszFileName)
          {
             if( (ffind->attr & HB_FA_DIRECTORY) == HB_FA_DIRECTORY )
             {
-               bResult = HB_TRUE;
+               bResult = true;
                break;
             }
          }
