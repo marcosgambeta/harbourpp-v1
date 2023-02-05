@@ -92,56 +92,6 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
          UINT uiErrMode = SetErrorMode( SEM_FAILCRITICALERRORS );
          bool fResult = false;
 
-#if !defined(HB_OS_WIN_64)
-         /* NOTE: We need to call this function dynamically to maintain support
-                  Win95 first edition. It was introduced in Win95B (aka OSR2) [vszakats] */
-         typedef BOOL ( WINAPI * P_GDFSE )( LPCTSTR, PULARGE_INTEGER, PULARGE_INTEGER, PULARGE_INTEGER );
-         static P_GDFSE s_pGetDiskFreeSpaceEx = nullptr;
-         static bool s_fInit = false;
-
-         if( !s_fInit )
-         {
-            HMODULE hModule = GetModuleHandle(HB_WINAPI_KERNEL32_DLL());
-            if( hModule )
-            {
-               s_pGetDiskFreeSpaceEx = reinterpret_cast<P_GDFSE>(HB_WINAPI_GETPROCADDRESST(hModule, "GetDiskFreeSpaceEx"));
-            }
-            s_fInit = true;
-         }
-
-         if( !s_pGetDiskFreeSpaceEx )
-         {
-            DWORD dwSectorsPerCluster;
-            DWORD dwBytesPerSector;
-            DWORD dwNumberOfFreeClusters;
-            DWORD dwTotalNumberOfClusters;
-
-            fResult = GetDiskFreeSpace(lpPath, &dwSectorsPerCluster, &dwBytesPerSector, &dwNumberOfFreeClusters, &dwTotalNumberOfClusters) ? true : false;
-            hb_fsSetIOError(fResult, 0);
-
-            if( fResult )
-            {
-               switch( uiType )
-               {
-                  case HB_DISK_AVAIL:
-                  case HB_DISK_FREE:
-                     dSpace = static_cast<double>(dwNumberOfFreeClusters) * static_cast<double>(dwSectorsPerCluster) * static_cast<double>(dwBytesPerSector);
-                     break;
-
-                  case HB_DISK_USED:
-                  case HB_DISK_TOTAL:
-                     dSpace = static_cast<double>(dwTotalNumberOfClusters) * static_cast<double>(dwSectorsPerCluster) * static_cast<double>(dwBytesPerSector);
-
-                     if( uiType == HB_DISK_USED )
-                     {
-                        dSpace -= static_cast<double>(dwNumberOfFreeClusters) * static_cast<double>(dwSectorsPerCluster) * static_cast<double>(dwBytesPerSector);
-                     }
-                     break;
-               }
-            }
-         }
-         else
-#endif
          {
 #if defined(_MSC_VER) || (defined(__GNUC__))
 
@@ -156,17 +106,11 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
 
             ULARGE_INTEGER i64FreeBytesToCaller, i64TotalBytes, i64FreeBytes;
 
-#if !defined(HB_OS_WIN_64)
-            fResult = s_pGetDiskFreeSpaceEx(lpPath,
-                                            static_cast<PULARGE_INTEGER>(&i64FreeBytesToCaller),
-                                            static_cast<PULARGE_INTEGER>(&i64TotalBytes),
-                                            static_cast<PULARGE_INTEGER>(&i64FreeBytes));
-#else
             fResult = GetDiskFreeSpaceEx(lpPath,
                                          static_cast<PULARGE_INTEGER>(&i64FreeBytesToCaller),
                                          static_cast<PULARGE_INTEGER>(&i64TotalBytes),
                                          static_cast<PULARGE_INTEGER>(&i64FreeBytes));
-#endif
+
             hb_fsSetIOError(fResult, 0);
 
             if( fResult )
