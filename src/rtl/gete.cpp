@@ -135,7 +135,7 @@ HB_FUNC( HB_GETENV )
 HB_FUNC( HB_SETENV )
 {
    const char * pszName = hb_parc(1);
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
    if( pszName )
    {

@@ -116,8 +116,8 @@ struct HB_DYNARG
    int       iType;
    int       iEncoding;
    int       iOptions;
-   HB_BOOL   bRawBuffer;
-   HB_BOOL   bByRef;
+   bool      bRawBuffer;
+   bool      bByRef;
    HB_DYNVAL value;
 };
 
@@ -202,7 +202,7 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
       {
          HB_SIZE nLen = hb_itemGetCLen(pParam);
          pArg->hString = hb_xgrab(nLen + sizeof(char));
-         pArg->bRawBuffer = HB_TRUE;
+         pArg->bRawBuffer = true;
          memcpy(static_cast<char*>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
          (static_cast<char*>(pArg->hString))[nLen] = '\0';
          r = reinterpret_cast<HB_PTRUINT>(pArg->hString);
@@ -238,7 +238,7 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
             {
                HB_SIZE nLen = hb_itemGetCLen(pParam);
                pArg->hString = hb_xgrab(nLen + sizeof(char));
-               pArg->bRawBuffer = HB_TRUE;
+               pArg->bRawBuffer = true;
                memcpy(static_cast<char*>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
                (static_cast<char*>(pArg->hString))[nLen] = '\0';
                r = reinterpret_cast<HB_PTRUINT>(pArg->hString);
@@ -488,16 +488,16 @@ struct HB_DYNARG
    int       iType;
    int       iEncoding;
    int       iOptions;
-   HB_BOOL   bRawBuffer;
-   HB_BOOL   bByRef;
+   bool      bRawBuffer;
+   bool      bByRef;
    HB_DYNVAL value;
 };
 
 using PHB_DYNARG = HB_DYNARG *;
 
-static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r2, HB_BOOL * b64)
+static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r2, bool * b64)
 {
-   *b64 = HB_FALSE;
+   *b64 = false;
    *r2 = 0;
 
    switch( pArg->iType )
@@ -558,7 +558,7 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r2
          {
             *r1 = static_cast<HB_U32>(pArg->value.t.n64 & 0xFFFFFFFF);
             *r2 = static_cast<HB_U32>(pArg->value.t.n64 >> 32);
-            *b64 = HB_TRUE;
+            *b64 = true;
          }
 #endif
          break;
@@ -579,7 +579,7 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r2
          {
             *r1 = static_cast<HB_U32>(pArg->value.t.n64 & 0xFFFFFFFF);
             *r2 = static_cast<HB_U32>(pArg->value.t.n64 >> 32);
-            *b64 = HB_TRUE;
+            *b64 = true;
          }
 #endif
          break;
@@ -600,7 +600,7 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r2
 #if !defined(HB_LONG_LONG_OFF)
             *r1 = static_cast<HB_U32>(pArg->value.t.n64 & 0xFFFFFFFF);
             *r2 = static_cast<HB_U32>(pArg->value.t.n64 >> 32);
-            *b64 = HB_TRUE;
+            *b64 = true;
 #endif
          }
          break;
@@ -610,7 +610,7 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r2
       {
          HB_SIZE nLen = hb_itemGetCLen(pParam);
          pArg->hString = hb_xgrab(nLen + sizeof(char));
-         pArg->bRawBuffer = HB_TRUE;
+         pArg->bRawBuffer = true;
          memcpy(static_cast<char*>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
          (static_cast<char*>(pArg->hString))[nLen] = '\0';
          *r1 = reinterpret_cast<HB_PTRUINT>(pArg->hString);
@@ -646,7 +646,7 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r2
             {
                HB_SIZE nLen = hb_itemGetCLen(pParam);
                pArg->hString = hb_xgrab(nLen + sizeof(char));
-               pArg->bRawBuffer = HB_TRUE;
+               pArg->bRawBuffer = true;
                memcpy(static_cast<char*>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
                (static_cast<char*>(pArg->hString))[nLen] = '\0';
                *r1 = reinterpret_cast<HB_PTRUINT>(pArg->hString);
@@ -1110,7 +1110,7 @@ void hb_dynCall(int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, in
 
             HB_U32 r1;
             HB_U32 r2;
-            HB_BOOL b64;
+            bool b64;
 
             if( piArgFlags )
             {

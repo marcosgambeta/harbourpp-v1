@@ -87,26 +87,26 @@ HB_FUNC( HB_HEXTONUM )
    else
    {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }   
+   }
 }
 
 HB_FUNC( HB_NUMTOHEX )
 {
    HB_MAXUINT nNum;
    int        iLen;
-   HB_BOOL    fDefaultLen;
+   bool       fDefaultLen;
    char       ret[33];
 
    if( HB_ISNUM(2) )
    {
       iLen = hb_parni(2);
       iLen = (iLen < 1) ? 1 : ((iLen > 32) ? 32 : iLen);
-      fDefaultLen = 0;
+      fDefaultLen = false;
    }
    else
    {
       iLen = 32;
-      fDefaultLen = 1;
+      fDefaultLen = true;
    }
 
    if( HB_ISNUM(1) )

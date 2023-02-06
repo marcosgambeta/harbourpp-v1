@@ -308,7 +308,7 @@ static int hb_comGetPortNum(const char * pszName)
    return iPort;
 }
 
-static HB_BOOL hb_comPortCmp(const char * pszDevName1, const char * pszDevName2)
+static bool hb_comPortCmp(const char * pszDevName1, const char * pszDevName2)
 {
 #if defined(HB_OS_UNIX)
    return strcmp(pszDevName1, pszDevName2) == 0;

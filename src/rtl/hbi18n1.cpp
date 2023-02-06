@@ -500,7 +500,7 @@ static PHB_ITEM hb_i18n_serialize( PHB_I18N_TRANS pI18N )
    return nullptr;
 }
 
-static HB_BOOL hb_i18n_headercheck(const char * pBuffer, HB_SIZE nLen)
+static bool hb_i18n_headercheck(const char * pBuffer, HB_SIZE nLen)
 {
    if( nLen < HB_I18N_HEADER_SIZE )
    {
@@ -562,7 +562,7 @@ static const HB_GC_FUNCS s_gcI18NFuncs =
    hb_gcDummyMark
 };
 
-static PHB_I18N_TRANS hb_i18n_param(int * piParam, HB_BOOL fActive)
+static PHB_I18N_TRANS hb_i18n_param(int * piParam, bool fActive)
 {
    PHB_I18N_TRANS * pI18NHolder = static_cast<PHB_I18N_TRANS*>(hb_parptrGC(&s_gcI18NFuncs, *piParam));
 
@@ -590,9 +590,9 @@ static PHB_ITEM hb_i18n_newitem(PHB_I18N_TRANS pI18N)
    return hb_itemPutPtrGC(pItem, pI18NHolder);
 }
 
-static HB_BOOL hb_i18n_getpluralform(PHB_I18N_TRANS pI18N, PHB_ITEM pOldForm, HB_BOOL fBase)
+static bool hb_i18n_getpluralform(PHB_I18N_TRANS pI18N, PHB_ITEM pOldForm, bool fBase)
 {
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
    if( pI18N )
    {
@@ -625,14 +625,14 @@ static HB_BOOL hb_i18n_getpluralform(PHB_I18N_TRANS pI18N, PHB_ITEM pOldForm, HB
             hb_itemPutCConst(pOldForm, "EN"); /* default is ENGLISH */
          }
       }
-      fResult = HB_TRUE;
+      fResult = true;
    }
    return fResult;
 }
 
-static HB_BOOL hb_i18n_setpluralform(PHB_I18N_TRANS pI18N, PHB_ITEM pForm, HB_BOOL fBase)
+static bool hb_i18n_setpluralform(PHB_I18N_TRANS pI18N, PHB_ITEM pForm, bool fBase)
 {
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
    if( pI18N && pForm )
    {
@@ -660,7 +660,7 @@ static HB_BOOL hb_i18n_setpluralform(PHB_I18N_TRANS pI18N, PHB_ITEM pForm, HB_BO
                pI18N->plural_block = hb_itemNew(pForm);
             }
          }
-         fResult = HB_TRUE;
+         fResult = true;
       }
       else if( HB_IS_STRING(pForm) )
       {
@@ -689,7 +689,7 @@ static HB_BOOL hb_i18n_setpluralform(PHB_I18N_TRANS pI18N, PHB_ITEM pForm, HB_BO
                szKey = "LANG";
             }
             hb_i18n_setitem(pI18N->table, szKey, hb_i18n_pluralformid(iForm));
-            fResult = HB_TRUE;
+            fResult = true;
          }
       }
    }
@@ -707,7 +707,7 @@ static void hb_i18n_transitm(PHB_ITEM pText, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cd
    }
 }
 
-static const char * hb_i18n_setcodepage( PHB_I18N_TRANS pI18N, const char * szCdpID, HB_BOOL fBase, HB_BOOL fTranslate )
+static const char * hb_i18n_setcodepage( PHB_I18N_TRANS pI18N, const char * szCdpID, bool fBase, bool fTranslate )
 {
    const char * szOldCdpID = nullptr;
 
@@ -1061,7 +1061,7 @@ HB_FUNC( HB_I18N_PLURALFORM )
    {
       PHB_ITEM pOldForm = hb_itemNew(nullptr);
       PHB_ITEM pForm = hb_param(iParam, Harbour::Item::STRING | Harbour::Item::EVALITEM);
-      HB_BOOL fBase = hb_parl(iParam + 1);
+      bool fBase = hb_parl(iParam + 1);
 
       if( hb_i18n_getpluralform(pI18N, pOldForm, fBase) )
       {

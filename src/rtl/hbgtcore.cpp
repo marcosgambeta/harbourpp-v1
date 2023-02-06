@@ -435,7 +435,7 @@ static const char * hb_gt_def_ColorDecode( const char * szColorString, int * piC
 
    char c;
    int nColor = 0, iCount = 0;
-   HB_BOOL bFore = HB_TRUE;
+   bool bFore = true;
 
    while( (c = *szColorString++) != 0 )
    {
@@ -456,7 +456,7 @@ static const char * hb_gt_def_ColorDecode( const char * szColorString, int * piC
             }
             else
             {
-               bFore = HB_FALSE;
+               bFore = false;
             }
             break;
 
@@ -487,7 +487,7 @@ static const char * hb_gt_def_ColorDecode( const char * szColorString, int * piC
 
          case 'i':
          case 'I':
-            bFore = HB_FALSE;
+            bFore = false;
             nColor &= 0x88;
             nColor |= 0x70;
             break;
@@ -548,7 +548,7 @@ static int hb_gt_def_ColorNum(PHB_GT pGT, const char * szColorString)
    int nColor;
 
    HB_SYMBOL_UNUSED(pGT);
-   hb_gt_def_ColorDecode( szColorString, &nColor );
+   hb_gt_def_ColorDecode(szColorString, &nColor);
 
    return nColor;
 }
@@ -1063,9 +1063,9 @@ static void hb_gt_def_WriteW(PHB_GT pGT, const HB_WCHAR * szText, HB_SIZE nLengt
 static void hb_gt_def_WriteCon(PHB_GT pGT, const char * szText, HB_SIZE nLength)
 {
    int iLen = 0;
-   HB_BOOL bDisp = HB_FALSE;
-   HB_BOOL bBell = HB_FALSE;
-   HB_BOOL bNewLine = HB_FALSE;
+   bool bDisp = false;
+   bool bBell = false;
+   bool bNewLine = false;
    int iRow, iCol, iMaxRow, iMaxCol;
    HB_WCHAR szString[WRITECON_BUFFER_SIZE];
    PHB_CODEPAGE cdp = HB_GTSELF_HOSTCP(pGT);
@@ -1098,20 +1098,20 @@ static void hb_gt_def_WriteCon(PHB_GT pGT, const char * szText, HB_SIZE nLength)
       switch( wc )
       {
          case HB_CHAR_BEL:
-            bDisp = bBell = HB_TRUE;
+            bDisp = bBell = true;
             break;
 
          case HB_CHAR_BS:
             if( iCol > 0 )
             {
                --iCol;
-               bDisp = HB_TRUE;
+               bDisp = true;
             }
             else if( iCol == 0 && iRow > 0 )
             {
                iCol = iMaxCol;
                --iRow;
-               bDisp = HB_TRUE;
+               bDisp = true;
             }
             if( bDisp )
             {
@@ -1133,8 +1133,8 @@ static void hb_gt_def_WriteCon(PHB_GT pGT, const char * szText, HB_SIZE nLength)
             {
                ++iRow;
             }
-            bDisp    = HB_TRUE;
-            bNewLine = HB_TRUE;
+            bDisp    = true;
+            bNewLine = true;
             break;
 
          case HB_CHAR_CR:
@@ -1145,10 +1145,10 @@ static void hb_gt_def_WriteCon(PHB_GT pGT, const char * szText, HB_SIZE nLength)
                {
                   ++iRow;
                }
-               bNewLine = HB_TRUE;
+               bNewLine = true;
                ++nIndex;
             }
-            bDisp = HB_TRUE;
+            bDisp = true;
             break;
 
          default:
@@ -1170,8 +1170,8 @@ static void hb_gt_def_WriteCon(PHB_GT pGT, const char * szText, HB_SIZE nLength)
                {
                   ++iRow;
                }
-               bDisp    = HB_TRUE;
-               bNewLine = HB_TRUE;
+               bDisp    = true;
+               bNewLine = true;
             }
             else
             {
@@ -1181,7 +1181,7 @@ static void hb_gt_def_WriteCon(PHB_GT pGT, const char * szText, HB_SIZE nLength)
             /* Special handling for a really wide screen or device */
             if( iLen >= WRITECON_BUFFER_SIZE )
             {
-               bDisp = HB_TRUE;
+               bDisp = true;
             }
       }
 
@@ -1207,8 +1207,8 @@ static void hb_gt_def_WriteCon(PHB_GT pGT, const char * szText, HB_SIZE nLength)
             HB_GTSELF_SCROLL(pGT, 0, 0, iMaxRow, iMaxCol, HB_GTSELF_GETCOLOR(pGT), HB_GTSELF_GETCLEARCHAR(pGT), 1, 0);
          }
          HB_GTSELF_SETPOS(pGT, iRow, iCol);
-         bDisp = HB_FALSE;
-         bNewLine = HB_FALSE;
+         bDisp = false;
+         bNewLine = false;
 
          /* To emulate scrolling */
          HB_GTSELF_FLUSH(pGT);
@@ -1216,7 +1216,7 @@ static void hb_gt_def_WriteCon(PHB_GT pGT, const char * szText, HB_SIZE nLength)
          if( bBell )
          {
             HB_GTSELF_BELL(pGT);
-            bBell = HB_FALSE;
+            bBell = false;
          }
       }
    }
@@ -1225,9 +1225,9 @@ static void hb_gt_def_WriteCon(PHB_GT pGT, const char * szText, HB_SIZE nLength)
 static void hb_gt_def_WriteConW(PHB_GT pGT, const HB_WCHAR * szText, HB_SIZE nLength)
 {
    int iLen = 0;
-   HB_BOOL bDisp = HB_FALSE;
-   HB_BOOL bBell = HB_FALSE;
-   HB_BOOL bNewLine = HB_FALSE;
+   bool bDisp = false;
+   bool bBell = false;
+   bool bNewLine = false;
    int iRow, iCol, iMaxRow, iMaxCol;
    HB_WCHAR szString[WRITECON_BUFFER_SIZE];
    HB_SIZE nIndex = 0;
@@ -1260,20 +1260,20 @@ static void hb_gt_def_WriteConW(PHB_GT pGT, const HB_WCHAR * szText, HB_SIZE nLe
       switch( wc )
       {
          case HB_CHAR_BEL:
-            bDisp = bBell = HB_TRUE;
+            bDisp = bBell = true;
             break;
 
          case HB_CHAR_BS:
             if( iCol > 0 )
             {
                --iCol;
-               bDisp = HB_TRUE;
+               bDisp = true;
             }
             else if( iCol == 0 && iRow > 0 )
             {
                iCol = iMaxCol;
                --iRow;
-               bDisp = HB_TRUE;
+               bDisp = true;
             }
             if( bDisp )
             {
@@ -1295,8 +1295,8 @@ static void hb_gt_def_WriteConW(PHB_GT pGT, const HB_WCHAR * szText, HB_SIZE nLe
             {
                ++iRow;
             }
-            bDisp    = HB_TRUE;
-            bNewLine = HB_TRUE;
+            bDisp    = true;
+            bNewLine = true;
             break;
 
          case HB_CHAR_CR:
@@ -1307,10 +1307,10 @@ static void hb_gt_def_WriteConW(PHB_GT pGT, const HB_WCHAR * szText, HB_SIZE nLe
                {
                   ++iRow;
                }
-               bNewLine = HB_TRUE;
+               bNewLine = true;
                ++nIndex;
             }
-            bDisp = HB_TRUE;
+            bDisp = true;
             break;
 
          default:
@@ -1332,8 +1332,8 @@ static void hb_gt_def_WriteConW(PHB_GT pGT, const HB_WCHAR * szText, HB_SIZE nLe
                {
                   ++iRow;
                }
-               bDisp    = HB_TRUE;
-               bNewLine = HB_TRUE;
+               bDisp    = true;
+               bNewLine = true;
             }
             else
             {
@@ -1343,7 +1343,7 @@ static void hb_gt_def_WriteConW(PHB_GT pGT, const HB_WCHAR * szText, HB_SIZE nLe
             /* Special handling for a really wide screen or device */
             if( iLen >= WRITECON_BUFFER_SIZE )
             {
-               bDisp = HB_TRUE;
+               bDisp = true;
             }
       }
 
@@ -1369,8 +1369,8 @@ static void hb_gt_def_WriteConW(PHB_GT pGT, const HB_WCHAR * szText, HB_SIZE nLe
             HB_GTSELF_SCROLL(pGT, 0, 0, iMaxRow, iMaxCol, HB_GTSELF_GETCOLOR(pGT), HB_GTSELF_GETCLEARCHAR(pGT), 1, 0);
          }
          HB_GTSELF_SETPOS(pGT, iRow, iCol);
-         bDisp = HB_FALSE;
-         bNewLine = HB_FALSE;
+         bDisp = false;
+         bNewLine = false;
 
          /* To emulate scrolling */
          HB_GTSELF_FLUSH(pGT);
@@ -1378,7 +1378,7 @@ static void hb_gt_def_WriteConW(PHB_GT pGT, const HB_WCHAR * szText, HB_SIZE nLe
          if( bBell )
          {
             HB_GTSELF_BELL(pGT);
-            bBell = HB_FALSE;
+            bBell = false;
          }
       }
    }
@@ -1655,7 +1655,7 @@ static void hb_gt_def_ScrollArea(PHB_GT pGT, int iTop, int iLeft, int iBottom, i
       if( iLength > 0 )
       {
          long lIndex, lOffset = static_cast<long>(iRows) * iWidth + iCols;
-         HB_BOOL fMove = (iRows || iCols) && iColSize >= 0 && (iBottom - iTop >= iRows);
+         bool fMove = (iRows || iCols) && iColSize >= 0 && (iBottom - iTop >= iRows);
 
          while( iTop <= iBottom )
          {
@@ -2253,7 +2253,7 @@ static int hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
       HB_SIZE nLen;
       void * hMessage;
       const HB_WCHAR * szMessageW = hb_itemGetStrU16(pMessage, HB_CDP_ENDIAN_NATIVE, &hMessage, &nLen);
-      HB_BOOL fScreen = HB_FALSE, fKeyBoard = HB_FALSE;
+      bool fScreen = false, fKeyBoard = false;
       PHB_CODEPAGE cdp = HB_GTSELF_HOSTCP(pGT);
       char szKey[HB_MAX_CHAR_LEN];
       HB_SIZE nChar;
@@ -2276,7 +2276,7 @@ static int hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
       HB_GTSELF_GETSIZE(pGT, &iRows, &iCols);
       if( iCols <= 4 || iRows <= 4 )
       {
-         fScreen = HB_FALSE;
+         fScreen = false;
       }
 
       if( fScreen )
@@ -3288,7 +3288,7 @@ static int hb_gt_def_InkeyGet(PHB_GT pGT, HB_BOOL fWait, double dSeconds, int iE
    HB_MAXUINT timer;
    HB_MAXINT timeout;
    PHB_ITEM pKey;
-   HB_BOOL fPop;
+   bool fPop;
 
    pKey = nullptr;
 
@@ -4099,7 +4099,7 @@ static const char * hb_gt_FindDefault(void)
 
 static int hb_gt_FindEntry(const char * pszID)
 {
-   HB_BOOL fGt = hb_strnicmp(pszID, "gt", 2) == 0;
+   bool fGt = hb_strnicmp(pszID, "gt", 2) == 0;
 
    for( int iPos = -1; iPos < s_iGtCount; iPos++ )
    {
@@ -4155,7 +4155,7 @@ PHB_GT hb_gtLoad(const char * szGtName, PHB_GT pGT, PHB_GT_FUNCS pSuperTable)
       }
       else if( iPos >= 0 )
       {
-         HB_BOOL fNew = pGT == nullptr;
+         bool fNew = pGT == nullptr;
 
          if( fNew )
          {
@@ -4279,7 +4279,7 @@ void * hb_gtSwap(void * hGT)
 
 HB_BOOL hb_gtReload(const char * szGtName, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr)
 {
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
    if( szGtName && hb_gt_FindEntry(szGtName) >= -1 )
    {
