@@ -2744,6 +2744,36 @@ PHB_ITEM hb_objSendMsg(PHB_ITEM pObject, const char * szMsg, HB_ULONG ulArg, ...
    }
 }
 
+// DATA PUT/GET (experimental)
+
+PHB_ITEM hb_objDataPutPtr(PHB_ITEM pObject, const char * szMsg, void * value)
+{
+   hb_vmPushSymbol(hb_dynsymGet(szMsg )->pSymbol);
+   hb_vmPush(pObject);
+   hb_vmPushPointer(value);
+   hb_vmSend(1);
+   {
+      HB_STACK_TLS_PRELOAD
+      return hb_stackReturnItem();
+   }
+}
+
+PHB_ITEM hb_objDataPutL(PHB_ITEM pObject, const char * szMsg, bool value)
+{
+   hb_vmPushSymbol(hb_dynsymGet(szMsg )->pSymbol);
+   hb_vmPush(pObject);
+   hb_vmPushLogical(value);
+   hb_vmSend(1);
+   {
+      HB_STACK_TLS_PRELOAD
+      return hb_stackReturnItem();
+   }
+}
+
+// TODO: add others data types
+
+//
+
 PHB_ITEM hb_objGetVarPtr(PHB_ITEM pObject, PHB_DYNS pVarMsg)
 {
    if( pObject && HB_IS_OBJECT(pObject) && pVarMsg )

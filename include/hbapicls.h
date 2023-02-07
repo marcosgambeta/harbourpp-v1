@@ -128,6 +128,11 @@ extern HB_EXPORT HB_BOOL    hb_objHasMessage( PHB_ITEM pObject, PHB_DYNS pMessag
 extern HB_EXPORT PHB_ITEM   hb_objSendMsg( PHB_ITEM pObj, const char *sMsg, HB_ULONG ulArg, ... );
 extern HB_EXPORT PHB_ITEM   hb_objSendMessage( PHB_ITEM pObj, PHB_DYNS pMessage, HB_ULONG ulArg, ... );
 
+// DATA Put/Get (experimental)
+extern HB_EXPORT PHB_ITEM   hb_objDataPutPtr( PHB_ITEM pObj, const char *sMsg, void *value );
+extern HB_EXPORT PHB_ITEM   hb_objDataPutL( PHB_ITEM pObj, const char *sMsg, bool value );
+//
+
 extern HB_EXPORT PHB_ITEM   hb_objGetVarPtr( PHB_ITEM pObject, PHB_DYNS pVarMsg );
 
 /* send message which allows to set execution context for debugger */
