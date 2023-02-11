@@ -2758,7 +2758,7 @@ PHB_ITEM hb_objDataPutPtr(PHB_ITEM pObject, const char * szMsg, void * value)
    }
 }
 
-PHB_ITEM hb_objDataPutL(PHB_ITEM pObject, const char * szMsg, bool value)
+PHB_ITEM hb_objDataPutL(PHB_ITEM pObject, const char * szMsg, HB_BOOL value)
 {
    hb_vmPushSymbol(hb_dynsymGet(szMsg )->pSymbol);
    hb_vmPush(pObject);
