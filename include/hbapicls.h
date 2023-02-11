@@ -131,6 +131,8 @@ extern HB_EXPORT PHB_ITEM   hb_objSendMessage( PHB_ITEM pObj, PHB_DYNS pMessage,
 // DATA Put/Get (experimental)
 extern HB_EXPORT PHB_ITEM   hb_objDataPutPtr( PHB_ITEM pObj, const char *sMsg, void *value );
 extern HB_EXPORT PHB_ITEM   hb_objDataPutL( PHB_ITEM pObj, const char *sMsg, HB_BOOL value );
+extern HB_EXPORT PHB_ITEM   hb_objDataPutNI( PHB_ITEM pObj, const char *sMsg, int value );
+extern HB_EXPORT PHB_ITEM   hb_objDataPutNL( PHB_ITEM pObj, const char *sMsg, long value );
 //
 
 extern HB_EXPORT PHB_ITEM   hb_objGetVarPtr( PHB_ITEM pObject, PHB_DYNS pVarMsg );

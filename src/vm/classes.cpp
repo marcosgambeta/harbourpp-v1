@@ -2770,6 +2770,30 @@ PHB_ITEM hb_objDataPutL(PHB_ITEM pObject, const char * szMsg, HB_BOOL value)
    }
 }
 
+PHB_ITEM hb_objDataPutNI(PHB_ITEM pObject, const char * szMsg, int value)
+{
+   hb_vmPushSymbol(hb_dynsymGet(szMsg )->pSymbol);
+   hb_vmPush(pObject);
+   hb_vmPushInteger(value);
+   hb_vmSend(1);
+   {
+      HB_STACK_TLS_PRELOAD
+      return hb_stackReturnItem();
+   }
+}
+
+PHB_ITEM hb_objDataPutNL(PHB_ITEM pObject, const char * szMsg, long value)
+{
+   hb_vmPushSymbol(hb_dynsymGet(szMsg )->pSymbol);
+   hb_vmPush(pObject);
+   hb_vmPushLong(value);
+   hb_vmSend(1);
+   {
+      HB_STACK_TLS_PRELOAD
+      return hb_stackReturnItem();
+   }
+}
+
 // TODO: add others data types
 
 //

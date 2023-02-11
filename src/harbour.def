@@ -2959,6 +2959,8 @@ hb_numInt
 hb_numRound
 hb_numToStr
 hb_objDataPutL
+hb_objDataPutNI
+hb_objDataPutNL
 hb_objDataPutPtr
 hb_objGetClass
 hb_objGetClsName
