@@ -128,11 +128,15 @@ extern HB_EXPORT HB_BOOL    hb_objHasMessage( PHB_ITEM pObject, PHB_DYNS pMessag
 extern HB_EXPORT PHB_ITEM   hb_objSendMsg( PHB_ITEM pObj, const char *sMsg, HB_ULONG ulArg, ... );
 extern HB_EXPORT PHB_ITEM   hb_objSendMessage( PHB_ITEM pObj, PHB_DYNS pMessage, HB_ULONG ulArg, ... );
 
-// DATA Put/Get (experimental)
+// DATA Put/Get (experimental/work in progress)
 extern HB_EXPORT PHB_ITEM   hb_objDataPutPtr( PHB_ITEM pObj, const char *sMsg, void *value );
+extern HB_EXPORT void *     hb_objDataGetPtr( PHB_ITEM pObj, const char *sMsg );
 extern HB_EXPORT PHB_ITEM   hb_objDataPutL( PHB_ITEM pObj, const char *sMsg, HB_BOOL value );
+extern HB_EXPORT HB_BOOL    hb_objDataGetL( PHB_ITEM pObj, const char *sMsg );
 extern HB_EXPORT PHB_ITEM   hb_objDataPutNI( PHB_ITEM pObj, const char *sMsg, int value );
+extern HB_EXPORT int        hb_objDataGetNI( PHB_ITEM pObj, const char *sMsg );
 extern HB_EXPORT PHB_ITEM   hb_objDataPutNL( PHB_ITEM pObj, const char *sMsg, long value );
+extern HB_EXPORT long       hb_objDataGetNL( PHB_ITEM pObj, const char *sMsg );
 //
 
 extern HB_EXPORT PHB_ITEM   hb_objGetVarPtr( PHB_ITEM pObject, PHB_DYNS pVarMsg );

@@ -2744,7 +2744,7 @@ PHB_ITEM hb_objSendMsg(PHB_ITEM pObject, const char * szMsg, HB_ULONG ulArg, ...
    }
 }
 
-// DATA PUT/GET (experimental)
+// DATA PUT/GET (experimental/work in progress)
 
 PHB_ITEM hb_objDataPutPtr(PHB_ITEM pObject, const char * szMsg, void * value)
 {
@@ -2755,6 +2755,17 @@ PHB_ITEM hb_objDataPutPtr(PHB_ITEM pObject, const char * szMsg, void * value)
    {
       HB_STACK_TLS_PRELOAD
       return hb_stackReturnItem();
+   }
+}
+
+void * hb_objDataGetPtr(PHB_ITEM pObject, const char * szMsg)
+{
+   hb_vmPushSymbol(hb_dynsymGet(szMsg )->pSymbol);
+   hb_vmPush(pObject);
+   hb_vmSend(0);
+   {
+      HB_STACK_TLS_PRELOAD
+      return hb_itemGetPtr(hb_stackReturnItem());
    }
 }
 
@@ -2770,6 +2781,17 @@ PHB_ITEM hb_objDataPutL(PHB_ITEM pObject, const char * szMsg, HB_BOOL value)
    }
 }
 
+HB_BOOL hb_objDataGetL(PHB_ITEM pObject, const char * szMsg)
+{
+   hb_vmPushSymbol(hb_dynsymGet(szMsg )->pSymbol);
+   hb_vmPush(pObject);
+   hb_vmSend(0);
+   {
+      HB_STACK_TLS_PRELOAD
+      return hb_itemGetL(hb_stackReturnItem());
+   }
+}
+
 PHB_ITEM hb_objDataPutNI(PHB_ITEM pObject, const char * szMsg, int value)
 {
    hb_vmPushSymbol(hb_dynsymGet(szMsg )->pSymbol);
@@ -2782,6 +2804,17 @@ PHB_ITEM hb_objDataPutNI(PHB_ITEM pObject, const char * szMsg, int value)
    }
 }
 
+int hb_objDataGetNI(PHB_ITEM pObject, const char * szMsg)
+{
+   hb_vmPushSymbol(hb_dynsymGet(szMsg )->pSymbol);
+   hb_vmPush(pObject);
+   hb_vmSend(0);
+   {
+      HB_STACK_TLS_PRELOAD
+      return hb_itemGetNI(hb_stackReturnItem());
+   }
+}
+
 PHB_ITEM hb_objDataPutNL(PHB_ITEM pObject, const char * szMsg, long value)
 {
    hb_vmPushSymbol(hb_dynsymGet(szMsg )->pSymbol);
@@ -2791,6 +2824,17 @@ PHB_ITEM hb_objDataPutNL(PHB_ITEM pObject, const char * szMsg, long value)
    {
       HB_STACK_TLS_PRELOAD
       return hb_stackReturnItem();
+   }
+}
+
+long hb_objDataGetNL(PHB_ITEM pObject, const char * szMsg)
+{
+   hb_vmPushSymbol(hb_dynsymGet(szMsg )->pSymbol);
+   hb_vmPush(pObject);
+   hb_vmSend(0);
+   {
+      HB_STACK_TLS_PRELOAD
+      return hb_itemGetNL(hb_stackReturnItem());
    }
 }
 
