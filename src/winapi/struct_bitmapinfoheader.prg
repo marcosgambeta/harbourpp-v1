@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (C) 2022 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2022-2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2022 Marcos Antonio Gambeta
+Copyright (c) 2022-2023 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -129,15 +129,10 @@ RETURN
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_NEW )
 {
-  auto obj = new BITMAPINFOHEADER();
   PHB_ITEM self = hb_stackSelfItem();
-  PHB_ITEM ptr = hb_itemPutPtr( nullptr, ( void * ) obj );
-  hb_objSendMsg( self, "_ptr", 1, ptr );
-  hb_itemRelease( ptr );
-  PHB_ITEM des = hb_itemPutL( nullptr, true );
-  hb_objSendMsg( self, "_SELF_DESTRUCTION", 1, des );
-  hb_itemRelease( des );
-  hb_itemReturn( self );
+  hb_objDataPutPtr(self, "_PTR", new BITMAPINFOHEADER());
+  hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
+  hb_itemReturn(self);
 }
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_DELETE )
@@ -147,14 +142,10 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_DELETE )
   if( obj != nullptr )
   {
     delete obj;
-    obj = nullptr;
-    PHB_ITEM self = hb_stackSelfItem();
-    PHB_ITEM ptr = hb_itemPutPtr( nullptr, nullptr );
-    hb_objSendMsg( self, "_ptr", 1, ptr );
-    hb_itemRelease( ptr );
+    hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
   }
 
-  hb_itemReturn( hb_stackSelfItem() );
+  hb_itemReturn(hb_stackSelfItem());
 }
 
 // DWORD biSize
