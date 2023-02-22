@@ -1660,99 +1660,32 @@ HB_BOOL hb_fsGetFileTime(const char * pszFileName, long * plJulian, long * plMil
 
 #if defined(HB_OS_WIN)
    {
-      typedef BOOL ( WINAPI * _HB_GETFILEATTRIBUTESEX )( LPCTSTR, GET_FILEEX_INFO_LEVELS, LPVOID );
-      static _HB_GETFILEATTRIBUTESEX s_pGetFileAttributesEx = ( _HB_GETFILEATTRIBUTESEX ) -1; // TODO: C++ cast
+      LPCTSTR lpFileName;
+      LPTSTR lpFree;
+      WIN32_FILE_ATTRIBUTE_DATA attrex;
 
-      if( s_pGetFileAttributesEx == reinterpret_cast<_HB_GETFILEATTRIBUTESEX>(-1) )
+      lpFileName = HB_FSNAMECONV(pszFileName, &lpFree);
+
+      memset(&attrex, 0, sizeof(attrex));
+
+      if( GetFileAttributesEx(lpFileName, GetFileExInfoStandard, &attrex) )
       {
-         HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
-         if( hModule )
-         {
-            s_pGetFileAttributesEx = reinterpret_cast<_HB_GETFILEATTRIBUTESEX>(HB_WINAPI_GETPROCADDRESST(hModule, "GetFileAttributesEx"));
-         }
-         else
-         {
-            s_pGetFileAttributesEx = nullptr;
-         }
-      }
-
-      if( s_pGetFileAttributesEx )
-      {
-         LPCTSTR lpFileName;
-         LPTSTR lpFree;
-         WIN32_FILE_ATTRIBUTE_DATA attrex;
-
-         lpFileName = HB_FSNAMECONV(pszFileName, &lpFree);
-
-         memset(&attrex, 0, sizeof(attrex));
-
-         if( GetFileAttributesEx(lpFileName, GetFileExInfoStandard, &attrex) )
-         {
-            FILETIME local_ft;
-            SYSTEMTIME st;
-
-            if( FileTimeToLocalFileTime(&attrex.ftLastWriteTime, &local_ft) && FileTimeToSystemTime(&local_ft, &st) )
-            {
-               *plJulian = hb_dateEncode(st.wYear, st.wMonth, st.wDay);
-               *plMillisec = hb_timeEncode(st.wHour, st.wMinute, st.wSecond, st.wMilliseconds);
-
-               fResult = true;
-            }
-         }
-         hb_fsSetIOError(fResult, 0);
-
-         if( lpFree )
-         {
-            hb_xfree(lpFree);
-         }
-      }
-      else
-      {
-         HB_FHANDLE hFile = hb_fsOpen(pszFileName, FO_READ | FO_SHARED);
-         FILETIME ft, local_ft;
+         FILETIME local_ft;
          SYSTEMTIME st;
 
-         if( hFile != FS_ERROR )
+         if( FileTimeToLocalFileTime(&attrex.ftLastWriteTime, &local_ft) && FileTimeToSystemTime(&local_ft, &st) )
          {
-            if( GetFileTime(DosToWinHandle(hFile), nullptr, nullptr, &ft) &&
-                FileTimeToLocalFileTime(&ft, &local_ft) &&
-                FileTimeToSystemTime(&local_ft, &st) )
-            {
-               *plJulian = hb_dateEncode(st.wYear, st.wMonth, st.wDay);
-               *plMillisec = hb_timeEncode(st.wHour, st.wMinute, st.wSecond, st.wMilliseconds);
+            *plJulian = hb_dateEncode(st.wYear, st.wMonth, st.wDay);
+            *plMillisec = hb_timeEncode(st.wHour, st.wMinute, st.wSecond, st.wMilliseconds);
 
-               fResult = true;
-            }
-            hb_fsSetIOError(fResult, 0);
-            hb_fsClose(hFile);
+            fResult = true;
          }
-         else
-         {
-            WIN32_FIND_DATA findFileData;
-            HANDLE hFindFile;
-            LPCTSTR lpFileName;
-            LPTSTR lpFree;
+      }
+      hb_fsSetIOError(fResult, 0);
 
-            lpFileName = HB_FSNAMECONV(pszFileName, &lpFree);
-            hFindFile = FindFirstFile(lpFileName, &findFileData);
-            if( lpFree )
-            {
-               hb_xfree(lpFree);
-            }
-
-            if( hFindFile != INVALID_HANDLE_VALUE )
-            {
-               if( FileTimeToLocalFileTime(&findFileData.ftLastWriteTime, &local_ft) && FileTimeToSystemTime(&local_ft, &st) )
-               {
-                  *plJulian = hb_dateEncode(st.wYear, st.wMonth, st.wDay);
-                  *plMillisec = hb_timeEncode(st.wHour, st.wMinute, st.wSecond, st.wMilliseconds);
-
-                  fResult = true;
-               }
-               hb_fsSetIOError(fResult, 0);
-               FindClose(hFindFile);
-            }
-         }
+      if( lpFree )
+      {
+         hb_xfree(lpFree);
       }
    }
 #elif defined(HB_OS_UNIX) || defined(__GNUC__)
