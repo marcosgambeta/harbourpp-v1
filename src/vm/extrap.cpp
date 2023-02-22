@@ -282,66 +282,40 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS * pExceptio
 #endif
 
    {
-      /* NOTE: Several non-MS sources say that Win9x has these functions
-               in tlhelp32.dll. Testing shows though, that in Win95, Win95b
-               and Win98 they are in kernel32.dll, and tlhelp32.dll doesn't
-               exist. [vszakats] */
-      HMODULE hToolhelp = GetModuleHandle(TEXT("kernel32.dll"));
+      /* Take a snapshot of all modules in the specified process. */
+      HANDLE hModuleSnap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, GetCurrentProcessId());
 
-      if( hToolhelp )
+      if( hModuleSnap != INVALID_HANDLE_VALUE )
       {
-         /* NOTE: Hack to force the ASCII versions of these types. [vszakats] */
-         #if defined(UNICODE)
-            #undef MODULEENTRY32
-            #undef LPMODULEENTRY32
-         #endif
+         MODULEENTRY32 me32;
 
-         typedef HANDLE (WINAPI * P_CTH32SSH)(DWORD, DWORD); /* CreateToolhelp32Snapshot() */
-         typedef BOOL (WINAPI * P_M32F)(HANDLE, LPMODULEENTRY32); /* Module32First() */
-         typedef BOOL (WINAPI * P_M32N)(HANDLE, LPMODULEENTRY32); /* Module32Next() */
+         /* Set the size of the structure before using it. */
+         me32.dwSize = sizeof(MODULEENTRY32);
 
-         P_CTH32SSH pCreateToolhelp32Snapshot = reinterpret_cast<P_CTH32SSH>(HB_WINAPI_GETPROCADDRESS(hToolhelp, "CreateToolhelp32Snapshot"));
-         P_M32F pModule32First = reinterpret_cast<P_M32F>(HB_WINAPI_GETPROCADDRESS(hToolhelp, "Module32First"));
-         P_M32N pModule32Next = reinterpret_cast<P_M32N>(HB_WINAPI_GETPROCADDRESS(hToolhelp, "Module32Next"));
-
-         if( pCreateToolhelp32Snapshot && pModule32First && pModule32Next )
+         /* Retrieve information about the first module, and exit if unsuccessful */
+         if( Module32First(hModuleSnap, &me32) )
          {
-            /* Take a snapshot of all modules in the specified process. */
-            HANDLE hModuleSnap = pCreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, GetCurrentProcessId());
+            hb_strncat(errmsg, "\nModules:\n", errmsglen);
 
-            if( hModuleSnap != INVALID_HANDLE_VALUE )
+            /* Now walk the module list of the process, and display information about each module */
+            do
             {
-               MODULEENTRY32 me32;
-
-               /* Set the size of the structure before using it. */
-               me32.dwSize = sizeof(MODULEENTRY32);
-
-               /* Retrieve information about the first module, and exit if unsuccessful */
-               if( pModule32First(hModuleSnap, &me32) )
-               {
-                  hb_strncat(errmsg, "\nModules:\n", errmsglen);
-
-                  /* Now walk the module list of the process, and display information about each module */
-                  do
-                  {
-                     char buf[256];
+               char buf[256];
 #if defined(HB_OS_WIN_64)
-                     /* FIXME: me32.szExePath seemed trashed in some (standalone) tests. */
-                     hb_snprintf(buf, sizeof(buf), "%016" PFLL "X %016" PFLL "X %s\n", reinterpret_cast<HB_PTRUINT>(me32.modBaseAddr), static_cast<HB_PTRUINT>(me32.modBaseSize), me32.szExePath);
+               /* FIXME: me32.szExePath seemed trashed in some (standalone) tests. */
+               hb_snprintf(buf, sizeof(buf), "%016" PFLL "X %016" PFLL "X %s\n", reinterpret_cast<HB_PTRUINT>(me32.modBaseAddr), static_cast<HB_PTRUINT>(me32.modBaseSize), me32.szExePath);
 #else
-                     char szBuffer[MAX_PATH];
-                     hb_strncpy(szBuffer, me32.szExePath, HB_SIZEOFARRAY(szBuffer) - 1);
-                     hb_snprintf(buf, sizeof(buf), "%08lX %08lX %s\n", reinterpret_cast<HB_PTRUINT>(me32.modBaseAddr), static_cast<HB_PTRUINT>(me32.modBaseSize), szBuffer);
+               char szBuffer[MAX_PATH];
+               hb_strncpy(szBuffer, reinterpret_cast<const char*>(me32.szExePath), HB_SIZEOFARRAY(szBuffer) - 1);
+               hb_snprintf(buf, sizeof(buf), "%08lX %08lX %s\n", reinterpret_cast<HB_PTRUINT>(me32.modBaseAddr), static_cast<HB_PTRUINT>(me32.modBaseSize), szBuffer);
 #endif
-                     hb_strncat(errmsg, buf, errmsglen);
-                  }
-                  while( pModule32Next(hModuleSnap, &me32) );
-               }
-
-               /* Do not forget to clean up the snapshot object. */
-               CloseHandle(hModuleSnap);
+               hb_strncat(errmsg, buf, errmsglen);
             }
+            while( Module32Next(hModuleSnap, &me32) );
          }
+
+         /* Do not forget to clean up the snapshot object. */
+         CloseHandle(hModuleSnap);
       }
    }
 
