@@ -160,36 +160,16 @@ static HB_BOOL s_win_iswow64(void)
    HB_BOOL bRetVal = HB_FALSE;
 
    #if defined(HB_OS_WIN) && !defined(HB_OS_WIN_64)
+   BOOL bIsWow64 = FALSE;
+
+   if( !IsWow64Process(GetCurrentProcess(), &bIsWow64))
    {
-      using P_ISWOW64PROCESS = BOOL(WINAPI *)(HANDLE, PBOOL);
+      /* Try alternative method? */
+   }
 
-      P_ISWOW64PROCESS pIsWow64Process;
-
-      HMODULE hModule = GetModuleHandle(TEXT("kernel32"));
-
-      if( hModule )
-      {
-         pIsWow64Process = reinterpret_cast<P_ISWOW64PROCESS>(HB_WINAPI_GETPROCADDRESS(hModule, "IsWow64Process"));
-      }
-      else
-      {
-         pIsWow64Process = nullptr;
-      }
-
-      if( pIsWow64Process )
-      {
-         BOOL bIsWow64 = FALSE;
-
-         if( !pIsWow64Process(GetCurrentProcess(), &bIsWow64))
-         {
-            /* Try alternative method? */
-         }
-
-         if( bIsWow64 )
-         {
-            bRetVal = HB_TRUE;
-         }
-      }
+   if( bIsWow64 )
+   {
+      bRetVal = HB_TRUE;
    }
    #endif
 
