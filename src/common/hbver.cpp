@@ -268,10 +268,7 @@ static int     s_iWinNT    = 0;
 static int     s_iWin9x    = 0;
 static int     s_iWine     = 0;
 
-using _HB_VERIFYVERSIONINFO = BOOL(WINAPI *)(LPOSVERSIONINFOEXW, DWORD, DWORDLONG);
-
 static HB_BOOL s_fVerInfoInit = HB_TRUE;
-static _HB_VERIFYVERSIONINFO   s_pVerifyVersionInfo   = nullptr;
 
 static HB_BOOL s_hb_winVerifyVersionInit(void)
 {
@@ -280,12 +277,11 @@ static HB_BOOL s_hb_winVerifyVersionInit(void)
       HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
       if( hModule )
       {
-         s_pVerifyVersionInfo = reinterpret_cast<_HB_VERIFYVERSIONINFO>(HB_WINAPI_GETPROCADDRESS(hModule, "VerifyVersionInfoW"));
       }
       s_fVerInfoInit = HB_FALSE;
    }
 
-   return s_pVerifyVersionInfo != nullptr;
+   return true;
 }
 
 static void s_hb_winVerInit(void)
@@ -605,7 +601,7 @@ HB_BOOL hb_iswinver(int iMajor, int iMinor, int iType, HB_BOOL fOrUpper)
          dwlConditionMask = VerSetConditionMask(dwlConditionMask, VER_PRODUCT_TYPE, VER_EQUAL);
       }
 
-      return static_cast<HB_BOOL>(s_pVerifyVersionInfo(&ver, dwTypeMask, dwlConditionMask));
+      return static_cast<HB_BOOL>(VerifyVersionInfo(&ver, dwTypeMask, dwlConditionMask));
    }
 #else
    HB_SYMBOL_UNUSED(iMajor);
@@ -630,7 +626,7 @@ HB_BOOL hb_iswinsp(int iServicePackMajor, HB_BOOL fOrUpper)
 
       dwlConditionMask = VerSetConditionMask(dwlConditionMask, VER_SERVICEPACKMAJOR, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL);
 
-      return static_cast<HB_BOOL>(s_pVerifyVersionInfo(&ver, VER_SERVICEPACKMAJOR, dwlConditionMask));
+      return static_cast<HB_BOOL>(VerifyVersionInfo(&ver, VER_SERVICEPACKMAJOR, dwlConditionMask));
    }
 #else
    HB_SYMBOL_UNUSED(iServicePackMajor);
