@@ -1106,73 +1106,52 @@ long hb_timeStampUTCOffset(int iYear, int iMonth, int iDay, int iHour, int iMinu
 #endif
 
 #if defined(HB_OS_WIN)
+   SYSTEMTIME lt, st;
+
+   lt.wYear         = static_cast<WORD>(iYear);
+   lt.wMonth        = static_cast<WORD>(iMonth);
+   lt.wDay          = static_cast<WORD>(iDay);
+   lt.wHour         = static_cast<WORD>(iHour);
+   lt.wMinute       = static_cast<WORD>(iMinutes);
+   lt.wSecond       = static_cast<WORD>(iSeconds);
+   lt.wMilliseconds = 0;
+   lt.wDayOfWeek    = 0;
+
+   if( TzSpecificLocalTimeToSystemTime(nullptr, &lt, &st) )
    {
-      using P_TZSPECIFICLOCALTIMETOSYSTEMTIME = BOOL(WINAPI *)(LPTIME_ZONE_INFORMATION, LPSYSTEMTIME, LPSYSTEMTIME);
-
-      static HB_BOOL s_fInit = HB_TRUE;
-      static P_TZSPECIFICLOCALTIMETOSYSTEMTIME s_pTzSpecificLocalTimeToSystemTime = nullptr;
-
-      if( s_fInit )
-      {
-         HMODULE hModule = GetModuleHandle(TEXT("kernel32"));
-         if( hModule )
-         {
-            s_pTzSpecificLocalTimeToSystemTime = reinterpret_cast<P_TZSPECIFICLOCALTIMETOSYSTEMTIME>(HB_WINAPI_GETPROCADDRESS(hModule, "TzSpecificLocalTimeToSystemTime"));
-         }
-         s_fInit = HB_FALSE;
-      }
-
-      if( s_pTzSpecificLocalTimeToSystemTime )
-      {
-         SYSTEMTIME lt, st;
-
-         lt.wYear         = static_cast<WORD>(iYear);
-         lt.wMonth        = static_cast<WORD>(iMonth);
-         lt.wDay          = static_cast<WORD>(iDay);
-         lt.wHour         = static_cast<WORD>(iHour);
-         lt.wMinute       = static_cast<WORD>(iMinutes);
-         lt.wSecond       = static_cast<WORD>(iSeconds);
-         lt.wMilliseconds = 0;
-         lt.wDayOfWeek    = 0;
-
-         if( s_pTzSpecificLocalTimeToSystemTime(nullptr, &lt, &st) )
-         {
-            double dOffset = (hb_timeStampPack(lt.wYear, lt.wMonth, lt.wDay, lt.wHour, lt.wMinute, lt.wSecond, lt.wMilliseconds) -
-                              hb_timeStampPack(st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond, st.wMilliseconds)) * HB_SECONDS_PER_DAY;
-            return static_cast<long>(dOffset + (dOffset < 0 ? -0.5 : 0.5));
-         }
-      }
-
-      return hb_timeUTCOffset();
+      double dOffset = (hb_timeStampPack(lt.wYear, lt.wMonth, lt.wDay, lt.wHour, lt.wMinute, lt.wSecond, lt.wMilliseconds) -
+                        hb_timeStampPack(st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond, st.wMilliseconds)) * HB_SECONDS_PER_DAY;
+      return static_cast<long>(dOffset + (dOffset < 0 ? -0.5 : 0.5));
    }
+
+   return hb_timeUTCOffset();
 #else
+   struct tm timeinfo;
+   time_t utc, local;
+
+   timeinfo.tm_sec   = iSeconds;       /* seconds */
+   timeinfo.tm_min   = iMinutes;       /* minutes */
+   timeinfo.tm_hour  = iHour;          /* hours */
+   timeinfo.tm_mday  = iDay;           /* day of the month */
+   timeinfo.tm_mon   = iMonth - 1;     /* month */
+   timeinfo.tm_year  = iYear - 1900;   /* year */
+   timeinfo.tm_isdst = -1;             /* daylight saving time */
+
+   local = mktime(&timeinfo);
+
+   if( local != (time_t) -1 )
    {
-      struct tm timeinfo;
-      time_t utc, local;
-
-      timeinfo.tm_sec   = iSeconds;       /* seconds */
-      timeinfo.tm_min   = iMinutes;       /* minutes */
-      timeinfo.tm_hour  = iHour;          /* hours */
-      timeinfo.tm_mday  = iDay;           /* day of the month */
-      timeinfo.tm_mon   = iMonth - 1;     /* month */
-      timeinfo.tm_year  = iYear - 1900;   /* year */
-      timeinfo.tm_isdst = -1;             /* daylight saving time */
-
-      local = mktime(&timeinfo);
-
-      if( local != (time_t) -1 )
-      {
-         int isdst = (timeinfo.tm_isdst > 0 ? 3600 : 0);
+      int isdst = (timeinfo.tm_isdst > 0 ? 3600 : 0);
 #if defined(HB_HAS_LOCALTIME_R)
-         utc = mktime(gmtime_r(&local, &timeinfo) );
+      utc = mktime(gmtime_r(&local, &timeinfo) );
 #else
-         timeinfo = *gmtime(&local);
-         utc = mktime(&timeinfo);
+      timeinfo = *gmtime(&local);
+      utc = mktime(&timeinfo);
 #endif
-         return static_cast<long>(difftime(local, utc)) + isdst;
-      }
-      return 0;
+      return static_cast<long>(difftime(local, utc)) + isdst;
    }
+
+   return 0;
 #endif
 }
 
