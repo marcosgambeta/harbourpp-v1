@@ -269,11 +269,9 @@ static int     s_iWin9x    = 0;
 static int     s_iWine     = 0;
 
 using _HB_VERIFYVERSIONINFO = BOOL(WINAPI *)(LPOSVERSIONINFOEXW, DWORD, DWORDLONG);
-using _HB_VERSETCONDITIONMASK = ULONGLONG(WINAPI *)(ULONGLONG, DWORD, BYTE);
 
 static HB_BOOL s_fVerInfoInit = HB_TRUE;
 static _HB_VERIFYVERSIONINFO   s_pVerifyVersionInfo   = nullptr;
-static _HB_VERSETCONDITIONMASK s_pVerSetConditionMask = nullptr;
 
 static HB_BOOL s_hb_winVerifyVersionInit(void)
 {
@@ -283,12 +281,11 @@ static HB_BOOL s_hb_winVerifyVersionInit(void)
       if( hModule )
       {
          s_pVerifyVersionInfo = reinterpret_cast<_HB_VERIFYVERSIONINFO>(HB_WINAPI_GETPROCADDRESS(hModule, "VerifyVersionInfoW"));
-         s_pVerSetConditionMask = reinterpret_cast<_HB_VERSETCONDITIONMASK>(HB_WINAPI_GETPROCADDRESS(hModule, "VerSetConditionMask"));
       }
       s_fVerInfoInit = HB_FALSE;
    }
 
-   return s_pVerifyVersionInfo && s_pVerSetConditionMask;
+   return s_pVerifyVersionInfo != nullptr;
 }
 
 static void s_hb_winVerInit(void)
@@ -580,8 +577,8 @@ HB_BOOL hb_iswinver(int iMajor, int iMinor, int iType, HB_BOOL fOrUpper)
       ver.dwMajorVersion = static_cast<DWORD>(iMajor);
       ver.dwMinorVersion = static_cast<DWORD>(iMinor);
 
-      dwlConditionMask = s_pVerSetConditionMask(dwlConditionMask, VER_MAJORVERSION, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL);
-      dwlConditionMask = s_pVerSetConditionMask(dwlConditionMask, VER_MINORVERSION, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL);
+      dwlConditionMask = VerSetConditionMask(dwlConditionMask, VER_MAJORVERSION, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL);
+      dwlConditionMask = VerSetConditionMask(dwlConditionMask, VER_MINORVERSION, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL);
 
       /* MSDN says in https://msdn.microsoft.com/library/ms725492
            "If you are testing the major version, you must also test the
@@ -597,15 +594,15 @@ HB_BOOL hb_iswinver(int iMajor, int iMinor, int iType, HB_BOOL fOrUpper)
 #if defined(__HB_DISABLE_WINE_VERIFYVERSIONINFO_BUG_WORKAROUND)
       ver.wServicePackMajor = ver.wServicePackMinor = static_cast<WORD>(0);
       dwTypeMask |= VER_SERVICEPACKMAJOR | VER_SERVICEPACKMINOR;
-      dwlConditionMask = s_pVerSetConditionMask(dwlConditionMask, VER_SERVICEPACKMAJOR, VER_GREATER_EQUAL);
-      dwlConditionMask = s_pVerSetConditionMask(dwlConditionMask, VER_SERVICEPACKMINOR, VER_GREATER_EQUAL);
+      dwlConditionMask = VerSetConditionMask(dwlConditionMask, VER_SERVICEPACKMAJOR, VER_GREATER_EQUAL);
+      dwlConditionMask = VerSetConditionMask(dwlConditionMask, VER_SERVICEPACKMINOR, VER_GREATER_EQUAL);
 #endif
 
       if( iType )
       {
          dwTypeMask |= VER_PRODUCT_TYPE;
          ver.wProductType = static_cast<BYTE>(iType);
-         dwlConditionMask = s_pVerSetConditionMask(dwlConditionMask, VER_PRODUCT_TYPE, VER_EQUAL);
+         dwlConditionMask = VerSetConditionMask(dwlConditionMask, VER_PRODUCT_TYPE, VER_EQUAL);
       }
 
       return static_cast<HB_BOOL>(s_pVerifyVersionInfo(&ver, dwTypeMask, dwlConditionMask));
@@ -631,7 +628,7 @@ HB_BOOL hb_iswinsp(int iServicePackMajor, HB_BOOL fOrUpper)
       ver.dwOSVersionInfoSize = sizeof(ver);
       ver.wServicePackMajor = static_cast<WORD>(iServicePackMajor);
 
-      dwlConditionMask = s_pVerSetConditionMask(dwlConditionMask, VER_SERVICEPACKMAJOR, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL);
+      dwlConditionMask = VerSetConditionMask(dwlConditionMask, VER_SERVICEPACKMAJOR, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL);
 
       return static_cast<HB_BOOL>(s_pVerifyVersionInfo(&ver, VER_SERVICEPACKMAJOR, dwlConditionMask));
    }
