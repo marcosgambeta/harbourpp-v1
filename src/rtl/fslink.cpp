@@ -67,45 +67,22 @@ HB_BOOL hb_fsLink(const char * pszExisting, const char * pszNewFile)
       hb_vmUnlock();
 
 #if defined(HB_OS_WIN)
+      LPCTSTR lpFileName, lpExistingFileName;
+      LPTSTR lpFileNameFree, lpExistingFileNameFree;
+
+      lpFileName = HB_FSNAMECONV(pszNewFile, &lpFileNameFree);
+      lpExistingFileName = HB_FSNAMECONV(pszExisting, &lpExistingFileNameFree);
+
+      fResult = CreateHardLink(lpFileName, lpExistingFileName, nullptr) != 0;
+      hb_fsSetIOError(fResult, 0);
+
+      if( lpFileNameFree )
       {
-         typedef BOOL ( WINAPI * _HB_CREATEHARDLINK )( LPCTSTR, LPCTSTR, LPSECURITY_ATTRIBUTES );
-
-         static _HB_CREATEHARDLINK s_pCreateHardLink = nullptr;
-
-         if( !s_pCreateHardLink )
-         {
-            HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
-            if( hModule )
-            {
-               s_pCreateHardLink = reinterpret_cast<_HB_CREATEHARDLINK>(HB_WINAPI_GETPROCADDRESST(hModule, "CreateHardLink"));
-            }
-         }
-
-         if( s_pCreateHardLink )
-         {
-            LPCTSTR lpFileName, lpExistingFileName;
-            LPTSTR lpFileNameFree, lpExistingFileNameFree;
-
-            lpFileName = HB_FSNAMECONV(pszNewFile, &lpFileNameFree);
-            lpExistingFileName = HB_FSNAMECONV(pszExisting, &lpExistingFileNameFree);
-
-            fResult = s_pCreateHardLink(lpFileName, lpExistingFileName, nullptr) != 0;
-            hb_fsSetIOError(fResult, 0);
-
-            if( lpFileNameFree )
-            {
-               hb_xfree(lpFileNameFree);
-            }
-            if( lpExistingFileNameFree )
-            {
-               hb_xfree(lpExistingFileNameFree);
-            }
-         }
-         else
-         {
-            hb_fsSetError(1);
-            fResult = false;
-         }
+         hb_xfree(lpFileNameFree);
+      }
+      if( lpExistingFileNameFree )
+      {
+         hb_xfree(lpExistingFileNameFree);
       }
 #elif defined(HB_OS_UNIX)
       {
