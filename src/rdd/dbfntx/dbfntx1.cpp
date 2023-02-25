@@ -139,7 +139,7 @@
 #include "hbrddntx.h"
 #include "rddsys.ch"
 #include "hbregex.h"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 
 #ifdef HB_NTX_DEBUG_DISP
    static HB_ULONG s_rdNO = 0;

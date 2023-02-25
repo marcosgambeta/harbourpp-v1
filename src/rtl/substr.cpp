@@ -47,7 +47,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 #include "hbapierr.h"
 
 /* returns l characters from n characters into string */

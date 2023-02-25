@@ -74,7 +74,7 @@
 #include "hbwinuni.h"
 #include "hbdate.h"
 
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 
 #undef _WIN32_WINNT
 #define _WIN32_WINNT  0x0600 /* for hb_gt_win_SetPalette_Vista() */

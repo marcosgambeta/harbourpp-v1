@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 
 static HB_CDP_GET_FUNC(UTF16LE_get)
 {

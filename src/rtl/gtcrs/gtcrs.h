@@ -57,7 +57,7 @@
 #include "hbapifs.h"
 #include "hbdate.h"
 
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 
 #if defined( HB_OS_HPUX )
 #  define _XOPEN_SOURCE_EXTENDED

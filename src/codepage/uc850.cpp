@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 
 #define NUMBER_OF_CHARS    256
 

@@ -61,7 +61,7 @@
 #include "hbapierr.h"
 #include "inkey.ch"
 #include "hbgfxdef.ch"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 #include "hbapistr.h"
 #include "hbthread.h"
 #include "hbdate.h"

@@ -220,7 +220,7 @@
 #include "hbvm.h"
 #include "hbthread.h"
 #include "hbset.h"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 
 /* error codes */
 #define HSX_SUCCESSFALSE    0    /* operation finished successfully with false value */

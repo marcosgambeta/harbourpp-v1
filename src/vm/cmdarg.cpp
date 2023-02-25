@@ -53,7 +53,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapifs.h"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 #include "hbvm.h"
 #include "hbmemory.ch"
 #include "hbstack.h"

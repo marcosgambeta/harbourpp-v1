@@ -48,7 +48,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapierr.h"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 #include "hbapigt.h"
 
 HB_FUNC( HB_UTF8TOSTRBOX )

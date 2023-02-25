@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 
 static char * hb_strHardCR(char * pszString, HB_SIZE nStringLen)
 {

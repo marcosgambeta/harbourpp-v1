@@ -87,7 +87,7 @@
 
 /* hbfloat.h have to be included first */
 #include "hbfloat.h"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 #include <stddef.h>
 
 #if defined(__FreeBSD__)

@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 #include "hbapiitm.h"
 
 HB_FUNC( __HB_XML_CDPU16MAP )

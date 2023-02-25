@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 
 static const HB_USHORT s_uniSort[65536] =
 {

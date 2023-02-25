@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 #include "hbapigt.h"
 
 /* Scrolls a screen region */

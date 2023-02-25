@@ -69,7 +69,7 @@
 #include "hbsxfunc.h"
 #include "rddsys.ch"
 
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 
 #define FPT_TRANS_NONE     0
 #define FPT_TRANS_CP       1

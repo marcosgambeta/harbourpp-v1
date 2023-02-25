@@ -74,7 +74,7 @@
 #include "hbmath.h"
 #include "rddsys.ch"
 #include "hbregex.h"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 
 #define hb_cdxFilePageOffset(I, B)      (static_cast<HB_FOFFSET>(B) << ((I)->fLargeFile ? (I)->uiPageBits : 0))
 #define hb_cdxFilePageNum(I, O)         (static_cast<HB_ULONG>((O) >> ((I)->fLargeFile ? (I)->uiPageBits : 0)))

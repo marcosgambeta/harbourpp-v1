@@ -51,7 +51,7 @@
 #include "hbapierr.h"
 #include "hbdate.h"
 #include "hbset.h"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 
 /* Picture function flags */
 #define PF_LEFT       0x0001   /* @B */

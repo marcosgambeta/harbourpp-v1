@@ -49,7 +49,7 @@
 #include "hbapigt.h"
 #include "hbgtcore.h"
 #include "hbapiitm.h"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 #include "hbset.h"
 #include "hbstack.h"
 #include "hbvm.h"

@@ -54,7 +54,7 @@
 #endif
 
 #include "hbapi.hpp"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 #include "hbapifs.h"
 #include "hbvm.h"
 #include "hbmath.h"

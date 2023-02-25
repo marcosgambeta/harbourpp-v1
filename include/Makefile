@@ -16,6 +16,7 @@ C_HEADERS := \
    hbapi.h \
    hbapi.hpp \
    hbapicdp.h \
+   hbapicdp.hpp \
    hbapicls.h \
    hbapicom.h \
    hbapidbg.h \

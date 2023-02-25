@@ -66,7 +66,7 @@
 #include "hbgtcore.h"
 #include "hbinit.h"
 #include "hbapifs.h"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 #include "hbdate.h"
 
 static int s_GtId;

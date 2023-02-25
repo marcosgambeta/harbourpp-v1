@@ -48,7 +48,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapilng.h"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 
 /* NOTE: Ad-hoc names mostly taken from various Clipper source files.
          These should be named properly if exported outside this file.

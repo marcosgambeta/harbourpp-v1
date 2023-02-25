@@ -56,7 +56,7 @@
 #include "hbapierr.h"
 #include "hbapiitm.h"
 #include "inkey.ch"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 #include "hbdate.h"
 
 #if defined( HB_OS_DARWIN ) || defined( HB_OS_AIX )

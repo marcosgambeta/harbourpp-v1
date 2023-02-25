@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 
 #if defined(HB_OS_UNIX) && !defined(HB_NO_FNMATCH)
 #  include <fnmatch.h>

@@ -47,7 +47,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 #include "hbapierr.h"
 
 /* returns the right-most n characters in string */

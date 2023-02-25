@@ -46,7 +46,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 
 HB_FUNC( RAT )
 {

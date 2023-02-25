@@ -92,7 +92,7 @@
 #include "hbatomic.h"
 #include "hbapiitm.h"
 #include "hbapierr.h"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 #include "hbapilng.h"
 #include "hbvm.h"
 #include "hbstack.h"

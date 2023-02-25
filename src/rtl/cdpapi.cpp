@@ -47,7 +47,7 @@
 
 #include "hbapi.hpp"
 #include "hbapierr.h"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 #include "hbthread.h"
 
 /* MT macros */

@@ -52,7 +52,7 @@
 #include "hbset.h"
 #include "hbgtcore.h"
 #include "hbinit.h"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 #include "hbapierr.h"
 #include "hbapiitm.h"
 #include "inkey.ch"

@@ -60,7 +60,7 @@
 #include "rddsys.ch"
 #include "hbsxdef.ch"
 
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 
 static HB_USHORT s_uiRddId = static_cast<HB_USHORT>(-1);
 static RDDFUNCS  dbfSuper;

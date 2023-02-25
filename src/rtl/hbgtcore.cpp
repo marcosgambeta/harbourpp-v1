@@ -57,7 +57,7 @@
 #include "hbapistr.h"
 #include "hbapifs.h"
 #include "hbapierr.h"
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 #include "hbdate.h"
 #include "hbset.h"
 #include "hbvm.h"
