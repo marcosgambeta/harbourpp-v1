@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapigt.h"
 #include "hbchksum.h"

@@ -48,7 +48,7 @@
 #define _HB_SET_INTERNAL_
 
 #include "hbvmopt.h"
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapierr.h"
 #include "hbapifs.h"

@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapigt.h"
 
 static void hb_getScreenRange( int * piMin, int * piMax,

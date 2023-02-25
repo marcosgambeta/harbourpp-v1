@@ -49,7 +49,7 @@
 #define HB_STACK_PRELOAD
 
 #include "hbvmopt.h"
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbstack.h"
 #include "hbapierr.h"
 #include "hbapicls.h"

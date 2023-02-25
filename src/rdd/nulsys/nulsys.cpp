@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapirdd.h"
 
 HB_ERRCODE hb_rddSelectWorkAreaAlias(const char * szName)

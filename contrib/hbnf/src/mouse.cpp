@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 /* http://www.delorie.com/djgpp/doc/rbinter/ix/33/00.html */
 

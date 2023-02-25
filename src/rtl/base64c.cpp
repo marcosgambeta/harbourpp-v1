@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapierr.h"
 
 HB_FUNC( HB_BASE64ENCODE )

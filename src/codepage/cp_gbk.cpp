@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapicdp.h"
 
 #include "gbk.cpp"

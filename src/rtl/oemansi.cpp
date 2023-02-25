@@ -47,7 +47,7 @@
 /* NOTE: These are Windows specific, for other platforms it will return the
          passed parameter unchanged. */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 
 #ifdef HB_LEGACY_LEVEL4

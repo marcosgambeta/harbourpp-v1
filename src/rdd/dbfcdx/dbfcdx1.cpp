@@ -62,7 +62,7 @@
 #define HB_CDX_DBGUPDT
 */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbinit.h"
 #include "hbapierr.h"

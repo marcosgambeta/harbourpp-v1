@@ -53,7 +53,7 @@
    #endif
 #endif
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbwapi.h"
 #include "hbwinole.h"
 

@@ -15,7 +15,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 
 HB_FUNC( GT_NEWFLAG )

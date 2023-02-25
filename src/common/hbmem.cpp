@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 /* hb_xmemcpy() and hb_xmemset() are only needed when
    unsigned int and unsigned long differ in length */

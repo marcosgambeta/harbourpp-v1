@@ -49,7 +49,7 @@
 #define INCL_DOSPROCESS
 
 #include "hbvmopt.h"
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbstack.h"
 #include "hbapicls.h"
 #include "hbapiitm.h"

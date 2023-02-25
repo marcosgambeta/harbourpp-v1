@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbvm.h"
 
 #include "hbver.ch"

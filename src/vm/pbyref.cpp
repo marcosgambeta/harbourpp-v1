@@ -45,7 +45,7 @@
  */
 
 #include "hbvmint.h"
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbstack.h"
 
 HB_FUNC( HB_PISBYREF )

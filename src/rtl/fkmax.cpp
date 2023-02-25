@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 
 /* Dumb function to maintain dBase III+ and CA-Cl*pper compatibility */

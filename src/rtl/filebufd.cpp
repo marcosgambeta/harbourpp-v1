@@ -47,7 +47,7 @@
 /* this has to be declared before hbapifs.h is included */
 #define _HB_FILE_IMPLEMENTATION_
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapifs.h"
 
 static HB_BOOL s_fileAccept(PHB_FILE_FUNCS pFuncs, const char * pszFileName)

@@ -160,7 +160,7 @@ RETURN
 
 #include <windows.h>
 #include <commctrl.h>
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapicls.h"
 

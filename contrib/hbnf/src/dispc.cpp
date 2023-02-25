@@ -49,7 +49,7 @@
 /* TOFIX: support for reading files with any encoding
           and translating it to unicode for the GT */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapifs.h"
 #include "hbapigt.h"
 #include "hbstack.h"

@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapigt.h"
 
 HB_FUNC( HB_SHADOW )

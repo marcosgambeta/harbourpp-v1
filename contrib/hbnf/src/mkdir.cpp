@@ -20,7 +20,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapifs.h"
 
 HB_FUNC( FT_MKDIR )

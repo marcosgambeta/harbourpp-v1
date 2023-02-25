@@ -94,7 +94,7 @@
  */
 
 #include "hbvmopt.h"
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapicls.h"
 #include "hbstack.h"
 #include "hbapierr.h"

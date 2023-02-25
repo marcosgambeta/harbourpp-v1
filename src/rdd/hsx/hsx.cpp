@@ -212,7 +212,7 @@
       in VM codepage are respected and lCase switch works properly
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapifs.h"
 #include "hbapirdd.h"

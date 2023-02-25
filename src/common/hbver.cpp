@@ -52,7 +52,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbmemory.ch"
 
 #if defined(HB_OS_WIN)

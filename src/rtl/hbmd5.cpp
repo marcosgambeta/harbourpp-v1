@@ -73,7 +73,7 @@
 
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapifs.h"
 #include "hbchksum.h"
 

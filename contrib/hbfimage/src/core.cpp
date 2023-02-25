@@ -47,7 +47,7 @@
 
 /* FIXME: To use strings (or other solutions) for remaining raw pointers. */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapierr.h"
 #include "hbstack.h"

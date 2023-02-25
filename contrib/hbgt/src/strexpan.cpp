@@ -6,7 +6,7 @@
  * public domain.
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 HB_FUNC( GT_STREXPAND )
 {

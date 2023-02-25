@@ -55,7 +55,7 @@
 /*#  define HB_MEMO_SAFELOCK */
 #endif
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapistr.h"
 #include "hbapierr.h"

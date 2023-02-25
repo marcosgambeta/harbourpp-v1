@@ -6,7 +6,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 #define HB_UCUP_FIRST   0x0030
 #define HB_UCUP_LAST    0xFF5A

@@ -137,7 +137,7 @@
 #define FT_CHR_LF   10
 #define FT_CHR_EOF  26
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapifs.h"
 #include "hbstack.h"
 

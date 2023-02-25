@@ -48,7 +48,7 @@
 #  define _GNU_SOURCE
 #endif
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 #if defined(HB_OS_UNIX)
 #  if defined(HB_OS_VXWORKS)

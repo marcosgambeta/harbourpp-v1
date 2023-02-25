@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapicdp.h"
 
 /* replaces characters in a string */

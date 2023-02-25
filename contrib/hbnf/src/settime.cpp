@@ -69,7 +69,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbdate.h"
 
 HB_FUNC( FT_SETTIME )

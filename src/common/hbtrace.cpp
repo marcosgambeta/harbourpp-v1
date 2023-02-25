@@ -50,7 +50,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapifs.h"
 #include "hb_io.h"
 #include "hbtrace.h"

@@ -45,7 +45,7 @@
  */
 
 #include "hbvmopt.h"
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbvm.h"
 
 /* NOTE: This function should normally have a parameter count check. But

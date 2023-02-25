@@ -48,7 +48,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 #define ASIZE  UCHAR_MAX
 

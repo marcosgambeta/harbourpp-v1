@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 /* replaces characters in a string */
 HB_FUNC( STRDEL )

@@ -47,7 +47,7 @@
 #ifndef HBSSL_H_
 #define HBSSL_H_
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapierr.h"
 #include "hbsocket.h"
 

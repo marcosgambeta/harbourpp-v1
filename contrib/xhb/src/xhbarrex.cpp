@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 
 /* ASizeAlloc( <array>, <num> ) --> <array> - Set the pre-alloc step. */

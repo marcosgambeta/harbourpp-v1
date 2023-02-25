@@ -61,7 +61,7 @@
       Upon error   -> An empty array
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapifs.h"
 #include "hbapiitm.h"
 #include "hbfast.h"

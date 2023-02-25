@@ -48,7 +48,7 @@
 #  define _LARGEFILE64_SOURCE  1
 #endif
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapifs.h"
 #include "hb_io.h"
 #include "hbset.h"

@@ -227,7 +227,7 @@
 
 #endif /* HB_SOCKET_OFF */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbvm.h"
 #include "hbstack.h"

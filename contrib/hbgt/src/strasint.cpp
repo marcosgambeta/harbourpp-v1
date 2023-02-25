@@ -7,7 +7,7 @@
  * public domain.
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 int _GT_Internal_StringAsInt( char * String, HB_ISIZ Start, HB_ISIZ End )
 {

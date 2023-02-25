@@ -22,7 +22,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 
 #if defined(HB_OS_UNIX) && !defined(HB_OS_IOS)

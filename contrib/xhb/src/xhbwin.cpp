@@ -48,7 +48,7 @@
    OLE implementation. Please update your code to use this new API,
    the old one will be removed in a future revision. [vszakats] */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 #if defined(HB_OS_WIN)
 

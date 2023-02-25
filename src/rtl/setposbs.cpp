@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapigt.h"
 
 /* NOTE: Cannot be disabled with the HB_CLP_UNDOC macro, because this symbol

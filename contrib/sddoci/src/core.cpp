@@ -46,7 +46,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbdate.h"
 #include "hbapistr.h"

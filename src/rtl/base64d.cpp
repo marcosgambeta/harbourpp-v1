@@ -47,7 +47,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 /* Warning: this code works only on ASCII based machines */
 

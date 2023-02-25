@@ -47,7 +47,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapierr.h"
 #include "hbapiitm.h"
 #include "hbset.h"

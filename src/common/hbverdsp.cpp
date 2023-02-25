@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbmemory.ch"
 
 void hb_verBuildInfo(void)

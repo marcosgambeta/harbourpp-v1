@@ -50,7 +50,7 @@
 #define INCL_DOSERRORS
 #define INCL_DOSMODULEMGR
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapifs.h"
 #include "hbapicdp.h"

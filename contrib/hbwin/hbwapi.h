@@ -47,7 +47,7 @@
 #ifndef __HBWAPI_H
 #define __HBWAPI_H
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbwinuni.h"
 
 #if defined( HB_OS_WIN )

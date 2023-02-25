@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbapi.h" /* for HB_OS_* detection */
+#include "hbapi.hpp" /* for HB_OS_* detection */
 
 #if defined( UNICODE )
 #  define HB_UNICODE_ORI

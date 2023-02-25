@@ -50,7 +50,7 @@
    debug window.
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapifs.h"
 

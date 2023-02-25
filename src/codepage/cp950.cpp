@@ -6,7 +6,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 #define HB_CP950_FIRST   0xA140
 #define HB_CP950_LAST    0xF9FE

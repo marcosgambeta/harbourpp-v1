@@ -21,7 +21,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapigt.h"
 
 HB_FUNC( FT_N2COLOR )

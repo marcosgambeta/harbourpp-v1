@@ -46,7 +46,7 @@
 
 #define _HB_I18N_INTERNAL_
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapierr.h"
 #include "hbapicdp.h"

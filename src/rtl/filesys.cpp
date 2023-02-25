@@ -73,7 +73,7 @@
 #  define _GNU_SOURCE
 #endif
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbvm.h"
 #include "hbstack.h"
 #include "hbapifs.h"

@@ -47,7 +47,7 @@
 #ifndef HB_CAIRO_H_
 #define HB_CAIRO_H_
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbstack.h"
 
 #include "cairo.h"

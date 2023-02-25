@@ -50,7 +50,7 @@
    and call them from console.c Init/Exit functions.
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbvm.h"
 #include "hbapiitm.h"
 #include "hbapigt.h"

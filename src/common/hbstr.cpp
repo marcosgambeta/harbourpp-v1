@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbmath.h"
 
 const char * const hb_szAscii[256] = {

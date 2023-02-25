@@ -46,7 +46,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 #define _DEFAULT_ORIGIN_URL  "https://harbour.github.io/"
 

@@ -36,7 +36,7 @@ SOFTWARE.
 
 #include <windows.h>
 #include <winreg.h>
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapicls.h"
 #include "hbwinuni.h"

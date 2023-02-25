@@ -14,6 +14,7 @@ C_HEADERS := \
    clipdefs.h \
    extend.h \
    hbapi.h \
+   hbapi.hpp \
    hbapicdp.h \
    hbapicls.h \
    hbapicom.h \

@@ -30,7 +30,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 HB_FUNC( WINAPI_PTON )
 {

@@ -81,7 +81,7 @@
 #include <QtWidgets/QWidget>
 #endif
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbgtcore.h"
 #include "hbapistr.h"
 #include "hbapierr.h"

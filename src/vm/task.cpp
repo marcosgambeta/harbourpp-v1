@@ -47,7 +47,7 @@
 
 #define HB_TASK_DEBUG
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbtask.h"
 #include "hbapierr.h"
 

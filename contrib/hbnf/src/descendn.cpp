@@ -16,7 +16,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 
 HB_FUNC( FT_DESCEND )

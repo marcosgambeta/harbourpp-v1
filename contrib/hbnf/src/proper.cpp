@@ -27,7 +27,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 static char _ftToLower( char c )
 {

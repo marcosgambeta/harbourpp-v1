@@ -47,7 +47,7 @@
 #ifndef HB_ZEBRA_H_
 #define HB_ZEBRA_H_
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapierr.h"
 

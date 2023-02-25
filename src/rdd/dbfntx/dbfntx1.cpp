@@ -127,7 +127,7 @@
 #define HB_NTX_DEBUG_DISP
 */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbinit.h"
 #include "hbapierr.h"

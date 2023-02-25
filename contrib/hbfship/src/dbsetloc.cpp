@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapirdd.h"
 
 HB_FUNC( DBSETLOCATE )

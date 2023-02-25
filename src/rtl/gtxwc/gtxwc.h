@@ -52,7 +52,7 @@
 
 #define HB_GT_NAME  XWC
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbgtcore.h"
 #include "hbinit.h"
 #include "hbset.h"

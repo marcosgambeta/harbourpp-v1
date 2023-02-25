@@ -47,7 +47,7 @@
 /* NOTE: Notice that this code is needed as ANSI C getenv() crashes
          badly when used from a Windows DLL. */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 #if defined(HB_OS_WIN)
    #include <windows.h>

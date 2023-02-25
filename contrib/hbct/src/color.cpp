@@ -46,7 +46,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapigt.h"
 
 HB_FUNC( INVERTATTR )

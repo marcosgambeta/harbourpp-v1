@@ -51,7 +51,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapicdp.h"
 #include "hbapiitm.h"
 #include "hbapifs.h"

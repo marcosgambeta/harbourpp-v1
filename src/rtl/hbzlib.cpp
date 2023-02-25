@@ -46,7 +46,7 @@
 
 #define _HB_ZLIB_INTERNAL_
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapierr.h"
 #include "hbinit.h"

@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapigt.h"
 
 /* NOTE: This is a hack to emulate the overloaded MaxRow()/MaxCol()

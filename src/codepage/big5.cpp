@@ -6,7 +6,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 #define HB_BIG5_FIRST   0xA140
 #define HB_BIG5_LAST    0xF9D5

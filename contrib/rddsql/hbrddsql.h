@@ -48,7 +48,7 @@
 #ifndef HB_RDDSQL_H_
 #define HB_RDDSQL_H_
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapirdd.h"
 #include "hbdbferr.h"
 #include "hbapierr.h"

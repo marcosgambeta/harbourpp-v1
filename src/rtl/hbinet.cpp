@@ -50,7 +50,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbsocket.h"
 #include "hbapierr.h"

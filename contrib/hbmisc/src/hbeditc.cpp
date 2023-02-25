@@ -19,7 +19,7 @@
    3) Text buffer should be reallocated dynamically
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapifs.h"
 #include "hbapigt.h"
 #include "hbapierr.h"

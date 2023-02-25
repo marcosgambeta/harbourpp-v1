@@ -47,7 +47,7 @@
 /* WARNING: VM functionality is not supported by Harbour.
             All functions will emulate constant failure. */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 HB_VMHANDLE hb_xvalloc(HB_SIZE nSize, HB_USHORT nFlags)
 {

@@ -46,7 +46,7 @@
 
 #if ! defined( HB_DYNLIB )
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 #include "hbwinuni.h"
 #include "hbwinole.h"

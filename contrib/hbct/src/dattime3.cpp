@@ -53,7 +53,7 @@
 #define _DEFAULT_SOURCE
 #endif
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbdate.h"
 #include "hbstack.h"
 

@@ -46,7 +46,7 @@
 
 #define HB_UTF8EX_SORT
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapicdp.h"
 
 #include "uc16def.cpp"

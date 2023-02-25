@@ -47,7 +47,7 @@
 #ifdef HB_COMPAT_H_
 #define HB_COMPAT_H_
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 
 /* xHarbour functions mapped to Harbour ones */

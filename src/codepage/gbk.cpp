@@ -1,4 +1,4 @@
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 #define HB_GBK_FIRST   0x8140
 #define HB_GBK_LAST    0xFE4F

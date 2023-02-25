@@ -1,6 +1,6 @@
 /* Copyright 1999 {list of individual authors and e-mail addresses} */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 static const char * hb_strtoken( const char * szText,
                                  HB_ISIZ nText,

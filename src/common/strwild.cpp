@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapicdp.h"
 
 #if defined(HB_OS_UNIX) && !defined(HB_NO_FNMATCH)

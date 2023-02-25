@@ -50,7 +50,7 @@
  */
 
 #include "hbvmint.h"
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapicls.h"
 #include "hbapiitm.h"
 #include "hbstack.h"

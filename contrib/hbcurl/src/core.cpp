@@ -54,7 +54,7 @@
 #  include <curl/types.h>
 #endif
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapierr.h"
 #include "hbapifs.h"

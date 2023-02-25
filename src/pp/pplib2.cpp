@@ -47,7 +47,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbpp.h"
 
 HB_FUNC( __PP_STDRULES )

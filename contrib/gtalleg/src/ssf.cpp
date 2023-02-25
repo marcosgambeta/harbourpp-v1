@@ -55,7 +55,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 #include "ssf.h"
 #include "fixedth.sfc"

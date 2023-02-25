@@ -49,7 +49,7 @@
    tip_FileNameMimeType() -> hb_mimeFName()
    tip_MimeType()         -> hb_mimeStr() */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapierr.h"
 #include "hbapifs.h"

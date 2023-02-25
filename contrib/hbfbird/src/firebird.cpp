@@ -53,7 +53,7 @@
    #define __STDINT_H
 #endif
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapierr.h"
 #include "hbapiitm.h"
 

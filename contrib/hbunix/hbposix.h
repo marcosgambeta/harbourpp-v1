@@ -47,7 +47,7 @@
 #ifndef __HBPOSIX_H
 #define __HBPOSIX_H
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 #include <unistd.h>
 #include <sys/types.h>

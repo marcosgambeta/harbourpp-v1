@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbvm.h"
 
 HB_FUNC_EXTERN( __HBTIMESTAMP );

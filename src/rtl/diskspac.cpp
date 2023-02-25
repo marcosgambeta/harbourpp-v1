@@ -48,7 +48,7 @@
          return a (long) value, Harbour may return a (double) for large
          values, the decimal places are always set to zero, though. */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapierr.h"
 #include "hbapifs.h"
 

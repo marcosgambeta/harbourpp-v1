@@ -8,7 +8,7 @@
  * AmFast C library for Python
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapistr.h"
 #include "hbapicls.h" /* for hb_objSetClass() */

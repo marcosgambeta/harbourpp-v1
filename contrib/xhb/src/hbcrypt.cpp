@@ -58,7 +58,7 @@
  * NXS author is Giancarlo Niccolai <giancarlo@niccolai.ws>
  */
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapierr.h"
 #include "hbchksum.h"

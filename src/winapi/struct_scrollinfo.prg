@@ -99,7 +99,7 @@ RETURN
 #pragma BEGINDUMP
 
 #include <windows.h>
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapicls.h"
 
