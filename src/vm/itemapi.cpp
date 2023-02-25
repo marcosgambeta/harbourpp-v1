@@ -59,7 +59,7 @@
 
 #include "hbvm.h"
 #include "hbstack.h"
-#include "hbapicls.h"
+#include "hbapicls.hpp"
 #include "hbapiitm.h"
 #include "hbapilng.h"
 #include "hbapierr.h"

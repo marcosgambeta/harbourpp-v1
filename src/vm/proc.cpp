@@ -51,7 +51,7 @@
 
 #include "hbvmint.h"
 #include "hbapi.hpp"
-#include "hbapicls.h"
+#include "hbapicls.hpp"
 #include "hbapiitm.h"
 #include "hbstack.h"
 #include "hbvm.h"

@@ -83,7 +83,7 @@ RETURN
 #include <windows.h>
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapicls.h"
+#include "hbapicls.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_NEW )
 {

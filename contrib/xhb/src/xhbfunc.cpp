@@ -51,7 +51,7 @@
 #include "hbapigt.h"
 #include "hbapiitm.h"
 #include "hbapigt.h"
-#include "hbapicls.h"
+#include "hbapicls.hpp"
 #include "hbapierr.h"
 #include "hbstack.h"
 #include "hbvm.h"

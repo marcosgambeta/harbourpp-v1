@@ -38,7 +38,7 @@ SOFTWARE.
 #include <bcrypt.h>
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapicls.h"
+#include "hbapicls.hpp"
 #include "hbwinuni.h"
 #include "winapi.h"
 
