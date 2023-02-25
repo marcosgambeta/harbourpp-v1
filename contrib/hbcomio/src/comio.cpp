@@ -53,7 +53,7 @@
 #include "hbapierr.h"
 #include "hbinit.h"
 
-#include "hbapicom.h"
+#include "hbapicom.hpp"
 
 struct _HB_FILE
 {

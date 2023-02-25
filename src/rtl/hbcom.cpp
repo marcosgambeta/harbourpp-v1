@@ -99,7 +99,7 @@
 
 #include "hbapifs.h"
 #include "hbapiitm.h"
-#include "hbapicom.h"
+#include "hbapicom.hpp"
 #include "hbvm.h"
 #include "hbinit.h"
 #include "hbdate.h"

@@ -20,6 +20,7 @@ C_HEADERS := \
    hbapicls.h \
    hbapicls.hpp \
    hbapicom.h \
+   hbapicom.hpp \
    hbapidbg.h \
    hbapierr.h \
    hbapifs.h \

@@ -77,7 +77,7 @@
 #include "hbapiitm.h"
 #include "hbapierr.h"
 #include "hbvm.h"
-#include "hbapicom.h"
+#include "hbapicom.hpp"
 
 HB_FUNC( HB_COMCLOSE )
 {
