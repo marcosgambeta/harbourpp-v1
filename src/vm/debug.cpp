@@ -46,7 +46,7 @@
 
 #include "hbvmint.h"
 #include "hbapi.hpp"
-#include "hbapidbg.h"
+#include "hbapidbg.hpp"
 #include "hbapiitm.h"
 #include "hbapierr.h"
 #include "hbstack.h"
