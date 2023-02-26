@@ -50,7 +50,7 @@
 
 #include "hbwapi.h"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 /* For Arc() */
 #include <winspool.h>

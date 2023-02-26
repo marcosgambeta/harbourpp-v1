@@ -49,7 +49,7 @@
 #include "hbapi.hpp"
 #include "hbstack.h"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbvm.h"
 
 HB_BOOL hb_evalNew(PHB_EVALINFO pEvalInfo, PHB_ITEM pItem)

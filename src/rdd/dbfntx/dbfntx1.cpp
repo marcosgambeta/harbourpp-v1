@@ -130,7 +130,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbinit.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapilng.h"
 #include "hbvm.h"
 #include "hbset.h"

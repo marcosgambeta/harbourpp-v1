@@ -52,7 +52,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapirdd.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbdbferr.h"
 #include "hbvm.h"
 #include "hbset.h"

@@ -48,7 +48,7 @@
 #include "hbregex.h"
 #include "hbapicdp.hpp"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbinit.h"
 
 #if defined(HB_HAS_PCRE)

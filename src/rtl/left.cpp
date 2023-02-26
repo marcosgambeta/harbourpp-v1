@@ -48,7 +48,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapicdp.hpp"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 /* returns the left-most n characters in string */
 

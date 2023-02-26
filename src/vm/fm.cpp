@@ -72,7 +72,7 @@
 #include "hbapiitm.h"
 #include "hbapifs.h"
 #include "hbstack.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbmemory.ch"
 #include "hbdate.h"
 #include "hbset.h"

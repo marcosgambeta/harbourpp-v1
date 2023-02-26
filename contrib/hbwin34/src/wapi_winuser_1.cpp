@@ -46,7 +46,7 @@
  */
 
 #include "hbwapi.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapiitm.h"
 
 #if defined( __MINGW32CE__ )

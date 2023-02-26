@@ -48,7 +48,7 @@
 #include "hbapi.hpp"
 #include "hbapirdd.h"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbvm.h"
 #include "hbstack.h"
 #include "hbthread.h"

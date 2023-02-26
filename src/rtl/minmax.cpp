@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 /* returns the maximum of two date or numerics */
 /* NOTE: CA-Cl*pper returns 1st item when they are equal [druzus] */

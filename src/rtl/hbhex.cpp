@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 HB_FUNC( HB_HEXTONUM )
 {

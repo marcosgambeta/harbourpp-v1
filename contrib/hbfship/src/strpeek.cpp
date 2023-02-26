@@ -48,7 +48,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 HB_FUNC( STRPEEK )
 {

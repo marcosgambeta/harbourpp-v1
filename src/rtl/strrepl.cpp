@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 /* hb_StrReplace( <cString>, [ <cSource> | <acSource> | <hReplace> ], [ <cDest> | <acDest> ] )
  *    --> <cResult>

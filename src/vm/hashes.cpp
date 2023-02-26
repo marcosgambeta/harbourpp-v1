@@ -51,7 +51,7 @@
 #include "hbvmopt.h"
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapilng.h"
 #include "hbvm.h"
 #include "hbxvm.h"

@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapifs.h"
 
 #if defined(HB_OS_DARWIN)

@@ -50,7 +50,7 @@
 
 #include "hbwapi.h"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 #if ! defined( HB_OS_WIN_CE )
    #include <winspool.h>

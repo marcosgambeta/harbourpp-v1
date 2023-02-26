@@ -49,7 +49,7 @@
 #include "hbrdddbf.h"
 #include "hbapiitm.h"
 #include "hbapistr.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapilng.h"
 #include "hbset.h"
 #include "hbdate.h"

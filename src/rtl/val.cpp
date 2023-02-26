@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 /* returns the numeric value of a character string representation of a number */
 static void hb_val(HB_BOOL fExt)

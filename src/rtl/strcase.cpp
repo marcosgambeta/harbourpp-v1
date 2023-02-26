@@ -47,7 +47,7 @@
 #include "hbapi.hpp"
 #include "hbapicdp.hpp"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 /* converts string to lower case */
 HB_FUNC( LOWER )

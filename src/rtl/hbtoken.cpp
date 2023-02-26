@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 #define _HB_TOK_QUOTE_MASK       0x07
 #define _HB_TOK_RESPECT_DQUOTE   0x01

@@ -55,7 +55,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 static void s_errRT_hashArg(void)
 {

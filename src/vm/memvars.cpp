@@ -50,7 +50,7 @@
 #include "hbvmopt.h"
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapifs.h" /* for __mvSave()/__mvRestore() */
 #include "hbdate.h"  /* for __mvSave()/__mvRestore() */
 #include "hbcomp.h"  /* for HB_VSCOMP_* macros */

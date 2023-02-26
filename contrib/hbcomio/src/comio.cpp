@@ -50,7 +50,7 @@
 #include "hbapi.hpp"
 #include "hbapifs.h"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbinit.h"
 
 #include "hbapicom.hpp"

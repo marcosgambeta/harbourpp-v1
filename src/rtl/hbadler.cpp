@@ -46,7 +46,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbchksum.h"
 
 #define BASE  65521  /* largest prime smaller than 65536 */

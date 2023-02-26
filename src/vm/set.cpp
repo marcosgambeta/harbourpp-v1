@@ -50,7 +50,7 @@
 #include "hbvmopt.h"
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapifs.h"
 #include "hbapigt.h"
 #include "hbapilng.h"

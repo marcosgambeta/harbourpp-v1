@@ -53,7 +53,7 @@
 #include "hbapirdd.h"
 #include "hbapiitm.h"
 #include "hbapilng.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbdbferr.h"
 #include "hbrdddel.h"
 #include "rddsys.ch"

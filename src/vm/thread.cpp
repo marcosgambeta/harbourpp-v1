@@ -91,7 +91,7 @@
 #include "hbthread.h"
 #include "hbatomic.h"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapicdp.hpp"
 #include "hbapilng.h"
 #include "hbvm.h"

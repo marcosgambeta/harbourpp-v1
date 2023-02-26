@@ -47,7 +47,7 @@
 #include "hbapi.hpp"
 #include "hbstack.h"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapilng.h"
 
 /* This function creates an array item using 'iDimension' as an index

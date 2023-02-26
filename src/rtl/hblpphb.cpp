@@ -117,7 +117,7 @@
  */
 
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hblpp.h"
 
 struct HB_LPP_GC

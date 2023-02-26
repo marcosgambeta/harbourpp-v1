@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 static bool hb_numParam(int iParam, HB_MAXINT * plNum)
 {

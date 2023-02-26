@@ -48,7 +48,7 @@
 #define _HB_SOCKEX_IMPLEMENTATION_
 
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbsocket.h"
 #include "hbbfish.h"
 #include "hbinit.h"

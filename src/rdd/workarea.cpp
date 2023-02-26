@@ -49,7 +49,7 @@
 #include "hbapi.hpp"
 #include "hbapirdd.h"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapilng.h"
 #include "hbvm.h"
 #include "hbthread.h"

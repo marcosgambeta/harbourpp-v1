@@ -48,7 +48,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapicdp.hpp"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 /* locates a substring in a string */
 

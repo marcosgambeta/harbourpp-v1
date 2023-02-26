@@ -46,7 +46,7 @@
 
 #include "hbcairo.h"
 #include "hbapistr.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 HB_FUNC( CAIRO_FONT_EXTENTS )
 {

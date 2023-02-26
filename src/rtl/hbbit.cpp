@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 /* NOTE: IMPORTANT:
          hb_bit*() Harbour level function names and logic are embedded

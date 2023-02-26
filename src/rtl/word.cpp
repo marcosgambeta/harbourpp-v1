@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 /* NOTE: The Clipper NG states that Word() will only work when used
          in CALL commands parameter list, otherwise it will return

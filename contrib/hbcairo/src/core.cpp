@@ -46,7 +46,7 @@
 
 #include "hbcairo.h"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 /* --- cairo_t * support --- */
 static HB_GARBAGE_FUNC(hb_cairo_destructor)

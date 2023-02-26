@@ -46,7 +46,7 @@
  */
 
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 /* Dummy compatibility functions mimicking RTE behavior only.
    The rest is not needed in Harbour */

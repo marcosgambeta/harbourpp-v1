@@ -48,7 +48,7 @@
 #include "hbapi.hpp"
 #include "hbvm.h"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbstack.h"
 
 HB_FUNC( HB_QSELF )

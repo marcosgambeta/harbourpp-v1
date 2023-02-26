@@ -49,7 +49,7 @@
 
 #include "hbapi.hpp"
 #include "hbtask.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 #if defined(HB_OS_WIN)
 #  include <windows.h>

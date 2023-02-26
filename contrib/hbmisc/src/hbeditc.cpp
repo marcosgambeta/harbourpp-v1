@@ -22,7 +22,7 @@
 #include "hbapi.hpp"
 #include "hbapifs.h"
 #include "hbapigt.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 #define _STABILIZE_UP    1
 #define _STABILIZE_DOWN  0

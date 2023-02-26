@@ -49,7 +49,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapicdp.hpp"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 static HB_SIZE s_strAtI(PHB_CODEPAGE cdp, const char * szSub, HB_SIZE nSubLen, const char * szText, HB_SIZE nLen)
 {

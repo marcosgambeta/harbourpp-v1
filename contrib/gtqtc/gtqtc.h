@@ -84,7 +84,7 @@
 #include "hbapi.hpp"
 #include "hbgtcore.h"
 #include "hbapistr.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapiitm.h"
 #include "hbvm.h"
 #include "hbset.h"

@@ -47,7 +47,7 @@
 #include "hbapi.hpp"
 #include "hbapilng.h"
 #include "hbapicdp.hpp"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 static HB_LANG s_lang_en =
 {

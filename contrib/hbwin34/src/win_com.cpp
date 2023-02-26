@@ -45,7 +45,7 @@
  */
 
 #include "hbwapi.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbinit.h"
 
 #include "hbwin.ch"

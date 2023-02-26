@@ -47,7 +47,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapicdp.hpp"
 
 static HB_SIZE utf8pos(const char * szUTF8, HB_SIZE nLen, HB_SIZE nUTF8Pos)

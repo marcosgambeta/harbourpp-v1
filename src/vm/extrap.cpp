@@ -50,7 +50,7 @@
 #include "hbvm.h"
 #include "hbapifs.h"
 #include "hbdate.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbset.h"
 
 #if defined(HB_OS_UNIX)

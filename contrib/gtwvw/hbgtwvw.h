@@ -85,7 +85,7 @@
 #include "hbgtcore.h"
 #include "hbinit.h"
 #include "hbapigt.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapiitm.h"
 #include "inkey.ch"
 #include "error.ch"

@@ -47,7 +47,7 @@
 
 #include "hbapi.hpp"
 #include "hbapicdp.hpp"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 /* converts an ASCII code to a character value */
 HB_FUNC( CHR )

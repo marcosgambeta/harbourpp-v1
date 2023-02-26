@@ -47,7 +47,7 @@
 #define _HB_REGEX_INTERNAL_
 #include "hbregex.h"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 static void hb_regfree(PHB_REGEX pRegEx)
 {

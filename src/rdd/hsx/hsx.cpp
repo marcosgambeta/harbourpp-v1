@@ -216,7 +216,7 @@
 #include "hbapiitm.h"
 #include "hbapifs.h"
 #include "hbapirdd.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbvm.h"
 #include "hbthread.h"
 #include "hbset.h"

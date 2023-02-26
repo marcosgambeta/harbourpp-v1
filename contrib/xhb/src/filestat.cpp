@@ -47,7 +47,7 @@
 #include "hbapi.hpp"
 #include "hbapifs.h"
 #include "hbdate.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 #if !defined(_LARGEFILE64_SOURCE)
 #  define _LARGEFILE64_SOURCE  1

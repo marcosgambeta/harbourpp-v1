@@ -54,7 +54,7 @@
 #endif
 
 #include "hbapi.hpp"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapiitm.h"
 
 #include "ibase.h"

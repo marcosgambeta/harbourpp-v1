@@ -47,7 +47,7 @@
 #include "hbvmopt.h"
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbstack.h"
 
 struct DYNHB_ITEM

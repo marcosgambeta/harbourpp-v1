@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 /* NOTE: We're not using the original blat headers, because they
          contain C++ parts, which we don't need anyway. */

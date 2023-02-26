@@ -48,7 +48,7 @@
 
 #include "hbapi.hpp"
 #include "hbapifs.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 HB_FUNC( HB_PROCESSOPEN )
 {

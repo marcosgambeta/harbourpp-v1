@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbmath.h"
 
 /* NOTE: In CA-Cl*pper this is written in Clipper, see the source below,

@@ -77,7 +77,7 @@
 #include "hbapi.hpp"
 #include "hbapifs.h"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbsocket.h"
 #include "hbznet.h"
 #include "hbzlib.ch"

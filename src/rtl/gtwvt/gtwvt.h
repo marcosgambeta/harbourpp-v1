@@ -53,7 +53,7 @@
 #include "hbgtcore.h"
 #include "hbinit.h"
 #include "hbapicdp.hpp"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapiitm.h"
 #include "inkey.ch"
 #include "error.ch"

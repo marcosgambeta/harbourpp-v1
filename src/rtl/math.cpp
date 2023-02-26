@@ -52,7 +52,7 @@
 #include "hbfloat.h"
 #include "hbmather.h"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbvm.h"
 #include "hbstack.h"
 

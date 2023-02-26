@@ -48,7 +48,7 @@
 #include "hbapi.hpp"
 #include "hbapidbg.hpp"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbstack.h"
 
 /* Existing debug functions

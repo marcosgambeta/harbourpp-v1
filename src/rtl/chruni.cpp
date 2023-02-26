@@ -49,7 +49,7 @@
 #include "hbapi.hpp"
 #include "hbapicdp.hpp"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 /* hb_UChar(<nCode>) --> <cText>
  * return string with U+nCode character in HVM CP encoding

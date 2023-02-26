@@ -47,7 +47,7 @@
 #include "rddads.h"
 
 #include "hbinit.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbdbferr.h"
 #include "hbapilng.h"
 #include "hbdate.h"

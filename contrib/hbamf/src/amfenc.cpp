@@ -15,7 +15,7 @@
 #include "hbstack.h"
 
 #include "hbapirdd.h"   /* for amf3_FromWA() */
-#include "hbapierr.h"   /* as above */
+#include "hbapierr.hpp"   /* as above */
 
 #include "amf.h"
 

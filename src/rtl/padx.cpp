@@ -48,7 +48,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapicdp.hpp"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 
 static HB_SIZE hb_cdpItemLen(PHB_CODEPAGE cdp, PHB_ITEM pItem)
 {

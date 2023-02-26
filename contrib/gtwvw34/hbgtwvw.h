@@ -77,7 +77,7 @@
 #include <commctrl.h>
 #include <commdlg.h>
 
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapiitm.h"
 #include "hbgtcore.h"
 

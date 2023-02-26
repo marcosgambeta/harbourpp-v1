@@ -95,7 +95,7 @@
 #define _HB_SOCKEX_IMPLEMENTATION_
 
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbvm.h"
 #include "hbstack.h"
 #include "hbsocket.h"

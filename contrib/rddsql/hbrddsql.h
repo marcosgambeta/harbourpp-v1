@@ -51,7 +51,7 @@
 #include "hbapi.hpp"
 #include "hbapirdd.h"
 #include "hbdbferr.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapilng.h"
 
 /* SQLBASE */

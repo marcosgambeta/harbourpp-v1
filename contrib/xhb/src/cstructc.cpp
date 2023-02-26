@@ -50,7 +50,7 @@
 #include "hbstack.h"
 #include "hbapiitm.h"
 #include "hbapicls.hpp"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapilng.h"
 #include "hbset.h"
 #include "hbctypes.ch"

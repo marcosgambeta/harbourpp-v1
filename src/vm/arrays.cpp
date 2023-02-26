@@ -52,7 +52,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapicls.hpp"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapilng.h"
 #include "hbvm.h"
 #include "hbstack.h"

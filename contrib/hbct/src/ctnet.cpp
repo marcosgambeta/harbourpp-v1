@@ -81,7 +81,7 @@
 #include "hbapiitm.h"
 #include "hbvm.h"
 #include "hbset.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbwinuni.h"
 
 #if defined(HB_OS_WIN)

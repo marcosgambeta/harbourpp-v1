@@ -53,7 +53,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapierr.h"
+#include "hbapierr.hpp"
 #include "hbapistr.h"
 #include "hbdate.h"
 #include "hbset.h"
