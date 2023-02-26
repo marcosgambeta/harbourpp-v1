@@ -192,4 +192,4 @@ static void hb_cp_init(PHB_CODEPAGE cdp)
 #define HB_CP_INIT hb_cp_init
 
 /* include CP registration code */
-#include "hbcdpreg.h"
+#include "hbcdpreg.hpp"

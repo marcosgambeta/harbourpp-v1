@@ -26,4 +26,4 @@ static const unsigned char s_sort [256] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
 #endif
 
 /* include CP registration code */
-#include "hbcdpreg.h"
+#include "hbcdpreg.hpp"

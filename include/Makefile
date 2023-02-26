@@ -42,6 +42,7 @@ C_HEADERS := \
    hbbfish.h \
    hbfloat.h \
    hbcdpreg.h \
+   hbcdpreg.hpp \
    hbchksum.h \
    hbcomp.h \
    hbcompdf.h \

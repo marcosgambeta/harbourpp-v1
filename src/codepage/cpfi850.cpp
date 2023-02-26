@@ -15,4 +15,4 @@
 #define HB_CP_UTF8
 
 /* include CP registration code */
-#include "hbcdpreg.h"
+#include "hbcdpreg.hpp"
