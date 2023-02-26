@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 #ifdef HB_CLP_UNDOC
 

@@ -34,7 +34,7 @@
 #include <string.h>
 
 #include "sha2.h"
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 #define SHFR(x, n)    (x >> n)
 #define ROTR(x, n)   ((x >> n) | (x << ((sizeof(x) << 3) - n)))

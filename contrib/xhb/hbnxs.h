@@ -60,7 +60,7 @@
 #ifndef HBNXS_H
 #define HBNXS_H
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 #define NXS_MAX_KEYLEN  256
 

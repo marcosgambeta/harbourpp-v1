@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 HB_FUNC_TRANSLATE( DBRELEASE, HB_DBDETACH )
 HB_FUNC_TRANSLATE( DBREQUEST, HB_DBREQUEST )

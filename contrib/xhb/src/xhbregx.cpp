@@ -44,6 +44,6 @@
  *
  */
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 HB_FUNC_TRANSLATE( HB_ISREGEXSTRING, HB_ISREGEX )

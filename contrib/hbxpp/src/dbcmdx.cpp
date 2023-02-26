@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 HB_FUNC_TRANSLATE( DBPACK, HB_DBPACK )
 HB_FUNC_TRANSLATE( DBZAP, HB_DBZAP )

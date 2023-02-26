@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 HB_FUNC_TRANSLATE( __DBARRANG, __DBARRANGE       )
 HB_FUNC_TRANSLATE( __DBCLEARI, __DBCLEARINDEX    )

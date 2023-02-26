@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 HB_FUNC_TRANSLATE( PARAMETERS, PCOUNT )
 HB_FUNC_TRANSLATE( SROWS, MAXROW )

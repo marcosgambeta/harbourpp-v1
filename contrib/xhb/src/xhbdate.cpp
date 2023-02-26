@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 HB_FUNC_TRANSLATE( DATETIME , HB_DATETIME )
 HB_FUNC_TRANSLATE( HOUR     , HB_HOUR     )

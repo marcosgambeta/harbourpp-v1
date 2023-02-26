@@ -52,7 +52,7 @@
 #ifndef __ARC4_H__
 #define __ARC4_H__
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 #ifdef __cplusplus
 extern "C" {

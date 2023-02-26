@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 HB_FUNC_TRANSLATE( GTPROCESSMESSAGES , NEXTKEY         )
 HB_FUNC_TRANSLATE( GFXPRIMITIVE      , HB_GFXPRIMITIVE )

@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 HB_FUNC_TRANSLATE( INETINIT                , HB_INETINIT                )
 HB_FUNC_TRANSLATE( INETCLEANUP             , HB_INETCLEANUP             )

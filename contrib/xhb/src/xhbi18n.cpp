@@ -44,6 +44,6 @@
  *
  */
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 HB_FUNC_TRANSLATE( I18N, HB_I18N_GETTEXT )

@@ -49,6 +49,7 @@ C_HEADERS := \
    hbdbf.h \
    hbdbferr.h \
    hbdefs.h \
+   hbdefs.hpp \
    hberrors.h \
    hbexprop.h \
    hbgtcore.h \

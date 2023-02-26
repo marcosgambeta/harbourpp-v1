@@ -65,7 +65,7 @@
    but if #included, it still must come before its own headers.
    The Harbour wrapper code doesn't need the Windows headers, so
    they will be dropped once 1.0.2 is EOLed in 2019-12-31. */
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 #if defined(HB_OS_WIN)
    #include <windows.h>
    #include <wincrypt.h>

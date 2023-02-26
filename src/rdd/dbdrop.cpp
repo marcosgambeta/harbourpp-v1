@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 #ifndef HB_CLP_STRICT
 

@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 /* NOTE: This function is a new Harbour function implemented in the
          original CA-Cl*pper namespace. It should have been marked as

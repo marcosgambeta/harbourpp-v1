@@ -47,6 +47,6 @@
  *
  */
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 HB_FUNC_TRANSLATE( ISFUNCTION, HB_ISFUNCTION )

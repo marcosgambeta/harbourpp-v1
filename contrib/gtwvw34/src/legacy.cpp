@@ -1,6 +1,6 @@
 /* Copyright 2014 Viktor Szakats */
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 /* legacy non-prefixed names mapped to proper local ones and to hbwin */
 #if 1

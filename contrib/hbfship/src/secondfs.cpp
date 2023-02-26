@@ -44,6 +44,6 @@
  *
  */
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 HB_FUNC_TRANSLATE( SECONDSCPU, HB_SECONDSCPU )

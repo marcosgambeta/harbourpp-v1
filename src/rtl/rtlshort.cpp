@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 HB_FUNC_TRANSLATE( ACCELERATO, ACCELERATOR )
 HB_FUNC_TRANSLATE( COLORSELEC, COLORSELECT )

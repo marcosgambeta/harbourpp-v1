@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 HB_FUNC_TRANSLATE( HB_OPENPROCESS  , HB_PROCESSOPEN  )
 HB_FUNC_TRANSLATE( HB_CLOSEPROCESS , HB_PROCESSCLOSE )

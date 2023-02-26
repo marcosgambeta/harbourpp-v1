@@ -27,7 +27,7 @@
 #ifndef __SHA1_H__
 #define __SHA1_H__
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 #ifdef __cplusplus
 extern "C" {
