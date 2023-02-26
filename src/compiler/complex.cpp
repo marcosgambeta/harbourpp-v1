@@ -46,7 +46,7 @@
  */
 
 #include "hbcomp.h"
-#include "hbpp.h"
+#include "hbpp.hpp"
 #include "hbdate.h"
 #include "harboury.h"
 

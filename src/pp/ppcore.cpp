@@ -49,7 +49,7 @@
 
 #define _HB_PP_INTERNAL
 
-#include "hbpp.h"
+#include "hbpp.hpp"
 #include "hbdate.h"
 
 #define HB_PP_WARN_EXPLICIT                     1     /* C10?? */
