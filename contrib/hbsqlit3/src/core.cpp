@@ -52,7 +52,7 @@
 #include "hbapierr.hpp"
 #include "hbapifs.hpp"
 #include "hbapistr.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 /* FIXME: verify the exact SQLITE3 version */
 #if SQLITE_VERSION_NUMBER <= 3004001

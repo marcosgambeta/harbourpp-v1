@@ -53,7 +53,7 @@
 #include "hbvmopt.hpp"
 #include "hbmacro.h"
 #include "hbcomp.h"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 /* various flags for macro compiler */
 #ifndef HB_SM_DEFAULT

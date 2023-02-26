@@ -352,7 +352,7 @@ using LPHSXTABLE = HSXTABLE *;
 
 #if defined(HB_HSX_TSDSTORE)
 
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 #define HB_HSX_LOCK()    do {} while(false)
 #define HB_HSX_UNLOCK()  do {} while(false)

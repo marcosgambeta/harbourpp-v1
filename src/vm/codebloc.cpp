@@ -49,7 +49,7 @@
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
 #include "hbvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbpcode.h"
 
 /* Dummy returning NIL for buggy code which may store references

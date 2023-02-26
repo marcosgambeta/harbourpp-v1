@@ -75,7 +75,7 @@
 
 #include "hbapi.hpp"
 #include "hbvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbapifs.hpp"
 #include "hbapierr.hpp"
 #include "hbapicdp.hpp"

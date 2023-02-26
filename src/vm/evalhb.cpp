@@ -49,7 +49,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 HB_FUNC( EVAL )
 {

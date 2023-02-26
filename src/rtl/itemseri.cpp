@@ -51,7 +51,7 @@
 #include "hbapierr.hpp"
 #include "hbzlib.h"
 #include "hbvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbserial.ch"
 
 /*

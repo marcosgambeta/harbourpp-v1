@@ -52,7 +52,7 @@
 #include "hbapicdp.hpp"
 #include "hbmath.h"
 #include "hbvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbthread.h"
 #include "hbchksum.h"
 

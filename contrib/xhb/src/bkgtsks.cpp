@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbset.h"
 #include "hbvm.hpp"
 #include "hbdate.h"

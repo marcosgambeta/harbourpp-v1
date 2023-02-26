@@ -49,7 +49,7 @@
 #include "hbapidbg.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 /* Existing debug functions
  * from debug.c:

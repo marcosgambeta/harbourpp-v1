@@ -55,7 +55,7 @@
 
 #include "hbapi.hpp"
 #include "hbdate.h"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 #if defined(HB_OS_WIN)
 #  include <windows.h>

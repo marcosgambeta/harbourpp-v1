@@ -51,7 +51,7 @@
 #include "hbapiitm.hpp"
 #include "hbset.h"
 #include "hbdate.h"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 /* NOTE: iParam = -1 can be used to access the return value. */
 /* NOTE: iParam = 0 can be used to access the SELF object. */

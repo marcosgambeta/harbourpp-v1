@@ -11,7 +11,7 @@
 #include "hbapiitm.hpp"
 #include "hbapistr.hpp"
 #include "hbapicls.hpp" /* for hb_objSetClass() */
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "amf.h"
 
 #include "hbdate.h"

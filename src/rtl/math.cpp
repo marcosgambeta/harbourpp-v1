@@ -54,7 +54,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 #if defined(HB_MATH_ERRNO)
 #   include <errno.h>

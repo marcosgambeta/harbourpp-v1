@@ -47,7 +47,7 @@
 
 #include "ct.h"
 
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 /* statics */
 

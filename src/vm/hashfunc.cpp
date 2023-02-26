@@ -50,7 +50,7 @@
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
 #include "hbvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 HB_FUNC( HB_HASH )
 {

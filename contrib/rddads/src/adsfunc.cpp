@@ -50,7 +50,7 @@
 #include "hbvm.hpp"
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbdate.h"
 
 #include "rddsys.ch"

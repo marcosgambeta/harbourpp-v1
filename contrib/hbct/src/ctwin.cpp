@@ -50,7 +50,7 @@
 #define HB_GT_NAME  CTW
 
 #include "hbgtcore.h"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbinit.h"
 #include "hbapiitm.hpp"
 #include "hbapistr.hpp"

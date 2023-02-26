@@ -47,7 +47,7 @@
 #include "hbvmopt.hpp"
 #include "hbapistr.hpp"
 #include "hbapiitm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 static const HB_WCHAR s_szConstStr[1] = { 0 };
 

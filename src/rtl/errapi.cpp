@@ -53,7 +53,7 @@
 #include "hbapicls.hpp"
 #include "hbapifs.hpp"
 #include "hbvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 /* This is added to be able to detect a recursive error, and not let Harbour
    go into an infinite loop, this is an emulated version of the Clipper

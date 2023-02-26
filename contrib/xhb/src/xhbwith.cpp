@@ -48,7 +48,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 static PHB_ITEM hb_vmWithObjectItem(HB_ISIZ nLevel)
 {

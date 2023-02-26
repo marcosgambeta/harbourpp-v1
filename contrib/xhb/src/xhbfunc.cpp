@@ -53,7 +53,7 @@
 #include "hbapigt.hpp"
 #include "hbapicls.hpp"
 #include "hbapierr.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbvm.hpp"
 
 #if 0

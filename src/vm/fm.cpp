@@ -71,7 +71,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapifs.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbapierr.hpp"
 #include "hbmemory.ch"
 #include "hbdate.h"

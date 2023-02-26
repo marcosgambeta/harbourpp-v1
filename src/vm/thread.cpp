@@ -95,7 +95,7 @@
 #include "hbapicdp.hpp"
 #include "hbapilng.hpp"
 #include "hbvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbdate.h"
 #include "hbmemvar.ch"
 #include "hbthread.ch"

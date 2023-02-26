@@ -45,7 +45,7 @@
  */
 
 #include "hbposix.h"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbapierr.hpp"
 
 typedef struct

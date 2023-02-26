@@ -57,7 +57,7 @@
 #include "hbapifs.hpp"
 #include "hbapierr.hpp"
 #include "hbapigt.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbset.h"
 #include "hb_io.h"
 

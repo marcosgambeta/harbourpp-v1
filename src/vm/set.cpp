@@ -57,7 +57,7 @@
 #include "hbapicdp.hpp"
 #include "hbapistr.hpp"
 #include "hbset.h"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbvm.hpp"
 
 struct HB_SET_LISTENER_

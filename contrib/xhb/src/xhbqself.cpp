@@ -49,7 +49,7 @@
 #include "hbvm.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 HB_FUNC( HB_QSELF )
 {

@@ -57,7 +57,7 @@
 #include "error.ch"
 #include "hbmemvar.ch"
 #include "hbset.h"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 #if !defined(HB_MT_VM)
 #  define hb_dynsymGetMemvar(p)     (static_cast<PHB_ITEM>((p)->pMemvar))

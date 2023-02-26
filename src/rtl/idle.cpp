@@ -49,7 +49,7 @@
 #include "hbapiitm.hpp"
 #include "hbset.h"
 #include "hbvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbthread.h"
 #include "hbdate.h"
 #include "error.ch"

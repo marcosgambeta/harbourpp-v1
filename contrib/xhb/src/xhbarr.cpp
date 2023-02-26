@@ -45,7 +45,7 @@
  */
 
 #include "hbvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 

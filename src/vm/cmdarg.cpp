@@ -56,7 +56,7 @@
 #include "hbapicdp.hpp"
 #include "hbvm.hpp"
 #include "hbmemory.ch"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbverbld.h"
 
 /* Command-line argument management */

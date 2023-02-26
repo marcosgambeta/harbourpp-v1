@@ -52,7 +52,7 @@
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
 #include "hbxvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbthread.h"
 
 #include "hbiousr.ch"

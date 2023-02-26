@@ -134,7 +134,7 @@
 #include "hbapilng.hpp"
 #include "hbvm.hpp"
 #include "hbset.h"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbmath.h"
 #include "hbrddntx.hpp"
 #include "rddsys.ch"

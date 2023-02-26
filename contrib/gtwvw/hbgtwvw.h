@@ -90,7 +90,7 @@
 #include "inkey.ch"
 #include "error.ch"
 #include "hbvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbwinuni.hpp"
 
 #if 0

@@ -51,7 +51,7 @@
 #include "hbapiitm.hpp"
 #include "hbapicdp.hpp"
 #include "hbset.h"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbvm.hpp"
 
 static void hb_inkeySetTextKeys(const char * pszText, HB_SIZE nSize, HB_BOOL fInsert)

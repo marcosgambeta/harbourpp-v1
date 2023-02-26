@@ -49,7 +49,7 @@
 #include "hbapiitm.hpp"
 #include "hbapistr.hpp"
 #include "hbset.h"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 #include "hbdyn.ch"
 

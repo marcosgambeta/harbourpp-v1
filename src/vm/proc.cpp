@@ -53,7 +53,7 @@
 #include "hbapi.hpp"
 #include "hbapicls.hpp"
 #include "hbapiitm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbvm.hpp"
 
 HB_FUNC( HB_METHODNAME )

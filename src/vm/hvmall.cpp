@@ -76,7 +76,7 @@
 #include "hbvmopt.hpp"
 #include "hbfloat.h"
 
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 #if defined(_HB_STACK_MACROS_) && defined(_HB_STACK_LOCAL_MACROS_)
 #  if defined(HB_MT_VM)

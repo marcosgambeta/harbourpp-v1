@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 #include "hbvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 HB_FUNC( __XHELP )
 {

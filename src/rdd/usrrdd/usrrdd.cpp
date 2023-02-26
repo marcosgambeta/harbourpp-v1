@@ -51,7 +51,7 @@
 #include "hbapirdd.hpp"
 #include "hbvm.hpp"
 #include "hbxvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbinit.h"
 #include "rddsys.ch"
 #include "hbusrrdd.ch"

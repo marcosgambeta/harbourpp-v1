@@ -58,7 +58,7 @@
 #include "hbfloat.h"
 
 #include "hbvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbapicls.hpp"
 #include "hbapiitm.hpp"
 #include "hbapilng.hpp"

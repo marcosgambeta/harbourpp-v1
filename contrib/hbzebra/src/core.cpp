@@ -45,7 +45,7 @@
  */
 
 #include "hbzebra.h"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 /* --- Bit buffer --- */
 

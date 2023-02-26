@@ -47,7 +47,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 /*
  * check if array/string index is in valid range, update it if necessary

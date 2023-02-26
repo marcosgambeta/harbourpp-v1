@@ -69,7 +69,7 @@
 #include "hbapilng.hpp"
 #include "hbvm.hpp"
 #include "hbset.h"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbrddcdx.hpp"
 #include "hbmath.h"
 #include "rddsys.ch"

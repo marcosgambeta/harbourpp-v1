@@ -54,7 +54,7 @@
 #include "hbvm.hpp"
 #include "hbapiitm.hpp"
 #include "hbapigt.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 struct HB_SETKEY_
 {

@@ -57,7 +57,7 @@
 #include "hbapilng.hpp"
 #include "hbdate.h"
 #include "hbset.h"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 #include "rddsys.ch"
 

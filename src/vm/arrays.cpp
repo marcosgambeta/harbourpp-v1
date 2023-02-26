@@ -55,7 +55,7 @@
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
 #include "hbvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 static void hb_arrayReleaseItems(PHB_BASEARRAY pBaseArray)
 {

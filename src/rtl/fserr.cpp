@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hb_io.h"
 
 #if defined(HB_OS_WIN)

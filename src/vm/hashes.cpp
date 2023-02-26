@@ -55,7 +55,7 @@
 #include "hbapilng.hpp"
 #include "hbvm.hpp"
 #include "hbxvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 #define HB_HASH_ITEM_ALLOC    16
 

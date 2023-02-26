@@ -48,7 +48,7 @@
 #include "hbapi.hpp"
 #include "hbvm.hpp"
 #include "hbapigt.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "inkey.ch"
 
 HB_FUNC_EXTERN( QOUT );

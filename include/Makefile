@@ -83,6 +83,7 @@ C_HEADERS := \
    hbsetup.h \
    hbsocket.h \
    hbstack.h \
+   hbstack.hpp \
    hbsxfunc.h \
    hbtask.h \
    hbthread.h \

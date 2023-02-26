@@ -52,7 +52,7 @@
 #include "hbapicls.hpp"
 #include "hbapierr.hpp"
 #include "hbvm.hpp"
-#include "hbstack.h"
+#include "hbstack.hpp"
 #include "hbdate.h"
 
 #if defined( HB_OS_WIN )

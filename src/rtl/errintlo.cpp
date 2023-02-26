@@ -49,7 +49,7 @@
 #include "hbapilng.hpp"
 #include "hbdate.h"
 #include "hbset.h"
-#include "hbstack.h"
+#include "hbstack.hpp"
 
 /* NOTE: Use as minimal calls from here, as possible.
          Don't allocate memory from this function. [vszakats] */
