@@ -76,7 +76,7 @@
 #include "hbsocket.h"
 #include "hbznet.h"
 #include "hbzlib.ch"
-#include "hbinit.h"
+#include "hbinit.hpp"
 #include "hbvm.hpp"
 #include "hbstack.hpp"
 #include "hbthread.h"

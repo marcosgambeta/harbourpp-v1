@@ -54,7 +54,7 @@
 #include "hbapierr.hpp"
 #include "hbthread.h"
 #include "hbvm.hpp"
-#include "hbinit.h"
+#include "hbinit.hpp"
 
 #include "directry.ch"
 

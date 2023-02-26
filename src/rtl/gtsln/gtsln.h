@@ -51,7 +51,7 @@
 #define HB_GT_NAME  SLN
 
 #include "hbgtcore.h"
-#include "hbinit.h"
+#include "hbinit.hpp"
 #include "hbapifs.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"

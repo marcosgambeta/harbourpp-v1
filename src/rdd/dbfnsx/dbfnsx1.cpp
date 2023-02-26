@@ -56,7 +56,7 @@
 #include "hbrddnsx.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbinit.h"
+#include "hbinit.hpp"
 #include "hbapilng.hpp"
 #include "hbvm.hpp"
 #include "hbset.hpp"

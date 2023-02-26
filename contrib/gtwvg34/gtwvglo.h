@@ -78,7 +78,7 @@
 #include "hbapifs.hpp"
 #include "hbapiitm.hpp"
 #include "hbset.hpp"
-#include "hbinit.h"
+#include "hbinit.hpp"
 #include "inkey.ch"
 #include "error.ch"
 #include "hbvm.hpp"

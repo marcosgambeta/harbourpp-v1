@@ -129,7 +129,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
-#include "hbinit.h"
+#include "hbinit.hpp"
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
 #include "hbvm.hpp"

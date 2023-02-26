@@ -49,7 +49,7 @@
 #include "hbapicdp.hpp"
 #include "hbapilng.hpp"
 #include "hbapistr.hpp"
-#include "hbinit.h"
+#include "hbinit.hpp"
 
 /* enable workaround for wrong OLE variant structure definition */
 #if ( defined( __POCC__ ) && defined( HB_OS_WIN_CE ) ) || \

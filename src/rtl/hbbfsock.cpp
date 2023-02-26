@@ -51,7 +51,7 @@
 #include "hbapierr.hpp"
 #include "hbsocket.h"
 #include "hbbfish.h"
-#include "hbinit.h"
+#include "hbinit.hpp"
 
 #define HB_BFSOCK_READAHEAD   0x40
 #define HB_BFSOCK_WRBUFSIZE   4096

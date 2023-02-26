@@ -49,7 +49,7 @@
 #define HB_GT_NAME  STD
 
 #include "hbgtcore.h"
-#include "hbinit.h"
+#include "hbinit.hpp"
 #include "hbapifs.hpp"
 #include "hbapicdp.hpp"
 #include "hbapiitm.hpp"

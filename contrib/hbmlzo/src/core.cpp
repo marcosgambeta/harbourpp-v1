@@ -48,7 +48,7 @@
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
 #include "hbchksum.h"
-#include "hbinit.h"
+#include "hbinit.hpp"
 #include "hbvm.hpp"
 
 #include "minilzo.h"

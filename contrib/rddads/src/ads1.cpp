@@ -50,7 +50,7 @@
 #include "rddads.h"
 
 #include "hbvm.hpp"
-#include "hbinit.h"
+#include "hbinit.hpp"
 #include "hbapistr.hpp"
 #include "hbapierr.hpp"
 #include "hbdbferr.h"

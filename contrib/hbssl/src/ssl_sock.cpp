@@ -52,7 +52,7 @@
 #include "hbapiitm.hpp"
 #include "hbvm.hpp"
 #include "hbdate.hpp"
-#include "hbinit.h"
+#include "hbinit.hpp"
 
 typedef struct _HB_SSLSTREAM
 {

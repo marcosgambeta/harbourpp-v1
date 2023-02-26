@@ -52,7 +52,7 @@
 #include "hbvm.hpp"
 #include "hbxvm.hpp"
 #include "hbstack.hpp"
-#include "hbinit.h"
+#include "hbinit.hpp"
 #include "rddsys.ch"
 #include "hbusrrdd.ch"
 

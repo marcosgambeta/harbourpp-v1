@@ -52,7 +52,7 @@
 #include "hbznet.h"
 #include "hbbfish.h"
 #include "hbzlib.ch"
-#include "hbinit.h"
+#include "hbinit.hpp"
 
 #include <zlib.h>
 

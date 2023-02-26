@@ -50,7 +50,7 @@
 #define HB_GT_NAME  GUI
 
 #include "hbgtcore.h"
-#include "hbinit.h"
+#include "hbinit.hpp"
 #include "hbapiitm.hpp"
 
 #if defined(HB_OS_WIN)

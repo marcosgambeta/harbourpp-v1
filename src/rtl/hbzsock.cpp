@@ -50,7 +50,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbsocket.h"
-#include "hbinit.h"
+#include "hbinit.hpp"
 #include "hbzlib.ch"
 
 #include <zlib.h>

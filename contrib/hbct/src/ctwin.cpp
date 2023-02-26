@@ -51,7 +51,7 @@
 
 #include "hbgtcore.h"
 #include "hbstack.hpp"
-#include "hbinit.h"
+#include "hbinit.hpp"
 #include "hbapiitm.hpp"
 #include "hbapistr.hpp"
 

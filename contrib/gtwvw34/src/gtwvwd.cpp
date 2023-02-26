@@ -76,7 +76,7 @@
 
 #include "hbgtwvw.h"
 
-#include "hbinit.h"
+#include "hbinit.hpp"
 #include "hbapifs.hpp"
 #include "hbmath.h"
 #include "hbvm.hpp"
@@ -187,7 +187,7 @@ static void       s_RunControlBlock(PWVW_WIN wvw_win, int nClass, HWND hWnd, UIN
 static void       s_ReposControls(PWVW_WIN wvw_win, int nClass);
 
 #include "hbgtcore.h"
-#include "hbinit.h"
+#include "hbinit.hpp"
 #include "hbapiitm.hpp"
 
 static int s_GtId;

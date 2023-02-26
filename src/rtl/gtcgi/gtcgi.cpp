@@ -64,7 +64,7 @@
 #define HB_GT_CGI_RAWOUTPUT
 
 #include "hbgtcore.h"
-#include "hbinit.h"
+#include "hbinit.hpp"
 #include "hbapifs.hpp"
 #include "hbapicdp.hpp"
 #include "hbdate.hpp"

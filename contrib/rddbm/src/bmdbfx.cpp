@@ -56,7 +56,7 @@
 #include "hbdbferr.h"
 #include "hbvm.hpp"
 #include "hbset.hpp"
-#include "hbinit.h"
+#include "hbinit.hpp"
 #include "rddsys.ch"
 
 

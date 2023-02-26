@@ -49,7 +49,7 @@
 #include "hbapicdp.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbinit.h"
+#include "hbinit.hpp"
 
 #if defined(HB_HAS_PCRE)
    static int s_iUTF8Enabled;

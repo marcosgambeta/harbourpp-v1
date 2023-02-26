@@ -60,7 +60,7 @@
 #include "hbapistr.hpp"
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
-#include "hbinit.h"
+#include "hbinit.hpp"
 #include "hbset.hpp"
 #include "hbstack.hpp"
 #include "hbvm.hpp"

@@ -51,7 +51,7 @@
 #include "hbapifs.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
-#include "hbinit.h"
+#include "hbinit.hpp"
 
 #define FILE_PREFIX      "PIPE:"
 #define FILE_PREFIX_LEN  strlen(FILE_PREFIX)
