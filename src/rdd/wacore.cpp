@@ -51,7 +51,7 @@
 #include "hbapierr.hpp"
 #include "hbvm.hpp"
 #include "hbstack.hpp"
-#include "hbthread.h"
+#include "hbthread.hpp"
 
 #define HB_SET_WA(n)  \
    do \

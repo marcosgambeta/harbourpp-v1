@@ -67,7 +67,7 @@
 #include "hbmath.h"
 #include "hbdebug.ch"
 #if defined(HB_MT_VM)
-#  include "hbthread.h"
+#  include "hbthread.hpp"
 #endif /* HB_MT_VM */
 #include "hbmemory.ch"
 

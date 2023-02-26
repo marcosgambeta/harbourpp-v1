@@ -73,7 +73,7 @@
 
 #if defined(HB_MT_VM)
 
-#  include "hbthread.h"
+#  include "hbthread.hpp"
 
    static HB_CRITICAL_NEW(TSD_counter);
    static int s_iTSDCounter = 0;

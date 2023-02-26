@@ -100,7 +100,7 @@
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
 #include "hbvm.hpp"
-#include "hbthread.h"
+#include "hbthread.hpp"
 #include "hboo.ch"
 
 struct HB_CLSCAST
@@ -354,7 +354,7 @@ static HB_USHORT s_uiObjectClass    = 0;
  */
 #if defined(HB_MT_VM)
 
-#  include "hbthread.h"
+#  include "hbthread.hpp"
 
 #  define HB_CLASS_POOL_SIZE  16382
 #  define HB_CLASS_LOCK()     hb_threadEnterCriticalSection(&s_clsMtx)

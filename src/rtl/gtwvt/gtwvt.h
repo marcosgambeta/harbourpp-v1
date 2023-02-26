@@ -58,7 +58,7 @@
 #include "inkey.ch"
 #include "error.ch"
 #include "hbvm.hpp"
-#include "hbthread.h"
+#include "hbthread.hpp"
 #include "hbgfxdef.ch"
 #include "hbwinuni.hpp"
 

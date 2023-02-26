@@ -63,7 +63,7 @@
 #include "hbgfxdef.ch"
 #include "hbapicdp.hpp"
 #include "hbapistr.hpp"
-#include "hbthread.h"
+#include "hbthread.hpp"
 #include "hbdate.hpp"
 
 #include <unistd.h>

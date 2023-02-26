@@ -50,7 +50,7 @@
 #include "hbapirdd.hpp"
 #include "hbstack.hpp"
 #include "hbvm.hpp"
-#include "hbthread.h"
+#include "hbthread.hpp"
 
 #include "hbdebug.ch"
 #include "hbmacro.ch"

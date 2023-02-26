@@ -53,7 +53,7 @@
 #include "hbmath.h"
 #include "hbvm.hpp"
 #include "hbstack.hpp"
-#include "hbthread.h"
+#include "hbthread.hpp"
 #include "hbchksum.h"
 
 /*

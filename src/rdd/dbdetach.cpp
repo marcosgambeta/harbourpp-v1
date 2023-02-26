@@ -48,7 +48,7 @@
 #include "hbapirdd.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbthread.h"
+#include "hbthread.hpp"
 
 /*
  * hb_dbDetach( [<nWorkArea>|<cAlias>], [<xCargo>] ) --> <lSuccess>

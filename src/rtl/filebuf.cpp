@@ -56,7 +56,7 @@
 #include "hbapifs.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
-#include "hbthread.h"
+#include "hbthread.hpp"
 #include "hbvm.hpp"
 #include "directry.ch"
 

@@ -88,7 +88,7 @@
 #define _HB_THREAD_INTERNAL_
 
 #include "hbvmopt.hpp"
-#include "hbthread.h"
+#include "hbthread.hpp"
 #include "hbatomic.h"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"

@@ -83,7 +83,7 @@
 #endif
 
 #if defined(HB_MT_VM)
-#  include "hbthread.h"
+#  include "hbthread.hpp"
 #  include "hbatomic.h"
 #endif
 

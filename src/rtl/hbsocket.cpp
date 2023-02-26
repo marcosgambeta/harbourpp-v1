@@ -231,7 +231,7 @@
 #include "hbapiitm.hpp"
 #include "hbvm.hpp"
 #include "hbstack.hpp"
-#include "hbthread.h"
+#include "hbthread.hpp"
 #include "hbdate.hpp"
 
 /* TODO change error description to something more user friendly */

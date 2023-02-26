@@ -55,7 +55,7 @@
 #include "hbsocket.h"
 #include "hbapierr.hpp"
 #include "hbvm.hpp"
-#include "hbthread.h"
+#include "hbthread.hpp"
 #include "hbznet.h"
 
 struct HB_SOCKET_STRUCT

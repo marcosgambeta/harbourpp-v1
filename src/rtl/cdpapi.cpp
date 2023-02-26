@@ -48,7 +48,7 @@
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
 #include "hbapicdp.hpp"
-#include "hbthread.h"
+#include "hbthread.hpp"
 
 /* MT macros */
 #define HB_CDP_LOCK()    hb_threadEnterCriticalSection(&s_cdpMtx)

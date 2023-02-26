@@ -52,7 +52,7 @@
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
 #include "hbvm.hpp"
-#include "hbthread.h"
+#include "hbthread.hpp"
 #include "hbset.hpp"
 
 /*

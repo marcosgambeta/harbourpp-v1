@@ -45,7 +45,7 @@
 
 #include "arc4.h"
 #include "hbdate.hpp"
-#include "hbthread.h"
+#include "hbthread.hpp"
 
 /* XXX: Check and possibly extend this to other Unix-like platforms */
 #if (defined(HB_OS_BSD) && !defined(HB_OS_DARWIN)) || (defined(HB_OS_LINUX) && !defined(HB_OS_ANDROID))

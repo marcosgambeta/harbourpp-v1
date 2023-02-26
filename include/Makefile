@@ -93,6 +93,7 @@ C_HEADERS := \
    hbsxfunc.h \
    hbtask.h \
    hbthread.h \
+   hbthread.hpp \
    hbtrace.h \
    hbtypes.h \
    hbver.h \

@@ -52,7 +52,7 @@
 #include "hbapifs.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbthread.h"
+#include "hbthread.hpp"
 #include "hbvm.hpp"
 #include "hbinit.hpp"
 

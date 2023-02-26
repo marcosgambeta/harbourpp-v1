@@ -61,7 +61,7 @@
 #include "hbdate.hpp"
 #include "hbset.hpp"
 #include "hbvm.hpp"
-#include "hbthread.h"
+#include "hbthread.hpp"
 #include "hbstack.hpp"
 
 static const HB_WCHAR s_szSpaceW[] = { ' ', 0 };

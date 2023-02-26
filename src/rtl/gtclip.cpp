@@ -59,7 +59,7 @@
    #endif
 #endif
 
-#include "hbthread.h"
+#include "hbthread.hpp"
 
 static HB_CRITICAL_NEW(s_clipMtx);
 

@@ -48,7 +48,7 @@
 #include "hbapiitm.hpp"
 #include "hbvm.hpp"
 #include "hbstack.hpp"
-#include "hbthread.h"
+#include "hbthread.hpp"
 
 #if defined(HB_OS_WIN)
    #include <windows.h>

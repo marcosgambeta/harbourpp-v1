@@ -69,7 +69,7 @@ using PHB_SYM_HOLDER = HB_SYM_HOLDER *;
 
 #if defined(HB_MT_VM)
 
-#  include "hbthread.h"
+#  include "hbthread.hpp"
 
    static HB_CRITICAL_NEW(s_dynsMtx);
 #  define HB_DYNSYM_LOCK()      hb_threadEnterCriticalSection(&s_dynsMtx)

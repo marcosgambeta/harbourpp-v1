@@ -79,7 +79,7 @@
 #include "hbinit.hpp"
 #include "hbvm.hpp"
 #include "hbstack.hpp"
-#include "hbthread.h"
+#include "hbthread.hpp"
 #include "hbdate.hpp"
 #include "netio.h"
 #include "hbserial.ch"

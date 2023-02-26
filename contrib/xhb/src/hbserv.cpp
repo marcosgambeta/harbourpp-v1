@@ -51,7 +51,7 @@
 #include "hbvm.hpp"
 #include "hbstack.hpp"
 #include "hbserv.h"
-#include "hbthread.h"
+#include "hbthread.hpp"
 
 #include <stdio.h>
 
