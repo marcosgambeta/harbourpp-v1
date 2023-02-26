@@ -47,7 +47,7 @@
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
 #include "hbset.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
 #define READING_BLOCK  4096

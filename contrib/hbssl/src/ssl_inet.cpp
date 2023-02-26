@@ -48,7 +48,7 @@
 
 #include "hbssl.h"
 
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbdate.h"
 #include "hbznet.h"
 

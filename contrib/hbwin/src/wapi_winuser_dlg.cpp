@@ -47,7 +47,7 @@
 #include "hbwin.h"
 #include "hbwapi.h"
 #include "hbvm.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 #include <windowsx.h>
 

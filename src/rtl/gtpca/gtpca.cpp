@@ -56,7 +56,7 @@
 #include "hbinit.h"
 #include "hbapifs.hpp"
 #include "hbapicdp.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbdate.h"
 #include "hb_io.h"
 #include "inkey.ch"

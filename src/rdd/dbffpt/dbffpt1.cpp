@@ -56,7 +56,7 @@
 #endif
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapistr.h"
 #include "hbapierr.hpp"
 #include "hbapilng.h"

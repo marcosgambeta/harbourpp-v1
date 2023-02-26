@@ -37,7 +37,7 @@ SOFTWARE.
 #include <windows.h>
 #include <winnetwk.h>
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapicls.hpp"
 #include "hbwinuni.h"
 #include "winapi.h"

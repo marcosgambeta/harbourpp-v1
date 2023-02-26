@@ -69,7 +69,7 @@
 
 #include "hbgtcore.h"
 #include "hbinit.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbwinuni.h"
 #include "hbdate.h"

@@ -69,7 +69,7 @@
 
 #include "hbvmopt.h"
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapifs.hpp"
 #include "hbstack.h"
 #include "hbapierr.hpp"

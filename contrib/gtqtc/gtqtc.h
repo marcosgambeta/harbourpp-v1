@@ -85,7 +85,7 @@
 #include "hbgtcore.h"
 #include "hbapistr.h"
 #include "hbapierr.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbvm.h"
 #include "hbset.h"
 #include "inkey.ch"

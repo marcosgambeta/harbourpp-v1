@@ -52,7 +52,7 @@
 
 #include "hbgtcore.h"
 #include "hbinit.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapifs.hpp"
 #include "hbdate.h"

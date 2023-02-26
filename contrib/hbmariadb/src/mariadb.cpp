@@ -48,7 +48,7 @@
 
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapifs.hpp"
 
 /* NOTE: To satisfy MySQL headers. */

@@ -47,7 +47,7 @@
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
 #include "hbapifs.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbvm.h"
 
 #if defined(HB_OS_UNIX)

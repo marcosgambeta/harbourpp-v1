@@ -28,7 +28,7 @@
  */
 
 #include "hbapigt.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 HB_FUNC( FT_CAPLOCK )
 {

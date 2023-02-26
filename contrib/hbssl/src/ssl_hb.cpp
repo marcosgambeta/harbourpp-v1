@@ -46,7 +46,7 @@
 
 #include "hbssl.h"
 
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbvm.h"
 
 HB_FUNC( HB_SSL_READ_ALL )

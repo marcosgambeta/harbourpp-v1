@@ -71,7 +71,7 @@ RETURN
 #include <windows.h>
 #include <commctrl.h>
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapicls.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_NEW )

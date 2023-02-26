@@ -88,7 +88,7 @@
 
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 #include "directry.ch"
 

@@ -51,7 +51,7 @@
 /* hbfloat.h have to be included first */
 #include "hbfloat.h"
 #include "hbmather.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbvm.h"
 #include "hbstack.h"

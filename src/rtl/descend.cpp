@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 void hb_strDescend(char * szStringTo, const char * szStringFrom, HB_SIZE nLen)
 {

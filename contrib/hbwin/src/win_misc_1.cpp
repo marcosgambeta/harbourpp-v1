@@ -46,7 +46,7 @@
  */
 
 #include "hbwapi.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 #ifndef QS_ALLPOSTMESSAGE
 #define QS_ALLPOSTMESSAGE  0x0100

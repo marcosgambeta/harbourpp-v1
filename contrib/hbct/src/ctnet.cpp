@@ -78,7 +78,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbvm.h"
 #include "hbset.h"
 #include "hbapierr.hpp"

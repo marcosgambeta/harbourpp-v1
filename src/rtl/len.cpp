@@ -47,7 +47,7 @@
 
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapicdp.hpp"
 
 HB_FUNC( LEN )

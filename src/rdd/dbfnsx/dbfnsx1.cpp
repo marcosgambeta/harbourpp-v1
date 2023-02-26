@@ -54,7 +54,7 @@
 */
 
 #include "hbrddnsx.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbinit.h"
 #include "hbapilng.h"

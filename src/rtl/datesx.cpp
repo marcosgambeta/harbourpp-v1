@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 /* NOTE: This function is a non-CA-Cl*pper function implemented
          in the original CA-Cl*pper namespace. This should have

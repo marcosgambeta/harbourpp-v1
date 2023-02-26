@@ -98,7 +98,7 @@
 #include "hbapicls.hpp"
 #include "hbstack.h"
 #include "hbapierr.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbvm.h"
 #include "hbthread.h"
 #include "hboo.ch"

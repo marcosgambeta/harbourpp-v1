@@ -76,7 +76,7 @@
 #include "hbapicdp.hpp"
 #include "hbapierr.hpp"
 #include "hbapifs.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbset.h"
 #include "hbinit.h"
 #include "inkey.ch"

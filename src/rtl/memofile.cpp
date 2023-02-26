@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapifs.hpp"
 
 /* NOTE: CA-Cl*pper has ~64 KiB (65516 bytes exactly) limit on read, in Harbour

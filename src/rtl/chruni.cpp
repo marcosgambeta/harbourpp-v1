@@ -48,7 +48,7 @@
 
 #include "hbapi.hpp"
 #include "hbapicdp.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
 /* hb_UChar(<nCode>) --> <cText>

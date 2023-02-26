@@ -46,7 +46,7 @@
 
 #include "hbssl.h"
 
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 /* */
 

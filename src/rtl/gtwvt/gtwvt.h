@@ -54,7 +54,7 @@
 #include "hbinit.h"
 #include "hbapicdp.hpp"
 #include "hbapierr.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "inkey.ch"
 #include "error.ch"
 #include "hbvm.h"

@@ -47,7 +47,7 @@
 
 #include "hbapi.hpp"
 #include "hbapirdd.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbvm.h"
 #include "rddsys.ch"

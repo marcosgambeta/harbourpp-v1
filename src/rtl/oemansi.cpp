@@ -48,7 +48,7 @@
          passed parameter unchanged. */
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 #ifdef HB_LEGACY_LEVEL4
 

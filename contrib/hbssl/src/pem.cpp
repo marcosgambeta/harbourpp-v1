@@ -47,7 +47,7 @@
 #include "hbssl.h"
 
 #include "hbapifs.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbvm.h"
 
 typedef enum

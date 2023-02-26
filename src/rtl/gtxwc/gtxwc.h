@@ -57,7 +57,7 @@
 #include "hbinit.h"
 #include "hbset.h"
 #include "hbvm.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "inkey.ch"
 #include "hbgfxdef.ch"

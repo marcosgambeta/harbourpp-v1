@@ -54,7 +54,7 @@
 #include "hbinit.h"
 #include "hbapifs.hpp"
 #include "hbapierr.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "inkey.ch"
 #include "hbapicdp.hpp"
 #include "hbdate.h"

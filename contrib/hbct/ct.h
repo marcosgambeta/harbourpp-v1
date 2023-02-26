@@ -50,7 +50,7 @@
 #define _CT_H  1
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapicdp.hpp"
 #include "hbapierr.hpp"
 #include "error.ch"

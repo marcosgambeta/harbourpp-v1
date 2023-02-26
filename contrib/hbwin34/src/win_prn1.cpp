@@ -46,7 +46,7 @@
 
 #include "hbwapi.h"
 #include "hbapifs.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 #if defined( HB_OS_WIN_CE )
    #if defined( __POCC__ )

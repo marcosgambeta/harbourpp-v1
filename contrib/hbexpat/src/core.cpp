@@ -68,7 +68,7 @@
      XML_MICRO_VERSION >= mu ) ) ) )
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapistr.h"
 #include "hbapierr.hpp"
 #include "hbvm.h"

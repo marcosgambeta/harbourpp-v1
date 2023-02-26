@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 #include "hbapicdp.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 HB_FUNC( HB_STRSHRINK )
 {

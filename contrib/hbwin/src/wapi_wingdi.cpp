@@ -49,7 +49,7 @@
  */
 
 #include "hbwapi.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
 /* For Arc() */

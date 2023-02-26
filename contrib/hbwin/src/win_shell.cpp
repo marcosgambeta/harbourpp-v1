@@ -49,7 +49,7 @@
 #define _WIN32_IE  0x0500  /* request Windows 2000 features for NOTIFYICONDATA */
 
 #include "hbwapi.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 #if defined(__BORLANDC__)
 #  if !defined(NONAMELESSUNION)

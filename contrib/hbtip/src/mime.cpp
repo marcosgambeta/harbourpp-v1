@@ -50,7 +50,7 @@
    tip_MimeType()         -> hb_mimeStr() */
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapifs.hpp"
 

@@ -90,7 +90,7 @@
 #include "hbvmopt.h"
 #include "hbthread.h"
 #include "hbatomic.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapicdp.hpp"
 #include "hbapilng.h"

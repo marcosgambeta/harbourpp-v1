@@ -52,7 +52,7 @@
 #include "hbgtcore.h"
 #include "hbstack.h"
 #include "hbinit.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapistr.h"
 
 #include "ctwin.h"

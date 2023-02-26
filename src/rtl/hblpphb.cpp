@@ -116,7 +116,7 @@
    ENDIF
  */
 
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hblpp.h"
 

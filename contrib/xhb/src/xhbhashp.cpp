@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
 /* Dummy compatibility functions mimicking RTE behavior only.

@@ -53,7 +53,7 @@
 
 #include "hbrddsql.h"
 
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbvm.h"
 
 #include "ibase.h"

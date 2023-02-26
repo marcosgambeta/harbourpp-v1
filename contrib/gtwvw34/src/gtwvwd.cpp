@@ -188,7 +188,7 @@ static void       s_ReposControls(PWVW_WIN wvw_win, int nClass);
 
 #include "hbgtcore.h"
 #include "hbinit.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 static int s_GtId;
 static HB_GT_FUNCS SuperTable;

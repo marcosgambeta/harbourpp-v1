@@ -50,7 +50,7 @@
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
 #include "hbapierr.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbdate.h"
 
 HB_FUNC( FOPEN )

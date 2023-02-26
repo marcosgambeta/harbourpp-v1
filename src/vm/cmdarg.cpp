@@ -51,7 +51,7 @@
 #define INCL_DOSMODULEMGR
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapifs.hpp"
 #include "hbapicdp.hpp"
 #include "hbvm.h"

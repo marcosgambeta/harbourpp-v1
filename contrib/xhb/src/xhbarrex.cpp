@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 /* ASizeAlloc( <array>, <num> ) --> <array> - Set the pre-alloc step. */
 HB_FUNC( ASIZEALLOC )

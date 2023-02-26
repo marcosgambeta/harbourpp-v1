@@ -47,7 +47,7 @@
 
 #include "hbapi.hpp"
 #include "hbapigt.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 HB_FUNC( SETPOS )  /* Sets the screen position */
 {

@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbbfish.h"
 
 static const HB_BLOWFISH * hb_bf_keyparam(void)

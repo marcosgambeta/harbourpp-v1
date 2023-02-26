@@ -53,7 +53,7 @@
          https://www.cs.auckland.ac.nz/~jmor159/PLDS210/niemann/s_man.htm */
 
 #include "hbvmint.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbvm.h"
 
 static HB_BOOL hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nItem1, HB_SIZE nItem2)

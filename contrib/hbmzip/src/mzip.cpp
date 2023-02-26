@@ -51,7 +51,7 @@
 #endif
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapistr.h"
 #include "hbdate.h"

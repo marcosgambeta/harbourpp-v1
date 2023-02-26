@@ -57,7 +57,7 @@
 
 #include "hbssl.h"
 
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 static HB_GARBAGE_FUNC( SSL_CTX_release )
 {

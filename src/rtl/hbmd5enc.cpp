@@ -46,7 +46,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbchksum.h"
 
 static void hb_md5_init_seed(char * vect, const char * pszKey, int iLen)

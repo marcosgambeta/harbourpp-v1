@@ -45,7 +45,7 @@
  */
 
 #include "hbapigt.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
 HB_FUNC( HB_SETDISPCP )

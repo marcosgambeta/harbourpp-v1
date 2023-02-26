@@ -63,7 +63,7 @@
 
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbfast.h"
 
 /* adjustable, but this should be sufficient in normal situation */

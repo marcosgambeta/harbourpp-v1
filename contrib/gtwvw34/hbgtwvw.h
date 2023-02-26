@@ -78,7 +78,7 @@
 #include <commdlg.h>
 
 #include "hbapierr.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbgtcore.h"
 
 #ifndef GRADIENT_FILL_RECT_H

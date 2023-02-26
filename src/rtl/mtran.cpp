@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 /* NOTE: pszResult must have an allocated buffer of at least nStringLen */
 

@@ -47,7 +47,7 @@
 #include "hbwin.h"
 #include "hbwapi.h"
 #include "hbapifs.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include <winspool.h>
 
 HB_FUNC( WIN_CREATEDC )

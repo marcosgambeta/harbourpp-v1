@@ -47,7 +47,7 @@
 #include "hbpgsql.h"
 
 #include "hbapierr.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapirdd.h"
 #include "hbvm.h"
 #include "hbdate.h"

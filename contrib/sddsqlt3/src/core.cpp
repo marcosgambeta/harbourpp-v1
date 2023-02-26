@@ -46,7 +46,7 @@
 
 #include "hbrddsql.h"
 
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapistr.h"
 #include "hbapicdp.hpp"
 #include "hbdate.h"

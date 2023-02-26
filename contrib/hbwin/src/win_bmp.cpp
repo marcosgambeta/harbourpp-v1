@@ -49,7 +49,7 @@
 #include "hbwin.h"
 #include "hbwapi.h"
 #include "hbapifs.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 #ifndef QUERYESCSUPPORT
 #define QUERYESCSUPPORT  8

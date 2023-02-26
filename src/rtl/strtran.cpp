@@ -48,7 +48,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
 /* FIXME: Check for string overflow, Clipper can crash if the resulting

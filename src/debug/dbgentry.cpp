@@ -45,7 +45,7 @@
  */
 
 #include "hbapidbg.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapicls.hpp"
 #include "hbapirdd.h"
 #include "hbstack.h"

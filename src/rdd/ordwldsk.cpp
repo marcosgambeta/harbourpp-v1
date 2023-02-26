@@ -48,7 +48,7 @@
 #include "hbapi.hpp"
 #include "hbapirdd.h"
 #include "hbapierr.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 #ifndef HB_CLP_STRICT
 

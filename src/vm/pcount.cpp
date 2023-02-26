@@ -46,7 +46,7 @@
 
 #include "hbvmint.h"
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbstack.h"
 
 HB_FUNC( PCOUNT )

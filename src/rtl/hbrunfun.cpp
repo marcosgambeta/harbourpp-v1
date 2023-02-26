@@ -47,7 +47,7 @@
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
 #include "hbapigt.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapifs.hpp"
 
 #if defined(HB_OS_WIN)

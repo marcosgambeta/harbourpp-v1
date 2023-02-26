@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 #include "hbpp.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapifs.hpp"
 #include "hbapierr.hpp"
 #include "hbvm.h"

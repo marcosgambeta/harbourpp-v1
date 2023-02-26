@@ -45,7 +45,7 @@
  */
 
 #include "hbcairo.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
 HB_FUNC( CAIRO_CLIP )

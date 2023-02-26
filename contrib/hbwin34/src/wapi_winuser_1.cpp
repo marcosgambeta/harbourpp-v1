@@ -47,7 +47,7 @@
 
 #include "hbwapi.h"
 #include "hbapierr.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 #if defined( __MINGW32CE__ )
 /* MINGW32CE gets this wrong in its headers,

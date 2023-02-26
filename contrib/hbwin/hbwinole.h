@@ -48,7 +48,7 @@
 #define __HBWINOLE_H
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapicls.hpp"
 #include "hbapierr.hpp"
 #include "hbvm.h"

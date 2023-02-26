@@ -45,7 +45,7 @@
  */
 
 #include "hbwapi.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 #if defined( HB_OS_WIN_CE ) && ! defined( __MINGW32__ )
 #  include <simmgr.h>

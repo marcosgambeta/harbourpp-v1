@@ -46,7 +46,7 @@
 
 #include "hbwapi.h"
 #include "hbapierr.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 static HB_GARBAGE_FUNC( s_gc_HDC_release )
 {

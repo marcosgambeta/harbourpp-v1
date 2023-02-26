@@ -8,7 +8,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapistr.h"
 #include "hbapicls.hpp" /* for hb_objSetClass() */
 #include "hbstack.h"

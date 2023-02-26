@@ -52,7 +52,7 @@
 #include "hbvmint.h"
 #include "hbapi.hpp"
 #include "hbapicls.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbstack.h"
 #include "hbvm.h"
 

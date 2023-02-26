@@ -46,7 +46,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapirdd.h"
 
 HB_FUNC_TRANSLATE( FIELDSIZE, FIELDLEN )

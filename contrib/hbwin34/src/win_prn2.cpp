@@ -47,7 +47,7 @@
 
 #include "hbwapi.h"
 #include "hbapifs.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 
 #include "hbwin.ch"
 

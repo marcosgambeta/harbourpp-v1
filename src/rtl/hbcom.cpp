@@ -98,7 +98,7 @@
 #endif
 
 #include "hbapifs.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapicom.hpp"
 #include "hbvm.h"
 #include "hbinit.h"

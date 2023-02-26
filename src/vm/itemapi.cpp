@@ -60,7 +60,7 @@
 #include "hbvm.h"
 #include "hbstack.h"
 #include "hbapicls.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapilng.h"
 #include "hbapierr.hpp"
 #include "hbdate.h"

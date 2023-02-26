@@ -55,7 +55,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapilng.h"
 #include "hbdate.h"
 #include "hbset.h"

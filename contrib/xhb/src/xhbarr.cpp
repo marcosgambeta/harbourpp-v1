@@ -46,7 +46,7 @@
 
 #include "hbvm.h"
 #include "hbstack.h"
-#include "hbapiitm.h"
+#include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
 /* ASplice( <aArray> [, <nPos>] [, <nCount>] [, <xVal1>] [, ...] [, <xValN>] ) --> <aDeleted>
