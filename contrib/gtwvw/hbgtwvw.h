@@ -73,7 +73,7 @@
 
 /* NOTE: User programs should never call this layer directly! */
 
-/* This definition has to be placed before #include "hbapigt.h" */
+/* This definition has to be placed before #include "hbapigt.hpp" */
 
 #define HB_GT_NAME            WVW
 
@@ -84,7 +84,7 @@
 #include "hbset.h"
 #include "hbgtcore.h"
 #include "hbinit.h"
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.h"
 #include "inkey.ch"

@@ -20,7 +20,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 
 HB_FUNC( FT_SAVEATT )
 {

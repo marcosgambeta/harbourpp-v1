@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 #include "hbapistr.h"
 #include "hbdate.h"
 

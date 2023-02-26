@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 
 int hb_conSetCursor(HB_BOOL bSetCursor, int iNewCursor)
 {

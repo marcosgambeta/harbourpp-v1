@@ -21,7 +21,7 @@
 
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 #include "hbapierr.hpp"
 
 #define _STABILIZE_UP    1

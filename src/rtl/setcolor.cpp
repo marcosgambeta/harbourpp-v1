@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 #include "hbset.h"
 
 const char * hb_conSetColor(const char * szColor)

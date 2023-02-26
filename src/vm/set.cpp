@@ -52,7 +52,7 @@
 #include "hbapiitm.h"
 #include "hbapierr.hpp"
 #include "hbapifs.hpp"
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 #include "hbapilng.h"
 #include "hbapicdp.hpp"
 #include "hbapistr.h"

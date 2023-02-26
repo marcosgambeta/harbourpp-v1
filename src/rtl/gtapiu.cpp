@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 
 void hb_gtWCreate(HB_GT_RECT * rect, HB_GT_WND ** wnd)
 {

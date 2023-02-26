@@ -48,9 +48,9 @@
 
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 #include "hbapiitm.h"
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 #include "hbapicls.hpp"
 #include "hbapierr.hpp"
 #include "hbstack.h"

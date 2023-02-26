@@ -47,7 +47,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 #include "hbchksum.h"
 
 /* com_DosCon( <cString>, [<nLine>], [<nColumn>] ) --> <cNull>

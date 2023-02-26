@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 
 /* NOTE: This is a hack to emulate the overloaded MaxRow()/MaxCol()
          functions provided by CT3 library for CA-Cl*pper.

@@ -47,7 +47,7 @@
 
 #include "hbapi.hpp"
 #include "hbvm.h"
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 #include "hbstack.h"
 #include "inkey.ch"
 

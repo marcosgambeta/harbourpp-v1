@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 #include "hbstack.h"
 
 /* NOTE: In original CA-Cl*pper 5.x these functions are written in Clipper

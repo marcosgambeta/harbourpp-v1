@@ -54,7 +54,7 @@
 #include "hbapicls.hpp"
 #include "hbapiitm.h"
 #include "hbapierr.hpp"
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 #include "hbvm.h"
 #include "error.ch"
 

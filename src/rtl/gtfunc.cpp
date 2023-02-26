@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 #include "hbapiitm.h"
 #include "hbapierr.hpp"
 

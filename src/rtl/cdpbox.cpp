@@ -49,7 +49,7 @@
 #include "hbapiitm.h"
 #include "hbapierr.hpp"
 #include "hbapicdp.hpp"
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 
 HB_FUNC( HB_UTF8TOSTRBOX )
 {

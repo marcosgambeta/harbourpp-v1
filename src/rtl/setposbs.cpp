@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapigt.h"
+#include "hbapigt.hpp"
 
 /* NOTE: Cannot be disabled with the HB_CLP_UNDOC macro, because this symbol
          is referenced by the VM [vszakats] */

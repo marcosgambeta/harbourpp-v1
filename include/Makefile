@@ -28,6 +28,7 @@ C_HEADERS := \
    hbapifs.h \
    hbapifs.hpp \
    hbapigt.h \
+   hbapigt.hpp \
    hbapiitm.h \
    hbapilng.h \
    hbapirdd.h \
