@@ -49,7 +49,7 @@
 
 #include "hbgtwvw.h"
 
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 
 /*
 removed from GTWVT, so we remove it from here also. I really don't like doing it... 

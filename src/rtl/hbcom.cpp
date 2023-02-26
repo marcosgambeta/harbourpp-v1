@@ -97,7 +97,7 @@
 #  include "hbwinuni.h"
 #endif
 
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbapiitm.h"
 #include "hbapicom.hpp"
 #include "hbvm.h"

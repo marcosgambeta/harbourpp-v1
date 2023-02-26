@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 
 /* TODO: Xbase++ has an extension where the second parameter can specify
          the required attribute. */

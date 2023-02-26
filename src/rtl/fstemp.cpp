@@ -55,7 +55,7 @@
 
 #include "hbapi.hpp"
 #include "hbapicdp.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbvm.h"
 #include "hbmath.h"
 #include "hbset.h"

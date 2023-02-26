@@ -48,7 +48,7 @@
 #define _HB_FILE_IMPLEMENTATION_
 
 #include "hbapi.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.h"
 #include "hbinit.h"

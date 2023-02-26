@@ -51,7 +51,7 @@
 #include "hbapierr.hpp"
 #include "hbapilng.h"
 #include "hbapicls.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbvm.h"
 #include "hbstack.h"
 

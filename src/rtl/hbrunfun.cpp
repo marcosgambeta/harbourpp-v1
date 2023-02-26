@@ -48,7 +48,7 @@
 #include "hbapierr.hpp"
 #include "hbapigt.h"
 #include "hbapiitm.h"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 
 #if defined(HB_OS_WIN)
    #include "hbwinuni.h"

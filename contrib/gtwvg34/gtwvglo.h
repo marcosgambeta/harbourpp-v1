@@ -75,7 +75,7 @@
 #include "hbgtcore.h"
 #include "hbapicdp.hpp"
 #include "hbapierr.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbapiitm.h"
 #include "hbset.h"
 #include "hbinit.h"

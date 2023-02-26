@@ -48,7 +48,7 @@
 #define __HBHPDF_H
 
 #include "hbapi.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbapiitm.h"
 
 #include "hpdf.h"

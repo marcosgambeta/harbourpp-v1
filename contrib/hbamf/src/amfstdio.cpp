@@ -48,7 +48,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapigt.h"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 
 #define SINGLEBUF  32768
 #define MAXLEN     (16 * 1024 * 1024)

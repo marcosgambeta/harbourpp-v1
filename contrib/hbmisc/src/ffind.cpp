@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 
 static HB_GARBAGE_FUNC( PHB_FFIND_release )
 {

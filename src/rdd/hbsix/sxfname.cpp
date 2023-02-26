@@ -46,7 +46,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbset.h"
 
 HB_FUNC( SX_FNAMEPARSER )

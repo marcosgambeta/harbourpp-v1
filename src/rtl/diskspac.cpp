@@ -50,7 +50,7 @@
 
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 
 #if defined(HB_OS_UNIX)
 #  include <unistd.h>

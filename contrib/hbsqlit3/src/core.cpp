@@ -50,7 +50,7 @@
 #include "hbvm.h"
 #include "hbapiitm.h"
 #include "hbapierr.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbapistr.h"
 #include "hbstack.h"
 

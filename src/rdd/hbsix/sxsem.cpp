@@ -49,7 +49,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbapirdd.h"
 
 static HB_BOOL hb_sxSemName(char * szFileName)

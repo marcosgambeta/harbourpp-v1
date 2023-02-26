@@ -52,7 +52,7 @@
 
 #include "hbgtcore.h"
 #include "hbinit.h"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.h"
 #include "inkey.ch"

@@ -47,7 +47,7 @@
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.h"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 
 #if defined(HB_OS_UNIX)
    #include <sys/stat.h>

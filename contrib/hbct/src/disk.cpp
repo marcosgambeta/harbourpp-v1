@@ -49,7 +49,7 @@
 
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbvm.h"
 #include "ctstrfil.h"
 #include "hbwinuni.h"

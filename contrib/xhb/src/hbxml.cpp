@@ -64,7 +64,7 @@
 #include "hbapierr.hpp"
 #include "hbapiitm.h"
 #include "hbapicls.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 
 #include "hbvm.h"
 

@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 
 #if defined(HB_COMPAT_C53) && defined(HB_CLP_UNDOC)
 

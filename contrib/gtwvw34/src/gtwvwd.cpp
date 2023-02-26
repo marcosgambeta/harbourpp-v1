@@ -77,7 +77,7 @@
 #include "hbgtwvw.h"
 
 #include "hbinit.h"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbmath.h"
 #include "hbvm.h"
 

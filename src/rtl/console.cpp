@@ -54,7 +54,7 @@
 #include "hbapi.hpp"
 #include "hbapicdp.hpp"
 #include "hbapiitm.h"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbapierr.hpp"
 #include "hbapigt.h"
 #include "hbstack.h"

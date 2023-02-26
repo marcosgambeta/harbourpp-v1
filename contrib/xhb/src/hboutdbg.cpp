@@ -52,7 +52,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.h"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 
 #include "xhb.h"
 

@@ -26,6 +26,7 @@ C_HEADERS := \
    hbapierr.h \
    hbapierr.hpp \
    hbapifs.h \
+   hbapifs.hpp \
    hbapigt.h \
    hbapiitm.h \
    hbapilng.h \

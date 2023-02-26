@@ -67,7 +67,7 @@
 #include "hbapicdp.hpp"
 #include "hbapistr.h"
 #include "hbapiitm.h"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbdate.h"
 #include "inkey.ch"
 

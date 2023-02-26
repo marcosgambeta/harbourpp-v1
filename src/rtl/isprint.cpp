@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 
 HB_BOOL hb_printerIsReady(const char * pszPrinterName)
 {

@@ -20,7 +20,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbapigt.h"
 #include "hbapierr.hpp"
 

@@ -45,7 +45,7 @@
  */
 
 #include "hbwapi.h"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbapiitm.h"
 
 #if defined( HB_OS_WIN_CE )

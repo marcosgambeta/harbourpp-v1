@@ -49,7 +49,7 @@
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.h"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 
 /* NOTE: To satisfy MySQL headers. */
 #if defined(HB_OS_WIN)

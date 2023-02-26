@@ -47,7 +47,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapierr.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 
 /* NOTE: Do some initialization required by the GD headers. */
 #if defined(HB_OS_WIN)

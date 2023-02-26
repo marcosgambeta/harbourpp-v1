@@ -74,7 +74,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbchksum.h"
 
 /* MD5 buffer */

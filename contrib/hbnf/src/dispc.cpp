@@ -50,7 +50,7 @@
           and translating it to unicode for the GT */
 
 #include "hbapi.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbapigt.h"
 #include "hbstack.h"
 

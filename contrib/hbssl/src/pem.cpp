@@ -46,7 +46,7 @@
 
 #include "hbssl.h"
 
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbapiitm.h"
 #include "hbvm.h"
 

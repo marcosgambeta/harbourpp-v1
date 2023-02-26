@@ -51,7 +51,7 @@
 #include <string.h>
 
 #include "hbapi.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hb_io.h"
 #include "hbtrace.h"
 

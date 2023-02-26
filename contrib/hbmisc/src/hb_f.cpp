@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbstack.h"
 
 #define _B_SIZE         4096

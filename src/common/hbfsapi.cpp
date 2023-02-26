@@ -49,7 +49,7 @@
 #endif
 
 #include "hbapi.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hb_io.h"
 #include "hbset.h"
 #include "hbdate.h"

@@ -49,7 +49,7 @@
 #include "hbapirdd.h"
 #include "hbapierr.hpp"
 #include "hbapicdp.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbset.h"
 #include "hbvm.h"
 

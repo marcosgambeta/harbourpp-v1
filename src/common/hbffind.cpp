@@ -53,7 +53,7 @@
 #define _HB_FFIND_INTERNAL_
 
 #include "hbapi.hpp"
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "hbvm.h"
 #include "hbdate.h"
 #include "hb_io.h"

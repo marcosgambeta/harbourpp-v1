@@ -51,7 +51,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.h"
 #include "hbapierr.hpp"
-#include "hbapifs.h" /* for __mvSave()/__mvRestore() */
+#include "hbapifs.hpp" /* for __mvSave()/__mvRestore() */
 #include "hbdate.h"  /* for __mvSave()/__mvRestore() */
 #include "hbcomp.h"  /* for HB_VSCOMP_* macros */
 #include "error.ch"
