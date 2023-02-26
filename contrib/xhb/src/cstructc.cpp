@@ -52,7 +52,7 @@
 #include "hbapicls.hpp"
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbctypes.ch"
 
 static PHB_ITEM hb_itemPutCRaw(PHB_ITEM pItem, const char * szText, HB_SIZE nLen)

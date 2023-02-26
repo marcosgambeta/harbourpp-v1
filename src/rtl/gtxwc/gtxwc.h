@@ -55,7 +55,7 @@
 #include "hbapi.hpp"
 #include "hbgtcore.h"
 #include "hbinit.h"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbvm.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"

@@ -50,7 +50,7 @@
 #include "hbgtcore.h"
 #include "hbapiitm.hpp"
 #include "hbapicdp.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbstack.hpp"
 #include "hbvm.hpp"
 

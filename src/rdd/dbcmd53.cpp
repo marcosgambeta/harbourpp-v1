@@ -51,7 +51,7 @@
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
 #include "hbvm.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 
 #ifdef HB_COMPAT_C53
 

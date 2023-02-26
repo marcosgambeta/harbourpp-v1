@@ -87,7 +87,7 @@
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
 #include "hbvm.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "inkey.ch"
 #include "hbgfxdef.ch"
 

@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 
 HB_FUNC( __DEFPATH )
 {

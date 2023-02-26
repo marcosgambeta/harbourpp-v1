@@ -71,7 +71,7 @@
 #include <commdlg.h>
 #include <shellapi.h>
 
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbgtcore.h"
 #include "hbinit.h"
 #include "hbapicdp.hpp"

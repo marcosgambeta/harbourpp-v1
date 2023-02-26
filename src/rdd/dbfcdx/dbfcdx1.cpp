@@ -68,7 +68,7 @@
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
 #include "hbvm.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbstack.hpp"
 #include "hbrddcdx.hpp"
 #include "hbmath.h"

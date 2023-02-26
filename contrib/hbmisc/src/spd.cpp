@@ -48,7 +48,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbdate.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 
 static void STAItm(PHB_ITEM pItmPar)
 {

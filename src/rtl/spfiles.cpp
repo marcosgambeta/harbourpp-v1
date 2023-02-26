@@ -45,7 +45,7 @@
  */
 
 #include "hbapifs.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 
 HB_BOOL hb_spFile(const char * pszFileName, char * pszRetPath)
 {

@@ -51,7 +51,7 @@
 #include "hbapierr.hpp"
 #include "hbvm.hpp"
 #include "rddsys.ch"
-#include "hbset.h"
+#include "hbset.hpp"
 
 /*
  * check if a given name can be used as alias expression

@@ -49,7 +49,7 @@
 #include "hbvmopt.hpp"
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbdate.hpp"
 #include "hbstack.hpp"
 

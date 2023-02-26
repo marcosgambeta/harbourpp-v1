@@ -48,7 +48,7 @@
 #include "hbapiitm.hpp"
 #include "hbapirdd.hpp"
 #include "hbapierr.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 
 static AREAP s_foxAreaPointer(int iParam)
 {

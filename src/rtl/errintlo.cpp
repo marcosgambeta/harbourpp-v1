@@ -48,7 +48,7 @@
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
 #include "hbdate.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbstack.hpp"
 
 /* NOTE: Use as minimal calls from here, as possible.

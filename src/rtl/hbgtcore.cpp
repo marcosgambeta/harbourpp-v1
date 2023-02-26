@@ -59,7 +59,7 @@
 #include "hbapierr.hpp"
 #include "hbapicdp.hpp"
 #include "hbdate.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbvm.hpp"
 #include "hbthread.h"
 #include "hbstack.hpp"

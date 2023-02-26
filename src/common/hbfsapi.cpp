@@ -51,7 +51,7 @@
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
 #include "hb_io.h"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbdate.hpp"
 
 #if defined(HB_OS_WIN)

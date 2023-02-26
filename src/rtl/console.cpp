@@ -58,7 +58,7 @@
 #include "hbapierr.hpp"
 #include "hbapigt.hpp"
 #include "hbstack.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hb_io.h"
 
 #if defined(HB_OS_WIN)

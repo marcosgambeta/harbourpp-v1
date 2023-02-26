@@ -75,7 +75,7 @@
 #include "hbapierr.hpp"
 #include "hbmemory.ch"
 #include "hbdate.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbvm.hpp"
 
 #if defined(HB_OS_WIN)

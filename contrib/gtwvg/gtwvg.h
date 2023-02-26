@@ -61,7 +61,7 @@
    #define WINVER 0x0500
 #endif /* WINVER */
 
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbgtcore.h"
 #include "hbinit.h"
 #include "hbapicdp.hpp"

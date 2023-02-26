@@ -50,7 +50,7 @@
 #include "hbapierr.hpp"
 #include "hbapicdp.hpp"
 #include "hbapifs.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbvm.hpp"
 
 /* Escaping delimited strings. Need to be cleaned/optimized/improved */

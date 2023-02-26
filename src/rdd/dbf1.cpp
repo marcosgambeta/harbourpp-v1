@@ -51,7 +51,7 @@
 #include "hbapistr.hpp"
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbdate.hpp"
 #include "hbsxfunc.h"
 #include "hbstack.hpp"

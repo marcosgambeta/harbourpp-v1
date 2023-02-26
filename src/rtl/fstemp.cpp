@@ -58,7 +58,7 @@
 #include "hbapifs.hpp"
 #include "hbvm.hpp"
 #include "hbmath.h"
-#include "hbset.h"
+#include "hbset.hpp"
 
 #if defined(HB_OS_UNIX)
    #include <stdlib.h>

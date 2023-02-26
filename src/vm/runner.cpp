@@ -54,7 +54,7 @@
 #include "hbapifs.hpp"
 #include "hbvm.hpp"
 #include "hbpcode.h"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hb_io.h"
 #include "hbhrb.ch"
 

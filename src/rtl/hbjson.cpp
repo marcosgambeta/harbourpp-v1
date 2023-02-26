@@ -47,7 +47,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapistr.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbjson.h"
 
 /*

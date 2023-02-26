@@ -48,7 +48,7 @@
 #include "hbapifs.hpp"
 #include "hbapicdp.hpp"
 #include "hbapierr.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbvm.hpp"
 #include "hbcomp.h"
 #include "hbmemory.ch"

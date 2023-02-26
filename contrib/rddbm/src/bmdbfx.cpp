@@ -55,7 +55,7 @@
 #include "hbapierr.hpp"
 #include "hbdbferr.h"
 #include "hbvm.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbinit.h"
 #include "rddsys.ch"
 

@@ -47,7 +47,7 @@
 
 #include "hbapi.hpp"
 #include "hbdate.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 
 char * hb_dateFormat(const char * szDate, char * szFormattedDate, const char * szDateFormat)
 {

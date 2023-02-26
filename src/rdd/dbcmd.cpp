@@ -51,7 +51,7 @@
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
 #include "hbvm.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 
 /* The 5th parameter is Harbour extension */
 HB_FUNC( AFIELDS )

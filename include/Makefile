@@ -83,6 +83,7 @@ C_HEADERS := \
    hbrddnsx.hpp \
    hbregex.h \
    hbset.h \
+   hbset.hpp \
    hbsetup.h \
    hbsocket.h \
    hbstack.h \

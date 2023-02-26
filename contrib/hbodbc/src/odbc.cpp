@@ -56,7 +56,7 @@
 #include "hbapierr.hpp"
 #include "hbapistr.hpp"
 #include "hbdate.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 
 /* NOTE: This code using pointer items is a little bit more complicated
          then it has to be.

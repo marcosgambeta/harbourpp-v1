@@ -80,7 +80,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbvm.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbapierr.hpp"
 #include "hbwinuni.hpp"
 

@@ -56,7 +56,7 @@
 #include "hbcomp.h"  /* for HB_VSCOMP_* macros */
 #include "error.ch"
 #include "hbmemvar.ch"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbstack.hpp"
 
 #if !defined(HB_MT_VM)

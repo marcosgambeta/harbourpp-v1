@@ -32,7 +32,7 @@
 #endif
 
 #include "hbcomp.h"
-#include "hbset.h"
+#include "hbset.hpp"
 
 static int hb_compCompile(HB_COMP_DECL, const char * szPrg, const char * szBuffer, int iStartLine);
 static HB_BOOL hb_compRegisterFunc(HB_COMP_DECL, PHB_HFUNC pFunc, HB_BOOL fError);

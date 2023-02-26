@@ -55,7 +55,7 @@
 #include "hbapierr.hpp"
 #include "hbapistr.hpp"
 #include "hbdate.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 
 #if !defined(HB_OS_UNIX)
 #  undef _LARGEFILE64_SOURCE

@@ -50,7 +50,7 @@
 #include "hbapiitm.hpp"
 #include "hbdate.hpp"
 #include "hbapistr.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbvm.hpp"
 
 #include "hbrddsql.h"

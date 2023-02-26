@@ -50,7 +50,7 @@
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbdate.hpp"
 
 HB_FUNC( CTOD )

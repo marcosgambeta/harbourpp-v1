@@ -62,7 +62,7 @@
 #include "hbvm.hpp"
 #include "hbxvm.hpp"
 #include "hbpcode.h"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbdate.hpp"
 #include "hbmath.h"
 #include "hbdebug.ch"

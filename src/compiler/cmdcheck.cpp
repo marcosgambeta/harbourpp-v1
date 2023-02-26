@@ -45,7 +45,7 @@
  */
 
 #include "hbcomp.h"
-#include "hbset.h"
+#include "hbset.hpp"
 #include <string>
 
 static char s_szUndefineMarker[1] = "";

@@ -48,7 +48,7 @@
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
 #include "hbapistr.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbstack.hpp"
 
 #include "hbdyn.ch"

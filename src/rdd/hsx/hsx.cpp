@@ -219,7 +219,7 @@
 #include "hbapierr.hpp"
 #include "hbvm.hpp"
 #include "hbthread.h"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbapicdp.hpp"
 
 /* error codes */

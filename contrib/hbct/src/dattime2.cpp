@@ -58,7 +58,7 @@
 #include "hbapiitm.hpp"
 #include "hbapilng.hpp"
 #include "hbdate.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 
 static HB_BOOL ct_isleap( int iYear )
 {

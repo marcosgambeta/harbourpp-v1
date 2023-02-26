@@ -64,7 +64,7 @@
 #include "hbapilng.hpp"
 #include "hbapierr.hpp"
 #include "hbdate.hpp"
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbapicdp.hpp"
 
 PHB_ITEM hb_itemNew(PHB_ITEM pNull)

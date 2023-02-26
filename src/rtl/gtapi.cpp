@@ -56,7 +56,7 @@
  */
 
 #include "hbgtcore.h"
-#include "hbset.h"
+#include "hbset.hpp"
 
 /* gt API functions */
 

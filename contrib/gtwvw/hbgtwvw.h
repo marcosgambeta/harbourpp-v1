@@ -81,7 +81,7 @@
    #define CINTERFACE         1
 #endif
 
-#include "hbset.h"
+#include "hbset.hpp"
 #include "hbgtcore.h"
 #include "hbinit.h"
 #include "hbapigt.hpp"

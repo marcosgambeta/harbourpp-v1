@@ -53,7 +53,7 @@
 #include "hbapilng.hpp"
 #include "hbvm.hpp"
 #include "hbthread.h"
-#include "hbset.h"
+#include "hbset.hpp"
 
 /*
  * -- BASIC RDD METHODS --

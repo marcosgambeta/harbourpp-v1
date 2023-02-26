@@ -81,7 +81,7 @@
 #include "hbapicdp.hpp"
 #include "hbdate.hpp"
 #include "hb_io.h"
-#include "hbset.h"
+#include "hbset.hpp"
 
 #if defined(HB_OS_UNIX)
    #include <unistd.h>
