@@ -82,7 +82,7 @@
 #include "hbvm.h"
 #include "hbset.h"
 #include "hbapierr.hpp"
-#include "hbwinuni.h"
+#include "hbwinuni.hpp"
 
 #if defined(HB_OS_WIN)
    #include <windows.h>

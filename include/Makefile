@@ -95,6 +95,7 @@ C_HEADERS := \
    hbvmpub.h \
    hbxvm.h \
    hbwinuni.h \
+   hbwinuni.hpp \
    hbzlib.h \
    hbznet.h \
    hb_io.h \

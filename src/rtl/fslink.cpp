@@ -53,7 +53,7 @@
    #if !defined(INVALID_FILE_ATTRIBUTES)
       #define INVALID_FILE_ATTRIBUTES  ( static_cast<DWORD>(-1) )
    #endif
-   #include "hbwinuni.h"
+   #include "hbwinuni.hpp"
 #elif defined(HB_OS_UNIX)
    #include <unistd.h>
 #endif

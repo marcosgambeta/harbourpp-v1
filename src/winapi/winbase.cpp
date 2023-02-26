@@ -40,7 +40,7 @@ SOFTWARE.
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
-#include "hbwinuni.h"
+#include "hbwinuni.hpp"
 #include "winapi.h"
 
 /*

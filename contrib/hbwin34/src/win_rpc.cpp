@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbwinuni.h"
+#include "hbwinuni.hpp"
 
 #include "hbwin.ch"
 

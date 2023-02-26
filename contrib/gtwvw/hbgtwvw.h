@@ -91,7 +91,7 @@
 #include "error.ch"
 #include "hbvm.h"
 #include "hbstack.h"
-#include "hbwinuni.h"
+#include "hbwinuni.hpp"
 
 #if 0
 #include "hbole.h"

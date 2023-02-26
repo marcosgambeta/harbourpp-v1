@@ -84,7 +84,7 @@
 #include "hbvm.h"
 #include "hbthread.h"
 #include "hbgfxdef.ch"
-#include "hbwinuni.h"
+#include "hbwinuni.hpp"
 
 #include "hbgtwvg.ch"
 

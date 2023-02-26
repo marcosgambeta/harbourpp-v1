@@ -60,7 +60,7 @@
 #  include <sys/time.h>
 #elif defined(HB_OS_WIN)
 #  include <windows.h>
-#  include "hbwinuni.h"
+#  include "hbwinuni.hpp"
 #else
 #  include <sys/timeb.h>
 #  if defined(_MSC_VER)

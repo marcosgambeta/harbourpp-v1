@@ -141,7 +141,7 @@
 
 #if defined(HB_OS_WIN)
    #include <windows.h>
-   #include "hbwinuni.h"
+   #include "hbwinuni.hpp"
    #if !defined(INVALID_SET_FILE_POINTER) && (defined(_MSC_VER))
       #define INVALID_SET_FILE_POINTER ( static_cast<DWORD>(-1) )
    #endif

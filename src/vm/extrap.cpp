@@ -62,7 +62,7 @@
 #elif defined(HB_OS_WIN)
 #  include <windows.h>
 #  include <tlhelp32.h>
-#  include "hbwinuni.h"
+#  include "hbwinuni.hpp"
    /* BCC and MinGW doesn't seem to #define this */
 #  ifndef TH32CS_SNAPMODULE32
 #     define TH32CS_SNAPMODULE32  0

@@ -58,7 +58,7 @@
 
 #if defined(HB_OS_WIN)
    #include <windows.h>
-   #include "hbwinuni.h"
+   #include "hbwinuni.hpp"
 #endif
 
 #if defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS)

@@ -71,7 +71,7 @@
 #include "hbinit.h"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbwinuni.h"
+#include "hbwinuni.hpp"
 #include "hbdate.h"
 
 #include "hbapicdp.hpp"

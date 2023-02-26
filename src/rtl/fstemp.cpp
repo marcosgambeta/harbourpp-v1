@@ -67,7 +67,7 @@
 
 #if defined(HB_OS_WIN)
    #include <windows.h>
-   #include "hbwinuni.h"
+   #include "hbwinuni.hpp"
 #endif
 
 #if defined(HB_OS_LINUX) || defined(HB_OS_BSD) || defined(HB_OS_DARWIN) || defined(HB_OS_SUNOS)

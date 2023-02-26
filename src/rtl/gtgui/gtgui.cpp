@@ -55,7 +55,7 @@
 
 #if defined(HB_OS_WIN)
    #include <windows.h>
-   #include "hbwinuni.h"
+   #include "hbwinuni.hpp"
 #endif
 
 /* *********************************************************************** */

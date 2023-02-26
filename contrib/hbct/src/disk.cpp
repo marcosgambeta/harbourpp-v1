@@ -52,7 +52,7 @@
 #include "hbapifs.hpp"
 #include "hbvm.h"
 #include "ctstrfil.h"
-#include "hbwinuni.h"
+#include "hbwinuni.hpp"
 
 #if defined(HB_OS_WIN)
 #  include <windows.h>

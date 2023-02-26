@@ -54,7 +54,7 @@
 #include "hbvm.h"
 #if defined(HB_OS_WIN)
    #include <windows.h>
-   #include "hbwinuni.h"
+   #include "hbwinuni.hpp"
 #endif
 
 #if (defined(HB_OS_WIN)) && (defined(_MSC_VER) || defined(__MINGW32__) || defined(__BORLANDC__) ) && !defined(__MINGW32CE__)

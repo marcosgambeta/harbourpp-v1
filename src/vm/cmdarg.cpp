@@ -69,7 +69,7 @@ static char    s_szAppName[HB_PATH_MAX];
 
 #else
 
-#include "hbwinuni.h"
+#include "hbwinuni.hpp"
 #include <windows.h>
 
 static LPTSTR * s_lpArgV = nullptr;

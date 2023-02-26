@@ -54,7 +54,7 @@
 #include "hbapiitm.hpp"
 #include "hbstack.h"
 #include "hbvm.h"
-#include "hbwinuni.h"
+#include "hbwinuni.hpp"
 
 #if defined(HB_OS_WIN)
 #  include <windows.h>

@@ -48,7 +48,7 @@
 
 #include "hbapi.hpp"
 
-#include "hbwinuni.h"
+#include "hbwinuni.hpp"
 #include "hbwinole.h"
 
 #if defined( _MSC_VER )

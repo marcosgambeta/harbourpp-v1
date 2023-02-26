@@ -94,7 +94,7 @@
 #  include "../../src/3rd/hbpmcom/com.h"
 #elif defined(HB_OS_WIN)
 #  include <windows.h>
-#  include "hbwinuni.h"
+#  include "hbwinuni.hpp"
 #endif
 
 #include "hbapifs.hpp"

@@ -55,7 +55,7 @@
       extern char ** environ;
 #  endif
 #elif defined(HB_OS_WIN)
-#  include "hbwinuni.h"
+#  include "hbwinuni.hpp"
 #  include <windows.h>
 #endif
 

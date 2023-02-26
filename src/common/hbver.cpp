@@ -58,7 +58,7 @@
 #if defined(HB_OS_WIN)
 
    #include <windows.h>
-   #include "hbwinuni.h"
+   #include "hbwinuni.hpp"
 
    #ifndef VER_PLATFORM_WIN32_WINDOWS
    #define VER_PLATFORM_WIN32_WINDOWS  1
