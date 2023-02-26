@@ -47,7 +47,7 @@
 #include "hbapidbg.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
-#include "hbapirdd.h"
+#include "hbapirdd.hpp"
 #include "hbstack.h"
 #include "hbvm.h"
 #include "hbthread.h"

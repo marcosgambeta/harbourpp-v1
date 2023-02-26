@@ -48,7 +48,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
-#include "hbapirdd.h"
+#include "hbapirdd.hpp"
 
 HB_FUNC( INDEXCOUNT )
 {

@@ -64,7 +64,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapifs.hpp"
-#include "hbapirdd.h"
+#include "hbapirdd.hpp"
 #include "hbapierr.hpp"
 
 HB_FUNC( SX_GETLOCKS )

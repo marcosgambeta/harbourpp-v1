@@ -51,7 +51,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
-#include "hbapirdd.h"
+#include "hbapirdd.hpp"
 #include "hbapierr.hpp"
 #include "hbdbferr.h"
 #include "hbvm.h"

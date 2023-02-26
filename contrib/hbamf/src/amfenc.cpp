@@ -14,7 +14,7 @@
 #include "hbapicls.hpp" /* for hb_objSetClass() */
 #include "hbstack.h"
 
-#include "hbapirdd.h"   /* for amf3_FromWA() */
+#include "hbapirdd.hpp"   /* for amf3_FromWA() */
 #include "hbapierr.hpp"   /* as above */
 
 #include "amf.h"

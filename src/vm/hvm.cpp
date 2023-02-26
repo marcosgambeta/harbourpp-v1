@@ -56,7 +56,7 @@
 #include "hbapidbg.hpp"
 #include "hbapiitm.hpp"
 #include "hbapilng.hpp"
-#include "hbapirdd.h"
+#include "hbapirdd.hpp"
 #include "hbapigt.hpp"
 #include "hbapicdp.hpp"
 #include "hbvm.h"

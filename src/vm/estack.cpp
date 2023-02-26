@@ -56,7 +56,7 @@
 #include "hbstack.h"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbapirdd.h"
+#include "hbapirdd.hpp"
 #include "hbdate.h"
 
 /* --- */

@@ -49,7 +49,7 @@
 #define HB_RDDSQL_H_
 
 #include "hbapi.hpp"
-#include "hbapirdd.h"
+#include "hbapirdd.hpp"
 #include "hbdbferr.h"
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"

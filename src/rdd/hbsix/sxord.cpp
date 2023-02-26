@@ -79,7 +79,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapifs.hpp"
-#include "hbapirdd.h"
+#include "hbapirdd.hpp"
 
 static HB_BOOL hb_sxOrdParam(LPDBORDERINFO pInfo)
 {

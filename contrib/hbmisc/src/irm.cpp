@@ -10,7 +10,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbapirdd.h"
+#include "hbapirdd.hpp"
 
 typedef struct
 {

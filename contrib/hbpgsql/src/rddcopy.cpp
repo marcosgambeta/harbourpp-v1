@@ -48,7 +48,7 @@
 
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
-#include "hbapirdd.h"
+#include "hbapirdd.hpp"
 #include "hbvm.h"
 #include "hbdate.h"
 

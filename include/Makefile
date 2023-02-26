@@ -34,6 +34,7 @@ C_HEADERS := \
    hbapilng.h \
    hbapilng.hpp \
    hbapirdd.h \
+   hbapirdd.hpp \
    hbapistr.h \
    hbassert.h \
    hbatomic.h \
