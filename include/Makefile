@@ -36,6 +36,7 @@ C_HEADERS := \
    hbapirdd.h \
    hbapirdd.hpp \
    hbapistr.h \
+   hbapistr.hpp \
    hbassert.h \
    hbatomic.h \
    hbbfish.h \

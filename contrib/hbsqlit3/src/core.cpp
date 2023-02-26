@@ -51,7 +51,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapifs.hpp"
-#include "hbapistr.h"
+#include "hbapistr.hpp"
 #include "hbstack.h"
 
 /* FIXME: verify the exact SQLITE3 version */

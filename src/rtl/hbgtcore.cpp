@@ -54,7 +54,7 @@
 
 #include "hbgtcore.h"
 #include "hbapiitm.hpp"
-#include "hbapistr.h"
+#include "hbapistr.hpp"
 #include "hbapifs.hpp"
 #include "hbapierr.hpp"
 #include "hbapicdp.hpp"

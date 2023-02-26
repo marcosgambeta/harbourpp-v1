@@ -57,7 +57,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
-#include "hbapistr.h"
+#include "hbapistr.hpp"
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
 #include "hbinit.h"

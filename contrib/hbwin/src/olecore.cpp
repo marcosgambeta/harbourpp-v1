@@ -48,7 +48,7 @@
 #include "hbwinole.h"
 #include "hbapicdp.hpp"
 #include "hbapilng.hpp"
-#include "hbapistr.h"
+#include "hbapistr.hpp"
 #include "hbinit.h"
 
 /* enable workaround for wrong OLE variant structure definition */

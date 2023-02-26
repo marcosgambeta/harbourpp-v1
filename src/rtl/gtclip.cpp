@@ -47,7 +47,7 @@
 /* NOTE: User programs should never call this layer directly! */
 
 #include "hbgtcore.h"
-#include "hbapistr.h"
+#include "hbapistr.hpp"
 #include "hbapiitm.hpp"
 
 #if defined(HB_OS_WIN)

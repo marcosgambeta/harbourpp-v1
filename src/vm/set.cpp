@@ -55,7 +55,7 @@
 #include "hbapigt.hpp"
 #include "hbapilng.hpp"
 #include "hbapicdp.hpp"
-#include "hbapistr.h"
+#include "hbapistr.hpp"
 #include "hbset.h"
 #include "hbstack.h"
 #include "hbvm.h"

@@ -53,7 +53,7 @@
 #include "hbstack.h"
 #include "hbinit.h"
 #include "hbapiitm.hpp"
-#include "hbapistr.h"
+#include "hbapistr.hpp"
 
 #include "ctwin.h"
 

@@ -48,7 +48,7 @@
 #include "hbwinole.h"
 #include <olectl.h>
 
-#include "hbapistr.h"
+#include "hbapistr.hpp"
 
 using PHB_AX_WININIT = BOOL(CALLBACK *)(void);
 using PHB_AX_GETCTRL = HRESULT(CALLBACK *)(HWND, IUnknown**);

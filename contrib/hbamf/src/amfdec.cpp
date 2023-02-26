@@ -9,7 +9,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
-#include "hbapistr.h"
+#include "hbapistr.hpp"
 #include "hbapicls.hpp" /* for hb_objSetClass() */
 #include "hbstack.h"
 #include "amf.h"

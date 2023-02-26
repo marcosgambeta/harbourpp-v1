@@ -49,7 +49,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbdate.h"
-#include "hbapistr.h"
+#include "hbapistr.hpp"
 #include "hbset.h"
 #include "hbvm.h"
 

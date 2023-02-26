@@ -65,7 +65,7 @@
 #include "hbgtcore.h"
 #include "hbinit.h"
 #include "hbapicdp.hpp"
-#include "hbapistr.h"
+#include "hbapistr.hpp"
 #include "hbapiitm.hpp"
 #include "hbapifs.hpp"
 #include "hbdate.h"

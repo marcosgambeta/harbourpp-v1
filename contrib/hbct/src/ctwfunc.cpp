@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 #include "hbapigt.hpp"
-#include "hbapistr.h"
+#include "hbapistr.hpp"
 #include "ctwin.h"
 
 static int hb_ctColorParam( int iParam, int iDefault )

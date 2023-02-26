@@ -56,7 +56,7 @@
 #  pragma warning(pop)
 #endif
 
-#include "hbapistr.h"
+#include "hbapistr.hpp"
 #if defined( HB_OS_WIN_CE )
    #include "hbwince.h"
 #endif

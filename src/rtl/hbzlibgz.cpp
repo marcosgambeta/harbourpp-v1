@@ -47,7 +47,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbapistr.h"
+#include "hbapistr.hpp"
 #include "hbvm.h"
 
 #include <zlib.h>

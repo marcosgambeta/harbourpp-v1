@@ -48,7 +48,7 @@
 
 #include "hbrdddbf.h"
 #include "hbapiitm.hpp"
-#include "hbapistr.h"
+#include "hbapistr.hpp"
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
 #include "hbset.h"
