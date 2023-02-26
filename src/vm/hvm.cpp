@@ -48,7 +48,7 @@
 
 #define HB_STACK_PRELOAD
 
-#include "hbvmopt.h"
+#include "hbvmopt.hpp"
 #include "hbapi.hpp"
 #include "hbstack.h"
 #include "hbapierr.hpp"
@@ -59,7 +59,7 @@
 #include "hbapirdd.hpp"
 #include "hbapigt.hpp"
 #include "hbapicdp.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbxvm.h"
 #include "hbpcode.h"
 #include "hbset.h"

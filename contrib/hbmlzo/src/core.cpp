@@ -49,7 +49,7 @@
 #include "hbapierr.hpp"
 #include "hbchksum.h"
 #include "hbinit.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 #include "minilzo.h"
 

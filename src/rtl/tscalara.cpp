@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 HB_FUNC_EXTERN( __HBARRAY );
 

@@ -50,7 +50,7 @@
 #include "hbapifs.hpp"
 #include "hbapistr.hpp"
 #include "hbstack.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 #include "mxml.h"
 #include "config.h"

@@ -63,7 +63,7 @@
 #include "hbinit.h"
 #include "hbset.h"
 #include "hbstack.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbdate.h"
 #include "hbrddfpt.hpp"
 #include "hbsxfunc.h"

@@ -53,11 +53,11 @@
  *
  */
 
-#include "hbvmopt.h"
+#include "hbvmopt.hpp"
 /* hbfloat.h have to be included before other header files */
 #include "hbfloat.h"
 
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbstack.h"
 #include "hbapicls.hpp"
 #include "hbapiitm.hpp"

@@ -52,7 +52,7 @@
 #include "hbapilng.hpp"
 #include "hbdate.h"
 #include "hbset.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 #include "rddsys.ch"
 

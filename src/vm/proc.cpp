@@ -49,12 +49,12 @@
  *
  */
 
-#include "hbvmint.h"
+#include "hbvmint.hpp"
 #include "hbapi.hpp"
 #include "hbapicls.hpp"
 #include "hbapiitm.hpp"
 #include "hbstack.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 HB_FUNC( HB_METHODNAME )
 {

@@ -54,7 +54,7 @@
 
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbdate.h"
 #include "hb_io.h"
 

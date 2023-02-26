@@ -50,7 +50,7 @@
 #include "hbapirdd.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbset.h"
 
 #ifdef HB_COMPAT_C53

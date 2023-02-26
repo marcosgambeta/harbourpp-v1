@@ -50,7 +50,7 @@
 #include "hbapirdd.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbset.h"
 
 /* The 5th parameter is Harbour extension */

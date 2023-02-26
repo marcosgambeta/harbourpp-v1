@@ -89,7 +89,7 @@
 #include "hbapiitm.hpp"
 #include "inkey.ch"
 #include "error.ch"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbstack.h"
 #include "hbwinuni.hpp"
 

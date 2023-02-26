@@ -55,7 +55,7 @@
 #include "hbdate.h"
 #include "hbsxfunc.h"
 #include "hbstack.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "error.ch"
 #include "rddsys.ch"
 #include "hbsxdef.ch"

@@ -50,7 +50,7 @@
          because in MT mode, they will automatically #include <os2.h>. */
 #define INCL_DOSPROCESS
 
-#include "hbvmopt.h"
+#include "hbvmopt.hpp"
 #include "hbapi.hpp"
 #include "hbapicls.hpp"
 #include "hbstack.h"

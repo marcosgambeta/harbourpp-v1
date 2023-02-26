@@ -48,14 +48,14 @@
          because in MT mode, they will automatically #include <os2.h>. */
 #define INCL_DOSPROCESS
 
-#include "hbvmopt.h"
+#include "hbvmopt.hpp"
 #include "hbapi.hpp"
 #include "hbstack.h"
 #include "hbapicls.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapigt.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "error.ch"
 
 #if !defined(HB_GC_PTR)

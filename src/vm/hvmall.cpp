@@ -73,7 +73,7 @@
  * due to macros used to overload some functions
  */
 
-#include "hbvmopt.h"
+#include "hbvmopt.hpp"
 #include "hbfloat.h"
 
 #include "hbstack.h"

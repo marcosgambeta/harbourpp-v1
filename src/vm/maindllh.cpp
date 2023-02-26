@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbapiitm.hpp"
 
 #if defined(HB_OS_WIN)

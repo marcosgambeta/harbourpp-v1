@@ -47,7 +47,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbstack.h"
 
 /* NOTE: Do() as a function is a Harbour extension. [vszakats] */

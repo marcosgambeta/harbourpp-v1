@@ -57,7 +57,7 @@
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
 #include "hbthread.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "directry.ch"
 
 #if defined(HB_OS_UNIX)

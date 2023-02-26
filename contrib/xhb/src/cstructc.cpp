@@ -44,9 +44,9 @@
  *
  */
 
-#include "hbvmint.h" /* FIXME: clean the code to not access any internal HVM structures */
+#include "hbvmint.hpp" /* FIXME: clean the code to not access any internal HVM structures */
 #include "hbapi.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbstack.h"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"

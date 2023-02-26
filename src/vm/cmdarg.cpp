@@ -54,7 +54,7 @@
 #include "hbapiitm.hpp"
 #include "hbapifs.hpp"
 #include "hbapicdp.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbmemory.ch"
 #include "hbstack.h"
 #include "hbverbld.h"

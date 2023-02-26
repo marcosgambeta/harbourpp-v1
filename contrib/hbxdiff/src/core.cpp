@@ -50,7 +50,7 @@
 #include "hbapifs.hpp"
 #include "hbinit.h"
 #include "hbstack.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 #include "xdiff.h"
 

@@ -96,7 +96,7 @@
 
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbstack.h"
 #include "hbsocket.h"
 

@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 #include "hbinit.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbset.h"
 #include "hbdate.h"
 #include "hbapirdd.hpp"

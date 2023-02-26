@@ -53,7 +53,7 @@
 #include "hbmather.h"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbstack.h"
 
 #if defined(HB_MATH_ERRNO)

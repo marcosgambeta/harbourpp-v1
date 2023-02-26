@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbvmopt.h"
+#include "hbvmopt.hpp"
 #include "hbapistr.hpp"
 #include "hbapiitm.hpp"
 #include "hbstack.h"

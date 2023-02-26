@@ -54,7 +54,7 @@
 #include "hbapiitm.hpp"
 #include "hbsocket.h"
 #include "hbapierr.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbthread.h"
 #include "hbznet.h"
 

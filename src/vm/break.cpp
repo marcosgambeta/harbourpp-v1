@@ -44,9 +44,9 @@
  *
  */
 
-#include "hbvmopt.h"
+#include "hbvmopt.hpp"
 #include "hbapi.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 /* NOTE: This function should normally have a parameter count check. But
          since in Harbour we cannot distinguish between Break() function and

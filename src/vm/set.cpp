@@ -47,7 +47,7 @@
 
 #define _HB_SET_INTERNAL_
 
-#include "hbvmopt.h"
+#include "hbvmopt.hpp"
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
@@ -58,7 +58,7 @@
 #include "hbapistr.hpp"
 #include "hbset.h"
 #include "hbstack.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 struct HB_SET_LISTENER_
 {

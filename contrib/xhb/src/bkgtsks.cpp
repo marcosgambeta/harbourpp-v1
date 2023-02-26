@@ -48,7 +48,7 @@
 #include "hbapiitm.hpp"
 #include "hbstack.h"
 #include "hbset.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbdate.h"
 #include "error.ch"
 

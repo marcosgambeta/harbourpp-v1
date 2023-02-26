@@ -49,7 +49,7 @@
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
 #include "hbapirdd.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbdate.h"
 
 typedef struct

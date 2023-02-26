@@ -67,7 +67,7 @@
 
 #define HB_STACK_PRELOAD
 
-#include "hbvmopt.h"
+#include "hbvmopt.hpp"
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapifs.hpp"
@@ -76,7 +76,7 @@
 #include "hbmemory.ch"
 #include "hbdate.h"
 #include "hbset.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 #if defined(HB_OS_WIN)
 #  include <windows.h>

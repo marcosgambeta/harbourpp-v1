@@ -49,11 +49,11 @@
 #define INCL_DOSMODULEMGR
 #define INCL_ERRORS
 
-#include "hbvmint.h"
+#include "hbvmint.hpp"
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbstack.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbwinuni.hpp"
 
 #if defined(HB_OS_WIN)

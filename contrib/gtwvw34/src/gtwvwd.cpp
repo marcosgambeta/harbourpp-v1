@@ -79,7 +79,7 @@
 #include "hbinit.h"
 #include "hbapifs.hpp"
 #include "hbmath.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 #include "hbgfxdef.ch"
 

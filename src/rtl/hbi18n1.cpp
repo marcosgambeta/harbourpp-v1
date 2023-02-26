@@ -51,7 +51,7 @@
 #include "hbapierr.hpp"
 #include "hbapicdp.hpp"
 #include "hbmath.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbstack.h"
 #include "hbthread.h"
 #include "hbchksum.h"

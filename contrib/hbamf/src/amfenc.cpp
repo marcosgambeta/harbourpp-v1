@@ -22,7 +22,7 @@
 #include "hbdate.h"
 #include "hbmath.h"
 
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 typedef struct
 {

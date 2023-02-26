@@ -51,7 +51,7 @@
 #include "hbdate.h"
 #include "hbapistr.hpp"
 #include "hbset.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 #include "hbrddsql.h"
 

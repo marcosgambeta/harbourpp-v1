@@ -49,7 +49,7 @@
 #include "hbapicls.hpp"
 #include "hbapirdd.hpp"
 #include "hbstack.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbthread.h"
 
 #include "hbdebug.ch"

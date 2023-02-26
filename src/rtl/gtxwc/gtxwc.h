@@ -56,7 +56,7 @@
 #include "hbgtcore.h"
 #include "hbinit.h"
 #include "hbset.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "inkey.ch"

@@ -45,12 +45,12 @@
  *
  */
 
-#include "hbvmint.h"
+#include "hbvmint.hpp"
 #include "hbapi.hpp"
 #include "hbstack.h"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 HB_BOOL hb_evalNew(PHB_EVALINFO pEvalInfo, PHB_ITEM pItem)
 {

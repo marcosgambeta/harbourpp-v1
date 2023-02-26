@@ -74,7 +74,7 @@
 #endif
 
 #include "hbapi.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbstack.h"
 #include "hbapifs.hpp"
 #include "hbapierr.hpp"

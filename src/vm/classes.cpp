@@ -93,13 +93,13 @@
  *
  */
 
-#include "hbvmopt.h"
+#include "hbvmopt.hpp"
 #include "hbapi.hpp"
 #include "hbapicls.hpp"
 #include "hbstack.h"
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbthread.h"
 #include "hboo.ch"
 

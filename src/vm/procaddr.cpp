@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 PHB_FUNC hb_vmProcAddress(const char * szFuncName)
 {

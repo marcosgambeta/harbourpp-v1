@@ -81,7 +81,7 @@
 #include "hbinit.h"
 #include "inkey.ch"
 #include "error.ch"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbthread.h"
 #include "hbgfxdef.ch"
 #include "hbwinuni.hpp"

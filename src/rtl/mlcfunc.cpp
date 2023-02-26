@@ -48,7 +48,7 @@
 #include "hbapiitm.hpp"
 #include "hbapicdp.hpp"
 #include "hbset.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 #define HB_EOL_BUFFER_SIZE    4
 

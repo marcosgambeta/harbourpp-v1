@@ -50,7 +50,7 @@
 #include "hbssl.h"
 
 #include "hbapiitm.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbdate.h"
 #include "hbinit.h"
 

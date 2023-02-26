@@ -90,9 +90,13 @@ C_HEADERS := \
    hbtypes.h \
    hbver.h \
    hbvm.h \
+   hbvm.hpp \
    hbvmint.h \
+   hbvmint.hpp \
    hbvmopt.h \
+   hbvmopt.hpp \
    hbvmpub.h \
+   hbvmpub.hpp \
    hbxvm.h \
    hbwinuni.h \
    hbwinuni.hpp \

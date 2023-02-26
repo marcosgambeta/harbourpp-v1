@@ -54,7 +54,7 @@
 #include "hbapicls.hpp"
 #include "hbapierr.hpp"
 #include "hbstack.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 #if 0
 

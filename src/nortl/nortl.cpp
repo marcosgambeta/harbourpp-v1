@@ -49,7 +49,7 @@
 #include "hbapicdp.hpp"
 #include "hbapierr.hpp"
 #include "hbset.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbcomp.h"
 #include "hbmemory.ch"
 

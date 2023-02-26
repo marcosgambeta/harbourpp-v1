@@ -53,7 +53,7 @@
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
 #include "hbapiitm.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbstack.h"
 #include "hbdate.h"
 #include "hb_io.h"

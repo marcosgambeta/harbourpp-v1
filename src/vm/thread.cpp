@@ -87,14 +87,14 @@
 
 #define _HB_THREAD_INTERNAL_
 
-#include "hbvmopt.h"
+#include "hbvmopt.hpp"
 #include "hbthread.h"
 #include "hbatomic.h"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapicdp.hpp"
 #include "hbapilng.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbstack.h"
 #include "hbdate.h"
 #include "hbmemvar.ch"

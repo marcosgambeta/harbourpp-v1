@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 #if defined(HB_OS_WIN)
    #include <windows.h>

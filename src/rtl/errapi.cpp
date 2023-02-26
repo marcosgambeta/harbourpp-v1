@@ -52,7 +52,7 @@
 #include "hbapilng.hpp"
 #include "hbapicls.hpp"
 #include "hbapifs.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbstack.h"
 
 /* This is added to be able to detect a recursive error, and not let Harbour

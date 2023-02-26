@@ -1,7 +1,7 @@
 /*
- * Some class support functions for AMF3 (de)serialization
+ * Header files to force macro inlining for HVM build
  *
- * Copyright 2011 Aleksander Czajczynski <hb/at/fki.pl>
+ * Copyright 2008 Przemyslaw Czerpak <druzus /at/ priv.onet.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,37 +44,18 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbstack.h"
-#include "hbvm.hpp"
-#include "hboo.ch"
+/*
+ * This header file enable macro inlining of some functions.
+ * It should be included before any other hb*.h files.
+ * !!! Be careful - including this file cause that the final binaries
+ * can be linked only with exactly the same HVM version for which
+ * it was compiled and only if exactly the same C compiler switches
+ * which interacts with alignment are used. [druzus]
+ */
 
-HB_BOOL hbamf_is_cls_externalizable( HB_USHORT uiClass )
-{
-   PHB_DYNS pSymbol = hb_dynsymGet("__CLSMSGTYPE");
-   HB_BOOL  result  = HB_FALSE;
+#undef _HB_API_MACROS_
+#undef _HB_STACK_MACROS_
 
-   /* as far as i know, there is no exported Harbour C level api for this */
-
-   if( uiClass && pSymbol )
-   {
-      PHB_ITEM pRetCopy = hb_itemNew(nullptr);
-
-      hb_itemMove(pRetCopy, hb_stackReturnItem());
-
-      hb_vmPushDynSym(pSymbol);
-      hb_vmPushNil();
-      hb_vmPushInteger(uiClass);
-      hb_vmPushString("EXTERNALIZABLE", 14);
-      hb_vmDo(2);
-
-      if( hb_itemGetNI(hb_stackReturnItem()) == HB_OO_MSG_CLASSDATA )
-         result = HB_TRUE;
-
-      hb_itemMove(hb_stackReturnItem(), pRetCopy);
-      hb_itemRelease(pRetCopy);
-   }
-
-   return result;
-}
+#if ! defined( _HB_API_INTERNAL_ )
+#  define _HB_API_INTERNAL_
+#endif

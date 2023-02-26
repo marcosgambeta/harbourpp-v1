@@ -47,7 +47,7 @@
 
 #include "hbwapi.h"
 #include "hbapiitm.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 #include <commdlg.h>
 

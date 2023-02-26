@@ -100,7 +100,7 @@
 #include "hbapifs.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicom.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbinit.h"
 #include "hbdate.h"
 #include "hbthread.h"

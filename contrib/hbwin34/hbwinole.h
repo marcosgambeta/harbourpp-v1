@@ -51,7 +51,7 @@
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
 #include "hbapierr.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbstack.h"
 #include "hbdate.h"
 

@@ -49,7 +49,7 @@
 #include "hbapirdd.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "rddsys.ch"
 #include "hbset.h"
 

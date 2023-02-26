@@ -47,7 +47,7 @@
 
 #include "ct.h"
 #include "ctmath.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbstack.h"
 
 /* throwing a CT-subsystem error without value substitution

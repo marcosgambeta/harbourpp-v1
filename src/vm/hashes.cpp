@@ -48,12 +48,12 @@
 #define _HB_HASH_INTERNAL_
 #endif
 
-#include "hbvmopt.h"
+#include "hbvmopt.hpp"
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbxvm.h"
 #include "hbstack.h"
 

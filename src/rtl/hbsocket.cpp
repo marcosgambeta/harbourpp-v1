@@ -229,7 +229,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbstack.h"
 #include "hbthread.h"
 #include "hbdate.h"

@@ -47,7 +47,7 @@
 #include "sqlite3.h"
 
 #include "hbapi.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapifs.hpp"

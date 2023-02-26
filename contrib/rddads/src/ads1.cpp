@@ -49,7 +49,7 @@
 
 #include "rddads.h"
 
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbinit.h"
 #include "hbapistr.hpp"
 #include "hbapierr.hpp"

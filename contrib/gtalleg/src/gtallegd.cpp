@@ -48,7 +48,7 @@
 
 #include "hbgtcore.h"
 #include "hbinit.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"

@@ -66,7 +66,7 @@
 #include "hbapicls.hpp"
 #include "hbapifs.hpp"
 
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 #include "hbxml.h"
 

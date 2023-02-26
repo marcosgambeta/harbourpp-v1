@@ -49,7 +49,7 @@
 
 #include "hbgtwvw.h"
 
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 /*
 add one button to existing Toolbar

@@ -51,7 +51,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbstack.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 #if defined(HB_OS_WIN)
 #  include <windows.h>

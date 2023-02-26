@@ -47,7 +47,7 @@
 
 #include "rddads.h"
 
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
 #include "hbstack.h"

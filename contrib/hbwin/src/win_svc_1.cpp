@@ -46,7 +46,7 @@
 
 #include "hbwapi.h"
 #include "hbapiitm.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbstack.h"
 
 static SERVICE_STATUS        s_ServiceStatus;

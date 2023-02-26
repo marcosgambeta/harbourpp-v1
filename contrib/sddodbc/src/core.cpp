@@ -50,7 +50,7 @@
 #include "hbdate.h"
 #include "hbapistr.hpp"
 #include "hbset.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 /* Required by headers on Windows */
 #if defined(HB_OS_WIN)

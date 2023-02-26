@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbset.h"
 #include "hbrddsql.h"
 #include "rddsys.ch"

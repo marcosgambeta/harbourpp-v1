@@ -53,7 +53,7 @@
 #include "hbapilng.hpp"
 #include "hbapierr.hpp"
 #include "hbdbferr.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbdate.h"
 
 #define HB_FILE_BUF_SIZE  0x10000

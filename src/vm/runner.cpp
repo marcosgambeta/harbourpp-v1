@@ -46,13 +46,13 @@
  *
  */
 
-#include "hbvmint.h"
+#include "hbvmint.hpp"
 #include "hbapi.hpp"
 #include "hbstack.h"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapifs.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbpcode.h"
 #include "hbset.h"
 #include "hb_io.h"

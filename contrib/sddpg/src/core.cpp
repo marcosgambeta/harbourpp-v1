@@ -48,7 +48,7 @@
 #include "hbrddsql.h"
 
 #include "hbapiitm.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 #include "libpq-fe.h"
 

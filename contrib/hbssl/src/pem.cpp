@@ -48,7 +48,7 @@
 
 #include "hbapifs.hpp"
 #include "hbapiitm.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 typedef enum
 {

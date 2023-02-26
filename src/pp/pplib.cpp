@@ -49,7 +49,7 @@
 #include "hbapiitm.hpp"
 #include "hbapifs.hpp"
 #include "hbapierr.hpp"
-#include "hbvm.h"
+#include "hbvm.hpp"
 
 HB_EXTERN_BEGIN
 

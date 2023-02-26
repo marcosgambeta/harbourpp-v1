@@ -53,7 +53,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbthread.h"
-#include "hbvm.h"
+#include "hbvm.hpp"
 #include "hbinit.h"
 
 #include "directry.ch"
