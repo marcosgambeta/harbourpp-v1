@@ -10,7 +10,7 @@
 #define HB_CP_INFO      "Icelandic CP-861 (ntxic861.obj compatible)"
 #define HB_CP_UNITB     HB_UNITB_861
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
-#include "l_is.h"
+#include "l_is.hpp"
 #define HB_CP_UTF8
 
 /* include CP registration code */

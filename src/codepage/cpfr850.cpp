@@ -48,7 +48,7 @@
 #define HB_CP_INFO      "French CP-850"
 #define HB_CP_UNITB     HB_UNITB_850
 #define HB_CP_ACSORT    HB_CDP_ACSORT_EQUAL
-#include "l_fr.h"
+#include "l_fr.hpp"
 #define HB_CP_UTF8
 
 /* include CP registration code */

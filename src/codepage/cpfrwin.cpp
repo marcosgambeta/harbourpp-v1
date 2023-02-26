@@ -48,7 +48,7 @@
 #define HB_CP_INFO      "French Windows-1252"
 #define HB_CP_UNITB     HB_UNITB_1252
 #define HB_CP_ACSORT    HB_CDP_ACSORT_EQUAL
-#include "l_fr.h"
+#include "l_fr.hpp"
 #define HB_CP_UTF8
 
 /* include CP registration code */

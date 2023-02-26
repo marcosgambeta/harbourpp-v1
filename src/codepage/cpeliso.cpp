@@ -48,7 +48,7 @@
 #define HB_CP_INFO      "Greek ISO-8859-7"
 #define HB_CP_UNITB     HB_UNITB_8859_7
 #define HB_CP_ACSORT    HB_CDP_ACSORT_EQUAL
-#include "l_el.h"
+#include "l_el.hpp"
 #define HB_CP_UTF8
 
 /* include CP registration code */

@@ -48,7 +48,7 @@
 #define HB_CP_INFO      "Bulgarian CP-866"
 #define HB_CP_UNITB     HB_UNITB_866
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
-#include "l_bg.h"
+#include "l_bg.hpp"
 #define HB_CP_UTF8
 
 /* include CP registration code */

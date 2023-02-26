@@ -48,7 +48,7 @@
 #define HB_CP_INFO      "Slovenian CP-852"
 #define HB_CP_UNITB     HB_UNITB_852
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
-#include "l_sl.h"
+#include "l_sl.hpp"
 #define HB_CP_UTF8
 
 /* include CP registration code */

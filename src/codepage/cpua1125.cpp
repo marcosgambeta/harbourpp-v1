@@ -48,7 +48,7 @@
 #define HB_CP_INFO      "Ukrainian CP-1125"
 #define HB_CP_UNITB     HB_UNITB_1125
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
-#include "l_uk.h"
+#include "l_uk.hpp"
 #define HB_CP_UTF8
 
 /* include CP registration code */
