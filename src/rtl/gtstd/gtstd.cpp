@@ -48,7 +48,7 @@
 
 #define HB_GT_NAME  STD
 
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 #include "hbinit.hpp"
 #include "hbapifs.hpp"
 #include "hbapicdp.hpp"

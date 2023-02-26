@@ -238,7 +238,7 @@ static BOOL hb_wvw_Size_Ready(BOOL b_p_SizeIsReady);
 /* mouse initialization was made in cmdarg.c                         */
 /*                                                                   */
 
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 #include "hbinit.hpp"
 #include "hbapiitm.hpp"
 

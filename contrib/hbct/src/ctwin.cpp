@@ -49,7 +49,7 @@
 /* This definition has to be placed before #include "hbapigt.hpp" */
 #define HB_GT_NAME  CTW
 
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 #include "hbstack.hpp"
 #include "hbinit.hpp"
 #include "hbapiitm.hpp"

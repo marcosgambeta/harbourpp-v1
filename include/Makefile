@@ -55,6 +55,7 @@ C_HEADERS := \
    hberrors.h \
    hbexprop.h \
    hbgtcore.h \
+   hbgtcore.hpp \
    hbgtreg.h \
    hbhash.h \
    hbiniseg.h \

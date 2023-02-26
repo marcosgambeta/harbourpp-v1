@@ -47,7 +47,7 @@
  */
 
 #include "hbapigt.hpp"
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicdp.hpp"
 #include "hbset.hpp"

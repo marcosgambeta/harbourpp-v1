@@ -82,7 +82,7 @@
 #endif
 
 #include "hbset.hpp"
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 #include "hbinit.hpp"
 #include "hbapigt.hpp"
 #include "hbapierr.hpp"

@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 
 /* NOTE: Mouse initialization is called directly from low-level GT driver
  * because it possible that mouse subsystem can depend on the terminal

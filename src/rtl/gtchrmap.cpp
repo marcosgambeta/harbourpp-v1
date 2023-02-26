@@ -50,7 +50,7 @@
 
 /* TODO: use Harbour FS API */
 
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 #include "hbapifs.hpp"
 
 #if defined(HB_OS_UNIX)

@@ -49,7 +49,7 @@
 
 #define HB_GT_NAME  GUI
 
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 #include "hbinit.hpp"
 #include "hbapiitm.hpp"
 

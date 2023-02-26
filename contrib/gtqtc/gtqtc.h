@@ -82,7 +82,7 @@
 #endif
 
 #include "hbapi.hpp"
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 #include "hbapistr.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"

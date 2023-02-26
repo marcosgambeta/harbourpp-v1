@@ -50,7 +50,7 @@
 
 #define HB_GT_NAME  CRS
 
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 #include "hbinit.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"

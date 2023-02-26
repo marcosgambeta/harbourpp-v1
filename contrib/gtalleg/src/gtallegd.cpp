@@ -46,7 +46,7 @@
 
 #define HB_GT_NAME  ALLEG
 
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 #include "hbinit.hpp"
 #include "hbvm.hpp"
 #include "hbapi.hpp"

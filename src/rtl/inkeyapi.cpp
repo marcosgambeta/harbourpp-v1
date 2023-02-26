@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 
 /* xHarbour compatible definitions */
 #if !defined(K_SH_LEFT)

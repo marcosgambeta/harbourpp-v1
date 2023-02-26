@@ -53,7 +53,7 @@
 #define HB_GT_NAME  XWC
 
 #include "hbapi.hpp"
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 #include "hbinit.hpp"
 #include "hbset.hpp"
 #include "hbvm.hpp"

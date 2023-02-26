@@ -52,7 +52,7 @@
 
 #define HB_GT_NAME  PCA
 
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 #include "hbinit.hpp"
 #include "hbapifs.hpp"
 #include "hbapicdp.hpp"

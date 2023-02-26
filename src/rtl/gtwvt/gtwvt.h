@@ -50,7 +50,7 @@
 #define HB_GT_NAME  WVT
 
 #include "hbset.hpp"
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 #include "hbinit.hpp"
 #include "hbapicdp.hpp"
 #include "hbapierr.hpp"

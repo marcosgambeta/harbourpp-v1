@@ -46,7 +46,7 @@
 
 /* NOTE: User programs should never call this layer directly! */
 
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 #include "hbapistr.hpp"
 #include "hbapiitm.hpp"
 

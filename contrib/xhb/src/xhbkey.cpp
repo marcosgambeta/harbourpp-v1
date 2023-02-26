@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 #include "hbset.hpp"
 #include "xhbinkey.ch"
 

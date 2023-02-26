@@ -48,7 +48,7 @@
 
 /* TODO: include any standard headers here */
 
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 #include "hbinit.hpp"
 static int s_GtId;
 static HB_GT_FUNCS SuperTable;

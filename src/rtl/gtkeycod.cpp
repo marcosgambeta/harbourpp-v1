@@ -51,7 +51,7 @@
 
 /* NOTE: User programs should never call this layer directly! */
 
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 
 #if defined(HB_OS_WIN)
 

@@ -79,7 +79,7 @@
 
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 
 #ifndef GRADIENT_FILL_RECT_H
 #define GRADIENT_FILL_RECT_H      0x00000000

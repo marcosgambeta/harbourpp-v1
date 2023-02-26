@@ -186,7 +186,7 @@ static BYTE *       PackedDibGetBitsPtr(BITMAPINFO * pPackedDib);
 static void       s_RunControlBlock(PWVW_WIN wvw_win, int nClass, HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam, int iEventType);
 static void       s_ReposControls(PWVW_WIN wvw_win, int nClass);
 
-#include "hbgtcore.h"
+#include "hbgtcore.hpp"
 #include "hbinit.hpp"
 #include "hbapiitm.hpp"
 
