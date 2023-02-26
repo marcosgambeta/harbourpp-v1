@@ -136,7 +136,7 @@
 #include "hbset.h"
 #include "hbstack.h"
 #include "hbmath.h"
-#include "hbrddntx.h"
+#include "hbrddntx.hpp"
 #include "rddsys.ch"
 #include "hbregex.h"
 #include "hbapicdp.hpp"

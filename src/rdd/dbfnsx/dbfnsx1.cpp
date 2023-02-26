@@ -53,7 +53,7 @@
 #define HB_NSX_DEBUG_EXT
 */
 
-#include "hbrddnsx.h"
+#include "hbrddnsx.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbinit.h"

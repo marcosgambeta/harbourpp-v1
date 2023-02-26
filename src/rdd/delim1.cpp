@@ -55,7 +55,7 @@
 #include "hbapilng.hpp"
 #include "hbapierr.hpp"
 #include "hbdbferr.h"
-#include "hbrdddel.h"
+#include "hbrdddel.hpp"
 #include "rddsys.ch"
 
 #define SUPERTABLE  ( &delimSuper )

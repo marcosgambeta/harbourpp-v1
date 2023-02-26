@@ -70,7 +70,7 @@
 #include "hbvm.h"
 #include "hbset.h"
 #include "hbstack.h"
-#include "hbrddcdx.h"
+#include "hbrddcdx.hpp"
 #include "hbmath.h"
 #include "rddsys.ch"
 #include "hbregex.h"

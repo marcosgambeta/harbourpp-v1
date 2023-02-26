@@ -65,12 +65,19 @@ C_HEADERS := \
    hbpp.h \
    hbpp.hpp \
    hbrddcdx.h \
+   hbrddcdx.hpp \
    hbrdddbf.h \
+   hbrdddbf.hpp \
    hbrddfpt.h \
+   hbrddfpt.hpp \
    hbrdddel.h \
+   hbrdddel.hpp \
    hbrddntx.h \
+   hbrddntx.hpp \
    hbrddsdf.h \
+   hbrddsdf.hpp \
    hbrddnsx.h \
+   hbrddnsx.hpp \
    hbregex.h \
    hbset.h \
    hbsetup.h \
