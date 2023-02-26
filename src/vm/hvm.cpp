@@ -60,7 +60,7 @@
 #include "hbapigt.hpp"
 #include "hbapicdp.hpp"
 #include "hbvm.hpp"
-#include "hbxvm.h"
+#include "hbxvm.hpp"
 #include "hbpcode.h"
 #include "hbset.h"
 #include "hbdate.h"

@@ -51,7 +51,7 @@
 #include "hbapifs.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
-#include "hbxvm.h"
+#include "hbxvm.hpp"
 #include "hbstack.h"
 #include "hbthread.h"
 

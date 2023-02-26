@@ -98,6 +98,7 @@ C_HEADERS := \
    hbvmpub.h \
    hbvmpub.hpp \
    hbxvm.h \
+   hbxvm.hpp \
    hbwinuni.h \
    hbwinuni.hpp \
    hbzlib.h \
