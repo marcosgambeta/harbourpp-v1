@@ -1,6 +1,6 @@
 /* Last Translator: Sami Laham (sami laham.com.br) */
 
-#include "hbapilng.h"
+#include "hbapilng.hpp"
 
 static HB_LANG s_lang =
 {

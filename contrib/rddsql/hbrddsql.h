@@ -52,7 +52,7 @@
 #include "hbapirdd.h"
 #include "hbdbferr.h"
 #include "hbapierr.hpp"
-#include "hbapilng.h"
+#include "hbapilng.hpp"
 
 /* SQLBASE */
 

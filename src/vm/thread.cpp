@@ -93,7 +93,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapicdp.hpp"
-#include "hbapilng.h"
+#include "hbapilng.hpp"
 #include "hbvm.h"
 #include "hbstack.h"
 #include "hbdate.h"

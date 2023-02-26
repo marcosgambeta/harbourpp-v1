@@ -50,7 +50,7 @@
 #include "hbapirdd.h"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbapilng.h"
+#include "hbapilng.hpp"
 #include "hbvm.h"
 #include "hbthread.h"
 #include "hbset.h"

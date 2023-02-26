@@ -51,7 +51,7 @@
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
 #include "hbapierr.hpp"
-#include "hbapilng.h"
+#include "hbapilng.hpp"
 #include "hbset.h"
 #include "hbctypes.ch"
 

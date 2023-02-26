@@ -49,7 +49,7 @@
 
 #include "hbvm.h"
 #include "hbapierr.hpp"
-#include "hbapilng.h"
+#include "hbapilng.hpp"
 #include "hbstack.h"
 #include "hbdate.h"
 

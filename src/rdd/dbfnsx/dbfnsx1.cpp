@@ -57,7 +57,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbinit.h"
-#include "hbapilng.h"
+#include "hbapilng.hpp"
 #include "hbvm.h"
 #include "hbset.h"
 #include "hbstack.h"

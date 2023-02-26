@@ -32,6 +32,7 @@ C_HEADERS := \
    hbapiitm.h \
    hbapiitm.hpp \
    hbapilng.h \
+   hbapilng.hpp \
    hbapirdd.h \
    hbapistr.h \
    hbassert.h \

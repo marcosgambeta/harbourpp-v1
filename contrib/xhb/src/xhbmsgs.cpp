@@ -46,7 +46,7 @@
 
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbapilng.h"
+#include "hbapilng.hpp"
 #include "hbstack.h"
 #include "hbmath.h"
 

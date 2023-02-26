@@ -49,7 +49,7 @@
 #include "hbinit.h"
 #include "hbapierr.hpp"
 #include "hbdbferr.h"
-#include "hbapilng.h"
+#include "hbapilng.hpp"
 #include "hbdate.h"
 #include "hbset.h"
 #include "hbvm.h"

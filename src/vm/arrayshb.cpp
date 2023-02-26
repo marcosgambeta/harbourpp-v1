@@ -48,7 +48,7 @@
 #include "hbstack.h"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbapilng.h"
+#include "hbapilng.hpp"
 
 /* This function creates an array item using 'iDimension' as an index
  * to retrieve the number of elements from the parameter list.

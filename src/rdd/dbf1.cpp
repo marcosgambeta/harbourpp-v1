@@ -50,7 +50,7 @@
 #include "hbapiitm.hpp"
 #include "hbapistr.h"
 #include "hbapierr.hpp"
-#include "hbapilng.h"
+#include "hbapilng.hpp"
 #include "hbset.h"
 #include "hbdate.h"
 #include "hbsxfunc.h"

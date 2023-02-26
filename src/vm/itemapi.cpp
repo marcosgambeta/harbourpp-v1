@@ -61,7 +61,7 @@
 #include "hbstack.h"
 #include "hbapicls.hpp"
 #include "hbapiitm.hpp"
-#include "hbapilng.h"
+#include "hbapilng.hpp"
 #include "hbapierr.hpp"
 #include "hbdate.h"
 #include "hbset.h"

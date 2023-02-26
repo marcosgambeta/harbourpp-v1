@@ -1,6 +1,6 @@
 /* Last Translator: Alain Aupeix (alain.aupeix wanadoo.fr) */
 
-#include "hbapilng.h"
+#include "hbapilng.hpp"
 
 static HB_LANG s_lang =
 {
