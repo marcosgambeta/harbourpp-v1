@@ -48,7 +48,7 @@
 #include "hbapifs.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 /* extended FILE IO handle destructor */
 static HB_GARBAGE_FUNC(hb_file_Destructor)

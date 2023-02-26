@@ -49,7 +49,7 @@
 #include "hbstack.hpp"
 #include "hbset.h"
 #include "hbvm.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "error.ch"
 
 #if defined(HB_OS_UNIX)

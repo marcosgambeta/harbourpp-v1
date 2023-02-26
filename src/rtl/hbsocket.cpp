@@ -232,7 +232,7 @@
 #include "hbvm.hpp"
 #include "hbstack.hpp"
 #include "hbthread.h"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 /* TODO change error description to something more user friendly */
 static const char * s_socketErrors[] = {

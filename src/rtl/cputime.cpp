@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 #if defined(HB_OS_UNIX)
    #if !defined(HB_OS_VXWORKS)

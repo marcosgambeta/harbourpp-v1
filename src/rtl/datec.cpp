@@ -49,7 +49,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 #if defined(__CODEGUARD__)
    static const char s_nullStr[4] = { 0 };

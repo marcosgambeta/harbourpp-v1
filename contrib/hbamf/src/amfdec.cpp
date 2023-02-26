@@ -14,7 +14,7 @@
 #include "hbstack.hpp"
 #include "amf.h"
 
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "hbmath.h"
 
 #include "hbvm.hpp"

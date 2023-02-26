@@ -50,7 +50,7 @@
 #define _HB_PP_INTERNAL
 
 #include "hbpp.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 #define HB_PP_WARN_EXPLICIT                     1     /* C10?? */
 #define HB_PP_WARN_DEFINE_REDEF                 2     /* C1005 */

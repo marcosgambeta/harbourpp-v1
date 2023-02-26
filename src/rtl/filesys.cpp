@@ -79,7 +79,7 @@
 #include "hbapifs.hpp"
 #include "hbapierr.hpp"
 #include "hbapicdp.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "hb_io.h"
 #include "hbset.h"
 

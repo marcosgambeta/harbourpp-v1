@@ -63,7 +63,7 @@
 #include "hbapiitm.hpp"
 #include "hbapilng.hpp"
 #include "hbapierr.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "hbset.h"
 #include "hbapicdp.hpp"
 

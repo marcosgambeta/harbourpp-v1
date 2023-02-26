@@ -55,7 +55,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapifs.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 #include "hbapicdp.hpp"
 

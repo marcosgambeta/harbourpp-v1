@@ -72,7 +72,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbwinuni.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 #include "hbapicdp.hpp"
 

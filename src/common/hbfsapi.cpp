@@ -52,7 +52,7 @@
 #include "hbapifs.hpp"
 #include "hb_io.h"
 #include "hbset.h"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 #if defined(HB_OS_WIN)
    #include <windows.h>

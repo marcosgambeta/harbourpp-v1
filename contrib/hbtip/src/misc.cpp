@@ -48,7 +48,7 @@
 
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 /* Internet timestamp based on:
    https://tools.ietf.org/html/rfc822

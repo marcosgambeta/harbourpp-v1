@@ -54,7 +54,7 @@
 #include "hbapierr.hpp"
 #include "hbdbferr.h"
 #include "hbvm.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 #define HB_FILE_BUF_SIZE  0x10000
 struct _HB_FILEBUF

@@ -102,7 +102,7 @@
 #include "hbapicom.hpp"
 #include "hbvm.hpp"
 #include "hbinit.h"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "hbthread.h"
 
 struct HB_COM

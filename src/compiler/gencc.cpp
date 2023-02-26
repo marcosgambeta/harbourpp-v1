@@ -45,7 +45,7 @@
  */
 
 #include "hbcomp.h"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "hbassert.h"
 
 #define HB_GENC_FUNC(func)   HB_PCODE_FUNC(func, PHB_LABEL_INFO)

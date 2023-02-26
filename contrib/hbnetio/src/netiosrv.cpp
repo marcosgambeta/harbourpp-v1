@@ -80,7 +80,7 @@
 #include "hbvm.hpp"
 #include "hbstack.hpp"
 #include "hbthread.h"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "netio.h"
 #include "hbserial.ch"
 

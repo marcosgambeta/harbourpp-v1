@@ -50,7 +50,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbset.h"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "hbstack.hpp"
 
 /* NOTE: iParam = -1 can be used to access the return value. */

@@ -52,7 +52,7 @@
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
 #include "hbset.h"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "hbsxfunc.h"
 #include "hbstack.hpp"
 #include "hbvm.hpp"

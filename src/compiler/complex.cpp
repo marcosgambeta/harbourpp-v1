@@ -47,7 +47,7 @@
 
 #include "hbcomp.h"
 #include "hbpp.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "harboury.h"
 
 #define HB_PP_LEX_SELF(t)     (HB_PP_TOKEN_TYPE((t)->type) == HB_PP_TOKEN_SEND && \

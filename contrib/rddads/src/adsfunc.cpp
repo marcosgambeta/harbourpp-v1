@@ -51,7 +51,7 @@
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
 #include "hbstack.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 #include "rddsys.ch"
 

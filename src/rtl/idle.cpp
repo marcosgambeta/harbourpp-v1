@@ -51,7 +51,7 @@
 #include "hbvm.hpp"
 #include "hbstack.hpp"
 #include "hbthread.h"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "error.ch"
 
 struct HB_IDLEDATA

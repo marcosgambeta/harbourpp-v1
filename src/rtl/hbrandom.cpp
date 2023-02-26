@@ -46,7 +46,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "hbstack.hpp"
 
 /* NOTE: core random generator algorithm is the work of Steve Park

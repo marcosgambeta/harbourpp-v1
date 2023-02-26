@@ -46,7 +46,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 HB_FUNC( SECONDS )
 {

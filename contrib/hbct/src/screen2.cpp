@@ -47,7 +47,7 @@
 
 #include "hbapigt.hpp"
 #include "hbapistr.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 HB_FUNC( SAYDOWN )
 {

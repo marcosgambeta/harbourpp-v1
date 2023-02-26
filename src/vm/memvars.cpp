@@ -52,7 +52,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapifs.hpp" /* for __mvSave()/__mvRestore() */
-#include "hbdate.h"  /* for __mvSave()/__mvRestore() */
+#include "hbdate.hpp"  /* for __mvSave()/__mvRestore() */
 #include "hbcomp.h"  /* for HB_VSCOMP_* macros */
 #include "error.ch"
 #include "hbmemvar.ch"

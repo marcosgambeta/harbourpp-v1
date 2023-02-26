@@ -46,6 +46,7 @@ C_HEADERS := \
    hbcomp.h \
    hbcompdf.h \
    hbdate.h \
+   hbdate.hpp \
    hbdbf.h \
    hbdbferr.h \
    hbdefs.h \

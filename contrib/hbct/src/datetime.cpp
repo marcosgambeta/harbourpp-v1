@@ -47,7 +47,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 HB_FUNC( BOM )
 {

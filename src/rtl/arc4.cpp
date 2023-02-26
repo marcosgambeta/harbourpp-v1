@@ -44,7 +44,7 @@
  */
 
 #include "arc4.h"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "hbthread.h"
 
 /* XXX: Check and possibly extend this to other Unix-like platforms */

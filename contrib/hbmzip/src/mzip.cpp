@@ -54,7 +54,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapistr.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "hbset.h"
 
 #if !defined(HB_OS_UNIX)

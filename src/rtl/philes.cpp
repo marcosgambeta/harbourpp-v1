@@ -51,7 +51,7 @@
 #include "hbapifs.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 HB_FUNC( FOPEN )
 {

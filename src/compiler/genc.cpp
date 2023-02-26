@@ -21,7 +21,7 @@
  */
 
 #include "hbcomp.h"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "hbassert.h"
 #include <string>
 

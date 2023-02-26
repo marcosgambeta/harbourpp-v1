@@ -67,7 +67,7 @@
 #include "hbinit.h"
 #include "hbapifs.hpp"
 #include "hbapicdp.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 static int s_GtId;
 static HB_GT_FUNCS SuperTable;

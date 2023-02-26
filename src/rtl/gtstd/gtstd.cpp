@@ -53,7 +53,7 @@
 #include "hbapifs.hpp"
 #include "hbapicdp.hpp"
 #include "hbapiitm.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "hb_io.h"
 
 #if (defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS))

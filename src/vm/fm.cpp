@@ -74,7 +74,7 @@
 #include "hbstack.hpp"
 #include "hbapierr.hpp"
 #include "hbmemory.ch"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "hbset.h"
 #include "hbvm.hpp"
 

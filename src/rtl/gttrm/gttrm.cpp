@@ -68,7 +68,7 @@
 #include "hbapistr.hpp"
 #include "hbapiitm.hpp"
 #include "hbapifs.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "inkey.ch"
 
 #include <stdio.h>

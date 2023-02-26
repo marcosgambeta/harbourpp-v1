@@ -48,7 +48,7 @@
 
 #include "hbmacro.h"
 #include "hbcomp.h"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #include "macroy.h"
 
 struct _HB_MACRO_LEX

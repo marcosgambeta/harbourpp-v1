@@ -53,7 +53,7 @@
 #include "hbapierr.hpp"
 #include "hbvm.hpp"
 #include "hbstack.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 #if defined( HB_OS_WIN )
 

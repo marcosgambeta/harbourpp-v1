@@ -57,7 +57,7 @@
 #include "hbapiitm.hpp"
 #include "inkey.ch"
 #include "hbapicdp.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 #if defined( HB_OS_DARWIN ) || defined( HB_OS_AIX )
 #define REAL_UNIX_SYSTEM  /* this is for slang.h to include some defs */

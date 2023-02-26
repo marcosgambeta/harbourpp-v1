@@ -50,7 +50,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 #if defined(HB_LONG_LONG_OFF)
 #  include "hbmath.h"
 #endif

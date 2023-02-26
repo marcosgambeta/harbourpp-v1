@@ -50,7 +50,7 @@
 #include "hbapiitm.hpp"
 #include "hbapirdd.hpp"
 #include "hbvm.hpp"
-#include "hbdate.h"
+#include "hbdate.hpp"
 
 typedef struct
 {
