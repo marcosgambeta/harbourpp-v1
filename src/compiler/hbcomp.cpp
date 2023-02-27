@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 
 static PHB_EXPR hb_compExprAlloc(HB_COMP_DECL)
 {

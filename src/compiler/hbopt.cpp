@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 #include "hbassert.h"
 
 #define HB_OPT_FUNC(func)  HB_PCODE_FUNC(func, void *)

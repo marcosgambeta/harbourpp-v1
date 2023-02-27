@@ -22,7 +22,7 @@
 
 #include <string.h>
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 
 #define HB_IDENT_TABLE_SIZE  509UL
 

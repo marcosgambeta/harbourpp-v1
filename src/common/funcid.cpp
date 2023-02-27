@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 
 struct _HB_FUNCID
 {

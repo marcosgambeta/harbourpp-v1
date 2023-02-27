@@ -6,6 +6,6 @@
 #define HB_MACRO_SUPPORT
 
 #include "hbmacro.h"
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 
 #include "hbexpra.cpp"

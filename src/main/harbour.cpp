@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 #include "hbverbld.h"
 
 /* Source repository revision number */

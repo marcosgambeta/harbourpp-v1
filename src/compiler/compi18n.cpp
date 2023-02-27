@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 
 static PHB_I18NTABLE hb_compI18nCreate(void)
 {

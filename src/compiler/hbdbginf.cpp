@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 
 PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL)
 {

@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 #include "hbassert.h"
 
 HB_EXTERN_BEGIN

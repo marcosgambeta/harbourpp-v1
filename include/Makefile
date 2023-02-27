@@ -45,6 +45,7 @@ C_HEADERS := \
    hbcdpreg.hpp \
    hbchksum.h \
    hbcomp.h \
+   hbcomp.hpp \
    hbcompdf.h \
    hbdate.h \
    hbdate.hpp \

@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 
 static void hb_pp_ErrorGen(void * cargo, const char * const szMsgTable[], char cPrefix, int iErrorCode, const char * szParam1, const char * szParam2)
 {

@@ -20,7 +20,7 @@
  *
  */
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 
 /* Table with parse errors */
 const char * const hb_comp_szErrors[] =

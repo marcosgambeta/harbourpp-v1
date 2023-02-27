@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 
 static void s_pp_msg(void * cargo, int iErrorFmt, int iLine, const char * szModule, char cPrefix, int iValue,
                      const char * szText, const char * szPar1, const char * szPar2)

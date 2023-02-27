@@ -46,7 +46,7 @@
 
 #include <string>
 #include <array>
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 
 void hb_compPrintUsage(HB_COMP_DECL, const char * szSelf)
 {

@@ -20,7 +20,7 @@
  *
  */
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 #include "hbdate.hpp"
 #include "hbassert.h"
 #include <string>

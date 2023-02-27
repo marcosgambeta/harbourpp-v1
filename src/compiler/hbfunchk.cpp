@@ -20,7 +20,7 @@
  *
  */
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 
 /* NOTE: iMinParam = -1, means no lower limit
  *       iMaxParam = -1, means no upper limit

@@ -50,7 +50,7 @@
 #include "hbapierr.hpp"
 #include "hbset.hpp"
 #include "hbvm.hpp"
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 #include "hbmemory.ch"
 
 /* --- FM statistic module --- */

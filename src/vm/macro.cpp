@@ -52,7 +52,7 @@
 
 #include "hbvmopt.hpp"
 #include "hbmacro.h"
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 #include "hbstack.hpp"
 
 /* various flags for macro compiler */

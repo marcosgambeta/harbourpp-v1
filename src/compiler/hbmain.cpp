@@ -31,7 +31,7 @@
    #endif
 #endif
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 #include "hbset.hpp"
 
 static int hb_compCompile(HB_COMP_DECL, const char * szPrg, const char * szBuffer, int iStartLine);

@@ -22,7 +22,7 @@
  *
  */
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 #include <string>
 
 #define SYM_NOLINK    0             /* symbol does not have to be linked */

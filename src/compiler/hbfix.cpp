@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbcomp.h"
+#include "hbcomp.hpp"
 #include "hbassert.h"
 
 /* helper structure to pass information */
