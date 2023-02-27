@@ -47,7 +47,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
-#include "hbtrace.h"
+#include "hbtrace.hpp"
 
 static int s_traceLogLevel = HB_TR_DEFAULT;
 

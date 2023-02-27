@@ -100,6 +100,7 @@ C_HEADERS := \
    hbthread.h \
    hbthread.hpp \
    hbtrace.h \
+   hbtrace.hpp \
    hbtypes.h \
    hbver.h \
    hbvm.h \
