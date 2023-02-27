@@ -138,7 +138,7 @@
 #include "hbmath.hpp"
 #include "hbrddntx.hpp"
 #include "rddsys.ch"
-#include "hbregex.h"
+#include "hbregex.hpp"
 #include "hbapicdp.hpp"
 
 #ifdef HB_NTX_DEBUG_DISP

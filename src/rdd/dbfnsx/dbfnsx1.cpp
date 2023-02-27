@@ -63,7 +63,7 @@
 #include "hbstack.hpp"
 #include "hbmath.hpp"
 #include "rddsys.ch"
-#include "hbregex.h"
+#include "hbregex.hpp"
 
 static RDDFUNCS  nsxSuper;
 static HB_USHORT s_uiRddId;

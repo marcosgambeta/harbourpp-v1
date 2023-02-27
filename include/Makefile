@@ -92,6 +92,7 @@ C_HEADERS := \
    hbrddnsx.h \
    hbrddnsx.hpp \
    hbregex.h \
+   hbregex.hpp \
    hbset.h \
    hbset.hpp \
    hbsetup.h \

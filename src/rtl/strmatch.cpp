@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbregex.h"
+#include "hbregex.hpp"
 
 HB_BOOL hb_strMatchRegExp(const char * szString, const char * szPattern)
 {
