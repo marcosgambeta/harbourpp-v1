@@ -53,7 +53,7 @@
 #include "hbapierr.hpp"
 #include "hbapifs.hpp"
 #include "hbvm.hpp"
-#include "hbpcode.h"
+#include "hbpcode.hpp"
 #include "hbset.hpp"
 #include "hb_io.hpp"
 #include "hbhrb.ch"

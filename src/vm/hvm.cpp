@@ -61,7 +61,7 @@
 #include "hbapicdp.hpp"
 #include "hbvm.hpp"
 #include "hbxvm.hpp"
-#include "hbpcode.h"
+#include "hbpcode.hpp"
 #include "hbset.hpp"
 #include "hbdate.hpp"
 #include "hbmath.hpp"

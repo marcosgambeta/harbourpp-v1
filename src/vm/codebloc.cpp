@@ -50,7 +50,7 @@
 #include "hbapicls.hpp"
 #include "hbvm.hpp"
 #include "hbstack.hpp"
-#include "hbpcode.h"
+#include "hbpcode.hpp"
 
 /* Dummy returning NIL for buggy code which may store references
    to freed by GC codeblock in .prg destructors and then (after

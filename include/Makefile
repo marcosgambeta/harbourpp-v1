@@ -75,6 +75,7 @@ C_HEADERS := \
    hbmsgreg.h \
    hbmsgreg.hpp \
    hbpcode.h \
+   hbpcode.hpp \
    hbpp.h \
    hbpp.hpp \
    hbrddcdx.h \
