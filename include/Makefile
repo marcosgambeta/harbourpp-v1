@@ -104,6 +104,7 @@ C_HEADERS := \
    hbtrace.hpp \
    hbtypes.h \
    hbver.h \
+   hbver.hpp \
    hbvm.h \
    hbvm.hpp \
    hbvmint.h \
