@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 
-#include "sha1.h"
+#include "sha1.hpp"
 
 HB_FUNC( HB_SHA1 )
 {
