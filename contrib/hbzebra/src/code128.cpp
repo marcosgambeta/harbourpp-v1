@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbzebra.h"
+#include "hbzebra.hpp"
 
 static const unsigned short s_code[] = {
    00633,   /*           00 */

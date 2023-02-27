@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbzebra.h"
+#include "hbzebra.hpp"
 
 /* Usually one character bitmap does not fit into 1 byte, but if we use enough
    good encoding, we can manage to fit :) [Mindaugas] */

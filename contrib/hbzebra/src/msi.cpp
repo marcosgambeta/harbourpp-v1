@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbzebra.h"
+#include "hbzebra.hpp"
 
 static char _msi_checksum( const char * szCode )
 {

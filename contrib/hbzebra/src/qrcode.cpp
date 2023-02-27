@@ -69,7 +69,7 @@
 
  */
 
-#include "hbzebra.h"
+#include "hbzebra.hpp"
 
 /* #define DEBUG_CODE */
 

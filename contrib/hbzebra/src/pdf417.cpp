@@ -61,7 +61,7 @@
      https://www.datasymbol.com/barcode-recognition-sdk/barcode-reader/online-barcode-decoder.html
  */
 
-#include "hbzebra.h"
+#include "hbzebra.hpp"
 
 #define CODE_START          0x2AFF  /* 17-bit width */
 #define CODE_STOP           0x2517F /* 18-bit width */

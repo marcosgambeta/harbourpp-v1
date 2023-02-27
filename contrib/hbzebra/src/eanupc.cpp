@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbzebra.h"
+#include "hbzebra.hpp"
 
 /* we do not store L-code, but just to bit inversion R-code to obtain it */
 static const char s_first[] = { 0x00, 0x34, 0x2C, 0x1C, 0x32, 0x26, 0x0E, 0x2A, 0x1A, 0x16 };

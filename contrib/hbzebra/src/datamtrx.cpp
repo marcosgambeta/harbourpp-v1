@@ -64,7 +64,7 @@
 
  */
 
-#include "hbzebra.h"
+#include "hbzebra.hpp"
 
 /* Special CodeWords */
 #define PADDING               129

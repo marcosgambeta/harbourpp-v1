@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbzebra.h"
+#include "hbzebra.hpp"
 
 static const char s_code[] = {
    0x28,  /* 0 */
