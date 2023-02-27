@@ -47,7 +47,7 @@
  *
  */
 
-#include "hbgtwvw.h"
+#include "hbgtwvw.hpp"
 
 /*wvw_tbCreate([nWinNum], lDisplayText, nStyle, nSystemBitmap, nImageWidth, nImageHeight)
  * creates a toolbar at the top (no button initially)

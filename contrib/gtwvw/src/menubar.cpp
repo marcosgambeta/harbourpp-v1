@@ -42,7 +42,7 @@
  *
  */
 
-#include "hbgtwvw.h"
+#include "hbgtwvw.hpp"
 
 HB_FUNC( WVW_SETMENU )
 {

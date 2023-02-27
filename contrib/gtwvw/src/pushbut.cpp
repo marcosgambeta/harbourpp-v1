@@ -47,7 +47,7 @@
  *
  */
 
-#include "hbgtwvw.h"
+#include "hbgtwvw.hpp"
 
 /* wvw_pbCreate( [nWinNum], nTop, nLeft, nBottom, nRight, cText, cImage/nImage, bBlock, aOffset, ;
  *               nStretchBitmap, lMap3Dcolors, @hControl, nStyle )

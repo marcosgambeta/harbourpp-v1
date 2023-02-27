@@ -47,7 +47,7 @@
  *
  */
 
-#include "hbgtwvw.h"
+#include "hbgtwvw.hpp"
 
 static COLORREF _COLORS[] = {
    BLACK,

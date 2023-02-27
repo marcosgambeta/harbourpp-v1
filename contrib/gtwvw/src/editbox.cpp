@@ -47,7 +47,7 @@
  *
  */
 
-#include "hbgtwvw.h"
+#include "hbgtwvw.hpp"
 
 /* wvw_ebCreate( [nWinNum], nTop, nLeft, nBottom, nRight, cText, bBlock, ;
  *                         lMultiline, nMoreStyle, nMaxChar, nReserved, aOffset)

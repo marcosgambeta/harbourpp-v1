@@ -74,7 +74,7 @@
  *
  */
 
-#include "hbgtwvw.h"
+#include "hbgtwvw.hpp"
 
 #include "hbgfxdef.ch"
 #define SubclassWindow(hwnd, lpfn) (reinterpret_cast<WNDPROC>(SetWindowLongPtr((hwnd), GWLP_WNDPROC, reinterpret_cast<LPARAM>(static_cast<WNDPROC>(lpfn)))))

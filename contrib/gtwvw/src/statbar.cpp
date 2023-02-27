@@ -47,7 +47,7 @@
  *
  */
 
-#include "hbgtwvw.h"
+#include "hbgtwvw.hpp"
 
 /* wvw_sbCreate( [nWinNum] )
  * create status bar for window nWinNum, with one part.
