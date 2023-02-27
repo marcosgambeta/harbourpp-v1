@@ -94,7 +94,7 @@
 #include "hbwinuni.hpp"
 
 #if 0
-#include "hbole.h"
+#include "hbole.hpp"
 #endif
 
 #include <windows.h>
