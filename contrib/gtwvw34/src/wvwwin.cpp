@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbgtwvw.h"
+#include "hbgtwvw.hpp"
 
 #include "hbmath.h"
 

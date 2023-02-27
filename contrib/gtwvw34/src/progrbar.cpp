@@ -47,7 +47,7 @@
  *
  */
 
-#include "hbgtwvw.h"
+#include "hbgtwvw.hpp"
 
 /*
 wvw_pgCreate([nWinNum], nTop, nLeft, nBottom, nRight, [aOffset],

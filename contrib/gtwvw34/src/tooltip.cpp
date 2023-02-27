@@ -47,7 +47,7 @@
  *
  */
 
-#include "hbgtwvw.h"
+#include "hbgtwvw.hpp"
 
 /* workaround for missing declaration in MinGW */
 #if !defined(TTM_SETTITLE) && defined(TTM_SETTITLEA)

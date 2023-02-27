@@ -47,7 +47,7 @@
  *
  */
 
-#include "hbgtwvw.h"
+#include "hbgtwvw.hpp"
 
 #define WVW_MAX_STATUS_PARTS     40  /* max # of parts in Status Bar */
 #define WVW_SPACE_BETWEEN_PARTS  2   /* pixel space between Status Bar's parts */

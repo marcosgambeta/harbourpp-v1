@@ -74,7 +74,7 @@
  *
  */
 
-#include "hbgtwvw.h"
+#include "hbgtwvw.hpp"
 
 #include "hbinit.hpp"
 #include "hbapifs.hpp"
