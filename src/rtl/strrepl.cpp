@@ -54,7 +54,7 @@
 HB_FUNC( HB_STRREPLACE )
 {
    PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
-   PHB_ITEM pSrc = hb_param(2, Harbour::Item::STRING | Harbour::Item::ARRAY | (HB_ISNIL(3) ? Harbour::Item::HASH : 0));
+   PHB_ITEM pSrc = hb_param(2, Harbour::Item::STRING | Harbour::Item::ARRAY | (HB_ISNIL(3) ? Harbour::Item::HASH : Harbour::Item::NIL));
 
    if( pText && pSrc )
    {
