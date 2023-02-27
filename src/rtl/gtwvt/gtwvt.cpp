@@ -65,7 +65,7 @@
  *
  */
 
-#include "gtwvt.h"
+#include "gtwvt.hpp"
 
 #ifndef WS_EX_COMPOSITED
 #define WS_EX_COMPOSITED  0x02000000
