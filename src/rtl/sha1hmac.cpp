@@ -56,7 +56,7 @@
 #ifndef __HMAC_SHA1_H__
 #define __HMAC_SHA1_H__
 
-#include "sha1hmac.h"
+#include "sha1hmac.hpp"
 #include <string.h>
 
 #ifdef  __cplusplus
