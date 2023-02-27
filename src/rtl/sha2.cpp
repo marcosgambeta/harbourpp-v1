@@ -33,7 +33,7 @@
 
 #include <string.h>
 
-#include "sha2.h"
+#include "sha2.hpp"
 #include "hbdefs.hpp"
 
 #define SHFR(x, n)    (x >> n)

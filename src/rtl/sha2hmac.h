@@ -34,7 +34,7 @@
 #ifndef _HMAC_SHA2_H
 #define _HMAC_SHA2_H
 
-#include "sha2.h"
+#include "sha2.hpp"
 
 #ifdef __cplusplus
 extern "C" {
