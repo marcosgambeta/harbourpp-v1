@@ -45,7 +45,7 @@
  */
 
 #include "hbcomp.hpp"
-#include "hbassert.h"
+#include "hbassert.hpp"
 
 #define HB_LABEL_FUNC(func)  HB_PCODE_FUNC(func, PHB_LABEL_INFO)
 typedef HB_LABEL_FUNC(HB_LABEL_FUNC_);

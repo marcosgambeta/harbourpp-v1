@@ -45,7 +45,7 @@
  */
 
 #include "hbcomp.hpp"
-#include "hbassert.h"
+#include "hbassert.hpp"
 
 /* helper structure to pass information */
 struct HB_stru_fix_info

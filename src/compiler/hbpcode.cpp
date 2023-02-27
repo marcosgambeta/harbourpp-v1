@@ -21,7 +21,7 @@
  */
 
 #include "hbcomp.hpp"
-#include "hbassert.h"
+#include "hbassert.hpp"
 
 #define HB_PSIZE_FUNC(func)  HB_PCODE_FUNC(func, PHB_VOID)
 

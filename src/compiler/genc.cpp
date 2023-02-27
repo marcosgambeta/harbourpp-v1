@@ -22,7 +22,7 @@
 
 #include "hbcomp.hpp"
 #include "hbdate.hpp"
-#include "hbassert.h"
+#include "hbassert.hpp"
 #include <string>
 
 static void hb_compGenCReadable(HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc);
