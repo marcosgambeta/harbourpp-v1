@@ -49,7 +49,7 @@
  */
 #define  HB_COMMON_SUPPORT
 
-#include "hbmacro.h"
+#include "hbmacro.hpp"
 #include "hbcomp.hpp"
 
 static const char * s_OperTable[HB_EXPR_COUNT] = {

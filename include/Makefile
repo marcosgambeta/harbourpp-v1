@@ -64,6 +64,7 @@ C_HEADERS := \
    hbinit.hpp \
    hbjson.h \
    hbmacro.h \
+   hbmacro.hpp \
    hbmath.h \
    hbmath.hpp \
    hbmather.h \

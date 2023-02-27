@@ -46,7 +46,7 @@
 
 #define HB_MACRO_SUPPORT
 
-#include "hbmacro.h"
+#include "hbmacro.hpp"
 #include "hbcomp.hpp"
 #include "hbdate.hpp"
 #include "macroy.h"

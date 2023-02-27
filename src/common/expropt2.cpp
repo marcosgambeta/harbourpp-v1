@@ -49,7 +49,7 @@
  */
 #define  HB_COMMON_SUPPORT
 
-#include "hbmacro.h"
+#include "hbmacro.hpp"
 #include "hbcomp.hpp"
 #include "hbdate.hpp"
 #include "hbmath.hpp"

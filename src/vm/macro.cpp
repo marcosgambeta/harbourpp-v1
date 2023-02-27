@@ -51,7 +51,7 @@
 #endif
 
 #include "hbvmopt.hpp"
-#include "hbmacro.h"
+#include "hbmacro.hpp"
 #include "hbcomp.hpp"
 #include "hbstack.hpp"
 

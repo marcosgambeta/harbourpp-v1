@@ -5,7 +5,7 @@
 
 #define HB_MACRO_SUPPORT
 
-#include "hbmacro.h"
+#include "hbmacro.hpp"
 #include "hbcomp.hpp"
 
 #include "hbexpra.cpp"
