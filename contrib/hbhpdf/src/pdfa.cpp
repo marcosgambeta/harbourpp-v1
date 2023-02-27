@@ -42,7 +42,7 @@
  *
  */
 
-#include "hbhpdf.h"
+#include "hbhpdf.hpp"
 
 /* HPDF_PDFA_SetPDFAConformance( pdf, nPDFAType ) --> hStatus */
 HB_FUNC( HPDF_PDFA_SETPDFACONFORMANCE )

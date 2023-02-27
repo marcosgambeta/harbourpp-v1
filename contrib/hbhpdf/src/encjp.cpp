@@ -42,7 +42,7 @@
  *
  */
 
-#include "hbhpdf.h"
+#include "hbhpdf.hpp"
 
 /* HPDF_UseJPEncodings( hDoc ) --> hStatus */
 HB_FUNC( HPDF_USEJPENCODINGS )

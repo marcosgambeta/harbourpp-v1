@@ -42,7 +42,7 @@
  *
  */
 
-#include "hbhpdf.h"
+#include "hbhpdf.hpp"
 
 /* HPDF_UseCNTFonts( hDoc ) --> hStatus */
 HB_FUNC( HPDF_USECNTFONTS )

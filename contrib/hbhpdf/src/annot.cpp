@@ -42,7 +42,7 @@
  *
  */
 
-#include "hbhpdf.h"
+#include "hbhpdf.hpp"
 
 /* HPDF_LinkAnnot_SetHighlightMode( hAnnot, nHilightMode ) --> hStatus
        nHilightMode ==

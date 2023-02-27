@@ -42,7 +42,7 @@
  *
  */
 
-#include "hbhpdf.h"
+#include "hbhpdf.hpp"
 
 /* HPDF_LoadPngImageFromFile( hDoc, cPNGFileName ) --> hImage */
 HB_FUNC( HPDF_LOADPNGIMAGEFROMFILE )

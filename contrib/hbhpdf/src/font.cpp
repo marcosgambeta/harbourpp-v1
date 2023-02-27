@@ -42,7 +42,7 @@
  *
  */
 
-#include "hbhpdf.h"
+#include "hbhpdf.hpp"
 
 /* HPDF_LoadTypeIFontFromFile( hDoc, cAFMFileName, cPFA_PFBFileName ) --> cFontName */
 HB_FUNC( HPDF_LOADTYPE1FONTFROMFILE )

@@ -42,7 +42,7 @@
  *
  */
 
-#include "hbhpdf.h"
+#include "hbhpdf.hpp"
 
 static HB_GARBAGE_FUNC( hb_HPDF_Doc_release )
 {
