@@ -61,7 +61,7 @@
 #include "hbvm.hpp"
 #include "hbset.hpp"
 #include "hbstack.hpp"
-#include "hbmath.h"
+#include "hbmath.hpp"
 #include "rddsys.ch"
 #include "hbregex.h"
 

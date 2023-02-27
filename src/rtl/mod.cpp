@@ -47,7 +47,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbmath.h"
+#include "hbmath.hpp"
 
 /* NOTE: In CA-Cl*pper this is written in Clipper, see the source below,
          and the error handling is NOT made here, but in the % operator.

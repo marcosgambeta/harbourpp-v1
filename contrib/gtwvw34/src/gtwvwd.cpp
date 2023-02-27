@@ -78,7 +78,7 @@
 
 #include "hbinit.hpp"
 #include "hbapifs.hpp"
-#include "hbmath.h"
+#include "hbmath.hpp"
 #include "hbvm.hpp"
 
 #include "hbgfxdef.ch"

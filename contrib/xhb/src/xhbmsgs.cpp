@@ -48,7 +48,7 @@
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
 #include "hbstack.hpp"
-#include "hbmath.h"
+#include "hbmath.hpp"
 
 HB_FUNC( XHB_HASHERROR )
 {

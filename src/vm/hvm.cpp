@@ -64,7 +64,7 @@
 #include "hbpcode.h"
 #include "hbset.hpp"
 #include "hbdate.hpp"
-#include "hbmath.h"
+#include "hbmath.hpp"
 #include "hbdebug.ch"
 #if defined(HB_MT_VM)
 #  include "hbthread.hpp"

@@ -71,7 +71,7 @@
 #include "hbset.hpp"
 #include "hbstack.hpp"
 #include "hbrddcdx.hpp"
-#include "hbmath.h"
+#include "hbmath.hpp"
 #include "rddsys.ch"
 #include "hbregex.h"
 #include "hbapicdp.hpp"

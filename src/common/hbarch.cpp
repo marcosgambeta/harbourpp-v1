@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbmath.h"
+#include "hbmath.hpp"
 
 /*
  * functions hb_put_ieee754() and hb_get_ieee754() stores / retrieve

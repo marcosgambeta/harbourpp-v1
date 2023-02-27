@@ -52,7 +52,7 @@
 #include "hbmacro.h"
 #include "hbcomp.h"
 #include "hbdate.hpp"
-#include "hbmath.h"
+#include "hbmath.hpp"
 
 static HB_BOOL hb_compExprHasMacro(const char * szText, HB_SIZE nLen, HB_COMP_DECL)
 {

@@ -1,7 +1,8 @@
 /*
- * CA-T*ols for Harbour, Math header file
+ * Harbour math functions and API
  *
- * Copyright 2001 Alejandro de Garate <alex_degarate@hotmail.com>
+ * Copyright 2001 IntTec GmbH, Neunlindenstr 32, 79106 Freiburg, Germany
+ *        Author: Martin Vogel <vogel@inttec.de>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,25 +45,9 @@
  *
  */
 
-#ifndef _CTMATH_H
-#define _CTMATH_H
+#ifndef HB_MATH_H_
+#define HB_MATH_H_
 
-#include "hbmath.hpp"
+#include <math.h>
 
-#define CT_PI      3.14159265358979323846
-#define CT_PI_2    1.57079632679489661923
-#define CT_PI_RAD  0.0174532925199432957692  /* 3.14159265358979323846 / 180.0 */
-
-HB_EXTERN_BEGIN
-
-/* initialization */
-extern int ct_math_init( void );
-extern int ct_math_exit( void );
-
-/* set and get precision */
-extern void ct_setprecision( int iPrecision );
-extern int ct_getprecision( void );
-
-HB_EXTERN_END
-
-#endif /* CTMATH_H */
+#endif /* HB_MATH_H_ */

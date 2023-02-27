@@ -50,7 +50,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapicdp.hpp"
-#include "hbmath.h"
+#include "hbmath.hpp"
 #include "hbvm.hpp"
 #include "hbstack.hpp"
 #include "hbthread.hpp"

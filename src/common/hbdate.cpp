@@ -52,7 +52,7 @@
 #include "hbapi.hpp"
 #include "hbdate.hpp"
 #if defined(HB_LONG_LONG_OFF)
-#  include "hbmath.h"
+#  include "hbmath.hpp"
 #endif
 
 #include <time.h>

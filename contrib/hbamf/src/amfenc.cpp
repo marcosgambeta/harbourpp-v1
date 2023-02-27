@@ -20,7 +20,7 @@
 #include "amf.h"
 
 #include "hbdate.hpp"
-#include "hbmath.h"
+#include "hbmath.hpp"
 
 #include "hbvm.hpp"
 
