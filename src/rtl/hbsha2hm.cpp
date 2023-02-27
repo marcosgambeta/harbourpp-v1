@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 
-#include "sha2hmac.h"
+#include "sha2hmac.hpp"
 
 HB_FUNC( HB_HMAC_SHA224 )
 {
