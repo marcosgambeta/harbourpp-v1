@@ -56,7 +56,7 @@
 
 /* GUI Drawing Function */
 
-#include "gtwvg.h"
+#include "gtwvg.hpp"
 
 #define __SETGUI__
 

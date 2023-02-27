@@ -55,7 +55,7 @@
  *
  */
 
-#include "gtwvg.h"
+#include "gtwvg.hpp"
 
 #include <windowsx.h>
 

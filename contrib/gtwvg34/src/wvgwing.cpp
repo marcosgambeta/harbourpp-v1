@@ -78,7 +78,7 @@
 #  endif
 #endif
 
-#include "gtwvg.h"
+#include "gtwvg.hpp"
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0610
    #undef NONAMELESSUNION

@@ -62,7 +62,7 @@
  *
  */
 
-#include "gtwgu.h"
+#include "gtwgu.hpp"
 
 #ifndef WS_EX_LAYERED
 #define WS_EX_LAYERED     0x00080000
