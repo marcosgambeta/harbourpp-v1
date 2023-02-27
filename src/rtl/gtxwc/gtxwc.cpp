@@ -51,7 +51,7 @@
 /* #define HB_XWC_USE_LOCALE */
 
 
-#include "gtxwc.h"
+#include "gtxwc.hpp"
 #ifdef HB_XWC_USE_LOCALE
 #  include <locale.h>
 #endif
