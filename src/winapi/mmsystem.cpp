@@ -39,7 +39,7 @@ SOFTWARE.
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
 #include "hbwinuni.hpp"
-#include "winapi.h"
+#include "winapi.hpp"
 
 /*
 WINMMAPI LRESULT WINAPI CloseDriver(HDRVR hDriver,LPARAM lParam1,LPARAM lParam2)

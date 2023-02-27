@@ -41,7 +41,7 @@ SOFTWARE.
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
 #include "hbwinuni.hpp"
-#include "winapi.h"
+#include "winapi.hpp"
 
 /*
 WINBASEAPI HLOCAL WINAPI LocalAlloc (UINT uFlags, SIZE_T uBytes)

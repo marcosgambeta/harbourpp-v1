@@ -39,7 +39,7 @@ SOFTWARE.
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
 #include "hbwinuni.hpp"
-#include "winapi.h"
+#include "winapi.hpp"
 
 /*
 WINGDIAPI int WINAPI AddFontResourceA(LPCSTR)

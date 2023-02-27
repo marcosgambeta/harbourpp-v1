@@ -40,7 +40,7 @@ SOFTWARE.
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
 #include "hbwinuni.hpp"
-#include "winapi.h"
+#include "winapi.hpp"
 
 /*
 WINCOMMCTRLAPI void WINAPI InitCommonControls(void)
