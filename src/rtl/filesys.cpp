@@ -80,7 +80,7 @@
 #include "hbapierr.hpp"
 #include "hbapicdp.hpp"
 #include "hbdate.hpp"
-#include "hb_io.h"
+#include "hb_io.hpp"
 #include "hbset.hpp"
 
 #if defined(HB_OS_UNIX)

@@ -113,6 +113,7 @@ C_HEADERS := \
    hbzlib.h \
    hbznet.h \
    hb_io.h \
+   hb_io.hpp \
 
 PRG_HEADERS := \
    harbour.hbx \

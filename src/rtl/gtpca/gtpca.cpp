@@ -58,7 +58,7 @@
 #include "hbapicdp.hpp"
 #include "hbapiitm.hpp"
 #include "hbdate.hpp"
-#include "hb_io.h"
+#include "hb_io.hpp"
 #include "inkey.ch"
 
 #include <string.h>

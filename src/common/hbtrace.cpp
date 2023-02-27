@@ -52,7 +52,7 @@
 
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
-#include "hb_io.h"
+#include "hb_io.hpp"
 #include "hbtrace.h"
 
 #if defined(HB_OS_WIN)

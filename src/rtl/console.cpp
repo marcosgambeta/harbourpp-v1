@@ -59,7 +59,7 @@
 #include "hbapigt.hpp"
 #include "hbstack.hpp"
 #include "hbset.hpp"
-#include "hb_io.h"
+#include "hb_io.hpp"
 
 #if defined(HB_OS_WIN)
    #include <windows.h>

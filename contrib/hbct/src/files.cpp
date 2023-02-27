@@ -56,7 +56,7 @@
 #include "hbvm.hpp"
 #include "hbstack.hpp"
 #include "hbdate.hpp"
-#include "hb_io.h"
+#include "hb_io.hpp"
 #include "ctdisk.ch"
 
 #if defined(HB_OS_UNIX)

@@ -55,7 +55,7 @@
 #include "hbvm.hpp"
 #include "hbpcode.h"
 #include "hbset.hpp"
-#include "hb_io.h"
+#include "hb_io.hpp"
 #include "hbhrb.ch"
 
 struct HB_DYNF

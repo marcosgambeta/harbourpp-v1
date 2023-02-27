@@ -50,7 +50,7 @@
 
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
-#include "hb_io.h"
+#include "hb_io.hpp"
 #include "hbset.hpp"
 #include "hbdate.hpp"
 

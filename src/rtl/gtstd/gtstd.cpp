@@ -54,7 +54,7 @@
 #include "hbapicdp.hpp"
 #include "hbapiitm.hpp"
 #include "hbdate.hpp"
-#include "hb_io.h"
+#include "hb_io.hpp"
 
 #if (defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS))
 #  if !defined(HB_HAS_TERMIOS)
