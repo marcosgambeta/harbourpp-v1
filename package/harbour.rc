@@ -1,6 +1,6 @@
 /* Copyright 2011 Viktor Szakats (vszakats.net/harbour) */
 
-#include "hbver.h"
+#include "hbver.hpp"
 
 #define HB_MACRO2STRING( macro )       HB_MACRO2STRING_( macro )
 #define HB_MACRO2STRING_( macro )      #macro
