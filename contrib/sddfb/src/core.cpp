@@ -124,7 +124,7 @@ HB_CALL_ON_STARTUP_END( _hb_firebirddd_init_ )
 #elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY  HB_DATASEG_FUNC( firebirddd__InitSymbols ) \
    HB_DATASEG_FUNC( _hb_firebirddd_init_ )
-   #include "hbiniseg.h"
+   #include "hbiniseg.hpp"
 #endif
 
 

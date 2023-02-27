@@ -165,7 +165,7 @@ HB_CALL_ON_STARTUP_END( _hb_ocidd_init_ )
    #define HB_DATASEG_BODY  \
    HB_DATASEG_FUNC( ocidd__InitSymbols ) \
    HB_DATASEG_FUNC( _hb_ocidd_init_ )
-   #include "hbiniseg.h"
+   #include "hbiniseg.hpp"
 #endif
 /* --- */
 

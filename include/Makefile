@@ -63,6 +63,7 @@ C_HEADERS := \
    hbhash.h \
    hbhash.hpp \
    hbiniseg.h \
+   hbiniseg.hpp \
    hbinit.h \
    hbinit.hpp \
    hbjson.h \
