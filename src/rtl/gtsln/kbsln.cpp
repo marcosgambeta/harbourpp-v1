@@ -48,7 +48,7 @@
 
 /* *********************************************************************** */
 
-#include "gtsln.h"
+#include "gtsln.hpp"
 #include <sys/ioctl.h>
 
 #ifdef M_UNIX

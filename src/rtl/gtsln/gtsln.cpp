@@ -48,7 +48,7 @@
 
 /* *********************************************************************** */
 
-#include "gtsln.h"
+#include "gtsln.hpp"
 
 static int s_GtId;
 static HB_GT_FUNCS SuperTable;

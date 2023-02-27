@@ -46,7 +46,7 @@
 
 /* *********************************************************************** */
 
-#include "gtsln.h"
+#include "gtsln.hpp"
 #include <sys/time.h>
 #if defined(HB_HAS_GPM)
     #include <sys/types.h>
