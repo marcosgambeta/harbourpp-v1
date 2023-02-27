@@ -59,6 +59,7 @@ C_HEADERS := \
    hbgtcore.hpp \
    hbgtreg.h \
    hbhash.h \
+   hbhash.hpp \
    hbiniseg.h \
    hbinit.h \
    hbinit.hpp \

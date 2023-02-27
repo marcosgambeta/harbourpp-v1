@@ -59,7 +59,7 @@
 #include "hbapierr.hpp"
 #include "hbapifs.hpp"
 #include "hbvm.hpp"
-#include "hbhash.h"
+#include "hbhash.hpp"
 
 #include "hbcurl.ch"
 
