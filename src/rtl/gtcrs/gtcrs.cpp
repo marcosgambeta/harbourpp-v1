@@ -48,7 +48,7 @@
 
 /* *********************************************************************** */
 
-#include "gtcrs.h"
+#include "gtcrs.hpp"
 
 static int s_GtId;
 static HB_GT_FUNCS SuperTable;
