@@ -72,6 +72,7 @@ C_HEADERS := \
    hbmath.hpp \
    hbmather.h \
    hbmsgreg.h \
+   hbmsgreg.hpp \
    hbpcode.h \
    hbpp.h \
    hbpp.hpp \

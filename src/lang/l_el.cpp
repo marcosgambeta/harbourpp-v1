@@ -147,4 +147,4 @@ static HB_LANG s_lang =
 };
 
 #define HB_LANG_ID      EL
-#include "hbmsgreg.h"
+#include "hbmsgreg.hpp"

@@ -147,4 +147,4 @@ static HB_LANG s_lang =
 };
 
 #define HB_LANG_ID      SR_LAT
-#include "hbmsgreg.h"
+#include "hbmsgreg.hpp"
