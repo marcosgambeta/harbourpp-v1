@@ -67,7 +67,7 @@
 #endif
 #define WVT_DEFAULT_FONT_NAME       "Courier New"
 
-#include "gtwvglo.h"
+#include "gtwvglo.hpp"
 
 typedef struct
 {

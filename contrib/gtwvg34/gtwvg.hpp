@@ -67,7 +67,7 @@
 #endif
 #define WVT_DEFAULT_FONT_NAME       TEXT( "Courier New" )
 
-#include "gtwvglo.h"
+#include "gtwvglo.hpp"
 
 #define WVT_DLGML_MAX               50
 #define WVT_DLGMD_MAX               50
