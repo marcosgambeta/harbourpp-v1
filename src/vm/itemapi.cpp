@@ -55,7 +55,7 @@
 
 #include "hbvmopt.hpp"
 /* hbfloat.h have to be included before other header files */
-#include "hbfloat.h"
+#include "hbfloat.hpp"
 
 #include "hbvm.hpp"
 #include "hbstack.hpp"

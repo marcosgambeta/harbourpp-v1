@@ -49,7 +49,7 @@
  */
 
 /* hbfloat.h have to be included first */
-#include "hbfloat.h"
+#include "hbfloat.hpp"
 #include "hbmather.h"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"

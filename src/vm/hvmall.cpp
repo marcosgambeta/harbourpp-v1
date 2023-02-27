@@ -74,7 +74,7 @@
  */
 
 #include "hbvmopt.hpp"
-#include "hbfloat.h"
+#include "hbfloat.hpp"
 
 #include "hbstack.hpp"
 

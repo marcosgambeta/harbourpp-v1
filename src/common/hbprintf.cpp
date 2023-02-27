@@ -86,7 +86,7 @@
 /* #define __NO_ARGPOS__ */
 
 /* hbfloat.h have to be included first */
-#include "hbfloat.h"
+#include "hbfloat.hpp"
 #include "hbapicdp.hpp"
 #include <stddef.h>
 

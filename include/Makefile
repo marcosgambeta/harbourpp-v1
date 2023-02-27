@@ -41,6 +41,7 @@ C_HEADERS := \
    hbatomic.h \
    hbbfish.h \
    hbfloat.h \
+   hbfloat.hpp \
    hbcdpreg.h \
    hbcdpreg.hpp \
    hbchksum.h \
