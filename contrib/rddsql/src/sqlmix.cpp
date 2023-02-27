@@ -56,7 +56,7 @@
 #include "hbvm.hpp"
 #include "rddsys.ch"
 
-#include "hbrddsql.h"
+#include "hbrddsql.hpp"
 
 #define SUPERTABLE  ( &sqlmixSuper )
 

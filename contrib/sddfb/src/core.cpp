@@ -51,7 +51,7 @@
    #define __STDINT_H
 #endif
 
-#include "hbrddsql.h"
+#include "hbrddsql.hpp"
 
 #include "hbapiitm.hpp"
 #include "hbvm.hpp"

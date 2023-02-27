@@ -53,7 +53,7 @@
 #include "hbset.hpp"
 #include "hbvm.hpp"
 
-#include "hbrddsql.h"
+#include "hbrddsql.hpp"
 
 #include <ocilib.h>
 

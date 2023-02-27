@@ -48,7 +48,7 @@
 #include "hbapiitm.hpp"
 #include "hbvm.hpp"
 #include "hbset.hpp"
-#include "hbrddsql.h"
+#include "hbrddsql.hpp"
 #include "rddsys.ch"
 
 #include "hbtrace.hpp"
