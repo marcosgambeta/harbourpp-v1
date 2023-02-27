@@ -109,7 +109,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_MSG_DELETE )
 {
-  auto obj = static_cast<MSG*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -124,7 +124,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_MSG_SETHWND )
 {
-  auto obj = static_cast<MSG*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -134,7 +134,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_SETHWND )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_MSG_GETHWND )
 {
-  auto obj = static_cast<MSG*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -146,7 +146,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_GETHWND )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_MSG_SETMESSAGE )
 {
-  auto obj = static_cast<MSG*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -156,7 +156,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_SETMESSAGE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_MSG_GETMESSAGE )
 {
-  auto obj = static_cast<MSG*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -168,7 +168,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_GETMESSAGE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_MSG_SETWPARAM )
 {
-  auto obj = static_cast<MSG*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -178,7 +178,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_SETWPARAM )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_MSG_GETWPARAM )
 {
-  auto obj = static_cast<MSG*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -190,7 +190,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_GETWPARAM )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_MSG_SETLPARAM )
 {
-  auto obj = static_cast<MSG*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -200,7 +200,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_SETLPARAM )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_MSG_GETLPARAM )
 {
-  auto obj = static_cast<MSG*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -212,7 +212,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_GETLPARAM )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_MSG_SETTIME )
 {
-  auto obj = static_cast<MSG*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -222,7 +222,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_SETTIME )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_MSG_GETTIME )
 {
-  auto obj = static_cast<MSG*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -234,7 +234,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_GETTIME )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_MSG_SETPT )
 {
-  auto obj = static_cast<MSG*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -244,7 +244,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_SETPT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_MSG_GETPT )
 {
-  auto obj = static_cast<MSG*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {

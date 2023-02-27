@@ -119,7 +119,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_DELETE )
 {
-  auto obj = static_cast<SYSTEMTIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SYSTEMTIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -134,7 +134,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_SETWYEAR )
 {
-  auto obj = static_cast<SYSTEMTIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SYSTEMTIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -144,7 +144,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_SETWYEAR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWYEAR )
 {
-  auto obj = static_cast<SYSTEMTIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SYSTEMTIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -156,7 +156,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWYEAR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_SETWMONTH )
 {
-  auto obj = static_cast<SYSTEMTIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SYSTEMTIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -166,7 +166,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_SETWMONTH )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWMONTH )
 {
-  auto obj = static_cast<SYSTEMTIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SYSTEMTIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -178,7 +178,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWMONTH )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_SETWDAYOFWEEK )
 {
-  auto obj = static_cast<SYSTEMTIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SYSTEMTIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -188,7 +188,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_SETWDAYOFWEEK )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWDAYOFWEEK )
 {
-  auto obj = static_cast<SYSTEMTIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SYSTEMTIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -200,7 +200,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWDAYOFWEEK )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_SETWDAY )
 {
-  auto obj = static_cast<SYSTEMTIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SYSTEMTIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -210,7 +210,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_SETWDAY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWDAY )
 {
-  auto obj = static_cast<SYSTEMTIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SYSTEMTIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -222,7 +222,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWDAY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_SETWHOUR )
 {
-  auto obj = static_cast<SYSTEMTIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SYSTEMTIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -232,7 +232,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_SETWHOUR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWHOUR )
 {
-  auto obj = static_cast<SYSTEMTIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SYSTEMTIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -244,7 +244,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWHOUR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_SETWMINUTE )
 {
-  auto obj = static_cast<SYSTEMTIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SYSTEMTIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -254,7 +254,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_SETWMINUTE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWMINUTE )
 {
-  auto obj = static_cast<SYSTEMTIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SYSTEMTIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -266,7 +266,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWMINUTE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_SETWSECOND )
 {
-  auto obj = static_cast<SYSTEMTIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SYSTEMTIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -276,7 +276,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_SETWSECOND )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWSECOND )
 {
-  auto obj = static_cast<SYSTEMTIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SYSTEMTIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -288,7 +288,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWSECOND )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_SETWMILLISECONDS )
 {
-  auto obj = static_cast<SYSTEMTIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SYSTEMTIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -298,7 +298,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_SETWMILLISECONDS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWMILLISECONDS )
 {
-  auto obj = static_cast<SYSTEMTIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SYSTEMTIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {

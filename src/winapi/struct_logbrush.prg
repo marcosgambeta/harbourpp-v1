@@ -89,7 +89,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_DELETE )
 {
-  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -104,7 +104,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBSTYLE )
 {
-  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -114,7 +114,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBSTYLE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBSTYLE )
 {
-  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -126,7 +126,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBSTYLE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBCOLOR )
 {
-  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -136,7 +136,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBCOLOR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBCOLOR )
 {
-  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -148,7 +148,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBCOLOR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBHATCH )
 {
-  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -158,7 +158,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBHATCH )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBHATCH )
 {
-  auto obj = static_cast<LOGBRUSH*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {

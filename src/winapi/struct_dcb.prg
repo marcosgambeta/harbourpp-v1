@@ -239,7 +239,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_DELETE )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -254,7 +254,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETDCBLENGTH )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -264,7 +264,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETDCBLENGTH )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETDCBLENGTH )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -276,7 +276,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETDCBLENGTH )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETBAUDRATE )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -286,7 +286,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETBAUDRATE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETBAUDRATE )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -298,7 +298,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETBAUDRATE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFBINARY )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -308,7 +308,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFBINARY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFBINARY )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -320,7 +320,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFBINARY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFPARITY )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -330,7 +330,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFPARITY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFPARITY )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -342,7 +342,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFPARITY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFOUTXCTSFLOW )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -352,7 +352,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFOUTXCTSFLOW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFOUTXCTSFLOW )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -364,7 +364,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFOUTXCTSFLOW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFOUTXDSRFLOW )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -374,7 +374,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFOUTXDSRFLOW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFOUTXDSRFLOW )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -386,7 +386,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFOUTXDSRFLOW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFDTRCONTROL )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -396,7 +396,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFDTRCONTROL )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFDTRCONTROL )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -408,7 +408,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFDTRCONTROL )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFDSRSENSITIVITY )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -418,7 +418,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFDSRSENSITIVITY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFDSRSENSITIVITY )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -430,7 +430,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFDSRSENSITIVITY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFTXCONTINUEONXOFF )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -440,7 +440,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFTXCONTINUEONXOFF )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFTXCONTINUEONXOFF )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -452,7 +452,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFTXCONTINUEONXOFF )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFOUTX )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -462,7 +462,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFOUTX )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFOUTX )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -474,7 +474,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFOUTX )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFINX )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -484,7 +484,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFINX )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFINX )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -496,7 +496,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFINX )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFERRORCHAR )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -506,7 +506,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFERRORCHAR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFERRORCHAR )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -518,7 +518,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFERRORCHAR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFNULL )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -528,7 +528,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFNULL )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFNULL )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -540,7 +540,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFNULL )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFRTSCONTROL )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -550,7 +550,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFRTSCONTROL )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFRTSCONTROL )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -562,7 +562,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFRTSCONTROL )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFABORTONERROR )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -572,7 +572,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFABORTONERROR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFABORTONERROR )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -584,7 +584,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFABORTONERROR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFDUMMY2 )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -594,7 +594,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFDUMMY2 )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFDUMMY2 )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -606,7 +606,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFDUMMY2 )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETWRESERVED )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -616,7 +616,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETWRESERVED )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETWRESERVED )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -628,7 +628,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETWRESERVED )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXONLIM )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -638,7 +638,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXONLIM )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXONLIM )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -650,7 +650,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXONLIM )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXOFFLIM )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -660,7 +660,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXOFFLIM )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXOFFLIM )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -672,7 +672,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXOFFLIM )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETBYTESIZE )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -682,7 +682,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETBYTESIZE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETBYTESIZE )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -694,7 +694,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETBYTESIZE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETPARITY )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -704,7 +704,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETPARITY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETPARITY )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -716,7 +716,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETPARITY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETSTOPBITS )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -726,7 +726,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETSTOPBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETSTOPBITS )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -738,7 +738,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETSTOPBITS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXONCHAR )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -748,7 +748,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXONCHAR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXONCHAR )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -760,7 +760,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXONCHAR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXOFFCHAR )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -770,7 +770,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXOFFCHAR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXOFFCHAR )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -782,7 +782,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXOFFCHAR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETERRORCHAR )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -792,7 +792,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETERRORCHAR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETERRORCHAR )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -804,7 +804,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETERRORCHAR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETEOFCHAR )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -814,7 +814,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETEOFCHAR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETEOFCHAR )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -826,7 +826,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETEOFCHAR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETEVTCHAR )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -836,7 +836,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETEVTCHAR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETEVTCHAR )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -848,7 +848,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETEVTCHAR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETWRESERVED1 )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -858,7 +858,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETWRESERVED1 )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETWRESERVED1 )
 {
-  auto obj = static_cast<DCB*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {

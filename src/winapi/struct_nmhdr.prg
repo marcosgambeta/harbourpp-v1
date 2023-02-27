@@ -89,7 +89,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_DELETE )
 {
-  auto obj = static_cast<NMHDR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -104,7 +104,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_SETHWNDFROM )
 {
-  auto obj = static_cast<NMHDR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -114,7 +114,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_SETHWNDFROM )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_GETHWNDFROM )
 {
-  auto obj = static_cast<NMHDR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -126,7 +126,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_GETHWNDFROM )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_SETIDFROM )
 {
-  auto obj = static_cast<NMHDR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -136,7 +136,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_SETIDFROM )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_GETIDFROM )
 {
-  auto obj = static_cast<NMHDR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -148,7 +148,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_GETIDFROM )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_SETCODE )
 {
-  auto obj = static_cast<NMHDR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -158,7 +158,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_SETCODE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_GETCODE )
 {
-  auto obj = static_cast<NMHDR*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {

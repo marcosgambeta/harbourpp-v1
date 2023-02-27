@@ -137,7 +137,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_DELETE )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -152,7 +152,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBISIZE )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -162,7 +162,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBISIZE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBISIZE )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -174,7 +174,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBISIZE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBIWIDTH )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -184,7 +184,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBIWIDTH )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBIWIDTH )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -196,7 +196,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBIWIDTH )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBIHEIGHT )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -206,7 +206,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBIHEIGHT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBIHEIGHT )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -218,7 +218,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBIHEIGHT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBIPLANES )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -228,7 +228,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBIPLANES )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBIPLANES )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -240,7 +240,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBIPLANES )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBIBITCOUNT )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -250,7 +250,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBIBITCOUNT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBIBITCOUNT )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -262,7 +262,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBIBITCOUNT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBICOMPRESSION )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -272,7 +272,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBICOMPRESSION )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBICOMPRESSION )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -284,7 +284,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBICOMPRESSION )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBISIZEIMAGE )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -294,7 +294,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBISIZEIMAGE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBISIZEIMAGE )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -306,7 +306,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBISIZEIMAGE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBIXPELSPERMETER )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -316,7 +316,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBIXPELSPERMETER )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBIXPELSPERMETER )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -328,7 +328,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBIXPELSPERMETER )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBIYPELSPERMETER )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -338,7 +338,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBIYPELSPERMETER )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBIYPELSPERMETER )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -350,7 +350,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBIYPELSPERMETER )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBICLRUSED )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -360,7 +360,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBICLRUSED )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBICLRUSED )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -372,7 +372,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBICLRUSED )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBICLRIMPORTANT )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -382,7 +382,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBICLRIMPORTANT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBICLRIMPORTANT )
 {
-  auto obj = static_cast<BITMAPINFOHEADER*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<BITMAPINFOHEADER*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {

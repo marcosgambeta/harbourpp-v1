@@ -138,7 +138,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_DELETE )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -153,7 +153,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETWDEVICEINDEX )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -163,7 +163,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETWDEVICEINDEX )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETWDEVICEINDEX )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -175,7 +175,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETWDEVICEINDEX )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETFHASOVERLAY )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -185,7 +185,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETFHASOVERLAY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETFHASOVERLAY )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -197,7 +197,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETFHASOVERLAY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETFHASDLGVIDEOSOURCE )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -207,7 +207,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETFHASDLGVIDEOSOURCE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETFHASDLGVIDEOSOURCE )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -219,7 +219,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETFHASDLGVIDEOSOURCE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETFHASDLGVIDEOFORMAT )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -229,7 +229,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETFHASDLGVIDEOFORMAT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETFHASDLGVIDEOFORMAT )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -241,7 +241,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETFHASDLGVIDEOFORMAT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETFHASDLGVIDEODISPLAY )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -251,7 +251,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETFHASDLGVIDEODISPLAY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETFHASDLGVIDEODISPLAY )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -263,7 +263,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETFHASDLGVIDEODISPLAY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETFCAPTUREINITIALIZED )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -273,7 +273,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETFCAPTUREINITIALIZED )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETFCAPTUREINITIALIZED )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -285,7 +285,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETFCAPTUREINITIALIZED )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETFDRIVERSUPPLIESPALETTES )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -295,7 +295,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETFDRIVERSUPPLIESPALETTES )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETFDRIVERSUPPLIESPALETTES )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -307,7 +307,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETFDRIVERSUPPLIESPALETTES )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETHVIDEOIN )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -317,7 +317,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETHVIDEOIN )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETHVIDEOIN )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -329,7 +329,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETHVIDEOIN )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETHVIDEOOUT )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -339,7 +339,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETHVIDEOOUT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETHVIDEOOUT )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -351,7 +351,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETHVIDEOOUT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETHVIDEOEXTIN )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -361,7 +361,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETHVIDEOEXTIN )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETHVIDEOEXTIN )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -373,7 +373,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETHVIDEOEXTIN )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETHVIDEOEXTOUT )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -383,7 +383,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_SETHVIDEOEXTOUT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETHVIDEOEXTOUT )
 {
-  auto obj = static_cast<CAPDRIVERCAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<CAPDRIVERCAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {

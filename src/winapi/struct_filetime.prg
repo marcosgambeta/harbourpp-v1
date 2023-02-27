@@ -83,7 +83,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_FILETIME_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_FILETIME_DELETE )
 {
-  auto obj = static_cast<FILETIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<FILETIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -98,7 +98,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_FILETIME_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_FILETIME_SETDWLOWDATETIME )
 {
-  auto obj = static_cast<FILETIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<FILETIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -108,7 +108,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_FILETIME_SETDWLOWDATETIME )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_FILETIME_GETDWLOWDATETIME )
 {
-  auto obj = static_cast<FILETIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<FILETIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -120,7 +120,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_FILETIME_GETDWLOWDATETIME )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_FILETIME_SETDWHIGHDATETIME )
 {
-  auto obj = static_cast<FILETIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<FILETIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -130,7 +130,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_FILETIME_SETDWHIGHDATETIME )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_FILETIME_GETDWHIGHDATETIME )
 {
-  auto obj = static_cast<FILETIME*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<FILETIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {

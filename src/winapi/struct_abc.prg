@@ -89,7 +89,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ABC_DELETE )
 {
-  auto obj = static_cast<ABC*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -104,7 +104,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ABC_SETABCA )
 {
-  auto obj = static_cast<ABC*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -114,7 +114,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_SETABCA )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ABC_GETABCA )
 {
-  auto obj = static_cast<ABC*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -126,7 +126,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_GETABCA )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ABC_SETABCB )
 {
-  auto obj = static_cast<ABC*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -136,7 +136,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_SETABCB )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ABC_GETABCB )
 {
-  auto obj = static_cast<ABC*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -148,7 +148,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_GETABCB )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ABC_SETABCC )
 {
-  auto obj = static_cast<ABC*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -158,7 +158,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_SETABCC )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ABC_GETABCC )
 {
-  auto obj = static_cast<ABC*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {

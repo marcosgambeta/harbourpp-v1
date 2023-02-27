@@ -83,7 +83,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_TIMECAPS_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_TIMECAPS_DELETE )
 {
-  auto obj = static_cast<TIMECAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<TIMECAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -98,7 +98,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_TIMECAPS_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_TIMECAPS_SETWPERIODMIN )
 {
-  auto obj = static_cast<TIMECAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<TIMECAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -108,7 +108,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_TIMECAPS_SETWPERIODMIN )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_TIMECAPS_GETWPERIODMIN )
 {
-  auto obj = static_cast<TIMECAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<TIMECAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -120,7 +120,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_TIMECAPS_GETWPERIODMIN )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_TIMECAPS_SETWPERIODMAX )
 {
-  auto obj = static_cast<TIMECAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<TIMECAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -130,7 +130,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_TIMECAPS_SETWPERIODMAX )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_TIMECAPS_GETWPERIODMAX )
 {
-  auto obj = static_cast<TIMECAPS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<TIMECAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {

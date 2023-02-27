@@ -174,7 +174,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_DELETE )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -189,7 +189,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETCBSIZE )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -199,7 +199,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETCBSIZE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETCBSIZE )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -211,7 +211,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETCBSIZE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETHIML )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -221,7 +221,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETHIML )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETHIML )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -233,7 +233,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETHIML )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETI )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -243,7 +243,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETI )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETI )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -255,7 +255,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETI )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETHDCDST )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -265,7 +265,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETHDCDST )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETHDCDST )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -277,7 +277,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETHDCDST )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETX )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -287,7 +287,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETX )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETX )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -299,7 +299,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETX )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETY )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -309,7 +309,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETY )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -321,7 +321,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETCX )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -331,7 +331,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETCX )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETCX )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -343,7 +343,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETCX )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETCY )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -353,7 +353,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETCY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETCY )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -365,7 +365,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETCY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETXBITMAP )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -375,7 +375,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETXBITMAP )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETXBITMAP )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -387,7 +387,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETXBITMAP )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETYBITMAP )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -397,7 +397,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETYBITMAP )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETYBITMAP )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -409,7 +409,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETYBITMAP )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETRGBBK )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -419,7 +419,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETRGBBK )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETRGBBK )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -431,7 +431,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETRGBBK )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETRGBFG )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -441,7 +441,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETRGBFG )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETRGBFG )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -453,7 +453,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETRGBFG )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETFSTYLE )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -463,7 +463,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETFSTYLE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETFSTYLE )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -475,7 +475,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETFSTYLE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETDWROP )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -485,7 +485,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETDWROP )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETDWROP )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -497,7 +497,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETDWROP )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETFSTATE )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -507,7 +507,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETFSTATE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETFSTATE )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -519,7 +519,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETFSTATE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETFRAME )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -529,7 +529,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETFRAME )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETFRAME )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -541,7 +541,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETFRAME )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETCREFFECT )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -551,7 +551,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_SETCREFFECT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_IMAGELISTDRAWPARAMS_GETCREFFECT )
 {
-  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<IMAGELISTDRAWPARAMS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {

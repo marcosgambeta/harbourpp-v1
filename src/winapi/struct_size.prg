@@ -83,7 +83,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_DELETE )
 {
-  auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SIZE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -98,7 +98,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_SETCX )
 {
-  auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SIZE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -108,7 +108,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_SETCX )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_GETCX )
 {
-  auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SIZE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -120,7 +120,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_GETCX )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_SETCY )
 {
-  auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SIZE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -130,7 +130,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_SETCY )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_GETCY )
 {
-  auto obj = static_cast<SIZE*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SIZE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {

@@ -143,7 +143,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_DELETE )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -158,7 +158,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCASIZE )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -168,7 +168,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCASIZE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCASIZE )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -180,7 +180,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCASIZE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAFLAGS )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -190,7 +190,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAFLAGS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAFLAGS )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -202,7 +202,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAFLAGS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAILLUMINANTINDEX )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -212,7 +212,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAILLUMINANTINDEX )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAILLUMINANTINDEX )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -224,7 +224,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAILLUMINANTINDEX )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAREDGAMMA )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -234,7 +234,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAREDGAMMA )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAREDGAMMA )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -246,7 +246,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAREDGAMMA )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAGREENGAMMA )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -256,7 +256,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAGREENGAMMA )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAGREENGAMMA )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -268,7 +268,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAGREENGAMMA )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCABLUEGAMMA )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -278,7 +278,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCABLUEGAMMA )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCABLUEGAMMA )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -290,7 +290,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCABLUEGAMMA )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAREFERENCEBLACK )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -300,7 +300,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAREFERENCEBLACK )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAREFERENCEBLACK )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -312,7 +312,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAREFERENCEBLACK )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAREFERENCEWHITE )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -322,7 +322,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAREFERENCEWHITE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAREFERENCEWHITE )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -334,7 +334,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAREFERENCEWHITE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCACONTRAST )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -344,7 +344,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCACONTRAST )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCACONTRAST )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -356,7 +356,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCACONTRAST )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCABRIGHTNESS )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -366,7 +366,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCABRIGHTNESS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCABRIGHTNESS )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -378,7 +378,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCABRIGHTNESS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCACOLORFULNESS )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -388,7 +388,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCACOLORFULNESS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCACOLORFULNESS )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -400,7 +400,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCACOLORFULNESS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAREDGREENTINT )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -410,7 +410,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAREDGREENTINT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAREDGREENTINT )
 {
-  auto obj = static_cast<COLORADJUSTMENT*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<COLORADJUSTMENT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {

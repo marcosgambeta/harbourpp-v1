@@ -95,7 +95,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_DELETE )
 {
-  auto obj = static_cast<RGBQUAD*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -110,7 +110,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_SETRGBBLUE )
 {
-  auto obj = static_cast<RGBQUAD*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -120,7 +120,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_SETRGBBLUE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_GETRGBBLUE )
 {
-  auto obj = static_cast<RGBQUAD*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -132,7 +132,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_GETRGBBLUE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_SETRGBGREEN )
 {
-  auto obj = static_cast<RGBQUAD*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -142,7 +142,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_SETRGBGREEN )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_GETRGBGREEN )
 {
-  auto obj = static_cast<RGBQUAD*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -154,7 +154,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_GETRGBGREEN )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_SETRGBRED )
 {
-  auto obj = static_cast<RGBQUAD*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -164,7 +164,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_SETRGBRED )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_GETRGBRED )
 {
-  auto obj = static_cast<RGBQUAD*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -176,7 +176,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_GETRGBRED )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_SETRGBRESERVED )
 {
-  auto obj = static_cast<RGBQUAD*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -186,7 +186,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_SETRGBRESERVED )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_GETRGBRESERVED )
 {
-  auto obj = static_cast<RGBQUAD*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {

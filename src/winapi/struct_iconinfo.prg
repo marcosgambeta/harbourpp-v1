@@ -101,7 +101,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_DELETE )
 {
-  auto obj = static_cast<ICONINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -116,7 +116,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_SETFICON )
 {
-  auto obj = static_cast<ICONINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -126,7 +126,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_SETFICON )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_GETFICON )
 {
-  auto obj = static_cast<ICONINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -138,7 +138,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_GETFICON )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_SETXHOTSPOT )
 {
-  auto obj = static_cast<ICONINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -148,7 +148,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_SETXHOTSPOT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_GETXHOTSPOT )
 {
-  auto obj = static_cast<ICONINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -160,7 +160,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_GETXHOTSPOT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_SETYHOTSPOT )
 {
-  auto obj = static_cast<ICONINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -170,7 +170,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_SETYHOTSPOT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_GETYHOTSPOT )
 {
-  auto obj = static_cast<ICONINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -182,7 +182,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_GETYHOTSPOT )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_SETHBMMASK )
 {
-  auto obj = static_cast<ICONINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -192,7 +192,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_SETHBMMASK )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_GETHBMMASK )
 {
-  auto obj = static_cast<ICONINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -204,7 +204,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_GETHBMMASK )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_SETHBMCOLOR )
 {
-  auto obj = static_cast<ICONINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -214,7 +214,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_SETHBMCOLOR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_GETHBMCOLOR )
 {
-  auto obj = static_cast<ICONINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {

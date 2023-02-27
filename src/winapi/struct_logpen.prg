@@ -89,7 +89,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_DELETE )
 {
-  auto obj = static_cast<LOGPEN*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -104,7 +104,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_SETLOPNSTYLE )
 {
-  auto obj = static_cast<LOGPEN*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -114,7 +114,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_SETLOPNSTYLE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_GETLOPNSTYLE )
 {
-  auto obj = static_cast<LOGPEN*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -126,7 +126,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_GETLOPNSTYLE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_SETLOPNWIDTH )
 {
-  auto obj = static_cast<LOGPEN*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -136,7 +136,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_SETLOPNWIDTH )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_GETLOPNWIDTH )
 {
-  auto obj = static_cast<LOGPEN*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -148,7 +148,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_GETLOPNWIDTH )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_SETLOPNCOLOR )
 {
-  auto obj = static_cast<LOGPEN*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -158,7 +158,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_SETLOPNCOLOR )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_GETLOPNCOLOR )
 {
-  auto obj = static_cast<LOGPEN*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {

@@ -113,7 +113,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_DELETE )
 {
-  auto obj = static_cast<SCROLLINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SCROLLINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -128,7 +128,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETCBSIZE )
 {
-  auto obj = static_cast<SCROLLINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SCROLLINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -138,7 +138,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETCBSIZE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETCBSIZE )
 {
-  auto obj = static_cast<SCROLLINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SCROLLINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -150,7 +150,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETCBSIZE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETFMASK )
 {
-  auto obj = static_cast<SCROLLINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SCROLLINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -160,7 +160,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETFMASK )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETFMASK )
 {
-  auto obj = static_cast<SCROLLINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SCROLLINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -172,7 +172,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETFMASK )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETNMIN )
 {
-  auto obj = static_cast<SCROLLINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SCROLLINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -182,7 +182,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETNMIN )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETNMIN )
 {
-  auto obj = static_cast<SCROLLINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SCROLLINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -194,7 +194,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETNMIN )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETNMAX )
 {
-  auto obj = static_cast<SCROLLINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SCROLLINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -204,7 +204,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETNMAX )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETNMAX )
 {
-  auto obj = static_cast<SCROLLINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SCROLLINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -216,7 +216,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETNMAX )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETNPAGE )
 {
-  auto obj = static_cast<SCROLLINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SCROLLINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -226,7 +226,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETNPAGE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETNPAGE )
 {
-  auto obj = static_cast<SCROLLINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SCROLLINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -238,7 +238,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETNPAGE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETNPOS )
 {
-  auto obj = static_cast<SCROLLINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SCROLLINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -248,7 +248,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETNPOS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETNPOS )
 {
-  auto obj = static_cast<SCROLLINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SCROLLINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -260,7 +260,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETNPOS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETNTRACKPOS )
 {
-  auto obj = static_cast<SCROLLINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SCROLLINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -270,7 +270,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETNTRACKPOS )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETNTRACKPOS )
 {
-  auto obj = static_cast<SCROLLINFO*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<SCROLLINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {

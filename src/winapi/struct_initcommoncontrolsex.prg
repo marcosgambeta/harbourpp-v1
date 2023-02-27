@@ -84,7 +84,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_NEW )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_DELETE )
 {
-  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -99,7 +99,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_DELETE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_SETDWSIZE )
 {
-  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -109,7 +109,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_SETDWSIZE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_GETDWSIZE )
 {
-  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -121,7 +121,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_GETDWSIZE )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_SETDWICC )
 {
-  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -131,7 +131,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_SETDWICC )
 
 HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_GETDWICC )
 {
-  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_itemGetPtr(hb_objSendMsg(hb_stackSelfItem(), "PTR", 0)));
+  auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
