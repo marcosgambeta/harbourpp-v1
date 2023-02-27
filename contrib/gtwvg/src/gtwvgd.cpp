@@ -63,7 +63,7 @@
  */
 
 #include "hbwinole.h"
-#include "gtwvg.h"
+#include "gtwvg.hpp"
 
 #ifndef WS_EX_COMPOSITED
 #define WS_EX_COMPOSITED  0x02000000

@@ -62,7 +62,7 @@
  *
  */
 
-#include "gtwgu.h"
+#include "gtwgu.hpp"
 
 static int s_GtId;
 static HB_GT_FUNCS SuperTable;

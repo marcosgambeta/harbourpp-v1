@@ -57,7 +57,7 @@
 
 /* Direct WinApi Functions - Prefixed wvg_*() */
 
-#include "gtwvg.h"
+#include "gtwvg.hpp"
 #include "hbwapi.h"
 
 #include <windowsx.h>

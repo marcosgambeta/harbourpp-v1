@@ -55,7 +55,7 @@
  *
  */
 
-#include "gtwvg.h"
+#include "gtwvg.hpp"
 
 /* workaround for missing declaration in MinGW */
 #if !defined(TTM_SETTITLE) && defined(TTM_SETTITLEA)
