@@ -99,6 +99,7 @@ C_HEADERS := \
    hbstack.h \
    hbstack.hpp \
    hbsxfunc.h \
+   hbsxfunc.hpp \
    hbtask.h \
    hbthread.h \
    hbthread.hpp \

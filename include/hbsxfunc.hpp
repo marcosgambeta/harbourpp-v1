@@ -1,12 +1,7 @@
 /*
- * SIX compatible functions:
- *       hb_sxDtoP()
- *       hb_sxPtoD()
+ * Header file for SIX compatible functions
  *
- *       sx_DToP()
- *       sx_PToD()
- *
- * Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+ * Copyright 2005 Przemyslaw Czerpak <druzus@acn.waw.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,53 +44,29 @@
  *
  */
 
-#include "hbsxfunc.hpp"
+#ifndef HB_SXFUNC_H_
+#define HB_SXFUNC_H_
 
-char * hb_sxDtoP(char * pDate, long lJulian)
-{
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sxDtoP(%p, %ld)", static_cast<void*>(pDate), lJulian));
-#endif
+#include "hbapi.h"
+#include "hbapiitm.h"
+#include "hbapifs.h"
+#include "hbapirdd.h"
+#include "hbapierr.h"
+#include "hbdate.h"
 
-   int iYear, iMonth, iDay;
-   long lPDate;
+HB_EXTERN_BEGIN
 
-   hb_dateDecode( lJulian, &iYear, &iMonth, &iDay );
-   lPDate = (((iYear << 1) | (iMonth >> 3)) << 8) | ((iMonth & 7) << 5) | iDay;
-   HB_PUT_BE_UINT24(pDate, lPDate);
+char * hb_sxDtoP( char * pDate, long lJulian );
+long hb_sxPtoD( const char * pDate );
 
-   return pDate;
-}
+void hb_sxEnCrypt( const char * pSrc, char * pDst, const char * pKeyVal, HB_SIZE nLen );
+void hb_sxDeCrypt( const char * pSrc, char * pDst, const char * pKeyVal, HB_SIZE nLen );
 
-long hb_sxPtoD( const char * pDate )
-{
-#if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_sxPtoD(%p)", static_cast<const void*>(pDate)));
-#endif
+HB_BOOL hb_LZSSxDecompressMem( const char * pSrcBuf, HB_SIZE nSrcLen, char * pDstBuf, HB_SIZE nDstLen );
+HB_BOOL hb_LZSSxCompressMem( const char * pSrcBuf, HB_SIZE nSrcLen, char * pDstBuf, HB_SIZE nDstLen, HB_SIZE * pnSize );
+HB_BOOL hb_LZSSxCompressFile( PHB_FILE pInput, PHB_FILE pOutput, HB_SIZE * pnSize );
+HB_BOOL hb_LZSSxDecompressFile( PHB_FILE pInput, PHB_FILE pOutput );
 
-   if( pDate )
-   {
-      int iYear, iMonth, iDay;
-      long lPDate;
+HB_EXTERN_END
 
-      lPDate = HB_GET_BE_UINT24(pDate);
-      iDay = lPDate & 0x1f;
-      iMonth = (lPDate >> 5) & 0x0f;
-      iYear = (lPDate >> 9);
-
-      return hb_dateEncode(iYear, iMonth, iDay);
-   }
-   return 0;
-}
-
-HB_FUNC( SX_DTOP )
-{
-   char pDate[3];
-
-   hb_retclen(hb_sxDtoP(pDate, hb_pardl(1)), 3);
-}
-
-HB_FUNC( SX_PTOD )
-{
-   hb_retdl(hb_sxPtoD(hb_parclen(1) < 3 ? nullptr : hb_parc(1)));
-}
+#endif /* HB_SXFUNC_H_ */

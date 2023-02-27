@@ -53,7 +53,7 @@
 #include "hbapilng.hpp"
 #include "hbset.hpp"
 #include "hbdate.hpp"
-#include "hbsxfunc.h"
+#include "hbsxfunc.hpp"
 #include "hbstack.hpp"
 #include "hbvm.hpp"
 #include "error.ch"

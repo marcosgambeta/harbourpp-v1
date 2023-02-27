@@ -49,7 +49,7 @@
  *
  */
 
-#include "hbsxfunc.h"
+#include "hbsxfunc.hpp"
 
 #define rnd_mul1  0x0de6d
 #define rnd_mul2  0x0278d

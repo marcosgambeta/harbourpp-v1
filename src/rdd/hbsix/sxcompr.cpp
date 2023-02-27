@@ -114,7 +114,7 @@
    do not do that.
  */
 
-#include "hbsxfunc.h"
+#include "hbsxfunc.hpp"
 
 #define HB_SX_UNCOMPRESED  0xFFFFFFFFUL
 

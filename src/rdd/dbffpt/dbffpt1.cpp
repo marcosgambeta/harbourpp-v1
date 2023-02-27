@@ -66,7 +66,7 @@
 #include "hbvm.hpp"
 #include "hbdate.hpp"
 #include "hbrddfpt.hpp"
-#include "hbsxfunc.h"
+#include "hbsxfunc.hpp"
 #include "rddsys.ch"
 
 #include "hbapicdp.hpp"
