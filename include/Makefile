@@ -40,6 +40,7 @@ C_HEADERS := \
    hbassert.h \
    hbassert.hpp \
    hbatomic.h \
+   hbatomic.hpp \
    hbbfish.h \
    hbfloat.h \
    hbfloat.hpp \

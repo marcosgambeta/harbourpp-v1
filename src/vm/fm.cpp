@@ -84,7 +84,7 @@
 
 #if defined(HB_MT_VM)
 #  include "hbthread.hpp"
-#  include "hbatomic.h"
+#  include "hbatomic.hpp"
 #endif
 
 #if defined(HB_FM_STD_ALLOC)

@@ -89,7 +89,7 @@
 
 #include "hbvmopt.hpp"
 #include "hbthread.hpp"
-#include "hbatomic.h"
+#include "hbatomic.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapicdp.hpp"

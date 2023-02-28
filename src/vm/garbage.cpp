@@ -63,7 +63,7 @@
 #if defined(HB_MT_VM)
 
 #  include "hbthread.hpp"
-#  include "hbatomic.h"
+#  include "hbatomic.hpp"
 
 /* Use spinlock instead of mutex */
 
