@@ -99,6 +99,7 @@ C_HEADERS := \
    hbset.hpp \
    hbsetup.h \
    hbsocket.h \
+   hbsocket.hpp \
    hbstack.h \
    hbstack.hpp \
    hbsxfunc.h \
