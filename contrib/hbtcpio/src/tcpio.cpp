@@ -53,7 +53,7 @@
 #include "hbapierr.hpp"
 #include "hbinit.hpp"
 
-#include "hbsocket.h"
+#include "hbsocket.hpp"
 
 #define FILE_PREFIX      "TCP:"
 #define FILE_PREFIX_LEN  strlen(FILE_PREFIX)

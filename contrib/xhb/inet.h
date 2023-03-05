@@ -47,6 +47,6 @@
 #ifndef HB_INET_H_
 #define HB_INET_H_
 
-#error Please use hbsocket.h in Harbour.
+#error Please use hbsocket.hpp in Harbour.
 
 #endif

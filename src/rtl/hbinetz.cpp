@@ -45,7 +45,7 @@
  */
 
 #include "hbapi.hpp"
-#include "hbsocket.h"
+#include "hbsocket.hpp"
 #include "hbznet.h"
 #include "hbzlib.ch"
 

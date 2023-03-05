@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbsocket.h"
+#include "hbsocket.hpp"
 
 #if !defined(HB_SOCKET_OFF)
 

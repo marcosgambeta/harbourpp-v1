@@ -49,7 +49,7 @@
 
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
-#include "hbsocket.h"
+#include "hbsocket.hpp"
 
 #if defined( HB_OS_WIN )
    #if ! defined( HB_OPENSSL_STATIC )

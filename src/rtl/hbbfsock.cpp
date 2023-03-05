@@ -49,7 +49,7 @@
 
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-#include "hbsocket.h"
+#include "hbsocket.hpp"
 #include "hbbfish.h"
 #include "hbinit.hpp"
 

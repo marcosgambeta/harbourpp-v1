@@ -98,7 +98,7 @@
 #include "hbapierr.hpp"
 #include "hbvm.hpp"
 #include "hbstack.hpp"
-#include "hbsocket.h"
+#include "hbsocket.hpp"
 
 static HB_BOOL s_fInit = HB_FALSE;
 

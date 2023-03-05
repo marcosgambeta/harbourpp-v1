@@ -52,7 +52,7 @@
 
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
-#include "hbsocket.h"
+#include "hbsocket.hpp"
 #include "hbapierr.hpp"
 #include "hbvm.hpp"
 #include "hbthread.hpp"
