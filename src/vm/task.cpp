@@ -48,7 +48,7 @@
 #define HB_TASK_DEBUG
 
 #include "hbapi.hpp"
-#include "hbtask.h"
+#include "hbtask.hpp"
 #include "hbapierr.hpp"
 
 #if defined(HB_OS_WIN)

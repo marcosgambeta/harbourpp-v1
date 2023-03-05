@@ -105,6 +105,7 @@ C_HEADERS := \
    hbsxfunc.h \
    hbsxfunc.hpp \
    hbtask.h \
+   hbtask.hpp \
    hbthread.h \
    hbthread.hpp \
    hbtrace.h \
