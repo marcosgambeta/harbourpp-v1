@@ -81,7 +81,7 @@
 #include "hbstack.hpp"
 #include "hbthread.hpp"
 #include "hbdate.hpp"
-#include "netio.h"
+#include "netio.hpp"
 #include "hbserial.ch"
 
 
