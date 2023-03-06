@@ -33,6 +33,7 @@ PRG_SOURCES := \
    struct_initcommoncontrolsex.prg \
    struct_logbrush.prg \
    struct_logpen.prg \
+   struct_memorystatusex.prg \
    struct_msg.prg \
    struct_nmhdr.prg \
    struct_pixelformatdescriptor.prg \
