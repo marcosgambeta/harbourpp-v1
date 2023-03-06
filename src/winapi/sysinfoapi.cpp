@@ -43,6 +43,18 @@ SOFTWARE.
 #include "winapi.hpp"
 
 /*
+WINBASEAPI WINBOOL WINAPI GetComputerNameExA (COMPUTER_NAME_FORMAT NameType, LPSTR lpBuffer, LPDWORD nSize)
+*/
+
+/*
+WINBASEAPI WINBOOL WINAPI GetComputerNameExW (COMPUTER_NAME_FORMAT NameType, LPWSTR lpBuffer, LPDWORD nSize)
+*/
+
+/*
+WINBASEAPI UINT WINAPI EnumSystemFirmwareTables (DWORD FirmwareTableProviderSignature, PVOID pFirmwareTableEnumBuffer, DWORD BufferSize)
+*/
+
+/*
 WINBASEAPI VOID WINAPI GetLocalTime (LPSYSTEMTIME lpSystemTime)
 */
 HB_FUNC( WINAPI_GETLOCALTIME )
@@ -51,12 +63,90 @@ HB_FUNC( WINAPI_GETLOCALTIME )
 }
 
 /*
+WINBASEAPI WINBOOL WINAPI GetLogicalProcessorInformation (PSYSTEM_LOGICAL_PROCESSOR_INFORMATION Buffer, PDWORD ReturnedLength)
+*/
+
+/*
+WINBASEAPI WINBOOL WINAPI GetLogicalProcessorInformationEx (LOGICAL_PROCESSOR_RELATIONSHIP RelationshipType, PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX Buffer, PDWORD ReturnedLength)
+*/
+#if _WIN32_WINNT >= 0x0601
+#endif
+
+/*
+WINBASEAPI VOID WINAPI GetNativeSystemInfo (LPSYSTEM_INFO lpSystemInfo)
+*/
+
+/*
+WINBASEAPI WINBOOL WINAPI GetOsSafeBootMode (PDWORD Flags)
+*/
+#if _WIN32_WINNT >= 0x0601
+#endif
+
+/*
+WINBASEAPI WINBOOL WINAPI GetProductInfo (DWORD dwOSMajorVersion, DWORD dwOSMinorVersion, DWORD dwSpMajorVersion, DWORD dwSpMinorVersion, PDWORD pdwReturnedProductType)
+*/
+#if _WIN32_WINNT >= 0x0600
+HB_FUNC( WINAPI_GETPRODUCTINFO )
+{
+  DWORD dwReturnedProductType;
+  winapi_ret_BOOL(GetProductInfo(winapi_par_DWORD(1), winapi_par_DWORD(2), winapi_par_DWORD(3), winapi_par_DWORD(4), &dwReturnedProductType));
+  winapi_stor_DWORD(dwReturnedProductType, 5);
+}
+#endif
+
+/*
+WINBASEAPI UINT WINAPI GetSystemDirectoryA (LPSTR lpBuffer, UINT uSize)
+*/
+
+/*
+WINBASEAPI UINT WINAPI GetSystemDirectoryW (LPWSTR lpBuffer, UINT uSize)
+*/
+
+/*
+WINBASEAPI UINT WINAPI GetSystemFirmwareTable (DWORD FirmwareTableProviderSignature, DWORD FirmwareTableID, PVOID pFirmwareTableBuffer, DWORD BufferSize)
+*/
+
+/*
+WINBASEAPI VOID WINAPI GetSystemInfo (LPSYSTEM_INFO lpSystemInfo)
+*/
+
+/*
 WINBASEAPI VOID WINAPI GetSystemTime (LPSYSTEMTIME lpSystemTime)
 */
 HB_FUNC( WINAPI_GETSYSTEMTIME )
 {
   GetSystemTime(static_cast<LPSYSTEMTIME>(winapi_get_ptr(1)));
 }
+
+/*
+WINBASEAPI WINBOOL WINAPI GetSystemTimeAdjustment (PDWORD lpTimeAdjustment, PDWORD lpTimeIncrement, PBOOL lpTimeAdjustmentDisabled)
+*/
+HB_FUNC( WINAPI_GETSYSTEMTIMEADJUSTMENT )
+{
+  DWORD TimeAdjustment;
+  DWORD TimeIncrement;
+  BOOL TimeAdjustmentDisabled;
+  winapi_ret_BOOL(GetSystemTimeAdjustment(&TimeAdjustment, &TimeIncrement, &TimeAdjustmentDisabled));
+  winapi_stor_DWORD(TimeAdjustment, 1);
+  winapi_stor_DWORD(TimeIncrement, 2);
+  winapi_stor_BOOL(TimeAdjustmentDisabled, 3);
+}
+
+/*
+WINBASEAPI VOID WINAPI GetSystemTimeAsFileTime (LPFILETIME lpSystemTimeAsFileTime)
+*/
+
+/*
+WINBASEAPI VOID WINAPI GetSystemTimePreciseAsFileTime (LPFILETIME lpSystemTimeAsFileTime)
+*/
+
+/*
+WINBASEAPI UINT WINAPI GetSystemWindowsDirectoryA (LPSTR lpBuffer, UINT uSize)
+*/
+
+/*
+WINBASEAPI UINT WINAPI GetSystemWindowsDirectoryW (LPWSTR lpBuffer, UINT uSize)
+*/
 
 /*
 WINBASEAPI DWORD WINAPI GetTickCount (VOID)
@@ -77,11 +167,43 @@ HB_FUNC( WINAPI_GETTICKCOUNT64 )
 #endif
 
 /*
+WINBASEAPI DWORD WINAPI GetVersion (VOID)
+*/
+
+/*
+WINBASEAPI WINBOOL WINAPI GetVersionExA (LPOSVERSIONINFOA lpVersionInformation)
+*/
+
+/*
+WINBASEAPI WINBOOL WINAPI GetVersionExW (LPOSVERSIONINFOW lpVersionInformation)
+*/
+
+/*
+WINBASEAPI UINT WINAPI GetWindowsDirectoryA (LPSTR lpBuffer, UINT uSize)
+*/
+
+/*
+WINBASEAPI UINT WINAPI GetWindowsDirectoryW (LPWSTR lpBuffer, UINT uSize)
+*/
+
+/*
 WINBASEAPI WINBOOL WINAPI GlobalMemoryStatusEx (LPMEMORYSTATUSEX lpBuffer)
 */
 HB_FUNC( WINAPI_GLOBALMEMORYSTATUSEX )
 {
   winapi_ret_BOOL(GlobalMemoryStatusEx(static_cast<LPMEMORYSTATUSEX>(winapi_get_ptr(1))));
+}
+
+/*
+WINBASEAPI WINBOOL WINAPI SetComputerNameExW (COMPUTER_NAME_FORMAT NameType, LPCWSTR lpBuffer)
+*/
+
+/*
+WINBASEAPI WINBOOL WINAPI SetLocalTime (CONST SYSTEMTIME *lpSystemTime)
+*/
+HB_FUNC( WINAPI_SETLOCALTIME )
+{
+  winapi_ret_BOOL(SetLocalTime(static_cast<CONST SYSTEMTIME *>(winapi_get_ptr(1))));
 }
 
 /*
@@ -91,3 +213,7 @@ HB_FUNC( WINAPI_SETSYSTEMTIME )
 {
   winapi_ret_BOOL(SetSystemTime(static_cast<CONST SYSTEMTIME *>(winapi_get_ptr(1))));
 }
+
+/*
+NTSYSAPI ULONGLONG NTAPI VerSetConditionMask (ULONGLONG ConditionMask, ULONG TypeMask, UCHAR Condition)
+*/
