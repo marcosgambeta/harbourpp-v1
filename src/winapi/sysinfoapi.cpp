@@ -43,6 +43,16 @@ SOFTWARE.
 #include "winapi.hpp"
 
 /*
+void GetLocalTime(
+  [out] LPSYSTEMTIME lpSystemTime
+);
+*/
+HB_FUNC( WINAPI_GETLOCALTIME )
+{
+  GetLocalTime(static_cast<LPSYSTEMTIME>(winapi_get_ptr(1)));
+}
+
+/*
 void GetSystemTime(
   [out] LPSYSTEMTIME lpSystemTime
 );
