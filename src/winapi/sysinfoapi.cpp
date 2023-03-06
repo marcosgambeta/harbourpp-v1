@@ -43,9 +43,7 @@ SOFTWARE.
 #include "winapi.hpp"
 
 /*
-void GetLocalTime(
-  [out] LPSYSTEMTIME lpSystemTime
-);
+WINBASEAPI VOID WINAPI GetLocalTime (LPSYSTEMTIME lpSystemTime)
 */
 HB_FUNC( WINAPI_GETLOCALTIME )
 {
@@ -53,9 +51,7 @@ HB_FUNC( WINAPI_GETLOCALTIME )
 }
 
 /*
-void GetSystemTime(
-  [out] LPSYSTEMTIME lpSystemTime
-);
+WINBASEAPI VOID WINAPI GetSystemTime (LPSYSTEMTIME lpSystemTime)
 */
 HB_FUNC( WINAPI_GETSYSTEMTIME )
 {
@@ -63,9 +59,27 @@ HB_FUNC( WINAPI_GETSYSTEMTIME )
 }
 
 /*
-DWORD GetTickCount();
+WINBASEAPI DWORD WINAPI GetTickCount (VOID)
 */
 HB_FUNC( WINAPI_GETTICKCOUNT )
 {
   winapi_ret_DWORD(GetTickCount());
+}
+
+/*
+WINBASEAPI ULONGLONG WINAPI GetTickCount64 (VOID)
+*/
+#if _WIN32_WINNT >= 0x0600
+HB_FUNC( WINAPI_GETTICKCOUNT64 )
+{
+  winapi_ret_ULONGLONG(GetTickCount64());
+}
+#endif
+
+/*
+WINBASEAPI WINBOOL WINAPI SetSystemTime (CONST SYSTEMTIME *lpSystemTime)
+*/
+HB_FUNC( WINAPI_SETSYSTEMTIME )
+{
+  winapi_ret_BOOL(SetSystemTime(static_cast<CONST SYSTEMTIME *>(winapi_get_ptr(1))));
 }
