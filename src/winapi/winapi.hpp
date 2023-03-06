@@ -9,7 +9,7 @@
 /*
 MIT License
 
-Copyright (c) 2022 Marcos Antonio Gambeta
+Copyright (c) 2022,2023 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -169,6 +169,7 @@ SOFTWARE.
 #define winapi_ret_SIZE_T(x)       hb_retnl(x)
 #define winapi_ret_HFILE(x)        hb_retni(x)
 #define winapi_ret_NTSTATUS(x)     hb_retnl(x)
+#define winapi_ret_ULONGLONG(x)    hb_retnll(x)
 
 // #define winapi_stor_ATOM(v, n)         hb_storni(v, n)
 #define winapi_stor_BOOL(v, n)         hb_storl(v, n)
