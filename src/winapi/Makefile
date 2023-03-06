@@ -12,6 +12,7 @@ CPP_SOURCES := \
    bcrypt.cpp \
    commctrl.cpp \
    mmsystem.cpp \
+   sysinfoapi.cpp \
    utils.cpp \
    winbase.cpp \
    wingdi.cpp \
