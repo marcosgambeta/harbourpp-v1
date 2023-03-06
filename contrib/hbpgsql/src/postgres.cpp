@@ -46,7 +46,7 @@
  *
  */
 
-#include "hbpgsql.h"
+#include "hbpgsql.hpp"
 
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
