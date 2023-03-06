@@ -61,3 +61,11 @@ HB_FUNC( WINAPI_GETSYSTEMTIME )
 {
   GetSystemTime(static_cast<LPSYSTEMTIME>(winapi_get_ptr(1)));
 }
+
+/*
+DWORD GetTickCount();
+*/
+HB_FUNC( WINAPI_GETTICKCOUNT )
+{
+  winapi_ret_DWORD(GetTickCount());
+}
