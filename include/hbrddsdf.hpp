@@ -47,7 +47,7 @@
 #ifndef HB_RDDSDF_H_
 #define HB_RDDSDF_H_
 
-#include "hbapirdd.h"
+#include "hbapirdd.hpp"
 
 HB_EXTERN_BEGIN
 

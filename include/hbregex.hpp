@@ -47,7 +47,7 @@
 #ifndef HB_REGEX_H_
 #define HB_REGEX_H_
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 #if defined( _HB_REGEX_INTERNAL_ )
 

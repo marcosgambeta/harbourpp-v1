@@ -47,7 +47,7 @@
 #ifndef HB_EXPROP_H_
 #define HB_EXPROP_H_
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 HB_EXTERN_BEGIN
 

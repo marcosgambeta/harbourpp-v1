@@ -48,7 +48,7 @@
 #ifndef HB_TASK_H_
 #define HB_TASK_H_
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 HB_EXTERN_BEGIN
 

@@ -48,7 +48,7 @@
 #define HB_APICOM_H_
 
 #include "hbcom.ch"
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 HB_EXTERN_BEGIN
 

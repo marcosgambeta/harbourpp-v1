@@ -47,13 +47,13 @@
 #ifndef HB_MACRO_H_
 #define HB_MACRO_H_
 
-#include "hbapi.h"
-#include "hbcompdf.h"
-#include "hbapiitm.h"
-#include "hbapierr.h"
-#include "hbvm.h"
-#include "hbexprop.h"
-#include "hbpcode.h"
+#include "hbapi.hpp"
+#include "hbcompdf.hpp"
+#include "hbapiitm.hpp"
+#include "hbapierr.hpp"
+#include "hbvm.hpp"
+#include "hbexprop.hpp"
+#include "hbpcode.hpp"
 #include "hbmacro.ch"
 
 HB_EXTERN_BEGIN

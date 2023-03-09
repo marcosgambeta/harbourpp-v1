@@ -52,7 +52,7 @@
 #ifndef HB_APIEXT_H_
 #define HB_APIEXT_H_
 
-#include "hbvmpub.h"
+#include "hbvmpub.hpp"
 
 HB_EXTERN_BEGIN
 
@@ -1301,7 +1301,7 @@ extern HB_EXPORT char *  hb_username(void);
 HB_EXTERN_END
 
 #if defined(HB_MACRO_SUPPORT)
-#include "hbcompdf.h"
+#include "hbcompdf.hpp"
 #endif
 
 #endif /* HB_APIEXT_H_ */

@@ -47,12 +47,12 @@
 #ifndef HB_SXFUNC_H_
 #define HB_SXFUNC_H_
 
-#include "hbapi.h"
-#include "hbapiitm.h"
-#include "hbapifs.h"
-#include "hbapirdd.h"
-#include "hbapierr.h"
-#include "hbdate.h"
+#include "hbapi.hpp"
+#include "hbapiitm.hpp"
+#include "hbapifs.hpp"
+#include "hbapirdd.hpp"
+#include "hbapierr.hpp"
+#include "hbdate.hpp"
 
 HB_EXTERN_BEGIN
 

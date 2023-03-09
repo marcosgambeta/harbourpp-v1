@@ -47,9 +47,9 @@
 #ifndef HB_RDDDBF_H_
 #define HB_RDDDBF_H_
 
-#include "hbapirdd.h"
-#include "hbdbferr.h"
-#include "hbdbf.h"
+#include "hbapirdd.hpp"
+#include "hbdbferr.hpp"
+#include "hbdbf.hpp"
 
 HB_EXTERN_BEGIN
 

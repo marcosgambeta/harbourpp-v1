@@ -62,7 +62,7 @@
 #  define __C99FEATURES__
 #endif
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 #include <math.h>
 #if defined( __BORLANDC__ ) || defined( _MSC_VER ) || defined( HB_OS_MINIX )

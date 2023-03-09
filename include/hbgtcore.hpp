@@ -52,8 +52,8 @@
 #ifndef HB_GTCORE_H_
 #define HB_GTCORE_H_
 
-#include "hbapigt.h"
-#include "hbapicdp.h"
+#include "hbapigt.hpp"
+#include "hbapicdp.hpp"
 
 HB_EXTERN_BEGIN
 

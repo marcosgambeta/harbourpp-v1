@@ -47,8 +47,8 @@
 #ifndef HB_THREAD_H_
 #define HB_THREAD_H_
 
-#include "hbapi.h"
-#include "hbset.h"
+#include "hbapi.hpp"
+#include "hbset.hpp"
 
 #if defined( HB_TASK_THREAD )
    /* Harbour tasks explicitly requested */
@@ -75,7 +75,7 @@ HB_EXTERN_BEGIN
 
 #if defined( HB_TASK_THREAD )
 
-#  include "hbtask.h"
+#  include "hbtask.hpp"
 
    typedef HB_MAXINT          HB_THREAD_NO;
    typedef void *             HB_THREAD_ID;

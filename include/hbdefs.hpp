@@ -53,8 +53,8 @@
 #include <string.h>
 #include <limits.h>
 
-#include "hbsetup.h"
-#include "hbver.h"
+#include "hbsetup.hpp"
+#include "hbver.hpp"
 
 #if defined( __MINGW32__ ) || \
     ( defined( _MSC_VER ) && _MSC_VER >= 1600 ) || \
@@ -1637,6 +1637,6 @@ typedef int           HB_COLOR;
 #define HB_ISFIRSTIDCHAR( c )   ( HB_ISALPHA( c ) || ( c ) == '_' )
 #define HB_ISNEXTIDCHAR( c )    ( HB_ISFIRSTIDCHAR(c) || HB_ISDIGIT( c ) )
 
-#include "hbtrace.h"
+#include "hbtrace.hpp"
 
 #endif /* HB_DEFS_H_ */

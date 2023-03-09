@@ -47,7 +47,7 @@
 #ifndef HB_APIFS_H_
 #define HB_APIFS_H_
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "fileio.ch"
 
 HB_EXTERN_BEGIN

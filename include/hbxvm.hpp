@@ -47,10 +47,10 @@
 #ifndef HB_XVM_H_
 #define HB_XVM_H_
 
-#include "hbapi.h"
-#include "hbapiitm.h"
-#include "hbvm.h"
-#include "hbstack.h"
+#include "hbapi.hpp"
+#include "hbapiitm.hpp"
+#include "hbvm.hpp"
+#include "hbstack.hpp"
 
 HB_EXTERN_BEGIN
 

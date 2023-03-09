@@ -47,10 +47,10 @@
 #ifndef HB_APIRDD_H_
 #define HB_APIRDD_H_
 
-#include "hbapifs.h"
+#include "hbapifs.hpp"
 #include "dbinfo.ch"   /* Constants for SELF_ORDINFO, SELF_INFO(), SELF_RECINFO() */
 #include "dbstruct.ch" /* Constants for SELF_FIELDINFO() */
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 
 HB_EXTERN_BEGIN
 

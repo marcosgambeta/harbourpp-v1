@@ -170,7 +170,7 @@ LEAF KEY COMPRESSION:
 #ifndef HB_RDDNSX_H_
 #define HB_RDDNSX_H_
 
-#include "hbrdddbf.h"
+#include "hbrdddbf.hpp"
 
 HB_EXTERN_BEGIN
 

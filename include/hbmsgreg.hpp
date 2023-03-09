@@ -63,7 +63,7 @@ HB_CALL_ON_STARTUP_END( HB_MACRONAME_JOIN( _hb_lang_Init_, HB_LANG_ID ) )
 #elif defined( HB_DATASEG_STARTUP )
    #define HB_DATASEG_BODY    \
             HB_DATASEG_FUNC( HB_MACRONAME_JOIN( _hb_lang_Init_, HB_LANG_ID ) )
-   #include "hbiniseg.h"
+   #include "hbiniseg.hpp"
 #endif
 
 #endif /* HB_LANG_ID */

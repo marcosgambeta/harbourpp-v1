@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapicdp.h"
+#include "hbapicdp.hpp"
 
 HB_CODEPAGE_ANNOUNCE( HB_CP_ID )
 
@@ -156,5 +156,5 @@ HB_CALL_ON_STARTUP_END( HB_MACRONAME_JOIN( _hb_codepage_Init_, HB_CP_ID ) )
 #elif defined( HB_DATASEG_STARTUP )
    #define HB_DATASEG_BODY    \
          HB_DATASEG_FUNC( HB_MACRONAME_JOIN( _hb_codepage_Init_, HB_CP_ID ) )
-   #include "hbiniseg.h"
+   #include "hbiniseg.hpp"
 #endif

@@ -47,7 +47,7 @@
 #ifndef HB_ERRORS_H_
 #define HB_ERRORS_H_
 
-#include "hbsetup.h"
+#include "hbsetup.hpp"
 
 HB_EXTERN_BEGIN
 

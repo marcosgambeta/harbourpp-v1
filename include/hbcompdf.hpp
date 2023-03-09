@@ -47,8 +47,8 @@
 #ifndef HB_COMPDF_H_
 #define HB_COMPDF_H_
 
-#include "hbpp.h"
-#include "hbhash.h"
+#include "hbpp.hpp"
+#include "hbhash.hpp"
 
 HB_EXTERN_BEGIN
 

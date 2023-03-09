@@ -47,7 +47,7 @@
 #ifndef HB_ATOMIC_H_
 #define HB_ATOMIC_H_
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 #if defined( HB_OS_WIN )
 #  include <windows.h>

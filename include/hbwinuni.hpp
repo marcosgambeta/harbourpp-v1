@@ -47,11 +47,11 @@
 #ifndef HB_WINUNI_H_
 #define HB_WINUNI_H_
 
-#include "hbapistr.h"
+#include "hbapistr.hpp"
 
 #if defined( HB_OS_WIN )
 
-#include "hbset.h"
+#include "hbset.hpp"
 
 #if defined( UNICODE )
    #define HB_PARSTR( n, h, len )                hb_parstr_u16( n, HB_CDP_ENDIAN_NATIVE, h, len )

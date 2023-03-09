@@ -47,7 +47,7 @@
 #ifndef HB_RDDDEL_H_
 #define HB_RDDDEL_H_
 
-#include "hbapirdd.h"
+#include "hbapirdd.hpp"
 
 HB_EXTERN_BEGIN
 

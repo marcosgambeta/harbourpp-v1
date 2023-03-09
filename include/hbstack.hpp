@@ -52,12 +52,12 @@
 #ifndef HB_STACK_H_
 #define HB_STACK_H_
 
-#include "hbvmpub.h"
+#include "hbvmpub.hpp"
 
 HB_EXTERN_BEGIN
 
 #if defined( HB_MT_VM ) && defined( _HB_API_INTERNAL_ )
-#  include "hbthread.h"
+#  include "hbthread.hpp"
 #endif
 
 /* thread specific data */
@@ -108,7 +108,7 @@ HB_STACKRDD, * PHB_STACKRDD;
 
 #ifdef _HB_API_INTERNAL_
 
-#include "hbset.h"
+#include "hbset.hpp"
 
 typedef struct
 {

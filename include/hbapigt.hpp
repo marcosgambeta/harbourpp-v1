@@ -50,8 +50,8 @@
 #ifndef HB_APIGT_H_
 #define HB_APIGT_H_
 
-#include "hbapi.h"
-#include "hbapicdp.h"
+#include "hbapi.hpp"
+#include "hbapicdp.hpp"
 
 HB_EXTERN_BEGIN
 

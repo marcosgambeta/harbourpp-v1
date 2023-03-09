@@ -47,7 +47,7 @@
 #ifndef HB_DATE_H_
 #define HB_DATE_H_
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 HB_EXTERN_BEGIN
 

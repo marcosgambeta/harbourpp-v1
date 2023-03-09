@@ -47,7 +47,7 @@
 #ifndef HB_VMPUB_H_
 #define HB_VMPUB_H_
 
-#include "hbdefs.h"
+#include "hbdefs.hpp"
 
 /* Maximum symbol name length handled by Harbour compiler and runtime.
    For strict CA-Cl*pper compatibility a value of 10 would have

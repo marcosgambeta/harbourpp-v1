@@ -47,8 +47,8 @@
 #ifndef HB_PP_H_
 #define HB_PP_H_
 
-#include "hbapi.h"
-#include "hbapifs.h"
+#include "hbapi.hpp"
+#include "hbapifs.hpp"
 
 HB_EXTERN_BEGIN
 

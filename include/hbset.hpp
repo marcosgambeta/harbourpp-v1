@@ -47,9 +47,9 @@
 #ifndef HB_SET_H_
 #define HB_SET_H_
 
-#include "hbapi.h"
-#include "hbapigt.h"
-#include "hbapifs.h"
+#include "hbapi.hpp"
+#include "hbapigt.hpp"
+#include "hbapifs.hpp"
 
 HB_EXTERN_BEGIN
 

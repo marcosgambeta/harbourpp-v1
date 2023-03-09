@@ -47,7 +47,7 @@
 #ifndef HB_SOCKET_H_
 #define HB_SOCKET_H_
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbsocket.ch"
 
 HB_EXTERN_BEGIN

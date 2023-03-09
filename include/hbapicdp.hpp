@@ -48,8 +48,8 @@
 #ifndef HB_APICDP_H_
 #define HB_APICDP_H_
 
-#include "hbapi.h"
-#include "hbinit.h"
+#include "hbapi.hpp"
+#include "hbinit.hpp"
 
 HB_EXTERN_BEGIN
 

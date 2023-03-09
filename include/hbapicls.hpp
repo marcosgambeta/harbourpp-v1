@@ -47,7 +47,7 @@
 #ifndef HB_APICLS_H_
 #define HB_APICLS_H_
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 HB_EXTERN_BEGIN
 

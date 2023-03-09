@@ -47,9 +47,9 @@
 #ifndef HB_APILNG_H_
 #define HB_APILNG_H_
 
-#include "hbdefs.h"
-#include "hbvmpub.h"
-#include "hbinit.h"
+#include "hbdefs.hpp"
+#include "hbvmpub.hpp"
+#include "hbinit.hpp"
 
 #include "hblang.ch" /* Base values for the unified language item table */
 

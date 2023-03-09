@@ -47,7 +47,7 @@
 #ifndef HB_ASSERT_H_
 #define HB_ASSERT_H_
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 
 #if ! defined( HB_TR_LEVEL_DEBUG )
    #ifndef assert

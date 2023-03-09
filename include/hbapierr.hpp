@@ -47,7 +47,7 @@
 #ifndef HB_APIERR_H_
 #define HB_APIERR_H_
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "error.ch"
 
 HB_EXTERN_BEGIN

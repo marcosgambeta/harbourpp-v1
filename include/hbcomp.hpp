@@ -47,14 +47,14 @@
 #ifndef HB_COMP_H_
 #define HB_COMP_H_
 
-#include "hbapi.h"
+#include "hbapi.hpp"
 #include "hbmacro.ch"
-#include "hberrors.h"
-#include "hbpp.h"
-#include "hbmacro.h"
-#include "hbexprop.h"
-#include "hbpcode.h"
-#include "hbhash.h"
+#include "hberrors.hpp"
+#include "hbpp.hpp"
+#include "hbmacro.hpp"
+#include "hbexprop.hpp"
+#include "hbpcode.hpp"
+#include "hbhash.hpp"
 
 HB_EXTERN_BEGIN
 
