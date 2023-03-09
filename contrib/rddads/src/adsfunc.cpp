@@ -45,7 +45,7 @@
  *
  */
 
-#include "rddads.h"
+#include "rddads.hpp"
 
 #include "hbvm.hpp"
 #include "hbapierr.hpp"

@@ -44,7 +44,7 @@
  *
  */
 
-#include "rddads.h"
+#include "rddads.hpp"
 
 #include "hbinit.hpp"
 #include "hbapierr.hpp"

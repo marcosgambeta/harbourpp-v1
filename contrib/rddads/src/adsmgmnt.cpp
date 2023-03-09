@@ -45,7 +45,7 @@
  *
  */
 
-#include "rddads.h"
+#include "rddads.hpp"
 
 static ADSHANDLE s_hMgmtHandle = 0;
 

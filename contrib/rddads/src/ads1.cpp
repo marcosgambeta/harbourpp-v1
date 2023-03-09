@@ -47,7 +47,7 @@
 #define SUPERTABLE   (&adsSuper)
 #define MAX_STR_LEN  255
 
-#include "rddads.h"
+#include "rddads.hpp"
 
 #include "hbvm.hpp"
 #include "hbinit.hpp"
