@@ -58,6 +58,7 @@ C_HEADERS := \
    hbdefs.h \
    hbdefs.hpp \
    hberrors.h \
+   hberrors.hpp \
    hbexprop.h \
    hbexprop.hpp \
    hbgtcore.h \
