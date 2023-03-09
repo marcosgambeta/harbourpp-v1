@@ -54,7 +54,7 @@
 #include "hbapiitm.hpp"
 #include "hbapilng.hpp"
 #include "hbapierr.hpp"
-#include "hbdbferr.h"
+#include "hbdbferr.hpp"
 #include "hbrdddel.hpp"
 #include "rddsys.ch"
 

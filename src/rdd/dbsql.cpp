@@ -52,7 +52,7 @@
 #include "hbapirdd.hpp"
 #include "hbapilng.hpp"
 #include "hbapierr.hpp"
-#include "hbdbferr.h"
+#include "hbdbferr.hpp"
 #include "hbvm.hpp"
 #include "hbdate.hpp"
 

@@ -53,7 +53,7 @@
 #include "hbinit.hpp"
 #include "hbapistr.hpp"
 #include "hbapierr.hpp"
-#include "hbdbferr.h"
+#include "hbdbferr.hpp"
 #include "hbapilng.hpp"
 #include "hbdate.hpp"
 #include "hbset.hpp"

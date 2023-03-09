@@ -53,7 +53,7 @@
 #include "hbapiitm.hpp"
 #include "hbapirdd.hpp"
 #include "hbapierr.hpp"
-#include "hbdbferr.h"
+#include "hbdbferr.hpp"
 #include "hbvm.hpp"
 #include "hbset.hpp"
 #include "hbinit.hpp"
