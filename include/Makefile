@@ -50,6 +50,7 @@ C_HEADERS := \
    hbcomp.h \
    hbcomp.hpp \
    hbcompdf.h \
+   hbcompdf.hpp \
    hbdate.h \
    hbdate.hpp \
    hbdbf.h \
