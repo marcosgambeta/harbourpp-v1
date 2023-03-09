@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbposix.h"
+#include "hbposix.hpp"
 #include "hbstack.hpp"
 #include "hbapierr.hpp"
 

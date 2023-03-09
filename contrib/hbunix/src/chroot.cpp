@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbposix.h"
+#include "hbposix.hpp"
 
 HB_FUNC( UNIX_CHROOT )
 {

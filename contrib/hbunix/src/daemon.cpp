@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  */
 
-#include "hbposix.h"
+#include "hbposix.hpp"
 #include "hbvm.hpp"
 
 HB_FUNC( UNIX_DAEMON )
