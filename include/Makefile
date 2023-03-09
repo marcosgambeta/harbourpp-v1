@@ -55,6 +55,7 @@ C_HEADERS := \
    hbdate.hpp \
    hbdbf.h \
    hbdbferr.h \
+   hbdbferr.hpp \
    hbdefs.h \
    hbdefs.hpp \
    hberrors.h \
