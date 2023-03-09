@@ -19,10 +19,10 @@ This project is a work in progress.
 
 ### Related projects
 
-https://github.com/harbourplusplus/hwguipp  
+https://github.com/marcosgambeta/hwguipp  
 HWGUI for Harbour++
 
-https://github.com/harbourplusplus/hmgextpp  
+https://github.com/marcosgambeta/hmgextpp  
 Harbour MiniGUI Extended for Harbour++
 
 ## Portuguese
@@ -70,6 +70,14 @@ set HB_USER_CFLAGS=/std=c++11
 win-make install 1>log1.log 2>log2.log
 ```
 
+### Projetos relacionados
+
+https://github.com/marcosgambeta/hwguipp  
+HWGUI++ - fork da HWGUI para Harbour++
+
+https://github.com/marcosgambeta/hmgextpp  
+HMGEXT++ - fork da Harbour MiniGUI Extended para Harbour++
+
 ### Contato
 
 Envie sua mensagem para:
@@ -83,7 +91,3 @@ Questões sobre o projeto serão respondidas **somente por email**.
 Siga o blog abaixo para se manter informado:
 
 https://magsoftinfo.com/blog/
-
-### Grupo de usuários no Facebook
-
-https://www.facebook.com/groups/575158780741473
