@@ -46,7 +46,7 @@
 
 /* NOTE: This is only a container source file, don't put real program code here. */
 
-#include "hbsetup.h"
+#include "hbsetup.hpp"
 
 #if defined(HB_MAIN_STD)
    #include "mainstd.cpp"

@@ -47,7 +47,7 @@
 #ifndef HB_XHB_H_
 #define HB_XHB_H_
 
-#include "hbsetup.h"
+#include "hbsetup.hpp"
 #include "hbdate.hpp"
 
 HB_EXTERN_BEGIN

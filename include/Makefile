@@ -98,6 +98,7 @@ C_HEADERS := \
    hbset.h \
    hbset.hpp \
    hbsetup.h \
+   hbsetup.hpp \
    hbsocket.h \
    hbsocket.hpp \
    hbstack.h \
