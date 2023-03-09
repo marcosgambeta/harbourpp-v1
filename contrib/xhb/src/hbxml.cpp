@@ -68,7 +68,7 @@
 
 #include "hbvm.hpp"
 
-#include "hbxml.h"
+#include "hbxml.hpp"
 
 /* --- Static declarations --- */
 

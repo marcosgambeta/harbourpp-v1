@@ -50,7 +50,7 @@
 #include "hbapifs.hpp"
 #include "hbvm.hpp"
 #include "hbstack.hpp"
-#include "hbserv.h"
+#include "hbserv.hpp"
 #include "hbthread.hpp"
 
 #include <stdio.h>

@@ -64,7 +64,7 @@
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
 #include "hbapiitm.hpp"
-#include "hbfast.h"
+#include "hbfast.hpp"
 
 /* adjustable, but this should be sufficient in normal situation */
 #define MAX_READ  4096

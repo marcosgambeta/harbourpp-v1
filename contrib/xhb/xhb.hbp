@@ -8,7 +8,7 @@
 
 -w3 -es2
 
--instfile=contrib:hbcompat.h
+-instfile=contrib:hbcompat.hpp
 -instfile=contrib:xhb.hpp
 
 # For hbserv.c, maybe more
