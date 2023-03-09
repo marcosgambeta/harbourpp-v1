@@ -48,7 +48,7 @@
 #include "hbapiitm.hpp"
 #include "hbapifs.hpp"
 
-#include "xhb.h"
+#include "xhb.hpp"
 
 static HB_BOOL s_bToOutputDebug = HB_TRUE;
 static HB_BOOL s_bToLogFile     = HB_TRUE;

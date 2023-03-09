@@ -54,7 +54,7 @@
 #include "hbapiitm.hpp"
 #include "hbapifs.hpp"
 
-#include "xhb.h"
+#include "xhb.hpp"
 
 #if defined(HB_OS_WIN)
    #include <windows.h>
