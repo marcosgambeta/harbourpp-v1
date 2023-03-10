@@ -84,20 +84,21 @@
 #include "netio.hpp"
 #include "hbserial.ch"
 
-
 /*
  * server code
  */
 
-typedef struct _HB_CONSTREAM
+struct _HB_CONSTREAM
 {
    int id;
    int type;
    struct _HB_CONSTREAM * next;
-}
-HB_CONSTREAM, * PHB_CONSTREAM;
+};
 
-typedef struct _HB_CONSRV
+using HB_CONSTREAM = _HB_CONSTREAM;
+using PHB_CONSTREAM = _HB_CONSTREAM *;
+
+struct _HB_CONSRV
 {
    PHB_SOCKEX     sock;
    PHB_FILE       fileTable[NETIO_FILES_MAX];
@@ -115,17 +116,21 @@ typedef struct _HB_CONSRV
    HB_MAXUINT     rd_count;
    int            rootPathLen;
    char           rootPath[HB_PATH_MAX];
-}
-HB_CONSRV, * PHB_CONSRV;
+};
 
-typedef struct _HB_LISTENSD
+using HB_CONSRV = _HB_CONSRV;
+using PHB_CONSRV = _HB_CONSRV *;
+
+struct _HB_LISTENSD
 {
    HB_SOCKET sd;
    HB_BOOL   stop;
    HB_BOOL   rpc;
    char      rootPath[HB_PATH_MAX];
-}
-HB_LISTENSD, * PHB_LISTENSD;
+};
+
+using HB_LISTENSD = _HB_LISTENSD;
+using PHB_LISTENSD = _HB_LISTENSD *;
 
 static HB_BOOL s_isDirSep( char c )
 {
@@ -145,7 +150,7 @@ static const char * s_consrvFilePath( char * pszFileName, PHB_CONSRV conn, HB_BO
       while( s_isDirSep( pszFileName[0] ) )
       {
          ++pszFileName;
-      }   
+      }
    }
 
    while( pszFileName[iPos] && iLevel >= 0 )
@@ -156,21 +161,29 @@ static const char * s_consrvFilePath( char * pszFileName, PHB_CONSRV conn, HB_BO
              pszFileName[iPos + 1] == '.' &&
              ( pszFileName[iPos + 2] == '\0' ||
                s_isDirSep( pszFileName[iPos + 2] ) ) )
+         {
             --iLevel;
+         }
          else if( pszFileName[iPos] &&
                   !s_isDirSep( pszFileName[iPos] ) &&
                   !( pszFileName[iPos] == '.' &&
                       s_isDirSep( pszFileName[iPos + 1] ) ) )
+         {
             ++iLevel;
+         }
       }
       ch = pszFileName[iPos];
       if( s_isDirSep( ch ) )
+      {
          pszFileName[iPos] = HB_OS_PATH_DELIM_CHR;
+      }
       ++iPos;
    }
 
    if( iLevel < 0 )
+   {
       pszFileName = nullptr;
+   }
    else if( conn->rootPathLen && !fLink )
    {
       memmove(pszFileName + conn->rootPathLen, pszFileName, iPos + 1);
@@ -185,7 +198,9 @@ static HB_ERRCODE s_srvFsError(void)
    HB_ERRCODE errCode = hb_fsError();
 
    if( errCode == 0 )
+   {
       errCode = NETIO_ERR_FILE_IO;
+   }
    return errCode;
 }
 
@@ -217,7 +232,9 @@ static PHB_FILE s_srvFileFree(PHB_CONSRV conn, int iFile)
          conn->fileTable[iFile] = nullptr;
          conn->filesCount--;
          if( conn->firstFree > iFile )
+         {
             conn->firstFree = iFile;
+         }
          return pFile;
       }
    }
@@ -228,9 +245,13 @@ static PHB_FILE s_srvFileFree(PHB_CONSRV conn, int iFile)
 static PHB_FILE s_srvFileGet(PHB_CONSRV conn, int iFile)
 {
    if( iFile < NETIO_FILES_MAX && conn->filesCount > 0 )
+   {
       return conn->fileTable[iFile];
+   }
    else
+   {
       return nullptr;
+   }
 }
 
 static void s_consrv_disconnect( PHB_CONSRV conn )
@@ -247,7 +268,9 @@ static void s_consrv_close( PHB_CONSRV conn )
    int i = 0;
 
    if( conn->rpcFilter )
+   {
       hb_itemRelease(conn->rpcFilter);
+   }
 
    while( conn->streams )
    {
@@ -257,15 +280,21 @@ static void s_consrv_close( PHB_CONSRV conn )
    }
 
    if( conn->mutex )
+   {
       hb_itemRelease(conn->mutex);
+   }
 
    if( conn->sock )
+   {
       hb_sockexClose(conn->sock, true);
+   }
 
    while( conn->filesCount > 0 )
    {
       if( i >= NETIO_FILES_MAX )
+      {
          break;   /* internal error, it should not happen */
+      }
 
       if( conn->fileTable[i] )
       {
@@ -295,7 +324,9 @@ static HB_GARBAGE_FUNC( s_consrv_mark )
    PHB_CONSRV * conn_ptr = static_cast<PHB_CONSRV*>(Cargo);
 
    if( *conn_ptr && (*conn_ptr)->rpcFilter )
+   {
       hb_gcMark((*conn_ptr)->rpcFilter);
+   }
 }
 
 static const HB_GC_FUNCS s_gcConSrvFuncs =
@@ -309,7 +340,9 @@ static PHB_CONSRV s_consrvParam( int iParam )
    PHB_CONSRV * conn_ptr = static_cast<PHB_CONSRV*>(hb_parptrGC(&s_gcConSrvFuncs, iParam));
 
    if( conn_ptr && *conn_ptr )
+   {
       return *conn_ptr;
+   }
 
    hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    return nullptr;
@@ -324,7 +357,9 @@ static void s_consrvRet( PHB_CONSRV conn )
       hb_retptrGC(conn_ptr);
    }
    else
+   {
       hb_ret();
+   }   
 }
 
 static PHB_CONSRV s_consrvNew( PHB_SOCKEX sock, const char * szRootPath, HB_BOOL rpc )
@@ -362,7 +397,9 @@ static HB_BOOL s_srvRecvAll( PHB_CONSRV conn, void * buffer, long len )
                hb_socketGetError() != HB_SOCKET_ERR_TIMEOUT ||
                ( timeout = hb_timerTest( timeout, &timer ) ) == 0 ||
                hb_vmRequestQuery() != 0 )
+      {
          break;
+      }
    }
 
    return lRead == len;
@@ -389,17 +426,23 @@ static HB_BOOL s_srvSendAll( PHB_CONSRV conn, void * buffer, long len )
          else if( hb_socketGetError() != HB_SOCKET_ERR_TIMEOUT ||
                   ( timeout = hb_timerTest( timeout, &timer ) ) == 0 ||
                   hb_vmRequestQuery() != 0 )
+         {
             break;
+         }
       }
       if( lSent == len && !conn->stop )
       {
          if( hb_sockexFlush( conn->sock, conn->timeout > 0 ? conn->timeout : -1,
                              HB_FALSE ) != 0 )
+         {
             lSent = -1;
+         }
       }
 
       if( conn->mutex )
+      {
          hb_threadMutexUnlock(conn->mutex);
+      }
    }
    return lSent == len;
 }
@@ -432,10 +475,15 @@ static PHB_LISTENSD s_listenParam( int iParam, HB_BOOL fError )
    PHB_LISTENSD * lsd_ptr = static_cast<PHB_LISTENSD*>(hb_parptrGC(&s_gcListensdFuncs, iParam));
 
    if( lsd_ptr && *lsd_ptr )
+   {
       return *lsd_ptr;
+   }
 
    if( fError )
+   {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
+   
    return nullptr;
 }
 
@@ -450,16 +498,22 @@ static void s_listenRet( HB_SOCKET sd, const char * szRootPath, HB_BOOL rpc )
       lsd->sd = sd;
       lsd->rpc = rpc;
       if( szRootPath )
+      {
          hb_strncpy(lsd->rootPath, szRootPath, sizeof(lsd->rootPath) - 1);
+      }
       else
+      {
          hb_fsBaseDirBuff(lsd->rootPath);
+      }
       iLen = static_cast<int>(strlen(lsd->rootPath));
       if( iLen > 0 )
       {
          if( !s_isDirSep( lsd->rootPath[iLen - 1] ) )
          {
             if( iLen == static_cast<int>(sizeof(lsd->rootPath)) - 1 )
+            {
                --iLen;
+            }
             lsd->rootPath[iLen] = HB_OS_PATH_DELIM_CHR;
          }
       }
@@ -468,7 +522,9 @@ static void s_listenRet( HB_SOCKET sd, const char * szRootPath, HB_BOOL rpc )
       hb_retptrGC(lsd_ptr);
    }
    else
+   {
       hb_ret();
+   }   
 }
 
 
@@ -477,13 +533,15 @@ static void s_listenRet( HB_SOCKET sd, const char * szRootPath, HB_BOOL rpc )
 HB_FUNC( NETIO_RPC )
 {
    PHB_LISTENSD lsd = s_listenParam(1, false);
-   HB_BOOL fRPC = HB_FALSE;
+   bool fRPC = false;
 
    if( lsd )
    {
       fRPC = lsd->rpc;
       if( HB_ISLOG(2) )
+      {
          lsd->rpc = hb_parl(2);
+      }
    }
    else
    {
@@ -492,7 +550,9 @@ HB_FUNC( NETIO_RPC )
       {
          fRPC = conn->rpc;
          if( HB_ISLOG(2) )
+         {
             conn->rpc = hb_parl(2);
+         }
       }
    }
    hb_retl(fRPC);
@@ -530,15 +590,19 @@ HB_FUNC( NETIO_RPCFILTER )
 HB_FUNC( NETIO_SERVERSTOP )
 {
    PHB_LISTENSD lsd = s_listenParam(1, false);
-   HB_BOOL fStop = hb_parldef(2, true);
+   bool fStop = hb_parldef(2, true);
 
    if( lsd )
+   {
       lsd->stop = fStop;
+   }
    else
    {
       PHB_CONSRV conn = s_consrvParam(1);
       if( conn )
+      {
          conn->stop = fStop;
+      }
    }
 }
 
@@ -552,7 +616,9 @@ HB_FUNC( NETIO_SERVERTIMEOUT )
    {
       hb_retni(conn->timeout);
       if( HB_ISNUM(2) )
+      {
          conn->timeout = hb_parni(2);
+      }
    }
 }
 
@@ -561,7 +627,7 @@ HB_FUNC( NETIO_SERVERTIMEOUT )
  */
 HB_FUNC( NETIO_LISTEN )
 {
-   static HB_BOOL s_fInit = HB_TRUE;
+   static bool s_fInit = true;
 
    int iPort = hb_parnidef(1, NETIO_DEFAULT_PORT);
    const char * szAddress = hb_parc(2);
@@ -574,7 +640,7 @@ HB_FUNC( NETIO_LISTEN )
    if( s_fInit )
    {
       hb_socketInit();
-      s_fInit = HB_FALSE;
+      s_fInit = false;
    }
 
    if( hb_socketInetAddr( &pSockAddr, &uiLen, szAddress, iPort ) )
@@ -611,7 +677,9 @@ HB_FUNC( NETIO_ACCEPT )
       int iLevel, iStrategy, keylen = static_cast<int>(hb_parclen(3));
 
       if( keylen > NETIO_PASSWD_MAX )
+      {
          keylen = NETIO_PASSWD_MAX;
+      }
       iLevel = hb_parnidef(4, keylen ? HB_ZLIB_COMPRESSION_DEFAULT : HB_ZLIB_COMPRESSION_DISABLE);
       iStrategy = hb_parnidef(5, HB_ZLIB_STRATEGY_DEFAULT);
 
@@ -631,13 +699,22 @@ HB_FUNC( NETIO_ACCEPT )
          hb_socketSetNoDelay(connsd, true);
 
          if( iLevel == HB_ZLIB_COMPRESSION_DISABLE )
+         {
             sock = hb_sockexNew(connsd, nullptr, nullptr);
+         }
          else
+         {
             sock = hb_sockexNewZNet(connsd, hb_parc(3), keylen, iLevel, iStrategy);
+         }
+         
          if( sock != nullptr )
+         {
             conn = s_consrvNew(sock, lsd->rootPath, lsd->rpc);
+         }
          else
+         {
             hb_socketClose(connsd);
+         }
       }
    }
 
@@ -657,14 +734,22 @@ HB_FUNC( NETIO_COMPRESS )
       PHB_SOCKEX sock;
 
       if( keylen > NETIO_PASSWD_MAX )
+      {
          keylen = NETIO_PASSWD_MAX;
+      }
+
       iLevel = hb_parnidef(3, keylen ? HB_ZLIB_COMPRESSION_DEFAULT : HB_ZLIB_COMPRESSION_DISABLE);
       iStrategy = hb_parnidef(4, HB_ZLIB_STRATEGY_DEFAULT);
 
       if( iLevel == HB_ZLIB_COMPRESSION_DISABLE )
+      {
          sock = hb_sockexNew(hb_sockexGetHandle(conn->sock), nullptr, nullptr);
+      }
       else
+      {
          sock = hb_sockexNewZNet(hb_sockexGetHandle(conn->sock), hb_parc(2), keylen, iLevel, iStrategy);
+      }
+
       if( sock )
       {
          hb_sockexClose(conn->sock, false);
@@ -691,12 +776,16 @@ static HB_BOOL s_netio_login_accept( PHB_CONSRV conn )
                HB_PUT_LE_UINT32(&msgbuf[4], NETIO_CONNECTED);
                memset(msgbuf + 8, '\0', NETIO_MSGLEN - 8);
                if( s_srvSendAll( conn, msgbuf, NETIO_MSGLEN ) )
+               {
                   conn->login = HB_TRUE;
+               }
             }
          }
       }
       if( !conn->login )
+      {
          s_consrv_disconnect(conn);
+      }
    }
 
    return conn && conn->login;
@@ -709,7 +798,9 @@ HB_FUNC( NETIO_VERIFYCLIENT )
    PHB_CONSRV conn = s_consrvParam(1);
 
    if( conn )
+   {
       hb_retl(s_netio_login_accept(conn));
+   }
 }
 
 /* netio_Server( <pConnectionSocket> ) --> NIL
@@ -727,7 +818,7 @@ HB_FUNC( NETIO_SERVER )
       {
          HB_BYTE buffer[2048], * ptr = nullptr, * msg;
          HB_BYTE msgbuf[NETIO_MSGLEN];
-         HB_BOOL fNoAnswer = HB_FALSE;
+         bool fNoAnswer = false;
          HB_ERRCODE errCode = 0, errFsCode;
          long len = 0, size, size2;
          long lJulian, lMillisec;
@@ -744,7 +835,9 @@ HB_FUNC( NETIO_SERVER )
          msg = buffer;
 
          if( !s_srvRecvAll( conn, msgbuf, NETIO_MSGLEN ) )
+         {
             break;
+         }
 
          uiMsg = HB_GET_LE_UINT32(msgbuf);
          switch( uiMsg )
@@ -756,26 +849,36 @@ HB_FUNC( NETIO_SERVER )
             case NETIO_DIRREMOVE:
                size = HB_GET_LE_UINT16(&msgbuf[4]);
                if( size <= 0 )
+               {
                   errCode = NETIO_ERR_WRONG_PARAM;
+               }
                else
                {
                   if( size + conn->rootPathLen >= static_cast<long>(sizeof(buffer)) )
+                  {
                      ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size + conn->rootPathLen + 1));
+                  }
                   msg[size] = '\0';
                   if( !s_srvRecvAll( conn, msg, size ) )
+                  {
                      errCode = NETIO_ERR_READ;
+                  }
                   else
                   {
                      const char * pszName = s_consrvFilePath(reinterpret_cast<char*>(msg), conn, false);
 
                      if( !pszName )
+                     {
                         errCode = NETIO_ERR_WRONG_FILE_PATH;
+                     }
                      else if( !( uiMsg == NETIO_DELETE    ? hb_fileDelete( pszName ) :
                                 ( uiMsg == NETIO_DIREXISTS ? hb_fileDirExists( pszName ) :
                                 ( uiMsg == NETIO_DIRMAKE   ? hb_fileDirMake( pszName ) :
                                 ( uiMsg == NETIO_DIRREMOVE ? hb_fileDirRemove( pszName ) :
                                                              hb_fileExists(pszName, nullptr) ) ) ) ) )
+                     {
                         errCode = s_srvFsError();
+                     }
                      else
                      {
                         HB_PUT_LE_UINT32(&msg[0], uiMsg);
@@ -789,20 +892,28 @@ HB_FUNC( NETIO_SERVER )
                size = HB_GET_LE_UINT16(&msgbuf[4]);
                uiFlags = HB_GET_LE_UINT16(&msgbuf[6]);
                if( size <= 0 )
+               {
                   errCode = NETIO_ERR_WRONG_PARAM;
+               }
                else
                {
                   if( size + conn->rootPathLen >= static_cast<long>(sizeof(buffer)) )
+                  {
                      ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size + conn->rootPathLen + 1));
+                  }
                   msg[size] = '\0';
                   if( !s_srvRecvAll( conn, msg, size ) )
+                  {
                      errCode = NETIO_ERR_READ;
+                  }
                   else
                   {
                      const char * pszName = s_consrvFilePath(reinterpret_cast<char*>(msg), conn, false);
 
                      if( !pszName )
+                     {
                         errCode = NETIO_ERR_WRONG_FILE_PATH;
+                     }
                      else
                      {
                         HB_MAXINT nSize = static_cast<HB_MAXINT>(hb_fileDirSpace(pszName, uiFlags));
@@ -820,14 +931,20 @@ HB_FUNC( NETIO_SERVER )
                size  = HB_GET_LE_UINT16(&msgbuf[4]);
                size2 = HB_GET_LE_UINT16(&msgbuf[6]);
                if( size < 0 || size2 < 0 )
+               {
                   errCode = NETIO_ERR_WRONG_PARAM;
+               }
                else
                {
                   if( HB_MAX( size, size2 ) + conn->rootPathLen >= static_cast<long>(sizeof(buffer)) )
+                  {
                      ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(HB_MAX(size, size2) + conn->rootPathLen + 1));
+                  }
                   msg[size] = '\0';
                   if( !s_srvRecvAll( conn, msg, size ) )
+                  {
                      errCode = NETIO_ERR_READ;
+                  }
                   else
                   {
                      const char * pszName = s_consrvFilePath(reinterpret_cast<char*>(msg), conn, false);
@@ -837,9 +954,13 @@ HB_FUNC( NETIO_SERVER )
 
                      msg[size2] = '\0';
                      if( size2 && !s_srvRecvAll( conn, msg, size2 ) )
+                     {
                         errCode = NETIO_ERR_READ;
+                     }
                      else if( !pszName )
+                     {
                         errCode = NETIO_ERR_WRONG_FILE_PATH;
+                     }
                      else
                      {
                         HB_SIZE itmSize = 0;
@@ -856,11 +977,15 @@ HB_FUNC( NETIO_SERVER )
                         }
 
                         if( itmSize <= sizeof(buffer) - NETIO_MSGLEN )
+                        {
                            msg = buffer;
+                        }
                         else if( !ptr || itmSize > static_cast<HB_SIZE>(HB_MAX(size, size2)) + conn->rootPathLen + 1 - NETIO_MSGLEN )
                         {
                            if( ptr )
+                           {
                               hb_xfree(ptr);
+                           }
                            ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(itmSize + NETIO_MSGLEN));
                         }
                         if( itmData )
@@ -876,7 +1001,9 @@ HB_FUNC( NETIO_SERVER )
                         memset(msg + 12, '\0', NETIO_MSGLEN - 12);
                      }
                      if( pszDirSpec )
+                     {
                         hb_xfree(pszDirSpec);
+                     }
                   }
                }
                break;
@@ -884,20 +1011,28 @@ HB_FUNC( NETIO_SERVER )
             case NETIO_LINKREAD:
                size = HB_GET_LE_UINT16(&msgbuf[4]);
                if( size < 0 )
+               {
                   errCode = NETIO_ERR_WRONG_PARAM;
+               }
                else
                {
                   if( size + conn->rootPathLen >= static_cast<long>(sizeof(buffer)) )
+                  {
                      ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size + conn->rootPathLen + 1));
+                  }
                   msg[size] = '\0';
                   if( !s_srvRecvAll( conn, msg, size ) )
+                  {
                      errCode = NETIO_ERR_READ;
+                  }
                   else
                   {
                      const char * pszName = s_consrvFilePath(reinterpret_cast<char*>(msg), conn, false);
 
                      if( !pszName )
+                     {
                         errCode = NETIO_ERR_WRONG_FILE_PATH;
+                     }
                      else
                      {
                         char * pszTarget = hb_fileLinkRead(pszName);
@@ -907,18 +1042,24 @@ HB_FUNC( NETIO_SERVER )
                         {
                            len = static_cast<long>(strlen(pszTarget));
                            if( len <= static_cast<long>(sizeof(buffer) - NETIO_MSGLEN) )
+                           {
                               msg = buffer;
+                           }
                            else if( !ptr || len > static_cast<long>(size + conn->rootPathLen + 1 - NETIO_MSGLEN) )
                            {
                               if( ptr )
+                              {
                                  hb_xfree(ptr);
+                              }
                               ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(len + NETIO_MSGLEN));
                            }
                            memcpy(msg + NETIO_MSGLEN, pszTarget, len);
                            hb_xfree(pszTarget);
                         }
                         else
+                        {
                            len = 0;
+                        }
                         HB_PUT_LE_UINT32(&msg[0], uiMsg);
                         HB_PUT_LE_UINT32(&msg[4], len);
                         HB_PUT_LE_UINT32(&msg[8], errFsCode);
@@ -935,14 +1076,20 @@ HB_FUNC( NETIO_SERVER )
                size  = HB_GET_LE_UINT16(&msgbuf[4]);
                size2 = HB_GET_LE_UINT16(&msgbuf[6]);
                if( size <= 0 || size2 <= 0 )
+               {
                   errCode = NETIO_ERR_WRONG_PARAM;
+               }
                else
                {
                   if( HB_MAX( size, size2 ) + conn->rootPathLen >= static_cast<long>(sizeof(buffer)) )
+                  {
                      ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(HB_MAX(size, size2) + conn->rootPathLen + 1));
+                  }
                   msg[size] = '\0';
                   if( !s_srvRecvAll( conn, msg, size ) )
+                  {
                      errCode = NETIO_ERR_READ;
+                  }
                   else
                   {
                      const char * szFile = s_consrvFilePath(reinterpret_cast<char*>(msg), conn, uiMsg == NETIO_LINKSYM);
@@ -950,19 +1097,27 @@ HB_FUNC( NETIO_SERVER )
 
                      msg[size2] = '\0';
                      if( !s_srvRecvAll( conn, msg, size2 ) )
+                     {
                         errCode = NETIO_ERR_READ;
+                     }
                      else if( !szOldName )
+                     {
                         errCode = NETIO_ERR_WRONG_FILE_PATH;
+                     }
                      else
                      {
                         szFile = s_consrvFilePath(reinterpret_cast<char*>(msg), conn, false);
                         if( !szFile )
+                        {
                            errCode = NETIO_ERR_WRONG_FILE_PATH;
+                        }
                         else if( !( uiMsg == NETIO_RENAME ? hb_fileRename( szOldName, szFile ) :
                                    ( uiMsg == NETIO_COPY   ? hb_fileCopy( szOldName, szFile ) :
                                    ( uiMsg == NETIO_LINK   ? hb_fileLink( szOldName, szFile ) :
                                                              hb_fileLinkSym( szOldName, szFile ) ) ) ) )
+                        {
                            errCode = s_srvFsError();
+                        }
                         else
                         {
                            HB_PUT_LE_UINT32(&msg[0], uiMsg);
@@ -970,7 +1125,9 @@ HB_FUNC( NETIO_SERVER )
                         }
                      }
                      if( szOldName )
+                     {
                         hb_xfree(szOldName);
+                     }
                   }
                }
                break;
@@ -980,24 +1137,34 @@ HB_FUNC( NETIO_SERVER )
                size = HB_GET_LE_UINT16(&msgbuf[4]);
                ulAttr = HB_GET_LE_UINT32(&msgbuf[6]);
                if( size <= 0 )
+               {
                   errCode = NETIO_ERR_WRONG_PARAM;
+               }
                else
                {
                   if( size + conn->rootPathLen >= static_cast<long>(sizeof(buffer)) )
+                  {
                      ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size + conn->rootPathLen + 1));
+                  }
                   msg[size] = '\0';
                   if( !s_srvRecvAll( conn, msg, size ) )
+                  {
                      errCode = NETIO_ERR_READ;
+                  }
                   else
                   {
                      const char * pszName = s_consrvFilePath(reinterpret_cast<char*>(msg), conn, false);
 
                      if( !pszName )
+                     {
                         errCode = NETIO_ERR_WRONG_FILE_PATH;
+                     }
                      else if( !( uiMsg == NETIO_ATTRSET ?
                                   hb_fileAttrSet(pszName, ulAttr) :
                                   hb_fileAttrGet(pszName, &ulAttr) ) )
+                     {
                         errCode = s_srvFsError();
+                     }
                      else
                      {
                         HB_PUT_LE_UINT32(&msg[0], uiMsg);
@@ -1014,24 +1181,34 @@ HB_FUNC( NETIO_SERVER )
                lJulian = HB_GET_LE_UINT32(&msgbuf[6]);
                lMillisec = HB_GET_LE_UINT32(&msgbuf[10]);
                if( size <= 0 )
+               {
                   errCode = NETIO_ERR_WRONG_PARAM;
+               }
                else
                {
                   if( size + conn->rootPathLen >= static_cast<long>(sizeof(buffer)) )
+                  {
                      ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size + conn->rootPathLen + 1));
+                  }
                   msg[size] = '\0';
                   if( !s_srvRecvAll( conn, msg, size ) )
+                  {
                      errCode = NETIO_ERR_READ;
+                  }
                   else
                   {
                      const char * pszName = s_consrvFilePath(reinterpret_cast<char*>(msg), conn, false);
 
                      if( !pszName )
+                     {
                         errCode = NETIO_ERR_WRONG_FILE_PATH;
+                     }
                      else if( !( uiMsg == NETIO_FTIMESET ?
                                   hb_fileTimeSet(pszName, lJulian, lMillisec) :
                                   hb_fileTimeGet(pszName, &lJulian, &lMillisec) ) )
+                     {
                         errCode = s_srvFsError();
+                     }
                      else
                      {
                         HB_PUT_LE_UINT32(&msg[0], uiMsg);
@@ -1057,28 +1234,40 @@ HB_FUNC( NETIO_SERVER )
                   szExt = msgbuf[8] ? hb_strndup( reinterpret_cast<const char*>(&msgbuf[8]), NETIO_MSGLEN - 8 ) : nullptr;
                }
                if( size <= 0 )
+               {
                   errCode = NETIO_ERR_WRONG_PARAM;
+               }
                else
                {
                   if( size + conn->rootPathLen >= static_cast<long>(sizeof(buffer)) )
+                  {
                      ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size + conn->rootPathLen + 1));
+                  }
                   msg[size] = '\0';
                   if( !s_srvRecvAll( conn, msg, size ) )
+                  {
                      errCode = NETIO_ERR_READ;
+                  }
                   else if( conn->filesCount >= NETIO_FILES_MAX )
+                  {
                      errCode = NETIO_ERR_FILES_MAX;
+                  }
                   else
                   {
                      const char * szFile = s_consrvFilePath(reinterpret_cast<char*>(msg), conn, false);
 
                      if( !szFile )
+                     {
                         errCode = NETIO_ERR_WRONG_FILE_PATH;
+                     }
                      else
                      {
                         nFlags &= ~ ( HB_FATTR ) FXO_COPYNAME;
                         pFile = hb_fileExtOpen(szFile, szExt, nFlags, nullptr, nullptr);
                         if( !pFile )
+                        {
                            errCode = s_srvFsError();
+                        }
                         else
                         {
                            iFileNo = s_srvFileNew(conn, pFile);
@@ -1098,7 +1287,9 @@ HB_FUNC( NETIO_SERVER )
                   }
                }
                if( szExt )
+               {
                   hb_xfree(szExt);
+               }
                break;
 
             case NETIO_CONFIGURE:
@@ -1106,18 +1297,26 @@ HB_FUNC( NETIO_SERVER )
                size = HB_GET_LE_UINT32(&msgbuf[6]);
                iIndex = HB_GET_LE_INT32(&msgbuf[10]);
                if( size < 0 )
+               {
                   errCode = NETIO_ERR_WRONG_PARAM;
+               }
                else
                {
                   if( size > static_cast<long>(sizeof(buffer) - NETIO_MSGLEN) )
+                  {
                      ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size + NETIO_MSGLEN));
+                  }
                   if( !s_srvRecvAll( conn, msg, size ) )
+                  {
                      errCode = NETIO_ERR_READ;
+                  }
                   else
                   {
                      pFile = s_srvFileGet(conn, iFileNo);
                      if( pFile == nullptr )
+                     {
                         errCode = NETIO_ERR_WRONG_FILE_HANDLE;
+                     }
                      else
                      {
                         PHB_ITEM pValue = nullptr;
@@ -1129,7 +1328,9 @@ HB_FUNC( NETIO_SERVER )
 
                            pValue = hb_itemDeserialize(&data, &nSize);
                            if( !pValue || nSize != 0 )
+                           {
                               errCode = NETIO_ERR_WRONG_PARAM;
+                           }
                         }
                         if( errCode == 0 )
                         {
@@ -1138,18 +1339,26 @@ HB_FUNC( NETIO_SERVER )
 
                            iResult = hb_fileConfigure( pFile, iIndex, pValue ) ? 1 : 0;
                            if( pValue )
+                           {
                               itmData = hb_itemSerialize(pValue, HB_SERIALIZE_NUMSIZE, &itmSize);
+                           }
 
                            if( itmSize <= sizeof(buffer) - NETIO_MSGLEN )
+                           {
                               msg = buffer;
+                           }
                            else if( !ptr || itmSize > static_cast<HB_SIZE>(size) - NETIO_MSGLEN )
                            {
                               if( ptr )
+                              {
                                  hb_xfree(ptr);
+                              }
                               ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(itmSize + NETIO_MSGLEN));
                            }
                            else
+                           {
                               msg = ptr;
+                           }
 
                            if( itmData )
                            {
@@ -1166,7 +1375,9 @@ HB_FUNC( NETIO_SERVER )
                            memset(msg + 12, '\0', NETIO_MSGLEN - 12);
                         }
                         if( pValue )
+                        {
                            hb_itemRelease(pValue);
+                        }
                      }
                   }
                }
@@ -1187,27 +1398,39 @@ HB_FUNC( NETIO_SERVER )
                   llOffset = HB_GET_LE_INT64(&msgbuf[10]);
                }
                if( size < 0 )
+               {
                   errCode = NETIO_ERR_WRONG_PARAM;
+               }
                else
                {
                   if( size > static_cast<long>(sizeof(buffer) - NETIO_MSGLEN) )
+                  {
                      ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size + NETIO_MSGLEN));
+                  }
                   pFile = s_srvFileGet(conn, iFileNo);
                   if( pFile == nullptr )
+                  {
                      errCode = NETIO_ERR_WRONG_FILE_HANDLE;
+                  }
                   else
                   {
                      if( uiMsg == NETIO_READ )
+                     {
                         len = static_cast<long>(hb_fileRead(pFile, msg + NETIO_MSGLEN, size, nTimeout));
+                     }
                      else
+                     {
                         len = static_cast<long>(hb_fileReadAt(pFile, msg + NETIO_MSGLEN, size, llOffset));
+                     }
                      errFsCode = hb_fsError();
                      HB_PUT_LE_UINT32(&msg[0], uiMsg);
                      HB_PUT_LE_UINT32(&msg[4], len);
                      HB_PUT_LE_UINT32(&msg[8], errFsCode);
                      memset(msg + 12, '\0', NETIO_MSGLEN - 12);
                      if( len == FS_ERROR )
+                     {
                         len = 0;
+                     }
                   }
                }
                break;
@@ -1227,24 +1450,36 @@ HB_FUNC( NETIO_SERVER )
                   llOffset = HB_GET_LE_INT64(&msgbuf[10]);
                }
                if( size < 0 )
+               {
                   errCode = NETIO_ERR_WRONG_PARAM;
+               }
                else
                {
                   if( size > static_cast<long>(sizeof(buffer)) )
+                  {
                      ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size));
+                  }
                   if( !s_srvRecvAll( conn, msg, size ) )
+                  {
                      errCode = NETIO_ERR_READ;
+                  }
                   else
                   {
                      pFile = s_srvFileGet(conn, iFileNo);
                      if( pFile == nullptr )
+                     {
                         errCode = NETIO_ERR_WRONG_FILE_HANDLE;
+                     }
                      else
                      {
                         if( uiMsg == NETIO_WRITE )
+                        {
                            size = static_cast<long>(hb_fileWrite(pFile, msg, size, nTimeout));
+                        }
                         else
+                        {
                            size = static_cast<long>(hb_fileWriteAt(pFile, msg, size, llOffset));
+                        }
                         errFsCode = hb_fsError();
                         HB_PUT_LE_UINT32(&msg[0], uiMsg);
                         HB_PUT_LE_UINT32(&msg[4], size);
@@ -1266,7 +1501,9 @@ HB_FUNC( NETIO_SERVER )
                uiFlags = HB_GET_LE_UINT16(&msgbuf[22]);
                pFile = s_srvFileGet(conn, iFileNo);
                if( pFile == nullptr )
+               {
                   errCode = NETIO_ERR_WRONG_FILE_HANDLE;
+               }
                else if( uiMsg == NETIO_TESTLOCK )
                {
                   iResult = hb_fileLockTest(pFile, llOffset, llSize, uiFlags);
@@ -1277,7 +1514,9 @@ HB_FUNC( NETIO_SERVER )
                   memset(msg + 12, '\0', NETIO_MSGLEN - 4);
                }
                else if( !hb_fileLock(pFile, llOffset, llSize, uiFlags) )
+               {
                   errCode = s_srvFsError();
+               }
                else if( !fNoAnswer )
                {
                   HB_PUT_LE_UINT32(&msg[0], uiMsg);
@@ -1290,9 +1529,13 @@ HB_FUNC( NETIO_SERVER )
                llOffset = HB_GET_LE_INT64(&msgbuf[6]);
                pFile = s_srvFileGet(conn, iFileNo);
                if( pFile == nullptr )
+               {
                   errCode = NETIO_ERR_WRONG_FILE_HANDLE;
+               }
                else if( !hb_fileTruncAt( pFile, llOffset ) )
+               {
                   errCode = s_srvFsError();
+               }
                else
                {
                   HB_PUT_LE_UINT32(&msg[0], NETIO_TRUNC);
@@ -1306,7 +1549,9 @@ HB_FUNC( NETIO_SERVER )
                uiFlags = HB_GET_LE_UINT16(&msgbuf[14]);
                pFile = s_srvFileGet(conn, iFileNo);
                if( pFile == nullptr )
+               {
                   errCode = NETIO_ERR_WRONG_FILE_HANDLE;
+               }
                else
                {
                   llOffset = hb_fileSeek(pFile, llOffset, uiFlags);
@@ -1322,7 +1567,9 @@ HB_FUNC( NETIO_SERVER )
                iFileNo = HB_GET_LE_UINT16(&msgbuf[4]);
                pFile = s_srvFileGet(conn, iFileNo);
                if( pFile == nullptr )
+               {
                   errCode = NETIO_ERR_WRONG_FILE_HANDLE;
+               }
                else
                {
                   llOffset = hb_fileSize(pFile);
@@ -1338,7 +1585,9 @@ HB_FUNC( NETIO_SERVER )
                iFileNo = HB_GET_LE_UINT16(&msgbuf[4]);
                pFile = s_srvFileGet(conn, iFileNo);
                if( pFile == nullptr )
+               {
                   errCode = NETIO_ERR_WRONG_FILE_HANDLE;
+               }
                else
                {
                   iResult = hb_fileEof( pFile ) ? 1 : 0;
@@ -1354,7 +1603,9 @@ HB_FUNC( NETIO_SERVER )
                iFileNo = HB_GET_LE_UINT16(&msgbuf[4]);
                pFile = s_srvFileGet(conn, iFileNo);
                if( pFile )
+               {
                   hb_fileCommit(pFile);
+               }
                fNoAnswer = HB_TRUE;
                break;
 
@@ -1362,7 +1613,9 @@ HB_FUNC( NETIO_SERVER )
                iFileNo = HB_GET_LE_UINT16(&msgbuf[4]);
                pFile = s_srvFileFree(conn, iFileNo);
                if( pFile == nullptr )
+               {
                   errCode = NETIO_ERR_WRONG_FILE_HANDLE;
+               }
                else
                {
                   hb_fileClose(pFile);
@@ -1379,7 +1632,9 @@ HB_FUNC( NETIO_SERVER )
                   while( *pStreamPtr )
                   {
                      if( (*pStreamPtr)->id == iStreamID )
+                     {
                         break;
+                     }
                      pStreamPtr = &( *pStreamPtr )->next;
                   }
                   if( *pStreamPtr != nullptr )
@@ -1389,14 +1644,20 @@ HB_FUNC( NETIO_SERVER )
                      hb_xfree(stream);
                   }
                   else
+                  {
                      iStreamID = 0;
+                  }
                   hb_threadMutexUnlock(conn->mutex);
                }
                else
+               {
                   iStreamID = 0;
+               }
 
                if( iStreamID == 0 )
+               {
                   errCode = NETIO_ERR_WRONG_STREAMID;
+               }
                else
                {
                   HB_PUT_LE_UINT32(&msg[0], NETIO_SRVCLOSE);
@@ -1405,7 +1666,7 @@ HB_FUNC( NETIO_SERVER )
                break;
 
             case NETIO_PROC:
-               fNoAnswer = HB_TRUE;
+               fNoAnswer = true;
                /* fallthrough */
             case NETIO_PROCIS:
             case NETIO_PROCW:
@@ -1413,21 +1674,31 @@ HB_FUNC( NETIO_SERVER )
             case NETIO_FUNCCTRL:
                size = HB_GET_LE_UINT32(&msgbuf[4]);
                if( size < 2 )
+               {
                   errCode = NETIO_ERR_WRONG_PARAM;
+               }
                else
                {
                   if( size > static_cast<long>(sizeof(buffer)) )
+                  {
                      ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(size));
+                  }
                   if( !s_srvRecvAll( conn, msg, size ) )
+                  {
                      errCode = NETIO_ERR_READ;
+                  }
                   else if( !conn->rpc )
+                  {
                      errCode = NETIO_ERR_UNSUPPORTED;
+                  }
                   else
                   {
                      const char * data = reinterpret_cast<const char*>(msg);
                      size2 = static_cast<long>(hb_strnlen(data, size)) + 1;
                      if( size2 > size )
+                     {
                         errCode = NETIO_ERR_WRONG_PARAM;
+                     }
                      else
                      {
                         PHB_DYNS pDynSym = nullptr;
@@ -1437,13 +1708,17 @@ HB_FUNC( NETIO_SERVER )
                         {
                            pItem = hb_hashGetCItemPtr(conn->rpcFilter, data);
                            if( !pItem )
+                           {
                               errCode = NETIO_ERR_NOT_EXISTS;
+                           }
                         }
                         else
                         {
                            pDynSym = hb_dynsymFindName(data);
                            if( !pDynSym || !hb_dynsymIsFunction(pDynSym) )
+                           {
                               errCode = NETIO_ERR_NOT_EXISTS;
+                           }
                         }
 
                         if( uiMsg != NETIO_PROCIS && errCode == 0 )
@@ -1452,13 +1727,13 @@ HB_FUNC( NETIO_SERVER )
                            {
                               HB_SIZE nSize = size - size2;
                               HB_USHORT uiPCount = 0;
-                              HB_BOOL fSend = HB_FALSE;
+                              HB_BOOL fSend = false;
 
                               iStreamID = 0;
                               data += size2;
                               if( pItem != nullptr )
                               {
-                                 fSend = HB_TRUE;
+                                 fSend = true;
                                  hb_vmPushEvalSym();
                                  hb_vmPush(pItem);
                               }
@@ -1485,11 +1760,15 @@ HB_FUNC( NETIO_SERVER )
                                  uiPCount += 2;
                                  if( iStreamType != NETIO_SRVDATA &&
                                      iStreamType != NETIO_SRVITEM )
+                                 {
                                     iStreamID = 0;
+                                 }
                                  if( iStreamID )
                                  {
                                     if( conn->mutex == nullptr )
+                                    {
                                        conn->mutex = hb_threadMutexCreate();
+                                    }
                                     if( hb_threadMutexLock(conn->mutex) )
                                     {
                                        PHB_CONSTREAM stream = static_cast<PHB_CONSTREAM>(hb_xgrab(sizeof(HB_CONSTREAM)));
@@ -1505,7 +1784,9 @@ HB_FUNC( NETIO_SERVER )
                                     }
                                  }
                                  else
+                                 {
                                     errCode = NETIO_ERR_WRONG_PARAM;
+                                 }
                               }
                               while( nSize > 0 && errCode == 0 )
                               {
@@ -1531,20 +1812,28 @@ HB_FUNC( NETIO_SERVER )
                               else
                               {
                                  if( fSend )
+                                 {
                                     hb_vmSend(uiPCount);
+                                 }
                                  else
+                                 {
                                     hb_vmProc(uiPCount);
+                                 }
                                  if( uiMsg == NETIO_FUNC || uiMsg == NETIO_FUNCCTRL )
                                  {
                                     HB_SIZE itmSize;
                                     PHB_ITEM pResult = hb_stackReturnItem();
                                     char * itmData = hb_itemSerialize(pResult, HB_SERIALIZE_NUMSIZE, &itmSize);
                                     if( itmSize <= sizeof(buffer) - NETIO_MSGLEN )
+                                    {
                                        msg = buffer;
+                                    }
                                     else if( !ptr || itmSize > static_cast<HB_SIZE>(size) - NETIO_MSGLEN )
                                     {
                                        if( ptr )
+                                       {
                                           hb_xfree(ptr);
+                                       }
                                        ptr = msg = static_cast<HB_BYTE*>(hb_xgrab(itmSize + NETIO_MSGLEN));
                                     }
                                     memcpy(msg + NETIO_MSGLEN, itmData, itmSize);
@@ -1571,7 +1860,9 @@ HB_FUNC( NETIO_SERVER )
                               }
                            }
                            else
+                           {
                               errCode = NETIO_ERR_REFUSED;
+                           }
                         }
                      }
                      if( errCode == 0 && !fNoAnswer )
@@ -1609,15 +1900,21 @@ HB_FUNC( NETIO_SERVER )
             len = NETIO_MSGLEN;
          }
          else
+         {
             len += NETIO_MSGLEN;
+         }
 
          errCode = !s_srvSendAll(conn, msg, len);
 
          if( ptr )
+         {
             hb_xfree(ptr);
+         }
 
          if( errCode )
+         {
             break;
+         }
       }
    }
 }
@@ -1629,7 +1926,9 @@ HB_FUNC( NETIO_SERVEDCONNECTION )
    static PHB_DYNS s_pDyns_netio_server = nullptr;
 
    if( s_pDyns_netio_server == nullptr )
+   {
       s_pDyns_netio_server = hb_dynsymGetCase("NETIO_SERVER");
+   }
 
    if( s_pDyns_netio_server != nullptr )
    {
@@ -1640,7 +1939,9 @@ HB_FUNC( NETIO_SERVEDCONNECTION )
          PHB_ITEM pItem = hb_stackItem(nOffset + 2);
 
          if( hb_itemGetPtrGC(pItem, &s_gcConSrvFuncs) != nullptr )
+         {
             hb_itemReturn(pItem);
+         }
       }
    }
 }
@@ -1652,7 +1953,7 @@ HB_FUNC( NETIO_SRVSENDITEM )
    PHB_CONSRV conn = s_consrvParam(1);
    int iStreamID = hb_parni(2);
    PHB_ITEM pItem = hb_param(3, Harbour::Item::ANY);
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
    if( conn && conn->sock && !conn->stop && conn->mutex &&
        iStreamID && pItem )
@@ -1678,11 +1979,15 @@ HB_FUNC( NETIO_SRVSENDITEM )
          while( stream )
          {
             if( stream->id == iStreamID )
+            {
                break;
+            }
             stream = stream->next;
          }
          if( stream && stream->type == NETIO_SRVITEM )
+         {
             fResult = s_srvSendAll(conn, msg, lLen);
+         }
          hb_threadMutexUnlock(conn->mutex);
       }
       hb_xfree(msg);
@@ -1697,7 +2002,7 @@ HB_FUNC( NETIO_SRVSENDDATA )
    PHB_CONSRV conn = s_consrvParam(1);
    int iStreamID = hb_parni(2);
    long lLen = static_cast<long>(hb_parclen(3));
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
    if( conn && conn->sock && !conn->stop && conn->mutex && iStreamID && lLen > 0 )
    {
@@ -1717,11 +2022,15 @@ HB_FUNC( NETIO_SRVSENDDATA )
          while( stream )
          {
             if( stream->id == iStreamID )
+            {
                break;
+            }
             stream = stream->next;
          }
          if( stream && stream->type == NETIO_SRVDATA )
+         {
             fResult = s_srvSendAll(conn, msg, lLen);
+         }
          hb_threadMutexUnlock(conn->mutex);
       }
       hb_xfree(msg);
@@ -1745,11 +2054,17 @@ HB_FUNC( NETIO_SRVSTATUS )
    }
 
    if( !conn )
+   {
       iStatus = NETIO_SRVSTAT_WRONGHANDLE;
+   }
    else if( conn->sock == nullptr )
+   {
       iStatus = NETIO_SRVSTAT_CLOSED;
+   }
    else if( conn->stop )
+   {
       iStatus = NETIO_SRVSTAT_STOPPED;
+   }
    else if( iStreamID != 0 && conn->mutex )
    {
       if( hb_threadMutexLock(conn->mutex) )
@@ -1790,10 +2105,14 @@ HB_FUNC( NETIO_SRVSTATUS )
             {
                pItem = hb_socketAddrToItem(addr, len);
                if( addr )
+               {
                   hb_xfree(addr);
+               }
             }
             if( !hb_itemParamStoreRelease(3, pItem) && pItem )
+            {
                hb_itemRelease(pItem);
+            }
             break;
          }
       }
