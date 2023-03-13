@@ -120,6 +120,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_NEW )
 {
@@ -160,7 +161,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_GETFCTSHOLD )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fCtsHold);
+    winapi_ret_DWORD(obj->fCtsHold);
   }
 }
 
@@ -182,7 +183,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_GETFDSRHOLD )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fDsrHold);
+    winapi_ret_DWORD(obj->fDsrHold);
   }
 }
 
@@ -204,7 +205,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_GETFRLSDHOLD )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fRlsdHold);
+    winapi_ret_DWORD(obj->fRlsdHold);
   }
 }
 
@@ -226,7 +227,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_GETFXOFFHOLD )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fXoffHold);
+    winapi_ret_DWORD(obj->fXoffHold);
   }
 }
 
@@ -248,7 +249,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_GETFXOFFSENT )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fXoffSent);
+    winapi_ret_DWORD(obj->fXoffSent);
   }
 }
 
@@ -270,7 +271,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_GETFEOF )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fEof);
+    winapi_ret_DWORD(obj->fEof);
   }
 }
 
@@ -292,7 +293,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_GETFTXIM )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fTxim);
+    winapi_ret_DWORD(obj->fTxim);
   }
 }
 
@@ -314,7 +315,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_GETFRESERVED )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fReserved);
+    winapi_ret_DWORD(obj->fReserved);
   }
 }
 
@@ -336,7 +337,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_GETCBINQUE )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->cbInQue);
+    winapi_ret_DWORD(obj->cbInQue);
   }
 }
 
@@ -358,7 +359,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_GETCBOUTQUE )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->cbOutQue);
+    winapi_ret_DWORD(obj->cbOutQue);
   }
 }
 

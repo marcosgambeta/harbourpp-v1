@@ -78,6 +78,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_NEW )
 {
@@ -118,7 +119,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_GETLOPNSTYLE )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->lopnStyle);
+    winapi_ret_UINT(obj->lopnStyle);
   }
 }
 
@@ -162,7 +163,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGPEN_GETLOPNCOLOR )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->lopnColor);
+    winapi_ret_COLORREF(obj->lopnColor);
   }
 }
 

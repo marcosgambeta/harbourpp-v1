@@ -118,6 +118,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_NEW )
 {
@@ -162,7 +163,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_GETDWLENGTH )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->dwLength);
+    winapi_ret_DWORD(obj->dwLength);
   }
 }
 
@@ -184,7 +185,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_GETDWMEMORYLOAD )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->dwMemoryLoad);
+    winapi_ret_DWORD(obj->dwMemoryLoad);
   }
 }
 
@@ -206,7 +207,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_GETULLTOTALPHYS )
 
   if( obj != nullptr )
   {
-    hb_retnll(obj->ullTotalPhys);
+    winapi_ret_DWORDLONG(obj->ullTotalPhys);
   }
 }
 
@@ -228,7 +229,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_GETULLAVAILPHYS )
 
   if( obj != nullptr )
   {
-    hb_retnll(obj->ullAvailPhys);
+    winapi_ret_DWORDLONG(obj->ullAvailPhys);
   }
 }
 
@@ -250,7 +251,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_GETULLTOTALPAGEFILE )
 
   if( obj != nullptr )
   {
-    hb_retnll(obj->ullTotalPageFile);
+    winapi_ret_DWORDLONG(obj->ullTotalPageFile);
   }
 }
 
@@ -272,7 +273,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_GETULLAVAILPAGEFILE )
 
   if( obj != nullptr )
   {
-    hb_retnll(obj->ullAvailPageFile);
+    winapi_ret_DWORDLONG(obj->ullAvailPageFile);
   }
 }
 
@@ -294,7 +295,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_GETULLTOTALVIRTUAL )
 
   if( obj != nullptr )
   {
-    hb_retnll(obj->ullTotalVirtual);
+    winapi_ret_DWORDLONG(obj->ullTotalVirtual);
   }
 }
 
@@ -316,7 +317,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_GETULLAVAILVIRTUAL )
 
   if( obj != nullptr )
   {
-    hb_retnll(obj->ullAvailVirtual);
+    winapi_ret_DWORDLONG(obj->ullAvailVirtual);
   }
 }
 
@@ -338,7 +339,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_GETULLAVAILEXTENDEDVIRTUAL )
 
   if( obj != nullptr )
   {
-    hb_retnll(obj->ullAvailExtendedVirtual);
+    winapi_ret_DWORDLONG(obj->ullAvailExtendedVirtual);
   }
 }
 

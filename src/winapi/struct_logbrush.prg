@@ -78,6 +78,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_NEW )
 {
@@ -118,7 +119,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBSTYLE )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->lbStyle);
+    winapi_ret_UINT(obj->lbStyle);
   }
 }
 
@@ -140,7 +141,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBCOLOR )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->lbColor);
+    winapi_ret_COLORREF(obj->lbColor);
   }
 }
 
@@ -162,7 +163,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBHATCH )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->lbHatch);
+    winapi_ret_ULONG_PTR(obj->lbHatch);
   }
 }
 

@@ -90,6 +90,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_NEW )
 {
@@ -130,7 +131,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_GETFICON )
 
   if( obj != nullptr )
   {
-    hb_retl(obj->fIcon);
+    winapi_ret_BOOL(obj->fIcon);
   }
 }
 
@@ -152,7 +153,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_GETXHOTSPOT )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->xHotspot);
+    winapi_ret_DWORD(obj->xHotspot);
   }
 }
 
@@ -174,7 +175,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_GETYHOTSPOT )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->yHotspot);
+    winapi_ret_DWORD(obj->yHotspot);
   }
 }
 
@@ -196,7 +197,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_GETHBMMASK )
 
   if( obj != nullptr )
   {
-    hb_retptr(obj->hbmMask);
+    winapi_ret_HBITMAP(obj->hbmMask);
   }
 }
 
@@ -218,7 +219,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_GETHBMCOLOR )
 
   if( obj != nullptr )
   {
-    hb_retptr(obj->hbmColor);
+    winapi_ret_HBITMAP(obj->hbmColor);
   }
 }
 

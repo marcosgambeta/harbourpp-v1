@@ -102,6 +102,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_NEW )
 {
@@ -142,7 +143,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETCBSIZE )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->cbSize);
+    winapi_ret_UINT(obj->cbSize);
   }
 }
 
@@ -164,7 +165,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETFMASK )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->fMask);
+    winapi_ret_UINT(obj->fMask);
   }
 }
 
@@ -186,7 +187,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETNMIN )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->nMin);
+    winapi_ret_int(obj->nMin);
   }
 }
 
@@ -208,7 +209,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETNMAX )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->nMax);
+    winapi_ret_int(obj->nMax);
   }
 }
 
@@ -230,7 +231,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETNPAGE )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->nPage);
+    winapi_ret_UINT(obj->nPage);
   }
 }
 
@@ -252,7 +253,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETNPOS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->nPos);
+    winapi_ret_int(obj->nPos);
   }
 }
 
@@ -274,7 +275,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_GETNTRACKPOS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->nTrackPos);
+    winapi_ret_int(obj->nTrackPos);
   }
 }
 

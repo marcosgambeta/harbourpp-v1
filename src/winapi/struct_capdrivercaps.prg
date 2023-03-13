@@ -127,6 +127,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_NEW )
 {
@@ -167,7 +168,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETWDEVICEINDEX )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->wDeviceIndex);
+    winapi_ret_UINT(obj->wDeviceIndex);
   }
 }
 
@@ -189,7 +190,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETFHASOVERLAY )
 
   if( obj != nullptr )
   {
-    hb_retl(obj->fHasOverlay);
+    winapi_ret_BOOL(obj->fHasOverlay);
   }
 }
 
@@ -211,7 +212,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETFHASDLGVIDEOSOURCE )
 
   if( obj != nullptr )
   {
-    hb_retl(obj->fHasDlgVideoSource);
+    winapi_ret_BOOL(obj->fHasDlgVideoSource);
   }
 }
 
@@ -233,7 +234,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETFHASDLGVIDEOFORMAT )
 
   if( obj != nullptr )
   {
-    hb_retl(obj->fHasDlgVideoFormat);
+    winapi_ret_BOOL(obj->fHasDlgVideoFormat);
   }
 }
 
@@ -255,7 +256,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETFHASDLGVIDEODISPLAY )
 
   if( obj != nullptr )
   {
-    hb_retl(obj->fHasDlgVideoDisplay);
+    winapi_ret_BOOL(obj->fHasDlgVideoDisplay);
   }
 }
 
@@ -277,7 +278,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETFCAPTUREINITIALIZED )
 
   if( obj != nullptr )
   {
-    hb_retl(obj->fCaptureInitialized);
+    winapi_ret_BOOL(obj->fCaptureInitialized);
   }
 }
 
@@ -299,7 +300,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETFDRIVERSUPPLIESPALETTES )
 
   if( obj != nullptr )
   {
-    hb_retl(obj->fDriverSuppliesPalettes);
+    winapi_ret_BOOL(obj->fDriverSuppliesPalettes);
   }
 }
 
@@ -321,7 +322,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETHVIDEOIN )
 
   if( obj != nullptr )
   {
-    hb_retptr(obj->hVideoIn);
+    winapi_ret_HANDLE(obj->hVideoIn);
   }
 }
 
@@ -343,7 +344,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETHVIDEOOUT )
 
   if( obj != nullptr )
   {
-    hb_retptr(obj->hVideoOut);
+    winapi_ret_HANDLE(obj->hVideoOut);
   }
 }
 
@@ -365,7 +366,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETHVIDEOEXTIN )
 
   if( obj != nullptr )
   {
-    hb_retptr(obj->hVideoExtIn);
+    winapi_ret_HANDLE(obj->hVideoExtIn);
   }
 }
 
@@ -387,7 +388,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_CAPDRIVERCAPS_GETHVIDEOEXTOUT )
 
   if( obj != nullptr )
   {
-    hb_retptr(obj->hVideoExtOut);
+    winapi_ret_HANDLE(obj->hVideoExtOut);
   }
 }
 

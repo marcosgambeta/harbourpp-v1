@@ -84,6 +84,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_NEW )
 {
@@ -124,7 +125,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_GETRGBBLUE )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->rgbBlue);
+    winapi_ret_BYTE(obj->rgbBlue);
   }
 }
 
@@ -146,7 +147,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_GETRGBGREEN )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->rgbGreen);
+    winapi_ret_BYTE(obj->rgbGreen);
   }
 }
 
@@ -168,7 +169,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_GETRGBRED )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->rgbRed);
+    winapi_ret_BYTE(obj->rgbRed);
   }
 }
 
@@ -190,7 +191,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RGBQUAD_GETRGBRESERVED )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->rgbReserved);
+    winapi_ret_BYTE(obj->rgbReserved);
   }
 }
 

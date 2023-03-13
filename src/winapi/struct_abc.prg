@@ -78,6 +78,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ABC_NEW )
 {
@@ -118,7 +119,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_GETABCA )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->abcA);
+    winapi_ret_int(obj->abcA);
   }
 }
 
@@ -140,7 +141,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_GETABCB )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->abcB);
+    winapi_ret_UINT(obj->abcB);
   }
 }
 
@@ -162,7 +163,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_GETABCC )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->abcC);
+    winapi_ret_int(obj->abcC);
   }
 }
 

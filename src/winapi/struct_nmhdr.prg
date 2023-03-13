@@ -78,6 +78,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_NEW )
 {
@@ -118,7 +119,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_GETHWNDFROM )
 
   if( obj != nullptr )
   {
-    hb_retptr(obj->hwndFrom);
+    winapi_ret_HWND(obj->hwndFrom);
   }
 }
 
@@ -140,7 +141,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_GETIDFROM )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->idFrom);
+    winapi_ret_UINT_PTR(obj->idFrom);
   }
 }
 
@@ -162,7 +163,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_GETCODE )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->code);
+    winapi_ret_UINT(obj->code);
   }
 }
 

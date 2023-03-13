@@ -216,6 +216,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_NEW )
 {
@@ -256,7 +257,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETNSIZE )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->nSize);
+    winapi_ret_WORD(obj->nSize);
   }
 }
 
@@ -278,7 +279,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETNVERSION )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->nVersion);
+    winapi_ret_WORD(obj->nVersion);
   }
 }
 
@@ -300,7 +301,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETDWFLAGS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->dwFlags);
+    winapi_ret_DWORD(obj->dwFlags);
   }
 }
 
@@ -322,7 +323,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETIPIXELTYPE )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->iPixelType);
+    winapi_ret_BYTE(obj->iPixelType);
   }
 }
 
@@ -344,7 +345,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCCOLORBITS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->cColorBits);
+    winapi_ret_BYTE(obj->cColorBits);
   }
 }
 
@@ -366,7 +367,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCREDBITS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->cRedBits);
+    winapi_ret_BYTE(obj->cRedBits);
   }
 }
 
@@ -388,7 +389,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCREDSHIFT )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->cRedShift);
+    winapi_ret_BYTE(obj->cRedShift);
   }
 }
 
@@ -410,7 +411,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCGREENBITS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->cGreenBits);
+    winapi_ret_BYTE(obj->cGreenBits);
   }
 }
 
@@ -432,7 +433,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCGREENSHIFT )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->cGreenShift);
+    winapi_ret_BYTE(obj->cGreenShift);
   }
 }
 
@@ -454,7 +455,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCBLUEBITS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->cBlueBits);
+    winapi_ret_BYTE(obj->cBlueBits);
   }
 }
 
@@ -476,7 +477,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCBLUESHIFT )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->cBlueShift);
+    winapi_ret_BYTE(obj->cBlueShift);
   }
 }
 
@@ -498,7 +499,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCALPHABITS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->cAlphaBits);
+    winapi_ret_BYTE(obj->cAlphaBits);
   }
 }
 
@@ -520,7 +521,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCALPHASHIFT )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->cAlphaShift);
+    winapi_ret_BYTE(obj->cAlphaShift);
   }
 }
 
@@ -542,7 +543,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCACCUMBITS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->cAccumBits);
+    winapi_ret_BYTE(obj->cAccumBits);
   }
 }
 
@@ -564,7 +565,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCACCUMREDBITS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->cAccumRedBits);
+    winapi_ret_BYTE(obj->cAccumRedBits);
   }
 }
 
@@ -586,7 +587,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCACCUMGREENBITS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->cAccumGreenBits);
+    winapi_ret_BYTE(obj->cAccumGreenBits);
   }
 }
 
@@ -608,7 +609,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCACCUMBLUEBITS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->cAccumBlueBits);
+    winapi_ret_BYTE(obj->cAccumBlueBits);
   }
 }
 
@@ -630,7 +631,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCACCUMALPHABITS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->cAccumAlphaBits);
+    winapi_ret_BYTE(obj->cAccumAlphaBits);
   }
 }
 
@@ -652,7 +653,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCDEPTHBITS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->cDepthBits);
+    winapi_ret_BYTE(obj->cDepthBits);
   }
 }
 
@@ -674,7 +675,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCSTENCILBITS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->cStencilBits);
+    winapi_ret_BYTE(obj->cStencilBits);
   }
 }
 
@@ -696,7 +697,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETCAUXBUFFERS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->cAuxBuffers);
+    winapi_ret_BYTE(obj->cAuxBuffers);
   }
 }
 
@@ -718,7 +719,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETILAYERTYPE )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->iLayerType);
+    winapi_ret_BYTE(obj->iLayerType);
   }
 }
 
@@ -740,7 +741,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETBRESERVED )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->bReserved);
+    winapi_ret_BYTE(obj->bReserved);
   }
 }
 
@@ -762,7 +763,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETDWLAYERMASK )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->dwLayerMask);
+    winapi_ret_DWORD(obj->dwLayerMask);
   }
 }
 
@@ -784,7 +785,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETDWVISIBLEMASK )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->dwVisibleMask);
+    winapi_ret_DWORD(obj->dwVisibleMask);
   }
 }
 
@@ -806,7 +807,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_GETDWDAMAGEMASK )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->dwDamageMask);
+    winapi_ret_DWORD(obj->dwDamageMask);
   }
 }
 

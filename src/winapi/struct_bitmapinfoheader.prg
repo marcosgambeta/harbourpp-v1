@@ -126,6 +126,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_NEW )
 {
@@ -166,7 +167,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBISIZE )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->biSize);
+    winapi_ret_DWORD(obj->biSize);
   }
 }
 
@@ -188,7 +189,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBIWIDTH )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->biWidth);
+    winapi_ret_LONG(obj->biWidth);
   }
 }
 
@@ -210,7 +211,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBIHEIGHT )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->biHeight);
+    winapi_ret_LONG(obj->biHeight);
   }
 }
 
@@ -232,7 +233,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBIPLANES )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->biPlanes);
+    winapi_ret_WORD(obj->biPlanes);
   }
 }
 
@@ -254,7 +255,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBIBITCOUNT )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->biBitCount);
+    winapi_ret_WORD(obj->biBitCount);
   }
 }
 
@@ -276,7 +277,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBICOMPRESSION )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->biCompression);
+    winapi_ret_DWORD(obj->biCompression);
   }
 }
 
@@ -298,7 +299,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBISIZEIMAGE )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->biSizeImage);
+    winapi_ret_DWORD(obj->biSizeImage);
   }
 }
 
@@ -320,7 +321,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBIXPELSPERMETER )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->biXPelsPerMeter);
+    winapi_ret_LONG(obj->biXPelsPerMeter);
   }
 }
 
@@ -342,7 +343,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBIYPELSPERMETER )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->biYPelsPerMeter);
+    winapi_ret_LONG(obj->biYPelsPerMeter);
   }
 }
 
@@ -364,7 +365,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBICLRUSED )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->biClrUsed);
+    winapi_ret_DWORD(obj->biClrUsed);
   }
 }
 
@@ -386,7 +387,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_GETBICLRIMPORTANT )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->biClrImportant);
+    winapi_ret_DWORD(obj->biClrImportant);
   }
 }
 

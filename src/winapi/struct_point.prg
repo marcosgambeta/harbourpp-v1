@@ -72,6 +72,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_POINT_NEW )
 {
@@ -112,7 +113,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_POINT_GETX )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->x);
+    winapi_ret_LONG(obj->x);
   }
 }
 
@@ -134,7 +135,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_POINT_GETY )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->y);
+    winapi_ret_LONG(obj->y);
   }
 }
 

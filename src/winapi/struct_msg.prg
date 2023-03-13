@@ -98,6 +98,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_MSG_NEW )
 {
@@ -138,7 +139,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_GETHWND )
 
   if( obj != nullptr )
   {
-    hb_retptr(obj->hwnd);
+    winapi_ret_HWND(obj->hwnd);
   }
 }
 
@@ -160,7 +161,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_GETMESSAGE )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->message);
+    winapi_ret_UINT(obj->message);
   }
 }
 
@@ -182,7 +183,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_GETWPARAM )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->wParam);
+    winapi_ret_WPARAM(obj->wParam);
   }
 }
 
@@ -204,7 +205,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_GETLPARAM )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->lParam);
+    winapi_ret_LPARAM(obj->lParam);
   }
 }
 
@@ -226,7 +227,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_GETTIME )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->time);
+    winapi_ret_DWORD(obj->time);
   }
 }
 

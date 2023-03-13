@@ -72,6 +72,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_FILETIME_NEW )
 {
@@ -112,7 +113,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_FILETIME_GETDWLOWDATETIME )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->dwLowDateTime);
+    winapi_ret_DWORD(obj->dwLowDateTime);
   }
 }
 
@@ -134,7 +135,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_FILETIME_GETDWHIGHDATETIME )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->dwHighDateTime);
+    winapi_ret_DWORD(obj->dwHighDateTime);
   }
 }
 

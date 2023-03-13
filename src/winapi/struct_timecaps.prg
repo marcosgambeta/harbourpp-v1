@@ -72,6 +72,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_TIMECAPS_NEW )
 {
@@ -112,7 +113,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_TIMECAPS_GETWPERIODMIN )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->wPeriodMin);
+    winapi_ret_UINT(obj->wPeriodMin);
   }
 }
 
@@ -134,7 +135,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_TIMECAPS_GETWPERIODMAX )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->wPeriodMax);
+    winapi_ret_UINT(obj->wPeriodMax);
   }
 }
 

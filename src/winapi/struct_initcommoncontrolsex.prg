@@ -73,6 +73,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_NEW )
 {
@@ -113,7 +114,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_GETDWSIZE )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->dwSize);
+    winapi_ret_DWORD(obj->dwSize);
   }
 }
 
@@ -135,7 +136,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_GETDWICC )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->dwICC);
+    winapi_ret_DWORD(obj->dwICC);
   }
 }
 

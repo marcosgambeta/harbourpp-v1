@@ -228,6 +228,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_DCB_NEW )
 {
@@ -268,7 +269,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETDCBLENGTH )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->DCBlength);
+    winapi_ret_DWORD(obj->DCBlength);
   }
 }
 
@@ -290,7 +291,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETBAUDRATE )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->BaudRate);
+    winapi_ret_DWORD(obj->BaudRate);
   }
 }
 
@@ -312,7 +313,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFBINARY )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fBinary);
+    winapi_ret_DWORD(obj->fBinary);
   }
 }
 
@@ -334,7 +335,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFPARITY )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fParity);
+    winapi_ret_DWORD(obj->fParity);
   }
 }
 
@@ -356,7 +357,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFOUTXCTSFLOW )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fOutxCtsFlow);
+    winapi_ret_DWORD(obj->fOutxCtsFlow);
   }
 }
 
@@ -378,7 +379,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFOUTXDSRFLOW )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fOutxDsrFlow);
+    winapi_ret_DWORD(obj->fOutxDsrFlow);
   }
 }
 
@@ -400,7 +401,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFDTRCONTROL )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fDtrControl);
+    winapi_ret_DWORD(obj->fDtrControl);
   }
 }
 
@@ -422,7 +423,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFDSRSENSITIVITY )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fDsrSensitivity);
+    winapi_ret_DWORD(obj->fDsrSensitivity);
   }
 }
 
@@ -444,7 +445,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFTXCONTINUEONXOFF )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fTXContinueOnXoff);
+    winapi_ret_DWORD(obj->fTXContinueOnXoff);
   }
 }
 
@@ -466,7 +467,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFOUTX )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fOutX);
+    winapi_ret_DWORD(obj->fOutX);
   }
 }
 
@@ -488,7 +489,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFINX )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fInX);
+    winapi_ret_DWORD(obj->fInX);
   }
 }
 
@@ -510,7 +511,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFERRORCHAR )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fErrorChar);
+    winapi_ret_DWORD(obj->fErrorChar);
   }
 }
 
@@ -532,7 +533,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFNULL )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fNull);
+    winapi_ret_DWORD(obj->fNull);
   }
 }
 
@@ -554,7 +555,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFRTSCONTROL )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fRtsControl);
+    winapi_ret_DWORD(obj->fRtsControl);
   }
 }
 
@@ -576,7 +577,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFABORTONERROR )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fAbortOnError);
+    winapi_ret_DWORD(obj->fAbortOnError);
   }
 }
 
@@ -598,7 +599,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFDUMMY2 )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->fDummy2);
+    winapi_ret_DWORD(obj->fDummy2);
   }
 }
 
@@ -620,7 +621,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETWRESERVED )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->wReserved);
+    winapi_ret_WORD(obj->wReserved);
   }
 }
 
@@ -642,7 +643,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXONLIM )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->XonLim);
+    winapi_ret_WORD(obj->XonLim);
   }
 }
 
@@ -664,7 +665,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXOFFLIM )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->XoffLim);
+    winapi_ret_WORD(obj->XoffLim);
   }
 }
 
@@ -686,7 +687,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETBYTESIZE )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->ByteSize);
+    winapi_ret_BYTE(obj->ByteSize);
   }
 }
 
@@ -708,7 +709,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETPARITY )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->Parity);
+    winapi_ret_BYTE(obj->Parity);
   }
 }
 
@@ -730,7 +731,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETSTOPBITS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->StopBits);
+    winapi_ret_BYTE(obj->StopBits);
   }
 }
 
@@ -752,7 +753,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXONCHAR )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->XonChar);
+    winapi_ret_char(obj->XonChar);
   }
 }
 
@@ -774,7 +775,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXOFFCHAR )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->XoffChar);
+    winapi_ret_char(obj->XoffChar);
   }
 }
 
@@ -796,7 +797,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETERRORCHAR )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->ErrorChar);
+    winapi_ret_char(obj->ErrorChar);
   }
 }
 
@@ -818,7 +819,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETEOFCHAR )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->EofChar);
+    winapi_ret_char(obj->EofChar);
   }
 }
 
@@ -840,7 +841,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETEVTCHAR )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->EvtChar);
+    winapi_ret_char(obj->EvtChar);
   }
 }
 
@@ -862,7 +863,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETWRESERVED1 )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->wReserved1);
+    winapi_ret_WORD(obj->wReserved1);
   }
 }
 

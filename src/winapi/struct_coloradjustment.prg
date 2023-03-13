@@ -132,6 +132,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_NEW )
 {
@@ -172,7 +173,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCASIZE )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->caSize);
+    winapi_ret_WORD(obj->caSize);
   }
 }
 
@@ -194,7 +195,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAFLAGS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->caFlags);
+    winapi_ret_WORD(obj->caFlags);
   }
 }
 
@@ -216,7 +217,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAILLUMINANTINDEX )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->caIlluminantIndex);
+    winapi_ret_WORD(obj->caIlluminantIndex);
   }
 }
 
@@ -238,7 +239,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAREDGAMMA )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->caRedGamma);
+    winapi_ret_WORD(obj->caRedGamma);
   }
 }
 
@@ -260,7 +261,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAGREENGAMMA )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->caGreenGamma);
+    winapi_ret_WORD(obj->caGreenGamma);
   }
 }
 
@@ -282,7 +283,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCABLUEGAMMA )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->caBlueGamma);
+    winapi_ret_WORD(obj->caBlueGamma);
   }
 }
 
@@ -304,7 +305,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAREFERENCEBLACK )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->caReferenceBlack);
+    winapi_ret_WORD(obj->caReferenceBlack);
   }
 }
 
@@ -326,7 +327,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAREFERENCEWHITE )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->caReferenceWhite);
+    winapi_ret_WORD(obj->caReferenceWhite);
   }
 }
 
@@ -348,7 +349,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCACONTRAST )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->caContrast);
+    winapi_ret_SHORT(obj->caContrast);
   }
 }
 
@@ -370,7 +371,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCABRIGHTNESS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->caBrightness);
+    winapi_ret_SHORT(obj->caBrightness);
   }
 }
 
@@ -392,7 +393,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCACOLORFULNESS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->caColorfulness);
+    winapi_ret_SHORT(obj->caColorfulness);
   }
 }
 
@@ -414,7 +415,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_GETCAREDGREENTINT )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->caRedGreenTint);
+    winapi_ret_SHORT(obj->caRedGreenTint);
   }
 }
 

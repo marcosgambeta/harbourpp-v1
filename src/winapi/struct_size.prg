@@ -72,6 +72,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_NEW )
 {
@@ -112,7 +113,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_GETCX )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->cx);
+    winapi_ret_LONG(obj->cx);
   }
 }
 
@@ -134,7 +135,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_GETCY )
 
   if( obj != nullptr )
   {
-    hb_retnl(obj->cy);
+    winapi_ret_LONG(obj->cy);
   }
 }
 

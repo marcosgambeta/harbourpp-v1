@@ -108,6 +108,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include "winapi.hpp"
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_NEW )
 {
@@ -148,7 +149,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWYEAR )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->wYear);
+    winapi_ret_WORD(obj->wYear);
   }
 }
 
@@ -170,7 +171,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWMONTH )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->wMonth);
+    winapi_ret_WORD(obj->wMonth);
   }
 }
 
@@ -192,7 +193,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWDAYOFWEEK )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->wDayOfWeek);
+    winapi_ret_WORD(obj->wDayOfWeek);
   }
 }
 
@@ -214,7 +215,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWDAY )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->wDay);
+    winapi_ret_WORD(obj->wDay);
   }
 }
 
@@ -236,7 +237,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWHOUR )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->wHour);
+    winapi_ret_WORD(obj->wHour);
   }
 }
 
@@ -258,7 +259,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWMINUTE )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->wMinute);
+    winapi_ret_WORD(obj->wMinute);
   }
 }
 
@@ -280,7 +281,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWSECOND )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->wSecond);
+    winapi_ret_WORD(obj->wSecond);
   }
 }
 
@@ -302,7 +303,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SYSTEMTIME_GETWMILLISECONDS )
 
   if( obj != nullptr )
   {
-    hb_retni(obj->wMilliseconds);
+    winapi_ret_WORD(obj->wMilliseconds);
   }
 }
 
