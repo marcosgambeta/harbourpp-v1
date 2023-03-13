@@ -170,6 +170,12 @@ SOFTWARE.
 #define winapi_ret_HFILE(x)        hb_retni(x)
 #define winapi_ret_NTSTATUS(x)     hb_retnl(x)
 #define winapi_ret_ULONGLONG(x)    hb_retnll(x)
+#define winapi_ret_float(x)        hb_retnd(x)
+#define winapi_ret_DWORDLONG(x)    hb_retnll(x)
+#define winapi_ret_BYTE(x)         hb_retni(x)
+#define winapi_ret_char(x)         hb_retni(x)
+#define winapi_ret_WPARAM(x)       hb_retnl(x)
+#define winapi_ret_UINT_PTR(x)     hb_retni(x)
 
 // #define winapi_stor_ATOM(v, n)         hb_storni(v, n)
 #define winapi_stor_BOOL(v, n)         hb_storl(v, n)
