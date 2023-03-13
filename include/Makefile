@@ -135,6 +135,7 @@ C_HEADERS := \
    hbznet.h \
    hb_io.h \
    hb_io.hpp \
+   winapi.hpp \
 
 PRG_HEADERS := \
    harbour.hbx \
