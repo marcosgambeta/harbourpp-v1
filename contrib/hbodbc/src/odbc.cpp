@@ -89,17 +89,17 @@
 
 #if !defined(HB_OS_WIN)
    #if !defined(SQLLEN) && !defined(SQLTCHAR) && !defined(UODBCINT64) && !defined(SIZEOF_LONG_INT)
-      typedef unsigned char SQLTCHAR;
-      typedef long          SQLLEN;
-      typedef unsigned long SQLULEN;
+      using SQLTCHAR = unsigned char;
+      using SQLLEN = long;
+      using SQLULEN = unsigned long;
       #ifndef SQL_WCHAR
-         #define SQL_WCHAR         ( -8 )
+         #define SQL_WCHAR         (-8)
       #endif
       #ifndef SQL_WVARCHAR
-         #define SQL_WVARCHAR      ( -9 )
+         #define SQL_WVARCHAR      (-9)
       #endif
       #ifndef SQL_WLONGVARCHAR
-         #define SQL_WLONGVARCHAR  ( -10 )
+         #define SQL_WLONGVARCHAR  (-10)
       #endif
    #endif
 #endif
@@ -134,13 +134,14 @@
 
 /* GC - SQLHENV */
 
-typedef struct
+struct HB_SQLHENV
 {
-   SQLHENV  hEnv;
-}
-HB_SQLHENV, * PHB_SQLHENV;
+   SQLHENV hEnv;
+};
 
-static HB_GARBAGE_FUNC( hb_SQLHENV_Destructor )
+using PHB_SQLHENV = HB_SQLHENV *;
+
+static HB_GARBAGE_FUNC(hb_SQLHENV_Destructor)
 {
    PHB_SQLHENV pHEnv = static_cast<PHB_SQLHENV>(Cargo);
 
@@ -164,7 +165,7 @@ static const HB_GC_FUNCS s_gcSQLHENVFuncs =
    hb_gcDummyMark
 };
 
-static void hb_SQLHENV_stor( SQLHENV hEnv, int iParam )
+static void hb_SQLHENV_stor(SQLHENV hEnv, int iParam)
 {
    PHB_SQLHENV pHEnv = static_cast<PHB_SQLHENV>(hb_gcAllocate(sizeof(HB_SQLHENV), &s_gcSQLHENVFuncs));
 
@@ -173,7 +174,7 @@ static void hb_SQLHENV_stor( SQLHENV hEnv, int iParam )
    hb_storptrGC(static_cast<void*>(pHEnv), iParam);
 }
 
-static SQLHENV hb_SQLHENV_par( int iParam )
+static SQLHENV hb_SQLHENV_par(int iParam)
 {
    PHB_SQLHENV pHEnv = static_cast<PHB_SQLHENV>(hb_parptrGC(&s_gcSQLHENVFuncs, iParam));
 
@@ -182,15 +183,16 @@ static SQLHENV hb_SQLHENV_par( int iParam )
 
 /* GC - SQLHDBC */
 
-typedef struct
+struct HB_SQLHDBC
 {
    SQLHDBC  hDbc;
    PHB_ITEM pHEnvItm;
    int      conn_counter;
-}
-HB_SQLHDBC, * PHB_SQLHDBC;
+};
 
-static HB_GARBAGE_FUNC( hb_SQLHDBC_Destructor )
+using PHB_SQLHDBC = HB_SQLHDBC *;
+
+static HB_GARBAGE_FUNC(hb_SQLHDBC_Destructor)
 {
    /* Retrieve image pointer holder */
    PHB_SQLHDBC pHDbc = static_cast<PHB_SQLHDBC>(Cargo);
@@ -216,7 +218,7 @@ static HB_GARBAGE_FUNC( hb_SQLHDBC_Destructor )
    }
 }
 
-static HB_GARBAGE_FUNC( hb_SQLHDBC_Mark )
+static HB_GARBAGE_FUNC(hb_SQLHDBC_Mark)
 {
    /* Retrieve image pointer holder */
    PHB_SQLHDBC pHDbc = static_cast<PHB_SQLHDBC>(Cargo);
@@ -272,7 +274,7 @@ static HB_BOOL hb_SQLHDBC_check(PHB_ITEM pItem, int conn_counter)
    }
 }
 
-static SQLHDBC hb_SQLHDBC_par( int iParam )
+static SQLHDBC hb_SQLHDBC_par(int iParam)
 {
    PHB_SQLHDBC pHDbc = hb_SQLHDBC_get(hb_param(iParam, Harbour::Item::POINTER));
 
@@ -281,15 +283,16 @@ static SQLHDBC hb_SQLHDBC_par( int iParam )
 
 /* GC - SQLHSTMT */
 
-typedef struct
+struct HB_SQLHSTMT
 {
    SQLHSTMT hStmt;
    PHB_ITEM pHDbcItm;
    int      conn_counter;
-}
-HB_SQLHSTMT, * PHB_SQLHSTMT;
+};
 
-static HB_GARBAGE_FUNC( hb_SQLHSTMT_Destructor )
+using PHB_SQLHSTMT = HB_SQLHSTMT *;
+
+static HB_GARBAGE_FUNC(hb_SQLHSTMT_Destructor)
 {
    /* Retrieve image pointer holder */
    PHB_SQLHSTMT pHStmt = static_cast<PHB_SQLHSTMT>(Cargo);
@@ -297,7 +300,7 @@ static HB_GARBAGE_FUNC( hb_SQLHSTMT_Destructor )
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( pHStmt->hStmt )
    {
-      if( hb_SQLHDBC_check(  pHStmt->pHDbcItm, pHStmt->conn_counter ) )
+      if( hb_SQLHDBC_check(pHStmt->pHDbcItm, pHStmt->conn_counter) )
       {
 #if ODBCVER >= 0x0300
          SQLFreeHandle(SQL_HANDLE_STMT, static_cast<SQLHANDLE>(pHStmt->hStmt));
@@ -319,7 +322,7 @@ static HB_GARBAGE_FUNC( hb_SQLHSTMT_Destructor )
    }
 }
 
-static HB_GARBAGE_FUNC( hb_SQLHSTMT_Mark )
+static HB_GARBAGE_FUNC(hb_SQLHSTMT_Mark)
 {
    /* Retrieve image pointer holder */
    PHB_SQLHSTMT pHStmt = static_cast<PHB_SQLHSTMT>(Cargo);
@@ -362,11 +365,11 @@ static void hb_SQLHSTMT_stor(PHB_ITEM pHDbcItm, SQLHSTMT hStmt, int iParam)
    hb_storptrGC(static_cast<void*>(pHStmt), iParam);
 }
 
-static SQLHSTMT hb_SQLHSTMT_par( int iParam )
+static SQLHSTMT hb_SQLHSTMT_par(int iParam)
 {
    PHB_SQLHSTMT pHStmt = static_cast<PHB_SQLHSTMT>(hb_parptrGC(&s_gcSQLHSTMTFuncs, iParam));
 
-   return ( pHStmt && pHStmt->hStmt && hb_SQLHDBC_check(  pHStmt->pHDbcItm, pHStmt->conn_counter ) ) ? pHStmt->hStmt : nullptr;
+   return (pHStmt && pHStmt->hStmt && hb_SQLHDBC_check(pHStmt->pHDbcItm, pHStmt->conn_counter)) ? pHStmt->hStmt : nullptr;
 }
 
 HB_FUNC( SQLALLOCENV )  /* @hEnv --> nRetCode */
@@ -377,7 +380,7 @@ HB_FUNC( SQLALLOCENV )  /* @hEnv --> nRetCode */
 #if ODBCVER >= 0x0300
    result = SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &hEnv);
 
-   if( SQL_SUCCEEDED( result ) )
+   if( SQL_SUCCEEDED(result) )
    {
       SQLSetEnvAttr(hEnv, SQL_ATTR_ODBC_VERSION, reinterpret_cast<SQLPOINTER>(SQL_OV_ODBC3), SQL_IS_UINTEGER);
    }
@@ -488,7 +491,7 @@ HB_FUNC( SQLDISCONNECT )  /* hDbc --> nRetCode */
    {
       SQLRETURN result = SQLDisconnect(pHDbc->hDbc);
 
-      if( SQL_SUCCEEDED( result ) )
+      if( SQL_SUCCEEDED(result) )
       {
          pHDbc->conn_counter++;
       }
@@ -618,7 +621,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
             SQLSMALLINT iTargetType = SQL_C_CHAR;
 #endif
 
-            if( SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, iTargetType, buffer, 0, &nLen ) ) )
+            if( SQL_SUCCEEDED(res = SQLGetData(hStmt, uiField, iTargetType, buffer, 0, &nLen)) )
             {
                if( nLen > 0 )
                {
@@ -632,7 +635,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
                      nLen = nMaxLen;
                   }
                   val = static_cast<O_HB_CHAR*>(hb_xgrab(nLen + sizeof(O_HB_CHAR)));
-                  if( !SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, iTargetType, val, nLen + sizeof(O_HB_CHAR), &nLen ) ) )
+                  if( !SQL_SUCCEEDED(res = SQLGetData(hStmt, uiField, iTargetType, val, nLen + sizeof(O_HB_CHAR), &nLen)) )
                   {
                      hb_xfree(val);
                      val = nullptr;
@@ -664,7 +667,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
             char * val = nullptr;
             char buffer[1];
 
-            if( SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_BINARY, buffer, 0, &nLen ) ) )
+            if( SQL_SUCCEEDED(res = SQLGetData(hStmt, uiField, SQL_C_BINARY, buffer, 0, &nLen)) )
             {
                if( nLen > 0 )
                {
@@ -675,7 +678,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
                      nLen = nMaxLen;
                   }
                   val = static_cast<char*>(hb_xgrab(nLen + 1));
-                  if( !SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_BINARY, val, nLen + 1, &nLen ) ) )
+                  if( !SQL_SUCCEEDED(res = SQLGetData(hStmt, uiField, SQL_C_BINARY, val, nLen + 1, &nLen)) )
                   {
                      hb_xfree(val);
                      val = nullptr;
@@ -684,7 +687,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
             }
             if( val )
             {
-               if( !hb_storclen_buffer( val, static_cast<HB_SIZE>(nLen), 5 ) )
+               if( !hb_storclen_buffer(val, static_cast<HB_SIZE>(nLen), 5) )
                {
                   hb_xfree(val);
                }
@@ -701,7 +704,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
          {
             HB_I64 val = 0;
             /* NOTE: SQL_C_SBIGINT not available before ODBC 3.0 */
-            if( SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_SBIGINT, &val, sizeof(val), &nLen ) ) )
+            if( SQL_SUCCEEDED(res = SQLGetData(hStmt, uiField, SQL_C_SBIGINT, &val, sizeof(val), &nLen)) )
             {
                hb_stornint(val, 5);
             }
@@ -717,7 +720,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
          case SQL_INTEGER:
          {
             SQLINTEGER val = 0;
-            if( SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_LONG, &val, sizeof(val), &nLen ) ) )
+            if( SQL_SUCCEEDED(res = SQLGetData(hStmt, uiField, SQL_C_LONG, &val, sizeof(val), &nLen)) )
             {
                hb_stornint(val, 5);
             }
@@ -735,7 +738,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
          case SQL_DOUBLE:
          {
             double val = 0.0;
-            if( SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_DOUBLE, &val, sizeof(val), &nLen ) ) )
+            if( SQL_SUCCEEDED(res = SQLGetData(hStmt, uiField, SQL_C_DOUBLE, &val, sizeof(val), &nLen)) )
             {
                hb_stornd(val, 5);
             }
@@ -749,7 +752,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
          case SQL_BIT:
          {
             unsigned char val = 0;
-            if( SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_BIT, &val, sizeof(val), &nLen ) ) )
+            if( SQL_SUCCEEDED(res = SQLGetData(hStmt, uiField, SQL_C_BIT, &val, sizeof(val), &nLen)) )
             {
                hb_storl(val != 0, 5);
             }
@@ -766,7 +769,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
 #endif
          {
             DATE_STRUCT val = { 0, 0, 0 };
-            if( SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_DATE, &val, sizeof(val), &nLen ) ) )
+            if( SQL_SUCCEEDED(res = SQLGetData(hStmt, uiField, SQL_C_DATE, &val, sizeof(val), &nLen)) )
             {
                hb_stordl(hb_dateEncode(val.year, val.month, val.day), 5);
             }
@@ -783,7 +786,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
 #endif
          {
             TIME_STRUCT val = { 0, 0, 0 };
-            if( SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_TIME, &val, sizeof(val), &nLen ) ) )
+            if( SQL_SUCCEEDED(res = SQLGetData(hStmt, uiField, SQL_C_TIME, &val, sizeof(val), &nLen)) )
             {
                hb_stortdt(0, hb_timeEncode(val.hour, val.minute, val.second, 0), 5);
             }
@@ -800,7 +803,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
 #endif
          {
             TIMESTAMP_STRUCT val = { 0, 0, 0, 0, 0, 0, 0 };
-            if( SQL_SUCCEEDED( res = SQLGetData( hStmt, uiField, SQL_C_TIMESTAMP, &val, sizeof(val), &nLen ) ) )
+            if( SQL_SUCCEEDED(res = SQLGetData(hStmt, uiField, SQL_C_TIMESTAMP, &val, sizeof(val), &nLen)) )
             {
                hb_stortdt(hb_dateEncode(val.year, val.month, val.day), hb_timeEncode(val.hour, val.minute, val.second, val.fraction / 1000000), 5);
             }

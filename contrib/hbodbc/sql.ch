@@ -58,7 +58,7 @@
 #define SQL_NEED_DATA                   99
 
 /* Test for SQL_SUCCESS or SQL_SUCCESS_WITH_INFO */
-#define SQL_SUCCEEDED( rc )             ( hb_bitAnd( rc, hb_bitNot( SQL_SUCCESS_WITH_INFO ) ) == SQL_SUCCESS )
+#define SQL_SUCCEEDED(rc)               (hb_bitAnd(rc, hb_bitNot(SQL_SUCCESS_WITH_INFO)) == SQL_SUCCESS)
 
 /* Standard SQL datatypes, using ANSI type numbering */
 #define SQL_CHAR                        1

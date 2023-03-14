@@ -53,7 +53,7 @@
 #include "inkey.ch"
 #include "setcurs.ch"
 
-FUNCTION BrowseODBC( nTop, nLeft, nBottom, nRight, oDataSource )
+FUNCTION BrowseODBC(nTop, nLeft, nBottom, nRight, oDataSource)
 
    LOCAL oBrw
    LOCAL cOldScreen
@@ -64,7 +64,7 @@ FUNCTION BrowseODBC( nTop, nLeft, nBottom, nRight, oDataSource )
    LOCAL oColumn
 
    // TODO: Check if datasource is open
-   // IF ! Used()
+   // IF !Used()
    //    RETURN .F.
    // ENDIF
 
@@ -75,30 +75,30 @@ FUNCTION BrowseODBC( nTop, nLeft, nBottom, nRight, oDataSource )
       nRight  := MaxCol()
    ENDIF
 
-   nOldCursor := SetCursor( SC_NONE )
-   cOldScreen := SaveScreen( nTop, nLeft, nBottom, nRight )
+   nOldCursor := SetCursor(SC_NONE)
+   cOldScreen := SaveScreen(nTop, nLeft, nBottom, nRight)
 
-   hb_DispBox( nTop, nLeft, nBottom, nRight, HB_B_SINGLE_UNI )
-   hb_DispOutAt( nTop + 1, nLeft + 1, Space( nRight - nLeft - 1 ) )
+   hb_DispBox(nTop, nLeft, nBottom, nRight, HB_B_SINGLE_UNI)
+   hb_DispOutAt(nTop + 1, nLeft + 1, Space(nRight - nLeft - 1))
 
-   oBrw := TBrowseNew( nTop + 2, nLeft + 1, nBottom - 1, nRight - 1 )
+   oBrw := TBrowseNew(nTop + 2, nLeft + 1, nBottom - 1, nRight - 1)
 
-   oBrw:SkipBlock     := {| nRecs | Skipped( nRecs, oDataSource ) }
-   oBrw:GoTopBlock    := {|| oDataSource:first() }
-   oBrw:GoBottomBlock := {|| oDataSource:last() }
+   oBrw:SkipBlock     := {|nRecs|Skipped(nRecs, oDataSource)}
+   oBrw:GoTopBlock    := {||oDataSource:first()}
+   oBrw:GoBottomBlock := {||oDataSource:last()}
 
    oBrw:HeadSep := "-"
 
    // TODO: Find out number of columns in ODBC result set, up to then you have to add columns by hand
-   FOR n := 1 TO Len( oDataSource:Fields )
-      oColumn := TBColumn():New( oDataSource:Fields[ n ]:FieldName, ODBCFget( oDataSource:Fields[ n ]:FieldName, oDataSource ) )
-      oBrw:AddColumn( oColumn )
+   FOR n := 1 TO Len(oDataSource:Fields)
+      oColumn := TBColumn():New(oDataSource:Fields[n]:FieldName, ODBCFget(oDataSource:Fields[n]:FieldName, oDataSource))
+      oBrw:AddColumn(oColumn)
    NEXT
 
    oBrw:Configure()
    oBrw:ForceStable()
 
-   DO WHILE ! lExit
+   DO WHILE !lExit
 
       DO WHILE .T.
          nKey := Inkey()
@@ -110,12 +110,12 @@ FUNCTION BrowseODBC( nTop, nLeft, nBottom, nRight, oDataSource )
       IF nKey == 0
 
          oBrw:forceStable()
-         Statline( oBrw, oDataSource )
+         Statline(oBrw, oDataSource)
 
-         nKey := Inkey( 0 )
+         nKey := Inkey(0)
 
-         IF ( bAction := SetKey( nKey ) ) != NIL
-            Eval( bAction, ProcName( 1 ), ProcLine( 1 ), "" )
+         IF (bAction := SetKey(nKey)) != NIL
+            Eval(bAction, ProcName(1), ProcLine(1), "")
             LOOP
          ENDIF
       ENDIF
@@ -169,43 +169,43 @@ FUNCTION BrowseODBC( nTop, nLeft, nBottom, nRight, oDataSource )
       ENDCASE
    ENDDO
 
-   RestScreen( nTop, nLeft, nBottom, nRight, cOldScreen )
-   SetCursor( nOldCursor )
+   RestScreen(nTop, nLeft, nBottom, nRight, cOldScreen)
+   SetCursor(nOldCursor)
 
    RETURN .T.
 
-STATIC PROCEDURE StatLine( oBrw, oDataSource )
+STATIC PROCEDURE StatLine(oBrw, oDataSource)
 
    LOCAL nTop   := oBrw:nTop - 1
    LOCAL nRight := oBrw:nRight
 
-   hb_DispOutAt( nTop, nRight - 27, "Record " )
+   hb_DispOutAt(nTop, nRight - 27, "Record ")
 
    IF oDataSource:LastRec() == 0
-      hb_DispOutAt( nTop, nRight - 20, "<none>               " )
+      hb_DispOutAt(nTop, nRight - 20, "<none>               ")
    ELSEIF oDataSource:RecNo() == oDataSource:LastRec() + 1
-      hb_DispOutAt( nTop, nRight - 40, "         " )
-      hb_DispOutAt( nTop, nRight - 20, "                <new>" )
+      hb_DispOutAt(nTop, nRight - 40, "         ")
+      hb_DispOutAt(nTop, nRight - 20, "                <new>")
    ELSE
-      hb_DispOutAt( nTop, nRight - 20, PadR( hb_ntos( oDataSource:RecNo() ) + "/" + ;
-         hb_ntos( oDataSource:LastRec() ), 16 ) + ;
-         iif( oBrw:hitTop, "<bof>", "     " ) + ;
-         iif( oBrw:hitBottom, "<eof>", "     " ) )
+      hb_DispOutAt(nTop, nRight - 20, PadR(hb_ntos(oDataSource:RecNo()) + "/" + ;
+         hb_ntos(oDataSource:LastRec()), 16) + ;
+         iif(oBrw:hitTop, "<bof>", "     ") + ;
+         iif(oBrw:hitBottom, "<eof>", "     "))
    ENDIF
 
    RETURN
 
-STATIC FUNCTION Skipped( nRecs, oDataSource )
+STATIC FUNCTION Skipped(nRecs, oDataSource)
 
    LOCAL nSkipped := 0
 
-   IF ! oDataSource:Eof()
+   IF !oDataSource:Eof()
       DO CASE
       CASE nRecs == 0
-         // ODBC doesn't have Skip( 0 )
+         // ODBC doesn't have Skip(0)
       CASE nRecs > 0
          DO WHILE nSkipped < nRecs
-            IF ! oDataSource:Eof()
+            IF !oDataSource:Eof()
                oDataSource:next()
                IF oDataSource:Eof()
                   oDataSource:prior()
@@ -216,7 +216,7 @@ STATIC FUNCTION Skipped( nRecs, oDataSource )
          ENDDO
       CASE nRecs < 0
          DO WHILE nSkipped > nRecs
-            IF ! oDataSource:Bof()
+            IF !oDataSource:Bof()
                oDataSource:prior()
                IF oDataSource:Bof()
                   EXIT
@@ -229,11 +229,11 @@ STATIC FUNCTION Skipped( nRecs, oDataSource )
 
    RETURN nSkipped
 
-STATIC FUNCTION ODBCFGet( cFieldName, oDataSource )
+STATIC FUNCTION ODBCFGet(cFieldName, oDataSource)
 
-   IF HB_ISSTRING( cFieldName )
+   IF HB_ISSTRING(cFieldName)
       // For changing value rather write a decent SQL statement
-      RETURN {| x | iif( x == NIL, oDataSource:FieldByName( cFieldName ):value, NIL ) }
+      RETURN {|x|iif(x == NIL, oDataSource:FieldByName(cFieldName):value, NIL)}
    ENDIF
 
    RETURN NIL
