@@ -31,9 +31,9 @@
 
 /* TODO: rewrite in C */
 
-FUNCTION ft_NWUID( nConn )
+FUNCTION ft_NWUID(nConn)
 
-   LOCAL aRegs[ INT86_MAX_REGS ]
+   LOCAL aRegs[INT86_MAX_REGS]
    LOCAL cReqPkt
    LOCAL cRepPkt
 
@@ -42,20 +42,20 @@ FUNCTION ft_NWUID( nConn )
    ENDIF
 
    // Set up request packet
-   cReqPkt := hb_BChar( 22 )          // Get Connection Information
-   cReqPkt += hb_BChar( nConn )
-   cReqPkt := I2Bin( hb_BLen( cReqPkt ) ) + cReqPkt
+   cReqPkt := hb_BChar(22)          // Get Connection Information
+   cReqPkt += hb_BChar(nConn)
+   cReqPkt := I2Bin(hb_BLen(cReqPkt)) + cReqPkt
 
    // Set up reply packet
-   cRepPkt := Space( 63 )
+   cRepPkt := Space(63)
 
    // Assign registers
-   aRegs[ AX ] := MAKEHI( 227 ) // NW_LOG
-   aRegs[ DS ] := cReqPkt
-   aRegs[ SI ] := REG_DS
-   aRegs[ ES ] := cRepPkt
-   aRegs[ DI ] := REG_ES
+   aRegs[AX] := MAKEHI(227) // NW_LOG
+   aRegs[DS] := cReqPkt
+   aRegs[SI] := REG_DS
+   aRegs[ES] := cRepPkt
+   aRegs[DI] := REG_ES
 
-   ft_int86( 33, aRegs )
+   ft_int86(33, aRegs)
 
-   RETURN AllTrim( StrTran( hb_BSubStr( aRegs[ ES ], 9, 48 ), hb_BChar( 0 ) ) )
+   RETURN AllTrim(StrTran(hb_BSubStr(aRegs[ES], 9, 48), hb_BChar(0)))

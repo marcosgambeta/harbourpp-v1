@@ -21,18 +21,18 @@
 
 FUNCTION ft_PickDay()
 
-   LOCAL days := { "SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY" }
+   LOCAL days := {"SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"}
    LOCAL sel := 0
-   LOCAL oldscrn := SaveScreen( 8, 35, 16, 45 )
-   LOCAL oldcolor := SetColor( "+w/r" )
+   LOCAL oldscrn := SaveScreen(8, 35, 16, 45)
+   LOCAL oldcolor := SetColor("+w/r")
 
-   hb_DispBox( 8, 35, 16, 45, hb_UTF8ToStrBox( "┌─┐│┘─└│ " ) )
+   hb_DispBox(8, 35, 16, 45, hb_UTF8ToStrBox("┌─┐│┘─└│ "))
    /* do not allow user to Esc out, which would cause array access error */
    DO WHILE sel == 0
-      sel := AChoice( 9, 36, 15, 44, days )
+      sel := AChoice(9, 36, 15, 44, days)
    ENDDO
    /* restore previous screen contents and color */
-   RestScreen( 8, 35, 16, 45, oldscrn )
-   SetColor( oldcolor )
+   RestScreen(8, 35, 16, 45, oldscrn)
+   SetColor(oldcolor)
 
-   RETURN days[ sel ]
+   RETURN days[sel]

@@ -56,33 +56,33 @@
          for writability. It also won't detected unformatted
          state and "not ready" state. [vszakats] */
 
-FUNCTION ft_FlopTst( nDriveNum )
+FUNCTION ft_FlopTst(nDriveNum)
 
    LOCAL cFileName
    LOCAL fhnd
 
-   IF HB_ISNUMERIC( nDriveNum )
-      cFileName := Chr( Asc( "A" ) + nDriveNum ) + hb_osDriveSeparator()
-   ELSEIF HB_ISSTRING( nDriveNum )
+   IF HB_ISNUMERIC(nDriveNum)
+      cFileName := Chr(Asc("A") + nDriveNum) + hb_osDriveSeparator()
+   ELSEIF HB_ISSTRING(nDriveNum)
       cFileName := nDriveNum
    ELSE
       RETURN ERR_WRONG_PARAMETERS
    ENDIF
 
-   cFileName := hb_DirSepAdd( cFileName ) + "nf$rwtst.tmp"
+   cFileName := hb_DirSepAdd(cFileName) + "nf$rwtst.tmp"
 
-   IF hb_FileExists( cFileName )
-      IF ( fhnd := FOpen( cFileName, FO_DENYNONE + FO_READWRITE ) ) == F_ERROR
+   IF hb_FileExists(cFileName)
+      IF (fhnd := FOpen(cFileName, FO_DENYNONE + FO_READWRITE)) == F_ERROR
          RETURN ERR_WRITE_PROTECTED
       ENDIF
-      FClose( fhnd )
+      FClose(fhnd)
    ELSE
-      IF ( fhnd := hb_FCreate( cFileName, FC_NORMAL, FO_DENYNONE + FO_READWRITE ) ) == F_ERROR
+      IF (fhnd := hb_FCreate(cFileName, FC_NORMAL, FO_DENYNONE + FO_READWRITE)) == F_ERROR
          RETURN ERR_WRITE_PROTECTED
       ENDIF
-      FClose( fhnd )
+      FClose(fhnd)
 
-      FErase( cFileName )
+      FErase(cFileName)
    ENDIF
 
    RETURN ERR_NO_ERROR

@@ -44,10 +44,10 @@
  *
  */
 
-FUNCTION ft_Default( cDrive )
+FUNCTION ft_Default(cDrive)
 
-   BEGIN SEQUENCE WITH {|| Break() }
-      hb_CurDrive( cDrive )
+   BEGIN SEQUENCE WITH {||Break()}
+      hb_CurDrive(cDrive)
    END SEQUENCE
 
    RETURN hb_CurDrive()

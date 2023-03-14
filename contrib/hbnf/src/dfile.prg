@@ -26,44 +26,42 @@
 
 THREAD STATIC t_nHandle := F_ERROR
 
-FUNCTION ft_DFSetup( cInFile, nTop, nLeft, nBottom, nRight, ;
+FUNCTION ft_DFSetup(cInFile, nTop, nLeft, nBottom, nRight, ;
       nStart, nCNormal, nCHighlight, cExitKeys, ;
-      lBrowse, nColSkip, nRMargin, nBuffSize )
+      lBrowse, nColSkip, nRMargin, nBuffSize)
 
    LOCAL rval
 
-   IF hb_FileExists( cInFile )
+   IF hb_FileExists(cInFile)
 
-      hb_default( @nTop        , 0 )
-      hb_default( @nLeft       , 0 )
-      hb_default( @nBottom     , MaxRow() )
-      hb_default( @nRight      , MaxCol() )
-      hb_default( @nCNormal    , 7 )
-      hb_default( @nCHighlight , 15 )
-      hb_default( @nStart      , 1 )
-      hb_default( @nColSkip    , 1 )
-      hb_default( @lBrowse     , .F. )
-      hb_default( @nRMargin    , 255 )
-      hb_default( @nBuffSize   , 4096 )
+      hb_default(@nTop       , 0)
+      hb_default(@nLeft      , 0)
+      hb_default(@nBottom    , MaxRow())
+      hb_default(@nRight     , MaxCol())
+      hb_default(@nCNormal   , 7)
+      hb_default(@nCHighlight, 15)
+      hb_default(@nStart     , 1)
+      hb_default(@nColSkip   , 1)
+      hb_default(@lBrowse    , .F.)
+      hb_default(@nRMargin   , 255)
+      hb_default(@nBuffSize  , 4096)
 
-      IF HB_ISARRAY( cExitKeys ) /* Harbour extension */
-         IF Len( cExitKeys ) > 25
-            ASize( cExitKeys, 25 )
+      IF HB_ISARRAY(cExitKeys) /* Harbour extension */
+         IF Len(cExitKeys) > 25
+            ASize(cExitKeys, 25)
          ENDIF
-      ELSEIF HB_ISSTRING( cExitKeys )
-         cExitKeys := Left( cExitKeys, 25 )
+      ELSEIF HB_ISSTRING(cExitKeys)
+         cExitKeys := Left(cExitKeys, 25)
       ELSE
          cExitKeys := {}
       ENDIF
 
-      t_nHandle := FOpen( cInFile )
+      t_nHandle := FOpen(cInFile)
 
       rval := FError()
 
       IF rval == 0
-         rval := _ft_DFInit( t_nHandle, nTop, nLeft, nBottom, nRight, ;
-            nStart, nCNormal, nCHighlight, cExitKeys, ;
-            lBrowse, nColSkip, nRMargin, nBuffSize )
+         rval := _ft_DFInit(t_nHandle, nTop, nLeft, nBottom, nRight, nStart, nCNormal, nCHighlight, cExitKeys, lBrowse, nColSkip, nRMargin, nBuffSize)
       ENDIF
    ELSE
       rval := 2       // simulate a file-not-found DOS file error
@@ -76,7 +74,7 @@ FUNCTION ft_DFClose()
    IF t_nHandle != F_ERROR
       _ft_DFClos()
 
-      FClose( t_nHandle )
+      FClose(t_nHandle)
 
       t_nHandle := F_ERROR
    ENDIF

@@ -17,33 +17,33 @@
  *
  */
 
-FUNCTION ft_AEMinLen( aArray, nDimension, nStart, nCount )
+FUNCTION ft_AEMinLen(aArray, nDimension, nStart, nCount)
 
    LOCAL i
    LOCAL nLast
    LOCAL nMinlen := NIL
    LOCAL nLen
 
-   __defaultNIL( @nDimension, 1 )
-   __defaultNIL( @nStart, 1 )
-   __defaultNIL( @nCount, Len( aArray ) - nStart + 1 )
+   __defaultNIL(@nDimension, 1)
+   __defaultNIL(@nStart, 1)
+   __defaultNIL(@nCount, Len(aArray) - nStart + 1)
 
-   nLast := Min( nStart + nCount - 1, Len( aArray ) )
+   nLast := Min(nStart + nCount - 1, Len(aArray))
 
    FOR i := nStart TO nLast
 
-      SWITCH ValType( aArray[ i ] )
+      SWITCH ValType(aArray[i])
       CASE "C"
-         nLen := Len( aArray[ i ] )
+         nLen := Len(aArray[i])
          EXIT
       CASE "A"
-         nLen := Len( LTrim( Transform( aArray[ i ][ nDimension ], "@X" ) ) )
+         nLen := Len(LTrim(Transform(aArray[i][nDimension], "@X")))
          EXIT
       OTHERWISE
-         nLen := Len( LTrim( Transform( aArray[ i ], "@X" ) ) )
+         nLen := Len(LTrim(Transform(aArray[i], "@X")))
       ENDSWITCH
 
-      nMinlen := iif( nMinLen == NIL, nLen, Min( nMinlen, nLen ) )
+      nMinlen := iif(nMinLen == NIL, nLen, Min(nMinlen, nLen))
    NEXT
 
    IF nMinLen == NIL

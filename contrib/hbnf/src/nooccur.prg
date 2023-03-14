@@ -19,16 +19,16 @@
  *
  */
 
-FUNCTION ft_NoOccur( cCheckFor, cCheckIn, lIgnoreCase )
+FUNCTION ft_NoOccur(cCheckFor, cCheckIn, lIgnoreCase)
 
    // Is Case Important?
 
-   IF ! HB_ISLOGICAL( lIgnoreCase ) .OR. lIgnoreCase
-      cCheckFor := Upper( cCheckFor )
-      cCheckIn  := Upper( cCheckIn  )
+   IF !HB_ISLOGICAL(lIgnoreCase) .OR. lIgnoreCase
+      cCheckFor := Upper(cCheckFor)
+      cCheckIn  := Upper(cCheckIn)
    ENDIF
 
-   RETURN iif( Len( cCheckFor ) == 0 .OR. Len( cCheckIn ) == 0, ;
+   RETURN iif(Len(cCheckFor) == 0 .OR. Len(cCheckIn) == 0, ;
       0, ;
-      Int( ( Len( cCheckIn ) - Len( StrTran( cCheckIn, cCheckFor ) ) ) / ;
-      Len( cCheckFor ) ) )
+      Int((Len(cCheckIn) - Len(StrTran(cCheckIn, cCheckFor))) / ;
+      Len(cCheckFor)))

@@ -19,22 +19,18 @@
  *
  */
 
-FUNCTION ft_FindITh( cCheckFor, cCheckIn, nWhichOccurrence, lIgnoreCase )
+FUNCTION ft_FindITh(cCheckFor, cCheckIn, nWhichOccurrence, lIgnoreCase)
 
    LOCAL nIthOccurrence
 
    // Is Case Important??
 
-   IF ! HB_ISLOGICAL( lIgnoreCase ) .OR. lIgnoreCase
-      cCheckFor := Upper( cCheckFor )
-      cCheckIn  := Upper( cCheckIn )
+   IF !HB_ISLOGICAL(lIgnoreCase) .OR. lIgnoreCase
+      cCheckFor := Upper(cCheckFor)
+      cCheckIn  := Upper(cCheckIn)
    ENDIF
 
-   RETURN iif( nWhichOccurrence == 1, ;
-      At( cCheckFor, cCheckIn ), ;
-      iif( ( nIthOccurrence := At( cCheckFor, ;
-      StrTran( cCheckIn, cCheckFor, ;
-      "", 1, ;
-      nWhichOccurrence - 1 ) ) ) == 0, ;
-      0, ;
-      nIthOccurrence + ( ( nWhichOccurrence - 1 ) * Len( cCheckFor ) ) ) )
+   RETURN iif(nWhichOccurrence == 1, ;
+      At(cCheckFor, cCheckIn), ;
+      iif((nIthOccurrence := At(cCheckFor, StrTran(cCheckIn, cCheckFor, "", 1, nWhichOccurrence - 1)) ) == 0, 0, ;
+      nIthOccurrence + ((nWhichOccurrence - 1) * Len(cCheckFor))))

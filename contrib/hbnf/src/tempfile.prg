@@ -23,7 +23,7 @@
  * Stripped off hb_BChar(0)s in the return value (aRegs[DS])
  *
  *    Rev 1.3   03 Jul 1991 01:08:08   GLENN
- * Changed one line in FT_TEST driver ( cHide == "Y" )
+ * Changed one line in FT_TEST driver (cHide == "Y")
  *
  *    Rev 1.2   14 Jun 1991 19:53:10   GLENN
  * Minor edit to file header
@@ -38,19 +38,19 @@
 
 #include "fileio.ch"
 
-FUNCTION ft_TempFil( cPath, lHide, /* @ */ nHandle )
+FUNCTION ft_TempFil(cPath, lHide, /* @ */ nHandle)
 
    LOCAL cFile
 
-   hb_default( @cPath, "." + hb_ps() )
-   hb_default( @lHide, .F. )
+   hb_default(@cPath, "." + hb_ps())
+   hb_default(@lHide, .F.)
 
-   cPath := AllTrim( cPath )
+   cPath := AllTrim(cPath)
 
-   nHandle := hb_FTempCreate( cPath, NIL, iif( lHide, FC_HIDDEN, FC_NORMAL ), @cFile )
+   nHandle := hb_FTempCreate(cPath, NIL, iif(lHide, FC_HIDDEN, FC_NORMAL), @cFile)
 
    IF PCount() <= 2
-      FClose( nHandle )
+      FClose(nHandle)
    ENDIF
 
    RETURN cFile

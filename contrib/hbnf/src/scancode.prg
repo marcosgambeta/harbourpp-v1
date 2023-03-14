@@ -28,9 +28,9 @@
 
 FUNCTION ft_ScanCode()
 
-   LOCAL aRegs[ INT86_MAX_REGS ]
+   LOCAL aRegs[INT86_MAX_REGS]
 
-   aRegs[ AX ] := MAKEHI( 0 )
-   ft_int86( 22, aRegs )
+   aRegs[AX] := MAKEHI(0)
+   ft_int86(22, aRegs)
 
-   RETURN hb_BChar( LOWBYTE( aRegs[ AX ] ) ) + hb_BChar( HIGHBYTE( aRegs[ AX ] ) )
+   RETURN hb_BChar(LOWBYTE(aRegs[AX])) + hb_BChar(HIGHBYTE(aRegs[AX]))

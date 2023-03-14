@@ -26,19 +26,19 @@
  *
  */
 
-FUNCTION ft_AcctAdj( dGivenDate, lIsEnd )
+FUNCTION ft_AcctAdj(dGivenDate, lIsEnd)
 
    LOCAL nTemp
 
-   IF ! HB_ISDATE( dGivenDate )
+   IF !HB_ISDATE(dGivenDate)
       dGivenDate := Date()
    ENDIF
 
-   hb_default( @lIsEnd, .F. )
+   hb_default(@lIsEnd, .F.)
 
-   nTemp := ft_DayToBoW( dGivenDate )
+   nTemp := ft_DayToBoW(dGivenDate)
 
-   IF nTemp > ( 2 + iif( lIsEnd, 0, 1 ) )
+   IF nTemp > (2 + iif(lIsEnd, 0, 1))
       dGivenDate += 7 - nTemp          // Next Week Start (This Week End + 1)
    ELSE
       dGivenDate -= nTemp              // This Week Start (Prior Week End + 1)

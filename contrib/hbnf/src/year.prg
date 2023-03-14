@@ -22,21 +22,21 @@
  *
  */
 
-FUNCTION ft_Year( dGivenDate )
+FUNCTION ft_Year(dGivenDate)
 
-   LOCAL aRetVal[ 3 ]
+   LOCAL aRetVal[3]
 
-   LOCAL cFY_Start := ft_DateCnfg()[ 1 ]
+   LOCAL cFY_Start := ft_DateCnfg()[1]
 
-   IF ! HB_ISDATE( dGivenDate )
+   IF !HB_ISDATE(dGivenDate)
       dGivenDate := Date()
    ENDIF
 
-   aRetVal[ 2 ] := hb_SToD( ;
-      StrZero( Year( dGivenDate ) - iif( Month( dGivenDate ) < Month( hb_CToD( cFY_Start, "yyyy.mm.dd" ) ), 1, 0 ), 4 ) + ;
-      SubStr( cFY_Start, 6, 2 ) + ;
-      SubStr( cFY_Start, 9, 6 ) )
-   aRetval[ 3 ] := ft_MAdd( aRetVal[ 2 ], 12 ) - 1
-   aRetVal[ 1 ] := Str( Year( aRetVal[ 3 ] ), 4 )      // End of Year
+   aRetVal[2] := hb_SToD( ;
+      StrZero(Year(dGivenDate) - iif(Month(dGivenDate) < Month(hb_CToD(cFY_Start, "yyyy.mm.dd")), 1, 0), 4) + ;
+      SubStr(cFY_Start, 6, 2) + ;
+      SubStr(cFY_Start, 9, 6))
+   aRetval[3] := ft_MAdd(aRetVal[2], 12) - 1
+   aRetVal[1] := Str(Year(aRetVal[3]), 4)      // End of Year
 
    RETURN aRetVal

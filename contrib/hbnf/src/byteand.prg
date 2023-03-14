@@ -19,10 +19,10 @@
  *
  */
 
-FUNCTION ft_ByteAnd( cByte1, cByte2 )
+FUNCTION ft_ByteAnd(cByte1, cByte2)
 
-   IF HB_ISSTRING( cByte1 ) .AND. HB_ISSTRING( cByte2 )
-      RETURN hb_BChar( hb_bitAnd( hb_BCode( cByte1 ), hb_BCode( cByte2 ) ) )
+   IF HB_ISSTRING(cByte1) .AND. HB_ISSTRING(cByte2)
+      RETURN hb_BChar(hb_bitAnd(hb_BCode(cByte1), hb_BCode(cByte2)))
    ENDIF
 
    RETURN NIL

@@ -19,16 +19,16 @@
  *
  */
 
-FUNCTION ft_SetCentury( lNewSetState )
+FUNCTION ft_SetCentury(lNewSetState)
 
    // Note that if CENTURY is ON then
    // DToC() Will Return a String of Length
    // 10, Otherwise it Will be of Length 8
 
-   LOCAL lOldSetState := ( Len( DToC( Date() ) ) == 10 )
+   LOCAL lOldSetState := (Len(DToC(Date())) == 10)
 
-   IF HB_ISLOGICAL( lNewSetState )        // Did They Want it Set??
-      SET CENTURY ( lNewSetState )        // Yes, Set it
+   IF HB_ISLOGICAL(lNewSetState)        // Did They Want it Set??
+      SET CENTURY (lNewSetState)        // Yes, Set it
    ENDIF
 
    RETURN lOldSetState

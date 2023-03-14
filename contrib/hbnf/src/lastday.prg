@@ -23,10 +23,10 @@
 
  */
 
-FUNCTION ft_LDay( dDate )
+FUNCTION ft_LDay(dDate)
 
    IF dDate == NIL
       dDate := Date()
    ENDIF
 
-   RETURN ( dDate += 45 - Day( dDate ) ) - Day( dDate )
+   RETURN (dDate += 45 - Day(dDate)) - Day(dDate)

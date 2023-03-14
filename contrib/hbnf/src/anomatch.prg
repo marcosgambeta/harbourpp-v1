@@ -19,22 +19,19 @@
  *
  */
 
-#define FORCE_BETWEEN( x, y, z )         ( y := Max( Min( y, z ), x ) )
+#define FORCE_BETWEEN(x, y, z)           (y := Max(Min(y, z), x))
 
-FUNCTION ft_ANoMatches( aArray, bCompareBlock, nStartIndex, nEndIndex )
+FUNCTION ft_ANoMatches(aArray, bCompareBlock, nStartIndex, nEndIndex)
 
    LOCAL nNoOfMatches := 0              // Number of Matches Found
 
-   __defaultNIL( @nStartIndex, 1 )
-   __defaultNIL( @nEndIndex, Len( aArray ) )
+   __defaultNIL(@nStartIndex, 1)
+   __defaultNIL(@nEndIndex, Len(aArray))
 
    // Make Sure Bounds are in Range
-   FORCE_BETWEEN( 1, nEndIndex,   Len( aArray ) )
-   FORCE_BETWEEN( 1, nStartIndex, nEndIndex )
+   FORCE_BETWEEN(1, nEndIndex, Len(aArray))
+   FORCE_BETWEEN(1, nStartIndex, nEndIndex)
 
-   AEval( aArray, ;
-      {| xElement | ;
-      iif( Eval( bCompareBlock, xElement ), nNoOfMatches++, NIL ) }, ;
-      nStartIndex, nEndIndex - nStartIndex + 1 )
+   AEval(aArray, {|xElement|iif(Eval(bCompareBlock, xElement), nNoOfMatches++, NIL)}, nStartIndex, nEndIndex - nStartIndex + 1)
 
    RETURN nNoOfMatches                // FT_ANoMatches

@@ -22,7 +22,7 @@
 /* NOTE: In its original version, this function changed cursor position,
          in Harbour it doesn't. */
 
-FUNCTION ft_Blink( cMsg, nRow, nCol )
+FUNCTION ft_Blink(cMsg, nRow, nCol)
 
    LOCAL cSavColor
 
@@ -31,11 +31,11 @@ FUNCTION ft_Blink( cMsg, nRow, nCol )
       cSavColor := SetColor()
 
       // If blink colors not already set, add blink to current foreground color.
-      hb_DispOutAt( ;
-         iif( nRow == NIL, Row(), nRow ), ;
-         iif( nCol == NIL, Col(), nCol ), ;
+      hb_DispOutAt(;
+         iif(nRow == NIL, Row(), nRow), ;
+         iif(nCol == NIL, Col(), nCol), ;
          cMsg, ;
-         iif( "*" $ Left( cSavColor, 4 ), cSavColor, "*" + cSavColor ) )
+         iif("*" $ Left(cSavColor, 4), cSavColor, "*" + cSavColor))
    ENDIF
 
    RETURN NIL

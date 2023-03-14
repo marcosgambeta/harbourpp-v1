@@ -29,4 +29,4 @@
 
 FUNCTION ft_SysMem()
 
-   RETURN Memory( HB_MEM_FM )
+   RETURN Memory(HB_MEM_FM)

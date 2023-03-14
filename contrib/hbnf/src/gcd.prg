@@ -19,7 +19,7 @@
  *
  */
 
-FUNCTION ft_GCD( nNumber1, nNumber2 )
+FUNCTION ft_GCD(nNumber1, nNumber2)
 
    LOCAL nHold1                      // Temporarily Hold the Maximum Number
    LOCAL nHold2                      // Temporarily Hold the Minimum Number
@@ -31,8 +31,8 @@ FUNCTION ft_GCD( nNumber1, nNumber2 )
       nResult := 0                      // Yes, Can't Have a GCD
    ELSE                                 // No, Calculate the GCD
 
-      nHold1 := Max( Abs( nNumber1 ), Abs( nNumber2 ) )
-      nHold2 := Min( Abs( nNumber1 ), Abs( nNumber2 ) )
+      nHold1 := Max(Abs(nNumber1), Abs(nNumber2))
+      nHold2 := Min(Abs(nNumber1), Abs(nNumber2))
 
       DO WHILE .T.
 

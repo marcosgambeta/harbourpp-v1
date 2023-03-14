@@ -19,26 +19,22 @@
  *
  */
 
-FUNCTION ft_InvClr( cDsrdColor )
+FUNCTION ft_InvClr(cDsrdColor)
 
    LOCAL cBackground                    // The Background Color, New Foreground
    LOCAL cForeground                    // The Foreground Color, New Background
    LOCAL cModifiers                     // Any Color Modifiers (+*)
 
-   __defaultNIL( @cDsrdColor, SetColor() )
+   __defaultNIL(@cDsrdColor, SetColor())
 
    // Remove Anything Past 1st Color
-   cDsrdColor := Left( cDsrdColor, At( ",", cDsrdColor + "," ) - 1 )
+   cDsrdColor := Left(cDsrdColor, At(",", cDsrdColor + ",") - 1)
 
    // Get Any Modifiers
-   cModifiers := ;
-      iif( "*" $ cDsrdColor, "*", "" ) + ;
-      iif( "+" $ cDsrdColor, "+", "" )
+   cModifiers := iif("*" $ cDsrdColor, "*", "") + iif("+" $ cDsrdColor, "+", "")
 
    // Separate the Fore/Background Colors
-   cForeground := AllTrim( Left( cDsrdColor,   At( "/", cDsrdColor ) - 1 ) )
-   cBackground := AllTrim( SubStr( cDsrdColor, At( "/", cDsrdColor ) + 1 ) )
+   cForeground := AllTrim(Left(cDsrdColor,   At("/", cDsrdColor) - 1))
+   cBackground := AllTrim(SubStr(cDsrdColor, At("/", cDsrdColor) + 1))
 
-   RETURN ;
-      StrTran( StrTran( cBackground, "+" ), "*" ) + cModifiers + "/" + ;
-      StrTran( StrTran( cForeground, "+" ), "*" )
+   RETURN StrTran(StrTran(cBackground, "+"), "*") + cModifiers + "/" + StrTran(StrTran(cForeground, "+"), "*")

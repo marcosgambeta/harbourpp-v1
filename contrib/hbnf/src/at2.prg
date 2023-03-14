@@ -22,7 +22,7 @@
  *
  */
 
-FUNCTION ft_At2( cSearch, cTarget, nOccurs, lCaseSens )
+FUNCTION ft_At2(cSearch, cTarget, nOccurs, lCaseSens)
 
    LOCAL nCount
    LOCAL nPos
@@ -31,23 +31,23 @@ FUNCTION ft_At2( cSearch, cTarget, nOccurs, lCaseSens )
 
    // Set default parameters as necessary.
 
-   __defaultNIL( @lCaseSens, .T. )
-   __defaultNIL( @nOccurs, 1 )
+   __defaultNIL(@lCaseSens, .T.)
+   __defaultNIL(@nOccurs, 1)
 
    FOR nCount := 1 TO nOccurs
 
       // Store position of next occurrence of cSearch.
       IF lCaseSens
-         nPos := At( cSearch, cSubstr )
+         nPos := At(cSearch, cSubstr)
       ELSE
-         nPos := At( Upper( cSearch ), Upper( cSubstr ) )
+         nPos := At(Upper(cSearch), Upper(cSubstr))
       ENDIF
 
       // Store position of cSearch relative to original string.
       nPos2 += nPos
 
       // Resize cSubstr
-      cSubstr := SubStr( cSubstr, At( cSearch, cSubstr ) + 1 )
+      cSubstr := SubStr(cSubstr, At(cSearch, cSubstr) + 1)
 
       // Breakout if there are no occurences here
 
@@ -58,7 +58,7 @@ FUNCTION ft_At2( cSearch, cTarget, nOccurs, lCaseSens )
 
    RETURN nPos2
 
-FUNCTION ft_RAt2( cSearch, cTarget, nOccurs, lCaseSens )
+FUNCTION ft_RAt2(cSearch, cTarget, nOccurs, lCaseSens)
 
    LOCAL nCount
    LOCAL nPos
@@ -67,23 +67,23 @@ FUNCTION ft_RAt2( cSearch, cTarget, nOccurs, lCaseSens )
 
    // Set default parameters as necessary.
 
-   __defaultNIL( @lCaseSens, .T. )
-   __defaultNIL( @nOccurs, 1 )
+   __defaultNIL(@lCaseSens, .T.)
+   __defaultNIL(@nOccurs, 1)
 
    FOR nCount := 1 TO nOccurs
 
       // Store position of next occurrence of cSearch.
       IF lCaseSens
-         nPos := RAt( cSearch, cSubstr )
+         nPos := RAt(cSearch, cSubstr)
       ELSE
-         nPos := RAt( Upper( cSearch ), Upper( cSubstr ) )
+         nPos := RAt(Upper(cSearch), Upper(cSubstr))
       ENDIF
 
       // Store position of cSearch relative to original string.
       nPos2 := nPos
 
       // Resize cSubstr
-      cSubstr := SubStr( cSubstr, 1, RAt( cSearch, cSubstr ) - 1 )
+      cSubstr := SubStr(cSubstr, 1, RAt(cSearch, cSubstr) - 1)
 
       // Breakout if there are no occurences here
       IF nPos == 0

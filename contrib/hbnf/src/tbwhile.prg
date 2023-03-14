@@ -53,8 +53,7 @@
 #include "inkey.ch"
 #include "setcurs.ch"
 
-FUNCTION ft_BrwsWhl( aFields, bWhileCond, cKey, nFreeze, lSaveScrn, ;
-      cColorList, cColorShad, nTop, nLeft, nBottom, nRight )
+FUNCTION ft_BrwsWhl(aFields, bWhileCond, cKey, nFreeze, lSaveScrn, cColorList, cColorShad, nTop, nLeft, nBottom, nRight)
 
    LOCAL b
    LOCAL column
@@ -70,63 +69,63 @@ FUNCTION ft_BrwsWhl( aFields, bWhileCond, cKey, nFreeze, lSaveScrn, ;
    LOCAL nKey
    LOCAL nPassRec
 
-   __defaultNIL( @nFreeze, 0 )
-   __defaultNIL( @lSaveScrn, .T. )
-   __defaultNIL( @cColorList, "N/W, N/BG, B/W, B/BG, B/W, B/BG, R/W, B/R" )
-   __defaultNIL( @cColorShad, "N/N" )
-   __defaultNIL( @nTop, 2 )
-   __defaultNIL( @nLeft, 2 )
-   __defaultNIL( @nBottom, MaxRow() - 2 )
-   __defaultNIL( @nRight, MaxCol() - 2 )
+   __defaultNIL(@nFreeze, 0)
+   __defaultNIL(@lSaveScrn, .T.)
+   __defaultNIL(@cColorList, "N/W, N/BG, B/W, B/BG, B/W, B/BG, R/W, B/R")
+   __defaultNIL(@cColorShad, "N/N")
+   __defaultNIL(@nTop, 2)
+   __defaultNIL(@nLeft, 2)
+   __defaultNIL(@nBottom, MaxRow() - 2)
+   __defaultNIL(@nRight, MaxCol() - 2)
 
    lKeepScrn := PCount() > 6
 
-   dbSeek( cKey )
-   IF ! Found() .OR. LastRec() == 0
+   dbSeek(cKey)
+   IF !Found() .OR. LastRec() == 0
       RETURN 0
    ENDIF
 
    /* make new browse object */
-   b := TBrowseDB( nTop, nLeft, nBottom, nRight )
+   b := TBrowseDB(nTop, nLeft, nBottom, nRight)
 
    /* default heading and column separators */
-   b:headSep := hb_UTF8ToStrBox( "═╤═" )
-   b:colSep  := hb_UTF8ToStrBox( " │ " )
-   b:footSep := hb_UTF8ToStrBox( "═╧═" )
+   b:headSep := hb_UTF8ToStrBox("═╤═")
+   b:colSep  := hb_UTF8ToStrBox(" │ ")
+   b:footSep := hb_UTF8ToStrBox("═╧═")
 
    /* add custom 'TbSkipWhil' (to handle passed condition) */
-   b:skipBlock := {| x | TbSkipWhil( x, bWhileCond ) }
+   b:skipBlock := {|x|TbSkipWhil(x, bWhileCond)}
 
    /* Set up substitute goto top and goto bottom */
    /* with While's top and bottom records        */
-   b:goTopBlock    := {|| TbWhileTop( cKey ) }
-   b:goBottomBlock := {|| TbWhileBot( cKey ) }
+   b:goTopBlock    := {||TbWhileTop(cKey)}
+   b:goBottomBlock := {||TbWhileBot(cKey)}
 
    /* colors */
    b:colorSpec := cColorList
 
    /* add a column for each field in the current workarea */
-   FOR i := 1 TO Len( aFields )
-      cHead  := aFields[ i, 1 ]
-      bField := aFields[ i, 2 ]
+   FOR i := 1 TO Len(aFields)
+      cHead  := aFields[i, 1]
+      bField := aFields[i, 2]
 
       /* make the new column */
-      column := TBColumnNew( cHead, bField )
+      column := TBColumnNew(cHead, bField)
 
       /* these are color setups from tbdemo.prg from Nantucket */
       // IF cType == "N"
-      //   column:defColor := { 5, 6 }
-      //   column:colorBlock := {| x | iif( x < 0, { 7, 8 }, { 5, 6 } ) }
+      //   column:defColor := {5, 6}
+      //   column:colorBlock := {|x|iif(x < 0, {7, 8}, {5, 6})}
       // ELSE
-      //   column:defColor := { 3, 4 }
+      //   column:defColor := {3, 4}
       // ENDIF
 
       /* To simplify I just used 3rd and 4th colors from passed cColorList */
       /* This way 1st is SAY, 2nd is GET, 3rd and 4th are used here,
       /* 5th is Unselected Get, extras can be used as in tbdemo.prg */
-      column:defColor := { 3, 4 }
+      column:defColor := {3, 4}
 
-      b:addColumn( column )
+      b:addColumn(column)
    NEXT
 
    /* freeze columns */
@@ -136,25 +135,24 @@ FUNCTION ft_BrwsWhl( aFields, bWhileCond, cKey, nFreeze, lSaveScrn, ;
 
    /* save old screen and colors */
    IF lSaveScrn
-      cScrnSave := SaveScreen( 0, 0, MaxRow(), MaxCol() )
+      cScrnSave := SaveScreen(0, 0, MaxRow(), MaxCol())
    ENDIF
    cColorSave := SetColor()
 
    /* Background Color Is Based On First Color In Passed cColorList */
-   cColorBack := iif( "," $ cColorList, ;
-      SubStr( cColorList, 1, At( ",", cColorList ) - 1 ), cColorList )
+   cColorBack := iif("," $ cColorList, SubStr(cColorList, 1, At(",", cColorList) - 1), cColorList)
 
-   IF ! lKeepScrn
-      SetColor( cColorBack )
+   IF !lKeepScrn
+      SetColor(cColorBack)
       hb_Scroll()
    ENDIF
 
    /* make a window shadow */
-   hb_Scroll( nTop + 1, nLeft + 1, nBottom + 1, nRight + 1,,, cColorShad )
-   hb_Scroll( nTop, nLeft, nBottom, nRight,,, cColorBack )
-   SetColor( cColorSave )
+   hb_Scroll(nTop + 1, nLeft + 1, nBottom + 1, nRight + 1,,, cColorShad)
+   hb_Scroll(nTop, nLeft, nBottom, nRight,,, cColorBack)
+   SetColor(cColorSave)
 
-   nCursSave := SetCursor( SC_NONE )
+   nCursSave := SetCursor(SC_NONE)
 
    lMore := .T.
    DO WHILE lMore
@@ -162,7 +160,7 @@ FUNCTION ft_BrwsWhl( aFields, bWhileCond, cKey, nFreeze, lSaveScrn, ;
       /* stabilize the display */
       nKey := 0
       DispBegin()
-      DO WHILE nKey == 0 .AND. ! b:stable
+      DO WHILE nKey == 0 .AND. !b:stable
          b:stabilize()
          nKey := Inkey()
       ENDDO
@@ -171,7 +169,7 @@ FUNCTION ft_BrwsWhl( aFields, bWhileCond, cKey, nFreeze, lSaveScrn, ;
       IF b:stable
          /* display is stable */
          IF b:hitTop .OR. b:hitBottom
-            Tone( 125, 0 )
+            Tone(125, 0)
          ENDIF
 
          // Make sure that the current record is showing
@@ -182,7 +180,7 @@ FUNCTION ft_BrwsWhl( aFields, bWhileCond, cKey, nFreeze, lSaveScrn, ;
          DispEnd()
 
          /* everything's done. just wait for a key */
-         nKey := Inkey( 0 )
+         nKey := Inkey(0)
       ENDIF
 
       /* process key */
@@ -258,25 +256,25 @@ FUNCTION ft_BrwsWhl( aFields, bWhileCond, cKey, nFreeze, lSaveScrn, ;
 
    /* restore old screen */
    IF lSaveScrn
-      RestScreen( 0, 0, MaxRow(), MaxCol(), cScrnSave )
+      RestScreen(0, 0, MaxRow(), MaxCol(), cScrnSave)
    ENDIF
-   SetCursor( nCursSave )
-   SetColor( cColorSave )
+   SetCursor(nCursSave)
+   SetColor(cColorSave)
 
    RETURN nPassRec
 
-STATIC FUNCTION TbSkipWhil( n, bWhileCond )
+STATIC FUNCTION TbSkipWhil(n, bWhileCond)
 
    LOCAL i := 0
 
    IF n == 0 .OR. LastRec() == 0
-      dbSkip( 0 )  // significant on a network
+      dbSkip(0)  // significant on a network
 
    ELSEIF n > 0 .AND. RecNo() != LastRec() + 1
       WHILE i < n
          dbSkip()
-         IF Eof() .OR. ! Eval( bWhileCond )
-            dbSkip( -1 )
+         IF Eof() .OR. !Eval(bWhileCond)
+            dbSkip(-1)
             EXIT
          ENDIF
          i++
@@ -284,10 +282,10 @@ STATIC FUNCTION TbSkipWhil( n, bWhileCond )
 
    ELSEIF n < 0
       DO WHILE i > n
-         dbSkip( -1 )
+         dbSkip(-1)
          IF Bof()
             EXIT
-         ELSEIF ! Eval( bWhileCond )
+         ELSEIF !Eval(bWhileCond)
             dbSkip()
             EXIT
          ENDIF
@@ -297,9 +295,9 @@ STATIC FUNCTION TbSkipWhil( n, bWhileCond )
 
    RETURN i
 
-STATIC FUNCTION TbWhileTop( cKey )
+STATIC FUNCTION TbWhileTop(cKey)
 
-   dbSeek( cKey )
+   dbSeek(cKey)
 
    RETURN NIL
 
@@ -310,9 +308,9 @@ STATIC FUNCTION TbWhileTop( cKey )
 // string cKey by one ascii character.  After SEEKing the new string,
 // back up one record to get to the last record which matches cKey.
 
-STATIC FUNCTION TbWhileBot( cKey )
+STATIC FUNCTION TbWhileBot(cKey)
 
-   dbSeek( Left( cKey, Len( cKey ) - 1 ) + Chr( Asc( Right( cKey, 1 ) ) + 1 ), .T. )
-   dbSkip( -1 )
+   dbSeek(Left(cKey, Len(cKey) - 1) + Chr(Asc(Right(cKey, 1)) + 1), .T.)
+   dbSkip(-1)
 
    RETURN NIL

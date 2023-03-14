@@ -37,7 +37,7 @@ FUNCTION ft_XBox( ;
       cBoxColor, ; // color string for text
       nStartRow, ; // upper row of box.  99=center vertically
       nStartCol, ; // left edge of box.  99=center horizontally
-      cLine1, cLine2, cLine3, cLine4, cLine5, cLine6, cLine7, cLine8 )
+      cLine1, cLine2, cLine3, cLine4, cLine5, cLine6, cLine7, cLine8)
 
    LOCAL nLLen := 0
    LOCAL nLCol
@@ -48,74 +48,74 @@ FUNCTION ft_XBox( ;
    LOCAL nSayRow
    LOCAL nSayCol
    LOCAL nNumRows
-   LOCAL aLines_[ 8 ]
+   LOCAL aLines_[8]
 
-   hb_default( @cJustType, "" )
-   hb_default( @cRetWait, "" )
-   hb_default( @cBorType, "" )
-   hb_default( @cBorColor, "N/W" )
-   hb_default( @cBoxColor, "W/N" )
-   hb_default( @nStartRow, 99 )
-   hb_default( @nStartCol, 99 )
+   hb_default(@cJustType, "")
+   hb_default(@cRetWait, "")
+   hb_default(@cBorType, "")
+   hb_default(@cBorColor, "N/W")
+   hb_default(@cBoxColor, "W/N")
+   hb_default(@nStartRow, 99)
+   hb_default(@nStartCol, 99)
 
-   cJustType := Upper( cJustType )
-   cRetWait  := Upper( cRetWait )
-   cBorType  := Upper( cBorType )
+   cJustType := Upper(cJustType)
+   cRetWait  := Upper(cRetWait)
+   cBorType  := Upper(cBorType)
 
-   nNumRows := Min( PCount() - 7, 8 )
+   nNumRows := Min(PCount() - 7, 8)
 
    // establish array of strings to be displayed
-   aLines_[ 1 ] := iif( HB_ISSTRING( cLine1 ), AllTrim( Left( cLine1, 74 ) ), "" )
-   aLines_[ 2 ] := iif( HB_ISSTRING( cLine2 ), AllTrim( Left( cLine2, 74 ) ), "" )
-   aLines_[ 3 ] := iif( HB_ISSTRING( cLine3 ), AllTrim( Left( cLine3, 74 ) ), "" )
-   aLines_[ 4 ] := iif( HB_ISSTRING( cLine4 ), AllTrim( Left( cLine4, 74 ) ), "" )
-   aLines_[ 5 ] := iif( HB_ISSTRING( cLine5 ), AllTrim( Left( cLine5, 74 ) ), "" )
-   aLines_[ 6 ] := iif( HB_ISSTRING( cLine6 ), AllTrim( Left( cLine6, 74 ) ), "" )
-   aLines_[ 7 ] := iif( HB_ISSTRING( cLine7 ), AllTrim( Left( cLine7, 74 ) ), "" )
-   aLines_[ 8 ] := iif( HB_ISSTRING( cLine8 ), AllTrim( Left( cLine8, 74 ) ), "" )
-   ASize( aLines_, Min( nNumRows, 8 ) )
+   aLines_[1] := iif(HB_ISSTRING(cLine1), AllTrim(Left(cLine1, 74)), "")
+   aLines_[2] := iif(HB_ISSTRING(cLine2), AllTrim(Left(cLine2, 74)), "")
+   aLines_[3] := iif(HB_ISSTRING(cLine3), AllTrim(Left(cLine3, 74)), "")
+   aLines_[4] := iif(HB_ISSTRING(cLine4), AllTrim(Left(cLine4, 74)), "")
+   aLines_[5] := iif(HB_ISSTRING(cLine5), AllTrim(Left(cLine5, 74)), "")
+   aLines_[6] := iif(HB_ISSTRING(cLine6), AllTrim(Left(cLine6, 74)), "")
+   aLines_[7] := iif(HB_ISSTRING(cLine7), AllTrim(Left(cLine7, 74)), "")
+   aLines_[8] := iif(HB_ISSTRING(cLine8), AllTrim(Left(cLine8, 74)), "")
+   ASize(aLines_, Min(nNumRows, 8))
 
    // determine longest line
    nLoop := 1
-   AEval( aLines_, {|| nLLen := Max( nLLen, Len( aLines_[ nLoop ] ) ), nLoop++ } )
+   AEval(aLines_, {||nLLen := Max(nLLen, Len(aLines_[nLoop])), nLoop++})
 
    // calculate corners
-   nLCol := iif( nStartCol == 99, Int( ( 76 - nLLen ) / 2 ), Min( nStartCol, 74 - nLLen ) )
+   nLCol := iif(nStartCol == 99, Int((76 - nLLen) / 2 ), Min(nStartCol, 74 - nLLen))
    nRCol := nLCol + nLLen + 3
-   nTRow := iif( nStartRow == 99, Int( ( 24 - nNumRows ) / 2 ), Min( nStartRow, 22 - nNumRows ) )
+   nTRow := iif(nStartRow == 99, Int((24 - nNumRows) / 2), Min(nStartRow, 22 - nNumRows))
    nBRow := nTRow + nNumRows + 1
 
    // form box and border
 
    // save screen color and set new color
-   hb_Scroll( nTRow, nLCol, nBRow, nRCol )
+   hb_Scroll(nTRow, nLCol, nBRow, nRCol)
 
    // draw border
-   SetColor( cBorColor )
-   IF Left( cBorType, 1 ) == "D"
-      hb_DispBox( nTRow, nLCol, nBRow, nRCol, HB_B_DOUBLE_UNI )
+   SetColor(cBorColor)
+   IF Left(cBorType, 1) == "D"
+      hb_DispBox(nTRow, nLCol, nBRow, nRCol, HB_B_DOUBLE_UNI)
    ELSE
-      hb_DispBox( nTRow, nLCol, nBRow, nRCol, HB_B_SINGLE_UNI )
+      hb_DispBox(nTRow, nLCol, nBRow, nRCol, HB_B_SINGLE_UNI)
    ENDIF
 
    // write shadow
-   hb_Shadow( nTRow, nLCol, nBRow, nRCol )
+   hb_Shadow(nTRow, nLCol, nBRow, nRCol)
 
    // print text in box
-   SetColor( cBoxColor )
+   SetColor(cBoxColor)
    nLoop := 1
-   AEval( aLines_, {| cSayStr | ;
+   AEval(aLines_, {|cSayStr| ;
       nSayRow := nTRow + nLoop, ;
-      nSayCol := iif( Left( cJustType, 1 ) == "L", ;
+      nSayCol := iif(Left(cJustType, 1) == "L", ;
       nLCol + 2, ;
-      nLCol + 2 + ( nLLen - Int( Len( aLines_[ nLoop ] ) ) ) / 2 ), ;
+      nLCol + 2 + (nLLen - Int(Len(aLines_[nLoop]))) / 2), ;
       nLoop++, ;
-      hb_DispOutAt( nSayRow, nSayCol, cSayStr );
-      } )
+      hb_DispOutAt(nSayRow, nSayCol, cSayStr);
+      })
 
    // wait for keypress if desired
-   IF Left( cRetWait, 1 ) == "W"
-      Inkey( 0 )
+   IF Left(cRetWait, 1) == "W"
+      Inkey(0)
    ENDIF
 
    RETURN NIL

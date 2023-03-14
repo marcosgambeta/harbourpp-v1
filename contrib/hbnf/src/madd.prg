@@ -22,35 +22,34 @@
  *
  */
 
-FUNCTION ft_MAdd( dGivenDate, nAddMonths, lMakeEOM )
+FUNCTION ft_MAdd(dGivenDate, nAddMonths, lMakeEOM)
 
    LOCAL nAdjDay
    LOCAL dTemp
    LOCAL i
 
-   hb_default( @dGivenDate, Date() )
-   hb_default( @nAddMonths, 0 )
-   hb_default( @lMakeEOM, .F. )
+   hb_default(@dGivenDate, Date())
+   hb_default(@nAddMonths, 0)
+   hb_default(@lMakeEOM, .F.)
 
-   nAdjDay := Day( dGivenDate ) - 1
+   nAdjDay := Day(dGivenDate) - 1
 
    /* If givendate is end of month and lMakeEom, then force EOM.*/
 
-   lMakeEom := ( lMakeEom .AND. dGivenDate == dGivenDate - nAdjDay + 31 - ;
-      Day( dGivenDate - nAdjDay + 31 ) )
+   lMakeEom := (lMakeEom .AND. dGivenDate == dGivenDate - nAdjDay + 31 - Day(dGivenDate - nAdjDay + 31))
 
    dTemp := dGivenDate - nAdjDay     // first of month
 
    /* Work with 1st of months.*/
-   FOR i := 1 TO Abs( nAddMonths )
-      dTemp += iif( nAddMonths > 0, 31, -1 )
-      dTemp += 1 - Day( dTemp )
+   FOR i := 1 TO Abs(nAddMonths)
+      dTemp += iif(nAddMonths > 0, 31, -1)
+      dTemp += 1 - Day(dTemp)
    NEXT
 
    IF lMakeEom
-      dTemp += 31 - Day( dTemp + 31 )
+      dTemp += 31 - Day(dTemp + 31)
    ELSE
-      dTemp := Min( dTemp + nAdjday, ( dTemp += 31 - Day( dTemp + 31 ) ) )
+      dTemp := Min(dTemp + nAdjday, (dTemp += 31 - Day(dTemp + 31)))
    ENDIF
 
    RETURN dTemp

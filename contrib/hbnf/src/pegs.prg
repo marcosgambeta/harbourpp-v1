@@ -27,14 +27,14 @@
 #include "inkey.ch"
 #include "setcurs.ch"
 
-#translate DOUBLEBOX( <top>, <left>, <bottom>, <right> ) => hb_DispBox( <top>, <left>, <bottom>, <right>, hb_UTF8ToStrBox( "╔═╗║╝═╚║ " ) )
+#translate DOUBLEBOX(<top>, <left>, <bottom>, <right>) => hb_DispBox(<top>, <left>, <bottom>, <right>, hb_UTF8ToStrBox("╔═╗║╝═╚║ "))
 
 /*
    here's the board array -- structure of which is:
-   board_[ xx, 1 ] - subarray containing box coordinates for this peg
-   board_[ xx, 2 ] - subarray containing all adjacent locations
-   board_[ xx, 3 ] - subarray containing all target locations
-   board_[ xx, 4 ] - is the location occupied or not? .T. -> Yes, .F. -> No
+   board_[xx, 1] - subarray containing box coordinates for this peg
+   board_[xx, 2] - subarray containing all adjacent locations
+   board_[xx, 3] - subarray containing all target locations
+   board_[xx, 4] - is the location occupied or not? .T. -> Yes, .F. -> No
 */
 
 FUNCTION ft_Pegs()
@@ -48,8 +48,8 @@ FUNCTION ft_Pegs()
    LOCAL OLDSCORE
    LOCAL MOVE2
    LOCAL SCANBLOCK
-   LOCAL OLDCOLOR := SetColor( "w/n" )
-   LOCAL oldscrn := SaveScreen( 0, 0, MaxRow(), MaxCol() )
+   LOCAL OLDCOLOR := SetColor("w/n")
+   LOCAL oldscrn := SaveScreen(0, 0, MaxRow(), MaxCol())
    LOCAL GetList
 
    LOCAL board_ := { ;
@@ -92,110 +92,104 @@ FUNCTION ft_Pegs()
       to validate entry when there is more than one possible move
    */
 
-   scanblock := {| a | a[ 2 ] == move2 }
+   scanblock := {|a|a[2] == move2}
    hb_Scroll()
-   SetColor( "w/r" )
-   hb_DispBox( 22, 31, 24, 48, hb_UTF8ToStrBox( "┌─┐│┘─└│ " ) )
-   hb_DispOutAt( 23, 33, "Your move:" )
-   AEval( board_, {| a, x | HB_SYMBOL_UNUSED( a ), drawbox( board_, x ) } )
-   DO WHILE LastKey() != K_ESC .AND. moremoves( board_ )
+   SetColor("w/r")
+   hb_DispBox(22, 31, 24, 48, hb_UTF8ToStrBox("┌─┐│┘─└│ "))
+   hb_DispOutAt(23, 33, "Your move:")
+   AEval(board_, {|a, x|HB_SYMBOL_UNUSED(a), drawbox(board_, x)})
+   DO WHILE LastKey() != K_ESC .AND. moremoves(board_)
       move := 1
 
-      SetColor( "w/n" )
-      GetList := { Get():New( 23, 44, {| v | iif( PCount() == 0, move, move := v ) }, "move", "##" ) }
-      ATail( GetList ):postBlock := {| oGet | RangeCheck( oGet,, 1, 33 ) }
-      ATail( GetList ):display()
+      SetColor("w/n")
+      GetList := {Get():New(23, 44, {|v|iif(PCount() == 0, move, move := v)}, "move", "##")}
+      ATail(GetList):postBlock := {|oGet|RangeCheck(oGet,, 1, 33)}
+      ATail(GetList):display()
       READ
 
       IF move > 0
          DO CASE
-         CASE ! board_[ move ][ 4 ]
-            err_msg( "No piece there!" )
+         CASE !board_[move][4]
+            err_msg("No piece there!")
          OTHERWISE
             possible_ := {}
-            FOR xx := 1 TO Len( board_[ move ][ 2 ] )
-               IF board_[ board_[ move ][ 2, xx ] ][ 4 ] .AND. ;
-                  ! board_[ board_[ move ][ 3, xx ] ][ 4 ]
-                  AAdd( possible_, { board_[ move ][ 2, xx ], board_[ move ][ 3, xx ] } )
+            FOR xx := 1 TO Len(board_[move][2])
+               IF board_[board_[move][2, xx]][4] .AND. ;
+                  !board_[board_[move][3, xx]][4]
+                  AAdd(possible_, {board_[move][2, xx], board_[move][3, xx]})
                ENDIF
             NEXT
             // only one available move -- do it
             DO CASE
-            CASE Len( possible_ ) == 1
+            CASE Len(possible_) == 1
                // clear out original position and the position you jumped over
-               board_[ move ][ 4 ] := board_[ possible_[ 1, 1 ] ][ 4 ] := .F.
-               board_[ possible_[ 1, 2 ] ][ 4 ] := .T.
-               drawbox( board_, move )
-               drawbox( board_, possible_[ 1, 1 ] )
-               drawbox( board_, possible_[ 1, 2 ] )
-            CASE Len( possible_ ) == 0
-               err_msg( "Illegal move!" )
+               board_[move][4] := board_[possible_[1, 1]][4] := .F.
+               board_[possible_[1, 2]][4] := .T.
+               drawbox(board_, move)
+               drawbox(board_, possible_[1, 1])
+               drawbox(board_, possible_[1, 2])
+            CASE Len(possible_) == 0
+               err_msg("Illegal move!")
             OTHERWISE
-               move2 := possible_[ 1, 2 ]
-               toprow := 21 - Len( possible_ )
-               SetColor( "+w/b" )
-               buffer := SaveScreen( toprow, 55, 22, 74 )
-               DOUBLEBOX( toprow, 55, 22, 74 )
-               hb_DispOutAt( toprow, 58, "Possible Moves" )
-               SetPos( toprow, 65 )
-               AEval( possible_, {| a | hb_DispOutAt( Row() + 1, 65, Transform( a[ 2 ], "##" ) ) } )
-               oldscore := Set( _SET_SCOREBOARD, .F. )
+               move2 := possible_[1, 2]
+               toprow := 21 - Len(possible_)
+               SetColor("+w/b")
+               buffer := SaveScreen(toprow, 55, 22, 74)
+               DOUBLEBOX(toprow, 55, 22, 74)
+               hb_DispOutAt(toprow, 58, "Possible Moves")
+               SetPos(toprow, 65)
+               AEval(possible_, {|a|hb_DispOutAt(Row() + 1, 65, Transform(a[2], "##"))})
+               oldscore := Set(_SET_SCOREBOARD, .F.)
 
-               GetList := { Get():New( 23, 44, {| v | iif( PCount() == 0, move2, move2 := v ) }, "move2", "##" ) }
-               ATail( GetList ):postBlock := {|| AScan( possible_, scanblock ) > 0 }
-               ATail( GetList ):display()
+               GetList := {Get():New(23, 44, {|v|iif(PCount() == 0, move2, move2 := v)}, "move2", "##")}
+               ATail(GetList):postBlock := {||AScan(possible_, scanblock) > 0}
+               ATail(GetList):display()
                READ
 
-               RestScreen( toprow, 55, 22, 74, buffer )
-               Set( _SET_SCOREBOARD, oldscore )
-               mpos := AScan( possible_, {| a | move2 == a[ 2 ] } )
+               RestScreen(toprow, 55, 22, 74, buffer)
+               Set(_SET_SCOREBOARD, oldscore)
+               mpos := AScan(possible_, {|a|move2 == a[2]})
                // clear out original position and the position you jumped over
-               board_[ move ][ 4 ] := board_[ possible_[ mpos, 1 ] ][ 4 ] := .F.
-               board_[ move2 ][ 4 ] := .T.
-               drawbox( board_, move )
-               drawbox( board_, possible_[ mpos, 1 ] )
-               drawbox( board_, move2 )
+               board_[move][4] := board_[possible_[mpos, 1]][4] := .F.
+               board_[move2][4] := .T.
+               drawbox(board_, move)
+               drawbox(board_, possible_[mpos, 1])
+               drawbox(board_, move2)
 
             ENDCASE
          ENDCASE
          move := 1
       ENDIF
    ENDDO
-   SetColor( oldcolor )
-   RestScreen( 0, 0, MaxRow(), MaxCol(), oldscrn )
+   SetColor(oldcolor)
+   RestScreen(0, 0, MaxRow(), MaxCol(), oldscrn)
 
    RETURN NIL
 
-STATIC FUNCTION DrawBox( board_, nelement )
+STATIC FUNCTION DrawBox(board_, nelement)
 
-   SetColor( iif( board_[ nelement ][ 4 ], "+w/rb", "w/n" ) )
+   SetColor(iif(board_[nelement][4], "+w/rb", "w/n"))
 
-   hb_DispBox( ;
-      board_[ nelement ][ 1, 1 ], ;
-      board_[ nelement ][ 1, 2 ], ;
-      board_[ nelement ][ 1, 3 ], ;
-      board_[ nelement ][ 1, 4 ], hb_UTF8ToStrBox( "┌─┐│┘─└│ " ) )
+   hb_DispBox(board_[nelement][1, 1], board_[nelement][1, 2], board_[nelement][1, 3], board_[nelement][1, 4], hb_UTF8ToStrBox("┌─┐│┘─└│ "))
 
-   hb_DispOutAt( ;
-      board_[ nelement ][ 1, 1 ] + 1, ;
-      board_[ nelement ][ 1, 2 ] + 2, hb_ntos( nelement ) )
+   hb_DispOutAt(board_[nelement][1, 1] + 1, board_[nelement][1, 2] + 2, hb_ntos(nelement))
 
    RETURN NIL
 
-STATIC FUNCTION err_msg( msg )
+STATIC FUNCTION err_msg(msg)
 
-   LOCAL buffer := SaveScreen( 23, 33, 23, 47 )
+   LOCAL buffer := SaveScreen(23, 33, 23, 47)
 
-   SetCursor( SC_NONE )
-   SetColor( "+w/r" )
-   hb_DispOutAt( 23, 33, msg )
-   Inkey( 2 )
-   SetCursor( SC_NORMAL )
-   RestScreen( 23, 33, 23, 47, buffer )
+   SetCursor(SC_NONE)
+   SetColor("+w/r")
+   hb_DispOutAt(23, 33, msg)
+   Inkey(2)
+   SetCursor(SC_NORMAL)
+   RestScreen(23, 33, 23, 47, buffer)
 
    RETURN NIL
 
-STATIC FUNCTION moremoves( board_ )
+STATIC FUNCTION moremoves(board_)
 
    LOCAL xx
    LOCAL yy
@@ -204,27 +198,27 @@ STATIC FUNCTION moremoves( board_ )
    LOCAL buffer
 
    FOR xx := 1 TO 33
-      FOR yy := 1 TO Len( board_[ xx ][ 2 ] )
-         IF board_[ xx ][ 4 ] .AND.  ;                     // if current location is filled
-            board_[ board_[ xx ][ 2, yy ] ][ 4 ] .AND. ;   // adjacent must be filled
-            ! board_[ board_[ xx ][ 3, yy ] ][ 4 ]         // target must be empty
+      FOR yy := 1 TO Len(board_[xx][2])
+         IF board_[xx][4] .AND.  ;                     // if current location is filled
+            board_[board_[xx][2, yy]][4] .AND. ;   // adjacent must be filled
+            !board_[board_[xx][3, yy]][4]         // target must be empty
             canmove := .T.
             EXIT
          ENDIF
       NEXT
       // increment number of pieces left
-      IF board_[ xx ][ 4 ]
+      IF board_[xx][4]
          piecesleft++
       ENDIF
    NEXT
-   IF ! canmove
-      SetColor( "+w/b" )
-      buffer := SaveScreen( 18, 55, 21, 74 )
-      DOUBLEBOX( 18, 55, 21, 74 )
-      hb_DispOutAt( 19, 58, "No more moves!" )
-      hb_DispOutAt( 20, 58, hb_ntos( piecesleft ) + " pieces left" )
-      Inkey( 0 )
-      RestScreen( 18, 55, 21, 74, buffer )
+   IF !canmove
+      SetColor("+w/b")
+      buffer := SaveScreen(18, 55, 21, 74)
+      DOUBLEBOX(18, 55, 21, 74)
+      hb_DispOutAt(19, 58, "No more moves!")
+      hb_DispOutAt(20, 58, hb_ntos(piecesleft) + " pieces left")
+      Inkey(0)
+      RestScreen(18, 55, 21, 74, buffer)
    ENDIF
 
    RETURN canmove

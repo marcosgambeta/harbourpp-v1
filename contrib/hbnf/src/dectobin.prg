@@ -19,18 +19,16 @@
  *
  */
 
-FUNCTION ft_Dec2Bin( x )
+FUNCTION ft_Dec2Bin(x)
 
-   LOCAL buffer := { "0", "0", "0", "0", "0", "0", "0", "0" }
+   LOCAL buffer := {"0", "0", "0", "0", "0", "0", "0", "0"}
    LOCAL i
 
    FOR i := 8 TO 1 STEP -1
-      IF x >= 2 ^ ( i - 1 )
-         x -= 2 ^ ( i - 1 )
-         buffer[ 9 - i ] := "1"
+      IF x >= 2 ^ (i - 1)
+         x -= 2 ^ (i - 1)
+         buffer[9 - i] := "1"
       ENDIF
    NEXT
 
-   RETURN ;
-      buffer[ 1 ] + buffer[ 2 ] + buffer[ 3 ] + buffer[ 4 ] + ;
-      buffer[ 5 ] + buffer[ 6 ] + buffer[ 7 ] + buffer[ 8 ]
+   RETURN buffer[1] + buffer[2] + buffer[3] + buffer[4] + buffer[5] + buffer[6] + buffer[7] + buffer[8]

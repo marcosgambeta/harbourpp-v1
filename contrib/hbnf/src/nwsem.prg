@@ -39,107 +39,107 @@
 
 /* TODO: rewrite in C */
 
-FUNCTION ft_NWSemOpen( cName, nInitVal, nHandle, nOpenCnt )
+FUNCTION ft_NWSemOpen(cName, nInitVal, nHandle, nOpenCnt)
 
-   LOCAL aRegs[ INT86_MAX_REGS ]
+   LOCAL aRegs[INT86_MAX_REGS]
    LOCAL cRequest
    LOCAL nRet
 
-   __defaultNIL( @cName, "" )
-   __defaultNIL( @nInitVal, 0 )
-   __defaultNIL( @nHandle, 0 )
-   __defaultNIL( @nOpenCnt, 0 )
+   __defaultNIL(@cName, "")
+   __defaultNIL(@nInitVal, 0)
+   __defaultNIL(@nHandle, 0)
+   __defaultNIL(@nOpenCnt, 0)
 
-   cName    := iif( hb_BLen( cName ) > 127, hb_BSubStr( cName, 1, 127 ), cName )
-   cRequest := hb_BChar( Len( cName ) ) + cName
+   cName    := iif(hb_BLen(cName) > 127, hb_BSubStr(cName, 1, 127), cName)
+   cRequest := hb_BChar(Len(cName)) + cName
 
-   aRegs[ AX ] := MAKEHI( 197 )                       // C5h
-   aRegs[ DS ] := cRequest
-   aRegs[ DX ] := REG_DS
-   aRegs[ CX ] := nInitVal
+   aRegs[AX] := MAKEHI(197)                       // C5h
+   aRegs[DS] := cRequest
+   aRegs[DX] := REG_DS
+   aRegs[CX] := nInitVal
 
-   ft_int86( 33, aRegs )
+   ft_int86(33, aRegs)
 
-   nHandle  := Bin2L( I2Bin( aRegs[ CX ] ) + I2Bin( aRegs[ DX ] ) )
-   nOpenCnt := LOWBYTE( aRegs[ BX ] )
+   nHandle  := Bin2L(I2Bin(aRegs[CX]) + I2Bin(aRegs[DX]))
+   nOpenCnt := LOWBYTE(aRegs[BX])
 
-   nRet := LOWBYTE( aRegs[ AX ] )
+   nRet := LOWBYTE(aRegs[AX])
 
-   RETURN iif( nRet < 0, nRet + 256, nRet )
+   RETURN iif(nRet < 0, nRet + 256, nRet)
 
 /* TODO: rewrite in C */
 
-FUNCTION ft_NWSemEx( nHandle, nValue, nOpenCnt )
+FUNCTION ft_NWSemEx(nHandle, nValue, nOpenCnt)
 
-   LOCAL aRegs[ INT86_MAX_REGS ]
+   LOCAL aRegs[INT86_MAX_REGS]
    LOCAL nRet
 
-   __defaultNIL( @nHandle, 0 )
-   __defaultNIL( @nValue, 0 )
-   __defaultNIL( @nOpenCnt, 0 )
+   __defaultNIL(@nHandle, 0)
+   __defaultNIL(@nValue, 0)
+   __defaultNIL(@nOpenCnt, 0)
 
-   aRegs[ AX ] := MAKEHI( 197 ) + 1                         // C5h, 01h
-   aRegs[ CX ] := Bin2I( hb_BSubStr( L2Bin( nHandle ), 1, 2 ) )
-   aRegs[ DX ] := Bin2I( hb_BSubStr( L2Bin( nHandle ), 3, 2 ) )
+   aRegs[AX] := MAKEHI(197) + 1                         // C5h, 01h
+   aRegs[CX] := Bin2I(hb_BSubStr(L2Bin(nHandle), 1, 2))
+   aRegs[DX] := Bin2I(hb_BSubStr(L2Bin(nHandle), 3, 2))
 
-   ft_int86( 33, aRegs )
+   ft_int86(33, aRegs)
 
-   nValue   := aRegs[ CX ]
-   nOpenCnt := LOWBYTE( aRegs[ DX ] )
-   nRet     := LOWBYTE( aRegs[ AX ] )
+   nValue   := aRegs[CX]
+   nOpenCnt := LOWBYTE(aRegs[DX])
+   nRet     := LOWBYTE(aRegs[AX])
 
-   RETURN iif( nRet < 0, nRet + 256, nRet )
+   RETURN iif(nRet < 0, nRet + 256, nRet)
 
-FUNCTION ft_NWSemWait( nHandle, nTimeout )
+FUNCTION ft_NWSemWait(nHandle, nTimeout)
 
-   RETURN _ftnwsem( WAIT_SEMAPHORE, nHandle, nTimeout )
+   RETURN _ftnwsem(WAIT_SEMAPHORE, nHandle, nTimeout)
 
-FUNCTION ft_NWSemSig( nHandle )
+FUNCTION ft_NWSemSig(nHandle)
 
-   RETURN _ftnwsem( SIGNAL_SEMAPHORE, nHandle )
+   RETURN _ftnwsem(SIGNAL_SEMAPHORE, nHandle)
 
-FUNCTION ft_NWSemClose( nHandle )
+FUNCTION ft_NWSemClose(nHandle)
 
-   RETURN _ftnwsem( CLOSE_SEMAPHORE, nHandle )
+   RETURN _ftnwsem(CLOSE_SEMAPHORE, nHandle)
 
 // -----------------------------------------------
 // _ftnwsem() - internal for the semaphore package
 
 /* TODO: rewrite in C */
 
-STATIC FUNCTION _ftnwsem( nOp, nHandle, nTimeout )
+STATIC FUNCTION _ftnwsem(nOp, nHandle, nTimeout)
 
-   LOCAL aRegs[ INT86_MAX_REGS ]
+   LOCAL aRegs[INT86_MAX_REGS]
    LOCAL nRet
 
-   __defaultNIL( @nOp, SIGNAL_SEMAPHORE )
-   __defaultNIL( @nHandle, 0 )
-   __defaultNIL( @nTimeout, 0 )
+   __defaultNIL(@nOp, SIGNAL_SEMAPHORE)
+   __defaultNIL(@nHandle, 0)
+   __defaultNIL(@nTimeout, 0)
 
-   aRegs[ AX ] := MAKEHI( 197 ) + nOp
-   aRegs[ CX ] := Bin2I( hb_BSubStr( L2Bin( nHandle ), 1, 2 ) )
-   aRegs[ DX ] := Bin2I( hb_BSubStr( L2Bin( nHandle ), 3, 2 ) )
-   aRegs[ BP ] := nTimeout
+   aRegs[AX] := MAKEHI(197) + nOp
+   aRegs[CX] := Bin2I(hb_BSubStr(L2Bin(nHandle), 1, 2))
+   aRegs[DX] := Bin2I(hb_BSubStr(L2Bin(nHandle), 3, 2))
+   aRegs[BP] := nTimeout
 
-   ft_int86( 33, aRegs )
-   nRet := LOWBYTE( aRegs[ AX ] )
-   nRet := iif( nRet < 0, nRet + 256, nRet )
+   ft_int86(33, aRegs)
+   nRet := LOWBYTE(aRegs[AX])
+   nRet := iif(nRet < 0, nRet + 256, nRet)
 
    RETURN nRet
 
-FUNCTION ft_NWSemLock( cSemaphore, nHandle )
+FUNCTION ft_NWSemLock(cSemaphore, nHandle)
 
    LOCAL nOpenCnt := 0
-   LOCAL nRc := ft_NWSemOpen( cSemaphore, 0, @nHandle, @nOpenCnt )
+   LOCAL nRc := ft_NWSemOpen(cSemaphore, 0, @nHandle, @nOpenCnt)
 
    IF nRc == 0
       IF nOpenCnt != 1
-         ft_NWSemClose( nHandle )
+         ft_NWSemClose(nHandle)
       ENDIF
    ENDIF
 
    RETURN nOpenCnt == 1
 
-FUNCTION ft_NWSemUnlock( nHandle )
+FUNCTION ft_NWSemUnlock(nHandle)
 
-   RETURN ft_NWSemClose( nHandle ) == 0
+   RETURN ft_NWSemClose(nHandle) == 0

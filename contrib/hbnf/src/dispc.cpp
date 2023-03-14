@@ -302,7 +302,7 @@ static void win_align( PFT_DISPC dispc )
  *
  */
 
-static void disp_update( PFT_DISPC dispc, int offset )
+static void disp_update(PFT_DISPC dispc, int offset)
 {
    int line, col, pos, i;
 

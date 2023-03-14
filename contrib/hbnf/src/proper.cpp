@@ -29,27 +29,27 @@
 
 #include "hbapi.hpp"
 
-static char _ftToLower( char c )
+static char _ftToLower(char c)
 {
    return c >= 'A' && c <= 'Z' ? c - 'A' + 'a' : c;
 }
 
-static char _ftToUpper( char c )
+static char _ftToUpper(char c)
 {
    return c >= 'a' && c <= 'z' ? c - 'a' + 'A' : c;
 }
 
-static HB_BOOL _ftIsUpper( char c )
+static HB_BOOL _ftIsUpper(char c)
 {
    return c >= 'A' && c <= 'Z';
 }
 
-static HB_BOOL _ftIsLower( char c )
+static HB_BOOL _ftIsLower(char c)
 {
    return c >= 'a' && c <= 'z';
 }
 
-static HB_BOOL _ftIsAlpha( char c )
+static HB_BOOL _ftIsAlpha(char c)
 {
    return _ftIsUpper(c) || _ftIsLower(c);
 }
@@ -66,7 +66,7 @@ HB_FUNC( FT_PROPER )
 
    for( i = 0; i < iLen; i++ )
    {
-      if( _ftIsAlpha( cStr[i] ) )
+      if( _ftIsAlpha(cStr[i]) )
       {
          if( !cDst )
          {

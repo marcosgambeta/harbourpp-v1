@@ -19,28 +19,28 @@
  *
  */
 
-FUNCTION ft_EscCode( cInput )
+FUNCTION ft_EscCode(cInput)
 
    LOCAL cOutput  := ""
    LOCAL cCurrent
    LOCAL nPointer := 1
-   LOCAL nLen     := Len( cInput )
+   LOCAL nLen     := Len(cInput)
 
    DO WHILE nPointer <= nLen
 
-      cCurrent := SubStr( cInput, nPointer, 1 )
+      cCurrent := SubStr(cInput, nPointer, 1)
 
       DO CASE
 
       CASE cCurrent == "\" .AND. ;
-            IsDigit( SubStr( cInput, nPointer + 1, 1 ) ) .AND. ;
-            IsDigit( SubStr( cInput, nPointer + 2, 1 ) ) .AND. ;
-            IsDigit( SubStr( cInput, nPointer + 3, 1 ) )
-         cOutput  += Chr( Val( SubStr( cInput, nPointer + 1, 3 ) ) )
+            IsDigit(SubStr(cInput, nPointer + 1, 1)) .AND. ;
+            IsDigit(SubStr(cInput, nPointer + 2, 1)) .AND. ;
+            IsDigit(SubStr(cInput, nPointer + 3, 1))
+         cOutput  += Chr(Val(SubStr(cInput, nPointer + 1, 3)))
          nPointer += 4
 
       CASE cCurrent == "\" .AND. ;
-            SubStr( cInput, nPointer + 1, 1 ) == "\"
+            SubStr(cInput, nPointer + 1, 1) == "\"
          cOutput += "\"
          nPointer += 2
 

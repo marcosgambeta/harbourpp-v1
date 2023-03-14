@@ -22,7 +22,7 @@
 HB_FUNC( FT_DESCEND )
 {
    PHB_ITEM iP     = hb_itemParam(1);
-   HB_TYPE  uiType = hb_itemType( iP );
+   HB_TYPE  uiType = hb_itemType(iP);
 
    PHB_ITEM iR = nullptr;
 
@@ -48,11 +48,11 @@ HB_FUNC( FT_DESCEND )
    }
    else if( uiType & Harbour::Item::STRING )
    {
-      HB_SIZE uiLen = hb_itemSize( iP );
+      HB_SIZE uiLen = hb_itemSize(iP);
 
       char * pDescend = static_cast<char*>(hb_xgrab(uiLen));
 
-      hb_itemCopyC( iP, pDescend, uiLen );
+      hb_itemCopyC(iP, pDescend, uiLen);
 
       for( HB_SIZE n = 0; n < uiLen; n++ )
       {

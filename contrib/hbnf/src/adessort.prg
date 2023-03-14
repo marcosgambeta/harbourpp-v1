@@ -19,16 +19,15 @@
  *
  */
 
-#define FORCE_BETWEEN( x, y, z )         ( y := Max( Min( y, z ), x ) )
+#define FORCE_BETWEEN(x, y, z)           (y := Max(Min(y, z), x))
 
-FUNCTION ft_ADesSort( aArray, nStartIndex, nEndIndex )
+FUNCTION ft_ADesSort(aArray, nStartIndex, nEndIndex)
 
-   __defaultNIL( @nStartIndex, 1 )
-   __defaultNIL( @nEndIndex, Len( aArray ) )
+   __defaultNIL(@nStartIndex, 1)
+   __defaultNIL(@nEndIndex, Len(aArray))
 
    // Make Sure Bounds are in Range
-   FORCE_BETWEEN( 1, nEndIndex,   Len( aArray ) )
-   FORCE_BETWEEN( 1, nStartIndex, nEndIndex )
+   FORCE_BETWEEN(1, nEndIndex, Len(aArray))
+   FORCE_BETWEEN(1, nStartIndex, nEndIndex)
 
-   RETURN ASort( aArray, nStartIndex, nEndIndex, ;
-      {| xElement1, xElement2 | xElement1 > xElement2 } )
+   RETURN ASort(aArray, nStartIndex, nEndIndex, {|xElement1, xElement2|xElement1 > xElement2})

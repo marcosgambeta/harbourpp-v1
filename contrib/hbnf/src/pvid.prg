@@ -30,35 +30,35 @@ THREAD STATIC t_aVideo := {}
 
 FUNCTION ft_PushVid()
 
-   AAdd( t_aVideo, { Row(), ;
+   AAdd(t_aVideo, {Row(), ;
       Col(), ;
       SetColor(), ;
-      SaveScreen( 0, 0, MaxRow(), MaxCol() ), ;
-      Set( _SET_CURSOR ), ;
+      SaveScreen(0, 0, MaxRow(), MaxCol()), ;
+      Set(_SET_CURSOR), ;
       SetBlink(), ;
       NoSnow(), ;
       MaxRow() + 1, ;
       MaxCol() + 1, ;
-      Set( _SET_SCOREBOARD ) } )
+      Set(_SET_SCOREBOARD)})
 
-   RETURN Len( t_aVideo )
+   RETURN Len(t_aVideo)
 
 FUNCTION ft_PopVid()
 
-   LOCAL nNewSize := Len( t_aVideo ) - 1
-   LOCAL aBottom  := ATail( t_aVideo )
+   LOCAL nNewSize := Len(t_aVideo) - 1
+   LOCAL aBottom  := ATail(t_aVideo)
 
    IF nNewSize >= 0
-      SetMode( aBottom[ PV_MAXROW ], aBottom[ PV_MAXCOL ] )
-      Set( _SET_CURSOR, aBottom[ PV_CURSOR ] )
-      NoSnow( aBottom[ PV_NOSNOW ] )
-      SetBlink( aBottom[ PV_BLINK ] )
-      RestScreen( 0, 0, MaxRow(), MaxCol(), aBottom[ PV_IMAGE ] )
-      SetColor( aBottom[ PV_COLOR ] )
-      SetPos( aBottom[ PV_ROW ], aBottom[ PV_COL ] )
-      Set( _SET_SCOREBOARD, aBottom[ PV_SCORE ] )
+      SetMode(aBottom[PV_MAXROW], aBottom[PV_MAXCOL])
+      Set(_SET_CURSOR, aBottom[PV_CURSOR])
+      NoSnow(aBottom[PV_NOSNOW])
+      SetBlink(aBottom[PV_BLINK])
+      RestScreen(0, 0, MaxRow(), MaxCol(), aBottom[PV_IMAGE])
+      SetColor(aBottom[PV_COLOR])
+      SetPos(aBottom[PV_ROW], aBottom[PV_COL])
+      Set(_SET_SCOREBOARD, aBottom[PV_SCORE])
 
-      ASize( t_aVideo, nNewSize )
+      ASize(t_aVideo, nNewSize)
    ENDIF
 
-   RETURN Len( t_aVideo )
+   RETURN Len(t_aVideo)

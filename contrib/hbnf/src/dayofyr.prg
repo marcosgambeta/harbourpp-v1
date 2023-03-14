@@ -22,35 +22,35 @@
  *
  */
 
-FUNCTION ft_DayOfYr( dGivenDate, nDayNum, lIsAcct )
+FUNCTION ft_DayOfYr(dGivenDate, nDayNum, lIsAcct)
 
    LOCAL nTemp
    LOCAL aRetVal
 
-   IF HB_ISNUMERIC( dGivenDate )
+   IF HB_ISNUMERIC(dGivenDate)
       nDayNum    := dGivenDate
       dGivenDate := Date()
-   ELSEIF HB_ISLOGICAL( dGivenDate )
+   ELSEIF HB_ISLOGICAL(dGivenDate)
       lIsAcct    := dGivenDate
       dGivenDate := Date()
-   ELSEIF ! HB_ISDATE( dGivenDate )
+   ELSEIF !HB_ISDATE(dGivenDate)
       dGivenDate := Date()
    ENDIF
 
-   IF HB_ISLOGICAL( lIsAcct )
-      aRetVal := ft_AcctYear( dGivenDate )
+   IF HB_ISLOGICAL(lIsAcct)
+      aRetVal := ft_AcctYear(dGivenDate)
    ELSE
-      aRetVal := ft_Year( dGivenDate )
+      aRetVal := ft_Year(dGivenDate)
    ENDIF
 
-   IF HB_ISNUMERIC( nDayNum )
-      nTemp := aRetVal[ 3 ] - aRetVal[ 2 ] + 1
+   IF HB_ISNUMERIC(nDayNum)
+      nTemp := aRetVal[3] - aRetVal[2] + 1
       IF nDayNum < 1 .OR. nDayNum > nTemp
          nDayNum := nTemp
       ENDIF
-      aRetVal[ 1 ] := aRetVal[ 2 ] + nDayNum - 1
+      aRetVal[1] := aRetVal[2] + nDayNum - 1
    ELSE
-      aRetVal[ 1 ] += StrZero( dGivenDate - aRetVal[ 2 ] + 1, 3 )
+      aRetVal[1] += StrZero(dGivenDate - aRetVal[2] + 1, 3)
    ENDIF
 
    RETURN aRetVal

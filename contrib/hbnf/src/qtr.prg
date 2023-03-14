@@ -22,33 +22,33 @@
  *
  */
 
-FUNCTION ft_Qtr( dGivenDate, nQtrNum )
+FUNCTION ft_Qtr(dGivenDate, nQtrNum)
 
    LOCAL nTemp
    LOCAL aRetVal
 
-   IF HB_ISNUMERIC( dGivenDate )
+   IF HB_ISNUMERIC(dGivenDate)
       nQtrNum    := dGivenDate
       dGivenDate := Date()
-   ELSEIF ! HB_ISDATE( dGivenDate )
+   ELSEIF !HB_ISDATE(dGivenDate)
       dGivenDate := Date()
    ENDIF
 
-   aRetval := ft_Year( dGivenDate )
+   aRetval := ft_Year(dGivenDate)
 
-   IF HB_ISNUMERIC( nQtrNum )
+   IF HB_ISNUMERIC(nQtrNum)
       IF nQtrNum < 1 .OR. nQtrNum > 4
          nQtrNum := 4
       ENDIF
-      dGivenDate := ft_MAdd( aRetVal[ 2 ], 3 * ( nQtrNum - 1 ) )
+      dGivenDate := ft_MAdd(aRetVal[2], 3 * (nQtrNum - 1))
    ENDIF
 
-   nTemp := Month( dGivenDate ) - Month( aRetVal[ 2 ] )
-   nTemp += iif( nTemp >= 0, 1, 13 )
-   nTemp := Int( ( nTemp - 1 ) / 3 )
+   nTemp := Month(dGivenDate) - Month(aRetVal[2])
+   nTemp += iif(nTemp >= 0, 1, 13)
+   nTemp := Int((nTemp - 1) / 3)
 
-   aRetVal[ 1 ] += StrZero( nTemp + 1, 2 )
-   aRetVal[ 2 ] := ft_MAdd( aRetVal[ 2 ], nTemp * 3 )
-   aRetVal[ 3 ] := ft_MAdd( aRetVal[ 2 ], 3 ) - 1
+   aRetVal[1] += StrZero(nTemp + 1, 2)
+   aRetVal[2] := ft_MAdd(aRetVal[2], nTemp * 3)
+   aRetVal[3] := ft_MAdd(aRetVal[2], 3) - 1
 
    RETURN aRetVal

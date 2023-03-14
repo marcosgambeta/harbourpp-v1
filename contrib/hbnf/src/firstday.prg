@@ -19,10 +19,10 @@
  *
  */
 
-FUNCTION ft_FDay( dDateToChk )
+FUNCTION ft_FDay(dDateToChk)
 
-   IF ! HB_ISDATE( dDatetoChk )
+   IF !HB_ISDATE(dDatetoChk)
       dDatetoChk := Date()
    ENDIF
 
-   RETURN dDateToChk - ( Day( dDateToChk ) - 1 )
+   RETURN dDateToChk - (Day(dDateToChk) - 1)

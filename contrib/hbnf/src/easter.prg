@@ -20,7 +20,7 @@
  *
  */
 
-FUNCTION ft_Easter( nYear )
+FUNCTION ft_Easter(nYear)
 
    LOCAL nGold
    LOCAL nCent
@@ -32,43 +32,43 @@ FUNCTION ft_Easter( nYear )
    LOCAL nMonth := 0
    LOCAL nDay := 0
 
-   IF HB_ISSTRING( nYear )
-      nYear := Val( nYear )
+   IF HB_ISSTRING(nYear)
+      nYear := Val(nYear)
    ENDIF
 
-   IF HB_ISDATE( nYear )
-      nYear := Year( nYear )
+   IF HB_ISDATE(nYear)
+      nYear := Year(nYear)
    ENDIF
 
-   IF HB_ISNUMERIC( nYear )
+   IF HB_ISNUMERIC(nYear)
       IF nYear > 1582
 
          // <<nGold>> is Golden number of the year in the 19 year Metonic cycle
          nGold := nYear % 19 + 1
 
          // <<nCent>> is Century
-         nCent := Int( nYear / 100 ) + 1
+         nCent := Int(nYear / 100) + 1
 
          // Corrections:
          // <<nCorx>> is the no. of years in which leap-year was dropped in order
          // to keep step with the sun
-         nCorx := Int( ( 3 * nCent ) / 4 - 12 )
+         nCorx := Int((3 * nCent) / 4 - 12)
 
          // <<nCorz>> is a special correction to synchronize Easter with the moon's
          // orbit.
-         nCorz := Int( ( 8 * nCent + 5 ) / 25 - 5 )
+         nCorz := Int((8 * nCent + 5) / 25 - 5)
 
          // <<nSunday>> Find Sunday
-         nSunday := Int( ( 5 * nYear ) / 4 - nCorx - 10 )
+         nSunday := Int((5 * nYear) / 4 - nCorx - 10)
 
          // Set Epact <<nEpact>> (specifies occurance of a full moon)
-         nEpact := Int( ( 11 * nGold + 20 + nCorz - nCorx ) % 30 )
+         nEpact := Int((11 * nGold + 20 + nCorz - nCorx) % 30)
 
          IF nEpact < 0
             nEpact += 30
          ENDIF
 
-         IF ( nEpact == 25 .AND. nGold > 11 ) .OR. nEpact == 24
+         IF (nEpact == 25 .AND. nGold > 11) .OR. nEpact == 24
             ++nEpact
          ENDIF
 
@@ -80,7 +80,7 @@ FUNCTION ft_Easter( nYear )
          ENDIF
 
          // Advance to Sunday
-         nMoon := Int ( nMoon + 7 - ( ( nSunday + nMoon ) % 7 ) )
+         nMoon := Int(nMoon + 7 - ((nSunday + nMoon) % 7))
 
          // Get Month and Day
          IF nMoon > 31
@@ -95,4 +95,4 @@ FUNCTION ft_Easter( nYear )
       nYear := 0
    ENDIF
 
-   RETURN hb_SToD( Str( nYear, 4 ) + PadL( nMonth, 2, "0" ) + PadL( Int( nDay ), 2, "0" ) )
+   RETURN hb_SToD(Str(nYear, 4) + PadL(nMonth, 2, "0") + PadL(Int(nDay), 2, "0"))

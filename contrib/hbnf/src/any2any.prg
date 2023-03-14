@@ -19,88 +19,84 @@
  *
  */
 
-#define CASE_AT( x, y, z )           z[ At( x, y ) + 1 ]
+#define CASE_AT(x, y, z)             z[At(x, y) + 1]
 #define NULL                         ""
-#define EARLIEST_DATE                hb_SToD( "01000101" )
+#define EARLIEST_DATE                hb_SToD("01000101")
 #define BLANK_DATE                   hb_SToD()
 
-#define _XTOC( x )           CASE_AT( ValType( x ), "CNDLM", ;
-      { NULL, ;
+#define _XTOC(x)             CASE_AT(ValType(x), "CNDLM", ;
+      {NULL, ;
       x, ;
-      iif( HB_ISNUMERIC( x ), ;
-      hb_ntos( x ), ;
-      NULL ), ;
-      iif( HB_ISDATE( x ), DToC( x ), NULL ), ;
-      iif( HB_ISLOGICAL( x ), ;
-      iif( x, ".T.", ".F." ), ;
-      NULL ), ;
-      x } )
+      iif(HB_ISNUMERIC(x), hb_ntos(x), NULL), ;
+      iif(HB_ISDATE(x), DToC(x), NULL), ;
+      iif(HB_ISLOGICAL(x), iif(x, ".T.", ".F."), NULL), ;
+      x})
 
-FUNCTION ft_XToY( xValueToConvert, cTypeToConvertTo, lWantYesNo )
+FUNCTION ft_XToY(xValueToConvert, cTypeToConvertTo, lWantYesNo)
 
-   __defaultNIL( @lWantYesNo, .F. )
+   __defaultNIL(@lWantYesNo, .F.)
 
    DO CASE
 
    CASE cTypeToConvertTo == "C" .AND. ; // They Want a Character String
-      ! HB_ISSTRING( xValueToConvert )
+      !HB_ISSTRING(xValueToConvert)
 
-      xValueToConvert := _XTOC( xValueToConvert )
+      xValueToConvert := _XTOC(xValueToConvert)
 
    CASE cTypeToConvertTo == "D" .AND. ; // They Want a Date
-      ! HB_ISDATE( xValueToConvert )
+      !HB_ISDATE(xValueToConvert)
 
-      xValueToConvert := iif( HB_ISSTRING( xValueToConvert ), ;
+      xValueToConvert := iif(HB_ISSTRING(xValueToConvert), ;
          ; // Convert from a Character
-      CToD( xValueToConvert ), ;
-         iif( HB_ISNUMERIC( xValueToConvert ), ;
+      CToD(xValueToConvert), ;
+         iif(HB_ISNUMERIC(xValueToConvert), ;
          ; // Convert from a Number
       xValueToConvert + EARLIEST_DATE, ;
-         iif( HB_ISLOGICAL( xValueToConvert ), ;
+         iif(HB_ISLOGICAL(xValueToConvert), ;
          ; // Convert from a Logical
-      iif( xValueToConvert, Date(), BLANK_DATE ), ;
+      iif(xValueToConvert, Date(), BLANK_DATE), ;
          ; // Unsupported Type
-      BLANK_DATE ) ) )
+      BLANK_DATE)))
 
    CASE cTypeToConvertTo == "N" .AND. ; // They Want a Number
-      ! HB_ISNUMERIC( xValueToConvert )
+      !HB_ISNUMERIC(xValueToConvert)
 
-      xValueToConvert := iif( HB_ISSTRING( xValueToConvert ), ;
+      xValueToConvert := iif(HB_ISSTRING(xValueToConvert), ;
          ; // Convert from a Character
-      Val( xValueToConvert ), ;
-         iif( HB_ISDATE( xValueToConvert ), ;
+      Val(xValueToConvert), ;
+         iif(HB_ISDATE(xValueToConvert), ;
          ; // Convert from a Date
       xValueToConvert - EARLIEST_DATE, ;
-         iif( HB_ISLOGICAL( xValueToConvert ), ;
+         iif(HB_ISLOGICAL(xValueToConvert), ;
          ; // Convert from a Logical
-      iif( xValueToConvert, 1, 0 ), ;
+      iif(xValueToConvert, 1, 0), ;
          ; // Unsupported Type
-      0 ) ) )
+      0)))
 
    CASE cTypeToConvertTo == "L" .AND. ; // They Want a Logical
-      ! HB_ISLOGICAL( xValueToConvert )
+      !HB_ISLOGICAL(xValueToConvert)
 
-      xValueToConvert := iif( HB_ISSTRING( xValueToConvert ), ;
+      xValueToConvert := iif(HB_ISSTRING(xValueToConvert), ;
          ; // Convert from a Character
-      Upper( xValueToConvert ) == iif( lWantYesNo, "Y", ".T." ), ;
-         iif( HB_ISDATE( xValueToConvert ), ;
+      Upper(xValueToConvert) == iif(lWantYesNo, "Y", ".T."), ;
+         iif(HB_ISDATE(xValueToConvert), ;
          ; // Convert from a Date
-      ! Empty( xValueToConvert ), ;
-         iif( HB_ISNUMERIC( xValueToConvert ), ;
+      !Empty(xValueToConvert), ;
+         iif(HB_ISNUMERIC(xValueToConvert), ;
          ; // Convert from a Number
       xValueToConvert != 0, ;
          ; // Unsupported Type
-      .F. ) ) )
+      .F.)))
 
    CASE cTypeToConvertTo == "A" .AND. ; // They Want an Array
-      ! HB_ISARRAY( xValueToConvert )
+      !HB_ISARRAY(xValueToConvert)
 
-      xValueToConvert := { xValueToConvert }
+      xValueToConvert := {xValueToConvert}
 
    CASE cTypeToConvertTo == "B" .AND. ; // They Want a Code Block
-      ! HB_ISBLOCK( xValueToConvert )
+      !HB_ISBLOCK(xValueToConvert)
 
-      xValueToConvert := {|| xValueToConvert }
+      xValueToConvert := {||xValueToConvert}
 
    ENDCASE
 

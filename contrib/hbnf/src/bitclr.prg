@@ -19,10 +19,10 @@
  *
  */
 
-FUNCTION ft_BitClr( cInbyte, nBitpos )
+FUNCTION ft_BitClr(cInbyte, nBitpos)
 
-   IF HB_ISSTRING( cInbyte ) .AND. HB_ISNUMERIC( nBitpos )
-      RETURN hb_BChar( hb_bitReset( hb_BCode( cInbyte ), nBitpos ) )
+   IF HB_ISSTRING(cInbyte) .AND. HB_ISNUMERIC(nBitpos)
+      RETURN hb_BChar(hb_bitReset(hb_BCode(cInbyte), nBitpos))
    ENDIF
 
    RETURN NIL

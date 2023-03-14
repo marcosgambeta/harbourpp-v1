@@ -52,7 +52,7 @@
 //  NOTE: When evaluated a code block is passed the array element to
 //          be edited
 
-FUNCTION ft_ArEdit( nTop, nLeft, nBot, nRight, ar, nElem, aHeadings, aBlocks, bGetFunc )
+FUNCTION ft_ArEdit(nTop, nLeft, nBot, nRight, ar, nElem, aHeadings, aBlocks, bGetFunc)
 
    LOCAL exit_requested
    LOCAL nKey
@@ -64,80 +64,76 @@ FUNCTION ft_ArEdit( nTop, nLeft, nBot, nRight, ar, nElem, aHeadings, aBlocks, bG
    LOCAL nDim
    LOCAL cType
    LOCAL cVal
-   LOCAL tb_methods := ;
-      { ;
-      { K_DOWN,       {| b | b:down() } }, ;
-      { K_UP,         {| b | b:up() } }, ;
-      { K_PGDN,       {| b | b:pagedown() } }, ;
-      { K_PGUP,       {| b | b:pageup() } }, ;
-      { K_CTRL_PGUP,  {| b | b:gotop() } }, ;
-      { K_CTRL_PGDN,  {| b | b:gobottom() } }, ;
-      { K_RIGHT,      {| b | b:Right() } }, ;
-      { K_LEFT,       {| b | b:Left() } }, ;
-      { K_HOME,       {| b | b:home() } }, ;
-      { K_END,        {| b | b:end() } }, ;
-      { K_CTRL_LEFT,  {| b | b:panleft() } }, ;
-      { K_CTRL_RIGHT, {| b | b:panright() } }, ;
-      { K_CTRL_HOME,  {| b | b:panhome() } }, ;
-      { K_CTRL_END,   {| b | b:panend() } } ;
-      }
+   LOCAL tb_methods := { ;
+      {K_DOWN,       {|b|b:down()}}, ;
+      {K_UP,         {|b|b:up()}}, ;
+      {K_PGDN,       {|b|b:pagedown()}}, ;
+      {K_PGUP,       {|b|b:pageup()}}, ;
+      {K_CTRL_PGUP,  {|b|b:gotop()}}, ;
+      {K_CTRL_PGDN,  {|b|b:gobottom()}}, ;
+      {K_RIGHT,      {|b|b:Right()}}, ;
+      {K_LEFT,       {|b|b:Left()}}, ;
+      {K_HOME,       {|b|b:home()}}, ;
+      {K_END,        {|b|b:end()}}, ;
+      {K_CTRL_LEFT,  {|b|b:panleft()}}, ;
+      {K_CTRL_RIGHT, {|b|b:panright()}}, ;
+      {K_CTRL_HOME,  {|b|b:panhome()}}, ;
+      {K_CTRL_END,   {|b|b:panend()}}}
 
-   cSaveWin := SaveScreen( nTop, nLeft, nBot, nRight )
-   hb_DispBox( nTop, nLeft, nBot, nRight, HB_B_SINGLE_UNI )
+   cSaveWin := SaveScreen(nTop, nLeft, nBot, nRight)
+   hb_DispBox(nTop, nLeft, nBot, nRight, HB_B_SINGLE_UNI)
 
-   b := TBrowseNew( nTop + 1, nLeft + 1, nBot - 1, nRight - 1 )
-   b:headsep := hb_UTF8ToStrBox( "═╤═" )
-   b:colsep  := hb_UTF8ToStrBox( " │ " )
-   b:footsep := hb_UTF8ToStrBox( "═╧═" )
+   b := TBrowseNew(nTop + 1, nLeft + 1, nBot - 1, nRight - 1)
+   b:headsep := hb_UTF8ToStrBox("═╤═")
+   b:colsep  := hb_UTF8ToStrBox(" │ ")
+   b:footsep := hb_UTF8ToStrBox("═╧═")
 
-   b:gotopblock    := {|| nElem := 1 }
-   b:gobottomblock := {|| nElem := Len( ar[ 1 ] ) }
+   b:gotopblock    := {||nElem := 1}
+   b:gobottomblock := {||nElem := Len(ar[1])}
 
    // skipblock originally coded by Robert DiFalco
-   b:SkipBlock     := {| nSkip, nStart | nStart := nElem, ;
-      nElem := Max( 1, Min( Len( ar[ 1 ] ), nElem + nSkip ) ), ;
-      nElem - nStart }
+   b:SkipBlock := {|nSkip, nStart|nStart := nElem, nElem := Max(1, Min(Len(ar[1]), nElem + nSkip)), nElem - nStart}
 
-   FOR i := 1 TO Len( aBlocks )
-      column := TBColumnNew( aHeadings[ i ], aBlocks[ i ] )
-      b:addcolumn( column )
+   FOR i := 1 TO Len(aBlocks)
+      column := TBColumnNew(aHeadings[i], aBlocks[i])
+      b:addcolumn(column)
    NEXT
 
    exit_requested := .F.
-   DO WHILE ! exit_requested
+   DO WHILE !exit_requested
 
-      DO WHILE ( nKey := Inkey() ) == 0 .AND. ! b:stabilize()
+      DO WHILE (nKey := Inkey()) == 0 .AND. !b:stabilize()
       ENDDO
 
       IF nKey == 0
-         nKey := Inkey( 0 )
+         nKey := Inkey(0)
       ENDIF
 
-      meth_no := AScan( tb_methods, {| elem | nKey == elem[ KEY_ELEM ] } )
+      meth_no := AScan(tb_methods, {|elem|nKey == elem[KEY_ELEM]})
       IF meth_no != 0
-         Eval( tb_methods[ meth_no, BLK_ELEM ], b )
+         Eval(tb_methods[meth_no, BLK_ELEM], b)
       ELSE
          DO CASE
          CASE nKey == K_F7
-            FOR nDim := 1 TO Len( ar )
-               hb_ADel( ar[ nDim ], nElem, .T. )
+            FOR nDim := 1 TO Len(ar)
+               hb_ADel(ar[nDim], nElem, .T.)
             NEXT
             b:refreshAll()
 
          CASE nKey == K_F8
-            FOR nDim := 1 TO Len( ar )
+            FOR nDim := 1 TO Len(ar)
                // check valtype of current element before AIns()
-               cType := ValType( ar[ nDim, nElem ] )
-               cVal  := ar[ nDim, nElem ]
-               hb_AIns( ar[ nDim ], nElem,, .T. )
+               cType := ValType(ar[nDim, nElem])
+               cVal  := ar[nDim, nElem]
+               hb_AIns(ar[nDim], nElem,, .T.)
                IF cType == "C"
-                  ar[ nDim, nElem ] := Space( Len( cVal ) )
+                  ar[nDim, nElem] := Space(Len(cVal))
                ELSEIF cType == "N"
-                  ar[ nDim, nElem ] := 0
+                  ar[nDim, nElem] := 0
                ELSEIF cType == "L"
-                  ar[ nDim, nElem ] := .F.
+                  ar[nDim, nElem] := .F.
                ELSEIF cType == "D"
-                  ar[ nDim, nElem ] := hb_SToD()
+                  ar[nDim, nElem] := hb_SToD()
                ENDIF
             NEXT
             b:refreshAll()
@@ -146,14 +142,14 @@ FUNCTION ft_ArEdit( nTop, nLeft, nBot, nRight, ar, nElem, aHeadings, aBlocks, bG
             exit_requested := .T.
 
             // Other exception handling ...
-         CASE HB_ISBLOCK( bGetFunc )
+         CASE HB_ISBLOCK(bGetFunc)
             IF nKey != K_ENTER
                // want last key to be part of GET edit so KEYBOARD it
-               hb_keyPut( LastKey() )
+               hb_keyPut(LastKey())
             ENDIF
-            Eval( bGetFunc, b, ar, b:colPos, nElem )
+            Eval(bGetFunc, b, ar, b:colPos, nElem)
             // after get move to next field
-            hb_keyPut( iif( b:colPos < b:colCount, K_RIGHT, { K_HOME, K_DOWN } ) )
+            hb_keyPut(iif(b:colPos < b:colCount, K_RIGHT, {K_HOME, K_DOWN}))
 
             // Placing K_ENTER here below Edit Block (i.e. bGetFunc)
             // defaults K_ENTER to Edit when bGetFunc Is Present
@@ -164,6 +160,6 @@ FUNCTION ft_ArEdit( nTop, nLeft, nBot, nRight, ar, nElem, aHeadings, aBlocks, bG
          ENDCASE
       ENDIF
    ENDDO
-   RestScreen( nTop, nLeft, nBot, nRight, cSaveWin )
+   RestScreen(nTop, nLeft, nBot, nRight, cSaveWin)
 
-   RETURN ar[ b:colPos, nElem ]
+   RETURN ar[b:colPos, nElem]

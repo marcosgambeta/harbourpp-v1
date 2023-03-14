@@ -19,26 +19,26 @@
  *
  */
 
-#define CASE_AT( x, y, z )               z[ At( x, y ) + 1 ]
-#define FORCE_BETWEEN( x, y, z )         ( y := Max( Min( y, z ), x ) )
+#define CASE_AT(x, y, z)                 z[At(x, y) + 1]
+#define FORCE_BETWEEN(x, y, z)           (y := Max(Min(y, z), x))
 
-FUNCTION ft_ASum( aArray, nStartIndex, nEndIndex )
+FUNCTION ft_ASum(aArray, nStartIndex, nEndIndex)
 
    LOCAL nSumTotal := 0                 // Array Sum
 
-   __defaultNIL( @nStartIndex, 1 )
-   __defaultNIL( @nEndIndex, Len( aArray ) )
+   __defaultNIL(@nStartIndex, 1)
+   __defaultNIL(@nEndIndex, Len(aArray))
 
    // Make Sure Bounds are in Range
-   FORCE_BETWEEN( 1, nEndIndex,   Len( aArray ) )
-   FORCE_BETWEEN( 1, nStartIndex, nEndIndex )
+   FORCE_BETWEEN(1, nEndIndex, Len(aArray))
+   FORCE_BETWEEN(1, nStartIndex, nEndIndex)
 
-   AEval( aArray, ;
-      {| xElement | ;
+   AEval(aArray, ;
+      {|xElement| ;
       nSumTotal += ;
-      CASE_AT( ValType( xElement ), "NC", ;
-      { 0, xElement, ;
-      iif( HB_ISSTRING( xElement ), Len( xElement ), 0 ) } ) }, ;
-      nStartIndex, nEndIndex - nStartIndex + 1 )
+      CASE_AT(ValType(xElement), "NC", ;
+      {0, xElement, ;
+      iif(HB_ISSTRING(xElement), Len(xElement), 0)})}, ;
+      nStartIndex, nEndIndex - nStartIndex + 1)
 
    RETURN nSumTotal

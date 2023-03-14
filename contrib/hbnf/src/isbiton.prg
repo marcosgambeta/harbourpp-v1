@@ -22,5 +22,5 @@
  *
  */
 
-FUNCTION ft_IsBitOn( nWord, nBit )
-   RETURN hb_bitTest( nWord, nBit )
+FUNCTION ft_IsBitOn(nWord, nBit)
+   RETURN hb_bitTest(nWord, nBit)

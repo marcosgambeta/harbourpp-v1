@@ -22,62 +22,62 @@
  *
  */
 
-FUNCTION ft_AcctQtr( dGivenDate, nQtrNum )
+FUNCTION ft_AcctQtr(dGivenDate, nQtrNum)
 
    LOCAL nYTemp
    LOCAL nQTemp
    LOCAL aRetVal
 
-   IF HB_ISNUMERIC( dGivenDate )
+   IF HB_ISNUMERIC(dGivenDate)
       nQtrNum    := dGivenDate
       dGivenDate := Date()
-   ELSEIF ! HB_ISDATE( dGivenDate )
+   ELSEIF !HB_ISDATE(dGivenDate)
       dGivenDate := Date()
    ENDIF
 
-   aRetVal      := ft_Qtr( dGivenDate )
-   nYTemp       := Val( SubStr( aRetVal[ 1 ], 1, 4 ) )
-   nQTemp       := Val( SubStr( aRetVal[ 1 ], 5, 2 ) )
-   aRetVal[ 2 ] := ft_AcctAdj( aRetVal[ 2 ] )
-   aRetVal[ 3 ] := ft_AcctAdj( aRetVal[ 3 ], .T. )
+   aRetVal    := ft_Qtr(dGivenDate)
+   nYTemp     := Val(SubStr(aRetVal[1], 1, 4))
+   nQTemp     := Val(SubStr(aRetVal[1], 5, 2))
+   aRetVal[2] := ft_AcctAdj(aRetVal[2])
+   aRetVal[3] := ft_AcctAdj(aRetVal[3], .T.)
 
-   IF dGivenDate < aRetVal[ 2 ]
+   IF dGivenDate < aRetVal[2]
 
-      dGivenDate := ft_MAdd( dGivenDate, - 1 )
-      aRetVal    := ft_Qtr( dGivenDate )
+      dGivenDate := ft_MAdd(dGivenDate, - 1)
+      aRetVal    := ft_Qtr(dGivenDate)
       nQTemp     -= 1
       IF nQTemp  == 0
          nYTemp  -= 1
          nQTemp  := 4
       ENDIF
-      aRetVal[ 2 ] := ft_AcctAdj( aRetVal[ 2 ] )
-      aRetVal[ 3 ] := ft_AcctAdj( aRetVal[ 3 ], .T. )
+      aRetVal[2] := ft_AcctAdj(aRetVal[2])
+      aRetVal[3] := ft_AcctAdj(aRetVal[3], .T.)
 
-   ELSEIF dGivenDate > aRetVal[ 3 ]
+   ELSEIF dGivenDate > aRetVal[3]
 
-      dGivenDate := ft_MAdd( dGivenDate, 1 )
-      aRetVal    := ft_Qtr( dGivenDate )
+      dGivenDate := ft_MAdd(dGivenDate, 1)
+      aRetVal    := ft_Qtr(dGivenDate)
       nQTemp     += 1
       IF nQTemp  == 5
          nYTemp  += 1
          nQTemp  := 1
       ENDIF
-      aRetVal[ 2 ] := ft_AcctAdj( aRetVal[ 2 ] )
-      aRetVal[ 3 ] := ft_AcctAdj( aRetVal[ 3 ], .T. )
+      aRetVal[2] := ft_AcctAdj(aRetVal[2])
+      aRetVal[3] := ft_AcctAdj(aRetVal[3], .T.)
 
    ENDIF
 
-   IF HB_ISNUMERIC( nQtrNum )
+   IF HB_ISNUMERIC(nQtrNum)
       IF nQtrNum < 1 .OR. nQtrNum > 4
          nQtrNum := 4
       ENDIF
-      aRetVal      := ft_Qtr( dGivenDate, nQtrNum )
-      nYTemp       := Val( SubStr( aRetVal[ 1 ], 1, 4 ) )
-      nQTemp       := Val( SubStr( aRetVal[ 1 ], 5, 2 ) )
-      aRetVal[ 2 ] := ft_AcctAdj( aRetVal[ 2 ] )
-      aRetVal[ 3 ] := ft_AcctAdj( aRetVal[ 3 ], .T. )
+      aRetVal      := ft_Qtr(dGivenDate, nQtrNum)
+      nYTemp       := Val(SubStr(aRetVal[1], 1, 4))
+      nQTemp       := Val(SubStr(aRetVal[1], 5, 2))
+      aRetVal[2] := ft_AcctAdj(aRetVal[2])
+      aRetVal[3] := ft_AcctAdj(aRetVal[3], .T.)
    ENDIF
 
-   aRetVal[ 1 ] := Str( nYTemp, 4 ) + StrZero( nQTemp, 2 )
+   aRetVal[1] := Str(nYTemp, 4) + StrZero(nQTemp, 2)
 
    RETURN aRetVal

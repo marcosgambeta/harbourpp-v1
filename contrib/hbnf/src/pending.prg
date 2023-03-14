@@ -22,7 +22,7 @@
 // nWait   Wait in seconds between messages
 // cColor  Color of displayed message
 
-FUNCTION ft_Pending( cMsg, nRow, nCol, nWait, cColor )
+FUNCTION ft_Pending(cMsg, nRow, nCol, nWait, cColor)
 
    THREAD STATIC t_nRow1 := 24
    THREAD STATIC t_nCol1 := 0
@@ -35,10 +35,10 @@ FUNCTION ft_Pending( cMsg, nRow, nCol, nWait, cColor )
 
    IF cMsg != NIL
 
-      t_nRow1   := iif( nRow != NIL, nRow, t_nRow1 )        // reset display row
-      t_nCol1   := iif( nCol != NIL, nCol, t_nCol1 )        // reset display col
-      t_nWait1  := iif( nWait != NIL, nWait, t_nWait1 )     // reset display wait
-      t_cColor1 := iif( cColor != NIL, cColor, t_cColor1 )  // reset display color
+      t_nRow1   := iif(nRow != NIL, nRow, t_nRow1)        // reset display row
+      t_nCol1   := iif(nCol != NIL, nCol, t_nCol1)        // reset display col
+      t_nWait1  := iif(nWait != NIL, nWait, t_nWait1)     // reset display wait
+      t_cColor1 := iif(cColor != NIL, cColor, t_cColor1)  // reset display color
 
       nThis_Time := Seconds()                       // time of current message
 
@@ -46,16 +46,16 @@ FUNCTION ft_Pending( cMsg, nRow, nCol, nWait, cColor )
          t_nLast_Time := nThis_Time - t_nWait1      // for first time round.
       ENDIF
 
-      IF ( nThis_Time - t_nLast_Time ) < 0.1        // if messages are coming too fast,
+      IF (nThis_Time - t_nLast_Time) < 0.1        // if messages are coming too fast,
          t_nLast_Time := nThis_Time + t_nWait1      // set time counter and then
-         Inkey( t_nWait1 )                          // wait a few seconds.
+         Inkey(t_nWait1)                          // wait a few seconds.
       ELSE
          t_nLast_Time := nThis_Time                 // set time counter for next message.
       ENDIF
 
-      hb_Scroll( t_nRow1, 0, t_nRow1, 80 )          // clear the display line
+      hb_Scroll(t_nRow1, 0, t_nRow1, 80)          // clear the display line
 
-      hb_DispOutAt( t_nRow1, t_nCol1, cMsg, t_cColor1 ) // display message
+      hb_DispOutAt(t_nRow1, t_nCol1, cMsg, t_cColor1) // display message
 
    ENDIF
 

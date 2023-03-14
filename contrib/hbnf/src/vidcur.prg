@@ -73,22 +73,22 @@
 
 /* NOTE: In Harbour video pages are ignored. */
 
-PROCEDURE ft_SetVcur( nPage, nRow, nCol )
+PROCEDURE ft_SetVcur(nPage, nRow, nCol)
 
-   HB_SYMBOL_UNUSED( nPage )
+   HB_SYMBOL_UNUSED(nPage)
 
-   SetPos( nRow, nCol )
+   SetPos(nRow, nCol)
 
    RETURN
 
 /* NOTE: In Harbour video pages are ignored. */
 
-FUNCTION ft_GetVCur( nPage )
+FUNCTION ft_GetVCur(nPage)
 
    LOCAL nTop
    LOCAL nBot
 
-   HB_SYMBOL_UNUSED( nPage )
+   HB_SYMBOL_UNUSED(nPage)
 
    SWITCH SetCursor()
    CASE SC_NORMAL
@@ -111,4 +111,4 @@ FUNCTION ft_GetVCur( nPage )
       nTop := nBot := 0
    ENDSWITCH
 
-   RETURN { nTop, nBot, Row(), Col() }
+   RETURN {nTop, nBot, Row(), Col()}

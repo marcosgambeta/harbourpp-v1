@@ -6,7 +6,7 @@
 THREAD STATIC t_lCrsState := .F.
 THREAD STATIC t_lMInit := .F.
 
-FUNCTION ft_MDblClk( nClick, nButton, nInterval, nRow, nCol, nStart )
+FUNCTION ft_MDblClk(nClick, nButton, nInterval, nRow, nCol, nStart)
 
    LOCAL nVert         // local row and col coordinates
    LOCAL nHorz
@@ -14,33 +14,33 @@ FUNCTION ft_MDblClk( nClick, nButton, nInterval, nRow, nCol, nStart )
    LOCAL lDone         // loop flag
    LOCAL nPrs          // number of presses which occurred
 
-   __defaultNIL( @nClick, 1 )
-   __defaultNIL( @nButton, 0 )
-   __defaultNIL( @nInterval, 0.5 )
-   __defaultNIL( @nRow, MRow() )
-   __defaultNIL( @nCol, MCol() )
-   __defaultNIL( @nStart, Seconds() )
+   __defaultNIL(@nClick, 1)
+   __defaultNIL(@nButton, 0)
+   __defaultNIL(@nInterval, 0.5)
+   __defaultNIL(@nRow, MRow())
+   __defaultNIL(@nCol, MCol())
+   __defaultNIL(@nStart, Seconds())
 
    nVert := nRow
    nHorz := nCol
-   lDouble := lDone := ( nClick == 0 )
+   lDouble := lDone := (nClick == 0)
 
    // Wait for first press if requested
 
-   DO WHILE ! lDone
+   DO WHILE !lDone
 
-      ft_MButPrs( nButton, @nPrs, @nVert, @nHorz )
-      nVert := Int( nVert / 8 )
-      nHorz := Int( nHorz / 8 )
+      ft_MButPrs(nButton, @nPrs, @nVert, @nHorz)
+      nVert := Int(nVert / 8)
+      nHorz := Int(nHorz / 8)
 
-      lDouble := ( nPrs > 0 )
+      lDouble := (nPrs > 0)
       ldone := Seconds() - nStart >= nInterval .OR. lDouble
 
    ENDDO
 
    // if we have not moved then keep the preliminary double click setting
 
-   lDouble := lDouble .AND. ( nVert == nRow .AND. nHorz == nCol )
+   lDouble := lDouble .AND. (nVert == nRow .AND. nHorz == nCol)
 
    // change start time if we waited for first click. nInterval is the
    // maximum time between clicks not the total time for two clicks if
@@ -56,13 +56,13 @@ FUNCTION ft_MDblClk( nClick, nButton, nInterval, nRow, nCol, nStart )
 
       lDouble := lDone := .F.
 
-      DO WHILE ! lDone
+      DO WHILE !lDone
 
-         ft_MButPrs( nButton, @nPrs, @nVert, @nHorz )
-         nVert := Int( nVert / 8 )
-         nHorz := Int( nHorz / 8 )
+         ft_MButPrs(nButton, @nPrs, @nVert, @nHorz)
+         nVert := Int(nVert / 8)
+         nHorz := Int(nHorz / 8)
 
-         lDouble := ( nPrs > 0 )
+         lDouble := (nPrs > 0)
          lDone := Seconds() - nStart >= nInterval .OR. lDouble
 
       ENDDO
@@ -74,45 +74,39 @@ FUNCTION ft_MDblClk( nClick, nButton, nInterval, nRow, nCol, nStart )
 
    RETURN lDouble
 
-FUNCTION ft_MInRegion( nTR, nLC, nBR, nRC )
+FUNCTION ft_MInRegion(nTR, nLC, nBR, nRC)
    RETURN ;
       MRow() >= nTR .AND. MRow() <= nBR .AND. ;
       MCol() >= nLC .AND. MCol() <= nRC
 
-FUNCTION ft_MMickeys( /* @ */ nX, /* @ */ nY )
+FUNCTION ft_MMickeys(/* @ */ nX, /* @ */ nY)
 
    nX := MRow() * 8
    nY := MCol() * 8
 
    RETURN NIL
 
-FUNCTION ft_MGetPos( /* @ */ nX, /* @ */ nY )
+FUNCTION ft_MGetPos(/* @ */ nX, /* @ */ nY)
 
    nX := MRow() * 8
    nY := MCol() * 8
 
-   RETURN ;
-      iif( MLeftDown(), 1, 0 ) + ;
-      iif( MRightDown(), 2, 0 ) + ;
-      iif( hb_MMiddleDown(), 4, 0 )
+   RETURN iif(MLeftDown(), 1, 0) + iif(MRightDown(), 2, 0) + iif(hb_MMiddleDown(), 4, 0)
 
-FUNCTION ft_MSetPos( nX, nY )
-   RETURN MSetPos( nX / 8, nY / 8 )
+FUNCTION ft_MSetPos(nX, nY)
+   RETURN MSetPos(nX / 8, nY / 8)
 
-FUNCTION ft_MGetCoord( /* @ */ nX, /* @ */ nY )
+FUNCTION ft_MGetCoord(/* @ */ nX, /* @ */ nY)
 
    nX := MRow()
    nY := MCol()
 
-   RETURN ;
-      iif( MLeftDown(), 1, 0 ) + ;
-      iif( MRightDown(), 2, 0 ) + ;
-      iif( hb_MMiddleDown(), 4, 0 )
+   RETURN iif(MLeftDown(), 1, 0) + iif(MRightDown(), 2, 0) + iif(hb_MMiddleDown(), 4, 0)
 
-FUNCTION ft_MSetCoord( nX, nY )
-   RETURN MSetPos( nX, nY )
+FUNCTION ft_MSetCoord(nX, nY)
+   RETURN MSetPos(nX, nY)
 
-FUNCTION ft_MSetSens( nHoriz, nVert, nDouble )
+FUNCTION ft_MSetSens(nHoriz, nVert, nDouble)
 
    LOCAL nCurHoriz
    LOCAL nCurVert
@@ -120,18 +114,18 @@ FUNCTION ft_MSetSens( nHoriz, nVert, nDouble )
 
    // Get current values
 
-   ft_MGetSens( @nCurHoriz, @nCurVert, @nCurDouble )
+   ft_MGetSens(@nCurHoriz, @nCurVert, @nCurDouble)
 
-   hb_default( @nHoriz, nCurHoriz )
-   hb_default( @nVert, nCurVert )
-   hb_default( @nDouble, nCurDouble )
+   hb_default(@nHoriz, nCurHoriz)
+   hb_default(@nVert, nCurVert)
+   hb_default(@nDouble, nCurDouble)
 
    // Fill the registers
-   _ft_MSetSensitive( nHoriz, nVert, nDouble )
+   _ft_MSetSensitive(nHoriz, nVert, nDouble)
 
    RETURN NIL
 
-FUNCTION ft_MVersion( /* @ */ nMinor, /* @ */ nType, /* @ */ nIRQ )
+FUNCTION ft_MVersion(/* @ */ nMinor, /* @ */ nType, /* @ */ nIRQ)
 
    nMinor := 20
    nType := 2 /* serial */
@@ -143,8 +137,8 @@ FUNCTION ft_MInit()
 
    // If not previously initialized then try
 
-   IF ! t_lMInit
-      t_lMInit := ( ft_MReset() != 0 )
+   IF !t_lMInit
+      t_lMInit := (ft_MReset() != 0)
    ELSE
       MSetBounds()
    ENDIF
@@ -156,16 +150,16 @@ FUNCTION ft_MReset()
    t_lCrsState := .F. // Cursor is off after reset
    MHide()
    MSetBounds()
-   MSetPos( ( MaxRow() + 1 ) / 2, ( MaxCol() + 1 ) / 2 )
+   MSetPos((MaxRow() + 1) / 2, (MaxCol() + 1) / 2)
 
-   RETURN iif( MPresent(), -1, 0 )
+   RETURN iif(MPresent(), -1, 0)
 
-FUNCTION ft_MCursor( lState )
+FUNCTION ft_MCursor(lState)
 
    LOCAL lSavState := t_lCrsState
 
-   IF HB_ISLOGICAL( lState )
-      IF ( t_lCrsState := lState )
+   IF HB_ISLOGICAL(lState)
+      IF (t_lCrsState := lState)
          MShow()
       ELSE
          MHide()
@@ -190,23 +184,23 @@ FUNCTION ft_MHideCrs() // decrement internal cursor flag and hide cursor
 
    RETURN NIL                // no output from function
 
-FUNCTION ft_MXLimit( nMin, nMax )
+FUNCTION ft_MXLimit(nMin, nMax)
 
    LOCAL nTop
    LOCAL nBottom
 
-   hb_MGetBounds( @nTop,, @nBottom )
-   MSetBounds( nTop, nMin, nBottom, nMax )
+   hb_MGetBounds(@nTop,, @nBottom)
+   MSetBounds(nTop, nMin, nBottom, nMax)
 
    RETURN NIL
 
-FUNCTION ft_MYLimit( nMin, nMax )
+FUNCTION ft_MYLimit(nMin, nMax)
 
    LOCAL nLeft
    LOCAL nRight
 
    hb_MGetBounds(, @nLeft,, @nRight )
-   MSetBounds( nMin, nLeft, nMax, nRight )
+   MSetBounds(nMin, nLeft, nMax, nRight)
 
    RETURN NIL
 
@@ -225,8 +219,8 @@ FUNCTION ft_MGetPage()
 
 /* NOTE: Page is ignored in Harbour */
 
-FUNCTION ft_MSetPage( nPage )
+FUNCTION ft_MSetPage(nPage)
 
-   HB_SYMBOL_UNUSED( nPage )
+   HB_SYMBOL_UNUSED(nPage)
 
    RETURN NIL

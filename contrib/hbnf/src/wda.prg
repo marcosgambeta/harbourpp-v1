@@ -16,10 +16,8 @@
  *
  */
 
-FUNCTION ft_AddWkDy( dStart, nDys )
+FUNCTION ft_AddWkDy(dStart, nDys)
 
-   LOCAL nDc  := DoW( dStart )
+   LOCAL nDc := DoW(dStart)
 
-   RETURN iif( nDc == 7, ;
-      ( nDys - 1 )        % 5 + 7 * Int( ( nDys - 1 )        / 5 ) + 2, ;
-      ( nDys + nDc - 2 )  % 5 + 7 * Int( ( nDys + nDc - 2 )  / 5 ) + 2  - nDc )
+   RETURN iif(nDc == 7, (nDys - 1) % 5 + 7 * Int((nDys - 1) / 5) + 2, (nDys + nDc - 2) % 5 + 7 * Int((nDys + nDc - 2) / 5) + 2  - nDc)

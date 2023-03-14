@@ -25,7 +25,7 @@
 // Returns: .T. if all functions are available,
 //          .F. if not
 
-FUNCTION ft_Linked( cFuncs )
+FUNCTION ft_Linked(cFuncs)
 
    LOCAL aFuncArray := {}
    LOCAL nSpace
@@ -33,33 +33,33 @@ FUNCTION ft_Linked( cFuncs )
    LOCAL nFEnd
    LOCAL lRetVal := .F.
 
-   IF At( "(", cFuncs ) == 0
+   IF At("(", cFuncs) == 0
       // No functions in string
-      Alert( "Warning: Expected function(s) in ft_Linked(), but none were found" )
+      Alert("Warning: Expected function(s) in ft_Linked(), but none were found")
    ELSE
-      DO WHILE ( nFEnd := At( "(", cFuncs ) ) > 0
+      DO WHILE ( nFEnd := At("(", cFuncs) ) > 0
          // Add the current function to the array of functions
-         AAdd( aFuncArray, Left( cFuncs, nFEnd ) + ")" )
+         AAdd(aFuncArray, Left(cFuncs, nFEnd) + ")")
          // Remove the current function from the string
-         cFuncs := SubStr( cFuncs, nFEnd + 1 )
-         nSpace := At( " ", cFuncs )
-         nComma := At( ",", cFuncs )
+         cFuncs := SubStr(cFuncs, nFEnd + 1)
+         nSpace := At(" ", cFuncs)
+         nComma := At(",", cFuncs)
          DO WHILE ( nComma > 0 .AND. nComma < nFEnd ) .OR. ;
                ( nSpace > 0 .AND. nSpace < nFEnd )
             // We have extra parameters or spaces prior to the start
             // of the function. Strip them out.
             IF nComma > 0
-               cFuncs := SubStr( cFuncs, nComma + 1 )
+               cFuncs := SubStr(cFuncs, nComma + 1)
             ELSEIF nSpace > 0
-               cFuncs := SubStr( cFuncs, nSpace + 1 )
+               cFuncs := SubStr(cFuncs, nSpace + 1)
             ENDIF
-            nSpace := At( " ", cFuncs )
-            nComma := At( ",", cFuncs )
+            nSpace := At(" ", cFuncs)
+            nComma := At(",", cFuncs)
          ENDDO
       ENDDO
       // Scan through the array of functions, stop after the first occurence
       // of a function which returns a Type() of "U" (hence is not linked in)
-      lRetVal := AScan( aFuncArray, {| element | Type( element ) == "U" } ) == 0
+      lRetVal := AScan(aFuncArray, {|element|Type(element) == "U"}) == 0
    ENDIF
 
    RETURN lRetVal

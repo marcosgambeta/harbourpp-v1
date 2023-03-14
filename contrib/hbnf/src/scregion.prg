@@ -21,25 +21,24 @@
 
 THREAD STATIC t_aRgnStack := {}
 
-FUNCTION ft_SavRgn( nTop, nLeft, nBottom, nRight )
+FUNCTION ft_SavRgn(nTop, nLeft, nBottom, nRight)
 
-   RETURN hb_BChar( nTop ) + hb_BChar( nLeft ) + hb_BChar( nBottom ) + hb_BChar( nRight ) + ;
-      SaveScreen( nTop, nLeft, nBottom, nRight )
+   RETURN hb_BChar(nTop) + hb_BChar(nLeft) + hb_BChar(nBottom) + hb_BChar(nRight) + SaveScreen(nTop, nLeft, nBottom, nRight)
 
-FUNCTION ft_RstRgn( cScreen, nTop, nLeft )
+FUNCTION ft_RstRgn(cScreen, nTop, nLeft)
 
    IF PCount() == 3
-      RestScreen( nTop, nLeft, ;
-         ( nTop  - hb_BCode( hb_BSubStr( cScreen, 1, 1 ) ) ) + hb_BCode( hb_BSubStr( cScreen, 3, 1 ) ), ;
-         ( nLeft - hb_BCode( hb_BSubStr( cScreen, 2, 1 ) ) ) + hb_BCode( hb_BSubStr( cScreen, 4, 1 ) ), ;
-         hb_BSubStr( cScreen, 5 ) )
+      RestScreen(nTop, nLeft, ;
+         (nTop  - hb_BCode(hb_BSubStr(cScreen, 1, 1))) + hb_BCode(hb_BSubStr(cScreen, 3, 1)), ;
+         (nLeft - hb_BCode(hb_BSubStr(cScreen, 2, 1))) + hb_BCode(hb_BSubStr(cScreen, 4, 1)), ;
+         hb_BSubStr(cScreen, 5))
    ELSE
       RestScreen( ;
-         hb_BCode( hb_BSubStr( cScreen, 1, 1 ) ), ;
-         hb_BCode( hb_BSubStr( cScreen, 2, 1 ) ), ;
-         hb_BCode( hb_BSubStr( cScreen, 3, 1 ) ), ;
-         hb_BCode( hb_BSubStr( cScreen, 4, 1 ) ), ;
-         hb_BSubStr( cScreen, 5 ) )
+         hb_BCode(hb_BSubStr(cScreen, 1, 1)), ;
+         hb_BCode(hb_BSubStr(cScreen, 2, 1)), ;
+         hb_BCode(hb_BSubStr(cScreen, 3, 1)), ;
+         hb_BCode(hb_BSubStr(cScreen, 4, 1)), ;
+         hb_BSubStr(cScreen, 5))
    ENDIF
 
    RETURN NIL
@@ -48,7 +47,7 @@ FUNCTION ft_RstRgn( cScreen, nTop, nLeft )
          extra character and _SET_EXACT was set to .F.
          Harbour version accepts "pop all" only. [vszakats] */
 
-FUNCTION ft_RgnStack( cAction, nTop, nLeft, nBottom, nRight )
+FUNCTION ft_RgnStack(cAction, nTop, nLeft, nBottom, nRight)
 
    THREAD STATIC t_nStackPtr := 0
 
@@ -56,18 +55,17 @@ FUNCTION ft_RgnStack( cAction, nTop, nLeft, nBottom, nRight )
 
    IF cAction == "push"
 
-      ASize( t_aRgnStack, ++t_nStackPtr )[ t_nStackPtr ] := ;
-         ft_SavRgn( nTop, nLeft, nBottom, nRight )
+      ASize(t_aRgnStack, ++t_nStackPtr)[t_nStackPtr] := ft_SavRgn(nTop, nLeft, nBottom, nRight)
 
    ELSEIF cAction == "pop" .OR. cAction == "pop all"
 
-      nPopTop := iif( "all" $ cAction, 0, t_nStackPtr - 1 )
+      nPopTop := iif("all" $ cAction, 0, t_nStackPtr - 1)
 
       DO WHILE t_nStackPtr > nPopTop
-         ft_RstRgn( t_aRgnStack[ t_nStackPtr-- ] )
+         ft_RstRgn(t_aRgnStack[t_nStackPtr--])
       ENDDO
 
-      ASize( t_aRgnStack, t_nStackPtr )
+      ASize(t_aRgnStack, t_nStackPtr)
 
    ENDIF
 

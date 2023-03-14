@@ -22,18 +22,18 @@
  *
  */
 
-FUNCTION ft_DayToBoW( dGivenDate )
+FUNCTION ft_DayToBoW(dGivenDate)
 
    LOCAL nRetVal
    LOCAL nDOW_Start
 
-   nDOW_Start := ft_DateCnfg()[ 2 ]
+   nDOW_Start := ft_DateCnfg()[2]
 
-   IF ! HB_ISDATE( dGivenDate )
+   IF !HB_ISDATE(dGivenDate)
       dGivenDate := Date()
    ENDIF
 
-   nRetVal := DoW( dGivenDate ) - nDOW_Start
+   nRetVal := DoW(dGivenDate) - nDOW_Start
    IF nRetVal < 0
       nRetVal += 7
    ENDIF

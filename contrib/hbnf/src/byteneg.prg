@@ -19,10 +19,10 @@
  *
  */
 
-FUNCTION ft_ByteNeg( cByte )
+FUNCTION ft_ByteNeg(cByte)
 
-   IF HB_ISSTRING( cByte )
-      RETURN hb_BChar( ( 256 - hb_BCode( cByte ) ) % 256 )
+   IF HB_ISSTRING(cByte)
+      RETURN hb_BChar((256 - hb_BCode(cByte)) % 256)
    ENDIF
 
    RETURN NIL
