@@ -150,28 +150,28 @@ static void hb_compDumpFindCFunc(HB_COMP_DECL)
 
 static void hb_compGenCStdHeaders(HB_COMP_DECL, FILE * yyc, HB_BOOL fHbInLine)
 {
-   fprintf(yyc, "#include \"hbvmpub.h\"\n");
+   fprintf(yyc, "#include \"hbvmpub.hpp\"\n");
 
    if( HB_COMP_PARAM->iGenCOutput != HB_COMPGENC_COMPACT )
    {
-      fprintf(yyc, "#include \"hbpcode.h\"\n");
+      fprintf(yyc, "#include \"hbpcode.hpp\"\n");
    }
 
-   fprintf(yyc, "#include \"hbinit.h\"\n");
+   fprintf(yyc, "#include \"hbinit.hpp\"\n");
 
    if( HB_COMP_PARAM->iGenCOutput == HB_COMPGENC_REALCODE )
    {
-      fprintf(yyc, "#include \"hbxvm.h\"\n");
+      fprintf(yyc, "#include \"hbxvm.hpp\"\n");
    }
 
    if( fHbInLine )
    {
-      fprintf(yyc, "#include \"hbapi.h\"\n");
-      fprintf(yyc, "#include \"hbstack.h\"\n");
-      fprintf(yyc, "#include \"hbapierr.h\"\n");
-      fprintf(yyc, "#include \"hbapiitm.h\"\n");
-      fprintf(yyc, "#include \"hbvm.h\"\n");
-      fprintf(yyc, "#include \"hbapicls.h\"\n");
+      fprintf(yyc, "#include \"hbapi.hpp\"\n");
+      fprintf(yyc, "#include \"hbstack.hpp\"\n");
+      fprintf(yyc, "#include \"hbapierr.hpp\"\n");
+      fprintf(yyc, "#include \"hbapiitm.hpp\"\n");
+      fprintf(yyc, "#include \"hbvm.hpp\"\n");
+      fprintf(yyc, "#include \"hbapicls.hpp\"\n");
       fprintf(yyc, "#include \"hboo.ch\"\n");
    }
 }
@@ -538,7 +538,7 @@ static void hb_writeEndInit(HB_COMP_DECL, FILE * yyc, const char * szModulname, 
            "   #pragma startup hb_vm_SymbolInit_%s\n"
            "#elif defined(HB_DATASEG_STARTUP)\n"
            "   #define HB_DATASEG_BODY    HB_DATASEG_FUNC( hb_vm_SymbolInit_%s )\n"
-           "   #include \"hbiniseg.h\"\n"
+           "   #include \"hbiniseg.hpp\"\n"
            "#endif\n\n",
            szModulname, szModulname);
 }
