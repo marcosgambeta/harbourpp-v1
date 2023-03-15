@@ -489,10 +489,46 @@ CREATE CLASS Numeric INHERIT HBScalar FUNCTION __HBNumeric
 
    METHOD AsString()
 
+   METHOD abs
+   METHOD chr
+   METHOD empty
+   // METHOD exp
+   METHOD int
+   // METHOD max
+   // METHOD min
+   METHOD round
+   METHOD sqrt
+   METHOD str
+   METHOD transform
+
 ENDCLASS
 
 METHOD AsString() CLASS Numeric
    RETURN hb_ntos(Self)
+
+METHOD abs() CLASS Numeric
+   RETURN abs(Self)
+
+METHOD chr() CLASS Numeric
+   RETURN chr(Self)
+
+METHOD empty() CLASS Numeric
+   RETURN empty(Self)
+
+METHOD int() CLASS Numeric
+   RETURN int(Self)
+
+METHOD round(n) CLASS Numeric
+   RETURN round(Self, n)
+
+METHOD sqrt() CLASS Numeric
+   RETURN sqrt(Self)
+
+METHOD str(...) CLASS Numeric
+   RETURN str(Self, ...)
+
+METHOD transform(...) CLASS Numeric
+   RETURN transform(Self, ...)
 
 /* --- */
 
