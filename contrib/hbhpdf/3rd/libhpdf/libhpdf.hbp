@@ -31,6 +31,8 @@
 -cflag=-DHPDF_DLL_MAKE_CDECL{allwin&hbdyn}
 -cflag=-U__COREDLL__{mingwarm}
 
+-iinclude
+
 _hbhbpdf.c
 hpdf_3dmeasure.c
 hpdf_annotation.c
