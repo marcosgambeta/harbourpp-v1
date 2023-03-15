@@ -254,6 +254,41 @@ CREATE CLASS Character INHERIT HBScalar FUNCTION __HBCharacter
    METHOD AsString()
    METHOD AsExpStr()
 
+   METHOD at
+   METHOD asc
+   METHOD empty
+   METHOD isAlpha
+   METHOD isDigit
+   METHOD isLower
+   METHOD isUpper
+   METHOD left
+   METHOD len
+   METHOD lower
+   METHOD ltrim
+   // METHOD memoedit
+   // METHOD memoline
+   // METHOD memotran
+   // METHOD memowrit
+   // METHOD mlcount
+   // METHOD mlctopos
+   // METHOD mlpos
+   // METHOD mpostolc
+   METHOD padl
+   METHOD padc
+   METHOD padr
+   METHOD rat
+   METHOD replicate
+   METHOD right
+   METHOD rtrim
+   METHOD soundex
+   METHOD strtran
+   METHOD stuff
+   METHOD substr
+   METHOD transform
+   METHOD trim
+   METHOD upper
+   METHOD val
+
 ENDCLASS
 
 METHOD AsString() CLASS Character
@@ -261,6 +296,84 @@ METHOD AsString() CLASS Character
 
 METHOD AsExpStr() CLASS Character
    RETURN '"' + Self + '"'
+
+METHOD at(c) CLASS Character
+   RETURN at(c, Self)
+
+METHOD asc() CLASS Character
+   RETURN asc(Self)
+
+METHOD empty() CLASS Character
+   RETURN empty(Self)
+
+METHOD isAlpha() CLASS Character
+   RETURN isAlpha(Self)
+
+METHOD isDigit() CLASS Character
+   RETURN isDigit(Self)
+
+METHOD isLower() CLASS Character
+   RETURN isLower(Self)
+
+METHOD isUpper() CLASS Character
+   RETURN isUpper(Self)
+
+METHOD left(n) CLASS Character
+   RETURN left(Self, n)
+
+METHOD len() CLASS Character
+   RETURN len(Self)
+
+METHOD lower() CLASS Character
+   RETURN lower(Self)
+
+METHOD ltrim() CLASS Character
+   RETURN ltrim(Self)
+
+METHOD padl(...) CLASS Character
+   RETURN padl(Self, ...)
+
+METHOD padc(...) CLASS Character
+   RETURN padc(Self, ...)
+
+METHOD padr(...) CLASS Character
+   RETURN padr(Self, ...)
+
+METHOD rat(c) CLASS Character
+   RETURN rat(c, Self)
+
+METHOD replicate(n) CLASS Character
+   RETURN replicate(Self, n)
+
+METHOD right(n) CLASS Character
+   RETURN right(Self, n)
+
+METHOD rtrim() CLASS Character
+   RETURN rtrim(Self)
+
+METHOD soundex() CLASS Character
+   RETURN soundex(Self)
+
+METHOD strtran(...) CLASS Character
+   RETURN strtran(Self, ...)
+
+METHOD stuff(...) CLASS Character
+   RETURN stuff(Self, ...)
+
+METHOD substr(...) CLASS Character
+   RETURN substr(Self, ...)
+
+METHOD transform(c) CLASS Character
+   RETURN transform(Self, c)
+
+METHOD trim() CLASS Character
+   RETURN trim(Self)
+
+METHOD upper() CLASS Character
+   RETURN upper(Self)
+
+METHOD val() CLASS Character
+   RETURN val(Self)
 
 /* --- */
 
