@@ -111,32 +111,14 @@ HB_FUNC( WIN_PRINTEREXISTS )
 
 static void hb_GetDefaultPrinter(PHB_ITEM pPrinterName)
 {
-   HB_BOOL bResult = HB_FALSE;
+   bool bResult = false;
 
    hb_itemPutC(pPrinterName, nullptr);
 
-   if( hb_iswin2k() )  /* Windows 2000 or later */
-   {
-      using DEFPRINTER = BOOL(WINAPI *)(LPTSTR, LPDWORD);
-      HMODULE hWinSpool = hbwapi_LoadLibrarySystem(TEXT("winspool.drv"));
-
-      if( hWinSpool )
-      {
-         DEFPRINTER fnGetDefaultPrinter = reinterpret_cast<DEFPRINTER>(HB_WINAPI_GETPROCADDRESST(hWinSpool, "GetDefaultPrinter"));
-
-         if( fnGetDefaultPrinter )
-         {
-            TCHAR lpPrinterName[256];
-            DWORD dwSize = HB_SIZEOFARRAY(lpPrinterName) - 1;
-
-            bResult = (*fnGetDefaultPrinter)(lpPrinterName, &dwSize);
-
-            HB_ITEMPUTSTR(pPrinterName, lpPrinterName);
-         }
-
-         FreeLibrary(hWinSpool);
-      }
-   }
+   TCHAR lpPrinterName[256];
+   DWORD dwSize = HB_SIZEOFARRAY(lpPrinterName) - 1;
+   bResult = GetDefaultPrinter(lpPrinterName, &dwSize);
+   HB_ITEMPUTSTR(pPrinterName, lpPrinterName);
 
    if( !bResult ) /* Win9x and Windows NT 4.0 or earlier & 2000+ if necessary for some reason i.e. dll could not load! */
    {
@@ -153,37 +135,9 @@ static void hb_GetDefaultPrinter(PHB_ITEM pPrinterName)
          }
          lpPrinterName[dwSize] = '\0';
 
-         bResult = HB_TRUE;
+         bResult = true;
 
          HB_ITEMPUTSTRLEN(pPrinterName, lpPrinterName, dwSize);
-      }
-   }
-
-   if( !bResult && hb_iswin9x() )
-   {
-      /* This option should never be required but is included because of this article
-            https://support.microsoft.com/kb/246772
-
-         This option will not enumerate any network printers.
-
-         From the SDK technical reference for EnumPrinters();
-            If Level is 2 or 5, Name is a pointer to a null-terminated string that specifies
-            the name of a server whose printers are to be enumerated.
-            If this string is nullptr, then the function enumerates the printers installed on the local machine.
-       */
-      DWORD dwNeeded = 0, dwReturned = 0;
-
-      EnumPrinters(PRINTER_ENUM_DEFAULT, nullptr, 2, nullptr, 0, &dwNeeded, &dwReturned);
-      if( dwNeeded )
-      {
-         PRINTER_INFO_2 * pPrinterInfo = static_cast<PRINTER_INFO_2*>(hb_xgrabz(dwNeeded));
-
-         if( EnumPrinters(PRINTER_ENUM_DEFAULT, nullptr, 2, reinterpret_cast<LPBYTE>(pPrinterInfo), dwNeeded, &dwNeeded, &dwReturned) && dwReturned )
-         {
-            HB_ITEMPUTSTR(pPrinterName, pPrinterInfo->pPrinterName);
-         }
-
-         hb_xfree(pPrinterInfo);
       }
    }
 }

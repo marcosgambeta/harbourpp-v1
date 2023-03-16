@@ -275,18 +275,7 @@ HB_FUNC( WAPI_GETSHORTPATHNAME )
 
 HB_FUNC( WAPI_GETLONGPATHNAME )
 {
-   static _HB_GETPATHNAME s_getPathNameAddr = nullptr;
-
-   if( !s_getPathNameAddr )
-   {
-      s_getPathNameAddr = reinterpret_cast<_HB_GETPATHNAME>(HB_WINAPI_GETPROCADDRESST(GetModuleHandle(HB_WINAPI_KERNEL32_DLL()), "GetLongPathName"));
-
-      if( !s_getPathNameAddr )
-      {
-         s_getPathNameAddr = GetShortPathName;
-      }
-   }
-   s_getPathName(s_getPathNameAddr);
+   s_getPathName(GetLongPathName);
 }
 
 HB_FUNC( WAPI_GETSYSTEMDIRECTORY )
