@@ -7,9 +7,9 @@
 
 ${hb_name}.hbx
 
-src\core.prg
-src\widgets.prg
-src\log.prg
+src/core.prg
+src/widgets.prg
+src/log.prg
 
 -env:HB_DYNBIND_OPENSSL=yes
 hbssl.hbc

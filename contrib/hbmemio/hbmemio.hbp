@@ -7,4 +7,4 @@
 
 ${hb_name}.hbx
 
-src\memio.cpp
+src/memio.cpp

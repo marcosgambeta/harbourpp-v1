@@ -9,5 +9,5 @@ ${hb_name}.hbx
 
 -i.
 
-src\telepath.prg
-src\tp_idle.prg
+src/telepath.prg
+src/tp_idle.prg

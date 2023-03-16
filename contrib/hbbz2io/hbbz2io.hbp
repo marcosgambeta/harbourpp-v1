@@ -5,7 +5,7 @@
 
 -w3 -es2
 
-src\bz2io.cpp
+src/bz2io.cpp
 
 ${hb_name}.hbx
 

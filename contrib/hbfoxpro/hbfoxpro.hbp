@@ -9,10 +9,10 @@ ${hb_name}.hbx
 
 -i.
 
-src\dll.prg
-src\misc.prg
-src\occurs.prg
+src/dll.prg
+src/misc.prg
+src/occurs.prg
 
-src\dbfunc.cpp
-src\miscfunc.cpp
-src\relfunc.cpp
+src/dbfunc.cpp
+src/miscfunc.cpp
+src/relfunc.cpp

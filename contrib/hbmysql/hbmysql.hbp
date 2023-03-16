@@ -18,7 +18,7 @@ ${hb_name}.hbx
 
 -i.
 
-src\mysql.cpp
+src/mysql.cpp
 
-src\tmysql.prg
-src\tsqlbrw.prg
+src/tmysql.prg
+src/tsqlbrw.prg

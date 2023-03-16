@@ -7,4 +7,4 @@
 
 ${hb_name}.hbx
 
-src\comm.prg
+src/comm.prg

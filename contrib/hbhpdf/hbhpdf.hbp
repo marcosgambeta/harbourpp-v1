@@ -19,21 +19,21 @@ ${hb_name}.hbx
 
 -i.
 
-src\core.cpp
-src\annot.cpp
-src\enccns.cpp
-src\enccnt.cpp
-src\encjp.cpp
-src\enckr.cpp
-src\font.cpp
-src\fontcns.cpp
-src\fontcnt.cpp
-src\fontjp.cpp
-src\fontkr.cpp
-src\image.cpp
-src\pdfa.cpp
+src/core.cpp
+src/annot.cpp
+src/enccns.cpp
+src/enccnt.cpp
+src/encjp.cpp
+src/enckr.cpp
+src/font.cpp
+src/fontcns.cpp
+src/fontcnt.cpp
+src/fontjp.cpp
+src/fontkr.cpp
+src/image.cpp
+src/pdfa.cpp
 
-src\errstr.prg
-src\misc.prg
+src/errstr.prg
+src/misc.prg
 
 3rd/libhpdf/libhpdf.hbc{HBMK_HAS_LIBHARU_LOCAL}

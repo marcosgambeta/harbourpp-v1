@@ -7,15 +7,15 @@
 
 ${hb_name}.hbx
 
-src\fldarr.prg
-src\isdb.prg
-src\stroccur.prg
+src/fldarr.prg
+src/isdb.prg
+src/stroccur.prg
 
-src\dbsetloc.cpp
-src\exec.cpp
-src\index.cpp
-src\isbegseq.cpp
-src\isfunc.cpp
-src\secondfs.cpp
-src\strpeek.cpp
-src\users.cpp
+src/dbsetloc.cpp
+src/exec.cpp
+src/index.cpp
+src/isbegseq.cpp
+src/isfunc.cpp
+src/secondfs.cpp
+src/strpeek.cpp
+src/users.cpp

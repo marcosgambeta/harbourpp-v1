@@ -19,7 +19,7 @@ ${hb_name}.hbx
 -i.
 {allwin}-i${HB_WITH_MARIADB}/mysql
 
-src\mariadb.cpp
+src/mariadb.cpp
 
-src\tmariadb.prg
-src\tsqlbrw.prg
+src/tmariadb.prg
+src/tsqlbrw.prg

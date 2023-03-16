@@ -13,17 +13,17 @@
 
 -i.
 
-src\gtwvwd.cpp
+src/gtwvwd.cpp
 
-src\wvwdraw.cpp
-src\wvwutils.cpp
+src/wvwdraw.cpp
+src/wvwutils.cpp
 
-src\checkbox.cpp
-src\editbox.cpp
-src\menubar.cpp
-src\pushbut.cpp
-src\statbar.cpp
-src\toolbar.cpp
+src/checkbox.cpp
+src/editbox.cpp
+src/menubar.cpp
+src/pushbut.cpp
+src/statbar.cpp
+src/toolbar.cpp
 
 # NOTE: Due to large quantity of unprecise code, it doesn't build in C++ mode.
 #-cpp=no

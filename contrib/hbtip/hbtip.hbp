@@ -10,28 +10,28 @@ ${hb_name}.hbx
 
 -i.
 
-src\encurlc.cpp
-src\mime.cpp
-src\misc.cpp
+src/encurlc.cpp
+src/mime.cpp
+src/misc.cpp
 
-src\base64u.prg
-src\cgi.prg
-src\client.prg
-src\encb64.prg
-src\encoder.prg
-src\encqp.prg
-src\encurl.prg
-src\ftpcli.prg
-src\httpcli.prg
-src\log.prg
-src\mail.prg
-src\mailassy.prg
-src\mailsend.prg
-src\popcli.prg
-src\sessid.prg
-src\smtpcli.prg
-src\thtml.prg
-src\url.prg
+src/base64u.prg
+src/cgi.prg
+src/client.prg
+src/encb64.prg
+src/encoder.prg
+src/encqp.prg
+src/encurl.prg
+src/ftpcli.prg
+src/httpcli.prg
+src/log.prg
+src/mail.prg
+src/mailassy.prg
+src/mailsend.prg
+src/popcli.prg
+src/sessid.prg
+src/smtpcli.prg
+src/thtml.prg
+src/url.prg
 
 -env:HB_DYNBIND_OPENSSL=yes
 hbssl.hbc

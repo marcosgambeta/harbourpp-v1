@@ -13,10 +13,10 @@ ${hb_name}.hbx
 
 -i.
 
-src\chdir.cpp
-src\chroot.cpp
-src\daemon.cpp
-src\posix.cpp
-src\posixerr.cpp
-src\sleep.cpp
-src\uidgid.cpp
+src/chdir.cpp
+src/chroot.cpp
+src/daemon.cpp
+src/posix.cpp
+src/posixerr.cpp
+src/sleep.cpp
+src/uidgid.cpp

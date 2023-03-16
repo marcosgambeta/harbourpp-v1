@@ -10,18 +10,18 @@ ${hb_name}.hbx
 -i.
 
 # Core
-src\core.cpp
-src\coredraw.cpp
+src/core.cpp
+src/coredraw.cpp
 
 # Barcodes
-src\codabar.cpp
-src\code11.cpp
-src\code128.cpp
-src\code39.cpp
-src\code93.cpp
-src\eanupc.cpp
-src\itf.cpp
-src\msi.cpp
-src\pdf417.cpp
-src\datamtrx.cpp
-src\qrcode.cpp
+src/codabar.cpp
+src/code11.cpp
+src/code128.cpp
+src/code39.cpp
+src/code93.cpp
+src/eanupc.cpp
+src/itf.cpp
+src/msi.cpp
+src/pdf417.cpp
+src/datamtrx.cpp
+src/qrcode.cpp

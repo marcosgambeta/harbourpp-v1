@@ -19,7 +19,7 @@ ${hb_name}.hbx
 
 -i.
 
-src\core.cpp
-src\errint.cpp
+src/core.cpp
+src/errint.cpp
 
 3rd/bz2/bz2.hbc{HBMK_HAS_BZIP2_LOCAL}

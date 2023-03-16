@@ -9,5 +9,5 @@
 
 -i.
 
-src\sqlbase.cpp
-src\sqlmix.cpp
+src/sqlbase.cpp
+src/sqlmix.cpp

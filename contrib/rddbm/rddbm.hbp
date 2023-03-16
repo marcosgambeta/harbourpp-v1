@@ -7,7 +7,7 @@
 
 ${hb_name}.hbx
 
-src\bmdbfx.cpp
-src\bmdbfcdx.prg
-src\bmdbfnsx.prg
-src\bmdbfntx.prg
+src/bmdbfx.cpp
+src/bmdbfcdx.prg
+src/bmdbfnsx.prg
+src/bmdbfntx.prg

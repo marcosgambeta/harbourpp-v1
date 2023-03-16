@@ -21,15 +21,15 @@ ${hb_name}.hbx
 -i.
 {allwin}-i${HB_WITH_CAIRO}/cairo
 
-src\context.cpp
-src\core.cpp
-src\image.cpp
-src\paths.cpp
-src\pattern.cpp
-src\pdf.cpp
-src\png.cpp
-src\ps.cpp
-src\surface.cpp
-src\text.cpp
-src\transfor.cpp
-src\util.cpp
+src/context.cpp
+src/core.cpp
+src/image.cpp
+src/paths.cpp
+src/pattern.cpp
+src/pdf.cpp
+src/png.cpp
+src/ps.cpp
+src/surface.cpp
+src/text.cpp
+src/transfor.cpp
+src/util.cpp

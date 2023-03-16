@@ -16,7 +16,7 @@ ${hb_name}.hbx
 
 -i.
 
-src\core.cpp
-src\format.prg
+src/core.cpp
+src/format.prg
 
 3rd/minixml/mxml.hbc{HBMK_HAS_MXML_LOCAL}

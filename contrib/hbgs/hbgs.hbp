@@ -20,4 +20,4 @@
 
 ${hb_name}.hbx
 
-src\core.cpp
+src/core.cpp

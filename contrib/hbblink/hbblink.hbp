@@ -9,4 +9,4 @@ ${hb_name}.hbx
 
 -i.
 
-src\blinker.prg
+src/blinker.prg

@@ -27,7 +27,7 @@ ${hb_name}.hbx
 
 -i.
 
-src\ads1.cpp
-src\adsfunc.cpp
-src\adsmgmnt.cpp
-src\adsx.cpp
+src/ads1.cpp
+src/adsfunc.cpp
+src/adsmgmnt.cpp
+src/adsx.cpp

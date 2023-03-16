@@ -22,5 +22,5 @@ ${hb_name}.hbx
 
 -i.
 
-src\firebird.cpp
-src\tfirebrd.prg
+src/firebird.cpp
+src/tfirebrd.prg

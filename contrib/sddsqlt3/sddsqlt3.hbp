@@ -17,6 +17,6 @@ rddsql.hbc
 
 ${hb_name}.hbx
 
-src\core.cpp
+src/core.cpp
 
 ../3rd/sqlite3/sqlite3.hbc{HBMK_HAS_SQLITE3_LOCAL}

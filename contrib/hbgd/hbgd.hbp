@@ -21,10 +21,10 @@ ${hb_name}.hbx
 
 -i.
 
-src\gdwrp.cpp
+src/gdwrp.cpp
 
-src\gd.prg
-src\gdbar.prg
-src\gdchart.prg
-src\gdimage.prg
-src\gdbarcod.prg
+src/gd.prg
+src/gdbar.prg
+src/gdchart.prg
+src/gdimage.prg
+src/gdbarcod.prg

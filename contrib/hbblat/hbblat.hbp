@@ -18,5 +18,5 @@ ${hb_name}.hbx
 
 -i.
 
-src\blatwrp.cpp
-src\blatcls.prg
+src/blatwrp.cpp
+src/blatcls.prg

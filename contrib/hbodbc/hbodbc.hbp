@@ -20,7 +20,7 @@ ${hb_name}.hbx
 
 -i.
 
-src\odbc.cpp
+src/odbc.cpp
 
-src\todbc.prg
-src\browse.prg
+src/todbc.prg
+src/browse.prg
