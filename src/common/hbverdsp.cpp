@@ -71,6 +71,25 @@ void hb_verBuildInfo(void)
    }
 
    {
+      #if __cplusplus == 202002L
+      hb_conOutErr("C++ Standard: C++20", 0);
+      hb_conOutErr(hb_conNewLine(), 0);
+      #elif __cplusplus == 201703L
+      hb_conOutErr("C++ Standard: C++17", 0);
+      hb_conOutErr(hb_conNewLine(), 0);
+      #elif __cplusplus == 201402L
+      hb_conOutErr("C++ Standard: C++14", 0);
+      hb_conOutErr(hb_conNewLine(), 0);
+      #elif __cplusplus == 201103L
+      hb_conOutErr("C++ Standard: C++11", 0);
+      hb_conOutErr(hb_conNewLine(), 0);
+      #else
+      hb_conOutErr("C++ Standard: undetermined", 0);
+      hb_conOutErr(hb_conNewLine(), 0);
+      #endif
+   }
+
+   {
       char * pszVersion = hb_verPlatform();
       hb_conOutErr("Platform: ", 0);
       hb_conOutErr(pszVersion, 0);
