@@ -163,7 +163,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCASIZE )
 
   if( obj != nullptr )
   {
-    obj->caSize = hb_parni(1);
+    obj->caSize = winapi_par_WORD(1);
   }
 }
 
@@ -185,7 +185,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAFLAGS )
 
   if( obj != nullptr )
   {
-    obj->caFlags = hb_parni(1);
+    obj->caFlags = winapi_par_WORD(1);
   }
 }
 
@@ -207,7 +207,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAILLUMINANTINDEX )
 
   if( obj != nullptr )
   {
-    obj->caIlluminantIndex = hb_parni(1);
+    obj->caIlluminantIndex = winapi_par_WORD(1);
   }
 }
 
@@ -229,7 +229,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAREDGAMMA )
 
   if( obj != nullptr )
   {
-    obj->caRedGamma = hb_parni(1);
+    obj->caRedGamma = winapi_par_WORD(1);
   }
 }
 
@@ -251,7 +251,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAGREENGAMMA )
 
   if( obj != nullptr )
   {
-    obj->caGreenGamma = hb_parni(1);
+    obj->caGreenGamma = winapi_par_WORD(1);
   }
 }
 
@@ -273,7 +273,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCABLUEGAMMA )
 
   if( obj != nullptr )
   {
-    obj->caBlueGamma = hb_parni(1);
+    obj->caBlueGamma = winapi_par_WORD(1);
   }
 }
 
@@ -295,7 +295,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAREFERENCEBLACK )
 
   if( obj != nullptr )
   {
-    obj->caReferenceBlack = hb_parni(1);
+    obj->caReferenceBlack = winapi_par_WORD(1);
   }
 }
 
@@ -317,7 +317,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAREFERENCEWHITE )
 
   if( obj != nullptr )
   {
-    obj->caReferenceWhite = hb_parni(1);
+    obj->caReferenceWhite = winapi_par_WORD(1);
   }
 }
 
@@ -339,7 +339,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCACONTRAST )
 
   if( obj != nullptr )
   {
-    obj->caContrast = hb_parni(1);
+    obj->caContrast = winapi_par_SHORT(1);
   }
 }
 
@@ -361,7 +361,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCABRIGHTNESS )
 
   if( obj != nullptr )
   {
-    obj->caBrightness = hb_parni(1);
+    obj->caBrightness = winapi_par_SHORT(1);
   }
 }
 
@@ -383,7 +383,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCACOLORFULNESS )
 
   if( obj != nullptr )
   {
-    obj->caColorfulness = hb_parni(1);
+    obj->caColorfulness = winapi_par_SHORT(1);
   }
 }
 
@@ -405,7 +405,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COLORADJUSTMENT_SETCAREDGREENTINT )
 
   if( obj != nullptr )
   {
-    obj->caRedGreenTint = hb_parni(1);
+    obj->caRedGreenTint = winapi_par_SHORT(1);
   }
 }
 

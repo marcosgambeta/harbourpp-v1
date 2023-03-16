@@ -157,7 +157,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBISIZE )
 
   if( obj != nullptr )
   {
-    obj->biSize = hb_parnl(1);
+    obj->biSize = winapi_par_DWORD(1);
   }
 }
 
@@ -179,7 +179,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBIWIDTH )
 
   if( obj != nullptr )
   {
-    obj->biWidth = hb_parnl(1);
+    obj->biWidth = winapi_par_LONG(1);
   }
 }
 
@@ -201,7 +201,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBIHEIGHT )
 
   if( obj != nullptr )
   {
-    obj->biHeight = hb_parnl(1);
+    obj->biHeight = winapi_par_LONG(1);
   }
 }
 
@@ -223,7 +223,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBIPLANES )
 
   if( obj != nullptr )
   {
-    obj->biPlanes = hb_parni(1);
+    obj->biPlanes = winapi_par_WORD(1);
   }
 }
 
@@ -245,7 +245,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBIBITCOUNT )
 
   if( obj != nullptr )
   {
-    obj->biBitCount = hb_parni(1);
+    obj->biBitCount = winapi_par_WORD(1);
   }
 }
 
@@ -267,7 +267,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBICOMPRESSION )
 
   if( obj != nullptr )
   {
-    obj->biCompression = hb_parnl(1);
+    obj->biCompression = winapi_par_DWORD(1);
   }
 }
 
@@ -289,7 +289,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBISIZEIMAGE )
 
   if( obj != nullptr )
   {
-    obj->biSizeImage = hb_parnl(1);
+    obj->biSizeImage = winapi_par_DWORD(1);
   }
 }
 
@@ -311,7 +311,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBIXPELSPERMETER )
 
   if( obj != nullptr )
   {
-    obj->biXPelsPerMeter = hb_parnl(1);
+    obj->biXPelsPerMeter = winapi_par_LONG(1);
   }
 }
 
@@ -333,7 +333,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBIYPELSPERMETER )
 
   if( obj != nullptr )
   {
-    obj->biYPelsPerMeter = hb_parnl(1);
+    obj->biYPelsPerMeter = winapi_par_LONG(1);
   }
 }
 
@@ -355,7 +355,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBICLRUSED )
 
   if( obj != nullptr )
   {
-    obj->biClrUsed = hb_parnl(1);
+    obj->biClrUsed = winapi_par_DWORD(1);
   }
 }
 
@@ -377,7 +377,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_BITMAPINFOHEADER_SETBICLRIMPORTANT )
 
   if( obj != nullptr )
   {
-    obj->biClrImportant = hb_parnl(1);
+    obj->biClrImportant = winapi_par_DWORD(1);
   }
 }
 

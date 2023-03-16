@@ -247,7 +247,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETNSIZE )
 
   if( obj != nullptr )
   {
-    obj->nSize = hb_parni(1);
+    obj->nSize = winapi_par_WORD(1);
   }
 }
 
@@ -269,7 +269,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETNVERSION )
 
   if( obj != nullptr )
   {
-    obj->nVersion = hb_parni(1);
+    obj->nVersion = winapi_par_WORD(1);
   }
 }
 
@@ -291,7 +291,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETDWFLAGS )
 
   if( obj != nullptr )
   {
-    obj->dwFlags = hb_parni(1);
+    obj->dwFlags = winapi_par_DWORD(1);
   }
 }
 
@@ -313,7 +313,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETIPIXELTYPE )
 
   if( obj != nullptr )
   {
-    obj->iPixelType = hb_parni(1);
+    obj->iPixelType = winapi_par_BYTE(1);
   }
 }
 
@@ -335,7 +335,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCCOLORBITS )
 
   if( obj != nullptr )
   {
-    obj->cColorBits = hb_parni(1);
+    obj->cColorBits = winapi_par_BYTE(1);
   }
 }
 
@@ -357,7 +357,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCREDBITS )
 
   if( obj != nullptr )
   {
-    obj->cRedBits = hb_parni(1);
+    obj->cRedBits = winapi_par_BYTE(1);
   }
 }
 
@@ -379,7 +379,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCREDSHIFT )
 
   if( obj != nullptr )
   {
-    obj->cRedShift = hb_parni(1);
+    obj->cRedShift = winapi_par_BYTE(1);
   }
 }
 
@@ -401,7 +401,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCGREENBITS )
 
   if( obj != nullptr )
   {
-    obj->cGreenBits = hb_parni(1);
+    obj->cGreenBits = winapi_par_BYTE(1);
   }
 }
 
@@ -423,7 +423,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCGREENSHIFT )
 
   if( obj != nullptr )
   {
-    obj->cGreenShift = hb_parni(1);
+    obj->cGreenShift = winapi_par_BYTE(1);
   }
 }
 
@@ -445,7 +445,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCBLUEBITS )
 
   if( obj != nullptr )
   {
-    obj->cBlueBits = hb_parni(1);
+    obj->cBlueBits = winapi_par_BYTE(1);
   }
 }
 
@@ -467,7 +467,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCBLUESHIFT )
 
   if( obj != nullptr )
   {
-    obj->cBlueShift = hb_parni(1);
+    obj->cBlueShift = winapi_par_BYTE(1);
   }
 }
 
@@ -489,7 +489,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCALPHABITS )
 
   if( obj != nullptr )
   {
-    obj->cAlphaBits = hb_parni(1);
+    obj->cAlphaBits = winapi_par_BYTE(1);
   }
 }
 
@@ -511,7 +511,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCALPHASHIFT )
 
   if( obj != nullptr )
   {
-    obj->cAlphaShift = hb_parni(1);
+    obj->cAlphaShift = winapi_par_BYTE(1);
   }
 }
 
@@ -533,7 +533,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCACCUMBITS )
 
   if( obj != nullptr )
   {
-    obj->cAccumBits = hb_parni(1);
+    obj->cAccumBits = winapi_par_BYTE(1);
   }
 }
 
@@ -555,7 +555,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCACCUMREDBITS )
 
   if( obj != nullptr )
   {
-    obj->cAccumRedBits = hb_parni(1);
+    obj->cAccumRedBits = winapi_par_BYTE(1);
   }
 }
 
@@ -577,7 +577,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCACCUMGREENBITS )
 
   if( obj != nullptr )
   {
-    obj->cAccumGreenBits = hb_parni(1);
+    obj->cAccumGreenBits = winapi_par_BYTE(1);
   }
 }
 
@@ -599,7 +599,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCACCUMBLUEBITS )
 
   if( obj != nullptr )
   {
-    obj->cAccumBlueBits = hb_parni(1);
+    obj->cAccumBlueBits = winapi_par_BYTE(1);
   }
 }
 
@@ -621,7 +621,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCACCUMALPHABITS )
 
   if( obj != nullptr )
   {
-    obj->cAccumAlphaBits = hb_parni(1);
+    obj->cAccumAlphaBits = winapi_par_BYTE(1);
   }
 }
 
@@ -643,7 +643,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCDEPTHBITS )
 
   if( obj != nullptr )
   {
-    obj->cDepthBits = hb_parni(1);
+    obj->cDepthBits = winapi_par_BYTE(1);
   }
 }
 
@@ -665,7 +665,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCSTENCILBITS )
 
   if( obj != nullptr )
   {
-    obj->cStencilBits = hb_parni(1);
+    obj->cStencilBits = winapi_par_BYTE(1);
   }
 }
 
@@ -687,7 +687,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETCAUXBUFFERS )
 
   if( obj != nullptr )
   {
-    obj->cAuxBuffers = hb_parni(1);
+    obj->cAuxBuffers = winapi_par_BYTE(1);
   }
 }
 
@@ -709,7 +709,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETILAYERTYPE )
 
   if( obj != nullptr )
   {
-    obj->iLayerType = hb_parni(1);
+    obj->iLayerType = winapi_par_BYTE(1);
   }
 }
 
@@ -731,7 +731,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETBRESERVED )
 
   if( obj != nullptr )
   {
-    obj->bReserved = hb_parni(1);
+    obj->bReserved = winapi_par_BYTE(1);
   }
 }
 
@@ -753,7 +753,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETDWLAYERMASK )
 
   if( obj != nullptr )
   {
-    obj->dwLayerMask = hb_parnl(1);
+    obj->dwLayerMask = winapi_par_DWORD(1);
   }
 }
 
@@ -775,7 +775,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETDWVISIBLEMASK )
 
   if( obj != nullptr )
   {
-    obj->dwVisibleMask = hb_parnl(1);
+    obj->dwVisibleMask = winapi_par_DWORD(1);
   }
 }
 
@@ -797,7 +797,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_PIXELFORMATDESCRIPTOR_SETDWDAMAGEMASK )
 
   if( obj != nullptr )
   {
-    obj->dwDamageMask = hb_parnl(1);
+    obj->dwDamageMask = winapi_par_DWORD(1);
   }
 }
 

@@ -152,7 +152,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_SETDWLENGTH )
 
   if( obj != nullptr )
   {
-    obj->dwLength = hb_parnl(1);
+    obj->dwLength = winapi_par_DWORD(1);
   }
 }
 #endif
@@ -175,7 +175,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_SETDWMEMORYLOAD )
 
   if( obj != nullptr )
   {
-    obj->dwMemoryLoad = hb_parnl(1);
+    obj->dwMemoryLoad = winapi_par_DWORD(1);
   }
 }
 
@@ -197,7 +197,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_SETULLTOTALPHYS )
 
   if( obj != nullptr )
   {
-    obj->ullTotalPhys = hb_parnll(1);
+    obj->ullTotalPhys = winapi_par_DWORDLONG(1);
   }
 }
 
@@ -219,7 +219,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_SETULLAVAILPHYS )
 
   if( obj != nullptr )
   {
-    obj->ullAvailPhys = hb_parnll(1);
+    obj->ullAvailPhys = winapi_par_DWORDLONG(1);
   }
 }
 
@@ -241,7 +241,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_SETULLTOTALPAGEFILE )
 
   if( obj != nullptr )
   {
-    obj->ullTotalPageFile = hb_parnll(1);
+    obj->ullTotalPageFile = winapi_par_DWORDLONG(1);
   }
 }
 
@@ -263,7 +263,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_SETULLAVAILPAGEFILE )
 
   if( obj != nullptr )
   {
-    obj->ullAvailPageFile = hb_parnll(1);
+    obj->ullAvailPageFile = winapi_par_DWORDLONG(1);
   }
 }
 
@@ -285,7 +285,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_SETULLTOTALVIRTUAL )
 
   if( obj != nullptr )
   {
-    obj->ullTotalVirtual = hb_parnll(1);
+    obj->ullTotalVirtual = winapi_par_DWORDLONG(1);
   }
 }
 
@@ -307,7 +307,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_SETULLAVAILVIRTUAL )
 
   if( obj != nullptr )
   {
-    obj->ullAvailVirtual = hb_parnll(1);
+    obj->ullAvailVirtual = winapi_par_DWORDLONG(1);
   }
 }
 
@@ -329,7 +329,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_SETULLAVAILEXTENDEDVIRTUAL )
 
   if( obj != nullptr )
   {
-    obj->ullAvailExtendedVirtual = hb_parnll(1);
+    obj->ullAvailExtendedVirtual = winapi_par_DWORDLONG(1);
   }
 }
 

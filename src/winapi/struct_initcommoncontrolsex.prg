@@ -104,7 +104,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_SETDWSIZE )
 
   if( obj != nullptr )
   {
-    obj->dwSize = static_cast<DWORD>(hb_parnl(1));
+    obj->dwSize = winapi_par_DWORD(1);
   }
 }
 
@@ -126,7 +126,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_INITCOMMONCONTROLSEX_SETDWICC )
 
   if( obj != nullptr )
   {
-    obj->dwICC = static_cast<DWORD>(hb_parnl(1));
+    obj->dwICC = winapi_par_DWORD(1);
   }
 }
 

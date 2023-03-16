@@ -109,7 +109,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_SETABCA )
 
   if( obj != nullptr )
   {
-    obj->abcA = hb_parni(1);
+    obj->abcA = winapi_par_int(1);
   }
 }
 
@@ -131,7 +131,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_SETABCB )
 
   if( obj != nullptr )
   {
-    obj->abcB = hb_parni(1);
+    obj->abcB = winapi_par_UINT(1);
   }
 }
 
@@ -153,7 +153,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_SETABCC )
 
   if( obj != nullptr )
   {
-    obj->abcC = hb_parni(1);
+    obj->abcC = winapi_par_int(1);
   }
 }
 

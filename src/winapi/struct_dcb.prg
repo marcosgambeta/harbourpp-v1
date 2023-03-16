@@ -259,7 +259,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETDCBLENGTH )
 
   if( obj != nullptr )
   {
-    obj->DCBlength = hb_parnl(1);
+    obj->DCBlength = winapi_par_DWORD(1);
   }
 }
 
@@ -281,7 +281,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETBAUDRATE )
 
   if( obj != nullptr )
   {
-    obj->BaudRate = hb_parnl(1);
+    obj->BaudRate = winapi_par_DWORD(1);
   }
 }
 
@@ -303,7 +303,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFBINARY )
 
   if( obj != nullptr )
   {
-    obj->fBinary = hb_parnl(1);
+    obj->fBinary = winapi_par_DWORD(1);
   }
 }
 
@@ -325,7 +325,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFPARITY )
 
   if( obj != nullptr )
   {
-    obj->fParity = hb_parnl(1);
+    obj->fParity = winapi_par_DWORD(1);
   }
 }
 
@@ -347,7 +347,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFOUTXCTSFLOW )
 
   if( obj != nullptr )
   {
-    obj->fOutxCtsFlow = hb_parnl(1);
+    obj->fOutxCtsFlow = winapi_par_DWORD(1);
   }
 }
 
@@ -369,7 +369,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFOUTXDSRFLOW )
 
   if( obj != nullptr )
   {
-    obj->fOutxDsrFlow = hb_parnl(1);
+    obj->fOutxDsrFlow = winapi_par_DWORD(1);
   }
 }
 
@@ -391,7 +391,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFDTRCONTROL )
 
   if( obj != nullptr )
   {
-    obj->fDtrControl = hb_parnl(1);
+    obj->fDtrControl = winapi_par_DWORD(1);
   }
 }
 
@@ -413,7 +413,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFDSRSENSITIVITY )
 
   if( obj != nullptr )
   {
-    obj->fDsrSensitivity = hb_parnl(1);
+    obj->fDsrSensitivity = winapi_par_DWORD(1);
   }
 }
 
@@ -435,7 +435,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFTXCONTINUEONXOFF )
 
   if( obj != nullptr )
   {
-    obj->fTXContinueOnXoff = hb_parnl(1);
+    obj->fTXContinueOnXoff = winapi_par_DWORD(1);
   }
 }
 
@@ -457,7 +457,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFOUTX )
 
   if( obj != nullptr )
   {
-    obj->fOutX = hb_parnl(1);
+    obj->fOutX = winapi_par_DWORD(1);
   }
 }
 
@@ -479,7 +479,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFINX )
 
   if( obj != nullptr )
   {
-    obj->fInX = hb_parnl(1);
+    obj->fInX = winapi_par_DWORD(1);
   }
 }
 
@@ -501,7 +501,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFERRORCHAR )
 
   if( obj != nullptr )
   {
-    obj->fErrorChar = hb_parnl(1);
+    obj->fErrorChar = winapi_par_DWORD(1);
   }
 }
 
@@ -523,7 +523,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFNULL )
 
   if( obj != nullptr )
   {
-    obj->fNull = hb_parnl(1);
+    obj->fNull = winapi_par_DWORD(1);
   }
 }
 
@@ -545,7 +545,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFRTSCONTROL )
 
   if( obj != nullptr )
   {
-    obj->fRtsControl = hb_parnl(1);
+    obj->fRtsControl = winapi_par_DWORD(1);
   }
 }
 
@@ -567,7 +567,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFABORTONERROR )
 
   if( obj != nullptr )
   {
-    obj->fAbortOnError = hb_parnl(1);
+    obj->fAbortOnError = winapi_par_DWORD(1);
   }
 }
 
@@ -589,7 +589,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFDUMMY2 )
 
   if( obj != nullptr )
   {
-    obj->fDummy2 = hb_parnl(1);
+    obj->fDummy2 = winapi_par_DWORD(1);
   }
 }
 
@@ -611,7 +611,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETWRESERVED )
 
   if( obj != nullptr )
   {
-    obj->wReserved = hb_parni(1);
+    obj->wReserved = winapi_par_WORD(1);
   }
 }
 
@@ -633,7 +633,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXONLIM )
 
   if( obj != nullptr )
   {
-    obj->XonLim = hb_parni(1);
+    obj->XonLim = winapi_par_WORD(1);
   }
 }
 
@@ -655,7 +655,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXOFFLIM )
 
   if( obj != nullptr )
   {
-    obj->XoffLim = hb_parni(1);
+    obj->XoffLim = winapi_par_WORD(1);
   }
 }
 
@@ -677,7 +677,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETBYTESIZE )
 
   if( obj != nullptr )
   {
-    obj->ByteSize = hb_parni(1);
+    obj->ByteSize = winapi_par_BYTE(1);
   }
 }
 
@@ -699,7 +699,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETPARITY )
 
   if( obj != nullptr )
   {
-    obj->Parity = hb_parni(1);
+    obj->Parity = winapi_par_BYTE(1);
   }
 }
 
@@ -721,7 +721,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETSTOPBITS )
 
   if( obj != nullptr )
   {
-    obj->StopBits = hb_parni(1);
+    obj->StopBits = winapi_par_BYTE(1);
   }
 }
 
@@ -743,7 +743,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXONCHAR )
 
   if( obj != nullptr )
   {
-    obj->XonChar = hb_parni(1);
+    obj->XonChar = winapi_par_char(1);
   }
 }
 
@@ -765,7 +765,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXOFFCHAR )
 
   if( obj != nullptr )
   {
-    obj->XoffChar = hb_parni(1);
+    obj->XoffChar = winapi_par_char(1);
   }
 }
 
@@ -787,7 +787,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETERRORCHAR )
 
   if( obj != nullptr )
   {
-    obj->ErrorChar = hb_parni(1);
+    obj->ErrorChar = winapi_par_char(1);
   }
 }
 
@@ -809,7 +809,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETEOFCHAR )
 
   if( obj != nullptr )
   {
-    obj->EofChar = hb_parni(1);
+    obj->EofChar = winapi_par_char(1);
   }
 }
 
@@ -831,7 +831,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETEVTCHAR )
 
   if( obj != nullptr )
   {
-    obj->EvtChar = hb_parni(1);
+    obj->EvtChar = winapi_par_char(1);
   }
 }
 
@@ -853,7 +853,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETWRESERVED1 )
 
   if( obj != nullptr )
   {
-    obj->wReserved1 = hb_parni(1);
+    obj->wReserved1 = winapi_par_WORD(1);
   }
 }
 

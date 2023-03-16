@@ -103,7 +103,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_SETCX )
 
   if( obj != nullptr )
   {
-    obj->cx = hb_parnl(1);
+    obj->cx = winapi_par_LONG(1);
   }
 }
 
@@ -125,7 +125,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_SETCY )
 
   if( obj != nullptr )
   {
-    obj->cy = hb_parnl(1);
+    obj->cy = winapi_par_LONG(1);
   }
 }
 

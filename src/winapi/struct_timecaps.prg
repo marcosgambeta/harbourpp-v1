@@ -103,7 +103,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_TIMECAPS_SETWPERIODMIN )
 
   if( obj != nullptr )
   {
-    obj->wPeriodMin = hb_parni(1);
+    obj->wPeriodMin = winapi_par_UINT(1);
   }
 }
 
@@ -125,7 +125,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_TIMECAPS_SETWPERIODMAX )
 
   if( obj != nullptr )
   {
-    obj->wPeriodMax = hb_parni(1);
+    obj->wPeriodMax = winapi_par_UINT(1);
   }
 }
 

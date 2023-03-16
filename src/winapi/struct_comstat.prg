@@ -151,7 +151,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_SETFCTSHOLD )
 
   if( obj != nullptr )
   {
-    obj->fCtsHold = hb_parnl(1);
+    obj->fCtsHold = winapi_par_DWORD(1);
   }
 }
 
@@ -173,7 +173,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_SETFDSRHOLD )
 
   if( obj != nullptr )
   {
-    obj->fDsrHold = hb_parnl(1);
+    obj->fDsrHold = winapi_par_DWORD(1);
   }
 }
 
@@ -195,7 +195,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_SETFRLSDHOLD )
 
   if( obj != nullptr )
   {
-    obj->fRlsdHold = hb_parnl(1);
+    obj->fRlsdHold = winapi_par_DWORD(1);
   }
 }
 
@@ -217,7 +217,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_SETFXOFFHOLD )
 
   if( obj != nullptr )
   {
-    obj->fXoffHold = hb_parnl(1);
+    obj->fXoffHold = winapi_par_DWORD(1);
   }
 }
 
@@ -239,7 +239,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_SETFXOFFSENT )
 
   if( obj != nullptr )
   {
-    obj->fXoffSent = hb_parnl(1);
+    obj->fXoffSent = winapi_par_DWORD(1);
   }
 }
 
@@ -261,7 +261,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_SETFEOF )
 
   if( obj != nullptr )
   {
-    obj->fEof = hb_parnl(1);
+    obj->fEof = winapi_par_DWORD(1);
   }
 }
 
@@ -283,7 +283,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_SETFTXIM )
 
   if( obj != nullptr )
   {
-    obj->fTxim = hb_parnl(1);
+    obj->fTxim = winapi_par_DWORD(1);
   }
 }
 
@@ -305,7 +305,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_SETFRESERVED )
 
   if( obj != nullptr )
   {
-    obj->fReserved = hb_parnl(1);
+    obj->fReserved = winapi_par_DWORD(1);
   }
 }
 
@@ -327,7 +327,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_SETCBINQUE )
 
   if( obj != nullptr )
   {
-    obj->cbInQue = hb_parnl(1);
+    obj->cbInQue = winapi_par_DWORD(1);
   }
 }
 
@@ -349,7 +349,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_COMSTAT_SETCBOUTQUE )
 
   if( obj != nullptr )
   {
-    obj->cbOutQue = hb_parnl(1);
+    obj->cbOutQue = winapi_par_DWORD(1);
   }
 }
 

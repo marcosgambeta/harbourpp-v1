@@ -109,7 +109,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBSTYLE )
 
   if( obj != nullptr )
   {
-    obj->lbStyle = hb_parni(1);
+    obj->lbStyle = winapi_par_UINT(1);
   }
 }
 
@@ -131,7 +131,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBCOLOR )
 
   if( obj != nullptr )
   {
-    obj->lbColor = hb_parnl(1);
+    obj->lbColor = winapi_par_COLORREF(1);
   }
 }
 
@@ -153,7 +153,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBHATCH )
 
   if( obj != nullptr )
   {
-    obj->lbHatch = hb_parnl(1);
+    obj->lbHatch = winapi_par_ULONG_PTR(1);
   }
 }
 

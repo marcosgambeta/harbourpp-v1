@@ -121,7 +121,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_SETFICON )
 
   if( obj != nullptr )
   {
-    obj->fIcon = hb_parl(1);
+    obj->fIcon = winapi_par_BOOL(1);
   }
 }
 
@@ -143,7 +143,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_SETXHOTSPOT )
 
   if( obj != nullptr )
   {
-    obj->xHotspot = hb_parnl(1);
+    obj->xHotspot = winapi_par_DWORD(1);
   }
 }
 
@@ -165,7 +165,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_SETYHOTSPOT )
 
   if( obj != nullptr )
   {
-    obj->yHotspot = hb_parnl(1);
+    obj->yHotspot = winapi_par_DWORD(1);
   }
 }
 
@@ -187,7 +187,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_SETHBMMASK )
 
   if( obj != nullptr )
   {
-    obj->hbmMask = static_cast<HBITMAP>(hb_parptr(1));
+    obj->hbmMask = winapi_par_HBITMAP(1);
   }
 }
 
@@ -209,7 +209,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ICONINFO_SETHBMCOLOR )
 
   if( obj != nullptr )
   {
-    obj->hbmColor = static_cast<HBITMAP>(hb_parptr(1));
+    obj->hbmColor = winapi_par_HBITMAP(1);
   }
 }
 

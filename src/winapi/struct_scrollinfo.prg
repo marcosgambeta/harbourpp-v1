@@ -133,7 +133,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETCBSIZE )
 
   if( obj != nullptr )
   {
-    obj->cbSize = hb_parni(1);
+    obj->cbSize = winapi_par_UINT(1);
   }
 }
 
@@ -155,7 +155,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETFMASK )
 
   if( obj != nullptr )
   {
-    obj->fMask = hb_parni(1);
+    obj->fMask = winapi_par_UINT(1);
   }
 }
 
@@ -177,7 +177,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETNMIN )
 
   if( obj != nullptr )
   {
-    obj->nMin = hb_parni(1);
+    obj->nMin = winapi_par_int(1);
   }
 }
 
@@ -199,7 +199,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETNMAX )
 
   if( obj != nullptr )
   {
-    obj->nMax = hb_parni(1);
+    obj->nMax = winapi_par_int(1);
   }
 }
 
@@ -221,7 +221,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETNPAGE )
 
   if( obj != nullptr )
   {
-    obj->nPage = hb_parni(1);
+    obj->nPage = winapi_par_UINT(1);
   }
 }
 
@@ -243,7 +243,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETNPOS )
 
   if( obj != nullptr )
   {
-    obj->nPos = hb_parni(1);
+    obj->nPos = winapi_par_int(1);
   }
 }
 
@@ -265,7 +265,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SCROLLINFO_SETNTRACKPOS )
 
   if( obj != nullptr )
   {
-    obj->nTrackPos = hb_parni(1);
+    obj->nTrackPos = winapi_par_int(1);
   }
 }
 

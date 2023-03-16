@@ -106,6 +106,8 @@ SOFTWARE.
 #define winapi_par_WCHAR(n)        static_cast<WCHAR>(hb_parni(n))
 #define winapi_par_WORD(n)         static_cast<WORD>(hb_parni(n))
 #define winapi_par_WPARAM(n)       static_cast<WPARAM>(hb_parni(n))
+#define winapi_par_SHORT(n)        static_cast<SHORT>(hb_parni(n))
+#define winapi_par_DWORDLONG(n)    static_cast<DWORDLONG>(hb_parnll(n))
 
 #define winapi_ret___LONG32(x)     hb_retnl(x)
 #define winapi_ret_ATOM(x)         hb_retni(x)
@@ -171,6 +173,7 @@ SOFTWARE.
 #define winapi_ret_NTSTATUS(x)     hb_retnl(x)
 #define winapi_ret_ULONGLONG(x)    hb_retnll(x)
 #define winapi_ret_float(x)        hb_retnd(x)
+#define winapi_ret_FLOAT(x)        hb_retnd(x)
 #define winapi_ret_DWORDLONG(x)    hb_retnll(x)
 #define winapi_ret_BYTE(x)         hb_retni(x)
 #define winapi_ret_char(x)         hb_retni(x)

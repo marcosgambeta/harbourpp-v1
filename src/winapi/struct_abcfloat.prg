@@ -44,19 +44,19 @@ CLASS WINAPI_STRUCT_ABCFLOAT
    METHOD new
    METHOD delete
 
-   // float abcfA
+   // FLOAT abcfA
    ASSIGN abcfA(n) INLINE ::setabcfA(n)
    ACCESS abcfA INLINE ::getabcfA()
    METHOD setabcfA
    METHOD getabcfA
 
-   // float abcfB
+   // FLOAT abcfB
    ASSIGN abcfB(n) INLINE ::setabcfB(n)
    ACCESS abcfB INLINE ::getabcfB()
    METHOD setabcfB
    METHOD getabcfB
 
-   // float abcfC
+   // FLOAT abcfC
    ASSIGN abcfC(n) INLINE ::setabcfC(n)
    ACCESS abcfC INLINE ::getabcfC()
    METHOD setabcfC
@@ -101,7 +101,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_DELETE )
   hb_itemReturn(hb_stackSelfItem());
 }
 
-// float abcfA
+// FLOAT abcfA
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_SETABCFA )
 {
@@ -109,7 +109,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_SETABCFA )
 
   if( obj != nullptr )
   {
-    obj->abcfA = static_cast<FLOAT>(hb_parnd(1));
+    obj->abcfA = winapi_par_FLOAT(1);
   }
 }
 
@@ -119,11 +119,11 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_GETABCFA )
 
   if( obj != nullptr )
   {
-    winapi_ret_float(obj->abcfA);
+    winapi_ret_FLOAT(obj->abcfA);
   }
 }
 
-// float abcfB
+// FLOAT abcfB
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_SETABCFB )
 {
@@ -131,7 +131,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_SETABCFB )
 
   if( obj != nullptr )
   {
-    obj->abcfB = static_cast<FLOAT>(hb_parnd(1));
+    obj->abcfB = winapi_par_FLOAT(1);
   }
 }
 
@@ -141,11 +141,11 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_GETABCFB )
 
   if( obj != nullptr )
   {
-    winapi_ret_float(obj->abcfB);
+    winapi_ret_FLOAT(obj->abcfB);
   }
 }
 
-// float abcfC
+// FLOAT abcfC
 
 HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_SETABCFC )
 {
@@ -153,7 +153,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_SETABCFC )
 
   if( obj != nullptr )
   {
-    obj->abcfC = static_cast<FLOAT>(hb_parnd(1));
+    obj->abcfC = winapi_par_FLOAT(1);
   }
 }
 
@@ -163,7 +163,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABCFLOAT_GETABCFC )
 
   if( obj != nullptr )
   {
-    winapi_ret_float(obj->abcfC);
+    winapi_ret_FLOAT(obj->abcfC);
   }
 }
 

@@ -129,7 +129,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_SETHWND )
 
   if( obj != nullptr )
   {
-    obj->hwnd = static_cast<HWND>(hb_parptr(1));
+    obj->hwnd = winapi_par_HWND(1);
   }
 }
 
@@ -151,7 +151,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_SETMESSAGE )
 
   if( obj != nullptr )
   {
-    obj->message = static_cast<UINT>(hb_parni(1));
+    obj->message = winapi_par_UINT(1);
   }
 }
 
@@ -173,7 +173,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_SETWPARAM )
 
   if( obj != nullptr )
   {
-    obj->wParam = static_cast<WPARAM>(hb_parnl(1));
+    obj->wParam = winapi_par_WPARAM(1);
   }
 }
 
@@ -195,7 +195,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_SETLPARAM )
 
   if( obj != nullptr )
   {
-    obj->lParam = static_cast<LPARAM>(hb_parnl(1));
+    obj->lParam = winapi_par_LPARAM(1);
   }
 }
 
@@ -217,7 +217,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MSG_SETTIME )
 
   if( obj != nullptr )
   {
-    obj->time = static_cast<DWORD>(hb_parnl(1));
+    obj->time = winapi_par_DWORD(1);
   }
 }
 

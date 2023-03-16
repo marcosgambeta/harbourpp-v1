@@ -103,7 +103,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_FILETIME_SETDWLOWDATETIME )
 
   if( obj != nullptr )
   {
-    obj->dwLowDateTime = hb_parnl(1);
+    obj->dwLowDateTime = winapi_par_DWORD(1);
   }
 }
 
@@ -125,7 +125,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_FILETIME_SETDWHIGHDATETIME )
 
   if( obj != nullptr )
   {
-    obj->dwHighDateTime = hb_parnl(1);
+    obj->dwHighDateTime = winapi_par_DWORD(1);
   }
 }
 

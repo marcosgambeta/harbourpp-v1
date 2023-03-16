@@ -115,7 +115,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RECT_SETLEFT )
 
   if( obj != nullptr )
   {
-    obj->left = hb_parnl(1);
+    obj->left = winapi_par_LONG(1);
   }
 }
 
@@ -137,7 +137,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RECT_SETTOP )
 
   if( obj != nullptr )
   {
-    obj->top = hb_parnl(1);
+    obj->top = winapi_par_LONG(1);
   }
 }
 
@@ -159,7 +159,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RECT_SETRIGHT )
 
   if( obj != nullptr )
   {
-    obj->right = hb_parnl(1);
+    obj->right = winapi_par_LONG(1);
   }
 }
 
@@ -181,7 +181,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RECT_SETBOTTOM )
 
   if( obj != nullptr )
   {
-    obj->bottom = hb_parnl(1);
+    obj->bottom = winapi_par_LONG(1);
   }
 }
 

@@ -109,7 +109,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_SETHWNDFROM )
 
   if( obj != nullptr )
   {
-    obj->hwndFrom = static_cast<HWND>(hb_parptr(1));
+    obj->hwndFrom = winapi_par_HWND(1);
   }
 }
 
@@ -131,7 +131,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_SETIDFROM )
 
   if( obj != nullptr )
   {
-    obj->idFrom = hb_parni(1);
+    obj->idFrom = winapi_par_UINT_PTR(1);
   }
 }
 
@@ -153,7 +153,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_NMHDR_SETCODE )
 
   if( obj != nullptr )
   {
-    obj->code = hb_parni(1);
+    obj->code = winapi_par_UINT(1);
   }
 }
 

@@ -103,7 +103,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_POINT_SETX )
 
   if( obj != nullptr )
   {
-    obj->x = hb_parnl(1);
+    obj->x = winapi_par_LONG(1);
   }
 }
 
@@ -125,7 +125,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_POINT_SETY )
 
   if( obj != nullptr )
   {
-    obj->y = hb_parnl(1);
+    obj->y = winapi_par_LONG(1);
   }
 }
 
