@@ -47,405 +47,411 @@
 #include "hbwapi.h"
 #include "hbapifs.hpp"
 #include "hbapiitm.hpp"
-
-#if defined( HB_OS_WIN_CE )
-   #if defined( __POCC__ )
-      #ifndef FONTENUMPROC
-      #define FONTENUMPROC  FONTENUMPROCW
-      #endif
-   #endif
-#else
-   #include <winspool.h>
-#endif
+#include <winspool.h>
 
 #ifdef HB_LEGACY_LEVEL5
+
 HB_FUNC( WIN_CREATEDC )
 {
-   if( HB_ISCHAR( 1 ) )
+   if( HB_ISCHAR(1) )
    {
       void * hDevice;
-
-      hbwapi_ret_HDC( CreateDC( TEXT( "" ),
-                                HB_PARSTR( 1, &hDevice, nullptr ),
-                                nullptr,
-                                nullptr ) );
-
-      hb_strfree( hDevice );
+      hbwapi_ret_HDC(CreateDC(TEXT(""), HB_PARSTR(1, &hDevice, nullptr), nullptr, nullptr));
+      hb_strfree(hDevice);
    }
    else
-      hb_retptr( nullptr );
+   {
+      hb_retptr(nullptr);
+   }
 }
 
 HB_FUNC( WIN_STARTDOC )
 {
-   HDC hDC = hbwapi_par_HDC( 1 );
-   HB_BOOL bResult = HB_FALSE;
+   HDC hDC = hbwapi_par_HDC(1);
+   bool bResult = false;
 
    if( hDC )
    {
       void * hDocName;
       DOCINFO sDoc;
 
-      memset( &sDoc, 0, sizeof( sDoc ) );
+      memset(&sDoc, 0, sizeof(sDoc));
 
-      sDoc.cbSize = sizeof( sDoc );
-      sDoc.lpszDocName = HB_PARSTR( 2, &hDocName, nullptr );
-      bResult = ( StartDoc( hDC, &sDoc ) > 0 );
+      sDoc.cbSize = sizeof(sDoc);
+      sDoc.lpszDocName = HB_PARSTR(2, &hDocName, nullptr);
+      bResult = StartDoc(hDC, &sDoc) > 0;
 
-      hb_strfree( hDocName );
+      hb_strfree(hDocName);
    }
 
-   hb_retl( bResult );
+   hb_retl(bResult);
 }
 
 HB_FUNC( WIN_ENDDOC )
 {
-   HB_BOOL bResult = HB_FALSE;
-   HDC hDC = hbwapi_par_HDC( 1 );
+   bool bResult = false;
+   HDC hDC = hbwapi_par_HDC(1);
 
    if( hDC )
    {
-      if( hb_parl( 2 ) )
-         bResult = ( AbortDoc( hDC ) > 0 );
+      if( hb_parl(2) )
+      {
+         bResult = AbortDoc(hDC) > 0;
+      }
       else
-         bResult = ( EndDoc( hDC ) > 0 );
+      {
+         bResult = EndDoc(hDC) > 0;
+      }
    }
 
-   hb_retl( bResult );
+   hb_retl(bResult);
 }
 
 HB_FUNC( WIN_ABORTDOC )
 {
-   HDC hDC = hbwapi_par_HDC( 1 );
-
-   hb_retl( hDC && AbortDoc( hDC ) > 0 );
+   HDC hDC = hbwapi_par_HDC(1);
+   hb_retl(hDC && AbortDoc(hDC) > 0);
 }
 
 HB_FUNC( WIN_DELETEDC )  /* Compatibility dummy */
 {
-   hb_retni( 0 );
+   hb_retni(0);
 }
 
 HB_FUNC( WIN_STARTPAGE )
 {
-   HDC hDC = hbwapi_par_HDC( 1 );
-
-   hb_retl( hDC && StartPage( hDC ) > 0 );
+   HDC hDC = hbwapi_par_HDC(1);
+   hb_retl(hDC && StartPage(hDC) > 0);
 }
 
 HB_FUNC( WIN_ENDPAGE )
 {
-   HDC hDC = hbwapi_par_HDC( 1 );
-
-   hb_retl( hDC && EndPage( hDC ) > 0 );
+   HDC hDC = hbwapi_par_HDC(1);
+   hb_retl(hDC && EndPage(hDC) > 0);
 }
 
 HB_FUNC( WIN_TEXTOUT )
 {
    long lResult = 0;
-   HDC hDC = hbwapi_par_HDC( 1 );
+   HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC && HB_ISCHAR( 4 ) )
+   if( hDC && HB_ISCHAR(4) )
    {
-      HB_SIZE nLen = hb_parns( 5 );
+      HB_SIZE nLen = hb_parns(5);
 
       void * hData;
       HB_SIZE nDataLen;
-      LPCTSTR lpData = HB_PARSTR( 4, &hData, &nDataLen );
+      LPCTSTR lpData = HB_PARSTR(4, &hData, &nDataLen);
 
       if( nLen > nDataLen )
+      {
          nLen = nDataLen;
+      }
 
       if( nLen > 0 )
       {
-         SIZE sSize;
+         int iRow = hb_parni(2);
+         int iCol = hb_parni(3);
+         int iWidth = hb_parni(6);  /* defaults to 0 */
 
-         int iRow = hb_parni( 2 );
-         int iCol = hb_parni( 3 );
-         int iWidth = hb_parni( 6 );  /* defaults to 0 */
-
-         if( HB_ISNUM( 7 ) )
-            SetTextAlign( ( HDC ) hDC, TA_NOUPDATECP | hb_parni( 7 ) );
+         if( HB_ISNUM(7) )
+         {
+            SetTextAlign(static_cast<HDC>(hDC), TA_NOUPDATECP | hb_parni(7));
+         }
 
          if( iWidth < 0 && nLen < 1024 )
          {
-            int n = ( int ) nLen, aFixed[ 1024 ];
+            int n = static_cast<int>(nLen), aFixed[1024];
 
             iWidth = -iWidth;
 
             while( n )
-               aFixed[ --n ] = iWidth;
+            {
+               aFixed[--n] = iWidth;
+            }
 
-            if( ExtTextOut( hDC, iRow, iCol, 0, nullptr, lpData, ( UINT ) nLen, aFixed ) )
-               lResult = ( long ) ( nLen * iWidth );
+            if( ExtTextOut(hDC, iRow, iCol, 0, nullptr, lpData, static_cast<UINT>(nLen), aFixed) )
+            {
+               lResult = static_cast<long>(nLen * iWidth);
+            }
          }
-         else if( ExtTextOut( hDC, iRow, iCol, 0, nullptr, lpData, ( UINT ) nLen, nullptr ) )
+         else if( ExtTextOut(hDC, iRow, iCol, 0, nullptr, lpData, static_cast<UINT>(nLen), nullptr) )
          {
-            GetTextExtentPoint32( hDC, lpData, ( int ) nLen, &sSize );  /* Get the length of the text in device size */
-            lResult = ( long ) sSize.cx;  /* return the width so we can update the current pen position (::PosY) */
+            SIZE sSize;
+            GetTextExtentPoint32(hDC, lpData, static_cast<int>(nLen), &sSize);  /* Get the length of the text in device size */
+            lResult = static_cast<long>(sSize.cx);  /* return the width so we can update the current pen position (::PosY) */
          }
       }
 
-      hb_strfree( hData );
+      hb_strfree(hData);
    }
 
-   hb_retnl( lResult );
+   hb_retnl(lResult);
 }
 
 HB_FUNC( WIN_GETTEXTSIZE )
 {
    long lResult = 0;
-   HDC hDC = hbwapi_par_HDC( 1 );
+   HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC && HB_ISCHAR( 2 ) )
+   if( hDC && HB_ISCHAR(2) )
    {
-      HB_SIZE nLen = hb_parns( 3 );
+      HB_SIZE nLen = hb_parns(3);
 
       void * hData;
       HB_SIZE nDataLen;
-      LPCTSTR lpData = HB_PARSTR( 2, &hData, &nDataLen );
+      LPCTSTR lpData = HB_PARSTR(2, &hData, &nDataLen);
 
       if( nLen > nDataLen )
+      {
          nLen = nDataLen;
+      }
 
       if( nLen > 0 )
       {
          SIZE sSize;
 
-         GetTextExtentPoint32( hDC, lpData, ( int ) nLen, &sSize );  /* Get the length of the text in device size */
+         GetTextExtentPoint32(hDC, lpData, static_cast<int>(nLen), &sSize);  /* Get the length of the text in device size */
 
-         if( hb_parldef( 4, HB_TRUE ) )
-            lResult = ( long ) sSize.cx;  /* return the width */
+         if( hb_parldef(4, true) )
+         {
+            lResult = static_cast<long>(sSize.cx);  /* return the width */
+         }
          else
-            lResult = ( long ) sSize.cy;  /* return the height */
+         {
+            lResult = static_cast<long>(sSize.cy);  /* return the height */
+         }
       }
 
-      hb_strfree( hData );
+      hb_strfree(hData);
    }
 
-   hb_retnl( lResult );
+   hb_retnl(lResult);
 }
+
 #endif
 
 HB_FUNC( WIN_GETCHARSIZE )
 {
    long lResult = 0;
-   HDC hDC = hbwapi_par_HDC( 1 );
+   HDC hDC = hbwapi_par_HDC(1);
 
    if( hDC )
    {
       TEXTMETRIC tm;
 
-      GetTextMetrics( hDC, &tm );
-      if( hb_parl( 2 ) )
-         lResult = ( long ) tm.tmHeight;
+      GetTextMetrics(hDC, &tm);
+      if( hb_parl(2) )
+      {
+         lResult = static_cast<long>(tm.tmHeight);
+      }
       else
-         lResult = ( long ) tm.tmAveCharWidth;
+      {
+         lResult = static_cast<long>(tm.tmAveCharWidth);
+      }
    }
 
-   hb_retnl( lResult );
+   hb_retnl(lResult);
 }
 
 #ifdef HB_LEGACY_LEVEL5
+
 HB_FUNC( WIN_GETDEVICECAPS )
 {
-   HDC hDC = hbwapi_par_HDC( 1 );
-
-   hb_retni( hDC && HB_ISNUM( 2 ) ? GetDeviceCaps( hDC, hb_parni( 2 ) ) : 0 );
+   HDC hDC = hbwapi_par_HDC(1);
+   hb_retni(hDC && HB_ISNUM(2) ? GetDeviceCaps(hDC, hb_parni(2)) : 0);
 }
 
 HB_FUNC( WIN_SETMAPMODE )
 {
-#if ! defined( HB_OS_WIN_CE )
-   HDC hDC = hbwapi_par_HDC( 1 );
-
-   hb_retni( hDC && HB_ISNUM( 2 ) ? SetMapMode( hDC, hb_parni( 2 ) ) : 0 );
-#else
-   hb_retni( 0 );
-#endif
+   HDC hDC = hbwapi_par_HDC(1);
+   hb_retni(hDC && HB_ISNUM(2) ? SetMapMode(hDC, hb_parni(2)) : 0);
 }
 
 HB_FUNC( WIN_CREATEFONT )
 {
-   HDC hDC = hbwapi_par_HDC( 1 );
+   HDC hDC = hbwapi_par_HDC(1);
 
    if( hDC )
    {
-      LOGFONT lf;
-      HFONT hFont;
       int iHeight;
       int iWidth;
-      int iWeight = hb_parni( 6 );
+      int iWeight = hb_parni(6);
 
       void * hfFaceName;
       LPCTSTR pfFaceName;
       HB_SIZE nLen;
 
       if( iWeight <= 0 )
-         iWeight = FW_NORMAL;
-
-      if( hb_parl( 10 ) )  /* Ugly hack to enable full control for caller */
       {
-         iHeight = hb_parni( 3 );
-         iWidth = hb_parni( 5 );
+         iWeight = FW_NORMAL;
+      }
+
+      if( hb_parl(10) )  /* Ugly hack to enable full control for caller */
+      {
+         iHeight = hb_parni(3);
+         iWidth = hb_parni(5);
       }
       else
       {
-         iHeight = -MulDiv( hb_parni( 3 ), GetDeviceCaps( hDC, LOGPIXELSY ), 72 );
-         iWidth = hb_parni( 5 );
+         iHeight = -MulDiv(hb_parni(3), GetDeviceCaps(hDC, LOGPIXELSY), 72);
+         iWidth = hb_parni(5);
 
          if( iWidth )
-            iWidth = MulDiv( abs( hb_parni( 4 ) ), GetDeviceCaps( hDC, LOGPIXELSX ), abs( iWidth ) );
+         {
+            iWidth = MulDiv(abs(hb_parni(4)), GetDeviceCaps(hDC, LOGPIXELSX), abs(iWidth));
+         }
       }
 
-      lf.lfHeight         = ( LONG ) iHeight;
-      lf.lfWidth          = ( LONG ) iWidth;
+      LOGFONT lf;
+
+      lf.lfHeight         = static_cast<LONG>(iHeight);
+      lf.lfWidth          = static_cast<LONG>(iWidth);
       lf.lfEscapement     = 0;
       lf.lfOrientation    = 0;
-      lf.lfWeight         = ( LONG ) iWeight;
-      lf.lfItalic         = ( BYTE ) hb_parl( 8 );
-      lf.lfUnderline      = ( BYTE ) hb_parl( 7 );
-      lf.lfStrikeOut      = ( BYTE ) 0;
-      lf.lfCharSet        = ( BYTE ) hb_parnidef( 9, DEFAULT_CHARSET );
-#if defined( HB_OS_WIN_CE )
-      lf.lfOutPrecision   = ( BYTE ) OUT_DEFAULT_PRECIS;
-#else
-      lf.lfOutPrecision   = ( BYTE ) OUT_DEVICE_PRECIS;
-#endif
-      lf.lfClipPrecision  = ( BYTE ) CLIP_DEFAULT_PRECIS;
-      lf.lfQuality        = ( BYTE ) DRAFT_QUALITY;
-      lf.lfPitchAndFamily = ( BYTE ) DEFAULT_PITCH | FF_DONTCARE;
+      lf.lfWeight         = static_cast<LONG>(iWeight);
+      lf.lfItalic         = static_cast<BYTE>(hb_parl(8));
+      lf.lfUnderline      = static_cast<BYTE>(hb_parl(7));
+      lf.lfStrikeOut      = 0;
+      lf.lfCharSet        = static_cast<BYTE>(hb_parnidef(9, DEFAULT_CHARSET));
+      lf.lfOutPrecision   = static_cast<BYTE>(OUT_DEVICE_PRECIS);
+      lf.lfClipPrecision  = static_cast<BYTE>(CLIP_DEFAULT_PRECIS);
+      lf.lfQuality        = static_cast<BYTE>(DRAFT_QUALITY);
+      lf.lfPitchAndFamily = static_cast<BYTE>(DEFAULT_PITCH) | FF_DONTCARE;
 
-      pfFaceName = HB_PARSTR( 2, &hfFaceName, &nLen );
+      pfFaceName = HB_PARSTR(2, &hfFaceName, &nLen);
 
-      if( nLen > ( LF_FACESIZE - 1 ) )
+      if( nLen > (LF_FACESIZE - 1) )
+      {
          nLen = LF_FACESIZE - 1;
+      }
 
-      memcpy( lf.lfFaceName, pfFaceName, nLen * sizeof( TCHAR ) );
-      lf.lfFaceName[ nLen ] = TEXT( '\0' );
+      memcpy(lf.lfFaceName, pfFaceName, nLen * sizeof(TCHAR));
+      lf.lfFaceName[nLen] = TEXT('\0');
 
-      hb_strfree( hfFaceName );
+      hb_strfree(hfFaceName);
 
-      hFont = CreateFontIndirect( &lf );
+      HFONT hFont = CreateFontIndirect(&lf);
 
-      hbwapi_ret_HFONT( hFont );
+      hbwapi_ret_HFONT(hFont);
 
       if( hFont )
-         SelectObject( hDC, hFont );
+      {
+         SelectObject(hDC, hFont);
+      }
    }
    else
-      hb_retptr( nullptr );
+   {
+      hb_retptr(nullptr);
+   }
 }
 
 HB_FUNC( WIN_GETPRINTERFONTNAME )
 {
-   HDC hDC = hbwapi_par_HDC( 1 );
+   HDC hDC = hbwapi_par_HDC(1);
 
    if( hDC )
    {
-      TCHAR tszFontName[ 128 ];
-
-      GetTextFace( hDC, HB_SIZEOFARRAY( tszFontName ) - 1, tszFontName );
-
-      HB_RETSTR( tszFontName );
+      TCHAR tszFontName[128];
+      GetTextFace(hDC, HB_SIZEOFARRAY(tszFontName) - 1, tszFontName);
+      HB_RETSTR(tszFontName);
    }
    else
+   {
       hb_retc_null();
+   }
 }
 
 HB_FUNC( WIN_BITMAPSOK )
 {
-   HDC hDC = hbwapi_par_HDC( 1 );
-
-   hb_retl( hDC && ( GetDeviceCaps( hDC, RASTERCAPS ) & RC_STRETCHDIB ) );
+   HDC hDC = hbwapi_par_HDC(1);
+   hb_retl(hDC && (GetDeviceCaps(hDC, RASTERCAPS) & RC_STRETCHDIB));
 }
+
 #endif
 
 HB_FUNC( WIN_SETDOCUMENTPROPERTIES )
 {
-   HB_BOOL bResult = HB_FALSE;
+   bool bResult = false;
 
-#if ! defined( HB_OS_WIN_CE )
-   HDC hDC = hbwapi_par_HDC( 1 );
+   HDC hDC = hbwapi_par_HDC(1);
 
    if( hDC )
    {
       HANDLE hPrinter;
       void * hDeviceName;
-      LPCTSTR lpDeviceName = HB_PARSTR( 2, &hDeviceName, nullptr );
+      LPCTSTR lpDeviceName = HB_PARSTR(2, &hDeviceName, nullptr);
 
-      if( OpenPrinter( ( LPTSTR ) HB_UNCONST( lpDeviceName ), &hPrinter, nullptr ) )
+      if( OpenPrinter(const_cast<LPTSTR>(lpDeviceName), &hPrinter, nullptr) )
       {
-         LONG lSize = DocumentProperties( 0, hPrinter, ( LPTSTR ) HB_UNCONST( lpDeviceName ), nullptr, nullptr, 0 );
+         LONG lSize = DocumentProperties(0, hPrinter, const_cast<LPTSTR>(lpDeviceName), nullptr, nullptr, 0);
 
          if( lSize > 0 )
          {
-            PDEVMODE pDevMode = ( PDEVMODE ) hb_xgrabz( lSize );
+            PDEVMODE pDevMode = static_cast<PDEVMODE>(hb_xgrabz(lSize));
 
-            if( DocumentProperties( 0, hPrinter, ( LPTSTR ) HB_UNCONST( lpDeviceName ), pDevMode, pDevMode, DM_OUT_BUFFER ) == IDOK )
+            if( DocumentProperties(0, hPrinter, const_cast<LPTSTR>(lpDeviceName), pDevMode, pDevMode, DM_OUT_BUFFER) == IDOK )
             {
                DWORD dmFields = 0, fMode;
-               HB_BOOL fUserDialog;
+               bool fUserDialog;
                int iProp, iProp2;
 
-               fUserDialog = HB_ISBYREF( 3 ) ||
-                             HB_ISBYREF( 4 ) ||
-                             HB_ISBYREF( 5 ) ||
-                             HB_ISBYREF( 6 ) ||
-                             HB_ISBYREF( 7 ) ||
-                             HB_ISBYREF( 8 ) ||
-                             HB_ISBYREF( 9 ) ||
-                             HB_ISBYREF( 10 ) ||
-                             HB_ISBYREF( 11 );
+               fUserDialog = HB_ISBYREF(3) ||
+                             HB_ISBYREF(4) ||
+                             HB_ISBYREF(5) ||
+                             HB_ISBYREF(6) ||
+                             HB_ISBYREF(7) ||
+                             HB_ISBYREF(8) ||
+                             HB_ISBYREF(9) ||
+                             HB_ISBYREF(10) ||
+                             HB_ISBYREF(11);
 
-               if( ( iProp = hb_parni( 3 ) ) != 0 )      /* [2007-02-22] don't change if 0 */
+               if( (iProp = hb_parni(3)) != 0 )      /* [2007-02-22] don't change if 0 */
                {
-                  pDevMode->dmPaperSize = ( short ) iProp;
+                  pDevMode->dmPaperSize = static_cast<short>(iProp);
                   dmFields |= DM_PAPERSIZE;
                }
 
-               if( HB_ISLOG( 4 ) )
+               if( HB_ISLOG(4) )
                {
-                  pDevMode->dmOrientation = ( short ) ( hb_parl( 4 ) ? DMORIENT_LANDSCAPE : DMORIENT_PORTRAIT );
+                  pDevMode->dmOrientation = static_cast<short>(hb_parl(4) ? DMORIENT_LANDSCAPE : DMORIENT_PORTRAIT);
                   dmFields |= DM_ORIENTATION;
                }
 
-               if( ( iProp = hb_parni( 5 ) ) > 0 )
+               if( (iProp = hb_parni(5)) > 0 )
                {
-                  pDevMode->dmCopies = ( short ) iProp;
+                  pDevMode->dmCopies = static_cast<short>(iProp);
                   dmFields |= DM_COPIES;
 
-                  if( hb_parl( 11 ) )
+                  if( hb_parl(11) )
                   {
                      pDevMode->dmCollate = DMCOLLATE_TRUE;
                      dmFields |= DM_COLLATE;
                   }
                }
 
-               if( ( iProp = hb_parni( 6 ) ) != 0 )      /* [2007-02-22] don't change if 0 */
+               if( (iProp = hb_parni(6)) != 0 )      /* [2007-02-22] don't change if 0 */
                {
-                  pDevMode->dmDefaultSource = ( short ) iProp;
+                  pDevMode->dmDefaultSource = static_cast<short>(iProp);
                   dmFields |= DM_DEFAULTSOURCE;
                }
 
-               if( ( iProp = hb_parni( 7 ) ) != 0 )      /* [2007-02-22] don't change if 0 */
+               if( (iProp = hb_parni(7)) != 0 )      /* [2007-02-22] don't change if 0 */
                {
-                  pDevMode->dmDuplex = ( short ) iProp;
+                  pDevMode->dmDuplex = static_cast<short>(iProp);
                   dmFields |= DM_DUPLEX;
                }
 
-               if( ( iProp = hb_parni( 8 ) ) != 0 )      /* [2007-02-22] don't change if 0 */
+               if( (iProp = hb_parni(8)) != 0 )      /* [2007-02-22] don't change if 0 */
                {
-                  pDevMode->dmPrintQuality = ( short ) iProp;
+                  pDevMode->dmPrintQuality = static_cast<short>(iProp);
                   dmFields |= DM_PRINTQUALITY;
                }
 
-               if( pDevMode->dmPaperSize == DMPAPER_USER &&
-                   ( iProp = hb_parni( 9 ) ) > 0 &&
-                   ( iProp2 = hb_parni( 10 ) ) > 0 )
+               if( pDevMode->dmPaperSize == DMPAPER_USER && (iProp = hb_parni(9)) > 0 && (iProp2 = hb_parni(10)) > 0 )
                {
-                  pDevMode->dmPaperLength = ( short ) iProp;
-                  pDevMode->dmPaperWidth = ( short ) iProp2;
+                  pDevMode->dmPaperLength = static_cast<short>(iProp);
+                  pDevMode->dmPaperWidth = static_cast<short>(iProp2);
                   dmFields |= DM_PAPERLENGTH | DM_PAPERWIDTH;
                }
 
@@ -453,283 +459,303 @@ HB_FUNC( WIN_SETDOCUMENTPROPERTIES )
 
                fMode = DM_IN_BUFFER | DM_OUT_BUFFER;
                if( fUserDialog )
-                  fMode |= DM_IN_PROMPT;
-
-               if( DocumentProperties( 0, hPrinter, ( LPTSTR ) HB_UNCONST( lpDeviceName ), pDevMode, pDevMode, fMode ) == IDOK )
                {
-                  hb_storni( pDevMode->dmPaperSize, 3 );
-                  hb_storl( pDevMode->dmOrientation == DMORIENT_LANDSCAPE, 4 );
-                  hb_storni( pDevMode->dmCopies, 5 );
-                  hb_storni( pDevMode->dmDefaultSource, 6 );
-                  hb_storni( pDevMode->dmDuplex, 7 );
-                  hb_storni( pDevMode->dmPrintQuality, 8 );
-                  hb_storni( pDevMode->dmPaperLength, 9 );
-                  hb_storni( pDevMode->dmPaperWidth, 10 );
+                  fMode |= DM_IN_PROMPT;
+               }
 
-                  bResult = ( ResetDC( hDC, pDevMode ) != nullptr );
+               if( DocumentProperties(0, hPrinter, const_cast<LPTSTR>(lpDeviceName), pDevMode, pDevMode, fMode) == IDOK )
+               {
+                  hb_storni(pDevMode->dmPaperSize, 3);
+                  hb_storl(pDevMode->dmOrientation == DMORIENT_LANDSCAPE, 4);
+                  hb_storni(pDevMode->dmCopies, 5);
+                  hb_storni(pDevMode->dmDefaultSource, 6);
+                  hb_storni(pDevMode->dmDuplex, 7);
+                  hb_storni(pDevMode->dmPrintQuality, 8);
+                  hb_storni(pDevMode->dmPaperLength, 9);
+                  hb_storni(pDevMode->dmPaperWidth, 10);
+
+                  bResult = ResetDC(hDC, pDevMode) != nullptr;
                }
             }
 
-            hb_xfree( pDevMode );
+            hb_xfree(pDevMode);
          }
 
-         ClosePrinter( hPrinter );
+         ClosePrinter(hPrinter);
       }
 
-      hb_strfree( hDeviceName );
+      hb_strfree(hDeviceName);
    }
-#endif
 
-   hb_retl( bResult );
+   hb_retl(bResult);
 }
 
 HB_FUNC( WIN_GETDOCUMENTPROPERTIES )
 {
-   HB_BOOL bResult = HB_FALSE;
-
-#if ! defined( HB_OS_WIN_CE )
+   bool bResult = false;
    HANDLE hPrinter;
    void * hDeviceName;
-   LPCTSTR lpDeviceName = HB_PARSTR( 1, &hDeviceName, nullptr );
+   LPCTSTR lpDeviceName = HB_PARSTR(1, &hDeviceName, nullptr);
 
-   if( OpenPrinter( ( LPTSTR ) HB_UNCONST( lpDeviceName ), &hPrinter, nullptr ) )
+   if( OpenPrinter(const_cast<LPTSTR>(lpDeviceName), &hPrinter, nullptr) )
    {
-      LONG lSize = DocumentProperties( 0, hPrinter, ( LPTSTR ) HB_UNCONST( lpDeviceName ), nullptr, nullptr, 0 );
+      LONG lSize = DocumentProperties(0, hPrinter, const_cast<LPTSTR>(lpDeviceName), nullptr, nullptr, 0);
 
       if( lSize > 0 )
       {
-         PDEVMODE pDevMode = ( PDEVMODE ) hb_xgrabz( lSize );
+         PDEVMODE pDevMode = static_cast<PDEVMODE>(hb_xgrabz(lSize));
 
-         if( DocumentProperties( 0, hPrinter, ( LPTSTR ) HB_UNCONST( lpDeviceName ), pDevMode, pDevMode, DM_OUT_BUFFER ) == IDOK )
+         if( DocumentProperties(0, hPrinter, const_cast<LPTSTR>(lpDeviceName), pDevMode, pDevMode, DM_OUT_BUFFER) == IDOK )
          {
-            hb_storni( pDevMode->dmPaperSize, 2 );
-            hb_storl( pDevMode->dmOrientation == DMORIENT_LANDSCAPE, 3 );
-            hb_storni( pDevMode->dmCopies, 4 );
-            hb_storni( pDevMode->dmDefaultSource, 5 );
-            hb_storni( pDevMode->dmDuplex, 6 );
-            hb_storni( pDevMode->dmPrintQuality, 7 );
-            hb_storni( pDevMode->dmPaperLength, 8 );
-            hb_storni( pDevMode->dmPaperWidth, 9 );
-            hb_storl( pDevMode->dmCollate == DMCOLLATE_TRUE, 10 );
-            bResult = HB_TRUE;
+            hb_storni(pDevMode->dmPaperSize, 2);
+            hb_storl(pDevMode->dmOrientation == DMORIENT_LANDSCAPE, 3);
+            hb_storni(pDevMode->dmCopies, 4);
+            hb_storni(pDevMode->dmDefaultSource, 5);
+            hb_storni(pDevMode->dmDuplex, 6);
+            hb_storni(pDevMode->dmPrintQuality, 7);
+            hb_storni(pDevMode->dmPaperLength, 8);
+            hb_storni(pDevMode->dmPaperWidth, 9);
+            hb_storl(pDevMode->dmCollate == DMCOLLATE_TRUE, 10);
+            bResult = true;
          }
 
-         hb_xfree( pDevMode );
+         hb_xfree(pDevMode);
       }
 
-      ClosePrinter( hPrinter );
+      ClosePrinter(hPrinter);
    }
 
-   hb_strfree( hDeviceName );
-#endif
+   hb_strfree(hDeviceName);
 
-   hb_retl( bResult );
+   hb_retl(bResult);
 }
 
-static int CALLBACK FontEnumCallBack( LOGFONT * lplf, TEXTMETRIC * lpntm,
-                                      DWORD dwFontType, LPVOID pArray )
+static int CALLBACK FontEnumCallBack(LOGFONT * lplf, TEXTMETRIC * lpntm, DWORD dwFontType, LPVOID pArray)
 {
-   PHB_ITEM pSubItems = hb_itemArrayNew( 4 );
+   PHB_ITEM pSubItems = hb_itemArrayNew(4);
 
-   HB_ARRAYSETSTR( pSubItems, 1, lplf->lfFaceName );
-   hb_arraySetL( pSubItems, 2, ( lplf->lfPitchAndFamily & FIXED_PITCH ) != 0 );
-   hb_arraySetL( pSubItems, 3, ( dwFontType & TRUETYPE_FONTTYPE ) != 0 );
-   hb_arraySetNL( pSubItems, 4, lpntm->tmCharSet );
-   hb_arrayAddForward( ( PHB_ITEM ) pArray, pSubItems );
+   HB_ARRAYSETSTR(pSubItems, 1, lplf->lfFaceName);
+   hb_arraySetL(pSubItems, 2, (lplf->lfPitchAndFamily & FIXED_PITCH) != 0);
+   hb_arraySetL(pSubItems, 3, (dwFontType & TRUETYPE_FONTTYPE) != 0);
+   hb_arraySetNL(pSubItems, 4, lpntm->tmCharSet);
+   hb_arrayAddForward(static_cast<PHB_ITEM>(pArray), pSubItems);
 
-   hb_itemRelease( pSubItems );
+   hb_itemRelease(pSubItems);
 
    return 1;
 }
 
 HB_FUNC( WIN_ENUMFONTS )
 {
-   HDC hDC = hbwapi_par_HDC( 1 );
-   HB_BOOL fNullDC = ( ! hDC );
-   PHB_ITEM pArray = hb_itemArrayNew( 0 );
+   HDC hDC = hbwapi_par_HDC(1);
+   bool fNullDC = !hDC;
+   PHB_ITEM pArray = hb_itemArrayNew(0);
 
    if( fNullDC )
-      hDC = GetDC( nullptr );
+   {
+      hDC = GetDC(nullptr);
+   }
 
-   EnumFonts( hDC, nullptr, ( FONTENUMPROC ) FontEnumCallBack, ( LPARAM ) pArray );
+   EnumFonts(hDC, nullptr, reinterpret_cast<FONTENUMPROC>(FontEnumCallBack), reinterpret_cast<LPARAM>(pArray));
 
    if( fNullDC )
-      ReleaseDC( nullptr, hDC );
+   {
+      ReleaseDC(nullptr, hDC);
+   }
 
-   hb_itemReturnRelease( pArray );
+   hb_itemReturnRelease(pArray);
 }
 
 HB_FUNC( WIN_ENUMFONTFAMILIES )
 {
-   PHB_ITEM pArray = hb_itemArrayNew( 0 );
-#if ! defined( HB_OS_WIN_CE )
-   HDC hDC = hbwapi_par_HDC( 1 );
-   HB_BOOL fNullDC = ( ! hDC );
+   PHB_ITEM pArray = hb_itemArrayNew(0);
+   HDC hDC = hbwapi_par_HDC(1);
+   bool fNullDC = !hDC;
+
    LOGFONT lf;
+   memset(&lf, 0, sizeof(lf));
+   lf.lfCharSet = static_cast<BYTE>(hb_parnidef(1, DEFAULT_CHARSET));
 
-   memset( &lf, 0, sizeof( lf ) );
-
-   lf.lfCharSet = ( BYTE ) hb_parnidef( 1, DEFAULT_CHARSET );
-   if( HB_ISCHAR( 2 ) )
+   if( HB_ISCHAR(2) )
    {
       void * hText;
-      HB_STRNCPY( lf.lfFaceName, HB_PARSTR( 2, &hText, nullptr ), HB_SIZEOFARRAY( lf.lfFaceName ) - 1 );
-      hb_strfree( hText );
+      HB_STRNCPY(lf.lfFaceName, HB_PARSTR(2, &hText, nullptr), HB_SIZEOFARRAY(lf.lfFaceName) - 1);
+      hb_strfree(hText);
    }
 
    if( fNullDC )
-      hDC = GetDC( nullptr );
+   {
+      hDC = GetDC(nullptr);
+   }
 
-   EnumFontFamiliesEx( hDC, &lf, ( FONTENUMPROC ) FontEnumCallBack, ( LPARAM ) pArray, 0 );
+   EnumFontFamiliesEx(hDC, &lf, reinterpret_cast<FONTENUMPROC>(FontEnumCallBack), reinterpret_cast<LPARAM>(pArray), 0);
 
    if( fNullDC )
-      ReleaseDC( nullptr, hDC );
-#endif
+   {
+      ReleaseDC(nullptr, hDC);
+   }
 
-   hb_itemReturnRelease( pArray );
+   hb_itemReturnRelease(pArray);
 }
 
 #ifdef HB_LEGACY_LEVEL5
+
 HB_FUNC( WIN_SETCOLOR )
 {
-   HDC hDC = hbwapi_par_HDC( 1 );
+   HDC hDC = hbwapi_par_HDC(1);
 
    if( hDC )
    {
-      if( HB_ISNUM( 2 ) )
-         hb_retnint( SetTextColor( hDC, hbwapi_par_COLORREF( 2 ) ) );
+      if( HB_ISNUM(2) )
+      {
+         hb_retnint(SetTextColor(hDC, hbwapi_par_COLORREF(2)));
+      }
       else
-         hb_retnint( GetTextColor( hDC ) );
+      {
+         hb_retnint(GetTextColor(hDC));
+      }
 
-      if( HB_ISNUM( 3 ) )
-         SetBkColor( hDC, hbwapi_par_COLORREF( 3 ) );
+      if( HB_ISNUM(3) )
+      {
+         SetBkColor(hDC, hbwapi_par_COLORREF(3));
+      }
 
-      if( HB_ISNUM( 4 ) )
-         SetTextAlign( hDC, hb_parni( 4 ) );
+      if( HB_ISNUM(4) )
+      {
+         SetTextAlign(hDC, hb_parni(4));
+      }
    }
    else
-      hb_retnint( CLR_INVALID );
+   {
+      hb_retnint(CLR_INVALID);
+   }
 }
+
 #endif
 
+/*
+WIN_SETPEN(HDC, HPEN|nPenStyle, nPenWidth, nColor) --> HPEN
+*/
 HB_FUNC( WIN_SETPEN )
 {
-   HDC hDC = hbwapi_par_HDC( 1 );
+   HDC hDC = hbwapi_par_HDC(1);
 
    if( hDC )
    {
       HPEN hPen;
 
-      if( HB_ISPOINTER( 2 ) )
-         hPen = hbwapi_par_HPEN( 2 );
+      if( HB_ISPOINTER(2) )
+      {
+         hPen = hbwapi_par_HPEN(2);
+      }
       else
       {
-         hPen = CreatePen( hb_parni( 2 ),  /* pen style */
-                           hb_parni( 3 ),  /* pen width */
-                           hbwapi_par_COLORREF( 4 ) );  /* pen color */
-
-         hbwapi_ret_HPEN( hPen );
+         hPen = CreatePen(hb_parni(2), hb_parni(3), hbwapi_par_COLORREF(4));
+         hbwapi_ret_HPEN(hPen);
       }
 
       if( hPen )
-         SelectObject( hDC, hPen );
+      {
+         SelectObject(hDC, hPen);
+      }
    }
    else
-      hb_retptr( nullptr );
+   {
+      hb_retptr(nullptr);
+   }
 }
 
 #ifdef HB_LEGACY_LEVEL5
+
 HB_FUNC( WIN_FILLRECT )
 {
-   HDC hDC = hbwapi_par_HDC( 1 );
-   HB_BOOL fResult = HB_FALSE;
+   HDC hDC = hbwapi_par_HDC(1);
+   bool fResult = false;
 
    if( hDC )
    {
-      HBRUSH hBrush = CreateSolidBrush( hbwapi_par_COLORREF( 6 ) );
+      HBRUSH hBrush = CreateSolidBrush(hbwapi_par_COLORREF(6));
+
       RECT rc;
+      rc.left   = hb_parnl(2);
+      rc.top    = hb_parnl(3);
+      rc.right  = hb_parnl(4);
+      rc.bottom = hb_parnl(5);
 
-      rc.left   = hb_parnl( 2 );
-      rc.top    = hb_parnl( 3 );
-      rc.right  = hb_parnl( 4 );
-      rc.bottom = hb_parnl( 5 );
+      if( FillRect(hDC, &rc, hBrush) )
+      {
+         fResult = true;
+      }
 
-      if( FillRect( hDC, &rc, hBrush ) )
-         fResult = HB_TRUE;
-
-      DeleteObject( hBrush );
+      DeleteObject(hBrush);
    }
-   hb_retl( fResult );
+   hb_retl(fResult);
 }
 
+/*
+WIN_LINETO(HDC, nX1, nY1, nX2, nY2) --> .T.|.F.
+*/
 HB_FUNC( WIN_LINETO )
 {
-   HDC hDC = hbwapi_par_HDC( 1 );
-
-   hb_retl( hDC ? MoveToEx( hDC, hb_parni( 2 ) /* x1 */,
-                                 hb_parni( 3 ) /* y1 */, nullptr ) &&
-                  LineTo( hDC, hb_parni( 4 ) /* x2 */,
-                               hb_parni( 5 ) /* y2 */ ) : HB_FALSE );
+   HDC hDC = hbwapi_par_HDC(1);
+   hb_retl(hDC ? MoveToEx(hDC, hb_parni(2), hb_parni(3), nullptr) && LineTo(hDC, hb_parni(4), hb_parni(5)) : false);
 }
 
 HB_FUNC( WIN_RECTANGLE )
 {
-   HDC hDC     = hbwapi_par_HDC( 1 );
-   int x1      = hb_parni( 2 );
-   int y1      = hb_parni( 3 );
-   int x2      = hb_parni( 4 );
-   int y2      = hb_parni( 5 );
-   int iWidth  = hb_parni( 6 );
-   int iHeight = hb_parni( 7 );
+   HDC hDC     = hbwapi_par_HDC(1);
+   int x1      = hb_parni(2);
+   int y1      = hb_parni(3);
+   int x2      = hb_parni(4);
+   int y2      = hb_parni(5);
+   int iWidth  = hb_parni(6);
+   int iHeight = hb_parni(7);
 
    if( iWidth && iHeight )
-      hb_retl( hDC ? RoundRect( hDC, x1, y1, x2, y2, iWidth, iHeight ) : HB_FALSE );
+   {
+      hb_retl(hDC ? RoundRect(hDC, x1, y1, x2, y2, iWidth, iHeight) : false);
+   }
    else
-      hb_retl( hDC ? Rectangle( hDC, x1, y1, x2, y2 ) : HB_FALSE );
+   {
+      hb_retl(hDC ? Rectangle(hDC, x1, y1, x2, y2) : false);
+   }
 }
 
+/*
+WIN_ARC(HDC, nX1, nY1, nX2, nY2) --> .T.|.F.
+*/
 HB_FUNC( WIN_ARC )
 {
-#if defined( HB_OS_WIN_CE )
-   hb_retl( HB_FALSE );
-#else
-   HDC hDC = hbwapi_par_HDC( 1 );
-
-   hb_retl( hDC ? Arc( hDC /* hDC */,
-                       hb_parni( 2 ) /* x1 */,
-                       hb_parni( 3 ) /* y1 */,
-                       hb_parni( 4 ) /* x2 */,
-                       hb_parni( 5 ) /* y2 */,
-                       0,
-                       0,
-                       0,
-                       0 ) : HB_FALSE );
-#endif
+   HDC hDC = hbwapi_par_HDC(1);
+   hb_retl(hDC ? Arc(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), 0, 0, 0, 0) : false);
 }
 
+/*
+WIN_ELLIPSE(HDC, nX1, nY1, nX2, nY2) --> .T.|.F.
+*/
 HB_FUNC( WIN_ELLIPSE )
 {
-   HDC hDC = hbwapi_par_HDC( 1 );
-
-   hb_retl( hDC ? Ellipse( hDC /* hDC */,
-                           hb_parni( 2 ) /* x1 */,
-                           hb_parni( 3 ) /* y1 */,
-                           hb_parni( 4 ) /* x2 */,
-                           hb_parni( 5 ) /* y2 */ ) : HB_FALSE );
+   HDC hDC = hbwapi_par_HDC(1);
+   hb_retl(hDC ? Ellipse(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)) : false);
 }
 
 HB_FUNC( WIN_SETBKMODE )
 {
-   HDC hDC = hbwapi_par_HDC( 1 );
+   HDC hDC = hbwapi_par_HDC(1);
    int iMode = 0;
 
    if( hDC )
    {
-      if( HB_ISNUM( 2 ) )
-         iMode = SetBkMode( hDC, hb_parni( 2 ) );
+      if( HB_ISNUM(2) )
+      {
+         iMode = SetBkMode(hDC, hb_parni(2));
+      }
       else
-         iMode = GetBkMode( hDC );
+      {
+         iMode = GetBkMode(hDC);
+      }
    }
-   hb_retni( iMode );
+   hb_retni(iMode);
 }
+
 #endif

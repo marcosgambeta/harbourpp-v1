@@ -51,10 +51,7 @@
 #include "hbwapi.h"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
-
-#if ! defined( HB_OS_WIN_CE )
-   #include <winspool.h>
-#endif
+#include <winspool.h>
 
 static void s_hb_hashSetCItemNL( PHB_ITEM pHash, const char * pszKey, long v )
 {
@@ -304,9 +301,6 @@ LOGBRUSH * hbwapi_par_LOGBRUSH( LOGBRUSH * p, int iParam )
    {
       p->lbStyle = ( UINT ) hb_itemGetNI( hb_hashGetCItemPtr( pStru, "lbStyle" ) );
       p->lbColor = ( COLORREF ) hb_itemGetNL( hb_hashGetCItemPtr( pStru, "lbColor" ) );
-      #if defined( HB_OS_WIN_CE )
-      p->lbHatch = 0;
-      #else
       switch( p->lbStyle )
       {
          case BS_SOLID:
@@ -317,15 +311,11 @@ LOGBRUSH * hbwapi_par_LOGBRUSH( LOGBRUSH * p, int iParam )
          default:
             p->lbHatch = ( ULONG_PTR ) hb_itemGetPtr( hb_hashGetCItemPtr( pStru, "lbHatch" ) );
       }
-      #endif
    }
    else if( pStru && HB_IS_ARRAY( pStru ) && hb_arrayLen( pStru ) >= 3 )
    {
       p->lbStyle = ( UINT ) hb_arrayGetNI( pStru, 1 );
       p->lbColor = ( COLORREF ) hb_arrayGetNL( pStru, 2 );
-      #if defined( HB_OS_WIN_CE )
-      p->lbHatch = 0;
-      #else
       switch( p->lbStyle )
       {
          case BS_SOLID:
@@ -336,7 +326,6 @@ LOGBRUSH * hbwapi_par_LOGBRUSH( LOGBRUSH * p, int iParam )
          default:
             p->lbHatch = ( ULONG_PTR ) hb_arrayGetPtr( pStru, 3 );
       }
-      #endif
    }
 #if 0
    else
@@ -344,9 +333,6 @@ LOGBRUSH * hbwapi_par_LOGBRUSH( LOGBRUSH * p, int iParam )
       /* Just an experiment */
       p->lbStyle = hbwapi_par_UINT( iParam );
       p->lbColor = hbwapi_par_COLORREF( iParam + 1 );
-      #if defined( HB_OS_WIN_CE )
-      p->lbHatch = 0;
-      #else
       switch( p->lbStyle )
       {
          case BS_SOLID:
@@ -357,7 +343,6 @@ LOGBRUSH * hbwapi_par_LOGBRUSH( LOGBRUSH * p, int iParam )
          default:
             p->lbHatch = ( ULONG_PTR ) hbwapi_par_raw_HANDLE( iParam + 2 );
       }
-      #endif
    }
 #endif
 
@@ -405,7 +390,6 @@ void hbwapi_strfree_DOCINFO( void ** h )
 
 HB_FUNC( __WAPI_DEVMODE_NEW )
 {
-#if ! defined( HB_OS_WIN_CE )
    HANDLE hPrinter;
    void * hDeviceName;
    LPCTSTR lpDeviceName = HB_PARSTR( 1, &hDeviceName, nullptr );
@@ -430,14 +414,10 @@ HB_FUNC( __WAPI_DEVMODE_NEW )
    }
 
    hb_strfree( hDeviceName );
-#else
-   hb_retptr( nullptr );
-#endif
 }
 
 HB_FUNC( __WAPI_DEVMODE_SET )
 {
-#if ! defined( HB_OS_WIN_CE )
    PDEVMODE pDevMode = hbwapi_par_PDEVMODE( 1 );
    PHB_ITEM pStru = hb_param( 2, Harbour::Item::HASH );
 
@@ -466,12 +446,10 @@ HB_FUNC( __WAPI_DEVMODE_SET )
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-#endif
 }
 
 HB_FUNC( __WAPI_DEVMODE_GET )
 {
-#if ! defined( HB_OS_WIN_CE )
    PDEVMODE pDevMode = hbwapi_par_PDEVMODE( 1 );
    PHB_ITEM pStru = hb_param( 2, Harbour::Item::HASH );
 
@@ -489,7 +467,6 @@ HB_FUNC( __WAPI_DEVMODE_GET )
    }
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-#endif
 }
 
 HB_FUNC( WAPI_CREATEDC )
@@ -510,7 +487,6 @@ HB_FUNC( WAPI_CREATEDC )
 
 HB_FUNC( WAPI_RESETDC )
 {
-#if ! defined( HB_OS_WIN_CE )
    HDC hDC = hbwapi_par_HDC( 1 );
    PDEVMODE pDEVMODE = hbwapi_par_PDEVMODE( 2 );
 
@@ -518,9 +494,6 @@ HB_FUNC( WAPI_RESETDC )
       hb_retl( ResetDC( hDC, pDEVMODE ) == hDC );
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-#else
-   hb_retl( HB_FALSE );
-#endif
 }
 
 HB_FUNC( WAPI_STARTDOC )
@@ -612,30 +585,22 @@ HB_FUNC( WAPI_GETDEVICECAPS )
 
 HB_FUNC( WAPI_SETMAPMODE )
 {
-#if ! defined( HB_OS_WIN_CE )
    HDC hDC = hbwapi_par_HDC( 1 );
 
    if( hDC )
       hb_retni( SetMapMode( hDC, hb_parni( 2 ) ) );
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-#else
-   hb_retni( 0 );
-#endif
 }
 
 HB_FUNC( WAPI_GETMAPMODE )
 {
-#if ! defined( HB_OS_WIN_CE )
    HDC hDC = hbwapi_par_HDC( 1 );
 
    if( hDC )
       hb_retni( GetMapMode( hDC ) );
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-#else
-   hb_retni( 0 );
-#endif
 }
 
 HB_FUNC( WAPI_SETTEXTALIGN )
@@ -683,23 +648,11 @@ HB_FUNC( WAPI_TEXTOUT )
       HB_SIZE nDataLen;
       LPCTSTR lpData = HB_PARSTR( 4, &hData, &nDataLen );
 
-#if ! defined( HB_OS_WIN_CE )
       hbwapi_ret_L( TextOut( hDC,
                              hb_parni( 2 ) /* iRow */,
                              hb_parni( 3 ) /* iCol */,
                              lpData,
                              ( int ) nDataLen ) );
-#else
-      /* Emulating TextOut() using ExtTextOut(). [vszakats] */
-      hbwapi_ret_L( ExtTextOut( hDC,
-                                hb_parni( 2 ) /* iRow */,
-                                hb_parni( 3 ) /* iCol */,
-                                0,
-                                nullptr,
-                                lpData,
-                                ( UINT ) nDataLen,
-                                nullptr ) );
-#endif
 
       hb_strfree( hData );
    }
@@ -825,36 +778,24 @@ HB_FUNC( WAPI_CREATESOLIDBRUSH )
 {
    HBRUSH h = CreateSolidBrush( hbwapi_par_COLORREF( 1 ) /* crColor */ );
 
-#if defined( HB_OS_WIN_CE )
-   hbwapi_SetLastError( GetLastError() );
-#endif
    hbwapi_ret_HBRUSH( h );
 }
 
 HB_FUNC( WAPI_CREATEHATCHBRUSH )
 {
-#if ! defined( HB_OS_WIN_CE )
    hbwapi_ret_HBRUSH( CreateHatchBrush( hb_parni( 1 ) /* fnStyle */,
                                         hbwapi_par_COLORREF( 2 ) /* crColor */ ) );
-#else
-   hb_retptr( nullptr );
-#endif
 }
 
 HB_FUNC( WAPI_CREATEBRUSHINDIRECT )
 {
    LOGBRUSH lb;
    hbwapi_par_LOGBRUSH( &lb, 1 );
-#if ! defined( HB_OS_WIN_CE )
    hbwapi_ret_HBRUSH( CreateBrushIndirect( &lb ) );
-#else
-   hbwapi_ret_HBRUSH( CreateSolidBrush( lb.lbColor ) );
-#endif
 }
 
 HB_FUNC( WAPI_CREATEFONT )
 {
-#if ! defined( HB_OS_WIN_CE )
    void * hFontFace;
 
    hbwapi_ret_HFONT( CreateFont( hb_parni( 1 ) /* nHeight */,
@@ -873,9 +814,6 @@ HB_FUNC( WAPI_CREATEFONT )
                                  HB_PARSTR( 14, &hFontFace, nullptr ) /* lpszFace */ ) );
 
    hb_strfree( hFontFace );
-#else
-   hb_retptr( nullptr );
-#endif
 }
 
 HB_FUNC( WAPI_CREATEFONTINDIRECT )
@@ -997,9 +935,6 @@ HB_FUNC( WAPI_ARC )
    HDC hDC = hbwapi_par_HDC( 1 );
 
    if( hDC )
-#if defined( HB_OS_WIN_CE )
-      hb_retl( HB_FALSE );
-#else
       hbwapi_ret_L( Arc( hDC,
                          hb_parni( 2 ) /* nLeftRect */,
                          hb_parni( 3 ) /* nTopRect */,
@@ -1009,7 +944,6 @@ HB_FUNC( WAPI_ARC )
                          hb_parni( 7 ) /* nYStartArc */,
                          hb_parni( 8 ) /* nXEndArc */,
                          hb_parni( 9 ) /* nYEndArc */ ) );
-#endif
    else
       hb_errRT_BASE( EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
@@ -1030,67 +964,17 @@ HB_FUNC( WAPI_ELLIPSE )
 
 HB_FUNC( WAPI_SETDCBRUSHCOLOR )
 {
-   COLORREF result = 0;
-
-#if ! defined( HB_OS_WIN_CE )
-   {
-      typedef COLORREF ( WINAPI * _HB_SETDCBRUSHCOLOR )( HDC, COLORREF );
-
-      static _HB_SETDCBRUSHCOLOR s_pSetDCBrushColor = ( _HB_SETDCBRUSHCOLOR ) -1;
-
-      if( s_pSetDCBrushColor == ( _HB_SETDCBRUSHCOLOR ) -1 )
-      {
-         HMODULE hModule = GetModuleHandle( TEXT( "gdi32.dll" ) );
-         if( hModule )
-            s_pSetDCBrushColor = ( _HB_SETDCBRUSHCOLOR ) HB_WINAPI_GETPROCADDRESST( hModule,
-               "SetDCBrushColor" );
-         else
-            s_pSetDCBrushColor = nullptr;
-      }
-
-      if( s_pSetDCBrushColor )
-         result = s_pSetDCBrushColor( hbwapi_par_raw_HDC( 1 ), hbwapi_par_COLORREF( 2 ) );
-   }
-#endif
-
-   hbwapi_ret_COLORREF( result );
+   hbwapi_ret_COLORREF(SetDCBrushColor(hbwapi_par_raw_HDC(1), hbwapi_par_COLORREF(2)));
 }
 
 HB_FUNC( WAPI_SETDCPENCOLOR )
 {
-   COLORREF result = 0;
-
-#if ! defined( HB_OS_WIN_CE )
-   {
-      typedef COLORREF ( WINAPI * _HB_SETDCPENCOLOR )( HDC, COLORREF );
-
-      static _HB_SETDCPENCOLOR s_pSetDCPenColor = ( _HB_SETDCPENCOLOR ) -1;
-
-      if( s_pSetDCPenColor == ( _HB_SETDCPENCOLOR ) -1 )
-      {
-         HMODULE hModule = GetModuleHandle( TEXT( "gdi32.dll" ) );
-         if( hModule )
-            s_pSetDCPenColor = ( _HB_SETDCPENCOLOR ) HB_WINAPI_GETPROCADDRESST( hModule,
-               "SetDCPenColor" );
-         else
-            s_pSetDCPenColor = nullptr;
-      }
-
-      if( s_pSetDCPenColor )
-         result = s_pSetDCPenColor( hbwapi_par_raw_HDC( 1 ), hbwapi_par_COLORREF( 2 ) );
-   }
-#endif
-
-   hbwapi_ret_COLORREF( result );
+   hbwapi_ret_COLORREF(SetDCPenColor(hbwapi_par_raw_HDC(1), hbwapi_par_COLORREF(2)));
 }
 
 HB_FUNC( WAPI_SETARCDIRECTION )
 {
-#if ! defined( HB_OS_WIN_CE )
-   hb_retni( SetArcDirection( hbwapi_par_raw_HDC( 1 ), hb_parni( 2 ) ) );
-#else
-   hb_retni( 0 );
-#endif
+   hb_retni(SetArcDirection(hbwapi_par_raw_HDC(1), hb_parni(2)));
 }
 
 HB_FUNC( WAPI_GETSTOCKOBJECT )
@@ -1165,13 +1049,9 @@ static void hbwapi_stor_TEXTMETRIC( const TEXTMETRIC * p, int iParam )
 HB_FUNC( WAPI_GETTEXTMETRICS )
 {
    TEXTMETRIC tm;
-   BOOL bResult;
-
-   memset( &tm, 0, sizeof( tm ) );
-
-   bResult = GetTextMetrics( hbwapi_par_HDC( 1 ), &tm );
-   hbwapi_SetLastError( GetLastError() );
-
-   hbwapi_stor_TEXTMETRIC( &tm, 2 );
-   hbwapi_ret_L( bResult );
+   memset(&tm, 0, sizeof(tm));
+   bool bResult = GetTextMetrics(hbwapi_par_HDC(1), &tm);
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_stor_TEXTMETRIC(&tm, 2);
+   hbwapi_ret_L(bResult);
 }

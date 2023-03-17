@@ -45,189 +45,28 @@
  */
 
 #include "hbwapi.h"
+#include <winspool.h>
 
-#if ! defined( HB_OS_WIN_CE )
-#  include <winspool.h>
-#endif
-
-static HB_BOOL hb_SetDefaultPrinter( LPCTSTR lpPrinterName )
+static HB_BOOL hb_SetDefaultPrinter(LPCTSTR lpPrinterName)
 {
-#if ! defined( HB_OS_WIN_CE )
-   BOOL bFlag;
-   DWORD dwNeeded = 0;
-   HANDLE hPrinter = nullptr;
-   PRINTER_INFO_2 * ppi2 = nullptr;
-   LPTSTR pBuffer = nullptr;
-
-   /* If Windows 95 or 98, use SetPrinter. */
-   if( hb_iswin9x() )
+   if( !SetDefaultPrinter(lpPrinterName) )
    {
-      /* Open this printer so you can get information about it. */
-      bFlag = OpenPrinter( ( LPTSTR ) HB_UNCONST( lpPrinterName ), &hPrinter, nullptr );
-      if( ! bFlag || ! hPrinter )
-         return HB_FALSE;
-
-      /* The first GetPrinter() tells you how big our buffer must
-         be to hold ALL of PRINTER_INFO_2. Note that this will
-         typically return FALSE. This only means that the buffer (the 3rd
-         parameter) was not filled in. You do not want it filled in here. */
-      SetLastError( 0 );
-      bFlag = GetPrinter( hPrinter, 2, 0, 0, &dwNeeded );
-      if( ! bFlag )
-      {
-         if( ( GetLastError() != ERROR_INSUFFICIENT_BUFFER ) || ( dwNeeded == 0 ) )
-         {
-            ClosePrinter( hPrinter );
-            return HB_FALSE;
-         }
-      }
-
-      /* Allocate enough space for PRINTER_INFO_2. */
-      ppi2 = ( PRINTER_INFO_2 * ) hb_xgrabz( dwNeeded );
-
-      /* The second GetPrinter() will fill in all the current information
-         so that all you have to do is modify what you are interested in. */
-      bFlag = GetPrinter( hPrinter, 2, ( LPBYTE ) ppi2, dwNeeded, &dwNeeded );
-      if( ! bFlag )
-      {
-         ClosePrinter( hPrinter );
-         hb_xfree( ppi2 );
-         return HB_FALSE;
-      }
-
-      /* Set default printer attribute for this printer. */
-      ppi2->Attributes |= PRINTER_ATTRIBUTE_DEFAULT;
-      bFlag = SetPrinter( hPrinter, 2, ( LPBYTE ) ppi2, 0 );
-      if( ! bFlag )
-      {
-         ClosePrinter( hPrinter );
-         hb_xfree( ppi2 );
-         return HB_FALSE;
-      }
-
-      /* Tell all open programs that this change occurred.
-         Allow each program 1 second to handle this message. */
-      SendMessageTimeout( HWND_BROADCAST, WM_SETTINGCHANGE, 0, ( LPARAM ) ( LPCTSTR ) TEXT( "windows" ), SMTO_NORMAL, 1000, nullptr );
-   }
-   /* If Windows NT, use the SetDefaultPrinter API for Windows 2000,
-      or WriteProfileString for version 4.0 and earlier. */
-   else if( hb_iswinnt() )
-   {
-      if( hb_iswin2k() ) /* Windows 2000 or later (use explicit call) */
-      {
-         HMODULE hWinSpool;
-         typedef BOOL ( WINAPI * DEFPRINTER )( LPCTSTR ); /* stops warnings */
-         DEFPRINTER fnSetDefaultPrinter;
-
-         hWinSpool = hbwapi_LoadLibrarySystem( TEXT( "winspool.drv" ) );
-         if( ! hWinSpool )
-            return HB_FALSE;
-
-         fnSetDefaultPrinter = ( DEFPRINTER ) HB_WINAPI_GETPROCADDRESST( hWinSpool,
-            "SetDefaultPrinter" );
-
-         if( ! fnSetDefaultPrinter )
-         {
-            FreeLibrary( hWinSpool );
-            return HB_FALSE;
-         }
-
-         bFlag = ( *fnSetDefaultPrinter )( lpPrinterName );
-         FreeLibrary( hWinSpool );
-         if( ! bFlag )
-            return HB_FALSE;
-      }
-      else /* NT4.0 or earlier */
-      {
-         HB_ISIZ nStrLen;
-
-         /* Open this printer so you can get information about it. */
-         bFlag = OpenPrinter( ( LPTSTR ) HB_UNCONST( lpPrinterName ), &hPrinter, nullptr );
-         if( ! bFlag || ! hPrinter )
-            return HB_FALSE;
-
-         /* The first GetPrinter() tells you how big our buffer must
-            be to hold ALL of PRINTER_INFO_2. Note that this will
-            typically return FALSE. This only means that the buffer (the 3rd
-            parameter) was not filled in. You do not want it filled in here. */
-         SetLastError( 0 );
-         bFlag = GetPrinter( hPrinter, 2, 0, 0, &dwNeeded );
-         if( ! bFlag )
-         {
-            if( ( GetLastError() != ERROR_INSUFFICIENT_BUFFER ) || ( dwNeeded == 0 ) )
-            {
-               ClosePrinter( hPrinter );
-               return HB_FALSE;
-            }
-         }
-
-         /* Allocate enough space for PRINTER_INFO_2. */
-         ppi2 = ( PRINTER_INFO_2 * ) hb_xgrabz( dwNeeded );
-
-         /* The second GetPrinter() fills in all the current
-            information. */
-         bFlag = GetPrinter( hPrinter, 2, ( LPBYTE ) ppi2, dwNeeded, &dwNeeded );
-         if( ( ! bFlag ) || ( ! ppi2->pDriverName ) || ( ! ppi2->pPortName ) )
-         {
-            ClosePrinter( hPrinter );
-            hb_xfree( ppi2 );
-            return HB_FALSE;
-         }
-
-         nStrLen = hbwapi_tstrlen( lpPrinterName ) +
-                   hbwapi_tstrlen( ppi2->pDriverName ) +
-                   hbwapi_tstrlen( ppi2->pPortName ) + 2;
-
-         /* Allocate buffer big enough for concatenated string.
-            String will be in form "printername,drivername,portname". */
-         pBuffer = ( LPTSTR ) hb_xgrab( ( nStrLen + 1 ) * sizeof( TCHAR ) );
-
-         pBuffer[ 0 ] = TEXT( '\0' );
-
-         /* Build string in form "printername,drivername,portname". */
-         hbwapi_tstrncat( pBuffer, lpPrinterName, nStrLen );
-         hbwapi_tstrncat( pBuffer, TEXT( "," ), nStrLen );
-         hbwapi_tstrncat( pBuffer, ppi2->pDriverName, nStrLen );
-         hbwapi_tstrncat( pBuffer, TEXT( "," ), nStrLen );
-         hbwapi_tstrncat( pBuffer, ppi2->pPortName, nStrLen );
-
-         /* Set the default printer in win.ini and registry. */
-         bFlag = WriteProfileString( TEXT( "windows" ), TEXT( "device" ), pBuffer );
-         if( ! bFlag )
-         {
-            ClosePrinter( hPrinter );
-            hb_xfree( ppi2 );
-            hb_xfree( pBuffer );
-            return HB_FALSE;
-         }
-      }
-
-      /* Tell all open programs that this change occurred.
-         Allow each app 1 second to handle this message. */
-      SendMessageTimeout( HWND_BROADCAST, WM_SETTINGCHANGE, 0, 0, SMTO_NORMAL, 1000, nullptr );
+      return false;
    }
 
-   /* Clean up. */
-   if( hPrinter )
-      ClosePrinter( hPrinter );
-   if( ppi2 )
-      hb_xfree( ppi2 );
-   if( pBuffer )
-      hb_xfree( pBuffer );
+   /* Tell all open programs that this change occurred.
+      Allow each app 1 second to handle this message. */
+   SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, 0, SMTO_NORMAL, 1000, nullptr);
 
-   return HB_TRUE;
-#else
-   HB_SYMBOL_UNUSED( lpPrinterName );
-   return HB_FALSE;
-#endif
+   return true;
 }
 
 HB_FUNC( WIN_PRINTERSETDEFAULT )
 {
    void * hPrinterName;
    HB_SIZE nLen;
-   LPCTSTR pszPrinterName = HB_PARSTR( 1, &hPrinterName, &nLen );
+   LPCTSTR pszPrinterName = HB_PARSTR(1, &hPrinterName, &nLen);
 
-   hb_retl( nLen > 0 ? hb_SetDefaultPrinter( pszPrinterName ) : HB_FALSE );
-   hb_strfree( hPrinterName );
+   hb_retl(nLen > 0 ? hb_SetDefaultPrinter(pszPrinterName) : false);
+   hb_strfree(hPrinterName);
 }

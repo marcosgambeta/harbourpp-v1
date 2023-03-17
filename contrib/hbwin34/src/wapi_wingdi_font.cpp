@@ -49,137 +49,42 @@
 HB_FUNC( WAPI_ADDFONTRESOURCE )
 {
    void * hFileName;
-
-   hb_retni( AddFontResource( HB_PARSTRDEF( 1, &hFileName, nullptr ) ) );
-   hb_strfree( hFileName );
+   hb_retni(AddFontResource(HB_PARSTRDEF(1, &hFileName, nullptr)));
+   hb_strfree(hFileName);
 }
 
 HB_FUNC( WAPI_ADDFONTMEMRESOURCEEX )
 {
    DWORD dwFonts = 0;
-   HANDLE hResult = nullptr;
-
-#if ! defined( HB_OS_WIN_CE )
-   {
-      typedef HANDLE ( WINAPI * _HB_ADDFONTMEMRESOURCEEX )( PVOID, DWORD, PVOID, DWORD * );
-
-      static _HB_ADDFONTMEMRESOURCEEX s_pAddFontMemResourceEx = ( _HB_ADDFONTMEMRESOURCEEX ) -1;
-
-      if( s_pAddFontMemResourceEx == ( _HB_ADDFONTMEMRESOURCEEX ) -1 )
-      {
-         HMODULE hModule = GetModuleHandle( TEXT( "gdi32.dll" ) );
-         if( hModule )
-            s_pAddFontMemResourceEx = ( _HB_ADDFONTMEMRESOURCEEX ) HB_WINAPI_GETPROCADDRESST( hModule,
-               "AddFontMemResourceEx" );
-         else
-            s_pAddFontMemResourceEx = nullptr;
-      }
-
-      if( s_pAddFontMemResourceEx )
-         hResult = s_pAddFontMemResourceEx( ( PVOID ) HB_UNCONST( hb_parcx( 1 ) ), ( DWORD ) hb_parclen( 1 ), nullptr, &dwFonts );
-   }
-#endif
-
-   hb_stornint( dwFonts, 3 );
-
-   hbwapi_ret_raw_HANDLE( hResult );
+   HANDLE hResult = AddFontMemResourceEx(static_cast<PVOID>(const_cast<char*>(hb_parcx(1))), static_cast<DWORD>(hb_parclen(1)), nullptr, &dwFonts);
+   hb_stornint(dwFonts, 3);
+   hbwapi_ret_raw_HANDLE(hResult);
 }
 
 HB_FUNC( WAPI_REMOVEFONTRESOURCE )
 {
    void * hFileName;
-   hbwapi_ret_L( RemoveFontResource( HB_PARSTRDEF( 1, &hFileName, nullptr ) ) );
-   hb_strfree( hFileName );
+   hbwapi_ret_L(RemoveFontResource(HB_PARSTRDEF(1, &hFileName, nullptr)));
+   hb_strfree(hFileName);
 }
 
 HB_FUNC( WAPI_ADDFONTRESOURCEEX )
 {
-   int iResult = 0;
-
-#if ! defined( HB_OS_WIN_CE )
-   {
-      typedef int ( WINAPI * _HB_ADDFONTRESOURCEEX )( LPCTSTR, DWORD, PVOID );
-
-      static _HB_ADDFONTRESOURCEEX s_pAddFontResourceEx = ( _HB_ADDFONTRESOURCEEX ) -1;
-
-      if( s_pAddFontResourceEx == ( _HB_ADDFONTRESOURCEEX ) -1 )
-      {
-         HMODULE hModule = GetModuleHandle( TEXT( "gdi32.dll" ) );
-         if( hModule )
-            s_pAddFontResourceEx = ( _HB_ADDFONTRESOURCEEX ) HB_WINAPI_GETPROCADDRESST( hModule,
-               "AddFontResourceEx" );
-         else
-            s_pAddFontResourceEx = nullptr;
-      }
-
-      if( s_pAddFontResourceEx )
-      {
-         void * hFileName;
-         iResult = s_pAddFontResourceEx( HB_PARSTRDEF( 1, &hFileName, nullptr ), ( DWORD ) hb_parnl( 2 ), nullptr );
-         hb_strfree( hFileName );
-      }
-   }
-#endif
-
-   hb_retni( iResult );
+   void * hFileName;
+   int iResult = AddFontResourceEx(HB_PARSTRDEF(1, &hFileName, nullptr), static_cast<DWORD>(hb_parnl(2)), nullptr);
+   hb_strfree(hFileName);
+   hb_retni(iResult);
 }
 
 HB_FUNC( WAPI_REMOVEFONTRESOURCEEX )
 {
-   BOOL fResult = FALSE;
-
-#if ! defined( HB_OS_WIN_CE )
-   {
-      typedef BOOL ( WINAPI * _HB_REMOVEFONTRESOURCEEX )( LPCTSTR, DWORD, PVOID );
-
-      static _HB_REMOVEFONTRESOURCEEX s_pRemoveFontResourceEx = ( _HB_REMOVEFONTRESOURCEEX ) -1;
-
-      if( s_pRemoveFontResourceEx == ( _HB_REMOVEFONTRESOURCEEX ) -1 )
-      {
-         HMODULE hModule = GetModuleHandle( TEXT( "gdi32.dll" ) );
-         if( hModule )
-            s_pRemoveFontResourceEx = ( _HB_REMOVEFONTRESOURCEEX ) HB_WINAPI_GETPROCADDRESST( hModule,
-               "RemoveFontResourceEx" );
-         else
-            s_pRemoveFontResourceEx = nullptr;
-      }
-
-      if( s_pRemoveFontResourceEx )
-      {
-         void * hFileName;
-         fResult = s_pRemoveFontResourceEx( HB_PARSTRDEF( 1, &hFileName, nullptr ), ( DWORD ) hb_parnl( 2 ), nullptr );
-         hb_strfree( hFileName );
-      }
-   }
-#endif
-
-   hbwapi_ret_L( fResult );
+   void * hFileName;
+   bool fResult = RemoveFontResourceEx(HB_PARSTRDEF(1, &hFileName, nullptr), static_cast<DWORD>(hb_parnl(2)), nullptr);
+   hb_strfree(hFileName);
+   hbwapi_ret_L(fResult);
 }
 
 HB_FUNC( WAPI_REMOVEFONTMEMRESOURCEEX )
 {
-   BOOL fResult = FALSE;
-
-#if ! defined( HB_OS_WIN_CE )
-   {
-      typedef BOOL ( WINAPI * _HB_REMOVEFONTMEMRESOURCEEX )( HANDLE );
-
-      static _HB_REMOVEFONTMEMRESOURCEEX s_pRemoveFontMemResourceEx = ( _HB_REMOVEFONTMEMRESOURCEEX ) -1;
-
-      if( s_pRemoveFontMemResourceEx == ( _HB_REMOVEFONTMEMRESOURCEEX ) -1 )
-      {
-         HMODULE hModule = GetModuleHandle( TEXT( "gdi32.dll" ) );
-         if( hModule )
-            s_pRemoveFontMemResourceEx = ( _HB_REMOVEFONTMEMRESOURCEEX ) HB_WINAPI_GETPROCADDRESST( hModule,
-               "RemoveFontMemResourceEx" );
-         else
-            s_pRemoveFontMemResourceEx = nullptr;
-      }
-
-      if( s_pRemoveFontMemResourceEx )
-         fResult = s_pRemoveFontMemResourceEx( hbwapi_par_raw_HANDLE( 1 ) );
-   }
-#endif
-
-   hbwapi_ret_L( fResult );
+   hbwapi_ret_L(RemoveFontMemResourceEx(hbwapi_par_raw_HANDLE(1)));
 }

@@ -50,417 +50,307 @@
 
 HB_FUNC( WAPI_GETCOMMANDLINE )
 {
-   HB_RETSTR( GetCommandLine() );
+   HB_RETSTR(GetCommandLine());
 }
 
 HB_FUNC( WAPI_GETCURRENTPROCESS )
 {
-   hbwapi_ret_raw_HANDLE( GetCurrentProcess() );
+   hbwapi_ret_raw_HANDLE(GetCurrentProcess());
 }
 
 HB_FUNC( WAPI_GETCURRENTTHREAD )
 {
-   hbwapi_ret_raw_HANDLE( GetCurrentThread() );
+   hbwapi_ret_raw_HANDLE(GetCurrentThread());
 }
 
 HB_FUNC( WAPI_WAITFORSINGLEOBJECT )
 {
-   DWORD dwResult = WaitForSingleObject( hbwapi_par_raw_HANDLE( 1 ), ( DWORD ) hb_parnl( 2 ) );
-
-   hbwapi_SetLastError( GetLastError() );
-   hb_retnint( dwResult );
+   DWORD dwResult = WaitForSingleObject(hbwapi_par_raw_HANDLE(1), static_cast<DWORD>(hb_parnl(2)));
+   hbwapi_SetLastError(GetLastError());
+   hb_retnint(dwResult);
 }
 
 HB_FUNC( WAPI_WAITFORSINGLEOBJECTEX )
 {
-   DWORD dwResult;
-   DWORD dwLastError;
-
-#if defined( HB_OS_WIN_CE )
-   /* WinCE (WinMobile6) does not support
-    * WaitFor{Single,Multiple}Object[Ex]() though it supports:
-    * MsgWaitFor{Single,Multiple}Object[Ex]()
-    */
-   dwResult = 0;
-   dwLastError = ERROR_INVALID_FUNCTION;
-#else
-   dwResult = WaitForSingleObjectEx( hbwapi_par_raw_HANDLE( 1 ), ( DWORD ) hb_parnl( 2 ), hb_parl( 3 ) );
-   dwLastError = GetLastError();
-#endif
-
-   hbwapi_SetLastError( dwLastError );
-   hb_retnint( dwResult );
+   DWORD dwResult = WaitForSingleObjectEx(hbwapi_par_raw_HANDLE(1), static_cast<DWORD>(hb_parnl(2)), hb_parl(3));
+   DWORD dwLastError = GetLastError();
+   hbwapi_SetLastError(dwLastError);
+   hb_retnint(dwResult);
 }
 
 HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTS )
 {
-   PHB_ITEM pArray = hb_param( 2, Harbour::Item::ARRAY );
-   DWORD nCount = pArray ? ( DWORD ) hb_arrayLen( pArray ) : 0;
+   PHB_ITEM pArray = hb_param(2, Harbour::Item::ARRAY);
+   DWORD nCount = pArray ? static_cast<DWORD>(hb_arrayLen(pArray)) : 0;
 
    if( nCount > 0 && nCount <= MAXIMUM_WAIT_OBJECTS )
    {
-      HANDLE * handles = ( HANDLE * ) hb_xgrab( nCount * sizeof( HANDLE ) );
-      DWORD nPos;
-      DWORD dwResult;
+      HANDLE * handles = static_cast<HANDLE*>(hb_xgrab(nCount * sizeof(HANDLE)));
 
-      for( nPos = 0; nPos < nCount; ++nPos )
-         handles[ nPos ] = hb_arrayGetPtr( pArray, nPos + 1 );
+      for( DWORD nPos = 0; nPos < nCount; ++nPos )
+      {
+         handles[nPos] = hb_arrayGetPtr(pArray, nPos + 1);
+      }
 
-      dwResult = WaitForMultipleObjects( nCount, handles, hb_parl( 3 ), ( DWORD ) hb_parnl( 4 ) );
-
-      hbwapi_SetLastError( GetLastError() );
-      hb_retnint( dwResult );
-
-      hb_xfree( handles );
+      DWORD dwResult = WaitForMultipleObjects(nCount, handles, hb_parl(3), static_cast<DWORD>(hb_parnl(4)));
+      hbwapi_SetLastError(GetLastError());
+      hb_retnint(dwResult);
+      hb_xfree(handles);
    }
    else
-      hb_errRT_BASE( EG_ARG, 1001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   {
+      hb_errRT_BASE(EG_ARG, 1001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
 }
 
 HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTSEX )
 {
-#if ! defined( HB_OS_WIN_CE )
-   PHB_ITEM pArray = hb_param( 2, Harbour::Item::ARRAY );
-   DWORD nCount = pArray ? ( DWORD ) hb_arrayLen( pArray ) : 0;
+   PHB_ITEM pArray = hb_param(2, Harbour::Item::ARRAY);
+   DWORD nCount = pArray ? static_cast<DWORD>(hb_arrayLen(pArray)) : 0;
 
    if( nCount > 0 && nCount <= MAXIMUM_WAIT_OBJECTS )
    {
-      HANDLE * handles = ( HANDLE * ) hb_xgrab( nCount * sizeof( HANDLE ) );
-      DWORD nPos;
-      DWORD dwResult;
+      HANDLE * handles = static_cast<HANDLE*>(hb_xgrab(nCount * sizeof(HANDLE)));
 
-      for( nPos = 0; nPos < nCount; ++nPos )
-         handles[ nPos ] = hb_arrayGetPtr( pArray, nPos + 1 );
+      for( DWORD nPos = 0; nPos < nCount; ++nPos )
+      {
+         handles[nPos] = hb_arrayGetPtr(pArray, nPos + 1);
+      }
 
-      dwResult = WaitForMultipleObjectsEx( nCount, handles, hb_parl( 3 ), ( DWORD ) hb_parnl( 4 ), hb_parl( 5 ) );
-
-      hbwapi_SetLastError( GetLastError() );
-      hb_retnint( dwResult );
-
-      hb_xfree( handles );
+      DWORD dwResult = WaitForMultipleObjectsEx(nCount, handles, hb_parl(3), static_cast<DWORD>(hb_parnl(4)), hb_parl(5));
+      hbwapi_SetLastError(GetLastError());
+      hb_retnint(dwResult);
+      hb_xfree(handles);
    }
    else
-      hb_errRT_BASE( EG_ARG, 1001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-#else
-   /* WinCE (WinMobile6) does not support
-    * WaitFor{Single,Multiple}Object[Ex]() though it supports:
-    * MsgWaitFor{Single,Multiple}Object[Ex]()
-    */
-   hbwapi_SetLastError( ERROR_INVALID_FUNCTION );
-   hb_retnint( 0 );
-#endif
+   {
+      hb_errRT_BASE(EG_ARG, 1001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
 }
 
+/*
+WAPI_SETPROCESSWORKINGSETSIZE(HProcess, dwMinimumWorkingSetSize, dwMaximumWorkingSetSize) --> .T.|.F.
+*/
 HB_FUNC( WAPI_SETPROCESSWORKINGSETSIZE )
 {
-   BOOL bResult;
-   DWORD dwLastError;
-
-#if defined( HB_OS_WIN_CE )
-   /* WinCE (till WinMobile6) does not support Working Set functions */
-   bResult = FALSE;
-   dwLastError = ERROR_INVALID_FUNCTION;
-#else
-   bResult = SetProcessWorkingSetSize(
-      hbwapi_par_raw_HANDLE( 1 ) /* hProcess */,
-      ( SIZE_T ) hb_parnint( 2 ) /* dwMinimumWorkingSetSize */,
-      ( SIZE_T ) hb_parnint( 3 ) /* dwMaximumWorkingSetSize */ );
-   dwLastError = GetLastError();
-#endif
-
-   hbwapi_SetLastError( dwLastError );
-   hbwapi_ret_L( bResult );
+   BOOL bResult = SetProcessWorkingSetSize(hbwapi_par_raw_HANDLE(1), static_cast<SIZE_T>(hb_parnint(2)), static_cast<SIZE_T>(hb_parnint(3)));
+   DWORD dwLastError = GetLastError();
+   hbwapi_SetLastError(dwLastError);
+   hbwapi_ret_L(bResult);
 }
 
 HB_FUNC( WAPI_SETLASTERROR )
 {
-   DWORD dwLastError = ( DWORD ) hb_parnl( 1 );
-
-   SetLastError( dwLastError );
-   hbwapi_SetLastError( dwLastError );
+   DWORD dwLastError = static_cast<DWORD>(hb_parnl(1));
+   SetLastError(dwLastError);
+   hbwapi_SetLastError(dwLastError);
 }
 
 HB_FUNC( WAPI_SETERRORMODE )
 {
-#if defined( HB_OS_WIN_CE )
-   hbwapi_ret_UINT( 0 );
-#else
-   hbwapi_ret_UINT( SetErrorMode( hbwapi_par_UINT( 1 ) ) );
-#endif
+   hbwapi_ret_UINT(SetErrorMode(hbwapi_par_UINT(1)));
 }
 
 HB_FUNC( WAPI_LOADLIBRARYEX )
 {
    void * hFileName;
-   HMODULE hResult = LoadLibraryEx( HB_PARSTRDEF( 1, &hFileName, nullptr ),
-                                    nullptr,
-                                    hbwapi_par_DWORD( 3 ) );
-
-   hbwapi_SetLastError( GetLastError() );
-   hb_retptr( hResult );
-
-   hb_strfree( hFileName );
+   HMODULE hResult = LoadLibraryEx(HB_PARSTRDEF(1, &hFileName, nullptr), nullptr, hbwapi_par_DWORD(3));
+   hbwapi_SetLastError(GetLastError());
+   hb_retptr(hResult);
+   hb_strfree(hFileName);
 }
 
 HB_FUNC( WAPI_LOADLIBRARY )
 {
    void * hFileName;
-   HMODULE hResult = LoadLibrary( HB_PARSTRDEF( 1, &hFileName, nullptr ) );
-
-   hbwapi_SetLastError( GetLastError() );
-   hb_retptr( hResult );
-
-   hb_strfree( hFileName );
+   HMODULE hResult = LoadLibrary(HB_PARSTRDEF(1, &hFileName, nullptr));
+   hbwapi_SetLastError(GetLastError());
+   hb_retptr(hResult);
+   hb_strfree(hFileName);
 }
 
 HB_FUNC( WAPI_FREELIBRARY )
 {
-   BOOL bResult = FreeLibrary( ( HMODULE ) hb_parptr( 1 ) );
-
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_L( bResult );
+   BOOL bResult = FreeLibrary(static_cast<HMODULE>(hb_parptr(1)));
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(bResult);
 }
 
 HB_FUNC( WAPI_GETPROCADDRESS )
 {
-   FARPROC pProc;
-   DWORD dwLastError;
-#if defined( HB_OS_WIN_CE )
-   void * hProcName;
-   LPCTSTR lpProcName = HB_PARSTR( 2, &hProcName, nullptr );
-   pProc = GetProcAddress( ( HMODULE ) hb_parptr( 1 ),
-                           lpProcName ? lpProcName :
-                           ( LPCTSTR ) ( HB_PTRUINT ) hb_parnint( 2 ) );
-   dwLastError = GetLastError();
-   hb_strfree( hProcName );
-#else
-   pProc = GetProcAddress( ( HMODULE ) hb_parptr( 1 ),
-                           HB_ISCHAR( 2 ) ? hb_parc( 2 ) :
-                           ( LPCSTR ) ( HB_PTRUINT ) hb_parnint( 2 ) );
-   dwLastError = GetLastError();
-#endif
-   hbwapi_SetLastError( dwLastError );
-   hb_retptr( ( void * ) ( HB_PTRUINT ) pProc );
+   FARPROC pProc = GetProcAddress(static_cast<HMODULE>(hb_parptr(1)), HB_ISCHAR(2) ? hb_parc(2) : reinterpret_cast<LPCSTR>(static_cast<HB_PTRUINT>(hb_parnint(2))));
+   DWORD dwLastError = GetLastError();
+   hbwapi_SetLastError(dwLastError);
+   hb_retptr(reinterpret_cast<void*>(reinterpret_cast<HB_PTRUINT>(pProc)));
 }
 
 /* HMODULE WINAPI GetModuleHandle( __in_opt LPCTSTR lpModuleName ); */
 HB_FUNC( WAPI_GETMODULEHANDLE )
 {
    void * hModuleName;
-   HMODULE hResult = GetModuleHandle( HB_PARSTR( 1, &hModuleName, nullptr ) );
-
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_raw_HANDLE( hResult );
-
-   hb_strfree( hModuleName );
+   HMODULE hResult = GetModuleHandle(HB_PARSTR(1, &hModuleName, nullptr));
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_raw_HANDLE(hResult);
+   hb_strfree(hModuleName);
 }
 
 HB_FUNC( WAPI_MULDIV )
 {
-   hb_retni( MulDiv( hb_parni( 1 ), hb_parni( 2 ), hb_parni( 3 ) ) );
+   hb_retni(MulDiv(hb_parni(1), hb_parni(2), hb_parni(3)));
 }
 
-#if ! defined( HB_OS_WIN_CE )
+typedef DWORD (WINAPI * _HB_GETPATHNAME)(LPCTSTR, LPTSTR, DWORD);
 
-/* WinCE does not support GetShortPathName()/GetLongPathName() functions */
-
-typedef DWORD ( WINAPI * _HB_GETPATHNAME )( LPCTSTR, LPTSTR, DWORD );
-
-static void s_getPathName( _HB_GETPATHNAME getPathName )
+static void s_getPathName(_HB_GETPATHNAME getPathName)
 {
    void * hLongPath;
    DWORD length = 0;
-   LPCTSTR lpszLongPath = HB_PARSTR( 1, &hLongPath, nullptr );
+   LPCTSTR lpszLongPath = HB_PARSTR(1, &hLongPath, nullptr);
 
    if( lpszLongPath )
    {
-      if( HB_ISBYREF( 2 ) )
+      if( HB_ISBYREF(2) )
       {
-         TCHAR buffer[ HB_PATH_MAX ];
-         DWORD cchBuffer = ( DWORD ) HB_SIZEOFARRAY( buffer );
+         TCHAR buffer[HB_PATH_MAX];
+         DWORD cchBuffer = static_cast<DWORD>(HB_SIZEOFARRAY(buffer));
          LPTSTR lpszShortPath = buffer;
-         HB_BOOL fSize = HB_ISNUM( 3 );
+         HB_BOOL fSize = HB_ISNUM(3);
 
          if( fSize )    /* the size of buffer is limited by user */
          {
-            cchBuffer = ( DWORD ) hb_parnl( 3 );
+            cchBuffer = static_cast<DWORD>(hb_parnl(3));
             if( cchBuffer == 0 )
+            {
                lpszShortPath = nullptr;
-            else if( cchBuffer > ( DWORD ) HB_SIZEOFARRAY( buffer ) )
-               lpszShortPath = ( LPTSTR ) hb_xgrab( cchBuffer * sizeof( TCHAR ) );
+            }
+            else if( cchBuffer > static_cast<DWORD>(HB_SIZEOFARRAY(buffer)) )
+            {
+               lpszShortPath = static_cast<LPTSTR>(hb_xgrab(cchBuffer * sizeof(TCHAR)));
+            }
          }
 
-         length = getPathName( lpszLongPath, lpszShortPath, cchBuffer );
-         if( ! fSize && length > cchBuffer )  /* default buffer size was too small */
+         length = getPathName(lpszLongPath, lpszShortPath, cchBuffer);
+         if( !fSize && length > cchBuffer )  /* default buffer size was too small */
          {
             cchBuffer = length;
-            lpszShortPath = ( LPTSTR ) hb_xgrab( cchBuffer * sizeof( TCHAR ) );
-            length = getPathName( lpszLongPath, lpszShortPath, cchBuffer );
+            lpszShortPath = static_cast<LPTSTR>(hb_xgrab(cchBuffer * sizeof(TCHAR)));
+            length = getPathName(lpszLongPath, lpszShortPath, cchBuffer);
          }
-         hbwapi_SetLastError( GetLastError() );
-         HB_STORSTRLEN( lpszShortPath, length > cchBuffer ? 0 : length, 2 );
+         hbwapi_SetLastError(GetLastError());
+         HB_STORSTRLEN(lpszShortPath, length > cchBuffer ? 0 : length, 2);
          if( lpszShortPath && lpszShortPath != buffer )
-            hb_xfree( lpszShortPath );
+         {
+            hb_xfree(lpszShortPath);
+         }
       }
       else if( getPathName )
       {
-         length = getPathName( lpszLongPath, nullptr, 0 );
-         hbwapi_SetLastError( GetLastError() );
+         length = getPathName(lpszLongPath, nullptr, 0);
+         hbwapi_SetLastError(GetLastError());
       }
    }
-   hb_retnl( length );
-   hb_strfree( hLongPath );
+   hb_retnl(length);
+   hb_strfree(hLongPath);
 }
-
-#endif
 
 HB_FUNC( WAPI_GETSHORTPATHNAME )
 {
-#if ! defined( HB_OS_WIN_CE )
-   s_getPathName( GetShortPathName );
-#else
-   {
-      HB_SIZE nSize = hb_parclen( 1 );
-      hb_storclen( hb_parc( 1 ), nSize, 2 );
-      hb_retns( nSize );
-   }
-#endif
+   s_getPathName(GetShortPathName);
 }
 
 HB_FUNC( WAPI_GETLONGPATHNAME )
 {
-#if ! defined( HB_OS_WIN_CE )
-   static _HB_GETPATHNAME s_getPathNameAddr = ( _HB_GETPATHNAME ) -1;
-
-   if( s_getPathNameAddr == ( _HB_GETPATHNAME ) -1 )
-   {
-      HMODULE hModule = GetModuleHandle( HB_WINAPI_KERNEL32_DLL() );
-      if( hModule )
-         s_getPathNameAddr = ( _HB_GETPATHNAME )
-            HB_WINAPI_GETPROCADDRESST( hModule, "GetLongPathName" );
-      else
-         s_getPathNameAddr = nullptr;
-
-      if( ! s_getPathNameAddr )
-         s_getPathNameAddr = GetShortPathName;
-   }
-   s_getPathName( s_getPathNameAddr );
-#else
-   {
-      HB_SIZE nSize = hb_parclen( 1 );
-      hb_storclen( hb_parc( 1 ), nSize, 2 );
-      hb_retns( nSize );
-   }
-#endif
+   s_getPathName(GetLongPathName);
 }
 
 HB_FUNC( WAPI_GETSYSTEMDIRECTORY )
 {
-#if defined( HB_OS_WIN_CE )
-   hb_retc_const( "\\Windows" );
-#else
-   UINT nLen = GetSystemDirectory( nullptr, 0 );
+   UINT nLen = GetSystemDirectory(nullptr, 0);
 
    if( nLen )
    {
-      LPTSTR buffer = ( LPTSTR ) hb_xgrab( ( nLen + 1 ) * sizeof( TCHAR ) );
-
-      nLen = GetSystemDirectory( buffer, nLen );
-      hbwapi_SetLastError( GetLastError() );
-
-      HB_RETSTRLEN( buffer, nLen );
-
-      hb_xfree( buffer );
+      LPTSTR buffer = static_cast<LPTSTR>(hb_xgrab((nLen + 1) * sizeof(TCHAR)));
+      nLen = GetSystemDirectory(buffer, nLen);
+      hbwapi_SetLastError(GetLastError());
+      HB_RETSTRLEN(buffer, nLen);
+      hb_xfree(buffer);
    }
    else
    {
-      hbwapi_SetLastError( GetLastError() );
+      hbwapi_SetLastError(GetLastError());
       hb_retc_null();
    }
-#endif
 }
 
 HB_FUNC( WAPI_GETWINDOWSDIRECTORY )
 {
-#if defined( HB_OS_WIN_CE )
-   hb_retc_const( "\\Windows" );
-#else
-   UINT nLen = GetWindowsDirectory( nullptr, 0 );
+   UINT nLen = GetWindowsDirectory(nullptr, 0);
 
    if( nLen )
    {
-      LPTSTR buffer = ( LPTSTR ) hb_xgrab( ( nLen + 1 ) * sizeof( TCHAR ) );
-
-      nLen = GetWindowsDirectory( buffer, nLen );
-      hbwapi_SetLastError( GetLastError() );
-
-      HB_RETSTRLEN( buffer, nLen );
-
-      hb_xfree( buffer );
+      LPTSTR buffer = static_cast<LPTSTR>(hb_xgrab((nLen + 1) * sizeof(TCHAR)));
+      nLen = GetWindowsDirectory(buffer, nLen);
+      hbwapi_SetLastError(GetLastError());
+      HB_RETSTRLEN(buffer, nLen);
+      hb_xfree(buffer);
    }
    else
    {
-      hbwapi_SetLastError( GetLastError() );
+      hbwapi_SetLastError(GetLastError());
       hb_retc_null();
    }
-#endif
 }
-
 
 HB_FUNC( WAPI_QUERYPERFORMANCECOUNTER )
 {
    LARGE_INTEGER counter;
-   BOOL result = QueryPerformanceCounter( &counter );
-
-   hb_stornint( result ? HBWAPI_GET_LARGEUINT( counter ) : 0, 1 );
-   hb_retl( result != 0 );
+   BOOL result = QueryPerformanceCounter(&counter);
+   hb_stornint(result ? HBWAPI_GET_LARGEUINT(counter) : 0, 1);
+   hb_retl(result != 0);
 }
 
 HB_FUNC( WAPI_QUERYPERFORMANCEFREQUENCY )
 {
    LARGE_INTEGER frequency;
-   BOOL result = QueryPerformanceFrequency( &frequency );
-
-   hb_stornint( result ? HBWAPI_GET_LARGEUINT( frequency ) : 0, 1 );
-   hb_retl( result != 0 );
+   BOOL result = QueryPerformanceFrequency(&frequency);
+   hb_stornint(result ? HBWAPI_GET_LARGEUINT(frequency) : 0, 1);
+   hb_retl(result != 0);
 }
 
 #define TARGET_PATH_BUFFER_SIZE     4096
+
 HB_FUNC( WAPI_QUERYDOSDEVICE )
 {
-#if ! defined( HB_OS_WIN_CE )
    void * hDeviceName;
-   LPTSTR lpTargetPath = ( LPTSTR ) hb_xgrab( TARGET_PATH_BUFFER_SIZE * sizeof( TCHAR ) );
-   DWORD dwResult;
+   LPTSTR lpTargetPath = static_cast<LPTSTR>(hb_xgrab(TARGET_PATH_BUFFER_SIZE * sizeof(TCHAR)));
 
-   dwResult = QueryDosDevice( HB_PARSTR( 1, &hDeviceName, nullptr ), lpTargetPath, TARGET_PATH_BUFFER_SIZE );
-   hbwapi_SetLastError( GetLastError() );
+   DWORD dwResult = QueryDosDevice(HB_PARSTR(1, &hDeviceName, nullptr), lpTargetPath, TARGET_PATH_BUFFER_SIZE);
+   hbwapi_SetLastError(GetLastError());
    if( dwResult )
    {
-      PHB_ITEM pArray = hb_itemArrayNew( 0 ), pItem = nullptr;
+      PHB_ITEM pArray = hb_itemArrayNew(0), pItem = nullptr;
       DWORD dwPos, dwStart;
 
       dwPos = dwStart = 0;
-      while( lpTargetPath[ dwPos ] )
+      while( lpTargetPath[dwPos] )
       {
-         if( ! lpTargetPath[ ++dwPos ] )
+         if( ! lpTargetPath[++dwPos] )
          {
-            pItem = HB_ITEMPUTSTRLEN( pItem, lpTargetPath + dwStart, dwPos - dwStart - 1 );
-            hb_arrayAdd( pArray, pItem );
+            pItem = HB_ITEMPUTSTRLEN(pItem, lpTargetPath + dwStart, dwPos - dwStart - 1);
+            hb_arrayAdd(pArray, pItem);
             dwStart = ++dwPos;
          }
       }
-      hb_itemRelease( pItem );
-      hb_itemReturnRelease( pArray );
+      hb_itemRelease(pItem);
+      hb_itemReturnRelease(pArray);
    }
    else
-      hb_reta( 0 );
+   {
+      hb_reta(0);
+   }
 
-   hb_strfree( hDeviceName );
-   hb_xfree( lpTargetPath );
-#else
-   hb_reta( 0 );
-#endif
+   hb_strfree(hDeviceName);
+   hb_xfree(lpTargetPath);
 }
 
 /* wapi_GetVolumeInformation( <cRootPath>, @<cVolumeName>, @<nSerial>,
@@ -470,97 +360,53 @@ HB_FUNC( WAPI_QUERYDOSDEVICE )
 
 HB_FUNC( WAPI_GETVOLUMEINFORMATION )
 {
-#if ! defined( HB_OS_WIN_CE )
-   BOOL bResult;
-   DWORD dwSerialNumber, dwMaxFileNameLen, dwFileSystemFlags;
-   DWORD dwVolNameSize, dwFSNameSize;
-   LPTSTR lpVolNameBuf, lpFSNameBuf;
-   void * hRootPath;
-   LPCTSTR lpRootPath;
+   DWORD dwSerialNumber = 0;
+   DWORD dwMaxFileNameLen = 0;
+   DWORD dwFileSystemFlags = 0;
+   DWORD dwVolNameSize = 0;
+   DWORD dwFSNameSize = 0;
+   LPTSTR lpVolNameBuf = nullptr;
+   LPTSTR lpFSNameBuf = nullptr;
 
-   dwSerialNumber = dwMaxFileNameLen = dwFileSystemFlags = 0;
-   dwVolNameSize = dwFSNameSize = 0;
-   lpVolNameBuf = lpFSNameBuf = nullptr;
-   lpRootPath = HB_PARSTR( 1, &hRootPath, nullptr );
-   if( HB_ISBYREF( 2 ) )
+   if( HB_ISBYREF(2) )
    {
       dwVolNameSize = MAX_PATH + 1;
-      lpVolNameBuf = ( LPTSTR ) hb_xgrab( dwVolNameSize * sizeof( TCHAR ) );
+      lpVolNameBuf = static_cast<LPTSTR>(hb_xgrab(dwVolNameSize * sizeof(TCHAR)));
    }
-   if( HB_ISBYREF( 6 ) )
+   if( HB_ISBYREF(6) )
    {
       dwFSNameSize = MAX_PATH + 1;
-      lpFSNameBuf = ( LPTSTR ) hb_xgrab( dwFSNameSize * sizeof( TCHAR ) );
+      lpFSNameBuf = static_cast<LPTSTR>(hb_xgrab(dwFSNameSize * sizeof(TCHAR)));
    }
 
-   bResult = GetVolumeInformation( lpRootPath,         /* RootPathName */
-                                   lpVolNameBuf,       /* VolumeName */
-                                   dwVolNameSize,      /* VolumeNameSize */
-                                   &dwSerialNumber,    /* VolumeSerialNumber */
-                                   &dwMaxFileNameLen,  /* MaxComponentLength */
-                                   &dwFileSystemFlags, /* FileSystemFlags */
-                                   lpFSNameBuf,        /* FileSystemName */
-                                   dwFSNameSize );     /* FileSystemSize */
-   hb_strfree( hRootPath );
+   void * hRootPath;
+   BOOL bResult = GetVolumeInformation(HB_PARSTR(1, &hRootPath, nullptr), lpVolNameBuf, dwVolNameSize, &dwSerialNumber, &dwMaxFileNameLen, &dwFileSystemFlags, lpFSNameBuf, dwFSNameSize);
+   hb_strfree(hRootPath);
 
    if( lpVolNameBuf )
    {
-      HB_STORSTR( lpVolNameBuf, 2 );
-      hb_xfree( lpVolNameBuf );
+      HB_STORSTR(lpVolNameBuf, 2);
+      hb_xfree(lpVolNameBuf);
    }
-   hb_stornint( dwSerialNumber, 3 );
-   hb_stornint( dwMaxFileNameLen, 4 );
-   hb_stornint( dwFileSystemFlags, 5 );
+   hb_stornint(dwSerialNumber, 3);
+   hb_stornint(dwMaxFileNameLen, 4);
+   hb_stornint(dwFileSystemFlags, 5);
    if( lpFSNameBuf )
    {
-      HB_STORSTR( lpFSNameBuf, 6 );
-      hb_xfree( lpFSNameBuf );
+      HB_STORSTR(lpFSNameBuf, 6);
+      hb_xfree(lpFSNameBuf);
    }
 
-   hb_retl( bResult != 0 );
-#else
-   hb_retl( HB_FALSE );
-#endif
+   hb_retl(bResult != 0);
 }
 
 HB_FUNC( WAPI_COPYFILE )
 {
-#if ! defined( HB_OS_WIN_CE )
-   typedef BOOL ( WINAPI * _HB_COPYFILE )( LPCTSTR, LPCTSTR, BOOL );
-
-   static _HB_COPYFILE s_pCopyFile = ( _HB_COPYFILE ) -1;
-
-   if( s_pCopyFile == ( _HB_COPYFILE ) -1 )
-   {
-      HMODULE hModule = GetModuleHandle( HB_WINAPI_KERNEL32_DLL() );
-      if( hModule )
-         s_pCopyFile = ( _HB_COPYFILE ) HB_WINAPI_GETPROCADDRESST( hModule, "CopyFile" );
-      else
-         s_pCopyFile = nullptr;
-   }
-
-   if( s_pCopyFile )
-   {
-      void * hSrc;
-      void * hDst;
-
-      BOOL bResult = s_pCopyFile( HB_PARSTRDEF( 1, &hSrc, nullptr ),
-                                  HB_PARSTRDEF( 2, &hDst, nullptr ),
-                                  hbwapi_par_BOOL( 3 ) );
-
-      hbwapi_SetLastError( GetLastError() );
-      hbwapi_ret_L( bResult );
-
-      hb_strfree( hSrc );
-      hb_strfree( hDst );
-   }
-   else
-   {
-      hbwapi_SetLastError( ERROR_INVALID_FUNCTION );
-      hbwapi_ret_L( FALSE );
-   }
-#else
-   hbwapi_SetLastError( ERROR_INVALID_FUNCTION );
-   hbwapi_ret_L( FALSE );
-#endif
+   void * hSrc;
+   void * hDst;
+   bool bResult = CopyFile(HB_PARSTRDEF(1, &hSrc, nullptr), HB_PARSTRDEF(2, &hDst, nullptr), hbwapi_par_BOOL(3));
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(bResult);
+   hb_strfree(hSrc);
+   hb_strfree(hDst);
 }

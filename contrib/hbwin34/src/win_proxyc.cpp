@@ -45,240 +45,125 @@
  */
 
 #include "hbwapi.h"
-
-#if ! defined( HB_OS_WIN_CE )
-   #if defined( HBWIN_HAS_WINHTTP_H )
-      #include "winhttp.h"
-   #else
-      /* Clone relevant content of "winhttp.h" Windows header,
-         because its availability depends on C compiler type,
-         distro, SDK, so it can only be detected by probing it,
-         and if missing we'd need to plug its place with the
-         logic below anyway. [vszakats] */
-
-      #undef HINTERNET
-      #define HINTERNET  LPVOID
-
-      #ifdef _WIN64
-         #pragma pack( push, 8 )
-      #else
-         #pragma pack( push, 4 )
-      #endif
-
-      typedef struct
-      {
-         BOOL   fAutoDetect;
-         LPWSTR lpszAutoConfigUrl;
-         LPWSTR lpszProxy;
-         LPWSTR lpszProxyBypass;
-      } HB_WINHTTP_CURRENT_USER_IE_PROXY_CONFIG;
-
-      typedef struct
-      {
-         DWORD dwAccessType;
-         LPWSTR lpszProxy;
-         LPWSTR lpszProxyBypass;
-      } HB_WINHTTP_PROXY_INFO;
-
-      typedef struct
-      {
-         DWORD dwFlags;
-         DWORD dwAutoDetectFlags;
-         LPCWSTR lpszAutoConfigUrl;
-         LPVOID lpvReserved;
-         DWORD dwReserved;
-         BOOL fAutoLogonIfChallenged;
-      } HB_WINHTTP_AUTOPROXY_OPTIONS;
-
-      #pragma pack( pop )
-
-      #undef WINHTTP_PROXY_INFO
-      #undef WINHTTP_CURRENT_USER_IE_PROXY_CONFIG
-      #undef WINHTTP_AUTOPROXY_OPTIONS
-      #define WINHTTP_PROXY_INFO                    HB_WINHTTP_PROXY_INFO
-      #define WINHTTP_CURRENT_USER_IE_PROXY_CONFIG  HB_WINHTTP_CURRENT_USER_IE_PROXY_CONFIG
-      #define WINHTTP_AUTOPROXY_OPTIONS             HB_WINHTTP_AUTOPROXY_OPTIONS
-
-      #ifndef WINHTTP_ACCESS_TYPE_DEFAULT_PROXY
-      #define WINHTTP_ACCESS_TYPE_DEFAULT_PROXY  0
-      #endif
-      #ifndef WINHTTP_NO_PROXY_NAME
-      #define WINHTTP_NO_PROXY_NAME  NULL
-      #endif
-      #ifndef WINHTTP_NO_PROXY_BYPASS
-      #define WINHTTP_NO_PROXY_BYPASS  NULL
-      #endif
-      #ifndef WINHTTP_AUTOPROXY_AUTO_DETECT
-      #define WINHTTP_AUTOPROXY_AUTO_DETECT  0x00000001
-      #endif
-      #ifndef WINHTTP_AUTOPROXY_CONFIG_URL
-      #define WINHTTP_AUTOPROXY_CONFIG_URL  0x00000002
-      #endif
-      #ifndef WINHTTP_AUTO_DETECT_TYPE_DHCP
-      #define WINHTTP_AUTO_DETECT_TYPE_DHCP  0x00000001
-      #endif
-      #ifndef WINHTTP_AUTO_DETECT_TYPE_DNS_A
-      #define WINHTTP_AUTO_DETECT_TYPE_DNS_A  0x00000002
-      #endif
-      #ifndef WINHTTP_ACCESS_TYPE_NO_PROXY
-      #define WINHTTP_ACCESS_TYPE_NO_PROXY  1
-      #endif
-      #ifndef ERROR_WINHTTP_LOGIN_FAILURE
-      #define ERROR_WINHTTP_LOGIN_FAILURE  12015
-      #endif
-   #endif
-#endif
+#include <winhttp.h>
 
 HB_FUNC( __WIN_PROXYDETECT )
 {
-#if ! defined( HB_OS_WIN_CE )
-   typedef HINTERNET ( WINAPI * _HB_WINHTTPOPEN )( LPCWSTR, DWORD, LPCWSTR, LPCWSTR, DWORD );
-   typedef BOOL      ( WINAPI * _HB_WINHTTPSETTIMEOUTS )( HINTERNET, int, int, int, int );
-   typedef BOOL      ( WINAPI * _HB_WINHTTPCLOSEHANDLE )( HINTERNET );
-   typedef BOOL      ( WINAPI * _HB_WINHTTPGETPROXYFORURL )( HINTERNET, LPCWSTR, WINHTTP_AUTOPROXY_OPTIONS *, WINHTTP_PROXY_INFO * );
-   typedef BOOL      ( WINAPI * _HB_WINHTTPGETIEPROXYCONFIGFORCURRENTUSER )( WINHTTP_CURRENT_USER_IE_PROXY_CONFIG * );
+   WINHTTP_AUTOPROXY_OPTIONS options;
+   WINHTTP_CURRENT_USER_IE_PROXY_CONFIG ieproxy;
 
-   static HB_BOOL s_fInit = HB_TRUE;
+   bool fDetect = true;
 
-   static _HB_WINHTTPOPEN                           s_pWinHttpOpen = nullptr;
-   static _HB_WINHTTPSETTIMEOUTS                    s_pWinHttpSetTimeouts = nullptr;
-   static _HB_WINHTTPCLOSEHANDLE                    s_pWinHttpCloseHandle = nullptr;
-   static _HB_WINHTTPGETPROXYFORURL                 s_pWinHttpGetProxyForUrl = nullptr;
-   static _HB_WINHTTPGETIEPROXYCONFIGFORCURRENTUSER s_pWinHttpGetIEProxyConfigForCurrentUser = nullptr;
+   memset(&options, 0, sizeof(options));
+   memset(&ieproxy, 0, sizeof(ieproxy));
 
-   if( s_fInit )
+   if( WinHttpGetIEProxyConfigForCurrentUser(&ieproxy) )
    {
-      HMODULE hModule = hbwapi_LoadLibrarySystem( TEXT( "winhttp.dll" ) );
-      if( hModule )
+      if( ieproxy.lpszAutoConfigUrl != nullptr )
       {
-         s_pWinHttpOpen                           = ( _HB_WINHTTPOPEN )                           HB_WINAPI_GETPROCADDRESS( hModule, "WinHttpOpen" );
-         s_pWinHttpSetTimeouts                    = ( _HB_WINHTTPSETTIMEOUTS )                    HB_WINAPI_GETPROCADDRESS( hModule, "WinHttpSetTimeouts" );
-         s_pWinHttpCloseHandle                    = ( _HB_WINHTTPCLOSEHANDLE )                    HB_WINAPI_GETPROCADDRESS( hModule, "WinHttpCloseHandle" );
-         s_pWinHttpGetProxyForUrl                 = ( _HB_WINHTTPGETPROXYFORURL )                 HB_WINAPI_GETPROCADDRESS( hModule, "WinHttpGetProxyForUrl" );
-         s_pWinHttpGetIEProxyConfigForCurrentUser = ( _HB_WINHTTPGETIEPROXYCONFIGFORCURRENTUSER ) HB_WINAPI_GETPROCADDRESS( hModule, "WinHttpGetIEProxyConfigForCurrentUser" );
+         options.lpszAutoConfigUrl = ieproxy.lpszAutoConfigUrl;
       }
-      s_fInit = HB_FALSE;
+      else
+      {
+         fDetect = ieproxy.fAutoDetect;
+      }
    }
 
-   if( s_pWinHttpOpen != nullptr &&
-       s_pWinHttpSetTimeouts != nullptr &&
-       s_pWinHttpCloseHandle != nullptr &&
-       s_pWinHttpGetProxyForUrl != nullptr &&
-       s_pWinHttpGetIEProxyConfigForCurrentUser != nullptr )
+   if( fDetect )
    {
-      WINHTTP_AUTOPROXY_OPTIONS options;
-      WINHTTP_CURRENT_USER_IE_PROXY_CONFIG ieproxy;
+      HINTERNET hSession = WinHttpOpen(nullptr, WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0);
 
-      BOOL fDetect = TRUE;
-
-      memset( &options, 0, sizeof( options ) );
-      memset( &ieproxy, 0, sizeof( ieproxy ) );
-
-      if( s_pWinHttpGetIEProxyConfigForCurrentUser( &ieproxy ) )
+      if( hSession != nullptr )
       {
-         if( ieproxy.lpszAutoConfigUrl != nullptr )
-            options.lpszAutoConfigUrl = ieproxy.lpszAutoConfigUrl;
-         else
-            fDetect = ieproxy.fAutoDetect;
-      }
+         WINHTTP_PROXY_INFO proxy;
 
-      if( fDetect )
-      {
-         HINTERNET hSession =
-            s_pWinHttpOpen( nullptr,
-               WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,
-               WINHTTP_NO_PROXY_NAME,
-               WINHTTP_NO_PROXY_BYPASS,
-               0 );
+         void * hURL;
+         LPCTSTR pURL = HB_PARSTRDEF(1, &hURL, nullptr);
+         DWORD dwError;
 
-         if( hSession != nullptr )
+         memset(&proxy, 0, sizeof(proxy));
+
+         if( options.lpszAutoConfigUrl != nullptr )
          {
-            WINHTTP_PROXY_INFO proxy;
-
-            void * hURL;
-            LPCTSTR pURL = HB_PARSTRDEF( 1, &hURL, nullptr );
-            DWORD dwError;
-
-            memset( &proxy, 0, sizeof( proxy ) );
-
-            if( options.lpszAutoConfigUrl != nullptr )
-               options.dwFlags = WINHTTP_AUTOPROXY_CONFIG_URL;
-            else
-            {
-               options.dwFlags = WINHTTP_AUTOPROXY_AUTO_DETECT;
-               options.dwAutoDetectFlags = WINHTTP_AUTO_DETECT_TYPE_DNS_A;
-               #if defined( HBWIN_USE_WINHTTP_DHCP )
-                  /* This flag has issues, according to Chromium code. */
-                  options.dwAutoDetectFlags |= WINHTTP_AUTO_DETECT_TYPE_DHCP;
-               #endif
-            }
-
-            ( void ) s_pWinHttpSetTimeouts( hSession, 10000, 10000, 5000, 5000 );
-
-            fDetect = s_pWinHttpGetProxyForUrl( hSession, pURL, &options, &proxy );
-            hbwapi_SetLastError( dwError = GetLastError() );
-
-            if( ! fDetect && dwError == ERROR_WINHTTP_LOGIN_FAILURE )
-            {
-               options.fAutoLogonIfChallenged = TRUE;
-
-               fDetect = s_pWinHttpGetProxyForUrl( hSession, pURL, &options, &proxy );
-               hbwapi_SetLastError( GetLastError() );
-            }
-
-            if( fDetect )
-            {
-               if( proxy.dwAccessType == WINHTTP_ACCESS_TYPE_NO_PROXY )
-               {
-                  hb_retc_null();
-                  hb_storc( nullptr, 2 );
-               }
-               else
-               {
-                  HB_RETSTR( proxy.lpszProxy );
-                  HB_STORSTR( proxy.lpszProxyBypass, 2 );
-               }
-            }
-            else
-               fDetect = FALSE;
-
-            if( proxy.lpszProxy != nullptr )
-               GlobalFree( proxy.lpszProxy );
-            if( proxy.lpszProxyBypass != nullptr )
-               GlobalFree( proxy.lpszProxyBypass );
-
-            hb_strfree( hURL );
-
-            s_pWinHttpCloseHandle( hSession );
+            options.dwFlags = WINHTTP_AUTOPROXY_CONFIG_URL;
          }
          else
-            fDetect = FALSE;
-      }
+         {
+            options.dwFlags = WINHTTP_AUTOPROXY_AUTO_DETECT;
+            options.dwAutoDetectFlags = WINHTTP_AUTO_DETECT_TYPE_DNS_A;
+            #if defined(HBWIN_USE_WINHTTP_DHCP)
+               /* This flag has issues, according to Chromium code. */
+               options.dwAutoDetectFlags |= WINHTTP_AUTO_DETECT_TYPE_DHCP;
+            #endif
+         }
 
-      if( ! fDetect )
+         WinHttpSetTimeouts(hSession, 10000, 10000, 5000, 5000);
+
+         fDetect = WinHttpGetProxyForUrl(hSession, pURL, &options, &proxy);
+         hbwapi_SetLastError(dwError = GetLastError());
+
+         if( !fDetect && dwError == ERROR_WINHTTP_LOGIN_FAILURE )
+         {
+            options.fAutoLogonIfChallenged = TRUE;
+
+            fDetect = WinHttpGetProxyForUrl(hSession, pURL, &options, &proxy);
+            hbwapi_SetLastError(GetLastError());
+         }
+
+         if( fDetect )
+         {
+            if( proxy.dwAccessType == WINHTTP_ACCESS_TYPE_NO_PROXY )
+            {
+               hb_retc_null();
+               hb_storc(nullptr, 2);
+            }
+            else
+            {
+               HB_RETSTR(proxy.lpszProxy);
+               HB_STORSTR(proxy.lpszProxyBypass, 2);
+            }
+         }
+         else
+         {
+            fDetect = false;
+         }
+
+         if( proxy.lpszProxy != nullptr )
+         {
+            GlobalFree(proxy.lpszProxy);
+         }
+         if( proxy.lpszProxyBypass != nullptr )
+         {
+            GlobalFree(proxy.lpszProxyBypass);
+         }
+
+         hb_strfree(hURL);
+
+         WinHttpCloseHandle(hSession);
+      }
+      else
       {
-         hbwapi_SetLastError( GetLastError() );
-         HB_RETSTR( ieproxy.lpszProxy );
-         HB_STORSTR( ieproxy.lpszProxyBypass, 2 );
+         fDetect = false;
       }
+   }
 
-      if( ieproxy.lpszAutoConfigUrl != nullptr )
-         GlobalFree( ieproxy.lpszAutoConfigUrl );
-      if( ieproxy.lpszProxy != nullptr )
-         GlobalFree( ieproxy.lpszProxy );
-      if( ieproxy.lpszProxyBypass != nullptr )
-         GlobalFree( ieproxy.lpszProxyBypass );
-   }
-   else
+   if( !fDetect )
    {
-      hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
-      hb_retc_null();
-      hb_storc( nullptr, 2 );
+      hbwapi_SetLastError(GetLastError());
+      HB_RETSTR(ieproxy.lpszProxy);
+      HB_STORSTR(ieproxy.lpszProxyBypass, 2);
    }
-#else
-   /* TODO: Proxy detection for WinCE */
-   hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
-   hb_retc_null();
-   hb_storc( nullptr, 2 );
-#endif
+
+   if( ieproxy.lpszAutoConfigUrl != nullptr )
+   {
+      GlobalFree(ieproxy.lpszAutoConfigUrl);
+   }
+   if( ieproxy.lpszProxy != nullptr )
+   {
+      GlobalFree(ieproxy.lpszProxy);
+   }
+   if( ieproxy.lpszProxyBypass != nullptr )
+   {
+      GlobalFree(ieproxy.lpszProxyBypass);
+   }
 }
