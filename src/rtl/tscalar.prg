@@ -58,6 +58,25 @@ CREATE CLASS ScalarObject FUNCTION HBScalar
    METHOD AsString()
    METHOD AsExpStr()
 
+   // TODO: replace Harbour code with C++ code
+   METHOD isNumeric
+   METHOD isLogical
+   METHOD isDate
+   METHOD isDateTime
+   METHOD isTimeStamp
+   METHOD isBlock
+   METHOD isPointer
+   METHOD isSymbol
+   METHOD isString
+   METHOD isChar
+   METHOD isMemo
+   METHOD isArray
+   METHOD isObject
+   METHOD isHash
+   METHOD isHashKey
+   METHOD isEvalItem
+   METHOD isNull
+
    MESSAGE Become    METHOD BecomeErr()  /* a scalar cannot "become" another object */
    MESSAGE DeepCopy  METHOD Copy()
 
@@ -97,6 +116,57 @@ METHOD AsExpStr() CLASS ScalarObject
    ENDSWITCH
 
    RETURN ::AsString()
+
+METHOD isNumeric() CLASS ScalarObject
+   RETURN HB_ISNUMERIC(Self)
+
+METHOD isLogical() CLASS ScalarObject
+   RETURN HB_ISLOGICAL(Self)
+
+METHOD isDate() CLASS ScalarObject
+   RETURN HB_ISDATE(Self)
+
+METHOD isDateTime() CLASS ScalarObject
+   RETURN HB_ISDATETIME(Self)
+
+METHOD isTimeStamp() CLASS ScalarObject
+   RETURN HB_ISTIMESTAMP(Self)
+
+METHOD isBlock() CLASS ScalarObject
+   RETURN HB_ISBLOCK(Self)
+
+METHOD isPointer() CLASS ScalarObject
+   RETURN HB_ISPOINTER(Self)
+
+METHOD isSymbol() CLASS ScalarObject
+   RETURN HB_ISSYMBOL(Self)
+
+METHOD isString() CLASS ScalarObject
+   RETURN HB_ISSTRING(Self)
+
+METHOD isChar() CLASS ScalarObject
+   RETURN HB_ISCHAR(Self)
+
+METHOD isMemo() CLASS ScalarObject
+   RETURN HB_ISMEMO(Self)
+
+METHOD isArray() CLASS ScalarObject
+   RETURN HB_ISARRAY(Self)
+
+METHOD isObject() CLASS ScalarObject
+   RETURN HB_ISOBJECT(Self)
+
+METHOD isHash() CLASS ScalarObject
+   RETURN HB_ISHASH(Self)
+
+METHOD isHashKey() CLASS ScalarObject
+   RETURN HB_ISHASHKEY(Self)
+
+METHOD isEvalItem() CLASS ScalarObject
+   RETURN HB_ISEVALITEM(Self)
+
+METHOD isNull() CLASS ScalarObject
+   RETURN HB_ISNULL(Self)
 
 METHOD PROCEDURE BecomeErr() CLASS ScalarObject
 
