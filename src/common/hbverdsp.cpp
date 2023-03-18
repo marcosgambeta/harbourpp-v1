@@ -84,8 +84,27 @@ void hb_verBuildInfo(void)
       hb_conOutErr("C++ Standard: C++11", 0);
       hb_conOutErr(hb_conNewLine(), 0);
       #else
-      hb_conOutErr("C++ Standard: undetermined", 0);
-      hb_conOutErr(hb_conNewLine(), 0);
+         #ifdef _MSVC_LANG
+            #if _MSVC_LANG > 202002L
+            hb_conOutErr("C++ Standard: C++23", 0);
+            hb_conOutErr(hb_conNewLine(), 0);
+            #elif _MSVC_LANG == 202002L
+            hb_conOutErr("C++ Standard: C++20", 0);
+            hb_conOutErr(hb_conNewLine(), 0);
+            #elif _MSVC_LANG == 201703L
+            hb_conOutErr("C++ Standard: C++17", 0);
+            hb_conOutErr(hb_conNewLine(), 0);
+            #elif _MSVC_LANG == 201402L
+            hb_conOutErr("C++ Standard: C++14", 0);
+            hb_conOutErr(hb_conNewLine(), 0);
+            #elif __cplusplus < 201402L
+            hb_conOutErr("C++ Standard: C++11", 0);
+            hb_conOutErr(hb_conNewLine(), 0);
+            #endif
+         #else
+         hb_conOutErr("C++ Standard: undetermined", 0);
+         hb_conOutErr(hb_conNewLine(), 0);
+         #endif
       #endif
    }
 
