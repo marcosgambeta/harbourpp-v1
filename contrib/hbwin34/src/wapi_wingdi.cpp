@@ -48,7 +48,7 @@
       https://msdn.microsoft.com/library/aa923590
  */
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include <winspool.h>

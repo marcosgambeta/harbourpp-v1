@@ -32,7 +32,7 @@
 -depincpath=png:/usr/local/include
 -depincpathlocal=png:../../src/3rd/png
 
--instfile=contrib:hbwapi.h
+-instfile=contrib:hbwapi.hpp
 -instfile=contrib:hbwin.h
 -instfile=contrib:hbwinole.h
 -instfile=contrib:*.def

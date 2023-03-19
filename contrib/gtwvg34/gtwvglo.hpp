@@ -54,7 +54,7 @@
 #endif
 
 #include "hbapi.hpp"
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 #include "hbwinole.h"
 
 #if ! defined( HB_OS_WIN_CE )

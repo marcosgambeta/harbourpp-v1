@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 
 #include <commdlg.h>
 
@@ -300,7 +300,7 @@ static void s_GetFileName( HB_BOOL fSave )
    {
       hb_xfree( lpstrFilter );
    }
-   
+
    hb_strfree( hInitDir );
    hb_strfree( hTitle );
    hb_strfree( hDefExt );

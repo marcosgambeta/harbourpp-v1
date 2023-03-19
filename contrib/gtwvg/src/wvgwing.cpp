@@ -79,7 +79,7 @@
 #endif
 
 #include "gtwvg.hpp"
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 
 #include <windowsx.h>
 

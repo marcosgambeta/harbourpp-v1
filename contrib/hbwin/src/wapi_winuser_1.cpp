@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 #include "hbapierr.hpp"
 
 #ifndef WS_OVERLAPPEDWINDOW

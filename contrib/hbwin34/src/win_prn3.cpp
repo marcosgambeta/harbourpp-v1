@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 #include <winspool.h>
 
 static HB_BOOL hb_SetDefaultPrinter(LPCTSTR lpPrinterName)

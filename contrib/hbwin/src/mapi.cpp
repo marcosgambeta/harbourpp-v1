@@ -55,7 +55,7 @@
 #   undef UNICODE
 #endif
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 
 #include <mapi.h>
 

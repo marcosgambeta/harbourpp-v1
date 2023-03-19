@@ -46,7 +46,7 @@
  *
  */
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 #include "hbapifs.hpp"
 #include "hbapiitm.hpp"
 

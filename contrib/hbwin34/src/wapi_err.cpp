@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 #include "hbstack.hpp"
 
 typedef struct

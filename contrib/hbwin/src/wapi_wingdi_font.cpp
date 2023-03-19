@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 
 /*
 int AddFontResourceA(LPCSTR unnamedParam1);

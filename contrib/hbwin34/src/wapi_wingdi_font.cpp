@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 
 HB_FUNC( WAPI_ADDFONTRESOURCE )
 {

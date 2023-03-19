@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 #include "hbwinole.h"
 
 #if defined( _MSC_VER )
@@ -703,7 +703,7 @@ HB_FUNC( __AXREGISTERHANDLER )  /* ( pDisp, bHandler [, cIID] ) --> pSink */
          if( lOleError != S_OK )
          {
             hb_ret();
-         }   
+         }
       }
       else
          hb_errRT_OLE( EG_ARG, 1015, 0, nullptr, HB_ERR_FUNCNAME );

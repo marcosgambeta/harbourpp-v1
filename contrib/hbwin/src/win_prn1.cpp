@@ -45,7 +45,7 @@
  */
 
 #include "hbwin.h"
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 #include "hbapifs.hpp"
 #include "hbapiitm.hpp"
 #include <winspool.h>

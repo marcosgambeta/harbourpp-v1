@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
 
@@ -1461,7 +1461,7 @@ HB_FUNC( WAPI_GETICONINFO )  /* TODO: added support to return hash instead of ar
    if( ! hb_itemParamStoreRelease( 2, aInfo ) )
    {
       hb_itemRelease( aInfo );
-   }   
+   }
 }
 
 HB_FUNC( WAPI_DEFWINDOWPROC )

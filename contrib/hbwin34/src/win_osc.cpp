@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 #include "hbapiitm.hpp"
 
 HB_FUNC( WIN_OSISNT )

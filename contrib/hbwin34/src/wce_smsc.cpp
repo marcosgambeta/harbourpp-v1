@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 
 #if defined( HB_OS_WIN_CE ) && \
    ! defined( __MINGW32__ ) && \

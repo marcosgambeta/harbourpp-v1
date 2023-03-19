@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 #include <winhttp.h>
 
 HB_FUNC( __WIN_PROXYDETECT )

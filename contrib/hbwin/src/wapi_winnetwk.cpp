@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 #include <winnetwk.h>
 
 HB_FUNC( WAPI_WNETGETLASTERROR )

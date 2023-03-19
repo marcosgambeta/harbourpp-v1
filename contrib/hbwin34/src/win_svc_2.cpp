@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 
 #if defined( __POCC__ )
    #include <winsvc.h>   /* it's disabled by WIN32_LEAN_AND_MEAN */

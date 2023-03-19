@@ -62,7 +62,7 @@
 #endif
 
 #include "hbapi.hpp"
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 #include "hbwinole.h"
 
 #if defined( _MSC_VER )

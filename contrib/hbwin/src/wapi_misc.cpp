@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 
 HB_SIZE hbwapi_tstrlen(const TCHAR * pText)
 {

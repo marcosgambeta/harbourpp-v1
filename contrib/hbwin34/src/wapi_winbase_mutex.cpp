@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 
 static HB_GARBAGE_FUNC( hbwapi_mutex_release )
 {

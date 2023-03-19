@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbwapi.h"
+#include "hbwapi.hpp"
 
 static HB_GARBAGE_FUNC(s_gc_HDC_release)
 {
