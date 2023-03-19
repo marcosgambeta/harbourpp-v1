@@ -68,12 +68,18 @@ int hbwin_bitmapType( const void * pImgBuf, HB_SIZE size )
 
    if( pImgBuf )
    {
-      if(      size > 2 && memcmp( pImgBuf, "BM", 2 ) == 0 )
+      if( size > 2 && memcmp( pImgBuf, "BM", 2 ) == 0 )
+      {
          iType = HB_WIN_BITMAP_BMP;
+      }
       else if( size > 3 && memcmp( pImgBuf, "\xFF\xD8\xFF", 3 ) == 0 )
+      {
          iType = HB_WIN_BITMAP_JPEG;
+      }
       else if( size > 4 && memcmp( pImgBuf, "\x89PNG", 4 ) == 0 )
+      {
          iType = HB_WIN_BITMAP_PNG;
+      }   
    }
 
    return iType;
@@ -105,7 +111,9 @@ HB_FUNC( WIN_LOADBITMAPFILE )
    }
 
    if( pBuffer )
+   {
       hb_retclen_buffer( pBuffer, nSize );
+   }
    else
       hb_retc_null();
 }
@@ -120,13 +128,12 @@ HB_FUNC( WIN_LOADBITMAPFILE )
 
 static int hbwin_bitmapIsSupported( HDC hDC, int iType, const void * pImgBuf, HB_SIZE nSize )
 {
-   if( hDC &&
-       iType != HB_WIN_BITMAP_UNKNOWN &&
-       pImgBuf &&
-       nSize >= sizeof( BITMAPCOREHEADER ) )
+   if( hDC && iType != HB_WIN_BITMAP_UNKNOWN && pImgBuf && nSize >= sizeof( BITMAPCOREHEADER ) )
    {
       if( iType == HB_WIN_BITMAP_BMP )
+      {
          return 0;
+      }
       else
       {
          int iRes = iType = ( iType == HB_WIN_BITMAP_JPEG ? CHECKJPEGFORMAT : CHECKPNGFORMAT );
@@ -137,7 +144,9 @@ static int hbwin_bitmapIsSupported( HDC hDC, int iType, const void * pImgBuf, HB
             if( ExtEscape( hDC, iType, ( int ) nSize, ( LPCSTR ) pImgBuf, sizeof( iRes ), ( LPSTR ) &iRes ) > 0 )
             {
                if( iRes == 1 )
+               {
                   return 0;
+               }
                else
                   return -4;
             }

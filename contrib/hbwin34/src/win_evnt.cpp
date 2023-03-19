@@ -100,8 +100,10 @@ HB_FUNC( WIN_REPORTEVENT )
                        ( DWORD ) hb_parclen( 7 ),
                        lpStrings,
                        ( LPVOID ) HB_UNCONST( hb_parc( 7 ) ) ) )
+      {
          bRetVal = HB_TRUE;
-
+      }
+      
       if( lpStrings )
       {
          while( wNumStrings )

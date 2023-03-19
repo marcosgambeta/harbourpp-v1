@@ -87,7 +87,9 @@ HB_FUNC( WAPI_ISUSERANADMIN )
       ISUSERANADMIN pIsUserAnAdmin = ( ISUSERANADMIN )
                                      HB_WINAPI_GETPROCADDRESS( hLib, "IsUserAnAdmin" );
       if( pIsUserAnAdmin )
+      {
          bResult = ( pIsUserAnAdmin )();
+      }
 
       FreeLibrary( hLib );
    }

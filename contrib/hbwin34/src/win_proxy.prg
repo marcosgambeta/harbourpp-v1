@@ -44,29 +44,30 @@
  *
  */
 
-FUNCTION win_ProxyDetect( cURL, /* @ */ cByPass )
+FUNCTION win_ProxyDetect(cURL, /* @ */ cByPass)
 
    LOCAL cProxy
    LOCAL nPos
-   LOCAL cProtocol, cHost
+   LOCAL cProtocol
+   LOCAL cHost
 
-   hb_default( @cURL, "" )
+   hb_default(@cURL, "")
 
-   cProtocol := iif( ( nPos := At( "://", cURL ) ) > 1, Lower( Left( cURL, nPos - 1 ) ), "http" )
+   cProtocol := iif((nPos := At("://", cURL)) > 1, Lower(Left(cURL, nPos - 1)), "http")
 
-   cHost := SubStr( cURL, iif( nPos > 0, nPos + Len( "://" ), 1 ) )
-   cHost := iif( ( nPos := At( "/", cHost ) ) > 0, Left( cHost, nPos - 1 ), cHost )
-   cHost := iif( ( nPos := At( "@", cHost ) ) > 0, SubStr( cHost, nPos + 1 ), cHost )
-   cHost := iif( ( nPos := At( ":", cHost ) ) > 0, Left( cHost, nPos - 1 ), cHost )
+   cHost := SubStr(cURL, iif(nPos > 0, nPos + Len("://"), 1))
+   cHost := iif((nPos := At("/", cHost)) > 0, Left(cHost, nPos - 1), cHost)
+   cHost := iif((nPos := At("@", cHost)) > 0, SubStr(cHost, nPos + 1), cHost)
+   cHost := iif((nPos := At(":", cHost)) > 0, Left(cHost, nPos - 1), cHost)
 
-   cProxy := __win_ProxyDetect( cProtocol + "://" + cHost, @cByPass )
+   cProxy := __win_ProxyDetect(cProtocol + "://" + cHost, @cByPass)
 
    /* https://msdn.microsoft.com/library/aa383912 */
-   FOR EACH cProxy IN hb_ATokens( cProxy, ";" )
-      IF ( nPos := At( "=", cProxy ) ) > 1
+   FOR EACH cProxy IN hb_ATokens(cProxy, ";")
+      IF (nPos := At("=", cProxy)) > 1
          /* Return first match */
-         IF Lower( Left( cProxy, nPos - 1 ) ) == cProtocol
-            RETURN SubStr( cProxy, nPos + 1 )
+         IF Lower(Left(cProxy, nPos - 1)) == cProtocol
+            RETURN SubStr(cProxy, nPos + 1)
          ENDIF
       ELSE
          RETURN cProxy

@@ -48,9 +48,9 @@
       hbrun <this_source>.prg [<full_path_of_winerror.h>]
  */
 
-#if defined( __HBSCRIPT__HBSHELL )
+#if defined(__HBSCRIPT__HBSHELL)
 
-PROCEDURE Main( cInputFile )
+PROCEDURE Main(cInputFile)
 
    LOCAL cOutput
    LOCAL cFile
@@ -58,49 +58,47 @@ PROCEDURE Main( cInputFile )
    LOCAL hWas
    LOCAL tmp
 
-   hb_default( @cInputFile, ;
-      hb_GetEnv( "ProgramFiles(x86)", hb_GetEnv( "ProgramFiles" ) ) + ;
-      "\Windows Kits\10\Include\shared\winerror.h" )
+   hb_default(@cInputFile, hb_GetEnv("ProgramFiles(x86)", hb_GetEnv("ProgramFiles")) + "\Windows Kits\10\Include\shared\winerror.h")
 
    ? "Input file:", cInputFile
 
-   IF ( cFile := hb_MemoRead( cInputFile ) ) == ""
+   IF (cFile := hb_MemoRead(cInputFile)) == ""
       ? "Input file not found"
-   ELSEIF Empty( pRegex := hb_regexComp( "[ \t]*#[ \t]*define[ \t]+([a-zA-Z0-9_]+)[ \t]+([\-A-F0-9]+)+L([ \t\n\r]|$)", .T., .T. ) )
+   ELSEIF Empty(pRegex := hb_regexComp("[ \t]*#[ \t]*define[ \t]+([a-zA-Z0-9_]+)[ \t]+([\-A-F0-9]+)+L([ \t\n\r]|$)", .T., .T.))
       ? "Invalid regexp"
    ELSE
-      cOutput := hb_MemoRead( __FILE__ )
-      IF ( tmp := RAt( "<<< */", cOutput ) ) > 0
-         cOutput := Left( cOutput, tmp - 1 ) + "<<< */" + hb_eol() + hb_eol()
+      cOutput := hb_MemoRead(__FILE__)
+      IF (tmp := RAt("<<< */", cOutput)) > 0
+         cOutput := Left(cOutput, tmp - 1) + "<<< */" + hb_eol() + hb_eol()
       ENDIF
 
       cOutput += ;
-         "FUNCTION win_ErrorString( nCode )" + hb_eol() + ;
+         "FUNCTION win_ErrorString(nCode)" + hb_eol() + ;
          hb_eol() + ;
-         "   IF ! HB_ISNUMERIC( nCode )" + hb_eol() + ;
+         "   IF !HB_ISNUMERIC(nCode)" + hb_eol() + ;
          "      nCode := wapi_GetLastError()" + hb_eol() + ;
          "   ENDIF" + hb_eol() + ;
          hb_eol() + ;
          "   SWITCH nCode" + hb_eol()
 
-      hWas := { => }
+      hWas := {=>}
 
-      FOR EACH tmp IN hb_regexAll( pRegex, StrTran( cFile, Chr( 13 ) ),,,,, .T. )
-         IF ! Val( tmp[ 3 ] ) $ hWas
-            hWas[ Val( tmp[ 3 ] ) ] := NIL
-            cOutput += "   CASE " + PadR( tmp[ 3 ], 5 ) + " ; RETURN " + '"' + tmp[ 2 ] + '"' + hb_eol()
+      FOR EACH tmp IN hb_regexAll(pRegex, StrTran(cFile, Chr(13)),,,,, .T.)
+         IF !Val(tmp[3]) $ hWas
+            hWas[Val(tmp[3])] := NIL
+            cOutput += "   CASE " + PadR(tmp[3], 5) + " ; RETURN " + '"' + tmp[2] + '"' + hb_eol()
          ENDIF
       NEXT
 
       cOutput += ;
          "   ENDSWITCH" + hb_eol() + ;
          hb_eol() + ;
-         "   RETURN __win_ErrorString_Manual( nCode )" + hb_eol()
+         "   RETURN __win_ErrorString_Manual(nCode)" + hb_eol()
 
-      IF Empty( hWas )
+      IF Empty(hWas)
          ? "No error definitions found in input file"
       ELSE
-         ? iif( hb_MemoWrit( __FILE__, cOutput ), "Saved OK:", "Save error:" ), __FILE__
+         ? iif(hb_MemoWrit(__FILE__, cOutput), "Saved OK:", "Save error:"), __FILE__
       ENDIF
    ENDIF
 
@@ -108,22 +106,22 @@ PROCEDURE Main( cInputFile )
 
 #endif
 
-FUNCTION win_ErrorDesc( nCode, nLangID )
+FUNCTION win_ErrorDesc(nCode, nLangID)
 
-   LOCAL cMsg := Space( 2048 )
+   LOCAL cMsg := Space(2048)
 
-   wapi_FormatMessage( ,, nCode, nLangID, @cMsg )
+   wapi_FormatMessage(,, nCode, nLangID, @cMsg)
 
-   cMsg := RTrim( cMsg )
-   IF Right( cMsg, Len( hb_eol() ) ) == hb_eol()
-      cMsg := hb_StrShrink( cMsg, Len( hb_eol() ) )
+   cMsg := RTrim(cMsg)
+   IF Right(cMsg, Len(hb_eol())) == hb_eol()
+      cMsg := hb_StrShrink(cMsg, Len(hb_eol()))
    ENDIF
 
-   RETURN RTrim( cMsg )
+   RETURN RTrim(cMsg)
 
 /* Codes that are too complex to parse automatically,
    so they are rolled manually. */
-STATIC FUNCTION __win_ErrorString_Manual( nCode )
+STATIC FUNCTION __win_ErrorString_Manual(nCode)
 
    SWITCH nCode
    CASE 12001 ; RETURN "ERROR_WINHTTP_OUT_OF_HANDLES"
@@ -175,13 +173,13 @@ STATIC FUNCTION __win_ErrorString_Manual( nCode )
    CASE 12186 ; RETURN "ERROR_WINHTTP_CLIENT_CERT_NO_ACCESS_PRIVATE_KEY"
    ENDSWITCH
 
-   RETURN "HBWIN_UNKNOWN_" + hb_ntos( nCode )
+   RETURN "HBWIN_UNKNOWN_" + hb_ntos(nCode)
 
 /* DO NOT REMOVE OR MODIFY THIS LINE, OR ANY CODE BELOW <<< */
 
-FUNCTION win_ErrorString( nCode )
+FUNCTION win_ErrorString(nCode)
 
-   IF ! HB_ISNUMERIC( nCode )
+   IF !HB_ISNUMERIC(nCode)
       nCode := wapi_GetLastError()
    ENDIF
 
@@ -2963,4 +2961,4 @@ FUNCTION win_ErrorString( nCode )
    CASE 15864 ; RETURN "STORE_ERROR_LICENSE_REVOKED"
    ENDSWITCH
 
-   RETURN __win_ErrorString_Manual( nCode )
+   RETURN __win_ErrorString_Manual(nCode)

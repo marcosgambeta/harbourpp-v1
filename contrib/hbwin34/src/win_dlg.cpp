@@ -74,7 +74,9 @@ HB_FUNC( WIN_PRINTDLGDC )
       {
          LPDEVNAMES lpdn = ( LPDEVNAMES ) GlobalLock( pd.hDevNames );
          if( lpdn )
+         {
             HB_STORSTR( ( LPCTSTR ) lpdn + lpdn->wDeviceOffset, 1 );
+         }
          else
             hb_storc( nullptr, 1 );
          GlobalUnlock( pd.hDevNames );
@@ -82,7 +84,9 @@ HB_FUNC( WIN_PRINTDLGDC )
       }
 
       if( pd.hDevMode )
+      {
          GlobalFree( pd.hDevMode );
+      }
 
       hbwapi_ret_HDC( pd.hDC );
 #else
@@ -122,14 +126,18 @@ static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
             {
                n1 = HB_ITEMCOPYSTR( pArrItem, nullptr, 0 );
                if( n1 )
+               {
                   nLen += n1 * 2 + 2;
+               }   
             }
             else if( hb_arrayLen( pArrItem ) >= 2 )
             {
                n1 = HB_ITEMCOPYSTR( hb_arrayGetItemPtr( pArrItem, 1 ), nullptr, 0 );
                n2 = HB_ITEMCOPYSTR( hb_arrayGetItemPtr( pArrItem, 2 ), nullptr, 0 );
                if( n1 && n2 )
+               {
                   nLen += n1 + n2 + 2;
+               }   
             }
          }
          if( nLen )
@@ -185,7 +193,9 @@ static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
                {
                   ++n1;
                   if( lpStr[ n + 1 ] == 0 )
+                  {
                      break;
+                  }   
                }
             }
             if( n1 == 0 )
@@ -202,7 +212,9 @@ static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
                   ++n1;
                }
                if( ( n1 & 1 ) == 0 )
+               {
                   dwMaxIndex = ( DWORD ) n1;
+               }
                else
                {
                   hb_xfree( lpStr );
@@ -216,9 +228,13 @@ static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
    if( pdwIndex )
    {
       if( dwMaxIndex < *pdwIndex )
+      {
          *pdwIndex = dwMaxIndex;
+      }
       else if( dwMaxIndex && *pdwIndex == 0 )
+      {
          *pdwIndex = 1;
+      }   
    }
 
    return lpStr;
@@ -244,7 +260,9 @@ static void s_GetFileName( HB_BOOL fSave )
 
    ofn.nMaxFile         = hbwapi_par_DWORD( 7 );
    if( ofn.nMaxFile < 0x400 )
+   {
       ofn.nMaxFile = ofn.nMaxFile == 0 ? 0x10000 : 0x400;
+   }
    ofn.lpstrFile        = ( LPTSTR ) hb_xgrabz( ofn.nMaxFile * sizeof( TCHAR ) );
 
    ofn.lpstrInitialDir  = HB_PARSTR( 3, &hInitDir, nullptr );
@@ -254,7 +272,9 @@ static void s_GetFileName( HB_BOOL fSave )
                             OFN_HIDEREADONLY | OFN_NOCHANGEDIR );
    ofn.lpstrDefExt      = HB_PARSTR( 4, &hDefExt, nullptr );
    if( ofn.lpstrDefExt && ofn.lpstrDefExt[ 0 ] == '.' )
+   {
       ++ofn.lpstrDefExt;
+   }
 
    HB_ITEMCOPYSTR( hb_param( 8, Harbour::Item::ANY ), ofn.lpstrFile, ofn.nMaxFile );
 
@@ -263,9 +283,10 @@ static void s_GetFileName( HB_BOOL fSave )
       HB_SIZE nLen;
       for( nLen = 0; nLen < ofn.nMaxFile; ++nLen )
       {
-         if( ofn.lpstrFile[ nLen ] == 0 &&
-             ( nLen + 1 == ofn.nMaxFile || ofn.lpstrFile[ nLen + 1 ] == 0 ) )
+         if( ofn.lpstrFile[ nLen ] == 0 && ( nLen + 1 == ofn.nMaxFile || ofn.lpstrFile[ nLen + 1 ] == 0 ) )
+         {
             break;
+         }   
       }
       hb_stornint( ofn.Flags, 1 );
       hb_stornint( ofn.nFilterIndex, 6 );
@@ -276,8 +297,10 @@ static void s_GetFileName( HB_BOOL fSave )
 
    hb_xfree( ofn.lpstrFile );
    if( lpstrFilter )
+   {
       hb_xfree( lpstrFilter );
-
+   }
+   
    hb_strfree( hInitDir );
    hb_strfree( hTitle );
    hb_strfree( hDefExt );

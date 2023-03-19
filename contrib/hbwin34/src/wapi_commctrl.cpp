@@ -219,7 +219,9 @@ HB_FUNC( WAPI_IMAGELIST_GETICONSIZE )
    int cy;
 
    if( ImageList_GetIconSize( hbwapi_par_raw_HIMAGELIST( 1 ), &cx, &cy ) )
+   {
       hb_retl( HB_TRUE );
+   }
    else
    {
       cx = cy = 0;
@@ -242,7 +244,9 @@ HB_FUNC( WAPI_IMAGELIST_GETIMAGEINFO )
    IMAGEINFO ii;
 
    if( ImageList_GetImageInfo( hbwapi_par_raw_HIMAGELIST( 1 ), hbwapi_par_INT( 2 ), &ii ) )
+   {
       hb_retclen( ( char * ) &ii, sizeof( ii ) );
+   }
    else
       hb_retc_null();
 }
@@ -256,7 +260,9 @@ HB_FUNC( WAPI_IMAGELIST_LOADIMAGE )
    LPCTSTR image;
 
    if( HB_ISCHAR( 2 ) )
+   {
       image = HB_PARSTRDEF( 2, &hImage, nullptr );
+   }
    else
       image = MAKEINTRESOURCE( hbwapi_par_INT( 2 ) );
 

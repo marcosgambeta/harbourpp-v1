@@ -77,9 +77,13 @@ HB_FUNC( WAPI_FORMATMESSAGE )
       if( ( dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER ) == 0 )
       {
          if( nSize == 0 && ! HB_ISNUM( 6 ) )
+         {
             nSize = hb_parclen( 5 );
+         }
          if( nSize > 0 )
+         {
             lpBuffer = ( LPTSTR ) hb_xgrab( nSize * sizeof( TCHAR ) );
+         }
          else
             dwFlags |= FORMAT_MESSAGE_ALLOCATE_BUFFER;
       }
@@ -88,7 +92,9 @@ HB_FUNC( WAPI_FORMATMESSAGE )
       dwFlags = ( DWORD ) ~FORMAT_MESSAGE_ALLOCATE_BUFFER;
 
    if( dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER )
+   {
       lpBuffer = ( LPTSTR ) &lpAllocBuff;
+   }
 
    if( lpBuffer )
    {
@@ -107,16 +113,22 @@ HB_FUNC( WAPI_FORMATMESSAGE )
       if( lpBuffer )
       {
          if( dwRetVal && ( dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER ) )
+         {
             lpBuffer = lpAllocBuff;
+         }
          else
             lpBuffer[ nSize - 1 ] = '\0';
 
          HB_STORSTR( dwRetVal ? lpBuffer : nullptr, 5 );
 
          if( lpAllocBuff )
+         {
             LocalFree( lpAllocBuff );
+         }
          else if( lpBuffer && ( dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER ) == 0 )
+         {
             hb_xfree( lpBuffer );
+         }
       }
 
       hb_strfree( hSource );

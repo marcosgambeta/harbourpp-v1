@@ -75,7 +75,9 @@ static BOOL CALLBACK wapi_DialogFuncProc( HWND hDlg, UINT message, WPARAM wParam
       {
          hb_vmPushNumInt( wParam );
          if( HIWORD( wParam ) == 0 || HIWORD( wParam ) == 1 )
+         {
             hb_vmPushNumInt( lParam );
+         }
          else
             hbwapi_vmPush_HANDLE( ( HWND ) lParam );
          /* TODO: rethink this. Called proc can do this on its own,
@@ -199,8 +201,10 @@ HB_FUNC( WAPI_SENDDLGITEMMESSAGE )  /* NOTE: unsafe function, may corrupt memory
    LRESULT result;
 
    if( szText )
+   {
       szText = HB_STRUNSHARE( &hText, szText, nLen );
-
+   }
+   
    result = SendDlgItemMessage( hbwapi_par_raw_HWND( 1 ),
                                 hb_parni( 2 ),
                                 hbwapi_par_UINT( 3 ),
@@ -210,7 +214,9 @@ HB_FUNC( WAPI_SENDDLGITEMMESSAGE )  /* NOTE: unsafe function, may corrupt memory
    hb_retnint( result );
 
    if( szText )
+   {
       HB_STORSTRLEN( szText, nLen, 5 );
+   }
    else
       hb_storc( nullptr, 5 );
 
@@ -277,8 +283,10 @@ HB_FUNC( __WAPI_DLGTEMPLATE_RAW_NEW )
       nchar = hb_wstrnlen( szText, nchar );
 
       if( nchar > 256 )
+      {
          nchar = 256;
-
+      }
+      
       hb_wstrncpy( ( HB_WCHAR * ) p, szText, nchar );
       p += nchar + 1;
 
@@ -301,7 +309,9 @@ HB_FUNC( __WAPI_DLGTEMPLATE_RAW_NEW )
       nchar = hb_wstrnlen( szText, nchar );
 
       if( nchar > 256 )
+      {
          nchar = 256;
+      }
 
       hb_wstrncpy( ( HB_WCHAR * ) p, szText, nchar );
       p += nchar + 1;
@@ -339,7 +349,9 @@ HB_FUNC( __WAPI_DLGTEMPLATE_RAW_NEW )
          nchar = hb_wstrnlen( szText, nchar );
 
          if( nchar > 256 )
+         {
             nchar = 256;
+         }
 
          hb_wstrncpy( ( HB_WCHAR * ) p, szText, nchar );
          p += nchar + 1;
@@ -360,7 +372,9 @@ HB_FUNC( __WAPI_DLGTEMPLATE_RAW_NEW )
          nchar = hb_wstrnlen( szText, nchar );
 
          if( nchar > 256 )
+         {
             nchar = 256;
+         }
 
          hb_wstrncpy( ( HB_WCHAR * ) p, szText, nchar );
          p += nchar + 1;

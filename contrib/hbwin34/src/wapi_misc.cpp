@@ -107,7 +107,9 @@ static TCHAR * hbwapi_FileNameAtSystemDir( const TCHAR * pFileName )
       LPTSTR buffer;
 
       if( pFileName )
+      {
          nLen += ( UINT ) hbwapi_tstrlen( pFileName ) + 1;
+      }
 
       buffer = ( LPTSTR ) hb_xgrab( nLen * sizeof( TCHAR ) );
 
@@ -137,13 +139,17 @@ static TCHAR * hbwapi_FileNameAtSystemDir( const TCHAR * pFileName )
 static HB_BOOL hbwapi_has_search_system32()
 {
    if( hb_iswin8() )
+   {
       return HB_TRUE;
+   }
    else
    {
       HMODULE hKernel32 = GetModuleHandle( TEXT( "kernel32.dll" ) );
 
       if( hKernel32 )
+      {
          return HB_WINAPI_GETPROCADDRESS( hKernel32, "AddDllDirectory" ) != nullptr;  /* Detect KB2533623 */
+      }   
    }
 
    return HB_FALSE;
@@ -168,7 +174,9 @@ HMODULE hbwapi_LoadLibrarySystemVM( const char * szFileName )
    HMODULE h = hbwapi_LoadLibrarySystem( HB_FSNAMECONV( szFileName, &lpFree ) );
 
    if( lpFree )
+   {
       hb_xfree( lpFree );
+   }
 
    return h;
 }

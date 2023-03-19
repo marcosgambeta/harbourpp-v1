@@ -73,80 +73,111 @@ static int hb_jpeg_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int *
    HB_BYTE bpc = 0;
 
    if( piHeight )
+   {
       *piHeight = ( int ) height;
+   }
    if( piWidth )
+   {
       *piWidth = ( int ) width;
+   }
    if( piColorSpace )
+   {
       *piColorSpace = ( int ) colorspace;
+   }
    if( piBPC )
+   {
       *piBPC = ( int ) bpc;
+   }
 
    if( nPos >= nBufferSize )
+   {
       return _JPEG_RET_OVERRUN;
+   }
 
    tag = HB_SWAP_UINT16( ( HB_U16 ) HB_GET_LE_UINT16( buffer + nPos ) ); nPos += 2;
 
    /* SOI marker */
    if( tag != 0xFFD8 )
+   {
       return _JPEG_RET_INVALID;
+   }
 
    for( ;; )
    {
       HB_U16 size;
 
       if( nPos >= nBufferSize )
+      {
          return _JPEG_RET_OVERRUN;
+      }
 
       tag = HB_SWAP_UINT16( ( HB_U16 ) HB_GET_LE_UINT16( buffer + nPos ) ); nPos += 2;
 
       if( nPos >= nBufferSize )
+      {
          return _JPEG_RET_OVERRUN;
+      }
 
       size = HB_SWAP_UINT16( ( HB_U16 ) HB_GET_LE_UINT16( buffer + nPos ) ); nPos += 2;
 
       /* SOF markers */
-      if( tag == 0xFFC0 ||
-          tag == 0xFFC1 ||
-          tag == 0xFFC2 ||
-          tag == 0xFFC9 )
+      if( tag == 0xFFC0 || tag == 0xFFC1 || tag == 0xFFC2 || tag == 0xFFC9 )
       {
          if( nPos >= nBufferSize )
+         {
             return _JPEG_RET_OVERRUN;
+         }
 
          colorspace = *( buffer + nPos ); nPos += 1;
 
          if( nPos >= nBufferSize )
+         {
             return _JPEG_RET_OVERRUN;
+         }
 
          height = HB_SWAP_UINT16( ( HB_U16 ) HB_GET_LE_UINT16( buffer + nPos ) ); nPos += 2;
 
          if( nPos >= nBufferSize )
+         {
             return _JPEG_RET_OVERRUN;
+         }
 
          width = HB_SWAP_UINT16( ( HB_U16 ) HB_GET_LE_UINT16( buffer + nPos ) ); nPos += 2;
 
          if( nPos >= nBufferSize )
+         {
             return _JPEG_RET_OVERRUN;
+         }
 
          bpc = *( buffer + nPos );
 
          break;
       }
       else if( ( tag | 0x00FF ) != 0xFFFF ) /* lost marker */
+      {
          return _JPEG_RET_UNSUPPORTED;
+      }
 
       nPos += size - 2;
 
       if( nPos >= nBufferSize )
+      {
          return _JPEG_RET_OVERRUN;
+      }
    }
 
    if( piHeight )
+   {
       *piHeight = ( int ) height;
+   }
    if( piWidth )
+   {
       *piWidth = ( int ) width;
+   }
    if( piBPC )
+   {
       *piBPC = ( int ) bpc;
+   }
    if( piColorSpace )
    {
       switch( colorspace )
@@ -186,7 +217,9 @@ static void hb_png_read_func( png_structp png_ptr, png_bytep data, png_uint_32 l
    png_uint_32 pos;
 
    for( pos = 0; pos < length && hb_png_read_data->nPos < hb_png_read_data->nLen; )
+   {
       data[ pos++ ] = hb_png_read_data->buffer[ hb_png_read_data->nPos++ ];
+   }
 
    hb_png_read_data->bOk = ( length == pos );
 }
@@ -201,25 +234,39 @@ static int hb_png_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
    int iResult;
 
    if( piHeight )
+   {
       *piHeight = 0;
+   }
    if( piWidth )
+   {
       *piWidth = 0;
+   }
    if( piColorSpace )
+   {
       *piColorSpace = 0;
+   }
    if( piBPC )
+   {
       *piBPC = 0;
+   }
 
    if( nBufferSize < sizeof( header ) )
+   {
       return _PNG_RET_ERR_INVALID1;
+   }
 
    memcpy( header, buffer, sizeof( header ) );
 
    if( png_sig_cmp( header, ( png_size_t ) 0, sizeof( header ) ) )
+   {
       return _PNG_RET_ERR_INVALID2;
+   }
 
    png_ptr = png_create_read_struct( PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr );
    if( ! png_ptr )
+   {
       return _PNG_RET_ERR_INIT1;
+   }
 
    info_ptr = png_create_info_struct( png_ptr );
    if( ! info_ptr )
@@ -248,13 +295,21 @@ static int hb_png_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
       png_get_IHDR( png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, nullptr, nullptr, nullptr );
 
       if( piHeight )
+      {
          *piHeight = ( int ) height;
+      }
       if( piWidth )
+      {
          *piWidth = ( int ) width;
+      }
       if( piBPC )
+      {
          *piBPC = bit_depth;
+      }
       if( piColorSpace )
+      {
          *piColorSpace = color_type;
+      }
 
       iResult = _PNG_RET_OK;
    }

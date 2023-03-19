@@ -96,7 +96,9 @@ HB_FUNC( WIN_LOADRESOURCE )
             void * pMem = LockResource( hMem );
 
             if( pMem )
+            {
                hb_retclen( ( char * ) pMem, SizeofResource( nullptr, hRes ) );
+            }   
          }
       }
 
@@ -116,7 +118,9 @@ HB_FUNC( WIN_GETCOMMANDLINEPARAM )
    while( lpCmdLine[ pos ] && ( fQuote || ! HB_ISSPACE( lpCmdLine[ pos ] ) ) )
    {
       if( lpCmdLine[ pos ] == '"' )
+      {
          fQuote = ! fQuote;
+      }
       pos++;
    }
    while( HB_ISSPACE( lpCmdLine[ pos ] ) )

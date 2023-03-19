@@ -119,8 +119,10 @@ HB_BOOL hb_oleAxInit( void )
       s_pAtlAxGetControl = ( PHB_AX_GETCTRL ) HB_WINAPI_GETPROCADDRESS( s_hLib, "AtlAxGetControl" );
 
       if( pAtlAxWinInit )
+      {
          ( *pAtlAxWinInit )();
-
+      }
+      
       hb_vmAtQuit( hb_oleAxExit, nullptr );
    }
    return HB_TRUE;
@@ -139,8 +141,10 @@ PHB_ITEM hb_oleAxControlNew( PHB_ITEM pItem, HWND hWnd )
    IDispatch * pDisp = nullptr;
 
    if( pItem )
+   {
       hb_itemClear( pItem );
-
+   }
+   
    if( ! hb_oleAxInit() || ! s_pAtlAxGetControl )
    {
       hb_oleSetError( S_OK );
@@ -155,15 +159,19 @@ PHB_ITEM hb_oleAxControlNew( PHB_ITEM pItem, HWND hWnd )
          lOleError = HB_VTBL( pUnk )->QueryInterface( HB_THIS_( pUnk ) HB_ID_REF( IID_IDispatch ), ( void ** ) ( void * ) &pDisp );
 
          if( lOleError == S_OK )
+         {
             pItem = hb_oleItemPut( pItem, pDisp );
-
+         }
+         
          HB_VTBL( pUnk )->Release( HB_THIS( pUnk ) );
       }
 
       hb_oleSetError( lOleError );
 
       if( lOleError != S_OK )
+      {
          hb_errRT_OLE( EG_ARG, 1011, ( HB_ERRCODE ) lOleError, nullptr, HB_ERR_FUNCNAME );
+      }   
    }
 
    return pItem;
@@ -175,7 +183,9 @@ HB_FUNC( __AXGETCONTROL )  /* ( hWnd ) --> pDisp */
    HWND hWnd = hbwapi_par_raw_HWND( 1 );
 
    if( ! hWnd )
+   {
       hb_errRT_OLE( EG_ARG, 1012, 0, nullptr, HB_ERR_FUNCNAME );
+   }
    else
       hb_oleAxControlNew( hb_stackReturnItem(), hWnd );
 }
@@ -343,7 +353,9 @@ static HRESULT STDMETHODCALLTYPE Invoke( IDispatch * lpThis, DISPID dispid, REFI
    HB_SYMBOL_UNUSED( puArgErr );
 
    if( ! IsEqualIID( riid, HB_ID_REF( IID_NULL ) ) )
+   {
       return DISP_E_UNKNOWNINTERFACE;
+   }
 
    hr = DISP_E_MEMBERNOTFOUND;
 
@@ -361,7 +373,9 @@ static HRESULT STDMETHODCALLTYPE Invoke( IDispatch * lpThis, DISPID dispid, REFI
       if( pAction && hb_oleDispInvoke( nullptr, pAction, pKey,
                                        pParams, pVarResult, nullptr,
                                        ( ( ISink * ) lpThis )->uiClass ) )
+      {
          hr = S_OK;
+      }
 
       hb_stackPop();
    }
@@ -393,7 +407,9 @@ static char * GUID2String( GUID * pID )
    StringFromGUID2( pID, olestr, HB_SIZEOFARRAY( olestr ) );
    iLen = WideCharToMultiByte( CP_ACP, 0, olestr, -1, strguid, sizeof( strguid ), nullptr, nullptr );
    if( iLen )
+   {
       strguid[ iLen - 1 ] = 0;
+   }
    return strguid;
 }
 #endif
@@ -422,7 +438,9 @@ static HRESULT _get_default_sink( IDispatch * iDisp, const char * szEvent, IID *
          HB_VTBL( iPCI2 )->Release( HB_THIS( iPCI2 ) );
 
          if( hr == S_OK )
+         {
             return S_OK;
+         }   
       }
       else
          HB_TRACE( HB_TR_DEBUG, ( "_get_default_sink() IProvideClassInfo2 obtain error %08lX", hr ) );
@@ -664,7 +682,9 @@ HB_FUNC( __AXREGISTERHANDLER )  /* ( pDisp, bHandler [, cIID] ) --> pSink */
                   pSink->rriid = rriid;
                   pSink->uiClass = 0;
                   if( ( lOleError = HB_VTBL( pCP )->Advise( HB_THIS_( pCP ) ( IUnknown* ) pSink, &dwCookie ) ) != S_OK )
+                  {
                      dwCookie = 0;
+                  }
                   pSink->pConnectionPoint = pCP;
                   pSink->dwCookie = dwCookie;
 
@@ -681,7 +701,9 @@ HB_FUNC( __AXREGISTERHANDLER )  /* ( pDisp, bHandler [, cIID] ) --> pSink */
 
          hb_oleSetError( lOleError );
          if( lOleError != S_OK )
+         {
             hb_ret();
+         }   
       }
       else
          hb_errRT_OLE( EG_ARG, 1015, 0, nullptr, HB_ERR_FUNCNAME );

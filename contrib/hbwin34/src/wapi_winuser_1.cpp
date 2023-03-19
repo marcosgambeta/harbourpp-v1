@@ -67,7 +67,9 @@ HB_FUNC( WAPI_SETWINDOWPOS )
    BOOL bResult;
 
    if( hbwapi_is_HANDLE( 2 ) )
+   {
       hWndInsertAfter = hbwapi_par_raw_HWND( 2 );
+   }
    else if( HB_ISNUM( 2 ) )
    {
       /* Do not delete this, it will be active if
@@ -78,7 +80,9 @@ HB_FUNC( WAPI_SETWINDOWPOS )
              hWndInsertAfter == HWND_BOTTOM ||
              hWndInsertAfter == HWND_TOPMOST ||
              hWndInsertAfter == HWND_NOTOPMOST ) )
+      {
          hWndInsertAfter = nullptr;
+      }   
    }
    else
       hWndInsertAfter = nullptr;
@@ -313,7 +317,9 @@ HB_FUNC( WAPI_GETSCROLLBARINFO )
       hbwapi_SetLastError( GetLastError() );
 
       if( bSuccess )
+      {
          hb_storclen( ( char * ) &sbi, sizeof( sbi ), 3 );
+      }
       else
          hb_storc( nullptr, 3 );
    }
@@ -346,7 +352,9 @@ HB_FUNC( WAPI_GETSCROLLINFO )
       hbwapi_SetLastError( GetLastError() );
 
       if( bSuccess )
+      {
          hb_storclen( ( char * ) &si, sizeof( si ), 3 );
+      }
       else
          hb_storc( nullptr, 3 );
    }
@@ -514,7 +522,9 @@ HB_FUNC( WAPI_SETACTIVEWINDOW )
 HB_FUNC( WAPI_LOADBITMAP )
 {
    if( HB_ISNUM( 2 ) )
+   {
       hb_retptr( LoadBitmap( hbwapi_par_raw_HINSTANCE( 1 ), MAKEINTRESOURCE( hbwapi_par_INT( 2 ) ) ) );
+   }
    else
    {
       void * hBmp;
@@ -636,7 +646,9 @@ HB_FUNC( WAPI_CHECKMENUITEM )
                                    hbwapi_par_UINT( 2 ), hbwapi_par_UINT( 3 ) );
    hbwapi_SetLastError( GetLastError() );
    if( dwResult == ( DWORD ) -1 )
+   {
       hbwapi_ret_NI( -1 );
+   }
    else
       hbwapi_ret_DWORD( dwResult );
 }
@@ -690,7 +702,9 @@ HB_FUNC( WAPI_INSERTMENU )
    LPCTSTR lpNewItem = HB_PARSTR( 5, &hNewItemStr, nullptr );
 
    if( ( uFlags & MF_POPUP ) == MF_POPUP )
+   {
       uIDNewItem = ( UINT_PTR ) hbwapi_par_raw_HMENU( 4 );
+   }
    else
    {
       if( HB_ISPOINTER( 4 ) )  /* NOTE: assumes that pointer cannot be numeric */
@@ -705,23 +719,31 @@ HB_FUNC( WAPI_INSERTMENU )
    if( ( uFlags & MF_SEPARATOR ) == 0 )
    {
       if( lpNewItem )
+      {
          uFlags |= MF_STRING;
+      }
       else if( HB_ISNUM( 5 ) )
       {
          lpNewItem = ( LPCTSTR ) ( HB_PTRUINT ) hb_parnint( 5 );
          if( lpNewItem )
+         {
             uFlags |= MF_OWNERDRAW;
+         }
       }
 #if ! defined( HB_OS_WIN_CE )
       else if( hbwapi_is_HANDLE( 5 ) )
       {
          lpNewItem = ( LPCTSTR ) hbwapi_par_raw_HBITMAP( 5 );
          if( lpNewItem )
+         {
             uFlags |= MF_BITMAP;
+         }
       }
 #endif
       else if( hb_pcount() <= 3 )
+      {
          uFlags |= MF_SEPARATOR;
+      }
    }
 
    fResult = InsertMenu( hMenu, uPosition, uFlags, uIDNewItem, lpNewItem );
@@ -740,7 +762,9 @@ HB_FUNC( WAPI_APPENDMENU )
    LPCTSTR lpNewItem = HB_PARSTR( 4, &hNewItemStr, nullptr );
 
    if( ( uFlags & MF_POPUP ) == MF_POPUP )
+   {
       uIDNewItem = ( UINT_PTR ) hbwapi_par_raw_HMENU( 3 );
+   }
    else
    {
       if( HB_ISPOINTER( 3 ) )  /* NOTE: assumes that pointer cannot be numeric */
@@ -755,23 +779,31 @@ HB_FUNC( WAPI_APPENDMENU )
    if( ( uFlags & MF_SEPARATOR ) == 0 )
    {
       if( lpNewItem )
+      {
          uFlags |= MF_STRING;
+      }
       else if( HB_ISNUM( 4 ) )
       {
          lpNewItem = ( LPCTSTR ) ( HB_PTRUINT ) hb_parnint( 4 );
          if( lpNewItem )
+         {
             uFlags |= MF_OWNERDRAW;
+         }
       }
 #if ! defined( HB_OS_WIN_CE )
       else if( hbwapi_is_HANDLE( 4 ) )
       {
          lpNewItem = ( LPCTSTR ) hbwapi_par_raw_HBITMAP( 4 );
          if( lpNewItem )
+         {
             uFlags |= MF_BITMAP;
+         }
       }
 #endif
       else if( hb_pcount() <= 2 )
+      {
          uFlags |= MF_SEPARATOR;
+      }
    }
 
    fResult = AppendMenu( hMenu, uFlags, uIDNewItem, lpNewItem );
@@ -840,7 +872,9 @@ HB_FUNC( WAPI_GETMENUSTATE )
                                  hbwapi_par_UINT( 3 ) );
    hbwapi_SetLastError( GetLastError() );
    if( uiResult == ( UINT ) -1 )
+   {
       hbwapi_ret_NI( -1 );
+   }
    else
       hbwapi_ret_UINT( uiResult );
 #endif
@@ -867,7 +901,9 @@ HB_FUNC( WAPI_GETMENUITEMID )
    UINT uiResult = GetMenuItemID( hbwapi_par_raw_HMENU( 1 ), hbwapi_par_UINT( 2 ) );
    hbwapi_SetLastError( GetLastError() );
    if( uiResult == ( UINT ) -1 )
+   {
       hbwapi_ret_NI( -1 );
+   }
    else
       hbwapi_ret_UINT( uiResult );
 #endif
@@ -899,7 +935,9 @@ HB_FUNC( WAPI_GETMENUDEFAULTITEM )
 
    hbwapi_SetLastError( GetLastError() );
    if( uiResult == ( UINT ) -1 )
+   {
       hbwapi_ret_NI( -1 );
+   }
    else
       hbwapi_ret_UINT( uiResult );
 #endif
@@ -1180,7 +1218,9 @@ HB_FUNC( WAPI_POSTMESSAGE )  /* NOTE: unsafe function, may write past buffer */
    HB_BOOL bResult;
 
    if( szText )
+   {
       szText = HB_STRUNSHARE( &hText, szText, nLen );
+   }
 
    bResult = PostMessage( hbwapi_par_raw_HWND( 1 ),
                           hbwapi_par_UINT( 2 ),
@@ -1201,7 +1241,9 @@ HB_FUNC( WAPI_SENDNOTIFYMESSAGE )  /* NOTE: unsafe function, may write past buff
    HB_BOOL bResult;
 
    if( szText )
+   {
       szText = HB_STRUNSHARE( &hText, szText, nLen );
+   }
 
    bResult = SendNotifyMessage( hbwapi_par_raw_HWND( 1 ),
                                 hbwapi_par_UINT( 2 ),
@@ -1222,7 +1264,9 @@ HB_FUNC( WAPI_SENDMESSAGE )  /* NOTE: unsafe function, may write past buffer */
    LRESULT result;
 
    if( szText )
+   {
       szText = HB_STRUNSHARE( &hText, szText, nLen );
+   }
 
    result = SendMessage( hbwapi_par_raw_HWND( 1 ),
                          hbwapi_par_UINT( 2 ),
@@ -1232,7 +1276,9 @@ HB_FUNC( WAPI_SENDMESSAGE )  /* NOTE: unsafe function, may write past buffer */
    hb_retnint( result );
 
    if( szText )
+   {
       HB_STORSTRLEN( szText, nLen, 4 );
+   }
    else
       hb_storc( nullptr, 4 );
 
@@ -1249,7 +1295,9 @@ HB_FUNC( WAPI_SENDMESSAGETIMEOUT )  /* NOTE: unsafe function, may write past buf
    LRESULT result;
 
    if( szText )
+   {
       szText = HB_STRUNSHARE( &hText, szText, nLen );
+   }
 
    result = SendMessageTimeout( hbwapi_par_raw_HWND( 1 ),
                                 hbwapi_par_UINT( 2 ),
@@ -1262,7 +1310,9 @@ HB_FUNC( WAPI_SENDMESSAGETIMEOUT )  /* NOTE: unsafe function, may write past buf
    hb_retnint( result );
 
    if( szText )
+   {
       HB_STORSTRLEN( szText, nLen, 4 );
+   }
    else
       hb_storc( nullptr, 4 );
 
@@ -1409,7 +1459,9 @@ HB_FUNC( WAPI_GETICONINFO )  /* TODO: added support to return hash instead of ar
    hbwapi_arraySet_HANDLE( aInfo, 5, ii.hbmColor );
 
    if( ! hb_itemParamStoreRelease( 2, aInfo ) )
+   {
       hb_itemRelease( aInfo );
+   }   
 }
 
 HB_FUNC( WAPI_DEFWINDOWPROC )

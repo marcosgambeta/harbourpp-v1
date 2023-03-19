@@ -74,8 +74,7 @@ static UINT_PTR CALLBACK CCHookProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM 
       fInit = HB_TRUE;
    }
 
-   if( ( pBlock = ( PHB_ITEM ) GetProp( hWnd, _HB_CHOOSECOLOR_CB_PROP_ ) ) != nullptr &&
-       hb_vmRequestReenter() )
+   if( ( pBlock = ( PHB_ITEM ) GetProp( hWnd, _HB_CHOOSECOLOR_CB_PROP_ ) ) != nullptr && hb_vmRequestReenter() )
    {
       PHB_ITEM pWnd = hbwapi_itemPut_HANDLE( nullptr, hWnd );
       PHB_ITEM pMsg = hb_itemPutNInt( nullptr, msg );
@@ -134,7 +133,9 @@ HB_FUNC( WIN_CHOOSECOLOR )
    cc.lpTemplateName = HB_PARSTR( 7, &hTpl, nullptr );
 
    if( ChooseColor( &cc ) )
+   {
       hbwapi_ret_COLORREF( cc.rgbResult );
+   }
    else
       hbwapi_ret_COLORREF( -1 );
 

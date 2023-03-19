@@ -285,13 +285,34 @@ PDEVMODE hbwapi_par_PDEVMODE( int iParam )
 
 HB_FUNC( __WAPI_TYPE )
 {
-   if(      hbwapi_is_HDC( 1 ) )      hb_retc_const( "HDC" );
-   else if( hbwapi_is_HPEN( 1 ) )     hb_retc_const( "HPEN" );
-   else if( hbwapi_is_HBRUSH( 1 ) )   hb_retc_const( "HBRUSH" );
-   else if( hbwapi_is_HFONT( 1 ) )    hb_retc_const( "HFONT" );
-   else if( hbwapi_is_PDEVMODE( 1 ) ) hb_retc_const( "PDEVMODE" );
-   else if( HB_ISPOINTER( 1 ) )       hb_retc_const( "HANDLE" );
-   else                               hb_retc_null();
+   if( hbwapi_is_HDC( 1 ) )
+   {
+      hb_retc_const( "HDC" );
+   }
+   else if( hbwapi_is_HPEN( 1 ) )
+   {
+      hb_retc_const( "HPEN" );
+   }
+   else if( hbwapi_is_HBRUSH( 1 ) )
+   {
+      hb_retc_const( "HBRUSH" );
+   }
+   else if( hbwapi_is_HFONT( 1 ) )
+   {
+      hb_retc_const( "HFONT" );
+   }
+   else if( hbwapi_is_PDEVMODE( 1 ) )
+   {
+      hb_retc_const( "PDEVMODE" );
+   }
+   else if( HB_ISPOINTER( 1 ) )
+   {
+      hb_retc_const( "HANDLE" );
+   }
+   else
+   {
+      hb_retc_null();
+   }
 }
 
 #if defined( __HBWIN_WITH_UNSAFE_HANDLES )
@@ -302,7 +323,9 @@ HB_FUNC( __WAPI_DBGUNSAFEHANDLES )
    hb_retni( s_iDbgUnsafeMode );
 
    if( HB_ISNUM( 1 ) )
+   {
       s_iDbgUnsafeMode = hb_parni( 1 );
+   }
 }
 
 /* The goal is to minimize numeric pointers circulating
@@ -327,7 +350,9 @@ static HB_BOOL s_handle_trace( int n )
             HB_TRACE( HB_TR_ALWAYS, ( "%s:%s:%i: __hbwapi_par*_handle(%d)", file, procname, line, n ) );
 
             if( s_iDbgUnsafeMode == 2 )
+            {
                hb_errRT_BASE( EG_ARG, 19000, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+            }
          }
       }
 
@@ -344,7 +369,9 @@ void * __hbwapi_par_handle( int n )
 {
 #if defined( __HBWIN_WITH_UNSAFE_HANDLES )
    if( HB_ISNUM( n ) )
+   {
       return s_handle_trace( n ) ? ( void * ) ( HB_PTRUINT ) hb_parnint( n ) : nullptr;
+   }
    else
 #endif
       return hb_parptr( n );
@@ -354,7 +381,9 @@ void * __hbwapi_parv_handle( int n, int i )
 {
 #if defined( __HBWIN_WITH_UNSAFE_HANDLES )
    if( HB_ISNUM( n ) )
+   {
       return s_handle_trace( n ) ? ( void * ) ( HB_PTRUINT ) hb_parvnint( n, i ) : nullptr;
+   }
    else
 #endif
       return hb_parvptr( n, i );
@@ -364,7 +393,9 @@ void * hbwapi_itemGet_HANDLE( PHB_ITEM pItem )
 {
 #if defined( __HBWIN_WITH_UNSAFE_HANDLES )
    if( pItem && HB_IS_NUMERIC( pItem ) )
+   {
       return ( void * ) ( HB_PTRUINT ) hb_itemGetNInt( pItem );
+   }
    else
 #endif
       return hb_itemGetPtr( pItem );
