@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbwin.h"
+#include "hbwin.hpp"
 #include "hbwapi.hpp"
 
 #include <commdlg.h>

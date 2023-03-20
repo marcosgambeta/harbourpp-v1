@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbwin.h"
+#include "hbwin.hpp"
 #include "hbapiitm.hpp"
 
 static HKEY hb_regkeyconv(HB_PTRUINT nKey)

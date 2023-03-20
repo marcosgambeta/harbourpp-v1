@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbwin.h"
+#include "hbwin.hpp"
 #include "hbapierr.hpp"
 #include "hbinit.hpp"
 

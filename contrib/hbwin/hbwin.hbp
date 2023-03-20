@@ -18,7 +18,7 @@
 -depincpathlocal=png:../../src/3rd/png
 
 -instfile=contrib:hbwapi.hpp
--instfile=contrib:hbwin.h
+-instfile=contrib:hbwin.hpp
 -instfile=contrib:hbwinole.h
 -instfile=contrib:*.def
 

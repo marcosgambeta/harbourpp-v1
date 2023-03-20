@@ -48,7 +48,7 @@
 
 #if defined(HB_OS_WIN)
 
-#include "hbwin.h"
+#include "hbwin.hpp"
 #include "hbwinole.h"
 
 HB_FUNC_TRANSLATE( OLEERROR     , WIN_OLEERROR )

@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbwin.h"
+#include "hbwin.hpp"
 
 HB_FUNC( WCE_SMSSENDMESSAGE ) /* cMessage, cNumber */
 {

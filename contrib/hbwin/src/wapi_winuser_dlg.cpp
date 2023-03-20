@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbwin.h"
+#include "hbwin.hpp"
 #include "hbwapi.hpp"
 #include "hbvm.hpp"
 #include "hbapiitm.hpp"
