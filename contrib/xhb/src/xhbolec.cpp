@@ -49,7 +49,7 @@
 #if defined(HB_OS_WIN)
 
 #include "hbwin.hpp"
-#include "hbwinole.h"
+#include "hbwinole.hpp"
 
 HB_FUNC_TRANSLATE( OLEERROR     , WIN_OLEERROR )
 HB_FUNC_TRANSLATE( OLE2TXTERROR , WIN_OLEERRORTEXT )

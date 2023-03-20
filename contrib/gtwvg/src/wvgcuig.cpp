@@ -64,7 +64,7 @@
  *                            Pure Statics
  */
 
-#include "hbwinole.h"
+#include "hbwinole.hpp"
 #include "gtwvg.hpp"
 
 static PHB_GOBJS hb_wvg_ObjectNew(PHB_GTWVT pWVT)

@@ -63,7 +63,7 @@
 
 #include "hbapi.hpp"
 #include "hbwapi.hpp"
-#include "hbwinole.h"
+#include "hbwinole.hpp"
 
 #if defined( _MSC_VER )
 #  pragma warning(push)

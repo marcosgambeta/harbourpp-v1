@@ -19,7 +19,7 @@
 
 -instfile=contrib:hbwapi.hpp
 -instfile=contrib:hbwin.hpp
--instfile=contrib:hbwinole.h
+-instfile=contrib:hbwinole.hpp
 -instfile=contrib:*.def
 
 ${hb_name}.hbx

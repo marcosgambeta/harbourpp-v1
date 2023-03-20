@@ -45,7 +45,7 @@
  */
 
 #include "hbwapi.hpp"
-#include "hbwinole.h"
+#include "hbwinole.hpp"
 #include <olectl.h>
 
 #include "hbapistr.hpp"

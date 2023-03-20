@@ -56,7 +56,7 @@
 
 /* GUI Drawing Function */
 
-#include "hbwinole.h"
+#include "hbwinole.hpp"
 #include "gtwvg.hpp"
 
 #define __SETGUI__

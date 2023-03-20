@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbwinole.h"
+#include "hbwinole.hpp"
 #include "hbapicdp.hpp"
 #include "hbapilng.hpp"
 #include "hbapistr.hpp"

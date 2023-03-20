@@ -55,7 +55,7 @@
 
 #include "hbapi.hpp"
 #include "hbwapi.hpp"
-#include "hbwinole.h"
+#include "hbwinole.hpp"
 
 #if ! defined( HB_OS_WIN_CE )
 #  if defined( _MSC_VER )

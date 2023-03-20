@@ -49,7 +49,7 @@
 #include "hbapi.hpp"
 
 #include "hbwinuni.hpp"
-#include "hbwinole.h"
+#include "hbwinole.hpp"
 #include <olectl.h>
 
 #define MAX_CLSID_SIZE    64

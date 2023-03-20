@@ -62,7 +62,7 @@
  *
  */
 
-#include "hbwinole.h"
+#include "hbwinole.hpp"
 #include "gtwvg.hpp"
 
 #ifndef WS_EX_COMPOSITED
