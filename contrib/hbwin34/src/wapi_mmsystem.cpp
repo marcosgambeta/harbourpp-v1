@@ -45,16 +45,14 @@
  */
 
 #include "hbwapi.hpp"
-
 #include <mmsystem.h>
 
+/*
+WAPI_PLAYSOUND(pszSound, hmod, fdwSound) --> .T.|.F.
+*/
 HB_FUNC( WAPI_PLAYSOUND )
 {
    void * hSound;
-
-   hb_retl( PlaySound( HB_PARSTR( 1, &hSound, nullptr ) /* pszSound */,
-                       ( HMODULE ) hb_parptr( 2 ) /* hmod */,
-                       ( DWORD ) hb_parnl( 3 ) /* fdwSound */ ) );
-
-   hb_strfree( hSound );
+   hb_retl(PlaySound(HB_PARSTR(1, &hSound, nullptr), ( HMODULE ) hb_parptr(2), ( DWORD ) hb_parnl(3)));
+   hb_strfree(hSound);
 }

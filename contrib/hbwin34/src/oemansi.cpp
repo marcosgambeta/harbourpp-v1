@@ -51,7 +51,7 @@
 
 HB_FUNC( WIN_ANSITOOEM )
 {
-   PHB_ITEM pString = hb_param( 1, Harbour::Item::STRING );
+   PHB_ITEM pString = hb_param(1, Harbour::Item::STRING);
 
    if( pString )
    {
@@ -70,16 +70,18 @@ HB_FUNC( WIN_ANSITOOEM )
 
       WideCharToMultiByte( CP_OEMCP, 0, pszWide, nWideLen, pszDst, nLen, nullptr, nullptr );
 
-      hb_xfree( pszWide );
+      hb_xfree(pszWide);
       hb_retclen_buffer( pszDst, nLen );
    }
    else
+   {
       hb_retc_null();
+   }
 }
 
 HB_FUNC( WIN_OEMTOANSI )
 {
-   PHB_ITEM pString = hb_param( 1, Harbour::Item::STRING );
+   PHB_ITEM pString = hb_param(1, Harbour::Item::STRING);
 
    if( pString )
    {
@@ -98,9 +100,11 @@ HB_FUNC( WIN_OEMTOANSI )
 
       WideCharToMultiByte( CP_ACP, 0, pszWide, nWideLen, pszDst, nLen, nullptr, nullptr );
 
-      hb_xfree( pszWide );
+      hb_xfree(pszWide);
       hb_retclen_buffer( pszDst, nLen );
    }
    else
+   {
       hb_retc_null();
+   }
 }

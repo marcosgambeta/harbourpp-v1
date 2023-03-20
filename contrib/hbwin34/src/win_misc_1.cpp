@@ -69,21 +69,25 @@ HB_FUNC( WIN_LOADRESOURCE )
       void * hName;
       void * hType;
 
-      if( HB_ISNUM( 1 ) )
+      if( HB_ISNUM(1) )
       {
-         szName = MAKEINTRESOURCE( hbwapi_par_INT( 1 ) );
+         szName = MAKEINTRESOURCE( hbwapi_par_INT(1) );
          hName = nullptr;
       }
       else
-         szName = HB_PARSTRDEF( 1, &hName, nullptr );
-
-      if( HB_ISNUM( 2 ) )
       {
-         szType = MAKEINTRESOURCE( hbwapi_par_INT( 2 ) );
+         szName = HB_PARSTRDEF(1, &hName, nullptr);
+      }
+
+      if( HB_ISNUM(2) )
+      {
+         szType = MAKEINTRESOURCE( hbwapi_par_INT(2) );
          hType = nullptr;
       }
       else
-         szType = HB_PARSTRDEF( 2, &hType, nullptr );
+      {
+         szType = HB_PARSTRDEF(2, &hType, nullptr);
+      }
 
       hRes = FindResource( ( HMODULE ) hInstance, szName, szType );
 
@@ -102,8 +106,8 @@ HB_FUNC( WIN_LOADRESOURCE )
          }
       }
 
-      hb_strfree( hName );
-      hb_strfree( hType );
+      hb_strfree(hName);
+      hb_strfree(hType);
    }
 }
 
@@ -124,15 +128,17 @@ HB_FUNC( WIN_GETCOMMANDLINEPARAM )
       pos++;
    }
    while( HB_ISSPACE( lpCmdLine[ pos ] ) )
+   {
       pos++;
+   }
 
    HB_RETSTR( lpCmdLine + pos );
 }
 
 HB_FUNC( WIN_ANSITOWIDE )
 {
-   HB_SIZE nLen = hb_parclen( 1 );
-   LPCSTR lpSrcMB = hb_parcx( 1 );
+   HB_SIZE nLen = hb_parclen(1);
+   LPCSTR lpSrcMB = hb_parcx(1);
    DWORD dwLength = MultiByteToWideChar( CP_ACP, 0, lpSrcMB, ( int ) nLen, nullptr, 0 );
    LPWSTR lpDstWide = ( LPWSTR ) hb_xgrab( ( dwLength + 1 ) * sizeof( wchar_t ) );
 
@@ -143,8 +149,8 @@ HB_FUNC( WIN_ANSITOWIDE )
 
 HB_FUNC( WIN_WIDETOANSI )
 {
-   HB_SIZE nLen = hb_parclen( 1 );
-   LPCWSTR lpSrcWide = ( LPCWSTR ) hb_parcx( 1 );
+   HB_SIZE nLen = hb_parclen(1);
+   LPCWSTR lpSrcWide = ( LPCWSTR ) hb_parcx(1);
    DWORD dwLength = WideCharToMultiByte( CP_ACP, 0, lpSrcWide, ( int ) nLen, nullptr, 0, nullptr, nullptr );
    LPSTR lpDstMB = ( LPSTR ) hb_xgrab( dwLength + 1 );
 
@@ -156,9 +162,9 @@ HB_FUNC( WIN_WIDETOANSI )
 HB_FUNC( WIN_UNICODE )
 {
 #if defined( UNICODE )
-   hb_retl( HB_TRUE );
+   hb_retl(true);
 #else
-   hb_retl( HB_FALSE );
+   hb_retl(false);
 #endif
 }
 
@@ -195,12 +201,12 @@ HB_FUNC( WIN_SYSREFRESH )
 
    if( hDummyEvent )
    {
-      DWORD dwMsec = ( DWORD ) hb_parnl( 1 );
+      DWORD dwMsec = ( DWORD ) hb_parnl(1);
 
       /* Begin the operation and continue until it is complete
          or until the user clicks the mouse or presses a key. */
 
-      if( MsgWaitForMultipleObjects( 1, &hDummyEvent, FALSE, ( dwMsec == 0 ? INFINITE : dwMsec ), QS_ALLINPUT | QS_ALLPOSTMESSAGE ) == WAIT_OBJECT_0 + 1 )
+      if( MsgWaitForMultipleObjects(1, &hDummyEvent, FALSE, (dwMsec == 0 ? INFINITE : dwMsec), QS_ALLINPUT | QS_ALLPOSTMESSAGE) == WAIT_OBJECT_0 + 1)
       {
          MSG msg;
 
@@ -210,7 +216,7 @@ HB_FUNC( WIN_SYSREFRESH )
             {
                case WM_CLOSE:
                   CloseHandle( hDummyEvent );
-                  hb_retni( 1 );
+                  hb_retni(1);
                   return;
                case WM_QUIT:
                   CloseHandle( hDummyEvent );
@@ -236,7 +242,7 @@ HB_FUNC( WIN_SYSREFRESH )
       CloseHandle( hDummyEvent );
    }
 
-   hb_retni( 0 );
+   hb_retni(0);
 }
 
 HB_FUNC( WIN_QPCOUNTER2SEC )
@@ -248,10 +254,10 @@ HB_FUNC( WIN_QPCOUNTER2SEC )
       LARGE_INTEGER frequency;
       if( ! QueryPerformanceFrequency( &frequency ) )
       {
-         hb_retnd( 0 );
+         hb_retnd(0);
          return;
       }
       s_dFrequence = ( HB_MAXDBL ) HBWAPI_GET_LARGEUINT( frequency );
    }
-   hb_retnd( ( double ) ( ( HB_MAXDBL ) hb_parnint( 1 ) / ( HB_MAXDBL ) s_dFrequence ) );
+   hb_retnd( ( double ) ( ( HB_MAXDBL ) hb_parnint(1) / ( HB_MAXDBL ) s_dFrequence ) );
 }

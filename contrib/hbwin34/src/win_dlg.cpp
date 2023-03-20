@@ -55,21 +55,16 @@
 HB_FUNC( WIN_PRINTDLGDC )
 {
    PRINTDLG pd;
-
    memset( &pd, 0, sizeof( pd ) );
-
-#if ! defined( HB_OS_WIN_CE )
    pd.lStructSize = sizeof( pd );
    pd.hwndOwner = GetActiveWindow();
-   pd.Flags = ( DWORD ) hb_parnl( 5 ) | PD_RETURNDC | PD_USEDEVMODECOPIESANDCOLLATE;
-   pd.nFromPage = ( WORD ) hb_parnidef( 2, 1 );
-   pd.nToPage = ( WORD ) hb_parnidef( 3, 1 );
-   pd.nCopies = ( WORD ) hb_parnidef( 4, 1 );
-#endif
+   pd.Flags = ( DWORD ) hb_parnl(5) | PD_RETURNDC | PD_USEDEVMODECOPIESANDCOLLATE;
+   pd.nFromPage = ( WORD ) hb_parnidef(2, 1);
+   pd.nToPage = ( WORD ) hb_parnidef(3, 1);
+   pd.nCopies = ( WORD ) hb_parnidef(4, 1);
 
    if( PrintDlg( &pd ) )
    {
-#if ! defined( HB_OS_WIN_CE )
       if( pd.hDevNames )
       {
          LPDEVNAMES lpdn = ( LPDEVNAMES ) GlobalLock( pd.hDevNames );
@@ -78,7 +73,9 @@ HB_FUNC( WIN_PRINTDLGDC )
             HB_STORSTR( ( LPCTSTR ) lpdn + lpdn->wDeviceOffset, 1 );
          }
          else
+         {
             hb_storc( nullptr, 1 );
+         }
          GlobalUnlock( pd.hDevNames );
          GlobalFree( pd.hDevNames );
       }
@@ -89,18 +86,11 @@ HB_FUNC( WIN_PRINTDLGDC )
       }
 
       hbwapi_ret_HDC( pd.hDC );
-#else
-      hb_storc( nullptr, 1 );
-
-#if defined( __MINGW32__ ) /* NOTE: mingwarm has the struct names/members wrong. */
-      hbwapi_ret_HDC( pd.hDC );
-#else
-      hbwapi_ret_HDC( pd.hdc );
-#endif
-#endif
    }
    else
+   {
       hb_retptr( nullptr );
+   }
 }
 
 static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
@@ -217,7 +207,7 @@ static LPTSTR s_dialogPairs( int iParam, DWORD * pdwIndex )
                }
                else
                {
-                  hb_xfree( lpStr );
+                  hb_xfree(lpStr);
                   lpStr = nullptr;
                }
             }
@@ -255,28 +245,26 @@ static void s_GetFileName( HB_BOOL fSave )
    ofn.hwndOwner = GetActiveWindow();
    ofn.hInstance = GetModuleHandle( nullptr );
 
-   ofn.nFilterIndex     = hbwapi_par_DWORD( 6 );
-   ofn.lpstrFilter      = lpstrFilter = s_dialogPairs( 5, &ofn.nFilterIndex );
+   ofn.nFilterIndex     = hbwapi_par_DWORD(6);
+   ofn.lpstrFilter      = lpstrFilter = s_dialogPairs(5, &ofn.nFilterIndex);
 
-   ofn.nMaxFile         = hbwapi_par_DWORD( 7 );
+   ofn.nMaxFile         = hbwapi_par_DWORD(7);
    if( ofn.nMaxFile < 0x400 )
    {
       ofn.nMaxFile = ofn.nMaxFile == 0 ? 0x10000 : 0x400;
    }
    ofn.lpstrFile        = ( LPTSTR ) hb_xgrabz( ofn.nMaxFile * sizeof( TCHAR ) );
 
-   ofn.lpstrInitialDir  = HB_PARSTR( 3, &hInitDir, nullptr );
-   ofn.lpstrTitle       = HB_PARSTR( 2, &hTitle, nullptr );
-   ofn.Flags            = HB_ISNUM( 1 ) ? hbwapi_par_DWORD( 1 ) :
-                          ( OFN_EXPLORER | OFN_ALLOWMULTISELECT |
-                            OFN_HIDEREADONLY | OFN_NOCHANGEDIR );
-   ofn.lpstrDefExt      = HB_PARSTR( 4, &hDefExt, nullptr );
+   ofn.lpstrInitialDir  = HB_PARSTR(3, &hInitDir, nullptr);
+   ofn.lpstrTitle       = HB_PARSTR(2, &hTitle, nullptr);
+   ofn.Flags            = HB_ISNUM(1) ? hbwapi_par_DWORD(1) : (OFN_EXPLORER | OFN_ALLOWMULTISELECT | OFN_HIDEREADONLY | OFN_NOCHANGEDIR);
+   ofn.lpstrDefExt      = HB_PARSTR(4, &hDefExt, nullptr);
    if( ofn.lpstrDefExt && ofn.lpstrDefExt[ 0 ] == '.' )
    {
       ++ofn.lpstrDefExt;
    }
 
-   HB_ITEMCOPYSTR( hb_param( 8, Harbour::Item::ANY ), ofn.lpstrFile, ofn.nMaxFile );
+   HB_ITEMCOPYSTR( hb_param(8, Harbour::Item::ANY), ofn.lpstrFile, ofn.nMaxFile );
 
    if( fSave ? GetSaveFileName( &ofn ) : GetOpenFileName( &ofn ) )
    {
@@ -293,17 +281,19 @@ static void s_GetFileName( HB_BOOL fSave )
       HB_RETSTRLEN( ofn.lpstrFile, nLen );
    }
    else
-      hb_retc_null();
-
-   hb_xfree( ofn.lpstrFile );
-   if( lpstrFilter )
    {
-      hb_xfree( lpstrFilter );
+      hb_retc_null();
    }
 
-   hb_strfree( hInitDir );
-   hb_strfree( hTitle );
-   hb_strfree( hDefExt );
+   hb_xfree(ofn.lpstrFile);
+   if( lpstrFilter )
+   {
+      hb_xfree(lpstrFilter);
+   }
+
+   hb_strfree(hInitDir);
+   hb_strfree(hTitle);
+   hb_strfree(hDefExt);
 }
 
 /* win_GetOpenFileName( [[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;

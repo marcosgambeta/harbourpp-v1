@@ -85,48 +85,50 @@
                         [<cInfo>], [<nInfoTimeOut>], [<cInfoTitle>], [<nInfoFlags>] ) --> <lOK> */
 HB_FUNC( WIN_SHELLNOTIFYICON )
 {
-#if ! defined( HB_OS_WIN_CE )
    NOTIFYICONDATA tnid;
 
    memset( &tnid, 0, sizeof( tnid ) );
    tnid.cbSize = sizeof( tnid );
-   tnid.hWnd = hbwapi_par_raw_HWND( 1 );
-   tnid.uID = hbwapi_par_UINT( 2 );
-   tnid.uCallbackMessage = hbwapi_par_UINT( 3 );
+   tnid.hWnd = hbwapi_par_raw_HWND(1);
+   tnid.uID = hbwapi_par_UINT(2);
+   tnid.uCallbackMessage = hbwapi_par_UINT(3);
    if( tnid.uCallbackMessage )
+   {
       tnid.uFlags = NIF_MESSAGE;
-   tnid.hIcon = hbwapi_par_raw_HICON( 4 );
+   }
+   tnid.hIcon = hbwapi_par_raw_HICON(4);
    if( tnid.hIcon )
+   {
       tnid.uFlags |= NIF_ICON;
-   if( HB_ITEMCOPYSTR( hb_param( 5, Harbour::Item::ANY ),
-                       tnid.szTip, HB_SIZEOFARRAY( tnid.szTip ) ) > 0 )
+   }
+   if( HB_ITEMCOPYSTR( hb_param(5, Harbour::Item::ANY), tnid.szTip, HB_SIZEOFARRAY( tnid.szTip ) ) > 0 )
+   {
       tnid.uFlags |= NIF_TIP;
+   }
 
    #if defined( NIF_INFO ) /* did the headers provide Windows 2000 features? */
    if( hb_iswin2k() )      /* are we running on Windows 2000 or above? */
    {
-      if( HB_ITEMCOPYSTR( hb_param( 7, Harbour::Item::ANY ), tnid.szInfo, HB_SIZEOFARRAY( tnid.szInfo ) ) > 0 )
+      if( HB_ITEMCOPYSTR( hb_param(7, Harbour::Item::ANY), tnid.szInfo, HB_SIZEOFARRAY( tnid.szInfo ) ) > 0 )
+      {
          tnid.uFlags |= NIF_INFO;
-      HB_WIN_V_UNION( tnid, uTimeout ) = hbwapi_par_UINT( 8 );
-      if( HB_ITEMCOPYSTR( hb_param( 9, Harbour::Item::ANY ), tnid.szInfoTitle, HB_SIZEOFARRAY( tnid.szInfoTitle ) ) > 0 )
+      }
+      HB_WIN_V_UNION( tnid, uTimeout ) = hbwapi_par_UINT(8);
+      if( HB_ITEMCOPYSTR( hb_param(9, Harbour::Item::ANY), tnid.szInfoTitle, HB_SIZEOFARRAY( tnid.szInfoTitle ) ) > 0 )
+      {
          tnid.uFlags |= NIF_INFO;
-      tnid.dwInfoFlags = ( DWORD ) hb_parnl( 10 );
+      }
+      tnid.dwInfoFlags = ( DWORD ) hb_parnl(10);
    }
    #endif
 
-   hbwapi_ret_L( Shell_NotifyIcon( HB_ISLOG( 6 ) ?
-                 ( hb_parl( 6 ) ? NIM_ADD : NIM_DELETE ) : NIM_MODIFY, &tnid ) );
-#else
-   hb_retl( HB_FALSE );
-#endif
+   hbwapi_ret_L( Shell_NotifyIcon( HB_ISLOG(6) ? ( hb_parl(6) ? NIM_ADD : NIM_DELETE ) : NIM_MODIFY, &tnid ) );
 }
 
 /* Details:
       https://msdn.microsoft.com/library/bb762164
       https://msdn.microsoft.com/library/bb759795
  */
-
-#if ! defined( HB_OS_WIN_CE )
 
 #if defined( __MINGW32__ )
 #  include <_mingw.h>
@@ -171,7 +173,9 @@ static LPTSTR s_StringList( int iParam )
             {
                n1 = HB_ITEMCOPYSTR( pArrItem, nullptr, 0 );
                if( n1 )
+               {
                   nLen += n1 + 1;
+               }
             }
          }
          if( nLen )
@@ -186,7 +190,9 @@ static LPTSTR s_StringList( int iParam )
                   n1 = HB_ITEMCOPYSTR( pArrItem,
                                        lpStr + nLen, nTotal - nLen );
                   if( n1 )
+                  {
                      nLen += n1 + 1;
+                  }
                }
             }
             lpStr[ nLen ] = TEXT( '\0' );
@@ -207,8 +213,6 @@ static LPTSTR s_StringList( int iParam )
    return lpStr;
 }
 
-#endif
-
 /* win_SHFileOperation( [<hWnd>], [<nFunction>], [<cFrom>|<aFrom>], [<cTo>|<aTo>],
                         [<nFlags>], [<@lAnyOperationAborted>],
                         [<aNameMappings>], [<cProgressTitle>] ) --> <nResult> */
@@ -216,25 +220,22 @@ HB_FUNC( WIN_SHFILEOPERATION )
 {
    int iRetVal;
 
-#if defined( HB_OS_WIN_CE )
-   iRetVal = -1;
-#else
    SHFILEOPSTRUCT fop;
 
    void * hProgressTitle;
 
-   LPTSTR pFrom = s_StringList( 3 );
-   LPTSTR pTo   = s_StringList( 4 );
+   LPTSTR pFrom = s_StringList(3);
+   LPTSTR pTo   = s_StringList(4);
 
    memset( &fop, 0, sizeof( fop ) );
-   fop.hwnd                  = hbwapi_par_raw_HWND( 1 );
-   fop.wFunc                 = hbwapi_par_UINT( 2 );
+   fop.hwnd                  = hbwapi_par_raw_HWND(1);
+   fop.wFunc                 = hbwapi_par_UINT(2);
    fop.pFrom                 = ( LPCTSTR ) pFrom;
    fop.pTo                   = ( LPCTSTR ) pTo;
-   fop.fFlags                = ( FILEOP_FLAGS ) hb_parnl( 5 );
+   fop.fFlags                = ( FILEOP_FLAGS ) hb_parnl(5);
    fop.fAnyOperationsAborted = FALSE;
    fop.hNameMappings         = nullptr;
-   fop.lpszProgressTitle     = HB_PARSTR( 8, &hProgressTitle, nullptr );
+   fop.lpszProgressTitle     = HB_PARSTR(8, &hProgressTitle, nullptr);
 
    iRetVal = SHFileOperation( &fop );
    hbwapi_SetLastError( GetLastError() );
@@ -242,17 +243,21 @@ HB_FUNC( WIN_SHFILEOPERATION )
    hb_storl( fop.fAnyOperationsAborted, 6 );
 
    if( pFrom )
-      hb_xfree( pFrom );
+   {
+      hb_xfree(pFrom);
+   }
 
    if( pTo )
-      hb_xfree( pTo );
+   {
+      hb_xfree(pTo);
+   }
 
-   hb_strfree( hProgressTitle );
+   hb_strfree(hProgressTitle);
 
    if( ( fop.fFlags & FOF_WANTMAPPINGHANDLE ) != 0 )
    {
       HANDLETOMAPPINGS * hm = ( HANDLETOMAPPINGS * ) fop.hNameMappings;
-      PHB_ITEM pArray = hb_param( 7, Harbour::Item::ARRAY );
+      PHB_ITEM pArray = hb_param(7, Harbour::Item::ARRAY);
 
       /* Process hNameMappings */
       if( hm )
@@ -260,13 +265,12 @@ HB_FUNC( WIN_SHFILEOPERATION )
          if( pArray )
          {
             PHB_ITEM pTempItem = hb_itemNew( nullptr );
-            UINT tmp;
             LPSHNAMEMAPPING pmap = hm->lpSHNameMapping;
             HB_BOOL bIsWin9x = hb_iswin9x();
 
             hb_arraySize( pArray, hm->uNumberOfMappings );
 
-            for( tmp = 0; tmp < hm->uNumberOfMappings; ++tmp )
+            for( UINT tmp = 0; tmp < hm->uNumberOfMappings; ++tmp )
             {
                hb_arrayNew( pTempItem, 2 );
 
@@ -292,8 +296,9 @@ HB_FUNC( WIN_SHFILEOPERATION )
          SHFreeNameMappings( hm );
       }
       else if( pArray )
+      {
          hb_arraySize( pArray, 0 );
+      }
    }
-#endif
    hb_retni( iRetVal );
 }

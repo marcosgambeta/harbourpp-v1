@@ -52,55 +52,42 @@ HB_FUNC( WIN_RUNDETACHED )
    void * hCommandLine;
 
    HB_SIZE nLen;
-   LPCTSTR lpCommandRO = HB_PARSTR( 2, &hCommandLine, &nLen );
+   LPCTSTR lpCommandRO = HB_PARSTR(2, &hCommandLine, &nLen);
 
-#if ! defined( HB_OS_WIN_CE )
    STARTUPINFO si;
    PROCESS_INFORMATION pi;
 
    memset( &si, 0, sizeof( si ) );
    si.cb = sizeof( si );
    memset( &pi, 0, sizeof( pi ) );
-#endif
 
    if( CreateProcess(
-          HB_PARSTR( 1, &hCommandName, nullptr ),                  /* Command name */
+          HB_PARSTR(1, &hCommandName, nullptr),                 /* Command name */
           HB_STRUNSHARE( &hCommandLine, lpCommandRO, nLen ),    /* Command-line (Unicode version needs an non-const buffer) */
-          nullptr,                                                 /* Process handle not inheritable */
-          nullptr,                                                 /* Thread handle not inheritable */
+          nullptr,                                              /* Process handle not inheritable */
+          nullptr,                                              /* Thread handle not inheritable */
           FALSE,                                                /* Set handle inheritance to FALSE */
-#if ! defined( HB_OS_WIN_CE )
-          hb_parl( 4 ) ? CREATE_NO_WINDOW : CREATE_NEW_CONSOLE, /* Creation flags */
-#else
-          CREATE_NEW_CONSOLE,                                   /* Creation flags */
-#endif
-          nullptr,                                                 /* Use parent's environment block */
-          nullptr,                                                 /* Use parent's starting directory */
-#if ! defined( HB_OS_WIN_CE )
+          hb_parl(4) ? CREATE_NO_WINDOW : CREATE_NEW_CONSOLE, /* Creation flags */
+          nullptr,                                              /* Use parent's environment block */
+          nullptr,                                              /* Use parent's starting directory */
           &si,                                                  /* Pointer to STARTUPINFO structure */
           &pi )                                                 /* Pointer to PROCESS_INFORMATION structure */
-#else
-          nullptr,                                                 /* Pointer to STARTUPINFO structure */
-          nullptr )                                                /* Pointer to PROCESS_INFORMATION structure */
-#endif
        )
    {
-      hb_retl( HB_TRUE );
+      hb_retl(true);
 
-#if ! defined( HB_OS_WIN_CE )
       hb_stornint( pi.dwProcessId, 3 );
 
       /* Close process and thread handles. */
       CloseHandle( pi.hProcess );
       CloseHandle( pi.hThread );
-#endif
    }
    else
    {
-      hb_stornint( -1, 3 );
-      hb_retl( HB_FALSE );
+      hb_stornint(-1, 3);
+      hb_retl(false);
    }
 
-   hb_strfree( hCommandName );
-   hb_strfree( hCommandLine );
+   hb_strfree(hCommandName);
+   hb_strfree(hCommandLine);
 }

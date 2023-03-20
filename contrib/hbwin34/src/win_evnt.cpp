@@ -49,19 +49,17 @@
 
 HB_FUNC( WIN_REPORTEVENT )
 {
-   HB_BOOL bRetVal = HB_FALSE;
+   bool bRetVal = false;
 
-#if ! defined( HB_OS_WIN_CE )
    HANDLE hEventLog;
 
    void * hServerName;
    void * hSourceName;
 
-   hEventLog = RegisterEventSource( HB_PARSTR( 1, &hServerName, nullptr ),
-                                    HB_PARSTRDEF( 2, &hSourceName, nullptr ) );
+   hEventLog = RegisterEventSource( HB_PARSTR(1, &hServerName, nullptr), HB_PARSTRDEF(2, &hSourceName, nullptr) );
 
-   hb_strfree( hServerName );
-   hb_strfree( hSourceName );
+   hb_strfree(hServerName);
+   hb_strfree(hSourceName);
 
    if( hEventLog != nullptr && hEventLog != ( HANDLE ) ERROR_ACCESS_DENIED )
    {
@@ -69,53 +67,54 @@ HB_FUNC( WIN_REPORTEVENT )
       LPCTSTR * lpStrings = nullptr;
       void ** hStrings = nullptr;
 
-      PHB_ITEM pStrings = hb_param( 6, Harbour::Item::ARRAY );
+      PHB_ITEM pStrings = hb_param(6, Harbour::Item::ARRAY);
 
       if( pStrings && ( wNumStrings = ( WORD ) hb_arrayLen( pStrings ) ) > 0 )
       {
-         WORD i;
-
          lpStrings = ( LPCTSTR * ) hb_xgrab( sizeof( LPCTSTR ) * wNumStrings );
          hStrings = ( void ** ) hb_xgrab( sizeof( void * ) * wNumStrings );
 
-         for( i = 0; i < wNumStrings; ++i )
+         for( WORD i = 0; i < wNumStrings; ++i )
+         {
             lpStrings[ i ] = ( LPCTSTR ) HB_ARRAYGETSTR( pStrings, i + 1, &hStrings[ i ], nullptr );
+         }
       }
-      else if( HB_ISCHAR( 6 ) )
+      else if( HB_ISCHAR(6) )
       {
          wNumStrings = 1;
 
          lpStrings = ( LPCTSTR * ) hb_xgrab( sizeof( LPCTSTR ) );
          hStrings = ( void ** ) hb_xgrab( sizeof( void * ) );
 
-         lpStrings[ 0 ] = ( LPCTSTR ) HB_ITEMGETSTR( hb_param( 6, Harbour::Item::STRING ), &hStrings[ 0 ], nullptr );
+         lpStrings[ 0 ] = ( LPCTSTR ) HB_ITEMGETSTR( hb_param(6, Harbour::Item::STRING), &hStrings[ 0 ], nullptr );
       }
 
       if( ReportEvent( hEventLog,
-                       ( WORD ) hb_parni( 3 ) /* wType */,
-                       ( WORD ) hb_parni( 4 ) /* wCategory */,
-                       ( DWORD ) hb_parnl( 5 ) /* dwEventID */,
+                       ( WORD ) hb_parni(3) /* wType */,
+                       ( WORD ) hb_parni(4) /* wCategory */,
+                       ( DWORD ) hb_parnl(5) /* dwEventID */,
                        nullptr /* lpUserSid */,
                        wNumStrings,
-                       ( DWORD ) hb_parclen( 7 ),
+                       ( DWORD ) hb_parclen(7),
                        lpStrings,
-                       ( LPVOID ) HB_UNCONST( hb_parc( 7 ) ) ) )
+                       ( LPVOID ) HB_UNCONST( hb_parc(7) ) ) )
       {
-         bRetVal = HB_TRUE;
+         bRetVal = true;
       }
-      
+
       if( lpStrings )
       {
          while( wNumStrings )
-            hb_strfree( hStrings[ --wNumStrings ] );
+         {
+            hb_strfree(hStrings[--wNumStrings]);
+         }
 
-         hb_xfree( hStrings );
-         hb_xfree( ( void * ) lpStrings );
+         hb_xfree(hStrings);
+         hb_xfree(( void * ) lpStrings);
       }
 
       DeregisterEventSource( hEventLog );
    }
-#endif
 
-   hb_retl( bRetVal );
+   hb_retl(bRetVal);
 }

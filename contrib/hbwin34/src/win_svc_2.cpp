@@ -54,19 +54,21 @@ HB_FUNC( WIN_SERVICEINSTALL )
 {
    HB_BOOL bRetVal = HB_FALSE;
 
-#if ! defined( HB_OS_WIN_CE )
-
    void * hPath;
-   LPCTSTR lpPath = HB_PARSTR( 3, &hPath, nullptr );
+   LPCTSTR lpPath = HB_PARSTR(3, &hPath, nullptr);
 
    TCHAR lpPathBuffer[ MAX_PATH ];
 
    if( lpPath == nullptr )
    {
       if( GetModuleFileName( nullptr, lpPathBuffer, HB_SIZEOFARRAY( lpPathBuffer ) ) )
+      {
          lpPath = lpPathBuffer;
+      }
       else
+      {
          hbwapi_SetLastError( GetLastError() );
+      }
    }
 
    if( lpPath )
@@ -82,17 +84,17 @@ HB_FUNC( WIN_SERVICEINSTALL )
          void * hAccountName;
          void * hPassword;
 
-         LPCTSTR lpServiceName = HB_PARSTRDEF( 1, &hServiceName, nullptr );
-         LPCTSTR lpDisplayName = HB_PARSTR( 2, &hDisplayName, nullptr );
-         LPCTSTR lpAccountName = HB_PARSTR( 5, &hAccountName, nullptr );
-         LPCTSTR lpPassword = HB_PARSTR( 6, &hPassword, nullptr );
+         LPCTSTR lpServiceName = HB_PARSTRDEF(1, &hServiceName, nullptr);
+         LPCTSTR lpDisplayName = HB_PARSTR(2, &hDisplayName, nullptr);
+         LPCTSTR lpAccountName = HB_PARSTR(5, &hAccountName, nullptr);
+         LPCTSTR lpPassword = HB_PARSTR(6, &hPassword, nullptr);
 
          schSrv = CreateService( schSCM,                    /* SCM database */
                                  lpServiceName,             /* name of service */
                                  lpDisplayName,             /* service name to display */
                                  SERVICE_ALL_ACCESS,        /* desired access */
                                  SERVICE_WIN32_OWN_PROCESS, /* service type */
-                                 ( DWORD ) hb_parnldef( 4, SERVICE_DEMAND_START ),  /* start type */
+                                 ( DWORD ) hb_parnldef(4, SERVICE_DEMAND_START),  /* start type */
                                  SERVICE_ERROR_NORMAL,      /* error control type */
                                  lpPath,                    /* path to service's binary */
                                  nullptr,                      /* no load ordering group */
@@ -110,51 +112,48 @@ HB_FUNC( WIN_SERVICEINSTALL )
             CloseServiceHandle( schSrv );
          }
 
-         hb_strfree( hServiceName );
-         hb_strfree( hDisplayName );
-         hb_strfree( hAccountName );
-         hb_strfree( hPassword );
+         hb_strfree(hServiceName);
+         hb_strfree(hDisplayName);
+         hb_strfree(hAccountName);
+         hb_strfree(hPassword);
 
          CloseServiceHandle( schSCM );
       }
       else
+      {
          hbwapi_SetLastError( GetLastError() );
+      }
    }
 
-   hb_strfree( hPath );
-#else
-   hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
-#endif
+   hb_strfree(hPath);
 
-   hb_retl( bRetVal );
+   hb_retl(bRetVal);
 }
 
 HB_FUNC( WIN_SERVICEDELETE )
 {
    HB_BOOL bRetVal = HB_FALSE;
 
-#if ! defined( HB_OS_WIN_CE )
    SC_HANDLE schSCM = OpenSCManager( nullptr, nullptr, SC_MANAGER_ALL_ACCESS );
 
    if( schSCM )
    {
       void * hServiceName;
 
-      SC_HANDLE schSrv = OpenService( schSCM,
-                                      HB_PARSTRDEF( 1, &hServiceName, nullptr ),
-                                      SERVICE_ALL_ACCESS );
+      SC_HANDLE schSrv = OpenService( schSCM, HB_PARSTRDEF(1, &hServiceName, nullptr), SERVICE_ALL_ACCESS );
 
       if( schSrv )
       {
-         if( hb_parl( 2 ) )  /* Check if service is up and stop it */
+         if( hb_parl(2) )  /* Check if service is up and stop it */
          {
             SERVICE_STATUS ssStatus;
 
             if( ControlService( schSrv, SERVICE_CONTROL_STOP, &ssStatus ) )
             {
-               while( ssStatus.dwCurrentState != SERVICE_STOPPED &&
-                      QueryServiceStatus( schSrv, &ssStatus ) )
-                  hb_idleSleep( 1.0 );
+               while( ssStatus.dwCurrentState != SERVICE_STOPPED && QueryServiceStatus( schSrv, &ssStatus ) )
+               {
+                  hb_idleSleep(1.0);
+               }
             }
          }
 
@@ -164,77 +163,73 @@ HB_FUNC( WIN_SERVICEDELETE )
          CloseServiceHandle( schSrv );
       }
       else
+      {
          hbwapi_SetLastError( GetLastError() );
+      }
 
-      hb_strfree( hServiceName );
+      hb_strfree(hServiceName);
 
       CloseServiceHandle( schSCM );
    }
    else
+   {
       hbwapi_SetLastError( GetLastError() );
-#else
-   hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
-#endif
-   hb_retl( bRetVal );
+   }
+   hb_retl(bRetVal);
 }
 
 HB_FUNC( WIN_SERVICECONTROL )
 {
    HB_BOOL bRetVal = HB_FALSE;
 
-#if ! defined( HB_OS_WIN_CE )
    SC_HANDLE schSCM = OpenSCManager( nullptr, nullptr, SC_MANAGER_ALL_ACCESS );
 
    if( schSCM )
    {
       void * hServiceName;
 
-      SC_HANDLE schSrv = OpenService( schSCM,
-                                      HB_PARSTRDEF( 1, &hServiceName, nullptr ),
-                                      SERVICE_ALL_ACCESS );
+      SC_HANDLE schSrv = OpenService( schSCM, HB_PARSTRDEF(1, &hServiceName, nullptr), SERVICE_ALL_ACCESS );
 
       if( schSrv )
       {
          SERVICE_STATUS ssStatus;
          memset( &ssStatus, 0, sizeof( ssStatus ) );
-         bRetVal = ( HB_BOOL ) ControlService( schSrv, ( DWORD ) hb_parnl( 2 ), &ssStatus );
+         bRetVal = ( HB_BOOL ) ControlService( schSrv, ( DWORD ) hb_parnl(2), &ssStatus );
          hbwapi_SetLastError( GetLastError() );
 
          CloseServiceHandle( schSrv );
       }
       else
+      {
          hbwapi_SetLastError( GetLastError() );
+      }
 
-      hb_strfree( hServiceName );
+      hb_strfree(hServiceName);
 
       CloseServiceHandle( schSCM );
    }
    else
+   {
       hbwapi_SetLastError( GetLastError() );
-#else
-   hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
-#endif
-   hb_retl( bRetVal );
+   }
+   hb_retl(bRetVal);
 }
 
 HB_FUNC( WIN_SERVICERUN )
 {
    HB_BOOL bRetVal = HB_FALSE;
 
-#if ! defined( HB_OS_WIN_CE )
    SC_HANDLE schSCM = OpenSCManager( nullptr, nullptr, SC_MANAGER_ALL_ACCESS );
 
    if( schSCM )
    {
       void * hServiceName;
 
-      SC_HANDLE schSrv = OpenService( schSCM,
-                                      HB_PARSTRDEF( 1, &hServiceName, nullptr ),
-                                      SERVICE_ALL_ACCESS );
+      SC_HANDLE schSrv = OpenService( schSCM, HB_PARSTRDEF(1, &hServiceName, nullptr), SERVICE_ALL_ACCESS );
 
       if( schSrv )
       {
-         DWORD dwArgs, pos;
+         DWORD dwArgs;
          void ** hArgs;
          LPCTSTR * lpArgs;
 
@@ -244,8 +239,10 @@ HB_FUNC( WIN_SERVICERUN )
             hArgs = ( void ** ) hb_xgrab( dwArgs * sizeof( void * ) );
             lpArgs = ( LPCTSTR * ) hb_xgrab( dwArgs * sizeof( LPCTSTR ) );
 
-            for( pos = 0; pos < dwArgs; ++pos )
-               lpArgs[ pos ] = HB_PARSTRDEF( pos + 2, &hArgs[ pos ], nullptr );
+            for( DWORD pos = 0; pos < dwArgs; ++pos )
+            {
+               lpArgs[ pos ] = HB_PARSTRDEF(pos + 2, &hArgs[pos], nullptr);
+            }
          }
          else
          {
@@ -259,26 +256,29 @@ HB_FUNC( WIN_SERVICERUN )
 
          if( hArgs )
          {
-            for( pos = 0; pos < dwArgs; ++pos )
-               hb_strfree( hArgs[ pos ] );
+            for( DWORD pos = 0; pos < dwArgs; ++pos )
+            {
+               hb_strfree(hArgs[pos]);
+            }
 
-            hb_xfree( hArgs );
-            hb_xfree( HB_UNCONST( lpArgs ) );
+            hb_xfree(hArgs);
+            hb_xfree(HB_UNCONST(lpArgs));
          }
 
          CloseServiceHandle( schSrv );
       }
       else
+      {
          hbwapi_SetLastError( GetLastError() );
+      }
 
-      hb_strfree( hServiceName );
+      hb_strfree(hServiceName);
 
       CloseServiceHandle( schSCM );
    }
    else
+   {
       hbwapi_SetLastError( GetLastError() );
-#else
-   hbwapi_SetLastError( ERROR_NOT_SUPPORTED );
-#endif
-   hb_retl( bRetVal );
+   }
+   hb_retl(bRetVal);
 }

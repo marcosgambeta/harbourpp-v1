@@ -314,7 +314,9 @@ static int hb_png_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
       iResult = _PNG_RET_OK;
    }
    else
+   {
       iResult = _PNG_RET_ERR_READ;
+   }
 
    png_destroy_read_struct( &png_ptr, &info_ptr, nullptr );
 
@@ -325,8 +327,8 @@ static int hb_png_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
 
 HB_FUNC( WIN_BITMAPDIMENSIONS )
 {
-   const void * buffer = hb_parc( 1 );
-   HB_SIZE nSize = hb_parclen( 1 );
+   const void * buffer = hb_parc(1);
+   HB_SIZE nSize = hb_parclen(1);
 
    int iType = hbwin_bitmapType( buffer, nSize );
 
@@ -367,5 +369,5 @@ HB_FUNC( WIN_BITMAPDIMENSIONS )
    hb_storni( iWidth, 2 );
    hb_storni( iHeight, 3 );
 
-   hb_retl( bRetVal );
+   hb_retl(bRetVal);
 }

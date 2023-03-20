@@ -53,7 +53,9 @@ HB_SIZE hbwapi_tstrlen( const TCHAR * pText )
    HB_TRACE( HB_TR_DEBUG, ( "hbwapi_tstrlen(%p)", ( const void * ) pText ) );
 
    while( pText[ nLen ] != TEXT( '\0' ) )
+   {
       ++nLen;
+   }
 
    return nLen;
 }
@@ -90,16 +92,15 @@ TCHAR * hbwapi_tstrncat( TCHAR * pDest, const TCHAR * pSource, HB_SIZE nLen )
    }
 
    while( nLen && ( *pDest++ = *pSource++ ) != TEXT( '\0' ) )
+   {
       nLen--;
+   }
 
    return pBuf;
 }
 
 static TCHAR * hbwapi_FileNameAtSystemDir( const TCHAR * pFileName )
 {
-#if defined( HB_OS_WIN_CE )
-   return hbwapi_tstrdup( pFileName );
-#else
    UINT nLen = GetSystemDirectory( nullptr, 0 );
 
    if( nLen )
@@ -124,8 +125,9 @@ static TCHAR * hbwapi_FileNameAtSystemDir( const TCHAR * pFileName )
       return buffer;
    }
    else
+   {
       return hbwapi_tstrdup( pFileName );
-#endif
+   }
 }
 
 #ifndef LOAD_LIBRARY_SEARCH_SYSTEM32
@@ -161,7 +163,7 @@ HMODULE hbwapi_LoadLibrarySystem( LPCTSTR pFileName )
 
    HMODULE h = LoadLibraryEx( pLibPath, nullptr, hbwapi_has_search_system32() ? LOAD_LIBRARY_SEARCH_SYSTEM32 : LOAD_WITH_ALTERED_SEARCH_PATH );
 
-   hb_xfree( pLibPath );
+   hb_xfree(pLibPath);
 
    return h;
 }
@@ -175,7 +177,7 @@ HMODULE hbwapi_LoadLibrarySystemVM( const char * szFileName )
 
    if( lpFree )
    {
-      hb_xfree( lpFree );
+      hb_xfree(lpFree);
    }
 
    return h;
@@ -200,10 +202,8 @@ HKEY hbwapi_get_HKEY( HB_PTRUINT nKey )
       case 0:
       case 2:
          return ( HKEY ) HKEY_CURRENT_USER;
-#if ! defined( HB_OS_WIN_CE )
       case 3:
          return ( HKEY ) HKEY_CURRENT_CONFIG;
-#endif
       case 4:
          return ( HKEY ) HKEY_LOCAL_MACHINE;
       case 5:

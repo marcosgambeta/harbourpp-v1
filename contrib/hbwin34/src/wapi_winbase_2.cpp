@@ -69,27 +69,31 @@ HB_FUNC( WAPI_FORMATMESSAGE )
    HB_SIZE nSize = 0;
    DWORD dwFlags;
 
-   dwFlags = ( DWORD ) hb_parnldef( 1, FORMAT_MESSAGE_FROM_SYSTEM );
+   dwFlags = ( DWORD ) hb_parnldef(1, FORMAT_MESSAGE_FROM_SYSTEM);
 
-   if( HB_ISBYREF( 5 ) )
+   if( HB_ISBYREF(5) )
    {
-      nSize = hb_parns( 6 );
+      nSize = hb_parns(6);
       if( ( dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER ) == 0 )
       {
-         if( nSize == 0 && ! HB_ISNUM( 6 ) )
+         if( nSize == 0 && ! HB_ISNUM(6) )
          {
-            nSize = hb_parclen( 5 );
+            nSize = hb_parclen(5);
          }
          if( nSize > 0 )
          {
             lpBuffer = ( LPTSTR ) hb_xgrab( nSize * sizeof( TCHAR ) );
          }
          else
+         {
             dwFlags |= FORMAT_MESSAGE_ALLOCATE_BUFFER;
+         }
       }
    }
    else
+   {
       dwFlags = ( DWORD ) ~FORMAT_MESSAGE_ALLOCATE_BUFFER;
+   }
 
    if( dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER )
    {
@@ -100,9 +104,9 @@ HB_FUNC( WAPI_FORMATMESSAGE )
    {
       DWORD dwRetVal =
          FormatMessage( dwFlags,
-                        HB_ISCHAR( 2 ) ? ( LPCVOID ) HB_PARSTR( 2, &hSource, nullptr ) : hb_parptr( 2 ),
-                        HB_ISNUM( 3 ) ? ( DWORD ) hb_parnl( 3 ) : hbwapi_GetLastError() /* dwMessageId */,
-                        ( DWORD ) hb_parnldef( 4, MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ) ) /* dwLanguageId */,
+                        HB_ISCHAR(2) ? ( LPCVOID ) HB_PARSTR(2, &hSource, nullptr) : hb_parptr(2),
+                        HB_ISNUM(3) ? ( DWORD ) hb_parnl(3) : hbwapi_GetLastError() /* dwMessageId */,
+                        ( DWORD ) hb_parnldef(4, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT)) /* dwLanguageId */,
                         lpBuffer,
                         ( DWORD ) nSize,
                         nullptr /* TODO: Add support for this parameter. */ );
@@ -117,7 +121,9 @@ HB_FUNC( WAPI_FORMATMESSAGE )
             lpBuffer = lpAllocBuff;
          }
          else
+         {
             lpBuffer[ nSize - 1 ] = '\0';
+         }
 
          HB_STORSTR( dwRetVal ? lpBuffer : nullptr, 5 );
 
@@ -127,31 +133,31 @@ HB_FUNC( WAPI_FORMATMESSAGE )
          }
          else if( lpBuffer && ( dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER ) == 0 )
          {
-            hb_xfree( lpBuffer );
+            hb_xfree(lpBuffer);
          }
       }
 
-      hb_strfree( hSource );
+      hb_strfree(hSource);
    }
    else
    {
       hb_storc( nullptr, 5 );
       hbwapi_SetLastError( ERROR_EMPTY );
-      hb_retnint( -1 );
+      hb_retnint(-1);
    }
 }
 
 /* VOID WINAPI Sleep( __in DWORD dwMilliseconds ); */
 HB_FUNC( WAPI_SLEEP )
 {
-   Sleep( ( DWORD ) hb_parnl( 1 ) );
+   Sleep( ( DWORD ) hb_parnl(1) );
 }
 
 HB_FUNC( WAPI_OUTPUTDEBUGSTRING )
 {
    void * hOutputString;
 
-   OutputDebugString( HB_PARSTR( 1, &hOutputString, nullptr ) );
+   OutputDebugString( HB_PARSTR(1, &hOutputString, nullptr) );
 
-   hb_strfree( hOutputString );
+   hb_strfree(hOutputString);
 }

@@ -80,7 +80,9 @@ void hbwapi_ret_HDC( HDC p )
       hb_retptrGC( ph );
    }
    else
+   {
       hb_retptr( nullptr );
+   }   
 }
 
 HB_BOOL hbwapi_is_HDC( int iParam )
@@ -127,7 +129,9 @@ void hbwapi_ret_HPEN( HPEN p )
       hb_retptrGC( ph );
    }
    else
+   {
       hb_retptr( nullptr );
+   }   
 }
 
 HB_BOOL hbwapi_is_HPEN( int iParam )
@@ -174,7 +178,9 @@ void hbwapi_ret_HBRUSH( HBRUSH p )
       hb_retptrGC( ph );
    }
    else
+   {
       hb_retptr( nullptr );
+   }   
 }
 
 HB_BOOL hbwapi_is_HBRUSH( int iParam )
@@ -221,7 +227,9 @@ void hbwapi_ret_HFONT( HFONT p )
       hb_retptrGC( ph );
    }
    else
+   {
       hb_retptr( nullptr );
+   }   
 }
 
 HB_BOOL hbwapi_is_HFONT( int iParam )
@@ -244,7 +252,7 @@ static HB_GARBAGE_FUNC( s_gc_PDEVMODE_release )
    if( ph && *ph )
    {
       /* Destroy the object */
-      hb_xfree( *ph );
+      hb_xfree(*ph);
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -268,7 +276,9 @@ void hbwapi_ret_PDEVMODE( PDEVMODE p )
       hb_retptrGC( ph );
    }
    else
+   {
       hb_retptr( nullptr );
+   }   
 }
 
 HB_BOOL hbwapi_is_PDEVMODE( int iParam )
@@ -285,27 +295,27 @@ PDEVMODE hbwapi_par_PDEVMODE( int iParam )
 
 HB_FUNC( __WAPI_TYPE )
 {
-   if( hbwapi_is_HDC( 1 ) )
+   if( hbwapi_is_HDC(1) )
    {
       hb_retc_const( "HDC" );
    }
-   else if( hbwapi_is_HPEN( 1 ) )
+   else if( hbwapi_is_HPEN(1) )
    {
       hb_retc_const( "HPEN" );
    }
-   else if( hbwapi_is_HBRUSH( 1 ) )
+   else if( hbwapi_is_HBRUSH(1) )
    {
       hb_retc_const( "HBRUSH" );
    }
-   else if( hbwapi_is_HFONT( 1 ) )
+   else if( hbwapi_is_HFONT(1) )
    {
       hb_retc_const( "HFONT" );
    }
-   else if( hbwapi_is_PDEVMODE( 1 ) )
+   else if( hbwapi_is_PDEVMODE(1) )
    {
       hb_retc_const( "PDEVMODE" );
    }
-   else if( HB_ISPOINTER( 1 ) )
+   else if( HB_ISPOINTER(1) )
    {
       hb_retc_const( "HANDLE" );
    }
@@ -322,9 +332,9 @@ HB_FUNC( __WAPI_DBGUNSAFEHANDLES )
 {
    hb_retni( s_iDbgUnsafeMode );
 
-   if( HB_ISNUM( 1 ) )
+   if( HB_ISNUM(1) )
    {
-      s_iDbgUnsafeMode = hb_parni( 1 );
+      s_iDbgUnsafeMode = hb_parni(1);
    }
 }
 
@@ -345,7 +355,7 @@ static HB_BOOL s_handle_trace( int n )
             char file[ HB_PATH_MAX ];
             HB_USHORT line;
 
-            hb_procinfo( 0, procname, &line, file );
+            hb_procinfo(0, procname, &line, file);
 
             HB_TRACE( HB_TR_ALWAYS, ( "%s:%s:%i: __hbwapi_par*_handle(%d)", file, procname, line, n ) );
 
@@ -359,7 +369,9 @@ static HB_BOOL s_handle_trace( int n )
       return HB_TRUE;
    }
    else
+   {
       return HB_FALSE;
+   }   
 }
 #else
 HB_FUNC( __WAPI_DBGUNSAFEHANDLES ) { ; }

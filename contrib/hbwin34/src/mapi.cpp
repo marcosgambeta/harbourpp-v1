@@ -81,7 +81,6 @@ HB_FUNC( WIN_MAPISENDMAIL )
 
    HB_SIZE nRecpCount = pRecpList ? hb_arrayLen(pRecpList) : 0;
    HB_SIZE nFileCount = pFileList ? hb_arrayLen(pFileList) : 0;
-   HB_SIZE i;
 
    int iString = 0;
 
@@ -133,7 +132,7 @@ HB_FUNC( WIN_MAPISENDMAIL )
       note.lpOriginator = &origin;
    }
 
-   for( i = 0; i < nRecpCount; ++i )
+   for( HB_SIZE i = 0; i < nRecpCount; ++i )
    {
       PHB_ITEM pItem = hb_arrayGetItemPtr(pRecpList, i + 1);
 
@@ -177,7 +176,7 @@ HB_FUNC( WIN_MAPISENDMAIL )
       }
    }
 
-   for( i = 0; i < nFileCount; ++i )
+   for( HB_SIZE i = 0; i < nFileCount; ++i )
    {
       PHB_ITEM pItem = hb_arrayGetItemPtr(pFileList, i + 1);
 

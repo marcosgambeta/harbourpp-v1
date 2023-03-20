@@ -46,69 +46,7 @@
 
 #include "hbwapi.hpp"
 
-#if defined( HB_OS_WIN_CE ) && \
-   ! defined( __MINGW32__ ) && \
-   ! ( ! defined( __cplusplus ) && ( defined( _MSC_VER ) && ( _MSC_VER <= 1310 ) ) )
-#  include <sms.h>
-#  define __HB_COMPONENT_SUPPORTED__
-#endif
-
 HB_FUNC( WCE_SMSSENDMESSAGE ) /* cMessage, cNumber */
 {
-#ifdef __HB_COMPONENT_SUPPORTED__
-   SMS_HANDLE smshHandle = 0;
-   HRESULT hr = SmsOpen( SMS_MSGTYPE_TEXT, SMS_MODE_SEND, &smshHandle, nullptr ); /* try to open an SMS Handle */
-
-   /* Set default return value */
-   hb_retnint( -1 );
-
-   if( hr == ERROR_SUCCESS )
-   {
-      SMS_ADDRESS smsaDestination;
-
-      void * hMessage;
-      void * hPhoneNumber;
-
-      HB_SIZE nMessageLen;
-      HB_SIZE nPhoneNumberLen;
-
-      LPCTSTR sztMessage     = HB_PARSTRDEF( 1, &hMessage    , &nMessageLen );
-      LPCTSTR sztPhoneNumber = HB_PARSTRDEF( 2, &hPhoneNumber, &nPhoneNumberLen );
-
-      if( nPhoneNumberLen <= HB_SIZEOFARRAY( smsaDestination.ptsAddress ) )
-      {
-         TEXT_PROVIDER_SPECIFIC_DATA tpsd;
-         SMS_MESSAGE_ID smsmidMessageID = 0;
-
-         /* Create the destination address */
-         memset( &smsaDestination, 0, sizeof( smsaDestination ) );
-         smsaDestination.smsatAddressType = ( *sztPhoneNumber == _T( '+' ) ) ? SMSAT_INTERNATIONAL : SMSAT_NATIONAL;
-         memcpy( smsaDestination.ptsAddress, sztPhoneNumber, sizeof( smsaDestination.ptsAddress ) );
-
-         /* Set up provider specific data */
-         tpsd.dwMessageOptions = PS_MESSAGE_OPTION_NONE;
-         tpsd.psMessageClass   = PS_MESSAGE_CLASS0;
-         tpsd.psReplaceOption  = PSRO_NONE;
-
-         /* Send the message, indicating success or failure */
-         hb_retnint( SmsSendMessage( smshHandle,
-                                     nullptr,
-                                     &smsaDestination,
-                                     nullptr,
-                                     ( PBYTE ) sztMessage,
-                                     nMessageLen * sizeof( TCHAR ),
-                                     ( PBYTE ) &tpsd, 12,
-                                     SMSDE_OPTIMAL,
-                                     SMS_OPTION_DELIVERY_NONE,
-                                     &smsmidMessageID ) );
-      }
-
-      hb_strfree( hMessage );
-      hb_strfree( hPhoneNumber );
-
-      SmsClose( smshHandle );
-   }
-#else
-   hb_retnint( -1 );
-#endif
+   hb_retnint(-1);
 }

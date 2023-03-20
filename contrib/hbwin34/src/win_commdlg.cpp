@@ -60,7 +60,6 @@ BOOL WINAPI ChooseColor( LPCHOOSECOLORW );
 
 #define _HB_CHOOSECOLOR_CB_PROP_  TEXT( "__hbwin_win_ChooseColor_CB" )
 
-#if ! defined( HB_OS_WIN_CE )
 static UINT_PTR CALLBACK CCHookProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
    UINT_PTR res;
@@ -83,7 +82,7 @@ static UINT_PTR CALLBACK CCHookProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM 
 
       hb_evalBlock( pBlock, pWnd, pMsg, pLPa, pWPa );
 
-      res = ( UINT_PTR ) hbwapi_par_RESULT( -1 );
+      res = ( UINT_PTR ) hbwapi_par_RESULT(-1);
 
       hb_itemRelease( pWnd );
       hb_itemRelease( pMsg );
@@ -99,45 +98,44 @@ static UINT_PTR CALLBACK CCHookProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM 
       hb_vmRequestRestore();
    }
    else
+   {
       res = 0;
+   }
 
    return fInit ? 1 : res;
 }
-#endif
 
 HB_FUNC( WIN_CHOOSECOLOR )
 {
-   CHOOSECOLOR cc;
    COLORREF    crCustClr[ 16 ];
-   int         i;
 
    void * hTpl;
 
-   for( i = 0; i < ( int ) HB_SIZEOFARRAY( crCustClr ); ++i )
-      crCustClr[ i ] = HB_ISARRAY( 4 ) ? hbwapi_parv_COLORREF( 4, i + 1 ) : RGB( 0, 0, 0 );
+   for( int i = 0; i < ( int ) HB_SIZEOFARRAY( crCustClr ); ++i )
+   {
+      crCustClr[ i ] = HB_ISARRAY(4) ? hbwapi_parv_COLORREF(4, i + 1) : RGB(0, 0, 0);
+   }
 
+   CHOOSECOLOR cc;
    memset( &cc, 0, sizeof( cc ) );
-
    cc.lStructSize    = sizeof( cc );
-   cc.hwndOwner      = hbwapi_par_raw_HWND( 1 );
-#if ! defined( HB_OS_WIN_CE )
-   cc.hInstance      = hbwapi_par_raw_HWND( 2 );
-#endif
-   cc.rgbResult      = hbwapi_par_COLORREF( 3 );
+   cc.hwndOwner      = hbwapi_par_raw_HWND(1);
+   cc.hInstance      = hbwapi_par_raw_HWND(2);
+   cc.rgbResult      = hbwapi_par_COLORREF(3);
    cc.lpCustColors   = crCustClr;
-   cc.Flags          = hbwapi_par_WORD( 5 );
-#if ! defined( HB_OS_WIN_CE )
-   cc.lCustData      = ( LPARAM ) ( HB_PTRUINT ) hb_param( 6, Harbour::Item::EVALITEM );
+   cc.Flags          = hbwapi_par_WORD(5);
+   cc.lCustData      = ( LPARAM ) ( HB_PTRUINT ) hb_param(6, Harbour::Item::EVALITEM);
    cc.lpfnHook       = cc.lCustData ? CCHookProc : nullptr;
-#endif
-   cc.lpTemplateName = HB_PARSTR( 7, &hTpl, nullptr );
+   cc.lpTemplateName = HB_PARSTR(7, &hTpl, nullptr);
 
    if( ChooseColor( &cc ) )
    {
       hbwapi_ret_COLORREF( cc.rgbResult );
    }
    else
-      hbwapi_ret_COLORREF( -1 );
+   {
+      hbwapi_ret_COLORREF(-1);
+   }
 
-   hb_strfree( hTpl );
+   hb_strfree(hTpl);
 }

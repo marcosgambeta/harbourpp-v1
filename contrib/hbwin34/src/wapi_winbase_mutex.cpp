@@ -73,7 +73,9 @@ static void hbwapi_mutex_ret( HANDLE hMutex )
       hb_retptrGC( ph );
    }
    else
+   {
       hb_retptr( nullptr );
+   }
 }
 
 static HANDLE hbwapi_mutex_par( int iParam )
@@ -87,35 +89,30 @@ static HANDLE hbwapi_mutex_par( int iParam )
 HB_FUNC( WAPI_CREATEMUTEX )
 {
    void * hName;
-   HANDLE hMutex = CreateMutex( ( LPSECURITY_ATTRIBUTES ) hb_parptr( 1 ), hb_parl( 2 ), HB_PARSTR( 3, &hName, nullptr ) );
+   HANDLE hMutex = CreateMutex( ( LPSECURITY_ATTRIBUTES ) hb_parptr(1), hb_parl(2), HB_PARSTR(3, &hName, nullptr) );
 
    hbwapi_SetLastError( GetLastError() );
    hbwapi_mutex_ret( hMutex );
 
-   hb_strfree( hName );
+   hb_strfree(hName);
 }
 
 /* HANDLE WINAPI OpenMutex( DWORD dwDesiredAccess, BOOL bInheritHandle, LPCTSTR lpName ) */
 HB_FUNC( WAPI_OPENMUTEX )
 {
-#if ! defined( HB_OS_WIN_CE )
    void * hName;
-   HANDLE hMutex = OpenMutex( ( DWORD ) hb_parnl( 1 ), hb_parl( 2 ), HB_PARSTR( 3, &hName, nullptr ) );
+   HANDLE hMutex = OpenMutex( ( DWORD ) hb_parnl(1), hb_parl(2), HB_PARSTR(3, &hName, nullptr) );
 
    hbwapi_SetLastError( GetLastError() );
    hbwapi_mutex_ret( hMutex );
 
-   hb_strfree( hName );
-#else
-   /* WinCE (WinMobile6) does not support OpenMutex() */
-   hb_retptr( nullptr );
-#endif
+   hb_strfree(hName);
 }
 
 /* BOOL WINAPI ReleaseMutex( HANDLE hMutex ) */
 HB_FUNC( WAPI_RELEASEMUTEX )
 {
-   HANDLE hMutex = hbwapi_mutex_par( 1 );
+   HANDLE hMutex = hbwapi_mutex_par(1);
 
    if( hMutex )
    {
@@ -124,5 +121,7 @@ HB_FUNC( WAPI_RELEASEMUTEX )
       hbwapi_ret_L( bResult );
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }

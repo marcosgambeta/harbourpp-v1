@@ -49,7 +49,7 @@
 #include "hbapi.hpp"
 
 #include "hbwinuni.hpp"
-#include "hbwinole.h"
+#include "hbwinole.hpp"
 
 #if defined( _MSC_VER )
 #  pragma warning(push)
@@ -105,7 +105,9 @@ static PHB_DYNS hb_dispIdToDynsym( DISPID dispid )
       return hb_dynsymFromNum( ( int ) dispid );
    }
    else
+   {
       return nullptr;
+   }   
 }
 
 static void hb_errRT_OLESRV( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, HB_ERRCODE errOsCode,
@@ -128,15 +130,15 @@ static void hb_errRT_OLESRV( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, HB_ER
 
 static HB_BOOL s_hashWithNumKeys( PHB_ITEM pHash )
 {
-   HB_SIZE nLen = hb_hashLen( pHash ), n;
+   HB_SIZE nLen = hb_hashLen( pHash );
 
-   for( n = 1; n <= nLen; ++n )
+   for( HB_SIZE n = 1; n <= nLen; ++n )
    {
       PHB_ITEM pKey = hb_hashGetKeyAt( pHash, n );
       if( ! pKey || ! HB_IS_NUMERIC( pKey ) )
       {
          return HB_FALSE;
-      }   
+      }
    }
 
    return HB_TRUE;
@@ -260,7 +262,7 @@ static ULONG STDMETHODCALLTYPE Release( IDispatch * lpThis )
          hb_itemRelease( pHbOleServer->pAction );
          pHbOleServer->pAction = nullptr;
       }
-      hb_xfree( pHbOleServer );
+      hb_xfree(pHbOleServer);
       InterlockedDecrement( &s_lObjectCount );
       return 0;
    }
@@ -306,7 +308,6 @@ static HRESULT STDMETHODCALLTYPE GetIDsOfNames( IDispatch * lpThis, REFIID riid,
    {
       char szName[ HB_SYMBOL_NAME_LEN + 1 ];
       DISPID dispid = 0;
-      UINT ui;
 
       if( s_WideToAnsiBuffer( rgszNames[ 0 ], szName, ( int ) sizeof( szName ) ) != 0 )
       {
@@ -364,7 +365,7 @@ static HRESULT STDMETHODCALLTYPE GetIDsOfNames( IDispatch * lpThis, REFIID riid,
          }
       }
 
-      for( ui = 0; ui < cNames; ++ui )
+      for( UINT ui = 0; ui < cNames; ++ui )
       {
          rgDispId[ ui ] = DISPID_UNKNOWN;
       }
@@ -477,7 +478,9 @@ static HRESULT STDMETHODCALLTYPE Invoke( IDispatch * lpThis, DISPID dispid, REFI
                pDynSym = hb_dynsymFindName( szName );
             }
             else
+            {
                pDynSym = nullptr;
+            }
          }
          if( pDynSym && hb_objHasMessage( pAction, pDynSym ) )
          {
@@ -487,7 +490,7 @@ static HRESULT STDMETHODCALLTYPE Invoke( IDispatch * lpThis, DISPID dispid, REFI
       if( ! fResult )
       {
          return DISP_E_MEMBERNOTFOUND;
-      }   
+      }
    }
    else
    {
@@ -509,7 +512,9 @@ static HRESULT STDMETHODCALLTYPE Invoke( IDispatch * lpThis, DISPID dispid, REFI
             return S_OK;
          }
          else
+         {
             return DISP_E_MEMBERNOTFOUND;
+         }
       }
       else if( ( wFlags & DISPATCH_PROPERTYGET ) && pParams->cArgs == 0 && hb_dynsymIsMemvar( pDynSym ) )
       {
@@ -669,7 +674,7 @@ static HRESULT STDMETHODCALLTYPE classCreateInstance( IClassFactory * lpThis,
             {
                hb_vmPushEvalSym();
                hb_vmPush( s_pAction );
-               hb_vmProc( 0 );
+               hb_vmProc(0);
                pAction = hb_itemNew( hb_stackReturnItem() );
                hb_vmRequestRestore();
             }
@@ -747,9 +752,8 @@ STDAPI DllCanUnloadNow( void )
 STDAPI DllUnregisterServer( void )
 {
    TCHAR lpKeyName[ MAX_REGSTR_SIZE ];
-   int i;
 
-   for( i = ( int ) HB_SIZEOFARRAY( s_regTable ) - 1; i >= 0; --i )
+   for( int i = ( int ) HB_SIZEOFARRAY( s_regTable ) - 1; i >= 0; --i )
    {
       if( s_getKeyValue( s_regTable[ i ][ 0 ], lpKeyName, MAX_REGSTR_SIZE ) )
       {
@@ -775,9 +779,8 @@ STDAPI DllRegisterServer( void )
    LPCTSTR lpValName;
    HRESULT hr = S_OK;
    HKEY hKey;
-   int i;
 
-   for( i = 0; i < ( int ) HB_SIZEOFARRAY( s_regTable ); ++i )
+   for( int i = 0; i < ( int ) HB_SIZEOFARRAY( s_regTable ); ++i )
    {
       long err;
 
@@ -788,19 +791,16 @@ STDAPI DllRegisterServer( void )
          lpValName = lpNameBuf;
       }
       else
+      {
          lpValName = nullptr;
+      }
       s_getKeyValue( s_regTable[ i ][ 2 ], lpValue, MAX_REGSTR_SIZE );
 
-      err = RegCreateKeyEx( HKEY_CLASSES_ROOT, lpKeyName,
-                            0, nullptr, REG_OPTION_NON_VOLATILE,
-                            KEY_SET_VALUE | KEY_CREATE_SUB_KEY,
-                            nullptr, &hKey, nullptr );
+      err = RegCreateKeyEx( HKEY_CLASSES_ROOT, lpKeyName, 0, nullptr, REG_OPTION_NON_VOLATILE, KEY_SET_VALUE | KEY_CREATE_SUB_KEY, nullptr, &hKey, nullptr );
 
       if( err == ERROR_SUCCESS )
       {
-         err = RegSetValueEx( hKey, lpValName, 0, REG_SZ,
-                              ( const BYTE * ) lpValue,
-                              ( lstrlen( lpValue ) + 1 ) * sizeof( TCHAR ) );
+         err = RegSetValueEx( hKey, lpValName, 0, REG_SZ, ( const BYTE * ) lpValue, ( lstrlen( lpValue ) + 1 ) * sizeof( TCHAR ) );
          RegCloseKey( hKey );
       }
       if( err != ERROR_SUCCESS )
@@ -814,11 +814,7 @@ STDAPI DllRegisterServer( void )
    return hr;
 }
 
-#if defined( HB_OS_WIN_CE ) && ( defined( _MSC_VER ) || defined( __POCC__ ) )
-BOOL WINAPI DllMain( HANDLE hInstance, DWORD dwReason, PVOID pvReserved )
-#else
 BOOL WINAPI DllMain( HINSTANCE hInstance, DWORD dwReason, PVOID pvReserved )
-#endif
 {
    static HB_BOOL s_fInit = HB_FALSE;
    BOOL fResult = TRUE;
@@ -830,8 +826,7 @@ BOOL WINAPI DllMain( HINSTANCE hInstance, DWORD dwReason, PVOID pvReserved )
       case DLL_PROCESS_ATTACH:
          s_hInstDll = ( HINSTANCE ) hInstance;
          s_lLockCount = s_lObjectCount = 0;
-         s_IClassFactoryObj.lpVtbl = ( IClassFactoryVtbl * )
-                                     HB_UNCONST( &s_IClassFactory_Vtbl );
+         s_IClassFactoryObj.lpVtbl = ( IClassFactoryVtbl * ) HB_UNCONST( &s_IClassFactory_Vtbl );
 
          DisableThreadLibraryCalls( ( HMODULE ) hInstance );
 
@@ -851,7 +846,7 @@ BOOL WINAPI DllMain( HINSTANCE hInstance, DWORD dwReason, PVOID pvReserved )
             {
                hb_vmPushDynSym( pDynSym );
                hb_vmPushNil();
-               hb_vmProc( 0 );
+               hb_vmProc(0);
                hb_vmRequestRestore();
             }
          }
@@ -894,15 +889,15 @@ HB_FUNC( WIN_OLESERVERINIT )
       void * hClsId, * hClsName;
       LPCTSTR lpClsId, lpClsName;
 
-      lpClsId = HB_PARSTR( 1, &hClsId, nullptr );
-      lpClsName = HB_PARSTR( 2, &hClsName, nullptr );
+      lpClsId = HB_PARSTR(1, &hClsId, nullptr);
+      lpClsName = HB_PARSTR(2, &hClsName, nullptr);
 
       if( lpClsId && lpClsName )
       {
          void * hOleClsId;
          LPCOLESTR lpOleClsId;
 
-         lpOleClsId = hb_parstr_u16( 1, HB_CDP_ENDIAN_NATIVE, &hOleClsId, nullptr );
+         lpOleClsId = hb_parstr_u16(1, HB_CDP_ENDIAN_NATIVE, &hOleClsId, nullptr);
          if( CLSIDFromString( lpOleClsId, &s_IID_IHbOleServer ) == S_OK )
          {
             PHB_ITEM pAction;
@@ -914,10 +909,10 @@ HB_FUNC( WIN_OLESERVERINIT )
                s_pMsgHash = nullptr;
             }
 
-            pAction = hb_param( 3, Harbour::Item::HASH | Harbour::Item::EVALITEM );
-            if( ! pAction && HB_ISOBJECT( 3 ) )
+            pAction = hb_param(3, Harbour::Item::HASH | Harbour::Item::EVALITEM);
+            if( ! pAction && HB_ISOBJECT(3) )
             {
-               pAction = hb_param( 3, Harbour::Item::OBJECT );
+               pAction = hb_param(3, Harbour::Item::OBJECT);
             }
             if( pAction )
             {
@@ -927,9 +922,9 @@ HB_FUNC( WIN_OLESERVERINIT )
                }
                s_pAction = hb_itemNew( pAction );
 
-               if( HB_ISLOG( 4 ) )
+               if( HB_ISLOG(4) )
                {
-                  if( hb_parl( 4 ) )
+                  if( hb_parl(4) )
                   {
                      if( HB_IS_HASH( s_pAction ) )
                      {
@@ -941,12 +936,12 @@ HB_FUNC( WIN_OLESERVERINIT )
                      }
                   }
                }
-               else if( ! HB_ISNIL( 4 ) )
+               else if( ! HB_ISNIL(4) )
                {
                   errCode = 1001;
                }
             }
-            else if( ! HB_ISNIL( 3 ) )
+            else if( ! HB_ISNIL(3) )
             {
                errCode = 1001;
             }
@@ -961,15 +956,15 @@ HB_FUNC( WIN_OLESERVERINIT )
             errCode = 1002;
          }
 
-         hb_strfree( hOleClsId );
+         hb_strfree(hOleClsId);
       }
       else
       {
          errCode = 1001;
       }
 
-      hb_strfree( hClsId );
-      hb_strfree( hClsName );
+      hb_strfree(hClsId);
+      hb_strfree(hClsName);
    }
 
    if( errCode )
@@ -978,8 +973,8 @@ HB_FUNC( WIN_OLESERVERINIT )
    }
    else
    {
-      hb_retl( s_fServerReady );
-   }   
+      hb_retl(s_fServerReady);
+   }
 }
 
 #endif

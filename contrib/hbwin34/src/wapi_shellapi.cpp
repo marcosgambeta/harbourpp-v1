@@ -45,34 +45,26 @@
  */
 
 #include "hbwapi.hpp"
-#if defined( HB_OS_WIN_CE )
-   #include "hbwince.h"
-#endif
-
 #include <shellapi.h>
 
 HB_FUNC( WAPI_SHELLEXECUTE )
 {
-#if defined( HB_OS_WIN_CE )
-   hb_retnint( -1 );
-#else
    void * hOperation;
    void * hFile;
    void * hParameters;
    void * hDirectory;
 
-   hb_retnint( ( HB_PTRUINT ) ShellExecute( hbwapi_par_raw_HWND( 1 ),
-                                            HB_PARSTR( 2, &hOperation, nullptr ), /* edit, explore, open, print, play?, properties? */
-                                            HB_PARSTRDEF( 3, &hFile, nullptr ),
-                                            HB_PARSTR( 4, &hParameters, nullptr ),
-                                            HB_PARSTR( 5, &hDirectory, nullptr ),
-                                            hb_parnidef( 6, SW_SHOWNORMAL ) /* nShowCmd */ ) );
+   hb_retnint( ( HB_PTRUINT ) ShellExecute( hbwapi_par_raw_HWND(1),
+                                            HB_PARSTR(2, &hOperation, nullptr), /* edit, explore, open, print, play?, properties? */
+                                            HB_PARSTRDEF(3, &hFile, nullptr),
+                                            HB_PARSTR(4, &hParameters, nullptr),
+                                            HB_PARSTR(5, &hDirectory, nullptr),
+                                            hb_parnidef(6, SW_SHOWNORMAL) /* nShowCmd */ ) );
 
-   hb_strfree( hOperation );
-   hb_strfree( hFile );
-   hb_strfree( hParameters );
-   hb_strfree( hDirectory );
-#endif
+   hb_strfree(hOperation);
+   hb_strfree(hFile);
+   hb_strfree(hParameters);
+   hb_strfree(hDirectory);
 }
 
 HB_FUNC( WAPI_ISUSERANADMIN )
@@ -84,8 +76,7 @@ HB_FUNC( WAPI_ISUSERANADMIN )
    if( hLib )
    {
       typedef int ( WINAPI * ISUSERANADMIN )( void );
-      ISUSERANADMIN pIsUserAnAdmin = ( ISUSERANADMIN )
-                                     HB_WINAPI_GETPROCADDRESS( hLib, "IsUserAnAdmin" );
+      ISUSERANADMIN pIsUserAnAdmin = ( ISUSERANADMIN ) HB_WINAPI_GETPROCADDRESS( hLib, "IsUserAnAdmin" );
       if( pIsUserAnAdmin )
       {
          bResult = ( pIsUserAnAdmin )();

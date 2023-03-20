@@ -87,15 +87,15 @@ int hbwin_bitmapType( const void * pImgBuf, HB_SIZE size )
 
 HB_FUNC( WIN_BITMAPTYPE )
 {
-   hb_retni( hbwin_bitmapType( hb_parc( 1 ), hb_parclen( 1 ) ) );
+   hb_retni( hbwin_bitmapType( hb_parc(1), hb_parclen(1) ) );
 }
 
-#define HB_MAX_BMP_SIZE       ( 32 * 1024 * 1024 )
+#define HB_MAX_BMP_SIZE       (32 * 1024 * 1024)
 
 HB_FUNC( WIN_LOADBITMAPFILE )
 {
    HB_SIZE nSize;
-   char * pBuffer = ( char * ) hb_fileLoad( hb_parcx( 1 ), HB_MAX_BMP_SIZE, &nSize );
+   char * pBuffer = ( char * ) hb_fileLoad( hb_parcx(1), HB_MAX_BMP_SIZE, &nSize );
 
    if( pBuffer )
    {
@@ -105,7 +105,7 @@ HB_FUNC( WIN_LOADBITMAPFILE )
 
       if( nSize <= 2 || hbwin_bitmapType( pBuffer, nSize ) == HB_WIN_BITMAP_UNKNOWN )
       {
-         hb_xfree( pBuffer );
+         hb_xfree(pBuffer);
          pBuffer = nullptr;
       }
    }
@@ -115,7 +115,9 @@ HB_FUNC( WIN_LOADBITMAPFILE )
       hb_retclen_buffer( pBuffer, nSize );
    }
    else
+   {
       hb_retc_null();
+   }
 }
 
 /* Some compilers don't implement these define [jarabal] */
@@ -148,32 +150,40 @@ static int hbwin_bitmapIsSupported( HDC hDC, int iType, const void * pImgBuf, HB
                   return 0;
                }
                else
+               {
                   return -4;
+               }
             }
             else
+            {
                return -3;
+            }
          }
          else
+         {
             return -2;
+         }
       }
    }
    else
+   {
       return -1;
+   }
 }
 
 HB_FUNC( WIN_BITMAPISSUPPORTED )
 {
-   const char * pImgBuf = hb_parc( 2 );
-   HB_SIZE nSize = hb_parclen( 2 );
+   const char * pImgBuf = hb_parc(2);
+   HB_SIZE nSize = hb_parclen(2);
 
-   hb_retni( hbwin_bitmapIsSupported( hbwapi_par_HDC( 1 ), hbwin_bitmapType( pImgBuf, nSize ), pImgBuf, nSize ) );
+   hb_retni( hbwin_bitmapIsSupported( hbwapi_par_HDC(1), hbwin_bitmapType( pImgBuf, nSize ), pImgBuf, nSize ) );
 }
 
 HB_FUNC( WIN_DRAWBITMAP )
 {
-   HDC hDC = hbwapi_par_HDC( 1 );
-   HB_SIZE nSize = hb_parclen( 2 );
-   const BITMAPFILEHEADER * pbmfh = ( const BITMAPFILEHEADER * ) hb_parc( 2 );
+   HDC hDC = hbwapi_par_HDC(1);
+   HB_SIZE nSize = hb_parclen(2);
+   const BITMAPFILEHEADER * pbmfh = ( const BITMAPFILEHEADER * ) hb_parc(2);
    int iType = hbwin_bitmapType( pbmfh, nSize );
 
    /* FIXME: No check is done on 2nd parameter which is a large security hole
@@ -184,8 +194,8 @@ HB_FUNC( WIN_DRAWBITMAP )
       const BITMAPINFO * pbmi = nullptr;
       const BYTE * pBits = nullptr;
 
-      int iWidth  = hb_parni( 7 );
-      int iHeight = hb_parni( 8 );
+      int iWidth  = hb_parni(7);
+      int iHeight = hb_parni(8);
 
       if( iType == HB_WIN_BITMAP_BMP )
       {
@@ -222,16 +232,18 @@ HB_FUNC( WIN_DRAWBITMAP )
 
       if( pbmi && pBits )
       {
-#if ! defined( HB_OS_WIN_CE )
-         SetStretchBltMode( hDC, COLORONCOLOR );
-#endif
-         hb_retl( StretchDIBits( hDC, hb_parni( 3 ), hb_parni( 4 ), hb_parni( 5 ), hb_parni( 6 ),
+         SetStretchBltMode(hDC, COLORONCOLOR);
+         hb_retl(StretchDIBits(hDC, hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6),
                                  0, 0, iWidth, iHeight, pBits, pbmi,
-                                 DIB_RGB_COLORS, SRCCOPY ) != ( int ) GDI_ERROR );
+                                 DIB_RGB_COLORS, SRCCOPY) != ( int ) GDI_ERROR);
       }
       else
-         hb_retl( HB_FALSE );
+      {
+         hb_retl(false);
+      }
    }
    else
-      hb_retl( HB_FALSE );
+   {
+      hb_retl(false);
+   }
 }
