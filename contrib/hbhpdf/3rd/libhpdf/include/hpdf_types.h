@@ -45,6 +45,12 @@ typedef  signed int          HPDF_INT;
 typedef  unsigned int        HPDF_UINT;
 
 
+/*  64bit integer types
+ */
+typedef  signed long long    HPDF_INT64;
+typedef  unsigned long long  HPDF_UINT64;
+
+
 /*  32bit integer types
  */
 typedef  signed int          HPDF_INT32;
@@ -88,7 +94,7 @@ typedef  signed int          HPDF_BOOL;
 typedef  unsigned long       HPDF_STATUS;
 
 
-/*  charactor-code type (16bit)
+/*  character-code type (16bit)
  */
 typedef  HPDF_UINT16         HPDF_CID;
 typedef  HPDF_UINT16         HPDF_UNICODE;
@@ -152,7 +158,7 @@ typedef enum _HPDF_InfoType {
 
 /* PDF-A Types */
 
-typedef enum _HPDF_PDFA_TYPE 
+typedef enum _HPDF_PDFA_TYPE
 {
     HPDF_PDFA_1A = 0,
     HPDF_PDFA_1B = 1
@@ -207,9 +213,9 @@ typedef struct _HPDF_TextWidth {
 /*------ dash mode ----------------------------------------------------------*/
 
 typedef struct _HPDF_DashMode {
-    HPDF_UINT16  ptn[8];
-    HPDF_UINT    num_ptn;
-    HPDF_UINT    phase;
+    HPDF_REAL  ptn[8];
+    HPDF_UINT  num_ptn;
+    HPDF_REAL  phase;
 } HPDF_DashMode;
 
 
@@ -225,6 +231,23 @@ typedef struct _HPDF_TransMatrix {
     HPDF_REAL   y;
 } HPDF_TransMatrix;
 
+/*---------------------------------------------------------------------------*/
+/*----- HPDF_3DMatrix struct ------------------------------------------------*/
+
+typedef struct _HPDF_3DMatrix {
+    HPDF_REAL   a;
+    HPDF_REAL   b;
+    HPDF_REAL   c;
+    HPDF_REAL   d;
+    HPDF_REAL   e;
+    HPDF_REAL   f;
+    HPDF_REAL   g;
+    HPDF_REAL   h;
+    HPDF_REAL   i;
+    HPDF_REAL   tx;
+    HPDF_REAL   ty;
+    HPDF_REAL   tz;
+} HPDF_3DMatrix;
 
 /*---------------------------------------------------------------------------*/
 
@@ -268,7 +291,7 @@ typedef struct _HPDF_CMYKColor {
 typedef enum _HPDF_LineCap {
     HPDF_BUTT_END = 0,
     HPDF_ROUND_END,
-    HPDF_PROJECTING_SCUARE_END,
+    HPDF_PROJECTING_SQUARE_END,
     HPDF_LINECAP_EOF
 } HPDF_LineCap;
 
@@ -368,7 +391,8 @@ typedef enum _HPDF_AnnotType {
     HPDF_ANNOT_3D,
     HPDF_ANNOT_SQUIGGLY,
 	HPDF_ANNOT_LINE,
-	HPDF_ANNOT_PROJECTION
+	HPDF_ANNOT_PROJECTION,
+	HPDF_ANNOT_WIDGET
 } HPDF_AnnotType;
 
 
@@ -499,7 +523,7 @@ typedef enum _HPDF_TransitionStyle {
     HPDF_TS_GLITTER_TOP_LEFT_TO_BOTTOM_RIGHT,
     HPDF_TS_REPLACE,
     HPDF_TS_EOF
-} HPDF_TransitionStyle; 
+} HPDF_TransitionStyle;
 
 /*----------------------------------------------------------------------------*/
 
@@ -537,7 +561,7 @@ typedef enum  _HPDF_EncoderType {
 typedef enum _HPDF_ByteType {
     HPDF_BYTE_TYPE_SINGLE = 0,
     HPDF_BYTE_TYPE_LEAD,
-    HPDF_BYTE_TYPE_TRIAL,
+    HPDF_BYTE_TYPE_TRAIL,
     HPDF_BYTE_TYPE_UNKNOWN
 } HPDF_ByteType;
 
@@ -556,6 +580,20 @@ typedef enum _HPDF_NameDictKey {
     HPDF_NAME_EMBEDDED_FILES = 0,    /* TODO the rest */
     HPDF_NAME_EOF
 } HPDF_NameDictKey;
+
+/*----------------------------------------------------------------------------*/
+
+typedef enum _HPDF_ShadingType {
+  HPDF_SHADING_FREE_FORM_TRIANGLE_MESH = 4 /* TODO the rest */
+} HPDF_ShadingType;
+
+typedef enum _HPDF_Shading_FreeFormTriangleMeshEdgeFlag {
+  HPDF_FREE_FORM_TRI_MESH_EDGEFLAG_NO_CONNECTION = 0,
+  HPDF_FREE_FORM_TRI_MESH_EDGEFLAG_BC,
+  HPDF_FREE_FORM_TRI_MESH_EDGEFLAG_AC
+} HPDF_Shading_FreeFormTriangleMeshEdgeFlag;
+
+/*----------------------------------------------------------------------------*/
 
 #ifdef __cplusplus
 }

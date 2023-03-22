@@ -1,15 +1,16 @@
-#
-#  URL http://libharu.org/
-#
-#  Copyright 2000-2006 (c) Takeshi Kanno
-#  Copyright 2007-2009 (c) Antony Dovgal et al.
-#
+# Haru Free PDF Library [![Build Status](https://github.com/libharu/libharu/actions/workflows/cmake.yml/badge.svg)](https://github.com/libharu/libharu/actions/workflows/cmake.yml)
+
+  **URL http://libharu.org/**
+
+  **Copyright 2000-2006 (c) Takeshi Kanno**
+
+  **Copyright 2007-2009 (c) Antony Dovgal et al.**
 
 See INSTALL for instructions on how to install libHaru.
 
-*
-* What is Haru Free PDF Library?
-*
+
+# What is Haru Free PDF Library?
+
 Haru is a free, cross platform, open-sourced software library for generating 
 PDF. It supports the following features.
 
@@ -25,9 +26,9 @@ PDF. It supports the following features.
 You can add the feature of PDF creation by using Haru without understanding 
 complicated internal structure of PDF.
 
-*
-* The differences from the previous version 
-*
+
+# The differences from the previous version 
+
 
 The biggest differences are that all code is written in C. 
 To our regret, because internal structures changed greatly, The API is not 
@@ -43,9 +44,9 @@ previous version.
  3. Supported more features.
     TrueType font, 128 bit encryption, arc function, and so on.
 
-*
-* Supporting platforms
-*
+
+# Supporting platforms
+
 Haru is written in ANSI-C and should compile easily with any compliant C 
 compiler.
 I inspected Haru in the following environment and make files for these 
@@ -64,20 +65,20 @@ compression and embedding PNG images. (In the case of Windows, static library
 files for several compilers are included in the package for WIndows.  In the 
 case of  most of UNIX, these libraries are usually installed.)
 
-*
-* Available development environment
-*
+
+# Available development environment
+
 Haru can work as both static-library (.a, .lib) and shared-library (.so, .dll).
 When you use it as static-library, It can be used by C and a C++.
 But when you use it as shared-library, it can be used by many development 
 languages which support shared library.
 So far, Haru provides bindings for Ruby, Delphi/Free Pascal and C#.
 
-If you write bindings for other programing languages, please notice me!
+If you write bindings for other programming languages, please notice me!
 
-*
-* Runtime environment of programs using Haru
-*
+
+# Runtime environment of programs using Haru
+
 1. static-library
    No runtime files are required.
 
@@ -91,9 +92,9 @@ NOTE:
 In the UNIX environment, there are the cases that libz.so, libpng.so.x are 
 necessary. About this, please refer to the documentation of PNGLIB and ZLIB.
 
-*
-* License
-*
+
+# License
+
 Haru is distributed under the ZLIB/LIBPNG License. Because ZLIB/LIBPNG License 
 is one of the freest licenses, You can use Haru for various purposes.
 
@@ -120,9 +121,9 @@ to the following restrictions:
  3. This notice may not be removed or altered from any source distribution.
 
 
-*
-* Acknowledgment
-*
+
+# Acknowledgment
+
 1. Information-technology Promotion Agency(IPA)
    The development of Haru has been supported by Exploratory Software Project 
    of Information-technology Promotion Agency(IPA), Japan. 
@@ -133,9 +134,5 @@ to the following restrictions:
    Riccardo Cohen, sea_sbs, Andrew. 
    They gave me very useful advices.
 
-3. Sourceforge.net
-   We would like to thank sourceForge.net for project hosting.
-
-4. Adobe Systems Inc.
+3. Adobe Systems Inc.
    We thank Adobe Systems Inc. for publishing PDF specification.
-
