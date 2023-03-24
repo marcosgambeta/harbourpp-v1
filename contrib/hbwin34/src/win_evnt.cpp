@@ -56,7 +56,7 @@ HB_FUNC( WIN_REPORTEVENT )
    void * hServerName;
    void * hSourceName;
 
-   hEventLog = RegisterEventSource( HB_PARSTR(1, &hServerName, nullptr), HB_PARSTRDEF(2, &hSourceName, nullptr) );
+   hEventLog = RegisterEventSource(HB_PARSTR(1, &hServerName, nullptr), HB_PARSTRDEF(2, &hSourceName, nullptr));
 
    hb_strfree(hServerName);
    hb_strfree(hSourceName);
@@ -71,33 +71,33 @@ HB_FUNC( WIN_REPORTEVENT )
 
       if( pStrings && ( wNumStrings = ( WORD ) hb_arrayLen( pStrings ) ) > 0 )
       {
-         lpStrings = ( LPCTSTR * ) hb_xgrab( sizeof( LPCTSTR ) * wNumStrings );
-         hStrings = ( void ** ) hb_xgrab( sizeof( void * ) * wNumStrings );
+         lpStrings = ( LPCTSTR * ) hb_xgrab(sizeof(LPCTSTR) * wNumStrings);
+         hStrings = ( void ** ) hb_xgrab(sizeof(void*) * wNumStrings);
 
          for( WORD i = 0; i < wNumStrings; ++i )
          {
-            lpStrings[ i ] = ( LPCTSTR ) HB_ARRAYGETSTR( pStrings, i + 1, &hStrings[ i ], nullptr );
+            lpStrings[i] = ( LPCTSTR ) HB_ARRAYGETSTR( pStrings, i + 1, &hStrings[i], nullptr );
          }
       }
       else if( HB_ISCHAR(6) )
       {
          wNumStrings = 1;
 
-         lpStrings = ( LPCTSTR * ) hb_xgrab( sizeof( LPCTSTR ) );
-         hStrings = ( void ** ) hb_xgrab( sizeof( void * ) );
+         lpStrings = ( LPCTSTR * ) hb_xgrab(sizeof(LPCTSTR));
+         hStrings = ( void ** ) hb_xgrab(sizeof(void*));
 
-         lpStrings[ 0 ] = ( LPCTSTR ) HB_ITEMGETSTR( hb_param(6, Harbour::Item::STRING), &hStrings[ 0 ], nullptr );
+         lpStrings[0] = ( LPCTSTR ) HB_ITEMGETSTR( hb_param(6, Harbour::Item::STRING), &hStrings[0], nullptr );
       }
 
       if( ReportEvent( hEventLog,
                        ( WORD ) hb_parni(3) /* wType */,
                        ( WORD ) hb_parni(4) /* wCategory */,
-                       ( DWORD ) hb_parnl(5) /* dwEventID */,
+                       static_cast<DWORD>(hb_parnl(5)) /* dwEventID */,
                        nullptr /* lpUserSid */,
                        wNumStrings,
-                       ( DWORD ) hb_parclen(7),
+                       static_cast<DWORD>(hb_parclen(7)),
                        lpStrings,
-                       ( LPVOID ) HB_UNCONST( hb_parc(7) ) ) )
+                       static_cast<LPVOID>(const_cast<char*>(hb_parc(7))) ) )
       {
          bRetVal = true;
       }
@@ -113,7 +113,7 @@ HB_FUNC( WIN_REPORTEVENT )
          hb_xfree(( void * ) lpStrings);
       }
 
-      DeregisterEventSource( hEventLog );
+      DeregisterEventSource(hEventLog);
    }
 
    hb_retl(bRetVal);

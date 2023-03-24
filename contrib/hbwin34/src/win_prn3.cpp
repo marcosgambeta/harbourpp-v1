@@ -47,7 +47,7 @@
 #include "hbwapi.hpp"
 #include <winspool.h>
 
-static HB_BOOL hb_SetDefaultPrinter(LPCTSTR lpPrinterName)
+static bool hb_SetDefaultPrinter(LPCTSTR lpPrinterName)
 {
    if( !SetDefaultPrinter(lpPrinterName) )
    {
@@ -66,7 +66,6 @@ HB_FUNC( WIN_PRINTERSETDEFAULT )
    void * hPrinterName;
    HB_SIZE nLen;
    LPCTSTR pszPrinterName = HB_PARSTR(1, &hPrinterName, &nLen);
-
    hb_retl(nLen > 0 ? hb_SetDefaultPrinter(pszPrinterName) : false);
    hb_strfree(hPrinterName);
 }

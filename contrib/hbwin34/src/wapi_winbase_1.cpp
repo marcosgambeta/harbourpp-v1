@@ -214,7 +214,7 @@ static void s_getPathName(_HB_GETPATHNAME getPathName)
          TCHAR buffer[HB_PATH_MAX];
          DWORD cchBuffer = static_cast<DWORD>(HB_SIZEOFARRAY(buffer));
          LPTSTR lpszShortPath = buffer;
-         HB_BOOL fSize = HB_ISNUM(3);
+         bool fSize = HB_ISNUM(3);
 
          if( fSize )    /* the size of buffer is limited by user */
          {
@@ -334,7 +334,7 @@ HB_FUNC( WAPI_QUERYDOSDEVICE )
       dwPos = dwStart = 0;
       while( lpTargetPath[dwPos] )
       {
-         if( ! lpTargetPath[++dwPos] )
+         if( !lpTargetPath[++dwPos] )
          {
             pItem = HB_ITEMPUTSTRLEN(pItem, lpTargetPath + dwStart, dwPos - dwStart - 1);
             hb_arrayAdd(pArray, pItem);

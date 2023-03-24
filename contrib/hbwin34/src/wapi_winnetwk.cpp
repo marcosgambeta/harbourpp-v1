@@ -50,8 +50,8 @@
 HB_FUNC( WAPI_WNETGETLASTERROR )
 {
    DWORD dwLastError = 0;
-   TCHAR lpDescription[ 256 ];
-   TCHAR lpProvider[ 256 ];
+   TCHAR lpDescription[256];
+   TCHAR lpProvider[256];
 
    hb_retnint( WNetGetLastError( &dwLastError, lpDescription, HB_SIZEOFARRAY( lpDescription ), lpProvider, HB_SIZEOFARRAY( lpProvider ) ) );
 

@@ -58,5 +58,5 @@ HB_FUNC( WAPI_GETOEMCP )
 
 HB_FUNC( WAPI_ISVALIDCODEPAGE )
 {
-   hbwapi_ret_L( IsValidCodePage( hbwapi_par_UINT(1) ) );
+   hbwapi_ret_L(IsValidCodePage(hbwapi_par_UINT(1)));
 }

@@ -52,7 +52,7 @@
 
 /* Application-defined callback used with the CreateDialog and DialogBox... It
    processes messages sent to a modal or modeless dialog box. */
-static BOOL CALLBACK wapi_DialogFuncProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam )
+static BOOL CALLBACK wapi_DialogFuncProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
    PHB_SYMB pSymbol;
 
@@ -68,7 +68,7 @@ static BOOL CALLBACK wapi_DialogFuncProc( HWND hDlg, UINT message, WPARAM wParam
 
    if( pSymbol )
    {
-      hb_vmPushSymbol( pSymbol );
+      hb_vmPushSymbol(pSymbol);
       hb_vmPushNil();
       hb_vmPushPointer( hDlg );
       hb_vmPushNumInt( message );
@@ -82,13 +82,13 @@ static BOOL CALLBACK wapi_DialogFuncProc( HWND hDlg, UINT message, WPARAM wParam
          }
          else
          {
-            hbwapi_vmPush_HANDLE( ( HWND ) lParam );
+            hbwapi_vmPush_HANDLE(( HWND ) lParam);
          }
          /* TODO: rethink this. Called proc can do this on its own,
                   no need to pass calculated params. Or, think of
                   some generic solution. */
-         hb_vmPushInteger( ( int ) HIWORD( wParam ) );
-         hb_vmPushInteger( ( int ) LOWORD( wParam ) );
+         hb_vmPushInteger(static_cast<int>(HIWORD(wParam)));
+         hb_vmPushInteger(static_cast<int>(LOWORD(wParam)));
          hb_vmDo(6);
       }
       else
@@ -107,13 +107,13 @@ HB_FUNC( WAPI_DIALOGBOXPARAM )
 {
    INT_PTR nResult = DialogBoxParam(
       hbwapi_par_raw_HINSTANCE(1),                              /* hInstance */
-      MAKEINTRESOURCE( hbwapi_par_INT(2) ),                     /* lpTemplate */
+      MAKEINTRESOURCE(hbwapi_par_INT(2)),                     /* lpTemplate */
       hbwapi_par_raw_HWND(3),                                   /* hWndParent */
       ( DLGPROC ) wapi_DialogFuncProc,                            /* lpDialogFunc */
-      ( LPARAM ) hb_itemGetSymbol( hb_param(4, Harbour::Item::SYMBOL) )  /* dwInitParam */
+      ( LPARAM ) hb_itemGetSymbol(hb_param(4, Harbour::Item::SYMBOL))  /* dwInitParam */
       );
 
-   hbwapi_SetLastError( GetLastError() );
+   hbwapi_SetLastError(GetLastError());
    hbwapi_ret_NINT( nResult );
 }
 
@@ -121,23 +121,23 @@ HB_FUNC( WAPI_DIALOGBOXPARAM )
    dialog box. */
 HB_FUNC( WAPI_ENDDIALOG )
 {
-   BOOL bResult = EndDialog( hbwapi_par_raw_HWND(1), hbwapi_par_INT(2) );
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_L( bResult );
+   BOOL bResult = EndDialog(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2));
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(bResult);
 }
 
 HB_FUNC( WAPI_CHECKDLGBUTTON )
 {
    BOOL bResult = CheckDlgButton(hbwapi_par_raw_HWND(1), hb_parni(2), HB_ISNUM(3) ? hbwapi_par_UINT(3) : ( UINT ) hb_parl(3));
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_L( bResult );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_L(bResult);
 }
 
 HB_FUNC( WAPI_ISDLGBUTTONCHECKED )
 {
    int iResult = IsDlgButtonChecked(hbwapi_par_raw_HWND(1), hb_parni(2));
-   hbwapi_SetLastError( GetLastError() );
-   hb_retni( iResult );
+   hbwapi_SetLastError(GetLastError());
+   hb_retni(iResult);
 }
 
 /* Sets the title or text of a control in a dialog box. */
@@ -153,12 +153,12 @@ HB_FUNC( WAPI_SETDLGITEMTEXT )
 /* Retrieves the title or text associated with a control in a dialog box. */
 HB_FUNC( WAPI_GETDLGITEMTEXT )
 {
-   HB_SIZE nSize    = ( HB_SIZE ) SendMessage( GetDlgItem( hbwapi_par_raw_HWND(1), hbwapi_par_INT(2) ), WM_GETTEXTLENGTH, 0, 0 );
-   TCHAR * lpResult = ( TCHAR * ) hb_xgrab( ( nSize + 1 ) * sizeof( TCHAR ) );
+   HB_SIZE nSize    = static_cast<HB_SIZE>(SendMessage(GetDlgItem(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2)), WM_GETTEXTLENGTH, 0, 0));
+   TCHAR * lpResult = ( TCHAR * ) hb_xgrab((nSize + 1) * sizeof(TCHAR));
 
-   HB_SIZE nResult = ( HB_SIZE ) GetDlgItemText(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), lpResult, ( int ) (nSize + 1));
+   HB_SIZE nResult = static_cast<HB_SIZE>(GetDlgItemText(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), lpResult, static_cast<int>(nSize + 1)));
 
-   hbwapi_SetLastError( GetLastError() );
+   hbwapi_SetLastError(GetLastError());
    HB_RETSTRLEN( lpResult, nResult );
    hb_xfree(lpResult);
 }
@@ -167,24 +167,23 @@ HB_FUNC( WAPI_GETDLGITEMTEXT )
 HB_FUNC( WAPI_GETDLGITEM )
 {
    HWND hWnd = GetDlgItem(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2));
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_raw_HWND( hWnd );
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_raw_HWND(hWnd);
 }
 
 /* Adds a string to a list in a combo box. */
 HB_FUNC( WAPI_COMBOBOX_ADDSTRING )
 {
    void * hStr;
-   int    iResult = ComboBox_AddString( hbwapi_par_raw_HWND(1), HB_PARSTR(2, &hStr, nullptr) );
-
-   hbwapi_SetLastError( GetLastError() );
-   hbwapi_ret_NI( iResult );
+   int iResult = ComboBox_AddString(hbwapi_par_raw_HWND(1), HB_PARSTR(2, &hStr, nullptr));
+   hbwapi_SetLastError(GetLastError());
+   hbwapi_ret_NI(iResult);
    hb_strfree(hStr);
 }
 
 HB_FUNC( WAPI_GETDIALOGBASEUNITS )
 {
-   hb_retnl( GetDialogBaseUnits() );
+   hb_retnl(GetDialogBaseUnits());
 }
 
 HB_FUNC( WAPI_SENDDLGITEMMESSAGE )  /* NOTE: unsafe function, may corrupt memory */
@@ -197,24 +196,24 @@ HB_FUNC( WAPI_SENDDLGITEMMESSAGE )  /* NOTE: unsafe function, may corrupt memory
 
    if( szText )
    {
-      szText = HB_STRUNSHARE( &hText, szText, nLen );
+      szText = HB_STRUNSHARE(&hText, szText, nLen);
    }
    
-   result = SendDlgItemMessage( hbwapi_par_raw_HWND(1),
-                                hb_parni(2),
-                                hbwapi_par_UINT(3),
-                                hbwapi_par_WPARAM(4),
-                                szText ? ( LPARAM ) szText : hbwapi_par_LPARAM(5) );
-   hbwapi_SetLastError( GetLastError() );
-   hb_retnint( result );
+   result = SendDlgItemMessage(hbwapi_par_raw_HWND(1),
+                               hb_parni(2),
+                               hbwapi_par_UINT(3),
+                               hbwapi_par_WPARAM(4),
+                               szText ? ( LPARAM ) szText : hbwapi_par_LPARAM(5));
+   hbwapi_SetLastError(GetLastError());
+   hb_retnint(result);
 
    if( szText )
    {
-      HB_STORSTRLEN( szText, nLen, 5 );
+      HB_STORSTRLEN(szText, nLen, 5);
    }
    else
    {
-      hb_storc( nullptr, 5 );
+      hb_storc(nullptr, 5);
    }
 
    hb_strfree(hText);
@@ -275,7 +274,7 @@ HB_FUNC( __WAPI_DLGTEMPLATE_RAW_NEW )
    if( hb_parinfa(1, 11) == Harbour::Item::STRING )
    {
       void *  hText;
-      LPCWSTR szText = hb_wstrnull( hb_parastr_u16(1, 11, HB_CDP_ENDIAN_NATIVE, &hText, &nchar) );
+      LPCWSTR szText = hb_wstrnull(hb_parastr_u16(1, 11, HB_CDP_ENDIAN_NATIVE, &hText, &nchar));
 
       nchar = hb_wstrnlen( szText, nchar );
 
@@ -299,7 +298,7 @@ HB_FUNC( __WAPI_DLGTEMPLATE_RAW_NEW )
    if( ( lStyle & DS_SETFONT ) != 0 )
    {
       void *  hText;
-      LPCWSTR szText = hb_wstrnull( hb_parastr_u16(1, 15, HB_CDP_ENDIAN_NATIVE, &hText, &nchar) );
+      LPCWSTR szText = hb_wstrnull(hb_parastr_u16(1, 15, HB_CDP_ENDIAN_NATIVE, &hText, &nchar));
 
       *p++ = ( short ) hb_parvni(1, 12);
       *p++ = ( short ) hb_parvni(1, 13);

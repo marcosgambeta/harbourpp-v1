@@ -62,7 +62,7 @@
 
 /* Functions for loading and printing bitmaps */
 
-int hbwin_bitmapType( const void * pImgBuf, HB_SIZE size )
+int hbwin_bitmapType(const void * pImgBuf, HB_SIZE size)
 {
    int iType = HB_WIN_BITMAP_UNKNOWN;
 
@@ -87,7 +87,7 @@ int hbwin_bitmapType( const void * pImgBuf, HB_SIZE size )
 
 HB_FUNC( WIN_BITMAPTYPE )
 {
-   hb_retni( hbwin_bitmapType( hb_parc(1), hb_parclen(1) ) );
+   hb_retni(hbwin_bitmapType(hb_parc(1), hb_parclen(1)));
 }
 
 #define HB_MAX_BMP_SIZE       (32 * 1024 * 1024)
@@ -95,7 +95,7 @@ HB_FUNC( WIN_BITMAPTYPE )
 HB_FUNC( WIN_LOADBITMAPFILE )
 {
    HB_SIZE nSize;
-   char * pBuffer = ( char * ) hb_fileLoad( hb_parcx(1), HB_MAX_BMP_SIZE, &nSize );
+   char * pBuffer = ( char * ) hb_fileLoad(hb_parcx(1), HB_MAX_BMP_SIZE, &nSize);
 
    if( pBuffer )
    {
@@ -103,7 +103,7 @@ HB_FUNC( WIN_LOADBITMAPFILE )
                 and may cause GPF even in simple error cases, like invalid file content.
                 [vszakats] */
 
-      if( nSize <= 2 || hbwin_bitmapType( pBuffer, nSize ) == HB_WIN_BITMAP_UNKNOWN )
+      if( nSize <= 2 || hbwin_bitmapType(pBuffer, nSize) == HB_WIN_BITMAP_UNKNOWN )
       {
          hb_xfree(pBuffer);
          pBuffer = nullptr;
@@ -128,9 +128,9 @@ HB_FUNC( WIN_LOADBITMAPFILE )
 #define CHECKPNGFORMAT   4120
 #endif
 
-static int hbwin_bitmapIsSupported( HDC hDC, int iType, const void * pImgBuf, HB_SIZE nSize )
+static int hbwin_bitmapIsSupported(HDC hDC, int iType, const void * pImgBuf, HB_SIZE nSize)
 {
-   if( hDC && iType != HB_WIN_BITMAP_UNKNOWN && pImgBuf && nSize >= sizeof( BITMAPCOREHEADER ) )
+   if( hDC && iType != HB_WIN_BITMAP_UNKNOWN && pImgBuf && nSize >= sizeof(BITMAPCOREHEADER) )
    {
       if( iType == HB_WIN_BITMAP_BMP )
       {
@@ -140,10 +140,10 @@ static int hbwin_bitmapIsSupported( HDC hDC, int iType, const void * pImgBuf, HB
       {
          int iRes = iType = ( iType == HB_WIN_BITMAP_JPEG ? CHECKJPEGFORMAT : CHECKPNGFORMAT );
 
-         iRes = ExtEscape( hDC, QUERYESCSUPPORT, sizeof( iRes ), ( LPCSTR ) &iRes, 0, 0 );
+         iRes = ExtEscape(hDC, QUERYESCSUPPORT, sizeof(iRes), ( LPCSTR ) &iRes, 0, 0);
          if( iRes > 0 )
          {
-            if( ExtEscape( hDC, iType, ( int ) nSize, ( LPCSTR ) pImgBuf, sizeof( iRes ), ( LPSTR ) &iRes ) > 0 )
+            if( ExtEscape(hDC, iType, static_cast<int>(nSize), ( LPCSTR ) pImgBuf, sizeof(iRes), ( LPSTR ) &iRes) > 0 )
             {
                if( iRes == 1 )
                {
@@ -176,7 +176,7 @@ HB_FUNC( WIN_BITMAPISSUPPORTED )
    const char * pImgBuf = hb_parc(2);
    HB_SIZE nSize = hb_parclen(2);
 
-   hb_retni( hbwin_bitmapIsSupported( hbwapi_par_HDC(1), hbwin_bitmapType( pImgBuf, nSize ), pImgBuf, nSize ) );
+   hb_retni(hbwin_bitmapIsSupported(hbwapi_par_HDC(1), hbwin_bitmapType(pImgBuf, nSize), pImgBuf, nSize));
 }
 
 HB_FUNC( WIN_DRAWBITMAP )
@@ -184,12 +184,12 @@ HB_FUNC( WIN_DRAWBITMAP )
    HDC hDC = hbwapi_par_HDC(1);
    HB_SIZE nSize = hb_parclen(2);
    const BITMAPFILEHEADER * pbmfh = ( const BITMAPFILEHEADER * ) hb_parc(2);
-   int iType = hbwin_bitmapType( pbmfh, nSize );
+   int iType = hbwin_bitmapType(pbmfh, nSize);
 
    /* FIXME: No check is done on 2nd parameter which is a large security hole
              and may cause GPF in simple error cases.
              [vszakats] */
-   if( hbwin_bitmapIsSupported( hDC, iType, pbmfh, nSize ) == 0 )
+   if( hbwin_bitmapIsSupported(hDC, iType, pbmfh, nSize) == 0 )
    {
       const BITMAPINFO * pbmi = nullptr;
       const BYTE * pBits = nullptr;
@@ -203,7 +203,7 @@ HB_FUNC( WIN_DRAWBITMAP )
          pBits = ( const BYTE * ) pbmfh + pbmfh->bfOffBits;
 
          /* Remember there are 2 types of BitMap File */
-         if( pbmi->bmiHeader.biSize == sizeof( BITMAPCOREHEADER ) )
+         if( pbmi->bmiHeader.biSize == sizeof(BITMAPCOREHEADER) )
          {
             iWidth  = ( ( const BITMAPCOREHEADER * ) pbmi )->bcWidth;
             iHeight = ( ( const BITMAPCOREHEADER * ) pbmi )->bcHeight;
@@ -218,14 +218,14 @@ HB_FUNC( WIN_DRAWBITMAP )
       {
          BITMAPINFO bmi;
 
-         memset( &bmi, 0, sizeof( bmi ) );
-         bmi.bmiHeader.biSize        = sizeof( bmi );
+         memset(&bmi, 0, sizeof(bmi));
+         bmi.bmiHeader.biSize        = sizeof(bmi);
          bmi.bmiHeader.biWidth       = iWidth;
          bmi.bmiHeader.biHeight      = -iHeight; /* top-down image */
          bmi.bmiHeader.biPlanes      = 1;
          bmi.bmiHeader.biBitCount    = 0;
          bmi.bmiHeader.biCompression = ( iType == HB_WIN_BITMAP_JPEG ? BI_JPEG : BI_PNG );
-         bmi.bmiHeader.biSizeImage   = ( DWORD ) nSize;
+         bmi.bmiHeader.biSizeImage   = static_cast<DWORD>(nSize);
          pbmi = &bmi;
          pBits = ( const BYTE * ) pbmfh;
       }
@@ -235,7 +235,7 @@ HB_FUNC( WIN_DRAWBITMAP )
          SetStretchBltMode(hDC, COLORONCOLOR);
          hb_retl(StretchDIBits(hDC, hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6),
                                  0, 0, iWidth, iHeight, pBits, pbmi,
-                                 DIB_RGB_COLORS, SRCCOPY) != ( int ) GDI_ERROR);
+                                 DIB_RGB_COLORS, SRCCOPY) != static_cast<int>(GDI_ERROR));
       }
       else
       {

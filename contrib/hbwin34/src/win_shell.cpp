@@ -51,30 +51,30 @@
 #include "hbwapi.hpp"
 #include "hbapiitm.hpp"
 
-#if defined( __BORLANDC__ )
-#  if ! defined( NONAMELESSUNION )
+#if defined(__BORLANDC__)
+#  if !defined(NONAMELESSUNION)
 #     define NONAMELESSUNION
 #  endif
-#  if defined( DUMMYUNIONNAME )
+#  if defined(DUMMYUNIONNAME)
 #     undef DUMMYUNIONNAME
 #  endif
-#  if defined( DUMMYUNIONNAME2 )
+#  if defined(DUMMYUNIONNAME2)
 #     undef DUMMYUNIONNAME2
 #  endif
-#  if defined( DUMMYUNIONNAME3 )
+#  if defined(DUMMYUNIONNAME3)
 #     undef DUMMYUNIONNAME3
 #  endif
-#  if defined( DUMMYUNIONNAME4 )
+#  if defined(DUMMYUNIONNAME4)
 #     undef DUMMYUNIONNAME4
 #  endif
-#  if defined( DUMMYUNIONNAME5 )
+#  if defined(DUMMYUNIONNAME5)
 #     undef DUMMYUNIONNAME5
 #  endif
 #endif
 
 #include <shellapi.h>
 
-#if defined( NONAMELESSUNION )
+#if defined(NONAMELESSUNION)
 #  define HB_WIN_V_UNION( x, z )  ( ( x ).DUMMYUNIONNAME.z )
 #else
 #  define HB_WIN_V_UNION( x, z )  ( ( x ).z )
@@ -87,8 +87,8 @@ HB_FUNC( WIN_SHELLNOTIFYICON )
 {
    NOTIFYICONDATA tnid;
 
-   memset( &tnid, 0, sizeof( tnid ) );
-   tnid.cbSize = sizeof( tnid );
+   memset(&tnid, 0, sizeof(tnid));
+   tnid.cbSize = sizeof(tnid);
    tnid.hWnd = hbwapi_par_raw_HWND(1);
    tnid.uID = hbwapi_par_UINT(2);
    tnid.uCallbackMessage = hbwapi_par_UINT(3);
@@ -106,7 +106,7 @@ HB_FUNC( WIN_SHELLNOTIFYICON )
       tnid.uFlags |= NIF_TIP;
    }
 
-   #if defined( NIF_INFO ) /* did the headers provide Windows 2000 features? */
+   #if defined(NIF_INFO) /* did the headers provide Windows 2000 features? */
    if( hb_iswin2k() )      /* are we running on Windows 2000 or above? */
    {
       if( HB_ITEMCOPYSTR( hb_param(7, Harbour::Item::ANY), tnid.szInfo, HB_SIZEOFARRAY( tnid.szInfo ) ) > 0 )
@@ -118,11 +118,11 @@ HB_FUNC( WIN_SHELLNOTIFYICON )
       {
          tnid.uFlags |= NIF_INFO;
       }
-      tnid.dwInfoFlags = ( DWORD ) hb_parnl(10);
+      tnid.dwInfoFlags = static_cast<DWORD>(hb_parnl(10));
    }
    #endif
 
-   hbwapi_ret_L( Shell_NotifyIcon( HB_ISLOG(6) ? ( hb_parl(6) ? NIM_ADD : NIM_DELETE ) : NIM_MODIFY, &tnid ) );
+   hbwapi_ret_L(Shell_NotifyIcon(HB_ISLOG(6) ? (hb_parl(6) ? NIM_ADD : NIM_DELETE) : NIM_MODIFY, &tnid));
 }
 
 /* Details:
@@ -130,9 +130,9 @@ HB_FUNC( WIN_SHELLNOTIFYICON )
       https://msdn.microsoft.com/library/bb759795
  */
 
-#if defined( __MINGW32__ )
+#if defined(__MINGW32__)
 #  include <_mingw.h>
-#  if ! defined( __MINGW64_VERSION_MAJOR )
+#  if !defined(__MINGW64_VERSION_MAJOR)
 
 typedef struct _SHNAMEMAPPING
 {
@@ -153,14 +153,14 @@ typedef struct
 
 static LPTSTR s_StringList( int iParam )
 {
-   PHB_ITEM pItem = hb_param( iParam, Harbour::Item::ARRAY | Harbour::Item::STRING );
+   PHB_ITEM pItem = hb_param(iParam, Harbour::Item::ARRAY | Harbour::Item::STRING);
    LPTSTR lpStr = nullptr;
 
    if( pItem )
    {
       HB_SIZE nLen;
 
-      if( HB_IS_ARRAY( pItem ) )
+      if( HB_IS_ARRAY(pItem) )
       {
          HB_SIZE nSize, n, n1;
          PHB_ITEM pArrItem;
@@ -169,7 +169,7 @@ static LPTSTR s_StringList( int iParam )
          for( n = nLen = 0; n < nSize; ++n )
          {
             pArrItem = hb_arrayGetItemPtr( pItem, n + 1 );
-            if( HB_IS_STRING( pArrItem ) )
+            if( HB_IS_STRING(pArrItem) )
             {
                n1 = HB_ITEMCOPYSTR( pArrItem, nullptr, 0 );
                if( n1 )
@@ -181,21 +181,20 @@ static LPTSTR s_StringList( int iParam )
          if( nLen )
          {
             HB_SIZE nTotal = nLen + 1;
-            lpStr = ( LPTSTR ) hb_xgrab( nTotal * sizeof( TCHAR ) );
+            lpStr = ( LPTSTR ) hb_xgrab(nTotal * sizeof(TCHAR));
             for( n = nLen = 0; n < nSize; ++n )
             {
                pArrItem = hb_arrayGetItemPtr( pItem, n + 1 );
-               if( HB_IS_STRING( pArrItem ) )
+               if( HB_IS_STRING(pArrItem) )
                {
-                  n1 = HB_ITEMCOPYSTR( pArrItem,
-                                       lpStr + nLen, nTotal - nLen );
+                  n1 = HB_ITEMCOPYSTR( pArrItem, lpStr + nLen, nTotal - nLen );
                   if( n1 )
                   {
                      nLen += n1 + 1;
                   }
                }
             }
-            lpStr[ nLen ] = TEXT( '\0' );
+            lpStr[nLen] = TEXT('\0');
          }
       }
       else
@@ -203,9 +202,9 @@ static LPTSTR s_StringList( int iParam )
          nLen = HB_ITEMCOPYSTR( pItem, nullptr, 0 );
          if( nLen )
          {
-            lpStr = ( LPTSTR ) hb_xgrab( ( nLen + 2 ) * sizeof( TCHAR ) );
+            lpStr = ( LPTSTR ) hb_xgrab((nLen + 2) * sizeof(TCHAR));
             HB_ITEMCOPYSTR( pItem, lpStr, nLen );
-            lpStr[ nLen ] = lpStr[ nLen + 1 ] = TEXT( '\0' );
+            lpStr[nLen] = lpStr[nLen + 1] = TEXT('\0');
          }
       }
    }
@@ -227,7 +226,7 @@ HB_FUNC( WIN_SHFILEOPERATION )
    LPTSTR pFrom = s_StringList(3);
    LPTSTR pTo   = s_StringList(4);
 
-   memset( &fop, 0, sizeof( fop ) );
+   memset(&fop, 0, sizeof(fop));
    fop.hwnd                  = hbwapi_par_raw_HWND(1);
    fop.wFunc                 = hbwapi_par_UINT(2);
    fop.pFrom                 = ( LPCTSTR ) pFrom;
@@ -238,9 +237,9 @@ HB_FUNC( WIN_SHFILEOPERATION )
    fop.lpszProgressTitle     = HB_PARSTR(8, &hProgressTitle, nullptr);
 
    iRetVal = SHFileOperation( &fop );
-   hbwapi_SetLastError( GetLastError() );
+   hbwapi_SetLastError(GetLastError());
 
-   hb_storl( fop.fAnyOperationsAborted, 6 );
+   hb_storl(fop.fAnyOperationsAborted, 6);
 
    if( pFrom )
    {
@@ -266,9 +265,9 @@ HB_FUNC( WIN_SHFILEOPERATION )
          {
             PHB_ITEM pTempItem = hb_itemNew( nullptr );
             LPSHNAMEMAPPING pmap = hm->lpSHNameMapping;
-            HB_BOOL bIsWin9x = hb_iswin9x();
+            bool bIsWin9x = hb_iswin9x();
 
-            hb_arraySize( pArray, hm->uNumberOfMappings );
+            hb_arraySize(pArray, hm->uNumberOfMappings);
 
             for( UINT tmp = 0; tmp < hm->uNumberOfMappings; ++tmp )
             {
@@ -277,28 +276,28 @@ HB_FUNC( WIN_SHFILEOPERATION )
                if( bIsWin9x )
                {
                   /* always returns non-UNICODE on Win9x systems */
-                  hb_arraySetCL( pTempItem, 1, ( char * ) pmap[ tmp ].pszOldPath, pmap[ tmp ].cchOldPath );
-                  hb_arraySetCL( pTempItem, 2, ( char * ) pmap[ tmp ].pszNewPath, pmap[ tmp ].cchNewPath );
+                  hb_arraySetCL(pTempItem, 1, ( char * ) pmap[tmp].pszOldPath, pmap[tmp].cchOldPath);
+                  hb_arraySetCL(pTempItem, 2, ( char * ) pmap[tmp].pszNewPath, pmap[tmp].cchNewPath);
                }
                else
                {
                   /* always returns UNICODE on NT and upper systems */
-                  HB_ARRAYSETSTRLEN( pTempItem, 1, ( LPTSTR ) pmap[ tmp ].pszOldPath, pmap[ tmp ].cchOldPath );
-                  HB_ARRAYSETSTRLEN( pTempItem, 2, ( LPTSTR ) pmap[ tmp ].pszNewPath, pmap[ tmp ].cchNewPath );
+                  HB_ARRAYSETSTRLEN( pTempItem, 1, ( LPTSTR ) pmap[tmp].pszOldPath, pmap[tmp].cchOldPath );
+                  HB_ARRAYSETSTRLEN( pTempItem, 2, ( LPTSTR ) pmap[tmp].pszNewPath, pmap[tmp].cchNewPath );
                }
 
-               hb_arraySetForward( pArray, ( HB_SIZE ) ( tmp + 1 ), pTempItem );
+               hb_arraySetForward(pArray, static_cast<HB_SIZE>(tmp + 1), pTempItem);
             }
 
-            hb_itemRelease( pTempItem );
+            hb_itemRelease(pTempItem);
          }
 
          SHFreeNameMappings( hm );
       }
       else if( pArray )
       {
-         hb_arraySize( pArray, 0 );
+         hb_arraySize(pArray, 0);
       }
    }
-   hb_retni( iRetVal );
+   hb_retni(iRetVal);
 }

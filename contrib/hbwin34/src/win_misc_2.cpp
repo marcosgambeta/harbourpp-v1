@@ -57,21 +57,21 @@ HB_FUNC( WIN_RUNDETACHED )
    STARTUPINFO si;
    PROCESS_INFORMATION pi;
 
-   memset( &si, 0, sizeof( si ) );
-   si.cb = sizeof( si );
-   memset( &pi, 0, sizeof( pi ) );
+   memset(&si, 0, sizeof(si));
+   si.cb = sizeof(si);
+   memset(&pi, 0, sizeof(pi));
 
    if( CreateProcess(
-          HB_PARSTR(1, &hCommandName, nullptr),                 /* Command name */
-          HB_STRUNSHARE( &hCommandLine, lpCommandRO, nLen ),    /* Command-line (Unicode version needs an non-const buffer) */
-          nullptr,                                              /* Process handle not inheritable */
-          nullptr,                                              /* Thread handle not inheritable */
-          FALSE,                                                /* Set handle inheritance to FALSE */
+          HB_PARSTR(1, &hCommandName, nullptr),               /* Command name */
+          HB_STRUNSHARE(&hCommandLine, lpCommandRO, nLen),    /* Command-line (Unicode version needs an non-const buffer) */
+          nullptr,                                            /* Process handle not inheritable */
+          nullptr,                                            /* Thread handle not inheritable */
+          FALSE,                                              /* Set handle inheritance to FALSE */
           hb_parl(4) ? CREATE_NO_WINDOW : CREATE_NEW_CONSOLE, /* Creation flags */
-          nullptr,                                              /* Use parent's environment block */
-          nullptr,                                              /* Use parent's starting directory */
-          &si,                                                  /* Pointer to STARTUPINFO structure */
-          &pi )                                                 /* Pointer to PROCESS_INFORMATION structure */
+          nullptr,                                            /* Use parent's environment block */
+          nullptr,                                            /* Use parent's starting directory */
+          &si,                                                /* Pointer to STARTUPINFO structure */
+          &pi )                                               /* Pointer to PROCESS_INFORMATION structure */
        )
    {
       hb_retl(true);
@@ -79,8 +79,8 @@ HB_FUNC( WIN_RUNDETACHED )
       hb_stornint( pi.dwProcessId, 3 );
 
       /* Close process and thread handles. */
-      CloseHandle( pi.hProcess );
-      CloseHandle( pi.hThread );
+      CloseHandle(pi.hProcess);
+      CloseHandle(pi.hThread);
    }
    else
    {

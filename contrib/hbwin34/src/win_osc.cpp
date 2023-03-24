@@ -161,22 +161,14 @@ HB_FUNC( WIN_OSVERSIONINFO )
       int iMinor;
    } HB_ISWINVER;
 
-   static const HB_ISWINVER s_vers[] = {
-      { 10, 0 },
-      { 6, 3 },
-      { 6, 2 },
-      { 6, 1 },
-      { 6, 0 },
-      { 5, 2 },
-      { 5, 1 },
-      { 5, 0 } };
+   static const HB_ISWINVER s_vers[] = {{10, 0}, {6, 3}, {6, 2}, {6, 1}, {6, 0}, {5, 2}, {5, 1}, {5, 0}};
 
-   for( int pos = 0; pos < ( int ) HB_SIZEOFARRAY( s_vers ); ++pos )
+   for( int pos = 0; pos < static_cast<int>(HB_SIZEOFARRAY(s_vers)); ++pos )
    {
-      if( hb_iswinver( s_vers[ pos ].iMajor, s_vers[ pos ].iMinor, 0, ( pos == 0 ) ) )
+      if( hb_iswinver( s_vers[pos].iMajor, s_vers[pos].iMinor, 0, ( pos == 0 ) ) )
       {
-         iMajor = s_vers[ pos ].iMajor;
-         iMinor = s_vers[ pos ].iMinor;
+         iMajor = s_vers[pos].iMajor;
+         iMinor = s_vers[pos].iMinor;
          break;
       }
    }
@@ -191,15 +183,15 @@ HB_FUNC( WIN_OSVERSIONINFO )
    {
       for( int tmp = 5; tmp > 0; --tmp )
       {
-         if( hb_iswinsp( tmp, HB_TRUE ) )
+         if( hb_iswinsp(tmp, true) )
          {
-            char szServicePack[ 8 ];
-            hb_snprintf( szServicePack, sizeof( szServicePack ), "SP%u", tmp );
-            hb_arraySetC( pArray, 5, szServicePack );
+            char szServicePack[8];
+            hb_snprintf(szServicePack, sizeof(szServicePack), "SP%u", tmp);
+            hb_arraySetC(pArray, 5, szServicePack);
             break;
          }
       }
    }
 
-   hb_itemReturnRelease( pArray );
+   hb_itemReturnRelease(pArray);
 }

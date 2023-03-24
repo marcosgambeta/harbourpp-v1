@@ -746,15 +746,9 @@ HB_FUNC( WIN_SETBKMODE )
 
    if( hDC )
    {
-      if( HB_ISNUM(2) )
-      {
-         iMode = SetBkMode(hDC, hb_parni(2));
-      }
-      else
-      {
-         iMode = GetBkMode(hDC);
-      }
+      iMode = HB_ISNUM(2) ? SetBkMode(hDC, hb_parni(2)) : GetBkMode(hDC);
    }
+
    hb_retni(iMode);
 }
 

@@ -54,26 +54,26 @@ HB_FUNC( WIN_REGCREATEKEYEX )
    HKEY hkResult = nullptr;
    DWORD dwDisposition = 0;
 
-   HB_BOOL bSuccess = RegCreateKeyEx( hbwapi_get_HKEY( ( HB_PTRUINT ) hb_parnint(1) ),
+   bool bSuccess = RegCreateKeyEx(hbwapi_get_HKEY(( HB_PTRUINT ) hb_parnint(1)),
                                       HB_PARSTRDEF(2, &hKey, nullptr),
                                       0,
                                       nullptr,
-                                      ( DWORD ) hb_parnl(5) /* dwOptions */,
+                                      static_cast<DWORD>(hb_parnl(5)) /* dwOptions */,
                                       ( REGSAM ) hb_parnl(6) /* samDesired */,
                                       nullptr /* lpSecurityAttributes */,
                                       &hkResult,
-                                      &dwDisposition ) == ERROR_SUCCESS;
+                                      &dwDisposition) == ERROR_SUCCESS;
 
    hb_retl(bSuccess);
 
    if( bSuccess )
    {
-      hb_storptr( hkResult, 8 );
-      hb_stornint( dwDisposition, 9 );
+      hb_storptr(hkResult, 8);
+      hb_stornint(dwDisposition, 9);
    }
    else
    {
-      hb_storptr( nullptr, 8 );
+      hb_storptr(nullptr, 8);
       hb_stornint(0, 9);
    }
 
@@ -84,17 +84,13 @@ HB_FUNC( WIN_REGOPENKEYEX )
 {
    void * hKey;
    HKEY hkResult = nullptr;
-
-   HB_BOOL bSuccess = RegOpenKeyEx( hbwapi_get_HKEY( ( HB_PTRUINT ) hb_parnint(1) ),
+   bool bSuccess = RegOpenKeyEx(hbwapi_get_HKEY(( HB_PTRUINT ) hb_parnint(1)),
                                     HB_PARSTRDEF(2, &hKey, nullptr),
                                     0 /* dwOptions */,
                                     ( REGSAM ) hb_parnl(4) /* samDesired */,
-                                    &hkResult ) == ERROR_SUCCESS;
-
+                                    &hkResult) == ERROR_SUCCESS;
    hb_retl(bSuccess);
-
-   hb_storptr( bSuccess ? hkResult : nullptr, 5 );
-
+   hb_storptr(bSuccess ? hkResult : nullptr, 5);
    hb_strfree(hKey);
 }
 
@@ -104,44 +100,37 @@ HB_FUNC( WIN_REGQUERYVALUEEX )
    LPCTSTR lpKey = HB_PARSTRDEF(2, &hKey, nullptr);
    DWORD dwType = 0;
    DWORD dwSize = 0;
-   HB_BOOL bSuccess = HB_FALSE;
+   bool bSuccess = false;
 
-   if( RegQueryValueEx( ( HKEY ) hb_parptr(1),
-                        lpKey,
-                        nullptr,
-                        &dwType,
-                        nullptr,
-                        &dwSize ) == ERROR_SUCCESS )
+   if( RegQueryValueEx(static_cast<HKEY>(hb_parptr(1)), lpKey, nullptr, &dwType, nullptr, &dwSize) == ERROR_SUCCESS )
    {
       if( dwSize > 0 )
       {
          if( dwType == REG_SZ || dwType == REG_EXPAND_SZ || dwType == REG_MULTI_SZ )
          {
-            LPBYTE lpValue = ( LPBYTE ) hb_xgrab( ( dwSize + 1 ) * sizeof( TCHAR ) );
+            LPBYTE lpValue = ( LPBYTE ) hb_xgrab((dwSize + 1) * sizeof(TCHAR));
 
-            if( RegQueryValueEx( ( HKEY ) hb_parptr(1), lpKey, nullptr, &dwType, lpValue, &dwSize ) == ERROR_SUCCESS )
+            if( RegQueryValueEx(static_cast<HKEY>(hb_parptr(1)), lpKey, nullptr, &dwType, lpValue, &dwSize) == ERROR_SUCCESS )
             {
-               dwSize /= sizeof( TCHAR );
-
-               HB_STORSTRLEN( ( LPTSTR ) lpValue, dwSize, 5 );
-
-               bSuccess = HB_TRUE;
+               dwSize /= sizeof(TCHAR);
+               HB_STORSTRLEN(( LPTSTR ) lpValue, dwSize, 5);
+               bSuccess = true;
             }
 
             hb_xfree(lpValue);
          }
          else /* No translation for binary data */
          {
-            LPBYTE lpValue = ( LPBYTE ) hb_xgrab( dwSize + 1 );
+            LPBYTE lpValue = ( LPBYTE ) hb_xgrab(dwSize + 1);
 
-            if( RegQueryValueEx( ( HKEY ) hb_parptr(1), lpKey, nullptr, &dwType, lpValue, &dwSize ) == ERROR_SUCCESS )
+            if( RegQueryValueEx(static_cast<HKEY>(hb_parptr(1)), lpKey, nullptr, &dwType, lpValue, &dwSize) == ERROR_SUCCESS )
             {
-               if( ! hb_storclen_buffer( ( char * ) lpValue, dwSize, 5 ) )
+               if( !hb_storclen_buffer(( char * ) lpValue, dwSize, 5) )
                {
                   hb_xfree(lpValue);
                }
 
-               bSuccess = HB_TRUE;
+               bSuccess = true;
             }
             else
             {
@@ -151,8 +140,8 @@ HB_FUNC( WIN_REGQUERYVALUEEX )
       }
       else
       {
-         hb_storc( nullptr, 5 );
-         bSuccess = HB_TRUE;
+         hb_storc(nullptr, 5);
+         bSuccess = true;
       }
    }
 
@@ -174,19 +163,19 @@ HB_FUNC( WIN_REGQUERYVALUEEX )
 HB_FUNC( WIN_REGSETVALUEEX )
 {
    void * hKey;
-   DWORD dwType = ( DWORD ) hb_parnl(4);
+   DWORD dwType = static_cast<DWORD>(hb_parnl(4));
    LPCTSTR lpKey = HB_PARSTRDEF(2, &hKey, nullptr);
 
    if( dwType == REG_DWORD )
    {
-      DWORD nSpace = ( DWORD ) hb_parnl(5);
-      hb_retl(RegSetValueEx( ( HKEY ) hb_parptr(1), lpKey, 0, dwType, ( const BYTE * ) &nSpace, sizeof( DWORD ) ) == ERROR_SUCCESS);
+      DWORD nSpace = static_cast<DWORD>(hb_parnl(5));
+      hb_retl(RegSetValueEx(static_cast<HKEY>(hb_parptr(1)), lpKey, 0, dwType, ( const BYTE * ) &nSpace, sizeof(DWORD) ) == ERROR_SUCCESS);
    }
-#if defined( REG_QWORD )
+#if defined(REG_QWORD)
    else if( dwType == REG_QWORD )
    {
       HB_U64 nSpace = ( HB_U64 ) hb_parnint(5);
-      hb_retl(RegSetValueEx( ( HKEY ) hb_parptr(1), lpKey, 0, dwType, ( const BYTE * ) &nSpace, sizeof( HB_U64 ) ) == ERROR_SUCCESS);
+      hb_retl(RegSetValueEx(static_cast<HKEY>(hb_parptr(1)), lpKey, 0, dwType, ( const BYTE * ) &nSpace, sizeof(HB_U64) ) == ERROR_SUCCESS);
    }
 #endif
    else if( dwType == REG_SZ || dwType == REG_EXPAND_SZ || dwType == REG_MULTI_SZ )
@@ -194,18 +183,14 @@ HB_FUNC( WIN_REGSETVALUEEX )
       void * hValue;
       HB_SIZE nValueLen;
       LPCTSTR lpValue = HB_PARSTR(5, &hValue, &nValueLen);
-
       ++nValueLen;
-
-      nValueLen *= sizeof( TCHAR );
-
-      hb_retl(RegSetValueEx( ( HKEY ) hb_parptr(1), lpKey, 0, dwType, ( const BYTE * ) lpValue, ( DWORD ) nValueLen ) == ERROR_SUCCESS);
-
+      nValueLen *= sizeof(TCHAR);
+      hb_retl(RegSetValueEx(static_cast<HKEY>(hb_parptr(1)), lpKey, 0, dwType, ( const BYTE * ) lpValue, static_cast<DWORD>(nValueLen) ) == ERROR_SUCCESS);
       hb_strfree(hValue);
    }
    else /* No translation for binary data */
    {
-      hb_retl(RegSetValueEx( ( HKEY ) hb_parptr(1), lpKey, 0, dwType, ( const BYTE * ) hb_parc(5) /* cValue */, ( DWORD ) hb_parclen(5) + 1 ) == ERROR_SUCCESS);
+      hb_retl(RegSetValueEx(static_cast<HKEY>(hb_parptr(1)), lpKey, 0, dwType, ( const BYTE * ) hb_parc(5) /* cValue */, static_cast<DWORD>(hb_parclen(5)) + 1 ) == ERROR_SUCCESS);
    }
 
    hb_strfree(hKey);
@@ -214,22 +199,18 @@ HB_FUNC( WIN_REGSETVALUEEX )
 HB_FUNC( WIN_REGDELETEKEY )
 {
    void * hKey;
-
    hb_retl(RegDeleteKey( hbwapi_get_HKEY( ( HB_PTRUINT ) hb_parnint(1) ), ( LPCTSTR ) HB_PARSTRDEF(2, &hKey, nullptr) ) == ERROR_SUCCESS);
-
    hb_strfree(hKey);
 }
 
 HB_FUNC( WIN_REGDELETEVALUE )
 {
    void * hValue;
-
-   hb_retl(RegDeleteValue( ( HKEY ) hb_parptr(1), ( LPCTSTR ) HB_PARSTR(2, &hValue, nullptr) ) == ERROR_SUCCESS);
-
+   hb_retl(RegDeleteValue(static_cast<HKEY>(hb_parptr(1)), ( LPCTSTR ) HB_PARSTR(2, &hValue, nullptr) ) == ERROR_SUCCESS);
    hb_strfree(hValue);
 }
 
 HB_FUNC( WIN_REGCLOSEKEY )
 {
-   hb_retl(RegCloseKey( ( HKEY ) hb_parptr(1) ) == ERROR_SUCCESS);
+   hb_retl(RegCloseKey(static_cast<HKEY>(hb_parptr(1))) == ERROR_SUCCESS);
 }

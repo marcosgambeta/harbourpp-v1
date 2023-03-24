@@ -54,12 +54,12 @@ HB_FUNC( WAPI_SHELLEXECUTE )
    void * hParameters;
    void * hDirectory;
 
-   hb_retnint( ( HB_PTRUINT ) ShellExecute( hbwapi_par_raw_HWND(1),
-                                            HB_PARSTR(2, &hOperation, nullptr), /* edit, explore, open, print, play?, properties? */
-                                            HB_PARSTRDEF(3, &hFile, nullptr),
-                                            HB_PARSTR(4, &hParameters, nullptr),
-                                            HB_PARSTR(5, &hDirectory, nullptr),
-                                            hb_parnidef(6, SW_SHOWNORMAL) /* nShowCmd */ ) );
+   hb_retnint( ( HB_PTRUINT ) ShellExecute(hbwapi_par_raw_HWND(1),
+                                           HB_PARSTR(2, &hOperation, nullptr), /* edit, explore, open, print, play?, properties? */
+                                           HB_PARSTRDEF(3, &hFile, nullptr),
+                                           HB_PARSTR(4, &hParameters, nullptr),
+                                           HB_PARSTR(5, &hDirectory, nullptr),
+                                           hb_parnidef(6, SW_SHOWNORMAL) /* nShowCmd */));
 
    hb_strfree(hOperation);
    hb_strfree(hFile);
@@ -71,7 +71,7 @@ HB_FUNC( WAPI_ISUSERANADMIN )
 {
    BOOL bResult = FALSE;
 
-   HMODULE hLib = hbwapi_LoadLibrarySystem( TEXT( "shell32.dll" ) );
+   HMODULE hLib = hbwapi_LoadLibrarySystem( TEXT("shell32.dll") );
 
    if( hLib )
    {
@@ -85,5 +85,5 @@ HB_FUNC( WAPI_ISUSERANADMIN )
       FreeLibrary( hLib );
    }
 
-   hbwapi_ret_L( bResult );
+   hbwapi_ret_L(bResult);
 }

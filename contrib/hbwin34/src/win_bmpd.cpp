@@ -47,7 +47,7 @@
 #include "hbwapi.hpp"
 #include "hbapiitm.hpp"
 
-#if defined( HB_HAS_PNG ) && defined( HB_HAS_ZLIB )
+#if defined(HB_HAS_PNG) && defined(HB_HAS_ZLIB)
    #include "png.h"
 #endif
 
@@ -74,19 +74,19 @@ static int hb_jpeg_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int *
 
    if( piHeight )
    {
-      *piHeight = ( int ) height;
+      *piHeight = static_cast<int>(height);
    }
    if( piWidth )
    {
-      *piWidth = ( int ) width;
+      *piWidth = static_cast<int>(width);
    }
    if( piColorSpace )
    {
-      *piColorSpace = ( int ) colorspace;
+      *piColorSpace = static_cast<int>(colorspace);
    }
    if( piBPC )
    {
-      *piBPC = ( int ) bpc;
+      *piBPC = static_cast<int>(bpc);
    }
 
    if( nPos >= nBufferSize )
@@ -168,15 +168,15 @@ static int hb_jpeg_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int *
 
    if( piHeight )
    {
-      *piHeight = ( int ) height;
+      *piHeight = static_cast<int>(height);
    }
    if( piWidth )
    {
-      *piWidth = ( int ) width;
+      *piWidth = static_cast<int>(width);
    }
    if( piBPC )
    {
-      *piBPC = ( int ) bpc;
+      *piBPC = static_cast<int>(bpc);
    }
    if( piColorSpace )
    {
@@ -193,7 +193,7 @@ static int hb_jpeg_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int *
 
 /* .png size detection code. [vszakats] */
 
-#if defined( HB_HAS_PNG ) && defined( HB_HAS_ZLIB )
+#if defined(HB_HAS_PNG) && defined(HB_HAS_ZLIB)
 
 #define _PNG_RET_OK            0
 #define _PNG_RET_ERR_INVALID1  1
@@ -211,14 +211,14 @@ typedef struct
    HB_BOOL bOk;
 } HB_PNG_READ;
 
-static void hb_png_read_func( png_structp png_ptr, png_bytep data, png_uint_32 length )
+static void hb_png_read_func(png_structp png_ptr, png_bytep data, png_uint_32 length)
 {
    HB_PNG_READ * hb_png_read_data = ( HB_PNG_READ * ) png_get_io_ptr( png_ptr );
    png_uint_32 pos;
 
    for( pos = 0; pos < length && hb_png_read_data->nPos < hb_png_read_data->nLen; )
    {
-      data[ pos++ ] = hb_png_read_data->buffer[ hb_png_read_data->nPos++ ];
+      data[pos++] = hb_png_read_data->buffer[hb_png_read_data->nPos++];
    }
 
    hb_png_read_data->bOk = ( length == pos );
@@ -228,7 +228,7 @@ static int hb_png_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
 {
    png_structp png_ptr;
    png_infop info_ptr;
-   png_byte header[ 8 ];
+   png_byte header[8];
 
    HB_PNG_READ hb_png_read_data;
    int iResult;
@@ -250,26 +250,26 @@ static int hb_png_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
       *piBPC = 0;
    }
 
-   if( nBufferSize < sizeof( header ) )
+   if( nBufferSize < sizeof(header) )
    {
       return _PNG_RET_ERR_INVALID1;
    }
 
-   memcpy( header, buffer, sizeof( header ) );
+   memcpy( header, buffer, sizeof(header) );
 
-   if( png_sig_cmp( header, ( png_size_t ) 0, sizeof( header ) ) )
+   if( png_sig_cmp( header, ( png_size_t ) 0, sizeof(header) ) )
    {
       return _PNG_RET_ERR_INVALID2;
    }
 
    png_ptr = png_create_read_struct( PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr );
-   if( ! png_ptr )
+   if( !png_ptr )
    {
       return _PNG_RET_ERR_INIT1;
    }
 
    info_ptr = png_create_info_struct( png_ptr );
-   if( ! info_ptr )
+   if( !info_ptr )
    {
       png_destroy_read_struct( &png_ptr, nullptr, nullptr );
       return _PNG_RET_ERR_INIT2;
@@ -277,10 +277,10 @@ static int hb_png_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
 
    hb_png_read_data.buffer = buffer;
    hb_png_read_data.nLen = nBufferSize;
-   hb_png_read_data.nPos = sizeof( header );
-   hb_png_read_data.bOk = HB_TRUE;
+   hb_png_read_data.nPos = sizeof(header);
+   hb_png_read_data.bOk = true;
 
-   png_set_sig_bytes( png_ptr, sizeof( header ) );
+   png_set_sig_bytes( png_ptr, sizeof(header) );
    png_set_read_fn( png_ptr, ( void * ) &hb_png_read_data, ( png_rw_ptr ) hb_png_read_func );
 
    png_read_info( png_ptr, info_ptr );
@@ -296,11 +296,11 @@ static int hb_png_get_param( const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
 
       if( piHeight )
       {
-         *piHeight = ( int ) height;
+         *piHeight = static_cast<int>(height);
       }
       if( piWidth )
       {
-         *piWidth = ( int ) width;
+         *piWidth = static_cast<int>(width);
       }
       if( piBPC )
       {
@@ -330,19 +330,19 @@ HB_FUNC( WIN_BITMAPDIMENSIONS )
    const void * buffer = hb_parc(1);
    HB_SIZE nSize = hb_parclen(1);
 
-   int iType = hbwin_bitmapType( buffer, nSize );
+   int iType = hbwin_bitmapType(buffer, nSize);
 
    int iHeight = 0;
    int iWidth = 0;
-   HB_BOOL bRetVal = HB_FALSE;
+   bool bRetVal = false;
 
-   if( iType == HB_WIN_BITMAP_BMP && nSize >= sizeof( BITMAPCOREHEADER ) )
+   if( iType == HB_WIN_BITMAP_BMP && nSize >= sizeof(BITMAPCOREHEADER) )
    {
       const BITMAPFILEHEADER * pbmfh = ( const BITMAPFILEHEADER * ) buffer;
       const BITMAPINFO * pbmi = ( const BITMAPINFO * ) ( pbmfh + 1 );
 
       /* Remember there are 2 types of BitMap File */
-      if( pbmi->bmiHeader.biSize == sizeof( BITMAPCOREHEADER ) )
+      if( pbmi->bmiHeader.biSize == sizeof(BITMAPCOREHEADER) )
       {
          iWidth = ( ( const BITMAPCOREHEADER * ) pbmi )->bcWidth;
          iHeight = ( ( const BITMAPCOREHEADER * ) pbmi )->bcHeight;
@@ -353,21 +353,21 @@ HB_FUNC( WIN_BITMAPDIMENSIONS )
          iHeight = abs( pbmi->bmiHeader.biHeight );
       }
 
-      bRetVal = HB_TRUE;
+      bRetVal = true;
    }
    else if( iType == HB_WIN_BITMAP_JPEG )
    {
       bRetVal = ( hb_jpeg_get_param( ( const HB_BYTE * ) buffer, nSize, &iHeight, &iWidth, nullptr, nullptr ) == _JPEG_RET_OK );
    }
-#if defined( HB_HAS_PNG ) && defined( HB_HAS_ZLIB )
+#if defined(HB_HAS_PNG) && defined(HB_HAS_ZLIB)
    else if( iType == HB_WIN_BITMAP_PNG )
    {
       bRetVal = ( hb_png_get_param( ( const HB_BYTE * ) buffer, nSize, &iHeight, &iWidth, nullptr, nullptr ) == _PNG_RET_OK );
    }
 #endif
 
-   hb_storni( iWidth, 2 );
-   hb_storni( iHeight, 3 );
+   hb_storni(iWidth, 2);
+   hb_storni(iHeight, 3);
 
    hb_retl(bRetVal);
 }

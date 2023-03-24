@@ -51,26 +51,26 @@
 
 #include <commdlg.h>
 
-#if defined( __MINGW32CE__ )
+#if defined(__MINGW32CE__)
 /* ChooseColorW() problem is fixed in current devel MINGW32CE version but
    people who use recent official release (0.50) needs it */
 #undef ChooseColor
 BOOL WINAPI ChooseColor( LPCHOOSECOLORW );
 #endif
 
-#define _HB_CHOOSECOLOR_CB_PROP_  TEXT( "__hbwin_win_ChooseColor_CB" )
+#define _HB_CHOOSECOLOR_CB_PROP_  TEXT("__hbwin_win_ChooseColor_CB")
 
-static UINT_PTR CALLBACK CCHookProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
+static UINT_PTR CALLBACK CCHookProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
    UINT_PTR res;
-   HB_BOOL  fInit = HB_FALSE;
+   bool fInit = false;
    PHB_ITEM pBlock;
 
    if( msg == WM_INITDIALOG )
    {
       CHOOSECOLOR * cc = ( CHOOSECOLOR * ) lParam;
       SetProp( hWnd, _HB_CHOOSECOLOR_CB_PROP_, hb_itemNew( ( PHB_ITEM ) cc->lCustData ) );
-      fInit = HB_TRUE;
+      fInit = true;
    }
 
    if( ( pBlock = ( PHB_ITEM ) GetProp( hWnd, _HB_CHOOSECOLOR_CB_PROP_ ) ) != nullptr && hb_vmRequestReenter() )
@@ -80,19 +80,19 @@ static UINT_PTR CALLBACK CCHookProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM 
       PHB_ITEM pLPa = hb_itemPutNInt( nullptr, wParam );
       PHB_ITEM pWPa = hb_itemPutNInt( nullptr, lParam );
 
-      hb_evalBlock( pBlock, pWnd, pMsg, pLPa, pWPa );
+      hb_evalBlock(pBlock, pWnd, pMsg, pLPa, pWPa);
 
       res = ( UINT_PTR ) hbwapi_par_RESULT(-1);
 
-      hb_itemRelease( pWnd );
-      hb_itemRelease( pMsg );
-      hb_itemRelease( pLPa );
-      hb_itemRelease( pWPa );
+      hb_itemRelease(pWnd);
+      hb_itemRelease(pMsg);
+      hb_itemRelease(pLPa);
+      hb_itemRelease(pWPa);
 
       if( msg == WM_NCDESTROY )
       {
          RemoveProp( hWnd, _HB_CHOOSECOLOR_CB_PROP_ );
-         hb_itemRelease( pBlock );
+         hb_itemRelease(pBlock);
       }
 
       hb_vmRequestRestore();
@@ -107,18 +107,18 @@ static UINT_PTR CALLBACK CCHookProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM 
 
 HB_FUNC( WIN_CHOOSECOLOR )
 {
-   COLORREF    crCustClr[ 16 ];
+   COLORREF crCustClr[16];
 
    void * hTpl;
 
-   for( int i = 0; i < ( int ) HB_SIZEOFARRAY( crCustClr ); ++i )
+   for( int i = 0; i < static_cast<int>(HB_SIZEOFARRAY(crCustClr)); ++i )
    {
-      crCustClr[ i ] = HB_ISARRAY(4) ? hbwapi_parv_COLORREF(4, i + 1) : RGB(0, 0, 0);
+      crCustClr[i] = HB_ISARRAY(4) ? hbwapi_parv_COLORREF(4, i + 1) : RGB(0, 0, 0);
    }
 
    CHOOSECOLOR cc;
-   memset( &cc, 0, sizeof( cc ) );
-   cc.lStructSize    = sizeof( cc );
+   memset(&cc, 0, sizeof(cc));
+   cc.lStructSize    = sizeof(cc);
    cc.hwndOwner      = hbwapi_par_raw_HWND(1);
    cc.hInstance      = hbwapi_par_raw_HWND(2);
    cc.rgbResult      = hbwapi_par_COLORREF(3);
