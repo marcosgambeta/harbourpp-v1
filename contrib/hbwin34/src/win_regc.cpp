@@ -54,7 +54,7 @@ HB_FUNC( WIN_REGCREATEKEYEX )
    HKEY hkResult = nullptr;
    DWORD dwDisposition = 0;
 
-   bool bSuccess = RegCreateKeyEx(hbwapi_get_HKEY(( HB_PTRUINT ) hb_parnint(1)),
+   bool bSuccess = RegCreateKeyEx(hbwapi_get_HKEY(static_cast<HB_PTRUINT>(hb_parnint(1))),
                                       HB_PARSTRDEF(2, &hKey, nullptr),
                                       0,
                                       nullptr,
@@ -84,7 +84,7 @@ HB_FUNC( WIN_REGOPENKEYEX )
 {
    void * hKey;
    HKEY hkResult = nullptr;
-   bool bSuccess = RegOpenKeyEx(hbwapi_get_HKEY(( HB_PTRUINT ) hb_parnint(1)),
+   bool bSuccess = RegOpenKeyEx(hbwapi_get_HKEY(static_cast<HB_PTRUINT>(hb_parnint(1))),
                                     HB_PARSTRDEF(2, &hKey, nullptr),
                                     0 /* dwOptions */,
                                     ( REGSAM ) hb_parnl(4) /* samDesired */,
@@ -147,8 +147,8 @@ HB_FUNC( WIN_REGQUERYVALUEEX )
 
    if( bSuccess )
    {
-      hb_stornint( dwType, 4 );
-      hb_retnint( dwSize );
+      hb_stornint(dwType, 4);
+      hb_retnint(dwSize);
    }
    else
    {
@@ -199,14 +199,14 @@ HB_FUNC( WIN_REGSETVALUEEX )
 HB_FUNC( WIN_REGDELETEKEY )
 {
    void * hKey;
-   hb_retl(RegDeleteKey( hbwapi_get_HKEY( ( HB_PTRUINT ) hb_parnint(1) ), ( LPCTSTR ) HB_PARSTRDEF(2, &hKey, nullptr) ) == ERROR_SUCCESS);
+   hb_retl(RegDeleteKey(hbwapi_get_HKEY( static_cast<HB_PTRUINT>(hb_parnint(1)) ), static_cast<LPCTSTR>(HB_PARSTRDEF(2, &hKey, nullptr))) == ERROR_SUCCESS);
    hb_strfree(hKey);
 }
 
 HB_FUNC( WIN_REGDELETEVALUE )
 {
    void * hValue;
-   hb_retl(RegDeleteValue(static_cast<HKEY>(hb_parptr(1)), ( LPCTSTR ) HB_PARSTR(2, &hValue, nullptr) ) == ERROR_SUCCESS);
+   hb_retl(RegDeleteValue(static_cast<HKEY>(hb_parptr(1)), static_cast<LPCTSTR>(HB_PARSTR(2, &hValue, nullptr))) == ERROR_SUCCESS);
    hb_strfree(hValue);
 }
 

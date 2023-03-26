@@ -56,7 +56,7 @@ static HB_GARBAGE_FUNC( s_gc_HDC_release )
    if( ph && *ph )
    {
       /* Destroy the object */
-      DeleteDC( ( HDC ) *ph );
+      DeleteDC(( HDC ) *ph);
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -77,11 +77,11 @@ void hbwapi_ret_HDC( HDC p )
 
       *ph = p;
 
-      hb_retptrGC( ph );
+      hb_retptrGC(ph);
    }
    else
    {
-      hb_retptr( nullptr );
+      hb_retptr(nullptr);
    }   
 }
 
@@ -92,7 +92,7 @@ HB_BOOL hbwapi_is_HDC( int iParam )
 
 HDC hbwapi_par_HDC( int iParam )
 {
-   void ** ph = ( void ** ) hb_parptrGC( &s_gc_HDC_funcs, iParam );
+   void ** ph = ( void ** ) hb_parptrGC(&s_gc_HDC_funcs, iParam);
 
    return ph ? ( HDC ) *ph : ( HDC ) __hbwapi_par_handle(iParam);
 }
@@ -105,7 +105,7 @@ static HB_GARBAGE_FUNC( s_gc_HPEN_release )
    if( ph && *ph )
    {
       /* Destroy the object */
-      DeleteObject( ( HPEN ) *ph );
+      DeleteObject(( HPEN ) *ph);
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -126,11 +126,11 @@ void hbwapi_ret_HPEN( HPEN p )
 
       *ph = p;
 
-      hb_retptrGC( ph );
+      hb_retptrGC(ph);
    }
    else
    {
-      hb_retptr( nullptr );
+      hb_retptr(nullptr);
    }   
 }
 
@@ -141,7 +141,7 @@ HB_BOOL hbwapi_is_HPEN( int iParam )
 
 HPEN hbwapi_par_HPEN( int iParam )
 {
-   void ** ph = ( void ** ) hb_parptrGC( &s_gc_HPEN_funcs, iParam );
+   void ** ph = ( void ** ) hb_parptrGC(&s_gc_HPEN_funcs, iParam);
 
    return ph ? ( HPEN ) *ph : ( HPEN ) __hbwapi_par_handle(iParam);
 }
@@ -154,7 +154,7 @@ static HB_GARBAGE_FUNC( s_gc_HBRUSH_release )
    if( ph && *ph )
    {
       /* Destroy the object */
-      DeleteObject( ( HBRUSH ) *ph );
+      DeleteObject(( HBRUSH ) *ph);
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -175,11 +175,11 @@ void hbwapi_ret_HBRUSH(HBRUSH p)
 
       *ph = p;
 
-      hb_retptrGC( ph );
+      hb_retptrGC(ph);
    }
    else
    {
-      hb_retptr( nullptr );
+      hb_retptr(nullptr);
    }   
 }
 
@@ -190,7 +190,7 @@ HB_BOOL hbwapi_is_HBRUSH(int iParam)
 
 HBRUSH hbwapi_par_HBRUSH(int iParam)
 {
-   void ** ph = ( void ** ) hb_parptrGC( &s_gc_HBRUSH_funcs, iParam );
+   void ** ph = ( void ** ) hb_parptrGC(&s_gc_HBRUSH_funcs, iParam);
 
    return ph ? ( HBRUSH ) *ph : ( HBRUSH ) __hbwapi_par_handle(iParam);
 }
@@ -203,7 +203,7 @@ static HB_GARBAGE_FUNC( s_gc_HFONT_release )
    if( ph && *ph )
    {
       /* Destroy the object */
-      DeleteObject( ( HFONT ) *ph );
+      DeleteObject(( HFONT ) *ph);
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -216,7 +216,7 @@ static const HB_GC_FUNCS s_gc_HFONT_funcs =
    hb_gcDummyMark
 };
 
-void hbwapi_ret_HFONT( HFONT p )
+void hbwapi_ret_HFONT(HFONT p)
 {
    if( p )
    {
@@ -224,22 +224,22 @@ void hbwapi_ret_HFONT( HFONT p )
 
       *ph = p;
 
-      hb_retptrGC( ph );
+      hb_retptrGC(ph);
    }
    else
    {
-      hb_retptr( nullptr );
+      hb_retptr(nullptr);
    }   
 }
 
-HB_BOOL hbwapi_is_HFONT( int iParam )
+HB_BOOL hbwapi_is_HFONT(int iParam)
 {
    return hb_parptrGC( &s_gc_HFONT_funcs, iParam ) != nullptr;
 }
 
-HFONT hbwapi_par_HFONT( int iParam )
+HFONT hbwapi_par_HFONT(int iParam)
 {
-   void ** ph = ( void ** ) hb_parptrGC( &s_gc_HFONT_funcs, iParam );
+   void ** ph = ( void ** ) hb_parptrGC(&s_gc_HFONT_funcs, iParam);
 
    return ph ? ( HFONT ) *ph : ( HFONT ) __hbwapi_par_handle(iParam);
 }
@@ -273,11 +273,11 @@ void hbwapi_ret_PDEVMODE(PDEVMODE p)
 
       *ph = p;
 
-      hb_retptrGC( ph );
+      hb_retptrGC(ph);
    }
    else
    {
-      hb_retptr( nullptr );
+      hb_retptr(nullptr);
    }   
 }
 
@@ -288,7 +288,7 @@ HB_BOOL hbwapi_is_PDEVMODE(int iParam)
 
 PDEVMODE hbwapi_par_PDEVMODE(int iParam)
 {
-   void ** ph = ( void ** ) hb_parptrGC( &s_gc_PDEVMODE_funcs, iParam );
+   void ** ph = ( void ** ) hb_parptrGC(&s_gc_PDEVMODE_funcs, iParam);
 
    return ph ? ( PDEVMODE ) *ph : nullptr;
 }
@@ -297,27 +297,27 @@ HB_FUNC( __WAPI_TYPE )
 {
    if( hbwapi_is_HDC(1) )
    {
-      hb_retc_const( "HDC" );
+      hb_retc_const("HDC");
    }
    else if( hbwapi_is_HPEN(1) )
    {
-      hb_retc_const( "HPEN" );
+      hb_retc_const("HPEN");
    }
    else if( hbwapi_is_HBRUSH(1) )
    {
-      hb_retc_const( "HBRUSH" );
+      hb_retc_const("HBRUSH");
    }
    else if( hbwapi_is_HFONT(1) )
    {
-      hb_retc_const( "HFONT" );
+      hb_retc_const("HFONT");
    }
    else if( hbwapi_is_PDEVMODE(1) )
    {
-      hb_retc_const( "PDEVMODE" );
+      hb_retc_const("PDEVMODE");
    }
    else if( HB_ISPOINTER(1) )
    {
-      hb_retc_const( "HANDLE" );
+      hb_retc_const("HANDLE");
    }
    else
    {
@@ -384,11 +384,11 @@ void * __hbwapi_par_handle(int n)
 #if defined(__HBWIN_WITH_UNSAFE_HANDLES)
    if( HB_ISNUM(n) )
    {
-      return s_handle_trace(n) ? ( void * ) ( HB_PTRUINT ) hb_parnint( n ) : nullptr;
+      return s_handle_trace(n) ? static_cast<void*>(static_cast<HB_PTRUINT>(hb_parnint(n))) : nullptr;
    }
    else
 #endif
-      return hb_parptr( n );
+      return hb_parptr(n);
 }
 
 void * __hbwapi_parv_handle(int n, int i)
@@ -396,11 +396,11 @@ void * __hbwapi_parv_handle(int n, int i)
 #if defined(__HBWIN_WITH_UNSAFE_HANDLES)
    if( HB_ISNUM(n) )
    {
-      return s_handle_trace(n) ? ( void * ) ( HB_PTRUINT ) hb_parvnint( n, i ) : nullptr;
+      return s_handle_trace(n) ? static_cast<void*>(static_cast<HB_PTRUINT>(hb_parvnint(n, i))) : nullptr;
    }
    else
 #endif
-      return hb_parvptr( n, i );
+      return hb_parvptr(n, i);
 }
 
 void * hbwapi_itemGet_HANDLE(PHB_ITEM pItem)
@@ -408,11 +408,11 @@ void * hbwapi_itemGet_HANDLE(PHB_ITEM pItem)
 #if defined(__HBWIN_WITH_UNSAFE_HANDLES)
    if( pItem && HB_IS_NUMERIC(pItem) )
    {
-      return ( void * ) ( HB_PTRUINT ) hb_itemGetNInt( pItem );
+      return static_cast<void*>(static_cast<HB_PTRUINT>(hb_itemGetNInt(pItem)));
    }
    else
 #endif
-      return hb_itemGetPtr( pItem );
+      return hb_itemGetPtr(pItem);
 }
 
 /* pArray must not be nullptr */

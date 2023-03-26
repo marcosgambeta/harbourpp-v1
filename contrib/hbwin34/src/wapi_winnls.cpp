@@ -48,12 +48,12 @@
 
 HB_FUNC( WAPI_GETACP )
 {
-   hbwapi_ret_UINT( GetACP() );
+   hbwapi_ret_UINT(GetACP());
 }
 
 HB_FUNC( WAPI_GETOEMCP )
 {
-   hbwapi_ret_UINT( GetOEMCP() );
+   hbwapi_ret_UINT(GetOEMCP());
 }
 
 HB_FUNC( WAPI_ISVALIDCODEPAGE )

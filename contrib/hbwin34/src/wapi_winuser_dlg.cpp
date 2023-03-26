@@ -47,7 +47,6 @@
 #include "hbwapi.hpp"
 #include "hbvm.hpp"
 #include "hbapiitm.hpp"
-
 #include <windowsx.h>
 
 /* Application-defined callback used with the CreateDialog and DialogBox... It
@@ -58,31 +57,31 @@ static BOOL CALLBACK wapi_DialogFuncProc(HWND hDlg, UINT message, WPARAM wParam,
 
    if( message == WM_INITDIALOG && lParam )
    {
-      pSymbol = ( PHB_SYMB ) lParam;
-      SetWindowLongPtr( hDlg, GWLP_USERDATA, ( LONG_PTR ) pSymbol );
+      pSymbol = reinterpret_cast<PHB_SYMB>(lParam);
+      SetWindowLongPtr(hDlg, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pSymbol));
    }
    else
    {
-      pSymbol = ( PHB_SYMB ) GetWindowLongPtr( hDlg, GWLP_USERDATA );
+      pSymbol = reinterpret_cast<PHB_SYMB>(GetWindowLongPtr(hDlg, GWLP_USERDATA));
    }
 
    if( pSymbol )
    {
       hb_vmPushSymbol(pSymbol);
       hb_vmPushNil();
-      hb_vmPushPointer( hDlg );
-      hb_vmPushNumInt( message );
+      hb_vmPushPointer(hDlg);
+      hb_vmPushNumInt(message);
 
       if( message == WM_COMMAND )
       {
-         hb_vmPushNumInt( wParam );
-         if( HIWORD( wParam ) == 0 || HIWORD( wParam ) == 1 )
+         hb_vmPushNumInt(wParam);
+         if( HIWORD(wParam) == 0 || HIWORD(wParam) == 1 )
          {
-            hb_vmPushNumInt( lParam );
+            hb_vmPushNumInt(lParam);
          }
          else
          {
-            hbwapi_vmPush_HANDLE(( HWND ) lParam);
+            hbwapi_vmPush_HANDLE(reinterpret_cast<HWND>(lParam));
          }
          /* TODO: rethink this. Called proc can do this on its own,
                   no need to pass calculated params. Or, think of
@@ -93,28 +92,30 @@ static BOOL CALLBACK wapi_DialogFuncProc(HWND hDlg, UINT message, WPARAM wParam,
       }
       else
       {
-         hb_vmPushNumInt( wParam );
-         hb_vmPushNumInt( lParam );
+         hb_vmPushNumInt(wParam);
+         hb_vmPushNumInt(lParam);
          hb_vmDo(4);
       }
    }
 
-   return ( BOOL ) hb_parnl(-1);
+   return static_cast<BOOL>(hb_parnl(-1));
 }
 
 /* Creates a modal dialog box from a dialog box template resource. */
+
+/*
+WAPI_DIALOGBOXPARAM(hInstance, lpTemplate, hWndParent, dwInitParam) --> nResult
+*/
 HB_FUNC( WAPI_DIALOGBOXPARAM )
 {
    INT_PTR nResult = DialogBoxParam(
-      hbwapi_par_raw_HINSTANCE(1),                              /* hInstance */
-      MAKEINTRESOURCE(hbwapi_par_INT(2)),                     /* lpTemplate */
-      hbwapi_par_raw_HWND(3),                                   /* hWndParent */
-      ( DLGPROC ) wapi_DialogFuncProc,                            /* lpDialogFunc */
-      ( LPARAM ) hb_itemGetSymbol(hb_param(4, Harbour::Item::SYMBOL))  /* dwInitParam */
-      );
-
+      hbwapi_par_raw_HINSTANCE(1),
+      MAKEINTRESOURCE(hbwapi_par_INT(2)),
+      hbwapi_par_raw_HWND(3),
+      static_cast<DLGPROC>(wapi_DialogFuncProc),
+      reinterpret_cast<LPARAM>(hb_itemGetSymbol(hb_param(4, Harbour::Item::SYMBOL))));
    hbwapi_SetLastError(GetLastError());
-   hbwapi_ret_NINT( nResult );
+   hbwapi_ret_NINT(nResult);
 }
 
 /* Destroys a modal dialog box, causing the system to end any processing for the
@@ -128,7 +129,7 @@ HB_FUNC( WAPI_ENDDIALOG )
 
 HB_FUNC( WAPI_CHECKDLGBUTTON )
 {
-   BOOL bResult = CheckDlgButton(hbwapi_par_raw_HWND(1), hb_parni(2), HB_ISNUM(3) ? hbwapi_par_UINT(3) : ( UINT ) hb_parl(3));
+   BOOL bResult = CheckDlgButton(hbwapi_par_raw_HWND(1), hb_parni(2), HB_ISNUM(3) ? hbwapi_par_UINT(3) : static_cast<UINT>(hb_parl(3)));
    hbwapi_SetLastError(GetLastError());
    hbwapi_ret_L(bResult);
 }
@@ -153,13 +154,11 @@ HB_FUNC( WAPI_SETDLGITEMTEXT )
 /* Retrieves the title or text associated with a control in a dialog box. */
 HB_FUNC( WAPI_GETDLGITEMTEXT )
 {
-   HB_SIZE nSize    = static_cast<HB_SIZE>(SendMessage(GetDlgItem(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2)), WM_GETTEXTLENGTH, 0, 0));
-   TCHAR * lpResult = ( TCHAR * ) hb_xgrab((nSize + 1) * sizeof(TCHAR));
-
+   HB_SIZE nSize = static_cast<HB_SIZE>(SendMessage(GetDlgItem(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2)), WM_GETTEXTLENGTH, 0, 0));
+   TCHAR * lpResult = static_cast<TCHAR*>(hb_xgrab((nSize + 1) * sizeof(TCHAR)));
    HB_SIZE nResult = static_cast<HB_SIZE>(GetDlgItemText(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), lpResult, static_cast<int>(nSize + 1)));
-
    hbwapi_SetLastError(GetLastError());
-   HB_RETSTRLEN( lpResult, nResult );
+   HB_RETSTRLEN(lpResult, nResult);
    hb_xfree(lpResult);
 }
 
@@ -203,7 +202,7 @@ HB_FUNC( WAPI_SENDDLGITEMMESSAGE )  /* NOTE: unsafe function, may corrupt memory
                                hb_parni(2),
                                hbwapi_par_UINT(3),
                                hbwapi_par_WPARAM(4),
-                               szText ? ( LPARAM ) szText : hbwapi_par_LPARAM(5));
+                               szText ? reinterpret_cast<LPARAM>(szText) : hbwapi_par_LPARAM(5));
    hbwapi_SetLastError(GetLastError());
    hb_retnint(result);
 
@@ -223,28 +222,28 @@ HB_FUNC( WAPI_SENDDLGITEMMESSAGE )  /* NOTE: unsafe function, may corrupt memory
 
 /* Take an input pointer, return closest pointer that is
    aligned on a DWORD (4 byte) boundary. */
-static LPWORD s_AlignOnDWORD( LPWORD p )
+static LPWORD s_AlignOnDWORD(LPWORD p)
 {
-   HB_PTRUINT ul = ( HB_PTRUINT ) p;
+   HB_PTRUINT ul = reinterpret_cast<HB_PTRUINT>(p);
 
    ul  += 3;
    ul >>= 2;
    ul <<= 2;
 
-   return ( LPWORD ) ul;
+   return reinterpret_cast<LPWORD>(ul);
 }
 
 HB_FUNC( __WAPI_DLGTEMPLATE_RAW_NEW )
 {
    WORD * p;
-   WORD * pdlgtemplate = p = ( WORD * ) hb_xgrabz( _BUFFERSIZE );
+   WORD * pdlgtemplate = p = static_cast<WORD*>(hb_xgrabz(_BUFFERSIZE));
    WORD * pItems;
 
    /* Parameters: 12 arrays
       1 for DLG template
       11 for item properties */
 
-   WORD    nItems = ( WORD ) hb_parvni(1, 4);
+   WORD    nItems = static_cast<WORD>(hb_parvni(1, 4));
    DWORD   lStyle = hb_parvnl(1, 3);
    HB_SIZE nchar;
 
@@ -252,38 +251,38 @@ HB_FUNC( __WAPI_DLGTEMPLATE_RAW_NEW )
 
    *p++ = 1;                            /* version */
    *p++ = 0xFFFF;                       /* signature */
-   *p++ = LOWORD( hb_parvnl(1, 1) );  /* Help Id */
-   *p++ = HIWORD( hb_parvnl(1, 1) );
+   *p++ = LOWORD(hb_parvnl(1, 1));  /* Help Id */
+   *p++ = HIWORD(hb_parvnl(1, 1));
 
-   *p++ = LOWORD( hb_parvnl(1, 2) );  /* ext. style */
-   *p++ = HIWORD( hb_parvnl(1, 2) );
+   *p++ = LOWORD(hb_parvnl(1, 2));  /* ext. style */
+   *p++ = HIWORD(hb_parvnl(1, 2));
 
-   *p++ = LOWORD( lStyle );
-   *p++ = HIWORD( lStyle );
+   *p++ = LOWORD(lStyle);
+   *p++ = HIWORD(lStyle);
 
    pItems = p;
 
-   *p++ = ( WORD ) nItems;              /* NumberOfItems */
-   *p++ = ( short ) hb_parvni(1, 5);  /* x */
-   *p++ = ( short ) hb_parvni(1, 6);  /* y */
-   *p++ = ( short ) hb_parvni(1, 7);  /* cx */
-   *p++ = ( short ) hb_parvni(1, 8);  /* cy */
-   *p++ = ( short ) 0;                  /* Menu (ignored for now.) */
-   *p++ = ( short ) 0x00;               /* Class also ignored */
+   *p++ = static_cast<WORD>(nItems);              /* NumberOfItems */
+   *p++ = static_cast<short>(hb_parvni(1, 5));  /* x */
+   *p++ = static_cast<short>(hb_parvni(1, 6));  /* y */
+   *p++ = static_cast<short>(hb_parvni(1, 7));  /* cx */
+   *p++ = static_cast<short>(hb_parvni(1, 8));  /* cy */
+   *p++ = static_cast<short>(0);                  /* Menu (ignored for now.) */
+   *p++ = static_cast<short>(0x00);               /* Class also ignored */
 
    if( hb_parinfa(1, 11) == Harbour::Item::STRING )
    {
       void *  hText;
       LPCWSTR szText = hb_wstrnull(hb_parastr_u16(1, 11, HB_CDP_ENDIAN_NATIVE, &hText, &nchar));
 
-      nchar = hb_wstrnlen( szText, nchar );
+      nchar = hb_wstrnlen(szText, nchar);
 
       if( nchar > 256 )
       {
          nchar = 256;
       }
 
-      hb_wstrncpy( ( HB_WCHAR * ) p, szText, nchar );
+      hb_wstrncpy(reinterpret_cast<HB_WCHAR*>(p), szText, nchar);
       p += nchar + 1;
 
       hb_strfree(hText);
@@ -295,23 +294,23 @@ HB_FUNC( __WAPI_DLGTEMPLATE_RAW_NEW )
 
    /* add in the wPointSize and szFontName here iff the DS_SETFONT bit on */
 
-   if( ( lStyle & DS_SETFONT ) != 0 )
+   if( (lStyle & DS_SETFONT) != 0 )
    {
       void *  hText;
       LPCWSTR szText = hb_wstrnull(hb_parastr_u16(1, 15, HB_CDP_ENDIAN_NATIVE, &hText, &nchar));
 
-      *p++ = ( short ) hb_parvni(1, 12);
-      *p++ = ( short ) hb_parvni(1, 13);
-      *p++ = ( short ) hb_parvni(1, 14);
+      *p++ = static_cast<short>(hb_parvni(1, 12));
+      *p++ = static_cast<short>(hb_parvni(1, 13));
+      *p++ = static_cast<short>(hb_parvni(1, 14));
 
-      nchar = hb_wstrnlen( szText, nchar );
+      nchar = hb_wstrnlen(szText, nchar);
 
       if( nchar > 256 )
       {
          nchar = 256;
       }
 
-      hb_wstrncpy( ( HB_WCHAR * ) p, szText, nchar );
+      hb_wstrncpy(reinterpret_cast<HB_WCHAR*>(p), szText, nchar);
       p += nchar + 1;
 
       hb_strfree(hText);
@@ -320,38 +319,38 @@ HB_FUNC( __WAPI_DLGTEMPLATE_RAW_NEW )
    for( WORD i = 1; i <= nItems; i++ )
    {
       /* make sure each item starts on a DWORD boundary */
-      p = s_AlignOnDWORD( p );
+      p = s_AlignOnDWORD(p);
 
-      *p++ = LOWORD( hb_parvnl(2, i) );  /* help id */
-      *p++ = HIWORD( hb_parvnl(2, i) );
+      *p++ = LOWORD(hb_parvnl(2, i));  /* help id */
+      *p++ = HIWORD(hb_parvnl(2, i));
 
-      *p++ = LOWORD( hb_parvnl(3, i) );  /* ext. style */
-      *p++ = HIWORD( hb_parvnl(3, i) );
+      *p++ = LOWORD(hb_parvnl(3, i));  /* ext. style */
+      *p++ = HIWORD(hb_parvnl(3, i));
 
-      *p++ = LOWORD( hb_parvnl(4, i) );  /* style */
-      *p++ = HIWORD( hb_parvnl(4, i) );
+      *p++ = LOWORD(hb_parvnl(4, i));  /* style */
+      *p++ = HIWORD(hb_parvnl(4, i));
 
-      *p++ = ( short ) hb_parvni(5, i);  /* x */
-      *p++ = ( short ) hb_parvni(6, i);  /* y */
-      *p++ = ( short ) hb_parvni(7, i);  /* cx */
-      *p++ = ( short ) hb_parvni(8, i);  /* cy */
+      *p++ = static_cast<short>(hb_parvni(5, i));  /* x */
+      *p++ = static_cast<short>(hb_parvni(6, i));  /* y */
+      *p++ = static_cast<short>(hb_parvni(7, i));  /* cx */
+      *p++ = static_cast<short>(hb_parvni(8, i));  /* cy */
 
-      *p++ = LOWORD( hb_parvnl(9, i) );  /* id */
-      *p++ = HIWORD( hb_parvnl(9, i) );  /* id */
+      *p++ = LOWORD(hb_parvnl(9, i));  /* id */
+      *p++ = HIWORD(hb_parvnl(9, i));  /* id */
 
       if( hb_parinfa(10, i) == Harbour::Item::STRING )
       {
          void *  hText;
          LPCWSTR szText = hb_parastr_u16(10, i, HB_CDP_ENDIAN_NATIVE, &hText, &nchar);
 
-         nchar = hb_wstrnlen( szText, nchar );
+         nchar = hb_wstrnlen(szText, nchar);
 
          if( nchar > 256 )
          {
             nchar = 256;
          }
 
-         hb_wstrncpy( ( HB_WCHAR * ) p, szText, nchar );
+         hb_wstrncpy(reinterpret_cast<HB_WCHAR*>(p), szText, nchar);
          p += nchar + 1;
 
          hb_strfree(hText);
@@ -359,7 +358,7 @@ HB_FUNC( __WAPI_DLGTEMPLATE_RAW_NEW )
       else
       {
          *p++ = 0xFFFF;
-         *p++ = ( WORD ) hb_parvni(10, i);
+         *p++ = static_cast<WORD>(hb_parvni(10, i));
       }
 
       if( hb_parinfa(11, i) == Harbour::Item::STRING )
@@ -367,14 +366,14 @@ HB_FUNC( __WAPI_DLGTEMPLATE_RAW_NEW )
          void *  hText;
          LPCWSTR szText = hb_parastr_u16(11, i, HB_CDP_ENDIAN_NATIVE, &hText, &nchar);
 
-         nchar = hb_wstrnlen( szText, nchar );
+         nchar = hb_wstrnlen(szText, nchar);
 
          if( nchar > 256 )
          {
             nchar = 256;
          }
 
-         hb_wstrncpy( ( HB_WCHAR * ) p, szText, nchar );
+         hb_wstrncpy(reinterpret_cast<HB_WCHAR*>(p), szText, nchar);
          p += nchar + 1;
 
          hb_strfree(hText);
@@ -382,24 +381,24 @@ HB_FUNC( __WAPI_DLGTEMPLATE_RAW_NEW )
       else
       {
          *p++ = 0xFFFF;
-         *p++ = ( WORD ) hb_parvni(11, i);
+         *p++ = static_cast<WORD>(hb_parvni(11, i));
       }
 
       *p++ = 0x00;  /* extras (in array 12) */
 
       /* 768 is the maximum size of one item */
-      if( ( ( HB_PTRUINT ) p - ( HB_PTRUINT ) pdlgtemplate ) > _BUFFERSIZE - 768 )
+      if( (reinterpret_cast<HB_PTRUINT>(p) - reinterpret_cast<HB_PTRUINT>(pdlgtemplate)) > _BUFFERSIZE - 768 )
       {
          nItems = i;
          break;
       }
    }
 
-   *pItems = ( WORD ) nItems;
+   *pItems = static_cast<WORD>(nItems);
 
-   p = s_AlignOnDWORD( p );
+   p = s_AlignOnDWORD(p);
 
-   hb_retclen( ( char * ) pdlgtemplate, ( HB_PTRUINT ) p - ( HB_PTRUINT ) pdlgtemplate );
+   hb_retclen(reinterpret_cast<char*>(pdlgtemplate), reinterpret_cast<HB_PTRUINT>(p) - reinterpret_cast<HB_PTRUINT>(pdlgtemplate));
 
    hb_xfree(pdlgtemplate);
 }

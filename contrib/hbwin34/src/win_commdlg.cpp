@@ -55,7 +55,7 @@
 /* ChooseColorW() problem is fixed in current devel MINGW32CE version but
    people who use recent official release (0.50) needs it */
 #undef ChooseColor
-BOOL WINAPI ChooseColor( LPCHOOSECOLORW );
+BOOL WINAPI ChooseColor(LPCHOOSECOLORW);
 #endif
 
 #define _HB_CHOOSECOLOR_CB_PROP_  TEXT("__hbwin_win_ChooseColor_CB")
@@ -69,20 +69,20 @@ static UINT_PTR CALLBACK CCHookProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM l
    if( msg == WM_INITDIALOG )
    {
       CHOOSECOLOR * cc = ( CHOOSECOLOR * ) lParam;
-      SetProp( hWnd, _HB_CHOOSECOLOR_CB_PROP_, hb_itemNew( ( PHB_ITEM ) cc->lCustData ) );
+      SetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_, hb_itemNew(( PHB_ITEM ) cc->lCustData));
       fInit = true;
    }
 
-   if( ( pBlock = ( PHB_ITEM ) GetProp( hWnd, _HB_CHOOSECOLOR_CB_PROP_ ) ) != nullptr && hb_vmRequestReenter() )
+   if( (pBlock = ( PHB_ITEM ) GetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_)) != nullptr && hb_vmRequestReenter() )
    {
-      PHB_ITEM pWnd = hbwapi_itemPut_HANDLE( nullptr, hWnd );
-      PHB_ITEM pMsg = hb_itemPutNInt( nullptr, msg );
-      PHB_ITEM pLPa = hb_itemPutNInt( nullptr, wParam );
-      PHB_ITEM pWPa = hb_itemPutNInt( nullptr, lParam );
+      PHB_ITEM pWnd = hbwapi_itemPut_HANDLE(nullptr, hWnd);
+      PHB_ITEM pMsg = hb_itemPutNInt(nullptr, msg);
+      PHB_ITEM pLPa = hb_itemPutNInt(nullptr, wParam);
+      PHB_ITEM pWPa = hb_itemPutNInt(nullptr, lParam);
 
       hb_evalBlock(pBlock, pWnd, pMsg, pLPa, pWPa);
 
-      res = ( UINT_PTR ) hbwapi_par_RESULT(-1);
+      res = static_cast<UINT_PTR>(hbwapi_par_RESULT(-1));
 
       hb_itemRelease(pWnd);
       hb_itemRelease(pMsg);
@@ -91,7 +91,7 @@ static UINT_PTR CALLBACK CCHookProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM l
 
       if( msg == WM_NCDESTROY )
       {
-         RemoveProp( hWnd, _HB_CHOOSECOLOR_CB_PROP_ );
+         RemoveProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_);
          hb_itemRelease(pBlock);
       }
 
@@ -124,13 +124,13 @@ HB_FUNC( WIN_CHOOSECOLOR )
    cc.rgbResult      = hbwapi_par_COLORREF(3);
    cc.lpCustColors   = crCustClr;
    cc.Flags          = hbwapi_par_WORD(5);
-   cc.lCustData      = ( LPARAM ) ( HB_PTRUINT ) hb_param(6, Harbour::Item::EVALITEM);
+   cc.lCustData      = ( LPARAM ) reinterpret_cast<HB_PTRUINT>(hb_param(6, Harbour::Item::EVALITEM));
    cc.lpfnHook       = cc.lCustData ? CCHookProc : nullptr;
    cc.lpTemplateName = HB_PARSTR(7, &hTpl, nullptr);
 
-   if( ChooseColor( &cc ) )
+   if( ChooseColor(&cc) )
    {
-      hbwapi_ret_COLORREF( cc.rgbResult );
+      hbwapi_ret_COLORREF(cc.rgbResult);
    }
    else
    {

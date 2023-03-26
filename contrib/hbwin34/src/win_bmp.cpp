@@ -68,15 +68,15 @@ int hbwin_bitmapType(const void * pImgBuf, HB_SIZE size)
 
    if( pImgBuf )
    {
-      if( size > 2 && memcmp( pImgBuf, "BM", 2 ) == 0 )
+      if( size > 2 && memcmp(pImgBuf, "BM", 2) == 0 )
       {
          iType = HB_WIN_BITMAP_BMP;
       }
-      else if( size > 3 && memcmp( pImgBuf, "\xFF\xD8\xFF", 3 ) == 0 )
+      else if( size > 3 && memcmp(pImgBuf, "\xFF\xD8\xFF", 3) == 0 )
       {
          iType = HB_WIN_BITMAP_JPEG;
       }
-      else if( size > 4 && memcmp( pImgBuf, "\x89PNG", 4 ) == 0 )
+      else if( size > 4 && memcmp(pImgBuf, "\x89PNG", 4) == 0 )
       {
          iType = HB_WIN_BITMAP_PNG;
       }   
@@ -112,7 +112,7 @@ HB_FUNC( WIN_LOADBITMAPFILE )
 
    if( pBuffer )
    {
-      hb_retclen_buffer( pBuffer, nSize );
+      hb_retclen_buffer(pBuffer, nSize);
    }
    else
    {
@@ -138,7 +138,7 @@ static int hbwin_bitmapIsSupported(HDC hDC, int iType, const void * pImgBuf, HB_
       }
       else
       {
-         int iRes = iType = ( iType == HB_WIN_BITMAP_JPEG ? CHECKJPEGFORMAT : CHECKPNGFORMAT );
+         int iRes = iType = (iType == HB_WIN_BITMAP_JPEG ? CHECKJPEGFORMAT : CHECKPNGFORMAT);
 
          iRes = ExtEscape(hDC, QUERYESCSUPPORT, sizeof(iRes), ( LPCSTR ) &iRes, 0, 0);
          if( iRes > 0 )
@@ -199,7 +199,7 @@ HB_FUNC( WIN_DRAWBITMAP )
 
       if( iType == HB_WIN_BITMAP_BMP )
       {
-         pbmi  = ( const BITMAPINFO * ) ( pbmfh + 1 );
+         pbmi  = ( const BITMAPINFO * ) (pbmfh + 1);
          pBits = ( const BYTE * ) pbmfh + pbmfh->bfOffBits;
 
          /* Remember there are 2 types of BitMap File */
@@ -211,7 +211,7 @@ HB_FUNC( WIN_DRAWBITMAP )
          else
          {
             iWidth  = pbmi->bmiHeader.biWidth;
-            iHeight = abs( pbmi->bmiHeader.biHeight );
+            iHeight = abs(pbmi->bmiHeader.biHeight);
          }
       }
       else if( iWidth && iHeight )
@@ -224,7 +224,7 @@ HB_FUNC( WIN_DRAWBITMAP )
          bmi.bmiHeader.biHeight      = -iHeight; /* top-down image */
          bmi.bmiHeader.biPlanes      = 1;
          bmi.bmiHeader.biBitCount    = 0;
-         bmi.bmiHeader.biCompression = ( iType == HB_WIN_BITMAP_JPEG ? BI_JPEG : BI_PNG );
+         bmi.bmiHeader.biCompression = (iType == HB_WIN_BITMAP_JPEG ? BI_JPEG : BI_PNG);
          bmi.bmiHeader.biSizeImage   = static_cast<DWORD>(nSize);
          pbmi = &bmi;
          pBits = ( const BYTE * ) pbmfh;
@@ -234,8 +234,8 @@ HB_FUNC( WIN_DRAWBITMAP )
       {
          SetStretchBltMode(hDC, COLORONCOLOR);
          hb_retl(StretchDIBits(hDC, hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6),
-                                 0, 0, iWidth, iHeight, pBits, pbmi,
-                                 DIB_RGB_COLORS, SRCCOPY) != static_cast<int>(GDI_ERROR));
+                               0, 0, iWidth, iHeight, pBits, pbmi,
+                               DIB_RGB_COLORS, SRCCOPY) != static_cast<int>(GDI_ERROR));
       }
       else
       {

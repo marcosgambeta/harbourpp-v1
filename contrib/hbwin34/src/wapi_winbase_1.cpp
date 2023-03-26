@@ -184,7 +184,7 @@ HB_FUNC( WAPI_GETPROCADDRESS )
    hb_retptr(reinterpret_cast<void*>(reinterpret_cast<HB_PTRUINT>(pProc)));
 }
 
-/* HMODULE WINAPI GetModuleHandle( __in_opt LPCTSTR lpModuleName ); */
+/* HMODULE WINAPI GetModuleHandle(__in_opt LPCTSTR lpModuleName); */
 HB_FUNC( WAPI_GETMODULEHANDLE )
 {
    void * hModuleName;
@@ -353,10 +353,9 @@ HB_FUNC( WAPI_QUERYDOSDEVICE )
    hb_xfree(lpTargetPath);
 }
 
-/* wapi_GetVolumeInformation( <cRootPath>, @<cVolumeName>, @<nSerial>,
- *                            @<nMaxComponentLength>, @<nFileSystemFlags>,
- *                            @<cFileSystemName> ) --> <lSuccess>
- */
+/*
+wapi_GetVolumeInformation(<cRootPath>, @<cVolumeName>, @<nSerial>, @<nMaxComponentLength>, @<nFileSystemFlags>, @<cFileSystemName>) --> <lSuccess>
+*/
 
 HB_FUNC( WAPI_GETVOLUMEINFORMATION )
 {

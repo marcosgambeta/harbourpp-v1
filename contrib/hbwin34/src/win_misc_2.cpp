@@ -76,7 +76,7 @@ HB_FUNC( WIN_RUNDETACHED )
    {
       hb_retl(true);
 
-      hb_stornint( pi.dwProcessId, 3 );
+      hb_stornint(pi.dwProcessId, 3);
 
       /* Close process and thread handles. */
       CloseHandle(pi.hProcess);

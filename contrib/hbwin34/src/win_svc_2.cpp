@@ -69,7 +69,7 @@ HB_FUNC( WIN_SERVICEINSTALL )
 
    if( lpPath )
    {
-      SC_HANDLE schSCM = OpenSCManager( nullptr, nullptr, SC_MANAGER_ALL_ACCESS );
+      SC_HANDLE schSCM = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
 
       if( schSCM )
       {
@@ -130,7 +130,7 @@ HB_FUNC( WIN_SERVICEDELETE )
 {
    bool bRetVal = false;
 
-   SC_HANDLE schSCM = OpenSCManager( nullptr, nullptr, SC_MANAGER_ALL_ACCESS );
+   SC_HANDLE schSCM = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
 
    if( schSCM )
    {
@@ -146,7 +146,7 @@ HB_FUNC( WIN_SERVICEDELETE )
 
             if( ControlService(schSrv, SERVICE_CONTROL_STOP, &ssStatus) )
             {
-               while( ssStatus.dwCurrentState != SERVICE_STOPPED && QueryServiceStatus( schSrv, &ssStatus ) )
+               while( ssStatus.dwCurrentState != SERVICE_STOPPED && QueryServiceStatus(schSrv, &ssStatus) )
                {
                   hb_idleSleep(1.0);
                }
@@ -178,7 +178,7 @@ HB_FUNC( WIN_SERVICECONTROL )
 {
    bool bRetVal = false;
 
-   SC_HANDLE schSCM = OpenSCManager( nullptr, nullptr, SC_MANAGER_ALL_ACCESS );
+   SC_HANDLE schSCM = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
 
    if( schSCM )
    {
@@ -215,7 +215,7 @@ HB_FUNC( WIN_SERVICERUN )
 {
    bool bRetVal = false;
 
-   SC_HANDLE schSCM = OpenSCManager( nullptr, nullptr, SC_MANAGER_ALL_ACCESS );
+   SC_HANDLE schSCM = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
 
    if( schSCM )
    {

@@ -57,7 +57,7 @@ static struct
    DWORD  dwError;
 } s_PortData[256];
 
-static void hb_wincom_init( void )
+static void hb_wincom_init(void)
 {
    for( int i = 0; i < static_cast<int>(HB_SIZEOFARRAY(s_PortData)); i++ )
    {
@@ -91,7 +91,7 @@ HB_FUNC( WIN_COMOPEN )
       i = iPort + 1;
       while( i > 0 )
       {
-         szName[iPos--] = ( TCHAR ) ( i % 10 + '0' );
+         szName[iPos--] = ( TCHAR ) (i % 10 + '0');
          i /= 10;
       }
 
@@ -137,9 +137,9 @@ HB_FUNC( WIN_COMOPEN )
       NewDCB.fAbortOnError = 0;
     /*NewDCB.XonLim*/
     /*NewDCB.XoffLim*/
-      NewDCB.ByteSize = ( BYTE ) iByteSize;
-      NewDCB.Parity = ( BYTE ) iParity;
-      NewDCB.StopBits = ( BYTE ) iStopBits;
+      NewDCB.ByteSize = static_cast<BYTE>(iByteSize);
+      NewDCB.Parity = static_cast<BYTE>(iParity);
+      NewDCB.StopBits = static_cast<BYTE>(iStopBits);
     /*NewDCB.XonChar*/
     /*NewDCB.XoffChar*/
       NewDCB.ErrorChar = '?';
@@ -177,7 +177,7 @@ HB_FUNC( WIN_COMCLOSE )
 
       if( lDrain > 0 )
       {
-         Sleep( lDrain * 1000 );
+         Sleep(lDrain * 1000);
       }
       
       s_PortData[iPort].hPort = INVALID_HANDLE_VALUE;
@@ -209,7 +209,7 @@ HB_FUNC( WIN_COMWRITE )
       s_PortData[iPort].dwError = 0;
       if( WriteFile(hCommPort, lpBuffer, dwNumberofBytesToWrite, &dwNumberofBytesWritten, nullptr) )
       {
-         hb_retnint( dwNumberofBytesWritten );
+         hb_retnint(dwNumberofBytesWritten);
       }
       else
       {
@@ -234,16 +234,16 @@ HB_FUNC( WIN_COMREAD )
       DWORD dwNumberOfBytesToRead = static_cast<DWORD>(hb_parclen(2));
       DWORD dwNumberOfBytesRead = 0;
 
-      lpBuffer = ( char * ) hb_xgrabz( dwNumberOfBytesToRead + 1 );
+      lpBuffer = ( char * ) hb_xgrabz(dwNumberOfBytesToRead + 1);
       s_PortData[iPort].iFunction = HB_WIN_COM_FUN_READFILE;
       s_PortData[iPort].dwError = 0;
       if( ReadFile(hCommPort, lpBuffer, dwNumberOfBytesToRead, &dwNumberOfBytesRead, nullptr) )
       {
-         if( !hb_storclen_buffer( lpBuffer, dwNumberOfBytesRead, 2 ) )
+         if( !hb_storclen_buffer(lpBuffer, dwNumberOfBytesRead, 2) )
          {
             hb_xfree(lpBuffer);
          }
-         hb_retnint( dwNumberOfBytesRead );
+         hb_retnint(dwNumberOfBytesRead);
       }
       else
       {
@@ -270,13 +270,13 @@ HB_FUNC( WIN_COMRECV )
       DWORD dwNumberOfBytesToRead = static_cast<DWORD>(hb_parnl(2));
       DWORD dwNumberOfBytesRead = 0;
 
-      lpBuffer = ( char * ) hb_xgrabz( dwNumberOfBytesToRead + 1 );
+      lpBuffer = ( char * ) hb_xgrabz(dwNumberOfBytesToRead + 1);
       s_PortData[iPort].iFunction = HB_WIN_COM_FUN_READFILE;
       s_PortData[iPort].dwError = 0;
       if( ReadFile(hCommPort, lpBuffer, dwNumberOfBytesToRead, &dwNumberOfBytesRead, nullptr) )
       {
-         hb_retclen_buffer( lpBuffer, dwNumberOfBytesRead );
-         hb_stornint( dwNumberOfBytesRead, 3 );
+         hb_retclen_buffer(lpBuffer, dwNumberOfBytesRead);
+         hb_stornint(dwNumberOfBytesRead, 3);
       }
       else
       {
@@ -303,7 +303,7 @@ HB_FUNC( WIN_COMSTATUS )
 
       s_PortData[iPort].iFunction = HB_WIN_COM_FUN_GETCOMMMODEMSTATUS;
       s_PortData[iPort].dwError = 0;
-      if( GetCommModemStatus( hCommPort, &dwModemStat ) )
+      if( GetCommModemStatus(hCommPort, &dwModemStat) )
       {
          hb_storl((dwModemStat & MS_CTS_ON)  != 0, 2);     /* The CTS (clear-to-send) signal is on. */
          hb_storl((dwModemStat & MS_DSR_ON)  != 0, 3);     /* The DSR (data-set-ready) signal is on. */
@@ -337,12 +337,10 @@ HB_FUNC( WIN_COMPURGE )
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && ( hCommPort = s_PortData[iPort].hPort ) != INVALID_HANDLE_VALUE )
    {
-      DWORD dwFlags;
-
-      dwFlags = ( hb_parl(2) ? PURGE_RXCLEAR : 0 ) | ( hb_parl(3) ? PURGE_TXCLEAR : 0 );
+      DWORD dwFlags = (hb_parl(2) ? PURGE_RXCLEAR : 0) | (hb_parl(3) ? PURGE_TXCLEAR : 0);
       s_PortData[iPort].iFunction = HB_WIN_COM_FUN_PURGECOMM;
       s_PortData[iPort].dwError = 0;
-      if( PurgeComm( hCommPort, dwFlags ) )
+      if( PurgeComm(hCommPort, dwFlags) )
       {
          hb_retl(true);
       }
@@ -370,7 +368,7 @@ HB_FUNC( WIN_COMQUEUESTATUS )
 
       s_PortData[iPort].iFunction = HB_WIN_COM_FUN_CLEARCOMMERROR;
       s_PortData[iPort].dwError = 0;
-      if( ClearCommError( hCommPort, &dwErrors, &ComStat ) )
+      if( ClearCommError(hCommPort, &dwErrors, &ComStat) )
       {
          hb_storl(ComStat.fCtsHold, 2);
          hb_storl(ComStat.fDsrHold, 3);
@@ -417,7 +415,7 @@ HB_FUNC( WIN_COMSETRTS )
 
       s_PortData[iPort].iFunction = HB_WIN_COM_FUN_ESCAPECOMMFUNCTION;
       s_PortData[iPort].dwError = 0;
-      if( EscapeCommFunction( hCommPort, dwFunc ) )
+      if( EscapeCommFunction(hCommPort, dwFunc) )
       {
          hb_retl(true);
       }
@@ -447,7 +445,7 @@ HB_FUNC( WIN_COMSETDTR )
 
       s_PortData[iPort].iFunction = HB_WIN_COM_FUN_ESCAPECOMMFUNCTION;
       s_PortData[iPort].dwError = 0;
-      if( EscapeCommFunction( hCommPort, dwFunc ) )
+      if( EscapeCommFunction(hCommPort, dwFunc) )
       {
          hb_retl(true);
       }
@@ -629,7 +627,7 @@ HB_FUNC( WIN_COMXONXOFFFLOW )
    }
 }
 
-static int hb_win_ComSetTimeouts( HANDLE hCommPort, LPCOMMTIMEOUTS Timeouts, DWORD dwBaudRate, int iParity, int iByteSize, int iStopBits )
+static int hb_win_ComSetTimeouts(HANDLE hCommPort, LPCOMMTIMEOUTS Timeouts, DWORD dwBaudRate, int iParity, int iByteSize, int iStopBits)
 {
    COMMTIMEOUTS NewTimeouts;
 
@@ -643,16 +641,16 @@ static int hb_win_ComSetTimeouts( HANDLE hCommPort, LPCOMMTIMEOUTS Timeouts, DWO
       ReadTotalTimeoutMultiplier members, specifies that the read operation is to return
       immediately with the characters that have already been received, even if no characters
       have been received. */
-   NewTimeouts.ReadIntervalTimeout = ( Timeouts->ReadIntervalTimeout == static_cast<DWORD>(-1) ? MAXDWORD : Timeouts->ReadIntervalTimeout );
+   NewTimeouts.ReadIntervalTimeout = (Timeouts->ReadIntervalTimeout == static_cast<DWORD>(-1) ? MAXDWORD : Timeouts->ReadIntervalTimeout);
 
    /* Multiplier, in milliseconds, used to calculate the total time-out period for read operations.
       For each read operation, this value is multiplied by the requested number of bytes to be read. */
-   NewTimeouts.ReadTotalTimeoutMultiplier = ( Timeouts->ReadTotalTimeoutMultiplier == static_cast<DWORD>(-1) ? 0 : Timeouts->ReadTotalTimeoutMultiplier );
+   NewTimeouts.ReadTotalTimeoutMultiplier = (Timeouts->ReadTotalTimeoutMultiplier == static_cast<DWORD>(-1) ? 0 : Timeouts->ReadTotalTimeoutMultiplier);
 
    /* Constant, in milliseconds, used to calculate the total time-out period for read operations.
       For each read operation, this value is added to the product of the ReadTotalTimeoutMultiplier
       member and the requested number of bytes. */
-   NewTimeouts.ReadTotalTimeoutConstant = ( Timeouts->ReadTotalTimeoutConstant == static_cast<DWORD>(-1) ? 0 : Timeouts->ReadTotalTimeoutConstant );
+   NewTimeouts.ReadTotalTimeoutConstant = (Timeouts->ReadTotalTimeoutConstant == static_cast<DWORD>(-1) ? 0 : Timeouts->ReadTotalTimeoutConstant);
 
    /* A value of zero for both the ReadTotalTimeoutMultiplier and ReadTotalTimeoutConstant members
       indicates that total time-outs are not used for read operations ...
@@ -681,7 +679,7 @@ static int hb_win_ComSetTimeouts( HANDLE hCommPort, LPCOMMTIMEOUTS Timeouts, DWO
       and if flow control is enabled the program will "hang" or if it is not enabled the data will
       be lost (potentially), so we set a minimum of 1ms (baud rates higher than 4800) */
 
-   return SetCommTimeouts( hCommPort, &NewTimeouts );
+   return SetCommTimeouts(hCommPort, &NewTimeouts);
 }
 
 HB_FUNC( WIN_COMSETTIMEOUTS )
@@ -713,7 +711,7 @@ HB_FUNC( WIN_COMSETTIMEOUTS )
 
       s_PortData[iPort].iFunction = HB_WIN_COM_FUN_SETCOMMTIMEOUTS;
       s_PortData[iPort].dwError = 0;
-      if( !hb_win_ComSetTimeouts( hCommPort, &Timeouts, CurDCB.BaudRate, CurDCB.Parity, CurDCB.ByteSize, CurDCB.StopBits ) )
+      if( !hb_win_ComSetTimeouts(hCommPort, &Timeouts, CurDCB.BaudRate, CurDCB.Parity, CurDCB.ByteSize, CurDCB.StopBits) )
       {
          s_PortData[iPort].dwError = GetLastError();
          hb_retl(false);
@@ -738,7 +736,7 @@ HB_FUNC( WIN_COMSETQUEUESIZE )
    {
       s_PortData[iPort].iFunction = HB_WIN_COM_FUN_SETUPCOMM;
       s_PortData[iPort].dwError = 0;
-      if( !SetupComm( hCommPort, hb_parni(2), hb_parni(3) ) )
+      if( !SetupComm(hCommPort, hb_parni(2), hb_parni(3)) )
       {
          s_PortData[iPort].dwError = GetLastError();
          hb_retl(false);
@@ -801,7 +799,7 @@ HB_FUNC( WIN_COMFUNCLAST )
    else
    {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }   
+   }
 }
 
 HB_FUNC( WIN_COMDEBUGDCB )
@@ -825,55 +823,55 @@ HB_FUNC( WIN_COMDEBUGDCB )
       {
          if( iDebugLevel & HB_WIN_COM_DBGBASIC )
          {
-            hb_snprintf( buffer, sizeof(buffer), "Baud     : %lu\n", CurDCB.BaudRate ); hb_strncat( szDebugString, buffer, sizeof(szDebugString) - 1 );
-            hb_snprintf( buffer, sizeof(buffer), "ByteSize : %i\n" , CurDCB.ByteSize ); hb_strncat( szDebugString, buffer, sizeof(szDebugString) - 1 );
-            hb_snprintf( buffer, sizeof(buffer), "Parity   : %i\n" , CurDCB.Parity   ); hb_strncat( szDebugString, buffer, sizeof(szDebugString) - 1 );
-            hb_snprintf( buffer, sizeof(buffer), "StopBits : %i\n" , CurDCB.StopBits ); hb_strncat( szDebugString, buffer, sizeof(szDebugString) - 1 );
+            hb_snprintf(buffer, sizeof(buffer), "Baud     : %lu\n", CurDCB.BaudRate); hb_strncat(szDebugString, buffer, sizeof(szDebugString) - 1);
+            hb_snprintf(buffer, sizeof(buffer), "ByteSize : %i\n" , CurDCB.ByteSize); hb_strncat(szDebugString, buffer, sizeof(szDebugString) - 1);
+            hb_snprintf(buffer, sizeof(buffer), "Parity   : %i\n" , CurDCB.Parity  ); hb_strncat(szDebugString, buffer, sizeof(szDebugString) - 1);
+            hb_snprintf(buffer, sizeof(buffer), "StopBits : %i\n" , CurDCB.StopBits); hb_strncat(szDebugString, buffer, sizeof(szDebugString) - 1);
          }
          if( iDebugLevel & HB_WIN_COM_DBGFLOW )
          {
-            hb_strncat( szDebugString, "fRtsControl : ", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, CurDCB.fRtsControl == RTS_CONTROL_DISABLE ? "RTS_CONTROL_DISABLE\n" :
-                                       CurDCB.fRtsControl == RTS_CONTROL_ENABLE ? "RTS_CONTROL_ENABLE\n" :
-                                       CurDCB.fRtsControl == RTS_CONTROL_HANDSHAKE ? "RTS_CONTROL_HANDSHAKE\n" : "RTS_CONTROL_TOGGLE\n", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, "fOutxCtsFlow : ", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, CurDCB.fOutxCtsFlow ? "true\n" : "false\n", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, "fOutX : ", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, CurDCB.fOutX ? "true\n" : "false\n", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, "fInX : ", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, CurDCB.fInX ? "true\n" : "false\n", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, "fDtrControl : ", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, CurDCB.fDtrControl == DTR_CONTROL_DISABLE ? "DTR_CONTROL_DISABLE\n" :
-                                       CurDCB.fDtrControl == DTR_CONTROL_ENABLE ? "DTR_CONTROL_ENABLE\n" : "DTR_CONTROL_HANDSHAKE\n", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, "fOutxDsrFlow : ", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, CurDCB.fOutxDsrFlow ? "true\n" : "false\n", sizeof(szDebugString) - 1 );
+            hb_strncat(szDebugString, "fRtsControl : ", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, CurDCB.fRtsControl == RTS_CONTROL_DISABLE ? "RTS_CONTROL_DISABLE\n" :
+                                      CurDCB.fRtsControl == RTS_CONTROL_ENABLE ? "RTS_CONTROL_ENABLE\n" :
+                                      CurDCB.fRtsControl == RTS_CONTROL_HANDSHAKE ? "RTS_CONTROL_HANDSHAKE\n" : "RTS_CONTROL_TOGGLE\n", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, "fOutxCtsFlow : ", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, CurDCB.fOutxCtsFlow ? "true\n" : "false\n", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, "fOutX : ", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, CurDCB.fOutX ? "true\n" : "false\n", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, "fInX : ", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, CurDCB.fInX ? "true\n" : "false\n", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, "fDtrControl : ", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, CurDCB.fDtrControl == DTR_CONTROL_DISABLE ? "DTR_CONTROL_DISABLE\n" :
+                                      CurDCB.fDtrControl == DTR_CONTROL_ENABLE ? "DTR_CONTROL_ENABLE\n" : "DTR_CONTROL_HANDSHAKE\n", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, "fOutxDsrFlow : ", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, CurDCB.fOutxDsrFlow ? "true\n" : "false\n", sizeof(szDebugString) - 1);
          }
          if( iDebugLevel & HB_WIN_COM_DBGXTRAFLOW )
          {
-            hb_strncat( szDebugString, "fDsrSensitivity : ", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, CurDCB.fDsrSensitivity ? "true\n" : "false\n", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, "fTXContinueOnXoff : ", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, CurDCB.fTXContinueOnXoff ? "true\n" : "false\n", sizeof(szDebugString) - 1 );
-            hb_snprintf( buffer, sizeof(buffer), "XonLim : %i\n"    , CurDCB.XonLim   ); hb_strncat( szDebugString, buffer, sizeof(szDebugString) - 1 );
-            hb_snprintf( buffer, sizeof(buffer), "XoffLim : %i\n"   , CurDCB.XoffLim  ); hb_strncat( szDebugString, buffer, sizeof(szDebugString) - 1 );
-            hb_snprintf( buffer, sizeof(buffer), "XonChar : 0x%i\n" , CurDCB.XonChar  ); hb_strncat( szDebugString, buffer, sizeof(szDebugString) - 1 );
-            hb_snprintf( buffer, sizeof(buffer), "XoffChar : 0x%i\n", CurDCB.XoffChar ); hb_strncat( szDebugString, buffer, sizeof(szDebugString) - 1 );
+            hb_strncat(szDebugString, "fDsrSensitivity : ", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, CurDCB.fDsrSensitivity ? "true\n" : "false\n", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, "fTXContinueOnXoff : ", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, CurDCB.fTXContinueOnXoff ? "true\n" : "false\n", sizeof(szDebugString) - 1);
+            hb_snprintf(buffer, sizeof(buffer), "XonLim : %i\n"    , CurDCB.XonLim  ); hb_strncat(szDebugString, buffer, sizeof(szDebugString) - 1);
+            hb_snprintf(buffer, sizeof(buffer), "XoffLim : %i\n"   , CurDCB.XoffLim ); hb_strncat(szDebugString, buffer, sizeof(szDebugString) - 1);
+            hb_snprintf(buffer, sizeof(buffer), "XonChar : 0x%i\n" , CurDCB.XonChar ); hb_strncat(szDebugString, buffer, sizeof(szDebugString) - 1);
+            hb_snprintf(buffer, sizeof(buffer), "XoffChar : 0x%i\n", CurDCB.XoffChar); hb_strncat(szDebugString, buffer, sizeof(szDebugString) - 1);
          }
          if( iDebugLevel & HB_WIN_COM_DBGOTHER )
          {
-            hb_strncat( szDebugString, "fBinary : ", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, CurDCB.fBinary ? "true\n" : "false\n", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, "fParity : ", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, CurDCB.fParity ? "true\n" : "false\n", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, "fErrorChar : ", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, CurDCB.fErrorChar ? "true\n" : "false\n", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, "fNull : ", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, CurDCB.fNull ? "true\n" : "false\n", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, "fAbortOnError : ", sizeof(szDebugString) - 1 );
-            hb_strncat( szDebugString, CurDCB.fAbortOnError ? "true\n" : "false\n", sizeof(szDebugString) - 1 );
-            hb_snprintf( buffer, sizeof(buffer), "ErrorChar : 0x%i\n", CurDCB.ErrorChar ); hb_strncat( szDebugString, buffer, sizeof(szDebugString) - 1 );
-            hb_snprintf( buffer, sizeof(buffer), "EofChar : 0x%i\n"  , CurDCB.EofChar   ); hb_strncat( szDebugString, buffer, sizeof(szDebugString) - 1 );
-            hb_snprintf( buffer, sizeof(buffer), "EvtChar : 0x%i\n"  , CurDCB.EvtChar   ); hb_strncat( szDebugString, buffer, sizeof(szDebugString) - 1 );
+            hb_strncat(szDebugString, "fBinary : ", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, CurDCB.fBinary ? "true\n" : "false\n", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, "fParity : ", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, CurDCB.fParity ? "true\n" : "false\n", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, "fErrorChar : ", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, CurDCB.fErrorChar ? "true\n" : "false\n", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, "fNull : ", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, CurDCB.fNull ? "true\n" : "false\n", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, "fAbortOnError : ", sizeof(szDebugString) - 1);
+            hb_strncat(szDebugString, CurDCB.fAbortOnError ? "true\n" : "false\n", sizeof(szDebugString) - 1);
+            hb_snprintf(buffer, sizeof(buffer), "ErrorChar : 0x%i\n", CurDCB.ErrorChar); hb_strncat(szDebugString, buffer, sizeof(szDebugString) - 1);
+            hb_snprintf(buffer, sizeof(buffer), "EofChar : 0x%i\n"  , CurDCB.EofChar  ); hb_strncat(szDebugString, buffer, sizeof(szDebugString) - 1);
+            hb_snprintf(buffer, sizeof(buffer), "EvtChar : 0x%i\n"  , CurDCB.EvtChar  ); hb_strncat(szDebugString, buffer, sizeof(szDebugString) - 1);
          }
       }
       else
@@ -887,13 +885,13 @@ HB_FUNC( WIN_COMDEBUGDCB )
       {
          s_PortData[iPort].iFunction = HB_WIN_COM_FUN_GETCOMMTIMEOUTS;
          s_PortData[iPort].dwError = 0;
-         if( GetCommTimeouts( hCommPort, &CurCOMMTIMEOUTS ) )
+         if( GetCommTimeouts(hCommPort, &CurCOMMTIMEOUTS) )
          {
-            hb_snprintf( buffer, sizeof(buffer), "ReadIntervalTimeout : %lu\n"        , CurCOMMTIMEOUTS.ReadIntervalTimeout         ); hb_strncat( szDebugString, buffer, sizeof(szDebugString) - 1 );
-            hb_snprintf( buffer, sizeof(buffer), "ReadTotalTimeoutMultiplier : %ld\n" , CurCOMMTIMEOUTS.ReadTotalTimeoutMultiplier  ); hb_strncat( szDebugString, buffer, sizeof(szDebugString) - 1 );
-            hb_snprintf( buffer, sizeof(buffer), "ReadTotalTimeoutConstant : %ld\n"   , CurCOMMTIMEOUTS.ReadTotalTimeoutConstant    ); hb_strncat( szDebugString, buffer, sizeof(szDebugString) - 1 );
-            hb_snprintf( buffer, sizeof(buffer), "WriteTotalTimeoutMultiplier : %ld\n", CurCOMMTIMEOUTS.WriteTotalTimeoutMultiplier ); hb_strncat( szDebugString, buffer, sizeof(szDebugString) - 1 );
-            hb_snprintf( buffer, sizeof(buffer), "WriteTotalTimeoutConstant : %ld\n"  , CurCOMMTIMEOUTS.WriteTotalTimeoutConstant   ); hb_strncat( szDebugString, buffer, sizeof(szDebugString) - 1 );
+            hb_snprintf(buffer, sizeof(buffer), "ReadIntervalTimeout : %lu\n"        , CurCOMMTIMEOUTS.ReadIntervalTimeout        ); hb_strncat(szDebugString, buffer, sizeof(szDebugString) - 1);
+            hb_snprintf(buffer, sizeof(buffer), "ReadTotalTimeoutMultiplier : %ld\n" , CurCOMMTIMEOUTS.ReadTotalTimeoutMultiplier ); hb_strncat(szDebugString, buffer, sizeof(szDebugString) - 1);
+            hb_snprintf(buffer, sizeof(buffer), "ReadTotalTimeoutConstant : %ld\n"   , CurCOMMTIMEOUTS.ReadTotalTimeoutConstant   ); hb_strncat(szDebugString, buffer, sizeof(szDebugString) - 1);
+            hb_snprintf(buffer, sizeof(buffer), "WriteTotalTimeoutMultiplier : %ld\n", CurCOMMTIMEOUTS.WriteTotalTimeoutMultiplier); hb_strncat(szDebugString, buffer, sizeof(szDebugString) - 1);
+            hb_snprintf(buffer, sizeof(buffer), "WriteTotalTimeoutConstant : %ld\n"  , CurCOMMTIMEOUTS.WriteTotalTimeoutConstant  ); hb_strncat(szDebugString, buffer, sizeof(szDebugString) - 1);
          }
          else
          {
@@ -908,10 +906,10 @@ HB_FUNC( WIN_COMDEBUGDCB )
          s_PortData[iPort].iFunction = HB_WIN_COM_FUN_GETCOMMPROPERTIES;
          s_PortData[iPort].dwError = 0;
          memset(&CurCOMMPROP, 0, sizeof(CurCOMMPROP));
-         if( GetCommProperties( hCommPort, &CurCOMMPROP ) )
+         if( GetCommProperties(hCommPort, &CurCOMMPROP) )
          {
-            hb_snprintf( buffer, sizeof(buffer), "dwCurrentTxQueue : %lu\n", CurCOMMPROP.dwCurrentTxQueue ); hb_strncat( szDebugString, buffer, sizeof(szDebugString) - 1 );
-            hb_snprintf( buffer, sizeof(buffer), "dwCurrentRxQueue : %lu\n", CurCOMMPROP.dwCurrentRxQueue ); hb_strncat( szDebugString, buffer, sizeof(szDebugString) - 1 );
+            hb_snprintf(buffer, sizeof(buffer), "dwCurrentTxQueue : %lu\n", CurCOMMPROP.dwCurrentTxQueue); hb_strncat(szDebugString, buffer, sizeof(szDebugString) - 1);
+            hb_snprintf(buffer, sizeof(buffer), "dwCurrentRxQueue : %lu\n", CurCOMMPROP.dwCurrentRxQueue); hb_strncat(szDebugString, buffer, sizeof(szDebugString) - 1);
          }
          else
          {
@@ -929,13 +927,13 @@ HB_FUNC( WIN_COMDEBUGDCB )
    }
 }
 
-HB_CALL_ON_STARTUP_BEGIN( _hb_wincom_init_ )
+HB_CALL_ON_STARTUP_BEGIN(_hb_wincom_init_)
    hb_wincom_init();
-HB_CALL_ON_STARTUP_END( _hb_wincom_init_ )
+HB_CALL_ON_STARTUP_END(_hb_wincom_init_)
 
 #if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_wincom_init_
 #elif defined(HB_DATASEG_STARTUP)
-   #define HB_DATASEG_BODY  HB_DATASEG_FUNC( _hb_wincom_init_ )
+   #define HB_DATASEG_BODY HB_DATASEG_FUNC(_hb_wincom_init_)
    #include "hbiniseg.hpp"
 #endif

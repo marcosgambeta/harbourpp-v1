@@ -70,7 +70,7 @@ HB_FUNC( WIN_STARTDOC )
    HDC hDC = hbwapi_par_HDC(1);
    bool bResult = false;
 
-   if( hDC )
+   if( hDC != nullptr )
    {
       void * hDocName;
       DOCINFO sDoc;
@@ -92,7 +92,7 @@ HB_FUNC( WIN_ENDDOC )
    bool bResult = false;
    HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC )
+   if( hDC != nullptr )
    {
       if( hb_parl(2) )
       {
@@ -236,7 +236,7 @@ HB_FUNC( WIN_GETCHARSIZE )
    long lResult = 0;
    HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC )
+   if( hDC != nullptr )
    {
       TEXTMETRIC tm;
 
@@ -272,7 +272,7 @@ HB_FUNC( WIN_CREATEFONT )
 {
    HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC )
+   if( hDC != nullptr )
    {
       int iHeight;
       int iWidth;
@@ -350,7 +350,7 @@ HB_FUNC( WIN_GETPRINTERFONTNAME )
 {
    HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC )
+   if( hDC != nullptr )
    {
       TCHAR tszFontName[128];
       GetTextFace(hDC, HB_SIZEOFARRAY(tszFontName) - 1, tszFontName);
@@ -376,7 +376,7 @@ HB_FUNC( WIN_SETDOCUMENTPROPERTIES )
 
    HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC )
+   if( hDC != nullptr )
    {
       HANDLE hPrinter;
       void * hDeviceName;
@@ -604,7 +604,7 @@ HB_FUNC( WIN_SETCOLOR )
 {
    HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC )
+   if( hDC != nullptr )
    {
       if( HB_ISNUM(2) )
       {
@@ -640,7 +640,7 @@ HB_FUNC( WIN_SETPEN )
 {
    HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC )
+   if( hDC != nullptr )
    {
       HPEN hPen;
 
@@ -672,7 +672,7 @@ HB_FUNC( WIN_FILLRECT )
    HDC hDC = hbwapi_par_HDC(1);
    bool fResult = false;
 
-   if( hDC )
+   if( hDC != nullptr )
    {
       HBRUSH hBrush = CreateSolidBrush(hbwapi_par_COLORREF(6));
 
@@ -744,7 +744,7 @@ HB_FUNC( WIN_SETBKMODE )
    HDC hDC = hbwapi_par_HDC(1);
    int iMode = 0;
 
-   if( hDC )
+   if( hDC != nullptr )
    {
       iMode = HB_ISNUM(2) ? SetBkMode(hDC, hb_parni(2)) : GetBkMode(hDC);
    }

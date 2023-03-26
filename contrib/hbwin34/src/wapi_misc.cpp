@@ -46,11 +46,11 @@
 
 #include "hbwapi.hpp"
 
-HB_SIZE hbwapi_tstrlen( const TCHAR * pText )
+HB_SIZE hbwapi_tstrlen(const TCHAR * pText)
 {
    HB_SIZE nLen = 0;
 
-   HB_TRACE(HB_TR_DEBUG, ("hbwapi_tstrlen(%p)", ( const void * ) pText));
+   HB_TRACE(HB_TR_DEBUG, ("hbwapi_tstrlen(%p)", static_cast<const void*>(pText)));
 
    while( pText[nLen] != TEXT('\0') )
    {
@@ -61,27 +61,24 @@ HB_SIZE hbwapi_tstrlen( const TCHAR * pText )
 }
 
 /* NOTE: Based on hb_strdup() */
-TCHAR * hbwapi_tstrdup( const TCHAR * pszText )
+TCHAR * hbwapi_tstrdup(const TCHAR * pszText)
 {
-   TCHAR * pszDup;
-   HB_SIZE nLen;
+   HB_TRACE(HB_TR_DEBUG, ("hbwapi_tstrdup(%p)", static_cast<const void*>(pszText)));
 
-   HB_TRACE(HB_TR_DEBUG, ("hbwapi_tstrdup(%p)", ( const void * ) pszText));
+   HB_SIZE nLen = (hbwapi_tstrlen(pszText) + 1) * sizeof(TCHAR);
 
-   nLen = ( hbwapi_tstrlen( pszText ) + 1 ) * sizeof(TCHAR);
-
-   pszDup = ( TCHAR * ) hb_xgrab(nLen);
-   memcpy( pszDup, pszText, nLen );
+   TCHAR * pszDup = ( TCHAR * ) hb_xgrab(nLen);
+   memcpy(pszDup, pszText, nLen);
 
    return pszDup;
 }
 
 /* NOTE: Based on hb_strncat() */
-TCHAR * hbwapi_tstrncat( TCHAR * pDest, const TCHAR * pSource, HB_SIZE nLen )
+TCHAR * hbwapi_tstrncat(TCHAR * pDest, const TCHAR * pSource, HB_SIZE nLen)
 {
    TCHAR * pBuf = pDest;
 
-   HB_TRACE(HB_TR_DEBUG, ("hbwapi_tstrncat(%p, %p, %" HB_PFS "u)", ( void * ) pDest, ( const void * ) pSource, nLen));
+   HB_TRACE(HB_TR_DEBUG, ("hbwapi_tstrncat(%p, %p, %" HB_PFS "u)", static_cast<void*>(pDest), static_cast<const void*>(pSource), nLen));
 
    pDest[nLen] = TEXT('\0');
 
@@ -99,9 +96,9 @@ TCHAR * hbwapi_tstrncat( TCHAR * pDest, const TCHAR * pSource, HB_SIZE nLen )
    return pBuf;
 }
 
-static TCHAR * hbwapi_FileNameAtSystemDir( const TCHAR * pFileName )
+static TCHAR * hbwapi_FileNameAtSystemDir(const TCHAR * pFileName)
 {
-   UINT nLen = GetSystemDirectory( nullptr, 0 );
+   UINT nLen = GetSystemDirectory(nullptr, 0);
 
    if( nLen )
    {
@@ -109,24 +106,24 @@ static TCHAR * hbwapi_FileNameAtSystemDir( const TCHAR * pFileName )
 
       if( pFileName )
       {
-         nLen += ( UINT ) hbwapi_tstrlen( pFileName ) + 1;
+         nLen += static_cast<UINT>(hbwapi_tstrlen(pFileName)) + 1;
       }
 
       buffer = ( LPTSTR ) hb_xgrab(nLen * sizeof(TCHAR));
 
-      GetSystemDirectory( buffer, nLen );
+      GetSystemDirectory(buffer, nLen);
 
       if( pFileName )
       {
-         hbwapi_tstrncat( buffer, TEXT("\\"), nLen - 1 );
-         hbwapi_tstrncat( buffer, pFileName, nLen - 1 );
+         hbwapi_tstrncat(buffer, TEXT("\\"), nLen - 1);
+         hbwapi_tstrncat(buffer, pFileName, nLen - 1);
       }
 
       return buffer;
    }
    else
    {
-      return hbwapi_tstrdup( pFileName );
+      return hbwapi_tstrdup(pFileName);
    }
 }
 
@@ -157,20 +154,20 @@ static HB_BOOL hbwapi_has_search_system32()
    return false;
 }
 
-HMODULE hbwapi_LoadLibrarySystem( LPCTSTR pFileName )
+HMODULE hbwapi_LoadLibrarySystem(LPCTSTR pFileName)
 {
-   TCHAR * pLibPath = hbwapi_FileNameAtSystemDir( pFileName );
-   HMODULE h = LoadLibraryEx( pLibPath, nullptr, hbwapi_has_search_system32() ? LOAD_LIBRARY_SEARCH_SYSTEM32 : LOAD_WITH_ALTERED_SEARCH_PATH );
+   TCHAR * pLibPath = hbwapi_FileNameAtSystemDir(pFileName);
+   HMODULE h = LoadLibraryEx(pLibPath, nullptr, hbwapi_has_search_system32() ? LOAD_LIBRARY_SEARCH_SYSTEM32 : LOAD_WITH_ALTERED_SEARCH_PATH);
    hb_xfree(pLibPath);
    return h;
 }
 
 /* Version of the above that is exposed as a public API */
-HMODULE hbwapi_LoadLibrarySystemVM( const char * szFileName )
+HMODULE hbwapi_LoadLibrarySystemVM(const char * szFileName)
 {
    LPTSTR lpFree;
 
-   HMODULE h = hbwapi_LoadLibrarySystem( HB_FSNAMECONV( szFileName, &lpFree ) );
+   HMODULE h = hbwapi_LoadLibrarySystem(HB_FSNAMECONV(szFileName, &lpFree));
 
    if( lpFree )
    {
@@ -183,11 +180,11 @@ HMODULE hbwapi_LoadLibrarySystemVM( const char * szFileName )
 HINSTANCE hbwapi_Instance(void)
 {
    HINSTANCE hInstance;
-   hb_winmainArgGet( &hInstance, nullptr, nullptr );
+   hb_winmainArgGet(&hInstance, nullptr, nullptr);
    return hInstance;
 }
 
-HKEY hbwapi_get_HKEY( HB_PTRUINT nKey )
+HKEY hbwapi_get_HKEY(HB_PTRUINT nKey)
 {
    switch( nKey )
    {

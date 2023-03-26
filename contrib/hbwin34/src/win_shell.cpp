@@ -75,14 +75,14 @@
 #include <shellapi.h>
 
 #if defined(NONAMELESSUNION)
-#  define HB_WIN_V_UNION( x, z )  ( ( x ).DUMMYUNIONNAME.z )
+#  define HB_WIN_V_UNION(x, z) ((x).DUMMYUNIONNAME.z)
 #else
-#  define HB_WIN_V_UNION( x, z )  ( ( x ).z )
+#  define HB_WIN_V_UNION(x, z) ((x).z)
 #endif
 
-/* win_ShellNotifyIcon( [<hWnd>], [<nUID>], [<nMessage>], [<hIcon>],
-                        [<cTooltip>], [<lAddDel>],
-                        [<cInfo>], [<nInfoTimeOut>], [<cInfoTitle>], [<nInfoFlags>] ) --> <lOK> */
+/* win_ShellNotifyIcon([<hWnd>], [<nUID>], [<nMessage>], [<hIcon>],
+                       [<cTooltip>], [<lAddDel>],
+                       [<cInfo>], [<nInfoTimeOut>], [<cInfoTitle>], [<nInfoFlags>]) --> <lOK> */
 HB_FUNC( WIN_SHELLNOTIFYICON )
 {
    NOTIFYICONDATA tnid;
@@ -101,7 +101,7 @@ HB_FUNC( WIN_SHELLNOTIFYICON )
    {
       tnid.uFlags |= NIF_ICON;
    }
-   if( HB_ITEMCOPYSTR( hb_param(5, Harbour::Item::ANY), tnid.szTip, HB_SIZEOFARRAY( tnid.szTip ) ) > 0 )
+   if( HB_ITEMCOPYSTR(hb_param(5, Harbour::Item::ANY), tnid.szTip, HB_SIZEOFARRAY(tnid.szTip)) > 0 )
    {
       tnid.uFlags |= NIF_TIP;
    }
@@ -109,12 +109,12 @@ HB_FUNC( WIN_SHELLNOTIFYICON )
    #if defined(NIF_INFO) /* did the headers provide Windows 2000 features? */
    if( hb_iswin2k() )      /* are we running on Windows 2000 or above? */
    {
-      if( HB_ITEMCOPYSTR( hb_param(7, Harbour::Item::ANY), tnid.szInfo, HB_SIZEOFARRAY( tnid.szInfo ) ) > 0 )
+      if( HB_ITEMCOPYSTR(hb_param(7, Harbour::Item::ANY), tnid.szInfo, HB_SIZEOFARRAY(tnid.szInfo)) > 0 )
       {
          tnid.uFlags |= NIF_INFO;
       }
-      HB_WIN_V_UNION( tnid, uTimeout ) = hbwapi_par_UINT(8);
-      if( HB_ITEMCOPYSTR( hb_param(9, Harbour::Item::ANY), tnid.szInfoTitle, HB_SIZEOFARRAY( tnid.szInfoTitle ) ) > 0 )
+      HB_WIN_V_UNION(tnid, uTimeout) = hbwapi_par_UINT(8);
+      if( HB_ITEMCOPYSTR(hb_param(9, Harbour::Item::ANY), tnid.szInfoTitle, HB_SIZEOFARRAY(tnid.szInfoTitle)) > 0 )
       {
          tnid.uFlags |= NIF_INFO;
       }
@@ -151,7 +151,7 @@ typedef struct
    LPSHNAMEMAPPING lpSHNameMapping;
 } HANDLETOMAPPINGS;
 
-static LPTSTR s_StringList( int iParam )
+static LPTSTR s_StringList(int iParam)
 {
    PHB_ITEM pItem = hb_param(iParam, Harbour::Item::ARRAY | Harbour::Item::STRING);
    LPTSTR lpStr = nullptr;
@@ -165,13 +165,13 @@ static LPTSTR s_StringList( int iParam )
          HB_SIZE nSize, n, n1;
          PHB_ITEM pArrItem;
 
-         nSize = hb_arrayLen( pItem );
+         nSize = hb_arrayLen(pItem);
          for( n = nLen = 0; n < nSize; ++n )
          {
-            pArrItem = hb_arrayGetItemPtr( pItem, n + 1 );
+            pArrItem = hb_arrayGetItemPtr(pItem, n + 1);
             if( HB_IS_STRING(pArrItem) )
             {
-               n1 = HB_ITEMCOPYSTR( pArrItem, nullptr, 0 );
+               n1 = HB_ITEMCOPYSTR(pArrItem, nullptr, 0);
                if( n1 )
                {
                   nLen += n1 + 1;
@@ -184,10 +184,10 @@ static LPTSTR s_StringList( int iParam )
             lpStr = ( LPTSTR ) hb_xgrab(nTotal * sizeof(TCHAR));
             for( n = nLen = 0; n < nSize; ++n )
             {
-               pArrItem = hb_arrayGetItemPtr( pItem, n + 1 );
+               pArrItem = hb_arrayGetItemPtr(pItem, n + 1);
                if( HB_IS_STRING(pArrItem) )
                {
-                  n1 = HB_ITEMCOPYSTR( pArrItem, lpStr + nLen, nTotal - nLen );
+                  n1 = HB_ITEMCOPYSTR(pArrItem, lpStr + nLen, nTotal - nLen);
                   if( n1 )
                   {
                      nLen += n1 + 1;
@@ -199,11 +199,11 @@ static LPTSTR s_StringList( int iParam )
       }
       else
       {
-         nLen = HB_ITEMCOPYSTR( pItem, nullptr, 0 );
+         nLen = HB_ITEMCOPYSTR(pItem, nullptr, 0);
          if( nLen )
          {
             lpStr = ( LPTSTR ) hb_xgrab((nLen + 2) * sizeof(TCHAR));
-            HB_ITEMCOPYSTR( pItem, lpStr, nLen );
+            HB_ITEMCOPYSTR(pItem, lpStr, nLen);
             lpStr[nLen] = lpStr[nLen + 1] = TEXT('\0');
          }
       }
@@ -212,31 +212,28 @@ static LPTSTR s_StringList( int iParam )
    return lpStr;
 }
 
-/* win_SHFileOperation( [<hWnd>], [<nFunction>], [<cFrom>|<aFrom>], [<cTo>|<aTo>],
-                        [<nFlags>], [<@lAnyOperationAborted>],
-                        [<aNameMappings>], [<cProgressTitle>] ) --> <nResult> */
+/* win_SHFileOperation([<hWnd>], [<nFunction>], [<cFrom>|<aFrom>], [<cTo>|<aTo>],
+                       [<nFlags>], [<@lAnyOperationAborted>],
+                       [<aNameMappings>], [<cProgressTitle>]) --> <nResult> */
 HB_FUNC( WIN_SHFILEOPERATION )
 {
-   int iRetVal;
-
-   SHFILEOPSTRUCT fop;
-
    void * hProgressTitle;
 
    LPTSTR pFrom = s_StringList(3);
    LPTSTR pTo   = s_StringList(4);
 
+   SHFILEOPSTRUCT fop;
    memset(&fop, 0, sizeof(fop));
    fop.hwnd                  = hbwapi_par_raw_HWND(1);
    fop.wFunc                 = hbwapi_par_UINT(2);
-   fop.pFrom                 = ( LPCTSTR ) pFrom;
-   fop.pTo                   = ( LPCTSTR ) pTo;
-   fop.fFlags                = ( FILEOP_FLAGS ) hb_parnl(5);
+   fop.pFrom                 = static_cast<LPCTSTR>(pFrom);
+   fop.pTo                   = static_cast<LPCTSTR>(pTo);
+   fop.fFlags                = static_cast<FILEOP_FLAGS>(hb_parnl(5));
    fop.fAnyOperationsAborted = FALSE;
    fop.hNameMappings         = nullptr;
    fop.lpszProgressTitle     = HB_PARSTR(8, &hProgressTitle, nullptr);
 
-   iRetVal = SHFileOperation( &fop );
+   int iRetVal = SHFileOperation(&fop);
    hbwapi_SetLastError(GetLastError());
 
    hb_storl(fop.fAnyOperationsAborted, 6);
@@ -263,7 +260,7 @@ HB_FUNC( WIN_SHFILEOPERATION )
       {
          if( pArray )
          {
-            PHB_ITEM pTempItem = hb_itemNew( nullptr );
+            PHB_ITEM pTempItem = hb_itemNew(nullptr);
             LPSHNAMEMAPPING pmap = hm->lpSHNameMapping;
             bool bIsWin9x = hb_iswin9x();
 
@@ -271,7 +268,7 @@ HB_FUNC( WIN_SHFILEOPERATION )
 
             for( UINT tmp = 0; tmp < hm->uNumberOfMappings; ++tmp )
             {
-               hb_arrayNew( pTempItem, 2 );
+               hb_arrayNew(pTempItem, 2);
 
                if( bIsWin9x )
                {
@@ -282,8 +279,8 @@ HB_FUNC( WIN_SHFILEOPERATION )
                else
                {
                   /* always returns UNICODE on NT and upper systems */
-                  HB_ARRAYSETSTRLEN( pTempItem, 1, ( LPTSTR ) pmap[tmp].pszOldPath, pmap[tmp].cchOldPath );
-                  HB_ARRAYSETSTRLEN( pTempItem, 2, ( LPTSTR ) pmap[tmp].pszNewPath, pmap[tmp].cchNewPath );
+                  HB_ARRAYSETSTRLEN(pTempItem, 1, ( LPTSTR ) pmap[tmp].pszOldPath, pmap[tmp].cchOldPath);
+                  HB_ARRAYSETSTRLEN(pTempItem, 2, ( LPTSTR ) pmap[tmp].pszNewPath, pmap[tmp].cchNewPath);
                }
 
                hb_arraySetForward(pArray, static_cast<HB_SIZE>(tmp + 1), pTempItem);
@@ -292,7 +289,7 @@ HB_FUNC( WIN_SHFILEOPERATION )
             hb_itemRelease(pTempItem);
          }
 
-         SHFreeNameMappings( hm );
+         SHFreeNameMappings(hm);
       }
       else if( pArray )
       {

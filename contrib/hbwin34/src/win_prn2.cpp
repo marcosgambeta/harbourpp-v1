@@ -265,7 +265,7 @@ HB_FUNC( WIN_PRINTERPORTTONAME )
 
                if( bSubStr )
                {
-                  bFound = (hb_strnicmp(hb_itemGetCPtr(pTemp), pszPortNameFind, strlen( pszPortNameFind)) == 0);
+                  bFound = (hb_strnicmp(hb_itemGetCPtr(pTemp), pszPortNameFind, strlen(pszPortNameFind)) == 0);
                }
                else
                {

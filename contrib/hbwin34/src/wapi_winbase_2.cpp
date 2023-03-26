@@ -48,17 +48,17 @@
 
 HB_FUNC( WAPI_GETLASTERROR )
 {
-   hb_retnint( hbwapi_GetLastError() );
+   hb_retnint(hbwapi_GetLastError());
 }
 
 HB_FUNC( WAPI_GETCURRENTPROCESSID )
 {
-   hb_retnint( GetCurrentProcessId() );
+   hb_retnint(GetCurrentProcessId());
 }
 
 HB_FUNC( WAPI_GETCURRENTTHREADID )
 {
-   hb_retnint( GetCurrentThreadId() );
+   hb_retnint(GetCurrentThreadId());
 }
 
 HB_FUNC( WAPI_FORMATMESSAGE )
@@ -111,7 +111,7 @@ HB_FUNC( WAPI_FORMATMESSAGE )
                        nullptr /* TODO: Add support for this parameter. */);
 
       hbwapi_SetLastError(GetLastError());
-      hb_retnint( dwRetVal );
+      hb_retnint(dwRetVal);
 
       if( lpBuffer )
       {
@@ -124,7 +124,7 @@ HB_FUNC( WAPI_FORMATMESSAGE )
             lpBuffer[nSize - 1] = '\0';
          }
 
-         HB_STORSTR( dwRetVal ? lpBuffer : nullptr, 5 );
+         HB_STORSTR(dwRetVal ? lpBuffer : nullptr, 5);
 
          if( lpAllocBuff )
          {
@@ -141,12 +141,12 @@ HB_FUNC( WAPI_FORMATMESSAGE )
    else
    {
       hb_storc(nullptr, 5);
-      hbwapi_SetLastError( ERROR_EMPTY );
+      hbwapi_SetLastError(ERROR_EMPTY);
       hb_retnint(-1);
    }
 }
 
-/* VOID WINAPI Sleep( __in DWORD dwMilliseconds ); */
+/* VOID WINAPI Sleep(__in DWORD dwMilliseconds); */
 HB_FUNC( WAPI_SLEEP )
 {
    Sleep(static_cast<DWORD>(hb_parnl(1)));

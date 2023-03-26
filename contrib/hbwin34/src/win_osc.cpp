@@ -165,7 +165,7 @@ HB_FUNC( WIN_OSVERSIONINFO )
 
    for( int pos = 0; pos < static_cast<int>(HB_SIZEOFARRAY(s_vers)); ++pos )
    {
-      if( hb_iswinver( s_vers[pos].iMajor, s_vers[pos].iMinor, 0, ( pos == 0 ) ) )
+      if( hb_iswinver(s_vers[pos].iMajor, s_vers[pos].iMinor, 0, (pos == 0)) )
       {
          iMajor = s_vers[pos].iMajor;
          iMinor = s_vers[pos].iMinor;
@@ -173,11 +173,11 @@ HB_FUNC( WIN_OSVERSIONINFO )
       }
    }
 
-   hb_arraySetNL( pArray, 1, iMajor );
-   hb_arraySetNL( pArray, 2, iMinor );
-   hb_arraySetNL( pArray, 3, 0 );
-   hb_arraySetNL( pArray, 4, hb_iswinnt() ? VER_PLATFORM_WIN32_NT : VER_PLATFORM_WIN32_WINDOWS );
-   hb_arraySetC( pArray, 5, nullptr );
+   hb_arraySetNL(pArray, 1, iMajor);
+   hb_arraySetNL(pArray, 2, iMinor);
+   hb_arraySetNL(pArray, 3, 0);
+   hb_arraySetNL(pArray, 4, hb_iswinnt() ? VER_PLATFORM_WIN32_NT : VER_PLATFORM_WIN32_WINDOWS);
+   hb_arraySetC(pArray, 5, nullptr);
 
    if( hb_iswin2k() )
    {
