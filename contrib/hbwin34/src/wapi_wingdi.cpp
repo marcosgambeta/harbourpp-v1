@@ -53,7 +53,7 @@
 #include "hbapierr.hpp"
 #include <winspool.h>
 
-static void s_hb_hashSetCItemNL( PHB_ITEM pHash, const char * pszKey, long v )
+static void s_hb_hashSetCItemNL(PHB_ITEM pHash, const char * pszKey, long v)
 {
    PHB_ITEM pKey = hb_itemPutC(nullptr, pszKey);
    PHB_ITEM pValue = hb_itemPutNL(nullptr, v);
@@ -118,7 +118,7 @@ void hbwapi_stor_SIZE(const SIZE * p, int iParam)
       {
          if( !HB_IS_ARRAY(pStru) )
          {
-            if( !hb_itemParamStoreRelease(( USHORT ) iParam, pStru = hb_itemArrayNew(2)) )
+            if( !hb_itemParamStoreRelease(static_cast<USHORT>(iParam), pStru = hb_itemArrayNew(2)) )
             {
                hb_itemRelease(pStru);
             }
@@ -150,7 +150,7 @@ void hbwapi_stor_POINT(const POINT * p, int iParam)
       {
          if( !HB_IS_ARRAY(pStru) )
          {
-            if( !hb_itemParamStoreRelease(( USHORT ) iParam, pStru = hb_itemArrayNew(2)) )
+            if( !hb_itemParamStoreRelease(static_cast<USHORT>(iParam), pStru = hb_itemArrayNew(2)) )
             {
                hb_itemRelease(pStru);
             }
@@ -216,7 +216,7 @@ void hbwapi_stor_RECT(const RECT * p, int iParam)
       {
          if( !HB_IS_ARRAY(pStru) )
          {
-            if( !hb_itemParamStoreRelease(( USHORT ) iParam, pStru = hb_itemArrayNew(4)) )
+            if( !hb_itemParamStoreRelease(static_cast<USHORT>(iParam), pStru = hb_itemArrayNew(4)) )
             {
                hb_itemRelease(pStru);
             }
@@ -263,7 +263,7 @@ LOGFONT * hbwapi_par_LOGFONT(LOGFONT * p, int iParam, HB_BOOL bMandatory)
 
       pfFaceName = HB_ITEMGETSTR(hb_hashGetCItemPtr(pStru, "lfFaceName"), &hfFaceName, &nLen);
 
-      if( nLen > ( LF_FACESIZE - 1 ) )
+      if( nLen > (LF_FACESIZE - 1) )
       {
          nLen = LF_FACESIZE - 1;
       }
@@ -293,7 +293,7 @@ LOGFONT * hbwapi_par_LOGFONT(LOGFONT * p, int iParam, HB_BOOL bMandatory)
 
       pfFaceName = HB_ARRAYGETSTR(pStru, 14, &hfFaceName, &nLen);
 
-      if( nLen > ( LF_FACESIZE - 1 ) )
+      if( nLen > (LF_FACESIZE - 1) )
       {
          nLen = LF_FACESIZE - 1;
       }
@@ -322,31 +322,31 @@ LOGBRUSH * hbwapi_par_LOGBRUSH(LOGBRUSH * p, int iParam)
    if( pStru && HB_IS_HASH(pStru) )
    {
       p->lbStyle = static_cast<UINT>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lbStyle")));
-      p->lbColor = ( COLORREF ) hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lbColor"));
+      p->lbColor = static_cast<COLORREF>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lbColor")));
       switch( p->lbStyle )
       {
          case BS_SOLID:
          case BS_HOLLOW:
          case BS_HATCHED:
-            p->lbHatch = ( ULONG_PTR ) hb_itemGetNInt(hb_hashGetCItemPtr(pStru, "lbHatch"));
+            p->lbHatch = static_cast<ULONG_PTR>(hb_itemGetNInt(hb_hashGetCItemPtr(pStru, "lbHatch")));
             break;
          default:
-            p->lbHatch = ( ULONG_PTR ) hb_itemGetPtr(hb_hashGetCItemPtr(pStru, "lbHatch"));
+            p->lbHatch = reinterpret_cast<ULONG_PTR>(hb_itemGetPtr(hb_hashGetCItemPtr(pStru, "lbHatch")));
       }
    }
    else if( pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 3 )
    {
       p->lbStyle = static_cast<UINT>(hb_arrayGetNI(pStru, 1));
-      p->lbColor = ( COLORREF ) hb_arrayGetNL(pStru, 2);
+      p->lbColor = static_cast<COLORREF>(hb_arrayGetNL(pStru, 2));
       switch( p->lbStyle )
       {
          case BS_SOLID:
          case BS_HOLLOW:
          case BS_HATCHED:
-            p->lbHatch = ( ULONG_PTR ) hb_arrayGetNInt(pStru, 3);
+            p->lbHatch = static_cast<ULONG_PTR>(hb_arrayGetNInt(pStru, 3));
             break;
          default:
-            p->lbHatch = ( ULONG_PTR ) hb_arrayGetPtr(pStru, 3);
+            p->lbHatch = reinterpret_cast<ULONG_PTR>(hb_arrayGetPtr(pStru, 3));
       }
    }
 #if 0
@@ -360,10 +360,10 @@ LOGBRUSH * hbwapi_par_LOGBRUSH(LOGBRUSH * p, int iParam)
          case BS_SOLID:
          case BS_HOLLOW:
          case BS_HATCHED:
-            p->lbHatch = ( ULONG_PTR ) hb_parnint(iParam + 2);
+            p->lbHatch = static_cast<ULONG_PTR>(hb_parnint(iParam + 2));
             break;
          default:
-            p->lbHatch = ( ULONG_PTR ) hbwapi_par_raw_HANDLE(iParam + 2);
+            p->lbHatch = static_cast<ULONG_PTR>(hbwapi_par_raw_HANDLE(iParam + 2));
       }
    }
 #endif
@@ -371,10 +371,10 @@ LOGBRUSH * hbwapi_par_LOGBRUSH(LOGBRUSH * p, int iParam)
    return p;
 }
 
-DOCINFO * hbwapi_par_DOCINFO( DOCINFO * p, int iParam, HB_BOOL bMandatory, void *** ph )
+DOCINFO * hbwapi_par_DOCINFO(DOCINFO * p, int iParam, HB_BOOL bMandatory, void *** ph)
 {
    PHB_ITEM pStru = hb_param(iParam, Harbour::Item::HASH);
-   void ** h = ( void ** ) hb_xgrabz(3 * sizeof(void*));
+   void ** h = static_cast<void**>(hb_xgrabz(3 * sizeof(void*)));
 
    *ph = h;
 
@@ -402,7 +402,7 @@ DOCINFO * hbwapi_par_DOCINFO( DOCINFO * p, int iParam, HB_BOOL bMandatory, void 
    return nullptr;
 }
 
-void hbwapi_strfree_DOCINFO( void ** h )
+void hbwapi_strfree_DOCINFO(void ** h)
 {
    if( h )
    {
@@ -427,7 +427,7 @@ HB_FUNC( __WAPI_DEVMODE_NEW )
 
       if( lSize > 0 )
       {
-         PDEVMODE pDevMode = ( PDEVMODE ) hb_xgrabz(lSize);
+         PDEVMODE pDevMode = static_cast<PDEVMODE>(hb_xgrabz(lSize));
 
          if( DocumentProperties(0, hPrinter, const_cast<LPTSTR>(lpDeviceName), pDevMode, pDevMode, DM_OUT_BUFFER) == IDOK )
          {
@@ -563,7 +563,7 @@ HB_FUNC( WAPI_STARTDOC )
    void ** hDOCINFO = nullptr;
    DOCINFO di;
 
-   if( hDC && hbwapi_par_DOCINFO( &di, 2, false, &hDOCINFO ) )
+   if( hDC && hbwapi_par_DOCINFO(&di, 2, false, &hDOCINFO) )
    {
       hb_retni(StartDoc(hDC, &di));
 
@@ -780,7 +780,7 @@ HB_FUNC( WAPI_EXTTEXTOUT )
          HB_SIZE nFontWidthsLen = hb_arrayLen(pFontWidths);
          INT iWidth = 0;
 
-         lpFontWidths = ( INT * ) hb_xgrab(nDataLen * sizeof(INT));
+         lpFontWidths = static_cast<INT*>(hb_xgrab(nDataLen * sizeof(INT)));
 
          for( HB_SIZE tmp = 0; tmp < nDataLen; ++tmp )
          {
@@ -1191,7 +1191,7 @@ static void hbwapi_stor_TEXTMETRIC(const TEXTMETRIC * p, int iParam)
       {
          if( !HB_IS_ARRAY(pStru) )
          {
-            if( !hb_itemParamStoreRelease(( USHORT ) iParam, pStru = hb_itemArrayNew(20)) )
+            if( !hb_itemParamStoreRelease(static_cast<USHORT>(iParam), pStru = hb_itemArrayNew(20)) )
             {
                hb_itemRelease(pStru);
             }

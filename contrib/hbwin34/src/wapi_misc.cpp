@@ -67,7 +67,7 @@ TCHAR * hbwapi_tstrdup(const TCHAR * pszText)
 
    HB_SIZE nLen = (hbwapi_tstrlen(pszText) + 1) * sizeof(TCHAR);
 
-   TCHAR * pszDup = ( TCHAR * ) hb_xgrab(nLen);
+   TCHAR * pszDup = static_cast<TCHAR*>(hb_xgrab(nLen));
    memcpy(pszDup, pszText, nLen);
 
    return pszDup;
@@ -88,7 +88,7 @@ TCHAR * hbwapi_tstrncat(TCHAR * pDest, const TCHAR * pSource, HB_SIZE nLen)
       nLen--;
    }
 
-   while( nLen && ( *pDest++ = *pSource++ ) != TEXT('\0') )
+   while( nLen && (*pDest++ = *pSource++) != TEXT('\0') )
    {
       nLen--;
    }
@@ -109,7 +109,7 @@ static TCHAR * hbwapi_FileNameAtSystemDir(const TCHAR * pFileName)
          nLen += static_cast<UINT>(hbwapi_tstrlen(pFileName)) + 1;
       }
 
-      buffer = ( LPTSTR ) hb_xgrab(nLen * sizeof(TCHAR));
+      buffer = static_cast<LPTSTR>(hb_xgrab(nLen * sizeof(TCHAR)));
 
       GetSystemDirectory(buffer, nLen);
 
@@ -147,7 +147,7 @@ static HB_BOOL hbwapi_has_search_system32()
 
       if( hKernel32 )
       {
-         return HB_WINAPI_GETPROCADDRESS( hKernel32, "AddDllDirectory" ) != nullptr;  /* Detect KB2533623 */
+         return HB_WINAPI_GETPROCADDRESS(hKernel32, "AddDllDirectory") != nullptr;  /* Detect KB2533623 */
       }
    }
 

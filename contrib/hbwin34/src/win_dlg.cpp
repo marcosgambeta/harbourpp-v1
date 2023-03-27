@@ -49,7 +49,7 @@
 
 #include <commdlg.h>
 
-/* win_PrintDlgDC( [@<cDevice>], [<nFromPage>], [<nToPage>], [<nCopies>], [nFlags] )
+/* win_PrintDlgDC([@<cDevice>], [<nFromPage>], [<nToPage>], [<nCopies>], [nFlags])
  *                --> <hDC>
  */
 HB_FUNC( WIN_PRINTDLGDC )
@@ -67,7 +67,7 @@ HB_FUNC( WIN_PRINTDLGDC )
    {
       if( pd.hDevNames )
       {
-         LPDEVNAMES lpdn = ( LPDEVNAMES ) GlobalLock(pd.hDevNames);
+         LPDEVNAMES lpdn = static_cast<LPDEVNAMES>(GlobalLock(pd.hDevNames));
          if( lpdn )
          {
             HB_STORSTR(reinterpret_cast<LPCTSTR>(lpdn) + lpdn->wDeviceOffset, 1);
@@ -133,7 +133,7 @@ static LPTSTR s_dialogPairs(int iParam, DWORD * pdwIndex)
          if( nLen )
          {
             HB_SIZE nTotal = nLen + 1;
-            lpStr = ( LPTSTR ) hb_xgrab(nTotal * sizeof(TCHAR));
+            lpStr = static_cast<LPTSTR>(hb_xgrab(nTotal * sizeof(TCHAR)));
             for( n = nLen = 0; n < nSize; ++n )
             {
                pArrItem = hb_arrayGetItemPtr(pItem, n + 1);
@@ -170,7 +170,7 @@ static LPTSTR s_dialogPairs(int iParam, DWORD * pdwIndex)
          nLen = HB_ITEMCOPYSTR(pItem, nullptr, 0);
          if( nLen )
          {
-            lpStr = ( LPTSTR ) hb_xgrab((nLen * 2 + 3) * sizeof(TCHAR));
+            lpStr = static_cast<LPTSTR>(hb_xgrab((nLen * 2 + 3) * sizeof(TCHAR)));
             HB_ITEMCOPYSTR(pItem, lpStr, nLen + 1);
             for( n = n1 = 0; n < nLen; ++n )
             {
@@ -196,7 +196,7 @@ static LPTSTR s_dialogPairs(int iParam, DWORD * pdwIndex)
                   lpStr[n + 1] = 0;
                   ++n1;
                }
-               if( ( n1 & 1 ) == 0 )
+               if( (n1 & 1) == 0 )
                {
                   dwMaxIndex = static_cast<DWORD>(n1);
                }
@@ -248,7 +248,7 @@ static void s_GetFileName(HB_BOOL fSave)
    {
       ofn.nMaxFile = ofn.nMaxFile == 0 ? 0x10000 : 0x400;
    }
-   ofn.lpstrFile        = ( LPTSTR ) hb_xgrabz(ofn.nMaxFile * sizeof(TCHAR));
+   ofn.lpstrFile        = static_cast<LPTSTR>(hb_xgrabz(ofn.nMaxFile * sizeof(TCHAR)));
 
    ofn.lpstrInitialDir  = HB_PARSTR(3, &hInitDir, nullptr);
    ofn.lpstrTitle       = HB_PARSTR(2, &hTitle, nullptr);
@@ -266,7 +266,7 @@ static void s_GetFileName(HB_BOOL fSave)
       HB_SIZE nLen;
       for( nLen = 0; nLen < ofn.nMaxFile; ++nLen )
       {
-         if( ofn.lpstrFile[nLen] == 0 && ( nLen + 1 == ofn.nMaxFile || ofn.lpstrFile[nLen + 1] == 0 ) )
+         if( ofn.lpstrFile[nLen] == 0 && (nLen + 1 == ofn.nMaxFile || ofn.lpstrFile[nLen + 1] == 0) )
          {
             break;
          }   

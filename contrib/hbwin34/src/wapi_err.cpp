@@ -56,14 +56,14 @@ static HB_TSD_NEW(s_wapierrData, sizeof(HB_WAPIERRDATA), nullptr, nullptr);
 
 void hbwapi_SetLastError(DWORD dwLastError)
 {
-   PHB_WAPIERRDATA pWinErrData = ( PHB_WAPIERRDATA ) hb_stackGetTSD(&s_wapierrData);
+   PHB_WAPIERRDATA pWinErrData = static_cast<PHB_WAPIERRDATA>(hb_stackGetTSD(&s_wapierrData));
 
    pWinErrData->dwLastError = dwLastError;
 }
 
 DWORD hbwapi_GetLastError(void)
 {
-   PHB_WAPIERRDATA pWinErrData = ( PHB_WAPIERRDATA ) hb_stackGetTSD(&s_wapierrData);
+   PHB_WAPIERRDATA pWinErrData = static_cast<PHB_WAPIERRDATA>(hb_stackGetTSD(&s_wapierrData));
 
    return pWinErrData->dwLastError;
 }

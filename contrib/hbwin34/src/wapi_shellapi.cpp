@@ -76,10 +76,10 @@ HB_FUNC( WAPI_ISUSERANADMIN )
    if( hLib )
    {
       typedef int (WINAPI * ISUSERANADMIN)(void);
-      ISUSERANADMIN pIsUserAnAdmin = ( ISUSERANADMIN ) HB_WINAPI_GETPROCADDRESS(hLib, "IsUserAnAdmin");
+      ISUSERANADMIN pIsUserAnAdmin = static_cast<ISUSERANADMIN>(HB_WINAPI_GETPROCADDRESS(hLib, "IsUserAnAdmin"));
       if( pIsUserAnAdmin )
       {
-         bResult = ( pIsUserAnAdmin )();
+         bResult = (pIsUserAnAdmin)();
       }
 
       FreeLibrary(hLib);

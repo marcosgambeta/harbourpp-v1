@@ -106,7 +106,7 @@ static VOID WINAPI hbwin_SvcMainFunction(DWORD dwArgc, LPTSTR * lpszArgv)
 
    s_hStatus = RegisterServiceCtrlHandler(s_lpServiceName, static_cast<LPHANDLER_FUNCTION>(hbwin_SvcControlHandler));
 
-   if( s_hStatus != ( SERVICE_STATUS_HANDLE ) 0 )
+   if( s_hStatus != static_cast<SERVICE_STATUS_HANDLE>(0) )
    {
       if( s_pHarbourEntryFunc != nullptr )
       {
@@ -139,7 +139,7 @@ static VOID WINAPI hbwin_SvcMainFunction(DWORD dwArgc, LPTSTR * lpszArgv)
                }
             }
 
-            hb_vmSend(( HB_USHORT ) iArgCount);
+            hb_vmSend(static_cast<HB_USHORT>(iArgCount));
 
             hb_vmRequestRestore();
          }
@@ -167,7 +167,7 @@ HB_FUNC( WIN_SERVICEGETSTATUS )
 HB_FUNC( WIN_SERVICESETSTATUS )
 {
    s_ServiceStatus.dwCurrentState = static_cast<DWORD>(hb_parnl(1));
-   bool bRetVal = ( HB_BOOL ) SetServiceStatus(s_hStatus, &s_ServiceStatus);
+   bool bRetVal = static_cast<HB_BOOL>(SetServiceStatus(s_hStatus, &s_ServiceStatus));
    hbwapi_SetLastError(GetLastError());
    hb_retl(bRetVal);
 }
@@ -175,7 +175,7 @@ HB_FUNC( WIN_SERVICESETSTATUS )
 HB_FUNC( WIN_SERVICESETEXITCODE )
 {
    s_ServiceStatus.dwWin32ExitCode = static_cast<DWORD>(hb_parnl(1));
-   bool bRetVal = ( HB_BOOL ) SetServiceStatus(s_hStatus, &s_ServiceStatus);
+   bool bRetVal = static_cast<HB_BOOL>(SetServiceStatus(s_hStatus, &s_ServiceStatus));
    hbwapi_SetLastError(GetLastError());
    hb_retl(bRetVal);
 }
@@ -183,7 +183,7 @@ HB_FUNC( WIN_SERVICESETEXITCODE )
 HB_FUNC( WIN_SERVICESTOP )
 {
    s_ServiceStatus.dwCurrentState = SERVICE_STOPPED;
-   bool bRetVal = ( HB_BOOL ) SetServiceStatus(s_hStatus, &s_ServiceStatus);
+   bool bRetVal = static_cast<HB_BOOL>(SetServiceStatus(s_hStatus, &s_ServiceStatus));
    hbwapi_SetLastError(GetLastError());
    hb_retl(bRetVal);
 }
@@ -223,12 +223,12 @@ HB_FUNC( WIN_SERVICESTART )
    }
 
    lpServiceTable[0].lpServiceName = s_lpServiceName;
-   lpServiceTable[0].lpServiceProc = ( LPSERVICE_MAIN_FUNCTION ) hbwin_SvcMainFunction;
+   lpServiceTable[0].lpServiceProc = static_cast<LPSERVICE_MAIN_FUNCTION>(hbwin_SvcMainFunction);
 
    lpServiceTable[1].lpServiceName = nullptr;
    lpServiceTable[1].lpServiceProc = nullptr;
 
-   bool bRetVal = ( bool ) StartServiceCtrlDispatcher(lpServiceTable);
+   bool bRetVal = static_cast<bool>(StartServiceCtrlDispatcher(lpServiceTable));
    hbwapi_SetLastError(GetLastError());
    hb_retl(bRetVal);
 }

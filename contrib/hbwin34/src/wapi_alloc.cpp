@@ -48,15 +48,15 @@
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
 
-static HB_GARBAGE_FUNC( s_gc_HDC_release )
+static HB_GARBAGE_FUNC(s_gc_HDC_release)
 {
-   void ** ph = ( void ** ) Cargo;
+   void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
-      DeleteDC(( HDC ) *ph);
+      DeleteDC(static_cast<HDC>(*ph));
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -69,11 +69,11 @@ static const HB_GC_FUNCS s_gc_HDC_funcs =
    hb_gcDummyMark
 };
 
-void hbwapi_ret_HDC( HDC p )
+void hbwapi_ret_HDC(HDC p)
 {
    if( p )
    {
-      void ** ph = ( void ** ) hb_gcAllocate(sizeof(HDC), &s_gc_HDC_funcs);
+      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(HDC), &s_gc_HDC_funcs));
 
       *ph = p;
 
@@ -85,27 +85,27 @@ void hbwapi_ret_HDC( HDC p )
    }   
 }
 
-HB_BOOL hbwapi_is_HDC( int iParam )
+HB_BOOL hbwapi_is_HDC(int iParam)
 {
-   return hb_parptrGC( &s_gc_HDC_funcs, iParam ) != nullptr;
+   return hb_parptrGC(&s_gc_HDC_funcs, iParam) != nullptr;
 }
 
-HDC hbwapi_par_HDC( int iParam )
+HDC hbwapi_par_HDC(int iParam)
 {
-   void ** ph = ( void ** ) hb_parptrGC(&s_gc_HDC_funcs, iParam);
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gc_HDC_funcs, iParam));
 
-   return ph ? ( HDC ) *ph : ( HDC ) __hbwapi_par_handle(iParam);
+   return ph ? static_cast<HDC>(*ph) : static_cast<HDC>(__hbwapi_par_handle(iParam));
 }
 
-static HB_GARBAGE_FUNC( s_gc_HPEN_release )
+static HB_GARBAGE_FUNC(s_gc_HPEN_release)
 {
-   void ** ph = ( void ** ) Cargo;
+   void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
-      DeleteObject(( HPEN ) *ph);
+      DeleteObject(static_cast<HPEN>(*ph));
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -118,11 +118,11 @@ static const HB_GC_FUNCS s_gc_HPEN_funcs =
    hb_gcDummyMark
 };
 
-void hbwapi_ret_HPEN( HPEN p )
+void hbwapi_ret_HPEN(HPEN p)
 {
    if( p )
    {
-      void ** ph = ( void ** ) hb_gcAllocate(sizeof(HPEN), &s_gc_HPEN_funcs);
+      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(HPEN), &s_gc_HPEN_funcs));
 
       *ph = p;
 
@@ -134,27 +134,27 @@ void hbwapi_ret_HPEN( HPEN p )
    }   
 }
 
-HB_BOOL hbwapi_is_HPEN( int iParam )
+HB_BOOL hbwapi_is_HPEN(int iParam)
 {
-   return hb_parptrGC( &s_gc_HPEN_funcs, iParam ) != nullptr;
+   return hb_parptrGC(&s_gc_HPEN_funcs, iParam) != nullptr;
 }
 
-HPEN hbwapi_par_HPEN( int iParam )
+HPEN hbwapi_par_HPEN(int iParam)
 {
-   void ** ph = ( void ** ) hb_parptrGC(&s_gc_HPEN_funcs, iParam);
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gc_HPEN_funcs, iParam));
 
-   return ph ? ( HPEN ) *ph : ( HPEN ) __hbwapi_par_handle(iParam);
+   return ph ? static_cast<HPEN>(*ph) : static_cast<HPEN>(__hbwapi_par_handle(iParam));
 }
 
-static HB_GARBAGE_FUNC( s_gc_HBRUSH_release )
+static HB_GARBAGE_FUNC(s_gc_HBRUSH_release)
 {
-   void ** ph = ( void ** ) Cargo;
+   void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
-      DeleteObject(( HBRUSH ) *ph);
+      DeleteObject(static_cast<HBRUSH>(*ph));
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -171,7 +171,7 @@ void hbwapi_ret_HBRUSH(HBRUSH p)
 {
    if( p )
    {
-      void ** ph = ( void ** ) hb_gcAllocate(sizeof(HBRUSH), &s_gc_HBRUSH_funcs);
+      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(HBRUSH), &s_gc_HBRUSH_funcs));
 
       *ph = p;
 
@@ -185,25 +185,25 @@ void hbwapi_ret_HBRUSH(HBRUSH p)
 
 HB_BOOL hbwapi_is_HBRUSH(int iParam)
 {
-   return hb_parptrGC( &s_gc_HBRUSH_funcs, iParam ) != nullptr;
+   return hb_parptrGC(&s_gc_HBRUSH_funcs, iParam) != nullptr;
 }
 
 HBRUSH hbwapi_par_HBRUSH(int iParam)
 {
-   void ** ph = ( void ** ) hb_parptrGC(&s_gc_HBRUSH_funcs, iParam);
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gc_HBRUSH_funcs, iParam));
 
-   return ph ? ( HBRUSH ) *ph : ( HBRUSH ) __hbwapi_par_handle(iParam);
+   return ph ? static_cast<HBRUSH>(*ph) : static_cast<HBRUSH>(__hbwapi_par_handle(iParam));
 }
 
-static HB_GARBAGE_FUNC( s_gc_HFONT_release )
+static HB_GARBAGE_FUNC(s_gc_HFONT_release)
 {
-   void ** ph = ( void ** ) Cargo;
+   void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
-      DeleteObject(( HFONT ) *ph);
+      DeleteObject(static_cast<HFONT>(*ph));
 
       /* set pointer to nullptr to avoid multiple freeing */
       *ph = nullptr;
@@ -220,7 +220,7 @@ void hbwapi_ret_HFONT(HFONT p)
 {
    if( p )
    {
-      void ** ph = ( void ** ) hb_gcAllocate(sizeof(HFONT), &s_gc_HFONT_funcs);
+      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(HFONT), &s_gc_HFONT_funcs));
 
       *ph = p;
 
@@ -234,19 +234,19 @@ void hbwapi_ret_HFONT(HFONT p)
 
 HB_BOOL hbwapi_is_HFONT(int iParam)
 {
-   return hb_parptrGC( &s_gc_HFONT_funcs, iParam ) != nullptr;
+   return hb_parptrGC(&s_gc_HFONT_funcs, iParam) != nullptr;
 }
 
 HFONT hbwapi_par_HFONT(int iParam)
 {
-   void ** ph = ( void ** ) hb_parptrGC(&s_gc_HFONT_funcs, iParam);
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gc_HFONT_funcs, iParam));
 
-   return ph ? ( HFONT ) *ph : ( HFONT ) __hbwapi_par_handle(iParam);
+   return ph ? static_cast<HFONT>(*ph) : static_cast<HFONT>(__hbwapi_par_handle(iParam));
 }
 
-static HB_GARBAGE_FUNC( s_gc_PDEVMODE_release )
+static HB_GARBAGE_FUNC(s_gc_PDEVMODE_release)
 {
-   void ** ph = ( void ** ) Cargo;
+   void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -269,7 +269,7 @@ void hbwapi_ret_PDEVMODE(PDEVMODE p)
 {
    if( p )
    {
-      void ** ph = ( void ** ) hb_gcAllocate(sizeof(PDEVMODE), &s_gc_PDEVMODE_funcs);
+      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(PDEVMODE), &s_gc_PDEVMODE_funcs));
 
       *ph = p;
 
@@ -283,14 +283,14 @@ void hbwapi_ret_PDEVMODE(PDEVMODE p)
 
 HB_BOOL hbwapi_is_PDEVMODE(int iParam)
 {
-   return hb_parptrGC( &s_gc_PDEVMODE_funcs, iParam ) != nullptr;
+   return hb_parptrGC(&s_gc_PDEVMODE_funcs, iParam) != nullptr;
 }
 
 PDEVMODE hbwapi_par_PDEVMODE(int iParam)
 {
-   void ** ph = ( void ** ) hb_parptrGC(&s_gc_PDEVMODE_funcs, iParam);
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gc_PDEVMODE_funcs, iParam));
 
-   return ph ? ( PDEVMODE ) *ph : nullptr;
+   return ph ? static_cast<PDEVMODE>(*ph) : nullptr;
 }
 
 HB_FUNC( __WAPI_TYPE )

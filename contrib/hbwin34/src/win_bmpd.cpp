@@ -94,7 +94,7 @@ static int hb_jpeg_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
       return _JPEG_RET_OVERRUN;
    }
 
-   tag = HB_SWAP_UINT16(( HB_U16 ) HB_GET_LE_UINT16(buffer + nPos));
+   tag = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
    nPos += 2;
 
    /* SOI marker */
@@ -112,7 +112,7 @@ static int hb_jpeg_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
          return _JPEG_RET_OVERRUN;
       }
 
-      tag = HB_SWAP_UINT16(( HB_U16 ) HB_GET_LE_UINT16(buffer + nPos));
+      tag = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
       nPos += 2;
 
       if( nPos >= nBufferSize )
@@ -120,7 +120,7 @@ static int hb_jpeg_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
          return _JPEG_RET_OVERRUN;
       }
 
-      size = HB_SWAP_UINT16(( HB_U16 ) HB_GET_LE_UINT16(buffer + nPos));
+      size = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
       nPos += 2;
 
       /* SOF markers */
@@ -139,7 +139,7 @@ static int hb_jpeg_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
             return _JPEG_RET_OVERRUN;
          }
 
-         height = HB_SWAP_UINT16(( HB_U16 ) HB_GET_LE_UINT16(buffer + nPos));
+         height = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
          nPos += 2;
 
          if( nPos >= nBufferSize )
@@ -147,7 +147,7 @@ static int hb_jpeg_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
             return _JPEG_RET_OVERRUN;
          }
 
-         width = HB_SWAP_UINT16(( HB_U16 ) HB_GET_LE_UINT16(buffer + nPos));
+         width = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
          nPos += 2;
 
          if( nPos >= nBufferSize )
@@ -159,7 +159,7 @@ static int hb_jpeg_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
 
          break;
       }
-      else if( ( tag | 0x00FF ) != 0xFFFF ) /* lost marker */
+      else if( (tag | 0x00FF) != 0xFFFF ) /* lost marker */
       {
          return _JPEG_RET_UNSUPPORTED;
       }
@@ -219,7 +219,7 @@ typedef struct
 
 static void hb_png_read_func(png_structp png_ptr, png_bytep data, png_uint_32 length)
 {
-   HB_PNG_READ * hb_png_read_data = ( HB_PNG_READ * ) png_get_io_ptr(png_ptr);
+   HB_PNG_READ * hb_png_read_data = static_cast<HB_PNG_READ*>(png_get_io_ptr(png_ptr));
    png_uint_32 pos;
 
    for( pos = 0; pos < length && hb_png_read_data->nPos < hb_png_read_data->nLen; )
@@ -263,7 +263,7 @@ static int hb_png_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * p
 
    memcpy(header, buffer, sizeof(header));
 
-   if( png_sig_cmp(header, ( png_size_t ) 0, sizeof(header)) )
+   if( png_sig_cmp(header, static_cast<png_size_t>(0), sizeof(header)) )
    {
       return _PNG_RET_ERR_INVALID2;
    }
@@ -344,14 +344,14 @@ HB_FUNC( WIN_BITMAPDIMENSIONS )
 
    if( iType == HB_WIN_BITMAP_BMP && nSize >= sizeof(BITMAPCOREHEADER) )
    {
-      const BITMAPFILEHEADER * pbmfh = ( const BITMAPFILEHEADER * ) buffer;
-      const BITMAPINFO * pbmi = ( const BITMAPINFO * ) (pbmfh + 1);
+      const BITMAPFILEHEADER * pbmfh = static_cast<const BITMAPFILEHEADER*>(buffer);
+      const BITMAPINFO * pbmi = reinterpret_cast<const BITMAPINFO*>(pbmfh + 1);
 
       /* Remember there are 2 types of BitMap File */
       if( pbmi->bmiHeader.biSize == sizeof(BITMAPCOREHEADER) )
       {
-         iWidth = ( ( const BITMAPCOREHEADER * ) pbmi )->bcWidth;
-         iHeight = ( ( const BITMAPCOREHEADER * ) pbmi )->bcHeight;
+         iWidth = (reinterpret_cast<const BITMAPCOREHEADER*>(pbmi))->bcWidth;
+         iHeight = (reinterpret_cast<const BITMAPCOREHEADER*>(pbmi))->bcHeight;
       }
       else
       {
@@ -363,12 +363,12 @@ HB_FUNC( WIN_BITMAPDIMENSIONS )
    }
    else if( iType == HB_WIN_BITMAP_JPEG )
    {
-      bRetVal = ( hb_jpeg_get_param(( const HB_BYTE * ) buffer, nSize, &iHeight, &iWidth, nullptr, nullptr ) == _JPEG_RET_OK);
+      bRetVal = (hb_jpeg_get_param(static_cast<const HB_BYTE*>(buffer), nSize, &iHeight, &iWidth, nullptr, nullptr) == _JPEG_RET_OK);
    }
 #if defined(HB_HAS_PNG) && defined(HB_HAS_ZLIB)
    else if( iType == HB_WIN_BITMAP_PNG )
    {
-      bRetVal = ( hb_png_get_param(( const HB_BYTE * ) buffer, nSize, &iHeight, &iWidth, nullptr, nullptr ) == _PNG_RET_OK);
+      bRetVal = (hb_png_get_param(static_cast<const HB_BYTE*>(buffer), nSize, &iHeight, &iWidth, nullptr, nullptr) == _PNG_RET_OK);
    }
 #endif
 

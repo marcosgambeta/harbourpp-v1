@@ -153,7 +153,7 @@ HB_FUNC( WIN_SERVICEDELETE )
             }
          }
 
-         bRetVal = ( HB_BOOL ) DeleteService(schSrv);
+         bRetVal = static_cast<HB_BOOL>(DeleteService(schSrv));
          hbwapi_SetLastError(GetLastError());
 
          CloseServiceHandle(schSrv);
@@ -190,7 +190,7 @@ HB_FUNC( WIN_SERVICECONTROL )
       {
          SERVICE_STATUS ssStatus;
          memset(&ssStatus, 0, sizeof(ssStatus));
-         bRetVal = ( HB_BOOL ) ControlService(schSrv, static_cast<DWORD>(hb_parnl(2)), &ssStatus);
+         bRetVal = static_cast<HB_BOOL>(ControlService(schSrv, static_cast<DWORD>(hb_parnl(2)), &ssStatus));
          hbwapi_SetLastError(GetLastError());
 
          CloseServiceHandle(schSrv);
@@ -232,8 +232,8 @@ HB_FUNC( WIN_SERVICERUN )
          if( hb_pcount() >= 2 )
          {
             dwArgs = hb_pcount() - 1;
-            hArgs = ( void ** ) hb_xgrab(dwArgs * sizeof(void*));
-            lpArgs = ( LPCTSTR * ) hb_xgrab(dwArgs * sizeof(LPCTSTR));
+            hArgs = static_cast<void**>(hb_xgrab(dwArgs * sizeof(void*)));
+            lpArgs = static_cast<LPCTSTR*>(hb_xgrab(dwArgs * sizeof(LPCTSTR)));
 
             for( DWORD pos = 0; pos < dwArgs; ++pos )
             {
@@ -247,7 +247,7 @@ HB_FUNC( WIN_SERVICERUN )
             lpArgs = nullptr;
          }
 
-         bRetVal = ( HB_BOOL ) StartService(schSrv, dwArgs, lpArgs);
+         bRetVal = static_cast<HB_BOOL>(StartService(schSrv, dwArgs, lpArgs));
          hbwapi_SetLastError(GetLastError());
 
          if( hArgs )

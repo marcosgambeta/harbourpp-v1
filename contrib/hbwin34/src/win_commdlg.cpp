@@ -68,12 +68,12 @@ static UINT_PTR CALLBACK CCHookProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM l
 
    if( msg == WM_INITDIALOG )
    {
-      CHOOSECOLOR * cc = ( CHOOSECOLOR * ) lParam;
-      SetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_, hb_itemNew(( PHB_ITEM ) cc->lCustData));
+      CHOOSECOLOR * cc = reinterpret_cast<CHOOSECOLOR*>(lParam);
+      SetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_, hb_itemNew(reinterpret_cast<PHB_ITEM>(cc->lCustData)));
       fInit = true;
    }
 
-   if( (pBlock = ( PHB_ITEM ) GetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_)) != nullptr && hb_vmRequestReenter() )
+   if( (pBlock = static_cast<PHB_ITEM>(GetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_))) != nullptr && hb_vmRequestReenter() )
    {
       PHB_ITEM pWnd = hbwapi_itemPut_HANDLE(nullptr, hWnd);
       PHB_ITEM pMsg = hb_itemPutNInt(nullptr, msg);
@@ -124,7 +124,7 @@ HB_FUNC( WIN_CHOOSECOLOR )
    cc.rgbResult      = hbwapi_par_COLORREF(3);
    cc.lpCustColors   = crCustClr;
    cc.Flags          = hbwapi_par_WORD(5);
-   cc.lCustData      = ( LPARAM ) reinterpret_cast<HB_PTRUINT>(hb_param(6, Harbour::Item::EVALITEM));
+   cc.lCustData      = static_cast<LPARAM>(reinterpret_cast<HB_PTRUINT>(hb_param(6, Harbour::Item::EVALITEM)));
    cc.lpfnHook       = cc.lCustData ? CCHookProc : nullptr;
    cc.lpTemplateName = HB_PARSTR(7, &hTpl, nullptr);
 

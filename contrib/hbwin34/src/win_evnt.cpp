@@ -61,7 +61,7 @@ HB_FUNC( WIN_REPORTEVENT )
    hb_strfree(hServerName);
    hb_strfree(hSourceName);
 
-   if( hEventLog != nullptr && hEventLog != ( HANDLE ) ERROR_ACCESS_DENIED )
+   if( hEventLog != nullptr && hEventLog != reinterpret_cast<HANDLE>(ERROR_ACCESS_DENIED) )
    {
       WORD wNumStrings = 0;
       LPCTSTR * lpStrings = nullptr;
@@ -71,8 +71,8 @@ HB_FUNC( WIN_REPORTEVENT )
 
       if( pStrings && (wNumStrings = static_cast<WORD>(hb_arrayLen(pStrings))) > 0 )
       {
-         lpStrings = ( LPCTSTR * ) hb_xgrab(sizeof(LPCTSTR) * wNumStrings);
-         hStrings = ( void ** ) hb_xgrab(sizeof(void*) * wNumStrings);
+         lpStrings = static_cast<LPCTSTR*>(hb_xgrab(sizeof(LPCTSTR) * wNumStrings));
+         hStrings = static_cast<void**>(hb_xgrab(sizeof(void*) * wNumStrings));
 
          for( WORD i = 0; i < wNumStrings; ++i )
          {
@@ -83,8 +83,8 @@ HB_FUNC( WIN_REPORTEVENT )
       {
          wNumStrings = 1;
 
-         lpStrings = ( LPCTSTR * ) hb_xgrab(sizeof(LPCTSTR));
-         hStrings = ( void ** ) hb_xgrab(sizeof(void*));
+         lpStrings = static_cast<LPCTSTR*>(hb_xgrab(sizeof(LPCTSTR)));
+         hStrings = static_cast<void**>(hb_xgrab(sizeof(void*)));
 
          lpStrings[0] = static_cast<LPCTSTR>(HB_ITEMGETSTR(hb_param(6, Harbour::Item::STRING), &hStrings[0], nullptr));
       }

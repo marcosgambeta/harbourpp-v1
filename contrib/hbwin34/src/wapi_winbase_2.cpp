@@ -73,7 +73,7 @@ HB_FUNC( WAPI_FORMATMESSAGE )
    if( HB_ISBYREF(5) )
    {
       nSize = hb_parns(6);
-      if( ( dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER ) == 0 )
+      if( (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER) == 0 )
       {
          if( nSize == 0 && !HB_ISNUM(6) )
          {
@@ -81,7 +81,7 @@ HB_FUNC( WAPI_FORMATMESSAGE )
          }
          if( nSize > 0 )
          {
-            lpBuffer = ( LPTSTR ) hb_xgrab(nSize * sizeof(TCHAR));
+            lpBuffer = static_cast<LPTSTR>(hb_xgrab(nSize * sizeof(TCHAR)));
          }
          else
          {
@@ -96,14 +96,14 @@ HB_FUNC( WAPI_FORMATMESSAGE )
 
    if( dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER )
    {
-      lpBuffer = ( LPTSTR ) &lpAllocBuff;
+      lpBuffer = reinterpret_cast<LPTSTR>(&lpAllocBuff);
    }
 
    if( lpBuffer )
    {
       DWORD dwRetVal =
          FormatMessage(dwFlags,
-                       HB_ISCHAR(2) ? ( LPCVOID ) HB_PARSTR(2, &hSource, nullptr) : hb_parptr(2),
+                       HB_ISCHAR(2) ? static_cast<LPCVOID>(HB_PARSTR(2, &hSource, nullptr)) : hb_parptr(2),
                        HB_ISNUM(3) ? static_cast<DWORD>(hb_parnl(3)) : hbwapi_GetLastError() /* dwMessageId */,
                        static_cast<DWORD>(hb_parnldef(4, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT))) /* dwLanguageId */,
                        lpBuffer,
@@ -115,7 +115,7 @@ HB_FUNC( WAPI_FORMATMESSAGE )
 
       if( lpBuffer )
       {
-         if( dwRetVal && ( dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER ) )
+         if( dwRetVal && (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER) )
          {
             lpBuffer = lpAllocBuff;
          }
@@ -130,7 +130,7 @@ HB_FUNC( WAPI_FORMATMESSAGE )
          {
             LocalFree(lpAllocBuff);
          }
-         else if( lpBuffer && ( dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER ) == 0 )
+         else if( lpBuffer && (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER) == 0 )
          {
             hb_xfree(lpBuffer);
          }

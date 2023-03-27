@@ -181,7 +181,7 @@ static LPTSTR s_StringList(int iParam)
          if( nLen )
          {
             HB_SIZE nTotal = nLen + 1;
-            lpStr = ( LPTSTR ) hb_xgrab(nTotal * sizeof(TCHAR));
+            lpStr = static_cast<LPTSTR>(hb_xgrab(nTotal * sizeof(TCHAR)));
             for( n = nLen = 0; n < nSize; ++n )
             {
                pArrItem = hb_arrayGetItemPtr(pItem, n + 1);
@@ -202,7 +202,7 @@ static LPTSTR s_StringList(int iParam)
          nLen = HB_ITEMCOPYSTR(pItem, nullptr, 0);
          if( nLen )
          {
-            lpStr = ( LPTSTR ) hb_xgrab((nLen + 2) * sizeof(TCHAR));
+            lpStr = static_cast<LPTSTR>(hb_xgrab((nLen + 2) * sizeof(TCHAR)));
             HB_ITEMCOPYSTR(pItem, lpStr, nLen);
             lpStr[nLen] = lpStr[nLen + 1] = TEXT('\0');
          }
@@ -250,9 +250,9 @@ HB_FUNC( WIN_SHFILEOPERATION )
 
    hb_strfree(hProgressTitle);
 
-   if( ( fop.fFlags & FOF_WANTMAPPINGHANDLE ) != 0 )
+   if( (fop.fFlags & FOF_WANTMAPPINGHANDLE) != 0 )
    {
-      HANDLETOMAPPINGS * hm = ( HANDLETOMAPPINGS * ) fop.hNameMappings;
+      HANDLETOMAPPINGS * hm = static_cast<HANDLETOMAPPINGS*>(fop.hNameMappings);
       PHB_ITEM pArray = hb_param(7, Harbour::Item::ARRAY);
 
       /* Process hNameMappings */
@@ -273,14 +273,14 @@ HB_FUNC( WIN_SHFILEOPERATION )
                if( bIsWin9x )
                {
                   /* always returns non-UNICODE on Win9x systems */
-                  hb_arraySetCL(pTempItem, 1, ( char * ) pmap[tmp].pszOldPath, pmap[tmp].cchOldPath);
-                  hb_arraySetCL(pTempItem, 2, ( char * ) pmap[tmp].pszNewPath, pmap[tmp].cchNewPath);
+                  hb_arraySetCL(pTempItem, 1, reinterpret_cast<char*>(pmap[tmp].pszOldPath), pmap[tmp].cchOldPath);
+                  hb_arraySetCL(pTempItem, 2, reinterpret_cast<char*>(pmap[tmp].pszNewPath), pmap[tmp].cchNewPath);
                }
                else
                {
                   /* always returns UNICODE on NT and upper systems */
-                  HB_ARRAYSETSTRLEN(pTempItem, 1, ( LPTSTR ) pmap[tmp].pszOldPath, pmap[tmp].cchOldPath);
-                  HB_ARRAYSETSTRLEN(pTempItem, 2, ( LPTSTR ) pmap[tmp].pszNewPath, pmap[tmp].cchNewPath);
+                  HB_ARRAYSETSTRLEN(pTempItem, 1, static_cast<LPTSTR>(pmap[tmp].pszOldPath), pmap[tmp].cchOldPath);
+                  HB_ARRAYSETSTRLEN(pTempItem, 2, static_cast<LPTSTR>(pmap[tmp].pszNewPath), pmap[tmp].cchNewPath);
                }
 
                hb_arraySetForward(pArray, static_cast<HB_SIZE>(tmp + 1), pTempItem);
