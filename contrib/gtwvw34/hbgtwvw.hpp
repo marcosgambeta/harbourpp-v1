@@ -407,9 +407,6 @@ typedef struct
       HFONT      hUserFonts[ 20 ];              /* User defined font handles */
       HPEN       hUserPens[ 20 ];               /* User defined pens */
 
-      HINSTANCE       hMSImg32;                 /* Handle to the loaded library msimg32.dll */
-      wvwGradientFill pfnGF;                    /* Pointer to Address of the GradientFill function in MSImg32.dll */
-
       HWND     hDlgModeless[ WVW_DLGML_MAX ];   /* Handle to a modeless dialog */
       PHB_ITEM pFunc[ WVW_DLGML_MAX ];          /* Function pointer for WndProc */
       int      iType[ WVW_DLGML_MAX ];          /* Type of Function Pointers - Function 1, Block 2, Method 3 */

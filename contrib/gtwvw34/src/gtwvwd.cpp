@@ -484,11 +484,6 @@ static void hb_gt_wvw_Exit(PHB_GT pGT)
       }
    }
 
-   if( s_wvw->a.hMSImg32 )
-   {
-      FreeLibrary(s_wvw->a.hMSImg32);
-   }
-
    while( s_wvw->a.pbhBitmapList )
    {
       WVW_BMP * pbh = s_wvw->a.pbhBitmapList->pNext;
@@ -4244,7 +4239,6 @@ static void hb_gtInitStatics(int nWin, LPCTSTR szWinName, int iRow1, int iCol1, 
 
    if( nWin == 0 )
    {
-      HINSTANCE h;
       int       iIndex;
 
       wvw_win->nWinId = nWin;
@@ -4402,16 +4396,6 @@ static void hb_gtInitStatics(int nWin, LPCTSTR szWinName, int iRow1, int iCol1, 
       s_wvw->a.pSymWVW_INPUTFOCUS = hb_dynsymFind("WVW_INPUTFOCUS");
       s_wvw->a.pSymWVW_TIMER      = hb_dynsymFind("WVW_TIMER");
       s_wvw->a.pSymWVW_ONCTLCOLOR = hb_dynsymFind("WVW_ONCTLCOLOR");
-
-      h = hbwapi_LoadLibrarySystemVM("msimg32.dll");
-      if( h )
-      {
-         s_wvw->a.pfnGF = reinterpret_cast<wvwGradientFill>(HB_WINAPI_GETPROCADDRESS(h, "GradientFill"));
-         if( s_wvw->a.pfnGF )
-         {
-            s_wvw->a.hMSImg32 = h;
-         }
-      }
 
       for( iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(s_wvw->a.hDlgModeless)); iIndex++ )
       {

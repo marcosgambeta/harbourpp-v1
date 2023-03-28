@@ -3012,7 +3012,6 @@ HB_FUNC( WVW_DRAWSHADEDRECT )
    {
       HB_BOOL fResult = HB_FALSE;
 
-      if( wvw->a.hMSImg32 )
       {
          int iTop    = hb_parni(2),
              iLeft   = hb_parni(3),
@@ -3057,7 +3056,7 @@ HB_FUNC( WVW_DRAWSHADEDRECT )
          gRect.UpperLeft  = 0;
          gRect.LowerRight = 1;
 
-         fResult = static_cast<HB_BOOL>(wvw->a.pfnGF(wvw_win->hdc, vert, HB_SIZEOFARRAY(vert), &gRect, 1, iMode));
+         fResult = static_cast<HB_BOOL>(GradientFill(wvw_win->hdc, vert, HB_SIZEOFARRAY(vert), &gRect, 1, iMode));
       }
 
       hb_retl(fResult);
