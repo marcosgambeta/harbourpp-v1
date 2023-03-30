@@ -60,7 +60,7 @@ returns 0 if failed, eg. if there is already a status bar for this window
 */
 HB_FUNC( WVW_SBCREATE )
 {
-   PWVW_GLO wvw     = hb_gt_wvw();
+   PWVW_GLO wvw = hb_gt_wvw();
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win && wvw_win->hStatusBar == nullptr )
@@ -68,26 +68,24 @@ HB_FUNC( WVW_SBCREATE )
       HWND hWnd = CreateStatusWindow(WS_CHILD | WS_VISIBLE | WS_BORDER | SBT_TOOLTIPS, nullptr, wvw_win->hWnd, WVW_ID_BASE_STATUSBAR + wvw_win->nWinId);
       if( hWnd )
       {
-         int piArray;
-
-         RECT rSB;
-
          if( wvw_win->hSBfont == nullptr )
          {
             wvw_win->hSBfont = CreateFontIndirect(&wvw->lfSB);
          }
 
+         RECT rSB;
          memset(&rSB, 0, sizeof(rSB));
 
          if( GetClientRect(hWnd, &rSB) )
          {
             wvw_win->iSBHeight = rSB.bottom;
          }
+
          wvw_win->hStatusBar = hWnd;
 
          hb_gt_wvw_ResetWindow(wvw_win);
 
-         piArray = rSB.right;
+         int piArray = rSB.right;
          SendMessage(hWnd, WM_SETFONT, reinterpret_cast<WPARAM>(wvw_win->hSBfont), static_cast<LPARAM>(TRUE));
 
          SendMessage(hWnd, SB_SETPARTS, 1, reinterpret_cast<LPARAM>(&piArray));
@@ -120,7 +118,6 @@ HB_FUNC( WVW_SBDESTROY )
       wvw_win->hStatusBar = nullptr;
       wvw_win->fSBPaint   = HB_FALSE;
       wvw_win->iSBHeight  = 0;
-
       hb_gt_wvw_ResetWindow(wvw_win);
    }
 }
@@ -141,27 +138,25 @@ returns 0 if failed
 HB_FUNC( WVW_SBADDPART )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   HWND     hWnd;
+   HWND hWnd;
 
    if( wvw_win && (hWnd = wvw_win->hStatusBar) != nullptr )
    {
-      int     piArray[WVW_MAX_STATUS_PARTS];
-      int     iNumOfParts;
-      RECT    rSB;
-      WORD    displayFlags = static_cast<WORD>(hb_parnl(4));
-      HB_BOOL fResetParts  = hb_parl(5);
-      int     iWidth       = hb_parni(3) <= 0 ? 5 * WVW_SPACE_BETWEEN_PARTS : hb_parni(3);
+      int piArray[WVW_MAX_STATUS_PARTS];
+      int iNumOfParts;
+      WORD displayFlags = static_cast<WORD>(hb_parnl(4));
+      HB_BOOL fResetParts = hb_parl(5);
+      int iWidth = hb_parni(3) <= 0 ? 5 * WVW_SPACE_BETWEEN_PARTS : hb_parni(3);
 
       if( HB_ISCHAR(2) )
       {
          HDC hDCSB = GetDC(hWnd);
 
          HB_SIZE nLen;
-         void *  hText;
+         void * hText;
          LPCTSTR szText = HB_PARSTR(2, &hText, &nLen);
 
          SIZE size;
-
          memset(&size, 0, sizeof(size));
 
          SelectObject(hDCSB, reinterpret_cast<HFONT>(SendMessage(hWnd, WM_GETFONT, 0, 0)));
@@ -186,8 +181,8 @@ HB_FUNC( WVW_SBADDPART )
       }
       iNumOfParts++;
 
+      RECT rSB;
       memset(&rSB, 0, sizeof(rSB));
-
       GetClientRect(hWnd, &rSB);
 
       piArray[iNumOfParts - 1] = rSB.right;
@@ -206,12 +201,10 @@ HB_FUNC( WVW_SBADDPART )
          int cy = rSB.bottom - rSB.top - 4;
          int cx = cy;
 
-         HICON hIcon;
-
-         void *  hName;
+         void * hName;
          LPCTSTR szName = HB_PARSTR(6, &hName, nullptr);
 
-         hIcon = static_cast<HICON>(LoadImage(0, szName, IMAGE_ICON, cx, cy, LR_LOADFROMFILE | LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT | LR_DEFAULTSIZE));
+         HICON hIcon = static_cast<HICON>(LoadImage(0, szName, IMAGE_ICON, cx, cy, LR_LOADFROMFILE | LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT | LR_DEFAULTSIZE));
          if( hIcon == nullptr )
          {
             hIcon = static_cast<HICON>(LoadImage(GetModuleHandle(nullptr), szName, IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_DEFAULTSIZE));
@@ -251,7 +244,7 @@ returns 0 if failed
 HB_FUNC( WVW_SBREFRESH )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   HWND     hWnd;
+   HWND hWnd;
 
    if( wvw_win && (hWnd = wvw_win->hStatusBar) != nullptr )
    {
@@ -259,13 +252,10 @@ HB_FUNC( WVW_SBREFRESH )
       int iNumOfParts = static_cast<int>(SendMessage(hWnd, SB_GETPARTS, HB_SIZEOFARRAY(piArray), reinterpret_cast<LPARAM>(static_cast<LPINT>(piArray))));
       if( iNumOfParts > 0 )
       {
-         int  iDiff;
          RECT rSB;
-
          memset(&rSB, 0, sizeof(rSB));
-
          GetClientRect(hWnd, &rSB);
-         iDiff = rSB.right - piArray[iNumOfParts - 1];
+         int iDiff = rSB.right - piArray[iNumOfParts - 1];
 
          for( int n = 0; n <= iNumOfParts - 1; n++ )
          {
@@ -273,7 +263,6 @@ HB_FUNC( WVW_SBREFRESH )
          }
 
          SendMessage(hWnd, SB_SETPARTS, iNumOfParts, reinterpret_cast<LPARAM>(static_cast<LPINT>(piArray)));
-
          hb_retni(iNumOfParts);
          return;
       }
@@ -339,15 +328,12 @@ HB_FUNC( WVW_SBGETTEXT )
 
    if( wvw_win )
    {
-      int    iPart  = hb_parnidef(2, 1);
-      WORD   nLen   = LOWORD(SendMessage(wvw_win->hStatusBar, SB_GETTEXTLENGTH, static_cast<WPARAM>(iPart), 0));
-      LPTSTR szText = static_cast<LPTSTR>(hb_xgrabz((nLen + 1) * sizeof(TCHAR)));
-
+      int iPart = hb_parnidef(2, 1);
+      WORD nLen = LOWORD(SendMessage(wvw_win->hStatusBar, SB_GETTEXTLENGTH, static_cast<WPARAM>(iPart), 0));
+      TCHAR * szText = new TCHAR[nLen + 1];
       SendMessage(wvw_win->hStatusBar, SB_GETTEXT, static_cast<WPARAM>(iPart), reinterpret_cast<LPARAM>(szText));
-
       HB_RETSTRLEN(szText, nLen);
-
-      hb_xfree(szText);
+      delete[] szText;
    }
 }
 
@@ -371,12 +357,12 @@ wvw_sbSetFont([nWinNum], cFontFace, nHeight, nWidth, nWeight, nQUality, ;
 */
 HB_FUNC( WVW_SBSETFONT )
 {
-   PWVW_GLO wvw     = hb_gt_wvw();
+   PWVW_GLO wvw = hb_gt_wvw();
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win )
    {
-      HB_BOOL fResult = HB_TRUE;
+      bool fResult = true;
 
       wvw->lfSB.lfHeight         = hb_parnldef(3, wvw_win->fontHeight - 2);
       wvw->lfSB.lfWidth          = hb_parnldef(4, wvw->lfSB.lfWidth);
@@ -399,7 +385,7 @@ HB_FUNC( WVW_SBSETFONT )
       if( wvw_win->hSBfont )
       {
          HFONT hOldFont = wvw_win->hSBfont;
-         HFONT hFont    = CreateFontIndirect(&wvw->lfSB);
+         HFONT hFont = CreateFontIndirect(&wvw->lfSB);
          if( hFont )
          {
             wvw_win->hSBfont = hFont;
@@ -407,7 +393,7 @@ HB_FUNC( WVW_SBSETFONT )
          }
          else
          {
-            fResult = HB_FALSE;
+            fResult = false;
          }
       }
 

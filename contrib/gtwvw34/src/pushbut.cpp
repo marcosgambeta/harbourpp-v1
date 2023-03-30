@@ -96,10 +96,10 @@ HB_FUNC( WVW_PBCREATE )
 
    if( wvw_win && HB_ISEVALITEM(8) )
    {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      int iTop    = hb_parni(2);
+      int iLeft   = hb_parni(3);
+      int iBottom = hb_parni(4);
+      int iRight  = hb_parni(5);
 
       int iOffTop    = HB_ISARRAY(9) ? hb_parvni(9, 1) : -2;
       int iOffLeft   = HB_ISARRAY(9) ? hb_parvni(9, 2) : -2;
@@ -138,8 +138,8 @@ HB_FUNC( WVW_PBDESTROY )
 
    if( wvw_win )
    {
-      int      nCtrlId     = hb_parni(2);
-      PWVW_CTL wvw_ctl     = wvw_win->ctlList;
+      int nCtrlId = hb_parni(2);
+      PWVW_CTL wvw_ctl = wvw_win->ctlList;
       PWVW_CTL wvw_ctlPrev = nullptr;
 
       while( wvw_ctl )
@@ -149,7 +149,7 @@ HB_FUNC( WVW_PBDESTROY )
             break;
          }
          wvw_ctlPrev = wvw_ctl;
-         wvw_ctl     = wvw_ctl->pNext;
+         wvw_ctl = wvw_ctl->pNext;
       }
 
       if( wvw_ctl )
@@ -181,10 +181,7 @@ set the focus to button nButtonId in window nWinNum
 */
 HB_FUNC( WVW_PBSETFOCUS )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-
-   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
-
+   HWND hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
    hb_retl(hWnd && SetFocus(hWnd) != nullptr);
 }
 
@@ -194,10 +191,7 @@ returns .T. if the focus is on button nPBid in window nWinNum
 */
 HB_FUNC( WVW_PBISFOCUSED )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-
-   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
-
+   HWND hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
    hb_retl(hWnd && GetFocus() == hWnd);
 }
 
@@ -216,9 +210,9 @@ HB_FUNC( WVW_PBENABLE )
 
    if( hWnd )
    {
-      HB_BOOL fEnable = hb_parldef(3, true);
+      bool fEnable = hb_parldef(3, true);
 
-      hb_retl(EnableWindow(hWnd, static_cast<BOOL>(fEnable)) == 0);
+      hb_retl(EnableWindow(hWnd, fEnable) == 0);
 
       if( !fEnable )
       {
@@ -238,10 +232,9 @@ return .T. if successful
 */
 HB_FUNC( WVW_PBSETCODEBLOCK )
 {
-   PWVW_GLO wvw     = hb_gt_wvw();
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
-   PHB_ITEM pBlock  = hb_param(3, Harbour::Item::EVALITEM);
+   PWVW_GLO wvw = hb_gt_wvw();
+   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
+   PHB_ITEM pBlock = hb_param(3, Harbour::Item::EVALITEM);
 
    if( pBlock && wvw_ctl && !wvw_ctl->fBusy )
    {
@@ -284,8 +277,7 @@ this function always return .T.
 */
 HB_FUNC( WVW_PBSETSTYLE )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
+   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
 
    if( wvw_ctl && wvw_ctl->hWnd )
    {
@@ -303,12 +295,12 @@ this will initialize font for ALL pushbuttons in window nWinNum
 */
 HB_FUNC( WVW_PBSETFONT )
 {
-   PWVW_GLO wvw     = hb_gt_wvw();
+   PWVW_GLO wvw = hb_gt_wvw();
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win )
    {
-      HB_BOOL fResult = HB_TRUE;
+      bool fResult = true;
 
       wvw->lfPB.lfHeight         = hb_parnldef(3, wvw_win->fontHeight - 2);
       wvw->lfPB.lfWidth          = hb_parnldef(4, wvw->lfPB.lfWidth);
@@ -331,7 +323,7 @@ HB_FUNC( WVW_PBSETFONT )
       if( wvw_win->hPBfont )
       {
          HFONT hOldFont = wvw_win->hPBfont;
-         HFONT hFont    = CreateFontIndirect(&wvw->lfPB);
+         HFONT hFont = CreateFontIndirect(&wvw->lfPB);
          if( hFont )
          {
             PWVW_CTL wvw_ctl = wvw_win->ctlList;
@@ -351,7 +343,7 @@ HB_FUNC( WVW_PBSETFONT )
          }
          else
          {
-            fResult = HB_FALSE;
+            fResult = false;
          }
       }
 
@@ -365,9 +357,6 @@ HB_FUNC( WVW_PBSETFONT )
 
 HB_FUNC( WVW_PBVISIBLE )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-
-   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
-
+   HWND hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
    hb_retl(hWnd && ShowWindow(hWnd, hb_parldef(3, true) ? SW_SHOW : SW_HIDE) == 0);
 }

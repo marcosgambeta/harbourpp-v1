@@ -51,7 +51,7 @@
 
 /* workaround for missing declaration in MinGW */
 #if !defined(TTM_SETTITLE) && defined(TTM_SETTITLEA)
-   #define TTM_SETTITLE  TTM_SETTITLEA
+   #define TTM_SETTITLE TTM_SETTITLEA
 #endif
 
 /*
@@ -92,33 +92,32 @@ HB_FUNC( WVW_SETTOOLTIP )
 
    if( wvw_win && wvw_win->fToolTipActive )
    {
-      TOOLINFO ti;
-
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      int iTop    = hb_parni(2);
+      int iLeft   = hb_parni(3);
+      int iBottom = hb_parni(4);
+      int iRight  = hb_parni(5);
 
       hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
 
+      TOOLINFO ti;
       memset(&ti, 0, sizeof(ti));
-
       ti.cbSize = sizeof(ti);
-      ti.hwnd   = wvw_win->hWnd;
-      ti.uId    = WVW_ID_BASE_TOOLTIP + wvw_win->nWinId;
+      ti.hwnd = wvw_win->hWnd;
+      ti.uId = WVW_ID_BASE_TOOLTIP + wvw_win->nWinId;
 
       if( SendMessage(wvw_win->hWndTT, TTM_GETTOOLINFO, 0, reinterpret_cast<LPARAM>(&ti)) )
       {
          void * hText;
+
          POINT xy;
 
-         xy    = hb_gt_wvw_GetXYFromColRow(wvw_win, iLeft, iTop);
-         iTop  = xy.y;
+         xy = hb_gt_wvw_GetXYFromColRow(wvw_win, iLeft, iTop);
+         iTop = xy.y;
          iLeft = xy.x;
 
-         xy      = hb_gt_wvw_GetXYFromColRow(wvw_win, iRight + 1, iBottom + 1);
+         xy = hb_gt_wvw_GetXYFromColRow(wvw_win, iRight + 1, iBottom + 1);
          iBottom = xy.y - 1;
-         iRight  = xy.x - 1;
+         iRight = xy.x - 1;
 
          ti.lpszText    = static_cast<LPTSTR>(HB_UNCONST(HB_PARSTRDEF(6, &hText, nullptr)));
          ti.rect.left   = iLeft;
@@ -142,7 +141,6 @@ HB_FUNC( WVW_SETTOOLTIPTEXT )
    if( wvw_win )
    {
       TOOLINFO ti;
-
       ti.cbSize = sizeof(ti);
       ti.hwnd   = wvw_win->hWnd;
       ti.uId    = 100000;
@@ -166,7 +164,6 @@ HB_FUNC( WVW_SETTOOLTIPMARGIN )
    if( wvw_win )
    {
       RECT rc;
-
       rc.left   = hb_parni(3);
       rc.top    = hb_parni(2);
       rc.right  = hb_parni(5);

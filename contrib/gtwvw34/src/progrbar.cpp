@@ -82,36 +82,30 @@ Initial ProgressPos is 0
 */
 HB_FUNC( WVW_PGCREATE )
 {
-   PWVW_GLO wvw     = hb_gt_wvw();
+   PWVW_GLO wvw = hb_gt_wvw();
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win )
    {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      int iTop    = hb_parni(2);
+      int iLeft   = hb_parni(3);
+      int iBottom = hb_parni(4);
+      int iRight  = hb_parni(5);
 
       int iOffTop    = hb_parvni(6, 1);
       int iOffLeft   = hb_parvni(6, 2);
       int iOffBottom = hb_parvni(6, 3);
       int iOffRight  = hb_parvni(6, 4);
 
-      HWND  hWnd;
-      POINT xy;
-
-      int iStyle = 0;
-      int nCtrlId;
-
-      RECT rXB, rOffXB;
-
       InitCommonControls();
 
+      RECT rXB;
       rXB.top    = iTop;
       rXB.left   = iLeft;
       rXB.bottom = iBottom;
       rXB.right  = iRight;
 
+      RECT rOffXB;
       rOffXB.top    = iOffTop;
       rOffXB.left   = iOffLeft;
       rOffXB.bottom = iOffBottom;
@@ -119,15 +113,17 @@ HB_FUNC( WVW_PGCREATE )
 
       hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
 
-      xy    = hb_gt_wvw_GetXYFromColRow(wvw_win, iLeft, iTop);
-      iTop  = xy.y + iOffTop;
+      POINT xy;
+
+      xy = hb_gt_wvw_GetXYFromColRow(wvw_win, iLeft, iTop);
+      iTop = xy.y + iOffTop;
       iLeft = xy.x + iOffLeft;
 
-      xy      = hb_gt_wvw_GetXYFromColRow(wvw_win, iRight + 1, iBottom + 1);
+      xy = hb_gt_wvw_GetXYFromColRow(wvw_win, iRight + 1, iBottom + 1);
       iBottom = xy.y - wvw_win->iLineSpacing - 1 + iOffBottom;
-      iRight  = xy.x - 1 + iOffRight;
+      iRight = xy.x - 1 + iOffRight;
 
-      nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_PROGRESSBAR);
+      int nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_PROGRESSBAR);
       if( nCtrlId == 0 )
       {
          nCtrlId = WVW_ID_BASE_PROGRESSBAR;
@@ -136,6 +132,8 @@ HB_FUNC( WVW_PGCREATE )
       {
          nCtrlId++;
       }
+
+      DWORD iStyle = 0;
 
       if( hb_parl(9) /* fSmooth */ )
       {
@@ -146,11 +144,11 @@ HB_FUNC( WVW_PGCREATE )
          iStyle |= PBS_VERTICAL;
       }
 
-      hWnd = CreateWindowEx(
+      HWND hWnd = CreateWindowEx(
          0,
          PROGRESS_CLASS,
          nullptr,
-         WS_CHILD | WS_VISIBLE | static_cast<DWORD>(iStyle),
+         WS_CHILD | WS_VISIBLE | iStyle,
          iLeft,
          iTop,
          iRight - iLeft + 1,
@@ -195,8 +193,8 @@ HB_FUNC( WVW_PGDESTROY )
 
    if( wvw_win )
    {
-      int      nCtrlId     = hb_parni(2);
-      PWVW_CTL wvw_ctl     = wvw_win->ctlList;
+      int nCtrlId = hb_parni(2);
+      PWVW_CTL wvw_ctl = wvw_win->ctlList;
       PWVW_CTL wvw_ctlPrev = nullptr;
 
       while( wvw_ctl )
@@ -207,7 +205,7 @@ HB_FUNC( WVW_PGDESTROY )
          }
 
          wvw_ctlPrev = wvw_ctl;
-         wvw_ctl     = wvw_ctl->pNext;
+         wvw_ctl = wvw_ctl->pNext;
       }
 
       if( wvw_ctl )
@@ -243,11 +241,9 @@ returns .T. if operation considered successful
 */
 HB_FUNC( WVW_PGSETRANGE )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-
-   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
-   int  iMin = hb_parni(3);
-   int  iMax = hb_parni(4);
+   HWND hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
+   int iMin = hb_parni(3);
+   int iMax = hb_parni(4);
 
    if( hWnd && iMin <= iMax )
    {
@@ -270,13 +266,11 @@ returns .T. if operation considered successful
 */
 HB_FUNC( WVW_PGSETPOS )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-
-   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
+   HWND hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
 
    if( hWnd )
    {
-      int     iPos = hb_parni(3);
+      int iPos = hb_parni(3);
       PBRANGE pbrange;
 
       SendMessage(hWnd, PBM_GETRANGE, static_cast<WPARAM>(TRUE), reinterpret_cast<LPARAM>(&pbrange));
@@ -284,7 +278,6 @@ HB_FUNC( WVW_PGSETPOS )
       if( iPos >= pbrange.iLow && iPos <= pbrange.iHigh )
       {
          SendMessage(hWnd, PBM_SETPOS, static_cast<WPARAM>(iPos), 0);
-
          hb_retl(true);
          return;
       }
@@ -300,9 +293,7 @@ returns 0 if operation failed
 */
 HB_FUNC( WVW_PGGETPOS )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-
-   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
+   HWND hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
 
    if( hWnd )
    {

@@ -51,28 +51,21 @@
 
 HB_FUNC( WVW_STCREATE )
 {
-   PWVW_GLO wvw     = hb_gt_wvw();
+   PWVW_GLO wvw = hb_gt_wvw();
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win )
    {
-      HWND  hWnd;
-      POINT xy;
-
-      int     iOffTop, iOffLeft, iOffBottom, iOffRight;
-      HB_BOOL fBorder = hb_parl(7);
-
-      int nCtrlId;
-
+      bool fBorder = hb_parl(7);
       int iWidth  = hb_parni(4);
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parnidef(11, iTop),
-          iRight  = hb_parnidef(12, iLeft + iWidth - 1);
+      int iTop    = hb_parni(2);
+      int iLeft   = hb_parni(3);
+      int iBottom = hb_parnidef(11, iTop);
+      int iRight  = hb_parnidef(12, iLeft + iWidth - 1);
+      int iBox    = hb_parni(10);
+      HFONT hFont = nullptr;
 
-      int   iStyle = fBorder ? WS_BORDER : 0;
-      int   iBox   = hb_parni(10);
-      HFONT hFont  = nullptr;
+      DWORD iStyle  = fBorder ? WS_BORDER : 0;
 
       if( iBox > 0 )
       {
@@ -94,22 +87,24 @@ HB_FUNC( WVW_STCREATE )
          }
       }
 
-      iOffTop    = hb_parvni(6, 1);
-      iOffLeft   = hb_parvni(6, 2);
-      iOffBottom = hb_parvni(6, 3);
-      iOffRight  = hb_parvni(6, 4);
+      int iOffTop    = hb_parvni(6, 1);
+      int iOffLeft   = hb_parvni(6, 2);
+      int iOffBottom = hb_parvni(6, 3);
+      int iOffRight  = hb_parvni(6, 4);
 
       hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
 
-      xy    = hb_gt_wvw_GetXYFromColRow(wvw_win, iLeft, iTop);
-      iTop  = xy.y + iOffTop;
+      POINT xy;
+
+      xy = hb_gt_wvw_GetXYFromColRow(wvw_win, iLeft, iTop);
+      iTop = xy.y + iOffTop;
       iLeft = xy.x + iOffLeft;
 
-      xy      = hb_gt_wvw_GetXYFromColRow(wvw_win, iRight + 1, iBottom + 1);
+      xy = hb_gt_wvw_GetXYFromColRow(wvw_win, iRight + 1, iBottom + 1);
       iBottom = xy.y - wvw_win->iLineSpacing - 1 + iOffBottom;
-      iRight  = xy.x - 1 + iOffRight;
+      iRight = xy.x - 1 + iOffRight;
 
-      nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_STATIC);
+      int nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_STATIC);
       if( nCtrlId == 0 )
       {
          nCtrlId = WVW_ID_BASE_STATIC;
@@ -119,11 +114,11 @@ HB_FUNC( WVW_STCREATE )
          nCtrlId++;
       }
 
-      hWnd = CreateWindowEx(
+      HWND hWnd = CreateWindowEx(
          fBorder ? WS_EX_CLIENTEDGE : 0,
          TEXT("STATIC"),
          nullptr,
-         WS_CHILD | WS_VISIBLE | static_cast<DWORD>(iStyle),
+         WS_CHILD | WS_VISIBLE | iStyle,
          iLeft,
          iTop,
          iRight - iLeft + 1,
@@ -163,12 +158,12 @@ HB_FUNC( WVW_STCREATE )
 
 HB_FUNC( WVW_STSETFONT )
 {
-   PWVW_GLO wvw     = hb_gt_wvw();
+   PWVW_GLO wvw = hb_gt_wvw();
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win )
    {
-      HB_BOOL fResult = HB_TRUE;
+      bool fResult = true;
 
       wvw->lfST.lfHeight         = hb_parnldef(3, wvw_win->fontHeight - 2);
       wvw->lfST.lfWidth          = hb_parnldef(4, wvw->lfST.lfWidth);
@@ -191,7 +186,7 @@ HB_FUNC( WVW_STSETFONT )
       if( wvw_win->hSTfont )
       {
          HFONT hOldFont = wvw_win->hSTfont;
-         HFONT hFont    = CreateFontIndirect(&wvw->lfST);
+         HFONT hFont = CreateFontIndirect(&wvw->lfST);
          if( hFont )
          {
             PWVW_CTL wvw_ctl = wvw_win->ctlList;
@@ -211,7 +206,7 @@ HB_FUNC( WVW_STSETFONT )
          }
          else
          {
-            fResult = HB_FALSE;
+            fResult = false;
          }
       }
 

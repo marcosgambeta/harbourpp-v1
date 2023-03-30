@@ -51,7 +51,6 @@ HB_FUNC( WVW_SETMENU )
    if( wvw_win )
    {
       SetMenu(wvw_win->hWnd, hbwapi_par_raw_HMENU(2));
-
       hb_gt_wvw_ResetWindow(wvw_win);
    }
 }
@@ -63,9 +62,7 @@ HB_FUNC( WVW_SETPOPUPMENU )
    if( wvw_win )
    {
       HMENU hPopup = wvw_win->hPopup;
-
       wvw_win->hPopup = hbwapi_par_raw_HMENU(2);
-
       hbwapi_ret_raw_HANDLE(hPopup);
    }
    else
@@ -77,7 +74,6 @@ HB_FUNC( WVW_SETPOPUPMENU )
 HB_FUNC( WVW_GETLASTMENUEVENT )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-
    hb_retni(wvw_win ? wvw_win->LastMenuEvent : 0);
 }
 
@@ -88,7 +84,6 @@ HB_FUNC( WVW_SETLASTMENUEVENT )
    if( wvw_win )
    {
       hb_retni(wvw_win->LastMenuEvent);
-
       wvw_win->LastMenuEvent = hb_parni(2);
    }
    else
@@ -121,9 +116,9 @@ HB_FUNC( WVW_MENUITEM_SETBITMAPS )
    if( wvw )
    {
       HBITMAP hBitmapUnchecked = nullptr;
-      HBITMAP hBitmapChecked   = nullptr;
-      char    szResName[HB_PATH_MAX + 1];
-      int     iWidth = 0, iHeight = 0;
+      HBITMAP hBitmapChecked = nullptr;
+      char szResName[HB_PATH_MAX + 1];
+      int iWidth = 0, iHeight = 0;
 
       if( HB_ISNUM(4) )
       {
