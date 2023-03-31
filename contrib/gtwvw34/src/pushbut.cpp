@@ -238,10 +238,10 @@ HB_FUNC( WVW_PBSETCODEBLOCK )
 
    if( pBlock && wvw_ctl && !wvw_ctl->fBusy )
    {
-      HB_BOOL fOldSetting = wvw->fRecurseCBlock;
+      bool fOldSetting = wvw->fRecurseCBlock;
 
-      wvw->fRecurseCBlock = HB_FALSE;
-      wvw_ctl->fBusy      = HB_TRUE;
+      wvw->fRecurseCBlock = false;
+      wvw_ctl->fBusy      = true;
 
       if( wvw_ctl->pBlock )
       {
@@ -250,7 +250,7 @@ HB_FUNC( WVW_PBSETCODEBLOCK )
 
       wvw_ctl->pBlock = hb_itemNew(pBlock);
 
-      wvw_ctl->fBusy      = HB_FALSE;
+      wvw_ctl->fBusy      = false;
       wvw->fRecurseCBlock = fOldSetting;
 
       hb_retl(true);

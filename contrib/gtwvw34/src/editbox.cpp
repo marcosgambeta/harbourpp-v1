@@ -161,7 +161,7 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc(HWND hWnd, UINT message, WPARAM wParam,
 
       case WM_CHAR:
       {
-         HB_BOOL bCtrl     = GetKeyState(VK_CONTROL) & 0x8000;
+         bool    bCtrl     = GetKeyState(VK_CONTROL) & 0x8000;
          int     iScanCode = HB_LOBYTE(HIWORD(lParam));
          int     c         = static_cast<int>(wParam);
 
@@ -756,10 +756,10 @@ HB_FUNC( WVW_EBSETCODEBLOCK )
    if( pBlock && wvw_ctl && !wvw_ctl->fBusy )
    {
       PWVW_GLO wvw = hb_gt_wvw();
-      HB_BOOL fOldSetting = wvw->fRecurseCBlock;
+      bool fOldSetting = wvw->fRecurseCBlock;
 
-      wvw->fRecurseCBlock = HB_FALSE;
-      wvw_ctl->fBusy = HB_TRUE;
+      wvw->fRecurseCBlock = false;
+      wvw_ctl->fBusy = true;
 
       if( wvw_ctl->pBlock )
       {
@@ -768,7 +768,7 @@ HB_FUNC( WVW_EBSETCODEBLOCK )
 
       wvw_ctl->pBlock = hb_itemNew(pBlock);
 
-      wvw_ctl->fBusy = HB_FALSE;
+      wvw_ctl->fBusy = false;
       wvw->fRecurseCBlock = fOldSetting;
 
       hb_retl(true);
@@ -917,7 +917,7 @@ HB_FUNC( WVW_EBSETTEXT )
    if( wvw_ctl )
    {
       void * hText;
-      hb_retl(static_cast<HB_BOOL>(SendMessage(wvw_ctl->hWnd, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(HB_PARSTRDEF(3, &hText, nullptr)))));
+      hb_retl(static_cast<bool>(SendMessage(wvw_ctl->hWnd, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(HB_PARSTRDEF(3, &hText, nullptr)))));
       hb_strfree(hText);
    }
    else

@@ -54,7 +54,7 @@
 add one button to existing Toolbar
 uiBitmap is resource id
 */
-static HB_BOOL hb_gt_wvw_AddTBButton(HWND hWndToolbar, const char * szBitmap, HB_UINT uiBitmap, LPCTSTR pszLabel, int iCommand, int iBitmapType, HB_BOOL fMap3Dcolors, PWVW_WIN wvw_win, BOOL fDropdown)
+static bool hb_gt_wvw_AddTBButton(HWND hWndToolbar, const char * szBitmap, HB_UINT uiBitmap, LPCTSTR pszLabel, int iCommand, int iBitmapType, bool fMap3Dcolors, PWVW_WIN wvw_win, bool fDropdown)
 {
    TBBUTTON tbb;
    TBADDBITMAP tbab;
@@ -71,7 +71,7 @@ static HB_BOOL hb_gt_wvw_AddTBButton(HWND hWndToolbar, const char * szBitmap, HB
       tbb.dwData    = 0;
       tbb.iString   = 0;
 
-      return static_cast<HB_BOOL>(SendMessage(hWndToolbar, TB_ADDBUTTONS, static_cast<WPARAM>(1), reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(&tbb))));
+      return static_cast<bool>(SendMessage(hWndToolbar, TB_ADDBUTTONS, static_cast<WPARAM>(1), reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(&tbb))));
    }
 
    switch( iBitmapType )
@@ -125,7 +125,7 @@ static HB_BOOL hb_gt_wvw_AddTBButton(HWND hWndToolbar, const char * szBitmap, HB
    tbb.dwData  = 0;
    tbb.iString = iNewString;
 
-   return static_cast<HB_BOOL>(SendMessage(hWndToolbar, TB_ADDBUTTONS, static_cast<WPARAM>(1), reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(&tbb))));
+   return static_cast<bool>(SendMessage(hWndToolbar, TB_ADDBUTTONS, static_cast<WPARAM>(1), reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(&tbb))));
 }
 
 static int hb_gt_wvw_IndexToCommand(HWND hWndTB, int iIndex)

@@ -55,7 +55,7 @@ here we have an option fTight.
 if it is true, only one pixel lines used (outer lines are not drawn)
 TODO: combine it with aOffset like DrawImage ?
 */
-static void hb_gt_wvw_DrawBoxRecessed(HDC hDC, int iTop, int iLeft, int iBottom, int iRight, HB_BOOL fTight)
+static void hb_gt_wvw_DrawBoxRecessed(HDC hDC, int iTop, int iLeft, int iBottom, int iRight, bool fTight)
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
@@ -111,7 +111,7 @@ here we have an option fTight.
 if it is true, only one pixel lines used (outer lines are not drawn)
 TODO: combine it with aOffset like DrawImage ?
 */
-static void hb_gt_wvw_DrawBoxRaised(HDC hDC, int iTop, int iLeft, int iBottom, int iRight, HB_BOOL fTight) /* <-- none in GTWVT */
+static void hb_gt_wvw_DrawBoxRaised(HDC hDC, int iTop, int iLeft, int iBottom, int iRight, bool fTight) /* <-- none in GTWVT */
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
@@ -263,9 +263,9 @@ Do not use it to draw large number of images, because image handle
 is never closed.
 TODO: make it an option.
 */
-static HB_BOOL hb_gt_wvw_DrawImage(HWND hWnd, int x1, int y1, int wd, int ht, const char * image, HB_BOOL fTransparent)
+static bool hb_gt_wvw_DrawImage(HWND hWnd, int x1, int y1, int wd, int ht, const char * image, bool fTransparent)
 {
-   HB_BOOL fResult;
+   bool    fResult;
    int     iWidth  = 0;
    int     iHeight = 0;
 
@@ -282,7 +282,7 @@ static HB_BOOL hb_gt_wvw_DrawImage(HWND hWnd, int x1, int y1, int wd, int ht, co
 
       if( !pPicture )
       {
-         return HB_FALSE;
+         return false;
       }
 
       #if 0
@@ -302,7 +302,7 @@ static HB_BOOL hb_gt_wvw_DrawImage(HWND hWnd, int x1, int y1, int wd, int ht, co
 
       if( !hBitmap )
       {
-         return HB_FALSE;
+         return false;
       }
 
       GetObject(hBitmap, sizeof(bmTemp), static_cast<LPVOID>(&bmTemp));
@@ -315,7 +315,7 @@ static HB_BOOL hb_gt_wvw_DrawImage(HWND hWnd, int x1, int y1, int wd, int ht, co
    if( fTransparent )
    {
       s_DrawTransparentBitmap(hDC, hBitmap, x1, y1, wd, ht);
-      fResult = HB_TRUE;
+      fResult = true;
    }
    else
    {
@@ -327,7 +327,7 @@ static HB_BOOL hb_gt_wvw_DrawImage(HWND hWnd, int x1, int y1, int wd, int ht, co
 
       iOldMode = SetStretchBltMode(hDC, COLORONCOLOR);
 
-      fResult = static_cast<HB_BOOL>(StretchBlt(
+      fResult = static_cast<bool>(StretchBlt(
          hDC,        /* handle to destination DC */
          x1,         /* x-coord of destination upper-left corner */
          y1,         /* y-coord of destination upper-left corner */
@@ -350,9 +350,9 @@ static HB_BOOL hb_gt_wvw_DrawImage(HWND hWnd, int x1, int y1, int wd, int ht, co
    return fResult;
 }
 
-static HB_BOOL hb_gt_wvw_RenderPicture(PWVW_WIN wvw_win, int x1, int y1, int wd, int ht, IPicture * pPicture, HB_BOOL bTransp)
+static bool hb_gt_wvw_RenderPicture(PWVW_WIN wvw_win, int x1, int y1, int wd, int ht, IPicture * pPicture, bool bTransp)
 {
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
    if( pPicture )
    {
@@ -381,7 +381,7 @@ static HB_BOOL hb_gt_wvw_RenderPicture(PWVW_WIN wvw_win, int x1, int y1, int wd,
             s_DrawTransparentBitmap(hDCTemp, hBitmap, x1, y1, wd, ht);
             ReleaseDC(wvw_win->hWnd, hDCTemp);
 
-            fResult = HB_TRUE;
+            fResult = true;
          }
 
          return fResult;
@@ -447,7 +447,7 @@ static HB_BOOL hb_gt_wvw_RenderPicture(PWVW_WIN wvw_win, int x1, int y1, int wd,
          SelectClipRgn(wvw_win->hdc, nullptr);
          DeleteObject(hrgn1);
 
-         fResult = HB_TRUE;
+         fResult = true;
       }
    }
 
@@ -462,7 +462,7 @@ static IPicture * s_FindPictureHandle(PWVW_GLO wvw, const char * szFileName, int
 {
    WVW_IPIC * pph = wvw->a.pphPictureList;
 
-   HB_BOOL fStrictDimension = !(*piWidth == 0 && *piHeight == 0);
+   bool fStrictDimension = !(*piWidth == 0 && *piHeight == 0);
 
    while( pph )
    {
@@ -908,7 +908,7 @@ HB_FUNC( WVW_DRAWBOXRAISED )
           iBottom = hb_parni(4),
           iRight  = hb_parni(5);
 
-      HB_BOOL fTight = hb_parl(6);
+      bool fTight = hb_parl(6);
 
       POINT xy;
       int   iOffLeft, iOffTop, iOffRight, iOffBottom;
@@ -971,7 +971,7 @@ HB_FUNC( WVW_DRAWBOXRECESSED )
           iBottom = hb_parni(4),
           iRight  = hb_parni(5);
 
-      HB_BOOL fTight = hb_parl(6);
+      bool fTight = hb_parl(6);
 
       POINT xy;
       int   iOffLeft, iOffTop, iOffRight, iOffBottom;
@@ -1149,11 +1149,11 @@ HB_FUNC( WVW_DRAWIMAGE )
       POINT xy;
       int   iBottomNew = 0, iRightNew = 0;
 
-      HB_BOOL fResult;
+      bool fResult;
 
-      HB_BOOL fActBottom   = !HB_ISNUM(4);
-      HB_BOOL fActRight    = !HB_ISNUM(5);
-      HB_BOOL fTransparent = hb_parl(8);
+      bool fActBottom   = !HB_ISNUM(4);
+      bool fActRight    = !HB_ISNUM(5);
+      bool fTransparent = hb_parl(8);
 
       int iImgWidth = 0, iImgHeight = 0;
       int iOffLeft, iOffTop, iOffRight, iOffBottom;
@@ -1181,7 +1181,7 @@ HB_FUNC( WVW_DRAWIMAGE )
 
       if( fActRight || fActBottom )
       {
-         HB_BOOL fSuccess = HB_FALSE;
+         bool fSuccess = false;
 
          if( HB_ISNUM(6) )
          {
@@ -1199,8 +1199,8 @@ HB_FUNC( WVW_DRAWIMAGE )
 
          if( !fSuccess )
          {
-            fActRight  = HB_FALSE;
-            fActBottom = HB_FALSE;
+            fActRight  = false;
+            fActBottom = false;
          }
          else if( fActRight && fActBottom )
          {
@@ -1243,7 +1243,7 @@ HB_FUNC( WVW_DRAWIMAGE )
          }
          else
          {
-            fResult = HB_FALSE;
+            fResult = false;
          }
       }
       else
@@ -1310,8 +1310,8 @@ HB_FUNC( WVW_DRAWIMAGE_RESOURCE )  /* Not in WVT */
              iBottom = hb_parni(4),
              iRight  = hb_parni(5);
 
-         HB_BOOL fActBottom = !HB_ISNUM(4);
-         HB_BOOL fActRight  = !HB_ISNUM(5);
+         bool fActBottom = !HB_ISNUM(4);
+         bool fActRight  = !HB_ISNUM(5);
 
          int iBottomNew = 0, iRightNew = 0;
          int iOffLeft, iOffTop, iOffRight, iOffBottom;
@@ -1343,8 +1343,8 @@ HB_FUNC( WVW_DRAWIMAGE_RESOURCE )  /* Not in WVT */
          {
             if( !hb_gt_wvw_GetIPictDimension(pPicture, &iImgWidth, &iImgHeight) )
             {
-               fActRight  = HB_FALSE;
-               fActBottom = HB_FALSE;
+               fActRight  = false;
+               fActBottom = false;
             }
             else if( fActRight && fActBottom )
             {
@@ -2413,7 +2413,7 @@ HB_FUNC( WVW_DRAWBUTTON )
       LOGBRUSH lb;
       HBRUSH   hBrush;
 
-      HB_BOOL fImage  = HB_ISNUM(7) || HB_ISCHAR(7);
+      bool fImage  = HB_ISNUM(7) || HB_ISCHAR(7);
       int     iFormat = hb_parni(8);
 
       HDC hDC = wvw_win->hdc;
@@ -2449,7 +2449,7 @@ HB_FUNC( WVW_DRAWBUTTON )
       switch( iFormat )
       {
          case 1:
-            hb_gt_wvw_DrawBoxRecessed(hDC, iTop + 1, iLeft + 1, iBottom - 1, iRight - 1, HB_FALSE);
+            hb_gt_wvw_DrawBoxRecessed(hDC, iTop + 1, iLeft + 1, iBottom - 1, iRight - 1, false);
             break;
          case 2:
             break;
@@ -2459,7 +2459,7 @@ HB_FUNC( WVW_DRAWBUTTON )
          case 4:
             break;
          default:
-            hb_gt_wvw_DrawBoxRaised(hDC, iTop + 1, iLeft + 1, iBottom - 1, iRight - 1, HB_FALSE);
+            hb_gt_wvw_DrawBoxRaised(hDC, iTop + 1, iLeft + 1, iBottom - 1, iRight - 1, false);
       }
 
       if( HB_ISCHAR(6) )
@@ -2523,12 +2523,12 @@ HB_FUNC( WVW_DRAWBUTTON )
 
             if( iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.pPicture)) )
             {
-               hb_gt_wvw_RenderPicture(wvw_win, iLeft + 4, iTop + 4, iImageWidth, iImageHeight, wvw->a.pPicture[iSlot], HB_FALSE);
+               hb_gt_wvw_RenderPicture(wvw_win, iLeft + 4, iTop + 4, iImageWidth, iImageHeight, wvw->a.pPicture[iSlot], false);
             }
          }
          else
          {
-            hb_gt_wvw_DrawImage(wvw_win->hWnd, iLeft + 4, iTop + 4, iImageWidth, iImageHeight, hb_parcx(7), HB_FALSE);
+            hb_gt_wvw_DrawImage(wvw_win->hWnd, iLeft + 4, iTop + 4, iImageWidth, iImageHeight, hb_parcx(7), false);
          }
       }
 
@@ -2674,7 +2674,7 @@ HB_FUNC( WVW_DRAWPICTURE )
       iBottom = xy.y - 1 + iOffBottom;
       iRight  = xy.x - 1 + iOffRight;
 
-      hb_retl(hb_gt_wvw_RenderPicture(wvw_win, iLeft, iTop, iRight - iLeft + 1, iBottom - iTop + 1, wvw->a.pPicture[iSlot], HB_FALSE));
+      hb_retl(hb_gt_wvw_RenderPicture(wvw_win, iLeft, iTop, iRight - iLeft + 1, iBottom - iTop + 1, wvw->a.pPicture[iSlot], false));
    }
    else
    {
@@ -2823,11 +2823,11 @@ HB_FUNC( WVW_DRAWSCROLLBUTTON )
 
       if( hb_parl(8) /* fDepressed */ )
       {
-         hb_gt_wvw_DrawBoxRecessed(hDC, iTop + 1, iLeft + 1, iBottom - 2, iRight - 2, HB_FALSE);
+         hb_gt_wvw_DrawBoxRecessed(hDC, iTop + 1, iLeft + 1, iBottom - 2, iRight - 2, false);
       }
       else
       {
-         hb_gt_wvw_DrawBoxRaised(hDC, iTop + 1, iLeft + 1, iBottom - 2, iRight - 2, HB_FALSE);
+         hb_gt_wvw_DrawBoxRaised(hDC, iTop + 1, iLeft + 1, iBottom - 2, iRight - 2, false);
       }
       SelectObject(hDC, wvw->a.solidBrush);
 
@@ -2940,7 +2940,7 @@ HB_FUNC( WVW_DRAWSCROLLTHUMBVERT )
       SelectObject(hDC, wvw->a.penGray);
       Rectangle(hDC, iTabLft, iTabTop, iTabRgt + 1, iTabBtm);
 
-      hb_gt_wvw_DrawBoxRaised(hDC, iTabTop + 1, iTabLft + 1, iTabBtm - 2, iTabRgt - 2, HB_FALSE);
+      hb_gt_wvw_DrawBoxRaised(hDC, iTabTop + 1, iTabLft + 1, iTabBtm - 2, iTabRgt - 2, false);
    }
 }
 
@@ -2996,7 +2996,7 @@ HB_FUNC( WVW_DRAWSCROLLTHUMBHORZ )
       SelectObject(hDC, wvw->a.penGray);
       Rectangle(hDC, iThumbLeft, iTop, iThumbRight, iBottom);
 
-      hb_gt_wvw_DrawBoxRaised(hDC, iTop + 1, iThumbLeft + 1, iBottom - 2, iThumbRight - 2, HB_FALSE);
+      hb_gt_wvw_DrawBoxRaised(hDC, iTop + 1, iThumbLeft + 1, iBottom - 2, iThumbRight - 2, false);
    }
 }
 
@@ -3010,7 +3010,7 @@ HB_FUNC( WVW_DRAWSHADEDRECT )
 
    if( wvw && wvw_win )
    {
-      HB_BOOL fResult = HB_FALSE;
+      bool fResult = false;
 
       {
          int iTop    = hb_parni(2),
@@ -3056,7 +3056,7 @@ HB_FUNC( WVW_DRAWSHADEDRECT )
          gRect.UpperLeft  = 0;
          gRect.LowerRight = 1;
 
-         fResult = static_cast<HB_BOOL>(GradientFill(wvw_win->hdc, vert, HB_SIZEOFARRAY(vert), &gRect, 1, iMode));
+         fResult = static_cast<bool>(GradientFill(wvw_win->hdc, vert, HB_SIZEOFARRAY(vert), &gRect, 1, iMode));
       }
 
       hb_retl(fResult);
@@ -3222,7 +3222,7 @@ HB_FUNC( WVW_DRAWPROGRESSBAR )
 
       if( HB_ISCHAR(10) )
       {
-         hb_gt_wvw_DrawImage(wvw_win->hWnd, rc.left, rc.top, rc.right - rc.left + 1, rc.bottom - rc.top + 1, hb_parc(10), HB_FALSE);
+         hb_gt_wvw_DrawImage(wvw_win->hWnd, rc.left, rc.top, rc.right - rc.left + 1, rc.bottom - rc.top + 1, hb_parc(10), false);
       }
       else
       {

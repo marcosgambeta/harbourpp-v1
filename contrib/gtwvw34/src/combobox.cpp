@@ -544,9 +544,9 @@ HB_FUNC( WVW_CBSETCODEBLOCK )
    if( pBlock && wvw_ctl && !wvw_ctl->fBusy )
    {
       PWVW_GLO wvw = hb_gt_wvw();
-      HB_BOOL fOldSetting = wvw->fRecurseCBlock;
-      wvw->fRecurseCBlock = HB_FALSE;
-      wvw_ctl->fBusy = HB_TRUE;
+      bool fOldSetting = wvw->fRecurseCBlock;
+      wvw->fRecurseCBlock = false;
+      wvw_ctl->fBusy = true;
 
       if( wvw_ctl->pBlock )
       {
@@ -554,7 +554,7 @@ HB_FUNC( WVW_CBSETCODEBLOCK )
       }
 
       wvw_ctl->pBlock = hb_itemNew(pBlock);
-      wvw_ctl->fBusy = HB_FALSE;
+      wvw_ctl->fBusy = false;
       wvw->fRecurseCBlock = fOldSetting;
 
       hb_retl(true);
@@ -651,7 +651,7 @@ HB_FUNC( WVW_CBSETINDEX )
 {
    PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
    int iIndex = hb_parni(3);
-   hb_retl((wvw_ctl && iIndex >= 0) ? static_cast<HB_BOOL>(SendMessage(wvw_ctl->hWnd, CB_SETCURSEL, static_cast<WPARAM>(iIndex), 0)) == iIndex : false);
+   hb_retl((wvw_ctl && iIndex >= 0) ? static_cast<bool>(SendMessage(wvw_ctl->hWnd, CB_SETCURSEL, static_cast<WPARAM>(iIndex), 0)) == iIndex : false);
 }
 
 /*
@@ -743,7 +743,7 @@ Also returns .F. if nCBid not valid
 HB_FUNC( WVW_CBISDROPPED )
 {
    PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
-   hb_retl(wvw_ctl ? static_cast<HB_BOOL>(SendMessage(wvw_ctl->hWnd, CB_GETDROPPEDSTATE, 0, 0)) : false);
+   hb_retl(wvw_ctl ? static_cast<bool>(SendMessage(wvw_ctl->hWnd, CB_GETDROPPEDSTATE, 0, 0)) : false);
 }
 
 HB_FUNC( WVW_CBVISIBLE )

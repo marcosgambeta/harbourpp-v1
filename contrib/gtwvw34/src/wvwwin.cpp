@@ -48,9 +48,9 @@
 
 #include "hbmath.hpp"
 
-static HB_BOOL hb_gt_wvw_SetCentreWindow(PWVW_WIN wvw_win, HB_BOOL fCentre, HB_BOOL fPaint)
+static bool hb_gt_wvw_SetCentreWindow(PWVW_WIN wvw_win, bool fCentre, bool fPaint)
 {
-   HB_BOOL fOldCentre = wvw_win->CentreWindow;
+   bool fOldCentre = wvw_win->CentreWindow;
 
    wvw_win->CentreWindow = fCentre;
 
@@ -195,8 +195,8 @@ HB_FUNC( WVW_NOPENWINDOW )
          {
             if( wi.right < rcWorkArea.left || wi.left > rcWorkArea.right || wi.top > rcWorkArea.bottom || wi.bottom < rcWorkArea.top )
             {
-               hb_gt_wvw_SetCentreWindow(hb_gt_wvw_win_top(), HB_TRUE, HB_TRUE);
-               hb_gt_wvw_SetCentreWindow(wvw_win, wvw->fDevCentreWindow, HB_TRUE);
+               hb_gt_wvw_SetCentreWindow(hb_gt_wvw_win_top(), true, true);
+               hb_gt_wvw_SetCentreWindow(wvw_win, wvw->fDevCentreWindow, true);
             }
          }
 
@@ -251,9 +251,9 @@ HB_FUNC( WVW_LCLOSEWINDOW )
       {
          if( !hb_gt_wvw_GetMainCoordMode() )
          {
-            wvw->fQuickSetMode = HB_TRUE;
+            wvw->fQuickSetMode = true;
             hb_gtSetMode(wvw_top->ROWS, wvw_top->COLS);
-            wvw->fQuickSetMode = HB_FALSE;
+            wvw->fQuickSetMode = false;
          }
          else
          {
@@ -305,10 +305,10 @@ HB_FUNC( WVW_XREPOSWINDOW )
 
    if( wvw )
    {
-      HB_BOOL fAnchored = hb_parldef(1, true);
+      bool fAnchored = hb_parldef(1, true);
 
       /* centerize Main Window, only if not maximized */
-      hb_gt_wvw_SetCentreWindow(hb_gt_wvw_win_top(), HB_TRUE, HB_TRUE);
+      hb_gt_wvw_SetCentreWindow(hb_gt_wvw_win_top(), true, true);
 
       /* reposition all subwindows */
       for( int i = 1; i < wvw->iNumWindows; i++ )
@@ -319,11 +319,11 @@ HB_FUNC( WVW_XREPOSWINDOW )
          {
             if( fAnchored )
             {
-               hb_gt_wvw_SetCentreWindow(wvw_win, HB_FALSE, HB_TRUE);
+               hb_gt_wvw_SetCentreWindow(wvw_win, false, true);
             }
             else
             {
-               hb_gt_wvw_SetCentreWindow(wvw_win, wvw_win->CentreWindow, HB_TRUE);
+               hb_gt_wvw_SetCentreWindow(wvw_win, wvw_win->CentreWindow, true);
             }
          }
       }

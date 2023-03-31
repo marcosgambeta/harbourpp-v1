@@ -276,7 +276,7 @@ HB_FUNC( WVW_ADDTOOLTIPEX )  /* changed by MAG */
          ti.hinst    = GetModuleHandle(nullptr);
          ti.lpszText = static_cast<LPTSTR>(HB_UNCONST(HB_PARSTRDEF(3, &hText, nullptr)));
 
-         hb_retl(static_cast<HB_BOOL>(SendMessage(wvw->hWndTT, TTM_ADDTOOL, 0, reinterpret_cast<LPARAM>(&ti))));
+         hb_retl(static_cast<bool>(SendMessage(wvw->hWndTT, TTM_ADDTOOL, 0, reinterpret_cast<LPARAM>(&ti))));
 
          hb_strfree(hText);
          return;
@@ -661,7 +661,7 @@ HB_FUNC( WVW_DRAWBITMAP )
 HB_FUNC( WVW_WINDOW2BITMAP )
 {
    HWND    hWnd   = hbwapi_par_raw_HWND(1);
-   HB_BOOL fFull  = hb_parl(2);
+   bool    fFull  = hb_parl(2);
    HDC     hDC    = fFull ? GetWindowDC(hWnd) : GetDC(hWnd);
    HDC     hDCmem = CreateCompatibleDC(hDC);
    HBITMAP hBitmap;
@@ -867,7 +867,7 @@ HB_FUNC( WVW_LOADPICTURE )
    int        iSlot    = hb_parni(1) - 1;
    IPicture * pPicture = hb_gt_wvw_LoadPicture(hb_parcx(2));
 
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
    if( wvw && pPicture && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.pPicture)) )
    {
@@ -878,7 +878,7 @@ HB_FUNC( WVW_LOADPICTURE )
 
       wvw->a.pPicture[iSlot] = pPicture;
 
-      fResult = HB_TRUE;
+      fResult = true;
    }
 
    hb_retl(fResult);
@@ -1126,8 +1126,8 @@ HB_FUNC( WVW_FILLRECTANGLE )
       POINT xy;
 
       COLORREF crRGBcolor = hbwapi_par_COLORREF(6);
-      HB_BOOL  fTight     = hb_parl(7);
-      HB_BOOL  fUseBrush  = hb_parl(8);
+      bool     fTight     = hb_parl(7);
+      bool     fUseBrush  = hb_parl(8);
       LOGBRUSH lb;
       HBRUSH   hBrush;
       RECT     rcXY;
@@ -1468,7 +1468,7 @@ HB_FUNC( WVW_RESTSCREEN )
 
       HBITMAP hBmp;
 
-      HB_BOOL fResult = HB_FALSE;
+      bool fResult = false;
 
       hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
 
@@ -1490,12 +1490,12 @@ HB_FUNC( WVW_RESTSCREEN )
          {
             if( BitBlt(wvw_win->hdc, iLeft, iTop, iWidth, iHeight, wvw_win->hCompDC, 0, 0, SRCCOPY) )
             {
-               fResult = HB_TRUE;
+               fResult = true;
             }
          }
          else if( StretchBlt(wvw_win->hdc, iLeft, iTop, iWidth, iHeight, wvw_win->hCompDC, 0, 0, hb_parvni(6, 1), hb_parvni(6, 2), SRCCOPY) )
          {
-            fResult = HB_TRUE;
+            fResult = true;
          }
 
          SelectObject(wvw_win->hCompDC, hBmp);
@@ -1520,7 +1520,7 @@ HB_FUNC( WVW_SETFONT )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
    if( wvw_win )
    {
@@ -1571,7 +1571,7 @@ HB_FUNC( WVW_SETFONT )
                hb_gt_wvw_KillCaret(wvw_win);
                hb_gt_wvw_CreateCaret(wvw_win);
             }
-            fResult = HB_TRUE;
+            fResult = true;
          }
          DeleteObject(hFont);
       }

@@ -116,7 +116,7 @@ HB_FUNC( WVW_SBDESTROY )
       }
       DestroyWindow(wvw_win->hStatusBar);
       wvw_win->hStatusBar = nullptr;
-      wvw_win->fSBPaint   = HB_FALSE;
+      wvw_win->fSBPaint   = false;
       wvw_win->iSBHeight  = 0;
       hb_gt_wvw_ResetWindow(wvw_win);
    }
@@ -145,7 +145,7 @@ HB_FUNC( WVW_SBADDPART )
       int piArray[WVW_MAX_STATUS_PARTS];
       int iNumOfParts;
       WORD displayFlags = static_cast<WORD>(hb_parnl(4));
-      HB_BOOL fResetParts = hb_parl(5);
+      bool fResetParts = hb_parl(5);
       int iWidth = hb_parni(3) <= 0 ? 5 * WVW_SPACE_BETWEEN_PARTS : hb_parni(3);
 
       if( HB_ISCHAR(2) )
@@ -305,7 +305,7 @@ HB_FUNC( WVW_SBSETTEXT )
 
       if( iPart == 0 && (wvw_win->cSBColorForeground || wvw_win->cSBColorBackground) )
       {
-         wvw_win->fSBPaint = HB_TRUE;
+         wvw_win->fSBPaint = true;
          SendMessage(wvw_win->hStatusBar, SB_SETTEXT, SBT_OWNERDRAW, reinterpret_cast<LPARAM>(HB_PARSTRDEF(3, &hText, nullptr)));
          hb_gt_wvw_ProcessMessages(wvw_win);
       }

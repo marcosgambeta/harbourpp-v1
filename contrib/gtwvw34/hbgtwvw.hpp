@@ -216,7 +216,7 @@ typedef struct _WVW_CTL
    HWND     hWnd;
    int      nId;
    PHB_ITEM pBlock;
-   HB_BOOL  fBusy;
+   bool     fBusy;
    int      nBusy;
    RECT     rect;
    RECT     offs;
@@ -244,7 +244,7 @@ typedef struct
    int     iRowOfs;                /* offset to Main Window's (0,0) */
    int     iColOfs;                /* offset to Main Window's (0,0) */
    int     iDispCount;             /* pending DispEnd() request */
-   HB_BOOL fPaintPending;          /* pending WVW_PAINT() execution */
+   bool    fPaintPending;          /* pending WVW_PAINT() execution */
    RECT    rPaintPending;          /* rect of pending fPaintPending */
    HWND    hStatusBar;             /* handle to status bar */
    int     iSBHeight;              /* height of status bar */
@@ -267,16 +267,16 @@ typedef struct
    HFONT hCXfont;                  /* handle to font used by checkboxes when 'focused' */
    HFONT hSTfont;                  /* handle to font used by checkboxes when 'focused' */
 
-   HB_BOOL   fSBPaint;
+   bool      fSBPaint;
    COLORREF  cSBColorForeground;
    COLORREF  cSBColorBackground;
 
-   HB_BOOL   fIgnoreWM_SYSCHAR;
-   HB_BOOL   fPaint;
-   HB_BOOL   fGetFocus;
+   bool      fIgnoreWM_SYSCHAR;
+   bool      fPaint;
+   bool      fGetFocus;
 
    POINT     PTEXTSIZE;                                /* size of the fixed width font */
-   HB_BOOL   FixedFont;                                /* HB_TRUE if current font is a fixed font */
+   bool      FixedFont;                                /* HB_TRUE if current font is a fixed font */
    int       FixedSize[ WVW_MAX_COLS ];                /* buffer for ExtTextOut() to emulate fixed pitch when Proportional font selected */
    TCHAR     TextLine[ WVW_MAX_COLS ];                 /* buffer for ExtTextOut() */
    int       ROWS;                                     /* number of displayable rows in window */
@@ -291,7 +291,7 @@ typedef struct
    POINT     caretPos;                                 /* the current caret position */
    int       CaretSize;                                /* this may be specific to each windows, eg. different font size */
    POINT     mousePos;                                 /* the last mouse down position */
-   HB_BOOL   MouseMove;                                /* Flag to say whether to return mouse movement events */
+   bool      MouseMove;                                /* Flag to say whether to return mouse movement events */
    HWND      hWnd;                                     /* the window handle */
    int       Keys[ WVW_CHAR_QUEUE_SIZE ];              /* Array to hold the characters & events */
    int       keyPointerIn;                             /* Offset into key array for character to be placed */
@@ -308,23 +308,23 @@ typedef struct
 
    int       LastMenuEvent;             /* Last menu item selected */
    int       MenuKeyEvent;              /* User definable event number for windows menu command */
-   HB_BOOL   CentreWindow;              /* True if window is to be Reset into centre of window */
+   bool      CentreWindow;              /* True if window is to be Reset into centre of window */
 
    /* if CentreWindow is HB_FALSE, two following settings are examined */
-   HB_BOOL   HCentreWindow;             /* True if window is to be Reset into centre of window, horizontally */
-   HB_BOOL   VCentreWindow;             /* True if window is to be Reset into centre of window, vertically */
+   bool      HCentreWindow;             /* True if window is to be Reset into centre of window, horizontally */
+   bool      VCentreWindow;             /* True if window is to be Reset into centre of window, vertically */
 
    int       CodePage;                  /* Code page to use for display characters */
 
-   HB_BOOL   InvalidateWindow;          /* Flag for controlling whether to use ScrollWindowEx() */
-   HB_BOOL   EnableShortCuts;           /* Determines whether ALT key enables menu or system menu */
+   bool      InvalidateWindow;          /* Flag for controlling whether to use ScrollWindowEx() */
+   bool      EnableShortCuts;           /* Determines whether ALT key enables menu or system menu */
 
    HDC       hdc;                       /* Handle to Windows Device Context (FIXME: ? non-MT compatible to store it, even with CS_OWNDC?) */
    HMENU     hPopup;                    /* Handle of context menu invokable with right click */
 
    HDC       hCompDC;                   /* Compatible DC to _s.hdc */
    HWND      hWndTT;                    /* Handle to hold tooltip information */
-   HB_BOOL   fToolTipActive;            /* Flag to set whether tooltip is active or not */
+   bool      fToolTipActive;            /* Flag to set whether tooltip is active or not */
    HICON     hIcon;
 
 } WVW_WIN, * PWVW_WIN;
@@ -332,17 +332,17 @@ typedef struct
 typedef struct
 {
    int     iPaintRefresh;        /* milliseconds between timer check */
-   HB_BOOL fMainCoordMode;       /* in this mode, all HB_GT_FUNC() uses Main Window's coordinate */
-   HB_BOOL fVertCaret;           /* if HB_TRUE, caret is in Vertical style */
-   HB_BOOL fNOSTARTUPSUBWINDOW;  /* if HB_TRUE, subwindow will not be displayed during opening */
+   bool    fMainCoordMode;       /* in this mode, all HB_GT_FUNC() uses Main Window's coordinate */
+   bool    fVertCaret;           /* if HB_TRUE, caret is in Vertical style */
+   bool    fNOSTARTUPSUBWINDOW;  /* if HB_TRUE, subwindow will not be displayed during opening */
    /* use wvw_NoStartupSubWindow() to check/set it */
-   HB_BOOL fDevCentreWindow;     /* default CentreWindow setting for subwindows */
-   HB_BOOL fDevHCentreWindow;    /* default HCentreWindow setting for subwindows */
-   HB_BOOL fDevVCentreWindow;    /* default VCentreWindow setting for subwindows */
+   bool    fDevCentreWindow;     /* default CentreWindow setting for subwindows */
+   bool    fDevHCentreWindow;    /* default HCentreWindow setting for subwindows */
+   bool    fDevVCentreWindow;    /* default VCentreWindow setting for subwindows */
    int     iDefLineSpacing;      /* default line spacing */
    int     iDefLSpaceColor;      /* if >= 0 this will be the color index                                          for spacing between lines */
-   HB_BOOL fAllowNonTop;         /* allow non-topmost window's control to  accept input */
-   HB_BOOL fRecurseCBlock;       /* allow control's codeblock to recurse */
+   bool    fAllowNonTop;         /* allow non-topmost window's control to  accept input */
+   bool    fRecurseCBlock;       /* allow control's codeblock to recurse */
 
    LOGFONT lfPB;                 /* default font for pushbuttons */
    LOGFONT lfSB;                 /* default font for statusbar */
@@ -356,8 +356,8 @@ typedef struct
    /* read only by user */
 
    /* for GTWVW private use */
-   HB_BOOL fQuickSetMode;      /* quick SetMode(), to reset MaxRow() and MaxCol() only */
-   HB_BOOL fFlashingWindow;    /* topmost window is flashing due to invalid input on other window */
+   bool    fQuickSetMode;      /* quick SetMode(), to reset MaxRow() and MaxCol() only */
+   bool    fFlashingWindow;    /* topmost window is flashing due to invalid input on other window */
 
    int iScrolling;             /* scrollbar is scrolling */
    int iWrongButtonUp;         /* number of consecutive scrollbar's WM_LBUTTONUP encountered by gtProcessMessages */
@@ -365,7 +365,7 @@ typedef struct
 
    TCHAR   szAppName[ 13 ];
    TCHAR   szSubWinName[ 25 ];
-   HB_BOOL fSWRegistered;
+   bool    fSWRegistered;
 
    int iCursorStyle;
 
@@ -382,11 +382,11 @@ typedef struct
 
    struct
    {
-      HB_BOOL CaretExist;                       /* HB_TRUE if a caret has been created */
-      HB_BOOL displayCaret;                     /* flag to indicate if caret is on */
+      bool    CaretExist;                       /* HB_TRUE if a caret has been created */
+      bool    displayCaret;                     /* flag to indicate if caret is on */
 
-      HB_BOOL Win9X;                            /* Flag to say if running on Win9x */
-      HB_BOOL AltF4Close;                       /* Can use Alt+F4 to close application */
+      bool    Win9X;                            /* Flag to say if running on Win9x */
+      bool    AltF4Close;                       /* Can use Alt+F4 to close application */
 
       HPEN   penWhite;                          /* White pen to draw GDI elements */
       HPEN   penBlack;                          /* Black pen to draw GDI elements */
