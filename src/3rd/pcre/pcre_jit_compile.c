@@ -59,7 +59,7 @@ system files. */
 #define SLJIT_VERBOSE 0
 #define SLJIT_DEBUG 0
 
-#include "sljitLir.c"
+#include "sljit/sljitLir.c"
 
 #if defined SLJIT_CONFIG_UNSUPPORTED && SLJIT_CONFIG_UNSUPPORTED
 #error Unsupported architecture
