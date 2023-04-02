@@ -42,6 +42,7 @@ PRG_SOURCES := \
    struct_rgbquad.prg \
    struct_scrollinfo.prg \
    struct_size.prg \
+   struct_system_info.prg \
    struct_systemtime.prg \
    struct_timecaps.prg \
 
