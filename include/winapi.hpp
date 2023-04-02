@@ -2,7 +2,7 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (C) 2022 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (C) 2022,2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
@@ -179,6 +179,8 @@ SOFTWARE.
 #define winapi_ret_char(x)         hb_retni(x)
 #define winapi_ret_WPARAM(x)       hb_retnl(x)
 #define winapi_ret_UINT_PTR(x)     hb_retni(x)
+#define winapi_ret_LPVOID(x)       hb_retptr(x)
+#define winapi_ret_DWORD_PTR(x)    hb_retnl(x)
 
 // #define winapi_stor_ATOM(v, n)         hb_storni(v, n)
 #define winapi_stor_BOOL(v, n)         hb_storl(v, n)
