@@ -342,12 +342,6 @@ HB_FUNC( DBCOMMITALL )
  */
 HB_FUNC( DBCREATE )
 {
-   const char * szFileName, * szAlias, * szDriver, * szCpId;
-   HB_USHORT uiLen;
-   PHB_ITEM pStruct, pDelim;
-   HB_BOOL fKeepOpen, fCurrArea;
-   HB_ULONG ulConnection;
-
    /*
     * NOTE: 4th, 5th and 6th parameters are undocumented Clipper ones
     * 4th is boolean flag indicating if file should stay open (any boolean
@@ -356,15 +350,15 @@ HB_FUNC( DBCREATE )
     * 6th is optional DELIMITED value used by some RDDs like DELIM
     */
 
-   szFileName = hb_parc(1);
-   pStruct = hb_param(2, Harbour::Item::ARRAY);
-   szDriver = hb_parc(3);
-   fKeepOpen = HB_ISLOG(4);
-   fCurrArea = fKeepOpen && !hb_parl(4);
-   szAlias = hb_parc(5);
-   pDelim = hb_param(6, Harbour::Item::ANY);
-   szCpId = hb_parc(7);
-   ulConnection = hb_parnl(8);
+   const char * szFileName = hb_parc(1);
+   PHB_ITEM pStruct = hb_param(2, Harbour::Item::ARRAY);
+   const char * szDriver = hb_parc(3);
+   HB_BOOL fKeepOpen = HB_ISLOG(4);
+   HB_BOOL fCurrArea = fKeepOpen && !hb_parl(4);
+   const char * szAlias = hb_parc(5);
+   PHB_ITEM pDelim = hb_param(6, Harbour::Item::ANY);
+   const char * szCpId = hb_parc(7);
+   HB_ULONG ulConnection = hb_parnl(8);
 
    /*
     * Clipper allows to use empty struct array for RDDs which does not
@@ -382,7 +376,8 @@ HB_FUNC( DBCREATE )
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       return;
    }
-   uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
+
+   HB_USHORT uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
 
    for( HB_USHORT uiSize = 1; uiSize <= uiLen; ++uiSize )
    {
@@ -390,10 +385,10 @@ HB_FUNC( DBCREATE )
 
       /* Validate items types of fields */
       if( hb_arrayLen(pFieldDesc) < 4 ||
-          !( hb_arrayGetType(pFieldDesc, 1) & Harbour::Item::STRING ) ||
-          !( hb_arrayGetType(pFieldDesc, 2) & Harbour::Item::STRING ) ||
-          !( hb_arrayGetType(pFieldDesc, 3) & Harbour::Item::NUMERIC ) ||
-          !( hb_arrayGetType(pFieldDesc, 4) & Harbour::Item::NUMERIC ) )
+          !(hb_arrayGetType(pFieldDesc, 1) & Harbour::Item::STRING) ||
+          !(hb_arrayGetType(pFieldDesc, 2) & Harbour::Item::STRING) ||
+          !(hb_arrayGetType(pFieldDesc, 3) & Harbour::Item::NUMERIC) ||
+          !(hb_arrayGetType(pFieldDesc, 4) & Harbour::Item::NUMERIC) )
       {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          return;
@@ -412,16 +407,11 @@ HB_FUNC( DBCREATE )
  */
 HB_FUNC( HB_DBCREATETEMP )
 {
-   const char * szAlias, * szDriver, * szCpId;
-   HB_USHORT uiLen;
-   PHB_ITEM pStruct;
-   HB_ULONG ulConnection;
-
-   szAlias = hb_parc(1);
-   pStruct = hb_param(2, Harbour::Item::ARRAY);
-   szDriver = hb_parc(3);
-   szCpId = hb_parc(4);
-   ulConnection = hb_parnl(5);
+   const char * szAlias = hb_parc(1);
+   PHB_ITEM pStruct = hb_param(2, Harbour::Item::ARRAY);
+   const char * szDriver = hb_parc(3);
+   const char * szCpId = hb_parc(4);
+   HB_ULONG ulConnection = hb_parnl(5);
 
    /*
     * Clipper allows to use empty struct array for RDDs which does not
@@ -439,7 +429,8 @@ HB_FUNC( HB_DBCREATETEMP )
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       return;
    }
-   uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
+
+   HB_USHORT uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
 
    for( HB_USHORT uiSize = 1; uiSize <= uiLen; ++uiSize )
    {
@@ -447,10 +438,10 @@ HB_FUNC( HB_DBCREATETEMP )
 
       /* Validate items types of fields */
       if( hb_arrayLen(pFieldDesc) < 4 ||
-          !( hb_arrayGetType(pFieldDesc, 1) & Harbour::Item::STRING ) ||
-          !( hb_arrayGetType(pFieldDesc, 2) & Harbour::Item::STRING ) ||
-          !( hb_arrayGetType(pFieldDesc, 3) & Harbour::Item::NUMERIC ) ||
-          !( hb_arrayGetType(pFieldDesc, 4) & Harbour::Item::NUMERIC ) )
+          !(hb_arrayGetType(pFieldDesc, 1) & Harbour::Item::STRING) ||
+          !(hb_arrayGetType(pFieldDesc, 2) & Harbour::Item::STRING) ||
+          !(hb_arrayGetType(pFieldDesc, 3) & Harbour::Item::NUMERIC) ||
+          !(hb_arrayGetType(pFieldDesc, 4) & Harbour::Item::NUMERIC) )
       {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          return;
@@ -474,35 +465,29 @@ HB_FUNC( HB_DBCREATETEMP )
 /* __dbOpenSDF( cFile, aStruct, cRDD, lKeepOpen, cAlias, cDelimArg, cCodePage, nConnection ) --> <lSuccess> */
 HB_FUNC( __DBOPENSDF )
 {
-   const char * szFileName, * szAlias, * szDriver, * szCpId;
-   HB_USHORT uiLen;
-   PHB_ITEM pStruct, pDelim;
-   HB_BOOL fKeepOpen, fCurrArea;
-   HB_ULONG ulConnection;
-   HB_ERRCODE errCode;
-
    /*
     * NOTE: 4th and 5th parameters are undocumented Clipper ones
     * 4th is boolean flag indicating if file should stay open and
     * 5th is alias - if not given then WA is open without alias
     */
 
-   szFileName = hb_parc(1);
-   pStruct = hb_param(2, Harbour::Item::ARRAY);
-   szDriver = hb_parc(3);
-   fKeepOpen = HB_ISLOG(4);
-   fCurrArea = fKeepOpen && !hb_parl(4);
-   szAlias = hb_parc(5);
-   pDelim = hb_param(6, Harbour::Item::ANY);
-   szCpId = hb_parc(7);
-   ulConnection = hb_parnl(8);
+   const char * szFileName = hb_parc(1);
+   PHB_ITEM pStruct = hb_param(2, Harbour::Item::ARRAY);
+   const char * szDriver = hb_parc(3);
+   HB_BOOL fKeepOpen = HB_ISLOG(4);
+   HB_BOOL fCurrArea = fKeepOpen && !hb_parl(4);
+   const char * szAlias = hb_parc(5);
+   PHB_ITEM pDelim = hb_param(6, Harbour::Item::ANY);
+   const char * szCpId = hb_parc(7);
+   HB_ULONG ulConnection = hb_parnl(8);
 
    if( !pStruct || hb_arrayLen(pStruct) == 0 || !szFileName || !szFileName[0] )
    {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       return;
    }
-   uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
+
+   HB_USHORT uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
 
    for( HB_USHORT uiSize = 1; uiSize <= uiLen; ++uiSize )
    {
@@ -510,21 +495,21 @@ HB_FUNC( __DBOPENSDF )
 
       /* Validate items types of fields */
       if( hb_arrayLen(pFieldDesc) < 4 ||
-          !( hb_arrayGetType(pFieldDesc, 1) & Harbour::Item::STRING ) ||
-          !( hb_arrayGetType(pFieldDesc, 2) & Harbour::Item::STRING ) ||
-          !( hb_arrayGetType(pFieldDesc, 3) & Harbour::Item::NUMERIC ) ||
-          !( hb_arrayGetType(pFieldDesc, 4) & Harbour::Item::NUMERIC ) )
+          !(hb_arrayGetType(pFieldDesc, 1) & Harbour::Item::STRING) ||
+          !(hb_arrayGetType(pFieldDesc, 2) & Harbour::Item::STRING) ||
+          !(hb_arrayGetType(pFieldDesc, 3) & Harbour::Item::NUMERIC) ||
+          !(hb_arrayGetType(pFieldDesc, 4) & Harbour::Item::NUMERIC) )
       {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          return;
       }
    }
 
-   errCode = hb_rddOpenTable( szFileName, szDriver,
-                              fCurrArea ? static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber()) : 0,
-                              szAlias, true, true,
-                              szCpId, ulConnection,
-                              pStruct, pDelim );
+   HB_ERRCODE errCode = hb_rddOpenTable(szFileName, szDriver,
+                                        fCurrArea ? static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber()) : 0,
+                                        szAlias, true, true,
+                                        szCpId, ulConnection,
+                                        pStruct, pDelim);
 
    if( !fKeepOpen && errCode == HB_SUCCESS )
    {
