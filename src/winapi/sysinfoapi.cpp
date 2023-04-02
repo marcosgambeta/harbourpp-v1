@@ -75,6 +75,10 @@ WINBASEAPI WINBOOL WINAPI GetLogicalProcessorInformationEx (LOGICAL_PROCESSOR_RE
 /*
 WINBASEAPI VOID WINAPI GetNativeSystemInfo (LPSYSTEM_INFO lpSystemInfo)
 */
+HB_FUNC( WINAPI_GETNATIVESYSTEMINFO )
+{
+  GetNativeSystemInfo(static_cast<LPSYSTEM_INFO>(winapi_get_ptr(1)));
+}
 
 /*
 WINBASEAPI WINBOOL WINAPI GetOsSafeBootMode (PDWORD Flags)
@@ -109,6 +113,10 @@ WINBASEAPI UINT WINAPI GetSystemFirmwareTable (DWORD FirmwareTableProviderSignat
 /*
 WINBASEAPI VOID WINAPI GetSystemInfo (LPSYSTEM_INFO lpSystemInfo)
 */
+HB_FUNC( WINAPI_GETSYSTEMINFO )
+{
+  GetSystemInfo(static_cast<LPSYSTEM_INFO>(winapi_get_ptr(1)));
+}
 
 /*
 WINBASEAPI VOID WINAPI GetSystemTime (LPSYSTEMTIME lpSystemTime)
