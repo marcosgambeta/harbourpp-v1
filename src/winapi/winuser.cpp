@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (C) 2022 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (C) 2022,2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2022 Marcos Antonio Gambeta
+Copyright (c) 2022,2023 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +33,9 @@ SOFTWARE.
 /*
   NOTE: source code generated with the help of a code generator
 */
+
+#define WINVER 0x0600
+#define _WIN32_WINNT 0x0600
 
 #include <windows.h>
 #include "hbapi.hpp"
