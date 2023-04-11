@@ -188,7 +188,7 @@
 #     define hb_isfinite( d )       _finite( d )
 #  elif defined( __GNUC__ ) || \
       defined( HB_OS_SUNOS )
-#     define hb_isfinite( d )       finite( d )
+#     define hb_isfinite( d )       isfinite( d )
 #  endif
 
 #  if defined( hb_isfinite )
