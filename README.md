@@ -44,7 +44,7 @@ Este projeto é um trabalho em progresso.
 
 ### Compilação
 
-O projeto está sendo desenvolvido e testado com os compiladores GCC (MinGW), Microsoft Visual C++ (MSVC) e CLANG.
+O projeto está sendo desenvolvido e testado com os compiladores GCC (MinGW), Microsoft Visual C++ (MSVC) e LLVM/Clang C++.
 
 #### MinGW
 * Definir o padrão, conforme exemplo abaixo:  
@@ -70,7 +70,7 @@ set HB_USER_CFLAGS=/std=c++11
 win-make install 1>log1.log 2>log2.log
 ```
 
-#### CLANG
+#### LLVM/Clang C++
 * Se necessário, definir o padrão conforme exemplo abaixo:  
 set HB_USER_CFLAGS=-std=c++11
 
