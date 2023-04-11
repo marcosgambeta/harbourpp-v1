@@ -44,10 +44,10 @@ Este projeto é um trabalho em progresso.
 
 ### Compilação
 
-O projeto está sendo desenvolvido e testado com os compiladores GCC (MinGW) e Microsoft Visual C++ (MSVC).
+O projeto está sendo desenvolvido e testado com os compiladores GCC (MinGW), Microsoft Visual C++ (MSVC) e CLANG.
 
 #### MinGW
-* Definir o padrão, conforme abaixo:  
+* Definir o padrão, conforme exemplo abaixo:  
 set HB_USER_CFLAGS=-std=c++11
 
 ##### Exemplo
@@ -59,7 +59,7 @@ win-make install 1>log1.log 2>log2.log
 ```
 
 #### Visual C++
-* Se necessário, definir o padrão conforme abaixo:  
+* Se necessário, definir o padrão conforme exemplo abaixo:  
 set HB_USER_CFLAGS=/std=c++11
 
 ##### Exemplo
@@ -67,6 +67,18 @@ set HB_USER_CFLAGS=/std=c++11
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars32.bat"
 set HB_INSTALL_PREFIX=C:\HarbourPP
 set HB_USER_CFLAGS=/std=c++11
+win-make install 1>log1.log 2>log2.log
+```
+
+#### CLANG
+* Se necessário, definir o padrão conforme exemplo abaixo:  
+set HB_USER_CFLAGS=-std=c++11
+
+##### Exemplo
+```Batch
+set PATH=C:\MinGW32\bin;%PATH%
+set HB_INSTALL_PREFIX=C:\HarbourPP
+set HB_COMPILER=clang
 win-make install 1>log1.log 2>log2.log
 ```
 
