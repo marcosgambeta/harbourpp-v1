@@ -110,7 +110,7 @@ HB_BOOL hb_oleAxInit(void)
          s_hLib = nullptr;
          return false;
       }
-      pAtlAxWinInit      = static_cast<PHB_AX_WININIT>(HB_WINAPI_GETPROCADDRESS(s_hLib, "AtlAxWinInit"));
+      pAtlAxWinInit      = reinterpret_cast<PHB_AX_WININIT>(HB_WINAPI_GETPROCADDRESS(s_hLib, "AtlAxWinInit"));
       s_pAtlAxGetControl = reinterpret_cast<PHB_AX_GETCTRL>(HB_WINAPI_GETPROCADDRESS(s_hLib, "AtlAxGetControl"));
 
       if( pAtlAxWinInit )

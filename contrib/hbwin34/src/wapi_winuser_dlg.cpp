@@ -112,7 +112,7 @@ HB_FUNC( WAPI_DIALOGBOXPARAM )
       hbwapi_par_raw_HINSTANCE(1),
       MAKEINTRESOURCE(hbwapi_par_INT(2)),
       hbwapi_par_raw_HWND(3),
-      static_cast<DLGPROC>(wapi_DialogFuncProc),
+      reinterpret_cast<DLGPROC>(wapi_DialogFuncProc),
       reinterpret_cast<LPARAM>(hb_itemGetSymbol(hb_param(4, Harbour::Item::SYMBOL))));
    hbwapi_SetLastError(GetLastError());
    hbwapi_ret_NINT(nResult);
