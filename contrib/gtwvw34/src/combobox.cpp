@@ -651,7 +651,7 @@ HB_FUNC( WVW_CBSETINDEX )
 {
    PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
    int iIndex = hb_parni(3);
-   hb_retl((wvw_ctl && iIndex >= 0) ? static_cast<bool>(SendMessage(wvw_ctl->hWnd, CB_SETCURSEL, static_cast<WPARAM>(iIndex), 0)) == iIndex : false);
+   hb_retl((wvw_ctl && iIndex >= 0) ? SendMessage(wvw_ctl->hWnd, CB_SETCURSEL, static_cast<WPARAM>(iIndex), 0) == iIndex : false);
 }
 
 /*
