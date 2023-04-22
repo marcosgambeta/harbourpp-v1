@@ -19,6 +19,8 @@
 #include <stdarg.h>
 #include <ctype.h>
 
+#include "hb_io.hpp"
+
 
 /*
  * Version number...
@@ -97,8 +99,3 @@ extern int	_mxml_snprintf(char *, size_t, const char *, ...);
 extern int	_mxml_vsnprintf(char *, size_t, const char *, va_list);
 #    define vsnprintf _mxml_vsnprintf
 #  endif /* !HAVE_VSNPRINTF */
-
-#if defined(__clang__)
-size_t read(int fd, void *buf, size_t count);
-int write(int fd , void *buf, size_t n);
-#endif
