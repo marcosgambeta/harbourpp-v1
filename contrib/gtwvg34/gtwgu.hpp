@@ -69,7 +69,7 @@
 
 #include "gtwvglo.hpp"
 
-typedef struct
+struct HB_GTWGU
 {
    PHB_GT   pGT;                            /* core GT pointer */
    int      iHandle;                        /* window number */
@@ -154,7 +154,9 @@ typedef struct
    int       width;
    int       height;
 
-} HB_GTWGU, * PHB_GTWGU;
+};
+
+using PHB_GTWGU = HB_GTWGU *;
 
 /* Trick to avoid warning about structures with the same
    name having multiple definitions in the same module.

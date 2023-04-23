@@ -2788,8 +2788,8 @@ static HB_BOOL hb_gt_wvt_FullScreen(PHB_GT pGT)
 #ifdef MONITOR_DEFAULTTONEAREST
    HMONITOR mon;
    MONITORINFO mi;
-   typedef HMONITOR (WINAPI * P_MFW)(HWND, DWORD);
-   typedef BOOL (WINAPI * P_GMI)(HMONITOR, LPMONITORINFO);
+   using P_MFW = HMONITOR (WINAPI *)(HWND, DWORD);
+   using P_GMI = BOOL (WINAPI *)(HMONITOR, LPMONITORINFO);
    P_MFW pMonitorFromWindow;
    P_GMI pGetMonitorInfo;
 #endif

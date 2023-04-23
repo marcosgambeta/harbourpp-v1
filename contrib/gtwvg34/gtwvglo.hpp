@@ -131,23 +131,12 @@ HB_EXTERN_BEGIN
 
 /* - */
 
-typedef BOOL ( WINAPI * wvtGradientFill )(
-                      HDC        hdc,
-                      PTRIVERTEX pVertex,
-                      ULONG      dwNumVertex,
-                      PVOID      pMesh,
-                      ULONG      dwNumMesh,
-                      ULONG      dwMode );
-
-typedef BOOL ( WINAPI * wvtSetLayeredWindowAttributes )(
-                      HWND       hwnd,
-                      COLORREF   crKey,
-                      BYTE       bAlpha,
-                      DWORD      dwFlags );
+using wvtGradientFill = BOOL (WINAPI *)(HDC hdc, PTRIVERTEX pVertex, ULONG dwNumVertex, PVOID pMesh, ULONG dwNumMesh, ULONG dwMode);
+using wvtSetLayeredWindowAttributes = BOOL (WINAPI *)(HWND hwnd, COLORREF crKey, BYTE bAlpha, DWORD dwFlags);
 
 /* - */
 
-typedef enum
+enum HB_gt_object_enum
 {
    GTO_POINT          = 0,
    GTO_LINE           = 1,
@@ -157,11 +146,11 @@ typedef enum
    GTO_DISK           = 7,
    /* TODO: add other types */
    GTO_TEXT           = 100,
-} HB_gt_object_enum;
+};
 
 /* Event subsystem */
 
-typedef enum
+enum HB_gt_event_enum
 {
    GTEVENT_RESIZE     = 0,
    GTEVENT_CLOSE      = 1,
@@ -171,7 +160,7 @@ typedef enum
    GTEVENT_MAXIMIZE   = 5,
    GTEVENT_DEICONIZE  = 6,
    GTEVENT_SHUTDOWN   = 7
-} HB_gt_event_enum;
+} ;
 
 /* - */
 
@@ -247,7 +236,7 @@ typedef enum
 #define LWA_ALPHA  0x00000002
 #endif
 
-typedef struct
+struct HB_GT_PARAMS
 {
    DWORD     exStyle;
    DWORD     style;
@@ -260,4 +249,6 @@ typedef struct
    HB_BOOL   bRowCols;
    HB_BOOL   bConfigured;
    int       iWndType;
-} HB_GT_PARAMS, * PHB_GT_PARAMS;
+};
+
+using PHB_GT_PARAMS = HB_GT_PARAMS *;

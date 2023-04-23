@@ -72,16 +72,15 @@
 #define WVT_DLGML_MAX               50
 #define WVT_DLGMD_MAX               50
 
-typedef struct
+struct HB_GOBJ_OFFSET
 {
    int            iTop;
    int            iLeft;
    int            iBottom;
    int            iRight;
-} HB_GOBJ_OFFSET ;
+};
 
-
-typedef struct _tag_GOBJS
+struct _tag_GOBJS
 {
    int            iObjType;
    int            iHandle;
@@ -118,9 +117,12 @@ typedef struct _tag_GOBJS
    PHB_ITEM       bBlock;
    struct _tag_GOBJS * gObjNext;
 
-} HB_GOBJS, * PHB_GOBJS;
+};
 
-typedef struct
+using HB_GOBJS = _tag_GOBJS;
+using PHB_GOBJS =_tag_GOBJS *;
+
+struct HB_GUIDATA
 {
    HPEN      penWhite;                      /* White pen to draw GDI elements */
    HPEN      penBlack;                      /* Black pen to draw GDI elements */
@@ -140,10 +142,11 @@ typedef struct
    wvtGradientFill pfnGF;                   /* Pointer to Address of the GradientFill function in MSImg32.dll */
    HINSTANCE hUser32;                       /* Handle to the loaded library user32.dll */
    wvtSetLayeredWindowAttributes pfnLayered;/* Pointer to set Windows attribute - transparency. */
+};
 
-} HB_GUIDATA, * PHB_GUIDATA;
+using PHB_GUIDATA = HB_GUIDATA *;
 
-typedef struct
+struct HB_GTWVG
 {
    PHB_GT   pGT;                            /* core GT pointer */
    int      iHandle;                        /* window number */
@@ -295,7 +298,9 @@ typedef struct
 
    HB_THREAD_NO threadNO;                   /* Will hold the current THREAD No */
 
-} HB_GTWVG, * PHB_GTWVG;
+};
+
+using PHB_GTWVG = HB_GTWVG *;
 
 /* Trick to avoid warning about structures with the same
    name having multiple definitions in the same module.
