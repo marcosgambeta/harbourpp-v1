@@ -464,6 +464,10 @@ void hb_vmLock(void)
 {
 }
 
+void hb_vmLockForce(void)
+{
+}
+
 void hb_vmUnlock(void)
 {
 }
@@ -478,7 +482,14 @@ void hb_vmResumeThreads(void)
 {
 }
 
-#if 0
+void hb_vmTerminateThreads(void)
+{
+}
+
+void hb_vmWaitForThreads(void)
+{
+}
+
 HB_BOOL hb_vmThreadRegister(void * Cargo)
 {
    HB_SYMBOL_UNUSED(Cargo);
@@ -487,6 +498,7 @@ HB_BOOL hb_vmThreadRegister(void * Cargo)
 
 void hb_vmThreadRelease(void * Cargo)
 {
+#if 0
    PHB_THREADSTATE pState = static_cast<PHB_THREADSTATE>(Cargo);
    PHB_ITEM pThItm = pState->pThItm;
    pState->pThItm = nullptr;
@@ -494,8 +506,30 @@ void hb_vmThreadRelease(void * Cargo)
    {
       hb_itemRelease(pThItm);
    }
-}
 #endif
+
+   HB_SYMBOL_UNUSED(Cargo);
+}
+
+void * hb_vmThreadState(void)
+{
+   return nullptr;
+}
+
+void hb_vmThreadInit(void * Cargo)
+{
+   HB_SYMBOL_UNUSED(Cargo);
+}
+
+void hb_vmThreadQuit(void)
+{
+}
+
+void hb_vmThreadQuitRequest(void * Cargo)
+{
+   HB_SYMBOL_UNUSED(Cargo);
+}
+
 #else
 
 static HB_CRITICAL_NEW(s_vmMtx);

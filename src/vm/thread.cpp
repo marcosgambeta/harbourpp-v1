@@ -2874,6 +2874,11 @@ HB_FUNC( HB_MT )
 {
    ;
 }
+#else
+/* TOCHECK: added to fix 'cannot export HB_FUN_HB_MT: symbol not defined' */
+HB_FUNC( HB_MT )
+{
+}
 #endif
 
 #if defined(HB_TASK_THREAD) && defined(HB_MT_VM)
