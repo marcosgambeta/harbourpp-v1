@@ -245,9 +245,9 @@ struct HB_GT_PARAMS
    int       width;
    int       height;
    PHB_ITEM  pParentGT;
-   HB_BOOL   bVisible;
-   HB_BOOL   bRowCols;
-   HB_BOOL   bConfigured;
+   bool      bVisible;
+   bool      bRowCols;
+   bool      bConfigured;
    int       iWndType;
 };
 

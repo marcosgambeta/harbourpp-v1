@@ -169,7 +169,7 @@ HB_FUNC( WVT_SETTOOLTIPACTIVE )
    }
    else
    {
-      hb_retl(HB_FALSE);
+      hb_retl(false);
    }
 }
 
@@ -390,7 +390,7 @@ HB_FUNC( WVT_SETGUI )
    }
    else
    {
-      hb_retl(HB_FALSE);
+      hb_retl(false);
    }
 }
 
@@ -409,7 +409,7 @@ HB_FUNC( WVT_SETMOUSEPOS )
       }
    }
 
-   hb_retl(HB_FALSE);
+   hb_retl(false);
 }
 
 HB_FUNC( WVT_GETPAINTRECT )
@@ -481,7 +481,7 @@ HB_FUNC( WVT_SETMOUSEMOVE )
    }
    else
    {
-      hb_retl(HB_FALSE);
+      hb_retl(false);
    }
 }
 
@@ -635,7 +635,7 @@ HB_FUNC( WVT_ENABLESHORTCUTS )
    }
    else
    {
-      hb_retl(HB_FALSE);
+      hb_retl(false);
    }
 }
 

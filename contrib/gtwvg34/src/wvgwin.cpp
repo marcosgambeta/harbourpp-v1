@@ -101,7 +101,7 @@ HB_FUNC( WVG_SETMENU )
 {
    HWND hWnd = hbwapi_par_raw_HWND(1);
 
-   HB_BOOL bSet = SetMenu(hWnd, hbwapi_par_raw_HMENU(2));
+   bool bSet = SetMenu(hWnd, hbwapi_par_raw_HMENU(2));
 
    #if 1
    RECT wi = { 0, 0, 0, 0 };
@@ -137,7 +137,7 @@ HB_FUNC( WVG_ISMENUITEMCHECKED )
    }
    else
    {
-      hb_retl(HB_FALSE);
+      hb_retl(false);
    }
 }
 
@@ -156,7 +156,7 @@ HB_FUNC( WVG_ISMENUITEMENABLED )  /* = grayed */
    }
    else
    {
-      hb_retl(HB_TRUE);
+      hb_retl(true);
    }
 }
 
@@ -648,7 +648,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
          break;
 #if defined(CB_SETMINVISIBLE)
       case CB_SETMINVISIBLE:
-         hb_retl(static_cast<HB_BOOL>(SendMessage(hCB, CB_SETMINVISIBLE, static_cast<WPARAM>(hb_parnint(3)), 0)));
+         hb_retl(static_cast<bool>(SendMessage(hCB, CB_SETMINVISIBLE, static_cast<WPARAM>(hb_parnint(3)), 0)));
          break;
 #endif
       case CB_SETTOPINDEX:

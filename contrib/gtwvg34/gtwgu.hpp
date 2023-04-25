@@ -81,7 +81,7 @@ struct HB_GTWGU
    int      COLS;                           /* number of displayable columns in window */
 
    POINT    MousePos;                       /* the last mouse position */
-   HB_BOOL  MouseMove;                      /* Flag to say whether to return mouse movement events */
+   bool     MouseMove;                      /* Flag to say whether to return mouse movement events */
 
    int      Keys[ WVT_CHAR_QUEUE_SIZE ];    /* Array to hold the characters & events */
    int      keyPointerIn;                   /* Offset into key array for character to be placed */
@@ -89,7 +89,7 @@ struct HB_GTWGU
    int      keyLast;                        /* last inkey code value in buffer */
 
    POINT    PTEXTSIZE;                      /* size of the fixed width font */
-   HB_BOOL  FixedFont;                      /* TRUE if current font is a fixed font */
+   bool     FixedFont;                      /* TRUE if current font is a fixed font */
    int      FixedSize[ WVT_MAX_COLS ];      /* buffer for ExtTextOut() to emulate fixed pitch when Proportional font selected */
    int      fontHeight;                     /* requested font height */
    int      fontWidth;                      /* requested font width */
@@ -99,7 +99,7 @@ struct HB_GTWGU
    HFONT    hFont;                          /* current font handle */
 
    HWND     hWnd;                           /* the window handle */
-   HB_BOOL  fInit;                          /* logical variable indicating that window should be open */
+   bool     fInit;                          /* logical variable indicating that window should be open */
 
    PHB_CODEPAGE hostCDP;                    /* Host/HVM CodePage for unicode output translations */
    PHB_CODEPAGE inCDP;                      /* Host/HVM CodePage for unicode input translations */
@@ -109,19 +109,19 @@ struct HB_GTWGU
 #endif
 
    HICON    hIcon;                          /* Title Bar and Task List icon. Can be NULL. */
-   HB_BOOL  bIconToFree;                    /* Do we need to free this icon when it's not NULL? */
+   bool     bIconToFree;                    /* Do we need to free this icon when it's not NULL? */
 
    void *   hWindowTitle;
    LPCTSTR  lpWindowTitle;
 
    int      CodePage;                       /* Code page to use for display characters */
-   HB_BOOL  Win9X;                          /* Flag to say if running on Win9X not NT/2000/XP */
-   HB_BOOL  CentreWindow;                   /* True if window is to be Reset into centre of window */
+   bool     Win9X;                          /* Flag to say if running on Win9X not NT/2000/XP */ /* TODO: deprecated/remove */
+   bool     CentreWindow;                   /* True if window is to be Reset into centre of window */
 
-   HB_BOOL  IgnoreWM_SYSCHAR;
+   bool     IgnoreWM_SYSCHAR;
 
-   HB_BOOL  bResizable;
-   HB_BOOL  bClosable;
+   bool     bResizable;
+   bool     bClosable;
 
    /* To Be Split in 2 Structures <1 GUI dynamic> <2 GUI fixed> */
 
@@ -134,13 +134,13 @@ struct HB_GTWGU
 
    int       LastMenuEvent;                 /* Last menu item selected */
    int       MenuKeyEvent;                  /* User definable event number for windows menu command */
-   HB_BOOL   InvalidateWindow;              /* Flag for controlling whether to use ScrollWindowEx() */
-   HB_BOOL   EnableShortCuts;               /* Determines whether ALT key enables menu or system menu */
+   bool      InvalidateWindow;              /* Flag for controlling whether to use ScrollWindowEx() */
+   bool      EnableShortCuts;               /* Determines whether ALT key enables menu or system menu */
 
-   HB_BOOL   bPaint;
-   HB_BOOL   bGetFocus;
-   HB_BOOL   bSetFocus;
-   HB_BOOL   bKillFocus;
+   bool      bPaint;
+   bool      bGetFocus;
+   bool      bSetFocus;
+   bool      bKillFocus;
 
    HINSTANCE hMSImg32;                      /* Handle to the loaded library msimg32.dll */
    wvtGradientFill pfnGF;                   /* Pointer to Address of the GradientFill function in MSImg32.dll */
@@ -149,8 +149,8 @@ struct HB_GTWGU
 
    PHB_GT_PARAMS  pPP;                      /* Presentation Parameters */
 
-   HB_BOOL   bTracking;                     /* To track if mouse has entered or left the window area */
-   HB_BOOL   bResizing;                     /* To know when it is in resizing mode */
+   bool      bTracking;                     /* To track if mouse has entered or left the window area */
+   bool      bResizing;                     /* To know when it is in resizing mode */
    int       width;
    int       height;
 

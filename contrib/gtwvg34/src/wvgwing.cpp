@@ -223,7 +223,7 @@ HB_FUNC( WVG_PREPAREBITMAPFROMFILE )
 {
    HBITMAP hBitmap = nullptr;
 
-   HB_BOOL fMap3Dcolors = hb_parl(4);
+   bool fMap3Dcolors = hb_parl(4);
    BITMAPINFO * pPackedDib = fMap3Dcolors ? nullptr : PackedDibLoad(hb_parcx(1) /* szFileName */);
 
    if( pPackedDib || fMap3Dcolors )
@@ -334,7 +334,7 @@ HB_FUNC( WVG_STATUSBARCREATEPANEL )
 
             ptArray[iParts] = -1;
 
-            hb_retl(static_cast<HB_BOOL>(SendMessage(hWndSB, SB_SETPARTS, static_cast<WPARAM>(iParts) + 1, reinterpret_cast<LPARAM>(static_cast<LPINT>(ptArray)))));
+            hb_retl(static_cast<bool>(SendMessage(hWndSB, SB_SETPARTS, static_cast<WPARAM>(iParts) + 1, reinterpret_cast<LPARAM>(static_cast<LPINT>(ptArray)))));
             return;
          }
          case -1:
@@ -345,14 +345,14 @@ HB_FUNC( WVG_STATUSBARCREATEPANEL )
             {
                int ptArray = rc.right;
 
-               hb_retl(static_cast<HB_BOOL>(SendMessage(hWndSB, SB_SETPARTS, static_cast<WPARAM>(1), reinterpret_cast<LPARAM>(&ptArray))));
+               hb_retl(static_cast<bool>(SendMessage(hWndSB, SB_SETPARTS, static_cast<WPARAM>(1), reinterpret_cast<LPARAM>(&ptArray))));
                return;
             }
          }
       }
    }
 
-   hb_retl(HB_FALSE);
+   hb_retl(false);
 }
 
 HB_FUNC( WVG_STATUSBARSETTEXT )
@@ -387,12 +387,12 @@ HB_FUNC( WVG_STATUSBARREFRESH )
 
       if( SendMessage(hWndSB, SB_SETPARTS, iParts, static_cast<LPARAM>(static_cast<LPINT>(ptArray))) )
       {
-         hb_retl(HB_TRUE);
+         hb_retl(true);
          return;
       }
    }
 
-   hb_retl(HB_FALSE);
+   hb_retl(false);
 #endif
 }
 
@@ -612,7 +612,7 @@ static PHB_ITEM wvg_logfontTOarray(LPLOGFONT lf)
 static UINT_PTR CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
    UINT_PTR bret = 0;
-   HB_BOOL binit = HB_FALSE;
+   bool binit = false;
    PHB_ITEM block;
 
    if( msg == WM_INITDIALOG )
@@ -620,7 +620,7 @@ static UINT_PTR CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wPa
       CHOOSEFONT * cf = reinterpret_cast<CHOOSEFONT*>(lParam);
       PHB_ITEM pBlock = hb_itemNew(reinterpret_cast<PHB_ITEM>(cf->lCustData));
       SetProp(hwnd, TEXT("DIALOGPROC"), pBlock);
-      binit = HB_TRUE;
+      binit = true;
    }
 
    block = static_cast<PHB_ITEM>(GetProp(hwnd, TEXT("DIALOGPROC")));
@@ -861,9 +861,9 @@ HB_FUNC( WVG_ADDTOOLBARBUTTON )
          tbb.dwData    = 0;
          tbb.iString   = iNewString;
 
-         /* Conversion of LRESULT to HB_BOOL:
+         /* Conversion of LRESULT to bool:
             https://msdn.microsoft.com/library/bb787291 */
-         hb_retl(static_cast<HB_BOOL>(SendMessage(hWndTB, TB_ADDBUTTONS, static_cast<WPARAM>(1), reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(&tbb)))));
+         hb_retl(static_cast<bool>(SendMessage(hWndTB, TB_ADDBUTTONS, static_cast<WPARAM>(1), reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(&tbb)))));
          SendMessage(hWndTB, TB_SETPADDING, 0, static_cast<LPARAM>(MAKELPARAM(10, 10)));
          break;
       }
@@ -877,9 +877,9 @@ HB_FUNC( WVG_ADDTOOLBARBUTTON )
          tbb.dwData    = 0;
          tbb.iString   = 0;
 
-         /* Conversion of LRESULT to HB_BOOL:
+         /* Conversion of LRESULT to bool:
             https://msdn.microsoft.com/library/bb787291 */
-         hb_retl(static_cast<HB_BOOL>(SendMessage(hWndTB, TB_ADDBUTTONS, static_cast<WPARAM>(1), reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(&tbb)))));
+         hb_retl(static_cast<bool>(SendMessage(hWndTB, TB_ADDBUTTONS, static_cast<WPARAM>(1), reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(&tbb)))));
          break;
    }
 }
