@@ -1,8 +1,8 @@
-ifeq ($(HB_BUILD_MODE),cpp)
-   ifneq ($(findstring clang$(subst x, ,x)version$(subst x, ,x)1,$(shell clang --version)),)
-      HB_BUILD_MODE := c
-   endif
-endif
+#ifeq ($(HB_BUILD_MODE),cpp)
+#   ifneq ($(findstring clang$(subst x, ,x)version$(subst x, ,x)1,$(shell clang --version)),)
+#      HB_BUILD_MODE := c
+#   endif
+#endif
 
 ifeq ($(HB_BUILD_MODE),cpp)
    HB_CMP := clang++
