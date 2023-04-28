@@ -2126,7 +2126,11 @@ HB_BOOL hb_threadMutexLock(PHB_ITEM pItem)
    {
 #if !defined(HB_MT_VM)
       pMutex->lock_count++;
+      #if defined( HB_OS_DARWIN ) // TODO: revisar
+      pMutex->owner = reinterpret_cast<HB_THREAD_ID>(1);
+      #else
       pMutex->owner = static_cast<HB_THREAD_ID>(1);
+      #endif
       fResult = HB_TRUE;
 #else
 #  if !defined(HB_HELGRIND_FRIENDLY)
@@ -2188,7 +2192,11 @@ HB_BOOL hb_threadMutexTimedLock(PHB_ITEM pItem, HB_ULONG ulMilliSec)
 #if !defined(HB_MT_VM)
       HB_SYMBOL_UNUSED(ulMilliSec);
       pMutex->lock_count++;
+      #if defined( HB_OS_DARWIN ) // TODO: revisar
+      pMutex->owner = reinterpret_cast<HB_THREAD_ID>(1);
+      #else
       pMutex->owner = static_cast<HB_THREAD_ID>(1);
+      #endif
       fResult = HB_TRUE;
 #else
       if( HB_THREAD_EQUAL(pMutex->owner, HB_THREAD_SELF()) )
