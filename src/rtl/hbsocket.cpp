@@ -1878,7 +1878,7 @@ static int hb_socketSelectWRE( HB_SOCKET sd, HB_MAXINT timeout )
    if( iResult > 0 && FD_ISSET(static_cast<HB_SOCKET_T>(sd), &wfds) )
    {
       len = sizeof(iError);
-      if( getsockopt(sd, SOL_SOCKET, SO_ERROR, static_cast<char*>(&iError), &len) != 0 )
+      if( getsockopt(sd, SOL_SOCKET, SO_ERROR, reinterpret_cast<char*>(&iError), &len) != 0 )
       {
          iResult = -1;
          iError = HB_SOCK_GETERROR();
@@ -3720,8 +3720,8 @@ static char * hb_getMAC( const char * pszIfName )
       {
          if( ifa->ifa_addr != nullptr && ifa->ifa_addr->sa_family == AF_LINK && ifa->ifa_name && strcmp(ifa->ifa_name, pszIfName) == 0 )
          {
-            struct sockaddr_dl * sdl = static_cast<struct sockaddr_dl*>(ifa->ifa_addr);
-            unsigned char * data = static_cast<unsigned char*>(LLADDR(sdl));
+            struct sockaddr_dl * sdl = reinterpret_cast<struct sockaddr_dl*>(ifa->ifa_addr);
+            unsigned char * data = reinterpret_cast<unsigned char*>(LLADDR(sdl));
             char hwaddr[24];
 
             hb_snprintf(hwaddr, sizeof(hwaddr), "%02X:%02X:%02X:%02X:%02X:%02X", data[0], data[1], data[2], data[3], data[4], data[5]);
