@@ -4220,7 +4220,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             AAdd(hbmk[_HBMK_aOPTL], "-Wl,--out-implib,{OI}")
             AAdd(hbmk[_HBMK_aOPTD], "-Wl,--out-implib,{OI}")
          ENDIF
-         IF l_lLIBGROUPING .AND. HBMK_ISCOMP("mingw|mingw64|mingwarm")
+         IF l_lLIBGROUPING .AND. HBMK_ISCOMP("mingw|mingw64|mingwarm|clang|clang64")
             AAdd(hbmk[_HBMK_aOPTL], "-Wl,--start-group {LL} {LB} {LF} -Wl,--end-group")
             AAdd(hbmk[_HBMK_aOPTD], "-Wl,--start-group {LL} {LB} {LF} -Wl,--end-group")
          ELSE
