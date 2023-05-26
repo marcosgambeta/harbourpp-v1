@@ -200,15 +200,15 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, b
       if( strncmp(szSwPtr + 2, "version", 7) == 0 )
       {
          szSwPtr += 9;
-         HB_COMP_PARAM->fLogo = HB_TRUE;
-         HB_COMP_PARAM->fQuiet = HB_TRUE;
+         HB_COMP_PARAM->fLogo = true;
+         HB_COMP_PARAM->fQuiet = true;
       }
       else if( strncmp(szSwPtr + 2, "help", 4) == 0 )
       {
          szSwPtr += 6;
-         HB_COMP_PARAM->fLogo = HB_TRUE;
-         HB_COMP_PARAM->fQuiet = HB_FALSE;
-         HB_COMP_PARAM->fExit = HB_FALSE;
+         HB_COMP_PARAM->fLogo = true;
+         HB_COMP_PARAM->fQuiet = false;
+         HB_COMP_PARAM->fExit = false;
       }
    }
    else if( HB_ISOPTSEP(*szSwPtr) )
@@ -221,11 +221,11 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, b
             if( *szSwPtr == '-' )
             {
                ++szSwPtr;
-               HB_COMP_PARAM->fAutoMemvarAssume = HB_FALSE;
+               HB_COMP_PARAM->fAutoMemvarAssume = false;
             }
             else
             {
-               HB_COMP_PARAM->fAutoMemvarAssume = HB_TRUE;
+               HB_COMP_PARAM->fAutoMemvarAssume = true;
             }
             break;
 
@@ -235,18 +235,18 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, b
 
             if( strcmp(szOption, "BUILD") == 0 )
             {
-               HB_COMP_PARAM->fBuildInfo = HB_TRUE;
+               HB_COMP_PARAM->fBuildInfo = true;
                szSwPtr += 5;
             }
             else if( szSwPtr[1] == '-' )
             {
-               HB_COMP_PARAM->fDebugInfo = HB_FALSE;
+               HB_COMP_PARAM->fDebugInfo = false;
                szSwPtr += 2;
             }
             else
             {
-               HB_COMP_PARAM->fDebugInfo = HB_TRUE;
-               HB_COMP_PARAM->fLineNumbers = HB_TRUE;
+               HB_COMP_PARAM->fDebugInfo = true;
+               HB_COMP_PARAM->fLineNumbers = true;
                ++szSwPtr;
             }
             hb_xfree(szOption);
@@ -259,7 +259,7 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, b
 
             if( strlen(szOption) >= 4 && strncmp("CREDITS", szOption, strlen(szOption)) == 0 )
             {
-               HB_COMP_PARAM->fCredits = HB_TRUE;
+               HB_COMP_PARAM->fCredits = true;
                szSwPtr += strlen(szOption);
             }
             hb_xfree(szOption);
@@ -369,7 +369,7 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, b
                   if( *szSwPtr == '-' )
                   {
                      ++szSwPtr;
-                     hb_setSetTrimFileName(HB_FALSE);
+                     hb_setSetTrimFileName(false);
                   }
                   else
                   {
@@ -467,11 +467,11 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, b
             switch( *szSwPtr )
             {
                case '-':
-                  HB_COMP_PARAM->fINCLUDE = HB_FALSE;
+                  HB_COMP_PARAM->fINCLUDE = false;
                   ++szSwPtr;
                   break;
                case '+':
-                  HB_COMP_PARAM->fINCLUDE = HB_TRUE;
+                  HB_COMP_PARAM->fINCLUDE = true;
                   ++szSwPtr;
                   break;
                default:
@@ -482,7 +482,7 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, b
 
          case 'J':
             ++szSwPtr;
-            HB_COMP_PARAM->fI18n = HB_TRUE;
+            HB_COMP_PARAM->fI18n = true;
             if( *szSwPtr )
             {
                szSwPtr = hb_compChkOptionFName(szSwPtr, &HB_COMP_PARAM->pI18nFileName, fEnv);
@@ -501,8 +501,8 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, b
                   case '?':
                      hb_compPrintLogo(HB_COMP_PARAM);
                      hb_compPrintModes(HB_COMP_PARAM);
-                     HB_COMP_PARAM->fLogo = HB_FALSE;
-                     HB_COMP_PARAM->fQuiet = HB_TRUE;
+                     HB_COMP_PARAM->fLogo = false;
+                     HB_COMP_PARAM->fQuiet = true;
                      break;
 
                   case 'H':
@@ -648,12 +648,12 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, b
             ++szSwPtr;
             if( *szSwPtr == '-' )
             {
-               HB_COMP_PARAM->fLineNumbers = HB_TRUE;
+               HB_COMP_PARAM->fLineNumbers = true;
                ++szSwPtr;
             }
             else
             {
-               HB_COMP_PARAM->fLineNumbers = HB_FALSE;
+               HB_COMP_PARAM->fLineNumbers = false;
             }
             break;
 
@@ -661,12 +661,12 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, b
             ++szSwPtr;
             if( *szSwPtr == '-' )
             {
-               HB_COMP_PARAM->fSingleModule = HB_FALSE;
+               HB_COMP_PARAM->fSingleModule = false;
                ++szSwPtr;
             }
             else
             {
-               HB_COMP_PARAM->fSingleModule = HB_TRUE;
+               HB_COMP_PARAM->fSingleModule = true;
             }
             break;
 
@@ -701,7 +701,7 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, b
             ++szSwPtr;
             if( *szSwPtr == '+' )
             {
-               HB_COMP_PARAM->fPPT = HB_TRUE;
+               HB_COMP_PARAM->fPPT = true;
                ++szSwPtr;
             }
             else
@@ -713,7 +713,7 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, b
                }
                if( *szSwPtr == '-' )
                {
-                  HB_COMP_PARAM->fPPT = HB_COMP_PARAM->fPPO = HB_FALSE;
+                  HB_COMP_PARAM->fPPT = HB_COMP_PARAM->fPPO = false;
                   ++szSwPtr;
                }
                else
@@ -722,7 +722,7 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, b
                   {
                      szSwPtr = hb_compChkOptionFName(szSwPtr, &HB_COMP_PARAM->pPpoPath, fEnv);
                   }
-                  HB_COMP_PARAM->fPPO = HB_TRUE;
+                  HB_COMP_PARAM->fPPO = true;
                }
             }
             break;
@@ -733,18 +733,18 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, b
             {
                case 'l':
                case 'L':
-                  HB_COMP_PARAM->fGauge = HB_FALSE;
+                  HB_COMP_PARAM->fGauge = false;
                   ++szSwPtr;
                   break;
                case '2':
-                  HB_COMP_PARAM->fFullQuiet = HB_TRUE;
+                  HB_COMP_PARAM->fFullQuiet = true;
                   /* fallthrough */
                case '0':
-                  HB_COMP_PARAM->fLogo = HB_FALSE;
+                  HB_COMP_PARAM->fLogo = false;
                   ++szSwPtr;
                   /* fallthrough */
                default:
-                  HB_COMP_PARAM->fQuiet = HB_TRUE;
+                  HB_COMP_PARAM->fQuiet = true;
                   break;
             }
             break;
@@ -807,7 +807,7 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, b
             {
                if( hb_strnicmp(szSwPtr + 6, ".ARCH.", 6) == 0 )
                {
-                  HB_COMP_PARAM->fNoArchDefs = HB_TRUE;
+                  HB_COMP_PARAM->fNoArchDefs = true;
                   szSwPtr += 12;
                }
                else
@@ -840,12 +840,12 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, b
             ++szSwPtr;
             if( *szSwPtr == '-' )
             {
-               HB_COMP_PARAM->fForceMemvars = HB_FALSE;
+               HB_COMP_PARAM->fForceMemvars = false;
                ++szSwPtr;
             }
             else
             {
-               HB_COMP_PARAM->fForceMemvars = HB_TRUE;
+               HB_COMP_PARAM->fForceMemvars = true;
             }
             break;
 
@@ -863,7 +863,7 @@ static const char * hb_compChkParseSwitch(HB_COMP_DECL, const char * szSwitch, b
          case 'Y':
             ++szSwPtr;
             extern int hb_comp_yydebug;
-            hb_comp_yydebug = HB_TRUE;
+            hb_comp_yydebug = true;
             break;
 #endif
 

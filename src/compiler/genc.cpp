@@ -27,7 +27,7 @@
 
 static void hb_compGenCReadable(HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc);
 static void hb_compGenCCompact(PHB_HFUNC pFunc, FILE * yyc);
-static void hb_compGenCFunc(FILE * yyc, const char * cDecor, const char * szName, HB_BOOL fStrip, int iFuncSuffix);
+static void hb_compGenCFunc(FILE * yyc, const char * cDecor, const char * szName, bool fStrip, int iFuncSuffix);
 static void hb_writeEndInit(HB_COMP_DECL, FILE * yyc, const char * szModulname, const char * szSourceFile);
 
 /* helper structure to pass information */
@@ -148,7 +148,7 @@ static void hb_compDumpFindCFunc(HB_COMP_DECL)
    }
 }
 
-static void hb_compGenCStdHeaders(HB_COMP_DECL, FILE * yyc, HB_BOOL fHbInLine)
+static void hb_compGenCStdHeaders(HB_COMP_DECL, FILE * yyc, bool fHbInLine)
 {
    fprintf(yyc, "#include \"hbvmpub.hpp\"\n");
 
@@ -543,7 +543,7 @@ static void hb_writeEndInit(HB_COMP_DECL, FILE * yyc, const char * szModulname, 
            szModulname, szModulname);
 }
 
-static void hb_compGenCFunc(FILE * yyc, const char * cDecor, const char * szName, HB_BOOL fStrip, int iFuncSuffix)
+static void hb_compGenCFunc(FILE * yyc, const char * cDecor, const char * szName, bool fStrip, int iFuncSuffix)
 {
    int i = 0;
 

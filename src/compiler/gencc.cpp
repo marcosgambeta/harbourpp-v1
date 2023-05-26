@@ -448,7 +448,7 @@ static HB_GENC_FUNC(hb_p_endproc)
    {
       if( cargo->iNestedBlock )
       {
-         cargo->fEndRequest = HB_TRUE;
+         cargo->fEndRequest = true;
          fprintf(cargo->yyc, "\thb_xvmEndProc();\n");
       }
       fprintf(cargo->yyc, "\tbreak;\n");
@@ -2159,9 +2159,9 @@ void hb_compGenCRealCode(HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc)
 
    label_info.yyc = yyc;
    label_info.fVerbose = (HB_COMP_PARAM->iGenCOutput == HB_COMPGENC_VERBOSE);
-   label_info.fSetSeqBegin = HB_FALSE;
-   label_info.fCondJump = HB_FALSE;
-   label_info.fEndRequest = HB_FALSE;
+   label_info.fSetSeqBegin = false;
+   label_info.fCondJump = false;
+   label_info.fEndRequest = false;
    label_info.iNestedBlock = 0;
    label_info.pFuncTable = reinterpret_cast<const PHB_PCODE_FUNC*>(pFuncTable);
    if( pFunc->nPCodePos == 0 )
@@ -2177,7 +2177,7 @@ void hb_compGenCRealCode(HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc)
    fprintf(yyc, "{\n");
    if( label_info.fCondJump )
    {
-      fprintf(yyc, "   HB_BOOL fValue;\n");
+      fprintf(yyc, "   HB_BOOL fValue;\n"); // TODO: HB_BOOL to bool
    }
    fprintf(yyc, "   do {\n");
 

@@ -163,16 +163,16 @@ void hb_compGenError(HB_COMP_DECL, const char * const szErrors[], char cPrefix, 
       hb_compDispMessage(HB_COMP_PARAM, cPrefix, iError, szErrors[iError - 1], szError1, szError2);
 
       HB_COMP_PARAM->iErrorCount++;
-      HB_COMP_PARAM->fError = HB_TRUE;
+      HB_COMP_PARAM->fError = true;
       while( pFunc )
       {
-         pFunc->bError = HB_TRUE;
+         pFunc->bError = true;
          pFunc = pFunc->pOwner;
       }
       /* fatal error - exit immediately */
       if( cPrefix == 'F' )
       {
-         HB_COMP_PARAM->fExit = HB_TRUE;
+         HB_COMP_PARAM->fExit = true;
       }
    }
 }
@@ -185,7 +185,7 @@ void hb_compGenWarning(HB_COMP_DECL, const char * const szWarnings[], char cPref
    {
       hb_compDispMessage(HB_COMP_PARAM, cPrefix, iWarning, szText + 1, szWarning1, szWarning2);
 
-      HB_COMP_PARAM->fAnyWarning = HB_TRUE;    /* report warnings at exit */
+      HB_COMP_PARAM->fAnyWarning = true;    /* report warnings at exit */
    }
 }
 
@@ -236,7 +236,7 @@ PHB_EXPR hb_compWarnMeaningless(HB_COMP_DECL, PHB_EXPR pExpr)
 
 void hb_compErrorCodeblockDecl(HB_COMP_DECL, const char * szVarName)
 {
-   HB_BOOL fError = HB_COMP_PARAM->fError;
+   bool fError = HB_COMP_PARAM->fError;
 
    hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_BLOCK, szVarName, nullptr);
    HB_COMP_PARAM->fError = fError; /* restore error flag for this line */
@@ -244,7 +244,7 @@ void hb_compErrorCodeblockDecl(HB_COMP_DECL, const char * szVarName)
 
 void hb_compErrorCodeblockWith(HB_COMP_DECL, const char * szMessage)
 {
-   HB_BOOL fError = HB_COMP_PARAM->fError;
+   bool fError = HB_COMP_PARAM->fError;
 
    hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_WITHOBJECT_MACROBLOCK, szMessage, nullptr);
    HB_COMP_PARAM->fError = fError; /* restore error flag for this line */

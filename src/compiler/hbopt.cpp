@@ -945,14 +945,14 @@ struct HB_OPT_LOCAL
 
 using PHB_OPT_LOCAL = HB_OPT_LOCAL *;
 
-static HB_BOOL hb_compIsJump(HB_BYTE bPCode)
+static bool hb_compIsJump(HB_BYTE bPCode)
 {
    return (bPCode >= HB_P_JUMPNEAR && bPCode <= HB_P_JUMPTRUEFAR) || /* All jumps */
            bPCode == HB_P_SEQBEGIN || bPCode == HB_P_SEQEND ||
            bPCode == HB_P_SEQALWAYS || bPCode == HB_P_ALWAYSBEGIN;
 }
 
-static HB_BOOL hb_compIsUncondJump(HB_BYTE bPCode)
+static bool hb_compIsUncondJump(HB_BYTE bPCode)
 {
    return bPCode == HB_P_JUMPNEAR ||
           bPCode == HB_P_JUMP ||
@@ -1258,7 +1258,7 @@ static void hb_compPCodeEnumSelfifyLocal(PHB_HFUNC pFunc, HB_SHORT isLocal)
    }
 }
 
-static int hb_compPCodeTraceAssignedUnused(PHB_HFUNC pFunc, HB_SIZE nPos, HB_BYTE * pMap, HB_SHORT isLocal, HB_BOOL fCanBreak)
+static int hb_compPCodeTraceAssignedUnused(PHB_HFUNC pFunc, HB_SIZE nPos, HB_BYTE * pMap, HB_SHORT isLocal, bool fCanBreak)
 {
    for( ;; )
    {
@@ -1280,7 +1280,7 @@ static int hb_compPCodeTraceAssignedUnused(PHB_HFUNC pFunc, HB_SIZE nPos, HB_BYT
           pFunc->pCode[nPos] == HB_P_MACROFUNC ||
           pFunc->pCode[nPos] == HB_P_MACROSEND )
       {
-         fCanBreak = HB_TRUE;
+         fCanBreak = true;
       }
       else if( pFunc->pCode[nPos] == HB_P_POPLOCAL ||
                pFunc->pCode[nPos] == HB_P_POPLOCALNEAR ||
@@ -1309,7 +1309,7 @@ static int hb_compPCodeTraceAssignedUnused(PHB_HFUNC pFunc, HB_SIZE nPos, HB_BYT
                   if( pFunc->pCode[nPos] == HB_P_SEQEND )
                   {
                      /* Process RECOVER */
-                     fCanBreak = HB_FALSE;
+                     fCanBreak = false;
                      nPos += hb_compPCodeSize(pFunc, nPos);
                      continue;
                   }

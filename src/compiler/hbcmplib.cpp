@@ -99,7 +99,7 @@ static int s_pp_openFile(void * cargo, char * szFileName, HB_BOOL fBefore, HB_BO
                {
                   *pBufPtr = hb_itemGetCPtr(pFileItem);
                   *pnLen = nLen;
-                  *pfFree = HB_FALSE;
+                  *pfFree = false;
                   return HB_PP_OPEN_OK;
                }
             }

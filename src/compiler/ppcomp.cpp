@@ -62,7 +62,7 @@ static void hb_pp_ErrorGen(void * cargo, const char * const szMsgTable[], char c
    {
       hb_compGenError(HB_COMP_PARAM, szMsgTable, cPrefix, iErrorCode, szParam1, szParam2);
    }
-   HB_COMP_PARAM->fError = HB_FALSE;
+   HB_COMP_PARAM->fError = false;
    HB_COMP_PARAM->currLine = iCurrLine;
    HB_COMP_PARAM->currModule = currModule;
 }
@@ -91,7 +91,7 @@ static void hb_pp_hb_inLine(void * cargo, char * szFunc, char * pBuffer, HB_SIZE
       int iCurrLine = HB_COMP_PARAM->currLine;
       HB_COMP_PARAM->currLine = iLine;
       hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'F', HB_COMP_ERR_REQUIRES_C, nullptr, nullptr);
-      HB_COMP_PARAM->fError = HB_FALSE;
+      HB_COMP_PARAM->fError = false;
       HB_COMP_PARAM->currLine = iCurrLine;
    }
    else

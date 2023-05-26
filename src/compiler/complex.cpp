@@ -217,7 +217,7 @@ static const HB_LEX_KEY s_typetable[] =
    { "USUAL",     4, 5, _AS_VARIANT   }
 };
 
-static int hb_comp_asType(PHB_PP_TOKEN pToken, HB_BOOL fArray)
+static int hb_comp_asType(PHB_PP_TOKEN pToken, bool fArray)
 {
    if( pToken && HB_PP_TOKEN_TYPE(pToken->type) == HB_PP_TOKEN_KEYWORD )
    {
@@ -276,7 +276,7 @@ static const char * hb_comp_tokenString(YYSTYPE * yylval_ptr, HB_COMP_DECL, PHB_
 {
    yylval_ptr->valChar.length = pToken->len;
    yylval_ptr->valChar.string = const_cast<char*>(pToken->value);
-   yylval_ptr->valChar.dealloc = HB_FALSE;
+   yylval_ptr->valChar.dealloc = false;
    if( HB_PP_TOKEN_ALLOC(pToken->type) )
    {
       yylval_ptr->valChar.dealloc = pToken->len != strlen(pToken->value);
@@ -291,7 +291,7 @@ static const char * hb_comp_tokenString(YYSTYPE * yylval_ptr, HB_COMP_DECL, PHB_
 }
 
 #if defined(HB_COMPAT_FOXPRO) || 1
-static HB_BOOL hb_comp_timeDecode(PHB_PP_TOKEN pTime, long * plTime)
+static bool hb_comp_timeDecode(PHB_PP_TOKEN pTime, long * plTime)
 {
    HB_MAXINT lHour, lMinute, lMilliSec;
    double dNumber;
@@ -555,7 +555,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
 
    if( pLex->fEol )
    {
-      pLex->fEol = HB_FALSE;
+      pLex->fEol = false;
       HB_COMP_PARAM->currLine++;
    }
 
@@ -845,7 +845,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
          return static_cast<HB_UCHAR>(pToken->value[0]);
 
       case HB_PP_TOKEN_EOL:
-         pLex->fEol = HB_TRUE;
+         pLex->fEol = true;
          /* fallthrough */
       case HB_PP_TOKEN_EOC:
          pLex->iState = LOOKUP;

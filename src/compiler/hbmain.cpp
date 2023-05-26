@@ -35,7 +35,7 @@
 #include "hbset.hpp"
 
 static int hb_compCompile(HB_COMP_DECL, const char * szPrg, const char * szBuffer, int iStartLine);
-static HB_BOOL hb_compRegisterFunc(HB_COMP_DECL, PHB_HFUNC pFunc, HB_BOOL fError);
+static bool hb_compRegisterFunc(HB_COMP_DECL, PHB_HFUNC pFunc, bool fError);
 
 /* ************************************************************************* */
 
@@ -2112,8 +2112,8 @@ static PHB_HFUNC hb_compFunctionNew(HB_COMP_DECL, const char * szName, HB_SYMBOL
    pFunc->cScope         = cScope;
    pFunc->iStaticsBase   = HB_COMP_PARAM->iStaticCnt;
    pFunc->iEarlyEvalPass = 0;
-   pFunc->fVParams       = HB_FALSE;
-   pFunc->bError         = HB_FALSE;
+   pFunc->fVParams       = false;
+   pFunc->bError         = false;
 
    return pFunc;
 }
@@ -2281,7 +2281,7 @@ static PHB_HFUNC hb_compFunctionFind(HB_COMP_DECL, const char * szName, HB_BOOL 
    if( HB_COMP_PARAM->iModulesCount <= 1 )
    {
       pFunc = HB_COMP_PARAM->functions.pFirst;
-      fLocal = HB_TRUE;
+      fLocal = true;
    }
    else
    {
@@ -2292,7 +2292,7 @@ static PHB_HFUNC hb_compFunctionFind(HB_COMP_DECL, const char * szName, HB_BOOL 
    {
       if( pFunc == HB_COMP_PARAM->pDeclFunc )
       {
-         fLocal = HB_TRUE;
+         fLocal = true;
       }
 
       if( (pFunc->funFlags & HB_FUNF_FILE_DECL) == 0 &&
@@ -2307,7 +2307,7 @@ static PHB_HFUNC hb_compFunctionFind(HB_COMP_DECL, const char * szName, HB_BOOL 
    return pFunc;
 }
 
-static HB_BOOL hb_compIsModuleFunc(HB_COMP_DECL, const char * szFunctionName)
+static bool hb_compIsModuleFunc(HB_COMP_DECL, const char * szFunctionName)
 {
    PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pFirst;
 
@@ -2362,7 +2362,7 @@ static void hb_compUpdateFunctionNames(HB_COMP_DECL)
    }
 }
 
-static HB_BOOL hb_compCheckReservedNames(HB_COMP_DECL, const char * szFunName, HB_BOOL fError)
+static bool hb_compCheckReservedNames(HB_COMP_DECL, const char * szFunName, bool fError)
 {
    const char * szFunction;
    HB_FUNC_ID funcID;
@@ -2383,7 +2383,7 @@ static HB_BOOL hb_compCheckReservedNames(HB_COMP_DECL, const char * szFunName, H
    }
 }
 
-static HB_BOOL hb_compRegisterFunc(HB_COMP_DECL, PHB_HFUNC pFunc, HB_BOOL fError)
+static bool hb_compRegisterFunc(HB_COMP_DECL, PHB_HFUNC pFunc, bool fError)
 {
    if( hb_compFunctionFind(HB_COMP_PARAM, pFunc->szName, (pFunc->cScope & HB_FS_STATIC) != 0) )
    {
@@ -2915,8 +2915,8 @@ static void hb_compGenFieldPCode(HB_COMP_DECL, HB_BYTE bPCode, PHB_HVAR pField)
 }
 
 /* sends a message to an object */
-/* bIsObject = HB_TRUE if we are sending a message to real object
-   bIsObject is HB_FALSE if we are sending a message to an object specified
+/* bIsObject = true if we are sending a message to real object
+   bIsObject is false if we are sending a message to an object specified
    with WITH OBJECT statement.
  */
 void hb_compGenMessage(const char * szMsgName, HB_BOOL bIsObject, HB_COMP_DECL)
@@ -3098,7 +3098,7 @@ void hb_compGenPopMemvar(const char * szVarName, HB_COMP_DECL)
 
 /* generates the pcode to push a non-aliased variable value to the virtual
  * machine stack
- * bMacroVar is HB_TRUE if macro &szVarName context
+ * bMacroVar is true if macro &szVarName context
  */
 void hb_compGenPushVar(const char * szVarName, HB_COMP_DECL)
 {
@@ -3517,7 +3517,7 @@ void hb_compNOOPfill(PHB_HFUNC pFunc, HB_SIZE nFrom, HB_ISIZ nCount, HB_BOOL fPo
       if( fPop )
       {
          pFunc->pCode[nFrom] = HB_P_POP;
-         fPop = HB_FALSE;
+         fPop = false;
       }
       else if( fCheck && pFunc->pCode[nFrom] == HB_P_NOOP && pFunc->nNOOPs )
       {
@@ -4186,7 +4186,7 @@ static void hb_compInitVars(HB_COMP_DECL)
    HB_COMP_PARAM->functions.pFirst = nullptr;
    HB_COMP_PARAM->functions.pLast  = nullptr;
    HB_COMP_PARAM->szAnnounce       = nullptr;
-   HB_COMP_PARAM->fSwitchCase      = HB_FALSE;
+   HB_COMP_PARAM->fSwitchCase      = false;
 
    HB_COMP_PARAM->symbols.iCount   = 0;
    HB_COMP_PARAM->symbols.pFirst   = nullptr;
@@ -4509,8 +4509,8 @@ static void hb_compGenIncluded(HB_COMP_DECL)
       }
       else
       {
-         HB_BOOL fFullQuiet = HB_COMP_PARAM->fFullQuiet;
-         HB_COMP_PARAM->fFullQuiet = HB_FALSE;
+         bool fFullQuiet = HB_COMP_PARAM->fFullQuiet;
+         HB_COMP_PARAM->fFullQuiet = false;
          if( szDestFile[0] )
          {
             hb_compOutStd(HB_COMP_PARAM, szDestFile);
@@ -4608,7 +4608,7 @@ static int hb_compCompile(HB_COMP_DECL, const char * szPrg, const char * szBuffe
       hb_pp_reset(HB_COMP_PARAM->pLex->pPP);
       HB_COMP_PARAM->pLex->iState = HB_COMP_PARAM->pLex->iClose =
       HB_COMP_PARAM->pLex->iScope = 0;
-      HB_COMP_PARAM->pLex->fEol = HB_FALSE;
+      HB_COMP_PARAM->pLex->fEol = false;
       hb_compDeclaredReset(HB_COMP_PARAM);
 
       if( !szBuffer )

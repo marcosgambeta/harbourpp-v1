@@ -80,7 +80,7 @@ static HB_LABEL_FUNC(hb_p_jumpfar)
 static HB_LABEL_FUNC(hb_p_jumpfalsenear)
 {
    HB_SIZE nNewPos = nPCodePos + static_cast<signed char>(pFunc->pCode[nPCodePos + 1]);
-   cargo->fCondJump = HB_TRUE;
+   cargo->fCondJump = true;
    cargo->pnLabels[nNewPos]++;
    return 2;
 }
@@ -89,7 +89,7 @@ static HB_LABEL_FUNC(hb_p_jumpfalse)
 {
    HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 1];
    HB_SIZE nNewPos = nPCodePos + HB_PCODE_MKSHORT(pAddr);
-   cargo->fCondJump = HB_TRUE;
+   cargo->fCondJump = true;
    cargo->pnLabels[nNewPos]++;
    return 3;
 }
@@ -98,7 +98,7 @@ static HB_LABEL_FUNC(hb_p_jumpfalsefar)
 {
    HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 1];
    HB_SIZE nNewPos = nPCodePos + HB_PCODE_MKINT24(pAddr);
-   cargo->fCondJump = HB_TRUE;
+   cargo->fCondJump = true;
    cargo->pnLabels[nNewPos]++;
    return 4;
 }
@@ -106,7 +106,7 @@ static HB_LABEL_FUNC(hb_p_jumpfalsefar)
 static HB_LABEL_FUNC(hb_p_jumptruenear)
 {
    HB_SIZE nNewPos = nPCodePos + static_cast<signed char>(pFunc->pCode[nPCodePos + 1]);
-   cargo->fCondJump = HB_TRUE;
+   cargo->fCondJump = true;
    cargo->pnLabels[nNewPos]++;
    return 2;
 }
@@ -115,7 +115,7 @@ static HB_LABEL_FUNC(hb_p_jumptrue)
 {
    HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 1];
    HB_SIZE nNewPos = nPCodePos + HB_PCODE_MKSHORT(pAddr);
-   cargo->fCondJump = HB_TRUE;
+   cargo->fCondJump = true;
    cargo->pnLabels[nNewPos]++;
    return 3;
 }
@@ -124,7 +124,7 @@ static HB_LABEL_FUNC(hb_p_jumptruefar)
 {
    HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 1];
    HB_SIZE nNewPos = nPCodePos + HB_PCODE_MKINT24(pAddr);
-   cargo->fCondJump = HB_TRUE;
+   cargo->fCondJump = true;
    cargo->pnLabels[nNewPos]++;
    return 4;
 }

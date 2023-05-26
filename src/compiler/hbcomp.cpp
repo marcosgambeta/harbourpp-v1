@@ -273,22 +273,22 @@ PHB_COMP hb_comp_new(void)
                          HB_COMPFLAG_MACROTEXT |
                          HB_COMPFLAG_SHORTCUTS;
 
-      pComp->fSwitchCase       = HB_FALSE;
-      pComp->fPPO              = HB_FALSE;   /* flag indicating, is .ppo output needed */
-      pComp->fLineNumbers      = HB_TRUE;    /* holds if we need pcodes with line numbers */
-      pComp->fAnyWarning       = HB_FALSE;   /* holds if there was any warning during the compilation process */
-      pComp->fAutoMemvarAssume = HB_FALSE;   /* holds if undeclared variables are automatically assumed MEMVAR (-a)*/
-      pComp->fForceMemvars     = HB_FALSE;   /* holds if memvars are assumed when accessing undeclared variable (-v)*/
-      pComp->fDebugInfo        = HB_FALSE;   /* holds if generate debugger required info */
-      pComp->fHideSource       = HB_FALSE;   /* do not store .prg file names in PCODE */
-      pComp->fNoStartUp        = HB_FALSE;   /* C code generation embed HB_FS_FIRST or not */
-      pComp->fCredits          = HB_FALSE;   /* print credits */
-      pComp->fBuildInfo        = HB_FALSE;   /* print build info */
-      pComp->fGauge            = HB_TRUE;    /* line counter gauge */
-      pComp->fLogo             = HB_TRUE;    /* print logo */
-      pComp->fSingleModule     = HB_FALSE;
-      pComp->fError            = HB_FALSE;
-      pComp->fINCLUDE          = HB_TRUE;
+      pComp->fSwitchCase       = false;
+      pComp->fPPO              = false;   /* flag indicating, is .ppo output needed */
+      pComp->fLineNumbers      = true;    /* holds if we need pcodes with line numbers */
+      pComp->fAnyWarning       = false;   /* holds if there was any warning during the compilation process */
+      pComp->fAutoMemvarAssume = false;   /* holds if undeclared variables are automatically assumed MEMVAR (-a)*/
+      pComp->fForceMemvars     = false;   /* holds if memvars are assumed when accessing undeclared variable (-v)*/
+      pComp->fDebugInfo        = false;   /* holds if generate debugger required info */
+      pComp->fHideSource       = false;   /* do not store .prg file names in PCODE */
+      pComp->fNoStartUp        = false;   /* C code generation embed HB_FS_FIRST or not */
+      pComp->fCredits          = false;   /* print credits */
+      pComp->fBuildInfo        = false;   /* print build info */
+      pComp->fGauge            = true;    /* line counter gauge */
+      pComp->fLogo             = true;    /* print logo */
+      pComp->fSingleModule     = false;
+      pComp->fError            = false;
+      pComp->fINCLUDE          = true;
 
       pComp->iSyntaxCheckOnly = 0;               /* syntax check only */
       pComp->iStartProc       = 0;               /* no implicit starting procedure */
