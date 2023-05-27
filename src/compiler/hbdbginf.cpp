@@ -55,16 +55,12 @@ PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL)
 
    PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pFirst;
 
-   while( pFunc )
-   {
-      if( (pFunc->funFlags & HB_FUNF_FILE_DECL) == 0 )
-      {
+   while( pFunc ) {
+      if( (pFunc->funFlags & HB_FUNF_FILE_DECL) == 0 ) {
          nPos = ulLine = 0;
-         while( nPos < pFunc->nPCodePos )
-         {
+         while( nPos < pFunc->nPCodePos ) {
             nSkip = 0;
-            switch( pFunc->pCode[nPos] )
-            {
+            switch( pFunc->pCode[nPos] ) {
                case HB_P_LINE:
                   ulLine = HB_PCODE_MKUSHORT(&pFunc->pCode[nPos + 1]);
                   break;
@@ -92,26 +88,21 @@ PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL)
                   break;
             }
 
-            if( ulLine != 0 )
-            {
-               if( !pInfo )
-               {
+            if( ulLine != 0 ) {
+               if( !pInfo ) {
                   int i;
 
                   ptr = strrchr(pszModuleName, ':');
                   i = ptr ? static_cast<int>(ptr - pszModuleName) : static_cast<int>(strlen(pszModuleName));
 
                   pInfo = pLineInfo;
-                  while( pInfo != nullptr )
-                  {
-                     if( strncmp(pszModuleName, pInfo->pszModuleName, i) == 0 && (pInfo->pszModuleName[i] == '\0' || pInfo->pszModuleName[i] == ':') )
-                     {
+                  while( pInfo != nullptr ) {
+                     if( strncmp(pszModuleName, pInfo->pszModuleName, i) == 0 && (pInfo->pszModuleName[i] == '\0' || pInfo->pszModuleName[i] == ':') ) {
                         break;
                      }
                      pInfo = pInfo->pNext;
                   }
-                  if( !pInfo )
-                  {
+                  if( !pInfo ) {
                      pInfo = static_cast<PHB_DEBUGINFO>(hb_xgrab(sizeof(HB_DEBUGINFO)));
                      pInfo->pszModuleName = hb_strndup(pszModuleName, i);
                      pInfo->ulFirstLine = pInfo->ulLastLine = ulLine;
@@ -128,8 +119,7 @@ PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL)
                   }
                }
                nOffset = ulLine >> 3;
-               if( pInfo->ulAllocated <= nOffset )
-               {
+               if( pInfo->ulAllocated <= nOffset ) {
                   HB_ULONG ulNewSize = ((ulLine >> 3) + 0x100) & 0xFFFFFF00L;
                   pInfo->pLineMap = static_cast<HB_BYTE*>(hb_xrealloc(pInfo->pLineMap, ulNewSize + 1));
                   memset(pInfo->pLineMap + pInfo->ulAllocated, 0, ulNewSize - pInfo->ulAllocated + 1);
@@ -140,22 +130,18 @@ PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL)
                 * It's possible the the line number will be ascending
                 * if some external file is included more then once. [druzus]
                 */
-               if( pInfo->ulFirstLine > ulLine )
-               {
+               if( pInfo->ulFirstLine > ulLine ) {
                   pInfo->ulFirstLine = ulLine;
                }
-               if( pInfo->ulLastLine < ulLine )
-               {
+               if( pInfo->ulLastLine < ulLine ) {
                   pInfo->ulLastLine = ulLine;
                }
                ulLine = 0;
             }
 
-            if( nSkip == 0 )
-            {
+            if( nSkip == 0 ) {
                nSkip = hb_compPCodeSize(pFunc, nPos);
-               if( nSkip == 0 )
-               {
+               if( nSkip == 0 ) {
                   break;
                }
             }

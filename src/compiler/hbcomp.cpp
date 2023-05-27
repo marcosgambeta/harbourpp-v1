@@ -52,14 +52,11 @@ static PHB_EXPR hb_compExprAlloc(HB_COMP_DECL)
 
    pExpItm->pNext = HB_COMP_PARAM->pExprLst;
    HB_COMP_PARAM->pExprLst = pExpItm;
-   if( pExpItm->pNext )
-   {
+   if( pExpItm->pNext ) {
       pExpItm->pPrev = pExpItm->pNext->pPrev;
       pExpItm->pNext->pPrev = pExpItm;
       pExpItm->pPrev->pNext = pExpItm;
-   }
-   else
-   {
+   } else {
       pExpItm->pPrev = pExpItm->pNext = pExpItm;
    }
 
@@ -68,27 +65,20 @@ static PHB_EXPR hb_compExprAlloc(HB_COMP_DECL)
 
 static void hb_compExprDealloc(HB_COMP_DECL, PHB_EXPR pExpr)
 {
-   if( HB_COMP_PARAM->pExprLst )
-   {
+   if( HB_COMP_PARAM->pExprLst ) {
       PHB_EXPRLST pExpItm = reinterpret_cast<PHB_EXPRLST>(pExpr);
 
       pExpItm->pNext->pPrev = pExpItm->pPrev;
       pExpItm->pPrev->pNext = pExpItm->pNext;
-      if( pExpItm == HB_COMP_PARAM->pExprLst )
-      {
-         if( pExpItm->pNext == pExpItm )
-         {
+      if( pExpItm == HB_COMP_PARAM->pExprLst ) {
+         if( pExpItm->pNext == pExpItm ) {
             HB_COMP_PARAM->pExprLst = nullptr;
-         }
-         else
-         {
+         } else {
             HB_COMP_PARAM->pExprLst = pExpItm->pNext;
          }
       }
       hb_xfree(pExpItm);
-   }
-   else
-   {
+   } else {
       pExpr->ExprType = HB_ET_NONE;
    }
 }
@@ -128,24 +118,19 @@ static void hb_compExprFree(HB_COMP_DECL, PHB_EXPR pExpr)
 
 static void hb_compExprLstDealloc(HB_COMP_DECL)
 {
-   if( HB_COMP_PARAM->pExprLst )
-   {
+   if( HB_COMP_PARAM->pExprLst ) {
       PHB_EXPRLST pExpItm, pExp;
       pExpItm = pExp = HB_COMP_PARAM->pExprLst;
       HB_COMP_PARAM->pExprLst = nullptr;
-      do
-      {
+      do {
          hb_compExprFree(HB_COMP_PARAM, &pExp->Expression);
          pExp = pExp->pNext;
-      }
-      while( pExp != pExpItm );
-      do
-      {
+      } while( pExp != pExpItm );
+      do {
          PHB_EXPRLST pFree = pExp;
          pExp = pExp->pNext;
          hb_xfree(pFree);
-      }
-      while( pExp != pExpItm );
+      } while( pExp != pExpItm );
    }
 }
 
@@ -173,30 +158,21 @@ static void hb_compOutMsg(void * cargo, int iErrorFmt, int iLine, const char * s
 {
    char buffer[512];
 
-   if( szModule )
-   {
-      if( iErrorFmt == HB_ERRORFMT_CLIPPER )
-      {
+   if( szModule ) {
+      if( iErrorFmt == HB_ERRORFMT_CLIPPER ) {
          hb_snprintf(buffer, sizeof(buffer), "\r%s(%i) ", szModule, iLine);
-      }
-      else if( iLine )
-      {
+      } else if( iLine ) {
          hb_snprintf(buffer, sizeof(buffer), "\n%s:%i: ", szModule, iLine);
-      }
-      else
-      {
+      } else {
          hb_snprintf(buffer, sizeof(buffer), "\n%s:%s ", szModule, szPar2);
       }
 
       hb_compOutErr(static_cast<PHB_COMP>(cargo), buffer);
    }
 
-   if( iErrorFmt == HB_ERRORFMT_CLIPPER )
-   {
+   if( iErrorFmt == HB_ERRORFMT_CLIPPER ) {
       hb_snprintf(buffer, sizeof(buffer), "%s %c%04i  ", cPrefix == 'W' ? "Warning" : "Error", cPrefix, iValue);
-   }
-   else
-   {
+   } else {
       hb_snprintf(buffer, sizeof(buffer), "%s %c%04i  ", cPrefix == 'W' ? "warning" : "error", cPrefix, iValue);
    }
 
@@ -208,14 +184,10 @@ static void hb_compOutMsg(void * cargo, int iErrorFmt, int iLine, const char * s
 
 void hb_compOutStd(HB_COMP_DECL, const char * szMessage)
 {
-   if( !HB_COMP_PARAM->fFullQuiet )
-   {
-      if( HB_COMP_PARAM->outStdFunc )
-      {
+   if( !HB_COMP_PARAM->fFullQuiet ) {
+      if( HB_COMP_PARAM->outStdFunc ) {
          HB_COMP_PARAM->outStdFunc(HB_COMP_PARAM, szMessage);
-      }
-      else
-      {
+      } else {
          fprintf(stdout, "%s", szMessage);
          fflush(stdout);
       }
@@ -224,14 +196,10 @@ void hb_compOutStd(HB_COMP_DECL, const char * szMessage)
 
 void hb_compOutErr(HB_COMP_DECL, const char * szMessage)
 {
-   if( !HB_COMP_PARAM->fFullQuiet )
-   {
-      if( HB_COMP_PARAM->outErrFunc )
-      {
+   if( !HB_COMP_PARAM->fFullQuiet ) {
+      if( HB_COMP_PARAM->outErrFunc ) {
          HB_COMP_PARAM->outErrFunc(HB_COMP_PARAM, szMessage);
-      }
-      else
-      {
+      } else {
          fprintf(stderr, "%s", szMessage);
          fflush(stderr);
       }
@@ -253,8 +221,7 @@ PHB_COMP hb_comp_new(void)
    PHB_COMP pComp = nullptr;
    PHB_PP_STATE pPP = hb_pp_new();
 
-   if( pPP )
-   {
+   if( pPP ) {
       pComp = static_cast<PHB_COMP>(hb_xgrabz(sizeof(HB_COMP)));
       pComp->pLex = static_cast<PHB_COMP_LEX>(hb_xgrabz(sizeof(HB_COMP_LEX)));
 
@@ -317,75 +284,61 @@ void hb_comp_free(PHB_COMP pComp)
     * executing hb_compExprLstDealloc() may only hides some real
     * memory leaks
     */
-   if( pComp->iErrorCount != 0 )
-   {
+   if( pComp->iErrorCount != 0 ) {
       hb_compExprLstDealloc(pComp);
    }
 
    hb_compIdentifierClose(pComp);
 
-   if( pComp->pOutPath )
-   {
+   if( pComp->pOutPath ) {
       hb_xfree(pComp->pOutPath);
    }
 
-   if( pComp->pPpoPath )
-   {
+   if( pComp->pPpoPath ) {
       hb_xfree(pComp->pPpoPath);
    }
 
-   while( pComp->modules )
-   {
+   while( pComp->modules ) {
       PHB_MODULE pModule = pComp->modules;
 
       pComp->modules = pComp->modules->pNext;
       hb_xfree(pModule);
    }
 
-   while( pComp->pVarType )
-   {
+   while( pComp->pVarType ) {
       PHB_VARTYPE pVarType = pComp->pVarType;
 
       pComp->pVarType = pComp->pVarType->pNext;
       hb_xfree(pVarType);
    }
 
-   if( pComp->pOutBuf )
-   {
+   if( pComp->pOutBuf ) {
       hb_xfree(pComp->pOutBuf);
    }
 
-   if( pComp->pLex )
-   {
-      if( pComp->pLex->pPP )
-      {
+   if( pComp->pLex ) {
+      if( pComp->pLex->pPP ) {
          hb_pp_free(pComp->pLex->pPP);
       }
       hb_xfree(pComp->pLex);
    }
 
-   if( pComp->szDepExt )
-   {
+   if( pComp->szDepExt ) {
       hb_xfree(pComp->szDepExt);
    }
 
-   if( pComp->szStdCh )
-   {
+   if( pComp->szStdCh ) {
       hb_xfree(pComp->szStdCh);
    }
 
-   if( pComp->iStdChExt > 0 )
-   {
-      do
-      {
+   if( pComp->iStdChExt > 0 ) {
+      do {
          hb_xfree(pComp->szStdChExt[--pComp->iStdChExt]);
-      }
-      while( pComp->iStdChExt != 0 );
+      } while( pComp->iStdChExt != 0 );
       hb_xfree(pComp->szStdChExt);
    }
 
-   if( pComp->pI18nFileName )
-   {
+   if( pComp->pI18nFileName ) {
       hb_xfree(pComp->pI18nFileName);
    }
 

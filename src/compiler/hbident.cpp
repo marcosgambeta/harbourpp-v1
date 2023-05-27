@@ -32,25 +32,20 @@ const char * hb_compIdentifierNew(HB_COMP_DECL, const char * szName, int iType)
 {
    const char * szIdent = static_cast<const char*>(hb_hashTableFind(HB_COMP_PARAM->pIdentifiers, static_cast<const void*>(szName)));
 
-   if( !szIdent )
-   {
+   if( !szIdent ) {
       /*
        * In the future we may add direct support for static identifiers
        * so it will not be necessary to allocate separate buffer for them
        */
-      if( iType == HB_IDENT_COPY || iType == HB_IDENT_STATIC )
-      {
+      if( iType == HB_IDENT_COPY || iType == HB_IDENT_STATIC ) {
          szIdent = hb_strdup(szName);
-      }
-      else
-      {
+      } else {
          szIdent = szName;
       }
 
       hb_hashTableAdd(HB_COMP_PARAM->pIdentifiers, static_cast<const void*>(szIdent), static_cast<const void*>(szIdent));
    }
-   else if( iType == HB_IDENT_FREE )
-   {
+   else if( iType == HB_IDENT_FREE ) {
       hb_xfree(const_cast<char*>(szName));
    }
 
@@ -63,8 +58,7 @@ static HB_HASH_FUNC(hb_comp_IdentKey)    /* HB_SIZE func (void *Value, void *Car
    HB_SIZE nSum = 0;
    const char * szName = static_cast<const char*>(Value);
 
-   while( *szName )
-   {
+   while( *szName ) {
       nSum += *szName++;
    }
 
@@ -99,8 +93,7 @@ void hb_compIdentifierOpen(HB_COMP_DECL)
 /* release identifiers table */
 void hb_compIdentifierClose(HB_COMP_DECL)
 {
-   if( HB_COMP_PARAM->pIdentifiers )
-   {
+   if( HB_COMP_PARAM->pIdentifiers ) {
       hb_hashTableKill(HB_COMP_PARAM->pIdentifiers);
       HB_COMP_PARAM->pIdentifiers = nullptr;
    }

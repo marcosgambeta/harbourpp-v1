@@ -113,8 +113,7 @@ void hb_compPrintUsage(HB_COMP_DECL, const char * szSelf)
    buffer.append(" <file[s][.prg]|@file> [options]\n");
    hb_compOutStd(HB_COMP_PARAM, buffer.data());
 
-   for( auto option : options )
-   {
+   for( auto option : options ) {
       hb_compOutStd(HB_COMP_PARAM, option.data());
    }
 }
@@ -155,11 +154,9 @@ void hb_compPrintModes(HB_COMP_DECL)
 
    hb_compOutStd(HB_COMP_PARAM, "\nCompatibility flags: -k[options]\n");
 
-   for( unsigned int iLine = 0; iLine < options.size(); iLine++ )
-   {
+   for( unsigned int iLine = 0; iLine < options.size(); iLine++ ) {
       hb_compOutStd(HB_COMP_PARAM, options.at(iLine).data());
-      if( iLine < flags.size() && (flags.at(iLine) < 0 ? HB_COMP_ISSUPPORTED(~flags.at(iLine)) == 0 : HB_COMP_ISSUPPORTED(flags.at(iLine)) != 0) )
-      {
+      if( iLine < flags.size() && (flags.at(iLine) < 0 ? HB_COMP_ISSUPPORTED(~flags.at(iLine)) == 0 : HB_COMP_ISSUPPORTED(flags.at(iLine)) != 0) ) {
          hb_compOutStd(HB_COMP_PARAM, " (default)");
       }
    }

@@ -52,18 +52,14 @@ static void s_pp_msg(void * cargo, int iErrorFmt, int iLine, const char * szModu
    HB_SYMBOL_UNUSED(cargo);
 
    /* ignore all warning messages and errors when break or quit request */
-   if( cPrefix != 'W' && hb_vmRequestQuery() == 0 )
-   {
+   if( cPrefix != 'W' && hb_vmRequestQuery() == 0 ) {
       char szMsgBuf[512], szLine[512];
       PHB_ITEM pError;
 
       hb_snprintf(szMsgBuf, sizeof(szMsgBuf), szText, szPar1, szPar2);
-      if( !szModule || *szModule == 0 || strcmp(szModule, "{SOURCE}.prg") == 0 )
-      {
+      if( !szModule || *szModule == 0 || strcmp(szModule, "{SOURCE}.prg") == 0 ) {
          hb_snprintf(szLine, sizeof(szLine), "line:%i", iLine);
-      }
-      else
-      {
+      } else {
          hb_snprintf(szLine, sizeof(szLine), iErrorFmt == HB_ERRORFMT_CLIPPER ? "%s(%i)" : "%s:%i", szModule, iLine);
       }
       pError = hb_errRT_New(ES_ERROR, "COMPILER", 1001, static_cast<HB_ERRCODE>(iValue), szMsgBuf, szLine, 0 /*OsCode*/, EF_NONE);
@@ -81,22 +77,17 @@ static int s_pp_openFile(void * cargo, char * szFileName, HB_BOOL fBefore, HB_BO
    HB_SYMBOL_UNUSED(pfNested);
    HB_SYMBOL_UNUSED(file_ptr);
 
-   if( !fBefore )
-   {
+   if( !fBefore ) {
       HB_COMP_DECL = static_cast<PHB_COMP>(cargo);
       PHB_ITEM pIncItem = static_cast<PHB_ITEM>(HB_COMP_PARAM->cargo);
 
-      if( pIncItem )
-      {
-         if( HB_IS_HASH(pIncItem) )
-         {
+      if( pIncItem ) {
+         if( HB_IS_HASH(pIncItem) ) {
             PHB_ITEM pFileItem = hb_hashGetCItemPtr(pIncItem, szFileName);
 
-            if( pFileItem )
-            {
+            if( pFileItem ) {
                HB_SIZE nLen = hb_itemGetCLen(pFileItem);
-               if( nLen )
-               {
+               if( nLen ) {
                   *pBufPtr = hb_itemGetCPtr(pFileItem);
                   *pnLen = nLen;
                   *pfFree = false;
@@ -116,52 +107,38 @@ static void hb_compGenArgList(int iFirst, int iLast, int * pArgC, const char ***
    int argc = 1;
    const char ** argv;
 
-   if( pMsgFunc )
-   {
+   if( pMsgFunc ) {
       *pMsgFunc = nullptr;
-      if( HB_ISLOG(iFirst) )
-      {
-         if( hb_parl(iFirst) )
-         {
+      if( HB_ISLOG(iFirst) ) {
+         if( hb_parl(iFirst) ) {
             *pMsgFunc = s_pp_msg;
          }
          ++iFirst;
       }
    }
 
-   if( pIncItem && pOpenFunc )
-   {
+   if( pIncItem && pOpenFunc ) {
       *pOpenFunc = nullptr;
       *pIncItem = hb_param(iFirst, Harbour::Item::HASH);
-      if( *pIncItem )
-      {
+      if( *pIncItem ) {
          ++iFirst;
          *pOpenFunc = s_pp_openFile;
       }
    }
 
-   for( int i = iFirst; i <= iLast; ++i )
-   {
+   for( int i = iFirst; i <= iLast; ++i ) {
       pParam = hb_param(i, Harbour::Item::ARRAY | Harbour::Item::STRING);
-      if( pParam )
-      {
-         if( HB_IS_ARRAY(pParam) )
-         {
+      if( pParam ) {
+         if( HB_IS_ARRAY(pParam) ) {
             HB_SIZE nPos = hb_arrayLen(pParam);
-            if( nPos )
-            {
-               do
-               {
-                  if( hb_arrayGetType(pParam, nPos) & Harbour::Item::STRING )
-                  {
+            if( nPos ) {
+               do {
+                  if( hb_arrayGetType(pParam, nPos) & Harbour::Item::STRING ) {
                      ++argc;
                   }
-               }
-               while( --nPos );
+               } while( --nPos );
             }
-         }
-         else if( HB_IS_STRING(pParam) )
-         {
+         } else if( HB_IS_STRING(pParam) ) {
             ++argc;
          }
       }
@@ -169,24 +146,17 @@ static void hb_compGenArgList(int iFirst, int iLast, int * pArgC, const char ***
 
    argv = static_cast<const char**>(hb_xgrab(sizeof(char*) * (argc + 1)));
    argc = 0;
-   for( int i = iFirst; i <= iLast; ++i )
-   {
+   for( int i = iFirst; i <= iLast; ++i ) {
       pParam = hb_param(i, Harbour::Item::ARRAY | Harbour::Item::STRING);
-      if( pParam )
-      {
-         if( HB_IS_ARRAY(pParam) )
-         {
+      if( pParam ) {
+         if( HB_IS_ARRAY(pParam) ) {
             HB_SIZE nLen = hb_arrayLen(pParam);
-            for( HB_SIZE nPos = 1; nPos <= nLen; ++nPos )
-            {
-               if( hb_arrayGetType(pParam, nPos) & Harbour::Item::STRING )
-               {
+            for( HB_SIZE nPos = 1; nPos <= nLen; ++nPos ) {
+               if( hb_arrayGetType(pParam, nPos) & Harbour::Item::STRING ) {
                   argv[argc++] = hb_arrayGetCPtr(pParam, nPos);
                }
             }
-         }
-         else if( HB_IS_STRING(pParam) )
-         {
+         } else if( HB_IS_STRING(pParam) ) {
             argv[argc++] = hb_itemGetCPtr(pParam);
          }
       }
@@ -224,8 +194,7 @@ HB_FUNC( HB_COMPILEBUF )
    iResult = hb_compMainExt(argc, argv, &pBuffer, &nLen, nullptr, 0, pIncItem, pOpenFunc, pMsgFunc);
    hb_xfree(static_cast<void*>(argv));
 
-   if( iResult == EXIT_SUCCESS && pBuffer )
-   {
+   if( iResult == EXIT_SUCCESS && pBuffer ) {
       hb_retclen_buffer(reinterpret_cast<char*>(pBuffer), nLen);
    }
 }
@@ -234,8 +203,7 @@ HB_FUNC( HB_COMPILEFROMBUF )
 {
    const char * szSource = hb_parc(1);
 
-   if( szSource )
-   {
+   if( szSource ) {
       int iResult, argc;
       const char ** argv;
       PHB_ITEM pIncItem;
@@ -248,8 +216,7 @@ HB_FUNC( HB_COMPILEFROMBUF )
       iResult = hb_compMainExt(argc, argv, &pBuffer, &nLen, szSource, 0, pIncItem, pOpenFunc, pMsgFunc);
       hb_xfree(static_cast<void*>(argv));
 
-      if( iResult == EXIT_SUCCESS && pBuffer )
-      {
+      if( iResult == EXIT_SUCCESS && pBuffer ) {
          hb_retclen_buffer(reinterpret_cast<char*>(pBuffer), nLen);
       }
    }
