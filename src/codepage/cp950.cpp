@@ -1840,8 +1840,7 @@ static const HB_USHORT s_cp950_ucs16[13823] =
 static HB_USHORT s_cp950_to_ucs16(int n)
 {
    n -= HB_CP950_FIRST;
-   if( n >= 0 && n <= (HB_CP950_LAST - HB_CP950_FIRST) )
-   {
+   if( n >= 0 && n <= (HB_CP950_LAST - HB_CP950_FIRST) ) {
       return s_cp950_ucs16[(s_cp950index[n >> HB_CP950_BITS] << HB_CP950_BITS) + (n & ((1 << HB_CP950_BITS) - 1))];
    }
    return 0;
@@ -4799,8 +4798,7 @@ static const HB_USHORT s_ucs16_cp950[22470] =
 static HB_USHORT s_ucs16_to_cp950(int n)
 {
    n -= HB_U16_FIRST;
-   if( n >= 0 && n <= (HB_U16_LAST - HB_U16_FIRST) )
-   {
+   if( n >= 0 && n <= (HB_U16_LAST - HB_U16_FIRST) ) {
       return s_ucs16_cp950[(s_ucs16index[n >> HB_U16_BITS] << HB_U16_BITS) + (n & ((1 << HB_U16_BITS) - 1))];
    }
    return 0;

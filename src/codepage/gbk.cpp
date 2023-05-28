@@ -2936,8 +2936,7 @@ static const HB_USHORT s_gbk_ucs16[22864] =
 static HB_USHORT s_gbk_to_ucs16(int n)
 {
    n -= HB_GBK_FIRST;
-   if( n >= 0 && n <= (HB_GBK_LAST - HB_GBK_FIRST) )
-   {
+   if( n >= 0 && n <= (HB_GBK_LAST - HB_GBK_FIRST) ) {
       return s_gbk_ucs16[(s_gbkindex[n >> HB_GBK_BITS] << HB_GBK_BITS) + (n & ((1 << HB_GBK_BITS) - 1))];
    }
    return 0;
@@ -6111,8 +6110,7 @@ static const HB_USHORT s_ucs16_gbk[24194] =
 static HB_USHORT s_ucs16_to_gbk(int n)
 {
    n -= HB_U16_FIRST;
-   if( n >= 0 && n <= (HB_U16_LAST - HB_U16_FIRST) )
-   {
+   if( n >= 0 && n <= (HB_U16_LAST - HB_U16_FIRST) ) {
       return s_ucs16_gbk[(s_ucs16index[n >> HB_U16_BITS] << HB_U16_BITS) + (n & ((1 << HB_U16_BITS) - 1))];
    }
    return 0;

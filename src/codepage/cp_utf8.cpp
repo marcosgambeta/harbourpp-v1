@@ -63,20 +63,16 @@ static HB_CDP_GET_FUNC(UTF8_get)
    HB_SYMBOL_UNUSED(cdp);
 
    *wc = 0;
-   while( nIndex < nLen )
-   {
-      if( hb_cdpUTF8ToU16NextChar(static_cast<HB_UCHAR>(pSrc[nIndex]), &n, wc) )
-      {
+   while( nIndex < nLen ) {
+      if( hb_cdpUTF8ToU16NextChar(static_cast<HB_UCHAR>(pSrc[nIndex]), &n, wc) ) {
          ++nIndex;
       }
-      if( n == 0 )
-      {
+      if( n == 0 ) {
          *pnIndex = nIndex;
          return true;
       }
    }
-   if( n != 0 )
-   {
+   if( n != 0 ) {
       *pnIndex = nIndex;
       return true;
    }
@@ -89,8 +85,7 @@ static HB_CDP_PUT_FUNC(UTF8_put)
 
    HB_SYMBOL_UNUSED(cdp);
 
-   if( *pnIndex + i <= nLen )
-   {
+   if( *pnIndex + i <= nLen ) {
       hb_cdpU16CharToUTF8(&pDst[*pnIndex], wc);
       *pnIndex += i;
       return true;
@@ -144,24 +139,19 @@ static HB_CDP_CMP_FUNC(UTF8_cmp)
    iRet = 0;
    for( ;; )
    {
-      if( !HB_CDPCHAR_GET(cdp, szSecond, nLenSecond, &nPos2, &wc2) )
-      {
-         if( fExact && HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1) )
-         {
+      if( !HB_CDPCHAR_GET(cdp, szSecond, nLenSecond, &nPos2, &wc2) ) {
+         if( fExact && HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1) ) {
             iRet = 1;
          }
          break;
       }
-      if( !HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1) )
-      {
+      if( !HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1) ) {
          iRet = -1;
          break;
       }
-      if( wc1 != wc2 )
-      {
+      if( wc1 != wc2 ) {
          HB_USHORT us1 = s_uniSort[wc1], us2 = s_uniSort[wc2];
-         if( us1 != us2 )
-         {
+         if( us1 != us2 ) {
             iRet = us1 < us2 ? -1 : 1;
             break;
          }
@@ -175,23 +165,15 @@ static HB_CDP_CMP_FUNC(UTF8_cmp)
    HB_SYMBOL_UNUSED(cdp);
 
    iRet = memcmp(szFirst, szSecond, nLen);
-   if( iRet == 0 )
-   {
-      if( nLenSecond > nLenFirst )
-      {
+   if( iRet == 0 ) {
+      if( nLenSecond > nLenFirst ) {
          iRet = -1;
-      }
-      else if( fExact && nLenSecond < nLenFirst )
-      {
+      } else if( fExact && nLenSecond < nLenFirst ) {
          iRet = 1;
       }
-   }
-   else if( iRet > 0 )
-   {
+   } else if( iRet > 0 ) {
       iRet = 1;
-   }
-   else
-   {
+   } else {
       iRet = -1;
    }
 #endif
@@ -210,24 +192,19 @@ static HB_CDP_CMP_FUNC(UTF8_cmpi)
 
    for( ;; )
    {
-      if( !HB_CDPCHAR_GET(cdp, szSecond, nLenSecond, &nPos2, &wc2) )
-      {
-         if( fExact && HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1) )
-         {
+      if( !HB_CDPCHAR_GET(cdp, szSecond, nLenSecond, &nPos2, &wc2) ) {
+         if( fExact && HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1) ) {
             iRet = 1;
          }
          break;
       }
-      if( !HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1) )
-      {
+      if( !HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1) ) {
          iRet = -1;
          break;
       }
-      if( wc1 != wc2 )
-      {
+      if( wc1 != wc2 ) {
          HB_USHORT us1 = s_uniSort[HB_CDPCHAR_UPPER(cdp, wc1)], us2 = s_uniSort[HB_CDPCHAR_UPPER(cdp, wc2)];
-         if( us1 != us2 )
-         {
+         if( us1 != us2 ) {
             iRet = us1 < us2 ? -1 : 1;
             break;
          }
@@ -238,24 +215,18 @@ static HB_CDP_CMP_FUNC(UTF8_cmpi)
 
    HB_SIZE nLen = nLenFirst < nLenSecond ? nLenFirst : nLenSecond;
 
-   while( nLen-- )
-   {
+   while( nLen-- ) {
       HB_UCHAR u1 = cdp->upper[static_cast<HB_UCHAR>(*szFirst++)], u2 = cdp->upper[static_cast<HB_UCHAR>(*szSecond++)];
-      if( u1 != u2 )
-      {
+      if( u1 != u2 ) {
          iRet = (u1 < u2) ? -1 : 1;
          break;
       }
    }
 
-   if( iRet == 0 )
-   {
-      if( nLenSecond > nLenFirst )
-      {
+   if( iRet == 0 ) {
+      if( nLenSecond > nLenFirst ) {
          iRet = -1;
-      }
-      else if( fExact && nLenSecond < nLenFirst )
-      {
+      } else if( fExact && nLenSecond < nLenFirst ) {
          iRet = 1;
       }
    }
@@ -277,20 +248,16 @@ static void hb_cp_init(PHB_CODEPAGE cdp)
    for( int i = 0; i < 0x100; ++i )
    {
       flags[i] = 0;
-      if( HB_ISDIGIT(i) )
-      {
+      if( HB_ISDIGIT(i) ) {
          flags[i] |= HB_CDP_DIGIT;
       }
-      if( HB_ISALPHA(i) )
-      {
+      if( HB_ISALPHA(i) ) {
          flags[i] |= HB_CDP_ALPHA;
       }
-      if( HB_ISUPPER(i) )
-      {
+      if( HB_ISUPPER(i) ) {
          flags[i] |= HB_CDP_UPPER;
       }
-      if( HB_ISLOWER(i) )
-      {
+      if( HB_ISLOWER(i) ) {
          flags[i] |= HB_CDP_LOWER;
       }
       upper[i] = static_cast<HB_UCHAR>(HB_TOUPPER(i));
