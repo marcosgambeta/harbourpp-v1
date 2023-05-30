@@ -183,12 +183,9 @@ static const HB_BYTE s_PrecedTable[HB_EXPR_COUNT] = {
 
 const char * hb_compExprDescription(PHB_EXPR pExpr)
 {
-   if( pExpr )
-   {
+   if( pExpr ) {
       return s_OperTable[pExpr->ExprType];
-   }
-   else
-   {
+   } else {
       return s_OperTable[0];
    }
 }
@@ -215,8 +212,7 @@ int hb_compExprIsString(PHB_EXPR pExpr)
 
 const char * hb_compExprAsString(PHB_EXPR pExpr)
 {
-   if( pExpr->ExprType == HB_ET_STRING )
-   {
+   if( pExpr->ExprType == HB_ET_STRING ) {
       return pExpr->value.asString.string;
    }
    return nullptr;
@@ -224,8 +220,7 @@ const char * hb_compExprAsString(PHB_EXPR pExpr)
 
 HB_SIZE hb_compExprAsStringLen(PHB_EXPR pExpr)
 {
-   if( pExpr->ExprType == HB_ET_STRING )
-   {
+   if( pExpr->ExprType == HB_ET_STRING ) {
       return pExpr->nLength;
    }
    return 0;
@@ -233,27 +228,17 @@ HB_SIZE hb_compExprAsStringLen(PHB_EXPR pExpr)
 
 int hb_compExprAsNumSign(PHB_EXPR pExpr)
 {
-   if( pExpr->ExprType == HB_ET_NUMERIC )
-   {
-      if( pExpr->value.asNum.NumType == HB_ET_DOUBLE )
-      {
-         if( pExpr->value.asNum.val.d > 0 )
-         {
+   if( pExpr->ExprType == HB_ET_NUMERIC ) {
+      if( pExpr->value.asNum.NumType == HB_ET_DOUBLE ) {
+         if( pExpr->value.asNum.val.d > 0 ) {
             return 1;
-         }
-         else if( pExpr->value.asNum.val.d < 0 )
-         {
+         } else if( pExpr->value.asNum.val.d < 0 ) {
             return -1;
          }
-      }
-      else
-      {
-         if( pExpr->value.asNum.val.l > 0 )
-         {
+      } else {
+         if( pExpr->value.asNum.val.l > 0 ) {
             return 1;
-         }
-         else if( pExpr->value.asNum.val.l < 0 )
-         {
+         } else if( pExpr->value.asNum.val.l < 0 ) {
             return -1;
          }
       }
@@ -263,47 +248,36 @@ int hb_compExprAsNumSign(PHB_EXPR pExpr)
 
 int hb_compExprAsInteger(PHB_EXPR pExpr)
 {
-   if( pExpr->ExprType == HB_ET_NUMERIC && pExpr->value.asNum.NumType == HB_ET_LONG )
-   {
+   if( pExpr->ExprType == HB_ET_NUMERIC && pExpr->value.asNum.NumType == HB_ET_LONG ) {
       return static_cast<int>(pExpr->value.asNum.val.l);
-   }
-   else
-   {
+   } else {
       return 0;
    }
 }
 
 HB_MAXINT hb_compExprAsLongNum(PHB_EXPR pExpr)
 {
-   if( pExpr->ExprType == HB_ET_NUMERIC )
-   {
-      if( pExpr->value.asNum.NumType == HB_ET_LONG )
-      {
+   if( pExpr->ExprType == HB_ET_NUMERIC ) {
+      if( pExpr->value.asNum.NumType == HB_ET_LONG ) {
          return pExpr->value.asNum.val.l;
-      }
-      else
-      {
+      } else {
          return static_cast<HB_MAXINT>(pExpr->value.asNum.val.d);
       }
-   }
-   else
-   {
+   } else {
       return 0;
    }
 }
 
 const char * hb_compExprAsSymbol(PHB_EXPR pExpr)
 {
-   switch( pExpr->ExprType )
-   {
+   switch( pExpr->ExprType ) {
       case HB_ET_VARIABLE:
       case HB_ET_VARREF:
       case HB_ET_FUNNAME:
          return pExpr->value.asSymbol.name;
 
       case HB_ET_FUNCALL:
-         if( pExpr->value.asFunCall.pFunName->ExprType == HB_ET_FUNNAME )
-         {
+         if( pExpr->value.asFunCall.pFunName->ExprType == HB_ET_FUNNAME ) {
             return pExpr->value.asFunCall.pFunName->value.asSymbol.name;
          }
    }
@@ -408,20 +382,15 @@ PHB_EXPR hb_compExprNewArray(PHB_EXPR pArrList, HB_COMP_DECL)
     * If EO_NONE is the first expression and there is no more expressions
     * then it is an empty array {} and ET_NIL cannot be used
     */
-   if( pExpr->ExprType == HB_ET_NONE && pExpr->pNext == nullptr )
-   {
+   if( pExpr->ExprType == HB_ET_NONE && pExpr->pNext == nullptr ) {
       pArrList->value.asList.pExprList = nullptr;
       HB_COMP_EXPR_FREE(pExpr);
-   }
-   else
-   {
+   } else {
       /* there are at least one non-empty element specified
        */
-      while( pExpr )
-      {
+      while( pExpr ) {
          /* if empty element was specified replace it with NIL value */
-         if( pExpr->ExprType == HB_ET_NONE )
-         {
+         if( pExpr->ExprType == HB_ET_NONE ) {
             pExpr->ExprType = HB_ET_NIL;
          }
          pExpr = pExpr->pNext;
@@ -444,12 +413,9 @@ PHB_EXPR hb_compExprNewHash(PHB_EXPR pHashList, HB_COMP_DECL)
 
    PHB_EXPR pExpr;
 
-   if( pHashList )
-   {
+   if( pHashList ) {
       pHashList->ExprType = HB_ET_HASH;   /* change type from ET_LIST */
-   }
-   else
-   {
+   } else {
       pHashList = HB_COMP_EXPR_NEW(HB_ET_HASH);
       pHashList->value.asList.pExprList = nullptr;
    }
@@ -463,10 +429,8 @@ PHB_EXPR hb_compExprNewHash(PHB_EXPR pHashList, HB_COMP_DECL)
     * calculate the list length
     */
    pExpr = pHashList->value.asList.pExprList;
-   while( pExpr )
-   {
-      if( pExpr->ExprType == HB_ET_NONE )
-      {
+   while( pExpr ) {
+      if( pExpr->ExprType == HB_ET_NONE ) {
          pExpr->ExprType = HB_ET_NIL;
       }
       pExpr = pExpr->pNext;
@@ -494,20 +458,16 @@ PHB_EXPR hb_compExprNewCodeBlock(char * string, HB_SIZE nLen, int iFlags, HB_COM
 
 PHB_EXPR hb_compExprAddCodeblockExpr(PHB_EXPR pList, PHB_EXPR pNewItem)
 {
-   if( pList->value.asCodeblock.pExprList )
-   {
+   if( pList->value.asCodeblock.pExprList ) {
       PHB_EXPR pExpr;
 
       /* add new item to the end of the list */
       pExpr = pList->value.asCodeblock.pExprList;
-      while( pExpr->pNext )
-      {
+      while( pExpr->pNext ) {
          pExpr = pExpr->pNext;
       }
       pExpr->pNext = pNewItem;
-   }
-   else
-   {
+   } else {
       pList->value.asCodeblock.pExprList = pNewItem;
    }
 
@@ -590,8 +550,7 @@ PHB_EXPR hb_compExprNewMacro(PHB_EXPR pMacroExpr, unsigned char cMacroOp, const 
 {
    PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_MACRO);
 
-   if( szName )
-   {
+   if( szName ) {
 #if 0
       HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewMacro(%s)", szName));
 #endif
@@ -612,9 +571,7 @@ PHB_EXPR hb_compExprNewMacro(PHB_EXPR pMacroExpr, unsigned char cMacroOp, const 
       pExpr->value.asMacro.szMacro = szName;   /* variable name or macro text */
       pExpr->value.asMacro.pExprList = nullptr;     /* this is not a parenthesized expressions */
       pExpr->value.asMacro.SubType = HB_ET_MACRO_VAR;
-   }
-   else
-   {
+   } else {
 #if 0
       HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewMacro(&)"));
 #endif
@@ -646,12 +603,10 @@ PHB_EXPR hb_compExprNewAliasVar(PHB_EXPR pAlias, PHB_EXPR pVariable, HB_COMP_DEC
 
    /* macro expressions in alias context require a special handling
     */
-   if( pAlias->ExprType == HB_ET_MACRO )
-   {
+   if( pAlias->ExprType == HB_ET_MACRO ) {
       pAlias->value.asMacro.SubType = HB_ET_MACRO_ALIASED;
    }
-   if( pVariable->ExprType == HB_ET_MACRO )
-   {
+   if( pVariable->ExprType == HB_ET_MACRO ) {
       pVariable->value.asMacro.SubType = HB_ET_MACRO_ALIASED;
    }
 
@@ -672,11 +627,9 @@ PHB_EXPR hb_compExprNewAliasExpr(PHB_EXPR pAlias, PHB_EXPR pExpList, HB_COMP_DEC
    pExpr->value.asAlias.pExpList = pExpList;
    pExpr->value.asAlias.pVar = nullptr;
 
-   if( pAlias->ExprType == HB_ET_MACRO )
-   {
+   if( pAlias->ExprType == HB_ET_MACRO ) {
       /* Is it a special case &variable->(expressionList) */
-      if( pAlias->value.asMacro.SubType & (HB_ET_MACRO_VAR | HB_ET_MACRO_EXPR) )
-      {
+      if( pAlias->value.asMacro.SubType & (HB_ET_MACRO_VAR | HB_ET_MACRO_EXPR) ) {
          pAlias->value.asMacro.SubType = HB_ET_MACRO_ALIASED;
       }
    }
@@ -718,8 +671,7 @@ PHB_EXPR hb_compExprNewMacroSend(PHB_EXPR pMessage, HB_COMP_DECL)
    pExpr->value.asMessage.pMessage = pMessage;
    pExpr->nLength = 0;
 
-   if( pMessage->ExprType == HB_ET_MACRO )
-   {
+   if( pMessage->ExprType == HB_ET_MACRO ) {
       /* Signal that macro compiler have to generate a pcode that will
        * return function name as symbol instead of usual value
        */
@@ -817,20 +769,16 @@ PHB_EXPR hb_compExprNewArgRef(HB_COMP_DECL)
  */
 PHB_EXPR hb_compExprAddListExpr(PHB_EXPR pList, PHB_EXPR pNewItem)
 {
-   if( pList->value.asList.pExprList )
-   {
+   if( pList->value.asList.pExprList ) {
       PHB_EXPR pExpr;
 
       /* add new item to the end of the list */
       pExpr = pList->value.asList.pExprList;
-      while( pExpr->pNext )
-      {
+      while( pExpr->pNext ) {
          pExpr = pExpr->pNext;
       }
       pExpr->pNext = pNewItem;
-   }
-   else
-   {
+   } else {
       pList->value.asList.pExprList = pNewItem;
    }
 
@@ -862,8 +810,7 @@ PHB_EXPR hb_compExprNewRTVar(const char * szName, PHB_EXPR pMacroVar, HB_COMP_DE
    PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_RTVAR);
    pExpr->value.asRTVar.szName = szName;
    pExpr->value.asRTVar.pMacro = pMacroVar;
-   if( pMacroVar )
-   {
+   if( pMacroVar ) {
       pMacroVar->value.asMacro.SubType = HB_ET_MACRO_SYMBOL;
    }
    return pExpr;
@@ -1053,13 +1000,10 @@ PHB_EXPR hb_compExprNewNot(PHB_EXPR pNotExpr, HB_COMP_DECL)
 {
    PHB_EXPR pExpr;
 
-   if( pNotExpr->ExprType == HB_ET_LOGICAL )
-   {
+   if( pNotExpr->ExprType == HB_ET_LOGICAL ) {
       pNotExpr->value.asLogical = !pNotExpr->value.asLogical;
       pExpr = pNotExpr;
-   }
-   else
-   {
+   } else {
       pExpr = HB_COMP_EXPR_NEW(HB_EO_NOT);
       pExpr->value.asOperator.pLeft = pNotExpr;
       pExpr->value.asOperator.pRight = nullptr;
@@ -1130,24 +1074,18 @@ PHB_EXPR hb_compExprNewNegate(PHB_EXPR pNegExpr, HB_COMP_DECL)
 {
    PHB_EXPR pExpr;
 
-   if( pNegExpr->ExprType == HB_ET_NUMERIC )
-   {
-      if( pNegExpr->value.asNum.NumType == HB_ET_DOUBLE )
-      {
+   if( pNegExpr->ExprType == HB_ET_NUMERIC ) {
+      if( pNegExpr->value.asNum.NumType == HB_ET_DOUBLE ) {
          pNegExpr->value.asNum.val.d = -pNegExpr->value.asNum.val.d;
          pNegExpr->value.asNum.bWidth = static_cast<HB_UCHAR>(HB_DBL_LENGTH(pNegExpr->value.asNum.val.d));
-      }
-      else
-      {
+      } else {
 #if -HB_VMLONG_MAX > HB_VMLONG_MIN
-         if( pNegExpr->value.asNum.val.l < -HB_VMLONG_MAX )
-         {
+         if( pNegExpr->value.asNum.val.l < -HB_VMLONG_MAX ) {
             pNegExpr->value.asNum.NumType = HB_ET_DOUBLE;
             pNegExpr->value.asNum.val.d = -static_cast<double>(pNegExpr->value.asNum.val.l);
             pNegExpr->value.asNum.bWidth = static_cast<HB_UCHAR>(HB_DBL_LENGTH(pNegExpr->value.asNum.val.d));
             pNegExpr->value.asNum.bDec = 0;
-         }
-         else
+         } else
 #endif
          {
             pNegExpr->value.asNum.val.l = -pNegExpr->value.asNum.val.l;
@@ -1155,9 +1093,7 @@ PHB_EXPR hb_compExprNewNegate(PHB_EXPR pNegExpr, HB_COMP_DECL)
          }
       }
       pExpr = pNegExpr;
-   }
-   else
-   {
+   } else {
       pExpr = HB_COMP_EXPR_NEW(HB_EO_NEGATE);
       pExpr->value.asOperator.pLeft = pNegExpr;
       pExpr->value.asOperator.pRight = nullptr;
@@ -1181,12 +1117,10 @@ PHB_EXPR hb_compExprAssign(PHB_EXPR pLeftExpr, PHB_EXPR pRightExpr, HB_COMP_DECL
 
 void hb_compExprDelOperator(PHB_EXPR pExpr, HB_COMP_DECL)
 {
-   if( pExpr->value.asOperator.pLeft )
-   {
+   if( pExpr->value.asOperator.pLeft ) {
       HB_COMP_EXPR_FREE(pExpr->value.asOperator.pLeft);
    }
-   if( pExpr->value.asOperator.pRight )
-   {
+   if( pExpr->value.asOperator.pRight ) {
       HB_COMP_EXPR_FREE(pExpr->value.asOperator.pRight);
    }
 }
@@ -1197,40 +1131,31 @@ PHB_EXPR hb_compExprSetOperand(PHB_EXPR pExpr, PHB_EXPR pItem, HB_COMP_DECL)
 {
    HB_BYTE ucRight = s_PrecedTable[pItem->ExprType];
 
-   if( ucRight == HB_ET_NIL )
-   {
+   if( ucRight == HB_ET_NIL ) {
       /* the right side of an operator is an ordinary value
        * e.g. a := 1
        */
       pExpr->value.asOperator.pRight = pItem;
-   }
-   else if( ucRight == HB_ET_NONE )
-   {
+   } else if( ucRight == HB_ET_NONE ) {
       /* the right side of an operator is an invalid expression
        * e.g.
        *    a := 1 + b:=2
        *    a := 1 + b += 2
        */
 
-      if( pExpr->ExprType >= HB_EO_PLUSEQ && pExpr->ExprType <= HB_EO_EXPEQ )
-      {
-      }
-      else
-      {
+      if( pExpr->ExprType >= HB_EO_PLUSEQ && pExpr->ExprType <= HB_EO_EXPEQ ) {
+      } else {
          HB_COMP_ERROR_SYNTAX(pItem);
       }
       pExpr->value.asOperator.pRight = pItem; /* set it anyway */
-   }
-   else
-   {
+   } else {
       /* the right side of an operator is an expression with other operator
        * e.g. a := 2 + b * 3
        *   We have to set the proper order of evaluation using
        * precedence rules
        */
       HB_BYTE ucLeft = s_PrecedTable[pExpr->ExprType];
-      if( ucLeft < ucRight || (ucLeft == ucRight && HB_COMP_ISSUPPORTED(HB_COMPFLAG_SHORTCUTS) && (ucLeft == HB_EO_OR || ucLeft == HB_EO_AND)) )
-      {
+      if( ucLeft < ucRight || (ucLeft == ucRight && HB_COMP_ISSUPPORTED(HB_COMPFLAG_SHORTCUTS) && (ucLeft == HB_EO_OR || ucLeft == HB_EO_AND)) ) {
          /* Left operator has a lower precedence then the right one
           * e.g.  a + b * c
           *    pItem -> b * c    -> L=b  R=c  O=*
@@ -1242,9 +1167,7 @@ PHB_EXPR hb_compExprSetOperand(PHB_EXPR pExpr, PHB_EXPR pItem, HB_COMP_DECL)
           *             Oper  := o
           */
          pExpr->value.asOperator.pRight = pItem;
-      }
-      else
-      {
+      } else {
          /* Left operator has the same or higher precedence then the right one
           * e.g.  a * b + c
           *    pItem -> b + c   -> L=b  R=c  O=+
@@ -1274,8 +1197,7 @@ PHB_EXPR hb_compExprMacroAsAlias(PHB_EXPR pExpr)
    HB_TRACE(HB_TR_DEBUG, ("hb_compExprMacroAsAlias()"));
 #endif
 
-   if( pExpr->ExprType == HB_ET_VARIABLE )
-   {
+   if( pExpr->ExprType == HB_ET_VARIABLE ) {
       pExpr->ExprType = HB_ET_ALIAS;
    }
 
@@ -1289,8 +1211,7 @@ HB_ULONG hb_compExprListLen(PHB_EXPR pExpr)
    HB_ULONG nLen = 0;
 
    pExpr = pExpr->value.asList.pExprList;
-   while( pExpr )
-   {
+   while( pExpr ) {
       pExpr = pExpr->pNext;
       ++nLen;
    }
@@ -1301,17 +1222,13 @@ HB_ULONG hb_compExprListLen(PHB_EXPR pExpr)
 HB_BOOL hb_compExprListTypeCheck(PHB_EXPR pExpr, HB_EXPRTYPE ExprType)
 {
    pExpr = pExpr->value.asList.pExprList;
-   if( pExpr )
-   {
-      do
-      {
-         if( pExpr->ExprType != ExprType )
-         {
+   if( pExpr ) {
+      do {
+         if( pExpr->ExprType != ExprType ) {
             break;
          }
          pExpr = pExpr->pNext;
-      }
-      while( pExpr );
+      } while( pExpr );
 
       return pExpr == nullptr;
    }
@@ -1324,11 +1241,9 @@ HB_ULONG hb_compExprParamListLen(PHB_EXPR pExpr)
 {
    HB_ULONG nLen = 0;
 
-   if( pExpr )
-   {
+   if( pExpr ) {
       PHB_EXPR pParam = pExpr->value.asList.pExprList;
-      while( pParam )
-      {
+      while( pParam ) {
          pParam = pParam->pNext;
          ++nLen;
       }
@@ -1336,8 +1251,7 @@ HB_ULONG hb_compExprParamListLen(PHB_EXPR pExpr)
        * list of parameters contain only one expression of type HB_ET_NONE
        * There is no need to calculate this parameter
        */
-      if( nLen == 1 && pExpr->value.asList.pExprList->ExprType == HB_ET_NONE )
-      {
+      if( nLen == 1 && pExpr->value.asList.pExprList->ExprType == HB_ET_NONE ) {
          nLen = 0;
       }
    }
@@ -1358,46 +1272,35 @@ HB_SIZE hb_compExprParamListCheck(HB_COMP_DECL, PHB_EXPR pExpr)
 {
    HB_SIZE nLen = 0;
 
-   if( pExpr )
-   {
+   if( pExpr ) {
       HB_SIZE nItems = 0;
       PHB_EXPR pElem = pExpr->value.asList.pExprList;
 
-      while( pElem )
-      {
+      while( pElem ) {
          if( (pElem->ExprType == HB_ET_MACRO && HB_SUPPORT_XBASE && (pElem->value.asMacro.SubType & HB_ET_MACRO_NOLIST) == 0) ||
-             (pElem->ExprType == HB_ET_ARGLIST && pElem->value.asList.reference) || hb_compExprIsArrayToParams(pElem) )
-         {
+             (pElem->ExprType == HB_ET_ARGLIST && pElem->value.asList.reference) || hb_compExprIsArrayToParams(pElem) ) {
             /* &macro was passed
                or optional parameters list passed, f.e.: f(a,b,...)
                or hb_ArrayToParams(aParams)
                - handle it differently then in a normal statement */
-            if( pElem->ExprType == HB_ET_MACRO )
-            {
+            if( pElem->ExprType == HB_ET_MACRO ) {
                pElem->value.asMacro.SubType |= HB_ET_MACRO_LIST;
-            }
-            else if( pElem->ExprType == HB_ET_FUNCALL )
-            {
+            } else if( pElem->ExprType == HB_ET_FUNCALL ) {
                pElem->value.asFunCall.pFunName->value.asSymbol.flags |= HB_FN_MULTIARG;
             }
-            if( nItems )
-            {
+            if( nItems ) {
                nItems = 0;
                ++nLen;
             }
             ++nLen;
-         }
-         else
-         {
+         } else {
             ++nItems;
          }
          pElem = pElem->pNext;
       }
 
-      if( nLen )
-      {
-         if( nItems )
-         {
+      if( nLen ) {
+         if( nItems ) {
             ++nLen;
          }
          /* Note: direct type change */
@@ -1407,12 +1310,9 @@ HB_SIZE hb_compExprParamListCheck(HB_COMP_DECL, PHB_EXPR pExpr)
        * list of parameters contain only one expression of type HB_ET_NONE
        * There is no need to calculate this parameter
        */
-      else if( nItems == 1 && pExpr->value.asList.pExprList->ExprType == HB_ET_NONE )
-      {
+      else if( nItems == 1 && pExpr->value.asList.pExprList->ExprType == HB_ET_NONE ) {
          nLen = 0;
-      }
-      else
-      {
+      } else {
          nLen = nItems;
       }
    }
@@ -1446,31 +1346,23 @@ PHB_EXPR hb_compExprCBVarAdd(PHB_EXPR pCB, const char * szVarName, HB_BYTE bType
 
    PHB_CBVAR pVar;
 
-   if( pCB->value.asCodeblock.pLocals )
-   {
+   if( pCB->value.asCodeblock.pLocals ) {
       /* add it to the end of the list
        */
       pVar = pCB->value.asCodeblock.pLocals;
-      while( pVar )
-      {
-         if( strcmp(szVarName, pVar->szName) == 0 )
-         {
+      while( pVar ) {
+         if( strcmp(szVarName, pVar->szName) == 0 ) {
             HB_COMP_ERROR_DUPLVAR(szVarName);
          }
 
-         if( pVar->pNext )
-         {
+         if( pVar->pNext ) {
             pVar = pVar->pNext;
-         }
-         else
-         {
+         } else {
             pVar->pNext = hb_compExprCBVarNew(szVarName, bType);
             break;
          }
       }
-   }
-   else
-   {
+   } else {
       pCB->value.asCodeblock.pLocals = hb_compExprCBVarNew(szVarName, bType);
    }
 
@@ -1481,8 +1373,7 @@ PHB_EXPR hb_compExprCBVarAdd(PHB_EXPR pCB, const char * szVarName, HB_BYTE bType
  */
 void hb_compExprCBVarDel(PHB_CBVAR pVars)
 {
-   while( pVars )
-   {
+   while( pVars ) {
       PHB_CBVAR pDel = pVars;
       pVars = pVars->pNext;
       hb_xfree(pDel);

@@ -162,13 +162,11 @@ static HB_BOOL s_win_iswow64(void)
    #if defined(HB_OS_WIN) && !defined(HB_OS_WIN_64)
    BOOL bIsWow64 = FALSE;
 
-   if( !IsWow64Process(GetCurrentProcess(), &bIsWow64))
-   {
+   if( !IsWow64Process(GetCurrentProcess(), &bIsWow64)) {
       /* Try alternative method? */
    }
 
-   if( bIsWow64 )
-   {
+   if( bIsWow64 ) {
       bRetVal = HB_TRUE;
    }
    #endif
@@ -182,8 +180,7 @@ const char * hb_verHostCPU(void)
    HB_TRACE(HB_TR_DEBUG, ("hb_verHostCPU()"));
 #endif
 
-   if( s_win_iswow64() )
-   {
+   if( s_win_iswow64() ) {
       return "x86-64";
    }
 
@@ -205,8 +202,7 @@ int hb_verHostBitWidth(void)
       nBits = 0;
    #endif
 
-   if( s_win_iswow64() )
-   {
+   if( s_win_iswow64() ) {
       nBits = 64;
    }
 
@@ -272,11 +268,9 @@ static HB_BOOL s_fVerInfoInit = HB_TRUE;
 
 static HB_BOOL s_hb_winVerifyVersionInit(void)
 {
-   if( s_fVerInfoInit )
-   {
+   if( s_fVerInfoInit ) {
       HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
-      if( hModule )
-      {
+      if( hModule ) {
       }
       s_fVerInfoInit = HB_FALSE;
    }
@@ -298,40 +292,25 @@ static void s_hb_winVerInit(void)
    {
       OSVERSIONINFO osvi;
       osvi.dwOSVersionInfoSize = sizeof(osvi);
-      if( GetVersionEx(&osvi) )
-      {
+      if( GetVersionEx(&osvi) ) {
          /* NOTE: Value is VER_PLATFORM_WIN32_CE on WinCE */
-         if( osvi.dwPlatformId != VER_PLATFORM_WIN32_WINDOWS )
-         {
+         if( osvi.dwPlatformId != VER_PLATFORM_WIN32_WINDOWS ) {
             s_iWin9x = 0;
-         }
-         else if( osvi.dwMajorVersion == 4 && osvi.dwMinorVersion < 10 )
-         {
+         } else if( osvi.dwMajorVersion == 4 && osvi.dwMinorVersion < 10 ) {
             s_iWin9x = 5;  /* 95 */
-         }
-         else if( osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 10 )
-         {
+         } else if( osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 10 ) {
             s_iWin9x = 8;  /* 98 */
-         }
-         else
-         {
+         } else {
             s_iWin9x = 9;  /* ME */
          }
 
-         if( osvi.dwPlatformId != VER_PLATFORM_WIN32_NT )
-         {
+         if( osvi.dwPlatformId != VER_PLATFORM_WIN32_NT ) {
             s_iWinNT = 0;
-         }
-         else if( osvi.dwMajorVersion == 3 && osvi.dwMinorVersion == 51 )
-         {
+         } else if( osvi.dwMajorVersion == 3 && osvi.dwMinorVersion == 51 ) {
             s_iWinNT = 3;  /* 3.51 */
-         }
-         else if( osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 0 )
-         {
+         } else if( osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 0 ) {
             s_iWinNT = 4;  /* 4.0 */
-         }
-         else
-         {
+         } else {
             s_iWinNT = 5;  /* newer */
          }
       }
@@ -342,14 +321,12 @@ static void s_hb_winVerInit(void)
       /* NOTE: Unofficial Wine detection.
                https://www.mail-archive.com/wine-devel@winehq.org/msg48659.html */
       HMODULE hntdll = GetModuleHandle(TEXT("ntdll.dll"));
-      if( hntdll && HB_WINAPI_GETPROCADDRESS(hntdll, "wine_get_version") )
-      {
+      if( hntdll && HB_WINAPI_GETPROCADDRESS(hntdll, "wine_get_version") ) {
          s_iWine = 1;
       }
    }
 
-   if( s_fWin2K )
-   {
+   if( s_fWin2K ) {
       s_iWinNT = 5;
    }
 
@@ -382,8 +359,7 @@ char * hb_verPlatform(void)
       memset(&osvi, 0, sizeof(osvi));
 
       /* Detection of legacy Windows versions */
-      switch( hb_iswin9x() )
-      {
+      switch( hb_iswin9x() ) {
          case 5:
             osvi.dwMajorVersion = 4;
             osvi.dwMinorVersion = 0;
@@ -401,113 +377,72 @@ char * hb_verPlatform(void)
             break;
       }
 
-      if( pszName[0] == '\0' )
-      {
-         if( hb_iswinver(11, 0, 0, true) )
-         {
+      if( pszName[0] == '\0' ) {
+         if( hb_iswinver(11, 0, 0, true) ) {
             osvi.dwMajorVersion = 11;
             osvi.dwMinorVersion = 0;
             pszName = " 11 or newer";
-         }
-         else if( hb_iswin10() )
-         {
+         } else if( hb_iswin10() ) {
             osvi.dwMajorVersion = 10;
             osvi.dwMinorVersion = 0;
-            if( hb_iswinver(10, 0, VER_NT_WORKSTATION, false) )
-            {
+            if( hb_iswinver(10, 0, VER_NT_WORKSTATION, false) ) {
                pszName = " 10";
-            }
-            else
-            {
+            } else {
                pszName = " Server 2016";
             }
-         }
-         else if( hb_iswin81() )
-         {
+         } else if( hb_iswin81() ) {
             osvi.dwMajorVersion = 6;
             osvi.dwMinorVersion = 3;
-            if( hb_iswinver(6, 3, VER_NT_WORKSTATION, false) )
-            {
+            if( hb_iswinver(6, 3, VER_NT_WORKSTATION, false) ) {
                pszName = " 8.1";
-            }
-            else
-            {
+            } else {
                pszName = " Server 2012 R2";
             }
-         }
-         else if( hb_iswinvista() )
-         {
-            if( hb_iswin8() )
-            {
+         } else if( hb_iswinvista() ) {
+            if( hb_iswin8() ) {
                osvi.dwMajorVersion = 6;
                osvi.dwMinorVersion = 2;
-               if( hb_iswinver(6, 2, VER_NT_WORKSTATION, false) )
-               {
+               if( hb_iswinver(6, 2, VER_NT_WORKSTATION, false) ) {
                   pszName = " 8";
-               }
-               else
-               {
+               } else {
                   pszName = " Server 2012";
                }
-            }
-            else if( hb_iswinver(6, 1, 0, false) )
-            {
+            } else if( hb_iswinver(6, 1, 0, false) ) {
                osvi.dwMajorVersion = 6;
                osvi.dwMinorVersion = 1;
-               if( hb_iswinver(6, 1, VER_NT_WORKSTATION, false) )
-               {
+               if( hb_iswinver(6, 1, VER_NT_WORKSTATION, false) ) {
                   pszName = " 7";
-               }
-               else
-               {
+               } else {
                   pszName = " Server 2008 R2";
                }
-            }
-            else
-            {
+            } else {
                osvi.dwMajorVersion = 6;
                osvi.dwMinorVersion = 0;
-               if( hb_iswinver(6, 0, VER_NT_WORKSTATION, false) )
-               {
+               if( hb_iswinver(6, 0, VER_NT_WORKSTATION, false) ) {
                   pszName = " Vista";
-               }
-               else
-               {
+               } else {
                   pszName = " Server 2008";
                }
             }
-         }
-         else if( hb_iswinver(5, 2, 0, false) )
-         {
+         } else if( hb_iswinver(5, 2, 0, false) ) {
             osvi.dwMajorVersion = 5;
             osvi.dwMinorVersion = 2;
-            if( hb_iswinver(5, 2, VER_NT_WORKSTATION, false) )
-            {
+            if( hb_iswinver(5, 2, VER_NT_WORKSTATION, false) ) {
                pszName = " XP x64";
-            }
-            else if( GetSystemMetrics(SM_SERVERR2) != 0 )
-            {
+            } else if( GetSystemMetrics(SM_SERVERR2) != 0 ) {
                pszName = " Server 2003 R2";
-            }
-            else
-            {
+            } else {
                pszName = " Server 2003";
             }
-         }
-         else if( hb_iswinver(5, 1, 0, false) )
-         {
+         } else if( hb_iswinver(5, 1, 0, false) ) {
             osvi.dwMajorVersion = 5;
             osvi.dwMinorVersion = 1;
             pszName = " XP";
-         }
-         else if( hb_iswin2k() )
-         {
+         } else if( hb_iswin2k() ) {
             osvi.dwMajorVersion = 5;
             osvi.dwMinorVersion = 0;
             pszName = " 2000";
-         }
-         else
-         {
+         } else {
             pszName = " NT";
          }
       }
@@ -516,12 +451,9 @@ char * hb_verPlatform(void)
 
       /* Add service pack/other info */
 
-      if( hb_iswin2k() )
-      {
-         for( int tmp = 5; tmp > 0; --tmp )
-         {
-            if( hb_iswinsp(tmp, true) )
-            {
+      if( hb_iswin2k() ) {
+         for( int tmp = 5; tmp > 0; --tmp ) {
+            if( hb_iswinsp(tmp, true) ) {
                char szServicePack[8];
                hb_snprintf(szServicePack, sizeof(szServicePack), " SP%u", tmp);
                hb_strncat(pszPlatform, szServicePack, PLATFORM_BUF_SIZE);
@@ -562,8 +494,7 @@ char * hb_verPlatform(void)
 HB_BOOL hb_iswinver(int iMajor, int iMinor, int iType, HB_BOOL fOrUpper)
 {
 #if defined(HB_OS_WIN)
-   if( s_hb_winVerifyVersionInit() )
-   {
+   if( s_hb_winVerifyVersionInit() ) {
       OSVERSIONINFOEXW ver;
       DWORD dwTypeMask = VER_MAJORVERSION | VER_MINORVERSION;
       DWORDLONG dwlConditionMask = 0;
@@ -594,8 +525,7 @@ HB_BOOL hb_iswinver(int iMajor, int iMinor, int iType, HB_BOOL fOrUpper)
       dwlConditionMask = VerSetConditionMask(dwlConditionMask, VER_SERVICEPACKMINOR, VER_GREATER_EQUAL);
 #endif
 
-      if( iType )
-      {
+      if( iType ) {
          dwTypeMask |= VER_PRODUCT_TYPE;
          ver.wProductType = static_cast<BYTE>(iType);
          dwlConditionMask = VerSetConditionMask(dwlConditionMask, VER_PRODUCT_TYPE, VER_EQUAL);
@@ -615,8 +545,7 @@ HB_BOOL hb_iswinver(int iMajor, int iMinor, int iType, HB_BOOL fOrUpper)
 HB_BOOL hb_iswinsp(int iServicePackMajor, HB_BOOL fOrUpper)
 {
 #if defined(HB_OS_WIN)
-   if( s_hb_winVerifyVersionInit() )
-   {
+   if( s_hb_winVerifyVersionInit() ) {
       OSVERSIONINFOEXW ver;
       DWORDLONG dwlConditionMask = 0;
 
@@ -638,8 +567,7 @@ HB_BOOL hb_iswinsp(int iServicePackMajor, HB_BOOL fOrUpper)
 int hb_iswine(void)
 {
 #if defined(HB_OS_WIN)
-   if( !s_fWinVerInit )
-   {
+   if( !s_fWinVerInit ) {
       s_hb_winVerInit();
    }
    return s_iWine;
@@ -651,8 +579,7 @@ int hb_iswine(void)
 HB_BOOL hb_iswin10(void)
 {
 #if defined(HB_OS_WIN)
-   if( !s_fWinVerInit )
-   {
+   if( !s_fWinVerInit ) {
       s_hb_winVerInit();
    }
    return s_fWin10;
@@ -664,8 +591,7 @@ HB_BOOL hb_iswin10(void)
 HB_BOOL hb_iswin81(void)
 {
 #if defined(HB_OS_WIN)
-   if( !s_fWinVerInit )
-   {
+   if( !s_fWinVerInit ) {
       s_hb_winVerInit();
    }
    return s_fWin81;
@@ -677,8 +603,7 @@ HB_BOOL hb_iswin81(void)
 HB_BOOL hb_iswin8(void)
 {
 #if defined(HB_OS_WIN)
-   if( !s_fWinVerInit )
-   {
+   if( !s_fWinVerInit ) {
       s_hb_winVerInit();
    }
    return s_fWin8;
@@ -690,8 +615,7 @@ HB_BOOL hb_iswin8(void)
 HB_BOOL hb_iswin7(void)
 {
 #if defined(HB_OS_WIN)
-   if( !s_fWinVerInit )
-   {
+   if( !s_fWinVerInit ) {
       s_hb_winVerInit();
    }
    return s_fWin7;
@@ -703,8 +627,7 @@ HB_BOOL hb_iswin7(void)
 HB_BOOL hb_iswinvista(void)
 {
 #if defined(HB_OS_WIN)
-   if( !s_fWinVerInit )
-   {
+   if( !s_fWinVerInit ) {
       s_hb_winVerInit();
    }
    return s_fWinVista;
@@ -716,8 +639,7 @@ HB_BOOL hb_iswinvista(void)
 HB_BOOL hb_iswin2k3(void)
 {
 #if defined(HB_OS_WIN)
-   if( !s_fWinVerInit )
-   {
+   if( !s_fWinVerInit ) {
       s_hb_winVerInit();
    }
    return s_fWin2K3;
@@ -729,8 +651,7 @@ HB_BOOL hb_iswin2k3(void)
 HB_BOOL hb_iswin2k(void)
 {
 #if defined(HB_OS_WIN)
-   if( !s_fWinVerInit )
-   {
+   if( !s_fWinVerInit ) {
       s_hb_winVerInit();
    }
    return s_fWin2K;
@@ -742,8 +663,7 @@ HB_BOOL hb_iswin2k(void)
 int hb_iswinnt(void)
 {
 #if defined(HB_OS_WIN)
-   if( !s_fWinVerInit )
-   {
+   if( !s_fWinVerInit ) {
       s_hb_winVerInit();
    }
    return s_iWinNT;
@@ -755,8 +675,7 @@ int hb_iswinnt(void)
 int hb_iswin9x(void)
 {
 #if defined(HB_OS_WIN)
-   if( !s_fWinVerInit )
-   {
+   if( !s_fWinVerInit ) {
       s_hb_winVerInit();
    }
    return s_iWin9x;
@@ -800,12 +719,9 @@ char * hb_verCompiler(void)
       iVerMajor = __IBMCPP__;
    #endif
 
-   if( iVerMajor >= 300 )
-   {
+   if( iVerMajor >= 300 ) {
       pszName = "IBM Visual Age C++";
-   }
-   else
-   {
+   } else {
       pszName = "IBM C++";
    }
 
@@ -1043,38 +959,25 @@ char * hb_verCompiler(void)
 
 #endif
 
-   if( pszName )
-   {
-      if( iElements == 4 )
-      {
+   if( pszName ) {
+      if( iElements == 4 ) {
          hb_snprintf(pszCompiler, COMPILER_BUF_SIZE, "%s%s %d.%d.%d.%d", pszName, szSub, iVerMajor, iVerMinor, iVerPatch, iVerMicro);
-      }
-      else if( iVerPatch != 0 )
-      {
+      } else if( iVerPatch != 0 ) {
          hb_snprintf(pszCompiler, COMPILER_BUF_SIZE, "%s%s %d.%d.%d", pszName, szSub, iVerMajor, iVerMinor, iVerPatch);
-      }
-      else if( iVerMajor != 0 || iVerMinor != 0 )
-      {
+      } else if( iVerMajor != 0 || iVerMinor != 0 ) {
          hb_snprintf(pszCompiler, COMPILER_BUF_SIZE, "%s%s %d.%d", pszName, szSub, iVerMajor, iVerMinor);
-      }
-      else
-      {
+      } else {
          hb_snprintf(pszCompiler, COMPILER_BUF_SIZE, "%s%s", pszName, szSub);
       }
-   }
-   else
-   {
+   } else {
       hb_strncpy(pszCompiler, "(unknown)", COMPILER_BUF_SIZE - 1);
    }
 
 #if defined(__clang_version__)
-   if( strstr(__clang_version__, "("))
-   {
+   if( strstr(__clang_version__, "(")) {
       /* "2.0 (trunk 103176)" -> "(trunk 103176)" */
       hb_snprintf(szSub, sizeof(szSub), " %s", strstr(__clang_version__, "("));
-   }
-   else
-   {
+   } else {
       hb_snprintf(szSub, sizeof(szSub), " (%s)", __clang_version__);
    }
    hb_strncat(pszCompiler, szSub, COMPILER_BUF_SIZE - 1);

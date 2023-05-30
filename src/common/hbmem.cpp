@@ -73,16 +73,12 @@ void * hb_xmemcpy(void * pDestArg, const void * pSourceArg, HB_SIZE nLen)
    pSource = static_cast<const HB_BYTE*>(pSourceArg);
    nRemaining = nLen;
 
-   while( nRemaining )
-   {
+   while( nRemaining ) {
       /* Overcome the memcpy() size_t limitation */
-      if( nRemaining > UINT_MAX )
-      {
+      if( nRemaining > UINT_MAX ) {
          iCopySize = UINT_MAX;
          nRemaining -= static_cast<HB_SIZE>(iCopySize);
-      }
-      else
-      {
+      } else {
          iCopySize = static_cast<int>(nRemaining);
          nRemaining = 0;
       }
@@ -109,16 +105,12 @@ void * hb_xmemset(void * pDestArg, int iFill, HB_SIZE nLen)
    pDest = static_cast<HB_BYTE*>(pDestArg);
    nRemaining = nLen;
 
-   while( nRemaining )
-   {
+   while( nRemaining ) {
       /* Overcome the memset() size_t limitation */
-      if( nRemaining > UINT_MAX )
-      {
+      if( nRemaining > UINT_MAX ) {
          iSetSize = UINT_MAX;
          nRemaining -= static_cast<HB_SIZE>(iSetSize);
-      }
-      else
-      {
+      } else {
          iSetSize = static_cast<int>(nRemaining);
          nRemaining = 0;
       }

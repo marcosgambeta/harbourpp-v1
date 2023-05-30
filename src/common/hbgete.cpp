@@ -70,8 +70,7 @@ char * hb_getenv(const char * szName)
       LPTSTR lpName = HB_CHARDUP(szName);
       DWORD size = GetEnvironmentVariable(lpName, nullptr, 0);
 
-      if( size != 0 )
-      {
+      if( size != 0 ) {
          LPTSTR lpBuffer = static_cast<LPTSTR>(hb_xgrab(size * sizeof(TCHAR)));
          GetEnvironmentVariable(lpName, lpBuffer, size);
          pszBuffer = HB_OSSTRDUP(lpBuffer);
@@ -85,13 +84,11 @@ char * hb_getenv(const char * szName)
 
       szName = hb_osEncodeCP(szName, &pszNameFree, nullptr);
       pszTemp = getenv(szName);
-      if( pszNameFree )
-      {
+      if( pszNameFree ) {
          hb_xfree(pszNameFree);
       }
 
-      if( pszTemp != nullptr )
-      {
+      if( pszTemp != nullptr ) {
          pszBuffer = hb_osStrDecode(pszTemp);
       }
    }
@@ -108,21 +105,16 @@ HB_BOOL hb_getenv_buffer(const char * szName, char * szBuffer, int nSize)
    {
       LPTSTR lpName = HB_CHARDUP(szName), lpBuffer;
 
-      if( szBuffer != nullptr || nSize > 0 )
-      {
+      if( szBuffer != nullptr || nSize > 0 ) {
          lpBuffer = static_cast<LPTSTR>(hb_xgrab(nSize * sizeof(TCHAR)));
-      }
-      else
-      {
+      } else {
          lpBuffer = nullptr;
       }
 
       fRetVal = GetEnvironmentVariable(lpName, lpBuffer, nSize) != 0;
 
-      if( lpBuffer )
-      {
-         if( fRetVal )
-         {
+      if( lpBuffer ) {
+         if( fRetVal ) {
             lpBuffer[nSize - 1] = TEXT('\0');
             HB_OSSTRDUP2(lpBuffer, szBuffer, nSize - 1);
          }
@@ -136,28 +128,22 @@ HB_BOOL hb_getenv_buffer(const char * szName, char * szBuffer, int nSize)
 
       szName = hb_osEncodeCP(szName, &pszNameFree, nullptr);
       pszTemp = getenv(szName);
-      if( pszNameFree )
-      {
+      if( pszNameFree ) {
          hb_xfree(pszNameFree);
       }
 
-      if( pszTemp != nullptr )
-      {
+      if( pszTemp != nullptr ) {
          fRetVal = HB_TRUE;
-         if( szBuffer != nullptr && nSize != 0 )
-         {
+         if( szBuffer != nullptr && nSize != 0 ) {
             hb_osStrDecode2(pszTemp, szBuffer, nSize - 1);
          }
-      }
-      else
-      {
+      } else {
          fRetVal = HB_FALSE;
       }
    }
 #endif
 
-   if( !fRetVal && szBuffer != nullptr && nSize != 0 )
-   {
+   if( !fRetVal && szBuffer != nullptr && nSize != 0 ) {
       szBuffer[0] = '\0';
    }
 
@@ -169,8 +155,7 @@ HB_BOOL hb_getenv_buffer(const char * szName, char * szBuffer, int nSize)
  */
 HB_BOOL hb_setenv(const char * szName, const char * szValue)
 {
-   if( szName == nullptr )
-   {
+   if( szName == nullptr ) {
       return false;
    }
 
@@ -179,8 +164,7 @@ HB_BOOL hb_setenv(const char * szName, const char * szValue)
       LPTSTR lpName = HB_CHARDUP(szName);
       LPTSTR lpValue = szValue ? HB_CHARDUP(szValue) : nullptr;
       HB_BOOL fResult = (SetEnvironmentVariable(lpName, lpValue) != 0);
-      if( lpValue )
-      {
+      if( lpValue ) {
          hb_xfree(lpValue);
       }
       hb_xfree(lpName);
@@ -194,17 +178,13 @@ HB_BOOL hb_setenv(const char * szName, const char * szValue)
       char * pszNameFree = nullptr, * pszValueFree = nullptr;
 
       szName = hb_osEncodeCP(szName, &pszNameFree, nullptr);
-      if( szValue )
-      {
+      if( szValue ) {
          szValue = hb_osEncodeCP(szValue, &pszValueFree, nullptr);
          fResult = setenv(szName, szValue, 1) == 0;
-         if( pszValueFree )
-         {
+         if( pszValueFree ) {
             hb_xfree(pszValueFree);
          }
-      }
-      else
-      {
+      } else {
 #  if defined(__OpenBSD__) || defined(HB_OS_QNX) || (defined(__FreeBSD_version) && __FreeBSD_version < 700050 ) || \
         (defined(HB_OS_DARWIN) && !(defined(__DARWIN_UNIX03) && __DARWIN_UNIX03))
          unsetenv(szName);
@@ -214,8 +194,7 @@ HB_BOOL hb_setenv(const char * szName, const char * szValue)
 #  endif
       }
 
-      if( pszNameFree )
-      {
+      if( pszNameFree ) {
          hb_xfree(pszNameFree);
       }
 

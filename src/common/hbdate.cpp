@@ -196,14 +196,12 @@ long hb_dateEncode(int iYear, int iMonth, int iDay)
 #endif
 
    /* Perform date validation */
-   if( iYear >= 0 && iYear <= HB_DATE_YEAR_LIMIT && iMonth >= 1 && iMonth <= 12 && iDay >= 1 )
-   {
+   if( iYear >= 0 && iYear <= HB_DATE_YEAR_LIMIT && iMonth >= 1 && iMonth <= 12 && iDay >= 1 ) {
       /* Month, year, and lower day limits are simple,
          but upper day limit is dependent upon month and leap year */
       static const int auiDayLimit[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-      if( iDay <= auiDayLimit[iMonth - 1] || (iDay == 29 && iMonth == 2 && (iYear & 3) == 0 && (iYear % 100 != 0 || iYear % 400 == 0)) )
-      {
+      if( iDay <= auiDayLimit[iMonth - 1] || (iDay == 29 && iMonth == 2 && (iYear & 3) == 0 && (iYear % 100 != 0 || iYear % 400 == 0)) ) {
          int iFactor = (iMonth < 3) ? -1 : 0;
 
          return (static_cast<long>(iFactor + 4800 + iYear) * 1461 / 4) +
@@ -222,8 +220,7 @@ void hb_dateDecode(long lJulian, int * piYear, int * piMonth, int * piDay)
    HB_TRACE(HB_TR_DEBUG, ("hb_dateDecode(%ld, %p, %p, %p)", lJulian, static_cast<void*>(piYear), static_cast<void*>(piMonth), static_cast<void*>(piDay)));
 #endif
 
-   if( lJulian >= HB_STR_DATE_BASE )
-   {
+   if( lJulian >= HB_STR_DATE_BASE ) {
       HB_LONGLONG U, V, W, X, J;
 
       J = lJulian;
@@ -238,9 +235,7 @@ void hb_dateDecode(long lJulian, int * piYear, int * piMonth, int * piDay)
       *piYear = static_cast<int>(X + U + (W - 49) * 100);
       *piMonth = static_cast<int>(V + 2 - (U * 12));
       *piDay = static_cast<int>(J - (2447 * V / 80));
-   }
-   else
-   {
+   } else {
       *piYear = *piMonth = *piDay = 0;
    }
 }
@@ -251,8 +246,7 @@ void hb_dateStrPut(char * szDate, int iYear, int iMonth, int iDay)
    HB_TRACE(HB_TR_DEBUG, ("hb_dateStrPut(%p, %d, %d, %d)", static_cast<void*>(szDate), iYear, iMonth, iDay));
 #endif
 
-   if( iYear >= 0 && iMonth > 0 && iDay > 0 )
-   {
+   if( iYear >= 0 && iMonth > 0 && iDay > 0 ) {
       szDate[0] = static_cast<char>(((iYear / 1000) % 10) + '0');
       szDate[1] = static_cast<char>(((iYear / 100) % 10) + '0');
       szDate[2] = static_cast<char>(((iYear / 10) % 10) + '0');
@@ -263,9 +257,7 @@ void hb_dateStrPut(char * szDate, int iYear, int iMonth, int iDay)
 
       szDate[6] = static_cast<char>(((iDay / 10) % 10) + '0');
       szDate[7] = static_cast<char>((iDay % 10) + '0');
-   }
-   else
-   {
+   } else {
       memset(szDate, '0', 8);
    }
 }
@@ -297,9 +289,7 @@ void hb_dateStrGet(const char * szDate, int * piYear, int * piMonth, int * piDay
                   static_cast<int>(szDate[3] - '0');
       *piMonth = (szDate[4] - '0') * 10 + (szDate[5] - '0');
       *piDay = (szDate[6] - '0') * 10 + (szDate[7] - '0');
-   }
-   else
-   {
+   } else {
       /* Date string missing or bad length, so force an empty date */
       *piYear = *piMonth = *piDay = 0;
    }
@@ -316,12 +306,9 @@ char * hb_dateDecStr(char * szDate, long lJulian)
 
    int iYear, iMonth, iDay;
 
-   if( lJulian <= 0 )
-   {
+   if( lJulian <= 0 ) {
       memset(szDate, ' ', 8);
-   }
-   else
-   {
+   } else {
       hb_dateDecode(lJulian, &iYear, &iMonth, &iDay);
       hb_dateStrPut(szDate, iYear, iMonth, iDay);
    }
@@ -349,12 +336,9 @@ int hb_dateJulianDOW(long lJulian)
    HB_TRACE(HB_TR_DEBUG, ("hb_dateJulianDOW(%ld)", lJulian));
 #endif
 
-   if( lJulian >= HB_STR_DATE_BASE )
-   {
+   if( lJulian >= HB_STR_DATE_BASE ) {
       return static_cast<int>((lJulian + 1) % 7) + 1;
-   }
-   else
-   {
+   } else {
       return 0;
    }
 }
@@ -365,8 +349,7 @@ HB_BOOL hb_dateDecWeek(long lJulian, int * piYear, int * piWeek, int * piDay)
    HB_TRACE(HB_TR_DEBUG, ("hb_dateDecWeek(%ld,%p,%p,%p)", lJulian, static_cast<void*>(piYear), static_cast<void*>(piWeek), static_cast<void*>(piDay)));
 #endif
 
-   if( lJulian >= HB_STR_DATE_BASE )
-   {
+   if( lJulian >= HB_STR_DATE_BASE ) {
       int iMonth, iDay;
 
       *piDay = static_cast<int>(lJulian % 7) + 1;
@@ -390,8 +373,7 @@ long hb_dateEncWeek(int iYear, int iWeek, int iDay)
 
    long lDate = 0;
 
-   if( iWeek > 0 && iWeek <= 53 && iDay > 0 && iDay <= 7 )
-   {
+   if( iWeek > 0 && iWeek <= 53 && iDay > 0 && iDay <= 7 ) {
       lDate = hb_dateEncode(iYear, 1, 1);
       lDate += (iWeek - 1) * 7 + iDay - (lDate + 3) % 7 + 2;
    }
@@ -405,13 +387,10 @@ int hb_dateDOW(int iYear, int iMonth, int iDay)
    HB_TRACE(HB_TR_DEBUG, ("hb_dateDOW(%d, %d, %d)", iYear, iMonth, iDay));
 #endif
 
-   if( iMonth < 3 )
-   {
+   if( iMonth < 3 ) {
       iMonth += 13;
       iYear--;
-   }
-   else
-   {
+   } else {
       iMonth++;
    }
 
@@ -456,12 +435,9 @@ long hb_timeEncode(int iHour, int iMinutes, int iSeconds, int iMSec)
    if( iHour >= 0 && iHour < 24 &&
        iMinutes >= 0 && iMinutes < 60 &&
        iSeconds >= 0 && iSeconds < 60 &&
-       iMSec >= 0 && iMSec < 1000 ) /* <= intentionally for rounded milliseconds values */
-   {
+       iMSec >= 0 && iMSec < 1000 ) { /* <= intentionally for rounded milliseconds values */
       lMilliSec = (static_cast<long>(iHour * 60 + iMinutes) * 60 + iSeconds) * 1000 + iMSec;
-   }
-   else
-   {
+   } else {
       lMilliSec = 0;
    }
 
@@ -474,24 +450,18 @@ void hb_timeDecode(long lMilliSec, int * piHour, int * piMinutes, int * piSecond
    HB_TRACE(HB_TR_DEBUG, ("hb_timeDecode(%ld, %p, %p, %p, %p)", lMilliSec, static_cast<void*>(piHour), static_cast<void*>(piMinutes), static_cast<void*>(piSeconds), static_cast<void*>(piMSec)));
 #endif
 
-   if( lMilliSec <= 0 )
-   {
+   if( lMilliSec <= 0 ) {
       *piHour = *piMinutes = *piSeconds = *piMSec = 0;
-   }
-   else
-   {
+   } else {
       *piMSec = lMilliSec % 1000;
       lMilliSec /= 1000;
       *piSeconds = lMilliSec % 60;
       lMilliSec /= 60;
       *piMinutes = lMilliSec % 60;
       lMilliSec /= 60;
-      if( lMilliSec >= 24 )
-      {
+      if( lMilliSec >= 24 ) {
          *piHour = *piMinutes = *piSeconds = *piMSec = 0;
-      }
-      else
-      {
+      } else {
          *piHour = static_cast<int>(lMilliSec);
       }
    }
@@ -526,117 +496,87 @@ HB_BOOL hb_timeStrGet(const char * szTime, int * piHour, int * piMinutes, int * 
    iHour = iMinutes = iSeconds = iMSec = iBlocks = 0;
    fValid = HB_FALSE;
 
-   if( szTime )
-   {
-      while( HB_ISSPACE(*szTime) )
-      {
+   if( szTime ) {
+      while( HB_ISSPACE(*szTime) ) {
          ++szTime;
       }
 
-      if( HB_ISDIGIT(*szTime) )
-      {
+      if( HB_ISDIGIT(*szTime) ) {
          iHour = (*szTime++ - '0');
-         if( HB_ISDIGIT(*szTime) )
-         {
+         if( HB_ISDIGIT(*szTime) ) {
             iHour = iHour * 10 + (*szTime++ - '0');
          }
-         if( *szTime == ':' && HB_ISDIGIT(szTime[1]) )
-         {
+         if( *szTime == ':' && HB_ISDIGIT(szTime[1]) ) {
             ++iBlocks;
             ++szTime;
             iMinutes = (*szTime++ - '0');
-            if( HB_ISDIGIT(*szTime) )
-            {
+            if( HB_ISDIGIT(*szTime) ) {
                iMinutes = iMinutes * 10 + (*szTime++ - '0');
             }
-            if( *szTime == ':' && HB_ISDIGIT(szTime[1]) )
-            {
+            if( *szTime == ':' && HB_ISDIGIT(szTime[1]) ) {
                ++iBlocks;
                ++szTime;
                iSeconds = (*szTime++ - '0');
-               if( HB_ISDIGIT(*szTime) )
-               {
+               if( HB_ISDIGIT(*szTime) ) {
                   iSeconds = iSeconds * 10 + (*szTime++ - '0');
                }
-               if( *szTime == '.' && HB_ISDIGIT(szTime[1]) )
-               {
+               if( *szTime == '.' && HB_ISDIGIT(szTime[1]) ) {
                   ++iBlocks;
                   ++szTime;
                   iMSec = (*szTime++ - '0') * 100;
-                  if( HB_ISDIGIT(*szTime) )
-                  {
+                  if( HB_ISDIGIT(*szTime) ) {
                      iMSec += (*szTime++ - '0') * 10;
-                     if( HB_ISDIGIT(*szTime) )
-                     {
+                     if( HB_ISDIGIT(*szTime) ) {
                         iMSec += (*szTime++ - '0');
                      }
                   }
-                  if( HB_ISDIGIT(*szTime) )
-                  {
+                  if( HB_ISDIGIT(*szTime) ) {
                      ++szTime;
                   }
                }
             }
          }
-         while( HB_ISSPACE(*szTime) )
-         {
+         while( HB_ISSPACE(*szTime) ) {
             ++szTime;
          }
-         if( (szTime[0] == 'p' || szTime[0] == 'P') && (szTime[1] == 'm' || szTime[1] == 'M') )
-         {
+         if( (szTime[0] == 'p' || szTime[0] == 'P') && (szTime[1] == 'm' || szTime[1] == 'M') ) {
             ++iBlocks;
             szTime += 2;
-            if( iHour == 0 )
-            {
+            if( iHour == 0 ) {
                iHour = 24;    /* wrong time */
-            }
-            else if( iHour != 12 )
-            {
+            } else if( iHour != 12 ) {
                iHour += 12;
             }
-         }
-         else if( (szTime[0] == 'a' || szTime[0] == 'A') && (szTime[1] == 'm' || szTime[1] == 'M') )
-         {
+         } else if( (szTime[0] == 'a' || szTime[0] == 'A') && (szTime[1] == 'm' || szTime[1] == 'M') ) {
             ++iBlocks;
             szTime += 2;
-            if( iHour == 0 )
-            {
+            if( iHour == 0 ) {
                iHour = 24;    /* wrong time */
-            }
-            else if( iHour == 12 )
-            {
+            } else if( iHour == 12 ) {
                iHour = 0;
             }
          }
-         while( HB_ISSPACE(*szTime) )
-         {
+         while( HB_ISSPACE(*szTime) ) {
             ++szTime;
          }
-         if( *szTime == 0 && iBlocks > 0 && iHour < 24 && iMinutes < 60 && iSeconds < 60 )
-         {
+         if( *szTime == 0 && iBlocks > 0 && iHour < 24 && iMinutes < 60 && iSeconds < 60 ) {
             fValid = HB_TRUE;
-         }
-         else
-         {
+         } else {
             iHour = iMinutes = iSeconds = iMSec = 0;
          }
       }
    }
 
-   if( piHour )
-   {
+   if( piHour ) {
       *piHour = iHour;
    }
-   if( piMinutes )
-   {
+   if( piMinutes ) {
       *piMinutes = iMinutes;
    }
-   if( piSeconds )
-   {
+   if( piSeconds ) {
       *piSeconds = iSeconds;
    }
-   if( piMSec )
-   {
+   if( piMSec ) {
       *piMSec = iMSec;
    }
 
@@ -651,32 +591,26 @@ void hb_timeStrRawGet(const char * szTime, int * piHour, int * piMinutes, int * 
 
    *piHour = *piMinutes = *piSeconds = *piMSec = 0;
 
-   if( szTime )
-   {
+   if( szTime ) {
       int iLen = 0;
 
-      while( iLen < 10 && HB_ISDIGIT(szTime[iLen]) )
-      {
+      while( iLen < 10 && HB_ISDIGIT(szTime[iLen]) ) {
          ++iLen;
       }
 
-      if( iLen >= 2 && ((iLen & 1) == 0 || iLen == 7 || iLen == 9) )
-      {
+      if( iLen >= 2 && ((iLen & 1) == 0 || iLen == 7 || iLen == 9) ) {
          *piHour = (szTime[0] - '0') * 10 + (szTime[1] - '0');
          szTime += 2;
          iLen -= 2;
-         if( iLen >= 2 )
-         {
+         if( iLen >= 2 ) {
             *piMinutes = (szTime[0] - '0') * 10 + (szTime[1] - '0');
             szTime += 2;
             iLen -= 2;
-            if( iLen >= 2 )
-            {
+            if( iLen >= 2 ) {
                *piSeconds = (szTime[0] - '0') * 10 + (szTime[1] - '0');
                szTime += 2;
                iLen -= 2;
-               switch( iLen )
-               {
+               switch( iLen ) {
                   case 4:
                   case 3:
                      *piMSec = (static_cast<int>(szTime[0] - '0') * 10 +
@@ -729,21 +663,18 @@ void hb_timeStampStrRawGet(const char * szDateTime, long * plJulian, long * plMi
    *plJulian = *plMilliSec = 0;
 
    iLen = 0;
-   while( iLen < 10 && HB_ISDIGIT(szDateTime[iLen]) )
-   {
+   while( iLen < 10 && HB_ISDIGIT(szDateTime[iLen]) ) {
       ++iLen;
    }
 
-   if( iLen == 8 || iLen >= 10 )
-   {
+   if( iLen == 8 || iLen >= 10 ) {
       hb_dateStrGet(szDateTime, &iYear, &iMonth, &iDay);
       *plJulian = hb_dateEncode(iYear, iMonth, iDay);
       szDateTime += 8;
       iLen -= 8;
    }
 
-   if( iLen >= 2 )
-   {
+   if( iLen >= 2 ) {
       hb_timeStrRawGet(szDateTime, &iHour, &iMinutes, &iSeconds, &iMSec);
       *plMilliSec = hb_timeEncode(iHour, iMinutes, iSeconds, iMSec);
    }
@@ -781,16 +712,13 @@ HB_BOOL hb_timeStampStrGet(const char * szDateTime, int * piYear, int * piMonth,
    iYear = iMonth = iDay = 0;
    fValid = HB_FALSE;
 
-   if( szDateTime )
-   {
-      while( HB_ISSPACE(*szDateTime) )
-      {
+   if( szDateTime ) {
+      while( HB_ISSPACE(*szDateTime) ) {
          ++szDateTime;
       }
       if( HB_ISDIGIT(szDateTime[0]) && HB_ISDIGIT(szDateTime[1]) &&
           HB_ISDIGIT(szDateTime[2]) && HB_ISDIGIT(szDateTime[3]) &&
-          (szDateTime[4] == '-' || szDateTime[4] == '/' || szDateTime[4] == '.') )
-      {
+          (szDateTime[4] == '-' || szDateTime[4] == '/' || szDateTime[4] == '.') ) {
          iYear = ((static_cast<int>(szDateTime[0] - '0') * 10 +
                    static_cast<int>(szDateTime[1] - '0')) * 10 +
                    static_cast<int>(szDateTime[2] - '0')) * 10 +
@@ -799,44 +727,33 @@ HB_BOOL hb_timeStampStrGet(const char * szDateTime, int * piYear, int * piMonth,
          if( HB_ISDIGIT(szDateTime[5]) && HB_ISDIGIT(szDateTime[6]) &&
              szDateTime[7] == szDateTime[4] &&
              HB_ISDIGIT(szDateTime[8]) && HB_ISDIGIT(szDateTime[9]) &&
-             !HB_ISDIGIT(szDateTime[10]) )
-         {
+             !HB_ISDIGIT(szDateTime[10]) ) {
             iMonth = (szDateTime[5] - '0') * 10 + (szDateTime[6] - '0');
             iDay = (szDateTime[8] - '0') * 10 + (szDateTime[9] - '0');
 
-            if( hb_dateEncode(iYear, iMonth, iDay) != 0 || (iYear == 0 && iMonth == 0 && iDay == 0) )
-            {
+            if( hb_dateEncode(iYear, iMonth, iDay) != 0 || (iYear == 0 && iMonth == 0 && iDay == 0) ) {
                szDateTime += 10;
                fValid = HB_TRUE;
             }
-         }
-         /* ISO 8601 Week dates: YYYY-Www-D */
-         else if( (szDateTime[5] == 'W' || szDateTime[5] == 'w') &&
+         } else if( (szDateTime[5] == 'W' || szDateTime[5] == 'w') && /* ISO 8601 Week dates: YYYY-Www-D */
                   HB_ISDIGIT(szDateTime[6]) && HB_ISDIGIT(szDateTime[7]) &&
                   szDateTime[8] == szDateTime[4] &&
-                  HB_ISDIGIT(szDateTime[9]) && !HB_ISDIGIT(szDateTime[10]) )
-         {
+                  HB_ISDIGIT(szDateTime[9]) && !HB_ISDIGIT(szDateTime[10]) ) {
             long lDate = hb_dateEncWeek(iYear, (szDateTime[6] - '0') * 10 + (szDateTime[7] - '0'), szDateTime[9] - '0');
-            if( lDate )
-            {
+            if( lDate ) {
                hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
                szDateTime += 10;
                fValid = HB_TRUE;
             }
-         }
-         /* ISO 8601 Ordinal dates: YYYY-DDD */
-         else if( szDateTime[4] == '-' && HB_ISDIGIT(szDateTime[5]) &&
+         } else if( szDateTime[4] == '-' && HB_ISDIGIT(szDateTime[5]) && /* ISO 8601 Ordinal dates: YYYY-DDD */
                   HB_ISDIGIT(szDateTime[6]) && HB_ISDIGIT(szDateTime[7]) &&
-                  !HB_ISDIGIT(szDateTime[8]) )
-         {
+                  !HB_ISDIGIT(szDateTime[8]) ) {
             iDay = (static_cast<int>(szDateTime[5] - '0') * 10 +
                     static_cast<int>(szDateTime[6] - '0')) * 10 +
                     static_cast<int>(szDateTime[7] - '0');
-            if( iDay > 0 && (iDay <= 365 || (iDay == 366 && iYear % 4 == 0 && (iYear % 100 != 0 || iYear % 400 == 0))) )
-            {
+            if( iDay > 0 && (iDay <= 365 || (iDay == 366 && iYear % 4 == 0 && (iYear % 100 != 0 || iYear % 400 == 0))) ) {
                long lDate = hb_dateEncode(iYear, 1, 1);
-               if( lDate )
-               {
+               if( lDate ) {
                   hb_dateDecode(lDate + iDay - 1, &iYear, &iMonth, &iDay);
                   szDateTime += 8;
                   fValid = HB_TRUE;
@@ -844,69 +761,49 @@ HB_BOOL hb_timeStampStrGet(const char * szDateTime, int * piYear, int * piMonth,
             }
          }
 
-         if( fValid )
-         {
-            if( *szDateTime == 'T' || *szDateTime == 't' )
-            {
-               if( HB_ISDIGIT(szDateTime[1]) )
-               {
+         if( fValid ) {
+            if( *szDateTime == 'T' || *szDateTime == 't' ) {
+               if( HB_ISDIGIT(szDateTime[1]) ) {
                   ++szDateTime;
                }
                fValid = HB_FALSE;
-            }
-            else
-            {
-               if( *szDateTime == ',' || *szDateTime == ';' )
-               {
+            } else {
+               if( *szDateTime == ',' || *szDateTime == ';' ) {
                   ++szDateTime;
                }
-               while( HB_ISSPACE(*szDateTime) )
-               {
+               while( HB_ISSPACE(*szDateTime) ) {
                   ++szDateTime;
                }
-               if( *szDateTime == '\0' )
-               {
+               if( *szDateTime == '\0' ) {
                   szDateTime = nullptr;
                }
             }
-         }
-         else
-         {
+         } else {
             iYear = iMonth = iDay = 0;
             szDateTime = nullptr;
          }
       }
    }
 
-   if( piHour || piMinutes || piSeconds || piMSec )
-   {
-      if( !hb_timeStrGet(szDateTime, piHour, piMinutes, piSeconds, piMSec) )
-      {
-         if( szDateTime )
-         {
+   if( piHour || piMinutes || piSeconds || piMSec ) {
+      if( !hb_timeStrGet(szDateTime, piHour, piMinutes, piSeconds, piMSec) ) {
+         if( szDateTime ) {
             fValid = HB_FALSE;
          }
-      }
-      else
-      {
+      } else {
          fValid = HB_TRUE;
       }
-   }
-   else if( szDateTime )
-   {
+   } else if( szDateTime ) {
       fValid = HB_FALSE;
    }
 
-   if( piYear )
-   {
+   if( piYear ) {
       *piYear = iYear;
    }
-   if( piMonth )
-   {
+   if( piMonth ) {
       *piMonth = iMonth;
    }
-   if( piDay )
-   {
+   if( piDay ) {
       *piDay = iDay;
    }
 
@@ -923,12 +820,10 @@ HB_BOOL hb_timeStampStrGetDT(const char * szDateTime, long * plJulian, long * pl
    HB_BOOL fValid;
 
    fValid = hb_timeStampStrGet(szDateTime, &iYear, &iMonth, &iDay, &iHour, &iMinutes, &iSeconds, &iMSec);
-   if( plJulian )
-   {
+   if( plJulian ) {
       *plJulian = hb_dateEncode(iYear, iMonth, iDay);
    }
-   if( plMilliSec )
-   {
+   if( plMilliSec ) {
       *plMilliSec = hb_timeEncode(iHour, iMinutes, iSeconds, iMSec);
    }
 
@@ -955,22 +850,18 @@ void hb_timeStampUnpackDT(double dTimeStamp, long * plJulian, long * plMilliSec)
       double dJulian, dTime;
 
       dTime = modf(dTimeStamp + 0.5 / HB_MILLISECS_PER_DAY, &dJulian);
-      if( plJulian )
-      {
+      if( plJulian ) {
          *plJulian = static_cast<long>(dJulian);
       }
-      if( plMilliSec )
-      {
+      if( plMilliSec ) {
          *plMilliSec = static_cast<long>(dTime * HB_MILLISECS_PER_DAY);
       }
 #else
       HB_LONGLONG llMilliSec = static_cast<HB_LONGLONG>(dTimeStamp * HB_MILLISECS_PER_DAY + 0.5);
-      if( plJulian )
-      {
+      if( plJulian ) {
          *plJulian = static_cast<long>(llMilliSec / HB_MILLISECS_PER_DAY);
       }
-      if( plMilliSec )
-      {
+      if( plMilliSec ) {
          *plMilliSec = static_cast<long>(llMilliSec % HB_MILLISECS_PER_DAY);
       }
 #endif
@@ -988,12 +879,10 @@ double hb_timeStampPack(int iYear, int iMonth, int iDay, int iHour, int iMinutes
    if( iHour >= 0 && iHour < 24 &&
        iMinutes >= 0 && iMinutes < 60 &&
        iSeconds >= 0 && iSeconds < 60 &&
-       iMSec >= 0 && iMSec < 1000 )
-   {
+       iMSec >= 0 && iMSec < 1000 ) {
       long lJulian = hb_dateEncode(iYear, iMonth, iDay);
 
-      if( lJulian != 0 || (iYear == 0 && iMonth == 0 && iDay == 0) )
-      {
+      if( lJulian != 0 || (iYear == 0 && iMonth == 0 && iDay == 0) ) {
          dTimeStamp = static_cast<double>(lJulian) +
                       static_cast<double>((static_cast<long>(iHour * 60 + iMinutes) * 60 +
                       iSeconds) * 1000 + iMSec) / HB_MILLISECS_PER_DAY;
@@ -1023,12 +912,10 @@ double hb_timeStampPackD(int iYear, int iMonth, int iDay, int iHour, int iMinute
 
    double dTimeStamp = 0;
 
-   if( iHour >= 0 && iHour < 24 && iMinutes >= 0 && iMinutes < 60 && dSeconds >= 0 && dSeconds < 60 )
-   {
+   if( iHour >= 0 && iHour < 24 && iMinutes >= 0 && iMinutes < 60 && dSeconds >= 0 && dSeconds < 60 ) {
       long lJulian = hb_dateEncode(iYear, iMonth, iDay);
 
-      if( lJulian != 0 || (iYear == 0 && iMonth == 0 && iDay == 0) )
-      {
+      if( lJulian != 0 || (iYear == 0 && iMonth == 0 && iDay == 0) ) {
          dTimeStamp = static_cast<double>(lJulian) + static_cast<double>(((iHour * 60 + iMinutes) * 60) + dSeconds) / HB_SECONDS_PER_DAY;
       }
    }
@@ -1048,8 +935,7 @@ void hb_timeStampUnpackD(double dTimeStamp, int * piYear, int * piMonth, int * p
    hb_dateDecode(lJulian, piYear, piMonth, piDay);
    hb_timeDecode(lMilliSec, piHour, piMinutes, &iSeconds, &iMSec);
 
-   if( pdSeconds )
-   {
+   if( pdSeconds ) {
       *pdSeconds = static_cast<double>(iSeconds) + static_cast<double>(iMSec) / 1000;
    }
 }
@@ -1070,8 +956,7 @@ long hb_timeUTCOffset(void) /* in seconds */
        * tzInfo.StandardBias field.
        */
 #if 0
-      if( retval == TIME_ZONE_ID_INVALID )
-      {
+      if( retval == TIME_ZONE_ID_INVALID ) {
          return 0;
       }
 #endif
@@ -1117,8 +1002,7 @@ long hb_timeStampUTCOffset(int iYear, int iMonth, int iDay, int iHour, int iMinu
    lt.wMilliseconds = 0;
    lt.wDayOfWeek    = 0;
 
-   if( TzSpecificLocalTimeToSystemTime(nullptr, &lt, &st) )
-   {
+   if( TzSpecificLocalTimeToSystemTime(nullptr, &lt, &st) ) {
       double dOffset = (hb_timeStampPack(lt.wYear, lt.wMonth, lt.wDay, lt.wHour, lt.wMinute, lt.wSecond, lt.wMilliseconds) -
                         hb_timeStampPack(st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond, st.wMilliseconds)) * HB_SECONDS_PER_DAY;
       return static_cast<long>(dOffset + (dOffset < 0 ? -0.5 : 0.5));
@@ -1139,8 +1023,7 @@ long hb_timeStampUTCOffset(int iYear, int iMonth, int iDay, int iHour, int iMinu
 
    local = mktime(&timeinfo);
 
-   if( local != (time_t) -1 )
-   {
+   if( local != (time_t) -1 ) {
       int isdst = (timeinfo.tm_isdst > 0 ? 3600 : 0);
 #if defined(HB_HAS_LOCALTIME_R)
       utc = mktime(gmtime_r(&local, &timeinfo) );
@@ -1179,8 +1062,7 @@ HB_MAXUINT hb_timerGet(void)
       static int s_iClkId = -1;
       struct timespec ts;
 
-      if( s_iClkId < 0 )
-      {
+      if( s_iClkId < 0 ) {
          int i, piClkId[] = {
 #  if defined(CLOCK_MONOTONIC)
             CLOCK_MONOTONIC,
@@ -1196,17 +1078,14 @@ HB_MAXUINT hb_timerGet(void)
 #  endif
             0 };
 
-         for( i = 0; i < static_cast<int>(HB_SIZEOFARRAY(piClkId)); ++i )
-         {
+         for( i = 0; i < static_cast<int>(HB_SIZEOFARRAY(piClkId)); ++i ) {
             s_iClkId = piClkId[i];
-            if( s_iClkId == 0 || clock_getres(s_iClkId, &ts) == 0 )
-            {
+            if( s_iClkId == 0 || clock_getres(s_iClkId, &ts) == 0 ) {
                break;
             }
          }
       }
-      if( s_iClkId != 0 && clock_gettime(s_iClkId, &ts) == 0 )
-      {
+      if( s_iClkId != 0 && clock_gettime(s_iClkId, &ts) == 0 ) {
          return static_cast<HB_MAXUINT>(ts.tv_sec) * 1000 + ts.tv_nsec / 1000000;
       }
    }
@@ -1222,8 +1101,7 @@ HB_MAXUINT hb_timerGet(void)
       static DWORD s_dwCounter = 0, s_dwLast = 0;
       DWORD dwTime = timeGetTime();
 
-      if( dwTime < s_dwLast )
-      {
+      if( dwTime < s_dwLast ) {
          ++s_dwCounter;
       }
       s_dwLast = dwTime;
@@ -1253,15 +1131,12 @@ HB_MAXINT hb_timerTest(HB_MAXINT nTimeOut, HB_MAXUINT * pnTimer)
    HB_TRACE(HB_TR_DEBUG, ("hb_timerTest(%" PFHL "d, %p)", nTimeOut, static_cast<void*>(pnTimer)));
 #endif
 
-   if( nTimeOut > 0 )
-   {
+   if( nTimeOut > 0 ) {
       HB_MAXUINT nTime = hb_timerGet();
 
-      if( nTime > *pnTimer )
-      {
+      if( nTime > *pnTimer ) {
          nTimeOut -= nTime - *pnTimer;
-         if( nTimeOut < 0 )
-         {
+         if( nTimeOut < 0 ) {
             nTimeOut = 0;
          }
       }
@@ -1283,13 +1158,10 @@ int gettimeofday(struct timeval * tv, void * tz)
 
    HB_SYMBOL_UNUSED(tz);
 
-   if( (ret = clock_gettime(CLOCK_REALTIME, &tp)) == 0 )
-   {
+   if( (ret = clock_gettime(CLOCK_REALTIME, &tp)) == 0 ) {
       tv->tv_sec = tp.tv_sec;
       tv->tv_usec = (tp.tv_nsec + 500) / 1000;
-   }
-   else
-   {
+   } else {
       tv->tv_sec = 0;
       tv->tv_usec = 0;
    }

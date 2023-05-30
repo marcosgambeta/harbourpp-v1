@@ -93,14 +93,12 @@ void hb_fsAddSearchPath(const char * szPath, HB_PATHNAMES ** pSearchList)
    char * pDelim;
    HB_BOOL fFree = HB_TRUE;
 
-   while( *pSearchList )
-   {
+   while( *pSearchList ) {
       pSearchList = &(*pSearchList)->pNext;
    }
 
    pPath = hb_strdup(szPath);
-   while( (pDelim = strchr(pPath, HB_OS_PATH_LIST_SEP_CHR)) != nullptr )
-   {
+   while( (pDelim = strchr(pPath, HB_OS_PATH_LIST_SEP_CHR)) != nullptr ) {
       *pDelim = '\0';
       *pSearchList = static_cast<HB_PATHNAMES*>(hb_xgrab(sizeof(HB_PATHNAMES)));
       (*pSearchList)->szPath = pPath;
@@ -126,10 +124,8 @@ void hb_fsFreeSearchPath(HB_PATHNAMES * pSearchList)
       All of the other paths in the list are part of
       that first string. */
 
-   while( pSearchList )
-   {
-      if( pSearchList->fFree )
-      {
+   while( pSearchList ) {
+      if( pSearchList->fFree ) {
          hb_xfree(pSearchList->szPath);
       }
       pNext = pSearchList->pNext;
@@ -155,8 +151,7 @@ PHB_FNAME hb_fsFNameSplit(const char * pszFileName)
 
    pFileName->szPath = pFileName->szName = pFileName->szExtension = pFileName->szDrive = nullptr;
 
-   if( pszFileName )
-   {
+   if( pszFileName ) {
       char * pszPos, cDirSep;
       HB_ISIZ iSize, iPos;
 
@@ -168,10 +163,8 @@ PHB_FNAME hb_fsFNameSplit(const char * pszFileName)
       /* Find the end of the path part, and find out where the
          name+ext starts */
 
-      while( --iPos >= 0 )
-      {
-         if( pszFileName[iPos] == cDirSep || strchr(HB_OS_PATH_DELIM_CHR_LIST, pszFileName[iPos]) )
-         {
+      while( --iPos >= 0 ) {
+         if( pszFileName[iPos] == cDirSep || strchr(HB_OS_PATH_DELIM_CHR_LIST, pszFileName[iPos]) ) {
             pFileName->szPath = pszPos;
             hb_strncpy(pszPos, pszFileName, iPos + 1);
             pszPos += iPos + 2;
@@ -184,10 +177,8 @@ PHB_FNAME hb_fsFNameSplit(const char * pszFileName)
       /* From this point pszFileName will point to the name+ext part of the path */
       /* Split the filename part to name and extension */
       iPos = iSize;
-      while( --iPos > 0 )
-      {
-         if( pszFileName[iPos] == '.' )
-         {
+      while( --iPos > 0 ) {
+         if( pszFileName[iPos] == '.' ) {
             pFileName->szExtension = pszPos;
             hb_strncpy(pszPos, pszFileName + iPos, iSize - iPos);
             pszPos += iSize - iPos + 1;
@@ -195,8 +186,7 @@ PHB_FNAME hb_fsFNameSplit(const char * pszFileName)
             break;
          }
       }
-      if( iSize )
-      {
+      if( iSize ) {
          pFileName->szName = pszPos;
          hb_strncpy(pszPos, pszFileName, iSize);
          pszPos += iSize + 1;
@@ -206,13 +196,10 @@ PHB_FNAME hb_fsFNameSplit(const char * pszFileName)
          platforms where applicable. Note that the drive info is always
          present also in the path itself. */
 
-      if( pFileName->szPath )
-      {
+      if( pFileName->szPath ) {
          iPos = 0;
-         while( iPos < HB_MAX_DRIVE_LENGTH && pFileName->szPath[iPos] != '\0' )
-         {
-            if( pFileName->szPath[iPos] == ':' )
-            {
+         while( iPos < HB_MAX_DRIVE_LENGTH && pFileName->szPath[iPos] != '\0' ) {
+            if( pFileName->szPath[iPos] == ':' ) {
                pFileName->szDrive = pszPos;
                hb_strncpy(pszPos, pFileName->szPath, iPos);
                break;
@@ -245,8 +232,7 @@ char * hb_fsFNameMerge(char * pszFileName, PHB_FNAME pFileName)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsFNameMerge(%p, %p)", static_cast<void*>(pszFileName), static_cast<void*>(pFileName)));
 #endif
 
-   if( pszFileName && pFileName )
-   {
+   if( pszFileName && pFileName ) {
       const char * pszName;
       char cDirSep;
 
@@ -258,42 +244,35 @@ char * hb_fsFNameMerge(char * pszFileName, PHB_FNAME pFileName)
 
       /* Strip preceding path separators from the filename */
       pszName = pFileName->szName;
-      if( pszName && pszName[0] != '\0' && (pszName[0] == cDirSep || strchr(HB_OS_PATH_DELIM_CHR_LIST, pszName[0]) != nullptr) )
-      {
+      if( pszName && pszName[0] != '\0' && (pszName[0] == cDirSep || strchr(HB_OS_PATH_DELIM_CHR_LIST, pszName[0]) != nullptr) ) {
          pszName++;
       }
 
       /* Add path if specified */
-      if( pFileName->szPath )
-      {
+      if( pFileName->szPath ) {
          hb_strncat(pszFileName, pFileName->szPath, HB_PATH_MAX - 1 - 1);
       }
 
       /* If we have a path, append a path separator to the path if there
          was none. */
-      if( pszFileName[0] != '\0' && (pszName || pFileName->szExtension) )
-      {
+      if( pszFileName[0] != '\0' && (pszName || pFileName->szExtension) ) {
          int iLen = static_cast<int>(strlen(pszFileName)) - 1;
 
-         if( iLen < HB_PATH_MAX - 1 - 2 && pszFileName[iLen] != cDirSep && strchr(HB_OS_PATH_DELIM_CHR_LIST, pszFileName[iLen]) == nullptr )
-         {
+         if( iLen < HB_PATH_MAX - 1 - 2 && pszFileName[iLen] != cDirSep && strchr(HB_OS_PATH_DELIM_CHR_LIST, pszFileName[iLen]) == nullptr ) {
             pszFileName[iLen + 1] = HB_OS_PATH_DELIM_CHR;
             pszFileName[iLen + 2] = '\0';
          }
       }
 
       /* Add filename (without extension) if specified */
-      if( pszName )
-      {
+      if( pszName ) {
          hb_strncat(pszFileName, pszName, HB_PATH_MAX - 1 - 1);
       }
 
       /* Add extension if specified */
-      if( pFileName->szExtension )
-      {
+      if( pFileName->szExtension ) {
          /* Add a dot if the extension doesn't have it */
-         if( pFileName->szExtension[0] != '\0' && pFileName->szExtension[0] != '.' )
-         {
+         if( pFileName->szExtension[0] != '\0' && pFileName->szExtension[0] != '.' ) {
             hb_strncat(pszFileName, ".", HB_PATH_MAX - 1 - 1);
          }
 
@@ -319,16 +298,14 @@ HB_BOOL hb_fsNameExists(const char * pszFileName)
 
    HB_BOOL fExist = HB_FALSE;
 
-   if( pszFileName != nullptr )
-   {
+   if( pszFileName != nullptr ) {
 #if defined(HB_OS_WIN)
       LPTSTR lpFree;
       LPCTSTR lpFileName = HB_FSNAMECONV(pszFileName, &lpFree);
 
       fExist = (GetFileAttributes(lpFileName) != INVALID_FILE_ATTRIBUTES);
 
-      if( lpFree )
-      {
+      if( lpFree ) {
          hb_xfree(lpFree);
       }
 #else
@@ -350,8 +327,7 @@ HB_BOOL hb_fsNameExists(const char * pszFileName)
 #  endif
       }
 
-      if( pszFree )
-      {
+      if( pszFree ) {
          hb_xfree(pszFree);
       }
 #endif
@@ -368,8 +344,7 @@ HB_BOOL hb_fsFileExists(const char * pszFileName)
 
    HB_BOOL fExist = HB_FALSE;
 
-   if( pszFileName != nullptr )
-   {
+   if( pszFileName != nullptr ) {
 #if defined(HB_OS_WIN)
       LPTSTR lpFree;
       LPCTSTR lpFileName = HB_FSNAMECONV(pszFileName, &lpFree);
@@ -378,8 +353,7 @@ HB_BOOL hb_fsFileExists(const char * pszFileName)
       dwAttr = GetFileAttributes(lpFileName);
       fExist = (dwAttr != INVALID_FILE_ATTRIBUTES) && (dwAttr & (FILE_ATTRIBUTE_DIRECTORY | FILE_ATTRIBUTE_DEVICE)) == 0;
 
-      if( lpFree )
-      {
+      if( lpFree ) {
          hb_xfree(lpFree);
       }
 #else
@@ -401,8 +375,7 @@ HB_BOOL hb_fsFileExists(const char * pszFileName)
 #  endif
       }
 
-      if( pszFree )
-      {
+      if( pszFree ) {
          hb_xfree(pszFree);
       }
 #endif
@@ -419,8 +392,7 @@ HB_BOOL hb_fsDirExists(const char * pszDirName)
 
    HB_BOOL fExist = HB_FALSE;
 
-   if( pszDirName != nullptr )
-   {
+   if( pszDirName != nullptr ) {
 #if defined(HB_OS_WIN)
       LPTSTR lpFree;
       LPCTSTR lpDirName = HB_FSNAMECONV(pszDirName, &lpFree);
@@ -429,8 +401,7 @@ HB_BOOL hb_fsDirExists(const char * pszDirName)
       dwAttr = GetFileAttributes(lpDirName);
       fExist = (dwAttr != INVALID_FILE_ATTRIBUTES) && (dwAttr & FILE_ATTRIBUTE_DIRECTORY);
 
-      if( lpFree )
-      {
+      if( lpFree ) {
          hb_xfree(lpFree);
       }
 #else
@@ -452,8 +423,7 @@ HB_BOOL hb_fsDirExists(const char * pszDirName)
 #  endif
       }
 
-      if( pszFree )
-      {
+      if( pszFree ) {
          hb_xfree(pszFree);
       }
 #endif

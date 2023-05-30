@@ -141,8 +141,7 @@ void hb_verBuildInfo(void)
 
    {
       const char * pszFlags = hb_verFlagsPRG();
-      if( pszFlags && *pszFlags )
-      {
+      if( pszFlags && *pszFlags ) {
          hb_conOutErr("Extra Harbour compiler options: ", 0);
          hb_conOutErr(pszFlags, 0);
          hb_conOutErr(hb_conNewLine(), 0);
@@ -151,8 +150,7 @@ void hb_verBuildInfo(void)
 
    {
       const char * pszFlags = hb_verFlagsC();
-      if( pszFlags && *pszFlags )
-      {
+      if( pszFlags && *pszFlags ) {
          hb_conOutErr("Extra C++ compiler options: ", 0);
          hb_conOutErr(pszFlags, 0);
          hb_conOutErr(hb_conNewLine(), 0);
@@ -161,8 +159,7 @@ void hb_verBuildInfo(void)
 
    {
       const char * pszFlags = hb_verFlagsL();
-      if( pszFlags && *pszFlags )
-      {
+      if( pszFlags && *pszFlags ) {
          hb_conOutErr("Extra linker options: ", 0);
          hb_conOutErr(pszFlags, 0);
          hb_conOutErr(hb_conNewLine(), 0);
@@ -170,8 +167,7 @@ void hb_verBuildInfo(void)
    }
 
    hb_conOutErr("Build options: ", 0);
-   if( hb_xquery(HB_MEM_STATISTICS) != 0 )
-   {
+   if( hb_xquery(HB_MEM_STATISTICS) != 0 ) {
       hb_conOutErr("(memory tracking) ", 0);
    }
 #if defined(HB_TR_INFO) && (HB_TR_LEVEL == HB_TR_INFO || HB_TR_LEVEL == HB_TR_DEBUG)

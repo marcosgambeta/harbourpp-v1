@@ -154,38 +154,29 @@ const char * hb_compGetFuncID(const char * szFuncName, HB_FUNC_ID * pFunID, int 
    unsigned int uiFirst = 0, uiLast = HB_SIZEOFARRAY(s_funcId) - 1, uiMiddle;
    int i;
 
-   do
-   {
+   do {
       uiMiddle = (uiFirst + uiLast) >> 1;
       i = strcmp(szFuncName, s_funcId[uiMiddle].szFuncName);
-      if( i <= 0 )
-      {
+      if( i <= 0 ) {
          uiLast = uiMiddle;
-      }
-      else
-      {
+      } else {
          uiFirst = uiMiddle + 1;
       }
-   }
-   while( uiFirst < uiLast );
+   } while( uiFirst < uiLast );
 
-   if( uiFirst != uiMiddle )
-   {
+   if( uiFirst != uiMiddle ) {
       i = strcmp(szFuncName, s_funcId[uiFirst].szFuncName);
    }
 
-   if( i < 0 && s_funcId[uiFirst].iMinLen )
-   {
+   if( i < 0 && s_funcId[uiFirst].iMinLen ) {
       int iLen = static_cast<int>(strlen(szFuncName));
 
-      if( iLen >= s_funcId[uiFirst].iMinLen )
-      {
+      if( iLen >= s_funcId[uiFirst].iMinLen ) {
          i = strncmp(szFuncName, s_funcId[uiFirst].szFuncName, iLen);
       }
    }
 
-   if( i == 0 )
-   {
+   if( i == 0 ) {
       *piFlags = s_funcId[uiFirst].flags;
       *pFunID = s_funcId[uiFirst].funcID;
       return s_funcId[uiFirst].szFuncName;
@@ -195,24 +186,17 @@ const char * hb_compGetFuncID(const char * szFuncName, HB_FUNC_ID * pFunID, int 
    *pFunID = HB_F_UDF;
 
    /* hack for HB_I18N_GETTEXT_[NOOP_|STRICT_]* functions */
-   if( strncmp(szFuncName, "HB_I18N_", 8) == 0 )
-   {
+   if( strncmp(szFuncName, "HB_I18N_", 8) == 0 ) {
       const char * szName = szFuncName + 8;
       i = *szName == 'N' ? 1 : 0;
       szName += i;
-      if( strncmp(szName, "GETTEXT_", 8) == 0 )
-      {
+      if( strncmp(szName, "GETTEXT_", 8) == 0 ) {
          szName += 8;
-         if( strncmp(szName, "STRICT_", 7) == 0 )
-         {
+         if( strncmp(szName, "STRICT_", 7) == 0 ) {
             *pFunID = i ? HB_F_I18N_NGETTEXT_STRICT : HB_F_I18N_GETTEXT_STRICT;
-         }
-         else if( strncmp(szName, "NOOP_", 5) == 0 )
-         {
+         } else if( strncmp(szName, "NOOP_", 5) == 0 ) {
             *pFunID = i ? HB_F_I18N_NGETTEXT_NOOP : HB_F_I18N_GETTEXT_NOOP;
-         }
-         else
-         {
+         } else {
             *pFunID = i ? HB_F_I18N_NGETTEXT :  HB_F_I18N_GETTEXT;
          }
       }
