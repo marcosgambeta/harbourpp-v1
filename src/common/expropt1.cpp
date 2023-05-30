@@ -375,7 +375,7 @@ PHB_EXPR hb_compExprNewArray(PHB_EXPR pArrList, HB_COMP_DECL)
    pArrList->ExprType = HB_ET_ARRAY;   /* change type from ET_LIST */
    pArrList->ValType = HB_EV_ARRAY;
    pArrList->nLength = 0;
-   pArrList->value.asList.reference = HB_FALSE;
+   pArrList->value.asList.reference = false;
 
    pExpr = pArrList->value.asList.pExprList;   /* get first element on the list */
    /* Now we need to replace all EO_NONE expressions with ET_NIL expressions
@@ -421,7 +421,7 @@ PHB_EXPR hb_compExprNewHash(PHB_EXPR pHashList, HB_COMP_DECL)
    }
    pHashList->ValType = HB_EV_HASH;
    pHashList->nLength = 0;
-   pHashList->value.asList.reference = HB_FALSE;
+   pHashList->value.asList.reference = false;
    pHashList->value.asList.pIndex = nullptr;
 
    /*
@@ -733,7 +733,7 @@ PHB_EXPR hb_compExprNewList(PHB_EXPR pFirstItem, HB_COMP_DECL)
 
    PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_LIST);
    pExpr->value.asList.pExprList = pFirstItem;
-   pExpr->value.asList.reference = HB_FALSE;
+   pExpr->value.asList.reference = false;
    return pExpr;
 }
 
@@ -747,7 +747,7 @@ PHB_EXPR hb_compExprNewArgList(PHB_EXPR pFirstItem, HB_COMP_DECL)
 
    PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_ARGLIST);
    pExpr->value.asList.pExprList = pFirstItem;
-   pExpr->value.asList.reference = HB_FALSE;
+   pExpr->value.asList.reference = false;
    return pExpr;
 }
 
@@ -761,7 +761,7 @@ PHB_EXPR hb_compExprNewArgRef(HB_COMP_DECL)
 
    PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_ARGLIST);
    pExpr->value.asList.pExprList = nullptr;
-   pExpr->value.asList.reference = HB_TRUE;
+   pExpr->value.asList.reference = true;
    return pExpr;
 }
 
@@ -1332,7 +1332,7 @@ static PHB_CBVAR hb_compExprCBVarNew(const char * szVarName, HB_BYTE bType)
    pVar->szName = szVarName;
    pVar->bType = bType;
    pVar->pNext = nullptr;
-   pVar->bUsed = HB_FALSE;
+   pVar->bUsed = false;
    return pVar;
 }
 

@@ -491,10 +491,10 @@ HB_BOOL hb_timeStrGet(const char * szTime, int * piHour, int * piMinutes, int * 
 #endif
 
    int iHour, iMinutes, iSeconds, iMSec, iBlocks;
-   HB_BOOL fValid;
+   bool fValid;
 
    iHour = iMinutes = iSeconds = iMSec = iBlocks = 0;
-   fValid = HB_FALSE;
+   fValid = false;
 
    if( szTime ) {
       while( HB_ISSPACE(*szTime) ) {
@@ -560,7 +560,7 @@ HB_BOOL hb_timeStrGet(const char * szTime, int * piHour, int * piMinutes, int * 
             ++szTime;
          }
          if( *szTime == 0 && iBlocks > 0 && iHour < 24 && iMinutes < 60 && iSeconds < 60 ) {
-            fValid = HB_TRUE;
+            fValid = true;
          } else {
             iHour = iMinutes = iSeconds = iMSec = 0;
          }
@@ -707,10 +707,10 @@ HB_BOOL hb_timeStampStrGet(const char * szDateTime, int * piYear, int * piMonth,
 #endif
 
    int iYear, iMonth, iDay;
-   HB_BOOL fValid;
+   bool fValid;
 
    iYear = iMonth = iDay = 0;
-   fValid = HB_FALSE;
+   fValid = false;
 
    if( szDateTime ) {
       while( HB_ISSPACE(*szDateTime) ) {
@@ -733,7 +733,7 @@ HB_BOOL hb_timeStampStrGet(const char * szDateTime, int * piYear, int * piMonth,
 
             if( hb_dateEncode(iYear, iMonth, iDay) != 0 || (iYear == 0 && iMonth == 0 && iDay == 0) ) {
                szDateTime += 10;
-               fValid = HB_TRUE;
+               fValid = true;
             }
          } else if( (szDateTime[5] == 'W' || szDateTime[5] == 'w') && /* ISO 8601 Week dates: YYYY-Www-D */
                   HB_ISDIGIT(szDateTime[6]) && HB_ISDIGIT(szDateTime[7]) &&
@@ -743,7 +743,7 @@ HB_BOOL hb_timeStampStrGet(const char * szDateTime, int * piYear, int * piMonth,
             if( lDate ) {
                hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
                szDateTime += 10;
-               fValid = HB_TRUE;
+               fValid = true;
             }
          } else if( szDateTime[4] == '-' && HB_ISDIGIT(szDateTime[5]) && /* ISO 8601 Ordinal dates: YYYY-DDD */
                   HB_ISDIGIT(szDateTime[6]) && HB_ISDIGIT(szDateTime[7]) &&
@@ -756,7 +756,7 @@ HB_BOOL hb_timeStampStrGet(const char * szDateTime, int * piYear, int * piMonth,
                if( lDate ) {
                   hb_dateDecode(lDate + iDay - 1, &iYear, &iMonth, &iDay);
                   szDateTime += 8;
-                  fValid = HB_TRUE;
+                  fValid = true;
                }
             }
          }
@@ -766,7 +766,7 @@ HB_BOOL hb_timeStampStrGet(const char * szDateTime, int * piYear, int * piMonth,
                if( HB_ISDIGIT(szDateTime[1]) ) {
                   ++szDateTime;
                }
-               fValid = HB_FALSE;
+               fValid = false;
             } else {
                if( *szDateTime == ',' || *szDateTime == ';' ) {
                   ++szDateTime;
@@ -788,13 +788,13 @@ HB_BOOL hb_timeStampStrGet(const char * szDateTime, int * piYear, int * piMonth,
    if( piHour || piMinutes || piSeconds || piMSec ) {
       if( !hb_timeStrGet(szDateTime, piHour, piMinutes, piSeconds, piMSec) ) {
          if( szDateTime ) {
-            fValid = HB_FALSE;
+            fValid = false;
          }
       } else {
-         fValid = HB_TRUE;
+         fValid = true;
       }
    } else if( szDateTime ) {
-      fValid = HB_FALSE;
+      fValid = false;
    }
 
    if( piYear ) {
@@ -817,7 +817,7 @@ HB_BOOL hb_timeStampStrGetDT(const char * szDateTime, long * plJulian, long * pl
 #endif
 
    int iYear, iMonth, iDay, iHour, iMinutes, iSeconds, iMSec;
-   HB_BOOL fValid;
+   bool fValid;
 
    fValid = hb_timeStampStrGet(szDateTime, &iYear, &iMonth, &iDay, &iHour, &iMinutes, &iSeconds, &iMSec);
    if( plJulian ) {

@@ -211,7 +211,7 @@ HB_BOOL hb_hashTableDel(PHB_HASH_TABLE pTable, const void * pKey)
    HB_SIZE nKey;
    PHB_HASH_ITEM pItem;
    PHB_HASH_ITEM pPrev = nullptr;
-   HB_BOOL bFound = HB_FALSE;
+   bool bFound = false;
 
    nKey = (pTable->pKeyFunc)(pTable, pKey, nullptr);
    if( nKey > pTable->nTableSize ) {
@@ -232,7 +232,7 @@ HB_BOOL hb_hashTableDel(PHB_HASH_TABLE pTable, const void * pKey)
          }
          --pTable->nCount;
          hb_hashItemDelete(pTable, pItem);
-         bFound = HB_TRUE;
+         bFound = true;
       } else {
          pPrev = pItem;
          pItem = pItem->next;

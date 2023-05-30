@@ -99,7 +99,7 @@ char * hb_getenv(const char * szName)
 
 HB_BOOL hb_getenv_buffer(const char * szName, char * szBuffer, int nSize)
 {
-   HB_BOOL fRetVal;
+   bool fRetVal;
 
 #if defined(HB_OS_WIN)
    {
@@ -133,12 +133,12 @@ HB_BOOL hb_getenv_buffer(const char * szName, char * szBuffer, int nSize)
       }
 
       if( pszTemp != nullptr ) {
-         fRetVal = HB_TRUE;
+         fRetVal = true;
          if( szBuffer != nullptr && nSize != 0 ) {
             hb_osStrDecode2(pszTemp, szBuffer, nSize - 1);
          }
       } else {
-         fRetVal = HB_FALSE;
+         fRetVal = false;
       }
    }
 #endif
@@ -163,7 +163,7 @@ HB_BOOL hb_setenv(const char * szName, const char * szValue)
    {
       LPTSTR lpName = HB_CHARDUP(szName);
       LPTSTR lpValue = szValue ? HB_CHARDUP(szValue) : nullptr;
-      HB_BOOL fResult = (SetEnvironmentVariable(lpName, lpValue) != 0);
+      bool fResult = (SetEnvironmentVariable(lpName, lpValue) != 0);
       if( lpValue ) {
          hb_xfree(lpValue);
       }
@@ -174,7 +174,7 @@ HB_BOOL hb_setenv(const char * szName, const char * szValue)
    defined(HB_OS_DARWIN) || defined(HB_OS_BEOS) || defined(HB_OS_QNX) || defined(HB_OS_VXWORKS) || defined(HB_OS_CYGWIN) || defined(HB_OS_MINIX) || \
    defined(HB_OS_ANDROID)
    {
-      HB_BOOL fResult;
+      bool fResult;
       char * pszNameFree = nullptr, * pszValueFree = nullptr;
 
       szName = hb_osEncodeCP(szName, &pszNameFree, nullptr);
@@ -188,7 +188,7 @@ HB_BOOL hb_setenv(const char * szName, const char * szValue)
 #  if defined(__OpenBSD__) || defined(HB_OS_QNX) || (defined(__FreeBSD_version) && __FreeBSD_version < 700050 ) || \
         (defined(HB_OS_DARWIN) && !(defined(__DARWIN_UNIX03) && __DARWIN_UNIX03))
          unsetenv(szName);
-         fResult = HB_TRUE;
+         fResult = true;
 #  else
          fResult = unsetenv(szName) == 0;
 #  endif

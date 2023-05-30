@@ -70,7 +70,7 @@
       HANDLE            hFindFile;
       WIN32_FIND_DATA   pFindFileData;
       DWORD             dwAttr;
-      HB_BOOL           fLabelDone;
+      bool              fLabelDone;
    };
    
    using PHB_FFIND_INFO = HB_FFIND_INFO *;
@@ -317,9 +317,9 @@ char * hb_fsAttrDecode(HB_FATTR nAttr, char * szAttr)
    each call. Does low-level (platform dependent
    filtering if needed. */
 
-static HB_BOOL hb_fsFindNextLow(PHB_FFIND ffind)
+static bool hb_fsFindNextLow(PHB_FFIND ffind)
 {
-   HB_BOOL bFound;
+   bool bFound;
 
    int iYear  = 0;
    int iMonth = 0;
@@ -347,14 +347,14 @@ static HB_BOOL hb_fsFindNextLow(PHB_FFIND ffind)
    {
       PHB_FFIND_INFO info = static_cast<PHB_FFIND_INFO>(ffind->info);
 
-      bFound = HB_FALSE;
+      bFound = false;
 
       if( (ffind->attrmask & HB_FA_LABEL) != 0 && !info->fLabelDone ) {
          TCHAR lpVolName[HB_PATH_MAX];
          LPTSTR lpFileMask = nullptr;
          char * mask = nullptr;
 
-         info->fLabelDone = HB_TRUE;
+         info->fLabelDone = true;
 
          if( ffind->pszFileMask && *ffind->pszFileMask ) {
             PHB_FNAME pFileName = hb_fsFNameSplit(ffind->pszFileMask);
@@ -371,7 +371,7 @@ static HB_BOOL hb_fsFindNextLow(PHB_FFIND ffind)
             HB_OSSTRDUP2(lpVolName, ffind->szName, sizeof(ffind->szName) - 1);
             if( mask && *mask && !hb_strMatchFile(ffind->szName, mask) ) {
                ffind->szName[0] = '\0';
-               bFound = HB_FALSE;
+               bFound = false;
             }
          }
          if( lpFileMask ) {
@@ -385,20 +385,20 @@ static HB_BOOL hb_fsFindNextLow(PHB_FFIND ffind)
       if( !bFound && (ffind->attrmask & (HB_FA_LABEL | HB_FA_HIDDEN | HB_FA_SYSTEM | HB_FA_DIRECTORY) ) != HB_FA_LABEL ) {
          if( ffind->bFirst ) {
             LPTSTR lpFileMask = HB_CHARDUP(ffind->pszFileMask);
-            ffind->bFirst = HB_FALSE;
+            ffind->bFirst = false;
             info->dwAttr = static_cast<DWORD>(hb_fsAttrToRaw(ffind->attrmask));
             info->hFindFile = FindFirstFile(lpFileMask, &info->pFindFileData);
             hb_xfree(lpFileMask);
 
             if( (info->hFindFile != INVALID_HANDLE_VALUE) && _HB_WIN_MATCH() ) {
-               bFound = HB_TRUE;
+               bFound = true;
             }
          }
 
          if( !bFound && info->hFindFile != INVALID_HANDLE_VALUE ) {
             while( FindNextFile(info->hFindFile, &info->pFindFileData) ) {
                if( _HB_WIN_MATCH() ) {
-                  bFound = HB_TRUE;
+                  bFound = true;
                   break;
                }
             }
@@ -446,14 +446,14 @@ static HB_BOOL hb_fsFindNextLow(PHB_FFIND ffind)
 
       char dirname[HB_PATH_MAX];
 
-      bFound = HB_FALSE;
+      bFound = false;
 
       /* TODO: HB_FA_LABEL handling */
 
       if( ffind->bFirst ) {
          char * pos;
 
-         ffind->bFirst = HB_FALSE;
+         ffind->bFirst = false;
 
          hb_strncpy(dirname, ffind->pszFileMask, sizeof(dirname) - 1);
          pos = strrchr(dirname, HB_OS_PATH_DELIM_CHR);
@@ -481,7 +481,7 @@ static HB_BOOL hb_fsFindNextLow(PHB_FFIND ffind)
       if( info->dir && info->pattern[0] != '\0' ) {
          while( (info->entry = readdir(info->dir)) != nullptr ) {
             if( hb_strMatchFile(info->entry->d_name, info->pattern) ) {
-               bFound = HB_TRUE;
+               bFound = true;
                break;
             }
          }
@@ -546,7 +546,7 @@ static HB_BOOL hb_fsFindNextLow(PHB_FFIND ffind)
 #     endif
 #  endif
             } else {
-               bFound = HB_FALSE;
+               bFound = false;
             }
          }
       }
@@ -571,7 +571,7 @@ static HB_BOOL hb_fsFindNextLow(PHB_FFIND ffind)
       HB_SYMBOL_UNUSED(iMSec);
       HB_SYMBOL_UNUSED(raw_attr);
 
-      bFound = HB_FALSE;
+      bFound = false;
 
       hb_fsSetIOError(bFound, 0);
    }
@@ -626,7 +626,7 @@ PHB_FFIND hb_fsFindFirst(const char * pszFileMask, HB_FATTR attrmask)
    ffind->pszFileMask = hb_fsNameConv(pszFileMask, &ffind->pszFree);
 #endif
    ffind->attrmask = attrmask;
-   ffind->bFirst = HB_TRUE;
+   ffind->bFirst = true;
 
    /* Find first/next matching file */
 

@@ -91,7 +91,7 @@ void hb_fsAddSearchPath(const char * szPath, HB_PATHNAMES ** pSearchList)
 {
    char * pPath;
    char * pDelim;
-   HB_BOOL fFree = HB_TRUE;
+   bool fFree = true;
 
    while( *pSearchList ) {
       pSearchList = &(*pSearchList)->pNext;
@@ -105,7 +105,7 @@ void hb_fsAddSearchPath(const char * szPath, HB_PATHNAMES ** pSearchList)
       (*pSearchList)->fFree = fFree;
       pSearchList = &(*pSearchList)->pNext;
       pPath = pDelim + 1;
-      fFree = HB_FALSE;
+      fFree = false;
    }
    *pSearchList = static_cast<HB_PATHNAMES*>(hb_xgrab(sizeof(HB_PATHNAMES)));
    (*pSearchList)->szPath = pPath;
@@ -296,7 +296,7 @@ HB_BOOL hb_fsNameExists(const char * pszFileName)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsNameExists(%p)", static_cast<const void*>(pszFileName)));
 #endif
 
-   HB_BOOL fExist = HB_FALSE;
+   bool fExist = false;
 
    if( pszFileName != nullptr ) {
 #if defined(HB_OS_WIN)
@@ -342,7 +342,7 @@ HB_BOOL hb_fsFileExists(const char * pszFileName)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsFileExists(%p)", static_cast<const void*>(pszFileName)));
 #endif
 
-   HB_BOOL fExist = HB_FALSE;
+   bool fExist = false;
 
    if( pszFileName != nullptr ) {
 #if defined(HB_OS_WIN)
@@ -390,7 +390,7 @@ HB_BOOL hb_fsDirExists(const char * pszDirName)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsDirExists(%p)", static_cast<const void*>(pszDirName)));
 #endif
 
-   HB_BOOL fExist = HB_FALSE;
+   bool fExist = false;
 
    if( pszDirName != nullptr ) {
 #if defined(HB_OS_WIN)

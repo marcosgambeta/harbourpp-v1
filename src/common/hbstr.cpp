@@ -456,13 +456,13 @@ double hb_numRound(double dNum, int iDec)
     */
    {
       int iDecR, iPrec;
-      HB_BOOL fNeg;
+      bool fNeg;
 
       if( dNum < 0 ) {
-         fNeg = HB_TRUE;
+         fNeg = true;
          dNum = -dNum;
       } else {
-         fNeg = HB_FALSE;
+         fNeg = false;
       }
 
       iDecR = static_cast<int>(log10(dNum));
@@ -550,13 +550,13 @@ double hb_numExpConv(double dNum, int iExp)
    }
 }
 
-static HB_BOOL hb_str2number(HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, HB_MAXINT * lVal, double * dVal, int * piDec, int * piWidth)
+static bool hb_str2number(bool fPCode, const char * szNum, HB_SIZE nLen, HB_MAXINT * lVal, double * dVal, int * piDec, int * piWidth)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_str2number(%d, %p, %" HB_PFS "u, %p, %p, %p, %p)", static_cast<int>(fPCode), static_cast<const void*>(szNum), nLen, static_cast<void*>(lVal), static_cast<void*>(dVal), static_cast<void*>(piDec), static_cast<void*>(piWidth)));
 #endif
 
-   HB_BOOL fDbl = HB_FALSE, fDec = HB_FALSE, fNeg, fHex = HB_FALSE;
+   bool fDbl = false, fDec = false, fNeg, fHex = false;
    int iLen, iPos = 0;
    int c, iWidth, iDec = 0, iDecR = 0;
 
@@ -567,12 +567,12 @@ static HB_BOOL hb_str2number(HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, H
    }
 
    if( iPos >= iLen ) {
-      fNeg = HB_FALSE;
+      fNeg = false;
    } else if( szNum[iPos] == '-' ) {
-      fNeg = HB_TRUE;
+      fNeg = true;
       iPos++;
    } else {
-      fNeg = HB_FALSE;
+      fNeg = false;
       if( szNum[iPos] == '+' ) {
          iPos++;
       }
@@ -585,7 +585,7 @@ static HB_BOOL hb_str2number(HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, H
    if( fPCode && iPos + 1 < iLen && szNum[iPos] == '0' && (szNum[iPos + 1] == 'X' || szNum[iPos + 1] == 'x') ) {
       iPos += 2;
       iWidth = HB_DEFAULT_WIDTH;
-      fHex = HB_TRUE;
+      fHex = true;
       for( ; iPos < iLen; iPos++ ) {
          c = szNum[iPos];
          if( c >= '0' && c <= '9' ) {
@@ -617,7 +617,7 @@ static HB_BOOL hb_str2number(HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, H
                *lVal = *lVal * 10 + (c - '0');
             } else {
                *dVal = static_cast<double>(*lVal) * 10.0 + (c - '0');
-               fDbl = HB_TRUE;
+               fDbl = true;
             }
             if( fDec ) {
                iDec++;
@@ -625,11 +625,11 @@ static HB_BOOL hb_str2number(HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, H
                iWidth++;
             }
          } else if( c == '.' && !fDec ) {
-            fDec = HB_TRUE;
+            fDec = true;
          } else {
             while( !fDec && iPos < iLen ) {
                if( szNum[iPos++] == '.' ) {
-                  fDec = HB_TRUE;
+                  fDec = true;
                } else {
                   iWidth++;
                }
@@ -655,7 +655,7 @@ static HB_BOOL hb_str2number(HB_BOOL fPCode, const char * szNum, HB_SIZE nLen, H
 #endif
         fDec) ) {
       *dVal = static_cast<double>(*lVal);
-      fDbl = HB_TRUE;
+      fDbl = true;
    }
    if( iDec ) {
       *dVal /= hb_numPow10(iDec);
@@ -765,11 +765,11 @@ char * hb_numToStr(char * szBuf, HB_SIZE nSize, HB_MAXINT lNumber)
 #endif
 
    int iPos = static_cast<int>(nSize);
-   HB_BOOL fNeg = HB_FALSE;
+   bool fNeg = false;
 
    szBuf[--iPos] = '\0';
    if( lNumber < 0 ) {
-      fNeg = HB_TRUE;
+      fNeg = true;
       lNumber = -lNumber;
    }
 
@@ -807,7 +807,7 @@ char * hb_dblToStr(char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec)
    double dInt, dFract, dDig, doBase = 10.0;
    int iLen, iPos, iPrec;
    char * szResult;
-   HB_BOOL fFirst;
+   bool fFirst;
 
    iLen = static_cast<int>(nSize - 1);
    if( iLen <= 0 ) {
@@ -886,7 +886,7 @@ char * hb_dblToStr(char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec)
          dFract = modf(dFract * doBase, &dDig);
          szBuf[iPos] = '0' + static_cast<char>(dDig + 0.01);
          if( szBuf[iPos] != '0' ) {
-            fFirst = HB_TRUE;
+            fFirst = true;
          }
          if( fFirst ) {
             --iPrec;

@@ -155,9 +155,9 @@ const char * hb_verCPU(void)
 #endif
 }
 
-static HB_BOOL s_win_iswow64(void)
+static bool s_win_iswow64(void)
 {
-   HB_BOOL bRetVal = HB_FALSE;
+   bool bRetVal = false;
 
    #if defined(HB_OS_WIN) && !defined(HB_OS_WIN_64)
    BOOL bIsWow64 = FALSE;
@@ -167,7 +167,7 @@ static HB_BOOL s_win_iswow64(void)
    }
 
    if( bIsWow64 ) {
-      bRetVal = HB_TRUE;
+      bRetVal = true;
    }
    #endif
 
@@ -251,28 +251,28 @@ const char * hb_verPlatformMacro(void)
 
 #if defined(HB_OS_WIN)
 
-static HB_BOOL s_fWinVerInit = HB_FALSE;
+static bool s_fWinVerInit = false;
 
-static HB_BOOL s_fWin10    = HB_FALSE;
-static HB_BOOL s_fWin81    = HB_FALSE;
-static HB_BOOL s_fWin8     = HB_FALSE;
-static HB_BOOL s_fWin7     = HB_FALSE;
-static HB_BOOL s_fWinVista = HB_FALSE;
-static HB_BOOL s_fWin2K3   = HB_FALSE;
-static HB_BOOL s_fWin2K    = HB_FALSE;
+static bool    s_fWin10    = false;
+static bool    s_fWin81    = false;
+static bool    s_fWin8     = false;
+static bool    s_fWin7     = false;
+static bool    s_fWinVista = false;
+static bool    s_fWin2K3   = false;
+static bool    s_fWin2K    = false;
 static int     s_iWinNT    = 0;
 static int     s_iWin9x    = 0;
 static int     s_iWine     = 0;
 
-static HB_BOOL s_fVerInfoInit = HB_TRUE;
+static bool s_fVerInfoInit = true;
 
-static HB_BOOL s_hb_winVerifyVersionInit(void)
+static bool s_hb_winVerifyVersionInit(void)
 {
    if( s_fVerInfoInit ) {
       HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
       if( hModule ) {
       }
-      s_fVerInfoInit = HB_FALSE;
+      s_fVerInfoInit = false;
    }
 
    return true;
@@ -330,7 +330,7 @@ static void s_hb_winVerInit(void)
       s_iWinNT = 5;
    }
 
-   s_fWinVerInit = HB_TRUE;
+   s_fWinVerInit = true;
 }
 
 #endif
@@ -531,7 +531,7 @@ HB_BOOL hb_iswinver(int iMajor, int iMinor, int iType, HB_BOOL fOrUpper)
          dwlConditionMask = VerSetConditionMask(dwlConditionMask, VER_PRODUCT_TYPE, VER_EQUAL);
       }
 
-      return static_cast<HB_BOOL>(VerifyVersionInfo(&ver, dwTypeMask, dwlConditionMask));
+      return static_cast<HB_BOOL>(VerifyVersionInfo(&ver, dwTypeMask, dwlConditionMask)); // TODO: HB_BOOL -> bool
    }
 #else
    HB_SYMBOL_UNUSED(iMajor);
@@ -555,7 +555,7 @@ HB_BOOL hb_iswinsp(int iServicePackMajor, HB_BOOL fOrUpper)
 
       dwlConditionMask = VerSetConditionMask(dwlConditionMask, VER_SERVICEPACKMAJOR, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL);
 
-      return static_cast<HB_BOOL>(VerifyVersionInfo(&ver, VER_SERVICEPACKMAJOR, dwlConditionMask));
+      return static_cast<HB_BOOL>(VerifyVersionInfo(&ver, VER_SERVICEPACKMAJOR, dwlConditionMask)); // TODO: HB_BOOL -> bool
    }
 #else
    HB_SYMBOL_UNUSED(iServicePackMajor);

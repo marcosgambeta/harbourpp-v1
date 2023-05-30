@@ -234,7 +234,7 @@ struct v_paramlst
 {
    int         maxarg;
    int         size;
-   HB_BOOL     repeat;
+   bool        repeat;
    v_param *   arglst;
 };
 
@@ -281,7 +281,7 @@ struct v_paramlst
 static v_param * va_arg_get(int iArg, v_paramlst * plst, int iType)
 {
    if( plst->maxarg == 0 ) {
-      plst->repeat = HB_TRUE;
+      plst->repeat = true;
       memset(plst->arglst, 0, plst->size * sizeof(v_param));
    }
    if( plst->repeat ) {
@@ -926,7 +926,7 @@ int hb_vsnprintf(char * buffer, size_t bufsize, const char * format, va_list ap)
 
 #ifndef __NO_ARGPOS__
    do {
-      params.repeat = HB_FALSE;
+      params.repeat = false;
       if( params.maxarg > 0 ) {
          va_copy(args, ap);
          va_arg_fill(&params, args);
