@@ -71,7 +71,7 @@ static int hb_pp_writeTokenCount(PHB_PP_TOKEN pToken)
    return iToken;
 }
 
-static void hb_pp_writeToken(FILE * fout, PHB_PP_TOKEN pToken, const char * szName, int iToken, HB_BOOL fLast)
+static void hb_pp_writeToken(FILE * fout, PHB_PP_TOKEN pToken, const char * szName, int iToken, bool fLast)
 {
    while( pToken ) {
       int iOptional = hb_pp_writeTokenCount(pToken->pMTokens), i;
@@ -608,7 +608,7 @@ int main(int argc, char * argv[])
 {
    char * szFile = nullptr, * szRuleFile = nullptr, * szVerFile = nullptr;
    char * szStdCh = nullptr, * szLogFile = nullptr, * szInclude;
-   HB_BOOL fWrite = false, fChgLog = false;
+   bool fWrite = false, fChgLog = false;
    char * szChangeLogID = nullptr, * szLastEntry = nullptr;
    int iRevID = 0, iResult = 0, iQuiet = 0, i;
    char * szPPRuleFuncName = nullptr;
