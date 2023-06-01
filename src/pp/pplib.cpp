@@ -111,7 +111,7 @@ static const HB_GC_FUNCS s_gcPPFuncs =
 
 static void hb_pp_StdRules(PHB_ITEM ppItem)
 {
-   static HB_BOOL s_fInit = true;
+   static bool s_fInit = true;
    static PHB_DYNS s_pDynSym;
 
    if( s_fInit ) {
@@ -151,7 +151,7 @@ HB_FUNC( __PP_INIT )
    if( pState ) {
       PHB_PP_STATE * pStatePtr;
       const char * szPath = hb_parc(1), * szStdCh = hb_parc(2);
-      HB_BOOL fArchDefs = hb_parldef(3, true);
+      bool fArchDefs = hb_parldef(3, true);
       PHB_ITEM ppItem;
 
       pStatePtr = static_cast<PHB_PP_STATE*>(hb_gcAllocate(sizeof(PHB_PP_STATE), &s_gcPPFuncs));
