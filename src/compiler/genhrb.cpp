@@ -147,7 +147,7 @@ void hb_compGenPortObj(HB_COMP_DECL, PHB_FNAME pFileName)
 
    if( !HB_COMP_PARAM->fQuiet ) {
       std::string buffer;
-      buffer.append("Generating Harbour Portable Object output to '");
+      buffer.append("Generating Harbour++ Portable Object output to '");
       buffer.append(szFileName);
       buffer.append("'... ");
       hb_compOutStd(HB_COMP_PARAM, buffer.data());

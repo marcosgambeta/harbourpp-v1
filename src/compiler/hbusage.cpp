@@ -70,7 +70,7 @@ void hb_compPrintUsage(HB_COMP_DECL, const char * szSelf)
       "\n          -gc[<type>]      output type: C++ source (.cpp) (default)",
       "\n                           <type>: 0=compact (default) 1=normal 2=verbose",
       "\n                                   3=generate real C++ code",
-      "\n          -gh              output type: Harbour Portable Object (.hrb)",
+      "\n          -gh              output type: Harbour++ Portable Object (.hrb)",
       "\n          -gd[.<destext>]  generate dependencies list into (.d) file",
       "\n          -ge[<mode>]      error output <mode>: 0=Clipper (default)",
       "\n                                                1=IDE friendly",
@@ -124,7 +124,7 @@ void hb_compPrintModes(HB_COMP_DECL)
    std::array<std::string, 13> options =
    {
       "\nOptions:  c               clear all flags (strict Clipper mode)",
-      "\n          h[-]            Harbour mode",
+      "\n          h[-]            Harbour++ mode",
       "\n          o[-]            allow operator optimizations",
       "\n          i[-]            enable support for HB_INLINE",
       "\n          r[-]            runtime settings enabled",
