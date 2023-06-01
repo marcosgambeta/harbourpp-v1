@@ -608,7 +608,7 @@ int main(int argc, char * argv[])
 {
    char * szFile = nullptr, * szRuleFile = nullptr, * szVerFile = nullptr;
    char * szStdCh = nullptr, * szLogFile = nullptr, * szInclude;
-   HB_BOOL fWrite = HB_FALSE, fChgLog = HB_FALSE;
+   HB_BOOL fWrite = false, fChgLog = false;
    char * szChangeLogID = nullptr, * szLastEntry = nullptr;
    int iRevID = 0, iResult = 0, iQuiet = 0, i;
    char * szPPRuleFuncName = nullptr;
@@ -666,13 +666,13 @@ int main(int argc, char * argv[])
                   if( argv[i][2] ) {
                      szFile = nullptr;
                   } else {
-                     fWrite = HB_TRUE;
+                     fWrite = true;
                   }
                   break;
 
                case 'c':
                case 'C':
-                  fChgLog = HB_TRUE;
+                  fChgLog = true;
                   if( argv[i][2] ) {
                      szLogFile = argv[i] + 2;
                   }
@@ -729,7 +729,7 @@ int main(int argc, char * argv[])
 
    if( szFile ) {
       if( !szRuleFile && !szVerFile ) {
-         fWrite = HB_TRUE;
+         fWrite = true;
       }
 
       hb_pp_init(pState, iQuiet != 0, true, 0, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);

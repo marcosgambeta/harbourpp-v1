@@ -111,12 +111,12 @@ static const HB_GC_FUNCS s_gcPPFuncs =
 
 static void hb_pp_StdRules(PHB_ITEM ppItem)
 {
-   static HB_BOOL s_fInit = HB_TRUE;
+   static HB_BOOL s_fInit = true;
    static PHB_DYNS s_pDynSym;
 
    if( s_fInit ) {
       s_pDynSym = hb_dynsymFind("__PP_STDRULES");
-      s_fInit = HB_FALSE;
+      s_fInit = false;
    }
 
    if( s_pDynSym ) {
