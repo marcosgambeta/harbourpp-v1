@@ -54,8 +54,7 @@ HB_FUNC( __PP_STDRULES )
 {
    PHB_PP_STATE pState = hb_pp_Param(1);
 
-   if( pState )
-   {
+   if( pState ) {
       hb_pp_setStdRules(pState);
    }
 }

@@ -62,8 +62,7 @@ static void hb_pp_ErrorMessage(void * cargo, const char * const szMsgTable[], ch
    HB_SYMBOL_UNUSED(cargo);
 
    /* ignore all warning messages and errors when break or quit request */
-   if( cPrefix != 'W' && hb_vmRequestQuery() == 0 )
-   {
+   if( cPrefix != 'W' && hb_vmRequestQuery() == 0 ) {
       char szMsgBuf[1024];
       PHB_ITEM pError;
       hb_snprintf(szMsgBuf, sizeof(szMsgBuf), szMsgTable[iCode - 1], szParam1, szParam2);
@@ -96,8 +95,7 @@ static HB_GARBAGE_FUNC(hb_pp_Destructor)
 {
    PHB_PP_STATE * pStatePtr = static_cast<PHB_PP_STATE*>(Cargo);
 
-   if( *pStatePtr )
-   {
+   if( *pStatePtr ) {
       hb_pp_free(*pStatePtr);
       *pStatePtr = nullptr;
    }
@@ -116,14 +114,12 @@ static void hb_pp_StdRules(PHB_ITEM ppItem)
    static HB_BOOL s_fInit = HB_TRUE;
    static PHB_DYNS s_pDynSym;
 
-   if( s_fInit )
-   {
+   if( s_fInit ) {
       s_pDynSym = hb_dynsymFind("__PP_STDRULES");
       s_fInit = HB_FALSE;
    }
 
-   if( s_pDynSym )
-   {
+   if( s_pDynSym ) {
       hb_vmPushDynSym(s_pDynSym);
       hb_vmPushNil();
       hb_vmPush(ppItem);
@@ -135,12 +131,9 @@ PHB_PP_STATE hb_pp_Param(int iParam)
 {
    PHB_PP_STATE * pStatePtr = static_cast<PHB_PP_STATE*>(hb_parptrGC(&s_gcPPFuncs, iParam));
 
-   if( pStatePtr )
-   {
+   if( pStatePtr ) {
       return *pStatePtr;
-   }
-   else
-   {
+   } else {
       return nullptr;
    }
 }
@@ -155,8 +148,7 @@ HB_FUNC( __PP_INIT )
 {
    PHB_PP_STATE pState = hb_pp_new();
 
-   if( pState )
-   {
+   if( pState ) {
       PHB_PP_STATE * pStatePtr;
       const char * szPath = hb_parc(1), * szStdCh = hb_parc(2);
       HB_BOOL fArchDefs = hb_parldef(3, true);
@@ -168,17 +160,13 @@ HB_FUNC( __PP_INIT )
 
       hb_pp_init(pState, true, false, 0, nullptr, nullptr, nullptr, hb_pp_ErrorMessage, hb_pp_Disp, nullptr, nullptr, hb_pp_CompilerSwitch);
 
-      if( szPath )
-      {
+      if( szPath ) {
          hb_pp_addSearchPath(pState, szPath, true);
       }
 
-      if( !szStdCh )
-      {
+      if( !szStdCh ) {
          hb_pp_StdRules(ppItem);
-      }
-      else if( *szStdCh )
-      {
+      } else if( *szStdCh ) {
          hb_pp_readRules(pState, szStdCh);
       }
 
@@ -186,9 +174,7 @@ HB_FUNC( __PP_INIT )
       hb_pp_setStdBase(pState);
 
       hb_itemReturnRelease(ppItem);
-   }
-   else
-   {
+   } else {
       hb_ret();
    }
 }
@@ -201,8 +187,7 @@ HB_FUNC( __PP_PATH )
 {
    PHB_PP_STATE pState = hb_pp_Param(1);
 
-   if( pState )
-   {
+   if( pState ) {
       hb_pp_addSearchPath(pState, hb_parc(2), hb_parl(3));
    }
 }
@@ -215,8 +200,7 @@ HB_FUNC( __PP_RESET )
 {
    PHB_PP_STATE pState = hb_pp_Param(1);
 
-   if( pState )
-   {
+   if( pState ) {
       hb_pp_reset(pState);
    }
 }
@@ -229,34 +213,27 @@ HB_FUNC( __PP_ADDRULE )
 {
    PHB_PP_STATE pState = hb_pp_Param(1);
 
-   if( pState )
-   {
+   if( pState ) {
       const char * szText = hb_parc(2);
       HB_SIZE nLen = hb_parclen(2);
 
-      if( szText )
-      {
-         while( nLen && (szText[0] == ' ' || szText[0] == '\t') )
-         {
+      if( szText ) {
+         while( nLen && (szText[0] == ' ' || szText[0] == '\t') ) {
             ++szText;
             --nLen;
          }
       }
 
-      if( szText && nLen && szText[0] == '#' )
-      {
+      if( szText && nLen && szText[0] == '#' ) {
          hb_pp_parseLine(pState, szText, &nLen);
 
          /* probably for parsing #included files the old code was making
             something like that */
-         do
-         {
-            if( hb_vmRequestQuery() != 0 )
-            {
+         do {
+            if( hb_vmRequestQuery() != 0 ) {
                return;
             }
-         }
-         while( hb_pp_nextLine(pState, nullptr) );
+         } while( hb_pp_nextLine(pState, nullptr) );
 
          hb_retl(true);
          return;
@@ -273,12 +250,10 @@ HB_FUNC( __PP_PROCESS )
 {
    PHB_PP_STATE pState = hb_pp_Param(1);
 
-   if( pState )
-   {
+   if( pState ) {
       HB_SIZE nLen = hb_parclen(2);
 
-      if( nLen )
-      {
+      if( nLen ) {
          char * szText = hb_pp_parseLine(pState, hb_parc(2), &nLen);
          hb_retclen(szText, nLen);
          return;
