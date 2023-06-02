@@ -60,12 +60,10 @@ HB_FUNC( ORDWILDSEEK )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       const char * szPattern = hb_parc(1);
 
-      if( szPattern )
-      {
+      if( szPattern ) {
          HB_BOOL fCont = hb_parl(2), fBack = hb_parl(3), fFound = HB_FALSE;
          DBORDERINFO OrderInfo;
          HB_ERRCODE errCode = HB_SUCCESS;
@@ -73,44 +71,32 @@ HB_FUNC( ORDWILDSEEK )
          memset(&OrderInfo, 0, sizeof(OrderInfo));
          OrderInfo.itmResult = hb_itemNew(nullptr);
 
-         if( !fCont )
-         {
-            if( fBack )
-            {
+         if( !fCont ) {
+            if( fBack ) {
                errCode = SELF_GOBOTTOM(pArea);
-            }
-            else
-            {
+            } else {
                errCode = SELF_GOTOP(pArea);
             }
 
-            if( errCode == HB_SUCCESS )
-            {
+            if( errCode == HB_SUCCESS ) {
                errCode = SELF_ORDINFO(pArea, DBOI_KEYVAL, &OrderInfo);
-               if( errCode == HB_SUCCESS )
-               {
+               if( errCode == HB_SUCCESS ) {
                   fFound = hb_strMatchWild(hb_itemGetCPtr(OrderInfo.itmResult), szPattern);
                }
             }
          }
-         if( !fFound && errCode == HB_SUCCESS )
-         {
+         if( !fFound && errCode == HB_SUCCESS ) {
             OrderInfo.itmNewVal = hb_param(1, Harbour::Item::STRING);
-            if( SELF_ORDINFO(pArea, fBack ? DBOI_SKIPWILDBACK : DBOI_SKIPWILD, &OrderInfo) == HB_SUCCESS )
-            {
+            if( SELF_ORDINFO(pArea, fBack ? DBOI_SKIPWILDBACK : DBOI_SKIPWILD, &OrderInfo) == HB_SUCCESS ) {
                fFound = hb_itemGetL(OrderInfo.itmResult);
             }
          }
          hb_itemRelease(OrderInfo.itmResult);
          hb_retl(fFound);
-      }
-      else
-      {
+      } else {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_SEEK_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
