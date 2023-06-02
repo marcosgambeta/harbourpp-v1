@@ -69,106 +69,79 @@ HB_FUNC( AFIELDS )
    PHB_ITEM pFlags = nullptr;
 #endif
 
-   if( !pArea || (!pName && !pType && !pLen && !pDec && !pFlags) )
-   {
+   if( !pArea || (!pName && !pType && !pLen && !pDec && !pFlags) ) {
       hb_retni(0);
       return;
    }
 
-   if( SELF_FIELDCOUNT(pArea, &uiFields) != HB_SUCCESS )
-   {
+   if( SELF_FIELDCOUNT(pArea, &uiFields) != HB_SUCCESS ) {
       return;
    }
 
-   if( pName )
-   {
+   if( pName ) {
       HB_USHORT uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pName));
-      if( uiArrayLen < uiFields )
-      {
+      if( uiArrayLen < uiFields ) {
          uiFields = uiArrayLen;
       }
    }
-   if( pType )
-   {
+   if( pType ) {
       HB_USHORT uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pType));
-      if( uiArrayLen < uiFields )
-      {
+      if( uiArrayLen < uiFields ) {
          uiFields = uiArrayLen;
       }
    }
-   if( pLen )
-   {
+   if( pLen ) {
       HB_USHORT uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pLen));
-      if( uiArrayLen < uiFields )
-      {
+      if( uiArrayLen < uiFields ) {
          uiFields = uiArrayLen;
       }
    }
-   if( pDec )
-   {
+   if( pDec ) {
       HB_USHORT uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pDec));
-      if( uiArrayLen < uiFields )
-      {
+      if( uiArrayLen < uiFields ) {
          uiFields = uiArrayLen;
       }
    }
 
-   if( pFlags )
-   {
+   if( pFlags ) {
       HB_USHORT uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pFlags));
-      if( uiArrayLen < uiFields )
-      {
+      if( uiArrayLen < uiFields ) {
          uiFields = uiArrayLen;
       }
    }
 
-   if( pName )
-   {
-      for( uiCount = 1; uiCount <= uiFields; ++uiCount )
-      {
-         if( SELF_FIELDINFO(pArea, uiCount, DBS_NAME, hb_arrayGetItemPtr(pName, uiCount)) != HB_SUCCESS )
-         {
+   if( pName ) {
+      for( uiCount = 1; uiCount <= uiFields; ++uiCount ) {
+         if( SELF_FIELDINFO(pArea, uiCount, DBS_NAME, hb_arrayGetItemPtr(pName, uiCount)) != HB_SUCCESS ) {
             return;
          }
       }
    }
-   if( pType )
-   {
-      for( uiCount = 1; uiCount <= uiFields; ++uiCount )
-      {
-         if( SELF_FIELDINFO(pArea, uiCount, DBS_TYPE, hb_arrayGetItemPtr(pType, uiCount)) != HB_SUCCESS )
-         {
+   if( pType ) {
+      for( uiCount = 1; uiCount <= uiFields; ++uiCount ) {
+         if( SELF_FIELDINFO(pArea, uiCount, DBS_TYPE, hb_arrayGetItemPtr(pType, uiCount)) != HB_SUCCESS ) {
             return;
          }
       }
    }
-   if( pLen )
-   {
-      for( uiCount = 1; uiCount <= uiFields; ++uiCount )
-      {
-         if( SELF_FIELDINFO(pArea, uiCount, DBS_LEN, hb_arrayGetItemPtr(pLen, uiCount)) != HB_SUCCESS )
-         {
+   if( pLen ) {
+      for( uiCount = 1; uiCount <= uiFields; ++uiCount ) {
+         if( SELF_FIELDINFO(pArea, uiCount, DBS_LEN, hb_arrayGetItemPtr(pLen, uiCount)) != HB_SUCCESS ) {
             return;
          }
       }
    }
-   if( pDec )
-   {
-      for( uiCount = 1; uiCount <= uiFields; ++uiCount )
-      {
-         if( SELF_FIELDINFO(pArea, uiCount, DBS_DEC, hb_arrayGetItemPtr(pDec, uiCount)) != HB_SUCCESS )
-         {
+   if( pDec ) {
+      for( uiCount = 1; uiCount <= uiFields; ++uiCount ) {
+         if( SELF_FIELDINFO(pArea, uiCount, DBS_DEC, hb_arrayGetItemPtr(pDec, uiCount)) != HB_SUCCESS ) {
             return;
          }
       }
    }
 #ifdef DBS_FLAG
-   if( pFlags )
-   {
-      for( uiCount = 1; uiCount <= uiFields; ++uiCount )
-      {
-         if( SELF_FIELDINFO(pArea, uiCount, DBS_FLAG, hb_arrayGetItemPtr(pFlags, uiCount)) != HB_SUCCESS )
-         {
+   if( pFlags ) {
+      for( uiCount = 1; uiCount <= uiFields; ++uiCount ) {
+         if( SELF_FIELDINFO(pArea, uiCount, DBS_FLAG, hb_arrayGetItemPtr(pFlags, uiCount)) != HB_SUCCESS ) {
             return;
          }   
       }
@@ -182,12 +155,10 @@ HB_FUNC( ALIAS )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(static_cast<HB_AREANO>(hb_parni(1))));
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
 
-      if( SELF_ALIAS(pArea, szAlias) == HB_SUCCESS )
-      {
+      if( SELF_ALIAS(pArea, szAlias) == HB_SUCCESS ) {
          hb_retc(szAlias);
          return;
       }
@@ -199,70 +170,59 @@ HB_FUNC( DBEVAL )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBEVALINFO pEvalInfo;
       memset(&pEvalInfo, 0, sizeof(pEvalInfo));
       pEvalInfo.itmBlock = hb_param(1, Harbour::Item::BLOCK);
-      if( !pEvalInfo.itmBlock )
-      {
+      if( !pEvalInfo.itmBlock ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          return;
       }
 
       pEvalInfo.dbsci.itmCobFor = hb_param(2, Harbour::Item::BLOCK);
-      if( !pEvalInfo.dbsci.itmCobFor && !HB_ISNIL(2) )
-      {
+      if( !pEvalInfo.dbsci.itmCobFor && !HB_ISNIL(2) ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          return;
       }
 
       pEvalInfo.dbsci.itmCobWhile = hb_param(3, Harbour::Item::BLOCK);
-      if( !pEvalInfo.dbsci.itmCobWhile && !HB_ISNIL(3) )
-      {
+      if( !pEvalInfo.dbsci.itmCobWhile && !HB_ISNIL(3) ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          return;
       }
 
       pEvalInfo.dbsci.lNext = hb_param(4, Harbour::Item::NUMERIC);
-      if( !pEvalInfo.dbsci.lNext && !HB_ISNIL(4) )
-      {
+      if( !pEvalInfo.dbsci.lNext && !HB_ISNIL(4) ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          return;
       }
 
       pEvalInfo.dbsci.itmRecID = hb_param(5, Harbour::Item::NUMERIC);
-      if( !pEvalInfo.dbsci.itmRecID && !HB_ISNIL(5) )
-      {
+      if( !pEvalInfo.dbsci.itmRecID && !HB_ISNIL(5) ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          return;
       }
 
       pEvalInfo.dbsci.fRest = hb_param(6, Harbour::Item::LOGICAL);
-      if( !pEvalInfo.dbsci.fRest && !HB_ISNIL(6) )
-      {
+      if( !pEvalInfo.dbsci.fRest && !HB_ISNIL(6) ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          return;
       }
 
       SELF_DBEVAL(pArea, &pEvalInfo);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
-   }   
+   }
 }
 
 HB_FUNC( DBF )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
 
-      if( SELF_ALIAS(pArea, szAlias) == HB_SUCCESS )
-      {
+      if( SELF_ALIAS(pArea, szAlias) == HB_SUCCESS ) {
          hb_retc(szAlias);
          return;
       }
@@ -275,8 +235,7 @@ HB_FUNC( BOF )
    HB_BOOL bBof = HB_TRUE;
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_BOF(pArea, &bBof);
    }
    
@@ -288,8 +247,7 @@ HB_FUNC( DBAPPEND )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       HB_BOOL bUnLockAll = hb_parldef(1, true);
       HB_ERRCODE errCode;
 
@@ -297,9 +255,7 @@ HB_FUNC( DBAPPEND )
       hb_rddSetNetErr(false);
       errCode = SELF_APPEND(pArea, bUnLockAll);
       hb_retl(errCode == HB_SUCCESS);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -318,12 +274,9 @@ HB_FUNC( DBCOMMIT )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_FLUSH(pArea);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }   
 }
@@ -371,16 +324,14 @@ HB_FUNC( DBCREATE )
 #ifdef HB_CLP_STRICT
        hb_arrayLen(pStruct) == 0 ||
 #endif
-       !szFileName )
-   {
+       !szFileName ) {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       return;
    }
 
    HB_USHORT uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
 
-   for( HB_USHORT uiSize = 1; uiSize <= uiLen; ++uiSize )
-   {
+   for( HB_USHORT uiSize = 1; uiSize <= uiLen; ++uiSize ) {
       PHB_ITEM pFieldDesc = hb_arrayGetItemPtr(pStruct, uiSize);
 
       /* Validate items types of fields */
@@ -388,8 +339,7 @@ HB_FUNC( DBCREATE )
           !(hb_arrayGetType(pFieldDesc, 1) & Harbour::Item::STRING) ||
           !(hb_arrayGetType(pFieldDesc, 2) & Harbour::Item::STRING) ||
           !(hb_arrayGetType(pFieldDesc, 3) & Harbour::Item::NUMERIC) ||
-          !(hb_arrayGetType(pFieldDesc, 4) & Harbour::Item::NUMERIC) )
-      {
+          !(hb_arrayGetType(pFieldDesc, 4) & Harbour::Item::NUMERIC) ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          return;
       }
@@ -424,16 +374,14 @@ HB_FUNC( HB_DBCREATETEMP )
 #ifdef HB_CLP_STRICT
        || hb_arrayLen(pStruct) == 0
 #endif
-       )
-   {
+       ) {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       return;
    }
 
    HB_USHORT uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
 
-   for( HB_USHORT uiSize = 1; uiSize <= uiLen; ++uiSize )
-   {
+   for( HB_USHORT uiSize = 1; uiSize <= uiLen; ++uiSize ) {
       PHB_ITEM pFieldDesc = hb_arrayGetItemPtr(pStruct, uiSize);
 
       /* Validate items types of fields */
@@ -441,8 +389,7 @@ HB_FUNC( HB_DBCREATETEMP )
           !(hb_arrayGetType(pFieldDesc, 1) & Harbour::Item::STRING) ||
           !(hb_arrayGetType(pFieldDesc, 2) & Harbour::Item::STRING) ||
           !(hb_arrayGetType(pFieldDesc, 3) & Harbour::Item::NUMERIC) ||
-          !(hb_arrayGetType(pFieldDesc, 4) & Harbour::Item::NUMERIC) )
-      {
+          !(hb_arrayGetType(pFieldDesc, 4) & Harbour::Item::NUMERIC) ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          return;
       }
@@ -481,16 +428,14 @@ HB_FUNC( __DBOPENSDF )
    const char * szCpId = hb_parc(7);
    HB_ULONG ulConnection = hb_parnl(8);
 
-   if( !pStruct || hb_arrayLen(pStruct) == 0 || !szFileName || !szFileName[0] )
-   {
+   if( !pStruct || hb_arrayLen(pStruct) == 0 || !szFileName || !szFileName[0] ) {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       return;
    }
 
    HB_USHORT uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
 
-   for( HB_USHORT uiSize = 1; uiSize <= uiLen; ++uiSize )
-   {
+   for( HB_USHORT uiSize = 1; uiSize <= uiLen; ++uiSize ) {
       PHB_ITEM pFieldDesc = hb_arrayGetItemPtr(pStruct, uiSize);
 
       /* Validate items types of fields */
@@ -498,8 +443,7 @@ HB_FUNC( __DBOPENSDF )
           !(hb_arrayGetType(pFieldDesc, 1) & Harbour::Item::STRING) ||
           !(hb_arrayGetType(pFieldDesc, 2) & Harbour::Item::STRING) ||
           !(hb_arrayGetType(pFieldDesc, 3) & Harbour::Item::NUMERIC) ||
-          !(hb_arrayGetType(pFieldDesc, 4) & Harbour::Item::NUMERIC) )
-      {
+          !(hb_arrayGetType(pFieldDesc, 4) & Harbour::Item::NUMERIC) ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          return;
       }
@@ -511,8 +455,7 @@ HB_FUNC( __DBOPENSDF )
                                         szCpId, ulConnection,
                                         pStruct, pDelim);
 
-   if( !fKeepOpen && errCode == HB_SUCCESS )
-   {
+   if( !fKeepOpen && errCode == HB_SUCCESS ) {
       hb_rddReleaseCurrentArea();
    }
 
@@ -523,12 +466,9 @@ HB_FUNC( DBDELETE )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_DELETE(pArea);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -537,12 +477,9 @@ HB_FUNC( DBRECALL )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_RECALL(pArea);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -551,12 +488,9 @@ HB_FUNC( DBGOBOTTOM )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_GOBOTTOM(pArea);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -565,20 +499,14 @@ HB_FUNC( DBGOTO )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
-      if( !pItem )
-      {
+      if( !pItem ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_NOVAR, nullptr, HB_ERR_FUNCNAME);
-      }
-      else
-      {
+      } else {
          SELF_GOTOID(pArea, pItem);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -587,12 +515,9 @@ HB_FUNC( DBGOTOP )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_GOTOP(pArea);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -601,8 +526,7 @@ HB_FUNC( __DBLOCATE )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBSCOPEINFO dbScopeInfo;
 
       dbScopeInfo.itmCobFor   = hb_param(1, Harbour::Item::BLOCK);
@@ -619,13 +543,10 @@ HB_FUNC( __DBLOCATE )
       dbScopeInfo.fIgnoreDuplicates = HB_FALSE;
       dbScopeInfo.fBackward         = HB_FALSE;
 
-      if( SELF_SETLOCATE(pArea, &dbScopeInfo) == HB_SUCCESS )
-      {
+      if( SELF_SETLOCATE(pArea, &dbScopeInfo) == HB_SUCCESS ) {
          SELF_LOCATE(pArea, false);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EG_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -634,11 +555,9 @@ HB_FUNC( __DBSETLOCATE )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pLocate = hb_param(1, Harbour::Item::BLOCK);
-      if( pLocate )
-      {
+      if( pLocate ) {
          DBSCOPEINFO pScopeInfo;
          memset(&pScopeInfo, 0, sizeof(pScopeInfo));
          pScopeInfo.itmCobFor = pLocate;
@@ -651,12 +570,9 @@ HB_FUNC( __DBCONTINUE )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_LOCATE(pArea, true);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -665,48 +581,35 @@ HB_FUNC( __DBPACK )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       /*
        * Additional feature: __dbPack([<bBlock>, [<nEvery>])
        * Code Block to execute for every record.
        */
       PHB_ITEM pBlock = hb_param(1, Harbour::Item::BLOCK);
-      if( pBlock )
-      {
+      if( pBlock ) {
          PHB_ITEM pEvery;
          hb_itemRelease(pArea->valResult);
          pArea->valResult = hb_itemArrayNew(2);
          hb_arraySet(pArea->valResult, 1, pBlock);
          pEvery = hb_param(2, Harbour::Item::NUMERIC);
-         if( pEvery )
-         {
+         if( pEvery ) {
             hb_arraySet(pArea->valResult, 2, pEvery);
-         }
-         else
-         {
+         } else {
             hb_arraySetNI(pArea->valResult, 2, 0);
          }
-      }
-      else
-      {
-         if( pArea->valResult )
-         {
+      } else {
+         if( pArea->valResult ) {
             hb_itemClear(pArea->valResult);
-         }
-         else
-         {
+         } else {
             pArea->valResult = hb_itemNew(nullptr);
          }
       }
       SELF_PACK(pArea);
-      if( pBlock )
-      {
+      if( pBlock ) {
          hb_itemClear(pArea->valResult);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -715,24 +618,18 @@ HB_FUNC( DBRLOCK )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBLOCKINFO dbLockInfo;
       dbLockInfo.fResult = HB_FALSE;
       dbLockInfo.itmRecID = hb_param(1, Harbour::Item::ANY);
-      if( !dbLockInfo.itmRecID || HB_ISNIL(1) )
-      {
+      if( !dbLockInfo.itmRecID || HB_ISNIL(1) ) {
          dbLockInfo.uiMethod = DBLM_EXCLUSIVE;
-      }
-      else
-      {
+      } else {
          dbLockInfo.uiMethod = DBLM_MULTIPLE;
       }
       SELF_LOCK(pArea, &dbLockInfo);
       hb_retl(dbLockInfo.fResult);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -741,14 +638,11 @@ HB_FUNC( DBRLOCKLIST )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pList = hb_itemArrayNew(0);
       SELF_INFO(pArea, DBI_GETLOCKARRAY, pList);
       hb_itemReturnRelease(pList);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -757,12 +651,9 @@ HB_FUNC( DBRUNLOCK )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_UNLOCK(pArea, hb_param(1, Harbour::Item::ANY));
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -771,29 +662,21 @@ HB_FUNC( DBSEEK )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
-      if( !HB_ISNIL(1) )
-      {
+   if( pArea != nullptr ) {
+      if( !HB_ISNIL(1) ) {
          PHB_ITEM pKey = hb_param(1, Harbour::Item::ANY);
          HB_BOOL bSoftSeek = HB_ISLOG(2) ? static_cast<HB_BOOL>(hb_parl(2)) : hb_setGetSoftSeek();
          HB_BOOL bFindLast = hb_parl(3) /* HB_EXTENSION */, fFound = HB_FALSE;
-         if( SELF_SEEK(pArea, bSoftSeek, pKey, bFindLast) == HB_SUCCESS )
-         {
-            if( SELF_FOUND(pArea, &fFound) != HB_SUCCESS )
-            {
+         if( SELF_SEEK(pArea, bSoftSeek, pKey, bFindLast) == HB_SUCCESS ) {
+            if( SELF_FOUND(pArea, &fFound) != HB_SUCCESS ) {
                fFound = HB_FALSE;
             }
          }
          hb_retl(fFound);
-      }
-      else
-      {
+      } else {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_SEEK_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -802,27 +685,20 @@ HB_FUNC( DBSELECTAREA )
 {
    const char * szAlias = hb_parc(1);
 
-   if( szAlias )
-   {
+   if( szAlias ) {
       hb_rddSelectWorkAreaAlias(szAlias);
-   }
-   else
-   {
+   } else {
       int iNewArea = hb_parni(1);
 
       /*
        * NOTE: iNewArea >= HB_RDD_MAX_AREA_NUM used intentionally
        * In Clipper area 65535 is reserved for "M" alias [druzus]
        */
-      if( iNewArea < 1 || iNewArea >= HB_RDD_MAX_AREA_NUM )
-      {
-         if( hb_rddSelectFirstAvailable() != HB_SUCCESS )
-         {
+      if( iNewArea < 1 || iNewArea >= HB_RDD_MAX_AREA_NUM ) {
+         if( hb_rddSelectFirstAvailable() != HB_SUCCESS ) {
             hb_rddSelectWorkAreaNumber(0);
          }
-      }
-      else
-      {
+      } else {
          hb_rddSelectWorkAreaNumber(iNewArea);
       }
    }
@@ -832,11 +708,9 @@ HB_FUNC( __DBSETFOUND )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pFound = hb_param(1, Harbour::Item::LOGICAL);
-      if( pFound )
-      {
+      if( pFound ) {
          pArea->fFound = hb_itemGetL(pFound);
       }
    }
@@ -846,8 +720,7 @@ HB_FUNC( DBSETFILTER )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pBlock, pText;
       DBFILTERINFO pFilterInfo;
 
@@ -860,33 +733,24 @@ HB_FUNC( DBSETFILTER )
          may use only text version of filter and ignore or use with
          lower priority the codeblock so Harbour has to work like
          Cl*pper here. [druzus] */
-      if( pBlock || hb_itemGetCLen(pText) > 0 )
-      {
+      if( pBlock || hb_itemGetCLen(pText) > 0 ) {
          pFilterInfo.itmCobExpr = pBlock;
-         if( pText )
-         {
+         if( pText ) {
             pFilterInfo.abFilterText = pText;
-         }
-         else
-         {
+         } else {
             pFilterInfo.abFilterText = hb_itemPutC(nullptr, nullptr);
          }
          pFilterInfo.fFilter = HB_TRUE;
          pFilterInfo.lpvCargo = nullptr;
          pFilterInfo.fOptimized = HB_FALSE;
          SELF_SETFILTER(pArea, &pFilterInfo);
-         if( !pText )
-         {
+         if( !pText ) {
             hb_itemRelease(pFilterInfo.abFilterText);
          }
-      }
-      else
-      {
+      } else {
          SELF_CLEARFILTER(pArea);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -895,12 +759,9 @@ HB_FUNC( DBCLEARFILTER )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_CLEARFILTER(pArea);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -909,14 +770,11 @@ HB_FUNC( DBFILTER )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pFilter = hb_itemPutC(nullptr, nullptr);
       SELF_FILTERTEXT(pArea, pFilter);
       hb_itemReturnRelease(pFilter);
-   }
-   else
-   {
+   } else {
       hb_retc_null();
    }
 }
@@ -926,12 +784,9 @@ HB_FUNC( HB_DBGETFILTER )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       hb_itemReturn(pArea->dbfi.itmCobExpr);
-   }
-   else
-   {
+   } else {
       hb_ret();
    }
 }
@@ -940,12 +795,9 @@ HB_FUNC( DBSKIP )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_SKIP(pArea, hb_parnldef(1, 1));
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -955,8 +807,7 @@ HB_FUNC( DBSTRUCT )
    PHB_ITEM pStruct = hb_itemArrayNew(0);
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       hb_tblStructure( pArea, pStruct, DBS_ALEN );
    }
    hb_itemReturnRelease(pStruct);
@@ -968,28 +819,22 @@ HB_FUNC( DBTABLEEXT )
    PHB_ITEM pItem = hb_itemNew(nullptr);
    HB_ERRCODE errCode = HB_FAILURE;
 
-   if( !pArea )
-   {
+   if( !pArea ) {
       LPRDDNODE pRddNode;
       HB_USHORT uiRddID;
       pRddNode = hb_rddFindNode( hb_rddDefaultDrv(nullptr), &uiRddID );
-      if( pRddNode )
-      {
+      if( pRddNode ) {
          pArea = static_cast<AREAP>(hb_rddNewAreaNode( pRddNode, uiRddID ));
-         if( pArea != nullptr )
-         {
+         if( pArea != nullptr ) {
             errCode = SELF_INFO(pArea, DBI_TABLEEXT, pItem);
             SELF_RELEASE(pArea);
          }
       }
-   }
-   else
-   {
+   } else {
       errCode = SELF_INFO(pArea, DBI_TABLEEXT, pItem);
    }
 
-   if( errCode != HB_SUCCESS )
-   {
+   if( errCode != HB_SUCCESS ) {
       hb_itemPutC(pItem, nullptr);
    }
    hb_itemReturnRelease(pItem);
@@ -999,12 +844,9 @@ HB_FUNC( DBUNLOCK )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_UNLOCK(pArea, nullptr);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -1029,12 +871,9 @@ HB_FUNC( __DBZAP )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_ZAP(pArea);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -1044,8 +883,7 @@ HB_FUNC( DELETED )
    HB_BOOL bDeleted = HB_FALSE;
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_DELETED(pArea, &bDeleted);
    }
    hb_retl(bDeleted);
@@ -1056,8 +894,7 @@ HB_FUNC( EOF )
    HB_BOOL bEof = HB_TRUE;
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_EOF(pArea, &bEof);
    }
    hb_retl(bEof);
@@ -1068,8 +905,7 @@ HB_FUNC( FCOUNT )
    HB_USHORT uiFields = 0;
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_FIELDCOUNT(pArea, &uiFields);
    }
    hb_retni(uiFields);
@@ -1081,8 +917,7 @@ HB_FUNC( FIELDGET )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_USHORT uiField = static_cast<HB_FIELDNO>(hb_parni(1));
 
-   if( pArea && uiField )
-   {
+   if( pArea && uiField ) {
       SELF_GETVALUE(pArea, uiField, pItem);
    }
 
@@ -1094,10 +929,8 @@ HB_FUNC( FIELDNAME )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_USHORT uiFields, uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
 
-   if( pArea && uiIndex )
-   {
-      if( SELF_FIELDCOUNT(pArea, &uiFields) == HB_SUCCESS && uiIndex <= uiFields )
-      {
+   if( pArea && uiIndex ) {
+      if( SELF_FIELDCOUNT(pArea, &uiFields) == HB_SUCCESS && uiIndex <= uiFields ) {
          char * szName = static_cast<char*>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
          szName[0] = '\0';
          SELF_FIELDNAME(pArea, uiIndex, szName);
@@ -1116,12 +949,9 @@ HB_FUNC( FIELDPOS )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea && hb_parclen(1) > 0 )
-   {
+   if( pArea && hb_parclen(1) > 0 ) {
       hb_retni(hb_rddFieldIndex(pArea, hb_parc(1)));
-   }
-   else
-   {
+   } else {
       hb_retni(0);
    }
 }
@@ -1130,17 +960,13 @@ HB_FUNC( FIELDPUT )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       HB_USHORT uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
 
-      if( uiIndex > 0 )
-      {
+      if( uiIndex > 0 ) {
          PHB_ITEM pItem = hb_param(2, Harbour::Item::ANY);
-         if( pItem && !HB_IS_NIL(pItem) )
-         {
-            if( SELF_PUTVALUE(pArea, uiIndex, pItem) == HB_SUCCESS )
-            {
+         if( pItem && !HB_IS_NIL(pItem) ) {
+            if( SELF_PUTVALUE(pArea, uiIndex, pItem) == HB_SUCCESS ) {
                hb_itemReturn(pItem);
             }
          }
@@ -1152,17 +978,14 @@ HB_FUNC( FLOCK )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBLOCKINFO dbLockInfo;
       dbLockInfo.fResult  = HB_FALSE;
       dbLockInfo.itmRecID = nullptr;
       dbLockInfo.uiMethod = DBLM_FILE;
       SELF_LOCK(pArea, &dbLockInfo);
       hb_retl(dbLockInfo.fResult);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -1172,8 +995,7 @@ HB_FUNC( FOUND )
    HB_BOOL bFound = HB_FALSE;
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_FOUND(pArea, &bFound);
    }
    hb_retl(bFound);
@@ -1183,12 +1005,9 @@ HB_FUNC( HEADER )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( !pArea )
-   {
+   if( !pArea ) {
       hb_retni(0);
-   }
-   else
-   {
+   } else {
       PHB_ITEM pItem = hb_itemNew(nullptr);
       SELF_INFO(pArea, DBI_GETHEADERSIZE, pItem);
       hb_itemReturnRelease(pItem);
@@ -1199,17 +1018,14 @@ HB_FUNC( INDEXORD )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBORDERINFO pInfo;
       memset(&pInfo, 0, sizeof(pInfo));
       pInfo.itmResult = hb_itemPutNI(nullptr, 0);
       SELF_ORDINFO(pArea, DBOI_NUMBER, &pInfo);
       hb_retni(hb_itemGetNI(pInfo.itmResult));
       hb_itemRelease(pInfo.itmResult);
-   }
-   else
-   {
+   } else {
       hb_retni(0);
    }
 }
@@ -1219,8 +1035,7 @@ HB_FUNC( LASTREC )
    HB_ULONG ulRecCount = 0;
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_RECCOUNT(pArea, &ulRecCount);
    }
 
@@ -1231,17 +1046,14 @@ HB_FUNC( LOCK )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBLOCKINFO dbLockInfo;
       dbLockInfo.fResult  = HB_FALSE;
       dbLockInfo.itmRecID = nullptr;
       dbLockInfo.uiMethod = DBLM_EXCLUSIVE;
       SELF_LOCK(pArea, &dbLockInfo);
       hb_retl(dbLockInfo.fResult);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -1250,15 +1062,12 @@ HB_FUNC( LUPDATE )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemNew(nullptr);
 
       SELF_INFO(pArea, DBI_LASTUPDATE, pItem);
       hb_itemReturnRelease(pItem);
-   }
-   else
-   {
+   } else {
       hb_retds(nullptr);
    }
 }
@@ -1267,8 +1076,7 @@ HB_FUNC( NETERR )
 {
    hb_retl(hb_rddGetNetErr());
 
-   if( HB_ISLOG(1) )
-   {
+   if( HB_ISLOG(1) ) {
       hb_rddSetNetErr(hb_parl(1));
    }
 }
@@ -1280,23 +1088,18 @@ HB_FUNC( ORDBAGEXT )
 
    memset(&pInfo, 0, sizeof(pInfo));
    pInfo.itmResult = hb_itemPutC(nullptr, nullptr);
-   if( !pArea )
-   {
+   if( !pArea ) {
       LPRDDNODE pRddNode;
       HB_USHORT uiRddID;
       pRddNode = hb_rddFindNode( hb_rddDefaultDrv(nullptr), &uiRddID );
-      if( pRddNode )
-      {
+      if( pRddNode ) {
          pArea = static_cast<AREAP>(hb_rddNewAreaNode( pRddNode, uiRddID ));
-         if( pArea != nullptr )
-         {
+         if( pArea != nullptr ) {
             SELF_ORDINFO(pArea, DBOI_BAGEXT, &pInfo);
             SELF_RELEASE(pArea);
          }
       }
-   }
-   else
-   {
+   } else {
       SELF_ORDINFO(pArea, DBOI_BAGEXT, &pInfo);
    }
    hb_itemReturnRelease(pInfo.itmResult);
@@ -1306,27 +1109,19 @@ HB_FUNC( ORDBAGNAME )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
 
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
-      if( pOrderInfo.itmOrder && !HB_IS_STRING(pOrderInfo.itmOrder) )
-      {
-         if( HB_IS_NIL(pOrderInfo.itmOrder) )
-         {
+      if( pOrderInfo.itmOrder && !HB_IS_STRING(pOrderInfo.itmOrder) ) {
+         if( HB_IS_NIL(pOrderInfo.itmOrder) ) {
             pOrderInfo.itmOrder = nullptr;
-         }
-         else if( HB_IS_NUMERIC(pOrderInfo.itmOrder) )
-         {
-            if( hb_itemGetNI(pOrderInfo.itmOrder) == 0 )
-            {
+         } else if( HB_IS_NUMERIC(pOrderInfo.itmOrder) ) {
+            if( hb_itemGetNI(pOrderInfo.itmOrder) == 0 ) {
                pOrderInfo.itmOrder = nullptr;
             }
-         }
-         else
-         {
+         } else {
             hb_errRT_DBCMD(EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
             return;
          }
@@ -1334,9 +1129,7 @@ HB_FUNC( ORDBAGNAME )
       pOrderInfo.itmResult = hb_itemPutC(nullptr, nullptr);
       SELF_ORDINFO(pArea, DBOI_BAGNAME, &pOrderInfo);
       hb_itemReturnRelease(pOrderInfo.itmResult);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -1345,8 +1138,7 @@ HB_FUNC( ORDCONDSET )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       LPDBORDERCONDINFO lpdbOrdCondInfo;
       PHB_ITEM pItem;
 
@@ -1392,12 +1184,10 @@ HB_FUNC( ORDCONDSET )
          index is not shared between other clients */
       lpdbOrdCondInfo->fExclusive    = hb_parl(20);
 
-      if( lpdbOrdCondInfo->itmCobWhile )
-      {
+      if( lpdbOrdCondInfo->itmCobWhile ) {
          lpdbOrdCondInfo->fRest = HB_TRUE;
       }
-      if( lpdbOrdCondInfo->lNextCount || lpdbOrdCondInfo->itmRecID || lpdbOrdCondInfo->fRest || lpdbOrdCondInfo->fUseCurrent || lpdbOrdCondInfo->fUseFilter )
-      {
+      if( lpdbOrdCondInfo->lNextCount || lpdbOrdCondInfo->itmRecID || lpdbOrdCondInfo->fRest || lpdbOrdCondInfo->fUseCurrent || lpdbOrdCondInfo->fUseFilter ) {
          lpdbOrdCondInfo->fAll = HB_FALSE;
       }
 
@@ -1411,9 +1201,7 @@ HB_FUNC( ORDCONDSET )
       lpdbOrdCondInfo->lpvCargo = nullptr;
 
       hb_retl(SELF_ORDSETCOND(pArea, lpdbOrdCondInfo) == HB_SUCCESS);
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -1422,8 +1210,7 @@ HB_FUNC( ORDCREATE )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBORDERCREATEINFO dbOrderInfo;
       DBCONSTRAINTINFO dbConstrInfo;
 
@@ -1435,8 +1222,7 @@ HB_FUNC( ORDCREATE )
       dbOrderInfo.abExpr = hb_param(3, Harbour::Item::STRING);
       if( ((dbOrderInfo.abBagName == nullptr || dbOrderInfo.abBagName[0] == 0 ) &&
           (dbOrderInfo.atomBagName == nullptr || dbOrderInfo.atomBagName[0] == 0)) ||
-          !dbOrderInfo.abExpr )
-      {
+          !dbOrderInfo.abExpr ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          return;
       }
@@ -1445,20 +1231,15 @@ HB_FUNC( ORDCREATE )
       dbConstrInfo.abConstrName = hb_parc(6);
       dbConstrInfo.abTargetName = hb_parc(7);
       dbConstrInfo.itmRelationKey = hb_param(8, Harbour::Item::ARRAY);
-      if( dbConstrInfo.abConstrName && dbConstrInfo.abTargetName && dbConstrInfo.itmRelationKey )
-      {
+      if( dbConstrInfo.abConstrName && dbConstrInfo.abTargetName && dbConstrInfo.itmRelationKey ) {
          dbConstrInfo.fEnabled = hb_parl(9);
          dbOrderInfo.lpdbConstraintInfo = &dbConstrInfo;
-      }
-      else
-      {
+      } else {
          dbOrderInfo.lpdbConstraintInfo = nullptr;
       }
 
       SELF_ORDCREATE(pArea, &dbOrderInfo);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -1467,15 +1248,12 @@ HB_FUNC( ORDBAGCLEAR )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
       pOrderInfo.atomBagName = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
       hb_retl(SELF_ORDLSTDELETE(pArea, &pOrderInfo) == HB_SUCCESS);
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -1484,16 +1262,13 @@ HB_FUNC( ORDDESTROY )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
       pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       hb_retl(SELF_ORDDESTROY(pArea, &pOrderInfo) == HB_SUCCESS);
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -1502,25 +1277,17 @@ HB_FUNC( ORDFOR )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo;
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
-      if( pOrderInfo.itmOrder && !HB_IS_STRING(pOrderInfo.itmOrder) )
-      {
-         if( HB_IS_NIL(pOrderInfo.itmOrder) )
-         {
+      if( pOrderInfo.itmOrder && !HB_IS_STRING(pOrderInfo.itmOrder) ) {
+         if( HB_IS_NIL(pOrderInfo.itmOrder) ) {
             pOrderInfo.itmOrder = nullptr;
-         }
-         else if( HB_IS_NUMERIC(pOrderInfo.itmOrder) )
-         {
-            if( hb_itemGetNI(pOrderInfo.itmOrder) == 0 )
-            {
+         } else if( HB_IS_NUMERIC(pOrderInfo.itmOrder) ) {
+            if( hb_itemGetNI(pOrderInfo.itmOrder) == 0 ) {
                pOrderInfo.itmOrder = nullptr;
             }
-         }
-         else
-         {
+         } else {
             hb_errRT_DBCMD(EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
             return;
          }
@@ -1532,9 +1299,7 @@ HB_FUNC( ORDFOR )
       pOrderInfo.fAllTags = HB_FALSE;
       SELF_ORDINFO(pArea, DBOI_CONDITION, &pOrderInfo);
       hb_itemReturnRelease(pOrderInfo.itmResult);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -1543,26 +1308,18 @@ HB_FUNC( ORDKEY )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
-      if( pOrderInfo.itmOrder && !HB_IS_STRING(pOrderInfo.itmOrder) )
-      {
-         if( HB_IS_NIL(pOrderInfo.itmOrder) )
-         {
+      if( pOrderInfo.itmOrder && !HB_IS_STRING(pOrderInfo.itmOrder) ) {
+         if( HB_IS_NIL(pOrderInfo.itmOrder) ) {
             pOrderInfo.itmOrder = nullptr;
-         }
-         else if( HB_IS_NUMERIC(pOrderInfo.itmOrder) )
-         {
-            if( hb_itemGetNI(pOrderInfo.itmOrder) == 0 )
-            {
+         } else if( HB_IS_NUMERIC(pOrderInfo.itmOrder) ) {
+            if( hb_itemGetNI(pOrderInfo.itmOrder) == 0 ) {
                pOrderInfo.itmOrder = nullptr;
             }
-         }
-         else
-         {
+         } else {
             hb_errRT_DBCMD(EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
             return;
          }
@@ -1571,9 +1328,7 @@ HB_FUNC( ORDKEY )
       pOrderInfo.itmResult = hb_itemPutC(nullptr, nullptr);
       SELF_ORDINFO(pArea, DBOI_EXPRESSION, &pOrderInfo);
       hb_itemReturnRelease(pOrderInfo.itmResult);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -1582,8 +1337,7 @@ HB_FUNC( ORDLISTADD )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo;
       HB_ERRCODE errCode;
 
@@ -1594,10 +1348,8 @@ HB_FUNC( ORDLISTADD )
       pOrderInfo.atomBagName = hb_param(1, Harbour::Item::STRING);
       pOrderInfo.itmOrder    = hb_param(2, Harbour::Item::STRING);
 
-      if( !pOrderInfo.atomBagName )
-      {
-         if( !HB_ISNIL(1) )
-         {
+      if( !pOrderInfo.atomBagName ) {
+         if( !HB_ISNIL(1) ) {
             hb_errRT_DBCMD(EG_ARG, EDBCMD_ORDLSTADD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          }
          return;
@@ -1607,19 +1359,14 @@ HB_FUNC( ORDLISTADD )
 
       errCode = SELF_ORDLSTADD(pArea, &pOrderInfo);
 
-      if( !pOrderInfo.itmResult || HB_IS_NIL(pOrderInfo.itmResult) )
-      {
+      if( !pOrderInfo.itmResult || HB_IS_NIL(pOrderInfo.itmResult) ) {
          hb_retl(errCode == HB_SUCCESS);
-      }
-      else
-      {
+      } else {
          hb_itemReturn(pOrderInfo.itmResult);
       }
 
       hb_itemRelease(pOrderInfo.itmResult);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -1628,12 +1375,9 @@ HB_FUNC( ORDLISTCLEAR )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_ORDLSTCLEAR(pArea);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -1642,12 +1386,9 @@ HB_FUNC( ORDLISTREBUILD )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_ORDLSTREBUILD(pArea);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -1656,26 +1397,18 @@ HB_FUNC( ORDNAME )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
-      if( pOrderInfo.itmOrder )
-      {
-         if( HB_IS_NIL(pOrderInfo.itmOrder) )
-         {
+      if( pOrderInfo.itmOrder ) {
+         if( HB_IS_NIL(pOrderInfo.itmOrder) ) {
             pOrderInfo.itmOrder = nullptr;
-         }
-         else if( HB_IS_NUMERIC(pOrderInfo.itmOrder) )
-         {
-            if( hb_itemGetNI(pOrderInfo.itmOrder) == 0 )
-            {
+         } else if( HB_IS_NUMERIC(pOrderInfo.itmOrder) ) {
+            if( hb_itemGetNI(pOrderInfo.itmOrder) == 0 ) {
                pOrderInfo.itmOrder = nullptr;
             }
-         }
-         else
-         {
+         } else {
             hb_errRT_DBCMD(EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
             return;
          }
@@ -1685,9 +1418,7 @@ HB_FUNC( ORDNAME )
       pOrderInfo.itmResult   = hb_itemPutC(nullptr, nullptr);
       SELF_ORDINFO(pArea, DBOI_NAME, &pOrderInfo);
       hb_itemReturnRelease(pOrderInfo.itmResult);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -1696,23 +1427,19 @@ HB_FUNC( ORDNUMBER )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo;
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING);
       pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
-      if( !( pOrderInfo.itmOrder || HB_ISNIL(1) ) || !( pOrderInfo.atomBagName || HB_ISNIL(2) ) )
-      {
+      if( !( pOrderInfo.itmOrder || HB_ISNIL(1) ) || !( pOrderInfo.atomBagName || HB_ISNIL(2) ) ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          return;
       }
       pOrderInfo.itmResult = hb_itemPutNI(nullptr, 0);
       SELF_ORDINFO(pArea, DBOI_NUMBER, &pOrderInfo);
       hb_itemReturnRelease(pOrderInfo.itmResult);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -1721,8 +1448,7 @@ HB_FUNC( ORDSETFOCUS )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBORDERINFO pInfo;
       memset(&pInfo, 0, sizeof(pInfo));
       pInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
@@ -1730,9 +1456,7 @@ HB_FUNC( ORDSETFOCUS )
       pInfo.itmResult = hb_itemPutC(nullptr, nullptr);
       SELF_ORDLSTFOCUS(pArea, &pInfo);
       hb_itemReturnRelease(pInfo.itmResult);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -1746,15 +1470,12 @@ HB_FUNC( RDDNAME )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       char szRddName[HB_RDD_MAX_DRIVERNAME_LEN + 1];
 
       SELF_SYSNAME(pArea, szRddName);
       hb_retc(szRddName);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -1763,12 +1484,10 @@ HB_FUNC( RDDREGISTER )
 {
    HB_USHORT uiLen = static_cast<HB_USHORT>(hb_parclen(1));
 
-   if( uiLen > 0 )
-   {
+   if( uiLen > 0 ) {
       char szDriver[HB_RDD_MAX_DRIVERNAME_LEN + 1];
 
-      if( uiLen > HB_RDD_MAX_DRIVERNAME_LEN )
-      {
+      if( uiLen > HB_RDD_MAX_DRIVERNAME_LEN ) {
          uiLen = HB_RDD_MAX_DRIVERNAME_LEN;
       }
 
@@ -1780,8 +1499,7 @@ HB_FUNC( RDDREGISTER )
        * 1: RDD already registerd
        * > 1: error
        */
-      if( hb_rddRegister(szDriver, static_cast<HB_USHORT>(hb_parni(2))) > 1 )
-      {
+      if( hb_rddRegister(szDriver, static_cast<HB_USHORT>(hb_parni(2))) > 1 ) {
          hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
       }
    }
@@ -1795,8 +1513,7 @@ HB_FUNC( RECNO )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    PHB_ITEM pRecNo = hb_itemPutNL(nullptr, 0);
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_RECID(pArea, pRecNo);
    }
    hb_itemReturnRelease(pRecNo);
@@ -1806,14 +1523,11 @@ HB_FUNC( RECSIZE )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemNew(nullptr);
       SELF_INFO(pArea, DBI_GETRECSIZE, pItem);
       hb_itemReturnRelease(pItem);
-   }
-   else
-   {
+   } else {
       hb_retni(0);
    }
 }
@@ -1822,34 +1536,27 @@ HB_FUNC( RLOCK )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBLOCKINFO dbLockInfo;
       dbLockInfo.fResult = HB_FALSE;
       dbLockInfo.itmRecID = nullptr;
       dbLockInfo.uiMethod = DBLM_EXCLUSIVE;
       SELF_LOCK(pArea, &dbLockInfo);
       hb_retl(dbLockInfo.fResult);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
 
 HB_FUNC( SELECT )
 {
-   if( hb_pcount() == 0 )
-   {
+   if( hb_pcount() == 0 ) {
       hb_retni(hb_rddGetCurrentWorkAreaNumber());
-   }
-   else
-   {
+   } else {
       const char * szAlias = hb_parc(1);
       int iArea = 0;
 
-      if( szAlias )
-      {
+      if( szAlias ) {
 #if defined(HB_CLP_STRICT) || 1
          /*
           * I do not like this Clipper behavior, in some constructions
@@ -1872,10 +1579,8 @@ HB_FUNC( RDDSETDEFAULT )
 {
    hb_retc(hb_rddDefaultDrv(nullptr));
 
-   if( hb_parclen(1) > 0 )
-   {
-      if( !hb_rddDefaultDrv(hb_parc(1)) )
-      {
+   if( hb_parclen(1) > 0 ) {
+      if( !hb_rddDefaultDrv(hb_parc(1)) ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       }
    }
@@ -1885,10 +1590,8 @@ HB_FUNC( DBSETDRIVER )
 {
    hb_retc(hb_rddDefaultDrv(nullptr));
 
-   if( hb_parclen(1) > 0 )
-   {
-      if( !hb_rddDefaultDrv(hb_parc(1)) )
-      {
+   if( hb_parclen(1) > 0 ) {
+      if( !hb_rddDefaultDrv(hb_parc(1)) ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       }
    }
@@ -1898,46 +1601,33 @@ HB_FUNC( ORDSCOPE )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBORDERINFO pInfo;
       HB_USHORT uiAction;
       int iScope = hb_parni(1);
 
       memset(&pInfo, 0, sizeof(pInfo));
       pInfo.itmResult = hb_itemNew(nullptr);
-      if( iScope == 2 )
-      {
-         if( hb_pcount() > 1 && !HB_ISNIL(2) )
-         {
+      if( iScope == 2 ) {
+         if( hb_pcount() > 1 && !HB_ISNIL(2) ) {
             uiAction = DBOI_SCOPESET;
             pInfo.itmNewVal = hb_param(2, Harbour::Item::ANY);
-         }
-         else
-         {
+         } else {
             uiAction = DBOI_SCOPECLEAR;
          }
-      }
-      else
-      {
+      } else {
          uiAction = (iScope == 0) ? DBOI_SCOPETOP : DBOI_SCOPEBOTTOM;
-         if( hb_pcount() > 1 )
-         {
-            if( HB_ISNIL(2) )
-            {
+         if( hb_pcount() > 1 ) {
+            if( HB_ISNIL(2) ) {
                uiAction = (iScope == 0) ? DBOI_SCOPETOPCLEAR : DBOI_SCOPEBOTTOMCLEAR;
-            }
-            else
-            {
+            } else {
                pInfo.itmNewVal = hb_param(2, Harbour::Item::ANY);
             }
          }
       }
       SELF_ORDINFO(pArea, uiAction, &pInfo);
       hb_itemReturnRelease(pInfo.itmResult);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -1946,15 +1636,12 @@ HB_FUNC( DBRELATION )  /* (<nRelation>) --> cLinkExp */
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pRelExpr = hb_itemPutC(nullptr, nullptr);
       HB_USHORT uiRelNo = static_cast<HB_USHORT>(hb_parni(1));
       SELF_RELTEXT(pArea, uiRelNo ? uiRelNo : 1, pRelExpr);
       hb_itemReturnRelease(pRelExpr);
-   }
-   else
-   {
+   } else {
       hb_retc_null();
    }
 }
@@ -1964,12 +1651,13 @@ HB_FUNC( DBRSELECT )  /* (<nRelation>) --> nWorkArea */
    HB_USHORT uiWorkArea = 0, uiRelation = static_cast<HB_USHORT>(hb_parni(1));
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
+   if( pArea != nullptr ) {
       /* undocumented CA-Cl*pper behavior:
        * When parameter is missing, wrong or 0 then 1 is used as
        * relation number [druzus]
        */
       SELF_RELAREA(pArea, uiRelation ? uiRelation : 1, &uiWorkArea);
+   }
 
    hb_retni(uiWorkArea);
 }
@@ -1978,8 +1666,7 @@ HB_FUNC( DBCLEARRELATION )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       SELF_CLEARREL(pArea);
    }
 }
@@ -1988,29 +1675,23 @@ HB_FUNC( DBSETRELATION )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       DBRELINFO dbRelations;
       AREAP pChildArea;
       HB_AREANO uiChildArea;
 
-      if( hb_pcount() < 2 || hb_param(1, Harbour::Item::NUMERIC | Harbour::Item::STRING) == nullptr || !( HB_ISNIL(4) || HB_ISLOG(4) ) )
-      {
+      if( hb_pcount() < 2 || hb_param(1, Harbour::Item::NUMERIC | Harbour::Item::STRING) == nullptr || !( HB_ISNIL(4) || HB_ISLOG(4) ) ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          return;
       }
 
-      if( HB_ISNUM(1) )
-      {
+      if( HB_ISNUM(1) ) {
          uiChildArea = static_cast<HB_AREANO>(hb_parni(1));
-      }
-      else
-      {
+      } else {
          int iArea = hb_rddGetCurrentWorkAreaNumber();
 
          hb_rddSelectWorkAreaAlias(hb_parcx(1));
-         if( hb_vmRequestQuery() )
-         {
+         if( hb_vmRequestQuery() ) {
             return;
          }
          uiChildArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
@@ -2019,8 +1700,7 @@ HB_FUNC( DBSETRELATION )
 
       pChildArea = uiChildArea ? static_cast<AREAP>(hb_rddGetWorkAreaPointer(uiChildArea)) : nullptr;
 
-      if( !pChildArea )
-      {
+      if( !pChildArea ) {
          hb_errRT_BASE(EG_NOALIAS, EDBCMD_NOALIAS, nullptr, nullptr, 0);
          return;
       }
@@ -2034,9 +1714,7 @@ HB_FUNC( DBSETRELATION )
       dbRelations.lpdbriNext = nullptr;
 
       SELF_SETREL(pArea, &dbRelations);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -2051,8 +1729,7 @@ HB_FUNC( __DBARRANGE )
    pDstArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(static_cast<HB_AREANO>(hb_parni(1))));
 
    /* TODO: check what Clipper does when pDstArea == nullptr or pSrcArea == pDstArea */
-   if( pSrcArea && pDstArea && pSrcArea != pDstArea )
-   {
+   if( pSrcArea && pDstArea && pSrcArea != pDstArea ) {
       DBSORTINFO dbSortInfo;
       /* structure with fields copied copied from source WorkArea */
       PHB_ITEM pStruct = hb_param(2, Harbour::Item::ARRAY);
@@ -2061,8 +1738,7 @@ HB_FUNC( __DBARRANGE )
 
       memset(&dbSortInfo, 0, sizeof(dbSortInfo));
       errCode = hb_dbTransStruct(pSrcArea, pDstArea, &dbSortInfo.dbtri, nullptr, pStruct);
-      if( errCode == HB_SUCCESS )
-      {
+      if( errCode == HB_SUCCESS ) {
          PHB_ITEM pTransItm;
 
          dbSortInfo.dbtri.dbsci.itmCobFor   = hb_param(3, Harbour::Item::BLOCK);
@@ -2084,48 +1760,37 @@ HB_FUNC( __DBARRANGE )
          dbSortInfo.dbtri.uiFlags |= DBTF_RECALL;
 
          dbSortInfo.uiItemCount = pFields ? static_cast<HB_USHORT>(hb_arrayLen(pFields)) : 0;
-         if( dbSortInfo.uiItemCount > 0 )
-         {
+         if( dbSortInfo.uiItemCount > 0 ) {
             HB_USHORT uiCount, uiDest;
             char * szFieldLine;
             HB_SIZE nSize = 0;
 
             dbSortInfo.lpdbsItem = static_cast<LPDBSORTITEM>(hb_xgrab(dbSortInfo.uiItemCount * sizeof(DBSORTITEM)));
-            for( uiCount = 1; uiCount <= dbSortInfo.uiItemCount; ++uiCount )
-            {
+            for( uiCount = 1; uiCount <= dbSortInfo.uiItemCount; ++uiCount ) {
                HB_SIZE nLine = hb_arrayGetCLen(pFields, uiCount);
-               if( nLine > nSize )
-               {
+               if( nLine > nSize ) {
                   nSize = nLine;
                }
             }
             szFieldLine = static_cast<char*>(hb_xgrab(nSize + 1));
-            for( uiDest = 0, uiCount = 1; uiCount <= dbSortInfo.uiItemCount; ++uiCount )
-            {
+            for( uiDest = 0, uiCount = 1; uiCount <= dbSortInfo.uiItemCount; ++uiCount ) {
                char * szPos;
                dbSortInfo.lpdbsItem[uiDest].uiFlags = 0;
                hb_strncpyUpper(szFieldLine, hb_arrayGetCPtr(pFields, uiCount), hb_arrayGetCLen(pFields, uiCount));
                szPos = strchr(szFieldLine, '/');
-               if( szPos )
-               {
+               if( szPos ) {
                   *szPos++ = 0;
                   /* It's not Cl*pper compatible, Cl*pper checks only
                      for /D flag and ignores any /A flags [druzus] */
-                  if( strchr(szPos, 'D') > strchr(szPos, 'A') )
-                  {
+                  if( strchr(szPos, 'D') > strchr(szPos, 'A') ) {
                      dbSortInfo.lpdbsItem[uiDest].uiFlags |= SF_DESCEND;
-                  }
-                  else
-                  {
+                  } else {
                      dbSortInfo.lpdbsItem[uiDest].uiFlags |= SF_ASCEND;
                   }
-                  if( strchr(szPos, 'C') != nullptr )
-                  {
+                  if( strchr(szPos, 'C') != nullptr ) {
                      dbSortInfo.lpdbsItem[uiDest].uiFlags |= SF_CASE;
                   }
-               }
-               else
-               {
+               } else {
                   dbSortInfo.lpdbsItem[uiDest].uiFlags |= SF_ASCEND;
                }
 
@@ -2134,8 +1799,7 @@ HB_FUNC( __DBARRANGE )
                   fields at all [druzus] */
                dbSortInfo.lpdbsItem[uiDest].uiField = hb_rddFieldExpIndex(pSrcArea, szFieldLine);
                /* Field found */
-               if( dbSortInfo.lpdbsItem[uiDest].uiField != 0 )
-               {
+               if( dbSortInfo.lpdbsItem[uiDest].uiField != 0 ) {
                   ++uiDest;
                }
             }
@@ -2145,15 +1809,13 @@ HB_FUNC( __DBARRANGE )
 
          pTransItm = hb_dbTransInfoPut(nullptr, &dbSortInfo.dbtri);
          errCode = SELF_INFO(dbSortInfo.dbtri.lpaDest, DBI_TRANSREC, pTransItm);
-         if( errCode == HB_SUCCESS )
-         {
+         if( errCode == HB_SUCCESS ) {
             errCode = dbSortInfo.dbtri.uiItemCount == 0 ? HB_FAILURE :
                       (dbSortInfo.uiItemCount == 0 ?
                        SELF_TRANS(pSrcArea, &dbSortInfo.dbtri) :
                        SELF_SORT(pSrcArea, &dbSortInfo));
             SELF_INFO(dbSortInfo.dbtri.lpaDest, DBI_TRANSREC, pTransItm);
-            if( errCode == HB_SUCCESS && (dbSortInfo.dbtri.uiFlags & DBTF_CPYCTR) )
-            {
+            if( errCode == HB_SUCCESS && (dbSortInfo.dbtri.uiFlags & DBTF_CPYCTR) ) {
                errCode = hb_dbTransCounters(&dbSortInfo.dbtri);
             }
          }
@@ -2161,12 +1823,10 @@ HB_FUNC( __DBARRANGE )
       }
 
       /* Free items */
-      if( dbSortInfo.lpdbsItem )
-      {
+      if( dbSortInfo.lpdbsItem ) {
          hb_xfree(dbSortInfo.lpdbsItem);
       }
-      if( dbSortInfo.dbtri.lpTransItems )
-      {
+      if( dbSortInfo.dbtri.lpTransItems ) {
          hb_xfree(dbSortInfo.dbtri.lpTransItems);
       }
    }
@@ -2177,8 +1837,7 @@ HB_FUNC( __DBARRANGE )
 /* __dbTrans(nDstArea, aFieldsStru, bFor, bWhile, nNext, nRecord, lRest) --> <lSuccess> */
 HB_FUNC( __DBTRANS )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       HB_AREANO uiSrcArea, uiDstArea;
       AREAP pSrcArea, pDstArea;
 
@@ -2188,16 +1847,14 @@ HB_FUNC( __DBTRANS )
       hb_rddSelectWorkAreaNumber(uiDstArea);
       pDstArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-      if( pSrcArea && pDstArea )
-      {
+      if( pSrcArea && pDstArea ) {
          DBTRANSINFO dbTransInfo;
          PHB_ITEM pFields = hb_param(2, Harbour::Item::ARRAY);
          HB_ERRCODE errCode;
 
          memset(&dbTransInfo, 0, sizeof(dbTransInfo));
          errCode = hb_dbTransStruct(pSrcArea, pDstArea, &dbTransInfo, nullptr, pFields);
-         if( errCode == HB_SUCCESS )
-         {
+         if( errCode == HB_SUCCESS ) {
             PHB_ITEM pTransItm;
 
             hb_rddSelectWorkAreaNumber(dbTransInfo.lpaSource->uiArea);
@@ -2219,8 +1876,7 @@ HB_FUNC( __DBTRANS )
 
             pTransItm = hb_dbTransInfoPut(nullptr, &dbTransInfo);
             errCode = SELF_INFO(dbTransInfo.lpaDest, DBI_TRANSREC, pTransItm);
-            if( errCode == HB_SUCCESS )
-            {
+            if( errCode == HB_SUCCESS ) {
                errCode = dbTransInfo.uiItemCount == 0 ? HB_FAILURE : SELF_TRANS(dbTransInfo.lpaSource, &dbTransInfo);
                /* we always call DBI_TRANSREC second time after TRANS() method
                 * even if TRANS() failed - it's for RDDs which may need to store
@@ -2228,30 +1884,24 @@ HB_FUNC( __DBTRANS )
                 * clean some structures allocated for transfer operation [druzus]
                 */
                SELF_INFO(dbTransInfo.lpaDest, DBI_TRANSREC, pTransItm);
-               if( errCode == HB_SUCCESS && (dbTransInfo.uiFlags & DBTF_CPYCTR) )
-               {
+               if( errCode == HB_SUCCESS && (dbTransInfo.uiFlags & DBTF_CPYCTR) ) {
                   errCode = hb_dbTransCounters(&dbTransInfo);
                }
             }
             hb_itemRelease(pTransItm);
          }
 
-         if( dbTransInfo.lpTransItems )
-         {
+         if( dbTransInfo.lpTransItems ) {
             hb_xfree(dbTransInfo.lpTransItems);
          }
 
          hb_retl(errCode == HB_SUCCESS);
-      }
-      else
-      {
+      } else {
          hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
       }
 
       hb_rddSelectWorkAreaNumber(uiSrcArea);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_USE_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -2264,8 +1914,7 @@ HB_FUNC( __DBAPP )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       hb_retl(HB_SUCCESS == hb_rddTransRecords(pArea,
               hb_parc(1),                     /* file name */
               hb_parc(8),                     /* RDD */
@@ -2281,9 +1930,7 @@ HB_FUNC( __DBAPP )
               hb_param(7, Harbour::Item::LOGICAL),     /* Rest */
               hb_parc(10),                    /* Codepage */
               hb_param(11, Harbour::Item::ANY)));      /* Delimiter */
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, "APPEND FROM");
    }
 }
@@ -2296,8 +1943,7 @@ HB_FUNC( __DBCOPY )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       hb_retl(HB_SUCCESS == hb_rddTransRecords(pArea,
               hb_parc(1),                                              /* file name */
               hb_parc(8),                                              /* RDD */
@@ -2313,9 +1959,7 @@ HB_FUNC( __DBCOPY )
               hb_param(7, Harbour::Item::LOGICAL),                     /* Rest */
               hb_parc(10),                                             /* Codepage */
               hb_param(11, Harbour::Item::ANY)));                      /* Delimiter */
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, "COPY TO");
    }
 }
@@ -2324,8 +1968,7 @@ HB_FUNC( HB_RDDGETTEMPALIAS )
 {
    char szAliasTmp[HB_RDD_MAX_ALIAS_LEN + 1];
 
-   if( hb_rddGetTempAlias(szAliasTmp) == HB_SUCCESS )
-   {
+   if( hb_rddGetTempAlias(szAliasTmp) == HB_SUCCESS ) {
       hb_retc(szAliasTmp);
    }
 }
@@ -2339,8 +1982,7 @@ HB_FUNC( HB_RDDINFO )
    const char * szDriver;
 
    szDriver = hb_parc(3);
-   if( !szDriver ) /* no VIA RDD parameter, use default */
-   {
+   if( !szDriver ) { /* no VIA RDD parameter, use default */
       szDriver = hb_rddDefaultDrv(nullptr);
    }
 
@@ -2349,14 +1991,11 @@ HB_FUNC( HB_RDDINFO )
    pRDDNode = hb_rddFindNode( szDriver, &uiRddID );  /* find the RDDNODE */
    pIndex = hb_param(1, Harbour::Item::NUMERIC);
 
-   if( pRDDNode && pIndex )
-   {
+   if( pRDDNode && pIndex ) {
       PHB_ITEM pInfo = hb_itemParam(2);
       SELF_RDDINFO(pRDDNode, static_cast<HB_USHORT>(hb_itemGetNI(pIndex)), ulConnection, pInfo);
       hb_itemReturnRelease(pInfo);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -2367,27 +2006,21 @@ HB_FUNC( HB_DBDROP )
    HB_ULONG ulConnection = hb_parnl(4);
    const char * szName = hb_parc(1);
 
-   if( szName )
-   {
+   if( szName ) {
       const char * szDriver;
 
-      if( !szName[0] )
-      {
+      if( !szName[0] ) {
          szName = hb_parc(2);
       }
       szDriver = hb_rddFindDrv(hb_parc(3), szName);
-      if( szDriver )
-      {
+      if( szDriver ) {
          pRDDNode = hb_rddFindNode(szDriver, nullptr);  /* find the RDDNODE */
       }
    }
 
-   if( pRDDNode )
-   {
+   if( pRDDNode ) {
       hb_retl(SELF_DROP(pRDDNode, hb_param(1, Harbour::Item::STRING), hb_param(2, Harbour::Item::STRING), ulConnection) == HB_SUCCESS);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -2398,26 +2031,20 @@ HB_FUNC( HB_DBEXISTS )
    HB_ULONG ulConnection = hb_parnl(4);
    const char * szName = hb_parc(1);
 
-   if( szName )
-   {
+   if( szName ) {
       const char * szDriver;
 
-      if( !szName[0] )
-      {
+      if( !szName[0] ) {
          szName = hb_parc(2);
       }
       szDriver = hb_rddFindDrv(hb_parc(3), szName);
-      if( szDriver )
-      {
+      if( szDriver ) {
          pRDDNode = hb_rddFindNode(szDriver, nullptr);  /* find the RDDNODE */
       }
    }
-   if( pRDDNode )
-   {
+   if( pRDDNode ) {
       hb_retl(SELF_EXISTS(pRDDNode, hb_param(1, Harbour::Item::STRING), hb_param(2, Harbour::Item::STRING), ulConnection) == HB_SUCCESS);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -2429,17 +2056,14 @@ HB_FUNC( HB_DBRENAME )
    const char * szName = hb_parc(1);
    PHB_ITEM pTable, pIndex, pNewName;
 
-   if( szName )
-   {
+   if( szName ) {
       const char * szDriver;
 
-      if( !szName[0] )
-      {
+      if( !szName[0] ) {
          szName = hb_parc(2);
       }
       szDriver = hb_rddFindDrv(hb_parc(4), szName);
-      if( szDriver )
-      {
+      if( szDriver ) {
          pRDDNode = hb_rddFindNode(szDriver, nullptr);  /* find the RDDNODE */
       }
    }
@@ -2447,18 +2071,14 @@ HB_FUNC( HB_DBRENAME )
    pTable = hb_param(1, Harbour::Item::STRING);
    pIndex = hb_param(2, Harbour::Item::STRING);
    pNewName = hb_param(3, Harbour::Item::STRING);
-   if( pIndex && !pNewName )
-   {
+   if( pIndex && !pNewName ) {
       pNewName = pIndex;
       pIndex = nullptr;
    }
 
-   if( pRDDNode && pTable && pNewName )
-   {
+   if( pRDDNode && pTable && pNewName ) {
       hb_retl(SELF_RENAME(pRDDNode, pTable, pIndex, pNewName, ulConnection) == HB_SUCCESS);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -2467,26 +2087,20 @@ HB_FUNC( HB_FIELDLEN )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       HB_USHORT uiIndex;
       const char * szField = hb_parc(1);
 
-      if( szField )
-      {
+      if( szField ) {
          uiIndex = hb_rddFieldIndex(pArea, szField);
-      }
-      else
-      {
+      } else {
          uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
       }
 
-      if( uiIndex > 0 )
-      {
+      if( uiIndex > 0 ) {
          PHB_ITEM pItem = hb_itemNew(nullptr);
 
-         if( SELF_FIELDINFO(pArea, uiIndex, DBS_LEN, pItem) == HB_SUCCESS )
-         {
+         if( SELF_FIELDINFO(pArea, uiIndex, DBS_LEN, pItem) == HB_SUCCESS ) {
             hb_itemReturnRelease(pItem);
             return;
          }
@@ -2501,26 +2115,20 @@ HB_FUNC( HB_FIELDDEC )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       HB_USHORT uiIndex;
       const char * szField = hb_parc(1);
 
-      if( szField )
-      {
+      if( szField ) {
          uiIndex = hb_rddFieldIndex(pArea, szField);
-      }
-      else
-      {
+      } else {
          uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
       }
 
-      if( uiIndex > 0 )
-      {
+      if( uiIndex > 0 ) {
          PHB_ITEM pItem = hb_itemNew(nullptr);
 
-         if( SELF_FIELDINFO(pArea, uiIndex, DBS_DEC, pItem) == HB_SUCCESS )
-         {
+         if( SELF_FIELDINFO(pArea, uiIndex, DBS_DEC, pItem) == HB_SUCCESS ) {
             hb_itemReturnRelease(pItem);
             return;
          }
@@ -2535,26 +2143,20 @@ HB_FUNC( HB_FIELDTYPE )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       HB_USHORT uiIndex;
       const char * szField = hb_parc(1);
 
-      if( szField )
-      {
+      if( szField ) {
          uiIndex = hb_rddFieldIndex(pArea, szField);
-      }
-      else
-      {
+      } else {
          uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
       }
 
-      if( uiIndex > 0 )
-      {
+      if( uiIndex > 0 ) {
          PHB_ITEM pItem = hb_itemNew(nullptr);
 
-         if( SELF_FIELDINFO(pArea, uiIndex, DBS_TYPE, pItem) == HB_SUCCESS )
-         {
+         if( SELF_FIELDINFO(pArea, uiIndex, DBS_TYPE, pItem) == HB_SUCCESS ) {
             hb_itemReturnRelease(pItem);
             return;
          }
@@ -2569,22 +2171,17 @@ HB_FUNC( HB_FIELDGET )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       HB_USHORT uiField;
       const char * szField = hb_parc(1);
 
-      if( szField )
-      {
+      if( szField ) {
          uiField = hb_rddFieldIndex(pArea, szField);
-      }
-      else
-      {
+      } else {
          uiField = static_cast<HB_FIELDNO>(hb_parni(1));
       }
 
-      if( uiField > 0 )
-      {
+      if( uiField > 0 ) {
          PHB_ITEM pItem = hb_itemNew(nullptr);
          SELF_GETVALUE(pArea, uiField, pItem);
          hb_itemReturnRelease(pItem);
@@ -2596,27 +2193,20 @@ HB_FUNC( HB_FIELDPUT )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       HB_USHORT uiField;
       const char * szField = hb_parc(1);
 
-      if( szField )
-      {
+      if( szField ) {
          uiField = hb_rddFieldIndex(pArea, szField);
-      }
-      else
-      {
+      } else {
          uiField = static_cast<HB_FIELDNO>(hb_parni(1));
       }
 
-      if( uiField > 0 )
-      {
+      if( uiField > 0 ) {
          PHB_ITEM pItem = hb_param(2, Harbour::Item::ANY);
-         if( pItem && !HB_IS_NIL(pItem) )
-         {
-            if( SELF_PUTVALUE(pArea, uiField, pItem) == HB_SUCCESS )
-            {
+         if( pItem && !HB_IS_NIL(pItem) ) {
+            if( SELF_PUTVALUE(pArea, uiField, pItem) == HB_SUCCESS ) {
                hb_itemReturn(pItem);
             }
          }
@@ -2628,12 +2218,9 @@ HB_FUNC( HB_WAEVAL )
 {
    PHB_ITEM pBlock = hb_param(1, Harbour::Item::BLOCK);
 
-   if( pBlock )
-   {
+   if( pBlock ) {
       hb_rddEvalWA(pBlock);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_USE_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
    }
 }
@@ -2644,27 +2231,21 @@ HB_FUNC( __DBSKIPPER )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       HB_LONG lSkipped = 0;
       HB_BOOL fBEof;
       HB_ULONG ulRecords = 0;
 
-      if( SELF_RECCOUNT(pArea, &ulRecords) == HB_SUCCESS && ulRecords > 0 )
-      {
+      if( SELF_RECCOUNT(pArea, &ulRecords) == HB_SUCCESS && ulRecords > 0 ) {
          HB_LONG lRecs = 1;
 
-         if( HB_ISNUM(1) )
-         {
+         if( HB_ISNUM(1) ) {
             lRecs = hb_parnl(1);
          }
 
-         if( lRecs == 0 )
-         {
+         if( lRecs == 0 ) {
             SELF_SKIP(pArea, 0);
-         }
-         else if( lRecs > 0 )
-         {
+         } else if( lRecs > 0 ) {
             /* the condition below is exact Clipper behavior anyhow
              * we cannot replicate it without introducing serious problem:
              * some RDDs use non continuous record numbers (i.e. ADT) and
@@ -2676,39 +2257,29 @@ HB_FUNC( __DBSKIPPER )
             if( SELF_RECNO(pArea, &ulRecNo) == HB_SUCCESS && ulRecNo != ulRecords + 1 )
 #endif
             {
-               while( lSkipped < lRecs )
-               {
-                  if( SELF_SKIP(pArea, 1) != HB_SUCCESS )
-                  {
+               while( lSkipped < lRecs ) {
+                  if( SELF_SKIP(pArea, 1) != HB_SUCCESS ) {
                      break;
                   }
-                  if( SELF_EOF(pArea, &fBEof) != HB_SUCCESS )
-                  {
+                  if( SELF_EOF(pArea, &fBEof) != HB_SUCCESS ) {
                      break;
                   }
-                  if( fBEof )
-                  {
+                  if( fBEof ) {
                      SELF_SKIP(pArea, -1);
                      break;
                   }
                   lSkipped++;
                }
             }
-         }
-         else /* if( lRecs < 0 ) */
-         {
-            while( lSkipped > lRecs )
-            {
-               if( SELF_SKIP(pArea, -1) != HB_SUCCESS )
-               {
+         } else /* if( lRecs < 0 ) */ {
+            while( lSkipped > lRecs ) {
+               if( SELF_SKIP(pArea, -1) != HB_SUCCESS ) {
                   break;
                }
-               if( SELF_BOF(pArea, &fBEof) != HB_SUCCESS )
-               {
+               if( SELF_BOF(pArea, &fBEof) != HB_SUCCESS ) {
                   break;
                }
-               if( fBEof )
-               {
+               if( fBEof ) {
                   break;
                }
                lSkipped--;
@@ -2716,9 +2287,7 @@ HB_FUNC( __DBSKIPPER )
          }
       }
       hb_retnl(lSkipped);
-   }
-   else
-   {
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }
 }
