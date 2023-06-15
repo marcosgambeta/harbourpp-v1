@@ -80,7 +80,7 @@ CREATE CLASS WvgToolBar INHERIT WvgWindow /*WvgActiveXControl*/
    VAR    sl_buttonMenuClick
    VAR    sl_buttonDropDown
 
-   METHOD numItems()                            INLINE Len( ::aItems )
+   METHOD numItems()                            INLINE Len(::aItems)
 
    METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
@@ -161,7 +161,7 @@ METHOD WvgToolBar:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ::SetWindowProcCallback()
 #endif
 
-   IF ! Empty( ::hWnd )
+   IF !Empty(::hWnd)
       ::SendToolbarMessage( TB_BUTTONSTRUCTSIZE )
       ::hImageList := wapi_ImageList_Create( ::imageWidth, ::imageHeight, ILC_COLOR32 + ILC_MASK, 0, 1 )
       ::SendToolbarMessage( TB_SETIMAGELIST, ::hImageList )
@@ -188,7 +188,7 @@ METHOD WvgToolBar:handleEvent( nMessage, aNM )
       IF ::isParentCrt()
          ::rePosition()
       ENDIF
-      ::sendMessage( WM_SIZE, 0, 0 )
+      ::sendMessage(WM_SIZE, 0, 0)
       RETURN EVENT_HANDELLED
 
    CASE HB_GTE_COMMAND
@@ -201,11 +201,11 @@ METHOD WvgToolBar:handleEvent( nMessage, aNM )
 
       CASE aNMMouse[NMH_code] == NM_CLICK
          IF ( nObj := AScan( ::aItems, {| e_ | e_[1] == aNMMouse[NMH_dwItemSpec] } ) ) > 0
-            IF HB_ISBLOCK( ::sl_lbClick )
+            IF HB_ISBLOCK(::sl_lbClick)
                IF ::isParentCrt()
                   ::oParent:setFocus()
                ENDIF
-               Eval( ::sl_lbClick, ::aItems[nObj][2], , Self )
+               Eval(::sl_lbClick, ::aItems[nObj][2], , Self)
 
             ENDIF
          ENDIF
@@ -225,7 +225,7 @@ METHOD PROCEDURE WvgToolBar:destroy()
 
    LOCAL i, nItems
 
-   IF ( nItems := Len( ::aItems ) ) > 0
+   IF ( nItems := Len(::aItems) ) > 0
       FOR i := 1 TO nItems
          IF ::aItems[i, 2]:image != NIL
             wvg_DeleteObject( ::aItems[i, 2]:image )
@@ -239,7 +239,7 @@ METHOD PROCEDURE WvgToolBar:destroy()
       NEXT
    ENDIF
 
-   IF ! Empty( ::hImageList )
+   IF !Empty(::hImageList)
       wapi_ImageList_Destroy( ::hImageList )
    ENDIF
 
@@ -265,7 +265,7 @@ METHOD WvgToolBar:addItem( cCaption, xImage, xDisabledImage, xHotImage, cDLL, nS
    HB_SYMBOL_UNUSED( cDLL )
 
    /* Issue this at the beginning of first item */
-   IF ! ::lSized
+   IF !::lSized
 #if 0
       ::SendToolbarMessage( TB_SETBUTTONWIDTH, ::buttonWidth, ::buttonWidth )
 #endif
@@ -300,15 +300,15 @@ METHOD WvgToolBar:addItem( cCaption, xImage, xDisabledImage, xHotImage, cDLL, nS
 
    ENDSWITCH
 
-   IF ! Empty( pBitmap )
+   IF !Empty(pBitmap)
       /* oBtn:image := pBitmap */
 
-      IF HB_ISNUMERIC( nMapRGB )
+      IF HB_ISNUMERIC(nMapRGB)
          nBtn := wapi_ImageList_AddMasked( ::hImageList, pBitmap, nMapRGB )
       ELSE
          nBtn := wapi_ImageList_Add( ::hImageList, pBitmap )
       ENDIF
-      IF ! HB_ISPOINTER( xImage )
+      IF !HB_ISPOINTER(xImage)
          wvg_DeleteObject( pBitmap )
       ENDIF
 
@@ -326,7 +326,7 @@ METHOD WvgToolBar:addItem( cCaption, xImage, xDisabledImage, xHotImage, cDLL, nS
 
    ENDIF
 
-   AAdd( ::aItems, { oBtn:command, oBtn } )
+   AAdd(::aItems, { oBtn:command, oBtn })
 
    RETURN oBtn
 
@@ -356,13 +356,13 @@ METHOD WvgToolBar:setPosAndSize()
 
 METHOD WvgToolBar:setSize()
 
-   ::sendMessage( TB_AUTOSIZE, 0, 0 )
+   ::sendMessage(TB_AUTOSIZE, 0, 0)
 
    RETURN Self
 
 METHOD WvgToolBar:buttonClick( xParam )
 
-   IF HB_ISBLOCK( xParam ) .OR. HB_ISNIL( xParam )
+   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
       ::sl_lbClick := xParam
    ENDIF
 
@@ -370,7 +370,7 @@ METHOD WvgToolBar:buttonClick( xParam )
 
 METHOD WvgToolBar:change( xParam )
 
-   IF HB_ISBLOCK( xParam ) .OR. HB_ISNIL( xParam )
+   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
       ::sl_change := xParam
    ENDIF
 
@@ -378,7 +378,7 @@ METHOD WvgToolBar:change( xParam )
 
 METHOD WvgToolBar:buttonMenuClick( xParam )
 
-   IF HB_ISBLOCK( xParam ) .OR. HB_ISNIL( xParam )
+   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
       ::sl_buttonMenuClick := xParam
    ENDIF
 
@@ -386,7 +386,7 @@ METHOD WvgToolBar:buttonMenuClick( xParam )
 
 METHOD WvgToolBar:buttonDropDown( xParam )
 
-   IF HB_ISBLOCK( xParam ) .OR. HB_ISNIL( xParam )
+   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
       ::sl_buttonDropDown := xParam
    ENDIF
 

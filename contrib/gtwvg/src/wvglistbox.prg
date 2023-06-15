@@ -72,16 +72,16 @@ CREATE CLASS WvgListBox INHERIT WvgWindow, WvgDataRef
 
    METHOD handleEvent( nMessage, aNM )
 
-   METHOD getItemHeight()                       INLINE ::sendMessage( LB_GETITEMHEIGHT, 0, 0 )
-   METHOD getTopItem()                          INLINE ::sendMessage( LB_GETTOPINDEX, 0, 0 )
+   METHOD getItemHeight()                       INLINE ::sendMessage(LB_GETITEMHEIGHT, 0, 0)
+   METHOD getTopItem()                          INLINE ::sendMessage(LB_GETTOPINDEX, 0, 0)
    METHOD getVisibleItems()                     VIRTUAL
-   METHOD numItems()                            INLINE ::sendMessage( LB_GETCOUNT, 0, 0 )
-   METHOD setItemsHeight( nPixel )              INLINE ::sendMessage( LB_SETITEMHEIGHT, 0, nPixel )
-   METHOD setTopItem( nIndex )                  INLINE ::sendMessage( LB_SETTOPINDEX, nIndex - 1, 0 )
+   METHOD numItems()                            INLINE ::sendMessage(LB_GETCOUNT, 0, 0)
+   METHOD setItemsHeight( nPixel )              INLINE ::sendMessage(LB_SETITEMHEIGHT, 0, nPixel)
+   METHOD setTopItem( nIndex )                  INLINE ::sendMessage(LB_SETTOPINDEX, nIndex - 1, 0)
 
    METHOD addItem( cItem )                      INLINE wvg_SendMessageText( ::hWnd, LB_ADDSTRING, 0, cItem )
    METHOD clear()
-   METHOD delItem( nIndex )                     INLINE ::sendMessage( LB_DELETESTRING, nIndex - 1, 0 )
+   METHOD delItem( nIndex )                     INLINE ::sendMessage(LB_DELETESTRING, nIndex - 1, 0)
    METHOD getItem( nIndex )                     INLINE wvg_lbGetText( ::hWnd, nIndex - 1 )
    METHOD getTabstops()                         VIRTUAL
    METHOD insItem( nIndex, cItem )              INLINE wvg_SendMessageText( ::hWnd, LB_INSERTSTRING, nIndex - 1, cItem )
@@ -166,7 +166,7 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
       IF ::isParentCrt()
          ::rePosition()
       ENDIF
-      ::sendMessage( WM_SIZE, 0, 0 )
+      ::sendMessage(WM_SIZE, 0, 0)
 
    CASE nMessage == HB_GTE_COMMAND
       DO CASE
@@ -175,8 +175,8 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
          IF ::isParentCrt()
             ::oParent:setFocus()
          ENDIF
-         IF HB_ISBLOCK( ::sl_itemMarked )
-            Eval( ::sl_itemMarked, , , Self )
+         IF HB_ISBLOCK(::sl_itemMarked)
+            Eval(::sl_itemMarked, , , Self)
          ENDIF
          IF ::isParentCrt()
             IF ::pointerFocus
@@ -189,8 +189,8 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
          IF ::isParentCrt()
             ::oParent:setFocus()
          ENDIF
-         IF HB_ISBLOCK( ::sl_itemSelected )
-            Eval( ::sl_itemSelected, , , Self )
+         IF HB_ISBLOCK(::sl_itemSelected)
+            Eval(::sl_itemSelected, , , Self)
          ENDIF
          IF ::isParentCrt()
             IF ::pointerFocus
@@ -211,8 +211,8 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
          IF ::isParentCrt()
             ::oParent:setFocus()
          ENDIF
-         IF HB_ISBLOCK( ::sl_itemSelected )
-            Eval( ::sl_itemSelected, , , Self )
+         IF HB_ISBLOCK(::sl_itemSelected)
+            Eval(::sl_itemSelected, , , Self)
          ENDIF
          IF ::isParentCrt()
             IF ::pointerFocus
@@ -224,10 +224,10 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
    CASE nMessage == HB_GTE_NOTIFY
 
    CASE nMessage == HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC( ::clr_FG )
+      IF HB_ISNUMERIC(::clr_FG)
          wvg_SetTextColor( aNM[1], ::clr_FG )
       ENDIF
-      IF HB_ISNUMERIC( ::hBrushBG )
+      IF HB_ISNUMERIC(::hBrushBG)
          wvg_SetBkMode( aNM[1], 1 )
          RETURN ::hBrushBG
       ELSE
@@ -238,11 +238,11 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
       DO CASE
       CASE aNM[1] == WM_LBUTTONUP
          ::nCurSelected := wvg_lbGetCurSel( ::hWnd ) + 1
-         IF HB_ISBLOCK( ::sl_itemMarked )
+         IF HB_ISBLOCK(::sl_itemMarked)
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
-            Eval( ::sl_itemMarked, , , Self )
+            Eval(::sl_itemMarked, , , Self)
             IF ::isParentCrt()
                ::setFocus()
             ENDIF
@@ -250,11 +250,11 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
 
       CASE aNM[1] == WM_LBUTTONDBLCLK
          ::editBuffer := ::nCurSelected
-         IF HB_ISBLOCK( ::sl_itemSelected )
+         IF HB_ISBLOCK(::sl_itemSelected)
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
-            Eval( ::sl_itemSelected, , , Self )
+            Eval(::sl_itemSelected, , , Self)
             IF ::isParentCrt()
                ::setFocus()
             ENDIF
@@ -264,11 +264,11 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
       CASE aNM[1] == WM_KEYUP
          IF ::nCurSelected != wvg_lbGetCurSel( ::hWnd ) + 1
             ::nCurSelected := wvg_lbGetCurSel( ::hWnd ) + 1
-            IF HB_ISBLOCK( ::sl_itemMarked )
+            IF HB_ISBLOCK(::sl_itemMarked)
                IF ::isParentCrt()
                   ::oParent:setFocus()
                ENDIF
-               Eval( ::sl_itemMarked, , , Self )
+               Eval(::sl_itemMarked, , , Self)
                IF ::isParentCrt()
                   ::setFocus()
                ENDIF
@@ -282,7 +282,7 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
 
 METHOD WvgListBox:clear()
 
-   ::sendMessage( LB_RESETCONTENT, 0, 0 )
+   ::sendMessage(LB_RESETCONTENT, 0, 0)
 
    RETURN Self
 

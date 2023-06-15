@@ -85,23 +85,23 @@ CREATE CLASS WvtPanel INHERIT WvtObject
    VAR    cIconFile
 
    ACCESS TEXT                                    INLINE ::cTxt
-   ASSIGN TEXT( cText )                           INLINE ::cTxt := PadR( cText, ::nRight - ::nLeft - 2 )
+   ASSIGN TEXT(cText)                             INLINE ::cTxt := PadR(cText, ::nRight - ::nLeft - 2)
 
-   METHOD New( oParent, nId, nTop, nLeft )
+   METHOD New(oParent, nId, nTop, nLeft)
    METHOD Refresh()
 
 ENDCLASS
 
-METHOD WvtPanel:New( oParent, nId, nTop, nLeft )
+METHOD WvtPanel:New(oParent, nId, nTop, nLeft)
 
-   ::Super:New( oParent, DLG_OBJ_PANEL, nId, nTop, nLeft, nTop )
+   ::Super:New(oParent, DLG_OBJ_PANEL, nId, nTop, nLeft, nTop)
 
    RETURN Self
 
 METHOD WvtPanel:Refresh()
 
    IF ::Text != NIL
-      hb_DispOutAt( ::nTop, ::nLeft + 1, ::Text, ::cColor )
+      hb_DispOutAt(::nTop, ::nLeft + 1, ::Text, ::cColor)
    ENDIF
 
    RETURN Self

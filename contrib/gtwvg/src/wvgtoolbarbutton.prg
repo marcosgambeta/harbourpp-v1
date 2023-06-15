@@ -79,15 +79,15 @@ CREATE CLASS WvgToolBarButton
    VAR    tooltipText                           INIT ""
    VAR    command                               INIT 0
 
-   METHOD new( cCaption, nStyle, cKey )
+   METHOD new(cCaption, nStyle, cKey)
 
 ENDCLASS
 
-METHOD WvgToolBarButton:new( cCaption, nStyle, cKey )
+METHOD WvgToolBarButton:new(cCaption, nStyle, cKey)
 
-   __defaultNIL( @cCaption, ::caption )
-   __defaultNIL( @nStyle, ::style )
-   __defaultNIL( @cKey, ::key )
+   __defaultNIL(@cCaption, ::caption)
+   __defaultNIL(@nStyle, ::style)
+   __defaultNIL(@cKey, ::key)
 
    ::caption        := cCaption
    ::style          := nStyle

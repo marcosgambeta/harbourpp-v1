@@ -82,19 +82,19 @@ CREATE CLASS WvtTextBox INHERIT WvtObject
 
    VAR    cText                                   INIT ""
 
-   METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
+   METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
    METHOD Configure()
    METHOD Refresh()
-   METHOD SetText( cText )
+   METHOD SetText(cText)
    METHOD HoverOn()
    METHOD HoverOff()
 
 ENDCLASS
 
-METHOD WvtTextBox:New( oParent, nID, nTop, nLeft, nBottom, nRight )
+METHOD WvtTextBox:New(oParent, nID, nTop, nLeft, nBottom, nRight)
 
-   ::Super:New( oParent, DLG_OBJ_TEXTBOX, nID, nTop, nLeft, nBottom, nRight )
+   ::Super:New(oParent, DLG_OBJ_TEXTBOX, nID, nTop, nLeft, nBottom, nRight)
 
    RETURN Self
 
@@ -102,16 +102,16 @@ METHOD WvtTextBox:Create()
 
    ::nTextColorHoverOff := ::nTextColor
 
-   ::hFont := wvt_CreateFont( ::cFont, ::nFontHeight, ::nFontWidth, ;
+   ::hFont := wvt_CreateFont(::cFont, ::nFontHeight, ::nFontWidth, ;
       ::nFontWeight, ::lItalic, ::lUnderline, ::lStrikeout, ;
-      ::nCharSet, ::nFontQuality, 0 )
+      ::nCharSet, ::nFontQuality, 0)
 
    IF ::hFont != 0
-      ::bPaint := {|| wvt_DrawTextBox( ::nTop, ::nLeft, ::nBottom, ::nRight, ;
+      ::bPaint := {|| wvt_DrawTextBox(::nTop, ::nLeft, ::nBottom, ::nRight, ;
          ::aPxlTLBR, ::cText, ::nAlignHorz, ::nAlignVert, ;
-         ::nTextColor, ::nBackColor, ::nBackMode, ::hFont ) }
+         ::nTextColor, ::nBackColor, ::nBackMode, ::hFont) }
 
-      AAdd( ::aPaint, { ::bPaint, { WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight } } )
+      AAdd(::aPaint, { ::bPaint, { WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight } })
    ENDIF
 
    ::Super:Create()
@@ -120,14 +120,14 @@ METHOD WvtTextBox:Create()
 
 METHOD WvtTextBox:Refresh()
 
-   Eval( ::bPaint )
+   Eval(::bPaint)
 
    RETURN Self
 
 METHOD WvtTextBox:Configure()
    RETURN Self
 
-METHOD WvtTextBox:SetText( cText )
+METHOD WvtTextBox:SetText(cText)
 
    IF cText != NIL
       ::cText := cText
@@ -136,7 +136,7 @@ METHOD WvtTextBox:SetText( cText )
 
    RETURN Self
 
-METHOD WvtTextBox:HoverOn( /* cText */ )
+METHOD WvtTextBox:HoverOn(/* cText */)
 
    IF ::nTextColorHoverOn != NIL
       ::nTextColor := ::nTextColorHoverOn
@@ -145,7 +145,7 @@ METHOD WvtTextBox:HoverOn( /* cText */ )
 
    RETURN Self
 
-METHOD WvtTextBox:HoverOff( /* cText */ )
+METHOD WvtTextBox:HoverOff(/* cText */)
 
    IF ::nTextColorHoverOn != NIL
       ::nTextColor := ::nTextColorHoverOff

@@ -83,35 +83,35 @@ CREATE CLASS WvtImage INHERIT WvtObject
    VAR    cImageFile
 
    ACCESS cImage                                  INLINE ::cImageFile
-   ASSIGN cImage( cImg )                          INLINE ::cImageFile := cImg
+   ASSIGN cImage(cImg)                            INLINE ::cImageFile := cImg
 
-   METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
+   METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
-   METHOD SetImage( cImage )
+   METHOD SetImage(cImage)
 
 ENDCLASS
 
-METHOD WvtImage:New( oParent, nID, nTop, nLeft, nBottom, nRight )
+METHOD WvtImage:New(oParent, nID, nTop, nLeft, nBottom, nRight)
 
-   ::Super:New( oParent, DLG_OBJ_IMAGE, nId, nTop, nLeft, nBottom, nRight )
+   ::Super:New(oParent, DLG_OBJ_IMAGE, nId, nTop, nLeft, nBottom, nRight)
 
    RETURN Self
 
 METHOD WvtImage:Create()
 
-   ::bPaint := {|| iif( hb_FileExists( ::cImage ), ;
-      wvt_DrawImage( ::nTop, ::nLeft, ::nBottom, ::nRight, ::cImage ), "" ) }
+   ::bPaint := {|| iif(hb_FileExists(::cImage), ;
+      wvt_DrawImage(::nTop, ::nLeft, ::nBottom, ::nRight, ::cImage), "") }
 
-   AAdd( ::aPaint, { ::bPaint, ;
-      { WVT_BLOCK_IMAGE, ::nTop, ::nLeft, ::nBottom, ::nRight } } )
+   AAdd(::aPaint, { ::bPaint, ;
+      { WVT_BLOCK_IMAGE, ::nTop, ::nLeft, ::nBottom, ::nRight } })
 
    ::Super:Create()
 
    RETURN Self
 
-METHOD WvtImage:SetImage( cImage )
+METHOD WvtImage:SetImage(cImage)
 
-   IF cImage != NIL .AND. hb_FileExists( cImage )
+   IF cImage != NIL .AND. hb_FileExists(cImage)
       ::cImageFile := cImage
       ::Refresh()
    ENDIF

@@ -80,44 +80,44 @@
 /* Class WvtConsole */
 CREATE CLASS WvtConsole INHERIT WvtObject
 
-   METHOD New( oParent )
-   METHOD Say( nRow, nCol, xExp, cColor )
-   METHOD Box( nRow, nCol, n2Row, n2Col, cBoxChars, cColor )
+   METHOD New(oParent)
+   METHOD Say(nRow, nCol, xExp, cColor)
+   METHOD Box(nRow, nCol, n2Row, n2Col, cBoxChars, cColor)
 
 ENDCLASS
 
-METHOD WvtConsole:New( oParent )
+METHOD WvtConsole:New(oParent)
 
-   ::Super:New( oParent, DLG_OBJ_CONSOLE, , -1, -1, -1, -1 )
+   ::Super:New(oParent, DLG_OBJ_CONSOLE, , -1, -1, -1, -1)
 
    RETURN Self
 
-METHOD WvtConsole:Say( nRow, nCol, xExp, cColor )
+METHOD WvtConsole:Say(nRow, nCol, xExp, cColor)
 
    LOCAL nCRow, nCCol, nCursor
 
    IF nRow >= 0 .AND. nCol >= 0 .AND. xExp != NIL
-      nCursor := SetCursor( SC_NONE )
+      nCursor := SetCursor(SC_NONE)
       nCRow   := Row()
       nCCol   := Col()
-      hb_DispOutAt( nRow, nCol, xExp, cColor )
-      SetPos( nCRow, nCCol )
-      SetCursor( nCursor )
+      hb_DispOutAt(nRow, nCol, xExp, cColor)
+      SetPos(nCRow, nCCol)
+      SetCursor(nCursor)
    ENDIF
 
    RETURN Self
 
-METHOD WvtConsole:Box( nRow, nCol, n2Row, n2Col, cBoxChars, cColor )
+METHOD WvtConsole:Box(nRow, nCol, n2Row, n2Col, cBoxChars, cColor)
 
    LOCAL nCRow, nCCol, nCursor
 
    IF nRow >= 0 .AND. nCol >= 0
-      nCursor := SetCursor( SC_NONE )
+      nCursor := SetCursor(SC_NONE)
       nCRow   := Row()
       nCCol   := Col()
-      hb_DispBox( nRow, nCol, n2Row, n2Col, cBoxChars, cColor )
-      SetPos( nCRow, nCCol )
-      SetCursor( nCursor )
+      hb_DispBox(nRow, nCol, n2Row, n2Col, cBoxChars, cColor)
+      SetPos(nCRow, nCCol)
+      SetCursor(nCursor)
    ENDIF
 
    RETURN Self

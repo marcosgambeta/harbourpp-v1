@@ -60,23 +60,23 @@ THREAD STATIC t_oCrt
 
 EXIT PROCEDURE KillGTChildren()
 
-   IF HB_ISOBJECT( t_oCrt ) .AND. __objGetClsName( t_oCrt ) == "WVGCRT" .AND. t_oCrt:isGT
+   IF HB_ISOBJECT(t_oCrt) .AND. __objGetClsName(t_oCrt) == "WVGCRT" .AND. t_oCrt:isGT
       t_oCrt:destroy()
       t_oCrt := NIL
    ENDIF
 
    RETURN
 
-FUNCTION WvgSetAppWindow( oCrt )
+FUNCTION WvgSetAppWindow(oCrt)
 
    LOCAL ooCrt := t_oCrt
 
-   IF Empty( oCrt )
-      IF Empty( t_oCrt )
+   IF Empty(oCrt)
+      IF Empty(t_oCrt)
          t_oCrt := WvgCrt():new()
          t_oCrt:hWnd := wvt_GetWindowHandle()
-         t_oCrt:pWnd := win_N2P( t_oCrt:hWnd )
-         hb_gtInfo( HB_GTI_NOTIFIERBLOCKGUI, {| nEvent, ... | t_oCrt:notifier( nEvent, ... ) } )
+         t_oCrt:pWnd := win_N2P(t_oCrt:hWnd)
+         hb_gtInfo(HB_GTI_NOTIFIERBLOCKGUI, {| nEvent, ... | t_oCrt:notifier(nEvent, ...) })
          t_oCrt:isGT := .T.
          RETURN t_oCrt
       ENDIF

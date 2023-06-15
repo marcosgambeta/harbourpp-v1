@@ -141,8 +141,8 @@ CREATE CLASS WvtObject
    VAR    nAlignVert
    VAR    nAngle
 
-   ACCESS ToolTip                                 INLINE iif( ::cTooltip == NIL, "", ::cTooltip )
-   ASSIGN ToolTip( cTip )                         INLINE ::cToolTip := cTip
+   ACCESS ToolTip                                 INLINE iif(::cTooltip == NIL, "", ::cTooltip)
+   ASSIGN ToolTip(cTip)                           INLINE ::cToolTip := cTip
 
    VAR    bHandleEvent
    VAR    bOnCreate                               INIT {|| NIL }
@@ -159,20 +159,20 @@ CREATE CLASS WvtObject
    VAR    bOnHilite                               INIT {|| NIL }
    VAR    bOnDeHilite                             INIT {|| NIL }
 
-   ACCESS nChildren                               INLINE Len( ::aChildren )
+   ACCESS nChildren                               INLINE Len(::aChildren)
    VAR    nIndexOrder
 
-   METHOD New( oParent, nType, nID, nTop, nLeft, nBottom, nRight )
+   METHOD New(oParent, nType, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
    METHOD Destroy()
    METHOD CreatePopup()
    METHOD ShowPopup()
 
-   METHOD SetToolTip()                            INLINE wvt_SetToolTip( ::nTop, ::nLeft, ::nBottom, ::nRight, ::Tooltip )
-   METHOD Refresh()                               INLINE wvt_InvalidateRect( ::nTop, ::nLeft, ::nTop, ::nLeft )
-   METHOD Eval( bBlock )                          INLINE iif( HB_ISEVALITEM( bBlock ), Eval( bBlock, Self ), NIL )
-   METHOD AddChild( aChild )                      INLINE AAdd( ::aChildren, aChild )
-   METHOD AddParent( aParent )                    INLINE AAdd( ::aParent, aParent )
+   METHOD SetToolTip()                            INLINE wvt_SetToolTip(::nTop, ::nLeft, ::nBottom, ::nRight, ::Tooltip)
+   METHOD Refresh()                               INLINE wvt_InvalidateRect(::nTop, ::nLeft, ::nTop, ::nLeft)
+   METHOD Eval(bBlock)                            INLINE iif(HB_ISEVALITEM(bBlock), Eval(bBlock, Self), NIL)
+   METHOD AddChild(aChild)                        INLINE AAdd(::aChildren, aChild)
+   METHOD AddParent(aParent)                      INLINE AAdd(::aParent, aParent)
 
    METHOD PaintBlock()                            INLINE NIL
    METHOD Hilite()                                INLINE NIL
@@ -189,13 +189,13 @@ CREATE CLASS WvtObject
    METHOD RestSettings()                          INLINE NIL
    METHOD Activate()                              INLINE NIL
    METHOD DeActivate()                            INLINE NIL
-   METHOD NotifyChild( /* nChild */ )             INLINE NIL
+   METHOD NotifyChild(/* nChild */)               INLINE NIL
 
 ENDCLASS
 
-METHOD WvtObject:New( oParent, nType, nID, nTop, nLeft, nBottom, nRight )
+METHOD WvtObject:New(oParent, nType, nID, nTop, nLeft, nBottom, nRight)
 
-   IF ! HB_ISNUMERIC( nID )
+   IF !HB_ISNUMERIC(nID)
       nID := ++::nObjID
    ENDIF
 
@@ -277,7 +277,7 @@ METHOD WvtObject:New( oParent, nType, nID, nTop, nLeft, nBottom, nRight )
 
 METHOD WvtObject:Create()
 
-   ::Eval( ::bOnCreate )
+   ::Eval(::bOnCreate)
    ::CreatePopup()
 
    RETURN Self
@@ -285,12 +285,12 @@ METHOD WvtObject:Create()
 METHOD WvtObject:Destroy()
 
    IF ::hFont != NIL
-      wvg_DeleteObject( ::hFont )
+      wvg_DeleteObject(::hFont)
       ::hFont := NIL
    ENDIF
 
    IF ::hPopup != NIL
-      wvt_DestroyMenu( ::hPopup )
+      wvt_DestroyMenu(::hPopup)
       ::hPopup := NIL
    ENDIF
 
@@ -300,16 +300,16 @@ METHOD WvtObject:CreatePopup()
 
    LOCAL i, nID
 
-   IF ! Empty( ::aPopup ) .AND. ::hPopup == NIL
+   IF !Empty(::aPopup) .AND. ::hPopup == NIL
       ::hPopup := wvt_CreatePopupMenu()
 
-      FOR i := 1 TO Len( ::aPopup )
+      FOR i := 1 TO Len(::aPopup)
 
-         ASize( ::aPopup[i], 3 )
+         ASize(::aPopup[i], 3)
          nID := ::nPopupItemID++
          ::aPopup[i][3] := nID
 
-         wvt_AppendMenu( ::hPopup, MF_ENABLED + MF_STRING, nID, ::aPopup[i][1] )
+         wvt_AppendMenu(::hPopup, MF_ENABLED + MF_STRING, nID, ::aPopup[i][1])
       NEXT
    ENDIF
 
@@ -322,14 +322,14 @@ METHOD WvtObject:ShowPopup()
    IF ::hPopup != NIL
       aPos := wvt_GetCursorPos()
 
-      nRet := wvt_TrackPopupMenu( ::hPopup, TPM_CENTERALIGN + TPM_RETURNCMD, ;
-         aPos[1], aPos[2], 0, wvt_GetWindowHandle() )
+      nRet := wvt_TrackPopupMenu(::hPopup, TPM_CENTERALIGN + TPM_RETURNCMD, ;
+         aPos[1], aPos[2], 0, wvt_GetWindowHandle())
       IF nRet > 0
-         IF ( n := AScan( ::aPopup, {| e_ | e_[3] == nRet } ) ) > 0
+         IF (n := AScan(::aPopup, {| e_ | e_[3] == nRet })) > 0
             lRet := .T.
 
-            IF HB_ISBLOCK( ::aPopup[n][2] )
-               Eval( ::aPopup[n][2] )
+            IF HB_ISBLOCK(::aPopup[n][2])
+               Eval(::aPopup[n][2])
             ENDIF
          ENDIF
       ENDIF

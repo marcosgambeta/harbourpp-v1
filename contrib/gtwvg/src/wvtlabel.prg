@@ -80,8 +80,8 @@
 /* Class WvtLabel */
 CREATE CLASS WvtLabel INHERIT WvtObject
 
-   ACCESS TEXT                                    INLINE iif( ::cText == NIL, "", ::cText )
-   ASSIGN TEXT( cTxt )                            INLINE ::cText := iif( cTxt == NIL, "", cTxt )
+   ACCESS TEXT                                    INLINE iif(::cText == NIL, "", ::cText)
+   ASSIGN TEXT( cTxt )                            INLINE ::cText := iif(cTxt == NIL, "", cTxt)
 
    METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
    METHOD create( lConfg )
@@ -103,11 +103,11 @@ METHOD WvtLabel:New( oParent, nID, nTop, nLeft, nBottom, nRight )
 
 METHOD WvtLabel:Create( lConfg )
 
-   __defaultNIL( @lConfg, .F. )
+   __defaultNIL(@lConfg, .F.)
 
-   __defaultNIL( @::nBottom, ::nTop )
-   __defaultNIL( @::nRight, ::nLeft + Len( ::Text ) )
-   __defaultNIL( @::nTextColor, RGB( 0, 0, 0 ) )
+   __defaultNIL(@::nBottom, ::nTop)
+   __defaultNIL(@::nRight, ::nLeft + Len(::Text))
+   __defaultNIL(@::nTextColor, RGB( 0, 0, 0 ))
 
    ::nTextColorHoverOff := ::nTextColor
    ::nBackColorHoverOff := ::nBackColor
@@ -115,10 +115,10 @@ METHOD WvtLabel:Create( lConfg )
    ::hFont := wvt_CreateFont( ::cFont, ::nFontHeight, ::nFontWidth, ::nFontWeight, ::lItalic, ;
       ::lUnderline, ::lStrikeout, ::nCharSet, ::nFontQuality, ::nAngle )
    IF ::hFont != 0
-      IF ! lConfg
+      IF !lConfg
          ::bPaint := {|| wvt_DrawLabelObj( ::nTop, ::nLeft, ::nBottom, ::nRight, ;
             ::Text, ::nAlignHorz, ::nAlignVert, ::nTextColor, ::nBackColor, ::hFont ) }
-         AAdd( ::aPaint, { ::bPaint, { WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight } } )
+         AAdd(::aPaint, { ::bPaint, { WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight } })
       ENDIF
    ENDIF
 
@@ -128,13 +128,13 @@ METHOD WvtLabel:Create( lConfg )
 
 METHOD WvtLabel:Refresh()
 
-   Eval( ::bPaint )
+   Eval(::bPaint)
 
    RETURN Self
 
 METHOD WvtLabel:SetText( cTxt )
 
-   IF HB_ISSTRING( cTxt )
+   IF HB_ISSTRING(cTxt)
       ::Text := cTxt
       ::Refresh()
    ENDIF
@@ -143,7 +143,7 @@ METHOD WvtLabel:SetText( cTxt )
 
 METHOD WvtLabel:SetTextColor( nRGB )
 
-   IF HB_ISNUMERIC( nRGB )
+   IF HB_ISNUMERIC(nRGB)
       ::nTextColor := nRGB
       ::nTextColorHoverOff := nRGB
       ::Refresh()
@@ -153,7 +153,7 @@ METHOD WvtLabel:SetTextColor( nRGB )
 
 METHOD WvtLabel:SetBackColor( nRGB )
 
-   IF HB_ISNUMERIC( nRGB )
+   IF HB_ISNUMERIC(nRGB)
       ::nBackColor := nRGB
       ::nBackColorHoverOff := nRGB
       ::Refresh()

@@ -220,17 +220,17 @@ METHOD WvgStatic:handleEvent( nMessage, aNM )
       IF ::isParentCrt()
          ::rePosition()
       ENDIF
-      IF HB_ISBLOCK( ::sl_resize )
-         Eval( ::sl_resize, , , Self )
+      IF HB_ISBLOCK(::sl_resize)
+         Eval(::sl_resize, , , Self)
       ENDIF
-      AEval( ::aChildren, {| o | o:handleEvent( HB_GTE_RESIZED, { 0, 0, 0, 0, 0 } ) } )
+      AEval(::aChildren, {| o | o:handleEvent( HB_GTE_RESIZED, { 0, 0, 0, 0, 0 } ) })
       RETURN EVENT_HANDELLED
 
    CASE nMessage == HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC( ::clr_FG )
+      IF HB_ISNUMERIC(::clr_FG)
          wvg_SetTextColor( aNM[1], ::clr_FG )
       ENDIF
-      IF HB_ISNUMERIC( ::hBrushBG )
+      IF HB_ISNUMERIC(::hBrushBG)
          wvg_SetBkMode( aNM[1], 1 )
          RETURN ::hBrushBG
       ELSE
@@ -265,7 +265,7 @@ METHOD WvgStatic:setCaption( xCaption, cDll )
 
    HB_SYMBOL_UNUSED( cDll )
 
-   __defaultNIL( @xCaption, ::caption )
+   __defaultNIL(@xCaption, ::caption)
    ::caption := xCaption
 
    DO CASE
@@ -277,9 +277,9 @@ METHOD WvgStatic:setCaption( xCaption, cDll )
          wvg_DeleteObject( ::hBitmap )
       ENDIF
 
-      ::hBitmap := wvg_LoadImage( ::caption, iif( HB_ISNUMERIC( ::caption ), 1, 2 ) )
+      ::hBitmap := wvg_LoadImage( ::caption, iif(HB_ISNUMERIC(::caption), 1, 2) )
 
-      wvg_SendMessage( ::hWnd, STM_SETIMAGE, IMAGE_BITMAP, ::hBitmap )
+      wvg_SendMessage(::hWnd, STM_SETIMAGE, IMAGE_BITMAP, ::hBitmap)
 
    ENDCASE
 

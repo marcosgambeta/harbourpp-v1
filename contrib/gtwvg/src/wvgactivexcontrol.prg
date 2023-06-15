@@ -122,39 +122,39 @@ METHOD WvgActiveXControl:Create( oParent, oOwner, aPos, aSize, aPresParams, lVis
 
    ::WvgWindow:create( @oParent, @oOwner, aPos, aSize, aPresParams, lVisible )
 
-   __defaultNIL( @cCLSID, ::CLSID )
-   __defaultNIL( @cLicense, ::license )
+   __defaultNIL(@cCLSID, ::CLSID)
+   __defaultNIL(@cLicense, ::license)
 
    ::CLSID      := cCLSID
    ::license    := cLicense
-   ::hContainer := iif( HB_ISOBJECT( ::oParent ), ::oParent:getHWND(), ::oParent )
+   ::hContainer := iif(HB_ISOBJECT(::oParent), ::oParent:getHWND(), ::oParent)
 
-   IF ! HB_ISNUMERIC( ::hContainer ) .OR. ! HB_ISSTRING( ::CLSID )
+   IF !HB_ISNUMERIC(::hContainer) .OR. !HB_ISSTRING(::CLSID)
       RETURN NIL
    ENDIF
 
    ::hWnd := NIL
-   ::nID  := iif( HB_ISOBJECT( ::oParent ), ::oParent:GetControlId(), ::getControlID() )
+   ::nID  := iif(HB_ISOBJECT(::oParent), ::oParent:GetControlId(), ::getControlID())
    ::oOLE := win_oleAuto()
 
    win_axInit()
 
    hWnd := wapi_CreateWindowEx( ::exStyle, "AtlAxWin", ::CLSID, ::style, ::aPos[1], ::aPos[2], ;
                                 ::aSize[1], ::aSize[2], win_N2P( ::hContainer ), 0, NIL, NIL )
-   IF Empty( hWnd )
+   IF Empty(hWnd)
       RETURN NIL
    ENDIF
    ::hWnd := win_P2N( hWnd )
    ::pWnd := hWnd
 
    hObj := __axGetControl( ::pWnd )
-   IF Empty( hObj )
+   IF Empty(hObj)
       RETURN NIL
    ENDIF
    ::oOLE:__hObj := hObj
    __axDoVerb( ::pWnd, -4 )
 
-   IF ! Empty( ::hEvents )
+   IF !Empty(::hEvents)
       ::oOle:__hSink := __axRegisterHandler( ::oOle:__hObj, {| nEvent, ... | ::execEvent( nEvent, ... ) } )
    ENDIF
 
@@ -162,7 +162,7 @@ METHOD WvgActiveXControl:Create( oParent, oOwner, aPos, aSize, aPresParams, lVis
    ::SetWindowProcCallback()  /* Is this needed to catch windowing events ? - NO */
 #endif
 
-   IF HB_ISOBJECT( ::oParent )
+   IF HB_ISOBJECT(::oParent)
       ::oParent:addChild( Self )
    ENDIF
 
@@ -184,12 +184,12 @@ METHOD PROCEDURE WvgActiveXControl:execEvent( nEvent, ... )
    LOCAL cEvents := hb_ValToStr( nEvent ) + ", "
    LOCAL aEvents := { ... }
 
-   AEval( aEvents, {| xEvent | cEvents += hb_ValToStr( xEvent ) + ", " } )
+   AEval(aEvents, {| xEvent | cEvents += hb_ValToStr( xEvent ) + ", " })
    hb_traceLog( cEvents )
 #endif
 
    IF hb_HHasKey( ::hEvents, nEvent )
-      Eval( ::hEvents[nEvent], ... )
+      Eval(::hEvents[nEvent], ...)
    ENDIF
 
    RETURN
@@ -206,8 +206,8 @@ METHOD WvgActiveXControl:handleEvent( nEvent, aNM )
       IF ::isParentCrt()
          ::rePosition()
       ENDIF
-      IF HB_ISBLOCK( ::sl_resize )
-         Eval( ::sl_resize, , , Self )
+      IF HB_ISBLOCK(::sl_resize)
+         Eval(::sl_resize, , , Self)
       ENDIF
       EXIT
 
@@ -221,15 +221,15 @@ METHOD WvgActiveXControl:handleEvent( nEvent, aNM )
 METHOD WvgActiveXControl:OnError()
 
 #if 0
-   hb_traceLog( "HI: " + hb_ValToStr( __GetMessage() ) + " : " + Str( Len( hb_AParams() ) ) )
+   hb_traceLog( "HI: " + hb_ValToStr( __GetMessage() ) + " : " + Str( Len(hb_AParams()) ) )
 #endif
 
    RETURN hb_ExecFromArray( ::oOLE, __GetMessage(), hb_AParams() )
 
 METHOD PROCEDURE WvgActiveXControl:Destroy()
 
-   IF ! Empty( ::oOLE )
-      IF ! Empty( ::oOLE:__hObj )
+   IF !Empty(::oOLE)
+      IF !Empty(::oOLE:__hObj)
          IF wapi_IsWindow( ::pWnd )
             wapi_DestroyWindow( ::pWnd )
          ENDIF
@@ -241,7 +241,7 @@ METHOD PROCEDURE WvgActiveXControl:Destroy()
 
 METHOD WvgActiveXControl:mapEvent( nEvent, bBlock )
 
-   IF HB_ISNUMERIC( nEvent ) .AND. HB_ISBLOCK( bBlock )
+   IF HB_ISNUMERIC(nEvent) .AND. HB_ISBLOCK(bBlock)
       ::hEvents[nEvent] := bBlock
    ENDIF
 

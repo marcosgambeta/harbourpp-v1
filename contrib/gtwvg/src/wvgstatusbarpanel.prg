@@ -74,18 +74,18 @@ CREATE CLASS WvgStatusBarPanel
    VAR    width                                 INIT 0
    VAR    minWidth                              INIT 0
 
-   METHOD new( cCaption, nStyle, cKey )
-   METHOD caption( cCaption )                   SETGET
+   METHOD new(cCaption, nStyle, cKey)
+   METHOD caption(cCaption)                     SETGET
 
    VAR    oParent
 
 ENDCLASS
 
-METHOD WvgStatusBarPanel:new( cCaption, nStyle, cKey )
+METHOD WvgStatusBarPanel:new(cCaption, nStyle, cKey)
 
-   __defaultNIL( @cCaption, ::sl_caption )
-   __defaultNIL( @nStyle, ::style )
-   __defaultNIL( @cKey, ::key )
+   __defaultNIL(@cCaption, ::sl_caption)
+   __defaultNIL(@nStyle, ::style)
+   __defaultNIL(@cKey, ::key)
 
    ::sl_caption     := cCaption
    ::style          := nStyle
@@ -93,16 +93,16 @@ METHOD WvgStatusBarPanel:new( cCaption, nStyle, cKey )
 
    RETURN Self
 
-METHOD WvgStatusBarPanel:caption( cCaption )
+METHOD WvgStatusBarPanel:caption(cCaption)
 
    IF cCaption == NIL
       RETURN ::sl_caption
    ELSE
-      __defaultNIL( @cCaption, ::sl_caption )
+      __defaultNIL(@cCaption, ::sl_caption)
 
       ::sl_caption := cCaption
 
-      wvg_StatusBarSetText( ::oParent:hWnd, ::index, cCaption )
+      wvg_StatusBarSetText(::oParent:hWnd, ::index, cCaption)
    ENDIF
 
    RETURN Self

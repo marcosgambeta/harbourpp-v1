@@ -110,15 +110,15 @@ METHOD WvtProgressBar:New( oParent, nID, nTop, nLeft, nBottom, nRight )
 
 METHOD WvtProgressBar:Create()
 
-   __defaultNIL( @::nTop, 0 )
-   __defaultNIL( @::nLeft, 0 )
-   __defaultNIL( @::nBottom, iif( ::lVertical, ::nTop + 9, ::nTop ) )
-   __defaultNIL( @::nRight, iif( ::lVertical, ::nLeft + 1, ::nLeft + 19 ) )
-   __defaultNIL( @::nTextColor, RGB( 255, 255, 255 ) )
-   __defaultNIL( @::nBackColor, RGB( 198, 198, 198 ) )
+   __defaultNIL(@::nTop, 0)
+   __defaultNIL(@::nLeft, 0)
+   __defaultNIL(@::nBottom, iif(::lVertical, ::nTop + 9, ::nTop))
+   __defaultNIL(@::nRight, iif(::lVertical, ::nLeft + 1, ::nLeft + 19))
+   __defaultNIL(@::nTextColor, RGB( 255, 255, 255 ))
+   __defaultNIL(@::nBackColor, RGB( 198, 198, 198 ))
 
    ::bPaint := {|| ::Display() }
-   AAdd( ::aPaint, { ::bPaint, { WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight } } )
+   AAdd(::aPaint, { ::bPaint, { WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight } })
 
    ::Super:Create()
 
@@ -126,12 +126,12 @@ METHOD WvtProgressBar:Create()
 
 METHOD WvtProgressBar:Display( nCurrent, nTotal )
 
-   IF ! ::lActive
+   IF !::lActive
       RETURN Self
    ENDIF
 
-   __defaultNIL( @nCurrent, ::nCurrent )
-   __defaultNIL( @nTotal, ::nTotal )
+   __defaultNIL(@nCurrent, ::nCurrent)
+   __defaultNIL(@nTotal, ::nTotal)
 
    ::nCurrent := nCurrent
    ::nTotal   := nTotal

@@ -112,7 +112,7 @@ METHOD WvgTabPage:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    ::SetWindowProcCallback()
 
-   __defaultNIL( @::caption, " " )
+   __defaultNIL(@::caption, " ")
 
    wapi_TabCtrl_InsertItem( ::pWnd, 0, ::caption )
 
@@ -132,7 +132,7 @@ METHOD WvgTabPage:handleEvent( nMessage, aNM )
 
    DO CASE
    CASE nMessage == HB_GTE_SETFOCUS
-      IF HB_ISBLOCK( ::sl_tabActivate )
+      IF HB_ISBLOCK(::sl_tabActivate)
          RETURN EVENT_HANDELLED
       ENDIF
 
@@ -140,7 +140,7 @@ METHOD WvgTabPage:handleEvent( nMessage, aNM )
 
 
    CASE nMessage == HB_GTE_RESIZED
-      ::sendMessage( WM_SIZE, 0, 0 )
+      ::sendMessage(WM_SIZE, 0, 0)
       RETURN EVENT_HANDELLED
 
    CASE nMessage == HB_GTE_NOTIFY
@@ -159,7 +159,7 @@ METHOD WvgTabPage:handleEvent( nMessage, aNM )
 
 METHOD WvgTabPage:tabActivate( xParam )
 
-   IF HB_ISBLOCK( xParam )
+   IF HB_ISBLOCK(xParam)
       ::sl_tabActivate := xParam
    ENDIF
 

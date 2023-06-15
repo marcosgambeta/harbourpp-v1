@@ -108,7 +108,7 @@ METHOD Wvg3State:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ::setCaption( ::caption )
 
    IF ::selection
-      ::sendMessage( BM_SETCHECK, BST_CHECKED, 0 )
+      ::sendMessage(BM_SETCHECK, BST_CHECKED, 0)
    ENDIF
 
    IF ::visible
@@ -128,17 +128,17 @@ METHOD Wvg3State:handleEvent( nMessage, aNM )
       IF aNM[NMH_code] == BN_CLICKED
          ::editBuffer := wvg_Button_GetCheck( ::hWnd )
 
-         IF HB_ISBLOCK( ::sl_lbClick )
-            Eval( ::sl_lbClick, ::editBuffer, , Self )
+         IF HB_ISBLOCK(::sl_lbClick)
+            Eval(::sl_lbClick, ::editBuffer, , Self)
             RETURN 0
          ENDIF
       ENDIF
 
    CASE nMessage == HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC( ::clr_FG )
+      IF HB_ISNUMERIC(::clr_FG)
          wvg_SetTextColor( aNM[1], ::clr_FG )
       ENDIF
-      IF HB_ISNUMERIC( ::hBrushBG )
+      IF HB_ISNUMERIC(::hBrushBG)
          wvg_SetBkMode( aNM[1], 1 )
          RETURN ::hBrushBG
       ELSE
@@ -165,7 +165,7 @@ METHOD Wvg3State:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible 
 
 METHOD Wvg3State:setCaption( xCaption )
 
-   IF HB_ISSTRING( xCaption )
+   IF HB_ISSTRING(xCaption)
       ::caption := xCaption
       wvg_SendMessageText( ::hWnd, WM_SETTEXT, 0, ::caption )
    ENDIF

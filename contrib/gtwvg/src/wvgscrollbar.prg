@@ -136,10 +136,10 @@ METHOD WvgScrollBar:handleEvent( nMessage, aNM )
       IF ::isParentCrt()
          ::rePosition()
       ENDIF
-      ::sendMessage( WM_SIZE, 0, 0 )
+      ::sendMessage(WM_SIZE, 0, 0)
 
    CASE nMessage == HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC( ::hBrushBG )
+      IF HB_ISNUMERIC(::hBrushBG)
          wvg_SetBkMode( aNM[1], 1 )
          RETURN ::hBrushBG
       ENDIF
@@ -149,7 +149,7 @@ METHOD WvgScrollBar:handleEvent( nMessage, aNM )
          ::oParent:setFocus()
       ENDIF
 
-      IF ! HB_ISBLOCK( ::sl_xbeSB_Scroll )
+      IF !HB_ISBLOCK(::sl_xbeSB_Scroll)
          RETURN EVENT_UNHANDELLED
       ENDIF
 
@@ -212,7 +212,7 @@ METHOD WvgScrollBar:handleEvent( nMessage, aNM )
       ENDCASE
 
       ::sl_editBuffer := nScrPos
-      Eval( ::sl_xbeSB_Scroll, { nScrPos, nCommand }, , Self )
+      Eval(::sl_xbeSB_Scroll, { nScrPos, nCommand }, , Self)
       RETURN EVENT_HANDELLED
 
    CASE nMessage == HB_GTE_VSCROLL
@@ -227,7 +227,7 @@ METHOD WvgScrollBar:handleEvent( nMessage, aNM )
          nScrPos := wapi_GetScrollPos( ::pWnd, SB_CTL )
       ENDIF
 
-      IF ! HB_ISBLOCK( ::sl_xbeSB_Scroll )
+      IF !HB_ISBLOCK(::sl_xbeSB_Scroll)
          RETURN EVENT_UNHANDELLED
       ENDIF
 
@@ -283,7 +283,7 @@ METHOD WvgScrollBar:handleEvent( nMessage, aNM )
       ENDCASE
 
       ::sl_editBuffer := nScrPos
-      Eval( ::sl_xbeSB_Scroll, { nScrPos, nCommand }, , Self )
+      Eval(::sl_xbeSB_Scroll, { nScrPos, nCommand }, , Self)
       RETURN EVENT_HANDELLED
 
    ENDCASE
@@ -298,7 +298,7 @@ METHOD PROCEDURE WvgScrollBar:destroy()
 
 METHOD WvgScrollBar:Scroll( xParam )
 
-   IF HB_ISBLOCK( xParam )
+   IF HB_ISBLOCK(xParam)
       ::sl_xbeSB_Scroll := xParam
    ENDIF
 

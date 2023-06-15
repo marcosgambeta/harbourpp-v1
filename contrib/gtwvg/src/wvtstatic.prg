@@ -99,7 +99,7 @@ CREATE CLASS WvtStatic INHERIT WvtObject
 
    VAR    aPxlOffSet                              INIT {}
 
-   METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
+   METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
    METHOD Refresh()
    METHOD HoverOn()
@@ -107,9 +107,9 @@ CREATE CLASS WvtStatic INHERIT WvtObject
 
 ENDCLASS
 
-METHOD WvtStatic:New( oParent, nID, nTop, nLeft, nBottom, nRight )
+METHOD WvtStatic:New(oParent, nID, nTop, nLeft, nBottom, nRight)
 
-   ::Super:New( oParent, DLG_OBJ_STATIC, nID, nTop, nLeft, nBottom, nRight )
+   ::Super:New(oParent, DLG_OBJ_STATIC, nID, nTop, nLeft, nBottom, nRight)
 
    RETURN Self
 
@@ -121,54 +121,54 @@ METHOD WvtStatic:Create()
 
    CASE WVT_STATIC_LINE
       lInside := .T.
-      ::bPaint  := {|| wvt_DrawLine( ::nTop, ::nLeft, ::nBottom, ::nRight, ;
-         ::nOrient, ::nFormat, ::nAlign, ::nStyle, ::nThick, ::nColor ) }
+      ::bPaint  := {|| wvt_DrawLine(::nTop, ::nLeft, ::nBottom, ::nRight, ;
+         ::nOrient, ::nFormat, ::nAlign, ::nStyle, ::nThick, ::nColor) }
       EXIT
 
    CASE WVT_STATIC_BOXRAISED
-      ::bPaint := {|| wvt_DrawBoxRaised( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      ::bPaint := {|| wvt_DrawBoxRaised(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet) }
       EXIT
 
    CASE WVT_STATIC_BOXRECESSED
-      ::bPaint := {|| wvt_DrawBoxRecessed( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      ::bPaint := {|| wvt_DrawBoxRecessed(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet) }
       EXIT
 
    CASE WVT_STATIC_BOXGROUP
-      ::bPaint := {|| wvt_DrawBoxGroup( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      ::bPaint := {|| wvt_DrawBoxGroup(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet) }
       EXIT
 
    CASE WVT_STATIC_BOXGROUPRAISED
-      ::bPaint := {|| wvt_DrawBoxGroupRaised( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      ::bPaint := {|| wvt_DrawBoxGroupRaised(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet) }
       EXIT
 
    CASE WVT_STATIC_OUTLINE
-      ::bPaint := {|| wvt_DrawOutline( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      ::bPaint := {|| wvt_DrawOutline(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet) }
       EXIT
 
    CASE WVT_STATIC_RECTANGLE
       lInside := .T.
-      ::bPaint := {|| wvt_DrawRectangle( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      ::bPaint := {|| wvt_DrawRectangle(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet) }
       EXIT
 
    CASE WVT_STATIC_ROUNDRECT
       lInside := .T.
-      ::bPaint := {|| wvt_DrawRoundRect( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      ::bPaint := {|| wvt_DrawRoundRect(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet) }
       EXIT
 
    CASE WVT_STATIC_FOCUSRECT
       lInside := .T.
-      ::bPaint := {|| wvt_DrawFocusRect( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      ::bPaint := {|| wvt_DrawFocusRect(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet) }
       EXIT
 
    CASE WVT_STATIC_ELLIPSE
       lInside := .T.
-      ::bPaint := {|| wvt_DrawEllipse( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet ) }
+      ::bPaint := {|| wvt_DrawEllipse(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet) }
       EXIT
 
    CASE WVT_STATIC_SHADEDRECT
       lInside := .T.
-      ::bPaint := {|| wvt_DrawShadedRect( ::nTop, ::nLeft, ::nBottom, ::nRight, ;
-         ::aPxlOffSet, ::nHorzVert, ::aRGBb, ::aRGBe ) }
+      ::bPaint := {|| wvt_DrawShadedRect(::nTop, ::nLeft, ::nBottom, ::nRight, ;
+         ::aPxlOffSet, ::nHorzVert, ::aRGBb, ::aRGBe) }
       EXIT
 
    ENDSWITCH
@@ -185,8 +185,8 @@ METHOD WvtStatic:Create()
       ::nfRight  := ::nRight  + 1
    ENDIF
 
-   AAdd( ::aPaint, { ::bPaint, ;
-      { WVT_BLOCK_STATIC, ::nfTop, ::nfLeft, ::nfBottom, ::nfRight } } )
+   AAdd(::aPaint, { ::bPaint, ;
+      { WVT_BLOCK_STATIC, ::nfTop, ::nfLeft, ::nfBottom, ::nfRight } })
 
    ::Super:Create()
 
@@ -200,6 +200,6 @@ METHOD WvtStatic:HoverOff()
 
 METHOD WvtStatic:Refresh()
 
-   Eval( ::bPaint )
+   Eval(::bPaint)
 
    RETURN Self

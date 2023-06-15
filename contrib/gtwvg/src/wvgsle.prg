@@ -126,7 +126,7 @@ METHOD WvgSLE:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    IF ::autoSize
 
    ENDIF
-   IF ! ::editable
+   IF !::editable
       ::style += ES_READONLY
    ENDIF
    IF ::unReadable
@@ -147,11 +147,11 @@ METHOD WvgSLE:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ENDIF
    ::setPosAndSize()
 
-   IF HB_ISOBJECT( ::datalink )
-      Eval( ::datalink )
+   IF HB_ISOBJECT(::datalink)
+      Eval(::datalink)
    ENDIF
 
-   ::sendMessage( EM_SETLIMITTEXT, ::bufferLength )
+   ::sendMessage(EM_SETLIMITTEXT, ::bufferLength)
 
    RETURN Self
 
@@ -163,7 +163,7 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
          ::oParent:setFocus()
          ::rePosition()
       ENDIF
-      ::sendMessage( WM_SIZE, 0, 0 )
+      ::sendMessage(WM_SIZE, 0, 0)
 
    CASE nMessage == HB_GTE_COMMAND
       DO CASE
@@ -174,22 +174,22 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
       CASE aNM[NMH_code] == EN_MAXTEXT
 
       CASE aNM[NMH_code] == EN_KILLFOCUS
-         IF HB_ISBLOCK( ::sl_killInputFocus )
-            Eval( ::sl_killInputFocus, , , Self )
+         IF HB_ISBLOCK(::sl_killInputFocus)
+            Eval(::sl_killInputFocus, , , Self)
          ENDIF
 
       CASE aNM[NMH_code] == EN_SETFOCUS
-         IF HB_ISBLOCK( ::sl_setInputFocus )
-            Eval( ::sl_setInputFocus, , , Self )
+         IF HB_ISBLOCK(::sl_setInputFocus)
+            Eval(::sl_setInputFocus, , , Self)
          ENDIF
 
       ENDCASE
 
    CASE nMessage == HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC( ::clr_FG )
+      IF HB_ISNUMERIC(::clr_FG)
          wvg_SetTextColor( aNM[1], ::clr_FG )
       ENDIF
-      IF HB_ISNUMERIC( ::hBrushBG )
+      IF HB_ISNUMERIC(::hBrushBG)
          wvg_SetBkMode( aNM[1], 1 )
          RETURN ::hBrushBG
       ELSE
@@ -199,13 +199,13 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
    CASE nMessage == HB_GTE_ANY
       DO CASE
       CASE aNM[NMH_code] == WM_KILLFOCUS
-         IF HB_ISBLOCK( ::sl_killInputFocus )
-            Eval( ::sl_killInputFocus, , , Self )
+         IF HB_ISBLOCK(::sl_killInputFocus)
+            Eval(::sl_killInputFocus, , , Self)
          ENDIF
 
       CASE aNM[NMH_code] == WM_SETFOCUS
-         IF HB_ISBLOCK( ::sl_setInputFocus )
-            Eval( ::sl_setInputFocus, , , Self )
+         IF HB_ISBLOCK(::sl_setInputFocus)
+            Eval(::sl_setInputFocus, , , Self)
          ENDIF
 
       CASE aNM[NMH_code] == WM_KEYDOWN
@@ -214,8 +214,8 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
-            IF HB_ISBLOCK( ::sl_returnPressed )
-               Eval( ::sl_returnPressed, , , Self )
+            IF HB_ISBLOCK(::sl_returnPressed)
+               Eval(::sl_returnPressed, , , Self)
             ENDIF
          CASE aNM[2] == VK_TAB
             IF ::isParentCrt()
@@ -240,10 +240,10 @@ METHOD PROCEDURE WvgSLE:destroy()
 
 METHOD WvgSLE:changed( lChanged )
 
-   LOCAL lChg := ::sendMessage( EM_GETMODIFY, 0, 0 )
+   LOCAL lChg := ::sendMessage(EM_GETMODIFY, 0, 0)
 
-   IF HB_ISLOGICAL( lChanged )
-      ::sendMessage( EM_SETMODIFY, iif( lChanged, 0, 1 ), 0 )
+   IF HB_ISLOGICAL(lChanged)
+      ::sendMessage(EM_SETMODIFY, iif(lChanged, 0, 1), 0)
    ENDIF
 
    RETURN lChg
@@ -254,13 +254,13 @@ METHOD WvgSLE:clear()
 
    ::setData( "" )
 
-   RETURN Len( cText )
+   RETURN Len(cText)
 
 METHOD WvgSLE:copyMarked()
 
    LOCAL n, nB, nE
 
-   n := ::sendMessage( EM_GETSEL )
+   n := ::sendMessage(EM_GETSEL)
    nB := wvg_LOWORD( n )
    nE := wvg_HIWORD( n )
 
@@ -274,7 +274,7 @@ METHOD WvgSLE:cutMarked()
 
    LOCAL n, nB, nE, cText
 
-   n := ::sendMessage( EM_GETSEL )
+   n := ::sendMessage(EM_GETSEL)
    nB := wvg_LOWORD( n )
    nE := wvg_HIWORD( n )
 
@@ -287,10 +287,10 @@ METHOD WvgSLE:cutMarked()
 
 METHOD WvgSLE:returnPressed( bReturnPressed )
 
-   IF HB_ISBLOCK( bReturnPressed )
+   IF HB_ISBLOCK(bReturnPressed)
       ::sl_returnPressed := bReturnPressed
-   ELSEIF HB_ISBLOCK( ::sl_returnPressed )
-      Eval( ::sl_returnPressed, , , Self )
+   ELSEIF HB_ISBLOCK(::sl_returnPressed)
+      Eval(::sl_returnPressed, , , Self)
    ENDIF
 
    RETURN Self

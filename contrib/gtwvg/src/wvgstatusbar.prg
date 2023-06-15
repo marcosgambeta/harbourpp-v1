@@ -63,7 +63,7 @@ CREATE CLASS WvgStatusBar INHERIT WvgWindow /* WvgActiveXControl */
 
    VAR    aItems                                INIT {}
 
-   METHOD numItems()                            INLINE Len( ::aItems )
+   METHOD numItems()                            INLINE Len(::aItems)
 
    METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
@@ -120,12 +120,12 @@ METHOD WvgStatusBar:handleEvent( nMessage, aNM )
    DO CASE
 
    CASE nMessage == HB_GTE_RESIZED
-      ::sendMessage( WM_SIZE, 0, 0 )
+      ::sendMessage(WM_SIZE, 0, 0)
       RETURN 0
 
    CASE nMessage == HB_GTE_COMMAND
-      IF HB_ISBLOCK( ::sl_lbClick )
-         Eval( ::sl_lbClick, , , Self )
+      IF HB_ISBLOCK(::sl_lbClick)
+         Eval(::sl_lbClick, , , Self)
          RETURN 0
       ENDIF
 
@@ -135,11 +135,11 @@ METHOD WvgStatusBar:handleEvent( nMessage, aNM )
       DO CASE
       CASE aNMH[NMH_code] == NM_CLICK
 
-         IF HB_ISBLOCK( ::sl_lbClick )
+         IF HB_ISBLOCK(::sl_lbClick)
             IF aNMH[NMH_dwItemSpec] >= 0
                nObj := aNMH[NMH_dwItemSpec] + 1
 
-               Eval( ::sl_lbClick, ::aItems[nObj], , Self )
+               Eval(::sl_lbClick, ::aItems[nObj], , Self)
             ENDIF
 
             nHandled := 0
@@ -148,10 +148,10 @@ METHOD WvgStatusBar:handleEvent( nMessage, aNM )
       ENDCASE
 
    CASE nMessage == HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC( ::clr_FG )
+      IF HB_ISNUMERIC(::clr_FG)
          wvg_SetTextColor( aNM[1], ::clr_FG )
       ENDIF
-      IF HB_ISNUMERIC( ::hBrushBG )
+      IF HB_ISNUMERIC(::hBrushBG)
          wvg_SetBkMode( aNM[1], 1 )
          RETURN ::hBrushBG
       ELSE
@@ -166,7 +166,7 @@ METHOD PROCEDURE WvgStatusBar:destroy()
 
    LOCAL i, nItems
 
-   IF ( nItems := Len( ::aItems ) ) > 0
+   IF ( nItems := Len(::aItems) ) > 0
       FOR i := 1 TO nItems
 
       NEXT
@@ -186,7 +186,7 @@ METHOD WvgStatusBar:addItem( cCaption, xImage, cDLL, nStyle, cKey, nMode )
 
    LOCAL oPanel, lSuccess
 
-   __defaultNIL( @nMode, 0 )
+   __defaultNIL(@nMode, 0)
 
    HB_SYMBOL_UNUSED( xImage )
    HB_SYMBOL_UNUSED( cDLL )
@@ -199,7 +199,7 @@ METHOD WvgStatusBar:addItem( cCaption, xImage, cDLL, nStyle, cKey, nMode )
    lSuccess := wvg_StatusBarCreatePanel( ::hWnd, nMode )
 
    IF lSuccess
-      AAdd( ::aItems, oPanel )
+      AAdd(::aItems, oPanel)
    ELSE
       RETURN NIL
    ENDIF
@@ -211,9 +211,9 @@ METHOD WvgStatusBar:delItem( nItemORcKey )
    LOCAL nIndex := 0
 
    DO CASE
-   CASE HB_ISNUMERIC( nItemORcKey )
+   CASE HB_ISNUMERIC(nItemORcKey)
       nIndex := AScan( ::aItems, {| o | o:key == nItemORcKey } )
-   CASE HB_ISNUMERIC( nItemORcKey )
+   CASE HB_ISNUMERIC(nItemORcKey)
       nIndex := nItemORcKey
    ENDCASE
 
@@ -229,9 +229,9 @@ METHOD WvgStatusBar:getItem( nItemORcKey )
    LOCAL nIndex := 0, oPanel
 
    DO CASE
-   CASE HB_ISSTRING( nItemORcKey )
+   CASE HB_ISSTRING(nItemORcKey)
       nIndex := AScan( ::aItems, {| o | o:key == nItemORcKey } )
-   CASE HB_ISNUMERIC( nItemORcKey )
+   CASE HB_ISNUMERIC(nItemORcKey)
       nIndex := nItemORcKey
    ENDCASE
 
@@ -255,7 +255,7 @@ METHOD WvgStatusBar:clear()
 
 METHOD WvgStatusBar:panelClick( xParam )
 
-   IF HB_ISBLOCK( xParam ) .OR. HB_ISNIL( xParam )
+   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
       ::sl_lbClick := xParam
    ENDIF
 
@@ -263,7 +263,7 @@ METHOD WvgStatusBar:panelClick( xParam )
 
 METHOD WvgStatusBar:panelDblClick( xParam )
 
-   IF HB_ISBLOCK( xParam ) .OR. HB_ISNIL( xParam )
+   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
       ::sl_lbDblClick := xParam
    ENDIF
 

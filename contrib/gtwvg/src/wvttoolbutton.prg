@@ -85,7 +85,7 @@ CREATE CLASS WvtToolButton INHERIT WvtObject
    VAR    nBtnType              INIT TLB_BUTTON_TYPE_IMAGE
    VAR    aPxlOffSet            INIT { 0, -1, -3, 1 }
 
-   METHOD New( oParent )
+   METHOD New(oParent)
    METHOD create()
    METHOD Refresh()
    METHOD LeftDown()
@@ -96,17 +96,17 @@ CREATE CLASS WvtToolButton INHERIT WvtObject
 
 ENDCLASS
 
-METHOD WvtToolButton:New( oParent )
+METHOD WvtToolButton:New(oParent)
 
-   ::Super:New( oParent, DLG_OBJ_BUTTON )
+   ::Super:New(oParent, DLG_OBJ_BUTTON)
 
    RETURN Self
 
 METHOD WvtToolButton:Create()
 
    ::bPaint := {|| ::PaintButton() }
-   AAdd( ::aPaint, { ::bPaint, ;
-      { WVT_BLOCK_BUTTON, ::nTop, ::nLeft, ::nBottom, ::nRight } } )
+   AAdd(::aPaint, { ::bPaint, ;
+      { WVT_BLOCK_BUTTON, ::nTop, ::nLeft, ::nBottom, ::nRight } })
 
    ::Super:Create()
 
@@ -115,7 +115,7 @@ METHOD WvtToolButton:Create()
 METHOD WvtToolButton:Refresh()
 
    IF ::lActive
-      Eval( ::bPaint )
+      Eval(::bPaint)
    ENDIF
 
    RETURN Self
@@ -124,9 +124,9 @@ METHOD WvtToolButton:PaintButton()
 
    IF ::lActive
       IF ::nBtnType == TLB_BUTTON_TYPE_IMAGE
-         wvt_DrawImage( ::nTop, ::nLeft, ::nBottom, ::nRight, ::cFileImage, { 4, 4, -6, -4 } )
+         wvt_DrawImage(::nTop, ::nLeft, ::nBottom, ::nRight, ::cFileImage, { 4, 4, -6, -4 })
       ELSE
-         wvt_DrawLine( ::nTop, ::nLeft, ::nBottom, ::nRight, 1, 1, , , , ::oParent:nRGBSep )
+         wvt_DrawLine(::nTop, ::nLeft, ::nBottom, ::nRight, 1, 1, , , , ::oParent:nRGBSep)
       ENDIF
    ENDIF
 
@@ -137,7 +137,7 @@ METHOD WvtToolButton:LeftDown()
    LOCAL lRet := .F.
 
    IF ::lActive .AND. ::nBtnType == TLB_BUTTON_TYPE_IMAGE
-      wvt_DrawToolButtonState( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet, 2 )
+      wvt_DrawToolButtonState(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet, 2)
       lRet := .T.
    ENDIF
 
@@ -148,8 +148,8 @@ METHOD WvtToolButton:LeftUp()
    LOCAL lRet := .F.
 
    IF ::lActive .AND. ::nBtnType == TLB_BUTTON_TYPE_IMAGE
-      wvt_DrawToolButtonState( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet, 1 )
-      Eval( ::bOnLeftUp )
+      wvt_DrawToolButtonState(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet, 1)
+      Eval(::bOnLeftUp)
       lRet := .T.
    ENDIF
 
@@ -160,7 +160,7 @@ METHOD WvtToolButton:HoverOn()
    ::oParent:HoverOn()
 
    IF ::lActive .AND. ::nBtnType == TLB_BUTTON_TYPE_IMAGE
-      wvt_DrawToolButtonState( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet, 1 )
+      wvt_DrawToolButtonState(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet, 1)
    ENDIF
 
    RETURN Self
@@ -170,7 +170,7 @@ METHOD WvtToolButton:HoverOff()
    ::oParent:HoverOff()
 
    IF ::lActive .AND. ::nBtnType == TLB_BUTTON_TYPE_IMAGE
-      wvt_DrawToolButtonState( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet, 0 )
+      wvt_DrawToolButtonState(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet, 0)
    ENDIF
 
    RETURN Self

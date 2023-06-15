@@ -121,11 +121,11 @@ METHOD WvgDialog:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    hb_gtInfo( HB_GTI_CLOSABLE, ::closable  )
    hb_gtInfo( HB_GTI_WINTITLE, ::title     )
 
-   IF ! Empty( ::icon )
-      IF HB_ISNUMERIC( ::icon )
+   IF !Empty(::icon)
+      IF HB_ISNUMERIC(::icon)
          hb_gtInfo( HB_GTI_ICONRES, ::icon )
 
-      ELSEIF HB_ISSTRING( ::icon )
+      ELSEIF HB_ISSTRING(::icon)
          hb_gtInfo( HB_GTI_ICONFILE, ::icon )
 
       ENDIF
@@ -140,7 +140,7 @@ METHOD WvgDialog:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ENDIF
 
    oW := WvgDrawingArea():new( Self ):create( , , { 0, 0 }, Self:currentSize(), , .F. )
-   IF ! Empty( oW:hWnd )
+   IF !Empty(oW:hWnd)
       ::drawingArea := oW
    ELSE
       ::drawingArea := Self
@@ -158,15 +158,15 @@ METHOD WvgDialog:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible 
 
 METHOD WvgDialog:destroy()
 
-   IF HB_ISOBJECT( ::oMenu )
+   IF HB_ISOBJECT(::oMenu)
       ::oMenu:destroy()
    ENDIF
 
-   IF Len( ::aChildren ) > 0
-      AEval( ::aChildren, {| o | o:destroy() } )
+   IF Len(::aChildren) > 0
+      AEval(::aChildren, {| o | o:destroy() })
    ENDIF
 
-   IF ! Empty( ::hBrushBG )
+   IF !Empty(::hBrushBG)
       wvg_DeleteObject( ::hBrushBG )
    ENDIF
 
@@ -182,13 +182,13 @@ METHOD WvgDialog:setFrameState( nState )
    DO CASE
 
    CASE nState == WVGDLG_FRAMESTAT_MINIMIZED
-      RETURN ::sendMessage( WM_SYSCOMMAND, SC_MINIMIZE, 0 ) != 0
+      RETURN ::sendMessage(WM_SYSCOMMAND, SC_MINIMIZE, 0) != 0
 
    CASE nState == WVGDLG_FRAMESTAT_MAXIMIZED
-      RETURN ::sendMessage( WM_SYSCOMMAND, SC_MAXIMIZE, 0 ) != 0
+      RETURN ::sendMessage(WM_SYSCOMMAND, SC_MAXIMIZE, 0) != 0
 
    CASE nState == WVGDLG_FRAMESTAT_NORMALIZED
-      RETURN ::sendMessage( WM_SYSCOMMAND, SC_RESTORE, 0 ) != 0
+      RETURN ::sendMessage(WM_SYSCOMMAND, SC_RESTORE, 0) != 0
 
    ENDCASE
 
@@ -207,7 +207,7 @@ METHOD WvgDialog:getFrameState()
 
 METHOD WvgDialog:menuBar()
 
-   IF ! HB_ISOBJECT( ::oMenu )
+   IF !HB_ISOBJECT(::oMenu)
       ::oMenu := WvgMenuBar():New( Self ):create()
    ENDIF
 

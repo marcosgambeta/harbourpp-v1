@@ -67,23 +67,23 @@ FUNCTION WvtPaintObjects()
 
    aBlocks := WvtSetPaint()
 
-   IF ( nBlocks := Len( aBlocks ) ) > 0
+   IF ( nBlocks := Len(aBlocks) ) > 0
       tlbr_ := wvt_GetPaintRect()
 
       FOR i := 1 TO nBlocks
          lExe := .T.
 
-         IF aBlocks[i][3] != NIL .AND. ! Empty( aBlocks[i][3] )
+         IF aBlocks[i][3] != NIL .AND. !Empty(aBlocks[i][3])
             /* Check parameters against tlbr_ depending upon the
                type of object and attributes contained in aAttr */
             DO CASE
             CASE aBlocks[i][3][1] == WVT_BLOCK_GRID_V
                b := aBlocks[i][3][6]
-               IF Len( b:aColumnsSep ) == 0
+               IF Len(b:aColumnsSep) == 0
                   lExe := .F.
                ELSE
                   nLeft  := b:aColumnsSep[1]
-                  nRight := b:aColumnsSep[Len( b:aColumnsSep )]
+                  nRight := b:aColumnsSep[Len(b:aColumnsSep)]
                   IF tlbr_[1] > aBlocks[i][3][4] .OR. ;  /* top    > bottom */
                      tlbr_[3] < aBlocks[i][3][2] .OR. ;  /* bottom < top    */
                      tlbr_[2] > nRight + 1 .OR. ;              /* left   > right  */
@@ -114,7 +114,7 @@ FUNCTION WvtPaintObjects()
          ENDIF
 
          IF lExe
-            Eval( aBlocks[i][2] )
+            Eval(aBlocks[i][2])
          ENDIF
       NEXT
    ENDIF
@@ -150,12 +150,12 @@ FUNCTION wvg_SetPaint( cID, nAction, xData, aAttr )
             t_paint_[n][2][n1][2] := xData
             t_paint_[n][2][n1][3] := aAttr
          ELSE
-            AAdd( t_paint_[n][2], { nAction, xData, aAttr } )
+            AAdd(t_paint_[n][2], { nAction, xData, aAttr })
          ENDIF
       ELSE
-         AAdd( t_paint_, { cID, {} } )
-         n := Len( t_paint_ )
-         AAdd( t_paint_[n][2], { nAction, xData, aAttr } )
+         AAdd(t_paint_, { cID, {} })
+         n := Len(t_paint_)
+         AAdd(t_paint_[n][2], { nAction, xData, aAttr })
       ENDIF
    ENDIF
 
@@ -188,7 +188,7 @@ FUNCTION wvg_PurgePaint( cID, lDummy )
 
    LOCAL n, aPaint
 
-   __defaultNIL( @lDummy, .F. )
+   __defaultNIL(@lDummy, .F.)
 
    IF ( n := AScan( t_paint_, {| e_ | e_[1] == cID } ) ) > 0
       aPaint := t_paint_[n]
@@ -205,12 +205,12 @@ PROCEDURE wvg_InsertPaint( cID, aPaint, lSet )
 
    LOCAL n
 
-   __defaultNIL( @lSet, .F. )
+   __defaultNIL(@lSet, .F.)
 
    IF ( n := AScan( t_paint_, {| e_ | e_[1] == cID } ) ) > 0
       t_paint_[n] := aPaint
    ELSE
-      AAdd( t_paint_, aPaint )
+      AAdd(t_paint_, aPaint)
    ENDIF
 
    IF lSet
@@ -230,7 +230,7 @@ FUNCTION wvt_SetDlgCoMode( nMode )
    LOCAL nOldMode
 
    nOldMode := sMode
-   IF HB_ISNUMERIC( nMode ) .AND. nMode <= 1 .AND. nMode >= 0
+   IF HB_ISNUMERIC(nMode) .AND. nMode <= 1 .AND. nMode >= 0
       sMode := nMode
    ENDIF
 
@@ -248,12 +248,12 @@ FUNCTION wvt_MakeDlgTemplate( nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle
    aFont := wvt_GetFontInfo()
 
    IF nMode == 0
-      __defaultNIL( @aOffSet, {} )
+      __defaultNIL(@aOffSet, {})
       ASize( aOffSet, 4 )
-      __defaultNIL( @aOffSet[1], 0 )
-      __defaultNIL( @aOffSet[2], 0 )
-      __defaultNIL( @aOffSet[3], 0 )
-      __defaultNIL( @aOffSet[4], 0 )
+      __defaultNIL(@aOffSet[1], 0)
+      __defaultNIL(@aOffSet[2], 0)
+      __defaultNIL(@aOffSet[3], 0)
+      __defaultNIL(@aOffSet[4], 0)
 
       nBaseUnits  := wvg_GetDialogBaseUnits()
       nBaseUnitsX := wvg_LOWORD( nBaseUnits )
@@ -287,30 +287,30 @@ FUNCTION wvt_MakeDlgTemplate( nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle
       nH := nRows
    ENDIF
 
-   IF ! HB_ISNUMERIC( nStyle )
+   IF !HB_ISNUMERIC(nStyle)
       nStyle := ;
          WS_CAPTION + WS_SYSMENU + WS_GROUP      + ;
          WS_TABSTOP + DS_SETFONT + WS_THICKFRAME + ;
          WS_VISIBLE + WS_POPUP   + DS_3DLOOK
    ENDIF
 
-   AAdd( aDlg[1], iif( Empty( nHelpId  ), 0, nHelpId ) )
-   AAdd( aDlg[1], iif( Empty( nExStyle ), 0, nExStyle ) )
-   AAdd( aDlg[1], nStyle )
-   AAdd( aDlg[1], 0 )
-   AAdd( aDlg[1], nX )
-   AAdd( aDlg[1], nY )
-   AAdd( aDlg[1], nW )
-   AAdd( aDlg[1], nH )
-   AAdd( aDlg[1], 0 )
-   AAdd( aDlg[1], 0 )
-   AAdd( aDlg[1], iif( HB_ISSTRING( cTitle ), cTitle, "" ) )
+   AAdd(aDlg[1], iif(Empty(nHelpId), 0, nHelpId))
+   AAdd(aDlg[1], iif(Empty(nExStyle), 0, nExStyle))
+   AAdd(aDlg[1], nStyle)
+   AAdd(aDlg[1], 0)
+   AAdd(aDlg[1], nX)
+   AAdd(aDlg[1], nY)
+   AAdd(aDlg[1], nW)
+   AAdd(aDlg[1], nH)
+   AAdd(aDlg[1], 0)
+   AAdd(aDlg[1], 0)
+   AAdd(aDlg[1], iif(HB_ISSTRING(cTitle), cTitle, ""))
 
    IF hb_bitAnd( nStyle, DS_SETFONT ) == DS_SETFONT
-      AAdd( aDlg[1], iif( HB_ISNUMERIC( nPointSize ), nPointSize, 8 ) )
-      AAdd( aDlg[1], iif( HB_ISNUMERIC( nWeight    ), nWeight, 400 ) )
-      AAdd( aDlg[1], iif( HB_ISLOGICAL( lItalic    ), lItalic, .F. ) )
-      AAdd( aDlg[1], iif( HB_ISSTRING(  cFaceName  ), cFaceName, "MS Sans Serif" ) )
+      AAdd(aDlg[1], iif(HB_ISNUMERIC(nPointSize), nPointSize, 8))
+      AAdd(aDlg[1], iif(HB_ISNUMERIC(nWeight), nWeight, 400))
+      AAdd(aDlg[1], iif(HB_ISLOGICAL(lItalic), lItalic, .F.))
+      AAdd(aDlg[1], iif(HB_ISSTRING(cFaceName), cFaceName, "MS Sans Serif"))
    ENDIF
 
    RETURN aDlg
@@ -327,14 +327,14 @@ FUNCTION wvt_AddDlgItem( aDlg, nTop, nLeft, nRows, nCols, aOffSet, ;
       nBottom := nTop  + nRows - 1
       nRight  := nLeft + nCols - 1
 
-      __defaultNIL( @aOffSet, {} )
+      __defaultNIL(@aOffSet, {})
 
       ASize( aOffSet, 4 )
 
-      __defaultNIL( @aOffSet[1], 0 )
-      __defaultNIL( @aOffSet[2], 0 )
-      __defaultNIL( @aOffSet[3], 0 )
-      __defaultNIL( @aOffSet[4], 0 )
+      __defaultNIL(@aOffSet[1], 0)
+      __defaultNIL(@aOffSet[2], 0)
+      __defaultNIL(@aOffSet[3], 0)
+      __defaultNIL(@aOffSet[4], 0)
 
       nBaseUnits  := wvg_GetDialogBaseUnits()
       nBaseUnitsX := wvg_LOWORD( nBaseUnits )
@@ -364,17 +364,17 @@ FUNCTION wvt_AddDlgItem( aDlg, nTop, nLeft, nRows, nCols, aOffSet, ;
 
    aDlg[1][4]++  /* item count */
 
-   AAdd( aDlg[ 2], iif( HB_ISNUMERIC( nHelpId  ), nHelpId, 0 ) )
-   AAdd( aDlg[ 3], iif( HB_ISNUMERIC( nExStyle ), nExStyle, 0 ) )
-   AAdd( aDlg[ 4], iif( HB_ISNUMERIC( nStyle   ), nStyle, WS_CHILD + WS_VISIBLE ) )
-   AAdd( aDlg[ 5], nX )
-   AAdd( aDlg[ 6], nY )
-   AAdd( aDlg[ 7], nW )
-   AAdd( aDlg[ 8], nH )
-   AAdd( aDlg[ 9], cnId )
-   AAdd( aDlg[10], cnDlgClass )
-   AAdd( aDlg[11], iif( HB_ISSTRING( cText ), cText, iif( HB_ISNUMERIC( cText ), cText, "" ) ) )
-   AAdd( aDlg[12], 0 )
+   AAdd(aDlg[ 2], iif(HB_ISNUMERIC(nHelpId), nHelpId, 0))
+   AAdd(aDlg[ 3], iif(HB_ISNUMERIC(nExStyle), nExStyle, 0))
+   AAdd(aDlg[ 4], iif(HB_ISNUMERIC(nStyle), nStyle, WS_CHILD + WS_VISIBLE))
+   AAdd(aDlg[ 5], nX)
+   AAdd(aDlg[ 6], nY)
+   AAdd(aDlg[ 7], nW)
+   AAdd(aDlg[ 8], nH)
+   AAdd(aDlg[ 9], cnId)
+   AAdd(aDlg[10], cnDlgClass)
+   AAdd(aDlg[11], iif(HB_ISSTRING(cText), cText, iif(HB_ISNUMERIC(cText), cText, "")))
+   AAdd(aDlg[12], 0)
 
    RETURN aDlg
 
@@ -382,12 +382,12 @@ FUNCTION wvt_CreateDialog( acnDlg, lOnTop, cbDlgProc, ncIcon, nTimerTicks, hMenu
 
    LOCAL hDlg, cType, xTemplate, nDlgMode
 
-   IF HB_ISSTRING( cbDlgProc )
+   IF HB_ISSTRING(cbDlgProc)
       cbDlgProc := Upper( cbDlgProc )
    ENDIF
 
    cType    := ValType( acnDlg )
-   nDlgMode := iif( cType == "C", 0, iif( cType == "N", 1, 2 ) )
+   nDlgMode := iif(cType == "C", 0, iif(cType == "N", 1, 2))
 
    IF cType == "A"
       xTemplate := wvt__MakeDlgTemplate( acnDlg[1], acnDlg[2], acnDlg[3], acnDlg[4], ;
@@ -404,7 +404,7 @@ FUNCTION wvt_CreateDialog( acnDlg, lOnTop, cbDlgProc, ncIcon, nTimerTicks, hMenu
          wvt_DlgSetIcon( hDlg, ncIcon )
       ENDIF
 
-      IF HB_ISNUMERIC( nTimerTicks )
+      IF HB_ISNUMERIC(nTimerTicks)
          wvg_SetTimer( hDlg, 1001, nTimerTicks )
       ENDIF
 
@@ -419,12 +419,12 @@ FUNCTION wvt_DialogBox( acnDlg, cbDlgProc, hWndParent )
 
    LOCAL nResult, cType, xTemplate, nDlgMode
 
-   IF HB_ISSTRING( cbDlgProc )
+   IF HB_ISSTRING(cbDlgProc)
       cbDlgProc := Upper( cbDlgProc )
    ENDIF
 
    cType    := ValType( acnDlg )
-   nDlgMode := iif( cType == "C", 0, iif( cType == "N", 1, 2 ) )
+   nDlgMode := iif(cType == "C", 0, iif(cType == "N", 1, 2))
 
    IF cType == "A"
       xTemplate := wvt__MakeDlgTemplate( acnDlg[1], acnDlg[2], acnDlg[3], acnDlg[4], ;
@@ -460,8 +460,8 @@ FUNCTION wvt_GetOpenFileName( hWnd, cPath, cTitle, acFilter, nFlags, cInitDir, c
 
    HB_SYMBOL_UNUSED( hWnd )
 
-   __defaultNIL( @cPath, "" )
-   __defaultNIL( @nFlags, OFN_EXPLORER + OFN_NOCHANGEDIR )
+   __defaultNIL(@cPath, "")
+   __defaultNIL(@nFlags, OFN_EXPLORER + OFN_NOCHANGEDIR)
 
 /* win_GetOpenFileName( [[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;
  *                      [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>] )
@@ -471,10 +471,10 @@ FUNCTION wvt_GetOpenFileName( hWnd, cPath, cTitle, acFilter, nFlags, cInitDir, c
 
    IF wvg_And( nFlags, OFN_ALLOWMULTISELECT ) > 0
       xRet := {}
-      IF ! Empty( aTmp := hb_ATokens( cRet, Chr( 0 ) ) )
+      IF !Empty(aTmp := hb_ATokens(cRet, Chr(0)))
          cPath := aTmp[1]
-         FOR i := 2 TO Len( aTmp )
-            AAdd( xRet, cPath + "\" + aTmp[i] )
+         FOR i := 2 TO Len(aTmp)
+            AAdd(xRet, cPath + "\" + aTmp[i])
          NEXT
       ENDIF
    ELSE
@@ -502,7 +502,7 @@ FUNCTION wvt_GetSaveFileName( hWnd, cDefName, cTitle, acFilter, nFlags, cInitDir
 
    HB_SYMBOL_UNUSED( hWnd )
 
-   __defaultNIL( @nFlags, OFN_EXPLORER + OFN_NOCHANGEDIR )
+   __defaultNIL(@nFlags, OFN_EXPLORER + OFN_NOCHANGEDIR)
 
 /* win_GetSaveFileName( [[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;
  *                      [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>] )
@@ -512,10 +512,10 @@ FUNCTION wvt_GetSaveFileName( hWnd, cDefName, cTitle, acFilter, nFlags, cInitDir
 
    IF wvg_And( nFlags, OFN_ALLOWMULTISELECT ) > 0
       xRet := {}
-      IF ! Empty( aTmp := hb_ATokens( cRet, Chr( 0 ) ) )
+      IF !Empty(aTmp := hb_ATokens(cRet, Chr(0)))
          cPath := aTmp[1]
-         FOR i := 2 TO Len( aTmp )
-            AAdd( xRet, cPath + "\" + aTmp[i] )
+         FOR i := 2 TO Len(aTmp)
+            AAdd(xRet, cPath + "\" + aTmp[i])
          NEXT
       ENDIF
    ELSE
@@ -537,13 +537,13 @@ FUNCTION wvt_GetTitle()
 
 FUNCTION wvt_SetIcon( ncIconRes, cIconName )
 
-   IF HB_ISNUMERIC( ncIconRes )
+   IF HB_ISNUMERIC(ncIconRes)
       hb_gtInfo( HB_GTI_ICONRES, ncIconRes )
 
-   ELSEIF HB_ISSTRING( cIconName )
+   ELSEIF HB_ISSTRING(cIconName)
       hb_gtInfo( HB_GTI_ICONRES, cIconName )
 
-   ELSEIF HB_ISSTRING( ncIconRes )
+   ELSEIF HB_ISSTRING(ncIconRes)
       hb_gtInfo( HB_GTI_ICONFILE, ncIconRes )
 
    ENDIF
@@ -552,11 +552,11 @@ FUNCTION wvt_SetIcon( ncIconRes, cIconName )
 
 FUNCTION wvt_SetFont( cFontName, nSize, nWidth, nWeight, nQuality )
 
-   __defaultNIL( @cFontName, hb_gtInfo( HB_GTI_FONTNAME    ) )
-   __defaultNIL( @nWidth, hb_gtInfo( HB_GTI_FONTWIDTH   ) )
-   __defaultNIL( @nWeight, hb_gtInfo( HB_GTI_FONTWEIGHT  ) )
-   __defaultNIL( @nQuality, hb_gtInfo( HB_GTI_FONTQUALITY ) )
-   __defaultNIL( @nSize, hb_gtInfo( HB_GTI_FONTSIZE    ) )
+   __defaultNIL(@cFontName, hb_gtInfo(HB_GTI_FONTNAME))
+   __defaultNIL(@nWidth, hb_gtInfo(HB_GTI_FONTWIDTH))
+   __defaultNIL(@nWeight, hb_gtInfo(HB_GTI_FONTWEIGHT))
+   __defaultNIL(@nQuality, hb_gtInfo(HB_GTI_FONTQUALITY))
+   __defaultNIL(@nSize, hb_gtInfo(HB_GTI_FONTSIZE))
 
    RETURN hb_gtInfo( HB_GTI_SETFONT, { cFontName, nSize, nWidth, nWeight, nQuality } )
 
@@ -595,9 +595,9 @@ FUNCTION wvt_GetRGBColorByString( cColor, nForeBack )
    LOCAL nIndex := 0
    LOCAL a_ := { "N", "B", "G", "BG", "R", "RB", "GR", "W" }
 
-   nForeBack := iif( HB_ISNUMERIC( nForeBack ), nForeBack, 0 )
+   nForeBack := iif(HB_ISNUMERIC(nForeBack), nForeBack, 0)
 
-   IF HB_ISSTRING( cColor )
+   IF HB_ISSTRING(cColor)
       IF ( n := At( "/", cColor ) ) > 0
          IF nForeBack == 0
             s := SubStr( cColor, 1, n - 1 )
@@ -643,15 +643,15 @@ FUNCTION wvt_GetWindowHandle()
 
 FUNCTION wvt_CenterWindow( lCenter, lRePaint )
 
-   __defaultNIL( @lCenter, .T. )
-   __defaultNIL( @lRePaint, .F. )
+   __defaultNIL(@lCenter, .T.)
+   __defaultNIL(@lRePaint, .F.)
 
    RETURN hb_gtInfo( HB_GTI_SPEC, HB_GTS_CENTERWINDOW, { lCenter, lRePaint } )
 
 FUNCTION wvt_WindowCentre( lCenter, lRePaint )
 
-   __defaultNIL( @lCenter, .T. )
-   __defaultNIL( @lRePaint, .F. )
+   __defaultNIL(@lCenter, .T.)
+   __defaultNIL(@lRePaint, .F.)
 
    RETURN hb_gtInfo( HB_GTI_SPEC, HB_GTS_CENTERWINDOW, { lCenter, lRePaint } )
 
@@ -678,7 +678,7 @@ PROCEDURE wvt_PasteFromClipboard()
    LOCAL cText, nLen, i
 
    cText := hb_gtInfo( HB_GTI_CLIPBOARDDATA )
-   IF ( nLen := Len( cText ) ) > 0
+   IF ( nLen := Len(cText) ) > 0
       FOR i := 1 TO nLen
          wvt_Keyboard( Asc( SubStr( cText, i, 1 ) ) )
       NEXT

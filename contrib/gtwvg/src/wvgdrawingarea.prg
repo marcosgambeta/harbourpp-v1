@@ -62,16 +62,16 @@ CREATE CLASS WvgDrawingArea INHERIT WvgWindow
    VAR    clipParent                            INIT .T.
    VAR    clipSiblings                          INIT .T.
 
-   METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD destroy()
-   METHOD handleEvent( nMessage, aNM )
+   METHOD handleEvent(nMessage, aNM)
 
 ENDCLASS
 
-METHOD WvgDrawingArea:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgDrawingArea:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::style       := WS_CHILD
    ::exStyle     := 0
@@ -81,15 +81,15 @@ METHOD WvgDrawingArea:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    RETURN Self
 
-METHOD WvgDrawingArea:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgDrawingArea:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   HB_SYMBOL_UNUSED( lVisible )
+   HB_SYMBOL_UNUSED(lVisible)
 
-   ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, .T. )
+   ::wvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, .T.)
 
-   ::oParent:addChild( Self )
+   ::oParent:addChild(Self)
 
-   wvg_RegisterClass_ByName( ::className() )
+   wvg_RegisterClass_ByName(::className())
 
    ::createControl()
 
@@ -98,23 +98,23 @@ METHOD WvgDrawingArea:create( oParent, oOwner, aPos, aSize, aPresParams, lVisibl
 
    RETURN Self
 
-METHOD WvgDrawingArea:handleEvent( nMessage, aNM )
+METHOD WvgDrawingArea:handleEvent(nMessage, aNM)
 
    DO CASE
    CASE nMessage == HB_GTE_RESIZED
-      IF HB_ISBLOCK( ::sl_resize )
-         Eval( ::sl_resize, , , Self )
+      IF HB_ISBLOCK(::sl_resize)
+         Eval(::sl_resize, , , Self)
       ENDIF
-      AEval( ::aChildren, {| o | o:handleEvent( HB_GTE_RESIZED, { 0, 0, 0, 0, 0 } ) } )
+      AEval(::aChildren, {| o | o:handleEvent(HB_GTE_RESIZED, { 0, 0, 0, 0, 0 }) })
       RETURN EVENT_HANDELLED
 
    CASE nMessage == HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC( ::clr_FG )
-         wvg_SetTextColor( aNM[1], ::clr_FG )
+      IF HB_ISNUMERIC(::clr_FG)
+         wvg_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
-      IF HB_ISNUMERIC( ::hBrushBG )
-         wvg_SetBkMode( aNM[1], 1 )
-         wvg_FillRect( aNM[1], { 0, 0, ::currentSize()[1], ::currentSize()[2] }, ::hBrushBG )
+      IF HB_ISNUMERIC(::hBrushBG)
+         wvg_SetBkMode(aNM[1], 1)
+         wvg_FillRect(aNM[1], { 0, 0, ::currentSize()[1], ::currentSize()[2] }, ::hBrushBG)
          RETURN EVENT_HANDELLED
       ENDIF
 

@@ -95,21 +95,21 @@ CREATE CLASS WvtBanner INHERIT WvtObject
    VAR    nCurSeconds                             INIT 0
    VAR    nCurAlign
 
-   METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
+   METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
    METHOD Configure()
    METHOD Refresh()
    METHOD HoverOn()
    METHOD HoverOff()
    METHOD OnTimer()
-   METHOD SetText( cText )
+   METHOD SetText(cText)
    METHOD Destroy()
 
 ENDCLASS
 
-METHOD WvtBanner:New( oParent, nID, nTop, nLeft, nBottom, nRight )
+METHOD WvtBanner:New(oParent, nID, nTop, nLeft, nBottom, nRight)
 
-   ::Super:New( oParent, DLG_OBJ_BANNER, nID, nTop, nLeft, nBottom, nRight )
+   ::Super:New(oParent, DLG_OBJ_BANNER, nID, nTop, nLeft, nBottom, nRight)
 
    RETURN Self
 
@@ -117,7 +117,7 @@ METHOD WvtBanner:Create()
 
    ::cDispText := ::cText
 
-   ::oLabel := WvtLabel():New( ::oParent, , ::nTop, ::nLeft, ::nBottom, ::nRight )
+   ::oLabel := WvtLabel():New(::oParent, , ::nTop, ::nLeft, ::nBottom, ::nRight)
    ::oLabel:Text              := ::cDispText
    ::oLabel:cFont             := ::cFont
    ::oLabel:nFontHeight       := ::nFontHeight
@@ -128,7 +128,7 @@ METHOD WvtBanner:Create()
    ::oLabel:lStrikeout        := ::lStrikeout
    ::oLabel:lUnderline        := ::lUnderline
    ::oLabel:nAlignVert        := ::nAlignVert
-   ::oLabel:nAlignHorz        := iif( ::nDirection == 0, 0, 1 )
+   ::oLabel:nAlignHorz        := iif(::nDirection == 0, 0, 1)
    ::oLabel:nTextColor        := ::nTextColor
    ::oLabel:nBackColor        := ::nBackColor
    ::oLabel:nTextColorHoverOn := ::nTextColorHoverOn
@@ -137,8 +137,8 @@ METHOD WvtBanner:Create()
    ::oLabel:Create()
 
    ::nCurSeconds := Seconds()
-   ::nTextLen    := Len( ::cText )
-   ::nTextIndex  := iif( ::nDirection == 0, 1, ::nTextLen )
+   ::nTextLen    := Len(::cText)
+   ::nTextIndex  := iif(::nDirection == 0, 1, ::nTextLen)
    ::nCurAlign   := ::nDirection
 
    ::Super:Create()
@@ -147,7 +147,7 @@ METHOD WvtBanner:Create()
 
 METHOD WvtBanner:Destroy()
 
-   wvg_DeleteObject( ::oLabel:hFont )
+   wvg_DeleteObject(::oLabel:hFont)
 
    RETURN NIL
 
@@ -160,7 +160,7 @@ METHOD WvtBanner:OnTimer()
 
    RETURN Self
 
-METHOD WvtBanner:SetText( cText )
+METHOD WvtBanner:SetText(cText)
 
    IF cText != NIL
       ::cText := cText
@@ -173,37 +173,37 @@ METHOD WvtBanner:Refresh()
 
    LOCAL nNewTime
 
-   IF Abs( ( nNewTime := Seconds() ) - ::nCurSeconds ) >= ::nTimeDelay
+   IF Abs((nNewTime := Seconds()) - ::nCurSeconds) >= ::nTimeDelay
       ::nCurSeconds := nNewTime
 
       IF ::nDirection == 0
          ::nTextIndex++
          IF ::nTextIndex > ::nTextLen
             ::nTextIndex := 1
-            ::nCurAlign  := iif( ::nCurAlign == 0, 1, 0 )
+            ::nCurAlign  := iif(::nCurAlign == 0, 1, 0)
          ENDIF
 
          IF ::nCurAlign == 0   /* Left */
-            ::cDispText := SubStr( ::cText, ::nTextIndex )
+            ::cDispText := SubStr(::cText, ::nTextIndex)
          ELSE                  /* Right */
-            ::cDispText := SubStr( ::cText, 1, ::nTextIndex )
+            ::cDispText := SubStr(::cText, 1, ::nTextIndex)
          ENDIF
       ELSE
          ::nTextIndex--
          IF ::nTextIndex < 0
             ::nTextIndex := ::nTextLen
-            ::nCurAlign := iif( ::nCurAlign == 0, 1, 0 )
+            ::nCurAlign := iif(::nCurAlign == 0, 1, 0)
          ENDIF
 
          IF ::nCurAlign == 0   /* Left */
-            ::cDispText := SubStr( ::cText, ::nTextIndex )
+            ::cDispText := SubStr(::cText, ::nTextIndex)
          ELSE                  /* Right */
-            ::cDispText := SubStr( ::cText, 1, ::nTextIndex )
+            ::cDispText := SubStr(::cText, 1, ::nTextIndex)
          ENDIF
       ENDIF
 
       ::oLabel:nAlignHorz := ::nCurAlign
-      ::oLabel:SetText( ::cDispText )
+      ::oLabel:SetText(::cDispText)
       ::oLabel:Refresh()
    ENDIF
 

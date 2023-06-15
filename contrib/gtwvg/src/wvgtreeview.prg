@@ -94,11 +94,11 @@ CREATE CLASS WvgTreeView INHERIT WvgWindow, WvgDataRef
    VAR    textItemSelected                      INIT ""
 
    METHOD getSelectionInfo( nlParam )
-   METHOD setColorFG( nRGB )                    INLINE wvg_TreeView_SetTextColor( ::hWnd, iif( HB_ISSTRING( nRGB ), wvt_GetRGBColorByString( nRGB, 0 ), nRGB ) )
-   METHOD setColorBG( nRGB )                    INLINE wvg_TreeView_SetBkColor( ::hWnd, iif( HB_ISSTRING( nRGB ), wvt_GetRGBColorByString( nRGB, 1 ), nRGB ) )
+   METHOD setColorFG( nRGB )                    INLINE wvg_TreeView_SetTextColor( ::hWnd, iif(HB_ISSTRING(nRGB), wvt_GetRGBColorByString( nRGB, 0 ), nRGB) )
+   METHOD setColorBG( nRGB )                    INLINE wvg_TreeView_SetBkColor( ::hWnd, iif(HB_ISSTRING(nRGB), wvt_GetRGBColorByString( nRGB, 1 ), nRGB) )
    METHOD setColorLines( nRGB )                 INLINE wvg_TreeView_SetLineColor( ::hWnd, nRGB )
    METHOD showExpanded( lExpanded, nLevels )    INLINE wvg_TreeView_ShowExpanded( ::hWnd, ;
-      iif( HB_ISNIL( lExpanded ), .F., lExpanded ), nLevels )
+      iif(HB_ISNIL(lExpanded), .F., lExpanded), nLevels )
 
 ENDCLASS
 
@@ -157,11 +157,11 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
       IF ::isParentCrt()
          ::rePosition()
       ENDIF
-      ::sendMessage( WM_SIZE, 0, 0 )
+      ::sendMessage(WM_SIZE, 0, 0)
 
    CASE HB_GTE_COMMAND
-      IF HB_ISBLOCK( ::sl_lbClick )
-         Eval( ::sl_lbClick, , , Self )
+      IF HB_ISBLOCK(::sl_lbClick)
+         Eval(::sl_lbClick, , , Self)
          RETURN EVENT_HANDELLED
       ENDIF
       EXIT
@@ -175,8 +175,8 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
          IF ::isParentCrt()
             ::oParent:setFocus()
          ENDIF
-         IF HB_ISBLOCK( ::sl_itemSelected )
-            Eval( ::sl_itemSelected, ::oItemSelected, { 0, 0, 0, 0 }, Self )
+         IF HB_ISBLOCK(::sl_itemSelected)
+            Eval(::sl_itemSelected, ::oItemSelected, { 0, 0, 0, 0 }, Self)
          ENDIF
          IF ::isParentCrt()
             IF ::pointerFocus
@@ -192,8 +192,8 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
          IF ::isParentCrt()
             ::oParent:setFocus()
          ENDIF
-         IF HB_ISBLOCK( ::sl_itemMarked )
-            Eval( ::sl_itemMarked, ::oItemSelected, { 0, 0, 0, 0 }, Self )
+         IF HB_ISBLOCK(::sl_itemMarked)
+            Eval(::sl_itemMarked, ::oItemSelected, { 0, 0, 0, 0 }, Self)
          ENDIF
          IF ::isParentCrt()
             IF ::pointerFocus
@@ -215,11 +215,11 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
       IF aNM[1] == WM_LBUTTONDOWN
          aHdr := wvg_GetNMTreeViewInfo( aNM[3] )
          ::getSelectionInfo( aNM[2] )
-         IF HB_ISBLOCK( ::sl_lbClick )
+         IF HB_ISBLOCK(::sl_lbClick)
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
-            Eval( ::sl_lbClick, , , Self )
+            Eval(::sl_lbClick, , , Self)
             IF ::isParentCrt()
                ::setFocus()
             ENDIF
@@ -228,11 +228,11 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
 
       ELSEIF aNM[1] == WM_LBUTTONDBLCLK .OR. ( aNM[1] == WM_KEYDOWN .AND. aNM[2] == K_ENTER )
          ::editBuffer := ::oItemSelected
-         IF HB_ISBLOCK( ::sl_itemSelected )
+         IF HB_ISBLOCK(::sl_itemSelected)
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
-            Eval( ::sl_itemSelected, ::oItemSelected, { 0, 0, 0, 0 }, Self )
+            Eval(::sl_itemSelected, ::oItemSelected, { 0, 0, 0, 0 }, Self)
             IF ::isParentCrt()
                ::setFocus()
             ENDIF
@@ -286,7 +286,7 @@ METHOD WvgTreeView:itemFromPos( aPos )
 
 METHOD WvgTreeView:itemCollapsed( xParam )
 
-   IF HB_ISBLOCK( xParam ) .OR. xParam == NIL
+   IF HB_ISBLOCK(xParam) .OR. xParam == NIL
       ::sl_paint := xParam
    ENDIF
 
@@ -294,7 +294,7 @@ METHOD WvgTreeView:itemCollapsed( xParam )
 
 METHOD WvgTreeView:itemExpanded( xParam )
 
-   IF HB_ISBLOCK( xParam ) .OR. xParam == NIL
+   IF HB_ISBLOCK(xParam) .OR. xParam == NIL
       ::sl_itemExpanded := xParam
    ENDIF
 
@@ -302,7 +302,7 @@ METHOD WvgTreeView:itemExpanded( xParam )
 
 METHOD WvgTreeView:itemMarked( xParam )
 
-   IF HB_ISBLOCK( xParam ) .OR. xParam == NIL
+   IF HB_ISBLOCK(xParam) .OR. xParam == NIL
       ::sl_itemMarked := xParam
    ENDIF
 
@@ -312,7 +312,7 @@ METHOD WvgTreeView:itemMarked( xParam )
 
 METHOD WvgTreeView:itemSelected( xParam )
 
-   IF HB_ISBLOCK( xParam ) .OR. xParam == NIL
+   IF HB_ISBLOCK(xParam) .OR. xParam == NIL
       ::sl_itemSelected := xParam
    ENDIF
 

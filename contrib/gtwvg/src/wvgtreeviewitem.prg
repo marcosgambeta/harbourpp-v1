@@ -77,15 +77,15 @@ CREATE CLASS WvgTreeViewItem
    METHOD configure()
    METHOD destroy()
 
-   METHOD Expand( lExpand )                      INLINE wvg_TreeView_Expand( ::hTree, ::hItem, ;
-      iif( HB_ISLOGICAL( lExpand ), lExpand, .T. ) )
+   METHOD Expand(lExpand)                        INLINE wvg_TreeView_Expand(::hTree, ::hItem, ;
+      iif(HB_ISLOGICAL(lExpand), lExpand, .T.))
    METHOD isExpanded()
-   METHOD setCaption( cCaption )
-   METHOD setExpandedImage( nResIdoBitmap )
-   METHOD setImage( nResIdoBitmap )
-   METHOD setMarkedImage( nResIdoBitmap )
+   METHOD setCaption(cCaption)
+   METHOD setExpandedImage(nResIdoBitmap)
+   METHOD setImage(nResIdoBitmap)
+   METHOD setMarkedImage(nResIdoBitmap)
 
-   METHOD addItem( cCaption )
+   METHOD addItem(cCaption)
    METHOD delItem()
    METHOD getChildItems()
    METHOD getParentItem()
@@ -108,31 +108,31 @@ METHOD PROCEDURE WvgTreeViewItem:destroy()
 METHOD PROCEDURE WvgTreeViewItem:isExpanded()
    RETURN
 
-METHOD PROCEDURE WvgTreeViewItem:setCaption( cCaption )
+METHOD PROCEDURE WvgTreeViewItem:setCaption(cCaption)
 
-   HB_SYMBOL_UNUSED( cCaption )
-
-   RETURN
-
-METHOD PROCEDURE WvgTreeViewItem:setExpandedImage( nResIdoBitmap )
-
-   HB_SYMBOL_UNUSED( nResIdoBitmap )
+   HB_SYMBOL_UNUSED(cCaption)
 
    RETURN
 
-METHOD PROCEDURE WvgTreeViewItem:setImage( nResIdoBitmap )
+METHOD PROCEDURE WvgTreeViewItem:setExpandedImage(nResIdoBitmap)
 
-   HB_SYMBOL_UNUSED( nResIdoBitmap )
-
-   RETURN
-
-METHOD PROCEDURE WvgTreeViewItem:setMarkedImage( nResIdoBitmap )
-
-   HB_SYMBOL_UNUSED( nResIdoBitmap )
+   HB_SYMBOL_UNUSED(nResIdoBitmap)
 
    RETURN
 
-METHOD WvgTreeViewItem:addItem( cCaption )
+METHOD PROCEDURE WvgTreeViewItem:setImage(nResIdoBitmap)
+
+   HB_SYMBOL_UNUSED(nResIdoBitmap)
+
+   RETURN
+
+METHOD PROCEDURE WvgTreeViewItem:setMarkedImage(nResIdoBitmap)
+
+   HB_SYMBOL_UNUSED(nResIdoBitmap)
+
+   RETURN
+
+METHOD WvgTreeViewItem:addItem(cCaption)
 
    LOCAL oItem, hParent
 
@@ -143,11 +143,11 @@ METHOD WvgTreeViewItem:addItem( cCaption )
    oItem:caption := cCaption
    oItem:oWnd    := ::oWnd
 
-   hParent := iif( HB_ISOBJECT( oItem:oParent ), oItem:oParent:hItem, NIL )
+   hParent := iif(HB_ISOBJECT(oItem:oParent), oItem:oParent:hItem, NIL)
 
-   oItem:hItem := wvg_TreeView_AddItem( oItem:hTree, hParent, oItem:caption )
+   oItem:hItem := wvg_TreeView_AddItem(oItem:hTree, hParent, oItem:caption)
 
-   AAdd( oItem:oWnd:aItems, oItem )
+   AAdd(oItem:oWnd:aItems, oItem)
 
    RETURN oItem
 

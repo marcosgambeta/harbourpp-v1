@@ -72,9 +72,9 @@ ENDCLASS
 
 METHOD WvgMenu:new( oParent, aPresParams, lVisible )
 
-   __defaultNIL( @oParent, ::oParent )
-   __defaultNIL( @aPresParams, ::aPresParams )
-   __defaultNIL( @lVisible, ::visible )
+   __defaultNIL(@oParent, ::oParent)
+   __defaultNIL(@aPresParams, ::aPresParams)
+   __defaultNIL(@lVisible, ::visible)
 
    ::oParent     := oParent
    ::aPresParams := aPresParams
@@ -84,9 +84,9 @@ METHOD WvgMenu:new( oParent, aPresParams, lVisible )
 
 METHOD WvgMenu:create( oParent, aPresParams, lVisible )
 
-   __defaultNIL( @oParent, ::oParent )
-   __defaultNIL( @aPresParams, ::aPresParams )
-   __defaultNIL( @lVisible, ::visible )
+   __defaultNIL(@oParent, ::oParent)
+   __defaultNIL(@aPresParams, ::aPresParams)
+   __defaultNIL(@lVisible, ::visible)
 
    ::oParent     := oParent
    ::aPresParams := aPresParams
@@ -114,8 +114,8 @@ METHOD WvgMenu:Popup( oXbp, aPos, nDefaultItem, nControl )
    nCmd := wvg_TrackPopupMenu( ::hMenu, TPM_LEFTALIGN + TPM_TOPALIGN + TPM_RETURNCMD, aPos[1], aPos[2], oXbp:hWnd )
 
    aMenuItem := ::findMenuItemById( nCmd )
-   IF HB_ISARRAY( aMenuItem ) .AND. HB_ISBLOCK( aMenuItem[2] )
-      Eval( aMenuItem[2], aMenuItem[1], , aMenuItem[4] )
+   IF HB_ISARRAY(aMenuItem) .AND. HB_ISBLOCK(aMenuItem[2])
+      Eval(aMenuItem[2], aMenuItem[1], , aMenuItem[4])
    ENDIF
 
    RETURN 0

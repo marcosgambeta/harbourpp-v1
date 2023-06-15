@@ -82,7 +82,7 @@ CREATE CLASS WvgMenuBar INHERIT wvgWindow
 
    VAR    className                              INIT "MENUBAR"
 
-   METHOD numItems()                             INLINE Len( ::aMenuItems )
+   METHOD numItems()                             INLINE Len(::aMenuItems)
 
    METHOD new( oParent, aPresParams, lVisible )
    METHOD create( oParent, aPresParams, lVisible )
@@ -120,9 +120,9 @@ ENDCLASS
 
 METHOD WvgMenuBar:new( oParent, aPresParams, lVisible )
 
-   __defaultNIL( @oParent, ::oParent )
-   __defaultNIL( @aPresParams, ::aPresParams )
-   __defaultNIL( @lVisible, ::visible )
+   __defaultNIL(@oParent, ::oParent)
+   __defaultNIL(@aPresParams, ::aPresParams)
+   __defaultNIL(@lVisible, ::visible)
 
    ::oParent     := oParent
    ::aPresParams := aPresParams
@@ -134,9 +134,9 @@ METHOD WvgMenuBar:new( oParent, aPresParams, lVisible )
 
 METHOD WvgMenuBar:create( oParent, aPresParams, lVisible )
 
-   __defaultNIL( @oParent, ::oParent )
-   __defaultNIL( @aPresParams, ::aPresParams )
-   __defaultNIL( @lVisible, ::visible )
+   __defaultNIL(@oParent, ::oParent)
+   __defaultNIL(@aPresParams, ::aPresParams)
+   __defaultNIL(@lVisible, ::visible)
 
    ::oParent     := oParent
    ::aPresParams := aPresParams
@@ -171,9 +171,9 @@ METHOD WvgMenuBar:create( oParent, aPresParams, lVisible )
 
 METHOD WvgMenuBar:configure( oParent, aPresParams, lVisible )
 
-   __defaultNIL( @oParent, ::oParent )
-   __defaultNIL( @aPresParams, ::aPresParams )
-   __defaultNIL( @lVisible, ::visible )
+   __defaultNIL(@oParent, ::oParent)
+   __defaultNIL(@aPresParams, ::aPresParams)
+   __defaultNIL(@lVisible, ::visible)
 
    ::oParent     := oParent
    ::aPresParams := aPresParams
@@ -183,10 +183,10 @@ METHOD WvgMenuBar:configure( oParent, aPresParams, lVisible )
 
 METHOD WvgMenuBar:destroy()
 
-   IF ! Empty( ::hMenu )
+   IF !Empty(::hMenu)
       ::DelAllItems()
 
-      IF ! wvg_DestroyMenu( ::hMenu )
+      IF !wvg_DestroyMenu( ::hMenu )
 #if 0
          Throw( ErrorNew( "wvtMenu", 1000, "wvtMenu:Destroy()", "Destroy menu FAILED", {} ) )
 #endif
@@ -234,7 +234,7 @@ METHOD WvgMenuBar:addItem( aItem, p2, p3, p4 )
 
    LOCAL xCaption, bAction, nStyle, nAttrib
 
-   IF PCount() == 1 .AND. HB_ISARRAY( aItem )
+   IF PCount() == 1 .AND. HB_ISARRAY(aItem)
       ASize( aItem, 4 )
       xCaption := aItem[1]
       bAction  := aItem[2]
@@ -254,7 +254,7 @@ METHOD WvgMenuBar:putItem( aItem, nPos, lInsert )
    LOCAL nItemIndex, cCaption
    LOCAL xCaption, bAction, nStyle, nAttrib
 
-   __defaultNIL( @lInsert, .T. )
+   __defaultNIL(@lInsert, .T.)
 
    ASize( aItem, 4 )
 
@@ -278,7 +278,7 @@ METHOD WvgMenuBar:putItem( aItem, nPos, lInsert )
       EXIT
 
    CASE "O"
-      cCaption := iif( bAction == NIL, xCaption:title, bAction )
+      cCaption := iif(bAction == NIL, xCaption:title, bAction)
       aItem    := { MF_POPUP, xCaption:hMenu, cCaption, xCaption, nStyle, nAttrib }
       EXIT
 
@@ -288,12 +288,12 @@ METHOD WvgMenuBar:putItem( aItem, nPos, lInsert )
    ENDSWITCH
 
    IF nPos <= 0
-      AAdd( ::aMenuItems, aItem )
-      nItemIndex := Len( ::aMenuItems )
+      AAdd(::aMenuItems, aItem)
+      nItemIndex := Len(::aMenuItems)
       wvg_AppendMenu( ::hMenu, ;
          aItem[1], ;
          aItem[2], ;
-         iif( HB_ISSTRING( aItem[3] ), StrTran( aItem[3], "~", "&" ), aItem[3] ) )
+         iif(HB_ISSTRING(aItem[3]), StrTran( aItem[3], "~", "&" ), aItem[3]) )
    ELSE
       nItemIndex := nPos
       IF lInsert
@@ -302,17 +302,17 @@ METHOD WvgMenuBar:putItem( aItem, nPos, lInsert )
             nItemIndex - 1, ;
             aItem[1] + MF_BYPOSITION, ;
             aItem[2], ;
-            iif( HB_ISSTRING( aItem[3] ), StrTran( aItem[3], "~", "&" ), aItem[3] ) )
+            iif(HB_ISSTRING(aItem[3]), StrTran( aItem[3], "~", "&" ), aItem[3]) )
       ELSE
-         IF HB_ISSTRING( xCaption )
+         IF HB_ISSTRING(xCaption)
             aItem[2] := ::aMenuItems[nItemIndex][2]
          ENDIF
          ::aMenuItems[nItemIndex] := aItem
          wvg_SetMenuItem( ::hMenu, ;
             nItemIndex - 1, ;
             aItem[2], ;
-            iif( HB_ISSTRING( aItem[3] ), StrTran( aItem[3], "~", "&" ), aItem[3] ), ;
-            HB_ISSTRING( xCaption ) )
+            iif(HB_ISSTRING(aItem[3]), StrTran( aItem[3], "~", "&" ), aItem[3]), ;
+            HB_ISSTRING(xCaption) )
       ENDIF
    ENDIF
 
@@ -332,10 +332,10 @@ METHOD WvgMenuBar:findMenuItemById( nId )
 
    LOCAL x, aResult := {}
 
-   IF ! Empty( nId )
+   IF !Empty(nId)
       x := ::numItems()
 
-      DO WHILE x > 0 .AND. Empty( aResult )
+      DO WHILE x > 0 .AND. Empty(aResult)
          IF ::aMenuItems[x][WVT_MENU_TYPE] == MF_POPUP
             aResult := ::aMenuItems[x][WVT_MENU_MENUOBJ]:findMenuItemById( nId )
 
@@ -353,10 +353,10 @@ METHOD WvgMenuBar:findMenuPosById( nId )
 
    LOCAL x, nPos
 
-   IF ! Empty( nId )
+   IF !Empty(nId)
       x := ::numItems()
 
-      DO WHILE x > 0 .AND. Empty( nPos )
+      DO WHILE x > 0 .AND. Empty(nPos)
          IF ::aMenuItems[x][WVT_MENU_TYPE] == MF_POPUP
             nPos := ::aMenuItems[x][WVT_MENU_MENUOBJ]:findMenuPosById( nId )
 
@@ -374,19 +374,19 @@ METHOD WvgMenuBar:checkItem( nItemNum, lCheck )
 
    LOCAL nRet := -1
 
-   __defaultNIL( @lCheck, .T. )
+   __defaultNIL(@lCheck, .T.)
 
-   IF ! Empty( ::hMenu ) .AND. HB_ISNUMERIC( nItemNum )
-      nRet := wvg_CheckMenuItem( ::hMenu, nItemNum - 1, MF_BYPOSITION + iif( lCheck, MF_CHECKED, MF_UNCHECKED ) )
+   IF !Empty(::hMenu) .AND. HB_ISNUMERIC(nItemNum)
+      nRet := wvg_CheckMenuItem( ::hMenu, nItemNum - 1, MF_BYPOSITION + iif(lCheck, MF_CHECKED, MF_UNCHECKED) )
    ENDIF
 
-   RETURN iif( nRet == -1, .F., .T. )
+   RETURN iif(nRet == -1, .F., .T.)
 
 METHOD WvgMenuBar:enableItem( nItemNum )
 
    LOCAL lSuccess := .F.
 
-   IF ! Empty( ::hMenu ) .AND. HB_ISNUMERIC( nItemNum )
+   IF !Empty(::hMenu) .AND. HB_ISNUMERIC(nItemNum)
       lSuccess := wvg_EnableMenuItem( ::hMenu, nItemNum - 1, MF_BYPOSITION + MF_ENABLED )
    ENDIF
 
@@ -396,7 +396,7 @@ METHOD WvgMenuBar:disableItem( nItemNum )
 
    LOCAL lSuccess := .F.
 
-   IF ! Empty( ::hMenu ) .AND. ! Empty( nItemNum )
+   IF !Empty(::hMenu) .AND. !Empty(nItemNum)
       lSuccess := wvg_EnableMenuItem( ::hMenu, nItemNum - 1, MF_BYPOSITION + MF_GRAYED )
    ENDIF
 
@@ -404,7 +404,7 @@ METHOD WvgMenuBar:disableItem( nItemNum )
 
 METHOD WvgMenuBar:getItem( nItemNum )
 
-   IF HB_ISNUMERIC( nItemNum ) .AND. nItemNum > 0 .AND. nItemNum <= Len( ::aMenuItems )
+   IF HB_ISNUMERIC(nItemNum) .AND. nItemNum > 0 .AND. nItemNum <= Len(::aMenuItems)
       RETURN { ;
          ::aMenuItems[nItemNum][3], ;
          ::aMenuItems[nItemNum][4], ;
@@ -427,14 +427,14 @@ METHOD WvgMenuBar:isItemEnabled( nItemNum )
    RETURN wvg_IsMenuItemEnabled( ::hMenu, nItemNum - 1 )
 
 METHOD WvgMenuBar:selectItem( nItemNum )
-   RETURN ! HB_ISNUMERIC( nItemNum )
+   RETURN !HB_ISNUMERIC(nItemNum)
 
 METHOD WvgMenuBar:setItem( nItemNum, aItem )
    RETURN ::putItem( aItem, nItemNum, .F. )
 
 METHOD WvgMenuBar:beginMenu( xParam )
 
-   IF HB_ISBLOCK( xParam ) .OR. HB_ISNIL( xParam )
+   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
       ::sl_beginMenu := xParam
       RETURN NIL
    ENDIF
@@ -443,7 +443,7 @@ METHOD WvgMenuBar:beginMenu( xParam )
 
 METHOD WvgMenuBar:endMenu( xParam )
 
-   IF HB_ISBLOCK( xParam ) .OR. HB_ISNIL( xParam )
+   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
       ::sl_endMenu := xParam
       RETURN NIL
    ENDIF
@@ -452,7 +452,7 @@ METHOD WvgMenuBar:endMenu( xParam )
 
 METHOD WvgMenuBar:itemMarked( xParam )
 
-   IF HB_ISBLOCK( xParam ) .OR. HB_ISNIL( xParam )
+   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
       ::sl_itemMarked := xParam
       RETURN NIL
    ENDIF
@@ -461,7 +461,7 @@ METHOD WvgMenuBar:itemMarked( xParam )
 
 METHOD WvgMenuBar:itemSelected( xParam )
 
-   IF HB_ISBLOCK( xParam ) .OR. HB_ISNIL( xParam )
+   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
       ::sl_itemSelected := xParam
       RETURN NIL
    ENDIF
@@ -470,7 +470,7 @@ METHOD WvgMenuBar:itemSelected( xParam )
 
 METHOD WvgMenuBar:drawItem( xParam )
 
-   IF HB_ISBLOCK( xParam ) .OR. HB_ISNIL( xParam )
+   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
       ::sl_drawItem := xParam
       RETURN NIL
    ENDIF
@@ -479,7 +479,7 @@ METHOD WvgMenuBar:drawItem( xParam )
 
 METHOD WvgMenuBar:measureItem( xParam )
 
-   IF HB_ISBLOCK( xParam ) .OR. HB_ISNIL( xParam )
+   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
       ::sl_measureItem := xParam
       RETURN NIL
    ENDIF
@@ -488,7 +488,7 @@ METHOD WvgMenuBar:measureItem( xParam )
 
 METHOD WvgMenuBar:onMenuKey( xParam )
 
-   IF HB_ISBLOCK( xParam ) .OR. HB_ISNIL( xParam )
+   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
       ::sl_onMenuKey := xParam
       RETURN NIL
    ENDIF

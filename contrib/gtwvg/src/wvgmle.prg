@@ -89,7 +89,7 @@ CREATE CLASS WvgMLE INHERIT WvgWindow, WvgDataRef
    METHOD pos()                                 VIRTUAL
 
    VAR    sl_undo                               INIT .T.
-   ACCESS undo                                  INLINE iif( ::sl_undo, NIL, NIL )
+   ACCESS undo                                  INLINE iif(::sl_undo, NIL, NIL)
    ASSIGN undo( lUndo )                         INLINE ::sl_undo := lUndo
 
    METHOD setEditable()                         VIRTUAL
@@ -125,13 +125,13 @@ METHOD WvgMLE:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    IF ::tabStop
       ::style += WS_TABSTOP
    ENDIF
-   IF ! ::editable
+   IF !::editable
       ::style += ES_READONLY
    ENDIF
    IF ::border
       ::style += WS_BORDER
    ENDIF
-   IF ! ::wordWrap
+   IF !::wordWrap
       IF ::horizScroll
          ::style += WS_HSCROLL
       ELSE
@@ -164,23 +164,23 @@ METHOD WvgMLE:handleEvent( nMessage, aNM )
    CASE nMessage == HB_GTE_COMMAND
       DO CASE
       CASE aNM[NMH_code] == EN_KILLFOCUS
-         IF HB_ISBLOCK( ::sl_killInputFocus )
-            Eval( ::sl_killInputFocus, , , Self )
+         IF HB_ISBLOCK(::sl_killInputFocus)
+            Eval(::sl_killInputFocus, , , Self)
          ENDIF
 
       CASE aNM[NMH_code] == EN_SETFOCUS
-         IF HB_ISBLOCK( ::sl_setInputFocus )
-            Eval( ::sl_setInputFocus, , , Self )
+         IF HB_ISBLOCK(::sl_setInputFocus)
+            Eval(::sl_setInputFocus, , , Self)
          ENDIF
 
       CASE aNM[NMH_code] == EN_HSCROLL
-         IF HB_ISBLOCK( ::sl_hScroll )
-            Eval( ::sl_hScroll, , , Self )
+         IF HB_ISBLOCK(::sl_hScroll)
+            Eval(::sl_hScroll, , , Self)
          ENDIF
 
       CASE aNM[NMH_code] == EN_VSCROLL
-         IF HB_ISBLOCK( ::sl_vScroll )
-            Eval( ::sl_vScroll, , , Self )
+         IF HB_ISBLOCK(::sl_vScroll)
+            Eval(::sl_vScroll, , , Self)
          ENDIF
 
       CASE aNM[NMH_code] == EN_CHANGE
@@ -190,10 +190,10 @@ METHOD WvgMLE:handleEvent( nMessage, aNM )
       ENDCASE
 
    CASE nMessage ==  HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC( ::clr_FG )
+      IF HB_ISNUMERIC(::clr_FG)
          wvg_SetTextColor( aNM[1], ::clr_FG )
       ENDIF
-      IF HB_ISNUMERIC( ::hBrushBG )
+      IF HB_ISNUMERIC(::hBrushBG)
          wvg_SetBkMode( aNM[1], 1 )
          RETURN ::hBrushBG
       ELSE
@@ -211,23 +211,23 @@ METHOD WvgMLE:handleEvent( nMessage, aNM )
             ENDIF
 
          CASE aNM[NMH_code] == WM_KILLFOCUS
-            IF HB_ISBLOCK( ::sl_killInputFocus )
-               Eval( ::sl_killInputFocus, , , Self )
+            IF HB_ISBLOCK(::sl_killInputFocus)
+               Eval(::sl_killInputFocus, , , Self)
             ENDIF
 
          CASE aNM[NMH_code] == WM_SETFOCUS
-            IF HB_ISBLOCK( ::sl_setInputFocus )
-               Eval( ::sl_setInputFocus, , , Self )
+            IF HB_ISBLOCK(::sl_setInputFocus)
+               Eval(::sl_setInputFocus, , , Self)
             ENDIF
 
          CASE aNM[NMH_code] == WM_HSCROLL
-            IF HB_ISBLOCK( ::sl_hScroll )
-               Eval( ::sl_hScroll, , , Self )
+            IF HB_ISBLOCK(::sl_hScroll)
+               Eval(::sl_hScroll, , , Self)
             ENDIF
 
          CASE aNM[NMH_code] == WM_VSCROLL
-            IF HB_ISBLOCK( ::sl_vScroll )
-               Eval( ::sl_vScroll, , , Self )
+            IF HB_ISBLOCK(::sl_vScroll)
+               Eval(::sl_vScroll, , , Self)
             ENDIF
 
          ENDCASE
@@ -245,10 +245,10 @@ METHOD PROCEDURE WvgMLE:destroy()
 
 METHOD WvgMLE:changed( lChanged )
 
-   LOCAL lChg := ::sendMessage( EM_GETMODIFY, 0, 0 )
+   LOCAL lChg := ::sendMessage(EM_GETMODIFY, 0, 0)
 
-   IF HB_ISLOGICAL( lChanged )
-      ::sendMessage( EM_SETMODIFY, iif( lChanged, 0, 1 ), 0 )
+   IF HB_ISLOGICAL(lChanged)
+      ::sendMessage(EM_SETMODIFY, iif(lChanged, 0, 1), 0)
    ENDIF
 
    RETURN lChg
@@ -259,13 +259,13 @@ METHOD WvgMLE:clear()
 
    ::setData( "" )
 
-   RETURN Len( cText )
+   RETURN Len(cText)
 
 METHOD WvgMLE:copyMarked()
 
    LOCAL n, nB, nE
 
-   n := ::sendMessage( EM_GETSEL )
+   n := ::sendMessage(EM_GETSEL)
    nB := wvg_LOWORD( n )
    nE := wvg_HIWORD( n )
 
@@ -279,7 +279,7 @@ METHOD WvgMLE:cutMarked()
 
    LOCAL n, nB, nE, cText
 
-   n := ::sendMessage( EM_GETSEL )
+   n := ::sendMessage(EM_GETSEL)
    nB := wvg_LOWORD( n )
    nE := wvg_HIWORD( n )
 

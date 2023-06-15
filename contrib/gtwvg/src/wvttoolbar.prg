@@ -89,28 +89,28 @@ CREATE CLASS WvtToolBar INHERIT WvtObject
    VAR    wScreen
    VAR    cScreen
    VAR    nBtnLeft                                INIT 0
-   VAR    nRGBSep                                 INIT RGB( 150, 150, 150 )
+   VAR    nRGBSep                                 INIT RGB(150, 150, 150)
 
-   ACCESS nButtons                                INLINE Len( ::aButtons )
+   ACCESS nButtons                                INLINE Len(::aButtons)
 
-   METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
+   METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
    METHOD Refresh()
-   METHOD AddButton( cFileImage, bBlock, cTooltip )
+   METHOD AddButton(cFileImage, bBlock, cTooltip)
    METHOD PaintToolBar()
    METHOD HoverOn()
    METHOD HoverOff()
 
 ENDCLASS
 
-METHOD WvtToolBar:New( oParent, nID, nTop, nLeft, nBottom, nRight )
+METHOD WvtToolBar:New(oParent, nID, nTop, nLeft, nBottom, nRight)
 
    nTop    := 0
    nLeft   := 0
-   __defaultNIL( @nBottom, 1 )
+   __defaultNIL(@nBottom, 1)
    nRight  := oParent:MaxCol()
 
-   ::Super:New( oParent, DLG_OBJ_TOOLBAR, nID, nTop, nLeft, nBottom, nRight )
+   ::Super:New(oParent, DLG_OBJ_TOOLBAR, nID, nTop, nLeft, nBottom, nRight)
 
    ::lActive   := .T.
    ::lFloating := .F.
@@ -125,11 +125,11 @@ METHOD WvtToolBar:Create()
       ::lHidden := .T.
    ENDIF
 
-   AEval( ::aObjects, {| o | o:lActive := ::lActive } )
+   AEval(::aObjects, {| o | o:lActive := ::lActive })
 
    ::bPaint := {|| ::PaintToolBar() }
-   AAdd( ::aPaint, { ::bPaint, ;
-      { WVT_BLOCK_TOOLBAR, ::nTop, ::nLeft, ::nBottom, ::nRight } } )
+   AAdd(::aPaint, { ::bPaint, ;
+      { WVT_BLOCK_TOOLBAR, ::nTop, ::nLeft, ::nBottom, ::nRight } })
 
    ::Super:Create()
 
@@ -138,9 +138,9 @@ METHOD WvtToolBar:Create()
 METHOD WvtToolBar:Refresh()
 
    IF ::lFloating
-      hb_DispBox( ::nTop, ::nLeft, ::nBottom, ::nRight, "         ", "n/w" )
+      hb_DispBox(::nTop, ::nLeft, ::nBottom, ::nRight, "         ", "n/w")
    ELSE
-      wvt_InvalidateRect( ::nTop, ::nLeft, ::nTop, ::nLeft )
+      wvt_InvalidateRect(::nTop, ::nLeft, ::nTop, ::nLeft)
    ENDIF
 
    RETURN Self
@@ -148,25 +148,25 @@ METHOD WvtToolBar:Refresh()
 METHOD WvtToolBar:PaintToolBar()
 
    IF ::lActive
-      wvt_DrawLine( ::nTop, ::nLeft, ::nBottom, ::nRight, 0, 1, 2, , , ::nRGBSep )
+      wvt_DrawLine(::nTop, ::nLeft, ::nBottom, ::nRight, 0, 1, 2, , , ::nRGBSep)
    ENDIF
 
    RETURN Self
 
-METHOD WvtToolBar:AddButton( cFileImage, bBlock, cTooltip )
+METHOD WvtToolBar:AddButton(cFileImage, bBlock, cTooltip)
 
    LOCAL oObj, nCol
 
-   nCol := ( ::nBottom - ::nTop + 1 ) * 2
+   nCol := (::nBottom - ::nTop + 1) * 2
 
-   oObj := WvtToolButton():New( Self )
+   oObj := WvtToolButton():New(Self)
 
    oObj:lActive    := ::lActive
    oObj:nTop       := ::nTop
    oObj:nLeft      := ::nBtnLeft + 1
    oObj:nBottom    := ::nBottom
 
-   IF HB_ISSTRING( cFileImage )
+   IF HB_ISSTRING(cFileImage)
       oObj:nBtnType   := TLB_BUTTON_TYPE_IMAGE
       oObj:nRight     := oObj:nLeft + nCol - 1
       oObj:cFileImage := cFileImage
@@ -177,12 +177,12 @@ METHOD WvtToolBar:AddButton( cFileImage, bBlock, cTooltip )
       oObj:nRight     := oObj:nLeft
    ENDIF
 
-   AAdd( ::aObjects, oObj )
+   AAdd(::aObjects, oObj)
 
    ::nBtnLeft         := oObj:nRight + 1
    ::nCurButton++
 
-   ::oParent:AddObject( oObj )
+   ::oParent:AddObject(oObj)
 
    RETURN Self
 
@@ -192,10 +192,10 @@ METHOD WvtToolBar:HoverOn()
       ::lHidden   := .F.
       ::lActive   := .T.
 #if 0
-      ::cScreen   := SaveScreen( ::nTop, ::nLeft, ::nBottom, ::nRight )
-      ::wScreen   := wvt_SaveScreen( ::nTop, ::nLeft, ::nBottom, ::nRight )
+      ::cScreen   := SaveScreen(::nTop, ::nLeft, ::nBottom, ::nRight)
+      ::wScreen   := wvt_SaveScreen(::nTop, ::nLeft, ::nBottom, ::nRight)
 #endif
-      AEval( ::aObjects, {| o | o:lActive := ::lActive } )
+      AEval(::aObjects, {| o | o:lActive := ::lActive })
 
       ::Refresh()
    ENDIF
@@ -204,13 +204,13 @@ METHOD WvtToolBar:HoverOn()
 
 METHOD WvtToolBar:HoverOff()
 
-   IF ::lFloating .AND. ! ::lHidden
+   IF ::lFloating .AND. !::lHidden
       ::lHidden := .T.
       ::lActive := .F.
-      AEval( ::aObjects, {| o | o:lActive := ::lActive } )
+      AEval(::aObjects, {| o | o:lActive := ::lActive })
 #if 0
-      RestScreen( ::nTop, ::nLeft, ::nBottom, ::nRight, ::cScreen )
-      wvt_RestScreen( ::nTop, ::nLeft, ::nBottom, ::nRight, ::wScreen, .F. )
+      RestScreen(::nTop, ::nLeft, ::nBottom, ::nRight, ::cScreen)
+      wvt_RestScreen(::nTop, ::nLeft, ::nBottom, ::nRight, ::wScreen, .F.)
 #endif
       ::Refresh()
    ENDIF

@@ -103,7 +103,7 @@ METHOD WvgRadioButton:create( oParent, oOwner, aPos, aSize, aPresParams, lVisibl
    ::setCaption( ::caption )
 
    IF ::selection
-      ::sendMessage( BM_SETCHECK, BST_CHECKED, 0 )
+      ::sendMessage(BM_SETCHECK, BST_CHECKED, 0)
    ENDIF
 
    RETURN Self
@@ -116,8 +116,8 @@ METHOD WvgRadioButton:handleEvent( nMessage, aNM )
       IF aNM[NMH_code] == BN_CLICKED
          ::editBuffer := ( wvg_Button_GetCheck( ::hWnd ) == BST_CHECKED )
 
-         IF HB_ISBLOCK( ::sl_lbClick )
-            Eval( ::sl_lbClick, ::editBuffer, , Self )
+         IF HB_ISBLOCK(::sl_lbClick)
+            Eval(::sl_lbClick, ::editBuffer, , Self)
             RETURN 0
          ENDIF
       ENDIF
@@ -141,7 +141,7 @@ METHOD WvgRadioButton:configure( oParent, oOwner, aPos, aSize, aPresParams, lVis
 
 METHOD WvgRadioButton:setCaption( xCaption )
 
-   IF HB_ISSTRING( xCaption )
+   IF HB_ISSTRING(xCaption)
       ::caption := xCaption
       wvg_SendMessageText( ::hWnd, WM_SETTEXT, 0, ::caption )
    ENDIF

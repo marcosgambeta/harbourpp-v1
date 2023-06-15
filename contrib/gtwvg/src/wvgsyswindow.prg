@@ -95,9 +95,9 @@ ENDCLASS
 
 METHOD WvgSysWindow:new( oParent, oOwner, aPos )
 
-   __defaultNIL( @oParent, ::oParent )
-   __defaultNIL( @oOwner, ::oOwner )
-   __defaultNIL( @aPos, ::aPos )
+   __defaultNIL(@oParent, ::oParent)
+   __defaultNIL(@oOwner, ::oOwner)
+   __defaultNIL(@aPos, ::aPos)
 
    ::oParent := oParent
    ::oOwner  := oOwner
@@ -109,9 +109,9 @@ METHOD WvgSysWindow:new( oParent, oOwner, aPos )
 
 METHOD WvgSysWindow:create( oParent, oOwner, aPos )
 
-   __defaultNIL( @oParent, ::oParent )
-   __defaultNIL( @oOwner, ::oOwner )
-   __defaultNIL( @aPos, ::aPos )
+   __defaultNIL(@oParent, ::oParent)
+   __defaultNIL(@oOwner, ::oOwner)
+   __defaultNIL(@aPos, ::aPos)
 
    ::oParent := oParent
    ::oOwner  := oOwner

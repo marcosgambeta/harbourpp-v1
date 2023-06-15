@@ -70,7 +70,7 @@ CREATE CLASS WvgBitmap
    VAR    lDCToDestroy                          INIT .F.
 
    METHOD new()
-   METHOD create( oPScompat )
+   METHOD create(oPScompat)
    METHOD configure()                           VIRTUAL
    METHOD destroy()
 
@@ -91,7 +91,7 @@ ENDCLASS
 METHOD WvgBitmap:new()
    RETURN Self
 
-METHOD WvgBitmap:create( oPScompat )
+METHOD WvgBitmap:create(oPScompat)
 
    IF oPScompat == NIL
       ::hDCComp := wvg_GetDC()
@@ -105,10 +105,10 @@ METHOD WvgBitmap:create( oPScompat )
 METHOD WvgBitmap:destroy()
 
    IF ::hBitmap != NIL
-      wvg_DeleteObject( ::hBitmap )
+      wvg_DeleteObject(::hBitmap)
    ENDIF
    IF ::lDCtoDestroy
-      wvg_ReleaseDC( ::hDCcompat )
+      wvg_ReleaseDC(::hDCcompat)
    ENDIF
 
    RETURN Self

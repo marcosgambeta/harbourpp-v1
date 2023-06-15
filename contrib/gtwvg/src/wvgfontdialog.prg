@@ -132,11 +132,11 @@ ENDCLASS
 
 METHOD WvgFontDialog:new( oParent, oOwner, oScreenPS, oPrinterPS, aPos )
 
-   __defaultNIL( @oParent, ::oParent )
-   __defaultNIL( @oOwner, ::oOwner )
-   __defaultNIL( @oScreenPS, ::oScreenPS )
-   __defaultNIL( @oPrinterPS, ::oPrinterPS )
-   __defaultNIL( @aPos, ::aPos )
+   __defaultNIL(@oParent, ::oParent)
+   __defaultNIL(@oOwner, ::oOwner)
+   __defaultNIL(@oScreenPS, ::oScreenPS)
+   __defaultNIL(@oPrinterPS, ::oPrinterPS)
+   __defaultNIL(@aPos, ::aPos)
 
    ::oParent    := oParent
    ::oOwner     := oOwner
@@ -150,11 +150,11 @@ METHOD WvgFontDialog:new( oParent, oOwner, oScreenPS, oPrinterPS, aPos )
 
 METHOD WvgFontDialog:create( oParent, oOwner, oScreenPS, oPrinterPS, aPos )
 
-   __defaultNIL( @oParent, ::oParent )
-   __defaultNIL( @oOwner, ::oOwner )
-   __defaultNIL( @oScreenPS, ::oScreenPS )
-   __defaultNIL( @oPrinterPS, ::oPrinterPS )
-   __defaultNIL( @aPos, ::aPos )
+   __defaultNIL(@oParent, ::oParent)
+   __defaultNIL(@oOwner, ::oOwner)
+   __defaultNIL(@oScreenPS, ::oScreenPS)
+   __defaultNIL(@oPrinterPS, ::oPrinterPS)
+   __defaultNIL(@aPos, ::aPos)
 
    ::oParent    := oParent
    ::oOwner     := oOwner
@@ -165,7 +165,7 @@ METHOD WvgFontDialog:create( oParent, oOwner, oScreenPS, oPrinterPS, aPos )
    IF ::viewPrinterFonts .AND. ::oPrinterPS == NIL
       ::viewPrinterFonts := .F.
    ENDIF
-   IF ! ::viewScreenFonts .AND. ! ::viewPrinterFonts
+   IF !::viewScreenFonts .AND. !::viewPrinterFonts
       ::viewScreenFonts := .T.
    ENDIF
 
@@ -188,31 +188,31 @@ METHOD WvgFontDialog:wndProc( hWnd, nMessage, nwParam, nlParam )
    CASE nMessage == WM_INITDIALOG
       ::hWnd := hWnd
 
-      IF ! Empty( ::title )
+      IF !Empty(::title)
          wvg_SetWindowText( ::hWnd, ::title )
       ENDIF
-      IF ! ::buttonCancel
+      IF !::buttonCancel
          wvg_EnableWindow( wvg_GetDlgItem( ::hWnd, IDCANCEL ), .F. )
       ENDIF
-      IF ! ::buttonApply
+      IF !::buttonApply
          wvg_EnableWindow( wvg_GetDlgItem( ::hWnd, 1026 ), .F. )
       ENDIF
-      IF ! ::buttonHelp
+      IF !::buttonHelp
          wvg_EnableWindow( wvg_GetDlgItem( ::hWnd, 1038 ), .F. )
       ENDIF
-      IF ! ::strikeOut
+      IF !::strikeOut
          wvg_EnableWindow( wvg_GetDlgItem( ::hWnd, 1040 ), .F. )
       ENDIF
-      IF ! ::underscore
+      IF !::underscore
          wvg_EnableWindow( wvg_GetDlgItem( ::hWnd, 1041 ), .F. )
       ENDIF
-      IF ! ::name
+      IF !::name
          wvg_EnableWindow( wvg_GetDlgItem( ::hWnd, 1136 ), .F. )
       ENDIF
-      IF ! ::style
+      IF !::style
          wvg_EnableWindow( wvg_GetDlgItem( ::hWnd, 1137 ), .F. )
       ENDIF
-      IF ! ::size
+      IF !::size
          wvg_EnableWindow( wvg_GetDlgItem( ::hWnd, 1138 ), .F. )
       ENDIF
 
@@ -233,18 +233,18 @@ METHOD WvgFontDialog:wndProc( hWnd, nMessage, nwParam, nlParam )
 
       CASE nL == IDOK
          ::ok := .T.
-         IF HB_ISBLOCK( ::sl_activateOk )
-            Eval( ::sl_activateOk, ::GetWvgFont(), , Self )
+         IF HB_ISBLOCK(::sl_activateOk)
+            Eval(::sl_activateOk, ::GetWvgFont(), , Self)
          ENDIF
 
       CASE nL == IDCANCEL
-         IF HB_ISBLOCK( ::sl_activateCancel )
-            Eval( ::sl_activateCancel, , , Self )
+         IF HB_ISBLOCK(::sl_activateCancel)
+            Eval(::sl_activateCancel, , , Self)
          ENDIF
 
       CASE nL == 1026
-         IF HB_ISBLOCK( ::sl_activateApply )
-            Eval( ::sl_activateApply, ::GetWvgFont(), , Self )
+         IF HB_ISBLOCK(::sl_activateApply)
+            Eval(::sl_activateApply, ::GetWvgFont(), , Self)
          ENDIF
 
       CASE nL == 1038  /* Help */
@@ -268,7 +268,7 @@ METHOD WvgFontDialog:display( nMode )
    ::ok := .F.
    aInfo := wvg_ChooseFont( hWnd, {| h, m, w, l | ::wndProc( h, m, w, l ) }, ::familyName, ;
       ::nominalPointSize, ::viewScreenFonts, ::viewPrinterFonts )
-   IF ! ::ok
+   IF !::ok
       RETURN NIL
    ENDIF
 
@@ -287,7 +287,7 @@ METHOD WvgFontDialog:GetWvgFont( aFont )
 
    LOCAL oWvgFont
 
-   IF ! HB_ISARRAY( aFont )
+   IF !HB_ISARRAY(aFont)
       aFont := wvg_ChooseFont_GetLogFont( ::hWnd )
    ENDIF
 
@@ -302,8 +302,8 @@ METHOD WvgFontDialog:GetWvgFont( aFont )
    oWvgFont:underscore       := aFont[6]
    oWvgFont:strikeOut        := aFont[7]
    oWvgFont:codePage         := aFont[8]
-   oWvgFont:setCompoundName( RTrim( aFont[1] + " " + iif( oWvgFont:bold, "Bold ", "" ) + ;
-      iif( oWvgFont:italic, "Italic", "" ) ) )
+   oWvgFont:setCompoundName( RTrim( aFont[1] + " " + iif(oWvgFont:bold, "Bold ", "") + ;
+      iif(oWvgFont:italic, "Italic", "") ) )
    oWvgFont:create()
 
    RETURN oWvgFont

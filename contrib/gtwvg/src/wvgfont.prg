@@ -82,7 +82,7 @@ CREATE CLASS WvgFont
    VAR    antiAliased                           INIT .F.
 
    VAR    compoundName                          INIT ""
-   METHOD setCompoundName( cName )              INLINE ::compoundName := cName
+   METHOD setCompoundName(cName)                INLINE ::compoundName := cName
 
    VAR    generic                               INIT .T.
 
@@ -95,9 +95,9 @@ CREATE CLASS WvgFont
 
    VAR    aFontInfo                             INIT {}
 
-   METHOD new( oPS )
-   METHOD create( cFontName )
-   METHOD configure( cFontName )
+   METHOD new(oPS)
+   METHOD create(cFontName)
+   METHOD configure(cFontName)
    METHOD list()
    METHOD createFont()
 
@@ -105,17 +105,17 @@ CREATE CLASS WvgFont
 
 ENDCLASS
 
-METHOD WvgFont:new( oPS )
+METHOD WvgFont:new(oPS)
 
-   __defaultNIL( @oPS, ::oPS )
+   __defaultNIL(@oPS, ::oPS)
 
    ::oPS := oPS
 
    RETURN Self
 
-METHOD WvgFont:create( cFontName )
+METHOD WvgFont:create(cFontName)
 
-   __defaultNIL( @cFontName, ::familyName )
+   __defaultNIL(@cFontName, ::familyName)
 
    ::familyName := cFontName
 
@@ -123,9 +123,9 @@ METHOD WvgFont:create( cFontName )
 
    RETURN Self
 
-METHOD WvgFont:configure( cFontName )
+METHOD WvgFont:configure(cFontName)
 
-   __defaultNIL( @cFontName, ::familyName )
+   __defaultNIL(@cFontName, ::familyName)
 
    ::familyName := cFontName
 
@@ -136,7 +136,7 @@ METHOD WvgFont:configure( cFontName )
 METHOD WvgFont:destroy()
 
    IF ::hFont != NIL
-      wvg_DeleteObject( ::hFont )
+      wvg_DeleteObject(::hFont)
    ENDIF
 
    RETURN Self
@@ -149,20 +149,20 @@ METHOD WvgFont:createFont()
    LOCAL aFont
 
    IF ::hFont != NIL
-      wvg_DeleteObject( ::hFont )
+      wvg_DeleteObject(::hFont)
       ::hFont := NIL
    ENDIF
 
    IF ::oPS != NIL
-      ::height := wvg_PointSizeToHeight( ::oPS:hdc, ::nominalPointSize )
+      ::height := wvg_PointSizeToHeight(::oPS:hdc, ::nominalPointSize)
    ENDIF
 
-   ::aFontInfo := Array( 15 )
+   ::aFontInfo := Array(15)
 
    ::aFontInfo[ 1] := ::familyName
    ::aFontInfo[ 2] := ::height
    ::aFontInfo[ 3] := ::width
-   ::aFontInfo[ 4] := iif( ::bold, FW_BOLD, 0 )
+   ::aFontInfo[ 4] := iif(::bold, FW_BOLD, 0)
    ::aFontInfo[ 5] := ::italic
    ::aFontInfo[ 6] := ::underscore
    ::aFontInfo[ 7] := ::strikeout
@@ -174,9 +174,9 @@ METHOD WvgFont:createFont()
    ::aFontInfo[13] := DEFAULT_QUALITY
    ::aFontInfo[14] := NIL
 
-   aFont := wvg_FontCreate( ::aFontInfo )
+   aFont := wvg_FontCreate(::aFontInfo)
 
-   IF Empty( aFont[1] )
+   IF Empty(aFont[1])
       RETURN NIL
    ENDIF
 
