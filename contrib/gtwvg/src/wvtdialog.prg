@@ -367,9 +367,9 @@ METHOD WvtDialog:Inkey()
          RETURN K_ESC
       ENDIF
 
-      DO CASE
+      SWITCH ::nKey
 
-      CASE ::nKey == K_TAB
+      CASE K_TAB
          IF ::lTabStops
             DO WHILE .T.
                ::nCurObj++
@@ -383,8 +383,10 @@ METHOD WvtDialog:Inkey()
          ENDIF
 
          ::lEventHandled := .T.
+         
+         EXIT
 
-      CASE ::nKey == K_SH_TAB
+      CASE K_SH_TAB
          IF ::lTabStops
             DO WHILE .T.
                ::nCurObj--
@@ -398,8 +400,11 @@ METHOD WvtDialog:Inkey()
          ENDIF
 
          ::lEventHandled := .T.
+         
+         EXIT
 
-      CASE ::nKey == K_MOUSEMOVE .OR. ::nKey == K_MMLEFTDOWN
+      CASE K_MOUSEMOVE
+      CASE K_MMLEFTDOWN
          ::MouseOver()
          IF ::nObjOver == 0
             wvt_SetPointer( WVT_IDC_ARROW )
@@ -410,7 +415,7 @@ METHOD WvtDialog:Inkey()
          ENDIF
          ::lEventHandled := .T.
 
-      ENDCASE
+      ENDSWITCH
 
       IF ::nKey == K_LBUTTONDOWN    .OR. ;
          ::nKey == K_LBUTTONUP      .OR. ;

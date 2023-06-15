@@ -214,9 +214,9 @@ METHOD WvgStatic:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
 METHOD WvgStatic:handleEvent( nMessage, aNM )
 
-   DO CASE
+   SWITCH nMessage
 
-   CASE nMessage == HB_GTE_RESIZED
+   CASE HB_GTE_RESIZED
       IF ::isParentCrt()
          ::rePosition()
       ENDIF
@@ -226,7 +226,7 @@ METHOD WvgStatic:handleEvent( nMessage, aNM )
       AEval(::aChildren, {| o | o:handleEvent( HB_GTE_RESIZED, { 0, 0, 0, 0, 0 } ) })
       RETURN EVENT_HANDELLED
 
-   CASE nMessage == HB_GTE_CTLCOLOR
+   CASE HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC(::clr_FG)
          wvg_SetTextColor( aNM[1], ::clr_FG )
       ENDIF
@@ -236,13 +236,13 @@ METHOD WvgStatic:handleEvent( nMessage, aNM )
       ELSE
          RETURN wvg_GetCurrentBrush( aNM[1] )
       ENDIF
+      EXIT
 
-   CASE nMessage == HB_GTE_ANY
+   CASE HB_GTE_ANY
       IF ::isParentCrt()
-
       ENDIF
 
-   ENDCASE
+   ENDSWITCH
 
    RETURN EVENT_UNHANDELLED
 

@@ -118,14 +118,16 @@ METHOD WvgComboBox:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    ::oParent:AddChild( Self )
 
-   DO CASE
-   CASE ::type == WVGCOMBO_DROPDOWNLIST
+   SWITCH ::type
+   CASE WVGCOMBO_DROPDOWNLIST
       ::style += CBS_DROPDOWNLIST
-   CASE ::type == WVGCOMBO_SIMPLE
+      EXIT
+   CASE WVGCOMBO_SIMPLE
       ::style += CBS_SIMPLE
+      EXIT
    OTHERWISE
       ::style += CBS_DROPDOWN
-   ENDCASE
+   ENDSWITCH
 
    ::createControl()
 
@@ -175,17 +177,19 @@ METHOD PROCEDURE WvgComboBox:destroy()
 
 METHOD WvgComboBox:handleEvent( nMessage, aNM )
 
-   DO CASE
+   SWITCH nMessage
 
-   CASE nMessage == HB_GTE_RESIZED
+   CASE HB_GTE_RESIZED
       IF ::isParentCrt()
          ::rePosition()
       ENDIF
       ::sendMessage(WM_SIZE, 0, 0)
+      EXIT
 
-   CASE nMessage == HB_GTE_COMMAND
-      DO CASE
-      CASE aNM[1] == CBN_SELCHANGE
+   CASE HB_GTE_COMMAND
+      SWITCH aNM[1]
+
+      CASE CBN_SELCHANGE
          ::nCurSelected := ::editBuffer := wvg_lbGetCurSel( ::hWnd ) + 1
          IF ::isParentCrt()
             ::oParent:setFocus()
@@ -196,8 +200,9 @@ METHOD WvgComboBox:handleEvent( nMessage, aNM )
                ::setFocus()
             ENDIF
          ENDIF
+         EXIT
 
-      CASE aNM[1] == CBN_DBLCLK
+      CASE CBN_DBLCLK
          ::editBuffer := ::nCurSelected
          IF ::isParentCrt()
             ::oParent:setFocus()
@@ -208,16 +213,20 @@ METHOD WvgComboBox:handleEvent( nMessage, aNM )
                ::setFocus()
             ENDIF
          ENDIF
+         EXIT
 
-      CASE aNM[1] == CBN_KILLFOCUS
+      CASE CBN_KILLFOCUS
          ::killInputFocus()
+         EXIT
 
-      CASE aNM[1] == CBN_SETFOCUS
+      CASE CBN_SETFOCUS
          ::setInputFocus()
 
-      ENDCASE
+      ENDSWITCH
 
-   CASE nMessage == HB_GTE_KEYTOITEM
+      EXIT
+
+   CASE HB_GTE_KEYTOITEM
       IF aNM[1] == K_ENTER
          IF ::isParentCrt()
             ::oParent:setFocus()
@@ -229,8 +238,9 @@ METHOD WvgComboBox:handleEvent( nMessage, aNM )
             ENDIF
          ENDIF
       ENDIF
+      EXIT
 
-   CASE nMessage == HB_GTE_CTLCOLOR
+   CASE HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC(::clr_FG)
          wvg_SetTextColor( aNM[1], ::clr_FG )
       ENDIF
@@ -241,7 +251,7 @@ METHOD WvgComboBox:handleEvent( nMessage, aNM )
          RETURN wvg_GetCurrentBrush( aNM[1] )
       ENDIF
 
-   ENDCASE
+   ENDSWITCH
 
    RETURN EVENT_UNHANDELLED
 

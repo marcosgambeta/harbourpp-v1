@@ -132,32 +132,37 @@ METHOD WvgDataRef:setData(xValue, mp2)
       ::sl_editBuffer := xValue
    ENDIF
 
-   DO CASE
+   SWITCH ::className()
 
-   CASE ::className() == "BUTTON"     /* CheckBox, Radio, 3State */
+   CASE "BUTTON"     /* CheckBox, Radio, 3State */
       ::sendMessage(BM_SETCHECK, iif(::sl_editBuffer, BST_CHECKED, BST_UNCHECKED), 0)
+      EXIT
 
-   CASE ::className() == "LISTBOX"    /* Single Selection */
+   CASE "LISTBOX"    /* Single Selection */
       IF HB_ISNUMERIC(::sl_editBuffer)
          RETURN wvg_lbSetCurSel(::hWnd, ::sl_editBuffer - 1) >= 0
       ENDIF
+      EXIT
 
-   CASE ::className() == "SysTreeView32"
+   CASE "SysTreeView32"
       IF ::sl_editBuffer != NIL .AND. ::sl_editBuffer:hItem != NIL
          wvg_TreeView_SelectItem(::hWnd, ::sl_editBuffer:hItem)
       ENDIF
+      EXIT
 
-   CASE ::className() == "EDIT"
+   CASE "EDIT"
       IF HB_ISSTRING(::sl_editBuffer)
          wvg_SendMessageText(::hWnd, WM_SETTEXT, 0, ::sl_editBuffer)
       ENDIF
+      EXIT
 
-   CASE ::className() == "SCROLLBAR"
+   CASE "SCROLLBAR"
       IF ::sl_editBuffer != NIL
          wapi_SetScrollPos(::pWnd, SB_CTL, ::sl_editBuffer, .T.)
       ENDIF
+      EXIT
 
-   CASE ::className() == "COMBOBOX"
+   CASE "COMBOBOX"
       IF HB_ISARRAY(::sl_editBuffer)
          // NOT sure which way it should behave.
          // Xbase++ documentation IN this regard is crappy.
@@ -166,7 +171,7 @@ METHOD WvgDataRef:setData(xValue, mp2)
          NEXT
       ENDIF
 
-   ENDCASE
+   ENDSWITCH
 
    RETURN ::sl_editBuffer
 

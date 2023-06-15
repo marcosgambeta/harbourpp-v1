@@ -474,18 +474,20 @@ METHOD WvgCrt:setFrameState( nState )
 
    LOCAL lSuccess := .F.
 
-   DO CASE
+   SWITCH nState
 
-   CASE nState == WVGDLG_FRAMESTAT_MINIMIZED
+   CASE WVGDLG_FRAMESTAT_MINIMIZED
       lSuccess := ::sendMessage(WM_SYSCOMMAND, SC_MINIMIZE, 0)
+      EXIT
 
-   CASE nState == WVGDLG_FRAMESTAT_MAXIMIZED
+   CASE WVGDLG_FRAMESTAT_MAXIMIZED
       lSuccess := ::sendMessage(WM_SYSCOMMAND, SC_MAXIMIZE, 0)
+      EXIT
 
-   CASE nState == WVGDLG_FRAMESTAT_NORMALIZED
+   CASE WVGDLG_FRAMESTAT_NORMALIZED
       lSuccess := ::sendMessage(WM_SYSCOMMAND, SC_RESTORE, 0)
 
-   ENDCASE
+   ENDSWITCH
 
    RETURN lSuccess
 

@@ -117,19 +117,20 @@ METHOD WvgStatusBar:handleEvent( nMessage, aNM )
    LOCAL nHandled := 1
    LOCAL nObj, aNMH
 
-   DO CASE
+   SWITCH nMessage
 
-   CASE nMessage == HB_GTE_RESIZED
+   CASE HB_GTE_RESIZED
       ::sendMessage(WM_SIZE, 0, 0)
       RETURN 0
 
-   CASE nMessage == HB_GTE_COMMAND
+   CASE HB_GTE_COMMAND
       IF HB_ISBLOCK(::sl_lbClick)
          Eval(::sl_lbClick, , , Self)
          RETURN 0
       ENDIF
+      EXIT
 
-   CASE nMessage == HB_GTE_NOTIFY
+   CASE HB_GTE_NOTIFY
       aNMH := wvg_GetNMMouseInfo( aNM[2] )
 
       DO CASE
@@ -146,8 +147,9 @@ METHOD WvgStatusBar:handleEvent( nMessage, aNM )
          ENDIF
 
       ENDCASE
+      EXIT
 
-   CASE nMessage == HB_GTE_CTLCOLOR
+   CASE HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC(::clr_FG)
          wvg_SetTextColor( aNM[1], ::clr_FG )
       ENDIF
@@ -158,7 +160,7 @@ METHOD WvgStatusBar:handleEvent( nMessage, aNM )
          RETURN wvg_GetCurrentBrush( aNM[1] )
       ENDIF
 
-   ENDCASE
+   ENDSWITCH
 
    RETURN nHandled
 

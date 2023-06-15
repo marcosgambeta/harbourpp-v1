@@ -232,17 +232,20 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
    LOCAL aPos, aMenuItem, nIndex, nCtrlID, oObj
    LOCAL nReturn := 0
 
-   DO CASE
-   CASE nEvent == HB_GTE_MOUSE
+   SWITCH nEvent
 
-      DO CASE
-      CASE xParams[1] == WM_MOUSEHOVER
+   CASE HB_GTE_MOUSE
+
+      SWITCH xParams[1]
+      CASE WM_MOUSEHOVER
          aPos := { xParams[3], xParams[4] }
-      CASE xParams[1] == WM_MOUSELEAVE
+         EXIT
+      CASE WM_MOUSELEAVE
          /* Nothing */
+         EXIT
       OTHERWISE
          aPos := iif(::mouseMode == 2, { xParams[3], xParams[4] }, { xParams[5], xParams[6] })
-      ENDCASE
+      ENDSWITCH
 
       SWITCH xParams[1]
       CASE WM_MOUSEHOVER
@@ -313,13 +316,15 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
       CASE WM_NCMOUSEMOVE
          EXIT
       ENDSWITCH
+      EXIT
 
-   CASE nEvent == HB_GTE_KEYBOARD
+   CASE HB_GTE_KEYBOARD
       IF HB_ISBLOCK(::keyboard)
          Eval(::keyboard, xParams, , Self)
       ENDIF
+      EXIT
 
-   CASE nEvent == HB_GTE_SETFOCUS
+   CASE HB_GTE_SETFOCUS
 #if 0
       AEval(::aChildren, {| o | wvg_InvalidateRect( o:hWnd ) })
 #endif
@@ -328,29 +333,34 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
          Eval(::sl_setInputFocus, , , Self)
       ENDIF
       ::lHasInputFocus := .T.
+      EXIT
 
-   CASE nEvent == HB_GTE_KILLFOCUS
+   CASE HB_GTE_KILLFOCUS
       IF HB_ISBLOCK(::sl_killInputFocus)
          Eval(::sl_killInputFocus, , , Self)
       ENDIF
       ::lHasInputFocus := .F.
+      EXIT
 
-   CASE nEvent == HB_GTE_PAINT
+   CASE HB_GTE_PAINT
 #if 0
       AEval(::aChildren, {| o | wvg_InvalidateRect( o:hWnd ) })
 #endif
+      EXIT
 
-   CASE nEvent == HB_GTE_GUIPARTS
+   CASE HB_GTE_GUIPARTS
       /* Eventually every window be checked if it falls within returned rectangle or not
          then it will avoid a lot of flickering */
       AEval(::aChildren, {| o | wvg_InvalidateRect( o:hWnd ) })
+      EXIT
 
-   CASE nEvent == HB_GTE_CLOSE
+   CASE HB_GTE_CLOSE
       IF HB_ISBLOCK(::close)
          nReturn := Eval(::close, , , Self)
       ENDIF
+      EXIT
 
-   CASE nEvent == HB_GTE_MENU
+   CASE HB_GTE_MENU
       DO CASE
       CASE xParams[1] == 0                             /* menu selected */
          IF HB_ISOBJECT(::oMenu)
@@ -375,26 +385,30 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
          ENDIF
 
       ENDCASE
+      EXIT
 
-   CASE nEvent == HB_GTE_NOTIFY
+   CASE HB_GTE_NOTIFY
       nCtrlID := xParams[1]
       IF ( nIndex := AScan( ::aChildren, {| o | o:nID == nCtrlID } ) ) > 0
          RETURN ::aChildren[nIndex]:handleEvent( HB_GTE_NOTIFY, xParams )
       ENDIF
+      EXIT
 
-   CASE nEvent == HB_GTE_COMMAND
+   CASE HB_GTE_COMMAND
       nCtrlID := xParams[2]
       IF ( nIndex := AScan( ::aChildren, {| o | o:nID == nCtrlID } ) ) > 0
          RETURN ::aChildren[nIndex]:handleEvent( HB_GTE_COMMAND, xParams )
       ENDIF
+      EXIT
 
-   CASE nEvent == HB_GTE_CTLCOLOR
+   CASE HB_GTE_CTLCOLOR
       oObj := ::findObjectByHandle( xParams[2] )
       IF HB_ISOBJECT(oObj)
          RETURN oObj:handleEvent( HB_GTE_CTLCOLOR, xParams )
       ENDIF
+      EXIT
 
-   CASE nEvent == HB_GTE_HSCROLL
+   CASE HB_GTE_HSCROLL
       IF xParams[3] == ::hWnd
          RETURN ::handleEvent( HB_GTE_VSCROLL, xParams )
       ELSE
@@ -403,8 +417,9 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
             RETURN oObj:handleEvent( HB_GTE_VSCROLL, xParams )
          ENDIF
       ENDIF
+      EXIT
 
-   CASE nEvent == HB_GTE_VSCROLL
+   CASE HB_GTE_VSCROLL
       IF xParams[3] == ::hWnd
          RETURN ::handleEvent( HB_GTE_VSCROLL, xParams )
       ELSE
@@ -413,8 +428,9 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
             RETURN oObj:handleEvent( HB_GTE_VSCROLL, xParams )
          ENDIF
       ENDIF
+      EXIT
 
-   CASE nEvent == HB_GTE_RESIZED
+   CASE HB_GTE_RESIZED
       IF ::objType == objTypeDialog
          IF ::drawingArea:objType == objTypeDA
             ::drawingArea:setPosAndSize( { 0, 0 }, ::currentSize(), .F. )
@@ -424,8 +440,9 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
          Eval(::sl_resize, { xParams[1], xParams[2] }, { xParams[3], xParams[4] }, Self)
       ENDIF
       AEval(::aChildren, {| o | o:handleEvent( HB_GTE_RESIZED, { 0, 0, 0, 0, 0 } ) })
+      EXIT
 
-   CASE nEvent == HB_GTE_KEYTOITEM
+   CASE HB_GTE_KEYTOITEM
       IF xParams[3] == ::hWnd
          RETURN ::handleEvent( HB_GTE_KEYTOITEM, xParams )
       ELSE
@@ -435,7 +452,7 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
          ENDIF
       ENDIF
 
-   ENDCASE
+   ENDSWITCH
 
    RETURN nReturn
 

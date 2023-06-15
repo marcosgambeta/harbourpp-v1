@@ -229,27 +229,30 @@ METHOD WvgFontDialog:wndProc( hWnd, nMessage, nwParam, nlParam )
 
       HB_SYMBOL_UNUSED( nH )
 
-      DO CASE
+      SWITCH nL
 
-      CASE nL == IDOK
+      CASE IDOK
          ::ok := .T.
          IF HB_ISBLOCK(::sl_activateOk)
             Eval(::sl_activateOk, ::GetWvgFont(), , Self)
          ENDIF
+         EXIT
 
-      CASE nL == IDCANCEL
+      CASE IDCANCEL
          IF HB_ISBLOCK(::sl_activateCancel)
             Eval(::sl_activateCancel, , , Self)
          ENDIF
+         EXIT
 
-      CASE nL == 1026
+      CASE 1026
          IF HB_ISBLOCK(::sl_activateApply)
             Eval(::sl_activateApply, ::GetWvgFont(), , Self)
          ENDIF
+         EXIT
 
-      CASE nL == 1038  /* Help */
+      CASE 1038  /* Help */
 
-      ENDCASE
+      ENDSWITCH
 
    ENDCASE
 

@@ -76,8 +76,8 @@ FUNCTION WvtPaintObjects()
          IF aBlocks[i][3] != NIL .AND. !Empty(aBlocks[i][3])
             /* Check parameters against tlbr_ depending upon the
                type of object and attributes contained in aAttr */
-            DO CASE
-            CASE aBlocks[i][3][1] == WVT_BLOCK_GRID_V
+            SWITCH aBlocks[i][3][1]
+            CASE WVT_BLOCK_GRID_V
                b := aBlocks[i][3][6]
                IF Len(b:aColumnsSep) == 0
                   lExe := .F.
@@ -91,15 +91,15 @@ FUNCTION WvtPaintObjects()
                      lExe := .F.
                   ENDIF
                ENDIF
-
-            CASE aBlocks[i][3][1] == WVT_BLOCK_GETS
+               EXIT
+            CASE WVT_BLOCK_GETS
                IF tlbr_[1] > aBlocks[i][3][4] .OR. ;  /* top    > bottom */
                   tlbr_[3] < aBlocks[i][3][2] .OR. ;  /* bottom < top    */
                   tlbr_[2] > aBlocks[i][3][5] .OR. ;  /* left   > right  */
                   tlbr_[4] < aBlocks[i][3][3]         /* right  < left   */
                   lExe := .F.
                ENDIF
-
+               EXIT
             OTHERWISE
                /* If refreshing rectangle's top is less than objects' bottom
                 * and left is less than objects' right
@@ -110,7 +110,7 @@ FUNCTION WvtPaintObjects()
                   tlbr_[4] < aBlocks[i][3][3]         /* right  < left   */
                   lExe := .F.
                ENDIF
-            ENDCASE
+            ENDSWITCH
          ENDIF
 
          IF lExe

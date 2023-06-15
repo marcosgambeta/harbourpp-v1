@@ -130,30 +130,32 @@ METHOD WvgTabPage:handleEvent( nMessage, aNM )
 
    LOCAL aHdr
 
-   DO CASE
-   CASE nMessage == HB_GTE_SETFOCUS
+   SWITCH nMessage
+
+   CASE HB_GTE_SETFOCUS
       IF HB_ISBLOCK(::sl_tabActivate)
          RETURN EVENT_HANDELLED
       ENDIF
+      EXIT
 
-   CASE nMessage == HB_GTE_COMMAND
+   CASE HB_GTE_COMMAND
+      EXIT
 
-
-   CASE nMessage == HB_GTE_RESIZED
+   CASE HB_GTE_RESIZED
       ::sendMessage(WM_SIZE, 0, 0)
       RETURN EVENT_HANDELLED
 
-   CASE nMessage == HB_GTE_NOTIFY
+   CASE HB_GTE_NOTIFY
       aHdr := wvg_GetNMHdrInfo( aNM[2] )
-
       DO CASE
       CASE aHdr[NMH_code] == -551 /* TCN_SELCHANGE */
       ENDCASE
+      EXIT
 
-   CASE nMessage == HB_GTE_CTLCOLOR
+   CASE HB_GTE_CTLCOLOR
       RETURN wvg_GetStockObject( NULL_BRUSH )
 
-   ENDCASE
+   ENDSWITCH
 
    RETURN EVENT_UNHANDELLED
 

@@ -169,8 +169,10 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
    CASE HB_GTE_NOTIFY
       aHdr := wvg_GetNMTreeViewInfo( aNM[2] )
 
-      DO CASE
-      CASE aHdr[NMH_code] == NM_DBLCLK .OR. aHdr[NMH_code] == NM_RETURN
+      SWITCH aHdr[NMH_code]
+
+      CASE NM_DBLCLK
+      CASE NM_RETURN
          ::editBuffer := ::oItemSelected
          IF ::isParentCrt()
             ::oParent:setFocus()
@@ -187,7 +189,7 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
          ENDIF
          RETURN .F.
 
-      CASE aHdr[NMH_code] == TVN_SELCHANGED
+      CASE TVN_SELCHANGED
          ::getSelectionInfo( aNM[2] )
          IF ::isParentCrt()
             ::oParent:setFocus()
@@ -207,7 +209,7 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
       OTHERWISE
          RETURN .F.
 
-      ENDCASE
+      ENDSWITCH
       EXIT
 
 #if 0  /* It must never reach here */

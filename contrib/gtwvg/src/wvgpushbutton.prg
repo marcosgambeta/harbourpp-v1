@@ -137,8 +137,9 @@ METHOD WvgPushButton:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible
 
 METHOD WvgPushButton:handleEvent( nMessage, aNM )
 
-   DO CASE
-   CASE nMessage == HB_GTE_RESIZED
+   SWITCH nMessage
+
+   CASE HB_GTE_RESIZED
       IF ::isParentCrt()
          ::rePosition()
       ENDIF
@@ -146,8 +147,9 @@ METHOD WvgPushButton:handleEvent( nMessage, aNM )
       IF HB_ISBLOCK(::sl_resize)
          Eval(::sl_resize, , , Self)
       ENDIF
+      EXIT
 
-   CASE nMessage == HB_GTE_COMMAND
+   CASE HB_GTE_COMMAND
       IF aNM[1] == BN_CLICKED
          IF HB_ISBLOCK(::sl_lbClick)
             IF ::isParentCrt()
@@ -160,11 +162,13 @@ METHOD WvgPushButton:handleEvent( nMessage, aNM )
          ENDIF
          RETURN EVENT_HANDELLED
       ENDIF
+      EXIT
 
-   CASE nMessage == HB_GTE_NOTIFY
+   CASE HB_GTE_NOTIFY
       // Will never be issued because pushbutton sends WM_COMMAND
+      EXIT
 
-   CASE nMessage == HB_GTE_CTLCOLOR
+   CASE HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC(::clr_FG)
          wvg_SetTextColor( aNM[1], ::clr_FG )
       ENDIF
@@ -172,9 +176,10 @@ METHOD WvgPushButton:handleEvent( nMessage, aNM )
          wvg_SetBkMode( aNM[1], 1 )
          RETURN ::hBrushBG
       ENDIF
+      EXIT
 
 #if 0  /* Must not reach here if WndProc is not installed */
-   CASE nMessage == HB_GTE_ANY
+   CASE HB_GTE_ANY
       IF aNM[1] == WM_LBUTTONUP
          IF HB_ISBLOCK(::sl_lbClick)
             IF ::isParentCrt()
@@ -183,8 +188,10 @@ METHOD WvgPushButton:handleEvent( nMessage, aNM )
             Eval(::sl_lbClick, , , Self)
          ENDIF
       ENDIF
+      EXIT
 #endif
-   ENDCASE
+
+   ENDSWITCH
 
    RETURN EVENT_UNHANDELLED
 

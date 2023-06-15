@@ -157,35 +157,37 @@ METHOD WvgSLE:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
 METHOD WvgSLE:handleEvent( nMessage, aNM )
 
-   DO CASE
-   CASE nMessage == HB_GTE_RESIZED
+   SWITCH nMessage
+
+   CASE HB_GTE_RESIZED
       IF ::isParentCrt()
          ::oParent:setFocus()
          ::rePosition()
       ENDIF
       ::sendMessage(WM_SIZE, 0, 0)
+      EXIT
 
-   CASE nMessage == HB_GTE_COMMAND
-      DO CASE
-      CASE aNM[NMH_code] == EN_CHANGE
-
-      CASE aNM[NMH_code] == EN_UPDATE
-
-      CASE aNM[NMH_code] == EN_MAXTEXT
-
-      CASE aNM[NMH_code] == EN_KILLFOCUS
+   CASE HB_GTE_COMMAND
+      SWITCH aNM[NMH_code]
+      CASE EN_CHANGE
+         EXIT
+      CASE EN_UPDATE
+         EXIT
+      CASE EN_MAXTEXT
+         EXIT
+      CASE EN_KILLFOCUS
          IF HB_ISBLOCK(::sl_killInputFocus)
             Eval(::sl_killInputFocus, , , Self)
          ENDIF
-
-      CASE aNM[NMH_code] == EN_SETFOCUS
+         EXIT
+      CASE EN_SETFOCUS
          IF HB_ISBLOCK(::sl_setInputFocus)
             Eval(::sl_setInputFocus, , , Self)
          ENDIF
+      ENDSWITCH
+      EXIT
 
-      ENDCASE
-
-   CASE nMessage == HB_GTE_CTLCOLOR
+   CASE HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC(::clr_FG)
          wvg_SetTextColor( aNM[1], ::clr_FG )
       ENDIF
@@ -195,20 +197,21 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
       ELSE
          RETURN wvg_GetCurrentBrush( aNM[1] )
       ENDIF
+      EXIT
 
-   CASE nMessage == HB_GTE_ANY
-      DO CASE
-      CASE aNM[NMH_code] == WM_KILLFOCUS
+   CASE HB_GTE_ANY
+      SWITCH aNM[NMH_code]
+      CASE WM_KILLFOCUS
          IF HB_ISBLOCK(::sl_killInputFocus)
             Eval(::sl_killInputFocus, , , Self)
          ENDIF
-
-      CASE aNM[NMH_code] == WM_SETFOCUS
+         EXIT
+      CASE WM_SETFOCUS
          IF HB_ISBLOCK(::sl_setInputFocus)
             Eval(::sl_setInputFocus, , , Self)
          ENDIF
-
-      CASE aNM[NMH_code] == WM_KEYDOWN
+         EXIT
+      CASE WM_KEYDOWN
          DO CASE
          CASE aNM[2] == K_ENTER
             IF ::isParentCrt()
@@ -225,10 +228,9 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
          CASE aNM[2] == 65
             // RETURN EVENT_HANDELLED
          ENDCASE
+      ENDSWITCH
 
-      ENDCASE
-
-   ENDCASE
+   ENDSWITCH
 
    RETURN EVENT_UNHANDELLED
 

@@ -400,6 +400,7 @@ METHOD wvtScrollbar:HandleEvent( nKey )
    nmCol := MCol()
 
    DO CASE
+
    CASE ::nBarType == WVT_SCROLLBAR_VERT
       lHit := .T.
 
@@ -591,6 +592,7 @@ METHOD wvtScrollbar:HandleEvent( nKey )
             ENDCASE
          ENDIF
       ENDCASE
+   
    ENDCASE
 
    RETURN lHit

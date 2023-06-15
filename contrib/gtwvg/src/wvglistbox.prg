@@ -160,17 +160,18 @@ METHOD WvgListBox:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
 METHOD WvgListBox:handleEvent( nMessage, aNM )
 
-   DO CASE
+   SWITCH nMessage
 
-   CASE nMessage == HB_GTE_RESIZED
+   CASE HB_GTE_RESIZED
       IF ::isParentCrt()
          ::rePosition()
       ENDIF
       ::sendMessage(WM_SIZE, 0, 0)
+      EXIT
 
-   CASE nMessage == HB_GTE_COMMAND
-      DO CASE
-      CASE aNM[1] == LBN_SELCHANGE
+   CASE HB_GTE_COMMAND
+      SWITCH aNM[1]
+      CASE LBN_SELCHANGE
          ::nCurSelected := wvg_lbGetCurSel( ::hWnd ) + 1
          IF ::isParentCrt()
             ::oParent:setFocus()
@@ -183,8 +184,8 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
                ::setFocus()
             ENDIF
          ENDIF
-
-      CASE aNM[1] == LBN_DBLCLK
+         EXIT
+      CASE LBN_DBLCLK
          ::editBuffer := ::nCurSelected
          IF ::isParentCrt()
             ::oParent:setFocus()
@@ -197,16 +198,16 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
                ::setFocus()
             ENDIF
          ENDIF
-
-      CASE aNM[1] == LBN_KILLFOCUS
+         EXIT
+      CASE LBN_KILLFOCUS
          ::killInputFocus()
-
-      CASE aNM[1] == LBN_SETFOCUS
+         EXIT
+      CASE LBN_SETFOCUS
          ::setInputFocus()
+      ENDSWITCH
+      EXIT
 
-      ENDCASE
-
-   CASE nMessage == HB_GTE_KEYTOITEM
+   CASE HB_GTE_KEYTOITEM
       IF aNM[1] == K_ENTER
          IF ::isParentCrt()
             ::oParent:setFocus()
@@ -220,10 +221,12 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
             ENDIF
          ENDIF
       ENDIF
+      EXIT
 
-   CASE nMessage == HB_GTE_NOTIFY
+   CASE HB_GTE_NOTIFY
+      EXIT
 
-   CASE nMessage == HB_GTE_CTLCOLOR
+   CASE HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC(::clr_FG)
          wvg_SetTextColor( aNM[1], ::clr_FG )
       ENDIF
@@ -233,10 +236,11 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
       ELSE
          RETURN wvg_GetCurrentBrush( aNM[1] )
       ENDIF
+      EXIT
 
-   CASE nMessage == HB_GTE_ANY               /* This will never be reached */
-      DO CASE
-      CASE aNM[1] == WM_LBUTTONUP
+   CASE HB_GTE_ANY               /* This will never be reached */
+      SWITCH aNM[1]
+      CASE WM_LBUTTONUP
          ::nCurSelected := wvg_lbGetCurSel( ::hWnd ) + 1
          IF HB_ISBLOCK(::sl_itemMarked)
             IF ::isParentCrt()
@@ -247,8 +251,8 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
                ::setFocus()
             ENDIF
          ENDIF
-
-      CASE aNM[1] == WM_LBUTTONDBLCLK
+         EXIT
+      CASE WM_LBUTTONDBLCLK
          ::editBuffer := ::nCurSelected
          IF HB_ISBLOCK(::sl_itemSelected)
             IF ::isParentCrt()
@@ -260,8 +264,8 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
             ENDIF
             RETURN EVENT_HANDELLED
          ENDIF
-
-      CASE aNM[1] == WM_KEYUP
+         EXIT
+      CASE WM_KEYUP
          IF ::nCurSelected != wvg_lbGetCurSel( ::hWnd ) + 1
             ::nCurSelected := wvg_lbGetCurSel( ::hWnd ) + 1
             IF HB_ISBLOCK(::sl_itemMarked)
@@ -274,9 +278,9 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
                ENDIF
             ENDIF
          ENDIF
+      ENDSWITCH
 
-      ENDCASE
-   ENDCASE
+   ENDSWITCH
 
    RETURN EVENT_UNHANDELLED
 
