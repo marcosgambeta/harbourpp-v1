@@ -65,24 +65,24 @@ CREATE CLASS WvgStatusBar INHERIT WvgWindow /* WvgActiveXControl */
 
    METHOD numItems()                            INLINE Len(::aItems)
 
-   METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD destroy()
-   METHOD handleEvent( nMessage, aNM )
+   METHOD handleEvent(nMessage, aNM)
 
-   METHOD addItem( cCaption, xImage, cDLL, nStyle, cKey, nMode )
-   METHOD delItem( nItemORcKey )
-   METHOD getItem( nItemORcKey )
+   METHOD addItem(cCaption, xImage, cDLL, nStyle, cKey, nMode)
+   METHOD delItem(nItemORcKey)
+   METHOD getItem(nItemORcKey)
    METHOD clear()
-   METHOD panelClick( xParam )                  SETGET
-   METHOD panelDblClick( xParam )               SETGET
+   METHOD panelClick(xParam)                  SETGET
+   METHOD panelDblClick(xParam)               SETGET
 
 ENDCLASS
 
-METHOD WvgStatusBar:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgStatusBar:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::style       := WS_CHILD + WS_BORDER + SBARS_TOOLTIPS
    ::className   := STATUSCLASSNAME
@@ -90,15 +90,15 @@ METHOD WvgStatusBar:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    RETURN Self
 
-METHOD WvgStatusBar:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgStatusBar:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    IF ::sizeGrip
       ::style += SBARS_SIZEGRIP
    ENDIF
 
-   ::oParent:AddChild( Self )
+   ::oParent:AddChild(Self)
 
    ::createControl()
 
@@ -108,11 +108,11 @@ METHOD WvgStatusBar:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible 
       ::show()
    ENDIF
 
-   ::addItem( , , , , , -1 )
+   ::addItem(, , , , , -1)
 
    RETURN Self
 
-METHOD WvgStatusBar:handleEvent( nMessage, aNM )
+METHOD WvgStatusBar:handleEvent(nMessage, aNM)
 
    LOCAL nHandled := 1
    LOCAL nObj, aNMH
@@ -131,7 +131,7 @@ METHOD WvgStatusBar:handleEvent( nMessage, aNM )
       EXIT
 
    CASE HB_GTE_NOTIFY
-      aNMH := wvg_GetNMMouseInfo( aNM[2] )
+      aNMH := wvg_GetNMMouseInfo(aNM[2])
 
       DO CASE
       CASE aNMH[NMH_code] == NM_CLICK
@@ -151,13 +151,13 @@ METHOD WvgStatusBar:handleEvent( nMessage, aNM )
 
    CASE HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC(::clr_FG)
-         wvg_SetTextColor( aNM[1], ::clr_FG )
+         wvg_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
       IF HB_ISNUMERIC(::hBrushBG)
-         wvg_SetBkMode( aNM[1], 1 )
+         wvg_SetBkMode(aNM[1], 1)
          RETURN ::hBrushBG
       ELSE
-         RETURN wvg_GetCurrentBrush( aNM[1] )
+         RETURN wvg_GetCurrentBrush(aNM[1])
       ENDIF
 
    ENDSWITCH
@@ -168,7 +168,7 @@ METHOD PROCEDURE WvgStatusBar:destroy()
 
    LOCAL i, nItems
 
-   IF ( nItems := Len(::aItems) ) > 0
+   IF (nItems := Len(::aItems)) > 0
       FOR i := 1 TO nItems
 
       NEXT
@@ -178,27 +178,27 @@ METHOD PROCEDURE WvgStatusBar:destroy()
 
    RETURN
 
-METHOD WvgStatusBar:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgStatusBar:configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::Initialize( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::Initialize(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    RETURN Self
 
-METHOD WvgStatusBar:addItem( cCaption, xImage, cDLL, nStyle, cKey, nMode )
+METHOD WvgStatusBar:addItem(cCaption, xImage, cDLL, nStyle, cKey, nMode)
 
    LOCAL oPanel, lSuccess
 
    __defaultNIL(@nMode, 0)
 
-   HB_SYMBOL_UNUSED( xImage )
-   HB_SYMBOL_UNUSED( cDLL )
+   HB_SYMBOL_UNUSED(xImage)
+   HB_SYMBOL_UNUSED(cDLL)
 
-   oPanel := WvgStatusBarPanel():new( cCaption, nStyle, cKey )
+   oPanel := WvgStatusBarPanel():new(cCaption, nStyle, cKey)
    oPanel:oParent := Self
 
    oPanel:index := ::numItems + 1
 
-   lSuccess := wvg_StatusBarCreatePanel( ::hWnd, nMode )
+   lSuccess := wvg_StatusBarCreatePanel(::hWnd, nMode)
 
    IF lSuccess
       AAdd(::aItems, oPanel)
@@ -208,31 +208,31 @@ METHOD WvgStatusBar:addItem( cCaption, xImage, cDLL, nStyle, cKey, nMode )
 
    RETURN oPanel
 
-METHOD WvgStatusBar:delItem( nItemORcKey )
+METHOD WvgStatusBar:delItem(nItemORcKey)
 
    LOCAL nIndex := 0
 
    DO CASE
    CASE HB_ISNUMERIC(nItemORcKey)
-      nIndex := AScan( ::aItems, {| o | o:key == nItemORcKey } )
+      nIndex := AScan(::aItems, {| o | o:key == nItemORcKey })
    CASE HB_ISNUMERIC(nItemORcKey)
       nIndex := nItemORcKey
    ENDCASE
 
    IF nIndex > 0
       /* Delete panel by window */
-      hb_ADel( ::aItems, nIndex, .T. )
+      hb_ADel(::aItems, nIndex, .T.)
    ENDIF
 
    RETURN Self
 
-METHOD WvgStatusBar:getItem( nItemORcKey )
+METHOD WvgStatusBar:getItem(nItemORcKey)
 
    LOCAL nIndex := 0, oPanel
 
    DO CASE
    CASE HB_ISSTRING(nItemORcKey)
-      nIndex := AScan( ::aItems, {| o | o:key == nItemORcKey } )
+      nIndex := AScan(::aItems, {| o | o:key == nItemORcKey })
    CASE HB_ISNUMERIC(nItemORcKey)
       nIndex := nItemORcKey
    ENDCASE
@@ -255,7 +255,7 @@ METHOD WvgStatusBar:clear()
 
    RETURN Self
 
-METHOD WvgStatusBar:panelClick( xParam )
+METHOD WvgStatusBar:panelClick(xParam)
 
    IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
       ::sl_lbClick := xParam
@@ -263,7 +263,7 @@ METHOD WvgStatusBar:panelClick( xParam )
 
    RETURN Self
 
-METHOD WvgStatusBar:panelDblClick( xParam )
+METHOD WvgStatusBar:panelDblClick(xParam)
 
    IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
       ::sl_lbDblClick := xParam

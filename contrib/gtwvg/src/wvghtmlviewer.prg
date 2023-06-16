@@ -74,16 +74,16 @@
 
 CREATE CLASS WvgHTMLViewer INHERIT WvgActiveXControl
 
-   METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   METHOD xBeforeNavigate( cURL, Flags, TFName, PData, Headers )
-   METHOD xStatusTextChange( cText )
-   METHOD xNavigateComplete( cURL )
-   METHOD xProgressChange( nProgress, nProgMax )
-   METHOD xTitleChange( cTitle )
-   METHOD xDocumentComplete( cURI )
-   METHOD setHTML( cHTML )
+   METHOD xBeforeNavigate(cURL, Flags, TFName, PData, Headers)
+   METHOD xStatusTextChange(cText)
+   METHOD xNavigateComplete(cURL)
+   METHOD xProgressChange(nProgress, nProgMax)
+   METHOD xTitleChange(cTitle)
+   METHOD xDocumentComplete(cURI)
+   METHOD setHTML(cHTML)
 
    METHOD back()                                INLINE ::goBack()
    METHOD forward()                             INLINE ::goForward()
@@ -93,67 +93,67 @@ CREATE CLASS WvgHTMLViewer INHERIT WvgActiveXControl
 
    VAR    sl_beforeNavigate                     PROTECTED
    ACCESS beforeNavigate                        INLINE ::sl_beforeNavigate
-   ASSIGN beforeNavigate( bBlock )              INLINE ::sl_beforeNavigate := bBlock
+   ASSIGN beforeNavigate(bBlock)              INLINE ::sl_beforeNavigate := bBlock
 
    VAR    sl_navigateComplete                   PROTECTED
    ACCESS navigateComplete                      INLINE ::sl_navigateComplete
-   ASSIGN navigateComplete( bBlock )            INLINE ::sl_navigateComplete := bBlock
+   ASSIGN navigateComplete(bBlock)            INLINE ::sl_navigateComplete := bBlock
 
    VAR    sl_statusTextChange                   PROTECTED
    ACCESS statusTextChange                      INLINE ::sl_statusTextChange
-   ASSIGN statusTextChange( bBlock )            INLINE ::sl_statusTextChange := bBlock
+   ASSIGN statusTextChange(bBlock)            INLINE ::sl_statusTextChange := bBlock
 
    VAR    sl_progressChange                     PROTECTED
    ACCESS progressChange                        INLINE ::sl_progressChange
-   ASSIGN progressChange( bBlock )              INLINE ::sl_progressChange := bBlock
+   ASSIGN progressChange(bBlock)              INLINE ::sl_progressChange := bBlock
 
    VAR    sl_titleChange                        PROTECTED
    ACCESS titleChange                           INLINE ::sl_titleChange
-   ASSIGN titleChange( bBlock )                 INLINE ::sl_titleChange := bBlock
+   ASSIGN titleChange(bBlock)                 INLINE ::sl_titleChange := bBlock
 
    VAR    sl_documentComplete                   PROTECTED
    ACCESS documentComplete                      INLINE ::sl_documentComplete
-   ASSIGN documentComplete( bBlock )            INLINE ::sl_documentComplete := bBlock
+   ASSIGN documentComplete(bBlock)            INLINE ::sl_documentComplete := bBlock
 
    VAR    CLSID                                 PROTECTED INIT "Shell.Explorer"
 
 ENDCLASS
 
-METHOD WvgHTMLViewer:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgHTMLViewer:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::WvgActiveXControl:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-
-   RETURN Self
-
-METHOD WvgHTMLViewer:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-
-   ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-
-   ::mapEvent( evBeforeNavigate,   {| cURL, Flags, TFName, PData, Headers | ;
-      ::xBeforeNavigate( cURL, Flags, TFName, PData, Headers ) } )
-
-   ::mapEvent( evStatusTextChange, {| cText| ::xStatusTextChange( cText ) } )
-
-   ::mapEvent( evNavigateComplete, {| cURL | ::xNavigateComplete( cURL ) } )
-
-   ::mapEvent( evProgressChange, {| nProgress, nProgMax | ::xProgressChange( nProgress, nProgMax ) } )
-
-   ::mapEvent( evTitleChange, {| cTitle | ::xTitleChange( cTitle ) } )
-
-   ::mapEvent( evDocumentComplete, {| cURI | ::xDocumentComplete( cURI ) } )
-
-   ::WvgActiveXControl:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::WvgActiveXControl:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    RETURN Self
 
-METHOD WvgHTMLViewer:xBeforeNavigate( cURL, Flags, TFName, PData, Headers )
+METHOD WvgHTMLViewer:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   HB_SYMBOL_UNUSED( Flags   )
-   HB_SYMBOL_UNUSED( TFName  )
-   HB_SYMBOL_UNUSED( PData   )
-   HB_SYMBOL_UNUSED( Headers )
+   ::wvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+
+   ::mapEvent(evBeforeNavigate,   {| cURL, Flags, TFName, PData, Headers | ;
+      ::xBeforeNavigate( cURL, Flags, TFName, PData, Headers ) })
+
+   ::mapEvent(evStatusTextChange, {| cText| ::xStatusTextChange( cText ) })
+
+   ::mapEvent(evNavigateComplete, {| cURL | ::xNavigateComplete( cURL ) })
+
+   ::mapEvent(evProgressChange, {| nProgress, nProgMax | ::xProgressChange( nProgress, nProgMax ) })
+
+   ::mapEvent(evTitleChange, {| cTitle | ::xTitleChange( cTitle ) })
+
+   ::mapEvent(evDocumentComplete, {| cURI | ::xDocumentComplete( cURI ) })
+
+   ::WvgActiveXControl:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+
+   RETURN Self
+
+METHOD WvgHTMLViewer:xBeforeNavigate(cURL, Flags, TFName, PData, Headers)
+
+   HB_SYMBOL_UNUSED(Flags)
+   HB_SYMBOL_UNUSED(TFName)
+   HB_SYMBOL_UNUSED(PData)
+   HB_SYMBOL_UNUSED(Headers)
 
    IF PCount() >= 1 .AND. HB_ISBLOCK(::sl_beforeNavigate)
       Eval(::sl_beforeNavigate, cURL, , Self)
@@ -162,7 +162,7 @@ METHOD WvgHTMLViewer:xBeforeNavigate( cURL, Flags, TFName, PData, Headers )
 
    RETURN Self
 
-METHOD WvgHTMLViewer:xStatusTextChange( cText )
+METHOD WvgHTMLViewer:xStatusTextChange(cText)
 
    IF HB_ISBLOCK(::sl_statusTextChange)
       Eval(::sl_statusTextChange, cText, , Self)
@@ -170,7 +170,7 @@ METHOD WvgHTMLViewer:xStatusTextChange( cText )
 
    RETURN Self
 
-METHOD WvgHTMLViewer:xNavigateComplete( cURL )
+METHOD WvgHTMLViewer:xNavigateComplete(cURL)
 
    IF HB_ISBLOCK(::sl_navigateComplete)
       Eval(::sl_navigateComplete, cURL, , Self)
@@ -178,7 +178,7 @@ METHOD WvgHTMLViewer:xNavigateComplete( cURL )
 
    RETURN Self
 
-METHOD WvgHTMLViewer:xProgressChange( nProgress, nProgMax )
+METHOD WvgHTMLViewer:xProgressChange(nProgress, nProgMax)
 
    IF HB_ISBLOCK(::sl_progressChange)
       Eval(::sl_progressChange, nProgress, nProgMax, Self)
@@ -186,7 +186,7 @@ METHOD WvgHTMLViewer:xProgressChange( nProgress, nProgMax )
 
    RETURN Self
 
-METHOD WvgHTMLViewer:xTitleChange( cTitle )
+METHOD WvgHTMLViewer:xTitleChange(cTitle)
 
    IF HB_ISBLOCK(::sl_titleChange)
       Eval(::sl_titleChange, cTitle, , Self)
@@ -194,7 +194,7 @@ METHOD WvgHTMLViewer:xTitleChange( cTitle )
 
    RETURN Self
 
-METHOD WvgHTMLViewer:xDocumentComplete( cURI )
+METHOD WvgHTMLViewer:xDocumentComplete(cURI)
 
    IF HB_ISBLOCK(::sl_documentComplete)
       Eval(::sl_documentComplete, cURI, , Self)
@@ -202,7 +202,7 @@ METHOD WvgHTMLViewer:xDocumentComplete( cURI )
 
    RETURN Self
 
-METHOD WvgHTMLViewer:setHTML( cHTML )
+METHOD WvgHTMLViewer:setHTML(cHTML)
 
    ::document:innerHTML := cHTML
    ::refresh()

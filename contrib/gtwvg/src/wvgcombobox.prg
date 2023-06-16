@@ -64,24 +64,24 @@ CREATE CLASS WvgComboBox INHERIT WvgWindow, WvgDataRef
 
    VAR    aInfo                                 INIT    NIL
 
-   METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD destroy()
-   METHOD handleEvent( nMessage, aNM )
+   METHOD handleEvent(nMessage, aNM)
 
-   METHOD sendCBMessage( nMsg, wParam, lParam ) INLINE wvg_SendCBMessage( ::pWnd, nMsg, wParam, lParam )
-   METHOD listBoxFocus( lFocus )
+   METHOD sendCBMessage(nMsg, wParam, lParam) INLINE wvg_SendCBMessage(::pWnd, nMsg, wParam, lParam)
+   METHOD listBoxFocus(lFocus)
    METHOD listBoxSize()
    METHOD sleSize()
 
-   METHOD addItem( cItem )
-   METHOD clear()                               INLINE ::sendCBMessage( CB_RESETCONTENT )
-   METHOD delItem( nIndex )                     INLINE ::sendCBMessage( CB_DELETESTRING, nIndex - 1 )
-   METHOD getItem( nIndex )                     INLINE ::sendCBMessage( CB_GETLBTEXT, nIndex - 1 )
-   METHOD insItem( nIndex, cItem )              INLINE ::sendCBMessage( CB_INSERTSTRING, nIndex - 1, cItem )
-   METHOD setItem( nIndex, cItem )              VIRTUAL
-   METHOD setIcon( nItem, cIcon )
+   METHOD addItem(cItem)
+   METHOD clear()                               INLINE ::sendCBMessage(CB_RESETCONTENT)
+   METHOD delItem(nIndex)                     INLINE ::sendCBMessage(CB_DELETESTRING, nIndex - 1)
+   METHOD getItem(nIndex)                     INLINE ::sendCBMessage(CB_GETLBTEXT, nIndex - 1)
+   METHOD insItem(nIndex, cItem)              INLINE ::sendCBMessage(CB_INSERTSTRING, nIndex - 1, cItem)
+   METHOD setItem(nIndex, cItem)              VIRTUAL
+   METHOD setIcon(nItem, cIcon)
 
    VAR    oSLE
    VAR    oListBox
@@ -92,15 +92,15 @@ CREATE CLASS WvgComboBox INHERIT WvgWindow, WvgDataRef
    VAR    sl_itemSelected
    VAR    sl_drawItem
 
-   METHOD itemMarked( ... )                     SETGET
-   METHOD itemSelected( ... )                   SETGET
-   METHOD drawItem( ... )                       SETGET
+   METHOD itemMarked(...)                     SETGET
+   METHOD itemSelected(...)                   SETGET
+   METHOD drawItem(...)                       SETGET
 
 ENDCLASS
 
-METHOD WvgComboBox:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgComboBox:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::style       := WS_CHILD + WS_TABSTOP + WS_BORDER + WS_VSCROLL + CBS_NOINTEGRALHEIGHT + CBS_AUTOHSCROLL
 #if 0
@@ -112,11 +112,11 @@ METHOD WvgComboBox:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    RETURN Self
 
-METHOD WvgComboBox:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgComboBox:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::oParent:AddChild( Self )
+   ::oParent:AddChild(Self)
 
    SWITCH ::type
    CASE WVGCOMBO_DROPDOWNLIST
@@ -145,19 +145,19 @@ METHOD WvgComboBox:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
       ::oSLE := WvgSLE():new()
       ::oSLE:oParent := Self
       ::oSLE:hWnd := ::aInfo[5]
-      ::oSLE:pWnd := win_N2P( ::aInfo[5] )
+      ::oSLE:pWnd := win_N2P(::aInfo[5])
 
       ::oListBox := WvgListBox():new()
       ::oListBox:oParent := Self
       ::oListBox:hWnd := ::aInfo[6]
-      ::oListBox:pWnd := win_N2P( ::aInfo[6] )
+      ::oListBox:pWnd := win_N2P(::aInfo[6])
    ENDIF
 
    RETURN Self
 
-METHOD WvgComboBox:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgComboBox:configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::Initialize( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::Initialize(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    RETURN Self
 
@@ -175,7 +175,7 @@ METHOD PROCEDURE WvgComboBox:destroy()
 
    RETURN
 
-METHOD WvgComboBox:handleEvent( nMessage, aNM )
+METHOD WvgComboBox:handleEvent(nMessage, aNM)
 
    SWITCH nMessage
 
@@ -190,7 +190,7 @@ METHOD WvgComboBox:handleEvent( nMessage, aNM )
       SWITCH aNM[1]
 
       CASE CBN_SELCHANGE
-         ::nCurSelected := ::editBuffer := wvg_lbGetCurSel( ::hWnd ) + 1
+         ::nCurSelected := ::editBuffer := wvg_lbGetCurSel(::hWnd) + 1
          IF ::isParentCrt()
             ::oParent:setFocus()
          ENDIF
@@ -242,33 +242,33 @@ METHOD WvgComboBox:handleEvent( nMessage, aNM )
 
    CASE HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC(::clr_FG)
-         wvg_SetTextColor( aNM[1], ::clr_FG )
+         wvg_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
       IF HB_ISNUMERIC(::hBrushBG)
-         wvg_SetBkMode( aNM[1], 1 )
+         wvg_SetBkMode(aNM[1], 1)
          RETURN ::hBrushBG
       ELSE
-         RETURN wvg_GetCurrentBrush( aNM[1] )
+         RETURN wvg_GetCurrentBrush(aNM[1])
       ENDIF
 
    ENDSWITCH
 
    RETURN EVENT_UNHANDELLED
 
-METHOD WvgComboBox:addItem( cItem )
+METHOD WvgComboBox:addItem(cItem)
 
    IF HB_ISSTRING(cItem)
-      RETURN ::sendCBMessage( CB_ADDSTRING, cItem )
+      RETURN ::sendCBMessage(CB_ADDSTRING, cItem)
    ENDIF
 
    RETURN -1
 
-METHOD WvgComboBox:listBoxFocus( lFocus )
+METHOD WvgComboBox:listBoxFocus(lFocus)
 
-   LOCAL lOldFocus := ::sendCBMessage( CB_GETDROPPEDSTATE )
+   LOCAL lOldFocus := ::sendCBMessage(CB_GETDROPPEDSTATE)
 
    IF HB_ISLOGICAL(lFocus)
-      ::sendCBMessage( CB_SHOWDROPDOWN, lFocus )
+      ::sendCBMessage(CB_SHOWDROPDOWN, lFocus)
    ENDIF
 
    RETURN lOldFocus
@@ -289,14 +289,14 @@ METHOD WvgComboBox:listBoxSize()
 
    RETURN { 0, 0 }
 
-METHOD WvgComboBox:setIcon( nItem, cIcon )
+METHOD WvgComboBox:setIcon(nItem, cIcon)
 
-   HB_SYMBOL_UNUSED( nItem )
-   HB_SYMBOL_UNUSED( cIcon )
+   HB_SYMBOL_UNUSED(nItem)
+   HB_SYMBOL_UNUSED(cIcon)
 
    RETURN Self
 
-METHOD WvgComboBox:itemMarked( ... )
+METHOD WvgComboBox:itemMarked(...)
 
    LOCAL a_ := hb_AParams()
 
@@ -308,7 +308,7 @@ METHOD WvgComboBox:itemMarked( ... )
 
    RETURN Self
 
-METHOD WvgComboBox:itemSelected( ... )
+METHOD WvgComboBox:itemSelected(...)
 
    LOCAL a_ := hb_AParams()
 
@@ -320,7 +320,7 @@ METHOD WvgComboBox:itemSelected( ... )
 
    RETURN Self
 
-METHOD WvgComboBox:drawItem( ... )
+METHOD WvgComboBox:drawItem(...)
 
    LOCAL a_ := hb_AParams()
 

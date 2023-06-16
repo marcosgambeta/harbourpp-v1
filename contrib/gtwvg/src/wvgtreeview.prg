@@ -67,44 +67,43 @@ CREATE CLASS WvgTreeView INHERIT WvgWindow, WvgDataRef
    VAR    oRootItem
    ACCESS rootItem()                            INLINE ::oRootItem
 
-   METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD destroy()
-   METHOD handleEvent( nMessage, aNM )
+   METHOD handleEvent(nMessage, aNM)
 
-   METHOD itemFromPos( aPos )
+   METHOD itemFromPos(aPos)
 
    VAR    sl_itemCollapsed
    VAR    sl_itemExpanded
    VAR    sl_itemMarked
    VAR    sl_itemSelected
 
-   METHOD itemCollapsed( xParam )               SETGET
-   METHOD itemExpanded( xParam )                SETGET
-   METHOD itemMarked( xParam )                  SETGET
+   METHOD itemCollapsed(xParam)               SETGET
+   METHOD itemExpanded(xParam)                SETGET
+   METHOD itemMarked(xParam)                  SETGET
 
    VAR    oItemSelected
    ACCESS itemSelected                          INLINE ::sl_itemSelected
-   ASSIGN itemSelected( bBlock )                INLINE ::sl_itemSelected := bBlock
+   ASSIGN itemSelected(bBlock)                INLINE ::sl_itemSelected := bBlock
 
    VAR    hParentSelected
    VAR    hItemSelected
    VAR    textParentSelected                    INIT ""
    VAR    textItemSelected                      INIT ""
 
-   METHOD getSelectionInfo( nlParam )
-   METHOD setColorFG( nRGB )                    INLINE wvg_TreeView_SetTextColor( ::hWnd, iif(HB_ISSTRING(nRGB), wvt_GetRGBColorByString( nRGB, 0 ), nRGB) )
-   METHOD setColorBG( nRGB )                    INLINE wvg_TreeView_SetBkColor( ::hWnd, iif(HB_ISSTRING(nRGB), wvt_GetRGBColorByString( nRGB, 1 ), nRGB) )
-   METHOD setColorLines( nRGB )                 INLINE wvg_TreeView_SetLineColor( ::hWnd, nRGB )
-   METHOD showExpanded( lExpanded, nLevels )    INLINE wvg_TreeView_ShowExpanded( ::hWnd, ;
-      iif(HB_ISNIL(lExpanded), .F., lExpanded), nLevels )
+   METHOD getSelectionInfo(nlParam)
+   METHOD setColorFG(nRGB)                    INLINE wvg_TreeView_SetTextColor(::hWnd, iif(HB_ISSTRING(nRGB), wvt_GetRGBColorByString(nRGB, 0), nRGB))
+   METHOD setColorBG(nRGB)                    INLINE wvg_TreeView_SetBkColor(::hWnd, iif(HB_ISSTRING(nRGB), wvt_GetRGBColorByString(nRGB, 1), nRGB))
+   METHOD setColorLines(nRGB)                 INLINE wvg_TreeView_SetLineColor(::hWnd, nRGB)
+   METHOD showExpanded(lExpanded, nLevels)    INLINE wvg_TreeView_ShowExpanded(::hWnd, iif(HB_ISNIL(lExpanded), .F., lExpanded), nLevels)
 
 ENDCLASS
 
-METHOD WvgTreeView:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgTreeView:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::style       := WS_CHILD + WS_TABSTOP + WS_CLIPSIBLINGS
    ::exStyle     := WS_EX_CLIENTEDGE // WS_EX_STATICEDGE /*+ TVS_EX_FADEINOUTEXPANDOS */
@@ -114,9 +113,9 @@ METHOD WvgTreeView:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    RETURN Self
 
-METHOD WvgTreeView:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgTreeView:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    IF ::alwaysShowSelection
       ::style += TVS_SHOWSELALWAYS
@@ -128,7 +127,7 @@ METHOD WvgTreeView:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
       ::style += TVS_HASLINES + TVS_LINESATROOT
    ENDIF
 
-   ::oParent:AddChild( Self )
+   ::oParent:AddChild(Self)
 
    ::createControl()
 
@@ -143,11 +142,11 @@ METHOD WvgTreeView:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    IF ::visible
       ::show()
    ENDIF
-   ::setPosAndSize( ::aPos, ::aSize )
+   ::setPosAndSize(::aPos, ::aSize)
 
    RETURN Self
 
-METHOD WvgTreeView:handleEvent( nMessage, aNM )
+METHOD WvgTreeView:handleEvent(nMessage, aNM)
 
    LOCAL aHdr
 
@@ -167,7 +166,7 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
       EXIT
 
    CASE HB_GTE_NOTIFY
-      aHdr := wvg_GetNMTreeViewInfo( aNM[2] )
+      aHdr := wvg_GetNMTreeViewInfo(aNM[2])
 
       SWITCH aHdr[NMH_code]
 
@@ -190,7 +189,7 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
          RETURN .F.
 
       CASE TVN_SELCHANGED
-         ::getSelectionInfo( aNM[2] )
+         ::getSelectionInfo(aNM[2])
          IF ::isParentCrt()
             ::oParent:setFocus()
          ENDIF
@@ -215,8 +214,8 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
 #if 0  /* It must never reach here */
    CASE HB_GTE_ANY
       IF aNM[1] == WM_LBUTTONDOWN
-         aHdr := wvg_GetNMTreeViewInfo( aNM[3] )
-         ::getSelectionInfo( aNM[2] )
+         aHdr := wvg_GetNMTreeViewInfo(aNM[3])
+         ::getSelectionInfo(aNM[2])
          IF HB_ISBLOCK(::sl_lbClick)
             IF ::isParentCrt()
                ::oParent:setFocus()
@@ -228,7 +227,7 @@ METHOD WvgTreeView:handleEvent( nMessage, aNM )
          ENDIF
          RETURN EVENT_HANDELLED
 
-      ELSEIF aNM[1] == WM_LBUTTONDBLCLK .OR. ( aNM[1] == WM_KEYDOWN .AND. aNM[2] == K_ENTER )
+      ELSEIF aNM[1] == WM_LBUTTONDBLCLK .OR. (aNM[1] == WM_KEYDOWN .AND. aNM[2] == K_ENTER)
          ::editBuffer := ::oItemSelected
          IF HB_ISBLOCK(::sl_itemSelected)
             IF ::isParentCrt()
@@ -254,39 +253,39 @@ METHOD PROCEDURE WvgTreeView:destroy()
 
    RETURN
 
-METHOD WvgTreeView:getSelectionInfo( nlParam )
+METHOD WvgTreeView:getSelectionInfo(nlParam)
 
    LOCAL hItemSelected, hParentOfSelected
-   LOCAL cParent := Space( 20 )
-   LOCAL cText   := Space( 20 )
+   LOCAL cParent := Space(20)
+   LOCAL cText   := Space(20)
    LOCAL n
 
-   wvg_TreeView_GetSelectionInfo( ::hWnd, nlParam, @cParent, @cText, @hParentOfSelected, @hItemSelected )
+   wvg_TreeView_GetSelectionInfo(::hWnd, nlParam, @cParent, @cText, @hParentOfSelected, @hItemSelected)
 
    ::hParentSelected    := hParentOfSelected
    ::hItemSelected      := hItemSelected
-   ::textParentSelected := RTrim( cParent )
-   ::textItemSelected   := RTrim( cText   )
+   ::textParentSelected := RTrim(cParent)
+   ::textItemSelected   := RTrim(cText)
 
-   IF ( n := AScan( ::aItems, {| o | o:hItem == hItemSelected } ) ) > 0
+   IF (n := AScan(::aItems, {| o | o:hItem == hItemSelected })) > 0
       ::oItemSelected      := ::aItems[n]
    ENDIF
 
    RETURN Self
 
-METHOD WvgTreeView:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgTreeView:configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::Initialize( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-
-   RETURN Self
-
-METHOD WvgTreeView:itemFromPos( aPos )
-
-   HB_SYMBOL_UNUSED( aPos )
+   ::Initialize(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    RETURN Self
 
-METHOD WvgTreeView:itemCollapsed( xParam )
+METHOD WvgTreeView:itemFromPos(aPos)
+
+   HB_SYMBOL_UNUSED(aPos)
+
+   RETURN Self
+
+METHOD WvgTreeView:itemCollapsed(xParam)
 
    IF HB_ISBLOCK(xParam) .OR. xParam == NIL
       ::sl_paint := xParam
@@ -294,7 +293,7 @@ METHOD WvgTreeView:itemCollapsed( xParam )
 
    RETURN Self
 
-METHOD WvgTreeView:itemExpanded( xParam )
+METHOD WvgTreeView:itemExpanded(xParam)
 
    IF HB_ISBLOCK(xParam) .OR. xParam == NIL
       ::sl_itemExpanded := xParam
@@ -302,7 +301,7 @@ METHOD WvgTreeView:itemExpanded( xParam )
 
    RETURN Self
 
-METHOD WvgTreeView:itemMarked( xParam )
+METHOD WvgTreeView:itemMarked(xParam)
 
    IF HB_ISBLOCK(xParam) .OR. xParam == NIL
       ::sl_itemMarked := xParam
@@ -312,7 +311,7 @@ METHOD WvgTreeView:itemMarked( xParam )
 
 #if 0
 
-METHOD WvgTreeView:itemSelected( xParam )
+METHOD WvgTreeView:itemSelected(xParam)
 
    IF HB_ISBLOCK(xParam) .OR. xParam == NIL
       ::sl_itemSelected := xParam

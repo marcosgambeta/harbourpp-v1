@@ -57,7 +57,7 @@
 #include "wvgparts.ch"
 
 #ifndef __DBG_PARTS__
-#xtranslate hb_traceLog( [<x,...>] ) =>
+#xtranslate hb_traceLog([<x,...>]) =>
 #endif
 
 CREATE CLASS Wvg3State INHERIT WvgWindow, WvgDataRef
@@ -67,23 +67,23 @@ CREATE CLASS Wvg3State INHERIT WvgWindow, WvgDataRef
    VAR    pointerFocus                          INIT .T.
    VAR    selection                             INIT .F.
 
-   METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD destroy()
 
-   METHOD setCaption( xCaption )
+   METHOD setCaption(xCaption)
 
    ACCESS selected                              INLINE ::sl_lbClick
-   ASSIGN selected( bBlock )                    INLINE ::sl_lbClick := bBlock
+   ASSIGN selected(bBlock)                    INLINE ::sl_lbClick := bBlock
 
-   METHOD handleEvent( nMessage, aNM )
+   METHOD handleEvent(nMessage, aNM)
 
 ENDCLASS
 
-METHOD Wvg3State:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD Wvg3State:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::style       := WS_CHILD + BS_AUTO3STATE
    ::className   := "BUTTON"
@@ -91,11 +91,11 @@ METHOD Wvg3State:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    RETURN Self
 
-METHOD Wvg3State:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD Wvg3State:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::oParent:AddChild( Self )
+   ::oParent:AddChild(Self)
 
    ::createControl()
 
@@ -105,7 +105,7 @@ METHOD Wvg3State:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
       ::show()
    ENDIF
 
-   ::setCaption( ::caption )
+   ::setCaption(::caption)
 
    IF ::selection
       ::sendMessage(BM_SETCHECK, BST_CHECKED, 0)
@@ -115,18 +115,18 @@ METHOD Wvg3State:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
       ::show()
    ENDIF
 
-   ::editBuffer := wvg_Button_GetCheck( ::hWnd )
+   ::editBuffer := wvg_Button_GetCheck(::hWnd)
 
    RETURN Self
 
-METHOD Wvg3State:handleEvent( nMessage, aNM )
+METHOD Wvg3State:handleEvent(nMessage, aNM)
 
-   hb_traceLog( "       %s:handleEvent( %i )", ::ClassName(), nMessage )
+   hb_traceLog("       %s:handleEvent( %i )", ::ClassName(), nMessage)
 
    DO CASE
    CASE nMessage == HB_GTE_COMMAND
       IF aNM[NMH_code] == BN_CLICKED
-         ::editBuffer := wvg_Button_GetCheck( ::hWnd )
+         ::editBuffer := wvg_Button_GetCheck(::hWnd)
 
          IF HB_ISBLOCK(::sl_lbClick)
             Eval(::sl_lbClick, ::editBuffer, , Self)
@@ -136,13 +136,13 @@ METHOD Wvg3State:handleEvent( nMessage, aNM )
 
    CASE nMessage == HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC(::clr_FG)
-         wvg_SetTextColor( aNM[1], ::clr_FG )
+         wvg_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
       IF HB_ISNUMERIC(::hBrushBG)
-         wvg_SetBkMode( aNM[1], 1 )
+         wvg_SetBkMode(aNM[1], 1)
          RETURN ::hBrushBG
       ELSE
-         RETURN wvg_GetCurrentBrush( aNM[1] )
+         RETURN wvg_GetCurrentBrush(aNM[1])
       ENDIF
 
    ENDCASE
@@ -151,23 +151,23 @@ METHOD Wvg3State:handleEvent( nMessage, aNM )
 
 METHOD PROCEDURE Wvg3State:destroy()
 
-   hb_traceLog( "          %s:destroy()", ::ClassName() )
+   hb_traceLog("          %s:destroy()", ::ClassName())
 
    ::WvgWindow:destroy()
 
    RETURN
 
-METHOD Wvg3State:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD Wvg3State:configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::Initialize( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::Initialize(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    RETURN Self
 
-METHOD Wvg3State:setCaption( xCaption )
+METHOD Wvg3State:setCaption(xCaption)
 
    IF HB_ISSTRING(xCaption)
       ::caption := xCaption
-      wvg_SendMessageText( ::hWnd, WM_SETTEXT, 0, ::caption )
+      wvg_SendMessageText(::hWnd, WM_SETTEXT, 0, ::caption)
    ENDIF
 
    RETURN Self

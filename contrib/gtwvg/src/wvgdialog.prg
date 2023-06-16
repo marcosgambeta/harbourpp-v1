@@ -63,25 +63,25 @@ CREATE CLASS WvgDialog INHERIT WvgWindow
    VAR    drawingArea
    VAR    tasklist                              INIT .T.
 
-   METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD destroy()
-   METHOD setFrameState( nState )
+   METHOD setFrameState(nState)
    METHOD getFrameState()
    METHOD menuBar()
 
    METHOD showModal()                           INLINE NIL
-   METHOD setTitle( cTitle )                    INLINE ::title := cTitle, hb_gtInfo( HB_GTI_WINTITLE, cTitle )
-   METHOD getTitle()                            INLINE hb_gtInfo( HB_GTI_WINTITLE )
-   METHOD calcClientRect()                      INLINE ::aRect := wvg_GetClientRect( ::hWnd ), { 0, 0, ::aRect[3], ::aRect[4] }
-   METHOD calcFrameRect()                       INLINE ::aRect := wvg_GetWindowRect( ::hWnd ), { ::aRect[1], ::aRect[2], ::aRect[3] - ::aRect[1], ::aRect[4] - ::aRect[2] }
+   METHOD setTitle(cTitle)                    INLINE ::title := cTitle, hb_gtInfo(HB_GTI_WINTITLE, cTitle)
+   METHOD getTitle()                            INLINE hb_gtInfo(HB_GTI_WINTITLE)
+   METHOD calcClientRect()                      INLINE ::aRect := wvg_GetClientRect(::hWnd), { 0, 0, ::aRect[3], ::aRect[4] }
+   METHOD calcFrameRect()                       INLINE ::aRect := wvg_GetWindowRect(::hWnd), { ::aRect[1], ::aRect[2], ::aRect[3] - ::aRect[1], ::aRect[4] - ::aRect[2] }
 
 ENDCLASS
 
-METHOD WvgDialog:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgDialog:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::WvgWindow:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::WvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::className   := "WVGDIALOG"
    ::resizeMode  := 0
@@ -92,67 +92,67 @@ METHOD WvgDialog:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    RETURN Self
 
-METHOD WvgDialog:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgDialog:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    LOCAL oW
 
-   ::WvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::WvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    IF ::lModal
-      ::pGT  := hb_gtCreate( "WGU" )
-      ::pGTp := hb_gtSelect( ::pGT )
+      ::pGT  := hb_gtCreate("WGU")
+      ::pGTp := hb_gtSelect(::pGT)
    ELSE
-      hb_gtReload( "WGU" )
+      hb_gtReload("WGU")
       ::pGT := hb_gtSelect()
    ENDIF
 
-   hb_gtInfo( HB_GTI_PRESPARAMS, { ::exStyle, ::style, ::aPos[1], ::aPos[2], ;
-      ::aSize[1], ::aSize[2], ::pGTp, .F., .F., HB_WNDTYPE_DIALOG } )
+   hb_gtInfo(HB_GTI_PRESPARAMS, { ::exStyle, ::style, ::aPos[1], ::aPos[2], ;
+      ::aSize[1], ::aSize[2], ::pGTp, .F., .F., HB_WNDTYPE_DIALOG })
 
    IF ::visible
-      hb_gtInfo( HB_GTI_SPEC, HB_GTS_SHOWWINDOW, SW_NORMAL )
+      hb_gtInfo(HB_GTI_SPEC, HB_GTS_SHOWWINDOW, SW_NORMAL)
    ELSE
-      hb_gtInfo( HB_GTI_SPEC, HB_GTS_SHOWWINDOW, SW_HIDE )
+      hb_gtInfo(HB_GTI_SPEC, HB_GTS_SHOWWINDOW, SW_HIDE)
    ENDIF
 
-   ::hWnd := hb_gtInfo( HB_GTI_SPEC, HB_GTS_WINDOWHANDLE )
+   ::hWnd := hb_gtInfo(HB_GTI_SPEC, HB_GTS_WINDOWHANDLE)
 
-   hb_gtInfo( HB_GTI_RESIZABLE, ::resizable )
-   hb_gtInfo( HB_GTI_CLOSABLE, ::closable  )
-   hb_gtInfo( HB_GTI_WINTITLE, ::title     )
+   hb_gtInfo(HB_GTI_RESIZABLE, ::resizable)
+   hb_gtInfo(HB_GTI_CLOSABLE, ::closable)
+   hb_gtInfo(HB_GTI_WINTITLE, ::title)
 
    IF !Empty(::icon)
       IF HB_ISNUMERIC(::icon)
-         hb_gtInfo( HB_GTI_ICONRES, ::icon )
+         hb_gtInfo(HB_GTI_ICONRES, ::icon)
 
       ELSEIF HB_ISSTRING(::icon)
-         hb_gtInfo( HB_GTI_ICONFILE, ::icon )
+         hb_gtInfo(HB_GTI_ICONFILE, ::icon)
 
       ENDIF
    ENDIF
 
    IF ::lModal
-      hb_gtInfo( HB_GTI_DISABLE, ::pGTp )
+      hb_gtInfo(HB_GTI_DISABLE, ::pGTp)
    ENDIF
 
    IF ::visible
       ::lHasInputFocus := .T.
    ENDIF
 
-   oW := WvgDrawingArea():new( Self ):create( , , { 0, 0 }, Self:currentSize(), , .F. )
+   oW := WvgDrawingArea():new(Self):create(, , { 0, 0 }, Self:currentSize(), , .F.)
    IF !Empty(oW:hWnd)
       ::drawingArea := oW
    ELSE
       ::drawingArea := Self
    ENDIF
 
-   hb_gtInfo( HB_GTI_NOTIFIERBLOCK, {| nEvent, ... | ::notifier( nEvent, ... ) } )
+   hb_gtInfo(HB_GTI_NOTIFIERBLOCK, {| nEvent, ... | ::notifier(nEvent, ...) })
 
    RETURN Self
 
-METHOD WvgDialog:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgDialog:configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::WvgWindow:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::WvgWindow:configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    RETURN Self
 
@@ -167,7 +167,7 @@ METHOD WvgDialog:destroy()
    ENDIF
 
    IF !Empty(::hBrushBG)
-      wvg_DeleteObject( ::hBrushBG )
+      wvg_DeleteObject(::hBrushBG)
    ENDIF
 
    ::pGT  := NIL
@@ -175,7 +175,7 @@ METHOD WvgDialog:destroy()
 
    RETURN Self
 
-METHOD WvgDialog:setFrameState( nState )
+METHOD WvgDialog:setFrameState(nState)
 
    LOCAL lSuccess := .F.
 
@@ -196,10 +196,10 @@ METHOD WvgDialog:setFrameState( nState )
 
 METHOD WvgDialog:getFrameState()
 
-   IF wvg_IsIconic( ::hWnd )
+   IF wvg_IsIconic(::hWnd)
       RETURN WVGDLG_FRAMESTAT_MINIMIZED
    ENDIF
-   IF wvg_IsZoomed( ::hWnd )
+   IF wvg_IsZoomed(::hWnd)
       RETURN WVGDLG_FRAMESTAT_MAXIMIZED
    ENDIF
 
@@ -208,7 +208,7 @@ METHOD WvgDialog:getFrameState()
 METHOD WvgDialog:menuBar()
 
    IF !HB_ISOBJECT(::oMenu)
-      ::oMenu := WvgMenuBar():New( Self ):create()
+      ::oMenu := WvgMenuBar():New(Self):create()
    ENDIF
 
    RETURN ::oMenu

@@ -83,25 +83,25 @@ CREATE CLASS WvtStatusBar INHERIT WvtObject
    VAR    aPanels
    VAR    cColor
 
-   METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
+   METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
-   METHOD SetPanels( aPanels )
-   METHOD SetText( nPanel, cText, cColor )
-   METHOD SetIcon( nPanel, cIconFile )
-   METHOD Update( nPanel, cText, cColor )
+   METHOD SetPanels(aPanels)
+   METHOD SetText(nPanel, cText, cColor)
+   METHOD SetIcon(nPanel, cIconFile)
+   METHOD Update(nPanel, cText, cColor)
    METHOD PaintBlock()
    METHOD Refresh()
 
 ENDCLASS
 
-METHOD WvtStatusBar:New( oParent, nID, nTop, nLeft, nBottom, nRight )
+METHOD WvtStatusBar:New(oParent, nID, nTop, nLeft, nBottom, nRight)
 
    __defaultNIL(@nTop, oParent:MaxRow())
    __defaultNIL(@nLeft, 0)
    __defaultNIL(@nBottom, oParent:MaxRow())
    __defaultNIL(@nRight, oParent:MaxCol())
 
-   ::Super:New( oParent, DLG_OBJ_STATUSBAR, nID, nTop, nLeft, nBottom, nRight )
+   ::Super:New(oParent, DLG_OBJ_STATUSBAR, nID, nTop, nLeft, nBottom, nRight)
 
    ::cColor  := "N/W"
 
@@ -110,7 +110,7 @@ METHOD WvtStatusBar:New( oParent, nID, nTop, nLeft, nBottom, nRight )
 METHOD WvtStatusBar:Create()
 
    ::Refresh()
-   ::PaintBlock( DLG_OBJ_STATUSBAR, Self )
+   ::PaintBlock(DLG_OBJ_STATUSBAR, Self)
 
    ::Super:Create()
 
@@ -126,13 +126,13 @@ METHOD WvtStatusBar:PaintBlock()
    a_[Len(a_)]++
    nPanels := Len(::aPanels)
 
-   ::bPaint  := {|| wvt_DrawStatusBar( nPanels, a_ ) }
+   ::bPaint  := {|| wvt_DrawStatusBar(nPanels, a_) }
    AAdd(::aPaint, { ::bPaint, ;
       { WVT_BLOCK_STATUSBAR, ::nTop, ::nLeft, ::nBottom, ::nRight } })
 
    RETURN Self
 
-METHOD WvtStatusBar:SetPanels( aPanels )
+METHOD WvtStatusBar:SetPanels(aPanels)
 
    LOCAL i, oPanel, nID
    LOCAL nLastCol := ::oParent:MaxCol()
@@ -141,20 +141,20 @@ METHOD WvtStatusBar:SetPanels( aPanels )
 
    ::aPanels := {}
 
-   oPanel := WvtPanel():New( ::oParent, ++nID, ::nTop, 0 )
+   oPanel := WvtPanel():New(::oParent, ++nID, ::nTop, 0)
 
    AAdd(::aPanels, oPanel)
 
    IF aPanels != NIL
       FOR i := 1 TO Len(aPanels)
          IF ::oParent:MaxCol() > aPanels[i]
-            oPanel := WvtPanel():New( ::oParent, ++nID, ::nTop, aPanels[i] )
+            oPanel := WvtPanel():New(::oParent, ++nID, ::nTop, aPanels[i])
             AAdd(::aPanels, oPanel)
          ENDIF
       NEXT
    ENDIF
 
-   ATail( ::aPanels ):nRight := nLastCol
+   ATail(::aPanels):nRight := nLastCol
 
    FOR i := Len(::aPanels) - 1 TO 1 STEP -1
       oPanel        := ::aPanels[i]
@@ -164,7 +164,7 @@ METHOD WvtStatusBar:SetPanels( aPanels )
 
    RETURN Self
 
-METHOD WvtStatusBar:Update( nPanel, cText, cColor )
+METHOD WvtStatusBar:Update(nPanel, cText, cColor)
 
    LOCAL oPanel
 
@@ -177,7 +177,7 @@ METHOD WvtStatusBar:Update( nPanel, cText, cColor )
 
    RETURN Self
 
-METHOD WvtStatusBar:SetText( nPanel, cText, cColor )
+METHOD WvtStatusBar:SetText(nPanel, cText, cColor)
 
    LOCAL oPanel
 
@@ -191,7 +191,7 @@ METHOD WvtStatusBar:SetText( nPanel, cText, cColor )
 
    RETURN Self
 
-METHOD WvtStatusBar:SetIcon( nPanel, cIconFile )
+METHOD WvtStatusBar:SetIcon(nPanel, cIconFile)
 
    IF nPanel > 0 .AND. nPanel <= Len(::aPanels)
       ::aPanels[nPanel]:cIconFile := cIconFile

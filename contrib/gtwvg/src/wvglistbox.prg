@@ -65,63 +65,63 @@ CREATE CLASS WvgListBox INHERIT WvgWindow, WvgDataRef
    VAR    vertScroll                            INIT .T.
    VAR    drawMode                              INIT WVG_DRAW_NORMAL
 
-   METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD destroy()
 
-   METHOD handleEvent( nMessage, aNM )
+   METHOD handleEvent(nMessage, aNM)
 
    METHOD getItemHeight()                       INLINE ::sendMessage(LB_GETITEMHEIGHT, 0, 0)
    METHOD getTopItem()                          INLINE ::sendMessage(LB_GETTOPINDEX, 0, 0)
    METHOD getVisibleItems()                     VIRTUAL
    METHOD numItems()                            INLINE ::sendMessage(LB_GETCOUNT, 0, 0)
-   METHOD setItemsHeight( nPixel )              INLINE ::sendMessage(LB_SETITEMHEIGHT, 0, nPixel)
-   METHOD setTopItem( nIndex )                  INLINE ::sendMessage(LB_SETTOPINDEX, nIndex - 1, 0)
+   METHOD setItemsHeight(nPixel)                INLINE ::sendMessage(LB_SETITEMHEIGHT, 0, nPixel)
+   METHOD setTopItem(nIndex)                  INLINE ::sendMessage(LB_SETTOPINDEX, nIndex - 1, 0)
 
-   METHOD addItem( cItem )                      INLINE wvg_SendMessageText( ::hWnd, LB_ADDSTRING, 0, cItem )
+   METHOD addItem(cItem)                      INLINE wvg_SendMessageText(::hWnd, LB_ADDSTRING, 0, cItem)
    METHOD clear()
-   METHOD delItem( nIndex )                     INLINE ::sendMessage(LB_DELETESTRING, nIndex - 1, 0)
-   METHOD getItem( nIndex )                     INLINE wvg_lbGetText( ::hWnd, nIndex - 1 )
+   METHOD delItem(nIndex)                     INLINE ::sendMessage(LB_DELETESTRING, nIndex - 1, 0)
+   METHOD getItem(nIndex)                     INLINE wvg_lbGetText(::hWnd, nIndex - 1)
    METHOD getTabstops()                         VIRTUAL
-   METHOD insItem( nIndex, cItem )              INLINE wvg_SendMessageText( ::hWnd, LB_INSERTSTRING, nIndex - 1, cItem )
+   METHOD insItem(nIndex, cItem)              INLINE wvg_SendMessageText(::hWnd, LB_INSERTSTRING, nIndex - 1, cItem)
    METHOD setColumnWidth()                      VIRTUAL
-   METHOD setItem( nIndex, cItem )              INLINE ::delItem( nIndex ), ::insItem( nIndex, cItem )
+   METHOD setItem(nIndex, cItem)              INLINE ::delItem(nIndex), ::insItem(nIndex, cItem)
    METHOD setTabstops()                         VIRTUAL
 
 
    VAR    sl_hScroll
    ACCESS hScroll                               INLINE ::sl_hScroll
-   ASSIGN hScroll( bBlock )                     INLINE ::sl_hScroll := bBlock
+   ASSIGN hScroll(bBlock)                     INLINE ::sl_hScroll := bBlock
 
    VAR    sl_vScroll
    ACCESS vScroll                               INLINE ::sl_vScroll
-   ASSIGN vScroll( bBlock )                     INLINE ::sl_vScroll := bBlock
+   ASSIGN vScroll(bBlock)                     INLINE ::sl_vScroll := bBlock
 
    VAR    sl_itemMarked
    ACCESS itemMarked                            INLINE ::sl_itemMarked
-   ASSIGN itemMarked( bBlock )                  INLINE ::sl_itemMarked := bBlock
+   ASSIGN itemMarked(bBlock)                  INLINE ::sl_itemMarked := bBlock
 
    VAR    sl_itemSelected
    ACCESS itemSelected                          INLINE ::sl_itemSelected
-   ASSIGN itemSelected( bBlock )                INLINE ::sl_itemSelected := bBlock
+   ASSIGN itemSelected(bBlock)                INLINE ::sl_itemSelected := bBlock
 
    VAR    sl_drawItem
    ACCESS drawItem                              INLINE ::sl_drawItem
-   ASSIGN drawItem( bBlock )                    INLINE ::sl_drawItem := bBlock
+   ASSIGN drawItem(bBlock)                    INLINE ::sl_drawItem := bBlock
 
    VAR    sl_measureItem
    ACCESS measureItem                           INLINE ::sl_measureItem
-   ASSIGN measureItem( bBlock )                 INLINE ::sl_measureItem := bBlock
+   ASSIGN measureItem(bBlock)                 INLINE ::sl_measureItem := bBlock
 
    VAR    nCurSelected                          INIT 0
-   METHOD getCurItem()                          INLINE ::getItem( ::nCurSelected )
+   METHOD getCurItem()                          INLINE ::getItem(::nCurSelected)
 
 ENDCLASS
 
-METHOD WvgListBox:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgListBox:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::style       := WS_CHILD + WS_OVERLAPPED + WS_TABSTOP + WS_CLIPSIBLINGS + LBS_NOINTEGRALHEIGHT + LBS_WANTKEYBOARDINPUT
    ::exStyle     := WS_EX_CLIENTEDGE // + WS_EX_LEFT + WS_EX_LTRREADING + WS_EX_RIGHTSCROLLBAR
@@ -130,9 +130,9 @@ METHOD WvgListBox:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    RETURN Self
 
-METHOD WvgListBox:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgListBox:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    IF ::horizScroll
       ::style += WS_HSCROLL
@@ -145,7 +145,7 @@ METHOD WvgListBox:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ENDIF
    ::style += LBS_NOTIFY
 
-   ::oParent:AddChild( Self )
+   ::oParent:AddChild(Self)
 
    ::createControl()
 #if 0
@@ -158,7 +158,7 @@ METHOD WvgListBox:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    RETURN Self
 
-METHOD WvgListBox:handleEvent( nMessage, aNM )
+METHOD WvgListBox:handleEvent(nMessage, aNM)
 
    SWITCH nMessage
 
@@ -172,7 +172,7 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
    CASE HB_GTE_COMMAND
       SWITCH aNM[1]
       CASE LBN_SELCHANGE
-         ::nCurSelected := wvg_lbGetCurSel( ::hWnd ) + 1
+         ::nCurSelected := wvg_lbGetCurSel(::hWnd) + 1
          IF ::isParentCrt()
             ::oParent:setFocus()
          ENDIF
@@ -228,20 +228,20 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
 
    CASE HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC(::clr_FG)
-         wvg_SetTextColor( aNM[1], ::clr_FG )
+         wvg_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
       IF HB_ISNUMERIC(::hBrushBG)
-         wvg_SetBkMode( aNM[1], 1 )
+         wvg_SetBkMode(aNM[1], 1)
          RETURN ::hBrushBG
       ELSE
-         RETURN wvg_GetCurrentBrush( aNM[1] )
+         RETURN wvg_GetCurrentBrush(aNM[1])
       ENDIF
       EXIT
 
    CASE HB_GTE_ANY               /* This will never be reached */
       SWITCH aNM[1]
       CASE WM_LBUTTONUP
-         ::nCurSelected := wvg_lbGetCurSel( ::hWnd ) + 1
+         ::nCurSelected := wvg_lbGetCurSel(::hWnd) + 1
          IF HB_ISBLOCK(::sl_itemMarked)
             IF ::isParentCrt()
                ::oParent:setFocus()
@@ -266,8 +266,8 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
          ENDIF
          EXIT
       CASE WM_KEYUP
-         IF ::nCurSelected != wvg_lbGetCurSel( ::hWnd ) + 1
-            ::nCurSelected := wvg_lbGetCurSel( ::hWnd ) + 1
+         IF ::nCurSelected != wvg_lbGetCurSel(::hWnd) + 1
+            ::nCurSelected := wvg_lbGetCurSel(::hWnd) + 1
             IF HB_ISBLOCK(::sl_itemMarked)
                IF ::isParentCrt()
                   ::oParent:setFocus()
@@ -290,9 +290,9 @@ METHOD WvgListBox:clear()
 
    RETURN Self
 
-METHOD WvgListBox:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgListBox:configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::Initialize( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::Initialize(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    RETURN Self
 

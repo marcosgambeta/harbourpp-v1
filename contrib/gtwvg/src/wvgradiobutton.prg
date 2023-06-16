@@ -63,22 +63,22 @@ CREATE CLASS WvgRadioButton INHERIT WvgWindow, WvgDataRef
    VAR    pointerFocus                          INIT .T.
    VAR    selection                             INIT .F.
 
-   METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD destroy()
-   METHOD handleEvent( nMessage, aNM )
+   METHOD handleEvent(nMessage, aNM)
 
-   METHOD setCaption( xCaption )
+   METHOD setCaption(xCaption)
 
    ACCESS selected                              INLINE ::sl_lbClick
-   ASSIGN selected( bBlock )                    INLINE ::sl_lbClick := bBlock
+   ASSIGN selected(bBlock)                    INLINE ::sl_lbClick := bBlock
 
 ENDCLASS
 
-METHOD WvgRadioButton:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgRadioButton:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::style       := WS_CHILD + BS_AUTORADIOBUTTON
    ::className   := "BUTTON"
@@ -86,11 +86,11 @@ METHOD WvgRadioButton:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    RETURN Self
 
-METHOD WvgRadioButton:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgRadioButton:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::oParent:addChild( Self )
+   ::oParent:addChild(Self)
 
    ::createControl()
 
@@ -100,7 +100,7 @@ METHOD WvgRadioButton:create( oParent, oOwner, aPos, aSize, aPresParams, lVisibl
       ::show()
    ENDIF
 
-   ::setCaption( ::caption )
+   ::setCaption(::caption)
 
    IF ::selection
       ::sendMessage(BM_SETCHECK, BST_CHECKED, 0)
@@ -108,13 +108,13 @@ METHOD WvgRadioButton:create( oParent, oOwner, aPos, aSize, aPresParams, lVisibl
 
    RETURN Self
 
-METHOD WvgRadioButton:handleEvent( nMessage, aNM )
+METHOD WvgRadioButton:handleEvent(nMessage, aNM)
 
    SWITCH nMessage
 
    CASE HB_GTE_COMMAND
       IF aNM[NMH_code] == BN_CLICKED
-         ::editBuffer := ( wvg_Button_GetCheck( ::hWnd ) == BST_CHECKED )
+         ::editBuffer := (wvg_Button_GetCheck(::hWnd) == BST_CHECKED)
 
          IF HB_ISBLOCK(::sl_lbClick)
             Eval(::sl_lbClick, ::editBuffer, , Self)
@@ -133,17 +133,17 @@ METHOD PROCEDURE WvgRadioButton:destroy()
 
    RETURN
 
-METHOD WvgRadioButton:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgRadioButton:configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::Initialize( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::Initialize(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    RETURN Self
 
-METHOD WvgRadioButton:setCaption( xCaption )
+METHOD WvgRadioButton:setCaption(xCaption)
 
    IF HB_ISSTRING(xCaption)
       ::caption := xCaption
-      wvg_SendMessageText( ::hWnd, WM_SETTEXT, 0, ::caption )
+      wvg_SendMessageText(::hWnd, WM_SETTEXT, 0, ::caption)
    ENDIF
 
    RETURN Self

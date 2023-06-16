@@ -58,7 +58,7 @@
 #include "wvgparts.ch"
 
 #ifndef __DBG_PARTS__
-#xtranslate hb_traceLog( [<x,...>] ) =>
+#xtranslate hb_traceLog([<x,...>]) =>
 #endif
 
 CREATE CLASS WvgActiveXControl INHERIT WvgWindow
@@ -81,12 +81,12 @@ CREATE CLASS WvgActiveXControl INHERIT WvgWindow
 
    VAR    ClassName
 
-   METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible, cCLSID, cLicense )
+   METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible, cCLSID, cLicense)
    METHOD Destroy()
-   METHOD execEvent( nEvent, ... )
-   METHOD handleEvent( nEvent, aNM )
-   METHOD mapEvent( nEvent, bBlock )
+   METHOD execEvent(nEvent, ...)
+   METHOD handleEvent(nEvent, aNM)
+   METHOD mapEvent(nEvent, bBlock)
 
    METHOD inheritPresParams()
    METHOD presParamsChanged()
@@ -105,9 +105,9 @@ CREATE CLASS WvgActiveXControl INHERIT WvgWindow
 
 ENDCLASS
 
-METHOD WvgActiveXControl:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgActiveXControl:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::style      := WS_CHILD + WS_VISIBLE + WS_CLIPCHILDREN + WS_CLIPSIBLINGS
    ::exStyle    := WS_EX_CLIENTEDGE
@@ -116,11 +116,11 @@ METHOD WvgActiveXControl:new( oParent, oOwner, aPos, aSize, aPresParams, lVisibl
 
    RETURN Self
 
-METHOD WvgActiveXControl:Create( oParent, oOwner, aPos, aSize, aPresParams, lVisible, cCLSID, cLicense )
+METHOD WvgActiveXControl:Create(oParent, oOwner, aPos, aSize, aPresParams, lVisible, cCLSID, cLicense)
 
    LOCAL hObj, hWnd
 
-   ::WvgWindow:create( @oParent, @oOwner, aPos, aSize, aPresParams, lVisible )
+   ::WvgWindow:create(@oParent, @oOwner, aPos, aSize, aPresParams, lVisible)
 
    __defaultNIL(@cCLSID, ::CLSID)
    __defaultNIL(@cLicense, ::license)
@@ -139,23 +139,23 @@ METHOD WvgActiveXControl:Create( oParent, oOwner, aPos, aSize, aPresParams, lVis
 
    win_axInit()
 
-   hWnd := wapi_CreateWindowEx( ::exStyle, "AtlAxWin", ::CLSID, ::style, ::aPos[1], ::aPos[2], ;
-                                ::aSize[1], ::aSize[2], win_N2P( ::hContainer ), 0, NIL, NIL )
+   hWnd := wapi_CreateWindowEx(::exStyle, "AtlAxWin", ::CLSID, ::style, ::aPos[1], ::aPos[2], ;
+                               ::aSize[1], ::aSize[2], win_N2P(::hContainer), 0, NIL, NIL)
    IF Empty(hWnd)
       RETURN NIL
    ENDIF
-   ::hWnd := win_P2N( hWnd )
+   ::hWnd := win_P2N(hWnd)
    ::pWnd := hWnd
 
-   hObj := __axGetControl( ::pWnd )
+   hObj := __axGetControl(::pWnd)
    IF Empty(hObj)
       RETURN NIL
    ENDIF
    ::oOLE:__hObj := hObj
-   __axDoVerb( ::pWnd, -4 )
+   __axDoVerb(::pWnd, -4)
 
    IF !Empty(::hEvents)
-      ::oOle:__hSink := __axRegisterHandler( ::oOle:__hObj, {| nEvent, ... | ::execEvent( nEvent, ... ) } )
+      ::oOle:__hSink := __axRegisterHandler(::oOle:__hObj, {| nEvent, ... | ::execEvent(nEvent, ...) })
    ENDIF
 
 #if 0
@@ -163,7 +163,7 @@ METHOD WvgActiveXControl:Create( oParent, oOwner, aPos, aSize, aPresParams, lVis
 #endif
 
    IF HB_ISOBJECT(::oParent)
-      ::oParent:addChild( Self )
+      ::oParent:addChild(Self)
    ENDIF
 
    ::setPosAndSize()
@@ -178,27 +178,27 @@ METHOD WvgActiveXControl:Create( oParent, oOwner, aPos, aSize, aPresParams, lVis
 
    RETURN Self
 
-METHOD PROCEDURE WvgActiveXControl:execEvent( nEvent, ... )
+METHOD PROCEDURE WvgActiveXControl:execEvent(nEvent, ...)
 
 #if 0
-   LOCAL cEvents := hb_ValToStr( nEvent ) + ", "
+   LOCAL cEvents := hb_ValToStr(nEvent) + ", "
    LOCAL aEvents := { ... }
 
-   AEval(aEvents, {| xEvent | cEvents += hb_ValToStr( xEvent ) + ", " })
-   hb_traceLog( cEvents )
+   AEval(aEvents, {| xEvent | cEvents += hb_ValToStr(xEvent) + ", " })
+   hb_traceLog(cEvents)
 #endif
 
-   IF hb_HHasKey( ::hEvents, nEvent )
+   IF hb_HHasKey(::hEvents, nEvent)
       Eval(::hEvents[nEvent], ...)
    ENDIF
 
    RETURN
 
-METHOD WvgActiveXControl:handleEvent( nEvent, aNM )
+METHOD WvgActiveXControl:handleEvent(nEvent, aNM)
 
    LOCAL nHandled := 0
 
-   HB_SYMBOL_UNUSED( aNM )
+   HB_SYMBOL_UNUSED(aNM)
 
    SWITCH nEvent
 
@@ -221,17 +221,17 @@ METHOD WvgActiveXControl:handleEvent( nEvent, aNM )
 METHOD WvgActiveXControl:OnError()
 
 #if 0
-   hb_traceLog( "HI: " + hb_ValToStr( __GetMessage() ) + " : " + Str( Len(hb_AParams()) ) )
+   hb_traceLog("HI: " + hb_ValToStr(__GetMessage()) + " : " + Str(Len(hb_AParams())))
 #endif
 
-   RETURN hb_ExecFromArray( ::oOLE, __GetMessage(), hb_AParams() )
+   RETURN hb_ExecFromArray(::oOLE, __GetMessage(), hb_AParams())
 
 METHOD PROCEDURE WvgActiveXControl:Destroy()
 
    IF !Empty(::oOLE)
       IF !Empty(::oOLE:__hObj)
-         IF wapi_IsWindow( ::pWnd )
-            wapi_DestroyWindow( ::pWnd )
+         IF wapi_IsWindow(::pWnd)
+            wapi_DestroyWindow(::pWnd)
          ENDIF
          ::oOle := NIL
          ::hWnd := NIL
@@ -239,7 +239,7 @@ METHOD PROCEDURE WvgActiveXControl:Destroy()
    ENDIF
    RETURN
 
-METHOD WvgActiveXControl:mapEvent( nEvent, bBlock )
+METHOD WvgActiveXControl:mapEvent(nEvent, bBlock)
 
    IF HB_ISNUMERIC(nEvent) .AND. HB_ISBLOCK(bBlock)
       ::hEvents[nEvent] := bBlock

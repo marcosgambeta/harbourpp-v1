@@ -92,33 +92,33 @@ CREATE CLASS WvtBrowse INHERIT WvtObject
    VAR    bCurrentColumn
 
    ACCESS cDesc                                   INLINE iif(::cText == NIL, "", ::cText)
-   ASSIGN cDesc( cText )                          INLINE ::cText := cText
+   ASSIGN cDesc(cText)                          INLINE ::cText := cText
 
-   METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
+   METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
-   METHOD PaintBlock( nPaintObj )
+   METHOD PaintBlock(nPaintObj)
    METHOD Hilite()
    METHOD DeHilite()
-   METHOD HandleEvent( nKey )
+   METHOD HandleEvent(nKey)
    METHOD Refresh()
    METHOD SetVBar()
    METHOD SetHBar()
    METHOD SetTooltip()
    METHOD SaveSettings()
    METHOD RestSettings()
-   METHOD NotifyChild( nIndex, nKey, oCurObj )
+   METHOD NotifyChild(nIndex, nKey, oCurObj)
 
 ENDCLASS
 
-METHOD WvtBrowse:New( oParent, nID, nTop, nLeft, nBottom, nRight )
+METHOD WvtBrowse:New(oParent, nID, nTop, nLeft, nBottom, nRight)
 
-   ::Super:New( oParent, DLG_OBJ_BROWSE, nID, nTop, nLeft, nBottom, nRight )
+   ::Super:New(oParent, DLG_OBJ_BROWSE, nID, nTop, nLeft, nBottom, nRight)
 
    RETURN Self
 
 METHOD WvtBrowse:Create()
 
-   dbSelectArea( ::cAlias )
+   dbSelectArea(::cAlias)
 #if 0
    ::nTop    := ::oBrw:nTop - 2
    ::nLeft   := ::oBrw:nLeft - 2
@@ -130,15 +130,15 @@ METHOD WvtBrowse:Create()
    ::nBottom := ::oBrw:nBottom
    ::nRight  := ::oBrw:nRight
 #endif
-   ::PaintBlock( 1 )
-   ::PaintBlock( 2 )
-   ::PaintBlock( 3 )
-   ::PaintBlock( 4 )
+   ::PaintBlock(1)
+   ::PaintBlock(2)
+   ::PaintBlock(3)
+   ::PaintBlock(4)
 
    ::Super:Create()
 
-   __defaultNIL(@::bTotalRecords, {|| ( ::cAlias )->( ordKeyCount() ) })
-   __defaultNIL(@::bCurrentRecord, {|| ( ::cAlias )->( ordKeyNo()    ) })
+   __defaultNIL(@::bTotalRecords, {|| (::cAlias)->(ordKeyCount()) })
+   __defaultNIL(@::bCurrentRecord, {|| (::cAlias)->(ordKeyNo()) })
    ::SetVBar()
 
    __defaultNIL(@::bTotalColumns, {|| ::oBrw:ColCount })
@@ -153,8 +153,8 @@ METHOD WvtBrowse:Create()
 METHOD WvtBrowse:SetVBar()
 
    IF ::lVSBar
-      ::oVBar := WvtScrollBar():New( Self, 999991, ;
-         ::oBrw:nTop, ::oBrw:nRight + 1, ::oBrw:nBottom, ::oBrw:nRight + 2 )
+      ::oVBar := WvtScrollBar():New(Self, 999991, ;
+         ::oBrw:nTop, ::oBrw:nRight + 1, ::oBrw:nBottom, ::oBrw:nRight + 2)
       ::oVBar:nBarType   := WVT_SCROLLBAR_VERT
       ::oVBar:bTotal     := ::bTotalRecords
       ::oVBar:bCurrent   := ::bCurrentRecord
@@ -175,7 +175,7 @@ METHOD WvtBrowse:SetVBar()
          { WVT_BLOCK_BUTTON, ::oVBar:nSTop, ::oVBar:nSLeft, ;
          ::oVBar:nSBottom, ::oVBar:nSRight } })
 
-      ::oParent:AddObject( ::oVBar )
+      ::oParent:AddObject(::oVBar)
    ENDIF
 
    RETURN Self
@@ -183,8 +183,8 @@ METHOD WvtBrowse:SetVBar()
 METHOD WvtBrowse:SetHBar()
 
    IF ::lHSBar
-      ::oHBar := WvtScrollBar():New( Self, 999990, ;
-         ::oBrw:nBottom + 1, ::oBrw:nLeft, ::oBrw:nBottom + 1, ::oBrw:nRight )
+      ::oHBar := WvtScrollBar():New(Self, 999990, ;
+         ::oBrw:nBottom + 1, ::oBrw:nLeft, ::oBrw:nBottom + 1, ::oBrw:nRight)
       ::oHBar:nBarType   := 2
       ::oHBar:bTotal     := ::bTotalColumns
       ::oHBar:bCurrent   := ::bCurrentColumn
@@ -203,7 +203,7 @@ METHOD WvtBrowse:SetHBar()
          { WVT_BLOCK_BUTTON, ::oHBar:nSTop, ::oHBar:nSLeft, ;
          ::oHBar:nSBottom, ::oHBar:nSRight } })
 
-      ::oParent:AddObject( ::oHBar )
+      ::oParent:AddObject(::oHBar)
    ENDIF
 
    RETURN Self
@@ -215,17 +215,17 @@ METHOD WvtBrowse:Refresh()
    IF HB_ISBLOCK(::bOnRefresh)
       Eval(::bOnRefresh, Self)
    ELSE
-      Select( ::cAlias )
+      Select(::cAlias)
 
       ::oBrw:RefreshAll()
       ::oBrw:ForceStable()
 
-      Select( nWorkArea )
+      Select(nWorkArea)
    ENDIF
 
    RETURN Self
 
-METHOD WvtBrowse:HandleEvent( nKey )
+METHOD WvtBrowse:HandleEvent(nKey)
 
    LOCAL lRet := .F.
 
@@ -235,7 +235,7 @@ METHOD WvtBrowse:HandleEvent( nKey )
 
    RETURN lRet
 
-METHOD WvtBrowse:NotifyChild( nIndex, nKey, oCurObj )
+METHOD WvtBrowse:NotifyChild(nIndex, nKey, oCurObj)
 
    LOCAL xData, i
 
@@ -256,7 +256,7 @@ METHOD WvtBrowse:NotifyChild( nIndex, nKey, oCurObj )
          Eval(::aChildren[nIndex][OBJ_CHILD_OBJ]:bOnFocus, ::aChildren[nIndex][OBJ_CHILD_OBJ])
 
          FOR i := 1 to ::aChildren[nIndex][OBJ_CHILD_OBJ]:nChildren
-            ::aChildren[nIndex][OBJ_CHILD_OBJ]:NotifyChild( i, nKey, ::aChildren[nIndex][OBJ_CHILD_OBJ] )
+            ::aChildren[nIndex][OBJ_CHILD_OBJ]:NotifyChild(i, nKey, ::aChildren[nIndex][OBJ_CHILD_OBJ])
          NEXT
 
          /* Restore previous environments */
@@ -270,7 +270,7 @@ METHOD WvtBrowse:Hilite()
 
    LOCAL b := ::oBrw
 
-   hb_DispOutAt( b:nTop - 2, b:nLeft - 2, PadR( " " + ::cDesc, b:nRight - b:nLeft + 5 ), ::cColorHilite )
+   hb_DispOutAt(b:nTop - 2, b:nLeft - 2, PadR(" " + ::cDesc, b:nRight - b:nLeft + 5), ::cColorHilite)
 
    RETURN Self
 
@@ -278,7 +278,7 @@ METHOD WvtBrowse:DeHilite()
 
    LOCAL b := ::oBrw
 
-   hb_DispOutAt( b:nTop - 2, b:nLeft - 2, PadR( " " + ::cDesc, b:nRight - b:nLeft + 5 ), ::cColorDeHilite )
+   hb_DispOutAt(b:nTop - 2, b:nLeft - 2, PadR(" " + ::cDesc, b:nRight - b:nLeft + 5), ::cColorDeHilite)
 
    RETURN Self
 
@@ -288,13 +288,13 @@ METHOD WvtBrowse:SetTooltip()
 
    IF HB_ISBLOCK(::bTooltip)
       ::SaveSettings()
-      nArea := Select( ::cAlias )
+      nArea := Select(::cAlias)
 
-      Select( ::cAlias )
+      Select(::cAlias)
 
       cTip := Eval(::bTooltip)
 
-      Select( nArea )
+      Select(nArea)
 
       ::RestSettings()
    ENDIF
@@ -303,7 +303,7 @@ METHOD WvtBrowse:SetTooltip()
       ::Tooltip := cTip
    ENDIF
 
-   wvt_SetToolTip( ::nTop, ::nLeft, ::nBottom, ::nRight, ::Tooltip )
+   wvt_SetToolTip(::nTop, ::nLeft, ::nBottom, ::nRight, ::Tooltip)
 
    RETURN Self
 
@@ -323,29 +323,29 @@ METHOD WvtBrowse:RestSettings()
 
    RETURN Self
 
-METHOD WvtBrowse:PaintBlock( nPaintObj )
+METHOD WvtBrowse:PaintBlock(nPaintObj)
 
    LOCAL bBlock, b := ::oBrw
 
    SWITCH nPaintObj
 
    CASE 1
-      bBlock := {|| wvt_DrawBoxRaised( b:nTop - 2, b:nLeft - 2, b:nBottom + 1, b:nRight + 2 ) }
+      bBlock := {|| wvt_DrawBoxRaised(b:nTop - 2, b:nLeft - 2, b:nBottom + 1, b:nRight + 2) }
       AAdd(::aPaint, { bBlock, { WVT_BLOCK_BOX, b:nTop - 3, b:nLeft - 3, b:nBottom + 2, b:nRight + 3 } })
       EXIT
 
    CASE 2
-      bBlock := {|| wvt_DrawBoxRecessed( b:nTop, b:nLeft, b:nBottom, b:nRight ) }
+      bBlock := {|| wvt_DrawBoxRecessed(b:nTop, b:nLeft, b:nBottom, b:nRight) }
       AAdd(::aPaint, { bBlock, { WVT_BLOCK_BOX, b:nTop - 1, b:nLeft - 1, b:nBottom + 1, b:nRight + 1 } })
       EXIT
 
    CASE 3
-      bBlock := {|| wvt_DrawGridHorz( b:nTop + 3, b:nLeft, b:nRight, b:nBottom - b:nTop - 2 ) }
+      bBlock := {|| wvt_DrawGridHorz(b:nTop + 3, b:nLeft, b:nRight, b:nBottom - b:nTop - 2) }
       AAdd(::aPaint, { bBlock, { WVT_BLOCK_GRID_H, b:nTop + 4, b:nLeft + 1, b:nBottom - 1, b:nRight - 1 } })
       EXIT
 
    CASE 4
-      bBlock := {|| wvt_DrawGridVert( b:nTop, b:nBottom, b:aColumnsSep, Len(b:aColumnsSep) ) }
+      bBlock := {|| wvt_DrawGridVert(b:nTop, b:nBottom, b:aColumnsSep, Len(b:aColumnsSep)) }
       AAdd(::aPaint, { bBlock, { WVT_BLOCK_GRID_V, b:nTop + 1, b:nLeft + 1, b:nBottom - 1, b:nRight - 1, b } })
       EXIT
 

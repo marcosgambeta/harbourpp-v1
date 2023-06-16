@@ -105,8 +105,7 @@ HB_FUNC( WVT_UTILS )
 }
 
 /*
- *     Wvt_ChooseFont( cFontName, nHeight, nWidth, nWeight, nQuality, ;
- *                                    lItalic, lUnderline, lStrikeout )
+ *     Wvt_ChooseFont(cFontName, nHeight, nWidth, nWeight, nQuality, lItalic, lUnderline, lStrikeout)
  *              ->
  *    { cFontName, nHeight, nWidth, nWeight, nQuality, lItalic, lUnderline, lStrikeout, nRGB }
  */
@@ -193,7 +192,7 @@ HB_FUNC( WVT_CHOOSEFONT )
 }
 
 /*
- *    Wvt_ChooseColor( nRGBInit, aRGB16, nFlags ) => nRGBSelected
+ *    Wvt_ChooseColor(nRGBInit, aRGB16, nFlags) => nRGBSelected
  */
 HB_FUNC( WVT_CHOOSECOLOR )
 {

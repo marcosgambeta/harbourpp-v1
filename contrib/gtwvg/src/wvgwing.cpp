@@ -554,7 +554,7 @@ HB_FUNC( WVG_STATUSBARREFRESH )
 }
 
 /*
- * Wvg_GetNMHInfo( nlParam )
+ * Wvg_GetNMHInfo(nlParam)
  */
 HB_FUNC( WVG_GETNMHDRINFO )
 {
@@ -571,7 +571,7 @@ HB_FUNC( WVG_GETNMHDRINFO )
 }
 
 /*
- * Wvg_GetNMMouseInfo( nlParam )
+ * Wvg_GetNMMouseInfo(nlParam)
  */
 HB_FUNC( WVG_GETNMMOUSEINFO )
 {
@@ -590,7 +590,7 @@ HB_FUNC( WVG_GETNMMOUSEINFO )
 }
 
 /*
- *  Wvg_GetNMTreeViewInfo( nlParam )
+ *  Wvg_GetNMTreeViewInfo(nlParam)
  */
 HB_FUNC( WVG_GETNMTREEVIEWINFO )
 {
@@ -610,7 +610,7 @@ HB_FUNC( WVG_GETNMTREEVIEWINFO )
 }
 
 /*
- *  Wvg_TreeView_GetSelectionInfo( ::hWnd, nlParam, @cParent, @cText, @hParentOfSelected, @hItemSelected )
+ *  Wvg_TreeView_GetSelectionInfo(::hWnd, nlParam, @cParent, @cText, @hParentOfSelected, @hItemSelected)
  */
 HB_FUNC( WVG_TREEVIEW_GETSELECTIONINFO )
 {
@@ -816,7 +816,7 @@ BOOL CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LPARAM
 }
 
 /*
- * Wvg_ChooseFont( hWnd, nWndProc, familyName, nominalPointSize, viewScreenFonts, viewPrinterFonts )
+ * Wvg_ChooseFont(hWnd, nWndProc, familyName, nominalPointSize, viewScreenFonts, viewPrinterFonts)
  */
 HB_FUNC( WVG_CHOOSEFONT )
 {
@@ -962,7 +962,7 @@ HB_FUNC( WVG_FONTCREATE )
 }
 
 /*
- * Wvg_PointSizeToHeight( hdc, nPointSize )
+ * Wvg_PointSizeToHeight(hdc, nPointSize)
  */
 HB_FUNC( WVG_POINTSIZETOHEIGHT )
 {

@@ -2719,8 +2719,8 @@ HB_FUNC( WVT_DRAWPROGRESSBAR )
    }
 }
 
-/* wvt_CreateFont( cFontFace, nHeight, nWidth, nWeight, lItalic, lUnderline,
-                   lStrikeout, nCharSet, nQuality, nEscapement ) */
+/* wvt_CreateFont(cFontFace, nHeight, nWidth, nWeight, lItalic, lUnderline,
+                  lStrikeout, nCharSet, nQuality, nEscapement) */
 HB_FUNC( WVT_CREATEFONT )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
@@ -2828,8 +2828,8 @@ HB_FUNC( WVT_LOADPICTUREFROMRESOURCEEX )
    }
 }
 
-/* wvt_LoadFont( nSlotFont, cFontFace, nHeight, nWidth, nWeight, lItalic, lUnderline, lStrikeout,
-                 nCharSet, nQuality, nEscapement ) */
+/* wvt_LoadFont(nSlotFont, cFontFace, nHeight, nWidth, nWeight, lItalic, lUnderline, lStrikeout,
+                nCharSet, nQuality, nEscapement) */
 HB_FUNC( WVT_LOADFONT )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();

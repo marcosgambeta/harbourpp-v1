@@ -123,21 +123,21 @@ CREATE CLASS WvtScrollBar INHERIT WvtObject
 
    VAR    nScrollUnits                            INIT 0
 
-   METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
+   METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
-   METHOD Configure( nTop, nLeft, nBottom, nRight )
+   METHOD Configure(nTop, nLeft, nBottom, nRight)
    METHOD Refresh()
-   METHOD HandleEvent( nKey )
-   METHOD SetPos( nTotal, nCurrent )
+   METHOD HandleEvent(nKey)
+   METHOD SetPos(nTotal, nCurrent)
    METHOD GetPos()
    METHOD ThumbPos()
    METHOD SetTooltip()
 
 ENDCLASS
 
-METHOD wvtScrollbar:New( oParent, nID, nTop, nLeft, nBottom, nRight )
+METHOD wvtScrollbar:New(oParent, nID, nTop, nLeft, nBottom, nRight)
 
-   ::Super:New( oParent, DLG_OBJ_SCROLLBAR, nID, nTop, nLeft, nBottom, nRight )
+   ::Super:New(oParent, DLG_OBJ_SCROLLBAR, nID, nTop, nLeft, nBottom, nRight)
 
    RETURN Self
 
@@ -152,7 +152,7 @@ METHOD wvtScrollbar:Create()
       __defaultNIL(@::nRight, ::nLeft + 1)
 
       ::nRight       := ::nLeft + 1
-      ::nBottom      := Max( 7, ::nBottom )
+      ::nBottom      := Max(7, ::nBottom)
 
       ::nBtn1Top     := ::nTop
       ::nBtn1Left    := ::nLeft
@@ -175,24 +175,18 @@ METHOD wvtScrollbar:Create()
       ::nCurrent     := Eval(::bCurrent)
       ::ThumbPos()
 
-      ::bBtnLeftTop := ;
-         {|| wvt_DrawScrollButton( ::nBtn1Top, ::nBtn1Left, ::nBtn1Bottom, ::nBtn1Right, ::aPxlBtnTop, 1 ) }
-      ::bBtnRightBottom := ;
-         {|| wvt_DrawScrollButton( ::nBtn2Top, ::nBtn2Left, ::nBtn2Bottom, ::nBtn2Right, ::aPxlBtnBtm, 3 ) }
-      ::bBtnScroll := ;
-         {|| wvt_DrawScrollThumbVert( ::nSTop, ::nSLeft, ::nSBottom, ::nSRight, ::aPxlScroll, ;
-         ::nThumbPos ) }
-      ::bBtnLeftTopDep := ;
-         {|| wvt_DrawScrollButton( ::nBtn1Top, ::nBtn1Left, ::nBtn1Bottom, ::nBtn1Right, ::aPxlBtnTop, 1, .T. ) }
-      ::bBtnRightBottomDep := ;
-         {|| wvt_DrawScrollButton( ::nBtn2Top, ::nBtn2Left, ::nBtn2Bottom, ::nBtn2Right, ::aPxlBtnBtm, 3, .T. ) }
+      ::bBtnLeftTop := {|| wvt_DrawScrollButton(::nBtn1Top, ::nBtn1Left, ::nBtn1Bottom, ::nBtn1Right, ::aPxlBtnTop, 1) }
+      ::bBtnRightBottom := {|| wvt_DrawScrollButton(::nBtn2Top, ::nBtn2Left, ::nBtn2Bottom, ::nBtn2Right, ::aPxlBtnBtm, 3) }
+      ::bBtnScroll := {|| wvt_DrawScrollThumbVert(::nSTop, ::nSLeft, ::nSBottom, ::nSRight, ::aPxlScroll, ::nThumbPos) }
+      ::bBtnLeftTopDep := {|| wvt_DrawScrollButton(::nBtn1Top, ::nBtn1Left, ::nBtn1Bottom, ::nBtn1Right, ::aPxlBtnTop, 1, .T.) }
+      ::bBtnRightBottomDep := {|| wvt_DrawScrollButton(::nBtn2Top, ::nBtn2Left, ::nBtn2Bottom, ::nBtn2Right, ::aPxlBtnBtm, 3, .T.) }
 
    ELSE
       __defaultNIL(@::nBottom, ::nTop)
       __defaultNIL(@::nRight, ::nLeft + 11)
 
       ::nBottom      := ::nTop
-      ::nRight       := Max( 11, ::nRight )
+      ::nRight       := Max(11, ::nRight)
 
       ::nBtn1Top     := ::nTop
       ::nBtn1Left    := ::nLeft
@@ -216,23 +210,18 @@ METHOD wvtScrollbar:Create()
 
       ::ThumbPos()
 
-      ::bBtnLeftTop := ;
-         {|| wvt_DrawScrollButton( ::nBtn1Top, ::nBtn1Left, ::nBtn1Bottom, ::nBtn1Right, ::aPxlBtnLft, 2 ) }
-      ::bBtnRightBottom := ;
-         {|| wvt_DrawScrollButton( ::nBtn2Top, ::nBtn2Left, ::nBtn2Bottom, ::nBtn2Right, ::aPxlBtnRgt, 4 ) }
-      ::bBtnScroll := ;
-         {|| wvt_DrawScrollThumbHorz( ::nSTop, ::nSLeft, ::nSBottom, ::nSRight, ::aPxlScroll, ::nThumbPos ) }
-      ::bBtnLeftTopDep := ;
-         {|| wvt_DrawScrollButton( ::nBtn1Top, ::nBtn1Left, ::nBtn1Bottom, ::nBtn1Right, ::aPxlBtnLft, 2, .T. ) }
-      ::bBtnRightBottomDep := ;
-         {|| wvt_DrawScrollButton( ::nBtn2Top, ::nBtn2Left, ::nBtn2Bottom, ::nBtn2Right, ::aPxlBtnRgt, 4, .T. ) }
+      ::bBtnLeftTop := {|| wvt_DrawScrollButton(::nBtn1Top, ::nBtn1Left, ::nBtn1Bottom, ::nBtn1Right, ::aPxlBtnLft, 2) }
+      ::bBtnRightBottom := {|| wvt_DrawScrollButton(::nBtn2Top, ::nBtn2Left, ::nBtn2Bottom, ::nBtn2Right, ::aPxlBtnRgt, 4) }
+      ::bBtnScroll := {|| wvt_DrawScrollThumbHorz(::nSTop, ::nSLeft, ::nSBottom, ::nSRight, ::aPxlScroll, ::nThumbPos) }
+      ::bBtnLeftTopDep := {|| wvt_DrawScrollButton(::nBtn1Top, ::nBtn1Left, ::nBtn1Bottom, ::nBtn1Right, ::aPxlBtnLft, 2, .T.) }
+      ::bBtnRightBottomDep := {|| wvt_DrawScrollButton(::nBtn2Top, ::nBtn2Left, ::nBtn2Bottom, ::nBtn2Right, ::aPxlBtnRgt, 4, .T.) }
 
    ENDIF
 
-   ::bOnLeftUp      := {|| ::HandleEvent( K_LBUTTONUP      ) }
-   ::bOnLeftDown    := {|| ::HandleEvent( K_LBUTTONDOWN    ), .F. }
-   ::bOnMMLeftDown  := {|| ::HandleEvent( K_MMLEFTDOWN     ) }
-   ::bOnLeftPressed := {|| ::HandleEvent( K_LBUTTONPRESSED ) }
+   ::bOnLeftUp      := {|| ::HandleEvent(K_LBUTTONUP) }
+   ::bOnLeftDown    := {|| ::HandleEvent(K_LBUTTONDOWN), .F. }
+   ::bOnMMLeftDown  := {|| ::HandleEvent(K_MMLEFTDOWN) }
+   ::bOnLeftPressed := {|| ::HandleEvent(K_LBUTTONPRESSED) }
 
    Eval(::bBtnLeftTop)
    Eval(::bBtnRightBottom)
@@ -241,7 +230,7 @@ METHOD wvtScrollbar:Create()
 
    RETURN Self
 
-METHOD wvtScrollbar:Configure( nTop, nLeft, nBottom, nRight )
+METHOD wvtScrollbar:Configure(nTop, nLeft, nBottom, nRight)
 
    ::nTop     := nTop
    ::nLeft    := nLeft
@@ -250,7 +239,7 @@ METHOD wvtScrollbar:Configure( nTop, nLeft, nBottom, nRight )
 
    IF ::nBarType == WVT_SCROLLBAR_VERT
       ::nRight       := ::nLeft + 1
-      ::nBottom      := Max( 7, ::nBottom )
+      ::nBottom      := Max(7, ::nBottom)
 
       ::nBtn1Top     := ::nTop
       ::nBtn1Left    := ::nLeft
@@ -274,7 +263,7 @@ METHOD wvtScrollbar:Configure( nTop, nLeft, nBottom, nRight )
       ::ThumbPos()
    ELSE
       ::nBottom      := ::nTop
-      ::nRight       := Max( 11, ::nRight )
+      ::nRight       := Max(11, ::nRight)
 
       ::nBtn1Top     := ::nTop
       ::nBtn1Left    := ::nLeft
@@ -309,7 +298,7 @@ METHOD wvtScrollbar:Refresh()
 
    RETURN Self
 
-METHOD wvtScrollbar:SetPos( nTotal, nCurrent )
+METHOD wvtScrollbar:SetPos(nTotal, nCurrent)
 
    __defaultNIL(@nTotal, Eval(::bTotal))
    __defaultNIL(@nCurrent, Eval(::bCurrent))
@@ -328,7 +317,7 @@ METHOD wvtScrollbar:ThumbPos()
 
    IF ::nBarType == WVT_SCROLLBAR_VERT
       nRecPerUnit := ::nTotal / ::nScrollUnits
-      nCurUnit    := Int( ::nCurrent / nRecPerUnit )
+      nCurUnit    := Int(::nCurrent / nRecPerUnit)
 
       DO CASE
       CASE ::nCurrent == 1
@@ -347,10 +336,10 @@ METHOD wvtScrollbar:ThumbPos()
 
    ELSE
       IF ::nTotal < ::nScrollUnits
-         nCurUnit := ::nCurrent * Int( ::nScrollUnits / ::nTotal )
+         nCurUnit := ::nCurrent * Int(::nScrollUnits / ::nTotal)
       ELSE
          nRecPerUnit := ::nTotal / ::nScrollUnits
-         nCurUnit    := Int( ::nCurrent / nRecPerUnit )
+         nCurUnit    := Int(::nCurrent / nRecPerUnit)
       ENDIF
 
       DO CASE
@@ -380,19 +369,19 @@ METHOD wvtScrollbar:GetPos()
 
 METHOD wvtScrollbar:SetTooltip()
 
-   ::Tooltip := hb_ntos( Int( ::nCurrent ) ) + " / " + hb_ntos( Int( ::nTotal ) )
+   ::Tooltip := hb_ntos(Int(::nCurrent)) + " / " + hb_ntos(Int(::nTotal))
 
-   wvt_SetToolTip( ::nTop, ::nLeft, ::nBottom, ::nRight, ::Tooltip )
+   wvt_SetToolTip(::nTop, ::nLeft, ::nBottom, ::nRight, ::Tooltip)
 
    RETURN Self
 
-METHOD wvtScrollbar:HandleEvent( nKey )
+METHOD wvtScrollbar:HandleEvent(nKey)
 
    LOCAL nmRow, nmCol, nOff
    LOCAL lHit  := .F.
    LOCAL mKeys_ := { K_LBUTTONDOWN, K_LBUTTONUP, K_MMLEFTDOWN, K_LBUTTONPRESSED }
 
-   IF AScan( mKeys_, nKey ) == 0
+   IF AScan(mKeys_, nKey) == 0
       RETURN .F.
    ENDIF
 
@@ -409,11 +398,11 @@ METHOD wvtScrollbar:HandleEvent( nKey )
          IF nmRow != ::nThumbPos
             nOff := ::nThumbPos - nmRow
             IF nOff > 0
-               ::nThumbPos := Max( ::nTop + 1, nmRow )
+               ::nThumbPos := Max(::nTop + 1, nmRow)
             ELSE
-               ::nThumbPos := Min( ::nBottom - 1, nmRow )
+               ::nThumbPos := Min(::nBottom - 1, nmRow)
             ENDIF
-            ::nCurrent := ( ::nTotal * ( ::nThumbPos - ::nTop ) / ::nScrollUnits )
+            ::nCurrent := (::nTotal * (::nThumbPos - ::nTop) / ::nScrollUnits)
 
             IF ::nCurrent > ::nTotal
                ::nCurrent := ::nTotal
@@ -422,10 +411,10 @@ METHOD wvtScrollbar:HandleEvent( nKey )
                ::nCurrent := 1
             ENDIF
 
-            ::SetPos( ::nTotal, ::nCurrent )
+            ::SetPos(::nTotal, ::nCurrent)
 
             ::SetTooltip()
-            wvt_Keyboard( K_SBTHUMBTRACKVERT )
+            wvt_Keyboard(K_SBTHUMBTRACKVERT)
          ELSE
             lHit := .F.
          ENDIF
@@ -444,7 +433,7 @@ METHOD wvtScrollbar:HandleEvent( nKey )
                ::lAnchored := .T.
 
             CASE nKey == K_LBUTTONUP
-               IF ( lHit := ::lOnLeftDown )
+               IF (lHit := ::lOnLeftDown)
                   DO CASE
                   CASE nmRow == ::nTop
                      Eval(::bBtnLeftTop)
@@ -461,16 +450,16 @@ METHOD wvtScrollbar:HandleEvent( nKey )
                ENDIF
 
             CASE nKey == K_LBUTTONPRESSED
-               IF ( lHit := ::lOnLeftDown )
+               IF (lHit := ::lOnLeftDown)
                   DO CASE
                   CASE nmRow == ::nTop
-                     wvt_Keyboard( K_SBLINEUP   )
+                     wvt_Keyboard(K_SBLINEUP)
                   CASE nmRow == ::nBottom
-                     wvt_Keyboard( K_SBLINEDOWN )
+                     wvt_Keyboard(K_SBLINEDOWN)
                   CASE nmRow < ::nThumbPos .AND. nmRow > ::nTop
-                     wvt_Keyboard( K_SBPAGEUP )
+                     wvt_Keyboard(K_SBPAGEUP)
                   CASE nmRow > ::nThumbPos .AND. nmRow < ::nBottom
-                     wvt_Keyboard( K_SBPAGEDOWN )
+                     wvt_Keyboard(K_SBPAGEDOWN)
                   OTHERWISE
                      lHit := .F.
                   ENDCASE
@@ -480,14 +469,14 @@ METHOD wvtScrollbar:HandleEvent( nKey )
                DO CASE
                CASE nmRow == ::nTop
                   Eval(::bBtnLeftTopDep)
-                  wvt_Keyboard( K_SBLINEUP )
+                  wvt_Keyboard(K_SBLINEUP)
                CASE nmRow == ::nBottom
                   Eval(::bBtnRightBottomDep)
-                  wvt_Keyboard( K_SBLINEDOWN )
+                  wvt_Keyboard(K_SBLINEDOWN)
                CASE nmRow < ::nThumbPos .AND. nmRow > ::nTop
-                  wvt_Keyboard( K_SBPAGEUP   )
+                  wvt_Keyboard(K_SBPAGEUP)
                CASE nmRow > ::nThumbPos .AND. nmRow < ::nBottom
-                  wvt_Keyboard( K_SBPAGEDOWN )
+                  wvt_Keyboard(K_SBPAGEDOWN)
                OTHERWISE
                   lHit := .F.
                ENDCASE
@@ -502,16 +491,16 @@ METHOD wvtScrollbar:HandleEvent( nKey )
    CASE ::nBarType == WVT_SCROLLBAR_HORZ
       DO CASE
       CASE ::lAnchored .AND. nKey == K_MMLEFTDOWN
-         IF ( lHit := ( nmCol < ::nThumbPos .OR. nmCol > ::nThumbPos + 1 ) )
+         IF (lHit := (nmCol < ::nThumbPos .OR. nmCol > ::nThumbPos + 1))
 
             nOff := ::nThumbPos - nmCol
             IF nOff > 0
-               ::nThumbPos := Max( ::nLeft + 2, nmCol )
+               ::nThumbPos := Max(::nLeft + 2, nmCol)
             ELSE
-               ::nThumbPos := Min( ::nRight - 2, nmCol )
+               ::nThumbPos := Min(::nRight - 2, nmCol)
             ENDIF
 
-            ::nCurrent := ( ::nTotal * ( ::nThumbPos - ::nLeft + 1 ) / ::nScrollUnits )
+            ::nCurrent := (::nTotal * (::nThumbPos - ::nLeft + 1) / ::nScrollUnits)
 
             IF ::nCurrent > ::nTotal
                ::nCurrent := ::nTotal
@@ -520,9 +509,9 @@ METHOD wvtScrollbar:HandleEvent( nKey )
                ::nCurrent := 1
             ENDIF
 
-            ::SetPos( ::nTotal, ::nCurrent )
+            ::SetPos(::nTotal, ::nCurrent)
 
-            wvt_Keyboard( K_SBTHUMBTRACKHORZ )
+            wvt_Keyboard(K_SBTHUMBTRACKHORZ)
          ENDIF
 
       CASE ::lAnchored .AND. nKey == K_LBUTTONUP
@@ -531,7 +520,7 @@ METHOD wvtScrollbar:HandleEvent( nKey )
 
       OTHERWISE
 
-         IF ( lHit := nmRow == ::nTop .AND. nmCol >= ::nLeft .AND. nmCol <= ::nRight )
+         IF (lHit := nmRow == ::nTop .AND. nmCol >= ::nLeft .AND. nmCol <= ::nRight)
 
             DO CASE
             CASE nKey == K_LBUTTONDOWN .AND. nmCol >= ::nThumbPos .AND. nmCol <= ::nThumbPos + 1
@@ -539,7 +528,7 @@ METHOD wvtScrollbar:HandleEvent( nKey )
 
             CASE nKey == K_LBUTTONUP
 
-               IF ( lHit := ::lOnLeftDown )
+               IF (lHit := ::lOnLeftDown)
                   DO CASE
                   CASE nmCol >= ::nLeft    .AND. nmCol <= ::nLeft + 1
                      Eval(::bBtnLeftTop)
@@ -556,16 +545,16 @@ METHOD wvtScrollbar:HandleEvent( nKey )
                ENDIF
 
             CASE nKey == K_LBUTTONPRESSED
-               IF ( lHit := ::lOnLeftDown )
+               IF (lHit := ::lOnLeftDown)
                   DO CASE
                   CASE nmCol == ::nLeft  .OR. nmCol == ::nLeft + 1
-                     wvt_Keyboard( K_SBLINELEFT )
+                     wvt_Keyboard(K_SBLINELEFT)
                   CASE nmCol == ::nRight .OR. nmCol == ::nRight - 1
-                     wvt_Keyboard( K_SBLINERIGHT )
+                     wvt_Keyboard(K_SBLINERIGHT)
                   CASE nmCol < ::nThumbPos
-                     wvt_Keyboard( K_SBPAGELEFT )
+                     wvt_Keyboard(K_SBPAGELEFT)
                   CASE nmCol > ::nThumbPos + 1
-                     wvt_Keyboard( K_SBPAGERIGHT )
+                     wvt_Keyboard(K_SBPAGERIGHT)
                   OTHERWISE
                      lHit := .F.
                   ENDCASE
@@ -575,14 +564,14 @@ METHOD wvtScrollbar:HandleEvent( nKey )
                DO CASE
                CASE nmCol == ::nLeft  .OR. nmCol == ::nLeft + 1
                   Eval(::bBtnLeftTopDep)
-                  wvt_Keyboard( K_SBLINELEFT )
+                  wvt_Keyboard(K_SBLINELEFT)
                CASE nmCol == ::nRight .OR. nmCol == ::nRight - 1
                   Eval(::bBtnRightBottomDep)
-                  wvt_Keyboard( K_SBLINERIGHT )
+                  wvt_Keyboard(K_SBLINERIGHT)
                CASE nmCol < ::nThumbPos
-                  wvt_Keyboard( K_SBPAGELEFT )
+                  wvt_Keyboard(K_SBPAGELEFT)
                CASE nmCol > ::nThumbPos + 1
-                  wvt_Keyboard( K_SBPAGERIGHT )
+                  wvt_Keyboard(K_SBPAGERIGHT)
                OTHERWISE
                   lHit := .F.
                ENDCASE
@@ -592,7 +581,7 @@ METHOD wvtScrollbar:HandleEvent( nKey )
             ENDCASE
          ENDIF
       ENDCASE
-   
+
    ENDCASE
 
    RETURN lHit

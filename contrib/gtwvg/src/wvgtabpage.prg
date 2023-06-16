@@ -66,23 +66,23 @@ CREATE CLASS WvgTabPage INHERIT WvgWindow
    VAR    tabHeight                             INIT -1  /* Determines the height of the tab.                                                                                */
    VAR    type                                  INIT WVGTABPAGE_TAB_TOP /* Determines the position of the tab.                                                               */
 
-   METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD destroy()
-   METHOD handleEvent( nMessage, aNM )
+   METHOD handleEvent(nMessage, aNM)
 
    METHOD Minimize()
    METHOD Maximize()
 
    VAR    sl_tabActivate
-   METHOD tabActivate( xParam )                  SETGET
+   METHOD tabActivate(xParam)                  SETGET
 
 ENDCLASS
 
-METHOD WvgTabPage:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgTabPage:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::WvgWindow:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::WvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::style       := WS_CHILD
    ::className   := "SysTabControl32"
@@ -90,9 +90,9 @@ METHOD WvgTabPage:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    RETURN Self
 
-METHOD WvgTabPage:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgTabPage:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::WvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::WvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    IF ::type == WVGTABPAGE_TAB_BOTTOM
       ::style += TCS_BOTTOM
@@ -106,7 +106,7 @@ METHOD WvgTabPage:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    ::style += TCS_FOCUSNEVER
 
-   ::oParent:AddChild( Self )
+   ::oParent:AddChild(Self)
 
    ::createControl()
 
@@ -114,7 +114,7 @@ METHOD WvgTabPage:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    __defaultNIL(@::caption, " ")
 
-   wapi_TabCtrl_InsertItem( ::pWnd, 0, ::caption )
+   wapi_TabCtrl_InsertItem(::pWnd, 0, ::caption)
 
    IF ::visible
       ::show()
@@ -126,7 +126,7 @@ METHOD WvgTabPage:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    RETURN Self
 
-METHOD WvgTabPage:handleEvent( nMessage, aNM )
+METHOD WvgTabPage:handleEvent(nMessage, aNM)
 
    LOCAL aHdr
 
@@ -146,20 +146,20 @@ METHOD WvgTabPage:handleEvent( nMessage, aNM )
       RETURN EVENT_HANDELLED
 
    CASE HB_GTE_NOTIFY
-      aHdr := wvg_GetNMHdrInfo( aNM[2] )
+      aHdr := wvg_GetNMHdrInfo(aNM[2])
       DO CASE
       CASE aHdr[NMH_code] == -551 /* TCN_SELCHANGE */
       ENDCASE
       EXIT
 
    CASE HB_GTE_CTLCOLOR
-      RETURN wvg_GetStockObject( NULL_BRUSH )
+      RETURN wvg_GetStockObject(NULL_BRUSH)
 
    ENDSWITCH
 
    RETURN EVENT_UNHANDELLED
 
-METHOD WvgTabPage:tabActivate( xParam )
+METHOD WvgTabPage:tabActivate(xParam)
 
    IF HB_ISBLOCK(xParam)
       ::sl_tabActivate := xParam
@@ -179,9 +179,9 @@ METHOD WvgTabPage:maximize()
 
    RETURN .T.
 
-METHOD WvgTabPage:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgTabPage:configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::Initialize( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::Initialize(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    RETURN Self
 

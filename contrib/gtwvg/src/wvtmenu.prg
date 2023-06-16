@@ -80,16 +80,16 @@
 /* Class WvtMenu [Peter Rees] */
 CREATE CLASS wvtMenu
 
-   METHOD create( cCaption )
-   METHOD AddItem( cCaption, bAction )
+   METHOD create(cCaption)
+   METHOD AddItem(cCaption, bAction)
    METHOD DelAllItems()
-   METHOD DelItem( nItemNum )
-   METHOD EnableItem( nItemNum )
-   METHOD DisableItem( nItemNum )
+   METHOD DelItem(nItemNum)
+   METHOD EnableItem(nItemNum)
+   METHOD DisableItem(nItemNum)
    METHOD NumItems()
    METHOD Destroy()
-   METHOD GetItem( nItemNum )
-   METHOD FindMenuItemById( nId )
+   METHOD GetItem(nItemNum)
+   METHOD FindMenuItemById(nId)
    METHOD DrawMenuBar()
 
    CLASS VAR MenuItemId                            INIT 1
@@ -101,13 +101,13 @@ CREATE CLASS wvtMenu
 
 ENDCLASS
 
-METHOD wvtMenu:Create( cCaption )
+METHOD wvtMenu:Create(cCaption)
 
    ::aItems := {}
 
    IF Empty(::hMenu := wvt_CreateMenu())
 #if 0
-      Throw( ErrorNew( "wvtMenu", 1000, "wvtMenu:Init()", "Create Menu Error", { cCaption, cCaption } ) )
+      Throw(ErrorNew("wvtMenu", 1000, "wvtMenu:Init()", "Create Menu Error", { cCaption, cCaption }))
 #endif
    ENDIF
    ::Caption := iif(cCaption == NIL, "", cCaption)
@@ -119,9 +119,9 @@ METHOD wvtMenu:Destroy()
    IF !Empty(::hMenu)
       ::DelAllItems()
 
-      IF !wvt_DestroyMenu( ::hMenu )
+      IF !wvt_DestroyMenu(::hMenu)
 #if 0
-         Throw( ErrorNew( "wvtMenu", 1000, "wvtMenu:Destroy()", "Destroy menu FAILED", {} ) )
+         Throw(ErrorNew("wvtMenu", 1000, "wvtMenu:Destroy()", "Destroy menu FAILED", {}))
 #endif
       ENDIF
       ::hMenu := 0
@@ -129,27 +129,27 @@ METHOD wvtMenu:Destroy()
 
    RETURN .T.
 
-METHOD wvtMenu:AddItem( cCaption, bAction )
+METHOD wvtMenu:AddItem(cCaption, bAction)
 
    LOCAL lResult := .F., aItem
 
-   IF !Empty(::hMenu) .AND. ( !Empty(cCaption) .OR. !Empty(bAction) )
+   IF !Empty(::hMenu) .AND. (!Empty(cCaption) .OR. !Empty(bAction))
       IF HB_ISOBJECT(bAction)
          cCaption := iif(!Empty(cCaption), cCaption, bAction:Caption)
          aItem := { MF_POPUP, bAction:hMenu, cCaption, bAction }   /* bAction is a wvtMenu object reference */
       ELSEIF HB_ISBLOCK(bAction)
          aItem := { MF_STRING, ::MenuItemId++, cCaption, bAction } /* bAction is a code block to execute */
-      ELSEIF Left( cCaption, 1 ) == "-"
+      ELSEIF Left(cCaption, 1) == "-"
          aItem := { MF_SEPARATOR, 0, 0, NIL }
       ELSE
 #if 0
-         Throw( ErrorNew( "wvtMenu", 3101, "wvtMenu:AddItem()", "Argument Error", { cCaption, bAction } ) )
+         Throw(ErrorNew("wvtMenu", 3101, "wvtMenu:AddItem()", "Argument Error", { cCaption, bAction }))
 #endif
       ENDIF
 
-      IF !wvt_AppendMenu( ::hMenu, aItem[WVT_MENU_TYPE], aItem[WVT_MENU_IDENTIFIER], aItem[WVT_MENU_CAPTION] )
+      IF !wvt_AppendMenu(::hMenu, aItem[WVT_MENU_TYPE], aItem[WVT_MENU_IDENTIFIER], aItem[WVT_MENU_CAPTION])
 #if 0
-         Throw( ErrorNew( "wvtMenu", 1000, "wvtMenu:AddItem()", "Add menu item", { cCaption, bAction } ) )
+         Throw(ErrorNew("wvtMenu", 1000, "wvtMenu:AddItem()", "Add menu item", { cCaption, bAction }))
 #endif
       ENDIF
 
@@ -166,13 +166,13 @@ METHOD wvtMenu:DelAllItems()
 
    nItems := ::NumItems()
    DO WHILE nItems > 0 .AND. lResult
-      lResult := ::DelItem( nItems )
+      lResult := ::DelItem(nItems)
       nItems--
    ENDDO
 
    RETURN lResult
 
-METHOD wvtMenu:DelItem( nItemNum )
+METHOD wvtMenu:DelItem(nItemNum)
 
    LOCAL lResult := .F.
 
@@ -181,33 +181,33 @@ METHOD wvtMenu:DelItem( nItemNum )
          ::aItems[nItemNum][WVT_MENU_MENUOBJ]:Destroy()
       ENDIF
 
-      IF ( lResult := wvt_DeleteMenu( ::hMenu, nItemNum - 1, MF_BYPOSITION ) ) /* Remember ZERO base */
-         hb_ADel( ::aItems, nItemNum, .T. )
+      IF (lResult := wvt_DeleteMenu(::hMenu, nItemNum - 1, MF_BYPOSITION)) /* Remember ZERO base */
+         hb_ADel(::aItems, nItemNum, .T.)
       ELSE
 #if 0
-         Throw( ErrorNew( "wvtMenu", 1000, "wvtMenu:DelItem()", "Delete menu item FAILED", { nItemNum } ) )
+         Throw(ErrorNew("wvtMenu", 1000, "wvtMenu:DelItem()", "Delete menu item FAILED", { nItemNum }))
 #endif
       ENDIF
    ENDIF
 
    RETURN lResult
 
-METHOD wvtMenu:EnableItem( nItemNum )
+METHOD wvtMenu:EnableItem(nItemNum)
 
    LOCAL nPrevious := -1
 
    IF !Empty(::hMenu) .AND. !Empty(nItemNum)
-      nPrevious := wvt_EnableMenuItem( ::hMenu, nItemNum - 1, MF_BYPOSITION + MF_ENABLED )
+      nPrevious := wvt_EnableMenuItem(::hMenu, nItemNum - 1, MF_BYPOSITION + MF_ENABLED)
    ENDIF
 
    RETURN nPrevious
 
-METHOD wvtMenu:DisableItem( nItemNum )
+METHOD wvtMenu:DisableItem(nItemNum)
 
    LOCAL nPrevious := -1
 
    IF !Empty(::hMenu) .AND. !Empty(nItemNum)
-      nPrevious := wvt_EnableMenuItem( ::hMenu, nItemNum - 1, MF_BYPOSITION + MF_GRAYED )
+      nPrevious := wvt_EnableMenuItem(::hMenu, nItemNum - 1, MF_BYPOSITION + MF_GRAYED)
    ENDIF
 
    RETURN nPrevious
@@ -215,7 +215,7 @@ METHOD wvtMenu:DisableItem( nItemNum )
 METHOD wvtMenu:NumItems()
    RETURN Len(::aItems)
 
-METHOD wvtMenu:GetItem( nItemNum )
+METHOD wvtMenu:GetItem(nItemNum)
 
    LOCAL nItems := ::NumItems(), aResult := NIL
 
@@ -225,7 +225,7 @@ METHOD wvtMenu:GetItem( nItemNum )
 
    RETURN aResult
 
-METHOD wvtMenu:FindMenuItemById( nId )
+METHOD wvtMenu:FindMenuItemById(nId)
 
    LOCAL x, aResult := {}
 
@@ -233,7 +233,7 @@ METHOD wvtMenu:FindMenuItemById( nId )
       x := ::NumItems()
       DO WHILE x > 0 .AND. Empty(aResult)
          IF ::aItems[x][WVT_MENU_TYPE] == MF_POPUP
-            aResult := ::aItems[x][WVT_MENU_MENUOBJ]:FindMenuItemById( nId )
+            aResult := ::aItems[x][WVT_MENU_MENUOBJ]:FindMenuItemById(nId)
          ELSEIF ::aItems[x][WVT_MENU_IDENTIFIER] == nId
             aResult := ::aItems[x]
          ENDIF

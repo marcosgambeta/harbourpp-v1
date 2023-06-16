@@ -67,11 +67,11 @@ CREATE CLASS WvgMLE INHERIT WvgWindow, WvgDataRef
 
    VAR    bufferLength                          INIT 32000
 
-   METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )  VIRTUAL
+   METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)  VIRTUAL
    METHOD destroy()
-   METHOD handleEvent( nMessage, aNM )
+   METHOD handleEvent(nMessage, aNM)
 
    METHOD clear()
    METHOD copyMarked()
@@ -84,32 +84,32 @@ CREATE CLASS WvgMLE INHERIT WvgWindow, WvgDataRef
    METHOD setFirstChar()                        VIRTUAL
    METHOD setMarked()                           VIRTUAL
    METHOD insert()                              VIRTUAL
-   METHOD charFromLine( nLine )                 VIRTUAL
+   METHOD charFromLine(nLine)                 VIRTUAL
    METHOD lineFromChar()                        VIRTUAL
    METHOD pos()                                 VIRTUAL
 
    VAR    sl_undo                               INIT .T.
    ACCESS undo                                  INLINE iif(::sl_undo, NIL, NIL)
-   ASSIGN undo( lUndo )                         INLINE ::sl_undo := lUndo
+   ASSIGN undo(lUndo)                         INLINE ::sl_undo := lUndo
 
    METHOD setEditable()                         VIRTUAL
    METHOD setWrap()                             VIRTUAL
 
    VAR    sl_hScroll
    ACCESS hScroll                               INLINE ::sl_hScroll
-   ASSIGN hScroll( bBlock )                     INLINE ::sl_hScroll := bBlock
+   ASSIGN hScroll(bBlock)                     INLINE ::sl_hScroll := bBlock
 
    VAR    sl_vScroll
    ACCESS vScroll                               INLINE ::sl_vScroll
-   ASSIGN vScroll( bBlock )                     INLINE ::sl_vScroll := bBlock
+   ASSIGN vScroll(bBlock)                     INLINE ::sl_vScroll := bBlock
 
-   METHOD changed( lChanged )                   SETGET
+   METHOD changed(lChanged)                   SETGET
 
 ENDCLASS
 
-METHOD WvgMLE:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgMLE:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::style       := WS_CHILD + ES_MULTILINE + ES_WANTRETURN
    ::exStyle     := WS_EX_CLIENTEDGE
@@ -118,9 +118,9 @@ METHOD WvgMLE:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    RETURN Self
 
-METHOD WvgMLE:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgMLE:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    IF ::tabStop
       ::style += WS_TABSTOP
@@ -144,7 +144,7 @@ METHOD WvgMLE:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
       ::style += ES_AUTOVSCROLL
    ENDIF
 
-   ::oParent:addChild( Self )
+   ::oParent:addChild(Self)
 
    ::createControl()
 
@@ -157,7 +157,7 @@ METHOD WvgMLE:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    RETURN Self
 
-METHOD WvgMLE:handleEvent( nMessage, aNM )
+METHOD WvgMLE:handleEvent(nMessage, aNM)
 
    SWITCH nMessage
 
@@ -193,13 +193,13 @@ METHOD WvgMLE:handleEvent( nMessage, aNM )
 
    CASE HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC(::clr_FG)
-         wvg_SetTextColor( aNM[1], ::clr_FG )
+         wvg_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
       IF HB_ISNUMERIC(::hBrushBG)
-         wvg_SetBkMode( aNM[1], 1 )
+         wvg_SetBkMode(aNM[1], 1)
          RETURN ::hBrushBG
       ELSE
-         RETURN wvg_GetCurrentBrush( aNM[1] )
+         RETURN wvg_GetCurrentBrush(aNM[1])
       ENDIF
       EXIT
 
@@ -244,7 +244,7 @@ METHOD PROCEDURE WvgMLE:destroy()
 
    RETURN
 
-METHOD WvgMLE:changed( lChanged )
+METHOD WvgMLE:changed(lChanged)
 
    LOCAL lChg := ::sendMessage(EM_GETMODIFY, 0, 0)
 
@@ -258,7 +258,7 @@ METHOD WvgMLE:clear()
 
    LOCAL cText := ::getData()
 
-   ::setData( "" )
+   ::setData("")
 
    RETURN Len(cText)
 
@@ -267,11 +267,11 @@ METHOD WvgMLE:copyMarked()
    LOCAL n, nB, nE
 
    n := ::sendMessage(EM_GETSEL)
-   nB := wvg_LOWORD( n )
-   nE := wvg_HIWORD( n )
+   nB := wvg_LOWORD(n)
+   nE := wvg_HIWORD(n)
 
-   IF ( n := nE - nB ) > 0
-      wvt_SetClipboard( SubStr( ::getData(), nB, n ) )
+   IF (n := nE - nB) > 0
+      wvt_SetClipboard(SubStr(::getData(), nB, n))
    ENDIF
 
    RETURN n
@@ -281,12 +281,12 @@ METHOD WvgMLE:cutMarked()
    LOCAL n, nB, nE, cText
 
    n := ::sendMessage(EM_GETSEL)
-   nB := wvg_LOWORD( n )
-   nE := wvg_HIWORD( n )
+   nB := wvg_LOWORD(n)
+   nE := wvg_HIWORD(n)
 
-   IF ( n := nE - nB ) > 0
+   IF (n := nE - nB) > 0
       cText := ::getData()
-      ::setData( SubStr( cText, 1, nB - 1 ) + SubStr( cText, nE ) )
+      ::setData(SubStr(cText, 1, nB - 1) + SubStr(cText, nE))
    ENDIF
 
    RETURN n

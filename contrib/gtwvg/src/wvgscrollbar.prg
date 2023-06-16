@@ -68,22 +68,22 @@ CREATE CLASS WvgScrollBar INHERIT WvgWindow, WvgDataRef
 
    VAR    lTracking                             INIT .F.
 
-   METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )  VIRTUAL
+   METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)  VIRTUAL
    METHOD destroy()
-   METHOD handleEvent( nMessage, aNM )
+   METHOD handleEvent(nMessage, aNM)
 
-   METHOD Scroll( xParam )                      SETGET
+   METHOD Scroll(xParam)                      SETGET
 
-   METHOD setRange( aRange )
-   METHOD setScrollBoxSize( nUnits )
+   METHOD setRange(aRange)
+   METHOD setScrollBoxSize(nUnits)
 
 ENDCLASS
 
-METHOD WvgScrollBar:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgScrollBar:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::WvgWindow:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::WvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::style       := WS_CHILD  /* + SBS_SIZEBOX + SBS_SIZEGRIP */
    ::className   := "SCROLLBAR"
@@ -91,9 +91,9 @@ METHOD WvgScrollBar:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    RETURN Self
 
-METHOD WvgScrollBar:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgScrollBar:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    IF ::type == WVGSCROLL_VERTICAL
       ::style += SBS_VERT
@@ -101,7 +101,7 @@ METHOD WvgScrollBar:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible 
       ::style += SBS_HORZ
    ENDIF
 
-   ::oParent:AddChild( Self )
+   ::oParent:AddChild(Self)
 
    ::createControl()
 
@@ -109,7 +109,7 @@ METHOD WvgScrollBar:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible 
       ::SetWindowProcCallback()
    ENDIF
 
-   ::setRange( ::range )
+   ::setRange(::range)
 
    IF ::visible
       ::show()
@@ -120,14 +120,14 @@ METHOD WvgScrollBar:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible 
    si IS SCROLLINFO
    si:cbSize := si:sizeof
    cSI := si:value
-   IF wapi_GetScrollInfo( ::pWnd, SB_CTL, @cSI )
-      si:buffer( cSI )
+   IF wapi_GetScrollInfo(::pWnd, SB_CTL, @cSI)
+      si:buffer(cSI)
    ENDIF
 #endif
 
    RETURN Self
 
-METHOD WvgScrollBar:handleEvent( nMessage, aNM )
+METHOD WvgScrollBar:handleEvent(nMessage, aNM)
 
    LOCAL nScrMsg, nScrPos, nCommand
 
@@ -142,7 +142,7 @@ METHOD WvgScrollBar:handleEvent( nMessage, aNM )
 
    CASE HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC(::hBrushBG)
-         wvg_SetBkMode( aNM[1], 1 )
+         wvg_SetBkMode(aNM[1], 1)
          RETURN ::hBrushBG
       ENDIF
       EXIT
@@ -160,7 +160,7 @@ METHOD WvgScrollBar:handleEvent( nMessage, aNM )
       IF nScrMsg == SB_THUMBPOSITION .OR. nScrMsg == SB_THUMBTRACK
          nScrPos := aNM[2]
       ELSE
-         nScrPos := wapi_GetScrollPos( ::pWnd, SB_CTL )
+         nScrPos := wapi_GetScrollPos(::pWnd, SB_CTL)
       ENDIF
 
       SWITCH nScrMsg
@@ -168,58 +168,58 @@ METHOD WvgScrollBar:handleEvent( nMessage, aNM )
       CASE SB_LEFT
          nCommand := WVGSB_PREVPOS
          IF nScrPos > ::range[1]
-            wapi_SetScrollPos( ::pWnd, SB_CTL, --nScrPos, .T. )
+            wapi_SetScrollPos(::pWnd, SB_CTL, --nScrPos, .T.)
          ENDIF
          EXIT
 
       CASE SB_RIGHT
          nCommand := WVGSB_NEXTPOS
          IF nScrPos < ::range[2]
-            wapi_SetScrollPos( ::pWnd, SB_CTL, ++nScrPos, .T. )
+            wapi_SetScrollPos(::pWnd, SB_CTL, ++nScrPos, .T.)
          ENDIF
          EXIT
 
       CASE SB_LINELEFT
          nCommand := WVGSB_PREVPAGE
          IF nScrPos > ::range[1]
-            wapi_SetScrollPos( ::pWnd, SB_CTL, --nScrPos, .T. )
+            wapi_SetScrollPos(::pWnd, SB_CTL, --nScrPos, .T.)
          ENDIF
          EXIT
 
       CASE SB_LINERIGHT
          nCommand := WVGSB_NEXTPAGE
          IF nScrPos < ::range[2]
-            wapi_SetScrollPos( ::pWnd, SB_CTL, ++nScrPos, .T. )
+            wapi_SetScrollPos(::pWnd, SB_CTL, ++nScrPos, .T.)
          ENDIF
          EXIT
 
       CASE SB_PAGELEFT
          nCommand := WVGSB_PREVPAGE
          IF nScrPos > ::range[1]
-            wapi_SetScrollPos( ::pWnd, SB_CTL, --nScrPos, .T. )
+            wapi_SetScrollPos(::pWnd, SB_CTL, --nScrPos, .T.)
          ENDIF
          EXIT
 
       CASE SB_PAGERIGHT
          nCommand := WVGSB_NEXTPAGE
          IF nScrPos < ::range[2]
-            wapi_SetScrollPos( ::pWnd, SB_CTL, ++nScrPos, .T. )
+            wapi_SetScrollPos(::pWnd, SB_CTL, ++nScrPos, .T.)
          ENDIF
          EXIT
 
       CASE SB_THUMBPOSITION
          nCommand := WVGSB_SLIDERTRACK
-         wapi_SetScrollPos( ::pWnd, SB_CTL, nScrPos, .T. )
+         wapi_SetScrollPos(::pWnd, SB_CTL, nScrPos, .T.)
          EXIT
 
       CASE SB_THUMBTRACK
          nCommand := WVGSB_ENDTRACK
-         wapi_SetScrollPos( ::pWnd, SB_CTL, nScrPos, .T. )
+         wapi_SetScrollPos(::pWnd, SB_CTL, nScrPos, .T.)
          EXIT
 
       CASE SB_ENDSCROLL
          nCommand := WVGSB_ENDSCROLL
-         wapi_SetScrollPos( ::pWnd, SB_CTL, nScrPos, .T. )
+         wapi_SetScrollPos(::pWnd, SB_CTL, nScrPos, .T.)
 
       ENDSWITCH
 
@@ -236,7 +236,7 @@ METHOD WvgScrollBar:handleEvent( nMessage, aNM )
       IF nScrMsg == SB_THUMBPOSITION .OR. nScrMsg == SB_THUMBTRACK
          nScrPos := aNM[2]
       ELSE
-         nScrPos := wapi_GetScrollPos( ::pWnd, SB_CTL )
+         nScrPos := wapi_GetScrollPos(::pWnd, SB_CTL)
       ENDIF
 
       IF !HB_ISBLOCK(::sl_xbeSB_Scroll)
@@ -248,58 +248,58 @@ METHOD WvgScrollBar:handleEvent( nMessage, aNM )
       CASE SB_TOP
          nCommand := WVGSB_TOP
          IF nScrPos > ::range[1]
-            wapi_SetScrollPos( ::pWnd, SB_CTL, --nScrPos, .T. )
+            wapi_SetScrollPos(::pWnd, SB_CTL, --nScrPos, .T.)
          ENDIF
          EXIT
 
       CASE SB_BOTTOM
          nCommand := WVGSB_BOTTOM
          IF nScrPos < ::range[2]
-            wapi_SetScrollPos( ::pWnd, SB_CTL, ++nScrPos, .T. )
+            wapi_SetScrollPos(::pWnd, SB_CTL, ++nScrPos, .T.)
          ENDIF
          EXIT
 
       CASE SB_LINEUP
          nCommand := WVGSB_PREVPOS
          IF nScrPos > ::range[1]
-            wapi_SetScrollPos( ::pWnd, SB_CTL, --nScrPos, .T. )
+            wapi_SetScrollPos(::pWnd, SB_CTL, --nScrPos, .T.)
          ENDIF
          EXIT
 
       CASE SB_LINEDOWN
          nCommand := WVGSB_NEXTPOS
          IF nScrPos < ::range[2]
-            wapi_SetScrollPos( ::pWnd, SB_CTL, ++nScrPos, .T. )
+            wapi_SetScrollPos(::pWnd, SB_CTL, ++nScrPos, .T.)
          ENDIF
          EXIT
 
       CASE SB_PAGEUP
          nCommand := WVGSB_PREVPAGE
          IF nScrPos > ::range[1]
-            wapi_SetScrollPos( ::pWnd, SB_CTL, --nScrPos, .T. )
+            wapi_SetScrollPos(::pWnd, SB_CTL, --nScrPos, .T.)
          ENDIF
          EXIT
 
       CASE SB_PAGEDOWN
          nCommand := WVGSB_NEXTPAGE
          IF nScrPos < ::range[2]
-            wapi_SetScrollPos( ::pWnd, SB_CTL, ++nScrPos, .T. )
+            wapi_SetScrollPos(::pWnd, SB_CTL, ++nScrPos, .T.)
          ENDIF
          EXIT
 
       CASE SB_THUMBPOSITION
          nCommand := WVGSB_SLIDERTRACK
-         wapi_SetScrollPos( ::pWnd, SB_CTL, nScrPos, .T. )
+         wapi_SetScrollPos(::pWnd, SB_CTL, nScrPos, .T.)
          EXIT
 
       CASE SB_THUMBTRACK
          nCommand := WVGSB_ENDTRACK
-         wapi_SetScrollPos( ::pWnd, SB_CTL, nScrPos, .T. )
+         wapi_SetScrollPos(::pWnd, SB_CTL, nScrPos, .T.)
          EXIT
 
       CASE SB_ENDSCROLL
          nCommand := WVGSB_ENDSCROLL
-         wapi_SetScrollPos( ::pWnd, SB_CTL, nScrPos, .T. )
+         wapi_SetScrollPos(::pWnd, SB_CTL, nScrPos, .T.)
 
       ENDSWITCH
 
@@ -317,7 +317,7 @@ METHOD PROCEDURE WvgScrollBar:destroy()
 
    RETURN
 
-METHOD WvgScrollBar:Scroll( xParam )
+METHOD WvgScrollBar:Scroll(xParam)
 
    IF HB_ISBLOCK(xParam)
       ::sl_xbeSB_Scroll := xParam
@@ -325,21 +325,21 @@ METHOD WvgScrollBar:Scroll( xParam )
 
    RETURN Self
 
-METHOD WvgScrollBar:setRange( aRange )
+METHOD WvgScrollBar:setRange(aRange)
 
    LOCAL aOldRange, nMin, nMax
 
-   IF wapi_GetScrollRange( ::pWnd, SB_CTL, @nMin, @nMax )
+   IF wapi_GetScrollRange(::pWnd, SB_CTL, @nMin, @nMax)
       aOldRange := { nMin, nMax }
    ELSE
       aOldRange := ::range
    ENDIF
 
-   IF wapi_SetScrollRange( ::pWnd, SB_CTL, aRange[1], aRange[2], .T. )
+   IF wapi_SetScrollRange(::pWnd, SB_CTL, aRange[1], aRange[2], .T.)
       ::range := aRange
    ENDIF
 
    RETURN aOldRange
 
-METHOD WvgScrollBar:setScrollBoxSize( nUnits )
+METHOD WvgScrollBar:setScrollBoxSize(nUnits)
    RETURN nUnits

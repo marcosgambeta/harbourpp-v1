@@ -81,43 +81,43 @@
 CREATE CLASS WvtLabel INHERIT WvtObject
 
    ACCESS TEXT                                    INLINE iif(::cText == NIL, "", ::cText)
-   ASSIGN TEXT( cTxt )                            INLINE ::cText := iif(cTxt == NIL, "", cTxt)
+   ASSIGN TEXT(cTxt)                            INLINE ::cText := iif(cTxt == NIL, "", cTxt)
 
-   METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
-   METHOD create( lConfg )
+   METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
+   METHOD create(lConfg)
    METHOD Configure()
    METHOD Refresh()
    METHOD HoverOn()
    METHOD HoverOff()
-   METHOD SetText( ctxt )
-   METHOD SetTextColor( nRGB )
-   METHOD SetBackColor( nRGB )
+   METHOD SetText(ctxt)
+   METHOD SetTextColor(nRGB)
+   METHOD SetBackColor(nRGB)
 
 ENDCLASS
 
-METHOD WvtLabel:New( oParent, nID, nTop, nLeft, nBottom, nRight )
+METHOD WvtLabel:New(oParent, nID, nTop, nLeft, nBottom, nRight)
 
-   ::Super:New( oParent, DLG_OBJ_LABEL, nID, nTop, nLeft, nBottom, nRight )
+   ::Super:New(oParent, DLG_OBJ_LABEL, nID, nTop, nLeft, nBottom, nRight)
 
    RETURN Self
 
-METHOD WvtLabel:Create( lConfg )
+METHOD WvtLabel:Create(lConfg)
 
    __defaultNIL(@lConfg, .F.)
 
    __defaultNIL(@::nBottom, ::nTop)
    __defaultNIL(@::nRight, ::nLeft + Len(::Text))
-   __defaultNIL(@::nTextColor, RGB( 0, 0, 0 ))
+   __defaultNIL(@::nTextColor, RGB(0, 0, 0))
 
    ::nTextColorHoverOff := ::nTextColor
    ::nBackColorHoverOff := ::nBackColor
 
-   ::hFont := wvt_CreateFont( ::cFont, ::nFontHeight, ::nFontWidth, ::nFontWeight, ::lItalic, ;
-      ::lUnderline, ::lStrikeout, ::nCharSet, ::nFontQuality, ::nAngle )
+   ::hFont := wvt_CreateFont(::cFont, ::nFontHeight, ::nFontWidth, ::nFontWeight, ::lItalic, ;
+      ::lUnderline, ::lStrikeout, ::nCharSet, ::nFontQuality, ::nAngle)
    IF ::hFont != 0
       IF !lConfg
-         ::bPaint := {|| wvt_DrawLabelObj( ::nTop, ::nLeft, ::nBottom, ::nRight, ;
-            ::Text, ::nAlignHorz, ::nAlignVert, ::nTextColor, ::nBackColor, ::hFont ) }
+         ::bPaint := {|| wvt_DrawLabelObj(::nTop, ::nLeft, ::nBottom, ::nRight, ;
+            ::Text, ::nAlignHorz, ::nAlignVert, ::nTextColor, ::nBackColor, ::hFont) }
          AAdd(::aPaint, { ::bPaint, { WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight } })
       ENDIF
    ENDIF
@@ -132,7 +132,7 @@ METHOD WvtLabel:Refresh()
 
    RETURN Self
 
-METHOD WvtLabel:SetText( cTxt )
+METHOD WvtLabel:SetText(cTxt)
 
    IF HB_ISSTRING(cTxt)
       ::Text := cTxt
@@ -141,7 +141,7 @@ METHOD WvtLabel:SetText( cTxt )
 
    RETURN Self
 
-METHOD WvtLabel:SetTextColor( nRGB )
+METHOD WvtLabel:SetTextColor(nRGB)
 
    IF HB_ISNUMERIC(nRGB)
       ::nTextColor := nRGB
@@ -151,7 +151,7 @@ METHOD WvtLabel:SetTextColor( nRGB )
 
    RETURN Self
 
-METHOD WvtLabel:SetBackColor( nRGB )
+METHOD WvtLabel:SetBackColor(nRGB)
 
    IF HB_ISNUMERIC(nRGB)
       ::nBackColor := nRGB
@@ -167,11 +167,11 @@ METHOD WvtLabel:Configure()
    ::nBackColorHoverOff := ::nBackColor
 
    IF ::hFont != 0
-      wvg_DeleteObject( ::hFont )
+      wvg_DeleteObject(::hFont)
    ENDIF
 
-   ::hFont := wvt_CreateFont( ::cFont, ::nFontHeight, ::nFontWidth, ::nFontWeight, ::lItalic, ;
-      ::lUnderline, ::lStrikeout, ::nCharSet, ::nFontQuality, ::nAngle )
+   ::hFont := wvt_CreateFont(::cFont, ::nFontHeight, ::nFontWidth, ::nFontWeight, ::lItalic, ;
+      ::lUnderline, ::lStrikeout, ::nCharSet, ::nFontQuality, ::nAngle)
 
    RETURN Self
 

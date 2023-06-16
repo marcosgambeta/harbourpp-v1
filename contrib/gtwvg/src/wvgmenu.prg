@@ -61,16 +61,16 @@ CREATE CLASS WvgMenu INHERIT WvgMenuBar
 
    VAR    title                                 INIT ""
 
-   METHOD new( oParent, aPresParams, lVisible )
-   METHOD create( oParent, aPresParams, lVisible )
+   METHOD new(oParent, aPresParams, lVisible)
+   METHOD create(oParent, aPresParams, lVisible)
 
    METHOD getTitle()
-   METHOD setTitle( cTitle )
-   METHOD Popup( oXbp, aPos, nDefaultItem, nControl )
+   METHOD setTitle(cTitle)
+   METHOD Popup(oXbp, aPos, nDefaultItem, nControl)
 
 ENDCLASS
 
-METHOD WvgMenu:new( oParent, aPresParams, lVisible )
+METHOD WvgMenu:new(oParent, aPresParams, lVisible)
 
    __defaultNIL(@oParent, ::oParent)
    __defaultNIL(@aPresParams, ::aPresParams)
@@ -82,7 +82,7 @@ METHOD WvgMenu:new( oParent, aPresParams, lVisible )
 
    RETURN Self
 
-METHOD WvgMenu:create( oParent, aPresParams, lVisible )
+METHOD WvgMenu:create(oParent, aPresParams, lVisible)
 
    __defaultNIL(@oParent, ::oParent)
    __defaultNIL(@aPresParams, ::aPresParams)
@@ -101,19 +101,19 @@ METHOD WvgMenu:create( oParent, aPresParams, lVisible )
 METHOD WvgMenu:getTitle()
    RETURN ::title
 
-METHOD WvgMenu:setTitle( cTitle )
+METHOD WvgMenu:setTitle(cTitle)
    RETURN ::title := cTitle
 
-METHOD WvgMenu:Popup( oXbp, aPos, nDefaultItem, nControl )
+METHOD WvgMenu:Popup(oXbp, aPos, nDefaultItem, nControl)
 
    LOCAL nCmd, aMenuItem
 
-   HB_SYMBOL_UNUSED( nDefaultItem )
-   HB_SYMBOL_UNUSED( nControl )
+   HB_SYMBOL_UNUSED(nDefaultItem)
+   HB_SYMBOL_UNUSED(nControl)
 
-   nCmd := wvg_TrackPopupMenu( ::hMenu, TPM_LEFTALIGN + TPM_TOPALIGN + TPM_RETURNCMD, aPos[1], aPos[2], oXbp:hWnd )
+   nCmd := wvg_TrackPopupMenu(::hMenu, TPM_LEFTALIGN + TPM_TOPALIGN + TPM_RETURNCMD, aPos[1], aPos[2], oXbp:hWnd)
 
-   aMenuItem := ::findMenuItemById( nCmd )
+   aMenuItem := ::findMenuItemById(nCmd)
    IF HB_ISARRAY(aMenuItem) .AND. HB_ISBLOCK(aMenuItem[2])
       Eval(aMenuItem[2], aMenuItem[1], , aMenuItem[4])
    ENDIF

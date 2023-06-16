@@ -86,7 +86,7 @@ CREATE CLASS WvtProgressBar INHERIT WvtObject
    VAR    lVertical                               INIT .F.
    VAR    lActive                                 INIT .F.
 
-   VAR    nBarColor                               INIT RGB( 0, 0, 128 )
+   VAR    nBarColor                               INIT RGB(0, 0, 128)
    VAR    nCurrent                                INIT 0
    VAR    nTotal                                  INIT 1
    VAR    nPercent                                INIT 0
@@ -94,17 +94,17 @@ CREATE CLASS WvtProgressBar INHERIT WvtObject
 
    VAR    cScreen
 
-   METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
+   METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
-   METHOD display( nCurrent, nTotal )
+   METHOD display(nCurrent, nTotal)
    METHOD Activate()
    METHOD DeActivate()
 
 ENDCLASS
 
-METHOD WvtProgressBar:New( oParent, nID, nTop, nLeft, nBottom, nRight )
+METHOD WvtProgressBar:New(oParent, nID, nTop, nLeft, nBottom, nRight)
 
-   ::Super:New( oParent, DLG_OBJ_PROGRESSBAR, nID, nTop, nLeft, nBottom, nRight )
+   ::Super:New(oParent, DLG_OBJ_PROGRESSBAR, nID, nTop, nLeft, nBottom, nRight)
 
    RETURN Self
 
@@ -114,8 +114,8 @@ METHOD WvtProgressBar:Create()
    __defaultNIL(@::nLeft, 0)
    __defaultNIL(@::nBottom, iif(::lVertical, ::nTop + 9, ::nTop))
    __defaultNIL(@::nRight, iif(::lVertical, ::nLeft + 1, ::nLeft + 19))
-   __defaultNIL(@::nTextColor, RGB( 255, 255, 255 ))
-   __defaultNIL(@::nBackColor, RGB( 198, 198, 198 ))
+   __defaultNIL(@::nTextColor, RGB(255, 255, 255))
+   __defaultNIL(@::nBackColor, RGB(198, 198, 198))
 
    ::bPaint := {|| ::Display() }
    AAdd(::aPaint, { ::bPaint, { WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight } })
@@ -124,7 +124,7 @@ METHOD WvtProgressBar:Create()
 
    RETURN Self
 
-METHOD WvtProgressBar:Display( nCurrent, nTotal )
+METHOD WvtProgressBar:Display(nCurrent, nTotal)
 
    IF !::lActive
       RETURN Self
@@ -140,17 +140,17 @@ METHOD WvtProgressBar:Display( nCurrent, nTotal )
       ::nCurrent := ::nTotal
    ENDIF
 
-   ::nPercent := Int( ::nCurrent / ::nTotal * 100 )
+   ::nPercent := Int(::nCurrent / ::nTotal * 100)
 
-   wvt_DrawProgressBar( ::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlTLBR, ::nPercent, ;
-      ::nBackColor, ::nBarColor, ::cImage, ::lVertical, ::nDirection )
+   wvt_DrawProgressBar(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlTLBR, ::nPercent, ;
+      ::nBackColor, ::nBarColor, ::cImage, ::lVertical, ::nDirection)
 
    RETURN Self
 
 METHOD WvtProgressBar:Activate()
 
-   ::cScreen := SaveScreen( ::nTop, ::nLeft, ::nBottom, ::nRight )
-   hb_DispBox( ::nTop, ::nLeft, ::nBottom, ::nRight, "         ", ::cBackColor )
+   ::cScreen := SaveScreen(::nTop, ::nLeft, ::nBottom, ::nRight)
+   hb_DispBox(::nTop, ::nLeft, ::nBottom, ::nRight, "         ", ::cBackColor)
    ::lActive := .T.
 
    RETURN Self
@@ -160,7 +160,7 @@ METHOD WvtProgressBar:DeActivate()
    ::lActive  := .F.
    ::nCurrent := 0
    ::nTotal   := 1
-   RestScreen( ::nTop, ::nLeft, ::nBottom, ::nRight, ::cScreen )
+   RestScreen(::nTop, ::nLeft, ::nBottom, ::nRight, ::cScreen)
    ::cScreen := NIL
 
    RETURN Self

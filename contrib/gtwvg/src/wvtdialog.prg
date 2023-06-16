@@ -142,7 +142,7 @@ CREATE CLASS WvtDialog
 
    ACCESS nObjects                                INLINE Len(::aObjects)
 
-   METHOD New( nRows, nCols, cTitle, cFont, nFontHeight, nFontWidth, nFontBold, nFontQuality )
+   METHOD New(nRows, nCols, cTitle, cFont, nFontHeight, nFontWidth, nFontBold, nFontQuality)
    METHOD create()
    METHOD Destroy()
    METHOD Event()
@@ -154,14 +154,14 @@ CREATE CLASS WvtDialog
    METHOD Eval(bBlock, p1, p2, p3, p4, p5)
    METHOD ActivateMenu()
 
-   METHOD AddObject( oObject )                    INLINE AAdd(::aObjects, oObject)
+   METHOD AddObject(oObject)                    INLINE AAdd(::aObjects, oObject)
    METHOD MaxRow()                                INLINE ::nRows - 1
    METHOD MaxCol()                                INLINE ::nCols - 1
    METHOD OnTimer()                               INLINE AEval(::aObjects, {| o | o:OnTimer() })
 
 ENDCLASS
 
-METHOD WvtDialog:New( nRows, nCols, cTitle, cFont, nFontHeight, nFontWidth, nFontBold, nFontQuality )
+METHOD WvtDialog:New(nRows, nCols, cTitle, cFont, nFontHeight, nFontWidth, nFontBold, nFontQuality)
 
    LOCAL fnt_ := wvt_GetFontInfo()
 
@@ -193,7 +193,7 @@ METHOD WvtDialog:New( nRows, nCols, cTitle, cFont, nFontHeight, nFontWidth, nFon
    ::aPalette            := wvt_GetPalette()
 
    ::oldMenuHandle       := wvt_GetMenu()
-   ::oldMenuBlock        := SetKey( wvt_SetMenuKeyEvent() )
+   ::oldMenuBlock        := SetKey(wvt_SetMenuKeyEvent())
 
    ::oldTooltipWidth     := wvt_GetToolTipWidth()
    ::oldTooltipBkColor   := wvt_GetToolTipBkColor()
@@ -208,12 +208,12 @@ METHOD WvtDialog:New( nRows, nCols, cTitle, cFont, nFontHeight, nFontWidth, nFon
    ::nFontBold           := nFontBold
    ::nFontQuality        := nFontQuality
 
-   ::cPaintBlockID       := StrZero( hb_Random( 99999998 ), 8 )
+   ::cPaintBlockID       := StrZero(hb_Random(99999998), 8)
    ::nObjOver            := 0
    ::nKey                := 0
    ::cColor              := "N/W"
    ::nUseObj             := 0
-   ::lGui                := wvt_SetGUI( .F. )
+   ::lGui                := wvt_SetGUI(.F.)
 
    RETURN Self
 
@@ -221,40 +221,40 @@ METHOD WvtDialog:Create()
 
    LOCAL aPalette, i, j
 
-   ::oldToolTipActive := wvt_SetToolTipActive( .T. )
+   ::oldToolTipActive := wvt_SetToolTipActive(.T.)
    IF ::nTooltipWidth != NIL
-      wvt_SetToolTipWidth( ::nTooltipWidth )
+      wvt_SetToolTipWidth(::nTooltipWidth)
    ENDIF
    IF ::nTooltipBkColor != NIL
-      wvt_SetToolTipBkColor( ::nTooltipBkColor )
+      wvt_SetToolTipBkColor(::nTooltipBkColor)
    ENDIF
    IF ::nTooltipTextColor != NIL
-      wvt_SetToolTipTextColor( ::nTooltipTextColor )
+      wvt_SetToolTipTextColor(::nTooltipTextColor)
    ENDIF
 
    aPalette      := wvt_GetPalette()
-   aPalette[9] := RGB( 175, 175, 175 )
-   wvt_SetPalette( aPalette )
+   aPalette[9] := RGB(175, 175, 175)
+   wvt_SetPalette(aPalette)
 
-   ::cScreen     := SaveScreen( 0, 0, MaxRow(), MaxCol() )
-   ::aWvtScreen  := wvt_SaveScreen( 0, 0, MaxRow(), MaxCol() )
-   ::aOldPnt     := WvtSetPaint( {} )
+   ::cScreen     := SaveScreen(0, 0, MaxRow(), MaxCol())
+   ::aWvtScreen  := wvt_SaveScreen(0, 0, MaxRow(), MaxCol())
+   ::aOldPnt     := WvtSetPaint({})
 
-   SetMode( ::nRows, ::nCols )
+   SetMode(::nRows, ::nCols)
    DO WHILE .T.
-      IF wvt_SetFont( ::cFont, ::nFontHeight, ::nFontWidth, ::nFontBold, ::nFontQuality )
+      IF wvt_SetFont(::cFont, ::nFontHeight, ::nFontWidth, ::nFontBold, ::nFontQuality)
          EXIT
       ENDIF
       ::nFontHeight--
    ENDDO
 #if 0
-   wvt_SetFont( ::cFont, ::nFontHeight, ::nFontWidth, ::nFontBold, ::nFontQuality )
+   wvt_SetFont(::cFont, ::nFontHeight, ::nFontWidth, ::nFontBold, ::nFontQuality)
 #endif
-   SetMode( ::nRows, ::nCols )
+   SetMode(::nRows, ::nCols)
 
-   wvt_SetTitle( ::cTitle )
+   wvt_SetTitle(::cTitle)
 
-   SetColor( ::cColor )
+   SetColor(::cColor)
    CLS
    ::Eval(::bOnCreate)
 
@@ -267,23 +267,22 @@ METHOD WvtDialog:Create()
    FOR i := 1 TO Len(::aObjects)
       IF !Empty(::aObjects[i]:aPaint)
          FOR j := 1 TO Len(::aObjects[i]:aPaint)
-            wvg_SetPaint( ::cPaintBlockID, ::nPaintID++, ;
-               ::aObjects[i]:aPaint[j][1], ::aObjects[i]:aPaint[j][2] )
+            wvg_SetPaint(::cPaintBlockID, ::nPaintID++, ::aObjects[i]:aPaint[j][1], ::aObjects[i]:aPaint[j][2])
          NEXT
       ENDIF
    NEXT
-   WvtSetPaint( wvg_GetPaint( ::cPaintBlockID ) )
+   WvtSetPaint(wvg_GetPaint(::cPaintBlockID))
 
-   IF AScan( ::aObjects, {| o | o:lTabStop } ) > 0
+   IF AScan(::aObjects, {| o | o:lTabStop }) > 0
       ::lTabStops := .T.
    ENDIF
 
    ::Update()
 
    IF HB_ISOBJECT(::oMenu)
-      wvt_SetMenu( ::oMenu:hMenu )
+      wvt_SetMenu(::oMenu:hMenu)
       wvt_DrawMenuBar()
-      SetKey( wvt_SetMenuKeyEvent(), {|| ::ActivateMenu( ::oMenu ) } )
+      SetKey(wvt_SetMenuKeyEvent(), {|| ::ActivateMenu(::oMenu) })
    ENDIF
 
    RETURN Self
@@ -296,32 +295,32 @@ METHOD PROCEDURE WvtDialog:Destroy()
 
    AEval(::aObjects, {| o | o:destroy() })
 
-   wvt_SetToolTip( 0, 0, 0, 0, "" )
-   wvt_SetToolTipActive( ::oldToolTipActive )
-   wvt_SetToolTipWidth( ::oldTooltipWidth )
-   wvt_SetToolTipBkColor( ::oldTooltipBkColor )
-   wvt_SetToolTipTextColor( ::oldTooltipTextColor )
+   wvt_SetToolTip(0, 0, 0, 0, "")
+   wvt_SetToolTipActive(::oldToolTipActive)
+   wvt_SetToolTipWidth(::oldTooltipWidth)
+   wvt_SetToolTipBkColor(::oldTooltipBkColor)
+   wvt_SetToolTipTextColor(::oldTooltipTextColor)
 
    /* Here set mode is before setting the font */
-   SetMode( ::nOldRows, ::nOldCols )
-   wvt_SetFont( ::aOldFont[1], ::aOldFont[2], ::aOldFont[3], ::aOldFont[4], ::aOldFont[5] )
-   wvt_SetTitle( ::cOldTitle )
-   wvt_SetPalette( ::aPalette )
-   wvt_SetPointer( WVT_IDC_ARROW )
-   wvt_SetMousePos( MRow(), MCol() )
+   SetMode(::nOldRows, ::nOldCols)
+   wvt_SetFont(::aOldFont[1], ::aOldFont[2], ::aOldFont[3], ::aOldFont[4], ::aOldFont[5])
+   wvt_SetTitle(::cOldTitle)
+   wvt_SetPalette(::aPalette)
+   wvt_SetPointer(WVT_IDC_ARROW)
+   wvt_SetMousePos(MRow(), MCol())
 
-   SetColor( ::cOldColor )
-   SetCursor( ::nOldCursor )
+   SetColor(::cOldColor)
+   SetCursor(::nOldCursor)
 
    IF ::oldMenuHandle != NIL .AND. ::oldMenuHandle != 0
-      wvt_SetMenu( ::oldMenuHandle )
+      wvt_SetMenu(::oldMenuHandle)
    ENDIF
-   SetKey( wvt_SetMenuKeyEvent(), ::oldMenuBlock )
-   RestScreen( 0, 0, MaxRow(), MaxCol(), ::cScreen )
-   wvt_RestScreen( 0, 0, MaxRow(), MaxCol(), ::aWvtScreen )
-   wvg_PurgePaint( ::cPaintBlockID )
-   WvtSetPaint( ::aOldPnt )
-   wvt_SetGUI( ::lGui )
+   SetKey(wvt_SetMenuKeyEvent(), ::oldMenuBlock)
+   RestScreen(0, 0, MaxRow(), MaxCol(), ::cScreen)
+   wvt_RestScreen(0, 0, MaxRow(), MaxCol(), ::aWvtScreen)
+   wvg_PurgePaint(::cPaintBlockID)
+   WvtSetPaint(::aOldPnt)
+   wvt_SetGUI(::lGui)
 
    RETURN
 
@@ -329,7 +328,7 @@ METHOD WvtDialog:Event()
 
    LOCAL nKey
 
-   IF ( nKey := Inkey( 0.1, INKEY_ALL + HB_INKEY_GTEVENT ) ) == 0
+   IF (nKey := Inkey(0.1, INKEY_ALL + HB_INKEY_GTEVENT)) == 0
       IF wvt_IsLButtonPressed()
          nKey := K_LBUTTONPRESSED
       ENDIF
@@ -341,7 +340,7 @@ METHOD WvtDialog:Execute()
 
    IF ::nObjects == 0
       DO WHILE .T.
-         IF Inkey( 0.1, hb_bitOr( INKEY_ALL, HB_INKEY_GTEVENT ) ) == K_ESC
+         IF Inkey(0.1, hb_bitOr(INKEY_ALL, HB_INKEY_GTEVENT)) == K_ESC
             EXIT
          ENDIF
       ENDDO
@@ -407,11 +406,11 @@ METHOD WvtDialog:Inkey()
       CASE K_MMLEFTDOWN
          ::MouseOver()
          IF ::nObjOver == 0
-            wvt_SetPointer( WVT_IDC_ARROW )
+            wvt_SetPointer(WVT_IDC_ARROW)
          ELSEIF ::oObjOver:nPointer != NIL .AND. ::oObjOver:lActive
-            wvt_SetPointer( ::oObjOver:nPointer )
+            wvt_SetPointer(::oObjOver:nPointer)
          ELSE
-            wvt_SetPointer( WVT_IDC_ARROW )
+            wvt_SetPointer(WVT_IDC_ARROW)
          ENDIF
          ::lEventHandled := .T.
 
@@ -435,7 +434,7 @@ METHOD WvtDialog:Inkey()
                oObj := ::aObjects[::nObjOver]
                IF oObj:oParent:className() == "WVTBROWSE"
                   nID := oObj:oParent:nID
-                  IF ( n := AScan( ::aObjects, {| o | o:nID == nID } ) ) > 0
+                  IF (n := AScan(::aObjects, {| o | o:nID == nID })) > 0
                      ::nCurObj := n
                   ENDIF
                ENDIF
@@ -460,11 +459,11 @@ METHOD WvtDialog:Inkey()
          ENDIF
 
          IF ::nObjOver == 0
-            wvt_SetToolTip( 0, 0, 0, 0, "" )
+            wvt_SetToolTip(0, 0, 0, 0, "")
          ELSEIF ::oObjOver:lActive
             ::oObjOver:SetTooltip()
          ELSE
-            wvt_SetToolTip( 0, 0, 0, 0, "" )
+            wvt_SetToolTip(0, 0, 0, 0, "")
          ENDIF
       ENDIF
 
@@ -481,7 +480,7 @@ METHOD WvtDialog:Inkey()
          ::oLastObj := ::aObjects[::nCurObj]
 
          IF ::oCurObj:nType == DLG_OBJ_BROWSE
-            dbSelectArea( ::oCurObj:cAlias )
+            dbSelectArea(::oCurObj:cAlias)
          ENDIF
 
          ::Eval(::oCurObj:bOnFocus, ::oCurObj)
@@ -489,7 +488,7 @@ METHOD WvtDialog:Inkey()
 
       IF ::nKey == K_LBUTTONDOWN
          IF ::nUseObj > 0
-            IF !( ::lEventHandled := ::aObjects[::nUseObj]:LeftDown() )
+            IF !(::lEventHandled := ::aObjects[::nUseObj]:LeftDown())
                ::lEventHandled := ::Eval(::aObjects[::nUseObj]:bOnLeftDown)
                IF ::aObjects[::nUseObj]:className() == "WVTBROWSE"
                   ::lEventHandled := .F.
@@ -500,7 +499,7 @@ METHOD WvtDialog:Inkey()
 
       IF ::nKey == K_LBUTTONUP
          IF ::nUseObj > 0
-            IF !( ::lEventHandled := ::aObjects[::nUseObj]:LeftUp() )
+            IF !(::lEventHandled := ::aObjects[::nUseObj]:LeftUp())
                ::lEventHandled := ::Eval(::aObjects[::nUseObj]:bOnLeftUp)
             ENDIF
          ENDIF
@@ -508,7 +507,7 @@ METHOD WvtDialog:Inkey()
 
       IF ::nKey == K_MMLEFTDOWN
          IF ::nUseObj > 0
-            IF !( ::lEventHandled := ::aObjects[::nUseObj]:MMLeftDown() )
+            IF !(::lEventHandled := ::aObjects[::nUseObj]:MMLeftDown())
                ::lEventHandled := ::Eval(::aObjects[::nUseObj]:bOnMMLeftDown)
             ENDIF
          ENDIF
@@ -516,7 +515,7 @@ METHOD WvtDialog:Inkey()
 
       IF ::nKey == K_LBUTTONPRESSED
          IF ::nUseObj > 0
-            IF !( ::lEventHandled := ::aObjects[::nUseObj]:LeftPressed() )
+            IF !(::lEventHandled := ::aObjects[::nUseObj]:LeftPressed())
                ::lEventHandled := ::Eval(::aObjects[::nUseObj]:bOnLeftPressed)
             ENDIF
          ENDIF
@@ -535,18 +534,18 @@ METHOD WvtDialog:Inkey()
       IF !::lEventHandled
          IF ::nCurObj > 0
             IF !Empty(::aDialogKeys)
-               IF ( n := AScan( ::aDialogKeys, {| e_ | e_[1] == ::nKey } ) ) > 0
+               IF (n := AScan(::aDialogKeys, {| e_ | e_[1] == ::nKey })) > 0
                   Eval(::aDialogKeys[n][2], Self, ::oCurObj)
                ENDIF
             ENDIF
 
-            ::lEventHandled := ::oCurObj:HandleEvent( ::nKey )
+            ::lEventHandled := ::oCurObj:HandleEvent(::nKey)
 
             IF ::lEventHandled
                IF ::oCurObj:nChildren > 0
                   FOR i := 1 to ::oCurObj:nChildren
-                     IF AScan( ::oCurObj:aChildren[i][OBJ_CHILD_EVENTS], ::nKey ) > 0
-                        ::oCurObj:NotifyChild( i, ::nKey, ::oCurObj )
+                     IF AScan(::oCurObj:aChildren[i][OBJ_CHILD_EVENTS], ::nKey) > 0
+                        ::oCurObj:NotifyChild(i, ::nKey, ::oCurObj)
                      ENDIF
                   NEXT
                ENDIF
@@ -555,8 +554,8 @@ METHOD WvtDialog:Inkey()
       ENDIF
 
       IF !::lEventHandled
-         IF HB_ISBLOCK(SetKey( ::nKey ))
-            Eval(SetKey( ::nKey ))
+         IF HB_ISBLOCK(SetKey(::nKey))
+            Eval(SetKey(::nKey))
          ENDIF
       ENDIF
    ENDIF
@@ -569,11 +568,11 @@ METHOD WvtDialog:MouseOver()
    LOCAL mCol := MCol()
    LOCAL nObj
 
-   nObj := AScan( ::aObjects, ;
+   nObj := AScan(::aObjects, ;
       {| o | o:nType != DLG_OBJ_STATIC               .AND. ;
       o:nType != DLG_OBJ_TOOLBAR              .AND. ;
       mRow >= o:nTop  .AND. mRow <= o:nBottom .AND. ;
-      mCol >= o:nLeft .AND. mCol <= o:nRight      } )
+      mCol >= o:nLeft .AND. mCol <= o:nRight      })
 
    ::nObjOver := nObj
    ::oObjOver := iif(nObj > 0, ::aObjects[nObj], NIL)
@@ -586,7 +585,7 @@ METHOD WvtDialog:MouseOver()
 
 METHOD WvtDialog:Update()
 
-   wvt_InvalidateRect( 0, 0, ::MaxRow(), ::MaxCol() )
+   wvt_InvalidateRect(0, 0, ::MaxRow(), ::MaxCol())
 
    RETURN Self
 
@@ -649,7 +648,7 @@ METHOD WvtDialog:Eval(bBlock, p1, p2, p3, p4, p5)
 
    LOCAL lRet
 
-   IF ( lRet := HB_ISBLOCK(bBlock) )
+   IF (lRet := HB_ISBLOCK(bBlock))
       Eval(bBlock, p1, p2, p3, p4, p5)
    ENDIF
 

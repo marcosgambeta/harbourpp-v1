@@ -417,7 +417,7 @@ HB_FUNC( WVG_CREATEBRUSH )
 }
 
 /*
- *   win_DrawText( hDC, cText, aRect, nFormat )
+ *   win_DrawText(hDC, cText, aRect, nFormat)
  */
 HB_FUNC( WVG_DRAWTEXT )
 {
@@ -953,7 +953,7 @@ HB_FUNC( WVG_ISZOOMED )
 }
 
 /*
- * Win_SetDCBrushColor( hDC, nRGB )
+ * Win_SetDCBrushColor(hDC, nRGB)
  */
 HB_FUNC( WVG_SETDCBRUSHCOLOR )
 {
@@ -965,7 +965,7 @@ HB_FUNC( WVG_SETDCBRUSHCOLOR )
 }
 
 /*
- * Win_SetDCPenColor( hDC, nRGB )
+ * Win_SetDCPenColor(hDC, nRGB)
  */
 HB_FUNC( WVG_SETDCPENCOLOR )
 {

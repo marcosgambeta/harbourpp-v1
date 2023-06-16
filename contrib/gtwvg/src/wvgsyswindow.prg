@@ -58,8 +58,8 @@
 
 CREATE CLASS WvgSysWindow INHERIT WvgPartHandler
 
-   METHOD new( oParent, oOwner, aPos )
-   METHOD create( oParent, oOwner, aPos )
+   METHOD new(oParent, oOwner, aPos)
+   METHOD create(oParent, oOwner, aPos)
    METHOD configure()
    METHOD destroy()
 
@@ -67,7 +67,7 @@ CREATE CLASS WvgSysWindow INHERIT WvgPartHandler
    METHOD enable()
    METHOD hide()
    METHOD show()
-   METHOD SetPos( aPos )
+   METHOD SetPos(aPos)
 
    METHOD currentPos()
    METHOD currentSize()
@@ -81,19 +81,19 @@ CREATE CLASS WvgSysWindow INHERIT WvgPartHandler
 
    VAR    sl_helpRequest
    ACCESS helpRequest                           INLINE ::sl_helpRequest
-   ASSIGN helpRequest( bBlock )                 INLINE ::sl_helpRequest := bBlock
+   ASSIGN helpRequest(bBlock)                 INLINE ::sl_helpRequest := bBlock
 
    VAR    sl_move
    ACCESS move                                  INLINE ::sl_move
-   ASSIGN move( bBlock )                        INLINE ::sl_move := bBlock
+   ASSIGN move(bBlock)                        INLINE ::sl_move := bBlock
 
    VAR    sl_quit
    ACCESS quit                                  INLINE ::sl_quit
-   ASSIGN quit( bBlock )                        INLINE ::sl_quit := bBlock
+   ASSIGN quit(bBlock)                        INLINE ::sl_quit := bBlock
 
 ENDCLASS
 
-METHOD WvgSysWindow:new( oParent, oOwner, aPos )
+METHOD WvgSysWindow:new(oParent, oOwner, aPos)
 
    __defaultNIL(@oParent, ::oParent)
    __defaultNIL(@oOwner, ::oOwner)
@@ -103,11 +103,11 @@ METHOD WvgSysWindow:new( oParent, oOwner, aPos )
    ::oOwner  := oOwner
    ::aPos    := aPos
 
-   ::WvgPartHandler:new( oParent, oOwner )
+   ::WvgPartHandler:new(oParent, oOwner)
 
    RETURN Self
 
-METHOD WvgSysWindow:create( oParent, oOwner, aPos )
+METHOD WvgSysWindow:create(oParent, oOwner, aPos)
 
    __defaultNIL(@oParent, ::oParent)
    __defaultNIL(@oOwner, ::oOwner)
@@ -117,7 +117,7 @@ METHOD WvgSysWindow:create( oParent, oOwner, aPos )
    ::oOwner  := oOwner
    ::aPos    := aPos
 
-   ::WvgPartHandler:create( oParent, oOwner )
+   ::WvgPartHandler:create(oParent, oOwner)
 
    RETURN Self
 
@@ -139,9 +139,9 @@ METHOD WvgSysWindow:hide()
 METHOD WvgSysWindow:show()
    RETURN Self
 
-METHOD WvgSysWindow:SetPos( aPos )
+METHOD WvgSysWindow:SetPos(aPos)
 
-   wvg_SetWindowPosition( ::hWnd, aPos[1], aPos[2], .F. )
+   wvg_SetWindowPosition(::hWnd, aPos[1], aPos[2], .F.)
 
    RETURN Self
 
@@ -149,7 +149,7 @@ METHOD WvgSysWindow:currentPos()
 
    LOCAL aRect
 
-   aRect := wvg_GetWindowRect( ::hWnd )
+   aRect := wvg_GetWindowRect(::hWnd)
 
    RETURN { aRect[1], aRect[2] }
 
@@ -157,6 +157,6 @@ METHOD WvgSysWindow:currentSize()
 
    LOCAL aRect
 
-   aRect := wvg_GetClientRect( ::hWnd )
+   aRect := wvg_GetClientRect(::hWnd)
 
    RETURN { aRect[3] - aRect[1], aRect[4] - aRect[2] }

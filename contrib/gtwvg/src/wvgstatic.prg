@@ -67,19 +67,19 @@ CREATE CLASS WvgStatic INHERIT WvgWindow
 
    VAR    hBitmap
 
-   METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
-   METHOD configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
+   METHOD configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD destroy()
-   METHOD handleEvent( nMessage, aNM )
+   METHOD handleEvent(nMessage, aNM)
 
-   METHOD setCaption( xCaption, cDll )
+   METHOD setCaption(xCaption, cDll)
 
 ENDCLASS
 
-METHOD WvgStatic:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgStatic:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    /* SS_NOTIFY  SS_ETCHEDFRAME  SS_SUNKEN  SS_WHITERECT */
 
@@ -89,9 +89,9 @@ METHOD WvgStatic:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    RETURN Self
 
-METHOD WvgStatic:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgStatic:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::wvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
 #if 0
    SS_ETCHEDFRAME
@@ -108,16 +108,16 @@ METHOD WvgStatic:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    SWITCH ::type
    CASE WVGSTATIC_TYPE_TEXT
-      IF hb_bitAnd( ::options, WVGSTATIC_TEXT_LEFT ) == WVGSTATIC_TEXT_LEFT
+      IF hb_bitAnd(::options, WVGSTATIC_TEXT_LEFT) == WVGSTATIC_TEXT_LEFT
          ::style += SS_LEFT /*+ SS_LEFTNOWORDWRAP */
       ENDIF
-      IF hb_bitAnd( ::options, WVGSTATIC_TEXT_RIGHT ) == WVGSTATIC_TEXT_RIGHT
+      IF hb_bitAnd(::options, WVGSTATIC_TEXT_RIGHT) == WVGSTATIC_TEXT_RIGHT
          ::style += SS_RIGHT
       ENDIF
-      IF hb_bitAnd( ::options, WVGSTATIC_TEXT_CENTER ) == WVGSTATIC_TEXT_CENTER
+      IF hb_bitAnd(::options, WVGSTATIC_TEXT_CENTER) == WVGSTATIC_TEXT_CENTER
          ::style += SS_CENTER
       ENDIF
-      IF hb_bitAnd( ::options, WVGSTATIC_TEXT_WORDBREAK ) == WVGSTATIC_TEXT_WORDBREAK
+      IF hb_bitAnd(::options, WVGSTATIC_TEXT_WORDBREAK) == WVGSTATIC_TEXT_WORDBREAK
          ::style -= SS_LEFTNOWORDWRAP
       ENDIF
       EXIT
@@ -177,11 +177,11 @@ METHOD WvgStatic:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
 #if 1
    /* Options */
-   IF AScan( { WVGSTATIC_TYPE_FGNDFRAME, WVGSTATIC_TYPE_BGNDFRAME, WVGSTATIC_TYPE_HALFTONEFRAME }, ::type ) > 0
+   IF AScan({ WVGSTATIC_TYPE_FGNDFRAME, WVGSTATIC_TYPE_BGNDFRAME, WVGSTATIC_TYPE_HALFTONEFRAME }, ::type) > 0
       DO CASE
-      CASE hb_bitAnd( ::options, WVGSTATIC_FRAMETHIN ) == WVGSTATIC_FRAMETHIN
+      CASE hb_bitAnd(::options, WVGSTATIC_FRAMETHIN) == WVGSTATIC_FRAMETHIN
          ::style += WS_BORDER
-      CASE hb_bitAnd( ::options, WVGSTATIC_FRAMETHICK ) == WVGSTATIC_FRAMETHICK
+      CASE hb_bitAnd(::options, WVGSTATIC_FRAMETHICK) == WVGSTATIC_FRAMETHICK
          ::style += WS_DLGFRAME
       ENDCASE
    ENDIF
@@ -197,7 +197,7 @@ METHOD WvgStatic:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ENDIF
 #endif
 
-   ::oParent:addChild( Self )
+   ::oParent:addChild(Self)
 
    ::createControl()
 
@@ -208,11 +208,11 @@ METHOD WvgStatic:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ENDIF
    ::setPosAndSize()
 
-   ::setCaption( ::caption )
+   ::setCaption(::caption)
 
    RETURN Self
 
-METHOD WvgStatic:handleEvent( nMessage, aNM )
+METHOD WvgStatic:handleEvent(nMessage, aNM)
 
    SWITCH nMessage
 
@@ -223,18 +223,18 @@ METHOD WvgStatic:handleEvent( nMessage, aNM )
       IF HB_ISBLOCK(::sl_resize)
          Eval(::sl_resize, , , Self)
       ENDIF
-      AEval(::aChildren, {| o | o:handleEvent( HB_GTE_RESIZED, { 0, 0, 0, 0, 0 } ) })
+      AEval(::aChildren, {| o | o:handleEvent(HB_GTE_RESIZED, { 0, 0, 0, 0, 0 }) })
       RETURN EVENT_HANDELLED
 
    CASE HB_GTE_CTLCOLOR
       IF HB_ISNUMERIC(::clr_FG)
-         wvg_SetTextColor( aNM[1], ::clr_FG )
+         wvg_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
       IF HB_ISNUMERIC(::hBrushBG)
-         wvg_SetBkMode( aNM[1], 1 )
+         wvg_SetBkMode(aNM[1], 1)
          RETURN ::hBrushBG
       ELSE
-         RETURN wvg_GetCurrentBrush( aNM[1] )
+         RETURN wvg_GetCurrentBrush(aNM[1])
       ENDIF
       EXIT
 
@@ -249,35 +249,35 @@ METHOD WvgStatic:handleEvent( nMessage, aNM )
 METHOD PROCEDURE WvgStatic:destroy()
 
    IF ::hBitmap != NIL
-      wvg_DeleteObject( ::hBitmap )
+      wvg_DeleteObject(::hBitmap)
    ENDIF
    ::wvgWindow:destroy()
 
    RETURN
 
-METHOD WvgStatic:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+METHOD WvgStatic:configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::Initialize( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
+   ::Initialize(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    RETURN Self
 
-METHOD WvgStatic:setCaption( xCaption, cDll )
+METHOD WvgStatic:setCaption(xCaption, cDll)
 
-   HB_SYMBOL_UNUSED( cDll )
+   HB_SYMBOL_UNUSED(cDll)
 
    __defaultNIL(@xCaption, ::caption)
    ::caption := xCaption
 
    DO CASE
    CASE ::type == WVGSTATIC_TYPE_TEXT
-      wvg_SendMessageText( ::hWnd, WM_SETTEXT, 0, ::caption )
+      wvg_SendMessageText(::hWnd, WM_SETTEXT, 0, ::caption)
 
    CASE ::type == WVGSTATIC_TYPE_BITMAP
       IF ::hBitmap != nil
-         wvg_DeleteObject( ::hBitmap )
+         wvg_DeleteObject(::hBitmap)
       ENDIF
 
-      ::hBitmap := wvg_LoadImage( ::caption, iif(HB_ISNUMERIC(::caption), 1, 2) )
+      ::hBitmap := wvg_LoadImage(::caption, iif(HB_ISNUMERIC(::caption), 1, 2))
 
       wvg_SendMessage(::hWnd, STM_SETIMAGE, IMAGE_BITMAP, ::hBitmap)
 

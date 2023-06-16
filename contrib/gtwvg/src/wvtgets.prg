@@ -86,13 +86,13 @@ CREATE CLASS WvtGets INHERIT WvtObject
    VAR    GetList                                 INIT {}
    VAR    cDesc                                   INIT ""
 
-   METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
+   METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
    METHOD KillFocus()
    METHOD SetFocus()
-   METHOD HandleEvent( nKey )
-   METHOD AddGets( nRow, nCol, xVar, cPic, cColor, bValid, bWhen )
-   METHOD PaintBlock( nIndex )
+   METHOD HandleEvent(nKey)
+   METHOD AddGets(nRow, nCol, xVar, cPic, cColor, bValid, bWhen)
+   METHOD PaintBlock(nIndex)
    METHOD READ()
    METHOD Hilite()
    METHOD DeHilite()
@@ -101,9 +101,9 @@ CREATE CLASS WvtGets INHERIT WvtObject
 
 ENDCLASS
 
-METHOD WvtGets:New( oParent, nID, nTop, nLeft, nBottom, nRight )
+METHOD WvtGets:New(oParent, nID, nTop, nLeft, nBottom, nRight)
 
-   ::Super:New( oParent, DLG_OBJ_GETS, nID, nTop, nLeft, nBottom, nRight )
+   ::Super:New(oParent, DLG_OBJ_GETS, nID, nTop, nLeft, nBottom, nRight)
 
    RETURN Self
 
@@ -119,25 +119,25 @@ METHOD WvtGets:Create()
       __defaultNIL(@::aGetList[i][5], {|| .T. })
       __defaultNIL(@::aGetList[i][6], {|| .T. })
 
-      AAdd(::GetList, Get():New( ::aGetList[i][1], ::aGetList[i][2], {| v | iif(PCount() == 0, ::aGetList[i][3], ::aGetList[i][3] := v) }, "::aGetList[i][3]", ::aGetList[i][7] ))
+      AAdd(::GetList, Get():New(::aGetList[i][1], ::aGetList[i][2], {| v | iif(PCount() == 0, ::aGetList[i][3], ::aGetList[i][3] := v) }, "::aGetList[i][3]", ::aGetList[i][7]))
 
       ::GetList[i]:Display()
-      ::PaintBlock( i )
+      ::PaintBlock(i)
    NEXT
-   SetPos( nCurRow, nCurCol )
+   SetPos(nCurRow, nCurCol)
 
    ::Super:Create()
    ::Dehilite()
 
    RETURN Self
 
-METHOD WvtGets:PaintBlock( nIndex )
+METHOD WvtGets:PaintBlock(nIndex)
 
    LOCAL nLen, bPaint
 
    nLen   := Len(Transform(::aGetList[nIndex][3], ::aGetList[nIndex][4]))
 
-   bPaint := {|| wvt_DrawBoxGet( ::aGetList[nIndex][1], ::aGetList[nIndex][2], nLen ) }
+   bPaint := {|| wvt_DrawBoxGet(::aGetList[nIndex][1], ::aGetList[nIndex][2], nLen) }
 
    AAdd(::aPaint, { bPaint, ;
       { WVT_BLOCK_GETS, ::aGetList[nIndex][1] - 1, ::aGetList[nIndex][2] - 1, ;
@@ -153,13 +153,13 @@ METHOD WvtGets:KillFocus()
 
    RETURN Self
 
-METHOD WvtGets:AddGets( nRow, nCol, xVar, cPic, cColor, bValid, bWhen )
+METHOD WvtGets:AddGets(nRow, nCol, xVar, cPic, cColor, bValid, bWhen)
 
    AAdd(::aGetList, { nRow, nCol, xVar, cPic, bValid, bWhen, cColor })
 
    RETURN Self
 
-METHOD WvtGets:HandleEvent( nKey )
+METHOD WvtGets:HandleEvent(nKey)
 
    LOCAL lRet := .F.
 
@@ -173,24 +173,24 @@ METHOD WvtGets:HandleEvent( nKey )
 
 METHOD WvtGets:Read()
 
-   ReadModal( ::GetList, ::nCurGet )
+   ReadModal(::GetList, ::nCurGet)
 
    RETURN Self
 
 METHOD WvtGets:GetData()
    RETURN NIL
 
-METHOD WvtGets:SetData( /* aData */ )
+METHOD WvtGets:SetData(/* aData */)
    RETURN Self
 
 METHOD WvtGets:Hilite()
 
-   hb_DispOutAt( ::nTop, ::nLeft, PadR( " " + ::cDesc, ::nRight - ::nLeft + 1 ), ::cColorHilite )
+   hb_DispOutAt(::nTop, ::nLeft, PadR(" " + ::cDesc, ::nRight - ::nLeft + 1), ::cColorHilite)
 
    RETURN Self
 
 METHOD WvtGets:DeHilite()
 
-   hb_DispOutAt( ::nTop, ::nLeft, PadR( " " + ::cDesc, ::nRight - ::nLeft + 1 ), ::cColorDeHilite )
+   hb_DispOutAt(::nTop, ::nLeft, PadR(" " + ::cDesc, ::nRight - ::nLeft + 1), ::cColorDeHilite)
 
    RETURN Self
