@@ -147,7 +147,8 @@ METHOD WvgPartHandler:addChild(oWvg)
 
 METHOD WvgPartHandler:childFromName(nNameId)
 
-   LOCAL i, oWvg
+   LOCAL i
+   LOCAL oWvg
 
    FOR i := 1 TO Len(::aChildren)
       IF ::aChildren[i]:nNameID != NIL .AND. ::aChildren[i]:nNameID == nNameID
@@ -164,7 +165,7 @@ METHOD WvgPartHandler:removeChild(oChild)
 
    LOCAL n
 
-   IF (n := AScan(::aChildren, {| o | o == oChild })) > 0
+   IF (n := AScan(::aChildren, {|o|o == oChild})) > 0
       hb_ADel(::aChildren, n, .T.)
    ENDIF
 
@@ -174,7 +175,7 @@ METHOD WvgPartHandler:delChild(oWvg)
 
    LOCAL n
 
-   n := AScan(::aChildren, {| o | o == oWvg })
+   n := AScan(::aChildren, {|o|o == oWvg})
    IF n > 0
       oWvg:destroy()
       hb_ADel(::aChildren, n, .T.)
@@ -229,7 +230,11 @@ METHOD PROCEDURE WvgPartHandler:notifierBlock(...)
 /* This will be called by the WvgCrt() console for various events to be propagated to child controls */
 METHOD WvgPartHandler:notifier(nEvent, xParams)
 
-   LOCAL aPos, aMenuItem, nIndex, nCtrlID, oObj
+   LOCAL aPos
+   LOCAL aMenuItem
+   LOCAL nIndex
+   LOCAL nCtrlID
+   LOCAL oObj
    LOCAL nReturn := 0
 
    SWITCH nEvent
@@ -238,13 +243,13 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
 
       SWITCH xParams[1]
       CASE WM_MOUSEHOVER
-         aPos := { xParams[3], xParams[4] }
+         aPos := {xParams[3], xParams[4]}
          EXIT
       CASE WM_MOUSELEAVE
          /* Nothing */
          EXIT
       OTHERWISE
-         aPos := iif(::mouseMode == 2, { xParams[3], xParams[4] }, { xParams[5], xParams[6] })
+         aPos := iif(::mouseMode == 2, {xParams[3], xParams[4]}, {xParams[5], xParams[6]})
       ENDSWITCH
 
       SWITCH xParams[1]
@@ -326,7 +331,7 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
 
    CASE HB_GTE_SETFOCUS
 #if 0
-      AEval(::aChildren, {| o | wvg_InvalidateRect(o:hWnd) })
+      AEval(::aChildren, {|o|wvg_InvalidateRect(o:hWnd)})
 #endif
 
       IF HB_ISBLOCK(::sl_setInputFocus)
@@ -344,14 +349,14 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
 
    CASE HB_GTE_PAINT
 #if 0
-      AEval(::aChildren, {| o | wvg_InvalidateRect(o:hWnd) })
+      AEval(::aChildren, {|o|wvg_InvalidateRect(o:hWnd)})
 #endif
       EXIT
 
    CASE HB_GTE_GUIPARTS
       /* Eventually every window be checked if it falls within returned rectangle or not
          then it will avoid a lot of flickering */
-      AEval(::aChildren, {| o | wvg_InvalidateRect(o:hWnd) })
+      AEval(::aChildren, {|o|wvg_InvalidateRect(o:hWnd)})
       EXIT
 
    CASE HB_GTE_CLOSE
@@ -389,14 +394,14 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
 
    CASE HB_GTE_NOTIFY
       nCtrlID := xParams[1]
-      IF (nIndex := AScan(::aChildren, {| o | o:nID == nCtrlID })) > 0
+      IF (nIndex := AScan(::aChildren, {|o|o:nID == nCtrlID})) > 0
          RETURN ::aChildren[nIndex]:handleEvent(HB_GTE_NOTIFY, xParams)
       ENDIF
       EXIT
 
    CASE HB_GTE_COMMAND
       nCtrlID := xParams[2]
-      IF (nIndex := AScan(::aChildren, {| o | o:nID == nCtrlID })) > 0
+      IF (nIndex := AScan(::aChildren, {|o|o:nID == nCtrlID})) > 0
          RETURN ::aChildren[nIndex]:handleEvent(HB_GTE_COMMAND, xParams)
       ENDIF
       EXIT
@@ -433,13 +438,13 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
    CASE HB_GTE_RESIZED
       IF ::objType == objTypeDialog
          IF ::drawingArea:objType == objTypeDA
-            ::drawingArea:setPosAndSize({ 0, 0 }, ::currentSize(), .F.)
+            ::drawingArea:setPosAndSize({0, 0}, ::currentSize(), .F.)
          ENDIF
       ENDIF
       IF HB_ISBLOCK(::sl_resize)
-         Eval(::sl_resize, { xParams[1], xParams[2] }, { xParams[3], xParams[4] }, Self)
+         Eval(::sl_resize, {xParams[1], xParams[2]}, {xParams[3], xParams[4]}, Self)
       ENDIF
-      AEval(::aChildren, {| o | o:handleEvent(HB_GTE_RESIZED, { 0, 0, 0, 0, 0 }) })
+      AEval(::aChildren, {|o|o:handleEvent(HB_GTE_RESIZED, {0, 0, 0, 0, 0})})
       EXIT
 
    CASE HB_GTE_KEYTOITEM
@@ -459,13 +464,19 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
 /* This will be called if a control is assigned its own WndProc via ::SetWindowProcCallback() */
 METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
 
-   LOCAL nCtrlID, nNotifctn, hWndCtrl, nObj, aMenuItem, oObj, nReturn
+   LOCAL nCtrlID
+   LOCAL nNotifctn
+   LOCAL hWndCtrl
+   LOCAL nObj
+   LOCAL aMenuItem
+   LOCAL oObj
+   LOCAL nReturn
 
    SWITCH nMessage
 
    CASE WM_ERASEBKGND
       IF ::objType == objTypeDA .AND. !Empty(::hBrushBG)
-         ::handleEvent(HB_GTE_CTLCOLOR, { nwParam, nlParam })
+         ::handleEvent(HB_GTE_CTLCOLOR, {nwParam, nlParam})
       ENDIF
       EXIT
 
@@ -487,8 +498,8 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
          ENDIF
          RETURN 0
       ELSE
-         IF (nObj := AScan(::aChildren, {| o | o:nID == nCtrlID })) > 0
-            nReturn := ::aChildren[nObj]:handleEvent(HB_GTE_COMMAND, { nNotifctn, nCtrlID, hWndCtrl })
+         IF (nObj := AScan(::aChildren, {|o|o:nID == nCtrlID})) > 0
+            nReturn := ::aChildren[nObj]:handleEvent(HB_GTE_COMMAND, {nNotifctn, nCtrlID, hWndCtrl})
             IF HB_ISNUMERIC(nReturn) .AND. nReturn == 0
                RETURN 0
             ENDIF
@@ -497,8 +508,8 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
       EXIT
 
    CASE WM_NOTIFY
-      IF (nObj := AScan(::aChildren, {| o | o:nID == nwParam })) > 0
-         nReturn := ::aChildren[nObj]:handleEvent(HB_GTE_NOTIFY, { nwParam, nlParam })
+      IF (nObj := AScan(::aChildren, {|o|o:nID == nwParam})) > 0
+         nReturn := ::aChildren[nObj]:handleEvent(HB_GTE_NOTIFY, {nwParam, nlParam})
          DO CASE
          CASE HB_ISNUMERIC(nReturn) .AND. nReturn == EVENT_HANDELLED
             RETURN 0
@@ -517,7 +528,7 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
    CASE WM_CTLCOLORSTATIC
       oObj := ::findObjectByHandle(nlParam)
       IF HB_ISOBJECT(oObj)
-         nReturn := oObj:handleEvent(HB_GTE_CTLCOLOR, { nwParam, nlParam })
+         nReturn := oObj:handleEvent(HB_GTE_CTLCOLOR, {nwParam, nlParam})
          IF nReturn == EVENT_UNHANDELLED
             RETURN wvg_CallWindowProc(::nOldProc, hWnd, nMessage, nwParam, nlParam)
          ELSE
@@ -527,11 +538,11 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
       EXIT
 
    CASE WM_HSCROLL
-      ::handleEvent(HB_GTE_HSCROLL, { wvg_LOWORD(nwParam), wvg_HIWORD(nwParam), nlParam })
+      ::handleEvent(HB_GTE_HSCROLL, {wvg_LOWORD(nwParam), wvg_HIWORD(nwParam), nlParam})
       RETURN 0
 
    CASE WM_VSCROLL
-      IF ::handleEvent(HB_GTE_VSCROLL, { wvg_LOWORD(nwParam), wvg_HIWORD(nwParam), nlParam }) == EVENT_HANDELLED
+      IF ::handleEvent(HB_GTE_VSCROLL, {wvg_LOWORD(nwParam), wvg_HIWORD(nwParam), nlParam}) == EVENT_HANDELLED
          RETURN 0
       ENDIF
       EXIT
@@ -568,11 +579,11 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
 
    CASE WM_VKEYTOITEM
    CASE WM_CHARTOITEM
-      ::handleEvent(HB_GTE_ANY, { nMessage, nwParam, nlParam })
+      ::handleEvent(HB_GTE_ANY, {nMessage, nwParam, nlParam})
       EXIT
 
    OTHERWISE
-      IF ::handleEvent(HB_GTE_ANY, { nMessage, nwParam, nlParam }) == EVENT_HANDELLED
+      IF ::handleEvent(HB_GTE_ANY, {nMessage, nwParam, nlParam}) == EVENT_HANDELLED
          RETURN 0
       ENDIF
       EXIT

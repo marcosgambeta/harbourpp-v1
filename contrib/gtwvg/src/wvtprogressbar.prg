@@ -117,8 +117,8 @@ METHOD WvtProgressBar:Create()
    __defaultNIL(@::nTextColor, RGB(255, 255, 255))
    __defaultNIL(@::nBackColor, RGB(198, 198, 198))
 
-   ::bPaint := {|| ::Display() }
-   AAdd(::aPaint, { ::bPaint, { WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight } })
+   ::bPaint := {||::Display()}
+   AAdd(::aPaint, {::bPaint, {WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight}})
 
    ::Super:Create()
 

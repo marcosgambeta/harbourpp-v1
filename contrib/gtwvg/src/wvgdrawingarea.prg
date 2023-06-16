@@ -105,7 +105,7 @@ METHOD WvgDrawingArea:handleEvent(nMessage, aNM)
       IF HB_ISBLOCK(::sl_resize)
          Eval(::sl_resize, , , Self)
       ENDIF
-      AEval(::aChildren, {| o | o:handleEvent(HB_GTE_RESIZED, { 0, 0, 0, 0, 0 }) })
+      AEval(::aChildren, {|o|o:handleEvent(HB_GTE_RESIZED, {0, 0, 0, 0, 0})})
       RETURN EVENT_HANDELLED
 
    CASE nMessage == HB_GTE_CTLCOLOR
@@ -114,7 +114,7 @@ METHOD WvgDrawingArea:handleEvent(nMessage, aNM)
       ENDIF
       IF HB_ISNUMERIC(::hBrushBG)
          wvg_SetBkMode(aNM[1], 1)
-         wvg_FillRect(aNM[1], { 0, 0, ::currentSize()[1], ::currentSize()[2] }, ::hBrushBG)
+         wvg_FillRect(aNM[1], {0, 0, ::currentSize()[1], ::currentSize()[2]}, ::hBrushBG)
          RETURN EVENT_HANDELLED
       ENDIF
 

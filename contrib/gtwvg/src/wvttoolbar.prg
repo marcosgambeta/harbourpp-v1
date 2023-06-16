@@ -125,11 +125,10 @@ METHOD WvtToolBar:Create()
       ::lHidden := .T.
    ENDIF
 
-   AEval(::aObjects, {| o | o:lActive := ::lActive })
+   AEval(::aObjects, {|o|o:lActive := ::lActive})
 
-   ::bPaint := {|| ::PaintToolBar() }
-   AAdd(::aPaint, { ::bPaint, ;
-      { WVT_BLOCK_TOOLBAR, ::nTop, ::nLeft, ::nBottom, ::nRight } })
+   ::bPaint := {||::PaintToolBar()}
+   AAdd(::aPaint, {::bPaint, {WVT_BLOCK_TOOLBAR, ::nTop, ::nLeft, ::nBottom, ::nRight}})
 
    ::Super:Create()
 
@@ -155,7 +154,8 @@ METHOD WvtToolBar:PaintToolBar()
 
 METHOD WvtToolBar:AddButton(cFileImage, bBlock, cTooltip)
 
-   LOCAL oObj, nCol
+   LOCAL oObj
+   LOCAL nCol
 
    nCol := (::nBottom - ::nTop + 1) * 2
 
@@ -195,7 +195,7 @@ METHOD WvtToolBar:HoverOn()
       ::cScreen   := SaveScreen(::nTop, ::nLeft, ::nBottom, ::nRight)
       ::wScreen   := wvt_SaveScreen(::nTop, ::nLeft, ::nBottom, ::nRight)
 #endif
-      AEval(::aObjects, {| o | o:lActive := ::lActive })
+      AEval(::aObjects, {|o|o:lActive := ::lActive})
 
       ::Refresh()
    ENDIF
@@ -207,7 +207,7 @@ METHOD WvtToolBar:HoverOff()
    IF ::lFloating .AND. !::lHidden
       ::lHidden := .T.
       ::lActive := .F.
-      AEval(::aObjects, {| o | o:lActive := ::lActive })
+      AEval(::aObjects, {|o|o:lActive := ::lActive})
 #if 0
       RestScreen(::nTop, ::nLeft, ::nBottom, ::nRight, ::cScreen)
       wvt_RestScreen(::nTop, ::nLeft, ::nBottom, ::nRight, ::wScreen, .F.)

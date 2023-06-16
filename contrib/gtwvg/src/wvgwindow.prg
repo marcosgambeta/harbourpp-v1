@@ -141,8 +141,8 @@ CREATE CLASS WvgWindow INHERIT WvgPartHandler
 
    VAR    hWnd
    VAR    pWnd
-   VAR    aPos                                  INIT { 0, 0 }
-   VAR    aSize                                 INIT { 0, 0 }
+   VAR    aPos                                  INIT {0, 0}
+   VAR    aSize                                 INIT {0, 0}
    VAR    aPresParams                           INIT {}
    VAR    lHasInputFocus                        INIT .F.
    VAR    nFrameState                           INIT 0       /* normal */
@@ -315,7 +315,7 @@ METHOD WvgWindow:destroy()
    ENDIF
 
    IF Len(::aChildren) > 0
-      AEval(::aChildren, {| o | o:destroy() })
+      AEval(::aChildren, {|o|o:destroy()})
       ::aChildren := {}
    ENDIF
 
@@ -398,7 +398,7 @@ METHOD WvgWindow:destroy()
 
 METHOD WvgWindow:SetWindowProcCallback()
 
-   ::nOldProc := wvg_SetWindowProcBlock(::pWnd, {| h, m, w, l | ::ControlWndProc(h, m, w, l) })
+   ::nOldProc := wvg_SetWindowProcBlock(::pWnd, {|h, m, w, l|::ControlWndProc(h, m, w, l)})
 
    RETURN Self
 
@@ -586,8 +586,14 @@ METHOD WvgWindow:SetFont()
 
 METHOD WvgWindow:setFontCompoundName(xFont)
 
-   LOCAL cOldFont, s, n, nPoint, cFont, cAttr, cFace
-   LOCAL aAttr := { "normal", "italic", "bold" }
+   LOCAL cOldFont
+   LOCAL s
+   LOCAL n
+   LOCAL nPoint
+   LOCAL cFont
+   LOCAL cAttr
+   LOCAL cFace
+   LOCAL aAttr := {"normal", "italic", "bold"}
 
    cOldFont := ::fnt_COMMPOUNDNAME
 
@@ -597,7 +603,7 @@ METHOD WvgWindow:setFontCompoundName(xFont)
       IF !Empty(xFont)
          cFont := xFont
          s := Lower(cFont)
-         n := AScan(aAttr, {| e | At(e, cFont) > 0 })
+         n := AScan(aAttr, {|e|At(e, cFont) > 0})
          IF n > 0
             cAttr := aAttr[n]
             n := At(cAttr, s)
@@ -630,7 +636,7 @@ METHOD WvgWindow:currentPos()
 
    LOCAL aRect := wvg_GetWindowRect(::hWnd)
 
-   RETURN { aRect[1], aRect[2] }
+   RETURN {aRect[1], aRect[2]}
 
 METHOD WvgWindow:currentSize()
 
@@ -638,7 +644,7 @@ METHOD WvgWindow:currentSize()
 
    aRect := wvg_GetClientRect(::hWnd)
 
-   RETURN { aRect[3] - aRect[1], aRect[4] - aRect[2] }
+   RETURN {aRect[3] - aRect[1], aRect[4] - aRect[2]}
 
 METHOD WvgWindow:getHWND()
    RETURN ::hWnd
@@ -1121,7 +1127,7 @@ METHOD WvgWindow:findObjectByHandle(hWnd)
    LOCAL nObj
 
    IF Len(::aChildren) > 0
-      IF (nObj := AScan(::aChildren, {| o | o:hWnd == hWnd })) > 0
+      IF (nObj := AScan(::aChildren, {|o|o:hWnd == hWnd})) > 0
          RETURN ::aChildren[nObj]
       ENDIF
    ENDIF
@@ -1130,7 +1136,13 @@ METHOD WvgWindow:findObjectByHandle(hWnd)
 
 METHOD WvgWindow:getPosAndSize(aPs, aSz)
 
-   LOCAL nX, nY, nW, nH, aPos, aSize, aFontInfo
+   LOCAL nX
+   LOCAL nY
+   LOCAL nW
+   LOCAL nH
+   LOCAL aPos
+   LOCAL aSize
+   LOCAL aFontInfo
 
    __defaultNIL(@aPs, AClone(::aPos))
    __defaultNIL(@aSz, AClone(::aSize))
@@ -1171,11 +1183,11 @@ METHOD WvgWindow:getPosAndSize(aPs, aSz)
          IF nH < 0
             nH := Int(Abs(aSize[1]) * aFontInfo[6])
          ENDIF
-         RETURN { nX, nY, nW, nH }
+         RETURN {nX, nY, nW, nH}
       ENDIF
    ENDIF
 
-   RETURN { aPos[1], aPos[2], aSize[1], aSize[2] }
+   RETURN {aPos[1], aPos[2], aSize[1], aSize[2]}
 
 METHOD WvgWindow:toolTipText(cText)
 
@@ -1190,7 +1202,8 @@ METHOD WvgWindow:toolTipText(cText)
 
 METHOD WvgWindow:createControl()
 
-   LOCAL hWnd, aPosSz
+   LOCAL hWnd
+   LOCAL aPosSz
 
    ::nID := ::oParent:GetControlId()
 

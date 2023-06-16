@@ -177,7 +177,7 @@ METHOD WvgStatic:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
 #if 1
    /* Options */
-   IF AScan({ WVGSTATIC_TYPE_FGNDFRAME, WVGSTATIC_TYPE_BGNDFRAME, WVGSTATIC_TYPE_HALFTONEFRAME }, ::type) > 0
+   IF AScan({WVGSTATIC_TYPE_FGNDFRAME, WVGSTATIC_TYPE_BGNDFRAME, WVGSTATIC_TYPE_HALFTONEFRAME}, ::type) > 0
       DO CASE
       CASE hb_bitAnd(::options, WVGSTATIC_FRAMETHIN) == WVGSTATIC_FRAMETHIN
          ::style += WS_BORDER
@@ -223,7 +223,7 @@ METHOD WvgStatic:handleEvent(nMessage, aNM)
       IF HB_ISBLOCK(::sl_resize)
          Eval(::sl_resize, , , Self)
       ENDIF
-      AEval(::aChildren, {| o | o:handleEvent(HB_GTE_RESIZED, { 0, 0, 0, 0, 0 }) })
+      AEval(::aChildren, {|o|o:handleEvent(HB_GTE_RESIZED, {0, 0, 0, 0, 0})})
       RETURN EVENT_HANDELLED
 
    CASE HB_GTE_CTLCOLOR

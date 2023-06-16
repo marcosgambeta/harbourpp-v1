@@ -115,7 +115,8 @@ METHOD WvgStatusBar:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 METHOD WvgStatusBar:handleEvent(nMessage, aNM)
 
    LOCAL nHandled := 1
-   LOCAL nObj, aNMH
+   LOCAL nObj
+   LOCAL aNMH
 
    SWITCH nMessage
 
@@ -166,7 +167,8 @@ METHOD WvgStatusBar:handleEvent(nMessage, aNM)
 
 METHOD PROCEDURE WvgStatusBar:destroy()
 
-   LOCAL i, nItems
+   LOCAL i
+   LOCAL nItems
 
    IF (nItems := Len(::aItems)) > 0
       FOR i := 1 TO nItems
@@ -186,7 +188,8 @@ METHOD WvgStatusBar:configure(oParent, oOwner, aPos, aSize, aPresParams, lVisibl
 
 METHOD WvgStatusBar:addItem(cCaption, xImage, cDLL, nStyle, cKey, nMode)
 
-   LOCAL oPanel, lSuccess
+   LOCAL oPanel
+   LOCAL lSuccess
 
    __defaultNIL(@nMode, 0)
 
@@ -214,7 +217,7 @@ METHOD WvgStatusBar:delItem(nItemORcKey)
 
    DO CASE
    CASE HB_ISNUMERIC(nItemORcKey)
-      nIndex := AScan(::aItems, {| o | o:key == nItemORcKey })
+      nIndex := AScan(::aItems, {|o|o:key == nItemORcKey})
    CASE HB_ISNUMERIC(nItemORcKey)
       nIndex := nItemORcKey
    ENDCASE
@@ -228,11 +231,12 @@ METHOD WvgStatusBar:delItem(nItemORcKey)
 
 METHOD WvgStatusBar:getItem(nItemORcKey)
 
-   LOCAL nIndex := 0, oPanel
+   LOCAL nIndex := 0
+   LOCAL oPanel
 
    DO CASE
    CASE HB_ISSTRING(nItemORcKey)
-      nIndex := AScan(::aItems, {| o | o:key == nItemORcKey })
+      nIndex := AScan(::aItems, {|o|o:key == nItemORcKey})
    CASE HB_ISNUMERIC(nItemORcKey)
       nIndex := nItemORcKey
    ENDCASE

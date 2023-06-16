@@ -157,7 +157,7 @@ CREATE CLASS WvtDialog
    METHOD AddObject(oObject)                    INLINE AAdd(::aObjects, oObject)
    METHOD MaxRow()                                INLINE ::nRows - 1
    METHOD MaxCol()                                INLINE ::nCols - 1
-   METHOD OnTimer()                               INLINE AEval(::aObjects, {| o | o:OnTimer() })
+   METHOD OnTimer()                               INLINE AEval(::aObjects, {|o|o:OnTimer()})
 
 ENDCLASS
 
@@ -219,7 +219,9 @@ METHOD WvtDialog:New(nRows, nCols, cTitle, cFont, nFontHeight, nFontWidth, nFont
 
 METHOD WvtDialog:Create()
 
-   LOCAL aPalette, i, j
+   LOCAL aPalette
+   LOCAL i
+   LOCAL j
 
    ::oldToolTipActive := wvt_SetToolTipActive(.T.)
    IF ::nTooltipWidth != NIL
@@ -273,7 +275,7 @@ METHOD WvtDialog:Create()
    NEXT
    WvtSetPaint(wvg_GetPaint(::cPaintBlockID))
 
-   IF AScan(::aObjects, {| o | o:lTabStop }) > 0
+   IF AScan(::aObjects, {|o|o:lTabStop}) > 0
       ::lTabStops := .T.
    ENDIF
 
@@ -282,7 +284,7 @@ METHOD WvtDialog:Create()
    IF HB_ISOBJECT(::oMenu)
       wvt_SetMenu(::oMenu:hMenu)
       wvt_DrawMenuBar()
-      SetKey(wvt_SetMenuKeyEvent(), {|| ::ActivateMenu(::oMenu) })
+      SetKey(wvt_SetMenuKeyEvent(), {||::ActivateMenu(::oMenu)})
    ENDIF
 
    RETURN Self
@@ -293,7 +295,7 @@ METHOD PROCEDURE WvtDialog:Destroy()
       ::oMenu:Destroy()
    ENDIF
 
-   AEval(::aObjects, {| o | o:destroy() })
+   AEval(::aObjects, {|o|o:destroy()})
 
    wvt_SetToolTip(0, 0, 0, 0, "")
    wvt_SetToolTipActive(::oldToolTipActive)
@@ -353,7 +355,10 @@ METHOD WvtDialog:Execute()
 
 METHOD WvtDialog:Inkey()
 
-   LOCAL n, oObj, nID, i
+   LOCAL n
+   LOCAL oObj
+   LOCAL nID
+   LOCAL i
 
    ::lEventHandled := .F.
    ::nUseObj       := 0
@@ -434,7 +439,7 @@ METHOD WvtDialog:Inkey()
                oObj := ::aObjects[::nObjOver]
                IF oObj:oParent:className() == "WVTBROWSE"
                   nID := oObj:oParent:nID
-                  IF (n := AScan(::aObjects, {| o | o:nID == nID })) > 0
+                  IF (n := AScan(::aObjects, {|o|o:nID == nID})) > 0
                      ::nCurObj := n
                   ENDIF
                ENDIF
@@ -534,7 +539,7 @@ METHOD WvtDialog:Inkey()
       IF !::lEventHandled
          IF ::nCurObj > 0
             IF !Empty(::aDialogKeys)
-               IF (n := AScan(::aDialogKeys, {| e_ | e_[1] == ::nKey })) > 0
+               IF (n := AScan(::aDialogKeys, {|e_|e_[1] == ::nKey})) > 0
                   Eval(::aDialogKeys[n][2], Self, ::oCurObj)
                ENDIF
             ENDIF
@@ -568,11 +573,8 @@ METHOD WvtDialog:MouseOver()
    LOCAL mCol := MCol()
    LOCAL nObj
 
-   nObj := AScan(::aObjects, ;
-      {| o | o:nType != DLG_OBJ_STATIC               .AND. ;
-      o:nType != DLG_OBJ_TOOLBAR              .AND. ;
-      mRow >= o:nTop  .AND. mRow <= o:nBottom .AND. ;
-      mCol >= o:nLeft .AND. mCol <= o:nRight      })
+   nObj := AScan(::aObjects, {|o|o:nType != DLG_OBJ_STATIC .AND. o:nType != DLG_OBJ_TOOLBAR .AND. ;
+      mRow >= o:nTop  .AND. mRow <= o:nBottom .AND. mCol >= o:nLeft .AND. mCol <= o:nRight})
 
    ::nObjOver := nObj
    ::oObjOver := iif(nObj > 0, ::aObjects[nObj], NIL)
@@ -591,7 +593,8 @@ METHOD WvtDialog:Update()
 
 METHOD WvtDialog:CreateObjects()
 
-   LOCAL i, nObjs
+   LOCAL i
+   LOCAL nObjs
 
    nObjs := Len(::aObjects)
 

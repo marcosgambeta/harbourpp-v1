@@ -116,9 +116,8 @@ METHOD WvtLabel:Create(lConfg)
       ::lUnderline, ::lStrikeout, ::nCharSet, ::nFontQuality, ::nAngle)
    IF ::hFont != 0
       IF !lConfg
-         ::bPaint := {|| wvt_DrawLabelObj(::nTop, ::nLeft, ::nBottom, ::nRight, ;
-            ::Text, ::nAlignHorz, ::nAlignVert, ::nTextColor, ::nBackColor, ::hFont) }
-         AAdd(::aPaint, { ::bPaint, { WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight } })
+         ::bPaint := {||wvt_DrawLabelObj(::nTop, ::nLeft, ::nBottom, ::nRight, ::Text, ::nAlignHorz, ::nAlignVert, ::nTextColor, ::nBackColor, ::hFont)}
+         AAdd(::aPaint, {::bPaint, {WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight}})
       ENDIF
    ENDIF
 

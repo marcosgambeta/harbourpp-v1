@@ -76,7 +76,7 @@ CREATE CLASS WvgActiveXControl INHERIT WvgWindow
 
    VAR    lSubStdEvents                      INIT .F.
 
-   VAR    hEvents                            INIT { => }
+   VAR    hEvents                            INIT {=>}
    VAR    hContainer
 
    VAR    ClassName
@@ -118,7 +118,8 @@ METHOD WvgActiveXControl:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible
 
 METHOD WvgActiveXControl:Create(oParent, oOwner, aPos, aSize, aPresParams, lVisible, cCLSID, cLicense)
 
-   LOCAL hObj, hWnd
+   LOCAL hObj
+   LOCAL hWnd
 
    ::WvgWindow:create(@oParent, @oOwner, aPos, aSize, aPresParams, lVisible)
 
@@ -155,7 +156,7 @@ METHOD WvgActiveXControl:Create(oParent, oOwner, aPos, aSize, aPresParams, lVisi
    __axDoVerb(::pWnd, -4)
 
    IF !Empty(::hEvents)
-      ::oOle:__hSink := __axRegisterHandler(::oOle:__hObj, {| nEvent, ... | ::execEvent(nEvent, ...) })
+      ::oOle:__hSink := __axRegisterHandler(::oOle:__hObj, {|nEvent, ...|::execEvent(nEvent, ...)})
    ENDIF
 
 #if 0
@@ -182,9 +183,9 @@ METHOD PROCEDURE WvgActiveXControl:execEvent(nEvent, ...)
 
 #if 0
    LOCAL cEvents := hb_ValToStr(nEvent) + ", "
-   LOCAL aEvents := { ... }
+   LOCAL aEvents := {...}
 
-   AEval(aEvents, {| xEvent | cEvents += hb_ValToStr(xEvent) + ", " })
+   AEval(aEvents, {|xEvent|cEvents += hb_ValToStr(xEvent) + ", "})
    hb_traceLog(cEvents)
 #endif
 

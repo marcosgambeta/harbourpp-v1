@@ -146,8 +146,8 @@ CREATE CLASS WvgCrt INHERIT WvgWindow, WvgPartHandler
    VAR    ClassName                             INIT "WVGCRT"
    VAR    drawingArea
    VAR    hWnd
-   VAR    aPos                                  INIT { 0, 0 }
-   VAR    aSize                                 INIT { 24, 79 }
+   VAR    aPos                                  INIT {0, 0}
+   VAR    aSize                                 INIT {24, 79}
    VAR    aPresParams                           INIT {}
    VAR    lHasInputFocus                        INIT .F.
    VAR    nFrameState                           INIT 0  /* normal */
@@ -290,8 +290,8 @@ METHOD WvgCrt:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
       ::pGT := hb_gtSelect()
    ENDIF
 
-   hb_gtInfo(HB_GTI_NOTIFIERBLOCKGUI, {| nEvent, ... | ::notifier(nEvent, ...)      })
-   hb_gtInfo(HB_GTI_NOTIFIERBLOCK   , {| nEvent, ... | ::notifierBlock(nEvent, ...) })
+   hb_gtInfo(HB_GTI_NOTIFIERBLOCKGUI, {|nEvent, ...|::notifier(nEvent, ...)})
+   hb_gtInfo(HB_GTI_NOTIFIERBLOCK, {|nEvent, ...|::notifierBlock(nEvent, ...)})
 
    IF ::lModal
       ::style := WS_POPUP + WS_CAPTION + WS_SYSMENU
@@ -301,9 +301,8 @@ METHOD WvgCrt:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    ENDIF
 
    hb_gtInfo(HB_GTI_RESIZABLE, ::resizable)
-   hb_gtInfo(HB_GTI_PRESPARAMS, { ::exStyle, ::style, ::aPos[1], ::aPos[2], ;
-      ::maxRow + 1, ::maxCol + 1, ::pGTp, .F., lRowCol, HB_WNDTYPE_CRT })
-   hb_gtInfo(HB_GTI_SETFONT, { ::fontName, ::fontHeight, ::fontWidth })
+   hb_gtInfo(HB_GTI_PRESPARAMS, {::exStyle, ::style, ::aPos[1], ::aPos[2], ::maxRow + 1, ::maxCol + 1, ::pGTp, .F., lRowCol, HB_WNDTYPE_CRT})
+   hb_gtInfo(HB_GTI_SETFONT, {::fontName, ::fontHeight, ::fontWidth})
 
    IF HB_ISNUMERIC(::icon)
       hb_gtInfo(HB_GTI_ICONRES, ::icon)
@@ -358,7 +357,7 @@ METHOD WvgCrt:destroy()
    ENDIF
 
    IF Len(::aChildren) > 0
-      AEval(::aChildren, {| o | o:destroy() })
+      AEval(::aChildren, {|o|o:destroy()})
       ::aChildren := {}
    ENDIF
 
@@ -380,7 +379,7 @@ METHOD WvgCrt:currentPos()
    RETURN Self
 
 METHOD WvgCrt:currentSize()
-   RETURN { hb_gtInfo(HB_GTI_SCREENWIDTH), hb_gtInfo(HB_GTI_SCREENHEIGHT) }
+   RETURN {hb_gtInfo(HB_GTI_SCREENWIDTH), hb_gtInfo(HB_GTI_SCREENHEIGHT)}
 
 METHOD WvgCrt:captureMouse()
    RETURN Self

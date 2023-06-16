@@ -83,7 +83,7 @@ CREATE CLASS WvtToolButton INHERIT WvtObject
    VAR    cFileImage
    VAR    nCurState             INIT 0
    VAR    nBtnType              INIT TLB_BUTTON_TYPE_IMAGE
-   VAR    aPxlOffSet            INIT { 0, -1, -3, 1 }
+   VAR    aPxlOffSet            INIT {0, -1, -3, 1}
 
    METHOD New(oParent)
    METHOD create()
@@ -104,9 +104,8 @@ METHOD WvtToolButton:New(oParent)
 
 METHOD WvtToolButton:Create()
 
-   ::bPaint := {|| ::PaintButton() }
-   AAdd(::aPaint, { ::bPaint, ;
-      { WVT_BLOCK_BUTTON, ::nTop, ::nLeft, ::nBottom, ::nRight } })
+   ::bPaint := {||::PaintButton()}
+   AAdd(::aPaint, {::bPaint, {WVT_BLOCK_BUTTON, ::nTop, ::nLeft, ::nBottom, ::nRight}})
 
    ::Super:Create()
 
@@ -124,7 +123,7 @@ METHOD WvtToolButton:PaintButton()
 
    IF ::lActive
       IF ::nBtnType == TLB_BUTTON_TYPE_IMAGE
-         wvt_DrawImage(::nTop, ::nLeft, ::nBottom, ::nRight, ::cFileImage, { 4, 4, -6, -4 })
+         wvt_DrawImage(::nTop, ::nLeft, ::nBottom, ::nRight, ::cFileImage, {4, 4, -6, -4})
       ELSE
          wvt_DrawLine(::nTop, ::nLeft, ::nBottom, ::nRight, 1, 1, , , , ::oParent:nRGBSep)
       ENDIF

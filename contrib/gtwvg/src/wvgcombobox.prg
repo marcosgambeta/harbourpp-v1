@@ -279,7 +279,7 @@ METHOD WvgComboBox:sleSize()
       RETURN ::oSLE:currentSize()
    ENDIF
 
-   RETURN { 0, 0 }
+   RETURN {0, 0}
 
 METHOD WvgComboBox:listBoxSize()
 
@@ -287,7 +287,7 @@ METHOD WvgComboBox:listBoxSize()
       RETURN ::oListBox:currentSize()
    ENDIF
 
-   RETURN { 0, 0 }
+   RETURN {0, 0}
 
 METHOD WvgComboBox:setIcon(nItem, cIcon)
 

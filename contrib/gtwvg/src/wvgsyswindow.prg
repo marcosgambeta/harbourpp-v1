@@ -72,7 +72,7 @@ CREATE CLASS WvgSysWindow INHERIT WvgPartHandler
    METHOD currentPos()
    METHOD currentSize()
 
-   VAR    aPos                                  INIT { 0, 0 }
+   VAR    aPos                                  INIT {0, 0}
 
    VAR    hWnd                                  PROTECTED
    VAR    nOldProc                              PROTECTED
@@ -151,7 +151,7 @@ METHOD WvgSysWindow:currentPos()
 
    aRect := wvg_GetWindowRect(::hWnd)
 
-   RETURN { aRect[1], aRect[2] }
+   RETURN {aRect[1], aRect[2]}
 
 METHOD WvgSysWindow:currentSize()
 
@@ -159,4 +159,4 @@ METHOD WvgSysWindow:currentSize()
 
    aRect := wvg_GetClientRect(::hWnd)
 
-   RETURN { aRect[3] - aRect[1], aRect[4] - aRect[2] }
+   RETURN {aRect[3] - aRect[1], aRect[4] - aRect[2]}

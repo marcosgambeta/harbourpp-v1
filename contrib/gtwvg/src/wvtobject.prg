@@ -145,19 +145,19 @@ CREATE CLASS WvtObject
    ASSIGN ToolTip(cTip)                           INLINE ::cToolTip := cTip
 
    VAR    bHandleEvent
-   VAR    bOnCreate                               INIT {|| NIL }
-   VAR    bOnSelect                               INIT {|| NIL }
-   VAR    bOnFocus                                INIT {|| NIL }
-   VAR    bOnRefresh                              INIT {|| NIL }
-   VAR    bOnLeftUp                               INIT {|| NIL }
-   VAR    bOnLeftDown                             INIT {|| .F. }
-   VAR    bOnMMLeftDown                           INIT {|| NIL }
-   VAR    bOnLeftPressed                          INIT {|| NIL }
-   VAR    bTooltip                                INIT {|| NIL }
-   VAR    bSaveSettings                           INIT {|| NIL }
-   VAR    bRestSettings                           INIT {|| NIL }
-   VAR    bOnHilite                               INIT {|| NIL }
-   VAR    bOnDeHilite                             INIT {|| NIL }
+   VAR    bOnCreate                               INIT {||NIL}
+   VAR    bOnSelect                               INIT {||NIL}
+   VAR    bOnFocus                                INIT {||NIL}
+   VAR    bOnRefresh                              INIT {||NIL}
+   VAR    bOnLeftUp                               INIT {||NIL}
+   VAR    bOnLeftDown                             INIT {||.F.}
+   VAR    bOnMMLeftDown                           INIT {||NIL}
+   VAR    bOnLeftPressed                          INIT {||NIL}
+   VAR    bTooltip                                INIT {||NIL}
+   VAR    bSaveSettings                           INIT {||NIL}
+   VAR    bRestSettings                           INIT {||NIL}
+   VAR    bOnHilite                               INIT {||NIL}
+   VAR    bOnDeHilite                             INIT {||NIL}
 
    ACCESS nChildren                               INLINE Len(::aChildren)
    VAR    nIndexOrder
@@ -298,7 +298,8 @@ METHOD WvtObject:Destroy()
 
 METHOD WvtObject:CreatePopup()
 
-   LOCAL i, nID
+   LOCAL i
+   LOCAL nID
 
    IF !Empty(::aPopup) .AND. ::hPopup == NIL
       ::hPopup := wvt_CreatePopupMenu()
@@ -317,15 +318,17 @@ METHOD WvtObject:CreatePopup()
 
 METHOD WvtObject:ShowPopup()
 
-   LOCAL lRet := .F., nRet, n, aPos
+   LOCAL lRet := .F.
+   LOCAL nRet
+   LOCAL n
+   LOCAL aPos
 
    IF ::hPopup != NIL
       aPos := wvt_GetCursorPos()
 
-      nRet := wvt_TrackPopupMenu(::hPopup, TPM_CENTERALIGN + TPM_RETURNCMD, ;
-         aPos[1], aPos[2], 0, wvt_GetWindowHandle())
+      nRet := wvt_TrackPopupMenu(::hPopup, TPM_CENTERALIGN + TPM_RETURNCMD, aPos[1], aPos[2], 0, wvt_GetWindowHandle())
       IF nRet > 0
-         IF (n := AScan(::aPopup, {| e_ | e_[3] == nRet })) > 0
+         IF (n := AScan(::aPopup, {|e_|e_[3] == nRet})) > 0
             lRet := .T.
 
             IF HB_ISBLOCK(::aPopup[n][2])

@@ -264,7 +264,9 @@ METHOD WvgMLE:clear()
 
 METHOD WvgMLE:copyMarked()
 
-   LOCAL n, nB, nE
+   LOCAL n
+   LOCAL nB
+   LOCAL nE
 
    n := ::sendMessage(EM_GETSEL)
    nB := wvg_LOWORD(n)
@@ -278,7 +280,10 @@ METHOD WvgMLE:copyMarked()
 
 METHOD WvgMLE:cutMarked()
 
-   LOCAL n, nB, nE, cText
+   LOCAL n
+   LOCAL nB
+   LOCAL nE
+   LOCAL cText
 
    n := ::sendMessage(EM_GETSEL)
    nB := wvg_LOWORD(n)

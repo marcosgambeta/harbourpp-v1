@@ -131,18 +131,17 @@ METHOD WvgHTMLViewer:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::wvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::mapEvent(evBeforeNavigate,   {| cURL, Flags, TFName, PData, Headers | ;
-      ::xBeforeNavigate( cURL, Flags, TFName, PData, Headers ) })
+   ::mapEvent(evBeforeNavigate,   {|cURL, Flags, TFName, PData, Headers|::xBeforeNavigate(cURL, Flags, TFName, PData, Headers)})
 
-   ::mapEvent(evStatusTextChange, {| cText| ::xStatusTextChange( cText ) })
+   ::mapEvent(evStatusTextChange, {|cText|::xStatusTextChange(cText)})
 
-   ::mapEvent(evNavigateComplete, {| cURL | ::xNavigateComplete( cURL ) })
+   ::mapEvent(evNavigateComplete, {|cURL|::xNavigateComplete(cURL)})
 
-   ::mapEvent(evProgressChange, {| nProgress, nProgMax | ::xProgressChange( nProgress, nProgMax ) })
+   ::mapEvent(evProgressChange, {|nProgress, nProgMax|::xProgressChange(nProgress, nProgMax)})
 
-   ::mapEvent(evTitleChange, {| cTitle | ::xTitleChange( cTitle ) })
+   ::mapEvent(evTitleChange, {|cTitle|::xTitleChange(cTitle)})
 
-   ::mapEvent(evDocumentComplete, {| cURI | ::xDocumentComplete( cURI ) })
+   ::mapEvent(evDocumentComplete, {|cURI|::xDocumentComplete(cURI)})
 
    ::WvgActiveXControl:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 

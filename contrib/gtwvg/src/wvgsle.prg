@@ -113,7 +113,7 @@ METHOD WvgSLE:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
 METHOD WvgSLE:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   LOCAL es_ := { ES_LEFT, ES_RIGHT, ES_CENTER }
+   LOCAL es_ := {ES_LEFT, ES_RIGHT, ES_CENTER}
 
    ::wvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
@@ -260,7 +260,9 @@ METHOD WvgSLE:clear()
 
 METHOD WvgSLE:copyMarked()
 
-   LOCAL n, nB, nE
+   LOCAL n
+   LOCAL nB
+   LOCAL nE
 
    n := ::sendMessage(EM_GETSEL)
    nB := wvg_LOWORD(n)
@@ -274,7 +276,10 @@ METHOD WvgSLE:copyMarked()
 
 METHOD WvgSLE:cutMarked()
 
-   LOCAL n, nB, nE, cText
+   LOCAL n
+   LOCAL nB
+   LOCAL nE
+   LOCAL cText
 
    n := ::sendMessage(EM_GETSEL)
    nB := wvg_LOWORD(n)

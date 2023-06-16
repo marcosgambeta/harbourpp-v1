@@ -110,11 +110,11 @@ CREATE CLASS WvtScrollBar INHERIT WvtObject
    VAR    bCurrent
    VAR    lHidden                                 INIT .T.
 
-   VAR    aPxlBtnTop                              INIT { 0, 0, 0, 0 }
-   VAR    aPxlBtnLft                              INIT { 0, 0, 0, 0 }
-   VAR    aPxlBtnBtm                              INIT { 0, 0, 0, 0 }
-   VAR    aPxlBtnRgt                              INIT { 0, 0, 0, 0 }
-   VAR    aPxlScroll                              INIT { 0, 0, 0, 0 }
+   VAR    aPxlBtnTop                              INIT {0, 0, 0, 0}
+   VAR    aPxlBtnLft                              INIT {0, 0, 0, 0}
+   VAR    aPxlBtnBtm                              INIT {0, 0, 0, 0}
+   VAR    aPxlBtnRgt                              INIT {0, 0, 0, 0}
+   VAR    aPxlScroll                              INIT {0, 0, 0, 0}
 
    VAR    lLeftDown                               INIT .F.
    VAR    lOnThumb                                INIT .F.
@@ -175,11 +175,11 @@ METHOD wvtScrollbar:Create()
       ::nCurrent     := Eval(::bCurrent)
       ::ThumbPos()
 
-      ::bBtnLeftTop := {|| wvt_DrawScrollButton(::nBtn1Top, ::nBtn1Left, ::nBtn1Bottom, ::nBtn1Right, ::aPxlBtnTop, 1) }
-      ::bBtnRightBottom := {|| wvt_DrawScrollButton(::nBtn2Top, ::nBtn2Left, ::nBtn2Bottom, ::nBtn2Right, ::aPxlBtnBtm, 3) }
-      ::bBtnScroll := {|| wvt_DrawScrollThumbVert(::nSTop, ::nSLeft, ::nSBottom, ::nSRight, ::aPxlScroll, ::nThumbPos) }
-      ::bBtnLeftTopDep := {|| wvt_DrawScrollButton(::nBtn1Top, ::nBtn1Left, ::nBtn1Bottom, ::nBtn1Right, ::aPxlBtnTop, 1, .T.) }
-      ::bBtnRightBottomDep := {|| wvt_DrawScrollButton(::nBtn2Top, ::nBtn2Left, ::nBtn2Bottom, ::nBtn2Right, ::aPxlBtnBtm, 3, .T.) }
+      ::bBtnLeftTop := {||wvt_DrawScrollButton(::nBtn1Top, ::nBtn1Left, ::nBtn1Bottom, ::nBtn1Right, ::aPxlBtnTop, 1)}
+      ::bBtnRightBottom := {||wvt_DrawScrollButton(::nBtn2Top, ::nBtn2Left, ::nBtn2Bottom, ::nBtn2Right, ::aPxlBtnBtm, 3)}
+      ::bBtnScroll := {||wvt_DrawScrollThumbVert(::nSTop, ::nSLeft, ::nSBottom, ::nSRight, ::aPxlScroll, ::nThumbPos)}
+      ::bBtnLeftTopDep := {||wvt_DrawScrollButton(::nBtn1Top, ::nBtn1Left, ::nBtn1Bottom, ::nBtn1Right, ::aPxlBtnTop, 1, .T.)}
+      ::bBtnRightBottomDep := {||wvt_DrawScrollButton(::nBtn2Top, ::nBtn2Left, ::nBtn2Bottom, ::nBtn2Right, ::aPxlBtnBtm, 3, .T.)}
 
    ELSE
       __defaultNIL(@::nBottom, ::nTop)
@@ -210,18 +210,18 @@ METHOD wvtScrollbar:Create()
 
       ::ThumbPos()
 
-      ::bBtnLeftTop := {|| wvt_DrawScrollButton(::nBtn1Top, ::nBtn1Left, ::nBtn1Bottom, ::nBtn1Right, ::aPxlBtnLft, 2) }
-      ::bBtnRightBottom := {|| wvt_DrawScrollButton(::nBtn2Top, ::nBtn2Left, ::nBtn2Bottom, ::nBtn2Right, ::aPxlBtnRgt, 4) }
-      ::bBtnScroll := {|| wvt_DrawScrollThumbHorz(::nSTop, ::nSLeft, ::nSBottom, ::nSRight, ::aPxlScroll, ::nThumbPos) }
-      ::bBtnLeftTopDep := {|| wvt_DrawScrollButton(::nBtn1Top, ::nBtn1Left, ::nBtn1Bottom, ::nBtn1Right, ::aPxlBtnLft, 2, .T.) }
-      ::bBtnRightBottomDep := {|| wvt_DrawScrollButton(::nBtn2Top, ::nBtn2Left, ::nBtn2Bottom, ::nBtn2Right, ::aPxlBtnRgt, 4, .T.) }
+      ::bBtnLeftTop := {||wvt_DrawScrollButton(::nBtn1Top, ::nBtn1Left, ::nBtn1Bottom, ::nBtn1Right, ::aPxlBtnLft, 2)}
+      ::bBtnRightBottom := {||wvt_DrawScrollButton(::nBtn2Top, ::nBtn2Left, ::nBtn2Bottom, ::nBtn2Right, ::aPxlBtnRgt, 4)}
+      ::bBtnScroll := {||wvt_DrawScrollThumbHorz(::nSTop, ::nSLeft, ::nSBottom, ::nSRight, ::aPxlScroll, ::nThumbPos)}
+      ::bBtnLeftTopDep := {||wvt_DrawScrollButton(::nBtn1Top, ::nBtn1Left, ::nBtn1Bottom, ::nBtn1Right, ::aPxlBtnLft, 2, .T.)}
+      ::bBtnRightBottomDep := {||wvt_DrawScrollButton(::nBtn2Top, ::nBtn2Left, ::nBtn2Bottom, ::nBtn2Right, ::aPxlBtnRgt, 4, .T.)}
 
    ENDIF
 
-   ::bOnLeftUp      := {|| ::HandleEvent(K_LBUTTONUP) }
-   ::bOnLeftDown    := {|| ::HandleEvent(K_LBUTTONDOWN), .F. }
-   ::bOnMMLeftDown  := {|| ::HandleEvent(K_MMLEFTDOWN) }
-   ::bOnLeftPressed := {|| ::HandleEvent(K_LBUTTONPRESSED) }
+   ::bOnLeftUp      := {||::HandleEvent(K_LBUTTONUP)}
+   ::bOnLeftDown    := {||::HandleEvent(K_LBUTTONDOWN), .F.}
+   ::bOnMMLeftDown  := {||::HandleEvent(K_MMLEFTDOWN)}
+   ::bOnLeftPressed := {||::HandleEvent(K_LBUTTONPRESSED)}
 
    Eval(::bBtnLeftTop)
    Eval(::bBtnRightBottom)
@@ -313,7 +313,9 @@ METHOD wvtScrollbar:SetPos(nTotal, nCurrent)
 
 METHOD wvtScrollbar:ThumbPos()
 
-   LOCAL nNewPos, nRecPerUnit, nCurUnit
+   LOCAL nNewPos
+   LOCAL nRecPerUnit
+   LOCAL nCurUnit
 
    IF ::nBarType == WVT_SCROLLBAR_VERT
       nRecPerUnit := ::nTotal / ::nScrollUnits
@@ -377,9 +379,11 @@ METHOD wvtScrollbar:SetTooltip()
 
 METHOD wvtScrollbar:HandleEvent(nKey)
 
-   LOCAL nmRow, nmCol, nOff
+   LOCAL nmRow
+   LOCAL nmCol
+   LOCAL nOff
    LOCAL lHit  := .F.
-   LOCAL mKeys_ := { K_LBUTTONDOWN, K_LBUTTONUP, K_MMLEFTDOWN, K_LBUTTONPRESSED }
+   LOCAL mKeys_ := {K_LBUTTONDOWN, K_LBUTTONUP, K_MMLEFTDOWN, K_LBUTTONPRESSED}
 
    IF AScan(mKeys_, nKey) == 0
       RETURN .F.

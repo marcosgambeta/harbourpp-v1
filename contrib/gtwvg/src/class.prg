@@ -104,7 +104,9 @@ ENDCLASS
 
 METHOD TBrowseWvg:SetVisible()
 
-   LOCAL lFirst, aCol, nColPos
+   LOCAL lFirst
+   LOCAL aCol
+   LOCAL nColPos
 
    ::Super:SetVisible()
    ::aColumnsSep := {}

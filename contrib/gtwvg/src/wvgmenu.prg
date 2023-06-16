@@ -106,7 +106,8 @@ METHOD WvgMenu:setTitle(cTitle)
 
 METHOD WvgMenu:Popup(oXbp, aPos, nDefaultItem, nControl)
 
-   LOCAL nCmd, aMenuItem
+   LOCAL nCmd
+   LOCAL aMenuItem
 
    HB_SYMBOL_UNUSED(nDefaultItem)
    HB_SYMBOL_UNUSED(nControl)

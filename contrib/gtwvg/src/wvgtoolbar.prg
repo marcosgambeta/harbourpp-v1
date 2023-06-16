@@ -180,7 +180,8 @@ METHOD WvgToolBar:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
 METHOD WvgToolBar:handleEvent(nMessage, aNM)
 
-   LOCAL nObj, aNMMouse
+   LOCAL nObj
+   LOCAL aNMMouse
 
    SWITCH nMessage
 
@@ -200,7 +201,7 @@ METHOD WvgToolBar:handleEvent(nMessage, aNM)
       DO CASE
 
       CASE aNMMouse[NMH_code] == NM_CLICK
-         IF (nObj := AScan(::aItems, {| e_ | e_[1] == aNMMouse[NMH_dwItemSpec] })) > 0
+         IF (nObj := AScan(::aItems, {|e_|e_[1] == aNMMouse[NMH_dwItemSpec]})) > 0
             IF HB_ISBLOCK(::sl_lbClick)
                IF ::isParentCrt()
                   ::oParent:setFocus()
@@ -223,7 +224,8 @@ METHOD WvgToolBar:handleEvent(nMessage, aNM)
 
 METHOD PROCEDURE WvgToolBar:destroy()
 
-   LOCAL i, nItems
+   LOCAL i
+   LOCAL nItems
 
    IF (nItems := Len(::aItems)) > 0
       FOR i := 1 TO nItems
@@ -258,7 +260,9 @@ METHOD WvgToolBar:sendToolbarMessage(nMsg, p1, p2)
 
 METHOD WvgToolBar:addItem(cCaption, xImage, xDisabledImage, xHotImage, cDLL, nStyle, cKey, nMapRGB)
 
-   LOCAL oBtn, pBitmap, nBtn
+   LOCAL oBtn
+   LOCAL pBitmap
+   LOCAL nBtn
 
    HB_SYMBOL_UNUSED(xDisabledImage)
    HB_SYMBOL_UNUSED(xHotImage)
@@ -326,7 +330,7 @@ METHOD WvgToolBar:addItem(cCaption, xImage, xDisabledImage, xHotImage, cDLL, nSt
 
    ENDIF
 
-   AAdd(::aItems, { oBtn:command, oBtn })
+   AAdd(::aItems, {oBtn:command, oBtn})
 
    RETURN oBtn
 

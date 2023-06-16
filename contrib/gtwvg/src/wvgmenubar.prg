@@ -199,7 +199,8 @@ METHOD WvgMenuBar:destroy()
 
 METHOD WvgMenuBar:delAllItems()
 
-   LOCAL lResult := .T., nItems
+   LOCAL lResult := .T.
+   LOCAL nItems
 
    nItems := ::numItems()
    DO WHILE nItems > 0 .AND. lResult
@@ -222,17 +223,20 @@ METHOD WvgMenuBar:delItem(nItemNum)
          hb_ADel(::aMenuItems, nItemNum, .T.)
       ELSE
 #if 0
-         Throw(ErrorNew("wvtMenu", 1000, "wvtMenu:DelItem()", "Delete menu item FAILED", { nItemNum }))
+         Throw(ErrorNew("wvtMenu", 1000, "wvtMenu:DelItem()", "Delete menu item FAILED", {nItemNum}))
 #endif
       ENDIF
    ENDIF
 
    RETURN lResult
 
-/* { xCaption, bAction, nStyle, nAttrb } */
+/* {xCaption, bAction, nStyle, nAttrb} */
 METHOD WvgMenuBar:addItem(aItem, p2, p3, p4)
 
-   LOCAL xCaption, bAction, nStyle, nAttrib
+   LOCAL xCaption
+   LOCAL bAction
+   LOCAL nStyle
+   LOCAL nAttrib
 
    IF PCount() == 1 .AND. HB_ISARRAY(aItem)
       ASize(aItem, 4)
@@ -247,12 +251,16 @@ METHOD WvgMenuBar:addItem(aItem, p2, p3, p4)
       nAttrib  := p4
    ENDIF
 
-   RETURN ::putItem({ xCaption, bAction, nStyle, nAttrib }, -1, .T.)
+   RETURN ::putItem({xCaption, bAction, nStyle, nAttrib}, -1, .T.)
 
 METHOD WvgMenuBar:putItem(aItem, nPos, lInsert)
 
-   LOCAL nItemIndex, cCaption
-   LOCAL xCaption, bAction, nStyle, nAttrib
+   LOCAL nItemIndex
+   LOCAL cCaption
+   LOCAL xCaption
+   LOCAL bAction
+   LOCAL nStyle
+   LOCAL nAttrib
 
    __defaultNIL(@lInsert, .T.)
 
@@ -266,20 +274,20 @@ METHOD WvgMenuBar:putItem(aItem, nPos, lInsert)
    /* xCaption : NIL | cPrompt | ncResource | oMenu */
    SWITCH ValType(xCaption)
    CASE "U"  /* Separator */
-      aItem := { MF_SEPARATOR, 0, 0, , nStyle, nAttrib }
+      aItem := {MF_SEPARATOR, 0, 0, , nStyle, nAttrib}
       EXIT
 
    CASE "C"
       IF Left(xCaption, 1) == "-"
-         aItem := { MF_SEPARATOR, 0, 0, , nStyle, nAttrib }
+         aItem := {MF_SEPARATOR, 0, 0, , nStyle, nAttrib}
       ELSE
-         aItem := { MF_STRING, ++::nMenuItemID, xCaption, bAction, nStyle, nAttrib }
+         aItem := {MF_STRING, ++::nMenuItemID, xCaption, bAction, nStyle, nAttrib}
       ENDIF
       EXIT
 
    CASE "O"
       cCaption := iif(bAction == NIL, xCaption:title, bAction)
-      aItem    := { MF_POPUP, xCaption:hMenu, cCaption, xCaption, nStyle, nAttrib }
+      aItem    := {MF_POPUP, xCaption:hMenu, cCaption, xCaption, nStyle, nAttrib}
       EXIT
 
    CASE "N"  /* Resource ID */
@@ -330,7 +338,8 @@ METHOD WvgMenuBar:putItem(aItem, nPos, lInsert)
 
 METHOD WvgMenuBar:findMenuItemById(nId)
 
-   LOCAL x, aResult := {}
+   LOCAL x
+   LOCAL aResult := {}
 
    IF !Empty(nId)
       x := ::numItems()
@@ -340,7 +349,7 @@ METHOD WvgMenuBar:findMenuItemById(nId)
             aResult := ::aMenuItems[x][WVT_MENU_MENUOBJ]:findMenuItemById(nId)
 
          ELSEIF ::aMenuItems[x][WVT_MENU_IDENTIFIER] == nId
-            aResult := { x, ::aMenuItems[x][WVT_MENU_ACTION], ::sl_itemSelected, Self }
+            aResult := {x, ::aMenuItems[x][WVT_MENU_ACTION], ::sl_itemSelected, Self}
 
          ENDIF
          x--
@@ -351,7 +360,8 @@ METHOD WvgMenuBar:findMenuItemById(nId)
 
 METHOD WvgMenuBar:findMenuPosById(nId)
 
-   LOCAL x, nPos
+   LOCAL x
+   LOCAL nPos
 
    IF !Empty(nId)
       x := ::numItems()
@@ -405,11 +415,7 @@ METHOD WvgMenuBar:disableItem(nItemNum)
 METHOD WvgMenuBar:getItem(nItemNum)
 
    IF HB_ISNUMERIC(nItemNum) .AND. nItemNum > 0 .AND. nItemNum <= Len(::aMenuItems)
-      RETURN { ;
-         ::aMenuItems[nItemNum][3], ;
-         ::aMenuItems[nItemNum][4], ;
-         ::aMenuItems[nItemNum][5], ;
-         ::aMenuItems[nItemNum][6] }
+      RETURN {::aMenuItems[nItemNum][3], ::aMenuItems[nItemNum][4], ::aMenuItems[nItemNum][5], ::aMenuItems[nItemNum][6]}
    ENDIF
 
    RETURN NIL

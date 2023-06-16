@@ -59,7 +59,7 @@
 CREATE CLASS WvgScrollBar INHERIT WvgWindow, WvgDataRef
 
    VAR    autoTrack                             INIT .T.
-   VAR    range                                 INIT { 0, 1 }
+   VAR    range                                 INIT {0, 1}
    VAR    scrollBoxSize                         INIT -1
    VAR    type                                  INIT WVGSCROLL_HORIZONTAL
    VAR    excludeScrollBox                      INIT .F.
@@ -129,7 +129,9 @@ METHOD WvgScrollBar:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
 METHOD WvgScrollBar:handleEvent(nMessage, aNM)
 
-   LOCAL nScrMsg, nScrPos, nCommand
+   LOCAL nScrMsg
+   LOCAL nScrPos
+   LOCAL nCommand
 
    SWITCH nMessage
 
@@ -224,7 +226,7 @@ METHOD WvgScrollBar:handleEvent(nMessage, aNM)
       ENDSWITCH
 
       ::sl_editBuffer := nScrPos
-      Eval(::sl_xbeSB_Scroll, { nScrPos, nCommand }, , Self)
+      Eval(::sl_xbeSB_Scroll, {nScrPos, nCommand}, , Self)
       RETURN EVENT_HANDELLED
 
    CASE HB_GTE_VSCROLL
@@ -304,7 +306,7 @@ METHOD WvgScrollBar:handleEvent(nMessage, aNM)
       ENDSWITCH
 
       ::sl_editBuffer := nScrPos
-      Eval(::sl_xbeSB_Scroll, { nScrPos, nCommand }, , Self)
+      Eval(::sl_xbeSB_Scroll, {nScrPos, nCommand}, , Self)
       RETURN EVENT_HANDELLED
 
    ENDSWITCH
@@ -327,10 +329,12 @@ METHOD WvgScrollBar:Scroll(xParam)
 
 METHOD WvgScrollBar:setRange(aRange)
 
-   LOCAL aOldRange, nMin, nMax
+   LOCAL aOldRange
+   LOCAL nMin
+   LOCAL nMax
 
    IF wapi_GetScrollRange(::pWnd, SB_CTL, @nMin, @nMax)
-      aOldRange := { nMin, nMax }
+      aOldRange := {nMin, nMax}
    ELSE
       aOldRange := ::range
    ENDIF

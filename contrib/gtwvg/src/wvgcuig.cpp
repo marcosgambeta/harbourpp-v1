@@ -1570,7 +1570,7 @@ static void hb_wvg_RenderPicture(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int 
    This protocol is necessary for dynamic coordinates which might have been changed by the
    applications, like TBrowse dimensions.
 
-   wvg_Object( GOBJ_OBJTYPE_BOXRAISED, {|| { oBrw:nTop, oBrw:nLeft, oBrw:nBottom, oBrw:nRight, {-2,-2,2,2} } } )
+   wvg_Object(GOBJ_OBJTYPE_BOXRAISED, {||{oBrw:nTop, oBrw:nLeft, oBrw:nBottom, oBrw:nRight, {-2, -2, 2, 2}}})
  */
 HB_FUNC( WVG_OBJECT )
 {
@@ -1586,8 +1586,8 @@ HB_FUNC( WVG_OBJECT )
    pWVT->gObjs    = gObj;
 }
 
-/* wvg_Object( GOBJ_OBJTYPE_GRIDVERT, {|| { nTop, nBottom, aCols, nCols, aPxlOff } } )
-                                                 aPxlOff[1] and aPxlOff[3] used */
+/* wvg_Object( GOBJ_OBJTYPE_GRIDVERT, {||{nTop, nBottom, aCols, nCols, aPxlOff}})
+                                                aPxlOff[1] and aPxlOff[3] used */
 static void hb_wvg_GridVert(PHB_GTWVT pWVT, PHB_ITEM pArray, RECT * uRect)
 {
    PHB_ITEM pCols = hb_arrayGetItemPtr(pArray, 3);

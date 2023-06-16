@@ -107,11 +107,9 @@ METHOD WvtTextBox:Create()
       ::nCharSet, ::nFontQuality, 0)
 
    IF ::hFont != 0
-      ::bPaint := {|| wvt_DrawTextBox(::nTop, ::nLeft, ::nBottom, ::nRight, ;
-         ::aPxlTLBR, ::cText, ::nAlignHorz, ::nAlignVert, ;
-         ::nTextColor, ::nBackColor, ::nBackMode, ::hFont) }
+      ::bPaint := {||wvt_DrawTextBox(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlTLBR, ::cText, ::nAlignHorz, ::nAlignVert, ::nTextColor, ::nBackColor, ::nBackMode, ::hFont)}
 
-      AAdd(::aPaint, { ::bPaint, { WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight } })
+      AAdd(::aPaint, {::bPaint, {WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight}})
    ENDIF
 
    ::Super:Create()

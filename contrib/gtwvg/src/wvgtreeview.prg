@@ -177,7 +177,7 @@ METHOD WvgTreeView:handleEvent(nMessage, aNM)
             ::oParent:setFocus()
          ENDIF
          IF HB_ISBLOCK(::sl_itemSelected)
-            Eval(::sl_itemSelected, ::oItemSelected, { 0, 0, 0, 0 }, Self)
+            Eval(::sl_itemSelected, ::oItemSelected, {0, 0, 0, 0}, Self)
          ENDIF
          IF ::isParentCrt()
             IF ::pointerFocus
@@ -194,7 +194,7 @@ METHOD WvgTreeView:handleEvent(nMessage, aNM)
             ::oParent:setFocus()
          ENDIF
          IF HB_ISBLOCK(::sl_itemMarked)
-            Eval(::sl_itemMarked, ::oItemSelected, { 0, 0, 0, 0 }, Self)
+            Eval(::sl_itemMarked, ::oItemSelected, {0, 0, 0, 0}, Self)
          ENDIF
          IF ::isParentCrt()
             IF ::pointerFocus
@@ -233,7 +233,7 @@ METHOD WvgTreeView:handleEvent(nMessage, aNM)
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
-            Eval(::sl_itemSelected, ::oItemSelected, { 0, 0, 0, 0 }, Self)
+            Eval(::sl_itemSelected, ::oItemSelected, {0, 0, 0, 0}, Self)
             IF ::isParentCrt()
                ::setFocus()
             ENDIF
@@ -255,7 +255,8 @@ METHOD PROCEDURE WvgTreeView:destroy()
 
 METHOD WvgTreeView:getSelectionInfo(nlParam)
 
-   LOCAL hItemSelected, hParentOfSelected
+   LOCAL hItemSelected
+   LOCAL hParentOfSelected
    LOCAL cParent := Space(20)
    LOCAL cText   := Space(20)
    LOCAL n
@@ -267,7 +268,7 @@ METHOD WvgTreeView:getSelectionInfo(nlParam)
    ::textParentSelected := RTrim(cParent)
    ::textItemSelected   := RTrim(cText)
 
-   IF (n := AScan(::aItems, {| o | o:hItem == hItemSelected })) > 0
+   IF (n := AScan(::aItems, {|o|o:hItem == hItemSelected})) > 0
       ::oItemSelected      := ::aItems[n]
    ENDIF
 

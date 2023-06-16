@@ -134,7 +134,8 @@ METHOD PROCEDURE WvgTreeViewItem:setMarkedImage(nResIdoBitmap)
 
 METHOD WvgTreeViewItem:addItem(cCaption)
 
-   LOCAL oItem, hParent
+   LOCAL oItem
+   LOCAL hParent
 
    oItem := WvgTreeViewItem():New()
 

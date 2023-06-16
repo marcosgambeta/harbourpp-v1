@@ -137,12 +137,12 @@ METHOD WvtBrowse:Create()
 
    ::Super:Create()
 
-   __defaultNIL(@::bTotalRecords, {|| (::cAlias)->(ordKeyCount()) })
-   __defaultNIL(@::bCurrentRecord, {|| (::cAlias)->(ordKeyNo()) })
+   __defaultNIL(@::bTotalRecords, {||(::cAlias)->(ordKeyCount())})
+   __defaultNIL(@::bCurrentRecord, {||(::cAlias)->(ordKeyNo())})
    ::SetVBar()
 
-   __defaultNIL(@::bTotalColumns, {|| ::oBrw:ColCount })
-   __defaultNIL(@::bCurrentColumn, {|| ::oBrw:ColPos   })
+   __defaultNIL(@::bTotalColumns, {||::oBrw:ColCount})
+   __defaultNIL(@::bCurrentColumn, {||::oBrw:ColPos})
    ::SetHBar()
 
    ::oBrw:ForceStable()
@@ -153,27 +153,20 @@ METHOD WvtBrowse:Create()
 METHOD WvtBrowse:SetVBar()
 
    IF ::lVSBar
-      ::oVBar := WvtScrollBar():New(Self, 999991, ;
-         ::oBrw:nTop, ::oBrw:nRight + 1, ::oBrw:nBottom, ::oBrw:nRight + 2)
+      ::oVBar := WvtScrollBar():New(Self, 999991, ::oBrw:nTop, ::oBrw:nRight + 1, ::oBrw:nBottom, ::oBrw:nRight + 2)
       ::oVBar:nBarType   := WVT_SCROLLBAR_VERT
       ::oVBar:bTotal     := ::bTotalRecords
       ::oVBar:bCurrent   := ::bCurrentRecord
-      ::oVBar:aPxlBtnTop := { -2, 2, 0, 0 }
-      ::oVBar:aPxlBtnBtm := {  0, 2, 2, 0 }
-      ::oVBar:aPxlScroll := {  0, 2, 0, 0 }
+      ::oVBar:aPxlBtnTop := {-2, 2, 0, 0}
+      ::oVBar:aPxlBtnBtm := {0, 2, 2, 0}
+      ::oVBar:aPxlScroll := {0, 2, 0, 0}
       ::oVBar:Create()
 
-      AAdd(::aPaint, { ::oVBar:bBtnLeftTop, ;
-         { WVT_BLOCK_BUTTON, ::oVBar:nBtn1Top, ::oVBar:nBtn1Left, ;
-         ::oVBar:nBtn1Bottom, ::oVBar:nBtn1Right } })
+      AAdd(::aPaint, {::oVBar:bBtnLeftTop, {WVT_BLOCK_BUTTON, ::oVBar:nBtn1Top, ::oVBar:nBtn1Left, ::oVBar:nBtn1Bottom, ::oVBar:nBtn1Right}})
 
-      AAdd(::aPaint, { ::oVBar:bBtnRightBottom, ;
-         { WVT_BLOCK_BUTTON, ::oVBar:nBtn2Top, ::oVBar:nBtn2Left, ;
-         ::oVBar:nBtn2Bottom, ::oVBar:nBtn2Right } })
+      AAdd(::aPaint, {::oVBar:bBtnRightBottom, {WVT_BLOCK_BUTTON, ::oVBar:nBtn2Top, ::oVBar:nBtn2Left, ::oVBar:nBtn2Bottom, ::oVBar:nBtn2Right}})
 
-      AAdd(::aPaint, { ::oVBar:bBtnScroll, ;
-         { WVT_BLOCK_BUTTON, ::oVBar:nSTop, ::oVBar:nSLeft, ;
-         ::oVBar:nSBottom, ::oVBar:nSRight } })
+      AAdd(::aPaint, {::oVBar:bBtnScroll, {WVT_BLOCK_BUTTON, ::oVBar:nSTop, ::oVBar:nSLeft, ::oVBar:nSBottom, ::oVBar:nSRight}})
 
       ::oParent:AddObject(::oVBar)
    ENDIF
@@ -188,20 +181,14 @@ METHOD WvtBrowse:SetHBar()
       ::oHBar:nBarType   := 2
       ::oHBar:bTotal     := ::bTotalColumns
       ::oHBar:bCurrent   := ::bCurrentColumn
-      ::oHBar:aPxlBtnLft := { 2, -2, 0, 0 }
-      ::oHBar:aPxlBtnRgt := { 2, 0, 0, 2 }
-      ::oHBar:aPxlScroll := { 2, 0, 0, 0 }
+      ::oHBar:aPxlBtnLft := {2, -2, 0, 0}
+      ::oHBar:aPxlBtnRgt := {2, 0, 0, 2}
+      ::oHBar:aPxlScroll := {2, 0, 0, 0}
       ::oHBar:Create()
 
-      AAdd(::aPaint, { ::oHBar:bBtnLeftTop, ;
-         { WVT_BLOCK_BUTTON, ::oHBar:nBtn1Top, ::oHBar:nBtn1Left, ;
-         ::oHBar:nBtn1Bottom, ::oHBar:nBtn1Right } })
-      AAdd(::aPaint, { ::oHBar:bBtnRightBottom, ;
-         { WVT_BLOCK_BUTTON, ::oHBar:nBtn2Top, ::oHBar:nBtn2Left, ;
-         ::oHBar:nBtn2Bottom, ::oHBar:nBtn2Right } })
-      AAdd(::aPaint, { ::oHBar:bBtnScroll, ;
-         { WVT_BLOCK_BUTTON, ::oHBar:nSTop, ::oHBar:nSLeft, ;
-         ::oHBar:nSBottom, ::oHBar:nSRight } })
+      AAdd(::aPaint, {::oHBar:bBtnLeftTop, {WVT_BLOCK_BUTTON, ::oHBar:nBtn1Top, ::oHBar:nBtn1Left, ::oHBar:nBtn1Bottom, ::oHBar:nBtn1Right}})
+      AAdd(::aPaint, {::oHBar:bBtnRightBottom, {WVT_BLOCK_BUTTON, ::oHBar:nBtn2Top, ::oHBar:nBtn2Left, ::oHBar:nBtn2Bottom, ::oHBar:nBtn2Right}})
+      AAdd(::aPaint, {::oHBar:bBtnScroll, {WVT_BLOCK_BUTTON, ::oHBar:nSTop, ::oHBar:nSLeft, ::oHBar:nSBottom, ::oHBar:nSRight}})
 
       ::oParent:AddObject(::oHBar)
    ENDIF
@@ -237,7 +224,8 @@ METHOD WvtBrowse:HandleEvent(nKey)
 
 METHOD WvtBrowse:NotifyChild(nIndex, nKey, oCurObj)
 
-   LOCAL xData, i
+   LOCAL xData
+   LOCAL i
 
    IF nIndex > 0 .AND. nIndex <= Len(::aChildren)
       IF HB_ISBLOCK(::aChildren[nIndex][OBJ_CHILD_DATABLOCK])
@@ -284,7 +272,8 @@ METHOD WvtBrowse:DeHilite()
 
 METHOD WvtBrowse:SetTooltip()
 
-   LOCAL cTip, nArea
+   LOCAL cTip
+   LOCAL nArea
 
    IF HB_ISBLOCK(::bTooltip)
       ::SaveSettings()
@@ -325,28 +314,29 @@ METHOD WvtBrowse:RestSettings()
 
 METHOD WvtBrowse:PaintBlock(nPaintObj)
 
-   LOCAL bBlock, b := ::oBrw
+   LOCAL bBlock
+   LOCAL b := ::oBrw
 
    SWITCH nPaintObj
 
    CASE 1
-      bBlock := {|| wvt_DrawBoxRaised(b:nTop - 2, b:nLeft - 2, b:nBottom + 1, b:nRight + 2) }
-      AAdd(::aPaint, { bBlock, { WVT_BLOCK_BOX, b:nTop - 3, b:nLeft - 3, b:nBottom + 2, b:nRight + 3 } })
+      bBlock := {||wvt_DrawBoxRaised(b:nTop - 2, b:nLeft - 2, b:nBottom + 1, b:nRight + 2)}
+      AAdd(::aPaint, {bBlock, {WVT_BLOCK_BOX, b:nTop - 3, b:nLeft - 3, b:nBottom + 2, b:nRight + 3}})
       EXIT
 
    CASE 2
-      bBlock := {|| wvt_DrawBoxRecessed(b:nTop, b:nLeft, b:nBottom, b:nRight) }
-      AAdd(::aPaint, { bBlock, { WVT_BLOCK_BOX, b:nTop - 1, b:nLeft - 1, b:nBottom + 1, b:nRight + 1 } })
+      bBlock := {||wvt_DrawBoxRecessed(b:nTop, b:nLeft, b:nBottom, b:nRight)}
+      AAdd(::aPaint, {bBlock, {WVT_BLOCK_BOX, b:nTop - 1, b:nLeft - 1, b:nBottom + 1, b:nRight + 1}})
       EXIT
 
    CASE 3
-      bBlock := {|| wvt_DrawGridHorz(b:nTop + 3, b:nLeft, b:nRight, b:nBottom - b:nTop - 2) }
-      AAdd(::aPaint, { bBlock, { WVT_BLOCK_GRID_H, b:nTop + 4, b:nLeft + 1, b:nBottom - 1, b:nRight - 1 } })
+      bBlock := {||wvt_DrawGridHorz(b:nTop + 3, b:nLeft, b:nRight, b:nBottom - b:nTop - 2)}
+      AAdd(::aPaint, {bBlock, {WVT_BLOCK_GRID_H, b:nTop + 4, b:nLeft + 1, b:nBottom - 1, b:nRight - 1}})
       EXIT
 
    CASE 4
-      bBlock := {|| wvt_DrawGridVert(b:nTop, b:nBottom, b:aColumnsSep, Len(b:aColumnsSep)) }
-      AAdd(::aPaint, { bBlock, { WVT_BLOCK_GRID_V, b:nTop + 1, b:nLeft + 1, b:nBottom - 1, b:nRight - 1, b } })
+      bBlock := {||wvt_DrawGridVert(b:nTop, b:nBottom, b:aColumnsSep, Len(b:aColumnsSep))}
+      AAdd(::aPaint, {bBlock, {WVT_BLOCK_GRID_V, b:nTop + 1, b:nLeft + 1, b:nBottom - 1, b:nRight - 1, b}})
       EXIT
 
    ENDSWITCH

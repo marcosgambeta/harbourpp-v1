@@ -118,23 +118,24 @@ METHOD WvtStatusBar:Create()
 
 METHOD WvtStatusBar:PaintBlock()
 
-   LOCAL a_ := {}, nPanels
+   LOCAL a_ := {}
+   LOCAL nPanels
 
-   AEval(::aPanels, {| o | AAdd(a_, o:nTop), AAdd(a_, o:nLeft), ;
-      AAdd(a_, o:nBottom), AAdd(a_, o:nRight) })
+   AEval(::aPanels, {|o|AAdd(a_, o:nTop), AAdd(a_, o:nLeft), AAdd(a_, o:nBottom), AAdd(a_, o:nRight)})
 
    a_[Len(a_)]++
    nPanels := Len(::aPanels)
 
-   ::bPaint  := {|| wvt_DrawStatusBar(nPanels, a_) }
-   AAdd(::aPaint, { ::bPaint, ;
-      { WVT_BLOCK_STATUSBAR, ::nTop, ::nLeft, ::nBottom, ::nRight } })
+   ::bPaint  := {||wvt_DrawStatusBar(nPanels, a_)}
+   AAdd(::aPaint, {::bPaint, {WVT_BLOCK_STATUSBAR, ::nTop, ::nLeft, ::nBottom, ::nRight}})
 
    RETURN Self
 
 METHOD WvtStatusBar:SetPanels(aPanels)
 
-   LOCAL i, oPanel, nID
+   LOCAL i
+   LOCAL oPanel
+   LOCAL nID
    LOCAL nLastCol := ::oParent:MaxCol()
 
    nID := 200000

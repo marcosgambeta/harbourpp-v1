@@ -94,7 +94,9 @@ METHOD WvtConsole:New(oParent)
 
 METHOD WvtConsole:Say(nRow, nCol, xExp, cColor)
 
-   LOCAL nCRow, nCCol, nCursor
+   LOCAL nCRow
+   LOCAL nCCol
+   LOCAL nCursor
 
    IF nRow >= 0 .AND. nCol >= 0 .AND. xExp != NIL
       nCursor := SetCursor(SC_NONE)
@@ -109,7 +111,9 @@ METHOD WvtConsole:Say(nRow, nCol, xExp, cColor)
 
 METHOD WvtConsole:Box(nRow, nCol, n2Row, n2Col, cBoxChars, cColor)
 
-   LOCAL nCRow, nCCol, nCursor
+   LOCAL nCRow
+   LOCAL nCCol
+   LOCAL nCursor
 
    IF nRow >= 0 .AND. nCol >= 0
       nCursor := SetCursor(SC_NONE)

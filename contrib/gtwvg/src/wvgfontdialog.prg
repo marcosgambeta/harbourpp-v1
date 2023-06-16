@@ -122,7 +122,7 @@ CREATE CLASS WvgFontDialog INHERIT WvgSysWindow
 
    VAR    oScreenPS
    VAR    oPrinterPS
-   VAR    aPos                                  INIT { 0, 0 }
+   VAR    aPos                                  INIT {0, 0}
    VAR    ok                                    INIT .F.
 
    METHOD wndProc(hWnd, nMessage, nwParam, nlParam)
@@ -179,7 +179,9 @@ METHOD WvgFontDialog:create(oParent, oOwner, oScreenPS, oPrinterPS, aPos)
 
 METHOD WvgFontDialog:wndProc(hWnd, nMessage, nwParam, nlParam)
 
-   LOCAL aRect, nL, nH
+   LOCAL aRect
+   LOCAL nL
+   LOCAL nH
 
    HB_SYMBOL_UNUSED(nlParam)
 
@@ -260,7 +262,8 @@ METHOD WvgFontDialog:wndProc(hWnd, nMessage, nwParam, nlParam)
 
 METHOD WvgFontDialog:display(nMode)
 
-   LOCAL hWnd, aInfo
+   LOCAL hWnd
+   LOCAL aInfo
 
    IF nMode == 0
       hWnd := ::oParent:hWnd
@@ -269,8 +272,7 @@ METHOD WvgFontDialog:display(nMode)
    ENDIF
 
    ::ok := .F.
-   aInfo := wvg_ChooseFont(hWnd, {| h, m, w, l | ::wndProc(h, m, w, l) }, ::familyName, ;
-      ::nominalPointSize, ::viewScreenFonts, ::viewPrinterFonts)
+   aInfo := wvg_ChooseFont(hWnd, {|h, m, w, l|::wndProc(h, m, w, l)}, ::familyName, ::nominalPointSize, ::viewScreenFonts, ::viewPrinterFonts)
    IF !::ok
       RETURN NIL
    ENDIF

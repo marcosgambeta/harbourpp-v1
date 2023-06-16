@@ -102,10 +102,9 @@ METHOD WvtPushButton:New(oParent, nID, nTop, nLeft, nBottom, nRight)
 
 METHOD WvtPushButton:Create()
 
-   ::bPaint := {|| ::PaintButton() }
+   ::bPaint := {||::PaintButton()}
 
-   AAdd(::aPaint, { ::bPaint, ;
-      { WVT_BLOCK_BUTTON, ::nTop, ::nLeft, ::nBottom, ::nRight } })
+   AAdd(::aPaint, {::bPaint, {WVT_BLOCK_BUTTON, ::nTop, ::nLeft, ::nBottom, ::nRight}})
 
    ::Super:Create()
 
@@ -114,23 +113,23 @@ METHOD WvtPushButton:Create()
 METHOD WvtPushButton:PaintButton()
 
    IF ::cCaption == NIL
-      wvt_DrawImage(::nTop, ::nLeft, ::nBottom, ::nRight, ::cFileImage, { 4, 4, -4, -4 })
+      wvt_DrawImage(::nTop, ::nLeft, ::nBottom, ::nRight, ::cFileImage, {4, 4, -4, -4})
    ELSE
       wvt_DrawButton(::nTop, ::nLeft, ::nBottom, ::nRight, ::cCaption, , 4)
    ENDIF
-   wvt_DrawToolButtonState(::nTop, ::nLeft, ::nBottom, ::nRight, { 0, 0, 0, 0 }, 1)
+   wvt_DrawToolButtonState(::nTop, ::nLeft, ::nBottom, ::nRight, {0, 0, 0, 0}, 1)
 
    RETURN Self
 
 METHOD WvtPushButton:LeftDown()
 
-   wvt_DrawToolButtonState(::nTop, ::nLeft, ::nBottom, ::nRight, { 0, 0, 0, 0 }, 2)
+   wvt_DrawToolButtonState(::nTop, ::nLeft, ::nBottom, ::nRight, {0, 0, 0, 0}, 2)
 
    RETURN .T.
 
 METHOD WvtPushButton:LeftUp()
 
-   wvt_DrawToolButtonState(::nTop, ::nLeft, ::nBottom, ::nRight, { 0, 0, 0, 0 }, 1)
+   wvt_DrawToolButtonState(::nTop, ::nLeft, ::nBottom, ::nRight, {0, 0, 0, 0}, 1)
    ::Eval(::bOnLeftUp)
 
    RETURN .T.
