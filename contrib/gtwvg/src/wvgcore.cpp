@@ -1064,11 +1064,9 @@ HB_FUNC( WVT_DRAWLABEL )
 
    POINT   xy = {0, 0};
    HFONT   hFont, hOldFont, hOldFontGui;
-   LOGFONT logfont;     /* = {0};*/
    void *  hText = nullptr;
 
-   memset(&logfont, 0, sizeof(logfont));
-
+   LOGFONT logfont{};
    logfont.lfEscapement     = hb_parni(5) * 10;
    logfont.lfOrientation    = 0;
    logfont.lfWeight         = hb_parni(11);

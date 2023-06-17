@@ -736,9 +736,8 @@ HB_FUNC( WVG_CHECKMENUITEM )
 HB_FUNC( WVG_ISMENUITEMCHECKED )
 {
    BOOL lSuccess;
-   MENUITEMINFO lpmii;
 
-   memset(&lpmii, 0, sizeof(MENUITEMINFO));
+   MENUITEMINFO lpmii{};
    lpmii.cbSize = sizeof(MENUITEMINFO);
    lpmii.fMask  = MIIM_STATE;
 
@@ -775,10 +774,9 @@ HB_FUNC( WVG_ISMENUITEMENABLED )
 HB_FUNC( WVG_SETMENUITEM )
 {
    BOOL lSuccess;
-   MENUITEMINFO lpmii;
    void *       hText = nullptr;
 
-   memset(&lpmii, 0, sizeof(MENUITEMINFO));
+   MENUITEMINFO lpmii{};
    lpmii.cbSize = sizeof(MENUITEMINFO);
    lpmii.fMask  = hb_parl(5) ? MIIM_STRING : MIIM_SUBMENU;
    if( hb_parl(5) )
@@ -1274,12 +1272,11 @@ HB_FUNC( WVG_SENDCBMESSAGE )
          break;
       case CB_GETCOMBOBOXINFO:
       {
-         COMBOBOXINFO cbi;
          PHB_ITEM pCbi = hb_itemNew(nullptr);
          PHB_ITEM pRc1 = hb_itemNew(nullptr);
          PHB_ITEM pRc2 = hb_itemNew(nullptr);
 
-         memset(&cbi, 0, sizeof(COMBOBOXINFO));
+         COMBOBOXINFO cbi{};
          cbi.cbSize = sizeof(COMBOBOXINFO);
 
          if( GetComboBoxInfo(hCB, &cbi) )

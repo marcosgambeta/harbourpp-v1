@@ -144,9 +144,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
 
 static void hb_gt_wvt_RegisterClass(HINSTANCE hInstance)
 {
-   WNDCLASS wndclass;
-
-   memset(&wndclass, 0, sizeof(wndclass));
+   WNDCLASS wndclass{};
    wndclass.style         = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
    wndclass.lpfnWndProc   = hb_gt_wvt_WndProc;
    wndclass.hInstance     = hInstance;
@@ -531,9 +529,7 @@ static HFONT hb_gt_wvt_GetFont(LPCTSTR lpFace, int iHeight, int iWidth, int iWei
 {
    if( iHeight > 0 )
    {
-      LOGFONT logfont;
-
-      memset(&logfont, 0, sizeof(logfont));
+      LOGFONT logfont{};
       logfont.lfEscapement     = 0;
       logfont.lfOrientation    = 0;
       logfont.lfWeight         = iWeight;

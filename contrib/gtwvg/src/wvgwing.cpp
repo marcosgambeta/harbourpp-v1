@@ -906,10 +906,9 @@ HB_FUNC( WVG_CHOOSEFONT )
 
 HB_FUNC( WVG_CHOOSEFONT_GETLOGFONT )
 {
-   LOGFONT  lf;
    PHB_ITEM aFont;
 
-   memset(&lf, 0, sizeof(lf));
+   LOGFONT lf{};
 
    SendMessage(wvg_parhwnd(1), WM_CHOOSEFONT_GETLOGFONT, static_cast<WPARAM>(0), reinterpret_cast<LPARAM>(&lf));
 
@@ -920,11 +919,10 @@ HB_FUNC( WVG_CHOOSEFONT_GETLOGFONT )
 
 HB_FUNC( WVG_FONTCREATE )
 {
-   LOGFONT  lf;
    HFONT    hFont;
    PHB_ITEM aFont;
 
-   memset(&lf, 0, sizeof(lf));
+   LOGFONT lf{};
 
    aFont = hb_param(1, Harbour::Item::ARRAY);
    if( aFont )
@@ -1065,10 +1063,9 @@ HB_FUNC( WVG_ADDTOOLBARBUTTON )
  */
 HB_FUNC( WVG_REGISTERCLASS_BYNAME )
 {
-   WNDCLASS wndclass;
    void *   hClass;
 
-   memset(&wndclass, 0, sizeof(WNDCLASS));
+   WNDCLASS wndclass{};
    wndclass.style = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
    wndclass.lpfnWndProc = DefWindowProc;
    wndclass.hInstance = static_cast<HINSTANCE>(wvg_hInstance());
@@ -1177,7 +1174,6 @@ HB_FUNC( WVG_RELEASEWINDOWPROCBLOCK )
 HB_FUNC( WVG_CREATETOOLTIPWINDOW )
 {
    HWND     hwndTip;
-   TOOLINFO toolInfo;
 
    hwndTip = CreateWindowEx(0, TOOLTIPS_CLASS, 0,
                             WS_POPUP | TTS_ALWAYSTIP, /* | TTS_BALLOON, */
@@ -1192,11 +1188,11 @@ HB_FUNC( WVG_CREATETOOLTIPWINDOW )
       return;
    }
 
-   memset(&toolInfo, 0, sizeof(toolInfo));
-   toolInfo.cbSize = sizeof(toolInfo);
-   toolInfo.hwnd = static_cast<HWND>(wvg_parhwnd(1));
-   toolInfo.uFlags = TTF_IDISHWND | TTF_SUBCLASS;
-   toolInfo.uId = reinterpret_cast<UINT_PTR>(const_cast<HWND>(wvg_parhwnd(1)));
+   TOOLINFO toolInfo{};
+   toolInfo.cbSize   = sizeof(toolInfo);
+   toolInfo.hwnd     = static_cast<HWND>(wvg_parhwnd(1));
+   toolInfo.uFlags   = TTF_IDISHWND | TTF_SUBCLASS;
+   toolInfo.uId      = reinterpret_cast<UINT_PTR>(const_cast<HWND>(wvg_parhwnd(1)));
    toolInfo.lpszText = const_cast<LPTSTR>(TEXT(""));
 
    if( SendMessage(hwndTip, TTM_ADDTOOL, 0, reinterpret_cast<LPARAM>(&toolInfo)) )
@@ -1211,14 +1207,13 @@ HB_FUNC( WVG_CREATETOOLTIPWINDOW )
 
 HB_FUNC( WVG_SETTOOLTIPTEXT )
 {
-   TOOLINFO toolInfo;
    void * hText;
 
-   memset(&toolInfo, 0, sizeof(toolInfo));
-   toolInfo.cbSize = sizeof(toolInfo);
-   toolInfo.hwnd = static_cast<HWND>(wvg_parhwnd(1));
-   toolInfo.uFlags = TTF_IDISHWND | TTF_SUBCLASS;
-   toolInfo.uId = reinterpret_cast<UINT_PTR>(static_cast<HWND>(wvg_parhwnd(1)));
+   TOOLINFO toolInfo{};
+   toolInfo.cbSize   = sizeof(toolInfo);
+   toolInfo.hwnd     = static_cast<HWND>(wvg_parhwnd(1));
+   toolInfo.uFlags   = TTF_IDISHWND | TTF_SUBCLASS;
+   toolInfo.uId      = reinterpret_cast<UINT_PTR>(static_cast<HWND>(wvg_parhwnd(1)));
    toolInfo.lpszText = const_cast<LPTSTR>(HB_PARSTRDEF(3, &hText, nullptr));
 
    SendMessage(wvg_parhwnd(2), TTM_SETTOOLINFO, static_cast<WPARAM>(0), reinterpret_cast<LPARAM>(&toolInfo));

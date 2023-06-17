@@ -93,9 +93,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
 
 static void hb_gt_wvt_RegisterClass(HINSTANCE hInstance)
 {
-   WNDCLASS wndclass;
-
-   memset(&wndclass, 0, sizeof(wndclass));
+   WNDCLASS wndclass{};
    wndclass.style         = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
    wndclass.lpfnWndProc   = hb_gt_wvt_WndProc;
    wndclass.hInstance     = hInstance;

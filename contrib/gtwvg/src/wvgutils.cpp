@@ -262,7 +262,6 @@ HB_FUNC( WVT_SETTOOLTIP )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   TOOLINFO ti;
    POINT    xy = {0, 0};
    int      iTop, iLeft, iBottom, iRight;
 
@@ -271,7 +270,7 @@ HB_FUNC( WVT_SETTOOLTIP )
       return;
    }
 
-   memset(&ti, 0, sizeof(ti));
+   TOOLINFO ti{};
    ti.cbSize = sizeof(TOOLINFO);
    ti.hwnd   = _s->hWnd;
    ti.uId    = 100000;
@@ -303,9 +302,8 @@ HB_FUNC( WVT_SETTOOLTIP )
 HB_FUNC( WVT_SETTOOLTIPTEXT )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
-   TOOLINFO  ti;
 
-   memset(&ti, 0, sizeof(ti));
+   TOOLINFO ti{};
    ti.cbSize = sizeof(TOOLINFO);
    ti.hwnd   = _s->hWnd;
    ti.uId    = 100000;
