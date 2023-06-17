@@ -91,19 +91,19 @@ FUNCTION WvtPaintObjects()
                ELSE
                   nLeft  := b:aColumnsSep[1]
                   nRight := b:aColumnsSep[Len(b:aColumnsSep)]
-                  IF tlbr_[1] > aBlocks[i][3][4] .OR. ;  /* top    > bottom */
-                     tlbr_[3] < aBlocks[i][3][2] .OR. ;  /* bottom < top    */
-                     tlbr_[2] > nRight + 1 .OR. ;              /* left   > right  */
-                     tlbr_[4] < nLeft - 2                      /* right  < left   */
+                  IF      tlbr_[1] > aBlocks[i][3][4] ; /* top    > bottom */
+                     .OR. tlbr_[3] < aBlocks[i][3][2] ; /* bottom < top    */
+                     .OR. tlbr_[2] > nRight + 1       ; /* left   > right  */
+                     .OR. tlbr_[4] < nLeft - 2          /* right  < left   */
                      lExe := .F.
                   ENDIF
                ENDIF
                EXIT
             CASE WVT_BLOCK_GETS
-               IF tlbr_[1] > aBlocks[i][3][4] .OR. ;  /* top    > bottom */
-                  tlbr_[3] < aBlocks[i][3][2] .OR. ;  /* bottom < top    */
-                  tlbr_[2] > aBlocks[i][3][5] .OR. ;  /* left   > right  */
-                  tlbr_[4] < aBlocks[i][3][3]         /* right  < left   */
+               IF      tlbr_[1] > aBlocks[i][3][4] ;  /* top    > bottom */
+                  .OR. tlbr_[3] < aBlocks[i][3][2] ;  /* bottom < top    */
+                  .OR. tlbr_[2] > aBlocks[i][3][5] ;  /* left   > right  */
+                  .OR. tlbr_[4] < aBlocks[i][3][3]    /* right  < left   */
                   lExe := .F.
                ENDIF
                EXIT
@@ -111,10 +111,10 @@ FUNCTION WvtPaintObjects()
                /* If refreshing rectangle's top is less than objects' bottom
                 * and left is less than objects' right
                 */
-               IF tlbr_[1] > aBlocks[i][3][4] .OR. ;  /* top    > bottom */
-                  tlbr_[3] < aBlocks[i][3][2] .OR. ;  /* bottom < top    */
-                  tlbr_[2] > aBlocks[i][3][5] .OR. ;  /* left   > right  */
-                  tlbr_[4] < aBlocks[i][3][3]         /* right  < left   */
+               IF      tlbr_[1] > aBlocks[i][3][4] ; /* top    > bottom */
+                  .OR. tlbr_[3] < aBlocks[i][3][2] ; /* bottom < top    */
+                  .OR. tlbr_[2] > aBlocks[i][3][5] ; /* left   > right  */
+                  .OR. tlbr_[4] < aBlocks[i][3][3]   /* right  < left   */
                   lExe := .F.
                ENDIF
             ENDSWITCH
@@ -248,8 +248,7 @@ FUNCTION wvt_SetDlgCoMode(nMode)
 
    RETURN nOldMode
 
-FUNCTION wvt_MakeDlgTemplate(nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle, ;
-      cFaceName, nPointSize, nWeight, lItalic, nHelpId, nExStyle)
+FUNCTION wvt_MakeDlgTemplate(nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle, cFaceName, nPointSize, nWeight, lItalic, nHelpId, nExStyle)
 
    LOCAL aDlg := {{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}
    LOCAL aXY
@@ -308,10 +307,7 @@ FUNCTION wvt_MakeDlgTemplate(nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle,
    ENDIF
 
    IF !HB_ISNUMERIC(nStyle)
-      nStyle := ;
-         WS_CAPTION + WS_SYSMENU + WS_GROUP      + ;
-         WS_TABSTOP + DS_SETFONT + WS_THICKFRAME + ;
-         WS_VISIBLE + WS_POPUP   + DS_3DLOOK
+      nStyle := WS_CAPTION + WS_SYSMENU + WS_GROUP + WS_TABSTOP + DS_SETFONT + WS_THICKFRAME + WS_VISIBLE + WS_POPUP + DS_3DLOOK
    ENDIF
 
    AAdd(aDlg[1], iif(Empty(nHelpId), 0, nHelpId))
@@ -421,9 +417,7 @@ FUNCTION wvt_CreateDialog(acnDlg, lOnTop, cbDlgProc, ncIcon, nTimerTicks, hMenu)
    nDlgMode := iif(cType == "C", 0, iif(cType == "N", 1, 2))
 
    IF cType == "A"
-      xTemplate := wvt__MakeDlgTemplate(acnDlg[1], acnDlg[2], acnDlg[3], acnDlg[4], ;
-         acnDlg[5], acnDlg[6], acnDlg[7], acnDlg[8], ;
-         acnDlg[9], acnDlg[10], acnDlg[11], acnDlg[12])
+      xTemplate := wvt__MakeDlgTemplate(acnDlg[1], acnDlg[2], acnDlg[3], acnDlg[4], acnDlg[5], acnDlg[6], acnDlg[7], acnDlg[8], acnDlg[9], acnDlg[10], acnDlg[11], acnDlg[12])
    ELSE
       xTemplate := acnDlg
    ENDIF
@@ -461,9 +455,7 @@ FUNCTION wvt_DialogBox(acnDlg, cbDlgProc, hWndParent)
    nDlgMode := iif(cType == "C", 0, iif(cType == "N", 1, 2))
 
    IF cType == "A"
-      xTemplate := wvt__MakeDlgTemplate(acnDlg[1], acnDlg[2], acnDlg[3], acnDlg[4], ;
-         acnDlg[5], acnDlg[6], acnDlg[7], acnDlg[8], ;
-         acnDlg[9], acnDlg[10], acnDlg[11], acnDlg[12])
+      xTemplate := wvt__MakeDlgTemplate(acnDlg[1], acnDlg[2], acnDlg[3], acnDlg[4], acnDlg[5], acnDlg[6], acnDlg[7], acnDlg[8], acnDlg[9], acnDlg[10], acnDlg[11], acnDlg[12])
    ELSE
       xTemplate := acnDlg
    ENDIF
@@ -500,8 +492,7 @@ FUNCTION wvt_GetOpenFileName(hWnd, cPath, cTitle, acFilter, nFlags, cInitDir, cD
    __defaultNIL(@cPath, "")
    __defaultNIL(@nFlags, OFN_EXPLORER + OFN_NOCHANGEDIR)
 
-/* win_GetOpenFileName([[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;
- *                     [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>])
+/* win_GetOpenFileName([[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>])
  *    --> <cFilePath> | <cPath> + e"\0" + <cFile1> [ + e"\0" + <cFileN> ] | ""
  */
    cRet := win_GetOpenFileName(@nFlags, cTitle, cInitDir, cDefExt, acFilter, @nFilterIndex, /* nBufferSize */, cDefName)
@@ -545,8 +536,7 @@ FUNCTION wvt_GetSaveFileName(hWnd, cDefName, cTitle, acFilter, nFlags, cInitDir,
 
    __defaultNIL(@nFlags, OFN_EXPLORER + OFN_NOCHANGEDIR)
 
-/* win_GetSaveFileName([[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;
- *                     [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>])
+/* win_GetSaveFileName([[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>])
  *    --> <cFilePath> | <cPath> + e"\0" + <cFile1> [ + e"\0" + <cFileN> ] | ""
  */
    cRet := win_GetSaveFileName(@nFlags, cTitle, cInitDir, cDefExt, acFilter, @nFilterIndex, /*nBufferSize*/, cDefName)

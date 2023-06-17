@@ -102,9 +102,7 @@ METHOD WvtTextBox:Create()
 
    ::nTextColorHoverOff := ::nTextColor
 
-   ::hFont := wvt_CreateFont(::cFont, ::nFontHeight, ::nFontWidth, ;
-      ::nFontWeight, ::lItalic, ::lUnderline, ::lStrikeout, ;
-      ::nCharSet, ::nFontQuality, 0)
+   ::hFont := wvt_CreateFont(::cFont, ::nFontHeight, ::nFontWidth, ::nFontWeight, ::lItalic, ::lUnderline, ::lStrikeout, ::nCharSet, ::nFontQuality, 0)
 
    IF ::hFont != 0
       ::bPaint := {||wvt_DrawTextBox(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlTLBR, ::cText, ::nAlignHorz, ::nAlignVert, ::nTextColor, ::nBackColor, ::nBackMode, ::hFont)}

@@ -421,20 +421,20 @@ METHOD WvtDialog:Inkey()
 
       ENDSWITCH
 
-      IF ::nKey == K_LBUTTONDOWN    .OR. ;
-         ::nKey == K_LBUTTONUP      .OR. ;
-         ::nKey == K_LDBLCLK        .OR. ;
-         ::nKey == K_MMLEFTDOWN     .OR. ;
-         ::nKey == K_LBUTTONPRESSED .OR. ;
-         ::nKey == K_RBUTTONDOWN
+      IF      ::nKey == K_LBUTTONDOWN    ;
+         .OR. ::nKey == K_LBUTTONUP      ;
+         .OR. ::nKey == K_LDBLCLK        ;
+         .OR. ::nKey == K_MMLEFTDOWN     ;
+         .OR. ::nKey == K_LBUTTONPRESSED ;
+         .OR. ::nKey == K_RBUTTONDOWN
 
          ::MouseOver()
 
          IF ::nObjOver > 0
-            IF ::aObjects[::nObjOver]:nType == DLG_OBJ_BUTTON     .OR. ;
-               ::aObjects[::nObjOver]:nType == DLG_OBJ_TOOLBAR    .OR. ;
-               ::aObjects[::nObjOver]:nType == DLG_OBJ_PUSHBUTTON .OR. ;
-               ::aObjects[::nObjOver]:nType == DLG_OBJ_SCROLLBAR
+            IF      ::aObjects[::nObjOver]:nType == DLG_OBJ_BUTTON     ;
+               .OR. ::aObjects[::nObjOver]:nType == DLG_OBJ_TOOLBAR    ;
+               .OR. ::aObjects[::nObjOver]:nType == DLG_OBJ_PUSHBUTTON ;
+               .OR. ::aObjects[::nObjOver]:nType == DLG_OBJ_SCROLLBAR
 
                oObj := ::aObjects[::nObjOver]
                IF oObj:oParent:className() == "WVTBROWSE"

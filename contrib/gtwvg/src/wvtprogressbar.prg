@@ -142,8 +142,7 @@ METHOD WvtProgressBar:Display(nCurrent, nTotal)
 
    ::nPercent := Int(::nCurrent / ::nTotal * 100)
 
-   wvt_DrawProgressBar(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlTLBR, ::nPercent, ;
-      ::nBackColor, ::nBarColor, ::cImage, ::lVertical, ::nDirection)
+   wvt_DrawProgressBar(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlTLBR, ::nPercent, ::nBackColor, ::nBarColor, ::cImage, ::lVertical, ::nDirection)
 
    RETURN Self
 

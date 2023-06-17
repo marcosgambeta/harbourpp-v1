@@ -176,8 +176,7 @@ METHOD WvtBrowse:SetVBar()
 METHOD WvtBrowse:SetHBar()
 
    IF ::lHSBar
-      ::oHBar := WvtScrollBar():New(Self, 999990, ;
-         ::oBrw:nBottom + 1, ::oBrw:nLeft, ::oBrw:nBottom + 1, ::oBrw:nRight)
+      ::oHBar := WvtScrollBar():New(Self, 999990, ::oBrw:nBottom + 1, ::oBrw:nLeft, ::oBrw:nBottom + 1, ::oBrw:nRight)
       ::oHBar:nBarType   := 2
       ::oHBar:bTotal     := ::bTotalColumns
       ::oHBar:bCurrent   := ::bCurrentColumn

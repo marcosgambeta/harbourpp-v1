@@ -283,11 +283,11 @@ METHOD WvgToolBar:addItem(cCaption, xImage, xDisabledImage, xHotImage, cDLL, nSt
 
    SWITCH ValType(xImage)
    CASE "C"
-      IF "." $ xImage .OR. ;
-         "/" $ xImage .OR. ;
-         "\" $ xImage .OR. ;
-         ":" $ xImage .OR. ;
-         hb_FileExists(xImage)
+      IF      "." $ xImage ;
+         .OR. "/" $ xImage ;
+         .OR. "\" $ xImage ;
+         .OR. ":" $ xImage ;
+         .OR. hb_FileExists(xImage)
          pBitmap := wvg_PrepareBitmapFromFile(xImage, ::imageWidth, ::imageHeight, .T., ::hWnd)
       ELSE
          pBitmap := wvg_PrepareBitmapFromResourceName(xImage, ::imageWidth, ::imageHeight, .T., ::hWnd)
