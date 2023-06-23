@@ -87,12 +87,9 @@ HB_FUNC( WIN_MAPISENDMAIL )
    void ** hString;
    int     iString = 0;
 
-   MapiMessage   note;
-   MapiRecipDesc origin;
+   MapiMessage   note{};
+   MapiRecipDesc origin{};
    FLAGS         flags;
-
-   memset(&note, 0, sizeof(note));
-   memset(&origin, 0, sizeof(origin));
 
    hString = static_cast<void**>(hb_xgrab((4 + 2 + (2 * nRecpCount) + (2 * nFileCount)) * sizeof(void*)));
 

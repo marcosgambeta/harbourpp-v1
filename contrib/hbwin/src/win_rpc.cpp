@@ -54,9 +54,7 @@ HB_FUNC( WIN_UUIDCREATESTRING )
    RPC_STATUS lRPCStatus = HB_RPC_S_ERROR;
 
    TCHAR * tszUuid = nullptr;
-   UUID    uuid;
-
-   memset(&uuid, 0, sizeof(UUID));
+   UUID    uuid{};
 
    lRPCStatus = UuidCreate(&uuid);
 

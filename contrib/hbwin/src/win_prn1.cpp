@@ -571,9 +571,7 @@ HB_FUNC( WIN_ENUMFONTFAMILIES )
    PHB_ITEM pArray = hb_itemArrayNew(0);
    HDC hDC = hbwapi_par_HDC(1);
    HB_BOOL fNullDC = (!hDC);
-   LOGFONT Logfont;
-
-   memset(&Logfont, 0, sizeof(Logfont));
+   LOGFONT Logfont{};
 
    Logfont.lfCharSet = static_cast<BYTE>(hb_parnidef(1, DEFAULT_CHARSET));
    if( HB_ISCHAR(2) )

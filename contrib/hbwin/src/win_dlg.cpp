@@ -55,9 +55,7 @@
  */
 HB_FUNC( WIN_PRINTDLGDC )
 {
-   PRINTDLG pd;
-
-   memset(&pd, 0, sizeof(pd));
+   PRINTDLG pd{};
 
    pd.lStructSize = sizeof(pd);
    pd.hwndOwner = GetActiveWindow();
@@ -222,9 +220,8 @@ static void s_GetFileName(HB_BOOL fSave)
 {
    void * hInitDir, * hTitle, * hDefExt;
    LPTSTR lpstrFilter;
-   OPENFILENAME ofn;
+   OPENFILENAME ofn{};
 
-   memset(&ofn, 0, sizeof(ofn));
 #if defined(OPENFILENAME_SIZE_VERSION_400)
    ofn.lStructSize = OPENFILENAME_SIZE_VERSION_400;
 #else

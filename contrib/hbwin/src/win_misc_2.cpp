@@ -54,12 +54,10 @@ HB_FUNC( WIN_RUNDETACHED )
    HB_SIZE nLen;
    LPCTSTR lpCommandRO = HB_PARSTR(2, &hCommandLine, &nLen);
 
-   STARTUPINFO si;
-   PROCESS_INFORMATION pi;
+   STARTUPINFO si{};
+   PROCESS_INFORMATION pi{};
 
-   memset(&si, 0, sizeof(si));
    si.cb = sizeof(si);
-   memset(&pi, 0, sizeof(pi));
 
    if( CreateProcess(
           HB_PARSTR(1, &hCommandName, nullptr),                  /* Command name */

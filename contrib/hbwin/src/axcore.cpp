@@ -203,10 +203,9 @@ HB_FUNC( __AXDOVERB ) /* (hWndAx, iVerb) --> hResult */
          lOleError = HB_VTBL(lpOleObject)->GetClientSite(HB_THIS_(lpOleObject) & lpOleClientSite);
          if( lOleError == S_OK )
          {
-            MSG Msg;
+            MSG Msg{};
             RECT rc;
 
-            memset(&Msg, 0, sizeof(Msg));
             GetClientRect(hWnd, &rc);
             HB_VTBL(lpOleObject)->DoVerb(HB_THIS_(lpOleObject) hb_parni(2), &Msg, lpOleClientSite, 0, hWnd, &rc);
          }

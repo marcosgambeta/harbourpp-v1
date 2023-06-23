@@ -85,9 +85,8 @@
                        [<cInfo>], [<nInfoTimeOut>], [<cInfoTitle>], [<nInfoFlags>]) --> <lOK> */
 HB_FUNC( WIN_SHELLNOTIFYICON )
 {
-   NOTIFYICONDATA tnid;
+   NOTIFYICONDATA tnid{};
 
-   memset(&tnid, 0, sizeof(tnid));
    tnid.cbSize = sizeof(tnid);
    tnid.hWnd = hbwapi_par_raw_HWND(1);
    tnid.uID = hbwapi_par_UINT(2);
