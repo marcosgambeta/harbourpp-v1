@@ -80,14 +80,10 @@ HB_FUNC( WVT_CHOOSEFONT )
 
       LONG PointSize = 0;
       COLORREF Colors = 0;
-      LOGFONT lf;
-
-      memset(&lf, 0, sizeof(lf));
+      LOGFONT lf{};
 
       {
-         CHOOSEFONT cf;
-
-         memset(&cf, 0, sizeof(cf));
+         CHOOSEFONT cf{};
 
          if( HB_ISNUM(2) )
          {
@@ -184,10 +180,8 @@ HB_FUNC( WVT_SETTOOLTIP )
    {
       if( _s->bToolTipActive )
       {
-         TOOLINFO ti;
+         TOOLINFO ti{};
          POINT xy = { 0, 0 };
-
-         memset(&ti, 0, sizeof(ti));
 
          ti.cbSize = sizeof(ti);
          ti.hwnd = _s->hWnd;
@@ -226,9 +220,7 @@ HB_FUNC( WVT_SETTOOLTIPTEXT )
 
    if( _s )
    {
-      TOOLINFO ti;
-
-      memset(&ti, 0, sizeof(ti));
+      TOOLINFO ti{};
 
       ti.cbSize = sizeof(ti);
       ti.hwnd = _s->hWnd;

@@ -652,14 +652,11 @@ wvg_ChooseFont(hWnd, nWndProc, familyName, nominalPointSize, viewScreenFonts, vi
 */
 HB_FUNC( WVG_CHOOSEFONT )
 {
-   CHOOSEFONT cf;
-   LOGFONT lf;
+   CHOOSEFONT cf{};
+   LOGFONT lf{};
    DWORD Flags = CF_EFFECTS | CF_SHOWHELP | CF_APPLY | CF_INITTOLOGFONTSTRUCT | CF_ENABLEHOOK;
    LONG PointSize = 0;
    HWND hWnd = hbwapi_par_raw_HWND(1);
-
-   memset(&cf, 0, sizeof(cf));
-   memset(&lf, 0, sizeof(lf));
 
    if( HB_ISCHAR(3) )
    {
@@ -740,9 +737,7 @@ HB_FUNC( WVG_CHOOSEFONT )
 
 HB_FUNC( WVG_CHOOSEFONT_GETLOGFONT )
 {
-   LOGFONT lf;
-
-   memset(&lf, 0, sizeof(lf));
+   LOGFONT lf{};
 
    SendMessage(hbwapi_par_raw_HWND(1), WM_CHOOSEFONT_GETLOGFONT, 0, reinterpret_cast<LPARAM>(&lf));
 
@@ -751,12 +746,10 @@ HB_FUNC( WVG_CHOOSEFONT_GETLOGFONT )
 
 HB_FUNC( WVG_FONTCREATE )
 {
-   LOGFONT lf;
+   LOGFONT lf{};
    HFONT hFont;
 
    PHB_ITEM aFont = hb_param(1, Harbour::Item::ARRAY);
-
-   memset(&lf, 0, sizeof(lf));
 
    if( aFont )
    {
@@ -889,10 +882,8 @@ wvg_RegisterClass_ByName(cClassName)
 */
 HB_FUNC( WVG_REGISTERCLASS_BYNAME )
 {
-   WNDCLASS wndclass;
+   WNDCLASS wndclass{};
    void * hClass;
-
-   memset(&wndclass, 0, sizeof(wndclass));
 
    wndclass.style         = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
    wndclass.lpfnWndProc   = DefWindowProc;
@@ -991,9 +982,7 @@ HB_FUNC( WVG_CREATETOOLTIPWINDOW )
 
    if( hwndTip )
    {
-      TOOLINFO ti;
-
-      memset(&ti, 0, sizeof(ti));
+      TOOLINFO ti{};
 
       ti.cbSize   = sizeof(ti);
       ti.hwnd     = hbwapi_par_raw_HWND(1);
@@ -1012,10 +1001,8 @@ HB_FUNC( WVG_CREATETOOLTIPWINDOW )
 
 HB_FUNC( WVG_SETTOOLTIPTEXT )
 {
-   TOOLINFO ti;
+   TOOLINFO ti{};
    void * hText;
-
-   memset(&ti, 0, sizeof(ti));
 
    ti.cbSize   = sizeof(ti);
    ti.hwnd     = hbwapi_par_raw_HWND(1);

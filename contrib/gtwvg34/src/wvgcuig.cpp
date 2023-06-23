@@ -1582,9 +1582,7 @@ static void hb_wvg_RenderPicture(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int 
       POINT lpp = { 0, 0 };
       HDC hdc = pWVT->hGuiDC;
 
-      RECT rc_dummy;
-
-      memset(&rc_dummy, 0, sizeof(rc_dummy));
+      RECT rc_dummy{};
 
       if( HB_VTBL(pPicture)->get_Width(HB_THIS_(pPicture) & nWidth) != S_OK )
       {

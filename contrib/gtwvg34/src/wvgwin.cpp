@@ -124,9 +124,7 @@ HB_FUNC( WVG_SETMENU )
 
 HB_FUNC( WVG_ISMENUITEMCHECKED )
 {
-   MENUITEMINFO lpmii;
-
-   memset(&lpmii, 0, sizeof(lpmii));
+   MENUITEMINFO lpmii{};
 
    lpmii.cbSize = sizeof(lpmii);
    lpmii.fMask = MIIM_STATE;
@@ -143,9 +141,7 @@ HB_FUNC( WVG_ISMENUITEMCHECKED )
 
 HB_FUNC( WVG_ISMENUITEMENABLED )  /* = grayed */
 {
-   MENUITEMINFO lpmii;
-
-   memset(&lpmii, 0, sizeof(lpmii));
+   MENUITEMINFO lpmii{};
 
    lpmii.cbSize = sizeof(lpmii);
    lpmii.fMask = MIIM_STATE;
@@ -162,10 +158,8 @@ HB_FUNC( WVG_ISMENUITEMENABLED )  /* = grayed */
 
 HB_FUNC( WVG_SETMENUITEM )
 {
-   MENUITEMINFO lpmii;
+   MENUITEMINFO lpmii{};
    void * hText = nullptr;
-
-   memset(&lpmii, 0, sizeof(lpmii));
 
    lpmii.cbSize = sizeof(lpmii);
    if( hb_parl(5) )
@@ -424,9 +418,7 @@ HB_FUNC( WVG_SENDTOOLBARMESSAGE )
       case TB_GETCOLORSCHEME:
       {
          PHB_ITEM info = hb_itemArrayNew(2);
-         COLORSCHEME colorScheme;
-
-         memset(&colorScheme, 0, sizeof(colorScheme));
+         COLORSCHEME colorScheme{};
 
          colorScheme.dwSize = sizeof(colorScheme);
          SendMessage(hTB, TB_GETCOLORSCHEME, 0, reinterpret_cast<LPARAM>(&colorScheme));
@@ -493,9 +485,8 @@ HB_FUNC( WVG_SENDCBMESSAGE )
 #if defined(CB_GETCOMBOBOXINFO)
       case CB_GETCOMBOBOXINFO:
       {
-         COMBOBOXINFO cbi;
+         COMBOBOXINFO cbi{};
 
-         memset(&cbi, 0, sizeof(cbi));
          cbi.cbSize = sizeof(cbi);
 
          if( GetComboBoxInfo(hCB, &cbi) )

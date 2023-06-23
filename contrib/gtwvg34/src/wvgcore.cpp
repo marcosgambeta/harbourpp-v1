@@ -217,9 +217,7 @@ static bool hb_wvt_gtRenderPicture(int x, int y, int wd, int ht, IPicture * pPic
          POINT lpp = { 0, 0 };
          HDC hdc = _s->hdc;
 
-         RECT rc_dummy;
-
-         memset(&rc_dummy, 0, sizeof(rc_dummy));
+         RECT rc_dummy{};
 
          if( HB_VTBL(pPicture)->get_Width(HB_THIS_(pPicture) &nWidth) != S_OK )
          {
@@ -353,9 +351,7 @@ static bool hb_wvt_DrawImage(HDC hdc, int x, int y, int wd, int ht, const char *
 
                      POINT lpp = { 0, 0 };
 
-                     RECT rc_dummy;
-
-                     memset(&rc_dummy, 0, sizeof(rc_dummy));
+                     RECT rc_dummy{};
 
                      if( HB_VTBL(pPicture)->get_Width(HB_THIS_(pPicture) &nWidth) != S_OK )
                      {
@@ -709,9 +705,7 @@ HB_FUNC( WVT_SETBRUSH )
       if( HB_ISNUM(1) )
       {
          HBRUSH hBrush;
-         LOGBRUSH lb;
-
-         memset(&lb, 0, sizeof(lb));
+         LOGBRUSH lb{};
 
          lb.lbStyle = hb_parnl(1);
          lb.lbColor = hbwapi_par_COLORREF(2);
@@ -916,10 +910,8 @@ HB_FUNC( WVT_DRAWLABEL )
    if( _s )
    {
       HFONT hFont;
-      LOGFONT lf;
+      LOGFONT lf{};
       void * hText = nullptr;
-
-      memset(&lf, 0, sizeof(lf));
 
       lf.lfEscapement     = hb_parni(5) * 10;
       lf.lfOrientation    = 0;
@@ -2738,10 +2730,8 @@ HB_FUNC( WVT_CREATEFONT )
 
    if( _s )
    {
-      LOGFONT lf;
+      LOGFONT lf{};
       void * hText = nullptr;
-
-      memset(&lf, 0, sizeof(lf));
 
       lf.lfEscapement     = hb_parni(10) * 10;
       lf.lfOrientation    = 0;
@@ -2870,11 +2860,9 @@ HB_FUNC( WVT_LOADFONT )
 
       if( iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->hUserFonts)) )
       {
-         LOGFONT lf;
+         LOGFONT lf{};
          HFONT hFont;
          void * hF = nullptr;
-
-         memset(&lf, 0, sizeof(lf));
 
          lf.lfEscapement     = hb_parni(11) * 10;
          lf.lfOrientation    = 0;
