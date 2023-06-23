@@ -2535,9 +2535,8 @@ static int hb_gt_xwc_keyFlags(PXWND_DEF wnd, int flags)
 
 static void hb_gt_xwc_FullScreen(PXWND_DEF wnd)
 {
-   XEvent evt;
+   XEvent evt{};
 
-   memset(&evt, 0, sizeof(evt));
    evt.xclient.type = ClientMessage;
    evt.xclient.message_type = s_atomState;
    evt.xclient.display = wnd->dpy;
@@ -2551,9 +2550,8 @@ static void hb_gt_xwc_FullScreen(PXWND_DEF wnd)
 
 static void hb_gt_xwc_MaximizeScreen(PXWND_DEF wnd)
 {
-   XEvent evt;
+   XEvent evt{};
 
-   memset(&evt, 0, sizeof(evt));
    evt.xclient.type = ClientMessage;
    evt.xclient.message_type = s_atomState;
    evt.xclient.display = wnd->dpy;
@@ -2569,9 +2567,8 @@ static void hb_gt_xwc_MaximizeScreen(PXWND_DEF wnd)
 /* after de-iconifying set input focus back */
 static void hb_gt_xwc_ActivateScreen(PXWND_DEF wnd)
 {
-   XEvent evt;
+   XEvent evt{};
 
-   memset(&evt, 0, sizeof(evt));
    evt.xclient.type = ClientMessage;
    evt.xclient.message_type = s_atomActivate;
    evt.xclient.display = wnd->dpy;
@@ -2627,15 +2624,13 @@ using PXWC_MWMHints = XWC_MWMHints *;
 
 static void hb_gt_xwc_MotifWmHints(PXWND_DEF wnd)
 {
-   XWC_MWMHints mwmhints;
+   XWC_MWMHints mwmhints{};
    Atom actual_type_return = 0;
    int actual_format_return = 0;
    unsigned long nitems_return = 0, bytes_after_return = 0;
    unsigned char * prop_return = nullptr;
    unsigned long functions, decorations;
    int result;
-
-   memset(&mwmhints, 0, sizeof(mwmhints));
 
    result = XGetWindowProperty(wnd->dpy, wnd->window, s_atomMotifHints,
                                0, 20, false, s_atomMotifHints,
@@ -4864,9 +4859,7 @@ static void hb_gt_xwc_DestroyWndDef( PXWND_DEF wnd )
 
 static void hb_gt_xwc_SetResizing(PXWND_DEF wnd)
 {
-   XSizeHints xsize;
-
-   memset(&xsize, 0, sizeof(xsize));
+   XSizeHints xsize{};
 
    xsize.flags = PWinGravity | PResizeInc | PMinSize | PMaxSize | PBaseSize;
 
