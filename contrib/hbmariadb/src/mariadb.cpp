@@ -70,8 +70,7 @@ static HB_GARBAGE_FUNC(MYSQL_release)
    void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
-   if( ph && *ph )
-   {
+   if( ph && *ph ) {
       /* Destroy the object */
       mysql_close(static_cast<MYSQL*>(*ph));
 
@@ -88,16 +87,13 @@ static const HB_GC_FUNCS s_gcMYSQLFuncs =
 
 static void hb_MYSQL_ret(MYSQL * p)
 {
-   if( p )
-   {
+   if( p ) {
       void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(MYSQL*), &s_gcMYSQLFuncs));
 
       *ph = p;
 
       hb_retptrGC(ph);
-   }
-   else
-   {
+   } else {
       hb_retptr(nullptr);
    }
 }
@@ -114,8 +110,7 @@ static HB_GARBAGE_FUNC(MYSQL_RES_release)
    void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
-   if( ph && *ph )
-   {
+   if( ph && *ph ) {
       /* Destroy the object */
       mysql_free_result(static_cast<MYSQL_RES*>(*ph));
 
@@ -132,16 +127,13 @@ static const HB_GC_FUNCS s_gcMYSQL_RESFuncs =
 
 static void hb_MYSQL_RES_ret(MYSQL_RES * p)
 {
-   if( p )
-   {
+   if( p ) {
       void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(MYSQL_RES*), &s_gcMYSQL_RESFuncs));
 
       *ph = p;
 
       hb_retptrGC(ph);
-   }
-   else
-   {
+   } else {
       hb_retptr(nullptr);
    }
 }
@@ -169,22 +161,16 @@ HB_FUNC( MYSQL_REAL_CONNECT )
    unsigned int port  = static_cast<unsigned int>(hb_parnidef(4, MYSQL_PORT));
    unsigned int flags = static_cast<unsigned int>(hb_parnidef(5, 0));
 
-   if( (mysql = mysql_init(static_cast<MYSQL*>(nullptr))) != nullptr )
-   {
+   if( (mysql = mysql_init(static_cast<MYSQL*>(nullptr))) != nullptr ) {
       /* from 3.22.x of MySQL there is a new parameter in mysql_real_connect() call, that is char * db
          which is not used here */
-      if( mysql_real_connect(mysql, szHost, szUser, szPass, 0, port, nullptr, flags) )
-      {
+      if( mysql_real_connect(mysql, szHost, szUser, szPass, 0, port, nullptr, flags) ) {
          hb_MYSQL_ret(mysql);
-      }
-      else
-      {
+      } else {
          mysql_close(mysql);
          hb_retptr(nullptr);
       }
-   }
-   else
-   {
+   } else {
       hb_retptr(nullptr);
    }
 #else
@@ -199,27 +185,22 @@ HB_FUNC( MYSQL_GET_SERVER_VERSION )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
 #if MYSQL_VERSION_ID >= 40100
       hb_retnl(static_cast<long>(mysql_get_server_version(mysql)));
 #else
       const char * szVer = mysql_get_server_info(mysql);
       long lVer = 0;
 
-      while( *szVer )
-      {
-         if( *szVer >= '0' && *szVer <= '9' )
-         {
+      while( *szVer ) {
+         if( *szVer >= '0' && *szVer <= '9' ) {
             lVer = lVer * 10 + *szVer;
          }
          ++szVer;
       }
       hb_retnl(lVer);
 #endif
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -231,16 +212,13 @@ HB_FUNC( MYSQL_COMMIT )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
 #if MYSQL_VERSION_ID >= 40100
       hb_retnl(static_cast<long>(mysql_commit(mysql)));
 #else
       hb_retnl(static_cast<long>(mysql_query(mysql, "COMMIT")));
 #endif
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -252,16 +230,13 @@ HB_FUNC( MYSQL_ROLLBACK )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
 #if MYSQL_VERSION_ID >= 40100
       hb_retnl(static_cast<long>(mysql_rollback(mysql)));
 #else
       hb_retnl(static_cast<long>(mysql_query(mysql, "ROLLBACK")));
 #endif
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -273,12 +248,9 @@ HB_FUNC( MYSQL_SELECT_DB )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
       hb_retnl(static_cast<long>(mysql_select_db(mysql, static_cast<const char*>(hb_parc(2)))));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -290,12 +262,9 @@ HB_FUNC( MYSQL_QUERY )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
       hb_retnl(static_cast<long>(mysql_query(mysql, hb_parc(2))));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -307,12 +276,9 @@ HB_FUNC( MYSQL_STORE_RESULT )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
       hb_MYSQL_RES_ret(mysql_store_result(mysql));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -324,12 +290,9 @@ HB_FUNC( MYSQL_USE_RESULT )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
       hb_MYSQL_RES_ret(mysql_use_result(mysql));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -341,17 +304,14 @@ HB_FUNC( MYSQL_FETCH_ROW )
 {
    MYSQL_RES * mresult = hb_MYSQL_RES_par(1);
 
-   if( mresult )
-   {
+   if( mresult ) {
       unsigned int num_fields = mysql_num_fields(mresult);
       PHB_ITEM aRow = hb_itemArrayNew(num_fields);
       MYSQL_ROW mrow = mysql_fetch_row(mresult);
 
-      if( mrow )
-      {
+      if( mrow ) {
          unsigned long * lengths = mysql_fetch_lengths(mresult);
-         for( unsigned int i = 0; i < num_fields; ++i )
-         {
+         for( unsigned int i = 0; i < num_fields; ++i ) {
             hb_arraySetCL(aRow, i + 1, mrow[i], lengths[i]);
          }
       }
@@ -367,12 +327,9 @@ HB_FUNC( MYSQL_DATA_SEEK )
 {
    MYSQL_RES * mresult = hb_MYSQL_RES_par(1);
 
-   if( mresult )
-   {
+   if( mresult ) {
       mysql_data_seek(mresult, static_cast<unsigned int>(hb_parni(2)));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -384,12 +341,9 @@ HB_FUNC( MYSQL_NUM_ROWS )
 {
    MYSQL_RES * mresult = hb_MYSQL_RES_par(1);
 
-   if( mresult )
-   {
+   if( mresult ) {
       hb_retnint(mysql_num_rows((mresult)));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -401,14 +355,12 @@ HB_FUNC( MYSQL_FETCH_FIELD )
 {
    MYSQL_RES * mresult = hb_MYSQL_RES_par(1);
 
-   if( mresult )
-   {
+   if( mresult ) {
       /* NOTE: field structure of MySQL has 8 members as of MySQL 3.22.x */
       PHB_ITEM aField = hb_itemArrayNew(8);
       MYSQL_FIELD * mfield = mysql_fetch_field(mresult);
 
-      if( mfield )
-      {
+      if( mfield ) {
          hb_arraySetC(aField, 1, mfield->name);
          hb_arraySetC(aField, 2, mfield->table);
          hb_arraySetC(aField, 3, mfield->def);
@@ -420,9 +372,7 @@ HB_FUNC( MYSQL_FETCH_FIELD )
       }
 
       hb_itemReturnRelease(aField);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -434,12 +384,9 @@ HB_FUNC( MYSQL_FIELD_SEEK )
 {
    MYSQL_RES * mresult = hb_MYSQL_RES_par(1);
 
-   if( mresult )
-   {
+   if( mresult ) {
       mysql_field_seek(mresult, static_cast<MYSQL_FIELD_OFFSET>(hb_parni(2)));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -451,12 +398,9 @@ HB_FUNC( MYSQL_NUM_FIELDS )
 {
    MYSQL_RES * mresult = hb_MYSQL_RES_par(1);
 
-   if( mresult )
-   {
+   if( mresult ) {
       hb_retnl(mysql_num_fields((mresult)));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -468,16 +412,13 @@ HB_FUNC( MYSQL_FIELD_COUNT )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
 #if MYSQL_VERSION_ID > 32200
       hb_retnl(mysql_field_count((mysql)));
 #else
       hb_retnl(0);
 #endif
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -489,12 +430,9 @@ HB_FUNC( MYSQL_LIST_FIELDS )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
       hb_MYSQL_RES_ret(mysql_list_fields(mysql, hb_parc(2), nullptr));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -506,12 +444,9 @@ HB_FUNC( MYSQL_ERRNO )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
       hb_retnint(mysql_errno(mysql));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -523,12 +458,9 @@ HB_FUNC( MYSQL_ERROR )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
       hb_retc(mysql_error(mysql));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -540,23 +472,19 @@ HB_FUNC( MYSQL_LIST_DBS )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
       MYSQL_RES * mresult = mysql_list_dbs(mysql, nullptr);
       HB_SIZE nr = static_cast<HB_SIZE>(mysql_num_rows(mresult));
       PHB_ITEM aDBs = hb_itemArrayNew(nr);
 
-      for( HB_SIZE i = 0; i < nr; ++i )
-      {
+      for( HB_SIZE i = 0; i < nr; ++i ) {
          MYSQL_ROW mrow = mysql_fetch_row(mresult);
          hb_arraySetC(aDBs, i + 1, mrow[0]);
       }
 
       mysql_free_result(mresult);
       hb_itemReturnRelease(aDBs);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -568,24 +496,20 @@ HB_FUNC( MYSQL_LIST_TABLES )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
       const char * cWild = hb_parc(2);
       MYSQL_RES * mresult = mysql_list_tables(mysql, cWild);
       long nr = static_cast<long>(mysql_num_rows(mresult));
       PHB_ITEM aTables = hb_itemArrayNew(nr);
 
-      for( long i = 0; i < nr; ++i )
-      {
+      for( long i = 0; i < nr; ++i ) {
          MYSQL_ROW mrow = mysql_fetch_row(mresult);
          hb_arraySetC(aTables, i + 1, mrow[0]);
       }
 
       mysql_free_result(mresult);
       hb_itemReturnRelease(aTables);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -594,12 +518,9 @@ HB_FUNC( MYSQL_AFFECTED_ROWS )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
       hb_retnl(static_cast<long>(mysql_affected_rows(mysql)));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -608,12 +529,9 @@ HB_FUNC( MYSQL_GET_HOST_INFO )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
       hb_retc(mysql_get_host_info(mysql));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -622,12 +540,9 @@ HB_FUNC( MYSQL_GET_SERVER_INFO )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
       hb_retc(mysql_get_server_info(mysql));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -636,12 +551,9 @@ HB_FUNC( MYSQL_INSERT_ID )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
       hb_retnint(mysql_insert_id(mysql));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -653,12 +565,9 @@ HB_FUNC( MYSQL_PING )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
       hb_retnint(mysql_ping(mysql));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -670,16 +579,13 @@ HB_FUNC( MYSQL_REAL_ESCAPE_STRING )
 {
    MYSQL * mysql = hb_MYSQL_par(1);
 
-   if( mysql )
-   {
+   if( mysql ) {
       const char * from = hb_parcx(2);
       unsigned long nSize = static_cast<unsigned long>(hb_parclen(2));
       char * buffer = static_cast<char*>(hb_xgrab(nSize * 2 + 1));
       nSize = mysql_real_escape_string(mysql, buffer, from, nSize);
       hb_retclen_buffer(static_cast<char*>(buffer), nSize);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -699,17 +605,14 @@ static char * filetoBuff(const char * fname, unsigned long * size)
    char * buffer = nullptr;
    HB_FHANDLE handle = hb_fsOpen(fname, FO_READWRITE);
 
-   if( handle != FS_ERROR )
-   {
+   if( handle != FS_ERROR ) {
       *size = hb_fsSeek(handle, 0, FS_END);
       hb_fsSeek(handle, 0, FS_SET);
       buffer = static_cast<char*>(hb_xgrab(*size + 1));
       *size  = static_cast<unsigned long>(hb_fsReadLarge(handle, buffer, *size));
       buffer[*size] = '\0';
       hb_fsClose(handle);
-   }
-   else
-   {
+   } else {
       *size = 0;
    }
 
@@ -721,8 +624,7 @@ HB_FUNC( MYSQL_ESCAPE_STRING_FROM_FILE )
    unsigned long nSize;
    char * from = filetoBuff(hb_parc(1), &nSize);
 
-   if( from )
-   {
+   if( from ) {
       char * buffer = static_cast<char*>(hb_xgrab(nSize * 2 + 1));
       nSize = mysql_escape_string(buffer, from, nSize);
       hb_retclen_buffer(buffer, nSize);
