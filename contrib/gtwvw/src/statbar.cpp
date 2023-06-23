@@ -72,7 +72,7 @@ HB_FUNC( WVW_SBCREATE )
    hWndSB     = CreateStatusWindow(WS_CHILD | WS_VISIBLE | WS_BORDER | SBT_TOOLTIPS, nullptr, hWndParent, WVW_ID_BASE_STATUSBAR + usWinNum);
    if( hWndSB ) {
 
-      RECT rSB; memset(&rSB, 0, sizeof(rSB));
+      RECT rSB{};
       if( pWindowData->hSBfont == nullptr ) {
          pWindowData->hSBfont = CreateFontIndirect(&pData->s_lfSB);
       }
@@ -133,7 +133,7 @@ HB_FUNC( WVW_SBADDPART )
    HWND       hWndSB;
    int        ptArray[WVW_MAX_STATUS_PARTS];
    int        numOfParts;
-   RECT       rSB; memset(&rSB, 0, sizeof(rSB));
+   RECT       rSB{};
    WORD       displayFlags;
    HICON      hIcon;
    BOOL       lResetParts;
@@ -151,7 +151,7 @@ HB_FUNC( WVW_SBADDPART )
 
    if( HB_ISCHAR(2) ) {
       HDC  hDCSB = GetDC(hWndSB);
-      SIZE size; memset(&size, 0, sizeof(size));
+      SIZE size{};
 
       HFONT hFont    = reinterpret_cast<HFONT>(SendMessage(hWndSB, WM_GETFONT, static_cast<WPARAM>(0), static_cast<LPARAM>(0)));
       HFONT hOldFont = static_cast<HFONT>(SelectObject(hDCSB, hFont));
@@ -220,7 +220,7 @@ HB_FUNC( WVW_SBREFRESH )
    int        ptArray[WVW_MAX_STATUS_PARTS];
    int        numOfParts;
    int        iDiff;
-   RECT       rSB; memset(&rSB, 0, sizeof(rSB));
+   RECT       rSB{};
 
    hWndSB = pWindowData->hStatusBar;
    if( hWndSB == nullptr ) {
@@ -405,7 +405,7 @@ HB_FUNC( WVW_XBCREATE )
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
    HWND       hWndParent  = pWindowData->hWnd;
    HWND       hWndXB;
-   POINT      xy; memset(&xy, 0, sizeof(xy));
+   POINT      xy{};
    int        iTop, iLeft, iBottom, iRight;
    int        iOffTop, iOffLeft, iOffBottom, iOffRight;
    int        iStyle = static_cast<int>(!HB_ISNUM(2) ? -1 : hb_parni(2));
@@ -481,8 +481,8 @@ HB_FUNC( WVW_XBCREATE )
 
    if( hWndXB ) {
 
-      RECT rXB; memset(&rXB, 0, sizeof(rXB));
-      RECT rOffXB; memset(&rOffXB, 0, sizeof(rOffXB));
+      RECT rXB{};
+      RECT rOffXB{};
 
       WNDPROC OldProc;
 

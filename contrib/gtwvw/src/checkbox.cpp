@@ -395,7 +395,7 @@ HB_FUNC( WVW_PGCREATE )
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
    HWND       hWndParent  = pWindowData->hWnd;
    HWND       hWndPG;
-   POINT      xy; memset(&xy, 0, sizeof(xy));
+   POINT      xy{};
    int        iTop, iLeft, iBottom, iRight;
    int        iOffTop, iOffLeft, iOffBottom, iOffRight;
    int        iStyle     = 0;
@@ -460,8 +460,8 @@ HB_FUNC( WVW_PGCREATE )
       static_cast<LPVOID>(nullptr));
 
    if( hWndPG ) {
-      RECT rXB; memset(&rXB, 0, sizeof(rXB));
-      RECT rOffXB; memset(&rOffXB, 0, sizeof(rOffXB));
+      RECT rXB{};
+      RECT rOffXB{};
 
       if( bBackColor ) {
          SendMessage(hWndPG, PBM_SETBKCOLOR, 0, static_cast<LPARAM>(static_cast<COLORREF>(hb_parnl(7))));

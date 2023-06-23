@@ -98,7 +98,7 @@ HB_FUNC( WVW_EBCREATE )
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
    HWND       hWndParent  = pWindowData->hWnd;
    HWND       hWndEB;
-   POINT      xy; memset(&xy, 0, sizeof(xy));
+   POINT      xy{};
    int        iTop, iLeft, iBottom, iRight;
    int        iOffTop, iOffLeft, iOffBottom, iOffRight;
    UINT       uiEBid;
@@ -182,8 +182,8 @@ HB_FUNC( WVW_EBCREATE )
       static_cast<LPVOID>(nullptr));
 
    if( hWndEB ) {
-      RECT    rXB; memset(&rXB, 0, sizeof(rXB));
-      RECT    rOffXB; memset(&rOffXB, 0, sizeof(rOffXB));
+      RECT    rXB{};
+      RECT    rOffXB{};
       WNDPROC OldProc;
       /* USHORT i; */
       BOOL bFromOEM = (pWindowData->CodePage == OEM_CHARSET);
@@ -617,7 +617,7 @@ HB_FUNC( WVW_STCREATE )
    HDC  hDc;
 #endif
 
-   POINT xy; memset(&xy, 0, sizeof(xy));
+   POINT xy{};
    int   iTop, iLeft, iBottom, iRight;
    int   iOffTop, iOffLeft, iOffBottom, iOffRight;
    UINT  uiCBid;

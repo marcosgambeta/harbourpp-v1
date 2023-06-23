@@ -886,8 +886,8 @@ static void hb_gt_wvw_Scroll(PHB_GT pGT, int iTop, int iLeft, int iBottom, int i
    if( s_pWvwData->s_pWindows[s_pWvwData->s_usCurWindow]->InvalidateWindow ) {
       hb_gt_wvw_vDispEnd(s_pWvwData->s_pWindows[s_pWvwData->s_usCurWindow]);
    } else {
-      RECT cr; memset(&cr, 0, sizeof(cr));
-      RECT crInvalid; memset(&crInvalid, 0, sizeof(crInvalid));
+      RECT cr{};
+      RECT crInvalid{};
 
       cr.left   = iLeft + (iCols > 0 ? 1 : 0);
       cr.top    = iTop + (iRows > 0 ? 1 : 0);
@@ -1461,7 +1461,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_DESKTOPWIDTH:
       {
-         RECT rDesk; memset(&rDesk, 0, sizeof(rDesk));
+         RECT rDesk{};
          HWND hDesk;
 
          hDesk = GetDesktopWindow();
@@ -1477,7 +1477,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
           * SEEALSO         hb_gt_wvwCalcPixelHeight() - usSBHeight - usTBHeight
           */
 
-         RECT rDesk; memset(&rDesk, 0, sizeof(rDesk));
+         RECT rDesk{};
          HWND hDesk = GetDesktopWindow();
          GetWindowRect(hDesk, &rDesk);
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, rDesk.bottom - rDesk.top);
@@ -1486,7 +1486,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_DESKTOPCOLS:
       {
-         RECT rDesk; memset(&rDesk, 0, sizeof(rDesk));
+         RECT rDesk{};
          HWND hDesk;
 
          hDesk = GetDesktopWindow();
@@ -1505,7 +1505,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
          /* NOTE 2004-07-19 screenheight includes linespacing, if any */
 
-         RECT rDesk; memset(&rDesk, 0, sizeof(rDesk));
+         RECT rDesk{};
          HWND hDesk;
 
          hDesk = GetDesktopWindow();
@@ -1716,7 +1716,7 @@ static int hb_gt_wvw_gfxPrimitive(PHB_GT pGT, int iType, int iTop, int iLeft, in
          break;
       case HB_GFX_RECT:
       {
-         RECT r; memset(&r, 0, sizeof(r));
+         RECT r{};
          r.left   = iLeft;
          r.top    = iTop;
          r.right  = iRight;
@@ -2061,7 +2061,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPAR
 
 static void hb_gt_wvwCreateObjects(UINT usWinNum)
 {
-   LOGBRUSH lb; memset(&lb, 0, sizeof(lb));
+   LOGBRUSH lb{};
 
    /* 2004-09-21 IMPORTANT:
       All these PENs and BRUSHes creations are temporarily disabled
@@ -2155,11 +2155,11 @@ static BOOL hb_gt_wvwValidWindowSize(WIN_DATA * pWindowData, int rows, int cols,
    HFONT      hOldFont;
    USHORT     width, height, maxWidth, maxHeight;
    USHORT     diffHeight, diffWidth;
-   TEXTMETRIC tm; memset(&tm, 0, sizeof(tm));
-   RECT       rcWorkArea; memset(&rcWorkArea, 0, sizeof(rcWorkArea));
+   TEXTMETRIC tm{};
+   RECT       rcWorkArea{};
 
-   RECT wi; memset(&wi, 0, sizeof(wi));
-   RECT ci; memset(&ci, 0, sizeof(ci));
+   RECT wi{};
+   RECT ci{};
 
    SystemParametersInfo(SPI_GETWORKAREA, 0, &rcWorkArea, 0);
 
@@ -2209,12 +2209,12 @@ static void hb_gt_wvwResetWindowSize(WIN_DATA * pWindowData, HWND hWnd)
    HFONT      hFont, hOldFont;
    USHORT     diffWidth, diffHeight;
    USHORT     height, width;
-   RECT       wi; memset(&wi, 0, sizeof(wi));
-   RECT       ci; memset(&ci, 0, sizeof(ci));
-   TEXTMETRIC tm; memset(&tm, 0, sizeof(tm));
+   RECT       wi{};
+   RECT       ci{};
+   TEXTMETRIC tm{};
 
-   RECT       rcWorkArea; memset(&rcWorkArea, 0, sizeof(rcWorkArea));
-   RECT       rcMainClientArea; memset(&rcMainClientArea, 0, sizeof(rcMainClientArea));
+   RECT       rcWorkArea{};
+   RECT       rcMainClientArea{};
    WIN_DATA * pMainWindow;
 
    pMainWindow = s_pWvwData->s_pWindows[0];
@@ -2648,13 +2648,13 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
 
       case WM_PAINT:
       {
-         PAINTSTRUCT ps; memset(&ps, 0, sizeof(ps));
+         PAINTSTRUCT ps{};
          HDC         hdc;
          USHORT      irow;
-         RECT        updateRect; memset(&updateRect, 0, sizeof(updateRect));
-         RECT        rcRect; memset(&rcRect, 0, sizeof(rcRect));
+         RECT        updateRect{};
+         RECT        rcRect{};
 
-         RECT  ci; memset(&ci, 0, sizeof(ci));
+         RECT  ci{};
          int   ixbeyond;
          int   iybeyond;
          BOOL  bR       = FALSE, bB = FALSE;
@@ -2782,7 +2782,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
 
          } else if( updateRect.right > ixbeyond ) {
 
-            LOGBRUSH lb; memset(&lb, 0, sizeof(lb));
+            LOGBRUSH lb{};
             HBRUSH   hBrush;
 
             COLORREF bkColor = _COLORS[pWindowData->byColors[0] >> 4];
@@ -2822,7 +2822,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
                This beyond reach area is due to MAXIMIZED state of
                a small window */
             else if( updateRect.bottom > iybeyond ) {
-               LOGBRUSH lb; memset(&lb, 0, sizeof(lb));
+               LOGBRUSH lb{};
                HBRUSH   hBrush;
 
                COLORREF bkColor = _COLORS[pWindowData->byColors[0] >> 4];
@@ -3512,7 +3512,7 @@ static BOOL hb_wvw_Size_Ready(BOOL b_p_SizeIsReady)
 static HWND hb_gt_wvwCreateWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow)
 {
    HWND     hWnd;
-   WNDCLASS wndclass; memset(&wndclass, 0, sizeof(wndclass));
+   WNDCLASS wndclass{};
 
    HB_SYMBOL_UNUSED(hPrevInstance);
    HB_SYMBOL_UNUSED(szCmdLine);
@@ -3577,9 +3577,9 @@ static HWND hb_gt_wvwCreateWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, 
 
 static void hb_gt_wvwCreateToolTipWindow(WIN_DATA * pWindowData)
 {
-   INITCOMMONCONTROLSEX icex; memset(&icex, 0, sizeof(icex));
+   INITCOMMONCONTROLSEX icex{};
    HWND     hWndTT;
-   TOOLINFO ti; memset(&ti, 0, sizeof(ti));
+   TOOLINFO ti{};
 
    /* Load the tooltip class from the DLL.
     */
@@ -3682,7 +3682,7 @@ DWORD hb_gt_wvwProcessMessages(WIN_DATA * pWindowData)
 
 POINT hb_gt_wvwGetXYFromColRow(WIN_DATA * pWindowData, USHORT col, USHORT row)
 {
-   POINT xy; memset(&xy, 0, sizeof(xy));
+   POINT xy{};
 
    xy.x = (col) * pWindowData->PTEXTSIZE.x;
 
@@ -3695,8 +3695,8 @@ POINT hb_gt_wvwGetXYFromColRow(WIN_DATA * pWindowData, USHORT col, USHORT row)
 
 static void hb_gt_wvwUnreachedXY(WIN_DATA * pWindowData, int * cols, int * rows)
 {
-   RECT  ci; memset(&ci, 0, sizeof(ci));
-   POINT xy; memset(&xy, 0, sizeof(xy));
+   RECT  ci{};
+   POINT xy{};
 
    if( !IsZoomed(pWindowData->hWnd) ) {
       if( rows ) {
@@ -3727,7 +3727,7 @@ static void hb_gt_wvwUnreachedXY(WIN_DATA * pWindowData, int * cols, int * rows)
  */
 static POINT hb_gt_wvwGetColRowFromXY(WIN_DATA * pWindowData, USHORT x, USHORT y)
 {
-   POINT colrow; memset(&colrow, 0, sizeof(colrow));
+   POINT colrow{};
 
    colrow.x = (x / pWindowData->PTEXTSIZE.x);
 
@@ -3740,7 +3740,7 @@ static POINT hb_gt_wvwGetColRowFromXY(WIN_DATA * pWindowData, USHORT x, USHORT y
 
 static POINT hb_gt_wvwTBGetColRowFromXY(WIN_DATA * pWindowData, USHORT x, USHORT y)
 {
-   POINT colrow; memset(&colrow, 0, sizeof(colrow));
+   POINT colrow{};
 
    colrow.x = (x / pWindowData->PTEXTSIZE.x);
 
@@ -3758,7 +3758,7 @@ static POINT hb_gt_wvwTBGetColRowFromXY(WIN_DATA * pWindowData, USHORT x, USHORT
 
 RECT hb_gt_wvwGetColRowFromXYRect(WIN_DATA * pWindowData, RECT xy)
 {
-   RECT colrow; memset(&colrow, 0, sizeof(colrow));
+   RECT colrow{};
    int  usLineSpaces;
 
    xy.top    -= pWindowData->usTBHeight;
@@ -3785,7 +3785,7 @@ RECT hb_gt_wvwGetColRowFromXYRect(WIN_DATA * pWindowData, RECT xy)
  */
 RECT hb_gt_wvwGetXYFromColRowRect(WIN_DATA * pWindowData, RECT colrow)
 {
-   RECT xy; memset(&xy, 0, sizeof(xy));
+   RECT xy{};
 
    xy.left = (colrow.left) * pWindowData->PTEXTSIZE.x;
 
@@ -3840,7 +3840,7 @@ static void hb_gt_wvwKillCaret(WIN_DATA * pWindowData)
 
 static BOOL hb_gt_wvwSetCaretPos(WIN_DATA * pWindowData)
 {
-   POINT xy; memset(&xy, 0, sizeof(xy));
+   POINT xy{};
 
    xy = hb_gt_wvwGetXYFromColRow(pWindowData, static_cast<SHORT>(pWindowData->caretPos.x), static_cast<SHORT>(pWindowData->caretPos.y));
    if( pWindowData->CaretSize > 0 ) {
@@ -3937,7 +3937,7 @@ static USHORT hb_gt_wvwGetIndexForTextBuffer(WIN_DATA * pWindowData, USHORT col,
  */
 static POINT hb_gt_wvwGetColRowForTextBuffer(WIN_DATA * pWindowData, USHORT index)
 {
-   POINT colrow; memset(&colrow, 0, sizeof(colrow));
+   POINT colrow{};
 
    colrow.x = index % pWindowData->COLS;
    colrow.y = index / pWindowData->COLS;
@@ -3953,8 +3953,8 @@ static POINT hb_gt_wvwGetColRowForTextBuffer(WIN_DATA * pWindowData, USHORT inde
 static BOOL hb_gt_wvwTextOut(WIN_DATA * pWindowData, HDC hdc, USHORT col, USHORT row, LPCTSTR lpString, USHORT cbString)
 {
    BOOL  Result;
-   POINT xy; memset(&xy, 0, sizeof(xy));
-   RECT  mClip; memset(&mClip, 0, sizeof(mClip));
+   POINT xy{};
+   RECT  mClip{};
 
    if( cbString > pWindowData->COLS ) {
       cbString = pWindowData->COLS;
@@ -3997,7 +3997,7 @@ static BOOL hb_gt_wvwSetColors(WIN_DATA * pWindowData, HDC hdc, BYTE attr)
  */
 static void hb_gt_wvwSetInvalidRect(WIN_DATA * pWindowData, USHORT left, USHORT top, USHORT right, USHORT bottom)
 {
-   RECT rect; memset(&rect, 0, sizeof(rect));
+   RECT rect{};
 
    if( pWindowData->InvalidateWindow ) {
       rect.left   = left;
@@ -4083,7 +4083,7 @@ HFONT hb_gt_wvwGetFont(const char * pszFace, int iHeight, int iWidth, int iWeigh
    HFONT hFont;
 
    if( iHeight > 0 ) {
-      LOGFONT logfont; memset(&logfont, 0, sizeof(logfont));
+      LOGFONT logfont{};
 
       logfont.lfEscapement     = 0;
       logfont.lfOrientation    = 0;
@@ -4471,7 +4471,7 @@ static void hb_gt_wvwSetMouseY(WIN_DATA * pWindowData, USHORT iy)
  */
 static void hb_gt_wvwSetStringInTextBuffer(WIN_DATA * pWindowData, int col, int row, BYTE color, BYTE attr, BYTE * sBuffer, ULONG length)
 {
-   POINT  end; memset(&end, 0, sizeof(end));
+   POINT  end{};
    USHORT index;
 
    HB_SYMBOL_UNUSED(attr);
@@ -4514,8 +4514,8 @@ static void hb_gt_wvwHandleMenuSelection(int menuIndex)
 
 static void hb_gt_wvwMouseEvent(WIN_DATA * pWindowData, HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   POINT xy; memset(&xy, 0, sizeof(xy));
-   POINT colrow; memset(&colrow, 0, sizeof(colrow));
+   POINT xy{};
+   POINT colrow{};
    SHORT keyCode  = 0;
    SHORT keyState = 0;
    ULONG lPopupRet;
@@ -4640,8 +4640,8 @@ static void hb_gt_wvwMouseEvent(WIN_DATA * pWindowData, HWND hWnd, UINT message,
 
 static void hb_gt_wvwTBMouseEvent(WIN_DATA * pWindowData, HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   POINT xy; memset(&xy, 0, sizeof(xy));
-   POINT colrow; memset(&colrow, 0, sizeof(colrow));
+   POINT xy{};
+   POINT colrow{};
    SHORT keyCode  = 0;
    SHORT keyState = 0;
    ULONG lPopupRet;
@@ -5357,7 +5357,7 @@ static void   hb_wvw_vmouse_Exit(void)
 
 static void   hb_wvw_vmouse_SetPos(WIN_DATA * pWindowData, USHORT usRow, USHORT usCol)
 {
-   POINT xy; memset(&xy, 0, sizeof(xy));
+   POINT xy{};
 
    hb_gt_wvwSetMouseY(pWindowData, usRow);
    hb_gt_wvwSetMouseX(pWindowData, usCol);
@@ -5839,8 +5839,8 @@ BYTE   hb_wvw_LineHeight(WIN_DATA * pWindowData)
    has no effect if linespacing == 0 */
 static void hb_gt_wvwFillLineSpace(WIN_DATA * pWindowData, HDC hdc, USHORT startCol, USHORT irow, USHORT len, BYTE byAttrib)
 {
-   RECT     rc; memset(&rc, 0, sizeof(rc));
-   LOGBRUSH lb; memset(&lb, 0, sizeof(lb));
+   RECT     rc{};
+   LOGBRUSH lb{};
    HBRUSH   hBrush;
 
    int      byColorIndex = pWindowData->iLSpaceColor < 0 ? ((byAttrib & 0x00F0) >> 4) : pWindowData->iLSpaceColor;
@@ -6052,7 +6052,7 @@ void hb_gt_wvwPostMessage(UINT usWinNum, int message)
 
 BOOL hb_gt_wvwSetWindowPos(UINT usWinNum, int left, int top)
 {
-   RECT wi; memset(&wi, 0, sizeof(wi));
+   RECT wi{};
 
    GetWindowRect(s_pWvwData->s_pWindows[usWinNum]->hWnd, &wi);
    return SetWindowPos(s_pWvwData->s_pWindows[usWinNum]->hWnd, nullptr, left, top, (wi.right - wi.left) + 1, (wi.bottom - wi.top) + 1, SWP_NOZORDER);
@@ -6341,7 +6341,7 @@ BOOL hb_gt_wvwRenderPicture(UINT usWinNum, int x1, int y1, int wd, int ht, IPict
    int        tor = 0;
    int        toc = 0;
    HRGN       hrgn1;
-   POINT      lpp; memset(&lpp, 0, sizeof(lpp));
+   POINT      lpp{};
    BOOL       bResult     = FALSE;
    WIN_DATA * pWindowData = s_pWvwData->s_pWindows[usWinNum];
 
@@ -6705,8 +6705,8 @@ HB_FUNC( WVW_NOPENWINDOW )
 
    WIN_DATA * pWindowData;
    int        irow1, icol1, irow2, icol2;
-   RECT       wi; memset(&wi, 0, sizeof(wi));
-   RECT       rcWorkArea; memset(&rcWorkArea, 0, sizeof(rcWorkArea));
+   RECT       wi{};
+   RECT       rcWorkArea{};
    UINT       usWinNum;
 
    DWORD     dwStyle    = (HB_ISNIL(6) ? (static_cast<DWORD>(WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_CLIPCHILDREN)) : (static_cast<DWORD>(hb_parnl(6))));
@@ -7045,8 +7045,8 @@ HB_FUNC( WVW_ADDROWS )
    USHORT     diffheight, diffwidth;
    USHORT     usNumChars;
 
-   RECT wi; memset(&wi, 0, sizeof(wi));
-   RECT ci; memset(&ci, 0, sizeof(ci));
+   RECT wi{};
+   RECT ci{};
 
    if( iRows == 0 ) {
       hb_retl(true);
@@ -7364,7 +7364,7 @@ HB_FUNC( WVW_SETLINESPACING )
 
    if( !HB_ISNIL(2) && HB_ISNUM(2) && hb_parni(2) >= 0 && hb_parni(2) <= 40 && /*nobody is crazy enough to use > 40 */ fmod(hb_parnd(2), 2) == 0 ) {
       USHORT height, maxHeight;
-      RECT   rcWorkArea; memset(&rcWorkArea, 0, sizeof(rcWorkArea));
+      RECT   rcWorkArea{};
 
       SystemParametersInfo(SPI_GETWORKAREA, 0, &rcWorkArea, 0);
       maxHeight = static_cast<SHORT>(rcWorkArea.bottom - rcWorkArea.top);
@@ -7702,8 +7702,8 @@ HB_FUNC( WVW_INVALIDATERECT )
 {
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = s_pWvwData->s_pWindows[usWinNum];
-   RECT       rc; memset(&rc, 0, sizeof(rc));
-   POINT      xy; memset(&xy, 0, sizeof(xy));
+   RECT       rc{};
+   POINT      xy{};
 
    USHORT usTop    = static_cast<USHORT>(hb_parni(2)),
           usLeft   = static_cast<USHORT>(hb_parni(3)),
@@ -7734,7 +7734,7 @@ HB_FUNC( WVW_CLIENTTOSCREEN )
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = s_pWvwData->s_pWindows[usWinNum];
    PHB_ITEM   paXY        = hb_itemArrayNew(2);
-   POINT      xy; memset(&xy, 0, sizeof(xy));
+   POINT      xy{};
    USHORT     usTop  = static_cast<USHORT>(hb_parni(2)),
               usLeft = static_cast<USHORT>(hb_parni(3));
 
@@ -7834,7 +7834,7 @@ HB_FUNC( WVW_GETXYFROMROWCOL )
 {
    UINT     usWinNum = WVW_WHICH_WINDOW;
    PHB_ITEM paXY     = hb_itemArrayNew(2);
-   POINT    xy; memset(&xy, 0, sizeof(xy));
+   POINT    xy{};
 
    xy = hb_gt_wvwGetXYFromColRow(s_pWvwData->s_pWindows[usWinNum], static_cast<USHORT>(hb_parni(3)), static_cast<USHORT>(hb_parni(2)));
 
@@ -8592,7 +8592,7 @@ int CommandToIndex(HWND hWndTB, int iCommand)
 
 void hb_gt_wvwTBinitSize(WIN_DATA * pWindowData, HWND hWndTB)
 {
-   RECT rTB; memset(&rTB, 0, sizeof(rTB));
+   RECT rTB{};
 
    SendMessage(hWndTB, TB_AUTOSIZE, static_cast<WPARAM>(0), static_cast<LPARAM>(0));
 
@@ -8660,7 +8660,7 @@ LRESULT CALLBACK hb_gt_wvwTBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
 
          HGDIOBJ hOldObj;
          HDC     hdc;
-         RECT    rTB; memset(&rTB, 0, sizeof(rTB));
+         RECT    rTB{};
          int     iTop, iRight;
 
          CallWindowProc(static_cast<WNDPROC>(pWindowData->tbOldProc), hWnd, message, wParam, lParam);
@@ -8973,7 +8973,7 @@ static void ReposControls(UINT usWinNum, BYTE byCtrlClass)
 
    while( pcd ) {
       if( byCtrlClass == 0 || byCtrlClass == pcd->byCtrlClass ) {
-         POINT xy; memset(&xy, 0, sizeof(xy));
+         POINT xy{};
          int   iTop, iLeft, iBottom, iRight;
 
          xy    = hb_gt_wvwGetXYFromColRow(pWindowData, static_cast<USHORT>(pcd->rCtrl.left), static_cast<USHORT>(pcd->rCtrl.top));
@@ -9212,7 +9212,7 @@ UINT ButtonCreate(UINT usWinNum, USHORT usTop, USHORT usLeft, USHORT usBottom, U
    WIN_DATA * pWindowData = s_pWvwData->s_pWindows[usWinNum];
    HWND       hWndParent  = pWindowData->hWnd;
    HWND       hWndButton;
-   POINT      xy; memset(&xy, 0, sizeof(xy));
+   POINT      xy{};
    int        iTop, iLeft, iBottom, iRight;
    UINT       uiPBid;
 
@@ -9264,8 +9264,8 @@ UINT ButtonCreate(UINT usWinNum, USHORT usTop, USHORT usLeft, USHORT usBottom, U
       static_cast<LPVOID>(nullptr));                          /* pointer not needed */
 
    if( hWndButton ) {
-      RECT    rXB; memset(&rXB, 0, sizeof(rXB));
-      RECT    rOffXB; memset(&rOffXB, 0, sizeof(rOffXB));
+      RECT    rXB{};
+      RECT    rOffXB{};
       WNDPROC OldProc;
 
       if( szBitmap || uiBitmap ) {

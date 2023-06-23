@@ -409,7 +409,7 @@ HB_FUNC( WVW_CBCREATE )
 /*   RECT r; */
    HFONT hFont = hb_gt_wvwGetFont(pWindowData->fontFace, 10, pWindowData->fontWidth, pWindowData->fontWeight, pWindowData->fontQuality, pWindowData->CodePage);
 
-   POINT xy; memset(&xy, 0, sizeof(xy));
+   POINT xy{};
    int   iTop, iLeft, iBottom, iRight;
    int   iOffTop, iOffLeft, iOffBottom, iOffRight;
 
@@ -481,8 +481,8 @@ HB_FUNC( WVW_CBCREATE )
       static_cast<LPVOID>(nullptr));
 
    if( hWndCB ) {
-      RECT rXB; memset(&rXB, 0, sizeof(rXB));
-      RECT rOffXB; memset(&rOffXB, 0, sizeof(rOffXB));
+      RECT rXB{};
+      RECT rOffXB{};
       WNDPROC OldProc;
       TCHAR   szDefault[] = TEXT("empty");
 
