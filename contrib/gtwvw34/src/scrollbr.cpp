@@ -368,8 +368,7 @@ HB_FUNC( WVW_XBUPDATE )
          fMask |= SIF_RANGE;
       }
 
-      SCROLLINFO si;
-      memset(&si, 0, sizeof(si));
+      SCROLLINFO si{};
       si.cbSize = sizeof(si);
       si.fMask  = fMask;
       si.nMin   = hb_parni(5);
@@ -396,8 +395,7 @@ HB_FUNC( WVW_XBINFO )
 
    if( hWnd )
    {
-      SCROLLINFO si;
-      memset(&si, 0, sizeof(si));
+      SCROLLINFO si{};
       si.cbSize = sizeof(si);
       si.fMask = SIF_ALL;
 

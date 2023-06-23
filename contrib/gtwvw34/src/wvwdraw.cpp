@@ -364,11 +364,9 @@ static bool hb_gt_wvw_RenderPicture(PWVW_WIN wvw_win, int x1, int y1, int wd, in
       int dc = wd;
       int dr = ht;
 
-      POINT lpp;
+      POINT lpp{};
 
-      RECT rc_dummy;
-
-      memset(&rc_dummy, 0, sizeof(rc_dummy));
+      RECT rc_dummy{};
 
       /* if bTransp, we use different method */
       if( bTransp )
@@ -425,8 +423,6 @@ static bool hb_gt_wvw_RenderPicture(PWVW_WIN wvw_win, int x1, int y1, int wd, in
          y  = r;
          xe = c + toc - 1;
          ye = r + tor - 1;
-
-         memset(&lpp, 0, sizeof(lpp));
 
          GetViewportOrgEx(wvw_win->hdc, &lpp);
 
@@ -714,9 +710,7 @@ HB_FUNC( WVW_SETBRUSH )
    if( wvw && wvw_zer && HB_ISNUM(1) )
    {
       HBRUSH   hBrush;
-      LOGBRUSH lb;
-
-      memset(&lb, 0, sizeof(lb));
+      LOGBRUSH lb{};
 
       lb.lbStyle = hbwapi_par_UINT(1);
       lb.lbColor = hbwapi_par_COLORREF(2);
@@ -1401,11 +1395,9 @@ HB_FUNC( WVW_DRAWLABEL )
           iCol = hb_parni(3);
 
       HFONT   hFont;
-      LOGFONT lf;
+      LOGFONT lf{};
 
       hb_gt_wvw_HBFUNCPrologue(wvw_win, &iRow, &iCol, nullptr, nullptr);
-
-      memset(&lf, 0, sizeof(lf));
 
       lf.lfEscapement     = hb_parnl(6) * 10;
       lf.lfOrientation    = 0;
@@ -1538,7 +1530,7 @@ HB_FUNC( WVW_DRAWLABELOBJ )
       RECT  rc;
       int   oldTextAlign, iAlignHorz, iAlignVert, iAlignH = 0, iAlignV;
       UINT  uiOptions;
-      SIZE  sz;
+      SIZE  sz{};
 
       HDC hDC = wvw_win->hdc;
 
@@ -1562,8 +1554,6 @@ HB_FUNC( WVW_DRAWLABELOBJ )
 
       iAlignHorz = hb_parni(7);
       iAlignVert = hb_parni(8);
-
-      memset(&sz, 0, sizeof(sz));
 
       GetTextExtentPoint32(hDC, szText, static_cast<int>(nLen), &sz);
 
@@ -2410,7 +2400,7 @@ HB_FUNC( WVW_DRAWBUTTON )
       POINT    xy;
       RECT     rc;
       int      iTextHeight;
-      LOGBRUSH lb;
+      LOGBRUSH lb{};
       HBRUSH   hBrush;
 
       bool fImage  = HB_ISNUM(7) || HB_ISCHAR(7);
@@ -2427,8 +2417,6 @@ HB_FUNC( WVW_DRAWBUTTON )
       xy      = hb_gt_wvw_GetXYFromColRow(wvw_win, iRight + 1, iBottom + 1);
       iBottom = xy.y - wvw_win->iLineSpacing - 1;
       iRight  = xy.x - 1;
-
-      memset(&lb, 0, sizeof(lb));
 
       lb.lbStyle = BS_SOLID;
       lb.lbColor = hbwapi_par_COLORREF_def(10, hb_gt_wvw_GetColorData(7));
@@ -2472,11 +2460,9 @@ HB_FUNC( WVW_DRAWBUTTON )
          void *  hText;
          LPCTSTR szText = HB_PARSTRDEF(6, &hText, &nLen);
 
-         SIZE sz;
+         SIZE sz{};
 
          SelectObject(hDC, GetStockObject(DEFAULT_GUI_FONT));
-
-         memset(&sz, 0, sizeof(sz));
 
          GetTextExtentPoint32(hDC, szText, static_cast<int>(nLen), &sz);
 
@@ -3227,9 +3213,7 @@ HB_FUNC( WVW_DRAWPROGRESSBAR )
       else
       {
          HBRUSH   hBrush;
-         LOGBRUSH lb;
-
-         memset(&lb, 0, sizeof(lb));
+         LOGBRUSH lb{};
 
          lb.lbStyle = BS_SOLID;
          lb.lbColor = hbwapi_par_COLORREF_def(9, hb_gt_wvw_GetColorData(0));

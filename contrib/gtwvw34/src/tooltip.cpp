@@ -99,8 +99,7 @@ HB_FUNC( WVW_SETTOOLTIP )
 
       hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
 
-      TOOLINFO ti;
-      memset(&ti, 0, sizeof(ti));
+      TOOLINFO ti{};
       ti.cbSize = sizeof(ti);
       ti.hwnd = wvw_win->hWnd;
       ti.uId = WVW_ID_BASE_TOOLTIP + wvw_win->nWinId;

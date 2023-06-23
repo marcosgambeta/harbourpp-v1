@@ -183,13 +183,9 @@ HB_FUNC( WVW_NOPENWINDOW )
       {
          PWVW_WIN wvw_win = hb_gt_wvw_win(nWin);
 
-         RECT wi, rcWorkArea;
-
-         memset(&wi, 0, sizeof(wi));
+         RECT wi{}, rcWorkArea{};
 
          GetWindowRect(wvw_win->hWnd, &wi);
-
-         memset(&rcWorkArea, 0, sizeof(rcWorkArea));
 
          if( SystemParametersInfo(SPI_GETWORKAREA, 0, &rcWorkArea, 0) )
          {
@@ -452,9 +448,7 @@ HB_FUNC( WVW_UNREACHEDBR )
    if( wvw_win && IsZoomed(wvw_win->hWnd) )
    {
       POINT xy = hb_gt_wvw_GetXYFromColRow(wvw_win, wvw_win->COLS, wvw_win->ROWS);
-      RECT  ci;
-
-      memset(&ci, 0, sizeof(ci));
+      RECT  ci{};
 
       GetClientRect(wvw_win->hWnd, &ci);
 
@@ -944,7 +938,7 @@ HB_FUNC( WVW_CLIENTTOSCREEN )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    PHB_ITEM aXY = hb_itemArrayNew(2);
-   POINT    xy;
+   POINT    xy{};
 
    if( wvw_win )
    {
@@ -956,10 +950,6 @@ HB_FUNC( WVW_CLIENTTOSCREEN )
       xy = hb_gt_wvw_GetXYFromColRow(wvw_win, iLeft, iTop);
 
       ClientToScreen(wvw_win->hWnd, &xy);
-   }
-   else
-   {
-      memset(&xy, 0, sizeof(xy));
    }
 
    hb_arraySetNL(aXY, 1, xy.x);

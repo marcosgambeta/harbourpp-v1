@@ -238,9 +238,7 @@ HB_FUNC( WVW_ADDTOOLTIPEX )  /* changed by MAG */
    if( wvw && wvw_win )
    {
       int iStyle = TTS_ALWAYSTIP;
-      INITCOMMONCONTROLSEX icex;
-
-      memset(&icex, 0, sizeof(icex));
+      INITCOMMONCONTROLSEX icex{};
 
       /* Load the tooltip class from the DLL. */
       icex.dwSize = sizeof(icex);
@@ -265,9 +263,7 @@ HB_FUNC( WVW_ADDTOOLTIPEX )  /* changed by MAG */
       {
          void * hText;
 
-         TOOLINFO ti;
-
-         memset(&ti, 0, sizeof(ti));
+         TOOLINFO ti{};
 
          ti.cbSize   = sizeof(ti);
          ti.uFlags   = TTF_SUBCLASS | TTF_IDISHWND;
@@ -509,9 +505,7 @@ HB_FUNC( WVW_CREATEFONT )
 
    if( wvw && wvw_top )
    {
-      LOGFONT lf;
-
-      memset(&lf, 0, sizeof(lf));
+      LOGFONT lf{};
 
       lf.lfEscapement     = hb_parnl(10) * 10;
       lf.lfOrientation    = 0;
@@ -805,15 +799,11 @@ HB_FUNC( WVW_GETPAINTRECT )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    PHB_ITEM info = hb_itemArrayNew(4);
-   RECT     rc;
+   RECT     rc{};
 
    if( wvw_win )
    {
       rc = wvw_win->rPaintPending;
-   }
-   else
-   {
-      memset(&rc, 0, sizeof(rc));
    }
 
    hb_arraySetNL(info, 1, rc.top);
@@ -986,14 +976,12 @@ HB_FUNC( WVW_CHOOSEFONT )
 
    PHB_ITEM aRet = hb_itemArrayNew(8);
 
-   LOGFONT lf;
+   LOGFONT lf{};
    int     iPointSize = 0;
-
-   memset(&lf, 0, sizeof(lf));
 
    if( wvw && wvw_top )
    {
-      CHOOSEFONT cf;
+      CHOOSEFONT cf{};
 
       if( HB_ISNUM(2) )
       {
@@ -1015,8 +1003,6 @@ HB_FUNC( WVW_CHOOSEFONT )
          HB_ITEMCOPYSTR(hb_param(1, Harbour::Item::STRING), lf.lfFaceName, HB_SIZEOFARRAY(lf.lfFaceName));
          lf.lfFaceName[HB_SIZEOFARRAY(lf.lfFaceName) - 1] = TEXT('\0');
       }
-
-      memset(&cf, 0, sizeof(cf));
 
       cf.lStructSize    = sizeof(cf);
       cf.hwndOwner      = wvw_top->hWnd;
@@ -1128,7 +1114,7 @@ HB_FUNC( WVW_FILLRECTANGLE )
       COLORREF crRGBcolor = hbwapi_par_COLORREF(6);
       bool     fTight     = hb_parl(7);
       bool     fUseBrush  = hb_parl(8);
-      LOGBRUSH lb;
+      LOGBRUSH lb{};
       HBRUSH   hBrush;
       RECT     rcXY;
 
@@ -1146,8 +1132,6 @@ HB_FUNC( WVW_FILLRECTANGLE )
       rcXY.top    = iTop;
       rcXY.right  = iRight;
       rcXY.bottom = iBottom;
-
-      memset(&lb, 0, sizeof(lb));
 
       lb.lbStyle = BS_SOLID;
       lb.lbColor = crRGBcolor;
@@ -1689,15 +1673,11 @@ HB_FUNC( WVW_GETXYFROMROWCOL )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    PHB_ITEM aRet = hb_itemArrayNew(2);
-   POINT    xy;
+   POINT    xy{};
 
    if( wvw_win )
    {
       xy = hb_gt_wvw_GetXYFromColRow(wvw_win, hb_parni(3), hb_parni(2));
-   }
-   else
-   {
-      memset(&xy, 0, sizeof(xy));
    }
 
    hb_arraySetNL(aRet, 1, xy.x);
@@ -1715,15 +1695,11 @@ HB_FUNC( WVW_GETROWCOLFROMXY )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    PHB_ITEM aRet = hb_itemArrayNew(2);
-   POINT    xy;
+   POINT    xy{};
 
    if( wvw_win )
    {
       xy = hb_gt_wvw_GetColRowFromXY(wvw_win, hb_parni(2), hb_parni(3));
-   }
-   else
-   {
-      memset(&xy, 0, sizeof(xy));
    }
 
    hb_arraySetNL(aRet, 1, xy.y);

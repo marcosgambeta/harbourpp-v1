@@ -73,8 +73,7 @@ HB_FUNC( WVW_SBCREATE )
             wvw_win->hSBfont = CreateFontIndirect(&wvw->lfSB);
          }
 
-         RECT rSB;
-         memset(&rSB, 0, sizeof(rSB));
+         RECT rSB{};
 
          if( GetClientRect(hWnd, &rSB) )
          {
@@ -156,8 +155,7 @@ HB_FUNC( WVW_SBADDPART )
          void * hText;
          LPCTSTR szText = HB_PARSTR(2, &hText, &nLen);
 
-         SIZE size;
-         memset(&size, 0, sizeof(size));
+         SIZE size{};
 
          SelectObject(hDCSB, reinterpret_cast<HFONT>(SendMessage(hWnd, WM_GETFONT, 0, 0)));
 
@@ -181,8 +179,7 @@ HB_FUNC( WVW_SBADDPART )
       }
       iNumOfParts++;
 
-      RECT rSB;
-      memset(&rSB, 0, sizeof(rSB));
+      RECT rSB{};
       GetClientRect(hWnd, &rSB);
 
       piArray[iNumOfParts - 1] = rSB.right;
@@ -252,8 +249,7 @@ HB_FUNC( WVW_SBREFRESH )
       int iNumOfParts = static_cast<int>(SendMessage(hWnd, SB_GETPARTS, HB_SIZEOFARRAY(piArray), reinterpret_cast<LPARAM>(static_cast<LPINT>(piArray))));
       if( iNumOfParts > 0 )
       {
-         RECT rSB;
-         memset(&rSB, 0, sizeof(rSB));
+         RECT rSB{};
          GetClientRect(hWnd, &rSB);
          int iDiff = rSB.right - piArray[iNumOfParts - 1];
 

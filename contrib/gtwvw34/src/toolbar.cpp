@@ -151,8 +151,7 @@ static void hb_gt_wvw_TBinitSize(PWVW_WIN wvw_win, HWND hWndTB)
 {
    SendMessage(hWndTB, TB_AUTOSIZE, 0, 0);
 
-   RECT rTB;
-   memset(&rTB, 0, sizeof(rTB));
+   RECT rTB{};
 
    if( GetClientRect(hWndTB, &rTB) )
    {
@@ -366,8 +365,7 @@ static LRESULT CALLBACK hb_gt_wvw_TBProc(HWND hWnd, UINT message, WPARAM wParam,
       {
          CallWindowProc(wvw_win->tbOldProc, hWnd, message, wParam, lParam);
 
-         RECT rTB;
-         memset(&rTB, 0, sizeof(rTB));
+         RECT rTB{};
          GetClientRect(hWnd, &rTB);
          int iTop = rTB.bottom - 3;
          int iRight = rTB.right;
@@ -472,8 +470,7 @@ HB_FUNC( WVW_TBCREATE )
 
          if( iSystemBitmap > 0 )
          {
-            TBADDBITMAP tbab;
-            memset(&tbab, 0, sizeof(tbab));
+            TBADDBITMAP tbab{};
             tbab.hInst = HINST_COMMCTRL;
             tbab.nID = iSystemBitmap == 1 ? IDB_STD_SMALL_COLOR : IDB_STD_LARGE_COLOR;
             wvw_win->iStartStdBitmap = static_cast<int>(SendMessage(hWnd, TB_ADDBITMAP, 0, reinterpret_cast<WPARAM>(&tbab)));

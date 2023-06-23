@@ -1475,9 +1475,8 @@ static HB_BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_DESKTOPWIDTH:
       {
-         RECT rDesk;
+         RECT rDesk{};
          HWND hDesk = GetDesktopWindow();
-         memset(&rDesk, 0, sizeof(rDesk));
          GetWindowRect(hDesk, &rDesk);
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, rDesk.right - rDesk.left);
          break;
@@ -1490,9 +1489,8 @@ static HB_BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
           * SEEALSO         hb_gt_wvwCalcPixelHeight() - iSBHeight - iTBHeight
           */
 
-         RECT rDesk;
+         RECT rDesk{};
          HWND hDesk = GetDesktopWindow();
-         memset(&rDesk, 0, sizeof(rDesk));
          GetWindowRect(hDesk, &rDesk);
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, rDesk.bottom - rDesk.top);
          break;
@@ -1500,9 +1498,8 @@ static HB_BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_DESKTOPCOLS:
       {
-         RECT rDesk;
+         RECT rDesk{};
          HWND hDesk = GetDesktopWindow();
-         memset(&rDesk, 0, sizeof(rDesk));
          GetClientRect(hDesk, &rDesk);
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, (rDesk.right - rDesk.left) / wvw_win->PTEXTSIZE.x);
          break;
@@ -1517,9 +1514,8 @@ static HB_BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
          /* NOTE 2004-07-19 screen height includes linespacing, if any */
 
-         RECT rDesk;
+         RECT rDesk{};
          HWND hDesk = GetDesktopWindow();
-         memset(&rDesk, 0, sizeof(rDesk));
          GetClientRect(hDesk, &rDesk);
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, (rDesk.bottom - rDesk.top) / hb_gt_wvw_LineHeight(wvw_win));
          break;
@@ -2093,7 +2089,7 @@ BOOL CALLBACK hb_gt_wvw_DlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPA
 
 static void hb_gt_wvwCreateObjects(int nWin)
 {
-   LOGBRUSH lb;
+   LOGBRUSH lb{};
 
    /* 2004-09-21 IMPORTANT:
       All these PENs and BRUSHes creations are temporarily disabled
@@ -2114,8 +2110,6 @@ static void hb_gt_wvwCreateObjects(int nWin)
       s_wvw->a.penGray     = CreatePen(PS_SOLID, 0, s_COLORS[7]);
       s_wvw->a.penNull     = CreatePen(PS_NULL, 0, s_COLORS[7]);
       s_wvw->a.currentPen  = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));
-
-      memset(&lb, 0, sizeof(lb));
 
       lb.lbStyle = BS_NULL;
       lb.lbColor = RGB(198, 198, 198);
@@ -2180,9 +2174,7 @@ static bool hb_gt_wvwInitWindow(PWVW_WIN wvw_win, HWND hWnd, int iCol, int iRow)
 /* WVT commented out this function. WVW is still using it. */
 bool hb_gt_wvw_ValidWindowSize(PWVW_WIN wvw_win, int iRows, int iCols, HFONT hFont, int iWidth, int * piMaxRows, int * piMaxCols)
 {
-   RECT rcWorkArea;
-
-   memset(&rcWorkArea, 0, sizeof(rcWorkArea));
+   RECT rcWorkArea{};
 
    if( SystemParametersInfo(SPI_GETWORKAREA, 0, &rcWorkArea, 0) )
    {
@@ -2190,13 +2182,9 @@ bool hb_gt_wvw_ValidWindowSize(PWVW_WIN wvw_win, int iRows, int iCols, HFONT hFo
       HFONT      hOldFont;
       int        width, height, maxWidth, maxHeight;
       int        diffHeight, diffWidth;
-      TEXTMETRIC tm;
+      TEXTMETRIC tm{};
 
-      RECT wi, ci;
-
-      memset(&tm, 0, sizeof(tm));
-      memset(&wi, 0, sizeof(wi));
-      memset(&ci, 0, sizeof(ci));
+      RECT wi{}, ci{};
 
       maxWidth  = rcWorkArea.right - rcWorkArea.left + 1;
       maxHeight = rcWorkArea.bottom - rcWorkArea.top + 1;
@@ -2260,19 +2248,12 @@ void hb_gt_wvw_ResetWindowSize(PWVW_WIN wvw_win, HWND hWnd)
    HFONT      hFont, hOldFont;
    int        diffWidth, diffHeight;
    int        height, width;
-   RECT       wi, ci;
-   TEXTMETRIC tm;
+   RECT       wi{}, ci{};
+   TEXTMETRIC tm{};
 
-   RECT     rcWorkArea;
-   RECT     rcMainClientArea;
+   RECT     rcWorkArea{};
+   RECT     rcMainClientArea{};
    PWVW_WIN wvw_zer;
-
-   memset(&tm, 0, sizeof(tm));
-   memset(&wi, 0, sizeof(wi));
-   memset(&ci, 0, sizeof(ci));
-
-   memset(&rcWorkArea, 0, sizeof(rcWorkArea));
-   memset(&rcMainClientArea, 0, sizeof(rcMainClientArea));
 
    wvw_zer = s_wvw->pWin[0];
 
@@ -2749,21 +2730,18 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
 
       case WM_PAINT:
       {
-         PAINTSTRUCT ps;
+         PAINTSTRUCT ps{};
          HDC         hdc;
-         RECT        updateRect;
+         RECT        updateRect{};
          RECT        rcRect;
 
          int colStart = 0, colStop = 0, rowStart = 0, rowStop = 0;
 
-         RECT    ci;
+         RECT    ci{};
          int     ixbeyond;
          int     iybeyond;
          bool    bR = false;
          HFONT   hOldFont;
-
-         memset(&ci, 0, sizeof(ci));
-         memset(&updateRect, 0, sizeof(updateRect));
 
          GetUpdateRect(hWnd, &updateRect, FALSE);
          /* WARNING!!!
@@ -2771,8 +2749,6 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
             BeginPaint() resets the update rectangle - don't move it or nothing is drawn! */
 
          /* 2005-06-25 TODO: MSDN says app should NOT call BeginPaint if GetUpdateRect returns zero */
-
-         memset(&ps, 0, sizeof(ps));
 
          hdc = BeginPaint(hWnd, &ps);
 
@@ -2894,7 +2870,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
          }
          else if( updateRect.right > ixbeyond )
          {
-            LOGBRUSH lb;
+            LOGBRUSH lb{};
             HBRUSH   hBrush;
 
             COLORREF bkColor = s_COLORS[wvw_win->screenBuffer[0].c.bColor >> 4];
@@ -2903,8 +2879,6 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
             rcRect.top    = updateRect.top;
             rcRect.right  = updateRect.right;
             rcRect.bottom = updateRect.bottom;
-
-            memset(&lb, 0, sizeof(lb));
 
             lb.lbStyle = BS_SOLID;
             lb.lbColor = bkColor;
@@ -2943,7 +2917,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
                a small window */
             else if( updateRect.bottom > iybeyond )
             {
-               LOGBRUSH lb;
+               LOGBRUSH lb{};
                HBRUSH   hBrush;
 
                COLORREF bkColor = s_COLORS[wvw_win->screenBuffer[0].c.bColor >> 4];
@@ -2952,8 +2926,6 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
                rcRect.top    = HB_MAX(iybeyond, updateRect.top);
                rcRect.right  = updateRect.right;
                rcRect.bottom = updateRect.bottom;
-
-               memset(&lb, 0, sizeof(lb));
 
                lb.lbStyle = BS_SOLID;
                lb.lbColor = bkColor;
@@ -3688,13 +3660,11 @@ static bool hb_wvw_Size_Ready(bool fSizeIsReady)
 static HWND hb_gt_wvwCreateWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, int iCmdShow)
 {
    HWND     hWnd;
-   WNDCLASS wndclass;
+   WNDCLASS wndclass{};
 
    HB_SYMBOL_UNUSED(hPrevInstance);
 
    InitCommonControls();
-
-   memset(&wndclass, 0, sizeof(wndclass));
 
    wndclass.style         = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS | CS_OWNDC;
    wndclass.lpfnWndProc   = hb_gt_wvwWndProc;
@@ -3761,9 +3731,7 @@ static HWND hb_gt_wvwCreateWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, 
 
 void hb_gt_wvw_CreateToolTipWindow(PWVW_WIN wvw_win)
 {
-   INITCOMMONCONTROLSEX icex;
-
-   memset(&icex, 0, sizeof(icex));
+   INITCOMMONCONTROLSEX icex{};
 
    /* Load the tooltip class from the DLL. */
    icex.dwSize = sizeof(icex);
@@ -3771,7 +3739,7 @@ void hb_gt_wvw_CreateToolTipWindow(PWVW_WIN wvw_win)
 
    if( InitCommonControlsEx(&icex) )
    {
-      TOOLINFO ti;
+      TOOLINFO ti{};
 
       /* Create the tooltip control.
        * TODO: shouldn't we set hWndOwner to wvw_win->hWnd instead of nullptr?
@@ -3786,8 +3754,6 @@ void hb_gt_wvw_CreateToolTipWindow(PWVW_WIN wvw_win)
                                  nullptr);
 
       SetWindowPos(hWndTT, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
-
-      memset(&ti, 0, sizeof(ti));
 
       /* Prepare structure for use as tracking tooltip. */
       ti.cbSize    = sizeof(ti);
@@ -4076,7 +4042,7 @@ static HB_SIZE hb_gt_wvw_GetIndexForTextBuffer(PWVW_WIN wvw_win, int iCol, int i
 static bool hb_gt_wvwTextOut(PWVW_WIN wvw_win, HDC hdc, int iCol, int iRow, HB_SIZE index, HB_SIZE nLen)
 {
    POINT xy = hb_gt_wvw_GetXYFromColRow(wvw_win, iCol, iRow);
-   RECT  mClip;
+   RECT  mClip{};
 
    if( nLen > static_cast<HB_SIZE>(wvw_win->COLS) )
    {
@@ -4091,7 +4057,6 @@ static bool hb_gt_wvwTextOut(PWVW_WIN wvw_win, HDC hdc, int iCol, int iRow, HB_S
    }
 
    /* safer solution by Oscar Hernandez Suarez: */
-   memset(&mClip, 0, sizeof(mClip));
 
    SetRect(&mClip, xy.x, xy.y, xy.x + static_cast<int>(nLen) * wvw_win->PTEXTSIZE.x, xy.y + wvw_win->PTEXTSIZE.y);
 
@@ -4205,9 +4170,7 @@ HFONT hb_gt_wvw_GetFont(LPCTSTR pszFace, int iHeight, int iWidth, int iWeight, i
 {
    if( iHeight > 0 )
    {
-      LOGFONT lf;
-
-      memset(&lf, 0, sizeof(lf));
+      LOGFONT lf{};
 
       lf.lfEscapement     = 0;
       lf.lfOrientation    = 0;
@@ -5679,7 +5642,7 @@ int hb_gt_wvw_LineHeight(PWVW_WIN wvw_win)
 static void hb_gt_wvwFillLineSpace(PWVW_WIN wvw_win, HDC hdc, int startCol, int iRow, HB_SIZE len, int iColor)
 {
    RECT     rc;
-   LOGBRUSH lb;
+   LOGBRUSH lb{};
    HBRUSH   hBrush;
 
    int      byColorIndex = wvw_win->iLSpaceColor < 0 ? ((iColor & 0x00F0) >> 4) : wvw_win->iLSpaceColor;
@@ -5690,8 +5653,6 @@ static void hb_gt_wvwFillLineSpace(PWVW_WIN wvw_win, HDC hdc, int startCol, int 
    rc.bottom = iRow;
    rc.right  = startCol + static_cast<int>(len) - 1;
    rc        = hb_gt_wvw_GetXYFromColRowRect(wvw_win, rc);
-
-   memset(&lb, 0, sizeof(lb));
 
    lb.lbStyle = BS_SOLID;
    lb.lbColor = bkColor;
@@ -7057,7 +7018,7 @@ HB_FUNC( WVW_ADDROWS )
       int     height, width;
       HB_SIZE nNumChars;
 
-      RECT wi, ci;
+      RECT wi{}, ci{};
 
       if( iRows == 0 )
       {
@@ -7113,9 +7074,6 @@ HB_FUNC( WVW_ADDROWS )
       /* resize the window to get the specified number of rows and columns */
       height = hb_gt_wvwCalcPixelHeight(wvw_win);
       width  = hb_gt_wvwCalcPixelWidth(wvw_win);
-
-      memset(&wi, 0, sizeof(wi));
-      memset(&ci, 0, sizeof(ci));
 
       GetWindowRect(wvw_win->hWnd, &wi);
       GetClientRect(wvw_win->hWnd, &ci);
@@ -7186,9 +7144,7 @@ HB_FUNC( WVW_SETLINESPACING )
 
       if( HB_ISNUM(2) && hb_parni(2) >= 0 && hb_parni(2) <= 40 &&  /* nobody is crazy enough to use > 40 */ fmod(hb_parnd(2), 2) == 0 )
       {
-         RECT rcWorkArea;
-
-         memset(&rcWorkArea, 0, sizeof(rcWorkArea));
+         RECT rcWorkArea{};
 
          if( SystemParametersInfo(SPI_GETWORKAREA, 0, &rcWorkArea, 0) )
          {
