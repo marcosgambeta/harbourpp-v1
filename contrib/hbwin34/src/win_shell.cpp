@@ -85,9 +85,8 @@
                        [<cInfo>], [<nInfoTimeOut>], [<cInfoTitle>], [<nInfoFlags>]) --> <lOK> */
 HB_FUNC( WIN_SHELLNOTIFYICON )
 {
-   NOTIFYICONDATA tnid;
+   NOTIFYICONDATA tnid{};
 
-   memset(&tnid, 0, sizeof(tnid));
    tnid.cbSize = sizeof(tnid);
    tnid.hWnd = hbwapi_par_raw_HWND(1);
    tnid.uID = hbwapi_par_UINT(2);
@@ -222,8 +221,7 @@ HB_FUNC( WIN_SHFILEOPERATION )
    LPTSTR pFrom = s_StringList(3);
    LPTSTR pTo   = s_StringList(4);
 
-   SHFILEOPSTRUCT fop;
-   memset(&fop, 0, sizeof(fop));
+   SHFILEOPSTRUCT fop{};
    fop.hwnd                  = hbwapi_par_raw_HWND(1);
    fop.wFunc                 = hbwapi_par_UINT(2);
    fop.pFrom                 = static_cast<LPCTSTR>(pFrom);

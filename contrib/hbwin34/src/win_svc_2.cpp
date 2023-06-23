@@ -188,8 +188,7 @@ HB_FUNC( WIN_SERVICECONTROL )
 
       if( schSrv )
       {
-         SERVICE_STATUS ssStatus;
-         memset(&ssStatus, 0, sizeof(ssStatus));
+         SERVICE_STATUS ssStatus{};
          bRetVal = static_cast<HB_BOOL>(ControlService(schSrv, static_cast<DWORD>(hb_parnl(2)), &ssStatus));
          hbwapi_SetLastError(GetLastError());
 

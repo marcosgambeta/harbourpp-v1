@@ -836,8 +836,7 @@ HB_FUNC( WAPI_GETSYSCOLOR )
 
 HB_FUNC( WAPI_GETCLIENTRECT )
 {
-   RECT rc;
-   memset(&rc, 0, sizeof(rc));
+   RECT rc{};
    BOOL bResult = GetClientRect(hbwapi_par_raw_HWND(1), &rc);
    hbwapi_SetLastError(GetLastError());
    hbwapi_stor_RECT(&rc, 2);
@@ -846,8 +845,7 @@ HB_FUNC( WAPI_GETCLIENTRECT )
 
 HB_FUNC( WAPI_GETWINDOWRECT )
 {
-   RECT rc;
-   memset(&rc, 0, sizeof(rc));
+   RECT rc{};
    BOOL bResult = GetWindowRect(hbwapi_par_raw_HWND(1), &rc);
    hbwapi_SetLastError(GetLastError());
    hbwapi_stor_RECT(&rc, 2);
@@ -1114,8 +1112,7 @@ HB_FUNC( WAPI_INVALIDATERECT )
 
 HB_FUNC( WAPI_GETCURSORPOS )
 {
-   POINT xy;
-   memset(&xy, 0, sizeof(xy));
+   POINT xy{};
    BOOL bResult = GetCursorPos(&xy);
    hbwapi_SetLastError(GetLastError());
    hbwapi_stor_POINT(&xy, 1);
@@ -1223,8 +1220,7 @@ HB_FUNC( WAPI_REDRAWWINDOW )
 HB_FUNC( WAPI_GETICONINFO )  /* TODO: added support to return hash instead of array. See wapi_GetTextMetrics() */
 {
    PHB_ITEM aInfo = hb_itemArrayNew(5);
-   ICONINFO ii;
-   memset(&ii, 0, sizeof(ii));
+   ICONINFO ii{};
 /* MSDN doc says it's in icon.lib, but I could not find such lib in wce msvcarm/mingwarm. */
    BOOL bResult = GetIconInfo(hbwapi_par_raw_HICON(1), &ii);
    hbwapi_SetLastError(GetLastError());

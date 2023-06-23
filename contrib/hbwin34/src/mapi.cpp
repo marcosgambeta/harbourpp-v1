@@ -84,13 +84,11 @@ HB_FUNC( WIN_MAPISENDMAIL )
 
    int iString = 0;
 
-   MapiRecipDesc origin;
-   memset(&origin, 0, sizeof(origin));
+   MapiRecipDesc origin{};
 
    void ** hString = static_cast<void**>(hb_xgrab((4 + 2 + (2 * nRecpCount) + (2 * nFileCount)) * sizeof(void*)));
 
-   MapiMessage note;
-   memset(&note, 0, sizeof(note));
+   MapiMessage note{};
    note.lpszSubject      = const_cast<LPSTR>(HB_PARSTR(1, &hString[iString++], nullptr));
    note.lpszNoteText     = const_cast<LPSTR>(HB_PARSTR(2, &hString[iString++], nullptr));
    note.lpszMessageType  = const_cast<LPSTR>(HB_PARSTR(3, &hString[iString++], nullptr));

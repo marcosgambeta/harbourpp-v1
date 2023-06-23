@@ -2058,8 +2058,8 @@ HB_FUNC( __OLEENUMCREATE ) /* (__hObj) */
    IDispatch *    pDisp;
    IEnumVARIANT * pEnum;
    VARIANTARG     variant;
-   DISPPARAMS     dispparam;
-   EXCEPINFO      excep;
+   DISPPARAMS     dispparam{};
+   EXCEPINFO      excep{};
    UINT           uiArgErr;
    HRESULT        lOleError;
 
@@ -2076,8 +2076,6 @@ HB_FUNC( __OLEENUMCREATE ) /* (__hObj) */
       return;
    }
 
-   memset(&excep, 0, sizeof(excep));
-   memset(&dispparam, 0, sizeof(dispparam)); /* empty parameters */
    VariantInit(&variant);
 
    lOleError = HB_VTBL(pDisp)->Invoke(HB_THIS_(pDisp) DISPID_NEWENUM, HB_ID_REF(IID_NULL),

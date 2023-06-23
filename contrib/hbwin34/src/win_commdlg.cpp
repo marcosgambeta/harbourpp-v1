@@ -116,8 +116,7 @@ HB_FUNC( WIN_CHOOSECOLOR )
       crCustClr[i] = HB_ISARRAY(4) ? hbwapi_parv_COLORREF(4, i + 1) : RGB(0, 0, 0);
    }
 
-   CHOOSECOLOR cc;
-   memset(&cc, 0, sizeof(cc));
+   CHOOSECOLOR cc{};
    cc.lStructSize    = sizeof(cc);
    cc.hwndOwner      = hbwapi_par_raw_HWND(1);
    cc.hInstance      = hbwapi_par_raw_HWND(2);

@@ -49,13 +49,10 @@
 
 HB_FUNC( __WIN_PROXYDETECT )
 {
-   WINHTTP_AUTOPROXY_OPTIONS options;
-   WINHTTP_CURRENT_USER_IE_PROXY_CONFIG ieproxy;
+   WINHTTP_AUTOPROXY_OPTIONS options{};
+   WINHTTP_CURRENT_USER_IE_PROXY_CONFIG ieproxy{};
 
    bool fDetect = true;
-
-   memset(&options, 0, sizeof(options));
-   memset(&ieproxy, 0, sizeof(ieproxy));
 
    if( WinHttpGetIEProxyConfigForCurrentUser(&ieproxy) )
    {
@@ -75,13 +72,11 @@ HB_FUNC( __WIN_PROXYDETECT )
 
       if( hSession != nullptr )
       {
-         WINHTTP_PROXY_INFO proxy;
+         WINHTTP_PROXY_INFO proxy{};
 
          void * hURL;
          LPCTSTR pURL = HB_PARSTRDEF(1, &hURL, nullptr);
          DWORD dwError;
-
-         memset(&proxy, 0, sizeof(proxy));
 
          if( options.lpszAutoConfigUrl != nullptr )
          {

@@ -73,9 +73,7 @@ HB_FUNC( WIN_STARTDOC )
    if( hDC != nullptr )
    {
       void * hDocName;
-      DOCINFO sDoc;
-
-      memset(&sDoc, 0, sizeof(sDoc));
+      DOCINFO sDoc{};
 
       sDoc.cbSize = sizeof(sDoc);
       sDoc.lpszDocName = HB_PARSTR(2, &hDocName, nullptr);
@@ -572,8 +570,7 @@ HB_FUNC( WIN_ENUMFONTFAMILIES )
    HDC hDC = hbwapi_par_HDC(1);
    bool fNullDC = !hDC;
 
-   LOGFONT lf;
-   memset(&lf, 0, sizeof(lf));
+   LOGFONT lf{};
    lf.lfCharSet = static_cast<BYTE>(hb_parnidef(1, DEFAULT_CHARSET));
 
    if( HB_ISCHAR(2) )

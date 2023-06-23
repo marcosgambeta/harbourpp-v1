@@ -1228,8 +1228,7 @@ static void hbwapi_stor_TEXTMETRIC(const TEXTMETRIC * p, int iParam)
 
 HB_FUNC( WAPI_GETTEXTMETRICS )
 {
-   TEXTMETRIC tm;
-   memset(&tm, 0, sizeof(tm));
+   TEXTMETRIC tm{};
    bool bResult = GetTextMetrics(hbwapi_par_HDC(1), &tm);
    hbwapi_SetLastError(GetLastError());
    hbwapi_stor_TEXTMETRIC(&tm, 2);
