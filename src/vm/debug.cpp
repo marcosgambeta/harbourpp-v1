@@ -107,21 +107,17 @@ static void AddToArray(PHB_ITEM pItem, PHB_ITEM pReturn, HB_SIZE nPos)
    HB_TRACE(HB_TR_DEBUG, ("AddToArray(%p, %p, %" HB_PFS "u)", static_cast<void*>(pItem), static_cast<void*>(pReturn), nPos));
 #endif
 
-   if( HB_IS_SYMBOL(pItem) )                  /* Symbol is pushed as text */
-   {
+   if( HB_IS_SYMBOL(pItem) ) { /* Symbol is pushed as text */
       PHB_ITEM pArrayItem = hb_arrayGetItemPtr(pReturn, nPos);
 
-      if( pArrayItem )
-      {
+      if( pArrayItem ) {
          HB_SIZE nLen = strlen(pItem->item.asSymbol.value->szName) + 2;
          char * szBuff = static_cast<char*>(hb_xgrab(nLen + 1));
 
          hb_snprintf(szBuff, nLen + 1, "[%s]", pItem->item.asSymbol.value->szName);
          hb_itemPutCLPtr(pArrayItem, szBuff, nLen);
       }
-   }
-   else                                         /* Normal types             */
-   {
+   } else {                    /* Normal types             */
       hb_itemArrayPut(pReturn, nPos, pItem);
    }
 }
@@ -131,12 +127,9 @@ static void AddToArray(PHB_ITEM pItem, PHB_ITEM pReturn, HB_SIZE nPos)
  */
 HB_FUNC( __DBGVMSTKGCOUNT )
 {
-   if( hb_vmInternalsEnabled() )
-   {
+   if( hb_vmInternalsEnabled() ) {
       hb_retns(hb_stackTopOffset());
-   }
-   else
-   {
+   } else {
       hb_retns(0);
    }
 }
@@ -146,22 +139,17 @@ HB_FUNC( __DBGVMSTKGCOUNT )
  */
 HB_FUNC( __DBGVMSTKGLIST )
 {
-   if( hb_vmInternalsEnabled() )
-   {
-      PHB_ITEM pReturn;
+   if( hb_vmInternalsEnabled() ) {
       HB_ISIZ nLen = hb_stackTopOffset();
 
-      pReturn = hb_itemArrayNew(nLen);           /* Create a transfer array  */
+      PHB_ITEM pReturn = hb_itemArrayNew(nLen);           /* Create a transfer array  */
 
-      for( HB_ISIZ nPos = 0; nPos < nLen; ++nPos )
-      {
+      for( HB_ISIZ nPos = 0; nPos < nLen; ++nPos ) {
          AddToArray(hb_stackItem(nPos), pReturn, nPos + 1);
       }
 
       hb_itemReturnRelease(pReturn);
-   }
-   else
-   {
+   } else {
       hb_reta(0);
    }
 }
@@ -175,21 +163,18 @@ static HB_ISIZ hb_stackLen(int iLevel)
    HB_TRACE(HB_TR_DEBUG, ("hb_stackLen()"));
 #endif
 
-   HB_ISIZ nBaseOffset, nPrevOffset, nLen;
-
-   nBaseOffset = hb_stackBaseOffset();
-   while( --iLevel > 0 && nBaseOffset > 1 )
-   {
+   HB_ISIZ nBaseOffset = hb_stackBaseOffset();
+   while( --iLevel > 0 && nBaseOffset > 1 ) {
       nBaseOffset = hb_stackItem(nBaseOffset - 1)->item.asSymbol.stackstate->nBaseItem + 1;
    }
 
-   if( nBaseOffset > 1 )
-   {
+   HB_ISIZ nPrevOffset;
+   HB_ISIZ nLen;
+
+   if( nBaseOffset > 1 ) {
       nPrevOffset = hb_stackItem(nBaseOffset - 1)->item.asSymbol.stackstate->nBaseItem;
       nLen = nBaseOffset - nPrevOffset - 3;
-   }
-   else
-   {
+   } else {
       nLen = 0;
    }
 
@@ -201,12 +186,9 @@ static HB_ISIZ hb_stackLen(int iLevel)
  */
 HB_FUNC( __DBGVMSTKLCOUNT )
 {
-   if( hb_vmInternalsEnabled() )
-   {
+   if( hb_vmInternalsEnabled() ) {
       hb_retns(hb_stackLen(hb_parni(1) + 1));
-   }
-   else
-   {
+   } else {
       hb_retns(0);
    }
 }
@@ -223,121 +205,92 @@ HB_FUNC( __DBGVMSTKLCOUNT )
  */
 HB_FUNC( __DBGVMSTKLLIST )
 {
-   if( hb_vmInternalsEnabled() )
-   {
-      PHB_ITEM pReturn;
-      HB_ISIZ nLen;
-      HB_ISIZ nBaseOffset, nPrevOffset;
+   if( hb_vmInternalsEnabled() ) {
+      HB_ISIZ nBaseOffset = hb_stackBaseOffset();
+      HB_ISIZ nPrevOffset = hb_stackItem(nBaseOffset - 1)->item.asSymbol.stackstate->nBaseItem;
 
-      nBaseOffset = hb_stackBaseOffset();
-      nPrevOffset = hb_stackItem(nBaseOffset - 1)->item.asSymbol.stackstate->nBaseItem;
-
-      nLen = nBaseOffset - nPrevOffset - 3;
-      pReturn = hb_itemArrayNew(nLen);           /* Create a transfer array  */
-      for( HB_ISIZ n = 0; n < nLen; ++n )
-      {
+      HB_ISIZ nLen = nBaseOffset - nPrevOffset - 3;
+      PHB_ITEM pReturn = hb_itemArrayNew(nLen);           /* Create a transfer array  */
+      for( HB_ISIZ n = 0; n < nLen; ++n ) {
          AddToArray(hb_stackItem(nPrevOffset + n), pReturn, n + 1);
       }
 
       hb_itemReturnRelease(pReturn);
-   }
-   else
-   {
+   } else {
       hb_reta(0);
    }
 }
 
 HB_FUNC( __DBGVMLOCALLIST )
 {
-   if( hb_vmInternalsEnabled() )
-   {
-      PHB_ITEM pArray;
-      HB_ISIZ nBaseOffset, nPrevOffset, nLen;
+   if( hb_vmInternalsEnabled() ) {
       int iLevel = hb_parni(1) + 1;
 
-      nBaseOffset = hb_stackBaseOffset();
-      while( --iLevel > 0 && nBaseOffset > 1 )
-      {
+      HB_ISIZ nBaseOffset = hb_stackBaseOffset();
+      while( --iLevel > 0 && nBaseOffset > 1 ) {
          nBaseOffset = hb_stackItem(nBaseOffset - 1)->item.asSymbol.stackstate->nBaseItem + 1;
       }
 
-      if( nBaseOffset > 1 )
-      {
-         PHB_ITEM pSymItm;
+      HB_ISIZ nPrevOffset;
+      HB_ISIZ nLen;
 
+      if( nBaseOffset > 1 ) {
          nPrevOffset = hb_stackItem(nBaseOffset - 1)->item.asSymbol.stackstate->nBaseItem;
-         pSymItm = hb_stackItem(nPrevOffset);
+         PHB_ITEM pSymItm = hb_stackItem(nPrevOffset);
          nPrevOffset += HB_MAX(pSymItm->item.asSymbol.paramdeclcnt, pSymItm->item.asSymbol.paramcnt) + 1;
          nLen = nBaseOffset - nPrevOffset - 2;
-      }
-      else
-      {
+      } else {
          nLen = nPrevOffset = 0;
       }
 
-      pArray = hb_itemArrayNew(nLen);
-      for( HB_ISIZ n = 1; n <= nLen; ++n )
-      {
+      PHB_ITEM pArray = hb_itemArrayNew(nLen);
+      for( HB_ISIZ n = 1; n <= nLen; ++n ) {
          hb_itemCopyFromRef(hb_arrayGetItemPtr(pArray, n), hb_stackItem(nPrevOffset + n));
       }
 
       hb_itemReturnRelease(pArray);
-   }
-   else
-   {
+   } else {
       hb_reta(0);
    }
 }
 
 HB_FUNC( __DBGVMPARLLIST )
 {
-   if( hb_vmInternalsEnabled() )
-   {
+   if( hb_vmInternalsEnabled() ) {
       hb_itemReturnRelease(hb_arrayFromParams(hb_parni(1) + 1));
-   }
-   else
-   {
+   } else {
       hb_reta(0);
    }
 }
 
 PHB_ITEM hb_dbg_vmVarLGet(int iLevel, int iLocal)
 {
-   PHB_ITEM pLocal = nullptr;
-   HB_ISIZ nBaseOffset;
-
-   nBaseOffset = hb_stackBaseOffset();
-   while( iLevel-- > 0 && nBaseOffset > 1 )
-   {
+   HB_ISIZ nBaseOffset = hb_stackBaseOffset();
+   while( iLevel-- > 0 && nBaseOffset > 1 ) {
       nBaseOffset = hb_stackItem(nBaseOffset - 1)->item.asSymbol.stackstate->nBaseItem + 1;
    }
 
-   if( iLevel < 0 )
-   {
-      if( iLocal > SHRT_MAX )
-      {
+   PHB_ITEM pLocal = nullptr;
+
+   if( iLevel < 0 ) {
+      if( iLocal > SHRT_MAX ) {
          iLocal -= USHRT_MAX;
          iLocal--;
       }
 
-      if( iLocal >= 0 )
-      {
+      if( iLocal >= 0 ) {
          PHB_ITEM pBase = hb_stackItem(nBaseOffset - 1);
 
-         if( pBase->item.asSymbol.paramcnt > pBase->item.asSymbol.paramdeclcnt && iLocal > pBase->item.asSymbol.paramdeclcnt )
-         {
+         if( pBase->item.asSymbol.paramcnt > pBase->item.asSymbol.paramdeclcnt && iLocal > pBase->item.asSymbol.paramdeclcnt ) {
             iLocal += pBase->item.asSymbol.paramcnt - pBase->item.asSymbol.paramdeclcnt;
          }
 
          pLocal = hb_stackItem(nBaseOffset + iLocal);
-      }
-      else
-      {
+      } else {
          pLocal = hb_codeblockGetRef(hb_stackItem(nBaseOffset)->item.asBlock.value, iLocal);
       }
 
-      if( HB_IS_BYREF(pLocal) )
-      {
+      if( HB_IS_BYREF(pLocal) ) {
          pLocal = hb_itemUnRef(pLocal);
       }
    }
@@ -347,18 +300,14 @@ PHB_ITEM hb_dbg_vmVarLGet(int iLevel, int iLocal)
 
 HB_FUNC( __DBGVMVARLGET )
 {
-   if( hb_vmInternalsEnabled() )
-   {
+   if( hb_vmInternalsEnabled() ) {
       int iLevel = hb_parni(1) + 1;
       int iLocal = hb_parni(2);
       PHB_ITEM pLocal = hb_dbg_vmVarLGet(iLevel, iLocal);
 
-      if( pLocal )
-      {
+      if( pLocal ) {
          hb_itemReturn(pLocal);
-      }
-      else
-      {
+      } else {
          hb_errRT_BASE(EG_ARG, 6005, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       }
    }
@@ -366,41 +315,32 @@ HB_FUNC( __DBGVMVARLGET )
 
 HB_FUNC( __DBGVMVARLSET )
 {
-   if( hb_vmInternalsEnabled() )
-   {
+   if( hb_vmInternalsEnabled() ) {
       int iLevel = hb_parni(1) + 1;
       int iLocal = hb_parni(2);
-      HB_ISIZ nBaseOffset;
 
-      nBaseOffset = hb_stackBaseOffset();
-      while( iLevel-- > 0 && nBaseOffset > 1 )
-      {
+      HB_ISIZ nBaseOffset = hb_stackBaseOffset();
+      while( iLevel-- > 0 && nBaseOffset > 1 ) {
          nBaseOffset = hb_stackItem(nBaseOffset - 1)->item.asSymbol.stackstate->nBaseItem + 1;
       }
 
-      if( iLevel < 0 )
-      {
+      if( iLevel < 0 ) {
          PHB_ITEM pLocal;
 
-         if( iLocal > SHRT_MAX )
-         {
+         if( iLocal > SHRT_MAX ) {
             iLocal -= USHRT_MAX;
             iLocal--;
          }
 
-         if( iLocal >= 0 )
-         {
+         if( iLocal >= 0 ) {
             PHB_ITEM pBase = hb_stackItem(nBaseOffset - 1);
 
-            if( pBase->item.asSymbol.paramcnt > pBase->item.asSymbol.paramdeclcnt && iLocal > pBase->item.asSymbol.paramdeclcnt )
-            {
+            if( pBase->item.asSymbol.paramcnt > pBase->item.asSymbol.paramdeclcnt && iLocal > pBase->item.asSymbol.paramdeclcnt ) {
                iLocal += pBase->item.asSymbol.paramcnt - pBase->item.asSymbol.paramdeclcnt;
             }
 
             pLocal = hb_stackItem(nBaseOffset + iLocal);
-         }
-         else
-         {
+         } else {
             pLocal = hb_codeblockGetRef(hb_stackItem(nBaseOffset)->item.asBlock.value, iLocal);
          }
 
