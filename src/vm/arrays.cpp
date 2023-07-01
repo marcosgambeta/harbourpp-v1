@@ -1505,7 +1505,7 @@ void hb_nestedCloneFree(PHB_NESTED_CLONED pClonedList)
    hb_xfree(pClonedList->pRefs);
 }
 
-static HB_BOOL hb_nestedCloneFind(PHB_NESTED_CLONED pClonedList, void * pValue, PHB_ITEM pDest)
+static bool hb_nestedCloneFind(PHB_NESTED_CLONED pClonedList, void * pValue, PHB_ITEM pDest)
 {
    HB_SIZE nFirst = 0;
    HB_SIZE nLast = pClonedList->nCount;
