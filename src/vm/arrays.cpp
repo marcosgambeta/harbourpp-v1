@@ -141,12 +141,11 @@ HB_BOOL hb_arrayNew(PHB_ITEM pItem, HB_SIZE nLen) /* creates a new array */
    HB_TRACE(HB_TR_DEBUG, ("hb_arrayNew(%p, %" HB_PFS "u)", static_cast<void*>(pItem), nLen));
 #endif
 
-   PHB_BASEARRAY pBaseArray;
-   PHB_ITEM pItems;
-
    if( HB_IS_COMPLEX(pItem) ) {
       hb_itemClear(pItem);
    }
+
+   PHB_ITEM pItems;
 
    /*
     * allocate memory for items before hb_gcAllocRaw() to be
@@ -162,7 +161,7 @@ HB_BOOL hb_arrayNew(PHB_ITEM pItem, HB_SIZE nLen) /* creates a new array */
       pItems = nullptr;
    }
 
-   pBaseArray = static_cast<PHB_BASEARRAY>(hb_gcAllocRaw(sizeof(HB_BASEARRAY), &s_gcArrayFuncs));
+   PHB_BASEARRAY pBaseArray = static_cast<PHB_BASEARRAY>(hb_gcAllocRaw(sizeof(HB_BASEARRAY), &s_gcArrayFuncs));
    pBaseArray->pItems     = pItems;
    pBaseArray->nLen       = nLen;
    pBaseArray->uiClass    = 0;
