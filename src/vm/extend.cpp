@@ -64,21 +64,17 @@ PHB_ITEM hb_param(int iParam, long lMask)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( pItem->type & Harbour::Item::BYREF )
-      {
+      if( pItem->type & Harbour::Item::BYREF ) {
          pItem = hb_itemUnRef(pItem);
-         if( static_cast<HB_TYPE>(lMask) == Harbour::Item::BYREF )
-         {
+         if( static_cast<HB_TYPE>(lMask) == Harbour::Item::BYREF ) {
             return pItem;
          }
       }
 
-      if( (pItem->type & static_cast<HB_TYPE>(lMask)) || static_cast<HB_TYPE>(lMask) == Harbour::Item::ANY )
-      {
+      if( (pItem->type & static_cast<HB_TYPE>(lMask)) || static_cast<HB_TYPE>(lMask) == Harbour::Item::ANY ) {
          return pItem;
       }
    }
@@ -92,8 +88,7 @@ PHB_ITEM hb_paramError(int iParam)
 
    PHB_ITEM pParam = hb_param(iParam, Harbour::Item::ANY);
 
-   if( pParam == nullptr )
-   {
+   if( pParam == nullptr ) {
       hb_itemClear(&s_NIL);
       pParam = &s_NIL;
    }
@@ -109,26 +104,19 @@ HB_ULONG hb_parinfo(int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam == 0 )
-   {
+   if( iParam == 0 ) {
       return static_cast<HB_ULONG>(hb_pcount());
-   }
-   else
-   {
-      if( iParam >= -1 && iParam <= hb_pcount() )
-      {
+   } else {
+      if( iParam >= -1 && iParam <= hb_pcount() ) {
          PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
          HB_TYPE uiType = HB_ITEM_TYPE(pItem);
 
-         if( uiType & Harbour::Item::BYREF )
-         {
+         if( uiType & Harbour::Item::BYREF ) {
             uiType |= HB_ITEM_TYPE(hb_itemUnRef(pItem));
          }
 
          return static_cast<HB_ULONG>(uiType);
-      }
-      else
-      {
+      } else {
          return 0;
       }
    }
@@ -140,23 +128,15 @@ HB_SIZE hb_parinfa(int iParamNum, HB_SIZE nArrayIndex)
    HB_TRACE(HB_TR_DEBUG, ("hb_parinfa(%d, %" HB_PFS "u)", iParamNum, nArrayIndex));
 #endif
 
-   PHB_ITEM pArray;
+   PHB_ITEM pArray = hb_param(iParamNum, Harbour::Item::ARRAY);
 
-   pArray = hb_param(iParamNum, Harbour::Item::ARRAY);
-
-   if( pArray )
-   {
-      if( nArrayIndex == 0 )
-      {
+   if( pArray ) {
+      if( nArrayIndex == 0 ) {
          return hb_arrayLen(pArray);
-      }
-      else
-      {
+      } else {
          return static_cast<HB_ISIZ>(hb_arrayGetType(pArray, nArrayIndex));
       }
-   }
-   else
-   {
+   } else {
       return 0;
    }
 }
@@ -170,21 +150,15 @@ HB_BOOL hb_extIsNil(int iParam)
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pItem;
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       pItem = hb_stackReturnItem();
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       pItem = hb_stackItemFromBase(iParam);
-   }
-   else
-   {
+   } else {
       return true;
    }
 
-   if( HB_IS_BYREF(pItem) )
-   {
+   if( HB_IS_BYREF(pItem) ) {
       pItem = hb_itemUnRef(pItem);
    }
 
@@ -199,21 +173,15 @@ HB_BOOL hb_extIsArray(int iParam)
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pItem;
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       pItem = hb_stackReturnItem();
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       pItem = hb_stackItemFromBase(iParam);
-   }
-   else
-   {
+   } else {
       return false;
    }
 
-   if( HB_IS_BYREF(pItem) )
-   {
+   if( HB_IS_BYREF(pItem) ) {
       pItem = hb_itemUnRef(pItem);
    }
 
@@ -228,21 +196,15 @@ HB_BOOL hb_extIsObject(int iParam)
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pItem;
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       pItem = hb_stackReturnItem();
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       pItem = hb_stackItemFromBase(iParam);
-   }
-   else
-   {
+   } else {
       return false;
    }
 
-   if( HB_IS_BYREF(pItem) )
-   {
+   if( HB_IS_BYREF(pItem) ) {
       pItem = hb_itemUnRef(pItem);
    }
 
@@ -260,17 +222,14 @@ const char * hb_parc(int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_STRING(pItem) )
-      {
+      if( HB_IS_STRING(pItem) ) {
          return pItem->item.asString.value;
       }
    }
@@ -286,17 +245,14 @@ const char * hb_parcx(int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_STRING(pItem) )
-      {
+      if( HB_IS_STRING(pItem) ) {
          return pItem->item.asString.value;
       }
    }
@@ -312,17 +268,14 @@ HB_SIZE hb_parclen(int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_STRING(pItem) )
-      {
+      if( HB_IS_STRING(pItem) ) {
          return pItem->item.asString.length;
       }
    }
@@ -342,19 +295,16 @@ HB_SIZE hb_parcsiz(int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       /* NOTE: hb_parcsiz() will only work for strings passed by reference.
                CA-Cl*pper works like this. [vszakats] */
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
 
-         if( HB_IS_STRING(pItem) )
-         {
+         if( HB_IS_STRING(pItem) ) {
             return pItem->item.asString.length + 1;
          }
       }
@@ -374,17 +324,14 @@ const char * hb_pards(int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_DATETIME(pItem) )
-      {
+      if( HB_IS_DATETIME(pItem) ) {
          return hb_dateDecStr(hb_stackDateBuffer(), pItem->item.asDateTime.julian);
       }
    }
@@ -402,17 +349,14 @@ char * hb_pardsbuff(char * szDate, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_DATETIME(pItem) )
-      {
+      if( HB_IS_DATETIME(pItem) ) {
          return hb_dateDecStr(szDate, pItem->item.asDateTime.julian);
       }
    }
@@ -430,17 +374,14 @@ long hb_pardl(int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_DATETIME(pItem) )
-      {
+      if( HB_IS_DATETIME(pItem) ) {
          return pItem->item.asDateTime.julian;
       }
    }
@@ -456,17 +397,14 @@ double hb_partd(int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_DATETIME(pItem) )
-      {
+      if( HB_IS_DATETIME(pItem) ) {
          return hb_timeStampPackDT(pItem->item.asDateTime.julian, pItem->item.asDateTime.time);
       }
    }
@@ -482,17 +420,14 @@ HB_BOOL hb_partdt(long * plJulian, long * plMilliSec, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_DATETIME(pItem) )
-      {
+      if( HB_IS_DATETIME(pItem) ) {
          *plJulian = pItem->item.asDateTime.julian;
          *plMilliSec = pItem->item.asDateTime.time;
          return true;
@@ -510,17 +445,14 @@ int  hb_parl(int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_LOGICAL(pItem) )
-      {
+      if( HB_IS_LOGICAL(pItem) ) {
          return pItem->item.asLogical.value ? 1 : 0;
       }
    }
@@ -536,17 +468,14 @@ int  hb_parldef(int iParam, int iDefValue)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_LOGICAL(pItem) )
-      {
+      if( HB_IS_LOGICAL(pItem) ) {
          return pItem->item.asLogical.value ? 1 : 0;
       }
    }
@@ -562,25 +491,18 @@ double  hb_parnd(int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_DOUBLE(pItem) )
-      {
+      if( HB_IS_DOUBLE(pItem) ) {
          return pItem->item.asDouble.value;
-      }
-      else if( HB_IS_INTEGER(pItem) )
-      {
+      } else if( HB_IS_INTEGER(pItem) ) {
          return static_cast<double>(pItem->item.asInteger.value);
-      }
-      else if( HB_IS_LONG(pItem) )
-      {
+      } else if( HB_IS_LONG(pItem) ) {
          return static_cast<double>(pItem->item.asLong.value);
       }
    }
@@ -596,25 +518,18 @@ int  hb_parni(int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_INTEGER(pItem) )
-      {
+      if( HB_IS_INTEGER(pItem) ) {
          return pItem->item.asInteger.value;
-      }
-      else if( HB_IS_LONG(pItem) )
-      {
+      } else if( HB_IS_LONG(pItem) ) {
          return static_cast<int>(pItem->item.asLong.value);
-      }
-      else if( HB_IS_DOUBLE(pItem) )
-      {
+      } else if( HB_IS_DOUBLE(pItem) ) {
          return HB_CAST_INT(pItem->item.asDouble.value);
       }
    }
@@ -630,25 +545,18 @@ int  hb_parnidef(int iParam, int iDefValue)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_INTEGER(pItem) )
-      {
+      if( HB_IS_INTEGER(pItem) ) {
          return pItem->item.asInteger.value;
-      }
-      else if( HB_IS_LONG(pItem) )
-      {
+      } else if( HB_IS_LONG(pItem) ) {
          return static_cast<int>(pItem->item.asLong.value);
-      }
-      else if( HB_IS_DOUBLE(pItem) )
-      {
+      } else if( HB_IS_DOUBLE(pItem) ) {
          return HB_CAST_INT(pItem->item.asDouble.value);
       }
    }
@@ -664,25 +572,18 @@ long  hb_parnl(int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_LONG(pItem) )
-      {
+      if( HB_IS_LONG(pItem) ) {
          return static_cast<long>(pItem->item.asLong.value);
-      }
-      else if( HB_IS_INTEGER(pItem) )
-      {
+      } else if( HB_IS_INTEGER(pItem) ) {
          return static_cast<long>(pItem->item.asInteger.value);
-      }
-      else if( HB_IS_DOUBLE(pItem) )
-      {
+      } else if( HB_IS_DOUBLE(pItem) ) {
          return HB_CAST_LONG(pItem->item.asDouble.value);
       }
    }
@@ -698,25 +599,18 @@ long  hb_parnldef(int iParam, long lDefValue)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_LONG(pItem) )
-      {
+      if( HB_IS_LONG(pItem) ) {
          return static_cast<long>(pItem->item.asLong.value);
-      }
-      else if( HB_IS_INTEGER(pItem) )
-      {
+      } else if( HB_IS_INTEGER(pItem) ) {
          return static_cast<long>(pItem->item.asInteger.value);
-      }
-      else if( HB_IS_DOUBLE(pItem) )
-      {
+      } else if( HB_IS_DOUBLE(pItem) ) {
          return HB_CAST_LONG(pItem->item.asDouble.value);
       }
    }
@@ -732,25 +626,18 @@ HB_ISIZ hb_parns(int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_LONG(pItem) )
-      {
+      if( HB_IS_LONG(pItem) ) {
          return static_cast<HB_ISIZ>(pItem->item.asLong.value);
-      }
-      else if( HB_IS_INTEGER(pItem) )
-      {
+      } else if( HB_IS_INTEGER(pItem) ) {
          return static_cast<HB_ISIZ>(pItem->item.asInteger.value);
-      }
-      else if( HB_IS_DOUBLE(pItem) )
-      {
+      } else if( HB_IS_DOUBLE(pItem) ) {
          return HB_CAST_ISIZ(pItem->item.asDouble.value);
       }
    }
@@ -766,25 +653,18 @@ HB_ISIZ hb_parnsdef(int iParam, HB_ISIZ nDefValue)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_LONG(pItem) )
-      {
+      if( HB_IS_LONG(pItem) ) {
          return static_cast<HB_ISIZ>(pItem->item.asLong.value);
-      }
-      else if( HB_IS_INTEGER(pItem) )
-      {
+      } else if( HB_IS_INTEGER(pItem) ) {
          return static_cast<HB_ISIZ>(pItem->item.asInteger.value);
-      }
-      else if( HB_IS_DOUBLE(pItem) )
-      {
+      } else if( HB_IS_DOUBLE(pItem) ) {
          return HB_CAST_ISIZ(pItem->item.asDouble.value);
       }
    }
@@ -801,25 +681,18 @@ HB_LONGLONG  hb_parnll(int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_LONG(pItem) )
-      {
+      if( HB_IS_LONG(pItem) ) {
          return static_cast<HB_LONGLONG>(pItem->item.asLong.value);
-      }
-      else if( HB_IS_INTEGER(pItem) )
-      {
+      } else if( HB_IS_INTEGER(pItem) ) {
          return static_cast<HB_LONGLONG>(pItem->item.asInteger.value);
-      }
-      else if( HB_IS_DOUBLE(pItem) )
-      {
+      } else if( HB_IS_DOUBLE(pItem) ) {
          return HB_CAST_LONGLONG(pItem->item.asDouble.value);
       }
    }
@@ -836,25 +709,18 @@ HB_MAXINT hb_parnint(int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_LONG(pItem) )
-      {
+      if( HB_IS_LONG(pItem) ) {
          return static_cast<HB_MAXINT>(pItem->item.asLong.value);
-      }
-      else if( HB_IS_INTEGER(pItem) )
-      {
+      } else if( HB_IS_INTEGER(pItem) ) {
          return static_cast<HB_MAXINT>(pItem->item.asInteger.value);
-      }
-      else if( HB_IS_DOUBLE(pItem) )
-      {
+      } else if( HB_IS_DOUBLE(pItem) ) {
          return HB_CAST_MAXINT(pItem->item.asDouble.value);
       }
    }
@@ -870,25 +736,18 @@ HB_MAXINT hb_parnintdef(int iParam, HB_MAXINT nDefValue)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_LONG(pItem) )
-      {
+      if( HB_IS_LONG(pItem) ) {
          return static_cast<HB_MAXINT>(pItem->item.asLong.value);
-      }
-      else if( HB_IS_INTEGER(pItem) )
-      {
+      } else if( HB_IS_INTEGER(pItem) ) {
          return static_cast<HB_MAXINT>(pItem->item.asInteger.value);
-      }
-      else if( HB_IS_DOUBLE(pItem) )
-      {
+      } else if( HB_IS_DOUBLE(pItem) ) {
          return HB_CAST_MAXINT(pItem->item.asDouble.value);
       }
    }
@@ -904,17 +763,14 @@ void * hb_parptr(int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_POINTER(pItem) )
-      {
+      if( HB_IS_POINTER(pItem) ) {
          return pItem->item.asPointer.value;
       }
    }
@@ -930,17 +786,14 @@ void * hb_parptrGC(const HB_GC_FUNCS * pFuncs, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_POINTER(pItem) && pItem->item.asPointer.collect && hb_gcFuncs(pItem->item.asPointer.value) == pFuncs )
-      {
+      if( HB_IS_POINTER(pItem) && pItem->item.asPointer.collect && hb_gcFuncs(pItem->item.asPointer.value) == pFuncs ) {
          return pItem->item.asPointer.value;
       }
    }
@@ -959,21 +812,16 @@ const char * hb_parvc(int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_STRING(pItem) )
-      {
+      if( HB_IS_STRING(pItem) ) {
          return pItem->item.asString.value;
-      }
-      else if( HB_IS_ARRAY(pItem) )
-      {
+      } else if( HB_IS_ARRAY(pItem) ) {
          va_list va;
          HB_SIZE nArrayIndex;
 
@@ -997,21 +845,16 @@ const char * hb_parvcx(int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_STRING(pItem) )
-      {
+      if( HB_IS_STRING(pItem) ) {
          return pItem->item.asString.value;
-      }
-      else if( HB_IS_ARRAY(pItem) )
-      {
+      } else if( HB_IS_ARRAY(pItem) ) {
          va_list va;
          HB_SIZE nArrayIndex;
 
@@ -1034,21 +877,16 @@ HB_SIZE hb_parvclen(int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_STRING(pItem) )
-      {
+      if( HB_IS_STRING(pItem) ) {
          return pItem->item.asString.length;
-      }
-      else if( HB_IS_ARRAY(pItem) )
-      {
+      } else if( HB_IS_ARRAY(pItem) ) {
          va_list va;
          HB_SIZE nArrayIndex;
 
@@ -1075,23 +913,18 @@ HB_SIZE hb_parvcsiz(int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
       /* NOTE: hb_parvcsiz() will only work for strings passed by reference.
                CA-Cl*pper works like this. [vszakats] */
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
 
-         if( HB_IS_STRING(pItem) )
-         {
+         if( HB_IS_STRING(pItem) ) {
             return pItem->item.asString.length + 1;
-         }
-         else if( HB_IS_ARRAY(pItem) )
-         {
+         } else if( HB_IS_ARRAY(pItem) ) {
             va_list va;
             HB_SIZE nArrayIndex;
 
@@ -1118,21 +951,16 @@ const char * hb_parvds(int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_DATETIME(pItem) )
-      {
+      if( HB_IS_DATETIME(pItem) ) {
          return hb_dateDecStr(hb_stackDateBuffer(), pItem->item.asDateTime.julian);
-      }
-      else if( HB_IS_ARRAY(pItem) )
-      {
+      } else if( HB_IS_ARRAY(pItem) ) {
          va_list va;
          HB_SIZE nArrayIndex;
 
@@ -1157,21 +985,16 @@ char  * hb_parvdsbuff(char * szDate, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_DATETIME(pItem) )
-      {
+      if( HB_IS_DATETIME(pItem) ) {
          return hb_dateDecStr(szDate, pItem->item.asDateTime.julian);
-      }
-      else if( HB_IS_ARRAY(pItem) )
-      {
+      } else if( HB_IS_ARRAY(pItem) ) {
          va_list va;
          HB_SIZE nArrayIndex;
 
@@ -1196,21 +1019,16 @@ long hb_parvdl(int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_DATETIME(pItem) )
-      {
+      if( HB_IS_DATETIME(pItem) ) {
          return pItem->item.asDateTime.julian;
-      }
-      else if( HB_IS_ARRAY(pItem) )
-      {
+      } else if( HB_IS_ARRAY(pItem) ) {
          va_list va;
          HB_SIZE nArrayIndex;
 
@@ -1233,21 +1051,16 @@ double hb_parvtd(int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_DATETIME(pItem) )
-      {
+      if( HB_IS_DATETIME(pItem) ) {
          return hb_timeStampPackDT(pItem->item.asDateTime.julian, pItem->item.asDateTime.time);
-      }
-      else if( HB_IS_ARRAY(pItem) )
-      {
+      } else if( HB_IS_ARRAY(pItem) ) {
          va_list va;
          HB_SIZE nArrayIndex;
 
@@ -1270,23 +1083,18 @@ HB_BOOL hb_parvtdt(long * plJulian, long * plMilliSec, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_DATETIME(pItem) )
-      {
+      if( HB_IS_DATETIME(pItem) ) {
          *plJulian = pItem->item.asDateTime.julian;
          *plMilliSec = pItem->item.asDateTime.time;
          return true;
-      }
-      else if( HB_IS_ARRAY(pItem) )
-      {
+      } else if( HB_IS_ARRAY(pItem) ) {
          va_list va;
          HB_SIZE nArrayIndex;
 
@@ -1309,33 +1117,22 @@ int  hb_parvl(int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_LOGICAL(pItem) )
-      {
+      if( HB_IS_LOGICAL(pItem) ) {
          return pItem->item.asLogical.value ? 1 : 0;
-      }
-      else if( HB_IS_INTEGER(pItem) )
-      {
+      } else if( HB_IS_INTEGER(pItem) ) {
          return pItem->item.asInteger.value != 0 ? 1 : 0;
-      }
-      else if( HB_IS_LONG(pItem) )
-      {
+      } else if( HB_IS_LONG(pItem) ) {
          return pItem->item.asLong.value != 0 ? 1 : 0;
-      }
-      else if( HB_IS_DOUBLE(pItem) )
-      {
+      } else if( HB_IS_DOUBLE(pItem) ) {
          return pItem->item.asDouble.value != 0.0 ? 1 : 0;
-      }
-      else if( HB_IS_ARRAY(pItem) )
-      {
+      } else if( HB_IS_ARRAY(pItem) ) {
          va_list va;
          HB_SIZE nArrayIndex;
 
@@ -1358,29 +1155,20 @@ double  hb_parvnd(int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_DOUBLE(pItem) )
-      {
+      if( HB_IS_DOUBLE(pItem) ) {
          return pItem->item.asDouble.value;
-      }
-      else if( HB_IS_INTEGER(pItem) )
-      {
+      } else if( HB_IS_INTEGER(pItem) ) {
          return static_cast<double>(pItem->item.asInteger.value);
-      }
-      else if( HB_IS_LONG(pItem) )
-      {
+      } else if( HB_IS_LONG(pItem) ) {
          return static_cast<double>(pItem->item.asLong.value);
-      }
-      else if( HB_IS_ARRAY(pItem) )
-      {
+      } else if( HB_IS_ARRAY(pItem) ) {
          va_list va;
          HB_SIZE nArrayIndex;
 
@@ -1403,29 +1191,20 @@ int  hb_parvni(int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_INTEGER(pItem) )
-      {
+      if( HB_IS_INTEGER(pItem) ) {
          return pItem->item.asInteger.value;
-      }
-      else if( HB_IS_LONG(pItem) )
-      {
+      } else if( HB_IS_LONG(pItem) ) {
          return static_cast<int>(pItem->item.asLong.value);
-      }
-      else if( HB_IS_DOUBLE(pItem) )
-      {
+      } else if( HB_IS_DOUBLE(pItem) ) {
          return HB_CAST_INT(pItem->item.asDouble.value);
-      }
-      else if( HB_IS_ARRAY(pItem) )
-      {
+      } else if( HB_IS_ARRAY(pItem) ) {
          va_list va;
          HB_SIZE nArrayIndex;
 
@@ -1448,34 +1227,23 @@ long  hb_parvnl(int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_LONG(pItem) )
-      {
+      if( HB_IS_LONG(pItem) ) {
          return static_cast<long>(pItem->item.asLong.value);
-      }
-      else if( HB_IS_INTEGER(pItem) )
-      {
+      } else if( HB_IS_INTEGER(pItem) ) {
          return static_cast<long>(pItem->item.asInteger.value);
-      }
-      else if( HB_IS_DOUBLE(pItem) )
-      {
+      } else if( HB_IS_DOUBLE(pItem) ) {
          return HB_CAST_LONG(pItem->item.asDouble.value);
-      }
       /* CA-Cl*pper does it */
-      else if( HB_IS_DATETIME(pItem) )
-      {
+      } else if( HB_IS_DATETIME(pItem) ) {
          return static_cast<long>(pItem->item.asDateTime.julian);
-      }
-      else if( HB_IS_ARRAY(pItem) )
-      {
+      } else if( HB_IS_ARRAY(pItem) ) {
          va_list va;
          HB_SIZE nArrayIndex;
 
@@ -1498,29 +1266,20 @@ HB_ISIZ hb_parvns(int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_LONG(pItem) )
-      {
+      if( HB_IS_LONG(pItem) ) {
          return static_cast<HB_ISIZ>(pItem->item.asLong.value);
-      }
-      else if( HB_IS_INTEGER(pItem) )
-      {
+      } else if( HB_IS_INTEGER(pItem) ) {
          return static_cast<HB_ISIZ>(pItem->item.asInteger.value);
-      }
-      else if( HB_IS_DOUBLE(pItem) )
-      {
+      } else if( HB_IS_DOUBLE(pItem) ) {
          return HB_CAST_ISIZ(pItem->item.asDouble.value);
-      }
-      else if( HB_IS_ARRAY(pItem) )
-      {
+      } else if( HB_IS_ARRAY(pItem) ) {
          va_list va;
          HB_SIZE nArrayIndex;
 
@@ -1544,29 +1303,20 @@ HB_LONGLONG hb_parvnll(int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_LONG(pItem) )
-      {
+      if( HB_IS_LONG(pItem) ) {
          return static_cast<HB_LONGLONG>(pItem->item.asLong.value);
-      }
-      else if( HB_IS_INTEGER(pItem) )
-      {
+      } else if( HB_IS_INTEGER(pItem) ) {
          return static_cast<HB_LONGLONG>(pItem->item.asInteger.value);
-      }
-      else if( HB_IS_DOUBLE(pItem) )
-      {
+      } else if( HB_IS_DOUBLE(pItem) ) {
          return HB_CAST_LONGLONG(pItem->item.asDouble.value);
-      }
-      else if( HB_IS_ARRAY(pItem) )
-      {
+      } else if( HB_IS_ARRAY(pItem) ) {
          va_list va;
          HB_SIZE nArrayIndex;
 
@@ -1590,29 +1340,20 @@ HB_MAXINT hb_parvnint(int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_LONG(pItem) )
-      {
+      if( HB_IS_LONG(pItem) ) {
          return static_cast<HB_MAXINT>(pItem->item.asLong.value);
-      }
-      else if( HB_IS_INTEGER(pItem) )
-      {
+      } else if( HB_IS_INTEGER(pItem) ) {
          return static_cast<HB_MAXINT>(pItem->item.asInteger.value);
-      }
-      else if( HB_IS_DOUBLE(pItem) )
-      {
+      } else if( HB_IS_DOUBLE(pItem) ) {
          return HB_CAST_MAXINT(pItem->item.asDouble.value);
-      }
-      else if( HB_IS_ARRAY(pItem) )
-      {
+      } else if( HB_IS_ARRAY(pItem) ) {
          va_list va;
          HB_SIZE nArrayIndex;
 
@@ -1635,21 +1376,16 @@ void * hb_parvptr(int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_POINTER(pItem) )
-      {
+      if( HB_IS_POINTER(pItem) ) {
          return pItem->item.asPointer.value;
-      }
-      else if( HB_IS_ARRAY(pItem) )
-      {
+      } else if( HB_IS_ARRAY(pItem) ) {
          va_list va;
          HB_SIZE nArrayIndex;
 
@@ -1672,24 +1408,18 @@ void * hb_parvptrGC(const HB_GC_FUNCS * pFuncs, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_POINTER(pItem) )
-      {
-         if( pItem->item.asPointer.collect && hb_gcFuncs(pItem->item.asPointer.value) == pFuncs )
-         {
+      if( HB_IS_POINTER(pItem) ) {
+         if( pItem->item.asPointer.collect && hb_gcFuncs(pItem->item.asPointer.value) == pFuncs ) {
             return pItem->item.asPointer.value;
          }
-      }
-      else if( HB_IS_ARRAY(pItem) )
-      {
+      } else if( HB_IS_ARRAY(pItem) ) {
          va_list va;
          HB_SIZE nArrayIndex;
 
@@ -1698,8 +1428,7 @@ void * hb_parvptrGC(const HB_GC_FUNCS * pFuncs, int iParam, ...)
          va_end(va);
 
          pItem = hb_arrayGetItemPtr(pItem, nArrayIndex);
-         if( pItem && HB_IS_POINTER(pItem) && pItem->item.asPointer.collect && hb_gcFuncs(pItem->item.asPointer.value) == pFuncs )
-         {
+         if( pItem && HB_IS_POINTER(pItem) && pItem->item.asPointer.collect && hb_gcFuncs(pItem->item.asPointer.value) == pFuncs ) {
             return pItem->item.asPointer.value;
          }
       }
@@ -1716,7 +1445,6 @@ void hb_ret(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemClear(hb_stackReturnItem());
 }
 
@@ -1728,7 +1456,6 @@ void hb_reta(HB_SIZE nLen)  /* undocumented hb_reta() */
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_arrayNew(hb_stackReturnItem(), nLen);
 }
 
@@ -1740,7 +1467,6 @@ void hb_retc(const char * szText)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutC(hb_stackReturnItem(), szText);
 }
 
@@ -1752,7 +1478,6 @@ void hb_retc_null(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutC(hb_stackReturnItem(), nullptr);
 }
 
@@ -1764,7 +1489,6 @@ void hb_retc_buffer(char * szText)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutCPtr(hb_stackReturnItem(), szText);
 }
 
@@ -1776,7 +1500,6 @@ void hb_retc_const(const char * szText)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutCConst(hb_stackReturnItem(), szText);
 }
 
@@ -1788,7 +1511,6 @@ void hb_retclen(const char * szText, HB_SIZE nLen)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutCL(hb_stackReturnItem(), szText, nLen);
 }
 
@@ -1800,7 +1522,6 @@ void hb_retclen_buffer(char * szText, HB_SIZE nLen)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutCLPtr(hb_stackReturnItem(), szText, nLen);
 }
 
@@ -1812,7 +1533,6 @@ void hb_retclen_const(const char * szText, HB_SIZE nLen)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutCLConst(hb_stackReturnItem(), szText, nLen);
 }
 
@@ -1826,7 +1546,6 @@ void hb_retds(const char * szDate)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutDS(hb_stackReturnItem(), szDate);
 }
 
@@ -1838,7 +1557,6 @@ void hb_retd(int iYear, int iMonth, int iDay)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutD(hb_stackReturnItem(), iYear, iMonth, iDay);
 }
 
@@ -1850,7 +1568,6 @@ void hb_retdl(long lJulian)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutDL(hb_stackReturnItem(), lJulian);
 }
 
@@ -1862,7 +1579,6 @@ void hb_rettd(double dTimeStamp)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutTD(hb_stackReturnItem(), dTimeStamp);
 }
 
@@ -1874,7 +1590,6 @@ void hb_rettdt(long lJulian, long lMilliSec)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutTDT(hb_stackReturnItem(), lJulian, lMilliSec);
 }
 
@@ -1886,7 +1601,6 @@ void hb_retl(int iLogical)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutL(hb_stackReturnItem(), iLogical ? true : false);
 }
 
@@ -1898,7 +1612,6 @@ void hb_retnd(double dNumber)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutND(hb_stackReturnItem(), dNumber);
 }
 
@@ -1910,7 +1623,6 @@ void hb_retni(int iNumber)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutNI(hb_stackReturnItem(), iNumber);
 }
 
@@ -1922,7 +1634,6 @@ void hb_retnl(long lNumber)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutNL(hb_stackReturnItem(), lNumber);
 }
 
@@ -1934,7 +1645,6 @@ void hb_retns(HB_ISIZ nNumber)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutNS(hb_stackReturnItem(), nNumber);
 }
 
@@ -1947,7 +1657,6 @@ void hb_retnll(HB_LONGLONG llNumber)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutNLL(hb_stackReturnItem(), llNumber);
 }
 #endif
@@ -1960,7 +1669,6 @@ void hb_retnint(HB_MAXINT nNumber)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutNInt(hb_stackReturnItem(), nNumber);
 }
 
@@ -1972,7 +1680,6 @@ void hb_retnlen(double dNumber, int iWidth, int iDec)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutNLen(hb_stackReturnItem(), dNumber, iWidth, iDec);
 }
 
@@ -1984,7 +1691,6 @@ void hb_retndlen(double dNumber, int iWidth, int iDec)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutNDLen(hb_stackReturnItem(), dNumber, iWidth, iDec);
 }
 
@@ -1996,7 +1702,6 @@ void hb_retnilen(int iNumber, int iWidth)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutNILen(hb_stackReturnItem(), iNumber, iWidth);
 }
 
@@ -2008,7 +1713,6 @@ void hb_retnllen(long lNumber, int iWidth)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutNLLen(hb_stackReturnItem(), lNumber, iWidth);
 }
 
@@ -2021,7 +1725,6 @@ void hb_retnlllen(HB_LONGLONG llNumber, int iWidth)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutNLLLen(hb_stackReturnItem(), llNumber, iWidth);
 }
 #endif
@@ -2034,7 +1737,6 @@ void hb_retnintlen(HB_MAXINT nNumber, int iWidth)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutNIntLen(hb_stackReturnItem(), nNumber, iWidth);
 }
 
@@ -2046,7 +1748,6 @@ void hb_retptr(void * pointer)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutPtr(hb_stackReturnItem(), pointer);
 }
 
@@ -2058,7 +1759,6 @@ void hb_retptrGC(void * pointer)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_itemPutPtrGC(hb_stackReturnItem(), pointer);
 }
 
@@ -2070,17 +1770,13 @@ int hb_stor(int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       hb_itemClear(hb_stackReturnItem());
       return 1;
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          hb_itemClear(hb_itemUnRef(pItem));
          return 1;
       }
@@ -2097,17 +1793,13 @@ int hb_storc(const char * szText, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       hb_itemPutC(hb_stackReturnItem(), szText);
       return 1;
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          hb_itemPutC(hb_itemUnRef(pItem), szText);
          return 1;
       }
@@ -2124,17 +1816,13 @@ int hb_storclen(const char * szText, HB_SIZE nLen, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       hb_itemPutCL(hb_stackReturnItem(), szText, nLen);
       return 1;
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          hb_itemPutCL(hb_itemUnRef(pItem), szText, nLen);
          return 1;
       }
@@ -2151,17 +1839,13 @@ int hb_storclen_buffer(char * szText, HB_SIZE nLen, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       hb_itemPutCLPtr(hb_stackReturnItem(), szText, nLen);
       return 1;
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          hb_itemPutCLPtr(hb_itemUnRef(pItem), szText, nLen);
          return 1;
       }
@@ -2180,17 +1864,13 @@ int hb_stords(const char * szDate, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       hb_itemPutDS(hb_stackReturnItem(), szDate);
       return 1;
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          hb_itemPutDS(hb_itemUnRef(pItem), szDate);
          return 1;
       }
@@ -2207,17 +1887,13 @@ int hb_stordl(long lJulian, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       hb_itemPutDL(hb_stackReturnItem(), lJulian);
       return 1;
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          hb_itemPutDL(hb_itemUnRef(pItem), lJulian);
          return 1;
       }
@@ -2234,17 +1910,13 @@ int hb_stortd(double dTimeStamp, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       hb_itemPutTD(hb_stackReturnItem(), dTimeStamp);
       return 1;
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          hb_itemPutTD(hb_itemUnRef(pItem), dTimeStamp);
          return 1;
       }
@@ -2261,17 +1933,13 @@ int hb_stortdt(long lJulian, long lMilliSec, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       hb_itemPutTDT(hb_stackReturnItem(), lJulian, lMilliSec);
       return 1;
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          hb_itemPutTDT(hb_itemUnRef(pItem), lJulian, lMilliSec);
          return 1;
       }
@@ -2288,17 +1956,13 @@ int hb_storl(int iLogical, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       hb_itemPutL(hb_stackReturnItem(), iLogical ? true : false);
       return 1;
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          hb_itemPutL(hb_itemUnRef(pItem), iLogical ? true : false);
          return 1;
       }
@@ -2315,17 +1979,13 @@ int hb_storni(int iValue, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       hb_itemPutNI(hb_stackReturnItem(), iValue);
       return 1;
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          hb_itemPutNI(hb_itemUnRef(pItem), iValue);
          return 1;
       }
@@ -2342,17 +2002,13 @@ int hb_stornl(long lValue, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       hb_itemPutNL(hb_stackReturnItem(), lValue);
       return 1;
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          hb_itemPutNL(hb_itemUnRef(pItem), lValue);
          return 1;
       }
@@ -2369,17 +2025,13 @@ int hb_storns(HB_ISIZ nValue, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       hb_itemPutNS(hb_stackReturnItem(), nValue);
       return 1;
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          hb_itemPutNS(hb_itemUnRef(pItem), nValue);
          return 1;
       }
@@ -2397,17 +2049,13 @@ int hb_stornll(HB_LONGLONG llValue, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       hb_itemPutNLL(hb_stackReturnItem(), llValue);
       return 1;
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          hb_itemPutNLL(hb_itemUnRef(pItem), llValue);
          return 1;
       }
@@ -2425,17 +2073,13 @@ int hb_stornint(HB_MAXINT nValue, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       hb_itemPutNInt(hb_stackReturnItem(), nValue);
       return 1;
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          hb_itemPutNInt(hb_itemUnRef(pItem), nValue);
          return 1;
       }
@@ -2452,17 +2096,13 @@ int hb_stornd(double dNumber, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       hb_itemPutND(hb_stackReturnItem(), dNumber);
       return 1;
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          hb_itemPutND(hb_itemUnRef(pItem), dNumber);
          return 1;
       }
@@ -2479,17 +2119,13 @@ int hb_storptr(void * pointer, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       hb_itemPutPtr(hb_stackReturnItem(), pointer);
       return 1;
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          hb_itemPutPtr(hb_itemUnRef(pItem), pointer);
          return 1;
       }
@@ -2506,17 +2142,13 @@ int hb_storptrGC(void * pointer, int iParam)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam == -1 )
-   {
+   if( iParam == -1 ) {
       hb_itemPutPtrGC(hb_stackReturnItem(), pointer);
       return 1;
-   }
-   else if( iParam >= 0 && iParam <= hb_pcount() )
-   {
+   } else if( iParam >= 0 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(iParam);
 
-      if( HB_IS_BYREF(pItem) )
-      {
+      if( HB_IS_BYREF(pItem) ) {
          hb_itemPutPtrGC(hb_itemUnRef(pItem), pointer);
          return 1;
       }
@@ -2537,27 +2169,22 @@ int hb_storvc(const char * szText, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-      HB_BOOL bByRef = HB_IS_BYREF(pItem);
+      bool bByRef = HB_IS_BYREF(pItem);
 
-      if( bByRef )
-      {
+      if( bByRef ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_ARRAY(pItem) )
-      {
+      if( HB_IS_ARRAY(pItem) ) {
          int iRetVal;
          va_list va;
          va_start(va, iParam);
          iRetVal = hb_arraySetC(pItem, va_arg(va, HB_SIZE), szText) ? 1 : 0;
          va_end(va);
          return iRetVal;
-      }
-      else if( bByRef || iParam == -1 )
-      {
+      } else if( bByRef || iParam == -1 ) {
          hb_itemPutC(pItem, szText);
          return 1;
       }
@@ -2574,27 +2201,22 @@ int hb_storvclen(const char * szText, HB_SIZE nLen, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-      HB_BOOL bByRef = HB_IS_BYREF(pItem);
+      bool bByRef = HB_IS_BYREF(pItem);
 
-      if( bByRef )
-      {
+      if( bByRef ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_ARRAY(pItem) )
-      {
+      if( HB_IS_ARRAY(pItem) ) {
          int iRetVal;
          va_list va;
          va_start(va, iParam);
          iRetVal = hb_arraySetCL(pItem, va_arg(va, HB_SIZE), szText, nLen) ? 1 : 0;
          va_end(va);
          return iRetVal;
-      }
-      else if( bByRef || iParam == -1 )
-      {
+      } else if( bByRef || iParam == -1 ) {
          hb_itemPutCL(pItem, szText, nLen);
          return 1;
       }
@@ -2611,27 +2233,22 @@ int hb_storvclen_buffer(char * szText, HB_SIZE nLen, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-      HB_BOOL bByRef = HB_IS_BYREF(pItem);
+      bool bByRef = HB_IS_BYREF(pItem);
 
-      if( bByRef )
-      {
+      if( bByRef ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_ARRAY(pItem) )
-      {
+      if( HB_IS_ARRAY(pItem) ) {
          int iRetVal;
          va_list va;
          va_start(va, iParam);
          iRetVal = hb_arraySetCLPtr(pItem, va_arg(va, HB_SIZE), szText, nLen) ? 1 : 0;
          va_end(va);
          return iRetVal;
-      }
-      else if( bByRef || iParam == -1 )
-      {
+      } else if( bByRef || iParam == -1 ) {
          hb_itemPutCLPtr(pItem, szText, nLen);
          return 1;
       }
@@ -2650,27 +2267,22 @@ int hb_storvds(const char * szDate, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-      HB_BOOL bByRef = HB_IS_BYREF(pItem);
+      bool bByRef = HB_IS_BYREF(pItem);
 
-      if( bByRef )
-      {
+      if( bByRef ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_ARRAY(pItem) )
-      {
+      if( HB_IS_ARRAY(pItem) ) {
          int iRetVal;
          va_list va;
          va_start(va, iParam);
          iRetVal = hb_arraySetDS(pItem, va_arg(va, HB_SIZE), szDate) ? 1 : 0;
          va_end(va);
          return iRetVal;
-      }
-      else if( bByRef || iParam == -1 )
-      {
+      } else if( bByRef || iParam == -1 ) {
          hb_itemPutDS(pItem, szDate);
          return 1;
       }
@@ -2687,27 +2299,22 @@ int hb_storvdl(long lJulian, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-      HB_BOOL bByRef = HB_IS_BYREF(pItem);
+      bool bByRef = HB_IS_BYREF(pItem);
 
-      if( bByRef )
-      {
+      if( bByRef ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_ARRAY(pItem) )
-      {
+      if( HB_IS_ARRAY(pItem) ) {
          int iRetVal;
          va_list va;
          va_start(va, iParam);
          iRetVal = hb_arraySetDL(pItem, va_arg(va, HB_SIZE), lJulian) ? 1 : 0;
          va_end(va);
          return iRetVal;
-      }
-      else if( bByRef || iParam == -1 )
-      {
+      } else if( bByRef || iParam == -1 ) {
          hb_itemPutDL(pItem, lJulian);
          return 1;
       }
@@ -2724,27 +2331,22 @@ int hb_storvtd(double dTimeStamp, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-      HB_BOOL bByRef = HB_IS_BYREF(pItem);
+      bool bByRef = HB_IS_BYREF(pItem);
 
-      if( bByRef )
-      {
+      if( bByRef ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_ARRAY(pItem) )
-      {
+      if( HB_IS_ARRAY(pItem) ) {
          int iRetVal;
          va_list va;
          va_start(va, iParam);
          iRetVal = hb_arraySetTD(pItem, va_arg(va, HB_SIZE), dTimeStamp) ? 1 : 0;
          va_end(va);
          return iRetVal;
-      }
-      else if( bByRef || iParam == -1 )
-      {
+      } else if( bByRef || iParam == -1 ) {
          hb_itemPutTD(pItem, dTimeStamp);
          return 1;
       }
@@ -2761,27 +2363,22 @@ int hb_storvtdt(long lJulian, long lMilliSec, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-      HB_BOOL bByRef = HB_IS_BYREF(pItem);
+      bool bByRef = HB_IS_BYREF(pItem);
 
-      if( bByRef )
-      {
+      if( bByRef ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_ARRAY(pItem) )
-      {
+      if( HB_IS_ARRAY(pItem) ) {
          int iRetVal;
          va_list va;
          va_start(va, iParam);
          iRetVal = hb_arraySetTDT(pItem, va_arg(va, HB_SIZE), lJulian, lMilliSec) ? 1 : 0;
          va_end(va);
          return iRetVal;
-      }
-      else if( bByRef || iParam == -1 )
-      {
+      } else if( bByRef || iParam == -1 ) {
          hb_itemPutTDT(pItem, lJulian, lMilliSec);
          return 1;
       }
@@ -2798,27 +2395,22 @@ int hb_storvl(int iLogical, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-      HB_BOOL bByRef = HB_IS_BYREF(pItem);
+      bool bByRef = HB_IS_BYREF(pItem);
 
-      if( bByRef )
-      {
+      if( bByRef ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_ARRAY(pItem) )
-      {
+      if( HB_IS_ARRAY(pItem) ) {
          int iRetVal;
          va_list va;
          va_start(va, iParam);
          iRetVal = hb_arraySetL(pItem, va_arg(va, HB_SIZE), iLogical ? true : false) ? 1 : 0;
          va_end(va);
          return iRetVal;
-      }
-      else if( bByRef || iParam == -1 )
-      {
+      } else if( bByRef || iParam == -1 ) {
          hb_itemPutL(pItem, iLogical ? true : false);
          return 1;
       }
@@ -2835,27 +2427,22 @@ int hb_storvni(int iValue, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-      HB_BOOL bByRef = HB_IS_BYREF(pItem);
+      bool bByRef = HB_IS_BYREF(pItem);
 
-      if( bByRef )
-      {
+      if( bByRef ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_ARRAY(pItem) )
-      {
+      if( HB_IS_ARRAY(pItem) ) {
          int iRetVal;
          va_list va;
          va_start(va, iParam);
          iRetVal = hb_arraySetNI(pItem, va_arg(va, HB_SIZE), iValue) ? 1 : 0;
          va_end(va);
          return iRetVal;
-      }
-      else if( bByRef || iParam == -1 )
-      {
+      } else if( bByRef || iParam == -1 ) {
          hb_itemPutNI(pItem, iValue);
          return 1;
       }
@@ -2872,27 +2459,22 @@ int hb_storvnl(long lValue, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-      HB_BOOL bByRef = HB_IS_BYREF(pItem);
+      bool bByRef = HB_IS_BYREF(pItem);
 
-      if( bByRef )
-      {
+      if( bByRef ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_ARRAY(pItem) )
-      {
+      if( HB_IS_ARRAY(pItem) ) {
          int iRetVal;
          va_list va;
          va_start(va, iParam);
          iRetVal = hb_arraySetNL(pItem, va_arg(va, HB_SIZE), lValue) ? 1 : 0;
          va_end(va);
          return iRetVal;
-      }
-      else if( bByRef || iParam == -1 )
-      {
+      } else if( bByRef || iParam == -1 ) {
          hb_itemPutNL(pItem, lValue);
          return 1;
       }
@@ -2909,27 +2491,22 @@ int hb_storvns(HB_ISIZ nValue, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-      HB_BOOL bByRef = HB_IS_BYREF(pItem);
+      bool bByRef = HB_IS_BYREF(pItem);
 
-      if( bByRef )
-      {
+      if( bByRef ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_ARRAY(pItem) )
-      {
+      if( HB_IS_ARRAY(pItem) ) {
          int iRetVal;
          va_list va;
          va_start(va, iParam);
          iRetVal = hb_arraySetNS(pItem, va_arg(va, HB_SIZE), nValue) ? 1 : 0;
          va_end(va);
          return iRetVal;
-      }
-      else if( bByRef || iParam == -1 )
-      {
+      } else if( bByRef || iParam == -1 ) {
          hb_itemPutNS(pItem, nValue);
          return 1;
       }
@@ -2947,27 +2524,22 @@ int hb_storvnll(HB_LONGLONG llValue, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-      HB_BOOL bByRef = HB_IS_BYREF(pItem);
+      bool bByRef = HB_IS_BYREF(pItem);
 
-      if( bByRef )
-      {
+      if( bByRef ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_ARRAY(pItem) )
-      {
+      if( HB_IS_ARRAY(pItem) ) {
          int iRetVal;
          va_list va;
          va_start(va, iParam);
          iRetVal = hb_arraySetNLL(pItem, va_arg(va, HB_SIZE), llValue) ? 1 : 0;
          va_end(va);
          return iRetVal;
-      }
-      else if( bByRef || iParam == -1 )
-      {
+      } else if( bByRef || iParam == -1 ) {
          hb_itemPutNLL(pItem, llValue);
          return 1;
       }
@@ -2985,27 +2557,22 @@ int hb_storvnint(HB_MAXINT nValue, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-      HB_BOOL bByRef = HB_IS_BYREF(pItem);
+      bool bByRef = HB_IS_BYREF(pItem);
 
-      if( bByRef )
-      {
+      if( bByRef ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_ARRAY(pItem) )
-      {
+      if( HB_IS_ARRAY(pItem) ) {
          int iRetVal;
          va_list va;
          va_start(va, iParam);
          iRetVal = hb_arraySetNInt(pItem, va_arg(va, HB_SIZE), nValue) ? 1 : 0;
          va_end(va);
          return iRetVal;
-      }
-      else if( bByRef || iParam == -1 )
-      {
+      } else if( bByRef || iParam == -1 ) {
          hb_itemPutNInt(pItem, nValue);
          return 1;
       }
@@ -3022,27 +2589,22 @@ int hb_storvnd(double dNumber, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-      HB_BOOL bByRef = HB_IS_BYREF(pItem);
+      bool bByRef = HB_IS_BYREF(pItem);
 
-      if( bByRef )
-      {
+      if( bByRef ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_ARRAY(pItem) )
-      {
+      if( HB_IS_ARRAY(pItem) ) {
          int iRetVal;
          va_list va;
          va_start(va, iParam);
          iRetVal = hb_arraySetND(pItem, va_arg(va, HB_SIZE), dNumber) ? 1 : 0;
          va_end(va);
          return iRetVal;
-      }
-      else if( bByRef || iParam == -1 )
-      {
+      } else if( bByRef || iParam == -1 ) {
          hb_itemPutND(pItem, dNumber);
          return 1;
       }
@@ -3059,27 +2621,22 @@ int hb_storvptr(void * pointer, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-      HB_BOOL bByRef = HB_IS_BYREF(pItem);
+      bool bByRef = HB_IS_BYREF(pItem);
 
-      if( bByRef )
-      {
+      if( bByRef ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_ARRAY(pItem) )
-      {
+      if( HB_IS_ARRAY(pItem) ) {
          int iRetVal;
          va_list va;
          va_start(va, iParam);
          iRetVal = hb_arraySetPtr(pItem, va_arg(va, HB_SIZE), pointer) ? 1 : 0;
          va_end(va);
          return iRetVal;
-      }
-      else if( bByRef || iParam == -1 )
-      {
+      } else if( bByRef || iParam == -1 ) {
          hb_itemPutPtr(pItem, pointer);
          return 1;
       }
@@ -3096,27 +2653,22 @@ int hb_storvptrGC(void * pointer, int iParam, ...)
 
    HB_STACK_TLS_PRELOAD
 
-   if( iParam >= -1 && iParam <= hb_pcount() )
-   {
+   if( iParam >= -1 && iParam <= hb_pcount() ) {
       PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-      HB_BOOL bByRef = HB_IS_BYREF(pItem);
+      bool bByRef = HB_IS_BYREF(pItem);
 
-      if( bByRef )
-      {
+      if( bByRef ) {
          pItem = hb_itemUnRef(pItem);
       }
 
-      if( HB_IS_ARRAY(pItem) )
-      {
+      if( HB_IS_ARRAY(pItem) ) {
          int iRetVal;
          va_list va;
          va_start(va, iParam);
          iRetVal = hb_arraySetPtrGC(pItem, va_arg(va, HB_SIZE), pointer) ? 1 : 0;
          va_end(va);
          return iRetVal;
-      }
-      else if( bByRef || iParam == -1 )
-      {
+      } else if( bByRef || iParam == -1 ) {
          hb_itemPutPtrGC(pItem, pointer);
          return 1;
       }
@@ -3133,6 +2685,5 @@ int hb_pcount(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    return static_cast<int>((hb_stackBaseItem())->item.asSymbol.paramcnt);
 }
