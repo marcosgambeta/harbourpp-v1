@@ -59,14 +59,12 @@
 HB_FUNC( HB_METHODNAME )
 {
    char szName[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
-
    hb_retc(hb_procname(hb_parni(1) + 1, szName, true));
 }
 
 HB_FUNC( PROCNAME )
 {
    char szName[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
-
    hb_retc(hb_procname(hb_parni(1) + 1, szName, false));
 }
 
@@ -74,12 +72,9 @@ HB_FUNC( PROCLINE )
 {
    HB_ISIZ nOffset = hb_stackBaseProcOffset(hb_parni(1) + 1);
 
-   if( nOffset > 0 )
-   {
+   if( nOffset > 0 ) {
       hb_retni(hb_stackItem(nOffset)->item.asSymbol.stackstate->uiLineNo);
-   }
-   else
-   {
+   } else {
       hb_retni(0);
    }
 }
@@ -94,43 +89,30 @@ HB_FUNC( PROCFILE )
 #ifndef HB_CLP_STRICT
    PHB_SYMB pSym = nullptr;
 
-   if( HB_ISSYMBOL(1) )
-   {
+   if( HB_ISSYMBOL(1) ) {
       pSym = hb_itemGetSymbol(hb_param(1, Harbour::Item::SYMBOL));
-   }
-   else if( HB_ISCHAR(1) )
-   {
+   } else if( HB_ISCHAR(1) ) {
       PHB_DYNS pDynSym = hb_dynsymFindName(hb_parc(1));
 
-      if( pDynSym )
-      {
+      if( pDynSym ) {
          pSym = pDynSym->pSymbol;
       }
-   }
-   else
-   {
+   } else {
       HB_ISIZ nOffset = hb_stackBaseProcOffset(hb_parni(1) + 1);
 
-      if( nOffset > 0 )
-      {
+      if( nOffset > 0 ) {
          PHB_ITEM pBase = hb_stackItem(nOffset);
 
          pSym = pBase->item.asSymbol.value;
-         if( pSym == &hb_symEval || pSym->pDynSym == hb_symEval.pDynSym )
-         {
+         if( pSym == &hb_symEval || pSym->pDynSym == hb_symEval.pDynSym ) {
             PHB_ITEM pSelf = hb_stackItem(nOffset + 1);
 
-            if( HB_IS_BLOCK(pSelf) )
-            {
+            if( HB_IS_BLOCK(pSelf) ) {
                pSym = pSelf->item.asBlock.value->pDefSymb;
-            }
-            else if( pBase->item.asSymbol.stackstate->uiClass )
-            {
+            } else if( pBase->item.asSymbol.stackstate->uiClass ) {
                pSym = hb_clsMethodSym(pBase);
             }
-         }
-         else if( pBase->item.asSymbol.stackstate->uiClass )
-         {
+         } else if( pBase->item.asSymbol.stackstate->uiClass ) {
             pSym = hb_clsMethodSym(pBase);
          }
       }
@@ -151,20 +133,15 @@ char * hb_procname(int iLevel, char * szName, HB_BOOL fMethodName)
    HB_ISIZ nOffset = hb_stackBaseProcOffset(iLevel);
 
    szName[0] = '\0';
-   if( nOffset > 0 )
-   {
-      PHB_ITEM pBase, pSelf;
+   if( nOffset > 0 ) {
+      PHB_ITEM pBase = hb_stackItem(nOffset);
+      PHB_ITEM pSelf = hb_stackItem(nOffset + 1);
 
-      pBase = hb_stackItem(nOffset);
-      pSelf = hb_stackItem(nOffset + 1);
-
-      if( fMethodName && nOffset > 0 && pBase->item.asSymbol.value == &hb_symEval && pBase->item.asSymbol.stackstate->uiClass )
-      {
+      if( fMethodName && nOffset > 0 && pBase->item.asSymbol.value == &hb_symEval && pBase->item.asSymbol.stackstate->uiClass ) {
          HB_ISIZ nPrevOffset = hb_stackItem(nOffset)->item.asSymbol.stackstate->nBaseItem;
 
          if( hb_stackItem(nPrevOffset)->item.asSymbol.stackstate->uiClass == pBase->item.asSymbol.stackstate->uiClass &&
-             hb_stackItem(nPrevOffset)->item.asSymbol.stackstate->uiMethod == pBase->item.asSymbol.stackstate->uiMethod )
-         {
+             hb_stackItem(nPrevOffset)->item.asSymbol.stackstate->uiMethod == pBase->item.asSymbol.stackstate->uiMethod ) {
             pBase = hb_stackItem(nPrevOffset);
             pSelf = hb_stackItem(nPrevOffset + 1);
          }
@@ -174,30 +151,20 @@ char * hb_procname(int iLevel, char * szName, HB_BOOL fMethodName)
       {
          hb_strncat(szName, "(b)", HB_PROCBUF_LEN);
          /* it is a method name? */
-         if( fMethodName && pBase->item.asSymbol.stackstate->uiClass )
-         {
+         if( fMethodName && pBase->item.asSymbol.stackstate->uiClass ) {
             hb_strncat(szName, hb_clsName(pBase->item.asSymbol.stackstate->uiClass), HB_PROCBUF_LEN);
             hb_strncat(szName, ":", HB_PROCBUF_LEN);
             hb_strncat(szName, hb_clsMethodName(pBase->item.asSymbol.stackstate->uiClass, pBase->item.asSymbol.stackstate->uiMethod), HB_PROCBUF_LEN);
-         }
-         else if( HB_IS_BLOCK(pSelf) )
-         {
+         } else if( HB_IS_BLOCK(pSelf) ) {
             hb_strncat(szName, pSelf->item.asBlock.value->pDefSymb->szName, HB_PROCBUF_LEN);
-         }
-         else if( HB_IS_SYMBOL(pSelf) )
-         {
+         } else if( HB_IS_SYMBOL(pSelf) ) {
             hb_strncpy(szName, pSelf->item.asSymbol.value->szName, HB_PROCBUF_LEN);
-         }
-         else
-         {
+         } else {
             hb_strncat(szName, pBase->item.asSymbol.value->szName, HB_PROCBUF_LEN);
          }
-      }
-      else
-      {
+      } else {
          /* it is a method name? */
-         if( pBase->item.asSymbol.stackstate->uiClass )
-         {
+         if( pBase->item.asSymbol.stackstate->uiClass ) {
             hb_strncat(szName, hb_clsName(pBase->item.asSymbol.stackstate->uiClass), HB_PROCBUF_LEN);
             hb_strncat(szName, ":", HB_PROCBUF_LEN);
          }
@@ -217,36 +184,24 @@ HB_BOOL hb_procinfo(int iLevel, char * szName, HB_USHORT * puiLine, char * szFil
 {
    HB_ISIZ nOffset = hb_stackBaseProcOffset(iLevel);
 
-   if( nOffset > 0 )
-   {
-      PHB_ITEM pBase, pSelf;
-      PHB_SYMB pSym;
+   if( nOffset > 0 ) {
+      PHB_ITEM pBase = hb_stackItem(nOffset);
+      PHB_ITEM pSelf = hb_stackItem(nOffset + 1);
 
-      pBase = hb_stackItem(nOffset);
-      pSelf = hb_stackItem(nOffset + 1);
+      PHB_SYMB pSym = pBase->item.asSymbol.value;
 
-      pSym = pBase->item.asSymbol.value;
-
-      if( szName )
-      {
+      if( szName ) {
          szName[0] = '\0';
-         if( pSym == &hb_symEval || pSym->pDynSym == hb_symEval.pDynSym )
-         {
+         if( pSym == &hb_symEval || pSym->pDynSym == hb_symEval.pDynSym ) {
             hb_strncat(szName, "(b)", HB_PROCBUF_LEN);
 
-            if( HB_IS_BLOCK(pSelf) )
-            {
+            if( HB_IS_BLOCK(pSelf) ) {
                hb_strncat(szName, pSelf->item.asBlock.value->pDefSymb->szName, HB_PROCBUF_LEN);
-            }
-            else
-            {
+            } else {
                hb_strncat(szName, pSym->szName, HB_PROCBUF_LEN);
             }
-         }
-         else
-         {
-            if( pBase->item.asSymbol.stackstate->uiClass ) /* it is a method name */
-            {
+         } else {
+            if( pBase->item.asSymbol.stackstate->uiClass ) { /* it is a method name */
                hb_strncat(szName, hb_clsName(pBase->item.asSymbol.stackstate->uiClass), HB_PROCBUF_LEN);
                hb_strncat(szName, ":", HB_PROCBUF_LEN);
             }
@@ -254,32 +209,22 @@ HB_BOOL hb_procinfo(int iLevel, char * szName, HB_USHORT * puiLine, char * szFil
          }
       }
 
-      if( puiLine )
-      {
+      if( puiLine ) {
          *puiLine = pBase->item.asSymbol.stackstate->uiLineNo;
       }
 
-      if( szFile )
-      {
-         const char * szModule;
-
-         if( HB_IS_BLOCK(pSelf) && (pSym == &hb_symEval || pSym->pDynSym == hb_symEval.pDynSym) )
-         {
+      if( szFile ) {
+         if( HB_IS_BLOCK(pSelf) && (pSym == &hb_symEval || pSym->pDynSym == hb_symEval.pDynSym) ) {
             pSym = pSelf->item.asBlock.value->pDefSymb;
-         }
-         else if( pBase->item.asSymbol.stackstate->uiClass )
-         {
+         } else if( pBase->item.asSymbol.stackstate->uiClass ) {
             pSym = hb_clsMethodSym(pBase);
          }
 
-         szModule = hb_vmFindModuleSymbolName(hb_vmGetRealFuncSym(pSym));
+         const char * szModule = hb_vmFindModuleSymbolName(hb_vmGetRealFuncSym(pSym));
 
-         if( szModule )
-         {
+         if( szModule ) {
             hb_strncpy(szFile, szModule, HB_PATH_MAX - 1);
-         }
-         else
-         {
+         } else {
             szFile[0] = '\0';
          }
       }
@@ -287,16 +232,13 @@ HB_BOOL hb_procinfo(int iLevel, char * szName, HB_USHORT * puiLine, char * szFil
       return true;
    }
 
-   if( szName )
-   {
+   if( szName ) {
       szName[0] = '\0';
    }
-   if( puiLine )
-   {
+   if( puiLine ) {
       *puiLine = 0;
    }
-   if( szFile )
-   {
+   if( szFile ) {
       szFile[0] = '\0';
    }
 
