@@ -70,7 +70,7 @@
 struct mv_PUBLIC_var_info
 {
    int      iPos;
-   HB_BOOL  bFound;
+   HB_BOOL  bFound; // TODO: bool
    PHB_DYNS pDynSym;
 };
 
@@ -90,11 +90,8 @@ static PHB_ITEM hb_memvarValueNew(void)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarValueNew()"));
 #endif
 
-   PHB_ITEM pMemvar;
-
-   pMemvar = static_cast<PHB_ITEM>(hb_xgrab(sizeof(HB_ITEM)));
+   PHB_ITEM pMemvar = static_cast<PHB_ITEM>(hb_xgrab(sizeof(HB_ITEM)));
    pMemvar->type = Harbour::Item::NIL;
-
    return pMemvar;
 }
 
@@ -121,10 +118,8 @@ void hb_memvarValueDecRef(PHB_ITEM pMemvar)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarValueDecRef(%p)", static_cast<void*>(pMemvar)));
 #endif
 
-   if( hb_xRefDec(pMemvar) )
-   {
-      if( HB_IS_COMPLEX(pMemvar) )
-      {
+   if( hb_xRefDec(pMemvar) ) {
+      if( HB_IS_COMPLEX(pMemvar) ) {
          hb_itemClear(pMemvar);
       }
       hb_xfree(pMemvar);
@@ -140,11 +135,8 @@ static void hb_memvarDetachDynSym(PHB_DYNS pDynSym, PHB_ITEM pPrevMemvar)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarDetachDynSym(%p,%p)", static_cast<void*>(pDynSym), static_cast<void*>(pPrevMemvar)));
 #endif
 
-   PHB_ITEM pMemvar;
-
-   pMemvar = hb_dynsymGetMemvar(pDynSym);
+   PHB_ITEM pMemvar = hb_dynsymGetMemvar(pDynSym);
    hb_dynsymSetMemvar(pDynSym, pPrevMemvar);
-
    hb_memvarValueDecRef(pMemvar);
 }
 
@@ -157,21 +149,14 @@ PHB_ITEM hb_memvarDetachLocal(PHB_ITEM pLocal)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarDetachLocal(%p)", static_cast<void*>(pLocal)));
 #endif
 
-   if( HB_IS_BYREF(pLocal) )
-   {
-      do
-      {
-         if( HB_IS_MEMVAR(pLocal) || HB_IS_EXTREF(pLocal) )
-         {
+   if( HB_IS_BYREF(pLocal) ) {
+      do {
+         if( HB_IS_MEMVAR(pLocal) || HB_IS_EXTREF(pLocal) ) {
             break;
-         }
-         else if( HB_IS_ENUM(pLocal) )
-         {
-            if( !pLocal->item.asEnum.valuePtr )
-            {
+         } else if( HB_IS_ENUM(pLocal) ) {
+            if( !pLocal->item.asEnum.valuePtr ) {
                PHB_ITEM pBase = HB_IS_BYREF(pLocal->item.asEnum.basePtr) ? hb_itemUnRef(pLocal->item.asEnum.basePtr) : pLocal->item.asEnum.basePtr;
-               if( HB_IS_ARRAY(pBase) )
-               {
+               if( HB_IS_ARRAY(pBase) ) {
                   PHB_ITEM pItem = hb_itemNew(nullptr);
                   hb_arrayGetItemRef(pBase, pLocal->item.asEnum.offset, pItem);
                   pLocal->item.asEnum.valuePtr = pItem;
@@ -179,14 +164,11 @@ PHB_ITEM hb_memvarDetachLocal(PHB_ITEM pLocal)
                   break;
                }
             }
-         }
-         else if( pLocal->item.asRefer.value >= 0 && pLocal->item.asRefer.offset == 0 )
-         {
+         } else if( pLocal->item.asRefer.value >= 0 && pLocal->item.asRefer.offset == 0 ) {
             break;
          }
          pLocal = hb_itemUnRefOnce(pLocal);
-      }
-      while( HB_IS_BYREF(pLocal) );
+      } while( HB_IS_BYREF(pLocal) );
    }
 
    /* Change the value only if this variable is not referenced
@@ -194,13 +176,10 @@ PHB_ITEM hb_memvarDetachLocal(PHB_ITEM pLocal)
     * In this case we have to copy the current value to a global memory
     * pool so it can be shared by codeblocks
     */
-   if( !HB_IS_MEMVAR(pLocal) )
-   {
+   if( !HB_IS_MEMVAR(pLocal) ) {
       PHB_ITEM pMemvar = hb_memvarValueNew();
-
       hb_itemRawCpy(pMemvar, pLocal);
       pMemvar->type &= ~Harbour::Item::DEFAULT;
-
       pLocal->type = Harbour::Item::BYREF | Harbour::Item::MEMVAR;
       pLocal->item.asMemvar.value = pMemvar;
    }
@@ -222,49 +201,38 @@ static void hb_memvarAddPrivate(PHB_DYNS pDynSym, PHB_ITEM pValue)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_PRIVATE_STACK pPrivateStack;
-   PHB_ITEM pMemvar;
 
-   pPrivateStack = hb_stackGetPrivateStack();
+   PHB_PRIVATE_STACK pPrivateStack = hb_stackGetPrivateStack();
 
-   pMemvar = hb_dynsymGetMemvar(pDynSym);
+   PHB_ITEM pMemvar = hb_dynsymGetMemvar(pDynSym);
    /* If the variable with the same name exists already
     * and it's PRIVATE variable declared in this function then
     * do not push new memvar on PRIVATEs stack
     */
-   if( pMemvar )
-   {
+   if( pMemvar ) {
       HB_SIZE nCount = pPrivateStack->count;
-      while( nCount > pPrivateStack->base )
-      {
-         if( pDynSym == pPrivateStack->stack[nCount - 1].pDynSym )
-         {
+      while( nCount > pPrivateStack->base ) {
+         if( pDynSym == pPrivateStack->stack[nCount - 1].pDynSym ) {
             break;
          }
          --nCount;
       }
-      if( nCount <= pPrivateStack->base )
-      {
+      if( nCount <= pPrivateStack->base ) {
          pMemvar = nullptr;
       }
    }
 
-   if( !pMemvar )
-   {
+   if( !pMemvar ) {
       /* Allocate the value from the end of table
        */
-      if( pPrivateStack->count == pPrivateStack->size )
-      {
+      if( pPrivateStack->count == pPrivateStack->size ) {
          /* No more free values in the table - expand the table
           */
-         if( pPrivateStack->size == 0 )
-         {
+         if( pPrivateStack->size == 0 ) {
             pPrivateStack->stack = static_cast<PHB_PRIVATE_ITEM>(hb_xgrab(sizeof(HB_PRIVATE_ITEM) * TABLE_INITHB_VALUE));
             pPrivateStack->size  = TABLE_INITHB_VALUE;
             pPrivateStack->count = pPrivateStack->base = 0;
-         }
-         else
-         {
+         } else {
             pPrivateStack->size += TABLE_EXPANDHB_VALUE;
             pPrivateStack->stack = static_cast<PHB_PRIVATE_ITEM>(hb_xrealloc(pPrivateStack->stack, sizeof(HB_PRIVATE_ITEM) * pPrivateStack->size));
          }
@@ -273,21 +241,17 @@ static void hb_memvarAddPrivate(PHB_DYNS pDynSym, PHB_ITEM pValue)
       pPrivateStack->stack[pPrivateStack->count].pDynSym = pDynSym;
       pPrivateStack->stack[pPrivateStack->count++].pPrevMemvar = hb_dynsymGetMemvar(pDynSym);
 
-      if( pValue && HB_IS_MEMVAR(pValue) )
-      {
+      if( pValue && HB_IS_MEMVAR(pValue) ) {
          pMemvar = pValue->item.asMemvar.value;
          hb_xRefInc(pMemvar);
          pValue = nullptr;
-      }
-      else
-      {
+      } else {
          pMemvar = hb_memvarValueNew();
       }
       hb_dynsymSetMemvar(pDynSym, pMemvar);
    }
 
-   if( pValue )
-   {
+   if( pValue ) {
       hb_itemCopy(pMemvar, pValue);
       /* Remove MEMOFLAG if exists (assignment from field). */
       pMemvar->type &= ~Harbour::Item::MEMOFLAG;
@@ -304,9 +268,7 @@ HB_SIZE hb_memvarGetPrivatesBase(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   HB_SIZE nBase;
-
-   nBase = hb_stackGetPrivateStack()->base;
+   HB_SIZE nBase = hb_stackGetPrivateStack()->base;
    hb_stackGetPrivateStack()->base = hb_stackGetPrivateStack()->count;
    return nBase;
 }
@@ -321,16 +283,13 @@ void hb_memvarSetPrivatesBase(HB_SIZE nBase)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_PRIVATE_STACK pPrivateStack;
 
-   pPrivateStack = hb_stackGetPrivateStack();
+   PHB_PRIVATE_STACK pPrivateStack = hb_stackGetPrivateStack();
 
-   while( pPrivateStack->count > pPrivateStack->base )
-   {
+   while( pPrivateStack->count > pPrivateStack->base ) {
       PHB_DYNS pDynSym = pPrivateStack->stack[--pPrivateStack->count].pDynSym;
 
-      if( hb_dynsymGetMemvar(pDynSym) )
-      {
+      if( hb_dynsymGetMemvar(pDynSym) ) {
          /* Restore previous value for variables that were overridden
           */
          hb_memvarDetachDynSym(pDynSym, pPrivateStack->stack[pPrivateStack->count].pPrevMemvar);
@@ -350,7 +309,6 @@ void hb_memvarUpdatePrivatesBase(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_stackGetPrivateStack()->base = hb_stackGetPrivateStack()->count;
 }
 
@@ -364,7 +322,6 @@ static void hb_memvarResetPrivatesBase(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-
    hb_stackGetPrivateStack()->base = hb_stackBaseItem()->item.asSymbol.stackstate->nPrivateBase;
 }
 
@@ -382,32 +339,24 @@ void hb_memvarSetValue(PHB_SYMB pMemvarSymb, PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarSetValue(%p, %p)", static_cast<void*>(pMemvarSymb), static_cast<void*>(pItem)));
 #endif
 
-   PHB_DYNS pDyn;
+   PHB_DYNS pDyn = pMemvarSymb->pDynSym;
+   if( pDyn ) {
+      PHB_ITEM pMemvar = hb_dynsymGetMemvar(pDyn);
 
-   pDyn = pMemvarSymb->pDynSym;
-   if( pDyn )
-   {
-      PHB_ITEM pMemvar;
-
-      pMemvar = hb_dynsymGetMemvar(pDyn);
-
+      #if 0
       HB_TRACE(HB_TR_INFO, ("Memvar item (%p)(%s) assigned", static_cast<void*>(pMemvar), pMemvarSymb->szName));
+      #endif
 
-      if( pMemvar )
-      {
+      if( pMemvar ) {
          /* value is already created */
          hb_itemCopyToRef(pMemvar, pItem);
          /* Remove MEMOFLAG if exists (assignment from field). */
          pMemvar->type &= ~Harbour::Item::MEMOFLAG;
-      }
-      else
-      {
+      } else {
          /* assignment to undeclared memvar - PRIVATE is assumed */
          hb_memvarCreateFromDynSymbol(pDyn, HB_VSCOMP_PRIVATE, pItem);
       }
-   }
-   else
-   {
+   } else {
       hb_errInternal(HB_EI_MVBADSYMBOL, nullptr, pMemvarSymb->szName, nullptr);
    }
 }
@@ -418,35 +367,27 @@ HB_ERRCODE hb_memvarGet(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarGet(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pMemvarSymb)));
 #endif
 
-   PHB_DYNS pDyn;
    HB_ERRCODE errCode = HB_FAILURE;
 
-   pDyn = pMemvarSymb->pDynSym;
-   if( pDyn )
-   {
-      PHB_ITEM pMemvar;
+   PHB_DYNS pDyn = pMemvarSymb->pDynSym;
+   if( pDyn ) {
+      PHB_ITEM pMemvar = hb_dynsymGetMemvar(pDyn);
 
-      pMemvar = hb_dynsymGetMemvar(pDyn);
-
+      #if 0
       HB_TRACE(HB_TR_INFO, ("Memvar item (%p)(%s) queried", static_cast<void*>(pMemvar), pMemvarSymb->szName));
+      #endif
 
-      if( pMemvar )
-      {
+      if( pMemvar ) {
          /* value is already created
           */
-         if( HB_IS_BYREF(pMemvar) )
-         {
+         if( HB_IS_BYREF(pMemvar) ) {
             hb_itemCopy(pItem, hb_itemUnRef(pMemvar));
-         }
-         else
-         {
+         } else {
             hb_itemCopy(pItem, pMemvar);
          }
          errCode = HB_SUCCESS;
       }
-   }
-   else
-   {
+   } else {
       hb_errInternal(HB_EI_MVBADSYMBOL, nullptr, pMemvarSymb->szName, nullptr);
    }
 
@@ -459,20 +400,15 @@ void hb_memvarGetValue(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarGetValue(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pMemvarSymb)));
 #endif
 
-   if( hb_memvarGet(pItem, pMemvarSymb) == HB_FAILURE )
-   {
+   if( hb_memvarGet(pItem, pMemvarSymb) == HB_FAILURE ) {
       /* Generate an error with retry possibility
        * (user created error handler can create this variable)
        */
-      PHB_ITEM pError;
-
-      pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pMemvarSymb->szName, 0, EF_CANRETRY);
+      PHB_ITEM pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pMemvarSymb->szName, 0, EF_CANRETRY);
       hb_itemClear(pItem);
 
-      while( hb_errLaunch(pError) == E_RETRY )
-      {
-         if( hb_memvarGet(pItem, pMemvarSymb) == HB_SUCCESS )
-         {
+      while( hb_errLaunch(pError) == E_RETRY ) {
+         if( hb_memvarGet(pItem, pMemvarSymb) == HB_SUCCESS ) {
             break;
          }
       }
@@ -487,52 +423,36 @@ void hb_memvarGetRefer(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarGetRefer(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pMemvarSymb)));
 #endif
 
-   PHB_DYNS pDyn;
+   PHB_DYNS pDyn = static_cast<PHB_DYNS>(pMemvarSymb->pDynSym);
+   if( pDyn ) {
+      PHB_ITEM pMemvar = hb_dynsymGetMemvar(pDyn);
 
-   pDyn = static_cast<PHB_DYNS>(pMemvarSymb->pDynSym);
-   if( pDyn )
-   {
-      PHB_ITEM pMemvar;
-
-      pMemvar = hb_dynsymGetMemvar(pDyn);
-
+      #if 0
       HB_TRACE(HB_TR_INFO, ("Memvar item (%p)(%s) referenced", static_cast<void*>(pMemvar), pMemvarSymb->szName));
+      #endif
 
-      if( pMemvar )
-      {
-         if( HB_IS_BYREF(pMemvar) && !HB_IS_ENUM(pMemvar) )
-         {
+      if( pMemvar ) {
+         if( HB_IS_BYREF(pMemvar) && !HB_IS_ENUM(pMemvar) ) {
             hb_itemCopy(pItem, pMemvar);
-         }
-         else
-         {
+         } else {
             /* value is already created */
             pItem->type = Harbour::Item::BYREF | Harbour::Item::MEMVAR;
             pItem->item.asMemvar.value = pMemvar;
             hb_xRefInc(pMemvar);
          }
-      }
-      else
-      {
+      } else {
          /* Generate an error with retry possibility
           * (user created error handler can make this variable accessible)
           */
-         PHB_ITEM pError;
-
-         pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pMemvarSymb->szName, 0, EF_CANRETRY);
+         PHB_ITEM pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pMemvarSymb->szName, 0, EF_CANRETRY);
          hb_itemClear(pItem);
 
-         while( hb_errLaunch(pError) == E_RETRY )
-         {
+         while( hb_errLaunch(pError) == E_RETRY ) {
             pMemvar = hb_dynsymGetMemvar(pDyn);
-            if( pMemvar )
-            {
-               if( HB_IS_BYREF(pMemvar) && !HB_IS_ENUM(pMemvar) )
-               {
+            if( pMemvar ) {
+               if( HB_IS_BYREF(pMemvar) && !HB_IS_ENUM(pMemvar) ) {
                   hb_itemCopy(pItem, pMemvar);
-               }
-               else
-               {
+               } else {
                   /* value is already created */
                   pItem->type = Harbour::Item::BYREF | Harbour::Item::MEMVAR;
                   pItem->item.asMemvar.value = pMemvar;
@@ -543,9 +463,7 @@ void hb_memvarGetRefer(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
          }
          hb_errRelease(pError);
       }
-   }
-   else
-   {
+   } else {
       hb_errInternal(HB_EI_MVBADSYMBOL, nullptr, pMemvarSymb->szName, nullptr);
    }
 }
@@ -556,18 +474,13 @@ PHB_ITEM hb_memvarGetItem(PHB_SYMB pMemvarSymb)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarGetItem(%p)", static_cast<void*>(pMemvarSymb)));
 #endif
 
-   if( pMemvarSymb->pDynSym )
-   {
+   if( pMemvarSymb->pDynSym ) {
       PHB_ITEM pMemvar = hb_dynsymGetMemvar(pMemvarSymb->pDynSym);
 
-      if( pMemvar )
-      {
-         if( HB_IS_BYREF(pMemvar) )
-         {
+      if( pMemvar ) {
+         if( HB_IS_BYREF(pMemvar) ) {
             return hb_itemUnRef(pMemvar);
-         }
-         else
-         {
+         } else {
             return pMemvar;
          }
       }
@@ -594,39 +507,27 @@ static PHB_DYNS hb_memvarFindSymbol(const char * szArg, HB_SIZE nLen)
 
    PHB_DYNS pDynSym = nullptr;
 
-   if( nLen && szArg && *szArg )
-   {
+   if( nLen && szArg && *szArg ) {
       char szUprName[HB_SYMBOL_NAME_LEN + 1];
       int iSize = 0;
 
-      do
-      {
+      do {
          char cChar = *szArg++;
 
-         if( cChar >= 'a' && cChar <= 'z' )
-         {
+         if( cChar >= 'a' && cChar <= 'z' ) {
             szUprName[iSize++] = cChar - ('a' - 'A');
-         }
-         else if( cChar == ' ' || cChar == '\t' || cChar == '\n' )
-         {
-            if( iSize )
-            {
+         } else if( cChar == ' ' || cChar == '\t' || cChar == '\n' ) {
+            if( iSize ) {
                break;
             }
-         }
-         else if( !cChar )
-         {
+         } else if( !cChar ) {
             break;
-         }
-         else
-         {
+         } else {
             szUprName[iSize++] = cChar;
          }
-      }
-      while( --nLen && iSize < HB_SYMBOL_NAME_LEN );
+      } while( --nLen && iSize < HB_SYMBOL_NAME_LEN );
 
-      if( iSize )
-      {
+      if( iSize ) {
          szUprName[iSize] = '\0';
          pDynSym = hb_dynsymFind(szUprName);
       }
@@ -640,29 +541,24 @@ char * hb_memvarGetStrValuePtr(char * szVarName, HB_SIZE * pnLen)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarGetStrValuePtr(%s, %p)", szVarName, static_cast<void*>(pnLen)));
 #endif
 
-   PHB_DYNS pDynVar;
    char * szValue = nullptr;
 
-   pDynVar = hb_memvarFindSymbol(szVarName, *pnLen);
+   PHB_DYNS pDynVar = hb_memvarFindSymbol(szVarName, *pnLen);
 
-   if( pDynVar )
-   {
+   if( pDynVar ) {
       /* there is dynamic symbol with the requested name - check if it is
        * a memvar variable
        */
       PHB_ITEM pMemvar = hb_dynsymGetMemvar(pDynVar);
 
-      if( pMemvar )
-      {
+      if( pMemvar ) {
          /* variable contains some data
           */
-         if( HB_IS_BYREF(pMemvar) )
-         {
+         if( HB_IS_BYREF(pMemvar) ) {
             pMemvar = hb_itemUnRef(pMemvar);
          }
 
-         if( HB_IS_STRING(pMemvar) )
-         {
+         if( HB_IS_STRING(pMemvar) ) {
             szValue = pMemvar->item.asString.value;
             *pnLen = pMemvar->item.asString.length;
          }
@@ -694,25 +590,19 @@ void hb_memvarCreateFromItem(PHB_ITEM pMemvar, int iScope, PHB_ITEM pValue)
    PHB_DYNS pDynVar = nullptr;
 
    /* find dynamic symbol or create one */
-   if( HB_IS_SYMBOL(pMemvar) )
-   {
+   if( HB_IS_SYMBOL(pMemvar) ) {
 #if 0
       pDynVar = hb_dynsymGet(pMemvar->item.asSymbol.value->szName);
 #else
       pDynVar = pMemvar->item.asSymbol.value->pDynSym;
 #endif
-   }
-   else if( HB_IS_STRING(pMemvar) )
-   {
+   } else if( HB_IS_STRING(pMemvar) ) {
       pDynVar = hb_dynsymGet(pMemvar->item.asString.value);
    }
 
-   if( pDynVar )
-   {
+   if( pDynVar ) {
       hb_memvarCreateFromDynSymbol(pDynVar, iScope, pValue);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 3008, nullptr, "&", HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -723,25 +613,20 @@ static void hb_memvarCreateFromDynSymbol(PHB_DYNS pDynVar, int iScope, PHB_ITEM 
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarCreateFromDynSymbol(%p, %d, %p)", static_cast<void*>(pDynVar), iScope, static_cast<void*>(pValue)));
 #endif
 
-   if( iScope & HB_VSCOMP_PUBLIC )
-   {
+   if( iScope & HB_VSCOMP_PUBLIC ) {
       /* If the variable with the same name exists already
        * then the current value have to be unchanged
        */
-      if( !hb_dynsymGetMemvar(pDynVar) )
-      {
+      if( !hb_dynsymGetMemvar(pDynVar) ) {
          PHB_ITEM pMemvar = hb_memvarValueNew();
 
          hb_dynsymSetMemvar(pDynVar, pMemvar);
 
-         if( pValue )
-         {
+         if( pValue ) {
             hb_itemCopy(pMemvar, pValue);
             /* Remove MEMOFLAG if exists (assignment from field). */
             pMemvar->type &= ~Harbour::Item::MEMOFLAG;
-         }
-         else
-         {
+         } else {
             /* new PUBLIC variable - initialize it to .F.
              */
             pMemvar->type = Harbour::Item::LOGICAL;
@@ -752,9 +637,7 @@ static void hb_memvarCreateFromDynSymbol(PHB_DYNS pDynVar, int iScope, PHB_ITEM 
             pMemvar->item.asLogical.value = (strcmp(pDynVar->pSymbol->szName, "HARBOUR") == 0 || strcmp(pDynVar->pSymbol->szName, "CLIPPER") == 0);
          }
       }
-   }
-   else
-   {
+   } else {
       /* Create new PRIVATE var and add it to the PRIVATE variables stack
        */
       hb_memvarAddPrivate(pDynVar, pValue);
@@ -771,28 +654,23 @@ static void hb_memvarRelease(PHB_ITEM pMemvar)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarRelease(%p)", static_cast<void*>(pMemvar)));
 #endif
 
-   if( HB_IS_STRING(pMemvar) )
-   {
+   if( HB_IS_STRING(pMemvar) ) {
       PHB_DYNS pDynSymbol = hb_memvarFindSymbol(pMemvar->item.asString.value, pMemvar->item.asString.length);
 
-      if( pDynSymbol && hb_dynsymGetMemvar(pDynSymbol) )
-      {
+      if( pDynSymbol && hb_dynsymGetMemvar(pDynSymbol) ) {
          HB_STACK_TLS_PRELOAD
          HB_SIZE nBase = hb_stackGetPrivateStack()->count;
 
          /* Find the variable with a requested name that is currently visible
           * Start from the top of the stack.
           */
-         while( nBase > 0 )
-         {
-            if( pDynSymbol == hb_stackGetPrivateStack()->stack[--nBase].pDynSym )
-            {
+         while( nBase > 0 ) {
+            if( pDynSymbol == hb_stackGetPrivateStack()->stack[--nBase].pDynSym ) {
                /* reset current value to NIL - the overridden variables will be
                 * visible after exit from current procedure
                 */
                pMemvar = hb_dynsymGetMemvar(pDynSymbol);
-               if( pMemvar )
-               {
+               if( pMemvar ) {
                   hb_itemClear(pMemvar);
                }
                return;
@@ -803,9 +681,7 @@ static void hb_memvarRelease(PHB_ITEM pMemvar)
           */
          hb_memvarDetachDynSym(pDynSymbol, nullptr);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 3008, nullptr, "RELEASE", HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -816,32 +692,25 @@ static void hb_memvarRelease(PHB_ITEM pMemvar)
  * procedure only.
  * The scope of released variables are specified using passed name's mask
  */
-static void hb_memvarReleaseWithMask(const char * szMask, HB_BOOL bInclude)
+static void hb_memvarReleaseWithMask(const char * szMask, bool bInclude)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarReleaseWithMask(%s, %d)", szMask, static_cast<int>(bInclude)));
 #endif
 
    HB_STACK_TLS_PRELOAD
-   HB_SIZE nBase, nCount;
 
-   nCount = hb_stackGetPrivateStack()->count;
-   nBase = hb_stackBaseItem()->item.asSymbol.stackstate->nPrivateBase;
-   while( nCount-- > nBase )
-   {
-      PHB_DYNS pDynVar;
-      PHB_ITEM pMemvar;
-
-      pDynVar = hb_stackGetPrivateStack()->stack[nCount].pDynSym;
+   HB_SIZE nCount = hb_stackGetPrivateStack()->count;
+   HB_SIZE nBase = hb_stackBaseItem()->item.asSymbol.stackstate->nPrivateBase;
+   while( nCount-- > nBase ) {
+      PHB_DYNS pDynVar = hb_stackGetPrivateStack()->stack[nCount].pDynSym;
       /* reset current value to NIL - the overridden variables will be
        * visible after exit from current procedure
        */
-      pMemvar = hb_dynsymGetMemvar(pDynVar);
-      if( pMemvar )
-      {
-         HB_BOOL fMatch = hb_strMatchCaseWildExact(pDynVar->pSymbol->szName, szMask);
-         if( bInclude ? fMatch : !fMatch )
-         {
+      PHB_ITEM pMemvar = hb_dynsymGetMemvar(pDynVar);
+      if( pMemvar ) {
+         bool fMatch = hb_strMatchCaseWildExact(pDynVar->pSymbol->szName, szMask);
+         if( bInclude ? fMatch : !fMatch ) {
             hb_itemClear(pMemvar);
          }
       }
@@ -856,25 +725,17 @@ static int hb_memvarScopeGet(PHB_DYNS pDynVar)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarScopeGet(%p)", static_cast<void*>(pDynVar)));
 #endif
 
-   if( hb_dynsymGetMemvar(pDynVar) == 0 )
-   {
+   if( hb_dynsymGetMemvar(pDynVar) == 0 ) {
       return HB_MV_UNKNOWN;
-   }
-   else
-   {
+   } else {
       HB_STACK_TLS_PRELOAD
       HB_SIZE nBase = hb_stackGetPrivateStack()->count;    /* start from the top of the stack */
 
-      while( nBase )
-      {
-         if( pDynVar == hb_stackGetPrivateStack()->stack[--nBase].pDynSym )
-         {
-            if( nBase >= hb_stackGetPrivateStack()->base )
-            {
+      while( nBase ) {
+         if( pDynVar == hb_stackGetPrivateStack()->stack[--nBase].pDynSym ) {
+            if( nBase >= hb_stackGetPrivateStack()->base ) {
                return HB_MV_PRIVATE_LOCAL;
-            }
-            else
-            {
+            } else {
                return HB_MV_PRIVATE_GLOBAL;
             }
          }
@@ -891,16 +752,11 @@ int hb_memvarScope(const char * szVarName, HB_SIZE nLength)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarScope(%s, %" HB_PFS "u)", szVarName, nLength));
 #endif
 
-   PHB_DYNS pDynVar;
+   PHB_DYNS pDynVar = hb_memvarFindSymbol(szVarName, nLength);
 
-   pDynVar = hb_memvarFindSymbol(szVarName, nLength);
-
-   if( pDynVar )
-   {
+   if( pDynVar ) {
       return hb_memvarScopeGet(pDynVar);
-   }
-   else
-   {
+   } else {
       return HB_MV_NOT_FOUND;
    }
 }
@@ -910,8 +766,7 @@ int hb_memvarScope(const char * szVarName, HB_SIZE nLength)
  */
 static HB_DYNS_FUNC(hb_memvarClear)
 {
-   if( pDynSymbol != static_cast<PHB_DYNS>(Cargo) && hb_dynsymGetMemvar(pDynSymbol) )
-   {
+   if( pDynSymbol != static_cast<PHB_DYNS>(Cargo) && hb_dynsymGetMemvar(pDynSymbol) ) {
       hb_memvarDetachDynSym(pDynSymbol, nullptr);
    }
 
@@ -927,9 +782,8 @@ void hb_memvarsClear(HB_BOOL fAll)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_DYNS pGetList;
 
-   pGetList = fAll ? nullptr : hb_dynsymFind("GETLIST");
+   PHB_DYNS pGetList = fAll ? nullptr : hb_dynsymFind("GETLIST");
 
    hb_stackClearMemvarsBase();
    hb_stackGetPrivateStack()->base = 0;
@@ -951,8 +805,7 @@ void hb_memvarsClear(HB_BOOL fAll)
  */
 static HB_DYNS_FUNC(hb_memvarCountPublics)
 {
-   if( hb_memvarScopeGet(pDynSymbol) == HB_MV_PUBLIC )
-   {
+   if( hb_memvarScopeGet(pDynSymbol) == HB_MV_PUBLIC ) {
       (*(static_cast<int*>(Cargo)))++;
    }
 
@@ -963,14 +816,11 @@ static HB_SIZE hb_memvarGetBaseOffset(int iProcLevel)
 {
    HB_STACK_TLS_PRELOAD
 
-   if( iProcLevel > 0 )
-   {
+   if( iProcLevel > 0 ) {
       int iLevel = hb_stackCallDepth();
-      if( iProcLevel < iLevel )
-      {
+      if( iProcLevel < iLevel ) {
          HB_ISIZ nOffset = hb_stackBaseProcOffset(iLevel - iProcLevel - 1);
-         if( nOffset > 0 )
-         {
+         if( nOffset > 0 ) {
             return hb_stackItem(nOffset)->item.asSymbol.stackstate->nPrivateBase;
          }
       }
@@ -987,27 +837,19 @@ static HB_ISIZ hb_memvarCount(int iScope, int iLevel)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarCount(%d,%d)", iScope, iLevel));
 #endif
 
-   if( iScope == HB_MV_PUBLIC )
-   {
+   if( iScope == HB_MV_PUBLIC ) {
       int iPublicCnt = 0;
 
       hb_dynsymProtectEval(hb_memvarCountPublics, static_cast<void*>(&iPublicCnt));
       return iPublicCnt;
-   }
-   else  /* number of PRIVATE variables */
-   {
+   } else { /* number of PRIVATE variables */
       HB_STACK_TLS_PRELOAD
 
-      if( iScope == HB_MV_PRIVATE_LOCAL )
-      {
+      if( iScope == HB_MV_PRIVATE_LOCAL ) {
          return hb_stackGetPrivateStack()->count - hb_memvarGetBaseOffset(iLevel);
-      }
-      else if( iScope == HB_MV_PRIVATE_GLOBAL )
-      {
+      } else if( iScope == HB_MV_PRIVATE_GLOBAL ) {
          return hb_memvarGetBaseOffset(iLevel);
-      }
-      else
-      {
+      } else {
          return hb_stackGetPrivateStack()->count;
       }
    }
@@ -1018,16 +860,14 @@ static HB_ISIZ hb_memvarCount(int iScope, int iLevel)
  */
 static HB_DYNS_FUNC(hb_memvarFindPublicByPos)
 {
-   HB_BOOL bCont = HB_TRUE;
+   bool bCont = true;
 
-   if( hb_memvarScopeGet(pDynSymbol) == HB_MV_PUBLIC )
-   {
+   if( hb_memvarScopeGet(pDynSymbol) == HB_MV_PUBLIC ) {
       struct mv_PUBLIC_var_info * pStruPub = static_cast<struct mv_PUBLIC_var_info*>(Cargo);
-      if( pStruPub->iPos-- == 0 )
-      {
-         pStruPub->bFound  = HB_TRUE;
+      if( pStruPub->iPos-- == 0 ) {
+         pStruPub->bFound  = true;
          pStruPub->pDynSym = pDynSymbol;
-         bCont = HB_FALSE;
+         bCont = false;
       }
    }
 
@@ -1049,30 +889,23 @@ static PHB_ITEM hb_memvarDebugVariable(int iScope, int iPos, const char ** pszNa
 
    *pszName = nullptr;
 
-   if( iPos > 0 )
-   {
+   if( iPos > 0 ) {
       --iPos;
-      if( iScope == HB_MV_PUBLIC )
-      {
+      if( iScope == HB_MV_PUBLIC ) {
          struct mv_PUBLIC_var_info struPub;
-
          struPub.iPos   = iPos;
-         struPub.bFound = HB_FALSE;
+         struPub.bFound = false;
          /* enumerate existing dynamic symbols and fill this structure
           * with info for requested PUBLIC variable
           */
          hb_dynsymProtectEval(hb_memvarFindPublicByPos, static_cast<void*>(&struPub));
-         if( struPub.bFound )
-         {
+         if( struPub.bFound ) {
             pValue = hb_dynsymGetMemvar(struPub.pDynSym);
             *pszName = struPub.pDynSym->pSymbol->szName;
          }
-      }
-      else
-      {
+      } else {
          HB_STACK_TLS_PRELOAD
-         if( static_cast<HB_SIZE>(iPos) < hb_stackGetPrivateStack()->count )
-         {
+         if( static_cast<HB_SIZE>(iPos) < hb_stackGetPrivateStack()->count ) {
             PHB_DYNS pDynSym = hb_stackGetPrivateStack()->stack[iPos].pDynSym;
 
             pValue = hb_dynsymGetMemvar(pDynSym);
@@ -1088,11 +921,9 @@ static HB_DYNS_FUNC(hb_memvarCountVisible)
 {
    PHB_ITEM pMemvar = hb_dynsymGetMemvar(pDynSymbol);
 
-   if( pMemvar )
-   {
+   if( pMemvar ) {
       struct mv_memvarArray_info * pMVInfo = static_cast<struct mv_memvarArray_info*>(Cargo);
-      if( !pMVInfo->iScope || (hb_memvarScopeGet(pDynSymbol) & pMVInfo->iScope) != 0 )
-      {
+      if( !pMVInfo->iScope || (hb_memvarScopeGet(pDynSymbol) & pMVInfo->iScope) != 0 ) {
          pMVInfo->pDyns[pMVInfo->nCount++] = pDynSymbol;
       }
    }
@@ -1102,17 +933,13 @@ static HB_DYNS_FUNC(hb_memvarCountVisible)
 PHB_ITEM hb_memvarSaveInArray(int iScope, HB_BOOL fCopy)
 {
    HB_STACK_TLS_PRELOAD
-   struct mv_memvarArray_info MVInfo;
-   PHB_ITEM pArray;
-
-   pArray = nullptr;
 
    iScope &= HB_MV_PUBLIC | HB_MV_PRIVATE;
-   if( iScope == (HB_MV_PUBLIC | HB_MV_PRIVATE) )
-   {
+   if( iScope == (HB_MV_PUBLIC | HB_MV_PRIVATE) ) {
       iScope = 0;
    }
 
+   struct mv_memvarArray_info MVInfo;
 #if !defined(HB_MT_VM)
    MVInfo.pDyns = static_cast<PHB_DYNS*>(hb_xgrab(hb_dynsymCount() * sizeof(PHB_DYNS)));
 #else
@@ -1122,34 +949,28 @@ PHB_ITEM hb_memvarSaveInArray(int iScope, HB_BOOL fCopy)
    MVInfo.iScope = iScope;
 
    hb_dynsymProtectEval(hb_memvarCountVisible, static_cast<void*>(&MVInfo));
-   if( MVInfo.nCount > 0 )
-   {
+   PHB_ITEM pArray = nullptr;
+   if( MVInfo.nCount > 0 ) {
       pArray = hb_itemArrayNew(MVInfo.nCount);
-      do
-      {
+      do {
          PHB_ITEM pItem = hb_arrayGetItemPtr(pArray, MVInfo.nCount);
-         if( pItem != nullptr )
-         {
+         if( pItem != nullptr ) {
             PHB_DYNS pDynSymbol = MVInfo.pDyns[--MVInfo.nCount];
             PHB_ITEM pMemvar = hb_dynsymGetMemvar(pDynSymbol);
 
             hb_arrayNew(pItem, 2);
             hb_arraySetSymbol(pItem, 1, pDynSymbol->pSymbol);
             pItem = hb_arrayGetItemPtr(pItem, 2);
-            if( fCopy )
-            {
+            if( fCopy ) {
                hb_itemCopy(pItem, pMemvar);
                hb_memvarDetachLocal(pItem);
-            }
-            else
-            {
+            } else {
                pItem->type = Harbour::Item::BYREF | Harbour::Item::MEMVAR;
                pItem->item.asMemvar.value = pMemvar;
                hb_xRefInc(pMemvar);
             }
          }
-      }
-      while( MVInfo.nCount );
+      } while( MVInfo.nCount );
    }
    hb_xfree(MVInfo.pDyns);
 
@@ -1158,21 +979,15 @@ PHB_ITEM hb_memvarSaveInArray(int iScope, HB_BOOL fCopy)
 
 void hb_memvarRestoreFromArray(PHB_ITEM pArray)
 {
-   HB_SIZE nCount;
-
-   nCount = hb_arrayLen(pArray);
-   for( HB_SIZE nPos = 1; nPos <= nCount; ++nPos )
-   {
+   HB_SIZE nCount = hb_arrayLen(pArray);
+   for( HB_SIZE nPos = 1; nPos <= nCount; ++nPos ) {
       PHB_ITEM pItem = hb_arrayGetItemPtr(pArray, nPos);
       PHB_DYNS pDynSym = hb_arrayGetSymbol(pItem, 1)->pDynSym;
       PHB_ITEM pMemvar = hb_arrayGetItemPtr(pItem, 2)->item.asMemvar.value;
       hb_memvarValueIncRef(pMemvar);
-      if( hb_dynsymGetMemvar(pDynSym) )
-      {
+      if( hb_dynsymGetMemvar(pDynSym) ) {
          hb_memvarDetachDynSym(pDynSym, pMemvar);
-      }
-      else
-      {
+      } else {
          hb_dynsymSetMemvar(pDynSym, pMemvar);
       }
    }
@@ -1184,8 +999,7 @@ static const char * hb_memvarGetMask(int iParam)
 {
    const char * pszMask = hb_parc(iParam);
 
-   if( !pszMask || pszMask[0] == '*' )
-   {
+   if( !pszMask || pszMask[0] == '*' ) {
       pszMask = "*";
    }
    return pszMask;
@@ -1196,27 +1010,20 @@ HB_FUNC( __MVPUBLIC )
    HB_STACK_TLS_PRELOAD
    int iCount = hb_pcount();
 
-   if( iCount )
-   {
-      for( int i = 1; i <= iCount; i++ )
-      {
+   if( iCount ) {
+      for( int i = 1; i <= iCount; i++ ) {
          PHB_ITEM pMemvar = hb_param(i, Harbour::Item::ANY);
 
-         if( pMemvar )
-         {
-            if( HB_IS_ARRAY(pMemvar) )
-            {
+         if( pMemvar ) {
+            if( HB_IS_ARRAY(pMemvar) ) {
                /* we are accepting an one-dimensional array of strings only
                 */
                HB_SIZE nLen = hb_arrayLen(pMemvar);
 
-               for( HB_SIZE n = 1; n <= nLen; n++ )
-               {
+               for( HB_SIZE n = 1; n <= nLen; n++ ) {
                   hb_memvarCreateFromItem(hb_arrayGetItemPtr(pMemvar, n), HB_VSCOMP_PUBLIC, nullptr);
                }
-            }
-            else
-            {
+            } else {
                hb_memvarCreateFromItem(pMemvar, HB_VSCOMP_PUBLIC, nullptr);
             }
          }
@@ -1229,28 +1036,21 @@ HB_FUNC( __MVPRIVATE )
    HB_STACK_TLS_PRELOAD
    int iCount = hb_pcount();
 
-   if( iCount )
-   {
+   if( iCount ) {
       hb_memvarResetPrivatesBase();
-      for( int i = 1; i <= iCount; i++ )
-      {
+      for( int i = 1; i <= iCount; i++ ) {
          PHB_ITEM pMemvar = hb_param(i, Harbour::Item::ANY);
 
-         if( pMemvar )
-         {
-            if( HB_IS_ARRAY(pMemvar) )
-            {
+         if( pMemvar ) {
+            if( HB_IS_ARRAY(pMemvar) ) {
                /* we are accepting an one-dimensional array of strings only
                 */
                HB_SIZE nLen = hb_arrayLen(pMemvar);
 
-               for( HB_SIZE n = 1; n <= nLen; n++ )
-               {
+               for( HB_SIZE n = 1; n <= nLen; n++ ) {
                   hb_memvarCreateFromItem(hb_arrayGetItemPtr(pMemvar, n), HB_VSCOMP_PRIVATE, nullptr);
                }
-            }
-            else
-            {
+            } else {
                hb_memvarCreateFromItem(pMemvar, HB_VSCOMP_PRIVATE, nullptr);
             }
          }
@@ -1264,27 +1064,20 @@ HB_FUNC( __MVXRELEASE )
    HB_STACK_TLS_PRELOAD
    int iCount = hb_pcount();
 
-   if( iCount )
-   {
-      for( int i = 1; i <= iCount; i++ )
-      {
+   if( iCount ) {
+      for( int i = 1; i <= iCount; i++ ) {
          PHB_ITEM pMemvar = hb_param(i, Harbour::Item::ANY);
 
-         if( pMemvar )
-         {
-            if( HB_IS_ARRAY(pMemvar) )
-            {
+         if( pMemvar ) {
+            if( HB_IS_ARRAY(pMemvar) ) {
                /* we are accepting an one-dimensional array of strings only
                 */
                HB_SIZE nLen = hb_arrayLen(pMemvar);
 
-               for( HB_SIZE n = 1; n <= nLen; n++ )
-               {
+               for( HB_SIZE n = 1; n <= nLen; n++ ) {
                   hb_memvarRelease(hb_arrayGetItemPtr(pMemvar, n));
                }
-            }
-            else
-            {
+            } else {
                hb_memvarRelease(pMemvar);
             }
          }
@@ -1297,13 +1090,9 @@ HB_FUNC( __MVRELEASE )
    HB_STACK_TLS_PRELOAD
    int iCount = hb_pcount();
 
-   if( iCount && HB_ISCHAR(1) )
-   {
-      HB_BOOL bIncludeVar;
-      const char * pszMask;
-
-      pszMask = hb_memvarGetMask(1);
-      bIncludeVar = (pszMask[0] == '*' && !pszMask[1]) || iCount < 2 || hb_parl(2);
+   if( iCount && HB_ISCHAR(1) ) {
+      const char * pszMask = hb_memvarGetMask(1);
+      bool bIncludeVar = (pszMask[0] == '*' && !pszMask[1]) || iCount < 2 || hb_parl(2);
       hb_memvarReleaseWithMask(pszMask, bIncludeVar);
    }
 }
@@ -1313,12 +1102,10 @@ HB_FUNC( __MVSCOPE )
    HB_STACK_TLS_PRELOAD
    int iMemvar = HB_MV_ERROR;
 
-   if( hb_pcount() )
-   {
+   if( hb_pcount() ) {
       PHB_ITEM pVarName = hb_param(1, Harbour::Item::STRING);
 
-      if( pVarName )
-      {
+      if( pVarName ) {
          iMemvar = hb_memvarScope(pVarName->item.asString.value, pVarName->item.asString.length);
       }
    }
@@ -1336,25 +1123,17 @@ HB_FUNC( __MVDBGINFO )
    HB_STACK_TLS_PRELOAD
    int iCount = hb_pcount();
 
-   if( iCount == 1 || iCount == 2 )          /* request for a number of variables */
-   {
+   if( iCount == 1 || iCount == 2 ) {        /* request for a number of variables */
       hb_retns(hb_memvarCount(hb_parni(1), hb_parni(2)));
-   }
-
-   else if( iCount > 2 )     /* request for a value of variable */
-   {
-      PHB_ITEM pValue;
+   } else if( iCount > 2 ) {   /* request for a value of variable */
       const char * szName;
 
-      pValue = hb_memvarDebugVariable(hb_parni(1), hb_parni(2), &szName);
+      PHB_ITEM pValue = hb_memvarDebugVariable(hb_parni(1), hb_parni(2), &szName);
 
-      if( pValue )   /* the requested variable was found */
-      {
+      if( pValue ) { /* the requested variable was found */
          hb_storc(szName, 3);
          hb_itemCopyFromRef(hb_stackReturnItem(), pValue);
-      }
-      else
-      {
+      } else {
          hb_ret(); /* return NIL value */
          hb_storc("?", 3);
       }
@@ -1364,9 +1143,7 @@ HB_FUNC( __MVDBGINFO )
 HB_FUNC( __MVEXIST )
 {
    HB_STACK_TLS_PRELOAD
-   PHB_DYNS pDyn;
-
-   pDyn = hb_memvarFindSymbol(hb_parc(1), hb_parclen(1));
+   PHB_DYNS pDyn = hb_memvarFindSymbol(hb_parc(1), hb_parclen(1));
    hb_retl(pDyn && hb_dynsymGetMemvar(pDyn));
 }
 
@@ -1374,35 +1151,25 @@ HB_FUNC( __MVGET )
 {
    PHB_ITEM pName = hb_param(1, Harbour::Item::STRING);
 
-   if( pName )
-   {
+   if( pName ) {
       HB_STACK_TLS_PRELOAD
       PHB_DYNS pDynVar = hb_memvarFindSymbol(pName->item.asString.value, pName->item.asString.length);
 
-      if( pDynVar )
-      {
+      if( pDynVar ) {
          PHB_ITEM pValue = hb_stackAllocItem();
-
          hb_memvarGetValue(pValue, pDynVar->pSymbol);
          hb_itemReturnForward(pValue);
          hb_stackDec();
-      }
-      else
-      {
+      } else {
          /* Generate an error with retry possibility
           * (user created error handler can create this variable)
           */
-         PHB_ITEM pError;
+         PHB_ITEM pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pName->item.asString.value, 0, EF_CANRETRY);
 
-         pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pName->item.asString.value, 0, EF_CANRETRY);
-
-         while( hb_errLaunch(pError) == E_RETRY )
-         {
+         while( hb_errLaunch(pError) == E_RETRY ) {
             pDynVar = hb_memvarFindSymbol(hb_itemGetCPtr(pName), hb_itemGetCLen(pName));
-            if( pDynVar )
-            {
+            if( pDynVar ) {
                PHB_ITEM pValue = hb_stackAllocItem();
-
                hb_memvarGetValue(pValue, pDynVar->pSymbol);
                hb_itemReturnForward(pValue);
                hb_stackDec();
@@ -1411,9 +1178,7 @@ HB_FUNC( __MVGET )
          }
          hb_errRelease(pError);
       }
-   }
-   else
-   {
+   } else {
       /* either the first parameter is not specified or it has a wrong type
        * (it must be a string)
        * This is not a critical error - we can continue normal processing
@@ -1426,23 +1191,16 @@ HB_FUNC( __MVGETDEF )
 {
    PHB_ITEM pName = hb_param(1, Harbour::Item::STRING);
 
-   if( pName )
-   {
+   if( pName ) {
       HB_STACK_TLS_PRELOAD
-      PHB_ITEM pMemvar;
       PHB_DYNS pDynVar = hb_memvarFindSymbol(pName->item.asString.value, pName->item.asString.length);
-
-      if( pDynVar && (pMemvar = hb_dynsymGetMemvar(pDynVar)) != nullptr )
-      {
+      PHB_ITEM pMemvar;
+      if( pDynVar && (pMemvar = hb_dynsymGetMemvar(pDynVar)) != nullptr ) {
          hb_itemReturn(HB_IS_BYREF(pMemvar) ? hb_itemUnRef(pMemvar) : pMemvar);
-      }
-      else if( hb_pcount() >= 2 )
-      {
+      } else if( hb_pcount() >= 2 ) {
          hb_itemReturn(hb_param(2, Harbour::Item::ANY));
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3009, nullptr, nullptr, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -1452,19 +1210,15 @@ HB_FUNC( __MVPUT )
    PHB_ITEM pName = hb_param(1, Harbour::Item::STRING);
    PHB_ITEM pValue = hb_paramError(2);
 
-   if( pName )
-   {
+   if( pName ) {
       /* the first parameter is a string with not empty variable name
        */
       PHB_DYNS pDynVar = hb_memvarFindSymbol(pName->item.asString.value, pName->item.asString.length);
-      if( pDynVar )
-      {
+      if( pDynVar ) {
          /* variable was declared somewhere - assign a new value
           */
          hb_memvarSetValue(pDynVar->pSymbol, pValue);
-      }
-      else
-      {
+      } else {
          /* attempt to assign a value to undeclared variable
           * create the PRIVATE one
           */
@@ -1472,17 +1226,14 @@ HB_FUNC( __MVPUT )
       }
       hb_memvarUpdatePrivatesBase();
       hb_itemReturn(pValue);
-   }
-   else
-   {
+   } else {
       /* either the first parameter is not specified or it has a wrong type
        * (it must be a string)
        * This is not a critical error - we can continue normal processing
        */
       PHB_ITEM pRetValue = hb_errRT_BASE_Subst(EG_ARG, 3010, nullptr, nullptr, HB_ERR_ARGS_BASEPARAMS);
 
-      if( pRetValue )
-      {
+      if( pRetValue ) {
          hb_itemRelease(pRetValue);
       }
       hb_itemReturn(pValue);
@@ -1495,7 +1246,7 @@ HB_FUNC( __MVPUT )
 struct MEMVARSAVE_CARGO
 {
    const char * pszMask;
-   HB_BOOL      bIncludeMask;
+   HB_BOOL      bIncludeMask; // TODO: bool
    HB_BYTE *    buffer;
    PHB_FILE     fhnd;
 };
@@ -1505,23 +1256,20 @@ struct MEMVARSAVE_CARGO
 static HB_DYNS_FUNC(hb_memvarSave)
 {
    const char * pszMask = (static_cast<MEMVARSAVE_CARGO*>(Cargo))->pszMask;
-   HB_BOOL bIncludeMask = (static_cast<MEMVARSAVE_CARGO*>(Cargo))->bIncludeMask;
+   bool bIncludeMask = (static_cast<MEMVARSAVE_CARGO*>(Cargo))->bIncludeMask;
    HB_BYTE * buffer = (static_cast<MEMVARSAVE_CARGO*>(Cargo))->buffer;
    PHB_FILE fhnd    = (static_cast<MEMVARSAVE_CARGO*>(Cargo))->fhnd;
-   PHB_ITEM pMemvar;
 
    /* NOTE: Harbour name lengths are not limited, but the .mem file
             structure is not flexible enough to allow for it.
             [vszakats] */
 
-   pMemvar = hb_dynsymGetMemvar(pDynSymbol);
-   if( pMemvar )
-   {
-      HB_BOOL bMatch = hb_strMatchCaseWildExact(pDynSymbol->pSymbol->szName, pszMask);
+   PHB_ITEM pMemvar = hb_dynsymGetMemvar(pDynSymbol);
+   if( pMemvar ) {
+      bool bMatch = hb_strMatchCaseWildExact(pDynSymbol->pSymbol->szName, pszMask);
 
       /* Process it if it matches the passed mask */
-      if( bIncludeMask ? bMatch : !bMatch )
-      {
+      if( bIncludeMask ? bMatch : !bMatch ) {
          /* NOTE: Clipper will not initialize the record buffer with
                   zeros, so they will look trashed. [vszakats] */
          memset(buffer, 0, HB_MEM_REC_LEN);
@@ -1529,15 +1277,13 @@ static HB_DYNS_FUNC(hb_memvarSave)
          /* NOTE: Save only the first 10 characters of the name */
          hb_strncpy(reinterpret_cast<char*>(buffer), pDynSymbol->pSymbol->szName, 10);
 
-         if( HB_IS_STRING(pMemvar) )
-         {
+         if( HB_IS_STRING(pMemvar) ) {
             /* Store the closing zero byte, too */
             HB_SIZE nLen = hb_itemGetCLen(pMemvar) + 1;
             int iOverFlow = 0;
 
             /* Clipper supports only 64 KiB strings */
-            if( nLen > USHRT_MAX )
-            {
+            if( nLen > USHRT_MAX ) {
                nLen = USHRT_MAX;
                iOverFlow = 1;
             }
@@ -1545,18 +1291,13 @@ static HB_DYNS_FUNC(hb_memvarSave)
             HB_PUT_LE_UINT16(&buffer[16], nLen);
             hb_fileWrite(fhnd, buffer, HB_MEM_REC_LEN, -1);
             hb_fileWrite(fhnd, hb_itemGetCPtr(pMemvar), nLen - iOverFlow, -1);
-            if( iOverFlow )
-            {
+            if( iOverFlow ) {
                hb_fileWrite(fhnd, "\0", 1, -1);
             }
-         }
-         else if( HB_IS_NUMERIC(pMemvar) )
-         {
-            double dNumber;
+         } else if( HB_IS_NUMERIC(pMemvar) ) {
+            double dNumber = hb_itemGetND(pMemvar);
             int iWidth;
             int iDec;
-
-            dNumber = hb_itemGetND(pMemvar);
             hb_itemGetNLen(pMemvar, &iWidth, &iDec);
             buffer[11] = 'N' + 128;
 #ifdef HB_CLP_STRICT
@@ -1569,29 +1310,21 @@ static HB_DYNS_FUNC(hb_memvarSave)
             buffer[17] = static_cast<HB_BYTE>(iDec);
             HB_PUT_LE_DOUBLE(&buffer[HB_MEM_REC_LEN], dNumber);
             hb_fileWrite(fhnd, buffer, HB_MEM_REC_LEN + HB_MEM_NUM_LEN, -1);
-         }
-         else if( HB_IS_DATE(pMemvar) )
-         {
+         } else if( HB_IS_DATE(pMemvar) ) {
             double dNumber = static_cast<double>(hb_itemGetDL(pMemvar));
-
             buffer[11] = 'D' + 128;
             buffer[16] = 1;
             buffer[17] = 0;
             HB_PUT_LE_DOUBLE(&buffer[HB_MEM_REC_LEN], dNumber);
             hb_fileWrite(fhnd, buffer, HB_MEM_REC_LEN + HB_MEM_NUM_LEN, -1);
-         }
-         else if( HB_IS_TIMESTAMP(pMemvar) )
-         {
+         } else if( HB_IS_TIMESTAMP(pMemvar) ) {
             double dNumber = hb_itemGetTD(pMemvar);
-
             buffer[11] = 'T' + 128;
             buffer[16] = 1;
             buffer[17] = 0;
             HB_PUT_LE_DOUBLE(&buffer[HB_MEM_REC_LEN], dNumber);
             hb_fileWrite(fhnd, buffer, HB_MEM_REC_LEN + HB_MEM_NUM_LEN, -1);
-         }
-         else if( HB_IS_LOGICAL(pMemvar) )
-         {
+         } else if( HB_IS_LOGICAL(pMemvar) ) {
             buffer[11] = 'L' + 128;
             buffer[16] = 1;
             buffer[17] = 0;
@@ -1608,36 +1341,30 @@ HB_FUNC( __MVSAVE )
    HB_STACK_TLS_PRELOAD
 
    /* Clipper also checks for the number of arguments here */
-   if( hb_pcount() == 3 && HB_ISCHAR(1) && HB_ISCHAR(2) && HB_ISLOG(3) )
-   {
+   if( hb_pcount() == 3 && HB_ISCHAR(1) && HB_ISCHAR(2) && HB_ISLOG(3) ) {
+      PHB_FILE fhnd;
       const char * pszFileName = hb_parc(1);
       PHB_ITEM pError = nullptr;
-      PHB_FILE fhnd;
 
       /* Create .mem file */
-      do
-      {
+      do {
          fhnd = hb_fileExtOpen(pszFileName,
                                hb_stackSetStruct()->HB_SET_DEFEXTENSIONS ? ".mem" : nullptr,
                                FXO_TRUNCATE | FO_READWRITE | FO_EXCLUSIVE |
                                FXO_DEFAULTS | FXO_SHARELOCK,
                                nullptr, pError);
-         if( fhnd == nullptr )
-         {
+         if( fhnd == nullptr ) {
             pError = hb_errRT_FileError(pError, nullptr, EG_CREATE, 2006, pszFileName);
-            if( hb_errLaunch(pError) != E_RETRY )
-            {
+            if( hb_errLaunch(pError) != E_RETRY ) {
                break;
             }
          }
-      }
-      while( fhnd == nullptr );
+      } while( fhnd == nullptr );
 
-      if( fhnd != nullptr )
-      {
+      if( fhnd != nullptr ) {
          HB_BYTE buffer[HB_MEM_REC_LEN + HB_MEM_NUM_LEN];
-         MEMVARSAVE_CARGO msc;
 
+         MEMVARSAVE_CARGO msc;
          msc.pszMask      = hb_memvarGetMask(2);
          msc.bIncludeMask = hb_parl(3);
          msc.buffer       = buffer;
@@ -1653,8 +1380,7 @@ HB_FUNC( __MVSAVE )
          /* NOTE: Here, we're not CA-Cl*pper compatible by default settings.
                   [vszakats] */
 #ifndef HB_CLP_STRICT
-         if( hb_setGetHardCommit() )
-         {
+         if( hb_setGetHardCommit() ) {
             hb_fileCommit(fhnd);
          }
 #endif
@@ -1662,13 +1388,10 @@ HB_FUNC( __MVSAVE )
          hb_fileClose(fhnd);
       }
 
-      if( pError )
-      {
+      if( pError ) {
          hb_itemRelease(pError);
       }
-   }
-   else
-   {
+   } else {
       /* NOTE: Undocumented error message in CA-Cl*pper 5.2e and 5.3b. [ckedem] */
       hb_errRT_BASE(EG_ARG, 2008, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
@@ -1683,60 +1406,51 @@ HB_FUNC( __MVRESTORE )
    /* Clipper checks for the number of arguments here here, but we cannot
       in Harbour since we have two optional parameters as an extension. */
 #ifdef HB_CLP_STRICT
-   if( hb_pcount() == 2 && HB_ISCHAR(1) && HB_ISLOG(2) )
+   if( hb_pcount() == 2 && HB_ISCHAR(1) && HB_ISLOG(2) ) {
 #else
-   if( HB_ISCHAR(1) && HB_ISLOG(2) )
+   if( HB_ISCHAR(1) && HB_ISLOG(2) ) {
 #endif
-   {
       HB_STACK_TLS_PRELOAD
-      const char * pszFileName = hb_parc(1);
-      PHB_ITEM pError = nullptr;
-      PHB_FILE fhnd;
 
-      HB_BOOL bAdditive = hb_parl(2);
+      bool bAdditive = hb_parl(2);
 
       /* Clear all memory variables if not ADDITIVE */
 
-      if( !bAdditive )
-      {
+      if( !bAdditive ) {
          hb_memvarsClear(false);
       }
 
+      PHB_FILE fhnd;
+      const char * pszFileName = hb_parc(1);
+      PHB_ITEM pError = nullptr;
+
       /* Open .mem file */
-      do
-      {
+      do {
          fhnd = hb_fileExtOpen(pszFileName,
                                hb_stackSetStruct()->HB_SET_DEFEXTENSIONS ? ".mem" : nullptr,
                                FO_READ | FXO_DEFAULTS | FXO_SHARELOCK,
                                nullptr, pError);
-         if( fhnd == nullptr )
-         {
+         if( fhnd == nullptr ) {
             pError = hb_errRT_FileError(pError, nullptr, EG_OPEN, 2005, pszFileName);
-            if( hb_errLaunch(pError) != E_RETRY )
-            {
+            if( hb_errLaunch(pError) != E_RETRY ) {
                break;
             }
          }
-      }
-      while( fhnd == nullptr );
+      } while( fhnd == nullptr );
 
-      if( fhnd != nullptr )
-      {
-         HB_BOOL bIncludeMask;
-         HB_BYTE buffer[HB_MEM_REC_LEN];
-         const char * pszMask;
-         PHB_ITEM pItem = nullptr;
-
+      if( fhnd != nullptr ) {
 #ifdef HB_CLP_STRICT
-         pszMask = "*";
-         bIncludeMask = HB_TRUE;
+         const char * pszMask = "*";
+         bool bIncludeMask = true;
 #else
-         pszMask = hb_memvarGetMask(3);
-         bIncludeMask = hb_parldef(4, true);
+         const char * pszMask = hb_memvarGetMask(3);
+         bool bIncludeMask = hb_parldef(4, true);
 #endif
 
-         while( hb_fileRead(fhnd, buffer, HB_MEM_REC_LEN, -1) == HB_MEM_REC_LEN )
-         {
+         HB_BYTE buffer[HB_MEM_REC_LEN];
+         PHB_ITEM pItem = nullptr;
+
+         while( hb_fileRead(fhnd, buffer, HB_MEM_REC_LEN, -1) == HB_MEM_REC_LEN ) {
             char * pszName;
 
             /* FoxPro does not add 128 to item type: 'N', 'C', 'D', 'L'
@@ -1750,21 +1464,15 @@ HB_FUNC( __MVRESTORE )
             buffer[10] = '\0';
             pszName = reinterpret_cast<char*>(buffer);
 
-            switch( uiType )
-            {
+            switch( uiType ) {
                case 'C':
                {
-                  HB_BYTE * pbyString;
-
                   uiWidth += uiDec * 256;
-                  pbyString = static_cast<HB_BYTE*>(hb_xgrab(uiWidth));
+                  HB_BYTE * pbyString = static_cast<HB_BYTE*>(hb_xgrab(uiWidth));
 
-                  if( hb_fileRead(fhnd, pbyString, uiWidth, -1) == static_cast<HB_SIZE>(uiWidth) )
-                  {
+                  if( hb_fileRead(fhnd, pbyString, uiWidth, -1) == static_cast<HB_SIZE>(uiWidth) ) {
                      pItem = hb_itemPutCLPtr(pItem, reinterpret_cast<char*>(pbyString), uiWidth - 1);
-                  }
-                  else
-                  {
+                  } else {
                      hb_xfree(pbyString);
                      pszName = nullptr;
                   }
@@ -1776,12 +1484,9 @@ HB_FUNC( __MVRESTORE )
                {
                   HB_BYTE pbyNumber[HB_MEM_NUM_LEN];
 
-                  if( hb_fileRead(fhnd, pbyNumber, HB_MEM_NUM_LEN, -1) == HB_MEM_NUM_LEN )
-                  {
+                  if( hb_fileRead(fhnd, pbyNumber, HB_MEM_NUM_LEN, -1) == HB_MEM_NUM_LEN ) {
                      pItem = hb_itemPutNLen(pItem, HB_GET_LE_DOUBLE(pbyNumber), uiWidth - (uiDec ? (uiDec + 1) : 0), uiDec);
-                  }
-                  else
-                  {
+                  } else {
                      pszName = nullptr;
                   }
 
@@ -1792,12 +1497,9 @@ HB_FUNC( __MVRESTORE )
                {
                   HB_BYTE pbyNumber[HB_MEM_NUM_LEN];
 
-                  if( hb_fileRead(fhnd, pbyNumber, HB_MEM_NUM_LEN, -1) == HB_MEM_NUM_LEN )
-                  {
+                  if( hb_fileRead(fhnd, pbyNumber, HB_MEM_NUM_LEN, -1) == HB_MEM_NUM_LEN ) {
                      pItem = hb_itemPutDL(pItem, static_cast<long>(HB_GET_LE_DOUBLE(pbyNumber)));
-                  }
-                  else
-                  {
+                  } else {
                      pszName = nullptr;
                   }
 
@@ -1808,12 +1510,9 @@ HB_FUNC( __MVRESTORE )
                {
                   HB_BYTE pbyNumber[HB_MEM_NUM_LEN];
 
-                  if( hb_fileRead(fhnd, pbyNumber, HB_MEM_NUM_LEN, -1) == HB_MEM_NUM_LEN )
-                  {
+                  if( hb_fileRead(fhnd, pbyNumber, HB_MEM_NUM_LEN, -1) == HB_MEM_NUM_LEN ) {
                      pItem = hb_itemPutTD(pItem, HB_GET_LE_DOUBLE(pbyNumber));
-                  }
-                  else
-                  {
+                  } else {
                      pszName = nullptr;
                   }
 
@@ -1824,12 +1523,9 @@ HB_FUNC( __MVRESTORE )
                {
                   HB_BYTE pbyLogical[1];
 
-                  if( hb_fileRead(fhnd, pbyLogical, 1, -1) == 1 )
-                  {
+                  if( hb_fileRead(fhnd, pbyLogical, 1, -1) == 1 ) {
                      pItem = hb_itemPutL(pItem, pbyLogical[0] != 0);
-                  }
-                  else
-                  {
+                  } else {
                      pszName = nullptr;
                   }
 
@@ -1840,23 +1536,18 @@ HB_FUNC( __MVRESTORE )
                   pszName = nullptr;
             }
 
-            if( pszName )
-            {
-               HB_BOOL bMatch = hb_strMatchCaseWildExact(pszName, pszMask);
+            if( pszName ) {
+               bool bMatch = hb_strMatchCaseWildExact(pszName, pszMask);
 
                /* Process it if it matches the passed mask */
-               if( bIncludeMask ? bMatch : !bMatch )
-               {
+               if( bIncludeMask ? bMatch : !bMatch ) {
                   /* the first parameter is a string with not empty variable name */
                   PHB_DYNS pDynVar = hb_memvarFindSymbol(pszName, strlen(pszName));
 
-                  if( pDynVar )
-                  {
+                  if( pDynVar ) {
                      /* variable was declared somewhere - assign a new value */
                      hb_memvarSetValue(pDynVar->pSymbol, pItem);
-                  }
-                  else
-                  {
+                  } else {
                      /* attempt to assign a value to undeclared variable create the PRIVATE one */
                      hb_memvarCreateFromDynSymbol(hb_dynsymGet(pszName), HB_VSCOMP_PRIVATE, pItem);
                   }
@@ -1867,19 +1558,14 @@ HB_FUNC( __MVRESTORE )
          hb_fileClose(fhnd);
          hb_memvarUpdatePrivatesBase();
          hb_itemReturnRelease(pItem);
-      }
-      else
-      {
+      } else {
          hb_retl(false);
       }
 
-      if( pError )
-      {
+      if( pError ) {
          hb_itemRelease(pError);
       }
-   }
-   else
-   {
+   } else {
       /* NOTE: Undocumented error message in CA-Cl*pper 5.2e and 5.3b. [ckedem] */
       hb_errRT_BASE(EG_ARG, 2007, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
@@ -1896,8 +1582,7 @@ HB_FUNC( __MVSETBASE )
    HB_STACK_TLS_PRELOAD
    HB_ISIZ nOffset = hb_stackBaseProcOffset(0);
 
-   if( nOffset > 0 )
-   {
+   if( nOffset > 0 ) {
       hb_stackItem(nOffset)->item.asSymbol.stackstate->nPrivateBase = hb_memvarGetPrivatesBase();
    }
 }
