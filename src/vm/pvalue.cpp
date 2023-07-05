@@ -51,14 +51,12 @@
 
 HB_FUNC( HB_PVALUE )
 {
-   HB_ISIZ nOffset = hb_stackBaseItem()->item.asSymbol.stackstate->nBaseItem;
    HB_USHORT uiParam = static_cast<HB_USHORT>(hb_parni(1));
+   HB_ISIZ nOffset = hb_stackBaseItem()->item.asSymbol.stackstate->nBaseItem;
 
-   if( uiParam && uiParam <= hb_stackItem(nOffset)->item.asSymbol.paramcnt )
-   {
+   if( uiParam && uiParam <= hb_stackItem(nOffset)->item.asSymbol.paramcnt ) {
       PHB_ITEM pItem = hb_stackItem(nOffset + 1 + uiParam);
-      if( hb_pcount() > 1 )
-      {
+      if( hb_pcount() > 1 ) {
          hb_itemCopyToRef(pItem, hb_param(2, Harbour::Item::ANY));
       }
       hb_itemReturn(HB_IS_BYREF(pItem) ? hb_itemUnRef(pItem) : pItem);

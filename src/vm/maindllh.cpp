@@ -63,8 +63,7 @@ BOOL WINAPI HB_DLL_ENTRY_POINT(HINSTANCE hInstance, DWORD fdwReason, PVOID pvRes
    HB_SYMBOL_UNUSED(fdwReason);
    HB_SYMBOL_UNUSED(pvReserved);
 
-   switch( fdwReason )
-   {
+   switch( fdwReason ) {
       case DLL_PROCESS_ATTACH:
          break;
 

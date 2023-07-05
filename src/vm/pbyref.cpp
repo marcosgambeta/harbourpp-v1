@@ -50,12 +50,11 @@
 
 HB_FUNC( HB_PISBYREF )
 {
-   HB_SIZE nOffset = hb_stackBaseItem()->item.asSymbol.stackstate->nBaseItem;
    HB_USHORT uiParam = static_cast<HB_USHORT>(hb_parni(1));
+   HB_SIZE nOffset = hb_stackBaseItem()->item.asSymbol.stackstate->nBaseItem;
    PHB_ITEM pItem = nullptr;
 
-   if( uiParam && uiParam <= hb_stackItem(nOffset)->item.asSymbol.paramcnt )
-   {
+   if( uiParam && uiParam <= hb_stackItem(nOffset)->item.asSymbol.paramcnt ) {
       pItem = hb_stackItem(nOffset + 1 + uiParam);
    }
 

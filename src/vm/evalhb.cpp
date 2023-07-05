@@ -55,8 +55,7 @@ HB_FUNC( EVAL )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::BLOCK);
 
-   if( pItem != nullptr )
-   {
+   if( pItem != nullptr ) {
       int iPCount = hb_pcount();
 
       hb_vmPushEvalSym();
@@ -65,15 +64,12 @@ HB_FUNC( EVAL )
        * because we need to pass the references too.
        * hb_param() is dereferencing the passed parameters
        */
-      for( int iParam = 2; iParam <= iPCount; iParam++ )
-      {
+      for( int iParam = 2; iParam <= iPCount; iParam++ ) {
          hb_vmPush(hb_stackItemFromBase(iParam));
       }
 
       hb_vmSend(static_cast<HB_USHORT>(iPCount - 1));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_NOMETHOD, 1004, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

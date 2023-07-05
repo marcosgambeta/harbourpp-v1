@@ -114,26 +114,21 @@ PHB_FUNC hb_vmProcAddress(const char * szFuncName)
       { "hb_xrealloc",         reinterpret_cast<PHB_FUNC>(hb_xrealloc              ) }
    };
 
-   unsigned int uiFirst = 0, uiLast = HB_SIZEOFARRAY(s_funcTable), uiMiddle;
+   unsigned int uiFirst = 0;
+   unsigned int uiLast = HB_SIZEOFARRAY(s_funcTable), uiMiddle;
    int iCmp;
 
-   do
-   {
+   do {
       uiMiddle = (uiFirst + uiLast) >> 1;
       iCmp = strcmp(szFuncName, s_funcTable[uiMiddle].szFuncName);
-      if( iCmp <= 0 )
-      {
+      if( iCmp <= 0 ) {
          uiLast = uiMiddle;
-      }
-      else
-      {
+      } else {
          uiFirst = uiMiddle + 1;
       }
-   }
-   while( uiFirst < uiLast );
+   } while( uiFirst < uiLast );
 
-   if( uiFirst != uiMiddle )
-   {
+   if( uiFirst != uiMiddle ) {
       iCmp = strcmp(szFuncName, s_funcTable[uiFirst].szFuncName);
    }
 
