@@ -120,7 +120,7 @@
 #if !defined(HB_MT_VM)
    /* nothing */
 #else
-   static volatile HB_BOOL s_fThreadInit = HB_FALSE;
+   static volatile bool s_fThreadInit = false;
 
    static PHB_ITEM s_pOnceMutex = nullptr;
 
@@ -150,16 +150,14 @@
    static HB_RAWCRITICAL_T s_mutexlst_mtx;
    static void hb_threadCriticalInit(HB_CRITICAL_T * critical)
    {
-      if( !s_fThreadInit )
-      {
+      if( !s_fThreadInit ) {
          hb_threadInit();
       }
 
       HB_CRITICAL_LOCK(s_init_mtx);
-      if( !critical->fInit )
-      {
+      if( !critical->fInit ) {
          HB_CRITICAL_INIT(critical->critical.value);
-         critical->fInit = HB_TRUE;
+         critical->fInit = true;
       }
       HB_CRITICAL_UNLOCK(s_init_mtx);
    }
@@ -176,20 +174,18 @@
       static HB_RAWCOND_T s_thread_cond;
       static void hb_threadCondInit(HB_COND_T * cond)
       {
-         if( !s_fThreadInit )
-         {
+         if( !s_fThreadInit ) {
             hb_threadInit();
          }
 
          HB_CRITICAL_LOCK(s_init_mtx);
-         if( !cond->fInit )
-         {
+         if( !cond->fInit ) {
             HB_COND_INIT(cond->cond.value);
 #     if !defined(HB_COND_OS_SUPPORT)
             HB_CRITICAL_INIT(cond->critical.value);
             cond->waiters = 0;
 #     endif
-            cond->fInit = HB_TRUE;
+            cond->fInit = true;
          }
          HB_CRITICAL_UNLOCK(s_init_mtx);
       }
@@ -202,8 +198,7 @@
 #if defined(HB_MT_VM)
 void hb_threadInit(void)
 {
-   if( !s_fThreadInit )
-   {
+   if( !s_fThreadInit ) {
 #if !defined(HB_MT_VM)
       /* nothing to do */
 #else
@@ -220,14 +215,13 @@ void hb_threadInit(void)
       hb_taskInit();
 #  endif
 #endif
-      s_fThreadInit = HB_TRUE;
+      s_fThreadInit = true;
    }
 }
 
 void hb_threadExit(void)
 {
-   if( s_pOnceMutex )
-   {
+   if( s_pOnceMutex ) {
       hb_itemRelease(s_pOnceMutex);
       s_pOnceMutex = nullptr;
    }
@@ -297,12 +291,9 @@ static PHB_WAIT_LIST _hb_thread_wait_list(void)
 {
    PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(hb_vmThreadState());
 
-   if( pThread )
-   {
+   if( pThread ) {
       return &pThread->pWaitList;
-   }
-   else
-   {
+   } else {
       return nullptr;
    }
 }
@@ -317,14 +308,11 @@ static void _hb_thread_wait_add(HB_COND_T * cond, PHB_WAIT_LIST pWaiting)
    WaitForSingleObject(pWaiting->cond, 0);
    #endif
 #endif
-   pWaiting->signaled = HB_FALSE;
+   pWaiting->signaled = false;
 
-   if( cond->waiters == nullptr )
-   {
+   if( cond->waiters == nullptr ) {
       cond->waiters = pWaiting->next = pWaiting->prev = pWaiting;
-   }
-   else
-   {
+   } else {
       pWaiting->next = cond->waiters;
       pWaiting->prev = cond->waiters->prev;
       cond->waiters->prev = pWaiting->prev->next = pWaiting;
@@ -335,69 +323,58 @@ static void _hb_thread_wait_del(HB_COND_T * cond, PHB_WAIT_LIST pWaiting)
 {
    pWaiting->next->prev = pWaiting->prev;
    pWaiting->prev->next = pWaiting->next;
-   if( pWaiting == cond->waiters )
-   {
+   if( pWaiting == cond->waiters ) {
       cond->waiters = pWaiting->next;
-      if( pWaiting == cond->waiters )
-      {
+      if( pWaiting == cond->waiters ) {
          cond->waiters = nullptr;
       }
    }
 }
 
-static HB_BOOL _hb_thread_cond_signal(HB_COND_T * cond)
+static bool _hb_thread_cond_signal(HB_COND_T * cond)
 {
-   if( cond->waiters )
-   {
+   if( cond->waiters ) {
       PHB_WAIT_LIST pWaiting = cond->waiters;
-      do
-      {
-         if( !pWaiting->signaled )
-         {
+      do {
+         if( !pWaiting->signaled ) {
 #if defined(HB_OS_WIN)
             ReleaseSemaphore(pWaiting->cond, 1, nullptr);
 #endif
-            pWaiting->signaled = HB_TRUE;
+            pWaiting->signaled = true;
             /* signal only single thread */
             break;
          }
          pWaiting = pWaiting->next;
-      }
-      while( pWaiting != cond->waiters );
+      } while( pWaiting != cond->waiters );
    }
 
    return true;
 }
 
-static HB_BOOL _hb_thread_cond_broadcast(HB_COND_T * cond)
+static bool _hb_thread_cond_broadcast(HB_COND_T * cond)
 {
-   if( cond->waiters )
-   {
+   if( cond->waiters ) {
       PHB_WAIT_LIST pWaiting = cond->waiters;
-      do
-      {
-         if( !pWaiting->signaled )
-         {
+      do {
+         if( !pWaiting->signaled ) {
 #if defined(HB_OS_WIN)
             ReleaseSemaphore(pWaiting->cond, 1, nullptr);
 #endif
-            pWaiting->signaled = HB_TRUE;
+            pWaiting->signaled = true;
          }
          pWaiting = pWaiting->next;
-      }
-      while( pWaiting != cond->waiters );
+      } while( pWaiting != cond->waiters );
    }
 
    return true;
 }
 
-static HB_BOOL _hb_thread_cond_wait(HB_COND_T * cond, HB_RAWCRITICAL_T * critical, HB_ULONG ulMillisec)
+static bool _hb_thread_cond_wait(HB_COND_T * cond, HB_RAWCRITICAL_T * critical, HB_ULONG ulMillisec)
 {
    PHB_WAIT_LIST pWaiting = _hb_thread_wait_list();
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
-   if( pWaiting )
-   {
+   if( pWaiting ) {
       _hb_thread_wait_add(cond, pWaiting);
 
 #if defined(HB_OS_WIN)
@@ -405,8 +382,7 @@ static HB_BOOL _hb_thread_cond_wait(HB_COND_T * cond, HB_RAWCRITICAL_T * critica
       fResult = WaitForSingleObject(pWaiting->cond, ulMillisec) == WAIT_OBJECT_0;
       EnterCriticalSection(critical);
       /* workaround for race condition */
-      if( !fResult && pWaiting->signaled )
-      {
+      if( !fResult && pWaiting->signaled ) {
          fResult = WaitForSingleObject(pWaiting->cond, 0) == WAIT_OBJECT_0;
       }
 #endif
@@ -490,10 +466,8 @@ void hb_atomic_inc(volatile HB_COUNTER * pCounter)
 
 HB_BOOL hb_atomic_dec(volatile HB_COUNTER * pCounter)
 {
-   HB_BOOL fResult;
-
    hb_threadEnterCriticalSection(&s_atomicMtx);
-   fResult = --(*pCounter) == 0;
+   bool fResult = --(*pCounter) == 0;
    hb_threadLeaveCriticalSection(&s_atomicMtx);
    return fResult;
 }
@@ -504,8 +478,7 @@ void hb_threadEnterCriticalSection(HB_CRITICAL_T * critical)
 #if !defined(HB_MT_VM)
    HB_SYMBOL_UNUSED(critical);
 #elif defined(HB_CRITICAL_NEED_INIT)
-   if( !critical->fInit )
-   {
+   if( !critical->fInit ) {
       hb_threadCriticalInit(critical);
    }
    HB_CRITICAL_LOCK(critical->critical.value);
@@ -519,8 +492,7 @@ void hb_threadEnterCriticalSectionGC(HB_CRITICAL_T * critical)
 #if !defined(HB_MT_VM)
    HB_SYMBOL_UNUSED(critical);
 #elif defined(HB_CRITICAL_NEED_INIT)
-   if( !critical->fInit )
-   {
+   if( !critical->fInit ) {
       hb_threadCriticalInit(critical);
    }
    hb_vmUnlock();
@@ -559,8 +531,7 @@ HB_BOOL hb_threadCondSignal(HB_COND_T * cond)
 #elif defined(HB_PTHREAD_API)
 
 #  if defined(HB_COND_NEED_INIT)
-      if( !cond->fInit )
-      {
+      if( !cond->fInit ) {
          hb_threadCondInit(cond);
       }
 #  endif
@@ -572,14 +543,12 @@ HB_BOOL hb_threadCondSignal(HB_COND_T * cond)
 
 #else
 
-   if( !cond->fInit )
-   {
+   if( !cond->fInit ) {
       hb_threadCondInit(cond);
    }
 
    HB_CRITICAL_LOCK(cond->critical.value);
-   if( cond->waiters )
-   {
+   if( cond->waiters ) {
       HB_COND_SIGNAL(cond->cond.value);
       cond->waiters--;
    }
@@ -605,8 +574,7 @@ HB_BOOL hb_threadCondBroadcast(HB_COND_T * cond)
 #elif defined(HB_PTHREAD_API)
 
 #  if defined(HB_COND_NEED_INIT)
-      if( !cond->fInit )
-      {
+      if( !cond->fInit ) {
          hb_threadCondInit(cond);
       }
 #  endif
@@ -618,14 +586,12 @@ HB_BOOL hb_threadCondBroadcast(HB_COND_T * cond)
 
 #else
 
-   if( !cond->fInit )
-   {
+   if( !cond->fInit ) {
       hb_threadCondInit(cond);
    }
 
    HB_CRITICAL_LOCK(cond->critical.value);
-   if( cond->waiters )
-   {
+   if( cond->waiters ) {
       HB_COND_SIGNALN(cond->cond.value, cond->waiters);
       cond->waiters = 0;
    }
@@ -651,8 +617,7 @@ HB_BOOL hb_threadCondWait(HB_COND_T * cond, HB_CRITICAL_T * mutex)
 #elif defined(HB_PTHREAD_API)
 
 #  if defined(HB_COND_NEED_INIT)
-      if( !cond->fInit )
-      {
+      if( !cond->fInit ) {
          hb_threadCondInit(cond);
       }
 #  endif
@@ -664,10 +629,9 @@ HB_BOOL hb_threadCondWait(HB_COND_T * cond, HB_CRITICAL_T * mutex)
 
 #else
 
-   HB_BOOL fResult;
+   bool fResult;
 
-   if( !cond->fInit )
-   {
+   if( !cond->fInit ) {
       hb_threadCondInit(cond);
    }
 
@@ -686,8 +650,7 @@ HB_BOOL hb_threadCondWait(HB_COND_T * cond, HB_CRITICAL_T * mutex)
     * the wait condition is valid after leaving hb_threadCondWait()
     * even if it returns HB_TRUE
     */
-   if( !fResult )
-   {
+   if( !fResult ) {
       HB_CRITICAL_LOCK(cond->critical.value);
       cond->waiters--;
       HB_CRITICAL_UNLOCK(cond->critical.value);
@@ -715,8 +678,7 @@ HB_BOOL hb_threadCondTimedWait(HB_COND_T * cond, HB_CRITICAL_T * mutex, HB_ULONG
    struct timespec ts;
 
 #  if defined(HB_COND_NEED_INIT)
-      if( !cond->fInit )
-      {
+      if( !cond->fInit ) {
          hb_threadCondInit(cond);
       }
 #  endif
@@ -729,10 +691,9 @@ HB_BOOL hb_threadCondTimedWait(HB_COND_T * cond, HB_CRITICAL_T * mutex, HB_ULONG
 
 #else
 
-   HB_BOOL fResult;
+   bool fResult;
 
-   if( !cond->fInit )
-   {
+   if( !cond->fInit ) {
       hb_threadCondInit(cond);
    }
 
@@ -751,8 +712,7 @@ HB_BOOL hb_threadCondTimedWait(HB_COND_T * cond, HB_CRITICAL_T * mutex, HB_ULONG
     * the wait condition is valid after leaving hb_threadCondTimedWait()
     * even if it returns HB_TRUE
     */
-   if( !fResult )
-   {
+   if( !fResult ) {
       HB_CRITICAL_LOCK(cond->critical.value);
       cond->waiters--;
       HB_CRITICAL_UNLOCK(cond->critical.value);
@@ -776,8 +736,7 @@ HB_THREAD_HANDLE hb_threadCreate(HB_THREAD_ID * th_id, PHB_THREAD_STARTFUNC star
    *th_id = hb_taskCreate(start_func, Cargo, 0);
    th_h = *th_id;
 #elif defined(HB_PTHREAD_API)
-   if( pthread_create(th_id, nullptr, start_func, Cargo) != 0 )
-   {
+   if( pthread_create(th_id, nullptr, start_func, Cargo) != 0 ) {
       *th_id = static_cast<HB_THREAD_ID>(0);
    }
    th_h = *th_id;
@@ -787,8 +746,7 @@ HB_THREAD_HANDLE hb_threadCreate(HB_THREAD_ID * th_id, PHB_THREAD_STARTFUNC star
 #  else
       th_h = reinterpret_cast<HANDLE>(_beginthreadex(nullptr, 0, start_func, Cargo, 0, th_id));
 #  endif
-   if( !th_h )
-   {
+   if( !th_h ) {
       *th_id = static_cast<HB_THREAD_ID>(0);
    }
 #else
@@ -810,8 +768,7 @@ HB_BOOL hb_threadJoin(HB_THREAD_HANDLE th_h)
 #elif defined(HB_PTHREAD_API)
    return pthread_join(th_h, nullptr) == 0;
 #elif defined(HB_OS_WIN)
-   if( WaitForSingleObject(th_h, INFINITE) != WAIT_FAILED )
-   {
+   if( WaitForSingleObject(th_h, INFINITE) != WAIT_FAILED ) {
       CloseHandle(th_h);
       return true;
    }
@@ -846,8 +803,7 @@ HB_THREAD_NO hb_threadNO(void)
 {
 #if defined(HB_MT_VM)
    PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(hb_vmThreadState());
-   if( pThread )
-   {
+   if( pThread ) {
       return pThread->th_no;
    }
 #endif
@@ -864,45 +820,37 @@ static HB_GARBAGE_FUNC(hb_threadDestructor)
 {
    PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(Cargo);
 
-   if( pThread->pParams )
-   {
+   if( pThread->pParams ) {
       hb_itemRelease(pThread->pParams);
       pThread->pParams = nullptr;
    }
-   if( pThread->pMemvars )
-   {
+   if( pThread->pMemvars ) {
       hb_itemRelease(pThread->pMemvars);
       pThread->pMemvars = nullptr;
    }
-   if( pThread->pResult )
-   {
+   if( pThread->pResult ) {
       hb_itemRelease(pThread->pResult);
       pThread->pResult = nullptr;
    }
-   if( pThread->pI18N )
-   {
+   if( pThread->pI18N ) {
       hb_i18n_release(pThread->pI18N);
       pThread->pI18N = nullptr;
    }
-   if( pThread->pSet )
-   {
+   if( pThread->pSet ) {
       hb_setRelease(pThread->pSet);
       hb_xfree(pThread->pSet);
       pThread->pSet = nullptr;
    }
-   if( pThread->th_h != 0 )
-   {
+   if( pThread->th_h != 0 ) {
       hb_threadDetach(pThread->th_h);
       pThread->th_h = 0;
    }
-   if( pThread->hGT )
-   {
+   if( pThread->hGT ) {
       hb_gtRelease(pThread->hGT);
       pThread->hGT = nullptr;
    }
 #if defined(HB_COND_HARBOUR_SUPPORT)
-   if( pThread->pWaitList.cond )
-   {
+   if( pThread->pWaitList.cond ) {
 #  if defined(HB_OS_WIN)
       CloseHandle(pThread->pWaitList.cond);
       pThread->pWaitList.cond = static_cast<HANDLE>(0);
@@ -915,12 +863,10 @@ static HB_GARBAGE_FUNC(hb_threadMark)
 {
    PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(Cargo);
 
-   if( pThread->pResult )
-   {
+   if( pThread->pResult ) {
       hb_gcMark(pThread->pResult);
    }
-   if( pThread->hGT )
-   {
+   if( pThread->hGT ) {
       hb_gtIsGtRef(pThread->hGT);
    }
 }
@@ -935,61 +881,44 @@ static const HB_GC_FUNCS s_gcThreadFuncs =
 HB_CARGO_FUNC(hb_threadStartVM)
 {
    PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(cargo);
-   HB_ULONG ulPCount;
-   HB_BOOL fSend = HB_FALSE;
+   bool fSend = false;
 
-   ulPCount = static_cast<HB_ULONG>(hb_arrayLen(pThread->pParams));
-   if( ulPCount > 0 )
-   {
+   HB_ULONG ulPCount = static_cast<HB_ULONG>(hb_arrayLen(pThread->pParams));
+   if( ulPCount > 0 ) {
       PHB_ITEM pStart = hb_arrayGetItemPtr(pThread->pParams, 1);
 
-      if( HB_IS_BLOCK(pStart) )
-      {
+      if( HB_IS_BLOCK(pStart) ) {
          hb_vmPushEvalSym();
          hb_vmPush(pStart);
-         fSend = HB_TRUE;
-      }
-      else if( HB_IS_SYMBOL(pStart) )
-      {
+         fSend = true;
+      } else if( HB_IS_SYMBOL(pStart) ) {
          hb_vmPush(pStart);
          hb_vmPushNil();
-      }
-      else if( HB_IS_STRING(pStart) )
-      {
+      } else if( HB_IS_STRING(pStart) ) {
          hb_vmPushDynSym(hb_dynsymGet(hb_itemGetCPtr(pStart)));
          hb_vmPushNil();
-      }
-      else
-      {
+      } else {
          ulPCount = 0;
       }
    }
 
-   if( ulPCount > 0 )
-   {
-      for( HB_ULONG ulParam = 2; ulParam <= ulPCount; ++ulParam )
-      {
+   if( ulPCount > 0 ) {
+      for( HB_ULONG ulParam = 2; ulParam <= ulPCount; ++ulParam ) {
          hb_vmPush(hb_arrayGetItemPtr(pThread->pParams, ulParam));
       }
 
       hb_itemRelease(pThread->pParams);
       pThread->pParams = nullptr;
 
-      if( fSend )
-      {
+      if( fSend ) {
          hb_vmSend(static_cast<HB_USHORT>(ulPCount - 1));
-      }
-      else
-      {
+      } else {
          hb_vmProc(static_cast<HB_USHORT>(ulPCount - 1));
       }
-   }
-   else
-   {
+   } else {
       hb_itemRelease(pThread->pParams);
       pThread->pParams = nullptr;
-      if( pThread->pMemvars )
-      {
+      if( pThread->pMemvars ) {
          hb_itemRelease(pThread->pMemvars);
          pThread->pMemvars = nullptr;
       }
@@ -1014,8 +943,7 @@ static HB_THREAD_STARTFUNC(hb_threadStartFunc)
    hb_vmThreadQuit();
 
    HB_CRITICAL_LOCK(s_thread_mtx);
-   if( s_waiting_for_threads )
-   {
+   if( s_waiting_for_threads ) {
       HB_COND_SIGNALN(s_thread_cond, s_waiting_for_threads);
       s_waiting_for_threads = 0;
    }
@@ -1027,11 +955,8 @@ static HB_THREAD_STARTFUNC(hb_threadStartFunc)
 
 PHB_THREADSTATE hb_threadStateNew(void)
 {
-   PHB_ITEM pThItm;
-   PHB_THREADSTATE pThread;
-
-   pThItm = hb_itemNew(nullptr);
-   pThread = static_cast<PHB_THREADSTATE>(hb_gcAllocRaw(sizeof(HB_THREADSTATE), &s_gcThreadFuncs));
+   PHB_ITEM pThItm = hb_itemNew(nullptr);
+   PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(hb_gcAllocRaw(sizeof(HB_THREADSTATE), &s_gcThreadFuncs));
    memset(pThread, 0, sizeof(HB_THREADSTATE));
    hb_itemPutPtrRawGC(pThItm, pThread);
 
@@ -1052,9 +977,8 @@ PHB_THREADSTATE hb_threadStateNew(void)
 PHB_THREADSTATE hb_threadStateClone(HB_ULONG ulAttr, PHB_ITEM pParams)
 {
    HB_STACK_TLS_PRELOAD
-   PHB_THREADSTATE pThread;
 
-   pThread = hb_threadStateNew();
+   PHB_THREADSTATE pThread = hb_threadStateNew();
 #if defined(HB_MT_VM)
    if( hb_stackId() != nullptr )
 #endif
@@ -1065,30 +989,22 @@ PHB_THREADSTATE hb_threadStateClone(HB_ULONG ulAttr, PHB_ITEM pParams)
       pThread->pszDefRDD = hb_stackRDD()->szDefaultRDD;
       pThread->pSet      = hb_setClone(hb_stackSetStruct());
 
-      if( (ulAttr & HB_THREAD_INHERIT_MEMVARS) != 0 )
-      {
+      if( (ulAttr & HB_THREAD_INHERIT_MEMVARS) != 0 ) {
          int iScope = 0;
-         if( (ulAttr & HB_THREAD_INHERIT_PUBLIC) != 0 )
-         {
+         if( (ulAttr & HB_THREAD_INHERIT_PUBLIC) != 0 ) {
             iScope |= HB_MV_PUBLIC;
          }
-         if( (ulAttr & HB_THREAD_INHERIT_PRIVATE) != 0 )
-         {
+         if( (ulAttr & HB_THREAD_INHERIT_PRIVATE) != 0 ) {
             iScope |= HB_MV_PRIVATE;
          }
          pThread->pMemvars = hb_memvarSaveInArray(iScope, (ulAttr & HB_THREAD_MEMVARS_COPY) != 0);
       }
-      if( pParams && hb_arrayLen(pParams) > 0 )
-      {
+      if( pParams && hb_arrayLen(pParams) > 0 ) {
          /* detach LOCAL variables passed by reference */
-         HB_SIZE nPCount;
-
-         nPCount = hb_arrayLen(pParams);
-         for( HB_SIZE nParam = 1; nParam <= nPCount; ++nParam )
-         {
+         HB_SIZE nPCount = hb_arrayLen(pParams);
+         for( HB_SIZE nParam = 1; nParam <= nPCount; ++nParam ) {
             PHB_ITEM pParam = hb_arrayGetItemPtr(pParams, nParam);
-            if( HB_IS_BYREF(pParam) )
-            {
+            if( HB_IS_BYREF(pParam) ) {
                hb_memvarDetachLocal(pParam);
             }
          }
@@ -1102,8 +1018,7 @@ static PHB_THREADSTATE hb_thParam(int iParam, int iPos)
 {
    PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(hb_parvptrGC(&s_gcThreadFuncs, iParam, iPos));
 
-   if( pThread )
-   {
+   if( pThread ) {
       return pThread;
    }
 
@@ -1127,13 +1042,11 @@ PHB_ITEM hb_threadStart(HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void * cargo)
    pThread->cargo = cargo;
    pReturn = hb_itemNew(pThread->pThItm);
 
-   if( hb_vmThreadRegister(static_cast<void*>(pThread)) )
-   {
+   if( hb_vmThreadRegister(static_cast<void*>(pThread)) ) {
       pThread->th_h = hb_threadCreate(&pThread->th_id, hb_threadStartFunc, static_cast<void*>(pThread));
    }
 
-   if( !pThread->th_h )
-   {
+   if( !pThread->th_h ) {
       hb_vmThreadRelease(pThread);
       hb_itemRelease(pReturn);
       pReturn = nullptr;
@@ -1144,120 +1057,92 @@ PHB_ITEM hb_threadStart(HB_ULONG ulAttr, PHB_CARGO_FUNC pFunc, void * cargo)
 
 HB_FUNC( HB_THREADSTART )
 {
-   HB_ULONG ulAttr = 0, ulStart = 1;
-   const char * szFuncName = nullptr;
-   PHB_SYMB pSymbol = nullptr;
-   PHB_ITEM pStart;
+   HB_ULONG ulAttr = 0;
+   HB_ULONG ulStart = 1;
 
-   pStart = hb_param(ulStart, Harbour::Item::ANY);
-   while( pStart && HB_IS_NUMERIC(pStart) )
-   {
+   PHB_ITEM pStart = hb_param(ulStart, Harbour::Item::ANY);
+   while( pStart && HB_IS_NUMERIC(pStart) ) {
       ulAttr |= static_cast<HB_ULONG>(hb_itemGetNL(pStart));
       pStart = hb_param(++ulStart, Harbour::Item::ANY);
    }
 
-   if( pStart )
-   {
-      if( HB_IS_STRING(pStart) )
-      {
-         PHB_DYNS pDynSym;
+   const char * szFuncName = nullptr;
+   PHB_SYMB pSymbol = nullptr;
+
+   if( pStart ) {
+      if( HB_IS_STRING(pStart) ) {
          szFuncName = hb_itemGetCPtr(pStart);
-         pDynSym = hb_dynsymFindName(szFuncName);
-         if( pDynSym )
-         {
+         PHB_DYNS pDynSym = hb_dynsymFindName(szFuncName);
+         if( pDynSym ) {
             pSymbol = pDynSym->pSymbol;
          }
-         if( !pSymbol || !pSymbol->value.pFunPtr )
-         {
+         if( !pSymbol || !pSymbol->value.pFunPtr ) {
             pStart = nullptr;
          }
-      }
-      else if( HB_IS_SYMBOL(pStart) )
-      {
+      } else if( HB_IS_SYMBOL(pStart) ) {
          pSymbol = hb_itemGetSymbol(pStart);
-         if( !pSymbol->value.pFunPtr )
-         {
+         if( !pSymbol->value.pFunPtr ) {
             szFuncName = pSymbol->szName;
             pStart = nullptr;
          }
-      }
-      else if( !HB_IS_BLOCK(pStart) )
-      {
+      } else if( !HB_IS_BLOCK(pStart) ) {
          pStart = nullptr;
       }
    }
 
-   if( pStart )
-   {
+   if( pStart ) {
 #if !defined(HB_MT_VM)
       HB_STACK_TLS_PRELOAD
       HB_SYMBOL_UNUSED(ulAttr);
       hb_ret();
 #else
       HB_STACK_TLS_PRELOAD
-      PHB_THREADSTATE pThread;
-      PHB_ITEM pReturn, pParams;
-      HB_SIZE nPCount;
 
-      pParams = hb_arrayBaseParams();
-      nPCount = hb_arrayLen(pParams);
+      PHB_ITEM pParams = hb_arrayBaseParams();
+      HB_SIZE nPCount = hb_arrayLen(pParams);
 
       /* remove thread attributes */
-      if( ulStart > 1 )
-      {
-         do
-         {
+      if( ulStart > 1 ) {
+         do {
             hb_arrayDel(pParams, 1);
             nPCount--;
-         }
-         while( --ulStart > 1 );
+         } while( --ulStart > 1 );
          hb_arraySize(pParams, nPCount);
       }
 
       /* update startup item if necessary */
-      if( HB_IS_STRING(pStart) && pSymbol )
-      {
+      if( HB_IS_STRING(pStart) && pSymbol ) {
          hb_itemPutSymbol(hb_arrayGetItemPtr(pParams, 1), pSymbol);
-      }
-      else
-      {
+      } else {
          PHB_ITEM pParam = hb_arrayGetItemPtr(pParams, 1);
-         if( HB_IS_BYREF(pParam) )
-         {
+         if( HB_IS_BYREF(pParam) ) {
             hb_itemCopy(pParam, hb_itemUnRef(pParam));
          }
       }
 
-      pThread = hb_threadStateClone(ulAttr, pParams);
+      PHB_THREADSTATE pThread = hb_threadStateClone(ulAttr, pParams);
       pThread->pFunc = hb_threadStartVM;
       pThread->cargo = pThread;
-      pReturn = pThread->pThItm;
+      PHB_ITEM pReturn = pThread->pThItm;
 
       /* make copy of thread pointer item before we pass it to new thread
        * to avoid race condition
        */
       hb_itemReturn(pReturn);
 
-      if( hb_vmThreadRegister(static_cast<void*>(pThread)) )
-      {
+      if( hb_vmThreadRegister(static_cast<void*>(pThread)) ) {
          pThread->th_h = hb_threadCreate(&pThread->th_id, hb_threadStartFunc, static_cast<void*>(pThread));
       }
 
-      if( !pThread->th_h )
-      {
+      if( !pThread->th_h ) {
          hb_vmThreadRelease(pThread);
          hb_ret();
       }
 #endif
-   }
-   else
-   {
-      if( szFuncName )
-      {
+   } else {
+      if( szFuncName ) {
          hb_errRT_BASE_SubstR(EG_NOFUNC, 1001, nullptr, szFuncName, 0);
-      }
-      else
-      {
+      } else {
          hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       }
    }
@@ -1273,8 +1158,7 @@ HB_FUNC( HB_THREADSELF )
     * item (in practice it can be only thread return value) and parent
     * thread destroyed this thread pointer item. [druzus]
     */
-   if( pThread )
-   {
+   if( pThread ) {
       hb_itemReturn(pThread->pThItm);
    }
 #endif
@@ -1286,23 +1170,16 @@ HB_FUNC( HB_THREADID )
    HB_STACK_TLS_PRELOAD
    PHB_THREADSTATE pThread;
 
-   if( hb_pcount() > 0 )
-   {
+   if( hb_pcount() > 0 ) {
       pThread = hb_thParam(1, 0);
-      if( pThread )
-      {
+      if( pThread ) {
          hb_retnint(pThread->th_no);
       }
-   }
-   else
-   {
+   } else {
       pThread = static_cast<PHB_THREADSTATE>(hb_vmThreadState());
-      if( pThread )
-      {
+      if( pThread ) {
          hb_retnint(pThread->th_no);
-      }
-      else
-      {
+      } else {
          hb_retnint(0);
       }
    }
@@ -1316,16 +1193,12 @@ HB_FUNC( HB_THREADISMAIN )
 #if defined(HB_MT_VM)
    HB_STACK_TLS_PRELOAD
 
-   if( hb_pcount() > 0 )
-   {
+   if( hb_pcount() > 0 ) {
       PHB_THREADSTATE pThread = hb_thParam(1, 0);
-      if( pThread )
-      {
+      if( pThread ) {
          hb_retl(hb_vmThreadIsMain(pThread));
       }
-   }
-   else
-   {
+   } else {
       hb_retl(hb_vmThreadIsMain(nullptr));
    }
 #else
@@ -1334,69 +1207,55 @@ HB_FUNC( HB_THREADISMAIN )
 }
 
 #if defined(HB_MT_VM)
-static int hb_threadWait(PHB_THREADSTATE * pThreads, int iThreads, HB_BOOL fAll, HB_ULONG ulMilliSec)
+static int hb_threadWait(PHB_THREADSTATE * pThreads, int iThreads, bool fAll, HB_ULONG ulMilliSec)
 {
-   int iFinished, iResult = 0;
-   HB_BOOL fExit = ulMilliSec == 0;
+   int iFinished;
+   int iResult = 0;
+   bool fExit = ulMilliSec == 0;
 
 #if defined(HB_PTHREAD_API)
    struct timespec ts;
 
-   if( ulMilliSec != HB_THREAD_INFINITE_WAIT )
-   {
+   if( ulMilliSec != HB_THREAD_INFINITE_WAIT ) {
       hb_threadTimeInit(&ts, ulMilliSec);
-   }
-   else
-   {
+   } else {
       ts.tv_sec = ts.tv_nsec = 0;
    }
 #else
    HB_MAXUINT timer;
 
-   if( ulMilliSec != HB_THREAD_INFINITE_WAIT )
-   {
+   if( ulMilliSec != HB_THREAD_INFINITE_WAIT ) {
       timer = hb_timerGet() + ulMilliSec;
-   }
-   else
-   {
+   } else {
       timer = 0;
    }
 #endif
 
    HB_CRITICAL_LOCK(s_thread_mtx);
-   for( ;; )
-   {
-      for( int i = iFinished = 0; i < iThreads; ++i )
-      {
-         if( pThreads[i]->fFinished )
-         {
+   for( ;; ) {
+      for( int i = iFinished = 0; i < iThreads; ++i ) {
+         if( pThreads[i]->fFinished ) {
             iFinished++;
-            if( !fAll )
-            {
+            if( !fAll ) {
                iResult = i + 1;
                break;
             }
          }
       }
-      if( iFinished >= (fAll ? iThreads : 1) )
-      {
+      if( iFinished >= (fAll ? iThreads : 1) ) {
          break;
       }
 
-      if( fExit )
-      {
+      if( fExit ) {
          break;
       }
 
       s_waiting_for_threads++;
 #if defined(HB_PTHREAD_API)
       hb_vmUnlock();
-      if( ulMilliSec != HB_THREAD_INFINITE_WAIT )
-      {
+      if( ulMilliSec != HB_THREAD_INFINITE_WAIT ) {
          fExit = pthread_cond_timedwait(&s_thread_cond, &s_thread_mtx, &ts) != 0;
-      }
-      else
-      {
+      } else {
          fExit = pthread_cond_wait(&s_thread_cond, &s_thread_mtx) != 0;
       }
       hb_vmLock();
@@ -1416,27 +1275,21 @@ static int hb_threadWait(PHB_THREADSTATE * pThreads, int iThreads, HB_BOOL fAll,
       fExit = !HB_COND_TIMEDWAIT(s_thread_cond, ulMilliSec);
       hb_vmLock();
       HB_CRITICAL_LOCK(s_thread_mtx);
-      if( fExit )
-      {
+      if( fExit ) {
          s_waiting_for_threads--;
       }
 #  endif
-      if( !fExit && timer )
-      {
+      if( !fExit && timer ) {
          HB_MAXUINT curr = hb_timerGet();
-         if( timer <= curr )
-         {
-            fExit = HB_TRUE;
-         }
-         else
-         {
+         if( timer <= curr ) {
+            fExit = true;
+         } else {
             ulMilliSec = static_cast<HB_ULONG>(timer - curr);
          }
       }
 #endif
 
-      if( !fExit && hb_vmRequestQuery() != 0 )
-      {
+      if( !fExit && hb_vmRequestQuery() != 0 ) {
          break;
       }
    }
@@ -1450,25 +1303,20 @@ HB_FUNC( HB_THREADJOIN )
 {
    PHB_THREADSTATE pThread = hb_thParam(1, 0);
 
-   if( pThread )
-   {
+   if( pThread ) {
       HB_STACK_TLS_PRELOAD
-      HB_BOOL fResult = HB_FALSE;
+      bool fResult = false;
 
-      if( pThread->th_h )
-      {
+      if( pThread->th_h ) {
          hb_vmUnlock();
          fResult = hb_threadJoin(pThread->th_h);
-         if( fResult )
-         {
+         if( fResult ) {
             pThread->th_h = 0;
          }
          hb_vmLock();
       }
-      if( fResult )
-      {
-         if( pThread->pResult )
-         {
+      if( fResult ) {
+         if( pThread->pResult ) {
             hb_itemParamStoreForward(2, pThread->pResult);
             hb_itemRelease(pThread->pResult);
             pThread->pResult = nullptr;
@@ -1482,15 +1330,13 @@ HB_FUNC( HB_THREADDETACH )
 {
    PHB_THREADSTATE pThread = hb_thParam(1, 0);
 
-   if( pThread )
-   {
+   if( pThread ) {
       HB_STACK_TLS_PRELOAD
-      HB_BOOL fResult = HB_FALSE;
+      bool fResult = false;
 
-      if( pThread->th_h && hb_threadDetach(pThread->th_h) )
-      {
+      if( pThread->th_h && hb_threadDetach(pThread->th_h) ) {
          pThread->th_h = 0;
-         fResult = HB_TRUE;
+         fResult = true;
       }
       hb_retl(fResult);
    }
@@ -1500,16 +1346,14 @@ HB_FUNC( HB_THREADQUITREQUEST )
 {
    PHB_THREADSTATE pThread = hb_thParam(1, 0);
 
-   if( pThread )
-   {
+   if( pThread ) {
       HB_STACK_TLS_PRELOAD
-      HB_BOOL fResult = HB_FALSE;
+      bool fResult = false;
 
 #if defined(HB_MT_VM)
-      if( pThread->fActive )
-      {
+      if( pThread->fActive ) {
          hb_vmThreadQuitRequest(static_cast<void*>(pThread));
-         fResult = HB_TRUE;
+         fResult = true;
       }
 #endif
       hb_retl(fResult);
@@ -1522,46 +1366,37 @@ HB_FUNC( HB_THREADWAIT )
 #  define HB_THREAD_WAIT_ALLOC  16
    HB_STACK_TLS_PRELOAD
    HB_ULONG ulMilliSec = HB_THREAD_INFINITE_WAIT;
-   PHB_THREADSTATE * pThreads, pAlloc[HB_THREAD_WAIT_ALLOC];
+   PHB_THREADSTATE pAlloc[HB_THREAD_WAIT_ALLOC];
    int iThreads = -1;
 
-   pThreads = pAlloc;
-   if( HB_ISARRAY(1) )
-   {
+   PHB_THREADSTATE * pThreads = pAlloc;
+   if( HB_ISARRAY(1) ) {
       PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
       int iLen = static_cast<int>(hb_arrayLen(pArray)), i;
 
-      for( i = iThreads = 0; i < iLen; ++i )
-      {
+      for( i = iThreads = 0; i < iLen; ++i ) {
          PHB_THREADSTATE pThread = hb_thParam(1, i + 1);
-         if( !pThread )
-         {
+         if( !pThread ) {
             iThreads = -1;
             break;
          }
-         if( pThreads == pAlloc && iThreads >= HB_THREAD_WAIT_ALLOC )
-         {
+         if( pThreads == pAlloc && iThreads >= HB_THREAD_WAIT_ALLOC ) {
             pThreads = static_cast<PHB_THREADSTATE*>(hb_xgrab(sizeof(PHB_THREADSTATE) * iLen));
             memcpy(pThreads, pAlloc, sizeof(pAlloc));
          }
          pThreads[iThreads++] = pThread;
       }
-   }
-   else
-   {
+   } else {
       pThreads[0] = hb_thParam(1, 0);
-      if( pThreads[0] )
-      {
+      if( pThreads[0] ) {
          iThreads = 1;
       }
    }
 
-   if( iThreads > 0 )
-   {
-      HB_BOOL fAll;
+   if( iThreads > 0 ) {
+      bool fAll;
 
-      if( HB_ISNUM(2) )
-      {
+      if( HB_ISNUM(2) ) {
          double dTimeOut = hb_parnd(2);
          ulMilliSec = dTimeOut > 0 ? static_cast<HB_ULONG>(dTimeOut * 1000) : 0;
       }
@@ -1569,14 +1404,11 @@ HB_FUNC( HB_THREADWAIT )
       fAll = hb_parl(3);
 
       hb_retni(hb_threadWait(pThreads, iThreads, fAll, ulMilliSec));
-   }
-   else if( iThreads == 0 )
-   {
+   } else if( iThreads == 0 ) {
       hb_retni(0);
    }
 
-   if( pThreads != pAlloc )
-   {
+   if( pThreads != pAlloc ) {
       hb_xfree(pThreads);
    }
 #endif
@@ -1614,55 +1446,44 @@ HB_FUNC( HB_THREADONCE )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
 
-   if( pItem && HB_ISBYREF(1) && (HB_IS_NIL(pItem) || HB_IS_LOGICAL(pItem)) )
-   {
+   if( pItem && HB_ISBYREF(1) && (HB_IS_NIL(pItem) || HB_IS_LOGICAL(pItem)) ) {
       HB_STACK_TLS_PRELOAD
-      HB_BOOL fFirstCall = HB_FALSE;
-      if( HB_IS_NIL(pItem) || !hb_itemGetL(pItem) )
-      {
+      bool fFirstCall = false;
+      if( HB_IS_NIL(pItem) || !hb_itemGetL(pItem) ) {
          PHB_ITEM pAction = hb_param(2, Harbour::Item::EVALITEM);
 
 #if defined(HB_MT_VM)
-         if( !s_pOnceMutex )
-         {
-            if( !s_fThreadInit )
-            {
+         if( !s_pOnceMutex ) {
+            if( !s_fThreadInit ) {
                hb_threadInit();
             }
             HB_CRITICAL_LOCK(s_once_mtx);
-            if( !s_pOnceMutex )
-            {
+            if( !s_pOnceMutex ) {
                s_pOnceMutex = hb_threadMutexCreate();
             }
             HB_CRITICAL_UNLOCK(s_once_mtx);
          }
-         if( hb_threadMutexLock(s_pOnceMutex) )
-         {
-            if( HB_IS_NIL(pItem) )
-            {
-               if( pAction )
-               {
+         if( hb_threadMutexLock(s_pOnceMutex) ) {
+            if( HB_IS_NIL(pItem) ) {
+               if( pAction ) {
                   hb_storl(false, 1);
                   hb_vmEvalBlock(pAction);
                }
                hb_storl(true, 1);
-               fFirstCall = HB_TRUE;
+               fFirstCall = true;
             }
             hb_threadMutexUnlock(s_pOnceMutex);
          }
 #else
          hb_storl(true, 1);
-         fFirstCall = HB_TRUE;
-         if( pAction )
-         {
+         fFirstCall = true;
+         if( pAction ) {
             hb_vmEvalBlock(pAction);
          }
 #endif
       }
       hb_retl(fFirstCall);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -1675,37 +1496,31 @@ HB_FUNC( HB_THREADONCEINIT )
    PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
    PHB_ITEM pValue = hb_param(2, Harbour::Item::ANY);
 
-   if( pItem && pValue && HB_ISBYREF(1) && !HB_ISBYREF(2) )
-   {
+   if( pItem && pValue && HB_ISBYREF(1) && !HB_ISBYREF(2) ) {
       HB_STACK_TLS_PRELOAD
-      HB_BOOL fInitialized = HB_FALSE;
+      bool fInitialized = false;
 
-      if( HB_IS_NIL(pItem) && !HB_IS_NIL(pValue) )
-      {
+      if( HB_IS_NIL(pItem) && !HB_IS_NIL(pValue) ) {
 #if defined(HB_MT_VM)
-         if( !s_fThreadInit )
-         {
+         if( !s_fThreadInit ) {
             hb_threadInit();
          }
          HB_CRITICAL_LOCK(s_once_mtx);
-         if( HB_IS_NIL(pItem) )
-         {
+         if( HB_IS_NIL(pItem) ) {
             /* special core code only macro used to eliminate race condition
              * in unprotected readonly access to pItem variable.
              */
             hb_itemSafeMove(pItem, pValue);
-            fInitialized = HB_TRUE;
+            fInitialized = true;
          }
          HB_CRITICAL_UNLOCK(s_once_mtx);
 #else
          hb_itemSafeMove(pItem, pValue);
-         fInitialized = HB_TRUE;
+         fInitialized = true;
 #endif
       }
       hb_retl(fInitialized);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -1734,15 +1549,12 @@ static PHB_MUTEX s_pMutexList = nullptr;
 
 static void hb_mutexLink(PHB_MUTEX * pList, PHB_MUTEX pItem)
 {
-   if( *pList )
-   {
+   if( *pList ) {
       pItem->pNext = *pList;
       pItem->pPrev = (*pList)->pPrev;
       pItem->pPrev->pNext = pItem;
       (*pList)->pPrev = pItem;
-   }
-   else
-   {
+   } else {
       *pList = pItem->pNext = pItem->pPrev = pItem;
    }
 }
@@ -1751,11 +1563,9 @@ static void hb_mutexUnlink(PHB_MUTEX * pList, PHB_MUTEX pItem)
 {
    pItem->pPrev->pNext = pItem->pNext;
    pItem->pNext->pPrev = pItem->pPrev;
-   if( *pList == pItem )
-   {
+   if( *pList == pItem ) {
       *pList = pItem->pNext;
-      if( *pList == pItem )
-      {
+      if( *pList == pItem ) {
          *pList = nullptr;    /* this was the last block */
       }
    }
@@ -1765,28 +1575,22 @@ static void hb_mutexUnlink(PHB_MUTEX * pList, PHB_MUTEX pItem)
 void hb_threadMutexUnlockAll(void)
 {
    HB_CRITICAL_LOCK(s_mutexlst_mtx);
-   if( s_pMutexList )
-   {
+   if( s_pMutexList ) {
       PHB_MUTEX pMutex = s_pMutexList;
-      do
-      {
-         if( HB_THREAD_EQUAL(pMutex->owner, HB_THREAD_SELF()) )
-         {
+      do {
+         if( HB_THREAD_EQUAL(pMutex->owner, HB_THREAD_SELF()) ) {
             HB_CRITICAL_LOCK(pMutex->mutex);
-            if( HB_THREAD_EQUAL(pMutex->owner, HB_THREAD_SELF()) )
-            {
+            if( HB_THREAD_EQUAL(pMutex->owner, HB_THREAD_SELF()) ) {
                pMutex->lock_count = 0;
                pMutex->owner = static_cast<HB_THREAD_ID>(0);
-               if( pMutex->lockers )
-               {
+               if( pMutex->lockers ) {
                   HB_COND_SIGNAL(pMutex->cond_l);
                }
             }
             HB_CRITICAL_UNLOCK(pMutex->mutex);
          }
          pMutex = pMutex->pNext;
-      }
-      while( pMutex != s_pMutexList );
+      } while( pMutex != s_pMutexList );
    }
    HB_CRITICAL_UNLOCK(s_mutexlst_mtx);
 }
@@ -1794,23 +1598,18 @@ void hb_threadMutexUnlockAll(void)
 void hb_threadMutexUnsubscribeAll(void)
 {
    HB_CRITICAL_LOCK(s_mutexlst_mtx);
-   if( s_pMutexList )
-   {
+   if( s_pMutexList ) {
       PHB_MUTEX pMutex = s_pMutexList;
-      do
-      {
-         if( pMutex->waiters )
-         {
+      do {
+         if( pMutex->waiters ) {
             HB_CRITICAL_LOCK(pMutex->mutex);
-            if( pMutex->waiters )
-            {
+            if( pMutex->waiters ) {
                HB_COND_SIGNALN(pMutex->cond_w, pMutex->waiters);
             }
             HB_CRITICAL_UNLOCK(pMutex->mutex);
          }
          pMutex = pMutex->pNext;
-      }
-      while( pMutex != s_pMutexList );
+      } while( pMutex != s_pMutexList );
    }
    HB_CRITICAL_UNLOCK(s_mutexlst_mtx);
 }
@@ -1828,8 +1627,7 @@ static HB_GARBAGE_FUNC(hb_mutexDestructor)
    hb_mutexUnlink(&s_pMutexList, pMutex);
 #endif
 
-   if( pMutex->events )
-   {
+   if( pMutex->events ) {
       hb_itemRelease(pMutex->events);
       pMutex->events = nullptr;
    }
@@ -1849,8 +1647,7 @@ static HB_GARBAGE_FUNC(hb_mutexMark)
 {
    PHB_MUTEX pMutex = static_cast<PHB_MUTEX>(Cargo);
 
-   if( pMutex->events )
-   {
+   if( pMutex->events ) {
       hb_gcMark(pMutex->events);
    }
 }
@@ -1870,8 +1667,7 @@ static PHB_ITEM hb_mutexParam(int iParam)
 {
    PHB_ITEM pItem = hb_param(iParam, Harbour::Item::POINTER);
 
-   if( hb_itemGetPtrGC(pItem, &s_gcMutexFuncs) )
-   {
+   if( hb_itemGetPtrGC(pItem, &s_gcMutexFuncs) ) {
       return pItem;
    }
 
@@ -1881,11 +1677,8 @@ static PHB_ITEM hb_mutexParam(int iParam)
 
 PHB_ITEM hb_threadMutexCreate(void)
 {
-   PHB_MUTEX pMutex;
-   PHB_ITEM pItem;
-
-   pItem = hb_itemNew(nullptr);
-   pMutex = static_cast<PHB_MUTEX>(hb_gcAllocRaw(sizeof(HB_MUTEX), &s_gcMutexFuncs));
+   PHB_ITEM pItem = hb_itemNew(nullptr);
+   PHB_MUTEX pMutex = static_cast<PHB_MUTEX>(hb_gcAllocRaw(sizeof(HB_MUTEX), &s_gcMutexFuncs));
    memset(pMutex, 0, sizeof(HB_MUTEX));
    pItem = hb_itemPutPtrRawGC(pItem, pMutex);
 
@@ -1915,21 +1708,16 @@ void hb_threadMutexSyncSignal(PHB_ITEM pItemMtx)
 {
    PHB_MUTEX pMutex = hb_mutexPtr(pItemMtx);
 
-   if( pMutex )
-   {
+   if( pMutex ) {
       hb_vmUnlock();
       HB_CRITICAL_LOCK(pMutex->mutex);
 
-      if( pMutex->waiters )
-      {
+      if( pMutex->waiters ) {
          int iCount = pMutex->waiters - pMutex->syncsignals;
 
-         if( iCount == 1 )
-         {
+         if( iCount == 1 ) {
             HB_COND_SIGNAL(pMutex->cond_w);
-         }
-         else if( iCount > 0 )
-         {
+         } else if( iCount > 0 ) {
             HB_COND_SIGNALN(pMutex->cond_w, iCount);
          }
       }
@@ -1942,48 +1730,39 @@ void hb_threadMutexSyncSignal(PHB_ITEM pItemMtx)
 HB_BOOL hb_threadMutexSyncWait(PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM pItemSync)
 {
    PHB_MUTEX pMutex = hb_mutexPtr(pItemMtx), pSyncMutex = nullptr;
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
-   if( pMutex )
-   {
-      if( pItemSync )
-      {
+   if( pMutex ) {
+      if( pItemSync ) {
          pSyncMutex = hb_mutexPtr(pItemSync);
-         if( !pSyncMutex )
-         {
+         if( !pSyncMutex ) {
             pMutex = nullptr;
          }
       }
    }
 
-   if( pMutex )
-   {
+   if( pMutex ) {
       int lock_count = 0;
 
       hb_vmUnlock();
 
       HB_CRITICAL_LOCK(pMutex->mutex);
 
-      if( ulMilliSec && pMutex->syncsignals == 0 )
-      {
+      if( ulMilliSec && pMutex->syncsignals == 0 ) {
          /* release own lock from sync mutex */
-         if( pSyncMutex && HB_THREAD_EQUAL(pSyncMutex->owner, HB_THREAD_SELF()) )
-         {
+         if( pSyncMutex && HB_THREAD_EQUAL(pSyncMutex->owner, HB_THREAD_SELF()) ) {
             HB_CRITICAL_LOCK(pSyncMutex->mutex);
             lock_count = pSyncMutex->lock_count;
             pSyncMutex->lock_count = 0;
             pSyncMutex->owner = static_cast<HB_THREAD_ID>(0);
-            if( pSyncMutex->lockers )
-            {
+            if( pSyncMutex->lockers ) {
                HB_COND_SIGNAL(pSyncMutex->cond_l);
             }
             HB_CRITICAL_UNLOCK(pSyncMutex->mutex);
          }
 
-         if( ulMilliSec == HB_THREAD_INFINITE_WAIT )
-         {
-            while( pMutex->syncsignals == 0 )
-            {
+         if( ulMilliSec == HB_THREAD_INFINITE_WAIT ) {
+            while( pMutex->syncsignals == 0 ) {
                pMutex->waiters++;
 #  if defined(HB_PTHREAD_API)
                pthread_cond_wait(&pMutex->cond_w, &pMutex->mutex);
@@ -1998,19 +1777,14 @@ HB_BOOL hb_threadMutexSyncWait(PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM 
 #  endif
                pMutex->waiters--;
             }
-         }
-         else
-         {
+         } else {
             pMutex->waiters++;
 #  if defined(HB_PTHREAD_API)
             {
                struct timespec ts;
-
                hb_threadTimeInit(&ts, ulMilliSec);
-               while( pMutex->syncsignals == 0 )
-               {
-                  if( pthread_cond_timedwait(&pMutex->cond_w, &pMutex->mutex, &ts) != 0 )
-                  {
+               while( pMutex->syncsignals == 0 ) {
+                  if( pthread_cond_timedwait(&pMutex->cond_w, &pMutex->mutex, &ts) != 0 ) {
                      break;
                   }
                }
@@ -2036,23 +1810,19 @@ HB_BOOL hb_threadMutexSyncWait(PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM 
          }
       }
 
-      if( pMutex->syncsignals > 0 )
-      {
+      if( pMutex->syncsignals > 0 ) {
          pMutex->syncsignals--;
-         fResult = HB_TRUE;
+         fResult = true;
       }
 
       HB_CRITICAL_UNLOCK(pMutex->mutex);
 
       /* restore the own lock on sync mutex if necessary */
-      if( lock_count )
-      {
+      if( lock_count ) {
          HB_CRITICAL_LOCK(pSyncMutex->mutex);
-         if( pSyncMutex->owner )
-         {
+         if( pSyncMutex->owner ) {
             pSyncMutex->lockers++;
-            while( pSyncMutex->lock_count != 0 )
-            {
+            while( pSyncMutex->lock_count != 0 ) {
 #  if defined(HB_PTHREAD_API)
                pthread_cond_wait(&pSyncMutex->cond_l, &pSyncMutex->mutex);
 #  elif defined(HB_TASK_THREAD)
@@ -2082,33 +1852,27 @@ HB_BOOL hb_threadMutexSyncWait(PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM 
 HB_BOOL hb_threadMutexUnlock(PHB_ITEM pItem)
 {
    PHB_MUTEX pMutex = hb_mutexPtr(pItem);
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
-   if( pMutex )
-   {
+   if( pMutex ) {
 #if !defined(HB_MT_VM)
-      if( pMutex->lock_count )
-      {
-         if( --pMutex->lock_count == 0 )
-         {
+      if( pMutex->lock_count ) {
+         if( --pMutex->lock_count == 0 ) {
             pMutex->owner = static_cast<HB_THREAD_ID>(0);
          }
-         fResult = HB_TRUE;
+         fResult = true;
       }
 #else
       hb_vmUnlock();
       HB_CRITICAL_LOCK(pMutex->mutex);
-      if( HB_THREAD_EQUAL(pMutex->owner, HB_THREAD_SELF()) )
-      {
-         if( --pMutex->lock_count == 0 )
-         {
+      if( HB_THREAD_EQUAL(pMutex->owner, HB_THREAD_SELF()) ) {
+         if( --pMutex->lock_count == 0 ) {
             pMutex->owner = static_cast<HB_THREAD_ID>(0);
-            if( pMutex->lockers )
-            {
+            if( pMutex->lockers ) {
                HB_COND_SIGNAL(pMutex->cond_l);
             }
          }
-         fResult = HB_TRUE;
+         fResult = true;
       }
       HB_CRITICAL_UNLOCK(pMutex->mutex);
       hb_vmLock();
@@ -2120,10 +1884,9 @@ HB_BOOL hb_threadMutexUnlock(PHB_ITEM pItem)
 HB_BOOL hb_threadMutexLock(PHB_ITEM pItem)
 {
    PHB_MUTEX pMutex = hb_mutexPtr(pItem);
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
-   if( pMutex )
-   {
+   if( pMutex ) {
 #if !defined(HB_MT_VM)
       pMutex->lock_count++;
       #if defined( HB_OS_DARWIN ) // TODO: revisar
@@ -2131,30 +1894,25 @@ HB_BOOL hb_threadMutexLock(PHB_ITEM pItem)
       #else
       pMutex->owner = static_cast<HB_THREAD_ID>(1);
       #endif
-      fResult = HB_TRUE;
+      fResult = true;
 #else
 #  if !defined(HB_HELGRIND_FRIENDLY)
-      if( HB_THREAD_EQUAL(pMutex->owner, HB_THREAD_SELF()) )
-      {
+      if( HB_THREAD_EQUAL(pMutex->owner, HB_THREAD_SELF()) ) {
          pMutex->lock_count++;
-         fResult = HB_TRUE;
-      }
-      else
+         fResult = true;
+      } else
 #endif
       {
          hb_vmUnlock();
 
          HB_CRITICAL_LOCK(pMutex->mutex);
 #  if defined(HB_HELGRIND_FRIENDLY)
-         if( HB_THREAD_EQUAL(pMutex->owner, HB_THREAD_SELF()) )
-         {
+         if( HB_THREAD_EQUAL(pMutex->owner, HB_THREAD_SELF()) ) {
             pMutex->lock_count++;
-         }
-         else
+         } else
 #  endif
          {
-            while( pMutex->lock_count != 0 )
-            {
+            while( pMutex->lock_count != 0 ) {
                pMutex->lockers++;
 #  if defined(HB_PTHREAD_API)
                pthread_cond_wait(&pMutex->cond_l, &pMutex->mutex);
@@ -2173,7 +1931,7 @@ HB_BOOL hb_threadMutexLock(PHB_ITEM pItem)
             pMutex->owner = HB_THREAD_SELF();
          }
          HB_CRITICAL_UNLOCK(pMutex->mutex);
-         fResult = HB_TRUE;
+         fResult = true;
 
          hb_vmLock();
       }
@@ -2185,10 +1943,9 @@ HB_BOOL hb_threadMutexLock(PHB_ITEM pItem)
 HB_BOOL hb_threadMutexTimedLock(PHB_ITEM pItem, HB_ULONG ulMilliSec)
 {
    PHB_MUTEX pMutex = hb_mutexPtr(pItem);
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
-   if( pMutex )
-   {
+   if( pMutex ) {
 #if !defined(HB_MT_VM)
       HB_SYMBOL_UNUSED(ulMilliSec);
       pMutex->lock_count++;
@@ -2197,23 +1954,18 @@ HB_BOOL hb_threadMutexTimedLock(PHB_ITEM pItem, HB_ULONG ulMilliSec)
       #else
       pMutex->owner = static_cast<HB_THREAD_ID>(1);
       #endif
-      fResult = HB_TRUE;
+      fResult = true;
 #else
-      if( HB_THREAD_EQUAL(pMutex->owner, HB_THREAD_SELF()) )
-      {
+      if( HB_THREAD_EQUAL(pMutex->owner, HB_THREAD_SELF()) ) {
          pMutex->lock_count++;
-         fResult = HB_TRUE;
-      }
-      else
-      {
+         fResult = true;
+      } else {
          hb_vmUnlock();
 
          HB_CRITICAL_LOCK(pMutex->mutex);
-         if( ulMilliSec && pMutex->lock_count != 0 )
-         {
+         if( ulMilliSec && pMutex->lock_count != 0 ) {
 #  if defined(HB_PTHREAD_API)
             struct timespec ts;
-
             hb_threadTimeInit(&ts, ulMilliSec);
 
             /* pthread_cond_signal() wakes up at least one thread
@@ -2221,14 +1973,11 @@ HB_BOOL hb_threadMutexTimedLock(PHB_ITEM pItem, HB_ULONG ulMilliSec)
              * we should use while loop here.
              */
             pMutex->lockers++;
-            do
-            {
-               if( pthread_cond_timedwait(&pMutex->cond_l, &pMutex->mutex, &ts) != 0 )
-               {
+            do {
+               if( pthread_cond_timedwait(&pMutex->cond_l, &pMutex->mutex, &ts) != 0 ) {
                   break;
                }
-            }
-            while( pMutex->lock_count != 0 );
+            } while( pMutex->lock_count != 0 );
             pMutex->lockers--;
 #  else
             /* TODO: on some platforms HB_COND_SIGNAL() may wake up more then
@@ -2252,11 +2001,10 @@ HB_BOOL hb_threadMutexTimedLock(PHB_ITEM pItem, HB_ULONG ulMilliSec)
 #     endif
 #  endif
          }
-         if( pMutex->lock_count == 0 )
-         {
+         if( pMutex->lock_count == 0 ) {
             pMutex->lock_count = 1;
             pMutex->owner = HB_THREAD_SELF();
-            fResult = HB_TRUE;
+            fResult = true;
          }
          HB_CRITICAL_UNLOCK(pMutex->mutex);
 
@@ -2270,22 +2018,17 @@ HB_BOOL hb_threadMutexTimedLock(PHB_ITEM pItem, HB_ULONG ulMilliSec)
 #if defined(HB_MT_VM)
 static void hb_thredMutexEventInit(PHB_MUTEX pMutex)
 {
-   PHB_ITEM pEvents;
-
    HB_CRITICAL_UNLOCK(pMutex->mutex);
    hb_vmLock();
-   pEvents = hb_itemArrayNew(0);
+   PHB_ITEM pEvents = hb_itemArrayNew(0);
    hb_vmUnlock();
    HB_CRITICAL_LOCK(pMutex->mutex);
-   if( pMutex->events == nullptr )
-   {
+   if( pMutex->events == nullptr ) {
       hb_vmLockForce();
       pMutex->events = pEvents;
       hb_gcUnlock(pMutex->events);
       hb_vmUnlock();
-   }
-   else
-   {
+   } else {
       HB_CRITICAL_UNLOCK(pMutex->mutex);
       hb_vmLock();
       hb_itemRelease(pEvents);
@@ -2299,59 +2042,41 @@ void hb_threadMutexNotify(PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting)
 {
    PHB_MUTEX pMutex = hb_mutexPtr(pItem);
 
-   if( pMutex )
-   {
+   if( pMutex ) {
 #if !defined(HB_MT_VM)
-      if( !fWaiting )
-      {
-         if( !pMutex->events )
-         {
+      if( !fWaiting ) {
+         if( !pMutex->events ) {
             pMutex->events = hb_itemArrayNew(1);
             hb_gcUnlock(pMutex->events);
-            if( pNotifier && !HB_IS_NIL(pNotifier) )
-            {
+            if( pNotifier && !HB_IS_NIL(pNotifier) ) {
                hb_arraySet(pMutex->events, 1, pNotifier);
             }
-         }
-         else if( pNotifier )
-         {
+         } else if( pNotifier ) {
             hb_arrayAdd(pMutex->events, pNotifier);
-         }
-         else
-         {
+         } else {
             hb_arraySize(pMutex->events, hb_arrayLen(pMutex->events) + 1);
          }
-      }
-      else if( pMutex->waiters )
-      {
+      } else if( pMutex->waiters ) {
          int iCount = pMutex->waiters;
          HB_ULONG ulLen;
 
-         if( pMutex->events )
-         {
+         if( pMutex->events ) {
             ulLen = static_cast<HB_ULONG>(hb_arrayLen(pMutex->events));
             iCount -= ulLen;
-            if( iCount > 0 )
-            {
+            if( iCount > 0 ) {
                hb_arraySize(pMutex->events, ulLen + iCount);
             }
-         }
-         else
-         {
+         } else {
             ulLen = 0;
             pMutex->events = hb_itemArrayNew(iCount);
             hb_gcUnlock(pMutex->events);
          }
-         if( iCount > 0 )
-         {
-            if( pNotifier && !HB_IS_NIL(pNotifier) )
-            {
+         if( iCount > 0 ) {
+            if( pNotifier && !HB_IS_NIL(pNotifier) ) {
                int iSet = iCount;
-               do
-               {
+               do {
                   hb_arraySet(pMutex->events, ++ulLen, pNotifier);
-               }
-               while( --iSet );
+               } while( --iSet );
             }
          }
       }
@@ -2359,55 +2084,39 @@ void hb_threadMutexNotify(PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting)
       hb_vmUnlock();
       HB_CRITICAL_LOCK(pMutex->mutex);
 
-      if( !fWaiting || pMutex->waiters )
-      {
-         if( !pMutex->events )
-         {
+      if( !fWaiting || pMutex->waiters ) {
+         if( !pMutex->events ) {
             hb_thredMutexEventInit(pMutex);
          }
 
-         if( !fWaiting )
-         {
+         if( !fWaiting ) {
             hb_vmLockForce();
-            if( pNotifier )
-            {
+            if( pNotifier ) {
                hb_arrayAdd(pMutex->events, pNotifier);
-            }
-            else
-            {
+            } else {
                hb_arraySize(pMutex->events, hb_arrayLen(pMutex->events) + 1);
             }
             hb_vmUnlock();
-            if( pMutex->waiters )
-            {
+            if( pMutex->waiters ) {
                HB_COND_SIGNAL(pMutex->cond_w);
             }
-         }
-         else if( pMutex->waiters )
-         {
+         } else if( pMutex->waiters ) {
             int iLen = static_cast<int>(hb_arrayLen(pMutex->events));
             int iCount = pMutex->waiters - iLen;
 
-            if( iCount > 0 )
-            {
+            if( iCount > 0 ) {
                hb_vmLockForce();
                hb_arraySize(pMutex->events, iLen + iCount);
-               if( pNotifier && !HB_IS_NIL(pNotifier) )
-               {
+               if( pNotifier && !HB_IS_NIL(pNotifier) ) {
                   int iSet = iCount;
-                  do
-                  {
+                  do {
                      hb_arraySet(pMutex->events, ++iLen, pNotifier);
-                  }
-                  while( --iSet );
+                  } while( --iSet );
                }
                hb_vmUnlock();
-               if( iCount == 1 )
-               {
+               if( iCount == 1 ) {
                   HB_COND_SIGNAL(pMutex->cond_w);
-               }
-               else
-               {
+               } else {
                   HB_COND_SIGNALN(pMutex->cond_w, iCount);
                }
             }
@@ -2424,17 +2133,12 @@ PHB_ITEM hb_threadMutexSubscribe(PHB_ITEM pItem, HB_BOOL fClear)
    PHB_MUTEX pMutex = hb_mutexPtr(pItem);
    PHB_ITEM pResult = nullptr;
 
-   if( pMutex )
-   {
+   if( pMutex ) {
 #if !defined(HB_MT_VM)
-      if( pMutex->events && hb_arrayLen(pMutex->events) > 0 )
-      {
-         if( fClear && pMutex->events )
-         {
+      if( pMutex->events && hb_arrayLen(pMutex->events) > 0 ) {
+         if( fClear && pMutex->events ) {
             hb_arraySize(pMutex->events, 0);
-         }
-         else
-         {
+         } else {
             pResult = hb_itemNew(nullptr);
             hb_arrayGet(pMutex->events, 1, pResult);
             hb_arrayDel(pMutex->events, 1);
@@ -2448,8 +2152,7 @@ PHB_ITEM hb_threadMutexSubscribe(PHB_ITEM pItem, HB_BOOL fClear)
       hb_vmUnlock();
       HB_CRITICAL_LOCK(pMutex->mutex);
 
-      if( fClear && pMutex->events )
-      {
+      if( fClear && pMutex->events ) {
          hb_vmLockForce();
          hb_itemMove(hb_stackAllocItem(), pMutex->events);
          pMutex->events = nullptr;
@@ -2460,19 +2163,16 @@ PHB_ITEM hb_threadMutexSubscribe(PHB_ITEM pItem, HB_BOOL fClear)
       }
 
       /* release own lock from this mutex */
-      if( HB_THREAD_EQUAL(pMutex->owner, HB_THREAD_SELF()) )
-      {
+      if( HB_THREAD_EQUAL(pMutex->owner, HB_THREAD_SELF()) ) {
          lock_count = pMutex->lock_count;
          pMutex->lock_count = 0;
          pMutex->owner = static_cast<HB_THREAD_ID>(0);
-         if( pMutex->lockers )
-         {
+         if( pMutex->lockers ) {
             HB_COND_SIGNAL(pMutex->cond_l);
          }
       }
 
-      while( (!pMutex->events || hb_arrayLen(pMutex->events) == 0) && hb_vmRequestQuery() == 0 )
-      {
+      while( (!pMutex->events || hb_arrayLen(pMutex->events) == 0) && hb_vmRequestQuery() == 0 ) {
          pMutex->waiters++;
 #  if defined(HB_PTHREAD_API)
          pthread_cond_wait(&pMutex->cond_w, &pMutex->mutex);
@@ -2488,8 +2188,7 @@ PHB_ITEM hb_threadMutexSubscribe(PHB_ITEM pItem, HB_BOOL fClear)
          pMutex->waiters--;
       }
 
-      if( pMutex->events && hb_arrayLen(pMutex->events) > 0 )
-      {
+      if( pMutex->events && hb_arrayLen(pMutex->events) > 0 ) {
          hb_vmLockForce();
          pResult = hb_stackAllocItem();
          hb_arrayGet(pMutex->events, 1, pResult);
@@ -2499,13 +2198,10 @@ PHB_ITEM hb_threadMutexSubscribe(PHB_ITEM pItem, HB_BOOL fClear)
       }
 
       /* restore the own lock on this mutex if necessary */
-      if( lock_count )
-      {
-         if( pMutex->owner )
-         {
+      if( lock_count ) {
+         if( pMutex->owner ) {
             pMutex->lockers++;
-            while( pMutex->lock_count != 0 )
-            {
+            while( pMutex->lock_count != 0 ) {
 #  if defined(HB_PTHREAD_API)
                pthread_cond_wait(&pMutex->cond_l, &pMutex->mutex);
 #  elif defined(HB_TASK_THREAD)
@@ -2527,8 +2223,7 @@ PHB_ITEM hb_threadMutexSubscribe(PHB_ITEM pItem, HB_BOOL fClear)
       HB_CRITICAL_UNLOCK(pMutex->mutex);
       hb_vmLock();
 
-      if( pResult )
-      {
+      if( pResult ) {
          pResult = hb_itemNew(pResult);
          hb_stackPop();
       }
@@ -2542,19 +2237,14 @@ PHB_ITEM hb_threadMutexTimedSubscribe(PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_BO
    PHB_MUTEX pMutex = hb_mutexPtr(pItem);
    PHB_ITEM pResult = nullptr;
 
-   if( pMutex )
-   {
+   if( pMutex ) {
 #if !defined(HB_MT_VM)
       HB_SYMBOL_UNUSED(ulMilliSec);
 
-      if( pMutex->events && hb_arrayLen(pMutex->events) > 0 )
-      {
-         if( fClear && pMutex->events )
-         {
+      if( pMutex->events && hb_arrayLen(pMutex->events) > 0 ) {
+         if( fClear && pMutex->events ) {
             hb_arraySize(pMutex->events, 0);
-         }
-         else
-         {
+         } else {
             pResult = hb_itemNew(nullptr);
             hb_arrayGet(pMutex->events, 1, pResult);
             hb_arrayDel(pMutex->events, 1);
@@ -2568,8 +2258,7 @@ PHB_ITEM hb_threadMutexTimedSubscribe(PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_BO
       hb_vmUnlock();
       HB_CRITICAL_LOCK(pMutex->mutex);
 
-      if( fClear && pMutex->events )
-      {
+      if( fClear && pMutex->events ) {
          hb_vmLockForce();
          hb_itemMove(hb_stackAllocItem(), pMutex->events);
          pMutex->events = nullptr;
@@ -2579,16 +2268,13 @@ PHB_ITEM hb_threadMutexTimedSubscribe(PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_BO
          HB_CRITICAL_LOCK(pMutex->mutex);
       }
 
-      if( ulMilliSec && !(pMutex->events && hb_arrayLen(pMutex->events) > 0) )
-      {
+      if( ulMilliSec && !(pMutex->events && hb_arrayLen(pMutex->events) > 0) ) {
          /* release own lock from this mutex */
-         if( HB_THREAD_EQUAL(pMutex->owner, HB_THREAD_SELF()) )
-         {
+         if( HB_THREAD_EQUAL(pMutex->owner, HB_THREAD_SELF()) ) {
             lock_count = pMutex->lock_count;
             pMutex->lock_count = 0;
             pMutex->owner = static_cast<HB_THREAD_ID>(0);
-            if( pMutex->lockers )
-            {
+            if( pMutex->lockers ) {
                HB_COND_SIGNAL(pMutex->cond_l);
             }
          }
@@ -2597,12 +2283,9 @@ PHB_ITEM hb_threadMutexTimedSubscribe(PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_BO
 #  if defined(HB_PTHREAD_API)
          {
             struct timespec ts;
-
             hb_threadTimeInit(&ts, ulMilliSec);
-            while( (!pMutex->events || hb_arrayLen(pMutex->events) == 0) && hb_vmRequestQuery() == 0 )
-            {
-               if( pthread_cond_timedwait(&pMutex->cond_w, &pMutex->mutex, &ts) != 0 )
-               {
+            while( (!pMutex->events || hb_arrayLen(pMutex->events) == 0) && hb_vmRequestQuery() == 0 ) {
+               if( pthread_cond_timedwait(&pMutex->cond_w, &pMutex->mutex, &ts) != 0 ) {
                   break;
                }
             }
@@ -2627,8 +2310,7 @@ PHB_ITEM hb_threadMutexTimedSubscribe(PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_BO
          pMutex->waiters--;
       }
 
-      if( pMutex->events && hb_arrayLen(pMutex->events) > 0 )
-      {
+      if( pMutex->events && hb_arrayLen(pMutex->events) > 0 ) {
          hb_vmLockForce();
          pResult = hb_stackAllocItem();
          hb_arrayGet(pMutex->events, 1, pResult);
@@ -2638,13 +2320,10 @@ PHB_ITEM hb_threadMutexTimedSubscribe(PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_BO
       }
 
       /* restore the own lock on this mutex if necessary */
-      if( lock_count )
-      {
-         if( pMutex->owner )
-         {
+      if( lock_count ) {
+         if( pMutex->owner ) {
             pMutex->lockers++;
-            while( pMutex->lock_count != 0 )
-            {
+            while( pMutex->lock_count != 0 ) {
 #  if defined(HB_PTHREAD_API)
                pthread_cond_wait(&pMutex->cond_l, &pMutex->mutex);
 #  elif defined(HB_TASK_THREAD)
@@ -2666,8 +2345,7 @@ PHB_ITEM hb_threadMutexTimedSubscribe(PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_BO
       HB_CRITICAL_UNLOCK(pMutex->mutex);
       hb_vmLock();
 
-      if( pResult )
-      {
+      if( pResult ) {
          pResult = hb_itemNew(pResult);
          hb_stackPop();
       }
@@ -2691,21 +2369,16 @@ HB_FUNC( HB_MUTEXLOCK )
 {
    PHB_ITEM pItem = hb_mutexParam(1);
 
-   if( pItem != nullptr )
-   {
+   if( pItem != nullptr ) {
       HB_STACK_TLS_PRELOAD
-      if( HB_ISNUM(2) )
-      {
+      if( HB_ISNUM(2) ) {
          HB_ULONG ulMilliSec = 0;
          double dTimeOut = hb_parnd(2);
-         if( dTimeOut > 0 )
-         {
+         if( dTimeOut > 0 ) {
             ulMilliSec = static_cast<HB_ULONG>(dTimeOut * 1000);
          }
          hb_retl(hb_threadMutexTimedLock(pItem, ulMilliSec));
-      }
-      else
-      {
+      } else {
          hb_retl(hb_threadMutexLock(pItem));
       }
    }
@@ -2715,8 +2388,7 @@ HB_FUNC( HB_MUTEXUNLOCK )
 {
    PHB_ITEM pItem = hb_mutexParam(1);
 
-   if( pItem != nullptr )
-   {
+   if( pItem != nullptr ) {
       HB_STACK_TLS_PRELOAD
       hb_retl(hb_threadMutexUnlock(pItem));
    }
@@ -2726,8 +2398,7 @@ HB_FUNC( HB_MUTEXNOTIFY )
 {
    PHB_ITEM pItem = hb_mutexParam(1);
 
-   if( pItem != nullptr )
-   {
+   if( pItem != nullptr ) {
       hb_threadMutexNotify(pItem, hb_param(2, Harbour::Item::ANY), false);
    }
 }
@@ -2736,8 +2407,7 @@ HB_FUNC( HB_MUTEXNOTIFYALL )
 {
    PHB_ITEM pItem = hb_mutexParam(1);
 
-   if( pItem != nullptr )
-   {
+   if( pItem != nullptr ) {
       hb_threadMutexNotify(pItem, hb_param(2, Harbour::Item::ANY), true);
    }
 }
@@ -2746,34 +2416,26 @@ HB_FUNC( HB_MUTEXSUBSCRIBE )
 {
    PHB_ITEM pItem = hb_mutexParam(1);
 
-   if( pItem != nullptr )
-   {
+   if( pItem != nullptr ) {
       HB_STACK_TLS_PRELOAD
       PHB_ITEM pResult;
 
-      if( HB_ISNUM(2) )
-      {
+      if( HB_ISNUM(2) ) {
          HB_ULONG ulMilliSec = 0;
          double dTimeOut = hb_parnd(2);
-         if( dTimeOut > 0 )
-         {
+         if( dTimeOut > 0 ) {
             ulMilliSec = static_cast<HB_ULONG>(dTimeOut * 1000);
          }
          pResult = hb_threadMutexTimedSubscribe(pItem, ulMilliSec, false);
-      }
-      else
-      {
+      } else {
          pResult = hb_threadMutexSubscribe(pItem, false);
       }
 
-      if( pResult )
-      {
+      if( pResult ) {
          hb_itemParamStoreForward(3, pResult);
          hb_itemRelease(pResult);
          hb_retl(true);
-      }
-      else
-      {
+      } else {
          hb_retl(false);
       }
    }
@@ -2783,34 +2445,26 @@ HB_FUNC( HB_MUTEXSUBSCRIBENOW )
 {
    PHB_ITEM pItem = hb_mutexParam(1);
 
-   if( pItem != nullptr )
-   {
+   if( pItem != nullptr ) {
       HB_STACK_TLS_PRELOAD
       PHB_ITEM pResult;
 
-      if( HB_ISNUM(2) )
-      {
+      if( HB_ISNUM(2) ) {
          HB_ULONG ulMilliSec = 0;
          double dTimeOut = hb_parnd(2);
-         if( dTimeOut > 0 )
-         {
+         if( dTimeOut > 0 ) {
             ulMilliSec = static_cast<HB_ULONG>(dTimeOut * 1000);
          }
          pResult = hb_threadMutexTimedSubscribe(pItem, ulMilliSec, true);
-      }
-      else
-      {
+      } else {
          pResult = hb_threadMutexSubscribe(pItem, true);
       }
 
-      if( pResult )
-      {
+      if( pResult ) {
          hb_itemParamStoreForward(3, pResult);
          hb_itemRelease(pResult);
          hb_retl(true);
-      }
-      else
-      {
+      } else {
          hb_retl(false);
       }
    }
@@ -2820,29 +2474,23 @@ HB_FUNC( HB_MUTEXEVAL )
 {
    PHB_ITEM pItem = hb_mutexParam(1);
 
-   if( pItem != nullptr )
-   {
+   if( pItem != nullptr ) {
       PHB_ITEM pEval = hb_param(2, Harbour::Item::EVALITEM);
 
-      if( pEval )
-      {
+      if( pEval ) {
          HB_STACK_TLS_PRELOAD
          int iPCount = hb_pcount();
 
-         if( hb_threadMutexLock(pItem) )
-         {
+         if( hb_threadMutexLock(pItem) ) {
             hb_vmPushEvalSym();
             hb_vmPush(pEval);
-            for( int iParam = 3; iParam <= iPCount; iParam++ )
-            {
+            for( int iParam = 3; iParam <= iPCount; iParam++ ) {
                hb_vmPush(hb_stackItemFromBase(iParam));
             }
             hb_vmSend(static_cast<HB_USHORT>(iPCount - 2));
             hb_threadMutexUnlock(pItem);
          }
-      }
-      else
-      {
+      } else {
          hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       }
    }
@@ -2852,12 +2500,10 @@ HB_FUNC( HB_MUTEXQUEUEINFO )
 {
    PHB_ITEM pItem = hb_mutexParam(1);
 
-   if( pItem != nullptr )
-   {
+   if( pItem != nullptr ) {
       PHB_MUTEX pMutex = hb_mutexPtr(pItem);
 
-      if( pMutex )
-      {
+      if( pMutex ) {
          HB_STACK_TLS_PRELOAD
          hb_storni(pMutex->waiters, 2);
          hb_storns(pMutex->events ? hb_arrayLen(pMutex->events) : 0, 3);
