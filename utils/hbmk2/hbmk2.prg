@@ -6004,7 +6004,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                   /* TODO: eliminate recursive macros from hbmk[_HBMK_aOPTC] */
                   cOpt_CompCPass := StrTran(cOpt_CompCPass, "{FC}", ;
                      iif(hbmk[_HBMK_lBLDFLGC], hb_Version( HB_VERSION_FLAG_C ) + " ", "") + ;
-                     GetEnv("HB_USER_CFLAGS") + ;
+                     iif(tmp3 == _CCOMP_PASS_C, FilterFlags(GetEnv("HB_USER_CFLAGS")), GetEnv("HB_USER_CFLAGS")) + ;
                      iif(Empty(hbmk[_HBMK_aOPTC]), "", " " + ArrayToList(hbmk[_HBMK_aOPTC])) + ;
                      iif(Empty(tmp4), "", " " + ArrayToList(tmp4)) + ;
                      iif(Empty(hbmk[_HBMK_aOPTCUSER]), "", " " + ArrayToList(hbmk[_HBMK_aOPTCUSER])))
@@ -15935,3 +15935,17 @@ License extensions:
     Creative Commons Attribution-ShareAlike 4.0 International:
     https://creativecommons.org/licenses/by-sa/4.0/
 #pragma __endtext
+
+/*
+Temporary solution to remove flag -std when compiling C code
+*/
+STATIC FUNCTION FilterFlags(cFlags) // TODO: find a better solution
+
+   cFlags := StrTran(cFlags, "-std=c++11", "")
+   cFlags := StrTran(cFlags, "-std=c++14", "")
+   cFlags := StrTran(cFlags, "-std=c++17", "")
+   cFlags := StrTran(cFlags, "-std=c++20", "")
+   cFlags := StrTran(cFlags, "-std=c++23", "")
+   cFlags := StrTran(cFlags, "-std=c++2c", "")
+
+   RETURN cFlags
