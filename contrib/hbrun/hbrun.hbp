@@ -32,3 +32,6 @@
 -3rd=_langhb_docext=.md
 -3rd=_langhb_docoption=-lang={LNG}
 -3rd=_langhb_docoption=-longhelpmdsh
+
+# using libc++ because libstdc++ is deprecated
+{darwin}-lc++

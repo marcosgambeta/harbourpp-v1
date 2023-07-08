@@ -16,3 +16,6 @@ _winsvc.prg{win}
 hbwin.hbc{win}
 
 #-prgflag=-DHB_EXTERN
+
+# using libc++ because libstdc++ is deprecated
+{darwin}-lc++
