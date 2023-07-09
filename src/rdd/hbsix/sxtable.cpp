@@ -71,8 +71,7 @@ HB_FUNC( SX_GETLOCKS )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pList = hb_itemArrayNew(0);
       SELF_INFO(pArea, DBI_GETLOCKARRAY, pList);
       hb_itemReturnRelease(pList);
@@ -84,8 +83,7 @@ HB_FUNC( SX_ISFLOCKED )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_BOOL fLocked = HB_FALSE;
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemNew(nullptr);
       SELF_INFO(pArea, DBI_ISFLOCK, pItem);
       fLocked = hb_itemGetL(pItem);
@@ -100,8 +98,7 @@ HB_FUNC( SX_ISREADONLY )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_BOOL fReadOnly = HB_FALSE;
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemNew(nullptr);
       SELF_INFO(pArea, DBI_ISREADONLY, pItem);
       fReadOnly = hb_itemGetL(pItem);
@@ -116,8 +113,7 @@ HB_FUNC( SX_ISSHARED )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_BOOL fShared = HB_FALSE;
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemNew(nullptr);
       SELF_INFO(pArea, DBI_SHARED, pItem);
       fShared = hb_itemGetL(pItem);
@@ -132,11 +128,9 @@ HB_FUNC( SX_IDTYPE )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    int iType = 0;
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemNew(nullptr);
-      if( SELF_RECINFO(pArea, nullptr, DBRI_ENCRYPTED, pItem) == HB_SUCCESS )
-      {
+      if( SELF_RECINFO(pArea, nullptr, DBRI_ENCRYPTED, pItem) == HB_SUCCESS ) {
          iType = hb_itemGetL(pItem) ? 2 : 1;
       }
       hb_itemRelease(pItem);
@@ -150,11 +144,9 @@ HB_FUNC( SX_TABLETYPE )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    int iType = 0;
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemNew(nullptr);
-      if( SELF_INFO(pArea, DBI_ISENCRYPTED, pItem) == HB_SUCCESS )
-      {
+      if( SELF_INFO(pArea, DBI_ISENCRYPTED, pItem) == HB_SUCCESS ) {
          iType = hb_itemGetL(pItem) ? 2 : 1;
       }
       hb_itemRelease(pItem);
@@ -167,14 +159,11 @@ HB_FUNC( SX_TABLENAME )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pList = hb_itemNew(nullptr);
       SELF_INFO(pArea, DBI_FULLPATH, pList);
       hb_itemReturnRelease(pList);
-   }
-   else
-   {
+   } else {
       hb_retc_null();
    }
 }
@@ -183,10 +172,8 @@ static void hb_sxRollBackChild(AREAP pArea, PHB_ITEM pItem)
 {
    LPDBRELINFO lpdbRelation = pArea->lpdbRelations;
 
-   while( lpdbRelation )
-   {
-      if( SELF_INFO(lpdbRelation->lpaChild, DBI_ROLLBACK, pItem) != HB_SUCCESS )
-      {
+   while( lpdbRelation ) {
+      if( SELF_INFO(lpdbRelation->lpaChild, DBI_ROLLBACK, pItem) != HB_SUCCESS ) {
          break;
       }
       hb_sxRollBackChild(lpdbRelation->lpaChild, pItem);
@@ -200,27 +187,21 @@ HB_FUNC( SX_ROLLBACK )
    int iArea = 0;
    AREAP pArea;
 
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       iArea = hb_parni(1);
       fRollChild = iArea == 0;
    }
 
-   if( iArea )
-   {
+   if( iArea ) {
       pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(iArea));
-   }
-   else
-   {
+   } else {
       pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    }
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemNew(nullptr);
       fResult = SELF_INFO(pArea, DBI_ROLLBACK, pItem) == HB_SUCCESS;
-      if( fResult && fRollChild )
-      {
+      if( fResult && fRollChild ) {
          hb_sxRollBackChild(pArea, pItem);
       }
       hb_itemRelease(pItem);
@@ -235,37 +216,29 @@ HB_FUNC( SX_RLOCK )
    HB_BOOL fResult = HB_FALSE;
    PHB_ITEM pResult = nullptr;
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pRecords = hb_param(1, Harbour::Item::ARRAY);
       DBLOCKINFO dbLockInfo;
       dbLockInfo.fResult = HB_FALSE;
       dbLockInfo.uiMethod = DBLM_MULTIPLE;
-      if( pRecords )
-      {
+      if( pRecords ) {
          HB_SIZE nLen = hb_arrayLen(pRecords);
          pResult = hb_itemArrayNew(nLen);
-         for( HB_SIZE nPos = 1; nPos <= nLen; ++nPos )
-         {
+         for( HB_SIZE nPos = 1; nPos <= nLen; ++nPos ) {
             dbLockInfo.itmRecID = hb_arrayGetItemPtr(pRecords, nPos);
             SELF_LOCK(pArea, &dbLockInfo);
             hb_arraySetL(pResult, nPos, dbLockInfo.fResult);
          }
-      }
-      else
-      {
+      } else {
          dbLockInfo.itmRecID = hb_param(1, Harbour::Item::ANY);
          SELF_LOCK(pArea, &dbLockInfo);
          fResult = dbLockInfo.fResult;
       }
    }
 
-   if( pResult )
-   {
+   if( pResult ) {
       hb_itemReturnRelease(pResult);
-   }
-   else
-   {
+   } else {
       hb_retl(fResult);
    }
 }
@@ -274,19 +247,14 @@ HB_FUNC( SX_UNLOCK )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pRecords = hb_param(1, Harbour::Item::ARRAY);
-      if( pRecords )
-      {
+      if( pRecords ) {
          HB_SIZE nLen = hb_arrayLen(pRecords);
-         for( HB_SIZE nPos = 1; nPos <= nLen; ++nPos )
-         {
+         for( HB_SIZE nPos = 1; nPos <= nLen; ++nPos ) {
             SELF_UNLOCK(pArea, hb_arrayGetItemPtr(pRecords, nPos));
          }
-      }
-      else
-      {
+      } else {
          SELF_UNLOCK(pArea, hb_param(1, Harbour::Item::ANY));
       }
    }
@@ -298,26 +266,19 @@ HB_FUNC( SX_SETPASS )
    HB_BOOL fResult = HB_FALSE;
    PHB_ITEM pItem;
 
-   if( iPCount == 1 )
-   {
-      if( HB_ISCHAR(1) )
-      {
+   if( iPCount == 1 ) {
+      if( HB_ISCHAR(1) ) {
          AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-         if( pArea != nullptr )
-         {
+         if( pArea != nullptr ) {
             pItem = hb_itemParam(1);
-            if( SELF_INFO(pArea, DBI_PASSWORD, pItem) == HB_SUCCESS )
-            {
+            if( SELF_INFO(pArea, DBI_PASSWORD, pItem) == HB_SUCCESS ) {
                fResult = HB_TRUE;
             }
             hb_itemRelease(pItem);
          }
       }
-   }
-   else if( iPCount >= 2 && iPCount <= 4 )
-   {
-      if( HB_ISCHAR(1) && HB_ISNUM(2) && (iPCount < 3 || HB_ISCHAR(3)) && (iPCount < 4 || HB_ISNUM(4)) )
-      {
+   } else if( iPCount >= 2 && iPCount <= 4 ) {
+      if( HB_ISCHAR(1) && HB_ISNUM(2) && (iPCount < 3 || HB_ISCHAR(3)) && (iPCount < 4 || HB_ISNUM(4)) ) {
          /* Set pending password for table which will be open
           * 3rd and 4th parameters are optional Harbour extensions
           * with RDD name and connection number.
@@ -326,37 +287,27 @@ HB_FUNC( SX_SETPASS )
          HB_USHORT uiRddID;
          const char * szDriver;
 
-         if( iPCount == 2 ) /* no RDD parameter, use default */
-         {
+         if( iPCount == 2 ) { /* no RDD parameter, use default */
             szDriver = hb_rddDefaultDrv(nullptr);
-         }
-         else
-         {
+         } else {
             szDriver = hb_parc(3);
          }
          pRDDNode = hb_rddFindNode( szDriver, &uiRddID );   /* find the RDDNODE */
-         if( pRDDNode )
-         {
+         if( pRDDNode ) {
             pItem = hb_itemParam(1);
-            if( SELF_RDDINFO(pRDDNode, RDDI_PENDINGPASSWORD, hb_parnl(4), pItem) == HB_SUCCESS )
-            {
+            if( SELF_RDDINFO(pRDDNode, RDDI_PENDINGPASSWORD, hb_parnl(4), pItem) == HB_SUCCESS ) {
                fResult = HB_TRUE;
             }
             hb_itemRelease(pItem);
          }
-      }
-      else if( iPCount == 2 && HB_ISNUM(1) && HB_ISCHAR(2) )
-      {
+      } else if( iPCount == 2 && HB_ISNUM(1) && HB_ISCHAR(2) ) {
          AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-         if( pArea != nullptr )
-         {
+         if( pArea != nullptr ) {
             /* Undocumented SIX3 extension */
-            switch( hb_parni(1) )
-            {
+            switch( hb_parni(1) ) {
                case 1:  /* return current password key in raw form */
                   pItem = hb_itemNew(nullptr);
-                  if( SELF_INFO(pArea, DBI_PASSWORD, pItem) == HB_SUCCESS )
-                  {
+                  if( SELF_INFO(pArea, DBI_PASSWORD, pItem) == HB_SUCCESS ) {
                      hb_itemReturn(pItem);
                   }
                   hb_itemRelease(pItem);
@@ -384,12 +335,10 @@ HB_FUNC( SX_DBFENCRYPT )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_BOOL fResult = HB_FALSE;
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemParam(1);
 
-      if( SELF_INFO(pArea, DBI_ENCRYPT, pItem) == HB_SUCCESS )
-      {
+      if( SELF_INFO(pArea, DBI_ENCRYPT, pItem) == HB_SUCCESS ) {
          fResult = hb_itemGetL(pItem);
       }
       hb_itemRelease(pItem);
@@ -402,11 +351,9 @@ HB_FUNC( SX_DBFDECRYPT )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_BOOL fResult = HB_FALSE;
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemParam(1);
-      if( SELF_INFO(pArea, DBI_DECRYPT, pItem) == HB_SUCCESS )
-      {
+      if( SELF_INFO(pArea, DBI_DECRYPT, pItem) == HB_SUCCESS ) {
          fResult = hb_itemGetL(pItem);
       }
       hb_itemRelease(pItem);
@@ -419,12 +366,10 @@ HB_FUNC( SX_MEMOPACK )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_BOOL fResult = HB_FALSE;
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemArrayNew(3);
       int iPCount = hb_pcount();
-      for( int i = 1; i <= iPCount; ++i )
-      {
+      for( int i = 1; i <= iPCount; ++i ) {
          hb_arraySet(pItem, i, hb_param(i, Harbour::Item::ANY));
       }
       fResult = SELF_INFO(pArea, DBI_MEMOPACK, pItem) == HB_SUCCESS;
@@ -437,21 +382,16 @@ HB_FUNC( SX_TURBOAREA )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemParam(1);
-      if( hb_pcount() > 0 && HB_IS_NIL(pItem) )
-      {
+      if( hb_pcount() > 0 && HB_IS_NIL(pItem) ) {
          hb_itemPutNI(pItem, 0);
       }
-      if( SELF_INFO(pArea, DBI_DIRTYREAD, pItem) != HB_SUCCESS )
-      {
+      if( SELF_INFO(pArea, DBI_DIRTYREAD, pItem) != HB_SUCCESS ) {
          hb_itemPutL(pItem, false);
       }
       hb_itemReturnRelease(pItem);
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -463,25 +403,19 @@ HB_FUNC( SX_SETTURBO )
    const char * szDriver;
 
    szDriver = hb_parc(2);
-   if( !szDriver ) /* no VIA RDD parameter, use default */
-   {
+   if( !szDriver ) { /* no VIA RDD parameter, use default */
       szDriver = hb_rddDefaultDrv(nullptr);
    }
 
    pRDDNode = hb_rddFindNode( szDriver, &uiRddID );  /* find the RDDNODE */
-   if( !pRDDNode )
-   {
+   if( !pRDDNode ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
-   else
-   {
+   } else {
       PHB_ITEM pItem = hb_itemParam(1);
-      if( hb_pcount() > 0 && HB_IS_NIL(pItem) )
-      {
+      if( hb_pcount() > 0 && HB_IS_NIL(pItem) ) {
          hb_itemPutNI(pItem, 0);
       }
-      if( SELF_RDDINFO(pRDDNode, RDDI_DIRTYREAD, 0, pItem) != HB_SUCCESS )
-      {
+      if( SELF_RDDINFO(pRDDNode, RDDI_DIRTYREAD, 0, pItem) != HB_SUCCESS ) {
          hb_itemPutL(pItem, false);
       }
       hb_itemReturnRelease(pItem);
@@ -496,40 +430,30 @@ HB_FUNC( _SXOPENINIT )
    AREAP pArea = nullptr;
    int iArea = hb_parni(1);
 
-   if( iArea )
-   {
+   if( iArea ) {
       pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(iArea));
    }
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       LPDBOPENINFO pInfo = nullptr;
       PHB_ITEM pItem = hb_itemNew(nullptr);
 
-      if( SELF_INFO(pArea, DBI_OPENINFO, pItem) )
-      {
+      if( SELF_INFO(pArea, DBI_OPENINFO, pItem) ) {
          pInfo = static_cast<LPDBOPENINFO>(hb_itemGetPtr(pItem));
       }
       hb_itemRelease(pItem);
-      if( pInfo )
-      {
-         if( HB_ISLOG(2) )
-         {
+      if( pInfo ) {
+         if( HB_ISLOG(2) ) {
             pInfo->fShared = hb_parl(2);
          }
-         if( HB_ISLOG(3) )
-         {
+         if( HB_ISLOG(3) ) {
             pInfo->fReadonly = hb_parl(2);
          }
-         if( HB_ISCHAR(4) )
-         {
+         if( HB_ISCHAR(4) ) {
             const char * szAlias = hb_parc(1);
-            if( szAlias && szAlias[0] )
-            {
+            if( szAlias && szAlias[0] ) {
                pInfo->atomAlias = hb_dynsymName(hb_dynsymGet(szAlias));
-            }
-            else
-            {
+            } else {
                pInfo->atomAlias = "";
             }
          }

@@ -73,8 +73,7 @@ long hb_sxPtoD( const char * pDate )
    HB_TRACE(HB_TR_DEBUG, ("hb_sxPtoD(%p)", static_cast<const void*>(pDate)));
 #endif
 
-   if( pDate )
-   {
+   if( pDate ) {
       int iYear, iMonth, iDay;
       long lPDate;
 
