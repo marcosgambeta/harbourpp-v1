@@ -81,7 +81,7 @@
 #include "hbapifs.hpp"
 #include "hbapirdd.hpp"
 
-static HB_BOOL hb_sxOrdParam(LPDBORDERINFO pInfo)
+static bool hb_sxOrdParam(LPDBORDERINFO pInfo)
 {
    memset(pInfo, 0, sizeof(DBORDERINFO));
 
@@ -167,7 +167,7 @@ HB_FUNC( SX_FREEZE )
       DBORDERINFO Info;
 
       if( hb_sxOrdParam(&Info) ) {
-         HB_BOOL fResult = HB_FALSE;
+         bool fResult = false;
          Info.itmNewVal = hb_itemPutL(nullptr, true);
          Info.itmResult = hb_itemNew(nullptr);
          if( SELF_ORDINFO(pArea, DBOI_CUSTOM, &Info) == HB_SUCCESS ) {
@@ -188,7 +188,7 @@ HB_FUNC( SX_WARM )
       DBORDERINFO Info;
 
       if( hb_sxOrdParam(&Info) ) {
-         HB_BOOL fResult = HB_FALSE;
+         bool fResult = false;
          Info.itmNewVal = hb_itemPutL(nullptr, false);
          Info.itmResult = hb_itemNew(nullptr);
          if( SELF_ORDINFO(pArea, DBOI_CHGONLY, &Info) == HB_SUCCESS ) {
@@ -209,7 +209,7 @@ HB_FUNC( SX_CHILL )
       DBORDERINFO Info;
 
       if( hb_sxOrdParam(&Info) ) {
-         HB_BOOL fResult = HB_FALSE;
+         bool fResult = false;
          Info.itmNewVal = hb_itemPutL(nullptr, true);
          Info.itmResult = hb_itemNew(nullptr);
          if( SELF_ORDINFO(pArea, DBOI_CHGONLY, &Info) == HB_SUCCESS ) {
@@ -302,7 +302,7 @@ HB_FUNC( SX_SETSCOPE )
 HB_FUNC( SX_ISREINDEX )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_BOOL fReindex = HB_FALSE;
+   bool fReindex = false;
 
    if( pArea != nullptr ) {
       DBORDERINFO Info;
@@ -458,7 +458,7 @@ HB_FUNC( SX_DESCEND )
 HB_FUNC( SX_KEYADD )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
    if( pArea != nullptr ) {
       DBORDERINFO Info;
@@ -476,7 +476,7 @@ HB_FUNC( SX_KEYADD )
 HB_FUNC( SX_KEYDROP )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
    if( pArea != nullptr ) {
       DBORDERINFO Info;
@@ -508,7 +508,8 @@ HB_FUNC( SX_KEYDATA )
 HB_FUNC( SX_KEYSKIP )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_BOOL fResult = HB_FALSE, fBEof = HB_FALSE;
+   bool fResult = false;
+   HB_BOOL fBEof = false;
 
    if( pArea != nullptr ) {
       if( SELF_SKIPRAW(pArea, hb_parnldef(1, 1)) == HB_SUCCESS ) {
@@ -559,7 +560,7 @@ HB_FUNC( SX_KEYNO )
 HB_FUNC( SX_KEYGOTO )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
    if( pArea && hb_parnl(3) != 0 ) {
       DBORDERINFO Info;
@@ -592,15 +593,15 @@ HB_FUNC( SX_SKIPUNIQUE )
 HB_FUNC( SX_SEEKLAST )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_BOOL fFound = HB_FALSE;
+   HB_BOOL fFound = false;
 
    if( pArea && hb_pcount() > 0 ) {
       PHB_ITEM pKey = hb_param(1, Harbour::Item::ANY);
-      HB_BOOL bSoftSeek = hb_parl(2);
+      bool bSoftSeek = hb_parl(2);
 
       if( SELF_SEEK(pArea, bSoftSeek, pKey, true) == HB_SUCCESS ) {
          if( SELF_FOUND(pArea, &fFound) != HB_SUCCESS ) {
-            fFound = HB_FALSE;
+            fFound = false;
          }
       }
    }
@@ -625,8 +626,8 @@ HB_FUNC( SX_WILDSEEK )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    const char * szPattern = hb_parc(1);
-   HB_BOOL fCont = hb_parl(2);
-   HB_BOOL fFound = HB_FALSE;
+   bool fCont = hb_parl(2);
+   bool fFound = false;
 
    if( pArea != nullptr ) {
       int iOrder = 0;
@@ -670,7 +671,7 @@ HB_FUNC( SX_WILDSEEK )
 HB_FUNC( SX_ROXLOCK )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_BOOL fLocked = HB_FALSE;
+   bool fLocked = false;
 
    if( pArea != nullptr ) {
       DBORDERINFO Info;
@@ -706,7 +707,7 @@ HB_FUNC( SX_ROXUNLOCK )
 HB_FUNC( SX_ISMYROX )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_BOOL fLocked = HB_FALSE;
+   bool fLocked = false;
 
    if( pArea != nullptr ) {
       DBORDERINFO Info;
@@ -724,7 +725,7 @@ HB_FUNC( SX_ISMYROX )
 HB_FUNC( SX_ISROXLOCK )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_BOOL fLocked = HB_FALSE;
+   bool fLocked = false;
 
    if( pArea != nullptr ) {
       DBORDERINFO Info;
@@ -753,7 +754,7 @@ HB_FUNC( SX_ISROXLOCK )
 HB_FUNC( SX_SORTOPTION )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_BOOL fUseCurrent = HB_TRUE;
+   bool fUseCurrent = true;
 
    if( pArea != nullptr ) {
       DBORDERINFO Info;

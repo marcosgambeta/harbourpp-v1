@@ -81,7 +81,7 @@ HB_FUNC( SX_GETLOCKS )
 HB_FUNC( SX_ISFLOCKED )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_BOOL fLocked = HB_FALSE;
+   bool fLocked = false;
 
    if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemNew(nullptr);
@@ -96,7 +96,7 @@ HB_FUNC( SX_ISFLOCKED )
 HB_FUNC( SX_ISREADONLY )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_BOOL fReadOnly = HB_FALSE;
+   bool fReadOnly = false;
 
    if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemNew(nullptr);
@@ -111,7 +111,7 @@ HB_FUNC( SX_ISREADONLY )
 HB_FUNC( SX_ISSHARED )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_BOOL fShared = HB_FALSE;
+   bool fShared = false;
 
    if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemNew(nullptr);
@@ -183,7 +183,7 @@ static void hb_sxRollBackChild(AREAP pArea, PHB_ITEM pItem)
 
 HB_FUNC( SX_ROLLBACK )
 {
-   HB_BOOL fResult = HB_FALSE, fRollChild = HB_FALSE;
+   bool fResult = false, fRollChild = false;
    int iArea = 0;
    AREAP pArea;
 
@@ -213,13 +213,13 @@ HB_FUNC( SX_ROLLBACK )
 HB_FUNC( SX_RLOCK )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
    PHB_ITEM pResult = nullptr;
 
    if( pArea != nullptr ) {
       PHB_ITEM pRecords = hb_param(1, Harbour::Item::ARRAY);
       DBLOCKINFO dbLockInfo;
-      dbLockInfo.fResult = HB_FALSE;
+      dbLockInfo.fResult = false;
       dbLockInfo.uiMethod = DBLM_MULTIPLE;
       if( pRecords ) {
          HB_SIZE nLen = hb_arrayLen(pRecords);
@@ -263,7 +263,7 @@ HB_FUNC( SX_UNLOCK )
 HB_FUNC( SX_SETPASS )
 {
    int iPCount = hb_pcount();
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
    PHB_ITEM pItem;
 
    if( iPCount == 1 ) {
@@ -272,7 +272,7 @@ HB_FUNC( SX_SETPASS )
          if( pArea != nullptr ) {
             pItem = hb_itemParam(1);
             if( SELF_INFO(pArea, DBI_PASSWORD, pItem) == HB_SUCCESS ) {
-               fResult = HB_TRUE;
+               fResult = true;
             }
             hb_itemRelease(pItem);
          }
@@ -296,7 +296,7 @@ HB_FUNC( SX_SETPASS )
          if( pRDDNode ) {
             pItem = hb_itemParam(1);
             if( SELF_RDDINFO(pRDDNode, RDDI_PENDINGPASSWORD, hb_parnl(4), pItem) == HB_SUCCESS ) {
-               fResult = HB_TRUE;
+               fResult = true;
             }
             hb_itemRelease(pItem);
          }
@@ -333,7 +333,7 @@ HB_FUNC( SX_SETPASS )
 HB_FUNC( SX_DBFENCRYPT )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
    if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemParam(1);
@@ -349,7 +349,7 @@ HB_FUNC( SX_DBFENCRYPT )
 HB_FUNC( SX_DBFDECRYPT )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
    if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemParam(1);
@@ -364,7 +364,7 @@ HB_FUNC( SX_DBFDECRYPT )
 HB_FUNC( SX_MEMOPACK )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
    if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemArrayNew(3);

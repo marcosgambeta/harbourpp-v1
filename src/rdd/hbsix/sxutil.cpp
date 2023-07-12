@@ -85,7 +85,7 @@ HB_FUNC( SX_SLIMFAST )
 HB_FUNC( SX_WILDMATCH )
 {
    const char * szPattern = hb_parc(1), * szValue = hb_parc(2);
-   HB_BOOL fMatch = HB_FALSE;
+   bool fMatch = false;
 
    if( szPattern && szPattern[0] && szValue ) {
       fMatch = hb_strMatchWild(szValue, szPattern);

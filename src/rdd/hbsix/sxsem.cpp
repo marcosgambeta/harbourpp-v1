@@ -52,15 +52,15 @@
 #include "hbapifs.hpp"
 #include "hbapirdd.hpp"
 
-static HB_BOOL hb_sxSemName(char * szFileName)
+static bool hb_sxSemName(char * szFileName)
 {
    const char * szName = hb_parc(1);
-   HB_BOOL fResult = HB_FALSE;
+   bool fResult = false;
 
    if( szName && szName[0] ) {
       hb_cdpnDup2Lower(hb_vmCDP(), szName, strlen(szName), szFileName, HB_PATH_MAX);
       szFileName[HB_PATH_MAX - 1] = '\0';
-      fResult = HB_TRUE;
+      fResult = true;
    } else {
       AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
@@ -78,7 +78,7 @@ static HB_BOOL hb_sxSemName(char * szFileName)
          if( szName && szName[0] ) {
             hb_cdpnDup2Lower(hb_vmCDP(), szName, strlen(szName), szFileName, HB_PATH_MAX);
             szFileName[HB_PATH_MAX - 1] = '\0';
-            fResult = HB_TRUE;
+            fResult = true;
          }
          hb_itemRelease(pOrderInfo.itmResult);
       }
@@ -121,7 +121,7 @@ HB_FUNC( SX_MAKESEM )
 {
    char szFileName[HB_PATH_MAX];
    int iUsers = -1;
-   HB_BOOL fError = HB_FALSE, fNewFile = HB_FALSE;
+   HB_BOOL fError = false, fNewFile = false;
 
    if( hb_sxSemName(szFileName) ) {
       PHB_FILE pFile = hb_sxSemOpen(szFileName, &fNewFile);
@@ -133,7 +133,7 @@ HB_FUNC( SX_MAKESEM )
             iUsers = 1;
          } else {
             if( hb_fileReadAt(pFile, buffer, 2, 0) != 2 ) {
-               fError = HB_TRUE;
+               fError = true;
             } else {
                iUsers = HB_GET_LE_INT16(buffer) + 1;
             }
@@ -141,7 +141,7 @@ HB_FUNC( SX_MAKESEM )
          if( !fError ) {
             HB_PUT_LE_UINT16(buffer, iUsers);
             if( hb_fileWriteAt(pFile, buffer, 2, 0) != 2 ) {
-               fError = HB_TRUE;
+               fError = true;
             }
          }
          hb_fileClose(pFile);

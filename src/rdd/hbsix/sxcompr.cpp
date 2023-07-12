@@ -226,8 +226,8 @@ static PHB_LZSSX_COMPR hb_LZSSxInit(PHB_FILE pInput, const HB_BYTE * pSrcBuf, HB
    pCompr->fOutFree    = (pOutput != nullptr && pDstBuf == nullptr);
 
    pCompr->nOutSize    = 0;
-   pCompr->fResult     = HB_TRUE;
-   pCompr->fContinue   = HB_FALSE;
+   pCompr->fResult     = true;
+   pCompr->fContinue   = false;
 
    if( pCompr->fInFree ) {
       pCompr->inBuffer    = static_cast<HB_BYTE*>(hb_xgrab(nDstBuf));
@@ -244,11 +244,11 @@ static PHB_LZSSX_COMPR hb_LZSSxInit(PHB_FILE pInput, const HB_BYTE * pSrcBuf, HB
    return pCompr;
 }
 
-static HB_BOOL hb_LZSSxFlush(PHB_LZSSX_COMPR pCompr)
+static bool hb_LZSSxFlush(PHB_LZSSX_COMPR pCompr)
 {
    if( pCompr->fResult && pCompr->pOutput != nullptr ) {
       if( hb_fileWrite(pCompr->pOutput, pCompr->outBuffer, pCompr->outBuffPos, -1) != pCompr->outBuffPos ) {
-         pCompr->fResult = HB_FALSE;
+         pCompr->fResult = false;
       } else {
          pCompr->nOutSize += pCompr->outBuffPos;
          pCompr->outBuffPos = 0;
@@ -257,7 +257,7 @@ static HB_BOOL hb_LZSSxFlush(PHB_LZSSX_COMPR pCompr)
    return pCompr->fResult;
 }
 
-static HB_BOOL hb_LZSSxWrite(PHB_LZSSX_COMPR pCompr, HB_UCHAR ucVal)
+static bool hb_LZSSxWrite(PHB_LZSSX_COMPR pCompr, HB_UCHAR ucVal)
 {
    if( pCompr->fResult ) {
       if( pCompr->outBuffPos == pCompr->outBuffSize ) {
@@ -266,7 +266,7 @@ static HB_BOOL hb_LZSSxWrite(PHB_LZSSX_COMPR pCompr, HB_UCHAR ucVal)
       if( pCompr->outBuffPos < pCompr->outBuffSize ) {
          pCompr->outBuffer[pCompr->outBuffPos] = ucVal;
       } else {
-         pCompr->fResult = HB_FALSE;
+         pCompr->fResult = false;
       }
    }
    pCompr->outBuffPos++;
@@ -294,7 +294,7 @@ static int hb_LZSSxRead(PHB_LZSSX_COMPR pCompr)
 
 static HB_BOOL hb_LZSSxDecode( PHB_LZSSX_COMPR pCompr )
 {
-   HB_BOOL fResult = HB_TRUE;
+   HB_BOOL fResult = true;
    HB_USHORT itemMask;
    int offset, length, rbufidx, c, h;
 
@@ -317,7 +317,7 @@ static HB_BOOL hb_LZSSxDecode( PHB_LZSSX_COMPR pCompr )
 
       if( itemMask & 1 ) { /* Is the next character normal byte ? */
          if( !hb_LZSSxWrite(pCompr, static_cast<HB_UCHAR>(c)) ) {
-            fResult = HB_FALSE;
+            fResult = false;
             break;
          }
          pCompr->ring_buffer[rbufidx] = static_cast<HB_UCHAR>(c);
@@ -325,7 +325,7 @@ static HB_BOOL hb_LZSSxDecode( PHB_LZSSX_COMPR pCompr )
       } else { /* we have an item pair (ring buffer offset : match length) */
          if( (h = hb_LZSSxRead(pCompr)) == -1 ) {
             #if 0
-            fResult = HB_FALSE;
+            fResult = false;
             #endif
             break;
          }
@@ -334,7 +334,7 @@ static HB_BOOL hb_LZSSxDecode( PHB_LZSSX_COMPR pCompr )
          for( h = 0; h < length; h++ ) {
             c = pCompr->ring_buffer[RBUFINDEX(offset + h)];
             if( !hb_LZSSxWrite(pCompr, static_cast<HB_UCHAR>(c)) ) {
-               fResult = HB_FALSE;
+               fResult = false;
                break;
             }
             /* SIX does not use additional buffers and dynamically
@@ -588,7 +588,7 @@ HB_BOOL hb_LZSSxDecompressFile(PHB_FILE pInput, PHB_FILE pOutput)
 
 HB_FUNC( SX_FCOMPRESS )
 {
-   HB_BOOL fRet = HB_FALSE;
+   HB_BOOL fRet = false;
    const char * szSource = hb_parc(1), * szDestin = hb_parc(2);
 
    if( szSource && *szSource && szDestin && *szDestin ) {
@@ -617,7 +617,7 @@ HB_FUNC( SX_FCOMPRESS )
 
 HB_FUNC( SX_FDECOMPRESS )
 {
-   HB_BOOL fRet = HB_FALSE;
+   HB_BOOL fRet = false;
    const char * szSource = hb_parc(1), * szDestin = hb_parc(2);
 
    if( szSource && *szSource && szDestin && *szDestin ) {
@@ -664,7 +664,7 @@ HB_FUNC( _SX_STRCOMPRESS )
 
 HB_FUNC( _SX_STRDECOMPRESS )
 {
-   HB_BOOL fOK = HB_FALSE;
+   HB_BOOL fOK = false;
    const char * pStr = hb_parc(1);
 
    if( pStr ) {
@@ -674,7 +674,7 @@ HB_FUNC( _SX_STRDECOMPRESS )
          nBuf = HB_GET_LE_UINT32(pStr);
          if( nBuf == HB_SX_UNCOMPRESED ) {
             hb_retclen(pStr + 4, nLen - 4);
-            fOK = HB_TRUE;
+            fOK = true;
          } else {
             char * pBuf = static_cast<char*>(hb_xalloc(nBuf + 1));
             if( pBuf ) {
