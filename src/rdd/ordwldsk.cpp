@@ -64,7 +64,7 @@ HB_FUNC( ORDWILDSEEK )
       const char * szPattern = hb_parc(1);
 
       if( szPattern ) {
-         HB_BOOL fCont = hb_parl(2), fBack = hb_parl(3), fFound = HB_FALSE;
+         bool fCont = hb_parl(2), fBack = hb_parl(3), fFound = false;
          DBORDERINFO OrderInfo;
          HB_ERRCODE errCode = HB_SUCCESS;
 

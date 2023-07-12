@@ -1795,7 +1795,7 @@ static void hb_cdxPageLeafDecode(LPCDXPAGE pPage, HB_BYTE * pKeyBuf)
    }
 #ifdef HB_CDX_DBGCODE_EXT
    {
-      HB_BOOL fChg = pPage->fChanged;
+      bool fChg = pPage->fChanged;
       hb_cdxPageLeafEncode(pPage, pKeyBuf, pPage->iKeys);
       pPage->fChanged = fChg;
    }
@@ -4922,7 +4922,7 @@ static bool hb_cdxCurKeyRefresh(CDXAREAP pArea, LPCDXTAG pTag)
          hb_cdxTagKeyFind(pTag, pKey);
       }
       if( pTag->CurKey->rec != pArea->dbfarea.ulRecNo ) {
-         HB_BOOL fValidBuf = pArea->dbfarea.fValidBuffer;
+         bool fValidBuf = pArea->dbfarea.fValidBuffer;
          /* not found, create new key from DBF and if differs seek again */
          pKey2 = hb_cdxKeyEval(pKey2, pTag);
          if( pKey == nullptr || memcmp(pKey2->val, pKey->val, pKey->len) != 0 ) {
@@ -4969,7 +4969,7 @@ static HB_ERRCODE hb_cdxDBOISkipUnique(CDXAREAP pArea, LPCDXTAG pTag, HB_LONG lT
 #endif
 
    HB_ERRCODE retval;
-   HB_BOOL fForward;
+   bool fForward;
 
    if( FAST_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
       return HB_FAILURE;
@@ -6415,8 +6415,8 @@ static HB_ERRCODE hb_cdxGoCold(CDXAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_cdxGoCold(%p)", static_cast<void*>(pArea)));
 #endif
 
-   HB_BOOL fRecordChanged = pArea->dbfarea.fRecordChanged;
-   HB_BOOL fAppend = pArea->dbfarea.fAppend;
+   bool fRecordChanged = pArea->dbfarea.fRecordChanged;
+   bool fAppend = pArea->dbfarea.fAppend;
 
    if( SUPER_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
       return HB_FAILURE;
@@ -6425,7 +6425,7 @@ static HB_ERRCODE hb_cdxGoCold(CDXAREAP pArea)
    if( (fRecordChanged || pArea->fCdxAppend) && pArea->lpIndexes ) {
       LPCDXTAG pTag = pArea->lpIndexes->TagList;
       LPCDXKEY pKey = nullptr;
-      HB_BOOL fAdd, fDel, fLck = false;
+      bool fAdd, fDel, fLck = false;
       LPDBRELINFO lpdbPendingRel;
 
       if( pArea->dbfarea.fShared ) {
@@ -7218,7 +7218,7 @@ static HB_ERRCODE hb_cdxOrderCreate(CDXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
    if( !fOpenedIndex ) {
       char szTempFile[HB_PATH_MAX];
       PHB_FILE pFile;
-      HB_BOOL bRetry, fShared = pArea->dbfarea.fShared && !fTemporary && !fExclusive;
+      bool bRetry, fShared = pArea->dbfarea.fShared && !fTemporary && !fExclusive;
       PHB_ITEM pError = nullptr;
 
       do {
@@ -7991,7 +7991,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
                }
 
                if( pArea->dbfarea.fPositioned && (!pTag->pForItem || hb_cdxEvalCond(pArea, pTag->pForItem, true)) ) {
-                  HB_BOOL fLck = false;
+                  bool fLck = false;
                   LPCDXKEY pKey;
 #if defined(HB_SIXCDX)
                   if( pTag->Template ) {

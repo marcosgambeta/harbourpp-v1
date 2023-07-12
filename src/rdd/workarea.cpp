@@ -114,7 +114,7 @@ static HB_ERRCODE hb_waSkip(AREAP pArea, HB_LONG lToSkip)
       return SELF_SKIPRAW(pArea, 0);
    }
 
-   pArea->fTop = pArea->fBottom = HB_FALSE;
+   pArea->fTop = pArea->fBottom = false;
 
    if( lToSkip > 0 ) {
       lSkip = 1;
@@ -136,9 +136,9 @@ static HB_ERRCODE hb_waSkip(AREAP pArea, HB_LONG lToSkip)
 
    /* Update Bof and Eof flags */
    if( lSkip < 0 ) {
-      pArea->fEof = HB_FALSE;
+      pArea->fEof = false;
    } else /* ( lSkip > 0 ) */ {
-      pArea->fBof = HB_FALSE;
+      pArea->fBof = false;
    }
 
    return HB_SUCCESS;
@@ -220,7 +220,7 @@ static HB_ERRCODE hb_waSkipFilter(AREAP pArea, HB_LONG lUpDown)
          errCode = SELF_GOTO(pArea, 0);
       } else {
          errCode = SELF_GOTOP(pArea);
-         pArea->fBof = HB_TRUE;
+         pArea->fBof = true;
       }
    } else {
       errCode = HB_SUCCESS;
@@ -871,7 +871,7 @@ static HB_ERRCODE hb_waInfo(AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       case DBI_SCOPEDRELATION:
       {
          int iRelNo = hb_itemGetNI(pItem);
-         HB_BOOL fScoped = HB_FALSE;
+         bool fScoped = false;
 
          if( iRelNo > 0 ) {
             LPDBRELINFO lpdbRelations = pArea->lpdbRelations;
@@ -1076,7 +1076,8 @@ static HB_ERRCODE hb_waEval(AREAP pArea, LPDBEVALINFO pEvalInfo)
 #endif
 
    HB_LONG lNext = 1;
-   HB_BOOL fEof, fFor;
+   HB_BOOL fEof;
+   bool fFor;
 
    if( pEvalInfo->dbsci.itmRecID ) {
       if( SELF_GOTOID(pArea, pEvalInfo->dbsci.itmRecID) != HB_SUCCESS ) {
@@ -1119,7 +1120,7 @@ static HB_ERRCODE hb_waEval(AREAP pArea, LPDBEVALINFO pEvalInfo)
          }
          fFor = hb_itemGetLX(pArea->valResult);
       } else {
-         fFor = HB_TRUE;
+         fFor = true;
       }
 
       if( fFor ) {
@@ -1175,7 +1176,7 @@ static HB_ERRCODE hb_waLocate( AREAP pArea, HB_BOOL fContinue )
       }
    }
 
-   pArea->fFound = HB_FALSE;
+   pArea->fFound = false;
 
    /* TODO: use SKIPSCOPE() method and fRest parameter */
 
@@ -1198,7 +1199,7 @@ static HB_ERRCODE hb_waLocate( AREAP pArea, HB_BOOL fContinue )
       }
 
       if( !pArea->dbsi.itmCobFor ) {
-         pArea->fFound = HB_TRUE;
+         pArea->fFound = true;
          break;
       } else {
          if( SELF_EVALBLOCK(pArea, pArea->dbsi.itmCobFor) != HB_SUCCESS ) {
@@ -1206,7 +1207,7 @@ static HB_ERRCODE hb_waLocate( AREAP pArea, HB_BOOL fContinue )
          }
 
          if( hb_itemGetLX(pArea->valResult) ) {
-            pArea->fFound = HB_TRUE;
+            pArea->fFound = true;
             break;
          }
       }
@@ -1233,7 +1234,8 @@ static HB_ERRCODE hb_waTrans(AREAP pArea, LPDBTRANSINFO pTransInfo)
 #endif
 
    HB_LONG lNext = 1;
-   HB_BOOL fEof, fFor;
+   HB_BOOL fEof;
+   bool fFor;
 
    if( pTransInfo->dbsci.itmRecID ) {
       if( SELF_GOTOID(pArea, pTransInfo->dbsci.itmRecID) != HB_SUCCESS ) {
@@ -1276,7 +1278,7 @@ static HB_ERRCODE hb_waTrans(AREAP pArea, LPDBTRANSINFO pTransInfo)
          }
          fFor = hb_itemGetLX(pArea->valResult);
       } else {
-         fFor = HB_TRUE;
+         fFor = true;
       }
 
       if( fFor ) {
@@ -1335,7 +1337,7 @@ static HB_ERRCODE hb_waTransRec(AREAP pArea, LPDBTRANSINFO pTransInfo)
       PHB_ITEM pItem;
 
       if( pTransInfo->uiFlags & DBTF_RECALL ) {
-         bDeleted = HB_FALSE;
+         bDeleted = false;
       } else {
          /* Record deleted? */
          errCode = SELF_DELETED(pArea, &bDeleted);
@@ -1651,8 +1653,8 @@ static HB_ERRCODE hb_waClearFilter(AREAP pArea)
       hb_itemRelease(pArea->dbfi.abFilterText);
       pArea->dbfi.abFilterText = nullptr;
    }
-   pArea->dbfi.fOptimized = HB_FALSE;
-   pArea->dbfi.fFilter = HB_FALSE;
+   pArea->dbfi.fOptimized = false;
+   pArea->dbfi.fFilter = false;
 
    return HB_SUCCESS;
 }
@@ -1736,7 +1738,7 @@ static HB_ERRCODE hb_waSetFilter(AREAP pArea, LPDBFILTERINFO pFilterInfo)
       pArea->dbfi.abFilterText = hb_itemNew(pFilterInfo->abFilterText);
    }
    pArea->dbfi.fOptimized = pFilterInfo->fOptimized;
-   pArea->dbfi.fFilter = HB_TRUE;
+   pArea->dbfi.fFilter = true;
 
    return HB_SUCCESS;
 }
@@ -1877,7 +1879,7 @@ static HB_ERRCODE hb_waRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCon
    HB_TRACE(HB_TR_DEBUG, ("hb_rddInfo(%p, %hu, %lu, %p)", static_cast<void*>(pRDD), uiIndex, ulConnection, static_cast<void*>(pItem)));
 #endif
 
-   HB_BOOL fResult;
+   bool fResult;
    int iResult;
 
    HB_SYMBOL_UNUSED(pRDD);

@@ -127,7 +127,7 @@ static PHB_FILEBUF hb_createFBuffer(PHB_FILE pFile, HB_SIZE nSize)
 }
 
 /* Export field value into the buffer in SQL format */
-static HB_BOOL hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char * szDelim, const char * szEsc)
+static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char * szDelim, const char * szEsc)
 {
    switch( hb_itemType(pValue) ) {
       case Harbour::Item::STRING:
@@ -237,10 +237,10 @@ static HB_ULONG hb_db2Sql(AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
    HB_ULONG ulRecords = 0;
    HB_USHORT uiFields = 0, ui;
    PHB_ITEM pTmp;
-   HB_BOOL fWriteSep = HB_FALSE;
+   HB_BOOL fWriteSep = false;
    const char * szNewLine = hb_conNewLine();
    char * szInsert = nullptr;
-   HB_BOOL fEof = HB_TRUE;
+   HB_BOOL fEof = true;
    HB_BOOL fNoFieldPassed = (pFields == nullptr || hb_arrayLen(pFields) == 0);
 
    if( SELF_FIELDCOUNT(pArea, &uiFields) != HB_SUCCESS ) {
@@ -312,7 +312,7 @@ static HB_ULONG hb_db2Sql(AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
             hb_addStrToFBuffer(pFileBuf, " );");
          }
          hb_addStrToFBuffer(pFileBuf, szNewLine);
-         fWriteSep = HB_FALSE;
+         fWriteSep = false;
       }
 
       if( SELF_SKIP(pArea, 1) != HB_SUCCESS ) {
@@ -398,7 +398,7 @@ HB_FUNC( __DBSQL )
                }
                fRetry = hb_errLaunch(pError) == E_RETRY;
             } else {
-               fRetry = HB_FALSE;
+               fRetry = false;
             }
          } while( fRetry );
 

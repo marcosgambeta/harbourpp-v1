@@ -232,7 +232,7 @@ HB_FUNC( DBF )
 
 HB_FUNC( BOF )
 {
-   HB_BOOL bBof = HB_TRUE;
+   HB_BOOL bBof = true;
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
@@ -248,7 +248,7 @@ HB_FUNC( DBAPPEND )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      HB_BOOL bUnLockAll = hb_parldef(1, true);
+      bool bUnLockAll = hb_parldef(1, true);
       HB_ERRCODE errCode;
 
       /* Clipper clears NETERR flag before APPEND */
@@ -306,8 +306,8 @@ HB_FUNC( DBCREATE )
    const char * szFileName = hb_parc(1);
    PHB_ITEM pStruct = hb_param(2, Harbour::Item::ARRAY);
    const char * szDriver = hb_parc(3);
-   HB_BOOL fKeepOpen = HB_ISLOG(4);
-   HB_BOOL fCurrArea = fKeepOpen && !hb_parl(4);
+   bool fKeepOpen = HB_ISLOG(4);
+   bool fCurrArea = fKeepOpen && !hb_parl(4);
    const char * szAlias = hb_parc(5);
    PHB_ITEM pDelim = hb_param(6, Harbour::Item::ANY);
    const char * szCpId = hb_parc(7);
@@ -421,8 +421,8 @@ HB_FUNC( __DBOPENSDF )
    const char * szFileName = hb_parc(1);
    PHB_ITEM pStruct = hb_param(2, Harbour::Item::ARRAY);
    const char * szDriver = hb_parc(3);
-   HB_BOOL fKeepOpen = HB_ISLOG(4);
-   HB_BOOL fCurrArea = fKeepOpen && !hb_parl(4);
+   bool fKeepOpen = HB_ISLOG(4);
+   bool fCurrArea = fKeepOpen && !hb_parl(4);
    const char * szAlias = hb_parc(5);
    PHB_ITEM pDelim = hb_param(6, Harbour::Item::ANY);
    const char * szCpId = hb_parc(7);
@@ -537,11 +537,11 @@ HB_FUNC( __DBLOCATE )
       dbScopeInfo.itmRecID    = hb_param(4, Harbour::Item::NUMERIC);
       dbScopeInfo.fRest       = hb_param(5, Harbour::Item::LOGICAL);
 
-      dbScopeInfo.fIgnoreFilter     = HB_TRUE;
-      dbScopeInfo.fIncludeDeleted   = HB_TRUE;
-      dbScopeInfo.fLast             = HB_FALSE;
-      dbScopeInfo.fIgnoreDuplicates = HB_FALSE;
-      dbScopeInfo.fBackward         = HB_FALSE;
+      dbScopeInfo.fIgnoreFilter     = true;
+      dbScopeInfo.fIncludeDeleted   = true;
+      dbScopeInfo.fLast             = false;
+      dbScopeInfo.fIgnoreDuplicates = false;
+      dbScopeInfo.fBackward         = false;
 
       if( SELF_SETLOCATE(pArea, &dbScopeInfo) == HB_SUCCESS ) {
          SELF_LOCATE(pArea, false);
@@ -620,7 +620,7 @@ HB_FUNC( DBRLOCK )
 
    if( pArea != nullptr ) {
       DBLOCKINFO dbLockInfo;
-      dbLockInfo.fResult = HB_FALSE;
+      dbLockInfo.fResult = false;
       dbLockInfo.itmRecID = hb_param(1, Harbour::Item::ANY);
       if( !dbLockInfo.itmRecID || HB_ISNIL(1) ) {
          dbLockInfo.uiMethod = DBLM_EXCLUSIVE;
@@ -665,11 +665,12 @@ HB_FUNC( DBSEEK )
    if( pArea != nullptr ) {
       if( !HB_ISNIL(1) ) {
          PHB_ITEM pKey = hb_param(1, Harbour::Item::ANY);
-         HB_BOOL bSoftSeek = HB_ISLOG(2) ? static_cast<HB_BOOL>(hb_parl(2)) : hb_setGetSoftSeek();
-         HB_BOOL bFindLast = hb_parl(3) /* HB_EXTENSION */, fFound = HB_FALSE;
+         bool bSoftSeek = HB_ISLOG(2) ? static_cast<HB_BOOL>(hb_parl(2)) : hb_setGetSoftSeek();
+         bool bFindLast = hb_parl(3) /* HB_EXTENSION */;
+         HB_BOOL fFound = false;
          if( SELF_SEEK(pArea, bSoftSeek, pKey, bFindLast) == HB_SUCCESS ) {
             if( SELF_FOUND(pArea, &fFound) != HB_SUCCESS ) {
-               fFound = HB_FALSE;
+               fFound = false;
             }
          }
          hb_retl(fFound);
@@ -740,9 +741,9 @@ HB_FUNC( DBSETFILTER )
          } else {
             pFilterInfo.abFilterText = hb_itemPutC(nullptr, nullptr);
          }
-         pFilterInfo.fFilter = HB_TRUE;
+         pFilterInfo.fFilter = true;
          pFilterInfo.lpvCargo = nullptr;
-         pFilterInfo.fOptimized = HB_FALSE;
+         pFilterInfo.fOptimized = false;
          SELF_SETFILTER(pArea, &pFilterInfo);
          if( !pText ) {
             hb_itemRelease(pFilterInfo.abFilterText);
@@ -880,7 +881,7 @@ HB_FUNC( __DBZAP )
 
 HB_FUNC( DELETED )
 {
-   HB_BOOL bDeleted = HB_FALSE;
+   HB_BOOL bDeleted = false;
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
@@ -891,7 +892,7 @@ HB_FUNC( DELETED )
 
 HB_FUNC( EOF )
 {
-   HB_BOOL bEof = HB_TRUE;
+   HB_BOOL bEof = true;
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
@@ -980,7 +981,7 @@ HB_FUNC( FLOCK )
 
    if( pArea != nullptr ) {
       DBLOCKINFO dbLockInfo;
-      dbLockInfo.fResult  = HB_FALSE;
+      dbLockInfo.fResult  = false;
       dbLockInfo.itmRecID = nullptr;
       dbLockInfo.uiMethod = DBLM_FILE;
       SELF_LOCK(pArea, &dbLockInfo);
@@ -992,7 +993,7 @@ HB_FUNC( FLOCK )
 
 HB_FUNC( FOUND )
 {
-   HB_BOOL bFound = HB_FALSE;
+   HB_BOOL bFound = false;
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
@@ -1048,7 +1049,7 @@ HB_FUNC( LOCK )
 
    if( pArea != nullptr ) {
       DBLOCKINFO dbLockInfo;
-      dbLockInfo.fResult  = HB_FALSE;
+      dbLockInfo.fResult  = false;
       dbLockInfo.itmRecID = nullptr;
       dbLockInfo.uiMethod = DBLM_EXCLUSIVE;
       SELF_LOCK(pArea, &dbLockInfo);
@@ -1185,10 +1186,10 @@ HB_FUNC( ORDCONDSET )
       lpdbOrdCondInfo->fExclusive    = hb_parl(20);
 
       if( lpdbOrdCondInfo->itmCobWhile ) {
-         lpdbOrdCondInfo->fRest = HB_TRUE;
+         lpdbOrdCondInfo->fRest = true;
       }
       if( lpdbOrdCondInfo->lNextCount || lpdbOrdCondInfo->itmRecID || lpdbOrdCondInfo->fRest || lpdbOrdCondInfo->fUseCurrent || lpdbOrdCondInfo->fUseFilter ) {
-         lpdbOrdCondInfo->fAll = HB_FALSE;
+         lpdbOrdCondInfo->fAll = false;
       }
 
       lpdbOrdCondInfo->fActive = !lpdbOrdCondInfo->fAll ||
@@ -1218,7 +1219,7 @@ HB_FUNC( ORDCREATE )
       dbOrderInfo.abBagName = hb_parcx(1);
       dbOrderInfo.atomBagName = hb_parcx(2);
       dbOrderInfo.itmOrder = nullptr;
-      dbOrderInfo.fUnique = HB_ISLOG(5) ? static_cast<HB_BOOL>(hb_parl(5)) : hb_setGetUnique();
+      dbOrderInfo.fUnique = HB_ISLOG(5) ? static_cast<HB_BOOL>(hb_parl(5)) : hb_setGetUnique(); // TODO: cast to HB_BOOL ?
       dbOrderInfo.abExpr = hb_param(3, Harbour::Item::STRING);
       if( ((dbOrderInfo.abBagName == nullptr || dbOrderInfo.abBagName[0] == 0 ) &&
           (dbOrderInfo.atomBagName == nullptr || dbOrderInfo.atomBagName[0] == 0)) ||
@@ -1296,7 +1297,7 @@ HB_FUNC( ORDFOR )
       pOrderInfo.itmNewVal = hb_param(3, Harbour::Item::STRING);
       pOrderInfo.itmResult = hb_itemPutC(nullptr, nullptr);
       pOrderInfo.itmCobExpr = nullptr;
-      pOrderInfo.fAllTags = HB_FALSE;
+      pOrderInfo.fAllTags = false;
       SELF_ORDINFO(pArea, DBOI_CONDITION, &pOrderInfo);
       hb_itemReturnRelease(pOrderInfo.itmResult);
    } else {
@@ -1538,7 +1539,7 @@ HB_FUNC( RLOCK )
 
    if( pArea != nullptr ) {
       DBLOCKINFO dbLockInfo;
-      dbLockInfo.fResult = HB_FALSE;
+      dbLockInfo.fResult = false;
       dbLockInfo.itmRecID = nullptr;
       dbLockInfo.uiMethod = DBLM_EXCLUSIVE;
       SELF_LOCK(pArea, &dbLockInfo);
@@ -1708,7 +1709,7 @@ HB_FUNC( DBSETRELATION )
       dbRelations.itmCobExpr = hb_itemNew(hb_param(2, Harbour::Item::BLOCK));
       dbRelations.abKey = hb_itemNew(hb_param(3, Harbour::Item::STRING));
       dbRelations.isScoped = hb_parl(4);
-      dbRelations.isOptimized = HB_FALSE;
+      dbRelations.isOptimized = false;
       dbRelations.lpaChild = pChildArea;
       dbRelations.lpaParent = pArea;
       dbRelations.lpdbriNext = nullptr;
@@ -1753,8 +1754,8 @@ HB_FUNC( __DBARRANGE )
          dbSortInfo.dbtri.dbsci.fLast             =
          dbSortInfo.dbtri.dbsci.fIgnoreDuplicates =
          dbSortInfo.dbtri.dbsci.fBackward         =
-         dbSortInfo.dbtri.dbsci.fOptimized        = HB_FALSE;
-         dbSortInfo.dbtri.dbsci.fIncludeDeleted   = HB_TRUE;
+         dbSortInfo.dbtri.dbsci.fOptimized        = false;
+         dbSortInfo.dbtri.dbsci.fIncludeDeleted   = true;
 
          /* do not transfer record deleted flag to destination area */
          dbSortInfo.dbtri.uiFlags |= DBTF_RECALL;
@@ -1871,8 +1872,8 @@ HB_FUNC( __DBTRANS )
             dbTransInfo.dbsci.fLast             =
             dbTransInfo.dbsci.fIgnoreDuplicates =
             dbTransInfo.dbsci.fBackward         =
-            dbTransInfo.dbsci.fOptimized        = HB_FALSE;
-            dbTransInfo.dbsci.fIncludeDeleted   = HB_TRUE;
+            dbTransInfo.dbsci.fOptimized        = false;
+            dbTransInfo.dbsci.fIncludeDeleted   = true;
 
             pTransItm = hb_dbTransInfoPut(nullptr, &dbTransInfo);
             errCode = SELF_INFO(dbTransInfo.lpaDest, DBI_TRANSREC, pTransItm);
@@ -1920,7 +1921,7 @@ HB_FUNC( __DBAPP )
               hb_parc(8),                     /* RDD */
               hb_parnl(9),                    /* connection */
               hb_param(2, Harbour::Item::ARRAY),       /* Fields */
-              HB_FALSE,                       /* Export? */
+              false,                       /* Export? */
               hb_param(3, Harbour::Item::BLOCK),       /* cobFor */
               nullptr,                        /* lpStrFor */
               hb_param(4, Harbour::Item::BLOCK),       /* cobWhile */

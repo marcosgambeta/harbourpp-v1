@@ -263,11 +263,11 @@ void hb_rddCloseAll(void)
 
    pRddInfo = hb_stackRDD();
    if( pRddInfo->uiWaMax > 0 ) {
-      HB_BOOL isParents, isFinish = HB_FALSE;
+      bool isParents, isFinish = false;
       AREAP pArea;
 
       do {
-         isParents = HB_FALSE;
+         isParents = false;
          for( HB_USHORT uiIndex = 1; uiIndex < pRddInfo->uiWaMax; uiIndex++ ) {
             pArea = static_cast<AREAP>(pRddInfo->waList[uiIndex]);
             HB_SET_WA(pArea->uiArea);
@@ -276,13 +276,13 @@ void hb_rddCloseAll(void)
                pRddInfo->waNums[pRddInfo->uiCurrArea] = 0;
                pRddInfo->pCurrArea = nullptr;
             } else if( pArea->uiParents ) {
-               isParents = HB_TRUE;
+               isParents = true;
             } else {
                SELF_CLOSE(pArea);
             }
          }
          if( !isParents && !isFinish ) {
-            isParents = isFinish = HB_TRUE;
+            isParents = isFinish = true;
          }
       } while( isParents );
 

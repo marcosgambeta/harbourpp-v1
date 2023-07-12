@@ -112,7 +112,7 @@ static HB_ERRCODE hb_sdfReadRecord(SDFAREAP pArea)
 
    HB_SIZE nRead;
 
-   pArea->area.fEof = HB_TRUE;
+   pArea->area.fEof = true;
 
    nRead = 0;
    for( ;; ) {
@@ -144,7 +144,7 @@ static HB_ERRCODE hb_sdfReadRecord(SDFAREAP pArea)
                 ( pArea->pBuffer[pArea->nBufferIndex] == '\r' || pArea->pBuffer[pArea->nBufferIndex] == '\n' ) ) {
                pArea->nBufferIndex++;
             }
-            pArea->area.fEof = HB_FALSE;
+            pArea->area.fEof = false;
             break;
          }
       }
@@ -153,7 +153,7 @@ static HB_ERRCODE hb_sdfReadRecord(SDFAREAP pArea)
              ( pArea->nBufferRead - pArea->nBufferIndex >= static_cast<HB_SIZE>(pArea->uiEolLen) - 1 &&
                memcmp(pArea->pBuffer + pArea->nBufferIndex, pArea->szEol + 1, pArea->uiEolLen - 1) == 0 ) ) {
             pArea->nBufferIndex += pArea->uiEolLen - 1;
-            pArea->area.fEof = HB_FALSE;
+            pArea->area.fEof = false;
             break;
          }
       }
@@ -166,7 +166,7 @@ static HB_ERRCODE hb_sdfReadRecord(SDFAREAP pArea)
       memset(pArea->pRecord + nRead, ' ', pArea->uiRecordLen - nRead);
    }
    if( nRead > 0 ) {
-      pArea->area.fEof = HB_FALSE;
+      pArea->area.fEof = false;
    }
 
    pArea->fPositioned = !pArea->area.fEof;
@@ -245,8 +245,8 @@ static HB_ERRCODE hb_sdfGoTop(SDFAREAP pArea)
       return HB_FAILURE;
    }
 
-   pArea->area.fTop = HB_TRUE;
-   pArea->area.fBottom = HB_FALSE;
+   pArea->area.fTop = true;
+   pArea->area.fBottom = false;
 
    if( pArea->ulRecNo != 1 ) {
       if( pArea->ulRecNo != 0 || !pArea->fReadonly ) {
@@ -376,8 +376,8 @@ static HB_ERRCODE hb_sdfAppend(SDFAREAP pArea, HB_BOOL fUnLockAll)
    }
 
    pArea->ulRecNo = ++pArea->ulRecCount;
-   pArea->area.fEof = HB_FALSE;
-   pArea->fPositioned = HB_TRUE;
+   pArea->area.fEof = false;
+   pArea->fPositioned = true;
    hb_sdfClearRecordBuffer(pArea);
 
    return HB_SUCCESS;
@@ -398,8 +398,8 @@ static HB_ERRCODE hb_sdfDeleteRec(SDFAREAP pArea)
 #if 0
    if( pArea->fRecordChanged ) {
       pArea->ulRecCount--;
-      pArea->area.fEof = HB_TRUE;
-      pArea->fPositioned = pArea->fRecordChanged = HB_FALSE;
+      pArea->area.fEof = true;
+      pArea->fPositioned = pArea->fRecordChanged = false;
       hb_sdfClearRecordBuffer(pArea);
    }
 #endif
@@ -483,7 +483,7 @@ static HB_ERRCODE hb_sdfGetValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
       {
          HB_MAXINT lVal;
          double dVal;
-         HB_BOOL fDbl;
+         bool fDbl;
 
          fDbl = hb_strnToNum(reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], pField->uiLen, &lVal, &dVal);
 
@@ -719,8 +719,8 @@ static HB_ERRCODE hb_sdfGoCold(SDFAREAP pArea)
          hb_itemRelease(pError);
          return HB_FAILURE;
       }
-      pArea->fRecordChanged = HB_FALSE;
-      pArea->fFlush = HB_TRUE;
+      pArea->fRecordChanged = false;
+      pArea->fFlush = true;
    }
    return HB_SUCCESS;
 }
@@ -743,7 +743,7 @@ static HB_ERRCODE hb_sdfGoHot(SDFAREAP pArea)
       hb_itemRelease(pError);
       return HB_FAILURE;
    }
-   pArea->fRecordChanged = HB_TRUE;
+   pArea->fRecordChanged = true;
    return HB_SUCCESS;
 }
 
@@ -762,7 +762,7 @@ static HB_ERRCODE hb_sdfFlush(SDFAREAP pArea)
 
    if( pArea->fFlush && hb_setGetHardCommit() ) {
       hb_fileCommit(pArea->pFile);
-      pArea->fFlush = HB_FALSE;
+      pArea->fFlush = false;
    }
 
    return errCode;
@@ -847,7 +847,7 @@ static HB_ERRCODE hb_sdfAddField(SDFAREAP pArea, LPDBFIELDINFO pFieldInfo)
       case HB_FT_OLE:
          pFieldInfo->uiType = HB_FT_MEMO;
          pFieldInfo->uiLen = 0;
-         pArea->fTransRec = HB_FALSE;
+         pArea->fTransRec = false;
          break;
 
       case HB_FT_ANY:
@@ -861,13 +861,13 @@ static HB_ERRCODE hb_sdfAddField(SDFAREAP pArea, LPDBFIELDINFO pFieldInfo)
             pFieldInfo->uiType = HB_FT_MEMO;
             pFieldInfo->uiLen = 0;
          }
-         pArea->fTransRec = HB_FALSE;
+         pArea->fTransRec = false;
          break;
 
       case HB_FT_DATE:
          if( pFieldInfo->uiLen != 8 ) {
             pFieldInfo->uiLen = 8;
-            pArea->fTransRec = HB_FALSE;
+            pArea->fTransRec = false;
          }
          break;
 
@@ -888,45 +888,45 @@ static HB_ERRCODE hb_sdfAddField(SDFAREAP pArea, LPDBFIELDINFO pFieldInfo)
          if( pFieldInfo->uiDec ) {
             pFieldInfo->uiLen++;
          }
-         pArea->fTransRec = HB_FALSE;
+         pArea->fTransRec = false;
          break;
 
       case HB_FT_DOUBLE:
       case HB_FT_CURDOUBLE:
          pFieldInfo->uiType = HB_FT_LONG;
          pFieldInfo->uiLen = 20;
-         pArea->fTransRec = HB_FALSE;
+         pArea->fTransRec = false;
          break;
 
       case HB_FT_VARLENGTH:
          pFieldInfo->uiType = HB_FT_STRING;
-         pArea->fTransRec = HB_FALSE;
+         pArea->fTransRec = false;
          break;
 
       case HB_FT_LOGICAL:
          if( pFieldInfo->uiLen != 1 ) {
             pFieldInfo->uiLen = 1;
-            pArea->fTransRec = HB_FALSE;
+            pArea->fTransRec = false;
          }
          break;
 
       case HB_FT_TIME:
          pFieldInfo->uiType = HB_FT_TIMESTAMP;
          pFieldInfo->uiLen = 12;
-         pArea->fTransRec = HB_FALSE;
+         pArea->fTransRec = false;
          break;
 
       case HB_FT_TIMESTAMP:
       case HB_FT_MODTIME:
          pFieldInfo->uiType = HB_FT_TIMESTAMP;
          pFieldInfo->uiLen = 23;
-         pArea->fTransRec = HB_FALSE;
+         pArea->fTransRec = false;
          break;
 
       default:
          pFieldInfo->uiType = HB_FT_NONE;
          pFieldInfo->uiLen = 0;
-         pArea->fTransRec = HB_FALSE;
+         pArea->fTransRec = false;
          break;
    }
 
@@ -974,7 +974,7 @@ static HB_ERRCODE hb_sdfNewArea(SDFAREAP pArea)
    }
 
    pArea->pFile = nullptr;
-   pArea->fTransRec = HB_TRUE;
+   pArea->fTransRec = true;
    pArea->uiRecordLen = 0;
    pArea->nBufferSize = 0;
 
@@ -1010,7 +1010,7 @@ static HB_ERRCODE hb_sdfClose(SDFAREAP pArea)
 
       if( !pArea->fReadonly && hb_setGetEOF() ) {
          hb_fileWrite(pArea->pFile, "\032", 1, -1);
-         pArea->fFlush = HB_TRUE;
+         pArea->fFlush = true;
       }
       SELF_FLUSH(&pArea->area);
       hb_fileClose(pArea->pFile);
@@ -1054,12 +1054,12 @@ static HB_ERRCODE hb_sdfCreate(SDFAREAP pArea, LPDBOPENINFO pCreateInfo)
 
    PHB_ITEM pError = nullptr;
    HB_ERRCODE errCode;
-   HB_BOOL fRetry;
+   bool fRetry;
    PHB_FNAME pFileName;
    char szFileName[HB_PATH_MAX];
 
-   pArea->fShared = HB_FALSE;    /* pCreateInfo->fShared; */
-   pArea->fReadonly = HB_FALSE;  /* pCreateInfo->fReadonly */
+   pArea->fShared = false;    /* pCreateInfo->fShared; */
+   pArea->fReadonly = false;  /* pCreateInfo->fReadonly */
 
    if( pCreateInfo->cdpId ) {
       pArea->area.cdPage = hb_cdpFindExt(pCreateInfo->cdpId);
@@ -1101,7 +1101,7 @@ static HB_ERRCODE hb_sdfCreate(SDFAREAP pArea, LPDBOPENINFO pCreateInfo)
          }
          fRetry = (SELF_ERROR(&pArea->area, pError) == E_RETRY);
       } else {
-         fRetry = HB_FALSE;
+         fRetry = false;
       }
    } while( fRetry );
 
@@ -1121,8 +1121,8 @@ static HB_ERRCODE hb_sdfCreate(SDFAREAP pArea, LPDBOPENINFO pCreateInfo)
 
    hb_sdfInitArea(pArea, szFileName);
    pArea->ulRecNo = 1;
-   pArea->area.fEof = HB_TRUE;
-   pArea->fPositioned = HB_FALSE;
+   pArea->area.fEof = true;
+   pArea->fPositioned = false;
    hb_sdfClearRecordBuffer(pArea);
 
    return HB_SUCCESS;
@@ -1141,12 +1141,12 @@ static HB_ERRCODE hb_sdfOpen(SDFAREAP pArea, LPDBOPENINFO pOpenInfo)
    PHB_FNAME pFileName;
    HB_ERRCODE errCode;
    HB_USHORT uiFlags;
-   HB_BOOL fRetry;
+   bool fRetry;
    char szFileName[HB_PATH_MAX];
    char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
 
-   pArea->fShared = HB_TRUE;     /* pOpenInfo->fShared; */
-   pArea->fReadonly = HB_TRUE;   /* pOpenInfo->fReadonly; */
+   pArea->fShared = true;     /* pOpenInfo->fShared; */
+   pArea->fReadonly = true;   /* pOpenInfo->fReadonly; */
 
    if( pOpenInfo->cdpId ) {
       pArea->area.cdPage = hb_cdpFindExt(pOpenInfo->cdpId);
@@ -1200,7 +1200,7 @@ static HB_ERRCODE hb_sdfOpen(SDFAREAP pArea, LPDBOPENINFO pOpenInfo)
          }
          fRetry = (SELF_ERROR(&pArea->area, pError) == E_RETRY);
       } else {
-         fRetry = HB_FALSE;
+         fRetry = false;
       }
    } while( fRetry );
 

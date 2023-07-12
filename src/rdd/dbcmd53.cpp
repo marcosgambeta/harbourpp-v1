@@ -315,7 +315,7 @@ HB_FUNC( DBORDERINFO )
          pOrderInfo.itmNewVal  = hb_param(4, Harbour::Item::ANY);
          pOrderInfo.itmResult  = hb_itemNew(nullptr);
          pOrderInfo.itmCobExpr = nullptr;
-         pOrderInfo.fAllTags   = HB_FALSE;
+         pOrderInfo.fAllTags   = false;
          SELF_ORDINFO(pArea, static_cast<HB_USHORT>(hb_itemGetNI(pType)), &pOrderInfo);
          hb_itemReturnRelease(pOrderInfo.itmResult);
       } else {

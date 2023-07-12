@@ -296,7 +296,7 @@ HB_ERRCODE hb_rddGetAliasNumber(const char * szAlias, int * iArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_rddGetAliasNumber(%s, %p)", szAlias, static_cast<void*>(iArea)));
 #endif
 
-   HB_BOOL fOneLetter;
+   bool fOneLetter;
    char c;
 
    while( *szAlias == ' ' ) {
@@ -673,8 +673,8 @@ HB_ERRCODE hb_rddCreateTable( const char * szFileName, const char * szDriver,
    pInfo.uiArea = pArea->uiArea;
    pInfo.abName = szFileName;
    pInfo.atomAlias = szAlias;
-   pInfo.fShared = HB_FALSE;
-   pInfo.fReadonly = HB_FALSE;
+   pInfo.fShared = false;
+   pInfo.fReadonly = false;
    pInfo.cdpId = szCpId ? szCpId : hb_setGetDBCODEPAGE();
    pInfo.ulConnection = ulConnection;
    pInfo.lpdbHeader = nullptr;
@@ -733,8 +733,8 @@ HB_ERRCODE hb_rddCreateTableTemp(const char * szDriver, const char * szAlias, co
    pInfo.uiArea = pArea->uiArea;
    pInfo.abName = nullptr;
    pInfo.atomAlias = szAlias;
-   pInfo.fShared = HB_FALSE;
-   pInfo.fReadonly = HB_FALSE;
+   pInfo.fShared = false;
+   pInfo.fReadonly = false;
    pInfo.cdpId = szCpId ? szCpId : hb_setGetDBCODEPAGE();
    pInfo.ulConnection = ulConnection;
    pInfo.lpdbHeader = nullptr;
@@ -860,7 +860,7 @@ HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTr
    HB_USHORT uiFields, uiSize, uiCount, uiPosSrc, uiPosDst, uiSizeSrc, uiSizeDst;
    HB_ERRCODE errCode;
    const char * szField;
-   HB_BOOL fAll;
+   bool fAll;
 
    errCode = SELF_FIELDCOUNT(lpaSource, &uiSizeSrc);
    if( errCode != HB_SUCCESS ) {
@@ -912,7 +912,7 @@ HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTr
             szField = hb_itemGetCPtr(pItem);
             uiPosDst = hb_rddFieldExpIndex(lpaDest, szField);
             if( uiPosDst != uiCount ) {
-               fAll = HB_FALSE;
+               fAll = false;
             }
             if( uiPosDst ) {
                HB_USHORT ui;
@@ -954,7 +954,7 @@ HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTr
             }
             if( uiPosDst ) {
                if( uiPosSrc != uiPosDst ) {
-                  fAll = HB_FALSE;
+                  fAll = false;
                }
                lpdbTransInfo->lpTransItems[uiSize].uiSource = uiPosSrc;
                lpdbTransInfo->lpTransItems[uiSize++].uiDest = uiPosDst;
@@ -968,7 +968,7 @@ HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTr
    }
 
    if( uiSize != uiSizeSrc ) {
-      fAll = HB_FALSE;
+      fAll = false;
    }
 
    if( fAll && lpaDest ) {
@@ -986,7 +986,7 @@ HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTr
             break;
          }
          if( hb_stricmp(hb_itemGetCPtr(pSrcItm), hb_itemGetCPtr(pDstItm)) != 0 ) {
-            fAll = HB_FALSE;
+            fAll = false;
             break;
          }
          if( SELF_FIELDINFO(lpaSource, uiCount, DBS_LEN, pSrcItm) != HB_SUCCESS ||
@@ -995,7 +995,7 @@ HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTr
             break;
          }
          if( hb_itemGetNL(pSrcItm) != hb_itemGetNL(pDstItm) ) {
-            fAll = HB_FALSE;
+            fAll = false;
             break;
          }
          if( SELF_FIELDINFO(lpaSource, uiCount, DBS_DEC, pSrcItm) != HB_SUCCESS ||
@@ -1004,7 +1004,7 @@ HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTr
             break;
          }
          if( hb_itemGetNL(pSrcItm) != hb_itemGetNL(pDstItm) ) {
-            fAll = HB_FALSE;
+            fAll = false;
             break;
          }
 #ifdef DBS_FLAG
@@ -1014,7 +1014,7 @@ HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTr
             break;
          }
          if( hb_itemGetNL(pSrcItm) != hb_itemGetNL(pDstItm) ) {
-            fAll = HB_FALSE;
+            fAll = false;
             break;
          }
 #endif
@@ -1110,11 +1110,11 @@ HB_ERRCODE hb_rddTransRecords(AREAP pArea,
       dbTransInfo.dbsci.itmRecID    = pRecID;
       dbTransInfo.dbsci.fRest       = pRest;
 
-      dbTransInfo.dbsci.fIgnoreFilter     = HB_TRUE;
-      dbTransInfo.dbsci.fIncludeDeleted   = HB_TRUE;
-      dbTransInfo.dbsci.fLast             = HB_FALSE;
-      dbTransInfo.dbsci.fIgnoreDuplicates = HB_FALSE;
-      dbTransInfo.dbsci.fBackward         = HB_FALSE;
+      dbTransInfo.dbsci.fIgnoreFilter     = true;
+      dbTransInfo.dbsci.fIncludeDeleted   = true;
+      dbTransInfo.dbsci.fLast             = false;
+      dbTransInfo.dbsci.fIgnoreDuplicates = false;
+      dbTransInfo.dbsci.fBackward         = false;
 
       pTransItm = hb_dbTransInfoPut(nullptr, &dbTransInfo);
       errCode = SELF_INFO(dbTransInfo.lpaDest, DBI_TRANSREC, pTransItm);
