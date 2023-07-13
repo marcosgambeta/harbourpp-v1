@@ -60,8 +60,7 @@ HB_FUNC( ORDKEYCOUNT )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
       pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       /* Either or both may be NIL */
@@ -79,8 +78,7 @@ HB_FUNC( ORDKEYNO )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
       pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       /* Either or both may be NIL */
@@ -98,8 +96,7 @@ HB_FUNC( ORDKEYGOTO )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
       pOrderInfo.itmNewVal = hb_param(1, Harbour::Item::NUMERIC);
       pOrderInfo.itmResult = hb_itemPutL(nullptr, false);
       SELF_ORDINFO(pArea, DBOI_POSITION, &pOrderInfo);
@@ -114,8 +111,7 @@ HB_FUNC( ORDKEYRELPOS )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
       pOrderInfo.itmNewVal = hb_param(1, Harbour::Item::NUMERIC);
       pOrderInfo.itmResult = hb_itemPutNI(nullptr, 0);
       SELF_ORDINFO(pArea, DBOI_RELKEYPOS, &pOrderInfo);
@@ -130,8 +126,7 @@ HB_FUNC( ORDFINDREC )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
       pOrderInfo.itmNewVal = hb_param(1, Harbour::Item::NUMERIC);
       pOrderInfo.itmResult = hb_itemPutL(nullptr, false);
       SELF_ORDINFO(pArea, hb_parl(2) ? DBOI_FINDRECCONT : DBOI_FINDREC, &pOrderInfo);
@@ -157,8 +152,7 @@ HB_FUNC( ORDSKIPUNIQUE )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
       pOrderInfo.itmNewVal = hb_param(1, Harbour::Item::ANY);
       pOrderInfo.itmResult = hb_itemPutL(nullptr, false);
       SELF_ORDINFO(pArea, DBOI_SKIPUNIQUE, &pOrderInfo);
@@ -173,8 +167,7 @@ HB_FUNC( ORDKEYVAL )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
       pOrderInfo.itmResult = hb_itemNew(nullptr);
       SELF_ORDINFO(pArea, DBOI_KEYVAL, &pOrderInfo);
       hb_itemReturnRelease(pOrderInfo.itmResult);
@@ -188,8 +181,7 @@ HB_FUNC( ORDKEYADD )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
       pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       /* Either or both may be NIL */
@@ -207,8 +199,7 @@ HB_FUNC( ORDKEYDEL )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
       pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       /* Either or both may be NIL */
@@ -226,8 +217,7 @@ HB_FUNC( ORDDESCEND )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
       pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       /* Either or both may be NIL */
@@ -245,8 +235,7 @@ HB_FUNC( ORDISUNIQUE )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
       pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       /* Harbour extension: NewVal to set/reset unique flag */
@@ -264,8 +253,7 @@ HB_FUNC( ORDCUSTOM )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
       pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       /* Either or both may be NIL */
