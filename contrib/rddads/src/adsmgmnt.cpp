@@ -95,8 +95,7 @@ HB_FUNC( ADSMGGETINSTALLINFO )
    ADS_MGMT_INSTALL_INFO stInstallInfo;
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_INSTALL_INFO);
 
-   if( AdsMgGetInstallInfo( s_hMgmtHandle, &stInstallInfo, &usStructSize ) == AE_SUCCESS )
-   {
+   if( AdsMgGetInstallInfo( s_hMgmtHandle, &stInstallInfo, &usStructSize ) == AE_SUCCESS ) {
       hb_reta(8);
       hb_storvnl(stInstallInfo.ulUserOption, -1, 1);                                /* User option purchased */
       hb_storvc(reinterpret_cast<char*>(stInstallInfo.aucRegisteredOwner), -1, 2);  /* Registered owner */
@@ -106,15 +105,12 @@ HB_FUNC( ADSMGGETINSTALLINFO )
       hb_storvc(reinterpret_cast<char*>(stInstallInfo.aucAnsiCharName), -1, 6);     /* ANSI char language */
       hb_storvc(reinterpret_cast<char*>(stInstallInfo.aucEvalExpireDate), -1, 7);   /* Eval expiration date */
       hb_storvc(reinterpret_cast<char*>(stInstallInfo.aucSerialNumber), -1, 8);     /* Serial number string */
-   }
-   else
-   {
+   } else {
       hb_reta(0);
    }
 
 #if HB_TR_LEVEL >= HB_TR_INFO
-   if( usStructSize > sizeof(ADS_MGMT_INSTALL_INFO) )
-   {
+   if( usStructSize > sizeof(ADS_MGMT_INSTALL_INFO) ) {
 #if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetInstallInfo()" ) );
 #endif
@@ -127,10 +123,8 @@ HB_FUNC( ADSMGGETACTIVITYINFO )
    ADS_MGMT_ACTIVITY_INFO stActivityInfo;
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_ACTIVITY_INFO);
 
-   if( AdsMgGetActivityInfo( s_hMgmtHandle, &stActivityInfo, &usStructSize ) == AE_SUCCESS )
-   {
-      switch( hb_parni(1) /* iOption */ )
-      {
+   if( AdsMgGetActivityInfo( s_hMgmtHandle, &stActivityInfo, &usStructSize ) == AE_SUCCESS ) {
+      switch( hb_parni(1) /* iOption */ ) {
          case 1:
             hb_retnl(stActivityInfo.ulOperations);     /* Number operations since started */
             break;
@@ -220,15 +214,12 @@ HB_FUNC( ADSMGGETACTIVITYINFO )
          default:
             hb_reta(0);
       }
-   }
-   else
-   {
+   } else {
       hb_reta(0);
    }
 
 #if HB_TR_LEVEL >= HB_TR_INFO
-   if( usStructSize > sizeof(ADS_MGMT_ACTIVITY_INFO) )
-   {
+   if( usStructSize > sizeof(ADS_MGMT_ACTIVITY_INFO) ) {
 #if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetActivityInfo()" ) );
 #endif
@@ -241,8 +232,7 @@ HB_FUNC( ADSMGGETCOMMSTATS )
    ADS_MGMT_COMM_STATS stCommStats;
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_COMM_STATS);
 
-   if( AdsMgGetCommStats( s_hMgmtHandle, &stCommStats, &usStructSize ) == AE_SUCCESS )
-   {
+   if( AdsMgGetCommStats( s_hMgmtHandle, &stCommStats, &usStructSize ) == AE_SUCCESS ) {
       hb_reta(11);
       hb_storvnd(stCommStats.dPercentCheckSums  , -1, 1 );  /* % of pkts with checksum failures */
       hb_storvnl(stCommStats.ulTotalPackets     , -1, 2 );  /* Total packets received */
@@ -255,15 +245,12 @@ HB_FUNC( ADSMGGETCOMMSTATS )
       hb_storvnl(stCommStats.ulInvalidPackets   , -1, 9 );  /* Rcvd invalid packets (NT only) */
       hb_storvnl(stCommStats.ulRecvFromErrors   , -1, 10);  /* RecvFrom failed (NT only) */
       hb_storvnl(stCommStats.ulSendToErrors     , -1, 11);  /* SendTo failed (NT only) */
-   }
-   else
-   {
+   } else {
       hb_reta(0);
    }
 
 #if HB_TR_LEVEL >= HB_TR_INFO
-   if( usStructSize > sizeof(ADS_MGMT_COMM_STATS) )
-   {
+   if( usStructSize > sizeof(ADS_MGMT_COMM_STATS) ) {
 #if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetCommStats()" ) );
 #endif
@@ -283,10 +270,8 @@ HB_FUNC( ADSMGGETCONFIGINFO )
    UNSIGNED16 usConfigValuesStructSize = sizeof(ADS_MGMT_CONFIG_PARAMS);
    UNSIGNED16 usConfigMemoryStructSize = sizeof(ADS_MGMT_CONFIG_MEMORY);
 
-   if( AdsMgGetConfigInfo( s_hMgmtHandle, &stConfigValues, &usConfigValuesStructSize, &stConfigMemory, &usConfigMemoryStructSize ) == AE_SUCCESS )
-   {
-      switch( hb_parnidef(1, 1) /* iOption */ ) /* Pass 0 for Values, 1 for memory */
-      {
+   if( AdsMgGetConfigInfo( s_hMgmtHandle, &stConfigValues, &usConfigValuesStructSize, &stConfigMemory, &usConfigMemoryStructSize ) == AE_SUCCESS ) {
+      switch( hb_parnidef(1, 1) /* iOption */ ) { /* Pass 0 for Values, 1 for memory */
          case 0:
             hb_reta(25);
             hb_storvnl(stConfigValues.ulNumConnections        , -1, 1 );  /* number connections */
@@ -347,22 +332,18 @@ HB_FUNC( ADSMGGETCONFIGINFO )
          default:
             hb_reta(0);
       }
-   }
-   else
-   {
+   } else {
       hb_reta(0);
    }
 
 #if HB_TR_LEVEL >= HB_TR_INFO
-   if( usConfigValuesStructSize > sizeof(ADS_MGMT_CONFIG_PARAMS) )
-   {
+   if( usConfigValuesStructSize > sizeof(ADS_MGMT_CONFIG_PARAMS) ) {
 #if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetConfigInfo()" ) );
 #endif
    }
 
-   if( usConfigMemoryStructSize > sizeof(ADS_MGMT_CONFIG_MEMORY) )
-   {
+   if( usConfigMemoryStructSize > sizeof(ADS_MGMT_CONFIG_MEMORY) ) {
 #if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetConfigInfo()" ) );
 #endif
@@ -386,12 +367,10 @@ HB_FUNC( ADSMGGETUSERNAMES )
                           reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucFileName */,
                           pastUserInfo,
                           &usArrayLen,
-                          &usStructSize ) == AE_SUCCESS )
-   {
+                          &usStructSize ) == AE_SUCCESS ) {
       PHB_ITEM pArray = hb_itemArrayNew(usArrayLen);
 
-      for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ )
-      {
+      for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ ) {
          PHB_ITEM pArrayItm = hb_arrayGetItemPtr(pArray, ulCount);
          hb_arrayNew(pArrayItm, 6);
 
@@ -416,17 +395,14 @@ HB_FUNC( ADSMGGETUSERNAMES )
 #endif
       }
       hb_itemReturnRelease(pArray);
-   }
-   else
-   {
+   } else {
       hb_reta(0);
    }
 
    hb_xfree(pastUserInfo);
 
 #if HB_TR_LEVEL >= HB_TR_INFO
-   if( usStructSize > sizeof(ADS_MGMT_USER_INFO) )
-   {
+   if( usStructSize > sizeof(ADS_MGMT_USER_INFO) ) {
 #if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetUserNames()" ) );
 #endif
@@ -456,8 +432,7 @@ HB_FUNC( ADSMGGETLOCKOWNER )
                           static_cast<UNSIGNED32>(hb_parnl(2)) /* ulRecordNumber */,
                           pstUserInfo,
                           &usStructSize,
-                          &pusLockType ) == AE_SUCCESS )
-   {
+                          &pusLockType ) == AE_SUCCESS ) {
       hb_reta(5);
       hb_storvc(reinterpret_cast<char*>(pstUserInfo->aucUserName), -1, 1);       /* Machine name under NT */
       hb_storvnl(static_cast<UNSIGNED16>(pstUserInfo->usConnNumber), -1, 2); /* NetWare conn # (NLM only) */
@@ -469,17 +444,14 @@ HB_FUNC( ADSMGGETLOCKOWNER )
       hb_storvc(nullptr, -1, 4);                                      /* IP address */
 #endif
       hb_storvnl(pusLockType, -1, 5);                              /* type of lock */
-   }
-   else
-   {
+   } else {
       hb_reta(0);
    }
 
    hb_xfree(pstUserInfo);
 
 #if HB_TR_LEVEL >= HB_TR_INFO
-   if( usStructSize > sizeof(ADS_MGMT_USER_INFO) )
-   {
+   if( usStructSize > sizeof(ADS_MGMT_USER_INFO) ) {
 #if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetLockOwner()" ) );
 #endif
@@ -500,27 +472,22 @@ HB_FUNC( ADSMGGETOPENTABLES ) /* nMaxNumberOfFilesToReturn, cUserName, nConnecti
                            static_cast<UNSIGNED16>(hb_parni(3)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(3) only valid for NetWare so don't default to current, only take a passed value */
                            astOpenTableInfo,
                            &usArrayLen,
-                           &usStructSize ) == AE_SUCCESS )
-   {
+                           &usStructSize ) == AE_SUCCESS ) {
       PHB_ITEM pArray = hb_itemArrayNew(usArrayLen);
 
-      for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ )
-      {
+      for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ ) {
          hb_arraySetC( pArray, static_cast<HB_ULONG>(ulCount), reinterpret_cast<char*>(astOpenTableInfo[ulCount - 1].aucTableName) );
       }
 
       hb_itemReturnRelease(pArray);
-   }
-   else
-   {
+   } else {
       hb_reta(0);
    }
 
    hb_xfree(astOpenTableInfo);
 
 #if HB_TR_LEVEL >= HB_TR_INFO
-   if( usStructSize > sizeof(ADS_MGMT_TABLE_INFO) )
-   {
+   if( usStructSize > sizeof(ADS_MGMT_TABLE_INFO) ) {
 #if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetOpenTables()" ) );
 #endif
@@ -539,12 +506,10 @@ HB_FUNC( ADSMGGETOPENTABLES2 ) /* nMaxNumberOfFilesToReturn, cUserName, nConnect
                            static_cast<UNSIGNED16>(hb_parni(3)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(3) only valid for NetWare so don't default to current, only take a passed value */
                            astOpenTableInfo,
                            &usArrayLen,
-                           &usStructSize ) == AE_SUCCESS )
-   {
+                           &usStructSize ) == AE_SUCCESS ) {
       PHB_ITEM pArray = hb_itemArrayNew(usArrayLen);
 
-      for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ )
-      {
+      for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ ) {
          PHB_ITEM pArrayItm = hb_arrayGetItemPtr(pArray, ulCount);
          hb_arrayNew(pArrayItm, 2);
 
@@ -553,17 +518,14 @@ HB_FUNC( ADSMGGETOPENTABLES2 ) /* nMaxNumberOfFilesToReturn, cUserName, nConnect
       }
 
       hb_itemReturnRelease(pArray);
-   }
-   else
-   {
+   } else {
       hb_reta(0);
    }
 
    hb_xfree(astOpenTableInfo);
 
 #if HB_TR_LEVEL >= HB_TR_INFO
-   if( usStructSize > sizeof(ADS_MGMT_TABLE_INFO) )
-   {
+   if( usStructSize > sizeof(ADS_MGMT_TABLE_INFO) ) {
 #if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetOpenTables()" ) );
 #endif
@@ -583,27 +545,22 @@ HB_FUNC( ADSMGGETOPENINDEXES ) /* nMaxNumberOfFilesToReturn, cTableName, cUserNa
                             static_cast<UNSIGNED16>(hb_parni(4)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(4) only valid for NetWare so don't default to current, only take a passed value */
                             astOpenIndexInfo,
                             &usArrayLen,
-                            &usStructSize ) == AE_SUCCESS )
-   {
+                            &usStructSize ) == AE_SUCCESS ) {
       PHB_ITEM pArray = hb_itemArrayNew(usArrayLen);
 
-      for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ )
-      {
+      for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ ) {
          hb_arraySetC( pArray, static_cast<HB_ULONG>(ulCount), reinterpret_cast<char*>(astOpenIndexInfo[ulCount - 1].aucIndexName) );
       }
 
       hb_itemReturnRelease(pArray);
-   }
-   else
-   {
+   } else {
       hb_reta(0);
    }
 
    hb_xfree(astOpenIndexInfo);
 
 #if HB_TR_LEVEL >= HB_TR_INFO
-   if( usStructSize > sizeof(ADS_MGMT_INDEX_INFO) )
-   {
+   if( usStructSize > sizeof(ADS_MGMT_INDEX_INFO) ) {
 #if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetOpenIndexes()" ) );
 #endif
@@ -623,27 +580,22 @@ HB_FUNC( ADSMGGETLOCKS )
                       static_cast<UNSIGNED16>(hb_parni(4)) /* usConnNumber */, /* = HB_ADS_PARCONNECTION(4) only valid for NetWare so don't default to current, only take a passed value */
                       astRecordInfo,
                       &usArrayLen,
-                      &usStructSize ) == AE_SUCCESS )
-   {
+                      &usStructSize ) == AE_SUCCESS ) {
       PHB_ITEM pArray = hb_itemArrayNew(usArrayLen);
 
-      for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ )
-      {
+      for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ ) {
          hb_arraySetNL(pArray, static_cast<HB_ULONG>(ulCount), astRecordInfo[ulCount - 1].ulRecordNumber);
       }
 
       hb_itemReturnRelease(pArray);
-   }
-   else
-   {
+   } else {
       hb_reta(0);
    }
 
    hb_xfree(astRecordInfo);
 
 #if HB_TR_LEVEL >= HB_TR_INFO
-   if( usStructSize > sizeof(ADS_MGMT_RECORD_INFO) )
-   {
+   if( usStructSize > sizeof(ADS_MGMT_RECORD_INFO) ) {
 #if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetLocks()" ) );
 #endif
@@ -657,12 +609,10 @@ HB_FUNC( ADSMGGETWORKERTHREADACTIVITY )
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_THREAD_ACTIVITY);
    ADS_MGMT_THREAD_ACTIVITY * astWorkerThreadActivity = static_cast<ADS_MGMT_THREAD_ACTIVITY*>(hb_xgrab(sizeof(ADS_MGMT_THREAD_ACTIVITY) * usArrayLen));
 
-   if( AdsMgGetWorkerThreadActivity( s_hMgmtHandle, astWorkerThreadActivity, &usArrayLen, &usStructSize ) == AE_SUCCESS )
-   {
+   if( AdsMgGetWorkerThreadActivity( s_hMgmtHandle, astWorkerThreadActivity, &usArrayLen, &usStructSize ) == AE_SUCCESS ) {
       PHB_ITEM pArray = hb_itemArrayNew(usArrayLen);
 
-      for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ )
-      {
+      for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ ) {
          PHB_ITEM pArrayItm = hb_arrayGetItemPtr(pArray, ulCount);
          hb_arrayNew(pArrayItm, 6);
 
@@ -678,17 +628,14 @@ HB_FUNC( ADSMGGETWORKERTHREADACTIVITY )
 #endif
       }
       hb_itemReturnRelease(pArray);
-   }
-   else
-   {
+   } else {
       hb_reta(0);
    }
 
    hb_xfree(astWorkerThreadActivity);
 
 #if HB_TR_LEVEL >= HB_TR_INFO
-   if( usStructSize > sizeof(ADS_MGMT_THREAD_ACTIVITY) )
-   {
+   if( usStructSize > sizeof(ADS_MGMT_THREAD_ACTIVITY) ) {
 #if 0
       HB_TRACE( HB_TR_INFO, ( "%s returned extra data; available with newer client lib.", "AdsMgGetWorkerThreadActivity()" ) );
 #endif
