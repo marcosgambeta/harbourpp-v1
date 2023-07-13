@@ -4644,7 +4644,7 @@ static bool hb_cdxIndexLoad(LPCDXINDEX pIndex, char * szBaseName)
 /*
  * create index file name
  */
-static void hb_cdxCreateFName(CDXAREAP pArea, const char * szBagName, HB_BOOL * fProd, char * szFileName, char * szBaseName)
+static void hb_cdxCreateFName(CDXAREAP pArea, const char * szBagName, bool * fProd, char * szFileName, char * szBaseName)
 {
    PHB_FNAME pFileName;
    PHB_ITEM pExt = nullptr;
@@ -4671,9 +4671,9 @@ static void hb_cdxCreateFName(CDXAREAP pArea, const char * szBagName, HB_BOOL * 
 
    if( fProd ) {
       if( !pFileName->szName ) {
-         *fProd = HB_FALSE;
+         *fProd = false;
       } else if( !fName ) {
-         *fProd = HB_TRUE;
+         *fProd = true;
       } else {
          PHB_FNAME pTableFileName = hb_fsFNameSplit(pArea->dbfarea.szDataFileName);
 
@@ -6778,8 +6778,7 @@ static HB_ERRCODE hb_cdxOrderListAdd(CDXAREAP pArea, LPDBORDERINFO pOrderInfo)
    char szBaseName[CDX_MAXTAGNAMELEN + 1];
    char szFileName[HB_PATH_MAX];
    LPCDXINDEX pIndex, * pIndexPtr;
-   HB_BOOL fProd;
-   bool bRetry;
+   bool fProd, bRetry;
    PHB_ITEM pError = nullptr;
 
    if( FAST_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
@@ -6899,7 +6898,7 @@ static HB_ERRCODE hb_cdxOrderListDelete(CDXAREAP pArea, LPDBORDERINFO pOrderInfo
    char szTagName[CDX_MAXTAGNAMELEN + 1];
    char szFileName[HB_PATH_MAX];
    LPCDXINDEX pIndex, * pIndexPtr;
-   HB_BOOL fProd;
+   bool fProd;
 
    if( FAST_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
       return HB_FAILURE;
@@ -7021,8 +7020,7 @@ static HB_ERRCODE hb_cdxOrderCreate(CDXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
 #endif
 
    HB_ULONG ulRecNo;
-   HB_BOOL fProd;
-   bool fNewFile, fOpenedIndex, fAscend = true, fNoCase = false,
+   bool fProd, fNewFile, fOpenedIndex, fAscend = true, fNoCase = false,
         fCustom = false, fTemporary = false, fExclusive = false;
    PHB_ITEM pKeyExp, pForExp = nullptr, pResult;
    char szCpndTagName[CDX_MAXTAGNAMELEN + 1], szTagName[CDX_MAXTAGNAMELEN + 1];

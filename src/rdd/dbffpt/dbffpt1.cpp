@@ -2784,12 +2784,12 @@ static bool hb_fptHasMemoData(FPTAREAP pArea, HB_USHORT uiIndex)
 }
 #endif
 
-static HB_ERRCODE hb_fptLockForRead(FPTAREAP pArea, HB_USHORT uiIndex, HB_BOOL * fUnLock)
+static HB_ERRCODE hb_fptLockForRead(FPTAREAP pArea, HB_USHORT uiIndex, bool * fUnLock)
 {
    HB_ERRCODE errCode;
    HB_BOOL fLocked;
 
-   *fUnLock = HB_FALSE;
+   *fUnLock = false;
 #ifdef HB_MEMO_SAFELOCK
    if( pArea->lpdbPendingRel ) {
       errCode = SELF_FORCEREL(&pArea->area);
@@ -2819,7 +2819,7 @@ static HB_ERRCODE hb_fptLockForRead(FPTAREAP pArea, HB_USHORT uiIndex, HB_BOOL *
             return HB_FAILURE;
          }
 
-         *fUnLock = HB_TRUE;
+         *fUnLock = true;
          pArea->fValidBuffer = false;
       }
    }
@@ -2841,7 +2841,7 @@ static HB_ERRCODE hb_fptGetVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
    LPFIELD pField;
    HB_ERRCODE errCode;
    HB_BYTE * pFieldBuf;
-   HB_BOOL fUnLock = false;
+   bool fUnLock = false;
 
    pField = pArea->area.lpFields + uiIndex - 1;
 
@@ -3321,7 +3321,7 @@ static HB_ERRCODE hb_fptGetVarLen(FPTAREAP pArea, HB_USHORT uiIndex, HB_ULONG * 
          pArea->area.lpFields[uiIndex - 1].uiType == HB_FT_BLOB ||
          pArea->area.lpFields[uiIndex - 1].uiType == HB_FT_OLE ) ) {
       HB_ERRCODE errCode;
-      HB_BOOL fUnLock;
+      bool fUnLock;
 
       errCode = hb_fptLockForRead(pArea, uiIndex, &fUnLock);
       if( errCode == HB_SUCCESS ) {

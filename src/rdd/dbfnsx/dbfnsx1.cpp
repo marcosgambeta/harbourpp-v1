@@ -2538,12 +2538,12 @@ static bool hb_nsxTagPrevKey(LPTAGINFO pTag)
 /*
  * find a key value in page
  */
-static int hb_nsxPageKeyFind(LPTAGINFO pTag, LPPAGEINFO pPage, HB_UCHAR * key, HB_SHORT keylen, int mode, bool fLast, HB_ULONG ulRecNo, HB_BOOL * fStop)
+static int hb_nsxPageKeyFind(LPTAGINFO pTag, LPPAGEINFO pPage, HB_UCHAR * key, HB_SHORT keylen, int mode, bool fLast, HB_ULONG ulRecNo, bool * fStop)
 {
    int iBegin, iEnd, iLast, k, i;
    HB_ULONG ulRec;
 
-   *fStop = HB_FALSE;
+   *fStop = false;
 
    if( pPage->uiKeys == 0 ) {
       return 0;
@@ -2566,7 +2566,7 @@ static int hb_nsxPageKeyFind(LPTAGINFO pTag, LPPAGEINFO pPage, HB_UCHAR * key, H
                } else if( ulRecNo > ulRec ) {
                   k = 1;
                } else {
-                  *fStop = HB_TRUE;
+                  *fStop = true;
                   return u;
                }
             }
@@ -2575,7 +2575,7 @@ static int hb_nsxPageKeyFind(LPTAGINFO pTag, LPPAGEINFO pPage, HB_UCHAR * key, H
          if( k < 0 ) {
             break;
          } else if( k == 0 && !fLast ) {
-            *fStop = HB_TRUE;
+            *fStop = true;
             break;
          }
       }
@@ -2596,7 +2596,7 @@ static int hb_nsxPageKeyFind(LPTAGINFO pTag, LPPAGEINFO pPage, HB_UCHAR * key, H
                } else if( ulRecNo > ulRec ) {
                   k = 1;
                } else {
-                  *fStop = HB_TRUE;
+                  *fStop = true;
                   return i + 1;
                }
             }
@@ -2606,7 +2606,7 @@ static int hb_nsxPageKeyFind(LPTAGINFO pTag, LPPAGEINFO pPage, HB_UCHAR * key, H
             iBegin = i + 1;
          } else {
             if( k == 0 ) {
-               *fStop = HB_TRUE;
+               *fStop = true;
             }
             iLast = i;
             iEnd = i - 1;
@@ -2624,8 +2624,7 @@ static bool hb_nsxTagKeyFind(LPTAGINFO pTag, LPKEYINFO pKey, HB_USHORT uiLen)
    LPPAGEINFO pPage;
    HB_ULONG ulPage, ulRecNo = 0;
    int iKey;
-   HB_BOOL fStop = false;
-   bool fLast = false, fOut;
+   bool fStop = false, fLast = false, fOut;
 
    if( pKey->rec == NSX_MAX_REC_NUM ) {       /* for seek last */
       fLast = true;
@@ -3534,7 +3533,7 @@ static HB_ERRCODE hb_nsxTagSpaceFree(LPTAGINFO pTag)
 /*
  * create index file name
  */
-static void hb_nsxCreateFName(NSXAREAP pArea, const char * szBagName, HB_BOOL * fProd, char * szFileName, char * szTagName)
+static void hb_nsxCreateFName(NSXAREAP pArea, const char * szBagName, bool * fProd, char * szFileName, char * szTagName)
 {
    PHB_FNAME pFileName;
    PHB_ITEM pExt = nullptr;
@@ -3562,9 +3561,9 @@ static void hb_nsxCreateFName(NSXAREAP pArea, const char * szBagName, HB_BOOL * 
 
    if( fProd ) {
       if( !pFileName->szName ) {
-         *fProd = HB_FALSE;
+         *fProd = false;
       } else if( !fName ) {
-         *fProd = HB_TRUE;
+         *fProd = true;
       } else {
          PHB_FNAME pTableFileName = hb_fsFNameSplit(pArea->dbfarea.szDataFileName);
 
@@ -6186,8 +6185,7 @@ static HB_ERRCODE hb_nsxOrderCreate(NSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
    LPTAGINFO pTag = nullptr;
    HB_ERRCODE errCode;
    HB_ULONG ulRecNo;
-   HB_BOOL fProd;
-   bool fNewFile, fLocked = false, fAscend = true, fCustom = false,
+   bool fProd, fNewFile, fLocked = false, fAscend = true, fCustom = false,
         fTemporary = false, fExclusive = false;
    HB_BYTE bType, bTrail;
 
@@ -6550,7 +6548,7 @@ static HB_ERRCODE hb_nsxOrderDestroy(NSXAREAP pArea, LPDBORDERINFO pOrderInfo)
          LPNSXINDEX pIndex = pTag->pIndex;
 
          if( pIndex->iTags == 1 ) {
-            HB_BOOL fProd = pIndex->Production;
+            bool fProd = pIndex->Production;
             LPNSXINDEX * pIndexPtr = &pArea->lpIndexes;
             while( *pIndexPtr != pIndex ) {
                pIndexPtr = &( *pIndexPtr )->pNext;
@@ -7221,7 +7219,7 @@ static HB_ERRCODE hb_nsxOrderListAdd(NSXAREAP pArea, LPDBORDERINFO pOrderInfo)
    char szFileName[HB_PATH_MAX];
    LPNSXINDEX pIndex;
    HB_ERRCODE errCode;
-   HB_BOOL fProd;
+   bool fProd;
 
    errCode = SELF_GOCOLD(&pArea->dbfarea.area);
    if( errCode != HB_SUCCESS ) {
@@ -7333,7 +7331,7 @@ static HB_ERRCODE hb_nsxOrderListDelete(NSXAREAP pArea, LPDBORDERINFO pOrderInfo
    char szTagName[NSX_TAGNAME + 1];
    char szFileName[HB_PATH_MAX];
    LPNSXINDEX pIndex;
-   HB_BOOL fProd;
+   bool fProd;
 
    if( SELF_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
       return HB_FAILURE;
