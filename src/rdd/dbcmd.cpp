@@ -171,8 +171,7 @@ HB_FUNC( DBEVAL )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBEVALINFO pEvalInfo;
-      memset(&pEvalInfo, 0, sizeof(pEvalInfo));
+      DBEVALINFO pEvalInfo{};
       pEvalInfo.itmBlock = hb_param(1, Harbour::Item::BLOCK);
       if( !pEvalInfo.itmBlock ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
@@ -558,8 +557,7 @@ HB_FUNC( __DBSETLOCATE )
    if( pArea != nullptr ) {
       PHB_ITEM pLocate = hb_param(1, Harbour::Item::BLOCK);
       if( pLocate ) {
-         DBSCOPEINFO pScopeInfo;
-         memset(&pScopeInfo, 0, sizeof(pScopeInfo));
+         DBSCOPEINFO pScopeInfo{};
          pScopeInfo.itmCobFor = pLocate;
          SELF_SETLOCATE(pArea, &pScopeInfo);
       }
@@ -1020,8 +1018,7 @@ HB_FUNC( INDEXORD )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pInfo;
-      memset(&pInfo, 0, sizeof(pInfo));
+      DBORDERINFO pInfo{};
       pInfo.itmResult = hb_itemPutNI(nullptr, 0);
       SELF_ORDINFO(pArea, DBOI_NUMBER, &pInfo);
       hb_retni(hb_itemGetNI(pInfo.itmResult));
@@ -1084,10 +1081,9 @@ HB_FUNC( NETERR )
 
 HB_FUNC( ORDBAGEXT )
 {
-   DBORDERINFO pInfo;
+   DBORDERINFO pInfo{};
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   memset(&pInfo, 0, sizeof(pInfo));
    pInfo.itmResult = hb_itemPutC(nullptr, nullptr);
    if( !pArea ) {
       LPRDDNODE pRddNode;
@@ -1111,8 +1107,7 @@ HB_FUNC( ORDBAGNAME )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
 
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
       if( pOrderInfo.itmOrder && !HB_IS_STRING(pOrderInfo.itmOrder) ) {
@@ -1250,8 +1245,7 @@ HB_FUNC( ORDBAGCLEAR )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
       pOrderInfo.atomBagName = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
       hb_retl(SELF_ORDLSTDELETE(pArea, &pOrderInfo) == HB_SUCCESS);
    } else {
@@ -1264,8 +1258,7 @@ HB_FUNC( ORDDESTROY )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
       pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       hb_retl(SELF_ORDDESTROY(pArea, &pOrderInfo) == HB_SUCCESS);
@@ -1310,8 +1303,7 @@ HB_FUNC( ORDKEY )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
       if( pOrderInfo.itmOrder && !HB_IS_STRING(pOrderInfo.itmOrder) ) {
          if( HB_IS_NIL(pOrderInfo.itmOrder) ) {
@@ -1339,13 +1331,12 @@ HB_FUNC( ORDLISTADD )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
+      DBORDERINFO pOrderInfo{};
       HB_ERRCODE errCode;
 
       /* Clipper clears NETERR flag when index is open */
       hb_rddSetNetErr(false);
 
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
       pOrderInfo.atomBagName = hb_param(1, Harbour::Item::STRING);
       pOrderInfo.itmOrder    = hb_param(2, Harbour::Item::STRING);
 
@@ -1399,8 +1390,7 @@ HB_FUNC( ORDNAME )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
       if( pOrderInfo.itmOrder ) {
          if( HB_IS_NIL(pOrderInfo.itmOrder) ) {
@@ -1429,8 +1419,7 @@ HB_FUNC( ORDNUMBER )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING);
       pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       if( !( pOrderInfo.itmOrder || HB_ISNIL(1) ) || !( pOrderInfo.atomBagName || HB_ISNIL(2) ) ) {
@@ -1450,8 +1439,7 @@ HB_FUNC( ORDSETFOCUS )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pInfo;
-      memset(&pInfo, 0, sizeof(pInfo));
+      DBORDERINFO pInfo{};
       pInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
       pInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
       pInfo.itmResult = hb_itemPutC(nullptr, nullptr);
@@ -1603,11 +1591,10 @@ HB_FUNC( ORDSCOPE )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pInfo;
+      DBORDERINFO pInfo{};
       HB_USHORT uiAction;
       int iScope = hb_parni(1);
 
-      memset(&pInfo, 0, sizeof(pInfo));
       pInfo.itmResult = hb_itemNew(nullptr);
       if( iScope == 2 ) {
          if( hb_pcount() > 1 && !HB_ISNIL(2) ) {
@@ -1731,13 +1718,12 @@ HB_FUNC( __DBARRANGE )
 
    /* TODO: check what Clipper does when pDstArea == nullptr or pSrcArea == pDstArea */
    if( pSrcArea && pDstArea && pSrcArea != pDstArea ) {
-      DBSORTINFO dbSortInfo;
+      DBSORTINFO dbSortInfo{};
       /* structure with fields copied copied from source WorkArea */
       PHB_ITEM pStruct = hb_param(2, Harbour::Item::ARRAY);
       /* array with sorted fields in source WorkArea */
       PHB_ITEM pFields = hb_param(8, Harbour::Item::ARRAY);
 
-      memset(&dbSortInfo, 0, sizeof(dbSortInfo));
       errCode = hb_dbTransStruct(pSrcArea, pDstArea, &dbSortInfo.dbtri, nullptr, pStruct);
       if( errCode == HB_SUCCESS ) {
          PHB_ITEM pTransItm;
@@ -1849,11 +1835,10 @@ HB_FUNC( __DBTRANS )
       pDstArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
       if( pSrcArea && pDstArea ) {
-         DBTRANSINFO dbTransInfo;
+         DBTRANSINFO dbTransInfo{};
          PHB_ITEM pFields = hb_param(2, Harbour::Item::ARRAY);
          HB_ERRCODE errCode;
 
-         memset(&dbTransInfo, 0, sizeof(dbTransInfo));
          errCode = hb_dbTransStruct(pSrcArea, pDstArea, &dbTransInfo, nullptr, pFields);
          if( errCode == HB_SUCCESS ) {
             PHB_ITEM pTransItm;
