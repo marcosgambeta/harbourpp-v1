@@ -2357,11 +2357,11 @@ static bool hb_ntxTagPrevKey(LPTAGINFO pTag)
 /*
  * find a key value in page
  */
-static int hb_ntxPageKeyFind(LPTAGINFO pTag, LPPAGEINFO pPage, const char * key, HB_SHORT keylen, bool fNext, HB_ULONG ulRecNo, HB_BOOL * fStop)
+static int hb_ntxPageKeyFind(LPTAGINFO pTag, LPPAGEINFO pPage, const char * key, HB_SHORT keylen, bool fNext, HB_ULONG ulRecNo, bool * fStop)
 {
    int iLast = -1, iBegin = 0, iEnd = pPage->uiKeys - 1;
 
-   *fStop = HB_FALSE;
+   *fStop = false;
    while( iBegin <= iEnd ) {
       int i, k;
 
@@ -2375,7 +2375,7 @@ static int hb_ntxPageKeyFind(LPTAGINFO pTag, LPPAGEINFO pPage, const char * key,
             } else if( ulRecNo > ulRec ) {
                k = 1;
             } else {
-               *fStop = HB_TRUE;
+               *fStop = true;
                return i;
             }
          }
@@ -2386,7 +2386,7 @@ static int hb_ntxPageKeyFind(LPTAGINFO pTag, LPPAGEINFO pPage, const char * key,
          iBegin = i + 1;
       } else {
          if( k == 0 && !ulRecNo ) {
-            *fStop = HB_TRUE;
+            *fStop = true;
          }
          iLast = i;
          iEnd = i - 1;
@@ -2420,8 +2420,7 @@ static bool hb_ntxTagKeyFind(LPTAGINFO pTag, LPKEYINFO pKey, HB_USHORT uiLen)
    LPPAGEINFO pPage = nullptr;
    HB_ULONG ulPage = 0, ulRecNo = 0;
    int iKey;
-   HB_BOOL fStop = false;
-   bool fNext = false, fPrev = false, fOut = false;
+   bool fStop = false, fNext = false, fPrev = false, fOut = false;
 
    if( pKey->Tag == NTX_MAX_REC_NUM ) {        /* for key add */
       if( pTag->fSortRec ) {
@@ -3344,7 +3343,7 @@ static HB_ERRCODE hb_ntxTagSpaceFree(LPTAGINFO pTag)
 /*
  * create index file name
  */
-static void hb_ntxCreateFName(NTXAREAP pArea, const char * szBagName, HB_BOOL * fProd, char * szFileName, char * szTagName)
+static void hb_ntxCreateFName(NTXAREAP pArea, const char * szBagName, bool * fProd, char * szFileName, char * szTagName)
 {
    PHB_FNAME pFileName;
    PHB_ITEM pExt = nullptr;
@@ -3372,9 +3371,9 @@ static void hb_ntxCreateFName(NTXAREAP pArea, const char * szBagName, HB_BOOL * 
 
    if( fProd ) {
       if( !pFileName->szName ) {
-         *fProd = HB_FALSE;
+         *fProd = false;
       } else if( !fName ) {
-         *fProd = HB_TRUE;
+         *fProd = true;
       } else {
          PHB_FNAME pTableFileName = hb_fsFNameSplit(pArea->dbfarea.szDataFileName);
 
@@ -5341,7 +5340,7 @@ static HB_ERRCODE hb_ntxSeek(NTXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pItem, 
    } else {
       LPKEYINFO pKey;
       HB_ERRCODE retval = HB_SUCCESS;
-      bool  fEOF = false, fLast;
+      bool fEOF = false, fLast;
       HB_USHORT uiLen;
       HB_ULONG ulRec;
 
@@ -5850,8 +5849,7 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
    LPDBFDATA pData;
    HB_ERRCODE errCode;
    HB_ULONG ulRecNo;
-   HB_BOOL fProd;
-   bool fCompound, fTagName, fBagName, fLocked = false,
+   bool fProd, fCompound, fTagName, fBagName, fLocked = false,
         fAscend = true, fCustom = false, fTemporary = false,
         fExclusive = false;
    HB_BYTE bType;
@@ -6925,7 +6923,7 @@ static HB_ERRCODE hb_ntxOrderListAdd(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
    char szFileName[HB_PATH_MAX], szTagName[NTX_MAX_TAGNAME + 1];
    LPNTXINDEX pIndex;
    HB_ERRCODE errCode;
-   HB_BOOL fProd;
+   bool fProd;
 
    errCode = SELF_GOCOLD(&pArea->dbfarea.area);
    if( errCode != HB_SUCCESS ) {
@@ -7045,7 +7043,7 @@ static HB_ERRCODE hb_ntxOrderListDelete(NTXAREAP pArea, LPDBORDERINFO pOrderInfo
    char szTagName[NTX_MAX_TAGNAME + 1];
    char szFileName[HB_PATH_MAX];
    LPNTXINDEX pIndex;
-   HB_BOOL fProd;
+   bool fProd;
 
    if( SELF_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
       return HB_FAILURE;
