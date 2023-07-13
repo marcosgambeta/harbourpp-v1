@@ -305,8 +305,7 @@ HB_FUNC( SX_ISREINDEX )
    bool fReindex = false;
 
    if( pArea != nullptr ) {
-      DBORDERINFO Info;
-      memset(&Info, 0, sizeof(Info));
+      DBORDERINFO Info{};
       Info.itmResult = hb_itemNew(nullptr);
       SELF_ORDINFO(pArea, DBOI_ISREINDEX, &Info);
       fReindex = hb_itemGetL(Info.itmResult);
@@ -322,8 +321,7 @@ HB_FUNC( SX_STEP )
    HB_LONG lStep = 0;
 
    if( pArea != nullptr ) {
-      DBORDERINFO Info;
-      memset(&Info, 0, sizeof(Info));
+      DBORDERINFO Info{};
       Info.itmResult = hb_itemNew(nullptr);
       SELF_ORDINFO(pArea, DBOI_EVALSTEP, &Info);
       lStep = hb_itemGetNL(Info.itmResult);
@@ -339,8 +337,7 @@ HB_FUNC( SX_KEYSINCLUDED )
    HB_ULONG ulKeys = 0;
 
    if( pArea != nullptr ) {
-      DBORDERINFO Info;
-      memset(&Info, 0, sizeof(Info));
+      DBORDERINFO Info{};
       Info.itmResult = hb_itemNew(nullptr);
       SELF_ORDINFO(pArea, DBOI_KEYSINCLUDED, &Info);
       ulKeys = hb_itemGetNL(Info.itmResult);
@@ -355,8 +352,7 @@ HB_FUNC( SX_I_INDEXNAME )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO Info;
-      memset(&Info, 0, sizeof(Info));
+      DBORDERINFO Info{};
       Info.itmResult = hb_itemNew(nullptr);
       SELF_ORDINFO(pArea, DBOI_I_BAGNAME, &Info);
       hb_itemReturnRelease(Info.itmResult);
@@ -371,8 +367,7 @@ HB_FUNC( SX_I_TAGNAME )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO Info;
-      memset(&Info, 0, sizeof(Info));
+      DBORDERINFO Info{};
       Info.itmResult = hb_itemNew(nullptr);
       SELF_ORDINFO(pArea, DBOI_I_TAGNAME, &Info);
       hb_itemReturnRelease(Info.itmResult);
@@ -388,8 +383,7 @@ HB_FUNC( SX_INDEXCOUNT )
    int iCount = 0;
 
    if( pArea != nullptr ) {
-      DBORDERINFO Info;
-      memset(&Info, 0, sizeof(Info));
+      DBORDERINFO Info{};
       Info.itmResult = hb_itemNew(nullptr);
       SELF_ORDINFO(pArea, DBOI_BAGCOUNT, &Info);
       iCount = hb_itemGetNI(Info.itmResult);
@@ -581,8 +575,7 @@ HB_FUNC( SX_SKIPUNIQUE )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO Info;
-      memset(&Info, 0, sizeof(Info));
+      DBORDERINFO Info{};
       Info.itmNewVal = hb_param(1, Harbour::Item::ANY);
       Info.itmResult = hb_itemNew(nullptr);
       SELF_ORDINFO(pArea, DBOI_SKIPUNIQUE, &Info);
@@ -632,8 +625,7 @@ HB_FUNC( SX_WILDSEEK )
    if( pArea != nullptr ) {
       int iOrder = 0;
 
-      DBORDERINFO Info;
-      memset(&Info, 0, sizeof(Info));
+      DBORDERINFO Info{};
       Info.itmResult = hb_itemNew(nullptr);
 
       if( szPattern && szPattern[0] ) {
