@@ -4661,8 +4661,7 @@ static void hb_cdxCreateFName(CDXAREAP pArea, const char * szBagName, HB_BOOL * 
    }
 
    if( !fName || (!pFileName->szExtension && hb_setGetDefExtension()) ) {
-      DBORDERINFO pExtInfo;
-      memset(&pExtInfo, 0, sizeof(pExtInfo));
+      DBORDERINFO pExtInfo{};
       pExt = pExtInfo.itmResult = hb_itemPutC(nullptr, nullptr);
       if( SELF_ORDINFO(&pArea->dbfarea.area, DBOI_BAGEXT, &pExtInfo) == HB_SUCCESS && hb_itemGetCLen(pExt) > 0 ) {
          pFileName->szExtension = hb_itemGetCPtr(pExt);
@@ -4680,8 +4679,7 @@ static void hb_cdxCreateFName(CDXAREAP pArea, const char * szBagName, HB_BOOL * 
 
          *fProd = pTableFileName->szName && hb_stricmp(pTableFileName->szName, pFileName->szName) == 0;
          if( *fProd && pFileName->szExtension && !pExt ) {
-            DBORDERINFO pExtInfo;
-            memset(&pExtInfo, 0, sizeof(pExtInfo));
+            DBORDERINFO pExtInfo{};
             pExt = pExtInfo.itmResult = hb_itemPutC(nullptr, nullptr);
             if( SELF_ORDINFO(&pArea->dbfarea.area, DBOI_BAGEXT, &pExtInfo) == HB_SUCCESS ) {
                *fProd = hb_stricmp(pFileName->szExtension, hb_itemGetCPtr(pExt)) == 0;
@@ -4715,10 +4713,9 @@ static void hb_cdxOrdListClear(CDXAREAP pArea, bool fAll, LPCDXINDEX pKeepInd)
          pFileNameCdx = hb_fsFNameSplit(pArea->lpIndexes->szFileName);
          fAll = hb_stricmp(pFileNameDbf->szName ? pFileNameDbf->szName : "", pFileNameCdx->szName ? pFileNameCdx->szName : "") != 0;
          if( !fAll ) {
-            DBORDERINFO pExtInfo;
+            DBORDERINFO pExtInfo{};
             PHB_ITEM pExt;
 
-            memset(&pExtInfo, 0, sizeof(pExtInfo));
             pExt = pExtInfo.itmResult = hb_itemPutC(nullptr, nullptr);
             if( SELF_ORDINFO(&pArea->dbfarea.area, DBOI_BAGEXT, &pExtInfo) == HB_SUCCESS ) {
                fAll = hb_stricmp(pFileNameCdx->szExtension, hb_itemGetCPtr(pExt)) != 0;

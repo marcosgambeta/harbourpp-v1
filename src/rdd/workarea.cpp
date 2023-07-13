@@ -1522,14 +1522,13 @@ static HB_ERRCODE hb_waRelEval(AREAP pArea, LPDBRELINFO pRelInfo)
          errCode = SELF_EVALBLOCK(pRelInfo->lpaParent, pRelInfo->itmCobExpr);
          if( errCode == HB_SUCCESS ) {
             PHB_ITEM pResult;
-            DBORDERINFO pInfo;
+            DBORDERINFO pInfo{};
 
             /*
              *  Check the current order
              */
             pResult = pRelInfo->lpaParent->valResult;
             pRelInfo->lpaParent->valResult = nullptr;
-            memset(&pInfo, 0, sizeof(pInfo));
             pInfo.itmResult = hb_itemPutNI(nullptr, 0);
             errCode = SELF_ORDINFO(pArea, DBOI_NUMBER, &pInfo);
 

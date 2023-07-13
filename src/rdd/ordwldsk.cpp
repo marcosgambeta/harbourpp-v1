@@ -65,10 +65,9 @@ HB_FUNC( ORDWILDSEEK )
 
       if( szPattern ) {
          bool fCont = hb_parl(2), fBack = hb_parl(3), fFound = false;
-         DBORDERINFO OrderInfo;
+         DBORDERINFO OrderInfo{};
          HB_ERRCODE errCode = HB_SUCCESS;
 
-         memset(&OrderInfo, 0, sizeof(OrderInfo));
          OrderInfo.itmResult = hb_itemNew(nullptr);
 
          if( !fCont ) {

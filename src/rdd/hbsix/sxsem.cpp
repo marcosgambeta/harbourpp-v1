@@ -65,9 +65,8 @@ static bool hb_sxSemName(char * szFileName)
       AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
       if( pArea != nullptr ) {
-         DBORDERINFO pOrderInfo;
+         DBORDERINFO pOrderInfo{};
 
-         memset(&pOrderInfo, 0, sizeof(pOrderInfo));
          pOrderInfo.itmOrder = hb_param(1, Harbour::Item::NUMERIC);
          if( pOrderInfo.itmOrder && hb_itemGetNI(pOrderInfo.itmOrder) == 0 ) {
             pOrderInfo.itmOrder = nullptr;

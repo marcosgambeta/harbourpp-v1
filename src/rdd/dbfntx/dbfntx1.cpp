@@ -3360,8 +3360,7 @@ static void hb_ntxCreateFName(NTXAREAP pArea, const char * szBagName, bool * fPr
    }
 
    if( !fName || (!pFileName->szExtension && hb_setGetDefExtension()) ) {
-      DBORDERINFO pExtInfo;
-      memset(&pExtInfo, 0, sizeof(pExtInfo));
+      DBORDERINFO pExtInfo{};
       pExt = pExtInfo.itmResult = hb_itemPutC(nullptr, nullptr);
       if( SELF_ORDINFO(&pArea->dbfarea.area, DBOI_BAGEXT, &pExtInfo) == HB_SUCCESS && hb_itemGetCLen(pExt) > 0 ) {
          pFileName->szExtension = hb_itemGetCPtr(pExt);
@@ -3379,8 +3378,7 @@ static void hb_ntxCreateFName(NTXAREAP pArea, const char * szBagName, bool * fPr
 
          *fProd = pTableFileName->szName && hb_stricmp(pTableFileName->szName, pFileName->szName) == 0;
          if( *fProd && pFileName->szExtension && !pExt ) {
-            DBORDERINFO pExtInfo;
-            memset(&pExtInfo, 0, sizeof(pExtInfo));
+            DBORDERINFO pExtInfo{};
             pExt = pExtInfo.itmResult = hb_itemPutC(nullptr, nullptr);
             if( SELF_ORDINFO(&pArea->dbfarea.area, DBOI_BAGEXT, &pExtInfo) == HB_SUCCESS ) {
                *fProd = hb_stricmp(pFileName->szExtension, hb_itemGetCPtr(pExt)) == 0;

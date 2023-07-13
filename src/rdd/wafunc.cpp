@@ -1042,11 +1042,10 @@ HB_ERRCODE hb_rddTransRecords(AREAP pArea,
 {
    AREAP lpaClose = nullptr;
    PHB_ITEM pStruct = nullptr;
-   DBTRANSINFO dbTransInfo;
+   DBTRANSINFO dbTransInfo{};
    HB_USHORT uiPrevArea;
    HB_ERRCODE errCode;
 
-   memset(&dbTransInfo, 0, sizeof(dbTransInfo));
    uiPrevArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
 
    szDriver = hb_rddFindDrv(szDriver, szFileName);

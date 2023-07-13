@@ -60,8 +60,7 @@ HB_FUNC( ORDCOUNT )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo;
-      memset(&pOrderInfo, 0, sizeof(pOrderInfo));
+      DBORDERINFO pOrderInfo{};
       pOrderInfo.atomBagName = hb_param(1, Harbour::Item::STRING);
       pOrderInfo.itmResult = hb_itemPutNI(nullptr, 0);
       SELF_ORDINFO(pArea, DBOI_ORDERCOUNT, &pOrderInfo);
