@@ -713,7 +713,7 @@ static HB_ERRCODE adsxSeek( ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, H
    HB_USHORT  uiLen;
    HB_ULONG   ulKeyPos, ulRecNo;
    HB_ERRCODE errCode;
-   HB_BOOL    fFound = HB_FALSE;
+   HB_BOOL    fFound = false;
 
    if( !pArea->pTagCurrent ) {
       return SUPER_SEEK(&pArea->adsarea.area, bSoftSeek, pKey, bFindLast);
@@ -740,10 +740,10 @@ static HB_ERRCODE adsxSeek( ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, H
    if( bFindLast ) {
       if( ulKeyPos > 0 && mixCompareKey( pArea->pTagCurrent, ulKeyPos - 1, pMixKey, uiLen ) == -1 ) {
          ulRecNo = pArea->pTagCurrent->pKeys[ulKeyPos - 1]->rec;
-         fFound  = HB_TRUE;
+         fFound  = true;
       } else if( ulKeyPos < pArea->pTagCurrent->ulRecCount ) {
          ulRecNo = pArea->pTagCurrent->pKeys[ulKeyPos]->rec;
-         fFound  = HB_FALSE;
+         fFound  = false;
       }
    } else {
       if( ulKeyPos < pArea->pTagCurrent->ulRecCount ) {
@@ -759,7 +759,7 @@ static HB_ERRCODE adsxSeek( ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, H
    errCode = SELF_GOTO(&pArea->adsarea.area, ulRecNo);
 
    pArea->adsarea.area.fEof = ulRecNo == 0;
-   pArea->adsarea.area.fBof = HB_FALSE;
+   pArea->adsarea.area.fBof = false;
    pArea->adsarea.area.fFound = fFound;
    pArea->adsarea.fPositioned = !pArea->adsarea.area.fEof;
    return errCode;
@@ -780,13 +780,13 @@ static HB_ERRCODE adsxSkip( ADSXAREAP pArea, HB_LONG lToSkip )
       SELF_FORCEREL(&pArea->adsarea.area);
    }
 
-   pArea->adsarea.area.fTop = pArea->adsarea.area.fBottom = HB_FALSE;
+   pArea->adsarea.area.fTop = pArea->adsarea.area.fBottom = false;
 
    if( lToSkip > 0 ) {
       if( !pArea->adsarea.fPositioned ) {
          errCode = SELF_GOTO(&pArea->adsarea.area, pArea->adsarea.ulRecNo);
       } else {
-         pArea->adsarea.area.fEof = HB_FALSE;
+         pArea->adsarea.area.fEof = false;
       }
 
       pKey = mixKeyEval(pArea->pTagCurrent, pArea);
@@ -798,23 +798,23 @@ static HB_ERRCODE adsxSkip( ADSXAREAP pArea, HB_LONG lToSkip )
             errCode = HB_FAILURE;
          }
 
-         pArea->adsarea.fPositioned = HB_TRUE;
-         pArea->adsarea.area.fEof = HB_FALSE;
+         pArea->adsarea.fPositioned = true;
+         pArea->adsarea.area.fEof = false;
       } else {
          SELF_GOTO(&pArea->adsarea.area, 0);
-         pArea->adsarea.fPositioned = HB_FALSE;
-         pArea->adsarea.area.fEof = HB_TRUE;
+         pArea->adsarea.fPositioned = false;
+         pArea->adsarea.area.fEof = true;
       }
 
       mixKeyFree(pKey);
-      pArea->adsarea.area.fBof = HB_FALSE;
+      pArea->adsarea.area.fBof = false;
    } else {
       if( !pArea->adsarea.fPositioned ) {
          errCode = SELF_GOBOTTOM(&pArea->adsarea.area);
-         pArea->adsarea.area.fBottom = HB_FALSE;
+         pArea->adsarea.area.fBottom = false;
          ++lToSkip;
       } else {
-         pArea->adsarea.area.fBof = HB_FALSE;
+         pArea->adsarea.area.fBof = false;
       }
 
       pKey = mixKeyEval(pArea->pTagCurrent, pArea);
@@ -825,14 +825,14 @@ static HB_ERRCODE adsxSkip( ADSXAREAP pArea, HB_LONG lToSkip )
          if( SELF_GOTO(&pArea->adsarea.area, pArea->pTagCurrent->pKeys[ulKeyPos + lToSkip]->rec) == HB_FAILURE ) {
             errCode = HB_FAILURE;
          }
-         pArea->adsarea.area.fBof = HB_FALSE;
+         pArea->adsarea.area.fBof = false;
       } else {
          SELF_GOTOP(&pArea->adsarea.area);
-         pArea->adsarea.area.fBof = HB_TRUE;
+         pArea->adsarea.area.fBof = true;
       }
 
       mixKeyFree(pKey);
-      pArea->adsarea.area.fEof = HB_FALSE;
+      pArea->adsarea.area.fEof = false;
    }
 
    /* Force relational movement in child WorkAreas */
@@ -1002,7 +1002,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
    HB_BOOL    bKeyADS, bForADS, bWhileADS;
    ADSHANDLE  hIndex = ( ADSHANDLE ) 0;
 
-   bForADS = bWhileADS = HB_TRUE;
+   bForADS = bWhileADS = true;
 
    /* Test key expression */
    bValidExpr = 0;
@@ -1016,7 +1016,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          AdsIsExprValid( pArea->adsarea.hTable, reinterpret_cast<UNSIGNED8*>(pArea->adsarea.area.lpdbOrdCondInfo->abFor), &bValidExpr );
          bForADS = bValidExpr;
       } else if( pArea->adsarea.area.lpdbOrdCondInfo->itmCobFor ) {
-         bForADS = HB_FALSE;
+         bForADS = false;
       }
 
       /* Test WHILE expression */
@@ -1025,7 +1025,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          AdsIsExprValid( pArea->adsarea.hTable, reinterpret_cast<UNSIGNED8*>(pArea->adsarea.area.lpdbOrdCondInfo->abWhile), &bValidExpr );
          bWhileADS = bValidExpr;
       } else if( pArea->adsarea.area.lpdbOrdCondInfo->itmCobWhile ) {
-         bWhileADS = HB_FALSE;
+         bWhileADS = false;
       }
    }
 
@@ -1070,7 +1070,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          return HB_FAILURE;
       }
 
-      pArea->adsarea.area.lpdbOrdCondInfo->fUseCurrent = HB_TRUE;
+      pArea->adsarea.area.lpdbOrdCondInfo->fUseCurrent = true;
 
       /* If while condition is already used, remove it from OrdCondInfo */
       if( bWhileADS && pArea->adsarea.area.lpdbOrdCondInfo->abWhile ) {
@@ -1084,7 +1084,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
             hb_itemRelease(pArea->adsarea.area.lpdbOrdCondInfo->itmStartRecID);
             pArea->adsarea.area.lpdbOrdCondInfo->itmStartRecID = nullptr;
          }
-         pArea->adsarea.area.lpdbOrdCondInfo->fRest = HB_FALSE;
+         pArea->adsarea.area.lpdbOrdCondInfo->fRest = false;
       }
    }
 
@@ -1407,7 +1407,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
             if( !pArea->adsarea.fPositioned ) {
                SELF_GOTO(&pArea->adsarea.area, pArea->adsarea.ulRecNo);
             } else {
-               pArea->adsarea.area.fEof = HB_FALSE;
+               pArea->adsarea.area.fEof = false;
             }
 
             pKey = mixKeyEval(pTag, pArea);
@@ -1435,7 +1435,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
             if( !pArea->adsarea.fPositioned ) {
                SELF_GOTO(&pArea->adsarea.area, pArea->adsarea.ulRecNo);
             } else {
-               pArea->adsarea.area.fEof = HB_FALSE;
+               pArea->adsarea.area.fEof = false;
             }
 
             pKey = mixKeyEval(pTag, pArea);

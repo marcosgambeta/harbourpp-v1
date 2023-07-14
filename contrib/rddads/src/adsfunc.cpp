@@ -63,11 +63,11 @@ int     hb_ads_iFileType     = ADS_CDX;
 int     hb_ads_iLockType     = ADS_PROPRIETARY_LOCKING;
 int     hb_ads_iCheckRights  = ADS_CHECKRIGHTS;
 int     hb_ads_iCharType     = ADS_ANSI;
-HB_BOOL hb_ads_bTestRecLocks = HB_FALSE;               /* Debug Implicit locks */
+HB_BOOL hb_ads_bTestRecLocks = false;               /* Debug Implicit locks */
 
 #ifdef ADS_USE_OEM_TRANSLATION
 
-HB_BOOL hb_ads_bOEM = HB_FALSE;
+HB_BOOL hb_ads_bOEM = false;
 
 char * hb_adsOemToAnsi( const char * pszSrc, HB_SIZE nLen )
 {
@@ -952,11 +952,11 @@ HB_FUNC( ADSISRECORDINAOF )
 /* Does current record match any current filter? */
 HB_FUNC( ADSISRECORDVALID )
 {
-   HB_BOOL bReturn = HB_FALSE;
+   HB_BOOL bReturn = false;
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      HB_BOOL fEof = HB_TRUE;
+      HB_BOOL fEof = true;
 
       if( SELF_EOF(pArea, &fEof) == HB_SUCCESS && !fEof ) {
          if( pArea->dbfi.itmCobExpr ) {
@@ -964,7 +964,7 @@ HB_FUNC( ADSISRECORDVALID )
 
             bReturn = HB_IS_LOGICAL(pResult) && hb_itemGetL(pResult);
          } else {
-            bReturn = HB_TRUE;
+            bReturn = true;
          }
       }
    }
@@ -1212,7 +1212,7 @@ HB_FUNC( ADSSTMTSETTABLEREADONLY )
 
 HB_FUNC( ADSCREATESQLSTATEMENT )
 {
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
    ADSHANDLE hConnect = HB_ADS_PARCONNECTION(3);
 
    if( hConnect ) {
@@ -1243,7 +1243,7 @@ HB_FUNC( ADSCREATESQLSTATEMENT )
                   pArea->hTable = 0;
                   pArea->hOrdCurrent = 0;
                   pArea->hStatement = adsStatementHandle;
-                  fResult = HB_TRUE;
+                  fResult = true;
                } else {
                   hb_rddReleaseCurrentArea();
                }
@@ -1272,7 +1272,7 @@ HB_FUNC( ADSEXECUTESQLDIRECT )
 
             memset(&pInfo, 0, sizeof(pInfo));
             pInfo.abName = "";
-            pInfo.fReadonly = HB_TRUE;
+            pInfo.fReadonly = true;
             pArea->hTable = hCursor;
             SELF_OPEN(&pArea->area, &pInfo);
          } else {
@@ -1322,7 +1322,7 @@ HB_FUNC( ADSEXECUTESQL )
 
             memset(&pInfo, 0, sizeof(pInfo));
             pInfo.abName = "";
-            pInfo.fReadonly = HB_TRUE;
+            pInfo.fReadonly = true;
             pArea->hTable = hCursor;
             SELF_OPEN(&pArea->area, &pInfo);
          } else {
@@ -1449,7 +1449,7 @@ UNSIGNED32 WINAPI hb_adsShowCallback( UNSIGNED16 usPercentDone )
 
 HB_FUNC( ADSREGCALLBACK )
 {
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
 
 #if !defined(ADS_LINUX)
    /* NOTE: current implementation is not thread safe.
@@ -1469,7 +1469,7 @@ HB_FUNC( ADSREGCALLBACK )
       if( AdsRegisterProgressCallback( hb_adsShowCallback ) == AE_SUCCESS )
 #endif
       {
-         fResult = HB_TRUE;
+         fResult = true;
       } else {
          hb_ads_setCallBack(nullptr);
       }
@@ -2055,7 +2055,7 @@ HB_FUNC( ADSDDSETDATABASEPROPERTY )
 
 HB_FUNC( ADSDDGETUSERPROPERTY )
 {
-   if( HB_ISBYREF(3) { /* fPropertyByRef */ )
+   if( HB_ISBYREF(3) /* fPropertyByRef */ ) {
       UNSIGNED8  pvProperty[ADS_MAX_PARAMDEF_LEN] = { 0 };
       UNSIGNED16 usPropertyLen = sizeof(pvProperty);
 
