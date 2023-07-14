@@ -5864,9 +5864,7 @@ static HB_ERRCODE hb_nsxFlush(NSXAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_nsxFlush(%p)", static_cast<void*>(pArea)));
 #endif
 
-   HB_ERRCODE errCode;
-
-   errCode = SELF_GOCOLD(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
    if( errCode == HB_SUCCESS ) {
       errCode = SUPER_FLUSH(&pArea->dbfarea.area);
 
@@ -6002,9 +6000,7 @@ static HB_ERRCODE hb_nsxGoHot(NSXAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_nsxGoHot(%p)", static_cast<void*>(pArea)));
 #endif
 
-   HB_ERRCODE errCode;
-
-   errCode = SUPER_GOHOT(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SUPER_GOHOT(&pArea->dbfarea.area);
    if( errCode == HB_SUCCESS ) {
       if( !pArea->fIdxAppend ) {
          LPNSXINDEX pIndex = pArea->lpIndexes;
@@ -6037,13 +6033,11 @@ static HB_ERRCODE hb_nsxClose(NSXAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_nsxClose(%p)", static_cast<void*>(pArea)));
 #endif
 
-   HB_ERRCODE errCode;
-
    if( SELF_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
       return HB_FAILURE;
    }
 
-   errCode = SUPER_CLOSE(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SUPER_CLOSE(&pArea->dbfarea.area);
 
    if( errCode == HB_SUCCESS ) {
       if( pArea->pSort ) {
@@ -6145,9 +6139,7 @@ static HB_ERRCODE hb_nsxPack(NSXAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_nsxPack(%p)", static_cast<void*>(pArea)));
 #endif
 
-   HB_ERRCODE errCode;
-
-   errCode = SUPER_PACK(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SUPER_PACK(&pArea->dbfarea.area);
    if( errCode == HB_SUCCESS ) {
       return SELF_ORDLSTREBUILD(&pArea->dbfarea.area);
    }
@@ -6161,9 +6153,7 @@ static HB_ERRCODE hb_nsxZap(NSXAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_nsxZap(%p)", static_cast<void*>(pArea)));
 #endif
 
-   HB_ERRCODE errCode;
-
-   errCode = SUPER_ZAP(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SUPER_ZAP(&pArea->dbfarea.area);
    if( errCode == HB_SUCCESS ) {
       return SELF_ORDLSTREBUILD(&pArea->dbfarea.area);
    }
@@ -6183,13 +6173,12 @@ static HB_ERRCODE hb_nsxOrderCreate(NSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
    const char * szKey, * szFor = nullptr;
    LPNSXINDEX pIndex, * pIndexPtr;
    LPTAGINFO pTag = nullptr;
-   HB_ERRCODE errCode;
    HB_ULONG ulRecNo;
    bool fProd, fNewFile, fLocked = false, fAscend = true, fCustom = false,
         fTemporary = false, fExclusive = false;
    HB_BYTE bType, bTrail;
 
-   errCode = SELF_GOCOLD(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
    if( errCode != HB_SUCCESS ) {
       return errCode;
    }
@@ -6527,9 +6516,7 @@ static HB_ERRCODE hb_nsxOrderDestroy(NSXAREAP pArea, LPDBORDERINFO pOrderInfo)
    HB_TRACE(HB_TR_DEBUG, ("hb_nsxOrderDestroy(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pOrderInfo)));
 #endif
 
-   HB_ERRCODE errCode;
-
-   errCode = SELF_GOCOLD(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
    if( errCode != HB_SUCCESS ) {
       return errCode;
    }
@@ -7218,10 +7205,9 @@ static HB_ERRCODE hb_nsxOrderListAdd(NSXAREAP pArea, LPDBORDERINFO pOrderInfo)
    PHB_FILE pFile;
    char szFileName[HB_PATH_MAX];
    LPNSXINDEX pIndex;
-   HB_ERRCODE errCode;
    bool fProd;
 
-   errCode = SELF_GOCOLD(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
    if( errCode != HB_SUCCESS ) {
       return errCode;
    }
@@ -7392,9 +7378,8 @@ static HB_ERRCODE hb_nsxOrderListRebuild(NSXAREAP pArea)
 
    LPTAGINFO pCurrTag;
    LPNSXINDEX pIndex;
-   HB_ERRCODE errCode;
 
-   errCode = SELF_GOCOLD(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
    if( errCode != HB_SUCCESS ) {
       return errCode;
    }
@@ -7608,12 +7593,10 @@ HB_FUNC_STATIC( DBFNSX_GETFUNCTABLE )
    puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(5));
 
    if( pTable ) {
-      HB_ERRCODE errCode;
-
       if( puiCount ) {
          *puiCount = RDDFUNCSCOUNT;
       }
-      errCode = hb_rddInheritEx(pTable, &nsxTable, &nsxSuper, "DBFFPT", puiSuperRddId);
+      HB_ERRCODE errCode = hb_rddInheritEx(pTable, &nsxTable, &nsxSuper, "DBFFPT", puiSuperRddId);
       if( errCode != HB_SUCCESS ) {
          errCode = hb_rddInheritEx(pTable, &nsxTable, &nsxSuper, "DBF", puiSuperRddId);
       }

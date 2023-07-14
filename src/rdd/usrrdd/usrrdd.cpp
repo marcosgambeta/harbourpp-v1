@@ -876,9 +876,7 @@ static HB_ERRCODE hb_usrStructSize(AREAP pArea, HB_USHORT * puiSize)
    HB_TRACE(HB_TR_DEBUG, ("hb_usrStrucSize(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(puiSize)));
 #endif
 
-   HB_ERRCODE errCode;
-
-   errCode = SUPER_STRUCTSIZE(pArea, puiSize);
+   HB_ERRCODE errCode = SUPER_STRUCTSIZE(pArea, puiSize);
    s_pUsrRddNodes[pArea->rddID]->uiDataOffset = *puiSize;
    *puiSize += sizeof(USRRDDDATA);
 
@@ -917,9 +915,7 @@ static HB_ERRCODE hb_usrNewArea(AREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_usrNewArea(%p)", static_cast<void*>(pArea)));
 #endif
 
-   HB_ERRCODE errCode;
-
-   errCode = SUPER_NEW(pArea);
+   HB_ERRCODE errCode = SUPER_NEW(pArea);
 
    if( errCode == HB_SUCCESS ) {
       SELF_USRDATA(pArea)->pItem = hb_itemNew(nullptr);
@@ -3130,7 +3126,6 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
    puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(7));
 
    if( puiCount && pSelfTable && pSuperTable && pMethods ) {
-      HB_ERRCODE uiResult;
       HB_RDD_FUNCTABLE funcTable;
       DBENTRYP_V * pFunction;
       const DBENTRYP_V * pUsrFunction, * pRddFunction;
@@ -3151,7 +3146,7 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
          ++pRddFunction;
          ++pFunction;
       }
-      uiResult = hb_rddInheritEx(pSelfTable, &funcTable.funcTable, pSuperTable, szSuperRDD, puiSuperRddId);
+      HB_ERRCODE uiResult = hb_rddInheritEx(pSelfTable, &funcTable.funcTable, pSuperTable, szSuperRDD, puiSuperRddId);
       if( uiResult == HB_SUCCESS ) {
          pSelfTable->whoCares = reinterpret_cast<DBENTRYP_SVP>(hb_itemNew(pMethods));
       }

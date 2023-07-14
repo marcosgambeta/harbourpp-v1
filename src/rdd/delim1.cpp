@@ -587,10 +587,9 @@ static HB_ERRCODE hb_delimRecId(DELIMAREAP pArea, PHB_ITEM pRecNo)
    HB_TRACE(HB_TR_DEBUG, ("hb_delimRecId(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pRecNo)));
 #endif
 
-   HB_ERRCODE errCode;
    HB_ULONG ulRecNo;
 
-   errCode = SELF_RECNO(&pArea->area, &ulRecNo);
+   HB_ERRCODE errCode = SELF_RECNO(&pArea->area, &ulRecNo);
 
 #ifdef HB_CLP_STRICT
    /* this is for strict Clipper compatibility but IMHO Clipper should not
@@ -781,7 +780,6 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
 #endif
 
    char szBuffer[256];
-   HB_ERRCODE errCode;
    LPFIELD pField;
    HB_SIZE nSize;
 
@@ -797,7 +795,7 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
       return HB_FAILURE;
    }
 
-   errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = HB_SUCCESS;
    pField = pArea->area.lpFields + uiIndex;
    if( pField->uiType != HB_FT_MEMO && pField->uiType != HB_FT_NONE ) {
       if( HB_IS_MEMO(pItem) || HB_IS_STRING(pItem) ) {
@@ -995,9 +993,7 @@ static HB_ERRCODE hb_delimFlush(DELIMAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_delimFlush(%p)", static_cast<void*>(pArea)));
 #endif
 
-   HB_ERRCODE errCode;
-
-   errCode = SELF_GOCOLD(&pArea->area);
+   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->area);
 
    if( pArea->fFlush && hb_setGetHardCommit() ) {
       hb_fileCommit(pArea->pFile);
@@ -1371,7 +1367,6 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
 #endif
 
    PHB_ITEM pError = nullptr;
-   HB_ERRCODE errCode;
    bool fRetry;
    PHB_FNAME pFileName;
    char szFileName[HB_PATH_MAX];
@@ -1431,7 +1426,7 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
       return HB_FAILURE;
    }
 
-   errCode = SUPER_CREATE(&pArea->area, pCreateInfo);
+   HB_ERRCODE errCode = SUPER_CREATE(&pArea->area, pCreateInfo);
    if( errCode == HB_SUCCESS ) {
       PHB_ITEM pItem = hb_itemNew(nullptr);
 
@@ -1467,7 +1462,6 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
 
    PHB_ITEM pError = nullptr;
    PHB_FNAME pFileName;
-   HB_ERRCODE errCode;
    HB_USHORT uiFlags;
    bool fRetry;
    char szFileName[HB_PATH_MAX];
@@ -1540,7 +1534,7 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
       return HB_FAILURE;
    }
 
-   errCode = SUPER_OPEN(&pArea->area, pOpenInfo);
+   HB_ERRCODE errCode = SUPER_OPEN(&pArea->area, pOpenInfo);
    if( errCode != HB_SUCCESS ) {
       SELF_CLOSE(&pArea->area);
       return HB_FAILURE;

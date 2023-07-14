@@ -338,7 +338,6 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol(PHB_SYMB pSymAlias)
 #endif
 
    PHB_ITEM pError;
-   HB_ERRCODE errCode;
    const char * szName;
    int iArea;
 
@@ -369,7 +368,7 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol(PHB_SYMB pSymAlias)
     */
 
    pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOALIAS, EDBCMD_NOALIAS, nullptr, pSymAlias->szName, 0, EF_CANRETRY);
-   errCode = HB_FAILURE;
+   HB_ERRCODE errCode = HB_FAILURE;
 
    do {
       if( hb_errLaunch(pError) != E_RETRY ) {
@@ -396,10 +395,9 @@ HB_ERRCODE hb_rddSelectWorkAreaAlias(const char * szAlias)
    HB_TRACE(HB_TR_DEBUG, ("hb_rddSelectWorkAreaAlias(%s)", szAlias));
 #endif
 
-   HB_ERRCODE errCode;
    int iArea;
 
-   errCode = hb_rddGetAliasNumber(szAlias, &iArea);
+   HB_ERRCODE errCode = hb_rddGetAliasNumber(szAlias, &iArea);
 
    if( errCode == HB_FAILURE ) {
       /*
@@ -494,9 +492,7 @@ HB_ERRCODE hb_rddGetFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
    HB_TRACE(HB_TR_DEBUG, ("hb_rddGetFieldValue(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pFieldSymbol)));
 #endif
 
-   HB_ERRCODE errCode;
-
-   errCode = hb_rddFieldGet(pItem, pFieldSymbol);
+   HB_ERRCODE errCode = hb_rddFieldGet(pItem, pFieldSymbol);
 
    if( errCode == HB_FAILURE && hb_vmRequestQuery() == 0 ) {
       /*
@@ -530,9 +526,7 @@ HB_ERRCODE hb_rddPutFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
    HB_TRACE(HB_TR_DEBUG, ("hb_rddPutFieldValue(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pFieldSymbol)));
 #endif
 
-   HB_ERRCODE errCode;
-
-   errCode = hb_rddFieldPut(pItem, pFieldSymbol);
+   HB_ERRCODE errCode = hb_rddFieldPut(pItem, pFieldSymbol);
 
    if( errCode == HB_FAILURE && hb_vmRequestQuery() == 0 ) {
       /*
@@ -561,7 +555,6 @@ HB_ERRCODE hb_rddOpenTable( const char * szFileName, const char * szDriver,
                             PHB_ITEM pStruct, PHB_ITEM pDelim )
 {
    DBOPENINFO pInfo;
-   HB_ERRCODE errCode;
    AREAP pArea;
 
    /* uiArea = 0 in hb_rddInsertAreaNode() means chose first
@@ -617,7 +610,7 @@ HB_ERRCODE hb_rddOpenTable( const char * szFileName, const char * szDriver,
    pInfo.ulConnection = ulConnection;
    pInfo.lpdbHeader = nullptr;
 
-   errCode = pStruct ? SELF_CREATEFIELDS(pArea, pStruct) : HB_SUCCESS;
+   HB_ERRCODE errCode = pStruct ? SELF_CREATEFIELDS(pArea, pStruct) : HB_SUCCESS;
    if( errCode == HB_SUCCESS ) {
       if( pDelim && !HB_IS_NIL(pDelim) ) {
          errCode = SELF_INFO(pArea, DBI_SETDELIMITER, pDelim);
@@ -705,7 +698,6 @@ HB_ERRCODE hb_rddCreateTableTemp(const char * szDriver, const char * szAlias, co
    char szDriverBuffer[HB_RDD_MAX_DRIVERNAME_LEN + 1];
    DBOPENINFO pInfo;
    PHB_ITEM pItem;
-   HB_ERRCODE errCode;
    HB_USHORT uiPrevArea;
    AREAP pArea;
 
@@ -740,7 +732,7 @@ HB_ERRCODE hb_rddCreateTableTemp(const char * szDriver, const char * szAlias, co
    pInfo.lpdbHeader = nullptr;
 
    pItem = hb_itemPutL(nullptr, true);
-   errCode = SELF_INFO(pArea, DBI_ISTEMPORARY, pItem);
+   HB_ERRCODE errCode = SELF_INFO(pArea, DBI_ISTEMPORARY, pItem);
    hb_itemRelease(pItem);
 
    if( errCode == HB_SUCCESS ) {
@@ -858,11 +850,10 @@ HB_ERRCODE hb_dbTransCounters(LPDBTRANSINFO lpdbTransInfo)
 HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTransInfo, PHB_ITEM * pStruct, PHB_ITEM pFields)
 {
    HB_USHORT uiFields, uiSize, uiCount, uiPosSrc, uiPosDst, uiSizeSrc, uiSizeDst;
-   HB_ERRCODE errCode;
    const char * szField;
    bool fAll;
 
-   errCode = SELF_FIELDCOUNT(lpaSource, &uiSizeSrc);
+   HB_ERRCODE errCode = SELF_FIELDCOUNT(lpaSource, &uiSizeSrc);
    if( errCode != HB_SUCCESS ) {
       return errCode;
    }
@@ -1212,11 +1203,10 @@ HB_ERRCODE hb_rddEvalWA(PHB_ITEM pBlock)
    HB_TRACE(HB_TR_DEBUG, ("hb_rddEvalWA(%p)", static_cast<void*>(pBlock)));
 #endif
 
-   HB_ERRCODE errCode;
    HB_USHORT uiArea;
 
    uiArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
-   errCode = hb_rddIterateWorkAreas(hb_rddEvalWABlock, pBlock);
+   HB_ERRCODE errCode = hb_rddIterateWorkAreas(hb_rddEvalWABlock, pBlock);
    hb_rddSelectWorkAreaNumber(uiArea);
 
    return errCode;

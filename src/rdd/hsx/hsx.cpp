@@ -1549,7 +1549,6 @@ static int hb_hsxIndex(const char * szFile, PHB_ITEM pExpr, int iKeySize, int iM
 {
    int iRetVal = HSX_SUCCESS, iHandle;
    HB_ULONG ulRecNo = 0, ulRecCount = 0, ulNewRec, ulRec;
-   HB_ERRCODE errCode;
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( !pArea ) {
@@ -1562,7 +1561,7 @@ static int hb_hsxIndex(const char * szFile, PHB_ITEM pExpr, int iKeySize, int iM
       return iHandle;
    }
 
-   errCode = SELF_RECCOUNT(pArea, &ulRecCount);
+   HB_ERRCODE errCode = SELF_RECCOUNT(pArea, &ulRecCount);
    if( errCode != HB_FAILURE && ulRecCount ) {
       errCode = SELF_RECNO(pArea, &ulRecNo);
       if( errCode != HB_FAILURE ) {
@@ -1606,7 +1605,6 @@ static int hb_hsxFilter(int iHandle, const char * pSeek, HB_SIZE nSeek, PHB_ITEM
    LPHSXINFO pHSX = hb_hsxGetPointer(iHandle);
    HB_BOOL fDestroyExpr = false, fValid;
    int iResult = HSX_SUCCESS;
-   HB_ERRCODE errCode;
    HB_ULONG ulRecNo = 0, ulRec;
    PHB_ITEM pItem;
 
@@ -1633,7 +1631,7 @@ static int hb_hsxFilter(int iHandle, const char * pSeek, HB_SIZE nSeek, PHB_ITEM
       }
    }
 
-   errCode = SELF_RECNO(pArea, &ulRecNo);
+   HB_ERRCODE errCode = SELF_RECNO(pArea, &ulRecNo);
    if( errCode != HB_FAILURE ) {
       iResult = hb_hsxSeekSet(iHandle, pSeek, nSeek);
    }

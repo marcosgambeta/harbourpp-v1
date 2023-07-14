@@ -2475,7 +2475,6 @@ static HB_ERRCODE hb_fptWriteMemo(FPTAREAP pArea, HB_ULONG ulBlock, HB_ULONG ulS
 #endif
 
    MEMOGCTABLE fptGCtable;
-   HB_ERRCODE errCode;
    bool bWrite;
 
    bWrite = (ulLen != 0 || (pArea->bMemoType == DB_MEMO_FPT && ulType != FPTIT_TEXT && ulType != FPTIT_BINARY && ulType != FPTIT_DUMMY) );
@@ -2486,7 +2485,7 @@ static HB_ERRCODE hb_fptWriteMemo(FPTAREAP pArea, HB_ULONG ulBlock, HB_ULONG ulS
    }
 
    hb_fptInitGCdata(&fptGCtable);
-   errCode = hb_fptReadGCdata(pArea, &fptGCtable);
+   HB_ERRCODE errCode = hb_fptReadGCdata(pArea, &fptGCtable);
    if( errCode != HB_SUCCESS ) {
       return errCode;
    }
@@ -3087,11 +3086,10 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
        pField->uiType == HB_FT_BLOB ||
        pField->uiType == HB_FT_OLE ) {
       HB_BYTE * pFieldBuf = pArea->pRecord + pArea->pFieldOffset[uiIndex - 1];
-      HB_ERRCODE errCode;
       HB_BOOL bDeleted;
 
       /* update any pending relations and reread record if necessary */
-      errCode = SELF_DELETED(&pArea->area, &bDeleted);
+      HB_ERRCODE errCode = SELF_DELETED(&pArea->area, &bDeleted);
       if( errCode != HB_SUCCESS ) {
          return errCode;
       }
@@ -3320,10 +3318,9 @@ static HB_ERRCODE hb_fptGetVarLen(FPTAREAP pArea, HB_USHORT uiIndex, HB_ULONG * 
          pArea->area.lpFields[uiIndex - 1].uiType == HB_FT_IMAGE ||
          pArea->area.lpFields[uiIndex - 1].uiType == HB_FT_BLOB ||
          pArea->area.lpFields[uiIndex - 1].uiType == HB_FT_OLE ) ) {
-      HB_ERRCODE errCode;
       bool fUnLock;
 
-      errCode = hb_fptLockForRead(pArea, uiIndex, &fUnLock);
+      HB_ERRCODE errCode = hb_fptLockForRead(pArea, uiIndex, &fUnLock);
       if( errCode == HB_SUCCESS ) {
          *pLength = hb_fptGetMemoLen(pArea, uiIndex);
       } else {
@@ -3350,13 +3347,11 @@ static HB_ERRCODE hb_fptGetValue(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
    HB_TRACE(HB_TR_DEBUG, ("hb_fptGetValue(%p, %hu, %p)", pArea, uiIndex, pItem));
 #endif
 
-   HB_ERRCODE errCode;
-
    if( !uiIndex || uiIndex > pArea->area.uiFieldCount ) {
       return HB_FAILURE;
    }
 
-   errCode = hb_fptGetVarField(pArea, uiIndex, pItem, nullptr);
+   HB_ERRCODE errCode = hb_fptGetVarField(pArea, uiIndex, pItem, nullptr);
 
    if( errCode != HB_SUCCESS ) {
       if( errCode == HB_FAILURE ) {
@@ -3377,13 +3372,11 @@ static HB_ERRCODE hb_fptPutValue(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
    HB_TRACE(HB_TR_DEBUG, ("hb_fptPutValue(%p, %hu, %p)", pArea, uiIndex, pItem));
 #endif
 
-   HB_ERRCODE errCode;
-
    if( !uiIndex || uiIndex > pArea->area.uiFieldCount ) {
       return HB_FAILURE;
    }
 
-   errCode = hb_fptPutVarField(pArea, uiIndex, pItem);
+   HB_ERRCODE errCode = hb_fptPutVarField(pArea, uiIndex, pItem);
    if( errCode != HB_SUCCESS ) {
       if( errCode == HB_FAILURE ) {
          return HB_FAILURE;
@@ -3750,12 +3743,11 @@ static HB_ERRCODE hb_fptPutValueFile(FPTAREAP pArea, HB_USHORT uiIndex, const ch
          pField->uiType == HB_FT_BLOB ||
          pField->uiType == HB_FT_OLE ||
          ( pField->uiType == HB_FT_ANY && pField->uiLen >= 6 ) ) ) {
-      HB_ERRCODE errCode;
       HB_BOOL bDeleted;
       PHB_FILE pFile;
 
       /* update any pending relations and reread record if necessary */
-      errCode = SELF_DELETED(&pArea->area, &bDeleted);
+      HB_ERRCODE errCode = SELF_DELETED(&pArea->area, &bDeleted);
       if( errCode != HB_SUCCESS ) {
          return errCode;
       }
@@ -4103,13 +4095,12 @@ static HB_ERRCODE hb_fptPack(FPTAREAP pArea)
 
       pArea->pMemoTmpFile = hb_fileCreateTemp(nullptr, nullptr, FC_NORMAL, szFile);
       if( pArea->pMemoTmpFile ) {
-         HB_ERRCODE errCode;
          PHB_FILE pFile = pArea->pMemoFile;
 
          pArea->ulNewBlockSize = pArea->ulMemoBlockSize;
 
          pArea->pMemoFile = pArea->pMemoTmpFile;
-         errCode = SELF_CREATEMEMFILE(&pArea->area, nullptr);
+         HB_ERRCODE errCode = SELF_CREATEMEMFILE(&pArea->area, nullptr);
          pArea->pMemoFile = pFile;
 
          if( errCode == HB_SUCCESS ) {
@@ -4242,7 +4233,6 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       {
          /* pItem := { <nPointer>, <nStart>, <nCount> } */
          HB_ULONG ulBlock, ulStart, ulCount;
-         HB_ERRCODE errCode;
 
          if( HB_IS_ARRAY(pItem) ) {
             ulBlock = hb_arrayGetNL(pItem, 1);
@@ -4254,7 +4244,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          } else {
             ulBlock = ulStart = ulCount = 0;
          }
-         errCode = hb_fptGetMemo(pArea, 0, pItem, nullptr, ulBlock, ulStart, ulCount, FPT_DIRECT_TRANS(pArea));
+         HB_ERRCODE errCode = hb_fptGetMemo(pArea, 0, pItem, nullptr, ulBlock, ulStart, ulCount, FPT_DIRECT_TRANS(pArea));
          if( errCode != HB_SUCCESS ) {
             if( errCode != HB_FAILURE ) {
                hb_memoErrorRT(pArea, 0, errCode, pArea->szMemoFileName, 0, 0);
@@ -4301,9 +4291,8 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       case DBI_BLOB_ROOT_GET:       /* BLOBRootGet() */
       {
          HB_ULONG ulBlock;
-         HB_ERRCODE errCode;
 
-         errCode = hb_fptGetRootBlock(pArea, &ulBlock);
+         HB_ERRCODE errCode = hb_fptGetRootBlock(pArea, &ulBlock);
          if( errCode == HB_SUCCESS ) {
             errCode = hb_fptGetMemo(pArea, 0, pItem, nullptr, ulBlock, 0, 0, FPT_DIRECT_TRANS(pArea));
          }
@@ -4319,9 +4308,8 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       case DBI_BLOB_ROOT_PUT:       /* BLOBRootPut(<xBlob>) */
       {
          HB_ULONG ulBlock;
-         HB_ERRCODE errCode;
 
-         errCode = hb_fptGetRootBlock(pArea, &ulBlock);
+         HB_ERRCODE errCode = hb_fptGetRootBlock(pArea, &ulBlock);
          if( errCode == HB_SUCCESS ) {
             if( hb_fptFileLockEx(pArea, true) ) {
                errCode = hb_fptPutMemo(pArea, 0, pItem, &ulBlock, FPT_DIRECT_TRANS(pArea));
@@ -4398,7 +4386,6 @@ static HB_ERRCODE hb_fptFieldInfo(FPTAREAP pArea, HB_USHORT uiIndex, HB_USHORT u
          {
             /* pItem := { <nStart>, <nCount> } */
             HB_ULONG ulStart, ulCount;
-            HB_ERRCODE errCode;
             int iTrans;
 
             if( (pField->uiFlags & HB_FF_UNICODE) != 0 ) {
@@ -4421,7 +4408,7 @@ static HB_ERRCODE hb_fptFieldInfo(FPTAREAP pArea, HB_USHORT uiIndex, HB_USHORT u
             if( ulStart || ulCount ) {
                iTrans = FPT_TRANS_NONE;
             }
-            errCode = hb_fptGetMemo(pArea, uiIndex, pItem, nullptr, 0, ulStart, ulCount, iTrans);
+            HB_ERRCODE errCode = hb_fptGetMemo(pArea, uiIndex, pItem, nullptr, 0, ulStart, ulCount, iTrans);
             if( errCode != HB_SUCCESS ) {
                if( errCode != HB_FAILURE ) {
                   hb_memoErrorRT(pArea, 0, errCode, pArea->szMemoFileName, 0, 0);
@@ -4748,13 +4735,11 @@ static void hb_dbffptRegisterRDD(HB_USHORT * pusRddId)
 #endif
 
    if( pTable ) {
-      HB_ERRCODE errCode;
-
       if( puiCount ) {
          *puiCount = RDDFUNCSCOUNT;
       }
 
-      errCode = hb_rddInheritEx(pTable, &fptTable, &fptSuper, "DBF", puiSuperRddId);
+      HB_ERRCODE errCode = hb_rddInheritEx(pTable, &fptTable, &fptSuper, "DBF", puiSuperRddId);
       if( errCode == HB_SUCCESS ) {
          *pusRddId = uiRddId;
       }

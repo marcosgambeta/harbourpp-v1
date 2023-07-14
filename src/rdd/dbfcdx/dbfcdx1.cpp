@@ -6051,7 +6051,6 @@ static HB_ERRCODE hb_cdxGoBottom(CDXAREAP pArea)
 #endif
 
    LPCDXTAG pTag;
-   HB_ERRCODE retval;
 
    if( FAST_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
       return HB_FAILURE;
@@ -6074,7 +6073,7 @@ static HB_ERRCODE hb_cdxGoBottom(CDXAREAP pArea)
    pArea->dbfarea.area.fTop = false;
    pArea->dbfarea.area.fBottom = true;
 
-   retval = SELF_GOTO(&pArea->dbfarea.area, pTag->CurKey->rec);
+   HB_ERRCODE retval = SELF_GOTO(&pArea->dbfarea.area, pTag->CurKey->rec);
 
    if( retval != HB_FAILURE && pArea->dbfarea.fPositioned ) {
       retval = SELF_SKIPFILTER(&pArea->dbfarea.area, -1);
@@ -6100,7 +6099,6 @@ static HB_ERRCODE hb_cdxGoTop(CDXAREAP pArea)
 #endif
 
    LPCDXTAG pTag;
-   HB_ERRCODE retval;
 
    if( FAST_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
       return HB_FAILURE;
@@ -6123,7 +6121,7 @@ static HB_ERRCODE hb_cdxGoTop(CDXAREAP pArea)
    pArea->dbfarea.area.fTop = true;
    pArea->dbfarea.area.fBottom = false;
 
-   retval = SELF_GOTO(&pArea->dbfarea.area, pTag->CurKey->rec);
+   HB_ERRCODE retval = SELF_GOTO(&pArea->dbfarea.area, pTag->CurKey->rec);
 
    if( retval != HB_FAILURE && pArea->dbfarea.fPositioned ) {
       retval = SELF_SKIPFILTER(&pArea->dbfarea.area, 1);
@@ -6376,13 +6374,12 @@ static HB_ERRCODE hb_cdxFlush(CDXAREAP pArea)
 #endif
 
    LPCDXINDEX pIndex;
-   HB_ERRCODE errCode;
 
    if( SELF_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
       return HB_FAILURE;
    }
 
-   errCode = SUPER_FLUSH(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SUPER_FLUSH(&pArea->dbfarea.area);
 
    if( hb_setGetHardCommit() ) {
       pIndex = pArea->lpIndexes;
@@ -6579,12 +6576,10 @@ static HB_ERRCODE hb_cdxClose(CDXAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_cdxClose(%p)", static_cast<void*>(pArea)));
 #endif
 
-   HB_ERRCODE errCode;
-
    if( SELF_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
       return HB_FAILURE;
    }
-   errCode = SUPER_CLOSE(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SUPER_CLOSE(&pArea->dbfarea.area);
 
    if( errCode == HB_SUCCESS ) {
       if( pArea->pSort ) {
@@ -9273,12 +9268,10 @@ HB_FUNC_STATIC( _GETFUNCTABLE )
 #endif
 
    if( pTable ) {
-      HB_ERRCODE errCode;
-
       if( puiCount ) {
          *puiCount = RDDFUNCSCOUNT;
       }
-      errCode = hb_rddInheritEx(pTable, &cdxTable, &cdxSuper, "DBFFPT", puiSuperRddId);
+      HB_ERRCODE errCode = hb_rddInheritEx(pTable, &cdxTable, &cdxSuper, "DBFFPT", puiSuperRddId);
       if( errCode != HB_SUCCESS ) {
          errCode = hb_rddInheritEx(pTable, &cdxTable, &cdxSuper, "DBFDBT", puiSuperRddId);
       }

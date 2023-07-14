@@ -1665,8 +1665,6 @@ static HB_ERRCODE hb_dbfSkip(DBFAREAP pArea, HB_LONG lToSkip)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfSkip(%p, %ld)", static_cast<void*>(pArea), lToSkip));
 #endif
 
-   HB_ERRCODE errCode;
-
    if( pArea->lpdbPendingRel ) {
       if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
          return HB_FAILURE;
@@ -1679,7 +1677,7 @@ static HB_ERRCODE hb_dbfSkip(DBFAREAP pArea, HB_LONG lToSkip)
       return SUPER_SKIP(&pArea->area, lToSkip);
    }
 
-   errCode = SELF_SKIPRAW(&pArea->area, lToSkip);
+   HB_ERRCODE errCode = SELF_SKIPRAW(&pArea->area, lToSkip);
 
    /* TODO: remove this hack - it's not necessary if SKIPRAW works
       as it should, Druzus */
@@ -1938,9 +1936,7 @@ static HB_ERRCODE hb_dbfFlush(DBFAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfFlush(%p)", static_cast<void*>(pArea)));
 #endif
 
-   HB_ERRCODE errCode;
-
-   errCode = SELF_GOCOLD(&pArea->area);
+   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->area);
    if( errCode == HB_SUCCESS ) {
       if( pArea->fUpdateHeader && (pArea->uiSetHeader & DB_SETHEADER_COMMIT) != 0 ) {
          errCode = SELF_WRITEDBHEADER(&pArea->area);
@@ -2421,7 +2417,6 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
    const char * pszPtr;
    HB_SIZE nSize, nLen;
    HB_BYTE * ptr;
-   HB_ERRCODE errCode;
 
    if( pArea->fTrigger ) {
       if( !hb_dbfTriggerDo(pArea, EVENT_PUT, uiIndex, pItem) ) {
@@ -2453,7 +2448,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
       return HB_FAILURE;
    }
 
-   errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = HB_SUCCESS;
    pField = pArea->area.lpFields + uiIndex;
    if( pField->uiType == HB_FT_MEMO ||
        pField->uiType == HB_FT_IMAGE ||
@@ -2738,10 +2733,9 @@ static HB_ERRCODE hb_dbfRecId(DBFAREAP pArea, PHB_ITEM pRecNo)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfRecId(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pRecNo)));
 #endif
 
-   HB_ERRCODE errCode;
    HB_ULONG ulRecNo = 0;
 
-   errCode = SELF_RECNO(&pArea->area, &ulRecNo);
+   HB_ERRCODE errCode = SELF_RECNO(&pArea->area, &ulRecNo);
 
 #ifdef HB_CLP_STRICT
    /* this is for strict Clipper compatibility but IMHO Clipper should not
@@ -5191,7 +5185,6 @@ static HB_ERRCODE hb_dbfSort(DBFAREAP pArea, LPDBSORTINFO pSortInfo)
    DBSORTREC dbSortRec;
    HB_BOOL fEof;
    bool fFor;
-   HB_ERRCODE errCode;
    HB_LONG lNext = 1;
 
    if( SELF_GOCOLD(&pArea->area) != HB_SUCCESS ) {
@@ -5206,7 +5199,7 @@ static HB_ERRCODE hb_dbfSort(DBFAREAP pArea, LPDBSORTINFO pSortInfo)
       return SELF_TRANS(&pArea->area, &pSortInfo->dbtri);
    }
 
-   errCode = hb_dbfTransCond(pArea, &pSortInfo->dbtri);
+   HB_ERRCODE errCode = hb_dbfTransCond(pArea, &pSortInfo->dbtri);
    if( errCode == HB_SUCCESS ) {
       if( pSortInfo->dbtri.dbsci.itmRecID ) {
          errCode = SELF_GOTOID(&pArea->area, pSortInfo->dbtri.dbsci.itmRecID);
@@ -6655,12 +6648,10 @@ HB_FUNC_STATIC( DBF_GETFUNCTABLE )
 #endif
 
    if( pTable ) {
-      HB_ERRCODE errCode;
-
       if( puiCount ) {
          *puiCount = RDDFUNCSCOUNT;
       }
-      errCode = hb_rddInheritEx(pTable, &dbfTable, &dbfSuper, nullptr, nullptr);
+      HB_ERRCODE errCode = hb_rddInheritEx(pTable, &dbfTable, &dbfSuper, nullptr, nullptr);
       hb_retni(errCode);
       if( errCode == HB_SUCCESS ) {
          /*

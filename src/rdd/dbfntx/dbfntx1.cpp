@@ -5489,9 +5489,7 @@ static HB_ERRCODE hb_ntxFlush(NTXAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_ntxFlush(%p)", static_cast<void*>(pArea)));
 #endif
 
-   HB_ERRCODE errCode;
-
-   errCode = SELF_GOCOLD(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
    if( errCode == HB_SUCCESS ) {
       errCode = SUPER_FLUSH(&pArea->dbfarea.area);
 
@@ -5634,9 +5632,7 @@ static HB_ERRCODE hb_ntxGoHot(NTXAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_ntxGoHot(%p)", static_cast<void*>(pArea)));
 #endif
 
-   HB_ERRCODE errCode;
-
-   errCode = SUPER_GOHOT(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SUPER_GOHOT(&pArea->dbfarea.area);
    if( errCode == HB_SUCCESS ) {
       if( !pArea->fNtxAppend ) {
          LPNTXINDEX pIndex = pArea->lpIndexes;
@@ -5679,13 +5675,11 @@ static HB_ERRCODE hb_ntxClose(NTXAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_ntxClose(%p)", static_cast<void*>(pArea)));
 #endif
 
-   HB_ERRCODE errCode;
-
    if( SELF_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
       return HB_FAILURE;
    }
 
-   errCode = SUPER_CLOSE(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SUPER_CLOSE(&pArea->dbfarea.area);
 
    if( errCode == HB_SUCCESS ) {
       if( pArea->pSort ) {
@@ -5738,9 +5732,7 @@ static HB_ERRCODE hb_ntxOpen(NTXAREAP pArea, LPDBOPENINFO pOpenInfo)
    HB_TRACE(HB_TR_DEBUG, ("hb_ntxOpen(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pOpenInfo)));
 #endif
 
-   HB_ERRCODE errCode;
-
-   errCode = SUPER_OPEN(&pArea->dbfarea.area, pOpenInfo);
+   HB_ERRCODE errCode = SUPER_OPEN(&pArea->dbfarea.area, pOpenInfo);
 
    if( errCode == HB_SUCCESS && DBFAREA_DATA(&pArea->dbfarea)->fStruct &&
        ( DBFAREA_DATA(&pArea->dbfarea)->fStrictStruct ?
@@ -5788,9 +5780,7 @@ static HB_ERRCODE hb_ntxPack(NTXAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_ntxPack(%p)", static_cast<void*>(pArea)));
 #endif
 
-   HB_ERRCODE errCode;
-
-   errCode = SUPER_PACK(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SUPER_PACK(&pArea->dbfarea.area);
    if( errCode == HB_SUCCESS ) {
       return SELF_ORDLSTREBUILD(&pArea->dbfarea.area);
    }
@@ -5809,9 +5799,7 @@ static HB_ERRCODE hb_ntxZap(NTXAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_ntxZap(%p)", static_cast<void*>(pArea)));
 #endif
 
-   HB_ERRCODE errCode;
-
-   errCode = SUPER_ZAP(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SUPER_ZAP(&pArea->dbfarea.area);
    if( errCode == HB_SUCCESS ) {
       return SELF_ORDLSTREBUILD(&pArea->dbfarea.area);
    }
@@ -5845,14 +5833,13 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
    LPNTXINDEX pIndex, * pIndexPtr;
    LPTAGINFO pTag = nullptr;
    LPDBFDATA pData;
-   HB_ERRCODE errCode;
    HB_ULONG ulRecNo;
    bool fProd, fCompound, fTagName, fBagName, fLocked = false,
         fAscend = true, fCustom = false, fTemporary = false,
         fExclusive = false;
    HB_BYTE bType;
 
-   errCode = SELF_GOCOLD(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
    if( errCode != HB_SUCCESS ) {
       return errCode;
    }
@@ -6237,9 +6224,7 @@ static HB_ERRCODE hb_ntxOrderDestroy(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
    HB_TRACE(HB_TR_DEBUG, ("hb_ntxOrderDestroy(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pOrderInfo)));
 #endif
 
-   HB_ERRCODE errCode;
-
-   errCode = SELF_GOCOLD(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
    if( errCode != HB_SUCCESS ) {
       return errCode;
    }
@@ -6920,10 +6905,9 @@ static HB_ERRCODE hb_ntxOrderListAdd(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
    PHB_FILE pFile;
    char szFileName[HB_PATH_MAX], szTagName[NTX_MAX_TAGNAME + 1];
    LPNTXINDEX pIndex;
-   HB_ERRCODE errCode;
    bool fProd;
 
-   errCode = SELF_GOCOLD(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
    if( errCode != HB_SUCCESS ) {
       return errCode;
    }
@@ -7102,9 +7086,8 @@ static HB_ERRCODE hb_ntxOrderListRebuild(NTXAREAP pArea)
 
    LPTAGINFO pCurrTag;
    LPNTXINDEX pIndex;
-   HB_ERRCODE errCode;
 
-   errCode = SELF_GOCOLD(&pArea->dbfarea.area);
+   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
    if( errCode != HB_SUCCESS ) {
       return errCode;
    }
@@ -7396,12 +7379,10 @@ HB_FUNC_STATIC( DBFNTX_GETFUNCTABLE )
    puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(5));
 
    if( pTable ) {
-      HB_ERRCODE errCode;
-
       if( puiCount ) {
          *puiCount = RDDFUNCSCOUNT;
       }
-      errCode = hb_rddInheritEx(pTable, &ntxTable, &ntxSuper, "DBFFPT", puiSuperRddId);
+      HB_ERRCODE errCode = hb_rddInheritEx(pTable, &ntxTable, &ntxSuper, "DBFFPT", puiSuperRddId);
       if( errCode != HB_SUCCESS ) {
          errCode = hb_rddInheritEx(pTable, &ntxTable, &ntxSuper, "DBFDBT", puiSuperRddId);
       }

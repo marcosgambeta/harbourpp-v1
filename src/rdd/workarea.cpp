@@ -1511,10 +1511,9 @@ static HB_ERRCODE hb_waRelEval(AREAP pArea, LPDBRELINFO pRelInfo)
    HB_TRACE(HB_TR_DEBUG, ("hb_waRelEval(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pRelInfo)));
 #endif
 
-   HB_ERRCODE errCode;
    HB_BOOL fEof;
 
-   errCode = SELF_EOF( pRelInfo->lpaParent, &fEof );
+   HB_ERRCODE errCode = SELF_EOF( pRelInfo->lpaParent, &fEof );
    if( errCode == HB_SUCCESS ) {
       if( fEof ) {
          errCode = SELF_GOTO(pArea, 0);

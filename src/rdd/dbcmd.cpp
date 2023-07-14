@@ -248,11 +248,10 @@ HB_FUNC( DBAPPEND )
 
    if( pArea != nullptr ) {
       bool bUnLockAll = hb_parldef(1, true);
-      HB_ERRCODE errCode;
 
       /* Clipper clears NETERR flag before APPEND */
       hb_rddSetNetErr(false);
-      errCode = SELF_APPEND(pArea, bUnLockAll);
+      HB_ERRCODE errCode = SELF_APPEND(pArea, bUnLockAll);
       hb_retl(errCode == HB_SUCCESS);
    } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
@@ -1332,7 +1331,6 @@ HB_FUNC( ORDLISTADD )
 
    if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo{};
-      HB_ERRCODE errCode;
 
       /* Clipper clears NETERR flag when index is open */
       hb_rddSetNetErr(false);
@@ -1349,7 +1347,7 @@ HB_FUNC( ORDLISTADD )
 
       pOrderInfo.itmResult = hb_itemNew(nullptr);
 
-      errCode = SELF_ORDLSTADD(pArea, &pOrderInfo);
+      HB_ERRCODE errCode = SELF_ORDLSTADD(pArea, &pOrderInfo);
 
       if( !pOrderInfo.itmResult || HB_IS_NIL(pOrderInfo.itmResult) ) {
          hb_retl(errCode == HB_SUCCESS);
@@ -1837,9 +1835,8 @@ HB_FUNC( __DBTRANS )
       if( pSrcArea && pDstArea ) {
          DBTRANSINFO dbTransInfo{};
          PHB_ITEM pFields = hb_param(2, Harbour::Item::ARRAY);
-         HB_ERRCODE errCode;
 
-         errCode = hb_dbTransStruct(pSrcArea, pDstArea, &dbTransInfo, nullptr, pFields);
+         HB_ERRCODE errCode = hb_dbTransStruct(pSrcArea, pDstArea, &dbTransInfo, nullptr, pFields);
          if( errCode == HB_SUCCESS ) {
             PHB_ITEM pTransItm;
 
