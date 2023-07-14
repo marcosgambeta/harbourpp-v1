@@ -230,10 +230,10 @@ static PMIXKEY mixKeyEval( PMIXTAG pTag, ADSXAREAP pArea )
    return pKey;
 }
 
-static HB_BOOL mixEvalCond(PHB_ITEM pCondItem, ADSXAREAP pArea)
+static bool mixEvalCond(PHB_ITEM pCondItem, ADSXAREAP pArea)
 {
    int iCurrArea = 0;
-   HB_BOOL fRet;
+   bool fRet;
 
    if( pArea != nullptr ) {
       iCurrArea = hb_rddGetCurrentWorkAreaNumber();
@@ -603,7 +603,7 @@ static void mixUpdateDestroy( ADSXAREAP pArea, PMIXUPDATE pUpdate, int fUpdate )
 
    iTag = 0;
    while( pTag ) {
-      HB_BOOL bFor = pTag->pForItem == nullptr || mixEvalCond(pTag->pForItem, pArea);
+      bool bFor = pTag->pForItem == nullptr || mixEvalCond(pTag->pForItem, pArea);
       if( pUpdate[iTag] == static_cast<HB_ULONG>(-1) ) {
          if( bFor ) {
             HB_ULONG ulKeyPos;
@@ -713,7 +713,7 @@ static HB_ERRCODE adsxSeek( ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, H
    HB_USHORT  uiLen;
    HB_ULONG   ulKeyPos, ulRecNo;
    HB_ERRCODE errCode;
-   HB_BOOL    fFound = false;
+   bool       fFound = false;
 
    if( !pArea->pTagCurrent ) {
       return SUPER_SEEK(&pArea->adsarea.area, bSoftSeek, pKey, bFindLast);
@@ -999,7 +999,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
    HB_USHORT  uiLen;
    HB_BYTE    bType;
    UNSIGNED16 bValidExpr;
-   HB_BOOL    bKeyADS, bForADS, bWhileADS;
+   bool       bKeyADS, bForADS, bWhileADS;
    ADSHANDLE  hIndex = ( ADSHANDLE ) 0;
 
    bForADS = bWhileADS = true;

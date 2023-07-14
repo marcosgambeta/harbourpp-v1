@@ -260,7 +260,7 @@ static void DumpArea(ADSAREAP pArea)  /* For debugging: call this to dump ads se
 }
 #endif
 
-static HB_BOOL adsIndexKeyCmp(ADSHANDLE hIndex, UNSIGNED8 * pszKey, UNSIGNED16 u16KeyLen)
+static bool adsIndexKeyCmp(ADSHANDLE hIndex, UNSIGNED8 * pszKey, UNSIGNED16 u16KeyLen)
 {
    UNSIGNED32 u32RetVal;
    UNSIGNED8  pucCurKey[ADS_MAX_KEY_LENGTH + 1];
@@ -1248,7 +1248,7 @@ static HB_ERRCODE adsSkip(ADSAREAP pArea, HB_LONG lToSkip)
    if( lToSkip == 0 ) {
       /* Clipper does not update record at EOF position in SKIP(0) */
       if( pArea->fPositioned ) {
-         HB_BOOL fBof, fEof;
+         bool fBof, fEof;
 
          /* Save flags */
          fBof = pArea->area.fBof;
@@ -1349,7 +1349,7 @@ static HB_ERRCODE adsSkipFilter(ADSAREAP pArea, HB_LONG lUpDown)
 #endif
 
    UNSIGNED32 u32RetVal;
-   HB_BOOL fBottom;
+   bool fBottom;
    HB_ERRCODE errCode;
 
    lUpDown = (lUpDown < 0 ? -1 : 1);
@@ -2516,7 +2516,7 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
    LPFIELD pField;
    HB_SIZE nLen;
    HB_BYTE * szText;
-   HB_BOOL bTypeError = true;
+   bool bTypeError = true;
    UNSIGNED32 u32RetVal = 0;
 
    if( !uiIndex || uiIndex > pArea->area.uiFieldCount ) {
@@ -2919,7 +2919,7 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
    char szBuffer[MAX_STR_LEN + 1];
    HB_USHORT uiCount;
    LPFIELD pField;
-   HB_BOOL fUnicode;
+   bool fUnicode;
 
    hConnection = HB_ADS_DEFCONNECTION(pCreateInfo->ulConnection, pCreateInfo->abName);
 
@@ -3372,7 +3372,7 @@ static HB_ERRCODE adsOpen(ADSAREAP pArea, LPDBOPENINFO pOpenInfo)
    DBFIELDINFO dbFieldInfo;
    char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
    const char * szFile;
-   HB_BOOL fDictionary = false, fUnicode = false;
+   bool fDictionary = false, fUnicode = false;
 
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("adsOpen(%p)", static_cast<void*>(pArea)));
@@ -3438,7 +3438,7 @@ static HB_ERRCODE adsOpen(ADSAREAP pArea, LPDBOPENINFO pOpenInfo)
       }
    } else { /* if( hb_strnicmp(szFile, "TABLE:", 6) == 0 ) */
       PHB_ITEM pError = nullptr;
-      HB_BOOL fRetry;
+      bool fRetry;
 
       if( szFile && (hb_strnicmp(szFile, "TABLE:", 6) == 0) ) {
          szFile += 6;
@@ -4069,7 +4069,7 @@ static HB_ERRCODE adsOrderCreate(ADSAREAP pArea, LPDBORDERCREATEINFO pOrderInfo)
    UNSIGNED16 u16 = 0;
    UNSIGNED8  pucWhile[(ADS_MAX_KEY_LENGTH << 1) + 3];
    UNSIGNED16 u16Len = ADS_MAX_KEY_LENGTH;
-   HB_BOOL fClose = true;
+   bool fClose = true;
 
    /* resolve any pending relations */
    if( pArea->lpdbPendingRel ) {
@@ -5019,7 +5019,7 @@ static HB_ERRCODE adsDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemInd
    const char * szExt;
    PHB_ITEM pFileExt = nullptr;
    PHB_FNAME pFileName;
-   HB_BOOL fTable = false, fResult = false;
+   bool fTable = false, fResult = false;
 
    szFile = hb_itemGetCPtr(pItemIndex);
    if( !szFile[0] ) {
@@ -5101,7 +5101,7 @@ static HB_ERRCODE adsExists(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemI
    const char * szFile;
    PHB_ITEM pFileExt = nullptr;
    PHB_FNAME pFileName;
-   HB_BOOL fTable = false;
+   bool fTable = false;
 
    szFile = hb_itemGetCPtr(pItemIndex);
    if( !szFile[0] ) {

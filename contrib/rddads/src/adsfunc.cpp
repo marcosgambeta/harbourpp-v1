@@ -952,7 +952,7 @@ HB_FUNC( ADSISRECORDINAOF )
 /* Does current record match any current filter? */
 HB_FUNC( ADSISRECORDVALID )
 {
-   HB_BOOL bReturn = false;
+   bool bReturn = false;
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
@@ -1212,7 +1212,7 @@ HB_FUNC( ADSSTMTSETTABLEREADONLY )
 
 HB_FUNC( ADSCREATESQLSTATEMENT )
 {
-   HB_BOOL fResult = false;
+   bool fResult = false;
    ADSHANDLE hConnect = HB_ADS_PARCONNECTION(3);
 
    if( hConnect ) {
@@ -1426,7 +1426,7 @@ UNSIGNED32 WINAPI hb_adsShowCallback( UNSIGNED16 usPercentDone )
       PHB_ITEM pPercentDone = hb_itemPutNI(nullptr, usPercentDone);
 #if ADS_LIB_VERSION >= 610
       PHB_ITEM pCallbackID = hb_itemPutNL(nullptr, ulCallbackID);
-      HB_BOOL fResult = hb_itemGetL(hb_vmEvalBlockV(pCallBack, 2, pPercentDone, pCallbackID));
+      bool fResult = hb_itemGetL(hb_vmEvalBlockV(pCallBack, 2, pPercentDone, pCallbackID));
       hb_itemRelease(pCallbackID);
 #else
       HB_BOOL fResult = hb_itemGetL(hb_vmEvalBlockV(pCallBack, 1, pPercentDone));
@@ -1449,7 +1449,7 @@ UNSIGNED32 WINAPI hb_adsShowCallback( UNSIGNED16 usPercentDone )
 
 HB_FUNC( ADSREGCALLBACK )
 {
-   HB_BOOL fResult = false;
+   bool fResult = false;
 
 #if !defined(ADS_LINUX)
    /* NOTE: current implementation is not thread safe.
