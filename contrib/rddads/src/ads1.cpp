@@ -1469,13 +1469,11 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
 
    HB_USHORT uiItems, uiCount;
    HB_ERRCODE errCode = HB_SUCCESS;
-   DBFIELDINFO dbFieldInfo;
+   DBFIELDINFO dbFieldInfo{};
    const char * szType;
 
    uiItems = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
    SELF_SETFIELDEXTENT(&pArea->area, uiItems);
-
-   memset(&dbFieldInfo, 0, sizeof(dbFieldInfo));
 
    for( uiCount = 0; uiCount < uiItems; uiCount++ ) {
       HB_USHORT uiLen, uiDec;
@@ -3369,7 +3367,7 @@ static HB_ERRCODE adsOpen(ADSAREAP pArea, LPDBOPENINFO pOpenInfo)
    UNSIGNED8 szName[ADS_MAX_FIELD_NAME + 1];
    /* See adsGettValue() for why we don't use pArea->area.uiMaxFieldNameLength here */
    UNSIGNED16 usBufLen, usType, usDecimals;
-   DBFIELDINFO dbFieldInfo;
+   DBFIELDINFO dbFieldInfo{};
    char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
    const char * szFile;
    bool fDictionary = false, fUnicode = false;
@@ -3497,7 +3495,6 @@ static HB_ERRCODE adsOpen(ADSAREAP pArea, LPDBOPENINFO pOpenInfo)
 
    SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
-   memset(&dbFieldInfo, 0, sizeof(dbFieldInfo));
    pArea->maxFieldLen = 0;
 
    u32RetVal = AE_SUCCESS;

@@ -1268,9 +1268,8 @@ HB_FUNC( ADSEXECUTESQLDIRECT )
 
       if( AdsExecuteSQLDirect(pArea->hStatement, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1))) /* pucStmt */, &hCursor) == AE_SUCCESS ) {
          if( hCursor ) {
-            DBOPENINFO pInfo;
+            DBOPENINFO pInfo{};
 
-            memset(&pInfo, 0, sizeof(pInfo));
             pInfo.abName = "";
             pInfo.fReadonly = true;
             pArea->hTable = hCursor;
@@ -1318,9 +1317,8 @@ HB_FUNC( ADSEXECUTESQL )
 
       if( AdsExecuteSQL( pArea->hStatement, &hCursor ) == AE_SUCCESS ) {
          if( hCursor ) {
-            DBOPENINFO pInfo;
+            DBOPENINFO pInfo{};
 
-            memset(&pInfo, 0, sizeof(pInfo));
             pInfo.abName = "";
             pInfo.fReadonly = true;
             pArea->hTable = hCursor;
