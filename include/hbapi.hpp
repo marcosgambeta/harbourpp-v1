@@ -64,7 +64,7 @@ HB_EXTERN_BEGIN
 #define HB_DEFAULT_DECIMALS  255
 
 /* items types and type checking macros */
-/* NOTA: mantido para compatibilidade */
+/* NOTE: maintained for compatibility with C language */
 #define HB_IT_NIL       0x00000
 #define HB_IT_POINTER   0x00001
 #define HB_IT_INTEGER   0x00002
@@ -97,14 +97,15 @@ HB_EXTERN_BEGIN
 #define HB_IT_EVALITEM  (HB_IT_BLOCK | HB_IT_SYMBOL)
 #define HB_IT_HASHKEY   (HB_IT_INTEGER | HB_IT_LONG | HB_IT_DOUBLE | HB_IT_DATE | HB_IT_TIMESTAMP | HB_IT_STRING | HB_IT_POINTER)
 
-/* NOTA: usar em src e contrib */
+/*
+NOTE:
+. for internal usage
+. used in src and contrib
+*/
 #if defined(__cplusplus)
-namespace Harbour
-{
-   namespace Item
-   {
-      enum Type : unsigned int
-      {
+namespace Harbour {
+   namespace Item {
+      enum Type : unsigned int {
          NIL       = 0x00000,
          POINTER   = 0x00001,
          INTEGER   = 0x00002,
