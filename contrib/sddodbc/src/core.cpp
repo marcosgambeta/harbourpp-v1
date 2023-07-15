@@ -496,20 +496,20 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
          case SQL_CHAR:
          case SQL_VARCHAR:
          case SQL_LONGVARCHAR:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             break;
 
          case SQL_WCHAR:
          case SQL_WVARCHAR:
          case SQL_WLONGVARCHAR:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiFlags |= HB_FF_UNICODE;
             break;
 
          case SQL_BINARY:
          case SQL_VARBINARY:
          case SQL_LONGVARBINARY:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiFlags |= HB_FF_BINARY;
             break;
 
@@ -517,36 +517,36 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
          case SQL_SMALLINT:
          case SQL_INTEGER:
          case SQL_BIGINT:
-            dbFieldInfo.uiType = HB_FT_INTEGER;
+            dbFieldInfo.uiType = Harbour::DB::Field::INTEGER;
             break;
 
          case SQL_DECIMAL:
          case SQL_NUMERIC:
-            dbFieldInfo.uiType = HB_FT_LONG;
+            dbFieldInfo.uiType = Harbour::DB::Field::LONG;
             break;
 
          case SQL_REAL:
          case SQL_FLOAT:
          case SQL_DOUBLE:
-            dbFieldInfo.uiType = HB_FT_DOUBLE;
+            dbFieldInfo.uiType = Harbour::DB::Field::DOUBLE;
             break;
 
          case SQL_BIT:
-            dbFieldInfo.uiType = HB_FT_LOGICAL;
+            dbFieldInfo.uiType = Harbour::DB::Field::LOGICAL;
             break;
 
          case SQL_DATE:
 #if ODBCVER >= 0x0300
          case SQL_TYPE_DATE:
 #endif
-            dbFieldInfo.uiType = HB_FT_DATE;
+            dbFieldInfo.uiType = Harbour::DB::Field::DATE;
             break;
 
          case SQL_TIME:
 #if ODBCVER >= 0x0300
          case SQL_TYPE_TIME:
 #endif
-            dbFieldInfo.uiType = HB_FT_TIME;
+            dbFieldInfo.uiType = Harbour::DB::Field::TIME;
             break;
 
          /* SQL_DATETIME = SQL_DATE = 9 */
@@ -554,7 +554,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
 #if ODBCVER >= 0x0300
          case SQL_TYPE_TIMESTAMP:
 #endif
-            dbFieldInfo.uiType = HB_FT_TIMESTAMP;
+            dbFieldInfo.uiType = Harbour::DB::Field::TIMESTAMP;
             break;
 
          default:
@@ -570,7 +570,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
       {
          switch( dbFieldInfo.uiType )
          {
-            case HB_FT_STRING:
+            case Harbour::DB::Field::STRING:
             {
                char * pStr;
 
@@ -583,38 +583,38 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
                break;
             }
 
-            case HB_FT_MEMO:
+            case Harbour::DB::Field::MEMO:
                hb_itemPutC(pItem, nullptr);
                break;
 
-            case HB_FT_INTEGER:
+            case Harbour::DB::Field::INTEGER:
                hb_itemPutNI(pItem, 0);
                break;
 
-            case HB_FT_LONG:
+            case Harbour::DB::Field::LONG:
                if( dbFieldInfo.uiDec == 0 )
                   hb_itemPutNLLen(pItem, 0, dbFieldInfo.uiLen);
                else
                   hb_itemPutNDLen(pItem, 0.0, dbFieldInfo.uiLen, dbFieldInfo.uiDec);
                break;
 
-            case HB_FT_DOUBLE:
+            case Harbour::DB::Field::DOUBLE:
                hb_itemPutNDLen(pItem, 0.0, dbFieldInfo.uiLen, dbFieldInfo.uiDec);
                break;
 
-            case HB_FT_LOGICAL:
+            case Harbour::DB::Field::LOGICAL:
                hb_itemPutL(pItem, false);
                break;
 
-            case HB_FT_DATE:
+            case Harbour::DB::Field::DATE:
                hb_itemPutDL(pItem, 0);
                break;
 
-            case HB_FT_TIME:
+            case Harbour::DB::Field::TIME:
                hb_itemPutTDT(pItem, 0, 0);
                break;
 
-            case HB_FT_TIMESTAMP:
+            case Harbour::DB::Field::TIMESTAMP:
                hb_itemPutTDT(pItem, 0, 0);
                break;
 
@@ -714,7 +714,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
          pField = pArea->area.lpFields + ui - 1;
          switch( pField->uiType )
          {
-            case HB_FT_STRING:
+            case Harbour::DB::Field::STRING:
                if( pField->uiType & HB_FF_BINARY )
                {
                   char buffer[1];
@@ -760,7 +760,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                }
                break;
 
-            case HB_FT_INTEGER:
+            case Harbour::DB::Field::INTEGER:
 #if ODBCVER >= 0x0300
                if( pField->uiTypeExtended == static_cast<HB_USHORT>(SQL_BIGINT) )
                {
@@ -778,7 +778,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                }
                break;
 
-            case HB_FT_LONG:
+            case Harbour::DB::Field::LONG:
                if( pField->uiDec == 0 && pField->uiLen < 10 )
                {
                   SQLINTEGER val = 0;
@@ -793,7 +793,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                }
                break;
 
-            case HB_FT_DOUBLE:
+            case Harbour::DB::Field::DOUBLE:
             {
                double val = 0.0;
                if( SQL_SUCCEEDED( res = SQLGetData( hStmt, ui, SQL_C_DOUBLE, &val, sizeof(val), &iLen ) ) )
@@ -801,7 +801,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                break;
             }
 
-            case HB_FT_LOGICAL:
+            case Harbour::DB::Field::LOGICAL:
             {
                unsigned char val = 0;
                if( SQL_SUCCEEDED( res = SQLGetData( hStmt, ui, SQL_C_BIT, &val, sizeof(val), &iLen ) ) )
@@ -809,7 +809,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                break;
             }
 
-            case HB_FT_DATE:
+            case Harbour::DB::Field::DATE:
             {
                DATE_STRUCT val = { 0, 0, 0 };
                if( SQL_SUCCEEDED( res = SQLGetData( hStmt, ui, SQL_C_DATE, &val, sizeof(val), &iLen ) ) )
@@ -817,7 +817,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                break;
             }
 
-            case HB_FT_TIME:
+            case Harbour::DB::Field::TIME:
             {
                TIME_STRUCT val = { 0, 0, 0 };
                if( SQL_SUCCEEDED( res = SQLGetData( hStmt, ui, SQL_C_TIME, &val, sizeof(val), &iLen ) ) )
@@ -825,7 +825,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                break;
             }
 
-            case HB_FT_TIMESTAMP:
+            case Harbour::DB::Field::TIMESTAMP:
             {
                TIMESTAMP_STRUCT val = { 0, 0, 0, 0, 0, 0, 0 };
                if( SQL_SUCCEEDED( res = SQLGetData( hStmt, ui, SQL_C_TIMESTAMP, &val, sizeof(val), &iLen ) ) )
