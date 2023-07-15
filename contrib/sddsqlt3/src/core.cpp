@@ -195,53 +195,53 @@ static HB_USHORT sqlite3DeclType(sqlite3_stmt * st, HB_USHORT uiIndex )
       HB_SIZE nLen = strlen(szDeclType);
 
       if( hb_strAtI( "INT", 3, szDeclType, nLen ) != 0 )
-         return HB_FT_INTEGER;
+         return Harbour::DB::Field::INTEGER;
       if( hb_strAtI( "CHAR", 4, szDeclType, nLen ) != 0 ||
           hb_strAtI( "TEXT", 4, szDeclType, nLen ) != 0 ||
           hb_strAtI( "CLOB", 4, szDeclType, nLen ) != 0 )
-         return HB_FT_STRING;
+         return Harbour::DB::Field::STRING;
       if( hb_strAtI( "BLOB", 4, szDeclType, nLen ) != 0 )
-         return HB_FT_ANY;
+         return Harbour::DB::Field::ANY;
       if( hb_strAtI( "REAL", 4, szDeclType, nLen ) != 0 ||
           hb_strAtI( "FLOA", 4, szDeclType, nLen ) != 0 ||
           hb_strAtI( "DOUB", 4, szDeclType, nLen ) != 0 )
-         return HB_FT_LONG; /* logically HB_FT_DOUBLE, what was the idea? */
+         return Harbour::DB::Field::LONG; /* logically HB_FT_DOUBLE, what was the idea? */
 #ifdef HB_SQLT3_MAP_DECLARED_EMULATED
       /* types not handled in a specific way by SQLITE3
        * but anyway we should try to look at declarations
        */
       if( hb_strAtI( "TIME", 4, szDeclType, nLen ) != 0 )
-         return HB_FT_TIMESTAMP;
+         return Harbour::DB::Field::TIMESTAMP;
       if( hb_strAtI( "DATE", 4, szDeclType, nLen ) != 0 )
-         return HB_FT_DATE;
+         return Harbour::DB::Field::DATE;
       if( hb_strAtI( "NUME", 4, szDeclType, nLen ) != 0 ||
           hb_strAtI( "NUMB", 4, szDeclType, nLen ) != 0 )
-         return HB_FT_LONG;
+         return Harbour::DB::Field::LONG;
 #endif
    }
 
 #ifdef HB_SQLT3_MAP_UNDECLARED_TYPES_AS_ANY
-   return HB_FT_ANY;
+   return Harbour::DB::Field::ANY;
 #else
    switch( sqlite3_column_type( st, uiIndex ) )
    {
       case SQLITE_TEXT:
-         return HB_FT_STRING;
+         return Harbour::DB::Field::STRING;
 
       case SQLITE_FLOAT:
-         return HB_FT_LONG;
+         return Harbour::DB::Field::LONG;
 
       case SQLITE_INTEGER:
-         return HB_FT_INTEGER;
+         return Harbour::DB::Field::INTEGER;
 
       case SQLITE_BLOB:
-         return HB_FT_BLOB;
+         return Harbour::DB::Field::BLOB;
 
       case SQLITE_NULL:
-         return HB_FT_ANY;
+         return Harbour::DB::Field::ANY;
    }
 
-   return HB_FT_NONE;
+   return Harbour::DB::Field::NONE;
 #endif
 }
 
@@ -442,7 +442,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
 
       switch( dbFieldInfo.uiType )
       {
-         case HB_FT_STRING:
+         case Harbour::DB::Field::STRING:
          {
             HB_SIZE nSize = hb_cdpUTF8StringLength(reinterpret_cast<const char*>(sqlite3_column_text(st, uiIndex)), sqlite3_column_bytes(st, uiIndex));
 
@@ -463,17 +463,17 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
             hb_itemPutCLPtr(pItem, pStr, dbFieldInfo.uiLen);
             break;
          }
-         case HB_FT_BLOB:
+         case Harbour::DB::Field::BLOB:
             dbFieldInfo.uiLen = 4;
             hb_itemPutC(pItem, nullptr);
             break;
 
-         case HB_FT_INTEGER:
+         case Harbour::DB::Field::INTEGER:
             dbFieldInfo.uiLen = 8;
             hb_itemPutNInt(pItem, 0);
             break;
 
-         case HB_FT_LONG:
+         case Harbour::DB::Field::LONG:
             dbFieldInfo.uiLen = 20;
             dbFieldInfo.uiDec = static_cast<HB_USHORT>(hb_setGetDecimals());
 #ifdef HB_SQLT3_MAP_DECLARED_EMULATED
@@ -483,18 +483,18 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
             break;
 
 #ifdef HB_SQLT3_MAP_DECLARED_EMULATED
-         case HB_FT_DATE:
+         case Harbour::DB::Field::DATE:
             dbFieldInfo.uiLen = 8;
             hb_itemPutDS(pItem, nullptr);
             break;
 
-         case HB_FT_TIMESTAMP:
+         case Harbour::DB::Field::TIMESTAMP:
             dbFieldInfo.uiLen = 8;
             hb_itemPutTDT(pItem, 0, 0);
             break;
 #endif
 
-         case HB_FT_ANY:
+         case Harbour::DB::Field::ANY:
             dbFieldInfo.uiLen = 6;
             break;
 
@@ -563,42 +563,42 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
          LPFIELD  pField = pArea->area.lpFields + ui;
          HB_USHORT uiType = pField->uiType;
 
-         if( uiType == HB_FT_ANY )
+         if( uiType == Harbour::DB::Field::ANY )
          {
             switch( sqlite3_column_type( st, ui ) )
             {
                case SQLITE_TEXT:
-                  uiType = HB_FT_STRING;
+                  uiType = Harbour::DB::Field::STRING;
                   break;
 
                case SQLITE_FLOAT:
                case SQLITE_INTEGER:
-                  uiType = HB_FT_LONG;
+                  uiType = Harbour::DB::Field::LONG;
                   break;
 
                case SQLITE_BLOB:
-                  uiType = HB_FT_BLOB;
+                  uiType = Harbour::DB::Field::BLOB;
                   break;
             }
          }
 
          switch( uiType )
          {
-            case HB_FT_STRING:
+            case Harbour::DB::Field::STRING:
                pItem = S_HB_ITEMPUTSTR(nullptr, reinterpret_cast<const char*>(sqlite3_column_text(st, ui)));
                break;
 
-            case HB_FT_INTEGER:
+            case Harbour::DB::Field::INTEGER:
 #if HB_VMLONG_MAX > INT32_MAX && !defined(HB_LONG_LONG_OFF)
                pItem = hb_itemPutNInt(nullptr, sqlite3_column_int64(st, ui));
                break;
 #endif
-            case HB_FT_LONG:
+            case Harbour::DB::Field::LONG:
                pItem = hb_itemPutNDDec(nullptr, sqlite3_column_double(st, ui), pField->uiDec);
                break;
 
 #ifdef HB_SQLT3_MAP_DECLARED_EMULATED
-            case HB_FT_DATE:
+            case Harbour::DB::Field::DATE:
                if( sqlite3_column_bytes( st, ui ) >= 10 )
                {
                   char szDate[9];
@@ -620,7 +620,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
 
                break;
 
-            case HB_FT_TIMESTAMP:
+            case Harbour::DB::Field::TIMESTAMP:
                if( sqlite3_column_bytes( st, ui ) >= 10 )
                {
                   long lDate, lTime;
@@ -631,7 +631,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                   break;
                }
 #endif
-            case HB_FT_BLOB:
+            case Harbour::DB::Field::BLOB:
                pItem = hb_itemPutCL(nullptr, static_cast<const char*>(sqlite3_column_blob(st, ui)), sqlite3_column_bytes(st, ui));
                break;
          }
