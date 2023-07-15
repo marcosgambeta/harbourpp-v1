@@ -82,7 +82,7 @@ HB_EXTERN_BEGIN
 
 
 /* Field types */
-
+/* NOTE: maintained for compatibility with C language */
 #define HB_FT_NONE            0
 #define HB_FT_STRING          1     /* "C" */
 #define HB_FT_LOGICAL         2     /* "L" */
@@ -105,7 +105,11 @@ HB_EXTERN_BEGIN
 #define HB_FT_BLOB            19    /* "W" */
 #define HB_FT_OLE             20    /* "G" */
 
-/* NOTA: usar em src e contrib */
+/*
+NOTE:
+. for internal usage
+. used in src and contrib
+*/
 #if defined(__cplusplus)
 namespace Harbour {
    namespace DB {
