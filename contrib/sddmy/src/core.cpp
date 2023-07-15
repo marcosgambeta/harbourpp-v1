@@ -273,38 +273,38 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
       {
          case MYSQL_TYPE_TINY:
          case MYSQL_TYPE_SHORT:
-            dbFieldInfo.uiType = HB_FT_INTEGER;
+            dbFieldInfo.uiType = Harbour::DB::Field::INTEGER;
             break;
 
          case MYSQL_TYPE_LONG:
          case MYSQL_TYPE_LONGLONG:
          case MYSQL_TYPE_INT24:
-            dbFieldInfo.uiType = HB_FT_LONG;
+            dbFieldInfo.uiType = Harbour::DB::Field::LONG;
             break;
 
          case MYSQL_TYPE_DECIMAL:
          case MYSQL_TYPE_NEWDECIMAL:
          case MYSQL_TYPE_FLOAT:
          case MYSQL_TYPE_DOUBLE:
-            dbFieldInfo.uiType = HB_FT_DOUBLE;
+            dbFieldInfo.uiType = Harbour::DB::Field::DOUBLE;
             dbFieldInfo.uiDec  = static_cast<HB_USHORT>(pMyField->decimals);
             break;
 
          case MYSQL_TYPE_STRING:
          case MYSQL_TYPE_VAR_STRING:
          case MYSQL_TYPE_ENUM:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             break;
 
          case MYSQL_TYPE_DATE:
-            dbFieldInfo.uiType = HB_FT_DATE;
+            dbFieldInfo.uiType = Harbour::DB::Field::DATE;
             break;
 
          case MYSQL_TYPE_TINY_BLOB:
          case MYSQL_TYPE_MEDIUM_BLOB:
          case MYSQL_TYPE_LONG_BLOB:
          case MYSQL_TYPE_BLOB:
-            dbFieldInfo.uiType = HB_FT_MEMO;
+            dbFieldInfo.uiType = Harbour::DB::Field::MEMO;
             break;
 
          case MYSQL_TYPE_TIMESTAMP:
@@ -313,7 +313,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
          case MYSQL_TYPE_TIMESTAMP2:
          case MYSQL_TYPE_DATETIME2:
 #endif
-            dbFieldInfo.uiType = HB_FT_TIMESTAMP;
+            dbFieldInfo.uiType = Harbour::DB::Field::TIMESTAMP;
             dbFieldInfo.uiLen  = 8;
             break;
 
@@ -321,7 +321,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
 #if MYSQL_VERSION_ID >= 50610
          case MYSQL_TYPE_TIME2:
 #endif
-            dbFieldInfo.uiType = HB_FT_TIME;
+            dbFieldInfo.uiType = Harbour::DB::Field::TIME;
             dbFieldInfo.uiLen  = 4;
             break;
 
@@ -344,7 +344,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
       {
          switch( dbFieldInfo.uiType )
          {
-            case HB_FT_STRING:
+            case Harbour::DB::Field::STRING:
             {
                char * pStr;
 
@@ -357,28 +357,28 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
                break;
             }
 
-            case HB_FT_MEMO:
+            case Harbour::DB::Field::MEMO:
                pItem = hb_itemPutC(nullptr, nullptr);
                break;
 
-            case HB_FT_INTEGER:
+            case Harbour::DB::Field::INTEGER:
                pItem = hb_itemPutNI(nullptr, 0);
                break;
 
-            case HB_FT_LONG:
+            case Harbour::DB::Field::LONG:
                pItem = hb_itemPutNL(nullptr, 0);
                break;
 
-            case HB_FT_DOUBLE:
+            case Harbour::DB::Field::DOUBLE:
                pItem = hb_itemPutND(nullptr, 0.0);
                break;
 
-            case HB_FT_DATE:
+            case Harbour::DB::Field::DATE:
                pItem = hb_itemPutDS(nullptr, nullptr);
                break;
 
-            case HB_FT_TIMESTAMP:
-            case HB_FT_TIME:
+            case Harbour::DB::Field::TIMESTAMP:
+            case Harbour::DB::Field::TIME:
                pItem = hb_itemPutTDT(nullptr, 0, 0);
                break;
 
@@ -503,7 +503,7 @@ static HB_ERRCODE mysqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
 
    switch( pField->uiType )
    {
-      case HB_FT_STRING:
+      case Harbour::DB::Field::STRING:
       {
 #if 0
          char * pStr;
@@ -524,14 +524,14 @@ static HB_ERRCODE mysqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          break;
       }
 
-      case HB_FT_MEMO:
+      case Harbour::DB::Field::MEMO:
          hb_itemPutCL(pItem, pValue, nLen);
          hb_itemSetCMemo(pItem);
          break;
 
-      case HB_FT_INTEGER:
-      case HB_FT_LONG:
-      case HB_FT_DOUBLE:
+      case Harbour::DB::Field::INTEGER:
+      case Harbour::DB::Field::LONG:
+      case Harbour::DB::Field::DOUBLE:
          hb_strncpy( szBuffer, pValue, sizeof(szBuffer) - 1 );
 
          if( pField->uiDec )
@@ -540,7 +540,7 @@ static HB_ERRCODE mysqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
             hb_itemPutNLLen(pItem, atol(szBuffer), static_cast<int>(pField->uiLen));
          break;
 
-      case HB_FT_DATE:
+      case Harbour::DB::Field::DATE:
       {
          char szDate[9];
 
@@ -557,7 +557,7 @@ static HB_ERRCODE mysqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          break;
       }
 
-      case HB_FT_TIMESTAMP:
+      case Harbour::DB::Field::TIMESTAMP:
       {
          char szTimeStamp[15];
 
@@ -581,7 +581,7 @@ static HB_ERRCODE mysqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          break;
       }
 
-      case HB_FT_TIME:
+      case Harbour::DB::Field::TIME:
       {
          char szTimeStamp[15];
 
