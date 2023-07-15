@@ -307,7 +307,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
          {
             char * pStr;
 
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiLen  = pVar->sqllen;
             pVar->sqldata = static_cast<char*>(hb_xgrab(sizeof(char) * pVar->sqllen + 2));
 
@@ -321,7 +321,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
          {
             char * pStr;
 
-            dbFieldInfo.uiType = HB_FT_VARLENGTH;
+            dbFieldInfo.uiType = Harbour::DB::Field::VARLENGTH;
             dbFieldInfo.uiLen  = pVar->sqllen;
             /* pVar->sqltype = SQL_TEXT;  Coercing */
             pVar->sqldata = static_cast<char*>(hb_xgrab(sizeof(char) * pVar->sqllen + 2));
@@ -335,7 +335,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
          case SQL_SHORT:
             if( pVar->sqlscale < 0 )
             {
-               dbFieldInfo.uiType = HB_FT_LONG;
+               dbFieldInfo.uiType = Harbour::DB::Field::LONG;
                dbFieldInfo.uiLen  = 7;
                dbFieldInfo.uiDec  = -pVar->sqlscale;
 
@@ -343,7 +343,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
             }
             else
             {
-               dbFieldInfo.uiType = HB_FT_INTEGER;
+               dbFieldInfo.uiType = Harbour::DB::Field::INTEGER;
                dbFieldInfo.uiLen  = 2;
 
                pItem = hb_itemPutNILen(nullptr, 0, 6);
@@ -354,7 +354,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
          case SQL_LONG:
             if( pVar->sqlscale < 0 )
             {
-               dbFieldInfo.uiType = HB_FT_LONG;
+               dbFieldInfo.uiType = Harbour::DB::Field::LONG;
                dbFieldInfo.uiLen  = 12;
                dbFieldInfo.uiDec  = -pVar->sqlscale;
 
@@ -362,7 +362,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
             }
             else
             {
-               dbFieldInfo.uiType = HB_FT_INTEGER;
+               dbFieldInfo.uiType = Harbour::DB::Field::INTEGER;
                dbFieldInfo.uiLen  = 4;
 
                pItem = hb_itemPutNLLen(nullptr, 0, 11);
@@ -371,7 +371,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
             break;
 
          case SQL_FLOAT:
-            dbFieldInfo.uiType = HB_FT_DOUBLE;
+            dbFieldInfo.uiType = Harbour::DB::Field::DOUBLE;
             dbFieldInfo.uiLen  = 8;
             dbFieldInfo.uiDec  = -pVar->sqlscale;
             pVar->sqldata      = static_cast<char*>(hb_xgrab(sizeof(float)));
@@ -380,7 +380,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
             break;
 
          case SQL_DOUBLE:
-            dbFieldInfo.uiType = HB_FT_DOUBLE;
+            dbFieldInfo.uiType = Harbour::DB::Field::DOUBLE;
             dbFieldInfo.uiLen  = 8;
             dbFieldInfo.uiDec  = -pVar->sqlscale;
             pVar->sqldata      = static_cast<char*>(hb_xgrab(sizeof(double)));
@@ -389,7 +389,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
             break;
 
          case SQL_TIMESTAMP:
-            dbFieldInfo.uiType = HB_FT_TIMESTAMP;
+            dbFieldInfo.uiType = Harbour::DB::Field::TIMESTAMP;
             dbFieldInfo.uiLen  = 8;
             pVar->sqldata      = static_cast<char*>(hb_xgrab(sizeof(ISC_TIMESTAMP)));
 
