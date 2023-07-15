@@ -330,7 +330,7 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
 #endif
       switch( iData ) {
          case 'C':
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiLen = uiLen;
 /* Too many people reported the behavior with code below as a
    Clipper compatibility bug so I commented this code, Druzus.
@@ -344,33 +344,33 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
             break;
 
          case 'L':
-            dbFieldInfo.uiType = HB_FT_LOGICAL;
+            dbFieldInfo.uiType = Harbour::DB::Field::LOGICAL;
             dbFieldInfo.uiLen = 1;
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
             break;
 
          case 'D':
-            dbFieldInfo.uiType = HB_FT_DATE;
+            dbFieldInfo.uiType = Harbour::DB::Field::DATE;
             dbFieldInfo.uiLen = (uiLen == 3 || uiLen == 4) ? uiLen : 8;
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
             break;
 
          case 'I':
-            dbFieldInfo.uiType = HB_FT_INTEGER;
+            dbFieldInfo.uiType = Harbour::DB::Field::INTEGER;
             dbFieldInfo.uiLen = ((uiLen > 0 && uiLen <= 4) || uiLen == 8) ? uiLen : 4;
             dbFieldInfo.uiDec = uiDec;
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE | HB_FF_AUTOINC;
             break;
 
          case 'Y':
-            dbFieldInfo.uiType = HB_FT_CURRENCY;
+            dbFieldInfo.uiType = Harbour::DB::Field::CURRENCY;
             dbFieldInfo.uiLen = 8;
             dbFieldInfo.uiDec = 4;
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
             break;
 
          case 'Z':
-            dbFieldInfo.uiType = HB_FT_CURDOUBLE;
+            dbFieldInfo.uiType = Harbour::DB::Field::CURDOUBLE;
             dbFieldInfo.uiLen = 8;
             dbFieldInfo.uiDec = uiDec;
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
@@ -378,21 +378,21 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
 
          case '2':
          case '4':
-            dbFieldInfo.uiType = HB_FT_INTEGER;
+            dbFieldInfo.uiType = Harbour::DB::Field::INTEGER;
             dbFieldInfo.uiLen = static_cast<HB_USHORT>(iData - '0');
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE | HB_FF_AUTOINC;
             break;
 
          case 'B':
          case '8':
-            dbFieldInfo.uiType = HB_FT_DOUBLE;
+            dbFieldInfo.uiType = Harbour::DB::Field::DOUBLE;
             dbFieldInfo.uiLen = 8;
             dbFieldInfo.uiDec = uiDec;
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE | HB_FF_AUTOINC;
             break;
 
          case 'N':
-            dbFieldInfo.uiType = HB_FT_LONG;
+            dbFieldInfo.uiType = Harbour::DB::Field::LONG;
             dbFieldInfo.uiDec = uiDec;
             /* dBase documentation defines maximum numeric field size as 20
              * but Clipper allows to create longer fields so I remove this
@@ -408,7 +408,7 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
             break;
 
          case 'F':
-            dbFieldInfo.uiType = HB_FT_FLOAT;
+            dbFieldInfo.uiType = Harbour::DB::Field::FLOAT;
             dbFieldInfo.uiDec = uiDec;
             /* see note above */
             if( uiLen > 255 ) {
@@ -419,71 +419,71 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
 
          case 'T':
             if( uiLen == 8 ) {
-               dbFieldInfo.uiType = HB_FT_TIMESTAMP;
+               dbFieldInfo.uiType = Harbour::DB::Field::TIMESTAMP;
                dbFieldInfo.uiLen = 8;
             } else {
-               dbFieldInfo.uiType = HB_FT_TIME;
+               dbFieldInfo.uiType = Harbour::DB::Field::TIME;
                dbFieldInfo.uiLen = 4;
             }
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
             break;
 
          case '@':
-            dbFieldInfo.uiType = HB_FT_TIMESTAMP;
+            dbFieldInfo.uiType = Harbour::DB::Field::TIMESTAMP;
             dbFieldInfo.uiLen = 8;
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
             break;
 
          case '=':
-            dbFieldInfo.uiType = HB_FT_MODTIME;
+            dbFieldInfo.uiType = Harbour::DB::Field::MODTIME;
             dbFieldInfo.uiLen = 8;
             dbFieldInfo.uiFlags = 0;
             break;
 
          case '^':
-            dbFieldInfo.uiType = HB_FT_ROWVER;
+            dbFieldInfo.uiType = Harbour::DB::Field::ROWVER;
             dbFieldInfo.uiLen = 8;
             dbFieldInfo.uiFlags = 0;
             break;
 
          case '+':
-            dbFieldInfo.uiType = HB_FT_AUTOINC;
+            dbFieldInfo.uiType = Harbour::DB::Field::AUTOINC;
             dbFieldInfo.uiLen = 4;
             dbFieldInfo.uiFlags = 0;
             break;
 
          case 'Q':
-            dbFieldInfo.uiType = HB_FT_VARLENGTH;
+            dbFieldInfo.uiType = Harbour::DB::Field::VARLENGTH;
             dbFieldInfo.uiLen = uiLen > 255 ? 255 : (uiLen == 0 ? 1 : uiLen);
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE | HB_FF_BINARY | HB_FF_COMPRESSED | HB_FF_ENCRYPTED | HB_FF_UNICODE;
             break;
 
          case 'V':
-            dbFieldInfo.uiType = HB_FT_ANY;
+            dbFieldInfo.uiType = Harbour::DB::Field::ANY;
             dbFieldInfo.uiLen = (uiLen < 3 || uiLen == 5) ? 6 : uiLen;
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE | HB_FF_BINARY | HB_FF_COMPRESSED | HB_FF_ENCRYPTED | HB_FF_UNICODE;
             break;
 
          case 'M':
-            dbFieldInfo.uiType = HB_FT_MEMO;
+            dbFieldInfo.uiType = Harbour::DB::Field::MEMO;
             dbFieldInfo.uiLen = (uiLen == 4) ? 4 : 10;
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE | HB_FF_BINARY | HB_FF_COMPRESSED | HB_FF_ENCRYPTED | HB_FF_UNICODE;
             break;
 
          case 'P':
-            dbFieldInfo.uiType = HB_FT_IMAGE;
+            dbFieldInfo.uiType = Harbour::DB::Field::IMAGE;
             dbFieldInfo.uiLen = (uiLen == 4) ? 4 : 10;
             dbFieldInfo.uiFlags &= HB_FF_BINARY;
             break;
 
          case 'W':
-            dbFieldInfo.uiType = HB_FT_BLOB;
+            dbFieldInfo.uiType = Harbour::DB::Field::BLOB;
             dbFieldInfo.uiLen = (uiLen == 4) ? 4 : 10;
             dbFieldInfo.uiFlags &= HB_FF_BINARY;
             break;
 
          case 'G':
-            dbFieldInfo.uiType = HB_FT_OLE;
+            dbFieldInfo.uiType = Harbour::DB::Field::OLE;
             dbFieldInfo.uiLen = (uiLen == 4) ? 4 : 10;
             dbFieldInfo.uiFlags &= HB_FF_BINARY;
             break;
@@ -547,98 +547,98 @@ static HB_ERRCODE hb_waFieldInfo(AREAP pArea, HB_USHORT uiIndex, HB_USHORT uiTyp
          int iLen = 0;
 
          switch( pField->uiType ) {
-            case HB_FT_STRING:
+            case Harbour::DB::Field::STRING:
                cType = 'C';
                uiFlags = HB_FF_NULLABLE | HB_FF_BINARY | HB_FF_UNICODE | HB_FF_ENCRYPTED | HB_FF_COMPRESSED;
                break;
 
-            case HB_FT_LOGICAL:
+            case Harbour::DB::Field::LOGICAL:
                cType = 'L';
                uiFlags = HB_FF_NULLABLE;
                break;
 
-            case HB_FT_DATE:
+            case Harbour::DB::Field::DATE:
                cType = 'D';
                uiFlags = HB_FF_NULLABLE;
                break;
 
-            case HB_FT_LONG:
+            case Harbour::DB::Field::LONG:
                cType = 'N';
                uiFlags = HB_FF_NULLABLE | HB_FF_AUTOINC;
                break;
 
-            case HB_FT_INTEGER:
+            case Harbour::DB::Field::INTEGER:
                cType = 'I';
                uiFlags = HB_FF_NULLABLE | HB_FF_AUTOINC;
                break;
 
-            case HB_FT_DOUBLE:
+            case Harbour::DB::Field::DOUBLE:
                cType = 'B';
                uiFlags = HB_FF_NULLABLE | HB_FF_AUTOINC;
                break;
 
-            case HB_FT_FLOAT:
+            case Harbour::DB::Field::FLOAT:
                cType = 'F';
                uiFlags = HB_FF_NULLABLE | HB_FF_AUTOINC;
                break;
 
-            case HB_FT_TIME:
+            case Harbour::DB::Field::TIME:
                cType = 'T';
                uiFlags = HB_FF_NULLABLE;
                break;
 
-            case HB_FT_TIMESTAMP:
+            case Harbour::DB::Field::TIMESTAMP:
                cType = '@';
                uiFlags = HB_FF_NULLABLE;
                break;
 
-            case HB_FT_MODTIME:
+            case Harbour::DB::Field::MODTIME:
                cType = '=';
                break;
 
-            case HB_FT_ROWVER:
+            case Harbour::DB::Field::ROWVER:
                cType = '^';
                break;
 
-            case HB_FT_AUTOINC:
+            case Harbour::DB::Field::AUTOINC:
                cType = '+';
                uiFlags = HB_FF_AUTOINC;
                break;
 
-            case HB_FT_CURRENCY:
+            case Harbour::DB::Field::CURRENCY:
                cType = 'Y';
                uiFlags = HB_FF_NULLABLE;
                break;
 
-            case HB_FT_CURDOUBLE:
+            case Harbour::DB::Field::CURDOUBLE:
                cType = 'Z';
                uiFlags = HB_FF_NULLABLE;
                break;
 
-            case HB_FT_VARLENGTH:
+            case Harbour::DB::Field::VARLENGTH:
                cType = 'Q';
                uiFlags = HB_FF_NULLABLE | HB_FF_BINARY | HB_FF_UNICODE | HB_FF_ENCRYPTED | HB_FF_COMPRESSED;
                break;
 
-            case HB_FT_ANY:
+            case Harbour::DB::Field::ANY:
                cType = 'V';
                uiFlags = HB_FF_NULLABLE | HB_FF_BINARY | HB_FF_UNICODE | HB_FF_ENCRYPTED | HB_FF_COMPRESSED;
                break;
 
-            case HB_FT_MEMO:
+            case Harbour::DB::Field::MEMO:
                cType = 'M';
                uiFlags = HB_FF_NULLABLE | HB_FF_BINARY | HB_FF_UNICODE | HB_FF_ENCRYPTED | HB_FF_COMPRESSED;
                break;
 
-            case HB_FT_IMAGE:
+            case Harbour::DB::Field::IMAGE:
                cType = 'P';
                break;
 
-            case HB_FT_BLOB:
+            case Harbour::DB::Field::BLOB:
                cType = 'W';
                break;
 
-            case HB_FT_OLE:
+            case Harbour::DB::Field::OLE:
                cType = 'G';
                break;
 

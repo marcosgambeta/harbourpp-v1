@@ -2741,7 +2741,7 @@ static bool hb_fptHasMemoData(FPTAREAP pArea, HB_USHORT uiIndex)
    if( --uiIndex < pArea->area.uiFieldCount ) {
       LPFIELD pField = pArea->area.lpFields + uiIndex;
 
-      if( pField->uiType == HB_FT_ANY ) {
+      if( pField->uiType == Harbour::DB::Field::ANY ) {
          if( pField->uiLen >= 6 ) {
             HB_BYTE * pFieldBuf = pArea->pRecord + pArea->pFieldOffset[uiIndex];
             HB_USHORT uiType = HB_GET_LE_UINT16(pFieldBuf + pField->uiLen - 2);
@@ -2759,7 +2759,7 @@ static bool hb_fptHasMemoData(FPTAREAP pArea, HB_USHORT uiIndex)
             }
          }
       }
-      else if( pField->uiType == HB_FT_MEMO || pField->uiType == HB_FT_IMAGE || pField->uiType == HB_FT_BLOB || pField->uiType == HB_FT_OLE ) {
+      else if( pField->uiType == Harbour::DB::Field::MEMO || pField->uiType == Harbour::DB::Field::IMAGE || pField->uiType == Harbour::DB::Field::BLOB || pField->uiType == Harbour::DB::Field::OLE ) {
          HB_BYTE * pFieldBuf = pArea->pRecord + pArea->pFieldOffset[uiIndex];
          HB_USHORT uiLen = pField->uiLen;
 
@@ -2797,7 +2797,7 @@ static HB_ERRCODE hb_fptLockForRead(FPTAREAP pArea, HB_USHORT uiIndex, bool * fU
       }
    }
 
-   if( (uiIndex > 0 && pArea->area.lpFields[uiIndex - 1].uiType == HB_FT_ANY && pArea->area.lpFields[uiIndex - 1].uiLen < 6) ||
+   if( (uiIndex > 0 && pArea->area.lpFields[uiIndex - 1].uiType == Harbour::DB::Field::ANY && pArea->area.lpFields[uiIndex - 1].uiLen < 6) ||
        !pArea->fPositioned || !pArea->fShared || pArea->fFLocked || pArea->fRecordChanged ) {
       fLocked = true;
    } else {
@@ -2844,7 +2844,7 @@ static HB_ERRCODE hb_fptGetVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
 
    pField = pArea->area.lpFields + uiIndex - 1;
 
-   if( pField->uiType == HB_FT_ANY ) {
+   if( pField->uiType == Harbour::DB::Field::ANY ) {
       HB_USHORT uiType;
 
       errCode = hb_fptLockForRead(pArea, uiIndex, &fUnLock);
@@ -2976,7 +2976,7 @@ static HB_ERRCODE hb_fptGetVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
             errCode = EDBF_DATATYPE;
          }
       }
-   } else if( pField->uiType == HB_FT_MEMO || pField->uiType == HB_FT_IMAGE || pField->uiType == HB_FT_BLOB || pField->uiType == HB_FT_OLE ) {
+   } else if( pField->uiType == Harbour::DB::Field::MEMO || pField->uiType == Harbour::DB::Field::IMAGE || pField->uiType == Harbour::DB::Field::BLOB || pField->uiType == Harbour::DB::Field::OLE ) {
       errCode = hb_fptLockForRead(pArea, uiIndex, &fUnLock);
       if( errCode != HB_SUCCESS ) {
          return errCode;
@@ -3080,11 +3080,11 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
 
    pField = pArea->area.lpFields + uiIndex - 1;
 
-   if( pField->uiType == HB_FT_ANY ||
-       pField->uiType == HB_FT_MEMO ||
-       pField->uiType == HB_FT_IMAGE ||
-       pField->uiType == HB_FT_BLOB ||
-       pField->uiType == HB_FT_OLE ) {
+   if( pField->uiType == Harbour::DB::Field::ANY ||
+       pField->uiType == Harbour::DB::Field::MEMO ||
+       pField->uiType == Harbour::DB::Field::IMAGE ||
+       pField->uiType == Harbour::DB::Field::BLOB ||
+       pField->uiType == Harbour::DB::Field::OLE ) {
       HB_BYTE * pFieldBuf = pArea->pRecord + pArea->pFieldOffset[uiIndex - 1];
       HB_BOOL bDeleted;
 
@@ -3106,7 +3106,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
          }
       }
 
-      if( pField->uiType != HB_FT_ANY ) {
+      if( pField->uiType != Harbour::DB::Field::ANY ) {
          if( !hb_fptFileLockEx(pArea, true) ) {
             return EDBF_LOCK;
          }
@@ -3314,10 +3314,10 @@ static HB_ERRCODE hb_fptGetVarLen(FPTAREAP pArea, HB_USHORT uiIndex, HB_ULONG * 
 #endif
 
    if( pArea->fHasMemo && pArea->pMemoFile &&
-       ( pArea->area.lpFields[uiIndex - 1].uiType == HB_FT_MEMO ||
-         pArea->area.lpFields[uiIndex - 1].uiType == HB_FT_IMAGE ||
-         pArea->area.lpFields[uiIndex - 1].uiType == HB_FT_BLOB ||
-         pArea->area.lpFields[uiIndex - 1].uiType == HB_FT_OLE ) ) {
+       ( pArea->area.lpFields[uiIndex - 1].uiType == Harbour::DB::Field::MEMO ||
+         pArea->area.lpFields[uiIndex - 1].uiType == Harbour::DB::Field::IMAGE ||
+         pArea->area.lpFields[uiIndex - 1].uiType == Harbour::DB::Field::BLOB ||
+         pArea->area.lpFields[uiIndex - 1].uiType == Harbour::DB::Field::OLE ) ) {
       bool fUnLock;
 
       HB_ERRCODE errCode = hb_fptLockForRead(pArea, uiIndex, &fUnLock);
@@ -3567,11 +3567,11 @@ static HB_ERRCODE hb_fptGetValueFile(FPTAREAP pArea, HB_USHORT uiIndex, const ch
    }
 
    if( pArea->fHasMemo && pArea->pMemoFile &&
-       ( pArea->area.lpFields[uiIndex - 1].uiType == HB_FT_MEMO ||
-         pArea->area.lpFields[uiIndex - 1].uiType == HB_FT_IMAGE ||
-         pArea->area.lpFields[uiIndex - 1].uiType == HB_FT_BLOB ||
-         pArea->area.lpFields[uiIndex - 1].uiType == HB_FT_OLE ||
-         pArea->area.lpFields[uiIndex - 1].uiType == HB_FT_ANY ) ) {
+       ( pArea->area.lpFields[uiIndex - 1].uiType == Harbour::DB::Field::MEMO ||
+         pArea->area.lpFields[uiIndex - 1].uiType == Harbour::DB::Field::IMAGE ||
+         pArea->area.lpFields[uiIndex - 1].uiType == Harbour::DB::Field::BLOB ||
+         pArea->area.lpFields[uiIndex - 1].uiType == Harbour::DB::Field::OLE ||
+         pArea->area.lpFields[uiIndex - 1].uiType == Harbour::DB::Field::ANY ) ) {
       HB_ERRCODE errCode;
       PHB_FILE pFile;
 
@@ -3738,11 +3738,11 @@ static HB_ERRCODE hb_fptPutValueFile(FPTAREAP pArea, HB_USHORT uiIndex, const ch
    pField = pArea->area.lpFields + uiIndex - 1;
 
    if( pArea->fHasMemo && pArea->pMemoFile &&
-       ( pField->uiType == HB_FT_MEMO ||
-         pField->uiType == HB_FT_IMAGE ||
-         pField->uiType == HB_FT_BLOB ||
-         pField->uiType == HB_FT_OLE ||
-         ( pField->uiType == HB_FT_ANY && pField->uiLen >= 6 ) ) ) {
+       ( pField->uiType == Harbour::DB::Field::MEMO ||
+         pField->uiType == Harbour::DB::Field::IMAGE ||
+         pField->uiType == Harbour::DB::Field::BLOB ||
+         pField->uiType == Harbour::DB::Field::OLE ||
+         ( pField->uiType == Harbour::DB::Field::ANY && pField->uiLen >= 6 ) ) ) {
       HB_BOOL bDeleted;
       PHB_FILE pFile;
 
@@ -3764,7 +3764,7 @@ static HB_ERRCODE hb_fptPutValueFile(FPTAREAP pArea, HB_USHORT uiIndex, const ch
       pFile = hb_fileExtOpen(szFile, nullptr, FO_READ | FO_DENYNONE | FXO_DEFAULTS | FXO_SHARELOCK, nullptr, nullptr);
       if( pFile == nullptr ) {
          errCode = EDBF_OPEN_DBF;
-      } else if( pField->uiType == HB_FT_ANY ) {
+      } else if( pField->uiType == Harbour::DB::Field::ANY ) {
          HB_BYTE * pAlloc;
          HB_ULONG ulSize;
          HB_FOFFSET size = hb_fileSize(pFile);
@@ -3844,10 +3844,10 @@ static HB_ERRCODE hb_fptDoPackRec(FPTAREAP pArea)
    for( HB_USHORT uiField = 0; uiField < pArea->area.uiFieldCount; ++uiField ) {
       LPFIELD pField = pArea->area.lpFields + uiField;
 
-      if( pField->uiType == HB_FT_MEMO ||
-          pField->uiType == HB_FT_IMAGE ||
-          pField->uiType == HB_FT_BLOB ||
-          pField->uiType == HB_FT_OLE ) {
+      if( pField->uiType == Harbour::DB::Field::MEMO ||
+          pField->uiType == Harbour::DB::Field::IMAGE ||
+          pField->uiType == Harbour::DB::Field::BLOB ||
+          pField->uiType == Harbour::DB::Field::OLE ) {
          errCode = hb_dbfGetMemoData(static_cast<DBFAREAP>(pArea), uiField, &ulBlock, &ulSize, &ulType);
          if( errCode == HB_SUCCESS && ulBlock != 0 ) {
             /* Buffer is hot? */
@@ -3882,7 +3882,7 @@ static HB_ERRCODE hb_fptDoPackRec(FPTAREAP pArea)
             }
          }
       }
-      else if( pField->uiType == HB_FT_ANY && pField->uiLen >= 6 ) {
+      else if( pField->uiType == Harbour::DB::Field::ANY && pField->uiLen >= 6 ) {
          HB_BYTE * pFieldBuf = pArea->pRecord + pArea->pFieldOffset[uiField];
          HB_BYTE buffer[4];
 
@@ -4373,10 +4373,10 @@ static HB_ERRCODE hb_fptFieldInfo(FPTAREAP pArea, HB_USHORT uiIndex, HB_USHORT u
    pField = &pArea->area.lpFields[uiIndex - 1];
 
    if( pArea->fHasMemo && pArea->pMemoFile &&
-       ( pField->uiType == HB_FT_MEMO ||
-         pField->uiType == HB_FT_IMAGE ||
-         pField->uiType == HB_FT_BLOB ||
-         pField->uiType == HB_FT_OLE ) ) {
+       ( pField->uiType == Harbour::DB::Field::MEMO ||
+         pField->uiType == Harbour::DB::Field::IMAGE ||
+         pField->uiType == Harbour::DB::Field::BLOB ||
+         pField->uiType == Harbour::DB::Field::OLE ) ) {
       HB_ULONG ulBlock, ulSize, ulType;
       HB_BOOL bDeleted;
 

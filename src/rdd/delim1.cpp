@@ -189,8 +189,8 @@ static HB_SIZE hb_delimEncodeBuffer(DELIMAREAP pArea)
       }
 
       switch( pField->uiType ) {
-         case HB_FT_STRING:
-         case HB_FT_TIMESTAMP:
+         case Harbour::DB::Field::STRING:
+         case Harbour::DB::Field::TIMESTAMP:
             uiLen = pField->uiLen;
             while( uiLen && pFieldBuf[uiLen - 1] == ' ' ) {
                --uiLen;
@@ -206,11 +206,11 @@ static HB_SIZE hb_delimEncodeBuffer(DELIMAREAP pArea)
             }
             break;
 
-         case HB_FT_LOGICAL:
+         case Harbour::DB::Field::LOGICAL:
             pBuffer[nSize++] = (*pFieldBuf == 'T' || *pFieldBuf == 't' || *pFieldBuf == 'Y' || *pFieldBuf == 'y') ? 'T' : 'F';
             break;
 
-         case HB_FT_DATE:
+         case Harbour::DB::Field::DATE:
             uiLen = 0;
             while( uiLen < 8 && pFieldBuf[uiLen] == ' ' ) {
                ++uiLen;
@@ -221,7 +221,7 @@ static HB_SIZE hb_delimEncodeBuffer(DELIMAREAP pArea)
             }
             break;
 
-         case HB_FT_LONG:
+         case Harbour::DB::Field::LONG:
             uiLen = 0;
             while( uiLen < pField->uiLen && pFieldBuf[uiLen] == ' ' ) {
                ++uiLen;
@@ -239,7 +239,7 @@ static HB_SIZE hb_delimEncodeBuffer(DELIMAREAP pArea)
             }
             break;
 
-         case HB_FT_MEMO:
+         case Harbour::DB::Field::MEMO:
          default:
             if( nSize ) {
                --nSize;
@@ -330,7 +330,7 @@ static HB_ERRCODE hb_delimReadRecord(DELIMAREAP pArea)
       LPFIELD pField = pArea->area.lpFields + uiField;
       HB_USHORT uiType = pField->uiType;
 
-      if( uiType == HB_FT_STRING || uiType == HB_FT_LOGICAL || uiType == HB_FT_DATE || uiType == HB_FT_TIMESTAMP || uiType == HB_FT_LONG ) {
+      if( uiType == Harbour::DB::Field::STRING || uiType == Harbour::DB::Field::LOGICAL || uiType == Harbour::DB::Field::DATE || uiType == Harbour::DB::Field::TIMESTAMP || uiType == Harbour::DB::Field::LONG ) {
          HB_USHORT uiLen = pField->uiLen, uiSize = 0;
          HB_BYTE * pFieldBuf = pArea->pRecord + pArea->pFieldOffset[uiField], buffer[256];
          char cStop;
@@ -358,7 +358,7 @@ static HB_ERRCODE hb_delimReadRecord(DELIMAREAP pArea)
           * can be terminated only with valid stop character when
           * other fields also by length
           */
-         if( pField->uiType == HB_FT_STRING || (pField->uiType == HB_FT_TIMESTAMP && cStop == pArea->cDelim) ) {
+         if( pField->uiType == Harbour::DB::Field::STRING || (pField->uiType == Harbour::DB::Field::TIMESTAMP && cStop == pArea->cDelim) ) {
             while( ch >= 0 && ch != cStop ) {
                if( uiSize < uiLen ) {
                   pFieldBuf[uiSize++] = static_cast<HB_BYTE>(ch);
@@ -374,13 +374,13 @@ static HB_ERRCODE hb_delimReadRecord(DELIMAREAP pArea)
             }
             buffer[uiSize] = '\0';
 
-            if( pField->uiType == HB_FT_LOGICAL ) {
+            if( pField->uiType == Harbour::DB::Field::LOGICAL ) {
                *pFieldBuf = (*buffer == 'T' || *buffer == 't' || *buffer == 'Y' || *buffer == 'y') ? 'T' : 'F';
-            } else if( pField->uiType == HB_FT_DATE ) {
+            } else if( pField->uiType == Harbour::DB::Field::DATE ) {
                if( uiSize == 8 && hb_dateEncStr(reinterpret_cast<char*>(buffer)) != 0 ) {
                   memcpy(pFieldBuf, buffer, 8);
                }
-            } else if( pField->uiType == HB_FT_TIMESTAMP ) {
+            } else if( pField->uiType == Harbour::DB::Field::TIMESTAMP ) {
                memcpy(pFieldBuf, buffer, uiSize);
                if( uiSize < uiLen ) {
                   memset(pFieldBuf + uiSize, 0, uiLen - uiSize);
@@ -687,7 +687,7 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
 
    pField = pArea->area.lpFields + uiIndex;
    switch( pField->uiType ) {
-      case HB_FT_STRING:
+      case Harbour::DB::Field::STRING:
          if( (pField->uiFlags & HB_FF_BINARY) == 0 ) {
             HB_SIZE nLen = pField->uiLen;
             char * pszVal = hb_cdpnDup(reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], &nLen, pArea->area.cdPage, hb_vmCDP());
@@ -697,7 +697,7 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          }
          break;
 
-      case HB_FT_LOGICAL:
+      case Harbour::DB::Field::LOGICAL:
          switch( pArea->pRecord[pArea->pFieldOffset[uiIndex]] ) {
             case 'T':
             case 't':
@@ -711,11 +711,11 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          }
          break;
 
-      case HB_FT_DATE:
+      case Harbour::DB::Field::DATE:
          hb_itemPutDS(pItem, reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex]);
          break;
 
-      case HB_FT_TIMESTAMP:
+      case Harbour::DB::Field::TIMESTAMP:
       {
          long lJulian, lMilliSec;
          HB_BYTE * pFieldPtr = pArea->pRecord + pArea->pFieldOffset[uiIndex], bChar;
@@ -728,7 +728,7 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          break;
       }
 
-      case HB_FT_LONG:
+      case Harbour::DB::Field::LONG:
       {
          HB_MAXINT lVal;
          double dVal;
@@ -746,11 +746,11 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          break;
       }
 
-      case HB_FT_MEMO:
+      case Harbour::DB::Field::MEMO:
          hb_itemPutC(pItem, nullptr);
          break;
 
-      case HB_FT_NONE:
+      case Harbour::DB::Field::NONE:
          hb_itemClear(pItem);
          break;
 
@@ -797,9 +797,9 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
 
    HB_ERRCODE errCode = HB_SUCCESS;
    pField = pArea->area.lpFields + uiIndex;
-   if( pField->uiType != HB_FT_MEMO && pField->uiType != HB_FT_NONE ) {
+   if( pField->uiType != Harbour::DB::Field::MEMO && pField->uiType != Harbour::DB::Field::NONE ) {
       if( HB_IS_MEMO(pItem) || HB_IS_STRING(pItem) ) {
-         if( pField->uiType == HB_FT_STRING ) {
+         if( pField->uiType == Harbour::DB::Field::STRING ) {
             if( (pField->uiFlags & HB_FF_BINARY) == 0 ) {
                nSize = pField->uiLen;
                hb_cdpnDup2(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem),
@@ -819,10 +819,10 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
             errCode = EDBF_DATATYPE;
          }
       } else if( HB_IS_DATETIME(pItem) ) {
-         if( pField->uiType == HB_FT_DATE ) {
+         if( pField->uiType == Harbour::DB::Field::DATE ) {
             hb_itemGetDS(pItem, szBuffer);
             memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], szBuffer, 8);
-         } else if( pField->uiType == HB_FT_TIMESTAMP && (pField->uiLen == 12 || pField->uiLen == 23) ) {
+         } else if( pField->uiType == Harbour::DB::Field::TIMESTAMP && (pField->uiLen == 12 || pField->uiLen == 23) ) {
             long lDate, lTime;
             hb_itemGetTDT(pItem, &lDate, &lTime);
             if( pField->uiLen == 12 ) {
@@ -835,7 +835,7 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
             errCode = EDBF_DATATYPE;
          }
       } else if( HB_IS_NUMBER(pItem) ) {
-         if( pField->uiType == HB_FT_LONG ) {
+         if( pField->uiType == Harbour::DB::Field::LONG ) {
             if( hb_itemStrBuf(szBuffer, pItem, pField->uiLen, pField->uiDec) ) {
                memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], szBuffer, pField->uiLen);
             } else {
@@ -846,7 +846,7 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
             errCode = EDBF_DATATYPE;
          }
       } else if( HB_IS_LOGICAL(pItem) ) {
-         if( pField->uiType == HB_FT_LOGICAL ) {
+         if( pField->uiType == Harbour::DB::Field::LOGICAL ) {
             pArea->pRecord[pArea->pFieldOffset[uiIndex]] = hb_itemGetL(pItem) ? 'T' : 'F';
          } else {
             errCode = EDBF_DATATYPE;
@@ -1142,52 +1142,52 @@ static HB_ERRCODE hb_delimAddField(DELIMAREAP pArea, LPDBFIELDINFO pFieldInfo)
    HB_USHORT uiDelim = 0;
 
    switch( pFieldInfo->uiType ) {
-      case HB_FT_STRING:
+      case Harbour::DB::Field::STRING:
          uiDelim = 2;
          break;
 
-      case HB_FT_MEMO:
-      case HB_FT_IMAGE:
-      case HB_FT_BLOB:
-      case HB_FT_OLE:
-         pFieldInfo->uiType = HB_FT_MEMO;
+      case Harbour::DB::Field::MEMO:
+      case Harbour::DB::Field::IMAGE:
+      case Harbour::DB::Field::BLOB:
+      case Harbour::DB::Field::OLE:
+         pFieldInfo->uiType = Harbour::DB::Field::MEMO;
          pFieldInfo->uiLen = 0;
          pArea->fTransRec = false;
          break;
 
-      case HB_FT_ANY:
+      case Harbour::DB::Field::ANY:
          if( pFieldInfo->uiLen == 3 ) {
-            pFieldInfo->uiType = HB_FT_DATE;
+            pFieldInfo->uiType = Harbour::DB::Field::DATE;
             pFieldInfo->uiLen = 8;
          } else if( pFieldInfo->uiLen < 6 ) {
-            pFieldInfo->uiType = HB_FT_LONG;
+            pFieldInfo->uiType = Harbour::DB::Field::LONG;
             pFieldInfo->uiLen = s_uiNumLength[pFieldInfo->uiLen];
          } else {
-            pFieldInfo->uiType = HB_FT_MEMO;
+            pFieldInfo->uiType = Harbour::DB::Field::MEMO;
             pFieldInfo->uiLen = 0;
          }
          pArea->fTransRec = false;
          break;
 
-      case HB_FT_DATE:
+      case Harbour::DB::Field::DATE:
          if( pFieldInfo->uiLen != 8 ) {
             pFieldInfo->uiLen = 8;
             pArea->fTransRec = false;
          }
          break;
 
-      case HB_FT_LONG:
+      case Harbour::DB::Field::LONG:
          break;
 
-      case HB_FT_FLOAT:
-         pFieldInfo->uiType = HB_FT_LONG;
+      case Harbour::DB::Field::FLOAT:
+         pFieldInfo->uiType = Harbour::DB::Field::LONG;
          break;
 
-      case HB_FT_INTEGER:
-      case HB_FT_CURRENCY:
-      case HB_FT_ROWVER:
-      case HB_FT_AUTOINC:
-         pFieldInfo->uiType = HB_FT_LONG;
+      case Harbour::DB::Field::INTEGER:
+      case Harbour::DB::Field::CURRENCY:
+      case Harbour::DB::Field::ROWVER:
+      case Harbour::DB::Field::AUTOINC:
+         pFieldInfo->uiType = Harbour::DB::Field::LONG;
          pFieldInfo->uiLen = s_uiNumLength[pFieldInfo->uiLen];
          if( pFieldInfo->uiDec ) {
             pFieldInfo->uiLen++;
@@ -1195,43 +1195,43 @@ static HB_ERRCODE hb_delimAddField(DELIMAREAP pArea, LPDBFIELDINFO pFieldInfo)
          pArea->fTransRec = false;
          break;
 
-      case HB_FT_DOUBLE:
-      case HB_FT_CURDOUBLE:
-         pFieldInfo->uiType = HB_FT_LONG;
+      case Harbour::DB::Field::DOUBLE:
+      case Harbour::DB::Field::CURDOUBLE:
+         pFieldInfo->uiType = Harbour::DB::Field::LONG;
          pFieldInfo->uiLen = 20;
          pArea->fTransRec = false;
          break;
 
-      case HB_FT_VARLENGTH:
-         pFieldInfo->uiType = HB_FT_STRING;
+      case Harbour::DB::Field::VARLENGTH:
+         pFieldInfo->uiType = Harbour::DB::Field::STRING;
          pArea->fTransRec = false;
          uiDelim = 2;
          break;
 
-      case HB_FT_LOGICAL:
+      case Harbour::DB::Field::LOGICAL:
          if( pFieldInfo->uiLen != 1 ) {
             pFieldInfo->uiLen = 1;
             pArea->fTransRec = false;
          }
          break;
 
-      case HB_FT_TIME:
-         pFieldInfo->uiType = HB_FT_TIMESTAMP;
+      case Harbour::DB::Field::TIME:
+         pFieldInfo->uiType = Harbour::DB::Field::TIMESTAMP;
          pFieldInfo->uiLen = 12;
          pArea->fTransRec = false;
          uiDelim = 2;
          break;
 
-      case HB_FT_TIMESTAMP:
-      case HB_FT_MODTIME:
-         pFieldInfo->uiType = HB_FT_TIMESTAMP;
+      case Harbour::DB::Field::TIMESTAMP:
+      case Harbour::DB::Field::MODTIME:
+         pFieldInfo->uiType = Harbour::DB::Field::TIMESTAMP;
          pFieldInfo->uiLen = 23;
          pArea->fTransRec = false;
          uiDelim = 2;
          break;
 
       default:
-         pFieldInfo->uiType = HB_FT_NONE;
+         pFieldInfo->uiType = Harbour::DB::Field::NONE;
          pFieldInfo->uiLen = 0;
          pArea->fTransRec = false;
          break;

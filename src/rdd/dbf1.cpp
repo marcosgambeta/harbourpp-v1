@@ -160,18 +160,18 @@ static void hb_dbfRowVerSet(DBFAREAP pArea, HB_USHORT uiField, HB_MAXINT nValue)
 
 static HB_BOOL hb_dbfIsAutoIncField(LPFIELD pField)
 {
-   if( pField->uiType == HB_FT_AUTOINC ) {
+   if( pField->uiType == Harbour::DB::Field::AUTOINC ) {
       return pField->uiLen - pField->uiDec > 4 ? HB_AUTOINC_LONG : HB_AUTOINC_STD;
-   } else if( pField->uiType == HB_FT_ROWVER ) {
+   } else if( pField->uiType == Harbour::DB::Field::ROWVER ) {
       return HB_AUTOINC_LONG;
    } else if( (pField->uiFlags & HB_FF_AUTOINC) != 0 ) {
       switch( pField->uiType ) {
-         case HB_FT_DOUBLE:
+         case Harbour::DB::Field::DOUBLE:
             return HB_AUTOINC_LONG;
-         case HB_FT_LONG:
-         case HB_FT_FLOAT:
+         case Harbour::DB::Field::LONG:
+         case Harbour::DB::Field::FLOAT:
             return pField->uiLen - ( pField->uiDec ? pField->uiDec + 1 : 0 ) > 9 ? HB_AUTOINC_LONG : HB_AUTOINC_STD;
-         case HB_FT_INTEGER:
+         case Harbour::DB::Field::INTEGER:
             return pField->uiLen - pField->uiDec > 4 ? HB_AUTOINC_LONG : HB_AUTOINC_STD;
       }
    }
@@ -286,7 +286,7 @@ void hb_dbfTransCheckCounters(LPDBTRANSINFO lpdbTransInfo)
          HB_USHORT uiField = lpdbTransInfo->lpTransItems[uiCount].uiDest;
          LPFIELD pField = lpdbTransInfo->lpaDest->lpFields + uiField - 1;
 
-         if( hb_dbfIsAutoIncField(pField) == HB_AUTOINC_NONE && pField->uiType != HB_FT_MODTIME ) {
+         if( hb_dbfIsAutoIncField(pField) == HB_AUTOINC_NONE && pField->uiType != Harbour::DB::Field::MODTIME ) {
             if( uiDest != uiCount ) {
                lpdbTransInfo->lpTransItems[uiDest].uiSource =
                lpdbTransInfo->lpTransItems[uiCount].uiSource;
@@ -312,7 +312,7 @@ static void hb_dbfUpdateStampFields(DBFAREAP pArea)
 
    for( uiCount = 0, pField = pArea->area.lpFields; uiCount < pArea->area.uiFieldCount; uiCount++, pField++ ) {
       switch( pField->uiType ) {
-         case HB_FT_MODTIME:
+         case Harbour::DB::Field::MODTIME:
          {
             HB_BYTE * pPtr = pArea->pRecord + pArea->pFieldOffset[uiCount];
             if( !pArea->fTransRec || HB_GET_LE_UINT64(pPtr) == 0 ) {
@@ -325,7 +325,7 @@ static void hb_dbfUpdateStampFields(DBFAREAP pArea)
             }
             break;
          }
-         case HB_FT_ROWVER:
+         case Harbour::DB::Field::ROWVER:
          {
             HB_BYTE * pPtr = pArea->pRecord + pArea->pFieldOffset[uiCount];
             if( !pArea->fTransRec || HB_GET_LE_UINT64(pPtr) == 0 ) {
@@ -351,27 +351,27 @@ static void hb_dbfSetBlankRecord(DBFAREAP pArea, int iType)
       HB_USHORT uiLen = pField->uiLen;
 
       switch( pField->uiType ) {
-         case HB_FT_MEMO:
-         case HB_FT_IMAGE:
-         case HB_FT_BLOB:
-         case HB_FT_OLE:
+         case Harbour::DB::Field::MEMO:
+         case Harbour::DB::Field::IMAGE:
+         case Harbour::DB::Field::BLOB:
+         case Harbour::DB::Field::OLE:
             bNext = uiLen == 10 ? ' ' : '\0';
             break;
 
-         case HB_FT_DATE:
+         case Harbour::DB::Field::DATE:
             bNext = uiLen == 8 ? ' ' : '\0';
             break;
 
-         case HB_FT_LOGICAL:
+         case Harbour::DB::Field::LOGICAL:
             bNext = ' ';
             break;
 
-         case HB_FT_STRING:
+         case Harbour::DB::Field::STRING:
             bNext = (pField->uiFlags & HB_FF_UNICODE) != 0 ? HB_BLANK_UNISPACE : ' ';
             break;
 
-         case HB_FT_LONG:
-         case HB_FT_FLOAT:
+         case Harbour::DB::Field::LONG:
+         case Harbour::DB::Field::FLOAT:
             if( pField->uiFlags & HB_FF_AUTOINC ) {
                if( iType == HB_BLANK_APPEND ) {
                   bNext = HB_BLANK_AUTOINC;
@@ -384,7 +384,7 @@ static void hb_dbfSetBlankRecord(DBFAREAP pArea, int iType)
             bNext = ' ';
             break;
 
-         case HB_FT_AUTOINC:
+         case Harbour::DB::Field::AUTOINC:
             if( iType == HB_BLANK_APPEND ) {
                bNext = HB_BLANK_AUTOINC;
             } else if( iType == HB_BLANK_ROLLBACK ) {
@@ -394,8 +394,8 @@ static void hb_dbfSetBlankRecord(DBFAREAP pArea, int iType)
             }
             break;
 
-         case HB_FT_INTEGER:
-         case HB_FT_DOUBLE:
+         case Harbour::DB::Field::INTEGER:
+         case Harbour::DB::Field::DOUBLE:
             if( pField->uiFlags & HB_FF_AUTOINC ) {
                if( iType == HB_BLANK_APPEND ) {
                   bNext = HB_BLANK_AUTOINC;
@@ -408,7 +408,7 @@ static void hb_dbfSetBlankRecord(DBFAREAP pArea, int iType)
             bNext = '\0';
             break;
 
-         case HB_FT_VARLENGTH:
+         case Harbour::DB::Field::VARLENGTH:
             if( pField->uiFlags & HB_FF_UNICODE ) {
                uiLen = (uiLen + 1) << 1;
             }
@@ -436,7 +436,7 @@ static void hb_dbfSetBlankRecord(DBFAREAP pArea, int iType)
             }
          } else if( bNext == HB_BLANK_AUTOINC ) {
             HB_MAXINT nValue = hb_dbfNextValueGet(pArea, uiCount, true);
-            if( pField->uiType == HB_FT_INTEGER || pField->uiType == HB_FT_AUTOINC ) {
+            if( pField->uiType == Harbour::DB::Field::INTEGER || pField->uiType == Harbour::DB::Field::AUTOINC ) {
                if( pField->uiDec ) {
                   nValue = static_cast<HB_MAXINT>(hb_numDecConv(static_cast<double>(nValue), -static_cast<int>(pField->uiDec)));
                }
@@ -451,7 +451,7 @@ static void hb_dbfSetBlankRecord(DBFAREAP pArea, int iType)
                } else if( uiLen == 8 ) {
                   HB_PUT_LE_UINT64(pPtr, nValue);
                }
-            } else if( pField->uiType == HB_FT_DOUBLE ) {
+            } else if( pField->uiType == Harbour::DB::Field::DOUBLE ) {
                HB_PUT_LE_DOUBLE(pPtr, nValue);
             } else {
                HB_USHORT ui = uiLen;
@@ -1128,10 +1128,10 @@ HB_ERRCODE hb_dbfGetMemoData(DBFAREAP pArea, HB_USHORT uiIndex, HB_ULONG * pulBl
    *pulBlock = *pulSize = *pulType = 0;
 
    if( uiIndex >= pArea->area.uiFieldCount ||
-       ( pArea->area.lpFields[uiIndex].uiType != HB_FT_MEMO &&
-         pArea->area.lpFields[uiIndex].uiType != HB_FT_IMAGE &&
-         pArea->area.lpFields[uiIndex].uiType != HB_FT_BLOB &&
-         pArea->area.lpFields[uiIndex].uiType != HB_FT_OLE ) ) {
+       ( pArea->area.lpFields[uiIndex].uiType != Harbour::DB::Field::MEMO &&
+         pArea->area.lpFields[uiIndex].uiType != Harbour::DB::Field::IMAGE &&
+         pArea->area.lpFields[uiIndex].uiType != Harbour::DB::Field::BLOB &&
+         pArea->area.lpFields[uiIndex].uiType != Harbour::DB::Field::OLE ) ) {
       return HB_FAILURE;
    }
 
@@ -1184,10 +1184,10 @@ HB_ERRCODE hb_dbfSetMemoData(DBFAREAP pArea, HB_USHORT uiIndex, HB_ULONG ulBlock
 #endif
 
    if( uiIndex >= pArea->area.uiFieldCount ||
-       ( pArea->area.lpFields[uiIndex].uiType != HB_FT_MEMO &&
-         pArea->area.lpFields[uiIndex].uiType != HB_FT_IMAGE &&
-         pArea->area.lpFields[uiIndex].uiType != HB_FT_BLOB &&
-         pArea->area.lpFields[uiIndex].uiType != HB_FT_OLE ) ) {
+       ( pArea->area.lpFields[uiIndex].uiType != Harbour::DB::Field::MEMO &&
+         pArea->area.lpFields[uiIndex].uiType != Harbour::DB::Field::IMAGE &&
+         pArea->area.lpFields[uiIndex].uiType != Harbour::DB::Field::BLOB &&
+         pArea->area.lpFields[uiIndex].uiType != Harbour::DB::Field::OLE ) ) {
       return HB_FAILURE;
    }
 
@@ -1749,12 +1749,12 @@ static HB_ERRCODE hb_dbfAddField(DBFAREAP pArea, LPDBFIELDINFO pFieldInfo)
 #endif
 
    switch( pFieldInfo->uiType ) {
-      case HB_FT_IMAGE:
-      case HB_FT_BLOB:
-      case HB_FT_OLE:
+      case Harbour::DB::Field::IMAGE:
+      case Harbour::DB::Field::BLOB:
+      case Harbour::DB::Field::OLE:
          pFieldInfo->uiFlags |= HB_FF_BINARY;
          /* fallthrough */
-      case HB_FT_MEMO:
+      case Harbour::DB::Field::MEMO:
          if( pArea->bMemoType == DB_MEMO_SMT ) {
             pFieldInfo->uiLen = 10;
          }
@@ -1765,9 +1765,9 @@ static HB_ERRCODE hb_dbfAddField(DBFAREAP pArea, LPDBFIELDINFO pFieldInfo)
    pArea->pFieldOffset[pArea->area.uiFieldCount] = pArea->uiRecordLen;
    pArea->uiRecordLen += pFieldInfo->uiLen;
    if( (pFieldInfo->uiFlags & HB_FF_UNICODE) != 0 ) {
-      if( pFieldInfo->uiType == HB_FT_STRING ) {
+      if( pFieldInfo->uiType == Harbour::DB::Field::STRING ) {
          pArea->uiRecordLen += pFieldInfo->uiLen;
-      } else if( pFieldInfo->uiType == HB_FT_VARLENGTH ) {
+      } else if( pFieldInfo->uiType == Harbour::DB::Field::VARLENGTH ) {
          pArea->uiRecordLen += pFieldInfo->uiLen + 2;
       }
    }
@@ -2020,7 +2020,7 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
    fError = false;
    pField = pArea->area.lpFields + uiIndex;
    switch( pField->uiType ) {
-      case HB_FT_STRING:
+      case Harbour::DB::Field::STRING:
          nLen = pField->uiLen;
          if( (pField->uiFlags & HB_FF_UNICODE) != 0 ) {
             hb_itemPutStrLenU16(pItem, HB_CDP_ENDIAN_LITTLE, reinterpret_cast<const HB_WCHAR*>(&pArea->pRecord[pArea->pFieldOffset[uiIndex]]), nLen);
@@ -2033,7 +2033,7 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
          }
          break;
 
-      case HB_FT_VARLENGTH:
+      case Harbour::DB::Field::VARLENGTH:
          nLen = pField->uiLen;
          if( (pField->uiFlags & HB_FF_UNICODE) != 0 ) {
             nLen = HB_GET_LE_UINT16(&pArea->pRecord[pArea->pFieldOffset[uiIndex] + (nLen << 1)]);
@@ -2059,14 +2059,14 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
          }
          break;
 
-      case HB_FT_LOGICAL:
+      case Harbour::DB::Field::LOGICAL:
          hb_itemPutL(pItem, pArea->pRecord[pArea->pFieldOffset[uiIndex]] == 'T' ||
                      pArea->pRecord[pArea->pFieldOffset[uiIndex]] == 't' ||
                      pArea->pRecord[pArea->pFieldOffset[uiIndex]] == 'Y' ||
                      pArea->pRecord[pArea->pFieldOffset[uiIndex]] == 'y');
          break;
 
-      case HB_FT_DATE:
+      case Harbour::DB::Field::DATE:
          if( pField->uiLen == 3 ) {
             hb_itemPutDL(pItem, HB_GET_LE_UINT24(pArea->pRecord + pArea->pFieldOffset[uiIndex]));
          } else if( pField->uiLen == 4 ) {
@@ -2076,23 +2076,23 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
          }
          break;
 
-      case HB_FT_TIME:
+      case Harbour::DB::Field::TIME:
          if( pField->uiLen == 4 ) {
             hb_itemPutTDT(pItem, 0, HB_GET_LE_INT32(pArea->pRecord + pArea->pFieldOffset[uiIndex]));
             break;
          }
          /* fallthrough */
 
-      case HB_FT_MODTIME:
-      case HB_FT_TIMESTAMP:
+      case Harbour::DB::Field::MODTIME:
+      case Harbour::DB::Field::TIMESTAMP:
          hb_itemPutTDT(pItem, HB_GET_LE_INT32(pArea->pRecord + pArea->pFieldOffset[uiIndex]),
                                HB_GET_LE_INT32(pArea->pRecord + pArea->pFieldOffset[uiIndex] + 4));
          break;
 
-      case HB_FT_INTEGER:
-      case HB_FT_CURRENCY:
-      case HB_FT_AUTOINC:
-      case HB_FT_ROWVER:
+      case Harbour::DB::Field::INTEGER:
+      case Harbour::DB::Field::CURRENCY:
+      case Harbour::DB::Field::AUTOINC:
+      case Harbour::DB::Field::ROWVER:
          if( pField->uiDec ) {
             int iLen;
 
@@ -2152,13 +2152,13 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
          }
          break;
 
-      case HB_FT_DOUBLE:
-      case HB_FT_CURDOUBLE:
+      case Harbour::DB::Field::DOUBLE:
+      case Harbour::DB::Field::CURDOUBLE:
          hb_itemPutNDLen(pItem, HB_GET_LE_DOUBLE(pArea->pRecord + pArea->pFieldOffset[uiIndex]),
             20 - (pField->uiDec > 0 ? (pField->uiDec + 1) : 0), static_cast<int>(pField->uiDec));
          break;
 
-      case HB_FT_LONG:
+      case Harbour::DB::Field::LONG:
       {
          HB_MAXINT lVal;
          HB_BOOL fDbl;
@@ -2186,7 +2186,7 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
          }
          break;
       }
-      case HB_FT_FLOAT:
+      case Harbour::DB::Field::FLOAT:
          pszVal = reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex];
          dVal = hb_strVal(pszVal, pField->uiLen);
          nLen = pField->uiLen;
@@ -2208,7 +2208,7 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
          hb_itemPutNDLen(pItem, dVal, static_cast<int>(pField->uiLen - pField->uiDec - 1), static_cast<int>(pField->uiDec));
          break;
 
-      case HB_FT_ANY:
+      case Harbour::DB::Field::ANY:
          if( pField->uiLen == 3 ) {
             hb_itemPutDL(pItem, hb_sxPtoD(reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex]));
          } else if( pField->uiLen == 4 ) {
@@ -2218,7 +2218,7 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
          }
          break;
 
-      case HB_FT_MEMO:
+      case Harbour::DB::Field::MEMO:
       default:
          fError = true;
          break;
@@ -2450,15 +2450,15 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
 
    HB_ERRCODE errCode = HB_SUCCESS;
    pField = pArea->area.lpFields + uiIndex;
-   if( pField->uiType == HB_FT_MEMO ||
-       pField->uiType == HB_FT_IMAGE ||
-       pField->uiType == HB_FT_BLOB ||
-       pField->uiType == HB_FT_OLE ) {
+   if( pField->uiType == Harbour::DB::Field::MEMO ||
+       pField->uiType == Harbour::DB::Field::IMAGE ||
+       pField->uiType == Harbour::DB::Field::BLOB ||
+       pField->uiType == Harbour::DB::Field::OLE ) {
       errCode = EDBF_DATATYPE;
    } else {
       if( HB_IS_MEMO(pItem) || HB_IS_STRING(pItem) ) {
          nLen = pField->uiLen;
-         if( pField->uiType == HB_FT_STRING ) {
+         if( pField->uiType == Harbour::DB::Field::STRING ) {
             if( (pField->uiFlags & HB_FF_UNICODE) != 0 ) {
                HB_WCHAR * pwBuffer = reinterpret_cast<HB_WCHAR*>(&pArea->pRecord[pArea->pFieldOffset[uiIndex]]);
                nLen = hb_itemCopyStrU16(pItem, HB_CDP_ENDIAN_LITTLE, pwBuffer, nLen);
@@ -2481,7 +2481,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
                   memset(pArea->pRecord + pArea->pFieldOffset[uiIndex] + nLen, ' ', pField->uiLen - nLen);
                }
             }
-         } else if( pField->uiType == HB_FT_VARLENGTH ) {
+         } else if( pField->uiType == Harbour::DB::Field::VARLENGTH ) {
             if( (pField->uiFlags & HB_FF_UNICODE) != 0 ) {
                HB_WCHAR * pwBuffer = reinterpret_cast<HB_WCHAR*>(&pArea->pRecord[pArea->pFieldOffset[uiIndex]]);
                nLen = hb_itemCopyStrU16(pItem, HB_CDP_ENDIAN_LITTLE, pwBuffer, nLen);
@@ -2512,7 +2512,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
             errCode = EDBF_DATATYPE;
          }
       } else if( HB_IS_DATETIME(pItem) ) {
-         if( pField->uiType == HB_FT_DATE ) {
+         if( pField->uiType == Harbour::DB::Field::DATE ) {
             if( pField->uiLen == 3 ) {
                HB_PUT_LE_UINT24(pArea->pRecord + pArea->pFieldOffset[uiIndex], hb_itemGetDL(pItem));
             } else if( pField->uiLen == 4 ) {
@@ -2521,32 +2521,32 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
                hb_itemGetDS(pItem, szBuffer);
                memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], szBuffer, 8);
             }
-         } else if( pField->uiType == HB_FT_TIMESTAMP ||
-                  pField->uiType == HB_FT_TIME ||
-                  ( pField->uiType == HB_FT_MODTIME && pArea->fTransRec ) ) {
+         } else if( pField->uiType == Harbour::DB::Field::TIMESTAMP ||
+                  pField->uiType == Harbour::DB::Field::TIME ||
+                  ( pField->uiType == Harbour::DB::Field::MODTIME && pArea->fTransRec ) ) {
             long lDate, lTime;
 
             hb_itemGetTDT(pItem, &lDate, &lTime);
             ptr = pArea->pRecord + pArea->pFieldOffset[uiIndex];
-            if( pField->uiType != HB_FT_TIME ) {
+            if( pField->uiType != Harbour::DB::Field::TIME ) {
                HB_PUT_LE_UINT32(ptr, lDate);
                ptr += 4;
             }
             HB_PUT_LE_UINT32(ptr, lTime);
-         } else if( pField->uiType == HB_FT_ANY && pField->uiLen == 3 ) {
+         } else if( pField->uiType == Harbour::DB::Field::ANY && pField->uiLen == 3 ) {
             hb_sxDtoP(reinterpret_cast<char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], hb_itemGetDL(pItem));
          } else {
             errCode = EDBF_DATATYPE;
          }
       } else if( HB_IS_NUMBER(pItem) ) {
-         if( pField->uiType == HB_FT_LONG || pField->uiType == HB_FT_FLOAT ) {
+         if( pField->uiType == Harbour::DB::Field::LONG || pField->uiType == Harbour::DB::Field::FLOAT ) {
             if( hb_itemStrBuf(szBuffer, pItem, pField->uiLen, pField->uiDec) ) {
                memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], szBuffer, pField->uiLen);
             } else {
                errCode = EDBF_DATAWIDTH;
                memset(pArea->pRecord + pArea->pFieldOffset[uiIndex], '*', pField->uiLen);
             }
-         } else if( pField->uiType == HB_FT_INTEGER || (pArea->fTransRec && (pField->uiType == HB_FT_AUTOINC || pField->uiType == HB_FT_ROWVER)) ) {
+         } else if( pField->uiType == Harbour::DB::Field::INTEGER || (pArea->fTransRec && (pField->uiType == Harbour::DB::Field::AUTOINC || pField->uiType == Harbour::DB::Field::ROWVER)) ) {
             HB_MAXINT lVal;
             int iSize;
 
@@ -2605,9 +2605,9 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
                      break;
                }
             }
-         } else if( pField->uiType == HB_FT_DOUBLE ) {
+         } else if( pField->uiType == Harbour::DB::Field::DOUBLE ) {
             HB_PUT_LE_DOUBLE(pArea->pRecord + pArea->pFieldOffset[uiIndex], hb_itemGetND(pItem));
-         } else if( pField->uiType == HB_FT_ANY && pField->uiLen == 4 ) {
+         } else if( pField->uiType == Harbour::DB::Field::ANY && pField->uiLen == 4 ) {
             HB_MAXINT lVal = hb_itemGetNInt(pItem);
             if( HB_IS_DOUBLE(pItem) ? HB_DBL_LIM_INT32(hb_itemGetND(pItem)) : HB_LIM_INT32(lVal) ) {
                HB_PUT_LE_UINT32(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U32>(lVal));
@@ -2618,7 +2618,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
             errCode = EDBF_DATATYPE;
          }
       } else if( HB_IS_LOGICAL(pItem) ) {
-         if( pField->uiType == HB_FT_LOGICAL ) {
+         if( pField->uiType == Harbour::DB::Field::LOGICAL ) {
             pArea->pRecord[pArea->pFieldOffset[uiIndex]] = hb_itemGetL(pItem) ? 'T' : 'F';
          } else {
             errCode = EDBF_DATATYPE;
@@ -3007,7 +3007,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
       }
       pThisField->bFieldFlags = static_cast<HB_BYTE>(pField->uiFlags) & (HB_FF_HIDDEN | HB_FF_NULLABLE | HB_FF_BINARY | HB_FF_AUTOINC);
       switch( pField->uiType ) {
-         case HB_FT_STRING:
+         case Harbour::DB::Field::STRING:
             if( (pField->uiFlags & HB_FF_UNICODE) != 0 ) {
                pThisField->bType = '\x1A';
                if( pField->uiLen > 32767 ) {
@@ -3023,13 +3023,13 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
             pArea->uiRecordLen += uiLen;
             break;
 
-         case HB_FT_LOGICAL:
+         case Harbour::DB::Field::LOGICAL:
             pThisField->bType = 'L';
             pThisField->bLen = 1;
             pArea->uiRecordLen++;
             break;
 
-         case HB_FT_MEMO:
+         case Harbour::DB::Field::MEMO:
             pThisField->bType = (pField->uiFlags & HB_FF_UNICODE) ? '\x1C' : 'M';
             if( pField->uiLen != 4 || pArea->bMemoType == DB_MEMO_SMT ) {
                pField->uiLen = 10;
@@ -3039,7 +3039,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
             pArea->fHasMemo = true;
             break;
 
-         case HB_FT_BLOB:
+         case Harbour::DB::Field::BLOB:
             pThisField->bType = 'W';
             if( pField->uiLen != 4 || pArea->bMemoType == DB_MEMO_SMT ) {
                pField->uiLen = 10;
@@ -3050,7 +3050,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
             pArea->fHasMemo = true;
             break;
 
-         case HB_FT_IMAGE:
+         case Harbour::DB::Field::IMAGE:
             pThisField->bType = 'P';
             if( pField->uiLen != 4 || pArea->bMemoType == DB_MEMO_SMT ) {
                pField->uiLen = 10;
@@ -3061,7 +3061,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
             pArea->fHasMemo = true;
             break;
 
-         case HB_FT_OLE:
+         case Harbour::DB::Field::OLE:
             pThisField->bType = 'G';
             if( pField->uiLen != 4 || pArea->bMemoType == DB_MEMO_SMT ) {
                pField->uiLen = 10;
@@ -3072,7 +3072,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
             pArea->fHasMemo = true;
             break;
 
-         case HB_FT_ANY:
+         case Harbour::DB::Field::ANY:
             if( pArea->bTableType == DB_DBF_VFP ) {
                errSubCode = EDBF_DATATYPE;
             } else {
@@ -3090,7 +3090,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
             }
             break;
 
-         case HB_FT_DATE:
+         case Harbour::DB::Field::DATE:
             pThisField->bType = 'D';
             if( pField->uiLen == 3 || pField->uiLen == 4 ) {
                pThisField->bFieldFlags |= HB_FF_BINARY;
@@ -3101,7 +3101,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
             pArea->uiRecordLen += pField->uiLen;
             break;
 
-         case HB_FT_LONG:
+         case Harbour::DB::Field::LONG:
             pThisField->bType = 'N';
             pThisField->bLen = static_cast<HB_BYTE>(pField->uiLen);
             pThisField->bDec = static_cast<HB_BYTE>(pField->uiDec);
@@ -3111,7 +3111,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
             pArea->uiRecordLen += pField->uiLen;
             break;
 
-         case HB_FT_FLOAT:
+         case Harbour::DB::Field::FLOAT:
             pThisField->bType = 'F';
             pThisField->bLen = static_cast<HB_BYTE>(pField->uiLen);
             pThisField->bDec = static_cast<HB_BYTE>(pField->uiDec);
@@ -3121,8 +3121,8 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
             pArea->uiRecordLen += pField->uiLen;
             break;
 
-         case HB_FT_DOUBLE:
-         case HB_FT_CURDOUBLE:
+         case Harbour::DB::Field::DOUBLE:
+         case Harbour::DB::Field::CURDOUBLE:
             pThisField->bType = 'B';
             pField->uiLen = 8;
             pThisField->bLen = static_cast<HB_BYTE>(pField->uiLen);
@@ -3134,8 +3134,8 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
             pArea->uiRecordLen += pField->uiLen;
             break;
 
-         case HB_FT_INTEGER:
-         case HB_FT_CURRENCY:
+         case Harbour::DB::Field::INTEGER:
+         case Harbour::DB::Field::CURRENCY:
             pThisField->bType = (pArea->bTableType == DB_DBF_VFP && pField->uiLen == 8 && pField->uiDec == 4) ? 'Y' : 'I';
             if( (pField->uiLen > 4 && pField->uiLen != 8) || pField->uiLen == 0 ) {
                pField->uiLen = 4;
@@ -3149,7 +3149,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
             pArea->uiRecordLen += pField->uiLen;
             break;
 
-         case HB_FT_VARLENGTH:
+         case Harbour::DB::Field::VARLENGTH:
             if( pField->uiLen == 0 ) {
                pField->uiLen = 1;
             }
@@ -3176,7 +3176,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
             hb_dbfAllocNullFlag(pArea, uiCount, true);
             break;
 
-         case HB_FT_TIME:
+         case Harbour::DB::Field::TIME:
             pThisField->bType = 'T';
             pField->uiLen = 4;
             pThisField->bLen = static_cast<HB_BYTE>(pField->uiLen);
@@ -3184,7 +3184,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
             pArea->uiRecordLen += pField->uiLen;
             break;
 
-         case HB_FT_TIMESTAMP:
+         case Harbour::DB::Field::TIMESTAMP:
             pThisField->bType = pArea->bTableType == DB_DBF_VFP ? 'T' : '@';
             pField->uiLen = 8;
             pThisField->bLen = static_cast<HB_BYTE>(pField->uiLen);
@@ -3192,7 +3192,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
             pArea->uiRecordLen += pField->uiLen;
             break;
 
-         case HB_FT_MODTIME:
+         case Harbour::DB::Field::MODTIME:
             pThisField->bType = '=';
             pField->uiLen = 8;
             pThisField->bLen = static_cast<HB_BYTE>(pField->uiLen);
@@ -3201,7 +3201,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
             pArea->fModStamp = true;
             break;
 
-         case HB_FT_ROWVER:
+         case Harbour::DB::Field::ROWVER:
             pThisField->bType = '^';
             pField->uiLen = 8;
             pThisField->bLen = static_cast<HB_BYTE>(pField->uiLen);
@@ -3213,7 +3213,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
             pArea->fModStamp = true;
             break;
 
-         case HB_FT_AUTOINC:
+         case Harbour::DB::Field::AUTOINC:
             pThisField->bType = '+';
             pField->uiLen = 4;
             pThisField->bLen = static_cast<HB_BYTE>(pField->uiLen);
@@ -3790,10 +3790,10 @@ static HB_ERRCODE hb_dbfRecInfo(DBFAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInf
 
          if( pArea->fHasMemo ) {
             for( HB_USHORT uiFields = 0; uiFields < pArea->area.uiFieldCount; uiFields++ ) {
-               if( pArea->area.lpFields[uiFields].uiType == HB_FT_MEMO ||
-                   pArea->area.lpFields[uiFields].uiType == HB_FT_IMAGE ||
-                   pArea->area.lpFields[uiFields].uiType == HB_FT_BLOB ||
-                   pArea->area.lpFields[uiFields].uiType == HB_FT_OLE ) {
+               if( pArea->area.lpFields[uiFields].uiType == Harbour::DB::Field::MEMO ||
+                   pArea->area.lpFields[uiFields].uiType == Harbour::DB::Field::IMAGE ||
+                   pArea->area.lpFields[uiFields].uiType == Harbour::DB::Field::BLOB ||
+                   pArea->area.lpFields[uiFields].uiType == Harbour::DB::Field::OLE ) {
                   HB_SIZE nLen;
                   errResult = SELF_GETVALUE(&pArea->area, uiFields + 1, pInfo);
                   if( errResult != HB_SUCCESS ) {
@@ -4163,24 +4163,24 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
 
       switch( pField->bType ) {
          case 'C':
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiLen = pField->bLen + pField->bDec * 256;
             break;
 
          case 'L':
-            dbFieldInfo.uiType = HB_FT_LOGICAL;
+            dbFieldInfo.uiType = Harbour::DB::Field::LOGICAL;
             dbFieldInfo.uiLen = 1;
             break;
 
          case 'D':
-            dbFieldInfo.uiType = HB_FT_DATE;
+            dbFieldInfo.uiType = Harbour::DB::Field::DATE;
             if( dbFieldInfo.uiLen != 3 && dbFieldInfo.uiLen != 4 ) {
                dbFieldInfo.uiLen = 8;
             }
             break;
 
          case 'I':
-            dbFieldInfo.uiType = HB_FT_INTEGER;
+            dbFieldInfo.uiType = Harbour::DB::Field::INTEGER;
             if( (dbFieldInfo.uiLen > 4 && dbFieldInfo.uiLen != 8) || dbFieldInfo.uiLen == 0 ) {
                dbFieldInfo.uiLen = 4;
             }
@@ -4188,7 +4188,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
             break;
 
          case 'Y':
-            dbFieldInfo.uiType = HB_FT_CURRENCY;
+            dbFieldInfo.uiType = Harbour::DB::Field::CURRENCY;
             if( (dbFieldInfo.uiLen > 4 && dbFieldInfo.uiLen != 8) || dbFieldInfo.uiLen == 0 ) {
                dbFieldInfo.uiLen = 8;
             }
@@ -4197,12 +4197,12 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
 
          case '2':
          case '4':
-            dbFieldInfo.uiType = HB_FT_INTEGER;
+            dbFieldInfo.uiType = Harbour::DB::Field::INTEGER;
             dbFieldInfo.uiLen = pField->bType - '0';
             break;
 
          case 'N':
-            dbFieldInfo.uiType = HB_FT_LONG;
+            dbFieldInfo.uiType = Harbour::DB::Field::LONG;
             dbFieldInfo.uiDec = pField->bDec;
             /* dBase documentation defines maximum numeric field size as 20
              * but Clipper allows to create longer fields so I removed this
@@ -4216,14 +4216,14 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
             break;
 
          case 'F':
-            dbFieldInfo.uiType = HB_FT_FLOAT;
+            dbFieldInfo.uiType = Harbour::DB::Field::FLOAT;
             dbFieldInfo.uiDec = pField->bDec;
             /* See note above */
             break;
 
          case '8':
          case 'B':
-            dbFieldInfo.uiType = HB_FT_DOUBLE;
+            dbFieldInfo.uiType = Harbour::DB::Field::DOUBLE;
             dbFieldInfo.uiDec = pField->bDec;
             if( dbFieldInfo.uiLen != 8 ) {
                errCode = HB_FAILURE;
@@ -4234,9 +4234,9 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
 
          case 'T':
             if( dbFieldInfo.uiLen == 8 ) {
-               dbFieldInfo.uiType = HB_FT_TIMESTAMP;
+               dbFieldInfo.uiType = Harbour::DB::Field::TIMESTAMP;
             } else if( dbFieldInfo.uiLen == 4 ) {
-               dbFieldInfo.uiType = HB_FT_TIME;
+               dbFieldInfo.uiType = Harbour::DB::Field::TIME;
             } else {
                errCode = HB_FAILURE;
             }
@@ -4244,14 +4244,14 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
 
          /* types which are not supported by VM - mapped to different ones */
          case '@':
-            dbFieldInfo.uiType = HB_FT_TIMESTAMP;
+            dbFieldInfo.uiType = Harbour::DB::Field::TIMESTAMP;
             if( dbFieldInfo.uiLen != 8 ) {
                errCode = HB_FAILURE;
             }
             break;
 
          case '=':
-            dbFieldInfo.uiType = HB_FT_MODTIME;
+            dbFieldInfo.uiType = Harbour::DB::Field::MODTIME;
             if( dbFieldInfo.uiLen != 8 ) {
                errCode = HB_FAILURE;
             }
@@ -4259,7 +4259,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
             break;
 
          case '^':
-            dbFieldInfo.uiType = HB_FT_ROWVER;
+            dbFieldInfo.uiType = Harbour::DB::Field::ROWVER;
             if( dbFieldInfo.uiLen != 8 ) {
                errCode = HB_FAILURE;
             }
@@ -4267,7 +4267,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
             break;
 
          case '+':
-            dbFieldInfo.uiType = HB_FT_AUTOINC;
+            dbFieldInfo.uiType = Harbour::DB::Field::AUTOINC;
             if( dbFieldInfo.uiLen != 4 ) {
                errCode = HB_FAILURE;
             }
@@ -4275,7 +4275,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
             break;
 
          case 'Q':
-            dbFieldInfo.uiType = HB_FT_VARLENGTH;
+            dbFieldInfo.uiType = Harbour::DB::Field::VARLENGTH;
             if( pArea->bTableType == DB_DBF_VFP ) {
                dbFieldInfo.uiFlags |= HB_FF_BINARY;
             } else {
@@ -4286,13 +4286,13 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
 
          case 'V':
             if( pArea->bTableType == DB_DBF_VFP ) {
-               dbFieldInfo.uiType = HB_FT_VARLENGTH;
+               dbFieldInfo.uiType = Harbour::DB::Field::VARLENGTH;
                #if 0
                dbFieldInfo.uiFlags &= ~HB_FF_BINARY;
                #endif
                hb_dbfAllocNullFlag(pArea, uiCount, true);
             } else {
-               dbFieldInfo.uiType = HB_FT_ANY;
+               dbFieldInfo.uiType = Harbour::DB::Field::ANY;
                if( dbFieldInfo.uiLen >= 6 ) {
                   pArea->uiMemoVersion = DB_MEMOVER_SIX;
                   pArea->fHasMemo = true;
@@ -4301,30 +4301,30 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
             break;
 
          case 'M':
-            dbFieldInfo.uiType = HB_FT_MEMO;
+            dbFieldInfo.uiType = Harbour::DB::Field::MEMO;
             pArea->fHasMemo = true;
             break;
 
          case 'P':
-            dbFieldInfo.uiType = HB_FT_IMAGE;
+            dbFieldInfo.uiType = Harbour::DB::Field::IMAGE;
             dbFieldInfo.uiFlags |= HB_FF_BINARY;
             pArea->fHasMemo = true;
             break;
 
          case 'W':
-            dbFieldInfo.uiType = HB_FT_BLOB;
+            dbFieldInfo.uiType = Harbour::DB::Field::BLOB;
             dbFieldInfo.uiFlags |= HB_FF_BINARY;
             pArea->fHasMemo = true;
             break;
 
          case 'G':
-            dbFieldInfo.uiType = HB_FT_OLE;
+            dbFieldInfo.uiType = Harbour::DB::Field::OLE;
             dbFieldInfo.uiFlags |= HB_FF_BINARY;
             pArea->fHasMemo = true;
             break;
 
          case '\x1A':
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiFlags |= HB_FF_UNICODE;
             uiLen = pField->bLen + pField->bDec * 256;
             if( uiLen & 1 ) {
@@ -4334,7 +4334,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
             break;
 
          case '\x1B':
-            dbFieldInfo.uiType = HB_FT_VARLENGTH;
+            dbFieldInfo.uiType = Harbour::DB::Field::VARLENGTH;
             dbFieldInfo.uiFlags |= HB_FF_UNICODE;
             uiLen = pField->bLen + pField->bDec * 256;
             if( uiLen & 1 || uiLen < 2 ) {
@@ -4344,7 +4344,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
             break;
 
          case '\x1C':
-            dbFieldInfo.uiType = HB_FT_MEMO;
+            dbFieldInfo.uiType = Harbour::DB::Field::MEMO;
             dbFieldInfo.uiFlags |= HB_FF_UNICODE;
             pArea->fHasMemo = true;
             break;
@@ -4701,7 +4701,7 @@ static HB_ERRCODE hb_dbfSortInit(LPDBSORTREC pSortRec, LPDBSORTINFO pSortInfo)
       LPFIELD pField = pSortInfo->dbtri.lpaSource->lpFields + pSortInfo->lpdbsItem[uiCount].uiField - 1;
 
       switch( pField->uiType ) {
-         case HB_FT_ANY:
+         case Harbour::DB::Field::ANY:
             if( pField->uiLen == 4 ) {
                pSortInfo->lpdbsItem[uiCount].uiFlags |= SF_LONG;
                break;
@@ -4710,40 +4710,40 @@ static HB_ERRCODE hb_dbfSortInit(LPDBSORTREC pSortRec, LPDBSORTINFO pSortInfo)
                break;
             }
             /* fallthrough */
-         case HB_FT_MEMO:
-         case HB_FT_IMAGE:
-         case HB_FT_BLOB:
-         case HB_FT_OLE:
+         case Harbour::DB::Field::MEMO:
+         case Harbour::DB::Field::IMAGE:
+         case Harbour::DB::Field::BLOB:
+         case Harbour::DB::Field::OLE:
             pSortInfo->lpdbsItem[uiCount].uiField = 0;
             break;
 
-         case HB_FT_INTEGER:
-         case HB_FT_CURRENCY:
-         case HB_FT_AUTOINC:
-         case HB_FT_ROWVER:
+         case Harbour::DB::Field::INTEGER:
+         case Harbour::DB::Field::CURRENCY:
+         case Harbour::DB::Field::AUTOINC:
+         case Harbour::DB::Field::ROWVER:
             pSortInfo->lpdbsItem[uiCount].uiFlags |= pField->uiDec == 0 ? SF_LONG : SF_DOUBLE;
             break;
-         case HB_FT_LONG:
+         case Harbour::DB::Field::LONG:
             if( pField->uiDec == 0 && pField->uiLen < 19 ) {
                pSortInfo->lpdbsItem[uiCount].uiFlags |= SF_LONG;
                break;
             }
             /* fallthrough */
-         case HB_FT_FLOAT:
-         case HB_FT_DOUBLE:
-         case HB_FT_CURDOUBLE:
+         case Harbour::DB::Field::FLOAT:
+         case Harbour::DB::Field::DOUBLE:
+         case Harbour::DB::Field::CURDOUBLE:
             pSortInfo->lpdbsItem[uiCount].uiFlags |= SF_DOUBLE;
             break;
 
-         case HB_FT_STRING:
-         case HB_FT_VARLENGTH:
+         case Harbour::DB::Field::STRING:
+         case Harbour::DB::Field::VARLENGTH:
             break;
 
-         case HB_FT_DATE:
-         case HB_FT_TIME:
-         case HB_FT_MODTIME:
-         case HB_FT_TIMESTAMP:
-         case HB_FT_LOGICAL:
+         case Harbour::DB::Field::DATE:
+         case Harbour::DB::Field::TIME:
+         case Harbour::DB::Field::MODTIME:
+         case Harbour::DB::Field::TIMESTAMP:
+         case Harbour::DB::Field::LOGICAL:
             break;
 
          default:
@@ -4751,8 +4751,8 @@ static HB_ERRCODE hb_dbfSortInit(LPDBSORTREC pSortRec, LPDBSORTINFO pSortInfo)
             break;
       }
       switch( pField->uiType ) {
-         case HB_FT_STRING:
-         case HB_FT_VARLENGTH:
+         case Harbour::DB::Field::STRING:
+         case Harbour::DB::Field::VARLENGTH:
             break;
          default:
             pSortInfo->lpdbsItem[uiCount].uiFlags &= ~SF_CASE;
@@ -5313,7 +5313,7 @@ static HB_ERRCODE hb_dbfZap(DBFAREAP pArea)
 
    /* reset auto-increment and row version fields */
    for( HB_USHORT uiField = 0; uiField < pArea->area.uiFieldCount; uiField++ ) {
-      if( pArea->area.lpFields[uiField].uiType == HB_FT_ROWVER ) {
+      if( pArea->area.lpFields[uiField].uiType == Harbour::DB::Field::ROWVER ) {
          hb_dbfRowVerSet(pArea, uiField, 0);
       } else if( hb_dbfIsAutoIncField(&pArea->area.lpFields[uiField]) != HB_AUTOINC_NONE ) {
          hb_dbfNextValueSet(pArea, uiField, 1);
@@ -5727,7 +5727,7 @@ static HB_ERRCODE hb_dbfGetValueFile(DBFAREAP pArea, HB_USHORT uiIndex, const ch
    }
 
    pField = pArea->area.lpFields + uiIndex;
-   if( pField->uiType == HB_FT_STRING ) {
+   if( pField->uiType == Harbour::DB::Field::STRING ) {
       PHB_FILE pFile;
 
       pFile = hb_fileExtOpen(szFile, nullptr, FO_WRITE | FO_EXCLUSIVE |
@@ -5810,7 +5810,7 @@ static HB_ERRCODE hb_dbfPutValueFile(DBFAREAP pArea, HB_USHORT uiIndex, const ch
    }
 
    pField = pArea->area.lpFields + uiIndex;
-   if( pField->uiType == HB_FT_STRING ) {
+   if( pField->uiType == Harbour::DB::Field::STRING ) {
       PHB_FILE pFile;
 
       pFile = hb_fileExtOpen(szFile, nullptr, FO_READ | FO_DENYNONE |
