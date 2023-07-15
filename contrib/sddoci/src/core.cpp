@@ -378,11 +378,11 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
       switch( uiDataType )
       {
          case OCI_CDT_TEXT:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             break;
 
          case OCI_CDT_NUMERIC:
-            dbFieldInfo.uiType = HB_FT_LONG;
+            dbFieldInfo.uiType = Harbour::DB::Field::LONG;
             /* For plain 'NUMERIC', precision is zero and scale is -127 */
             if( OCI_ColumnGetPrecision( col ) > 0 )
                dbFieldInfo.uiLen = static_cast<HB_USHORT>(OCI_ColumnGetPrecision(col));
@@ -393,17 +393,17 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
             break;
 
          case OCI_CDT_LONG:
-            dbFieldInfo.uiType = HB_FT_VARLENGTH;
+            dbFieldInfo.uiType = Harbour::DB::Field::VARLENGTH;
             break;
 
          case OCI_CDT_RAW:
-            dbFieldInfo.uiType = HB_FT_BLOB;
+            dbFieldInfo.uiType = Harbour::DB::Field::BLOB;
             break;
 
          case OCI_CDT_DATETIME:
          case OCI_CDT_TIMESTAMP:
          case OCI_CDT_INTERVAL:
-            dbFieldInfo.uiType = HB_FT_TIME;
+            dbFieldInfo.uiType = Harbour::DB::Field::TIME;
             break;
 
          default:
@@ -419,7 +419,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
       {
          switch( dbFieldInfo.uiType )
          {
-            case HB_FT_STRING:
+            case Harbour::DB::Field::STRING:
             {
                char * pStr = static_cast<char*>(hb_xgrab(static_cast<HB_SIZE>(dbFieldInfo.uiLen) + 1));
                memset(pStr, ' ', dbFieldInfo.uiLen);
@@ -428,37 +428,37 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
                hb_itemPutCLPtr(pItem, pStr, dbFieldInfo.uiLen);
                break;
             }
-            case HB_FT_MEMO:
-            case HB_FT_VARLENGTH:
-            case HB_FT_BLOB:
+            case Harbour::DB::Field::MEMO:
+            case Harbour::DB::Field::VARLENGTH:
+            case Harbour::DB::Field::BLOB:
                hb_itemPutC(pItem, nullptr);
                break;
 
-            case HB_FT_INTEGER:
+            case Harbour::DB::Field::INTEGER:
                hb_itemPutNI(pItem, 0);
                break;
 
-            case HB_FT_LONG:
+            case Harbour::DB::Field::LONG:
                if( dbFieldInfo.uiDec == 0 )
                   hb_itemPutNLLen(pItem, 0, dbFieldInfo.uiLen);
                else
                   hb_itemPutNDLen(pItem, 0.0, dbFieldInfo.uiLen, dbFieldInfo.uiDec);
                break;
 
-            case HB_FT_DOUBLE:
+            case Harbour::DB::Field::DOUBLE:
                hb_itemPutNDLen(pItem, 0.0, dbFieldInfo.uiLen, dbFieldInfo.uiDec);
                break;
 
-            case HB_FT_LOGICAL:
+            case Harbour::DB::Field::LOGICAL:
                hb_itemPutL(pItem, false);
                break;
 
-            case HB_FT_DATE:
+            case Harbour::DB::Field::DATE:
                hb_itemPutDL(pItem, 0);
                break;
 
-            case HB_FT_TIME:
-            case HB_FT_TIMESTAMP:
+            case Harbour::DB::Field::TIME:
+            case Harbour::DB::Field::TIMESTAMP:
                hb_itemPutTDT(pItem, 0, 0);
                break;
 
@@ -542,7 +542,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
 
          switch( pField->uiType )
          {
-            case HB_FT_STRING:
+            case Harbour::DB::Field::STRING:
                if( OCI_IsNull( rs, ui ) )
                {
                   char * pStr = static_cast<char*>(hb_xgrab(static_cast<HB_SIZE>(pField->uiLen) + 1));
@@ -559,8 +559,8 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                }
                break;
 
-            case HB_FT_LONG:
-            case HB_FT_INTEGER:
+            case Harbour::DB::Field::LONG:
+            case Harbour::DB::Field::INTEGER:
                if( pField->uiDec == 0 )
 #if HB_VMLONG_MAX == INT32_MAX || defined(HB_LONG_LONG_OFF)
                   pItem = hb_itemPutNIntLen(pItem, OCI_GetInt(rs, ui), pField->uiLen);
@@ -571,8 +571,8 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                   pItem = hb_itemPutNDLen(pItem, OCI_GetDouble(rs, ui), pField->uiLen, pField->uiDec);
                break;
 
-            case HB_FT_VARLENGTH:
-            case HB_FT_MEMO:
+            case Harbour::DB::Field::VARLENGTH:
+            case Harbour::DB::Field::MEMO:
             {
                OCI_Long * val = OCI_GetLong( rs, ui );
                if( val )
@@ -586,9 +586,9 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                break;
             }
 
-            case HB_FT_IMAGE:
-            case HB_FT_BLOB:
-            case HB_FT_OLE:
+            case Harbour::DB::Field::IMAGE:
+            case Harbour::DB::Field::BLOB:
+            case Harbour::DB::Field::OLE:
             {
                OCI_Long * val = OCI_GetLong( rs, ui );
                if( val )
@@ -596,15 +596,15 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                break;
             }
 
-            case HB_FT_CURRENCY:
-            case HB_FT_CURDOUBLE:
-            case HB_FT_FLOAT:
-            case HB_FT_DOUBLE:
+            case Harbour::DB::Field::CURRENCY:
+            case Harbour::DB::Field::CURDOUBLE:
+            case Harbour::DB::Field::FLOAT:
+            case Harbour::DB::Field::DOUBLE:
 
                pItem = hb_itemPutNDLen(pItem, OCI_GetDouble(rs, ui), pField->uiLen, pField->uiDec);
                break;
 
-            case HB_FT_DATE:
+            case Harbour::DB::Field::DATE:
             {
                OCI_Date * date = OCI_GetDate( rs, ui );
                int        iYear, iMonth, iDay;
@@ -613,7 +613,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                break;
             }
 
-            case HB_FT_TIME:
+            case Harbour::DB::Field::TIME:
             {
                OCI_Date * date = OCI_GetDate( rs, ui );
                int        iYear, iMonth, iDay, iHour, iMin, iSec;
@@ -623,7 +623,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
                break;
             }
 
-            case HB_FT_TIMESTAMP:
+            case Harbour::DB::Field::TIMESTAMP:
             {
                OCI_Timestamp * ts = OCI_GetTimestamp( rs, ui );
                int iYear, iMonth, iDay, iHour, iMin, iSec, iFSec;
