@@ -533,12 +533,12 @@ static HB_ERRCODE sqlbasePutValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_IT
    errCode = HB_SUCCESS;
    pField  = pArea->area.lpFields + ( uiIndex - 1 );
 
-   if( ((HB_IS_MEMO(pItem) || HB_IS_STRING(pItem) ) && (pField->uiType == HB_FT_STRING || pField->uiType == HB_FT_MEMO)) ||
-       (HB_IS_DATE(pItem) && pField->uiType == HB_FT_DATE) ||
-       (HB_IS_TIMESTAMP(pItem) && pField->uiType == HB_FT_TIMESTAMP) ||
-       (HB_IS_NUMBER(pItem) && (pField->uiType == HB_FT_INTEGER || pField->uiType == HB_FT_LONG || pField->uiType == HB_FT_FLOAT || pField->uiType == HB_FT_DOUBLE)) ||
-       (HB_IS_LOGICAL(pItem) && pField->uiType == HB_FT_LOGICAL) ||
-       pField->uiType == HB_FT_ANY || HB_IS_NIL(pItem) )
+   if( ((HB_IS_MEMO(pItem) || HB_IS_STRING(pItem) ) && (pField->uiType == Harbour::DB::Field::STRING || pField->uiType == Harbour::DB::Field::MEMO)) ||
+       (HB_IS_DATE(pItem) && pField->uiType == Harbour::DB::Field::DATE) ||
+       (HB_IS_TIMESTAMP(pItem) && pField->uiType == Harbour::DB::Field::TIMESTAMP) ||
+       (HB_IS_NUMBER(pItem) && (pField->uiType == Harbour::DB::Field::INTEGER || pField->uiType == Harbour::DB::Field::LONG || pField->uiType == Harbour::DB::Field::FLOAT || pField->uiType == Harbour::DB::Field::DOUBLE)) ||
+       (HB_IS_LOGICAL(pItem) && pField->uiType == Harbour::DB::Field::LOGICAL) ||
+       pField->uiType == Harbour::DB::Field::ANY || HB_IS_NIL(pItem) )
    {
       hb_arraySet(static_cast<PHB_ITEM>(pArea->pRecord), uiIndex, pItem);
    }
@@ -697,7 +697,7 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
 
       switch( pField->uiType )
       {
-         case HB_FT_STRING:
+         case Harbour::DB::Field::STRING:
          {
             char * pStr;
 
@@ -710,37 +710,37 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
             break;
          }
 
-         case HB_FT_MEMO:
+         case Harbour::DB::Field::MEMO:
             pItem = hb_itemPutC(nullptr, nullptr);
             break;
 
-         case HB_FT_INTEGER:
+         case Harbour::DB::Field::INTEGER:
             if( pField->uiDec )
                pItem = hb_itemPutND(nullptr, 0.0);
             else
                pItem = hb_itemPutNI(nullptr, 0);
             break;
 
-         case HB_FT_LONG:
+         case Harbour::DB::Field::LONG:
             if( pField->uiDec )
                pItem = hb_itemPutND(nullptr, 0.0);
             else
                pItem = hb_itemPutNL(nullptr, 0);
             break;
 
-         case HB_FT_FLOAT:
+         case Harbour::DB::Field::FLOAT:
             pItem = hb_itemPutND(nullptr, 0.0);
             break;
 
-         case HB_FT_DOUBLE:
+         case Harbour::DB::Field::DOUBLE:
             pItem = hb_itemPutND(nullptr, 0.0);
             break;
 
-         case HB_FT_DATE:
+         case Harbour::DB::Field::DATE:
             pItem = hb_itemPutDS(nullptr, nullptr);
             break;
 
-         case HB_FT_LOGICAL:
+         case Harbour::DB::Field::LOGICAL:
             pItem = hb_itemPutL(nullptr, false);
             break;
 
