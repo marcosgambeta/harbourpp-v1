@@ -105,6 +105,38 @@ HB_EXTERN_BEGIN
 #define HB_FT_BLOB            19    /* "W" */
 #define HB_FT_OLE             20    /* "G" */
 
+/* NOTA: usar em src e contrib */
+#if defined(__cplusplus)
+namespace Harbour {
+   namespace DB {
+      namespace Field {
+         enum Type : unsigned int {
+            NONE      = 0,
+            STRING    = 1,  /* "C" */
+            LOGICAL   = 2,  /* "L" */
+            DATE      = 3,  /* "D" */
+            LONG      = 4,  /* "N" */
+            FLOAT     = 5,  /* "F" */
+            INTEGER   = 6,  /* "I" */
+            DOUBLE    = 7,  /* "B" */
+            TIME      = 8,  /* "T" */
+            TIMESTAMP = 9,  /* "@" */
+            MODTIME   = 10, /* "=" */
+            ROWVER    = 11, /* "^" */
+            AUTOINC   = 12, /* "+" */
+            CURRENCY  = 13, /* "Y" */
+            CURDOUBLE = 14, /* "Z" */
+            VARLENGTH = 15, /* "Q" */
+            MEMO      = 16, /* "M" */
+            ANY       = 17, /* "V" */
+            IMAGE     = 18, /* "P" */
+            BLOB      = 19, /* "W" */
+            OLE       = 20  /* "G" */
+         };
+      }
+   }
+}
+#endif
 
 
 /* Field flags */
