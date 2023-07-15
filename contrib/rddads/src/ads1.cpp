@@ -1641,7 +1641,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
 #if ADS_LIB_VERSION >= 710
          case 'c':
             if( pArea->iFileType == ADS_ADT ) {
-               dbFieldInfo.uiType = HB_FT_STRING;
+               dbFieldInfo.uiType = Harbour::DB::Field::STRING;
                dbFieldInfo.uiTypeExtended = ADS_CISTRING;
                dbFieldInfo.uiLen = uiLen;
                dbFieldInfo.uiFlags = 0;
@@ -1652,7 +1652,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
 #endif
 
          case 'C':
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
 #if ADS_LIB_VERSION >= 1000
             if( dbFieldInfo.uiFlags & HB_FF_UNICODE ) {
                dbFieldInfo.uiTypeExtended = ADS_NCHAR;
@@ -1668,7 +1668,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
             break;
 
          case 'M':
-            dbFieldInfo.uiType = HB_FT_MEMO;
+            dbFieldInfo.uiType = Harbour::DB::Field::MEMO;
 #if ADS_LIB_VERSION >= 1000
             if( dbFieldInfo.uiFlags & HB_FF_UNICODE ) {
                dbFieldInfo.uiTypeExtended = ADS_NMEMO;
@@ -1689,7 +1689,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
             break;
 
          case 'Q':
-            dbFieldInfo.uiType = HB_FT_VARLENGTH;
+            dbFieldInfo.uiType = Harbour::DB::Field::VARLENGTH;
 #if ADS_LIB_VERSION >= 1000
             if( dbFieldInfo.uiFlags & HB_FF_UNICODE ) {
                dbFieldInfo.uiTypeExtended = ADS_NVARCHAR;
@@ -1722,7 +1722,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
             break;
 
          case 'W':
-            dbFieldInfo.uiType = HB_FT_BLOB;
+            dbFieldInfo.uiType = Harbour::DB::Field::BLOB;
             dbFieldInfo.uiTypeExtended = ADS_BINARY;
             dbFieldInfo.uiFlags = HB_FF_BINARY;
 #if ADS_LIB_VERSION >= 900
@@ -1734,7 +1734,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
             break;
 
          case 'P':
-            dbFieldInfo.uiType = HB_FT_IMAGE;
+            dbFieldInfo.uiType = Harbour::DB::Field::IMAGE;
             dbFieldInfo.uiTypeExtended = ADS_IMAGE;
             dbFieldInfo.uiFlags = HB_FF_BINARY;
 #if ADS_LIB_VERSION >= 900
@@ -1746,14 +1746,14 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
             break;
 
          case 'D':
-            dbFieldInfo.uiType = HB_FT_DATE;
+            dbFieldInfo.uiType = Harbour::DB::Field::DATE;
             dbFieldInfo.uiLen = (pArea->iFileType == ADS_ADT || uiLen == 4) ? 4 : (uiLen == 3 ? 3 : 8);
             dbFieldInfo.uiTypeExtended = dbFieldInfo.uiLen == 3 ? ADS_COMPACTDATE : ADS_DATE;
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
             break;
 
          case 'L':
-            dbFieldInfo.uiType = HB_FT_LOGICAL;
+            dbFieldInfo.uiType = Harbour::DB::Field::LOGICAL;
             dbFieldInfo.uiTypeExtended = ADS_LOGICAL;
             dbFieldInfo.uiLen = 1;
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
@@ -1761,7 +1761,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
 
          case 'T':
             if( pArea->iFileType == ADS_ADT && uiLen != 8 ) {
-               dbFieldInfo.uiType = HB_FT_TIME;
+               dbFieldInfo.uiType = Harbour::DB::Field::TIME;
                dbFieldInfo.uiTypeExtended = ADS_TIME;
                dbFieldInfo.uiLen = 4;
                dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
@@ -1776,7 +1776,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
             if( pArea->iFileType == ADS_ADT )
 #endif
             {
-               dbFieldInfo.uiType = HB_FT_TIMESTAMP;
+               dbFieldInfo.uiType = Harbour::DB::Field::TIMESTAMP;
                dbFieldInfo.uiTypeExtended = ADS_TIMESTAMP;
                dbFieldInfo.uiLen = 8;
                dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
@@ -1786,7 +1786,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
             break;
 
          case 'N':
-            dbFieldInfo.uiType = HB_FT_LONG;
+            dbFieldInfo.uiType = Harbour::DB::Field::LONG;
             dbFieldInfo.uiTypeExtended = ADS_NUMERIC;
             dbFieldInfo.uiLen = uiLen;
             dbFieldInfo.uiDec = uiDec;
@@ -1797,7 +1797,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
             break;
 
          case 'I':
-            dbFieldInfo.uiType = HB_FT_INTEGER;
+            dbFieldInfo.uiType = Harbour::DB::Field::INTEGER;
 #if ADS_LIB_VERSION >= 700
             dbFieldInfo.uiLen = (pArea->iFileType == ADS_ADT && uiLen == 2) ? 2 : (uiLen == 8 ? 8 : 4);
             dbFieldInfo.uiTypeExtended = dbFieldInfo.uiLen == 2 ? ADS_SHORTINT : (dbFieldInfo.uiLen == 8 ? ADS_LONGLONG : ADS_INTEGER);
@@ -1810,7 +1810,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
 
 #if ADS_LIB_VERSION >= 700
          case 'Y':
-            dbFieldInfo.uiType = HB_FT_CURRENCY;
+            dbFieldInfo.uiType = Harbour::DB::Field::CURRENCY;
             dbFieldInfo.uiTypeExtended = ADS_MONEY;
             dbFieldInfo.uiLen = 8;
             dbFieldInfo.uiDec = 4;
@@ -1820,7 +1820,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
 
          case 'Z':
             if( pArea->iFileType == ADS_ADT ) {
-               dbFieldInfo.uiType = HB_FT_CURDOUBLE;
+               dbFieldInfo.uiType = Harbour::DB::Field::CURDOUBLE;
                dbFieldInfo.uiTypeExtended = ADS_CURDOUBLE;
                dbFieldInfo.uiLen = 8;
                dbFieldInfo.uiDec = uiDec;
@@ -1832,7 +1832,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
 
          case '8':
          case 'B':
-            dbFieldInfo.uiType = HB_FT_DOUBLE;
+            dbFieldInfo.uiType = Harbour::DB::Field::DOUBLE;
             dbFieldInfo.uiTypeExtended = ADS_DOUBLE;
             dbFieldInfo.uiLen = 8;
             dbFieldInfo.uiDec = uiDec;
@@ -1849,7 +1849,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
             if( pArea->iFileType == ADS_ADT )
 #endif
             {
-               dbFieldInfo.uiType = HB_FT_AUTOINC;
+               dbFieldInfo.uiType = Harbour::DB::Field::AUTOINC;
                dbFieldInfo.uiTypeExtended = ADS_AUTOINC;
                dbFieldInfo.uiLen = 4;
                dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
@@ -1861,7 +1861,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
 #if ADS_LIB_VERSION >= 800
          case '=':
             if( pArea->iFileType == ADS_ADT ) {
-               dbFieldInfo.uiType = HB_FT_MODTIME;
+               dbFieldInfo.uiType = Harbour::DB::Field::MODTIME;
                dbFieldInfo.uiTypeExtended = ADS_MODTIME;
                dbFieldInfo.uiLen = 8;
                dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
@@ -1872,7 +1872,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
 
          case '^':
             if( pArea->iFileType == ADS_ADT ) {
-               dbFieldInfo.uiType = HB_FT_ROWVER;
+               dbFieldInfo.uiType = Harbour::DB::Field::ROWVER;
                dbFieldInfo.uiTypeExtended = ADS_ROWVERSION;
                dbFieldInfo.uiLen = 8;
                dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
@@ -2108,8 +2108,8 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
    /* AdsGetFieldName() function for speed. ToninhoFwi, 2003-07-22 */
 
    switch( pField->uiType ) {
-      case HB_FT_STRING:
-      case HB_FT_VARLENGTH:
+      case Harbour::DB::Field::STRING:
+      case Harbour::DB::Field::VARLENGTH:
          u32Length = pArea->maxFieldLen + 1;
          if( !pArea->fPositioned ) {
             u32RetVal = AE_SUCCESS;
@@ -2127,7 +2127,7 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          else if( hb_ads_bOEM && (pField->uiFlags & HB_FF_BINARY) == 0 ) {
 #if ADS_LIB_VERSION >= 600
             u32RetVal = AdsGetFieldRaw(pArea->hTable, ADSFIELD(uiIndex), pBuffer, &u32Length);
-            if( u32RetVal == AE_INSUFFICIENT_BUFFER && pField->uiType == HB_FT_VARLENGTH ) {
+            if( u32RetVal == AE_INSUFFICIENT_BUFFER && pField->uiType == Harbour::DB::Field::VARLENGTH ) {
                UNSIGNED8 * pucBuf = static_cast<UNSIGNED8*>(hb_xgrab(u32Length));
                u32RetVal = AdsGetFieldRaw(pArea->hTable, ADSFIELD(uiIndex), pucBuf, &u32Length);
                if( u32RetVal == AE_SUCCESS ) {
@@ -2143,7 +2143,7 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
                hb_itemPutCL(pItem, pBufOem, u32Length);
                hb_adsOemAnsiFree(pBufOem);
                break;
-            } else if( u32RetVal == AE_INSUFFICIENT_BUFFER && pField->uiType == HB_FT_VARLENGTH ) {
+            } else if( u32RetVal == AE_INSUFFICIENT_BUFFER && pField->uiType == Harbour::DB::Field::VARLENGTH ) {
                UNSIGNED8 * pucBuf = static_cast<UNSIGNED8*>(hb_xgrab(u32Length));
                u32RetVal = AdsGetField(pArea->hTable, ADSFIELD(uiIndex), pucBuf, &u32Length, ADS_NONE);
                if( u32RetVal == AE_SUCCESS ) {
@@ -2162,7 +2162,7 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          else
          {
             u32RetVal = AdsGetField(pArea->hTable, ADSFIELD(uiIndex), pBuffer, &u32Length, ADS_NONE);
-            if( u32RetVal == AE_INSUFFICIENT_BUFFER && pField->uiType == HB_FT_VARLENGTH ) {
+            if( u32RetVal == AE_INSUFFICIENT_BUFFER && pField->uiType == Harbour::DB::Field::VARLENGTH ) {
                UNSIGNED8 * pucBuf = static_cast<UNSIGNED8*>(hb_xgrab(u32Length));
                u32RetVal = AdsGetField(pArea->hTable, ADSFIELD(uiIndex), pucBuf, &u32Length, ADS_NONE);
                if( u32RetVal == AE_SUCCESS ) {
@@ -2174,7 +2174,7 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          }
 
          if( !pArea->fPositioned || u32RetVal != AE_SUCCESS ) {
-            if( pField->uiType == HB_FT_STRING ) {
+            if( pField->uiType == Harbour::DB::Field::STRING ) {
                u32Length = pField->uiLen;
                memset(pBuffer, ' ', u32Length);
             } else {
@@ -2184,16 +2184,16 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          hb_itemPutCL(pItem, reinterpret_cast<char*>(pBuffer), u32Length);
          break;
 
-      case HB_FT_TIME:
-      case HB_FT_TIMESTAMP:
-      case HB_FT_MODTIME:
+      case Harbour::DB::Field::TIME:
+      case Harbour::DB::Field::TIMESTAMP:
+      case Harbour::DB::Field::MODTIME:
       {
          SIGNED32 lTime = 0, lDate = 0;
          u32RetVal = AdsGetMilliseconds(pArea->hTable, ADSFIELD(uiIndex), &lTime);
          if( u32RetVal != AE_SUCCESS ) {
             lTime = 0;
             pArea->area.fEof = true;
-         } else if( pField->uiType != HB_FT_TIME ) {
+         } else if( pField->uiType != Harbour::DB::Field::TIME ) {
             u32RetVal = AdsGetJulian(pArea->hTable, ADSFIELD(uiIndex), &lDate);
             if( u32RetVal != AE_SUCCESS ) {
                pArea->area.fEof = true;
@@ -2203,7 +2203,7 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          hb_itemPutTDT(pItem, lDate, lTime);
          break;
       }
-      case HB_FT_INTEGER:
+      case Harbour::DB::Field::INTEGER:
 
 #if ADS_LIB_VERSION >= 700
          if( pField->uiTypeExtended == ADS_LONGLONG ) {
@@ -2241,7 +2241,7 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          }
          break;
 #if ADS_LIB_VERSION >= 700 && !defined(HB_LONG_LONG_OFF)
-      case HB_FT_AUTOINC:
+      case Harbour::DB::Field::AUTOINC:
       {
          SIGNED64 qVal = 0;
          u32RetVal = AdsGetLongLong(pArea->hTable, ADSFIELD(uiIndex), &qVal);
@@ -2252,7 +2252,7 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          hb_itemPutNIntLen(pItem, static_cast<HB_MAXINT>(qVal), 10);
          break;
       }
-      case HB_FT_ROWVER:
+      case Harbour::DB::Field::ROWVER:
       {
          SIGNED64 qVal = 0;
          u32RetVal = AdsGetLongLong(pArea->hTable, ADSFIELD(uiIndex), &qVal);
@@ -2264,8 +2264,8 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          break;
       }
 #else
-      case HB_FT_AUTOINC:
-      case HB_FT_ROWVER:
+      case Harbour::DB::Field::AUTOINC:
+      case Harbour::DB::Field::ROWVER:
       {
          DOUBLE dVal = 0;
 
@@ -2274,14 +2274,14 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
             dVal = 0.0;
             pArea->area.fEof = true;
          }
-         hb_itemPutNLen(pItem, dVal, pField->uiTypeExtended == HB_FT_AUTOINC ? 10 : 20, 0);
+         hb_itemPutNLen(pItem, dVal, pField->uiTypeExtended == Harbour::DB::Field::AUTOINC ? 10 : 20, 0);
          break;
       }
 #endif
-      case HB_FT_LONG:
-      case HB_FT_DOUBLE:
-      case HB_FT_CURDOUBLE:
-      case HB_FT_CURRENCY:
+      case Harbour::DB::Field::LONG:
+      case Harbour::DB::Field::DOUBLE:
+      case Harbour::DB::Field::CURDOUBLE:
+      case Harbour::DB::Field::CURRENCY:
       {
          DOUBLE dVal = 0;
 
@@ -2304,7 +2304,7 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          }
          break;
       }
-      case HB_FT_DATE:
+      case Harbour::DB::Field::DATE:
       {
          SIGNED32 lDate;
 
@@ -2317,7 +2317,7 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          break;
       }
 
-      case HB_FT_LOGICAL:
+      case Harbour::DB::Field::LOGICAL:
       {
          UNSIGNED16 pbValue = 0;
          u32RetVal = AdsGetLogical(pArea->hTable, ADSFIELD(uiIndex), &pbValue);
@@ -2329,9 +2329,9 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          break;
       }
 
-      case HB_FT_MEMO:
-      case HB_FT_BLOB:
-      case HB_FT_IMAGE:
+      case Harbour::DB::Field::MEMO:
+      case Harbour::DB::Field::BLOB:
+      case Harbour::DB::Field::IMAGE:
       {
          UNSIGNED8 * pucBuf;
          UNSIGNED16 u16Type;
@@ -2560,15 +2560,15 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
    /* AdsGetFieldName() function for speed. ToninhoFwi, 2003-07-22 */
 
    switch( pField->uiType ) {
-      case HB_FT_STRING:
-      case HB_FT_VARLENGTH:
+      case Harbour::DB::Field::STRING:
+      case Harbour::DB::Field::VARLENGTH:
          if( HB_IS_STRING(pItem) ) {
             bTypeError = false;
 #if ADS_LIB_VERSION >= 1000
             if( (pField->uiFlags & HB_FF_UNICODE) != 0 ) {
                void * hString;
                const HB_WCHAR * pwBuffer = hb_itemGetStrU16(pItem, HB_CDP_ENDIAN_LITTLE, &hString, &nLen);
-               if( nLen > static_cast<HB_SIZE>(pField->uiLen) && pField->uiType == HB_FT_STRING ) {
+               if( nLen > static_cast<HB_SIZE>(pField->uiLen) && pField->uiType == Harbour::DB::Field::STRING ) {
                   nLen = pField->uiLen;
                }
                u32RetVal = AdsSetStringW(pArea->hTable, ADSFIELD(uiIndex), static_cast<WCHAR*>(const_cast<HB_WCHAR*>(pwBuffer)), static_cast<UNSIGNED32>(nLen));
@@ -2579,9 +2579,9 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
                nLen = hb_itemGetCLen(pItem);
                if( nLen > static_cast<HB_SIZE>(pField->uiLen) ) {
 #if ADS_LIB_VERSION >= 900
-                  if( pField->uiType == HB_FT_STRING || pArea->iFileType == ADS_VFP )
+                  if( pField->uiType == Harbour::DB::Field::STRING || pArea->iFileType == ADS_VFP )
 #else
-                  if( pField->uiType == HB_FT_STRING )
+                  if( pField->uiType == Harbour::DB::Field::STRING )
 #endif
                   {
                      nLen = pField->uiLen;
@@ -2614,9 +2614,9 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          }
          break;
 
-      case HB_FT_ROWVER:
-      case HB_FT_AUTOINC:
-      case HB_FT_INTEGER:
+      case Harbour::DB::Field::ROWVER:
+      case Harbour::DB::Field::AUTOINC:
+      case Harbour::DB::Field::INTEGER:
 #if ADS_LIB_VERSION >= 700 && !defined(HB_LONG_LONG_OFF)
          if( HB_IS_NUMERIC(pItem) ) {
             bTypeError = false;
@@ -2625,10 +2625,10 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          }
          break;
 #endif
-      case HB_FT_LONG:
-      case HB_FT_DOUBLE:
-      case HB_FT_CURDOUBLE:
-      case HB_FT_CURRENCY:
+      case Harbour::DB::Field::LONG:
+      case Harbour::DB::Field::DOUBLE:
+      case Harbour::DB::Field::CURDOUBLE:
+      case Harbour::DB::Field::CURRENCY:
          if( HB_IS_NUMERIC(pItem) ) {
             bTypeError = false;
             u32RetVal = AdsSetDouble(pArea->hTable, ADSFIELD(uiIndex), hb_itemGetND(pItem));
@@ -2641,21 +2641,21 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          }
          break;
 
-      case HB_FT_TIME:
-      case HB_FT_TIMESTAMP:
-      case HB_FT_MODTIME:
+      case Harbour::DB::Field::TIME:
+      case Harbour::DB::Field::TIMESTAMP:
+      case Harbour::DB::Field::MODTIME:
          if( HB_IS_DATETIME(pItem) ) {
             long lDate, lTime;
             bTypeError = false;
             hb_itemGetTDT(pItem, &lDate, &lTime);
             u32RetVal = AdsSetMilliseconds(pArea->hTable, ADSFIELD(uiIndex), lTime);
-            if( u32RetVal == AE_SUCCESS && pField->uiType != HB_FT_TIME ) {
+            if( u32RetVal == AE_SUCCESS && pField->uiType != Harbour::DB::Field::TIME ) {
                u32RetVal = AdsSetJulian(pArea->hTable, ADSFIELD(uiIndex), lDate);
             }
          }
          break;
 
-      case HB_FT_DATE:
+      case Harbour::DB::Field::DATE:
          if( HB_IS_DATETIME(pItem) ) {
             long lDate = hb_itemGetDL(pItem);
 
@@ -2670,7 +2670,7 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          }
          break;
 
-      case HB_FT_LOGICAL:
+      case Harbour::DB::Field::LOGICAL:
          if( HB_IS_LOGICAL(pItem) ) {
             bTypeError = false;
             *szText = hb_itemGetL(pItem) ? 'T' : 'F';
@@ -2678,9 +2678,9 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          }
          break;
 
-      case HB_FT_MEMO:
-      case HB_FT_BLOB:
-      case HB_FT_IMAGE:
+      case Harbour::DB::Field::MEMO:
+      case Harbour::DB::Field::BLOB:
+      case Harbour::DB::Field::IMAGE:
          if( HB_IS_STRING(pItem) ) {
             bTypeError = false;
             nLen = hb_itemGetCLen(pItem);
@@ -2959,7 +2959,7 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
 
       cType = nullptr;
       switch( pField->uiType ) {
-         case HB_FT_STRING:
+         case Harbour::DB::Field::STRING:
             if( pField->uiFlags & HB_FF_BINARY || pField->uiTypeExtended == ADS_RAW ) {
                cType = "Raw";
             } else if( pField->uiFlags & HB_FF_UNICODE ) {
@@ -2976,11 +2976,11 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
             }
             break;
 
-         case HB_FT_LOGICAL:
+         case Harbour::DB::Field::LOGICAL:
             cType = "Logical";
             break;
 
-         case HB_FT_DATE:
+         case Harbour::DB::Field::DATE:
             if( pField->uiTypeExtended == ADS_COMPACTDATE ) {
                cType = "ShortDate";
             } else {
@@ -2988,11 +2988,11 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
             }
             break;
 
-         case HB_FT_LONG:
+         case Harbour::DB::Field::LONG:
             cType = "Numeric";
             break;
 
-         case HB_FT_INTEGER:
+         case Harbour::DB::Field::INTEGER:
             if( pField->uiTypeExtended == ADS_SHORTINT ) {
                cType = "ShortInt";
             }
@@ -3006,39 +3006,39 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
             }
             break;
 
-         case HB_FT_DOUBLE:
+         case Harbour::DB::Field::DOUBLE:
             cType = "Double";
             break;
 
-         case HB_FT_TIME:
+         case Harbour::DB::Field::TIME:
             cType = "Time";
             break;
 
-         case HB_FT_TIMESTAMP:
+         case Harbour::DB::Field::TIMESTAMP:
             cType = "TimeStamp";
             break;
 
-         case HB_FT_MODTIME:
+         case Harbour::DB::Field::MODTIME:
             cType = "ModTime";
             break;
 
-         case HB_FT_ROWVER:
+         case Harbour::DB::Field::ROWVER:
             cType = "RowVersion";
             break;
 
-         case HB_FT_AUTOINC:
+         case Harbour::DB::Field::AUTOINC:
             cType = "Autoinc";
             break;
 
-         case HB_FT_CURRENCY:
+         case Harbour::DB::Field::CURRENCY:
             cType = "Money";
             break;
 
-         case HB_FT_CURDOUBLE:
+         case Harbour::DB::Field::CURDOUBLE:
             cType = "CurDouble";
             break;
 
-         case HB_FT_VARLENGTH:
+         case Harbour::DB::Field::VARLENGTH:
             if( pField->uiFlags & HB_FF_UNICODE ) {
                fUnicode = true;
                cType = "NVarChar";
@@ -3057,7 +3057,7 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
             }
             break;
 
-         case HB_FT_MEMO:
+         case Harbour::DB::Field::MEMO:
             if( pField->uiFlags & HB_FF_UNICODE ) {
                cType = "NMemo";
                fUnicode = true;
@@ -3066,11 +3066,11 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
             }
             break;
 
-         case HB_FT_BLOB:
+         case Harbour::DB::Field::BLOB:
             cType = "Binary";
             break;
 
-         case HB_FT_IMAGE:
+         case Harbour::DB::Field::IMAGE:
             cType = "Image";
             break;
       }
@@ -3081,25 +3081,25 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
       }
 
       switch( pField->uiType ) {
-         case HB_FT_LOGICAL:
-         case HB_FT_DATE:
-         case HB_FT_TIME:
-         case HB_FT_TIMESTAMP:
-         case HB_FT_MODTIME:
-         case HB_FT_ROWVER:
-         case HB_FT_AUTOINC:
-         case HB_FT_IMAGE:
-         case HB_FT_BLOB:
+         case Harbour::DB::Field::LOGICAL:
+         case Harbour::DB::Field::DATE:
+         case Harbour::DB::Field::TIME:
+         case Harbour::DB::Field::TIMESTAMP:
+         case Harbour::DB::Field::MODTIME:
+         case Harbour::DB::Field::ROWVER:
+         case Harbour::DB::Field::AUTOINC:
+         case Harbour::DB::Field::IMAGE:
+         case Harbour::DB::Field::BLOB:
             uiFldLen = hb_snprintf(szBuffer, sizeof(szBuffer), "%.*s,%s;",
                                    static_cast<int>(pArea->area.uiMaxFieldNameLength),
                                    hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)),
                                    cType);
             break;
 
-         case HB_FT_STRING:
-         case HB_FT_INTEGER:
-         case HB_FT_MEMO:
-         case HB_FT_VARLENGTH:
+         case Harbour::DB::Field::STRING:
+         case Harbour::DB::Field::INTEGER:
+         case Harbour::DB::Field::MEMO:
+         case Harbour::DB::Field::VARLENGTH:
             uiFldLen = hb_snprintf(szBuffer, sizeof(szBuffer), "%.*s,%s,%d;",
                                    static_cast<int>(pArea->area.uiMaxFieldNameLength),
                                    hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)),
@@ -3525,41 +3525,41 @@ static HB_ERRCODE adsOpen(ADSAREAP pArea, LPDBOPENINFO pOpenInfo)
       dbFieldInfo.uiTypeExtended = usType;
       switch( usType ) {
          case ADS_STRING:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             break;
 
          case ADS_RAW:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiFlags = HB_FF_BINARY;
             break;
 
 #if ADS_LIB_VERSION >= 710
          case ADS_CISTRING:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             break;
 #endif
 
          case ADS_NUMERIC:
-            dbFieldInfo.uiType = HB_FT_LONG;
+            dbFieldInfo.uiType = Harbour::DB::Field::LONG;
             AdsGetFieldDecimals(pArea->hTable, szName, &usDecimals);
             dbFieldInfo.uiDec = static_cast<HB_USHORT>(usDecimals);
             break;
 
          case ADS_DOUBLE:
-            dbFieldInfo.uiType = HB_FT_DOUBLE;
+            dbFieldInfo.uiType = Harbour::DB::Field::DOUBLE;
             AdsGetFieldDecimals(pArea->hTable, szName, &usDecimals);
             dbFieldInfo.uiDec = static_cast<HB_USHORT>(usDecimals);
             break;
 
          case ADS_CURDOUBLE:
-            dbFieldInfo.uiType = HB_FT_CURDOUBLE;
+            dbFieldInfo.uiType = Harbour::DB::Field::CURDOUBLE;
             AdsGetFieldDecimals(pArea->hTable, szName, &usDecimals);
             dbFieldInfo.uiDec = static_cast<HB_USHORT>(usDecimals);
             break;
 
 #if ADS_LIB_VERSION >= 700
          case ADS_MONEY:
-            dbFieldInfo.uiType = HB_FT_CURRENCY;
+            dbFieldInfo.uiType = Harbour::DB::Field::CURRENCY;
             AdsGetFieldDecimals(pArea->hTable, szName, &usDecimals);
             dbFieldInfo.uiDec = static_cast<HB_USHORT>(usDecimals);
             break;
@@ -3570,86 +3570,86 @@ static HB_ERRCODE adsOpen(ADSAREAP pArea, LPDBOPENINFO pOpenInfo)
 #if ADS_LIB_VERSION >= 700
          case ADS_LONGLONG:
 #endif
-            dbFieldInfo.uiType = HB_FT_INTEGER;
+            dbFieldInfo.uiType = Harbour::DB::Field::INTEGER;
             break;
 
          case ADS_TIME:
-            dbFieldInfo.uiType = HB_FT_TIME;
+            dbFieldInfo.uiType = Harbour::DB::Field::TIME;
             break;
 
          case ADS_TIMESTAMP:
-            dbFieldInfo.uiType = HB_FT_TIMESTAMP;
+            dbFieldInfo.uiType = Harbour::DB::Field::TIMESTAMP;
             break;
 
 #if ADS_LIB_VERSION >= 800
          case ADS_MODTIME:
-            dbFieldInfo.uiType = HB_FT_MODTIME;
+            dbFieldInfo.uiType = Harbour::DB::Field::MODTIME;
             break;
 #endif
 
          case ADS_AUTOINC:
-            dbFieldInfo.uiType = HB_FT_AUTOINC;
+            dbFieldInfo.uiType = Harbour::DB::Field::AUTOINC;
             break;
 
 #if ADS_LIB_VERSION >= 800
          case ADS_ROWVERSION:
-            dbFieldInfo.uiType = HB_FT_ROWVER;
+            dbFieldInfo.uiType = Harbour::DB::Field::ROWVER;
             break;
 #endif
 
          case ADS_LOGICAL:
-            dbFieldInfo.uiType = HB_FT_LOGICAL;
+            dbFieldInfo.uiType = Harbour::DB::Field::LOGICAL;
             break;
 
          case ADS_DATE:
          case ADS_COMPACTDATE:
-            dbFieldInfo.uiType = HB_FT_DATE;
+            dbFieldInfo.uiType = Harbour::DB::Field::DATE;
             break;
 
 #if ADS_LIB_VERSION >= 900
          case ADS_VARCHAR_FOX:
-            dbFieldInfo.uiType = HB_FT_VARLENGTH;
+            dbFieldInfo.uiType = Harbour::DB::Field::VARLENGTH;
             break;
 
          case ADS_VARBINARY_FOX:
-            dbFieldInfo.uiType = HB_FT_VARLENGTH;
+            dbFieldInfo.uiType = Harbour::DB::Field::VARLENGTH;
             dbFieldInfo.uiFlags = HB_FF_BINARY;
             break;
 #endif
 
          case ADS_MEMO:
-            dbFieldInfo.uiType = HB_FT_MEMO;
+            dbFieldInfo.uiType = Harbour::DB::Field::MEMO;
             break;
 
          case ADS_VARCHAR:
-            dbFieldInfo.uiType = HB_FT_VARLENGTH;
+            dbFieldInfo.uiType = Harbour::DB::Field::VARLENGTH;
             break;
 
          case ADS_BINARY:
-            dbFieldInfo.uiType = HB_FT_BLOB;
+            dbFieldInfo.uiType = Harbour::DB::Field::BLOB;
             dbFieldInfo.uiFlags = HB_FF_BINARY;
             break;
 
          case ADS_IMAGE:
-            dbFieldInfo.uiType = HB_FT_IMAGE;
+            dbFieldInfo.uiType = Harbour::DB::Field::IMAGE;
             dbFieldInfo.uiFlags = HB_FF_BINARY;
             break;
 
 #if ADS_LIB_VERSION >= 1000
          case ADS_NCHAR:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiFlags = HB_FF_UNICODE;
             fUnicode = true;
             break;
 
          case ADS_NVARCHAR:
-            dbFieldInfo.uiType = HB_FT_VARLENGTH;
+            dbFieldInfo.uiType = Harbour::DB::Field::VARLENGTH;
             dbFieldInfo.uiFlags = HB_FF_UNICODE;
             fUnicode = true;
             break;
 
          case ADS_NMEMO:
-            dbFieldInfo.uiType = HB_FT_MEMO;
+            dbFieldInfo.uiType = Harbour::DB::Field::MEMO;
             dbFieldInfo.uiFlags = HB_FF_UNICODE;
             fUnicode = true;
             break;
