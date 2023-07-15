@@ -282,103 +282,103 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
       {
          case BPCHAROID:
          case VARCHAROID:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiLen  = static_cast<HB_USHORT>(PQfmod(pResult, uiCount)) - 4;
             break;
 
          case TEXTOID:
-            dbFieldInfo.uiType = HB_FT_MEMO;
+            dbFieldInfo.uiType = Harbour::DB::Field::MEMO;
             dbFieldInfo.uiLen  = 10;
             break;
 
          case NUMERICOID:
-            dbFieldInfo.uiType = HB_FT_DOUBLE;
+            dbFieldInfo.uiType = Harbour::DB::Field::DOUBLE;
             dbFieldInfo.uiLen  = ( PQfmod( pResult, uiCount ) - 4 ) >> 16;
             dbFieldInfo.uiDec  = ( PQfmod( pResult, uiCount ) - 4 ) & 0xFFFF;
             break;
 
          case INT2OID:
-            dbFieldInfo.uiType = HB_FT_INTEGER;
+            dbFieldInfo.uiType = Harbour::DB::Field::INTEGER;
             dbFieldInfo.uiLen  = 6;
             break;
 
          case INT4OID:
-            dbFieldInfo.uiType = HB_FT_INTEGER;
+            dbFieldInfo.uiType = Harbour::DB::Field::INTEGER;
             dbFieldInfo.uiLen  = 11;
             break;
 
          case INT8OID:
          case OIDOID:
-            dbFieldInfo.uiType = HB_FT_LONG;
+            dbFieldInfo.uiType = Harbour::DB::Field::LONG;
             dbFieldInfo.uiLen  = 20;
             break;
 
          case FLOAT4OID:
          case FLOAT8OID:
          case CASHOID:  /* TODO: ??? */
-            dbFieldInfo.uiType = HB_FT_DOUBLE;
+            dbFieldInfo.uiType = Harbour::DB::Field::DOUBLE;
             dbFieldInfo.uiLen  = 16;
             dbFieldInfo.uiDec  = 2;   /* TODO: hb_set.SET_DECIMALS ??? */
             break;
 
          case BOOLOID:
-            dbFieldInfo.uiType = HB_FT_LOGICAL;
+            dbFieldInfo.uiType = Harbour::DB::Field::LOGICAL;
             dbFieldInfo.uiLen  = 1;
             break;
 
          case DATEOID:
-            dbFieldInfo.uiType = HB_FT_DATE;
+            dbFieldInfo.uiType = Harbour::DB::Field::DATE;
             dbFieldInfo.uiLen  = 8;
             break;
 
          case INETOID:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiLen  = 29;
             break;
 
          case CIDROID:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiLen  = 32;
             break;
 
          case MACADDROID:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiLen  = 17;
             break;
 
          case BITOID:
          case VARBITOID:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiLen  = static_cast<HB_USHORT>(PQfsize(pResult, uiCount));
             break;
 
          case TIMEOID:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiLen  = 12;
             break;
 
          case TIMESTAMPOID:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiLen  = 23;
             break;
 
          case TIMETZOID:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiLen  = 15;
             break;
 
          case TIMESTAMPTZOID:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiLen  = 26;
             break;
 
          case NAMEOID:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiLen  = 63;
             break;
 
          case BYTEAOID:
-            dbFieldInfo.uiType = HB_FT_STRING;
+            dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             break;
 
          default:
@@ -393,7 +393,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
       {
          switch( dbFieldInfo.uiType )
          {
-            case HB_FT_STRING:
+            case Harbour::DB::Field::STRING:
             {
                char * pStr;
 
@@ -405,28 +405,28 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
                hb_xfree(pStr);
                break;
             }
-            case HB_FT_MEMO:
+            case Harbour::DB::Field::MEMO:
                hb_itemPutC(pItem, nullptr);
                hb_itemSetCMemo(pItem);
                break;
 
-            case HB_FT_INTEGER:
+            case Harbour::DB::Field::INTEGER:
                hb_itemPutNI(pItem, 0);
                break;
 
-            case HB_FT_LONG:
+            case Harbour::DB::Field::LONG:
                hb_itemPutNL(pItem, 0);
                break;
 
-            case HB_FT_DOUBLE:
+            case Harbour::DB::Field::DOUBLE:
                hb_itemPutND(pItem, 0.0);
                break;
 
-            case HB_FT_LOGICAL:
+            case Harbour::DB::Field::LOGICAL:
                hb_itemPutL(pItem, false);
                break;
 
-            case HB_FT_DATE:
+            case Harbour::DB::Field::DATE:
                hb_itemPutDS(pItem, nullptr);
                break;
 
@@ -519,18 +519,18 @@ static HB_ERRCODE pgsqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
 
    switch( pField->uiType )
    {
-      case HB_FT_STRING:
+      case Harbour::DB::Field::STRING:
          hb_itemPutCL(pItem, pValue, nLen);
          break;
 
-      case HB_FT_MEMO:
+      case Harbour::DB::Field::MEMO:
          hb_itemPutCL(pItem, pValue, nLen);
          hb_itemSetCMemo(pItem);
          break;
 
-      case HB_FT_INTEGER:
-      case HB_FT_LONG:
-      case HB_FT_DOUBLE:
+      case Harbour::DB::Field::INTEGER:
+      case Harbour::DB::Field::LONG:
+      case Harbour::DB::Field::DOUBLE:
          if( pField->uiDec )
             hb_itemPutNDLen(pItem, atof(pValue), static_cast<int>(pField->uiLen) - (static_cast<int>(pField->uiDec) + 1), static_cast<int>(pField->uiDec));
          else
@@ -540,11 +540,11 @@ static HB_ERRCODE pgsqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
             hb_itemPutNLLen(pItem, atol(pValue), static_cast<int>(pField->uiLen));
          break;
 
-      case HB_FT_LOGICAL:
+      case Harbour::DB::Field::LOGICAL:
          hb_itemPutL(pItem, pValue[0] == 'T' || pValue[0] == 'Y');
          break;
 
-      case HB_FT_DATE:
+      case Harbour::DB::Field::DATE:
       {
          char szDate[9];
 
