@@ -127,7 +127,7 @@ using PHB_GTSTD = HB_GTSTD *;
 
 #if defined(HB_HAS_TERMIOS)
 
-static volatile HB_BOOL s_fRestTTY = HB_FALSE;
+static volatile HB_BOOL s_fRestTTY = false;
 
 #if defined(SIGTTOU)
 static void sig_handler(int iSigNo)
@@ -150,34 +150,34 @@ static void sig_handler(int iSigNo)
 #ifdef SIGWINCH
       case SIGWINCH:
          #if 0
-         s_WinSizeChangeFlag = HB_TRUE;
+         s_WinSizeChangeFlag = true;
          #endif
          break;
 #endif
 #ifdef SIGINT
       case SIGINT:
          #if 0
-         s_InetrruptFlag = HB_TRUE;
+         s_InetrruptFlag = true;
          #endif
          break;
 #endif
 #ifdef SIGQUIT
       case SIGQUIT:
          #if 0
-         s_BreakFlag = HB_TRUE;
+         s_BreakFlag = true;
          #endif
          break;
 #endif
 #ifdef SIGTSTP
       case SIGTSTP:
          #if 0
-         s_DebugFlag = HB_TRUE;
+         s_DebugFlag = true;
          #endif
          break;
 #endif
 #ifdef SIGTSTP
       case SIGTTOU:
-         s_fRestTTY = HB_FALSE;
+         s_fRestTTY = false;
          break;
 #endif
    }
@@ -243,7 +243,7 @@ static void hb_gt_std_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
       sigaction(SIGTTOU, &act, 0);
 #endif
 
-      s_fRestTTY = HB_TRUE;
+      s_fRestTTY = true;
 
       tcgetattr(pGTSTD->hStdin, &pGTSTD->saved_TIO);
       memcpy(&pGTSTD->curr_TIO, &pGTSTD->saved_TIO, sizeof(struct termios));
@@ -700,7 +700,7 @@ static void hb_gt_std_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
             if( pGTSTD->iRow > iRow )
             {
                pGTSTD->iRow = -1;
-               pGTSTD->fFullRedraw = HB_TRUE;
+               pGTSTD->fFullRedraw = true;
             }
             for( int i = pGTSTD->iRow + 1; i < iRow; ++i )
             {
@@ -744,7 +744,7 @@ static void hb_gt_std_Refresh(PHB_GT pGT)
       pGTSTD->sLineBuf = static_cast<char*>(hb_xrealloc(pGTSTD->sLineBuf, iSize));
       pGTSTD->iLineBufSize = iSize;
    }
-   pGTSTD->fFullRedraw = HB_FALSE;
+   pGTSTD->fFullRedraw = false;
    HB_GTSUPER_REFRESH(pGT);
    if( pGTSTD->fFullRedraw )
    {

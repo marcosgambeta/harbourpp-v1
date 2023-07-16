@@ -54,7 +54,7 @@ HB_BOOL hb_spFile(const char * pszFileName, char * pszRetPath)
 #endif
 
    char * pszPath;
-   HB_BOOL bIsFile = HB_FALSE;
+   HB_BOOL bIsFile = false;
    PHB_FNAME pFilepath;
 
    if( pszRetPath )
@@ -87,7 +87,7 @@ HB_BOOL hb_spFile(const char * pszFileName, char * pszRetPath)
       {
          HB_PATHNAMES * pNextPath = hb_setGetFirstSetPath();
 
-         while( bIsFile == HB_FALSE && pNextPath )
+         while( bIsFile == false && pNextPath )
          {
             pFilepath->szPath = pNextPath->szPath;
             hb_fsFNameMerge(pszPath, pFilepath);
@@ -126,7 +126,7 @@ HB_BOOL hb_spFileExists(const char * pszFileName, char * pszRetPath)
 #endif
 
    char * pszPath;
-   HB_BOOL bIsFile = HB_FALSE;
+   HB_BOOL bIsFile = false;
    PHB_FNAME pFilepath;
 
    if( pszRetPath )
@@ -159,7 +159,7 @@ HB_BOOL hb_spFileExists(const char * pszFileName, char * pszRetPath)
       {
          HB_PATHNAMES * pNextPath = hb_setGetFirstSetPath();
 
-         while( bIsFile == HB_FALSE && pNextPath )
+         while( bIsFile == false && pNextPath )
          {
             pFilepath->szPath = pNextPath->szPath;
             hb_fsFNameMerge(pszPath, pFilepath);

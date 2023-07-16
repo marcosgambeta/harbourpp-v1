@@ -98,7 +98,7 @@ void hb_idleState(void)
 
    if( !pIdleData->fIamIdle )
    {
-      pIdleData->fIamIdle = HB_TRUE;
+      pIdleData->fIamIdle = true;
 
       hb_releaseCPU();
       if( hb_vmRequestQuery() == 0 )
@@ -106,7 +106,7 @@ void hb_idleState(void)
          if( pIdleData->fCollectGarbage )
          {
             hb_gcCollectAll(false);
-            pIdleData->fCollectGarbage = HB_FALSE;
+            pIdleData->fCollectGarbage = false;
          }
 
          if( pIdleData->pIdleTasks && pIdleData->iIdleTask < pIdleData->iIdleMaxTask )
@@ -116,11 +116,11 @@ void hb_idleState(void)
             if( pIdleData->iIdleTask == pIdleData->iIdleMaxTask && hb_setGetIdleRepeat() )
             {
                pIdleData->iIdleTask = 0;    /* restart processing of idle tasks */
-               pIdleData->fCollectGarbage = HB_TRUE;
+               pIdleData->fCollectGarbage = true;
             }
          }
       }
-      pIdleData->fIamIdle = HB_FALSE;
+      pIdleData->fIamIdle = false;
    }
 }
 
@@ -133,7 +133,7 @@ void hb_idleReset(void)
       pIdleData->iIdleTask = 0;
    }
 
-   pIdleData->fCollectGarbage = HB_TRUE;
+   pIdleData->fCollectGarbage = true;
 }
 
 void hb_idleSleep(double dSeconds)
@@ -158,7 +158,7 @@ HB_FUNC( HB_IDLESTATE )
 {
    PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
-   pIdleData->fCollectGarbage = HB_TRUE;
+   pIdleData->fCollectGarbage = true;
    hb_idleState();
 }
 

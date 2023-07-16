@@ -108,11 +108,11 @@ void hb_gtSleep(PHB_GT pGT, double dSeconds)
 /* helper internal function */
 static void hb_gt_def_BaseInit(PHB_GT_BASE pGT)
 {
-   pGT->fVgaCell     = HB_TRUE;
-   pGT->fIsColor     = HB_TRUE;
-   pGT->fBlinking    = HB_TRUE;
-   pGT->fStdOutCon   = HB_FALSE;
-   pGT->fStdErrCon   = HB_FALSE;
+   pGT->fVgaCell     = true;
+   pGT->fIsColor     = true;
+   pGT->fBlinking    = true;
+   pGT->fStdOutCon   = false;
+   pGT->fStdErrCon   = false;
    pGT->iCursorShape = SC_NORMAL;
    pGT->iDispCount   = 0;
    pGT->iExtCount    = 0;
@@ -160,7 +160,7 @@ static void * hb_gt_def_New(PHB_GT pGT)
 
    for( i = 0; i < pGT->iHeight; ++i )
    {
-      pGT->pLines[i] = HB_TRUE;
+      pGT->pLines[i] = true;
    }
 
    usChar = HB_GTSELF_GETCLEARCHAR(pGT);
@@ -949,8 +949,8 @@ static HB_BOOL hb_gt_def_PutChar(PHB_GT pGT, int iRow, int iCol, int iColor, HB_
       pGT->screenBuffer[lIndex].c.usChar = usChar;
       pGT->screenBuffer[lIndex].c.bColor = static_cast<HB_BYTE>(iColor);
       pGT->screenBuffer[lIndex].c.bAttr  = bAttr;
-      pGT->pLines[iRow] = HB_TRUE;
-      pGT->fRefresh = HB_TRUE;
+      pGT->pLines[iRow] = true;
+      pGT->fRefresh = true;
       return true;
    }
    return false;
@@ -1734,9 +1734,9 @@ static void hb_gt_def_ScrollUp(PHB_GT pGT, int iRows, int iColor, HB_USHORT usCh
             pGT->screenBuffer[lIndex].c.bAttr  = bAttr;
             ++lIndex;
          }
-         pGT->pLines[i] = HB_TRUE;
+         pGT->pLines[i] = true;
       }
-      pGT->fRefresh = HB_TRUE;
+      pGT->fRefresh = true;
    }
 }
 
@@ -2710,7 +2710,7 @@ static HB_BOOL hb_gt_def_Resize(PHB_GT pGT, int iRows, int iCols)
          memset(pGT->prevBuffer, 0, sizeof(HB_SCREENCELL) * nLen);
          for( i = 0; i < iRows; ++i )
          {
-            pGT->pLines[i] = HB_TRUE;
+            pGT->pLines[i] = true;
          }
          for( nIndex = 0; nIndex < nLen; ++nIndex )
          {
@@ -2732,7 +2732,7 @@ static HB_BOOL hb_gt_def_Resize(PHB_GT pGT, int iRows, int iCols)
             pGT->iCol = pGT->iWidth - 1;
          }
 
-         pGT->fRefresh = HB_TRUE;
+         pGT->fRefresh = true;
 
          if( nSize )
          {
@@ -2761,9 +2761,9 @@ static void hb_gt_def_SemiCold(PHB_GT pGT)
 {
    for( int i = 0; i < pGT->iHeight; ++i )
    {
-      pGT->pLines[i] = HB_FALSE;
+      pGT->pLines[i] = false;
    }
-   pGT->fRefresh = HB_FALSE;
+   pGT->fRefresh = false;
 }
 
 static void hb_gt_def_ColdArea(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight)
@@ -2795,7 +2795,7 @@ static void hb_gt_def_ColdArea(PHB_GT pGT, int iTop, int iLeft, int iBottom, int
       }
       if( iLeft == 0 && iRight == pGT->iWidth - 1 )
       {
-         pGT->pLines[iTop] = HB_FALSE;
+         pGT->pLines[iTop] = false;
       }
       ++iTop;
    }
@@ -2825,8 +2825,8 @@ static void hb_gt_def_ExposeArea(PHB_GT pGT, int iTop, int iLeft, int iBottom, i
          if( HB_GTSELF_CHECKPOS(pGT, iTop, i, &lIndex) )
          {
             pGT->prevBuffer[lIndex].c.bAttr = HB_GT_ATTR_REFRESH;
-            pGT->pLines[iTop] = HB_TRUE;
-            pGT->fRefresh = HB_TRUE;
+            pGT->pLines[iTop] = true;
+            pGT->fRefresh = true;
          }
       }
       ++iTop;
@@ -2837,8 +2837,8 @@ static void hb_gt_def_TouchLine(PHB_GT pGT, int iRow)
 {
    if( iRow >= 0 && iRow < pGT->iHeight )
    {
-      pGT->pLines[iRow] = HB_TRUE;
-      pGT->fRefresh = HB_TRUE;
+      pGT->pLines[iRow] = true;
+      pGT->fRefresh = true;
    }
 }
 
@@ -2849,8 +2849,8 @@ static void hb_gt_def_TouchCell(PHB_GT pGT, int iRow, int iCol)
    if( HB_GTSELF_CHECKPOS(pGT, iRow, iCol, &lIndex) )
    {
       pGT->prevBuffer[lIndex].c.bAttr = HB_GT_ATTR_REFRESH;
-      pGT->pLines[iRow] = HB_TRUE;
-      pGT->fRefresh = HB_TRUE;
+      pGT->pLines[iRow] = true;
+      pGT->fRefresh = true;
    }
 }
 
@@ -2896,10 +2896,10 @@ static void hb_gt_def_RedrawDiff(PHB_GT pGT)
                   HB_GTSELF_REDRAW(pGT, i, s, r - s + 1);
                }
             }
-            pGT->pLines[i] = HB_FALSE;
+            pGT->pLines[i] = false;
          }
       }
-      pGT->fRefresh = HB_FALSE;
+      pGT->fRefresh = false;
    }
 }
 
@@ -3528,7 +3528,7 @@ static void hb_gt_def_MouseSetCursor(PHB_GT pGT, HB_BOOL fVisible)
    if( fVisible )
    {
       HB_GTSELF_MOUSESHOW(pGT);
-      pGT->fMouseVisible = HB_TRUE;
+      pGT->fMouseVisible = true;
    }
    else if( pGT->fMouseVisible )
    {
@@ -3546,7 +3546,7 @@ static void hb_gt_def_MouseSetCursor(PHB_GT pGT, HB_BOOL fVisible)
        * [druzus]
        */
       HB_GTSELF_MOUSEHIDE(pGT);
-      pGT->fMouseVisible = HB_FALSE;
+      pGT->fMouseVisible = false;
    }
 }
 

@@ -727,8 +727,8 @@ PHB_SOCKEX hb_sockexNewZNet(HB_SOCKET sd, const void * keydata, int keylen, int 
       {
          pSock = static_cast<PHB_SOCKEX>(hb_xgrabz(sizeof(HB_SOCKEX)));
          pSock->sd = sd;
-         pSock->fRedirAll = HB_TRUE;
-         pSock->fShutDown = HB_TRUE;
+         pSock->fRedirAll = true;
+         pSock->fShutDown = true;
          pSock->pFilter = &s_sockFilter;
          pSock->cargo = static_cast<void*>(pStream);
       }

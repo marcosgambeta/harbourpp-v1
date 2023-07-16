@@ -2150,7 +2150,7 @@ int hb_socketAddrGetPort(const void * pSockAddr, unsigned len)
 
 HB_BOOL hb_socketAddrFromItem(void ** pSockAddr, unsigned * puiLen, PHB_ITEM pAddrItm)
 {
-   HB_BOOL fOK = HB_FALSE;
+   HB_BOOL fOK = false;
 
    *pSockAddr = nullptr;
    *puiLen = 0;
@@ -3193,7 +3193,7 @@ int hb_socketSelect(PHB_ITEM pArrayRD, HB_BOOL fSetRD, PHB_ITEM pArrayWR, HB_BOO
       if( hb_vmRequestQuery() != 0 )
       {
          hb_socketSetError(HB_SOCKET_ERR_INVALIDHANDLE);
-         pSet[0] = pSet[1] = pSet[2] = HB_FALSE;
+         pSet[0] = pSet[1] = pSet[2] = false;
          ret = -1;
          break;
       }
@@ -3297,7 +3297,7 @@ HB_BOOL hb_socketResolveInetAddr(void ** pSockAddr, unsigned * puiLen, const cha
              hb_socketGetAddrFamily(res->ai_addr, static_cast<unsigned>(res->ai_addrlen)) == AF_INET )
          {
             sa.sin_addr.s_addr = (reinterpret_cast<struct sockaddr_in*>(res->ai_addr))->sin_addr.s_addr;
-            fTrans = HB_TRUE;
+            fTrans = true;
          }
          freeaddrinfo(res);
       }
@@ -3311,7 +3311,7 @@ HB_BOOL hb_socketResolveInetAddr(void ** pSockAddr, unsigned * puiLen, const cha
       if( he && he->h_addr_list[0] )
       {
          sa.sin_addr.s_addr = (reinterpret_cast<struct in_addr*>(he->h_addr_list[0]))->s_addr;
-         fTrans = HB_TRUE;
+         fTrans = true;
       }
       hb_vmLock();
 #endif
@@ -3336,7 +3336,7 @@ HB_BOOL hb_socketResolveInetAddr(void ** pSockAddr, unsigned * puiLen, const cha
 char * hb_socketResolveAddr(const char * szAddr, int af)
 {
    char * szResult = nullptr;
-   HB_BOOL fTrans = HB_FALSE;
+   HB_BOOL fTrans = false;
    int iError = 0;
 
    if( !szAddr || !*szAddr )
@@ -3366,7 +3366,7 @@ char * hb_socketResolveAddr(const char * szAddr, int af)
          if( he && he->h_addr_list[0] )
          {
             sin.s_addr = (reinterpret_cast<struct in_addr*>(he->h_addr_list[0]))->s_addr;
-            fTrans = HB_TRUE;
+            fTrans = true;
          }
          else
          {
@@ -3408,7 +3408,7 @@ char * hb_socketResolveAddr(const char * szAddr, int af)
       }
 #else
       int iTODO;
-      fTrans = HB_FALSE;
+      fTrans = false;
 #endif
    }
 #endif

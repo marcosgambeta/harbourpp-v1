@@ -99,7 +99,7 @@ HB_FUNC( SAVESCREEN )
    int iTop, iLeft, iBottom, iRight;
    HB_SIZE nSize;
    void * pBuffer;
-   HB_BOOL fNoCheck = HB_FALSE;
+   HB_BOOL fNoCheck = false;
 
    hb_getScreenRange( &iTop, &iBottom, fNoCheck, true );
    hb_getScreenRange( &iLeft, &iRight, fNoCheck, false );
@@ -119,7 +119,7 @@ HB_FUNC( RESTSCREEN )
       HB_SIZE nSize, nLen;
       void * pBuffer = nullptr;
       const char * pBufStr = hb_parc(5);
-      HB_BOOL fNoCheck = HB_FALSE;
+      HB_BOOL fNoCheck = false;
 
       hb_getScreenRange( &iTop, &iBottom, fNoCheck, true );
       hb_getScreenRange( &iLeft, &iRight, fNoCheck, false );

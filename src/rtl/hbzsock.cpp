@@ -401,7 +401,7 @@ static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
       {
          if( pSock->fShutDown )
          {
-            pZ->sock->fShutDown = HB_TRUE;
+            pZ->sock->fShutDown = true;
          }
          if( pSock->iAutoFlush != 0 && pZ->sock->iAutoFlush == 0 )
          {
@@ -460,7 +460,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
 
    if( pSock )
    {
-      HB_BOOL fDecompressIn = HB_TRUE, fCompressOut = HB_TRUE;
+      HB_BOOL fDecompressIn = true, fCompressOut = true;
       int level = HB_ZLIB_COMPRESSION_DEFAULT,
           strategy = HB_ZLIB_STRATEGY_DEFAULT,
           windowBitsIn = MAX_WBITS, windowBitsOut = MAX_WBITS;
@@ -518,7 +518,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
 
          pSockNew = static_cast<PHB_SOCKEX>(hb_xgrabz(sizeof(HB_SOCKEX)));
          pSockNew->sd = HB_NO_SOCKET;
-         pSockNew->fRedirAll = HB_TRUE;
+         pSockNew->fRedirAll = true;
          pSockNew->pFilter = &s_sockFilter;
 
          pSockNew->cargo = static_cast<void*>(pZ);
@@ -555,7 +555,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
              */
             if( inflateInit2(&pZ->z_read, windowBitsIn) == Z_OK )
             {
-               pZ->fDecompressIn = HB_TRUE;
+               pZ->fDecompressIn = true;
                pZ->rdbuf = static_cast<HB_BYTE*>(hb_xgrab(HB_ZSOCK_RDBUFSIZE));
             }
             else
@@ -571,7 +571,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
              */
             if( deflateInit2(&pZ->z_write, level, Z_DEFLATED, windowBitsOut, HB_ZSOCK_MEM_LEVEL, strategy) == Z_OK )
             {
-               pZ->fCompressOut = HB_TRUE;
+               pZ->fCompressOut = true;
                pZ->wrbuf = static_cast<HB_BYTE*>(hb_xgrab(HB_ZSOCK_WRBUFSIZE));
                pZ->z_write.next_out  = static_cast<Bytef*>(pZ->wrbuf);
                pZ->z_write.avail_out = HB_ZSOCK_WRBUFSIZE;

@@ -768,7 +768,7 @@ static long s_inetRecv(PHB_SOCKET_STRUCT socket, char * buffer, long size, HB_BO
    }
    else
    {
-      readahead = HB_FALSE;
+      readahead = false;
    }
 
    if( socket->inbuffer > 0 )
@@ -1671,7 +1671,7 @@ HB_FUNC( HB_INETDGRAMRECV )
 
       do
       {
-         fRepeat = HB_FALSE;
+         fRepeat = false;
          if( socket->remote )
          {
             hb_xfree(socket->remote);  /* FIXME: double free */

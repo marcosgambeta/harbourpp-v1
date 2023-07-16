@@ -98,7 +98,7 @@ static HB_BOOL hb_memowrit(HB_BOOL bHandleEOF)
 {
    const char * pszFileName = hb_parc(1);
    PHB_ITEM pString   = hb_param(2, Harbour::Item::STRING);
-   HB_BOOL bRetVal    = HB_FALSE;
+   HB_BOOL bRetVal    = false;
 
    if( pszFileName && pString )
    {
@@ -141,7 +141,7 @@ static HB_BOOL hb_memowrit(HB_BOOL bHandleEOF)
 
 HB_FUNC( HB_MEMOWRIT )
 {
-   hb_retl(hb_memowrit(HB_FALSE));
+   hb_retl(hb_memowrit(false));
 }
 
 HB_FUNC( MEMOWRIT )

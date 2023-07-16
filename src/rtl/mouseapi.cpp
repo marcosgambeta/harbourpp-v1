@@ -60,7 +60,7 @@ HB_BOOL hb_mouseIsPresent(void)
    HB_TRACE(HB_TR_DEBUG, ("hb_mouseIsPresent()"));
 #endif
 
-   HB_BOOL fPresent = HB_FALSE;
+   HB_BOOL fPresent = false;
    PHB_GT pGT;
 
    pGT = hb_gt_Base();
@@ -78,7 +78,7 @@ HB_BOOL hb_mouseGetCursor(void)
    HB_TRACE(HB_TR_DEBUG, ("hb_mouseGetCursor()"));
 #endif
 
-   HB_BOOL fVisible = HB_FALSE;
+   HB_BOOL fVisible = false;
    PHB_GT pGT;
 
    pGT = hb_gt_Base();
@@ -314,7 +314,7 @@ HB_BOOL hb_mouseButtonState(int iButton)
    HB_TRACE(HB_TR_DEBUG, ("hb_mouseButtonState(%d)", iButton));
 #endif
 
-   HB_BOOL fPressed = HB_FALSE;
+   HB_BOOL fPressed = false;
    PHB_GT pGT;
 
    pGT = hb_gt_Base();
@@ -332,7 +332,7 @@ HB_BOOL hb_mouseButtonPressed(int iButton, int * piRow, int * piCol)
    HB_TRACE(HB_TR_DEBUG, ("hb_mouseButtonPressed(%d,%p,%p)", iButton, static_cast<void*>(piRow), static_cast<void*>(piCol)));
 #endif
 
-   HB_BOOL fPressed = HB_FALSE;
+   HB_BOOL fPressed = false;
    PHB_GT pGT;
 
    pGT = hb_gt_Base();
@@ -350,7 +350,7 @@ HB_BOOL hb_mouseButtonReleased(int iButton, int * piRow, int * piCol)
    HB_TRACE(HB_TR_DEBUG, ("hb_mouseButtonReleased(%d,%p,%p)", iButton, static_cast<void*>(piRow), static_cast<void*>(piCol)));
 #endif
 
-   HB_BOOL fReleased = HB_FALSE;
+   HB_BOOL fReleased = false;
    PHB_GT pGT;
 
    pGT = hb_gt_Base();

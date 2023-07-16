@@ -421,7 +421,7 @@ HB_FUNC( HB_FCOMMIT )
 HB_FUNC( HB_FLOCK )
 {
    HB_ERRCODE uiError = 0;
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
 
    if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) )
    {
@@ -438,7 +438,7 @@ HB_FUNC( HB_FLOCK )
 HB_FUNC( HB_FUNLOCK )
 {
    HB_ERRCODE uiError = 0;
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
 
    if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) )
    {

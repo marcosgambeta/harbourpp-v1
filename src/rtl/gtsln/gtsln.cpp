@@ -56,10 +56,10 @@ static HB_GT_FUNCS SuperTable;
 #define HB_GTID_PTR  ( &s_GtId )
 
 static HB_FHANDLE s_hStdIn, s_hStdOut, s_hStdErr;
-static HB_BOOL    s_fStdInTTY = HB_FALSE, s_fStdOutTTY = HB_FALSE, s_fStdErrTTY = HB_FALSE;
+static HB_BOOL    s_fStdInTTY = false, s_fStdOutTTY = false, s_fStdErrTTY = false;
 
 /* does terminal works in Unicode (UTF-8) mode? */
-HB_BOOL hb_sln_Is_Unicode = HB_FALSE;
+HB_BOOL hb_sln_Is_Unicode = false;
 
 /* Slang color names */
 static const char * s_colorNames[] =
@@ -98,12 +98,12 @@ static SLsmg_Char_Type s_outboxTab[256];
 /* to convert input characters */
 unsigned char hb_sln_inputTab[256];
 
-static HB_BOOL s_fActive = HB_FALSE;
+static HB_BOOL s_fActive = false;
 
 static int s_iCursorStyle = SC_NORMAL;
 
 /* indicate if we are currently running a command from system */
-static HB_BOOL s_bSuspended = HB_FALSE;
+static HB_BOOL s_bSuspended = false;
 
 /* the name of an environment variable containing a definition of nation chars.*/
 /* A definition is a list of pairs of chars. The first char in each pair is  */
@@ -115,14 +115,14 @@ static const char * hb_NationCharsEnvName = "HRBNATIONCHARS";
 
 /* *********************************************************************** */
 
-volatile HB_BOOL hb_sln_bScreen_Size_Changed = HB_FALSE;
+volatile HB_BOOL hb_sln_bScreen_Size_Changed = false;
 
 /* window's resize handler */
 static void sigwinch_handler(int iSig)
 {
    HB_SYMBOL_UNUSED(iSig);
 
-   hb_sln_bScreen_Size_Changed = HB_TRUE;
+   hb_sln_bScreen_Size_Changed = true;
    SLsignal(SIGWINCH, sigwinch_handler);
 }
 
@@ -587,7 +587,7 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStderr))));
 #endif
 
-   HB_BOOL gt_Inited = HB_FALSE;
+   HB_BOOL gt_Inited = false;
 
    /* stdin && stdout && stderr */
    s_hStdIn  = hFilenoStdin;
@@ -705,7 +705,7 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
             SLsmg_gotorc(0, 0);
             SLsmg_refresh();
 
-            gt_Inited = HB_TRUE;
+            gt_Inited = true;
          }
       }
    }
@@ -717,7 +717,7 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
       hb_errInternal(9997, "Internal error: screen driver initialization failure", nullptr, nullptr);
    }
 
-   s_fActive = HB_TRUE;
+   s_fActive = true;
    hb_gt_sln_mouse_Init();
    HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
    HB_GTSELF_RESIZE(pGT, SLtt_Screen_Rows, SLtt_Screen_Cols);
@@ -754,7 +754,7 @@ static void hb_gt_sln_Exit(PHB_GT pGT)
    SLsmg_reset_smg();
    SLang_reset_tty();
 
-   s_fStdInTTY = s_fStdOutTTY = s_fStdErrTTY = s_fActive = HB_FALSE;
+   s_fStdInTTY = s_fStdOutTTY = s_fStdErrTTY = s_fActive = false;
 
    HB_GTSUPER_EXIT(pGT);
 }
@@ -882,7 +882,7 @@ static HB_BOOL hb_gt_sln_Suspend(PHB_GT pGT)
       if( SLsmg_suspend_smg() != -1 )
       {
          SLang_reset_tty();
-         s_bSuspended = HB_TRUE;
+         s_bSuspended = true;
       }
    }
 
@@ -901,7 +901,7 @@ static HB_BOOL hb_gt_sln_Resume(PHB_GT pGT)
 #if defined(HB_HAS_GPM)
       hb_gt_sln_mouse_FixTrash();
 #endif
-      s_bSuspended = HB_FALSE;
+      s_bSuspended = false;
    }
 
    return !s_bSuspended;

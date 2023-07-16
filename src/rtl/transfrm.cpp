@@ -74,11 +74,11 @@ HB_FUNC( TRANSFORM )
    PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY); /* Input parameter */
    PHB_ITEM pPic = hb_param(2, Harbour::Item::STRING); /* Picture string */
 
-   HB_BOOL bError = HB_FALSE;
+   HB_BOOL bError = false;
 
    if( pValue == nullptr )
    {
-      bError = HB_TRUE;
+      bError = true;
    }
    else if( pPic && hb_itemGetCLen(pPic) > 0 )
    {
@@ -105,7 +105,7 @@ HB_FUNC( TRANSFORM )
 
       if( *szPic == '@' )
       {
-         HB_BOOL bDone = HB_FALSE;
+         HB_BOOL bDone = false;
 
          /* Skip the "@" char */
 
@@ -121,7 +121,7 @@ HB_FUNC( TRANSFORM )
             {
                case HB_CHAR_HT:
                case ' ':
-                  bDone = HB_TRUE;     /* End of function string */
+                  bDone = true;     /* End of function string */
                   break;
                case '!':
                   uiPicFlags |= PF_UPPER;
@@ -331,7 +331,7 @@ HB_FUNC( TRANSFORM )
 
             if( uiPicFlags & PF_EXCHANG )
             {
-               HB_BOOL bFound = HB_FALSE;
+               HB_BOOL bFound = false;
 
                while( nExpPos < nResultPos )
                {
@@ -342,7 +342,7 @@ HB_FUNC( TRANSFORM )
                   else if( !bFound && szResult[nExpPos] == '.' )
                   {
                      szResult[nExpPos] = ',';
-                     bFound = HB_TRUE;
+                     bFound = true;
                   }
                   nExpPos++;
                }
@@ -910,8 +910,8 @@ HB_FUNC( TRANSFORM )
 
       else if( HB_IS_LOGICAL(pValue) )
       {
-         HB_BOOL bDone = HB_FALSE;
-         HB_BOOL bExit = HB_FALSE;
+         HB_BOOL bDone = false;
+         HB_BOOL bExit = false;
          char cPic;
 
          if( uiPicFlags & ( PF_DATE | PF_BRITISH ) )
@@ -933,7 +933,7 @@ HB_FUNC( TRANSFORM )
             else
             {
                cPic  = 'L';
-               bExit = HB_TRUE;
+               bExit = true;
             }
 
             switch( cPic )
@@ -944,7 +944,7 @@ HB_FUNC( TRANSFORM )
                   if( !bDone )
                   {
                      szResult[nResultPos] = hb_itemGetL(pValue) ? 'Y' : 'N';
-                     bDone = HB_TRUE;           /* Logical written */
+                     bDone = true;           /* Logical written */
                   }
                   else
                   {
@@ -960,7 +960,7 @@ HB_FUNC( TRANSFORM )
                   if( !bDone )
                   {
                      szResult[nResultPos] = hb_itemGetL(pValue) ? 'T' : 'F';
-                     bDone = HB_TRUE;
+                     bDone = true;
                   }
                   else
                   {
@@ -975,7 +975,7 @@ HB_FUNC( TRANSFORM )
 
             if( !( uiPicFlags & PF_REMAIN ) )
             {
-               bExit = HB_TRUE;
+               bExit = true;
             }
          }
       }
@@ -986,7 +986,7 @@ HB_FUNC( TRANSFORM )
       {
          szResult = nullptr; /* To avoid GCC -O2 warning */
          nResultPos = 0; /* To avoid GCC -O2 warning */
-         bError = HB_TRUE;
+         bError = true;
       }
 
       if( !bError )
@@ -1071,12 +1071,12 @@ HB_FUNC( TRANSFORM )
       }
       else
       {
-         bError = HB_TRUE;
+         bError = true;
       }
    }
    else
    {
-      bError = HB_TRUE;
+      bError = true;
    }
 
    /* If there was any parameter error, launch a runtime error */

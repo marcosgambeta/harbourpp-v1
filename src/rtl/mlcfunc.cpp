@@ -685,7 +685,7 @@ HB_FUNC( HB_MLEVAL )
       {
          HB_SIZE nBlankCol = 0, nBlankPos = 0, nBlankDst = 0, nCol = 0, nDst = 0;
 
-         fSoftCR = fEOL = HB_FALSE;
+         fSoftCR = fEOL = false;
          ++nLines;
          while( !fSoftCR && nOffset < nLen )
          {
@@ -708,7 +708,7 @@ HB_FUNC( HB_MLEVAL )
                {
                   ++nOffset;
                }
-               fEOL = HB_TRUE;
+               fEOL = true;
                break;
             }
             else if( pszString[nOffset] == HB_CHAR_LF )
@@ -718,7 +718,7 @@ HB_FUNC( HB_MLEVAL )
                {
                   ++nOffset;
                }
-               fEOL = HB_TRUE;
+               fEOL = true;
                break;
             }
 
@@ -766,7 +766,7 @@ HB_FUNC( HB_MLEVAL )
                         nRowPos = nColPos = 0;
                      }
                   }
-                  fSoftCR = HB_TRUE;
+                  fSoftCR = true;
                   break;
                }
                if( nRepl-- == 0 )

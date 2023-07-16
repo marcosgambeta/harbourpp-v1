@@ -315,7 +315,7 @@ static void hb_gt_xwc_SetSelection(PXWND_DEF wnd, const char * szData, HB_SIZE n
 /************************ globals ********************************/
 
 static PXWND_DEF s_wnd = nullptr;
-static HB_BOOL s_fNoXServer = HB_FALSE;
+static HB_BOOL s_fNoXServer = false;
 
 #if 1
 static int s_updateMode = XWC_SYNC_UPDATE;
@@ -324,7 +324,7 @@ static int s_updateMode = XWC_ASYNC_UPDATE;
 #endif
 static int s_iUpdateCounter;
 
-static HB_BOOL s_fIgnoreErrors = HB_FALSE;
+static HB_BOOL s_fIgnoreErrors = false;
 
 /* *********************************************************************** */
 
@@ -337,7 +337,7 @@ static int s_errorHandler(Display * dpy, XErrorEvent * e)
 
    if( !s_fIgnoreErrors )
    {
-      s_fNoXServer = HB_TRUE;
+      s_fNoXServer = true;
       hb_errInternal(10001, errorText, nullptr, nullptr);
    }
 
@@ -467,7 +467,7 @@ static HB_BOOL hb_gt_xwc_DefineBoxChar(PXWND_DEF wnd, HB_USHORT usCh, XWC_CharTr
    XPoint       * pts  = chdef.pts;
    XWC_CharType   type = CH_UNDEF;
    int            size = 0;
-   HB_BOOL        inverse = HB_FALSE;
+   HB_BOOL        inverse = false;
 
    int cellx = wnd->fontWidth;
    int celly = wnd->fontHeight;
@@ -1358,7 +1358,7 @@ static HB_BOOL hb_gt_xwc_DefineBoxChar(PXWND_DEF wnd, HB_USHORT usCh, XWC_CharTr
             {
                skip = 4;
                start = mod = 0;
-               inverse = HB_TRUE;
+               inverse = true;
             }
             xx = yy = 0;
             for( y = 0; y < celly; y++ )
@@ -1432,12 +1432,12 @@ static HB_BOOL hb_gt_xwc_DefineBoxChar(PXWND_DEF wnd, HB_USHORT usCh, XWC_CharTr
             break;
 
          case HB_BOXCH_FULL:
-            inverse = HB_TRUE;
+            inverse = true;
             type = CH_NONE;
             break;
 
          case HB_BOXCH_FULL_B:
-            inverse = HB_TRUE;
+            inverse = true;
             /* fallthrough */
          case HB_BOXCH_FULL_T:
             rect[0].x = 0;
@@ -1449,7 +1449,7 @@ static HB_BOOL hb_gt_xwc_DefineBoxChar(PXWND_DEF wnd, HB_USHORT usCh, XWC_CharTr
             break;
 
          case HB_BOXCH_FULL_R:
-            inverse = HB_TRUE;
+            inverse = true;
             /* fallthrough */
          case HB_BOXCH_FULL_L:
             rect[0].x = 0;
@@ -2363,7 +2363,7 @@ static void hb_gt_xwc_ResetCharTrans(PXWND_DEF wnd)
    wnd->boxTrans[0].type = CH_CHAR;
    wnd->boxTrans[0].u.ch16 = 0;
    wnd->boxTrans[0].size = 0;
-   wnd->boxTrans[0].inverse = HB_FALSE;
+   wnd->boxTrans[0].inverse = false;
 
    for( i = 0; i < HB_BOXCH_TRANS_COUNT; ++i )
    {
@@ -2740,7 +2740,7 @@ static void hb_gt_xwc_UpdateWindowCords(PXWND_DEF wnd, int * pX, int * pY)
             XFree(prop_return);
          }
       }
-      wnd->fCordsInited = HB_TRUE;
+      wnd->fCordsInited = true;
    }
 
    *pX -= wnd->iCordLeft;
@@ -2783,22 +2783,22 @@ static void hb_gt_xwc_ProcessKey(PXWND_DEF wnd, XKeyEvent * evt)
       /* First of all, let's scan for special codes */
       case XK_Shift_L:
       case XK_Shift_R:
-         wnd->keyModifiers.bShift = HB_TRUE;
+         wnd->keyModifiers.bShift = true;
          return;
 
       case XK_Control_L:
       case XK_Control_R:
-         wnd->keyModifiers.bCtrl = HB_TRUE;
+         wnd->keyModifiers.bCtrl = true;
          return;
 
       case XK_Meta_L:
       case XK_Alt_L:
-         wnd->keyModifiers.bAlt = HB_TRUE;
+         wnd->keyModifiers.bAlt = true;
          return;
 
       case XK_Meta_R:
       case XK_Alt_R:
-         wnd->keyModifiers.bAltGr = HB_TRUE;
+         wnd->keyModifiers.bAltGr = true;
          return;
 
       /* Then we scan for movement */
@@ -3098,22 +3098,22 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent * evt)
          {
             case XK_Shift_L:
             case XK_Shift_R:
-               wnd->keyModifiers.bShift = HB_FALSE;
+               wnd->keyModifiers.bShift = false;
                break;
 
             case XK_Control_L:
             case XK_Control_R:
-               wnd->keyModifiers.bCtrl = HB_FALSE;
+               wnd->keyModifiers.bCtrl = false;
                break;
 
             case XK_Meta_L:
             case XK_Alt_L:
-               wnd->keyModifiers.bAlt = HB_FALSE;
+               wnd->keyModifiers.bAlt = false;
                break;
 
             case XK_Meta_R:
             case XK_Alt_R:
-               wnd->keyModifiers.bAltGr = HB_FALSE;
+               wnd->keyModifiers.bAltGr = false;
                break;
          }
          break;
@@ -3188,7 +3188,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent * evt)
             {
                if( wnd->keyModifiers.bShift && button == 0 && wnd->fSelectCopy && !wnd->fMarkMode )
                {
-                  wnd->fMarkMode = HB_TRUE;
+                  wnd->fMarkMode = true;
                   wnd->iMarkCol = wnd->mouseCol;
                   wnd->iMarkRow = wnd->mouseRow;
                }
@@ -3213,7 +3213,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent * evt)
                char * pBuffer;
                HB_SIZE nSize, nI;
 
-               wnd->fMarkMode = HB_FALSE;
+               wnd->fMarkMode = false;
                hb_gt_xwc_InvalidateChar(wnd, left, top, right, bottom);
 
                nSize = (bottom - top + 1) * (right - left + 2) * 3;
@@ -3292,7 +3292,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent * evt)
          wnd->keyModifiers.bCtrl  =
          wnd->keyModifiers.bAlt   =
          wnd->keyModifiers.bAltGr =
-         wnd->keyModifiers.bShift = HB_FALSE;
+         wnd->keyModifiers.bShift = false;
          hb_gt_xwc_AddCharToInputQueue(wnd, HB_K_GOTFOCUS);
          break;
 
@@ -3316,7 +3316,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent * evt)
          wnd->iNewPosY   = evt->xconfigure.y;
          wnd->newWidth   = evt->xconfigure.width;
          wnd->newHeight  = evt->xconfigure.height;
-         wnd->fWinResize = HB_TRUE;
+         wnd->fWinResize = true;
          break;
 
       case ClientMessage:
@@ -3380,7 +3380,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent * evt)
                   wnd->ClipboardData = static_cast<unsigned char*>(hb_xmemdup(text.value, text.nitems + 1));
                   wnd->ClipboardData[wnd->ClipboardSize] = '\0';
                   wnd->ClipboardTime = evt->xselection.time;
-                  wnd->ClipboardRcvd = HB_TRUE;
+                  wnd->ClipboardRcvd = true;
                }
                else if( evt->xselection.target == s_atomString && text.format == 8 )
                {
@@ -3396,7 +3396,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent * evt)
                   wnd->ClipboardSize = text.nitems;
                   wnd->ClipboardData = reinterpret_cast<unsigned char*>(hb_cdpnDup(reinterpret_cast<const char*>(text.value), &wnd->ClipboardSize, HB_GTSELF_INCP(wnd->pGT), wnd->utf8CDP));
                   wnd->ClipboardTime = evt->xselection.time;
-                  wnd->ClipboardRcvd = HB_TRUE;
+                  wnd->ClipboardRcvd = true;
                }
                else if( evt->xselection.target == s_atomTargets && text.format == 32 )
                {
@@ -3515,7 +3515,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent * evt)
          printf("Event: SelectionClear\n");
          fflush(stdout);
 #endif
-         wnd->ClipboardOwner = HB_FALSE;
+         wnd->ClipboardOwner = false;
          break;
 
       case PropertyNotify:
@@ -3534,7 +3534,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent * evt)
          printf("Event: VisibilityNotify\n");
          fflush(stdout);
 #endif
-         wnd->fCordsInited = HB_FALSE;
+         wnd->fCordsInited = false;
          break;
 
       case GraphicsExpose:
@@ -3542,7 +3542,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent * evt)
          printf("Event: GraphicsExpose\n");
          fflush(stdout);
 #endif
-         wnd->fCordsInited = HB_FALSE;
+         wnd->fCordsInited = false;
          break;
 
 #ifdef XWC_DEBUG
@@ -3657,13 +3657,13 @@ static int hb_gt_xwc_GetColormapSize(PXWND_DEF wnd)
 
 static HB_BOOL hb_gt_xwc_AllocColor(PXWND_DEF wnd, XColor * pColor)
 {
-   HB_BOOL fOK = HB_FALSE;
+   HB_BOOL fOK = false;
    int iCMapSize;
 
    if( XAllocColor(wnd->dpy, wnd->colorsmap, pColor) != 0 )
    {
       /* the exact color allocated */
-      fOK = HB_TRUE;
+      fOK = true;
    }
    else if( (iCMapSize = hb_gt_xwc_GetColormapSize(wnd)) > 0 )
    {
@@ -3683,7 +3683,7 @@ static HB_BOOL hb_gt_xwc_AllocColor(PXWND_DEF wnd, XColor * pColor)
       for( i = 0; i < iCMapSize; i++ )
       {
          colorTable[i].pixel = static_cast<HB_GT_PIXELTYPE>(i);
-         checkTable[i]       = HB_FALSE;
+         checkTable[i]       = false;
       }
       XQueryColors(wnd->dpy, wnd->colorsmap, colorTable, iCMapSize);
 
@@ -3731,10 +3731,10 @@ static HB_BOOL hb_gt_xwc_AllocColor(PXWND_DEF wnd, XColor * pColor)
             if( XAllocColor(wnd->dpy, wnd->colorsmap, &colorTable[iClosestColor]) != 0 )
             {
                *pColor = colorTable[iClosestColor];
-               fOK = HB_TRUE;
+               fOK = true;
                break;
             }
-            checkTable[iClosestColor] = HB_TRUE;
+            checkTable[iClosestColor] = true;
          }
       }
       while( iClosestColor > 0 );
@@ -3752,7 +3752,7 @@ static HB_BOOL hb_gt_xwc_setPalette(PXWND_DEF wnd)
 {
    char rgb_color[13];
    XColor color, dummy;
-   HB_BOOL fSet = HB_FALSE;
+   HB_BOOL fSet = false;
 
    /* Set standard colors */
    wnd->colorsmap = DefaultColormap(wnd->dpy, DefaultScreen(wnd->dpy));
@@ -3780,7 +3780,7 @@ static HB_BOOL hb_gt_xwc_setPalette(PXWND_DEF wnd)
 #endif
             }
          }
-         fSet = wnd->colors[i].set = HB_TRUE;
+         fSet = wnd->colors[i].set = true;
       }
    }
    return fSet;
@@ -4047,7 +4047,7 @@ static void hb_gt_xwc_InvalidateChar(PXWND_DEF wnd, int left, int top, int right
     * to make sure that screen will be updated (sometimes maybe twice but
     * it shouldn't hurt us)
     */
-   wnd->fInvalidChr = HB_TRUE;
+   wnd->fInvalidChr = true;
 }
 
 static void hb_gt_xwc_InvalidateFull(PXWND_DEF wnd)
@@ -4106,7 +4106,7 @@ static void hb_gt_xwc_InvalidatePts(PXWND_DEF wnd, int left, int top, int right,
          wnd->rInvalidPts.bottom = bottom;
       }
    }
-   wnd->fInvalidPts = HB_TRUE;
+   wnd->fInvalidPts = true;
 }
 
 /* *********************************************************************** */
@@ -4187,7 +4187,7 @@ static void hb_gt_xwc_UpdatePts(PXWND_DEF wnd)
       top    = wnd->rInvalidPts.top;
       right  = wnd->rInvalidPts.right;
       bottom = wnd->rInvalidPts.bottom;
-      wnd->fInvalidPts = HB_FALSE;
+      wnd->fInvalidPts = false;
       XCopyArea(wnd->dpy, wnd->pm, wnd->window, wnd->gc, left, top, right - left + 1, bottom - top + 1, left, top);
 
       /* if we've just overwritten the cursor then set it last state as SC_NONE */
@@ -4214,7 +4214,7 @@ static void hb_gt_xwc_UpdateChr(PXWND_DEF wnd)
       top    = wnd->rInvalidChr.top;
       right  = wnd->rInvalidChr.right;
       bottom = wnd->rInvalidChr.bottom;
-      wnd->fInvalidChr = HB_FALSE;
+      wnd->fInvalidChr = false;
 
       hb_gt_xwc_RepaintChar(wnd, left, top, right, bottom);
 
@@ -4300,7 +4300,7 @@ static void hb_gt_xwc_UpdateSize(PXWND_DEF wnd)
    {
       HB_USHORT rows, cols;
 
-      wnd->fWinResize = HB_FALSE;
+      wnd->fWinResize = false;
 
       rows = wnd->newHeight / wnd->fontHeight;
       if( rows > XWC_MAX_ROWS )
@@ -4327,7 +4327,7 @@ static void hb_gt_xwc_UpdateSize(PXWND_DEF wnd)
           (wnd->oldWidth != wnd->newWidth || wnd->oldHeight != wnd->newHeight) &&
           !wnd->fFullScreen )
       {
-         wnd->fCordsInited = HB_FALSE;
+         wnd->fCordsInited = false;
          wnd->oldWidth = wnd->newWidth;
          wnd->oldHeight = wnd->newHeight;
          XResizeWindow(wnd->dpy, wnd->window, wnd->width, wnd->height);
@@ -4376,7 +4376,7 @@ static void hb_gt_xwc_ProcessMessages(PXWND_DEF wnd, HB_BOOL fSync)
    {
       if( wnd->cursorBlinkRate == 0 )
       {
-         wnd->cursorState = HB_TRUE;
+         wnd->cursorState = true;
       }
       else
       {
@@ -4396,14 +4396,14 @@ static void hb_gt_xwc_ProcessMessages(PXWND_DEF wnd, HB_BOOL fSync)
 
    if( wnd->fDspTitle )
    {
-      wnd->fDspTitle = HB_FALSE;
+      wnd->fDspTitle = false;
       hb_gt_xwc_SetTitle(wnd, wnd->szTitle);
    }
 
    for( ;; )
    {
       const int event_types[] = { 0, ClientMessage, MappingNotify, SelectionClear, SelectionNotify, SelectionRequest };
-      HB_BOOL fRepeat = HB_FALSE;
+      HB_BOOL fRepeat = false;
       XEvent evt;
 
       hb_gt_xwc_UpdateSize(wnd);
@@ -4421,7 +4421,7 @@ static void hb_gt_xwc_ProcessMessages(PXWND_DEF wnd, HB_BOOL fSync)
              XCheckWindowEvent(wnd->dpy, wnd->window, XWC_STD_MASK, &evt) : XCheckTypedWindowEvent(wnd->dpy, wnd->window, event_types[i], &evt) )
          {
             hb_gt_xwc_WndProc(wnd, &evt);
-            fRepeat = HB_TRUE;
+            fRepeat = true;
          }
       }
 
@@ -4502,7 +4502,7 @@ static void hb_gt_xwc_ClearSelection(PXWND_DEF wnd)
    {
       XSetSelectionOwner(wnd->dpy, s_atomPrimary, None, wnd->ClipboardTime);
       XSetSelectionOwner(wnd->dpy, s_atomClipboard, None, wnd->ClipboardTime);
-      wnd->ClipboardOwner = HB_FALSE;
+      wnd->ClipboardOwner = false;
    }
 }
 
@@ -4525,7 +4525,7 @@ static void hb_gt_xwc_SetSelection(PXWND_DEF wnd, const char * szData, HB_SIZE n
 
    wnd->ClipboardSize = nSize;
    wnd->ClipboardTime = wnd->lastEventTime;
-   wnd->ClipboardOwner = HB_FALSE;
+   wnd->ClipboardOwner = false;
 
    if( nSize > 0 )
    {
@@ -4543,7 +4543,7 @@ static void hb_gt_xwc_SetSelection(PXWND_DEF wnd, const char * szData, HB_SIZE n
       XSetSelectionOwner(wnd->dpy, s_atomPrimary, wnd->window, wnd->ClipboardTime);
       if( XGetSelectionOwner(wnd->dpy, s_atomPrimary) == wnd->window )
       {
-         wnd->ClipboardOwner = HB_TRUE;
+         wnd->ClipboardOwner = true;
          XSetSelectionOwner(wnd->dpy, s_atomClipboard, wnd->window, wnd->ClipboardTime);
       }
       else
@@ -4567,7 +4567,7 @@ static void hb_gt_xwc_RequestSelection(PXWND_DEF wnd)
       HB_ULONG ulCurrentTime = hb_gt_xwc_CurrentTime();
       int iConnFD = ConnectionNumber(wnd->dpy);
 
-      wnd->ClipboardRcvd = HB_FALSE;
+      wnd->ClipboardRcvd = false;
       wnd->ClipboardRequest = s_atomTargets;
       aRequest = None;
 
@@ -4630,7 +4630,7 @@ static void hb_gt_xwc_RequestSelection(PXWND_DEF wnd)
 #ifdef HB_XWC_USE_LOCALE
 static HB_BOOL hb_gt_xwc_isUTF8(void)
 {
-   HB_BOOL fUTF8 = HB_FALSE;
+   HB_BOOL fUTF8 = false;
    const char * szLang = setlocale(LC_CTYPE, nullptr);
 
    if( szLang )
@@ -4656,16 +4656,16 @@ static PXWND_DEF hb_gt_xwc_CreateWndDef(PHB_GT pGT)
 
    wnd->pGT = pGT;
    wnd->dpy = nullptr;
-   wnd->fInit = wnd->fData = HB_FALSE;
+   wnd->fInit = wnd->fData = false;
    hb_gt_xwc_SetScrBuff(wnd, XWC_DEFAULT_COLS, XWC_DEFAULT_ROWS);
    wnd->iNewPosX = wnd->iNewPosY = -1;
    wnd->iCloseMode = 0;
-   wnd->fResizable = HB_TRUE;
-   wnd->fWinResize = HB_FALSE;
-   wnd->fFullScreen = HB_FALSE;
-   wnd->fMaximized = HB_FALSE;
-   wnd->fMinimized = HB_FALSE;
-   wnd->fAltEnter = HB_FALSE;
+   wnd->fResizable = true;
+   wnd->fWinResize = false;
+   wnd->fFullScreen = false;
+   wnd->fMaximized = false;
+   wnd->fMinimized = false;
+   wnd->fAltEnter = false;
 #if defined(HB_XWC_USE_LOCALE)
    wnd->fUTF8key = hb_gt_xwc_isUTF8();
 #endif
@@ -4674,7 +4674,7 @@ static PXWND_DEF hb_gt_xwc_CreateWndDef(PHB_GT pGT)
 
    /* Window Title */
    wnd->szTitle = hb_cmdargBaseProgName();
-   wnd->fDspTitle = HB_TRUE;
+   wnd->fDspTitle = true;
 
    /* Font parameters */
    wnd->fontHeight = XWC_DEFAULT_FONT_HEIGHT;
@@ -4690,10 +4690,10 @@ static PXWND_DEF hb_gt_xwc_CreateWndDef(PHB_GT pGT)
    /* Clear keyboard buffer */
    wnd->keyBuffNO = 0;
    wnd->keyBuffPointer = 0;
-   wnd->keyModifiers.bCtrl  = HB_FALSE;
-   wnd->keyModifiers.bAlt   = HB_FALSE;
-   wnd->keyModifiers.bAltGr = HB_FALSE;
-   wnd->keyModifiers.bShift = HB_FALSE;
+   wnd->keyModifiers.bCtrl  = false;
+   wnd->keyModifiers.bAlt   = false;
+   wnd->keyModifiers.bAltGr = false;
+   wnd->keyModifiers.bShift = false;
 
    for( int i = 0; i < 16; i++ )
    {
@@ -4725,7 +4725,7 @@ static HB_BOOL hb_gt_xwc_ConnectX(PXWND_DEF wnd, HB_BOOL fExit)
                   it can run without console!
          hb_errRT_TERM(EG_CREATE, 10001, nullptr, "Could not connect to X server", 0, 0);
          */
-         s_fNoXServer = HB_TRUE;
+         s_fNoXServer = true;
          hb_errInternal(10001, "Could not connect to X server.", nullptr, nullptr);
       }
       return false;
@@ -4817,7 +4817,7 @@ static void hb_gt_xwc_DissConnectX(PXWND_DEF wnd)
        * in heavy stress MT tests that it can receive some events bound with
        * destroyed objects and executes our error handler.
        */
-      s_fIgnoreErrors = HB_TRUE;
+      s_fIgnoreErrors = true;
    }
 }
 
@@ -4895,7 +4895,7 @@ static void hb_gt_xwc_SetResizing(PXWND_DEF wnd)
 
 static void hb_gt_xwc_CreateWindow(PXWND_DEF wnd)
 {
-   HB_BOOL fResizable = wnd->fResizable, fReset = HB_FALSE;
+   HB_BOOL fResizable = wnd->fResizable, fReset = false;
 
    HB_XWC_XLIB_LOCK(wnd->dpy);
 
@@ -4913,7 +4913,7 @@ static void hb_gt_xwc_CreateWindow(PXWND_DEF wnd)
             hb_errRT_TERM(EG_CREATE, 10001, nullptr, "Cannot load 'fixed' font", 0, 0);
             return;
             */
-            s_fNoXServer = HB_TRUE;
+            s_fNoXServer = true;
             hb_errInternal(10001, "Cannot load 'fixed' font", nullptr, nullptr);
          }
       }
@@ -4943,7 +4943,7 @@ static void hb_gt_xwc_CreateWindow(PXWND_DEF wnd)
 
    if( hb_gt_xwc_CreatePixmap(wnd) && !(wnd->fFullScreen || wnd->fMaximized || wnd->fMinimized) )
    {
-      wnd->fResizable = fReset = HB_TRUE;
+      wnd->fResizable = fReset = true;
       hb_gt_xwc_SetResizing(wnd);
    }
    hb_gt_xwc_ResizeRequest(wnd, wnd->cols, wnd->rows);
@@ -4953,7 +4953,7 @@ static void hb_gt_xwc_CreateWindow(PXWND_DEF wnd)
    if( wnd->fFullScreen )
    {
       hb_gt_xwc_FullScreen(wnd);
-      wnd->fResizable = HB_TRUE;
+      wnd->fResizable = true;
    }
    else if( wnd->fMinimized )
    {
@@ -4990,7 +4990,7 @@ static void hb_gt_xwc_CreateWindow(PXWND_DEF wnd)
          }
          else
          {
-            wnd->fUTF8key = HB_TRUE;
+            wnd->fUTF8key = true;
          }
       }
    }
@@ -5029,9 +5029,9 @@ static void hb_gt_xwc_RealRefresh( PXWND_DEF wnd, HB_BOOL fSync )
       if( hb_gt_xwc_ConnectX(wnd, true) )
       {
          hb_gt_xwc_CreateWindow(wnd);
-         wnd->fInit = HB_TRUE;
+         wnd->fInit = true;
          hb_gt_xwc_Enable();
-         fSync = HB_TRUE;
+         fSync = true;
       }
       else
       {
@@ -5041,9 +5041,9 @@ static void hb_gt_xwc_RealRefresh( PXWND_DEF wnd, HB_BOOL fSync )
 
    if( s_updateMode == XWC_SYNC_UPDATE && !wnd->fRefresh )
    {
-      wnd->fRefresh = HB_TRUE;
+      wnd->fRefresh = true;
       hb_gt_xwc_ProcessMessages(wnd, fSync);
-      wnd->fRefresh = HB_FALSE;
+      wnd->fRefresh = false;
    }
 }
 
@@ -5092,7 +5092,7 @@ static void hb_gt_xwc_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
    /* for signal handler */
    s_wnd = wnd;
 
-   wnd->cursorState = HB_TRUE;
+   wnd->cursorState = true;
    wnd->cursorBlinkRate = 700;
    wnd->cursorStateTime = 0;
 
@@ -5139,7 +5139,7 @@ static HB_BOOL hb_gt_xwc_SetMode(PHB_GT pGT, int iRow, int iCol)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_xwc_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRow, iCol));
 #endif
 
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
 
    if( iCol >= XWC_MIN_COLS && iRow >= XWC_MIN_ROWS && iCol <= XWC_MAX_COLS && iRow <= XWC_MAX_ROWS )
    {
@@ -5157,7 +5157,7 @@ static HB_BOOL hb_gt_xwc_SetMode(PHB_GT pGT, int iRow, int iCol)
       {
          hb_gt_xwc_SetScrBuff(wnd, iCol, iRow);
          HB_GTSELF_SEMICOLD(pGT);
-         fResult = HB_TRUE;
+         fResult = true;
       }
       else
       {
@@ -5173,7 +5173,7 @@ static HB_BOOL hb_gt_xwc_SetMode(PHB_GT pGT, int iRow, int iCol)
          HB_XWC_XLIB_LOCK(wnd->dpy);
          if( !fResizable )
          {
-            wnd->fResizable = HB_TRUE;
+            wnd->fResizable = true;
             hb_gt_xwc_SetResizing(wnd);
          }
          hb_gt_xwc_ResizeRequest(wnd, iCol, iRow);
@@ -5187,7 +5187,7 @@ static HB_BOOL hb_gt_xwc_SetMode(PHB_GT pGT, int iRow, int iCol)
             hb_gt_xwc_RealRefresh(wnd, true);
             if( iCol == wnd->cols && iRow == wnd->rows )
             {
-               fResult = HB_TRUE;
+               fResult = true;
             }
             else if( (timeout = hb_timerTest(timeout, &timer)) == 0 )
             {
@@ -5202,7 +5202,7 @@ static HB_BOOL hb_gt_xwc_SetMode(PHB_GT pGT, int iRow, int iCol)
 
          if( !fResizable )
          {
-            wnd->fResizable = HB_FALSE;
+            wnd->fResizable = false;
             HB_XWC_XLIB_LOCK(wnd->dpy);
             hb_gt_xwc_SetResizing(wnd);
             HB_XWC_XLIB_UNLOCK(wnd->dpy);
@@ -5636,7 +5636,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
             wnd->szTitle = nLen > 0 ? hb_strdup(pszTitle) : nullptr;
             hb_strfree(hString);
 
-            wnd->fDspTitle = HB_TRUE;
+            wnd->fDspTitle = true;
             if( wnd->window )
             {
                hb_gt_xwc_ProcessMessages(wnd, false);
@@ -5918,7 +5918,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
                   if( iColor != wnd->colors[iVal].value )
                   {
                      wnd->colors[iVal].value = iColor;
-                     wnd->colors[iVal].set = HB_FALSE;
+                     wnd->colors[iVal].set = false;
                      if( wnd->fInit )
                      {
                         HB_XWC_XLIB_LOCK(wnd->dpy);
@@ -5951,7 +5951,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
                   if( iColor != wnd->colors[iVal].value )
                   {
                      wnd->colors[iVal].value = iColor;
-                     wnd->colors[iVal].set = HB_FALSE;
+                     wnd->colors[iVal].set = false;
                   }
                }
                if( wnd->fInit )
@@ -6349,7 +6349,7 @@ static void hb_gt_xwc_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
             }
             if( iColor != iDefColor || usChar != ' ' )
             {
-               wnd->fData = HB_TRUE;
+               wnd->fData = true;
                break;
             }
          }
@@ -6357,7 +6357,7 @@ static void hb_gt_xwc_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
 #else
       else
       {
-         wnd->fData = HB_TRUE;
+         wnd->fData = true;
       }
 #endif
    }

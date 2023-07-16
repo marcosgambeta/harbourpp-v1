@@ -371,7 +371,7 @@ HB_FUNC( HB_SETKEYSAVE )
 
 HB_FUNC( HB_SETKEYCHECK )
 {
-   HB_BOOL bIsKeySet = HB_FALSE;
+   HB_BOOL bIsKeySet = false;
    int iKeyCode = hb_parni(1);
 
    if( iKeyCode != 0 )
@@ -407,7 +407,7 @@ HB_FUNC( HB_SETKEYCHECK )
             hb_vmPushInteger(iKeyCode);
             hb_vmSend(uiPCount);
 
-            bIsKeySet = HB_TRUE;
+            bIsKeySet = true;
          }
       }
    }

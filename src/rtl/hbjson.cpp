@@ -397,7 +397,7 @@ static void _hb_jsonEncode( PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE n
                else
                {
                   _hb_jsonCtxAdd(pCtx, ":", 1);
-                  fEOL = HB_FALSE;
+                  fEOL = false;
                }
 
                _hb_jsonEncode(pItem, pCtx, nLevel + 1, fEOL, cdp);
@@ -540,7 +540,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
                JSON syntax definition. This is allowed behaviour [Mindaugas] */
       HB_MAXINT nValue = 0;
       double dblValue = 0;
-      HB_BOOL fNeg, fDbl = HB_FALSE;
+      HB_BOOL fNeg, fDbl = false;
       int iDec = 0;
 
       fNeg = *szSource == '-';
@@ -559,7 +559,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
          double mult = 1;
 
          dblValue = static_cast<double>(nValue);
-         fDbl = HB_TRUE;
+         fDbl = true;
          szSource++;
          while( *szSource >= '0' && *szSource <= '9' )
          {
@@ -589,7 +589,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
          if( !fDbl )
          {
             dblValue = static_cast<double>(nValue);
-            fDbl = HB_TRUE;
+            fDbl = true;
          }
          if( fNegExp )
          {

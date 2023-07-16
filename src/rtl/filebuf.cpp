@@ -741,7 +741,7 @@ static void s_fileClose(PHB_FILE pFile)
 static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
 {
    bool fResult = false;
-   HB_BOOL fLockFS = HB_FALSE;
+   HB_BOOL fLockFS = false;
 
    hb_vmUnlock();
    if( (iType & FL_MASK) == FL_UNLOCK )

@@ -142,7 +142,7 @@ HB_BOOL hb_lppRecv(PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT timeo
    {
       pSocket->pRecvBuffer  = static_cast<char*>(hb_xgrab(4));
       pSocket->nRecvLen     = 0;
-      pSocket->fRecvHasSize = HB_FALSE;
+      pSocket->fRecvHasSize = false;
    }
 
    timer = hb_timerInit(timeout);
@@ -184,7 +184,7 @@ HB_BOOL hb_lppRecv(PHB_LPP pSocket, void ** data, HB_SIZE * len, HB_MAXINT timeo
          }
 
          pSocket->nRecvLen     = 0;
-         pSocket->fRecvHasSize = HB_TRUE;
+         pSocket->fRecvHasSize = true;
          if( pSocket->nRecvSize != 4 )
          {
             pSocket->pRecvBuffer = static_cast<char*>(hb_xrealloc(pSocket->pRecvBuffer, pSocket->nRecvSize));

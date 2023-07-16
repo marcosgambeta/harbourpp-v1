@@ -111,7 +111,7 @@ HB_FUNC( HB_STRCDECODE )
                {
                   ++pszSrc;
                   --nLen;
-                  fCont = HB_TRUE;
+                  fCont = true;
                }
             }
             if( !fCont || !nLen )
@@ -125,7 +125,7 @@ HB_FUNC( HB_STRCDECODE )
                char c = pszSrc[n];
                if( c == '"' )
                {
-                  fCont = HB_FALSE;
+                  fCont = false;
                   break;
                }
                pszDst[nDst + n] = c;

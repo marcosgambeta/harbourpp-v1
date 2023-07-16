@@ -60,7 +60,7 @@
 static int s_iMouseRow = 0;
 static int s_iMouseCol = 0;
 
-static HB_BOOL s_bMousePresent = HB_FALSE;
+static HB_BOOL s_bMousePresent = false;
 static int     s_iMouseButtons = -1;
 
 static HB_USHORT s_usMouseState = 0;
@@ -363,7 +363,7 @@ void hb_gt_sln_mouse_Init(void)
          s_iMouseButtons = 3;
       }
 
-      s_bMousePresent = HB_TRUE;
+      s_bMousePresent = true;
    }
 #if defined(HB_HAS_GPM)
    else if( hb_sln_UnderLinuxConsole )
@@ -391,7 +391,7 @@ void hb_gt_sln_mouse_Init(void)
       {
          Gpm_Event Evt;
 
-         s_bMousePresent = HB_TRUE;
+         s_bMousePresent = true;
 
          while( GetGpmEvent(&Evt) )
          {
@@ -446,7 +446,7 @@ void hb_gt_sln_mouse_Exit(void)
          }
       }
 #endif
-      s_bMousePresent = HB_FALSE;
+      s_bMousePresent = false;
    }
 }
 

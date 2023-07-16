@@ -400,10 +400,10 @@ using PHB_GTTRM = _HB_GTTRM *;
 
 /* static variables use by signal handler */
 #if defined(HB_OS_UNIX)
-   static volatile HB_BOOL s_WinSizeChangeFlag = HB_FALSE;
+   static volatile HB_BOOL s_WinSizeChangeFlag = false;
 #endif
 #if defined(HB_OS_UNIX) && defined(SA_NOCLDSTOP)
-   static volatile HB_BOOL s_fRestTTY = HB_FALSE;
+   static volatile HB_BOOL s_fRestTTY = false;
 #endif
 
 /* save old hilit tracking & enable mouse tracking */
@@ -484,25 +484,25 @@ static void sig_handler(int iSigNo)
          }
          break;
       case SIGWINCH:
-         s_WinSizeChangeFlag = HB_TRUE;
+         s_WinSizeChangeFlag = true;
          break;
       case SIGINT:
          #if 0
-         s_InetrruptFlag = HB_TRUE;
+         s_InetrruptFlag = true;
          #endif
          break;
       case SIGQUIT:
          #if 0
-         s_BreakFlag = HB_TRUE;
+         s_BreakFlag = true;
          #endif
          break;
       case SIGTSTP:
          #if 0
-         s_DebugFlag = HB_TRUE;
+         s_DebugFlag = true;
          #endif
          break;
       case SIGTTOU:
-         s_fRestTTY = HB_FALSE;
+         s_fRestTTY = false;
          break;
    }
    errno = e;
@@ -1338,7 +1338,7 @@ static int wait_key(PHB_GTTRM pTerm, int milisec)
 #if defined(HB_OS_UNIX)
    if( s_WinSizeChangeFlag )
    {
-      s_WinSizeChangeFlag = HB_FALSE;
+      s_WinSizeChangeFlag = false;
       return K_RESIZE;
    }
 #endif
@@ -1742,7 +1742,7 @@ static HB_BOOL hb_gt_trm_XtermSetMode( PHB_GTTRM pTerm, int * piRows, int * piCo
    }
    if( s_WinSizeChangeFlag )
    {
-      s_WinSizeChangeFlag = HB_FALSE;
+      s_WinSizeChangeFlag = false;
    }
 #endif
 
@@ -2063,7 +2063,7 @@ static HB_BOOL hb_gt_trm_BsdGetCursorPos(PHB_GTTRM pTerm, int * iRow, int * iCol
 
    if( pTerm->fPosAnswer )
    {
-      pTerm->fPosAnswer = HB_FALSE;
+      pTerm->fPosAnswer = false;
       *iRow = *iCol = -1;
    }
 
@@ -2169,7 +2169,7 @@ static HB_BOOL hb_gt_trm_AnsiGetCursorPos(PHB_GTTRM pTerm, int * iRow, int * iCo
       hb_gt_trm_termFlush(pTerm);
 
       n = j = x = y = 0;
-      pTerm->fPosAnswer = HB_FALSE;
+      pTerm->fPosAnswer = false;
 
       /* wait up to 2 seconds for answer */
       timeout = 2000;
@@ -2214,7 +2214,7 @@ static HB_BOOL hb_gt_trm_AnsiGetCursorPos(PHB_GTTRM pTerm, int * iRow, int * iCo
                            --j;
                         }
                      }
-                     pTerm->fPosAnswer = HB_TRUE;
+                     pTerm->fPosAnswer = true;
                      break;
                   }
                }
@@ -2522,7 +2522,7 @@ static void hb_gt_trm_AnsiExit(PHB_GTTRM pTerm)
  */
 static HB_BOOL hb_trm_Param(const char * pszParam, int * piValue)
 {
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
    char * pszGtTrmParams = hb_cmdargString("GTTRM");
 
    if( pszGtTrmParams )
@@ -2531,7 +2531,7 @@ static HB_BOOL hb_trm_Param(const char * pszParam, int * piValue)
 
       if( pszAt != nullptr )
       {
-         fResult = HB_TRUE;
+         fResult = true;
          if( piValue )
          {
             int iOverflow;
@@ -2552,7 +2552,7 @@ static HB_BOOL hb_trm_Param(const char * pszParam, int * piValue)
 
 static HB_BOOL hb_trm_isUTF8(PHB_GTTRM pTerm)
 {
-   HB_BOOL fUTF8 = HB_FALSE;
+   HB_BOOL fUTF8 = false;
    char * szLang;
 
    if( pTerm->fPosAnswer )
@@ -3421,7 +3421,7 @@ static void hb_gt_trm_SetTerm(PHB_GTTRM pTerm)
    pTerm->iAttrMask     = ~HB_GTTRM_ATTR_BOX;
    pTerm->iExtColor     = HB_GTTRM_CLRNDF;
    pTerm->terminal_ext  = 0;
-   pTerm->fAM           = HB_FALSE;
+   pTerm->fAM           = false;
 
    /* standard VGA colors */
    pTerm->colors[0x00] = 0x000000;
@@ -3550,7 +3550,7 @@ static void hb_gt_trm_SetTerm(PHB_GTTRM pTerm)
       if( strcmp(szTerm, "cygwin") == 0 )
       {
          pTerm->terminal_type  = TERM_CYGWIN;
-         pTerm->fAM            = HB_TRUE;
+         pTerm->fAM            = true;
       }
       else
       {
@@ -3572,7 +3572,7 @@ static void hb_gt_trm_SetTerm(PHB_GTTRM pTerm)
       pTerm->Bell           = hb_gt_trm_AnsiBell;
       pTerm->szAcsc         = szExtAcsc;
       pTerm->terminal_type  = TERM_CONS;
-      pTerm->fAM            = HB_TRUE;
+      pTerm->fAM            = true;
    }
    else
    {
@@ -3602,10 +3602,10 @@ static void hb_gt_trm_SetTerm(PHB_GTTRM pTerm)
    if( !pTerm->fOutTTY && pTerm->fStdinTTY )
    {
       pTerm->hFileno     = pTerm->hFilenoStdin;
-      pTerm->fOutTTY     = HB_TRUE;
+      pTerm->fOutTTY     = true;
    }
    pTerm->fPosAnswer     = pTerm->fOutTTY && !hb_trm_Param("NOPOS", nullptr) && pTerm->terminal_type != TERM_CYGWIN;
-   pTerm->fUTF8          = HB_FALSE;
+   pTerm->fUTF8          = false;
 
    hb_fsSetDevMode(pTerm->hFileno, FD_BINARY);
 
@@ -3646,7 +3646,7 @@ static void hb_gt_trm_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
    {
       struct sigaction act, old;
 
-      s_fRestTTY = HB_TRUE;
+      s_fRestTTY = true;
 
       /* if( pTerm->saved_TIO.c_lflag & TOSTOP ) != 0 */
       sigaction(SIGTTOU, nullptr, &old);
@@ -3863,7 +3863,7 @@ static HB_BOOL hb_gt_trm_mouse_ButtonState(PHB_GT pGT, int iButton)
 #endif
 
    PHB_GTTRM pTerm;
-   HB_BOOL ret = HB_FALSE;
+   HB_BOOL ret = false;
 
    pTerm = HB_GTTRM_GET(pGT);
    if( pTerm->mouse_type != MOUSE_NONE )

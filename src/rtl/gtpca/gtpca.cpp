@@ -123,7 +123,7 @@ static char * s_sOutBuf;
 
 #if defined(HB_HAS_TERMIOS)
 
-static volatile HB_BOOL s_fRestTTY = HB_FALSE;
+static volatile HB_BOOL s_fRestTTY = false;
 static struct termios s_saved_TIO, s_curr_TIO;
 
 #if defined(SIGTTOU)
@@ -148,34 +148,34 @@ static void sig_handler(int iSigNo)
 #ifdef SIGWINCH
       case SIGWINCH:
          #if 0
-         s_WinSizeChangeFlag = HB_TRUE;
+         s_WinSizeChangeFlag = true;
          #endif
          break;
 #endif
 #ifdef SIGINT
       case SIGINT:
          #if 0
-         s_InetrruptFlag = HB_TRUE;
+         s_InetrruptFlag = true;
          #endif
          break;
 #endif
 #ifdef SIGQUIT
       case SIGQUIT:
          #if 0
-         s_BreakFlag = HB_TRUE;
+         s_BreakFlag = true;
          #endif
          break;
 #endif
 #ifdef SIGTSTP
       case SIGTSTP:
          #if 0
-         s_DebugFlag = HB_TRUE;
+         s_DebugFlag = true;
          #endif
          break;
 #endif
 #ifdef SIGTTOU
       case SIGTTOU:
-         s_fRestTTY = HB_FALSE;
+         s_fRestTTY = false;
          break;
 #endif
    }
@@ -249,7 +249,7 @@ static void hb_gt_pca_AnsiGetCurPos(int * iRow, int * iCol)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_AnsiGetCurPos(%p, %p)", static_cast<void*>(iRow), static_cast<void*>(iCol)));
 #endif
 
-   static HB_BOOL s_fIsAnswer = HB_TRUE;
+   static HB_BOOL s_fIsAnswer = true;
 
    if( s_fIsAnswer && s_bStdinConsole && s_bStdoutConsole )
    {
@@ -294,7 +294,7 @@ static void hb_gt_pca_AnsiGetCurPos(int * iRow, int * iCol)
                   }
                   if( i < n && i > d && rdbuf[i] == 'R' )
                   {
-                     s_fIsAnswer = HB_TRUE;
+                     s_fIsAnswer = true;
                      break;
                   }
                }
@@ -505,7 +505,7 @@ static void hb_gt_pca_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
    s_bStderrConsole = hb_fsIsDevice(s_hFilenoStderr);
 
    s_cdpTerm = s_cdpHost = nullptr;
-   s_fDispTrans = HB_FALSE;
+   s_fDispTrans = false;
 
    s_szCrLf = hb_conNewLine();
    s_nCrLf = strlen(s_szCrLf);
@@ -516,7 +516,7 @@ static void hb_gt_pca_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
 /* SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment */
 #if defined(HB_HAS_TERMIOS) && defined(SA_NOCLDSTOP)
-   s_fRestTTY = HB_FALSE;
+   s_fRestTTY = false;
    if( s_bStdinConsole )
    {
 #if defined(SIGTTOU)
@@ -537,7 +537,7 @@ static void hb_gt_pca_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
       sigaction(SIGTTOU, &act, 0);
 #endif
 
-      s_fRestTTY = HB_TRUE;
+      s_fRestTTY = true;
 
       tcgetattr(hFilenoStdin, &s_saved_TIO);
       memcpy(&s_curr_TIO, &s_saved_TIO, sizeof(struct termios));
@@ -628,7 +628,7 @@ static void hb_gt_pca_Exit(PHB_GT pGT)
       hb_xfree(s_sOutBuf);
       s_iOutBufSize = s_iOutBufIndex = 0;
    }
-   s_bStdinConsole = s_bStdoutConsole = s_bStderrConsole = HB_FALSE;
+   s_bStdinConsole = s_bStdoutConsole = s_bStderrConsole = false;
 }
 
 static int hb_gt_pca_ReadKey(PHB_GT pGT, int iEventMask)

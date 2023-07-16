@@ -168,7 +168,7 @@ static void s_pushMethod(PHB_IOUSR pIO, int iMethod)
 static HB_BOOL s_fileAccept(PHB_FILE_FUNCS pFuncs, const char * pszFileName)
 {
    PHB_IOUSR pIO = s_getUsrIO(pFuncs);
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
 
    if( hb_strnicmp(pszFileName, pIO->prefix, pIO->prefix_len) == 0 )
    {
@@ -181,7 +181,7 @@ static HB_BOOL s_fileAccept(PHB_FILE_FUNCS pFuncs, const char * pszFileName)
       }
       else if( pIO->prefix_len > 0 )
       {
-         fResult = HB_TRUE;
+         fResult = true;
       }
    }
 

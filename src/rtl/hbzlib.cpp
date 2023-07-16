@@ -306,7 +306,7 @@ HB_FUNC( HB_ZCOMPRESS )
       if( nLen )
       {
          PHB_ITEM pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
-         HB_BOOL fAlloc = HB_FALSE;
+         HB_BOOL fAlloc = false;
          HB_SIZE nDstLen;
          char * pDest;
          int iResult;
@@ -329,7 +329,7 @@ HB_FUNC( HB_ZCOMPRESS )
             {
                pDest = nullptr;
                nDstLen = 0;
-               fAlloc = HB_TRUE;
+               fAlloc = true;
             }
          }
 
@@ -481,7 +481,7 @@ HB_FUNC( HB_GZCOMPRESS )
       if( nLen )
       {
          PHB_ITEM pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
-         HB_BOOL fAlloc = HB_FALSE;
+         HB_BOOL fAlloc = false;
          HB_SIZE nDstLen;
          char * pDest;
          int iResult;
@@ -504,7 +504,7 @@ HB_FUNC( HB_GZCOMPRESS )
             {
                pDest = nullptr;
                nDstLen = 0;
-               fAlloc = HB_TRUE;
+               fAlloc = true;
             }
          }
 

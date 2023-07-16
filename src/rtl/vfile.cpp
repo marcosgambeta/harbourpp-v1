@@ -142,7 +142,7 @@ static void hb_fileReturn(PHB_FILE pFile)
 HB_FUNC( HB_VFEXISTS )
 {
    const char * pszFileName = hb_parc(1);
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
    HB_ERRCODE uiError = 2;
 
    if( pszFileName )
@@ -251,7 +251,7 @@ HB_FUNC( HB_VFMOVEFILE )
 HB_FUNC( HB_VFDIREXISTS )
 {
    const char * pszDirName = hb_parc(1);
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
    HB_ERRCODE uiError = 2;
 
    if( pszDirName )
@@ -562,7 +562,7 @@ HB_FUNC( HB_VFLOCK )
    if( pFile )
    {
       HB_ERRCODE uiError = 0;
-      HB_BOOL fResult = HB_FALSE;
+      HB_BOOL fResult = false;
 
       if( HB_ISNUM(2) && HB_ISNUM(3) )
       {
@@ -585,7 +585,7 @@ HB_FUNC( HB_VFUNLOCK )
    if( pFile )
    {
       HB_ERRCODE uiError = 0;
-      HB_BOOL fResult = HB_FALSE;
+      HB_BOOL fResult = false;
 
       if( HB_ISNUM(2) && HB_ISNUM(3) )
       {

@@ -187,7 +187,7 @@ static PHB_GTWVT hb_gt_wvt_Find(HWND hWnd)
 
 static HB_BOOL hb_gt_wvt_Alloc(PHB_GTWVT pWVT)
 {
-   HB_BOOL fOK = HB_FALSE;
+   HB_BOOL fOK = false;
 
    HB_WVT_LOCK();
 
@@ -204,7 +204,7 @@ static HB_BOOL hb_gt_wvt_Alloc(PHB_GTWVT pWVT)
             {
                hb_gt_wvt_RegisterClass(pWVT->hInstance);
             }
-            fOK = HB_TRUE;
+            fOK = true;
             break;
          }
          ++iPos;
@@ -356,8 +356,8 @@ static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int iCmdShow)
    pWVT->fontAttribute     = WVT_DEFAULT_FONT_ATTR;
    HB_STRNCPY(pWVT->fontFace, WVT_DEFAULT_FONT_NAME, HB_SIZEOFARRAY(pWVT->fontFace) - 1);
 
-   pWVT->CaretExist        = HB_FALSE;
-   pWVT->CaretHidden       = HB_TRUE;
+   pWVT->CaretExist        = false;
+   pWVT->CaretHidden       = true;
    pWVT->CaretSize         = 0;
    pWVT->CaretWidth        = 0;
    pWVT->MousePos.x        = 0;
@@ -367,7 +367,7 @@ static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int iCmdShow)
    pWVT->keyPointerOut     = 0;
    pWVT->keyLastPos        = 0;
 
-   pWVT->CentreWindow      = HB_TRUE;         /* Default is to always display window in centre of screen */
+   pWVT->CentreWindow      = true;         /* Default is to always display window in centre of screen */
    pWVT->CodePage          = OEM_CHARSET;     /* GetACP(); - set code page to default system */
 #if !defined(UNICODE)
    pWVT->boxCodePage       = OEM_CHARSET;     /* GetACP(); - set code page to default system */
@@ -378,13 +378,13 @@ static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int iCmdShow)
 
    pWVT->Win9X             = hb_iswin9x();
 
-   pWVT->IgnoreWM_SYSCHAR  = HB_FALSE;
+   pWVT->IgnoreWM_SYSCHAR  = false;
 
-   pWVT->bMaximized        = HB_FALSE;
-   pWVT->bBeingMarked      = HB_FALSE;
-   pWVT->bBeginMarked      = HB_FALSE;
-   pWVT->bFullScreen       = HB_FALSE;
-   pWVT->bAltEnter         = HB_FALSE;
+   pWVT->bMaximized        = false;
+   pWVT->bBeingMarked      = false;
+   pWVT->bBeginMarked      = false;
+   pWVT->bFullScreen       = false;
+   pWVT->bAltEnter         = false;
 
    pWVT->MarginTop         = 0;
    pWVT->MarginLeft        = 0;
@@ -394,7 +394,7 @@ static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int iCmdShow)
 
    pWVT->lpSelectCopy      = TEXT("Mark and Copy");
    pWVT->hSelectCopy       = nullptr;
-   pWVT->bSelectCopy       = HB_TRUE;
+   pWVT->bSelectCopy       = true;
 
    pWVT->pMenu             = nullptr;
 
@@ -405,13 +405,13 @@ static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int iCmdShow)
       hb_itemRelease(pItem);
    }
 
-   pWVT->bResizable        = HB_TRUE;
+   pWVT->bResizable        = true;
    pWVT->CloseMode         = 0;
    pWVT->ResizeMode        = HB_GTI_RESIZEMODE_FONT;
-   pWVT->bResizing         = HB_FALSE;
-   pWVT->bAlreadySizing    = HB_FALSE;
+   pWVT->bResizing         = false;
+   pWVT->bAlreadySizing    = false;
 
-   pWVT->bComposited       = HB_FALSE;
+   pWVT->bComposited       = false;
 
    return pWVT;
 }
@@ -1700,7 +1700,7 @@ static void hb_gt_wvt_UpdateCaret(PHB_GTWVT pWVT)
       if( pWVT->CaretExist && !pWVT->CaretHidden )
       {
          HideCaret(pWVT->hWnd);
-         pWVT->CaretHidden = HB_TRUE;
+         pWVT->CaretHidden = true;
       }
    }
    else
@@ -1717,7 +1717,7 @@ static void hb_gt_wvt_UpdateCaret(PHB_GTWVT pWVT)
          xy = hb_gt_wvt_GetXYFromColRow(pWVT, iCol, iRow);
          SetCaretPos(xy.x, pWVT->CaretSize < 0 ? xy.y : xy.y + pWVT->PTEXTSIZE.y - pWVT->CaretSize);
          ShowCaret(pWVT->hWnd);
-         pWVT->CaretHidden = HB_FALSE;
+         pWVT->CaretHidden = false;
       }
    }
 }
@@ -1727,7 +1727,7 @@ static void hb_gt_wvt_KillCaret(PHB_GTWVT pWVT)
    if( pWVT->CaretExist )
    {
       DestroyCaret();
-      pWVT->CaretExist = HB_FALSE;
+      pWVT->CaretExist = false;
    }
 }
 
@@ -1823,7 +1823,7 @@ static void hb_gt_wvt_FitRows(PHB_GTWVT pWVT)
    if( maxHeight > 0 )
    {
       HB_BOOL bOldCentre = pWVT->CentreWindow;
-      pWVT->CentreWindow = HB_FALSE;
+      pWVT->CentreWindow = false;
       HB_GTSELF_SETMODE(pWVT->pGT, maxHeight / pWVT->PTEXTSIZE.y, maxWidth / pWVT->PTEXTSIZE.x);
       pWVT->CentreWindow = bOldCentre;
    }
@@ -2122,20 +2122,20 @@ static void hb_gt_wvt_ResetWindowSize(PHB_GTWVT pWVT, HFONT hFont)
 
       if( pWVT->CentreWindow && SystemParametersInfo(SPI_GETWORKAREA, 0, &rcWorkArea, 0) )
       {
-         int bRecenter = HB_FALSE;
+         int bRecenter = false;
 
          if( width > rcWorkArea.right - rcWorkArea.left )
          {
             /* New window width is larger than monitor workarea, force to fit and adjusts Font size */
             width = rcWorkArea.right - rcWorkArea.left;
-            bRecenter = HB_TRUE;
+            bRecenter = true;
          }
 
          if( height > rcWorkArea.bottom - rcWorkArea.top )
          {
             /* New window height is larger than monitor workarea, force to fit and adjusts Font height */
             height = rcWorkArea.bottom - rcWorkArea.top;
-            bRecenter = HB_TRUE;
+            bRecenter = true;
          }
 
          if( bRecenter || rcWorkArea.left + width > rcWorkArea.right || rcWorkArea.top + height > rcWorkArea.bottom || wi.left != pWVT->iNewPosX || wi.top != pWVT->iNewPosY )
@@ -2385,7 +2385,7 @@ static void hb_gt_wvt_MouseEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LP
       case WM_LBUTTONDOWN:
          if( pWVT->bBeginMarked )
          {
-            pWVT->bBeingMarked = HB_TRUE;
+            pWVT->bBeingMarked = true;
 
             pWVT->sRectNew.left   = xy.x;
             pWVT->sRectNew.top    = xy.y;
@@ -2416,8 +2416,8 @@ static void hb_gt_wvt_MouseEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LP
 
          if( pWVT->bBeingMarked )
          {
-            pWVT->bBeginMarked = HB_FALSE;
-            pWVT->bBeingMarked = HB_FALSE;
+            pWVT->bBeginMarked = false;
+            pWVT->bBeingMarked = false;
 
             RedrawWindow(pWVT->hWnd, nullptr, nullptr, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -2589,20 +2589,20 @@ static HB_BOOL hb_gt_wvt_KeyEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
    {
       case WM_KEYDOWN:
       case WM_SYSKEYDOWN:
-         pWVT->IgnoreWM_SYSCHAR = HB_FALSE;
+         pWVT->IgnoreWM_SYSCHAR = false;
          iFlags = hb_gt_wvt_GetKeyFlags();
          switch( wParam )
          {
             case VK_BACK:
-               pWVT->IgnoreWM_SYSCHAR = HB_TRUE;
+               pWVT->IgnoreWM_SYSCHAR = true;
                iKey = HB_KX_BS;
                break;
             case VK_TAB:
-               pWVT->IgnoreWM_SYSCHAR = HB_TRUE;
+               pWVT->IgnoreWM_SYSCHAR = true;
                iKey = HB_KX_TAB;
                break;
             case VK_RETURN:
-               pWVT->IgnoreWM_SYSCHAR = HB_TRUE;
+               pWVT->IgnoreWM_SYSCHAR = true;
                if( pWVT->bAltEnter && (iFlags & HB_KF_ALT) != 0 )
                {
                   hb_gt_wvt_FullScreen(pWVT->pGT);
@@ -2617,7 +2617,7 @@ static HB_BOOL hb_gt_wvt_KeyEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
                }
                break;
             case VK_ESCAPE:
-               pWVT->IgnoreWM_SYSCHAR = HB_TRUE;
+               pWVT->IgnoreWM_SYSCHAR = true;
                iKey = HB_KX_ESC;
                break;
 
@@ -2704,7 +2704,7 @@ static HB_BOOL hb_gt_wvt_KeyEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
                iFlags |= HB_KF_CTRL;
                /* fallthrough */
             case VK_PAUSE:
-               pWVT->IgnoreWM_SYSCHAR = HB_TRUE;
+               pWVT->IgnoreWM_SYSCHAR = true;
                iKey = HB_KX_PAUSE;
                break;
 
@@ -2724,7 +2724,7 @@ static HB_BOOL hb_gt_wvt_KeyEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
             case VK_NUMPAD9:
                if( iFlags & HB_KF_CTRL )
                {
-                  pWVT->IgnoreWM_SYSCHAR = HB_TRUE;
+                  pWVT->IgnoreWM_SYSCHAR = true;
                   iKey = static_cast<int>(wParam) - VK_NUMPAD0 + '0';
                }
                else if( iFlags == HB_KF_ALT || iFlags == HB_KF_ALTGR )
@@ -2738,7 +2738,7 @@ static HB_BOOL hb_gt_wvt_KeyEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
                iFlags |= HB_KF_KEYPAD;
                if( iFlags & HB_KF_CTRL )
                {
-                  pWVT->IgnoreWM_SYSCHAR = HB_TRUE;
+                  pWVT->IgnoreWM_SYSCHAR = true;
                   iKey = '.';
                }
                break;
@@ -2989,7 +2989,7 @@ static HB_BOOL hb_gt_wvt_KeyEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
 #endif
             }
          }
-         pWVT->IgnoreWM_SYSCHAR = HB_FALSE;
+         pWVT->IgnoreWM_SYSCHAR = false;
          break;
    }
 
@@ -3332,16 +3332,16 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
 
       case WM_ENTERSIZEMOVE:
          GetClientRect(pWVT->hWnd, &pWVT->ciLast);  /* need in Paint function, client area before sizing started */
-         pWVT->bResizing = HB_TRUE;
+         pWVT->bResizing = true;
          return 0;
 
       case WM_EXITSIZEMOVE:
-         pWVT->bResizing = HB_FALSE;
+         pWVT->bResizing = false;
          if( pWVT->bAlreadySizing )
          /* user was resizing as opposed to moving window */
          {
             hb_gt_wvt_FitRows(pWVT);
-            pWVT->bAlreadySizing = HB_FALSE;
+            pWVT->bAlreadySizing = false;
          }
          return 0;
 
@@ -3350,7 +3350,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
          {
             if( pWVT->bResizing && pWVT->ResizeMode == HB_GTI_RESIZEMODE_ROWS )
             {
-               pWVT->bAlreadySizing = HB_TRUE;
+               pWVT->bAlreadySizing = true;
             }
             else if( pWVT->ResizeMode == HB_GTI_RESIZEMODE_FONT )
             {
@@ -3370,7 +3370,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
       case WM_SYSCOMMAND:
          if( wParam == SYS_EV_MARK )
          {
-            pWVT->bBeginMarked = HB_TRUE;
+            pWVT->bBeginMarked = true;
             return 0;
          }
          else if( wParam > SYS_EV_MARK )
@@ -3469,8 +3469,8 @@ static HB_BOOL hb_gt_wvt_CreateConsoleWindow(PHB_GTWVT pWVT)
          }
          if( pWVT->bFullScreen )
          {
-            pWVT->bMaximized = HB_FALSE;
-            pWVT->bFullScreen = HB_FALSE;
+            pWVT->bMaximized = false;
+            pWVT->bFullScreen = false;
             hb_gt_wvt_FullScreen(pWVT->pGT);
          }
          else
@@ -3529,13 +3529,13 @@ static HB_BOOL hb_gt_wvt_FullScreen(PHB_GT pGT)
 
       pWVT->MarginLeft = 0;
       pWVT->MarginTop = 0;
-      pWVT->bFullScreen = HB_FALSE;
+      pWVT->bFullScreen = false;
    }
    else
    {
       nStyle &= ~(WS_CAPTION | WS_BORDER | WS_THICKFRAME);
       nExtendedStyle &= ~WS_EX_TOPMOST;
-      pWVT->bFullScreen = HB_TRUE;
+      pWVT->bFullScreen = true;
    }
 
    SetWindowLongPtr(pWVT->hWnd, GWL_STYLE, nStyle);
@@ -3679,7 +3679,7 @@ static HB_BOOL hb_gt_wvt_SetMode(PHB_GT pGT, int iRow, int iCol)
 #endif
 
    PHB_GTWVT pWVT;
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
 
    pWVT = HB_GTWVT_GET(pGT);
 
@@ -4497,7 +4497,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
                {
                   hb_strfree(pWVT->hSelectCopy);
                   pWVT->lpSelectCopy = HB_ITEMGETSTR(pInfo->pNewVal, &pWVT->hSelectCopy, nullptr);
-                  pWVT->bSelectCopy = HB_TRUE;
+                  pWVT->bSelectCopy = true;
                   if( hSysMenu )
                   {
                      ModifyMenu(hSysMenu, SYS_EV_MARK, MF_BYCOMMAND | MF_STRING | MF_ENABLED, SYS_EV_MARK, pWVT->lpSelectCopy);
@@ -4891,7 +4891,7 @@ static void hb_gt_wvt_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
       }
       else
       {
-         pWVT->fInit = HB_TRUE;
+         pWVT->fInit = true;
       }
    }
 }

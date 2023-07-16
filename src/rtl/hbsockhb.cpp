@@ -100,7 +100,7 @@
 #include "hbstack.hpp"
 #include "hbsocket.hpp"
 
-static HB_BOOL s_fInit = HB_FALSE;
+static HB_BOOL s_fInit = false;
 
 /* create new extended socket structure */
 static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams);
@@ -346,7 +346,7 @@ static void s_socket_exit(void * cargo)
    {
       hb_socketCleanup();
       s_iFilterCount = 0;
-      s_fInit = HB_FALSE;
+      s_fInit = false;
    }
 }
 
@@ -357,7 +357,7 @@ static void s_socket_init(void)
       hb_sockexRegister(nullptr);
       hb_socketInit();
       hb_vmAtQuit(s_socket_exit, nullptr);
-      s_fInit = HB_TRUE;
+      s_fInit = true;
    }
 }
 

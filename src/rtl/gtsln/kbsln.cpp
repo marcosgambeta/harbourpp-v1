@@ -117,8 +117,8 @@ static int s_iDeadKey = -1;
    int hb_sln_escDelay = 0;
 #endif
 
-HB_BOOL hb_sln_UnderLinuxConsole = HB_FALSE;
-HB_BOOL hb_sln_UnderXterm        = HB_FALSE;
+HB_BOOL hb_sln_UnderLinuxConsole = false;
+HB_BOOL hb_sln_UnderXterm        = false;
 
 static int hb_sln_try_get_Kbd_State(void);
 
@@ -314,7 +314,7 @@ int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_ReadKey(%p,%d)", static_cast<void*>(pGT), static_cast<int>(iEventMask)));
 #endif
 
-   static int InDeadState = HB_FALSE;
+   static int InDeadState = false;
    unsigned int ch, tmp, kbdflags;
    HB_BOOL fInput;
    int iKey;
@@ -328,7 +328,7 @@ int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
    /* has screen size changed ? */
    if( hb_sln_bScreen_Size_Changed )
    {
-      hb_sln_bScreen_Size_Changed = HB_FALSE;
+      hb_sln_bScreen_Size_Changed = false;
       SLtt_get_screen_size();
 #if SLANG_VERSION > 10202
       SLsmg_reinit_smg();
@@ -399,7 +399,7 @@ int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
    /* Dead key handling */
    if( InDeadState )
    {
-      InDeadState = HB_FALSE;
+      InDeadState = false;
       if( static_cast<int>(ch) == s_iDeadKey ) /* double press Dead key */
       {
          return ch;
@@ -419,7 +419,7 @@ int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
    else if( static_cast<int>(ch) == s_iDeadKey )
    {
       /* entering Dead key state */
-      InDeadState = HB_TRUE;
+      InDeadState = true;
       return 0;
    }
 

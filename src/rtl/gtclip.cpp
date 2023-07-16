@@ -139,7 +139,7 @@ HB_BOOL hb_gt_winapi_setClipboardRaw(HB_UINT uFormat, void * pData, HB_SIZE nSiz
       }
       else
       {
-         fResult = HB_TRUE;
+         fResult = true;
       }
 
       CloseClipboard();
@@ -197,7 +197,7 @@ HB_BOOL hb_gt_winapi_setClipboard(HB_UINT uFormat, PHB_ITEM pItem)
       }
       else
       {
-         fResult = HB_TRUE;
+         fResult = true;
       }
 
       CloseClipboard();

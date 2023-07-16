@@ -107,7 +107,7 @@ PHB_REGEX hb_regexCompile(const char * szRegEx, HB_SIZE nLen, int iFlags)
 
    pRegEx = static_cast<PHB_REGEX>(hb_gcAllocate(sizeof(*pRegEx), &s_gcRegexFuncs));
    memset(pRegEx, 0, sizeof(*pRegEx));
-   pRegEx->fFree = HB_TRUE;
+   pRegEx->fFree = true;
    pRegEx->iFlags = iFlags;
 
    if( (s_reg_comp)(pRegEx, szRegEx) != 0 )
@@ -122,7 +122,7 @@ PHB_REGEX hb_regexCompile(const char * szRegEx, HB_SIZE nLen, int iFlags)
 PHB_REGEX hb_regexGet(PHB_ITEM pRegExItm, int iFlags)
 {
    PHB_REGEX pRegEx = nullptr;
-   HB_BOOL fArgError = HB_TRUE;
+   HB_BOOL fArgError = true;
 
    if( pRegExItm )
    {
@@ -131,7 +131,7 @@ PHB_REGEX hb_regexGet(PHB_ITEM pRegExItm, int iFlags)
          pRegEx = static_cast<PHB_REGEX>(hb_itemGetPtrGC(pRegExItm, &s_gcRegexFuncs));
          if( pRegEx )
          {
-            fArgError = HB_FALSE;
+            fArgError = false;
          }
       }
       else if( HB_IS_STRING(pRegExItm) )
@@ -140,7 +140,7 @@ PHB_REGEX hb_regexGet(PHB_ITEM pRegExItm, int iFlags)
          const char * szRegEx = hb_itemGetCPtr(pRegExItm);
          if( nLen > 0 )
          {
-            fArgError = HB_FALSE;
+            fArgError = false;
             pRegEx = hb_regexCompile(szRegEx, nLen, iFlags);
          }
       }

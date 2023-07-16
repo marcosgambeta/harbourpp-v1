@@ -49,7 +49,7 @@
 HB_FUNC( HB_STRISUTF8 )
 {
    HB_SIZE nLen = hb_parclen(1);
-   HB_BOOL fUtf8 = HB_FALSE;
+   HB_BOOL fUtf8 = false;
 
    if( nLen > 0 )
    {
@@ -83,13 +83,13 @@ HB_FUNC( HB_STRISUTF8 )
                break;
             }
 
-            fUtf8 = HB_TRUE;
+            fUtf8 = true;
          }
       }
       while( --nLen );
       if( nLen != 0 )
       {
-         fUtf8 = HB_FALSE;
+         fUtf8 = false;
       }
    }
 

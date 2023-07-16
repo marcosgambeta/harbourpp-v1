@@ -189,7 +189,7 @@ HB_FUNC( HB_REGEXCOMP )
       pRegEx = hb_regexCompile( hb_parc(1), nLen, iFlags );
       if( pRegEx )
       {
-         pRegEx->fFree = HB_FALSE;
+         pRegEx->fFree = false;
          hb_retptrGC(pRegEx);
       }
    }
@@ -267,7 +267,7 @@ static HB_BOOL hb_regex(int iRequest)
    HB_REGMATCH aMatches[HB_REGMATCH_SIZE( REGEX_MAX_GROUPS )];
    PHB_ITEM pRetArray, pMatch, pString;
    int i, iMatches, iMaxMatch;
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
    PHB_REGEX pRegEx;
    const char * pszString;
    HB_SIZE nLen;
@@ -306,7 +306,7 @@ static HB_BOOL hb_regex(int iRequest)
                }
             }
             hb_itemReturnRelease(pRetArray);
-            fResult = HB_TRUE;
+            fResult = true;
             break;
 
          case 1: /* LIKE */
@@ -314,7 +314,7 @@ static HB_BOOL hb_regex(int iRequest)
             break;
 
          case 2: /* MATCH ( HAS ) */
-            fResult = HB_TRUE;
+            fResult = true;
             break;
 
          case 3: /* SPLIT */
@@ -342,7 +342,7 @@ static HB_BOOL hb_regex(int iRequest)
             hb_itemRelease(pMatch);
 
             hb_itemReturnRelease(pRetArray);
-            fResult = HB_TRUE;
+            fResult = true;
             break;
 
          case 4: /* results AND positions */
@@ -370,7 +370,7 @@ static HB_BOOL hb_regex(int iRequest)
                }
             }
             hb_itemReturnRelease(pRetArray);
-            fResult = HB_TRUE;
+            fResult = true;
             break;
 
          case 5: /* _ALL_ results AND positions */
@@ -484,7 +484,7 @@ static HB_BOOL hb_regex(int iRequest)
             }
             while( iEO && nLen && (iMax == 0 || iCount < iMax) && (iMatches = hb_regexec(pRegEx, pszString, nLen, iMaxMatch, aMatches)) > 0 );
             hb_itemReturnRelease(pRetArray);
-            fResult = HB_TRUE;
+            fResult = true;
             break;
          }
       }
@@ -494,7 +494,7 @@ static HB_BOOL hb_regex(int iRequest)
       pRetArray = hb_itemArrayNew(1);
       hb_arraySet(pRetArray, 1, pString);
       hb_itemReturnRelease(pRetArray);
-      fResult = HB_TRUE;
+      fResult = true;
    }
 
    hb_regexFree(pRegEx);

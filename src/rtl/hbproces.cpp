@@ -366,7 +366,7 @@ HB_FHANDLE hb_fsProcessOpen(const char * pszFileName, HB_FHANDLE * phStdin, HB_F
               hPipeOut[2] = { FS_ERROR, FS_ERROR },
               hPipeErr[2] = { FS_ERROR, FS_ERROR };
    HB_FHANDLE hResult = FS_ERROR;
-   HB_BOOL fError = HB_FALSE;
+   HB_BOOL fError = false;
 
    if( phStdin != nullptr )
    {
@@ -480,7 +480,7 @@ HB_FHANDLE hb_fsProcessOpen(const char * pszFileName, HB_FHANDLE * phStdin, HB_F
 
       if( pid == -1 )
       {
-         fError = HB_TRUE;
+         fError = true;
       }
       else if( pid != 0 )    /* parent process */
       {
@@ -649,7 +649,7 @@ HB_FHANDLE hb_fsProcessOpen(const char * pszFileName, HB_FHANDLE * phStdin, HB_F
 
       if( pid < 0 )
       {
-         fError = HB_TRUE;
+         fError = true;
       }
       else if( pid != 0 )    /* parent process */
       {
@@ -729,7 +729,7 @@ int hb_fsProcessValue(HB_FHANDLE hProcess, HB_BOOL fWait)
 
 #if defined(HB_OS_WIN)
 {
-   HB_BOOL fError = HB_TRUE;
+   HB_BOOL fError = true;
    DWORD dwResult;
    HANDLE hProc = reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hProcess));
 
@@ -807,7 +807,7 @@ HB_BOOL hb_fsProcessClose(HB_FHANDLE hProcess, HB_BOOL fGentle)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsProcessClose(%p, %d)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hProcess)), fGentle));
 #endif
 
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
 
 #if defined(HB_OS_WIN)
 {
@@ -989,7 +989,7 @@ int hb_fsProcessRun(const char * pszFileName, const char * pStdInBuf, HB_SIZE nS
    {
 #if defined(HB_OS_WIN)
 
-      HB_BOOL fFinished = HB_FALSE, fBlocked;
+      HB_BOOL fFinished = false, fBlocked;
       int iPipeCount = 0;
 
       if( nStdInLen == 0 && hStdin != FS_ERROR )
@@ -1138,7 +1138,7 @@ int hb_fsProcessRun(const char * pszFileName, const char * pStdInBuf, HB_SIZE nS
             {
                iResult = -2;
             }
-            fFinished = HB_TRUE;
+            fFinished = true;
          }
       }
 
@@ -1376,12 +1376,12 @@ int hb_fsProcessRun(const char * pszFileName, const char * pStdInBuf, HB_SIZE nS
             }
 
             nfds = 0;
-            fStdout = fStderr = fStdin = HB_FALSE;
+            fStdout = fStderr = fStdin = false;
             if( hStdout != FS_ERROR )
             {
                if( (fds[nfds].revents & POLLIN) != 0 )
                {
-                  fStdout = HB_TRUE;
+                  fStdout = true;
                }
                else if( (fds[nfds].revents & (POLLHUP | POLLNVAL | POLLERR)) != 0 )
                {
@@ -1394,7 +1394,7 @@ int hb_fsProcessRun(const char * pszFileName, const char * pStdInBuf, HB_SIZE nS
             {
                if( (fds[nfds].revents & POLLIN) != 0 )
                {
-                  fStderr = HB_TRUE;
+                  fStderr = true;
                }
                else if( (fds[nfds].revents & (POLLHUP | POLLNVAL | POLLERR)) != 0 )
                {
@@ -1407,7 +1407,7 @@ int hb_fsProcessRun(const char * pszFileName, const char * pStdInBuf, HB_SIZE nS
             {
                if( (fds[nfds].revents & POLLOUT) != 0 )
                {
-                  fStdin = HB_TRUE;
+                  fStdin = true;
                }
                else if( (fds[nfds].revents & (POLLHUP | POLLNVAL | POLLERR)) != 0 )
                {

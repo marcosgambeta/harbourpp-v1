@@ -57,12 +57,12 @@ static HB_GT_FUNCS SuperTable;
 
 static volatile HB_BOOL s_SignalTable[MAX_SIGNO];
 #if defined(SA_NOCLDSTOP) && defined(SA_RESTART) && defined(SIGCHLD)
-static volatile HB_BOOL s_SignalFlag = HB_FALSE;
+static volatile HB_BOOL s_SignalFlag = false;
 /* this variable should be global and checked in main VM loop */
-static volatile HB_BOOL s_BreakFlag = HB_FALSE;
-static volatile HB_BOOL s_InetrruptFlag = HB_FALSE;
+static volatile HB_BOOL s_BreakFlag = false;
+static volatile HB_BOOL s_InetrruptFlag = false;
 #endif
-static volatile HB_BOOL s_WinSizeChangeFlag = HB_FALSE;
+static volatile HB_BOOL s_WinSizeChangeFlag = false;
 
 static int s_iStdIn, s_iStdOut, s_iStdErr;
 
@@ -224,8 +224,8 @@ static void sig_handler(int signo)
    int e = errno;
 
    if( signo < MAX_SIGNO ) {
-      s_SignalTable[signo] = HB_TRUE;
-      s_SignalFlag = HB_TRUE;
+      s_SignalTable[signo] = true;
+      s_SignalFlag = true;
    }
 
    switch( signo ) {
@@ -239,13 +239,13 @@ static void sig_handler(int signo)
          break;
       }
       case SIGWINCH:
-         s_WinSizeChangeFlag = HB_TRUE;
+         s_WinSizeChangeFlag = true;
          break;
       case SIGINT:
-         s_InetrruptFlag = HB_TRUE;
+         s_InetrruptFlag = true;
          break;
       case SIGQUIT:
-         s_BreakFlag = HB_TRUE;
+         s_BreakFlag = true;
          break;
       case SIGTSTP:
          break;
@@ -260,9 +260,9 @@ static void set_signals(void)
 {
    int i, sigs[] = { SIGINT, SIGQUIT, SIGTSTP, SIGWINCH, SIGCHLD, 0 };
 
-   s_SignalFlag = HB_FALSE;
+   s_SignalFlag = false;
    for( i = 1; i < MAX_SIGNO; ++i ) {
-      s_SignalTable[i] = HB_FALSE;
+      s_SignalTable[i] = false;
    }
 
    /* Ignore SIGPIPEs so they don't kill us. */
@@ -327,9 +327,9 @@ static void sig_handler(int signo)
 
 static void set_signals(void)
 {
-   s_SignalFlag = HB_FALSE;
+   s_SignalFlag = false;
    for( int i = 1; i < MAX_SIGNO; ++i ) {
-      s_SignalTable[i] = HB_FALSE;
+      s_SignalTable[i] = false;
       set_sig_handler(i);
    }
 }
@@ -891,7 +891,7 @@ static int wait_key(InOutBase * ioBase, int milisec)
    keyTab * ptr;
 
    if( s_WinSizeChangeFlag ) {
-      s_WinSizeChangeFlag = HB_FALSE;
+      s_WinSizeChangeFlag = false;
       return K_RESIZE;
    }
 
@@ -1621,7 +1621,7 @@ static int gt_setsize( InOutBase * ioBase, int rows, int cols )
       }
 
       if( s_WinSizeChangeFlag ) {
-         s_WinSizeChangeFlag = HB_FALSE;
+         s_WinSizeChangeFlag = false;
          ret = gt_resize(ioBase);
       }
 #if defined(TIOCGWINSZ)
@@ -2247,11 +2247,11 @@ void HB_GT_FUNC(gt_SetDebugKey(int iDebug))
 
 HB_BOOL HB_GT_FUNC(gt_GetSignalFlag(int iSig))
 {
-   HB_BOOL bRetVal = HB_FALSE;
+   HB_BOOL bRetVal = false;
 
    if( iSig > 0 && iSig < MAX_SIGNO && s_SignalTable[iSig] ) {
-      bRetVal = HB_TRUE;
-      s_SignalTable[iSig] = HB_FALSE;
+      bRetVal = true;
+      s_SignalTable[iSig] = false;
    }
 
    return bRetVal;
@@ -2590,7 +2590,7 @@ static HB_BOOL hb_gt_crs_mouse_ButtonState(PHB_GT pGT, int iButton)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_crs_mouse_ButtonState(%p,%i)", static_cast<void*>(pGT), iButton));
 #endif
 
-   HB_BOOL ret = HB_FALSE;
+   HB_BOOL ret = false;
 
    HB_SYMBOL_UNUSED(pGT);
 
@@ -2816,7 +2816,7 @@ static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
 #include <term.h>
 static void curs_wrkaround(void)
 {
-   back_color_erase = HB_FALSE;
+   back_color_erase = false;
 #if 0
    cur_term->type.Booleans[28] = 0;
 #endif

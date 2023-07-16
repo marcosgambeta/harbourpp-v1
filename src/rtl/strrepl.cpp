@@ -69,7 +69,7 @@ HB_FUNC( HB_STRREPLACE )
          const char * ptr;
          char * pszResult = nullptr;
          HB_SIZE * ptrOpt = nullptr;
-         HB_BOOL fNext = HB_FALSE;
+         HB_BOOL fNext = false;
          HB_SIZE nDst, nSize, nPos, nAt, nSkip, nTmp;
 
          nDst = hb_itemSize(HB_IS_HASH(pSrc) ? pSrc : pDst);
@@ -99,7 +99,7 @@ HB_FUNC( HB_STRREPLACE )
                }
                else if( pszSrc == nullptr )
                {
-                  fNext = HB_TRUE;
+                  fNext = true;
                }
             }
          }

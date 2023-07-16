@@ -264,7 +264,7 @@ static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
       {
          if( pSock->fShutDown )
          {
-            pBF->sock->fShutDown = HB_TRUE;
+            pBF->sock->fShutDown = true;
          }
          if( pSock->iAutoFlush != 0 && pBF->sock->iAutoFlush == 0 )
          {
@@ -348,7 +348,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
 
          pSockNew = static_cast<PHB_SOCKEX>(hb_xgrabz(sizeof(HB_SOCKEX)));
          pSockNew->sd = pSock->sd;
-         pSockNew->fRedirAll = HB_TRUE;
+         pSockNew->fRedirAll = true;
          pSockNew->fShutDown = pSock->fShutDown;
          pSockNew->iAutoFlush = pSock->iAutoFlush;
          pSockNew->pFilter = &s_sockFilter;
