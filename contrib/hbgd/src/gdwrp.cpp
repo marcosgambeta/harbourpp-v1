@@ -1399,7 +1399,7 @@ HB_FUNC( GDIMAGESTRING ) /* void gdImageChar(gdImagePtr im, gdFontPtr font, int 
       int color = hb_parni(6);
 
       /* Write string */
-      gdImageString(im, font, x, y, static_cast<unsigned char*>(const_cast<char*>(hb_parc(5))), color);
+      gdImageString(im, font, x, y, reinterpret_cast<unsigned char*>(const_cast<char*>(hb_parc(5))), color);
    }
    else
    {
@@ -1421,7 +1421,7 @@ HB_FUNC( GDIMAGESTRINGUP ) /* void gdImageCharUp(gdImagePtr im, gdFontPtr font, 
       int color = hb_parni(6);
 
       /* Write string */
-      gdImageStringUp(im, font, x, y, static_cast<unsigned char*>(const_cast<char*>(hb_parc(5))), color);
+      gdImageStringUp(im, font, x, y, reinterpret_cast<unsigned char*>(const_cast<char*>(hb_parc(5))), color);
    }
    else
    {
