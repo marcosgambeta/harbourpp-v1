@@ -71,8 +71,8 @@
 
 static int s_GtId;
 static HB_GT_FUNCS SuperTable;
-#define HB_GTSUPER   ( &SuperTable )
-#define HB_GTID_PTR  ( &s_GtId )
+#define HB_GTSUPER   (&SuperTable)
+#define HB_GTID_PTR  (&s_GtId)
 
 #define HB_GTCGI_GET(p)  (static_cast<PHB_GTCGI>(HB_GTLOCAL(p)))
 
@@ -110,16 +110,11 @@ static void hb_gt_cgi_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 #endif
 
    PHB_GTCGI pGTCGI;
-
    HB_GTLOCAL(pGT) = pGTCGI = new HB_GTCGI();
-
    pGTCGI->hStdout = hFilenoStdout;
-
    pGTCGI->szCrLf = hb_strdup(hb_conNewLine());
    pGTCGI->nCrLf = strlen(pGTCGI->szCrLf);
-
    hb_fsSetDevMode(pGTCGI->hStdout, FD_BINARY);
-
    HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
    HB_GTSELF_SETFLAG(pGT, HB_GTI_STDOUTCON, true);
 }
@@ -131,29 +126,22 @@ static void hb_gt_cgi_Exit(PHB_GT pGT)
 #endif
 
    PHB_GTCGI pGTCGI;
-
    HB_GTSELF_REFRESH(pGT);
-
    pGTCGI = HB_GTCGI_GET(pGT);
-
    HB_GTSUPER_EXIT(pGT);
 
-   if( pGTCGI )
-   {
+   if( pGTCGI ) {
       /* update cursor position on exit */
-      if( pGTCGI->iLastCol > 0 )
-      {
+      if( pGTCGI->iLastCol > 0 ) {
          hb_gt_cgi_newLine(pGTCGI);
       }
 
 #ifndef HB_GT_CGI_RAWOUTPUT
-      if( pGTCGI->iLineBufSize > 0 )
-      {
+      if( pGTCGI->iLineBufSize > 0 ) {
          hb_xfree(pGTCGI->sLineBuf);
       }
 #endif
-      if( pGTCGI->szCrLf )
-      {
+      if( pGTCGI->szCrLf ) {
          hb_xfree(pGTCGI->szCrLf);
       }
       delete pGTCGI;
@@ -168,18 +156,16 @@ static int hb_gt_cgi_ReadKey(PHB_GT pGT, int iEventMask)
 
    HB_SYMBOL_UNUSED(pGT);
    HB_SYMBOL_UNUSED(iEventMask);
-
    return 13;
 }
 
-static HB_BOOL hb_gt_cgi_IsColor(PHB_GT pGT)
+static HB_BOOL hb_gt_cgi_IsColor(PHB_GT pGT) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_cgi_IsColor(%p)", static_cast<void*>(pGT)));
 #endif
 
    HB_SYMBOL_UNUSED(pGT);
-
    return false;
 }
 
@@ -190,10 +176,7 @@ static void hb_gt_cgi_Bell(PHB_GT pGT)
 #endif
 
    static const char s_szBell[] = { HB_CHAR_BEL, 0 };
-   PHB_GTCGI pGTCGI;
-
-   pGTCGI = HB_GTCGI_GET(pGT);
-
+   PHB_GTCGI pGTCGI = HB_GTCGI_GET(pGT);
    hb_gt_cgi_termOut(pGTCGI, s_szBell, 1);
 }
 
@@ -205,9 +188,8 @@ static const char * hb_gt_cgi_Version(PHB_GT pGT, int iType)
 
    HB_SYMBOL_UNUSED(pGT);
 
-   if( iType == 0 )
-   {
-      return HB_GT_DRVNAME( HB_GT_NAME );
+   if( iType == 0 ) {
+      return HB_GT_DRVNAME(HB_GT_NAME);
    }
 
    return "Harbour Terminal: Raw stream console";
@@ -219,26 +201,22 @@ static void hb_gt_cgi_Scroll(PHB_GT pGT, int iTop, int iLeft, int iBottom, int i
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_cgi_Scroll(%p,%d,%d,%d,%d,%d,%d,%d,%d)", static_cast<void*>(pGT), iTop, iLeft, iBottom, iRight, iColor, usChar, iRows, iCols));
 #endif
 
-   int iHeight, iWidth;
 
    /* Provide some basic scroll support for full screen */
+   int iHeight, iWidth;
    HB_GTSELF_GETSIZE(pGT, &iHeight, &iWidth);
-   if( iCols == 0 && iRows > 0 && iTop == 0 && iLeft == 0 && iBottom >= iHeight - 1 && iRight >= iWidth - 1 )
-   {
+   if( iCols == 0 && iRows > 0 && iTop == 0 && iLeft == 0 && iBottom >= iHeight - 1 && iRight >= iWidth - 1 ) {
       PHB_GTCGI pGTCGI = HB_GTCGI_GET(pGT);
 
       /* scroll up the internal screen buffer */
       HB_GTSELF_SCROLLUP(pGT, iRows, iColor, usChar);
       /* update our internal row position */
       pGTCGI->iRow -= iRows;
-      if( pGTCGI->iRow < 0 )
-      {
+      if( pGTCGI->iRow < 0 ) {
          pGTCGI->iRow = 0;
       }
       pGTCGI->iLastCol = pGTCGI->iCol = 0;
-   }
-   else
-   {
+   } else {
       HB_GTSUPER_SCROLL(pGT, iTop, iLeft, iBottom, iRight, iColor, usChar, iRows, iCols);
    }
 }
@@ -248,29 +226,22 @@ static void hb_gt_cgi_conPos(PHB_GTCGI pGTCGI, int iRow, int iCol)
 {
    int iLineFeed = 0, iSpace = 0;
 
-   if( pGTCGI->iRow != iRow )
-   {
+   if( pGTCGI->iRow != iRow ) {
       iLineFeed = pGTCGI->iRow < iRow ? iRow - pGTCGI->iRow : 1;
-   }
-   else if( pGTCGI->iCol > iCol )
-   {
+   } else if( pGTCGI->iCol > iCol ) {
       iLineFeed = 1;
       iSpace = iCol;
-   }
-   else if( pGTCGI->iCol < iCol )
-   {
+   } else if( pGTCGI->iCol < iCol ) {
       iSpace = iCol - pGTCGI->iCol;
    }
 
-   if( iSpace > 0 )
-   {
+   if( iSpace > 0 ) {
       char * buffer = static_cast<char*>(hb_xgrab(iSpace));
       memset(buffer, ' ', iSpace);
       hb_gt_cgi_termOut(pGTCGI, buffer, iSpace);
       hb_xfree(buffer);
    }
-   while( --iLineFeed >= 0 )
-   {
+   while( --iLineFeed >= 0 ) {
       hb_gt_cgi_newLine(pGTCGI);
    }
    pGTCGI->iRow = iRow;
@@ -282,32 +253,25 @@ static void hb_gt_cgi_conOut(PHB_GT pGT, const char * szText, HB_SIZE nLength, P
 {
    PHB_GTCGI pGTCGI = HB_GTCGI_GET(pGT);
 
-   if( cdpTerm && cdpHost && cdpTerm != cdpHost )
-   {
+   if( cdpTerm && cdpHost && cdpTerm != cdpHost ) {
       HB_SIZE nLen = nLength, nBufSize = 0;
       char * pBuf = nullptr;
       const char * buffer = hb_cdpnDup3(szText, nLen, nullptr, &nLen, &pBuf, &nBufSize, cdpHost, cdpTerm);
       hb_gt_cgi_termOut(pGTCGI, buffer, nLen);
-      if( pBuf )
-      {
+      if( pBuf ) {
          hb_xfree(pBuf);
       }
-   }
-   else
-   {
+   } else {
       hb_gt_cgi_termOut(pGTCGI, szText, nLength);
    }
 
-   while( nLength-- )
-   {
-      switch( *szText++ )
-      {
+   while( nLength-- ) {
+      switch( *szText++ ) {
          case HB_CHAR_BEL:
             break;
 
          case HB_CHAR_BS:
-            if( pGTCGI->iCol )
-            {
+            if( pGTCGI->iCol ) {
                pGTCGI->iCol--;
             }
             break;
@@ -337,7 +301,6 @@ static void hb_gt_cgi_WriteConW(PHB_GT pGT, const HB_WCHAR * szTextW, HB_SIZE nL
    PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP(pGT);
    HB_SIZE nSize = hb_cdpU16AsStrLen(cdpTerm, szTextW, nLength, 0);
    char * buffer = static_cast<char*>(hb_xgrab(nSize));
-
    hb_cdpU16ToStr(cdpTerm, HB_CDP_ENDIAN_NATIVE, szTextW, nLength, buffer, nSize);
    hb_gt_cgi_conOut(pGT, buffer, nSize, nullptr, nullptr);
    hb_xfree(buffer);
@@ -354,7 +317,6 @@ static void hb_gt_cgi_WriteAtW(PHB_GT pGT, int iRow, int iCol, const HB_WCHAR * 
    PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP(pGT);
    HB_SIZE nSize = hb_cdpU16AsStrLen(cdpTerm, szTextW, nLength, 0);
    char * buffer = static_cast<char*>(hb_xgrab(nSize));
-
    hb_cdpU16ToStr(cdpTerm, HB_CDP_ENDIAN_NATIVE, szTextW, nLength, buffer, nSize);
    hb_gt_cgi_conPos(HB_GTCGI_GET(pGT), iRow, iCol);
    hb_gt_cgi_conOut(pGT, buffer, nSize, nullptr, nullptr);
@@ -373,66 +335,52 @@ static void hb_gt_cgi_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
    HB_BYTE bAttr;
    HB_USHORT usChar;
    int iLineFeed, iHeight, iWidth, iLen;
-   PHB_GTCGI pGTCGI;
 
-   pGTCGI = HB_GTCGI_GET(pGT);
+   PHB_GTCGI pGTCGI = HB_GTCGI_GET(pGT);
    HB_GTSELF_GETSIZE(pGT, &iHeight, &iWidth);
    iLineFeed = iLen = 0;
 
-   if( pGTCGI->iRow != iRow )
-   {
+   if( pGTCGI->iRow != iRow ) {
       iLineFeed = pGTCGI->iRow < iRow ? iRow - pGTCGI->iRow : 1;
       pGTCGI->iLastCol = pGTCGI->iCol = iCol = 0;
       iSize = iWidth;
-   }
-   else if( pGTCGI->iCol < iCol )
-   {
+   } else if( pGTCGI->iCol < iCol ) {
       iSize += iCol - pGTCGI->iCol;
       iCol = pGTCGI->iCol;
-   }
-   else if( pGTCGI->iCol > iCol )
-   {
+   } else if( pGTCGI->iCol > iCol ) {
       iLineFeed = 1;
       iCol = pGTCGI->iCol = pGTCGI->iLastCol = 0;
       iSize = iWidth;
    }
 
-   while( iSize > 0 && iCol + iSize > pGTCGI->iLastCol && HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol + iSize - 1, &iColor, &bAttr, &usChar) )
-   {
-      if( usChar != ' ' )
-      {
+   while( iSize > 0 && iCol + iSize > pGTCGI->iLastCol && HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol + iSize - 1, &iColor, &bAttr, &usChar) ) {
+      if( usChar != ' ' ) {
          break;
       }
       --iSize;
    }
 
-   if( iSize > 0 )
-   {
+   if( iSize > 0 ) {
       PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP(pGT);
       int iIndex = 0;
 
-      while( --iLineFeed >= 0 )
-      {
+      while( --iLineFeed >= 0 ) {
          hb_gt_cgi_newLine(pGTCGI);
       }
       pGTCGI->iRow = iRow;
 
-      while( iLen < iSize )
-      {
-         if( !HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol, &iColor, &bAttr, &usChar) )
-         {
+      while( iLen < iSize ) {
+         if( !HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol, &iColor, &bAttr, &usChar) ) {
             break;
          }
          iIndex += static_cast<int>(hb_cdpTextPutU16(cdpTerm, pGTCGI->sLineBuf + iIndex, pGTCGI->iLineBufSize - iIndex, usChar));
          ++iLen;
          ++iCol;
       }
-      if( iIndex )
-      {
+      if( iIndex ) {
          hb_gt_cgi_termOut(pGTCGI, pGTCGI->sLineBuf, iIndex);
          pGTCGI->iCol = iCol;
-         if( pGTCGI->iCol > pGTCGI->iLastCol )
-         {
+         if( pGTCGI->iCol > pGTCGI->iLastCol ) {
             pGTCGI->iLastCol = pGTCGI->iCol;
          }
       }
@@ -445,14 +393,11 @@ static void hb_gt_cgi_Refresh(PHB_GT pGT)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_cgi_Refresh(%p)", static_cast<void*>(pGT)));
 #endif
 
+   PHB_GTCGI pGTCGI = HB_GTCGI_GET(pGT);
    int iHeight, iWidth;
-   PHB_GTCGI pGTCGI;
-
-   pGTCGI = HB_GTCGI_GET(pGT);
    HB_GTSELF_GETSIZE(pGT, &iHeight, &iWidth);
    iWidth *= HB_MAX_CHAR_LEN;
-   if( pGTCGI->iLineBufSize < iWidth )
-   {
+   if( pGTCGI->iLineBufSize < iWidth ) {
       pGTCGI->sLineBuf = static_cast<char*>(hb_xrealloc(pGTCGI->sLineBuf, iWidth));
       pGTCGI->iLineBufSize = iWidth;
    }
