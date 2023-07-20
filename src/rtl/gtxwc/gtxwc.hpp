@@ -100,9 +100,9 @@ using HB_GT_CELLTYPE = HB_USHORT;
 #define XWC_DEFAULT_FONT_NAME       "fixed"
 #define XWC_DEFAULT_FONT_ENCODING   "iso10646-1"
 
-#define XWC_DEFAULT_FONT_FIXMETRIC  HB_FALSE
-#define XWC_DEFAULT_FONT_CLRBKG     HB_FALSE
-#define XWC_DEFAULT_FONT_DRAWBOX    HB_TRUE
+#define XWC_DEFAULT_FONT_FIXMETRIC  false
+#define XWC_DEFAULT_FONT_CLRBKG     false
+#define XWC_DEFAULT_FONT_DRAWBOX    true
 
 
 #define XWC_SYNC_UPDATE             0
@@ -286,7 +286,7 @@ struct XWC_CharTrans
       HB_USHORT    ch16;
    } u;
    HB_BYTE size;
-   HB_BOOL inverse;
+   bool inverse;
 };
 
 #endif
