@@ -2352,11 +2352,11 @@ static void hb_gt_trm_SetDispTrans(PHB_GTTRM pTerm, int box)
 
 static int addKeyMap(PHB_GTTRM pTerm, int nKey, const char * cdesc)
 {
+   int ret = K_UNDEF, i = 0;
+
    if( cdesc == nullptr ) {
       return ret;
    }
-
-   int ret = K_UNDEF, i = 0;
 
    int c   = static_cast<unsigned char>(cdesc[i++]);
    keyTab ** ptr = &pTerm->pKeyTab;
