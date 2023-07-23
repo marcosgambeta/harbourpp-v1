@@ -283,9 +283,7 @@ static void hb_gt_wvt_Free(PHB_GTWVT pWVT)
 
 static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int iCmdShow)
 {
-   PHB_GTWVT pWVT;
-
-   pWVT = new HB_GTWVT();
+   PHB_GTWVT pWVT = new HB_GTWVT();
 
    pWVT->pGT               = pGT;
 

@@ -935,7 +935,7 @@ static const char * hb_gt_win_Version(PHB_GT pGT, int iType)
       return HB_GT_DRVNAME(HB_GT_NAME);
    }
 
-   return "Harbour Terminal: Windows native console";
+   return "Harbour++ Terminal: Windows native console";
 }
 
 /* *********************************************************************** */

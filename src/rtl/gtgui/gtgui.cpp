@@ -62,8 +62,8 @@
 
 static int s_GtId;
 static HB_GT_FUNCS SuperTable;
-#define HB_GTSUPER   ( &SuperTable )
-#define HB_GTID_PTR  ( &s_GtId )
+#define HB_GTSUPER   (&SuperTable)
+#define HB_GTID_PTR  (&s_GtId)
 
 #if defined(HB_OS_WIN)
 
@@ -164,7 +164,7 @@ static int hb_gt_gui_optionPos(int id, int iType, PHB_ITEM pOptions)
    return 0;
 }
 
-static int hb_gt_gui_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int iClrNorm, int iClrHigh, double dDelay)
+static int hb_gt_gui_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int iClrNorm, int iClrHigh, double dDelay) // FuncTable
 {
    void * hText;
    LPCTSTR lpText = HB_ITEMGETSTR(pMessage, &hText, nullptr);
@@ -227,7 +227,7 @@ static int hb_gt_gui_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
 
 /* *********************************************************************** */
 
-static const char * hb_gt_gui_Version(PHB_GT pGT, int iType)
+static const char * hb_gt_gui_Version(PHB_GT pGT, int iType) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_gui_Version(%p,%d)", static_cast<void*>(pGT), iType));
@@ -236,7 +236,7 @@ static const char * hb_gt_gui_Version(PHB_GT pGT, int iType)
    HB_SYMBOL_UNUSED(pGT);
 
    if( iType == 0 ) {
-      return HB_GT_DRVNAME( HB_GT_NAME );
+      return HB_GT_DRVNAME(HB_GT_NAME);
    }
 
    return "Harbour++ Terminal: Windows dummy console for GUI programs";
@@ -244,7 +244,7 @@ static const char * hb_gt_gui_Version(PHB_GT pGT, int iType)
 
 /* *********************************************************************** */
 /* dDuration is in 'Ticks' (18.2 per second) */
-static void hb_gt_gui_Tone(PHB_GT pGT, double dFrequency, double dDuration)
+static void hb_gt_gui_Tone(PHB_GT pGT, double dFrequency, double dDuration) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_gui_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration));
@@ -252,7 +252,7 @@ static void hb_gt_gui_Tone(PHB_GT pGT, double dFrequency, double dDuration)
 
 #if defined(HB_OS_WIN)
    hb_gt_BaseUnlock(pGT);
-   hb_gt_winapi_tone( dFrequency, dDuration );
+   hb_gt_winapi_tone(dFrequency, dDuration);
    hb_gt_BaseLock(pGT);
 #else
    HB_GTSUPER_TONE(pGT, dFrequency, dDuration);
@@ -261,7 +261,7 @@ static void hb_gt_gui_Tone(PHB_GT pGT, double dFrequency, double dDuration)
 
 /* *********************************************************************** */
 
-static HB_BOOL hb_gt_gui_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
+static HB_BOOL hb_gt_gui_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_gui_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));
@@ -291,7 +291,7 @@ static HB_BOOL hb_gt_gui_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
       case HB_GTI_KBDSHIFTS:
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_winapi_getKbdState());
          if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC ) {
-            hb_gt_winapi_setKbdState( hb_itemGetNI(pInfo->pNewVal) );
+            hb_gt_winapi_setKbdState(hb_itemGetNI(pInfo->pNewVal));
          }
          break;
 #endif

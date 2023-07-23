@@ -60,7 +60,7 @@
 static int s_iMouseRow = 0;
 static int s_iMouseCol = 0;
 
-static HB_BOOL s_bMousePresent = false;
+static bool    s_bMousePresent = false;
 static int     s_iMouseButtons = -1;
 
 static HB_USHORT s_usMouseState = 0;
@@ -76,10 +76,8 @@ static struct timeval mRightDblckTime;
 #if defined(HB_HAS_GPM)
 static HB_BOOL GetGpmEvent(Gpm_Event * Evt)
 {
-   if( s_bMousePresent && gpm_fd >= 0 )
-   {
-      if( hb_fsCanRead(gpm_fd, 0) > 0 )
-      {
+   if( s_bMousePresent && gpm_fd >= 0 ) {
+      if( hb_fsCanRead(gpm_fd, 0) > 0 ) {
          return Gpm_GetEvent(Evt) > 0;
       }
    }
@@ -93,15 +91,12 @@ static HB_BOOL GetGpmEvent(Gpm_Event * Evt)
 static HB_BOOL GetXtermEvent(int * Btn, int * Col, int * Row)
 {
    /* Xterm mouse event consists of three chars */
-   if( SLang_input_pending(0) > 0 )
-   {
+   if( SLang_input_pending(0) > 0 ) {
       *Btn = SLang_getkey() - 0x20;
 
-      if( SLang_input_pending(0) > 0 )
-      {
+      if( SLang_input_pending(0) > 0 ) {
          *Col = SLang_getkey() - 0x21;
-         if( SLang_input_pending(0) > 0 )
-         {
+         if( SLang_input_pending(0) > 0 ) {
             *Row = SLang_getkey() - 0x21;
             return true;
          }
@@ -117,31 +112,24 @@ static void hb_sln_CheckDoubleClick(void)
 {
    HB_USHORT usNewButtons = (s_usMouseState & ~s_usLastMouseState) & M_BUTTON_KEYMASK;
 
-   if( usNewButtons != 0 )
-   {
+   if( usNewButtons != 0 ) {
       struct timeval evtTime;
 
       TIMEVAL_GET(evtTime);
-      if( usNewButtons & M_BUTTON_LEFT )
-      {
-         if( TIMEVAL_LESS(evtTime, mLeftDblckTime) )
-         {
+      if( usNewButtons & M_BUTTON_LEFT ) {
+         if( TIMEVAL_LESS(evtTime, mLeftDblckTime) ) {
             s_usMouseState |= M_BUTTON_LDBLCK;
          }
          TIMEVAL_ADD( mLeftDblckTime, evtTime, hb_mouseGetDoubleClickSpeed() );
       }
-      if( usNewButtons & M_BUTTON_MIDDLE )
-      {
-         if( TIMEVAL_LESS(evtTime, mMiddleDblckTime) )
-         {
+      if( usNewButtons & M_BUTTON_MIDDLE ) {
+         if( TIMEVAL_LESS(evtTime, mMiddleDblckTime) ) {
             s_usMouseState |= M_BUTTON_MDBLCK;
          }
          TIMEVAL_ADD( mMiddleDblckTime, evtTime, hb_mouseGetDoubleClickSpeed() );
       }
-      if( usNewButtons & M_BUTTON_RIGHT )
-      {
-         if( TIMEVAL_LESS(evtTime, mRightDblckTime) )
-         {
+      if( usNewButtons & M_BUTTON_RIGHT ) {
+         if( TIMEVAL_LESS(evtTime, mRightDblckTime) ) {
             s_usMouseState |= M_BUTTON_RDBLCK;
          }
          TIMEVAL_ADD( mRightDblckTime, evtTime, hb_mouseGetDoubleClickSpeed() );
@@ -155,10 +143,8 @@ void hb_gt_sln_mouse_ProcessTerminalEvent(void)
 {
    int Btn, Col, Row;
 
-   if( GetXtermEvent(&Btn, &Col, &Row) )
-   {
-      if( s_iMouseRow != Row || s_iMouseCol != Col )
-      {
+   if( GetXtermEvent(&Btn, &Col, &Row) ) {
+      if( s_iMouseRow != Row || s_iMouseCol != Col ) {
          s_usMouseState |= M_CURSOR_MOVE;
       }
 
@@ -194,20 +180,16 @@ void hb_gt_sln_mouse_ProcessTerminalEvent(void)
 
 int hb_gt_sln_mouse_Inkey(int iEventMask, HB_BOOL fCheckNew)
 {
-   if( s_usMouseState != s_usLastMouseState )
-   {
-      if( s_usMouseState & M_CURSOR_MOVE )
-      {
+   if( s_usMouseState != s_usLastMouseState ) {
+      if( s_usMouseState & M_CURSOR_MOVE ) {
          s_usMouseState &= ~M_CURSOR_MOVE;
          return K_MOUSEMOVE;
       }
-      else if( s_usMouseState & M_BUTTON_WHEELUP )
-      {
+      else if( s_usMouseState & M_BUTTON_WHEELUP ) {
          s_usMouseState &= ~M_BUTTON_WHEELUP;
          return K_MWFORWARD;
       }
-      else if( s_usMouseState & M_BUTTON_WHEELDOWN )
-      {
+      else if( s_usMouseState & M_BUTTON_WHEELDOWN ) {
          s_usMouseState &= ~M_BUTTON_WHEELDOWN;
          return K_MWBACKWARD;
       }
@@ -215,13 +197,10 @@ int hb_gt_sln_mouse_Inkey(int iEventMask, HB_BOOL fCheckNew)
       {
          HB_USHORT usKeyDiff = (s_usMouseState ^ s_usLastMouseState);
 
-         if( usKeyDiff & M_BUTTON_LEFT )
-         {
+         if( usKeyDiff & M_BUTTON_LEFT ) {
             s_usLastMouseState ^= M_BUTTON_LEFT;
-            if( s_usMouseState & M_BUTTON_LEFT )
-            {
-               if( s_usMouseState & M_BUTTON_LDBLCK )
-               {
+            if( s_usMouseState & M_BUTTON_LEFT ) {
+               if( s_usMouseState & M_BUTTON_LDBLCK ) {
                   s_usMouseState &= ~M_BUTTON_LDBLCK;
                   return K_LDBLCLK;
                }
@@ -235,13 +214,10 @@ int hb_gt_sln_mouse_Inkey(int iEventMask, HB_BOOL fCheckNew)
                return K_LBUTTONUP;
             }
          }
-         else if( usKeyDiff & M_BUTTON_MIDDLE )
-         {
+         else if( usKeyDiff & M_BUTTON_MIDDLE ) {
             s_usLastMouseState ^= M_BUTTON_MIDDLE;
-            if( s_usMouseState & M_BUTTON_MIDDLE )
-            {
-               if( s_usMouseState & M_BUTTON_MDBLCK )
-               {
+            if( s_usMouseState & M_BUTTON_MIDDLE ) {
+               if( s_usMouseState & M_BUTTON_MDBLCK ) {
                   s_usMouseState &= ~M_BUTTON_MDBLCK;
                   return K_MDBLCLK;
                }
@@ -255,13 +231,10 @@ int hb_gt_sln_mouse_Inkey(int iEventMask, HB_BOOL fCheckNew)
                return K_MBUTTONUP;
             }
          }
-         else if( usKeyDiff & M_BUTTON_RIGHT )
-         {
+         else if( usKeyDiff & M_BUTTON_RIGHT ) {
             s_usLastMouseState ^= M_BUTTON_RIGHT;
-            if( s_usMouseState & M_BUTTON_RIGHT )
-            {
-               if( s_usMouseState & M_BUTTON_RDBLCK )
-               {
+            if( s_usMouseState & M_BUTTON_RIGHT ) {
+               if( s_usMouseState & M_BUTTON_RDBLCK ) {
                   s_usMouseState &= ~M_BUTTON_RDBLCK;
                   return K_RDBLCLK;
                }
@@ -282,49 +255,37 @@ int hb_gt_sln_mouse_Inkey(int iEventMask, HB_BOOL fCheckNew)
 #if defined(HB_HAS_GPM)
 
 #define CHECK_BUTTON_DOWN(Mask, GpmBtn, InkBtn, InkDbl)              \
-   if( (iEventMask & Mask) && (Evt.buttons & GpmBtn) )        \
-   {                                                              \
-      if( Evt.type & GPM_SINGLE )                                 \
+   if( (iEventMask & Mask) && (Evt.buttons & GpmBtn) ) {      \
+      if( Evt.type & GPM_SINGLE ) {                               \
          return InkBtn;                                           \
-      else if( Evt.type & GPM_DOUBLE || Evt.type & GPM_TRIPLE )   \
+      } else if( Evt.type & GPM_DOUBLE || Evt.type & GPM_TRIPLE ) {  \
          return InkDbl;                                           \
+      } \
    }
 
-   else if( hb_sln_UnderLinuxConsole && fCheckNew )
-   {
+   else if( hb_sln_UnderLinuxConsole && fCheckNew ) {
       Gpm_Event Evt;
 
-      if( GetGpmEvent(&Evt) )
-      {
+      if( GetGpmEvent(&Evt) ) {
          /* get the mouse event position */
          s_iMouseRow = Evt.y;
          s_iMouseCol = Evt.x;
 
-         if( (Evt.type & GPM_MOVE) && (iEventMask & INKEY_MOVE) )
-         {
+         if( (Evt.type & GPM_MOVE) && (iEventMask & INKEY_MOVE) ) {
             return K_MOUSEMOVE;
-         }
-         else if( Evt.type & GPM_DOWN )
+         } else if( Evt.type & GPM_DOWN )
          {
             CHECK_BUTTON_DOWN(INKEY_LDOWN,GPM_B_LEFT,K_LBUTTONDOWN,K_LDBLCLK)
             else
             CHECK_BUTTON_DOWN(INKEY_RDOWN,GPM_B_RIGHT,K_RBUTTONDOWN,K_RDBLCLK)
             else
             CHECK_BUTTON_DOWN(INKEY_MMIDDLE,GPM_B_MIDDLE,K_MBUTTONDOWN,K_MDBLCLK)
-         }
-
-         else if( Evt.type & GPM_UP )
-         {
-            if( (iEventMask & INKEY_LUP) && (Evt.buttons & GPM_B_LEFT) )
-            {
+         } else if( Evt.type & GPM_UP ) {
+            if( (iEventMask & INKEY_LUP) && (Evt.buttons & GPM_B_LEFT) ) {
                return K_LBUTTONUP;
-            }
-            else if( (iEventMask & INKEY_RUP) && (Evt.buttons & GPM_B_RIGHT) )
-            {
+            } else if( (iEventMask & INKEY_RUP) && (Evt.buttons & GPM_B_RIGHT) ) {
                return K_RBUTTONUP;
-            }
-            else if( (iEventMask & INKEY_MMIDDLE) && (Evt.buttons & GPM_B_MIDDLE) )
-            {
+            } else if( (iEventMask & INKEY_MMIDDLE) && (Evt.buttons & GPM_B_MIDDLE) ) {
                return K_MBUTTONUP;
             }
          }
@@ -358,22 +319,18 @@ void hb_gt_sln_mouse_Init(void)
       s_iMouseButtons = SLtt_tgetnum(const_cast<char*>("BT"));
 
       /* force two buttons mouse under xterm */
-      if( s_iMouseButtons < 1 )
-      {
+      if( s_iMouseButtons < 1 ) {
          s_iMouseButtons = 3;
       }
 
       s_bMousePresent = true;
    }
 #if defined(HB_HAS_GPM)
-   else if( hb_sln_UnderLinuxConsole )
-   {
+   else if( hb_sln_UnderLinuxConsole ) {
       Gpm_Connect Conn;
 #ifdef HB_GPM_NOICE_DISABLE
-      int iNull, iErr;
-
-      iErr = dup(STDERR_FILENO);
-      iNull = open("/dev/null", O_RDWR);
+      int iErr = dup(STDERR_FILENO);
+      int iNull = open("/dev/null", O_RDWR);
       dup2(iNull, STDERR_FILENO);
       close(iNull);
 #endif
@@ -387,14 +344,12 @@ void hb_gt_sln_mouse_Init(void)
       gpm_zerobased = 1;
       gpm_visiblepointer = 1;
 
-      if( Gpm_Open(&Conn, 0) >= 0 && gpm_fd >= 0 )
-      {
+      if( Gpm_Open(&Conn, 0) >= 0 && gpm_fd >= 0 ) {
          Gpm_Event Evt;
 
          s_bMousePresent = true;
 
-         while( GetGpmEvent(&Evt) )
-         {
+         while( GetGpmEvent(&Evt) ) {
             s_iMouseRow = Evt.y;
             s_iMouseCol = Evt.x;
          }
@@ -422,10 +377,8 @@ void hb_gt_sln_mouse_Init(void)
 
 void hb_gt_sln_mouse_Exit(void)
 {
-   if( s_bMousePresent )
-   {
-      if( hb_sln_UnderXterm )
-      {
+   if( s_bMousePresent ) {
+      if( hb_sln_UnderXterm ) {
          const char * DisabTrack = "\033[?1000l"; /* disable mouse tracking */
          const char * RestoHilit = "\033[?1001r"; /* restore old hilit tracking */
 
@@ -438,10 +391,8 @@ void hb_gt_sln_mouse_Exit(void)
          (void)SLtt_set_mouse_mode( 0, 1 );
       }
 #if defined(HB_HAS_GPM)
-      else if( hb_sln_UnderLinuxConsole )
-      {
-         if( gpm_fd >= 0 )
-         {
+      else if( hb_sln_UnderLinuxConsole ) {
+         if( gpm_fd >= 0 ) {
             Gpm_Close();
          }
       }
@@ -455,7 +406,6 @@ void hb_gt_sln_mouse_Exit(void)
 HB_BOOL hb_gt_sln_mouse_IsPresent(PHB_GT pGT)
 {
    HB_SYMBOL_UNUSED(pGT);
-
    return s_bMousePresent;
 }
 
@@ -467,8 +417,7 @@ void hb_gt_sln_mouse_Show(PHB_GT pGT)
 
 #if defined(HB_HAS_GPM)
    gpm_visiblepointer = 1;
-   if( hb_sln_UnderLinuxConsole && s_bMousePresent )
-   {
+   if( hb_sln_UnderLinuxConsole && s_bMousePresent ) {
       Gpm_DrawPointer(s_iMouseCol, s_iMouseRow, gpm_consolefd);
    }
 #endif
@@ -479,7 +428,6 @@ void hb_gt_sln_mouse_Show(PHB_GT pGT)
 void hb_gt_sln_mouse_Hide(PHB_GT pGT)
 {
    HB_SYMBOL_UNUSED(pGT);
-
 #if defined(HB_HAS_GPM)
    gpm_visiblepointer = 0;
 #endif
@@ -490,7 +438,6 @@ void hb_gt_sln_mouse_Hide(PHB_GT pGT)
 void hb_gt_sln_mouse_GetPos(PHB_GT pGT, int * piRow, int * piCol)
 {
    HB_SYMBOL_UNUSED(pGT);
-
    *piRow = s_iMouseRow;
    *piCol = s_iMouseCol;
 }
@@ -505,10 +452,8 @@ void hb_gt_sln_mouse_SetPos(PHB_GT pGT, int iRow, int iCol)
    s_iMouseRow = iRow;
    s_iMouseCol = iCol;
 #if defined(HB_HAS_GPM)
-   if( hb_sln_UnderLinuxConsole )
-   {
-      if( s_bMousePresent && gpm_visiblepointer )
-      {
+   if( hb_sln_UnderLinuxConsole ) {
+      if( s_bMousePresent && gpm_visiblepointer ) {
          Gpm_DrawPointer(iCol, iRow, gpm_consolefd);
       }
    }
@@ -521,8 +466,7 @@ HB_BOOL hb_gt_sln_mouse_ButtonState(PHB_GT pGT, int iButton)
 {
    HB_SYMBOL_UNUSED(pGT);
 
-   switch( iButton )
-   {
+   switch( iButton ) {
       case 0:
          return (s_usMouseState & M_BUTTON_LEFT) != 0;
       case 1:
@@ -539,7 +483,6 @@ HB_BOOL hb_gt_sln_mouse_ButtonState(PHB_GT pGT, int iButton)
 int hb_gt_sln_mouse_CountButton(PHB_GT pGT)
 {
    HB_SYMBOL_UNUSED(pGT);
-
    return s_iMouseButtons;
 }
 
@@ -548,10 +491,8 @@ int hb_gt_sln_mouse_CountButton(PHB_GT pGT)
 void hb_gt_sln_mouse_FixTrash(void)
 {
 #if defined(HB_HAS_GPM)
-   if( hb_sln_UnderLinuxConsole )
-   {
-      if( s_bMousePresent && gpm_visiblepointer )
-      {
+   if( hb_sln_UnderLinuxConsole ) {
+      if( s_bMousePresent && gpm_visiblepointer ) {
          Gpm_DrawPointer(s_iMouseCol, s_iMouseRow, gpm_consolefd);
       }
    }

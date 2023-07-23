@@ -56,7 +56,6 @@
 #include "hbapierr.hpp"
 #include "hbapifs.hpp"
 #include "hbdate.hpp"
-
 #include "hbapicdp.hpp"
 
 #if defined(HB_OS_HPUX)

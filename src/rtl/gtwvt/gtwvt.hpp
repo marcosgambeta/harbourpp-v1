@@ -268,8 +268,8 @@ struct HB_GTWVT
 
    COLORREF COLORS[ 16 ];                 /* colors */
 
-   HB_BOOL  CaretExist;                   /* HB_TRUE if a caret has been created */
-   HB_BOOL  CaretHidden;                  /* HB_TRUE if a caret has been hiden */
+   bool     CaretExist;                   /* HB_TRUE if a caret has been created */
+   bool     CaretHidden;                  /* HB_TRUE if a caret has been hiden */
    int      CaretSize;                    /* Height of solid caret */
    int      CaretWidth;                   /* Width of solid caret */
 
@@ -282,7 +282,7 @@ struct HB_GTWVT
    int      keyFlags;                     /* keyboard modifiers */
 
    POINT    PTEXTSIZE;                    /* size of the fixed width font */
-   HB_BOOL  FixedFont;                    /* HB_TRUE if current font is a fixed font */
+   bool     FixedFont;                    /* HB_TRUE if current font is a fixed font */
    int *    FixedSize;                    /* buffer for ExtTextOut() to emulate fixed pitch when Proportional font selected */
    int      fontHeight;                   /* requested font height */
    int      fontWidth;                    /* requested font width */
@@ -296,7 +296,7 @@ struct HB_GTWVT
 #endif
 
    HWND     hWnd;                         /* the window handle */
-   HB_BOOL  fInit;                        /* logical variable indicating that window should be open */
+   bool     fInit;                        /* logical variable indicating that window should be open */
 
    HICON    hIcon;                        /* Title Bar and Task List icon. Can be NULL. */
    HICON    hIconToFree;                  /* Do we need to free this icon when it's not NULL? */
@@ -318,25 +318,25 @@ struct HB_GTWVT
    HPEN     hPen;
    HBRUSH   hBrush;
 #endif
-   HB_BOOL  Win9X;                        /* Flag to say if running on Win9X not NT/2000/XP */
-   HB_BOOL  CentreWindow;                 /* HB_TRUE if window is to be Reset into centre of window */
+   bool     Win9X;                        /* Flag to say if running on Win9X not NT/2000/XP */
+   bool     CentreWindow;                 /* HB_TRUE if window is to be Reset into centre of window */
 
-   HB_BOOL  IgnoreWM_SYSCHAR;
+   bool     IgnoreWM_SYSCHAR;
 
-   HB_BOOL  bResizable;
-   HB_BOOL  bMaximized;                   /* Flag is set when window has been maximized */
-   HB_BOOL  bFullScreen;
-   HB_BOOL  bAltEnter;                    /* Can use Alt+Enter to enter full screen mode */
+   bool     bResizable;
+   bool     bMaximized;                   /* Flag is set when window has been maximized */
+   bool     bFullScreen;
+   bool     bAltEnter;                    /* Can use Alt+Enter to enter full screen mode */
    int      MarginTop;
    int      MarginLeft;
 
    int      iNewPosX;
    int      iNewPosY;
 
-   HB_BOOL  bBeingMarked;                 /* Flag to control DOS window like copy operation */
-   HB_BOOL  bBeginMarked;
+   bool     bBeingMarked;                 /* Flag to control DOS window like copy operation */
+   bool     bBeginMarked;
 
-   HB_BOOL  bSelectCopy;
+   bool     bSelectCopy;
    void *   hSelectCopy;
    LPCTSTR  lpSelectCopy;
 
@@ -348,10 +348,10 @@ struct HB_GTWVT
    int      CloseMode;
    int      ResizeMode;                   /* Sets the resizing mode either to FONT or ROWS */
 
-   HB_BOOL  bResizing;
-   HB_BOOL  bAlreadySizing;
+   bool     bResizing;
+   bool     bAlreadySizing;
 
-   HB_BOOL  bComposited;
+   bool     bComposited;
 
    RECT     ciLast;                       /* need in WM_ENTERSIZEMOVE processing and hb_gt_wvt_PaintText() function [HVB] */
 };

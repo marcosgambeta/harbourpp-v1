@@ -59,7 +59,7 @@
 #include "hbapicdp.hpp"
 #include "hbdate.hpp"
 
-#if defined( HB_OS_DARWIN ) || defined( HB_OS_AIX )
+#if defined(HB_OS_DARWIN) || defined(HB_OS_AIX)
 #define REAL_UNIX_SYSTEM  /* this is for slang.h to include some defs */
 #endif
 #include <slang.h>
@@ -80,37 +80,37 @@
  */
 #if SLANG_VERSION >= 20000
     #define HB_SLN_UTF8
-#elif defined( UTF8 ) && defined( SLSMG_HLINE_CHAR_TERM )
+#elif defined(UTF8) && defined(SLSMG_HLINE_CHAR_TERM)
     #define HB_SLN_UNICODE
 #endif
 
 /* missing defines in previous versions of Slang - this may not work ok ! */
 #ifdef HB_SLN_UTF8
 
-#define HB_SLN_SET_ACSC( slch )  \
+#define HB_SLN_SET_ACSC(slch)  \
    do { \
-      ( slch ).color |= SLSMG_ACS_MASK; \
-   } while(false)
-#define HB_SLN_BUILD_CHAR( slch, ch, clr, attr )  \
+      (slch).color |= SLSMG_ACS_MASK; \
+   } while( false )
+#define HB_SLN_BUILD_CHAR(slch, ch, clr, attr)  \
    do { \
-      SLsmg_Char_Type * outTab = ( ( attr ) & HB_GT_ATTR_BOX ) ? \
+      SLsmg_Char_Type * outTab = ((attr) & HB_GT_ATTR_BOX) ? \
                                  s_outboxTab : s_outputTab; \
-      ( slch ).color = outTab[ ( HB_BYTE ) ( ch ) ].color | \
-                       s_colorTab[ ( HB_BYTE ) ( clr ) ]; \
-      ( slch ).nchars      = 1; \
-      ( slch ).wchars[ 0 ] = outTab[ ( HB_BYTE ) ( ch ) ].wchars[ 0 ]; \
-   } while(false)
+      (slch).color = outTab[( HB_BYTE ) (ch)].color | \
+                       s_colorTab[( HB_BYTE ) (clr)]; \
+      (slch).nchars      = 1; \
+      (slch).wchars[0] = outTab[( HB_BYTE ) (ch)].wchars[0]; \
+   } while( false )
 
-#define HB_SLN_BUILD_RAWCHAR( slch, ch, attr )  \
+#define HB_SLN_BUILD_RAWCHAR(slch, ch, attr)  \
    do { \
-      ( slch ).color       = ( attr ); \
-      ( slch ).nchars      = 1; \
-      ( slch ).wchars[ 0 ] = ( SLwchar_Type ) ( ch ); \
-   } while(false)
+      (slch).color     = (attr); \
+      (slch).nchars    = 1; \
+      (slch).wchars[0] = ( SLwchar_Type ) (ch); \
+   } while( false )
 
-#define HB_SLN_IS_CHAR( slch )             ( ( slch ).wchars[ 0 ] != 0 )
+#define HB_SLN_IS_CHAR(slch)             ((slch).wchars[0] != 0)
 
-#else /* ! defined( HB_SLN_UTF8 ) */
+#else /* !defined(HB_SLN_UTF8) */
 
 #if SLANG_VERSION < 10400
     using SLsmg_Char_Type = unsigned short;
@@ -136,23 +136,23 @@
 #endif
 #endif
 
-#define HB_SLN_SET_ACSC( slch )  \
+#define HB_SLN_SET_ACSC(slch)  \
    do { \
-      ( slch ) = SLSMG_BUILD_CHAR( ( slch ), 0x80 ); \
-   } while(false)
-#define HB_SLN_BUILD_CHAR( slch, ch, clr, attr )  \
+      (slch) = SLSMG_BUILD_CHAR( (slch), 0x80 ); \
+   } while( false )
+#define HB_SLN_BUILD_CHAR(slch, ch, clr, attr)  \
    do { \
-      ( slch ) = ( ( ( attr ) & HB_GT_ATTR_BOX ) ? \
-                   s_outboxTab : s_outputTab )[ ( HB_BYTE ) ( ch ) ] | \
-                 s_colorTab[ ( HB_BYTE ) ( clr ) ]; \
-   } while(false)
+      (slch) = (((attr) & HB_GT_ATTR_BOX) ? \
+                   s_outboxTab : s_outputTab)[( HB_BYTE ) (ch)] | \
+                 s_colorTab[( HB_BYTE ) (clr)]; \
+   } while( false )
 
-#define HB_SLN_BUILD_RAWCHAR( slch, ch, attr )  \
+#define HB_SLN_BUILD_RAWCHAR(slch, ch, attr)  \
    do { \
-      ( slch ) = SLSMG_BUILD_CHAR( ( ch ), ( attr ) ); \
-   } while(false)
+      (slch) = SLSMG_BUILD_CHAR((ch), (attr)); \
+   } while( false )
 
-#define HB_SLN_IS_CHAR( slch )  ( ( slch ) != 0 )
+#define HB_SLN_IS_CHAR(slch)  ((slch) != 0)
 
 #endif /* HB_SLN_UTF8 */
 
@@ -162,7 +162,7 @@
 #define SC_UNAVAIL          -1
 
 /* xHarbour compatible definitions */
-#if ! defined( K_SH_LEFT )
+#if !defined(K_SH_LEFT)
 #define K_SH_LEFT           K_LEFT   /* Shift-Left  == Left  */
 #define K_SH_UP             K_UP     /* Shift-Up    == Up    */
 #define K_SH_RIGHT          K_RIGHT  /* Shift-Right == Right */
@@ -188,26 +188,27 @@
 #define M_BUTTON_WHEELUP    0x0100
 #define M_BUTTON_WHEELDOWN  0x0200
 #define M_CURSOR_MOVE       0x0400
-#define M_BUTTON_KEYMASK    ( M_BUTTON_LEFT | M_BUTTON_RIGHT | M_BUTTON_MIDDLE )
-#define M_BUTTON_DBLMASK    ( M_BUTTON_LDBLCK | M_BUTTON_RDBLCK | M_BUTTON_MDBLCK )
+#define M_BUTTON_KEYMASK    (M_BUTTON_LEFT | M_BUTTON_RIGHT | M_BUTTON_MIDDLE)
+#define M_BUTTON_DBLMASK    (M_BUTTON_LDBLCK | M_BUTTON_RDBLCK | M_BUTTON_MDBLCK)
 
-#define TIMEVAL_GET( tv )         gettimeofday( &( tv ), NULL );
-#define TIMEVAL_LESS( tv1, tv2 )  ( ( ( tv1 ).tv_sec == ( tv2 ).tv_sec ) ?     \
-                                    ( ( tv1 ).tv_usec < ( tv2 ).tv_usec ) :     \
-                                    ( ( tv1 ).tv_sec < ( tv2 ).tv_sec ) )
-#define TIMEVAL_ADD( dst, src, n )  \
+#define TIMEVAL_GET(tv)         gettimeofday(&(tv), nullptr);
+#define TIMEVAL_LESS(tv1, tv2)  ( ( (tv1).tv_sec == (tv2).tv_sec ) ?     \
+                                    ( (tv1).tv_usec < (tv2).tv_usec ) :     \
+                                    ( (tv1).tv_sec < (tv2).tv_sec ) )
+#define TIMEVAL_ADD(dst, src, n)  \
    {                                      \
-      ( dst ).tv_sec = ( src ).tv_sec + n / 1000;                           \
-      if( ( ( dst ).tv_usec = ( src ).tv_usec + ( n % 1000 ) * 1000 ) >= 1000000 ) {     \
-         ( dst ).tv_usec -= 1000000; ( dst ).tv_sec++;                      \
+      (dst).tv_sec = (src).tv_sec + n / 1000;                           \
+      if( ((dst).tv_usec = (src).tv_usec + (n % 1000) * 1000) >= 1000000 ) {     \
+         (dst).tv_usec -= 1000000; \
+         (dst).tv_sec++; \
       } \
    }
 
 /* *********************************************************************** */
 
-extern HB_BOOL hb_sln_Is_Unicode;
-extern HB_BOOL hb_sln_UnderLinuxConsole;
-extern HB_BOOL hb_sln_UnderXterm;
+extern bool hb_sln_Is_Unicode;
+extern bool hb_sln_UnderLinuxConsole;
+extern bool hb_sln_UnderXterm;
 extern unsigned char hb_sln_inputTab[ 256 ];
 
 /* delay for waiting on characters after ESC key */
@@ -219,24 +220,24 @@ extern int hb_sln_escDelay;
 extern unsigned char hb_sln_convKDeadKeys[];
 
 /* indicates that screen size has changed */
-extern volatile HB_BOOL hb_sln_bScreen_Size_Changed;
+extern volatile bool hb_sln_bScreen_Size_Changed;
 
-extern int hb_sln_Init_Terminal( int phase );
+extern int hb_sln_Init_Terminal(int phase);
 
-extern int hb_gt_sln_ReadKey( PHB_GT pGT, int iEventMask );
+extern int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask);
 
-extern void    hb_gt_sln_mouse_Init( void );
-extern void    hb_gt_sln_mouse_Exit( void );
-extern HB_BOOL hb_gt_sln_mouse_IsPresent( PHB_GT pGT );
-extern void    hb_gt_sln_mouse_Show( PHB_GT pGT );
-extern void    hb_gt_sln_mouse_Hide( PHB_GT pGT );
-extern void    hb_gt_sln_mouse_GetPos( PHB_GT pGT, int * piRow, int * piCol );
-extern void    hb_gt_sln_mouse_SetPos( PHB_GT pGT, int iRow, int iCol );
-extern int     hb_gt_sln_mouse_CountButton( PHB_GT pGT );
-extern HB_BOOL hb_gt_sln_mouse_ButtonState( PHB_GT pGT, int iButton );
+extern void    hb_gt_sln_mouse_Init(void);
+extern void    hb_gt_sln_mouse_Exit(void);
+extern HB_BOOL hb_gt_sln_mouse_IsPresent(PHB_GT pGT);
+extern void    hb_gt_sln_mouse_Show(PHB_GT pGT);
+extern void    hb_gt_sln_mouse_Hide(PHB_GT pGT);
+extern void    hb_gt_sln_mouse_GetPos(PHB_GT pGT, int * piRow, int * piCol);
+extern void    hb_gt_sln_mouse_SetPos(PHB_GT pGT, int iRow, int iCol);
+extern int     hb_gt_sln_mouse_CountButton(PHB_GT pGT);
+extern HB_BOOL hb_gt_sln_mouse_ButtonState(PHB_GT pGT, int iButton);
 
-extern void    hb_gt_sln_mouse_FixTrash( void );
-extern int     hb_gt_sln_mouse_Inkey( int iEventMask, HB_BOOL fCheckNew );
-extern void    hb_gt_sln_mouse_ProcessTerminalEvent( void );
+extern void    hb_gt_sln_mouse_FixTrash(void);
+extern int     hb_gt_sln_mouse_Inkey(int iEventMask, HB_BOOL fCheckNew);
+extern void    hb_gt_sln_mouse_ProcessTerminalEvent(void);
 
 /* *********************************************************************** */

@@ -103,7 +103,7 @@ static void hb_gt_cgi_newLine(PHB_GTCGI pGTCGI)
    hb_gt_cgi_termOut(pGTCGI, pGTCGI->szCrLf, pGTCGI->nCrLf);
 }
 
-static void hb_gt_cgi_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr)
+static void hb_gt_cgi_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_cgi_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStderr))));
@@ -119,15 +119,14 @@ static void hb_gt_cgi_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
    HB_GTSELF_SETFLAG(pGT, HB_GTI_STDOUTCON, true);
 }
 
-static void hb_gt_cgi_Exit(PHB_GT pGT)
+static void hb_gt_cgi_Exit(PHB_GT pGT) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_cgi_Exit(%p)", static_cast<void*>(pGT)));
 #endif
 
-   PHB_GTCGI pGTCGI;
    HB_GTSELF_REFRESH(pGT);
-   pGTCGI = HB_GTCGI_GET(pGT);
+   PHB_GTCGI pGTCGI = HB_GTCGI_GET(pGT);
    HB_GTSUPER_EXIT(pGT);
 
    if( pGTCGI ) {
@@ -148,7 +147,7 @@ static void hb_gt_cgi_Exit(PHB_GT pGT)
    }
 }
 
-static int hb_gt_cgi_ReadKey(PHB_GT pGT, int iEventMask)
+static int hb_gt_cgi_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_cgi_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask));
@@ -169,7 +168,7 @@ static HB_BOOL hb_gt_cgi_IsColor(PHB_GT pGT) // FuncTable
    return false;
 }
 
-static void hb_gt_cgi_Bell(PHB_GT pGT)
+static void hb_gt_cgi_Bell(PHB_GT pGT) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_cgi_Bell(%p)", static_cast<void*>(pGT)));
@@ -180,7 +179,7 @@ static void hb_gt_cgi_Bell(PHB_GT pGT)
    hb_gt_cgi_termOut(pGTCGI, s_szBell, 1);
 }
 
-static const char * hb_gt_cgi_Version(PHB_GT pGT, int iType)
+static const char * hb_gt_cgi_Version(PHB_GT pGT, int iType) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_cgi_Version(%p,%d)", static_cast<void*>(pGT), iType));
@@ -192,10 +191,10 @@ static const char * hb_gt_cgi_Version(PHB_GT pGT, int iType)
       return HB_GT_DRVNAME(HB_GT_NAME);
    }
 
-   return "Harbour Terminal: Raw stream console";
+   return "Harbour++ Terminal: Raw stream console";
 }
 
-static void hb_gt_cgi_Scroll(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, int iColor, HB_USHORT usChar, int iRows, int iCols)
+static void hb_gt_cgi_Scroll(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, int iColor, HB_USHORT usChar, int iRows, int iCols) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_cgi_Scroll(%p,%d,%d,%d,%d,%d,%d,%d,%d)", static_cast<void*>(pGT), iTop, iLeft, iBottom, iRight, iColor, usChar, iRows, iCols));
@@ -291,12 +290,12 @@ static void hb_gt_cgi_conOut(PHB_GT pGT, const char * szText, HB_SIZE nLength, P
    HB_GTSUPER_SETPOS(pGT, pGTCGI->iRow, pGTCGI->iCol);
 }
 
-static void hb_gt_cgi_WriteCon(PHB_GT pGT, const char * szText, HB_SIZE nLength)
+static void hb_gt_cgi_WriteCon(PHB_GT pGT, const char * szText, HB_SIZE nLength) // FuncTable
 {
    hb_gt_cgi_conOut(pGT, szText, nLength, HB_GTSELF_HOSTCP(pGT), HB_GTSELF_TERMCP(pGT));
 }
 
-static void hb_gt_cgi_WriteConW(PHB_GT pGT, const HB_WCHAR * szTextW, HB_SIZE nLength)
+static void hb_gt_cgi_WriteConW(PHB_GT pGT, const HB_WCHAR * szTextW, HB_SIZE nLength) // FuncTable
 {
    PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP(pGT);
    HB_SIZE nSize = hb_cdpU16AsStrLen(cdpTerm, szTextW, nLength, 0);
@@ -306,13 +305,13 @@ static void hb_gt_cgi_WriteConW(PHB_GT pGT, const HB_WCHAR * szTextW, HB_SIZE nL
    hb_xfree(buffer);
 }
 
-static void hb_gt_cgi_WriteAt(PHB_GT pGT, int iRow, int iCol, const char * szText, HB_SIZE nLength)
+static void hb_gt_cgi_WriteAt(PHB_GT pGT, int iRow, int iCol, const char * szText, HB_SIZE nLength) // FuncTable
 {
    hb_gt_cgi_conPos(HB_GTCGI_GET(pGT), iRow, iCol);
    hb_gt_cgi_WriteCon(pGT, szText, nLength);
 }
 
-static void hb_gt_cgi_WriteAtW(PHB_GT pGT, int iRow, int iCol, const HB_WCHAR * szTextW, HB_SIZE nLength)
+static void hb_gt_cgi_WriteAtW(PHB_GT pGT, int iRow, int iCol, const HB_WCHAR * szTextW, HB_SIZE nLength) // FuncTable
 {
    PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP(pGT);
    HB_SIZE nSize = hb_cdpU16AsStrLen(cdpTerm, szTextW, nLength, 0);
@@ -325,7 +324,7 @@ static void hb_gt_cgi_WriteAtW(PHB_GT pGT, int iRow, int iCol, const HB_WCHAR * 
 
 #else /* HB_GT_CGI_RAWOUTPUT */
 
-static void hb_gt_cgi_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
+static void hb_gt_cgi_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_cgi_Redraw(%p,%d,%d,%d)", static_cast<void*>(pGT), iRow, iCol, iSize));
@@ -387,7 +386,7 @@ static void hb_gt_cgi_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
    }
 }
 
-static void hb_gt_cgi_Refresh(PHB_GT pGT)
+static void hb_gt_cgi_Refresh(PHB_GT pGT) // FuncTable
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_cgi_Refresh(%p)", static_cast<void*>(pGT)));

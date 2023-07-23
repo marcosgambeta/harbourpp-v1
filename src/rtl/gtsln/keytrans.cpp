@@ -386,22 +386,18 @@ static int KeyTranslationTable[][2] =
 /* a very simple sort algorithm */
 static void hb_sln_SortKeyTranslationTable(void)
 {
-   for( int i = 0; i < ( static_cast<int>(KeyTranslationTableSize) - 1 ); i++ )
-   {
-      int j, min, KeyTmp[2];
+   for( int i = 0; i < ( static_cast<int>(KeyTranslationTableSize) - 1 ); i++ ) {
+      int min = i;
 
-      min = i;
-
-      for( j = i + 1; j < static_cast<int>(KeyTranslationTableSize); j++ )
-      {
-         if( KeyTranslationTable[j][0] < KeyTranslationTable[min][0] )
-         {
+      for( int j = i + 1; j < static_cast<int>(KeyTranslationTableSize); j++ ) {
+         if( KeyTranslationTable[j][0] < KeyTranslationTable[min][0] ) {
             min = j;
          }
       }
 
-      if( min > i )
-      {
+      int KeyTmp[2];
+
+      if( min > i ) {
          KeyTmp[0] = KeyTranslationTable[i][0];
          KeyTmp[1] = KeyTranslationTable[i][1];
 
@@ -414,8 +410,7 @@ static void hb_sln_SortKeyTranslationTable(void)
    }
 
 #if 0
-   for( i = 0; i < KeyTranslationTableSize; i++ )
-   {
+   for( int i = 0; i < KeyTranslationTableSize; i++ ) {
       fprintf(stderr, "%02x %8x %8x\n", i, KeyTranslationTable[i][0], KeyTranslationTable[i][1]);
    }
 #endif
@@ -426,28 +421,21 @@ static void hb_sln_SortKeyTranslationTable(void)
 /* standard binary search */
 static int hb_sln_FindKeyTranslation(int SlangKey)
 {
-   if( (SlangKey >= KeyTranslationTable[0][0]) && (SlangKey <= KeyTranslationTable[KeyTranslationTableSize - 1][0]) )
-   {
+   if( (SlangKey >= KeyTranslationTable[0][0]) && (SlangKey <= KeyTranslationTable[KeyTranslationTableSize - 1][0]) ) {
       int Start = 0, Stop = KeyTranslationTableSize - 1;
 
-      while( Start <= Stop )
-      {
+      while( Start <= Stop ) {
          int CurPos = (Start + Stop) / 2;
 
          #if 0
          fprintf(stderr, "%d %d %d\n", i, KeyTranslationTable[i][0], KeyTranslationTable[i][1]);
          #endif
 
-         if( SlangKey == KeyTranslationTable[CurPos][0] )
-         {
+         if( SlangKey == KeyTranslationTable[CurPos][0] ) {
             return KeyTranslationTable[CurPos][1];
-         }
-         else if( SlangKey < KeyTranslationTable[CurPos][0] )
-         {
+         } else if( SlangKey < KeyTranslationTable[CurPos][0] ) {
             Stop = CurPos - 1;
-         }
-         else if( SlangKey > KeyTranslationTable[CurPos][0] )
-         {
+         } else if( SlangKey > KeyTranslationTable[CurPos][0] ) {
             Start = CurPos + 1;
          }
       }
@@ -465,12 +453,9 @@ int hb_sln_SetKeyInKeyTranslationTable(int SlangKey, int ClipKey)
 {
    int Found = 0;
 
-   if( (SlangKey >= KeyTranslationTable[0][0] ) && (SlangKey <= KeyTranslationTable[KeyTranslationTableSize - 1][0]) )
-   {
-      for( int i = 0; i < static_cast<int>(KeyTranslationTableSize); i++ )
-      {
-         if( SlangKey == KeyTranslationTable[i][0] )
-         {
+   if( (SlangKey >= KeyTranslationTable[0][0] ) && (SlangKey <= KeyTranslationTable[KeyTranslationTableSize - 1][0]) ) {
+      for( int i = 0; i < static_cast<int>(KeyTranslationTableSize); i++ ) {
+         if( SlangKey == KeyTranslationTable[i][0] ) {
             KeyTranslationTable[i][1] = ClipKey;
          }
          Found = 1;
