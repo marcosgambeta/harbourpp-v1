@@ -120,8 +120,7 @@ static _HB_INLINE_ HB_U8 arc4_getbyte(void);
 
 static _HB_INLINE_ void arc4_init(void)
 {
-   for( int n = 0; n < 256; ++n )
-   {
+   for( int n = 0; n < 256; ++n ) {
       rs.s[n] = static_cast<HB_U8>(n);
    }
 
@@ -131,8 +130,7 @@ static _HB_INLINE_ void arc4_init(void)
 static _HB_INLINE_ void arc4_addrandom(const HB_U8 * dat, int datlen)
 {
    rs.i--;
-   for( int n = 0; n < 256; ++n )
-   {
+   for( int n = 0; n < 256; ++n ) {
       HB_U8 si;
       rs.i         = (rs.i + 1);
       si           = rs.s[rs.i];
@@ -148,16 +146,12 @@ static HB_ISIZ read_all(int fd, HB_U8 * buf, size_t count)
 {
    HB_SIZE numread = 0;
 
-   while( numread < count )
-   {
+   while( numread < count ) {
       HB_ISIZ result = read(fd, buf + numread, count - numread);
 
-      if( result < 0 )
-      {
+      if( result < 0 ) {
          return -1;
-      }
-      else if( result == 0 )
-      {
+      } else if( result == 0 ) {
          break;
       }
 
@@ -180,15 +174,13 @@ static int arc4_seed_win(void)
 
    if( !s_provider_set &&
        !CryptAcquireContext(&s_provider, nullptr, nullptr, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT) &&
-       GetLastError() != static_cast<DWORD>(NTE_BAD_KEYSET) )
-   {
+       GetLastError() != static_cast<DWORD>(NTE_BAD_KEYSET) ) {
       return -1;
    }
 
    s_provider_set = 1;
 
-   if( !CryptGenRandom(s_provider, sizeof(buf), buf) )
-   {
+   if( !CryptGenRandom(s_provider, sizeof(buf), buf) ) {
       return -1;
    }
 
@@ -219,24 +211,20 @@ static int arc4_seed_sysctl_linux(void)
 
    memset(buf, 0, sizeof(buf));
 
-   for( size_t len = 0; len < sizeof(buf); len += n )
-   {
+   for( size_t len = 0; len < sizeof(buf); len += n ) {
       n = sizeof(buf) - len;
 
-      if( sysctl(mib, 3, &buf[len], &n, nullptr, 0) != 0 )
-      {
+      if( sysctl(mib, 3, &buf[len], &n, nullptr, 0) != 0 ) {
          return -1;
       }
    }
 
    /* make sure that the buffer actually got set. */
-   for( unsigned int i = 0, any_set = 0; i < sizeof(buf); ++i )
-   {
+   for( unsigned int i = 0, any_set = 0; i < sizeof(buf); ++i ) {
       any_set |= buf[i];
    }
 
-   if( !any_set )
-   {
+   if( !any_set ) {
       return -1;
    }
 
@@ -266,32 +254,26 @@ static int arc4_seed_sysctl_bsd(void)
    memset(buf, 0, sizeof(buf));
 
    len = sizeof(buf);
-   if( sysctl(mib, 2, buf, &len, nullptr, 0) == -1 )
-   {
-      for( len = 0; len < sizeof(buf); len += sizeof(unsigned) )
-      {
+   if( sysctl(mib, 2, buf, &len, nullptr, 0) == -1 ) {
+      for( len = 0; len < sizeof(buf); len += sizeof(unsigned) ) {
          n = sizeof(unsigned);
 
-         if( n + len > sizeof(buf) )
-         {
+         if( n + len > sizeof(buf) ) {
             n = len - sizeof(buf);
          }
 
-         if( sysctl(mib, 2, &buf[len], &n, nullptr, 0) == -1 )
-         {
+         if( sysctl(mib, 2, &buf[len], &n, nullptr, 0) == -1 ) {
             return -1;
          }
       }
    }
 
    /* make sure that the buffer actually got set. */
-   for( int i = any_set = 0; i < static_cast<int>(sizeof(buf)); ++i )
-   {
+   for( int i = any_set = 0; i < static_cast<int>(sizeof(buf)); ++i ) {
       any_set |= buf[i];
    }
 
-   if( !any_set )
-   {
+   if( !any_set ) {
       return -1;
    }
 
@@ -309,8 +291,7 @@ static int arc4_seed_sysctl_bsd(void)
 #define TRY_SEED_PROC_SYS_KERNEL_RANDOM_UUID
 static _HB_INLINE_ int hex_char_to_int(char c)
 {
-   switch( c )
-   {
+   switch( c ) {
       case '0':           return 0;
       case '1':           return 1;
       case '2':           return 2;
@@ -343,45 +324,36 @@ static int arc4_seed_proc_sys_kernel_random_uuid(void)
    HB_U8 entropy[64];
    int   i, nybbles;
 
-   for( int bytes = 0; bytes < ADD_ENTROPY; )
-   {
+   for( int bytes = 0; bytes < ADD_ENTROPY; ) {
       int fd = open("/proc/sys/kernel/random/uuid", O_RDONLY, 0);
       int n;
 
-      if( fd < 0 )
-      {
+      if( fd < 0 ) {
          return -1;
       }
 
       n = read(fd, buf, sizeof(buf));
       close(fd);
 
-      if( n <= 0 )
-      {
+      if( n <= 0 ) {
          return -1;
       }
 
       memset(entropy, 0, sizeof(entropy));
-      for( i = nybbles = 0; i < n; ++i )
-      {
-         if( HB_ISXDIGIT(buf[i]) )
-         {
+      for( i = nybbles = 0; i < n; ++i ) {
+         if( HB_ISXDIGIT(buf[i]) ) {
             int nyb = hex_char_to_int(buf[i]);
 
-            if( nybbles & 1 )
-            {
+            if( nybbles & 1 ) {
                entropy[nybbles / 2] |= nyb;
-            }
-            else
-            {
+            } else {
                entropy[nybbles / 2] |= nyb << 4;
             }
 
             ++nybbles;
          }
       }
-      if( nybbles < 2 )
-      {
+      if( nybbles < 2 ) {
          return -1;
       }
 
@@ -404,23 +376,20 @@ static int arc4_seed_urandom(void)
    /* This is adapted from Tor's crypto_seed_rng() */
    static const char * filenames[] = {"/dev/srandom", "/dev/urandom", "/dev/random", nullptr};
 
-   for( int i = 0; filenames[i]; ++i )
-   {
+   for( int i = 0; filenames[i]; ++i ) {
       HB_U8 buf[ADD_ENTROPY];
       HB_SIZE n;
 
       int fd = open(filenames[i], O_RDONLY, 0);
 
-      if( fd < 0 )
-      {
+      if( fd < 0 ) {
          continue;
       }
 
       n = read_all(fd, buf, sizeof(buf));
       close(fd);
 
-      if( n != sizeof(buf) )
-      {
+      if( n != sizeof(buf) ) {
          return -1;
       }
 
@@ -440,8 +409,7 @@ static int arc4_seed_rand(void)
 
    srand(static_cast<unsigned>(hb_dateMilliSeconds()));
 
-   for( HB_SIZE i = 0; i < sizeof(buf); i++ )
-   {
+   for( HB_SIZE i = 0; i < sizeof(buf); i++ ) {
       buf[i] = static_cast<HB_U8>(rand() % 256);  /* not biased */
    }
 
@@ -462,22 +430,19 @@ static void arc4_seed(void)
     */
 
 #if defined(TRY_SEED_MS_CRYPTOAPI)
-   if( arc4_seed_win() == 0 )
-   {
+   if( arc4_seed_win() == 0 ) {
       ok = 1;
    }
 #endif
 
 #if defined(TRY_SEED_URANDOM)
-   if( arc4_seed_urandom() == 0 )
-   {
+   if( arc4_seed_urandom() == 0 ) {
       ok = 1;
    }
 #endif
 
 #if defined(TRY_SEED_PROC_SYS_KERNEL_RANDOM_UUID)
-   if( arc4_seed_proc_sys_kernel_random_uuid() == 0 )
-   {
+   if( arc4_seed_proc_sys_kernel_random_uuid() == 0 ) {
       ok = 1;
    }
 #endif
@@ -488,15 +453,13 @@ static void arc4_seed(void)
     * messages when you try to use it. To avoid dmesg spamming,
     * only try this if no previous method worked.
     */
-   if( !ok && arc4_seed_sysctl_linux() == 0 )
-   {
+   if( !ok && arc4_seed_sysctl_linux() == 0 ) {
       ok = 1;
    }
 #endif
 
 #if defined(TRY_SEED_SYSCTL_BSD)
-   if( arc4_seed_sysctl_bsd() == 0 )
-   {
+   if( arc4_seed_sysctl_bsd() == 0 ) {
       ok = 1;
    }
 #endif
@@ -508,16 +471,14 @@ static void arc4_seed(void)
     * (transient) failure, it will be re-tried at the next
     * seeding cycle.
     */
-   if( !ok )
-   {
+   if( !ok ) {
       arc4_seed_rand();
    }
 }
 
 static void arc4_stir(void)
 {
-   if( !rs_initialized )
-   {
+   if( !rs_initialized ) {
       arc4_init();
       rs_initialized = 1;
    }
@@ -542,8 +503,7 @@ static void arc4_stir(void)
     *
     * We add another sect to the cargo cult, and choose 12*256.
     */
-   for( int i = 0; i < 12 * 256; i++ )
-   {
+   for( int i = 0; i < 12 * 256; i++ ) {
       ( void ) arc4_getbyte(); // TODO: C++ cast
    }
 
@@ -553,15 +513,13 @@ static void arc4_stir(void)
 static void arc4_stir_if_needed(void)
 {
 #if defined(NO_PID_CHECK)
-   if( arc4_count <= 0 || !rs_initialized )
-   {
+   if( arc4_count <= 0 || !rs_initialized ) {
       arc4_stir();
    }
 #else
    pid_t pid = getpid();
 
-   if( arc4_count <= 0 || !rs_initialized || arc4_stir_pid != pid )
-   {
+   if( arc4_count <= 0 || !rs_initialized || arc4_stir_pid != pid ) {
       arc4_stir_pid = pid;
       arc4_stir();
    }
@@ -609,13 +567,11 @@ void arc4random_stir(void)
 void arc4random_addrandom(const unsigned char * dat, int datlen)
 {
    ARC4_LOCK();
-   if( !rs_initialized )
-   {
+   if( !rs_initialized ) {
       arc4_stir();
    }
 
-   for( int j = 0; j < datlen; j += 256 )
-   {
+   for( int j = 0; j < datlen; j += 256 ) {
       /*
        * arc4_addrandom() ignores all but the first 256 bytes of
        * its input.  We want to make sure to look at ALL the
@@ -651,10 +607,8 @@ void hb_arc4random_buf(void * _buf, HB_SIZE n)
 
    arc4_stir_if_needed();
 
-   while( n-- )
-   {
-      if( --arc4_count <= 0 )
-      {
+   while( n-- ) {
+      if( --arc4_count <= 0 ) {
          arc4_stir();
       }
 
@@ -678,8 +632,7 @@ HB_U32 hb_arc4random_uniform(HB_U32 upper_bound)
 {
    HB_U32 r, min;
 
-   if( upper_bound < 2 )
-   {
+   if( upper_bound < 2 ) {
       return 0;
    }
 
@@ -687,13 +640,10 @@ HB_U32 hb_arc4random_uniform(HB_U32 upper_bound)
    min = 0x100000000UL % upper_bound;
 #else
    /* Calculate (2**32 % upper_bound) avoiding 64-bit math */
-   if( upper_bound > 0x80000000 )
-   {
+   if( upper_bound > 0x80000000 ) {
       /* 2**32 - upper_bound */
       min = 1 + ~upper_bound;
-   }
-   else
-   {
+   } else {
       /* (2**32 - (x * 2)) % x == 2**32 % x when x <= 2**31 */
       min = ((0xffffffff - (upper_bound * 2)) + 1) % upper_bound;
    }
@@ -705,11 +655,9 @@ HB_U32 hb_arc4random_uniform(HB_U32 upper_bound)
     * number inside the range we need, so it should rarely need
     * to re-roll.
     */
-   for( ;; )
-   {
+   for( ;; ) {
       r = hb_arc4random();
-      if( r >= min )
-      {
+      if( r >= min ) {
          break;
       }
    }

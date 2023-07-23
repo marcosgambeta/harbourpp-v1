@@ -53,11 +53,9 @@ HB_FUNC( BIN2W )
    PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
    HB_U16 uiResult = 0;
 
-   if( pItem != nullptr )
-   {
+   if( pItem != nullptr ) {
       HB_SIZE nLen = hb_itemGetCLen(pItem);
-      if( nLen )
-      {
+      if( nLen ) {
          const char * pszString = hb_itemGetCPtr(pItem);
          uiResult = HB_GET_LE_INT16(pszString);
       }
@@ -70,11 +68,9 @@ HB_FUNC( BIN2I )
    PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
    HB_I16 iResult = 0;
 
-   if( pItem != nullptr )
-   {
+   if( pItem != nullptr ) {
       HB_SIZE nLen = hb_itemGetCLen(pItem);
-      if( nLen )
-      {
+      if( nLen ) {
          const char * pszString = hb_itemGetCPtr(pItem);
          iResult = HB_GET_LE_UINT16(pszString);
       }
@@ -87,18 +83,13 @@ HB_FUNC( BIN2L )
    PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
    HB_I32 iResult = 0;
 
-   if( pItem != nullptr )
-   {
+   if( pItem != nullptr ) {
       HB_SIZE nLen = hb_itemGetCLen(pItem);
-      if( nLen )
-      {
+      if( nLen ) {
          const char * pszString = hb_itemGetCPtr(pItem);
-         if( nLen >= 3 )
-         {
+         if( nLen >= 3 ) {
             iResult = HB_GET_LE_INT32(pszString);
-         }
-         else
-         {
+         } else {
             iResult = HB_GET_LE_UINT16(pszString);
          }
       }
@@ -110,7 +101,6 @@ HB_FUNC( I2BIN )
 {
    char szResult[2];
    HB_I16 iValue = static_cast<HB_I16>(hb_parni(1));
-
    HB_PUT_LE_UINT16(szResult, iValue);
    hb_retclen(szResult, 2);
 }
@@ -119,7 +109,6 @@ HB_FUNC( L2BIN )
 {
    char szResult[4];
    HB_I32 iValue = static_cast<HB_I32>(hb_parnl(1));
-
    HB_PUT_LE_UINT32(szResult, iValue);
    hb_retclen(szResult, 4);
 }

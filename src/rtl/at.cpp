@@ -57,78 +57,56 @@ HB_FUNC( HB_AT )
    PHB_ITEM pSub  = hb_param(1, Harbour::Item::STRING);
    PHB_ITEM pText = hb_param(2, Harbour::Item::STRING);
 
-   if( pText && pSub )
-   {
+   if( pText && pSub ) {
       PHB_CODEPAGE cdp         = hb_vmCDP();
       const char * pszText     = hb_itemGetCPtr(pText);
       HB_SIZE      nTextLength = hb_itemGetCLen(pText);
       HB_SIZE      nStart      = hb_parns(3);
       HB_SIZE      nFrom, nPos = 0;
 
-      if( nStart <= 1 )
-      {
+      if( nStart <= 1 ) {
          nStart = nFrom = 0;
-      }
-      else if( HB_CDP_ISCHARIDX(cdp) )
-      {
+      } else if( HB_CDP_ISCHARIDX(cdp) ) {
          nFrom = hb_cdpTextPos(cdp, pszText, nTextLength, --nStart);
-      }
-      else
-      {
+      } else {
          nFrom = --nStart;
       }
 
-      if( nFrom < nTextLength )
-      {
+      if( nFrom < nTextLength ) {
          HB_SIZE nTo;
 
          pszText     += nFrom;
          nTextLength -= nFrom;
-         if( HB_ISNUM(4) )
-         {
+         if( HB_ISNUM(4) ) {
             nTo = hb_parns(4);
-            if( nTo <= nStart )
-            {
+            if( nTo <= nStart ) {
                nTo = 0;
-            }
-            else
-            {
+            } else {
                nTo -= nStart;
-               if( HB_CDP_ISCHARIDX(cdp) )
-               {
+               if( HB_CDP_ISCHARIDX(cdp) ) {
                   nTo = hb_cdpTextPos(cdp, pszText, nTextLength, nTo);
                }
-               if( nTo > nTextLength )
-               {
+               if( nTo > nTextLength ) {
                   nTo = nTextLength;
                }
             }
-         }
-         else
-         {
+         } else {
             nTo = nTextLength;
          }
 
-         if( nTo > 0 )
-         {
+         if( nTo > 0 ) {
             nPos = hb_strAt(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), pszText, nTo);
-            if( nPos > 0 )
-            {
-               if( HB_CDP_ISCHARIDX(cdp) )
-               {
+            if( nPos > 0 ) {
+               if( HB_CDP_ISCHARIDX(cdp) ) {
                   nPos = hb_cdpTextLen(cdp, pszText, nPos - 1) + 1 + nStart;
-               }
-               else
-               {
+               } else {
                   nPos += nFrom;
                }
             }
          }
       }
       hb_retns(nPos);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1108, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -138,21 +116,16 @@ HB_FUNC( AT )
    PHB_ITEM pSub  = hb_param(1, Harbour::Item::STRING);
    PHB_ITEM pText = hb_param(2, Harbour::Item::STRING);
 
-   if( pText && pSub )
-   {
+   if( pText && pSub ) {
       HB_SIZE nPos = hb_strAt(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), hb_itemGetCPtr(pText), hb_itemGetCLen(pText));
-      if( nPos )
-      {
+      if( nPos ) {
          PHB_CODEPAGE cdp = hb_vmCDP();
-         if( HB_CDP_ISCHARIDX(cdp) )
-         {
+         if( HB_CDP_ISCHARIDX(cdp) ) {
             nPos = hb_cdpTextLen(cdp, hb_itemGetCPtr(pText), nPos - 1) + 1;
          }
       }
       hb_retns(nPos);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1108, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

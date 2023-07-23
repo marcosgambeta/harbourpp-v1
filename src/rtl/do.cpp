@@ -62,63 +62,44 @@ HB_FUNC( DO )
    HB_USHORT uiPCount = static_cast<HB_USHORT>(hb_pcount());
    PHB_ITEM pSelf = nullptr;
 
-   if( uiPCount > 0 )
-   {
+   if( uiPCount > 0 ) {
       PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
 
-      if( HB_IS_STRING(pItem) )
-      {
+      if( HB_IS_STRING(pItem) ) {
          PHB_DYNS pDynSym = hb_dynsymFindName(hb_itemGetCPtr(pItem));
 
-         if( !pDynSym )
-         {
+         if( !pDynSym ) {
             hb_errRT_BASE(EG_NOFUNC, 1001, nullptr, hb_itemGetCPtr(pItem), HB_ERR_ARGS_BASEPARAMS);
             return;
          }
          hb_vmPushDynSym(pDynSym);
-      }
-      else if( HB_IS_BLOCK(pItem) )
-      {
+      } else if( HB_IS_BLOCK(pItem) ) {
          hb_vmPushEvalSym();
          pSelf = pItem;
-      }
-      else if( HB_IS_SYMBOL(pItem) )
-      {
+      } else if( HB_IS_SYMBOL(pItem) ) {
          hb_vmPush(pItem);
-      }
-      else
-      {
+      } else {
          uiPCount = 0;
       }
    }
 
-   if( uiPCount > 0 )
-   {
-      if( pSelf )
-      {
+   if( uiPCount > 0 ) {
+      if( pSelf ) {
          hb_vmPush(pSelf);
-      }
-      else
-      {
+      } else {
          hb_vmPushNil();
       }
 
-      for( HB_USHORT uiParam = 2; uiParam <= uiPCount; ++uiParam )
-      {
+      for( HB_USHORT uiParam = 2; uiParam <= uiPCount; ++uiParam ) {
          hb_vmPush(hb_stackItemFromBase(uiParam));
       }
 
-      if( pSelf )
-      {
+      if( pSelf ) {
          hb_vmSend(static_cast<HB_USHORT>(uiPCount - 1));
-      }
-      else
-      {
+      } else {
          hb_vmProc(static_cast<HB_USHORT>(uiPCount - 1));
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

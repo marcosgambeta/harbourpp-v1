@@ -52,24 +52,20 @@ HB_FUNC( ABS )
 {
    PHB_ITEM pNumber = hb_param(1, Harbour::Item::NUMERIC);
 
-   if( pNumber )
-   {
+   if( pNumber ) {
       int iWidth;
       int iDec;
 
       hb_itemGetNLen(pNumber, &iWidth, &iDec);
 
-      if( HB_IS_INTEGER(pNumber) )
-      {
+      if( HB_IS_INTEGER(pNumber) ) {
          int iNumber = hb_itemGetNI(pNumber);
 
-         if( iNumber >= 0 )
-         {
+         if( iNumber >= 0 ) {
             hb_retnilen(iNumber, iWidth);
-         }   
+         }
 #if -HB_VMINT_MAX > HB_VMINT_MIN
-         else if( iNumber < -INT_MAX )
-         {
+         else if( iNumber < -INT_MAX ) {
 #if HB_VMLONG_MAX > HB_VMINT_MAX
             hb_retnint(-static_cast<HB_MAXINT>(iNumber));
 #else
@@ -77,39 +73,29 @@ HB_FUNC( ABS )
 #endif
          }
 #endif
-         else
-         {
+         else {
             hb_retni(-iNumber);
-         }   
-      }
-      else if( HB_IS_LONG(pNumber) )
-      {
+         }
+      } else if( HB_IS_LONG(pNumber) ) {
          HB_MAXINT lNumber = hb_itemGetNInt(pNumber);
 
-         if( lNumber >= 0 )
-         {
+         if( lNumber >= 0 ) {
             hb_retnintlen(lNumber, iWidth);
-         }   
+         }
 #if -HB_VMLONG_MAX > HB_VMLONG_MIN
-         else if( lNumber < -HB_VMLONG_MAX )
-         {
+         else if( lNumber < -HB_VMLONG_MAX ) {
             hb_retndlen(-static_cast<double>(lNumber), 0, iDec);
          }
 #endif
-         else
-         {
+         else {
             hb_retnint(-lNumber);
          }
-      }
-      else
-      {
+      } else {
          double dNumber = hb_itemGetND(pNumber);
 
          hb_retndlen(dNumber >= 0.0 ? dNumber : -dNumber, 0, iDec);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }   
+   }
 }

@@ -53,28 +53,22 @@ HB_FUNC( AMPM )
    int iHour = 0;
    bool bAM = false;
 
-   if( nTimeLen )
-   {
+   if( nTimeLen ) {
       const char * pszTime = hb_parc(1);
       memcpy(pszResult, pszTime, nTimeLen);
       iHour = static_cast<int>(hb_strVal(pszTime, nTimeLen));
    }
 
-   if( iHour == 0 || iHour == 24 )
-   {
-      if( nTimeLen < 2 )
-      {
+   if( iHour == 0 || iHour == 24 ) {
+      if( nTimeLen < 2 ) {
          nTimeLen = 2;
       }
 
       pszResult[0] = '1';
       pszResult[1] = '2';
       bAM = true;
-   }
-   else if( iHour > 12 )
-   {
-      if( nTimeLen < 2 )
-      {
+   } else if( iHour > 12 ) {
+      if( nTimeLen < 2 ) {
          nTimeLen = 2;
       }
 
@@ -82,15 +76,12 @@ HB_FUNC( AMPM )
       pszResult[0] = static_cast<char>(iHour / 10) + '0';
       pszResult[1] = static_cast<char>(iHour % 10) + '0';
 
-      if( pszResult[0] == '0' )
-      {
+      if( pszResult[0] == '0' ) {
          pszResult[0] = ' ';
       }
 
       bAM = false;
-   }
-   else
-   {
+   } else {
       bAM = (iHour != 12);
    }
 

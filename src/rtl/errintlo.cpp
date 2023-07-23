@@ -62,106 +62,83 @@ void hb_errInternalRaw(HB_ERRCODE errCode, const char * szText, const char * szP
 
    char buffer[8192];
    char file[HB_PATH_MAX];
-   const char * szFile;
-   bool fStack, fLang;
-   HB_USHORT uiLine;
-   FILE * hLog;
 
-   if( szPar1 == nullptr )
-   {
+   if( szPar1 == nullptr ) {
       szPar1 = "";
    }
 
-   if( szPar2 == nullptr )
-   {
+   if( szPar2 == nullptr ) {
       szPar2 = "";
    }
 
-   fStack = hb_stackId() != nullptr;
-   fLang = fStack && hb_langID() != nullptr;
+   bool fStack = hb_stackId() != nullptr;
+   bool fLang = fStack && hb_langID() != nullptr;
 
-   szFile = fStack ? hb_setGetCPtr(HB_SET_HBOUTLOG) : nullptr;
-   if( !szFile )
-   {
+   const char * szFile = fStack ? hb_setGetCPtr(HB_SET_HBOUTLOG) : nullptr;
+   if( !szFile ) {
       szFile = "hb_out.log";
    }
 
-   hLog = hb_fopen(szFile, "a+");
-   if( hLog )
-   {
-      const char * szInfo;
-
-      char szTime[9];
-      int  iYear, iMonth, iDay;
-
+   FILE * hLog = hb_fopen(szFile, "a+");
+   if( hLog ) {
+      int iYear, iMonth, iDay;
       hb_dateToday(&iYear, &iMonth, &iDay);
+      char szTime[9];
       hb_dateTimeStr(szTime);
 
       fprintf(hLog, "Application Internal Error - %s\n", hb_cmdargARGVN(0));
       fprintf(hLog, "Terminated at: %04d-%02d-%02d %s\n", iYear, iMonth, iDay, szTime);
-      szInfo = fStack ? hb_setGetCPtr(HB_SET_HBOUTLOGINFO) : nullptr;
-      if( szInfo && *szInfo )
-      {
+      const char * szInfo = fStack ? hb_setGetCPtr(HB_SET_HBOUTLOGINFO) : nullptr;
+      if( szInfo && *szInfo ) {
          fprintf(hLog, "Info: %s\n", szInfo);
       }
    }
 
    hb_conOutErr(hb_conNewLine(), 0);
-   if( fLang )
-   {
+   if( fLang ) {
       hb_snprintf(buffer, sizeof(buffer), hb_langDGetItem(HB_LANG_ITEM_BASE_ERRINTR), errCode);
-   }
-   else
-   {
+   } else {
       hb_snprintf(buffer, sizeof(buffer), "Unrecoverable error %d: ", errCode);
    }
 
    hb_conOutErr(buffer, 0);
-   if( hLog )
-   {
+   if( hLog ) {
       fprintf(hLog, "%s", buffer);
    }
 
-   if( !szText && fLang )
-   {
+   if( !szText && fLang ) {
       szText = hb_langDGetItem(HB_LANG_ITEM_BASE_ERRINTR + errCode - 9000);
    }
 
-   if( szText )
-   {
+   if( szText ) {
       hb_snprintf(buffer, sizeof(buffer), szText, szPar1, szPar2);
-   }
-   else
-   {
+   } else {
       buffer[0] = '\0';
    }
 
    hb_conOutErr(buffer, 0);
    hb_conOutErr(hb_conNewLine(), 0);
-   if( hLog )
-   {
+   if( hLog ) {
       fprintf(hLog, "%s\n", buffer);
    }
 
-   if( fStack && hb_stackTotalItems() )
-   {
+
+   if( fStack && hb_stackTotalItems() ) {
       int iLevel = 0;
-      while( hb_procinfo(iLevel++, buffer, &uiLine, file) )
-      {
+      HB_USHORT uiLine;
+      while( hb_procinfo(iLevel++, buffer, &uiLine, file) ) {
          char msg[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 32];
 
          hb_snprintf(msg, sizeof(msg), "Called from %s(%hu)%s%s\n", buffer, uiLine, *file ? " in " : "", file);
 
          hb_conOutErr(msg, 0);
-         if( hLog )
-         {
+         if( hLog ) {
             fprintf(hLog, "%s", msg);
          }
       }
    }
 
-   if( hLog )
-   {
+   if( hLog ) {
       fprintf(hLog, "------------------------------------------------------------------------\n");
       fclose(hLog);
    }

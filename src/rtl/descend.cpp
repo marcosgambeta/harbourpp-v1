@@ -53,14 +53,10 @@ void hb_strDescend(char * szStringTo, const char * szStringFrom, HB_SIZE nLen)
    HB_TRACE(HB_TR_DEBUG, ("hb_strDescend(%p, %s, %" HB_PFS "u)", static_cast<void*>(szStringTo), szStringFrom, nLen));
 #endif
 
-   if( nLen == 1 && szStringFrom[0] == '\0' )
-   {
+   if( nLen == 1 && szStringFrom[0] == '\0' ) {
       szStringTo[0] = '\0';
-   }
-   else
-   {
-      for(; nLen--; szStringTo++, szStringFrom++ )
-      {
+   } else {
+      for(; nLen--; szStringTo++, szStringFrom++ ) {
          *szStringTo = static_cast<char>(256 - *szStringFrom);
       }
    }
@@ -70,33 +66,22 @@ HB_FUNC( DESCEND )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
 
-   if( pItem != nullptr )
-   {
-      if( HB_IS_STRING(pItem) )
-      {
+   if( pItem != nullptr ) {
+      if( HB_IS_STRING(pItem) ) {
          HB_SIZE nLen = hb_itemGetCLen(pItem);
 
-         if( nLen > 0 )
-         {
+         if( nLen > 0 ) {
             char * szBuffer = static_cast<char*>(hb_xgrab(nLen + 1));
             hb_strDescend(szBuffer, hb_itemGetCPtr(pItem), nLen);
             hb_retclen_buffer(szBuffer, nLen);
-         }
-         else
-         {
+         } else {
             hb_retc_null();
          }
-      }
-      else if( HB_IS_DATE(pItem) )
-      {
+      } else if( HB_IS_DATE(pItem) ) {
          hb_retnl(5231808 - hb_itemGetDL(pItem));
-      }
-      else if( HB_IS_NUMERIC(pItem) )
-      {
+      } else if( HB_IS_NUMERIC(pItem) ) {
          hb_retnd(-1 * hb_itemGetND(pItem));
-      }
-      else if( HB_IS_LOGICAL(pItem) )
-      {
+      } else if( HB_IS_LOGICAL(pItem) ) {
          hb_retl(!hb_itemGetL(pItem));
       }
    }

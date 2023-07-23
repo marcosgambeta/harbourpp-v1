@@ -48,55 +48,44 @@
 
 HB_FUNC( HB_COLORINDEX )
 {
-   if( HB_ISCHAR(1) && HB_ISNUM(2) )
-   {
+   if( HB_ISCHAR(1) && HB_ISNUM(2) ) {
       const char * pszColor = hb_parc(1);
       HB_SIZE      nColorPos;
       int          iColorIndex = hb_parni(2);
 
       /* Skip the given number of commas */
-      for( nColorPos = 0; pszColor[nColorPos] != '\0' && iColorIndex > 0; nColorPos++ )
-      {
-         if( pszColor[nColorPos] == ',' )
-         {
+      for( nColorPos = 0; pszColor[nColorPos] != '\0' && iColorIndex > 0; nColorPos++ ) {
+         if( pszColor[nColorPos] == ',' ) {
             iColorIndex--;
          }
       }
 
       /* if found, continue */
-      if( iColorIndex == 0 )
-      {
+      if( iColorIndex == 0 ) {
          HB_SIZE nColorLen;
 
          /* Skip the spaces after the comma */
-         while( pszColor[nColorPos] == ' ' )
-         {
+         while( pszColor[nColorPos] == ' ' ) {
             nColorPos++;
          }
-         
+
          /* Search for next comma or end of string */
          nColorLen = 0;
-         while( pszColor[nColorPos + nColorLen] != '\0' && pszColor[nColorPos + nColorLen] != ',' )
-         {
+         while( pszColor[nColorPos + nColorLen] != '\0' && pszColor[nColorPos + nColorLen] != ',' ) {
             nColorLen++;
          }
-         
+
          /* Skip the trailing spaces */
-         while( nColorLen > 0 && pszColor[nColorPos + nColorLen - 1] == ' ' )
-         {
+         while( nColorLen > 0 && pszColor[nColorPos + nColorLen - 1] == ' ' ) {
             nColorLen--;
          }
 
          /* Return the string */
          hb_retclen(pszColor + nColorPos, nColorLen);
-      }
-      else
-      {
+      } else {
          hb_retc_null();
       }
-   }
-   else
-   {
+   } else {
       hb_retc_null();
    }
 }

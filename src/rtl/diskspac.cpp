@@ -89,15 +89,13 @@ HB_FUNC( DISKSPACE )
 
       int iDrive = hb_parni(1);
 
-      if( iDrive >= 0 )
-      {
+      if( iDrive >= 0 ) {
          ULARGE_INTEGER i64FreeBytesToCaller, i64TotalBytes, i64FreeBytes;
          UINT uiErrMode = SetErrorMode( SEM_FAILCRITICALERRORS );
 
          TCHAR lpPath[4];
 
-         if( iDrive == 0 )
-         {
+         if( iDrive == 0 ) {
             iDrive = hb_fsCurDrv() + 1;
          }
 
@@ -110,15 +108,12 @@ HB_FUNC( DISKSPACE )
                                      static_cast<PULARGE_INTEGER>(&i64FreeBytesToCaller),
                                      static_cast<PULARGE_INTEGER>(&i64TotalBytes),
                                      static_cast<PULARGE_INTEGER>(&i64FreeBytes)) ? false : true;
-         if( !bError )
-         {
+         if( !bError ) {
             dSpace = HB_GET_LARGE_UINT(i64FreeBytesToCaller);
          }
 
          SetErrorMode( uiErrMode );
-      }
-      else
-      {
+      } else {
          bError = true;
       }
    }
@@ -127,12 +122,9 @@ HB_FUNC( DISKSPACE )
       const char * szName = hb_parc(1);
       char * pszFree = nullptr;
 
-      if( !szName )
-      {
+      if( !szName ) {
          szName = "/";
-      }
-      else
-      {
+      } else {
          szName = hb_fsNameConv(szName, &pszFree);
       }
 
@@ -149,22 +141,18 @@ HB_FUNC( DISKSPACE )
          struct statvfs st;
          bError = statvfs(szName, &st) != 0;
 #endif
-         if( !bError )
-         {
+         if( !bError ) {
 #if !defined(HB_OS_VXWORKS)
-            if( getuid() == 0 )
-            {
+            if( getuid() == 0 ) {
                dSpace = static_cast<double>(st.f_bfree) * static_cast<double>(st.f_bsize);
-            }
-            else
+            } else
 #endif
                dSpace = static_cast<double>(st.f_bavail) * static_cast<double>(st.f_bsize);
          }
 #endif
       }
 
-      if( pszFree )
-      {
+      if( pszFree ) {
          hb_xfree(pszFree);
       }
    }
@@ -172,8 +160,7 @@ HB_FUNC( DISKSPACE )
    bError = false;
 #endif
 
-   if( bError )
-   {
+   if( bError ) {
       hb_errRT_BASE_Ext1(EG_OPEN, 2018, nullptr, nullptr, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
    }
 

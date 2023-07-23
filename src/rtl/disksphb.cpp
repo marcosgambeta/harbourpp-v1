@@ -69,13 +69,11 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
    char szPathBuf[2];
    double dSpace = 0.0;
 
-   if( uiType > HB_DISK_TOTAL )
-   {
+   if( uiType > HB_DISK_TOTAL ) {
       uiType = HB_DISK_AVAIL;
    }
 
-   if( !pszPath )
-   {
+   if( !pszPath ) {
       szPathBuf[0] = HB_OS_PATH_DELIM_CHR;
       szPathBuf[1] = '\0';
       pszPath = szPathBuf;
@@ -113,10 +111,8 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
 
             hb_fsSetIOError(fResult, 0);
 
-            if( fResult )
-            {
-               switch( uiType )
-               {
+            if( fResult ) {
+               switch( uiType ) {
                   case HB_DISK_AVAIL:
                      dSpace = HB_GET_LARGE_UINT(i64FreeBytesToCaller);
                      break;
@@ -135,10 +131,9 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
                }
             }
          }
-         SetErrorMode( uiErrMode );
+         SetErrorMode(uiErrMode);
       }
-      if( lpFree )
-      {
+      if( lpFree ) {
          hb_xfree(lpFree);
       }
    }
@@ -159,8 +154,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
       if( statvfs(pszPath, &sf) == 0 )
 #endif
       {
-         switch( uiType )
-         {
+         switch( uiType ) {
             case HB_DISK_AVAIL:
                dSpace = static_cast<double>(sf.f_bavail) * static_cast<double>(sf.f_bsize);
                break;
@@ -178,14 +172,11 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
                break;
          }
          hb_fsSetIOError(true, 0);
-      }
-      else
-      {
+      } else {
          hb_fsSetIOError(false, 0);
       }
 
-      if( pszFree )
-      {
+      if( pszFree ) {
          hb_xfree(pszFree);
       }
    }
@@ -208,12 +199,10 @@ HB_FUNC( HB_DISKSPACE )
 #ifdef HB_OS_HAS_DRIVE_LETTER
    char szPathBuf[4];
 
-   if( !pszPath )
-   {
+   if( !pszPath ) {
       int iDrive = hb_parni(1);
 
-      if( iDrive >= 1 && iDrive < 32 )
-      {
+      if( iDrive >= 1 && iDrive < 32 ) {
          szPathBuf[0] = static_cast<char>(iDrive) + 'A' - 1;
          szPathBuf[1] = HB_OS_DRIVE_DELIM_CHR;
          szPathBuf[2] = HB_OS_PATH_DELIM_CHR;

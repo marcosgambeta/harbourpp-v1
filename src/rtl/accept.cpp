@@ -84,35 +84,27 @@ HB_FUNC( __ACCEPT )
    {
       HB_FUNC_EXEC( QOUT );
    }
-   
+
    szAcceptResult[0] = '\0';
 
-   while( input != K_ENTER && hb_vmRequestQuery() == 0 )
-   {
+   while( input != K_ENTER && hb_vmRequestQuery() == 0 ) {
       /* Wait forever, for keyboard events only */
       input = hb_inkey(true, 0.0, INKEY_KEYBOARD);
-      switch( input )
-      {
+      switch( input ) {
          case K_BS:
          case K_LEFT:
-            if( nLen > 0 )
-            {
+            if( nLen > 0 ) {
                nChar = hb_cdpTextLen(cdp, szAcceptResult, nLen);
-               if( nChar > 0 )
-               {
+               if( nChar > 0 ) {
                   nLen = hb_cdpTextPos(cdp, szAcceptResult, nLen, nChar - 1);
-               }
-               else
-               {
+               } else {
                   nLen = 0;
                }
 
                szKey[0] = HB_CHAR_BS;
 
                nChar = 1;
-            }
-            else
-            {
+            } else {
                nChar = 0;
             }
             break;
@@ -125,10 +117,9 @@ HB_FUNC( __ACCEPT )
                nLen += nChar;
             }
       }
-      if( nChar > 0 )
-      {
+      if( nChar > 0 ) {
          hb_conOutAlt(szKey, nChar);
-      }   
+      }
    }
 
    szAcceptResult[nLen] = '\0';

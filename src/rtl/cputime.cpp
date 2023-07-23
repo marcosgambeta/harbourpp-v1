@@ -77,8 +77,7 @@ double hb_secondsCPU(int n)
    FILETIME Create, Exit, Kernel, User;
 #endif
 
-   if( (n < 1 || n > 3) && (n < 11 || n > 13) )
-   {
+   if( (n < 1 || n > 3) && (n < 11 || n > 13) ) {
       n = 3;
    }
 
@@ -88,24 +87,19 @@ double hb_secondsCPU(int n)
 
       times(&tm);
 
-      if( n > 10 )
-      {
+      if( n > 10 ) {
          n -= 10;
-         if( n & 1 )
-         {
+         if( n & 1 ) {
             d += tm.tms_cutime;
          }
-         if( n & 2 )
-         {
+         if( n & 2 ) {
             d += tm.tms_cstime;
          }
       }
-      if( n & 1 )
-      {
+      if( n & 1 ) {
          d += tm.tms_utime;
       }
-      if( n & 2 )
-      {
+      if( n & 2 ) {
          d += tm.tms_stime;
       }
 
@@ -116,31 +110,25 @@ double hb_secondsCPU(int n)
       d /= static_cast<double>(sysconf( _SC_CLK_TCK ));
    }
 #else
-   if( n > 10 )
-   {
+   if( n > 10 ) {
       n -= 10;
    }
 #if defined(HB_OS_WIN)
-   if( hb_iswinnt() && GetProcessTimes(GetCurrentProcess(), &Create, &Exit, &Kernel, &User) )
-   {
-      if( n & 1 )
-      {
+   if( hb_iswinnt() && GetProcessTimes(GetCurrentProcess(), &Create, &Exit, &Kernel, &User) ) {
+      if( n & 1 ) {
          d += static_cast<double>(( static_cast<HB_MAXINT>(User.dwHighDateTime) << 32 ) + static_cast<HB_MAXINT>(User.dwLowDateTime));
       }
-      if( n & 2 )
-      {
+      if( n & 2 ) {
          d += static_cast<double>(( static_cast<HB_MAXINT>(Kernel.dwHighDateTime) << 32 ) + static_cast<HB_MAXINT>(Kernel.dwLowDateTime));
       }
       d /= 10000000.0;
-   }
-   else
+   } else
 #endif
    {
       /* TODO: this code is only for DOS and other platforms which cannot
                calculate process time */
 
-      if( n & 1 )
-      {
+      if( n & 1 ) {
          d = hb_dateSeconds();
       }
    }

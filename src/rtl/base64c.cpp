@@ -51,32 +51,27 @@ HB_FUNC( HB_BASE64ENCODE )
 {
    HB_SIZE len = hb_parclen(1);
 
-   if( len > 0 )
-   {
+   if( len > 0 ) {
       HB_SIZE lin = hb_parns(2);
       HB_SIZE dst = (4 * ((len + 2) / 3) + 1);
 
-      if( lin <= 2 )
-      {
+      if( lin <= 2 ) {
          lin = 0;
       }
-      
-      if( lin )
-      {
+
+      if( lin ) {
          dst += ((dst + lin - 1) / lin) * 2;
       }
       dst *= sizeof(char);
 
-      if( dst > len )
-      {
+      if( dst > len ) {
          const char * s = hb_parcx(1);
          char * t, * p;
          HB_SIZE lln = lin;
 
          t = p = static_cast<char*>(hb_xgrab(dst));
 
-         while( len-- > 0 )
-         {
+         while( len-- > 0 ) {
             #define ADD_EOL()       do { if( --lln == 0 ) { *p++ = '\r'; *p++ = '\n'; lln = lin; } } while(false)
             #define ADD_CHAR(c)     do { *p++ = s_b64chars[( c ) & 0x3F]; ADD_EOL(); } while(false)
             #define ADD_EQ()        do { *p++ = '='; ADD_EOL(); } while(false)
@@ -85,8 +80,7 @@ HB_FUNC( HB_BASE64ENCODE )
 
             x = *s++;
             ADD_CHAR(x >> 2);
-            if( len-- == 0 )
-            {
+            if( len-- == 0 ) {
                ADD_CHAR(x << 4);
                ADD_EQ();
                ADD_EQ();
@@ -95,8 +89,7 @@ HB_FUNC( HB_BASE64ENCODE )
 
             y = *s++;
             ADD_CHAR((x << 4) | ((y >> 4) & 0x0F));
-            if( len-- == 0 )
-            {
+            if( len-- == 0 ) {
                ADD_CHAR(y << 2);
                ADD_EQ();
                break;
@@ -107,22 +100,17 @@ HB_FUNC( HB_BASE64ENCODE )
             ADD_CHAR(x);
          }
 
-         if( lin && lin != lln )
-         {
+         if( lin && lin != lln ) {
             *p++ = '\r';
             *p++ = '\n';
          }
          *p = '\0';
 
          hb_retclen_buffer(t, p - t);
-      }
-      else
-      {
+      } else {
          hb_errRT_BASE(EG_STROVERFLOW, 9999, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-      }   
-   }
-   else
-   {
+      }
+   } else {
       hb_retc_null();
    }
 }

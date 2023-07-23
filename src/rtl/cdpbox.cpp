@@ -55,24 +55,18 @@ HB_FUNC( HB_UTF8TOSTRBOX )
 {
    const char * szString = hb_parc(1);
 
-   if( szString )
-   {
+   if( szString ) {
       HB_SIZE nLen = hb_parclen(1), nDest = 0;
       char * szDest = nullptr;
 
-      if( nLen )
-      {
+      if( nLen ) {
          PHB_CODEPAGE cdp = hb_gtBoxCP();
 
-         if( cdp )
-         {
-            if( hb_cdpIsUTF8(cdp) )
-            {
+         if( cdp ) {
+            if( hb_cdpIsUTF8(cdp) ) {
                hb_itemReturn(hb_param(1, Harbour::Item::STRING));
                return;
-            }
-            else
-            {
+            } else {
                szString = hb_parc(1);
                nDest = hb_cdpUTF8AsStrLen(cdp, szString, nLen, 0);
                szDest = static_cast<char*>(hb_xgrab(nDest + 1));
@@ -81,17 +75,12 @@ HB_FUNC( HB_UTF8TOSTRBOX )
          }
       }
 
-      if( szDest )
-      {
+      if( szDest ) {
          hb_retclen_buffer(szDest, nDest);
-      }
-      else
-      {
+      } else {
          hb_retc_null();
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

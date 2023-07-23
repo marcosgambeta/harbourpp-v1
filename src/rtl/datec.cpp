@@ -79,41 +79,32 @@ HB_FUNC( CMONTH )
 {
    PHB_ITEM pDate = hb_param(1, Harbour::Item::DATETIME);
 
-   if( pDate )
-   {
+   if( pDate ) {
       int iYear, iMonth, iDay;
 
       hb_dateDecode(hb_itemGetDL(pDate), &iYear, &iMonth, &iDay);
       hb_retc_const(hb_dateCMonth(iMonth));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1116, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }   
+   }
 }
 
 HB_FUNC( CDOW )
 {
    PHB_ITEM pDate = hb_param(1, Harbour::Item::DATETIME);
 
-   if( pDate )
-   {
+   if( pDate ) {
       long lDate = hb_itemGetDL(pDate);
 
-      if( lDate )
-      {
+      if( lDate ) {
          int iYear, iMonth, iDay;
 
          hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
          hb_retc_const(hb_dateCDOW(hb_dateDOW(iYear, iMonth, iDay)));
-      }
-      else
-      {
+      } else {
          hb_retc_null();
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1117, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -122,12 +113,9 @@ HB_FUNC( HB_CDAY )
 {
    PHB_ITEM pDay = hb_param(1, Harbour::Item::NUMERIC);
 
-   if( pDay )
-   {
+   if( pDay ) {
       hb_retc_const(hb_dateCDOW(hb_itemGetNI(pDay)));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1117, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

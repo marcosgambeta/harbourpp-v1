@@ -108,15 +108,12 @@ PHB_ITEM hb_fsDirectory(const char * pszDirSpec, const char * pszAttributes, HB_
 
    ulMask = HB_FA_ARCHIVE | HB_FA_READONLY;
 
-   if( pszAttributes && *pszAttributes )
-   {
+   if( pszAttributes && *pszAttributes ) {
       ulMask |= hb_fsAttrEncode(pszAttributes);
    }
 
-   if( pszDirSpec && *pszDirSpec )
-   {
-      if( ulMask != HB_FA_LABEL )
-      {
+   if( pszDirSpec && *pszDirSpec ) {
+      if( ulMask != HB_FA_LABEL ) {
          /* CA-Cl*pper compatible behavior - add all file mask when
           * last character is directory or drive separator
           */
@@ -130,20 +127,16 @@ PHB_ITEM hb_fsDirectory(const char * pszDirSpec, const char * pszAttributes, HB_
             pszDirSpec = pszFree = hb_xstrcpy(nullptr, pszDirSpec, HB_OS_ALLFILE_MASK, nullptr);
          }
       }
-   }
-   else
-   {
+   } else {
       pszDirSpec = HB_OS_ALLFILE_MASK;
    }
 
    /* Get the file list */
 
-   if( (ffind = hb_fsFindFirst(pszDirSpec, ulMask)) != nullptr )
-   {
+   if( (ffind = hb_fsFindFirst(pszDirSpec, ulMask)) != nullptr ) {
       PHB_ITEM pSubarray = hb_itemNew(nullptr);
 
-      do
-      {
+      do {
          char buffer[32];
 
          hb_arrayNew    (pSubarray, F_LEN);
@@ -152,27 +145,22 @@ PHB_ITEM hb_fsDirectory(const char * pszDirSpec, const char * pszAttributes, HB_
          hb_arraySetC   (pSubarray, F_TIME, ffind->szTime);
          hb_arraySetC   (pSubarray, F_ATTR, hb_fsAttrDecode(ffind->attr, buffer));
 
-         if( fDateTime )
-         {
+         if( fDateTime ) {
             hb_arraySetTDT(pSubarray, F_DATE, ffind->lDate, ffind->lTime);
-         }
-         else
-         {
+         } else {
             hb_arraySetDL ( pSubarray, F_DATE, ffind->lDate );
          }
 
          /* Don't exit when array limit is reached */
          hb_arrayAddForward(pDir, pSubarray);
-      }
-      while( hb_fsFindNext(ffind) );
+      } while( hb_fsFindNext(ffind) );
 
       hb_itemRelease(pSubarray);
 
       hb_fsFindClose(ffind);
    }
 
-   if( pszFree )
-   {
+   if( pszFree ) {
       hb_xfree(pszFree);
    }
 

@@ -65,7 +65,7 @@ void hb_errInternal(HB_ERRCODE errCode, const char * szText, const char * szPar1
 #endif
       int * pGPF = nullptr;
       *pGPF = 0;
-      *( --pGPF ) = 0;
+      *(--pGPF) = 0;
 #if defined(_MSC_VER) && _MSC_VER >= 1800
 #  pragma warning(pop)
 #endif

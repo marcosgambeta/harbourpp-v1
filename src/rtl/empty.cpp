@@ -50,11 +50,8 @@
 HB_FUNC( EMPTY )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
-   long lDate, lTime;
-   PHB_SYMB pSym;
 
-   switch( hb_itemType(pItem) )
-   {
+   switch( hb_itemType(pItem) ) {
       case Harbour::Item::ARRAY:
          hb_retl(hb_arrayLen(pItem) == 0);
          break;
@@ -84,10 +81,12 @@ HB_FUNC( EMPTY )
          hb_retl(hb_itemGetDL(pItem) == 0);
          break;
 
-      case Harbour::Item::TIMESTAMP:
+      case Harbour::Item::TIMESTAMP: {
+         long lDate, lTime;
          hb_itemGetTDT(pItem, &lDate, &lTime);
          hb_retl(lDate == 0 && lTime == 0);
          break;
+      }
 
       case Harbour::Item::LOGICAL:
          hb_retl(!hb_itemGetL(pItem));
@@ -101,15 +100,14 @@ HB_FUNC( EMPTY )
          hb_retl(hb_itemGetPtr(pItem) == nullptr);
          break;
 
-      case Harbour::Item::SYMBOL:
-         pSym = hb_itemGetSymbol(pItem);
-         if( pSym && (pSym->scope.value & HB_FS_DEFERRED) && \
-             pSym->pDynSym )
-         {
+      case Harbour::Item::SYMBOL: {
+         PHB_SYMB pSym = hb_itemGetSymbol(pItem);
+         if( pSym && (pSym->scope.value & HB_FS_DEFERRED) && pSym->pDynSym ) {
             pSym = hb_dynsymSymbol(pSym->pDynSym);
          }
          hb_retl(pSym == nullptr || pSym->value.pFunPtr == nullptr);
          break;
+      }
 
       default:
          hb_retl(true);

@@ -55,50 +55,36 @@ HB_FUNC( DISPBOX )
    PHB_ITEM pBottom = hb_param(3, Harbour::Item::NUMERIC);
    PHB_ITEM pRight  = hb_param(4, Harbour::Item::NUMERIC);
 
-   if( pTop && pLeft && pBottom && pRight )
-   {
+   if( pTop && pLeft && pBottom && pRight ) {
       const char * pszBox   = hb_parc(5);
       const char * pszColor = hb_parc(6);
 
-      if( pszBox )
-      {
+      if( pszBox ) {
          int iColor;
 
-         if( pszColor )
-         {
+         if( pszColor ) {
             iColor = hb_gtColorToN(pszColor);
-         }
-         else if( HB_ISNUM(6) )
-         {
+         } else if( HB_ISNUM(6) ) {
             iColor = hb_parni(6);
-         }
-         else
-         {
+         } else {
             iColor = -1;
          }
          hb_gtBoxEx(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight), pszBox, iColor);
-      }
-      else
-      {
+      } else {
          char szOldColor[HB_CLRSTR_LEN];
 
-         if( pszColor )
-         {
+         if( pszColor ) {
             hb_gtGetColorStr(szOldColor);
             hb_gtSetColorStr(pszColor);
          }
 
-         if( hb_parni(5) == 2 )
-         {
+         if( hb_parni(5) == 2 ) {
             hb_gtBoxD(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight));
-         }
-         else
-         {
+         } else {
             hb_gtBoxS(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight));
          }
 
-         if( pszColor )
-         {
+         if( pszColor ) {
             hb_gtSetColorStr(szOldColor);
          }
       }
@@ -112,8 +98,7 @@ HB_FUNC( HB_DISPBOX )
    PHB_ITEM pBottom = hb_param(3, Harbour::Item::NUMERIC);
    PHB_ITEM pRight  = hb_param(4, Harbour::Item::NUMERIC);
 
-   if( pTop && pLeft && pBottom && pRight )
-   {
+   if( pTop && pLeft && pBottom && pRight ) {
       const char * pszBox   = hb_parc(5);
       const char * pszColor = hb_parc(6);
       int          iColor   = pszColor ? hb_gtColorToN(pszColor) : hb_parnidef(6, -1);
