@@ -83,8 +83,7 @@ static void s_bf_hash( const HB_BLOWFISH * bf, HB_BYTE * vect, HB_BYTE * counter
    cr = xr = HB_GET_BE_UINT32(&counter[4]);
    ++cr;
    HB_PUT_BE_UINT32(&counter[4], cr);
-   if( cr == 0 )
-   {
+   if( cr == 0 ) {
       ++cl;
       HB_PUT_BE_UINT32(&counter[0], cl);
    }
@@ -97,13 +96,10 @@ static long s_bf_send(PHB_SOCKEX_BF pBF, HB_MAXINT timeout)
 {
    long lSent = 0, len = pBF->inbuffer;
 
-   while( lSent < len )
-   {
+   while( lSent < len ) {
       long l = hb_sockexWrite(pBF->sock, pBF->buffer + lSent, len - lSent, timeout);
-      if( l <= 0 )
-      {
-         switch( hb_socketGetError() )
-         {
+      if( l <= 0 ) {
+         switch( hb_socketGetError() ) {
             case HB_SOCKET_ERR_TIMEOUT:
             case HB_SOCKET_ERR_AGAIN:
             case HB_SOCKET_ERR_TRYAGAIN:
@@ -115,16 +111,13 @@ static long s_bf_send(PHB_SOCKEX_BF pBF, HB_MAXINT timeout)
          break;
       }
       lSent += l;
-      if( timeout > 0 )
-      {
+      if( timeout > 0 ) {
          timeout = 0;
       }
    }
 
-   if( lSent > 0 )
-   {
-      if( lSent < len )
-      {
+   if( lSent > 0 ) {
+      if( lSent < len ) {
          memmove(pBF->buffer, pBF->buffer + lSent, len - lSent);
       }
       pBF->inbuffer -= lSent;
@@ -140,30 +133,21 @@ static long s_sockexRead(PHB_SOCKEX pSock, void * data, long len, HB_MAXINT time
    PHB_SOCKEX_BF pBF = HB_BFSOCK_GET(pSock);
    long lRecv;
 
-   if( pSock->inbuffer > 0 && len > 0 )
-   {
+   if( pSock->inbuffer > 0 && len > 0 ) {
       lRecv = HB_MIN(pSock->inbuffer, len);
       memcpy(data, pSock->buffer + pSock->posbuffer, lRecv);
-      if( (pSock->inbuffer -= lRecv) > 0 )
-      {
+      if( (pSock->inbuffer -= lRecv) > 0 ) {
          pSock->posbuffer += lRecv;
-      }
-      else
-      {
+      } else {
          pSock->posbuffer = 0;
       }
-   }
-   else
-   {
+   } else {
       lRecv = hb_sockexRead(pBF->sock, data, len, timeout);
-      if( lRecv > 0 )
-      {
+      if( lRecv > 0 ) {
          HB_BYTE * pData = static_cast<HB_BYTE*>(data);
 
-         for( long l = 0; l < lRecv; ++l )
-         {
-            if( (pBF->decoded & (HB_BF_CIPHERBLOCK - 1)) == 0 )
-            {
+         for( long l = 0; l < lRecv; ++l ) {
+            if( (pBF->decoded & (HB_BF_CIPHERBLOCK - 1)) == 0 ) {
                s_bf_hash( &pBF->bf, pBF->decryptkey, pBF->decounter );
                pBF->decoded = 0;
             }
@@ -180,19 +164,15 @@ static long s_sockexWrite(PHB_SOCKEX pSock, const void * data, long len, HB_MAXI
    const HB_BYTE * pData = static_cast<const HB_BYTE*>(data);
    long lWritten = 0, lDone;
 
-   for( lDone = 0; lDone < len; ++lDone )
-   {
-      if( pBF->inbuffer == HB_BFSOCK_WRBUFSIZE )
-      {
+   for( lDone = 0; lDone < len; ++lDone ) {
+      if( pBF->inbuffer == HB_BFSOCK_WRBUFSIZE ) {
          lWritten = s_bf_send(pBF, timeout);
-         if( lWritten <= 0 )
-         {
+         if( lWritten <= 0 ) {
             break;
          }
          timeout = 0;
       }
-      if( (pBF->encoded & (HB_BF_CIPHERBLOCK - 1)) == 0 )
-      {
+      if( (pBF->encoded & (HB_BF_CIPHERBLOCK - 1)) == 0 ) {
          s_bf_hash(&pBF->bf, pBF->encryptkey, pBF->encounter);
          pBF->encoded = 0;
       }
@@ -206,10 +186,8 @@ static long s_sockexFlush(PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync)
 {
    PHB_SOCKEX_BF pBF = HB_BFSOCK_GET(pSock);
 
-   while( pBF->inbuffer > 0 )
-   {
-      if( s_bf_send(pBF, timeout) <= 0 )
-      {
+   while( pBF->inbuffer > 0 ) {
+      if( s_bf_send(pBF, timeout) <= 0 ) {
          break;
       }
    }
@@ -229,14 +207,11 @@ static int s_sockexCanWrite(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout
 static char * s_sockexName(PHB_SOCKEX pSock)
 {
    char * pszName = hb_sockexIsRaw(HB_BFSOCK_GET(pSock)->sock ) ? nullptr : hb_sockexName(HB_BFSOCK_GET(pSock )->sock);
-   if( pszName )
-   {
+   if( pszName ) {
       char * pszFree = pszName;
       pszName = hb_xstrcpy(nullptr, pSock->pFilter->pszName, "|", pszName, nullptr);
       hb_xfree(pszFree);
-   }
-   else
-   {
+   } else {
       pszName = hb_strdup(pSock->pFilter->pszName);
    }
 
@@ -253,21 +228,16 @@ static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
    PHB_SOCKEX_BF pBF = HB_BFSOCK_GET(pSock);
    int iResult = 0;
 
-   if( pBF )
-   {
-      if( pBF->sock )
-      {
+   if( pBF ) {
+      if( pBF->sock ) {
          s_sockexFlush(pSock, HB_MAX(15000, pSock->iAutoFlush), true);
       }
 
-      if( pBF->sock )
-      {
-         if( pSock->fShutDown )
-         {
+      if( pBF->sock ) {
+         if( pSock->fShutDown ) {
             pBF->sock->fShutDown = true;
          }
-         if( pSock->iAutoFlush != 0 && pBF->sock->iAutoFlush == 0 )
-         {
+         if( pSock->iAutoFlush != 0 && pBF->sock->iAutoFlush == 0 ) {
             pBF->sock->iAutoFlush = pSock->iAutoFlush;
          }
          iResult = hb_sockexClose(pBF->sock, fClose);
@@ -290,11 +260,9 @@ static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
    PHB_SOCKEX pSock, pSockNew = nullptr;
 
    pSock = hb_sockexNew(sd, nullptr, pParams);
-   if( pSock )
-   {
+   if( pSock ) {
       pSockNew = s_sockexNext(pSock, pParams);
-      if( pSockNew == nullptr )
-      {
+      if( pSockNew == nullptr ) {
          hb_sockexClose(pSock, false);
       }
    }
@@ -321,27 +289,21 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
 {
    PHB_SOCKEX pSockNew = nullptr;
 
-   if( pSock )
-   {
+   if( pSock ) {
       const void * keydata = nullptr, * iv = nullptr;
       int keylen = 0, ivlen = 0;
 
       hb_socekxParamsGetStd(pParams, &keydata, &keylen, &iv, &ivlen, nullptr, nullptr);
-      if( keylen > 0 )
-      {
+      if( keylen > 0 ) {
          PHB_SOCKEX_BF pBF = static_cast<PHB_SOCKEX_BF>(hb_xgrabz(sizeof(HB_SOCKEX_BF)));
          const HB_BYTE * pVect = static_cast<const HB_BYTE*>(ivlen > 0 ? iv : nullptr);
          int i;
 
          hb_blowfishInit(&pBF->bf, keydata, keylen);
-         for( i = 0; i < HB_BF_CIPHERBLOCK; ++i )
-         {
-            if( pVect && ivlen > 0 )
-            {
+         for( i = 0; i < HB_BF_CIPHERBLOCK; ++i ) {
+            if( pVect && ivlen > 0 ) {
                pBF->encounter[i] = pBF->decounter[i] = pVect[i % ivlen];
-            }
-            else
-            {
+            } else {
                pBF->encounter[i] = pBF->decounter[i] = static_cast<HB_BYTE>(i);
             }
          }
@@ -366,11 +328,9 @@ HB_FUNC( HB_SOCKETNEWBFSOCK )
 {
    PHB_SOCKEX pSock = hb_sockexParam(1);
 
-   if( pSock )
-   {
+   if( pSock ) {
       pSock = s_sockexNext(pSock, hb_param(2, Harbour::Item::HASH));
-      if( pSock )
-      {
+      if( pSock ) {
          hb_sockexItemClear(hb_param(1, Harbour::Item::POINTER));
          hb_sockexItemPut(hb_param(-1, Harbour::Item::ANY), pSock);
       }

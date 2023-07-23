@@ -59,8 +59,7 @@
 #if !defined(HB_OS_WIN)
 static HB_ERRCODE hb_errnoToDosError(int ErrCode)
 {
-   switch( ErrCode )
-   {
+   switch( ErrCode ) {
 #if defined(ENMFILE)
       case ENMFILE:
 #endif
@@ -124,8 +123,7 @@ static HB_ERRCODE hb_WinToDosError(DWORD dwError)
    #define ERROR_PRIVILEGE_NOT_HELD  1314L
    #endif
 
-   switch( dwError )
-   {
+   switch( dwError ) {
       case ERROR_PRIVILEGE_NOT_HELD:
       case ERROR_ALREADY_EXISTS:          return 5;
       case ERROR_FILE_NOT_FOUND:          return 2;
@@ -187,7 +185,6 @@ void  hb_fsSetError(HB_ERRCODE uiError)
 #endif
 
    PHB_IOERRORS pIOErrors;
-
    pIOErrors = hb_stackIOErrors();
    /* TODO: untranslate uiError into errno */
    pIOErrors->uiOsErrorLast = pIOErrors->uiErrorLast = uiError;
@@ -196,18 +193,15 @@ void  hb_fsSetError(HB_ERRCODE uiError)
 /* set error code for last operation */
 void  hb_fsSetIOError(HB_BOOL fResult, HB_USHORT uiOperation)
 {
-   HB_ERRCODE uiOsErrorLast, uiErrorLast;
-   PHB_IOERRORS pIOErrors;
-
    /* TODO: implement it */
    HB_SYMBOL_UNUSED(uiOperation);
 
-   if( fResult )
-   {
+   HB_ERRCODE uiOsErrorLast, uiErrorLast;
+   PHB_IOERRORS pIOErrors;
+
+   if( fResult ) {
       uiOsErrorLast = uiErrorLast = 0;
-   }
-   else
-   {
+   } else {
 #if defined(HB_OS_WIN)
       DWORD dwLastError = GetLastError();
       uiOsErrorLast = static_cast<HB_ERRCODE>(dwLastError);

@@ -52,90 +52,72 @@ HB_FUNC( HB_ASCIIUPPER )
 {
    PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText )
-   {
+   if( pText ) {
       const char * pszText = hb_itemGetCPtr(pText);
       HB_SIZE nLen = hb_itemGetCLen(pText);
 
-      for( HB_SIZE u = 0; u < nLen; u++ )
-      {
-         if( HB_ISLOWER(pszText[u]) )
-         {
+      for( HB_SIZE u = 0; u < nLen; u++ ) {
+         if( HB_ISLOWER(pszText[u]) ) {
             char * pszBuff = hb_itemGetC(pText);
 
-            do
-            {
+            do {
                pszBuff[u] = HB_TOUPPER(pszBuff[u]);
-            }
-            while( ++u < nLen );
+            } while( ++u < nLen );
             hb_retclen_buffer(pszBuff, nLen);
             return;
          }
       }
       hb_itemReturn(pText);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1102, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }   
+   }
 }
 
 HB_FUNC( HB_ASCIILOWER )
 {
    PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText )
-   {
+   if( pText ) {
       const char * pszText = hb_itemGetCPtr(pText);
       HB_SIZE nLen = hb_itemGetCLen(pText);
 
-      for( HB_SIZE u = 0; u < nLen; u++ )
-      {
-         if( HB_ISUPPER(pszText[u]) )
-         {
+      for( HB_SIZE u = 0; u < nLen; u++ ) {
+         if( HB_ISUPPER(pszText[u]) ) {
             char * pszBuff = hb_itemGetC(pText);
 
-            do
-            {
+            do {
                pszBuff[u] = HB_TOLOWER(pszBuff[u]);
-            }
-            while( ++u < nLen );
+            } while( ++u < nLen );
             hb_retclen_buffer(pszBuff, nLen);
             return;
          }
       }
       hb_itemReturn(pText);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1103, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }   
+   }
 }
 
 HB_FUNC( HB_ASCIIISALPHA )
 {
    const char * pszText = hb_parc(1);
-
    hb_retl(pszText && HB_ISALPHA(static_cast<unsigned char>(*pszText)));
 }
 
 HB_FUNC( HB_ASCIIISUPPER )
 {
    const char * pszText = hb_parc(1);
-
    hb_retl(pszText && HB_ISUPPER(static_cast<unsigned char>(*pszText)));
 }
 
 HB_FUNC( HB_ASCIIISLOWER )
 {
    const char * pszText = hb_parc(1);
-
    hb_retl(pszText && HB_ISLOWER(static_cast<unsigned char>(*pszText)));
 }
 
 HB_FUNC( HB_ASCIIISDIGIT )
 {
    const char * pszText = hb_parc(1);
-
    hb_retl(pszText && HB_ISDIGIT(static_cast<unsigned char>(*pszText)));
 }

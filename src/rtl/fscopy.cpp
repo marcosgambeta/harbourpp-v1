@@ -54,29 +54,22 @@ HB_BOOL hb_fsCopy(const char * pszSource, const char * pszDest)
    bool fResult = false;
    PHB_FILE pSrcFile;
 
-   if( (pSrcFile = hb_fileExtOpen(pszSource, nullptr, FO_READ | FO_SHARED | FXO_SHARELOCK, nullptr, nullptr)) != nullptr )
-   {
+   if( (pSrcFile = hb_fileExtOpen(pszSource, nullptr, FO_READ | FO_SHARED | FXO_SHARELOCK, nullptr, nullptr)) != nullptr ) {
       PHB_FILE pDstFile;
       HB_ERRCODE errCode;
 
-      if( (pDstFile = hb_fileExtOpen(pszDest, nullptr, FXO_TRUNCATE | FO_READWRITE | FO_EXCLUSIVE | FXO_SHARELOCK, nullptr, nullptr)) != nullptr )
-      {
+      if( (pDstFile = hb_fileExtOpen(pszDest, nullptr, FXO_TRUNCATE | FO_READWRITE | FO_EXCLUSIVE | FXO_SHARELOCK, nullptr, nullptr)) != nullptr ) {
          void * pbyBuffer = hb_xgrab(HB_FSCOPY_BUFFERSIZE);
 
-         for( ;; )
-         {
+         for( ;; ) {
             HB_SIZE nBytesRead;
             if( (nBytesRead = hb_fileRead(pSrcFile, pbyBuffer, HB_FSCOPY_BUFFERSIZE, -1)) > 0 &&
-                nBytesRead != static_cast<HB_SIZE>(FS_ERROR) )
-            {
-               if( nBytesRead != hb_fileWrite(pDstFile, pbyBuffer, nBytesRead, -1) )
-               {
+                nBytesRead != static_cast<HB_SIZE>(FS_ERROR) ) {
+               if( nBytesRead != hb_fileWrite(pDstFile, pbyBuffer, nBytesRead, -1) ) {
                   errCode = hb_fsError();
                   break;
                }
-            }
-            else
-            {
+            } else {
                errCode = hb_fsError();
                fResult = errCode == 0;
                break;
@@ -86,20 +79,16 @@ HB_BOOL hb_fsCopy(const char * pszSource, const char * pszDest)
          hb_xfree(pbyBuffer);
 
          hb_fileClose(pDstFile);
-      }
-      else
-      {
+      } else {
          errCode = hb_fsError();
       }
 
       hb_fileClose(pSrcFile);
 
-      if( fResult )
-      {
+      if( fResult ) {
          HB_FATTR ulAttr;
 
-         if( hb_fileAttrGet(pszSource, &ulAttr) )
-         {
+         if( hb_fileAttrGet(pszSource, &ulAttr) ) {
             hb_fileAttrSet(pszDest, ulAttr);
          }
       }
@@ -115,13 +104,10 @@ HB_FUNC( HB_FCOPY )
    bool fResult = false;
    const char * pszSource = hb_parc(1), * pszDest = hb_parc(2);
 
-   if( pszSource && pszDest )
-   {
+   if( pszSource && pszDest ) {
       fResult = hb_fsCopy(pszSource, pszDest);
       errCode = hb_fsError();
-   }
-   else
-   {
+   } else {
       hb_fsSetFError(2); /* file not found */
       hb_retni(F_ERROR);
    }

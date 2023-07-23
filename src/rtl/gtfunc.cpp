@@ -50,60 +50,44 @@
 
 HB_FUNC( HB_SETDISPCP )
 {
-   if( HB_ISCHAR(1) )
-   {
-      if( hb_pcount() == 2 && HB_ISLOG(2) )
-      {
+   if( HB_ISCHAR(1) ) {
+      if( hb_pcount() == 2 && HB_ISLOG(2) ) {
          hb_gtSetDispCP(hb_parc(1), nullptr, hb_parl(2));
-      }
-      else
-      {
+      } else {
          hb_gtSetDispCP(hb_parc(1), hb_parc(2), hb_parl(3));
-      }   
-   }
-   else if( !( hb_pcount() >= 1 && HB_ISNIL(1) ) )
-   {
+      }
+   } else if( !( hb_pcount() >= 1 && HB_ISNIL(1) ) ) {
       hb_errRT_BASE_SubstR(EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }   
+   }
 }
 
 HB_FUNC( HB_SETKEYCP )
 {
-   if( HB_ISCHAR(1) )
-   {
+   if( HB_ISCHAR(1) ) {
       hb_gtSetKeyCP(hb_parc(1), hb_parc(2));
-   }
-   else if( !( hb_pcount() >= 1 && HB_ISNIL(1) ) )
-   {
+   } else if( !( hb_pcount() >= 1 && HB_ISNIL(1) ) ) {
       hb_errRT_BASE_SubstR(EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }   
+   }
 }
 
 HB_FUNC( HB_SETTERMCP )
 {
-   if( HB_ISCHAR(1) )
-   {
-      if( hb_pcount() == 2 && HB_ISLOG(2) )
-      {
+   if( HB_ISCHAR(1) ) {
+      if( hb_pcount() == 2 && HB_ISLOG(2) ) {
          hb_gtSetDispCP(hb_parc(1), nullptr, hb_parl(2));
          hb_gtSetKeyCP(hb_parc(1), nullptr);
-      }
-      else
-      {
+      } else {
          hb_gtSetDispCP(hb_parc(1), hb_parc(2), hb_parl(3));
          hb_gtSetKeyCP(hb_parc(1), hb_parc(2));
       }
-   }
-   else if( !( hb_pcount() >= 1 && HB_ISNIL(1) ) )
-   {
+   } else if( !( hb_pcount() >= 1 && HB_ISNIL(1) ) ) {
       hb_errRT_BASE_SubstR(EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }   
+   }
 }
 
 HB_FUNC( HB_GTINFO )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       HB_GT_INFO gtInfo;
 
       gtInfo.pNewVal  = hb_param(2, Harbour::Item::ANY);
@@ -115,9 +99,7 @@ HB_FUNC( HB_GTINFO )
       {
          hb_itemReturnRelease(gtInfo.pResult);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

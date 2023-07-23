@@ -58,28 +58,20 @@ static char * hb_strHardCR(char * pszString, HB_SIZE nStringLen)
    PHB_CODEPAGE cdp;
 
    cdp = hb_vmCDP();
-   if( HB_CDP_ISCUSTOM(cdp) )
-   {
+   if( HB_CDP_ISCUSTOM(cdp) ) {
       HB_WCHAR wc;
 
       nStringPos = 0;
-      while( nStringPos < nStringLen )
-      {
-         if( pszString[nStringPos] == HB_CHAR_SOFT1 && pszString[nStringPos + 1] == HB_CHAR_SOFT2 )
-         {
+      while( nStringPos < nStringLen ) {
+         if( pszString[nStringPos] == HB_CHAR_SOFT1 && pszString[nStringPos + 1] == HB_CHAR_SOFT2 ) {
             pszString[nStringPos] = HB_CHAR_HARD1;
             nStringPos += 2;
-         }
-         else if( !HB_CDPCHAR_GET(cdp, pszString, nStringLen, &nStringPos, &wc) )
-         {
+         } else if( !HB_CDPCHAR_GET(cdp, pszString, nStringLen, &nStringPos, &wc) ) {
             break;
          }
       }
-   }
-   else
-   {
-      for( nStringPos = 0; nStringPos < nStringLen; nStringPos++ )
-      {
+   } else {
+      for( nStringPos = 0; nStringPos < nStringLen; nStringPos++ ) {
          if( pszString[nStringPos] == HB_CHAR_SOFT1 && pszString[nStringPos + 1] == HB_CHAR_SOFT2 )
          {
             pszString[nStringPos++] = HB_CHAR_HARD1;
@@ -93,15 +85,12 @@ HB_FUNC( HARDCR )
 {
    PHB_ITEM pString = hb_param(1, Harbour::Item::STRING);
 
-   if( pString )
-   {
+   if( pString ) {
       char * pszBuffer = hb_itemGetC(pString);
       HB_SIZE nStringLen = hb_itemGetCLen(pString);
 
       hb_retclen_buffer(hb_strHardCR(pszBuffer, nStringLen), nStringLen);
-   }
-   else
-   {
+   } else {
       hb_retc_null();
-   }   
+   }
 }

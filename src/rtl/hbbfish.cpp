@@ -300,15 +300,12 @@ void hb_blowfishInit(HB_BLOWFISH * bf, const void * keydata, int keylen)
 
    memcpy(bf, &s_blowFishInit, sizeof(s_blowFishInit));
 
-   for( i = j = 0; i < SUBKEYS_COUNT; ++i )
-   {
+   for( i = j = 0; i < SUBKEYS_COUNT; ++i ) {
       xL = 0;
-      for( l = 4; l; --l )
-      {
+      for( l = 4; l; --l ) {
          xL <<= 8;
          xL |= key[j++];
-         if( j >= keylen )
-         {
+         if( j >= keylen ) {
             j = 0;
          }
       }

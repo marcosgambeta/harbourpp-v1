@@ -99,21 +99,16 @@ static bool fsGetTempDirByCase(char * pszName, const char * pszTempDir, bool fTr
 {
    bool fOK = false;
 
-   if( pszTempDir && *pszTempDir != '\0' )
-   {
+   if( pszTempDir && *pszTempDir != '\0' ) {
       char * pTmp;
 
-      if( fTrans )
-      {
+      if( fTrans ) {
          hb_osStrDecode2(pszTempDir, pszName, HB_PATH_MAX - 1);
-      }
-      else
-      {
+      } else {
          hb_strncpy(pszName, pszTempDir, HB_PATH_MAX - 1);
       }
 
-      switch( hb_setGetDirCase() )
-      {
+      switch( hb_setGetDirCase() ) {
          case HB_SET_CASE_LOWER:
             pTmp = hb_cdpnDupLower(hb_vmCDP(), pszName, nullptr);
             fOK = strcmp(pszName, pTmp) == 0;
@@ -130,10 +125,8 @@ static bool fsGetTempDirByCase(char * pszName, const char * pszTempDir, bool fTr
       }
    }
 
-   if( fOK )
-   {
-      if( !hb_fsDirExists(pszTempDir) )
-      {
+   if( fOK ) {
+      if( !hb_fsDirExists(pszTempDir) ) {
          fOK = false;
       }
    }
@@ -148,33 +141,26 @@ HB_FHANDLE hb_fsCreateTempEx(char * pszName, const char * pszDir, const char * p
    int iAttemptLeft = 99, iLen;
    HB_FHANDLE fd;
 
-   do
-   {
+   do {
       pszName[0] = '\0';
 
-      if( pszDir && pszDir[0] != '\0' )
-      {
+      if( pszDir && pszDir[0] != '\0' ) {
          hb_strncpy(pszName, pszDir, HB_PATH_MAX - 1);
          iLen = static_cast<int>(strlen(pszName));
-         if( pszName[iLen - 1] != HB_OS_PATH_DELIM_CHR && iLen < HB_PATH_MAX - 1 )
-         {
+         if( pszName[iLen - 1] != HB_OS_PATH_DELIM_CHR && iLen < HB_PATH_MAX - 1 ) {
             pszName[iLen] = HB_OS_PATH_DELIM_CHR;
             pszName[iLen + 1] = '\0';
          }
-      }
-      else
-      {
+      } else {
          hb_fsTempDir(pszName);
       }
 
-      if( pszPrefix )
-      {
+      if( pszPrefix ) {
          hb_strncat(pszName, pszPrefix, HB_PATH_MAX - 1);
       }
 
       iLen = static_cast<int>(strlen(pszName));
-      if( iLen > (HB_PATH_MAX - 1) - 6 - (pszExt ? static_cast<int>(strlen(pszExt)) : 0) )
-      {
+      if( iLen > (HB_PATH_MAX - 1) - 6 - (pszExt ? static_cast<int>(strlen(pszExt)) : 0) ) {
          fd = FS_ERROR;
          break;
       }
@@ -192,16 +178,14 @@ HB_FHANDLE hb_fsCreateTempEx(char * pszName, const char * pszDir, const char * p
          hb_vmUnlock();
          hb_strncat(pszName, "XXXXXX", HB_PATH_MAX - 1);
 #if defined(HB_HAS_MKSTEMPS)
-         if( pszExt && *pszExt )
-         {
+         if( pszExt && *pszExt ) {
             hb_strncat(pszName, pszExt, HB_PATH_MAX - 1);
 #if defined(HB_USE_LARGEFILE64)
             fd = static_cast<HB_FHANDLE>(mkstemps64(pszName, static_cast<int>(strlen(pszExt))));
 #else
             fd = static_cast<HB_FHANDLE>(mkstemps(pszName, static_cast<int>(strlen(pszExt))));
 #endif
-         }
-         else
+         } else
 #endif
 #if defined(HB_USE_LARGEFILE64)
             fd = static_cast<HB_FHANDLE>(mkstemp64(pszName));
@@ -210,34 +194,29 @@ HB_FHANDLE hb_fsCreateTempEx(char * pszName, const char * pszDir, const char * p
 #endif
          hb_fsSetIOError(fd != static_cast<HB_FHANDLE>(-1), 0);
          hb_vmLock();
-      }
-      else
+      } else
 #endif /* HB_HAS_MKSTEMP */
       {
-         double d = hb_random_num(), x;
+         double d = hb_random_num();
+         double x;
 
-         for( int i = 0; i < 6; i++ )
-         {
-            int n;
+         for( int i = 0; i < 6; i++ ) {
             d = d * 36;
-            n = static_cast<int>(d);
-            d = modf( d, &x );
-            pszName[iLen++] = static_cast<char>(n + ( n > 9 ? 'a' - 10 : '0' ));
+            int n = static_cast<int>(d);
+            d = modf(d, &x);
+            pszName[iLen++] = static_cast<char>(n + (n > 9 ? 'a' - 10 : '0'));
          }
          pszName[iLen] = '\0';
-         if( pszExt )
-         {
+         if( pszExt ) {
             hb_strncat(pszName, pszExt, HB_PATH_MAX - 1);
          }
          fd = hb_fsCreateEx(pszName, ulAttr, FO_EXCLUSIVE | FO_EXCL);
       }
 
-      if( fd != static_cast<HB_FHANDLE>(FS_ERROR) )
-      {
+      if( fd != static_cast<HB_FHANDLE>(FS_ERROR) ) {
          break;
       }
-   }
-   while( --iAttemptLeft );
+   } while( --iAttemptLeft );
 
    return fd;
 }
@@ -255,22 +234,19 @@ static bool hb_fsTempName(char * pszBuffer, const char * pszDir, const char * ps
 
 #if defined(HB_OS_WIN)
    {
-      LPCTSTR lpPrefix, lpDir;
-      LPTSTR lpPrefixFree = nullptr, lpDirFree = nullptr;
-
       TCHAR lpBuffer[HB_PATH_MAX];
       TCHAR lpTempDir[HB_PATH_MAX];
 
-      lpPrefix = pszPrefix ? HB_FSNAMECONV(pszPrefix, &lpPrefixFree) : nullptr;
+      LPTSTR lpPrefixFree = nullptr;
+      LPCTSTR lpPrefix = pszPrefix ? HB_FSNAMECONV(pszPrefix, &lpPrefixFree) : nullptr;
 
-      if( pszDir && pszDir[0] != '\0' )
-      {
+      LPCTSTR lpDir;
+      LPTSTR lpDirFree = nullptr;
+
+      if( pszDir && pszDir[0] != '\0' ) {
          lpDir = HB_FSNAMECONV(pszDir, &lpDirFree);
-      }
-      else
-      {
-         if( !GetTempPath( HB_PATH_MAX, lpTempDir ) )
-         {
+      } else {
+         if( !GetTempPath( HB_PATH_MAX, lpTempDir ) ) {
             hb_fsSetIOError(false, 0);
             return false;
          }
@@ -280,17 +256,14 @@ static bool hb_fsTempName(char * pszBuffer, const char * pszDir, const char * ps
 
       fResult = GetTempFileName(lpDir, lpPrefix ? lpPrefix : TEXT("hb"), 0, lpBuffer);
 
-      if( fResult )
-      {
+      if( fResult ) {
          HB_OSSTRDUP2(lpBuffer, pszBuffer, HB_PATH_MAX - 1);
       }
 
-      if( lpPrefixFree )
-      {
+      if( lpPrefixFree ) {
          hb_xfree(lpPrefixFree);
       }
-      if( lpDirFree )
-      {
+      if( lpDirFree ) {
          hb_xfree(lpDirFree);
       }
    }
@@ -306,8 +279,7 @@ static bool hb_fsTempName(char * pszBuffer, const char * pszDir, const char * ps
       fResult = (tmpnam(pTmpBuffer) != nullptr);
       pTmpBuffer[L_tmpnam] = '\0';
 
-      if( fResult )
-      {
+      if( fResult ) {
          hb_osStrDecode2(pTmpBuffer, pszBuffer, HB_PATH_MAX - 1);
       }
       hb_xfree(pTmpBuffer);
@@ -334,10 +306,8 @@ HB_FHANDLE hb_fsCreateTemp(const char * pszDir, const char * pszPrefix, HB_FATTR
       API exist. */
    int iAttemptLeft = 999;
 
-   while( --iAttemptLeft )
-   {
-      if( hb_fsTempName(pszName, pszDir, pszPrefix) )
-      {
+   while( --iAttemptLeft ) {
+      if( hb_fsTempName(pszName, pszDir, pszPrefix) ) {
 
 #if defined(HB_OS_WIN)
          /* Using FO_TRUNC on win platforms as hb_fsTempName() uses GetTempFileName(),
@@ -350,13 +320,10 @@ HB_FHANDLE hb_fsCreateTemp(const char * pszDir, const char * pszPrefix, HB_FATTR
          /* This function may fail, if the generated filename got
             used between generation and the file creation. */
 
-         if( fhnd != FS_ERROR )
-         {
+         if( fhnd != FS_ERROR ) {
             return fhnd;
          }
-      }
-      else
-      {
+      } else {
          /* Don't attempt to retry if the filename generator is
             failing for some reason. */
          break;
@@ -378,23 +345,19 @@ HB_ERRCODE hb_fsTempDir(char * pszTempDir)
    {
       char * pszTempDirEnv = hb_getenv("TMPDIR");
 
-      if( fsGetTempDirByCase(pszTempDir, pszTempDirEnv, false) )
-      {
+      if( fsGetTempDirByCase(pszTempDir, pszTempDirEnv, false) ) {
          nResult = 0;
       }
 #ifdef P_tmpdir
-      else if( fsGetTempDirByCase(pszTempDir, P_tmpdir, true) )
-      {
+      else if( fsGetTempDirByCase(pszTempDir, P_tmpdir, true) ) {
          nResult = 0;
       }
 #endif
-      else if( fsGetTempDirByCase(pszTempDir, "/tmp", true) )
-      {
+      else if( fsGetTempDirByCase(pszTempDir, "/tmp", true) ) {
          nResult = 0;
       }
 
-      if( pszTempDirEnv )
-      {
+      if( pszTempDirEnv ) {
          hb_xfree(pszTempDirEnv);
       }
    }
@@ -402,8 +365,7 @@ HB_ERRCODE hb_fsTempDir(char * pszTempDir)
    {
       TCHAR lpDir[HB_PATH_MAX];
 
-      if( GetTempPath(HB_PATH_MAX, lpDir) )
-      {
+      if( GetTempPath(HB_PATH_MAX, lpDir) ) {
          nResult = 0;
          lpDir[HB_PATH_MAX - 1] = TEXT('\0');
          HB_OSSTRDUP2(lpDir, pszTempDir, HB_PATH_MAX - 1);
@@ -415,14 +377,11 @@ HB_ERRCODE hb_fsTempDir(char * pszTempDir)
 
       const char ** tmp = env_tmp;
 
-      while( *tmp && nResult != 0 )
-      {
+      while( *tmp && nResult != 0 ) {
          char * pszTempDirEnv = hb_getenv(*tmp++);
 
-         if( pszTempDirEnv )
-         {
-            if( fsGetTempDirByCase(pszTempDir, pszTempDirEnv, false) )
-            {
+         if( pszTempDirEnv ) {
+            if( fsGetTempDirByCase(pszTempDir, pszTempDirEnv, false) ) {
                nResult = 0;
             }
             hb_xfree(pszTempDirEnv);
@@ -431,17 +390,13 @@ HB_ERRCODE hb_fsTempDir(char * pszTempDir)
    }
 #endif
 
-   if( nResult == 0 && pszTempDir[0] != '\0' )
-   {
+   if( nResult == 0 && pszTempDir[0] != '\0' ) {
       int len = static_cast<int>(strlen(pszTempDir));
-      if( pszTempDir[len - 1] != HB_OS_PATH_DELIM_CHR && len < HB_PATH_MAX - 1 )
-      {
+      if( pszTempDir[len - 1] != HB_OS_PATH_DELIM_CHR && len < HB_PATH_MAX - 1 ) {
          pszTempDir[len] = HB_OS_PATH_DELIM_CHR;
          pszTempDir[len + 1] = '\0';
       }
-   }
-   else
-   {
+   } else {
       pszTempDir[0] = '.';
       pszTempDir[1] = HB_OS_PATH_DELIM_CHR;
       pszTempDir[2] = '\0';
@@ -453,31 +408,23 @@ HB_ERRCODE hb_fsTempDir(char * pszTempDir)
 HB_FUNC( HB_FTEMPCREATE )
 {
    char szName[HB_PATH_MAX];
-
    hb_retnint(static_cast<HB_NHANDLE>(hb_fsCreateTemp(hb_parc(1), hb_parc(2), static_cast<HB_FATTR>(hb_parnldef(3, FC_NORMAL)), szName)));
-
    hb_storc(szName, 4);
 }
 
 HB_FUNC( HB_FTEMPCREATEEX )
 {
    char szName[HB_PATH_MAX];
-
    hb_retnint(static_cast<HB_NHANDLE>(hb_fsCreateTempEx(szName, hb_parc(2), hb_parc(3), hb_parc(4), static_cast<HB_FATTR>(hb_parnldef(5, FC_NORMAL)))));
-
    hb_storc(szName, 1);
 }
 
 HB_FUNC( HB_DIRTEMP )
 {
    char szTempDir[HB_PATH_MAX];
-
-   if( hb_fsTempDir(szTempDir) != static_cast<HB_ERRCODE>(FS_ERROR) )
-   {
+   if( hb_fsTempDir(szTempDir) != static_cast<HB_ERRCODE>(FS_ERROR) ) {
       hb_retc(szTempDir);
-   }
-   else
-   {
+   } else {
       hb_retc_null();
    }
 }

@@ -89,10 +89,8 @@ HB_ERRCODE hb_gtExit(void)
 #endif
 
    hb_gtRelease(nullptr);
-
    /* clear internal clipboard data */
    hb_gt_setClipboard(nullptr, 0);
-
    return HB_SUCCESS;
 }
 

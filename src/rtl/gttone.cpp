@@ -155,28 +155,21 @@ static void hb_gt_w9xTone( double dFreq, double dDurat )
    /* Clipper ignores Tone() requests (but delays anyway) if Frequency is
       less than < 20 hz (and so should we) to maintain compatibility .. */
 
-   if( dFreq >= 20.0 )
-   {
+   if( dFreq >= 20.0 ) {
       /* Setup Sound Control Port Registers and timer channel 2 */
       hb_Outp9x(67, 182);
 
       lAdjFreq = static_cast<unsigned long>(1193180 / dFreq);
 
-      if( static_cast<long>(lAdjFreq) < 0 )
-      {
+      if( static_cast<long>(lAdjFreq) < 0 ) {
          uLSB = lAdjFreq + 65536;
-      }
-      else
-      {
+      } else {
          uLSB = lAdjFreq % 256;
       }
 
-      if( static_cast<long>(lAdjFreq) < 0 )
-      {
+      if( static_cast<long>(lAdjFreq) < 0 ) {
          uMSB = lAdjFreq + 65536;
-      }
-      else
-      {
+      } else {
          uMSB = lAdjFreq / 256;
       }
 
@@ -200,9 +193,7 @@ static void hb_gt_w9xTone( double dFreq, double dDurat )
       /* Turn off the Speaker ! */
 
       hb_Outp9x(97, hb_Inp9x(97) & 0xFC);
-   }
-   else
-   {
+   } else {
       hb_idleSleep(dDurat);
    }
 }
@@ -219,12 +210,9 @@ static void hb_gt_wNtTone( double dFreq, double dDurat )
    /* Clipper ignores Tone() requests (but delays anyway) if Frequency is
       less than < 20 hz.  Windows NT minimum is 37... */
 
-   if( dFreq >= 37.0 )
-   {
+   if( dFreq >= 37.0 ) {
       Beep(static_cast<DWORD>(dFreq), static_cast<DWORD>(dDurat * 1000));  /* Beep wants Milliseconds */
-   }
-   else
-   {
+   } else {
       hb_idleSleep(dDurat);
    }
 }
@@ -248,12 +236,10 @@ void hb_gt_winapi_tone( double dFrequency, double dDuration )
    dFrequency = HB_MIN(HB_MAX(0.0, dFrequency), 32767.0);
 
 #if defined(HB_HAS_WIN9X_TONE)
-   if( hb_iswin9x() )
-   {
+   if( hb_iswin9x() ) {
       /* If Windows 95 or 98, use w9xTone for chosen C compilers */
       hb_gt_w9xTone( dFrequency, dDuration );
-   }
-   else
+   } else
 #endif
       /* If Windows NT or NT2k, use wNtTone, which redirects Tone() to
          Windows API Beep() function */

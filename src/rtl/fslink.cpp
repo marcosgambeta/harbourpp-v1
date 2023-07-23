@@ -66,11 +66,10 @@ HB_BOOL hb_fsLink(const char * pszExisting, const char * pszNewFile)
       hb_vmUnlock();
 
 #if defined(HB_OS_WIN)
-      LPCTSTR lpFileName, lpExistingFileName;
-      LPTSTR lpFileNameFree, lpExistingFileNameFree;
-
-      lpFileName = HB_FSNAMECONV(pszNewFile, &lpFileNameFree);
-      lpExistingFileName = HB_FSNAMECONV(pszExisting, &lpExistingFileNameFree);
+      LPTSTR lpFileNameFree;
+      LPCTSTR lpFileName = HB_FSNAMECONV(pszNewFile, &lpFileNameFree);
+      LPTSTR lpExistingFileNameFree;
+      LPCTSTR lpExistingFileName = HB_FSNAMECONV(pszExisting, &lpExistingFileNameFree);
 
       fResult = CreateHardLink(lpFileName, lpExistingFileName, nullptr) != 0;
       hb_fsSetIOError(fResult, 0);
@@ -84,9 +83,8 @@ HB_BOOL hb_fsLink(const char * pszExisting, const char * pszNewFile)
 #elif defined(HB_OS_UNIX)
       {
          char * pszExistingFree;
-         char * pszNewFileFree;
-
          pszExisting = hb_fsNameConv(pszExisting, &pszExistingFree);
+         char * pszNewFileFree;
          pszNewFile = hb_fsNameConv(pszNewFile, &pszNewFileFree);
 
          fResult = (link(pszExisting, pszNewFile) == 0);
@@ -124,7 +122,7 @@ HB_BOOL hb_fsLinkSym(const char * pszTarget, const char * pszNewFile)
 
 #if defined(HB_OS_WIN)
       {
-         typedef BOOL ( WINAPI * _HB_CREATESYMBOLICLINK )( LPCTSTR, LPCTSTR, DWORD );
+         using _HB_CREATESYMBOLICLINK = BOOL (WINAPI *)(LPCTSTR, LPCTSTR, DWORD);
 
          static _HB_CREATESYMBOLICLINK s_pCreateSymbolicLink = nullptr;
 
@@ -140,9 +138,9 @@ HB_BOOL hb_fsLinkSym(const char * pszTarget, const char * pszNewFile)
          }
 
          if( s_pCreateSymbolicLink ) {
-            LPTSTR lpSymlinkFileNameFree, lpTargetFileNameFree;
-
+            LPTSTR lpSymlinkFileNameFree;
             LPCTSTR lpSymlinkFileName = HB_FSNAMECONV(pszNewFile, &lpSymlinkFileNameFree);
+            LPTSTR lpTargetFileNameFree;
             LPCTSTR lpTargetFileName = HB_FSNAMECONV(pszTarget, &lpTargetFileNameFree);
 
             DWORD dwAttr = GetFileAttributes(lpTargetFileName);
@@ -165,9 +163,8 @@ HB_BOOL hb_fsLinkSym(const char * pszTarget, const char * pszNewFile)
 #elif defined(HB_OS_UNIX)
       {
          char * pszTargetFree;
-         char * pszNewFileFree;
-
          pszTarget = hb_fsNameConv(pszTarget, &pszTargetFree);
+         char * pszNewFileFree;
          pszNewFile = hb_fsNameConv(pszNewFile, &pszNewFileFree);
 
          fResult = (symlink(pszTarget, pszNewFile) == 0);
@@ -206,7 +203,7 @@ char * hb_fsLinkRead(const char * pszFile)
 
 #if defined(HB_OS_WIN)
       {
-         typedef DWORD ( WINAPI * _HB_GETFINALPATHNAMEBYHANDLE )( HANDLE, LPTSTR, DWORD, DWORD );
+         using _HB_GETFINALPATHNAMEBYHANDLE = DWORD (WINAPI *)(HANDLE, LPTSTR, DWORD, DWORD);
 
          static _HB_GETFINALPATHNAMEBYHANDLE s_pGetFinalPathNameByHandle = nullptr;
 
@@ -238,7 +235,6 @@ char * hb_fsLinkRead(const char * pszFile)
 
          if( s_pGetFinalPathNameByHandle ) {
             LPTSTR lpFileNameFree;
-
             LPCTSTR lpFileName = HB_FSNAMECONV(pszFile, &lpFileNameFree);
 
             DWORD dwAttr = GetFileAttributes(lpFileName);
@@ -255,9 +251,8 @@ char * hb_fsLinkRead(const char * pszFile)
             if( hFile == INVALID_HANDLE_VALUE ) {
                hb_fsSetIOError(false, 0);
             } else {
-               DWORD size;
                TCHAR lpLink[HB_PATH_MAX];
-               size = s_pGetFinalPathNameByHandle(hFile, lpLink, HB_PATH_MAX, VOLUME_NAME_DOS);
+               DWORD size = s_pGetFinalPathNameByHandle(hFile, lpLink, HB_PATH_MAX, VOLUME_NAME_DOS);
                if( size < HB_PATH_MAX ) {
                   if( size > 0 ) {
                      lpLink[size] = TEXT('\0');
@@ -280,7 +275,6 @@ char * hb_fsLinkRead(const char * pszFile)
 #elif defined(HB_OS_UNIX)
       {
          char * pszFileFree;
-
          pszFile = hb_fsNameConv(pszFile, &pszFileFree);
 
          pszLink = static_cast<char*>(hb_xgrab(HB_PATH_MAX + 1));
@@ -317,7 +311,8 @@ HB_FUNC( HB_FLINK )
 {
    HB_ERRCODE uiError = 2;
    bool fResult = false;
-   const char * pszExisting = hb_parc(1), * pszNewFile = hb_parc(2);
+   const char * pszExisting = hb_parc(1);
+   const char * pszNewFile = hb_parc(2);
 
    if( pszExisting && pszNewFile ) {
       fResult = hb_fsLink(pszExisting, pszNewFile);
@@ -331,7 +326,8 @@ HB_FUNC( HB_FLINKSYM )
 {
    HB_ERRCODE uiError = 2;
    bool fResult = false;
-   const char * pszTarget = hb_parc(1), * pszNewFile = hb_parc(2);
+   const char * pszTarget = hb_parc(1);
+   const char * pszNewFile = hb_parc(2);
 
    if( pszTarget && pszNewFile ) {
       fResult = hb_fsLinkSym(pszTarget, pszNewFile);
