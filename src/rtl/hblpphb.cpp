@@ -132,13 +132,11 @@ static HB_GARBAGE_FUNC( hb_lpp_destructor )
 {
    PHB_LPP_GC pGC = static_cast<PHB_LPP_GC>(Cargo);
 
-   if( pGC->pSocket )
-   {
+   if( pGC->pSocket ) {
       hb_lppDestroy(pGC->pSocket);
       pGC->pSocket = nullptr;
    }
-   if( pGC->pItemSocket )
-   {
+   if( pGC->pItemSocket ) {
       hb_itemRelease(pGC->pItemSocket);
       pGC->pItemSocket = nullptr;
    }
@@ -148,8 +146,7 @@ static HB_GARBAGE_FUNC( hb_lpp_mark )
 {
    PHB_LPP_GC pGC = static_cast<PHB_LPP_GC>(Cargo);
 
-   if( pGC->pItemSocket )
-   {
+   if( pGC->pItemSocket ) {
       hb_gcMark(pGC->pItemSocket);
    }
 }
@@ -163,17 +160,14 @@ static const HB_GC_FUNCS s_gcPSocketFuncs =
 HB_FUNC( HB_LPPCREATE )
 {
    HB_SOCKET sd;
-   PHB_LPP_GC pGC;
-   PHB_ITEM pItem;
 
-   pItem = hb_param(1, Harbour::Item::POINTER);
-   if( !pItem || (sd = hb_socketItemGet(pItem)) == HB_NO_SOCKET )
-   {
+   PHB_ITEM pItem = hb_param(1, Harbour::Item::POINTER);
+   if( !pItem || (sd = hb_socketItemGet(pItem)) == HB_NO_SOCKET ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
    }
 
-   pGC = static_cast<PHB_LPP_GC>(hb_gcAllocate(sizeof(HB_LPP_GC), &s_gcPSocketFuncs));
+   PHB_LPP_GC pGC = static_cast<PHB_LPP_GC>(hb_gcAllocate(sizeof(HB_LPP_GC), &s_gcPSocketFuncs));
    pGC->pSocket = hb_lppCreate(sd);
    pGC->pItemSocket = hb_itemNew(pItem);
    hb_gcUnlock(pGC->pItemSocket);
@@ -182,11 +176,8 @@ HB_FUNC( HB_LPPCREATE )
 
 HB_FUNC( HB_LPPDESTROY )
 {
-   PHB_LPP_GC pGC;
-
-   pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
-   if( !pGC || !pGC->pSocket )
-   {
+   PHB_LPP_GC pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
+   if( !pGC || !pGC->pSocket ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
    }
@@ -198,11 +189,8 @@ HB_FUNC( HB_LPPDESTROY )
 
 HB_FUNC( HB_LPPERROR )
 {
-   PHB_LPP_GC pGC;
-
-   pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
-   if( !pGC || !pGC->pSocket )
-   {
+   PHB_LPP_GC pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
+   if( !pGC || !pGC->pSocket ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
    }
@@ -211,11 +199,8 @@ HB_FUNC( HB_LPPERROR )
 
 HB_FUNC( HB_LPPSETLIMIT )
 {
-   PHB_LPP_GC pGC;
-
-   pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
-   if( !pGC || !pGC->pSocket )
-   {
+   PHB_LPP_GC pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
+   if( !pGC || !pGC->pSocket ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
    }
@@ -224,39 +209,29 @@ HB_FUNC( HB_LPPSETLIMIT )
 
 HB_FUNC( HB_LPPSEND )
 {
-   PHB_LPP_GC pGC;
-   PHB_ITEM pData;
-
-   pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
-   if( !pGC || !pGC->pSocket || hb_socketItemGet(pGC->pItemSocket) == HB_NO_SOCKET )
-   {
+   PHB_LPP_GC pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
+   if( !pGC || !pGC->pSocket || hb_socketItemGet(pGC->pItemSocket) == HB_NO_SOCKET ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
    }
 
-   pData = hb_param(2, Harbour::Item::STRING);
+   PHB_ITEM pData = hb_param(2, Harbour::Item::STRING);
    hb_retl(hb_lppSend(pGC->pSocket, pData ? hb_itemGetCPtr(pData) : "", hb_itemGetCLen(pData), hb_parnintdef(3, -1)));
 }
 
 HB_FUNC( HB_LPPRECV )
 {
-   PHB_LPP_GC pGC;
-   HB_BOOL    bRet;
-   void *     data;
-   HB_SIZE    len;
-
-   pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
-   if( !pGC || !pGC->pSocket || hb_socketItemGet(pGC->pItemSocket) == HB_NO_SOCKET )
-   {
+   PHB_LPP_GC pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
+   if( !pGC || !pGC->pSocket || hb_socketItemGet(pGC->pItemSocket) == HB_NO_SOCKET ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
    }
 
-   bRet = hb_lppRecv(pGC->pSocket, &data, &len, hb_parnintdef(3, -1));
-   if( bRet )
-   {
-      if( HB_ISBYREF(2) )
-      {
+   void * data;
+   HB_SIZE len;
+   bool bRet = hb_lppRecv(pGC->pSocket, &data, &len, hb_parnintdef(3, -1));
+   if( bRet ) {
+      if( HB_ISBYREF(2) ) {
          hb_storclen(static_cast<char*>(data), len, 2);
       }
       hb_xfree(data);
@@ -266,11 +241,8 @@ HB_FUNC( HB_LPPRECV )
 
 HB_FUNC( HB_LPPSENDLEN )
 {
-   PHB_LPP_GC pGC;
-
-   pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
-   if( !pGC || !pGC->pSocket )
-   {
+   PHB_LPP_GC pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
+   if( !pGC || !pGC->pSocket ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
    }
@@ -279,11 +251,8 @@ HB_FUNC( HB_LPPSENDLEN )
 
 HB_FUNC( HB_LPPRECVLEN )
 {
-   PHB_LPP_GC pGC;
-
-   pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
-   if( !pGC || !pGC->pSocket )
-   {
+   PHB_LPP_GC pGC = static_cast<PHB_LPP_GC>(hb_parptrGC(&s_gcPSocketFuncs, 1));
+   if( !pGC || !pGC->pSocket ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
    }

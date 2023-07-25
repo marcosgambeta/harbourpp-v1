@@ -59,36 +59,27 @@ HB_FUNC( HB_DYNCALL )
    bool bFreeLibrary = false;
    void * pFunctionPtr = nullptr;
 
-   if( pParam )
-   {
-      if( HB_IS_ARRAY(pParam) )
-      {
+   if( pParam ) {
+      if( HB_IS_ARRAY(pParam) ) {
          HB_SIZE nLen = hb_arrayLen(pParam);
 
-         if( nLen >= 1 )
-         {
+         if( nLen >= 1 ) {
             PHB_ITEM pFunction = hb_arrayGetItemPtr(pParam, 1);
             HB_SIZE nBasePos = 2;
 
-            if( HB_IS_STRING(pFunction) && nLen >= nBasePos )
-            {
+            if( HB_IS_STRING(pFunction) && nLen >= nBasePos ) {
                PHB_ITEM pLibrary = hb_arrayGetItemPtr(pParam, nBasePos);
 
-               if( HB_IS_STRING(pLibrary) )
-               {
+               if( HB_IS_STRING(pLibrary) ) {
                   pLibraryHandle = hb_libLoad(pLibrary, nullptr);
-                  if( pLibraryHandle )
-                  {
+                  if( pLibraryHandle ) {
                      bFreeLibrary = true;
                   }
-               }
-               else if( hb_libHandle(pLibrary) )
-               {
+               } else if( hb_libHandle(pLibrary) ) {
                   pLibraryHandle = pLibrary;
                }
 
-               if( pLibraryHandle )
-               {
+               if( pLibraryHandle ) {
                   pFunctionPtr = hb_libSymAddr(pLibraryHandle, hb_itemGetCPtr(pFunction));
                }
 
@@ -96,22 +87,19 @@ HB_FUNC( HB_DYNCALL )
             }
 
             /* Function flags */
-            if( nBasePos <= nLen )
-            {
+            if( nBasePos <= nLen ) {
                iFuncFlags = hb_arrayGetNI(pParam, nBasePos);
             }
 
             ++nBasePos;
 
             /* Argument flags */
-            if( nBasePos <= nLen )
-            {
+            if( nBasePos <= nLen ) {
                HB_SIZE nArgCount = hb_pcount() - 1;
 
                piArgFlags = static_cast<int*>(hb_xgrab(sizeof(int) * nArgCount));
 
-               for( HB_SIZE nPos = 0; nPos < nArgCount; ++nPos )
-               {
+               for( HB_SIZE nPos = 0; nPos < nArgCount; ++nPos ) {
                   piArgFlags[nPos] = ((nPos + nBasePos) <= nLen && HB_IS_NUMERIC(hb_arrayGetItemPtr(pParam, nPos + nBasePos))) ? hb_arrayGetNI(pParam, nPos + nBasePos) : HB_DYN_CTYPE_DEFAULT;
                }
             }
@@ -121,13 +109,11 @@ HB_FUNC( HB_DYNCALL )
 
    hb_dynCall(iFuncFlags, pFunctionPtr, hb_pcount(), 2, piArgFlags);
 
-   if( piArgFlags )
-   {
+   if( piArgFlags ) {
       hb_xfree(piArgFlags);
    }
 
-   if( bFreeLibrary )
-   {
+   if( bFreeLibrary ) {
       hb_libFree(pLibraryHandle);
    }
 }

@@ -51,41 +51,29 @@ HB_FUNC( HB_HEXTONUM )
 {
    const char * szHex = hb_parc(1);
 
-   if( szHex )
-   {
+   if( szHex ) {
       HB_MAXUINT nNum = 0;
 
-      while( *szHex == ' ' )
-      {
+      while( *szHex == ' ' ) {
          szHex++;
       }
-      while( *szHex )
-      {
+      while( *szHex ) {
          int iDigit;
          char c = *szHex++;
-         if( c >= '0' && c <= '9' )
-         {
+         if( c >= '0' && c <= '9' ) {
             iDigit = c - '0';
-         }
-         else if( c >= 'A' && c <= 'F' )
-         {
+         } else if( c >= 'A' && c <= 'F' ) {
             iDigit = c - ( 'A' - 10 );
-         }
-         else if( c >= 'a' && c <= 'f' )
-         {
+         } else if( c >= 'a' && c <= 'f' ) {
             iDigit = c - ( 'a' - 10 );
-         }
-         else
-         {
+         } else {
             nNum = 0;
             break;
          }
          nNum = (nNum << 4) + iDigit;
       }
       hb_retnint(nNum);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -97,40 +85,30 @@ HB_FUNC( HB_NUMTOHEX )
    bool       fDefaultLen;
    char       ret[33];
 
-   if( HB_ISNUM(2) )
-   {
+   if( HB_ISNUM(2) ) {
       iLen = hb_parni(2);
       iLen = (iLen < 1) ? 1 : ((iLen > 32) ? 32 : iLen);
       fDefaultLen = false;
-   }
-   else
-   {
+   } else {
       iLen = 32;
       fDefaultLen = true;
    }
 
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       nNum = hb_parnint(1);
-   }
-   else if( HB_ISPOINTER(1) )
-   {
+   } else if( HB_ISPOINTER(1) ) {
       nNum = reinterpret_cast<HB_PTRUINT>(hb_parptr(1));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
    }
 
    ret[iLen] = '\0';
-   do
-   {
+   do {
       int iDigit = static_cast<int>(nNum & 0x0F);
       ret[--iLen] = static_cast<char>(iDigit + ( iDigit < 10 ? '0' : 'A' - 10 ));
       nNum >>= 4;
-   }
-   while( fDefaultLen ? nNum != 0 : iLen != 0 );
+   } while( fDefaultLen ? nNum != 0 : iLen != 0 );
 
    hb_retc(&ret[iLen]);
 }
@@ -140,45 +118,37 @@ HB_FUNC( HB_STRTOHEX )
    const char * szStr = hb_parc(1), * szSep = "";
    HB_SIZE nStr, nSep = 0;
 
-   if( hb_pcount() > 1 )
-   {
+   if( hb_pcount() > 1 ) {
       szSep = hb_parc(2);
       nSep = hb_parclen(2);
    }
 
-   if( !szStr || !szSep )
-   {
+   if( !szStr || !szSep ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
    }
 
    nStr = hb_parclen(1);
-   if( nStr )
-   {
+   if( nStr ) {
       HB_SIZE nDest = (nStr << 1) + (nStr - 1) * nSep;
       char * szDest, * szPtr;
 
       szPtr = szDest = static_cast<char*>(hb_xgrab(nDest + 1));
-      do
-      {
+      do {
          HB_UCHAR uc = static_cast<HB_UCHAR>(*szStr++), ud;
          ud = uc >> 4;
          *szPtr++ = ud + ( ud < 10 ? '0' : 'A' - 10 );
          ud = uc & 0x0F;
          *szPtr++ = ud + ( ud < 10 ? '0' : 'A' - 10 );
-         if( --nStr && nSep )
-         {
+         if( --nStr && nSep ) {
             memcpy(szPtr, szSep, nSep);
             szPtr += nSep;
          }
-      }
-      while( nStr );
+      } while( nStr );
       hb_retclen_buffer(szDest, nDest);
-   }
-   else
-   {
+   } else {
       hb_retc_null();
-   }   
+   }
 }
 
 HB_FUNC( HB_HEXTOSTR )
@@ -186,67 +156,51 @@ HB_FUNC( HB_HEXTOSTR )
    const char * szStr = hb_parc(1);
    HB_SIZE nStr;
 
-   if( !szStr )
-   {
+   if( !szStr ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
    }
 
    nStr = hb_parclen(1);
-   if( nStr > 1 )
-   {
+   if( nStr > 1 ) {
       HB_SIZE nDest, ul;
       const char * szPtr;
 
       szPtr = szStr;
       ul = nStr;
       nDest = 0;
-      do
-      {
+      do {
          char c = *szPtr++;
-         if( (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f') )
-         {
+         if( (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f') ) {
             ++nDest;
          }
-      }
-      while( --ul );
+      } while( --ul );
 
       nDest >>= 1;
-      if( nDest )
-      {
+      if( nDest ) {
          int iVal = 0x10;
 
          char * szDest = static_cast<char*>(hb_xgrab(nDest + 1));
 
          /* ul = 0; see above stop condition */
-         do
-         {
+         do {
             char c = *szStr++;
-            if( c >= '0' && c <= '9' )
-            {
+            if( c >= '0' && c <= '9' ) {
                iVal += c - '0';
-            }
-            else if( c >= 'A' && c <= 'F' )
-            {
+            } else if( c >= 'A' && c <= 'F' ) {
                iVal += c - ( 'A' - 10 );
-            }
-            else if( c >= 'a' && c <= 'f' )
-            {
+            } else if( c >= 'a' && c <= 'f' ) {
                iVal += c - ( 'a' - 10 );
-            }
-            else
-            {
+            } else {
                continue;
             }
 
-            if( iVal & 0x100 )
-            {
+            if( iVal & 0x100 ) {
                szDest[ul++] = static_cast<char>(iVal) & 0xff;
                iVal = 0x1;
             }
             iVal <<= 4;
-         }
-         while( --nStr );
+         } while( --nStr );
 
          hb_retclen_buffer(szDest, nDest);
          return;

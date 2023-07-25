@@ -146,14 +146,11 @@ static const HB_U16 crc16_tab[] =
 HB_U32 hb_crc32(HB_U32 crc, const void * buf, HB_SIZE len)
 {
    crc ^= 0xffffffffL;
-   if( buf && len )
-   {
+   if( buf && len ) {
       const unsigned char * ucbuf = static_cast<const unsigned char*>(buf);
-      do
-      {
+      do {
          crc = crc32_tab[( crc ^ *ucbuf++ ) & 0xFF] ^ ( crc >> 8 );
-      }
-      while( --len );
+      } while( --len );
    }
    return crc ^ 0xffffffffL;
 }
@@ -161,47 +158,37 @@ HB_U32 hb_crc32(HB_U32 crc, const void * buf, HB_SIZE len)
 HB_U16 hb_crc16(HB_U16 crc, const void * buf, HB_SIZE len)
 {
    crc ^= 0xffff;
-   if( buf && len )
-   {
+   if( buf && len ) {
       const unsigned char * ucbuf = static_cast<const unsigned char*>(buf);
-      do
-      {
+      do {
          crc = crc16_tab[( crc ^ *ucbuf++ ) & 0xFF] ^ ( crc >> 8 );
-      }
-      while( --len );
+      } while( --len );
    }
    return crc ^ 0xffff;
 }
 
 HB_MAXUINT hb_crc(HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT poly)
 {
-   if( buf && len )
-   {
+   if( buf && len ) {
       const unsigned char * ucbuf = static_cast<const unsigned char*>(buf);
       HB_MAXUINT mask = 1, revp = 0;
 
-      while( poly > 1 )
-      {
+      while( poly > 1 ) {
          mask <<= 1;
          revp <<= 1;
-         if( poly & 1 )
-         {
+         if( poly & 1 ) {
             revp |= 1;
          }
          poly >>= 1;
       }
       crc ^= --mask;
-      do
-      {
+      do {
          int i = 8;
          crc ^= *ucbuf++;
-         do
-         {
+         do {
             crc = (crc & 1) ? revp ^ (crc >> 1) : crc >> 1;
-         }
-         while( --i );
-      }
-      while( --len );
+         } while( --i );
+      } while( --len );
       crc ^= mask;
    }
    return crc;
@@ -209,50 +196,37 @@ HB_MAXUINT hb_crc(HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT poly
 
 HB_MAXUINT hb_crcct(HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT poly)
 {
-   if( buf && len )
-   {
+   if( buf && len ) {
       const unsigned char * ucbuf = static_cast<const unsigned char*>(buf);
       HB_MAXUINT mask, revp = poly;
       int bits = 0;
 
-      while( revp >>= 1 )
-      {
+      while( revp >>= 1 ) {
          ++bits;
       }
       mask = static_cast<HB_MAXINT>(1) << ( bits - 1 );
       bits -= 8;
-      if( bits < 0 )
-      {
+      if( bits < 0 ) {
          mask <<= -bits;
          poly <<= -bits;
          crc <<= -bits;
-         do
-         {
+         do {
             int i = 8;
             crc ^= static_cast<HB_MAXUINT>(*ucbuf++);
-            do
-            {
+            do {
                crc = (crc & mask) ? poly ^ (crc << 1) : crc << 1;
-            }
-            while( --i );
-         }
-         while( --len );
+            } while( --i );
+         } while( --len );
          crc &= ( mask << 1 ) - 1;
          crc >>= -bits;
-      }
-      else
-      {
-         do
-         {
+      } else {
+         do {
             int i = 8;
             crc ^= static_cast<HB_MAXUINT>(*ucbuf++) << bits;
-            do
-            {
+            do {
                crc = (crc & mask) ? poly ^ (crc << 1) : crc << 1;
-            }
-            while( --i );
-         }
-         while( --len );
+            } while( --i );
+         } while( --len );
          crc &= ( mask << 1 ) - 1;
       }
    }
@@ -263,12 +237,9 @@ HB_FUNC( HB_CRC32 )
 {
    const char * szString = hb_parc(1);
 
-   if( szString )
-   {
+   if( szString ) {
       hb_retnint(hb_crc32(static_cast<HB_U32>(hb_parnl(2)), szString, hb_parclen(1)));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -277,12 +248,9 @@ HB_FUNC( HB_CRC16 )
 {
    const char * szString = hb_parc(1);
 
-   if( szString )
-   {
+   if( szString ) {
       hb_retnint(hb_crc16(static_cast<HB_U16>(hb_parnl(2)), szString, hb_parclen(1)));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -291,17 +259,13 @@ HB_FUNC( HB_CRC )
 {
    const char * szString = hb_parc(1);
 
-   if( szString )
-   {
+   if( szString ) {
       HB_MAXUINT ulPolynomial = static_cast<HB_MAXUINT>(hb_parnint(3));
-      if( ulPolynomial == 0 )
-      {
+      if( ulPolynomial == 0 ) {
          ulPolynomial = 0x11021;
       }
       hb_retnint(hb_crc(static_cast<HB_MAXUINT>(hb_parnint(2)), szString, hb_parclen(1), ulPolynomial));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -310,17 +274,13 @@ HB_FUNC( HB_CRCCT )
 {
    const char * szString = hb_parc(1);
 
-   if( szString )
-   {
+   if( szString ) {
       HB_MAXUINT ulPolynomial = static_cast<HB_MAXUINT>(hb_parnint(3));
-      if( ulPolynomial == 0 )
-      {
+      if( ulPolynomial == 0 ) {
          ulPolynomial = 0x11021;
       }
       hb_retnint(hb_crcct(static_cast<HB_MAXUINT>(hb_parnint(2)), szString, hb_parclen(1), ulPolynomial));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

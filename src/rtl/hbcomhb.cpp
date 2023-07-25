@@ -103,7 +103,6 @@ HB_FUNC( HB_COMFLOWCHARS )
 HB_FUNC( HB_COMFLOWCONTROL )
 {
    int iValue = 0;
-
    hb_retl(hb_comFlowControl(hb_parni(1), &iValue, hb_parnidef(3, -1)) == 0);
    hb_storni(iValue, 2);
 }
@@ -122,7 +121,6 @@ HB_FUNC( HB_COMGETDEVICE )
 {
    char buffer[HB_COM_DEV_NAME_MAX];
    const char * name = hb_comGetDevice( hb_parni(1), buffer, sizeof(buffer) );
-
    hb_retc(name);
 }
 
@@ -169,7 +167,6 @@ HB_FUNC( HB_COMLASTNUM )
 HB_FUNC( HB_COMLSR )
 {
    int iValue = 0;
-
    hb_retl(hb_comLSR(hb_parni(1), &iValue) == 0);
    hb_storni(iValue, 2);
 }
@@ -177,7 +174,6 @@ HB_FUNC( HB_COMLSR )
 HB_FUNC( HB_COMMCR )
 {
    int iValue = 0;
-
    hb_retl(hb_comMCR(hb_parni(1), &iValue, hb_parni(3), hb_parni(4)) == 0);
    hb_storni(iValue, 2);
 }
@@ -185,7 +181,6 @@ HB_FUNC( HB_COMMCR )
 HB_FUNC( HB_COMMSR )
 {
    int iValue = 0;
-
    hb_retl(hb_comMSR(hb_parni(1), &iValue) == 0);
    hb_storni(iValue, 2);
 }
@@ -227,20 +222,15 @@ HB_FUNC( HB_COMRECV )
    char * pBuffer;
    HB_SIZE nLen;
 
-   if( pItem && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen) )
-   {
-      if( HB_ISNUM(3) )
-      {
+   if( pItem && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen) ) {
+      if( HB_ISNUM(3) ) {
          long lRead = hb_parnl(3);
-         if( lRead >= 0 && lRead < static_cast<long>(nLen) )
-         {
+         if( lRead >= 0 && lRead < static_cast<long>(nLen) ) {
             nLen = lRead;
          }
       }
       hb_retnl(hb_comRecv(hb_parni(1), pBuffer, static_cast<long>(nLen), hb_parnint(4)));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -249,12 +239,10 @@ HB_FUNC( HB_COMSEND )
 {
    long  lLen = static_cast<long>(hb_parclen(2));
 
-   if( HB_ISNUM(3) )
-   {
+   if( HB_ISNUM(3) ) {
       long lParam = hb_parnl(3);
 
-      if( lParam >= 0 && lParam < lLen )
-      {
+      if( lParam >= 0 && lParam < lLen ) {
          lLen = lParam;
       }
    }
