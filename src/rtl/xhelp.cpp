@@ -52,13 +52,11 @@ HB_FUNC( __XHELP )
 {
    static PHB_DYNS s_pDynSym = nullptr;
 
-   if( s_pDynSym == nullptr )
-   {
+   if( s_pDynSym == nullptr ) {
       s_pDynSym = hb_dynsymGetCase("HELP");
    }
-   
-   if( hb_dynsymIsFunction(s_pDynSym) )
-   {
+
+   if( hb_dynsymIsFunction(s_pDynSym) ) {
       /* NOTE: push the existing params after the dynamic symbol. [awhite] */
 
       int iPCount = hb_pcount();
@@ -68,8 +66,7 @@ HB_FUNC( __XHELP )
       /* CA-Cl*pper respects references so hb_stackItemFromBase() is
        * used instead of hb_param() [druzus]
        */
-      for( int iParam = 1; iParam <= iPCount; iParam++ )
-      {
+      for( int iParam = 1; iParam <= iPCount; iParam++ ) {
          hb_vmPush(hb_stackItemFromBase(iParam));
       }
 

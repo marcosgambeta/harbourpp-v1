@@ -74,14 +74,11 @@ HB_FUNC( TRANSFORM )
    PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY); /* Input parameter */
    PHB_ITEM pPic = hb_param(2, Harbour::Item::STRING); /* Picture string */
 
-   HB_BOOL bError = false;
+   bool bError = false;
 
-   if( pValue == nullptr )
-   {
+   if( pValue == nullptr ) {
       bError = true;
-   }
-   else if( pPic && hb_itemGetCLen(pPic) > 0 )
-   {
+   } else if( pPic && hb_itemGetCLen(pPic) > 0 ) {
       PHB_CODEPAGE cdp = hb_vmCDP();
       char szPicDate[11];
       const char * szPic = hb_itemGetCPtr(pPic);
@@ -103,9 +100,8 @@ HB_FUNC( TRANSFORM )
 
       /* If an "@" char is at the first pos, we have picture function */
 
-      if( *szPic == '@' )
-      {
-         HB_BOOL bDone = false;
+      if( *szPic == '@' ) {
+         bool bDone = false;
 
          /* Skip the "@" char */
 
@@ -115,10 +111,8 @@ HB_FUNC( TRANSFORM )
          /* Go through all function chars, until the end of the picture string
             or any whitespace found. */
 
-         while( nPicLen && !bDone )
-         {
-            switch( *szPic++ )
-            {
+         while( nPicLen && !bDone ) {
+            switch( *szPic++ ) {
                case HB_CHAR_HT:
                case ' ':
                   bDone = true;     /* End of function string */
@@ -190,8 +184,7 @@ HB_FUNC( TRANSFORM )
 
       /* --- Handle STRING values --- */
 
-      if( HB_IS_STRING(pValue) )
-      {
+      if( HB_IS_STRING(pValue) ) {
          const char * szExp = hb_itemGetCPtr(pValue);
          HB_SIZE nExpLen = hb_itemGetCLen(pValue);
          HB_SIZE nExpPos = 0;
@@ -199,29 +192,24 @@ HB_FUNC( TRANSFORM )
          /* Grab enough */
 
          /* Support date function for strings */
-         if( uiPicFlags & ( PF_DATE | PF_BRITISH ) )
-         {
+         if( uiPicFlags & ( PF_DATE | PF_BRITISH ) ) {
             hb_dateFormat("XXXXXXXX", szPicDate, hb_setGetDateFormat());
             szPic = szPicDate;
             nPicLen = strlen(szPicDate);
          }
 
          /* Template string */
-         if( nPicPos < nPicLen )
-         {
+         if( nPicPos < nPicLen ) {
             HB_SIZE nSize = nExpLen + nExpLen + nPicLen - nPicPos;
             HB_WCHAR wcPict, wcExp;
 
             szResult = static_cast<char*>(hb_xgrab(nSize + 1));
             nResultPos = 0;
 
-            while( HB_CDPCHAR_GET(cdp, szPic, nPicLen, &nPicPos, &wcPict) )
-            {
+            while( HB_CDPCHAR_GET(cdp, szPic, nPicLen, &nPicPos, &wcPict) ) {
                HB_SIZE nExpPrev = nExpPos;
-               if( nExpPos < nExpLen && HB_CDPCHAR_GET(cdp, szExp, nExpLen, &nExpPos, &wcExp) )
-               {
-                  switch( wcPict )
-                  {
+               if( nExpPos < nExpLen && HB_CDPCHAR_GET(cdp, szExp, nExpLen, &nExpPos, &wcExp) ) {
+                  switch( wcPict ) {
                      /* Upper */
                      case '!':
                         HB_CDPCHAR_PUT(cdp, szResult, nSize, &nResultPos, hb_cdpUpperWC(cdp, wcExp));
@@ -250,25 +238,19 @@ HB_FUNC( TRANSFORM )
                      /* Other choices */
                      default:
                         HB_CDPCHAR_PUT(cdp, szResult, nSize, &nResultPos, wcPict);
-                        if( uiPicFlags & PF_REMAIN )
-                        {
+                        if( uiPicFlags & PF_REMAIN ) {
                            nExpPos = nExpPrev;
                         }
                   }
-               }
-               else if( !( uiPicFlags & PF_REMAIN ) )
-               {
+               } else if( !( uiPicFlags & PF_REMAIN ) ) {
                   break;
-               }
-               else
-               {
+               } else {
 /* NOTE: This is a FoxPro compatible [jarabal] */
 #if defined(HB_COMPAT_FOXPRO)
                   nPicPos = nPicLen;
                   break;
 #else
-                  switch( wcPict )
-                  {
+                  switch( wcPict ) {
                      case '!':
                      case '#':
                      case '9':
@@ -292,55 +274,38 @@ HB_FUNC( TRANSFORM )
                }
             }
 
-            if( (uiPicFlags & PF_REMAIN) && nExpPos == 0 && nExpPos < nExpLen )
-            {
-               if( uiPicFlags & PF_UPPER )
-               {
+            if( (uiPicFlags & PF_REMAIN) && nExpPos == 0 && nExpPos < nExpLen ) {
+               if( uiPicFlags & PF_UPPER ) {
                   nResultPos += hb_cdpnDup2Upper(cdp, szExp + nExpPos, nExpLen - nExpPos, szResult + nResultPos, nSize - nResultPos);
-               }
-               else
-               {
-                  while( HB_CDPCHAR_GET(cdp, szExp, nExpLen, &nExpPos, &wcExp) )
-                  {
+               } else {
+                  while( HB_CDPCHAR_GET(cdp, szExp, nExpLen, &nExpPos, &wcExp) ) {
                      HB_CDPCHAR_PUT(cdp, szResult, nSize, &nResultPos, wcExp);
                   }
                }
             }
 
             /* Any chars left ? */
-            if( (uiPicFlags & PF_REMAIN) && nPicPos < nPicLen )
-            {
+            if( (uiPicFlags & PF_REMAIN) && nPicPos < nPicLen ) {
                /* Export remainder */
-               while( nPicPos++ < nPicLen && nResultPos < nSize )
-               {
+               while( nPicPos++ < nPicLen && nResultPos < nSize ) {
                   szResult[nResultPos++] = ' ';
                }
             }
-         }
-         else
-         {
+         } else {
             nResultPos = nExpLen;
-            if( uiPicFlags & PF_UPPER )
-            {
+            if( uiPicFlags & PF_UPPER ) {
                szResult = hb_cdpnDupUpper(cdp, szExp, &nResultPos);
-            }
-            else
-            {
+            } else {
                szResult = static_cast<char*>(hb_xmemdup(szExp, nResultPos + 1));
             }
 
-            if( uiPicFlags & PF_EXCHANG )
-            {
-               HB_BOOL bFound = false;
+            if( uiPicFlags & PF_EXCHANG ) {
+               bool bFound = false;
 
-               while( nExpPos < nResultPos )
-               {
-                  if( szResult[nExpPos] == ',' )
-                  {
+               while( nExpPos < nResultPos ) {
+                  if( szResult[nExpPos] == ',' ) {
                      szResult[nExpPos] = '.';
-                  }
-                  else if( !bFound && szResult[nExpPos] == '.' )
-                  {
+                  } else if( !bFound && szResult[nExpPos] == '.' ) {
                      szResult[nExpPos] = ',';
                      bFound = true;
                   }
@@ -349,8 +314,7 @@ HB_FUNC( TRANSFORM )
             }
          }
 
-         if( uiPicFlags & PF_BRITISH )
-         {
+         if( uiPicFlags & PF_BRITISH ) {
             /* CA-Cl*pper do not check result size and always exchanges
              * bytes 1-2 with bytes 4-5. It's buffer overflow bug and I do
              * not want to replicate it. It also causes that the results of
@@ -366,16 +330,14 @@ HB_FUNC( TRANSFORM )
              *          ? Transform("ab", "@E")
              * [druzus]
              */
-            if( HB_CDP_ISCHARIDX(cdp) )
-            {
+            if( HB_CDP_ISCHARIDX(cdp) ) {
                HB_WCHAR wc0, wc1, wc2, wc3, wc4;
                nExpPos = 0;
                if( HB_CDPCHAR_GET(cdp, szResult, nResultPos, &nExpPos, &wc0) &&
                    HB_CDPCHAR_GET(cdp, szResult, nResultPos, &nExpPos, &wc1) &&
                    HB_CDPCHAR_GET(cdp, szResult, nResultPos, &nExpPos, &wc2) &&
                    HB_CDPCHAR_GET(cdp, szResult, nResultPos, &nExpPos, &wc3) &&
-                   HB_CDPCHAR_GET(cdp, szResult, nResultPos, &nExpPos, &wc4) )
-               {
+                   HB_CDPCHAR_GET(cdp, szResult, nResultPos, &nExpPos, &wc4) ) {
                   nExpPos = 0;
                   HB_CDPCHAR_PUT(cdp, szResult, nResultPos, &nExpPos, wc3);
                   HB_CDPCHAR_PUT(cdp, szResult, nResultPos, &nExpPos, wc4);
@@ -383,9 +345,7 @@ HB_FUNC( TRANSFORM )
                   HB_CDPCHAR_PUT(cdp, szResult, nResultPos, &nExpPos, wc0);
                   HB_CDPCHAR_PUT(cdp, szResult, nResultPos, &nExpPos, wc1);
                }
-            }
-            else if( nResultPos >= 5 )
-            {
+            } else if( nResultPos >= 5 ) {
                szPicDate[0] = szResult[0];
                szPicDate[1] = szResult[1];
                szResult[0] = szResult[3];
@@ -398,8 +358,7 @@ HB_FUNC( TRANSFORM )
 
       /* --- Handle NUMERIC values --- */
 
-      else if( HB_IS_NUMERIC(pValue) )
-      {
+      else if( HB_IS_NUMERIC(pValue) ) {
          int      iWidth;                             /* Width of string          */
          int      iDec;                               /* Number of decimals       */
          int      iCount;
@@ -409,79 +368,58 @@ HB_FUNC( TRANSFORM )
          double dValue = hb_itemGetND(pValue);
 
          /* Support date function for numbers */
-         if( uiPicFlags & PF_DATE )
-         {
+         if( uiPicFlags & PF_DATE ) {
             hb_dateFormat("99999999", szPicDate, hb_setGetDateFormat());
             szPic = szPicDate;
             nPicLen = strlen(szPicDate);
          }
 
-         for( i = iWidth = iDec = 0; i < nPicLen; i++ )
-         {
-            if( szPic[i] == '.' )
-            {
-               while( ++i < nPicLen )
-               {
-                  if( szPic[i] == '9' || szPic[i] == '#' || szPic[i] == '$' || szPic[i] == '*' )
-                  {
+         for( i = iWidth = iDec = 0; i < nPicLen; i++ ) {
+            if( szPic[i] == '.' ) {
+               while( ++i < nPicLen ) {
+                  if( szPic[i] == '9' || szPic[i] == '#' || szPic[i] == '$' || szPic[i] == '*' ) {
                      iWidth++;
                      iDec++;
                   }
                }
-               if( iDec )
-               {
+               if( iDec ) {
                   iWidth++;
                }
                break;
-            }
-            else if( szPic[i] == '9' || szPic[i] == '#' || szPic[i] == '$' || szPic[i] == '*' )
-            {
+            } else if( szPic[i] == '9' || szPic[i] == '#' || szPic[i] == '$' || szPic[i] == '*' ) {
                iWidth++;
             }
          }
 
          iCount = 0;
-         if( iWidth == 0 )                             /* Width calculated ??      */
-         {
+         if( iWidth == 0 ) {                           /* Width calculated ??      */
             hb_itemGetNLen(pValue, &iWidth, &iDec);
-            if( hb_setGetFixed() )
-            {
-               if( HB_IS_NUMINT(pValue) )
-               {
+            if( hb_setGetFixed() ) {
+               if( HB_IS_NUMINT(pValue) ) {
                   iWidth += 2 + (hb_setGetDecimals() << 1);
-               }
-               else
-               {
+               } else {
                   iDec = hb_setGetDecimals();
                }
             }
-            if( iDec )
-            {
+            if( iDec ) {
                iWidth += iDec + 1;
             }
-         }
-         else if( iDec > 0 && iWidth - iDec == 1 )
-         {
+         } else if( iDec > 0 && iWidth - iDec == 1 ) {
             iCount = 1;
             iWidth++;
          }
 
-         if( (uiPicFlags & (PF_DEBIT | PF_PARNEG | PF_PARNEGWOS)) && dValue < 0 )
-         {
+         if( (uiPicFlags & (PF_DEBIT | PF_PARNEG | PF_PARNEGWOS)) && dValue < 0 ) {
             /* Always convert absolute val */
-            if( HB_IS_NUMINT(pValue) ) /* workaround for 64-bit integer conversion */
-            {
+            if( HB_IS_NUMINT(pValue) ) { /* workaround for 64-bit integer conversion */
                pNumber = hb_itemPutNInt(nullptr, -hb_itemGetNInt(pValue));
-            }
-            else
-            {
+            } else {
                pNumber = hb_itemPutND(nullptr, -dValue);
             }
             pValue = pNumber;
          }
 
-         if( dValue != 0 )
-         {
+         if( dValue != 0 ) {
             /* Don't empty the result if the number is not zero */
             uiPicFlags &= ~PF_EMPTY;
          }
@@ -489,126 +427,92 @@ HB_FUNC( TRANSFORM )
          /* allocate 4 additional bytes for possible ") CR" or ") DB" suffix */
          szResult = static_cast<char*>(hb_xgrab(iWidth + 5));
          hb_itemStrBuf(szResult, pValue, iWidth, iDec);
-         if( pNumber )
-         {
+         if( pNumber ) {
             hb_itemRelease(pNumber);
          }
 
-         if( iCount )
-         {
+         if( iCount ) {
             iWidth--;
-            if( *szResult != '0' )
-            {
+            if( *szResult != '0' ) {
                memset(szResult + 1, '*', iWidth);
                *szResult = '.';
-            }
-            else
-            {
+            } else {
                memmove(szResult, szResult + 1, iWidth);
             }
             szResult[iWidth] = '\0';
          }
 
          /* Pad with padding char */
-         if( uiPicFlags & PF_PADL )
-         {
-            for( i = 0; szResult[i] == ' '; i++ )
-            {
+         if( uiPicFlags & PF_PADL ) {
+            for( i = 0; szResult[i] == ' '; i++ ) {
                szResult[i] = cParamL;
             }
 
             /* please test it with FoxPro and Xbase++ to check
              * if they made the same [druzus]
              */
-            if( i && szResult[i] == '-' )
-            {
+            if( i && szResult[i] == '-' ) {
                szResult[0] = '-';
                szResult[i] = cParamL;
             }
          }
 
-         if( nPicLen == 0 )
-         {
-            if( uiPicFlags & PF_EXCHANG )
-            {
-               for( i = 0; i < static_cast<HB_SIZE>(iWidth); ++i )
-               {
-                  if( szResult[i] == '.' )
-                  {
+         if( nPicLen == 0 ) {
+            if( uiPicFlags & PF_EXCHANG ) {
+               for( i = 0; i < static_cast<HB_SIZE>(iWidth); ++i ) {
+                  if( szResult[i] == '.' ) {
                      szResult[i] = ',';
                      break;
                   }
                }
             }
             i = iWidth;
-         }
-         else
-         {
+         } else {
             char * szStr = szResult;
 
             /* allocate 4 additional bytes for possible ") CR" or ") DB" suffix */
             szResult = static_cast<char*>(hb_xgrab(nPicLen + 5));
 
-            for( i = iCount = 0; i < nPicLen; i++ )
-            {
+            for( i = iCount = 0; i < nPicLen; i++ ) {
                char cPic = szPic[i];
-               if( cPic == '9' || cPic == '#' )
-               {
+               if( cPic == '9' || cPic == '#' ) {
                   szResult[i] = iCount < iWidth ? szStr[iCount++] : ' ';
-               }
-               else if( cPic == '$' || cPic == '*' )
-               {
-                  if( iCount < iWidth )
-                  {
+               } else if( cPic == '$' || cPic == '*' ) {
+                  if( iCount < iWidth ) {
                      szResult[i] = szStr[iCount] == ' ' ? cPic : szStr[iCount];
                      iCount++;
-                  }
-                  else
+                  } else {
                      szResult[i] = ' ';
-               }
-               else if( cPic == '.' && iCount < iWidth )
-               {
+                  }
+               } else if( cPic == '.' && iCount < iWidth ) {
                   szResult[i] = (uiPicFlags & PF_EXCHANG) ? ',' : '.';
                   iCount++;
-               }
-               else if( cPic == ',' && i && iCount < iWidth )
-               {
-                  if( HB_ISDIGIT(static_cast<HB_UCHAR>(szResult[i - 1])) )
-                  {
+               } else if( cPic == ',' && i && iCount < iWidth ) {
+                  if( HB_ISDIGIT(static_cast<HB_UCHAR>(szResult[i - 1])) ) {
                      szResult[i] = (uiPicFlags & PF_EXCHANG) ? '.' : ',';
-                  }
-                  else
-                  {
+                  } else {
                      szResult[i] = szResult[i - 1];
-                     if( szResult[i - 1] == '-' )
-                     {
+                     if( szResult[i - 1] == '-' ) {
                         szResult[i - 1] = i > 1 && szResult[i - 2] != '$' ? szResult[i - 2] : ' ';
                      }
                   }
-               }
-               else
-               {
+               } else {
                   szResult[i] = cPic;
                }
             }
             hb_xfree(szStr);
          }
 
-         if( dValue < 0 )
-         {
+         if( dValue < 0 ) {
             /* PF_PARNEGWOS has higher priority then PF_PARNEG */
-            if( (uiPicFlags & PF_PARNEGWOS) )
-            {
+            if( (uiPicFlags & PF_PARNEGWOS) ) {
                iCount = 0;
-               if( nPicLen && i > 1 )
-               {
-                  if( *szPic == *szResult && (*szPic == '*' || *szPic == '$') && szResult[1] == ' ' )
-                  {
+               if( nPicLen && i > 1 ) {
+                  if( *szPic == *szResult && (*szPic == '*' || *szPic == '$') && szResult[1] == ' ' ) {
                      ++iCount;
                   }
                }
-               while( static_cast<HB_SIZE>(iCount) + 1 < i && szResult[iCount + 1] == ' ' )
-               {
+               while( static_cast<HB_SIZE>(iCount) + 1 < i && szResult[iCount + 1] == ' ' ) {
                   ++iCount;
                }
 
@@ -616,37 +520,28 @@ HB_FUNC( TRANSFORM )
                /* This is not Clipper compatible */
                if( szResult[iCount] >= '1' && szResult[iCount] <= '9' &&
                    ( nPicLen == 0 || szPic[iCount] == '9' ||
-                     szPic[iCount] != szResult[iCount] ) )
-               {
+                     szPic[iCount] != szResult[iCount] ) ) {
                   szResult[iCount] = '(';
-                  for( ++iCount; static_cast<HB_SIZE>(iCount) < i; iCount++ )
-                  {
+                  for( ++iCount; static_cast<HB_SIZE>(iCount) < i; iCount++ ) {
                      if( szResult[iCount] >= '0' && szResult[iCount] <= '9' &&
                          ( nPicLen == 0 || szPic[iCount] == '9' ||
-                           szPic[iCount] != szResult[iCount] ) )
-                     {
+                           szPic[iCount] != szResult[iCount] ) ) {
                         szResult[iCount] = '*';
                      }
                   }
-               }
-               else
+               } else
 #endif
                   szResult[iCount] = '(';
 
                szResult[i++] = ')';
-            }
-            else if( (uiPicFlags & PF_PARNEG) )
-            {
+            } else if( (uiPicFlags & PF_PARNEG) ) {
 #ifndef HB_CLP_STRICT
                /* This is not Clipper compatible */
-               if( *szResult >= '1' && *szResult <= '9' && (nPicLen == 0 || *szPic == '9' || *szPic != *szResult) )
-               {
-                  for( iCount = 1; static_cast<HB_SIZE>(iCount) < i; iCount++ )
-                  {
+               if( *szResult >= '1' && *szResult <= '9' && (nPicLen == 0 || *szPic == '9' || *szPic != *szResult) ) {
+                  for( iCount = 1; static_cast<HB_SIZE>(iCount) < i; iCount++ ) {
                      if( szResult[iCount] >= '0' && szResult[iCount] <= '9' &&
                          ( nPicLen == 0 || szPic[iCount] == '9' ||
-                           szPic[iCount] != szResult[iCount] ) )
-                     {
+                           szPic[iCount] != szResult[iCount] ) ) {
                         szResult[iCount] = '*';
                      }
                   }
@@ -657,15 +552,12 @@ HB_FUNC( TRANSFORM )
                nOffset = 1;
             }
 
-            if( (uiPicFlags & PF_DEBIT) )
-            {
+            if( (uiPicFlags & PF_DEBIT) ) {
                szResult[i++] = ' ';
                szResult[i++] = 'D';
                szResult[i++] = 'B';
             }
-         }
-         else if( (uiPicFlags & PF_CREDIT) && dValue > 0 )
-         {
+         } else if( (uiPicFlags & PF_CREDIT) && dValue > 0 ) {
             szResult[i++] = ' ';
             szResult[i++] = 'C';
             szResult[i++] = 'R';
@@ -677,8 +569,7 @@ HB_FUNC( TRANSFORM )
 
       /* --- Handle DATE values --- */
 
-      else if( HB_IS_DATE(pValue) )
-      {
+      else if( HB_IS_DATE(pValue) ) {
          const char * szDateFormat;
          char szNewFormat[11];
          char szDate[9];
@@ -688,8 +579,7 @@ HB_FUNC( TRANSFORM )
          szDateFormat = hb_setGetDateFormat();
 
 #ifndef HB_CLP_STRICT
-         if( uiPicFlags & PF_BRITISH )
-         {
+         if( uiPicFlags & PF_BRITISH ) {
             /* When @E is used CA-Cl*pper do not update date format
              * pattern but wrongly moves 4th and 5th bytes of
              * formatted date to the beginning (see below). It causes
@@ -701,31 +591,21 @@ HB_FUNC( TRANSFORM )
             const char * szBritish = hb_setGetCentury() ? "DDMMYYYY" : "DDMMYY";
             char cLast = 'x';
 
-            for( nFor = 0; nFor < 10; nFor++ )
-            {
-               if( *szBritish == cLast )
-               {
+            for( nFor = 0; nFor < 10; nFor++ ) {
+               if( *szBritish == cLast ) {
                   szNewFormat[nFor] = cLast;
                   szBritish++;
-               }
-               else if( !*szDateFormat )
-               {
+               } else if( !*szDateFormat ) {
                   break;
-               }
-               else if( *szBritish &&
+               } else if( *szBritish &&
                         (*szDateFormat == 'Y' || *szDateFormat == 'y' ||
                          *szDateFormat == 'D' || *szDateFormat == 'd' ||
-                         *szDateFormat == 'M' || *szDateFormat == 'm') )
-               {
+                         *szDateFormat == 'M' || *szDateFormat == 'm') ) {
                   szNewFormat[nFor] = cLast = *szBritish++;
-                  do
-                  {
+                  do {
                      szDateFormat++;
-                  }
-                  while( szDateFormat[-1] == szDateFormat[0] );
-               }
-               else
-               {
+                  } while( szDateFormat[-1] == szDateFormat[0] );
+               } else {
                   szNewFormat[nFor] = *szDateFormat++;
                }
             }
@@ -738,8 +618,7 @@ HB_FUNC( TRANSFORM )
          nResultPos = strlen(szResult);
 
 #ifdef HB_CLP_STRICT
-         if( uiPicFlags & PF_BRITISH )
-         {
+         if( uiPicFlags & PF_BRITISH ) {
             /* replicated wrong Clipper behavior, see note above.
              * It's not exact CA-Cl*pper behavior because it does
              * not check for size of results and can extract data
@@ -748,8 +627,7 @@ HB_FUNC( TRANSFORM )
              * but this is buffer overflow and I do not plan to
              * replicated it too [druzus]
              */
-            if( nResultPos >= 5 )
-            {
+            if( nResultPos >= 5 ) {
                szNewFormat[0] = szResult[0];
                szNewFormat[1] = szResult[1];
                szResult[0] = szResult[3];
@@ -759,17 +637,14 @@ HB_FUNC( TRANSFORM )
             }
          }
 #endif
-         if( uiPicFlags & PF_REMAIN )
-         {
+         if( uiPicFlags & PF_REMAIN ) {
             /* Here we also respect the date format modified for @E [druzus]
              */
             hb_dateFormat("99999999", szPicDate, szDateFormat);
             nPicLen = strlen(szPicDate);
 
-            for( nFor = 0; nFor < nPicLen; nFor++ )
-            {
-               if( szPicDate[nFor] != '9' )
-               {
+            for( nFor = 0; nFor < nPicLen; nFor++ ) {
+               if( szPicDate[nFor] != '9' ) {
                   memmove(szResult + nFor + 1, szResult + nFor, 12 - nFor);
                   szResult[nFor] = szPicDate[nFor];
                   nResultPos++;
@@ -781,26 +656,22 @@ HB_FUNC( TRANSFORM )
 
       /* --- Handle TIMESTAMP values --- */
 
-      else if( HB_IS_TIMESTAMP(pValue) )
-      {
+      else if( HB_IS_TIMESTAMP(pValue) ) {
          const char * szDateFormat = nullptr, * szTimeFormat = nullptr;
          char szNewFormat[11];
          long lDate, lTime;
          HB_SIZE nFor;
 
          szResult = static_cast<char*>(hb_xgrab(29));
-         if( (uiPicFlags & (PF_DATE | PF_TIME)) != PF_TIME )
-         {
+         if( (uiPicFlags & (PF_DATE | PF_TIME)) != PF_TIME ) {
             szDateFormat = hb_setGetDateFormat();
          }
-         if( (uiPicFlags & (PF_DATE | PF_TIME)) != PF_DATE )
-         {
+         if( (uiPicFlags & (PF_DATE | PF_TIME)) != PF_DATE ) {
             szTimeFormat = hb_setGetTimeFormat();
          }
 
 #ifndef HB_CLP_STRICT
-         if( szDateFormat && (uiPicFlags & PF_BRITISH) )
-         {
+         if( szDateFormat && (uiPicFlags & PF_BRITISH) ) {
             /* When @E is used CA-Cl*pper do not update date format
              * pattern but wrongly moves 4th and 5th bytes of
              * formatted date to the beginning (see below). It causes
@@ -812,31 +683,21 @@ HB_FUNC( TRANSFORM )
             const char * szBritish = hb_setGetCentury() ? "DDMMYYYY" : "DDMMYY";
             char cLast = 'x';
 
-            for( nFor = 0; nFor < 10; nFor++ )
-            {
-               if( *szBritish == cLast )
-               {
+            for( nFor = 0; nFor < 10; nFor++ ) {
+               if( *szBritish == cLast ) {
                   szNewFormat[nFor] = cLast;
                   szBritish++;
-               }
-               else if( !*szDateFormat )
-               {
+               } else if( !*szDateFormat ) {
                   break;
-               }
-               else if( *szBritish &&
+               } else if( *szBritish &&
                         (*szDateFormat == 'Y' || *szDateFormat == 'y' ||
                          *szDateFormat == 'D' || *szDateFormat == 'd' ||
-                         *szDateFormat == 'M' || *szDateFormat == 'm') )
-               {
+                         *szDateFormat == 'M' || *szDateFormat == 'm') ) {
                   szNewFormat[nFor] = cLast = *szBritish++;
-                  do
-                  {
+                  do {
                      szDateFormat++;
-                  }
-                  while( szDateFormat[-1] == szDateFormat[0] );
-               }
-               else
-               {
+                  } while( szDateFormat[-1] == szDateFormat[0] );
+               } else {
                   szNewFormat[nFor] = *szDateFormat++;
                }
             }
@@ -846,27 +707,20 @@ HB_FUNC( TRANSFORM )
 #endif
 
          hb_itemGetTDT(pValue, &lDate, &lTime);
-         if( szTimeFormat )
-         {
-            if( szDateFormat )
-            {
+         if( szTimeFormat ) {
+            if( szDateFormat ) {
                hb_timeStampFormat(szResult, szDateFormat, szTimeFormat, lDate, lTime);
-            }
-            else
-            {
+            } else {
                hb_timeFormat(szResult, szTimeFormat, lTime);
             }
-         }
-         else
-         {
+         } else {
             char szDate[9];
             hb_dateFormat(hb_dateDecStr(szDate, lDate), szResult, szDateFormat);
          }
          nResultPos = strlen(szResult);
 
 #ifdef HB_CLP_STRICT
-         if( uiPicFlags & PF_BRITISH )
-         {
+         if( uiPicFlags & PF_BRITISH ) {
             /* replicated wrong Clipper behavior, see note above.
              * It's not exact CA-Cl*pper behavior because it does
              * not check for size of results and can extract data
@@ -875,8 +729,7 @@ HB_FUNC( TRANSFORM )
              * but this is buffer overflow and I do not plan to
              * replicated it too [druzus]
              */
-            if( nResultPos >= 5 )
-            {
+            if( nResultPos >= 5 ) {
                szNewFormat[0] = szResult[0];
                szNewFormat[1] = szResult[1];
                szResult[0] = szResult[3];
@@ -886,17 +739,14 @@ HB_FUNC( TRANSFORM )
             }
          }
 #endif
-         if( szDateFormat && (uiPicFlags & PF_REMAIN) )
-         {
+         if( szDateFormat && (uiPicFlags & PF_REMAIN) ) {
             /* Here we also respect the date format modified for @E [druzus]
              */
             hb_dateFormat("99999999", szPicDate, szDateFormat);
             nPicLen = strlen(szPicDate);
 
-            for( nFor = 0; nFor < nPicLen; nFor++ )
-            {
-               if( szPicDate[nFor] != '9' )
-               {
+            for( nFor = 0; nFor < nPicLen; nFor++ ) {
+               if( szPicDate[nFor] != '9' ) {
                   memmove(szResult + nFor + 1, szResult + nFor, 28 - nFor);
                   szResult[nFor] = szPicDate[nFor];
                   nResultPos++;
@@ -908,14 +758,12 @@ HB_FUNC( TRANSFORM )
 
       /* --- Handle LOGICAL values --- */
 
-      else if( HB_IS_LOGICAL(pValue) )
-      {
-         HB_BOOL bDone = false;
-         HB_BOOL bExit = false;
+      else if( HB_IS_LOGICAL(pValue) ) {
+         bool bDone = false;
+         bool bExit = false;
          char cPic;
 
-         if( uiPicFlags & ( PF_DATE | PF_BRITISH ) )
-         {
+         if( uiPicFlags & ( PF_DATE | PF_BRITISH ) ) {
             hb_dateFormat("99999999", szPicDate, hb_setGetDateFormat());
             szPic = szPicDate;
             nPicLen = strlen(szPicDate);
@@ -924,30 +772,22 @@ HB_FUNC( TRANSFORM )
          nResultPos = 0;
          szResult = static_cast<char*>(hb_xgrab(nPicLen + 2));
 
-         for( ; ( nPicLen || !bDone ) && !bExit; nResultPos++, szPic++, nPicLen-- )
-         {
-            if( nPicLen )
-            {
+         for( ; ( nPicLen || !bDone ) && !bExit; nResultPos++, szPic++, nPicLen-- ) {
+            if( nPicLen ) {
                cPic = *szPic;
-            }
-            else
-            {
+            } else {
                cPic  = 'L';
                bExit = true;
             }
 
-            switch( cPic )
-            {
+            switch( cPic ) {
                case 'y':                     /* Yes/No */
                case 'Y':                     /* Yes/No */
 
-                  if( !bDone )
-                  {
+                  if( !bDone ) {
                      szResult[nResultPos] = hb_itemGetL(pValue) ? 'Y' : 'N';
                      bDone = true;           /* Logical written */
-                  }
-                  else
-                  {
+                  } else {
                      szResult[nResultPos] = ' ';
                   }
 
@@ -957,13 +797,10 @@ HB_FUNC( TRANSFORM )
                case 'l':                     /* True/False */
                case 'L':                     /* True/False */
 
-                  if( !bDone )
-                  {
+                  if( !bDone ) {
                      szResult[nResultPos] = hb_itemGetL(pValue) ? 'T' : 'F';
                      bDone = true;
-                  }
-                  else
-                  {
+                  } else {
                      szResult[nResultPos] = ' ';
                   }
 
@@ -973,8 +810,7 @@ HB_FUNC( TRANSFORM )
                   szResult[nResultPos] = cPic;
             }
 
-            if( !( uiPicFlags & PF_REMAIN ) )
-            {
+            if( !( uiPicFlags & PF_REMAIN ) ) {
                bExit = true;
             }
          }
@@ -982,31 +818,24 @@ HB_FUNC( TRANSFORM )
 
       /* --- */
 
-      else
-      {
+      else {
          szResult = nullptr; /* To avoid GCC -O2 warning */
          nResultPos = 0; /* To avoid GCC -O2 warning */
          bError = true;
       }
 
-      if( !bError )
-      {
-         if( uiPicFlags & PF_EMPTY )
-         {
+      if( !bError ) {
+         if( uiPicFlags & PF_EMPTY ) {
             memset(szResult, ' ', nResultPos);
-         }
-         else if( uiPicFlags & PF_LEFT )
-         {
+         } else if( uiPicFlags & PF_LEFT ) {
             /* Trim left and pad with spaces */
             HB_SIZE nFirstChar = nOffset;
 
-            while( nFirstChar < nResultPos && szResult[nFirstChar] == ' ' )
-            {
+            while( nFirstChar < nResultPos && szResult[nFirstChar] == ' ' ) {
                nFirstChar++;
             }
 
-            if( nFirstChar > nOffset && nFirstChar < nResultPos )
-            {
+            if( nFirstChar > nOffset && nFirstChar < nResultPos ) {
                memmove(szResult + nOffset, szResult + nFirstChar, nResultPos - nFirstChar);
                memset(szResult + nOffset + nResultPos - nFirstChar, ' ', nFirstChar - nOffset);
             }
@@ -1014,75 +843,53 @@ HB_FUNC( TRANSFORM )
 
          hb_retclen_buffer(szResult, (nParamS && nResultPos > nParamS) ? nParamS : nResultPos);
       }
-   }
-   else if( pPic || HB_ISNIL(2) )  /* Picture is an empty string or NIL */
-   {
-      if( HB_IS_STRING(pValue) )
-      {
+   } else if( pPic || HB_ISNIL(2) ) { /* Picture is an empty string or NIL */
+     if( HB_IS_STRING(pValue) ) {
          hb_itemReturn(pValue);
-      }
-      else if( HB_IS_NUMERIC(pValue) )
-      {
+      } else if( HB_IS_NUMERIC(pValue) ) {
          char * szStr;
 
-         if( HB_IS_NUMINT(pValue) && hb_setGetFixed() )
-         {
+         if( HB_IS_NUMINT(pValue) && hb_setGetFixed() ) {
             int iWidth, iDec;
             hb_itemGetNLen(pValue, &iWidth, &iDec);
             iWidth += 2 + (hb_setGetDecimals() << 1);
             szStr = static_cast<char*>(hb_xgrab(iWidth + 1));
             hb_itemStrBuf(szStr, pValue, iWidth, iDec);
             hb_retclen_buffer(szStr, iWidth);
-         }
-         else
-         {
+         } else {
             HB_SIZE nLen;
             HB_BOOL bFreeReq;
 
             szStr = hb_itemString(pValue, &nLen, &bFreeReq);
-            if( bFreeReq )
-            {
+            if( bFreeReq ) {
                hb_retclen_buffer(szStr, nLen);
-            }
-            else
-            {
+            } else {
                hb_retclen(szStr, nLen);
             }
          }
-      }
-      else if( HB_IS_DATE(pValue) )
-      {
+      } else if( HB_IS_DATE(pValue) ) {
          char szDate[9];
          char szResult[11];
 
          hb_retc(hb_dateFormat(hb_itemGetDS(pValue, szDate), szResult, hb_setGetDateFormat()));
-      }
-      else if( HB_IS_TIMESTAMP(pValue) )
-      {
+      } else if( HB_IS_TIMESTAMP(pValue) ) {
          char szResult[27];
          long lDate, lTime;
 
          hb_itemGetTDT(pValue, &lDate, &lTime);
          hb_retc(hb_timeStampFormat(szResult, hb_setGetDateFormat(), hb_setGetTimeFormat(), lDate, lTime));
-      }
-      else if( HB_IS_LOGICAL(pValue) )
-      {
+      } else if( HB_IS_LOGICAL(pValue) ) {
          hb_retc_const(hb_itemGetL(pValue) ? "T" : "F");
-      }
-      else
-      {
+      } else {
          bError = true;
       }
-   }
-   else
-   {
+   } else {
       bError = true;
    }
 
    /* If there was any parameter error, launch a runtime error */
 
-   if( bError )
-   {
+   if( bError ) {
       hb_errRT_BASE_SubstR(EG_ARG, 1122, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

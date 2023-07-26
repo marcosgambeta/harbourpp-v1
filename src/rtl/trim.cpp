@@ -56,8 +56,7 @@ const char * hb_strLTrim(const char * szText, HB_SIZE * nLen)
    HB_TRACE(HB_TR_DEBUG, ("hb_strLTrim(%s, %p)", szText, static_cast<void*>(nLen)));
 #endif
 
-   while( *nLen && HB_ISSPACE(*szText) )
-   {
+   while( *nLen && HB_ISSPACE(*szText) ) {
       szText++;
       (*nLen)--;
    }
@@ -72,17 +71,12 @@ HB_SIZE hb_strRTrimLen(const char * szText, HB_SIZE nLen, HB_BOOL bAnySpace)
    HB_TRACE(HB_TR_DEBUG, ("hb_strRTrimLen(%s, %" HB_PFS "u, %d)", szText, nLen, static_cast<int>(bAnySpace)));
 #endif
 
-   if( bAnySpace )
-   {
-      while( nLen && HB_ISSPACE(szText[nLen - 1]) )
-      {
+   if( bAnySpace ) {
+      while( nLen && HB_ISSPACE(szText[nLen - 1]) ) {
          nLen--;
       }
-   }
-   else
-   {
-      while( nLen && szText[nLen - 1] == ' ' )
-      {
+   } else {
+      while( nLen && szText[nLen - 1] == ' ' ) {
          nLen--;
       }
    }
@@ -96,25 +90,19 @@ HB_FUNC( LTRIM )
 {
    PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText )
-   {
+   if( pText ) {
       HB_SIZE nLen, nSrc;
       const char * szText;
 
       nLen = nSrc = hb_itemGetCLen(pText);
       szText = hb_strLTrim(hb_itemGetCPtr(pText), &nLen);
 
-      if( nLen == nSrc )
-      {
+      if( nLen == nSrc ) {
          hb_itemReturn(pText);
-      }
-      else
-      {
+      } else {
          hb_retclen(szText, nLen);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1101, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -127,25 +115,18 @@ HB_FUNC( RTRIM )
 {
    PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText )
-   {
-      HB_SIZE nLen, nSrc;
+   if( pText ) {
       const char * szText = hb_itemGetCPtr(pText);
 
-      nSrc = hb_itemGetCLen(pText);
-      nLen = hb_strRTrimLen(szText, nSrc, false);
+      HB_SIZE nSrc = hb_itemGetCLen(pText);
+      HB_SIZE nLen = hb_strRTrimLen(szText, nSrc, false);
 
-      if( nLen == nSrc )
-      {
+      if( nLen == nSrc ) {
          hb_itemReturn(pText);
-      }
-      else
-      {
+      } else {
          hb_retclen(szText, nLen);
       }
-   }
-   else
-   {
+   } else {
       /* NOTE: "TRIM" is correct here [vszakats] */
       hb_errRT_BASE_SubstR(EG_ARG, 1100, nullptr, "TRIM", HB_ERR_ARGS_BASEPARAMS);
    }
@@ -162,8 +143,7 @@ HB_FUNC( ALLTRIM )
 {
    PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText )
-   {
+   if( pText ) {
       HB_SIZE nLen, nSrc;
       const char * szText = hb_itemGetCPtr(pText);
 
@@ -171,16 +151,12 @@ HB_FUNC( ALLTRIM )
       nLen = hb_strRTrimLen(szText, nSrc, false);
       szText = hb_strLTrim(szText, &nLen);
 
-      if( nLen == nSrc )
-      {
+      if( nLen == nSrc ) {
          hb_itemReturn(pText);
-      }
-      else
-      {
+      } else {
          hb_retclen(szText, nLen);
       }
-   }
-   else
+   } else
 #ifdef HB_COMPAT_C53
       /* NOTE: This runtime error appeared in CA-Cl*pper 5.3 [vszakats] */
 #ifdef HB_CLP_STRICT

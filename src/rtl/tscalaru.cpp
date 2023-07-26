@@ -53,12 +53,10 @@ HB_FUNC( HBNIL )
 {
    HB_FUNC_EXEC( __HBNIL );
 
-   if( hb_vmRequestQuery() == 0 )
-   {
+   if( hb_vmRequestQuery() == 0 ) {
       PHB_ITEM pItem = hb_param(-1, Harbour::Item::ANY);
 
-      if( HB_IS_OBJECT(pItem) )
-      {
+      if( HB_IS_OBJECT(pItem) ) {
          hb_vmPushDynSym(hb_dynsymGetCase("NEW"));
          hb_vmPush(pItem);
          hb_vmSend(0);

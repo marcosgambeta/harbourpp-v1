@@ -66,8 +66,7 @@ static void hb_xSaveRestRelease(void * cargo)
 {
    PHB_SCRDATA pScrData = static_cast<PHB_SCRDATA>(cargo);
 
-   if( pScrData->buffer )
-   {
+   if( pScrData->buffer ) {
       hb_xfree(pScrData->buffer);
    }
 }
@@ -83,8 +82,7 @@ HB_FUNC( __XSAVESCREEN )
    pScrData->maxrow = hb_gtMaxRow();
    pScrData->maxcol = hb_gtMaxCol();
    hb_gtRectSize(0, 0, pScrData->maxrow, pScrData->maxcol, &nSize);
-   if( pScrData->buffer )
-   {
+   if( pScrData->buffer ) {
       hb_xfree(pScrData->buffer);
    }
    pScrData->buffer = hb_xgrab(nSize);
@@ -100,12 +98,10 @@ HB_FUNC( __XRESTSCREEN )
 {
    PHB_SCRDATA pScrData = static_cast<PHB_SCRDATA>(hb_stackTestTSD( &s_scrData ));
 
-   if( pScrData && pScrData->buffer )
-   {
+   if( pScrData && pScrData->buffer ) {
       hb_gtRest(0, 0, pScrData->maxrow, pScrData->maxcol, pScrData->buffer);
       hb_xfree(pScrData->buffer);
       pScrData->buffer = nullptr;
-
       hb_gtSetPos(pScrData->row, pScrData->col);
    }
 }

@@ -52,23 +52,17 @@ HB_FUNC( HB_VALTOSTR )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
 
-   if( pItem != nullptr )
-   {
+   if( pItem != nullptr ) {
       HB_SIZE nLen;
       HB_BOOL bFreeReq;
       char * buffer = hb_itemString(pItem, &nLen, &bFreeReq);
 
-      if( bFreeReq )
-      {
+      if( bFreeReq ) {
          hb_retclen_buffer(buffer, nLen);
-      }
-      else
-      {
+      } else {
          hb_retclen(buffer, nLen);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
