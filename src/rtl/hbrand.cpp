@@ -67,14 +67,11 @@ HB_FUNC( HB_RANDSTR )
 {
    HB_ISIZ len = hb_parns(1);
 
-   if( len > 0 )
-   {
+   if( len > 0 ) {
       void * data = hb_xgrab(len + 1);
       hb_random_block(data, len);
       hb_retclen_buffer(static_cast<char*>(data), len);
-   }
-   else
-   {
+   } else {
       hb_retc_null();
    }
 }

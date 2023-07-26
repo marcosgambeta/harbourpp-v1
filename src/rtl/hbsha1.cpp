@@ -61,17 +61,13 @@ HB_FUNC( HB_SHA1 )
       HB_SIZE nCount = hb_parclen(1);
       HB_SIZE nDone = 0;
 
-      while( nCount )
-      {
+      while( nCount ) {
          unsigned int uiChunk;
 
-         if( nCount > static_cast<HB_SIZE>(UINT_MAX) )
-         {
+         if( nCount > static_cast<HB_SIZE>(UINT_MAX) ) {
             uiChunk = UINT_MAX;
             nCount -= static_cast<HB_SIZE>(uiChunk);
-         }
-         else
-         {
+         } else {
             uiChunk = static_cast<unsigned int>(nCount);
             nCount = 0;
          }
@@ -87,14 +83,11 @@ HB_FUNC( HB_SHA1 )
 
    hb_SHA1_Final(digest, &ctx);
 
-   if( !hb_parl(2) )
-   {
+   if( !hb_parl(2) ) {
       char hex[( sizeof(digest) * 2 ) + 1];
       hb_strtohex(reinterpret_cast<char*>(digest), sizeof(digest), hex);
       hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
-   }
-   else
-   {
+   } else {
       hb_retclen(reinterpret_cast<char*>(digest), sizeof(digest));
-   }   
+   }
 }

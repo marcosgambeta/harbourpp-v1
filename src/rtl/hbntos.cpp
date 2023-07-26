@@ -52,24 +52,20 @@ HB_FUNC( HB_NTOS )
 {
    PHB_ITEM pNumber = hb_param(1, Harbour::Item::NUMERIC);
 
-   if( pNumber )
-   {
+   if( pNumber ) {
       char * szResult = hb_itemStr(pNumber, nullptr, nullptr);
 
-      if( szResult )
-      {
+      if( szResult ) {
          HB_SIZE nToTrim = 0;
 
-         while( szResult[nToTrim] == ' ' )
-         {
+         while( szResult[nToTrim] == ' ' ) {
             ++nToTrim;
          }
 
-         if( nToTrim )
-         {
+         if( nToTrim ) {
             memmove(szResult, szResult + nToTrim, strlen(szResult + nToTrim) + 1);
          }
-         
+
          hb_retc_buffer(szResult);
          return;
       }
@@ -82,41 +78,31 @@ HB_FUNC( HB_NTOC )
 {
    PHB_ITEM pNumber = hb_param(1, Harbour::Item::NUMERIC);
 
-   if( pNumber )
-   {
+   if( pNumber ) {
       char szBuffer[HB_MAX_DOUBLE_LENGTH];
 
-      if( !HB_IS_DOUBLE(pNumber) )
-      {
+      if( !HB_IS_DOUBLE(pNumber) ) {
          HB_MAXINT nNumber = hb_itemGetNInt(pNumber);
          int iPos = sizeof(szBuffer);
-         HB_BOOL fNeg = nNumber < 0;
+         bool fNeg = nNumber < 0;
 
-         if( fNeg )
-         {
+         if( fNeg ) {
             nNumber = -nNumber;
          }
          szBuffer[--iPos] = '\0';
-         do
-         {
+         do {
             szBuffer[--iPos] = '0' + static_cast<char>(nNumber % 10);
             nNumber /= 10;
-         }
-         while( nNumber != 0 );
-         if( fNeg )
-         {
+         } while( nNumber != 0 );
+         if( fNeg ) {
             szBuffer[--iPos] = '-';
          }
 
          hb_retc(szBuffer + iPos);
-      }
-      else
-      {
+      } else {
          hb_retc(hb_dblToStr(szBuffer, sizeof(szBuffer), hb_itemGetND(pNumber), hb_parnidef(2, -1)));
       }
-   }
-   else
-   {
+   } else {
       hb_retc_null();
    }
 }

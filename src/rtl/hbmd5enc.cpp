@@ -56,8 +56,7 @@ static void hb_md5_init_seed(char * vect, const char * pszKey, int iLen)
 
 static void hb_md5_next_seed(char * vect, const char * pszKey, int iLen)
 {
-   for( int i = 0; i < 16; ++i )
-   {
+   for( int i = 0; i < 16; ++i ) {
       vect[i] ^= pszKey[i % iLen];
    }
    hb_md5(vect, 16, vect);
@@ -69,12 +68,10 @@ HB_FUNC( HB_MD5ENCRYPT )
 {
    PHB_ITEM pData = hb_param(1, Harbour::Item::STRING);
 
-   if( pData && hb_parclen(2) > 0 )
-   {
+   if( pData && hb_parclen(2) > 0 ) {
       HB_SIZE nLen = hb_itemGetCLen(pData);
 
-      if( nLen )
-      {
+      if( nLen ) {
          const char * pszSource = hb_itemGetCPtr(pData);
          char * pszData = static_cast<char*>(hb_xgrab(nLen + 1));
          const char * pszKey = hb_parc(2);
@@ -84,19 +81,15 @@ HB_FUNC( HB_MD5ENCRYPT )
 
          hb_md5_init_seed(vect, pszKey, iLen);
 
-         for( n = 0; n < nLen; ++n )
-         {
+         for( n = 0; n < nLen; ++n ) {
             int i = static_cast<int>(n & 0x0F);
-            if( i == 0 )
-            {
+            if( i == 0 ) {
                hb_md5_next_seed(vect, pszKey, iLen);
             }
             pszData[n] = (vect[i] ^= pszSource[n]);
          }
          hb_retclen_buffer(pszData, nLen);
-      }
-      else
-      {
+      } else {
          hb_retc_null();
       }
    }
@@ -108,12 +101,10 @@ HB_FUNC( HB_MD5DECRYPT )
 {
    PHB_ITEM pData = hb_param(1, Harbour::Item::STRING);
 
-   if( pData && hb_parclen(2) > 0 )
-   {
+   if( pData && hb_parclen(2) > 0 ) {
       HB_SIZE nLen = hb_itemGetCLen(pData);
 
-      if( nLen )
-      {
+      if( nLen ) {
          const char * pszSource = hb_itemGetCPtr(pData);
          char * pszData = static_cast<char*>(hb_xgrab(nLen + 1));
          const char * pszKey = hb_parc(2);
@@ -123,20 +114,16 @@ HB_FUNC( HB_MD5DECRYPT )
 
          hb_md5_init_seed(vect, pszKey, iLen);
 
-         for( n = 0; n < nLen; ++n )
-         {
+         for( n = 0; n < nLen; ++n ) {
             int i = static_cast<int>(n & 0x0F);
-            if( i == 0 )
-            {
+            if( i == 0 ) {
                hb_md5_next_seed(vect, pszKey, iLen);
             }
             pszData[n] = (vect[i] ^ pszSource[n]);
             vect[i] = pszSource[n];
          }
          hb_retclen_buffer(pszData, nLen);
-      }
-      else
-      {
+      } else {
          hb_retc_null();
       }
    }

@@ -101,17 +101,14 @@ HB_BOOL hb_regexIs(PHB_ITEM pItem)
 
 PHB_REGEX hb_regexCompile(const char * szRegEx, HB_SIZE nLen, int iFlags)
 {
-   PHB_REGEX pRegEx;
-
    HB_SYMBOL_UNUSED(nLen);
 
-   pRegEx = static_cast<PHB_REGEX>(hb_gcAllocate(sizeof(*pRegEx), &s_gcRegexFuncs));
+   PHB_REGEX pRegEx = static_cast<PHB_REGEX>(hb_gcAllocate(sizeof(*pRegEx), &s_gcRegexFuncs));
    memset(pRegEx, 0, sizeof(*pRegEx));
    pRegEx->fFree = true;
    pRegEx->iFlags = iFlags;
 
-   if( (s_reg_comp)(pRegEx, szRegEx) != 0 )
-   {
+   if( (s_reg_comp)(pRegEx, szRegEx) != 0 ) {
       hb_gcFree(pRegEx);
       pRegEx = nullptr;
    }
@@ -124,34 +121,25 @@ PHB_REGEX hb_regexGet(PHB_ITEM pRegExItm, int iFlags)
    PHB_REGEX pRegEx = nullptr;
    HB_BOOL fArgError = true;
 
-   if( pRegExItm )
-   {
-      if( HB_IS_POINTER(pRegExItm) )
-      {
+   if( pRegExItm ) {
+      if( HB_IS_POINTER(pRegExItm) ) {
          pRegEx = static_cast<PHB_REGEX>(hb_itemGetPtrGC(pRegExItm, &s_gcRegexFuncs));
-         if( pRegEx )
-         {
+         if( pRegEx ) {
             fArgError = false;
          }
-      }
-      else if( HB_IS_STRING(pRegExItm) )
-      {
+      } else if( HB_IS_STRING(pRegExItm) ) {
          HB_SIZE nLen = hb_itemGetCLen(pRegExItm);
          const char * szRegEx = hb_itemGetCPtr(pRegExItm);
-         if( nLen > 0 )
-         {
+         if( nLen > 0 ) {
             fArgError = false;
             pRegEx = hb_regexCompile(szRegEx, nLen, iFlags);
          }
       }
    }
 
-   if( fArgError )
-   {
+   if( fArgError ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, pRegExItm);
-   }
-   else if( !pRegEx ) /* hb_regexCompile() failed */
-   {
+   } else if( !pRegEx ) { /* hb_regexCompile() failed */
       hb_errRT_BASE_SubstR(EG_ARG, 3015, nullptr, HB_ERR_FUNCNAME, 1, pRegExItm);
    }
 
@@ -160,8 +148,7 @@ PHB_REGEX hb_regexGet(PHB_ITEM pRegExItm, int iFlags)
 
 void hb_regexFree(PHB_REGEX pRegEx)
 {
-   if( pRegEx && pRegEx->fFree )
-   {
+   if( pRegEx && pRegEx->fFree ) {
       (s_reg_free)(pRegEx);
       hb_gcFree(pRegEx);
    }
@@ -170,8 +157,6 @@ void hb_regexFree(PHB_REGEX pRegEx)
 HB_BOOL hb_regexMatch(PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen, HB_BOOL fFull)
 {
    HB_REGMATCH aMatches[HB_REGMATCH_SIZE(1)];
-   HB_BOOL fMatch;
-
-   fMatch = (s_reg_exec)(pRegEx, szString, nLen, 1, aMatches) > 0;
+   bool fMatch = (s_reg_exec)(pRegEx, szString, nLen, 1, aMatches) > 0;
    return fMatch && (!fFull || (HB_REGMATCH_SO(aMatches, 0) == 0 && HB_REGMATCH_EO(aMatches, 0) == static_cast<int>(nLen)));
 }
