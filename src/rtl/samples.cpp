@@ -54,9 +54,7 @@ static char * hb_SecToTimeStr(char * pszTime, long lTime)
    HB_TRACE(HB_TR_DEBUG, ("hb_SecToTimeStr(%p, %ld)", static_cast<void*>(pszTime), lTime));
 #endif
 
-   int iValue;
-
-   iValue = static_cast<int>((lTime / 3600) % 24);
+   int iValue = static_cast<int>((lTime / 3600) % 24);
    pszTime[0] = static_cast<char>(iValue / 10) + '0';
    pszTime[1] = static_cast<char>(iValue % 10) + '0';
    pszTime[2] = ':';
@@ -68,7 +66,6 @@ static char * hb_SecToTimeStr(char * pszTime, long lTime)
    pszTime[6] = static_cast<char>(iValue / 10) + '0';
    pszTime[7] = static_cast<char>(iValue % 10) + '0';
    pszTime[8] = '\0';
-
    return pszTime;
 }
 
@@ -78,23 +75,19 @@ static long hb_TimeStrToSec(const char * pszTime)
    HB_TRACE(HB_TR_DEBUG, ("hb_TimeStrToSec(%s)", pszTime));
 #endif
 
-   HB_SIZE nLen;
+   HB_SIZE nLen = strlen(pszTime);
+
    long lTime = 0;
 
-   nLen = strlen(pszTime);
-
-   if( nLen >= 1 )
-   {
+   if( nLen >= 1 ) {
       lTime += static_cast<long>(hb_strVal(pszTime, nLen)) * 3600;
    }
 
-   if( nLen >= 4 )
-   {
+   if( nLen >= 4 ) {
       lTime += static_cast<long>(hb_strVal(pszTime + 3, nLen - 3)) * 60;
    }
 
-   if( nLen >= 7 )
-   {
+   if( nLen >= 7 ) {
       lTime += static_cast<long>(hb_strVal(pszTime + 6, nLen - 6));
    }
 
@@ -111,7 +104,6 @@ HB_FUNC( ELAPTIME )
    long lStart = hb_TimeStrToSec(hb_parcx(1));
    long lEnd   = hb_TimeStrToSec(hb_parcx(2));
    char szTime[9];
-
    hb_retc(hb_SecToTimeStr(szTime, (lEnd < lStart ? 86400 : 0) + lEnd - lStart));
 }
 
@@ -123,6 +115,5 @@ HB_FUNC( SECS )
 HB_FUNC( TSTRING )
 {
    char szTime[9];
-
    hb_retc(hb_SecToTimeStr(szTime, hb_parnl(1)));
 }

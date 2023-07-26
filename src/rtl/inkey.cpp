@@ -60,31 +60,24 @@ static void hb_inkeySetTextKeys(const char * pszText, HB_SIZE nSize, HB_BOOL fIn
    HB_SIZE nIndex = 0;
    HB_WCHAR wc;
 
-   if( fInsert )
-   {
+   if( fInsert ) {
       HB_WCHAR buffer[32], * keys;
       HB_SIZE n = 0;
 
       keys = nSize <= HB_SIZEOFARRAY(buffer) ? buffer : static_cast<HB_WCHAR*>(hb_xgrab(nSize * sizeof(HB_WCHAR)));
-      while( HB_CDPCHAR_GET(cdp, pszText, nSize, &nIndex, &wc) )
-      {
+      while( HB_CDPCHAR_GET(cdp, pszText, nSize, &nIndex, &wc) ) {
          keys[n++] = wc;
       }
 
-      while( n-- )
-      {
+      while( n-- ) {
          int iKey = keys[n] >= 128 ? HB_INKEY_NEW_UNICODE( keys[n] ) : keys[n];
          hb_inkeyIns(iKey);
       }
-      if( nSize > HB_SIZEOFARRAY(buffer) )
-      {
+      if( nSize > HB_SIZEOFARRAY(buffer) ) {
          hb_xfree(keys);
       }
-   }
-   else
-   {
-      while( HB_CDPCHAR_GET(cdp, pszText, nSize, &nIndex, &wc) )
-      {
+   } else {
+      while( HB_CDPCHAR_GET(cdp, pszText, nSize, &nIndex, &wc) ) {
          int iKey = wc >= 128 ? HB_INKEY_NEW_UNICODE( wc ) : wc;
          hb_inkeyPut(iKey);
       }
@@ -116,29 +109,20 @@ HB_FUNC( HB_KEYCLEAR )
 
 HB_FUNC( HB_KEYPUT )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       hb_inkeyPut(hb_parni(1));
-   }
-   else if( HB_ISCHAR(1) )
-   {
+   } else if( HB_ISCHAR(1) ) {
       hb_inkeySetTextKeys(hb_parc(1), hb_parclen(1), false);
-   }
-   else if( HB_ISARRAY(1) )
-   {
+   } else if( HB_ISARRAY(1) ) {
       PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
       HB_SIZE nElements = hb_arrayLen(pArray);
 
-      for( HB_SIZE nIndex = 1; nIndex <= nElements; ++nIndex )
-      {
+      for( HB_SIZE nIndex = 1; nIndex <= nElements; ++nIndex ) {
          HB_TYPE type = hb_arrayGetType(pArray, nIndex);
 
-         if( type & Harbour::Item::NUMERIC )
-         {
+         if( type & Harbour::Item::NUMERIC ) {
             hb_inkeyPut(hb_arrayGetNI(pArray, nIndex));
-         }
-         else if( type & Harbour::Item::STRING )
-         {
+         } else if( type & Harbour::Item::STRING ) {
             hb_inkeySetTextKeys(hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), false);
          }
       }
@@ -147,29 +131,20 @@ HB_FUNC( HB_KEYPUT )
 
 HB_FUNC( HB_KEYINS )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       hb_inkeyIns(hb_parni(1));
-   }
-   else if( HB_ISCHAR(1) )
-   {
+   } else if( HB_ISCHAR(1) ) {
       hb_inkeySetTextKeys(hb_parc(1), hb_parclen(1), true);
-   }
-   else if( HB_ISARRAY(1) )
-   {
+   } else if( HB_ISARRAY(1) ) {
       PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
       HB_SIZE nElements = hb_arrayLen(pArray);
 
-      for( HB_SIZE nIndex = 1; nIndex <= nElements; ++nIndex )
-      {
+      for( HB_SIZE nIndex = 1; nIndex <= nElements; ++nIndex ) {
          HB_TYPE type = hb_arrayGetType(pArray, nIndex);
 
-         if( type & Harbour::Item::NUMERIC )
-         {
+         if( type & Harbour::Item::NUMERIC ) {
             hb_inkeyIns(hb_arrayGetNI(pArray, nIndex));
-         }
-         else if( type & Harbour::Item::STRING )
-         {
+         } else if( type & Harbour::Item::STRING ) {
             hb_inkeySetTextKeys(hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), true);
          }
       }
@@ -198,8 +173,7 @@ HB_FUNC( LASTKEY )
 
 HB_FUNC( HB_KEYSETLAST )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       hb_retni(hb_inkeySetLast(hb_parni(1)));
    }
 }
@@ -215,23 +189,17 @@ HB_FUNC( HB_KEYCODE )
    const char * szValue = hb_parc(1);
    int iKey;
 
-   if( szValue )
-   {
+   if( szValue ) {
       PHB_CODEPAGE cdp = hb_vmCDP();
       HB_SIZE nIndex = 0;
       HB_WCHAR wc;
 
-      if( HB_CDPCHAR_GET(cdp, szValue, hb_parclen(1), &nIndex, &wc) )
-      {
+      if( HB_CDPCHAR_GET(cdp, szValue, hb_parclen(1), &nIndex, &wc) ) {
          iKey = wc >= 128 ? HB_INKEY_NEW_UNICODE( wc ) : wc;
-      }
-      else
-      {
+      } else {
          iKey = 0;
       }
-   }
-   else
-   {
+   } else {
       iKey = 0;
    }
 
@@ -241,9 +209,7 @@ HB_FUNC( HB_KEYCODE )
 HB_FUNC( HB_KEYCHAR )
 {
    char szKeyChr[HB_MAX_CHAR_LEN];
-   HB_SIZE nLen;
-
-   nLen = hb_inkeyKeyString(hb_parni(1), szKeyChr, sizeof(szKeyChr));
+   HB_SIZE nLen = hb_inkeyKeyString(hb_parni(1), szKeyChr, sizeof(szKeyChr));
    hb_retclen(szKeyChr, nLen);
 }
 

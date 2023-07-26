@@ -60,16 +60,14 @@ HB_FUNC( SOUNDEX )
    memset(szResult, '0', SOUNDEX_LEN_MAX);
    szResult[SOUNDEX_LEN_MAX] = '\0';
 
-   if( pString )
-   {
+   if( pString ) {
       const char * pszString = hb_itemGetCPtr(pString);
       HB_SIZE nLen = hb_itemGetCLen(pString);
       HB_SIZE nPos = 0;
       HB_SIZE nResultPos = 0;
       char cCharPrev = '0';
 
-      while( nPos < nLen && nResultPos < SOUNDEX_LEN_MAX )
-      {
+      while( nPos < nLen && nResultPos < SOUNDEX_LEN_MAX ) {
          char cChar = pszString[nPos];
 
          /* NOTE: Intentionally not using toupper()/IsAlpha() to be 100%
@@ -78,24 +76,19 @@ HB_FUNC( SOUNDEX )
                   faster this way. [vszakats] */
 
          /* Convert to uppercase: HB_TOUPPER() */
-         if( cChar >= 'a' && cChar <= 'z' )
-         {
+         if( cChar >= 'a' && cChar <= 'z' ) {
             cChar -= ( 'a' - 'A' );
          }
 
          /* Check if IsAlpha() */
-         if( cChar >= 'A' && cChar <= 'Z' )
-         {
+         if( cChar >= 'A' && cChar <= 'Z' ) {
             static const char s_szTable[] = "01230120022455012623010202"; /* NOTE: SoundEx result codes for letters from "A" to "Z" */
                                          /* "ABCDEFGHIJKLMNOPQRSTUVWXYZ" */
             char cCharConverted = ((cChar - 'A') > (static_cast<int>(sizeof(s_szTable)) - 1)) ? '9' : s_szTable[cChar - 'A'];
 
-            if( nResultPos == 0 )
-            {
+            if( nResultPos == 0 ) {
                szResult[nResultPos++] = cChar;
-            }
-            else if( cCharConverted != '0' && cCharConverted != cCharPrev )
-            {
+            } else if( cCharConverted != '0' && cCharConverted != cCharPrev ) {
                szResult[nResultPos++] = cCharConverted;
             }
 

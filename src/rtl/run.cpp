@@ -62,8 +62,7 @@ HB_FUNC( __RUN )
 {
    const char * pszCommand = hb_parc(1);
 
-   if( pszCommand && hb_gtSuspend() == HB_SUCCESS )
-   {
+   if( pszCommand && hb_gtSuspend() == HB_SUCCESS ) {
 #if defined(HB_OS_WIN)
       LPTSTR lpCommand = HB_CHARDUP(pszCommand);
       ( void ) HB_WINAPI_SYSTEM(lpCommand); // TODO: C++ cast
@@ -71,18 +70,15 @@ HB_FUNC( __RUN )
 #else
       char * pszFree = nullptr;
 
-      if( system(hb_osEncodeCP(pszCommand, &pszFree, nullptr)) != 0 )
-      {
+      if( system(hb_osEncodeCP(pszCommand, &pszFree, nullptr)) != 0 ) {
       }
 
-      if( pszFree )
-      {
+      if( pszFree ) {
          hb_xfree(pszFree);
       }
 #endif
 
-      if( hb_gtResume() != HB_SUCCESS )
-      {
+      if( hb_gtResume() != HB_SUCCESS ) {
          /* an error should be generated here !! Something like */
          #if 0
          hb_errRT_BASE_Ext1(EG_GTRESUME, 6002, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT);

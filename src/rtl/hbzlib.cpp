@@ -88,53 +88,41 @@ static void s_zlib_free(void * cargo, void * address)
 {
    HB_SYMBOL_UNUSED(cargo);
 
-   if( address )
-   {
+   if( address ) {
       hb_xfree(address);
    }
 }
 
 static int s_zlibCompress2(char ** pDstPtr, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nSrc, HB_BOOL fGZip, int level)
 {
-   z_stream stream;
-   int iResult;
-
-   memset(&stream, 0, sizeof(stream));
+   z_stream stream{};
    stream.zalloc    = s_zlib_alloc;
    stream.zfree     = s_zlib_free;
    stream.opaque    = nullptr;
    stream.next_in   = reinterpret_cast<Bytef*>(const_cast<char*>(pSrc));
    stream.avail_in  = static_cast<uInt>(nSrc);
-   iResult = deflateInit2(&stream, level, Z_DEFLATED, 15 + (fGZip ? 16 : 0), 8, Z_DEFAULT_STRATEGY);
-   if( iResult == Z_OK )
-   {
-      if( *pDstPtr == nullptr )
-      {
-         if( *pnDst == 0 )
-         {
+   int iResult = deflateInit2(&stream, level, Z_DEFLATED, 15 + (fGZip ? 16 : 0), 8, Z_DEFAULT_STRATEGY);
+   if( iResult == Z_OK ) {
+      if( *pDstPtr == nullptr ) {
+         if( *pnDst == 0 ) {
             *pnDst = deflateBound(&stream, static_cast<uLong>(nSrc));
          }
          *pDstPtr = static_cast<char*>(hb_xalloc(*pnDst + 1));
-         if( *pDstPtr == nullptr )
-         {
+         if( *pDstPtr == nullptr ) {
             iResult = Z_MEM_ERROR;
          }
       }
    }
 
-   if( iResult == Z_OK )
-   {
+   if( iResult == Z_OK ) {
       stream.next_out  = reinterpret_cast<Bytef*>(*pDstPtr);
       stream.avail_out = static_cast<uInt>(*pnDst);
 
-      do
-      {
+      do {
          iResult = deflate( &stream, Z_FINISH );
-      }
-      while( iResult == Z_OK );
+      } while( iResult == Z_OK );
 
-      if( iResult == Z_STREAM_END )
-      {
+      if( iResult == Z_STREAM_END ) {
          *pnDst = stream.total_out;
          iResult = Z_OK;
       }
@@ -152,10 +140,9 @@ static int s_zlibCompress(char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SI
 static HB_SIZE s_zlibUncompressedSize(const char * szSrc, HB_SIZE nLen, int * piResult)
 {
    Byte buffer[1024];
-   z_stream stream;
    HB_SIZE nDest = 0;
 
-   memset(&stream, 0, sizeof(stream));
+   z_stream stream{};
    stream.zalloc    = s_zlib_alloc;
    stream.zfree     = s_zlib_free;
    stream.opaque    = nullptr;
@@ -163,18 +150,14 @@ static HB_SIZE s_zlibUncompressedSize(const char * szSrc, HB_SIZE nLen, int * pi
    stream.avail_in  = static_cast<uInt>(nLen);
 
    *piResult = inflateInit2(&stream, 15 + 32);
-   if( *piResult == Z_OK )
-   {
-      do
-      {
+   if( *piResult == Z_OK ) {
+      do {
          stream.next_out  = buffer;
          stream.avail_out = sizeof(buffer);
          *piResult = inflate( &stream, Z_NO_FLUSH );
-      }
-      while( *piResult == Z_OK );
+      } while( *piResult == Z_OK );
 
-      if( *piResult == Z_STREAM_END )
-      {
+      if( *piResult == Z_STREAM_END ) {
          nDest = stream.total_out;
          *piResult = Z_OK;
       }
@@ -186,30 +169,23 @@ static HB_SIZE s_zlibUncompressedSize(const char * szSrc, HB_SIZE nLen, int * pi
 
 static int s_zlibUncompress(char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_SIZE nSrc)
 {
-   z_stream stream;
-   int iResult;
-
-   memset(&stream, 0, sizeof(stream));
+   z_stream stream{};
    stream.zalloc    = s_zlib_alloc;
    stream.zfree     = s_zlib_free;
    stream.opaque    = nullptr;
    stream.next_in   = reinterpret_cast<Bytef*>(const_cast<char*>(pSrc));
    stream.avail_in  = static_cast<uInt>(nSrc);
-   iResult = inflateInit2(&stream, 15 + 32);
+   int iResult = inflateInit2(&stream, 15 + 32);
 
-   if( iResult == Z_OK )
-   {
+   if( iResult == Z_OK ) {
       stream.next_out  = reinterpret_cast<Bytef*>(pDst);
       stream.avail_out = static_cast<uInt>(*pnDst);
 
-      do
-      {
+      do {
          iResult = inflate( &stream, Z_FINISH );
-      }
-      while( iResult == Z_OK );
+      } while( iResult == Z_OK );
 
-      if( iResult == Z_STREAM_END )
-      {
+      if( iResult == Z_STREAM_END ) {
          *pnDst = stream.total_out;
          iResult = Z_OK;
       }
@@ -224,11 +200,9 @@ static int s_zlibUncompress(char * pDst, HB_SIZE * pnDst, const char * pSrc, HB_
  */
 HB_FUNC( HB_ZLIBVERSION )
 {
-   if( hb_parni(1) == 1 )
-   {
+   if( hb_parni(1) == 1 ) {
       hb_retc_const(ZLIB_VERSION);
-   }
-   else
+   } else
 #if defined(HB_OS_QNX)
       /* NOTE: Hack to avoid "undefined reference to 'zlibVersion' when linking hbrun on QNX 6.2.1. */
       hb_retc_null();
@@ -242,16 +216,11 @@ HB_FUNC( HB_ZLIBVERSION )
  */
 HB_FUNC( HB_ZCOMPRESSBOUND )
 {
-   if( HB_ISCHAR(1) )
-   {
+   if( HB_ISCHAR(1) ) {
       hb_retnint(s_zlibCompressBound(hb_parclen(1)));
-   }
-   else if( HB_ISNUM(1) )
-   {
+   } else if( HB_ISNUM(1) ) {
       hb_retnint(s_zlibCompressBound(hb_parns(1)));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -264,29 +233,22 @@ HB_FUNC( HB_ZUNCOMPRESSLEN )
 {
    const char * szData = hb_parc(1);
 
-   if( szData )
-   {
+   if( szData ) {
       HB_SIZE nLen = hb_parclen(1);
       int iResult = Z_OK;
 
-      if( nLen )
-      {
+      if( nLen ) {
          nLen = s_zlibUncompressedSize(szData, nLen, &iResult);
       }
 
-      if( iResult == Z_OK )
-      {
+      if( iResult == Z_OK ) {
          hb_retnint(nLen);
-      }
-      else
-      {
+      } else {
          hb_retni(-1);
       }
 
       hb_storni(iResult, 2);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -299,74 +261,52 @@ HB_FUNC( HB_ZCOMPRESS )
 {
    const char * szData = hb_parc(1);
 
-   if( szData )
-   {
+   if( szData ) {
       HB_SIZE nLen = hb_parclen(1);
 
-      if( nLen )
-      {
+      if( nLen ) {
          PHB_ITEM pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
          HB_BOOL fAlloc = false;
          HB_SIZE nDstLen;
          char * pDest;
          int iResult;
 
-         if( pBuffer )
-         {
-            if( !hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) )
-            {
+         if( pBuffer ) {
+            if( !hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) ) {
                pDest = nullptr;
             }
-         }
-         else
-         {
-            if( HB_ISNUM(2) )
-            {
+         } else {
+            if( HB_ISNUM(2) ) {
                nDstLen = hb_parns(2);
                pDest = static_cast<char*>(hb_xalloc(nDstLen + 1));
-            }
-            else
-            {
+            } else {
                pDest = nullptr;
                nDstLen = 0;
                fAlloc = true;
             }
          }
 
-         if( pDest || fAlloc )
-         {
+         if( pDest || fAlloc ) {
             iResult = s_zlibCompress2(&pDest, &nDstLen, szData, nLen, false, hb_parnidef(4, Z_DEFAULT_COMPRESSION));
-            if( !pBuffer )
-            {
-               if( iResult == Z_OK )
-               {
+            if( !pBuffer ) {
+               if( iResult == Z_OK ) {
                   hb_retclen_buffer(pDest, nDstLen);
-               }
-               else if( pDest )
-               {
+               } else if( pDest ) {
                   hb_xfree(pDest);
                }
-            }
-            else if( iResult == Z_OK )
-            {
+            } else if( iResult == Z_OK ) {
                hb_retclen(pDest, nDstLen);
             }
-         }
-         else
-         {
+         } else {
             iResult = Z_MEM_ERROR;
          }
 
          hb_storni(iResult, 3);
-      }
-      else
-      {
+      } else {
          hb_retc_null();
          hb_storni(Z_OK, 3);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -380,66 +320,47 @@ HB_FUNC( HB_ZUNCOMPRESS )
    PHB_ITEM pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
    const char * szData = hb_parc(1);
 
-   if( szData )
-   {
+   if( szData ) {
       HB_SIZE nLen = hb_parclen(1);
 
-      if( nLen )
-      {
+      if( nLen ) {
          HB_SIZE nDstLen;
          char * pDest = nullptr;
          int iResult = Z_OK;
 
-         if( pBuffer )
-         {
-            if( !hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) )
-            {
+         if( pBuffer ) {
+            if( !hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) ) {
                iResult = Z_MEM_ERROR;
             }
-         }
-         else
-         {
+         } else {
             nDstLen = HB_ISNUM(2) ? static_cast<HB_SIZE>(hb_parns(2)) : s_zlibUncompressedSize(szData, nLen, &iResult);
-            if( iResult == Z_OK )
-            {
+            if( iResult == Z_OK ) {
                pDest = static_cast<char*>(hb_xalloc(nDstLen + 1));
-               if( !pDest )
-               {
+               if( !pDest ) {
                   iResult = Z_MEM_ERROR;
                }
             }
          }
 
-         if( iResult == Z_OK )
-         {
+         if( iResult == Z_OK ) {
             iResult = s_zlibUncompress(pDest, &nDstLen, szData, nLen);
 
-            if( !pBuffer )
-            {
-               if( iResult == Z_OK )
-               {
+            if( !pBuffer ) {
+               if( iResult == Z_OK ) {
                   hb_retclen_buffer(pDest, nDstLen);
-               }
-               else
-               {
+               } else {
                   hb_xfree(pDest);
                }
-            }
-            else if( iResult == Z_OK )
-            {
+            } else if( iResult == Z_OK ) {
                hb_retclen(pDest, nDstLen);
             }
          }
          hb_storni(iResult, 3);
-      }
-      else
-      {
+      } else {
          hb_retc_null();
          hb_storni(Z_OK, 3);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -449,16 +370,11 @@ HB_FUNC( HB_ZUNCOMPRESS )
  */
 HB_FUNC( HB_GZCOMPRESSBOUND )
 {
-   if( HB_ISCHAR(1) )
-   {
+   if( HB_ISCHAR(1) ) {
       hb_retnint(s_zlibCompressBound(static_cast<uLong>(hb_parclen(1))) + 12);
-   }
-   else if( HB_ISNUM(1) )
-   {
+   } else if( HB_ISNUM(1) ) {
       hb_retnint(s_zlibCompressBound(static_cast<uLong>(hb_parns(1))) + 12);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -474,74 +390,52 @@ HB_FUNC( HB_GZCOMPRESS )
 {
    const char * szData = hb_parc(1);
 
-   if( szData )
-   {
+   if( szData ) {
       HB_SIZE nLen = hb_parclen(1);
 
-      if( nLen )
-      {
+      if( nLen ) {
          PHB_ITEM pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
          HB_BOOL fAlloc = false;
          HB_SIZE nDstLen;
          char * pDest;
          int iResult;
 
-         if( pBuffer )
-         {
-            if( !hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) )
-            {
+         if( pBuffer ) {
+            if( !hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) ) {
                pDest = nullptr;
             }
-         }
-         else
-         {
-            if( HB_ISNUM(2) )
-            {
+         } else {
+            if( HB_ISNUM(2) ) {
                nDstLen = hb_parns(2);
                pDest = static_cast<char*>(hb_xalloc(nDstLen + 1));
-            }
-            else
-            {
+            } else {
                pDest = nullptr;
                nDstLen = 0;
                fAlloc = true;
             }
          }
 
-         if( pDest || fAlloc )
-         {
+         if( pDest || fAlloc ) {
             iResult = s_zlibCompress2(&pDest, &nDstLen, szData, nLen, true, hb_parnidef(4, Z_DEFAULT_COMPRESSION));
-            if( !pBuffer )
-            {
-               if( iResult == Z_OK )
-               {
+            if( !pBuffer ) {
+               if( iResult == Z_OK ) {
                   hb_retclen_buffer(pDest, nDstLen);
-               }
-               else if( pDest )
-               {
+               } else if( pDest ) {
                   hb_xfree(pDest);
                }
-            }
-            else if( iResult == Z_OK )
-            {
+            } else if( iResult == Z_OK ) {
                hb_retclen(pDest, nDstLen);
             }
-         }
-         else
-         {
+         } else {
             iResult = Z_MEM_ERROR;
          }
 
          hb_storni(iResult, 3);
-      }
-      else
-      {
+      } else {
          hb_retc_null();
          hb_storni(Z_OK, 3);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

@@ -64,23 +64,18 @@ HB_FUNC( MOD )
    PHB_ITEM pNumber = hb_param(1, Harbour::Item::NUMERIC);
    PHB_ITEM pBase   = hb_param(2, Harbour::Item::NUMERIC);
 
-   if( pNumber && pBase )
-   {
+   if( pNumber && pBase ) {
       double dNumber = hb_itemGetND(pNumber);
       double dBase   = hb_itemGetND(pBase); /* dBase! Cool! */
 
-      if( dBase )
-      {
+      if( dBase ) {
          double dResult = fmod(dNumber, dBase);
 
-         if( dResult && (dNumber > 0 ? dBase < 0 : dBase > 0) )
-         {
+         if( dResult && (dNumber > 0 ? dBase < 0 : dBase > 0) ) {
             dResult += dBase;
          }
          hb_retnd(dResult);
-      }
-      else
-      {
+      } else {
          PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ZERODIV, 1341, nullptr, "%", HB_ERR_ARGS_BASEPARAMS);
 
          /* In CA-Cl*pper Mod() function ignores substitution result
@@ -94,15 +89,12 @@ HB_FUNC( MOD )
           *
           * [druzus]
           */
-         if( pResult )
-         {
+         if( pResult ) {
             hb_itemReturn(pNumber);
             hb_itemRelease(pResult);
          }
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1085, nullptr, "%", 2, hb_param(1, Harbour::Item::ANY), hb_param(2, Harbour::Item::ANY));
    }
 }

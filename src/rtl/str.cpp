@@ -55,38 +55,27 @@ HB_FUNC( STR )
    PHB_ITEM pWidth  = nullptr;
    PHB_ITEM pDec    = nullptr;
 
-   if( iParams >= 2 )
-   {
+   if( iParams >= 2 ) {
       pWidth = hb_param(2, Harbour::Item::NUMERIC);
-      if( pWidth == nullptr )
-      {
+      if( pWidth == nullptr ) {
          pNumber = nullptr;
-      }
-      else if( iParams >= 3 )
-      {
+      } else if( iParams >= 3 ) {
          pDec = hb_param(3, Harbour::Item::NUMERIC);
-         if( pDec == nullptr )
-         {
+         if( pDec == nullptr ) {
             pNumber = nullptr;
          }
       }
    }
 
-   if( pNumber )
-   {
+   if( pNumber ) {
       char * szResult = hb_itemStr(pNumber, pWidth, pDec);
 
-      if( szResult )
-      {
+      if( szResult ) {
          hb_retc_buffer(szResult);
-      }
-      else
-      {
+      } else {
          hb_retc_null();
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

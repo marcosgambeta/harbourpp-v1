@@ -52,51 +52,36 @@ HB_FUNC( HB_STRSHRINK )
 {
    PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText )
-   {
+   if( pText ) {
       HB_ISIZ nShrinkBy = hb_parnldef(2, 1);
 
-      if( nShrinkBy > 0 )
-      {
+      if( nShrinkBy > 0 ) {
          const char * pszText = hb_itemGetCPtr(pText);
          HB_ISIZ nText = hb_itemGetCLen(pText);
          HB_ISIZ nLen;
          PHB_CODEPAGE cdp = hb_vmCDP();
 
-         if( HB_CDP_ISCHARIDX(cdp) )
-         {
+         if( HB_CDP_ISCHARIDX(cdp) ) {
             nLen = hb_cdpTextLen(cdp, pszText, nText);
-         }
-         else
-         {
+         } else {
             nLen = nText;
          }
 
-         if( nShrinkBy < nLen )
-         {
-            if( HB_CDP_ISCHARIDX(cdp) )
-            {
+         if( nShrinkBy < nLen ) {
+            if( HB_CDP_ISCHARIDX(cdp) ) {
                nLen = hb_cdpTextPos(cdp, pszText, nText, nLen - nShrinkBy);
-            }
-            else
-            {
+            } else {
                nLen -= nShrinkBy;
             }
-         }
-         else
-         {
+         } else {
             nLen = 0;
          }
 
          hb_retclen(pszText, nLen);
-      }
-      else
-      {
+      } else {
          hb_itemReturn(pText);
       }
-   }
-   else
-   {
+   } else {
       hb_retc_null();
-   }   
+   }
 }

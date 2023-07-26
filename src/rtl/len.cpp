@@ -58,26 +58,19 @@ HB_FUNC( LEN )
             compiler checks this, but a direct hb_vmDo() call
             may not do so. [vszakats] */
 
-   if( pItem != nullptr )
-   {
-      if( HB_IS_STRING(pItem) )
-      {
+   if( pItem != nullptr ) {
+      if( HB_IS_STRING(pItem) ) {
          HB_SIZE nLen = hb_itemGetCLen(pItem);
          PHB_CODEPAGE cdp = hb_vmCDP();
-         if( HB_CDP_ISCHARIDX(cdp) )
-         {
+         if( HB_CDP_ISCHARIDX(cdp) ) {
             nLen = hb_cdpTextLen(cdp, hb_itemGetCPtr(pItem), nLen);
          }
          hb_retns(nLen);
          return;
-      }
-      else if( HB_IS_ARRAY(pItem) )
-      {
+      } else if( HB_IS_ARRAY(pItem) ) {
          hb_retns(hb_arrayLen(pItem));
          return;
-      }
-      else if( HB_IS_HASH(pItem) )
-      {
+      } else if( HB_IS_HASH(pItem) ) {
          hb_retns(hb_hashLen(pItem));
          return;
       }

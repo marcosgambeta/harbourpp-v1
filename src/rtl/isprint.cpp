@@ -49,7 +49,7 @@
 
 HB_BOOL hb_printerIsReady(const char * pszPrinterName)
 {
-   HB_BOOL bIsPrinter;
+   bool bIsPrinter;
 
    /* NOTE: Platform independent method, at least it will compile and run
             on any platform, but the result may not be the expected one,
@@ -59,10 +59,7 @@ HB_BOOL hb_printerIsReady(const char * pszPrinterName)
             [vszakats] */
 
    {
-      PHB_FILE pFile;
-
-      if( pszPrinterName == nullptr )
-      {
+      if( pszPrinterName == nullptr ) {
 #if defined(HB_OS_UNIX)
          pszPrinterName = "/dev/lp0";
 #else
@@ -70,10 +67,9 @@ HB_BOOL hb_printerIsReady(const char * pszPrinterName)
 #endif
       }
 
-      pFile = hb_fileExtOpen(pszPrinterName, nullptr, FXO_APPEND | FO_WRITE | FO_SHARED | FO_PRIVATE, nullptr, nullptr);
+      PHB_FILE pFile = hb_fileExtOpen(pszPrinterName, nullptr, FXO_APPEND | FO_WRITE | FO_SHARED | FO_PRIVATE, nullptr, nullptr);
       bIsPrinter = (pFile != nullptr);
-      if( bIsPrinter )
-      {
+      if( bIsPrinter ) {
          hb_fileClose(pFile);
       }
    }

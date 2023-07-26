@@ -56,36 +56,25 @@ HB_FUNC( LEFT )
 {
    PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText && HB_ISNUM(2) )
-   {
+   if( pText && HB_ISNUM(2) ) {
       HB_ISIZ nLen = hb_parns(2);
-      if( nLen <= 0 )
-      {
+      if( nLen <= 0 ) {
          hb_retc_null();
-      }
-      else
-      {
+      } else {
          HB_SIZE nText = hb_itemGetCLen(pText);
-         if( static_cast<HB_SIZE>(nLen) < nText )
-         {
+         if( static_cast<HB_SIZE>(nLen) < nText ) {
             PHB_CODEPAGE cdp = hb_vmCDP();
-            if( HB_CDP_ISCHARIDX(cdp) )
-            {
+            if( HB_CDP_ISCHARIDX(cdp) ) {
                nLen = hb_cdpTextPos(cdp, hb_itemGetCPtr(pText), nText, nLen);
-            }   
+            }
          }
-         if( static_cast<HB_SIZE>(nLen) >= nText )
-         {
+         if( static_cast<HB_SIZE>(nLen) >= nText ) {
             hb_itemReturn(pText);
-         }
-         else
-         {
+         } else {
             hb_retclen(hb_itemGetCPtr(pText), nLen);
          }
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1124, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -95,12 +84,9 @@ HB_FUNC( HB_LEFTEQ )
    PHB_ITEM pItem1 = hb_param(1, Harbour::Item::STRING);
    PHB_ITEM pItem2 = hb_param(2, Harbour::Item::STRING);
 
-   if( pItem1 && pItem2 )
-   {
+   if( pItem1 && pItem2 ) {
       hb_retl(hb_cdpcmp(hb_itemGetCPtr(pItem1), hb_itemGetCLen(pItem1), hb_itemGetCPtr(pItem2), hb_itemGetCLen(pItem2), hb_vmCDP(), false) == 0);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1071, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -110,12 +96,9 @@ HB_FUNC( HB_LEFTEQI )
    PHB_ITEM pItem1 = hb_param(1, Harbour::Item::STRING);
    PHB_ITEM pItem2 = hb_param(2, Harbour::Item::STRING);
 
-   if( pItem1 && pItem2 )
-   {
+   if( pItem1 && pItem2 ) {
       hb_retl(hb_cdpicmp(hb_itemGetCPtr(pItem1), hb_itemGetCLen(pItem1), hb_itemGetCPtr(pItem2), hb_itemGetCLen(pItem2), hb_vmCDP(), false) == 0);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1071, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

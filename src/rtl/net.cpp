@@ -83,8 +83,7 @@ char * hb_netname(void)
    GetComputerName(lpValue, &dwLen);
    lpValue[MAX_COMPUTERNAME_LENGTH] = TEXT('\0');
 
-   if( lpValue[0] )
-   {
+   if( lpValue[0] ) {
       return HB_OSSTRDUP(lpValue);
    }
 
@@ -93,9 +92,8 @@ char * hb_netname(void)
    char szValue[MAXGETHOSTNAME + 1];
    szValue[0] = szValue[MAXGETHOSTNAME] = '\0';
    gethostname(szValue, MAXGETHOSTNAME);
-   if( szValue[0] )
-   {
-      return hb_osStrDecode( szValue );
+   if( szValue[0] ) {
+      return hb_osStrDecode(szValue);
    }
 
 #endif
@@ -107,12 +105,9 @@ HB_FUNC( NETNAME )
 {
    char * buffer = hb_netname();
 
-   if( buffer )
-   {
+   if( buffer ) {
       hb_retc_buffer(buffer);
-   }
-   else
-   {
+   } else {
       hb_retc_null();
    }
 }

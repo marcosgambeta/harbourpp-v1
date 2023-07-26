@@ -63,56 +63,38 @@ HB_FUNC( SCROLL )
    /* Enforce limits of (0,0) to (MaxRow(),MaxCol()) */
 
    iTop = hb_parni(1); /* Defaults to zero on bad type */
-   if( iTop < 0 )
-   {
+   if( iTop < 0 ) {
       iTop = 0;
-   }
-   else if( iTop > iMaxRow )
-   {
+   } else if( iTop > iMaxRow ) {
       iTop = iMaxRow;
    }
 
    iLeft = hb_parni(2); /* Defaults to zero on bad type */
-   if( iLeft < 0 )
-   {
+   if( iLeft < 0 ) {
       iLeft = 0;
-   }
-   else if( iLeft > iMaxCol )
-   {
+   } else if( iLeft > iMaxCol ) {
       iLeft = iMaxCol;
    }
 
-   if( HB_ISNUM(3) )
-   {
+   if( HB_ISNUM(3) ) {
       iBottom = hb_parni(3);
-      if( iBottom < 0 )
-      {
+      if( iBottom < 0 ) {
          iBottom = 0;
-      }
-      else if( iBottom > iMaxRow )
-      {
+      } else if( iBottom > iMaxRow ) {
          iBottom = iMaxRow;
       }
-   }
-   else
-   {
+   } else {
       iBottom = iMaxRow;
    }
 
-   if( HB_ISNUM(4) )
-   {
+   if( HB_ISNUM(4) ) {
       iRight = hb_parni(4);
-      if( iRight < 0 )
-      {
+      if( iRight < 0 ) {
          iRight = 0;
-      }
-      else if( iRight > iMaxCol )
-      {
+      } else if( iRight > iMaxCol ) {
          iRight = iMaxCol;
       }
-   }
-   else
-   {
+   } else {
       iRight = iMaxCol;
    }
 
@@ -134,90 +116,60 @@ HB_FUNC( HB_SCROLL )
    /* Enforce limits of (0,0) to (MaxRow(),MaxCol()) */
 
    iTop = hb_parni(1); /* Defaults to zero on bad type */
-   if( iTop < 0 )
-   {
+   if( iTop < 0 ) {
       iTop = 0;
-   }
-   else if( iTop > iMaxRow )
-   {
+   } else if( iTop > iMaxRow ) {
       iTop = iMaxRow;
    }
 
    iLeft = hb_parni(2); /* Defaults to zero on bad type */
-   if( iLeft < 0 )
-   {
+   if( iLeft < 0 ) {
       iLeft = 0;
-   }
-   else if( iLeft > iMaxCol )
-   {
+   } else if( iLeft > iMaxCol ) {
       iLeft = iMaxCol;
    }
 
-   if( HB_ISNUM(3) )
-   {
+   if( HB_ISNUM(3) ) {
       iBottom = hb_parni(3);
-      if( iBottom < 0 )
-      {
+      if( iBottom < 0 ) {
          iBottom = 0;
-      }
-      else if( iBottom > iMaxRow )
-      {
+      } else if( iBottom > iMaxRow ) {
          iBottom = iMaxRow;
       }
-   }
-   else
-   {
+   } else {
       iBottom = iMaxRow;
    }
 
-   if( HB_ISNUM(4) )
-   {
+   if( HB_ISNUM(4) ) {
       iRight = hb_parni(4);
-      if( iRight < 0 )
-      {
+      if( iRight < 0 ) {
          iRight = 0;
-      }
-      else if( iRight > iMaxCol )
-      {
+      } else if( iRight > iMaxCol ) {
          iRight = iMaxCol;
       }
-   }
-   else
-   {
+   } else {
       iRight = iMaxCol;
    }
 
-   if( HB_ISNUM(7) )
-   {
+   if( HB_ISNUM(7) ) {
       iColor = hb_parni(7);
-   }
-   else if( HB_ISCHAR(7) )
-   {
+   } else if( HB_ISCHAR(7) ) {
       iColor = hb_gtColorToN(hb_parc(7));
-   }
-   else
-   {
+   } else {
       iColor = -1;
    }
 
-   if( HB_ISNUM(8) )
-   {
+   if( HB_ISNUM(8) ) {
       iChar = hb_parni(8);
-      if( iChar > 0 && iChar <= 255 )
-      {
+      if( iChar > 0 && iChar <= 255 ) {
          PHB_CODEPAGE cdp = hb_vmCDP();
-         if( !HB_CDP_ISCHARUNI(cdp) )
-         {
+         if( !HB_CDP_ISCHARUNI(cdp) ) {
             iChar = hb_cdpGetU16(cdp, static_cast<HB_UCHAR>(iChar));
          }
       }
-   }
-   else if( HB_ISCHAR(8) )
-   {
+   } else if( HB_ISCHAR(8) ) {
       iChar = hb_cdpTextGetU16(hb_vmCDP(), hb_parc(8), hb_parclen(8));
-   }
-   else
-   {
+   } else {
       iChar = -1;
    }
 

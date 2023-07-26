@@ -69,48 +69,38 @@ HB_FUNC( MSETCURSOR )
 {
    hb_retl(hb_mouseGetCursor());
 
-   if( HB_ISLOG(1) )
-   {
+   if( HB_ISLOG(1) ) {
       hb_mouseSetCursor(hb_parl(1));
-   }   
+   }
 }
 
 HB_FUNC( MROW )
 {
-   if( hb_parl(1) )
-   {
+   if( hb_parl(1) ) {
       int iRow, iCol;
-
       hb_mouseGetPos(&iRow, &iCol);
       hb_retni(iRow);
-   }
-   else
-   {
+   } else {
       hb_retni(hb_mouseRow());
    }
 }
 
 HB_FUNC( MCOL )
 {
-   if( hb_parl(1) )
-   {
+   if( hb_parl(1) ) {
       int iRow, iCol;
-
       hb_mouseGetPos(&iRow, &iCol);
       hb_retni(iCol);
-   }
-   else
-   {
+   } else {
       hb_retni(hb_mouseCol());
-   }   
+   }
 }
 
 HB_FUNC( MSETPOS )
 {
-   if( HB_ISNUM(1) && HB_ISNUM(2) )
-   {
+   if( HB_ISNUM(1) && HB_ISNUM(2) ) {
       hb_mouseSetPos(hb_parni(1), hb_parni(2));
-   }   
+   }
 }
 
 HB_FUNC( MLEFTDOWN )
@@ -127,33 +117,27 @@ HB_FUNC( MDBLCLK )
 {
    hb_retni(hb_mouseGetDoubleClickSpeed());
 
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       hb_mouseSetDoubleClickSpeed(hb_parni(1));
-   }   
+   }
 }
 
 HB_FUNC( MSAVESTATE )
 {
    int iLen = hb_mouseStorageSize();
 
-   if( iLen > 0 )
-   {
+   if( iLen > 0 ) {
       void * pBuffer = hb_xgrab(iLen + 1);
-
       hb_mouseSaveState( pBuffer );
       hb_retclen_buffer(static_cast<char*>(pBuffer), iLen);
-   }
-   else
-   {
+   } else {
       hb_retc_null();
-   }   
+   }
 }
 
 HB_FUNC( MRESTSTATE )
 {
-   if( hb_parclen(1) == static_cast<HB_SIZE>(hb_mouseStorageSize()) )
-   {
+   if( hb_parclen(1) == static_cast<HB_SIZE>(hb_mouseStorageSize()) ) {
       hb_mouseRestoreState(hb_parc(1));
    }
 }
@@ -171,9 +155,7 @@ HB_FUNC( MSETBOUNDS )
 HB_FUNC( HB_MGETBOUNDS )
 {
    int iTop, iLeft, iBottom, iRight;
-
    hb_mouseGetBounds(&iTop, &iLeft, &iBottom, &iRight);
-
    hb_storni(iTop, 1);
    hb_storni(iLeft, 2);
    hb_storni(iBottom, 3);

@@ -52,12 +52,10 @@ HB_FUNC( LENNUM )
    PHB_ITEM pNumber = hb_param(1, Harbour::Item::NUMERIC);
    HB_SIZE nLen = 0;
 
-   if( pNumber )
-   {
+   if( pNumber ) {
       char * pszString = hb_itemStr(pNumber, nullptr, nullptr);
 
-      if( pszString )
-      {
+      if( pszString ) {
          nLen = strlen(pszString);
          hb_strLTrim(pszString, &nLen);
          hb_xfree(pszString);

@@ -69,13 +69,10 @@ static void hb_idleDataRelease(void * Cargo)
 {
    PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(Cargo);
 
-   if( pIdleData->pIdleTasks )
-   {
-      do
-      {
+   if( pIdleData->pIdleTasks ) {
+      do {
          hb_itemRelease(pIdleData->pIdleTasks[--pIdleData->iIdleMaxTask]);
-      }
-      while( pIdleData->iIdleMaxTask );
+      } while( pIdleData->iIdleMaxTask );
       hb_xfree(pIdleData->pIdleTasks);
    }
 }
@@ -96,25 +93,20 @@ void hb_idleState(void)
 {
    PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
-   if( !pIdleData->fIamIdle )
-   {
+   if( !pIdleData->fIamIdle ) {
       pIdleData->fIamIdle = true;
 
       hb_releaseCPU();
-      if( hb_vmRequestQuery() == 0 )
-      {
-         if( pIdleData->fCollectGarbage )
-         {
+      if( hb_vmRequestQuery() == 0 ) {
+         if( pIdleData->fCollectGarbage ) {
             hb_gcCollectAll(false);
             pIdleData->fCollectGarbage = false;
          }
 
-         if( pIdleData->pIdleTasks && pIdleData->iIdleTask < pIdleData->iIdleMaxTask )
-         {
+         if( pIdleData->pIdleTasks && pIdleData->iIdleTask < pIdleData->iIdleMaxTask ) {
             hb_itemRelease(hb_itemDo(pIdleData->pIdleTasks[pIdleData->iIdleTask], 0));
             ++pIdleData->iIdleTask;
-            if( pIdleData->iIdleTask == pIdleData->iIdleMaxTask && hb_setGetIdleRepeat() )
-            {
+            if( pIdleData->iIdleTask == pIdleData->iIdleMaxTask && hb_setGetIdleRepeat() ) {
                pIdleData->iIdleTask = 0;    /* restart processing of idle tasks */
                pIdleData->fCollectGarbage = true;
             }
@@ -128,8 +120,7 @@ void hb_idleReset(void)
 {
    PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
-   if( pIdleData->iIdleTask == pIdleData->iIdleMaxTask && !hb_setGetIdleRepeat() )
-   {
+   if( pIdleData->iIdleTask == pIdleData->iIdleMaxTask && !hb_setGetIdleRepeat() ) {
       pIdleData->iIdleTask = 0;
    }
 
@@ -138,16 +129,13 @@ void hb_idleReset(void)
 
 void hb_idleSleep(double dSeconds)
 {
-   if( dSeconds >= 0 )
-   {
+   if( dSeconds >= 0 ) {
       HB_MAXINT timeout = dSeconds > 0 ? static_cast<HB_MAXINT>(dSeconds * 1000) : 0;
       HB_MAXUINT timer = hb_timerInit(timeout);
 
-      do
-      {
+      do {
          hb_idleState();
-      }
-      while( (timeout = hb_timerTest(timeout, &timer)) != 0 && hb_vmRequestQuery() == 0 );
+      } while( (timeout = hb_timerTest(timeout, &timer)) != 0 && hb_vmRequestQuery() == 0 );
 
       hb_idleReset();
    }
@@ -179,18 +167,14 @@ HB_FUNC( HB_IDLEADD )
 {
    PHB_ITEM pBlock = hb_param(1, Harbour::Item::EVALITEM);
 
-   if( pBlock )
-   {
+   if( pBlock ) {
       PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
       ++pIdleData->iIdleMaxTask;
 
-      if( !pIdleData->pIdleTasks )
-      {
+      if( !pIdleData->pIdleTasks ) {
          pIdleData->pIdleTasks = static_cast<PHB_ITEM*>(hb_xgrab(sizeof(PHB_ITEM)));
-      }
-      else
-      {
+      } else {
          pIdleData->pIdleTasks = static_cast<PHB_ITEM*>(hb_xrealloc(pIdleData->pIdleTasks, sizeof(PHB_ITEM) * pIdleData->iIdleMaxTask));
       }
 
@@ -210,34 +194,26 @@ HB_FUNC( HB_IDLEDEL )
    PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackTestTSD(&s_idleData));
    void * pID = hb_parptr(1);
 
-   if( pID && pIdleData && pIdleData->pIdleTasks )
-   {
+   if( pID && pIdleData && pIdleData->pIdleTasks ) {
       int iTask = 0;
 
-      while( iTask < pIdleData->iIdleMaxTask )
-      {
+      while( iTask < pIdleData->iIdleMaxTask ) {
          PHB_ITEM pItem = pIdleData->pIdleTasks[iTask];
 
-         if( pID == hb_codeblockId(pItem) )
-         {
+         if( pID == hb_codeblockId(pItem) ) {
             hb_itemClear(hb_itemReturn(pItem));  /* return a codeblock */
             hb_itemRelease(pItem);
 
             --pIdleData->iIdleMaxTask;
-            if( pIdleData->iIdleMaxTask )
-            {
-               if( iTask != pIdleData->iIdleMaxTask )
-               {
+            if( pIdleData->iIdleMaxTask ) {
+               if( iTask != pIdleData->iIdleMaxTask ) {
                   memmove(&pIdleData->pIdleTasks[iTask], &pIdleData->pIdleTasks[iTask + 1], sizeof(PHB_ITEM) * (pIdleData->iIdleMaxTask - iTask));
                }
                pIdleData->pIdleTasks = static_cast<PHB_ITEM*>(hb_xrealloc(pIdleData->pIdleTasks, sizeof(PHB_ITEM) * pIdleData->iIdleMaxTask));
-               if( pIdleData->iIdleTask >= pIdleData->iIdleMaxTask )
-               {
+               if( pIdleData->iIdleTask >= pIdleData->iIdleMaxTask ) {
                   pIdleData->iIdleTask = 0;
                }
-            }
-            else
-            {
+            } else {
                hb_xfree(pIdleData->pIdleTasks);
                pIdleData->pIdleTasks = nullptr;
                pIdleData->iIdleTask  = 0;

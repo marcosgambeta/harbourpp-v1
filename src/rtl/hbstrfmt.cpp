@@ -57,8 +57,7 @@ struct BUFFERTYPE
 
 static void bufadd(BUFFERTYPE * pBuf, const char * pAdd, HB_SIZE nLen)
 {
-   if( pBuf->nLen + nLen >= pBuf->nMax )
-   {
+   if( pBuf->nLen + nLen >= pBuf->nMax ) {
       pBuf->nMax += ( pBuf->nMax >> 1 ) + nLen;
       pBuf->pData = static_cast<char*>(hb_xrealloc(pBuf->pData, pBuf->nMax));
    }
@@ -75,21 +74,17 @@ static void hb_itemHexStr(PHB_ITEM pItem, char * pStr, HB_BOOL fUpper)
    nValue = nTmp = hb_itemGetNInt(pItem);
 
    iLen = 0;
-   do
-   {
+   do {
       ++iLen;
       nTmp >>= 4;
-   }
-   while( nTmp );
+   } while( nTmp );
 
    pStr[iLen] = '\0';
-   do
-   {
+   do {
       int iDigit = static_cast<int>(nValue & 0x0F);
       pStr[--iLen] = static_cast<char>(iDigit + (iDigit < 10 ? '0' : (fUpper ? 'A' : 'a') - 10));
       nValue >>= 4;
-   }
-   while( iLen );
+   } while( iLen );
 }
 
 PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PHB_ITEM * pItemArray)
@@ -111,18 +106,15 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
    buffer.pData[0] = '\0';
 
    iParam = 0;
-   while( pFmt < pFmtEnd )
-   {
-      if( *pFmt != '%' )
-      {
+   while( pFmt < pFmtEnd ) {
+      if( *pFmt != '%' ) {
          bufadd(&buffer, pFmt++, 1);
          continue;
       }
 
       pFmtSave = pFmt++;
 
-      if( *pFmt == '%' )
-      {
+      if( *pFmt == '%' ) {
          bufadd(&buffer, pFmt++, 1);
          continue;
       }
@@ -132,26 +124,20 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
 
       /* parse parameter number */
       iParamNo = 0;
-      while( HB_ISDIGIT(*pFmt) )
-      {
+      while( HB_ISDIGIT(*pFmt) ) {
          iParamNo = iParamNo * 10 + *pFmt++ - '0';
       }
 
-      if( iParamNo > 0 && *pFmt == '$' )
-      {
+      if( iParamNo > 0 && *pFmt == '$' ) {
          pFmt++;
-      }
-      else
-      {
+      } else {
          iParamNo = -1;
          pFmt = pFmtSave + 1;
       }
 
       /* Parse flags */
-      do
-      {
-         switch( *pFmt )
-         {
+      do {
+         switch( *pFmt ) {
             case '-':
                fLeftAlign = 1;
                continue;
@@ -166,68 +152,53 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
                continue;
          }
          break;
-      }
-      while( *++pFmt );
+      } while( *++pFmt );
 
       /* Parse width */
-      if( HB_ISDIGIT(*pFmt) )
-      {
+      if( HB_ISDIGIT(*pFmt) ) {
          iWidth = 0;
-         while( HB_ISDIGIT(*pFmt) )
-         {
+         while( HB_ISDIGIT(*pFmt) ) {
             iWidth = iWidth * 10 + *pFmt++ - '0';
          }
       }
 
       /* Parse decimals */
-      if( *pFmt == '.' )
-      {
+      if( *pFmt == '.' ) {
          pFmt++;
          iDec = 0;
-         if( HB_ISDIGIT(*pFmt) )
-         {
-            while( HB_ISDIGIT(*pFmt) )
-            {
+         if( HB_ISDIGIT(*pFmt) ) {
+            while( HB_ISDIGIT(*pFmt) ) {
                iDec = iDec * 10 + *pFmt++ - '0';
             }
          }
       }
 
       /* Parse specifier */
-      if( *pFmt == 'c' || *pFmt == 'd' || *pFmt == 'x' || *pFmt == 'X' || *pFmt == 'f' || *pFmt == 's' )
-      {
-         if( iParamNo == -1 )
-         {
+      if( *pFmt == 'c' || *pFmt == 'd' || *pFmt == 'x' || *pFmt == 'X' || *pFmt == 'f' || *pFmt == 's' ) {
+         if( iParamNo == -1 ) {
             iParamNo = ++iParam;
          }
-         
+
          pItem = (iParamNo > iCount) ? nullptr : pItemArray[iParamNo - 1];
-      }
-      else
-      {
+      } else {
          pItem = nullptr;
       }
 
-      switch( *pFmt )
-      {
+      switch( *pFmt ) {
          case 'c':
          {
             char  buf[1];
 
             buf[0] = static_cast<char>(hb_itemGetNI(pItem));
-            if( fLeftAlign )
-            {
+            if( fLeftAlign ) {
                bufadd(&buffer, buf, 1);
             }
-            if( iWidth > 1 )
-            {
-               for( i = 1; i < iWidth; i++ )
-               {
+            if( iWidth > 1 ) {
+               for( i = 1; i < iWidth; i++ ) {
                   bufadd(&buffer, " ", 1);
                }
             }
-            if( !fLeftAlign )
-            {
+            if( !fLeftAlign ) {
                bufadd(&buffer, buf, 1);
             }
             break;
@@ -242,142 +213,100 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
             int   iSize, iExtra;
 
             fSign = 0;
-            if( pItem && HB_IS_NUMERIC(pItem) )
-            {
+            if( pItem && HB_IS_NUMERIC(pItem) ) {
                iSize = sizeof(HB_MAXINT) * 3 + 1;
                pStr2 = pStr = static_cast<char*>(hb_xgrab(iSize + 1));
-               if( *pFmt == 'd' )
-               {
+               if( *pFmt == 'd' ) {
                   hb_itemStrBuf(pStr, pItem, iSize, 0);
-               }
-               else
-               {
+               } else {
                   hb_itemHexStr(pItem, pStr, *pFmt == 'X');
                }
 
-               while( *pStr2 == ' ' )
-               {
+               while( *pStr2 == ' ' ) {
                   pStr2++;
                }
                iSize = static_cast<int>(strlen(pStr2));
-               if( *pStr2 == '-' )
-               {
+               if( *pStr2 == '-' ) {
                   fSign = 1;
                   iSize--;
                   pStr2++;
                }
-            }
-            else if( pItem && HB_IS_LOGICAL(pItem) )
-            {
+            } else if( pItem && HB_IS_LOGICAL(pItem) ) {
                iSize = 1;
-               if( hb_itemGetL(pItem) )
-               {
+               if( hb_itemGetL(pItem) ) {
                   pStr2 = "1";
-               }
-               else
-               {
+               } else {
                   pStr2 = "0";
                }
-            }
-            else
-            {
+            } else {
                iSize = 1;
                pStr2 = "0";
             }
 
             iExtra = 0;
-            if( fForceSign || fSpaceSign || fSign )
-            {
+            if( fForceSign || fSpaceSign || fSign ) {
                iExtra = 1;
             }
 
             /* If decimals is set, zero padding flag is ignored */
-            if( iDec >= 0 )
-            {
+            if( iDec >= 0 ) {
                fPadZero = 0;
             }
 
-            if( fLeftAlign )
-            {
+            if( fLeftAlign ) {
                /* Zero padding is ignored on left Align */
                /* ForceSign has priority over SpaceSign */
-               if( fSign )
-               {
+               if( fSign ) {
                   bufadd(&buffer, "-", 1);
-               }
-               else if( fForceSign )
-               {
+               } else if( fForceSign ) {
                   bufadd(&buffer, "+", 1);
-               }
-               else if( fSpaceSign )
-               {
+               } else if( fSpaceSign ) {
                   bufadd(&buffer, " ", 1);
                }
 
-               for( i = iSize; i < iDec; i++ )
-               {
+               for( i = iSize; i < iDec; i++ ) {
                   bufadd(&buffer, "0", 1);
                }
 
                bufadd(&buffer, pStr2, static_cast<HB_SIZE>(iSize));
-               if( iDec > iSize )
-               {
+               if( iDec > iSize ) {
                   iSize = iDec;
                }
-               for( i = iSize + iExtra; i < iWidth; i++ )
-               {
+               for( i = iSize + iExtra; i < iWidth; i++ ) {
                   bufadd(&buffer, " ", 1);
                }
-            }
-            else
-            {
+            } else {
                /* Right align */
-               if( fPadZero )
-               {
+               if( fPadZero ) {
                   /* ForceSign has priority over SpaceSign */
-                  if( fSign )
-                  {
+                  if( fSign ) {
                      bufadd(&buffer, "-", 1);
-                  }
-                  else if( fForceSign )
-                  {
+                  } else if( fForceSign ) {
                      bufadd(&buffer, "+", 1);
-                  }
-                  else if( fSpaceSign )
-                  {
+                  } else if( fSpaceSign ) {
                      bufadd(&buffer, " ", 1);
                   }
 
-                  for( i = iSize + iExtra; i < iWidth; i++ )
-                  {
+                  for( i = iSize + iExtra; i < iWidth; i++ ) {
                      bufadd(&buffer, "0", 1);
                   }
 
                   bufadd(&buffer, pStr2, strlen(pStr2));
-               }
-               else
-               {
-                  for( i = (iSize > iDec ? iSize : iDec) + iExtra; i < iWidth; i++ )
-                  {
+               } else {
+                  for( i = (iSize > iDec ? iSize : iDec) + iExtra; i < iWidth; i++ ) {
                      bufadd(&buffer, " ", 1);
                   }
 
                   /* ForceSign has priority over SpaceSign */
-                  if( fSign )
-                  {
+                  if( fSign ) {
                      bufadd(&buffer, "-", 1);
-                  }
-                  else if( fForceSign )
-                  {
+                  } else if( fForceSign ) {
                      bufadd(&buffer, "+", 1);
-                  }
-                  else if( fSpaceSign )
-                  {
+                  } else if( fSpaceSign ) {
                      bufadd(&buffer, " ", 1);
                   }
 
-                  for( i = iSize; i < iDec; i++ )
-                  {
+                  for( i = iSize; i < iDec; i++ ) {
                      bufadd(&buffer, "0", 1);
                   }
 
@@ -385,8 +314,7 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
                }
             }
 
-            if( pStr )
-            {
+            if( pStr ) {
                hb_xfree(pStr);
             }
             break;
@@ -398,129 +326,93 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
             const char * pStr2;
             int   iSize, iExtra, iD;
 
-            if( pItem && HB_IS_NUMERIC(pItem) )
-            {
+            if( pItem && HB_IS_NUMERIC(pItem) ) {
                hb_itemGetNLen(pItem, &iSize, &iD);
 
-               if( iDec != -1 )
-               {
+               if( iDec != -1 ) {
                   iSize += iDec - iD + 1;
                   iD = iDec;
                }
 
                /* Let 255 be a limit for number length */
-               if( iSize > 255 )
-               {
+               if( iSize > 255 ) {
                   iSize = 255;
                }
-               if( iD > 253 )
-               {
+               if( iD > 253 ) {
                   iD = 253;
                }
-               if( iSize < iD + 2 )
-               {
+               if( iSize < iD + 2 ) {
                   iSize = iD + 2;
                }
 
                pStr2 = pStr = static_cast<char*>(hb_xgrab(iSize + 1));
                hb_itemStrBuf(pStr, pItem, iSize, iD);
 
-               if( pStr[0] == '*' && iSize < 255 )
-               {
+               if( pStr[0] == '*' && iSize < 255 ) {
                   pStr2 = pStr = static_cast<char*>(hb_xrealloc(pStr, 256));
                   hb_itemStrBuf(pStr, pItem, 255, iD);
                }
-               while( *pStr2 == ' ' )
-               {
+               while( *pStr2 == ' ' ) {
                   pStr2++;
                }
                iSize = static_cast<int>(strlen(pStr2));
-            }
-            else
-            {
+            } else {
                iSize = 1;
                pStr2 = "0";
             }
 
             iExtra = 0;
-            if( (fForceSign || fSpaceSign) && *pStr2 != '-' )
-            {
+            if( (fForceSign || fSpaceSign) && *pStr2 != '-' ) {
                iExtra = 1;
             }
 
-            if( fLeftAlign )
-            {
+            if( fLeftAlign ) {
                /* Zero padding is ignored on left Align */
-               if( *pStr2 != '-' )
-               {
+               if( *pStr2 != '-' ) {
                   /* ForceSign has priority over SpaceSign */
-                  if( fForceSign )
-                  {
+                  if( fForceSign ) {
                      bufadd(&buffer, "+", 1);
-                  }
-                  else
-                  {
-                     if( fSpaceSign )
-                     {
+                  } else {
+                     if( fSpaceSign ) {
                         bufadd(&buffer, " ", 1);
                      }
                   }
                }
                bufadd(&buffer, pStr2, static_cast<HB_SIZE>(iSize));
-               for( i = iSize + iExtra; i < iWidth; i++ )
-               {
+               for( i = iSize + iExtra; i < iWidth; i++ ) {
                   bufadd(&buffer, " ", 1);
                }
-            }
-            else
-            {
+            } else {
                /* Right align */
-               if( fPadZero )
-               {
-                  if( *pStr2 == '-' )
-                  {
+               if( fPadZero ) {
+                  if( *pStr2 == '-' ) {
                      bufadd(&buffer, pStr2++, 1);
-                  }
-                  else
-                  {
+                  } else {
                      /* ForceSign has priority over SpaceSign */
-                     if( fForceSign )
-                     {
+                     if( fForceSign ) {
                         bufadd(&buffer, "+", 1);
-                     }
-                     else
-                     {
-                        if( fSpaceSign )
-                        {
+                     } else {
+                        if( fSpaceSign ) {
                            bufadd(&buffer, " ", 1);
                         }
                      }
                   }
-                  for( i = iSize + iExtra; i < iWidth; i++ )
-                  {
+                  for( i = iSize + iExtra; i < iWidth; i++ ) {
                      bufadd(&buffer, "0", 1);
                   }
 
                   bufadd(&buffer, pStr2, strlen(pStr2));
-               }
-               else
-               {
-                  for( i = iSize + iExtra; i < iWidth; i++ )
-                  {
+               } else {
+                  for( i = iSize + iExtra; i < iWidth; i++ ) {
                      bufadd(&buffer, " ", 1);
                   }
 
-                  if( *pStr2 != '-' )
-                  {
+                  if( *pStr2 != '-' ) {
                      /* ForceSign has priority over SpaceSign */
-                     if( fForceSign )
-                     {
+                     if( fForceSign ) {
                         bufadd(&buffer, "+", 1);
-                     }
-                     else
-                     {
-                        if( fSpaceSign )
-                        {
+                     } else {
+                        if( fSpaceSign ) {
                            bufadd(&buffer, " ", 1);
                         }
                      }
@@ -529,8 +421,7 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
                }
             }
 
-            if( pStr )
-            {
+            if( pStr ) {
                hb_xfree(pStr);
             }
             break;
@@ -541,28 +432,22 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
             const char * pStr = hb_itemGetCPtr(pItem);
 
             nSize = hb_itemGetCLen(pItem);
-            if( iDec >= 0 )
-            {
-               if( static_cast<HB_SIZE>(iDec) < nSize )
-               {
+            if( iDec >= 0 ) {
+               if( static_cast<HB_SIZE>(iDec) < nSize ) {
                   nSize = iDec;
                }
             }
-            if( fLeftAlign )
-            {
+            if( fLeftAlign ) {
                bufadd(&buffer, pStr, nSize);
             }
 
-            if( iWidth > 1 )
-            {
-               for( i = static_cast<int>(nSize); i < iWidth; i++ )
-               {
+            if( iWidth > 1 ) {
+               for( i = static_cast<int>(nSize); i < iWidth; i++ ) {
                   bufadd(&buffer, " ", 1);
                }
             }
 
-            if( !fLeftAlign )
-            {
+            if( !fLeftAlign ) {
                bufadd(&buffer, pStr, nSize);
             }
 
@@ -587,29 +472,23 @@ HB_FUNC( HB_STRFORMAT )
 {
    PHB_ITEM pFormat = hb_param(1, Harbour::Item::STRING);
 
-   if( pFormat )
-   {
+   if( pFormat ) {
       int        iParams = hb_pcount();
       PHB_ITEM * pItemArray = nullptr;
 
-      if( iParams > 1 )
-      {
+      if( iParams > 1 ) {
          pItemArray = static_cast<PHB_ITEM*>(hb_xgrab((iParams - 1) * sizeof(PHB_ITEM)));
-         for( int i = 1; i < iParams; i++ )
-         {
+         for( int i = 1; i < iParams; i++ ) {
             pItemArray[i - 1] = hb_param(i + 1, Harbour::Item::ANY);
          }
       }
 
       hb_itemReturnRelease(hb_strFormat(nullptr, pFormat, iParams - 1, pItemArray));
 
-      if( iParams > 1 )
-      {
+      if( iParams > 1 ) {
          hb_xfree(pItemArray);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

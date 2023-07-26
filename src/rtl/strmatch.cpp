@@ -83,20 +83,17 @@ HB_BOOL hb_strMatchRegExp(const char * szString, const char * szPattern)
 HB_FUNC( HB_WILDMATCH )
 {
    const char * szPattern = hb_parc(1), * szText = hb_parc(2);
-
    hb_retl(szText && szPattern && (hb_parl(3) ? hb_strMatchWildExact(szText, szPattern) : hb_strMatchWild(szText, szPattern)));
 }
 
 HB_FUNC( HB_WILDMATCHI )
 {
    const char * szPattern = hb_parc(1), * szText = hb_parc(2);
-
    hb_retl(szText && szPattern && hb_strMatchCaseWildExact(szText, szPattern));
 }
 
 HB_FUNC( HB_FILEMATCH )
 {
    const char * szText = hb_parc(1), * szPattern = hb_parc(2);
-
    hb_retl(szText && szPattern && hb_strMatchFile(szText, szPattern));
 }

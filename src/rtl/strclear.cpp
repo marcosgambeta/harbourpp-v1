@@ -55,20 +55,14 @@ HB_FUNC( HB_STRCLEAR )
             it's possible that it contains copy of passed item [druzus] */
    hb_retl(false);
 
-   if( pItem && HB_ISBYREF(1) )
-   {
-      const char * pszPtr;
+   if( pItem && HB_ISBYREF(1) ) {
+      const char * pszPtr = hb_itemGetCPtr(pItem);
       char * pBuffer;
       HB_SIZE nSize;
-
-      pszPtr = hb_itemGetCPtr(pItem);
-      if( hb_itemGetWriteCL(pItem, &pBuffer, &nSize) )
-      {
+      if( hb_itemGetWriteCL(pItem, &pBuffer, &nSize) ) {
          memset(pBuffer, '\0', nSize + 1);
          hb_retl(pszPtr == pBuffer);
-      }
-      else
-      {
+      } else {
          hb_retl(false);
       }
    }

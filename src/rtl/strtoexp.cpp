@@ -50,16 +50,13 @@ HB_FUNC( HB_STRTOEXP )
 {
    const char * pszString = hb_parc(1);
 
-   if( pszString )
-   {
+   if( pszString ) {
       HB_SIZE nLen = hb_parclen(1), nRet, n, nQ = 0;
       int iType = 0;
       char ch, * pDst, * pszResult;
 
-      for( n = 0; n < nLen; ++n )
-      {
-         switch( pszString[n] )
-         {
+      for( n = 0; n < nLen; ++n ) {
+         switch( pszString[n] ) {
             case '\\':
                ++nQ;
                break;
@@ -84,17 +81,14 @@ HB_FUNC( HB_STRTOEXP )
                break;
          }
       }
-      if( iType == 7 || hb_parl(2) )
-      {
+      if( iType == 7 || hb_parl(2) ) {
          nRet = nLen + 3 + nQ;
          pDst = pszResult = static_cast<char*>(hb_xgrab(nRet + 1));
          *pDst++ = 'e';
          *pDst++ = '"';
-         for( n = 0; n < nLen; ++n )
-         {
+         for( n = 0; n < nLen; ++n ) {
             ch = pszString[n];
-            switch( ch )
-            {
+            switch( ch ) {
                case '\r':
                   *pDst++ = '\\';
                   *pDst++ = 'r';
@@ -119,21 +113,14 @@ HB_FUNC( HB_STRTOEXP )
             }
          }
          *pDst++ = '"';
-      }
-      else
-      {
+      } else {
          nRet = nLen + 2;
          pDst = pszResult = static_cast<char*>(hb_xgrab(nRet + 1));
-         if( (iType & 1) == 0 )
-         {
+         if( (iType & 1) == 0 ) {
             *pDst++ = ch = '"';
-         }
-         else if( (iType & 2) == 0 )
-         {
+         } else if( (iType & 2) == 0 ) {
             *pDst++ = ch = '\'';
-         }
-         else
-         {
+         } else {
             *pDst++ = '[';
             ch = ']';
          }

@@ -58,8 +58,7 @@ HB_FUNC( __BOX )
    PHB_ITEM pRight  = hb_param(4, Harbour::Item::NUMERIC);
    const char * pszBox = hb_parc(5);
 
-   if( pTop && pLeft && pBottom && pRight && pszBox )
-   {
+   if( pTop && pLeft && pBottom && pRight && pszBox ) {
       hb_gtBox(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight), pszBox);
    }
 }
@@ -71,8 +70,7 @@ HB_FUNC( __BOXD )
    PHB_ITEM pBottom = hb_param(3, Harbour::Item::NUMERIC);
    PHB_ITEM pRight  = hb_param(4, Harbour::Item::NUMERIC);
 
-   if( pTop && pLeft && pBottom && pRight )
-   {
+   if( pTop && pLeft && pBottom && pRight ) {
       hb_gtBoxD( hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight) );
    }
 }
@@ -84,8 +82,7 @@ HB_FUNC( __BOXS )
    PHB_ITEM pBottom = hb_param(3, Harbour::Item::NUMERIC);
    PHB_ITEM pRight  = hb_param(4, Harbour::Item::NUMERIC);
 
-   if( pTop && pLeft && pBottom && pRight )
-   {
+   if( pTop && pLeft && pBottom && pRight ) {
       hb_gtBoxS(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight));
    }
 }

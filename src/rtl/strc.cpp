@@ -56,23 +56,17 @@ HB_FUNC( HB_STRDECODESCAPE )
 {
    PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText )
-   {
+   if( pText ) {
       HB_SIZE nLen = hb_itemGetCLen(pText);
-      if( nLen > 0 )
-      {
+      if( nLen > 0 ) {
          char * str = static_cast<char*>(hb_xgrab(nLen + 1));
          hb_xmemcpy(str, hb_itemGetCPtr(pText), nLen + 1);
          hb_strRemEscSeq(str, &nLen);
          hb_retclen_buffer(str, nLen);
-      }
-      else
-      {
+      } else {
          hb_itemReturn(pText);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -88,83 +82,64 @@ HB_FUNC( HB_STRCDECODE )
 {
    PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText )
-   {
+   if( pText ) {
       HB_SIZE nLen = hb_itemGetCLen(pText);
       HB_BOOL fCont = hb_parl(2);
-      if( nLen > 0 )
-      {
+      if( nLen > 0 ) {
          const char * pszSrc = hb_itemGetCPtr(pText);
          char * pszDst = static_cast<char*>(hb_xgrab(nLen + 1));
          HB_SIZE nDst = 0, n;
 
-         for( ;; )
-         {
-            if( !fCont )
-            {
-               while( nLen && HB_ISSPACE(*pszSrc) )
-               {
+         for( ;; ) {
+            if( !fCont ) {
+               while( nLen && HB_ISSPACE(*pszSrc) ) {
                   ++pszSrc;
                   --nLen;
                }
-               if( nLen && *pszSrc == '"' )
-               {
+               if( nLen && *pszSrc == '"' ) {
                   ++pszSrc;
                   --nLen;
                   fCont = true;
                }
             }
-            if( !fCont || !nLen )
-            {
+            if( !fCont || !nLen ) {
                break;
             }
 
             n = 0;
-            while( n < nLen )
-            {
+            while( n < nLen ) {
                char c = pszSrc[n];
-               if( c == '"' )
-               {
+               if( c == '"' ) {
                   fCont = false;
                   break;
                }
                pszDst[nDst + n] = c;
-               if( ++n < nLen && c == '\\' )
-               {
+               if( ++n < nLen && c == '\\' ) {
                   pszDst[nDst + n] = pszSrc[n];
                   ++n;
                }
             }
-            if( n > 0 )
-            {
+            if( n > 0 ) {
                pszSrc += n;
                nLen -= n;
                hb_strRemEscSeq(pszDst + nDst, &n);
                nDst += n;
             }
-            if( !fCont )
-            {
+            if( !fCont ) {
                ++pszSrc;
                --nLen;
             }
          }
-         if( nLen == 0 && (!fCont || HB_ISBYREF(2)) )
-         {
+         if( nLen == 0 && (!fCont || HB_ISBYREF(2)) ) {
             hb_retclen_buffer(pszDst, nDst);
             hb_storl(fCont, 2);
-         }
-         else
-         {
+         } else {
             hb_xfree(pszDst);
          }
-      }
-      else if( fCont )
-      {
+      } else if( fCont ) {
          hb_itemReturn(pText);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

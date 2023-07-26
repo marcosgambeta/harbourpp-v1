@@ -55,36 +55,28 @@ HB_FUNC( HB_USERLANG )
    char * ietf;
 
    ietf = hb_getenv("LC_ALL");
-   if( ietf == nullptr )
-   {
+   if( ietf == nullptr ) {
       ietf = hb_getenv("LC_MESSAGES");
-      if( ietf == nullptr )
-      {
+      if( ietf == nullptr ) {
          ietf = hb_getenv("LANG");
-      }   
+      }
    }
 
-   if( ietf != nullptr )
-   {
+   if( ietf != nullptr ) {
       HB_ISIZ tmp;
 
-      for( tmp = 0; ietf[tmp] && ietf[tmp] != '.'; tmp++ )
-      {
-         if( ietf[tmp] == '_' )
-         {
+      for( tmp = 0; ietf[tmp] && ietf[tmp] != '.'; tmp++ ) {
+         if( ietf[tmp] == '_' ) {
             ietf[tmp] = '-';
-         }   
+         }
       }
 
       hb_retclen_buffer(ietf, tmp);
-   }
-   else
-   {
+   } else {
 #if defined(HB_OS_WIN)
       const char * ietfc;
 
-      switch( GetUserDefaultLangID() )
-      {
+      switch( GetUserDefaultLangID() ) {
          case 0x0036: ietfc = "af"         ; break;
          case 0x0436: ietfc = "af-ZA"      ; break;
          case 0x001C: ietfc = "sq"         ; break;
