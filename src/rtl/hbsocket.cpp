@@ -2606,6 +2606,7 @@ int hb_socketSetExclusiveAddr(HB_SOCKET sd, HB_BOOL fExclusive)
 
 int hb_socketSetReuseAddr(HB_SOCKET sd, HB_BOOL fReuse)
 {
+   int ret;
    /* it allows to reuse port immediately without timeout used to
     * clean all pending connections addressed to previous port owner
     */
@@ -2616,11 +2617,11 @@ int hb_socketSetReuseAddr(HB_SOCKET sd, HB_BOOL fReuse)
       HB_SYMBOL_UNUSED(sd);
       HB_SYMBOL_UNUSED(fReuse);
       hb_socketSetError(HB_SOCKET_ERR_NOSUPPORT);
-      int ret = -1;
+      ret = -1;
    #else
    {
       int val = fReuse ? 1 : 0;
-      int ret = setsockopt(sd, SOL_SOCKET, SO_REUSEADDR, reinterpret_cast<const char*>(&val), sizeof(val));
+      ret = setsockopt(sd, SOL_SOCKET, SO_REUSEADDR, reinterpret_cast<const char*>(&val), sizeof(val));
       hb_socketSetOsError(ret != -1 ? 0 : HB_SOCK_GETERROR());
    }
    #endif
