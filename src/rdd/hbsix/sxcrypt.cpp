@@ -135,7 +135,7 @@ static bool _hb_sxGetKey(PHB_ITEM pKeyItem, char * pKeyVal)
 
       if( pArea != nullptr ) {
          pItem = hb_itemNew(nullptr);
-         if( SELF_INFO(pArea, DBI_PASSWORD, pItem) == HB_SUCCESS ) {
+         if( SELF_INFO(pArea, DBI_PASSWORD, pItem) == Harbour::SUCCESS ) {
             pKeyItem = pItem;
          }
       }

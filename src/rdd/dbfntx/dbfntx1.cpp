@@ -259,7 +259,7 @@ static HB_ERRCODE hb_ntxErrorRT(NTXAREAP pArea,
                                 const char * szFileName, HB_ERRCODE errOsCode,
                                 HB_USHORT uiFlags, PHB_ITEM * pErrorPtr)
 {
-   HB_ERRCODE iRet = HB_FAILURE;
+   HB_ERRCODE iRet = Harbour::FAILURE;
 
    if( hb_vmRequestQuery() == 0 ) {
       PHB_ITEM pError;
@@ -866,7 +866,7 @@ static bool hb_ntxCheckRecordScope(NTXAREAP pArea, HB_ULONG ulRec)
 {
    HB_LONG lRecNo = static_cast<HB_LONG>(ulRec);
 
-   if( SELF_COUNTSCOPE(&pArea->dbfarea.area, nullptr, &lRecNo) == HB_SUCCESS && lRecNo == 0 ) {
+   if( SELF_COUNTSCOPE(&pArea->dbfarea.area, nullptr, &lRecNo) == Harbour::SUCCESS && lRecNo == 0 ) {
       return false;
    }
    return true;
@@ -1464,7 +1464,7 @@ static void hb_ntxTagDelete(LPTAGINFO pTag)
 static HB_ERRCODE hb_ntxTagAdd(LPNTXINDEX pIndex, LPTAGINFO pTag)
 {
    if( pIndex->iTags >= CTX_MAX_TAGS ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( pIndex->iTags ) {
@@ -1475,7 +1475,7 @@ static HB_ERRCODE hb_ntxTagAdd(LPNTXINDEX pIndex, LPTAGINFO pTag)
 
    pIndex->lpTags[pIndex->iTags++] = pTag;
    pIndex->pArea->fSetTagNumbers = true;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1495,14 +1495,14 @@ static LPTAGINFO hb_ntxTagLoad(LPNTXINDEX pIndex, HB_ULONG ulBlock, const char *
       return nullptr;
    }
 
-   if( SELF_COMPILE(&pIndex->pArea->dbfarea.area, reinterpret_cast<const char*>(lpNTX->key_expr)) == HB_FAILURE ) {
+   if( SELF_COMPILE(&pIndex->pArea->dbfarea.area, reinterpret_cast<const char*>(lpNTX->key_expr)) == Harbour::FAILURE ) {
       return nullptr;
    }
    pKeyExp = pIndex->pArea->dbfarea.area.valResult;
    pIndex->pArea->dbfarea.area.valResult = nullptr;
 
    if( usType & NTX_FLAG_FORITEM && lpNTX->for_expr[0] >= 0x20 ) {
-      if( SELF_COMPILE(&pIndex->pArea->dbfarea.area, reinterpret_cast<const char*>(lpNTX->for_expr)) == HB_FAILURE ) {
+      if( SELF_COMPILE(&pIndex->pArea->dbfarea.area, reinterpret_cast<const char*>(lpNTX->for_expr)) == Harbour::FAILURE ) {
          hb_vmDestroyBlockOrMacro(pKeyExp);
          return nullptr;
       }
@@ -1626,7 +1626,7 @@ static HB_ERRCODE hb_ntxTagHeaderSave( LPTAGINFO pTag )
       if( !pTag->HeadBlock ) {
          pTag->HeadBlock = hb_ntxPageGetFree(pTag);
          if( !pTag->HeadBlock ) {
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
          hb_ntxIndexTagAdd(pIndex, pTag);
       }
@@ -1693,12 +1693,12 @@ static HB_ERRCODE hb_ntxTagHeaderSave( LPTAGINFO pTag )
    }
 
    if( !hb_ntxBlockWrite(pIndex, pTag->HeadBlock, &Header, iSize) ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    pTag->HdrChanged = false;
    pIndex->Changed = pIndex->Compound;
    pIndex->fFlush = true;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1766,11 +1766,11 @@ static HB_ERRCODE hb_ntxIndexHeaderSave( LPNTXINDEX pIndex )
       HB_PUT_LE_UINT32(lpCTX->filesize, pIndex->TagBlock);
 
       if( !hb_ntxBlockWrite(pIndex, 0, lpCTX, iSize) ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
    pIndex->Changed = pIndex->Update = false;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1786,7 +1786,7 @@ static HB_ERRCODE hb_ntxIndexLoad(LPNTXINDEX pIndex, const char * szTagName)
          pIndex->HeaderBuff = static_cast<HB_BYTE*>(hb_xgrab(NTXBLOCKSIZE));
       }
       if( !hb_ntxBlockRead(pIndex, 0, pIndex->HeaderBuff, NTXBLOCKSIZE) ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       pIndex->fValidHeader = true;
    }
@@ -1802,7 +1802,7 @@ static HB_ERRCODE hb_ntxIndexLoad(LPNTXINDEX pIndex, const char * szTagName)
 
       iTags = HB_GET_LE_UINT16(lpCTX->ntags);
       if( iTags > CTX_MAX_TAGS ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       pIndex->Version = HB_GET_LE_UINT32(lpCTX->version);
       pIndex->NextAvail = HB_GET_LE_UINT32(lpCTX->freepage);
@@ -1812,14 +1812,14 @@ static HB_ERRCODE hb_ntxIndexLoad(LPNTXINDEX pIndex, const char * szTagName)
       for( pIndex->iTags = 0; pIndex->iTags < iTags; pTagItem++ ) {
          HB_ULONG ulBlock = HB_GET_LE_UINT32(pTagItem->tag_header);
          if( ulBlock == 0 || pTagItem->tag_name[0] <= 0x20 ) {
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
          if( !hb_ntxBlockRead(pIndex, ulBlock, tagbuffer, NTXBLOCKSIZE) ) {
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
          pTag = hb_ntxTagLoad(pIndex, ulBlock, reinterpret_cast<const char*>(pTagItem->tag_name), tagbuffer);
          if( !pTag ) {
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
          hb_ntxTagAdd(pIndex, pTag);
       }
@@ -1828,12 +1828,12 @@ static HB_ERRCODE hb_ntxIndexLoad(LPNTXINDEX pIndex, const char * szTagName)
    {
       pTag = hb_ntxTagLoad(pIndex, 0, szTagName, pIndex->HeaderBuff);
       if( !pTag ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       hb_ntxTagAdd(pIndex, pTag);
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1848,14 +1848,14 @@ static HB_ERRCODE hb_ntxIndexHeaderRead(LPNTXINDEX pIndex)
    }
 
    if( !hb_ntxBlockRead(pIndex, 0, pIndex->HeaderBuff, NTXBLOCKSIZE) ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    type = HB_GET_LE_UINT16(pIndex->HeaderBuff);
    if( (type & NTX_FLAG_COMPOUND) != 0 ) {
 #if defined(HB_NTX_NOMULTITAG)
       hb_ntxErrorRT(pIndex->pArea, EG_CORRUPTION, EDBF_CORRUPT, pIndex->IndexName, 0, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
 #else
       LPCTXHEADER lpCTX = reinterpret_cast<LPCTXHEADER>(pIndex->HeaderBuff);
       HB_ULONG ulVersion, ulNext;
@@ -1887,7 +1887,7 @@ static HB_ERRCODE hb_ntxIndexHeaderRead(LPNTXINDEX pIndex)
 
       if( pIndex->Compound ) {
          hb_ntxErrorRT(pIndex->pArea, EG_CORRUPTION, EDBF_CORRUPT, pIndex->IndexName, 0, 0, nullptr);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       pTag = pIndex->iTags ? pIndex->lpTags[0] : nullptr;
 
@@ -1905,7 +1905,7 @@ static HB_ERRCODE hb_ntxIndexHeaderRead(LPNTXINDEX pIndex)
          }
       }
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1959,7 +1959,7 @@ static bool hb_ntxIndexLockRead(LPNTXINDEX pIndex)
        */
       if( fOK ) {
          pIndex->lockRead++;
-         if( hb_ntxIndexHeaderRead(pIndex) != HB_SUCCESS ) {
+         if( hb_ntxIndexHeaderRead(pIndex) != Harbour::SUCCESS ) {
             pIndex->lockRead--;
             hb_dbfLockIdxFile(&pIndex->pArea->dbfarea, pIndex->DiskFile, FL_UNLOCK, false, &pIndex->lockData);
             return false;
@@ -1998,7 +1998,7 @@ static bool hb_ntxIndexLockWrite(LPNTXINDEX pIndex, bool fCheck)
        */
       if( fOK ) {
          pIndex->lockWrite++;
-         if( fCheck && hb_ntxIndexHeaderRead(pIndex) != HB_SUCCESS ) {
+         if( fCheck && hb_ntxIndexHeaderRead(pIndex) != Harbour::SUCCESS ) {
             pIndex->lockWrite--;
             hb_dbfLockIdxFile(&pIndex->pArea->dbfarea, pIndex->DiskFile, FL_UNLOCK, false, &pIndex->lockData);
             return false;
@@ -3329,7 +3329,7 @@ static HB_ERRCODE hb_ntxTagSpaceFree(LPTAGINFO pTag)
    if( hb_ntxTagHeaderCheck(pTag) ) {
       if( pTag->RootBlock ) {
          if( !hb_ntxTagPagesFree(pTag, pTag->RootBlock) ) {
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
       }
       hb_ntxPageAddFree(pTag, pTag->HeadBlock);
@@ -3337,7 +3337,7 @@ static HB_ERRCODE hb_ntxTagSpaceFree(LPTAGINFO pTag)
       pTag->pIndex->Changed = true;
    }
    hb_ntxTagDelete(pTag);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -3362,7 +3362,7 @@ static void hb_ntxCreateFName(NTXAREAP pArea, const char * szBagName, bool * fPr
    if( !fName || (!pFileName->szExtension && hb_setGetDefExtension()) ) {
       DBORDERINFO pExtInfo{};
       pExt = pExtInfo.itmResult = hb_itemPutC(nullptr, nullptr);
-      if( SELF_ORDINFO(&pArea->dbfarea.area, DBOI_BAGEXT, &pExtInfo) == HB_SUCCESS && hb_itemGetCLen(pExt) > 0 ) {
+      if( SELF_ORDINFO(&pArea->dbfarea.area, DBOI_BAGEXT, &pExtInfo) == Harbour::SUCCESS && hb_itemGetCLen(pExt) > 0 ) {
          pFileName->szExtension = hb_itemGetCPtr(pExt);
       }
    }
@@ -3380,7 +3380,7 @@ static void hb_ntxCreateFName(NTXAREAP pArea, const char * szBagName, bool * fPr
          if( *fProd && pFileName->szExtension && !pExt ) {
             DBORDERINFO pExtInfo{};
             pExt = pExtInfo.itmResult = hb_itemPutC(nullptr, nullptr);
-            if( SELF_ORDINFO(&pArea->dbfarea.area, DBOI_BAGEXT, &pExtInfo) == HB_SUCCESS ) {
+            if( SELF_ORDINFO(&pArea->dbfarea.area, DBOI_BAGEXT, &pExtInfo) == Harbour::SUCCESS ) {
                *fProd = hb_stricmp(pFileName->szExtension, hb_itemGetCPtr(pExt)) == 0;
             }
          }
@@ -3661,7 +3661,7 @@ static bool hb_ntxOrdKeyGoto(LPTAGINFO pTag, HB_ULONG ulKeyNo)
    } else {
       LPTAGINFO pSavedTag = pArea->lpCurTag;
       pArea->lpCurTag = pTag;
-      if( SELF_GOTO(&pArea->dbfarea.area, pTag->CurKeyInfo->Xtra) == HB_SUCCESS ) {
+      if( SELF_GOTO(&pArea->dbfarea.area, pTag->CurKeyInfo->Xtra) == Harbour::SUCCESS ) {
          SELF_SKIPFILTER(&pArea->dbfarea.area, 1);
       }
       pArea->lpCurTag = pSavedTag;
@@ -3790,7 +3790,7 @@ static void hb_ntxOrdSetRelKeyPos(LPTAGINFO pTag, double dPos)
                hb_ntxTagGoTop(pTag);
             }
             if( pTag->CurKeyInfo->Xtra != 0 ) {
-               if( SELF_GOTO(&pArea->dbfarea.area, pTag->CurKeyInfo->Xtra) == HB_SUCCESS ) {
+               if( SELF_GOTO(&pArea->dbfarea.area, pTag->CurKeyInfo->Xtra) == Harbour::SUCCESS ) {
                   SELF_SKIPFILTER(&pArea->dbfarea.area, 1);
                   if( pArea->dbfarea.area.fEof && !fTop ) {
                      fForward = false;
@@ -3804,7 +3804,7 @@ static void hb_ntxOrdSetRelKeyPos(LPTAGINFO pTag, double dPos)
          }
          if( !fForward ) {
             hb_ntxTagGoBottom(pTag);
-            if( SELF_GOTO(&pArea->dbfarea.area, pTag->CurKeyInfo->Xtra) == HB_SUCCESS && pTag->CurKeyInfo->Xtra != 0 ) {
+            if( SELF_GOTO(&pArea->dbfarea.area, pTag->CurKeyInfo->Xtra) == Harbour::SUCCESS && pTag->CurKeyInfo->Xtra != 0 ) {
                pArea->dbfarea.area.fBottom = true;
                SELF_SKIPFILTER(&pArea->dbfarea.area, -1);
             }
@@ -3863,7 +3863,7 @@ static bool hb_ntxOrdSkipUnique(LPTAGINFO pTag, HB_LONG lToSkip)
       }
       hb_ntxTagUnLockRead(pTag);
 
-      if( SELF_GOTO(&pArea->dbfarea.area, fEof ? 0 : pTag->CurKeyInfo->Xtra) == HB_SUCCESS && !fEof ) {
+      if( SELF_GOTO(&pArea->dbfarea.area, fEof ? 0 : pTag->CurKeyInfo->Xtra) == Harbour::SUCCESS && !fEof ) {
          SELF_SKIPFILTER(&pArea->dbfarea.area, (fForward || fOut) ? 1 : -1);
          if( !fForward && fOut ) {
             pArea->dbfarea.area.fBof = true;
@@ -3896,7 +3896,7 @@ static bool hb_ntxOrdSkipEval(LPTAGINFO pTag, bool fForward, PHB_ITEM pEval)
    bool fFound = false;
 
    if( (hb_itemType(pEval) & Harbour::Item::BLOCK) == 0 ) {
-      if( SELF_SKIP(&pArea->dbfarea.area, fForward ? 1 : -1) != HB_SUCCESS ) {
+      if( SELF_SKIP(&pArea->dbfarea.area, fForward ? 1 : -1) != Harbour::SUCCESS ) {
          return false;
       }
       return fForward ? !pArea->dbfarea.area.fEof : !pArea->dbfarea.area.fBof;
@@ -3921,12 +3921,12 @@ static bool hb_ntxOrdSkipEval(LPTAGINFO pTag, bool fForward, PHB_ITEM pEval)
          }
 
          while( fForward ? !pTag->TagEOF : !pTag->TagBOF ) {
-            if( SELF_GOTO(&pArea->dbfarea.area, pTag->CurKeyInfo->Xtra) != HB_SUCCESS ) {
+            if( SELF_GOTO(&pArea->dbfarea.area, pTag->CurKeyInfo->Xtra) != Harbour::SUCCESS ) {
                break;
             }
             if( hb_ntxEvalSeekCond(pTag, pEval) ) {
                HB_ULONG ulRecNo = pArea->dbfarea.ulRecNo;
-               if( SELF_SKIPFILTER(&pArea->dbfarea.area, fForward ? 1 : -1) != HB_SUCCESS ||
+               if( SELF_SKIPFILTER(&pArea->dbfarea.area, fForward ? 1 : -1) != Harbour::SUCCESS ||
                    pArea->dbfarea.ulRecNo == ulRecNo || hb_ntxEvalSeekCond(pTag, pEval) ) {
                   fFound = true;
                   break;
@@ -3979,7 +3979,7 @@ static bool hb_ntxOrdSkipWild(LPTAGINFO pTag, bool fForward, PHB_ITEM pWildItm)
    szPattern = hb_itemGetCPtr(pWildItm);
 
    if( pTag->KeyType != 'C' || !szPattern || !*szPattern ) {
-      if( SELF_SKIP(&pArea->dbfarea.area, fForward ? 1 : -1) != HB_SUCCESS ) {
+      if( SELF_SKIP(&pArea->dbfarea.area, fForward ? 1 : -1) != Harbour::SUCCESS ) {
          return false;
       }
       return fForward ? !pArea->dbfarea.area.fEof : !pArea->dbfarea.area.fBof;
@@ -4032,10 +4032,10 @@ static bool hb_ntxOrdSkipWild(LPTAGINFO pTag, bool fForward, PHB_ITEM pWildItm)
          while( fForward ? !pTag->TagEOF : !pTag->TagBOF ) {
             if( hb_strMatchWild(pTag->CurKeyInfo->key, szPattern) ) {
                HB_ULONG ulRecNo = pTag->CurKeyInfo->Xtra;
-               if( SELF_GOTO(&pArea->dbfarea.area, ulRecNo) != HB_SUCCESS ) {
+               if( SELF_GOTO(&pArea->dbfarea.area, ulRecNo) != Harbour::SUCCESS ) {
                   break;
                }
-               if( SELF_SKIPFILTER(&pArea->dbfarea.area, fForward ? 1 : -1) != HB_SUCCESS ||
+               if( SELF_SKIPFILTER(&pArea->dbfarea.area, fForward ? 1 : -1) != Harbour::SUCCESS ||
                    pArea->dbfarea.ulRecNo == ulRecNo ||
                    hb_strMatchWild(pTag->CurKeyInfo->key, szPattern) ) {
                   fFound = true;
@@ -4107,7 +4107,7 @@ static bool hb_ntxOrdSkipRegEx(LPTAGINFO pTag, bool fForward, PHB_ITEM pRegExItm
    PHB_REGEX pRegEx;
 
    if( pTag->KeyType != 'C' || (pRegEx = hb_regexGet(pRegExItm, 0)) == nullptr ) {
-      if( SELF_SKIP(&pArea->dbfarea.area, fForward ? 1 : -1) != HB_SUCCESS ) {
+      if( SELF_SKIP(&pArea->dbfarea.area, fForward ? 1 : -1) != Harbour::SUCCESS ) {
          return false;
       }
       return fForward ? !pArea->dbfarea.area.fEof : !pArea->dbfarea.area.fBof;
@@ -4132,13 +4132,13 @@ static bool hb_ntxOrdSkipRegEx(LPTAGINFO pTag, bool fForward, PHB_ITEM pRegExItm
          }
 
          while( fForward ? !pTag->TagEOF : !pTag->TagBOF ) {
-            if( SELF_GOTO(&pArea->dbfarea.area, pTag->CurKeyInfo->Xtra) != HB_SUCCESS ) {
+            if( SELF_GOTO(&pArea->dbfarea.area, pTag->CurKeyInfo->Xtra) != Harbour::SUCCESS ) {
                break;
             }
 
             if( hb_ntxRegexMatch( pTag, pRegEx, static_cast<const char*>(pTag->CurKeyInfo->key) ) ) {
                HB_ULONG ulRecNo = pArea->dbfarea.ulRecNo;
-               if( SELF_SKIPFILTER(&pArea->dbfarea.area, fForward ? 1 : -1) != HB_SUCCESS ||
+               if( SELF_SKIPFILTER(&pArea->dbfarea.area, fForward ? 1 : -1) != Harbour::SUCCESS ||
                    pArea->dbfarea.ulRecNo == ulRecNo ||
                    hb_ntxRegexMatch( pTag, pRegEx, static_cast<const char*>(pTag->CurKeyInfo->key) ) ) {
                   fFound = true;
@@ -4947,7 +4947,7 @@ static HB_ERRCODE hb_ntxTagCreate(LPTAGINFO pTag, bool fReindex)
    HB_ULONG ulRecCount, ulRecNo = pArea->dbfarea.ulRecNo;
    LPNTXSORTINFO pSort;
    HB_LONG lStep = 0;
-   HB_ERRCODE errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = Harbour::SUCCESS;
 
    if( pArea->dbfarea.area.lpdbOrdCondInfo ) {
       pWhileItem = pArea->dbfarea.area.lpdbOrdCondInfo->itmCobWhile;
@@ -4959,7 +4959,7 @@ static HB_ERRCODE hb_ntxTagCreate(LPTAGINFO pTag, bool fReindex)
       ulRecCount = 0;
    } else {
       errCode = SELF_RECCOUNT(&pArea->dbfarea.area, &ulRecCount);
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          return errCode;
       }
    }
@@ -4973,7 +4973,7 @@ static HB_ERRCODE hb_ntxTagCreate(LPTAGINFO pTag, bool fReindex)
          pTag->RootBlock = pPage->Page;
          hb_ntxPageRelease(pTag, pPage);
       } else {
-         errCode = HB_FAILURE;
+         errCode = Harbour::FAILURE;
       }
    } else {
       LPTAGINFO pSaveTag = pArea->lpCurTag;
@@ -5039,16 +5039,16 @@ static HB_ERRCODE hb_ntxTagCreate(LPTAGINFO pTag, bool fReindex)
          errCode = SELF_GOTOP(&pArea->dbfarea.area);
       } else {
          errCode = SELF_GOTO(&pArea->dbfarea.area, ulStartRec);
-         if( fUseFilter && errCode == HB_SUCCESS ) {
+         if( fUseFilter && errCode == Harbour::SUCCESS ) {
             errCode = SELF_SKIPFILTER(&pArea->dbfarea.area, 1);
          }
       }
 
       ulRecNo = pArea->dbfarea.ulRecNo;
 
-      while( errCode == HB_SUCCESS && !pArea->dbfarea.area.fEof ) {
+      while( errCode == Harbour::SUCCESS && !pArea->dbfarea.area.fEof ) {
          if( hb_vmRequestQuery() != 0 ) {
-            errCode = HB_FAILURE;
+            errCode = Harbour::FAILURE;
             break;
          }
 
@@ -5079,7 +5079,7 @@ static HB_ERRCODE hb_ntxTagCreate(LPTAGINFO pTag, bool fReindex)
             }
             pArea->dbfarea.pRecord = pSort->pBuffIO + iRecBuff * pArea->dbfarea.uiRecordLen;
             pArea->dbfarea.ulRecNo = ulRecNo;
-            if( SELF_GETREC(&pArea->dbfarea.area, nullptr) == HB_FAILURE ) {
+            if( SELF_GETREC(&pArea->dbfarea.area, nullptr) == Harbour::FAILURE ) {
                break;
             }
             pArea->dbfarea.fValidBuffer = pArea->dbfarea.fPositioned = true;
@@ -5087,7 +5087,7 @@ static HB_ERRCODE hb_ntxTagCreate(LPTAGINFO pTag, bool fReindex)
             /* Force relational movement in child WorkAreas */
             if( pArea->dbfarea.area.lpdbRelations ) {
                errCode = SELF_SYNCCHILDREN(&pArea->dbfarea.area);
-               if( errCode != HB_SUCCESS ) {
+               if( errCode != Harbour::SUCCESS ) {
                   break;
                }
             }
@@ -5137,7 +5137,7 @@ static HB_ERRCODE hb_ntxTagCreate(LPTAGINFO pTag, bool fReindex)
 
                default:
                   hb_ntxErrorRT(pArea, EG_DATATYPE, EDBF_INVALIDKEY, pTag->pIndex->IndexName, 0, 0, nullptr);
-                  errCode = HB_FAILURE;
+                  errCode = Harbour::FAILURE;
                   pTag->Partial = true;
                   pEvalItem = nullptr;
                   ulNextCount = 1;
@@ -5164,9 +5164,9 @@ static HB_ERRCODE hb_ntxTagCreate(LPTAGINFO pTag, bool fReindex)
 
          if( fDirectRead ) {
             ulRecNo++;
-         } else if( errCode == HB_SUCCESS ) {
+         } else if( errCode == Harbour::SUCCESS ) {
             errCode = SELF_SKIPRAW(&pArea->dbfarea.area, 1);
-            if( fUseFilter && errCode == HB_SUCCESS ) {
+            if( fUseFilter && errCode == Harbour::SUCCESS ) {
                errCode = SELF_SKIPFILTER(&pArea->dbfarea.area, 1);
             }
             ulRecNo = pArea->dbfarea.ulRecNo;
@@ -5176,12 +5176,12 @@ static HB_ERRCODE hb_ntxTagCreate(LPTAGINFO pTag, bool fReindex)
       if( fDirectRead ) {
          pArea->dbfarea.pRecord = pSaveRecBuff;
          pArea->dbfarea.fValidBuffer = false;
-         if( errCode == HB_SUCCESS ) {
+         if( errCode == Harbour::SUCCESS ) {
             errCode = SELF_GOTO(&pArea->dbfarea.area, ulRecNo);
          }
       }
 
-      if( errCode == HB_SUCCESS ) {
+      if( errCode == Harbour::SUCCESS ) {
          hb_ntxSortOut(pSort);
       }
 
@@ -5204,10 +5204,10 @@ static HB_ERRCODE hb_ntxTagCreate(LPTAGINFO pTag, bool fReindex)
  */
 static HB_ERRCODE hb_ntxReIndex(LPNTXINDEX pIndex)
 {
-   HB_ERRCODE errCode = HB_FAILURE;
+   HB_ERRCODE errCode = Harbour::FAILURE;
 
    if( hb_ntxIndexLockWrite(pIndex, false) ) {
-      errCode = HB_SUCCESS;
+      errCode = Harbour::SUCCESS;
       hb_ntxIndexTrunc(pIndex);
 
       for( int i = 0; i < pIndex->iTags; i++ ) {
@@ -5215,7 +5215,7 @@ static HB_ERRCODE hb_ntxReIndex(LPNTXINDEX pIndex)
          pTag->HeadBlock = pTag->RootBlock = pTag->keyCount = 0;
          pTag->HdrChanged = true;
          errCode = hb_ntxTagCreate(pTag, true);
-         if( errCode != HB_SUCCESS ) {
+         if( errCode != Harbour::SUCCESS ) {
             break;
          }
       }
@@ -5241,8 +5241,8 @@ static HB_ERRCODE hb_ntxGoBottom(NTXAREAP pArea)
 
    HB_ERRCODE retval;
 
-   if( SELF_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
    if( !pArea->lpCurTag ) {
@@ -5254,7 +5254,7 @@ static HB_ERRCODE hb_ntxGoBottom(NTXAREAP pArea)
    }
 
    if( !hb_ntxTagLockRead(pArea->lpCurTag) ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    hb_ntxTagRefreshScope(pArea->lpCurTag);
 
@@ -5267,7 +5267,7 @@ static HB_ERRCODE hb_ntxGoBottom(NTXAREAP pArea)
       retval = SELF_GOTO(&pArea->dbfarea.area, 0);
    } else {
       retval = SELF_GOTO(&pArea->dbfarea.area, pArea->lpCurTag->CurKeyInfo->Xtra);
-      if( retval != HB_FAILURE && pArea->dbfarea.fPositioned ) {
+      if( retval != Harbour::FAILURE && pArea->dbfarea.fPositioned ) {
          retval = SELF_SKIPFILTER(&pArea->dbfarea.area, -1);
       }
    }
@@ -5287,8 +5287,8 @@ static HB_ERRCODE hb_ntxGoTop(NTXAREAP pArea)
 
    HB_ERRCODE retval;
 
-   if( SELF_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
    if( !pArea->lpCurTag ) {
@@ -5300,7 +5300,7 @@ static HB_ERRCODE hb_ntxGoTop(NTXAREAP pArea)
    }
 
    if( !hb_ntxTagLockRead(pArea->lpCurTag) ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    hb_ntxTagRefreshScope(pArea->lpCurTag);
 
@@ -5313,7 +5313,7 @@ static HB_ERRCODE hb_ntxGoTop(NTXAREAP pArea)
       retval = SELF_GOTO(&pArea->dbfarea.area, 0);
    } else {
       retval = SELF_GOTO(&pArea->dbfarea.area, pArea->lpCurTag->CurKeyInfo->Xtra);
-      if( retval != HB_FAILURE && pArea->dbfarea.fPositioned ) {
+      if( retval != Harbour::FAILURE && pArea->dbfarea.fPositioned ) {
          retval = SELF_SKIPFILTER(&pArea->dbfarea.area, 1);
       }
    }
@@ -5328,16 +5328,16 @@ static HB_ERRCODE hb_ntxSeek(NTXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pItem, 
    HB_TRACE(HB_TR_DEBUG, ("hb_ntxSeek(%p, %d, %p, %d)", static_cast<void*>(pArea), fSoftSeek, static_cast<void*>(pItem), fFindLast));
 #endif
 
-   if( SELF_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
    if( !pArea->lpCurTag ) {
       hb_ntxErrorRT(pArea, EG_NOORDER, EDBF_NOTINDEXED, nullptr, 0, EF_CANDEFAULT, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    } else {
       LPKEYINFO pKey;
-      HB_ERRCODE retval = HB_SUCCESS;
+      HB_ERRCODE retval = Harbour::SUCCESS;
       bool fEOF = false, fLast;
       HB_USHORT uiLen;
       HB_ULONG ulRec;
@@ -5355,7 +5355,7 @@ static HB_ERRCODE hb_ntxSeek(NTXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pItem, 
 
       if( !hb_ntxTagLockRead(pArea->lpCurTag) ) {
          hb_ntxKeyFree(pKey);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       hb_ntxTagRefreshScope(pArea->lpCurTag);
 
@@ -5380,9 +5380,9 @@ static HB_ERRCODE hb_ntxSeek(NTXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pItem, 
       hb_ntxTagUnLockRead(pArea->lpCurTag);
       if( !fEOF ) {
          retval = SELF_GOTO(&pArea->dbfarea.area, pArea->lpCurTag->CurKeyInfo->Xtra);
-         if( retval != HB_FAILURE && pArea->dbfarea.fPositioned ) {
+         if( retval != Harbour::FAILURE && pArea->dbfarea.fPositioned ) {
             retval = SELF_SKIPFILTER(&pArea->dbfarea.area, fFindLast ? -1 : 1);
-            if( retval != HB_FAILURE && ulRec && pArea->dbfarea.fPositioned ) {
+            if( retval != Harbour::FAILURE && ulRec && pArea->dbfarea.fPositioned ) {
                pArea->dbfarea.area.fFound = (ulRec == pArea->dbfarea.ulRecNo ||
                      hb_ntxValCompare(pArea->lpCurTag, pKey->key, uiLen,
                                       pArea->lpCurTag->CurKeyInfo->key,
@@ -5393,7 +5393,7 @@ static HB_ERRCODE hb_ntxSeek(NTXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pItem, 
             }
          }
       }
-      if( retval != HB_FAILURE && (fEOF || !hb_ntxKeyInScope(pArea->lpCurTag, pArea->lpCurTag->CurKeyInfo)) ) {
+      if( retval != Harbour::FAILURE && (fEOF || !hb_ntxKeyInScope(pArea->lpCurTag, pArea->lpCurTag->CurKeyInfo)) ) {
          retval = SELF_GOTO(&pArea->dbfarea.area, 0);
       }
       if( pArea->dbfarea.fPositioned || pArea->dbfarea.ulRecNo != 1 ) {
@@ -5416,8 +5416,8 @@ static HB_ERRCODE hb_ntxSkipRaw(NTXAREAP pArea, HB_LONG lToSkip)
    HB_ERRCODE retval;
    bool fOut = false, fForward;
 
-   if( SELF_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
    if( !pArea->lpCurTag || lToSkip == 0 ) {
@@ -5425,7 +5425,7 @@ static HB_ERRCODE hb_ntxSkipRaw(NTXAREAP pArea, HB_LONG lToSkip)
    }
 
    if( !hb_ntxTagLockRead(pArea->lpCurTag) ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    hb_ntxTagRefreshScope(pArea->lpCurTag);
 
@@ -5490,7 +5490,7 @@ static HB_ERRCODE hb_ntxFlush(NTXAREAP pArea)
 #endif
 
    HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
-   if( errCode == HB_SUCCESS ) {
+   if( errCode == Harbour::SUCCESS ) {
       errCode = SUPER_FLUSH(&pArea->dbfarea.area);
 
       if( hb_setGetHardCommit() ) {
@@ -5524,7 +5524,7 @@ static HB_ERRCODE hb_ntxGoCold(NTXAREAP pArea)
    bool fRecordChanged = pArea->dbfarea.fRecordChanged;
    bool fAppend = pArea->dbfarea.fAppend;
 
-   if( SUPER_GOCOLD(&pArea->dbfarea.area) == HB_SUCCESS ) {
+   if( SUPER_GOCOLD(&pArea->dbfarea.area) == Harbour::SUCCESS ) {
       if( fRecordChanged || pArea->fNtxAppend ) {
          if( fAppend && pArea->dbfarea.fShared ) {
             if( pArea->fNtxAppend ) {
@@ -5618,9 +5618,9 @@ static HB_ERRCODE hb_ntxGoCold(NTXAREAP pArea)
             pArea->dbfarea.lpdbPendingRel = lpdbPendingRel;
          }
       }
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 /*
@@ -5633,7 +5633,7 @@ static HB_ERRCODE hb_ntxGoHot(NTXAREAP pArea)
 #endif
 
    HB_ERRCODE errCode = SUPER_GOHOT(&pArea->dbfarea.area);
-   if( errCode == HB_SUCCESS ) {
+   if( errCode == Harbour::SUCCESS ) {
       if( !pArea->fNtxAppend ) {
          LPNTXINDEX pIndex = pArea->lpIndexes;
          LPTAGINFO pTag;
@@ -5651,7 +5651,7 @@ static HB_ERRCODE hb_ntxGoHot(NTXAREAP pArea)
             pIndex = pIndex->pNext;
          }
       }
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
    return errCode;
 }
@@ -5675,13 +5675,13 @@ static HB_ERRCODE hb_ntxClose(NTXAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_ntxClose(%p)", static_cast<void*>(pArea)));
 #endif
 
-   if( SELF_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
    HB_ERRCODE errCode = SUPER_CLOSE(&pArea->dbfarea.area);
 
-   if( errCode == HB_SUCCESS ) {
+   if( errCode == Harbour::SUCCESS ) {
       if( pArea->pSort ) {
          hb_ntxSortFree(pArea->pSort, true);
          pArea->pSort = nullptr;
@@ -5720,7 +5720,7 @@ static HB_ERRCODE hb_ntxStructSize(NTXAREAP pArea, HB_USHORT * uiSize)
    HB_SYMBOL_UNUSED(pArea);
 
    *uiSize = sizeof(NTXAREA);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -5734,7 +5734,7 @@ static HB_ERRCODE hb_ntxOpen(NTXAREAP pArea, LPDBOPENINFO pOpenInfo)
 
    HB_ERRCODE errCode = SUPER_OPEN(&pArea->dbfarea.area, pOpenInfo);
 
-   if( errCode == HB_SUCCESS && DBFAREA_DATA(&pArea->dbfarea)->fStruct &&
+   if( errCode == Harbour::SUCCESS && DBFAREA_DATA(&pArea->dbfarea)->fStruct &&
        ( DBFAREA_DATA(&pArea->dbfarea)->fStrictStruct ?
          pArea->dbfarea.fHasTags : hb_setGetAutOpen() ) ) {
       char szFileName[HB_PATH_MAX];
@@ -5754,11 +5754,11 @@ static HB_ERRCODE hb_ntxOpen(NTXAREAP pArea, LPDBOPENINFO pOpenInfo)
          pOrderInfo.itmNewVal = nullptr;
          pOrderInfo.itmOrder  = nullptr;
          errCode = SELF_ORDLSTADD(&pArea->dbfarea.area, &pOrderInfo);
-         if( errCode == HB_SUCCESS ) {
+         if( errCode == Harbour::SUCCESS ) {
             pOrderInfo.itmOrder  = hb_itemPutNI(nullptr, hb_setGetAutOrder());
             errCode = SELF_ORDLSTFOCUS(&pArea->dbfarea.area, &pOrderInfo);
             hb_itemRelease(pOrderInfo.itmOrder);
-            if( errCode == HB_SUCCESS ) {
+            if( errCode == Harbour::SUCCESS ) {
                errCode = SELF_GOTOP(&pArea->dbfarea.area);
             }
          }
@@ -5781,7 +5781,7 @@ static HB_ERRCODE hb_ntxPack(NTXAREAP pArea)
 #endif
 
    HB_ERRCODE errCode = SUPER_PACK(&pArea->dbfarea.area);
-   if( errCode == HB_SUCCESS ) {
+   if( errCode == Harbour::SUCCESS ) {
       return SELF_ORDLSTREBUILD(&pArea->dbfarea.area);
    }
 
@@ -5800,7 +5800,7 @@ static HB_ERRCODE hb_ntxZap(NTXAREAP pArea)
 #endif
 
    HB_ERRCODE errCode = SUPER_ZAP(&pArea->dbfarea.area);
-   if( errCode == HB_SUCCESS ) {
+   if( errCode == Harbour::SUCCESS ) {
       return SELF_ORDLSTREBUILD(&pArea->dbfarea.area);
    }
 
@@ -5840,13 +5840,13 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
    HB_BYTE bType;
 
    HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
-   if( errCode != HB_SUCCESS ) {
+   if( errCode != Harbour::SUCCESS ) {
       return errCode;
    }
 
    if( pArea->dbfarea.lpdbPendingRel ) {
       errCode = SELF_FORCEREL(&pArea->dbfarea.area);
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          return errCode;
       }
    }
@@ -5857,7 +5857,7 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       pKeyExp = hb_itemNew(pOrderInfo->itmCobExpr);
    } else { /* Otherwise, try compiling the key expression string */
       errCode = SELF_COMPILE(&pArea->dbfarea.area, szKey);
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          return errCode;
       }
       pKeyExp = pArea->dbfarea.area.valResult;
@@ -5867,12 +5867,12 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
    /* Get a blank record before testing expression */
    ulRecNo = pArea->dbfarea.ulRecNo;
    errCode = SELF_GOTO(&pArea->dbfarea.area, 0);
-   if( errCode != HB_SUCCESS ) {
+   if( errCode != Harbour::SUCCESS ) {
       return errCode;
    }
 
    errCode = SELF_EVALBLOCK(&pArea->dbfarea.area, pKeyExp);
-   if( errCode != HB_SUCCESS ) {
+   if( errCode != Harbour::SUCCESS ) {
       hb_vmDestroyBlockOrMacro(pKeyExp);
       SELF_GOTO(&pArea->dbfarea.area, ulRecNo);
       return errCode;
@@ -5914,7 +5914,7 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       hb_vmDestroyBlockOrMacro(pKeyExp);
       SELF_GOTO(&pArea->dbfarea.area, ulRecNo);
       hb_ntxErrorRT(pArea, bType == 'U' ? EG_DATATYPE : EG_DATAWIDTH, EDBF_INVALIDKEY, nullptr, 0, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( pArea->dbfarea.area.lpdbOrdCondInfo ) {
@@ -5930,7 +5930,7 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       } else if( szFor ) {
          /* Otherwise, try compiling the conditional expression string */
          errCode = SELF_COMPILE(&pArea->dbfarea.area, szFor);
-         if( errCode != HB_SUCCESS ) {
+         if( errCode != Harbour::SUCCESS ) {
             hb_vmDestroyBlockOrMacro(pKeyExp);
             SELF_GOTO(&pArea->dbfarea.area, ulRecNo);
             return errCode;
@@ -5949,7 +5949,7 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       bool fOK;
 
       errCode = SELF_EVALBLOCK(&pArea->dbfarea.area, pForExp);
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          hb_vmDestroyBlockOrMacro(pKeyExp);
          hb_vmDestroyBlockOrMacro(pForExp);
          SELF_GOTO(&pArea->dbfarea.area, ulRecNo);
@@ -5963,7 +5963,7 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          hb_vmDestroyBlockOrMacro(pForExp);
          SELF_GOTO(&pArea->dbfarea.area, ulRecNo);
          hb_ntxErrorRT(pArea, EG_DATATYPE, EDBF_INVALIDFOR, nullptr, 0, 0, nullptr);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
 
@@ -6012,7 +6012,7 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
             hb_vmDestroyBlockOrMacro(pForExp);
          }
          hb_ntxErrorRT(pArea, EG_READONLY, EDBF_READONLY, pIndex->IndexName, 0, 0, nullptr);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
 #if 0 /* enable this code if you want to forbid tag deleting in shared mode */
       else if( pIndex->fShared ) {
@@ -6021,7 +6021,7 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
             hb_vmDestroyBlockOrMacro(pForExp);
          }
          hb_ntxErrorRT(pArea, EG_SHARED, EDBF_SHARED, pIndex->IndexName, 0, 0, nullptr);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
 #endif
    } else {
@@ -6062,7 +6062,7 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          if( pForExp != nullptr ) {
             hb_vmDestroyBlockOrMacro(pForExp);
          }
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
 
       pIndex = hb_ntxIndexNew(pArea);
@@ -6085,16 +6085,16 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       pArea->fSetTagNumbers = true;
       if( fOld ) {
          if( !hb_ntxIndexLockWrite(pIndex, true) ) {
-            errCode = HB_FAILURE;
+            errCode = Harbour::FAILURE;
          } else {
             errCode = hb_ntxIndexLoad(pIndex, szTagName);
-            if( errCode != HB_SUCCESS ) {
+            if( errCode != Harbour::SUCCESS ) {
                hb_ntxIndexUnLockWrite(pIndex);
             } else {
                fLocked = true;
             }
          }
-         if( errCode != HB_SUCCESS ) {
+         if( errCode != Harbour::SUCCESS ) {
             *pIndexPtr = pIndex->pNext;
             hb_ntxIndexFree(pIndex);
             hb_vmDestroyBlockOrMacro(pKeyExp);
@@ -6121,11 +6121,11 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          hb_vmDestroyBlockOrMacro(pForExp);
       }
       hb_ntxErrorRT(pArea, EG_LIMIT, EDBF_LIMITEXCEEDED, pIndex->IndexName, 0, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( !fLocked && !hb_ntxIndexLockWrite(pIndex, fCompound) ) {
-      errCode = HB_FAILURE;
+      errCode = Harbour::FAILURE;
    } else {
       if( pIndex->Compound != fCompound ) {
          pIndex->Compound = fCompound;
@@ -6161,7 +6161,7 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       if( iTag ) {
          pTag->HeadBlock = pIndex->lpTags[iTag - 1]->HeadBlock;
          if( hb_ntxTagHeaderCheck(pIndex->lpTags[iTag - 1]) && !hb_ntxTagPagesFree(pIndex->lpTags[iTag - 1], pIndex->lpTags[iTag - 1]->RootBlock) ) {
-            errCode = HB_FAILURE;
+            errCode = Harbour::FAILURE;
          } else {
             pTag->uiNumber = pIndex->lpTags[iTag - 1]->uiNumber;
             hb_ntxTagFree(pIndex->lpTags[iTag - 1]);
@@ -6174,7 +6174,7 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          }
       }
 
-      if( errCode == HB_SUCCESS ) {
+      if( errCode == Harbour::SUCCESS ) {
          pIndex->Update = pIndex->Changed = pTag->HdrChanged = true;
          errCode = hb_ntxTagCreate(pTag, false);
       }
@@ -6188,10 +6188,10 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
 
    /* It should not happen, reentrance? */
    if( !*pIndexPtr ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
-   if( errCode != HB_SUCCESS ) {
+   if( errCode != Harbour::SUCCESS ) {
       *pIndexPtr = pIndex->pNext;
       hb_ntxIndexFree(pIndex);
       return errCode;
@@ -6225,13 +6225,13 @@ static HB_ERRCODE hb_ntxOrderDestroy(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
 #endif
 
    HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
-   if( errCode != HB_SUCCESS ) {
+   if( errCode != Harbour::SUCCESS ) {
       return errCode;
    }
 
    if( pArea->dbfarea.lpdbPendingRel ) {
       errCode = SELF_FORCEREL(&pArea->dbfarea.area);
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          return errCode;
       }
    }
@@ -6261,16 +6261,16 @@ static HB_ERRCODE hb_ntxOrderDestroy(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
             }
          } else if( pIndex->fReadonly ) {
             hb_ntxErrorRT(pArea, EG_READONLY, EDBF_READONLY, pIndex->IndexName, 0, 0, nullptr);
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
 #if 0    /* enable this code if you want to forbid tag deleting in shared mode */
          else if( pIndex->fShared ) {
             hb_ntxErrorRT(pArea, EG_SHARED, EDBF_SHARED, pIndex->IndexName, 0, 0, nullptr);
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
 #endif
          else if( !hb_ntxIndexLockWrite(pIndex, true) ) {
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          } else {
             errCode = hb_ntxTagSpaceFree(pTag);
             hb_ntxIndexUnLockWrite(pIndex);
@@ -6310,19 +6310,19 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          return SELF_RDDINFO(SELF_RDDNODE(&pArea->dbfarea.area), RDDI_ORDBAGEXT, 0, pInfo->itmResult);
       case DBOI_EVALSTEP:
          pInfo->itmResult = hb_itemPutNL(pInfo->itmResult, pArea->dbfarea.area.lpdbOrdCondInfo ? pArea->dbfarea.area.lpdbOrdCondInfo->lStep : 0);
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
       case DBOI_KEYSINCLUDED:
          pInfo->itmResult = hb_itemPutNL(pInfo->itmResult, pArea->pSort ? pArea->pSort->ulTotKeys : 0);
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
       case DBOI_I_TAGNAME:
          pInfo->itmResult = hb_itemPutC(pInfo->itmResult, pArea->pSort ? pArea->pSort->pTag->TagName : nullptr);
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
       case DBOI_I_BAGNAME:
          pInfo->itmResult = hb_itemPutC(pInfo->itmResult, pArea->pSort ? pArea->pSort->pTag->pIndex->IndexName : nullptr);
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
       case DBOI_ISREINDEX:
          pInfo->itmResult = hb_itemPutL(pInfo->itmResult, pArea->pSort ? pArea->pSort->fReindex : false);
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
       case DBOI_LOCKOFFSET:
       case DBOI_HPLOCKING:
       {
@@ -6334,7 +6334,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          } else {
             pInfo->itmResult = hb_itemPutL(pInfo->itmResult, lockData.size > 0);
          }
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
       }
       case DBOI_ORDERCOUNT:
       {
@@ -6348,7 +6348,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          }
 
          pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, i);
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
       }
       case DBOI_BAGCOUNT:
       {
@@ -6359,7 +6359,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
             pIndex = pIndex->pNext;
          }
          pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, i);
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
       }
       case DBOI_BAGNUMBER:
       {
@@ -6382,7 +6382,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
             } while( pIndex );
          }
          pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, pIndex ? i : 0);
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
       }
       case DBOI_BAGORDER:
       {
@@ -6406,14 +6406,14 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
             } while( pIndex );
          }
          pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, pIndex ? i : 0);
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
       }
       case DBOI_RESETPOS:
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
    }
 
-   if( SELF_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
    pTag = hb_ntxFindTag(pArea, pInfo->itmOrder, pInfo->atomBagName);
@@ -6428,10 +6428,10 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
                   PHB_ITEM pForItem = nullptr;
                   bool fOK = *szForExpr == 0;
                   if( !fOK ) {
-                     if( SELF_COMPILE(&pArea->dbfarea.area, szForExpr) == HB_SUCCESS ) {
+                     if( SELF_COMPILE(&pArea->dbfarea.area, szForExpr) == Harbour::SUCCESS ) {
                         pForItem = pArea->dbfarea.area.valResult;
                         pArea->dbfarea.area.valResult = nullptr;
-                        if( SELF_EVALBLOCK(&pArea->dbfarea.area, pForItem) == HB_SUCCESS ) {
+                        if( SELF_EVALBLOCK(&pArea->dbfarea.area, pForItem) == Harbour::SUCCESS ) {
                            fOK = hb_itemType(pArea->dbfarea.area.valResult) & Harbour::Item::LOGICAL;
                            hb_itemRelease(pArea->dbfarea.area.valResult);
                            pArea->dbfarea.area.valResult = nullptr;
@@ -6625,25 +6625,25 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          case DBOI_KEYADD:
             if( pTag->pIndex->fReadonly ) {
                hb_ntxErrorRT(pArea, EG_READONLY, EDBF_READONLY, pTag->pIndex->IndexName, 0, 0, nullptr);
-               return HB_FAILURE;
+               return Harbour::FAILURE;
             }
             if( pTag->Custom ) {
                pInfo->itmResult = hb_itemPutL(pInfo->itmResult, hb_ntxOrdKeyAdd(pTag, pInfo->itmNewVal));
             } else {
                hb_ntxErrorRT(pArea, 0, EDBF_NOTCUSTOM, nullptr, 0, 0, nullptr);
-               return HB_FAILURE;
+               return Harbour::FAILURE;
             }
             break;
          case DBOI_KEYDELETE:
             if( pTag->pIndex->fReadonly ) {
                hb_ntxErrorRT(pArea, EG_READONLY, EDBF_READONLY, pTag->pIndex->IndexName, 0, 0, nullptr);
-               return HB_FAILURE;
+               return Harbour::FAILURE;
             }
             if( pTag->Custom ) {
                pInfo->itmResult = hb_itemPutL(pInfo->itmResult, hb_ntxOrdKeyDel(pTag, pInfo->itmNewVal));
             } else {
                hb_ntxErrorRT(pArea, 0, EDBF_NOTCUSTOM, nullptr, 0, 0, nullptr);
-               return HB_FAILURE;
+               return Harbour::FAILURE;
             }
             break;
          case DBOI_KEYTYPE:
@@ -6774,7 +6774,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          case DBOI_KEYNORAW:
          /* case DBOI_RECNO: */
             if( pInfo->itmNewVal && hb_itemType(pInfo->itmNewVal) & Harbour::Item::NUMERIC ) {
-               hb_itemPutL(pInfo->itmResult, SELF_GOTO(&pArea->dbfarea.area, hb_itemGetNL(pInfo->itmNewVal)) == HB_SUCCESS);
+               hb_itemPutL(pInfo->itmResult, SELF_GOTO(&pArea->dbfarea.area, hb_itemGetNL(pInfo->itmNewVal)) == Harbour::SUCCESS);
             } else {
                SELF_RECID(&pArea->dbfarea.area, pInfo->itmResult);
             }
@@ -6795,8 +6795,8 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
                   if( ulRecNo >= ulRecCount ) {
                      ulRecNo = ulRecCount;
                   }
-                  if( SELF_GOTO(&pArea->dbfarea.area, ulRecNo) == HB_SUCCESS &&
-                      SELF_SKIPFILTER(&pArea->dbfarea.area, 1) == HB_SUCCESS &&
+                  if( SELF_GOTO(&pArea->dbfarea.area, ulRecNo) == Harbour::SUCCESS &&
+                      SELF_SKIPFILTER(&pArea->dbfarea.area, 1) == Harbour::SUCCESS &&
                       pArea->dbfarea.area.fEof ) {
                      SELF_GOTOP(&pArea->dbfarea.area);
                   }
@@ -6806,7 +6806,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
                HB_ULONG ulRecNo = 0, ulRecCount = 0;
                double dPos = 0.0;
                /* resolve any pending relations */
-               if( SELF_RECNO(&pArea->dbfarea.area, &ulRecNo) == HB_SUCCESS ) {
+               if( SELF_RECNO(&pArea->dbfarea.area, &ulRecNo) == Harbour::SUCCESS ) {
                   if( !pArea->dbfarea.fPositioned ) {
                      if( ulRecNo > 1 ) {
                         dPos = 1.0;
@@ -6824,7 +6824,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          case DBOI_SKIPUNIQUE:
             hb_itemPutL(pInfo->itmResult, SELF_SKIP(&pArea->dbfarea.area,
                         pInfo->itmNewVal && HB_IS_NUMERIC(pInfo->itmNewVal) ?
-                        hb_itemGetNL(pInfo->itmNewVal) : 1) == HB_SUCCESS);
+                        hb_itemGetNL(pInfo->itmNewVal) : 1) == Harbour::SUCCESS);
             break;
          case DBOI_SKIPEVAL:
          case DBOI_SKIPEVALBACK:
@@ -6893,7 +6893,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
             hb_itemClear(pInfo->itmResult);
       }
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE hb_ntxOrderListAdd(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
@@ -6908,19 +6908,19 @@ static HB_ERRCODE hb_ntxOrderListAdd(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
    bool fProd;
 
    HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
-   if( errCode != HB_SUCCESS ) {
+   if( errCode != Harbour::SUCCESS ) {
       return errCode;
    }
 
    if( hb_itemGetCLen(pOrderInfo->atomBagName) == 0 ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    hb_ntxCreateFName(pArea, hb_itemGetCPtr(pOrderInfo->atomBagName), &fProd, szFileName, szTagName);
 
 #if 0
    if( !szTagName[0] ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 #endif
 
@@ -6951,7 +6951,7 @@ static HB_ERRCODE hb_ntxOrderListAdd(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
       }
 
       if( !pFile ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
 
       pIndex = hb_ntxIndexNew(pArea);
@@ -6971,10 +6971,10 @@ static HB_ERRCODE hb_ntxOrderListAdd(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
          errCode = hb_ntxIndexLoad(pIndex, szTagName);
          hb_ntxIndexUnLockRead(pIndex);
       } else {
-         errCode = HB_FAILURE;
+         errCode = Harbour::FAILURE;
       }
 
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          *pIndexPtr = pIndex->pNext;
          hb_ntxIndexFree(pIndex);
          hb_ntxErrorRT(pArea, EG_CORRUPTION, EDBF_CORRUPT, szFileName, 0, 0, nullptr);
@@ -6997,8 +6997,8 @@ static HB_ERRCODE hb_ntxOrderListClear(NTXAREAP pArea)
 
    LPNTXINDEX * pIndexPtr, pIndex;
 
-   if( SELF_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
    pArea->lpCurTag = nullptr;
@@ -7013,7 +7013,7 @@ static HB_ERRCODE hb_ntxOrderListClear(NTXAREAP pArea)
          hb_ntxIndexFree(pIndex);
       }
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE hb_ntxOrderListDelete(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
@@ -7027,8 +7027,8 @@ static HB_ERRCODE hb_ntxOrderListDelete(NTXAREAP pArea, LPDBORDERINFO pOrderInfo
    LPNTXINDEX pIndex;
    bool fProd;
 
-   if( SELF_GOCOLD(&pArea->dbfarea.area) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
    hb_ntxCreateFName(pArea, hb_itemGetCPtr(pOrderInfo->atomBagName), &fProd, szFileName, szTagName);
@@ -7047,7 +7047,7 @@ static HB_ERRCODE hb_ntxOrderListDelete(NTXAREAP pArea, LPDBORDERINFO pOrderInfo
          pIndexPtr = &( *pIndexPtr )->pNext;
       }
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE hb_ntxOrderListFocus(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
@@ -7075,7 +7075,7 @@ static HB_ERRCODE hb_ntxOrderListFocus(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
          pArea->lpCurTag = pTag;
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE hb_ntxOrderListRebuild(NTXAREAP pArea)
@@ -7088,33 +7088,33 @@ static HB_ERRCODE hb_ntxOrderListRebuild(NTXAREAP pArea)
    LPNTXINDEX pIndex;
 
    HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
-   if( errCode != HB_SUCCESS ) {
+   if( errCode != Harbour::SUCCESS ) {
       return errCode;
    }
 
    if( pArea->dbfarea.fShared ) {
       hb_ntxErrorRT(pArea, EG_SHARED, EDBF_SHARED, pArea->dbfarea.szDataFileName, 0, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    if( pArea->dbfarea.fReadonly ) {
       hb_ntxErrorRT(pArea, EG_READONLY, EDBF_READONLY, pArea->dbfarea.szDataFileName, 0, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( pArea->dbfarea.lpdbPendingRel ) {
       errCode = SELF_FORCEREL(&pArea->dbfarea.area);
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          return errCode;
       }
    }
    pCurrTag = pArea->lpCurTag;
    pArea->lpCurTag = nullptr;
    pIndex = pArea->lpIndexes;
-   while( pIndex && errCode == HB_SUCCESS ) {
+   while( pIndex && errCode == Harbour::SUCCESS ) {
       errCode = hb_ntxReIndex(pIndex);
       pIndex = pIndex->pNext;
    }
-   if( errCode == HB_SUCCESS ) {
+   if( errCode == Harbour::SUCCESS ) {
       pArea->lpCurTag = pCurrTag;
       errCode = SELF_GOTOP(&pArea->dbfarea.area);
    }
@@ -7132,7 +7132,7 @@ static HB_ERRCODE hb_ntxCountScope(NTXAREAP pArea, void * pPtr, HB_LONG * plRecN
 #endif
 
    if( pPtr == nullptr ) {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
    return SUPER_COUNTSCOPE(&pArea->dbfarea.area, pPtr, plRecNo);
 }
@@ -7258,7 +7258,7 @@ static HB_ERRCODE hb_ntxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
 
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 #define hb_ntxWhoCares  nullptr
@@ -7383,13 +7383,13 @@ HB_FUNC_STATIC( DBFNTX_GETFUNCTABLE )
          *puiCount = RDDFUNCSCOUNT;
       }
       HB_ERRCODE errCode = hb_rddInheritEx(pTable, &ntxTable, &ntxSuper, "DBFFPT", puiSuperRddId);
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          errCode = hb_rddInheritEx(pTable, &ntxTable, &ntxSuper, "DBFDBT", puiSuperRddId);
       }
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          errCode = hb_rddInheritEx(pTable, &ntxTable, &ntxSuper, "DBF", puiSuperRddId);
       }
-      if( errCode == HB_SUCCESS ) {
+      if( errCode == Harbour::SUCCESS ) {
          /*
           * we successfully register our RDD so now we can initialize it
           * You may think that this place is RDD init statement, Druzus
@@ -7398,7 +7398,7 @@ HB_FUNC_STATIC( DBFNTX_GETFUNCTABLE )
       }
       hb_retni(errCode);
    } else {
-      hb_retni(HB_FAILURE);
+      hb_retni(Harbour::FAILURE);
    }
 }
 

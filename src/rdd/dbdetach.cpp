@@ -79,7 +79,7 @@ HB_FUNC( HB_DBDETACH )
    }
 
    if( pArea != nullptr ) {
-      hb_retl(hb_rddDetachArea(pArea, pCargo) == HB_SUCCESS);
+      hb_retl(hb_rddDetachArea(pArea, pCargo) == Harbour::SUCCESS);
    } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
    }

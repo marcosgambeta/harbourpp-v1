@@ -243,7 +243,7 @@ static HB_ULONG hb_db2Sql(AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
    HB_BOOL fEof = true;
    HB_BOOL fNoFieldPassed = (pFields == nullptr || hb_arrayLen(pFields) == 0);
 
-   if( SELF_FIELDCOUNT(pArea, &uiFields) != HB_SUCCESS ) {
+   if( SELF_FIELDCOUNT(pArea, &uiFields) != Harbour::SUCCESS ) {
       return 0;
    }
 
@@ -256,17 +256,17 @@ static HB_ULONG hb_db2Sql(AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
 
    while( llNext-- > 0 ) {
       if( pWhile ) {
-         if( SELF_EVALBLOCK(pArea, pWhile) != HB_SUCCESS || !hb_itemGetL(pArea->valResult) ) {
+         if( SELF_EVALBLOCK(pArea, pWhile) != Harbour::SUCCESS || !hb_itemGetL(pArea->valResult) ) {
             break;
          }
       }
 
-      if( SELF_EOF(pArea, &fEof) != HB_SUCCESS || fEof ) {
+      if( SELF_EOF(pArea, &fEof) != Harbour::SUCCESS || fEof ) {
          break;
       }
 
       if( pFor ) {
-         if( SELF_EVALBLOCK(pArea, pFor) != HB_SUCCESS ) {
+         if( SELF_EVALBLOCK(pArea, pFor) != Harbour::SUCCESS ) {
             break;
          }
       }
@@ -293,7 +293,7 @@ static HB_ULONG hb_db2Sql(AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
 
          if( fNoFieldPassed ) {
             for( ui = 1; ui <= uiFields; ui++ ) {
-               if( SELF_GETVALUE(pArea, ui, pTmp) != HB_SUCCESS ) {
+               if( SELF_GETVALUE(pArea, ui, pTmp) != Harbour::SUCCESS ) {
                   break;
                }
                if( fWriteSep ) {
@@ -315,7 +315,7 @@ static HB_ULONG hb_db2Sql(AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext,
          fWriteSep = false;
       }
 
-      if( SELF_SKIP(pArea, 1) != HB_SUCCESS ) {
+      if( SELF_SKIP(pArea, 1) != Harbour::SUCCESS ) {
          break;
       }
 
@@ -411,7 +411,7 @@ HB_FUNC( __DBSQL )
                hb_fileSeek(pFile, 0, FS_END);
             }
 
-            errCode = HB_SUCCESS;
+            errCode = Harbour::SUCCESS;
             if( pRecord ) {
                errCode = SELF_GOTOID(pArea, pRecord);
             } else if( pNext ) {
@@ -420,7 +420,7 @@ HB_FUNC( __DBSQL )
                errCode = SELF_GOTOP(pArea);
             }
 
-            if( errCode == HB_SUCCESS ) {
+            if( errCode == Harbour::SUCCESS ) {
                hb_retnint(hb_db2Sql(pArea, pFields, llNext, pWhile, pFor, szDelim, szSep, szEsc, szTable, pFile, fInsert, fRecno));
             }
             hb_fileClose(pFile);

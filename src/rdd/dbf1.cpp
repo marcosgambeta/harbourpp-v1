@@ -89,7 +89,7 @@ static HB_ERRCODE hb_dbfErrorRT(DBFAREAP pArea,
                                 const char * szFileName, HB_ERRCODE errOsCode,
                                 HB_USHORT uiFlags, PHB_ITEM * pErrorPtr)
 {
-   HB_ERRCODE errCode = HB_FAILURE;
+   HB_ERRCODE errCode = Harbour::FAILURE;
 
    if( hb_vmRequestQuery() == 0 ) {
       PHB_ITEM pError;
@@ -127,8 +127,8 @@ static HB_MAXINT hb_dbfRowVerGet(DBFAREAP pArea, HB_USHORT uiField, HB_MAXINT * 
 
    *pValue = 0;
    if( pArea->fShared && !pArea->fFLocked && !pArea->fHeaderLocked ) {
-      if( SELF_RAWLOCK(&pArea->area, HEADER_LOCK, 0) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_RAWLOCK(&pArea->area, HEADER_LOCK, 0) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
       fLck = true;
    }
@@ -140,12 +140,12 @@ static HB_MAXINT hb_dbfRowVerGet(DBFAREAP pArea, HB_USHORT uiField, HB_MAXINT * 
    }
 
    if( fLck ) {
-      if( SELF_RAWLOCK(&pArea->area, HEADER_UNLOCK, 0) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_RAWLOCK(&pArea->area, HEADER_UNLOCK, 0) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static void hb_dbfRowVerSet(DBFAREAP pArea, HB_USHORT uiField, HB_MAXINT nValue)
@@ -268,7 +268,7 @@ void hb_dbfTransCheckCounters(LPDBTRANSINFO lpdbTransInfo)
             if( pItem == nullptr ) {
                pItem = hb_itemNew(nullptr);
             }
-            if( SELF_FIELDINFO(lpdbTransInfo->lpaSource, lpdbTransInfo->lpTransItems[uiCount].uiSource, DBS_COUNTER, pItem) != HB_SUCCESS ) {
+            if( SELF_FIELDINFO(lpdbTransInfo->lpaSource, lpdbTransInfo->lpTransItems[uiCount].uiSource, DBS_COUNTER, pItem) != Harbour::SUCCESS ) {
                fCopyCtr = false;
                break;
             }
@@ -633,7 +633,7 @@ static bool hb_dbfReadRecord(DBFAREAP pArea)
       return false;
    }
 
-   if( SELF_GETREC(&pArea->area, nullptr) == HB_FAILURE ) {
+   if( SELF_GETREC(&pArea->area, nullptr) == Harbour::FAILURE ) {
       return false;
    }
 
@@ -652,7 +652,7 @@ static bool hb_dbfWriteRecord(DBFAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfWriteRecord(%p)", static_cast<void*>(pArea)));
 #endif
 
-   if( SELF_PUTREC(&pArea->area, nullptr) == HB_FAILURE ) {
+   if( SELF_PUTREC(&pArea->area, nullptr) == Harbour::FAILURE ) {
       return false;
    }
 
@@ -738,8 +738,8 @@ static void hb_dbfTableCrypt(DBFAREAP pArea, PHB_ITEM pPasswd, bool fEncrypt)
    if( !pArea->fReadonly && !pArea->fShared && fEncrypt ? !pArea->fTableEncrypted && !pArea->fHasMemo : pArea->fTableEncrypted ) {
       HB_ULONG ulRecords;
 
-      if( SELF_RECCOUNT(&pArea->area, &ulRecords) == HB_SUCCESS ) {
-         HB_ERRCODE errCode = HB_SUCCESS;
+      if( SELF_RECCOUNT(&pArea->area, &ulRecords) == Harbour::SUCCESS ) {
+         HB_ERRCODE errCode = Harbour::SUCCESS;
          char * pOldCryptKey, * pNewCryptKey;
 
          pOldCryptKey = pArea->pCryptKey;
@@ -762,18 +762,18 @@ static void hb_dbfTableCrypt(DBFAREAP pArea, PHB_ITEM pPasswd, bool fEncrypt)
          for( HB_ULONG ulRecNo = 1; ulRecNo <= ulRecords; ++ulRecNo ) {
             pArea->pCryptKey = pOldCryptKey;
             errCode = SELF_GOTO(&pArea->area, ulRecNo);
-            if( errCode != HB_SUCCESS ) {
+            if( errCode != Harbour::SUCCESS ) {
                break;
             }
             if( !hb_dbfReadRecord(pArea) ) {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
                break;
             }
             pArea->pCryptKey = pNewCryptKey;
             /* Buffer is hot? */
             if( !pArea->fRecordChanged ) {
                errCode = SELF_GOHOT(&pArea->area);
-               if( errCode != HB_SUCCESS ) {
+               if( errCode != Harbour::SUCCESS ) {
                   break;
                }
             }
@@ -781,7 +781,7 @@ static void hb_dbfTableCrypt(DBFAREAP pArea, PHB_ITEM pPasswd, bool fEncrypt)
             pArea->fEncrypted = fEncrypt;
             /* Save encrypted record */
             errCode = SELF_GOCOLD(&pArea->area);
-            if( errCode != HB_SUCCESS ) {
+            if( errCode != Harbour::SUCCESS ) {
                break;
             }
          }
@@ -789,7 +789,7 @@ static void hb_dbfTableCrypt(DBFAREAP pArea, PHB_ITEM pPasswd, bool fEncrypt)
          if( pOldCryptKey && pOldCryptKey != pNewCryptKey ) {
             hb_xfree(pOldCryptKey);
          }
-         if( errCode == HB_SUCCESS ) {
+         if( errCode == Harbour::SUCCESS ) {
             pArea->fTableEncrypted = fEncrypt;
             SELF_WRITEDBHEADER(&pArea->area);
          }
@@ -806,7 +806,7 @@ static HB_ERRCODE hb_dbfUnlockAllRecords(DBFAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfUnlockAllRecords(%p)", static_cast<void*>(pArea)));
 #endif
 
-   HB_ERRCODE errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = Harbour::SUCCESS;
 
    if( pArea->pLocksPos ) {
       errCode = SELF_GOCOLD(&pArea->area);
@@ -829,7 +829,7 @@ static HB_ERRCODE hb_dbfUnlockRecord(DBFAREAP pArea, HB_ULONG ulRecNo)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfUnlockRecord(%p, %lu)", static_cast<void*>(pArea), ulRecNo));
 #endif
 
-   HB_ERRCODE errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = Harbour::SUCCESS;
    HB_ULONG ulCount;
 
    /* Search the locked record */
@@ -863,14 +863,14 @@ static HB_ERRCODE hb_dbfLockRecord(DBFAREAP pArea, HB_ULONG ulRecNo, HB_USHORT *
 #endif
 
    if( pArea->lpdbPendingRel ) {
-      if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
    if( pArea->fFLocked ) {
       *pResult = HB_TRUE;
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
    if( ulRecNo == 0 ) {
@@ -883,12 +883,12 @@ static HB_ERRCODE hb_dbfLockRecord(DBFAREAP pArea, HB_ULONG ulRecNo, HB_USHORT *
       for( HB_ULONG ul = 0; ul < pArea->ulNumLocksPos; ul++ ) {
          if( pArea->pLocksPos[ul] == ulRecNo ) {
             *pResult = HB_TRUE;
-            return HB_SUCCESS;
+            return Harbour::SUCCESS;
          }
       }
    }
 
-   if( SELF_RAWLOCK(&pArea->area, REC_LOCK, ulRecNo) == HB_SUCCESS ) {
+   if( SELF_RAWLOCK(&pArea->area, REC_LOCK, ulRecNo) == Harbour::SUCCESS ) {
       if( pArea->ulNumLocksPos == 0 ) {              /* Create the list */
          pArea->pLocksPos = static_cast<HB_ULONG*>(hb_xgrab(sizeof(HB_ULONG)));
       } else {                                         /* Resize the list */
@@ -898,12 +898,12 @@ static HB_ERRCODE hb_dbfLockRecord(DBFAREAP pArea, HB_ULONG ulRecNo, HB_USHORT *
       *pResult = HB_TRUE;
       if( ulRecNo == pArea->ulRecNo ) {
          if( !pArea->fPositioned ) {
-            if( SELF_GOTO(&pArea->area, pArea->ulRecNo) != HB_SUCCESS ) {
-               return HB_FAILURE;
+            if( SELF_GOTO(&pArea->area, pArea->ulRecNo) != Harbour::SUCCESS ) {
+               return Harbour::FAILURE;
             }
          } else if( !pArea->fRecordChanged ) {
-            if( SELF_GOCOLD(&pArea->area) != HB_SUCCESS ) {
-               return HB_FAILURE;
+            if( SELF_GOCOLD(&pArea->area) != Harbour::SUCCESS ) {
+               return Harbour::FAILURE;
             }
             pArea->fValidBuffer = false;
          }
@@ -911,7 +911,7 @@ static HB_ERRCODE hb_dbfLockRecord(DBFAREAP pArea, HB_ULONG ulRecNo, HB_USHORT *
    } else {
       *pResult = HB_FALSE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -925,8 +925,8 @@ static HB_ERRCODE hb_dbfLockFile(DBFAREAP pArea, HB_USHORT * pResult)
 
    if( !pArea->fFLocked ) {
       if( pArea->lpdbPendingRel ) {
-         if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
       }
 
@@ -945,7 +945,7 @@ static HB_ERRCODE hb_dbfLockFile(DBFAREAP pArea, HB_USHORT * pResult)
       *pResult = HB_TRUE;
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -957,7 +957,7 @@ static HB_ERRCODE hb_dbfUnlockFile(DBFAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfUnlockFile(%p)", static_cast<void*>(pArea)));
 #endif
 
-   HB_ERRCODE errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = Harbour::SUCCESS;
 
    if( pArea->fFLocked ) {
       errCode = SELF_GOCOLD(&pArea->area);
@@ -1132,12 +1132,12 @@ HB_ERRCODE hb_dbfGetMemoData(DBFAREAP pArea, HB_USHORT uiIndex, HB_ULONG * pulBl
          pArea->area.lpFields[uiIndex].uiType != Harbour::DB::Field::IMAGE &&
          pArea->area.lpFields[uiIndex].uiType != Harbour::DB::Field::BLOB &&
          pArea->area.lpFields[uiIndex].uiType != Harbour::DB::Field::OLE ) ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( pArea->area.lpFields[uiIndex].uiLen == 4 ) {
       *pulBlock = HB_GET_LE_UINT32(&pArea->pRecord[pArea->pFieldOffset[uiIndex]]);
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    } else if( pArea->area.lpFields[uiIndex].uiLen == 10 ) {
       HB_ULONG ulValue;
 
@@ -1161,15 +1161,15 @@ HB_ERRCODE hb_dbfGetMemoData(DBFAREAP pArea, HB_USHORT uiIndex, HB_ULONG * pulBl
             if( bByte >= '0' && bByte <= '9' ) {
                ulValue = ulValue * 10 + ( bByte - '0' );
             } else if( bByte != ' ' || ulValue ) {
-               return hb_dbfErrorRT(pArea, EG_CORRUPTION, EDBF_CORRUPT, pArea->szDataFileName, 0, EF_CANDEFAULT, nullptr) == E_DEFAULT ? HB_SUCCESS : HB_FAILURE;
+               return hb_dbfErrorRT(pArea, EG_CORRUPTION, EDBF_CORRUPT, pArea->szDataFileName, 0, EF_CANDEFAULT, nullptr) == E_DEFAULT ? Harbour::SUCCESS : Harbour::FAILURE;
             }
          }
          *pulBlock = ulValue;
       }
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 /*
@@ -1188,12 +1188,12 @@ HB_ERRCODE hb_dbfSetMemoData(DBFAREAP pArea, HB_USHORT uiIndex, HB_ULONG ulBlock
          pArea->area.lpFields[uiIndex].uiType != Harbour::DB::Field::IMAGE &&
          pArea->area.lpFields[uiIndex].uiType != Harbour::DB::Field::BLOB &&
          pArea->area.lpFields[uiIndex].uiType != Harbour::DB::Field::OLE ) ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( pArea->area.lpFields[uiIndex].uiLen == 4 ) {
       HB_PUT_LE_UINT32(&pArea->pRecord[pArea->pFieldOffset[uiIndex]], ulBlock);
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    } else if( pArea->area.lpFields[uiIndex].uiLen == 10 ) {
       if( pArea->bMemoType == DB_MEMO_SMT ) {
          LPSMTFIELD pSMTFiled = reinterpret_cast<LPSMTFIELD>(&pArea->pRecord[pArea->pFieldOffset[uiIndex]]);
@@ -1211,10 +1211,10 @@ HB_ERRCODE hb_dbfSetMemoData(DBFAREAP pArea, HB_USHORT uiIndex, HB_ULONG ulBlock
             }
          }
       }
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 /*
@@ -1432,9 +1432,9 @@ static HB_ERRCODE hb_dbfLockData(DBFAREAP pArea, HB_FOFFSET * pnPos, HB_FOFFSET 
       default:
          *pnPos = *pnFlSize = *pnRlSize = 0;
          *iDir = 0;
-         return HB_FAILURE;
+         return Harbour::FAILURE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static int hb_dbfLockTest(DBFAREAP pArea, HB_USHORT uiAction, HB_ULONG ulRecNo)
@@ -1451,7 +1451,7 @@ static int hb_dbfLockTest(DBFAREAP pArea, HB_USHORT uiAction, HB_ULONG ulRecNo)
       HB_FOFFSET nPos, nFlSize, nRlSize;
       int iDir;
 
-      if( hb_dbfLockData(pArea, &nPos, &nFlSize, &nRlSize, &iDir) == HB_SUCCESS ) {
+      if( hb_dbfLockData(pArea, &nPos, &nFlSize, &nRlSize, &iDir) == Harbour::SUCCESS ) {
          switch( uiAction ) {
             case FILE_LOCK:
                if( iDir < 0 ) {
@@ -1494,13 +1494,13 @@ static HB_ERRCODE hb_dbfBof( DBFAREAP pArea, HB_BOOL * pBof )
 #endif
 
    if( pArea->lpdbPendingRel ) {
-      if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
    *pBof = pArea->area.fBof;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1513,13 +1513,13 @@ static HB_ERRCODE hb_dbfEof( DBFAREAP pArea, HB_BOOL * pEof )
 #endif
 
    if( pArea->lpdbPendingRel ) {
-      if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
    *pEof = pArea->area.fEof;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1532,13 +1532,13 @@ static HB_ERRCODE hb_dbfFound(DBFAREAP pArea, HB_BOOL * pFound)
 #endif
 
    if( pArea->lpdbPendingRel ) {
-      if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
    *pFound = pArea->area.fFound;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1550,8 +1550,8 @@ static HB_ERRCODE hb_dbfGoBottom(DBFAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfGoBottom(%p)", static_cast<void*>(pArea)));
 #endif
 
-   if( SELF_GOCOLD(&pArea->area) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->area) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
    /* Update record count */
@@ -1561,8 +1561,8 @@ static HB_ERRCODE hb_dbfGoBottom(DBFAREAP pArea)
 
    pArea->area.fTop = false;
    pArea->area.fBottom = true;
-   if( SELF_GOTO(&pArea->area, pArea->ulRecCount) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( SELF_GOTO(&pArea->area, pArea->ulRecCount) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
 
    return SELF_SKIPFILTER(&pArea->area, -1);
@@ -1577,14 +1577,14 @@ static HB_ERRCODE hb_dbfGoTo(DBFAREAP pArea, HB_ULONG ulRecNo)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfGoTo(%p, %lu)", static_cast<void*>(pArea), ulRecNo));
 #endif
 
-   if( SELF_GOCOLD(&pArea->area) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->area) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
    if( pArea->lpdbPendingRel ) {
       if( pArea->lpdbPendingRel->isScoped ) {
-         if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
       } else { /* Reset parent rel struct */
          pArea->lpdbPendingRel = nullptr;
@@ -1614,7 +1614,7 @@ static HB_ERRCODE hb_dbfGoTo(DBFAREAP pArea, HB_ULONG ulRecNo)
    if( pArea->area.lpdbRelations ) {
       return SELF_SYNCCHILDREN(&pArea->area);
    } else {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 }
 
@@ -1631,7 +1631,7 @@ static HB_ERRCODE hb_dbfGoToId(DBFAREAP pArea, PHB_ITEM pItem)
       return SELF_GOTO(&pArea->area, hb_itemGetNL(pItem));
    } else {
       hb_dbfErrorRT(pArea, EG_DATATYPE, EDBF_DATATYPE, nullptr, 0, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 }
 
@@ -1647,8 +1647,8 @@ static HB_ERRCODE hb_dbfGoTop(DBFAREAP pArea)
    pArea->area.fTop = true;
    pArea->area.fBottom = false;
 
-   if( SELF_GOTO(&pArea->area, 1) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( SELF_GOTO(&pArea->area, 1) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
    return SELF_SKIPFILTER(&pArea->area, 1);
@@ -1666,8 +1666,8 @@ static HB_ERRCODE hb_dbfSkip(DBFAREAP pArea, HB_LONG lToSkip)
 #endif
 
    if( pArea->lpdbPendingRel ) {
-      if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
@@ -1683,7 +1683,7 @@ static HB_ERRCODE hb_dbfSkip(DBFAREAP pArea, HB_LONG lToSkip)
       as it should, Druzus */
 
    /* Move first record and set Bof flag */
-   if( errCode == HB_SUCCESS && pArea->area.fBof && lToSkip < 0 ) {
+   if( errCode == Harbour::SUCCESS && pArea->area.fBof && lToSkip < 0 ) {
       errCode = SELF_GOTOP(&pArea->area);
       pArea->area.fBof = true;
    }
@@ -1712,8 +1712,8 @@ static HB_ERRCODE hb_dbfSkipRaw(DBFAREAP pArea, HB_LONG lToSkip)
    HB_ERRCODE errCode;
 
    if( pArea->lpdbPendingRel ) {
-      if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
@@ -1772,7 +1772,7 @@ static HB_ERRCODE hb_dbfAddField(DBFAREAP pArea, LPDBFIELDINFO pFieldInfo)
       }
    }
    if( pArea->pFieldOffset[pArea->area.uiFieldCount] > pArea->uiRecordLen ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    } else {
       return SUPER_ADDFIELD(&pArea->area, pFieldInfo);
    }
@@ -1789,25 +1789,25 @@ static HB_ERRCODE hb_dbfAppend(DBFAREAP pArea, HB_BOOL bUnLockAll)
 
    HB_USHORT fLocked;
 
-   if( SELF_GOCOLD(&pArea->area) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->area) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
    if( pArea->fTrigger ) {
       if( !hb_dbfTriggerDo(pArea, EVENT_APPEND, 0, nullptr) ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
 
    if( pArea->fReadonly ) {
       hb_dbfErrorRT(pArea, EG_READONLY, EDBF_READONLY, nullptr, 0, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( pArea->lpdbPendingRel ) {
       if( pArea->lpdbPendingRel->isScoped ) {
-         if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
       } else { /* Reset parent rel struct */
          pArea->lpdbPendingRel = nullptr;
@@ -1816,25 +1816,25 @@ static HB_ERRCODE hb_dbfAppend(DBFAREAP pArea, HB_BOOL bUnLockAll)
 
    if( pArea->fShared ) {
       fLocked = false;
-      if( SELF_RAWLOCK(&pArea->area, APPEND_LOCK, 0) == HB_SUCCESS ) {
+      if( SELF_RAWLOCK(&pArea->area, APPEND_LOCK, 0) == Harbour::SUCCESS ) {
          HB_ULONG ulNewRecord;
          /* Update RecCount */
          pArea->ulRecCount = hb_dbfCalcRecCount(pArea);
          ulNewRecord = pArea->ulRecCount + 1;
          if( pArea->fFLocked || hb_dbfIsLocked(pArea, ulNewRecord) ) {
             fLocked = true;
-         } else if( hb_dbfLockRecord(pArea, ulNewRecord, &fLocked, bUnLockAll) != HB_SUCCESS ) {
+         } else if( hb_dbfLockRecord(pArea, ulNewRecord, &fLocked, bUnLockAll) != Harbour::SUCCESS ) {
             if( fLocked ) {
                hb_dbfUnlockRecord(pArea, ulNewRecord);
             }
             SELF_RAWLOCK(&pArea->area, APPEND_UNLOCK, 0);
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
       }
       if( !fLocked ) {
          SELF_RAWLOCK(&pArea->area, APPEND_UNLOCK, 0);
          hb_dbfErrorRT(pArea, EG_APPENDLOCK, EDBF_APPENDLOCK, nullptr, 0, EF_CANDEFAULT, nullptr);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
 
@@ -1854,7 +1854,7 @@ static HB_ERRCODE hb_dbfAppend(DBFAREAP pArea, HB_BOOL bUnLockAll)
       SELF_RAWLOCK(&pArea->area, APPEND_UNLOCK, 0);
       return errCode;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 #define hb_dbfCreateFields  nullptr
@@ -1870,33 +1870,33 @@ static HB_ERRCODE hb_dbfDeleteRec(DBFAREAP pArea)
 
    if( pArea->fTrigger ) {
       if( !hb_dbfTriggerDo(pArea, EVENT_DELETE, 0, nullptr) ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
 
    if( pArea->lpdbPendingRel ) {
-      if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
    /* Read record */
    if( !pArea->fValidBuffer && !hb_dbfReadRecord(pArea) ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( !pArea->fPositioned ) {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
    /* Buffer is hot? */
-   if( !pArea->fRecordChanged && SELF_GOHOT(&pArea->area) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( !pArea->fRecordChanged && SELF_GOHOT(&pArea->area) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
    pArea->pRecord[0] = '*';
    pArea->fDeleted = true;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1909,18 +1909,18 @@ static HB_ERRCODE hb_dbfDeleted(DBFAREAP pArea, HB_BOOL * pDeleted)
 #endif
 
    if( pArea->lpdbPendingRel ) {
-      if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
    /* Read record */
    if( !pArea->fValidBuffer && !hb_dbfReadRecord(pArea) ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    *pDeleted = pArea->fDeleted;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 #define hb_dbfFieldCount    nullptr
@@ -1937,13 +1937,13 @@ static HB_ERRCODE hb_dbfFlush(DBFAREAP pArea)
 #endif
 
    HB_ERRCODE errCode = SELF_GOCOLD(&pArea->area);
-   if( errCode == HB_SUCCESS ) {
+   if( errCode == Harbour::SUCCESS ) {
       if( pArea->fUpdateHeader && (pArea->uiSetHeader & DB_SETHEADER_COMMIT) != 0 ) {
          errCode = SELF_WRITEDBHEADER(&pArea->area);
       }
    }
 
-   if( errCode == HB_SUCCESS && hb_setGetHardCommit() ) {
+   if( errCode == Harbour::SUCCESS && hb_setGetHardCommit() ) {
       if( pArea->fDataFlush ) {
          hb_fileCommit(pArea->pDataFile);
          pArea->fDataFlush = false;
@@ -1969,7 +1969,7 @@ static HB_ERRCODE hb_dbfGetRec(DBFAREAP pArea, HB_BYTE ** pBuffer)
    if( pBuffer != nullptr ) {
       /* Read record */
       if( !pArea->fValidBuffer && !hb_dbfReadRecord(pArea) ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
 
       *pBuffer = pArea->pRecord;
@@ -1984,7 +1984,7 @@ static HB_ERRCODE hb_dbfGetRec(DBFAREAP pArea, HB_BYTE ** pBuffer)
          pArea->fEncrypted = false;
       }
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -2003,18 +2003,18 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
    HB_SIZE nLen;
 
    if( pArea->lpdbPendingRel ) {
-      if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
    if( --uiIndex >= pArea->area.uiFieldCount ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    /* Read record */
    if( !pArea->fValidBuffer && !hb_dbfReadRecord(pArea) ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    fError = false;
@@ -2233,16 +2233,16 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
       hb_errPutSubCode(pError, EDBF_DATATYPE);
       SELF_ERROR(&pArea->area, pError);
       hb_itemRelease(pError);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( pArea->fTrigger ) {
       if( !hb_dbfTriggerDo(pArea, EVENT_GET, uiIndex + 1, pItem) ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -2256,7 +2256,7 @@ static HB_ERRCODE hb_dbfGetVarLen(DBFAREAP pArea, HB_USHORT uiIndex, HB_SIZE * p
 
    *pLength = pArea->area.lpFields[uiIndex - 1].uiLen;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -2268,7 +2268,7 @@ static HB_ERRCODE hb_dbfGoCold(DBFAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfGoCold(%p)", static_cast<void*>(pArea)));
 #endif
 
-   HB_ERRCODE errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = Harbour::SUCCESS;
 
    if( pArea->fRecordChanged ) {
       if( pArea->fTrigger ) {
@@ -2289,7 +2289,7 @@ static HB_ERRCODE hb_dbfGoCold(DBFAREAP pArea)
 
       /* Write current record */
       if( !hb_dbfWriteRecord(pArea) ) {
-         errCode = HB_FAILURE;
+         errCode = Harbour::FAILURE;
       } else {
          if( pArea->uiSetHeader & DB_SETHEADER_REPLACE ) {
             pArea->fUpdateHeader = true;
@@ -2314,14 +2314,14 @@ static HB_ERRCODE hb_dbfGoHot(DBFAREAP pArea)
 
    if( pArea->fReadonly ) {
       hb_dbfErrorRT(pArea, EG_READONLY, EDBF_READONLY, nullptr, 0, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    } else if( pArea->fShared && !pArea->fFLocked && !hb_dbfIsLocked(pArea, pArea->ulRecNo) ) {
       hb_dbfErrorRT(pArea, EG_UNLOCKED, EDBF_UNLOCKED, nullptr, 0, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    pArea->fRecordChanged = true;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -2335,17 +2335,17 @@ static HB_ERRCODE hb_dbfPutRec(DBFAREAP pArea, const HB_BYTE * pBuffer)
 
    if( pBuffer != nullptr ) {
       if( pArea->lpdbPendingRel ) {
-         if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
       }
 
       if( !pArea->fPositioned ) {
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
       }
 
-      if( !pArea->fRecordChanged && SELF_GOHOT(&pArea->area) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( !pArea->fRecordChanged && SELF_GOHOT(&pArea->area) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
 
       /* Copy data to buffer */
@@ -2353,7 +2353,7 @@ static HB_ERRCODE hb_dbfPutRec(DBFAREAP pArea, const HB_BYTE * pBuffer)
 
       /*
        * TODO: such operation should be forbidden
-       * maybe it will be good to return HB_FAILURE when
+       * maybe it will be good to return Harbour::FAILURE when
        *    pArea->pRecord[0] != '*' && pArea->pRecord[0] != ' '
        */
       if( pArea->pRecord[0] == 'D' || pArea->pRecord[0] == 'E' ) {
@@ -2392,10 +2392,10 @@ static HB_ERRCODE hb_dbfPutRec(DBFAREAP pArea, const HB_BYTE * pBuffer)
 
       if( nWritten != static_cast<HB_SIZE>(pArea->uiRecordLen) ) {
          hb_dbfErrorRT(pArea, EG_WRITE, EDBF_WRITE, pArea->szDataFileName, hb_fsError(), 0, nullptr);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -2420,35 +2420,35 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
 
    if( pArea->fTrigger ) {
       if( !hb_dbfTriggerDo(pArea, EVENT_PUT, uiIndex, pItem) ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
 
    if( pArea->lpdbPendingRel ) {
-      if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
    /* Read record */
    if( !pArea->fValidBuffer && !hb_dbfReadRecord(pArea) ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( --uiIndex >= pArea->area.uiFieldCount ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( !pArea->fPositioned ) {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
    /* Buffer is hot? */
-   if( !pArea->fRecordChanged && SELF_GOHOT(&pArea->area) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( !pArea->fRecordChanged && SELF_GOHOT(&pArea->area) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
-   HB_ERRCODE errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = Harbour::SUCCESS;
    pField = pArea->area.lpFields + uiIndex;
    if( pField->uiType == Harbour::DB::Field::MEMO ||
        pField->uiType == Harbour::DB::Field::IMAGE ||
@@ -2629,7 +2629,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
    }
 
    /* Exit if any error */
-   if( errCode != HB_SUCCESS ) {
+   if( errCode != Harbour::SUCCESS ) {
       PHB_ITEM pError = hb_errNew();
       hb_errPutGenCode(pError, hb_dbfGetEGcode(errCode));
       hb_errPutDescription(pError, hb_langDGetErrorDesc(hb_dbfGetEGcode(errCode)));
@@ -2639,12 +2639,12 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
       hb_errPutArgs(pError, 1, pItem);
       errCode = SELF_ERROR(&pArea->area, pError);
       hb_itemRelease(pError);
-      return errCode == E_DEFAULT ? HB_SUCCESS : HB_FAILURE;
+      return errCode == E_DEFAULT ? Harbour::SUCCESS : Harbour::FAILURE;
    } else if( (pField->uiFlags & HB_FF_NULLABLE) != 0 ) {
       hb_dbfClearNullFlag(pArea->pRecord, pArea->uiNullOffset, pArea->pFieldBits[uiIndex].uiNullBit);
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -2658,33 +2658,33 @@ static HB_ERRCODE hb_dbfRecall(DBFAREAP pArea)
 
    if( pArea->fTrigger ) {
       if( !hb_dbfTriggerDo(pArea, EVENT_RECALL, 0, nullptr) ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
 
    if( pArea->lpdbPendingRel ) {
-      if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
    /* Read record */
    if( !pArea->fValidBuffer && !hb_dbfReadRecord(pArea) ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( !pArea->fPositioned ) {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
    /* Buffer is hot? */
-   if( !pArea->fRecordChanged && SELF_GOHOT(&pArea->area) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( !pArea->fRecordChanged && SELF_GOHOT(&pArea->area) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
 
    pArea->pRecord[0] = ' ';
    pArea->fDeleted = false;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -2702,7 +2702,7 @@ static HB_ERRCODE hb_dbfRecCount(DBFAREAP pArea, HB_ULONG * pRecCount)
    }
 
    *pRecCount = pArea->ulRecCount;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -2715,13 +2715,13 @@ static HB_ERRCODE hb_dbfRecNo(DBFAREAP pArea, HB_ULONG * pulRecNo)
 #endif
 
    if( pArea->lpdbPendingRel ) {
-      if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
    *pulRecNo = pArea->ulRecNo;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -2760,8 +2760,8 @@ static HB_ERRCODE hb_dbfSetFieldExtent(DBFAREAP pArea, HB_USHORT uiFieldExtent)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfSetFieldExtent(%p, %hu)", static_cast<void*>(pArea), uiFieldExtent));
 #endif
 
-   if( SUPER_SETFIELDEXTENT(&pArea->area, uiFieldExtent) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( SUPER_SETFIELDEXTENT(&pArea->area, uiFieldExtent) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
    /* Alloc field offsets array */
@@ -2769,7 +2769,7 @@ static HB_ERRCODE hb_dbfSetFieldExtent(DBFAREAP pArea, HB_USHORT uiFieldExtent)
       pArea->pFieldOffset = static_cast<HB_USHORT*>(hb_xgrabz(uiFieldExtent * sizeof(HB_USHORT)));
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 #define hb_dbfAlias  nullptr
@@ -2785,7 +2785,7 @@ static HB_ERRCODE hb_dbfClose(DBFAREAP pArea)
 
    if( pArea->fTrigger ) {
       if( !hb_dbfTriggerDo(pArea, EVENT_PRECLOSE, 0, nullptr) ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
 
@@ -2876,7 +2876,7 @@ static HB_ERRCODE hb_dbfClose(DBFAREAP pArea)
       pArea->fTrigger = false;
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -2888,7 +2888,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfCreate(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pCreateInfo)));
 #endif
 
-   HB_ERRCODE errCode = HB_SUCCESS, errSubCode = 0;
+   HB_ERRCODE errCode = Harbour::SUCCESS, errSubCode = 0;
    HB_SIZE nSize;
    HB_USHORT uiCount, uiLen;
    bool fRawBlob;
@@ -2905,11 +2905,11 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
 
       if( !pFileName->szExtension && hb_setGetDefExtension() ) {
          pItem = hb_itemPutNil(pItem);
-         if( SELF_INFO(&pArea->area, DBI_TABLEEXT, pItem) != HB_SUCCESS ) {
+         if( SELF_INFO(&pArea->area, DBI_TABLEEXT, pItem) != Harbour::SUCCESS ) {
             hb_itemRelease(pItem);
             hb_xfree(pFileName);
             pArea->lpdbOpenInfo = nullptr;
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
          pFileName->szExtension = hb_itemGetCPtr(pItem);
          hb_fsFNameMerge(szFileName, pFileName);
@@ -2920,14 +2920,14 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
    }
 
    pItem = hb_itemPutL(pItem, false);
-   fRawBlob = SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_BLOB_SUPPORT, pCreateInfo->ulConnection, pItem) == HB_SUCCESS && hb_itemGetL(pItem);
+   fRawBlob = SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_BLOB_SUPPORT, pCreateInfo->ulConnection, pItem) == Harbour::SUCCESS && hb_itemGetL(pItem);
 
    if( pArea->bLockType == 0 ) {
       pItem = hb_itemPutNil(pItem);
-      if( SELF_INFO(&pArea->area, DBI_LOCKSCHEME, pItem) != HB_SUCCESS ) {
+      if( SELF_INFO(&pArea->area, DBI_LOCKSCHEME, pItem) != Harbour::SUCCESS ) {
          hb_itemRelease(pItem);
          pArea->lpdbOpenInfo = nullptr;
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       pArea->bLockType = static_cast<HB_BYTE>(hb_itemGetNI(pItem));
       if( pArea->bLockType == 0 ) {
@@ -2940,10 +2940,10 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
    } else if( pArea->bMemoType == 0 ) {
       /* get memo type */
       pItem = hb_itemPutNil(pItem);
-      if( SELF_INFO(&pArea->area, DBI_MEMOTYPE, pItem) != HB_SUCCESS ) {
+      if( SELF_INFO(&pArea->area, DBI_MEMOTYPE, pItem) != Harbour::SUCCESS ) {
          hb_itemRelease(pItem);
          pArea->lpdbOpenInfo = nullptr;
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       pArea->bMemoType = static_cast<HB_BYTE>(hb_itemGetNI(pItem));
    }
@@ -2958,7 +2958,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
    if( nSize + sizeof(DBFHEADER) > UINT16_MAX ) {
       hb_dbfErrorRT(pArea, EG_CREATE, EDBF_DATAWIDTH, pCreateInfo->abName, 0, 0, nullptr);
       pArea->lpdbOpenInfo = nullptr;
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( !fRawBlob ) {
@@ -2983,7 +2983,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
 
       if( !pArea->pDataFile ) {
          pArea->lpdbOpenInfo = nullptr;
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
 
@@ -3263,7 +3263,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
       SELF_CLOSE(&pArea->area);
       hb_dbfErrorRT(pArea, EG_CREATE, errSubCode, pCreateInfo->abName, 0, 0, nullptr);
       pArea->lpdbOpenInfo = nullptr;
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    /* set end of fields marker */
@@ -3291,13 +3291,13 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
    }
 
    pItem = hb_itemNew(nullptr);
-   if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_PENDINGPASSWORD, pCreateInfo->ulConnection, pItem) == HB_SUCCESS ) {
+   if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_PENDINGPASSWORD, pCreateInfo->ulConnection, pItem) == Harbour::SUCCESS ) {
       if( hb_dbfPasswordSet(pArea, pItem, false) ) {
          pArea->fTableEncrypted = true;
       }
    } else {
       hb_itemClear(pItem);
-      if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_PASSWORD, pCreateInfo->ulConnection, pItem) == HB_SUCCESS ) {
+      if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_PASSWORD, pCreateInfo->ulConnection, pItem) == Harbour::SUCCESS ) {
          if( hb_dbfPasswordSet(pArea, pItem, false) ) {
             pArea->fTableEncrypted = true;
          }
@@ -3308,7 +3308,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
    if( !fRawBlob ) {
       /* Write header */
       errCode = SELF_WRITEDBHEADER(&pArea->area);
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          hb_xfree(pBuffer);
          SELF_CLOSE(&pArea->area);
          pArea->lpdbOpenInfo = nullptr;
@@ -3322,7 +3322,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
          hb_dbfErrorRT(pArea, EG_WRITE, EDBF_WRITE, pArea->szDataFileName, hb_fsError(), 0, nullptr);
          SELF_CLOSE(&pArea->area);
          pArea->lpdbOpenInfo = nullptr;
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       pArea->fDataFlush = true;
    }
@@ -3338,11 +3338,11 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
       errCode = SELF_CREATEMEMFILE(&pArea->area, pCreateInfo);
    }
    /* If successful call SUPER_CREATE to finish system jobs */
-   if( errCode == HB_SUCCESS ) {
+   if( errCode == Harbour::SUCCESS ) {
       errCode = SUPER_CREATE(&pArea->area, pCreateInfo);
    }
 
-   if( errCode != HB_SUCCESS ) {
+   if( errCode != Harbour::SUCCESS ) {
       SELF_CLOSE(&pArea->area);
       pArea->lpdbOpenInfo = nullptr;
       return errCode;
@@ -3369,7 +3369,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfInfo(%p, %hu, %p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pItem)));
 #endif
 
-   HB_ERRCODE errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = Harbour::SUCCESS;
 
    switch( uiIndex ) {
       case DBI_ISDBF:
@@ -3634,21 +3634,21 @@ static HB_ERRCODE hb_dbfFieldInfo(DBFAREAP pArea, HB_USHORT uiIndex, HB_USHORT u
    bool fLck;
 
    if( uiIndex > pArea->area.uiFieldCount ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    switch( uiType ) {
       case DBS_ISNULL:
          pField = pArea->area.lpFields + uiIndex - 1;
          hb_itemPutL(pItem, (pField->uiFlags & HB_FF_NULLABLE) != 0 && hb_dbfGetNullFlag(pArea, pArea->pFieldBits[uiIndex - 1].uiNullBit));
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
       case DBS_COUNTER:
          if( hb_dbfIsAutoIncField(pArea->area.lpFields + uiIndex - 1) != HB_AUTOINC_NONE ) {
             HB_MAXINT nValue;
             fLck = false;
             if( pArea->fShared && !pArea->fFLocked && !pArea->fHeaderLocked ) {
-               if( SELF_RAWLOCK(&pArea->area, HEADER_LOCK, 0) != HB_SUCCESS ) {
-                  return HB_FAILURE;
+               if( SELF_RAWLOCK(&pArea->area, HEADER_LOCK, 0) != Harbour::SUCCESS ) {
+                  return Harbour::FAILURE;
                }
                fLck = true;
             }
@@ -3662,18 +3662,18 @@ static HB_ERRCODE hb_dbfFieldInfo(DBFAREAP pArea, HB_USHORT uiIndex, HB_USHORT u
                SELF_RAWLOCK(&pArea->area, HEADER_UNLOCK, 0);
             }
             hb_itemPutNInt(pItem, nValue);
-            return HB_SUCCESS;
+            return Harbour::SUCCESS;
          }
          hb_itemClear(pItem);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       case DBS_STEP:
          if( hb_dbfIsAutoIncField(pArea->area.lpFields + uiIndex - 1) != HB_AUTOINC_NONE ) {
             int iValue;
             if( HB_IS_NUMERIC(pItem) ) {
                fLck = false;
                if( pArea->fShared && !pArea->fFLocked && !pArea->fHeaderLocked ) {
-                  if( SELF_RAWLOCK(&pArea->area, HEADER_LOCK, 0) != HB_SUCCESS ) {
-                     return HB_FAILURE;
+                  if( SELF_RAWLOCK(&pArea->area, HEADER_LOCK, 0) != Harbour::SUCCESS ) {
+                     return Harbour::FAILURE;
                   }
                   fLck = true;
                }
@@ -3685,10 +3685,10 @@ static HB_ERRCODE hb_dbfFieldInfo(DBFAREAP pArea, HB_USHORT uiIndex, HB_USHORT u
                iValue = hb_dbfNextValueStep(pArea, uiIndex - 1, 0);
             }
             hb_itemPutNI(pItem, iValue);
-            return HB_SUCCESS;
+            return Harbour::SUCCESS;
          }
          hb_itemClear(pItem);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       default:
          return SUPER_FIELDINFO(&pArea->area, uiIndex, uiType, pItem);
    }
@@ -3704,12 +3704,12 @@ static HB_ERRCODE hb_dbfRecInfo(DBFAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInf
 #endif
 
    HB_ULONG ulRecNo = hb_itemGetNL(pRecID), ulPrevRec = 0;
-   HB_ERRCODE errResult = HB_SUCCESS;
+   HB_ERRCODE errResult = Harbour::SUCCESS;
    HB_BOOL bDeleted;
 
    if( pArea->lpdbPendingRel ) {
-      if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
@@ -3724,7 +3724,7 @@ static HB_ERRCODE hb_dbfRecInfo(DBFAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInf
          case DBRI_RAWDATA:
             ulPrevRec = pArea->ulRecNo;
             errResult = SELF_GOTO(&pArea->area, ulRecNo);
-            if( errResult != HB_SUCCESS ) {
+            if( errResult != Harbour::SUCCESS ) {
                return errResult;
             }
             break;
@@ -3734,7 +3734,7 @@ static HB_ERRCODE hb_dbfRecInfo(DBFAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInf
    switch( uiInfoType ) {
       case DBRI_DELETED:
          errResult = SELF_DELETED(&pArea->area, &bDeleted);
-         if( errResult == HB_SUCCESS ) {
+         if( errResult == Harbour::SUCCESS ) {
             hb_itemPutL(pInfo, bDeleted);
          }
          break;
@@ -3758,7 +3758,7 @@ static HB_ERRCODE hb_dbfRecInfo(DBFAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInf
 
       case DBRI_ENCRYPTED:
          if( !pArea->fValidBuffer && !hb_dbfReadRecord(pArea) ) {
-            errResult = HB_FAILURE;
+            errResult = Harbour::FAILURE;
          } else {
             hb_itemPutL(pInfo, pArea->fEncrypted);
          }
@@ -3766,7 +3766,7 @@ static HB_ERRCODE hb_dbfRecInfo(DBFAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInf
 
       case DBRI_RAWRECORD:
          if( !pArea->fValidBuffer && !hb_dbfReadRecord(pArea) ) {
-            errResult = HB_FAILURE;
+            errResult = Harbour::FAILURE;
          } else {
             hb_itemPutCL(pInfo, reinterpret_cast<char*>(pArea->pRecord), pArea->uiRecordLen);
          }
@@ -3779,7 +3779,7 @@ static HB_ERRCODE hb_dbfRecInfo(DBFAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInf
          HB_SIZE nLength;
 
          if( !pArea->fValidBuffer && !hb_dbfReadRecord(pArea) ) {
-            errResult = HB_FAILURE;
+            errResult = Harbour::FAILURE;
             break;
          }
          nLength = uiInfoType == DBRI_RAWDATA ? pArea->uiRecordLen : 0;
@@ -3796,7 +3796,7 @@ static HB_ERRCODE hb_dbfRecInfo(DBFAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInf
                    pArea->area.lpFields[uiFields].uiType == Harbour::DB::Field::OLE ) {
                   HB_SIZE nLen;
                   errResult = SELF_GETVALUE(&pArea->area, uiFields + 1, pInfo);
-                  if( errResult != HB_SUCCESS ) {
+                  if( errResult != Harbour::SUCCESS ) {
                      break;
                   }
                   nLen = hb_itemGetCLen(pInfo);
@@ -3816,8 +3816,8 @@ static HB_ERRCODE hb_dbfRecInfo(DBFAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInf
          errResult = SUPER_RECINFO(&pArea->area, pRecID, uiInfoType, pInfo);
    }
    if( ulPrevRec != 0 ) {
-      if( SELF_GOTO(&pArea->area, ulPrevRec) != HB_SUCCESS && errResult == HB_SUCCESS ) {
-         errResult = HB_FAILURE;
+      if( SELF_GOTO(&pArea->area, ulPrevRec) != Harbour::SUCCESS && errResult == Harbour::SUCCESS ) {
+         errResult = Harbour::FAILURE;
       }
    }
    return errResult;
@@ -3832,8 +3832,8 @@ static HB_ERRCODE hb_dbfNewArea(DBFAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfNewArea(%p)", static_cast<void*>(pArea)));
 #endif
 
-   if( SUPER_NEW(&pArea->area) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( SUPER_NEW(&pArea->area) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
    /* set maximum field name length to 10 characters */
@@ -3850,17 +3850,17 @@ static HB_ERRCODE hb_dbfNewArea(DBFAREAP pArea)
 
    {
       PHB_ITEM pItem = hb_itemNew(nullptr);
-      if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_TABLETYPE, 0, pItem) == HB_SUCCESS ) {
+      if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_TABLETYPE, 0, pItem) == Harbour::SUCCESS ) {
          pArea->bTableType = static_cast<HB_BYTE>(hb_itemGetNI(pItem));
       }
       hb_itemClear(pItem);
-      if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_SETHEADER, 0, pItem) == HB_SUCCESS ) {
+      if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_SETHEADER, 0, pItem) == Harbour::SUCCESS ) {
          pArea->uiSetHeader = static_cast<HB_UINT>(hb_itemGetNI(pItem));
       }
       hb_itemRelease(pItem);
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -3887,7 +3887,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
 
    pItem = hb_itemNew(nullptr);
 
-   if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_PENDINGTRIGGER, pOpenInfo->ulConnection, pItem) == HB_SUCCESS ) {
+   if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_PENDINGTRIGGER, pOpenInfo->ulConnection, pItem) == Harbour::SUCCESS ) {
       if( HB_IS_STRING(pItem) ) {
          hb_dbfTriggerSet(pArea, pItem);
       }
@@ -3895,7 +3895,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
 
    if( !pArea->fTrigger ) {
       hb_itemClear(pItem);
-      if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_TRIGGER, pOpenInfo->ulConnection, pItem) == HB_SUCCESS ) {
+      if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_TRIGGER, pOpenInfo->ulConnection, pItem) == Harbour::SUCCESS ) {
          if( HB_IS_STRING(pItem) ) {
             hb_dbfTriggerSet(pArea, pItem);
          }
@@ -3907,7 +3907,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
       if( !hb_dbfTriggerDo(pArea, EVENT_PREUSE, 0, pItem) ) {
          hb_itemRelease(pItem);
          pArea->lpdbOpenInfo = nullptr;
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       hb_strncpy(szFileName, hb_itemGetCPtr(pItem), sizeof(szFileName) - 1);
    } else {
@@ -3916,10 +3916,10 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
 
    if( !pArea->bLockType ) {
       hb_itemClear(pItem);
-      if( SELF_INFO(&pArea->area, DBI_LOCKSCHEME, pItem) != HB_SUCCESS ) {
+      if( SELF_INFO(&pArea->area, DBI_LOCKSCHEME, pItem) != Harbour::SUCCESS ) {
          hb_itemRelease(pItem);
          pArea->lpdbOpenInfo = nullptr;
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       pArea->bLockType = static_cast<HB_BYTE>(hb_itemGetNI(pItem));
       if( !pArea->bLockType ) {
@@ -3953,11 +3953,11 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
    /* Add default file name extension if necessary */
    if( !pFileName->szExtension && hb_setGetDefExtension() ) {
       hb_itemClear(pItem);
-      if( SELF_INFO(&pArea->area, DBI_TABLEEXT, pItem) != HB_SUCCESS ) {
+      if( SELF_INFO(&pArea->area, DBI_TABLEEXT, pItem) != Harbour::SUCCESS ) {
          hb_xfree(pFileName);
          hb_itemRelease(pItem);
          pArea->lpdbOpenInfo = nullptr;
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       pFileName->szExtension = hb_itemGetCPtr(pItem);
       hb_fsFNameMerge(szFileName, pFileName);
@@ -3977,9 +3977,9 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
    hb_xfree(pFileName);
 
    hb_itemClear(pItem);
-   fRawBlob = SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_BLOB_SUPPORT, pOpenInfo->ulConnection, pItem) == HB_SUCCESS && hb_itemGetL(pItem);
+   fRawBlob = SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_BLOB_SUPPORT, pOpenInfo->ulConnection, pItem) == Harbour::SUCCESS && hb_itemGetL(pItem);
    hb_itemClear(pItem);
-   uiDecimals = static_cast<HB_USHORT>(SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_DECIMALS, pOpenInfo->ulConnection, pItem) == HB_SUCCESS ? hb_itemGetNI(pItem) : 0);
+   uiDecimals = static_cast<HB_USHORT>(SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_DECIMALS, pOpenInfo->ulConnection, pItem) == Harbour::SUCCESS ? hb_itemGetNI(pItem) : 0);
    hb_itemRelease(pItem);
    uiFlagsMask = 0;
 
@@ -4011,7 +4011,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
       if( !pArea->pDataFile ) {
          SELF_CLOSE(&pArea->area);
          pArea->lpdbOpenInfo = nullptr;
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
 
       /* Allocate only after successfully open file */
@@ -4019,7 +4019,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
 
       /* Read file header and exit if error */
       errCode = SELF_READDBHEADER(&pArea->area);
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          SELF_CLOSE(&pArea->area);
          pArea->lpdbOpenInfo = nullptr;
          return errCode;
@@ -4034,11 +4034,11 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
       /* Read fields and exit if error */
       do {
          if( hb_fileReadAt(pArea->pDataFile, pBuffer, nSize, sizeof(DBFHEADER)) == nSize ) {
-            errCode = HB_SUCCESS;
+            errCode = Harbour::SUCCESS;
             break;
          }
          errOsCode = hb_fsError();
-         errCode = HB_FAILURE;
+         errCode = Harbour::FAILURE;
       } while( hb_dbfErrorRT(pArea, errOsCode == 0 ? EG_CORRUPTION : EG_READ, errOsCode == 0 ? EDBF_CORRUPT : EDBF_READ,
                            pArea->szDataFileName, errOsCode, EF_CANRETRY | EF_CANDEFAULT, &pError) == E_RETRY );
       if( pError ) {
@@ -4046,7 +4046,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
       }
 
       /* Exit if error */
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          if( pBuffer ) {
             hb_xfree(pBuffer);
          }
@@ -4131,12 +4131,12 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
    /* CL5.3 allow to create and open DBFs without fields */
 #ifdef HB_CLP_STRICT
    if( uiFields == 0 ) {
-      errCode = HB_FAILURE;
+      errCode = Harbour::FAILURE;
    } else
 #endif
    {
       errCode = SELF_SETFIELDEXTENT(&pArea->area, uiFields);
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          SELF_CLOSE(&pArea->area);
          pArea->lpdbOpenInfo = nullptr;
          return errCode;
@@ -4210,7 +4210,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
              */
 #if 0
             if( pField->bLen > 20 ) {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             }
 #endif
             break;
@@ -4226,7 +4226,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
             dbFieldInfo.uiType = Harbour::DB::Field::DOUBLE;
             dbFieldInfo.uiDec = pField->bDec;
             if( dbFieldInfo.uiLen != 8 ) {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             } else if( dbFieldInfo.uiDec == 0 ) {
                dbFieldInfo.uiDec = uiDecimals;
             }
@@ -4238,7 +4238,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
             } else if( dbFieldInfo.uiLen == 4 ) {
                dbFieldInfo.uiType = Harbour::DB::Field::TIME;
             } else {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             }
             break;
 
@@ -4246,14 +4246,14 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
          case '@':
             dbFieldInfo.uiType = Harbour::DB::Field::TIMESTAMP;
             if( dbFieldInfo.uiLen != 8 ) {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             }
             break;
 
          case '=':
             dbFieldInfo.uiType = Harbour::DB::Field::MODTIME;
             if( dbFieldInfo.uiLen != 8 ) {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             }
             pArea->fModStamp = true;
             break;
@@ -4261,7 +4261,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
          case '^':
             dbFieldInfo.uiType = Harbour::DB::Field::ROWVER;
             if( dbFieldInfo.uiLen != 8 ) {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             }
             pArea->fModStamp = true;
             break;
@@ -4269,7 +4269,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
          case '+':
             dbFieldInfo.uiType = Harbour::DB::Field::AUTOINC;
             if( dbFieldInfo.uiLen != 4 ) {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             }
             pArea->fAutoInc = true;
             break;
@@ -4328,7 +4328,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
             dbFieldInfo.uiFlags |= HB_FF_UNICODE;
             uiLen = pField->bLen + pField->bDec * 256;
             if( uiLen & 1 ) {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             }
             dbFieldInfo.uiLen = uiLen >> 1;
             break;
@@ -4338,7 +4338,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
             dbFieldInfo.uiFlags |= HB_FF_UNICODE;
             uiLen = pField->bLen + pField->bDec * 256;
             if( uiLen & 1 || uiLen < 2 ) {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             }
             dbFieldInfo.uiLen = (uiLen >> 1) - 1;
             break;
@@ -4362,11 +4362,11 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
             /* fallthrough */
 
          default:
-            errCode = HB_FAILURE;
+            errCode = Harbour::FAILURE;
             break;
       }
 
-      if( errCode == HB_SUCCESS ) {
+      if( errCode == Harbour::SUCCESS ) {
          if( (dbFieldInfo.uiFlags & HB_FF_NULLABLE) != 0 ) {
             hb_dbfAllocNullFlag(pArea, uiCount, false);
          }
@@ -4375,7 +4375,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
       }
 
       /* Exit if error */
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          break;
       }
    }
@@ -4384,11 +4384,11 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
    }
 
    if( pArea->uiNullCount > 0 && pArea->uiNullOffset == 0 ) {
-      errCode = HB_FAILURE;
+      errCode = Harbour::FAILURE;
    }
 
    /* Exit if error */
-   if( errCode != HB_SUCCESS ) {
+   if( errCode != Harbour::SUCCESS ) {
       hb_dbfErrorRT(pArea, EG_CORRUPTION, EDBF_CORRUPT, pArea->szDataFileName, 0, EF_CANDEFAULT, nullptr);
       SELF_CLOSE(&pArea->area);
       pArea->lpdbOpenInfo = nullptr;
@@ -4396,11 +4396,11 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
    }
 
    pItem = hb_itemNew(nullptr);
-   if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_PENDINGPASSWORD, pOpenInfo->ulConnection, pItem) == HB_SUCCESS ) {
+   if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_PENDINGPASSWORD, pOpenInfo->ulConnection, pItem) == Harbour::SUCCESS ) {
       hb_dbfPasswordSet(pArea, pItem, false);
    } else {
       hb_itemClear(pItem);
-      if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_PASSWORD, pOpenInfo->ulConnection, pItem) == HB_SUCCESS ) {
+      if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_PASSWORD, pOpenInfo->ulConnection, pItem) == Harbour::SUCCESS ) {
          hb_dbfPasswordSet(pArea, pItem, false);
       }
    }
@@ -4416,15 +4416,15 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
       errCode = SELF_OPENMEMFILE(&pArea->area, pOpenInfo);
    }
 
-   if( errCode == HB_SUCCESS ) {
+   if( errCode == Harbour::SUCCESS ) {
       /* If successful call SUPER_OPEN to finish system jobs */
       errCode = SUPER_OPEN(&pArea->area, pOpenInfo);
    }
 
-   if( errCode != HB_SUCCESS ) {
+   if( errCode != Harbour::SUCCESS ) {
       SELF_CLOSE(&pArea->area);
       pArea->lpdbOpenInfo = nullptr;
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    /* Alloc buffer */
@@ -4459,7 +4459,7 @@ static HB_ERRCODE hb_dbfStructSize(DBFAREAP pArea, HB_USHORT * uiSize)
    HB_SYMBOL_UNUSED(pArea);
 
    *uiSize = sizeof(DBFAREA);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 #define hb_dbfSysName  nullptr
@@ -4478,7 +4478,7 @@ static HB_ERRCODE hb_dbfPackRec(DBFAREAP pArea, HB_ULONG ulRecNo, HB_BOOL * fWri
 
    *fWritten = !pArea->fDeleted;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -4496,21 +4496,21 @@ static HB_ERRCODE hb_dbfPack(DBFAREAP pArea)
 
    if( pArea->fReadonly ) {
       hb_dbfErrorRT(pArea, EG_READONLY, EDBF_READONLY, nullptr, 0, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    if( pArea->fShared ) {
       hb_dbfErrorRT(pArea, EG_SHARED, EDBF_SHARED, nullptr, 0, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( pArea->fTrigger ) {
       if( !hb_dbfTriggerDo(pArea, EVENT_PACK, 0, nullptr) ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
 
-   if( SELF_GOCOLD(&pArea->area) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->area) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
 
    /* This is bad hack but looks that people begins to use it :-(
@@ -4535,35 +4535,35 @@ static HB_ERRCODE hb_dbfPack(DBFAREAP pArea)
    ulRecOut = ulEvery = 0;
    ulRecIn = 1;
    while( ulRecIn <= pArea->ulRecCount ) {
-      if( SELF_GOTO(&pArea->area, ulRecIn) != HB_SUCCESS ) {
+      if( SELF_GOTO(&pArea->area, ulRecIn) != Harbour::SUCCESS ) {
          if( pBlock ) {
             hb_itemRelease(pBlock);
          }
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       if( !hb_dbfReadRecord(pArea) ) {
          if( pBlock ) {
             hb_itemRelease(pBlock);
          }
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
 
       /* Execute the Code Block */
       if( pBlock ) {
          if( ++ulEvery >= ulUserEvery ) {
             ulEvery = 0;
-            if( SELF_EVALBLOCK(&pArea->area, pBlock) != HB_SUCCESS ) {
+            if( SELF_EVALBLOCK(&pArea->area, pBlock) != Harbour::SUCCESS ) {
                hb_itemRelease(pBlock);
-               return HB_FAILURE;
+               return Harbour::FAILURE;
             }
          }
       }
 
-      if( SELF_PACKREC(&pArea->area, ulRecOut + 1, &fWritten) != HB_SUCCESS ) {
+      if( SELF_PACKREC(&pArea->area, ulRecOut + 1, &fWritten) != Harbour::SUCCESS ) {
          if( pBlock ) {
             hb_itemRelease(pBlock);
          }
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
 
       if( fWritten ) {
@@ -4575,7 +4575,7 @@ static HB_ERRCODE hb_dbfPack(DBFAREAP pArea)
                if( pBlock ) {
                   hb_itemRelease(pBlock);
                }
-               return HB_FAILURE;
+               return Harbour::FAILURE;
             }
          }
       }
@@ -4585,9 +4585,9 @@ static HB_ERRCODE hb_dbfPack(DBFAREAP pArea)
    /* Execute the Code Block for pending record */
    if( pBlock ) {
       if( ulEvery > 0 ) {
-         if( SELF_EVALBLOCK(&pArea->area, pBlock) != HB_SUCCESS ) {
+         if( SELF_EVALBLOCK(&pArea->area, pBlock) != Harbour::SUCCESS ) {
             hb_itemRelease(pBlock);
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
       }
       hb_itemRelease(pBlock);
@@ -4595,8 +4595,8 @@ static HB_ERRCODE hb_dbfPack(DBFAREAP pArea)
 
    if( pArea->ulRecCount != ulRecOut ) {
       pArea->ulRecCount = ulRecOut;
-      if( SELF_WRITEDBHEADER(&pArea->area) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_WRITEDBHEADER(&pArea->area) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
    return SELF_GOTO(&pArea->area, 1);
@@ -4615,9 +4615,9 @@ static HB_ERRCODE hb_dbfTransCond(DBFAREAP pArea, LPDBTRANSINFO pTransInfo)
          pTransInfo->uiFlags |= DBTF_PUTREC;
       } else {
          PHB_ITEM pPutRec = hb_itemPutL(nullptr, false);
-         if( SELF_INFO(pTransInfo->lpaDest, DBI_CANPUTREC, pPutRec) != HB_SUCCESS ) {
+         if( SELF_INFO(pTransInfo->lpaDest, DBI_CANPUTREC, pPutRec) != Harbour::SUCCESS ) {
             hb_itemRelease(pPutRec);
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
          if( hb_itemGetL(pPutRec) ) {
             pTransInfo->uiFlags |= DBTF_PUTREC;
@@ -4628,7 +4628,7 @@ static HB_ERRCODE hb_dbfTransCond(DBFAREAP pArea, LPDBTRANSINFO pTransInfo)
       }
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /* NOTE: For large tables the sorting algorithm may access source records
@@ -4767,7 +4767,7 @@ static HB_ERRCODE hb_dbfSortInit(LPDBSORTREC pSortRec, LPDBSORTINFO pSortInfo)
    }
    pSortInfo->uiItemCount = uiDest;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static void hb_dbfSortFree(LPDBSORTREC pSortRec)
@@ -4950,7 +4950,7 @@ static HB_ERRCODE hb_dbfSortWritePage(LPDBSORTREC pSortRec)
       pSortRec->pTempFile = hb_fileCreateTemp(nullptr, nullptr, FC_NORMAL, szName);
       if( pSortRec->pTempFile == nullptr ) {
          hb_dbfErrorRT(reinterpret_cast<DBFAREAP>(pArea), EG_CREATE, EDBF_CREATE_TEMP, szName, hb_fsError(), 0, nullptr);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       pSortRec->szTempFileName = hb_strdup(szName);
    }
@@ -4965,12 +4965,12 @@ static HB_ERRCODE hb_dbfSortWritePage(LPDBSORTREC pSortRec)
 
    if( hb_fileWriteAt(pSortRec->pTempFile, pData, nSize, pSortRec->pSwapPages[pSortRec->nPages].nOffset) != nSize ) {
       hb_dbfErrorRT(reinterpret_cast<DBFAREAP>(pArea), EG_WRITE, EDBF_WRITE_TEMP, pSortRec->szTempFileName, hb_fsError(), 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    pSortRec->nPages++;
    pSortRec->nCount = 0;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE hb_dbfSortReadRec(LPDBSORTREC pSortRec, PHB_ITEM pValue)
@@ -4986,12 +4986,12 @@ static HB_ERRCODE hb_dbfSortReadRec(LPDBSORTREC pSortRec, PHB_ITEM pValue)
    for( HB_SHORT uiCount = 0; uiCount < pSortRec->pSortInfo->uiItemCount; uiCount++ ) {
       PHB_ITEM pItem = hb_arrayGetItemPtr(pValue, uiCount + 1);
       HB_USHORT uiField = pSortRec->pSortInfo->lpdbsItem[uiCount].uiField;
-      if( SELF_GETVALUE(pArea, uiField, pItem) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_GETVALUE(pArea, uiField, pItem) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE hb_dbfSortReadPage(LPDBSORTREC pSortRec, PHB_DBSORTPAGE pPage)
@@ -5002,13 +5002,13 @@ static HB_ERRCODE hb_dbfSortReadPage(LPDBSORTREC pSortRec, PHB_DBSORTPAGE pPage)
 
    if( hb_fileReadAt(pSortRec->pTempFile, pPage->pnRecords, nSize, pPage->nOffset) != nSize ) {
       hb_dbfErrorRT(reinterpret_cast<DBFAREAP>(pArea), EG_READ, EDBF_READ_TEMP, pSortRec->szTempFileName, hb_fsError(), 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    pPage->nOffset += nSize;
    pPage->nInBuf = nCount;
    pPage->nCurrent = 0;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE hb_dbfSortGetRec(LPDBSORTREC pSortRec, HB_DBRECNO * pnRecNo)
@@ -5023,21 +5023,21 @@ static HB_ERRCODE hb_dbfSortGetRec(LPDBSORTREC pSortRec, HB_DBRECNO * pnRecNo)
       }
    } else {
       if( pPage->nCurrent == pPage->nInBuf ) {
-         if( hb_dbfSortReadPage(pSortRec, pPage) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( hb_dbfSortReadPage(pSortRec, pPage) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
       }
       if( pSortRec->nPages > 1 ) {
          AREAP pArea = pSortRec->pSortInfo->dbtri.lpaSource;
-         if( SELF_GOTO(pArea, pPage->pnRecords[pPage->nCurrent]) != HB_SUCCESS ||
-             hb_dbfSortReadRec(pSortRec, hb_arrayGetItemPtr(pSortRec->pSortArray, nPage + 1)) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( SELF_GOTO(pArea, pPage->pnRecords[pPage->nCurrent]) != Harbour::SUCCESS ||
+             hb_dbfSortReadRec(pSortRec, hb_arrayGetItemPtr(pSortRec->pSortArray, nPage + 1)) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
          hb_dbfSortInsPage(pSortRec, pSortRec->pnIndex, 1, pSortRec->nPages, 0);
       }
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE hb_dbfSortFinish( LPDBSORTREC pSortRec )
@@ -5052,8 +5052,8 @@ static HB_ERRCODE hb_dbfSortFinish( LPDBSORTREC pSortRec )
       if( pSortRec->nPages > 0 ) {
          HB_DBRECNO nCount, * pnOrder;
 
-         if( hb_dbfSortWritePage(pSortRec) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( hb_dbfSortWritePage(pSortRec) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
 
          if( pSortRec->pSortArray ) {
@@ -5086,10 +5086,10 @@ static HB_ERRCODE hb_dbfSortFinish( LPDBSORTREC pSortRec )
          pSortRec->pnOrder = pnOrder = static_cast<HB_DBRECNO*>(hb_xgrab(nCount * sizeof(HB_DBRECNO)));
          for( HB_SORTIDX nPage = 0; nPage < pSortRec->nPages; ++nPage, pnOrder += pSortRec->nMaxRec ) {
             pSortRec->pSwapPages[nPage].pnRecords = pnOrder;
-            if( hb_dbfSortReadPage(pSortRec, &pSortRec->pSwapPages[nPage]) != HB_SUCCESS ||
-                SELF_GOTO(pArea, pnOrder[0]) != HB_SUCCESS ||
-                hb_dbfSortReadRec(pSortRec, hb_arrayGetItemPtr(pSortRec->pSortArray, nPage + 1)) != HB_SUCCESS ) {
-               return HB_FAILURE;
+            if( hb_dbfSortReadPage(pSortRec, &pSortRec->pSwapPages[nPage]) != Harbour::SUCCESS ||
+                SELF_GOTO(pArea, pnOrder[0]) != Harbour::SUCCESS ||
+                hb_dbfSortReadRec(pSortRec, hb_arrayGetItemPtr(pSortRec->pSortArray, nPage + 1)) != Harbour::SUCCESS ) {
+               return Harbour::FAILURE;
             }
 
             pSortRec->pnIndex[nPage] = nPage;
@@ -5119,14 +5119,14 @@ static HB_ERRCODE hb_dbfSortFinish( LPDBSORTREC pSortRec )
    while( pSortRec->nPages > 0 ) {
       HB_DBRECNO nRecNo;
 
-      if( hb_dbfSortGetRec(pSortRec, &nRecNo) != HB_SUCCESS ||
-          SELF_GOTO(pArea, nRecNo) != HB_SUCCESS ||
-          SELF_TRANSREC(pArea, &pSortRec->pSortInfo->dbtri) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( hb_dbfSortGetRec(pSortRec, &nRecNo) != Harbour::SUCCESS ||
+          SELF_GOTO(pArea, nRecNo) != Harbour::SUCCESS ||
+          SELF_TRANSREC(pArea, &pSortRec->pSortInfo->dbtri) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE hb_dbfSortAdd(LPDBSORTREC pSortRec)
@@ -5159,18 +5159,18 @@ static HB_ERRCODE hb_dbfSortAdd(LPDBSORTREC pSortRec)
          }
       }
       if( pSortRec->nCount == pSortRec->nMaxRec ) {
-         if( hb_dbfSortWritePage(pSortRec) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( hb_dbfSortWritePage(pSortRec) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
       }
    }
 
-   if( SELF_RECNO(pArea, &ulRecNo) != HB_SUCCESS || hb_dbfSortReadRec(pSortRec, hb_arrayGetItemPtr(pSortRec->pSortArray, pSortRec->nCount + 1)) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( SELF_RECNO(pArea, &ulRecNo) != Harbour::SUCCESS || hb_dbfSortReadRec(pSortRec, hb_arrayGetItemPtr(pSortRec->pSortArray, pSortRec->nCount + 1)) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
    pSortRec->pnRecords[pSortRec->nCount++] = static_cast<HB_DBRECNO>(ulRecNo);
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -5187,12 +5187,12 @@ static HB_ERRCODE hb_dbfSort(DBFAREAP pArea, LPDBSORTINFO pSortInfo)
    bool fFor;
    HB_LONG lNext = 1;
 
-   if( SELF_GOCOLD(&pArea->area) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->area) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
 
-   if( hb_dbfSortInit(&dbSortRec, pSortInfo) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( hb_dbfSortInit(&dbSortRec, pSortInfo) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
 
    if( pSortInfo->uiItemCount == 0 ) {
@@ -5200,7 +5200,7 @@ static HB_ERRCODE hb_dbfSort(DBFAREAP pArea, LPDBSORTINFO pSortInfo)
    }
 
    HB_ERRCODE errCode = hb_dbfTransCond(pArea, &pSortInfo->dbtri);
-   if( errCode == HB_SUCCESS ) {
+   if( errCode == Harbour::SUCCESS ) {
       if( pSortInfo->dbtri.dbsci.itmRecID ) {
          errCode = SELF_GOTOID(&pArea->area, pSortInfo->dbtri.dbsci.itmRecID);
       } else if( pSortInfo->dbtri.dbsci.lNext ) {
@@ -5212,22 +5212,22 @@ static HB_ERRCODE hb_dbfSort(DBFAREAP pArea, LPDBSORTINFO pSortInfo)
 
    /* TODO: use SKIPSCOPE() method and fRest parameter */
 
-   while( errCode == HB_SUCCESS && lNext > 0 ) {
+   while( errCode == Harbour::SUCCESS && lNext > 0 ) {
       errCode = SELF_EOF(&pArea->area, &fEof);
-      if( errCode != HB_SUCCESS || fEof ) {
+      if( errCode != Harbour::SUCCESS || fEof ) {
          break;
       }
 
       if( pSortInfo->dbtri.dbsci.itmCobWhile ) {
          errCode = SELF_EVALBLOCK(&pArea->area, pSortInfo->dbtri.dbsci.itmCobWhile);
-         if( errCode != HB_SUCCESS || !hb_itemGetLX(pArea->area.valResult) ) {
+         if( errCode != Harbour::SUCCESS || !hb_itemGetLX(pArea->area.valResult) ) {
             break;
          }
       }
 
       if( pSortInfo->dbtri.dbsci.itmCobFor ) {
          errCode = SELF_EVALBLOCK(&pArea->area, pSortInfo->dbtri.dbsci.itmCobFor);
-         if( errCode != HB_SUCCESS ) {
+         if( errCode != Harbour::SUCCESS ) {
             break;
          }
          fFor = hb_itemGetLX(pArea->area.valResult);
@@ -5239,14 +5239,14 @@ static HB_ERRCODE hb_dbfSort(DBFAREAP pArea, LPDBSORTINFO pSortInfo)
          errCode = hb_dbfSortAdd(&dbSortRec);
       }
 
-      if( errCode != HB_SUCCESS || pSortInfo->dbtri.dbsci.itmRecID || (pSortInfo->dbtri.dbsci.lNext && --lNext < 1) ) {
+      if( errCode != Harbour::SUCCESS || pSortInfo->dbtri.dbsci.itmRecID || (pSortInfo->dbtri.dbsci.lNext && --lNext < 1) ) {
          break;
       }
 
       errCode = SELF_SKIP(&pArea->area, 1);
    }
 
-   if( errCode == HB_SUCCESS ) {
+   if( errCode == Harbour::SUCCESS ) {
       errCode = hb_dbfSortFinish( &dbSortRec );
    }
 
@@ -5264,8 +5264,8 @@ static HB_ERRCODE hb_dbfTrans(DBFAREAP pArea, LPDBTRANSINFO pTransInfo)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfTrans(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pTransInfo)));
 #endif
 
-   if( hb_dbfTransCond(pArea, pTransInfo) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( hb_dbfTransCond(pArea, pTransInfo) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    } else {
       return SUPER_TRANS(&pArea->area, pTransInfo);
    }
@@ -5284,31 +5284,31 @@ static HB_ERRCODE hb_dbfZap(DBFAREAP pArea)
 
    if( pArea->fReadonly ) {
       hb_dbfErrorRT(pArea, EG_READONLY, EDBF_READONLY, nullptr, 0, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    if( pArea->fShared ) {
       hb_dbfErrorRT(pArea, EG_SHARED, EDBF_SHARED, nullptr, 0, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( pArea->fTrigger ) {
       if( !hb_dbfTriggerDo(pArea, EVENT_ZAP, 0, nullptr) ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
 
-   if( SELF_GOCOLD(&pArea->area) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->area) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
 
    pArea->ulRecCount = 0;
 
-   if( SELF_WRITEDBHEADER(&pArea->area) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( SELF_WRITEDBHEADER(&pArea->area) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
 
-   if( SELF_GOTO(&pArea->area, 0) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( SELF_GOTO(&pArea->area, 0) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
 
    /* reset auto-increment and row version fields */
@@ -5322,11 +5322,11 @@ static HB_ERRCODE hb_dbfZap(DBFAREAP pArea)
 
    /* Zap memo file */
    if( pArea->fHasMemo ) {
-      if( SELF_CREATEMEMFILE(&pArea->area, nullptr) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_CREATEMEMFILE(&pArea->area, nullptr) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -5343,7 +5343,7 @@ static HB_ERRCODE hb_dbfChildEnd(DBFAREAP pArea, LPDBRELINFO pRelInfo)
    if( pArea->lpdbPendingRel == pRelInfo ) {
       errCode = SELF_FORCEREL(&pArea->area);
    } else {
-      errCode = HB_SUCCESS;
+      errCode = Harbour::SUCCESS;
    }
    SUPER_CHILDEND(&pArea->area, pRelInfo);
    return errCode;
@@ -5358,8 +5358,8 @@ static HB_ERRCODE hb_dbfChildStart(DBFAREAP pArea, LPDBRELINFO pRelInfo)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfChildStart(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pRelInfo)));
 #endif
 
-   if( SELF_CHILDSYNC(&pArea->area, pRelInfo) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( SELF_CHILDSYNC(&pArea->area, pRelInfo) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
    return SUPER_CHILDSTART(&pArea->area, pRelInfo);
 }
@@ -5396,8 +5396,8 @@ static HB_ERRCODE hb_dbfChildSync(DBFAREAP pArea, LPDBRELINFO pRelInfo)
     * Druzus.
     */
 
-   if( SELF_GOCOLD(&pArea->area) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->area) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
 
    pArea->lpdbPendingRel = pRelInfo;
@@ -5406,7 +5406,7 @@ static HB_ERRCODE hb_dbfChildSync(DBFAREAP pArea, LPDBRELINFO pRelInfo)
       return SELF_SYNCCHILDREN(&pArea->area);
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 #define hb_dbfSyncChildren  nullptr
@@ -5435,7 +5435,7 @@ static HB_ERRCODE hb_dbfForceRel(DBFAREAP pArea)
 
       return SELF_RELEVAL(&pArea->area, lpdbPendingRel);
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 #define hb_dbfRelArea           nullptr
@@ -5509,15 +5509,15 @@ static HB_ERRCODE hb_dbfRawLock(DBFAREAP pArea, HB_USHORT uiAction, HB_ULONG ulR
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfRawLock(%p, %hu, %lu)", static_cast<void*>(pArea), uiAction, ulRecNo));
 #endif
 
-   HB_ERRCODE errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = Harbour::SUCCESS;
 
    if( pArea->fShared ) {
       HB_FOFFSET nPos, nFlSize, nRlSize;
       int iDir;
       bool fLck;
 
-      if( hb_dbfLockData(pArea, &nPos, &nFlSize, &nRlSize, &iDir) == HB_FAILURE ) {
-         return HB_FAILURE;
+      if( hb_dbfLockData(pArea, &nPos, &nFlSize, &nRlSize, &iDir) == Harbour::FAILURE ) {
+         return Harbour::FAILURE;
       }
 
       switch( uiAction ) {
@@ -5531,7 +5531,7 @@ static HB_ERRCODE hb_dbfRawLock(DBFAREAP pArea, HB_USHORT uiAction, HB_ULONG ulR
 
                fLck = hb_fileLock(pArea->pDataFile, nPos, nFlSize, FL_LOCK);
                if( !fLck ) {
-                  errCode = HB_FAILURE;
+                  errCode = Harbour::FAILURE;
                } else {
                   pArea->fFLocked = true;
                }
@@ -5548,7 +5548,7 @@ static HB_ERRCODE hb_dbfRawLock(DBFAREAP pArea, HB_USHORT uiAction, HB_ULONG ulR
 
                fLck = hb_fileLock(pArea->pDataFile, nPos, nFlSize, FL_UNLOCK);
                if( !fLck ) {
-                  errCode = HB_FAILURE;
+                  errCode = Harbour::FAILURE;
                }
                pArea->fFLocked = false;
             }
@@ -5566,7 +5566,7 @@ static HB_ERRCODE hb_dbfRawLock(DBFAREAP pArea, HB_USHORT uiAction, HB_ULONG ulR
 
                fLck = hb_fileLock(pArea->pDataFile, nPos, nRlSize, FL_LOCK);
                if( !fLck ) {
-                  errCode = HB_FAILURE;
+                  errCode = Harbour::FAILURE;
                }
             }
             break;
@@ -5583,7 +5583,7 @@ static HB_ERRCODE hb_dbfRawLock(DBFAREAP pArea, HB_USHORT uiAction, HB_ULONG ulR
 
                fLck = hb_fileLock(pArea->pDataFile, nPos, nRlSize, FL_UNLOCK);
                if( !fLck ) {
-                  errCode = HB_FAILURE;
+                  errCode = Harbour::FAILURE;
                }
             }
             break;
@@ -5600,7 +5600,7 @@ static HB_ERRCODE hb_dbfRawLock(DBFAREAP pArea, HB_USHORT uiAction, HB_ULONG ulR
                   hb_releaseCPU();
                }
                if( !fLck ) {
-                  errCode = HB_FAILURE;
+                  errCode = Harbour::FAILURE;
                } else {
                   pArea->fHeaderLocked = true;
                }
@@ -5611,7 +5611,7 @@ static HB_ERRCODE hb_dbfRawLock(DBFAREAP pArea, HB_USHORT uiAction, HB_ULONG ulR
          case HEADER_UNLOCK:
             if( pArea->fHeaderLocked ) {
                if( !hb_fileLock(pArea->pDataFile, nPos, 1, FL_UNLOCK) ) {
-                  errCode = HB_FAILURE;
+                  errCode = Harbour::FAILURE;
                }
                pArea->fHeaderLocked = false;
             }
@@ -5648,7 +5648,7 @@ static HB_ERRCODE hb_dbfLock(DBFAREAP pArea, LPDBLOCKINFO pLockInfo)
       pLockInfo->fResult = true;
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -5660,7 +5660,7 @@ static HB_ERRCODE hb_dbfUnLock(DBFAREAP pArea, PHB_ITEM pRecNo)
    HB_TRACE(HB_TR_DEBUG, ("dbfUnLock(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pRecNo)));
 #endif
 
-   HB_ERRCODE errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = Harbour::SUCCESS;
 
    if( pArea->fShared ) {
       if( pArea->ulNumLocksPos > 0 ) {
@@ -5696,7 +5696,7 @@ static HB_ERRCODE hb_dbfCreateMemFile(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
 
    pArea->fHasMemo = false;
 
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 /*
@@ -5708,22 +5708,22 @@ static HB_ERRCODE hb_dbfGetValueFile(DBFAREAP pArea, HB_USHORT uiIndex, const ch
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfGetValueFile(%p, %hu, %s, %hu)", static_cast<void*>(pArea), uiIndex, szFile, uiMode));
 #endif
 
-   HB_ERRCODE errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = Harbour::SUCCESS;
    LPFIELD pField;
 
    if( pArea->lpdbPendingRel ) {
-      if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
    /* Read record */
    if( !pArea->fValidBuffer && !hb_dbfReadRecord(pArea) ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( --uiIndex >= pArea->area.uiFieldCount ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pField = pArea->area.lpFields + uiIndex;
@@ -5747,14 +5747,14 @@ static HB_ERRCODE hb_dbfGetValueFile(DBFAREAP pArea, HB_USHORT uiIndex, const ch
    }
 
    /* Exit if any error */
-   if( errCode != HB_SUCCESS ) {
+   if( errCode != Harbour::SUCCESS ) {
       hb_dbfErrorRT(pArea, hb_dbfGetEGcode(errCode), errCode,
                     errCode != EDBF_DATATYPE ? szFile : nullptr,
                     errCode != EDBF_DATATYPE ? hb_fsError() : 0,
                     EF_CANDEFAULT, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -5768,7 +5768,7 @@ static HB_ERRCODE hb_dbfOpenMemFile(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
 
    hb_dbfErrorRT(pArea, EG_OPEN, EDBF_OPEN_DBF, pOpenInfo->abName, 0, 0, nullptr);
 
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 /*
@@ -5780,33 +5780,33 @@ static HB_ERRCODE hb_dbfPutValueFile(DBFAREAP pArea, HB_USHORT uiIndex, const ch
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfPutValueFile(%p, %hu, %s, %hu)", static_cast<void*>(pArea), uiIndex, szFile, uiMode));
 #endif
 
-   HB_ERRCODE errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = Harbour::SUCCESS;
    LPFIELD pField;
 
    HB_SYMBOL_UNUSED(uiMode);
 
    if( pArea->lpdbPendingRel ) {
-      if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
    /* Read record */
    if( !pArea->fValidBuffer && !hb_dbfReadRecord(pArea) ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( --uiIndex >= pArea->area.uiFieldCount ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( !pArea->fPositioned ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    /* Buffer is hot? */
-   if( !pArea->fRecordChanged && SELF_GOHOT(&pArea->area) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( !pArea->fRecordChanged && SELF_GOHOT(&pArea->area) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
    pField = pArea->area.lpFields + uiIndex;
@@ -5830,14 +5830,14 @@ static HB_ERRCODE hb_dbfPutValueFile(DBFAREAP pArea, HB_USHORT uiIndex, const ch
    }
 
    /* Exit if any error */
-   if( errCode != HB_SUCCESS ) {
+   if( errCode != Harbour::SUCCESS ) {
       hb_dbfErrorRT(pArea, hb_dbfGetEGcode(errCode), errCode,
                     errCode != EDBF_DATATYPE ? szFile : nullptr,
                     errCode != EDBF_DATATYPE ? hb_fsError() : 0,
                     EF_CANDEFAULT, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -5854,7 +5854,7 @@ static HB_ERRCODE hb_dbfReadDBHeader(DBFAREAP pArea)
 
    pError = nullptr;
    do {
-      errCode = HB_SUCCESS;
+      errCode = Harbour::SUCCESS;
 
       if( hb_fileReadAt(pArea->pDataFile, &pArea->dbfHeader, sizeof(DBFHEADER), 0) != sizeof(DBFHEADER) ) {
          errCode = EDBF_READ;
@@ -5932,7 +5932,7 @@ static HB_ERRCODE hb_dbfReadDBHeader(DBFAREAP pArea)
                errCode = EDBF_CORRUPT;
 
          }
-         if( errCode == HB_SUCCESS ) {
+         if( errCode == Harbour::SUCCESS ) {
             break;
          }
       }
@@ -5941,14 +5941,14 @@ static HB_ERRCODE hb_dbfReadDBHeader(DBFAREAP pArea)
       hb_itemRelease(pError);
    }
 
-   if( errCode != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( errCode != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
 
    pArea->uiHeaderLen = HB_GET_LE_UINT16(pArea->dbfHeader.uiHeaderLen);
    pArea->ulRecCount  = HB_GET_LE_UINT32(pArea->dbfHeader.ulRecCount);
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -5966,7 +5966,7 @@ static HB_ERRCODE hb_dbfWriteDBHeader(DBFAREAP pArea)
 
    if( pArea->fReadonly ) {
       hb_dbfErrorRT(pArea, EG_READONLY, EDBF_READONLY, nullptr, 0, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pArea->dbfHeader.bHasTags = pArea->fHasTags ? 0x01 : 0x00;
@@ -5999,8 +5999,8 @@ static HB_ERRCODE hb_dbfWriteDBHeader(DBFAREAP pArea)
    /* Update record count */
    if( pArea->fShared ) {
       if( !pArea->fHeaderLocked ) {
-         if( SELF_RAWLOCK(&pArea->area, HEADER_LOCK, 0) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( SELF_RAWLOCK(&pArea->area, HEADER_LOCK, 0) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
          fLck = true;
       }
@@ -6011,29 +6011,29 @@ static HB_ERRCODE hb_dbfWriteDBHeader(DBFAREAP pArea)
    HB_PUT_LE_UINT16(pArea->dbfHeader.uiHeaderLen, pArea->uiHeaderLen);
    HB_PUT_LE_UINT16(pArea->dbfHeader.uiRecordLen, pArea->uiRecordLen);
    if( hb_fileWriteAt(pArea->pDataFile, &pArea->dbfHeader, sizeof(DBFHEADER), 0) == sizeof(DBFHEADER) ) {
-      errCode = HB_SUCCESS;
+      errCode = Harbour::SUCCESS;
       if( !pArea->fShared || (pArea->uiSetHeader & DB_SETHEADER_EOL) != 0 ) {
          /* write eof mark */
          HB_FOFFSET nOffset = static_cast<HB_FOFFSET>(pArea->uiHeaderLen) + static_cast<HB_FOFFSET>(pArea->uiRecordLen) * static_cast<HB_FOFFSET>(pArea->ulRecCount);
          if( hb_fileWriteAt(pArea->pDataFile, "\032", 1, nOffset) == 1 ) {
             hb_fileTruncAt(pArea->pDataFile, nOffset + 1);
          } else {
-            errCode = HB_FAILURE;
+            errCode = Harbour::FAILURE;
          }
       }
    } else {
-      errCode = HB_FAILURE;
+      errCode = Harbour::FAILURE;
    }
 
    pArea->fDataFlush = true;
    pArea->fUpdateHeader = false;
    if( fLck ) {
-      if( SELF_RAWLOCK(&pArea->area, HEADER_UNLOCK, 0) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_RAWLOCK(&pArea->area, HEADER_UNLOCK, 0) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
-   if( errCode != HB_SUCCESS ) {
+   if( errCode != Harbour::SUCCESS ) {
       hb_dbfErrorRT(pArea, EG_WRITE, EDBF_WRITE, pArea->szDataFileName, hb_fsError(), 0, nullptr);
    }
 
@@ -6057,7 +6057,7 @@ static HB_ERRCODE hb_dbfDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItem
       /* Try to delete index file */
       szFile = hb_itemGetCPtr(pItemTable);
       if( !szFile[0] ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       fTable = true;
    }
@@ -6067,7 +6067,7 @@ static HB_ERRCODE hb_dbfDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItem
    if( !pFileName->szExtension && (!fTable || hb_setGetDefExtension()) ) {
       /* Add default extension if missing */
       pFileExt = hb_itemPutNil(pFileExt);
-      if( SELF_RDDINFO(pRDD, fTable ? RDDI_TABLEEXT : RDDI_ORDBAGEXT, ulConnect, pFileExt) == HB_SUCCESS ) {
+      if( SELF_RDDINFO(pRDD, fTable ? RDDI_TABLEEXT : RDDI_ORDBAGEXT, ulConnect, pFileExt) == Harbour::SUCCESS ) {
          pFileName->szExtension = hb_itemGetCPtr(pFileExt);
       }
    }
@@ -6087,7 +6087,7 @@ static HB_ERRCODE hb_dbfDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItem
           */
          pFileName = hb_fsFNameSplit(szFileName);
          pFileExt = hb_itemPutNil(pFileExt);
-         if( SELF_RDDINFO(pRDD, RDDI_MEMOEXT, ulConnect, pFileExt) == HB_SUCCESS ) {
+         if( SELF_RDDINFO(pRDD, RDDI_MEMOEXT, ulConnect, pFileExt) == Harbour::SUCCESS ) {
             szExt = hb_itemGetCPtr(pFileExt);
             if( szExt[0] ) {
                pFileName->szExtension = szExt;
@@ -6100,7 +6100,7 @@ static HB_ERRCODE hb_dbfDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItem
           * in the same directory as table file
           */
          hb_itemClear(pFileExt);
-         if( SELF_RDDINFO(pRDD, RDDI_ORDSTRUCTEXT, ulConnect, pFileExt) == HB_SUCCESS ) {
+         if( SELF_RDDINFO(pRDD, RDDI_ORDSTRUCTEXT, ulConnect, pFileExt) == Harbour::SUCCESS ) {
             szExt = hb_itemGetCPtr(pFileExt);
             if( szExt[0] ) {
                pFileName->szExtension = szExt;
@@ -6116,7 +6116,7 @@ static HB_ERRCODE hb_dbfDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItem
       hb_itemRelease(pFileExt);
    }
 
-   return fResult ? HB_SUCCESS : HB_FAILURE;
+   return fResult ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
 static HB_ERRCODE hb_dbfExists(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemIndex, HB_ULONG ulConnect)
@@ -6135,7 +6135,7 @@ static HB_ERRCODE hb_dbfExists(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
    if( !szFile[0] ) {
       szFile = hb_itemGetCPtr(pItemTable);
       if( !szFile[0] ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       fTable = true;
    }
@@ -6144,7 +6144,7 @@ static HB_ERRCODE hb_dbfExists(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
 
    if( !pFileName->szExtension && (!fTable || hb_setGetDefExtension()) ) {
       pFileExt = hb_itemPutNil(pFileExt);
-      if( SELF_RDDINFO(pRDD, fTable ? RDDI_TABLEEXT : RDDI_ORDBAGEXT, ulConnect, pFileExt) == HB_SUCCESS ) {
+      if( SELF_RDDINFO(pRDD, fTable ? RDDI_TABLEEXT : RDDI_ORDBAGEXT, ulConnect, pFileExt) == Harbour::SUCCESS ) {
          pFileName->szExtension = hb_itemGetCPtr(pFileExt);
       }
    }
@@ -6155,7 +6155,7 @@ static HB_ERRCODE hb_dbfExists(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
       hb_itemRelease(pFileExt);
    }
 
-   return hb_fileExists(szFileName, szFileName) ? HB_SUCCESS : HB_FAILURE;
+   return hb_fileExists(szFileName, szFileName) ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
 static HB_ERRCODE hb_dbfRename(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemIndex, PHB_ITEM pItemNew, HB_ULONG ulConnect)
@@ -6175,7 +6175,7 @@ static HB_ERRCODE hb_dbfRename(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
       /* Try to delete index file */
       szFile = hb_itemGetCPtr(pItemTable);
       if( !szFile[0] ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       fTable = true;
    }
@@ -6185,7 +6185,7 @@ static HB_ERRCODE hb_dbfRename(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
    if( !pFileName->szExtension && (!fTable || hb_setGetDefExtension()) ) {
       /* Add default extension if missing */
       pFileExt = hb_itemPutNil(pFileExt);
-      if( SELF_RDDINFO(pRDD, fTable ? RDDI_TABLEEXT : RDDI_ORDBAGEXT, ulConnect, pFileExt) == HB_SUCCESS ) {
+      if( SELF_RDDINFO(pRDD, fTable ? RDDI_TABLEEXT : RDDI_ORDBAGEXT, ulConnect, pFileExt) == Harbour::SUCCESS ) {
          pFileName->szExtension = hb_itemGetCPtr(pFileExt);
       }
    }
@@ -6207,7 +6207,7 @@ static HB_ERRCODE hb_dbfRename(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
       if( !pFileNameNew->szExtension && (!fTable || hb_setGetDefExtension()) ) {
          /* Add default extension if missing */
          pFileExt = hb_itemPutNil(pFileExt);
-         if( SELF_RDDINFO(pRDD, fTable ? RDDI_TABLEEXT : RDDI_ORDBAGEXT, ulConnect, pFileExt) == HB_SUCCESS ) {
+         if( SELF_RDDINFO(pRDD, fTable ? RDDI_TABLEEXT : RDDI_ORDBAGEXT, ulConnect, pFileExt) == Harbour::SUCCESS ) {
             pFileNameNew->szExtension = hb_itemGetCPtr(pFileExt);
          }
       }
@@ -6224,7 +6224,7 @@ static HB_ERRCODE hb_dbfRename(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
           * in the same directory as table file
           */
          pFileExt = hb_itemPutNil(pFileExt);
-         if( SELF_RDDINFO(pRDD, RDDI_MEMOEXT, ulConnect, pFileExt) == HB_SUCCESS ) {
+         if( SELF_RDDINFO(pRDD, RDDI_MEMOEXT, ulConnect, pFileExt) == Harbour::SUCCESS ) {
             szExt = hb_itemGetCPtr(pFileExt);
             if( szExt[0] ) {
                pFileName->szExtension = szExt;
@@ -6239,7 +6239,7 @@ static HB_ERRCODE hb_dbfRename(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
           * in the same directory as table file
           */
          hb_itemClear(pFileExt);
-         if( SELF_RDDINFO(pRDD, RDDI_ORDSTRUCTEXT, ulConnect, pFileExt) == HB_SUCCESS ) {
+         if( SELF_RDDINFO(pRDD, RDDI_ORDSTRUCTEXT, ulConnect, pFileExt) == Harbour::SUCCESS ) {
             szExt = hb_itemGetCPtr(pFileExt);
             if( szExt[0] ) {
                pFileName->szExtension = szExt;
@@ -6258,7 +6258,7 @@ static HB_ERRCODE hb_dbfRename(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
       hb_itemRelease(pFileExt);
    }
 
-   return fResult ? HB_SUCCESS : HB_FAILURE;
+   return fResult ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
 static void hb_dbfInitTSD(void * Cargo)
@@ -6312,7 +6312,7 @@ static HB_ERRCODE hb_dbfInit(LPRDDNODE pRDD)
    if( ISSUPER_INIT(pRDD) ) {
       return SUPER_INIT(pRDD);
    } else {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 }
 
@@ -6332,7 +6332,7 @@ static HB_ERRCODE hb_dbfExit(LPRDDNODE pRDD)
    if( ISSUPER_EXIT(pRDD) ) {
       return SUPER_EXIT(pRDD);
    } else {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 }
 
@@ -6454,7 +6454,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          }
 
          if( !szTrigger && !fFree ) {
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
 
          break;
@@ -6472,7 +6472,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
             hb_itemPutCPtr(pItem, pData->szPendingTrigger);
             pData->szPendingTrigger = nullptr;
          } else {
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
          break;
 
@@ -6493,7 +6493,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          }
 
          if( !szPasswd && !fFree ) {
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
 
          break;
@@ -6511,7 +6511,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
             hb_itemPutCPtr(pItem, pData->szPendingPasswd);
             pData->szPendingPasswd = nullptr;
          } else {
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
          break;
 
@@ -6520,7 +6520,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
 
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 #define hb_dbfWhoCares  nullptr
@@ -6653,7 +6653,7 @@ HB_FUNC_STATIC( DBF_GETFUNCTABLE )
       }
       HB_ERRCODE errCode = hb_rddInheritEx(pTable, &dbfTable, &dbfSuper, nullptr, nullptr);
       hb_retni(errCode);
-      if( errCode == HB_SUCCESS ) {
+      if( errCode == Harbour::SUCCESS ) {
          /*
           * we successfully register our RDD so now we can initialize it
           * You may think that this place is RDD init statement, Druzus
@@ -6661,7 +6661,7 @@ HB_FUNC_STATIC( DBF_GETFUNCTABLE )
          s_uiRddId = uiRddId;
       }
    } else {
-      hb_retni(HB_FAILURE);
+      hb_retni(Harbour::FAILURE);
    }
 }
 

@@ -111,14 +111,14 @@ static HB_ERRCODE hb_delimWrite(DELIMAREAP pArea, const void * pBuffer, HB_SIZE 
       hb_errPutFileName(pError, pArea->szFileName);
       SELF_ERROR(&pArea->area, pError);
       hb_itemRelease(pError);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE hb_delimWriteHeader(DELIMAREAP pArea)
 {
-   HB_ERRCODE errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = Harbour::SUCCESS;
    const char * pszFieldName;
    HB_BYTE * pBuffer;
    HB_SIZE nSize, nS;
@@ -421,7 +421,7 @@ static HB_ERRCODE hb_delimReadRecord(DELIMAREAP pArea)
 
    pArea->fPositioned = !pArea->area.fEof;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE hb_delimNextRecord(DELIMAREAP pArea)
@@ -434,7 +434,7 @@ static HB_ERRCODE hb_delimNextRecord(DELIMAREAP pArea)
       pArea->ulRecNo++;
       return hb_delimReadRecord(pArea);
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -453,11 +453,11 @@ static HB_ERRCODE hb_delimGoTo(DELIMAREAP pArea, HB_ULONG ulRecNo)
 #ifndef HB_CLP_STRICT
    if( pArea->fReadonly && ulRecNo >= pArea->ulRecNo ) {
       while( pArea->ulRecNo < ulRecNo && pArea->fPositioned ) {
-         if( hb_delimNextRecord(pArea) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( hb_delimNextRecord(pArea) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
       }
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 #endif
    /* generate RTE */
@@ -491,8 +491,8 @@ static HB_ERRCODE hb_delimGoTop(DELIMAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_delimGoTop(%p)", static_cast<void*>(pArea)));
 #endif
 
-   if( SELF_GOCOLD(&pArea->area) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->area) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
 
    pArea->area.fTop = true;
@@ -505,8 +505,8 @@ static HB_ERRCODE hb_delimGoTop(DELIMAREAP pArea)
       }
 
       pArea->ulRecNo = 1;
-      if( hb_delimReadRecord(pArea) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( hb_delimReadRecord(pArea) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
@@ -522,8 +522,8 @@ static HB_ERRCODE hb_delimSkipRaw(DELIMAREAP pArea, HB_LONG lToSkip)
    HB_TRACE(HB_TR_DEBUG, ("hb_delimSkipRaw(%p,%ld)", static_cast<void*>(pArea), lToSkip));
 #endif
 
-   if( SELF_GOCOLD(&pArea->area) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->area) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
 
    if( lToSkip != 1 || !pArea->fReadonly ) {
@@ -547,7 +547,7 @@ static HB_ERRCODE hb_delimDeleted(DELIMAREAP pArea, HB_BOOL * pDeleted)
 
    *pDeleted = HB_FALSE;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -561,7 +561,7 @@ static HB_ERRCODE hb_delimRecCount(DELIMAREAP pArea, HB_ULONG * pRecCount)
 
    *pRecCount = pArea->ulRecCount;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -575,7 +575,7 @@ static HB_ERRCODE hb_delimRecNo(DELIMAREAP pArea, HB_ULONG * pulRecNo)
 
    *pulRecNo = pArea->ulRecNo;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -616,12 +616,12 @@ static HB_ERRCODE hb_delimAppend(DELIMAREAP pArea, HB_BOOL fUnLockAll)
 
    HB_SYMBOL_UNUSED(fUnLockAll);
 
-   if( SELF_GOCOLD(&pArea->area) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->area) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
 
-   if( SELF_GOHOT(&pArea->area) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( SELF_GOHOT(&pArea->area) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
 
    pArea->ulRecNo = ++pArea->ulRecCount;
@@ -629,7 +629,7 @@ static HB_ERRCODE hb_delimAppend(DELIMAREAP pArea, HB_BOOL fUnLockAll)
    pArea->fPositioned = true;
    hb_delimClearRecordBuffer(pArea);
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -653,7 +653,7 @@ static HB_ERRCODE hb_delimDeleteRec(DELIMAREAP pArea)
    }
 #endif
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -667,7 +667,7 @@ static HB_ERRCODE hb_delimRecall(DELIMAREAP pArea)
 
    HB_SYMBOL_UNUSED(pArea);
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -682,7 +682,7 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
    LPFIELD pField;
 
    if( --uiIndex >= pArea->area.uiFieldCount ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pField = pArea->area.lpFields + uiIndex;
@@ -763,11 +763,11 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          hb_errPutSubCode(pError, EDBF_DATATYPE);
          SELF_ERROR(&pArea->area, pError);
          hb_itemRelease(pError);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -784,18 +784,18 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
    HB_SIZE nSize;
 
    if( !pArea->fPositioned ) {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
    if( !pArea->fRecordChanged ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( --uiIndex >= pArea->area.uiFieldCount ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
-   HB_ERRCODE errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = Harbour::SUCCESS;
    pField = pArea->area.lpFields + uiIndex;
    if( pField->uiType != Harbour::DB::Field::MEMO && pField->uiType != Harbour::DB::Field::NONE ) {
       if( HB_IS_MEMO(pItem) || HB_IS_STRING(pItem) ) {
@@ -856,7 +856,7 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
       }
    }
 
-   if( errCode != HB_SUCCESS ) {
+   if( errCode != Harbour::SUCCESS ) {
       PHB_ITEM pError = hb_errNew();
       HB_ERRCODE errGenCode = errCode == EDBF_DATAWIDTH ? EG_DATAWIDTH : EDBF_DATATYPE;
 
@@ -867,10 +867,10 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
       hb_errPutFlags(pError, EF_CANDEFAULT);
       errCode = SELF_ERROR(&pArea->area, pError);
       hb_itemRelease(pError);
-      return errCode == E_DEFAULT ? HB_SUCCESS : HB_FAILURE;
+      return errCode == E_DEFAULT ? Harbour::SUCCESS : Harbour::FAILURE;
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -883,17 +883,17 @@ static HB_ERRCODE hb_delimPutRec(DELIMAREAP pArea, HB_BYTE * pBuffer)
 #endif
 
    if( !pArea->fPositioned ) {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
    if( !pArea->fRecordChanged ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    /* Copy data to buffer */
    memcpy(pArea->pRecord, pBuffer + 1, pArea->uiRecordLen);
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -907,7 +907,7 @@ static HB_ERRCODE hb_delimGetRec(DELIMAREAP pArea, HB_BYTE ** pBufferPtr)
 
    *pBufferPtr = pArea->pRecord - 1;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -926,9 +926,9 @@ static HB_ERRCODE hb_delimTrans(DELIMAREAP pArea, LPDBTRANSINFO pTransInfo)
          pTransInfo->uiFlags |= DBTF_PUTREC;
       } else {
          PHB_ITEM pPutRec = hb_itemPutL(nullptr, false);
-         if( SELF_INFO(pTransInfo->lpaDest, DBI_CANPUTREC, pPutRec) != HB_SUCCESS ) {
+         if( SELF_INFO(pTransInfo->lpaDest, DBI_CANPUTREC, pPutRec) != Harbour::SUCCESS ) {
             hb_itemRelease(pPutRec);
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
          if( hb_itemGetL(pPutRec) ) {
             pTransInfo->uiFlags |= DBTF_PUTREC;
@@ -953,13 +953,13 @@ static HB_ERRCODE hb_delimGoCold(DELIMAREAP pArea)
    if( pArea->fRecordChanged ) {
       HB_SIZE nSize = hb_delimEncodeBuffer(pArea);
 
-      if( hb_delimWrite(pArea, pArea->pBuffer, nSize) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( hb_delimWrite(pArea, pArea->pBuffer, nSize) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
       pArea->fRecordChanged = false;
       pArea->fFlush = true;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -978,10 +978,10 @@ static HB_ERRCODE hb_delimGoHot(DELIMAREAP pArea)
       hb_errPutSubCode(pError, EDBF_READONLY);
       SELF_ERROR(&pArea->area, pError);
       hb_itemRelease(pError);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    pArea->fRecordChanged = true;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1127,7 +1127,7 @@ static HB_ERRCODE hb_delimInfo(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
          return SUPER_INFO(&pArea->area, uiIndex, pItem);
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1256,8 +1256,8 @@ static HB_ERRCODE hb_delimSetFieldExtent(DELIMAREAP pArea, HB_USHORT uiFieldExte
    HB_TRACE(HB_TR_DEBUG, ("hb_delimSetFieldExtent(%p,%hu)", static_cast<void*>(pArea), uiFieldExtent));
 #endif
 
-   if( SUPER_SETFIELDEXTENT(&pArea->area, uiFieldExtent) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( SUPER_SETFIELDEXTENT(&pArea->area, uiFieldExtent) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
    /* Alloc field offsets array */
@@ -1265,7 +1265,7 @@ static HB_ERRCODE hb_delimSetFieldExtent(DELIMAREAP pArea, HB_USHORT uiFieldExte
       pArea->pFieldOffset = static_cast<HB_USHORT*>(hb_xgrabz(uiFieldExtent * sizeof(HB_USHORT)));
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1277,8 +1277,8 @@ static HB_ERRCODE hb_delimNewArea(DELIMAREAP pArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_delimNewArea(%p)", static_cast<void*>(pArea)));
 #endif
 
-   if( SUPER_NEW(&pArea->area) == HB_FAILURE ) {
-      return HB_FAILURE;
+   if( SUPER_NEW(&pArea->area) == Harbour::FAILURE ) {
+      return Harbour::FAILURE;
    }
 
    pArea->pFile = nullptr;
@@ -1292,7 +1292,7 @@ static HB_ERRCODE hb_delimNewArea(DELIMAREAP pArea)
    /* set field separator */
    pArea->cSeparator = ',';
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1306,7 +1306,7 @@ static HB_ERRCODE hb_delimStructSize(DELIMAREAP pArea, HB_USHORT * uiSize)
    HB_SYMBOL_UNUSED(pArea);
 
    *uiSize = sizeof(DELIMAREA);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1354,7 +1354,7 @@ static HB_ERRCODE hb_delimClose(DELIMAREAP pArea)
       pArea->szFileName = nullptr;
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1386,7 +1386,7 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
    pFileName = hb_fsFNameSplit(pCreateInfo->abName);
    if( hb_setGetDefExtension() && !pFileName->szExtension ) {
       PHB_ITEM pItem = hb_itemNew(nullptr);
-      if( SELF_INFO(&pArea->area, DBI_TABLEEXT, pItem) == HB_SUCCESS ) {
+      if( SELF_INFO(&pArea->area, DBI_TABLEEXT, pItem) == Harbour::SUCCESS ) {
          pFileName->szExtension = hb_itemGetCPtr(pItem);
          hb_fsFNameMerge(szFileName, pFileName);
       }
@@ -1423,11 +1423,11 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
    }
 
    if( !pArea->pFile ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    HB_ERRCODE errCode = SUPER_CREATE(&pArea->area, pCreateInfo);
-   if( errCode == HB_SUCCESS ) {
+   if( errCode == Harbour::SUCCESS ) {
       PHB_ITEM pItem = hb_itemNew(nullptr);
 
       hb_delimInitArea(pArea, szFileName);
@@ -1437,14 +1437,14 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
       pArea->fPositioned = false;
       hb_delimClearRecordBuffer(pArea);
 
-      if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_SETHEADER, pCreateInfo->ulConnection, pItem) == HB_SUCCESS && hb_itemGetNI(pItem) > 0 ) {
+      if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_SETHEADER, pCreateInfo->ulConnection, pItem) == Harbour::SUCCESS && hb_itemGetNI(pItem) > 0 ) {
          errCode = hb_delimWriteHeader(pArea);
       }
 
       hb_itemRelease(pItem);
    }
 
-   if( errCode != HB_SUCCESS ) {
+   if( errCode != Harbour::SUCCESS ) {
       SELF_CLOSE(&pArea->area);
    }
 
@@ -1485,7 +1485,7 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
    /* Add default file name extension if necessary */
    if( hb_setGetDefExtension() && !pFileName->szExtension ) {
       PHB_ITEM pFileExt = hb_itemNew(nullptr);
-      if( SELF_INFO(&pArea->area, DBI_TABLEEXT, pFileExt) == HB_SUCCESS ) {
+      if( SELF_INFO(&pArea->area, DBI_TABLEEXT, pFileExt) == Harbour::SUCCESS ) {
          pFileName->szExtension = hb_itemGetCPtr(pFileExt);
          hb_fsFNameMerge(szFileName, pFileName);
       }
@@ -1531,13 +1531,13 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
    }
 
    if( !pArea->pFile ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    HB_ERRCODE errCode = SUPER_OPEN(&pArea->area, pOpenInfo);
-   if( errCode != HB_SUCCESS ) {
+   if( errCode != Harbour::SUCCESS ) {
       SELF_CLOSE(&pArea->area);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    hb_delimInitArea(pArea, szFileName);
@@ -1564,7 +1564,7 @@ static HB_ERRCODE hb_delimInit(LPRDDNODE pRDD)
    if( ISSUPER_INIT(pRDD) ) {
       return SUPER_INIT(pRDD);
    } else {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 }
 
@@ -1586,7 +1586,7 @@ static HB_ERRCODE hb_delimExit(LPRDDNODE pRDD)
    if( ISSUPER_EXIT(pRDD) ) {
       return SUPER_EXIT(pRDD);
    } else {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 }
 
@@ -1637,7 +1637,7 @@ static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
 
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static const RDDFUNCS delimTable =
@@ -1767,7 +1767,7 @@ HB_FUNC_STATIC( DELIM_GETFUNCTABLE )
       }
       hb_retni(hb_rddInheritEx(pTable, &delimTable, &delimSuper, nullptr, nullptr));
    } else {
-      hb_retni(HB_FAILURE);
+      hb_retni(Harbour::FAILURE);
    }
 }
 

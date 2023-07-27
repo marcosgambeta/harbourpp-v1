@@ -69,7 +69,7 @@ static HB_ERRCODE hb_waBof( AREAP pArea, HB_BOOL * pBof )
 #endif
 
    *pBof = pArea->fBof;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -82,7 +82,7 @@ static HB_ERRCODE hb_waEof( AREAP pArea, HB_BOOL * pEof )
 #endif
 
    *pEof = pArea->fEof;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -95,7 +95,7 @@ static HB_ERRCODE hb_waFound(AREAP pArea, HB_BOOL * pFound)
 #endif
 
    *pFound = pArea->fFound;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -123,11 +123,11 @@ static HB_ERRCODE hb_waSkip(AREAP pArea, HB_LONG lToSkip)
       lToSkip *= -1;
    }
    while( --lToSkip >= 0 ) {
-      if( SELF_SKIPRAW(pArea, lSkip) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_SKIPRAW(pArea, lSkip) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
-      if( SELF_SKIPFILTER(pArea, lSkip) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_SKIPFILTER(pArea, lSkip) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
       if( pArea->fBof || pArea->fEof ) {
          break;
@@ -141,7 +141,7 @@ static HB_ERRCODE hb_waSkip(AREAP pArea, HB_LONG lToSkip)
       pArea->fBof = false;
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -157,7 +157,7 @@ static HB_ERRCODE hb_waSkipFilter(AREAP pArea, HB_LONG lUpDown)
    HB_ERRCODE errCode;
 
    if( pArea->dbfi.itmCobExpr == nullptr && !hb_setGetDeleted() ) {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
    /* Since lToSkip is passed to SkipRaw, it should never request more than
@@ -173,12 +173,12 @@ static HB_ERRCODE hb_waSkipFilter(AREAP pArea, HB_LONG lUpDown)
    while( !pArea->fBof && !pArea->fEof ) {
       /* SET DELETED */
       if( hb_setGetDeleted() ) {
-         if( SELF_DELETED(pArea, &fDeleted) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( SELF_DELETED(pArea, &fDeleted) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
          if( fDeleted ) {
-            if( SELF_SKIPRAW(pArea, lUpDown) != HB_SUCCESS ) {
-               return HB_FAILURE;
+            if( SELF_SKIPRAW(pArea, lUpDown) != Harbour::SUCCESS ) {
+               return Harbour::FAILURE;
             }
             continue;
          }
@@ -186,13 +186,13 @@ static HB_ERRCODE hb_waSkipFilter(AREAP pArea, HB_LONG lUpDown)
 
       /* SET FILTER TO */
       if( pArea->dbfi.itmCobExpr ) {
-         if( SELF_EVALBLOCK(pArea, pArea->dbfi.itmCobExpr) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( SELF_EVALBLOCK(pArea, pArea->dbfi.itmCobExpr) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
 
          if( HB_IS_LOGICAL(pArea->valResult) && !hb_itemGetL(pArea->valResult) ) {
-            if( SELF_SKIPRAW(pArea, lUpDown) != HB_SUCCESS ) {
-               return HB_FAILURE;
+            if( SELF_SKIPRAW(pArea, lUpDown) != Harbour::SUCCESS ) {
+               return Harbour::FAILURE;
             }
             continue;
          }
@@ -223,7 +223,7 @@ static HB_ERRCODE hb_waSkipFilter(AREAP pArea, HB_LONG lUpDown)
          pArea->fBof = true;
       }
    } else {
-      errCode = HB_SUCCESS;
+      errCode = Harbour::SUCCESS;
    }
 
    return errCode;
@@ -249,7 +249,7 @@ static HB_ERRCODE hb_waAddField(AREAP pArea, LPDBFIELDINFO pFieldInfo)
    }
    hb_strncpyUpperTrim(szFieldName, szPtr, HB_MIN(HB_SYMBOL_NAME_LEN, pArea->uiMaxFieldNameLength));
    if( szFieldName[0] == 0 ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pField = pArea->lpFields + pArea->uiFieldCount;
@@ -265,7 +265,7 @@ static HB_ERRCODE hb_waAddField(AREAP pArea, LPDBFIELDINFO pFieldInfo)
    pField->uiArea = pArea->uiArea;
    pArea->uiFieldCount++;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -278,12 +278,12 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
 #endif
 
    HB_USHORT uiItems;
-   HB_ERRCODE errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = Harbour::SUCCESS;
    DBFIELDINFO dbFieldInfo;
 
    uiItems = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
-   if( SELF_SETFIELDEXTENT(pArea, uiItems) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( SELF_SETFIELDEXTENT(pArea, uiItems) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
 
    for( HB_USHORT uiCount = 0; uiCount < uiItems; uiCount++ ) {
@@ -402,7 +402,7 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
             if( uiLen > 20 )
             */
             if( uiLen > 255 ) {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             }
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE | HB_FF_AUTOINC;
             break;
@@ -412,7 +412,7 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
             dbFieldInfo.uiDec = uiDec;
             /* see note above */
             if( uiLen > 255 ) {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             }
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE | HB_FF_AUTOINC;
             break;
@@ -489,20 +489,20 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
             break;
 
          default:
-            errCode = HB_FAILURE;
+            errCode = Harbour::FAILURE;
             break;
       }
 
-      if( errCode == HB_SUCCESS ) {
+      if( errCode == Harbour::SUCCESS ) {
          errCode = SELF_ADDFIELD(pArea, &dbFieldInfo); /* Add field */
       }
 
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          return errCode;
       }
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -515,7 +515,7 @@ static HB_ERRCODE hb_waFieldCount(AREAP pArea, HB_USHORT * uiFields)
 #endif
 
    * uiFields = pArea->uiFieldCount;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -530,7 +530,7 @@ static HB_ERRCODE hb_waFieldInfo(AREAP pArea, HB_USHORT uiIndex, HB_USHORT uiTyp
    LPFIELD pField;
 
    if( uiIndex > pArea->uiFieldCount ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pField = pArea->lpFields + uiIndex - 1;
@@ -689,10 +689,10 @@ static HB_ERRCODE hb_waFieldInfo(AREAP pArea, HB_USHORT uiIndex, HB_USHORT uiTyp
 #endif
 
       default:
-         return HB_FAILURE;
+         return Harbour::FAILURE;
 
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -707,12 +707,12 @@ static HB_ERRCODE hb_waFieldName(AREAP pArea, HB_USHORT uiIndex, char * szName)
    LPFIELD pField;
 
    if( uiIndex > pArea->uiFieldExtent ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pField = pArea->lpFields + uiIndex - 1;
    hb_strncpy(szName, hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)), pArea->uiMaxFieldNameLength);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -731,7 +731,7 @@ static HB_ERRCODE hb_waSetFieldExtent(AREAP pArea, HB_USHORT uiFieldExtent)
       pArea->lpFields = static_cast<LPFIELD>(hb_xgrabz(uiFieldExtent * sizeof(FIELD)));
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -748,7 +748,7 @@ static HB_ERRCODE hb_waAlias(AREAP pArea, char * szAlias)
       ? hb_dynsymName(static_cast<PHB_DYNS>(pArea->atomAlias)) : "",
       HB_RDD_MAX_ALIAS_LEN);
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -772,7 +772,7 @@ static HB_ERRCODE hb_waClose(AREAP pArea)
       hb_dynsymSetAreaHandle(static_cast<PHB_DYNS>(pArea->atomAlias), 0);
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -794,13 +794,13 @@ static HB_ERRCODE hb_waInfo(AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          break;
 
       /*
-       * IMHO better to return HB_FAILURE to notice that it's not supported
+       * IMHO better to return Harbour::FAILURE to notice that it's not supported
        */
       case DBI_GETDELIMITER:
       case DBI_SETDELIMITER:
       case DBI_SEPARATOR:
          hb_itemPutC(pItem, nullptr);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
 
       case DBI_GETHEADERSIZE:
       case DBI_GETRECSIZE:
@@ -855,8 +855,8 @@ static HB_ERRCODE hb_waInfo(AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       case DBI_ALIAS:
       {
          char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
-         if( SELF_ALIAS(pArea, szAlias) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( SELF_ALIAS(pArea, szAlias) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
          hb_itemPutC(pItem, szAlias);
          break;
@@ -866,7 +866,7 @@ static HB_ERRCODE hb_waInfo(AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       {
          LPRDDNODE pNode = SELF_RDDNODE( pArea );
          hb_itemClear(pItem);
-         return pNode ? SELF_RDDINFO(pNode, RDDI_TABLEEXT, 0, pItem) : HB_FAILURE;
+         return pNode ? SELF_RDDINFO(pNode, RDDI_TABLEEXT, 0, pItem) : Harbour::FAILURE;
       }
       case DBI_SCOPEDRELATION:
       {
@@ -889,13 +889,13 @@ static HB_ERRCODE hb_waInfo(AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       case DBI_POSITIONED:
       {
          HB_ULONG ulRecCount, ulRecNo;
-         if( SELF_RECNO(pArea, &ulRecNo) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( SELF_RECNO(pArea, &ulRecNo) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
          if( ulRecNo == 0 ) {
             hb_itemPutL(pItem, false);
-         } else if( SELF_RECCOUNT(pArea, &ulRecCount) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         } else if( SELF_RECCOUNT(pArea, &ulRecCount) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          } else {
             hb_itemPutL(pItem, ulRecNo != ulRecCount + 1);
          }
@@ -918,9 +918,9 @@ static HB_ERRCODE hb_waInfo(AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          break;
 
       default:
-         return HB_FAILURE;
+         return Harbour::FAILURE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -947,7 +947,7 @@ static HB_ERRCODE hb_waOrderInfo(AREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO p
    hb_errRT_DBCMD(EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
    #endif
 
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 /*
@@ -964,7 +964,7 @@ static HB_ERRCODE hb_waNewArea(AREAP pArea)
    pArea->uiParents = 0;
    pArea->uiMaxFieldNameLength = HB_SYMBOL_NAME_LEN;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -977,10 +977,10 @@ static HB_ERRCODE hb_waOpen(AREAP pArea, LPDBOPENINFO pInfo)
       pArea->atomAlias = hb_rddAllocWorkAreaAlias(pInfo->atomAlias, static_cast<int>(pInfo->uiArea));
       if( !pArea->atomAlias ) {
          SELF_CLOSE(pArea);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE hb_waOrderCondition(AREAP pArea, LPDBORDERCONDINFO param)
@@ -1011,7 +1011,7 @@ static HB_ERRCODE hb_waOrderCondition(AREAP pArea, LPDBORDERCONDINFO param)
    }
    pArea->lpdbOrdCondInfo = param;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1035,7 +1035,7 @@ static HB_ERRCODE hb_waRelease(AREAP pArea)
       hb_waOrderCondition(pArea, nullptr);
    }
    hb_xfree(pArea);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1049,7 +1049,7 @@ static HB_ERRCODE hb_waStructSize(AREAP pArea, HB_USHORT * uiSize)
    HB_SYMBOL_UNUSED(pArea);
 
    *uiSize = sizeof(AREA);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1063,7 +1063,7 @@ static HB_ERRCODE hb_waSysName(AREAP pArea, char * pBuffer)
 
    hb_strncpy(pBuffer, SELF_RDDNODE( pArea )->szName, HB_RDD_MAX_DRIVERNAME_LEN);
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1080,25 +1080,25 @@ static HB_ERRCODE hb_waEval(AREAP pArea, LPDBEVALINFO pEvalInfo)
    bool fFor;
 
    if( pEvalInfo->dbsci.itmRecID ) {
-      if( SELF_GOTOID(pArea, pEvalInfo->dbsci.itmRecID) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_GOTOID(pArea, pEvalInfo->dbsci.itmRecID) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    } else if( pEvalInfo->dbsci.lNext ) {
       lNext = hb_itemGetNL(pEvalInfo->dbsci.lNext);
       if( lNext <= 0 ) {
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
       }
    } else if( !pEvalInfo->dbsci.itmCobWhile && !hb_itemGetLX(pEvalInfo->dbsci.fRest) ) {
-      if( SELF_GOTOP(pArea) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_GOTOP(pArea) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
    /* TODO: use SKIPSCOPE() method and fRest parameter */
 
    for( ;; ) {
-      if( SELF_EOF( pArea, &fEof ) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_EOF( pArea, &fEof ) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
 
       if( fEof ) {
@@ -1106,8 +1106,8 @@ static HB_ERRCODE hb_waEval(AREAP pArea, LPDBEVALINFO pEvalInfo)
       }
 
       if( pEvalInfo->dbsci.itmCobWhile ) {
-         if( SELF_EVALBLOCK(pArea, pEvalInfo->dbsci.itmCobWhile) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( SELF_EVALBLOCK(pArea, pEvalInfo->dbsci.itmCobWhile) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
          if( !hb_itemGetLX(pArea->valResult) ) {
             break;
@@ -1115,8 +1115,8 @@ static HB_ERRCODE hb_waEval(AREAP pArea, LPDBEVALINFO pEvalInfo)
       }
 
       if( pEvalInfo->dbsci.itmCobFor ) {
-         if( SELF_EVALBLOCK(pArea, pEvalInfo->dbsci.itmCobFor) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( SELF_EVALBLOCK(pArea, pEvalInfo->dbsci.itmCobFor) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
          fFor = hb_itemGetLX(pArea->valResult);
       } else {
@@ -1124,8 +1124,8 @@ static HB_ERRCODE hb_waEval(AREAP pArea, LPDBEVALINFO pEvalInfo)
       }
 
       if( fFor ) {
-         if( SELF_EVALBLOCK(pArea, pEvalInfo->itmBlock) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( SELF_EVALBLOCK(pArea, pEvalInfo->itmBlock) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
       }
 
@@ -1133,12 +1133,12 @@ static HB_ERRCODE hb_waEval(AREAP pArea, LPDBEVALINFO pEvalInfo)
          break;
       }
 
-      if( SELF_SKIP(pArea, 1) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_SKIP(pArea, 1) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1155,24 +1155,24 @@ static HB_ERRCODE hb_waLocate( AREAP pArea, HB_BOOL fContinue )
 
    if( fContinue ) {
       if( !pArea->dbsi.itmCobFor ) {
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
       }
 
-      if( SELF_SKIP(pArea, 1) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_SKIP(pArea, 1) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    } else if( pArea->dbsi.itmRecID ) {
-      if( SELF_GOTOID(pArea, pArea->dbsi.itmRecID) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_GOTOID(pArea, pArea->dbsi.itmRecID) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    } else if( pArea->dbsi.lNext ) {
       lNext = hb_itemGetNL(pArea->dbsi.lNext);
       if( lNext <= 0 ) {
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
       }
    } else if( !pArea->dbsi.itmCobWhile && !hb_itemGetLX(pArea->dbsi.fRest) ) {
-      if( SELF_GOTOP(pArea) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_GOTOP(pArea) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
@@ -1181,8 +1181,8 @@ static HB_ERRCODE hb_waLocate( AREAP pArea, HB_BOOL fContinue )
    /* TODO: use SKIPSCOPE() method and fRest parameter */
 
    for( ;; ) {
-      if( SELF_EOF( pArea, &fEof ) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_EOF( pArea, &fEof ) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
 
       if( fEof ) {
@@ -1190,8 +1190,8 @@ static HB_ERRCODE hb_waLocate( AREAP pArea, HB_BOOL fContinue )
       }
 
       if( !fContinue && pArea->dbsi.itmCobWhile ) {
-         if( SELF_EVALBLOCK(pArea, pArea->dbsi.itmCobWhile) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( SELF_EVALBLOCK(pArea, pArea->dbsi.itmCobWhile) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
          if( !hb_itemGetLX(pArea->valResult) ) {
             break;
@@ -1202,8 +1202,8 @@ static HB_ERRCODE hb_waLocate( AREAP pArea, HB_BOOL fContinue )
          pArea->fFound = true;
          break;
       } else {
-         if( SELF_EVALBLOCK(pArea, pArea->dbsi.itmCobFor) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( SELF_EVALBLOCK(pArea, pArea->dbsi.itmCobFor) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
 
          if( hb_itemGetLX(pArea->valResult) ) {
@@ -1216,12 +1216,12 @@ static HB_ERRCODE hb_waLocate( AREAP pArea, HB_BOOL fContinue )
          break;
       }
 
-      if( SELF_SKIP(pArea, 1) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_SKIP(pArea, 1) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1238,25 +1238,25 @@ static HB_ERRCODE hb_waTrans(AREAP pArea, LPDBTRANSINFO pTransInfo)
    bool fFor;
 
    if( pTransInfo->dbsci.itmRecID ) {
-      if( SELF_GOTOID(pArea, pTransInfo->dbsci.itmRecID) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_GOTOID(pArea, pTransInfo->dbsci.itmRecID) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    } else if( pTransInfo->dbsci.lNext ) {
       lNext = hb_itemGetNL(pTransInfo->dbsci.lNext);
       if( lNext <= 0 ) {
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
       }
    } else if( !pTransInfo->dbsci.itmCobWhile && !hb_itemGetLX(pTransInfo->dbsci.fRest) ) {
-      if( SELF_GOTOP(pArea) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_GOTOP(pArea) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
    /* TODO: use SKIPSCOPE() method and fRest parameter */
 
    for( ;; ) {
-      if( SELF_EOF( pArea, &fEof ) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_EOF( pArea, &fEof ) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
 
       if( fEof ) {
@@ -1264,8 +1264,8 @@ static HB_ERRCODE hb_waTrans(AREAP pArea, LPDBTRANSINFO pTransInfo)
       }
 
       if( pTransInfo->dbsci.itmCobWhile ) {
-         if( SELF_EVALBLOCK(pArea, pTransInfo->dbsci.itmCobWhile) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( SELF_EVALBLOCK(pArea, pTransInfo->dbsci.itmCobWhile) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
          if( !hb_itemGetLX(pArea->valResult) ) {
             break;
@@ -1273,8 +1273,8 @@ static HB_ERRCODE hb_waTrans(AREAP pArea, LPDBTRANSINFO pTransInfo)
       }
 
       if( pTransInfo->dbsci.itmCobFor ) {
-         if( SELF_EVALBLOCK(pArea, pTransInfo->dbsci.itmCobFor) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( SELF_EVALBLOCK(pArea, pTransInfo->dbsci.itmCobFor) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
          fFor = hb_itemGetLX(pArea->valResult);
       } else {
@@ -1282,8 +1282,8 @@ static HB_ERRCODE hb_waTrans(AREAP pArea, LPDBTRANSINFO pTransInfo)
       }
 
       if( fFor ) {
-         if( SELF_TRANSREC(pArea, pTransInfo) != HB_SUCCESS ) {
-            return HB_FAILURE;
+         if( SELF_TRANSREC(pArea, pTransInfo) != Harbour::SUCCESS ) {
+            return Harbour::FAILURE;
          }
       }
 
@@ -1291,12 +1291,12 @@ static HB_ERRCODE hb_waTrans(AREAP pArea, LPDBTRANSINFO pTransInfo)
          break;
       }
 
-      if( SELF_SKIP(pArea, 1) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_SKIP(pArea, 1) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1315,18 +1315,18 @@ static HB_ERRCODE hb_waTransRec(AREAP pArea, LPDBTRANSINFO pTransInfo)
    if( pTransInfo->uiFlags & DBTF_MATCH && pTransInfo->uiFlags & DBTF_PUTREC ) {
       /* Record deleted? */
       errCode = SELF_DELETED(pArea, &bDeleted);
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          return errCode;
       }
 
       errCode = SELF_GETREC(pArea, &pRecord);
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          return errCode;
       }
 
       /* Append a new record */
       errCode = SELF_APPEND(pTransInfo->lpaDest, true);
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          return errCode;
       }
 
@@ -1341,14 +1341,14 @@ static HB_ERRCODE hb_waTransRec(AREAP pArea, LPDBTRANSINFO pTransInfo)
       } else {
          /* Record deleted? */
          errCode = SELF_DELETED(pArea, &bDeleted);
-         if( errCode != HB_SUCCESS ) {
+         if( errCode != Harbour::SUCCESS ) {
             return errCode;
          }
       }
 
       /* Append a new record */
       errCode = SELF_APPEND(pTransInfo->lpaDest, true);
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          return errCode;
       }
 
@@ -1356,11 +1356,11 @@ static HB_ERRCODE hb_waTransRec(AREAP pArea, LPDBTRANSINFO pTransInfo)
       pTransItem = pTransInfo->lpTransItems;
       for( HB_USHORT uiCount = pTransInfo->uiItemCount; uiCount; --uiCount ) {
          errCode = SELF_GETVALUE(pArea, pTransItem->uiSource, pItem);
-         if( errCode != HB_SUCCESS ) {
+         if( errCode != Harbour::SUCCESS ) {
             break;
          }
          errCode = SELF_PUTVALUE(pTransInfo->lpaDest, pTransItem->uiDest, pItem);
-         if( errCode != HB_SUCCESS ) {
+         if( errCode != Harbour::SUCCESS ) {
             break;
          }
          ++pTransItem;
@@ -1369,7 +1369,7 @@ static HB_ERRCODE hb_waTransRec(AREAP pArea, LPDBTRANSINFO pTransInfo)
    }
 
    /* Delete the new record if copy fail */
-   if( errCode != HB_SUCCESS ) {
+   if( errCode != Harbour::SUCCESS ) {
       SELF_DELETE( pTransInfo->lpaDest );
    } else if( bDeleted ) {
       /* Record with deleted flag */
@@ -1404,7 +1404,7 @@ static HB_ERRCODE hb_waChildEnd(AREAP pArea, LPDBRELINFO pRelInfo)
    }
 
    pArea->uiParents--;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1418,7 +1418,7 @@ static HB_ERRCODE hb_waChildStart(AREAP pArea, LPDBRELINFO pRelInfo)
    HB_SYMBOL_UNUSED(pRelInfo);
 
    pArea->uiParents++;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1434,13 +1434,13 @@ static HB_ERRCODE hb_waSyncChildren(AREAP pArea)
 
    lpdbRelation = pArea->lpdbRelations;
    while( lpdbRelation ) {
-      if( SELF_CHILDSYNC(lpdbRelation->lpaChild, lpdbRelation) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( SELF_CHILDSYNC(lpdbRelation->lpaChild, lpdbRelation) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
       lpdbRelation = lpdbRelation->lpdbriNext;
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1475,7 +1475,7 @@ static HB_ERRCODE hb_waClearRel(AREAP pArea)
       hb_rddSelectWorkAreaNumber(iCurrArea);
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1499,7 +1499,7 @@ static HB_ERRCODE hb_waRelArea(AREAP pArea, HB_USHORT uiRelNo, HB_USHORT * pRelA
       }
       lpdbRelations = lpdbRelations->lpdbriNext;
    }
-   return *pRelArea ? HB_SUCCESS : HB_FAILURE;
+   return *pRelArea ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
 /*
@@ -1514,12 +1514,12 @@ static HB_ERRCODE hb_waRelEval(AREAP pArea, LPDBRELINFO pRelInfo)
    HB_BOOL fEof;
 
    HB_ERRCODE errCode = SELF_EOF( pRelInfo->lpaParent, &fEof );
-   if( errCode == HB_SUCCESS ) {
+   if( errCode == Harbour::SUCCESS ) {
       if( fEof ) {
          errCode = SELF_GOTO(pArea, 0);
       } else {
          errCode = SELF_EVALBLOCK(pRelInfo->lpaParent, pRelInfo->itmCobExpr);
-         if( errCode == HB_SUCCESS ) {
+         if( errCode == Harbour::SUCCESS ) {
             PHB_ITEM pResult;
             DBORDERINFO pInfo{};
 
@@ -1531,17 +1531,17 @@ static HB_ERRCODE hb_waRelEval(AREAP pArea, LPDBRELINFO pRelInfo)
             pInfo.itmResult = hb_itemPutNI(nullptr, 0);
             errCode = SELF_ORDINFO(pArea, DBOI_NUMBER, &pInfo);
 
-            if( errCode == HB_SUCCESS ) {
+            if( errCode == Harbour::SUCCESS ) {
                int iOrder = hb_itemGetNI(pInfo.itmResult);
                if( iOrder != 0 ) {
                   if( pRelInfo->isScoped ) {
                      pInfo.itmNewVal = pResult;
                      errCode = SELF_ORDINFO(pArea, DBOI_SCOPETOP, &pInfo);
-                     if( errCode == HB_SUCCESS ) {
+                     if( errCode == Harbour::SUCCESS ) {
                         errCode = SELF_ORDINFO(pArea, DBOI_SCOPEBOTTOM, &pInfo);
                      }
                   }
-                  if( errCode == HB_SUCCESS ) {
+                  if( errCode == Harbour::SUCCESS ) {
                      errCode = SELF_SEEK(pArea, false, pResult, false);
                   }
                } else {
@@ -1559,9 +1559,9 @@ static HB_ERRCODE hb_waRelEval(AREAP pArea, LPDBRELINFO pRelInfo)
                   errCode = SELF_GOTOID(pArea, pResult);
                   #endif
                   errCode = SELF_GOTO(pArea, hb_itemGetNL(pResult));
-                  if( errCode == HB_SUCCESS ) {
+                  if( errCode == Harbour::SUCCESS ) {
                      errCode = SELF_EOF( pArea, &fEof );
-                     if( errCode == HB_SUCCESS ) {
+                     if( errCode == Harbour::SUCCESS ) {
                         pArea->fFound = !fEof;
                      }
                   }
@@ -1592,12 +1592,12 @@ static HB_ERRCODE hb_waRelText(AREAP pArea, HB_USHORT uiRelNo, PHB_ITEM pExpr)
    while( lpdbRelations ) {
       if( uiIndex++ == uiRelNo ) {
          hb_itemCopy(pExpr, lpdbRelations->abKey);
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
       }
       lpdbRelations = lpdbRelations->lpdbriNext;
    }
 
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 /*
@@ -1654,7 +1654,7 @@ static HB_ERRCODE hb_waClearFilter(AREAP pArea)
    pArea->dbfi.fOptimized = false;
    pArea->dbfi.fFilter = false;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1696,7 +1696,7 @@ static HB_ERRCODE hb_waClearLocate( AREAP pArea )
       pArea->dbsi.fRest = nullptr;
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1712,7 +1712,7 @@ static HB_ERRCODE hb_waFilterText(AREAP pArea, PHB_ITEM pFilter)
       hb_itemCopy(pFilter, pArea->dbfi.abFilterText);
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1725,8 +1725,8 @@ static HB_ERRCODE hb_waSetFilter(AREAP pArea, LPDBFILTERINFO pFilterInfo)
 #endif
 
    /* Clear the active filter expression */
-   if( SELF_CLEARFILTER(pArea) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( SELF_CLEARFILTER(pArea) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
 
    if( pFilterInfo->itmCobExpr ) {
@@ -1738,7 +1738,7 @@ static HB_ERRCODE hb_waSetFilter(AREAP pArea, LPDBFILTERINFO pFilterInfo)
    pArea->dbfi.fOptimized = pFilterInfo->fOptimized;
    pArea->dbfi.fFilter = true;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1751,8 +1751,8 @@ static HB_ERRCODE hb_waSetLocate( AREAP pArea, LPDBSCOPEINFO pScopeInfo )
 #endif
 
    /* Clear the active locate expression */
-   if( SELF_CLEARLOCATE( pArea ) != HB_SUCCESS ) {
-      return HB_FAILURE;
+   if( SELF_CLEARLOCATE( pArea ) != Harbour::SUCCESS ) {
+      return Harbour::FAILURE;
    }
 
    if( pScopeInfo->itmCobFor ) {
@@ -1790,7 +1790,7 @@ static HB_ERRCODE hb_waSetLocate( AREAP pArea, LPDBSCOPEINFO pScopeInfo )
    pArea->dbsi.fBackward         = pScopeInfo->fBackward;
    pArea->dbsi.fOptimized        = pScopeInfo->fOptimized;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -1807,9 +1807,9 @@ static HB_ERRCODE hb_waCompile( AREAP pArea, const char * pExpr )
    pMacro = hb_macroCompile( pExpr );
    if( pMacro ) {
       pArea->valResult = hb_itemPutPtr(pArea->valResult, static_cast<void*>(pMacro));
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    } else {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 }
 
@@ -1855,7 +1855,7 @@ static HB_ERRCODE hb_waEvalBlock(AREAP pArea, PHB_ITEM pBlock)
    pItem = hb_vmEvalBlockOrMacro(pBlock);
 
    if( static_cast<AREAP>(hb_rddGetWorkAreaPointer(iUsedArea)) != pArea ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( !pArea->valResult ) {
@@ -1865,7 +1865,7 @@ static HB_ERRCODE hb_waEvalBlock(AREAP pArea, PHB_ITEM pBlock)
 
    hb_rddSelectWorkAreaNumber(iCurrArea);
 
-   return hb_vmRequestQuery() ? HB_FAILURE : HB_SUCCESS;
+   return hb_vmRequestQuery() ? Harbour::FAILURE : Harbour::SUCCESS;
 }
 
 /*
@@ -1982,12 +1982,12 @@ static HB_ERRCODE hb_waRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCon
       case RDDI_TRIGGER:
       case RDDI_PENDINGTRIGGER:
          hb_itemPutC(pItem, nullptr);
-         /* fallthrough */ /* return HB_FAILURE */
+         /* fallthrough */ /* return Harbour::FAILURE */
 
       default:
-         return HB_FAILURE;
+         return Harbour::FAILURE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -2007,7 +2007,7 @@ static HB_ERRCODE hb_waUnsupported(AREAP pArea)
    SELF_ERROR(pArea, pError);
    hb_itemRelease(pError);
 
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 static HB_ERRCODE hb_waUnsupported_B(AREAP pArea, HB_BOOL p1)
@@ -2118,7 +2118,7 @@ static HB_ERRCODE hb_waRddUnsupported(LPRDDNODE pRDD)
    hb_errLaunch(pError);
    hb_itemRelease(pError);
 
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 static HB_ERRCODE hb_waRddUnsupported_VVL(LPRDDNODE pRDD, void * p1, void * p2, HB_LONG p3)
@@ -2152,7 +2152,7 @@ static HB_ERRCODE hb_waNull(AREAP pArea)
 
    HB_SYMBOL_UNUSED(pArea);
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 #endif
 
@@ -2498,7 +2498,7 @@ int hb_rddRegister(const char * szDriver, HB_USHORT uiType)
    hb_vmPushInteger(s_uiRddCount);
    hb_vmPushPointer(static_cast<void*>(&pRddNewNode->rddSuperID));
    hb_vmProc(5);
-   if( hb_parnidef(-1, HB_FAILURE) != HB_SUCCESS ) {
+   if( hb_parnidef(-1, Harbour::FAILURE) != Harbour::SUCCESS ) {
       iResult = 3;                        /* Invalid FUNCTABLE */
    } else {
       hb_threadEnterCriticalSection(&s_rddMtx);
@@ -2545,7 +2545,7 @@ HB_ERRCODE hb_rddInheritEx(RDDFUNCS * pTable, const RDDFUNCS * pSubTable, RDDFUN
    const DBENTRYP_V * pSubFunction;
 
    if( !pTable ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    /* Copy the pSuperTable into pTable */
@@ -2562,7 +2562,7 @@ HB_ERRCODE hb_rddInheritEx(RDDFUNCS * pTable, const RDDFUNCS * pSubTable, RDDFUN
       pRddNode = hb_rddFindNode(szSuperName, nullptr);
 
       if( !pRddNode ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
 
       memcpy(pTable, &pRddNode->pTable, sizeof(RDDFUNCS));
@@ -2582,7 +2582,7 @@ HB_ERRCODE hb_rddInheritEx(RDDFUNCS * pTable, const RDDFUNCS * pSubTable, RDDFUN
       pFunction++;
       pSubFunction++;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 HB_ERRCODE hb_rddInherit(RDDFUNCS * pTable, const RDDFUNCS * pSubTable, RDDFUNCS * pSuperTable, const char * szDrvName)

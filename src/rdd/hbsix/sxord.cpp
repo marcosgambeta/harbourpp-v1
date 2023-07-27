@@ -133,18 +133,18 @@ HB_FUNC( SX_TAGNO )
 
       if( hb_sxOrdParam(&Info) ) {
          Info.itmResult = hb_itemPutNI(nullptr, 0);
-         if( SELF_ORDINFO(pArea, DBOI_NUMBER, &Info) == HB_SUCCESS ) {
+         if( SELF_ORDINFO(pArea, DBOI_NUMBER, &Info) == Harbour::SUCCESS ) {
             int iOrder = hb_itemGetNI(Info.itmResult);
             if( iOrder ) {
                Info.itmOrder = hb_itemPutNI(nullptr, iOrder);
                Info.atomBagName = nullptr;
                hb_itemClear(Info.itmResult);
-               if( SELF_ORDINFO(pArea, DBOI_FULLPATH, &Info) == HB_SUCCESS && hb_itemGetCLen(Info.itmResult) > 0 ) {
+               if( SELF_ORDINFO(pArea, DBOI_FULLPATH, &Info) == Harbour::SUCCESS && hb_itemGetCLen(Info.itmResult) > 0 ) {
                   Info.atomBagName = Info.itmResult;
                   Info.itmResult = Info.itmOrder;
                   Info.itmOrder = nullptr;
                   hb_itemClear(Info.itmResult);
-                  if( SELF_ORDINFO(pArea, DBOI_BAGORDER, &Info) == HB_SUCCESS ) {
+                  if( SELF_ORDINFO(pArea, DBOI_BAGORDER, &Info) == Harbour::SUCCESS ) {
                      iBagOrder = iOrder - hb_itemGetNI(Info.itmResult) + 1;
                   }
                   Info.itmOrder = Info.atomBagName;
@@ -170,7 +170,7 @@ HB_FUNC( SX_FREEZE )
          bool fResult = false;
          Info.itmNewVal = hb_itemPutL(nullptr, true);
          Info.itmResult = hb_itemNew(nullptr);
-         if( SELF_ORDINFO(pArea, DBOI_CUSTOM, &Info) == HB_SUCCESS ) {
+         if( SELF_ORDINFO(pArea, DBOI_CUSTOM, &Info) == Harbour::SUCCESS ) {
             fResult = HB_IS_LOGICAL(Info.itmResult) && hb_itemGetL(Info.itmResult);
          }
          hb_itemRelease(Info.itmNewVal);
@@ -191,7 +191,7 @@ HB_FUNC( SX_WARM )
          bool fResult = false;
          Info.itmNewVal = hb_itemPutL(nullptr, false);
          Info.itmResult = hb_itemNew(nullptr);
-         if( SELF_ORDINFO(pArea, DBOI_CHGONLY, &Info) == HB_SUCCESS ) {
+         if( SELF_ORDINFO(pArea, DBOI_CHGONLY, &Info) == Harbour::SUCCESS ) {
             fResult = HB_IS_LOGICAL(Info.itmResult) && !hb_itemGetL(Info.itmResult);
          }
          hb_itemRelease(Info.itmNewVal);
@@ -212,7 +212,7 @@ HB_FUNC( SX_CHILL )
          bool fResult = false;
          Info.itmNewVal = hb_itemPutL(nullptr, true);
          Info.itmResult = hb_itemNew(nullptr);
-         if( SELF_ORDINFO(pArea, DBOI_CHGONLY, &Info) == HB_SUCCESS ) {
+         if( SELF_ORDINFO(pArea, DBOI_CHGONLY, &Info) == Harbour::SUCCESS ) {
             fResult = HB_IS_LOGICAL(Info.itmResult) && hb_itemGetL(Info.itmResult);
          }
          hb_itemRelease(Info.itmNewVal);
@@ -247,7 +247,7 @@ HB_FUNC( SX_THERMOMETER )
             iTemperature = 4;
             for( i = 0; i < 3; ++i, --iTemperature ) {
                hb_itemClear(Info.itmResult);
-               if( SELF_ORDINFO(pArea, s_iStates[i], &Info) == HB_SUCCESS && HB_IS_LOGICAL(Info.itmResult) && hb_itemGetL(Info.itmResult) ) {
+               if( SELF_ORDINFO(pArea, s_iStates[i], &Info) == Harbour::SUCCESS && HB_IS_LOGICAL(Info.itmResult) && hb_itemGetL(Info.itmResult) ) {
                   break;
                }
             }
@@ -422,7 +422,7 @@ HB_FUNC( SX_INDEXTYPE )
             Info.itmOrder = nullptr;
          }
          Info.itmResult = hb_itemNew(nullptr);
-         if( SELF_ORDINFO(pArea, DBOI_INDEXTYPE, &Info) == HB_SUCCESS ) {
+         if( SELF_ORDINFO(pArea, DBOI_INDEXTYPE, &Info) == Harbour::SUCCESS ) {
             iType = hb_itemGetNI(Info.itmResult);
          }
          hb_itemRelease(Info.itmResult);
@@ -439,7 +439,7 @@ HB_FUNC( SX_DESCEND )
       DBORDERINFO Info;
       if( hb_sxOrdParam(&Info) ) {
          Info.itmResult = hb_itemNew(nullptr);
-         if( SELF_ORDINFO(pArea, DBOI_ISDESC, &Info) == HB_SUCCESS ) {
+         if( SELF_ORDINFO(pArea, DBOI_ISDESC, &Info) == Harbour::SUCCESS ) {
             Info.itmNewVal = hb_itemPutL(nullptr, !hb_itemGetL(Info.itmResult));
             SELF_ORDINFO(pArea, DBOI_ISDESC, &Info);
             hb_itemRelease(Info.itmNewVal);
@@ -506,9 +506,9 @@ HB_FUNC( SX_KEYSKIP )
    HB_BOOL fBEof = false;
 
    if( pArea != nullptr ) {
-      if( SELF_SKIPRAW(pArea, hb_parnldef(1, 1)) == HB_SUCCESS ) {
-         if( SELF_EOF(pArea, &fBEof) == HB_SUCCESS && !fBEof ) {
-            fResult = SELF_BOF(pArea, &fBEof) == HB_SUCCESS && !fBEof;
+      if( SELF_SKIPRAW(pArea, hb_parnldef(1, 1)) == Harbour::SUCCESS ) {
+         if( SELF_EOF(pArea, &fBEof) == Harbour::SUCCESS && !fBEof ) {
+            fResult = SELF_BOF(pArea, &fBEof) == Harbour::SUCCESS && !fBEof;
          }
       }
    }
@@ -592,8 +592,8 @@ HB_FUNC( SX_SEEKLAST )
       PHB_ITEM pKey = hb_param(1, Harbour::Item::ANY);
       bool bSoftSeek = hb_parl(2);
 
-      if( SELF_SEEK(pArea, bSoftSeek, pKey, true) == HB_SUCCESS ) {
-         if( SELF_FOUND(pArea, &fFound) != HB_SUCCESS ) {
+      if( SELF_SEEK(pArea, bSoftSeek, pKey, true) == Harbour::SUCCESS ) {
+         if( SELF_FOUND(pArea, &fFound) != Harbour::SUCCESS ) {
             fFound = false;
          }
       }
@@ -629,25 +629,25 @@ HB_FUNC( SX_WILDSEEK )
       Info.itmResult = hb_itemNew(nullptr);
 
       if( szPattern && szPattern[0] ) {
-         if( SELF_ORDINFO(pArea, DBOI_NUMBER, &Info) == HB_SUCCESS ) {
+         if( SELF_ORDINFO(pArea, DBOI_NUMBER, &Info) == Harbour::SUCCESS ) {
             iOrder = hb_itemGetNI(Info.itmResult);
          }
       }
       if( iOrder > 0 ) {
-         HB_ERRCODE errCode = HB_SUCCESS;
+         HB_ERRCODE errCode = Harbour::SUCCESS;
          if( !fCont ) {
             errCode = SELF_GOTOP(pArea);
-            if( errCode == HB_SUCCESS ) {
+            if( errCode == Harbour::SUCCESS ) {
                errCode = SELF_ORDINFO(pArea, DBOI_KEYVAL, &Info);
-               if( errCode == HB_SUCCESS ) {
+               if( errCode == Harbour::SUCCESS ) {
                   const char * szKey = hb_itemGetCPtr(Info.itmResult);
                   fFound = hb_strMatchWild(szKey, szPattern);
                }
             }
          }
-         if( !fFound && errCode == HB_SUCCESS ) {
+         if( !fFound && errCode == Harbour::SUCCESS ) {
             Info.itmNewVal = hb_param(1, Harbour::Item::STRING);
-            if( SELF_ORDINFO(pArea, DBOI_SKIPWILD, &Info) == HB_SUCCESS ) {
+            if( SELF_ORDINFO(pArea, DBOI_SKIPWILD, &Info) == Harbour::SUCCESS ) {
                fFound = HB_IS_LOGICAL(Info.itmResult) && hb_itemGetL(Info.itmResult);
             }
          }
@@ -670,7 +670,7 @@ HB_FUNC( SX_ROXLOCK )
       if( hb_sxOrdParam(&Info) ) {
          Info.itmNewVal = hb_itemPutL(nullptr, true);
          Info.itmResult = hb_itemPutL(nullptr, false);
-         if( SELF_ORDINFO(pArea, DBOI_READLOCK, &Info) == HB_SUCCESS ) {
+         if( SELF_ORDINFO(pArea, DBOI_READLOCK, &Info) == Harbour::SUCCESS ) {
             fLocked = hb_itemGetL(Info.itmResult);
          }
          hb_itemRelease(Info.itmNewVal);
@@ -705,7 +705,7 @@ HB_FUNC( SX_ISMYROX )
       DBORDERINFO Info;
       if( hb_sxOrdParam(&Info) ) {
          Info.itmResult = hb_itemNew(nullptr);
-         if( SELF_ORDINFO(pArea, DBOI_READLOCK, &Info) == HB_SUCCESS ) {
+         if( SELF_ORDINFO(pArea, DBOI_READLOCK, &Info) == Harbour::SUCCESS ) {
             fLocked = hb_itemGetL(Info.itmResult);
          }
          hb_itemRelease(Info.itmResult);
@@ -723,12 +723,12 @@ HB_FUNC( SX_ISROXLOCK )
       DBORDERINFO Info;
       if( hb_sxOrdParam(&Info) ) {
          Info.itmResult = hb_itemNew(nullptr);
-         if( SELF_ORDINFO(pArea, DBOI_READLOCK, &Info) == HB_SUCCESS ) {
+         if( SELF_ORDINFO(pArea, DBOI_READLOCK, &Info) == Harbour::SUCCESS ) {
             fLocked = hb_itemGetL(Info.itmResult);
          }
          if( !fLocked ) {
             Info.itmNewVal = hb_itemPutL(nullptr, true);
-            if( SELF_ORDINFO(pArea, DBOI_READLOCK, &Info) == HB_SUCCESS ) {
+            if( SELF_ORDINFO(pArea, DBOI_READLOCK, &Info) == Harbour::SUCCESS ) {
                fLocked = hb_itemGetL(Info.itmResult);
             }
             if( fLocked ) {
@@ -753,7 +753,7 @@ HB_FUNC( SX_SORTOPTION )
       if( hb_sxOrdParam(&Info) ) {
          Info.itmResult = hb_itemNew(nullptr);
          Info.itmNewVal = hb_param(1, Harbour::Item::LOGICAL);
-         if( SELF_ORDINFO(pArea, DBOI_USECURRENT, &Info) == HB_SUCCESS ) {
+         if( SELF_ORDINFO(pArea, DBOI_USECURRENT, &Info) == Harbour::SUCCESS ) {
             fUseCurrent = hb_itemGetL(Info.itmResult);
          }
          hb_itemRelease(Info.itmResult);

@@ -562,7 +562,7 @@ static int hb_hsxCompile( const char * szExpr, PHB_ITEM * pExpr )
 
    *pExpr = nullptr;
    if( pArea != nullptr ) {
-      if( SELF_COMPILE(pArea, szExpr) == HB_FAILURE ) {
+      if( SELF_COMPILE(pArea, szExpr) == Harbour::FAILURE ) {
          return HSX_BADPARMS;
       }
       *pExpr = pArea->valResult;
@@ -621,7 +621,7 @@ static int hb_hsxEval(int iHandle, PHB_ITEM pExpr, HB_BYTE * pKey, HB_BOOL * fDe
          AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
          if( !pArea ) {
             *fDeleted = HB_FALSE;
-         } else if( SELF_DELETED(pArea, fDeleted) == HB_FAILURE ) {
+         } else if( SELF_DELETED(pArea, fDeleted) == Harbour::FAILURE ) {
             iResult = HSX_RDDFAILURE;
          }
       }
@@ -1562,12 +1562,12 @@ static int hb_hsxIndex(const char * szFile, PHB_ITEM pExpr, int iKeySize, int iM
    }
 
    HB_ERRCODE errCode = SELF_RECCOUNT(pArea, &ulRecCount);
-   if( errCode != HB_FAILURE && ulRecCount ) {
+   if( errCode != Harbour::FAILURE && ulRecCount ) {
       errCode = SELF_RECNO(pArea, &ulRecNo);
-      if( errCode != HB_FAILURE ) {
+      if( errCode != Harbour::FAILURE ) {
          for( ulRec = 1; ulRec <= ulRecCount; ulRec++ ) {
             errCode = SELF_GOTO(pArea, ulRec);
-            if( errCode == HB_FAILURE ) {
+            if( errCode == Harbour::FAILURE ) {
                break;
             }
             iRetVal = hb_hsxAdd(iHandle, &ulNewRec, nullptr, false);
@@ -1592,7 +1592,7 @@ static int hb_hsxIndex(const char * szFile, PHB_ITEM pExpr, int iKeySize, int iM
    if( iRetVal != HSX_SUCCESS ) {
       return iRetVal;
    }
-   if( errCode == HB_FAILURE ) {
+   if( errCode == Harbour::FAILURE ) {
       return HSX_RDDFAILURE;
    }
 
@@ -1632,24 +1632,24 @@ static int hb_hsxFilter(int iHandle, const char * pSeek, HB_SIZE nSeek, PHB_ITEM
    }
 
    HB_ERRCODE errCode = SELF_RECNO(pArea, &ulRecNo);
-   if( errCode != HB_FAILURE ) {
+   if( errCode != Harbour::FAILURE ) {
       iResult = hb_hsxSeekSet(iHandle, pSeek, nSeek);
    }
 
    fValid = true;
    pItem = hb_itemNew(nullptr);
-   while( iResult == HSX_SUCCESS && errCode != HB_FAILURE ) {
+   while( iResult == HSX_SUCCESS && errCode != Harbour::FAILURE ) {
       iResult = hb_hsxNext(iHandle, &ulRec);
       if( iResult != HSX_SUCCESS || ulRec == 0 ) {
          break;
       }
       if( pVerify ) {
          errCode = SELF_GOTO(pArea, ulRec);
-         if( errCode == HB_FAILURE ) {
+         if( errCode == Harbour::FAILURE ) {
             break;
          }
          errCode = SELF_EVALBLOCK(pArea, pVerify);
-         if( errCode == HB_FAILURE ) {
+         if( errCode == Harbour::FAILURE ) {
             break;
          }
          fValid = hb_hsxVerify(iHandle, hb_itemGetCPtr(pArea->valResult), hb_itemGetCLen(pArea->valResult), pSeek, nSeek, iVerifyType) == HSX_SUCCESS;
@@ -1674,7 +1674,7 @@ static int hb_hsxFilter(int iHandle, const char * pSeek, HB_SIZE nSeek, PHB_ITEM
       hb_hsxExpDestroy(pVerify);
    }
 
-   return errCode == HB_FAILURE ? HSX_RDDFAILURE : iResult;
+   return errCode == Harbour::FAILURE ? HSX_RDDFAILURE : iResult;
 }
 
 
@@ -1867,7 +1867,7 @@ HB_FUNC( HS_FILTER )
          hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, "HS_FILTER");
          iResult = HSX_NOTABLE;
       /* create empty workarea RM filter */
-      } else if( SELF_INFO(pArea, DBI_RM_CREATE, pItem) == HB_FAILURE ) {
+      } else if( SELF_INFO(pArea, DBI_RM_CREATE, pItem) == Harbour::FAILURE ) {
          iResult = HSX_RDDFAILURE;
       } else {
          /* to be SIX compatible divide given text on space delimited tokens */
@@ -1892,7 +1892,7 @@ HB_FUNC( HS_FILTER )
       }
       if( iResult == HSX_SUCCESS ) {
          hb_itemClear(pItem);
-         if( SELF_INFO(pArea, DBI_RM_COUNT, pItem) == HB_FAILURE ) {
+         if( SELF_INFO(pArea, DBI_RM_COUNT, pItem) == Harbour::FAILURE ) {
             iResult = HSX_RDDFAILURE;
          } else {
             ulRecords = hb_itemGetNL(pItem);

@@ -176,10 +176,10 @@ HB_ERRCODE hb_rddSelectFirstAvailable(void)
       uiArea++;
    }
    if( uiArea >= HB_RDD_MAX_AREA_NUM ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    HB_SET_WA(uiArea);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /*
@@ -207,7 +207,7 @@ HB_USHORT hb_rddInsertAreaNode( const char * szDriver )
    }
 
    if( pRddInfo->uiCurrArea == 0 ) {
-      if( hb_rddSelectFirstAvailable() != HB_SUCCESS ) {
+      if( hb_rddSelectFirstAvailable() != Harbour::SUCCESS ) {
          return 0;
       }
    }
@@ -241,7 +241,7 @@ void hb_rddReleaseCurrentArea(void)
       return;
    }
 
-   if( SELF_CLOSE(pArea) == HB_FAILURE ) {
+   if( SELF_CLOSE(pArea) == Harbour::FAILURE ) {
       return;
    }
 
@@ -329,13 +329,13 @@ HB_ERRCODE hb_rddIterateWorkAreas(WACALLBACK pCallBack, void * cargo)
 #endif
 
    PHB_STACKRDD pRddInfo;
-   HB_ERRCODE errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = Harbour::SUCCESS;
 
    pRddInfo = hb_stackRDD();
    for( HB_USHORT uiIndex = 1; uiIndex < pRddInfo->uiWaMax; uiIndex++ ) {
       AREAP pArea = static_cast<AREAP>(pRddInfo->waList[uiIndex]);
       errCode = pCallBack(pArea, cargo);
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          break;
       }
       if( uiIndex >= pRddInfo->uiWaMax || pArea != static_cast<AREAP>(pRddInfo->waList[uiIndex]) ) {
@@ -499,7 +499,7 @@ HB_ERRCODE hb_rddSelectWorkAreaNumber(int iArea)
       HB_SET_WA(static_cast<HB_AREANO>(iArea));
    }
 
-   return (pRddInfo->pCurrArea == nullptr) ? HB_FAILURE : HB_SUCCESS;
+   return (pRddInfo->pCurrArea == nullptr) ? Harbour::FAILURE : Harbour::SUCCESS;
 }
 
 /* Moving workareas between threads */
@@ -521,7 +521,7 @@ static HB_GARBAGE_FUNC(hb_waHolderDestructor)
 
       iArea = hb_rddGetCurrentWorkAreaNumber();
 
-      if( hb_rddSelectFirstAvailable() != HB_SUCCESS ) {
+      if( hb_rddSelectFirstAvailable() != Harbour::SUCCESS ) {
          /* workarea number HB_RDD_MAX_AREA_NUM is reserved
             for this destructor and used when all other workareas
             are active [druzus] */
@@ -619,7 +619,7 @@ HB_ERRCODE hb_rddDetachArea(AREAP pArea, PHB_ITEM pCargo)
    /* leave critical section */
    hb_threadLeaveCriticalSection(&s_waMtx);
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 AREAP hb_rddRequestArea(const char * szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea, HB_ULONG ulMilliSec)
@@ -634,7 +634,7 @@ AREAP hb_rddRequestArea(const char * szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea,
    /* close current WA or chose 1st free available */
    if( !fNewArea ) {
       hb_rddReleaseCurrentArea();
-   } else if( hb_rddSelectFirstAvailable() != HB_SUCCESS ) {
+   } else if( hb_rddSelectFirstAvailable() != Harbour::SUCCESS ) {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       return nullptr;
    }
@@ -643,7 +643,7 @@ AREAP hb_rddRequestArea(const char * szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea,
       pSymAlias = hb_dynsymGet(szAlias);
 
       /* verify if the alias name is valid symbol */
-      if( hb_rddVerifyAliasName(szAlias) != HB_SUCCESS ) {
+      if( hb_rddVerifyAliasName(szAlias) != Harbour::SUCCESS ) {
          hb_errRT_DBCMD_Ext(EG_BADALIAS, EDBCMD_BADALIAS, nullptr, szAlias, EF_CANDEFAULT);
          return nullptr;
       }

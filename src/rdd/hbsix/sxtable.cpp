@@ -130,7 +130,7 @@ HB_FUNC( SX_IDTYPE )
 
    if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemNew(nullptr);
-      if( SELF_RECINFO(pArea, nullptr, DBRI_ENCRYPTED, pItem) == HB_SUCCESS ) {
+      if( SELF_RECINFO(pArea, nullptr, DBRI_ENCRYPTED, pItem) == Harbour::SUCCESS ) {
          iType = hb_itemGetL(pItem) ? 2 : 1;
       }
       hb_itemRelease(pItem);
@@ -146,7 +146,7 @@ HB_FUNC( SX_TABLETYPE )
 
    if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemNew(nullptr);
-      if( SELF_INFO(pArea, DBI_ISENCRYPTED, pItem) == HB_SUCCESS ) {
+      if( SELF_INFO(pArea, DBI_ISENCRYPTED, pItem) == Harbour::SUCCESS ) {
          iType = hb_itemGetL(pItem) ? 2 : 1;
       }
       hb_itemRelease(pItem);
@@ -173,7 +173,7 @@ static void hb_sxRollBackChild(AREAP pArea, PHB_ITEM pItem)
    LPDBRELINFO lpdbRelation = pArea->lpdbRelations;
 
    while( lpdbRelation ) {
-      if( SELF_INFO(lpdbRelation->lpaChild, DBI_ROLLBACK, pItem) != HB_SUCCESS ) {
+      if( SELF_INFO(lpdbRelation->lpaChild, DBI_ROLLBACK, pItem) != Harbour::SUCCESS ) {
          break;
       }
       hb_sxRollBackChild(lpdbRelation->lpaChild, pItem);
@@ -200,7 +200,7 @@ HB_FUNC( SX_ROLLBACK )
 
    if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemNew(nullptr);
-      fResult = SELF_INFO(pArea, DBI_ROLLBACK, pItem) == HB_SUCCESS;
+      fResult = SELF_INFO(pArea, DBI_ROLLBACK, pItem) == Harbour::SUCCESS;
       if( fResult && fRollChild ) {
          hb_sxRollBackChild(pArea, pItem);
       }
@@ -271,7 +271,7 @@ HB_FUNC( SX_SETPASS )
          AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
          if( pArea != nullptr ) {
             pItem = hb_itemParam(1);
-            if( SELF_INFO(pArea, DBI_PASSWORD, pItem) == HB_SUCCESS ) {
+            if( SELF_INFO(pArea, DBI_PASSWORD, pItem) == Harbour::SUCCESS ) {
                fResult = true;
             }
             hb_itemRelease(pItem);
@@ -295,7 +295,7 @@ HB_FUNC( SX_SETPASS )
          pRDDNode = hb_rddFindNode( szDriver, &uiRddID );   /* find the RDDNODE */
          if( pRDDNode ) {
             pItem = hb_itemParam(1);
-            if( SELF_RDDINFO(pRDDNode, RDDI_PENDINGPASSWORD, hb_parnl(4), pItem) == HB_SUCCESS ) {
+            if( SELF_RDDINFO(pRDDNode, RDDI_PENDINGPASSWORD, hb_parnl(4), pItem) == Harbour::SUCCESS ) {
                fResult = true;
             }
             hb_itemRelease(pItem);
@@ -307,7 +307,7 @@ HB_FUNC( SX_SETPASS )
             switch( hb_parni(1) ) {
                case 1:  /* return current password key in raw form */
                   pItem = hb_itemNew(nullptr);
-                  if( SELF_INFO(pArea, DBI_PASSWORD, pItem) == HB_SUCCESS ) {
+                  if( SELF_INFO(pArea, DBI_PASSWORD, pItem) == Harbour::SUCCESS ) {
                      hb_itemReturn(pItem);
                   }
                   hb_itemRelease(pItem);
@@ -338,7 +338,7 @@ HB_FUNC( SX_DBFENCRYPT )
    if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemParam(1);
 
-      if( SELF_INFO(pArea, DBI_ENCRYPT, pItem) == HB_SUCCESS ) {
+      if( SELF_INFO(pArea, DBI_ENCRYPT, pItem) == Harbour::SUCCESS ) {
          fResult = hb_itemGetL(pItem);
       }
       hb_itemRelease(pItem);
@@ -353,7 +353,7 @@ HB_FUNC( SX_DBFDECRYPT )
 
    if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemParam(1);
-      if( SELF_INFO(pArea, DBI_DECRYPT, pItem) == HB_SUCCESS ) {
+      if( SELF_INFO(pArea, DBI_DECRYPT, pItem) == Harbour::SUCCESS ) {
          fResult = hb_itemGetL(pItem);
       }
       hb_itemRelease(pItem);
@@ -372,7 +372,7 @@ HB_FUNC( SX_MEMOPACK )
       for( int i = 1; i <= iPCount; ++i ) {
          hb_arraySet(pItem, i, hb_param(i, Harbour::Item::ANY));
       }
-      fResult = SELF_INFO(pArea, DBI_MEMOPACK, pItem) == HB_SUCCESS;
+      fResult = SELF_INFO(pArea, DBI_MEMOPACK, pItem) == Harbour::SUCCESS;
       hb_itemRelease(pItem);
    }
    hb_retl(fResult);
@@ -387,7 +387,7 @@ HB_FUNC( SX_TURBOAREA )
       if( hb_pcount() > 0 && HB_IS_NIL(pItem) ) {
          hb_itemPutNI(pItem, 0);
       }
-      if( SELF_INFO(pArea, DBI_DIRTYREAD, pItem) != HB_SUCCESS ) {
+      if( SELF_INFO(pArea, DBI_DIRTYREAD, pItem) != Harbour::SUCCESS ) {
          hb_itemPutL(pItem, false);
       }
       hb_itemReturnRelease(pItem);
@@ -415,7 +415,7 @@ HB_FUNC( SX_SETTURBO )
       if( hb_pcount() > 0 && HB_IS_NIL(pItem) ) {
          hb_itemPutNI(pItem, 0);
       }
-      if( SELF_RDDINFO(pRDDNode, RDDI_DIRTYREAD, 0, pItem) != HB_SUCCESS ) {
+      if( SELF_RDDINFO(pRDDNode, RDDI_DIRTYREAD, 0, pItem) != Harbour::SUCCESS ) {
          hb_itemPutL(pItem, false);
       }
       hb_itemReturnRelease(pItem);
