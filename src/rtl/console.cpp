@@ -150,7 +150,7 @@ void hb_conInit(void)
    hb_fsSetDevMode(s_hFilenoStdout, FD_BINARY);
    hb_fsSetDevMode(s_hFilenoStderr, FD_BINARY);
 
-   if( hb_gtInit(s_hFilenoStdin, s_hFilenoStdout, s_hFilenoStderr) != HB_SUCCESS ) {
+   if( hb_gtInit(s_hFilenoStdin, s_hFilenoStdout, s_hFilenoStderr) != Harbour::SUCCESS ) {
       hb_errInternal(9995, "Harbour terminal (GT) initialization failure", nullptr, nullptr);
    }
 

@@ -62,7 +62,7 @@ HB_FUNC( HB_RUN )
    if( pszCommand ) {
       int iResult = -1;
 
-      if( hb_gtSuspend() == HB_SUCCESS ) {
+      if( hb_gtSuspend() == Harbour::SUCCESS ) {
 #if defined(HB_OS_WIN)
          LPTSTR lpCommand = HB_CHARDUP(pszCommand);
          iResult = HB_WINAPI_SYSTEM(lpCommand);

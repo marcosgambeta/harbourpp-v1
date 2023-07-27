@@ -105,7 +105,7 @@ HB_ERRCODE hb_gtSLR(HB_GT_SLR * pSLR) /* System-Level Request */
       implemented with a different method than in CA-Cl*pper. */
 
    HB_SYMBOL_UNUSED(pSLR);
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 HB_ERRCODE hb_gtModalRead(void * dummy)
@@ -113,14 +113,14 @@ HB_ERRCODE hb_gtModalRead(void * dummy)
    /* TODO: */
 
    HB_SYMBOL_UNUSED(dummy);
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 HB_ERRCODE hb_gtFlushCursor(void)
 {
    /* TODO: */
 
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 HB_ERRCODE hb_gtSetColor(HB_GT_RGB * color)
@@ -128,7 +128,7 @@ HB_ERRCODE hb_gtSetColor(HB_GT_RGB * color)
    /* TODO: */
 
    HB_SYMBOL_UNUSED(color);
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 HB_ERRCODE hb_gtGetColor(HB_GT_RGB * color)
@@ -136,7 +136,7 @@ HB_ERRCODE hb_gtGetColor(HB_GT_RGB * color)
    /* TODO: */
 
    HB_SYMBOL_UNUSED(color);
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 HB_ERRCODE hb_gtSetBorder(HB_GT_RGB * color)
@@ -144,5 +144,5 @@ HB_ERRCODE hb_gtSetBorder(HB_GT_RGB * color)
    /* TODO: */
 
    HB_SYMBOL_UNUSED(color);
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }

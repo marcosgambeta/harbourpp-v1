@@ -367,7 +367,7 @@ HB_ERRCODE hb_memvarGet(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarGet(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pMemvarSymb)));
 #endif
 
-   HB_ERRCODE errCode = HB_FAILURE;
+   HB_ERRCODE errCode = Harbour::FAILURE;
 
    PHB_DYNS pDyn = pMemvarSymb->pDynSym;
    if( pDyn ) {
@@ -385,7 +385,7 @@ HB_ERRCODE hb_memvarGet(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
          } else {
             hb_itemCopy(pItem, pMemvar);
          }
-         errCode = HB_SUCCESS;
+         errCode = Harbour::SUCCESS;
       }
    } else {
       hb_errInternal(HB_EI_MVBADSYMBOL, nullptr, pMemvarSymb->szName, nullptr);
@@ -400,7 +400,7 @@ void hb_memvarGetValue(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarGetValue(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pMemvarSymb)));
 #endif
 
-   if( hb_memvarGet(pItem, pMemvarSymb) == HB_FAILURE ) {
+   if( hb_memvarGet(pItem, pMemvarSymb) == Harbour::FAILURE ) {
       /* Generate an error with retry possibility
        * (user created error handler can create this variable)
        */
@@ -408,7 +408,7 @@ void hb_memvarGetValue(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
       hb_itemClear(pItem);
 
       while( hb_errLaunch(pError) == E_RETRY ) {
-         if( hb_memvarGet(pItem, pMemvarSymb) == HB_SUCCESS ) {
+         if( hb_memvarGet(pItem, pMemvarSymb) == Harbour::SUCCESS ) {
             break;
          }
       }

@@ -1650,7 +1650,7 @@ static PHB_ITEM hb_dbgVarGet(HB_VARINFO * scope)
             PHB_ITEM pItem = hb_memvarGetValueBySym(pDyn);
             if( !pItem ) {
                pItem = hb_itemNew(nullptr);
-               if( hb_rddFieldGet(pItem, hb_dynsymSymbol(pDyn)) == HB_SUCCESS ) {
+               if( hb_rddFieldGet(pItem, hb_dynsymSymbol(pDyn)) == Harbour::SUCCESS ) {
                   scope->cType = 'F';
                } else {
                   hb_itemRelease(pItem);

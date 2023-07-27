@@ -2641,7 +2641,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
             if( pSymbol->pDynSym && hb_dynsymGetMemvar(pSymbol->pDynSym) ) {
                /* If exist a memory symbol with this name use it */
                hb_memvarSetValue(pSymbol, hb_stackItemFromTop(-1));
-            } else if( hb_rddFieldPut(hb_stackItemFromTop(-1), pSymbol) == HB_FAILURE ) {
+            } else if( hb_rddFieldPut(hb_stackItemFromTop(-1), pSymbol) == Harbour::FAILURE ) {
                /* Try with a field and after create a memvar */
                hb_memvarSetValue(pSymbol, hb_stackItemFromTop(-1));
             }
@@ -5419,7 +5419,7 @@ static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM pAlias, PHB_SYMB pField)
     */
    do {
       fRepeat = false;
-      errCode = HB_SUCCESS;
+      errCode = Harbour::SUCCESS;
 
       switch( HB_ITEM_TYPE(pAlias) ) {
          case Harbour::Item::INTEGER:
@@ -5486,7 +5486,7 @@ static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM pAlias, PHB_SYMB pField)
                   fRepeat = true;
                } else {
                   hb_itemSetNil(pAlias);
-                  errCode = HB_FAILURE;
+                  errCode = Harbour::FAILURE;
                }
             } else {
                hb_rddSelectWorkAreaNumber(-1);
@@ -6780,7 +6780,7 @@ static void hb_vmPushAliasedField(PHB_SYMB pSym)
    /*
     * NOTE: hb_vmSelectWorkarea() clears passed item
     */
-   if( hb_vmSelectWorkarea(pAlias, pSym) == HB_SUCCESS ) {
+   if( hb_vmSelectWorkarea(pAlias, pSym) == Harbour::SUCCESS ) {
       hb_rddGetFieldValue(pAlias, pSym);
    }
 
@@ -6921,16 +6921,16 @@ static void hb_vmPushVariable(PHB_SYMB pVarSymb)
    PHB_ITEM pItem = hb_stackAllocItem();
 
    /* First try if passed symbol is a name of field
-    * in a current workarea - if it is not a field (HB_FAILURE)
+    * in a current workarea - if it is not a field (Harbour::FAILURE)
     * then try the memvar variable
     */
-   if( hb_rddFieldGet(pItem, pVarSymb) != HB_SUCCESS && hb_memvarGet(pItem, pVarSymb) != HB_SUCCESS ) {
+   if( hb_rddFieldGet(pItem, pVarSymb) != Harbour::SUCCESS && hb_memvarGet(pItem, pVarSymb) != Harbour::SUCCESS ) {
 
       PHB_ITEM pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pVarSymb->szName, 0, EF_CANRETRY);
       hb_itemClear(pItem);
 
       while( hb_errLaunch(pError) == E_RETRY ) {
-         if( hb_rddFieldGet(pItem, pVarSymb) == HB_SUCCESS || hb_memvarGet(pItem, pVarSymb) == HB_SUCCESS ) {
+         if( hb_rddFieldGet(pItem, pVarSymb) == Harbour::SUCCESS || hb_memvarGet(pItem, pVarSymb) == Harbour::SUCCESS ) {
             break;
          }
       }
@@ -7038,7 +7038,7 @@ static void hb_vmPopAliasedField(PHB_SYMB pSym)
    HB_STACK_TLS_PRELOAD
 
    int iCurrArea = hb_rddGetCurrentWorkAreaNumber();
-   if( hb_vmSelectWorkarea(hb_stackItemFromTop(-1), pSym) == HB_SUCCESS ) {
+   if( hb_vmSelectWorkarea(hb_stackItemFromTop(-1), pSym) == Harbour::SUCCESS ) {
       hb_rddPutFieldValue(hb_stackItemFromTop(-2), pSym);
    }
 
@@ -9297,7 +9297,7 @@ HB_BOOL hb_xvmPopVariable(PHB_SYMB pSymbol)
 #if 0
    if( pSymbol->pDynSym && hb_dynsymGetMemvar(pSymbol->pDynSym) ) {
       hb_memvarSetValue(pSymbol, hb_stackItemFromTop(-1));
-   } else if( hb_rddFieldPut(hb_stackItemFromTop(-1), pSymbol) == HB_FAILURE )
+   } else if( hb_rddFieldPut(hb_stackItemFromTop(-1), pSymbol) == Harbour::FAILURE )
 #endif
       hb_memvarSetValue(pSymbol, hb_stackItemFromTop(-1));
    hb_stackPop();
@@ -9421,7 +9421,7 @@ HB_BOOL hb_xvmPushAliasedFieldExt(PHB_SYMB pAlias, PHB_SYMB pField)
 
    HB_STACK_TLS_PRELOAD
    int iCurrArea = hb_rddGetCurrentWorkAreaNumber();
-   if( hb_rddSelectWorkAreaSymbol(pAlias) == HB_SUCCESS ) {
+   if( hb_rddSelectWorkAreaSymbol(pAlias) == Harbour::SUCCESS ) {
       hb_rddGetFieldValue(hb_stackAllocItem(), pField);
    }
    hb_rddSelectWorkAreaNumber(iCurrArea);
@@ -9504,7 +9504,7 @@ HB_BOOL hb_xvmPopAliasedFieldExt(PHB_SYMB pAlias, PHB_SYMB pField)
 
    HB_STACK_TLS_PRELOAD
    int iCurrArea = hb_rddGetCurrentWorkAreaNumber();
-   if( hb_rddSelectWorkAreaSymbol(pAlias) == HB_SUCCESS ) {
+   if( hb_rddSelectWorkAreaSymbol(pAlias) == Harbour::SUCCESS ) {
       hb_rddPutFieldValue(hb_stackItemFromTop(-1), pField);
       hb_stackPop();
    }
