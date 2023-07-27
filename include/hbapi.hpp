@@ -526,7 +526,7 @@ typedef unsigned int HB_ERRCODE;
 #if defined(__cplusplus)
 namespace Harbour
 {
-   enum Result
+   enum Result : unsigned int
    {
       SUCCESS = 0,
       FAILURE = 1
