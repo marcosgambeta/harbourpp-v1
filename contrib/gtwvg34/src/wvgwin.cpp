@@ -255,7 +255,7 @@ HB_FUNC( WVG_SETLAYEREDWINDOWATTRIBUTES )
 
    if( h )
    {
-      wvtSetLayeredWindowAttributes pfnLayered = reinterpret_cast<wvtSetLayeredWindowAttributes>(HB_WINAPI_GETPROCADDRESS(h, "SetLayeredWindowAttributes"));
+      wvtSetLayeredWindowAttributes pfnLayered = reinterpret_cast<wvtSetLayeredWindowAttributes>(reinterpret_cast<void*>(HB_WINAPI_GETPROCADDRESS(h, "SetLayeredWindowAttributes")));
 
       if( pfnLayered )
       {

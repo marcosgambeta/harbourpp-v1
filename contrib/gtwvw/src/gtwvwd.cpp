@@ -4290,7 +4290,7 @@ static void hb_gtInitStatics(UINT usWinNum, LPCTSTR lpszWinName, USHORT usRow1, 
       h = LoadLibrary("msimg32.dll");
 
       if( h ) {
-         s_pWvwData->s_sApp->pfnGF = reinterpret_cast<wvwGradientFill>(HB_WINAPI_GETPROCADDRESS(h, "GradientFill"));
+         s_pWvwData->s_sApp->pfnGF = reinterpret_cast<wvwGradientFill>(reinterpret_cast<void*>(HB_WINAPI_GETPROCADDRESS(h, "GradientFill")));
          if( s_pWvwData->s_sApp->pfnGF ) {
             s_pWvwData->s_sApp->hMSImg32 = h;
          }

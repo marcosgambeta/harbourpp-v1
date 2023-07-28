@@ -2856,8 +2856,8 @@ static HB_BOOL hb_gt_wvt_FullScreen(PHB_GT pGT)
    rt.bottom = 0;
 
 #ifdef MONITOR_DEFAULTTONEAREST
-   pMonitorFromWindow = reinterpret_cast<P_MFW>(HB_WINAPI_GETPROCADDRESS(GetModuleHandle(TEXT("user32.dll")), "MonitorFromWindow"));
-   pGetMonitorInfo = reinterpret_cast<P_GMI>(HB_WINAPI_GETPROCADDRESS(GetModuleHandle(TEXT("user32.dll")), "GetMonitorInfo"));
+   pMonitorFromWindow = reinterpret_cast<P_MFW>(reinterpret_cast<void*>(HB_WINAPI_GETPROCADDRESS(GetModuleHandle(TEXT("user32.dll")), "MonitorFromWindow")));
+   pGetMonitorInfo = reinterpret_cast<P_GMI>(reinterpret_cast<void*>(HB_WINAPI_GETPROCADDRESS(GetModuleHandle(TEXT("user32.dll")), "GetMonitorInfo")));
 
    if( pMonitorFromWindow && pGetMonitorInfo )
    {

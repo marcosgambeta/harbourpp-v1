@@ -113,7 +113,7 @@ HB_FUNC( WAPI_ISUSERANADMIN )
    if( hLib )
    {
       using ISUSERANADMIN = int(WINAPI *)(void);
-      ISUSERANADMIN pIsUserAnAdmin = reinterpret_cast<ISUSERANADMIN>(HB_WINAPI_GETPROCADDRESS(hLib, "IsUserAnAdmin"));
+      ISUSERANADMIN pIsUserAnAdmin = reinterpret_cast<ISUSERANADMIN>(reinterpret_cast<void*>(HB_WINAPI_GETPROCADDRESS(hLib, "IsUserAnAdmin")));
       if( pIsUserAnAdmin )
       {
          bResult = (pIsUserAnAdmin)();

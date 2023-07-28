@@ -2836,8 +2836,8 @@ static bool hb_gt_wvt_FullScreen(PHB_GT pGT)
 
       if( hModule )
       {
-         pMonitorFromWindow = reinterpret_cast<P_MFW>(HB_WINAPI_GETPROCADDRESS(hModule, "MonitorFromWindow"));
-         pGetMonitorInfo = reinterpret_cast<P_GMI>(HB_WINAPI_GETPROCADDRESS(hModule, "GetMonitorInfo"));
+         pMonitorFromWindow = reinterpret_cast<P_MFW>(reinterpret_cast<void*>(HB_WINAPI_GETPROCADDRESS(hModule, "MonitorFromWindow")));
+         pGetMonitorInfo = reinterpret_cast<P_GMI>(reinterpret_cast<void*>(HB_WINAPI_GETPROCADDRESS(hModule, "GetMonitorInfo")));
       }
       else
       {
@@ -4547,7 +4547,7 @@ static void hb_wvt_gtLoadGuiData(void)
    if( h )
    {
       /* workaround for wrong declarations in some old C compilers */
-      s_guiData->pfnGF = reinterpret_cast<wvtGradientFill>(HB_WINAPI_GETPROCADDRESS(h, "GradientFill"));
+      s_guiData->pfnGF = reinterpret_cast<wvtGradientFill>(reinterpret_cast<void*>(HB_WINAPI_GETPROCADDRESS(h, "GradientFill")));
       if( s_guiData->pfnGF )
       {
          s_guiData->hMSImg32 = h;
@@ -4557,7 +4557,7 @@ static void hb_wvt_gtLoadGuiData(void)
    h = GetModuleHandle(TEXT("user32.dll"));
    if( h )
    {
-      s_guiData->pfnLayered = reinterpret_cast<wvtSetLayeredWindowAttributes>(HB_WINAPI_GETPROCADDRESS(h, "SetLayeredWindowAttributes"));
+      s_guiData->pfnLayered = reinterpret_cast<wvtSetLayeredWindowAttributes>(reinterpret_cast<void*>(HB_WINAPI_GETPROCADDRESS(h, "SetLayeredWindowAttributes")));
       if( s_guiData->pfnLayered )
       {
          s_guiData->hUser32 = h;
