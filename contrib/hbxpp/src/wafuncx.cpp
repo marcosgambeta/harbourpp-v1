@@ -58,7 +58,7 @@ static HB_ERRCODE s_waList(AREAP pArea, void * Cargo)
    hb_arraySize(pArray, nLen);
    hb_arraySetC(pArray, nLen, hb_dynsymName(static_cast<PHB_DYNS>(pArea->atomAlias)));
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 HB_FUNC( WORKSPACELIST )

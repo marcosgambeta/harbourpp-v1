@@ -62,14 +62,14 @@ HB_FUNC( DBFSIZE )
    {
       PHB_ITEM pSize = hb_itemNew(nullptr);
 
-      if( SELF_INFO(pArea, DBI_GETHEADERSIZE, pSize) == HB_SUCCESS )
+      if( SELF_INFO(pArea, DBI_GETHEADERSIZE, pSize) == Harbour::SUCCESS )
       {
          llSize = hb_itemGetNL(pSize) + 1;
-         if( SELF_INFO(pArea, DBI_GETRECSIZE, pSize) == HB_SUCCESS )
+         if( SELF_INFO(pArea, DBI_GETRECSIZE, pSize) == Harbour::SUCCESS )
          {
             HB_ULONG ulRecSize, ulRecCount;
             ulRecSize = hb_itemGetNL(pSize);
-            if( SELF_RECCOUNT(pArea, &ulRecCount) == HB_SUCCESS )
+            if( SELF_RECCOUNT(pArea, &ulRecCount) == Harbour::SUCCESS )
             {
                llSize += static_cast<HB_MAXINT>(ulRecCount) * ulRecSize;
             }

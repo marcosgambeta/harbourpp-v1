@@ -177,18 +177,18 @@ static HB_ERRCODE pgsqlConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    if( !pConn )   /* Low memory, etc */
    {
       /* TODO: error */
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    status = PQstatus( pConn );
    if( status != CONNECTION_OK )
    {
       /* TODO: error */
       PQfinish( pConn );
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    pConnection->pSDDConn = hb_xgrab(sizeof(SDDCONN));
    ( ( SDDCONN * ) pConnection->pSDDConn )->pConn = pConn;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -196,7 +196,7 @@ static HB_ERRCODE pgsqlDisconnect( SQLDDCONNECTION * pConnection )
 {
    PQfinish( ( ( SDDCONN * ) pConnection->pSDDConn )->pConn );
    hb_xfree(pConnection->pSDDConn);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -212,14 +212,14 @@ static HB_ERRCODE pgsqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    if( !pResult )
    {
       hb_rddsqlSetError(1, PQerrorMessage(pConn), hb_itemGetCPtr(pItem), nullptr, 0);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    status = PQresultStatus( pResult );
    if( status != PGRES_TUPLES_OK && status != PGRES_COMMAND_OK )
    {
       hb_rddsqlSetError(status, PQresultErrorMessage(pResult), hb_itemGetCPtr(pItem), nullptr, 0);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    iTuples = PQntuples( pResult );
@@ -230,7 +230,7 @@ static HB_ERRCODE pgsqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 
    hb_rddsqlSetError(0, nullptr, hb_itemGetCPtr(pItem), nullptr, ulAffectedRows);
    PQclear(pResult);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -251,7 +251,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
    if( !pResult )
    {
       hb_errRT_PostgreSQLDD( EG_OPEN, ESQLDD_LOWMEMORY, "Query failed", nullptr, 0 );  /* Low memory, etc */
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    status = PQresultStatus( pResult );
@@ -259,7 +259,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
    {
       hb_errRT_PostgreSQLDD( EG_OPEN, ESQLDD_INVALIDQUERY, PQresultErrorMessage( pResult ), pArea->szQuery, static_cast<HB_ERRCODE>(status) );
       PQclear(pResult);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pSDDData->pResult = pResult;
@@ -444,7 +444,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
 #endif
 
          if( !bError )
-            bError = (SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == HB_FAILURE);
+            bError = (SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == Harbour::FAILURE);
       }
 
       if( bError )
@@ -458,7 +458,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
       hb_itemClear(pItemEof);
       hb_itemRelease(pItemEof);
       hb_errRT_PostgreSQLDD( EG_CORRUPTION, ESQLDD_INVALIDFIELD, "Invalid field type", pArea->szQuery, 0 );
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pArea->ulRecCount = static_cast<HB_ULONG>(PQntuples(pResult));
@@ -471,7 +471,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
    pArea->pRowFlags[0] = SQLDD_FLAG_CACHED;
    pArea->fFetched = HB_TRUE;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -487,7 +487,7 @@ static HB_ERRCODE pgsqlClose( SQLBASEAREAP pArea )
       hb_xfree(pSDDData);
       pArea->pSDDData = nullptr;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -507,7 +507,7 @@ static HB_ERRCODE pgsqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
    {
       hb_itemClear(pItem);
       /* FIXME: it breaks defined field type */
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
    pValue = PQgetvalue( pSDDData->pResult, pArea->ulRecNo - 1, uiIndex );
@@ -574,7 +574,7 @@ static HB_ERRCODE pgsqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
       hb_errPutSubCode(pError, EDBF_DATATYPE);
       SELF_ERROR(&pArea->area, pError);
       hb_itemRelease(pError);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }

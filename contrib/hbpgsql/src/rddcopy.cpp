@@ -371,7 +371,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
       while( !bFail && (nCount == 0 || uiRecCount < nCount ) && (!pWhile || hb_itemGetL(hb_vmEvalBlock(pWhile))) )
       {
 
-         if( SELF_EOF(pArea, &bEof) != HB_SUCCESS )
+         if( SELF_EOF(pArea, &bEof) != Harbour::SUCCESS )
             break;
 
          if( bEof )
@@ -383,7 +383,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
             {
                for( uiIter = 1; uiIter <= uiFields; uiIter++ )
                {
-                  if( SELF_GETVALUE(pArea, uiIter, pItem) != HB_SUCCESS ||
+                  if( SELF_GETVALUE(pArea, uiIter, pItem) != Harbour::SUCCESS ||
                       !exportBufSqlVar(context, pItem, sc_szQuote, sc_szEsc) ||
                       !addStrToContext( context, uiIter == uiFields ? "\n" : sc_szDelim ) )
                   {
@@ -396,7 +396,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
             {
                for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ )
                {
-                  if( SELF_GETVALUE(pArea, static_cast<HB_USHORT>(hb_arrayGetNI(pFields, uiIter)), pItem) != HB_SUCCESS ||
+                  if( SELF_GETVALUE(pArea, static_cast<HB_USHORT>(hb_arrayGetNI(pFields, uiIter)), pItem) != Harbour::SUCCESS ||
                       !exportBufSqlVar(context, pItem, sc_szQuote, sc_szEsc) ||
                       !addStrToContext( context, uiIter == uiFields ? "\n" : sc_szDelim ) )
                   {
@@ -412,7 +412,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
             uiRecCount++;
          }
 
-         if( SELF_SKIP(pArea, 1) != HB_SUCCESS )
+         if( SELF_SKIP(pArea, 1) != Harbour::SUCCESS )
             break;
       }
 

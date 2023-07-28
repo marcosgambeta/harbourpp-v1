@@ -67,7 +67,7 @@ HB_FUNC( SCREENATTR )
       iCol = hb_parni(2);
    }
 
-   if( hb_gtGetChar(iRow, iCol, &iColor, &bAttr, &usChar) != HB_SUCCESS )
+   if( hb_gtGetChar(iRow, iCol, &iColor, &bAttr, &usChar) != Harbour::SUCCESS )
    {
       iColor = 0;
    }
@@ -120,7 +120,7 @@ HB_FUNC( SCREENMIX )
          i = iCol;
          for( ;; )
          {
-            if( hb_gtGetChar(iRow, i, &iColor, &bAttr, &usChar) != HB_SUCCESS )
+            if( hb_gtGetChar(iRow, i, &iColor, &bAttr, &usChar) != Harbour::SUCCESS )
             {
                if( ++iRow > hb_gtMaxRow() )
                {
@@ -181,7 +181,7 @@ HB_FUNC( SAYSCREEN )
             HB_BYTE bAttr;
             HB_USHORT usChar;
             HB_WCHAR wc;
-            if( hb_gtGetChar(iRow, i, &iColor, &bAttr, &usChar) != HB_SUCCESS )
+            if( hb_gtGetChar(iRow, i, &iColor, &bAttr, &usChar) != Harbour::SUCCESS )
             {
                if( ++iRow > hb_gtMaxRow() )
                {

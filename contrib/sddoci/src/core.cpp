@@ -229,16 +229,16 @@ static HB_ERRCODE ocilibConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    {
       pConnection->pSDDConn = hb_xgrab(sizeof(SDDCONN));
       ( ( SDDCONN * ) pConnection->pSDDConn )->pConn = cn;
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 static HB_ERRCODE ocilibDisconnect( SQLDDCONNECTION * pConnection )
 {
    HB_ERRCODE errCode;
 
-   errCode = OCI_ConnectionFree(( ( SDDCONN * ) pConnection->pSDDConn )->pConn) ? HB_SUCCESS : HB_FAILURE;
+   errCode = OCI_ConnectionFree(( ( SDDCONN * ) pConnection->pSDDConn )->pConn) ? Harbour::SUCCESS : Harbour::FAILURE;
    hb_xfree(pConnection->pSDDConn);
    return errCode;
 }
@@ -255,7 +255,7 @@ static HB_ERRCODE ocilibExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
       szError = ocilibGetError(&errCode);
       hb_errRT_OCIDD( EG_OPEN, ESQLDD_STMTALLOC, szError, hb_itemGetCPtr(pItem), errCode );
       hb_xfree(szError);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( OCI_ExecuteStmt(st, M_HB_ITEMGETSTR(pItem, &hStatement, nullptr)) )
@@ -265,7 +265,7 @@ static HB_ERRCODE ocilibExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
       /* TODO: new id */
       hb_rddsqlSetError(0, nullptr, hb_itemGetCPtr(pItem), nullptr, static_cast<unsigned long>(OCI_GetAffectedRows(st)));
       OCI_StatementFree(st);
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
    else
       hb_strfree(hStatement);
@@ -274,7 +274,7 @@ static HB_ERRCODE ocilibExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    hb_rddsqlSetError(errCode, szError, hb_itemGetCPtr(pItem), nullptr, 0);
    hb_xfree(szError);
    OCI_StatementFree(st);
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
@@ -297,7 +297,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
       szError = ocilibGetError(&errCode);
       hb_errRT_OCIDD( EG_OPEN, ESQLDD_STMTALLOC, szError, pArea->szQuery, errCode );
       hb_xfree(szError);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pItem = hb_itemPutC(nullptr, pArea->szQuery);
@@ -310,7 +310,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
       OCI_StatementFree(st);
       hb_errRT_OCIDD( EG_OPEN, ESQLDD_INVALIDQUERY, szError, pArea->szQuery, errCode );
       hb_xfree(szError);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    else
    {
@@ -353,7 +353,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
          OCI_StatementFree(st);
          hb_errRT_OCIDD( EG_OPEN, ESQLDD_STMTDESCR + 1001, szError, pArea->szQuery, 0 );
          hb_xfree(szError);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
 
       memset(&dbFieldInfo, 0, sizeof(dbFieldInfo));
@@ -470,7 +470,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
          hb_arraySetForward( pItemEof, uiIndex + 1, pItem );
 
          if( !bError )
-            bError = (SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == HB_FAILURE);
+            bError = (SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == Harbour::FAILURE);
       }
 
       hb_itemRelease(pName);
@@ -486,7 +486,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
       hb_itemRelease(pItemEof);
       OCI_StatementFree(st);
       hb_errRT_OCIDD( EG_CORRUPTION, ESQLDD_INVALIDFIELD, "Invalid field type", pArea->szQuery, errCode );
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pArea->ulRecCount = 0;
@@ -499,7 +499,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
    pArea->pRowFlags[0] = SQLDD_FLAG_CACHED;
 
    pSDDData->pStmt = st;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE ocilibClose( SQLBASEAREAP pArea )
@@ -514,7 +514,7 @@ static HB_ERRCODE ocilibClose( SQLBASEAREAP pArea )
       hb_xfree(pSDDData);
       pArea->pSDDData = nullptr;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
@@ -662,5 +662,5 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
       pArea->bRecordFlags = pArea->pRowFlags[ulRecNo];
       pArea->fPositioned  = HB_TRUE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }

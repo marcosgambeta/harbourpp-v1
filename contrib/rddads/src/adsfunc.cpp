@@ -958,7 +958,7 @@ HB_FUNC( ADSISRECORDVALID )
    if( pArea != nullptr ) {
       HB_BOOL fEof = true;
 
-      if( SELF_EOF(pArea, &fEof) == HB_SUCCESS && !fEof ) {
+      if( SELF_EOF(pArea, &fEof) == Harbour::SUCCESS && !fEof ) {
          if( pArea->dbfi.itmCobExpr ) {
             PHB_ITEM pResult = hb_vmEvalBlock(pArea->dbfi.itmCobExpr);
 
@@ -2148,7 +2148,7 @@ HB_FUNC( ADSCOPYTABLECONTENTS )
    if( pArea != nullptr ) {
       int iOldArea = hb_rddGetCurrentWorkAreaNumber();
 
-      if( hb_rddSelectWorkAreaAlias( hb_parcx(1) /* szAliasDest */ ) == HB_SUCCESS ) {
+      if( hb_rddSelectWorkAreaAlias( hb_parcx(1) /* szAliasDest */ ) == Harbour::SUCCESS ) {
          ADSAREAP pDest = hb_adsGetWorkAreaPointer();
 
          hb_rddSelectWorkAreaNumber( iOldArea );

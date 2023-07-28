@@ -170,13 +170,13 @@ static HB_ERRCODE fbConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 
    if( isc_attach_database(status, static_cast<short>(hb_arrayGetCLen(pItem, 5)), hb_arrayGetCPtr(pItem, 5), &hDb, static_cast<short>(i), parambuf) )
       /* TODO: error code in status[1] */
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    pConnection->pSDDConn = hb_xgrab(sizeof(SDDCONN));
    ( ( SDDCONN * ) pConnection->pSDDConn )->hDb = hDb;
 #if 0
    HB_TRACE( HB_TR_ALWAYS, ( "hDb=%d", hDb ) );
 #endif
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -186,7 +186,7 @@ static HB_ERRCODE fbDisconnect( SQLDDCONNECTION * pConnection )
 
    isc_detach_database( status, &( ( SDDCONN * ) pConnection->pSDDConn )->hDb );
    hb_xfree(pConnection->pSDDConn);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -194,7 +194,7 @@ static HB_ERRCODE fbExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 {
    HB_SYMBOL_UNUSED(pConnection);
    HB_SYMBOL_UNUSED(pItem);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -225,14 +225,14 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
       HB_TRACE( HB_TR_ALWAYS, ( "hTrans=%d status=%ld %ld %ld %ld", static_cast<int>(hTrans), static_cast<long>(status[0]), static_cast<long>(status[1]), static_cast<long>(status[2]), static_cast<long>(status[3]) ) );
 #endif
       hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_START, "Start transaction failed", nullptr, static_cast<HB_ERRCODE>(isc_sqlcode(status)) );
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( isc_dsql_allocate_statement( status, phDb, &hStmt ) )
    {
       hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_STMTALLOC, "Allocate statement failed", nullptr, static_cast<HB_ERRCODE>(isc_sqlcode(status)) );
       isc_rollback_transaction( status, &hTrans );
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pSqlda          = static_cast<XSQLDA*>(hb_xgrab(XSQLDA_LENGTH(1)));
@@ -245,7 +245,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
       isc_dsql_free_statement( status, &hStmt, DSQL_drop );
       isc_rollback_transaction( status, &hTrans );
       hb_xfree(pSqlda);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( isc_dsql_execute(status, &hTrans, &hStmt, 1, nullptr) )
@@ -254,7 +254,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
       isc_dsql_free_statement( status, &hStmt, DSQL_drop );
       isc_rollback_transaction( status, &hTrans );
       hb_xfree(pSqlda);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( pSqlda->sqld > pSqlda->sqln )
@@ -271,7 +271,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
          isc_dsql_free_statement( status, &hStmt, DSQL_drop );
          isc_rollback_transaction( status, &hTrans );
          hb_xfree(pSqlda);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
 
@@ -410,7 +410,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
       hb_itemRelease(pItem);
 
       if( !bError )
-         bError = (SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == HB_FAILURE);
+         bError = (SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == Harbour::FAILURE);
 
       hb_xfree(szOurName);
 
@@ -423,7 +423,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
       hb_itemClear(pItemEof);
       hb_itemRelease(pItemEof);
       hb_errRT_FirebirdDD( EG_CORRUPTION, ESQLDD_INVALIDFIELD, "Invalid field type", pArea->szQuery, 0 );
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pArea->ulRecCount = 0;
@@ -435,7 +435,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
    pArea->pRow[0] = pItemEof;
    pArea->pRowFlags[0] = SQLDD_FLAG_CACHED;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -455,7 +455,7 @@ static HB_ERRCODE fbClose( SQLBASEAREAP pArea )
       hb_xfree(pSDDData);
       pArea->pSDDData = nullptr;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -552,14 +552,14 @@ static HB_ERRCODE fbGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
          if( isc_dsql_free_statement( status, phStmt, DSQL_drop ) )
          {
             hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_STMTFREE, "Statement free error", nullptr, static_cast<HB_ERRCODE>(isc_sqlcode(status)) );
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
          pSDDData->hStmt = ( isc_stmt_handle ) 0;
 
          if( isc_commit_transaction( status, phTr ) )
          {
             hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_COMMIT, "Transaction commit error", nullptr, static_cast<HB_ERRCODE>(isc_sqlcode(status)) );
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
          pSDDData->hTrans = ( isc_tr_handle ) 0;
 
@@ -570,7 +570,7 @@ static HB_ERRCODE fbGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
       else
       {
          hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_FETCH, "Fetch error", nullptr, static_cast<HB_ERRCODE>(lErr) );
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
 
@@ -586,5 +586,5 @@ static HB_ERRCODE fbGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
       pArea->bRecordFlags = pArea->pRowFlags[ulRecNo];
       pArea->fPositioned  = HB_TRUE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }

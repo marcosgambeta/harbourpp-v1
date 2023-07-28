@@ -154,7 +154,7 @@ static void adsSetSend(void)
 static HB_ERRCODE commonError(ADSAREAP pArea, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, HB_ERRCODE errOsCode,
                               const char * szFileName, HB_USHORT uiFlags, PHB_ITEM * pErrorPtr)
 {
-   HB_ERRCODE errCode = HB_FAILURE;
+   HB_ERRCODE errCode = Harbour::FAILURE;
 
    if( hb_vmRequestQuery() == 0 ) {
       PHB_ITEM pError;
@@ -433,7 +433,7 @@ static HB_ERRCODE hb_adsUpdateAreaFlags(ADSAREAP pArea)
 
    pArea->fPositioned = !pArea->area.fBof && !pArea->area.fEof;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE hb_adsCheckLock(ADSAREAP pArea)
@@ -445,14 +445,14 @@ static HB_ERRCODE hb_adsCheckLock(ADSAREAP pArea)
       u32RetVal = AdsIsRecordLocked(pArea->hTable, 0, &u16Locked);
       if( u32RetVal != AE_SUCCESS ) {
          commonError(pArea, EG_UNLOCKED, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, 0, nullptr);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       if( !u16Locked ) {
          commonError(pArea, EG_UNLOCKED, EDBF_UNLOCKED - 900, 0, nullptr, 0, nullptr);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static void adsGetKeyItem(ADSAREAP pArea, PHB_ITEM pItem, int iKeyType, char * pKeyBuf, int iKeyLen)
@@ -655,9 +655,9 @@ static HB_ERRCODE adsScopeSet(ADSAREAP pArea, ADSHANDLE hOrder, HB_USHORT nScope
          AdsClearScope(hOrder, nScope);
       }
 
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    } else {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 }
 
@@ -789,7 +789,7 @@ static HB_ERRCODE adsBof(ADSAREAP pArea, HB_BOOL * pBof)
 
    *pBof = pArea->area.fBof;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsEof(ADSAREAP pArea, HB_BOOL * pEof)
@@ -805,7 +805,7 @@ static HB_ERRCODE adsEof(ADSAREAP pArea, HB_BOOL * pEof)
 
    *pEof = pArea->area.fEof;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsFound(ADSAREAP pArea, HB_BOOL * pFound)
@@ -821,7 +821,7 @@ static HB_ERRCODE adsFound(ADSAREAP pArea, HB_BOOL * pFound)
 
    *pFound = pArea->area.fFound;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsGoBottom(ADSAREAP pArea)
@@ -841,7 +841,7 @@ static HB_ERRCODE adsGoBottom(ADSAREAP pArea)
    u32RetVal = AdsGotoBottom((pArea->hOrdCurrent) ? pArea->hOrdCurrent : pArea->hTable);
    if( u32RetVal != AE_SUCCESS ) {
       commonError(pArea, EG_CORRUPTION, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, EF_CANDEFAULT, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    hb_adsUpdateAreaFlags(pArea);
@@ -916,7 +916,7 @@ static HB_ERRCODE adsGoTo(ADSAREAP pArea, HB_ULONG ulRecNo)
     */
    if( u32RetVal != AE_SUCCESS && u32RetVal != AE_INVALID_RECORD_NUMBER ) {
       commonError(pArea, EG_CORRUPTION, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, EF_CANDEFAULT, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    /* update area flag */
@@ -942,7 +942,7 @@ static HB_ERRCODE adsGoTo(ADSAREAP pArea, HB_ULONG ulRecNo)
       SELF_SYNCCHILDREN(&pArea->area);
    }
 
-   return u32RetVal == AE_SUCCESS ? HB_SUCCESS : HB_FAILURE;
+   return u32RetVal == AE_SUCCESS ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
 static HB_ERRCODE adsGoToId(ADSAREAP pArea, PHB_ITEM pItem)
@@ -956,7 +956,7 @@ static HB_ERRCODE adsGoToId(ADSAREAP pArea, PHB_ITEM pItem)
       return SELF_GOTO(&pArea->area, ulRecNo);
    } else {
       commonError(pArea, EG_DATATYPE, EDBF_DATATYPE - 900, 0, nullptr, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 }
 
@@ -976,7 +976,7 @@ static HB_ERRCODE adsGoTop(ADSAREAP pArea)
    u32RetVal = AdsGotoTop((pArea->hOrdCurrent) ? pArea->hOrdCurrent : pArea->hTable);
    if( u32RetVal != AE_SUCCESS ) {
       commonError(pArea, EG_CORRUPTION, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, EF_CANDEFAULT, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    hb_adsUpdateAreaFlags(pArea);
@@ -1007,7 +1007,7 @@ static HB_ERRCODE adsSeek(ADSAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB_B
 
    if( !pArea->hOrdCurrent ) {
       commonError(pArea, EG_NOORDER, EDBF_NOTINDEXED - 900, 0, nullptr, EF_CANDEFAULT, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    /* build a seek key */
@@ -1057,7 +1057,7 @@ static HB_ERRCODE adsSeek(ADSAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB_B
       u16KeyType = ADS_STRINGKEY;
    } else {
       commonError(pArea, EG_DATATYPE, EDBF_DATATYPE - 900, 0, nullptr, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    /* reset any pending relations - I hope ACE make the same and the problem
@@ -1089,7 +1089,7 @@ static HB_ERRCODE adsSeek(ADSAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB_B
 
    if( u32RetVal != AE_SUCCESS ) {
       commonError(pArea, EG_CORRUPTION, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, EF_CANDEFAULT, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    hb_adsUpdateAreaFlags(pArea);
@@ -1165,7 +1165,7 @@ static HB_ERRCODE adsSeek(ADSAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB_B
        * does scopes on client and if last good scoped record fails the filter,
        * the server will skip to the end anyway
        */
-      if( SELF_SKIPFILTER(&pArea->area, bFindLast ? -1 : 1) != HB_SUCCESS ) {
+      if( SELF_SKIPFILTER(&pArea->area, bFindLast ? -1 : 1) != Harbour::SUCCESS ) {
          if( pucSavedKey ) {
             hb_xfree(pucSavedKey);
          }
@@ -1174,7 +1174,7 @@ static HB_ERRCODE adsSeek(ADSAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB_B
             hb_adsOemAnsiFree(static_cast<char*>(pszKeyFree));
          }
 #endif
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
 
       if( u16Found ) {
@@ -1213,7 +1213,7 @@ static HB_ERRCODE adsSeek(ADSAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB_B
    }
 #endif
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsSkip(ADSAREAP pArea, HB_LONG lToSkip)
@@ -1257,7 +1257,7 @@ static HB_ERRCODE adsSkip(ADSAREAP pArea, HB_LONG lToSkip)
          u32RetVal = AdsSkip((pArea->hOrdCurrent) ? pArea->hOrdCurrent : pArea->hTable, 0);
          if( u32RetVal != AE_SUCCESS ) {
             commonError(pArea, EG_CORRUPTION, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, EF_CANDEFAULT, nullptr);
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
          /* TODO: is this really necessary, doesn't AdsSkip(0) do that? */
          AdsRefreshRecord(pArea->hTable);
@@ -1272,9 +1272,9 @@ static HB_ERRCODE adsSkip(ADSAREAP pArea, HB_LONG lToSkip)
             SELF_SYNCCHILDREN(&pArea->area);
          }
       }
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    } else {
-      HB_ERRCODE errCode = HB_SUCCESS;
+      HB_ERRCODE errCode = Harbour::SUCCESS;
       HB_LONG lSkipper;
 
       if( !pArea->fPositioned && lToSkip < 0 ) {
@@ -1304,11 +1304,11 @@ static HB_ERRCODE adsSkip(ADSAREAP pArea, HB_LONG lToSkip)
          }
 
          if( lToSkip > 0 ) {
-            while( errCode == HB_SUCCESS && !pArea->area.fEof && lToSkip ) {
+            while( errCode == Harbour::SUCCESS && !pArea->area.fEof && lToSkip ) {
                u32RetVal = AdsSkip((pArea->hOrdCurrent) ? pArea->hOrdCurrent : pArea->hTable, lSkipper);
                if( u32RetVal != AE_SUCCESS ) {
                   commonError(pArea, EG_CORRUPTION, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, EF_CANDEFAULT, nullptr);
-                  return HB_FAILURE;
+                  return Harbour::FAILURE;
                }
                hb_adsUpdateAreaFlags(pArea);
                /* Force relational movement in child WorkAreas */
@@ -1320,11 +1320,11 @@ static HB_ERRCODE adsSkip(ADSAREAP pArea, HB_LONG lToSkip)
             }
             pArea->area.fBof = false;
          } else {
-            while( errCode == HB_SUCCESS && !pArea->area.fBof && lToSkip ) {
+            while( errCode == Harbour::SUCCESS && !pArea->area.fBof && lToSkip ) {
                u32RetVal = AdsSkip((pArea->hOrdCurrent) ? pArea->hOrdCurrent : pArea->hTable, lSkipper);
                if( u32RetVal != AE_SUCCESS ) {
                   commonError(pArea, EG_CORRUPTION, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, EF_CANDEFAULT, nullptr);
-                  return HB_FAILURE;
+                  return Harbour::FAILURE;
                }
                hb_adsUpdateAreaFlags(pArea);
                /* Force relational movement in child WorkAreas */
@@ -1372,7 +1372,7 @@ static HB_ERRCODE adsSkipFilter(ADSAREAP pArea, HB_LONG lUpDown)
          u32RetVal = AdsSkip((pArea->hOrdCurrent) ? pArea->hOrdCurrent : pArea->hTable, lUpDown);
          if( u32RetVal != AE_SUCCESS ) {
             commonError(pArea, EG_CORRUPTION, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, EF_CANDEFAULT, nullptr);
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
          hb_adsUpdateAreaFlags(pArea);
 
@@ -1404,7 +1404,7 @@ static HB_ERRCODE adsSkipFilter(ADSAREAP pArea, HB_LONG lUpDown)
       errCode = SELF_RECCOUNT(&pArea->area, &ulRecCount);
       pArea->ulRecNo = ulRecCount + 1;
    } else {
-      errCode = HB_SUCCESS;
+      errCode = Harbour::SUCCESS;
    }
 
    return errCode;
@@ -1439,7 +1439,7 @@ static HB_ERRCODE adsAppend(ADSAREAP pArea, HB_BOOL fUnLockAll)
       if( pArea->fShared && !pArea->fFLocked ) {
          HB_ULONG ulRecNo;
 
-         if( SELF_RECNO(&pArea->area, &ulRecNo) == HB_SUCCESS ) {
+         if( SELF_RECNO(&pArea->area, &ulRecNo) == Harbour::SUCCESS ) {
             /* to avoid unnecessary record refreshing after locking */
             pArea->fPositioned = true;
             SELF_RAWLOCK(&pArea->area, REC_LOCK, ulRecNo);
@@ -1449,7 +1449,7 @@ static HB_ERRCODE adsAppend(ADSAREAP pArea, HB_BOOL fUnLockAll)
       pArea->area.fEof = false;
       pArea->area.fFound = false;
       pArea->fPositioned = true;
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    } else if( u32RetVal == AE_TABLE_READONLY ) {
       commonError(pArea, EG_READONLY, EDBF_READONLY - 900, 0, nullptr, 0, nullptr);
    } else if( u32RetVal == 1024 /* Append Lock Failed */ ) {
@@ -1458,7 +1458,7 @@ static HB_ERRCODE adsAppend(ADSAREAP pArea, HB_BOOL fUnLockAll)
       commonError(pArea, EG_CORRUPTION, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, EF_CANDEFAULT, nullptr);
    }
 
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
@@ -1468,7 +1468,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
 #endif
 
    HB_USHORT uiItems, uiCount;
-   HB_ERRCODE errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = Harbour::SUCCESS;
    DBFIELDINFO dbFieldInfo{};
    const char * szType;
 
@@ -1646,7 +1646,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
                dbFieldInfo.uiLen = uiLen;
                dbFieldInfo.uiFlags = 0;
             } else {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             }
             break;
 #endif
@@ -1781,7 +1781,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
                dbFieldInfo.uiLen = 8;
                dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
             } else {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             }
             break;
 
@@ -1792,7 +1792,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
             dbFieldInfo.uiDec = uiDec;
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
             if( uiLen > 32 ) {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             }
             break;
 
@@ -1826,7 +1826,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
                dbFieldInfo.uiDec = uiDec;
                dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
             } else {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             }
             break;
 
@@ -1838,7 +1838,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
             dbFieldInfo.uiDec = uiDec;
             dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
             if( uiDec > 20 ) {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             }
             break;
 
@@ -1854,7 +1854,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
                dbFieldInfo.uiLen = 4;
                dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
             } else {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             }
             break;
 
@@ -1866,7 +1866,7 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
                dbFieldInfo.uiLen = 8;
                dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
             } else {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             }
             break;
 
@@ -1877,26 +1877,26 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
                dbFieldInfo.uiLen = 8;
                dbFieldInfo.uiFlags &= HB_FF_NULLABLE;
             } else {
-               errCode = HB_FAILURE;
+               errCode = Harbour::FAILURE;
             }
             break;
 #endif
 
          default:
-            errCode = HB_FAILURE;
+            errCode = Harbour::FAILURE;
             break;
       }
 
-      if( errCode == HB_SUCCESS ) {
+      if( errCode == Harbour::SUCCESS ) {
          errCode = SELF_ADDFIELD(&pArea->area, &dbFieldInfo); /* Add field */
       }
 
-      if( errCode != HB_SUCCESS ) {
+      if( errCode != Harbour::SUCCESS ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          return errCode;
       }
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsDeleteRec(ADSAREAP pArea)
@@ -1913,18 +1913,18 @@ static HB_ERRCODE adsDeleteRec(ADSAREAP pArea)
    }
 
    if( !pArea->fPositioned ) {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
    if( hb_ads_bTestRecLocks ) {
-      if( hb_adsCheckLock(pArea) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( hb_adsCheckLock(pArea) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
    u32RetVal = AdsDeleteRecord(pArea->hTable);
 
-   return u32RetVal == AE_SUCCESS ? HB_SUCCESS : HB_FAILURE;
+   return u32RetVal == AE_SUCCESS ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
 static HB_ERRCODE adsDeleted(ADSAREAP pArea, HB_BOOL * pDeleted)
@@ -1948,9 +1948,9 @@ static HB_ERRCODE adsDeleted(ADSAREAP pArea, HB_BOOL * pDeleted)
       u32RetVal = AdsIsRecordDeleted(pArea->hTable, &u16Deleted);
       *pDeleted = u16Deleted != 0;
 
-      return u32RetVal == AE_SUCCESS ? HB_SUCCESS : HB_FAILURE;
+      return u32RetVal == AE_SUCCESS ? Harbour::SUCCESS : Harbour::FAILURE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsFieldCount(ADSAREAP pArea, HB_USHORT * uiFields)
@@ -1964,7 +1964,7 @@ static HB_ERRCODE adsFieldCount(ADSAREAP pArea, HB_USHORT * uiFields)
    AdsGetNumFields(pArea->hTable, &u16Fields);
    *uiFields = u16Fields;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 #define  adsFieldDisplay  nullptr
@@ -1976,7 +1976,7 @@ static HB_ERRCODE adsFieldInfo(ADSAREAP pArea, HB_USHORT uiIndex, HB_USHORT uiTy
 #endif
 
    if( uiIndex > pArea->area.uiFieldCount ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    switch( uiType ) {
@@ -1994,7 +1994,7 @@ static HB_ERRCODE adsFieldInfo(ADSAREAP pArea, HB_USHORT uiIndex, HB_USHORT uiTy
 #endif
             if( u32RetVal != AE_SUCCESS ) {
                commonError(pArea, EG_READ, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, 0, nullptr);
-               return HB_FAILURE;
+               return Harbour::FAILURE;
             }
          }
          hb_itemPutL(pItem, u16Null != 0);
@@ -2011,7 +2011,7 @@ static HB_ERRCODE adsFieldInfo(ADSAREAP pArea, HB_USHORT uiIndex, HB_USHORT uiTy
       default:
          return SUPER_FIELDINFO(&pArea->area, uiIndex, uiType, pItem);
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsFieldName(ADSAREAP pArea, HB_USHORT uiIndex, void * szName)
@@ -2025,9 +2025,9 @@ static HB_ERRCODE adsFieldName(ADSAREAP pArea, HB_USHORT uiIndex, void * szName)
 
       AdsGetFieldName(pArea->hTable, uiIndex, static_cast<UNSIGNED8*>(szName), &u16Len);
 
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    } else {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 }
 
@@ -2055,7 +2055,7 @@ static HB_ERRCODE adsFlush(ADSAREAP pArea)
 #endif
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsGetRec(ADSAREAP pArea, HB_BYTE ** pBuffer)
@@ -2074,12 +2074,12 @@ static HB_ERRCODE adsGetRec(ADSAREAP pArea, HB_BYTE ** pBuffer)
    *pBuffer = pArea->pRecord;
    if( !pArea->fPositioned ) {
       memset(pArea->pRecord, ' ', u32Len);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    } else {
       u32Result = AdsGetRecord(pArea->hTable, pArea->pRecord, &u32Len);
    }
 
-   return u32Result == AE_SUCCESS ? HB_SUCCESS : HB_FAILURE;
+   return u32Result == AE_SUCCESS ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
 static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
@@ -2094,7 +2094,7 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
    UNSIGNED32 u32RetVal;
 
    if( !uiIndex || uiIndex > pArea->area.uiFieldCount ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    /* resolve any pending relations */
@@ -2395,7 +2395,7 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       }
       default:
          commonError(pArea, EG_DATATYPE, EDBF_DATATYPE - 900, 0, nullptr, 0, nullptr);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
    }
 
    if( u32RetVal == AE_NO_CURRENT_RECORD ) {
@@ -2410,10 +2410,10 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       } else {
          commonError(pArea, EG_READ, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, 0, nullptr);
       }
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsGetVarLen(ADSAREAP pArea, HB_USHORT uiIndex, HB_ULONG * ulLen)
@@ -2425,7 +2425,7 @@ static HB_ERRCODE adsGetVarLen(ADSAREAP pArea, HB_USHORT uiIndex, HB_ULONG * ulL
    LPFIELD pField;
 
    if( uiIndex > pArea->area.uiFieldCount ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pField = pArea->area.lpFields + uiIndex - 1;
@@ -2459,7 +2459,7 @@ static HB_ERRCODE adsGetVarLen(ADSAREAP pArea, HB_USHORT uiIndex, HB_ULONG * ulL
    }
 #endif
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsGoCold(ADSAREAP pArea)
@@ -2472,7 +2472,7 @@ static HB_ERRCODE adsGoCold(ADSAREAP pArea)
       AdsWriteRecord(pArea->hTable);
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 #define  adsGoHot  nullptr
@@ -2491,18 +2491,18 @@ static HB_ERRCODE adsPutRec(ADSAREAP pArea, const HB_BYTE * pBuffer)
    }
 
    if( !pArea->fPositioned ) {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
    if( hb_ads_bTestRecLocks ) {
-      if( hb_adsCheckLock(pArea) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( hb_adsCheckLock(pArea) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
    u32Result = AdsSetRecord(pArea->hTable, static_cast<UNSIGNED8*>(const_cast<HB_BYTE*>(pBuffer)), u32Len);
 
-   return u32Result == AE_SUCCESS ? HB_SUCCESS : HB_FAILURE;
+   return u32Result == AE_SUCCESS ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
 static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
@@ -2518,7 +2518,7 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
    UNSIGNED32 u32RetVal = 0;
 
    if( !uiIndex || uiIndex > pArea->area.uiFieldCount ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    /* 2003-10-30 15:54
@@ -2544,12 +2544,12 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
    }
 
    if( !pArea->fPositioned ) {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
    if( hb_ads_bTestRecLocks ) {
-      if( hb_adsCheckLock(pArea) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( hb_adsCheckLock(pArea) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
@@ -2719,7 +2719,7 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 
    if( bTypeError ) {
       commonError(pArea, EG_DATATYPE, EDBF_DATATYPE - 900, 0, nullptr, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( u32RetVal != AE_SUCCESS ) {
@@ -2734,14 +2734,14 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       else if( u32RetVal == AE_DATA_TOO_LONG )
 #endif
       {
-         return commonError(pArea, EG_DATAWIDTH, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, EF_CANDEFAULT, nullptr) == E_DEFAULT ? HB_SUCCESS : HB_FAILURE;
+         return commonError(pArea, EG_DATAWIDTH, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, EF_CANDEFAULT, nullptr) == E_DEFAULT ? Harbour::SUCCESS : Harbour::FAILURE;
       } else {
          commonError(pArea, EG_WRITE, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, 0, nullptr);
       }
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsRecall(ADSAREAP pArea)
@@ -2758,18 +2758,18 @@ static HB_ERRCODE adsRecall(ADSAREAP pArea)
    }
 
    if( !pArea->fPositioned ) {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
    if( hb_ads_bTestRecLocks ) {
-      if( hb_adsCheckLock(pArea) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( hb_adsCheckLock(pArea) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
    u32RetVal = AdsRecallRecord(pArea->hTable);
 
-   return u32RetVal == AE_SUCCESS ? HB_SUCCESS : HB_FAILURE;
+   return u32RetVal == AE_SUCCESS ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
 static HB_ERRCODE adsRecCount(ADSAREAP pArea, HB_ULONG * pRecCount)
@@ -2783,7 +2783,7 @@ static HB_ERRCODE adsRecCount(ADSAREAP pArea, HB_ULONG * pRecCount)
    u32Result = AdsGetRecordCount(pArea->hTable, ADS_IGNOREFILTERS | ADS_REFRESHCOUNT, &u32RecCount);
    *pRecCount = static_cast<HB_ULONG>(u32RecCount);
 
-   return u32Result == AE_SUCCESS ? HB_SUCCESS : HB_FAILURE;
+   return u32Result == AE_SUCCESS ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
 static HB_ERRCODE adsRecInfo(ADSAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInfoType, PHB_ITEM pInfo)
@@ -2793,7 +2793,7 @@ static HB_ERRCODE adsRecInfo(ADSAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInfoTy
 #endif
 
    HB_ULONG ulRecNo = hb_itemGetNL(pRecID);
-   HB_ERRCODE uiRetVal = HB_SUCCESS;
+   HB_ERRCODE uiRetVal = Harbour::SUCCESS;
 
    switch( uiInfoType ) {
       case DBRI_DELETED:
@@ -2825,7 +2825,7 @@ static HB_ERRCODE adsRecInfo(ADSAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInfoTy
          }
 
          if( AdsIsRecordLocked(pArea->hTable, ulRecNo, &u16Locked) != AE_SUCCESS ) {
-            uiRetVal = HB_FAILURE;
+            uiRetVal = Harbour::FAILURE;
          }
          hb_itemPutL(pInfo, u16Locked != 0);
          break;
@@ -2872,7 +2872,7 @@ static HB_ERRCODE adsRecNo(ADSAREAP pArea, HB_ULONG * ulRecNo)
 
    *ulRecNo = pArea->ulRecNo;
 
-   return u32Result == AE_SUCCESS ? HB_SUCCESS : HB_FAILURE;
+   return u32Result == AE_SUCCESS ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
 static HB_ERRCODE adsRecId(ADSAREAP pArea, PHB_ITEM pRecNo)
@@ -3077,7 +3077,7 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
 
       if( cType == nullptr ) {
          hb_xfree(ucfieldDefs);
-         return HB_FAILURE;  /* RT_ERROR */
+         return Harbour::FAILURE;  /* RT_ERROR */
       }
 
       switch( pField->uiType ) {
@@ -3117,7 +3117,7 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
       if( uiFldLen >= uiLen ) {
          hb_xfree(ucfieldDefs);
          /* RT_ERROR; probably too many fields */
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       memcpy(ucfieldPtr, szBuffer, uiFldLen);
       uiLen -= uiFldLen;
@@ -3151,7 +3151,7 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
       HB_TRACE(HB_TR_INFO, ("adsCreate() error"));
 #endif
       commonError(pArea, EG_CREATE, static_cast<HB_ERRCODE>(uRetVal), 0, pCreateInfo->abName, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    /*
     * In Clipper CREATE() keeps database open on success [druzus]
@@ -3161,9 +3161,9 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
    pArea->fReadonly = false;  /* pCreateInfo->fReadonly */
 
    /* If successful call SUPER_CREATE to finish system jobs */
-   if( SUPER_CREATE(&pArea->area, pCreateInfo) != HB_SUCCESS ) {
+   if( SUPER_CREATE(&pArea->area, pCreateInfo) != Harbour::SUCCESS ) {
       SELF_CLOSE(&pArea->area);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    AdsGetRecordLength(pArea->hTable, &u32Length);
@@ -3216,7 +3216,7 @@ static HB_ERRCODE adsInfo(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          UNSIGNED16 u16Count;
          uRetVal = AdsGetNumLocks(pArea->hTable, &u16Count);
          if( uRetVal != AE_SUCCESS ) {
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
 
          if( u16Count ) {
@@ -3270,7 +3270,7 @@ static HB_ERRCODE adsInfo(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          UNSIGNED16 u16Count;
          uRetVal = AdsGetNumLocks(pArea->hTable, &u16Count);
          if( uRetVal != AE_SUCCESS ) {
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
 
          hb_itemPutNL(pItem, static_cast<long>(u16Count));
@@ -3318,7 +3318,7 @@ static HB_ERRCODE adsInfo(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       default:
          return SUPER_INFO(&pArea->area, uiIndex, pItem);
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsNewArea(ADSAREAP pArea)
@@ -3330,7 +3330,7 @@ static HB_ERRCODE adsNewArea(ADSAREAP pArea)
    HB_ERRCODE errCode;
 
    errCode = SUPER_NEW(&pArea->area);
-   if( errCode == HB_SUCCESS ) {
+   if( errCode == Harbour::SUCCESS ) {
       switch( adsGetRddType(pArea->area.rddID) ) {
          case ADS_NTX:
             pArea->iFileType = ADS_NTX;
@@ -3428,11 +3428,11 @@ static HB_ERRCODE adsOpen(ADSAREAP pArea, LPDBOPENINFO pOpenInfo)
          if( u32RetVal != AE_SUCCESS ) {
             commonError(pArea, EG_OPEN, static_cast<HB_ERRCODE>(u32RetVal), 0, pOpenInfo->abName, 0, nullptr);
             AdsCloseSQLStatement(hStatement);
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
       } else {
          commonError(pArea, EG_OPEN, static_cast<HB_ERRCODE>(u32RetVal), 0, pOpenInfo->abName, 0, nullptr);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    } else { /* if( hb_strnicmp(szFile, "TABLE:", 6) == 0 ) */
       PHB_ITEM pError = nullptr;
@@ -3470,7 +3470,7 @@ static HB_ERRCODE adsOpen(ADSAREAP pArea, LPDBOPENINFO pOpenInfo)
       }
 
       if( u32RetVal != AE_SUCCESS ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
 
@@ -3660,7 +3660,7 @@ static HB_ERRCODE adsOpen(ADSAREAP pArea, LPDBOPENINFO pOpenInfo)
       }
 
       if( u32RetVal == AE_SUCCESS ) {
-         u32RetVal = SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == HB_FAILURE ? EDBF_CORRUPT : AE_SUCCESS;
+         u32RetVal = SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == Harbour::FAILURE ? EDBF_CORRUPT : AE_SUCCESS;
       }
 
       if( u32RetVal != AE_SUCCESS ) {
@@ -3671,7 +3671,7 @@ static HB_ERRCODE adsOpen(ADSAREAP pArea, LPDBOPENINFO pOpenInfo)
    if( u32RetVal != AE_SUCCESS ) {
       commonError(pArea, EG_CORRUPTION, static_cast<HB_ERRCODE>(u32RetVal), 0, pOpenInfo->abName, EF_CANDEFAULT, nullptr);
       SELF_CLOSE(&pArea->area);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( fUnicode ) {
@@ -3688,9 +3688,9 @@ static HB_ERRCODE adsOpen(ADSAREAP pArea, LPDBOPENINFO pOpenInfo)
    pArea->pRecord = static_cast<HB_BYTE*>(hb_xgrab(HB_MAX(pArea->ulRecordLen, pArea->maxFieldLen) + 1));
 
    /* If successful call SUPER_OPEN to finish system jobs */
-   if( SUPER_OPEN(&pArea->area, pOpenInfo) == HB_FAILURE ) {
+   if( SUPER_OPEN(&pArea->area, pOpenInfo) == Harbour::FAILURE ) {
       SELF_CLOSE(&pArea->area);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( hb_setGetNI(HB_SET_AUTORDER) ) {
@@ -3715,7 +3715,7 @@ static HB_ERRCODE adsStructSize(ADSAREAP pArea, HB_USHORT * StructSize)
 
    *StructSize = sizeof(ADSAREA);
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsSysName(ADSAREAP pArea, HB_BYTE * pBuffer)
@@ -3756,7 +3756,7 @@ static HB_ERRCODE adsSysName(ADSAREAP pArea, HB_BYTE * pBuffer)
          break;
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 #define  adsEval  nullptr
@@ -3769,11 +3769,11 @@ static HB_ERRCODE adsPack(ADSAREAP pArea)
 
    if( pArea->fReadonly ) {
       commonError(pArea, EG_READONLY, EDBF_READONLY - 900, 0, nullptr, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    if( pArea->fShared ) {
       commonError(pArea, EG_SHARED, EDBF_SHARED - 900, 0, nullptr, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    AdsPackTable(pArea->hTable);
@@ -3794,11 +3794,11 @@ static HB_ERRCODE adsZap(ADSAREAP pArea)
 
    if( pArea->fReadonly ) {
       commonError(pArea, EG_READONLY, EDBF_READONLY - 900, 0, nullptr, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    if( pArea->fShared ) {
       commonError(pArea, EG_SHARED, EDBF_SHARED - 900, 0, nullptr, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    AdsZapTable(pArea->hTable);
@@ -3817,7 +3817,7 @@ static HB_ERRCODE adsChildEnd(ADSAREAP pArea, LPDBRELINFO pRelInfo)
    if( pArea->lpdbPendingRel == pRelInfo ) {
       errCode = SELF_FORCEREL(&pArea->area);
    } else {
-      errCode = HB_SUCCESS;
+      errCode = Harbour::SUCCESS;
    }
 
    SUPER_CHILDEND(&pArea->area, pRelInfo);
@@ -3848,7 +3848,7 @@ static HB_ERRCODE adsChildSync(ADSAREAP pArea, LPDBRELINFO pRelInfo)
       SELF_SYNCCHILDREN(&pArea->area);
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 #define adsSyncChildren  nullptr
@@ -3862,7 +3862,7 @@ static HB_ERRCODE adsClearRel(ADSAREAP pArea)
    SUPER_CLEARREL(&pArea->area);
    AdsClearRelation(pArea->hTable);
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsForceRel(ADSAREAP pArea)
@@ -3884,7 +3884,7 @@ static HB_ERRCODE adsForceRel(ADSAREAP pArea)
       hb_adsUpdateAreaFlags(pArea);
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 #define adsRelArea  nullptr
@@ -3932,14 +3932,14 @@ static HB_ERRCODE adsOrderListAdd(ADSAREAP pArea, LPDBORDERINFO pOrderInfo)
       /* 1001 and 7008 are standard ADS Open Errors that will usually be sharing issues */
       HB_ERRCODE errOsCode = u32RetVal == 1001 || u32RetVal == 7008 ? 32 : 0;
       commonError(pArea, EG_OPEN, static_cast<HB_ERRCODE>(u32RetVal), errOsCode, hb_itemGetCPtr(pOrderInfo->atomBagName), EF_CANDEFAULT, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    if( !pArea->hOrdCurrent && u16ArrayLen > 0 ) {
       pArea->hOrdCurrent = ahIndex[0];
       return SELF_GOTOP(&pArea->area);
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsOrderListClear(ADSAREAP pArea)
@@ -3957,7 +3957,7 @@ static HB_ERRCODE adsOrderListClear(ADSAREAP pArea)
    AdsCloseAllIndexes(pArea->hTable);
    pArea->hOrdCurrent = 0;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsOrderListDelete(ADSAREAP pArea, LPDBORDERINFO pOrderInfo)
@@ -3978,11 +3978,11 @@ static HB_ERRCODE adsOrderListDelete(ADSAREAP pArea, LPDBORDERINFO pOrderInfo)
                   pArea->hOrdCurrent = 0;
                }
             }
-            return HB_SUCCESS;
+            return Harbour::SUCCESS;
          }
       }
    }
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 static HB_ERRCODE adsOrderListFocus(ADSAREAP pArea, LPDBORDERINFO pOrderInfo)
@@ -4011,14 +4011,14 @@ static HB_ERRCODE adsOrderListFocus(ADSAREAP pArea, LPDBORDERINFO pOrderInfo)
          hb_strncpyUpperTrim(reinterpret_cast<char*>(pucTagName), hb_itemGetCPtr(pOrderInfo->itmOrder), sizeof(pucTagName) - 1);
          if( !pucTagName[0] ) {
             pArea->hOrdCurrent = 0;
-            return HB_SUCCESS;
+            return Harbour::SUCCESS;
          }
          u32RetVal = AdsGetIndexHandle(pArea->hTable, pucTagName, &hIndex);
       } else if( HB_IS_NUMERIC(pOrderInfo->itmOrder) ) {
          u16Order = static_cast<UNSIGNED16>(hb_itemGetNI(pOrderInfo->itmOrder));
          if( !u16Order ) {
             pArea->hOrdCurrent = 0;
-            return HB_SUCCESS;
+            return Harbour::SUCCESS;
          }
          u32RetVal = AdsGetIndexHandleByOrder(pArea->hTable, u16Order, &hIndex);
       } else {
@@ -4028,15 +4028,15 @@ static HB_ERRCODE adsOrderListFocus(ADSAREAP pArea, LPDBORDERINFO pOrderInfo)
       if( u32RetVal != AE_SUCCESS ) {
          /* NTX compatibility: keep current order if failed */
          if( pArea->iFileType == ADS_NTX ) {
-            return HB_SUCCESS;
+            return Harbour::SUCCESS;
          }
 
          pArea->hOrdCurrent = 0;
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       pArea->hOrdCurrent = hIndex;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsOrderListRebuild(ADSAREAP pArea)
@@ -4170,7 +4170,7 @@ static HB_ERRCODE adsOrderCreate(ADSAREAP pArea, LPDBORDERCREATEINFO pOrderInfo)
 
    if( u32RetVal != AE_SUCCESS ) {
       commonError(pArea, EG_CREATE, static_cast<HB_ERRCODE>(u32RetVal), 0, pOrderInfo->abBagName, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    } else {
       pArea->hOrdCurrent = hIndex;
    }
@@ -4182,7 +4182,7 @@ static HB_ERRCODE adsOrderCreate(ADSAREAP pArea, LPDBORDERCREATEINFO pOrderInfo)
       u32RetVal = AdsOpenIndex(pArea->hTable, static_cast<UNSIGNED8*>(HB_UNCONST(pOrderInfo->abBagName)), ahIndex, &usArrayLen);
       if( u32RetVal != AE_SUCCESS && u32RetVal != AE_INDEX_ALREADY_OPEN ) {
          SELF_ORDSETCOND(&pArea->area, nullptr);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       pArea->hOrdCurrent = usArrayLen ? ahIndex[0] : 0;
    }
@@ -4206,23 +4206,23 @@ static HB_ERRCODE adsOrderDestroy(ADSAREAP pArea, LPDBORDERINFO pOrderInfo)
       u32RetVal = AdsGetIndexHandle(pArea->hTable, pucTagName, &hIndex);
 
       if( u32RetVal != AE_SUCCESS ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
 
       u32RetVal = AdsDeleteIndex(hIndex);
 
       if( u32RetVal != AE_SUCCESS ) {
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
 
       if( hIndex == pArea->hOrdCurrent ) {
          pArea->hOrdCurrent = 0;
       }
    } else {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO pOrderInfo)
@@ -4380,7 +4380,7 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
             }
             if( u32RetVal != AE_SUCCESS ) {
                commonError(pArea, EG_CORRUPTION, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, EF_CANDEFAULT, nullptr);
-               return HB_FAILURE;
+               return Harbour::FAILURE;
             }
             hb_adsUpdateAreaFlags(pArea);
             /* Force relational movement in child WorkAreas */
@@ -4642,7 +4642,7 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
             }
             SELF_SKIPFILTER(&pArea->area, lToSkip);
          } else {
-            pOrderInfo->itmResult = hb_itemPutL(pOrderInfo->itmResult, SELF_SKIP(&pArea->area, lToSkip) == HB_SUCCESS);
+            pOrderInfo->itmResult = hb_itemPutL(pOrderInfo->itmResult, SELF_SKIP(&pArea->area, lToSkip) == Harbour::SUCCESS);
          }
          break;
       }
@@ -4697,7 +4697,7 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
       default:
          return SUPER_ORDINFO(&pArea->area, uiIndex, pOrderInfo);
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsClearFilter(ADSAREAP pArea)
@@ -4745,7 +4745,7 @@ static HB_ERRCODE adsSetFilter(ADSAREAP pArea, LPDBFILTERINFO pFilterInfo)
    }
 
    /* must do this first as it calls clearFilter */
-   if( SUPER_SETFILTER(&pArea->area, pFilterInfo) == HB_SUCCESS ) {
+   if( SUPER_SETFILTER(&pArea->area, pFilterInfo) == Harbour::SUCCESS ) {
       UNSIGNED16 bValidExpr = 0;
       UNSIGNED16 usResolve = ADS_RESOLVE_DYNAMIC ;  /*ADS_RESOLVE_IMMEDIATE ;get this from a SETting*/
       UNSIGNED32 u32RetVal = AE_INVALID_EXPRESSION;
@@ -4775,10 +4775,10 @@ static HB_ERRCODE adsSetFilter(ADSAREAP pArea, LPDBFILTERINFO pFilterInfo)
 #endif
       }     /* else let SUPER handle filtering */
       pArea->area.dbfi.fOptimized = u32RetVal == AE_SUCCESS;
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 #define  adsSetLocate  nullptr
@@ -4800,12 +4800,12 @@ static HB_ERRCODE adsRawLock(ADSAREAP pArea, HB_USHORT uiAction, HB_ULONG ulRecN
    switch( uiAction ) {
       case REC_LOCK:
          if( !pArea->fShared || pArea->fFLocked ) {
-            return HB_SUCCESS;
+            return Harbour::SUCCESS;
          }
 
          u32RetVal = AdsLockRecord(pArea->hTable, ulRecNo);
          if( u32RetVal != AE_SUCCESS ) {
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
 
          /* Update phantom record status after locking */
@@ -4818,23 +4818,23 @@ static HB_ERRCODE adsRawLock(ADSAREAP pArea, HB_USHORT uiAction, HB_ULONG ulRecN
 
       case REC_UNLOCK:
          if( !pArea->fShared || pArea->fFLocked ) {
-            return HB_SUCCESS;
+            return Harbour::SUCCESS;
          }
 
          u32RetVal = AdsUnlockRecord(pArea->hTable, ulRecNo);
          if( u32RetVal != AE_SUCCESS ) {
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
          break;
 
       case FILE_LOCK:
          if( !pArea->fShared || pArea->fFLocked ) {
-            return HB_SUCCESS;
+            return Harbour::SUCCESS;
          }
 
          u32RetVal = AdsLockTable(pArea->hTable);
          if( u32RetVal != AE_SUCCESS ) {
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
 
          pArea->fFLocked = true;
@@ -4855,11 +4855,11 @@ static HB_ERRCODE adsRawLock(ADSAREAP pArea, HB_USHORT uiAction, HB_ULONG ulRecN
          if( u32RetVal == AE_SUCCESS || u32RetVal == AE_TABLE_NOT_LOCKED || u32RetVal == AE_TABLE_NOT_SHARED ) {
             pArea->fFLocked = false;
          } else {
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
          break;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsLock(ADSAREAP pArea, LPDBLOCKINFO pLockInfo)
@@ -4904,11 +4904,11 @@ static HB_ERRCODE adsLock(ADSAREAP pArea, LPDBLOCKINFO pLockInfo)
          HB_TRACE(HB_TR_INFO, ("adsLock() error in pLockInfo->uiMethod"));
 #endif
          pLockInfo->fResult = false;
-         return HB_FAILURE;
+         return Harbour::FAILURE;
    }
 
-   pLockInfo->fResult = SELF_RAWLOCK(&pArea->area, uiAction, ulRecNo) == HB_SUCCESS;
-   return HB_SUCCESS;
+   pLockInfo->fResult = SELF_RAWLOCK(&pArea->area, uiAction, ulRecNo) == Harbour::SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsUnLock(ADSAREAP pArea, PHB_ITEM pRecNo)
@@ -4938,7 +4938,7 @@ static HB_ERRCODE adsGetValueFile(ADSAREAP pArea, HB_USHORT uiIndex, const char 
    HB_SYMBOL_UNUSED(uiMode);
 
    if( !uiIndex || uiIndex > pArea->area.uiFieldCount ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    /* resolve any pending relations */
@@ -4947,7 +4947,7 @@ static HB_ERRCODE adsGetValueFile(ADSAREAP pArea, HB_USHORT uiIndex, const char 
    }
 
    if( !pArea->fPositioned ) {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
    u32RetVal = AdsBinaryToFile(pArea->hTable, ADSFIELD(uiIndex), reinterpret_cast<UNSIGNED8*>(const_cast<char*>(szFile)));
@@ -4955,9 +4955,9 @@ static HB_ERRCODE adsGetValueFile(ADSAREAP pArea, HB_USHORT uiIndex, const char 
       #if 0
       commonError(pArea, EG_READ, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, 0, nullptr);
       #endif
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 #define  adsOpenMemFile  nullptr
@@ -4971,7 +4971,7 @@ static HB_ERRCODE adsPutValueFile(ADSAREAP pArea, HB_USHORT uiIndex, const char 
    UNSIGNED32 u32RetVal;
 
    if( !uiIndex || uiIndex > pArea->area.uiFieldCount ) {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    /* resolve any pending relations */
@@ -4980,12 +4980,12 @@ static HB_ERRCODE adsPutValueFile(ADSAREAP pArea, HB_USHORT uiIndex, const char 
    }
 
    if( !pArea->fPositioned ) {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
    if( hb_ads_bTestRecLocks ) {
-      if( hb_adsCheckLock(pArea) != HB_SUCCESS ) {
-         return HB_FAILURE;
+      if( hb_adsCheckLock(pArea) != Harbour::SUCCESS ) {
+         return Harbour::FAILURE;
       }
    }
 
@@ -4996,9 +4996,9 @@ static HB_ERRCODE adsPutValueFile(ADSAREAP pArea, HB_USHORT uiIndex, const char 
    u32RetVal = AdsFileToBinary(pArea->hTable, ADSFIELD(uiIndex), uiMode, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(szFile)));
    if( u32RetVal != AE_SUCCESS ) {
       commonError(pArea, EG_WRITE, static_cast<HB_ERRCODE>(u32RetVal), 0, nullptr, 0, nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 #define  adsReadDBHeader   nullptr
@@ -5033,7 +5033,7 @@ static HB_ERRCODE adsDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemInd
    if( !pFileName->szExtension ) {
       /* Add default extension if missing */
       pFileExt = hb_itemPutC(nullptr, nullptr);
-      if( SELF_RDDINFO(pRDD, fTable ? RDDI_TABLEEXT : RDDI_ORDBAGEXT, ulConnect, pFileExt) == HB_SUCCESS ) {
+      if( SELF_RDDINFO(pRDD, fTable ? RDDI_TABLEEXT : RDDI_ORDBAGEXT, ulConnect, pFileExt) == Harbour::SUCCESS ) {
          pFileName->szExtension = hb_itemGetCPtr(pFileExt);
       }
    }
@@ -5053,7 +5053,7 @@ static HB_ERRCODE adsDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemInd
           */
          pFileName = hb_fsFNameSplit(szFileName);
          pFileExt = hb_itemPutC(pFileExt, nullptr);
-         if( SELF_RDDINFO(pRDD, RDDI_MEMOEXT, ulConnect, pFileExt) == HB_SUCCESS ) {
+         if( SELF_RDDINFO(pRDD, RDDI_MEMOEXT, ulConnect, pFileExt) == Harbour::SUCCESS ) {
             szExt = hb_itemGetCPtr(pFileExt);
             if( szExt[0] ) {
                pFileName->szExtension = szExt;
@@ -5066,7 +5066,7 @@ static HB_ERRCODE adsDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemInd
           * in the same directory as table file
           */
          pFileExt = hb_itemPutC(pFileExt, nullptr);
-         if( SELF_RDDINFO(pRDD, RDDI_ORDSTRUCTEXT, ulConnect, pFileExt) == HB_SUCCESS ) {
+         if( SELF_RDDINFO(pRDD, RDDI_ORDSTRUCTEXT, ulConnect, pFileExt) == Harbour::SUCCESS ) {
             szExt = hb_itemGetCPtr(pFileExt);
             if( szExt[0] ) {
                pFileName->szExtension = szExt;
@@ -5082,7 +5082,7 @@ static HB_ERRCODE adsDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemInd
       hb_itemRelease(pFileExt);
    }
 
-   return fResult ? HB_SUCCESS : HB_FAILURE;
+   return fResult ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
 /* TODO: Use AdsCheckExistence()
@@ -5113,7 +5113,7 @@ static HB_ERRCODE adsExists(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemI
 
    if( !pFileName->szExtension ) {
       pFileExt = hb_itemPutC(nullptr, nullptr);
-      if( SELF_RDDINFO(pRDD, fTable ? RDDI_TABLEEXT : RDDI_ORDBAGEXT, ulConnect, pFileExt) == HB_SUCCESS ) {
+      if( SELF_RDDINFO(pRDD, fTable ? RDDI_TABLEEXT : RDDI_ORDBAGEXT, ulConnect, pFileExt) == Harbour::SUCCESS ) {
          pFileName->szExtension = hb_itemGetCPtr(pFileExt);
       }
    }
@@ -5124,7 +5124,7 @@ static HB_ERRCODE adsExists(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemI
       hb_itemRelease(pFileExt);
    }
 
-   return hb_spFile(szFileName, nullptr) ? HB_SUCCESS : HB_FAILURE;
+   return hb_spFile(szFileName, nullptr) ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
 static HB_ERRCODE adsRename(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemIndex, PHB_ITEM pNewName, HB_ULONG ulConnect)
@@ -5135,7 +5135,7 @@ static HB_ERRCODE adsRename(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemI
    HB_SYMBOL_UNUSED(pNewName);
    HB_SYMBOL_UNUSED(ulConnect);
 
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 static void adsTSDRelease(void * cargo)
@@ -5158,7 +5158,7 @@ static HB_ERRCODE adsInit(LPRDDNODE pRDD)
    if( ISSUPER_INIT(pRDD) ) {
       return SUPER_INIT(pRDD);
    } else {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 }
 
@@ -5191,7 +5191,7 @@ static HB_ERRCODE adsExit(LPRDDNODE pRDD)
    if( ISSUPER_EXIT(pRDD) ) {
       return SUPER_EXIT(pRDD);
    } else {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 }
 
@@ -5388,7 +5388,7 @@ static HB_ERRCODE adsRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConne
          return SUPER_RDDINFO(pRDD, uiIndex, ulConnect, pItem);
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 #define  adsWhoCares  nullptr
@@ -5511,7 +5511,7 @@ static void adsRegisterRDD(HB_USHORT * pusRddId)
          *puiCount = RDDFUNCSCOUNT;
       }
       errCode = hb_rddInheritEx(pTable, &adsTable, &adsSuper, nullptr, puiSuperRddId);
-      if( errCode == HB_SUCCESS ) {
+      if( errCode == Harbour::SUCCESS ) {
          /*
           * we successfully register our RDD so now we can initialize it
           * You may think that this place is RDD init statement, Druzus
@@ -5525,7 +5525,7 @@ static void adsRegisterRDD(HB_USHORT * pusRddId)
       }
       hb_retni(errCode);
    } else {
-      hb_retni(HB_FAILURE);
+      hb_retni(Harbour::FAILURE);
    }
 }
 

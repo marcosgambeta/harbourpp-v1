@@ -313,15 +313,15 @@ static HB_ERRCODE sqlite3Connect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem 
 
    hb_strfree(hConn);
 
-   return db ? HB_SUCCESS : HB_FAILURE;
+   return db ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
 static HB_ERRCODE sqlite3Disconnect( SQLDDCONNECTION * pConnection )
 {
    HB_ERRCODE errCode;
 
-   errCode = sqlite3_close( ( ( SDDCONN * ) pConnection->pSDDConn )->pDb ) == SQLITE_OK ? HB_SUCCESS : HB_FAILURE;
-   if( errCode == HB_SUCCESS )
+   errCode = sqlite3_close( ( ( SDDCONN * ) pConnection->pSDDConn )->pDb ) == SQLITE_OK ? Harbour::SUCCESS : Harbour::FAILURE;
+   if( errCode == Harbour::SUCCESS )
       hb_xfree(pConnection->pSDDConn);
 
    return errCode;
@@ -342,7 +342,7 @@ static HB_ERRCODE sqlite3Execute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem 
       hb_xfree(sqlite3GetError(pDb, &errCode));
       hb_errRT_SQLT3DD( EG_OPEN, ESQLDD_STMTALLOC, pszErrMsg, hb_itemGetCPtr(pItem), errCode );
       hb_xfree(pszErrMsg);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    else
       hb_strfree(hStatement);
@@ -351,7 +351,7 @@ static HB_ERRCODE sqlite3Execute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem 
 
    /* TODO: new id */
    hb_rddsqlSetError(0, nullptr, hb_itemGetCPtr(pItem), nullptr, static_cast<unsigned long>(iRow));
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
@@ -389,7 +389,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
       hb_errRT_SQLT3DD( EG_OPEN, ESQLDD_INVALIDQUERY, szError, pArea->szQuery, errCode );
       sqlite3_finalize( st );
       hb_xfree(szError);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    else
    {
@@ -405,7 +405,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
       hb_errRT_SQLT3DD( EG_OPEN, ESQLDD_INVALIDQUERY, szError, pArea->szQuery, errCode );
       sqlite3_finalize( st );
       hb_xfree(szError);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    uiFields = static_cast<HB_USHORT>(sqlite3_column_count(st));
@@ -503,7 +503,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
       }
 
       if( !bError )
-         bError = (SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == HB_FAILURE);
+         bError = (SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == Harbour::FAILURE);
 
       if( bError )
          break;
@@ -515,7 +515,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
       hb_itemRelease(pItemEof);
       sqlite3_finalize( st );
       hb_errRT_SQLT3DD( EG_CORRUPTION, ESQLDD_INVALIDFIELD, "Invalid field type", pArea->szQuery, errCode );
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pArea->ulRecCount = 0;
@@ -528,7 +528,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
    pArea->pRowFlags[0] = SQLDD_FLAG_CACHED;
 
    pSDDData->pStmt = st;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE sqlite3Close( SQLBASEAREAP pArea )
@@ -543,7 +543,7 @@ static HB_ERRCODE sqlite3Close( SQLBASEAREAP pArea )
       hb_xfree(pSDDData);
       pArea->pSDDData = nullptr;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
@@ -672,5 +672,5 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
       pArea->bRecordFlags = pArea->pRowFlags[ulRecNo];
       pArea->fPositioned  = HB_TRUE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }

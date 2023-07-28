@@ -92,7 +92,7 @@ void hb_wvt_GetStringAttrib(int top, int left, int bottom, int right, HB_BYTE * 
          HB_BYTE   bAttr;
          HB_USHORT usChar;
 
-         if( hb_gtGetScrChar(irow, icol, &iColor, &bAttr, &usChar) == HB_FAILURE )
+         if( hb_gtGetScrChar(irow, icol, &iColor, &bAttr, &usChar) == Harbour::FAILURE )
          {
             break;
          }
@@ -117,7 +117,7 @@ void hb_wvt_PutStringAttrib(int top, int left, int bottom, int right, HB_BYTE * 
    {
       for( icol = left; icol <= right; icol++ )
       {
-         if( hb_gtPutScrChar(irow, icol, sAttrib[j], 0, sBuffer[j]) == HB_FAILURE )
+         if( hb_gtPutScrChar(irow, icol, sAttrib[j], 0, sBuffer[j]) == Harbour::FAILURE )
          {
             break;
          }

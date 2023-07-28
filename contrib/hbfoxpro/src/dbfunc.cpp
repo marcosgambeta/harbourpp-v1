@@ -156,7 +156,7 @@ HB_FUNC( FSIZE )
       {
          PHB_ITEM pItem = hb_itemNew(nullptr);
 
-         if( SELF_FIELDINFO(pArea, uiIndex, DBS_LEN, pItem) == HB_SUCCESS )
+         if( SELF_FIELDINFO(pArea, uiIndex, DBS_LEN, pItem) == Harbour::SUCCESS )
          {
             hb_itemReturnRelease(pItem);
             return;
@@ -185,7 +185,7 @@ HB_FUNC( __FOX_SEEK )
          HB_BOOL fSoftSeek = HB_ISLOG(2) ? static_cast<HB_BOOL>(hb_parl(2)) : hb_setGetSoftSeek();
          HB_BOOL fFindLast = hb_parl(3), fFound = HB_FALSE;
          PHB_ITEM pTag = hb_param(5, Harbour::Item::NUMERIC | Harbour::Item::STRING);
-         HB_ERRCODE errCode = HB_SUCCESS;
+         HB_ERRCODE errCode = Harbour::SUCCESS;
 
          if( pTag )
          {
@@ -197,11 +197,11 @@ HB_FUNC( __FOX_SEEK )
             hb_itemRelease(pInfo.itmResult);
          }
 
-         if( errCode == HB_SUCCESS )
+         if( errCode == Harbour::SUCCESS )
          {
-            if( SELF_SEEK(pArea, fSoftSeek, pKey, fFindLast) == HB_SUCCESS )
+            if( SELF_SEEK(pArea, fSoftSeek, pKey, fFindLast) == Harbour::SUCCESS )
             {
-               if( SELF_FOUND(pArea, &fFound) != HB_SUCCESS )
+               if( SELF_FOUND(pArea, &fFound) != Harbour::SUCCESS )
                {
                   fFound = HB_FALSE;
                }

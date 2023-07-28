@@ -1183,10 +1183,10 @@ HB_FUNC( AMF3_FROMWA )
       {
          hb_itemRelease(pInfo.itmResult);
 
-         if( SELF_RECCOUNT(pArea, &uiRecCount) != HB_SUCCESS )
+         if( SELF_RECCOUNT(pArea, &uiRecCount) != Harbour::SUCCESS )
             return;
 
-         if( SELF_RECNO(pArea, &uiRecNo) != HB_SUCCESS )
+         if( SELF_RECNO(pArea, &uiRecNo) != Harbour::SUCCESS )
             return;
       }
 
@@ -1204,7 +1204,7 @@ HB_FUNC( AMF3_FROMWA )
          uiRecCount = 0;
          while( (nCount == 0 || uiRecCount < nCount) && (!pWhile || hb_itemGetL(hb_vmEvalBlock(pWhile))) )
          {
-            if( SELF_EOF(pArea, &bEof) != HB_SUCCESS )
+            if( SELF_EOF(pArea, &bEof) != Harbour::SUCCESS )
                break;
 
             if( bEof )
@@ -1213,7 +1213,7 @@ HB_FUNC( AMF3_FROMWA )
             if( !pFor || hb_itemGetL(hb_vmEvalBlock(pFor)) )
                uiRecCount++;
 
-            if( SELF_SKIP(pArea, 1) != HB_SUCCESS )
+            if( SELF_SKIP(pArea, 1) != Harbour::SUCCESS )
                break;
          }
          nCount = uiRecCount;
@@ -1305,7 +1305,7 @@ HB_FUNC( AMF3_FROMWA )
       uiRecCount = 0;
       while( (nCount == 0 || uiRecCount <= nCount) && (!pWhile || hb_itemGetL(hb_vmEvalBlock(pWhile))) )
       {
-         if( SELF_EOF(pArea, &bEof) != HB_SUCCESS )
+         if( SELF_EOF(pArea, &bEof) != Harbour::SUCCESS )
             break;
 
          if( bEof )
@@ -1372,7 +1372,7 @@ HB_FUNC( AMF3_FROMWA )
             uiRecCount++;
          }
 
-         if( SELF_SKIP(pArea, 1) != HB_SUCCESS )
+         if( SELF_SKIP(pArea, 1) != Harbour::SUCCESS )
             break;
 
       }

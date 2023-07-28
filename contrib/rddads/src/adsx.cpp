@@ -120,7 +120,7 @@ static RDDFUNCS  adsxSuper;
 
 static HB_ERRCODE hb_mixErrorRT( ADSXAREAP pArea, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char * filename, HB_ERRCODE errOsCode, HB_USHORT uiFlags )
 {
-   HB_ERRCODE iRet = HB_FAILURE;
+   HB_ERRCODE iRet = Harbour::FAILURE;
 
    if( hb_vmRequestQuery() == 0 ) {
       PHB_ITEM pError = hb_errNew();
@@ -155,7 +155,7 @@ static HB_ERRCODE hb_adsUpdateAreaFlags( ADSXAREAP pArea )
 
    pArea->adsarea.fPositioned = !pArea->adsarea.area.fBof && !pArea->adsarea.area.fEof;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 /* Memory Index */
@@ -675,12 +675,12 @@ static HB_ERRCODE adsxGoBottom( ADSXAREAP pArea )
    } else {
       ulRecNo = 0;
    }
-   if( SUPER_GOTO(&pArea->adsarea.area, ulRecNo) == HB_SUCCESS ) {
+   if( SUPER_GOTO(&pArea->adsarea.area, ulRecNo) == Harbour::SUCCESS ) {
       pTag->ulKeyNo = ulRecNo ? pTag->ulRecCount : 0;
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
    pTag->ulKeyNo = 0;
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 static HB_ERRCODE adsxGoTop( ADSXAREAP pArea )
@@ -699,12 +699,12 @@ static HB_ERRCODE adsxGoTop( ADSXAREAP pArea )
    } else {
       ulRecNo = 0;
    }
-   if( SUPER_GOTO(&pArea->adsarea.area, ulRecNo) == HB_SUCCESS ) {
+   if( SUPER_GOTO(&pArea->adsarea.area, ulRecNo) == Harbour::SUCCESS ) {
       pTag->ulKeyNo = ulRecNo ? 1 : 0;
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
    pTag->ulKeyNo = 0;
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 static HB_ERRCODE adsxSeek( ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB_BOOL bFindLast )
@@ -769,7 +769,7 @@ static HB_ERRCODE adsxSkip( ADSXAREAP pArea, HB_LONG lToSkip )
 {
    PMIXKEY    pKey;
    HB_ULONG   ulKeyPos;
-   HB_ERRCODE errCode = HB_SUCCESS;
+   HB_ERRCODE errCode = Harbour::SUCCESS;
 
    if( !pArea->pTagCurrent || lToSkip == 0 ) {
       return SUPER_SKIP(&pArea->adsarea.area, lToSkip);
@@ -794,8 +794,8 @@ static HB_ERRCODE adsxSkip( ADSXAREAP pArea, HB_LONG lToSkip )
       if( mixFindKey( pArea->pTagCurrent, pKey, &ulKeyPos ) &&
           pArea->pTagCurrent->ulRecCount > static_cast<HB_ULONG>(lToSkip) &&
           ulKeyPos < pArea->pTagCurrent->ulRecCount - static_cast<HB_ULONG>(lToSkip) ) {
-         if( SELF_GOTO(&pArea->adsarea.area, pArea->pTagCurrent->pKeys[ulKeyPos + lToSkip]->rec) == HB_FAILURE ) {
-            errCode = HB_FAILURE;
+         if( SELF_GOTO(&pArea->adsarea.area, pArea->pTagCurrent->pKeys[ulKeyPos + lToSkip]->rec) == Harbour::FAILURE ) {
+            errCode = Harbour::FAILURE;
          }
 
          pArea->adsarea.fPositioned = true;
@@ -822,8 +822,8 @@ static HB_ERRCODE adsxSkip( ADSXAREAP pArea, HB_LONG lToSkip )
       if( mixFindKey( pArea->pTagCurrent, pKey, &ulKeyPos ) &&
           pArea->pTagCurrent->ulRecCount >= static_cast<HB_ULONG>(-lToSkip) &&
           ulKeyPos >= static_cast<HB_ULONG>(-lToSkip) ) {
-         if( SELF_GOTO(&pArea->adsarea.area, pArea->pTagCurrent->pKeys[ulKeyPos + lToSkip]->rec) == HB_FAILURE ) {
-            errCode = HB_FAILURE;
+         if( SELF_GOTO(&pArea->adsarea.area, pArea->pTagCurrent->pKeys[ulKeyPos + lToSkip]->rec) == Harbour::FAILURE ) {
+            errCode = Harbour::FAILURE;
          }
          pArea->adsarea.area.fBof = false;
       } else {
@@ -850,7 +850,7 @@ static HB_ERRCODE adsxPutValue( ADSXAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
 
    pUpdate = mixUpdateCreate(pArea);
    errCode = SUPER_PUTVALUE(&pArea->adsarea.area, uiIndex, pItem);
-   mixUpdateDestroy(pArea, pUpdate, errCode == HB_SUCCESS);
+   mixUpdateDestroy(pArea, pUpdate, errCode == Harbour::SUCCESS);
    return errCode;
 }
 
@@ -867,7 +867,7 @@ static HB_ERRCODE adsxClose( ADSXAREAP pArea )
 
 static HB_ERRCODE adsxCreate( ADSXAREAP pArea, LPDBOPENINFO pCreateInfo )
 {
-   if( SUPER_CREATE(&pArea->adsarea.area, pCreateInfo) == HB_SUCCESS ) {
+   if( SUPER_CREATE(&pArea->adsarea.area, pCreateInfo) == Harbour::SUCCESS ) {
       if( pCreateInfo->cdpId ) {
          pArea->adsarea.area.cdPage = hb_cdpFind( pCreateInfo->cdpId );
          if( !pArea->adsarea.area.cdPage ) {
@@ -876,9 +876,9 @@ static HB_ERRCODE adsxCreate( ADSXAREAP pArea, LPDBOPENINFO pCreateInfo )
       } else {
          pArea->adsarea.area.cdPage = hb_vmCDP();
       }
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 static HB_ERRCODE adsxNewArea( ADSXAREAP pArea )
@@ -886,7 +886,7 @@ static HB_ERRCODE adsxNewArea( ADSXAREAP pArea )
    HB_ERRCODE errCode;
 
    errCode = SUPER_NEW(&pArea->adsarea.area);
-   if( errCode == HB_SUCCESS ) {
+   if( errCode == Harbour::SUCCESS ) {
       if( pArea->adsarea.area.rddID == s_uiRddIdADSADTX ) {
          pArea->adsarea.iFileType = ADS_ADT;
       } else if( pArea->adsarea.area.rddID == s_uiRddIdADSNTXX ) {
@@ -906,7 +906,7 @@ static HB_ERRCODE adsxNewArea( ADSXAREAP pArea )
 
 static HB_ERRCODE adsxOpen( ADSXAREAP pArea, LPDBOPENINFO pOpenInfo )
 {
-   if( SUPER_OPEN(&pArea->adsarea.area, pOpenInfo) == HB_SUCCESS ) {
+   if( SUPER_OPEN(&pArea->adsarea.area, pOpenInfo) == Harbour::SUCCESS ) {
       if( pOpenInfo->cdpId ) {
          pArea->adsarea.area.cdPage = hb_cdpFind( pOpenInfo->cdpId );
          if( !pArea->adsarea.area.cdPage ) {
@@ -915,9 +915,9 @@ static HB_ERRCODE adsxOpen( ADSXAREAP pArea, LPDBOPENINFO pOpenInfo )
       } else {
          pArea->adsarea.area.cdPage = hb_vmCDP();
       }
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 static HB_ERRCODE adsxStructSize( ADSXAREAP pArea, HB_USHORT * StructSize )
@@ -925,7 +925,7 @@ static HB_ERRCODE adsxStructSize( ADSXAREAP pArea, HB_USHORT * StructSize )
    HB_SYMBOL_UNUSED(pArea);
 
    *StructSize = sizeof(ADSXAREA);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsxSysName( ADSXAREAP pArea, HB_BYTE * pBuffer )
@@ -962,19 +962,19 @@ static HB_ERRCODE adsxSysName( ADSXAREAP pArea, HB_BYTE * pBuffer )
          break;
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsxOrderListFocus( ADSXAREAP pArea, LPDBORDERINFO pOrderInfo )
 {
-   if( SUPER_ORDLSTFOCUS(&pArea->adsarea.area, pOrderInfo) == HB_SUCCESS ) {
+   if( SUPER_ORDLSTFOCUS(&pArea->adsarea.area, pOrderInfo) == Harbour::SUCCESS ) {
       if( pArea->pTagCurrent ) {
          pOrderInfo->itmResult = hb_itemPutC(pOrderInfo->itmResult, pArea->pTagCurrent->szName);
          if( pOrderInfo->itmOrder ) {
             pArea->pTagCurrent = nullptr;
          }
       }
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
    if( pArea->pTagCurrent ) {
@@ -985,9 +985,9 @@ static HB_ERRCODE adsxOrderListFocus( ADSXAREAP pArea, LPDBORDERINFO pOrderInfo 
    pArea->adsarea.hOrdCurrent = 0;
 
    if( pArea->pTagCurrent ) {
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    } else {
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 }
 
@@ -1067,7 +1067,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
 
       if( u32RetVal != AE_SUCCESS ) {
          hb_mixErrorRT(pArea, EG_CREATE, static_cast<HB_ERRCODE>(u32RetVal), pOrderInfo->atomBagName, 0, 0);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
 
       pArea->adsarea.area.lpdbOrdCondInfo->fUseCurrent = true;
@@ -1092,11 +1092,11 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
    if( pOrderInfo->itmCobExpr ) {
       pKeyItem = hb_itemNew(pOrderInfo->itmCobExpr);
    } else {
-      if( SELF_COMPILE(&pArea->adsarea.area, hb_itemGetCPtr(pOrderInfo->abExpr)) == HB_FAILURE ) {
+      if( SELF_COMPILE(&pArea->adsarea.area, hb_itemGetCPtr(pOrderInfo->abExpr)) == Harbour::FAILURE ) {
          if( hIndex ) {
             AdsDeleteIndex( hIndex );
          }
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       pKeyItem = pArea->adsarea.area.valResult;
       pArea->adsarea.area.valResult = nullptr;
@@ -1105,13 +1105,13 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
    /* Test key codeblock on EOF */
    ulRecNo = pArea->adsarea.ulRecNo;
    SELF_GOTO(&pArea->adsarea.area, 0);
-   if( SELF_EVALBLOCK(&pArea->adsarea.area, pKeyItem) == HB_FAILURE ) {
+   if( SELF_EVALBLOCK(&pArea->adsarea.area, pKeyItem) == Harbour::FAILURE ) {
       if( hIndex ) {
          AdsDeleteIndex( hIndex );
       }
       hb_vmDestroyBlockOrMacro( pKeyItem );
       SELF_GOTO(&pArea->adsarea.area, ulRecNo);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pResult = pArea->adsarea.area.valResult;
@@ -1157,7 +1157,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       hb_vmDestroyBlockOrMacro( pKeyItem );
       SELF_GOTO(&pArea->adsarea.area, ulRecNo);
       hb_mixErrorRT(pArea, bType == 'U' ? EG_DATATYPE : EG_DATAWIDTH, 1026, nullptr, 0, 0);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( pArea->adsarea.area.lpdbOrdCondInfo ) {
@@ -1165,13 +1165,13 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       if( pArea->adsarea.area.lpdbOrdCondInfo->itmCobFor ) {
          pForItem = hb_itemNew(pArea->adsarea.area.lpdbOrdCondInfo->itmCobFor);
       } else if( pArea->adsarea.area.lpdbOrdCondInfo->abFor ) {
-         if( SELF_COMPILE(&pArea->adsarea.area, pArea->adsarea.area.lpdbOrdCondInfo->abFor) == HB_FAILURE ) {
+         if( SELF_COMPILE(&pArea->adsarea.area, pArea->adsarea.area.lpdbOrdCondInfo->abFor) == Harbour::FAILURE ) {
             if( hIndex ) {
                AdsDeleteIndex( hIndex );
             }
             hb_vmDestroyBlockOrMacro( pKeyItem );
             SELF_GOTO(&pArea->adsarea.area, ulRecNo);
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
          pForItem = pArea->adsarea.area.valResult;
          pArea->adsarea.area.valResult = nullptr;
@@ -1181,7 +1181,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       if( pArea->adsarea.area.lpdbOrdCondInfo->itmCobWhile ) {
          pWhileItem = hb_itemNew(pArea->adsarea.area.lpdbOrdCondInfo->itmCobWhile);
       } else if( pArea->adsarea.area.lpdbOrdCondInfo->abWhile ) {
-         if( SELF_COMPILE(&pArea->adsarea.area, pArea->adsarea.area.lpdbOrdCondInfo->abWhile) == HB_FAILURE ) {
+         if( SELF_COMPILE(&pArea->adsarea.area, pArea->adsarea.area.lpdbOrdCondInfo->abWhile) == Harbour::FAILURE ) {
             if( hIndex ) {
                AdsDeleteIndex( hIndex );
             }
@@ -1190,7 +1190,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
                hb_vmDestroyBlockOrMacro( pForItem );
             }
             SELF_GOTO(&pArea->adsarea.area, ulRecNo);
-            return HB_FAILURE;
+            return Harbour::FAILURE;
          }
          pWhileItem = pArea->adsarea.area.valResult;
          pArea->adsarea.area.valResult = nullptr;
@@ -1199,7 +1199,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
 
    /* Test FOR codeblock on EOF */
    if( pForItem ) {
-      if( SELF_EVALBLOCK(&pArea->adsarea.area, pForItem) == HB_FAILURE ) {
+      if( SELF_EVALBLOCK(&pArea->adsarea.area, pForItem) == Harbour::FAILURE ) {
          if( hIndex ) {
             AdsDeleteIndex( hIndex );
          }
@@ -1209,7 +1209,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
             hb_vmDestroyBlockOrMacro( pWhileItem );
          }
          SELF_GOTO(&pArea->adsarea.area, ulRecNo);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       if( hb_itemType( pArea->adsarea.area.valResult ) != Harbour::Item::LOGICAL ) {
          if( hIndex ) {
@@ -1224,7 +1224,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          }
          SELF_GOTO(&pArea->adsarea.area, ulRecNo);
          hb_mixErrorRT(pArea, EG_DATATYPE, EDBF_INVALIDFOR, nullptr, 0, 0);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
       hb_itemRelease(pArea->adsarea.area.valResult);
       pArea->adsarea.area.valResult = nullptr;
@@ -1261,7 +1261,7 @@ static HB_ERRCODE adsxOrderCreate( ADSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       pArea->pTagList = pTagNew;
    }
    pArea->pTagCurrent = pTagNew;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE adsxOrderDestroy( ADSXAREAP pArea, LPDBORDERINFO pOrderInfo )
@@ -1269,8 +1269,8 @@ static HB_ERRCODE adsxOrderDestroy( ADSXAREAP pArea, LPDBORDERINFO pOrderInfo )
    PMIXTAG pTag, pTag2;
 
    /* TODO: ADS RDD missing implementation of ordDestroy( nOrder ) */
-   if( SUPER_ORDDESTROY(&pArea->adsarea.area, pOrderInfo) == HB_SUCCESS ) {
-      return HB_SUCCESS;
+   if( SUPER_ORDDESTROY(&pArea->adsarea.area, pOrderInfo) == Harbour::SUCCESS ) {
+      return Harbour::SUCCESS;
    }
 
    pTag = mixFindTag(pArea, pOrderInfo->itmOrder);
@@ -1291,10 +1291,10 @@ static HB_ERRCODE adsxOrderDestroy( ADSXAREAP pArea, LPDBORDERINFO pOrderInfo )
       }
 
       mixTagDestroy( pTag );
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    } else {
       pArea->adsarea.hOrdCurrent = 0;
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 }
 
@@ -1519,7 +1519,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       default:
          return SUPER_ORDINFO(&pArea->adsarea.area, uiIndex, pOrderInfo);
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static RDDFUNCS adsxTable = { nullptr,
@@ -1642,12 +1642,12 @@ static void adsxRegisterRDD( HB_USHORT * pusRddId, const char * szRddName )
       }
 
       errCode = hb_rddInheritEx( pTable, &adsxTable, &adsxSuper, szRddName, puiSuperRddId );
-      if( errCode == HB_SUCCESS ) {
+      if( errCode == Harbour::SUCCESS ) {
          *pusRddId = uiRddId;
       }
       hb_retni(errCode);
    } else {
-      hb_retni(HB_FAILURE);
+      hb_retni(Harbour::FAILURE);
    }
 }
 

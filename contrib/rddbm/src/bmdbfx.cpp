@@ -95,7 +95,7 @@ HB_FUNC( BM_DBSEEKWILD )
          OrderInfo.itmResult = hb_itemNew(nullptr);
 
          errCode = SELF_ORDINFO(pArea, DBOI_NUMBER, &OrderInfo);
-         if( errCode == HB_SUCCESS )
+         if( errCode == Harbour::SUCCESS )
             iOrder = hb_itemGetNI(OrderInfo.itmResult);
 
          if( iOrder != 0 )
@@ -103,7 +103,7 @@ HB_FUNC( BM_DBSEEKWILD )
             HB_BOOL fUnlock;
             OrderInfo.itmNewVal = OrderInfo.itmResult;
             hb_itemPutL(OrderInfo.itmNewVal, true);
-            if( SELF_ORDINFO(pArea, DBOI_READLOCK, &OrderInfo) == HB_SUCCESS )
+            if( SELF_ORDINFO(pArea, DBOI_READLOCK, &OrderInfo) == Harbour::SUCCESS )
                fUnlock = hb_itemGetL(OrderInfo.itmResult);
             else
                fUnlock = HB_FALSE;
@@ -116,33 +116,33 @@ HB_FUNC( BM_DBSEEKWILD )
                else
                   errCode = SELF_GOTOP(pArea);
 
-               if( errCode == HB_SUCCESS )
+               if( errCode == Harbour::SUCCESS )
                {
                   errCode = SELF_ORDINFO(pArea, DBOI_KEYVAL, &OrderInfo);
-                  if( errCode == HB_SUCCESS )
+                  if( errCode == Harbour::SUCCESS )
                      fFound = hb_strMatchWild( hb_itemGetCPtr(OrderInfo.itmResult), szPattern );
                }
             }
 
-            if( !fFound && errCode == HB_SUCCESS )
+            if( !fFound && errCode == Harbour::SUCCESS )
             {
                OrderInfo.itmNewVal = hb_param(1, Harbour::Item::STRING);
                errCode = SELF_ORDINFO(pArea, fBack ? DBOI_SKIPWILDBACK : DBOI_SKIPWILD, &OrderInfo);
-               if( errCode == HB_SUCCESS )
+               if( errCode == Harbour::SUCCESS )
                   fFound = hb_itemGetL(OrderInfo.itmResult);
             }
 
-            if( fAll && errCode == HB_SUCCESS )
+            if( fAll && errCode == Harbour::SUCCESS )
             {
                OrderInfo.itmNewVal = hb_param(1, Harbour::Item::STRING);
                do
                {
                   errCode = SELF_RECID(pArea, OrderInfo.itmResult);
-                  if( errCode != HB_SUCCESS )
+                  if( errCode != Harbour::SUCCESS )
                      break;
                   hb_arrayAddForward( pArray, OrderInfo.itmResult );
                   errCode = SELF_ORDINFO(pArea, fBack ? DBOI_SKIPWILDBACK : DBOI_SKIPWILD, &OrderInfo);
-                  if( errCode == HB_SUCCESS )
+                  if( errCode == Harbour::SUCCESS )
                      fFound = hb_itemGetL(OrderInfo.itmResult);
                   else
                      fFound = HB_FALSE;
@@ -159,7 +159,7 @@ HB_FUNC( BM_DBSEEKWILD )
 
          hb_itemRelease(OrderInfo.itmResult);
 
-         if( !fFound && !fSoft && errCode == HB_SUCCESS )
+         if( !fFound && !fSoft && errCode == Harbour::SUCCESS )
             SELF_GOTO(pArea, 0);
 
          if( pArray )
@@ -247,7 +247,7 @@ static HB_BOOL hb_bmCheckRecordFilter(AREAP pArea, HB_ULONG ulRecNo)
    {
       HB_ULONG ulRec;
 
-      if( SELF_RECNO(pArea, &ulRec) == HB_SUCCESS )
+      if( SELF_RECNO(pArea, &ulRec) == Harbour::SUCCESS )
       {
          if( ulRec != ulRecNo )
             SELF_GOTO(pArea, ulRecNo);
@@ -295,7 +295,7 @@ static PBM_FILTER hb_bmCreate(AREAP pArea, HB_BOOL fFull)
    PBM_FILTER pBM = nullptr;
    HB_ULONG ulRecCount;
 
-   if( SELF_RECCOUNT(pArea, &ulRecCount) == HB_SUCCESS )
+   if( SELF_RECCOUNT(pArea, &ulRecCount) == Harbour::SUCCESS )
    {
       HB_SIZE nSize = sizeof(BM_FILTER) + BM_BYTESIZE( ulRecCount );
       pBM = static_cast<PBM_FILTER>(memset(hb_xgrab(nSize), fFull ? 0xFF : 0x00, nSize));
@@ -318,7 +318,7 @@ HB_FUNC( BM_DBGETFILTERARRAY )
          HB_ULONG ulItems = BM_ITEMSIZE( pBM->maxrec );
          HB_ULONG ulRecNo;
 
-         if( SELF_RECNO(pArea, &ulRecNo) == HB_SUCCESS )
+         if( SELF_RECNO(pArea, &ulRecNo) == Harbour::SUCCESS )
          {
             PHB_ITEM pItem = hb_itemNew(nullptr);
             HB_ULONG ul;
@@ -362,7 +362,7 @@ HB_FUNC( BM_DBSETFILTERARRAY )
 
       if( pArray )
       {
-         if( SELF_CLEARFILTER(pArea) == HB_SUCCESS )
+         if( SELF_CLEARFILTER(pArea) == Harbour::SUCCESS )
          {
             PBM_FILTER pBM = hb_bmCreate(pArea, false);
 
@@ -491,14 +491,14 @@ static HB_ERRCODE hb_bmSkipFilter(AREAP pArea, HB_LONG lUpDown)
    HB_ERRCODE errCode;
 
    if( !hb_setGetDeleted() && pArea->dbfi.itmCobExpr == nullptr && !BM_GETFILTER(pArea) )
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
 
    lUpDown = ( lUpDown < 0  ? -1 : 1 );
    fBottom = pArea->fBottom;
    while( !pArea->fBof && !pArea->fEof && !hb_bmEvalFilter(pArea, false) )
    {
       errCode = SELF_SKIPRAW(pArea, lUpDown);
-      if( errCode != HB_SUCCESS )
+      if( errCode != Harbour::SUCCESS )
          return errCode;
    }
 
@@ -513,7 +513,7 @@ static HB_ERRCODE hb_bmSkipFilter(AREAP pArea, HB_LONG lUpDown)
       }
    }
    else
-      errCode = HB_SUCCESS;
+      errCode = Harbour::SUCCESS;
 
    return errCode;
 }
@@ -522,7 +522,7 @@ static HB_ERRCODE hb_bmPutRec(AREAP pArea, const HB_BYTE * pBuffer)
 {
    HB_ERRCODE errCode = SUPER_PUTREC(pArea, pBuffer);
 
-   if( pBuffer == nullptr && errCode == HB_SUCCESS && BM_GETFILTER(pArea) )
+   if( pBuffer == nullptr && errCode == Harbour::SUCCESS && BM_GETFILTER(pArea) )
       hb_bmEvalFilter(pArea, true);
 
    return errCode;
@@ -537,7 +537,7 @@ static HB_ERRCODE hb_bmCountScope(AREAP pArea, void * pPtr, HB_LONG * plRec)
       if( pBM && pArea->dbfi.fFilter && !BM_GETREC( pBM, static_cast<HB_ULONG>(*plRec)) )
          *plRec = 0;
 
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
    return SUPER_COUNTSCOPE(pArea, pPtr, plRec);
 }
@@ -559,7 +559,7 @@ static HB_ERRCODE hb_bmSetFilter(AREAP pArea, LPDBFILTERINFO pFilterInfo)
 {
    HB_ERRCODE errCode = SUPER_SETFILTER(pArea, pFilterInfo);
 
-   if( errCode == HB_SUCCESS )
+   if( errCode == Harbour::SUCCESS )
    {
       if( hb_setGetOptimize() )
       {
@@ -575,7 +575,7 @@ static HB_ERRCODE hb_bmSetFilter(AREAP pArea, LPDBFILTERINFO pFilterInfo)
             {
                HB_ULONG ulRecNo;
 
-               if( SELF_RECNO(pArea, &ulRecNo) == HB_SUCCESS )
+               if( SELF_RECNO(pArea, &ulRecNo) == Harbour::SUCCESS )
                {
                   HB_ULONG ulRec;
 
@@ -742,12 +742,12 @@ static void hb_bmGetFuncTable( const char * szSuper )
 
       *puiCount = RDDFUNCSCOUNT;
       errCode = hb_rddInheritEx( pTable, &bmTable, pSuperTable, szSuper, puiSuperRddId );
-      if( errCode == HB_SUCCESS )
+      if( errCode == Harbour::SUCCESS )
          hb_bmSetRdd( uiRddId );
       hb_retni(errCode);
    }
    else
-      hb_retni(HB_FAILURE);
+      hb_retni(Harbour::FAILURE);
 }
 
 static void hb_bmRddInit( void * cargo )

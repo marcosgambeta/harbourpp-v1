@@ -167,11 +167,11 @@ static HB_ERRCODE mysqlConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    {
       hb_rddsqlSetError(mysql_errno(pMySql), mysql_error(pMySql), nullptr, nullptr, 0);
       mysql_close( pMySql );
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    pConnection->pSDDConn = hb_xgrab(sizeof(SDDCONN));
    ( ( SDDCONN * ) pConnection->pSDDConn )->pMySql = pMySql;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -179,7 +179,7 @@ static HB_ERRCODE mysqlDisconnect( SQLDDCONNECTION * pConnection )
 {
    mysql_close( ( ( SDDCONN * ) pConnection->pSDDConn )->pMySql );
    hb_xfree(pConnection->pSDDConn);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -193,7 +193,7 @@ static HB_ERRCODE mysqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    if( mysql_real_query(pMySql, hb_itemGetCPtr(pItem), static_cast<unsigned long>(hb_itemGetCLen(pItem))) )
    {
       hb_rddsqlSetError(mysql_errno(pMySql), mysql_error(pMySql), hb_itemGetCPtr(pItem), nullptr, 0);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pResult = mysql_store_result( pMySql );
@@ -219,10 +219,10 @@ static HB_ERRCODE mysqlExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
       else /* error */
       {
          hb_rddsqlSetError(mysql_errno(pMySql ), mysql_error(pMySql), hb_itemGetCPtr(pItem), nullptr, 0);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -244,13 +244,13 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
    if( mysql_real_query(pMySql, pArea->szQuery, static_cast<unsigned long>(strlen(pArea->szQuery))) )
    {
       hb_errRT_MySQLDD(EG_OPEN, ESQLDD_INVALIDQUERY, static_cast<const char*>(mysql_error(pMySql)), pArea->szQuery, mysql_errno(pMySql));
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( (pSDDData->pResult = mysql_store_result(pMySql)) == nullptr )
    {
       hb_errRT_MySQLDD(EG_MEM, ESQLDD_INVALIDQUERY, static_cast<const char*>(mysql_error(pMySql)), pArea->szQuery, mysql_errno(pMySql));
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    uiFields = static_cast<HB_USHORT>(mysql_num_fields(pSDDData->pResult));
@@ -397,7 +397,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
 #endif
 
          if( !bError )
-            bError = (SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == HB_FAILURE);
+            bError = (SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == Harbour::FAILURE);
       }
 
       if( bError )
@@ -408,7 +408,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
    {
       hb_itemRelease(pItemEof);
       hb_errRT_MySQLDD( EG_CORRUPTION, ESQLDD_INVALIDFIELD, "Invalid field type", pArea->szQuery, errCode );
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pArea->ulRecCount = static_cast<HB_ULONG>(mysql_num_rows(pSDDData->pResult));
@@ -429,7 +429,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
    }
    pArea->fFetched = HB_TRUE;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -445,7 +445,7 @@ static HB_ERRCODE mysqlClose( SQLBASEAREAP pArea )
       hb_xfree(pSDDData);
       pArea->pSDDData = nullptr;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -474,7 +474,7 @@ static HB_ERRCODE mysqlGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
 
       pArea->fPositioned = HB_TRUE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -498,7 +498,7 @@ static HB_ERRCODE mysqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
    if( !pValue )
    {
       hb_itemClear(pItem);
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
    switch( pField->uiType )
@@ -618,7 +618,7 @@ static HB_ERRCODE mysqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
       hb_errPutSubCode(pError, EDBF_DATATYPE);
       SELF_ERROR(&pArea->area, pError);
       hb_itemRelease(pError);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }

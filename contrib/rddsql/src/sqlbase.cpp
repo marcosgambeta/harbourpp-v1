@@ -104,7 +104,7 @@ void hb_rddsqlSetError(HB_ERRCODE errCode, const char * szError, const char * sz
 
 static HB_ERRCODE hb_errRT_SQLBASE( HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char * szDescription, const char * szOperation )
 {
-   HB_ERRCODE iRet = HB_FAILURE;
+   HB_ERRCODE iRet = Harbour::FAILURE;
 
    if( hb_vmRequestQuery() == 0 )
    {
@@ -148,7 +148,7 @@ static HB_ERRCODE sddConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    HB_SYMBOL_UNUSED(pConnection);
    HB_SYMBOL_UNUSED(pItem);
    hb_errRT_SQLBASE(EG_UNSUPPORTED, ESQLDD_NULLSDD, nullptr, nullptr);
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 
@@ -156,7 +156,7 @@ static HB_ERRCODE sddDisconnect( SQLDDCONNECTION * pConnection )
 {
    HB_SYMBOL_UNUSED(pConnection);
    hb_errRT_SQLBASE(EG_UNSUPPORTED, ESQLDD_NULLSDD, nullptr, nullptr);
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 
@@ -165,7 +165,7 @@ static HB_ERRCODE sddExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
    HB_SYMBOL_UNUSED(pConnection);
    HB_SYMBOL_UNUSED(pItem);
    hb_errRT_SQLBASE(EG_UNSUPPORTED, ESQLDD_NULLSDD, nullptr, nullptr);
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 
@@ -173,14 +173,14 @@ static HB_ERRCODE sddOpen( SQLBASEAREAP pArea )
 {
    HB_SYMBOL_UNUSED(pArea);
    hb_errRT_SQLBASE(EG_UNSUPPORTED, ESQLDD_NULLSDD, nullptr, nullptr);
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 
 static HB_ERRCODE sddClose( SQLBASEAREAP pArea )
 {
    HB_SYMBOL_UNUSED(pArea);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -200,7 +200,7 @@ static HB_ERRCODE sddGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
 
       pArea->fPositioned = HB_TRUE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -210,7 +210,7 @@ static HB_ERRCODE sddGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM p
    HB_SYMBOL_UNUSED(uiIndex);
    HB_SYMBOL_UNUSED(pItem);
    hb_errRT_SQLBASE(EG_UNSUPPORTED, ESQLDD_NULLSDD, nullptr, nullptr);
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 
@@ -220,7 +220,7 @@ static HB_ERRCODE sddGetVarLen( SQLBASEAREAP pArea, HB_USHORT uiIndex, HB_ULONG 
    HB_SYMBOL_UNUSED(uiIndex);
    HB_SYMBOL_UNUSED(pLength);
    hb_errRT_SQLBASE(EG_UNSUPPORTED, ESQLDD_NULLSDD, nullptr, nullptr);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -267,18 +267,18 @@ int hb_sddRegister( PSDDNODE pSdd )
 
 static HB_ERRCODE sqlbaseGoBottom( SQLBASEAREAP pArea )
 {
-   if( SELF_GOCOLD(&pArea->area) == HB_FAILURE )
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->area) == Harbour::FAILURE )
+      return Harbour::FAILURE;
 
 
-   if( !pArea->fFetched && pArea->pSDD->GoTo(pArea, static_cast<HB_ULONG>(-1)) == HB_FAILURE )
-      return HB_FAILURE;
+   if( !pArea->fFetched && pArea->pSDD->GoTo(pArea, static_cast<HB_ULONG>(-1)) == Harbour::FAILURE )
+      return Harbour::FAILURE;
 
    pArea->area.fTop    = HB_FALSE;
    pArea->area.fBottom = HB_TRUE;
 
-   if( SELF_GOTO(&pArea->area, pArea->ulRecCount) != HB_SUCCESS )
-      return HB_FAILURE;
+   if( SELF_GOTO(&pArea->area, pArea->ulRecCount) != Harbour::SUCCESS )
+      return Harbour::FAILURE;
 
    return SELF_SKIPFILTER(&pArea->area, -1);
 }
@@ -286,11 +286,11 @@ static HB_ERRCODE sqlbaseGoBottom( SQLBASEAREAP pArea )
 
 static HB_ERRCODE sqlbaseGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
 {
-   if( SELF_GOCOLD(&pArea->area) == HB_FAILURE )
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->area) == Harbour::FAILURE )
+      return Harbour::FAILURE;
 
-   if( pArea->pSDD->GoTo(pArea, ulRecNo) == HB_FAILURE )
-      return HB_FAILURE;
+   if( pArea->pSDD->GoTo(pArea, ulRecNo) == Harbour::FAILURE )
+      return Harbour::FAILURE;
 
    if( pArea->fPositioned )
    {
@@ -304,7 +304,7 @@ static HB_ERRCODE sqlbaseGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
    }
    pArea->area.fFound = HB_FALSE;
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -320,7 +320,7 @@ static HB_ERRCODE sqlbaseGoToId( SQLBASEAREAP pArea, PHB_ITEM pItem )
       hb_errPutSubCode(pError, EDBF_DATATYPE);
       SELF_ERROR(&pArea->area, pError);
       hb_itemRelease(pError);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 }
 
@@ -330,8 +330,8 @@ static HB_ERRCODE sqlbaseGoTop( SQLBASEAREAP pArea )
    pArea->area.fTop    = HB_TRUE;
    pArea->area.fBottom = HB_FALSE;
 
-   if( SELF_GOTO(&pArea->area, 1) == HB_FAILURE )
-      return HB_FAILURE;
+   if( SELF_GOTO(&pArea->area, 1) == Harbour::FAILURE )
+      return Harbour::FAILURE;
 
    return SELF_SKIPFILTER(&pArea->area, 1);
 }
@@ -343,8 +343,8 @@ static HB_ERRCODE sqlbaseSkip( SQLBASEAREAP pArea, HB_LONG lToSkip )
 
    if( pArea->lpdbPendingRel )
    {
-      if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS )
-         return HB_FAILURE;
+      if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS )
+         return Harbour::FAILURE;
    }
 
    pArea->area.fTop = pArea->area.fBottom = HB_FALSE;
@@ -356,7 +356,7 @@ static HB_ERRCODE sqlbaseSkip( SQLBASEAREAP pArea, HB_LONG lToSkip )
    errCode = SELF_SKIPRAW(&pArea->area, lToSkip);
 
    /* Move first record and set Bof flag */
-   if( errCode == HB_SUCCESS && pArea->area.fBof && lToSkip < 0 )
+   if( errCode == Harbour::SUCCESS && pArea->area.fBof && lToSkip < 0 )
    {
       errCode = SELF_GOTOP(&pArea->area);
       pArea->area.fBof = HB_TRUE;
@@ -377,8 +377,8 @@ static HB_ERRCODE sqlbaseSkipRaw( SQLBASEAREAP pArea, HB_LONG lToSkip )
 
    if( pArea->lpdbPendingRel )
    {
-      if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS )
-         return HB_FAILURE;
+      if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS )
+         return Harbour::FAILURE;
    }
 
    if( lToSkip == 0 )
@@ -413,11 +413,11 @@ static HB_ERRCODE sqlbaseAppend( SQLBASEAREAP pArea, HB_BOOL bUnLockAll )
    HB_SYMBOL_UNUSED(bUnLockAll);
 
    /* This GOTO is GOCOLD + GOEOF */
-   if( SELF_GOTO(&pArea->area, 0) == HB_FAILURE )
-      return HB_FAILURE;
+   if( SELF_GOTO(&pArea->area, 0) == Harbour::FAILURE )
+      return Harbour::FAILURE;
 
-   if( !pArea->fRecordChanged && SELF_GOHOT(&pArea->area) == HB_FAILURE )
-      return HB_FAILURE;
+   if( !pArea->fRecordChanged && SELF_GOHOT(&pArea->area) == Harbour::FAILURE )
+      return Harbour::FAILURE;
 
    if( pArea->ulRecCount + 1 >= pArea->ulRecMax )
    {
@@ -430,39 +430,39 @@ static HB_ERRCODE sqlbaseAppend( SQLBASEAREAP pArea, HB_BOOL bUnLockAll )
    pArea->ulRecCount++;
    pArea->ulRecNo   = pArea->ulRecCount;
    pArea->area.fBof = pArea->area.fEof = pArea->area.fFound = HB_FALSE;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
 static HB_ERRCODE sqlbaseDeleteRec( SQLBASEAREAP pArea )
 {
    if( !pArea->fPositioned )
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
 
-   if( !pArea->fRecordChanged && SELF_GOHOT(&pArea->area) == HB_FAILURE )
-      return HB_FAILURE;
+   if( !pArea->fRecordChanged && SELF_GOHOT(&pArea->area) == Harbour::FAILURE )
+      return Harbour::FAILURE;
 
    pArea->bRecordFlags |= SQLDD_FLAG_DELETED;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
 static HB_ERRCODE sqlbaseDeleted( SQLBASEAREAP pArea, HB_BOOL * pDeleted )
 {
    *pDeleted = pArea->bRecordFlags & SQLDD_FLAG_DELETED;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
 static HB_ERRCODE sqlbaseGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem )
 {
    if( uiIndex == 0 || uiIndex > pArea->area.uiFieldCount )
-      return HB_FAILURE;
+      return Harbour::FAILURE;
 
    if( pArea->bRecordFlags & SQLDD_FLAG_CACHED )
    {
       hb_arrayGet(static_cast<PHB_ITEM>(pArea->pRecord), uiIndex, pItem);
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
    return pArea->pSDD->GetValue(pArea, uiIndex, pItem);
 }
@@ -477,7 +477,7 @@ static HB_ERRCODE sqlbaseGetVarLen( SQLBASEAREAP pArea, HB_USHORT uiIndex, HB_UL
 #endif
 
    *pLength = pArea->area.lpFields[uiIndex - 1].uiLen;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -492,7 +492,7 @@ static HB_ERRCODE sqlbaseGoCold( SQLBASEAREAP pArea )
       pArea->fRecordChanged = HB_FALSE;
       pArea->fAppend        = HB_FALSE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -505,14 +505,14 @@ static HB_ERRCODE sqlbaseGoHot( SQLBASEAREAP pArea )
    pItem = hb_itemNew(nullptr);
    for( us = 1; us <= pArea->area.uiFieldCount; us++ )
    {
-      if( SELF_GETVALUE(&pArea->area, us, pItem) == HB_SUCCESS )
+      if( SELF_GETVALUE(&pArea->area, us, pItem) == Harbour::SUCCESS )
          hb_arraySetForward( pArray, us, pItem );
    }
    hb_itemRelease(pItem);
    pArea->pRecord        = pArray;
    pArea->bRecordFlags  |= SQLDD_FLAG_CACHED;
    pArea->fRecordChanged = HB_TRUE;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -522,15 +522,15 @@ static HB_ERRCODE sqlbasePutValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_IT
    HB_ERRCODE errCode;
 
    if( uiIndex == 0 || uiIndex > pArea->area.uiFieldCount )
-      return HB_FAILURE;
+      return Harbour::FAILURE;
 
    if( !pArea->fPositioned )
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
 
-   if( !pArea->fRecordChanged && SELF_GOHOT(&pArea->area) == HB_FAILURE )
-      return HB_FAILURE;
+   if( !pArea->fRecordChanged && SELF_GOHOT(&pArea->area) == Harbour::FAILURE )
+      return Harbour::FAILURE;
 
-   errCode = HB_SUCCESS;
+   errCode = Harbour::SUCCESS;
    pField  = pArea->area.lpFields + ( uiIndex - 1 );
 
    if( ((HB_IS_MEMO(pItem) || HB_IS_STRING(pItem) ) && (pField->uiType == Harbour::DB::Field::STRING || pField->uiType == Harbour::DB::Field::MEMO)) ||
@@ -554,36 +554,36 @@ static HB_ERRCODE sqlbasePutValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_IT
       hb_errPutFlags(pError, EF_CANDEFAULT);
       errCode = SELF_ERROR(&pArea->area, pError);
       hb_itemRelease(pError);
-      return errCode == E_DEFAULT ? HB_SUCCESS : HB_FAILURE;
+      return errCode == E_DEFAULT ? Harbour::SUCCESS : Harbour::FAILURE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
 static HB_ERRCODE sqlbaseRecall( SQLBASEAREAP pArea )
 {
    if( !pArea->fPositioned )
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
 
-   if( !pArea->fRecordChanged && SELF_GOHOT(&pArea->area) != HB_SUCCESS )
-      return HB_FAILURE;
+   if( !pArea->fRecordChanged && SELF_GOHOT(&pArea->area) != Harbour::SUCCESS )
+      return Harbour::FAILURE;
 
    pArea->bRecordFlags &= ~SQLDD_FLAG_DELETED;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
 static HB_ERRCODE sqlbaseRecCount( SQLBASEAREAP pArea, HB_ULONG * pRecCount )
 {
    *pRecCount = pArea->ulRecCount;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
 static HB_ERRCODE sqlbaseRecNo( SQLBASEAREAP pArea, HB_ULONG * ulRecNo )
 {
    *ulRecNo = pArea->ulRecNo;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -625,11 +625,11 @@ static HB_ERRCODE sqlbaseZap( SQLBASEAREAP pArea )
 
 static HB_ERRCODE sqlbaseClose( SQLBASEAREAP pArea )
 {
-   if( SELF_GOCOLD(&pArea->area) == HB_FAILURE )
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->area) == Harbour::FAILURE )
+      return Harbour::FAILURE;
 
-   if( SUPER_CLOSE(&pArea->area) == HB_FAILURE )
-      return HB_FAILURE;
+   if( SUPER_CLOSE(&pArea->area) == Harbour::FAILURE )
+      return Harbour::FAILURE;
 
    if( pArea->pSDD )
       pArea->pSDD->Close(pArea);
@@ -660,7 +660,7 @@ static HB_ERRCODE sqlbaseClose( SQLBASEAREAP pArea )
       pArea->pConnection->uiAreaCount--;
       pArea->pConnection = nullptr;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -676,7 +676,7 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
        ( pArea->ulConnection && !s_pConnection[pArea->ulConnection - 1] ) )
    {
       hb_errRT_SQLBASE(EG_OPEN, ESQLDD_NOTCONNECTED, "Not connected", nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( pArea->ulConnection )
@@ -763,7 +763,7 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
       hb_itemRelease(pItemEof);
       hb_errRT_SQLBASE(EG_CORRUPTION, ESQLDD_INVALIDFIELD, "Invalid field type", nullptr);
       SELF_CLOSE(&pArea->area);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pArea->ulRecCount = 0;
@@ -776,10 +776,10 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
    pArea->pRowFlags[0] = SQLDD_FLAG_CACHED;
    pArea->fFetched = HB_TRUE;
 
-   if( SUPER_CREATE(&pArea->area, pOpenInfo) != HB_SUCCESS )
+   if( SUPER_CREATE(&pArea->area, pOpenInfo) != Harbour::SUCCESS )
    {
       SELF_CLOSE(&pArea->area);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    return SELF_GOTOP(&pArea->area);
@@ -798,7 +798,7 @@ static HB_ERRCODE sqlbaseInfo( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM p
          return SUPER_INFO(&pArea->area, uiIndex, pItem);
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -812,12 +812,12 @@ static HB_ERRCODE sqlbaseOpen( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
        !s_pConnection[pArea->ulConnection - 1] )
    {
       hb_errRT_SQLBASE(EG_OPEN, ESQLDD_NOTCONNECTED, "Not connected", nullptr);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( pArea->area.uiFieldCount )
       /* This should not happen (in __dbTrans()), because RDD is registered with RDT_FULL */
-      return HB_FAILURE;
+      return Harbour::FAILURE;
 
    pArea->pConnection = s_pConnection[pArea->ulConnection - 1];
    pArea->pConnection->uiAreaCount++;
@@ -828,13 +828,13 @@ static HB_ERRCODE sqlbaseOpen( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
 
    errCode = pArea->pSDD->Open(pArea);
 
-   if( errCode == HB_SUCCESS )
+   if( errCode == Harbour::SUCCESS )
       errCode = SUPER_OPEN(&pArea->area, pOpenInfo);
 
-   if( errCode != HB_SUCCESS )
+   if( errCode != Harbour::SUCCESS )
    {
       SELF_CLOSE(&pArea->area);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
    return SELF_GOTOP(&pArea->area);
 }
@@ -845,7 +845,7 @@ static HB_ERRCODE sqlbaseStructSize( SQLBASEAREAP pArea, HB_USHORT * uiSize )
    HB_SYMBOL_UNUSED(pArea);
 
    *uiSize = sizeof(SQLBASEAREA);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -857,7 +857,7 @@ static HB_ERRCODE sqlbaseChildEnd( SQLBASEAREAP pArea, LPDBRELINFO pRelInfo )
    if( pArea->lpdbPendingRel == pRelInfo )
       errCode = SELF_FORCEREL(&pArea->area);
    else
-      errCode = HB_SUCCESS;
+      errCode = Harbour::SUCCESS;
    SUPER_CHILDEND(&pArea->area, pRelInfo);
    return errCode;
 }
@@ -865,23 +865,23 @@ static HB_ERRCODE sqlbaseChildEnd( SQLBASEAREAP pArea, LPDBRELINFO pRelInfo )
 
 static HB_ERRCODE sqlbaseChildStart( SQLBASEAREAP pArea, LPDBRELINFO pRelInfo )
 {
-   if( SELF_CHILDSYNC(&pArea->area, pRelInfo) != HB_SUCCESS )
-      return HB_FAILURE;
+   if( SELF_CHILDSYNC(&pArea->area, pRelInfo) != Harbour::SUCCESS )
+      return Harbour::FAILURE;
    return SUPER_CHILDSTART(&pArea->area, pRelInfo);
 }
 
 
 static HB_ERRCODE sqlbaseChildSync( SQLBASEAREAP pArea, LPDBRELINFO pRelInfo )
 {
-   if( SELF_GOCOLD(&pArea->area) != HB_SUCCESS )
-      return HB_FAILURE;
+   if( SELF_GOCOLD(&pArea->area) != Harbour::SUCCESS )
+      return Harbour::FAILURE;
 
    pArea->lpdbPendingRel = pRelInfo;
 
    if( pArea->lpdbRelations )
       return SELF_SYNCCHILDREN(&pArea->area);
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -895,7 +895,7 @@ static HB_ERRCODE sqlbaseForceRel( SQLBASEAREAP pArea )
       pArea->lpdbPendingRel = nullptr;
       return SELF_RELEVAL(&pArea->area, lpdbPendingRel);
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -903,8 +903,8 @@ static HB_ERRCODE sqlbaseSetFilter( SQLBASEAREAP pArea, LPDBFILTERINFO pFilterIn
 {
    if( pArea->lpdbPendingRel )
    {
-      if( SELF_FORCEREL(&pArea->area) != HB_SUCCESS )
-         return HB_FAILURE;
+      if( SELF_FORCEREL(&pArea->area) != Harbour::SUCCESS )
+         return Harbour::FAILURE;
    }
    return SUPER_SETFILTER(&pArea->area, pFilterInfo);
 }
@@ -916,7 +916,7 @@ static HB_ERRCODE sqlbaseInit( LPRDDNODE pRDD )
    HB_SYMBOL_UNUSED(pRDD);
 
    s_pItemNewID = hb_itemNew(nullptr);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -955,7 +955,7 @@ static HB_ERRCODE sqlbaseExit( LPRDDNODE pRDD )
       s_pItemNewID = nullptr;
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -1020,7 +1020,7 @@ static HB_ERRCODE sqlbaseRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
 
          hb_rddsqlSetError(0, nullptr, nullptr, nullptr, 0);
          pConn = static_cast<SQLDDCONNECTION*>(hb_xgrabz(sizeof(SQLDDCONNECTION)));
-         if( pNode && pNode->Connect( pConn, pItem ) == HB_SUCCESS )
+         if( pNode && pNode->Connect( pConn, pItem ) == Harbour::SUCCESS )
          {
             pConn->pSDD = pNode;
 
@@ -1058,7 +1058,7 @@ static HB_ERRCODE sqlbaseRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
 
       case RDDI_DISCONNECT:
          hb_rddsqlSetError(0, nullptr, nullptr, nullptr, 0);
-         if( pConn && !pConn->uiAreaCount && pConn->pSDD->Disconnect( pConn ) == HB_SUCCESS )
+         if( pConn && !pConn->uiAreaCount && pConn->pSDD->Disconnect( pConn ) == Harbour::SUCCESS )
          {
             hb_xfree(pConn);
             s_pConnection[ulConn - 1] = nullptr;
@@ -1066,39 +1066,39 @@ static HB_ERRCODE sqlbaseRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
                s_ulConnectionCurrent = 0;
 
             hb_itemPutL(pItem, true);
-            return HB_SUCCESS;
+            return Harbour::SUCCESS;
          }
          hb_itemPutL(pItem, false);
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
 
       case RDDI_EXECUTE:
          hb_rddsqlSetError(0, nullptr, nullptr, nullptr, 0);
          if( pConn )
-            hb_itemPutL(pItem, pConn->pSDD->Execute(pConn, pItem) == HB_SUCCESS);
+            hb_itemPutL(pItem, pConn->pSDD->Execute(pConn, pItem) == Harbour::SUCCESS);
          else
             hb_itemPutL(pItem, false);
 
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
 
       case RDDI_ERROR:
          hb_itemPutC(pItem, s_szError);
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
 
       case RDDI_ERRORNO:
          hb_itemPutNI(pItem, s_errCode);
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
 
       case RDDI_QUERY:
          hb_itemPutC(pItem, s_szQuery);
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
 
       case RDDI_INSERTID:
          hb_itemCopy(pItem, s_pItemNewID);
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
 
       case RDDI_AFFECTEDROWS:
          hb_itemPutNInt(pItem, s_ulAffectedRows);
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
 
 #if 0
       default:
@@ -1107,7 +1107,7 @@ static HB_ERRCODE sqlbaseRddInfo( LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
 
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -1241,13 +1241,13 @@ HB_FUNC_STATIC( SQLBASE_GETFUNCTABLE )
          *puiCount = RDDFUNCSCOUNT;
 
       errCode = hb_rddInheritEx(pTable, &sqlbaseTable, &sqlbaseSuper, nullptr, nullptr);
-      if( errCode == HB_SUCCESS )
+      if( errCode == Harbour::SUCCESS )
          s_rddidSQLBASE = uiRddId;
 
       hb_retni(errCode);
    }
    else
-      hb_retni(HB_FAILURE);
+      hb_retni(Harbour::FAILURE);
 }
 
 static void hb_sqlbaseInit( void * cargo )

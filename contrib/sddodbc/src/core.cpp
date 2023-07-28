@@ -260,7 +260,7 @@ static HB_ERRCODE odbcConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
             pConnection->pSDDConn = hb_xgrab(sizeof(SDDCONN));
             ( ( SDDCONN * ) pConnection->pSDDConn )->hConn = hConnect;
             ( ( SDDCONN * ) pConnection->pSDDConn )->hEnv  = hEnv;
-            return HB_SUCCESS;
+            return Harbour::SUCCESS;
          }
          else
          {
@@ -293,7 +293,7 @@ static HB_ERRCODE odbcConnect( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
       hb_errRT_ODBCDD( EG_OPEN, ESQLDD_ENVALLOC, szError, hb_arrayGetCPtr(pItem, 2), errCode );
       hb_xfree(szError);
    }
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 
@@ -310,7 +310,7 @@ static HB_ERRCODE odbcDisconnect( SQLDDCONNECTION * pConnection )
    SQLFreeEnv( pSDDConn->hEnv );
 #endif
    hb_xfree(pSDDConn);
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -335,7 +335,7 @@ static HB_ERRCODE odbcExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
       szError = odbcGetError(pSDDConn->hEnv, pSDDConn->hConn, SQL_NULL_HSTMT, &errCode);
       hb_errRT_ODBCDD( EG_OPEN, ESQLDD_STMTALLOC, szError, hb_itemGetCPtr(pItem), errCode );
       hb_xfree(szError);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pchStatement = O_HB_ITEMGETSTR(pItem, &hStatement, &nStatementLen);
@@ -356,7 +356,7 @@ static HB_ERRCODE odbcExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 #else
          SQLFreeStmt( hStmt, SQL_DROP );
 #endif
-         return HB_SUCCESS;
+         return Harbour::SUCCESS;
       }
    }
 
@@ -368,7 +368,7 @@ static HB_ERRCODE odbcExecute( SQLDDCONNECTION * pConnection, PHB_ITEM pItem )
 #else
    SQLFreeStmt( hStmt, SQL_DROP );
 #endif
-   return HB_FAILURE;
+   return Harbour::FAILURE;
 }
 
 
@@ -398,7 +398,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
       szError = odbcGetError(pSDDConn->hEnv, pSDDConn->hConn, SQL_NULL_HSTMT, &errCode);
       hb_errRT_ODBCDD( EG_OPEN, ESQLDD_STMTALLOC, szError, pArea->szQuery, errCode );
       hb_xfree(szError);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pchQuery = O_HB_CHARDUP( pArea->szQuery );
@@ -415,7 +415,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
 #endif
       hb_errRT_ODBCDD( EG_OPEN, ESQLDD_INVALIDQUERY, szError, pArea->szQuery, errCode );
       hb_xfree(szError);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    if( !SQL_SUCCEEDED( SQLNumResultCols( hStmt, &iNameLen ) ) )
@@ -428,7 +428,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
 #endif
       hb_errRT_ODBCDD( EG_OPEN, ESQLDD_STMTDESCR + 1000, szError, pArea->szQuery, errCode );
       hb_xfree(szError);
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    uiFields = static_cast<HB_USHORT>(iNameLen);
@@ -465,7 +465,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
 #endif
          hb_errRT_ODBCDD( EG_OPEN, ESQLDD_STMTDESCR + 1001, szError, pArea->szQuery, 0 );
          hb_xfree(szError);
-         return HB_FAILURE;
+         return Harbour::FAILURE;
       }
 
       memset(&dbFieldInfo, 0, sizeof(dbFieldInfo));
@@ -627,7 +627,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
          hb_arraySetForward( pItemEof, uiIndex + 1, pItem );
 
          if( !bError )
-            bError = (SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == HB_FAILURE);
+            bError = (SELF_ADDFIELD(&pArea->area, &dbFieldInfo) == Harbour::FAILURE);
 
          hb_xfree(pszName);
       }
@@ -646,7 +646,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
       SQLFreeStmt( hStmt, SQL_DROP );
 #endif
       hb_errRT_ODBCDD( EG_CORRUPTION, ESQLDD_INVALIDFIELD, "Invalid field type", pArea->szQuery, errCode );
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pArea->ulRecCount = 0;
@@ -659,7 +659,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
    pArea->pRowFlags[0] = SQLDD_FLAG_CACHED;
 
    pSDDData->hStmt = hStmt;
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -679,7 +679,7 @@ static HB_ERRCODE odbcClose( SQLBASEAREAP pArea )
       hb_xfree(pSDDData);
       pArea->pSDDData = nullptr;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 
@@ -874,5 +874,5 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
       pArea->bRecordFlags = pArea->pRowFlags[ulRecNo];
       pArea->fPositioned  = HB_TRUE;
    }
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }

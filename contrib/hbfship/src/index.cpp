@@ -86,7 +86,7 @@ HB_FUNC( INDEXNAMES )
       {
          pOrderInfo.itmOrder  = hb_itemPutNI(pOrderInfo.itmOrder, i);
          pOrderInfo.itmResult = hb_itemPutC(pOrderInfo.itmResult, 0);
-         if( SELF_ORDINFO(pArea, DBOI_NAME, &pOrderInfo) != HB_SUCCESS )
+         if( SELF_ORDINFO(pArea, DBOI_NAME, &pOrderInfo) != Harbour::SUCCESS )
             break;
          hb_arraySet(pArray, i, pOrderInfo.itmResult);
       }

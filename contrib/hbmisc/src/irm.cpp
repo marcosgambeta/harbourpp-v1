@@ -327,7 +327,7 @@ HB_FUNC( IRMMAPSKIP )
       ulRecNo = hb_irmMapNext(pMap, ulRecNo);
       hb_stornl(ulRecNo, 2);
       if( ulRecNo != 0 )
-         hb_retl(SELF_GOTO(static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer()), ulRecNo) == HB_SUCCESS);
+         hb_retl(SELF_GOTO(static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer()), ulRecNo) == Harbour::SUCCESS);
       else
          hb_retl(false);
    }

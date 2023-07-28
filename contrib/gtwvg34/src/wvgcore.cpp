@@ -79,7 +79,7 @@ void hb_wvt_GetStringAttrib(int top, int left, int bottom, int right, HB_BYTE * 
          HB_BYTE bAttr;
          HB_USHORT usChar;
 
-         if( hb_gtGetScrChar(irow, icol, &iColor, &bAttr, &usChar) == HB_SUCCESS )
+         if( hb_gtGetScrChar(irow, icol, &iColor, &bAttr, &usChar) == Harbour::SUCCESS )
          {
             sBuffer[j] = static_cast<HB_BYTE>(usChar);
             sAttrib[j] = static_cast<HB_BYTE>(iColor);
