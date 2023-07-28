@@ -120,7 +120,7 @@ static HB_SIZE ct_StrFile( const char * pFileName, const char * pcStr, HB_SIZE n
    if( bFile && bOverwrite )
    {
       hFile = hb_fsOpen(pFileName, FO_READWRITE);
-      bOpen = HB_TRUE;
+      bOpen = true;
    }
    else if( !bFile || !ct_getsafety() )
    {

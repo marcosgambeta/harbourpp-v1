@@ -99,7 +99,7 @@ HB_FUNC( WIN_REPORTEVENT )
                       lpStrings,
                       static_cast<LPVOID>(const_cast<char*>(hb_parc(7)))) )
       {
-         bRetVal = HB_TRUE;
+         bRetVal = true;
       }
 
       if( lpStrings )

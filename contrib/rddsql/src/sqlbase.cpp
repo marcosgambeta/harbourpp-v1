@@ -198,7 +198,7 @@ static HB_ERRCODE sddGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
       pArea->pRecord      = pArea->pRow[ulRecNo];
       pArea->bRecordFlags = pArea->pRowFlags[ulRecNo];
 
-      pArea->fPositioned = HB_TRUE;
+      pArea->fPositioned = true;
    }
    return Harbour::SUCCESS;
 }
@@ -275,7 +275,7 @@ static HB_ERRCODE sqlbaseGoBottom( SQLBASEAREAP pArea )
       return Harbour::FAILURE;
 
    pArea->area.fTop    = HB_FALSE;
-   pArea->area.fBottom = HB_TRUE;
+   pArea->area.fBottom = true;
 
    if( SELF_GOTO(&pArea->area, pArea->ulRecCount) != Harbour::SUCCESS )
       return Harbour::FAILURE;
@@ -300,7 +300,7 @@ static HB_ERRCODE sqlbaseGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
    else
    {
       pArea->ulRecNo   = pArea->ulRecCount + 1;
-      pArea->area.fBof = pArea->area.fEof = HB_TRUE;
+      pArea->area.fBof = pArea->area.fEof = true;
    }
    pArea->area.fFound = HB_FALSE;
 
@@ -327,7 +327,7 @@ static HB_ERRCODE sqlbaseGoToId( SQLBASEAREAP pArea, PHB_ITEM pItem )
 
 static HB_ERRCODE sqlbaseGoTop( SQLBASEAREAP pArea )
 {
-   pArea->area.fTop    = HB_TRUE;
+   pArea->area.fTop    = true;
    pArea->area.fBottom = HB_FALSE;
 
    if( SELF_GOTO(&pArea->area, 1) == Harbour::FAILURE )
@@ -359,7 +359,7 @@ static HB_ERRCODE sqlbaseSkip( SQLBASEAREAP pArea, HB_LONG lToSkip )
    if( errCode == Harbour::SUCCESS && pArea->area.fBof && lToSkip < 0 )
    {
       errCode = SELF_GOTOP(&pArea->area);
-      pArea->area.fBof = HB_TRUE;
+      pArea->area.fBof = true;
    }
 
    if( lToSkip < 0 )
@@ -399,7 +399,7 @@ static HB_ERRCODE sqlbaseSkipRaw( SQLBASEAREAP pArea, HB_LONG lToSkip )
    else if( lToSkip < 0 && static_cast<HB_ULONG>(-lToSkip) >= pArea->ulRecNo )
    {
       errCode = SELF_GOTO(&pArea->area, 1);
-      pArea->area.fBof = HB_TRUE;
+      pArea->area.fBof = true;
    }
    else
       errCode = SELF_GOTO(&pArea->area, pArea->ulRecNo + lToSkip);
@@ -426,7 +426,7 @@ static HB_ERRCODE sqlbaseAppend( SQLBASEAREAP pArea, HB_BOOL bUnLockAll )
       pArea->ulRecMax += SQLDD_ROWSET_RESIZE;
    }
 
-   pArea->fAppend = pArea->fPositioned = HB_TRUE;
+   pArea->fAppend = pArea->fPositioned = true;
    pArea->ulRecCount++;
    pArea->ulRecNo   = pArea->ulRecCount;
    pArea->area.fBof = pArea->area.fEof = pArea->area.fFound = HB_FALSE;
@@ -511,7 +511,7 @@ static HB_ERRCODE sqlbaseGoHot( SQLBASEAREAP pArea )
    hb_itemRelease(pItem);
    pArea->pRecord        = pArray;
    pArea->bRecordFlags  |= SQLDD_FLAG_CACHED;
-   pArea->fRecordChanged = HB_TRUE;
+   pArea->fRecordChanged = true;
    return Harbour::SUCCESS;
 }
 
@@ -615,7 +615,7 @@ static HB_ERRCODE sqlbaseZap( SQLBASEAREAP pArea )
    pArea->pRowFlags = static_cast<HB_BYTE*>(hb_xrealloc(pArea->pRowFlags, SQLDD_ROWSET_RESIZE * sizeof(HB_BYTE)));
    pArea->ulRecMax = SQLDD_ROWSET_RESIZE;
 
-   pArea->fFetched = HB_TRUE;
+   pArea->fFetched = true;
 
    pArea->fPositioned = HB_FALSE;
 
@@ -746,7 +746,7 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
 
          default:
             pItem  = hb_itemNew(nullptr);
-            bError = HB_TRUE;
+            bError = true;
             break;
       }
 
@@ -774,7 +774,7 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
 
    pArea->pRow[0] = pItemEof;
    pArea->pRowFlags[0] = SQLDD_FLAG_CACHED;
-   pArea->fFetched = HB_TRUE;
+   pArea->fFetched = true;
 
    if( SUPER_CREATE(&pArea->area, pOpenInfo) != Harbour::SUCCESS )
    {

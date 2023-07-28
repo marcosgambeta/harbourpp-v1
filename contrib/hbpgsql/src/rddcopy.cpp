@@ -363,7 +363,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
       HB_VM_UNLOCK();
       pgResult = PQexec(context->connection, szInit);
       if( PQresultStatus(pgResult) != PGRES_COPY_IN )
-         bFail = HB_TRUE;
+         bFail = true;
       PQclear(pgResult);
       hb_xfree(szInit);
       HB_VM_LOCK();
@@ -387,7 +387,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
                       !exportBufSqlVar(context, pItem, sc_szQuote, sc_szEsc) ||
                       !addStrToContext( context, uiIter == uiFields ? "\n" : sc_szDelim ) )
                   {
-                     bFail = HB_TRUE;
+                     bFail = true;
                      break;
                   }
                }
@@ -400,7 +400,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
                       !exportBufSqlVar(context, pItem, sc_szQuote, sc_szEsc) ||
                       !addStrToContext( context, uiIter == uiFields ? "\n" : sc_szDelim ) )
                   {
-                     bFail = HB_TRUE;
+                     bFail = true;
                      break;
                   }
                }
@@ -417,19 +417,19 @@ HB_FUNC( HB_PQCOPYFROMWA )
       }
 
       if( !bFail && !addStrnToContext( context, "\\.\n", 3 ) ) /* end CSV transfer */
-         bFail = HB_TRUE;
+         bFail = true;
 
       HB_VM_UNLOCK();
       if( bFail )
          PQputCopyEnd(context->connection, "export buffer problems");
       else if( PQputCopyData(context->connection, context->buffer, context->position) == -1 || PQputCopyEnd(context->connection, nullptr) == -1 )
-         bFail = HB_TRUE;
+         bFail = true;
       else
       {
          while( ( pgResult = PQgetResult( context->connection ) ) )
          {
             if( PQresultStatus(pgResult) != PGRES_COMMAND_OK )
-               bFail = HB_TRUE;
+               bFail = true;
             PQclear(pgResult);
          }
       }

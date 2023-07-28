@@ -420,7 +420,7 @@ HB_FUNC( CHARWIN )
       }
       else
       {
-         fAll = HB_TRUE;
+         fAll = true;
       }
 
       hb_gtBeginWrite();
@@ -465,7 +465,7 @@ HB_FUNC( COLORWIN )
       }
       else
       {
-         fAll = HB_TRUE;
+         fAll = true;
       }
 
       hb_gtBeginWrite();
@@ -541,7 +541,7 @@ HB_FUNC( COLORREPL )
    }
    else
    {
-      fAll = HB_TRUE;
+      fAll = true;
    }
 
    hb_gtBeginWrite();

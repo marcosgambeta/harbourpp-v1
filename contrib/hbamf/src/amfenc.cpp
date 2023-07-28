@@ -1086,7 +1086,7 @@ static amfContext * context_setup(PHB_ITEM pFuncSym, HB_BOOL use_refs, HB_BOOL s
    /* "strstr" is another optional idea of catching similar strings,
       key in this hash is not the pointer to C char, but the string
       itself and the value is id of the reference */
-   context->use_strstr = HB_TRUE;
+   context->use_strstr = true;
 
    if( outer_context )
    {
@@ -1417,7 +1417,7 @@ HB_FUNC( AMF3_ENCODE )
    context->obj_ref       = hb_hashNew(nullptr);
    context->str_ref       = hb_hashNew(nullptr);
    context->class_ref     = hb_hashNew(nullptr);
-   context->use_refs      = HB_TRUE;
+   context->use_refs      = true;
    context->conv_function = pFuncSym;
    context->encode_ba     = lBA;
    context->objnref_count = 0;
@@ -1425,7 +1425,7 @@ HB_FUNC( AMF3_ENCODE )
    /* "strstr" is another optional idea of catching similar strings,
       key in this hash is not the pointer to C char, but the string
       itself and the value is id of the reference */
-   context->use_strstr   = HB_TRUE;
+   context->use_strstr   = true;
    context->strstr_count = 0;
    context->strstr_ref   = hb_hashNew(nullptr);
 

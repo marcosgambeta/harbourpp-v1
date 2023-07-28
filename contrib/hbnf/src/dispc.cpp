@@ -372,7 +372,7 @@ static void winup( PFT_DISPC dispc )
    int        k;
    HB_FOFFSET i, j;
 
-   dispc->bRefresh = HB_TRUE;
+   dispc->bRefresh = true;
    k = dispc->wintop - 3;
 
    while( dispc->buffer[k] != CR && k > dispc->bufftop )
@@ -427,7 +427,7 @@ static void windown( PFT_DISPC dispc )
    int        k;
    HB_FOFFSET i, j;
 
-   dispc->bRefresh = HB_TRUE;
+   dispc->bRefresh = true;
    k = dispc->winbot;
 
    while( dispc->buffer[k] != CR && k <= dispc->buffbot )
@@ -512,7 +512,7 @@ static void filetop( PFT_DISPC dispc )
       buff_align(dispc);
    }
 
-   dispc->bRefresh = HB_TRUE;
+   dispc->bRefresh = true;
    dispc->wintop   = static_cast<int>(dispc->buffoffset);
    dispc->winrow   = dispc->sline;
    dispc->wincol   = 0;
@@ -531,7 +531,7 @@ static void filebot( PFT_DISPC dispc )
       buff_align(dispc);
    }
 
-   dispc->bRefresh = HB_TRUE;
+   dispc->bRefresh = true;
    dispc->wintop   = static_cast<int>(dispc->buffbot) - 3;
    dispc->winrow   = dispc->eline;
    dispc->wincol   = 0;
@@ -712,7 +712,7 @@ HB_FUNC( FT_DISPFILE )
    if( dispc->bIsAllocated && dispc->infile > 0 )
    {
       bDone = HB_FALSE;
-      dispc->bRefresh = HB_TRUE;
+      dispc->bRefresh = true;
 
       /* draw inside of window with normal color attribute */
 
@@ -785,7 +785,7 @@ HB_FUNC( FT_DISPFILE )
             case K_LEFT:
 
                dispc->wincol  -= dispc->colinc;             /* move cursor    */
-               dispc->bRefresh = HB_TRUE;                   /* to the left    */
+               dispc->bRefresh = true;                   /* to the left    */
 
                if( dispc->wincol < 0 )
                {
@@ -797,7 +797,7 @@ HB_FUNC( FT_DISPFILE )
             case K_RIGHT:
 
                dispc->wincol  += dispc->colinc;             /* move cursor  */
-               dispc->bRefresh = HB_TRUE;                   /* to the right */
+               dispc->bRefresh = true;                   /* to the right */
 
                if( dispc->wincol > ( dispc->maxlin - dispc->width ) )
                {
@@ -809,7 +809,7 @@ HB_FUNC( FT_DISPFILE )
             case K_HOME:
 
                dispc->wincol   = 0;                         /* move cursor  */
-               dispc->bRefresh = HB_TRUE;                   /* to first col */
+               dispc->bRefresh = true;                   /* to first col */
 
                break;
 
@@ -818,14 +818,14 @@ HB_FUNC( FT_DISPFILE )
             case K_END:
 
                dispc->wincol   = dispc->maxlin - dispc->width;
-               dispc->bRefresh = HB_TRUE;
+               dispc->bRefresh = true;
 
                break;
 
             case K_CTRL_LEFT:
 
                dispc->wincol  -= 16;                        /* move cursor    */
-               dispc->bRefresh = HB_TRUE;                   /* 16 col to left */
+               dispc->bRefresh = true;                   /* 16 col to left */
 
                if( dispc->wincol < 0 )
                {
@@ -837,7 +837,7 @@ HB_FUNC( FT_DISPFILE )
             case K_CTRL_RIGHT:
 
                dispc->wincol  += 16;                        /* move cursor     */
-               dispc->bRefresh = HB_TRUE;                   /* 16 col to right */
+               dispc->bRefresh = true;                   /* 16 col to right */
 
                if( dispc->wincol > ( dispc->maxlin - dispc->width ) )
                {
@@ -876,12 +876,12 @@ HB_FUNC( FT_DISPFILE )
 
             case K_ENTER:
 
-               bDone = HB_TRUE;                             /* carriage return */
+               bDone = true;                             /* carriage return */
                break;                                       /* terminates      */
 
             case K_ESC:
 
-               bDone = HB_TRUE;                             /* escape key */
+               bDone = true;                             /* escape key */
                break;                                       /* terminates */
 
             /* scan key list and see if key pressed is there */
@@ -892,7 +892,7 @@ HB_FUNC( FT_DISPFILE )
                {
                   if( dispc->keylist[i] == ch )
                   {
-                     bDone = HB_TRUE;
+                     bDone = true;
                   }
                }
          }

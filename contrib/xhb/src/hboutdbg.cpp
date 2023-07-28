@@ -143,12 +143,12 @@ HB_BOOL hb_OutDebugName(PHB_ITEM pName)
       hb_strncpy( s_szDebugName, hb_itemGetCPtr(pName), sizeof(s_szDebugName) - 1 );
       s_iUseDebugName = 1;
 
-      bRet = HB_TRUE;
+      bRet = true;
    }
    else if( pName == nullptr )
    {
       s_iUseDebugName = 0;
-      bRet = HB_TRUE;
+      bRet = true;
    }
    else
       bRet = HB_FALSE;

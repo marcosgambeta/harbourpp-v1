@@ -306,7 +306,7 @@ static void do_token1(int iSwitch)
          {
             if( nSkip == HB_SIZE_MAX )
             {
-               HB_BOOL bLast = HB_TRUE;
+               HB_BOOL bLast = true;
 
                for( const char * t = pc + 1; t < pcString + sStrLen; t++ )
                {

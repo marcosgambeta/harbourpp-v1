@@ -785,7 +785,7 @@ BOOL CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LPARAM
       CHOOSEFONT * cf = reinterpret_cast<CHOOSEFONT*>(lParam);
       PHB_ITEM     pBlock = static_cast<PHB_ITEM>(hb_itemNew(reinterpret_cast<PHB_ITEM>(cf->lCustData)));
       SetProp(hwnd, TEXT("DIALOGPROC"), pBlock);
-      binit = HB_TRUE;
+      binit = true;
    }
 
    block = static_cast<PHB_ITEM>(GetProp(hwnd, TEXT("DIALOGPROC")));

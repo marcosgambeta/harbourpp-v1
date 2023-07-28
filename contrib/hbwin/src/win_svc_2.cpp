@@ -103,7 +103,7 @@ HB_FUNC( WIN_SERVICEINSTALL )
 
          if( schSrv )
          {
-            bRetVal = HB_TRUE;
+            bRetVal = true;
 
             CloseServiceHandle(schSrv);
          }

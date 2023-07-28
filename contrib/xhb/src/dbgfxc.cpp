@@ -50,10 +50,10 @@
 
 #include "xhb.hpp"
 
-static HB_BOOL s_bToOutputDebug = HB_TRUE;
-static HB_BOOL s_bToLogFile     = HB_TRUE;
+static HB_BOOL s_bToOutputDebug = true;
+static HB_BOOL s_bToLogFile     = true;
 
-static HB_BOOL s_bEmptyLogFile = HB_TRUE;
+static HB_BOOL s_bEmptyLogFile = true;
 
 HB_BOOL hb_ToOutDebugOnOff( HB_BOOL bOnOff )
 {

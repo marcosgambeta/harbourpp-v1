@@ -421,7 +421,7 @@ static HB_ISIZ InsText( PHB_EDITOR pEd, char * adres, HB_ISIZ line )
          {
             /* There is no CRLF at the end of inserted text -
                we have to add CRLF to separate it from existing text */
-            addCRLF = HB_TRUE;
+            addCRLF = true;
             dl     += 2;
          }
          MoveText(pEd, off, off + dl, pEd->buffer_size - (off - 1) - dl);
@@ -437,7 +437,7 @@ static HB_ISIZ InsText( PHB_EDITOR pEd, char * adres, HB_ISIZ line )
 
          if( adres[dl - 1] != '\n' && adres[dl - 2] != '\r' )
          {
-            addCRLF = HB_TRUE;
+            addCRLF = true;
             dl     += 2;
          }
          MoveText(pEd, off, off + dl, pEd->buffer_size - (off - 1) - dl);
@@ -653,7 +653,7 @@ HB_FUNC( ED_CONFIG )
          pEd->active       = 1;
       }
 
-      pEd->fIsConfigured  = HB_TRUE;
+      pEd->fIsConfigured  = true;
       pEd->fStable        = HB_FALSE;
       pEd->current_stabil = 0;
       pEd->next_stabil    = pEd->first_display;
@@ -824,7 +824,7 @@ HB_FUNC( ED_READTEXT )
 
          NewText(pEd);
 
-         lSuccess     = HB_TRUE;
+         lSuccess     = true;
          pEd->fStable = HB_FALSE;
       }
 
@@ -982,7 +982,7 @@ HB_FUNC( ED_STABILIZE )
          hb_gtColorSelect(0);
       }
 
-      pEd->fStable = HB_TRUE;
+      pEd->fStable = true;
 
       hb_retni(nRow);
    }
@@ -1027,7 +1027,7 @@ static void Down( PHB_EDITOR pEd )
       j = -1;                          /* no more lines */
    if( j < 0 )
    {
-      pEd->fStable = HB_TRUE;
+      pEd->fStable = true;
    }
    else
    {
@@ -1090,7 +1090,7 @@ static void Up( PHB_EDITOR pEd )
    jj = Prev(pEd, pEd->current_line);
    if( jj < 0 )
    {
-      pEd->fStable = HB_TRUE;
+      pEd->fStable = true;
    }
    else
    {
@@ -1163,7 +1163,7 @@ HB_FUNC( ED_PGDOWN )
       j = Next(pEd, pEd->last_display);
       if( pEd->begin[j] == '\0' )  /* no more lines */
       {
-         pEd->fStable = HB_TRUE;
+         pEd->fStable = true;
          /* advance the cursor as much as possible (to the last line) */
          for( i = 0; i < pEd->bottom - pEd->top + 1; i++ )
             Down(pEd);
@@ -1237,7 +1237,7 @@ HB_FUNC( ED_PGUP )
       j = Prev(pEd, pEd->first_display);
       if( j < 0 )  /* no more lines to move */
       {
-         pEd->fStable = HB_TRUE;
+         pEd->fStable = true;
          /* advance the cursor to the topmost line */
          for( i = 0; i < bt + 1; i++ )
             Up(pEd);
@@ -2042,7 +2042,7 @@ static HB_BOOL format_line( PHB_EDITOR pEd, char Karetka, HB_ISIZ LineDl )
 
       /* the line is longer then maximal allowed length  -
          wrap the line */
-      status = HB_TRUE;  /* the line will be split */
+      status = true;  /* the line will be split */
 
       /* copy maximum allowed bytes form the line into temporary buffer */
       hb_strncpy(pom, pEd->begin + pEd->current_line, pEd->line_length + 10 + rdl);
@@ -2216,7 +2216,7 @@ static void PutChar( PHB_EDITOR pEd, HB_BOOL fInsert, char znak )
    if( !jj )
    {
       if( (pEd->cursor_col + pEd->first_col) > (pEd->right - pEd->left) )
-         jj = HB_TRUE;
+         jj = true;
    }
 
    if( jj )

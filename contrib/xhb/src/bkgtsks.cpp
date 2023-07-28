@@ -175,7 +175,7 @@ void hb_backgroundRun(void)
 
    if( !s_bIamBackground && s_bEnabled )
    {
-      s_bIamBackground = HB_TRUE;
+      s_bIamBackground = true;
 
       if( s_uiBackgroundTask < s_uiBackgroundMaxTask )
       {
@@ -212,7 +212,7 @@ void hb_backgroundRunForced(void)
 {
    HB_BOOL bOldSet = s_bEnabled;
 
-   s_bEnabled = HB_TRUE;
+   s_bEnabled = true;
 
    hb_backgroundRun();
 
@@ -226,7 +226,7 @@ void hb_backgroundRunSingle(HB_ULONG ulID)
 
    if( !s_bIamBackground )
    {
-      s_bIamBackground = HB_TRUE;
+      s_bIamBackground = true;
 
       pBkgTask = hb_backgroundFind(ulID);
       if( pBkgTask )

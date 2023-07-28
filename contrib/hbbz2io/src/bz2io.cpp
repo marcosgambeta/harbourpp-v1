@@ -388,7 +388,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXI
             hb_fsSetError(HB_BZ2_ERROR_BASE - err);
             return static_cast<HB_SIZE>(-1);
          }
-         pFile->fInited = HB_TRUE;
+         pFile->fInited = true;
          pFile->iMode = FO_READ;
       }
 
@@ -410,7 +410,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXI
             {
                BZ2_bzDecompressEnd(&pFile->bz2);
                pFile->fInited = HB_FALSE;
-               pFile->fEof = HB_TRUE;
+               pFile->fEof = true;
             }
             else
             {
@@ -462,7 +462,7 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * buffer, HB_SIZE nSize, 
             hb_fsSetError(HB_BZ2_ERROR_BASE - err);
             return static_cast<HB_SIZE>(-1);
          }
-         pFile->fInited = HB_TRUE;
+         pFile->fInited = true;
          pFile->iMode = FO_WRITE;
       }
 

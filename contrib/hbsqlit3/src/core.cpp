@@ -710,7 +710,7 @@ HB_FUNC( SQLITE3_TEMP_DIRECTORY )
 
       if( hb_fsIsDirectory(pszDirName) )
       {
-         bResult = HB_TRUE;
+         bResult = true;
       }
       else
       {
@@ -718,7 +718,7 @@ HB_FUNC( SQLITE3_TEMP_DIRECTORY )
          {
             if( hb_fsMkDir(pszDirName) )
             {
-               bResult = HB_TRUE;
+               bResult = true;
             }
             else
             {

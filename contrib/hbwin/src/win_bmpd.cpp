@@ -283,7 +283,7 @@ static int hb_png_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * p
    hb_png_read_data.buffer = buffer;
    hb_png_read_data.nLen = nBufferSize;
    hb_png_read_data.nPos = sizeof(header);
-   hb_png_read_data.bOk = HB_TRUE;
+   hb_png_read_data.bOk = true;
 
    png_set_sig_bytes(png_ptr, sizeof(header));
    png_set_read_fn(png_ptr, static_cast<void*>(&hb_png_read_data), static_cast<png_rw_ptr>(hb_png_read_func));
@@ -358,7 +358,7 @@ HB_FUNC( WIN_BITMAPDIMENSIONS )
          iHeight = abs(pbmi->bmiHeader.biHeight);
       }
 
-      bRetVal = HB_TRUE;
+      bRetVal = true;
    }
    else if( iType == HB_WIN_BITMAP_JPEG )
    {

@@ -428,12 +428,12 @@ static HRESULT STDMETHODCALLTYPE Invoke(IDispatch * lpThis, DISPID dispid, REFII
                {
                   hb_oleItemToVariantEx(pVarResult, pItem, s_objItemToVariant);
                }
-               fResult = HB_TRUE;
+               fResult = true;
             }
             else if( (wFlags & DISPATCH_PROPERTYPUT) != 0 && pParams->cArgs == 1 )
             {
                hb_oleVariantToItemEx(pItem, &pParams->rgvarg[0], uiClass);
-               fResult = HB_TRUE;
+               fResult = true;
             }
          }
       }
@@ -650,7 +650,7 @@ static HRESULT STDMETHODCALLTYPE classCreateInstance(IClassFactory * lpThis, IUn
             }
             else if( !s_pMsgHash && s_hashWithNumKeys(s_pAction) )
             {
-               fGuids = HB_TRUE;
+               fGuids = true;
             }
          }
       }

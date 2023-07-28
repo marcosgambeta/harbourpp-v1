@@ -282,7 +282,7 @@ HB_FUNC( ADDMONTH )
    {
       if( HB_ISTIMESTAMP(1) )
       {
-         fTimeStamp = HB_TRUE;
+         fTimeStamp = true;
          hb_partdt(&lJulian, &lMillisec, 1);
          hb_dateDecode(lJulian, &iYear, &iMonth, &iDay);
       }

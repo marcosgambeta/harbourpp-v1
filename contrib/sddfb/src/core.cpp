@@ -399,7 +399,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
          default:  /* other fields as binary string */
             pVar->sqldata      = static_cast<char*>(hb_xgrab(sizeof(char) * pVar->sqllen));
             pItem  = hb_itemNew(nullptr);
-            bError = HB_TRUE;
+            bError = true;
             break;
       }
 
@@ -548,7 +548,7 @@ static HB_ERRCODE fbGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
       }
       else if( lErr == 100 )
       {
-         pArea->fFetched = HB_TRUE;
+         pArea->fFetched = true;
          if( isc_dsql_free_statement( status, phStmt, DSQL_drop ) )
          {
             hb_errRT_FirebirdDD( EG_OPEN, ESQLDD_STMTFREE, "Statement free error", nullptr, static_cast<HB_ERRCODE>(isc_sqlcode(status)) );
@@ -584,7 +584,7 @@ static HB_ERRCODE fbGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
    {
       pArea->pRecord      = pArea->pRow[ulRecNo];
       pArea->bRecordFlags = pArea->pRowFlags[ulRecNo];
-      pArea->fPositioned  = HB_TRUE;
+      pArea->fPositioned  = true;
    }
    return Harbour::SUCCESS;
 }

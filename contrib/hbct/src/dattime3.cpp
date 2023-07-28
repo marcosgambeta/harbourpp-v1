@@ -111,7 +111,7 @@ static HB_BOOL _hb_timeValid(const char * szTime, HB_SIZE nLen, int * piDecode)
       int     i;
       HB_SIZE nPos;
 
-      fValid = HB_TRUE;
+      fValid = true;
       for( nPos = 0; fValid && nPos < nLen; ++nPos )
       {
          fValid = nPos % 3 == 2 ? szTime[nPos] == ':' : (szTime[nPos] >= '0' && szTime[nPos] <= '9');

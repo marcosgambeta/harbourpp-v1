@@ -60,7 +60,7 @@ HB_FUNC( FT_PROPER )
    const char * cStr = hb_parc(1);
    char *       cDst = nullptr;
    HB_ISIZ      i;
-   HB_BOOL      fCap = HB_TRUE;
+   HB_BOOL      fCap = true;
 
    hb_storc(nullptr, 1);
 

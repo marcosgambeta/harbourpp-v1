@@ -120,7 +120,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest, PHB_IT
          HB_SIZE nRead;
 
          buffer = static_cast<HB_UCHAR*>(hb_xgrab(BUFFER_SIZE));
-         bRetVal = HB_TRUE;
+         bRetVal = true;
          if( pBlock && HB_IS_EVALITEM(pBlock) )
             pCount = hb_itemNew(nullptr);
 

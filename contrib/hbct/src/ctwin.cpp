@@ -398,7 +398,7 @@ static int hb_ctw_SetWindowBoard( PHB_GTCTW pCTW, int iTop, int iLeft, int iBott
       pCTW->iBoardLeft   = iLeft;
       pCTW->iBoardBottom = iBottom;
       pCTW->iBoardRight  = iRight;
-      pCTW->fBoardSet    = HB_TRUE;
+      pCTW->fBoardSet    = true;
       hb_ctw_RemapAllWindows(pCTW, 0, true);
 
       return 0;
@@ -834,7 +834,7 @@ static int hb_ctw_CreateWindow( PHB_GTCTW pCTW, int iTop, int iLeft, int iBottom
 
    if( pWnd->iShadowAttr >= 0 )
    {
-      fClear = HB_TRUE;
+      fClear = true;
    }
    bAttr = 0;
    if( iColor < 0 )
@@ -1148,7 +1148,7 @@ static int hb_ctw_SetWindowClip( PHB_GTCTW pCTW, int iWindow, int iTop, int iLef
          }
          else
          {
-            pWnd->fClip      = HB_TRUE;
+            pWnd->fClip      = true;
             pWnd->iCliTop    = iTop;
             pWnd->iCliLeft   = iLeft;
             pWnd->iCliBottom = iBottom;
@@ -1629,20 +1629,20 @@ static void hb_ctw_gt_WriteCon( PHB_GT pGT, const char * szText, HB_SIZE nLength
       switch( wc )
       {
          case HB_CHAR_BEL:
-            bDisp = bBell = HB_TRUE;
+            bDisp = bBell = true;
             break;
 
          case HB_CHAR_BS:
             if( iCol > 0 )
             {
                --iCol;
-               bDisp = HB_TRUE;
+               bDisp = true;
             }
             else if( iRow > 0 )
             {
                iCol = iMaxCol;
                --iRow;
-               bDisp = HB_TRUE;
+               bDisp = true;
             }
             if( bDisp )
             {
@@ -1661,7 +1661,7 @@ static void hb_ctw_gt_WriteCon( PHB_GT pGT, const char * szText, HB_SIZE nLength
          case HB_CHAR_LF:
             iCol = 0;
             ++iRow;
-            bDisp = HB_TRUE;
+            bDisp = true;
             break;
 
          case HB_CHAR_CR:
@@ -1671,7 +1671,7 @@ static void hb_ctw_gt_WriteCon( PHB_GT pGT, const char * szText, HB_SIZE nLength
                ++iRow;
                ++nIndex;
             }
-            bDisp = HB_TRUE;
+            bDisp = true;
             break;
 
          default:
@@ -1680,11 +1680,11 @@ static void hb_ctw_gt_WriteCon( PHB_GT pGT, const char * szText, HB_SIZE nLength
             {
                iCol = 0;
                ++iRow;
-               bDisp = HB_TRUE;
+               bDisp = true;
             }
             else if( iLen >= WRITECON_BUFFER_SIZE )
             {
-               bDisp = HB_TRUE;
+               bDisp = true;
             }
       }
 
@@ -1765,20 +1765,20 @@ static void hb_ctw_gt_WriteConW( PHB_GT pGT, const HB_WCHAR * szText, HB_SIZE nL
       switch( wc )
       {
          case HB_CHAR_BEL:
-            bDisp = bBell = HB_TRUE;
+            bDisp = bBell = true;
             break;
 
          case HB_CHAR_BS:
             if( iCol > 0 )
             {
                --iCol;
-               bDisp = HB_TRUE;
+               bDisp = true;
             }
             else if( iRow > 0 )
             {
                iCol = iMaxCol;
                --iRow;
-               bDisp = HB_TRUE;
+               bDisp = true;
             }
             if( bDisp )
             {
@@ -1797,7 +1797,7 @@ static void hb_ctw_gt_WriteConW( PHB_GT pGT, const HB_WCHAR * szText, HB_SIZE nL
          case HB_CHAR_LF:
             iCol = 0;
             ++iRow;
-            bDisp = HB_TRUE;
+            bDisp = true;
             break;
 
          case HB_CHAR_CR:
@@ -1807,7 +1807,7 @@ static void hb_ctw_gt_WriteConW( PHB_GT pGT, const HB_WCHAR * szText, HB_SIZE nL
                ++iRow;
                ++nIndex;
             }
-            bDisp = HB_TRUE;
+            bDisp = true;
             break;
 
          default:
@@ -1816,11 +1816,11 @@ static void hb_ctw_gt_WriteConW( PHB_GT pGT, const HB_WCHAR * szText, HB_SIZE nL
             {
                iCol = 0;
                ++iRow;
-               bDisp = HB_TRUE;
+               bDisp = true;
             }
             else if( iLen >= WRITECON_BUFFER_SIZE )
             {
-               bDisp = HB_TRUE;
+               bDisp = true;
             }
       }
 

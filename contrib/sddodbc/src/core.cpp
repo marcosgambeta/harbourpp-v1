@@ -561,7 +561,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
 #if 0
             HB_TRACE( HB_TR_ALWAYS, ( "new sql type=%d", iDataType ) );
 #endif
-            bError  = HB_TRUE;
+            bError  = true;
             errCode = static_cast<HB_ERRCODE>(iDataType);
             break;
       }
@@ -620,7 +620,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
 
             default:
                hb_itemClear(pItem);
-               bError = HB_TRUE;
+               bError = true;
                break;
          }
 
@@ -693,7 +693,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
    HB_USHORT ui;
 
    /* No pArea->pSDDData for DBCreate() area...
-    * though pArea->fFetched == HB_TRUE for them
+    * though pArea->fFetched == true for them
     */
    hStmt = pArea->pSDDData ? ( ( SDDDATA * ) pArea->pSDDData )->hStmt : nullptr;
 
@@ -701,7 +701,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
    {
       if( !SQL_SUCCEEDED( SQLFetch( hStmt ) ) )
       {
-         pArea->fFetched = HB_TRUE;
+         pArea->fFetched = true;
          break;
       }
 
@@ -872,7 +872,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
    {
       pArea->pRecord      = pArea->pRow[ulRecNo];
       pArea->bRecordFlags = pArea->pRowFlags[ulRecNo];
-      pArea->fPositioned  = HB_TRUE;
+      pArea->fPositioned  = true;
    }
    return Harbour::SUCCESS;
 }

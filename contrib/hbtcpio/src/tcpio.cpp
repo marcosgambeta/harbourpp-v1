@@ -217,7 +217,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * data, HB_SIZE nSize, HB_MAXINT
             case HB_SOCKET_ERR_TRYAGAIN:
                break;
             default:
-               pFile->fEof = HB_TRUE;
+               pFile->fEof = true;
                break;
          }
          lRead = 0;

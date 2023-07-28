@@ -250,7 +250,7 @@ HB_FUNC( HB_READLINE )
       }
 
       pTerm1       = hb_itemPutC(nullptr, hb_setGetCPtr(HB_SET_EOL));
-      bAlloc_Term1 = HB_TRUE;
+      bAlloc_Term1 = true;
    }
    else
       pTerm1 = hb_param(2, Harbour::Item::ANY);

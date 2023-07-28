@@ -141,7 +141,7 @@ static long hb_hbfskip( PFT_TEXT ft_text, char * buffer, HB_SIZE bufsize, int re
             ft_text->recno[ft_text->area]  += 1;
          }
          else
-            ft_text->isEof[ft_text->area] = HB_TRUE;
+            ft_text->isEof[ft_text->area] = true;
       }
    }
    else
@@ -420,7 +420,7 @@ HB_FUNC( HB_FREADANDSKIP )
           ((*(buffer + x) == 10) && x < read - 1 && (*(buffer + x + 1) == 13)) )
       {
          x       += 2;
-         bHasCRLF = HB_TRUE;
+         bHasCRLF = true;
          break;
       }
       ++x;

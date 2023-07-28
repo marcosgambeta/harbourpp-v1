@@ -209,7 +209,7 @@ static const gtAllegKey s_CtrlTable[GT_CTRL_TABLE_SIZE] =
 
 static void hb_gt_alleg_Error(const char * szMsg)
 {
-   s_fGtError = HB_TRUE;
+   s_fGtError = true;
    hb_errInternal(9997, "%s: %s", szMsg, allegro_error);
 }
 
@@ -438,7 +438,7 @@ static HB_BOOL hb_gt_alleg_InitializeScreen(PHB_GT pGT, int iRows, int iCols, HB
       }
       else
       {
-         lMode = HB_TRUE;
+         lMode = true;
       }
 
       {
@@ -458,7 +458,7 @@ static HB_BOOL hb_gt_alleg_InitializeScreen(PHB_GT pGT, int iRows, int iCols, HB
          s_iMsButtons = al_install_mouse();
       }
 
-      s_fInit = HB_TRUE;
+      s_fInit = true;
       s_mouseBound.iLeft   = 0;
       s_mouseBound.iTop    = 0;
       s_mouseBound.iRight  = AL_SCREEN_W - 1;
@@ -1206,7 +1206,7 @@ static void hb_gt_alleg_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
 
          if( iColor != iDefColor || uc != ' ' )
          {
-            s_fMakeInit = HB_TRUE;
+            s_fMakeInit = true;
             break;
          }
       }

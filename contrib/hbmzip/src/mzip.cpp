@@ -177,7 +177,7 @@ static PHB_FILE hb_fileHandleParam( int iParam, HB_BOOL * pfFree )
       if( hFile != FS_ERROR )
       {
          pFile = hb_fileFromHandle(hFile);
-         * pfFree = HB_TRUE;
+         * pfFree = true;
       }
    }
    else
@@ -823,7 +823,7 @@ static int hb_zipStoreFile( zipFile hZip, int iParamFileName, int iParamZipName,
       }
       else
       {
-         fError = HB_TRUE;
+         fError = true;
       }
 
       if( lpFileNameFree )
@@ -883,7 +883,7 @@ static int hb_zipStoreFile( zipFile hZip, int iParamFileName, int iParamZipName,
       }
       else
       {
-         fError = HB_TRUE;
+         fError = true;
       }
 
       if( pszFree )

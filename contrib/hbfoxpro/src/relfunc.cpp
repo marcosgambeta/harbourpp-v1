@@ -76,7 +76,7 @@ HB_FUNC( INLIST )
       {
          if( hb_itemEqual( pValue, hb_param(iParam, Harbour::Item::ANY) ) )
          {
-            fResult = HB_TRUE;
+            fResult = true;
             break;
          }
       }

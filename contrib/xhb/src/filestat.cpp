@@ -192,7 +192,7 @@ HB_FUNC( FILESTATS )
 
          hb_fsAttrDecode( ushbAttr, szAttr );
 
-         fResult = HB_TRUE;
+         fResult = true;
       }
    }
 
@@ -246,7 +246,7 @@ HB_FUNC( FILESTATS )
                lcDate = hb_dateEncode(0, 0, 0);
                lcTime = 0;
             }
-            fResult = HB_TRUE;
+            fResult = true;
          }
       }
       hb_strfree(hFileName);
@@ -272,7 +272,7 @@ HB_FUNC( FILESTATS )
          lmDate = hb_dateEncode(0, 0, 0);
          lmTime = 0;
          hb_fsFindClose( findinfo );
-         fResult = HB_TRUE;
+         fResult = true;
       }
    }
 

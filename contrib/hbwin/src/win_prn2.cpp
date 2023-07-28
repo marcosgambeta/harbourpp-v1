@@ -175,7 +175,7 @@ static HB_BOOL hb_GetJobs(HANDLE hPrinter, JOB_INFO_2 ** ppJobInfo, DWORD * pdwJ
             {
                *pdwJobs = dwReturned;
                *ppJobInfo = pJobInfo;
-               bResult = HB_TRUE;
+               bResult = true;
             }
             else
             {

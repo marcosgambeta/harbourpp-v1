@@ -382,7 +382,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
             break;
 
          default:
-            bError = HB_TRUE;
+            bError = true;
             break;
       }
 #if 0
@@ -432,7 +432,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
 
             default:
                hb_itemClear(pItem);
-               bError = HB_TRUE;
+               bError = true;
                break;
          }
 
@@ -469,7 +469,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
 
    pArea->pRow[0] = pItemEof;
    pArea->pRowFlags[0] = SQLDD_FLAG_CACHED;
-   pArea->fFetched = HB_TRUE;
+   pArea->fFetched = true;
 
    return Harbour::SUCCESS;
 }
@@ -562,7 +562,7 @@ static HB_ERRCODE pgsqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
       }
 
       default:
-         bError = HB_TRUE;
+         bError = true;
          break;
    }
 

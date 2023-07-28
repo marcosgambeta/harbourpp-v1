@@ -398,7 +398,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
    }
 
    if( (iStatus = sqlite3_step(st)) == SQLITE_DONE )
-      pArea->fFetched = HB_TRUE;
+      pArea->fFetched = true;
    else if( iStatus != SQLITE_ROW )
    {
       szError = sqlite3GetError(pDb, &errCode);
@@ -499,7 +499,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
             break;
 
          default:
-            bError = HB_TRUE;
+            bError = true;
       }
 
       if( !bError )
@@ -655,7 +655,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
 
       if( sqlite3_step( st ) != SQLITE_ROW )
       {
-         pArea->fFetched = HB_TRUE;
+         pArea->fFetched = true;
          break;
       }
    }
@@ -670,7 +670,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
    {
       pArea->pRecord      = pArea->pRow[ulRecNo];
       pArea->bRecordFlags = pArea->pRowFlags[ulRecNo];
-      pArea->fPositioned  = HB_TRUE;
+      pArea->fPositioned  = true;
    }
    return Harbour::SUCCESS;
 }

@@ -516,7 +516,7 @@ HB_FUNC( WIN_GETDOCUMENTPROPERTIES )
             hb_storni(pDevMode->dmPrintQuality, 7);
             hb_storni(pDevMode->dmPaperLength, 8);
             hb_storni(pDevMode->dmPaperWidth, 9);
-            bResult = HB_TRUE;
+            bResult = true;
          }
 
          hb_xfree(pDevMode);
@@ -674,7 +674,7 @@ HB_FUNC( WIN_FILLRECT )
 
       if( FillRect(hDC, &rct, hBrush) )
       {
-         fResult = HB_TRUE;
+         fResult = true;
       }
 
       DeleteObject(hBrush);

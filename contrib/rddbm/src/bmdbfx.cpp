@@ -371,8 +371,8 @@ HB_FUNC( BM_DBSETFILTERARRAY )
                HB_SIZE nPos;
 
                pArea->dbfi.lpvCargo   = pBM;
-               pArea->dbfi.fOptimized = HB_TRUE;
-               pArea->dbfi.fFilter    = HB_TRUE;
+               pArea->dbfi.fOptimized = true;
+               pArea->dbfi.fFilter    = true;
 
                for( nPos = hb_arrayLen(pArray); nPos; nPos-- )
                {
@@ -443,7 +443,7 @@ HB_FUNC( BM_DBSETFILTERARRAYDEL )
 static HB_BOOL hb_bmEvalFilter(AREAP pArea, HB_BOOL fUpdate)
 {
    PBM_FILTER pBM = BM_GETFILTER(pArea);
-   HB_BOOL fResult = HB_TRUE;
+   HB_BOOL fResult = true;
    HB_ULONG ulRecNo = 0;
 
    if( pBM )
@@ -509,7 +509,7 @@ static HB_ERRCODE hb_bmSkipFilter(AREAP pArea, HB_LONG lUpDown)
       else
       {
          errCode = SELF_GOTOP(pArea);
-         pArea->fBof = HB_TRUE;
+         pArea->fBof = true;
       }
    }
    else
@@ -568,8 +568,8 @@ static HB_ERRCODE hb_bmSetFilter(AREAP pArea, LPDBFILTERINFO pFilterInfo)
          if( pBM )
          {
             pArea->dbfi.lpvCargo   = pBM;
-            pArea->dbfi.fOptimized = HB_TRUE;
-            pArea->dbfi.fFilter    = HB_TRUE;
+            pArea->dbfi.fOptimized = true;
+            pArea->dbfi.fFilter    = true;
 
             if( hb_setGetForceOpt() )
             {
@@ -763,17 +763,17 @@ static void hb_bmRddInit( void * cargo )
       if( hb_rddRegister( "DBFCDX", RDT_FULL ) <= 1 )
       {
          if( hb_rddRegister( "BMDBFCDX", RDT_FULL ) > 1 )
-            fError = HB_TRUE;
+            fError = true;
       }
       if( !fError && hb_rddRegister( "DBFNTX", RDT_FULL ) <= 1 )
       {
          if( hb_rddRegister( "BMDBFNTX", RDT_FULL ) > 1 )
-            fError = HB_TRUE;
+            fError = true;
       }
       if( !fError && hb_rddRegister( "DBFNSX", RDT_FULL ) <= 1 )
       {
          if( hb_rddRegister( "BMDBFNSX", RDT_FULL ) > 1 )
-            fError = HB_TRUE;
+            fError = true;
       }
    }
 

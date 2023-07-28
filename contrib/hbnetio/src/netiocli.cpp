@@ -2157,7 +2157,7 @@ static HB_BOOL s_fileTimeGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, lo
          {
             * plJulian   = HB_GET_LE_UINT32(&msgbuf[4]);
             * plMillisec = HB_GET_LE_UINT32(&msgbuf[8]);
-            fResult = HB_TRUE;
+            fResult = true;
          }
          s_fileConUnlock(conn);
       }

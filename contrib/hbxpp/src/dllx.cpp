@@ -112,7 +112,7 @@ HB_FUNC( DLLCALL )
       {
          pLibraryHandle = hb_libLoad(pLibrary, nullptr);
          if( pLibraryHandle )
-            bFreeLibrary = HB_TRUE;
+            bFreeLibrary = true;
       }
       else if( hb_libHandle( pLibrary ) )
          pLibraryHandle = pLibrary;
@@ -158,7 +158,7 @@ HB_FUNC( DLLPREPARECALL )
       {
          pLibraryHandle = hb_libLoad(pLibrary, nullptr);
          if( pLibraryHandle )
-            bFreeLibrary = HB_TRUE;
+            bFreeLibrary = true;
       }
       else if( hb_libHandle( pLibrary ) )
          pLibraryHandle = pLibrary;

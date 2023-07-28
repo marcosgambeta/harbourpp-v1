@@ -172,8 +172,8 @@ HB_FUNC( DBF2TEXT )
    PHB_ITEM  pTmp;
    HB_BOOL   bWriteSep = HB_FALSE;
 
-   HB_BOOL bEof = HB_TRUE;
-   HB_BOOL bBof = HB_TRUE;
+   HB_BOOL bEof = true;
+   HB_BOOL bBof = true;
 
    HB_BOOL bNoFieldPassed = (pFields == nullptr || hb_arrayLen(pFields) == 0);
 

@@ -275,7 +275,7 @@ HB_FUNC( FILEDELETE )
             }
             if( hb_fsDelete( szPath ) )
             {
-               fResult = HB_TRUE;
+               fResult = true;
             }
          }
          while( hb_fsFindNext(ffind) );

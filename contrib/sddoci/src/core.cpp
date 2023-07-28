@@ -410,7 +410,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
 #if 0
             HB_TRACE( HB_TR_ALWAYS, ( "new sql type=%d", uiDataType ) );
 #endif
-            bError  = HB_TRUE;
+            bError  = true;
             errCode = static_cast<HB_ERRCODE>(uiDataType);
             break;
       }
@@ -464,7 +464,7 @@ static HB_ERRCODE ocilibOpen( SQLBASEAREAP pArea )
 
             default:
                hb_itemClear(pItem);
-               bError = HB_TRUE;
+               bError = true;
          }
 
          hb_arraySetForward( pItemEof, uiIndex + 1, pItem );
@@ -530,7 +530,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
 
       if( !OCI_FetchNext( rs ) )
       {
-         pArea->fFetched = HB_TRUE;
+         pArea->fFetched = true;
          break;
       }
 
@@ -660,7 +660,7 @@ static HB_ERRCODE ocilibGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
    {
       pArea->pRecord      = pArea->pRow[ulRecNo];
       pArea->bRecordFlags = pArea->pRowFlags[ulRecNo];
-      pArea->fPositioned  = HB_TRUE;
+      pArea->fPositioned  = true;
    }
    return Harbour::SUCCESS;
 }

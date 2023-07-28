@@ -76,7 +76,7 @@ static void s_serviceSetDflSig(void);
 static void s_signalHandlersInit(void);
 
 static PHB_ITEM sp_hooks       = nullptr;
-static HB_BOOL  bSignalEnabled = HB_TRUE;
+static HB_BOOL  bSignalEnabled = true;
 static int      sb_isService   = 0;
 
 /* There is a service mutex in multithreading */
@@ -195,7 +195,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
          switch( iRet )
          {
             case HB_SERVICE_HANDLED:
-               bSignalEnabled = HB_TRUE;
+               bSignalEnabled = true;
                hb_threadLeaveCriticalSection( &s_ServiceMutex );
                return;
 
@@ -218,7 +218,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
       nPos--;
    }
 
-   bSignalEnabled = HB_TRUE;
+   bSignalEnabled = true;
    #if 0
    s_serviceSetHBSig();
    #endif
@@ -240,7 +240,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
 #if defined(HB_THREAD_SUPPORT)
 static void * s_signalListener( void * my_stack )
 {
-   static HB_BOOL bFirst = HB_TRUE;
+   static HB_BOOL bFirst = true;
 
    sigset_t   passall;
    HB_STACK * pStack = ( HB_STACK * ) my_stack;
@@ -453,7 +453,7 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
          switch( iRet )
          {
             case HB_SERVICE_HANDLED:
-               bSignalEnabled = HB_TRUE;
+               bSignalEnabled = true;
                hb_threadLeaveCriticalSection( &s_ServiceMutex );
                return EXCEPTION_CONTINUE_EXECUTION;
 
@@ -472,7 +472,7 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
       nPos--;
    }
 
-   bSignalEnabled = HB_TRUE;
+   bSignalEnabled = true;
    return EXCEPTION_EXECUTE_HANDLER;
 }
 
@@ -737,7 +737,7 @@ HB_FUNC( HB_STARTSERVICE )
    #endif
 
    /* let's begin */
-   sb_isService = HB_TRUE;
+   sb_isService = true;
 
    /* in windows, we just detach from console */
    #ifdef HB_OS_WIN

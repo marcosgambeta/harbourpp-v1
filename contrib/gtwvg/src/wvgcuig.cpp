@@ -209,7 +209,7 @@ HB_FUNC( WVG_SETGOBJDATA )
          {
             int iDataType = hb_parni(2);
 
-            bSuccess = HB_TRUE;
+            bSuccess = true;
 
             switch( iDataType )
             {
@@ -264,7 +264,7 @@ HB_FUNC( WVG_SETGOBJDATA )
                         HB_VTBL(gObj->pPicture)->Release(HB_THIS(gObj->pPicture));
                      }
                      gObj->pPicture        = iPicture;
-                     gObj->bDestroyPicture = HB_TRUE;
+                     gObj->bDestroyPicture = true;
                   }
                   break;
                }
@@ -290,7 +290,7 @@ HB_FUNC( WVG_SETGOBJDATA )
                      DeleteObject(gObj->hBrush);
                   }
                   gObj->hBrush        = reinterpret_cast<HBRUSH>(static_cast<HB_PTRUINT>(hb_parnint(3)));
-                  gObj->bDestroyBrush = HB_TRUE;
+                  gObj->bDestroyBrush = true;
                   break;
                case GOBJ_OBJDATA_COLORTEXT:
                   if( HB_ISNUM(3) )
@@ -639,7 +639,7 @@ HB_FUNC( WVG_LABEL )
       gObj->crRGBText    = static_cast<COLORREF>(hb_parnint(7));
       gObj->crRGBBk      = static_cast<COLORREF>(hb_parnint(8));
       gObj->hFont        = hFont;
-      gObj->bDestroyFont = HB_TRUE;
+      gObj->bDestroyFont = true;
 
       gObj->gObjNext = pWVT->gObjs;
       pWVT->gObjs    = gObj;
@@ -753,7 +753,7 @@ HB_FUNC( WVG_LABELEX2 )
       gObj->crRGBText    = static_cast<COLORREF>(hb_parnint(9));
       gObj->crRGBBk      = static_cast<COLORREF>(hb_parnint(10));
       gObj->hFont        = hFont;
-      gObj->bDestroyFont = HB_TRUE;
+      gObj->bDestroyFont = true;
 
       gObj->gObjNext = pWVT->gObjs;
       pWVT->gObjs    = gObj;
@@ -836,7 +836,7 @@ HB_FUNC( WVG_OUTLINE )
    if( gObj->iWidth > 0 )
    {
       gObj->hPen        = CreatePen(gObj->iWidth, gObj->iStyle, gObj->crRGB);
-      gObj->bDestroyPen = HB_TRUE;
+      gObj->bDestroyPen = true;
    }
    else
    {
@@ -928,7 +928,7 @@ HB_FUNC( WVG_LINE )
    gObj->crRGB  = static_cast<COLORREF>(hb_parnl(11));
 
    gObj->hPen        = CreatePen(gObj->iStyle, gObj->iWidth, gObj->crRGB);
-   gObj->bDestroyPen = HB_TRUE;
+   gObj->bDestroyPen = true;
 
    gObj->gObjNext = pWVT->gObjs;
    pWVT->gObjs    = gObj;
@@ -1223,7 +1223,7 @@ HB_FUNC( WVG_COLORRECT )
       gObj->aOffset.iRight  = hb_parvni(5, 4);
 
       gObj->hBrush        = hBrush;
-      gObj->bDestroyBrush = HB_TRUE;
+      gObj->bDestroyBrush = true;
 
       gObj->gObjNext = pWVT->gObjs;
       pWVT->gObjs    = gObj;
@@ -1494,7 +1494,7 @@ HB_FUNC( WVG_IMAGE )
       }
       else
       {
-         gObj->bDestroyPicture = HB_TRUE;
+         gObj->bDestroyPicture = true;
       }
 
       gObj->gObjNext = pWVT->gObjs;

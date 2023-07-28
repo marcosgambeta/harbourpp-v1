@@ -348,7 +348,7 @@ static HB_BOOL decode_dynamic_array_AMF3(amfContext * context, PHB_ITEM pItem, i
             hb_itemPutNI(pKey, i);
 
             if( hb_hashAdd(pItem, pKey, pValue) )
-               lRet = HB_TRUE;
+               lRet = true;
 
             hb_itemRelease(pKey);
          }
@@ -370,7 +370,7 @@ static HB_BOOL decode_dynamic_array_AMF3(amfContext * context, PHB_ITEM pItem, i
          if( amf3_getItem(context, pValue) )
          {
             if( hb_arraySet(pItem, i + 1, pValue) )
-               lRet = HB_TRUE;
+               lRet = true;
          }
 
          hb_itemRelease(pValue);
@@ -445,7 +445,7 @@ static HB_BOOL amf3_deserialize_array( amfContext * context, PHB_ITEM pItem, HB_
       if( !amf3_decode_dynamic_dict( context, pItem ) )
          return false;
 
-      mixed = HB_TRUE;
+      mixed = true;
    }
 
    amf3_add_reference(pHash, pItem);
@@ -887,7 +887,7 @@ static HB_BOOL amf3_decode_externalizable( amfContext * context, PHB_ITEM pItem 
    const char * position;
    PHB_ITEM     pRetCopy = hb_itemNew(nullptr);
    PHB_ITEM     pStr, pPos;
-   HB_BOOL      result = HB_TRUE;
+   HB_BOOL      result = true;
    PHB_ITEM     pObject;
 
    if( pItem == hb_stackReturnItem() )
@@ -1078,7 +1078,7 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
    else if( obj_type == 1 )
    {
       #if 0
-      result = HB_TRUE;
+      result = true;
       #endif
       result = amf3_decode_externalizable(context, pItem /*, pMappedClassDef */);
    }
@@ -1128,7 +1128,7 @@ static HB_BOOL amf3_getItem(amfContext * context, PHB_ITEM pItem)
 {
    char byte;
    const char * byte_ref;
-   HB_BOOL      lRet = HB_TRUE;
+   HB_BOOL      lRet = true;
 
    byte_ref = readByte(context);
 
@@ -1140,17 +1140,17 @@ static HB_BOOL amf3_getItem(amfContext * context, PHB_ITEM pItem)
    {
       case UNDEFINED_TYPE:
       case NULL_TYPE:
-         lRet = HB_TRUE;
+         lRet = true;
          break;
 
       case FALSE_TYPE:
          hb_itemPutL(pItem, false);
-         lRet = HB_TRUE;
+         lRet = true;
          break;
 
       case TRUE_TYPE:
          hb_itemPutL(pItem, true);
-         lRet = HB_TRUE;
+         lRet = true;
          break;
 
       case INT_TYPE:

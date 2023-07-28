@@ -290,7 +290,7 @@ static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * pszName, const ch
    HB_SYMBOL_UNUSED(pszDefExt);
    HB_SYMBOL_UNUSED(pPaths);
 
-   fRead = fWrite = HB_TRUE;
+   fRead = fWrite = true;
    iPort = s_filePortParams(pszName, &timeout, &iBaud, &iParity, &iSize, &iStop, &iFlow);
    if( iPort > 0 )
    {

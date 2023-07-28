@@ -305,7 +305,7 @@ static long _ft_skip( long iRecs )
             if( (iBytesRead = hb_fileResult(hb_fileReadAt(ft_text->handles[ft_text->area], cBuff, BUFFSIZE, fpOffset))) == 0 )
             {
                /* buffer is empty thus EOF, set vars and quit */
-               ft_text->isEof[ft_text->area] = HB_TRUE;
+               ft_text->isEof[ft_text->area] = true;
                ft_text->last_rec[ft_text->area] = ft_text->recno[ft_text->area];
                ft_text->last_off[ft_text->area] = ft_text->offset[ft_text->area];
                ft_text->error[ft_text->area] = hb_fsError();
@@ -347,7 +347,7 @@ static long _ft_skip( long iRecs )
                      ft_text->last_off[ft_text->area] = ft_text->offset[ft_text->area];
                      if( iRecs )
                      {
-                        ft_text->isEof[ft_text->area] = HB_TRUE;
+                        ft_text->isEof[ft_text->area] = true;
                      }
                   }
                   else
@@ -380,8 +380,8 @@ static long _ft_skip( long iRecs )
                if( (iBytesRead = hb_fileResult(hb_fileReadAt(ft_text->handles[ft_text->area], cBuff, BUFFSIZE, fpOffset))) == 0 )
                {
                   /* buffer is empty thus file is zero len, set vars and quit */
-                  ft_text->isBof[ft_text->area] = HB_TRUE;
-                  ft_text->isEof[ft_text->area] = HB_TRUE;
+                  ft_text->isBof[ft_text->area] = true;
+                  ft_text->isEof[ft_text->area] = true;
                   ft_text->recno[ft_text->area] = 0;
                   ft_text->offset[ft_text->area] = 0;
                   ft_text->last_rec[ft_text->area] = 0;
@@ -427,7 +427,7 @@ static long _ft_skip( long iRecs )
                         iBytesRemaining = 0;
                         ft_text->offset[ft_text->area] = 0;
                         ft_text->recno[ft_text->area] = 1;
-                        ft_text->isBof[ft_text->area] = HB_TRUE;
+                        ft_text->isBof[ft_text->area] = true;
                      }
                      else
                      {
@@ -444,7 +444,7 @@ static long _ft_skip( long iRecs )
          {
             ft_text->offset[ft_text->area] = 0;
             ft_text->recno[ft_text->area] = 1;
-            ft_text->isBof[ft_text->area] = HB_TRUE;
+            ft_text->isBof[ft_text->area] = true;
          }
       }
 
@@ -452,8 +452,8 @@ static long _ft_skip( long iRecs )
    }
    else
    {
-      ft_text->isBof[ft_text->area] = HB_TRUE;
-      ft_text->isEof[ft_text->area] = HB_TRUE;
+      ft_text->isBof[ft_text->area] = true;
+      ft_text->isEof[ft_text->area] = true;
       ft_text->error[ft_text->area] = 0;
    }
 
@@ -613,7 +613,7 @@ static HB_BOOL _writeeol( PHB_FILE fhnd )
 /* writes a line of data to the file, including the terminating EOL */
 static HB_BOOL _writeLine( PFT_TEXT ft_text, const char * theData, HB_SIZE iDataLen )
 {
-   HB_BOOL fSuccess = HB_TRUE;
+   HB_BOOL fSuccess = true;
 
    if( hb_fileWrite( ft_text->handles[ft_text->area], theData, iDataLen, -1 ) != iDataLen )
    {
@@ -877,7 +877,7 @@ HB_FUNC( FT_FINSERT )
 
       if( _ins_buff( ft_text, no_bytes ) == 0 )
       {
-         fSuccess = HB_TRUE;
+         fSuccess = true;
          while( no_lines-- )
          {
             if( !_writeeol( ft_text->handles[ft_text->area] ) )

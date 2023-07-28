@@ -149,7 +149,7 @@ static HB_SIZE s_fileRead(PHB_FILE pFile, void * data, HB_SIZE nSize, HB_MAXINT 
       nRead = hb_fsPipeRead(pFile->hPipeRD, data, nSize, timeout);
       if( nRead == static_cast<HB_SIZE>(-1) )
       {
-         pFile->fEof = HB_TRUE;
+         pFile->fEof = true;
          nRead = 0;
       }
    }

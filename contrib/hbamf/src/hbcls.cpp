@@ -70,7 +70,7 @@ HB_BOOL hbamf_is_cls_externalizable( HB_USHORT uiClass )
       hb_vmDo(2);
 
       if( hb_itemGetNI(hb_stackReturnItem()) == HB_OO_MSG_CLASSDATA )
-         result = HB_TRUE;
+         result = true;
 
       hb_itemMove(hb_stackReturnItem(), pRetCopy);
       hb_itemRelease(pRetCopy);

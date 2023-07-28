@@ -335,7 +335,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
          case MYSQL_TYPE_GEOMETRY:
 #endif
          default:
-            bError  = HB_TRUE;
+            bError  = true;
             errCode = static_cast<HB_ERRCODE>(pMyField->type);
             break;
       }
@@ -384,7 +384,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
 
             default:
                pItem  = hb_itemNew(nullptr);
-               bError = HB_TRUE;
+               bError = true;
                break;
          }
 
@@ -427,7 +427,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
       *pRow++ = static_cast<void*>(mysql_row_tell(pSDDData->pResult));
       mysql_fetch_row( pSDDData->pResult );
    }
-   pArea->fFetched = HB_TRUE;
+   pArea->fFetched = true;
 
    return Harbour::SUCCESS;
 }
@@ -472,7 +472,7 @@ static HB_ERRCODE mysqlGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
          pSDDData->pNatLength = mysql_fetch_lengths( pSDDData->pResult );
       }
 
-      pArea->fPositioned = HB_TRUE;
+      pArea->fPositioned = true;
    }
    return Harbour::SUCCESS;
 }
@@ -606,7 +606,7 @@ static HB_ERRCODE mysqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
       }
 
       default:
-         bError = HB_TRUE;
+         bError = true;
          break;
    }
 

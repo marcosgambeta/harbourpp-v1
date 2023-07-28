@@ -762,7 +762,7 @@ static HB_BOOL s_netio_login_accept(PHB_CONSRV conn)
                memset(msgbuf + 8, '\0', NETIO_MSGLEN - 8);
                if( s_srvSendAll(conn, msgbuf, NETIO_MSGLEN) )
                {
-                  conn->login = HB_TRUE;
+                  conn->login = true;
                }
             }
          }
@@ -1472,7 +1472,7 @@ HB_FUNC( NETIO_SERVER )
                break;
 
             case NETIO_UNLOCK:
-               fNoAnswer = HB_TRUE;
+               fNoAnswer = true;
                /* fallthrough */
             case NETIO_LOCK:
             case NETIO_TESTLOCK:
@@ -1587,7 +1587,7 @@ HB_FUNC( NETIO_SERVER )
                {
                   hb_fileCommit(pFile);
                }
-               fNoAnswer = HB_TRUE;
+               fNoAnswer = true;
                break;
 
             case NETIO_CLOSE:
