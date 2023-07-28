@@ -132,7 +132,7 @@ static HB_ERRCODE hb_usrEvalRddFunc(PHB_ITEM pMethods, HB_USHORT uiMethod, HB_US
       return hb_usrReturn();
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE hb_usrEvalAreaFunc(PHB_ITEM pMethods, HB_USHORT uiMethod, AREAP pArea)
@@ -143,7 +143,7 @@ static HB_ERRCODE hb_usrEvalAreaFunc(PHB_ITEM pMethods, HB_USHORT uiMethod, AREA
       return hb_usrReturn();
    }
 
-   return HB_SUCCESS;
+   return Harbour::SUCCESS;
 }
 
 static AREAP hb_usrGetAreaPointer(int iArea)
@@ -818,7 +818,7 @@ static HB_ERRCODE hb_usrInit(LPRDDNODE pRDD)
    if( ISSUPER_INIT(pRDD) ) {
       errCode = SUPER_INIT(pRDD);
    } else {
-      errCode = HB_SUCCESS;
+      errCode = Harbour::SUCCESS;
    }
 
    hb_usrEvalRddFunc(pNode->pMethods, UR_INIT, pRDD->rddID);
@@ -864,7 +864,7 @@ static HB_ERRCODE hb_usrExit(LPRDDNODE pRDD)
    if( ISSUPER_EXIT(pRDD) ) {
       errCode = SUPER_EXIT(pRDD);
    } else {
-      errCode = HB_SUCCESS;
+      errCode = Harbour::SUCCESS;
    }
 
    return errCode;
@@ -896,7 +896,7 @@ static HB_ERRCODE hb_usrSysName(AREAP pArea, char * szSysName)
    if( !hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_SYSNAME) ) {
       hb_stackPop();
       hb_strncpy(szSysName, SELF_RDDNODE(pArea)->szName, HB_RDD_MAX_DRIVERNAME_LEN);
-      return HB_SUCCESS;
+      return Harbour::SUCCESS;
    }
 
    hb_vmPushInteger(pArea->uiArea);
@@ -917,7 +917,7 @@ static HB_ERRCODE hb_usrNewArea(AREAP pArea)
 
    HB_ERRCODE errCode = SUPER_NEW(pArea);
 
-   if( errCode == HB_SUCCESS ) {
+   if( errCode == Harbour::SUCCESS ) {
       SELF_USRDATA(pArea)->pItem = hb_itemNew(nullptr);
       hb_usrEvalAreaFunc(SELF_USRNODE(pArea)->pMethods, UR_NEW, pArea);
    }
@@ -971,7 +971,7 @@ static HB_ERRCODE hb_usrBof(AREAP pArea, HB_BOOL * pBof)
 
    if( hb_xvmPopLogical(pBof) ) {
       hb_ret();
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pArea->fBof = *pBof;
@@ -998,7 +998,7 @@ static HB_ERRCODE hb_usrEof(AREAP pArea, HB_BOOL * pEof)
 
    if( hb_xvmPopLogical(pEof) ) {
       hb_ret();
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pArea->fEof = *pEof;
@@ -1025,7 +1025,7 @@ static HB_ERRCODE hb_usrFound(AREAP pArea, HB_BOOL * pFound)
 
    if( hb_xvmPopLogical(pFound) ) {
       hb_ret();
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    pArea->fFound = *pFound;
@@ -1192,7 +1192,7 @@ static HB_ERRCODE hb_usrDeleted(AREAP pArea, HB_BOOL * pDeleted)
 
    if( hb_xvmPopLogical(pDeleted) ) {
       hb_ret();
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    return hb_usrReturn();
@@ -1806,7 +1806,7 @@ static HB_ERRCODE hb_usrPackRec(AREAP pArea, HB_ULONG ulRecNo, HB_BOOL * pWritte
 
    if( hb_xvmPopLogical(pWritten) ) {
       hb_ret();
-      return HB_FAILURE;
+      return Harbour::FAILURE;
    }
 
    return hb_usrReturn();
@@ -3147,13 +3147,13 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
          ++pFunction;
       }
       HB_ERRCODE uiResult = hb_rddInheritEx(pSelfTable, &funcTable.funcTable, pSuperTable, szSuperRDD, puiSuperRddId);
-      if( uiResult == HB_SUCCESS ) {
+      if( uiResult == Harbour::SUCCESS ) {
          pSelfTable->whoCares = reinterpret_cast<DBENTRYP_SVP>(hb_itemNew(pMethods));
       }
 
       hb_retni(uiResult);
    } else {
-      hb_retni(HB_FAILURE);
+      hb_retni(Harbour::FAILURE);
    }
 }
 
@@ -3324,7 +3324,7 @@ HB_FUNC( USRRDD_SETBOTTOM )
 
 static HB_ERRCODE hb_usrErrorRT(AREAP pArea, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode)
 {
-   HB_ERRCODE iRet = HB_FAILURE;
+   HB_ERRCODE iRet = Harbour::FAILURE;
 
    if( hb_vmRequestQuery() == 0 ) {
       PHB_ITEM pError = hb_errNew();
@@ -3368,7 +3368,7 @@ static AREAP hb_usrGetAreaParam(int iParams)
       hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
    }
 
-   hb_retni(HB_FAILURE);
+   hb_retni(Harbour::FAILURE);
 
    return nullptr;
 }
@@ -3394,7 +3394,7 @@ static LPRDDNODE hb_usrGetNodeParam(int iParams)
       hb_usrErrorRT(nullptr, EG_ARG, EDBCMD_NOVAR);
    }
 
-   hb_retni(HB_FAILURE);
+   hb_retni(Harbour::FAILURE);
 
    return nullptr;
 }
@@ -3532,7 +3532,7 @@ HB_FUNC_UR_SUPER(ADDFIELD)
          hb_retni(SUPER_ADDFIELD(pArea, &dbFieldInfo));
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -3548,7 +3548,7 @@ HB_FUNC_UR_SUPER(FIELDDISPLAY)
          hb_retni(SUPER_FIELDDISPLAY(pArea, &dbFieldInfo));
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -3643,7 +3643,7 @@ HB_FUNC_UR_SUPER(PUTREC)
          hb_retni(SUPER_PUTREC(pArea, reinterpret_cast<const HB_BYTE*>(hb_parc(2))));
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -3791,7 +3791,7 @@ HB_FUNC_UR_SUPER(CREATE)
          hb_retni(SUPER_CREATE(pArea, &dbOpenInfo));
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -3807,7 +3807,7 @@ HB_FUNC_UR_SUPER(OPEN)
          hb_retni(SUPER_OPEN(pArea, &dbOpenInfo));
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -3832,7 +3832,7 @@ HB_FUNC_UR_SUPER(DBEVAL)
          hb_retni(SUPER_DBEVAL(pArea, &dbEvalInfo));
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -3870,7 +3870,7 @@ HB_FUNC_UR_SUPER(SORT)
          hb_usrSortInfoFree(&dbSortInfo);
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -3887,7 +3887,7 @@ HB_FUNC_UR_SUPER(TRANS)
          hb_usrTransInfoFree(&dbTransInfo);
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -3904,7 +3904,7 @@ HB_FUNC_UR_SUPER(TRANSREC)
          hb_usrTransInfoFree(&dbTransInfo);
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -3929,7 +3929,7 @@ HB_FUNC_UR_SUPER(CHILDEND)
          hb_retni(SUPER_CHILDEND(pArea, &dbRelInfo));
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -3945,7 +3945,7 @@ HB_FUNC_UR_SUPER(CHILDSTART)
          hb_retni(SUPER_CHILDSTART(pArea, &dbRelInfo));
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -3961,7 +3961,7 @@ HB_FUNC_UR_SUPER(CHILDSYNC)
          hb_retni(SUPER_CHILDSYNC(pArea, &dbRelInfo));
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -4016,7 +4016,7 @@ HB_FUNC_UR_SUPER(RELEVAL)
          hb_retni(SUPER_RELEVAL(pArea, &dbRelInfo));
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -4041,7 +4041,7 @@ HB_FUNC_UR_SUPER(SETREL)
          hb_retni(SUPER_SETREL(pArea, &dbRelInfo));
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -4059,7 +4059,7 @@ HB_FUNC_UR_SUPER(ORDLSTADD)
          hb_arraySet(pItem, UR_ORI_RESULT, dbOrderInfo.itmResult);
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -4086,7 +4086,7 @@ HB_FUNC_UR_SUPER(ORDLSTDELETE)
          hb_arraySet(pItem, UR_ORI_RESULT, dbOrderInfo.itmResult);
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -4104,7 +4104,7 @@ HB_FUNC_UR_SUPER(ORDLSTFOCUS)
          hb_arraySet(pItem, UR_ORI_RESULT, dbOrderInfo.itmResult);
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -4135,7 +4135,7 @@ HB_FUNC_UR_SUPER(ORDSETCOND)
          } else {
             hb_xfree(lpdbOrderCondInfo);
             hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-            hb_retni(HB_FAILURE);
+            hb_retni(Harbour::FAILURE);
          }
       }
    }
@@ -4154,7 +4154,7 @@ HB_FUNC_UR_SUPER(ORDCREATE)
          hb_usrOrderCreateFree(&dbOrderCreateInfo);
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -4172,7 +4172,7 @@ HB_FUNC_UR_SUPER(ORDDESTROY)
          hb_arraySet(pItem, UR_ORI_RESULT, dbOrderInfo.itmResult);
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -4190,7 +4190,7 @@ HB_FUNC_UR_SUPER(ORDINFO)
          hb_arraySet(pItem, UR_ORI_RESULT, dbOrderInfo.itmResult);
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -4242,7 +4242,7 @@ HB_FUNC_UR_SUPER(SETFILTER)
          hb_retni(SUPER_SETFILTER(pArea, &dbFilterInfo));
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -4258,7 +4258,7 @@ HB_FUNC_UR_SUPER(SETLOCATE)
          hb_retni(SUPER_SETLOCATE(pArea, &dbScopeInfo));
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -4281,7 +4281,7 @@ HB_FUNC_UR_SUPER(COMPILE)
          hb_retni(SUPER_COMPILE(pArea, hb_parc(2)));
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -4299,7 +4299,7 @@ HB_FUNC_UR_SUPER(ERROR)
          hb_itemRelease(pItem);
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -4315,7 +4315,7 @@ HB_FUNC_UR_SUPER(EVALBLOCK)
          hb_retni(SUPER_EVALBLOCK(pArea, pItem));
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -4342,7 +4342,7 @@ HB_FUNC_UR_SUPER(LOCK)
          hb_itemPutL(hb_arrayGetItemPtr(pItem, UR_LI_RESULT), dbLockInfo.fResult);
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -4376,7 +4376,7 @@ HB_FUNC_UR_SUPER(CREATEMEMFILE)
          hb_retni(SUPER_CREATEMEMFILE(pArea, &dbOpenInfo));
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
@@ -4392,7 +4392,7 @@ HB_FUNC_UR_SUPER(OPENMEMFILE)
          hb_retni(SUPER_OPENMEMFILE(pArea, &dbOpenInfo));
       } else {
          hb_usrErrorRT(pArea, EG_ARG, EDBCMD_NOVAR);
-         hb_retni(HB_FAILURE);
+         hb_retni(Harbour::FAILURE);
       }
    }
 }
