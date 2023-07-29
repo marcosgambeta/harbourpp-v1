@@ -93,39 +93,31 @@ unsigned short ssfDrawChar(AL_BITMAP * dst, ssfFont * sfont, char c, int x, int 
    charGlyph = *sfont->chars[p];
    fScale    = static_cast<float>((static_cast<float>(sfont->fsize) / static_cast<float>(65535)));
 
-   for( i = 0; i < charGlyph.num; i++ )
-   {
+   for( i = 0; i < charGlyph.num; i++ ) {
       charFrame = charGlyph.frames[i];
-      if( charFrame.ftype == SSF_SPLINE2 )
-      {
+      if( charFrame.ftype == SSF_SPLINE2 ) {
          points[_F_LEFT2]   = x + static_cast<int>(fScale * charFrame.left);
          points[_F_TOP2]    = y + static_cast<int>(fScale * charFrame.top);
          points[_F_RIGHT2]  = x + static_cast<int>(fScale * charFrame.right);
          points[_F_BOTTOM2] = y + static_cast<int>(fScale * charFrame.bottom);
-      }
-      else
-      {
+      } else {
          points[_F_LEFT]   = x + static_cast<int>(fScale * charFrame.left);
          points[_F_TOP]    = y + static_cast<int>(fScale * charFrame.top);
          points[_F_RIGHT]  = x + static_cast<int>(fScale * charFrame.right);
          points[_F_BOTTOM] = y + static_cast<int>(fScale * charFrame.bottom);
       }
 
-      switch( charFrame.ftype )
-      {
+      switch( charFrame.ftype ) {
          case SSF_SPLINE2:
             thick = static_cast<int>(fScale * charFrame.thick);
 
-            if( thick == 0 )
-            {
+            if( thick == 0 ) {
                thick++;
             }
 
-            for( j = 0; j < thick; j++ )
-            {
+            for( j = 0; j < thick; j++ ) {
                al_draw_spline(dst, points, color);
-               switch( charFrame.thickdir )
-               {
+               switch( charFrame.thickdir ) {
                   case THICK_LEFT:
                      points[_F_LEFT]--;
                      points[_F_RIGHT]--;
@@ -157,16 +149,13 @@ unsigned short ssfDrawChar(AL_BITMAP * dst, ssfFont * sfont, char c, int x, int 
          case SSF_LINE:
             thick = static_cast<int>(fScale * charFrame.thick);
 
-            if( thick == 0 )
-            {
+            if( thick == 0 ) {
                thick++;
             }
 
-            for( j = 0; j < thick; j++ )
-            {
+            for( j = 0; j < thick; j++ ) {
                al_draw_line(dst, points[_F_LEFT], points[_F_TOP], points[_F_RIGHT], points[_F_BOTTOM], color);
-               switch( charFrame.thickdir )
-               {
+               switch( charFrame.thickdir ) {
                   case THICK_LEFT:
                      points[_F_LEFT]--;
                      points[_F_RIGHT]--;
@@ -205,8 +194,7 @@ int ssfDrawText(AL_BITMAP * dst, ssfFont * sfont, const char * s, int x, int y, 
 {
    int i = 0;
 
-   while( s[i] )
-   {
+   while( s[i] ) {
       x += ssfDrawChar(dst, sfont, s[i], x, y, color);
       i++;
    }
