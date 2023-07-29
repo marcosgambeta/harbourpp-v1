@@ -2003,7 +2003,7 @@ static HB_BOOL s_fileDelete(PHB_FILE_FUNCS pFuncs, const char * pszFileName)
 
 static HB_BOOL s_fileRename(PHB_FILE_FUNCS pFuncs, const char * pszFileName, const char * pszNewName)
 {
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
 
    HB_SYMBOL_UNUSED(pFuncs);
 
@@ -2041,7 +2041,7 @@ static HB_BOOL s_fileRename(PHB_FILE_FUNCS pFuncs, const char * pszFileName, con
 
 static HB_BOOL s_fileCopy(PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const char * pszDstFile)
 {
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
    const char * pszSource = pszSrcFile;
 
    if( !s_fileAccept(pFuncs, pszDstFile) )
@@ -2197,7 +2197,7 @@ static HB_BOOL s_fileTimeSet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, lo
 
 static HB_BOOL s_fileLink(PHB_FILE_FUNCS pFuncs, const char * pszExisting, const char * pszNewName)
 {
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
 
    HB_SYMBOL_UNUSED(pFuncs);
 
@@ -2235,7 +2235,7 @@ static HB_BOOL s_fileLink(PHB_FILE_FUNCS pFuncs, const char * pszExisting, const
 
 static HB_BOOL s_fileLinkSym(PHB_FILE_FUNCS pFuncs, const char * pszTarget, const char * pszNewName)
 {
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
 
    HB_SYMBOL_UNUSED(pFuncs);
 

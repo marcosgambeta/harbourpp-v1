@@ -776,8 +776,8 @@ PHB_ITEM wvg_logfontTOarray(LPLOGFONT lf, HB_BOOL bEmpty)
 
 BOOL CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-   HB_BOOL bret = HB_FALSE;
-   HB_BOOL binit = HB_FALSE;
+   HB_BOOL bret = false;
+   HB_BOOL binit = false;
    PHB_ITEM block;
 
    if( msg == WM_INITDIALOG )

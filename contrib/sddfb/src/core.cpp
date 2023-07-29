@@ -284,7 +284,7 @@ static HB_ERRCODE fbOpen( SQLBASEAREAP pArea )
 
    pItemEof = hb_itemArrayNew(uiFields);
 
-   bError = HB_FALSE;
+   bError = false;
    for( uiCount = 0, pVar = pSqlda->sqlvar; uiCount < uiFields; uiCount++, pVar++ )
    {
       DBFIELDINFO dbFieldInfo;
@@ -578,7 +578,7 @@ static HB_ERRCODE fbGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
    {
       pArea->pRecord      = pArea->pRow[0];
       pArea->bRecordFlags = pArea->pRowFlags[0];
-      pArea->fPositioned  = HB_FALSE;
+      pArea->fPositioned  = false;
    }
    else
    {

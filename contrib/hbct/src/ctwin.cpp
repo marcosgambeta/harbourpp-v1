@@ -1144,7 +1144,7 @@ static int hb_ctw_SetWindowClip( PHB_GTCTW pCTW, int iWindow, int iTop, int iLef
          }
          if( iTop > iBottom || iLeft > iRight || ( iTop == 0 && iLeft == 0 && iBottom == pWnd->iHeight - 1 && iRight == pWnd->iWidth - 1 ) )
          {
-            pWnd->fClip = HB_FALSE;
+            pWnd->fClip = false;
          }
          else
          {
@@ -1588,8 +1588,8 @@ static void hb_ctw_gt_WriteCon( PHB_GT pGT, const char * szText, HB_SIZE nLength
 #endif
 
    int iLen = 0;
-   HB_BOOL bDisp = HB_FALSE;
-   HB_BOOL bBell = HB_FALSE;
+   HB_BOOL bDisp = false;
+   HB_BOOL bBell = false;
    int iRow, iCol, iMaxRow, iMaxCol;
    HB_WCHAR szString[WRITECON_BUFFER_SIZE];
    PHB_CODEPAGE cdp = HB_GTSELF_HOSTCP(pGT);
@@ -1703,7 +1703,7 @@ static void hb_ctw_gt_WriteCon( PHB_GT pGT, const char * szText, HB_SIZE nLength
             iCol = 0;
          }
          HB_GTSELF_SETPOS(pGT, iRow, iCol);
-         bDisp = HB_FALSE;
+         bDisp = false;
 
          /* To emulate scrolling */
          HB_GTSELF_FLUSH(pGT);
@@ -1711,7 +1711,7 @@ static void hb_ctw_gt_WriteCon( PHB_GT pGT, const char * szText, HB_SIZE nLength
          if( bBell )
          {
             HB_GTSELF_BELL(pGT);
-            bBell = HB_FALSE;
+            bBell = false;
          }
       }
    }
@@ -1724,8 +1724,8 @@ static void hb_ctw_gt_WriteConW( PHB_GT pGT, const HB_WCHAR * szText, HB_SIZE nL
 #endif
 
    int iLen = 0;
-   HB_BOOL bDisp = HB_FALSE;
-   HB_BOOL bBell = HB_FALSE;
+   HB_BOOL bDisp = false;
+   HB_BOOL bBell = false;
    int iRow, iCol, iMaxRow, iMaxCol;
    HB_WCHAR szString[WRITECON_BUFFER_SIZE];
    HB_SIZE nIndex = 0;
@@ -1839,7 +1839,7 @@ static void hb_ctw_gt_WriteConW( PHB_GT pGT, const HB_WCHAR * szText, HB_SIZE nL
             iCol = 0;
          }
          HB_GTSELF_SETPOS(pGT, iRow, iCol);
-         bDisp = HB_FALSE;
+         bDisp = false;
 
          /* To emulate scrolling */
          HB_GTSELF_FLUSH(pGT);
@@ -1847,7 +1847,7 @@ static void hb_ctw_gt_WriteConW( PHB_GT pGT, const HB_WCHAR * szText, HB_SIZE nL
          if( bBell )
          {
             HB_GTSELF_BELL(pGT);
-            bBell = HB_FALSE;
+            bBell = false;
          }
       }
    }
@@ -2406,7 +2406,7 @@ static int hb_ctw_gt_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
       HB_GTSELF_GETSIZE(pGT, &iRows, &iCols);
       if( iCols <= 4 || iRows <= 4 )
       {
-         fScreen = HB_FALSE;
+         fScreen = false;
       }
       else
       {
@@ -2419,7 +2419,7 @@ static int hb_ctw_gt_Alert( PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, in
          {
             if( !hb_itemGetL(gtInfo.pResult) )
             {
-               fScreen = HB_FALSE;
+               fScreen = false;
             }
             hb_itemRelease(gtInfo.pResult);
          }
@@ -2710,10 +2710,10 @@ static void hb_ctw_gt_RedrawDiff( PHB_GT pGT )
                   HB_GTSELF_REDRAW(pGT, i, s, r - s + 1);
                }
             }
-            pGT->pLines[i] = HB_FALSE;
+            pGT->pLines[i] = false;
          }
       }
-      pGT->fRefresh = HB_FALSE;
+      pGT->fRefresh = false;
    }
 }
 

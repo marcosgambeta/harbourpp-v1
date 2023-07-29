@@ -94,8 +94,8 @@ static void hb_oleDataInit(void * cargo)
    PHB_OLEDATA pOleData = static_cast<PHB_OLEDATA>(cargo);
 
    /* default settings: */
-   pOleData->fNullDate = HB_FALSE;
-   pOleData->fNil2Null = HB_FALSE;
+   pOleData->fNullDate = false;
+   pOleData->fNil2Null = false;
 
    if( OleInitialize(nullptr) == S_OK )
    {

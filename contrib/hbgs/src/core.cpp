@@ -62,7 +62,7 @@
 
 HB_FUNC( HB_GS )
 {
-   HB_BOOL  bResult = HB_FALSE;
+   HB_BOOL  bResult = false;
    PHB_ITEM pParam  = hb_param(1, Harbour::Item::ARRAY);
 
    if( pParam )

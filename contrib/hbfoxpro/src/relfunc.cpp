@@ -49,7 +49,7 @@
 
 HB_FUNC( BETWEEN )
 {
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
    if( hb_pcount() == 3 )
    {
       PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
@@ -64,7 +64,7 @@ HB_FUNC( BETWEEN )
 
 HB_FUNC( INLIST )
 {
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
    int iPCount = hb_pcount();
 
    if( iPCount > 1 )

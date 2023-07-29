@@ -89,7 +89,7 @@ HB_FUNC( WIN_LOADRESOURCE )
 HB_FUNC( WIN_GETCOMMANDLINEPARAM )
 {
    LPCTSTR lpCmdLine = GetCommandLine();
-   HB_BOOL fQuote = HB_FALSE;
+   HB_BOOL fQuote = false;
    long pos;
 
    /* Skip application path */

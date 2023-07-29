@@ -146,7 +146,7 @@ HB_FUNC( CTOMONTH )
 HB_FUNC( DMY )
 {
    int iYear, iMonth, iDay;
-   HB_BOOL bMode = HB_FALSE;
+   HB_BOOL bMode = false;
 
    if( HB_ISDATETIME(1) )
    {
@@ -271,7 +271,7 @@ HB_FUNC( ADDMONTH )
 {
    long lJulian, lMillisec = 0;
    int iYear, iMonth, iDay, iNum, iDays;
-   HB_BOOL fTimeStamp = HB_FALSE;
+   HB_BOOL fTimeStamp = false;
 
    if( HB_ISNUM(1) )
    {
@@ -395,7 +395,7 @@ HB_FUNC( QUARTER )
 
 HB_FUNC( LASTDAYOM )
 {
-   HB_BOOL bLeap = HB_FALSE;
+   HB_BOOL bLeap = false;
    int iYear, iMonth, iDay;
 
    if( HB_ISNUM(1) )

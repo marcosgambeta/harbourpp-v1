@@ -409,7 +409,7 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXI
             if( err == BZ_STREAM_END )
             {
                BZ2_bzDecompressEnd(&pFile->bz2);
-               pFile->fInited = HB_FALSE;
+               pFile->fInited = false;
                pFile->fEof = true;
             }
             else
@@ -682,7 +682,7 @@ static PHB_FILE s_filebz2New( PHB_FILE pFile, int iMode, int iBlockSize )
       pFileBZ2->pFile = pFile;
       pFileBZ2->seek_pos = 0;
       pFileBZ2->nTimeout = -1;
-      pFileBZ2->fInited = HB_FALSE;
+      pFileBZ2->fInited = false;
       pFileBZ2->iMode = iMode;
       pFileBZ2->iBlockSize = iBlockSize;
 

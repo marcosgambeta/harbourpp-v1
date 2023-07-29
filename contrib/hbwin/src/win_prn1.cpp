@@ -72,7 +72,7 @@ HB_FUNC( WIN_STARTDOC )
 {
    HDC hDC = hbwapi_par_HDC(1);
    DOCINFO sDoc;
-   HB_BOOL bResult = HB_FALSE;
+   HB_BOOL bResult = false;
 
    if( hDC )
    {
@@ -93,7 +93,7 @@ HB_FUNC( WIN_STARTDOC )
 
 HB_FUNC( WIN_ENDDOC )
 {
-   HB_BOOL bResult = HB_FALSE;
+   HB_BOOL bResult = false;
    HDC hDC = hbwapi_par_HDC(1);
 
    if( hDC )
@@ -383,7 +383,7 @@ HB_FUNC( WIN_BITMAPSOK )
 
 HB_FUNC( WIN_SETDOCUMENTPROPERTIES )
 {
-   HB_BOOL bResult = HB_FALSE;
+   HB_BOOL bResult = false;
 
    HDC hDC = hbwapi_par_HDC(1);
 
@@ -492,7 +492,7 @@ HB_FUNC( WIN_SETDOCUMENTPROPERTIES )
 
 HB_FUNC( WIN_GETDOCUMENTPROPERTIES )
 {
-   HB_BOOL bResult = HB_FALSE;
+   HB_BOOL bResult = false;
 
    HANDLE hPrinter;
    void * hDeviceName;
@@ -660,7 +660,7 @@ HB_FUNC( WIN_SETPEN )
 HB_FUNC( WIN_FILLRECT )
 {
    HDC hDC = hbwapi_par_HDC(1);
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
 
    if( hDC )
    {

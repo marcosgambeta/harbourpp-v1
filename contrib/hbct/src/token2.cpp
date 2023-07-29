@@ -419,7 +419,7 @@ HB_FUNC( TOKENINIT )
 
          if( !sTokSave( sTokenEnvironment, 4 ) )
          {
-            iResult = HB_FALSE;
+            iResult = false;
          }
          hb_retl(iResult);
       }

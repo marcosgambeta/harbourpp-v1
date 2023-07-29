@@ -53,7 +53,7 @@
 HB_BOOL hbamf_is_cls_externalizable( HB_USHORT uiClass )
 {
    PHB_DYNS pSymbol = hb_dynsymGet("__CLSMSGTYPE");
-   HB_BOOL  result  = HB_FALSE;
+   HB_BOOL  result  = false;
 
    /* as far as i know, there is no exported Harbour C level api for this */
 

@@ -96,7 +96,7 @@ HB_FUNC( HB_FUSE )
       ft_text->last_rec[ft_text->area] = 0;
       ft_text->last_off[ft_text->area] = 0;
       ft_text->lastbyte[ft_text->area] = 0;
-      ft_text->isEof[ft_text->area]    = HB_FALSE;
+      ft_text->isEof[ft_text->area]    = false;
    }
 }
 
@@ -136,7 +136,7 @@ static long hb_hbfskip( PFT_TEXT ft_text, char * buffer, HB_SIZE bufsize, int re
 
          if( (ft_text->offset[ft_text->area] + x + 2) < ft_text->lastbyte[ft_text->area] )
          {
-            ft_text->isEof[ft_text->area]   = HB_FALSE;
+            ft_text->isEof[ft_text->area]   = false;
             ft_text->offset[ft_text->area] += (x + 2);
             ft_text->recno[ft_text->area]  += 1;
          }
@@ -147,7 +147,7 @@ static long hb_hbfskip( PFT_TEXT ft_text, char * buffer, HB_SIZE bufsize, int re
    else
    {
       recs = -recs;
-      ft_text->isEof[ft_text->area] = HB_FALSE;
+      ft_text->isEof[ft_text->area] = false;
 
       if( (ft_text->recno[ft_text->area] - recs) < 1 )
          return 1;
@@ -396,7 +396,7 @@ HB_FUNC( HB_FREADANDSKIP )
 
    HB_ISIZ x = 0;
    HB_ISIZ read;
-   HB_BOOL bInField = HB_FALSE, bHasCRLF = HB_FALSE;
+   HB_BOOL bInField = false, bHasCRLF = false;
 
    hb_fsSeekLarge(ft_text->handles[ft_text->area], ft_text->offset[ft_text->area], FS_SET);
    read = hb_fsReadLarge(ft_text->handles[ft_text->area], buffer, _B_SIZE);

@@ -170,7 +170,7 @@ HB_FUNC( DBF2TEXT )
    HB_USHORT uiFields = 0;
    HB_USHORT ui;
    PHB_ITEM  pTmp;
-   HB_BOOL   bWriteSep = HB_FALSE;
+   HB_BOOL   bWriteSep = false;
 
    HB_BOOL bEof = true;
    HB_BOOL bBof = true;
@@ -271,7 +271,7 @@ HB_FUNC( DBF2TEXT )
             }
          }
          hb_fsWriteLarge(handle, "\r\n", 2);
-         bWriteSep = HB_FALSE;
+         bWriteSep = false;
       }
 
       if( nCount != -1 )

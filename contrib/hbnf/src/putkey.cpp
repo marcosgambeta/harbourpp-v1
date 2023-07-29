@@ -31,7 +31,7 @@
 
 HB_FUNC( FT_PUTKEY )
 {
-   HB_BOOL lSuccess = HB_FALSE;
+   HB_BOOL lSuccess = false;
 
    if( HB_ISNUM(1) )
    {

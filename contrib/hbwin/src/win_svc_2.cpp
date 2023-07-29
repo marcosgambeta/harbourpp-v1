@@ -48,7 +48,7 @@
 
 HB_FUNC( WIN_SERVICEINSTALL )
 {
-   HB_BOOL bRetVal = HB_FALSE;
+   HB_BOOL bRetVal = false;
 
    void * hPath;
    LPCTSTR lpPath = HB_PARSTR(3, &hPath, nullptr);
@@ -128,7 +128,7 @@ HB_FUNC( WIN_SERVICEINSTALL )
 
 HB_FUNC( WIN_SERVICEDELETE )
 {
-   HB_BOOL bRetVal = HB_FALSE;
+   HB_BOOL bRetVal = false;
 
    SC_HANDLE schSCM = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
 
@@ -176,7 +176,7 @@ HB_FUNC( WIN_SERVICEDELETE )
 
 HB_FUNC( WIN_SERVICECONTROL )
 {
-   HB_BOOL bRetVal = HB_FALSE;
+   HB_BOOL bRetVal = false;
 
    SC_HANDLE schSCM = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
 
@@ -212,7 +212,7 @@ HB_FUNC( WIN_SERVICECONTROL )
 
 HB_FUNC( WIN_SERVICERUN )
 {
-   HB_BOOL bRetVal = HB_FALSE;
+   HB_BOOL bRetVal = false;
 
    SC_HANDLE schSCM = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
 

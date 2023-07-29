@@ -412,7 +412,7 @@ static HB_ERRCODE sqlite3Open( SQLBASEAREAP pArea )
    SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
    errCode = 0;
-   bError  = HB_FALSE;
+   bError  = false;
    pItemEof = hb_itemArrayNew(uiFields);
    for( uiIndex = 0; uiIndex < uiFields; ++uiIndex )
    {
@@ -664,7 +664,7 @@ static HB_ERRCODE sqlite3GoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
    {
       pArea->pRecord = pArea->pRow[0];
       pArea->bRecordFlags = pArea->pRowFlags[0];
-      pArea->fPositioned = HB_FALSE;
+      pArea->fPositioned = false;
    }
    else
    {

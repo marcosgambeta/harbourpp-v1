@@ -406,7 +406,7 @@ HB_FUNC( CHARWIN )
    if( hb_ctGetWinCord( &iTop, &iLeft, &iBottom, &iRight ) )
    {
       HB_USHORT usNewChar, usOldChar = 0;
-      HB_BOOL fAll = HB_FALSE;
+      HB_BOOL fAll = false;
 
       usNewChar = static_cast<HB_USHORT>(hb_ctGetClearChar(5));
 
@@ -455,7 +455,7 @@ HB_FUNC( COLORWIN )
    if( hb_ctGetWinCord( &iTop, &iLeft, &iBottom, &iRight ) )
    {
       int iNewColor, iOldColor = 0;
-      HB_BOOL fAll = HB_FALSE;
+      HB_BOOL fAll = false;
 
       iNewColor = hb_ctGetClearColor(5);
 
@@ -531,7 +531,7 @@ HB_FUNC( COLORREPL )
    int iMaxCol = hb_gtMaxCol();
    int iRow = 0;
    int iNewColor, iOldColor = 0;
-   HB_BOOL fAll = HB_FALSE;
+   HB_BOOL fAll = false;
 
    iNewColor = hb_ctGetClearColor(1);
 

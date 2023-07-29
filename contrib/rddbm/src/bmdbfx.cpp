@@ -83,12 +83,12 @@ HB_FUNC( BM_DBSEEKWILD )
          fBack  = hb_parl(3);
          fCont  = hb_parl(4);
          fAll   = hb_parl(5);
-         fFound = HB_FALSE;
+         fFound = false;
 
          if( fAll )
          {
             pArray = hb_itemArrayNew(0);
-            fCont = HB_FALSE;
+            fCont = false;
          }
 
          memset(&OrderInfo, 0, sizeof(OrderInfo));
@@ -106,7 +106,7 @@ HB_FUNC( BM_DBSEEKWILD )
             if( SELF_ORDINFO(pArea, DBOI_READLOCK, &OrderInfo) == Harbour::SUCCESS )
                fUnlock = hb_itemGetL(OrderInfo.itmResult);
             else
-               fUnlock = HB_FALSE;
+               fUnlock = false;
             OrderInfo.itmNewVal = nullptr;
 
             if( !fCont )
@@ -145,7 +145,7 @@ HB_FUNC( BM_DBSEEKWILD )
                   if( errCode == Harbour::SUCCESS )
                      fFound = hb_itemGetL(OrderInfo.itmResult);
                   else
-                     fFound = HB_FALSE;
+                     fFound = false;
                }
                while( fFound );
             }
@@ -240,7 +240,7 @@ static void hb_bmResetFilterOpt(AREAP pArea)
 
 static HB_BOOL hb_bmCheckRecordFilter(AREAP pArea, HB_ULONG ulRecNo)
 {
-   HB_BOOL lResult = HB_FALSE;
+   HB_BOOL lResult = false;
    HB_BOOL fDeleted = hb_setGetDeleted();
 
    if( pArea->dbfi.itmCobExpr || fDeleted )

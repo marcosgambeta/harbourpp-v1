@@ -988,7 +988,7 @@ static void amf3_conversion_out( amfContext * context, PHB_ITEM pItem )
 
 static HB_BOOL amf3_encode( amfContext * context, PHB_ITEM pItem )
 {
-   HB_BOOL result = HB_FALSE;
+   HB_BOOL result = false;
 
    if( context->conv_function )
       amf3_conversion_out(context, pItem);
@@ -1006,14 +1006,14 @@ static HB_BOOL amf3_encode( amfContext * context, PHB_ITEM pItem )
       if( context->encode_ba )
       {
          if( !writeByte( context, BYTE_ARRAY_TYPE ) )
-            result = HB_FALSE;
+            result = false;
          else
             result = amf3_serialize_byte_array( context, pItem ) != 0;
       }
       else
       {
          if( !writeByte( context, STRING_TYPE ) )
-            result = HB_FALSE;
+            result = false;
          else
             result = amf3_serialize_string(context, pItem);
       }
@@ -1021,21 +1021,21 @@ static HB_BOOL amf3_encode( amfContext * context, PHB_ITEM pItem )
    else if( HB_IS_DATETIME(pItem) )
    {
       if( !writeByte( context, DATE_TYPE ) )
-         result = HB_FALSE;
+         result = false;
       else
          result = amf3_serialize_date(context, pItem);
    }
    else if( HB_IS_OBJECT(pItem) )
    {
       if( !writeByte( context, OBJECT_TYPE ) )
-         result = HB_FALSE;
+         result = false;
       else
          result = amf3_serialize_object(context, pItem);
    }
    else if( HB_IS_ARRAY(pItem) )
    {
       if( !writeByte( context, ARRAY_TYPE ) )
-         result = HB_FALSE;
+         result = false;
       else
          result = amf3_serialize_array(context, pItem);
    }
@@ -1152,7 +1152,7 @@ HB_FUNC( AMF3_FROMWA )
    HB_ULONG     uiRecCount     = 0;
    HB_ULONG     uiRecNo        = 0;
    HB_BOOL      bNoFieldPassed = (pFields == nullptr || hb_arrayLen(pFields) == 0);
-   HB_BOOL      bEof  = HB_FALSE;
+   HB_BOOL      bEof  = false;
    AREAP        pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    PHB_ITEM     pItem;
    HB_USHORT    uiFieldCopy = 0;      /* GCC knows better (warns) */
@@ -1413,7 +1413,7 @@ HB_FUNC( AMF3_ENCODE )
    context->cBuf = static_cast<char*>(hb_xgrab(sizeof(char) * 8));
    context->position      = 0;
    context->length        = sizeof(char) * 8;
-   context->str_rtrim     = HB_FALSE;
+   context->str_rtrim     = false;
    context->obj_ref       = hb_hashNew(nullptr);
    context->str_ref       = hb_hashNew(nullptr);
    context->class_ref     = hb_hashNew(nullptr);

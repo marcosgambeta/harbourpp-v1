@@ -306,7 +306,7 @@ static void disp_update(PFT_DISPC dispc, int offset)
 {
    int line, col, pos, i;
 
-   dispc->bRefresh = HB_FALSE;
+   dispc->bRefresh = false;
    line = 0;
 
    while( line < dispc->height )
@@ -711,7 +711,7 @@ HB_FUNC( FT_DISPFILE )
    /* make sure buffers were allocated and file was opened */
    if( dispc->bIsAllocated && dispc->infile > 0 )
    {
-      bDone = HB_FALSE;
+      bDone = false;
       dispc->bRefresh = true;
 
       /* draw inside of window with normal color attribute */

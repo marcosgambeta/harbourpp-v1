@@ -184,7 +184,7 @@ HB_FUNC( NUMDISKL )
 
 HB_FUNC( VOLUME )
 {
-   HB_BOOL bReturn = HB_FALSE;
+   HB_BOOL bReturn = false;
 
 #if defined(HB_OS_WIN)
    if( !ct_getsafety() )

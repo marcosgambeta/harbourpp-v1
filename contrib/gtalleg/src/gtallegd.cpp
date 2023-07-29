@@ -318,7 +318,7 @@ static HB_BOOL hb_gt_alleg_InitializeScreen(PHB_GT pGT, int iRows, int iCols, HB
 
    int       iRet  = 1, iWidth, iHeight; /* Don't remove iRet, ixFP and iyFP initializers! */
    short     ixFP  = 0, iyFP = 0;
-   HB_BOOL   lMode = HB_FALSE, lPrev = s_fInit;
+   HB_BOOL   lMode = false, lPrev = s_fInit;
 
    if( s_fGtError )
    {
@@ -574,7 +574,7 @@ static void hb_gt_alleg_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFi
    ssfCreateThinFont(&s_ssfDefaultFont);
 
    s_iCursorStyle = SC_NONE;
-   s_fMakeInit    = s_fGtError = HB_FALSE;
+   s_fMakeInit    = s_fGtError = false;
 
    if( allegro_init() != 0 )
    {
@@ -1236,7 +1236,7 @@ static void hb_gt_alleg_Refresh(PHB_GT pGT)
          HB_GTSUPER_REFRESH(pGT);
          if( s_fMakeInit )
          {
-            s_fMakeInit = HB_FALSE;
+            s_fMakeInit = false;
             GT_SCREENINIT();
          }
       }

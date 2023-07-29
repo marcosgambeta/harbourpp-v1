@@ -94,10 +94,10 @@ static HB_ULONG s_ulBackgroundID = 0;
  */
 static PHB_BACKGROUNDTASK * s_pBackgroundTasks = nullptr;
 
-static HB_BOOL s_bEnabled = HB_FALSE;
+static HB_BOOL s_bEnabled = false;
 
 /* flag to prevent recursive calls of hb_backgroundRun() */
-static HB_BOOL s_bIamBackground = HB_FALSE;
+static HB_BOOL s_bIamBackground = false;
 
 /* current task to be executed */
 static HB_USHORT s_uiBackgroundTask = 0;
@@ -203,7 +203,7 @@ void hb_backgroundRun(void)
             s_uiBackgroundTask = 0;
          }
       }
-      s_bIamBackground = HB_FALSE;
+      s_bIamBackground = false;
    }
 }
 
@@ -234,7 +234,7 @@ void hb_backgroundRunSingle(HB_ULONG ulID)
          hb_itemRelease(hb_itemDo(pBkgTask->pTask, 0));
       }
 
-      s_bIamBackground = HB_FALSE;
+      s_bIamBackground = false;
    }
 }
 
@@ -275,7 +275,7 @@ PHB_ITEM hb_backgroundDelFunc(HB_ULONG ulID)
    PHB_ITEM pItem   = nullptr;
    HB_BOOL  bOldSet = s_bEnabled;
 
-   s_bEnabled = HB_FALSE;
+   s_bEnabled = false;
 
    iTask = 0;
    while( iTask < s_uiBackgroundMaxTask )
@@ -336,7 +336,7 @@ PHB_BACKGROUNDTASK hb_backgroundFind(HB_ULONG ulID)
 HB_BOOL hb_backgroundActive(HB_ULONG ulID, HB_BOOL bActive)
 {
    PHB_BACKGROUNDTASK pBkgTask;
-   HB_BOOL bOldState = HB_FALSE;
+   HB_BOOL bOldState = false;
 
    pBkgTask = hb_backgroundFind(ulID);
 
@@ -440,7 +440,7 @@ HB_FUNC( HB_BACKGROUNDDEL )
 /* Set a task as active or not */
 HB_FUNC( HB_BACKGROUNDACTIVE )
 {
-   HB_BOOL bOldActive = HB_FALSE;
+   HB_BOOL bOldActive = false;
 
    if( s_pBackgroundTasks && HB_ISNUM(1) )
    {

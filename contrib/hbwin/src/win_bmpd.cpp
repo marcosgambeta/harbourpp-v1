@@ -339,7 +339,7 @@ HB_FUNC( WIN_BITMAPDIMENSIONS )
 
    int iHeight = 0;
    int iWidth = 0;
-   HB_BOOL bRetVal = HB_FALSE;
+   HB_BOOL bRetVal = false;
 
    if( iType == HB_WIN_BITMAP_BMP && nSize >= sizeof(BITMAPCOREHEADER) )
    {

@@ -445,7 +445,7 @@ static SSL * s_SSL_itemGet(PHB_ITEM pItem, PHB_ITEM * pSSL, HB_BOOL * pfFree)
 static PHB_SOCKEX s_sockexNew( HB_SOCKET sd, PHB_ITEM pParams )
 {
    PHB_SOCKEX pSock;
-   HB_BOOL fServer = HB_FALSE, fFree = HB_FALSE;
+   HB_BOOL fServer = false, fFree = false;
    HB_MAXINT timeout = -1;
    PHB_ITEM pSSL = nullptr;
    SSL * ssl = nullptr;

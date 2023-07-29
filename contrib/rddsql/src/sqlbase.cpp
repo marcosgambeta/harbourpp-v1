@@ -191,7 +191,7 @@ static HB_ERRCODE sddGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
       pArea->pRecord      = pArea->pRow[0];
       pArea->bRecordFlags = pArea->pRowFlags[0];
 
-      pArea->fPositioned = HB_FALSE;
+      pArea->fPositioned = false;
    }
    else
    {
@@ -274,7 +274,7 @@ static HB_ERRCODE sqlbaseGoBottom( SQLBASEAREAP pArea )
    if( !pArea->fFetched && pArea->pSDD->GoTo(pArea, static_cast<HB_ULONG>(-1)) == Harbour::FAILURE )
       return Harbour::FAILURE;
 
-   pArea->area.fTop    = HB_FALSE;
+   pArea->area.fTop    = false;
    pArea->area.fBottom = true;
 
    if( SELF_GOTO(&pArea->area, pArea->ulRecCount) != Harbour::SUCCESS )
@@ -295,14 +295,14 @@ static HB_ERRCODE sqlbaseGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
    if( pArea->fPositioned )
    {
       pArea->ulRecNo   = ulRecNo;
-      pArea->area.fBof = pArea->area.fEof = HB_FALSE;
+      pArea->area.fBof = pArea->area.fEof = false;
    }
    else
    {
       pArea->ulRecNo   = pArea->ulRecCount + 1;
       pArea->area.fBof = pArea->area.fEof = true;
    }
-   pArea->area.fFound = HB_FALSE;
+   pArea->area.fFound = false;
 
    return Harbour::SUCCESS;
 }
@@ -328,7 +328,7 @@ static HB_ERRCODE sqlbaseGoToId( SQLBASEAREAP pArea, PHB_ITEM pItem )
 static HB_ERRCODE sqlbaseGoTop( SQLBASEAREAP pArea )
 {
    pArea->area.fTop    = true;
-   pArea->area.fBottom = HB_FALSE;
+   pArea->area.fBottom = false;
 
    if( SELF_GOTO(&pArea->area, 1) == Harbour::FAILURE )
       return Harbour::FAILURE;
@@ -347,7 +347,7 @@ static HB_ERRCODE sqlbaseSkip( SQLBASEAREAP pArea, HB_LONG lToSkip )
          return Harbour::FAILURE;
    }
 
-   pArea->area.fTop = pArea->area.fBottom = HB_FALSE;
+   pArea->area.fTop = pArea->area.fBottom = false;
 
    if( lToSkip == 0 || hb_setGetDeleted() ||
        pArea->area.dbfi.itmCobExpr || pArea->area.dbfi.fFilter )
@@ -363,9 +363,9 @@ static HB_ERRCODE sqlbaseSkip( SQLBASEAREAP pArea, HB_LONG lToSkip )
    }
 
    if( lToSkip < 0 )
-      pArea->area.fEof = HB_FALSE;
+      pArea->area.fEof = false;
    else /* if( lToSkip > 0 ) */
-      pArea->area.fBof = HB_FALSE;
+      pArea->area.fBof = false;
 
    return errCode;
 }
@@ -429,7 +429,7 @@ static HB_ERRCODE sqlbaseAppend( SQLBASEAREAP pArea, HB_BOOL bUnLockAll )
    pArea->fAppend = pArea->fPositioned = true;
    pArea->ulRecCount++;
    pArea->ulRecNo   = pArea->ulRecCount;
-   pArea->area.fBof = pArea->area.fEof = pArea->area.fFound = HB_FALSE;
+   pArea->area.fBof = pArea->area.fEof = pArea->area.fFound = false;
    return Harbour::SUCCESS;
 }
 
@@ -489,8 +489,8 @@ static HB_ERRCODE sqlbaseGoCold( SQLBASEAREAP pArea )
          hb_itemRelease(static_cast<PHB_ITEM>(pArea->pRow[pArea->ulRecNo]));
       pArea->pRow[pArea->ulRecNo]      = pArea->pRecord;
       pArea->pRowFlags[pArea->ulRecNo] = pArea->bRecordFlags;
-      pArea->fRecordChanged = HB_FALSE;
-      pArea->fAppend        = HB_FALSE;
+      pArea->fRecordChanged = false;
+      pArea->fAppend        = false;
    }
    return Harbour::SUCCESS;
 }
@@ -617,7 +617,7 @@ static HB_ERRCODE sqlbaseZap( SQLBASEAREAP pArea )
 
    pArea->fFetched = true;
 
-   pArea->fPositioned = HB_FALSE;
+   pArea->fPositioned = false;
 
    return SELF_GOTOP(&pArea->area);
 }
@@ -690,7 +690,7 @@ static HB_ERRCODE sqlbaseCreate( SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo )
 
    pItemEof = hb_itemArrayNew(pArea->area.uiFieldCount);
 
-   bError = HB_FALSE;
+   bError = false;
    for( uiCount = 0; uiCount < pArea->area.uiFieldCount; uiCount++ )
    {
       LPFIELD pField = pArea->area.lpFields + uiCount;

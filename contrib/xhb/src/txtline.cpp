@@ -60,7 +60,7 @@ static void hb_readLine( const char * szText, HB_SIZE nTextLen, HB_SIZE nLineLen
 
    HB_SIZE nPosTerm, nPosition;
    HB_SIZE nPos, nCurrCol, nLastBlk;
-   HB_BOOL bBreak = HB_FALSE;
+   HB_BOOL bBreak = false;
 
    *pbFound     = HB_FALSE;
    *pbEOF       = HB_FALSE;
@@ -226,7 +226,7 @@ HB_FUNC( HB_READLINE )
    HB_SIZE       nEndOffset, nTextLen;
    HB_ISIZ       nEnd;
    PHB_ITEM      pOpt;
-   HB_BOOL       bAlloc_Term1 = HB_FALSE;
+   HB_BOOL       bAlloc_Term1 = false;
 
    if( !HB_ISCHAR(1) )
    {

@@ -79,7 +79,7 @@ static void hb_ctComTestMSR( int iLine )
    }
    else
    {
-      fResult = HB_FALSE;
+      fResult = false;
    }
 
    hb_retl(fResult);
@@ -247,7 +247,7 @@ HB_FUNC( COM_BREAK )
 HB_FUNC( COM_HARD )
 {
    int iPort = hb_parni(1), iFlow, iMask;
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
 
    if( hb_comFlowControl( iPort, &iFlow, -1 ) != -1 )
    {
@@ -273,7 +273,7 @@ HB_FUNC( COM_HARD )
 HB_FUNC( COM_SOFT )
 {
    int iPort = hb_parni(1), iFlow, iMask;
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
 
    if( hb_comFlowControl( iPort, &iFlow, -1 ) != -1 )
    {
@@ -304,7 +304,7 @@ HB_FUNC( COM_SOFT )
  */
 HB_FUNC( COM_SOFT_R )
 {
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
    int iPort = hb_parni(1), iMode;
 
    if( HB_ISLOG(2) )
@@ -325,7 +325,7 @@ HB_FUNC( COM_SOFT_R )
  */
 HB_FUNC( COM_SOFT_S )
 {
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
    int iMode = hb_comInputState(hb_parni(1));
 
    if( iMode > 0 )

@@ -151,12 +151,12 @@ HB_BOOL hb_OutDebugName(PHB_ITEM pName)
       bRet = true;
    }
    else
-      bRet = HB_FALSE;
+      bRet = false;
 
 #else
    HB_SYMBOL_UNUSED(pName);
 
-   bRet = HB_FALSE;
+   bRet = false;
 #endif
 
    return bRet;

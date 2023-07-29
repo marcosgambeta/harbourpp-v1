@@ -369,7 +369,7 @@ static PHB_FILE s_fileNew( PHB_SOCKEX sock, HB_MAXINT timeout )
 
    pFile->pFuncs  = &s_fileFuncs;
    pFile->sock    = sock;
-   pFile->fEof    = HB_FALSE;
+   pFile->fEof    = false;
    pFile->timeout = timeout;
 
    return pFile;

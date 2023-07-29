@@ -51,7 +51,7 @@
 HB_FUNC( DBSETLOCATE )
 {
    AREAP   pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_BOOL fSet  = HB_FALSE;
+   HB_BOOL fSet  = false;
 
    if( pArea != nullptr )
    {

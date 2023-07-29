@@ -104,7 +104,7 @@ void hb_ToLogFile( const char * sFile, const char * sTraceMsg, ... )
       {
          if( s_bEmptyLogFile )
          {
-            s_bEmptyLogFile = HB_FALSE;
+            s_bEmptyLogFile = false;
 
             /* Empty the file if it exists. */
             hFile = hb_fopen( "logfile.log", "w" );

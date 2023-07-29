@@ -49,7 +49,7 @@
 
 HB_FUNC( WIN_REPORTEVENT )
 {
-   HB_BOOL bRetVal = HB_FALSE;
+   HB_BOOL bRetVal = false;
 
    HANDLE hEventLog;
 

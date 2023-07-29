@@ -882,7 +882,7 @@ WAPI_SELECTOBJECT(hDC, hGDIOBJ) -> numeric/.T./.F.
 HB_FUNC( WAPI_SELECTOBJECT )
 {
    HDC hDC = hbwapi_par_HDC(1);
-   HB_BOOL bRegion = HB_FALSE;
+   HB_BOOL bRegion = false;
    HGDIOBJ h;
 
    if( (h = hbwapi_par_HPEN(2)) != nullptr )

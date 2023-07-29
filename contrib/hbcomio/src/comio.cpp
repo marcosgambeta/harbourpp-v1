@@ -299,10 +299,10 @@ static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * pszName, const ch
          switch( nExFlags & (FO_READ | FO_WRITE | FO_READWRITE) )
          {
             case FO_READ:
-               fWrite = HB_FALSE;
+               fWrite = false;
                break;
             case FO_WRITE:
-               fRead = HB_FALSE;
+               fRead = false;
                break;
          }
          pFile = s_fileNew(iPort, timeout, fRead, fWrite);
@@ -434,13 +434,13 @@ static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue)
             switch( hb_itemGetNI(pValue) )
             {
                case FO_READ:
-                  pFile->fRead = HB_FALSE;
+                  pFile->fRead = false;
                   break;
                case FO_WRITE:
-                  pFile->fWrite = HB_FALSE;
+                  pFile->fWrite = false;
                   break;
                case FO_READWRITE:
-                  pFile->fRead = pFile->fWrite = HB_FALSE;
+                  pFile->fRead = pFile->fWrite = false;
                   break;
             }
          }

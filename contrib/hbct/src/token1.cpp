@@ -312,7 +312,7 @@ static void do_token1(int iSwitch)
                {
                   if( !memchr( pcSeparatorStr, *t, sSeparatorStrLen ) )
                   {
-                     bLast = HB_FALSE;
+                     bLast = false;
                      break;
                   }
                }

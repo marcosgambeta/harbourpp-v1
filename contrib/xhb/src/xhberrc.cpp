@@ -85,7 +85,7 @@ LONG WINAPI PRGUnhandledExceptionFilter( EXCEPTION_POINTERS * ExceptionInfo )
             hb_itemPutCLStatic( &Buffer, static_cast<char*>(ExceptionInfo), sizeof(EXCEPTION_POINTERS) );
 
             Adopt.type = Harbour::Item::LOGICAL;
-            Adopt.item.asLogical.value = HB_FALSE;
+            Adopt.item.asLogical.value = false;
 
             hb_objSendMsg(&Exception, "Buffer", 2, &Buffer, &Adopt);
          }

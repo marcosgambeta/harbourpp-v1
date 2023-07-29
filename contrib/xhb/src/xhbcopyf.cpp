@@ -63,7 +63,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest, PHB_IT
    HB_TRACE( HB_TR_DEBUG, ( "hb_copyfile(%s, %s, %p)", pszSource, pszDest, static_cast<void*>(pBlock) ) );
 #endif
 
-   HB_BOOL bRetVal = HB_FALSE;
+   HB_BOOL bRetVal = false;
    PHB_FILE pSource;
    PHB_ITEM pError = nullptr;
 
@@ -138,7 +138,7 @@ static HB_BOOL hb_copyfile( const char * pszSource, const char * pszDest, PHB_IT
                   pError = hb_errRT_FileError(pError, nullptr, EG_WRITE, 2016, pszDest);
                   if( hb_errLaunch( pError ) != E_RETRY )
                   {
-                     bRetVal = HB_FALSE;
+                     bRetVal = false;
                      break;
                   }
                }

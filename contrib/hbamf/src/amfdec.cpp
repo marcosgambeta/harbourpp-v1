@@ -340,7 +340,7 @@ static HB_BOOL decode_dynamic_array_AMF3(amfContext * context, PHB_ITEM pItem, i
       for( i = 0; i < array_len; i++ )
       {
          PHB_ITEM pValue = hb_itemNew(nullptr);
-         lRet = HB_FALSE;
+         lRet = false;
 
          if( amf3_getItem(context, pValue) )
          {
@@ -365,7 +365,7 @@ static HB_BOOL decode_dynamic_array_AMF3(amfContext * context, PHB_ITEM pItem, i
       for( i = 0; i < array_len; i++ )
       {
          PHB_ITEM pValue = hb_itemNew(nullptr);
-         lRet = HB_FALSE;
+         lRet = false;
 
          if( amf3_getItem(context, pValue) )
          {
@@ -426,7 +426,7 @@ static HB_BOOL amf3_deserialize_array( amfContext * context, PHB_ITEM pItem, HB_
       I think that this is not a problem for Harbour */
 
    /* Determine if array is mixed (associative) or not */
-   mixed    = HB_FALSE;
+   mixed    = false;
    byte_ref = readByte(context);
    if( byte_ref == NULL )
       return false;
@@ -866,7 +866,7 @@ static HB_BOOL amf3_decode_obj_attrs( amfContext * context, PHB_ITEM pHash, PHB_
 static HB_BOOL amf3_decode_anon_obj( amfContext * context, PHB_ITEM pItem, PHB_ITEM pClass )
 {
    PHB_ITEM pAnonHash = hb_itemNew(nullptr);
-   HB_BOOL  result    = HB_FALSE;
+   HB_BOOL  result    = false;
 
    /* Original Python comment which I don't understand:
       We're using merge instead of populating the dict
@@ -904,10 +904,10 @@ static HB_BOOL amf3_decode_externalizable( amfContext * context, PHB_ITEM pItem 
    if( HB_IS_INTEGER(pPos) )
    {
       if( !readBytes( context, hb_itemGetNI(pPos) ) )
-         result = HB_FALSE;
+         result = false;
    }
    else
-      result = HB_FALSE;
+      result = false;
 
    hb_itemMove(hb_stackReturnItem(), pRetCopy);
 
@@ -1070,7 +1070,7 @@ static HB_BOOL amf3_deserialize_obj( amfContext * context, PHB_ITEM pItem, HB_BO
       amf3_add_reference(pHash, pItem);
    }
 
-   result = HB_FALSE;
+   result = false;
    if( obj_type == 0 )
    {
       result = amf3_decode_anon_obj(context, pItem, pClass);
@@ -1159,7 +1159,7 @@ static HB_BOOL amf3_getItem(amfContext * context, PHB_ITEM pItem)
          if( amf3_decode_int( context, &iVal ) )
             hb_itemPutNI(pItem, iVal);
          else
-            lRet = HB_FALSE;
+            lRet = false;
       }
       break;
 
@@ -1169,7 +1169,7 @@ static HB_BOOL amf3_getItem(amfContext * context, PHB_ITEM pItem)
          if( amfX_decode_double( context, &dVal ) )
             hb_itemPutND(pItem, dVal);
          else
-            lRet = HB_FALSE;
+            lRet = false;
       }
       break;
 
@@ -1208,7 +1208,7 @@ static HB_BOOL amf3_getItem(amfContext * context, PHB_ITEM pItem)
          break;
 
       default:
-         lRet = HB_FALSE;
+         lRet = false;
          break;
    }
 

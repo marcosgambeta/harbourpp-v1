@@ -701,7 +701,7 @@ HB_FUNC( SQLITE3_LAST_INSERT_ROWID )
 
 HB_FUNC( SQLITE3_TEMP_DIRECTORY )
 {
-   HB_BOOL bResult = HB_FALSE;
+   HB_BOOL bResult = false;
 
    #ifdef SQLITE3_DYNLIB
    {

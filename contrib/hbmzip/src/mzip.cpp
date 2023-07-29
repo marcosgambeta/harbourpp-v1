@@ -702,7 +702,7 @@ HB_FUNC( HB_UNZIPFILECLOSE )
 
 static HB_BOOL hb_zipGetFileInfoFromHandle( PHB_FILE pFile, HB_U32 * pulCRC, HB_BOOL * pfText )
 {
-   HB_BOOL fText = pfText != nullptr, fResult = HB_FALSE;
+   HB_BOOL fText = pfText != nullptr, fResult = false;
    HB_U32  ulCRC = 0;
 
    if( pFile != nullptr )
@@ -728,7 +728,7 @@ static HB_BOOL hb_zipGetFileInfoFromHandle( PHB_FILE pFile, HB_U32 * pulCRC, HB_
                       ( pString[u] >= 0x7F && pString[u] < 0xA0 &&
                         pString[u] != ( unsigned char ) HB_CHAR_SOFT1 ) )
                   {
-                     fText = HB_FALSE;
+                     fText = false;
                      break;
                   }
                }
@@ -807,7 +807,7 @@ static int hb_zipStoreFile( zipFile hZip, int iParamFileName, int iParamZipName,
    const char * szComment;
 
    memset(&zfi, 0, sizeof(zfi));
-   fError    = HB_FALSE;
+   fError    = false;
    ulExtAttr = 0;
 
 #if defined(HB_OS_WIN)
@@ -988,7 +988,7 @@ static int hb_zipStoreFile( zipFile hZip, int iParamFileName, int iParamZipName,
       }
    }
 
-   fText = HB_FALSE;
+   fText = false;
    ulCRC = 0;
 
    zfi.external_fa = ulExtAttr;
@@ -1147,7 +1147,7 @@ static int hb_zipStoreFileHandle( zipFile hZip, PHB_FILE pFile, int iParamZipNam
    zfi.tmz_date.tm_year = 0;
 
    ulCRC = 0;
-   fText = HB_FALSE;
+   fText = false;
    if( szPassword && hb_zipGetFileInfoFromHandle( pFile, &ulCRC, &fText ) )
    {
       zfi.internal_fa = fText ? 1 : 0;

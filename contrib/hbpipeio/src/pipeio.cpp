@@ -293,7 +293,7 @@ static PHB_FILE s_fileNew( HB_FHANDLE hProcess, HB_FHANDLE hPipeRD,
    pFile->hProcess = hProcess;
    pFile->hPipeRD = hPipeRD;
    pFile->hPipeWR = hPipeWR;
-   pFile->fEof    = HB_FALSE;
+   pFile->fEof    = false;
    pFile->timeout = timeout;
 
    return pFile;

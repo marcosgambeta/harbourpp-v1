@@ -104,7 +104,7 @@ HB_FUNC( DLLCALL )
 {
    PHB_ITEM pLibrary       = hb_param(1, Harbour::Item::ANY);
    PHB_ITEM pLibraryHandle = nullptr;
-   HB_BOOL  bFreeLibrary   = HB_FALSE;
+   HB_BOOL  bFreeLibrary   = false;
 
    if( pLibrary )
    {
@@ -149,7 +149,7 @@ HB_FUNC( DLLPREPARECALL )
 {
    PHB_ITEM pLibrary       = hb_param(1, Harbour::Item::ANY);
    PHB_ITEM pLibraryHandle = nullptr;
-   HB_BOOL  bFreeLibrary   = HB_FALSE;
+   HB_BOOL  bFreeLibrary   = false;
    const char * pszErrorText;
 
    if( pLibrary )

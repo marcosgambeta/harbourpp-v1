@@ -678,7 +678,7 @@ static PHB_FILE s_filegzipNew( PHB_FILE pFile, int iMode, int iLevel )
       pFileGZ->pFile = pFile;
       pFileGZ->seek_pos = 0;
       pFileGZ->nTimeout = -1;
-      pFileGZ->fInited = HB_FALSE;
+      pFileGZ->fInited = false;
       pFileGZ->iMode = iMode;
       pFileGZ->iLevel = iLevel;
 

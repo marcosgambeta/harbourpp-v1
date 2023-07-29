@@ -285,7 +285,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
       HB_USHORT       uiFields;
       HB_ULONG        uiRecCount = 0;
       HB_BOOL         bNoFieldPassed = (pFields == nullptr || hb_arrayLen(pFields) == 0);
-      HB_BOOL         bEof = HB_FALSE;
+      HB_BOOL         bEof = false;
       PHB_ITEM        pItem;
       HB_USHORT       uiFieldCopy = 0;
       HB_USHORT       uiIter;
@@ -294,7 +294,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
       char *          szFields = nullptr;
       char *          szTmp;
       PGresult *      pgResult;
-      HB_BOOL         bFail    = HB_FALSE;
+      HB_BOOL         bFail    = false;
 
       pItem = hb_itemNew(nullptr);
 

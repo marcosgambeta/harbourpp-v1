@@ -442,7 +442,7 @@ static HB_ERRCODE odbcOpen( SQLBASEAREAP pArea )
 #endif
 
    errCode = 0;
-   bError  = HB_FALSE;
+   bError  = false;
    for( uiIndex = 0; uiIndex < uiFields; uiIndex++ )
    {
       DBFIELDINFO dbFieldInfo;
@@ -866,7 +866,7 @@ static HB_ERRCODE odbcGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
    {
       pArea->pRecord      = pArea->pRow[0];
       pArea->bRecordFlags = pArea->pRowFlags[0];
-      pArea->fPositioned  = HB_FALSE;
+      pArea->fPositioned  = false;
    }
    else
    {

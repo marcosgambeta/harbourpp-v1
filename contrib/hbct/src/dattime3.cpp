@@ -103,7 +103,7 @@ HB_FUNC( WAITPERIOD )
 
 static HB_BOOL _hb_timeValid(const char * szTime, HB_SIZE nLen, int * piDecode)
 {
-   HB_BOOL fValid = HB_FALSE;
+   HB_BOOL fValid = false;
 
    if( nLen == 2 || nLen == 5 || nLen == 8 || nLen == 11 )
    {
@@ -138,7 +138,7 @@ HB_FUNC( TIMEVALID )
 
 HB_FUNC( SETTIME )
 {
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
    int     iTime[4];
 
    iTime[0] = iTime[1] = iTime[2] = iTime[3] = 0;
@@ -175,7 +175,7 @@ HB_FUNC( SETTIME )
 
 HB_FUNC( SETDATE )
 {
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
    long    lDate   = hb_pardl(1);
 
    if( lDate )

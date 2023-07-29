@@ -284,8 +284,8 @@ static long _ft_skip( long iRecs )
       char *     cBuff    = static_cast<char*>(hb_xgrab(BUFFSIZE));
       HB_FOFFSET fpOffset = ft_text->offset[ft_text->area];
 
-      ft_text->isBof[ft_text->area] = HB_FALSE;
-      ft_text->isEof[ft_text->area] = HB_FALSE;
+      ft_text->isBof[ft_text->area] = false;
+      ft_text->isEof[ft_text->area] = false;
       ft_text->error[ft_text->area] = 0;
 
       /* iRecs is zero if they want to find the EOF, start a top of file */
@@ -617,12 +617,12 @@ static HB_BOOL _writeLine( PFT_TEXT ft_text, const char * theData, HB_SIZE iData
 
    if( hb_fileWrite( ft_text->handles[ft_text->area], theData, iDataLen, -1 ) != iDataLen )
    {
-      fSuccess = HB_FALSE;
+      fSuccess = false;
       ft_text->error[ft_text->area] = hb_fsError();
    }
    else if( !_writeeol( ft_text->handles[ft_text->area] ) )
    {
-      fSuccess = HB_FALSE;
+      fSuccess = false;
       ft_text->error[ft_text->area] = hb_fsError();
    }
    return fSuccess;
@@ -651,8 +651,8 @@ HB_FUNC( FT_FUSE )
       ft_text->last_rec[ft_text->area] = 0;
       ft_text->last_off[ft_text->area] = 0;
       ft_text->lastbyte[ft_text->area] = 0;
-      ft_text->isBof[ft_text->area] = HB_FALSE;
-      ft_text->isEof[ft_text->area] = HB_FALSE;
+      ft_text->isBof[ft_text->area] = false;
+      ft_text->isEof[ft_text->area] = false;
    }
 
    if( pszFileName )
@@ -713,8 +713,8 @@ HB_FUNC( FT_FGOTOP )
    ft_text->error[ft_text->area] = 0;
    ft_text->offset[ft_text->area] = 0;
    ft_text->recno[ft_text->area] = 1;
-   ft_text->isBof[ft_text->area] = HB_FALSE;
-   ft_text->isEof[ft_text->area] = HB_FALSE;
+   ft_text->isBof[ft_text->area] = false;
+   ft_text->isEof[ft_text->area] = false;
 }
 
 HB_FUNC( FT_FERROR )
@@ -744,8 +744,8 @@ HB_FUNC( FT_FGOBOT )
 
    ft_text->recno[ft_text->area] = ft_text->last_rec[ ft_text->area ];
    ft_text->offset[ft_text->area] = ft_text->last_off[ ft_text->area ];
-   ft_text->isBof[ft_text->area] = HB_FALSE;
-   ft_text->isEof[ft_text->area] = HB_FALSE;
+   ft_text->isBof[ft_text->area] = false;
+   ft_text->isEof[ft_text->area] = false;
 }
 
 HB_FUNC_TRANSLATE( FT_FGOBOTTOM, FT_FGOBOT )  /* HB_EXTENSION */
@@ -855,7 +855,7 @@ HB_FUNC( FT_FDELETE )
       /* if we've deleted to EOF, leave EOF flag set, otherwise clear it */
       if( ft_text->recno[ft_text->area] != ft_text->last_rec[ft_text->area] )
       {
-         ft_text->isEof[ft_text->area] = HB_FALSE;
+         ft_text->isEof[ft_text->area] = false;
       }
 
       hb_xfree(Buff);
@@ -868,7 +868,7 @@ HB_FUNC( FT_FINSERT )
 {
    PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_ft_text));
 
-   HB_BOOL fSuccess = HB_FALSE;
+   HB_BOOL fSuccess = false;
 
    if( ft_text->handles[ft_text->area] )
    {
@@ -883,7 +883,7 @@ HB_FUNC( FT_FINSERT )
             if( !_writeeol( ft_text->handles[ft_text->area] ) )
             {
                ft_text->error[ft_text->area] = hb_fsError();
-               fSuccess = HB_FALSE;
+               fSuccess = false;
                break;
             }
          }
@@ -961,7 +961,7 @@ HB_FUNC( FT_FWRITELN )
 {
    PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_ft_text));
 
-   HB_BOOL fSuccess = HB_FALSE;
+   HB_BOOL fSuccess = false;
 
    if( ft_text->handles[ft_text->area] )
    {
@@ -1098,8 +1098,8 @@ HB_FUNC( FT_FGOTO )
 
       ft_text->offset[ft_text->area] = 0;
       ft_text->recno[ft_text->area]  = 1;
-      ft_text->isBof[ft_text->area]  = HB_FALSE;
-      ft_text->isEof[ft_text->area]  = HB_FALSE;
+      ft_text->isBof[ft_text->area]  = false;
+      ft_text->isEof[ft_text->area]  = false;
 
       if( --target )
       {

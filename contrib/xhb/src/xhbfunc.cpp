@@ -250,7 +250,7 @@ HB_FUNC( HB_EXEC )
 {
    if( HB_ISSYMBOL(1) )
    {
-      HB_BOOL fSend   = HB_FALSE;
+      HB_BOOL fSend   = false;
       int     iParams = hb_pcount() - 1;
 
       if( iParams >= 1 )

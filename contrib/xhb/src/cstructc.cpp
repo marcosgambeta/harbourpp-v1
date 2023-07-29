@@ -1444,7 +1444,7 @@ HB_FUNC( HB_STRUCTURETOARRAY )
       }
       else
       {
-         bAdopt = HB_FALSE;
+         bAdopt = false;
       }
 
       hb_itemReturnForward( StructureToArray( Buffer, Structure->item.asString.length, aDef, uiAlign, bAdopt, pRet ) );

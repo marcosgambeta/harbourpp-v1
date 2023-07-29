@@ -193,7 +193,7 @@ HB_FUNC( SETFATTR )
 HB_FUNC( SETFDATI )
 {
    const char * szFile = hb_parc(1);
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
 
    if( szFile && *szFile )
    {
@@ -238,7 +238,7 @@ HB_FUNC( SETFDATI )
 HB_FUNC( FILEDELETE )
 {
    const char * pszDirSpec = hb_parc(1);
-   HB_BOOL fResult = HB_FALSE;
+   HB_BOOL fResult = false;
 
    if( pszDirSpec )
    {

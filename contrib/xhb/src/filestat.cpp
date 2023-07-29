@@ -82,7 +82,7 @@
 
 HB_FUNC( FILESTATS )
 {
-   HB_BOOL    fResult = HB_FALSE;
+   HB_BOOL    fResult = false;
    char       szAttr[21];
    HB_FOFFSET llSize = 0;
    long       lcDate = 0, lcTime = 0, lmDate = 0, lmTime = 0;

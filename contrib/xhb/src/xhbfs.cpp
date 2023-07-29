@@ -63,7 +63,7 @@ HB_FUNC( ISDIRECTORY )
          hb_fsFindClose( ffind );
       }
       else
-         bRetVal = HB_FALSE;
+         bRetVal = false;
    }
 #endif
 

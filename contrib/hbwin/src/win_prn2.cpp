@@ -71,7 +71,7 @@ static HB_BOOL hb_IsLegacyDevice(const char * pszPrinterName)
 
 HB_FUNC( WIN_PRINTEREXISTS )
 {
-   HB_BOOL bResult = HB_FALSE;
+   HB_BOOL bResult = false;
 
    if( HB_ISCHAR(1) )
    {
@@ -153,7 +153,7 @@ HB_FUNC( WIN_PRINTERGETDEFAULT )
 
 static HB_BOOL hb_GetJobs(HANDLE hPrinter, JOB_INFO_2 ** ppJobInfo, DWORD * pdwJobs)
 {
-   HB_BOOL bResult = HB_FALSE;
+   HB_BOOL bResult = false;
    DWORD dwNeeded = 0;
 
    GetPrinter(hPrinter, 2, nullptr, 0, &dwNeeded);
@@ -283,7 +283,7 @@ HB_FUNC( WIN_PRINTERPORTTONAME )
          {
             const char * pszPortNameFind = hb_parc(1);
             HB_BOOL bSubStr = hb_parl(2);
-            HB_BOOL bFound = HB_FALSE;
+            HB_BOOL bFound = false;
             PHB_ITEM pTemp = hb_itemNew(nullptr);
 
             for( DWORD i = 0; i < dwReturned && !bFound; ++i, ++pPrinterEnum )

@@ -258,7 +258,7 @@ static HB_ERRCODE mysqlOpen( SQLBASEAREAP pArea )
 
    pItemEof = hb_itemArrayNew(uiFields);
 
-   bError = HB_FALSE;
+   bError = false;
    for( uiCount = 0; uiCount < uiFields; uiCount++ )
    {
       DBFIELDINFO dbFieldInfo;
@@ -458,7 +458,7 @@ static HB_ERRCODE mysqlGoTo( SQLBASEAREAP pArea, HB_ULONG ulRecNo )
       pArea->pRecord      = pArea->pRow[0];
       pArea->bRecordFlags = pArea->pRowFlags[0];
 
-      pArea->fPositioned = HB_FALSE;
+      pArea->fPositioned = false;
    }
    else
    {
@@ -487,7 +487,7 @@ static HB_ERRCODE mysqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
    HB_BOOL   bError;
    HB_SIZE   nLen;
 
-   bError = HB_FALSE;
+   bError = false;
    uiIndex--;
    pField = pArea->area.lpFields + uiIndex;
 

@@ -386,7 +386,7 @@ static HRESULT STDMETHODCALLTYPE Invoke(IDispatch * lpThis, DISPID dispid, REFII
 
    if( pAction )
    {
-      HB_BOOL fResult = HB_FALSE;
+      HB_BOOL fResult = false;
 
       if( s_pMsgHash )
       {
@@ -627,7 +627,7 @@ static HRESULT STDMETHODCALLTYPE classCreateInstance(IClassFactory * lpThis, IUn
    else
    {
       PHB_ITEM pAction = nullptr;
-      HB_BOOL fGuids = HB_FALSE;
+      HB_BOOL fGuids = false;
 
       if( s_pAction )
       {
@@ -782,7 +782,7 @@ STDAPI DllRegisterServer(void)
 
 BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, PVOID pvReserved)
 {
-   static HB_BOOL s_fInit = HB_FALSE;
+   static HB_BOOL s_fInit = false;
    BOOL fResult = TRUE;
 
    HB_SYMBOL_UNUSED(pvReserved);
@@ -834,7 +834,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, PVOID pvReserved)
          if( s_fInit )
          {
             hb_vmQuit();
-            s_fInit = HB_FALSE;
+            s_fInit = false;
          }
          break;
    }

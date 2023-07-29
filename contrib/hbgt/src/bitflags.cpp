@@ -108,7 +108,7 @@ HB_FUNC( GT_CLRFLAG )
 
 HB_FUNC( GT_ISFLAG )
 {
-   HB_BOOL FlagStatus = HB_FALSE;
+   HB_BOOL FlagStatus = false;
 
    if( HB_ISCHAR(1) )
    {

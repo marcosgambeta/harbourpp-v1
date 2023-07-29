@@ -270,7 +270,7 @@ static HB_ERRCODE pgsqlOpen( SQLBASEAREAP pArea )
    pItemEof = hb_itemArrayNew(uiFields);
    pItem    = hb_itemNew(nullptr);
 
-   bError = HB_FALSE;
+   bError = false;
    for( uiCount = 0; uiCount < uiFields; uiCount++ )
    {
       DBFIELDINFO dbFieldInfo;
@@ -499,7 +499,7 @@ static HB_ERRCODE pgsqlGetValue( SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
    HB_BOOL   bError;
    HB_SIZE   nLen;
 
-   bError = HB_FALSE;
+   bError = false;
    uiIndex--;
    pField = pArea->area.lpFields + uiIndex;
 

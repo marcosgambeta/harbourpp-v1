@@ -162,11 +162,11 @@ static void New( PHB_EDITOR pEd, int tab, HB_ISIZ ll, HB_ISIZ bufferSize )
    pEd->first_col      = 0;
    pEd->stabil         = 0;
    pEd->current_stabil = 0;
-   pEd->fStable        = HB_FALSE;
+   pEd->fStable        = false;
    pEd->tab_size       = tab;
    pEd->active         = 1;
    pEd->line_number    = 0;
-   pEd->fIsConfigured  = HB_FALSE;
+   pEd->fIsConfigured  = false;
    pEd->text_length    = 0;
    pEd->buffer_size    = bufferSize;
 
@@ -265,7 +265,7 @@ static void NewText( PHB_EDITOR pEd )
 
    pEd->cursor_col     = 0;
    pEd->cursor_row     = 0;
-   pEd->fStable        = HB_FALSE;
+   pEd->fStable        = false;
    pEd->current_stabil = 0;
    pEd->first_display  = pEd->last_display = 0;
    pEd->next_stabil    = 0;
@@ -402,7 +402,7 @@ static HB_ISIZ InsText( PHB_EDITOR pEd, char * adres, HB_ISIZ line )
    /* TODO: add reallocation  of text buffer */
    if( dl1 < ( pEd->buffer_size - 10 ) )
    {
-      HB_BOOL addCRLF = HB_FALSE;
+      HB_BOOL addCRLF = false;
       HB_ISIZ off, il;
       HB_ISIZ cc;
 
@@ -654,7 +654,7 @@ HB_FUNC( ED_CONFIG )
       }
 
       pEd->fIsConfigured  = true;
-      pEd->fStable        = HB_FALSE;
+      pEd->fStable        = false;
       pEd->current_stabil = 0;
       pEd->next_stabil    = pEd->first_display;
       pEd->dir = _STABILIZE_DOWN;
@@ -798,7 +798,7 @@ HB_FUNC( ED_READTEXT )
 
    if( pEd )
    {
-      HB_BOOL    lSuccess = HB_FALSE;
+      HB_BOOL    lSuccess = false;
       HB_FHANDLE nFile;
       HB_ISIZ    nSize;
       HB_FOFFSET nRead;
@@ -825,7 +825,7 @@ HB_FUNC( ED_READTEXT )
          NewText(pEd);
 
          lSuccess     = true;
-         pEd->fStable = HB_FALSE;
+         pEd->fStable = false;
       }
 
       hb_retl(lSuccess);
@@ -1048,7 +1048,7 @@ static void Down( PHB_EDITOR pEd )
          pEd->first_display = Next(pEd, pEd->first_display);
          pEd->last_display  = j;
 
-         pEd->fStable        = HB_FALSE;
+         pEd->fStable        = false;
          pEd->next_stabil    = pEd->last_display;
          pEd->dir            = _STABILIZE_UP;
          pEd->current_stabil = pEd->cursor_row;
@@ -1127,7 +1127,7 @@ static void Up( PHB_EDITOR pEd )
          if( j == (pEd->bottom - pEd->top + 1) )
             pEd->last_display = Prev(pEd, pEd->last_display);
 
-         pEd->fStable        = HB_FALSE;
+         pEd->fStable        = false;
          pEd->next_stabil    = pEd->current_line;
          pEd->dir            = _STABILIZE_DOWN;
          pEd->current_stabil = 0;
@@ -1212,7 +1212,7 @@ HB_FUNC( ED_PGDOWN )
             pEd->current_line = 0;
       }
 
-      pEd->fStable        = HB_FALSE;
+      pEd->fStable        = false;
       pEd->next_stabil    = pEd->first_display;
       pEd->stabil         = pEd->bottom - pEd->top + 1;
       pEd->dir            = _STABILIZE_DOWN;
@@ -1277,7 +1277,7 @@ HB_FUNC( ED_PGUP )
             pEd->current_line = 0;
       }
 
-      pEd->fStable        = HB_FALSE;
+      pEd->fStable        = false;
       pEd->next_stabil    = pEd->last_display;
       pEd->stabil         = bt + 1;
       pEd->dir            = _STABILIZE_UP;
@@ -1313,7 +1313,7 @@ HB_FUNC( ED_TOP )
       pEd->cursor_row   = pEd->current_stabil = 0;
       pEd->current_line = pEd->next_stabil = pEd->first_line;
       pEd->active       = 1;
-      pEd->fStable      = HB_FALSE;
+      pEd->fStable      = false;
       pEd->stabil       = pEd->bottom - pEd->top + 1;
       pEd->dir       = _STABILIZE_DOWN;
       pEd->first_col = pEd->cursor_col = 0;
@@ -1355,7 +1355,7 @@ HB_FUNC( ED_BOTTOM )
 
       pEd->current_line = pEd->last_display;
       pEd->active       = pEd->line_number;
-      pEd->fStable      = HB_FALSE;
+      pEd->fStable      = false;
       pEd->next_stabil  = pEd->first_display;
       pEd->dir = _STABILIZE_DOWN;
       pEd->current_stabil = 0;
@@ -1397,7 +1397,7 @@ static void GoTo( PHB_EDITOR pEd, HB_ISIZ line )
    }
 
    pEd->active         = line;
-   pEd->fStable        = HB_FALSE;
+   pEd->fStable        = false;
    pEd->next_stabil    = pEd->current_line;
    pEd->stabil         = pEd->bottom - pEd->top + 1;
    pEd->dir            = _STABILIZE_DOWN;
@@ -1427,7 +1427,7 @@ static void Left( PHB_EDITOR pEd )
       {
          /* the text is scrolled right - scroll it back to the left by one column */
          pEd->first_col--;
-         pEd->fStable        = HB_FALSE;
+         pEd->fStable        = false;
          pEd->next_stabil    = pEd->first_display;
          pEd->stabil         = pEd->bottom - pEd->top + 1;
          pEd->dir            = _STABILIZE_DOWN;
@@ -1463,7 +1463,7 @@ static void Right( PHB_EDITOR pEd )
       if( (++pEd->first_col + pEd->cursor_col) > pEd->line_length )
          pEd->first_col--;
 
-      pEd->fStable        = HB_FALSE;
+      pEd->fStable        = false;
       pEd->next_stabil    = pEd->first_display;
       pEd->stabil         = pEd->bottom - pEd->top + 1;
       pEd->dir            = _STABILIZE_DOWN;
@@ -1490,7 +1490,7 @@ static void Home( PHB_EDITOR pEd )
       /* the line was scrolled to the right */
       pEd->cursor_col     = 0;
       pEd->first_col      = 0;
-      pEd->fStable        = HB_FALSE;
+      pEd->fStable        = false;
       pEd->next_stabil    = pEd->first_display;
       pEd->stabil         = pEd->bottom - pEd->top + 1;
       pEd->dir            = _STABILIZE_DOWN;
@@ -1527,7 +1527,7 @@ static void End( PHB_EDITOR pEd )
          adjust the first visible column to make the end of line visible */
       pEd->first_col      = ll;
       pEd->cursor_col     = 0;
-      pEd->fStable        = HB_FALSE;
+      pEd->fStable        = false;
       pEd->next_stabil    = pEd->first_display;
       pEd->stabil         = pEd->bottom - pEd->top + 1;
       pEd->dir            = _STABILIZE_DOWN;
@@ -1538,7 +1538,7 @@ static void End( PHB_EDITOR pEd )
       /* scroll text to the right */
       pEd->cursor_col     = pEd->right - pEd->left;
       pEd->first_col      = ll - (pEd->right - pEd->left);
-      pEd->fStable        = HB_FALSE;
+      pEd->fStable        = false;
       pEd->next_stabil    = pEd->first_display;
       pEd->stabil         = pEd->bottom - pEd->top + 1;
       pEd->dir            = _STABILIZE_DOWN;
@@ -1634,7 +1634,7 @@ static void FormatParagraph( PHB_EDITOR pEd )
       pEd->current_stabil = pEd->cursor_row;
    }
 
-   pEd->fStable      = HB_FALSE;
+   pEd->fStable      = false;
    pEd->dir          = _STABILIZE_DOWN;
    pEd->cursor_col   = cc;
    pEd->cursor_row   = cr;
@@ -1661,7 +1661,7 @@ static void DelChar( PHB_EDITOR pEd )
       }
       MoveText(pEd, pEd->current_line + ccc + 1, pEd->current_line + ccc, (pEd->buffer_size - (pEd->current_line + ccc + 1)));
 
-      pEd->fStable     = HB_FALSE;
+      pEd->fStable     = false;
       pEd->next_stabil = pEd->current_line;
 
       pEd->dir = _STABILIZE_DOWN;
@@ -1674,7 +1674,7 @@ static void DelChar( PHB_EDITOR pEd )
 
       pEd->current_line = cl;
 
-      pEd->fStable        = HB_FALSE;
+      pEd->fStable        = false;
       pEd->next_stabil    = pEd->first_display;
       pEd->stabil         = pEd->bottom - pEd->top + 1;
       pEd->dir            = _STABILIZE_DOWN;
@@ -1703,7 +1703,7 @@ HB_FUNC( ED_DELCHAR )
             Home(pEd);                /* goto the beginning of line */
             BackSpace(pEd, true);    /* delete separating CR/LF */
 
-            pEd->fStable        = HB_FALSE;
+            pEd->fStable        = false;
             pEd->next_stabil    = pEd->first_display;
             pEd->stabil         = pEd->bottom - pEd->top + 1;
             pEd->dir            = _STABILIZE_DOWN;
@@ -1733,7 +1733,7 @@ static void BackSpace( PHB_EDITOR pEd, HB_BOOL fInsert )
    HB_ISIZ ccc;
    HB_ISIZ rdl;
 
-   pEd->fStable        = HB_FALSE;
+   pEd->fStable        = false;
    pEd->next_stabil    = pEd->current_line;
    pEd->stabil         = 1;
    pEd->dir            = _STABILIZE_DOWN;
@@ -1742,7 +1742,7 @@ static void BackSpace( PHB_EDITOR pEd, HB_BOOL fInsert )
    if( fInsert )
    {
       if( (ccc = pEd->cursor_col + pEd->first_col) > GetLineLength(pEd, pEd->current_line, &rdl) )
-         fInsert = HB_FALSE;  /* cursor is scrolled after the last character in the line - just move the cursor left */
+         fInsert = false;  /* cursor is scrolled after the last character in the line - just move the cursor left */
    }
 
    if( fInsert )
@@ -1816,7 +1816,7 @@ static void BackSpace( PHB_EDITOR pEd, HB_BOOL fInsert )
                pEd->last_display = Prev(pEd, pEd->last_display);
                pEd->last_line    = pEd->current_line;
             }
-            pEd->fStable        = HB_FALSE;
+            pEd->fStable        = false;
             pEd->next_stabil    = pEd->first_display;
             pEd->stabil         = pEd->bottom - pEd->top + 1;
             pEd->dir            = _STABILIZE_DOWN;
@@ -1826,7 +1826,7 @@ static void BackSpace( PHB_EDITOR pEd, HB_BOOL fInsert )
 
       FormatParagraph(pEd);
 
-      pEd->fStable        = HB_FALSE;
+      pEd->fStable        = false;
       pEd->next_stabil    = pEd->first_display;
       pEd->stabil         = pEd->bottom - pEd->top + 1;
       pEd->dir            = _STABILIZE_DOWN;
@@ -1916,7 +1916,7 @@ static void NextWord( PHB_EDITOR pEd )
          {
             pEd->first_col     += pEd->cursor_col - (pEd->right - pEd->left);
             pEd->cursor_col     = pEd->right - pEd->left;
-            pEd->fStable        = HB_FALSE;
+            pEd->fStable        = false;
             pEd->next_stabil    = pEd->first_display;
             pEd->stabil         = pEd->bottom - pEd->top + 1;
             pEd->dir            = _STABILIZE_DOWN;
@@ -1999,7 +1999,7 @@ static void PreviousWord( PHB_EDITOR pEd )
       if( pEd->cursor_col < 0 )
       {
          pEd->first_col      = pEd->cursor_col - (pEd->right - pEd->left);
-         pEd->fStable        = HB_FALSE;
+         pEd->fStable        = false;
          pEd->next_stabil    = pEd->first_display;
          pEd->stabil         = pEd->bottom - pEd->top + 1;
          pEd->dir            = _STABILIZE_DOWN;
@@ -2031,7 +2031,7 @@ static HB_BOOL format_line( PHB_EDITOR pEd, char Karetka, HB_ISIZ LineDl )
    if( !LineDl )
       LineDl = GetLineLength(pEd, pEd->current_line, &rdl);
 
-   status = HB_FALSE;  /* the line is not split yet */
+   status = false;  /* the line is not split yet */
    if( LineDl > pEd->line_length )
    {
       char *  p;
@@ -2154,7 +2154,7 @@ static void PutChar( PHB_EDITOR pEd, HB_BOOL fInsert, char znak )
    HB_ISIZ cc;
    HB_ISIZ rdl;
 
-   jj = HB_FALSE;
+   jj = false;
    cc = pEd->cursor_col + pEd->first_col;  /* current position in the line */
    if( fInsert )
    {
@@ -2201,7 +2201,7 @@ static void PutChar( PHB_EDITOR pEd, HB_BOOL fInsert, char znak )
    else if( cc < GetLineLength( pEd, pEd->current_line, &rdl ) )
    {
       pEd->begin[pEd->current_line + cc] = znak;
-      jj = HB_FALSE;
+      jj = false;
       Right(pEd);
    }
    else if( Check_length( pEd, 1 ) )
@@ -2232,7 +2232,7 @@ static void PutChar( PHB_EDITOR pEd, HB_BOOL fInsert, char znak )
       pEd->current_stabil = pEd->cursor_row;
    }
 
-   pEd->fStable = HB_FALSE;
+   pEd->fStable = false;
    pEd->dir     = _STABILIZE_DOWN;
 }
 
@@ -2303,7 +2303,7 @@ static void DelLine( PHB_EDITOR pEd )
 
       pEd->next_stabil    = pEd->current_line;
       pEd->current_stabil = pEd->cursor_row;
-      pEd->fStable        = HB_FALSE;
+      pEd->fStable        = false;
    }
    else
    {
@@ -2317,7 +2317,7 @@ static void DelLine( PHB_EDITOR pEd )
       pEd->dir            = _STABILIZE_DOWN;
       pEd->next_stabil    = pEd->current_line;
       pEd->current_stabil = pEd->cursor_row;
-      pEd->fStable        = HB_FALSE;
+      pEd->fStable        = false;
    }
    if( pEd->text_length == 0 )
    {
@@ -2382,7 +2382,7 @@ HB_FUNC( ED_DELWORD )
 
             MoveText(pEd, pEd->current_line + pos2, pEd->current_line + pos1, pEd->buffer_size - pEd->current_line - pos2);
             FormatParagraph(pEd);
-            pEd->fStable        = HB_FALSE;
+            pEd->fStable        = false;
             pEd->next_stabil    = pEd->first_display;
             pEd->stabil         = pEd->bottom - pEd->top + 1;
             pEd->dir            = _STABILIZE_DOWN;
@@ -2478,7 +2478,7 @@ static void Return( PHB_EDITOR pEd, HB_BOOL fInsert )
 
    if( Check_length( pEd, 0 ) )
    {
-      pEd->fStable = HB_FALSE;
+      pEd->fStable = false;
       pEd->dir     = _STABILIZE_DOWN;
       Down(pEd);
       Home(pEd);

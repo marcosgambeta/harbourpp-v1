@@ -197,7 +197,7 @@ HB_FUNC( WVG_SETGOBJDATA )
 {
    PHB_GTWVT pWVT     = hb_wvt_gtGetWVT();
    int       iHandle  = hb_parni(1);
-   HB_BOOL   bSuccess = HB_FALSE;
+   HB_BOOL   bSuccess = false;
 
    if( iHandle )
    {
@@ -274,7 +274,7 @@ HB_FUNC( WVG_SETGOBJDATA )
                      DeleteObject(gObj->hFont);
                   }
                   gObj->hFont        = reinterpret_cast<HFONT>(static_cast<HB_PTRUINT>(hb_parnint(3)));
-                  gObj->bDestroyFont = HB_FALSE;
+                  gObj->bDestroyFont = false;
                   break;
                case GOBJ_OBJDATA_HPEN:
                   if( gObj->hPen && gObj->bDestroyPen )
@@ -282,7 +282,7 @@ HB_FUNC( WVG_SETGOBJDATA )
                      DeleteObject(gObj->hPen);
                   }
                   gObj->hPen        = reinterpret_cast<HPEN>(static_cast<HB_PTRUINT>(hb_parnint(3)));
-                  gObj->bDestroyPen = HB_FALSE;
+                  gObj->bDestroyPen = false;
                   break;
                case GOBJ_OBJDATA_HBRUSH:
                   if( gObj->hBrush && gObj->bDestroyBrush )
@@ -299,7 +299,7 @@ HB_FUNC( WVG_SETGOBJDATA )
                   }
                   else
                   {
-                     bSuccess = HB_FALSE;
+                     bSuccess = false;
                   }
                   break;
                case GOBJ_OBJDATA_COLORBK:
@@ -313,7 +313,7 @@ HB_FUNC( WVG_SETGOBJDATA )
                   gObj->bBlock = hb_itemNew(hb_param(3, Harbour::Item::BLOCK));
                   break;
                default:
-                  bSuccess = HB_FALSE;
+                  bSuccess = false;
                   break;
             }
             if( bSuccess )
@@ -671,7 +671,7 @@ HB_FUNC( WVG_LABELEX )
    gObj->crRGBBk   = static_cast<COLORREF>(hb_parnint(7));
 
    gObj->hFont        = pWVT->pGUI->hUserFonts[hb_parni(8) - 1];
-   gObj->bDestroyFont = HB_FALSE;
+   gObj->bDestroyFont = false;
 
    gObj->gObjNext = pWVT->gObjs;
    pWVT->gObjs    = gObj;
@@ -841,7 +841,7 @@ HB_FUNC( WVG_OUTLINE )
    else
    {
       gObj->hPen        = pWVT->pGUI->penBlack;
-      gObj->bDestroyPen = HB_FALSE;
+      gObj->bDestroyPen = false;
    }
 
    gObj->gObjNext = pWVT->gObjs;
@@ -869,12 +869,12 @@ HB_FUNC( WVG_OUTLINEEX )
    if( pWVT->pGUI->hUserPens[hb_parni(6) - 1] )
    {
       gObj->hPen        = pWVT->pGUI->hUserPens[hb_parni(6) - 1];
-      gObj->bDestroyPen = HB_FALSE;
+      gObj->bDestroyPen = false;
    }
    else
    {
       gObj->hPen        = pWVT->pGUI->penBlack;
-      gObj->bDestroyPen = HB_FALSE;
+      gObj->bDestroyPen = false;
    }
 
    gObj->gObjNext = pWVT->gObjs;
@@ -958,7 +958,7 @@ HB_FUNC( WVG_LINEEX )
    gObj->iAlign  = hb_parni(8);
 
    gObj->hPen        = pWVT->pGUI->hUserPens[hb_parni(9) - 1];
-   gObj->bDestroyPen = HB_FALSE;
+   gObj->bDestroyPen = false;
 
    gObj->gObjNext = pWVT->gObjs;
    pWVT->gObjs    = gObj;
@@ -1102,9 +1102,9 @@ HB_FUNC( WVG_ELLIPSE )
    gObj->aOffset.iRight  = hb_parvni(5, 4);
 
    gObj->hPen          = pWVT->currentPen;
-   gObj->bDestroyPen   = HB_FALSE;
+   gObj->bDestroyPen   = false;
    gObj->hBrush        = pWVT->currentBrush;
-   gObj->bDestroyBrush = HB_FALSE;
+   gObj->bDestroyBrush = false;
 
    gObj->gObjNext = pWVT->gObjs;
    pWVT->gObjs    = gObj;
@@ -1140,9 +1140,9 @@ HB_FUNC( WVG_RECTANGLE )
    gObj->aOffset.iRight  = hb_parvni(5, 4);
 
    gObj->hPen          = pWVT->currentPen;
-   gObj->bDestroyPen   = HB_FALSE;
+   gObj->bDestroyPen   = false;
    gObj->hBrush        = pWVT->currentBrush;
-   gObj->bDestroyBrush = HB_FALSE;
+   gObj->bDestroyBrush = false;
 
    gObj->gObjNext = pWVT->gObjs;
    pWVT->gObjs    = gObj;
@@ -1181,9 +1181,9 @@ HB_FUNC( WVG_ROUNDRECT )
    gObj->iWidth  = hb_parni(7);
 
    gObj->hPen          = pWVT->currentPen;
-   gObj->bDestroyPen   = HB_FALSE;
+   gObj->bDestroyPen   = false;
    gObj->hBrush        = pWVT->currentBrush;
-   gObj->bDestroyBrush = HB_FALSE;
+   gObj->bDestroyBrush = false;
 
    gObj->gObjNext = pWVT->gObjs;
    pWVT->gObjs    = gObj;
@@ -1336,7 +1336,7 @@ HB_FUNC( WVG_TEXTBOX )
    gObj->crRGBBk   = static_cast<COLORREF>(hb_parnint(10));
 
    gObj->hFont        = reinterpret_cast<HFONT>(static_cast<HB_PTRUINT>(hb_parnint(11)));
-   gObj->bDestroyFont = HB_FALSE;
+   gObj->bDestroyFont = false;
 
    gObj->gObjNext = pWVT->gObjs;
    pWVT->gObjs    = gObj;
@@ -1387,7 +1387,7 @@ HB_FUNC( WVG_PICTURE )
 
       gObj->pPicture        = pWVT->pGUI->pPicture[hb_parni(6) - 1];
       gObj->iData           = (hb_parl(7) ? 1 : 0);
-      gObj->bDestroyPicture = HB_FALSE;
+      gObj->bDestroyPicture = false;
 
       gObj->gObjNext = pWVT->gObjs;
       pWVT->gObjs    = gObj;
@@ -1419,7 +1419,7 @@ HB_FUNC( WVG_PICTUREEX )
 
       gObj->pPicture        = reinterpret_cast<IPicture*>(static_cast<HB_PTRUINT>(hb_parnint(6)));
       gObj->iData           = (hb_parl(7) ? 1 : 0);
-      gObj->bDestroyPicture = HB_FALSE;
+      gObj->bDestroyPicture = false;
 
       gObj->gObjNext = pWVT->gObjs;
       pWVT->gObjs    = gObj;
@@ -1490,7 +1490,7 @@ HB_FUNC( WVG_IMAGE )
 
       if( iSource == GOBJ_IMAGESOURCE_SLOT )
       {
-         gObj->bDestroyPicture = HB_FALSE;
+         gObj->bDestroyPicture = false;
       }
       else
       {

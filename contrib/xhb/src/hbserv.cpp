@@ -141,7 +141,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
       return;
    }
 
-   bSignalEnabled = HB_FALSE;
+   bSignalEnabled = false;
    nPos = hb_arrayLen(sp_hooks);
    /* subsig not necessary */
    uiSig = static_cast<HB_UINT>(s_translateSignal(static_cast<HB_UINT>(sig), 0));
@@ -200,7 +200,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
                return;
 
             case HB_SERVICE_QUIT:
-               bSignalEnabled = HB_FALSE;
+               bSignalEnabled = false;
                hb_threadLeaveCriticalSection( &s_ServiceMutex );
                /* TODO: A service cleanup routine */
                hb_vmRequestQuit();
@@ -291,7 +291,7 @@ static void * s_signalListener( void * my_stack )
       if( bFirst )
       {
          pthread_sigmask(SIG_SETMASK, &passall, nullptr);
-         bFirst = HB_FALSE;
+         bFirst = false;
       }
 
       /* This is also a cancelation point. When the main thread
@@ -394,7 +394,7 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
       return EXCEPTION_EXECUTE_HANDLER;
    }
 
-   bSignalEnabled = HB_FALSE;
+   bSignalEnabled = false;
    nPos = hb_arrayLen(sp_hooks);
    /* subsig not necessary */
    uiSig = static_cast<HB_UINT>(s_translateSignal(static_cast<HB_UINT>(type), static_cast<HB_UINT>(sig)));
@@ -458,7 +458,7 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
                return EXCEPTION_CONTINUE_EXECUTION;
 
             case HB_SERVICE_QUIT:
-               bSignalEnabled = HB_FALSE;
+               bSignalEnabled = false;
                hb_threadLeaveCriticalSection( &s_ServiceMutex );
                hb_vmRequestQuit();
 #ifndef HB_THREAD_SUPPORT
