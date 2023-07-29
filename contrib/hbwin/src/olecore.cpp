@@ -1234,11 +1234,11 @@ void hb_oleVariantToItemEx(PHB_ITEM pItem, VARIANT * pVariant, HB_USHORT uiClass
          break;
 
       case VT_BOOL:
-         hb_itemPutL(pItem, V_BOOL(pVariant) ? HB_TRUE : HB_FALSE);
+         hb_itemPutL(pItem, V_BOOL(pVariant) ? true : false);
          break;
 
       case VT_BOOL | VT_BYREF:
-         hb_itemPutL(pItem, *V_BOOLREF(pVariant) ? HB_TRUE : HB_FALSE);
+         hb_itemPutL(pItem, *V_BOOLREF(pVariant) ? true : false);
          break;
 
       case VT_I1:

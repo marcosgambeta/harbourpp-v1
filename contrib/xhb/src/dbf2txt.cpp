@@ -225,7 +225,7 @@ HB_FUNC( DBF2TEXT )
       }
       
       /* For condition is met */
-      /* if For is nullptr, hb__Eval returns HB_TRUE */
+      /* if For is nullptr, hb__Eval returns true */
       if( !pFor || hb_itemGetL(hb_vmEvalBlock(pFor)) )
       {
          /* User does not request fields, copy all fields */

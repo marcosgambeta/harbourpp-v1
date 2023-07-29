@@ -84,7 +84,7 @@ typedef struct
    HB_ISIZ    kcount;            /* number of keys in terminate key list*/
    int        colinc;            /* col increment amount                */
    HB_BOOL    bBrowse;           /* browse flag                         */
-   HB_BOOL    bRefresh;          /* HB_TRUE means refresh screen        */
+   HB_BOOL    bRefresh;          /* true means refresh screen           */
    int        keylist[24];       /* terminate key list                  */
    int        keytype;           /* K_STRING or K_LIST                  */
 

@@ -799,7 +799,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, PVOID pvReserved)
          s_fInit = !hb_vmIsActive();
          if( s_fInit )
          {
-            hb_vmInit(HB_FALSE);
+            hb_vmInit(false);
          }
 
          hb_oleInit();

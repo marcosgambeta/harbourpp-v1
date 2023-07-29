@@ -828,7 +828,7 @@ static HB_BOOL hb_gt_wvt_FitRows(PHB_GTWVT pWVT)
    if( maxHeight > 0 )
    {
       HB_BOOL bOldCentre = pWVT->CentreWindow;
-      pWVT->CentreWindow = pWVT->bMaximized ? HB_TRUE : HB_FALSE;
+      pWVT->CentreWindow = pWVT->bMaximized ? true : false;
       HB_GTSELF_SETMODE(pWVT->pGT, maxHeight / pWVT->PTEXTSIZE.y, maxWidth / pWVT->PTEXTSIZE.x);
       pWVT->CentreWindow = bOldCentre;
       return true;
@@ -3638,7 +3638,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
             if( iY > 0 )
             {
                HB_BOOL bOldCentre = pWVT->CentreWindow;
-               pWVT->CentreWindow = pWVT->bMaximized ? HB_TRUE : HB_FALSE;
+               pWVT->CentreWindow = pWVT->bMaximized ? true : false;
                HB_GTSELF_SETMODE(pGT, (iY / pWVT->PTEXTSIZE.y), (iX / pWVT->PTEXTSIZE.x));
                pWVT->CentreWindow = bOldCentre;
             }

@@ -90,7 +90,7 @@
 
 #define hbwapi_ret_NINT( i )                ( hb_retnint( i ) )
 #define hbwapi_ret_NI( i )                  ( hb_retni( i ) )
-#define hbwapi_ret_L( b )                   ( hb_retl( b ? HB_TRUE : HB_FALSE ) )
+#define hbwapi_ret_L( b )                   ( hb_retl( b ? true : false ) )
 #define hbwapi_ret_UINT( n )                ( hb_retnint( n ) )
 #define hbwapi_ret_LONG( n )                ( hb_retnl( n ) )
 #define hbwapi_ret_WORD( n )                ( hb_retnl( n ) )

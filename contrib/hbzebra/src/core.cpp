@@ -78,7 +78,7 @@ unsigned char * hb_bitbuffer_buffer( PHB_BITBUFFER pBitBuffer )
 
 HB_BOOL hb_bitbuffer_get( PHB_BITBUFFER pBitBuffer, HB_SIZE nPos )
 {
-   return nPos > pBitBuffer->nLen ? HB_FALSE : ((pBitBuffer->pBuffer[nPos >> 3] >> (nPos & 7)) & 1);
+   return nPos > pBitBuffer->nLen ? false : ((pBitBuffer->pBuffer[nPos >> 3] >> (nPos & 7)) & 1);
 }
 
 void hb_bitbuffer_set( PHB_BITBUFFER pBitBuffer, HB_SIZE nPos, HB_BOOL fValue )

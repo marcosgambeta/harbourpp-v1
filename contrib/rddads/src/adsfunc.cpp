@@ -2371,7 +2371,7 @@ HB_FUNC( ADSDDDROPLINK )
 #if ADS_LIB_VERSION >= 900
    hb_retl(AdsDDDropLink(HB_ADS_PARCONNECTION(1)                   /* hConnect     */,
                          reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(2))) /* pucLinkAlias */,
-                         static_cast<UNSIGNED16>(hb_parl(3))                /* usDropGlobal */) == AE_SUCCESS); /* NOTE: Defaults to 0/HB_FALSE for non logical parameters. */
+                         static_cast<UNSIGNED16>(hb_parl(3))                /* usDropGlobal */) == AE_SUCCESS); /* NOTE: Defaults to 0/false for non logical parameters. */
 #else
    hb_retl(false);
 #endif
