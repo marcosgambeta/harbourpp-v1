@@ -525,8 +525,7 @@ void hb_dbgEntry(int nMode, int nLine, const char * szName, int nIndex, PHB_ITEM
          hb_dbgAddStatic(info, szName, nIndex, pFrame);
          return;
 
-      case HB_DBG_SHOWLINE:
-      {
+      case HB_DBG_SHOWLINE: {
          HB_CALLSTACKINFO * pTop = &info->aCallStack[info->nCallStackLen - 1];
 
          HB_TRACE(HB_TR_DEBUG, ("SHOWLINE %d", nLine));
@@ -1643,8 +1642,7 @@ static PHB_ITEM hb_dbgVarGet(HB_VARINFO * scope)
          return hb_dbg_vmVarLGet(scope->frame.num, scope->nIndex);
       case 'S':
          return hb_dbg_vmVarSGet(scope->frame.ptr, scope->nIndex);
-      case 'M':
-      {
+      case 'M': {
          PHB_DYNS pDyn = hb_dynsymFind(scope->szName);
          if( pDyn != nullptr ) {
             PHB_ITEM pItem = hb_memvarGetValueBySym(pDyn);

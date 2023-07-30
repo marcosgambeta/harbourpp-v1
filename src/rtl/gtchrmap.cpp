@@ -197,8 +197,7 @@ static int parse_line(char * buf, int * from, int * to, char * op, int * val, in
             break;
          case '\'':
             ina ^= 1;
-            if( ina )
-            {
+            if( ina ) {
                ++s;
             }
             break;

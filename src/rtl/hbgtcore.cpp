@@ -1791,8 +1791,7 @@ static HB_BOOL hb_gt_def_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          HB_GTSELF_FLUSH(pGT);
          /* fallthrough */
 
-      case HB_GTI_GETWIN:  /* save screen buffer, cursor shape and position */
-      {
+      case HB_GTI_GETWIN: { /* save screen buffer, cursor shape and position */
          int iRow, iCol, iFlag;
          HB_SIZE nSize;
 
@@ -3812,8 +3811,7 @@ HB_FUNC( HB_GTCREATE )
             HB_ISNUM(3) ? hb_numToHandle(hb_parnint(2)) : HB_STDOUT_HANDLE,
             HB_ISNUM(4) ? hb_numToHandle(hb_parnint(3)) : HB_STDERR_HANDLE);
 
-   if( hGT )
-   {
+   if( hGT ) {
       void ** gtHolder = static_cast<void**>(hb_gcAllocate(sizeof(void*), &s_gcGTFuncs));
       *gtHolder = hGT;
       hb_retptrGC(gtHolder);

@@ -147,8 +147,7 @@ char * hb_procname(int iLevel, char * szName, HB_BOOL fMethodName)
          }
       }
 
-      if( pBase->item.asSymbol.value == &hb_symEval || pBase->item.asSymbol.value->pDynSym == hb_symEval.pDynSym )
-      {
+      if( pBase->item.asSymbol.value == &hb_symEval || pBase->item.asSymbol.value->pDynSym == hb_symEval.pDynSym ) {
          hb_strncat(szName, "(b)", HB_PROCBUF_LEN);
          /* it is a method name? */
          if( fMethodName && pBase->item.asSymbol.stackstate->uiClass ) {

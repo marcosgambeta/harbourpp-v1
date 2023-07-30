@@ -80,8 +80,7 @@ HB_FUNC( __ACCEPT )
    int          input = 0;
 
    /* cPrompt(s) passed ? */
-   if( hb_pcount() >= 1 )
-   {
+   if( hb_pcount() >= 1 ) {
       HB_FUNC_EXEC( QOUT );
    }
 
@@ -111,8 +110,7 @@ HB_FUNC( __ACCEPT )
 
          default:
             nChar = hb_inkeyKeyString(input, szKey, sizeof(szKey));
-            if( nChar > 0 && nLen + nChar < ACCEPT_BUFFER_LEN )
-            {
+            if( nChar > 0 && nLen + nChar < ACCEPT_BUFFER_LEN ) {
                memcpy(&szAcceptResult[nLen], szKey, nChar);
                nLen += nChar;
             }

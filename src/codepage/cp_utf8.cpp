@@ -137,8 +137,7 @@ static HB_CDP_CMP_FUNC(UTF8_cmp)
    HB_WCHAR wc1, wc2;
 
    iRet = 0;
-   for( ;; )
-   {
+   for( ;; ) {
       if( !HB_CDPCHAR_GET(cdp, szSecond, nLenSecond, &nPos2, &wc2) ) {
          if( fExact && HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1) ) {
             iRet = 1;
@@ -190,8 +189,7 @@ static HB_CDP_CMP_FUNC(UTF8_cmpi)
    HB_SIZE nPos1 = 0, nPos2 = 0;
    HB_WCHAR wc1, wc2;
 
-   for( ;; )
-   {
+   for( ;; ) {
       if( !HB_CDPCHAR_GET(cdp, szSecond, nLenSecond, &nPos2, &wc2) ) {
          if( fExact && HB_CDPCHAR_GET(cdp, szFirst, nLenFirst, &nPos1, &wc1) ) {
             iRet = 1;
@@ -245,8 +243,7 @@ static void hb_cp_init(PHB_CODEPAGE cdp)
    cdp->upper = upper = static_cast<HB_UCHAR*>(cdp->buffer) + 0x100;
    cdp->lower = lower = static_cast<HB_UCHAR*>(cdp->buffer) + 0x200;
 
-   for( int i = 0; i < 0x100; ++i )
-   {
+   for( int i = 0; i < 0x100; ++i ) {
       flags[i] = 0;
       if( HB_ISDIGIT(i) ) {
          flags[i] |= HB_CDP_DIGIT;

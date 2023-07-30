@@ -441,8 +441,7 @@ static LPCDXKEY hb_cdxKeyPutItem(LPCDXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRec, 
    ptr = &buf[0];
 
    switch( hb_cdxItemType(pItem) ) {
-      case 'C':
-      {
+      case 'C': {
          HB_SIZE nDestLen = pTag->uiLen;
          char * pFree = nullptr, * pDest;
          const char * pText;
@@ -543,8 +542,7 @@ static PHB_ITEM hb_cdxKeyGetItem(LPCDXKEY pKey, PHB_ITEM pItem, LPCDXTAG pTag)
 
    if( pKey ) {
       switch( pTag->uiType ) {
-         case 'C':
-         {
+         case 'C': {
             HB_SIZE nLen = pKey->len;
             char * pszVal = hb_cdpnDup(reinterpret_cast<const char*>(pKey->val), &nLen, pTag->pIndex->pArea->dbfarea.area.cdPage, hb_vmCDP());
             pItem = hb_itemPutCLPtr(pItem, pszVal, nLen);
@@ -7078,8 +7076,7 @@ static HB_ERRCODE hb_cdxOrderCreate(CDXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       case 'L':
          uiLen = 1;
          break;
-      case 'C':
-      {
+      case 'C': {
          HB_SIZE nLen = hb_itemGetCLen(pResult);
          if( nLen > USHRT_MAX ) {
             nLen = USHRT_MAX;
@@ -7463,8 +7460,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          return Harbour::SUCCESS;
 
       case DBOI_LOCKOFFSET:
-      case DBOI_HPLOCKING:
-      {
+      case DBOI_HPLOCKING: {
          HB_DBFLOCKDATA lockData;
 
          hb_dbfLockIdxGetData(pArea->dbfarea.bLockType, &lockData);
@@ -7476,8 +7472,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          return Harbour::SUCCESS;
       }
 
-      case DBOI_ORDERCOUNT:
-      {
+      case DBOI_ORDERCOUNT: {
          LPCDXINDEX pIndex;
          const char * pszBag = hb_itemGetCLen(pInfo->atomBagName) > 0 ? hb_itemGetCPtr(pInfo->atomBagName) : nullptr;
          pIndex = pszBag ? hb_cdxFindBag(pArea, pszBag) : pArea->lpIndexes;
@@ -7493,8 +7488,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          return Harbour::SUCCESS;
       }
 
-      case DBOI_BAGCOUNT:
-      {
+      case DBOI_BAGCOUNT: {
          LPCDXINDEX pIndex = pArea->lpIndexes;
          while( pIndex ) {
             ++uiTag;
@@ -7504,8 +7498,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          return Harbour::SUCCESS;
       }
 
-      case DBOI_BAGNUMBER:
-      {
+      case DBOI_BAGNUMBER: {
          LPCDXINDEX pIndex = pArea->lpIndexes, pIndexSeek;
 
          if( hb_itemGetCLen(pInfo->atomBagName) > 0 ) {
@@ -7528,8 +7521,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          return Harbour::SUCCESS;
       }
 
-      case DBOI_BAGORDER:
-      {
+      case DBOI_BAGORDER: {
          LPCDXINDEX pIndex = pArea->lpIndexes, pIndexSeek;
 
          if( hb_itemGetCLen(pInfo->atomBagName) > 0 ) {
@@ -7925,8 +7917,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          pInfo->itmResult = hb_itemPutL(pInfo->itmResult, pTag && pTag->Partial);
          break;
 
-      case DBOI_KEYADD:
-      {
+      case DBOI_KEYADD: {
          bool fResult = false;
          if( pTag != nullptr ) {
             if( pTag->Custom ) {
@@ -7971,8 +7962,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          pInfo->itmResult = hb_itemPutL(pInfo->itmResult, fResult);
          break;
       }
-      case DBOI_KEYDELETE:
-      {
+      case DBOI_KEYDELETE: {
          bool fResult = false;
          if( pTag != nullptr ) {
             if( pTag->Custom ) {
@@ -8184,8 +8174,7 @@ static HB_ERRCODE hb_cdxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
    switch( uiIndex ) {
       case RDDI_ORDBAGEXT:
       case RDDI_ORDEREXT:
-      case RDDI_ORDSTRUCTEXT:
-      {
+      case RDDI_ORDSTRUCTEXT: {
          const char * szExt = hb_itemGetCPtr(pItem);
          char * szNewVal;
 
@@ -8205,8 +8194,7 @@ static HB_ERRCODE hb_cdxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          hb_itemPutL(pItem, true);
          break;
 
-      case RDDI_STRICTSTRUCT:
-      {
+      case RDDI_STRICTSTRUCT: {
          bool fStrictStruct = pData->fStrictStruct;
          if( hb_itemType(pItem) & Harbour::Item::LOGICAL ) {
             pData->fStrictStruct = hb_itemGetL(pItem);

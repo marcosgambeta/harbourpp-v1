@@ -185,8 +185,7 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
       }
 
       switch( *pFmt ) {
-         case 'c':
-         {
+         case 'c': {
             char  buf[1];
 
             buf[0] = static_cast<char>(hb_itemGetNI(pItem));
@@ -206,8 +205,7 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
 
          case 'd':
          case 'x':
-         case 'X':
-         {
+         case 'X': {
             char  * pStr = nullptr;
             const char * pStr2;
             int   iSize, iExtra;
@@ -320,8 +318,7 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
             break;
          }
 
-         case 'f':
-         {
+         case 'f': {
             char  * pStr = nullptr;
             const char * pStr2;
             int   iSize, iExtra, iD;
@@ -427,8 +424,7 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
             break;
          }
 
-         case 's':
-         {
+         case 's': {
             const char * pStr = hb_itemGetCPtr(pItem);
 
             nSize = hb_itemGetCLen(pItem);
@@ -454,8 +450,7 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
             break;
          }
 
-         default:
-         {
+         default: {
             bufadd(&buffer, pFmtSave, pFmt - pFmtSave);
             continue;
          }

@@ -6614,8 +6614,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          pInfo->itmResult = hb_itemPutL(pInfo->itmResult, pArea->pSort ? pArea->pSort->fReindex : false);
          return Harbour::SUCCESS;
       case DBOI_LOCKOFFSET:
-      case DBOI_HPLOCKING:
-      {
+      case DBOI_HPLOCKING: {
          HB_DBFLOCKDATA lockData;
 
          hb_dbfLockIdxGetData(pArea->dbfarea.bLockType, &lockData);
@@ -6626,8 +6625,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          }
          return Harbour::SUCCESS;
       }
-      case DBOI_ORDERCOUNT:
-      {
+      case DBOI_ORDERCOUNT: {
          int i;
 
          if( hb_itemGetCLen(pInfo->atomBagName) > 0 ) {
@@ -6640,8 +6638,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, i);
          return Harbour::SUCCESS;
       }
-      case DBOI_BAGCOUNT:
-      {
+      case DBOI_BAGCOUNT: {
          int i = 0;
          LPNSXINDEX pIndex = pArea->lpIndexes;
          while( pIndex ) {
@@ -6651,8 +6648,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, i);
          return Harbour::SUCCESS;
       }
-      case DBOI_BAGNUMBER:
-      {
+      case DBOI_BAGNUMBER: {
          LPNSXINDEX pIndex = pArea->lpIndexes, pIndexSeek = nullptr;
          int i = 0;
 
@@ -6674,8 +6670,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, pIndex ? i : 0);
          return Harbour::SUCCESS;
       }
-      case DBOI_BAGORDER:
-      {
+      case DBOI_BAGORDER: {
          LPNSXINDEX pIndex = pArea->lpIndexes, pIndexSeek = nullptr;
          int i = 0;
 
@@ -6757,8 +6752,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          case DBOI_EXPRESSION:
             pInfo->itmResult = hb_itemPutC(pInfo->itmResult, pTag->KeyExpr);
             break;
-         case DBOI_BAGNAME:
-         {
+         case DBOI_BAGNAME: {
             PHB_FNAME pFileName = hb_fsFNameSplit(pTag->pIndex->IndexName);
             pInfo->itmResult = hb_itemPutC(pInfo->itmResult, pFileName->szName);
             hb_xfree(pFileName);
@@ -6936,8 +6930,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
                return Harbour::FAILURE;
             }
             break;
-         case DBOI_KEYTYPE:
-            {
+         case DBOI_KEYTYPE: {
                char szType[2];
                szType[0] = static_cast<char>(pTag->KeyType);
                szType[1] = 0;
@@ -7050,8 +7043,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
    else if( pInfo->itmResult ) {
       switch( uiIndex ) {
          case DBOI_KEYCOUNT:
-         case DBOI_KEYCOUNTRAW:
-         {
+         case DBOI_KEYCOUNTRAW: {
             HB_ULONG ulRecCount = 0;
             SELF_RECCOUNT(&pArea->dbfarea.area, &ulRecCount);
             hb_itemPutNInt(pInfo->itmResult, ulRecCount);
@@ -7087,9 +7079,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
                   }
                }
                pArea->lpCurTag = pSavedTag;
-            }
-            else
-            {
+            } else {
                HB_ULONG ulRecNo = 0, ulRecCount = 0;
                double dPos = 0.0;
                /* resolve any pending relations */
@@ -7430,8 +7420,7 @@ static HB_ERRCODE hb_nsxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
    switch( uiIndex ) {
       case RDDI_ORDBAGEXT:
       case RDDI_ORDEREXT:
-      case RDDI_ORDSTRUCTEXT:
-      {
+      case RDDI_ORDSTRUCTEXT: {
          const char * szNew = hb_itemGetCPtr(pItem);
          char * szNewVal;
 
@@ -7450,8 +7439,7 @@ static HB_ERRCODE hb_nsxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          hb_itemPutL(pItem, true);
          break;
 
-      case RDDI_STRICTSTRUCT:
-      {
+      case RDDI_STRICTSTRUCT: {
          bool fStrictStruct = pData->fStrictStruct;
          if( hb_itemType(pItem) & Harbour::Item::LOGICAL ) {
             pData->fStrictStruct = hb_itemGetL(pItem);
@@ -7460,8 +7448,7 @@ static HB_ERRCODE hb_nsxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          break;
       }
 
-      case RDDI_MULTIKEY:
-      {
+      case RDDI_MULTIKEY: {
          bool fMultiKey = pData->fMultiKey;
          if( hb_itemType(pItem) & Harbour::Item::LOGICAL ) {
             pData->fMultiKey = hb_itemGetL(pItem);

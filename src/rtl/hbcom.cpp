@@ -1085,8 +1085,7 @@ int hb_comFlowSet(int iPort, int iFlow)
        */
       if( iFlow & HB_COM_FL_OON ) {
          iResult = tcflow(pCom->fd, TCOON);
-      } else if( iFlow & HB_COM_FL_OOFF )
-      {
+      } else if( iFlow & HB_COM_FL_OOFF ) {
          iResult = tcflow(pCom->fd, TCOOFF);
       } else {
          iResult = 0;

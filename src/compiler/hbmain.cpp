@@ -525,8 +525,7 @@ void hb_compVariableAdd(HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarTy
    } else {
       switch( HB_COMP_PARAM->iVarScope ) {
          case HB_VSCOMP_LOCAL:
-         case HB_VSCOMP_PARAMETER:
-         {
+         case HB_VSCOMP_PARAMETER: {
             HB_USHORT wLocal = hb_compVarListAdd(&pFunc->pLocals, pVar);
 
             if( HB_COMP_PARAM->iVarScope == HB_VSCOMP_PARAMETER ) {
@@ -2348,8 +2347,7 @@ void hb_compGenModuleName(HB_COMP_DECL, const char * szFunName)
    hb_compGenPCode1(':', HB_COMP_PARAM);
    if( szFunName && *szFunName ) {
       hb_compGenPCodeN(reinterpret_cast<const HB_BYTE*>(szFunName), strlen(szFunName) + 1, HB_COMP_PARAM);
-   } else /* special version "filename:" when the file changes within function */
-   {
+   } else { /* special version "filename:" when the file changes within function */
       hb_compGenPCode1('\0', HB_COMP_PARAM);
    }
    HB_COMP_PARAM->lastModule = HB_COMP_PARAM->currModule;

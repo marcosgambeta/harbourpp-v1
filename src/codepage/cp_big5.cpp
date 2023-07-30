@@ -116,8 +116,7 @@ static void hb_cp_init(PHB_CODEPAGE cdp)
    cdp->upper = upper = static_cast<HB_UCHAR*>(cdp->buffer) + 0x100;
    cdp->lower = lower = static_cast<HB_UCHAR*>(cdp->buffer) + 0x200;
 
-   for( int i = 0; i < 0x100; ++i )
-   {
+   for( int i = 0; i < 0x100; ++i ) {
       flags[i] = 0;
       if( HB_ISDIGIT(i) ) {
          flags[i] |= HB_CDP_DIGIT;
@@ -136,8 +135,7 @@ static void hb_cp_init(PHB_CODEPAGE cdp)
    }
 
 #if 0
-   for( i = 0; i < 0x10000; ++i )
-   {
+   for( i = 0; i < 0x10000; ++i ) {
       HB_WCHAR wc = s_big5_to_ucs16(i);
       if( wc ) {
          if( i != s_ucs16_to_big5(wc) ) {

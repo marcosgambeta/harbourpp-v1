@@ -896,8 +896,7 @@ int hb_cdpU16CharToUTF8(char * szUTF8, HB_WCHAR wc)
       n = 3;
    }
 /*
-   else
-   {
+   else {
       n = 0;
    }
  */
@@ -1186,8 +1185,7 @@ HB_SIZE hb_cdpStrToUTF8(PHB_CODEPAGE cdp, const char * pSrc, HB_SIZE nSrc, char 
       memcpy(pDst, pSrc, nSrc);
       return nSrc;
    }
-   else if( HB_CDP_ISCUSTOM(cdp) )
-   {
+   else if( HB_CDP_ISCUSTOM(cdp) ) {
       HB_WCHAR wc;
       nPosS = nPosD = 0;
       while( nPosD < nDst && HB_CDPCHAR_GET(cdp, pSrc, nSrc, &nPosS, &wc) ) {

@@ -1006,8 +1006,7 @@ static HB_ULONG hb_fptCountSMTItemLength(FPTAREAP pArea, PHB_ITEM pItem, HB_ULON
          ulSize = 5;
          break;
       case Harbour::Item::INTEGER:
-      case Harbour::Item::LONG:
-      {
+      case Harbour::Item::LONG: {
          HB_MAXINT iVal = hb_itemGetNInt(pItem);
          if( HB_LIM_INT32(iVal) ) {
             ulSize = 5;
@@ -1133,8 +1132,7 @@ static void hb_fptStoreSMTItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBufPt
          break;
 
       case Harbour::Item::INTEGER:
-      case Harbour::Item::LONG:
-      {
+      case Harbour::Item::LONG: {
          HB_MAXINT iVal = hb_itemGetNInt(pItem);
          if( HB_LIM_INT32(iVal) ) {
             *( *bBufPtr )++ = SMT_IT_INT;
@@ -1144,8 +1142,7 @@ static void hb_fptStoreSMTItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBufPt
          }
       }
       /* fallthrough */
-      case Harbour::Item::DOUBLE:
-      {
+      case Harbour::Item::DOUBLE: {
          double dVal = hb_itemGetND(pItem);
          int iWidth, iDec;
          hb_itemGetNLen(pItem, &iWidth, &iDec);
@@ -1160,8 +1157,7 @@ static void hb_fptStoreSMTItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBufPt
          break;
       }
       case Harbour::Item::DATE:
-      case Harbour::Item::TIMESTAMP:
-      {
+      case Harbour::Item::TIMESTAMP: {
          HB_LONG lVal;
          *( *bBufPtr )++ = SMT_IT_DATE;
          lVal = hb_itemGetDL(pItem);
@@ -1246,8 +1242,7 @@ static HB_ERRCODE hb_fptReadRawSMTItem(FPTAREAP pArea, PHB_ITEM pItem, HB_FOFFSE
          hb_itemPutNInt(pItem, static_cast<HB_LONG>(HB_GET_LE_UINT32(buffer)));
          break;
 
-      case SMT_IT_DOUBLE:
-      {
+      case SMT_IT_DOUBLE: {
          int iWidth, iDec;
          if( hb_fileReadAt(pArea->pMemoFile, buffer, 10, *pfOffset) != 10 ) {
             return EDBF_READ;
@@ -1354,8 +1349,7 @@ static HB_ERRCODE hb_fptReadSMTItem(FPTAREAP pArea, HB_BYTE ** pbMemoBuf, HB_BYT
             *pbMemoBuf += 4;
             break;
 
-         case SMT_IT_DOUBLE:
-         {
+         case SMT_IT_DOUBLE: {
             int iWidth, iDec;
             if( bBufEnd - (*pbMemoBuf) < 10 ) {
                errCode = EDBF_CORRUPT;
@@ -1480,8 +1474,7 @@ static HB_ULONG hb_fptStoreSixItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bB
          break;
 
       case Harbour::Item::INTEGER:
-      case Harbour::Item::LONG:
-      {
+      case Harbour::Item::LONG: {
          HB_MAXINT iVal = hb_itemGetNInt(pItem);
          hb_itemGetNLen(pItem, &iWidth, &iDec);
          if( HB_LIM_INT32(iVal) ) {
@@ -1499,8 +1492,7 @@ static HB_ULONG hb_fptStoreSixItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bB
          }
          break;
       }
-      case Harbour::Item::DOUBLE:
-      {
+      case Harbour::Item::DOUBLE: {
          double dVal = hb_itemGetND(pItem);
          hb_itemGetNLen(pItem, &iWidth, &iDec);
          HB_PUT_LE_UINT16(&(*bBufPtr)[0], FPTIT_SIX_DNUM);
@@ -1511,8 +1503,7 @@ static HB_ULONG hb_fptStoreSixItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bB
          break;
       }
       case Harbour::Item::DATE:
-      case Harbour::Item::TIMESTAMP:
-      {
+      case Harbour::Item::TIMESTAMP: {
          HB_LONG lVal = hb_itemGetDL(pItem);
          HB_PUT_LE_UINT16(&(*bBufPtr)[0], FPTIT_SIX_LDATE);
          HB_PUT_LE_UINT32(&(*bBufPtr)[6], lVal);
@@ -1747,8 +1738,7 @@ static void hb_fptStoreFlexItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBufP
          }
          break;
       case Harbour::Item::DATE:
-      case Harbour::Item::TIMESTAMP:
-      {
+      case Harbour::Item::TIMESTAMP: {
          HB_LONG lVal;
          *( *bBufPtr )++ = FPTIT_FLEXAR_DATEJ;
          lVal = hb_itemGetDL(pItem);
@@ -1757,8 +1747,7 @@ static void hb_fptStoreFlexItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBufP
          break;
       }
       case Harbour::Item::INTEGER:
-      case Harbour::Item::LONG:
-      {
+      case Harbour::Item::LONG: {
          HB_MAXINT iVal = hb_itemGetNInt(pItem);
          hb_itemGetNLen(pItem, &iWidth, &iDec);
          if( HB_LIM_INT8(iVal) ) {
@@ -1784,8 +1773,7 @@ static void hb_fptStoreFlexItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE ** bBufP
          }
          break;
       }
-      case Harbour::Item::DOUBLE:
-      {
+      case Harbour::Item::DOUBLE: {
          double dVal = hb_itemGetND(pItem);
          hb_itemGetNLen(pItem, &iWidth, &iDec);
          if( iDec ) {
@@ -2687,8 +2675,7 @@ static HB_ERRCODE hb_fptPutMemo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIte
                bBufPtr = itmBuffer;
             }
             break;
-         case Harbour::Item::DOUBLE:
-         {
+         case Harbour::Item::DOUBLE: {
             double d = hb_itemGetND(pItem);
             ulType = FPTIT_FLEX_DOUBLE;
             ulSize = 8;
@@ -4214,8 +4201,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 
       /* case DBI_RDD_VERSION */
 
-      case DBI_BLOB_DIRECT_EXPORT:  /* BLOBDirectExport() { <nPointer>, <cTargetFile>, <kMOde> } */
-      {
+      case DBI_BLOB_DIRECT_EXPORT: { /* BLOBDirectExport() { <nPointer>, <cTargetFile>, <kMOde> } */
          HB_ERRCODE errCode = Harbour::FAILURE;
 
          if( HB_IS_ARRAY(pItem) ) {
@@ -4229,8 +4215,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          hb_itemPutL(pItem, errCode == Harbour::SUCCESS);
          break;
       }
-      case DBI_BLOB_DIRECT_GET:     /* BLOBDirectGet() { <nPointer>, <nStart>, <nCount> } */
-      {
+      case DBI_BLOB_DIRECT_GET: {   /* BLOBDirectGet() { <nPointer>, <nStart>, <nCount> } */
          /* pItem := { <nPointer>, <nStart>, <nCount> } */
          HB_ULONG ulBlock, ulStart, ulCount;
 
@@ -4261,8 +4246,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          }
          break;
 
-      case DBI_BLOB_DIRECT_PUT:     /* BLOBDirectPut() { <nOldPointer>, <xBlob> } */
-      {
+      case DBI_BLOB_DIRECT_PUT: {   /* BLOBDirectPut() { <nOldPointer>, <xBlob> } */
          /* pItem := { <nOldPointer>, <xBlob> } */
          HB_ERRCODE errCode = EDBF_UNSUPPORTED;
          HB_ULONG ulBlock = 0;
@@ -4288,8 +4272,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          }
          break;
       }
-      case DBI_BLOB_ROOT_GET:       /* BLOBRootGet() */
-      {
+      case DBI_BLOB_ROOT_GET: {     /* BLOBRootGet() */
          HB_ULONG ulBlock;
 
          HB_ERRCODE errCode = hb_fptGetRootBlock(pArea, &ulBlock);
@@ -4305,8 +4288,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          }
          break;
       }
-      case DBI_BLOB_ROOT_PUT:       /* BLOBRootPut(<xBlob>) */
-      {
+      case DBI_BLOB_ROOT_PUT: {     /* BLOBRootPut(<xBlob>) */
          HB_ULONG ulBlock;
 
          HB_ERRCODE errCode = hb_fptGetRootBlock(pArea, &ulBlock);
@@ -4382,8 +4364,7 @@ static HB_ERRCODE hb_fptFieldInfo(FPTAREAP pArea, HB_USHORT uiIndex, HB_USHORT u
 
       SELF_DELETED(&pArea->area, &bDeleted);
       switch( uiType ) {
-         case DBS_BLOB_GET:         /* BLOBGet() { <nStart>, <nCount> } */
-         {
+         case DBS_BLOB_GET: {       /* BLOBGet() { <nStart>, <nCount> } */
             /* pItem := { <nStart>, <nCount> } */
             HB_ULONG ulStart, ulCount;
             int iTrans;
@@ -4456,8 +4437,7 @@ static HB_ERRCODE hb_fptRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
    pData = DBFNODE_DATA(pRDD);
 
    switch( uiIndex ) {
-      case RDDI_MEMOEXT:
-      {
+      case RDDI_MEMOEXT: {
          const char * szExt = hb_itemGetCPtr(pItem);
          char * szNewVal;
 
@@ -4480,8 +4460,7 @@ static HB_ERRCODE hb_fptRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          }
          break;
       }
-      case RDDI_MEMOBLOCKSIZE:
-      {
+      case RDDI_MEMOBLOCKSIZE: {
          int iSize = hb_itemGetNI(pItem), iOldSize;
 
          if( pData->ulMemoBlockSize ) {
@@ -4506,8 +4485,7 @@ static HB_ERRCODE hb_fptRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          }
          break;
       }
-      case RDDI_MEMOTYPE:
-      {
+      case RDDI_MEMOTYPE: {
          int iType = hb_itemGetNI(pItem);
 
          hb_itemPutNI(pItem, pData->bMemoType ? pData->bMemoType : DB_MEMO_FPT);
@@ -4523,8 +4501,7 @@ static HB_ERRCODE hb_fptRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          break;
       }
 
-      case RDDI_MEMOVERSION:
-      {
+      case RDDI_MEMOVERSION: {
          int iType = hb_itemGetNI(pItem);
 
          hb_itemPutNI(pItem, pData->bMemoExtType ? pData->bMemoExtType : DB_MEMOVER_FLEX);

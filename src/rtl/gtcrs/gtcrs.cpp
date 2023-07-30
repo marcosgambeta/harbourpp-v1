@@ -229,8 +229,7 @@ static void sig_handler(int signo)
    }
 
    switch( signo ) {
-      case SIGCHLD:
-      {
+      case SIGCHLD: {
          int status;
          pid_t pid;
          while( (pid = waitpid(-1, &status, WNOHANG)) > 0 ) {
@@ -280,8 +279,7 @@ static void sig_handler(int signo)
    char * pszSig;
 
    switch( signo ) {
-      case SIGCHLD:
-      {
+      case SIGCHLD: {
          int status;
          pid_t pid;
          pszSig = "SIGCHLD";

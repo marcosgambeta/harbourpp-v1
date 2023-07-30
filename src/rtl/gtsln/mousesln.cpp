@@ -151,8 +151,7 @@ void hb_gt_sln_mouse_ProcessTerminalEvent(void)
       s_iMouseRow = Row;
       s_iMouseCol = Col;
 
-      switch( Btn & 0xE3 )
-      {
+      switch( Btn & 0xE3 ) {
          case 0:
             s_usMouseState |= M_BUTTON_LEFT;
             break;
@@ -184,17 +183,13 @@ int hb_gt_sln_mouse_Inkey(int iEventMask, HB_BOOL fCheckNew)
       if( s_usMouseState & M_CURSOR_MOVE ) {
          s_usMouseState &= ~M_CURSOR_MOVE;
          return K_MOUSEMOVE;
-      }
-      else if( s_usMouseState & M_BUTTON_WHEELUP ) {
+      } else if( s_usMouseState & M_BUTTON_WHEELUP ) {
          s_usMouseState &= ~M_BUTTON_WHEELUP;
          return K_MWFORWARD;
-      }
-      else if( s_usMouseState & M_BUTTON_WHEELDOWN ) {
+      } else if( s_usMouseState & M_BUTTON_WHEELDOWN ) {
          s_usMouseState &= ~M_BUTTON_WHEELDOWN;
          return K_MWBACKWARD;
-      }
-      else
-      {
+      } else {
          HB_USHORT usKeyDiff = (s_usMouseState ^ s_usLastMouseState);
 
          if( usKeyDiff & M_BUTTON_LEFT ) {
@@ -203,48 +198,34 @@ int hb_gt_sln_mouse_Inkey(int iEventMask, HB_BOOL fCheckNew)
                if( s_usMouseState & M_BUTTON_LDBLCK ) {
                   s_usMouseState &= ~M_BUTTON_LDBLCK;
                   return K_LDBLCLK;
-               }
-               else
-               {
+               } else {
                   return K_LBUTTONDOWN;
                }
-            }
-            else
-            {
+            } else {
                return K_LBUTTONUP;
             }
-         }
-         else if( usKeyDiff & M_BUTTON_MIDDLE ) {
+         } else if( usKeyDiff & M_BUTTON_MIDDLE ) {
             s_usLastMouseState ^= M_BUTTON_MIDDLE;
             if( s_usMouseState & M_BUTTON_MIDDLE ) {
                if( s_usMouseState & M_BUTTON_MDBLCK ) {
                   s_usMouseState &= ~M_BUTTON_MDBLCK;
                   return K_MDBLCLK;
-               }
-               else
-               {
+               } else {
                   return K_MBUTTONDOWN;
                }
-            }
-            else
-            {
+            } else {
                return K_MBUTTONUP;
             }
-         }
-         else if( usKeyDiff & M_BUTTON_RIGHT ) {
+         } else if( usKeyDiff & M_BUTTON_RIGHT ) {
             s_usLastMouseState ^= M_BUTTON_RIGHT;
             if( s_usMouseState & M_BUTTON_RIGHT ) {
                if( s_usMouseState & M_BUTTON_RDBLCK ) {
                   s_usMouseState &= ~M_BUTTON_RDBLCK;
                   return K_RDBLCLK;
-               }
-               else
-               {
+               } else {
                   return K_RBUTTONDOWN;
                }
-            }
-            else
-            {
+            } else {
                return K_RBUTTONUP;
             }
          }
@@ -273,8 +254,7 @@ int hb_gt_sln_mouse_Inkey(int iEventMask, HB_BOOL fCheckNew)
 
          if( (Evt.type & GPM_MOVE) && (iEventMask & INKEY_MOVE) ) {
             return K_MOUSEMOVE;
-         } else if( Evt.type & GPM_DOWN )
-         {
+         } else if( Evt.type & GPM_DOWN ) {
             CHECK_BUTTON_DOWN(INKEY_LDOWN,GPM_B_LEFT,K_LBUTTONDOWN,K_LDBLCLK)
             else
             CHECK_BUTTON_DOWN(INKEY_RDOWN,GPM_B_RIGHT,K_RBUTTONDOWN,K_RDBLCLK)
@@ -303,8 +283,7 @@ int hb_gt_sln_mouse_Inkey(int iEventMask, HB_BOOL fCheckNew)
 
 void hb_gt_sln_mouse_Init(void)
 {
-   if( hb_sln_UnderXterm )
-   {
+   if( hb_sln_UnderXterm ) {
       const char * SaveHilit = "\033[?1001s"; /* save old hilit tracking */
       const char * EnabTrack = "\033[?1000h"; /* enable mouse tracking */
 

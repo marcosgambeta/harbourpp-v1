@@ -459,8 +459,7 @@ HB_FUNC( HB_UAT )
             } else {
                nTo -= nStart;
                nTo = hb_cdpTextPos(cdp, pszText, nTextLength, nTo);
-               if( nTo > nTextLength )
-               {
+               if( nTo > nTextLength ) {
                   nTo = nTextLength;
                }
             }

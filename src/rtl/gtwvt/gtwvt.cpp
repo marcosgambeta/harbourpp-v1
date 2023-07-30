@@ -917,8 +917,7 @@ static HBITMAP hb_gt_wvt_DefineBoxChar(PHB_GTWVT pWVT, HB_USHORT usCh)
       switch( usCh ) {
          case HB_BOXCH_FILLER1:
          case HB_BOXCH_FILLER2:
-         case HB_BOXCH_FILLER3:
-         {
+         case HB_BOXCH_FILLER3: {
             int skip, start, mod;
             hBitMap = hb_gt_wvt_bitmap_char(pWVT, cellx, celly);
             if( usCh == HB_BOXCH_FILLER1 ) {
@@ -3564,32 +3563,28 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
          }
          break;
 
-      case HB_GTI_DESKTOPWIDTH:
-      {
+      case HB_GTI_DESKTOPWIDTH: {
          HWND hDesk = GetDesktopWindow();
          RECT rDesk;
          GetWindowRect(hDesk, &rDesk);
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, rDesk.right - rDesk.left);
          break;
       }
-      case HB_GTI_DESKTOPHEIGHT:
-      {
+      case HB_GTI_DESKTOPHEIGHT: {
          HWND hDesk = GetDesktopWindow();
          RECT rDesk;
          GetWindowRect(hDesk, &rDesk);
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, rDesk.bottom - rDesk.top);
          break;
       }
-      case HB_GTI_DESKTOPCOLS:
-      {
+      case HB_GTI_DESKTOPCOLS: {
          HWND hDesk = GetDesktopWindow();
          RECT rDesk;
          GetClientRect(hDesk, &rDesk);
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, (rDesk.right - rDesk.left) / pWVT->PTEXTSIZE.x);
          break;
       }
-      case HB_GTI_DESKTOPROWS:
-      {
+      case HB_GTI_DESKTOPROWS: {
          HWND hDesk = GetDesktopWindow();
          RECT rDesk;
          GetClientRect(hDesk, &rDesk);
@@ -3695,8 +3690,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
          break;
 #endif
       case HB_GTI_ICONFILE:
-      case HB_GTI_ICONRES:
-      {
+      case HB_GTI_ICONRES: {
          HICON hIcon = nullptr, hIconToFree = nullptr;
 
          if( hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING ) {
@@ -3975,8 +3969,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
          break;
 
       case HB_GTI_SETPOS_XY:
-      case HB_GTI_SETPOS_ROWCOL:
-      {
+      case HB_GTI_SETPOS_ROWCOL: {
          RECT wi{};
          int x = 0, y = 0;
 

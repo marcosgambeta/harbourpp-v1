@@ -225,11 +225,10 @@ static HB_GT_FUNCS SuperTable;
 #define TIMEVAL_ADD(dst, src, n)  \
    do { \
       (dst).tv_sec = (src).tv_sec + (n) / 1000; \
-      if( ((dst).tv_usec = (src).tv_usec + ((n) % 1000) * 1000) >= 1000000 ) \
-      { \
+      if( ((dst).tv_usec = (src).tv_usec + ((n) % 1000) * 1000) >= 1000000 ) { \
          (dst).tv_usec -= 1000000; (dst).tv_sec++; \
       } \
-   } while(false)
+   } while( false )
 
 #else
 

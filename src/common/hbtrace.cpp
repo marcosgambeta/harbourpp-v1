@@ -192,8 +192,7 @@ int hb_tr_level(void)
       if( hb_getenv_buffer("HB_TR_LEVEL", env, sizeof(env)) && env[0] != '\0' ) {
          int i;
 
-         for( i = 0; i < HB_TR_LAST; ++i )
-         {
+         for( i = 0; i < HB_TR_LAST; ++i ) {
             if( hb_stricmp(env, s_slevel[i]) == 0 || hb_stricmp(env, s_slevel[i] + 6) == 0 ) {
                s_level = i;
                break;

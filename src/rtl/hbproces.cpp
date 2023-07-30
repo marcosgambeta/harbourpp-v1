@@ -74,12 +74,10 @@
 
 #if defined(HB_OS_UNIX) && defined(EINTR)
 #  define HB_FAILURE_RETRY(ret, exp) \
-   do \
-   { \
+   do { \
       (ret) = (exp); \
       hb_fsSetIOError(( ret ) != -1, 0); \
-   } \
-   while( (ret) == -1 && hb_fsOsError() == static_cast<HB_ERRCODE>(EINTR) && hb_vmRequestQuery() == 0 )
+   } while( (ret) == -1 && hb_fsOsError() == static_cast<HB_ERRCODE>(EINTR) && hb_vmRequestQuery() == 0 )
 #else
 #  define HB_FAILURE_RETRY(ret, exp) \
    do { \
@@ -1149,8 +1147,7 @@ int hb_fsProcessRun(const char * pszFileName, const char * pStdInBuf, HB_SIZE nS
                nfds++;
             }
             if( hStdin != FS_ERROR ) {
-               if( (fds[nfds].revents & POLLOUT) != 0 )
-               {
+               if( (fds[nfds].revents & POLLOUT) != 0 ) {
                   fStdin = true;
                } else if( (fds[nfds].revents & (POLLHUP | POLLNVAL | POLLERR)) != 0 ) {
                   hb_fsClose(hStdin);

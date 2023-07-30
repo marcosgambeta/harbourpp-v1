@@ -121,8 +121,7 @@ HB_BOOL hb_strEmpty(const char * szText, HB_SIZE nLen)
    HB_TRACE(HB_TR_DEBUG, ("hb_strEmpty(%s, %" HB_PFS "u)", szText, nLen));
 #endif
 
-   while( nLen-- )
-   {
+   while( nLen-- ) {
       char c = szText[nLen];
 
       if( !HB_ISSPACE(c) ) {

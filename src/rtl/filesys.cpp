@@ -3512,8 +3512,7 @@ HB_ERRCODE hb_fsIsDrv(int iDrive)
       hb_fsSetError(0);
    }
 #endif
-   else
-   {
+   else {
       nResult = static_cast<HB_ERRCODE>(FS_ERROR);
       hb_fsSetError(0);
    }

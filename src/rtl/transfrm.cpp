@@ -159,8 +159,7 @@ HB_FUNC( TRANSFORM )
                case 'S':
                   uiPicFlags |= PF_WIDTH;
                   nParamS = 0;
-                  while( nPicLen > 1 && *szPic >= '0' && *szPic <= '9' )
-                  {
+                  while( nPicLen > 1 && *szPic >= '0' && *szPic <= '9' ) {
                      nParamS = (nParamS * 10) + (static_cast<HB_SIZE>(*szPic++ - '0'));
                      nPicLen--;
                   }

@@ -95,8 +95,7 @@ HB_FUNC( HB_GTINFO )
       gtInfo.pResult  = nullptr;
 
       hb_gtInfo(hb_parni(1), &gtInfo);
-      if( gtInfo.pResult )
-      {
+      if( gtInfo.pResult ) {
          hb_itemReturnRelease(gtInfo.pResult);
       }
    } else {

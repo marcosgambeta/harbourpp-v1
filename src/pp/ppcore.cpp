@@ -961,8 +961,7 @@ static void hb_pp_getLine(PHB_PP_STATE pState)
             } else if( pState->iStreamDump == HB_PP_STREAM_CLIPPER ) {
                n = nLen;
                hb_pp_tokenAddStreamFunc(pState, pState->pFuncOut, pBuffer, n);
-            } else /* HB_PP_STREAM_PRG, HB_PP_STREAM_C */
-            {
+            } else { /* HB_PP_STREAM_PRG, HB_PP_STREAM_C */
                n = nLen;
                if( pState->iStreamDump == HB_PP_STREAM_C ) {
                   hb_strRemEscSeq(pBuffer, &n);

@@ -715,8 +715,7 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          hb_itemPutDS(pItem, reinterpret_cast<const char*>(pArea->pRecord) + pArea->pFieldOffset[uiIndex]);
          break;
 
-      case Harbour::DB::Field::TIMESTAMP:
-      {
+      case Harbour::DB::Field::TIMESTAMP: {
          long lJulian, lMilliSec;
          HB_BYTE * pFieldPtr = pArea->pRecord + pArea->pFieldOffset[uiIndex], bChar;
 
@@ -728,8 +727,7 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          break;
       }
 
-      case Harbour::DB::Field::LONG:
-      {
+      case Harbour::DB::Field::LONG: {
          HB_MAXINT lVal;
          double dVal;
          bool fDbl;
@@ -754,8 +752,7 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
          hb_itemClear(pItem);
          break;
 
-      default:
-      {
+      default: {
          PHB_ITEM pError = hb_errNew();
          hb_errPutGenCode(pError, EG_DATATYPE);
          hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_DATATYPE));
@@ -1021,8 +1018,7 @@ static HB_ERRCODE hb_delimInfo(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
          hb_itemPutNL(pItem, pArea->uiRecordLen);
          break;
 
-      case DBI_GETDELIMITER:
-      {
+      case DBI_GETDELIMITER: {
          char szDelim[2];
          szDelim[0] = pArea->cDelim;
          szDelim[1] = '\0';
@@ -1074,8 +1070,7 @@ static HB_ERRCODE hb_delimInfo(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
 #endif
          break;
 
-      case DBI_SEPARATOR:
-      {
+      case DBI_SEPARATOR: {
          char szSeparator[2];
          const char * szNew = hb_itemGetCPtr(pItem);
          szSeparator[0] = pArea->cSeparator;
@@ -1107,8 +1102,7 @@ static HB_ERRCODE hb_delimInfo(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
          break;
 
       case DBI_DB_VERSION:
-      case DBI_RDD_VERSION:
-      {
+      case DBI_RDD_VERSION: {
          char szBuf[64];
          int iSub = hb_itemGetNI(pItem);
 
@@ -1605,8 +1599,7 @@ static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
          hb_itemPutL(pItem, true);
          break;
 
-      case RDDI_TABLEEXT:
-      {
+      case RDDI_TABLEEXT: {
          LPDELIMDATA pData = DELIMNODE_DATA(pRDD);
          const char * szNew = hb_itemGetCPtr(pItem);
          char * szNewVal;
@@ -1619,8 +1612,7 @@ static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
          }
          break;
       }
-      case RDDI_SETHEADER:
-      {
+      case RDDI_SETHEADER: {
          LPDELIMDATA pData = DELIMNODE_DATA(pRDD);
          HB_USHORT uiSetHeader = pData->uiSetHeader;
          if( HB_IS_NUMERIC(pItem) ) {

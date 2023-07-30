@@ -1100,8 +1100,7 @@ static bool hb_deserializeTest(const HB_UCHAR ** pBufferPtr, HB_SIZE * pnSize, H
          break;
       case HB_SERIAL_XHB_R:
          if( nSize++ >= 10 ) {
-            switch( pBuffer[0] )
-            {
+            switch( pBuffer[0] ) {
                case HB_SERIAL_XHB_A:
                case HB_SERIAL_XHB_H:
                case HB_SERIAL_XHB_O:
@@ -1391,8 +1390,7 @@ static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPA
          nOffset += 4;
          break;
 
-      case HB_SERIAL_OBJ:
-      {
+      case HB_SERIAL_OBJ: {
          const char * szClass, * szFunc;
          szClass = reinterpret_cast<const char*>(&pBuffer[nOffset]);
          nLen = strlen(szClass);
@@ -1402,8 +1400,7 @@ static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPA
          break;
       }
 
-      case HB_SERIAL_HASHFLAGS:
-      {
+      case HB_SERIAL_HASHFLAGS: {
          int iHashFlags = HB_GET_LE_UINT16(&pBuffer[nOffset]);
          nOffset = hb_deserializeItem(pItem, cdpIn, cdpOut, pBuffer, nOffset + 2, pRefList);
          hb_hashClearFlags(pItem, HB_HASH_FLAG_MASK);
@@ -1414,8 +1411,7 @@ static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPA
          break;
       }
 
-      case HB_SERIAL_HASHDEFVAL:
-      {
+      case HB_SERIAL_HASHDEFVAL: {
          PHB_ITEM pDefVal = hb_itemNew(nullptr);
          nOffset = hb_deserializeItem(pDefVal, cdpIn, cdpOut, pBuffer, nOffset, pRefList);
          nOffset = hb_deserializeItem(pItem, cdpIn, cdpOut, pBuffer, nOffset, pRefList);
@@ -1431,8 +1427,7 @@ static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPA
          nOffset += 4;
          szVal = static_cast<char*>(hb_xgrab(nLen + 1));
          switch( hb_zlibUncompress(szVal, &nLen, reinterpret_cast<const char*>(&pBuffer[nOffset]), nSize) ) {
-            case HB_ZLIB_RES_OK:
-            {
+            case HB_ZLIB_RES_OK: {
                HB_REF_LIST refListZ;
 
                hb_itemSerialRefListInit(&refListZ);
@@ -1526,8 +1521,7 @@ static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPA
          nOffset = hb_deserializeHash(pItem, cdpIn, cdpOut, pBuffer, nOffset + 8, nLen, pRefList);
          hb_hashSetFlags(pItem, HB_HASH_KEEPORDER | HB_HASH_RESORT);
          break;
-      case HB_SERIAL_XHB_O:
-      {
+      case HB_SERIAL_XHB_O: {
          HB_USHORT uiClass;
 
          nLen = static_cast<HB_SIZE>(HB_GET_BE_UINT64(&pBuffer[nOffset]));
@@ -1564,8 +1558,7 @@ static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPA
          }
          break;
       }
-      case HB_SERIAL_XHB_Q:
-      {
+      case HB_SERIAL_XHB_Q: {
          HB_USHORT uiClass;
 
          nPad = static_cast<HB_SIZE>(HB_GET_BE_UINT64(&pBuffer[nOffset])) + nOffset + 8;

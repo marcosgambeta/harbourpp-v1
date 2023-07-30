@@ -1382,8 +1382,7 @@ HB_SIZE hb_xquery(int iMode)
          nResult = hb_stackTotalItems() * sizeof(HB_ITEM);
          break;
 
-      case HB_MEM_STACK_TOP:  /* Harbour extension (Total items currently on the stack) */
-      {
+      case HB_MEM_STACK_TOP: { /* Harbour extension (Total items currently on the stack) */
          HB_STACK_TLS_PRELOAD
          nResult = hb_stackTopOffset();
          break;

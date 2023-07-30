@@ -405,8 +405,7 @@ PHB_DYNS hb_dynsymFindName(const char * szName)  /* finds a symbol */
             break;
          } else if( cChar >= 'a' && cChar <= 'z' ) {
             *pDest++ = cChar - ('a' - 'A');
-         } else
-         {
+         } else {
             *pDest++ = cChar;
          }
       } while( --iLen );

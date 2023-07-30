@@ -286,8 +286,7 @@ void hb_blowfishDecrypt(const HB_BLOWFISH * bf, HB_U32 * xl, HB_U32 * xr)
 }
 
 #define INITARRAY(a, n)  \
-   for( i = 0; i < n; ++i ) \
-   { \
+   for( i = 0; i < n; ++i ) { \
       hb_blowfishEncrypt(bf, &xL, &xR); \
       bf->a[i] = xL; bf->a[++i] = xR; \
    }

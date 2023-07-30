@@ -658,8 +658,7 @@ void hb_taskResume(void * pTaskPtr)
    PHB_TASKINFO pTask = static_cast<PHB_TASKINFO>(pTaskPtr);
 
    if( s_currTask != pTask ) {
-      switch( pTask->state )
-      {
+      switch( pTask->state ) {
 #if !defined(HB_HAS_UCONTEXT)
          case TASK_INIT:
             /* save current execution context */

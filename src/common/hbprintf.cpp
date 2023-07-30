@@ -258,16 +258,15 @@ struct v_paramlst
 #define va_arg_n(va, type, n)     \
    ( { \
       type result; \
-      if( n == 0 ) \
+      if( n == 0 ) { \
          result = va_arg(va, type); \
-      else \
-      { \
+      } else { \
          int count = (n); \
          va_list ap; \
          va_start(ap, format); \
-         do \
+         do { \
             result = va_arg(ap, type); \
-         while( --count > 0 ); \
+         } while( --count > 0 ); \
          va_end(ap); \
       } \
       result; \
@@ -937,8 +936,7 @@ int hb_vsnprintf(char * buffer, size_t bufsize, const char * format, va_list ap)
       va_copy(args, ap);
       size = 0;
 
-      do
-      {
+      do {
          c = *format++;
          if( c == '%' ) {
             const char * pattern = format;

@@ -646,8 +646,7 @@ static void hb_clsFreeMsg(PCLASS pClass, PHB_DYNS pMsg)
       if( pMethod->pMessage == pMsg ) {
          if( hb_clsCanClearMethod(pMethod, true) ) {
             /* Move messages */
-            while( --uiBucket )
-            {
+            while( --uiBucket ) {
                memcpy(pMethod, pMethod + 1, sizeof(METHOD));
                pMethod++;
             }
@@ -1195,8 +1194,7 @@ void hb_clsIsClassRef(void)
 #if 0
    HB_USHORT uiClass = s_uiClasses;
 
-   while( uiClass )
-   {
+   while( uiClass ) {
       PCLASS pClass = s_pClasses[uiClass--];
 
       if( pClass->pInlines ) {
@@ -2820,8 +2818,7 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char * szMessage, HB_USHORT ui
             fOK = uiIndex != 0;
             break;
 
-         case HB_OO_MSG_DELEGATE:
-         {
+         case HB_OO_MSG_DELEGATE: {
             PHB_DYNS pDelegMsg = hb_objGetMsgSym(pFunction);
             if( pDelegMsg ) {
                pNewMeth = hb_clsFindMsg(pClass, pDelegMsg);
@@ -4652,8 +4649,7 @@ static PHB_ITEM hb_objGetIVars(PHB_ITEM pObject, HB_USHORT uiScope, HB_BOOL fCha
             nIndex = pInitData->uiData + pInitData->uiOffset;
             pItem = hb_arrayGetItemPtr(pObject, nIndex);
             if( pItem != nullptr ) {
-               if( hb_itemEqual(pItem, pInitData->pInitValue) )
-               {
+               if( hb_itemEqual(pItem, pInitData->pInitValue) ) {
                   pIndex[nIndex - 1].uiStatus = 3;
                   --nCount;
                } else {
