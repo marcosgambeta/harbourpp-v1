@@ -90,50 +90,50 @@ HB_EXTERN_BEGIN
 
 /*-*/
 
-#define WVT_CHAR_QUEUE_SIZE         128
-#define WVT_MAX_TITLE_SIZE          128
-#define WVT_MAX_ROWS                256
-#define WVT_MAX_COLS                512
-#define WVT_MAX_WINDOWS             256
+#define WVT_CHAR_QUEUE_SIZE       128
+#define WVT_MAX_TITLE_SIZE        128
+#define WVT_MAX_ROWS              256
+#define WVT_MAX_COLS              512
+#define WVT_MAX_WINDOWS           256
 #define WVT_DEFAULT_ROWS          25
 #define WVT_DEFAULT_COLS          80
 #define WVT_DEFAULT_FONT_HEIGHT   16
 #define WVT_DEFAULT_FONT_WIDTH    8
-#define WVT_DEFAULT_FONT_NAME       "Courier New"
+#define WVT_DEFAULT_FONT_NAME     "Courier New"
 
-#define BLACK                       RGB( 0x0 ,0x0 ,0x0  )
-#define BLUE                        RGB( 0x0 ,0x0 ,0x85 )
-#define GREEN                       RGB( 0x0 ,0x85,0x0  )
-#define CYAN                        RGB( 0x0 ,0x85,0x85 )
-#define RED                         RGB( 0x85,0x0 ,0x0  )
-#define MAGENTA                     RGB( 0x85,0x0 ,0x85 )
-#define BROWN                       RGB( 0x85,0x85,0x0  )
-#define WHITE                       RGB( 0xC6,0xC6,0xC6 )
-#define LIGHT_GRAY                  RGB( 0x60,0x60,0x60 )
-#define BRIGHT_BLUE                 RGB( 0x00,0x00,0xFF )
-#define BRIGHT_GREEN                RGB( 0x60,0xFF,0x60 )
-#define BRIGHT_CYAN                 RGB( 0x60,0xFF,0xFF )
-#define BRIGHT_RED                  RGB( 0xF8,0x00,0x26 )
-#define BRIGHT_MAGENTA              RGB( 0xFF,0x60,0xFF )
-#define YELLOW                      RGB( 0xFF,0xFF,0x00 )
-#define BRIGHT_WHITE                RGB( 0xFF,0xFF,0xFF )
+#define BLACK                     RGB(0x00, 0x00, 0x00)
+#define BLUE                      RGB(0x00, 0x00, 0x85)
+#define GREEN                     RGB(0x00, 0x85, 0x00)
+#define CYAN                      RGB(0x00, 0x85, 0x85)
+#define RED                       RGB(0x85, 0x00, 0x00)
+#define MAGENTA                   RGB(0x85, 0x00, 0x85)
+#define BROWN                     RGB(0x85, 0x85, 0x00)
+#define WHITE                     RGB(0xC6, 0xC6, 0xC6)
+#define LIGHT_GRAY                RGB(0x60, 0x60, 0x60)
+#define BRIGHT_BLUE               RGB(0x00, 0x00, 0xFF)
+#define BRIGHT_GREEN              RGB(0x60, 0xFF, 0x60)
+#define BRIGHT_CYAN               RGB(0x60, 0xFF, 0xFF)
+#define BRIGHT_RED                RGB(0xF8, 0x00, 0x26)
+#define BRIGHT_MAGENTA            RGB(0xFF, 0x60, 0xFF)
+#define YELLOW                    RGB(0xFF, 0xFF, 0x00)
+#define BRIGHT_WHITE              RGB(0xFF, 0xFF, 0xFF)
 
-#define WM_MY_UPDATE_CARET          ( WM_USER + 0x0101 )
+#define WM_MY_UPDATE_CARET        (WM_USER + 0x0101)
 
-#define SYS_EV_MARK                 1000
-#define HB_MSG_NOTIFYICON          ( WM_USER+1399 )
-#define HB_ID_NOTIFYICON            99
+#define SYS_EV_MARK               1000
+#define HB_MSG_NOTIFYICON         (WM_USER + 1399)
+#define HB_ID_NOTIFYICON          99
 
 /*-*/
-#define WVT_PICTURES_MAX            50
-#define WVT_FONTS_MAX               50
-#define WVT_PENS_MAX                50
-#define WVT_DLGML_MAX               50
-#define WVT_DLGMD_MAX               50
+#define WVT_PICTURES_MAX          50
+#define WVT_FONTS_MAX             50
+#define WVT_PENS_MAX              50
+#define WVT_DLGML_MAX             50
+#define WVT_DLGMD_MAX             50
 /*-*/
 
-#if defined( __BORLANDC__ ) && ( __BORLANDC__ == 0x0550 )
-   extern "C" { STDAPI OleLoadPicture( LPSTREAM, LONG, BOOL, REFIID, PVOID * ); }
+#if defined(__BORLANDC__) && (__BORLANDC__ == 0x0550)
+   extern "C" { STDAPI OleLoadPicture(LPSTREAM, LONG, BOOL, REFIID, PVOID *); }
 #endif
 
 /*-*/
@@ -147,9 +147,9 @@ struct HB_GT_PARAMS
    int       width;
    int       height;
    PHB_ITEM  pParentGT;
-   HB_BOOL   bVisible;
-   HB_BOOL   bRowCols;
-   HB_BOOL   bConfigured;
+   bool      bVisible;
+   bool      bRowCols;
+   bool      bConfigured;
    int       iWndType;
 };
 
@@ -167,47 +167,47 @@ struct HB_GTWVT
    int      COLS;                           /* number of displayable columns in window */
 
    POINT    MousePos;                       /* the last mouse position */
-   HB_BOOL  MouseMove;                      /* Flag to say whether to return mouse movement events */
+   bool     MouseMove;                      /* Flag to say whether to return mouse movement events */
 
-   int      Keys[ WVT_CHAR_QUEUE_SIZE ];    /* Array to hold the characters & events */
+   int      Keys[WVT_CHAR_QUEUE_SIZE];      /* Array to hold the characters & events */
    int      keyPointerIn;                   /* Offset into key array for character to be placed */
    int      keyPointerOut;                  /* Offset into key array of next character to read */
    int      keyLast;                        /* last inkey code value in buffer */
 
    POINT    PTEXTSIZE;                      /* size of the fixed width font */
-   HB_BOOL  FixedFont;                      /* TRUE if current font is a fixed font */
-   int      FixedSize[ WVT_MAX_COLS ];      /* buffer for ExtTextOut() to emulate fixed pitch when Proportional font selected */
+   bool     FixedFont;                      /* TRUE if current font is a fixed font */
+   int      FixedSize[WVT_MAX_COLS];        /* buffer for ExtTextOut() to emulate fixed pitch when Proportional font selected */
    int      fontHeight;                     /* requested font height */
    int      fontWidth;                      /* requested font width */
    int      fontWeight;                     /* Bold level */
    int      fontQuality;                    /* requested font quality */
-   char     fontFace[ LF_FACESIZE ];        /* requested font face name LF_FACESIZE #defined in wingdi.h */
+   char     fontFace[LF_FACESIZE];          /* requested font face name LF_FACESIZE #defined in wingdi.h */
    HFONT    hFont;                          /* current font handle */
 
    HWND     hWnd;                           /* the window handle */
-   HB_BOOL  fInit;                          /* logical variable indicating that window should be open */
+   bool     fInit;                          /* logical variable indicating that window should be open */
 
    PHB_CODEPAGE hostCDP;                    /* Host/HVM CodePage for unicode output translations */
    PHB_CODEPAGE inCDP;                      /* Host/HVM CodePage for unicode input translations */
-#if ! defined( UNICODE )
-   BYTE     keyTransTbl[ 256 ];
-   BYTE     chrTransTbl[ 256 ];
+#if !defined(UNICODE)
+   BYTE     keyTransTbl[256];
+   BYTE     chrTransTbl[256];
 #endif
 
    HICON    hIcon;                          /* Title Bar and Task List icon. Can be nullptr. */
-   HB_BOOL  bIconToFree;                    /* Do we need to free this icon when it's not nullptr? */
+   bool     bIconToFree;                    /* Do we need to free this icon when it's not nullptr? */
 
    void *   hWindowTitle;
    LPCTSTR  lpWindowTitle;
 
    int      CodePage;                       /* Code page to use for display characters */
-   HB_BOOL  Win9X;                          /* Flag to say if running on Win9X not NT/2000/XP */
-   HB_BOOL  CentreWindow;                   /* True if window is to be Reset into centre of window */
+   bool     Win9X;                          /* Flag to say if running on Win9X not NT/2000/XP */
+   bool     CentreWindow;                   /* True if window is to be Reset into centre of window */
 
-   HB_BOOL  IgnoreWM_SYSCHAR;
+   bool     IgnoreWM_SYSCHAR;
 
-   HB_BOOL  bResizable;
-   HB_BOOL  bClosable;
+   bool     bResizable;
+   bool     bClosable;
 
    /* To Be Split in 2 Structures <1 GUI dynamic> <2 GUI fixed> */
 
@@ -220,18 +220,18 @@ struct HB_GTWVT
 
    int       LastMenuEvent;                 /* Last menu item selected */
    int       MenuKeyEvent;                  /* User definable event number for windows menu command */
-   HB_BOOL   InvalidateWindow;              /* Flag for controlling whether to use ScrollWindowEx() */
-   HB_BOOL   EnableShortCuts;               /* Determines whether ALT key enables menu or system menu */
+   bool      InvalidateWindow;              /* Flag for controlling whether to use ScrollWindowEx() */
+   bool      EnableShortCuts;               /* Determines whether ALT key enables menu or system menu */
 
-   HB_BOOL   bPaint;
-   HB_BOOL   bGetFocus;
-   HB_BOOL   bSetFocus;
-   HB_BOOL   bKillFocus;
+   bool      bPaint;
+   bool      bGetFocus;
+   bool      bSetFocus;
+   bool      bKillFocus;
 
    PHB_GT_PARAMS  pPP;                      /* Presentation Parameters */
 
-   HB_BOOL   bTracking;                     /* To track if mouse has entered or left the window area */
-   HB_BOOL   bResizing;                     /* To know when it is in resizing mode */
+   bool      bTracking;                     /* To track if mouse has entered or left the window area */
+   bool      bResizing;                     /* To know when it is in resizing mode */
    int       width;
    int       height;
 
@@ -242,7 +242,7 @@ using PHB_GTWVT = HB_GTWVT *;
 /*-*/
 
 #ifndef INVALID_FILE_SIZE
-   #define INVALID_FILE_SIZE static_cast< DWORD >( 0xFFFFFFFF )
+   #define INVALID_FILE_SIZE static_cast<DWORD>(0xFFFFFFFF)
 #endif
 
 #ifndef CC_ANYCOLOR
@@ -250,7 +250,7 @@ using PHB_GTWVT = HB_GTWVT *;
 #endif
 
 #ifndef IDC_HAND
-   #define IDC_HAND MAKEINTRESOURCE( 32649 )
+   #define IDC_HAND MAKEINTRESOURCE(32649)
 #endif
 
 #ifndef GRADIENT_FILL_RECT_H
@@ -258,7 +258,7 @@ using PHB_GTWVT = HB_GTWVT *;
 #endif
 
 #ifndef GCLP_HCURSOR
-   #define GCLP_HCURSOR ( -12 )
+   #define GCLP_HCURSOR (-12)
 #endif
 
 /*-*/
@@ -292,7 +292,7 @@ enum HB_gt_event_enum
 /*-*/
 
 /* xHarbour compatible definitions */
-#if ! defined( K_SH_LEFT )
+#if !defined(K_SH_LEFT)
 #define K_SH_LEFT           K_LEFT   /* Shift-Left  == Left  */
 #define K_SH_UP             K_UP     /* Shift-Up    == Up    */
 #define K_SH_RIGHT          K_RIGHT  /* Shift-Right == Right */
@@ -313,15 +313,15 @@ enum HB_gt_event_enum
 
 /*-*/
 #if 0
-extern HB_BOOL  wvt_Array2Rect( PHB_ITEM aRect, RECT * rc );
-extern PHB_ITEM wvt_Rect2Array( RECT * rc );
-extern HB_BOOL  wvt_Array2Point( PHB_ITEM aPoint, POINT * pt );
-extern PHB_ITEM wvt_Point2Array( POINT * pt );
-extern HB_BOOL  wvt_Array2Size( PHB_ITEM aSize, SIZE * siz );
-extern PHB_ITEM wvt_Size2Array( SIZE * siz );
-extern void     wvt_Rect2ArrayEx( RECT * rc, PHB_ITEM aRect );
-extern void     wvt_Point2ArrayEx( POINT * pt, PHB_ITEM aPoint);
-extern void     wvt_Size2ArrayEx( SIZE * siz, PHB_ITEM aSize );
+extern HB_BOOL  wvt_Array2Rect(PHB_ITEM aRect, RECT * rc);
+extern PHB_ITEM wvt_Rect2Array(RECT * rc);
+extern HB_BOOL  wvt_Array2Point(PHB_ITEM aPoint, POINT * pt);
+extern PHB_ITEM wvt_Point2Array(POINT * pt);
+extern HB_BOOL  wvt_Array2Size(PHB_ITEM aSize, SIZE * siz);
+extern PHB_ITEM wvt_Size2Array(SIZE * siz);
+extern void     wvt_Rect2ArrayEx(RECT * rc, PHB_ITEM aRect);
+extern void     wvt_Point2ArrayEx(POINT * pt, PHB_ITEM aPoint);
+extern void     wvt_Size2ArrayEx(SIZE * siz, PHB_ITEM aSize);
 #endif
 
 HB_EXTERN_END
