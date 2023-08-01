@@ -92,9 +92,7 @@
 static HINSTANCE wvg_hInstance(void)
 {
    HANDLE hInstance;
-
    hb_winmainArgGet(&hInstance, nullptr, nullptr);
-
    return static_cast<HINSTANCE>(hInstance);
 }
 
@@ -104,16 +102,14 @@ HB_FUNC( WVG_SENDMESSAGE )
    HB_SIZE nLen   = 0;
    LPCTSTR lpText = HB_PARSTR(4, &hText, &nLen);
 
-   if( lpText && HB_ISBYREF(4) )
-   {
+   if( lpText && HB_ISBYREF(4) ) {
       lpText = HB_STRUNSHARE(&hText, lpText, nLen);
    }
 
    hb_retnl(static_cast<HB_ULONG>(SendMessage(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))),
                                   static_cast<UINT>(hb_parni(2)), (!HB_ISNUM(3) ? 0 : static_cast<WPARAM>(hb_parnint(3))),
                                   (lpText ? reinterpret_cast<LPARAM>(lpText) : static_cast<LPARAM>(hb_parnint(4))))));
-   if( lpText )
-   {
+   if( lpText ) {
       HB_STORSTR(lpText, 4);
       hb_strfree(hText);
    }
@@ -125,8 +121,7 @@ HB_FUNC( WVG_SENDDLGITEMMESSAGE )
    char *   cText = nullptr;
    HB_ISIZ  iLen  = 0;
 
-   if( pText )
-   {
+   if( pText ) {
       iLen  = hb_itemGetCLen(pText);
       cText = static_cast<char*>(hb_xgrab(iLen + 1));
       hb_xmemcpy(cText, hb_itemGetCPtr(pText), iLen + 1);
@@ -139,8 +134,7 @@ HB_FUNC( WVG_SENDDLGITEMMESSAGE )
                               (cText ? reinterpret_cast<LPARAM>(cText) : static_cast<LPARAM>(hb_parnint(5)))
                               )));
 
-   if( cText )
-   {
+   if( cText ) {
       hb_storclen(cText, iLen, 5);
       hb_xfree(cText);
    }
@@ -212,7 +206,6 @@ HB_FUNC( WVG_GETDIALOGBASEUNITS )
 HB_FUNC( WVG_SETDLGITEMTEXT )
 {
    void * hText;
-
    SetDlgItemText(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))), hb_parni(2), HB_PARSTR(3, &hText, nullptr));
    hb_strfree(hText);
 }
@@ -278,9 +271,8 @@ HB_FUNC( WVG_MESSAGEBOX )
 
 HB_FUNC( WVG_INVALIDATERECT )
 {
-   if( HB_ISARRAY(2) )
-   {
-      RECT rc = {0, 0, 0, 0};
+   if( HB_ISARRAY(2) ) {
+      RECT rc{};
 
       rc.left   = hb_parvni(2, 1);
       rc.top    = hb_parvni(2, 2);
@@ -288,9 +280,7 @@ HB_FUNC( WVG_INVALIDATERECT )
       rc.bottom = hb_parvni(2, 4);
 
       hb_retl(InvalidateRect(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))), &rc, TRUE));
-   }
-   else
-   {
+   } else {
       hb_retl(InvalidateRect(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))), nullptr, TRUE));
    }
 }
@@ -302,12 +292,9 @@ HB_FUNC( WVG_LOADICON )
 {
    HICON hIcon;
 
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       hIcon = LoadIcon(static_cast<HINSTANCE>(wvg_hInstance()), MAKEINTRESOURCE(hb_parni(1)));
-   }
-   else
-   {
+   } else {
       void * hBuffer;
       hIcon = static_cast<HICON>(LoadImage(static_cast<HINSTANCE>(nullptr), HB_PARSTR(1, &hBuffer, nullptr), IMAGE_ICON, 0, 0, LR_LOADFROMFILE));
       hb_strfree(hBuffer);
@@ -329,37 +316,27 @@ HB_FUNC( WVG_LOADIMAGE )
    LPCTSTR lpBuffer = HB_PARSTR(1, &hBuffer, nullptr);
    int     iSource  = hb_parni(2);
 
-   switch( iSource )
-   {
+   switch( iSource ) {
       case 0:   /* Image from resource by numeric id */
-         if( HB_ISNUM(3) && hb_parni(3) == IMAGE_ICON )
-         {
+         if( HB_ISNUM(3) && hb_parni(3) == IMAGE_ICON ) {
             hImage = LoadIcon(static_cast<HINSTANCE>(wvg_hInstance()), MAKEINTRESOURCE(hb_parni(1)));
-         }
-         else
-         {
+         } else {
             hImage = LoadBitmap(static_cast<HINSTANCE>(wvg_hInstance()), MAKEINTRESOURCE(hb_parni(1)));
          }
          break;
 
       case 1:   /* image from resource by name */
-         if( HB_ISNUM(3) && hb_parni(3) == IMAGE_ICON )
-         {
+         if( HB_ISNUM(3) && hb_parni(3) == IMAGE_ICON ) {
             hImage = LoadIcon(static_cast<HINSTANCE>(wvg_hInstance()), lpBuffer);
-         }
-         else
-         {
+         } else {
             hImage = LoadBitmap(static_cast<HINSTANCE>(wvg_hInstance()), lpBuffer);
          }
          break;
 
       case 2:   /* Image from disk file */
-         if( HB_ISNUM(3) && hb_parni(3) == IMAGE_ICON )
-         {
+         if( HB_ISNUM(3) && hb_parni(3) == IMAGE_ICON ) {
             hImage = static_cast<HICON>(LoadImage(static_cast<HINSTANCE>(nullptr), lpBuffer, IMAGE_ICON, hb_parni(4), hb_parni(5), LR_LOADFROMFILE));
-         }
-         else
-         {
+         } else {
             hImage = static_cast<HBITMAP>(LoadImage(static_cast<HINSTANCE>(nullptr), lpBuffer, IMAGE_BITMAP, hb_parni(4), hb_parni(5), LR_LOADFROMFILE));
          }
          break;
@@ -371,7 +348,7 @@ HB_FUNC( WVG_LOADIMAGE )
 
 HB_FUNC( WVG_GETCLIENTRECT )
 {
-   RECT     rc   = {0, 0, 0, 0};
+   RECT     rc{};
    PHB_ITEM info = hb_itemArrayNew(4);
 
    GetClientRect(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))), &rc);
@@ -390,7 +367,6 @@ HB_FUNC( WVG_GETCLIENTRECT )
 HB_FUNC( WVG_DRAWIMAGE )
 {
    void * hImage;
-
    hb_retl(hb_wvt_DrawImage(reinterpret_cast<HDC>(static_cast<HB_PTRUINT>(hb_parnint(1))), hb_parni(2), hb_parni(3),
                             hb_parni(4), hb_parni(5), HB_PARSTR(6, &hImage, nullptr), hb_parl(7)));
    hb_strfree(hImage);
@@ -408,8 +384,7 @@ HB_FUNC( WVG_RELEASEDC )
 
 HB_FUNC( WVG_CREATEBRUSH )
 {
-   LOGBRUSH lb = {0, 0, 0};
-
+   LOGBRUSH lb{};
    lb.lbStyle = hb_parni(1);
    lb.lbColor = static_cast<COLORREF>(hb_parnldef(2, RGB(0, 0, 0)));
    lb.lbHatch = hb_parni(3);
@@ -421,7 +396,7 @@ HB_FUNC( WVG_CREATEBRUSH )
  */
 HB_FUNC( WVG_DRAWTEXT )
 {
-   RECT    rc = {0, 0, 0, 0};
+   RECT    rc{};
    void *  hBuffer;
    LPCTSTR lpBuffer = HB_PARSTR(2, &hBuffer, nullptr);
 
@@ -509,20 +484,14 @@ HB_FUNC( WVG_CLIENTTOSCREEN )
    POINT    Point;
    PHB_ITEM pArray = hb_param(2, Harbour::Item::ARRAY);
 
-   if( wvt_Array2Point(pArray, &Point) )
-   {
-      if( ClientToScreen(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))), &Point) )
-      {
+   if( wvt_Array2Point(pArray, &Point) ) {
+      if( ClientToScreen(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))), &Point) ) {
          wvt_Point2ArrayEx(&Point, pArray);
          hb_retl(true);
-      }
-      else
-      {
+      } else {
          hb_retl(false);
       }
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -532,20 +501,14 @@ HB_FUNC( WVG_SCREENTOCLIENT )
    POINT    Point;
    PHB_ITEM pArray = hb_param(2, Harbour::Item::ARRAY);
 
-   if( wvt_Array2Point(pArray, &Point) )
-   {
-      if( ScreenToClient(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))), &Point) > 0 )
-      {
+   if( wvt_Array2Point(pArray, &Point) ) {
+      if( ScreenToClient(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))), &Point) > 0 ) {
          wvt_Point2ArrayEx(&Point, pArray);
          hb_retl(true);
-      }
-      else
-      {
+      } else {
          hb_retl(false);
       }
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -573,14 +536,11 @@ HB_FUNC( WVG_TRACKPOPUPMENU )
    int   y      = hb_parni(4);
    HWND  hWnd   = HB_ISNUM(5) ? reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(5))) : GetActiveWindow();
 
-   POINT xy = {0, 0};
+   POINT xy{};
 
-   if( !HB_ISNUM(3) )
-   {
+   if( !HB_ISNUM(3) ) {
       GetCursorPos(&xy);
-   }
-   else
-   {
+   } else {
       xy.x = x;
       xy.y = y;
    }
@@ -593,8 +553,7 @@ HB_FUNC( WVG_CHOOSECOLOR )
    CHOOSECOLOR cc;
    COLORREF    crCustClr[16];
 
-   for( int i = 0; i < static_cast<int>(HB_SIZEOFARRAY(crCustClr)); i++ )
-   {
+   for( int i = 0; i < static_cast<int>(HB_SIZEOFARRAY(crCustClr)); i++ ) {
       crCustClr[i] = (HB_ISARRAY(2) ? static_cast<COLORREF>(hb_parvnl(2, i + 1)) : GetSysColor(COLOR_BTNFACE));
    }
 
@@ -604,12 +563,9 @@ HB_FUNC( WVG_CHOOSECOLOR )
    cc.lpCustColors = crCustClr;
    cc.Flags        = static_cast<WORD>(hb_parnldef(3, CC_ANYCOLOR | CC_RGBINIT | CC_FULLOPEN));
 
-   if( ChooseColor(&cc) )
-   {
+   if( ChooseColor(&cc) ) {
       hb_retnl(cc.rgbResult);
-   }
-   else
-   {
+   } else {
       hb_retnl(-1);
    }
 }
@@ -622,12 +578,9 @@ HB_FUNC( WVG_FINDWINDOW )
    hwnd = FindWindow(nullptr, HB_PARSTR(1, &hText, nullptr));
    hb_strfree(hText);
 
-   if( hwnd )
-   {
+   if( hwnd ) {
       hb_retnint(reinterpret_cast<HB_PTRUINT>(hwnd));
-   }
-   else
-   {
+   } else {
       hb_retnint(-1);
    }
 }
@@ -644,9 +597,9 @@ HB_FUNC( WVG_SETMENU )
    HWND hWnd = reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1)));
 
    #if 1
-   HB_BOOL bSet;
-   RECT    wi = {0, 0, 0, 0};
-   RECT    ci = {0, 0, 0, 0};
+   bool    bSet;
+   RECT    wi{};
+   RECT    ci{};
    int     height, width;
 
    bSet = SetMenu(hWnd, reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(2))));
@@ -681,14 +634,11 @@ HB_FUNC( WVG_CREATEPOPUPMENU )
 
 HB_FUNC( WVG_APPENDMENU )
 {
-   if( HB_ISCHAR(4) )
-   {
+   if( HB_ISCHAR(4) ) {
       void * hBuffer;
       hb_retl(AppendMenu(reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(1))), static_cast<UINT>(hb_parni(2)), static_cast<HB_PTRUINT>(hb_parnint(3)), HB_PARSTR(4, &hBuffer, nullptr)));
       hb_strfree(hBuffer);
-   }
-   else /* It is a SEPARATOR or Submenu */
-   {
+   } else { /* It is a SEPARATOR or Submenu */
       LPCTSTR lpszCaption = reinterpret_cast<LPCTSTR>(static_cast<HB_PTRUINT>(hb_parnint(4)));
       hb_retl(AppendMenu(reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(1))), static_cast<UINT>(hb_parni(2)), static_cast<HB_PTRUINT>(hb_parnint(3)), static_cast<LPCTSTR>(lpszCaption)));
    }
@@ -698,15 +648,12 @@ HB_FUNC( WVG_INSERTMENU )
 {
    UINT flags = hb_parni(3);
 
-   if( HB_ISCHAR(5) )
-   {
+   if( HB_ISCHAR(5) ) {
       void * hBuffer;
       hb_retl(InsertMenu(reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(1))), static_cast<UINT>(hb_parni(2)),
                          flags, static_cast<HB_PTRUINT>(hb_parnint(4)), HB_PARSTR(5, &hBuffer, nullptr)));
       hb_strfree(hBuffer);
-   }
-   else /* It is a SEPARATOR or Submenu */
-   {
+   } else { /* It is a SEPARATOR or Submenu */
       LPCTSTR lpszCaption = reinterpret_cast<LPCTSTR>(static_cast<HB_PTRUINT>(hb_parnint(5)));
       hb_retl(InsertMenu(reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(1))), static_cast<UINT>(hb_parni(2)),
                          flags, static_cast<HB_PTRUINT>(hb_parnint(4)), static_cast<LPCTSTR>(lpszCaption)));
@@ -742,12 +689,9 @@ HB_FUNC( WVG_ISMENUITEMCHECKED )
    lpmii.fMask  = MIIM_STATE;
 
    lSuccess = GetMenuItemInfo(reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(1))), static_cast<UINT>(hb_parni(2)), TRUE, &lpmii);
-   if( lSuccess )
-   {
+   if( lSuccess ) {
       hb_retl(lpmii.fState & MFS_CHECKED ? TRUE : FALSE);
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -761,12 +705,9 @@ HB_FUNC( WVG_ISMENUITEMENABLED )
    lpmii.fMask  = MIIM_STATE;
 
    lSuccess = GetMenuItemInfo(reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(1))), static_cast<UINT>(hb_parni(2)), TRUE, &lpmii);
-   if( lSuccess )
-   {
+   if( lSuccess ) {
       hb_retl(lpmii.fState & MFS_DISABLED ? FALSE : TRUE);
-   }
-   else
-   {
+   } else {
       hb_retl(true);
    }
 }
@@ -779,16 +720,14 @@ HB_FUNC( WVG_SETMENUITEM )
    MENUITEMINFO lpmii{};
    lpmii.cbSize = sizeof(MENUITEMINFO);
    lpmii.fMask  = hb_parl(5) ? MIIM_STRING : MIIM_SUBMENU;
-   if( hb_parl(5) )
-   {
+   if( hb_parl(5) ) {
       lpmii.dwTypeData = const_cast<LPTSTR>(HB_PARSTR(4, &hText, nullptr));
    }
 
    lSuccess = SetMenuItemInfo(reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(1))), static_cast<UINT>(hb_parni(2)), TRUE, &lpmii);
    hb_retl(lSuccess);
 
-   if( hText )
-   {
+   if( hText ) {
       hb_strfree(hText);
    }
 }
@@ -845,9 +784,7 @@ HB_FUNC( WVG_SENDMESSAGETEXT )
 HB_FUNC( WVG_GETMESSAGETEXT )
 {
    TCHAR cText[32000];
-
    SendMessage(wvg_parhwnd(1), static_cast<UINT>(hb_parni(2)), wvg_parwparam(3), reinterpret_cast<LPARAM>(cText));
-
    HB_RETSTR(cText);
 }
 
@@ -917,9 +854,7 @@ HB_FUNC( WVG_TVIS_EXPANDED )
 HB_FUNC( WVG_LBGETTEXT )
 {
    TCHAR text[MAX_PATH + 1];
-
    SendMessage(wvg_parhwnd(1), LB_GETTEXT, wvg_parwparam(2), reinterpret_cast<LPARAM>(text));
-
    HB_RETSTR(text);
 }
 
@@ -1045,8 +980,7 @@ HB_FUNC( WVG_SETLAYEREDWINDOWATTRIBUTES )
 
    SetWindowLong(hWnd, GWL_EXSTYLE, GetWindowLong(hWnd, GWL_EXSTYLE) | WS_EX_LAYERED);
 
-   if( SetLayeredWindowAttributes(hWnd, cr, static_cast<BYTE>(hb_parni(3)), /*LWA_COLORKEY |*/ LWA_ALPHA) == false )
-   {
+   if( SetLayeredWindowAttributes(hWnd, cr, static_cast<BYTE>(hb_parni(3)), /*LWA_COLORKEY |*/ LWA_ALPHA) == false ) {
       /* Just to supress warning */
    }
 }
@@ -1056,10 +990,8 @@ HB_FUNC( WVG_SENDTOOLBARMESSAGE )
    HWND hTB = hbwapi_par_raw_HWND(1);
    int  msg = hbwapi_par_INT(2);
 
-   switch( msg )
-   {
-      case TB_ADDBITMAP:
-      {
+   switch( msg ) {
+      case TB_ADDBITMAP: {
          TBADDBITMAP tbab;
 
          tbab.hInst = nullptr;
@@ -1071,8 +1003,7 @@ HB_FUNC( WVG_SENDTOOLBARMESSAGE )
          hbwapi_ret_NI(static_cast<int>(SendMessage(hTB, TB_ADDBITMAP, static_cast<WPARAM>(1), reinterpret_cast<LPARAM>(&tbab))));
          break;
       }
-      case TB_ADDBUTTONS:
-      {
+      case TB_ADDBUTTONS: {
          TBBUTTON tbb;
 
          tbb.iBitmap   = hbwapi_par_INT(3);
@@ -1085,8 +1016,7 @@ HB_FUNC( WVG_SENDTOOLBARMESSAGE )
          hbwapi_ret_L(SendMessage(hTB, TB_ADDBUTTONS, static_cast<WPARAM>(1), reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(&tbb))));
          break;
       }
-      case TB_ADDSTRING:
-      {
+      case TB_ADDSTRING: {
          int    iString;
          void * hCaption;
 
@@ -1201,8 +1131,7 @@ HB_FUNC( WVG_SENDTOOLBARMESSAGE )
       case TB_MOVEBUTTON:
       case TB_GETINSERTMARK:
          break;
-      case TB_GETCOLORSCHEME:
-      {
+      case TB_GETCOLORSCHEME: {
          PHB_ITEM info = hb_itemArrayNew(2);
          COLORSCHEME colorScheme;
 
@@ -1235,10 +1164,8 @@ HB_FUNC( WVG_SENDEDITCONTROLMESSAGE )
    HWND hED = hbwapi_par_raw_HWND(1);
    int  msg = hbwapi_par_INT(2);
 
-   switch( msg )
-   {
-      case EM_GETSEL:
-      {
+   switch( msg ) {
+      case EM_GETSEL: {
          DWORD min = 0;
          DWORD max = 0;
          SendMessage(hED, EM_GETSEL, reinterpret_cast<WPARAM>(&min), reinterpret_cast<LPARAM>(&max));
@@ -1253,8 +1180,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
    int    msg   = hbwapi_par_INT(2);
    void * hText = nullptr;
 
-   switch( msg )
-   {
+   switch( msg ) {
       case CB_ADDSTRING:
          hb_retnint(SendMessage(hCB, CB_ADDSTRING, reinterpret_cast<WPARAM>(nullptr), reinterpret_cast<LPARAM>(static_cast<LPCTSTR>(HB_PARSTR(3, &hText, nullptr)))));
          break;
@@ -1270,8 +1196,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
       case CB_FINDSTRINGEXACT:
          hb_retnint(SendMessage(hCB, CB_FINDSTRINGEXACT, static_cast<WPARAM>(hb_parni(3)), reinterpret_cast<LPARAM>(HB_PARSTR(4, &hText, nullptr))));
          break;
-      case CB_GETCOMBOBOXINFO:
-      {
+      case CB_GETCOMBOBOXINFO: {
          PHB_ITEM pCbi = hb_itemNew(nullptr);
          PHB_ITEM pRc1 = hb_itemNew(nullptr);
          PHB_ITEM pRc2 = hb_itemNew(nullptr);
@@ -1279,8 +1204,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
          COMBOBOXINFO cbi{};
          cbi.cbSize = sizeof(COMBOBOXINFO);
 
-         if( GetComboBoxInfo(hCB, &cbi) )
-         {
+         if( GetComboBoxInfo(hCB, &cbi) ) {
             hb_arrayNew(pCbi, 6);
             hb_arrayNew(pRc1, 4);
             hb_arrayNew(pRc2, 4);
@@ -1320,8 +1244,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
       case CB_GETCURSEL:
          hb_retnint(SendMessage(hCB, CB_GETCURSEL, 0, 0));
          break;
-      case CB_GETDROPPEDCONTROLRECT:
-      {
+      case CB_GETDROPPEDCONTROLRECT: {
          RECT     rc;
          PHB_ITEM pRect = hb_itemNew(nullptr);
 
@@ -1342,8 +1265,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
       case CB_GETDROPPEDWIDTH:
          hb_retnint(SendMessage(hCB, CB_GETDROPPEDWIDTH, 0, 0));
          break;
-      case CB_GETEDITSEL:
-      {
+      case CB_GETEDITSEL: {
          DWORD    range = static_cast<DWORD>(SendMessage(hCB, CB_GETEDITSEL, reinterpret_cast<WPARAM>(nullptr), reinterpret_cast<LPARAM>(nullptr)));
          PHB_ITEM pRng  = hb_itemNew(nullptr);
 
@@ -1366,8 +1288,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
       case CB_GETITEMHEIGHT:
          hb_retnint(SendMessage(hCB, CB_GETITEMHEIGHT, 0, 0));
          break;
-      case CB_GETLBTEXT:
-      {
+      case CB_GETLBTEXT: {
          HB_ISIZ iSize = SendMessage(hCB, CB_GETLBTEXTLEN, static_cast<WPARAM>(hb_parnint(3)), 0);
          LPTSTR  text  = static_cast<LPTSTR>(hb_xgrab(iSize + 1));
          SendMessage(hCB, CB_GETLBTEXT, iSize, reinterpret_cast<LPARAM>(text));
@@ -1441,8 +1362,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
          break;
    }
 
-   if( hText )
-   {
+   if( hText ) {
       hb_strfree(hText);
    }
 }
