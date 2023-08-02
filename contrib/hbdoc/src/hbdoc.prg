@@ -767,8 +767,8 @@ STATIC PROCEDURE ShowHelp( cExtraMessage, aArgs )
    CASE Empty( aArgs ) .OR. Len( aArgs ) <= 1 .OR. Empty( aArgs[ 1 ] )
       aHelp := { ;
          cExtraMessage, ;
-         "Harbour Document Compiler (hbdoc) " + HBRawVersion(), ;
-         "Copyright (c) 1999-2020, " + hb_Version( HB_VERSION_URL_BASE ), ;
+         "Harbour++ Document Compiler (hbdoc) " + HBRawVersion(), ;
+         "Copyright (c) 1999-2023, " + hb_Version( HB_VERSION_URL_BASE ), ;
          "", ;
          "Syntax:", ;
          "", ;
