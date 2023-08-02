@@ -276,8 +276,8 @@ HB_FUNC( HB_PQCOPYFROMWA )
       static const char * sc_szDelim = ",";
 
       const char *    szTable   = hb_parcx(2);
-      PHB_ITEM        pWhile    = hb_param(3, Harbour::Item::BLOCK);
-      PHB_ITEM        pFor      = hb_param(4, Harbour::Item::BLOCK);
+      PHB_ITEM        pWhile    = hb_param(3, Harbour::Item::EVALITEM);
+      PHB_ITEM        pFor      = hb_param(4, Harbour::Item::EVALITEM);
       PHB_ITEM        pFields   = hb_param(5, Harbour::Item::ARRAY);
       HB_ULONG        nCount    = hb_parnldef(6, 0);
       HB_BOOL         str_rtrim = hb_parldef(7, true);
@@ -298,8 +298,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
 
       pItem = hb_itemNew(nullptr);
 
-      context = static_cast<pgCopyContext*>(hb_xgrab(sizeof(pgCopyContext)));
-      memset(context, 0, sizeof(pgCopyContext));
+      context = static_cast<pgCopyContext*>(hb_xgrabz(sizeof(pgCopyContext)));
 
       context->buffer     = static_cast<char*>(hb_xgrab(sizeof(char) * nBufLen * 1400));
       context->position   = 0;

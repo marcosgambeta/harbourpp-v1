@@ -2,7 +2,7 @@
  * PostgreSQL RDBMS low-level (client API) interface code.
  *
  * Copyright 2016 P.Chornyj <myorg63@mail.ru>
- * Copyright 2010-2016 Viktor Szakats (vszakats.net/harbour) (GC support, etc)
+ * Copyright 2010-2016 Viktor Szakats (vsz.me/hb) (GC support, etc)
  * Copyright 2003 Rodrigo Moreno rodrigo_moreno@yahoo.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -47,7 +47,6 @@
  */
 
 #include "hbpgsql.hpp"
-
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
 
@@ -72,11 +71,11 @@ static const HB_GC_FUNCS s_gcPGconnFuncs =
    hb_gcDummyMark
 };
 
-void hb_PGconn_ret( PGconn * p )
+void hb_PGconn_ret(PGconn * p)
 {
    if( p )
    {
-      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(PGconn*), &s_gcPGconnFuncs));
+      void ** ph = static_cast<void**>(hb_gcAllocate( sizeof(PGconn*), &s_gcPGconnFuncs));
 
       *ph = p;
 
@@ -85,10 +84,10 @@ void hb_PGconn_ret( PGconn * p )
    else
    {
       hb_retptr(nullptr);
-   }
+   }   
 }
 
-PGconn * hb_PGconn_par( int iParam )
+PGconn * hb_PGconn_par(int iParam)
 {
    void ** ph = static_cast<void**>(hb_parptrGC(&s_gcPGconnFuncs, iParam));
 
@@ -116,7 +115,7 @@ static const HB_GC_FUNCS s_gcPGresultFuncs =
    hb_gcDummyMark
 };
 
-void hb_PGresult_ret( PGresult * p )
+void hb_PGresult_ret(PGresult * p)
 {
    if( p )
    {
@@ -129,10 +128,10 @@ void hb_PGresult_ret( PGresult * p )
    else
    {
       hb_retptr(nullptr);
-   }
+   }   
 }
 
-PGresult * hb_PGresult_par( int iParam )
+PGresult * hb_PGresult_par(int iParam)
 {
    void ** ph = static_cast<void**>(hb_parptrGC(&s_gcPGresultFuncs, iParam));
 
@@ -162,11 +161,11 @@ static const HB_GC_FUNCS s_gcPGcancelFuncs =
    hb_gcDummyMark
 };
 
-static void hb_PGcancel_ret( PGcancel * p )
+static void hb_PGcancel_ret(PGcancel * p)
 {
    if( p )
    {
-      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(PGcancel*), &s_gcPGcancelFuncs));
+      void ** ph = static_cast<void**>(hb_gcAllocate( sizeof(PGcancel*), &s_gcPGcancelFuncs));
 
       *ph = p;
 
@@ -175,10 +174,10 @@ static void hb_PGcancel_ret( PGcancel * p )
    else
    {
       hb_retptr(nullptr);
-   }
+   }   
 }
 
-static PGcancel * hb_PGcancel_par( int iParam )
+static PGcancel * hb_PGcancel_par(int iParam)
 {
    void ** ph = static_cast<void**>(hb_parptrGC(&s_gcPGcancelFuncs, iParam));
 
@@ -223,10 +222,10 @@ static void hb_FILE_ret( FILE * p )
    else
    {
       hb_retptr(nullptr);
-   }
+   }   
 }
 
-static FILE * hb_FILE_par( int iParam )
+static FILE * hb_FILE_par(int iParam)
 {
    void ** ph = static_cast<void**>(hb_parptrGC(&s_gcFILEFuncs, iParam));
 
@@ -235,9 +234,52 @@ static FILE * hb_FILE_par( int iParam )
 
 #endif
 
-/*
- * Connection handling functions
- */
+/* Get the version of the libpq library in use */
+
+HB_FUNC( PQLIBVERSION )
+{
+#if PG_VERSION_NUM >= 90100
+   hb_retni(PQlibVersion());
+#else
+   hb_retni(0);
+#endif
+}
+
+/* Connection handling functions */
+
+/* 31.1. Database Connection Control Functions
+   The following functions deal with making a connection to a PostgreSQL backend server. */
+
+HB_FUNC( PQCONNECTDBPARAMS )
+{
+   PHB_ITEM pParam = hb_param(1, Harbour::Item::HASH);
+   int len;
+
+   if( pParam && (len = static_cast<int>(hb_hashLen(pParam))) > 0 )
+   {
+#if PG_VERSION_NUM >= 90000
+      const char ** paramKeyValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
+      const char ** paramValValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
+
+      for( int pos = 0; pos < len; ++pos )
+      {
+         paramKeyValues[pos] = hb_itemGetCPtr(hb_hashGetKeyAt(pParam, pos + 1));
+         paramValValues[pos] = hb_itemGetCPtr(hb_hashGetValueAt(pParam, pos + 1));
+      }
+
+      hb_PGconn_ret(PQconnectdbParams(paramKeyValues, paramValValues, hb_parl(2)));
+
+      hb_xfree(static_cast<void*>(paramKeyValues));
+      hb_xfree(static_cast<void*>(paramValValues));
+#else
+      hb_retptr(nullptr);
+#endif
+   }
+   else
+   {
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }   
+}
 
 HB_FUNC( PQCONNECTDB )
 {
@@ -248,7 +290,7 @@ HB_FUNC( PQCONNECTDB )
    else
    {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+   }   
 }
 
 /* NOTE: Deprecated */
@@ -263,6 +305,63 @@ HB_FUNC( PQSETDBLOGIN )
                               hb_parcx(7) /* pwd */));
 }
 
+HB_FUNC( PQCONNECTSTARTPARAMS )
+{
+   PHB_ITEM pParam = hb_param(1, Harbour::Item::HASH);
+   int len;
+
+   if( pParam && (len = static_cast<int>(hb_hashLen(pParam))) > 0 )
+   {
+#if PG_VERSION_NUM >= 90000
+      const char ** paramKeyValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
+      const char ** paramValValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
+
+      for( int pos = 0; pos < len; ++pos )
+      {
+         paramKeyValues[pos] = hb_itemGetCPtr(hb_hashGetKeyAt(pParam, pos + 1));
+         paramValValues[pos] = hb_itemGetCPtr(hb_hashGetValueAt(pParam, pos + 1));
+      }
+
+      hb_PGconn_ret(PQconnectStartParams(paramKeyValues, paramValValues, hb_parl(2)));
+
+      hb_xfree(static_cast<void*>(paramKeyValues));
+      hb_xfree(static_cast<void*>(paramValValues));
+#else
+      hb_retptr(nullptr);
+#endif
+   }
+   else
+   {
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }   
+}
+
+HB_FUNC( PQCONNECTSTART )
+{
+   if( HB_ISCHAR(1) )
+   {
+      hb_PGconn_ret(PQconnectStart(hb_parc(1)));
+   }
+   else
+   {
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }   
+}
+
+HB_FUNC( PQCONNECTPOLL )
+{
+   PGconn * conn = hb_PGconn_par(1);
+
+   if( conn )
+   {
+      hb_retni(PQconnectPoll(conn));
+   }
+   else
+   {
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }   
+}
+
 HB_FUNC( PQRESET )
 {
    PGconn * conn = hb_PGconn_par(1);
@@ -274,22 +373,86 @@ HB_FUNC( PQRESET )
    else
    {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+   }   
 }
 
-HB_FUNC( PQPROTOCOLVERSION )
+HB_FUNC( PQRESETSTART )
 {
    PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retni(PQprotocolVersion(conn));
+      PQresetStart(conn);
+   }
+   else
+   {
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }   
+}
+
+HB_FUNC( PQRESETPOLL )
+{
+   PGconn * conn = hb_PGconn_par(1);
+
+   if( conn )
+   {
+      hb_retni(PQresetPoll(conn));
+   }
+   else
+   {
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }   
+}
+
+HB_FUNC( PQPINGPARAMS )
+{
+   PHB_ITEM pParam = hb_param(1, Harbour::Item::HASH);
+   int len;
+
+   if( pParam && (len = static_cast<int>(hb_hashLen(pParam))) > 0 )
+   {
+#if PG_VERSION_NUM >= 90100
+      const char ** paramKeyValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
+      const char ** paramValValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
+
+      for( int pos = 0; pos < len; ++pos )
+      {
+         paramKeyValues[pos] = hb_itemGetCPtr(hb_hashGetKeyAt(pParam, pos + 1));
+         paramValValues[pos] = hb_itemGetCPtr(hb_hashGetValueAt(pParam, pos + 1));
+      }
+
+      hb_retni(PQpingParams(paramKeyValues, paramValValues, hb_parl(3)));
+
+      hb_xfree(static_cast<void*>(paramKeyValues));
+      hb_xfree(static_cast<void*>(paramValValues));
+#else
+      hb_retptr(nullptr);
+#endif
+   }
+   else
+   {
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }   
+}
+
+HB_FUNC( PQPING )
+{
+   if( HB_ISCHAR(1) )
+   {
+#if PG_VERSION_NUM >= 90100
+      hb_retni(PQping(hb_parc(1)));
+#else
+      hb_ret();
+#endif
    }
    else
    {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
+
+/* 31.2. Connection Status Functions.
+   These functions can be used to interrogate the status of an existing database connection object. */
 
 HB_FUNC( PQCLIENTENCODING )
 {
@@ -316,7 +479,7 @@ HB_FUNC( PQSETCLIENTENCODING )
    else
    {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+   }   
 }
 
 HB_FUNC( PQDB )
@@ -417,6 +580,46 @@ HB_FUNC( PQOPTIONS )
    }
 }
 
+HB_FUNC( PQRESULTERRORFIELD )
+{
+   PGresult * res = hb_PGresult_par(1);
+
+   if( res )
+   {
+#if PG_VERSION_NUM >= 70400
+      hb_retc(PQresultErrorField(res, hb_parni(2)));
+#else
+      hb_retc_null();
+#endif
+   }
+   else
+   {
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
+}
+
+HB_FUNC( PQRESSTATUS )
+{
+   hb_retc(PQresStatus(static_cast<ExecStatusType>(hb_parnl(1))));
+}
+
+/* 31.2. Connection Status Functions.
+   These functions can be used to interrogate the status of an existing database connection object. */
+
+HB_FUNC( PQSTATUS )
+{
+   PGconn * conn = hb_PGconn_par(1);
+
+   if( conn )
+   {
+      hb_retni(PQstatus(conn));
+   }
+   else
+   {
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
+}
+
 HB_FUNC( PQTRANSACTIONSTATUS )
 {
    PGconn * conn = hb_PGconn_par(1);
@@ -424,6 +627,52 @@ HB_FUNC( PQTRANSACTIONSTATUS )
    if( conn )
    {
       hb_retni(PQtransactionStatus(conn));
+   }
+   else
+   {
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
+}
+
+HB_FUNC( PQPARAMETERSTATUS )
+{
+   PGconn * conn = hb_PGconn_par(1);
+
+   if( conn )
+   {
+      hb_retc(PQparameterStatus(conn, hb_parcx(2)));
+   }
+   else
+   {
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
+}
+
+HB_FUNC( PQPROTOCOLVERSION )
+{
+   PGconn * conn = hb_PGconn_par(1);
+
+   if( conn )
+   {
+      hb_retni(PQprotocolVersion(conn));
+   }
+   else
+   {
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
+}
+
+HB_FUNC( PQSERVERVERSION )
+{
+   PGconn * conn = hb_PGconn_par(1);
+
+   if( conn )
+   {
+#if PG_VERSION_NUM >= 80000
+      hb_retni(PQserverVersion(conn));
+#else
+      hb_retni(0);
+#endif
    }
    else
    {
@@ -445,13 +694,13 @@ HB_FUNC( PQERRORMESSAGE )
    }
 }
 
-HB_FUNC( PQSTATUS )
+HB_FUNC( PQSOCKET )
 {
    PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retni(PQstatus(conn));
+      hb_retni(PQsocket(conn));
    }
    else
    {
@@ -459,9 +708,93 @@ HB_FUNC( PQSTATUS )
    }
 }
 
-/*
- * Query handling functions
- */
+HB_FUNC( PQBACKENDPID )
+{
+   PGconn * conn = hb_PGconn_par(1);
+
+   if( conn )
+   {
+      hb_retni(PQbackendPID(conn));
+   }
+   else
+   {
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
+}
+
+HB_FUNC( PQCONNECTIONNEEDSPASSWORD )
+{
+   PGconn * conn = hb_PGconn_par(1);
+
+   if( conn )
+   {
+#if PG_VERSION_NUM >= 80300
+      hb_retl(PQconnectionNeedsPassword(conn) ? true : false);
+#else
+      hb_ret();
+#endif
+   }
+   else
+   {
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
+}
+
+HB_FUNC( PQCONNECTIONUSEDPASSWORD )
+{
+   PGconn * conn = hb_PGconn_par(1);
+
+   if( conn )
+   {
+#if PG_VERSION_NUM >= 80300
+      hb_retl(PQconnectionUsedPassword(conn) ? true : false);
+#else
+      hb_ret();
+#endif
+   }
+   else
+   {
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
+}
+
+HB_FUNC( PQSSLINUSE )
+{
+   PGconn * conn = hb_PGconn_par(1);
+
+   if( conn )
+   {
+#if PG_VERSION_NUM >= 90500
+      hb_retl(PQsslInUse(conn) ? true : false);
+#else
+      hb_ret();
+#endif
+   }
+   else
+   {
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
+}
+
+HB_FUNC( PQSSLATTRIBUTE )
+{
+   PGconn * conn = hb_PGconn_par(1);
+
+   if( conn )
+   {
+#if PG_VERSION_NUM >= 90500
+      hb_retc(PQsslAttribute(conn, hb_parcx(2)));
+#else
+      hb_retc_null();
+#endif
+   }
+   else
+   {
+      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
+}
+
+/* Query handling functions */
 
 HB_FUNC( PQEXEC )
 {
@@ -486,16 +819,23 @@ HB_FUNC( PQEXECPARAMS )
    {
       int n = static_cast<int>(hb_arrayLen(aParam));
 
-      const char ** paramvalues = static_cast<const char**>(hb_xgrab(sizeof(char*) * n));
-
-      for( int i = 0; i < n; ++i )
+      if( ! n )
       {
-         paramvalues[i] = hb_arrayGetCPtr(aParam, i + 1);
+         hb_PGresult_ret(PQexec(conn, hb_parcx(2)));
       }
+      else
+      {
+         const char ** paramvalues = static_cast<const char**>(hb_xgrab(sizeof(char*) * n));
 
-      hb_PGresult_ret(PQexecParams(conn, hb_parcx(2), n, nullptr, paramvalues, nullptr, nullptr, 1));
+         for( int i = 0; i < n; ++i )
+         {
+            paramvalues[i] = hb_arrayGetCPtr(aParam, i + 1);
+         }
+         
+         hb_PGresult_ret(PQexecParams(conn, hb_parcx(2), n, nullptr, paramvalues, nullptr, nullptr, hb_parnidef(4, 1)));
 
-      hb_xfree(static_cast<void*>(paramvalues));
+         hb_xfree(static_cast<void*>(paramvalues));
+      }
    }
    else
    {
@@ -511,7 +851,7 @@ HB_FUNC( PQFCOUNT )  /* not a direct wrapper */
    {
       int nFields = 0;
 
-      if( PQresultStatus( res ) == PGRES_TUPLES_OK )
+      if( PQresultStatus(res) == PGRES_TUPLES_OK )
       {
          nFields = PQnfields(res);
       }
@@ -532,7 +872,7 @@ HB_FUNC( PQLASTREC )  /* not a direct wrapper */
    {
       int nRows = 0;
 
-      if( PQresultStatus( res ) == PGRES_TUPLES_OK )
+      if( PQresultStatus(res) == PGRES_TUPLES_OK )
       {
          nRows = PQntuples(res);
       }
@@ -551,19 +891,17 @@ HB_FUNC( PQGETVALUE )
 
    if( res )
    {
-      if( PQresultStatus( res ) == PGRES_TUPLES_OK )
+      if( PQresultStatus(res) == PGRES_TUPLES_OK )
       {
          int nRow = hb_parni(2) - 1;
          int nCol = hb_parni(3) - 1;
 
-         if( !PQgetisnull( res, nRow, nCol ) )
+         if( ! PQgetisnull(res, nRow, nCol) )
          {
             hb_retc(PQgetvalue(res, nRow, nCol));
          }
          else
-         {
             hb_ret();
-         }
       }
       else
       {
@@ -584,7 +922,7 @@ HB_FUNC( PQGETLENGTH )
    {
       int result = 0;
 
-      if( PQresultStatus( res ) == PGRES_TUPLES_OK )
+      if( PQresultStatus(res) == PGRES_TUPLES_OK )
       {
          int nRow = hb_parni(2) - 1;
          int nCol = hb_parni(3) - 1;
@@ -615,12 +953,12 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
 
    if( res )
    {
-      if( PQresultStatus( res ) == PGRES_TUPLES_OK )
+      if( PQresultStatus(res) == PGRES_TUPLES_OK )
       {
-         int      nFields = PQnfields(res);
+         int      nFields = PQnfields(res), i;
          PHB_ITEM pResult = hb_itemArrayNew(nFields);
 
-         for( int i = 0; i < nFields; i++ )
+         for( i = 0; i < nFields; i++ )
          {
             char buf[256];
             int  typemod = PQfmod(res, i);
@@ -629,7 +967,7 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
 
             PHB_ITEM pField;
 
-            switch( PQftype( res, i ) )
+            switch( PQftype(res, i) )
             {
                case BITOID:
                   if( typemod >= 0 )
@@ -674,8 +1012,8 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
                   break;
 
                case NUMERICOID:
-                  length  = ( ( typemod - VARHDRSZ ) >> 16 ) & 0xffff;
-                  decimal = ( typemod - VARHDRSZ ) & 0xffff;
+                  length  = ((typemod - VARHDRSZ) >> 16) & 0xffff;
+                  decimal = (typemod - VARHDRSZ) & 0xffff;
                   hb_strncpy(buf, "numeric", sizeof(buf) - 1);
                   break;
 
@@ -755,7 +1093,7 @@ HB_FUNC( PQRESULT2ARRAY )  /* not a direct wrapper */
 
    if( res )
    {
-      if( PQresultStatus( res ) == PGRES_TUPLES_OK )
+      if( PQresultStatus(res) == PGRES_TUPLES_OK )
       {
          int nRows = PQntuples(res);
          int nCols = PQnfields(res);
@@ -852,7 +1190,7 @@ HB_FUNC( PQESCAPESTRING )
    hb_retc_buffer(dest);
 }
 
-HB_FUNC( PQESCAPEBYTEA ) /* deprecated */
+HB_FUNC( PQESCAPEBYTEA )  /* deprecated */
 {
    if( HB_ISCHAR(1) )
    {
@@ -917,7 +1255,7 @@ HB_FUNC( PQBINARYTUPLES )
 
    if( res )
    {
-      hb_retl(PQbinaryTuples(res));
+      hb_retl(PQbinaryTuples(res) ? true : false);
    }
    else
    {
@@ -1001,7 +1339,7 @@ HB_FUNC( PQGETISNULL )
 
    if( res )
    {
-      hb_retl(PQgetisnull(res, hb_parni(2) - 1, hb_parni(3) - 1));
+      hb_retl(PQgetisnull(res, hb_parni(2) - 1, hb_parni(3) - 1) ? true : false);
    }
    else
    {
@@ -1051,9 +1389,7 @@ HB_FUNC( PQNFIELDS )
    }
 }
 
-/*
- * Asynchronous functions
- */
+/* Asynchronous functions */
 
 HB_FUNC( PQSENDQUERY )
 {
@@ -1061,7 +1397,7 @@ HB_FUNC( PQSENDQUERY )
 
    if( conn )
    {
-      hb_retl(PQsendQuery(conn, hb_parcx(2) ) ? true : false);
+      hb_retl(PQsendQuery(conn, hb_parcx(2)) ? true : false);
    }
    else
    {
@@ -1089,7 +1425,7 @@ HB_FUNC( PQCONSUMEINPUT )
 
    if( conn )
    {
-      hb_retl(PQconsumeInput(conn));
+      hb_retl(PQconsumeInput(conn) ? true : false);
    }
    else
    {
@@ -1139,13 +1475,15 @@ HB_FUNC( PQFLUSH )
    }
 }
 
+/* Set blocking/nonblocking connection to the backend */
+
 HB_FUNC( PQSETNONBLOCKING )
 {
    PGconn * conn = hb_PGconn_par(1);
 
    if( conn )
    {
-      hb_retl(PQsetnonblocking(conn, hb_parl(2)));
+      hb_retl(PQsetnonblocking(conn, hb_parl(2)) ? true : false);
    }
    else
    {
@@ -1159,7 +1497,7 @@ HB_FUNC( PQISNONBLOCKING )
 
    if( conn )
    {
-      hb_retl(PQisnonblocking(conn));
+      hb_retl(PQisnonblocking(conn) ? true : false);
    }
    else
    {
@@ -1167,14 +1505,12 @@ HB_FUNC( PQISNONBLOCKING )
    }
 }
 
-/*
- * Trace Connection handling functions
- */
+/* Trace Connection handling functions */
 
 HB_FUNC( PQTRACECREATE )  /* not a direct wrapper */
 {
 #ifdef NODLL
-   hb_FILE_ret(fopen(hb_parcx(1), "w+b"));
+   hb_FILE_ret(hb_fopen(hb_parcx(1), "w+b"));
 #else
    hb_retptr(nullptr);
 #endif
@@ -1229,9 +1565,7 @@ HB_FUNC( PQSETERRORVERBOSITY )
    }
 }
 
-/*
- * Large Object functions
- */
+/* Large Object functions */
 
 HB_FUNC( LO_IMPORT )
 {
@@ -1275,24 +1609,6 @@ HB_FUNC( LO_UNLINK )
    }
 }
 
-HB_FUNC( PQSERVERVERSION )
-{
-#if PG_VERSION_NUM >= 80000
-   PGconn * conn = hb_PGconn_par(1);
-
-   if( conn )
-   {
-      hb_retni(PQserverVersion(conn));
-   }
-   else
-   {
-      hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
-#else
-   hb_retni(0);
-#endif
-}
-
 HB_FUNC( PQGETCANCEL )
 {
 #if PG_VERSION_NUM >= 80000
@@ -1322,7 +1638,7 @@ HB_FUNC( PQCANCEL )
 
       errbuf[0] = '\0';
 
-      hb_retl(PQcancel(cancel, errbuf, sizeof(errbuf) - 1) == 1);
+      hb_retl(PQcancel(cancel, errbuf, sizeof(errbuf) - 1) ? true : false);
 
       hb_storc(errbuf, 2);
    }
@@ -1432,6 +1748,22 @@ HB_FUNC( PQPUTCOPYEND )
    }
 #else
    hb_retc_null();
+#endif
+}
+
+HB_FUNC( PG_ENCODING_TO_CHAR )
+{
+   hb_retc(pg_encoding_to_char(hb_parni(1)));
+}
+
+/* 31.19 Behavior in Threaded Programs */
+
+HB_FUNC( PQISTHREADSAFE )
+{
+#if PG_VERSION_NUM >= 80200
+   hb_retl(PQisthreadsafe() ? true : false);
+#else
+   hb_retl(false);
 #endif
 }
 
