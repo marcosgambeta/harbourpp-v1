@@ -1008,7 +1008,7 @@ char * hb_verHarbour(void)
 #endif
 
    char * pszVersion = static_cast<char*>(hb_xgrab(80));
-   hb_snprintf(pszVersion, 80, "Harbour++ %d.%d.%d%s (r%d)", HB_VER_MAJOR, HB_VER_MINOR, HB_VER_RELEASE, HB_VER_STATUS, hb_verRevision());
+   hb_snprintf(pszVersion, 80, "Harbour++ %d.%d.%d%s (r%" PFHL "u)", HB_VER_MAJOR, HB_VER_MINOR, HB_VER_RELEASE, HB_VER_STATUS, hb_verRevision());
    return pszVersion;
 }
 

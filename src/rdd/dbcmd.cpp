@@ -2188,7 +2188,7 @@ HB_FUNC( HB_FIELDPUT )
 
       if( uiField > 0 ) {
          PHB_ITEM pItem = hb_param(2, Harbour::Item::ANY);
-         if( pItem && !HB_IS_NIL(pItem) ) {
+         if( pItem ) {
             if( SELF_PUTVALUE(pArea, uiField, pItem) == Harbour::SUCCESS ) {
                hb_itemReturn(pItem);
             }

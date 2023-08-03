@@ -50,7 +50,7 @@
 
 #define _DEFAULT_ORIGIN_URL  "https://harbour.github.io/"
 
-int hb_verRevision(void)
+HB_MAXINT hb_verRevision(void)
 {
    return 0;
 }
@@ -305,7 +305,7 @@ static char * hb_pp_escapeString(char * szString)
    return szResult;
 }
 
-static int hb_pp_generateVerInfo(char * szVerFile, int iRevID, char * szChangeLogID, char * szLastEntry)
+static int hb_pp_generateVerInfo(char * szVerFile, HB_MAXINT nRevID, char * szChangeLogID, char * szLastEntry)
 {
    int iResult = 0;
    FILE * fout;
@@ -327,7 +327,7 @@ static int hb_pp_generateVerInfo(char * szVerFile, int iRevID, char * szChangeLo
                " * and is covered by the same license as Harbour PP\n"
                " */\n\n");
 
-      fprintf(fout, "#define HB_VER_REVID             %d\n", iRevID);
+      fprintf(fout, "#define HB_VER_REVID             %" PFHL "u\n", nRevID);
 
       if( szChangeLogID ) {
          pszEscaped = hb_pp_escapeString(szChangeLogID);
@@ -404,7 +404,7 @@ static char * hb_fsFileFind(const char * pszFileMask)
    return nullptr;
 }
 
-static int hb_pp_parseChangelog(PHB_PP_STATE pState, const char * pszFileName, int iQuiet, int * piRevID, char ** pszChangeLogID, char ** pszLastEntry)
+static int hb_pp_parseChangelog(PHB_PP_STATE pState, const char * pszFileName, int iQuiet, HB_MAXINT * pnRevID, char ** pszChangeLogID, char ** pszLastEntry)
 {
    char * pszFree = nullptr;
    int iResult = 0;
@@ -568,7 +568,7 @@ static int hb_pp_parseChangelog(PHB_PP_STATE pState, const char * pszFileName, i
             szRevID[0] = '\0';
          }
 
-         *piRevID = static_cast<int>(hb_strValInt(szRevID, &iLen));
+         *pnRevID = hb_strValInt(szRevID, &iLen);
 
          hb_pp_addDefine(pState, "HB_VER_REVID", szRevID);
 #ifdef HB_LEGACY_LEVEL4
@@ -610,7 +610,8 @@ int main(int argc, char * argv[])
    char * szStdCh = nullptr, * szLogFile = nullptr, * szInclude;
    bool fWrite = false, fChgLog = false;
    char * szChangeLogID = nullptr, * szLastEntry = nullptr;
-   int iRevID = 0, iResult = 0, iQuiet = 0, i;
+   int iResult = 0, iQuiet = 0, i;
+   HB_MAXINT nRevID = 0;
    char * szPPRuleFuncName = nullptr;
    PHB_PP_STATE pState;
 
@@ -760,7 +761,7 @@ int main(int argc, char * argv[])
          }
 
          if( fChgLog ) {
-            iResult = hb_pp_parseChangelog(pState, szLogFile, iQuiet, &iRevID, &szChangeLogID, &szLastEntry);
+            iResult = hb_pp_parseChangelog(pState, szLogFile, iQuiet, &nRevID, &szChangeLogID, &szLastEntry);
          }
 
          if( iResult == 0 ) {
@@ -768,7 +769,7 @@ int main(int argc, char * argv[])
          }
 
          if( iResult == 0 && szVerFile ) {
-            iResult = hb_pp_generateVerInfo(szVerFile, iRevID, szChangeLogID, szLastEntry);
+            iResult = hb_pp_generateVerInfo(szVerFile, nRevID, szChangeLogID, szLastEntry);
          }
          if( iResult == 0 && hb_pp_errorCount(pState) > 0 ) {
             iResult = 1;

@@ -290,8 +290,8 @@ static char * hb_memToStr(char * szBuffer, void * pMem, HB_SIZE nSize)
       for( int i = 0; i < iSize; ++i ) {
          int iLo = byMem[i] & 0x0f, iHi = byMem[i] >> 4;
          *pDest++ = '\\';
-         *pDest++ = iHi <= 9 ? '0' + iHi : 'A' - 10 + iHi;
-         *pDest++ = iLo <= 9 ? '0' + iLo : 'A' - 10 + iLo;
+         *pDest++ = static_cast<char>(iHi <= 9 ? '0' + iHi : 'A' - 10 + iHi);
+         *pDest++ = static_cast<char>(iLo <= 9 ? '0' + iLo : 'A' - 10 + iLo);
       }
    }
    *pDest = '\0';
@@ -323,7 +323,7 @@ void hb_xexit(void)
 
       for( int i = 1, pMemBlock = s_pMemBlocks; pMemBlock; ++i, pMemBlock = pMemBlock->pNextBlock ) {
          HB_TRACE(HB_TR_ERROR, ("Block %i %p (size %" HB_PFS "u) \"%s\"", i,
-            static_cast<void*>(pMemBlock) + HB_MEMINFO_SIZE, pMemBlock->nSize,
+            static_cast<char*>(pMemBlock) + HB_MEMINFO_SIZE, pMemBlock->nSize,
             hb_memToStr(szBuffer, static_cast<char*>(pMemBlock) + HB_MEMINFO_SIZE, pMemBlock->nSize)));
       }
    }
