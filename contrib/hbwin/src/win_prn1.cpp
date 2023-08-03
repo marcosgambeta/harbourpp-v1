@@ -530,7 +530,7 @@ HB_FUNC( WIN_GETDOCUMENTPROPERTIES )
    hb_retl(bResult);
 }
 
-static int CALLBACK FontEnumCallBack(LOGFONT * lplf, TEXTMETRIC * lpntm, DWORD dwFontType, LPVOID pArray)
+static int CALLBACK FontEnumCallBack(LOGFONT * lplf, TEXTMETRIC * lpntm, DWORD dwFontType, LPARAM pArray)
 {
    PHB_ITEM pSubItems = hb_itemArrayNew(4);
 
@@ -538,7 +538,7 @@ static int CALLBACK FontEnumCallBack(LOGFONT * lplf, TEXTMETRIC * lpntm, DWORD d
    hb_arraySetL(pSubItems, 2, (lplf->lfPitchAndFamily & FIXED_PITCH) != 0);
    hb_arraySetL(pSubItems, 3, (dwFontType & TRUETYPE_FONTTYPE) != 0);
    hb_arraySetNL(pSubItems, 4, lpntm->tmCharSet);
-   hb_arrayAddForward(static_cast<PHB_ITEM>(pArray), pSubItems);
+   hb_arrayAddForward(reinterpret_cast<PHB_ITEM>(pArray), pSubItems);
 
    hb_itemRelease(pSubItems);
 

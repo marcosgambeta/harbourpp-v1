@@ -3704,7 +3704,9 @@ static HB_BOOL hb_gtTryInit(const char * szGtName, HB_BOOL fFree)
             }
          }
 
-         hb_stackSetGT(hb_gtLoad(szGtName, nullptr, nullptr));
+         if( *szGtName ) {
+            hb_stackSetGT(hb_gtLoad(szGtName, nullptr, nullptr));
+         }
       }
 
       if( fFree ) {
@@ -3723,13 +3725,15 @@ void hb_gtStartupInit(void)
    if( hb_gtTryInit(hb_getenv("HB_GT"), true) ) {
       return;
    }
+   if( s_szNameDefault == s_gtNameBuf && hb_gtTryInit(s_szNameDefault, false) ) {
+      return;
+   }
    if( hb_gtTryInit(hb_gt_FindDefault(), false) ) {
       return;
    }
-   if( hb_gtTryInit(s_szNameDefault, false) ) {
+   if( s_szNameDefault != s_gtNameBuf && hb_gtTryInit(s_szNameDefault, false) ) {
       return;
    }
-
    if( hb_dynsymFind("HB_GT_NUL") ) { /* GTNUL was explicitly REQUESTed */
       if( hb_gtTryInit("NUL", false) ) {
          return;
@@ -3838,5 +3842,20 @@ HB_FUNC( HB_GTSELECT )
       void ** gtHolder = static_cast<void**>(hb_gcAllocate(sizeof(void*), &s_gcGTFuncs));
       *gtHolder = hGT;
       hb_retptrGC(gtHolder);
+   }
+}
+
+HB_FUNC( HB_GTEXISTS )
+{
+   const char * pszGtName = hb_parc(1);
+   hb_retl(pszGtName && hb_gt_FindEntry(pszGtName) >= -1);
+}
+
+HB_FUNC( HB_GTLIST )
+{
+   hb_reta(s_iGtCount + 1);
+   hb_storvc("NUL", -1, 1);
+   for( int iPos = 0; iPos < s_iGtCount; ++iPos ) {
+      hb_storvc(s_gtInit[iPos]->id, -1, iPos + 2);
    }
 }

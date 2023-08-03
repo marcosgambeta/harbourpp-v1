@@ -103,24 +103,34 @@ HB_BOOL hb_getenv_buffer(const char * szName, char * szBuffer, int nSize)
 
 #if defined(HB_OS_WIN)
    {
-      LPTSTR lpName = HB_CHARDUP(szName), lpBuffer;
+      TCHAR lpNameBuffer[64], lpDestBuffer[HB_PATH_MAX];
+      LPTSTR lpName = lpNameBuffer, lpBuffer = lpDestBuffer;
 
-      if( szBuffer != nullptr || nSize > 0 ) {
-         lpBuffer = static_cast<LPTSTR>(hb_xgrab(nSize * sizeof(TCHAR)));
-      } else {
+      if( szBuffer == nullptr || nSize == 0 ) {
          lpBuffer = nullptr;
+      } else if( static_cast<HB_SIZE>(nSize) > HB_SIZEOFARRAY(lpDestBuffer) ) {
+         lpBuffer = static_cast<LPTSTR>(hb_xgrab(nSize * sizeof(TCHAR)));
+      }
+
+      if( strlen(szName) >= HB_SIZEOFARRAY(lpNameBuffer) ) {
+         lpName = HB_CHARDUP(szName);
       }
 
       fRetVal = GetEnvironmentVariable(lpName, lpBuffer, nSize) != 0;
+
+      if( lpName != lpNameBuffer ) {
+         hb_xfree(lpName);
+      }
 
       if( lpBuffer ) {
          if( fRetVal ) {
             lpBuffer[nSize - 1] = TEXT('\0');
             HB_OSSTRDUP2(lpBuffer, szBuffer, nSize - 1);
          }
-         hb_xfree(lpBuffer);
+         if( lpBuffer != lpDestBuffer ) {
+            hb_xfree( lpBuffer );
+         }
       }
-      hb_xfree(lpName);
    }
 #else
    {
@@ -144,7 +154,7 @@ HB_BOOL hb_getenv_buffer(const char * szName, char * szBuffer, int nSize)
 #endif
 
    if( !fRetVal && szBuffer != nullptr && nSize != 0 ) {
-      szBuffer[0] = '\0';
+      szBuffer[ 0 ] = '\0';
    }
 
    return fRetVal;

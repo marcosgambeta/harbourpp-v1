@@ -1762,15 +1762,13 @@ HB_SIZE hb_cdpU16ToStr(PHB_CODEPAGE cdp, int iEndian, const HB_WCHAR * pSrc, HB_
  */
 HB_SIZE hb_cdpTransLen(const char * pSrc, HB_SIZE nSrc, HB_SIZE nMax, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut)
 {
-   HB_SIZE nSize;
-
    if( cdpIn && cdpOut && cdpIn != cdpOut && (cdpIn->uniTable != cdpOut->uniTable || HB_CDP_ISCUSTOM(cdpIn) || HB_CDP_ISCUSTOM(cdpOut)) ) {
       if( HB_CDP_ISUTF8(cdpIn) ) {
          return hb_cdpUTF8AsStrLen(cdpOut, pSrc, nSrc, nMax);
       } else if( HB_CDP_ISUTF8(cdpOut) ) {
          return hb_cdpStrAsUTF8Len(cdpIn, pSrc, nSrc, nMax);
       } else if( HB_CDP_ISCUSTOM(cdpIn) || HB_CDP_ISCUSTOM(cdpOut) ) {
-         HB_SIZE nPosS;
+         HB_SIZE nPosS, nSize;
          HB_WCHAR wc;
 
          nPosS = nSize = 0;
@@ -1781,14 +1779,11 @@ HB_SIZE hb_cdpTransLen(const char * pSrc, HB_SIZE nSrc, HB_SIZE nMax, PHB_CODEPA
             }
             nSize += i;
          }
-      } else {
-         nSize = (nMax && nSrc > nMax) ? nMax : nSrc;
+         return nSize;
       }
-   } else {
-      nSize = (nMax && nSrc > nMax) ? nMax : nSrc;
    }
 
-   return nSize;
+   return (nMax && nSrc > nMax) ? nMax : nSrc;
 }
 
 HB_SIZE hb_cdpTransTo(const char * pSrc, HB_SIZE nSrc, char * pDst, HB_SIZE nDst, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut)
