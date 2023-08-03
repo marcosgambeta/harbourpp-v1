@@ -450,8 +450,7 @@ static bool hb_gt_alleg_InitializeScreen(PHB_GT pGT, int iRows, int iCols, bool 
 
       if( AL_SCREEN_H != s_byFontSize * s_iScrHeight ) {
          iyFP = static_cast<HB_BYTE>(AL_SCREEN_H / s_iScrHeight);
-         if( iyFP & 1 )
-         {
+         if( iyFP & 1 ) {
             iyFP--;
          }
       }
@@ -655,7 +654,6 @@ static int hb_gt_alleg_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
 #endif
 
       if( ((nKey & 255) == 2 || (nKey & 255) == 3) && (nKey >> 8) > 31 ) { /* K_CTRL_ + navigation key */
-      {
          for( i = 0; i < GT_CTRL_TABLE_SIZE; i++ ) {
             if( (nKey >> 8) == s_CtrlTable[i].al_key ) {
                nKey = s_CtrlTable[i].xhb_key;
