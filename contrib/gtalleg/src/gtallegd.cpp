@@ -663,7 +663,6 @@ static int hb_gt_alleg_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
             }
          }
       } else if( (nKey != 0) && ((nKey & 255) < 32) && ((nKey & 255) == (nKey >> 8)) ) { /* K_CTRL_A .. Z */
-      {
 #ifdef HB_NEW_KCTRL
          nKey = 512 + (nKey & 255);
 #else
