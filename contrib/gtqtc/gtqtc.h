@@ -63,22 +63,41 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QMouseEvent>
-#include <QtCore/QBasicTimer>
+#include <QtCore/QTimer>
 
 #if QT_VERSION <= 0x040900
 #include <QtGui/QApplication>
 #include <QtGui/QMainWindow>
 #include <QtGui/QDesktopWidget>
 #include <QtGui/QWidget>
-#elif QT_VERSION <= 0x051600
+#include <QtGui/QMessageBox>
+#include <QtGui/QAbstractButton>
+#include <QtGui/QAction>
+#ifdef HB_QT_SOUND
+  #include <QtGui/QSound>
+#endif
+#elif QT_VERSION <= 0x051A00
+#include <QtGui/QScreen>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QWidget>
+#include <QtWidgets/QMessageBox>
+#include <QtWidgets/QAbstractButton>
+#include <QtWidgets/QAction>
+#ifdef HB_QT_SOUND
+  #include <QtMultimedia/QSound>
+#endif
 #else
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QWidget>
+#include <QtWidgets/QMessageBox>
+#include <QtWidgets/QAbstractButton>
+#include <QtWidgets/QAction>
+#ifdef HB_QT_SOUND
+  #include <QtMultimedia/QSound>
+#endif
 #endif
 
 #include "hbapi.hpp"
@@ -332,6 +351,7 @@ struct HB_GTQTC
    bool        fMinimized;                   /* enter/leave maximize (e.g. as icon in TaskBar) mode */
    bool        fFullScreen;                  /* enable/disable fullscreen mode */
    bool        fSelectCopy;                  /* allow marking texts by mouse left button with shift */
+   bool        fMsgAlert;                    /* redirect Alert() calls to QMessageBox */
    bool        fRepaint;                     /* force internal image repainting */
 
    int         iResizeMode;                  /* Sets the resizing mode either to FONT or ROWS */
@@ -398,3 +418,5 @@ protected:
 };
 
 #endif /* HB_QTC_H_ */
+
+// TODO: review code under #ifdef

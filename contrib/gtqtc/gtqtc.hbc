@@ -40,6 +40,8 @@ gt=${_HB_DYNPREF}${hb_name}${_HB_DYNSUFF}
 {(allwin|os2)&HBMK_HAS_QT4}libs=QtCore4 QtGui4
 {(allwin|os2|linux|bsd|beos|symbian)&HBMK_HAS_QT5}libs=Qt5Core Qt5Gui Qt5Widgets
 {(allwin|os2|linux|bsd|beos|symbian)&HBMK_HAS_QT6}libs=Qt6Core Qt6Gui Qt6Widgets
+{(allwin|os2|linux|bsd|beos|symbian)&HBMK_HAS_QT5&HB_QT_SOUND='yes'}libs=Qt5Multimedia
+{(allwin|os2|linux|bsd|beos|symbian)&HBMK_HAS_QT6&HB_QT_SOUND='yes'}libs=Qt6Multimedia
 {(linux|beos|symbian)&HBMK_HAS_QT4}libs=QtCore QtGui
 {(linux|beos|symbian)&HBMK_HAS_QT5}libs=Qt5Core Qt5Gui Qt5Widgets
 {(linux|beos|symbian)&HBMK_HAS_QT6}libs=Qt6Core Qt6Gui Qt6Widgets
@@ -52,6 +54,8 @@ gt=${_HB_DYNPREF}${hb_name}${_HB_DYNSUFF}
 {darwin&HBMK_HAS_QT4}frameworks=QtCore QtGui
 {darwin&HBMK_HAS_QT5}frameworks=QtCore QtGui QtWidgets
 {darwin&HBMK_HAS_QT6}frameworks=QtCore QtGui QtWidgets
+{darwin&HBMK_HAS_QT5&HB_QT_SOUND='yes'}frameworks=QtMultimedia
+{darwin&HBMK_HAS_QT6&HB_QT_SOUND='yes'}frameworks=QtMultimedia
 {bsd|darwin}libs=stdc++
 
 cpp=yes

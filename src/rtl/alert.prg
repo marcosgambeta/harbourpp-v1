@@ -111,6 +111,11 @@ FUNCTION hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
       NEXT
    CASE HB_ISSTRING(xMessage)
       cMessage := StrTran(xMessage, ";", Chr(10))
+   CASE HB_ISHASH(xMessage) .AND. "TXT" $ xMessage
+      cMessage := xMessage
+      IF !HB_ISARRAY(aOptions) .OR. Empty(aOptions)
+         aOptions := hb_HGetDef(xMessage, "BTN")
+      ENDIF
    OTHERWISE
       cMessage := hb_CStr(xMessage)
    ENDCASE

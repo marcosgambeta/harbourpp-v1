@@ -53,6 +53,8 @@
 {HBMK_HAS_QT6}-depincpath=qt6:/usr/local/include/qt6{bsd}
 {HBMK_HAS_QT6}-depfinish=qt6
 
+{HB_QT_SOUND='yes'}-cflag+=-DHB_QT_SOUND
+
 ${hb_name}.hbx
 
 # Required for 5.7.0 or upper
