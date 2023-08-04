@@ -1492,20 +1492,31 @@ static void hb_arrayCloneBody(PHB_ITEM pDest, PHB_ITEM pArray, PHB_NESTED_CLONED
 
 void hb_nestedCloneInit(PHB_NESTED_CLONED pClonedList, void * pValue, PHB_ITEM pDest)
 {
-   pClonedList->nSize  = 16;
-   pClonedList->nCount = 1;
-   pClonedList->pRefs  = static_cast<PHB_NESTED_REF>(hb_xgrab(pClonedList->nSize * sizeof(HB_NESTED_REF)));
-   pClonedList->pRefs[0].value = pValue;
-   pClonedList->pRefs[0].pDest = pDest;
+   if( hb_gcRefCount(pValue) > 1 ) {
+      pClonedList->nCount = 1;
+      pClonedList->nSize  = 16;
+      pClonedList->pRefs  = static_cast<PHB_NESTED_REF>(hb_xgrab(pClonedList->nSize * sizeof(HB_NESTED_REF)));
+      pClonedList->pRefs[0].value = pValue;
+      pClonedList->pRefs[0].pDest = pDest;
+   } else {
+      pClonedList->nCount = pClonedList->nSize  = 0;
+      pClonedList->pRefs = nullptr;
+   }
 }
 
 void hb_nestedCloneFree(PHB_NESTED_CLONED pClonedList)
 {
-   hb_xfree(pClonedList->pRefs);
+   if( pClonedList->pRefs ) {
+      hb_xfree( pClonedList->pRefs );
+   }
 }
 
 static bool hb_nestedCloneFind(PHB_NESTED_CLONED pClonedList, void * pValue, PHB_ITEM pDest)
 {
+   if( hb_gcRefCount(pValue) <= 1 ) {
+      return false;
+   }
+
    HB_SIZE nFirst = 0;
    HB_SIZE nLast = pClonedList->nCount;
    HB_SIZE nMiddle = (nFirst + nLast) >> 1;

@@ -7084,7 +7084,10 @@ static void hb_vmPopStatic(HB_USHORT uiStatic)
 PHB_SYMB hb_vmGetRealFuncSym(PHB_SYMB pSym)
 {
    if( pSym && !(pSym->scope.value & HB_FS_LOCAL) ) {
-      pSym = pSym->pDynSym && (pSym->pDynSym->pSymbol->scope.value & HB_FS_LOCAL) ? pSym->pDynSym->pSymbol : nullptr;
+      pSym = pSym->pDynSym &&
+         ((pSym->pDynSym->pSymbol->scope.value & HB_FS_LOCAL) ||
+           pSym->pDynSym->pSymbol->value.pFunPtr == pSym->value.pFunPtr) ?
+           pSym->pDynSym->pSymbol : nullptr;
    }
 
    return pSym;

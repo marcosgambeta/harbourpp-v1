@@ -981,7 +981,7 @@ static bool hb_clsIsFriendSymbol(PCLASS pClass, PHB_SYMB pSym)
    HB_TRACE(HB_TR_DEBUG, ("hb_clsIsFriendSymbol(%p,%p)", static_cast<void*>(pClass), static_cast<void*>(pSym)));
 #endif
 
-   if( pSym >= pClass->pFriendModule && pSym < pClass->pFriendModule + pClass->uiFriendModule ) {
+   if( pClass->pFriendModule && pSym >= pClass->pFriendModule && pSym < pClass->pFriendModule + pClass->uiFriendModule ) {
       return true;
    }
 

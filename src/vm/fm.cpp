@@ -445,8 +445,9 @@ static void dlmalloc_destroy(void)
 void hb_xinit_thread(void)
 {
 #if defined(HB_FM_DLMT_ALLOC)
+#if defined(hb_stack)
    HB_STACK_TLS_PRELOAD
-
+#endif
    if( hb_stack.allocator == nullptr ) {
       HB_FM_LOCK();
       hb_stack.allocator = static_cast<void*>(hb_mspace_alloc());
@@ -458,7 +459,9 @@ void hb_xinit_thread(void)
 void hb_xexit_thread(void)
 {
 #if defined(HB_FM_DLMT_ALLOC)
+#if defined(hb_stack)
    HB_STACK_TLS_PRELOAD
+#endif
    PHB_MSPACE pm = static_cast<PHB_MSPACE>(hb_stack.allocator);
 
    if( pm ) {
@@ -1383,7 +1386,9 @@ HB_SIZE hb_xquery(int iMode)
          break;
 
       case HB_MEM_STACK_TOP: { /* Harbour extension (Total items currently on the stack) */
+#if defined(hb_stackTopOffset)
          HB_STACK_TLS_PRELOAD
+#endif
          nResult = hb_stackTopOffset();
          break;
       }
@@ -1425,7 +1430,9 @@ HB_BOOL hb_xtraced(void)
 
 HB_FUNC( __FM_ALLOCLIMIT )
 {
-   HB_STACK_TLS_PRELOAD;
+#if defined(hb_retns) || defined(hb_retni)
+   HB_STACK_TLS_PRELOAD
+#endif
    hb_xclean();
 #if defined(HB_FM_DLMT_ALLOC)
    hb_retns(mspace_footprint_limit(hb_mspace()));
