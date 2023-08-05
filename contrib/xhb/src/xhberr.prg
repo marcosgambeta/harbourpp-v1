@@ -212,7 +212,7 @@ STATIC FUNCTION xhb_DefError( oError )
    ? cMessage
 
    ?
-   ? "Error at ...:", ProcName() + "(" + hb_ntos( ProcLine() ) + ") in Module:", ProcFile()
+   ? "Error at ...:", err_ProcName( oError, 3 ) + "(" + hb_ntos( err_ProcLine( oError, 3 ) ) + ") in Module:", err_ModuleName( oError, 3 )
    n := 2
    WHILE ! Empty( ProcName( ++n ) )
       ? "Called from :", ProcName( n ) + ;
@@ -268,7 +268,7 @@ STATIC FUNCTION ErrorMessage( oError )
 
    RETURN cMessage
 
-STATIC FUNCTION LogError( oerr )
+STATIC FUNCTION LogError( oErr )
 
    LOCAL cScreen
    LOCAL cLogFile    := s_cErrorLog       // error log file name
@@ -493,7 +493,7 @@ STATIC FUNCTION LogError( oerr )
       FWriteLine( nHandle, "" )
       FWriteLine( nHandle, "Subsystem Call ....: " + oErr:subsystem() )
       FWriteLine( nHandle, "System Code .......: " + strvalue( oErr:suBcode() ) )
-      FWriteLine( nHandle, "Default Status ....: " + strvalue( oerr:candefault() ) )
+      FWriteLine( nHandle, "Default Status ....: " + strvalue( oErr:candefault() ) )
       FWriteLine( nHandle, "Description .......: " + oErr:description() )
       FWriteLine( nHandle, "Operation .........: " + oErr:operation() )
       FWriteLine( nHandle, "Arguments .........: " + Arguments( oErr ) )
@@ -512,7 +512,7 @@ STATIC FUNCTION LogError( oerr )
       FWriteLine( nHandle, " Trace Through:" )
       FWriteLine( nHandle, "----------------" )
 
-      FWriteLine( nHandle, PadR( ProcName(), 21 ) + " : " + Transform( ProcLine(), "999,999" ) + " in Module: " + ProcFile() )
+      FWriteLine( nHandle, PadR( err_ProcName( oErr, 3 ), 21 ) + " : " + Transform( err_ProcLine( oErr, 3 ), "999,999" ) + " in Module: " + err_ModuleName( oErr, 3 ) )
 
       nCount := 3
       WHILE ! Empty( ProcName( ++nCount ) )
@@ -671,6 +671,7 @@ PROCEDURE __MinimalErrorHandler( oError )
 
    RETURN
 
+#if 0 // TODO: removed in Harbour
 FUNCTION xhb_ErrorNew( cSubSystem, nGenCode, nSubCode, ;
       cOperation, cDescription, aArgs, ;
       cModuleName, cProcName, nProcLine )
@@ -731,3 +732,4 @@ FUNCTION xhb_ErrorNew( cSubSystem, nGenCode, nSubCode, ;
    ENDIF
 
    RETURN oError
+#endif

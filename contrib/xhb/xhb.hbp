@@ -47,6 +47,7 @@ src/xhbctbit.cpp
 src/xhbdate.cpp
 src/xhbenum.cpp
 src/xhberrc.cpp
+src/xhberror.cpp
 src/xhbfs.cpp
 src/xhbfunc.cpp
 src/xhbgt.cpp
