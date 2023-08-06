@@ -117,6 +117,7 @@ C_HEADERS := \
    hbtrace.h \
    hbtrace.hpp \
    hbtypes.h \
+   hbtypes.hpp \
    hbver.h \
    hbver.hpp \
    hbvm.h \
