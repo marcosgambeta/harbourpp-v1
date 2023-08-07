@@ -2401,7 +2401,8 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          }
          break;
       }
-      case HB_GTI_PALETTE:
+      case HB_GTI_PALETTE: {
+         bool fExpose = false;
          if( pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal) ) {
             iVal = hb_itemGetNI(pInfo->pNewVal);
             if( iVal >= 0 && iVal < 16 ) {
@@ -2411,9 +2412,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
                   QRgb rgb = QTC_NUM2RGB(iColor);
                   if( rgb != pQTC->colors[iVal] ) {
                      pQTC->colors[iVal] = rgb;
-                     if( pQTC->qWnd ) {
-                        HB_GTSELF_EXPOSEAREA(pQTC->pGT, 0, 0, pQTC->iRows, pQTC->iCols);
-                     }
+                     fExpose = true;
                   }
                }
             }
@@ -2428,14 +2427,19 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
             if( pInfo->pNewVal && HB_IS_ARRAY(pInfo->pNewVal) && hb_arrayLen(pInfo->pNewVal) == 16 ) {
                for( iVal = 0; iVal < 16; iVal++ ) {
                   int iColor = hb_arrayGetNI(pInfo->pNewVal, iVal + 1);
-                  pQTC->colors[iVal] = QTC_NUM2RGB(iColor);
-               }
-               if( pQTC->qWnd ) {
-                  HB_GTSELF_EXPOSEAREA(pQTC->pGT, 0, 0, pQTC->iRows, pQTC->iCols);
+                  QRgb rgb = QTC_NUM2RGB(iColor);
+                  if( rgb != pQTC->colors[iVal] ) {
+                     pQTC->colors[iVal] = rgb;
+                     fExpose = true;
+                  }
                }
             }
          }
+         if( fExpose && pQTC->qWnd ) {
+            HB_GTSELF_EXPOSEAREA(pQTC->pGT, 0, 0, pQTC->iRows, pQTC->iCols);
+         }
          break;
+      }
 
       case HB_GTI_WINHANDLE:
          pInfo->pResult = hb_itemPutPtr(pInfo->pResult, pQTC->qWnd);

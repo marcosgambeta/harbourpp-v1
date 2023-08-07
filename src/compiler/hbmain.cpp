@@ -1061,13 +1061,22 @@ PHB_HDECLARED hb_compMethodAdd(HB_COMP_DECL, PHB_HCLASS pClass, const char * szM
 {
    PHB_HDECLARED pMethod;
 
-   #if 0
-   printf("\nDeclaring Method: %s of Class: %s Pointer: %li\n", szMethodName, pClass->szName, pClass);
-   #endif
-
    if( HB_COMP_PARAM->iWarnings < 3 ) {
       return nullptr;
    }
+
+   if( !pClass ) {
+      char buffer[80];
+      hb_snprintf(buffer, sizeof(buffer), "Class member '%s' declaration without class definition.\n", szMethodName);
+      hb_compOutErr(HB_COMP_PARAM, buffer);
+      HB_COMP_PARAM->iErrorCount++;
+      HB_COMP_PARAM->fError = true;
+      return nullptr;
+   }
+
+   #if 0
+   printf("\nDeclaring Method: %s of Class: %s Pointer: %li\n", szMethodName, pClass->szName, pClass);
+   #endif
 
    if( (pMethod = hb_compMethodFind(pClass, szMethodName) ) != nullptr ) {
       hb_compGenWarning(HB_COMP_PARAM, hb_comp_szWarnings, 'W', HB_COMP_WARN_DUP_DECLARATION, "method", szMethodName);
@@ -1205,7 +1214,13 @@ void hb_compDeclaredParameterAdd(HB_COMP_DECL, const char * szVarName, PHB_VARTY
             pDeclared->pParamClasses[pDeclared->iParamCount - 1] = hb_compClassFind(HB_COMP_PARAM, pVarType->szFromClass);
          }
       }
-   } else /* Declared Method Parameter */ {
+   } else if( !HB_COMP_PARAM->pLastMethod ) {
+      char buffer[80];
+      hb_snprintf(buffer, sizeof(buffer), "Message parameter '%s' declaration without class/message definition.\n", szVarName);
+      hb_compOutErr(HB_COMP_PARAM, buffer);
+      HB_COMP_PARAM->iErrorCount++;
+      HB_COMP_PARAM->fError = true;
+   } else { /* Declared Method Parameter */
       #if 0
       printf("\nAdding parameter: %s Type: %c In Method: %s Class: %s FROM CLASS: %s\n", szVarName, pVarType->cVarType, HB_COMP_PARAM->pLastMethod->szName, HB_COMP_PARAM->pLastClass->szName, pVarType->szFromClass);
       #endif
