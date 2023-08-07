@@ -96,8 +96,6 @@ Envie sua mensagem para:
 
 marcosgambeta@outlook.com
 
-Questões sobre o projeto serão respondidas **somente por email**.  
-
 ### Mais informações e conteúdo extra
 
 Siga o blog abaixo para se manter informado:
