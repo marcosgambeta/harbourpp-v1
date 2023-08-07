@@ -2591,7 +2591,7 @@ int hb_socketSetNoSigPipe(HB_SOCKET sd, HB_BOOL fNoSigPipe)
 {
 #if defined(SO_NOSIGPIPE)
    int val = fNoSigPipe ? 1 : 0, ret;
-   ret = setsockopt(sd, SOL_SOCKET, SO_NOSIGPIPE, static_cast<const char*>(&val), sizeof(val));
+   ret = setsockopt(sd, SOL_SOCKET, SO_NOSIGPIPE, reinterpret_cast<const char*>(&val), sizeof(val));
    hb_socketSetOsError(ret != -1 ? 0 : HB_SOCK_GETERROR());
    return ret;
 #else
