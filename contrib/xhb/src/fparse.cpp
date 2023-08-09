@@ -71,12 +71,10 @@
 
 static void hb_ParseLine(PHB_ITEM pReturn, const char * szText, int iDelimiter, int * iWord)
 {
-   if( szText )
-   {
+   if( szText ) {
       HB_ISIZ nLen = strlen(szText);
 
-      if( nLen > 0 )
-      {
+      if( nLen > 0 ) {
          PHB_ITEM pTemp      = hb_itemNew(nullptr);
          HB_ISIZ  i          = 0;
          int      word_count = 0;
@@ -84,10 +82,10 @@ static void hb_ParseLine(PHB_ITEM pReturn, const char * szText, int iDelimiter, 
          char * szResult = static_cast<char*>(hb_xgrab(nLen + 1));
 
 #if 0
-         while( nLen )
-         {
-            if( szText[nLen - 1] && !HB_ISSPACE( szText[nLen - 1] ) )
+         while( nLen ) {
+            if( szText[nLen - 1] && !HB_ISSPACE( szText[nLen - 1] ) ) {
                break;
+            }   
 
             nLen--;
          }
@@ -97,118 +95,95 @@ static void hb_ParseLine(PHB_ITEM pReturn, const char * szText, int iDelimiter, 
          nLen = strlen(szText);
 #endif
 
-         while( i < nLen )
-         {
+         while( i < nLen ) {
             HB_ISIZ ui = 0;
 
             hb_xmemset(szResult, ' ', nLen + 1);
 
             /* an '"' found, loop until the next one is found */
-            if( szText[i] == '"' )
-            {
+            if( szText[i] == '"' ) {
                /* an '"' after '"' ? */
-               if( szText[i + 1] != '"' )
+               if( szText[i + 1] != '"' ) {
                   szResult[ui] = szText[i + 1];
-               else
+               } else {
                   szResult[ui] = '\0';
+               }   
 
                ++i;
 
-               while( ++i < nLen )
-               {
-                  if( szText[i - 1] == '"' )
-                  {
+               while( ++i < nLen ) {
+                  if( szText[i - 1] == '"' ) {
                      szResult[ui + 1] = '\0';
                      break;
-                  }
-                  else
-                  {
-                     if( szText[i] == '"' )
+                  } else {
+                     if( szText[i] == '"' ) {
                         szResult[ui + 1] = '\0';
-                     else
+                     } else {
                         szResult[++ui] = szText[i];
+                     }   
                   }
                }
                word_count++;
                hb_arrayAddForward(pReturn, hb_itemPutC(pTemp, szResult));
-            }
             /* delimiter found */
-            else if( szText[i] == iDelimiter )
-            {
+            } else if( szText[i] == iDelimiter ) {
                /* first delimiter found but no word yet */
-               if( word_count == 0 )
-               {
+               if( word_count == 0 ) {
                   /* add an empty string */
                   szResult[ui] = '\0';
-               }
-               else
-               {
+               } else {
                   /* we have already have the first word */
                   /* check next character */
-                  if( szText[i - 1] == iDelimiter )
-                  {
+                  if( szText[i - 1] == iDelimiter ) {
                      /* delimiter after delimiter */
                      /* just add an empty string */
                      szResult[ui] = '\0';
-                  }
-                  else
-                  {
+                  } else {
                      /* ",,0" */
                      /* it is not a delimiter */
                      /* move to next character */
                      ++i;
                      szResult[ui] = szText[i];
 
-                     while( ++i < nLen )
-                     {
-                        if( szText[i] == iDelimiter )
+                     while( ++i < nLen ) {
+                        if( szText[i] == iDelimiter ) {
                            break;
-                        else
+                        } else {
                            szResult[++ui] = szText[i];
+                        }   
                      }
                   }
                }
                word_count++;
                szResult[ui + 1] = '\0';
                hb_arrayAddForward(pReturn, hb_itemPutC(pTemp, szResult));
-            }
-            else
-            {
+            } else {
                szResult[ui] = szText[i];
 
-               while( ++i < nLen )
-               {
-                  if( szText[i] == iDelimiter )
-                  {
+               while( ++i < nLen ) {
+                  if( szText[i] == iDelimiter ) {
                      szResult[ui + 1] = '\0';
                      break;
-                  }
-                  else if( szText[i] == '"' )
-                  {
+                  } else if( szText[i] == '"' ) {
                      szResult[ui] = szText[i + 1];
                      ++i;
 
-                     while( ++i < nLen )
-                     {
-                        if( szText[i - 1] == '"' )
-                        {
+                     while( ++i < nLen ) {
+                        if( szText[i - 1] == '"' ) {
                            szResult[ui + 1] = '\0';
                            break;
-                        }
-                        else
-                        {
-                           if( szText[i] == '"' )
-                           {
+                        } else {
+                           if( szText[i] == '"' ) {
                               szResult[ui + 1] = '\0';
                               break;
-                           }
-                           else
+                           } else {
                               szResult[++ui] = szText[i];
+                           }   
                         }
                      }
-                  }
-                  else
+                  } else {
                      szResult[++ui] = szText[i];
+                  }   
                }
                word_count++;
                szResult[ui + 1] = '\0';
@@ -220,8 +195,7 @@ static void hb_ParseLine(PHB_ITEM pReturn, const char * szText, int iDelimiter, 
 
          /* last character in passed string is a delimiter */
          /* just add an empty string */
-         if( szText[nLen - 1] == iDelimiter )
-         {
+         if( szText[nLen - 1] == iDelimiter ) {
             word_count++;
             hb_arrayAddForward(pReturn, hb_itemPutC(pTemp, nullptr));
          }
@@ -248,27 +222,24 @@ static char ** hb_tokensplit( const char * string, HB_BYTE delimiter, int iCharC
 
    bufptr = buffer;
 
-   while( *string )
-   {
-      if( static_cast<HB_BYTE>(*string) == delimiter )
-      {
-         while( static_cast<HB_BYTE>(*string) == delimiter )
-         {
+   while( *string ) {
+      if( static_cast<HB_BYTE>(*string) == delimiter ) {
+         while( static_cast<HB_BYTE>(*string) == delimiter ) {
             string++;
          }
          
-         if( bufptr > buffer )
-         {
+         if( bufptr > buffer ) {
             word_count++;
             last_char = *bufptr++ = '\0';
          }
-      }
-      else
+      } else {
          last_char = *bufptr++ = *string++;
+      }   
    }
 
-   if( last_char > 0 )
+   if( last_char > 0 ) {
       word_count++;
+   }   
 
    *bufptr = '\0';
 
@@ -278,8 +249,7 @@ static char ** hb_tokensplit( const char * string, HB_BYTE delimiter, int iCharC
 
    bufptr = buffer;
 
-   for( word_nbr = 0; word_nbr < word_count; word_nbr++ )
-   {
+   for( word_nbr = 0; word_nbr < word_count; word_nbr++ ) {
       token_list[word_nbr] = bufptr;
       bufptr += strlen(bufptr) + 1;
    }
@@ -297,24 +267,20 @@ static HB_BOOL file_read( FILE * stream, char * string, int * iCharCount )
 
    memset(string, ' ', MAX_READ);
 
-   for( ;; )
-   {
+   for( ;; ) {
       int ch = fgetc( stream );
 
-      if( ch == '\n' || ch == EOF || ch == 26 )
-      {
+      if( ch == '\n' || ch == EOF || ch == 26 ) {
          *iCharCount    = cnbr;
          string[cnbr] = '\0';
          return ch == '\n' || cnbr;
-      }
-      else
-      {
-         if( cnbr < MAX_READ && ch != '\r' )
+      } else {
+         if( cnbr < MAX_READ && ch != '\r' ) {
             string[cnbr++] = static_cast<char>(ch);
+         }   
       }
 
-      if( cnbr >= MAX_READ )
-      {
+      if( cnbr >= MAX_READ ) {
          *iCharCount        = cnbr;
          string[MAX_READ] = '\0';
          return true;
@@ -334,14 +300,12 @@ HB_FUNC( FPARSE )
    HB_BYTE  nByte;
 
    /* file parameter correctly passed */
-   if( !pSrc )
-   {
+   if( !pSrc ) {
       hb_reta(0);
       return;
    }
 
-   if( hb_itemGetCLen(pSrc) == 0 )
-   {
+   if( hb_itemGetCLen(pSrc) == 0 ) {
       hb_reta(0);
       return;
    }
@@ -350,8 +314,7 @@ HB_FUNC( FPARSE )
    inFile = hb_fopen( hb_itemGetCPtr(pSrc), "r" );
 
    /* return empty array on failure */
-   if( !inFile )
-   {
+   if( !inFile ) {
       hb_reta(0);
       return;
    }
@@ -367,8 +330,7 @@ HB_FUNC( FPARSE )
    string = static_cast<char*>(hb_xgrab(MAX_READ + 1));
 
    /* read the file until EOF */
-   while( file_read( inFile, string, &iCharCount ) )
-   {
+   while( file_read( inFile, string, &iCharCount ) ) {
       /* parse the read line */
       int iWord = 0;
 
@@ -378,8 +340,9 @@ HB_FUNC( FPARSE )
       hb_arrayNew(pItem, iWord);
 
       /* add parsed text to array */
-      for( iToken = 0; tokens[iToken]; iToken++ )
+      for( iToken = 0; tokens[iToken]; iToken++ ) {
          hb_arraySetC(pItem, iToken + 1, tokens[iToken]);
+      }
 
       /* add array containing parsed text to main array */
       hb_arrayAddForward( pArray, pItem );
@@ -411,14 +374,12 @@ HB_FUNC( FPARSEEX )
    HB_BYTE  nByte;
 
    /* file parameter correctly passed */
-   if( !pSrc )
-   {
+   if( !pSrc ) {
       hb_reta(0);
       return;
    }
 
-   if( hb_itemGetCLen(pSrc) == 0 )
-   {
+   if( hb_itemGetCLen(pSrc) == 0 ) {
       hb_reta(0);
       return;
    }
@@ -427,8 +388,7 @@ HB_FUNC( FPARSEEX )
    inFile = hb_fopen( hb_itemGetCPtr(pSrc), "r" );
 
    /* return empty array on failure */
-   if( !inFile )
-   {
+   if( !inFile ) {
       hb_reta(0);
       return;
    }
@@ -444,8 +404,7 @@ HB_FUNC( FPARSEEX )
    string = static_cast<char*>(hb_xgrab(MAX_READ + 1));
 
    /* read the file until EOF */
-   while( file_read( inFile, string, &iCharCount ) )
-   {
+   while( file_read( inFile, string, &iCharCount ) ) {
       /* parse the read line */
       int iWord = 0;
       hb_arrayNew(pSubArray, 0);
@@ -475,14 +434,12 @@ HB_FUNC( FWORDCOUNT )
    HB_SIZE  nWordCount = 0;
 
    /* file parameter correctly passed */
-   if( !pSrc )
-   {
+   if( !pSrc ) {
       hb_retns(0);
       return;
    }
 
-   if( hb_itemGetCLen(pSrc) == 0 )
-   {
+   if( hb_itemGetCLen(pSrc) == 0 ) {
       hb_retns(0);
       return;
    }
@@ -491,8 +448,7 @@ HB_FUNC( FWORDCOUNT )
    inFile = hb_fopen( hb_itemGetCPtr(pSrc), "r" );
 
    /* return 0 on failure */
-   if( !inFile )
-   {
+   if( !inFile ) {
       hb_retns(0);
       return;
    }
@@ -501,8 +457,7 @@ HB_FUNC( FWORDCOUNT )
    string = static_cast<char*>(hb_xgrab(MAX_READ + 1));
 
    /* read the file until EOF */
-   while( file_read( inFile, string, &iCharCount ) )
-   {
+   while( file_read( inFile, string, &iCharCount ) ) {
       int iWord = 0;
 
       char ** tokens = hb_tokensplit( string, nByte, iCharCount, &iWord );
@@ -531,14 +486,12 @@ HB_FUNC( FLINECOUNT )
    int      ch;
 
    /* file parameter correctly passed */
-   if( !pSrc )
-   {
+   if( !pSrc ) {
       hb_retns(0);
       return;
    }
 
-   if( hb_itemGetCLen(pSrc) == 0 )
-   {
+   if( hb_itemGetCLen(pSrc) == 0 ) {
       hb_retns(0);
       return;
    }
@@ -547,17 +500,16 @@ HB_FUNC( FLINECOUNT )
    inFile = hb_fopen( hb_itemGetCPtr(pSrc), "r" );
 
    /* return 0 on failure */
-   if( !inFile )
-   {
+   if( !inFile ) {
       hb_retns(0);
       return;
    }
 
    /* read the file until EOF */
-   while( ( ch = fgetc( inFile ) ) != EOF )
-   {
-      if( ch == '\n' )
+   while( ( ch = fgetc( inFile ) ) != EOF ) {
+      if( ch == '\n' ) {
          nLineCount++;
+      }   
    }
 
    /* return number of lines */
@@ -575,14 +527,12 @@ HB_FUNC( FCHARCOUNT )
    int      ch;
 
    /* file parameter correctly passed */
-   if( !pSrc )
-   {
+   if( !pSrc ) {
       hb_retns(0);
       return;
    }
 
-   if( hb_itemGetCLen(pSrc) == 0 )
-   {
+   if( hb_itemGetCLen(pSrc) == 0 ) {
       hb_retns(0);
       return;
    }
@@ -591,17 +541,14 @@ HB_FUNC( FCHARCOUNT )
    inFile = hb_fopen( hb_itemGetCPtr(pSrc), "r" );
 
    /* return 0 on failure */
-   if( !inFile )
-   {
+   if( !inFile ) {
       hb_retns(0);
       return;
    }
 
    /* read the file until EOF */
-   while( ( ch = fgetc( inFile ) ) != EOF )
-   {
-      switch( ch )
-      {
+   while( ( ch = fgetc( inFile ) ) != EOF ) {
+      switch( ch ) {
          case '\n':
          case '\r':
          case ' ':
@@ -628,8 +575,7 @@ HB_FUNC( FPARSELINE )
    pArray = hb_itemArrayNew(0);
    szText = hb_parc(1);
 
-   if( szText )
-   {
+   if( szText ) {
       const char * szDelim = hb_parc(2);
       int          iWords  = 0;
       hb_ParseLine( pArray, szText, szDelim ? static_cast<unsigned char>(*szDelim) : ',', &iWords);

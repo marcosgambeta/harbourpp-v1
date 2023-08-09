@@ -57,13 +57,12 @@ HB_FUNC( ISDIRECTORY )
    {
       PHB_FFIND ffind = hb_fsFindFirst( hb_parcx(1), HB_FA_DIRECTORY );
 
-      if( ffind )
-      {
+      if( ffind ) {
          bRetVal = ( ffind->attr & HB_FA_DIRECTORY );
          hb_fsFindClose( ffind );
-      }
-      else
+      } else {
          bRetVal = false;
+      }
    }
 #endif
 

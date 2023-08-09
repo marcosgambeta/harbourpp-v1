@@ -64,18 +64,15 @@ static HB_ULONG hb_TimeStrToSec(const char * pszTime)
 
    nLen = strlen(pszTime);
 
-   if( nLen >= 1 )
-   {
+   if( nLen >= 1 ) {
       ulTime += static_cast<HB_ULONG>(hb_strVal(pszTime, nLen)) * 3600;
    }
 
-   if( nLen >= 4 )
-   {
+   if( nLen >= 4 ) {
       ulTime += static_cast<HB_ULONG>(hb_strVal(pszTime + 3, nLen - 3)) * 60;
    }
 
-   if( nLen >= 7 )
-   {
+   if( nLen >= 7 ) {
       ulTime += static_cast<HB_ULONG>(hb_strVal(pszTime + 6, nLen - 6));
    }
 
@@ -91,12 +88,9 @@ HB_FUNC( TIMEOFDAY )
 {
    char szResult[9];
 
-   if( hb_pcount() == 0 )
-   {
+   if( hb_pcount() == 0 ) {
       hb_dateTimeStr(szResult);
-   }
-   else
-   {
+   } else {
       int iSeconds = hb_parni(1);
       iSeconds %= 3600 * 24;
       hb_snprintf(szResult, sizeof(szResult), "%02d:%02d:%02d", iSeconds / 3600, (iSeconds % 3600) / 60, iSeconds % 60);
@@ -116,12 +110,9 @@ HB_FUNC( HMS2D )
 
 HB_FUNC( TTOD )
 {
-   if( HB_ISDATE(1) )
-   {
+   if( HB_ISDATE(1) ) {
       hb_retdl(hb_pardl(1));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1120, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

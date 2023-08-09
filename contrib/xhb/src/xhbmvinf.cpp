@@ -53,13 +53,11 @@ HB_FUNC( __MVSYMBOLINFO )
    PHB_ITEM pArray;
 
    pArray = hb_memvarSaveInArray( HB_MV_PUBLIC | HB_MV_PRIVATE, true );
-   if( pArray )
-   {
+   if( pArray ) {
       HB_SIZE nLen = hb_arrayLen(pArray), n;
       PHB_ITEM pValue = hb_itemNew(nullptr);
 
-      for( n = 1; n <= nLen; ++n )
-      {
+      for( n = 1; n <= nLen; ++n ) {
          PHB_ITEM pItem = hb_arrayGetItemPtr(pArray, n);
          PHB_SYMB pSym  = hb_arrayGetSymbol(pItem, 1);
          hb_itemCopyFromRef( pValue, hb_arrayGetItemPtr(pItem, 2) );
@@ -68,7 +66,7 @@ HB_FUNC( __MVSYMBOLINFO )
       }
       hb_itemRelease(pValue);
       hb_itemReturnRelease(pArray);
-   }
-   else
+   } else {
       hb_reta(0);
+   }
 }

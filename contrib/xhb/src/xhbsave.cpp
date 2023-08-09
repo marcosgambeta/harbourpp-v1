@@ -47,41 +47,36 @@
 #include "hbapi.hpp"
 #include "hbapigt.hpp"
 
-static void hb_getScreenRange( int * piMin, int * piMax,
-                               HB_BOOL fNoCheck, HB_BOOL fVertical )
+static void hb_getScreenRange( int * piMin, int * piMax, HB_BOOL fNoCheck, HB_BOOL fVertical )
 {
    int iFrom, iTo, iMax;
 
-   if( fVertical )
-   {
+   if( fVertical ) {
       iMax  = hb_gtMaxRow();
       iFrom = hb_parni(1);
       iTo   = hb_parnidef(3, iMax);
-   }
-   else
-   {
+   } else {
       iMax  = hb_gtMaxCol();
       iFrom = hb_parni(2);
       iTo   = hb_parnidef(4, iMax);
    }
 
-   if( iFrom < 0 )
+   if( iFrom < 0 ) {
       iFrom = 0;
-   else if( iFrom > iMax && !fNoCheck )
+   } else if( iFrom > iMax && !fNoCheck ) {
       iFrom = iMax;
+   }
 
-   if( iTo < 0 )
+   if( iTo < 0 ) {
       iTo = 0;
-   else if( iTo > iMax && !fNoCheck )
+   } else if( iTo > iMax && !fNoCheck ) {
       iTo = iMax;
+   }
 
-   if( iFrom > iTo )
-   {
+   if( iFrom > iTo ) {
       *piMin = iTo;
       *piMax = iFrom;
-   }
-   else
-   {
+   } else {
       *piMin = iFrom;
       *piMax = iTo;
    }
@@ -106,8 +101,7 @@ HB_FUNC( XHB_SAVESCREEN )
 
 HB_FUNC( XHB_RESTSCREEN )
 {
-   if( HB_ISCHAR(5) )
-   {
+   if( HB_ISCHAR(5) ) {
       int     iTop, iLeft, iBottom, iRight;
       HB_BOOL fNoCheck = hb_parl(6);
 

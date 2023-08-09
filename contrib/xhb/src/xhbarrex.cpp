@@ -53,8 +53,7 @@ HB_FUNC( ASIZEALLOC )
    PHB_ITEM pArray    = hb_param(1, Harbour::Item::ARRAY);
    PHB_ITEM pPreAlloc = hb_param(2, Harbour::Item::NUMERIC);
 
-   if( pArray && pPreAlloc )
-   {
+   if( pArray && pPreAlloc ) {
       /* do nothing Harbour uses dynamically updated preallocation size */
       hb_itemReturn(pArray);
    }
@@ -65,8 +64,7 @@ HB_FUNC( ALENALLOC )
 {
    PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
 
-   if( pArray )
-   {
+   if( pArray ) {
       /* Harbour uses dynamically updated preallocation size
        * let's approximate some value
        */

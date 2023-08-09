@@ -56,22 +56,22 @@ HB_FUNC( XHB_RTRIM )
 {
    PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText )
-   {
+   if( pText ) {
       HB_SIZE      nLen, nSrc;
       const char * szText = hb_itemGetCPtr(pText);
 
       nSrc = hb_itemGetCLen(pText);
       nLen = hb_strRTrimLen( szText, nSrc, hb_parl(2) );
 
-      if( nLen == nSrc )
+      if( nLen == nSrc ) {
          hb_itemReturn(pText);
-      else
+      } else {
          hb_retclen(szText, nLen);
-   }
-   else
+      }
+   } else {
       /* NOTE: "TRIM" is correct here [vszakats] */
       hb_errRT_BASE_SubstR(EG_ARG, 1100, nullptr, "TRIM", HB_ERR_ARGS_BASEPARAMS);
+   }
 }
 
 /* synonym for xhb_RTrim() */
@@ -85,8 +85,7 @@ HB_FUNC( XHB_ALLTRIM )
 {
    PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText )
-   {
+   if( pText ) {
       HB_SIZE      nLen, nSrc;
       const char * szText = hb_itemGetCPtr(pText);
 
@@ -94,12 +93,12 @@ HB_FUNC( XHB_ALLTRIM )
       nLen   = hb_strRTrimLen( szText, nSrc, hb_parl(2) );
       szText = hb_strLTrim( szText, &nLen );
 
-      if( nLen == nSrc )
+      if( nLen == nSrc ) {
          hb_itemReturn(pText);
-      else
+      } else {
          hb_retclen(szText, nLen);
-   }
-   else
+      }
+   } else {
 #ifdef HB_COMPAT_C53
       /* NOTE: This runtime error appeared in CA-Cl*pper 5.3 [vszakats] */
 #ifdef HB_CLP_STRICT
@@ -110,4 +109,5 @@ HB_FUNC( XHB_ALLTRIM )
 #else
       hb_retc_null();
 #endif
+   }
 }

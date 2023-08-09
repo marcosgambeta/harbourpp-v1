@@ -69,15 +69,14 @@ static char * hb_fsReadLine( HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const 
    nOffset  = 0;
    nSize    = *plBuffLen;
 
-   if( *plBuffLen < 10 )
+   if( *plBuffLen < 10 ) {
       *plBuffLen = READING_BLOCK;
+   }
 
    pBuff = static_cast<char*>(hb_xgrab(*plBuffLen + 1));
 
-   do
-   {
-      if( nTries > 0 )
-      {
+   do {
+      if( nTries > 0 ) {
          /* pBuff can be enlarged to hold the line as needed.. */
          nSize    = ( *plBuffLen * ( nTries + 1 ) ) + 1;
          pBuff    = static_cast<char*>(hb_xrealloc(pBuff, nSize));
@@ -88,37 +87,32 @@ static char * hb_fsReadLine( HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const 
       nRead = hb_fsReadLarge(hFileHandle, pBuff + nOffset, nSize - nOffset);
 
       /* scan the read buffer */
-      if( nRead > 0 )
-      {
-         for( nPos = 0; nPos < nRead; nPos++ )
-         {
-            for( nPosTerm = 0; nPosTerm < nTerms; nPosTerm++ )
-            {
+      if( nRead > 0 ) {
+         for( nPos = 0; nPos < nRead; nPos++ ) {
+            for( nPosTerm = 0; nPosTerm < nTerms; nPosTerm++ ) {
                /* Compare with the LAST terminator byte */
-               if( pBuff[nOffset + nPos] == pTerm[nPosTerm][pnTermSizes[nPosTerm] - 1] && ( pnTermSizes[nPosTerm] - 1 ) <= ( nPos + nOffset ) )
-               {
+               if( pBuff[nOffset + nPos] == pTerm[nPosTerm][pnTermSizes[nPosTerm] - 1] && ( pnTermSizes[nPosTerm] - 1 ) <= ( nPos + nOffset ) ) {
                   *pbFound = HB_TRUE;
 
-                  for( nPosition = 0; nPosition < ( pnTermSizes[nPosTerm] - 1 ); nPosition++ )
-                  {
-                     if( pTerm[nPosTerm][nPosition] != pBuff[nOffset + ( nPos - pnTermSizes[nPosTerm] ) + nPosition + 1] )
-                     {
+                  for( nPosition = 0; nPosition < ( pnTermSizes[nPosTerm] - 1 ); nPosition++ ) {
+                     if( pTerm[nPosTerm][nPosition] != pBuff[nOffset + ( nPos - pnTermSizes[nPosTerm] ) + nPosition + 1] ) {
                         *pbFound = HB_FALSE;
                         break;
                      }
                   }
 
-                  if( *pbFound )
+                  if( *pbFound ) {
                      break;
+                  }
                }
             }
 
-            if( *pbFound )
+            if( *pbFound ) {
                break;
+            }
          }
 
-         if( *pbFound )
-         {
+         if( *pbFound ) {
             *plBuffLen = nOffset + nPos - pnTermSizes[nPosTerm] + 1;
 
             pBuff[*plBuffLen] = '\0';
@@ -128,18 +122,12 @@ static char * hb_fsReadLine( HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const 
 
             return pBuff;
          }
-      }
-      else
-      {
-         if( !*pbFound )
-         {
-            if( nTries == 0 )
-            {
+      } else {
+         if( !*pbFound ) {
+            if( nTries == 0 ) {
                pBuff[0] = '\0';
                *plBuffLen = 0;
-            }
-            else
-            {
+            } else {
                pBuff[nOffset + nRead] = '\0';
                *plBuffLen = nOffset + nRead;
             }
@@ -149,8 +137,7 @@ static char * hb_fsReadLine( HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const 
       }
 
       nTries++;
-   }
-   while( !*pbFound && nRead > 0 );
+   } while( !*pbFound && nRead > 0 );
 
    return pBuff;
 }
@@ -167,21 +154,17 @@ HB_FUNC( HB_FREADLINE )
    HB_ISIZ       i, nTerms;
    HB_BOOL       bFound, bEOF;
 
-   if( (!HB_ISBYREF(2)) || (!HB_ISNUM(1)) )
-   {
+   if( (!HB_ISBYREF(2)) || (!HB_ISNUM(1)) ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 4, hb_paramError(1), hb_paramError(2), hb_paramError(3), hb_paramError(4));
       return;
    }
 
-   if( HB_ISARRAY(3) || HB_ISCHAR(3) )
-   {
-      if( HB_ISARRAY(3) )
-      {
+   if( HB_ISARRAY(3) || HB_ISCHAR(3) ) {
+      if( HB_ISARRAY(3) ) {
          pTerm1 = hb_param(3, Harbour::Item::ARRAY);
          nTerms = hb_arrayLen(pTerm1);
 
-         if( nTerms <= 0 )
-         {
+         if( nTerms <= 0 ) {
             hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 4, hb_paramError(1), hb_paramError(2), hb_paramError(3), hb_paramError(4));
             return;
          }
@@ -189,14 +172,11 @@ HB_FUNC( HB_FREADLINE )
          Term        = static_cast<const char**>(hb_xgrab(sizeof(char*) * nTerms));
          pnTermSizes = static_cast<HB_ISIZ*>(hb_xgrab(sizeof(HB_ISIZ) * nTerms));
 
-         for( i = 0; i < nTerms; i++ )
-         {
+         for( i = 0; i < nTerms; i++ ) {
             Term[i]        = hb_arrayGetCPtr(pTerm1, i + 1);
             pnTermSizes[i] = hb_arrayGetCLen(pTerm1, i + 1);
          }
-      }
-      else
-      {
+      } else {
          pTerm1           = hb_param(3, Harbour::Item::STRING);
          Term             = static_cast<const char**>(hb_xgrab(sizeof(char*)));
          pnTermSizes      = static_cast<HB_ISIZ*>(hb_xgrab(sizeof(HB_ISIZ)));
@@ -204,9 +184,7 @@ HB_FUNC( HB_FREADLINE )
          pnTermSizes[0]   = hb_itemGetCLen(pTerm1);
          nTerms           = 1;
       }
-   }
-   else
-   {
+   } else {
       Term             = static_cast<const char**>(hb_xgrab(sizeof(char*)));
       pnTermSizes      = static_cast<HB_ISIZ*>(hb_xgrab(sizeof(HB_ISIZ)));
       Term[0]          = "\r\n";    /* Should be preplaced with the default EOL sequence */
@@ -214,13 +192,15 @@ HB_FUNC( HB_FREADLINE )
       pnTermSizes[0]   = 2;
    }
 
-   if( nSize == 0 )
+   if( nSize == 0 ) {
       nSize = READING_BLOCK;
+   }   
 
    pBuffer = hb_fsReadLine( hFileHandle, &nSize, Term, pnTermSizes, nTerms, &bFound, &bEOF );
 
-   if( !hb_storclen_buffer( pBuffer, nSize, 2 ) )
+   if( !hb_storclen_buffer( pBuffer, nSize, 2 ) ) {
       hb_xfree(pBuffer);
+   }
    hb_retns(bEOF ? -1 : 0);
    hb_xfree(static_cast<void*>(Term));
    hb_xfree(pnTermSizes);

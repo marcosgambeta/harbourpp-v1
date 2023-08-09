@@ -63,17 +63,14 @@ static char * hb_strescape( const char * szInput, HB_ISIZ nLen, const char * cDe
 
    szReturn = szEscape = static_cast<char*>(hb_xgrab(nLen * 2 + 4));
 
-   while( nLen && HB_ISSPACE( szInput[nLen - 1] ) )
-   {
+   while( nLen && HB_ISSPACE( szInput[nLen - 1] ) ) {
       nLen--;
    }
    
    szChr = szInput;
 
-   while( *szChr && nCnt++ < nLen )
-   {
-      if( *szChr == *cDelim )
-      {
+   while( *szChr && nCnt++ < nLen ) {
+      if( *szChr == *cDelim ) {
          *szEscape++ = '\\';
       }
 
@@ -87,17 +84,14 @@ static char * hb_strescape( const char * szInput, HB_ISIZ nLen, const char * cDe
 /* Export field values to text file */
 static HB_BOOL hb_ExportVar(HB_FHANDLE handle, PHB_ITEM pValue, const char * cDelim, PHB_CODEPAGE cdp)
 {
-   switch( hb_itemType( pValue ) )
-   {
+   switch( hb_itemType( pValue ) ) {
       /* a "C" field */
-      case Harbour::Item::STRING:
-      {
+      case Harbour::Item::STRING: {
          char * szStrEsc;
          char * szString;
 
          szStrEsc = hb_strescape(hb_itemGetCPtr(pValue), hb_itemGetCLen(pValue), cDelim);
-         if( cdp )
-         {
+         if( cdp ) {
             hb_cdpnDupLen(szStrEsc, strlen(szStrEsc), hb_vmCDP(), cdp);
          }
          
@@ -112,8 +106,7 @@ static HB_BOOL hb_ExportVar(HB_FHANDLE handle, PHB_ITEM pValue, const char * cDe
          break;
       }
       /* a "D" field */
-      case Harbour::Item::DATE:
-      {
+      case Harbour::Item::DATE: {
          char * szDate = static_cast<char*>(hb_xgrab(9));
 
          hb_itemGetDS(pValue, szDate);
@@ -128,12 +121,10 @@ static HB_BOOL hb_ExportVar(HB_FHANDLE handle, PHB_ITEM pValue, const char * cDe
       /* an "N" field */
       case Harbour::Item::INTEGER:
       case Harbour::Item::LONG:
-      case Harbour::Item::DOUBLE:
-      {
+      case Harbour::Item::DOUBLE: {
          char * szResult = hb_itemStr(pValue, nullptr, nullptr);
 
-         if( szResult )
-         {
+         if( szResult ) {
             HB_SIZE      nLen      = strlen(szResult);
             const char * szTrimmed = hb_strLTrim(szResult, &nLen);
 
@@ -177,64 +168,51 @@ HB_FUNC( DBF2TEXT )
 
    HB_BOOL bNoFieldPassed = (pFields == nullptr || hb_arrayLen(pFields) == 0);
 
-   if( !pArea )
-   {
+   if( !pArea ) {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
       return;
    }
 
-   if( !handle )
-   {
+   if( !handle ) {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_EVAL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       return;
    }
 
-   if( cdp && cdp == hb_vmCDP() )
-   {
+   if( cdp && cdp == hb_vmCDP() ) {
       cdp = nullptr;
    }
    
    pTmp = hb_itemNew(nullptr);
 
-   if( !cDelim )
-   {
+   if( !cDelim ) {
       cDelim = "\"";
    }
 
-   if( cSep )
-   {
+   if( cSep ) {
       nSepLen = hb_parclen(6);
-   }
-   else
-   {
+   } else {
       cSep    = ",";
       nSepLen = 1;
    }
 
    SELF_FIELDCOUNT(pArea, &uiFields);
 
-   while( ( nCount == -1 || nCount > 0 ) && ( !pWhile || hb_itemGetL(hb_vmEvalBlock(pWhile)) ) )
-   {
+   while( ( nCount == -1 || nCount > 0 ) && ( !pWhile || hb_itemGetL(hb_vmEvalBlock(pWhile)) ) ) {
       /* WHILE !Bof() .AND. !Eof() */
       SELF_EOF(pArea, &bEof);
       SELF_BOF(pArea, &bBof);
 
-      if( bEof || bBof )
-      {
+      if( bEof || bBof ) {
          break;
       }
       
       /* For condition is met */
       /* if For is nullptr, hb__Eval returns true */
-      if( !pFor || hb_itemGetL(hb_vmEvalBlock(pFor)) )
-      {
+      if( !pFor || hb_itemGetL(hb_vmEvalBlock(pFor)) ) {
          /* User does not request fields, copy all fields */
-         if( bNoFieldPassed )
-         {
-            for( ui = 1; ui <= uiFields; ui++ )
-            {
-               if( bWriteSep )
-               {
+         if( bNoFieldPassed ) {
+            for( ui = 1; ui <= uiFields; ui++ ) {
+               if( bWriteSep ) {
                   hb_fsWriteLarge(handle, cSep, nSepLen);
                }
                
@@ -242,24 +220,18 @@ HB_FUNC( DBF2TEXT )
                bWriteSep = hb_ExportVar(handle, pTmp, cDelim, cdp);
                hb_itemClear(pTmp);
             }
-         }
          /* Only requested fields are exported here */
-         else
-         {
+         } else {
             HB_USHORT uiFieldCopy = static_cast<HB_USHORT>(hb_arrayLen(pFields));
             HB_USHORT uiItter;
 
-            for( uiItter = 1; uiItter <= uiFieldCopy; uiItter++ )
-            {
+            for( uiItter = 1; uiItter <= uiFieldCopy; uiItter++ ) {
                const char * szFieldName = hb_arrayGetCPtr(pFields, uiItter);
-               if( szFieldName )
-               {
+               if( szFieldName ) {
                   int iPos = hb_rddFieldIndex(pArea, szFieldName);
 
-                  if( iPos )
-                  {
-                     if( bWriteSep )
-                     {
+                  if( iPos ) {
+                     if( bWriteSep ) {
                         hb_fsWriteLarge(handle, cSep, nSepLen);
                      }
 
@@ -274,8 +246,7 @@ HB_FUNC( DBF2TEXT )
          bWriteSep = false;
       }
 
-      if( nCount != -1 )
-      {
+      if( nCount != -1 ) {
          nCount--;
       }
 
@@ -284,8 +255,7 @@ HB_FUNC( DBF2TEXT )
    }
 
    /* Writing EOF */
-   if( hb_setGetEOF() )
-   {
+   if( hb_setGetEOF() ) {
       hb_fsWriteLarge(handle, "\032", 1);
    }
    hb_itemRelease(pTmp);

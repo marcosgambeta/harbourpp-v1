@@ -65,24 +65,26 @@ HB_FUNC( HB_POINTER2STRING )
    PHB_ITEM pPointer = hb_param(1, Harbour::Item::ANY);
    PHB_ITEM pLen     = hb_param(2, Harbour::Item::NUMERIC);
 
-   if( HB_IS_POINTER(pPointer) && pLen )
+   if( HB_IS_POINTER(pPointer) && pLen ) {
       hb_retclen_const( static_cast<char*>(hb_itemGetPtr(pPointer)), hb_itemGetNS( pLen ) );
-   else if( HB_IS_INTEGER(pPointer) && pLen )
+   } else if( HB_IS_INTEGER(pPointer) && pLen ) {
       hb_retclen_const( static_cast<char*>(hb_itemGetNI(pPointer)), hb_itemGetNS( pLen ) );
-   else if( HB_IS_LONG(pPointer) && pLen )
+   } else if( HB_IS_LONG(pPointer) && pLen ) {
       hb_retclen_const( static_cast<char*>(hb_itemGetNL(pPointer)), hb_itemGetNS( pLen ) );
-   else
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, 2, hb_paramError(1), hb_paramError(2));
+   }   
 }
 
 HB_FUNC( HB_STRING2POINTER )
 {
    PHB_ITEM pString = hb_param(1, Harbour::Item::STRING);
 
-   if( pString )
+   if( pString ) {
       hb_retptr(static_cast<void*>(hb_itemGetCPtr(pString)));
-   else
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError(1));
+   }   
 }
 
 #endif
@@ -108,33 +110,25 @@ HB_FUNC( HB_VMMODE )
 HB_FUNC( XHB__KEYBOARD )
 {
    /* Clear the typeahead buffer without reallocating the keyboard buffer */
-   if( !hb_parl(2) )
+   if( !hb_parl(2) ) {
       hb_inkeyReset();
+   }
 
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       hb_inkeyPut(hb_parni(1));
-   }
-   else if( HB_ISCHAR(1) )
-   {
+   } else if( HB_ISCHAR(1) ) {
       hb_inkeySetText( hb_parc(1), hb_parclen(1), false );
-   }
-   else if( HB_ISARRAY(1) )
-   {
+   } else if( HB_ISARRAY(1) ) {
       PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
       HB_SIZE  nIndex;
       HB_SIZE  nElements = hb_arrayLen(pArray);
 
-      for( nIndex = 1; nIndex <= nElements; nIndex++ )
-      {
+      for( nIndex = 1; nIndex <= nElements; nIndex++ ) {
          PHB_ITEM pItem = hb_arrayGetItemPtr(pArray, nIndex);
 
-         if( HB_IS_NUMBER(pItem) )
-         {
+         if( HB_IS_NUMBER(pItem) ) {
             hb_inkeyPut(hb_itemGetNI(pItem));
-         }
-         else if( HB_IS_STRING(pItem) )
-         {
+         } else if( HB_IS_STRING(pItem) ) {
             hb_inkeySetText( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), false );
          }
       }
@@ -146,14 +140,11 @@ HB_FUNC( HB_CREATELEN8 )
    char      buffer[8];
    HB_MAXINT nValue;
 
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       nValue = hb_parnint(1);
       HB_PUT_LE_UINT64(buffer, nValue);
       hb_retclen(buffer, 8);
-   }
-   else if( HB_ISBYREF(1) && HB_ISNUM(2) )
-   {
+   } else if( HB_ISBYREF(1) && HB_ISNUM(2) ) {
       nValue = hb_parnint(2);
       HB_PUT_LE_UINT64(buffer, nValue);
       hb_storclen(buffer, 8, 1);
@@ -164,18 +155,20 @@ HB_FUNC( HB_GETLEN8 )
 {
    const char * buffer = hb_parc(1);
 
-   if( buffer && hb_parclen(1) >= 8 )
+   if( buffer && hb_parclen(1) >= 8 ) {
       hb_retnint(HB_GET_LE_UINT64(buffer));
-   else
+   } else {
       hb_retni(-1);
+   }   
 }
 
 HB_FUNC( HB_DESERIALBEGIN )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem != nullptr )
+   if( pItem != nullptr ) {
       hb_itemReturn(pItem);
+   }   
 }
 
 HB_FUNC_TRANSLATE( HB_DESERIALNEXT, HB_DESERIALIZE )
@@ -186,13 +179,12 @@ HB_FUNC( HB_F_EOF )
 {
    HB_ERRCODE uiError = 6;
 
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       hb_retl(hb_fsEof(hb_numToHandle(hb_parnint(1))));
       uiError = hb_fsError();
-   }
-   else
+   } else {
       hb_retl(true);
+   }
 
    hb_fsSetFError(uiError);
 }
@@ -205,14 +197,14 @@ HB_FUNC( CURDIRX )
    int        iCurDrv    = hb_fsCurDrv();
    int        iDrv;
 
-   if( pDrv && hb_parclen(1) > 0 )
-   {
+   if( pDrv && hb_parclen(1) > 0 ) {
       iDrv = static_cast<int>(HB_TOUPPER(*hb_itemGetCPtr(pDrv)) - 'A');
-      if( iDrv != iCurDrv )
+      if( iDrv != iCurDrv ) {
          hb_fsChDrv( iDrv );
-   }
-   else
+      }
+   } else {
       iDrv = iCurDrv;
+   }   
 
    /* NOTE: hb_fsCurDirBuffEx() in xHarbour, but I couldn't decipher the
             difference. [vszakats] */
@@ -248,25 +240,24 @@ HB_FUNC( __SENDRAWMSG )
 
 HB_FUNC( HB_EXEC )
 {
-   if( HB_ISSYMBOL(1) )
-   {
+   if( HB_ISSYMBOL(1) ) {
       HB_BOOL fSend   = false;
       int     iParams = hb_pcount() - 1;
 
-      if( iParams >= 1 )
-      {
+      if( iParams >= 1 ) {
          fSend = iParams > 1 && !HB_IS_NIL(hb_param(2, Harbour::Item::ANY));
          iParams--;
-      }
-      else
+      } else {
          hb_vmPushNil();
-      if( fSend )
+      }   
+      if( fSend ) {
          hb_vmSend( static_cast<HB_USHORT>(iParams) );
-      else
+      } else {
          hb_vmDo( static_cast<HB_USHORT>(iParams) );
-   }
-   else
+      }
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }   
 }
 
 HB_FUNC_EXTERN( HB_USERNAME );
@@ -274,10 +265,11 @@ HB_FUNC_EXTERN( NETNAME );
 
 HB_FUNC( XHB_NETNAME )
 {
-   if( hb_parni(1) == 1 )
+   if( hb_parni(1) == 1 ) {
       HB_FUNC_EXEC( HB_USERNAME );
-   else
+   } else {
       HB_FUNC_EXEC( NETNAME );
+   }   
 }
 
 HB_FUNC_EXTERN( HB_MEMOWRIT );
@@ -285,10 +277,11 @@ HB_FUNC_EXTERN( MEMOWRIT );
 
 HB_FUNC( XHB_MEMOWRIT )
 {
-   if( HB_ISLOG(3) && !hb_parl(3) )
+   if( HB_ISLOG(3) && !hb_parl(3) ) {
       HB_FUNC_EXEC( HB_MEMOWRIT );
-   else
+   } else {
       HB_FUNC_EXEC( MEMOWRIT );
+   }   
 }
 
 #if !defined(HB_LEGACY_LEVEL4)
@@ -317,11 +310,11 @@ HB_FUNC( HB_OSPATHSEPARATOR )
 
 HB_FUNC( HB_ISBYREF )
 {
-   if( hb_pcount() )
-   {
+   if( hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(1);
-      if( HB_IS_BYREF(pItem) )
+      if( HB_IS_BYREF(pItem) ) {
          hb_retl(HB_IS_BYREF(hb_itemUnRefOnce(pItem)));
+      }
    }
 }
 

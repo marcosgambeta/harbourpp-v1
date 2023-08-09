@@ -59,14 +59,11 @@ static void s_xhb_bitOper( int iOper )
    HB_SIZE nLen1 = hb_itemGetCLen(pItem1),
            nLen2 = hb_itemGetCLen(pItem2);
 
-   if( pItem1 && pItem2 )
-   {
-      if( HB_IS_NUMERIC(pItem1) && ( HB_IS_NUMERIC(pItem2) || nLen2 == 1 ) )
-      {
+   if( pItem1 && pItem2 ) {
+      if( HB_IS_NUMERIC(pItem1) && ( HB_IS_NUMERIC(pItem2) || nLen2 == 1 ) ) {
          HB_MAXINT nVal1 = hb_itemGetNInt(pItem1),
                    nVal2 = nLen2 == 1 ? static_cast<HB_BYTE>(hb_itemGetCPtr(pItem1)[0]) : hb_itemGetNInt(pItem2);
-         switch( iOper )
-         {
+         switch( iOper ) {
             case XHB_AND:
                nVal1 &= nVal2;
                break;
@@ -81,108 +78,94 @@ static void s_xhb_bitOper( int iOper )
          return;
       }
 
-      if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) )
-      {
-         if( (nLen1 | nLen2) != 0 )
-         {
+      if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) ) {
+         if( (nLen1 | nLen2) != 0 ) {
             const char * pStr1 = hb_itemGetCPtr(pItem1),
                        * pStr2 = hb_itemGetCPtr(pItem2);
             char * pRet = static_cast<char*>(hb_xmemdup(pStr1, nLen1 + 1));
             HB_SIZE n1, n2;
 
-            switch( iOper )
-            {
+            switch( iOper ) {
                case XHB_AND:
-                  for( n1 = n2 = 0; n1 < nLen1; n1++ )
-                  {
+                  for( n1 = n2 = 0; n1 < nLen1; n1++ ) {
                      pRet[n1] &= pStr2[n2];
-                     if( ++n2 == nLen2 )
+                     if( ++n2 == nLen2 ) {
                         n2 = 0;
+                     }
                   }
                   break;
                case XHB_OR:
-                  for( n1 = n2 = 0; n1 < nLen1; n1++ )
-                  {
+                  for( n1 = n2 = 0; n1 < nLen1; n1++ ) {
                      pRet[n1] |= pStr2[n2];
-                     if( ++n2 == nLen2 )
+                     if( ++n2 == nLen2 ) {
                         n2 = 0;
+                     }   
                   }
                   break;
                default: /* XHB_XOR */
-                  for( n1 = n2 = 0; n1 < nLen1; n1++ )
-                  {
+                  for( n1 = n2 = 0; n1 < nLen1; n1++ ) {
                      pRet[n1] ^= pStr2[n2];
-                     if( ++n2 == nLen2 )
+                     if( ++n2 == nLen2 ) {
                         n2 = 0;
+                     }   
                   }
                   break;
             }
             hb_retclen_buffer(pRet, nLen1);
-         }
-         else
+         } else {
             hb_itemReturn(pItem1);
+         }
          return;
       }
 
-      if( HB_IS_STRING(pItem1) && ( HB_IS_NUMERIC(pItem2) || nLen2 == 1 ) )
-      {
-         if( nLen1 )
-         {
+      if( HB_IS_STRING(pItem1) && ( HB_IS_NUMERIC(pItem2) || nLen2 == 1 ) ) {
+         if( nLen1 ) {
             const char * pStr = hb_itemGetCPtr(pItem1);
             char * pRet = static_cast<char*>(hb_xmemdup(pStr, nLen1 + 1));
             char cVal = nLen2 == 1 ? hb_itemGetCPtr(pItem2)[0] : static_cast<char>(hb_itemGetNI(pItem2));
 
             nLen2 = nLen1;
-            switch( iOper )
-            {
+            switch( iOper ) {
                case XHB_AND:
-                  while( nLen2-- )
-                  {
+                  while( nLen2-- ) {
                      pRet[nLen2] &= cVal;
                   }
                   break;
                case XHB_OR:
-                  while( nLen2-- )
-                  {
+                  while( nLen2-- ) {
                      pRet[nLen2] |= cVal;
                   }
                   break;
                default: /* XHB_XOR */
-                  while( nLen2-- )
-                  {
+                  while( nLen2-- ) {
                      pRet[nLen2] ^= cVal;
                   }
                   break;
             }
             hb_retclen_buffer(pRet, nLen1);
-         }
-         else
+         } else {
             hb_itemReturn(pItem1);
+         }
          return;
       }
 
-      if( (HB_IS_NUMERIC(pItem1) || nLen1 == 1) && HB_IS_STRING(pItem2) )
-      {
+      if( (HB_IS_NUMERIC(pItem1) || nLen1 == 1) && HB_IS_STRING(pItem2) ) {
          const char * pStr = hb_itemGetCPtr(pItem2);
          int iVal = nLen1 == 1 ? hb_itemGetCPtr(pItem1)[0] : hb_itemGetNI(pItem1);
 
-         switch( iOper )
-         {
+         switch( iOper ) {
             case XHB_AND:
-               while( nLen2 )
-               {
+               while( nLen2 ) {
                   iVal &= static_cast<HB_UCHAR>(pStr[--nLen2]);
                }
                break;
             case XHB_OR:
-               while( nLen2 )
-               {
+               while( nLen2 ) {
                   iVal |= static_cast<HB_UCHAR>(pStr[--nLen2]);
                }
                break;
             default: /* XHB_XOR */
-               while( nLen2 )
-               {
+               while( nLen2 ) {
                   iVal ^= static_cast<HB_UCHAR>(pStr[--nLen2]);
                }
                break;

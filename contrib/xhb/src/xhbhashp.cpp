@@ -57,20 +57,22 @@ HB_FUNC( HSETPARTITION )
    PHB_ITEM pLevel  = hb_param(3, Harbour::Item::NUMERIC);
    HB_UINT  uiLevel = pLevel ? hb_itemGetNI(pLevel) : 1;
 
-   if( !pHash )
+   if( !pHash ) {
       hb_errRT_BASE(EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   else if( hb_hashLen( pHash ) > 0 )
+   } else if( hb_hashLen( pHash ) > 0 ) {
       hb_errRT_BASE(EG_ARG, 2017, "Cannot change partitioning in a non-empty hash", HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   else if( (hb_hashGetFlags(pHash) & HB_HASH_KEEPORDER) != 0 )
+   } else if( (hb_hashGetFlags(pHash) & HB_HASH_KEEPORDER) != 0 ) {
       hb_errRT_BASE(EG_ARG, 2017, "Cannot set partitioning in a hash with associative array compatibility", HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   else if( uiLevel < 1 || uiLevel > 8 )
+   } else if( uiLevel < 1 || uiLevel > 8 ) {
       hb_errRT_BASE(EG_ARG, 2017, "Pagination level must be between 1 and 8", HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
 }
 
 HB_FUNC( HGETPARTITION )
 {
-   if( hb_param(1, Harbour::Item::HASH) )
+   if( hb_param(1, Harbour::Item::HASH) ) {
       hb_retl(false);
-   else
+   } else {
       hb_errRT_BASE(EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
 }
