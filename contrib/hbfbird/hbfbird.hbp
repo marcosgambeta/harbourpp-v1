@@ -16,7 +16,9 @@
 -depimplibd=firebird:fbclient
 
 # For FireBird headers
--c=gnu90
+#-c=gnu90
+
+{allgcc}-cflag=-fpermissive
 
 ${hb_name}.hbx
 
