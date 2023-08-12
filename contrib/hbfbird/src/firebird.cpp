@@ -213,7 +213,7 @@ HB_FUNC( FBSTARTTRANSACTION )
       if( isc_start_transaction(status, &trans, 1, &db, 0, nullptr) ) {
          hb_retnl(isc_sqlcode(status));
       } else {
-         hb_retptr(reinterpret_cast<void*>(reinterpret_cast<HB_PTRUINT>(trans)));
+         hb_retptr(reinterpret_cast<void*>(trans));
       }
    } else {
       hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -222,7 +222,7 @@ HB_FUNC( FBSTARTTRANSACTION )
 
 HB_FUNC( FBCOMMIT )
 {
-   isc_tr_handle trans = reinterpret_cast<isc_tr_handle>(reinterpret_cast<HB_PTRUINT>(hb_parptr(1)));
+   isc_tr_handle trans = reinterpret_cast<isc_tr_handle>(hb_parptr(1));
 
    if( trans ) {
       ISC_STATUS_ARRAY status;
@@ -239,7 +239,7 @@ HB_FUNC( FBCOMMIT )
 
 HB_FUNC( FBROLLBACK )
 {
-   isc_tr_handle trans = reinterpret_cast<isc_tr_handle>(reinterpret_cast<HB_PTRUINT>(hb_parptr(1)));
+   isc_tr_handle trans = reinterpret_cast<isc_tr_handle>(hb_parptr(1));
 
    if( trans ) {
       ISC_STATUS_ARRAY status;
@@ -266,7 +266,7 @@ HB_FUNC( FBEXECUTE )
       unsigned short dialect = static_cast<unsigned short>(hb_parni(3));
 
       if( HB_ISPOINTER(4) ) {
-         trans = reinterpret_cast<isc_tr_handle>(reinterpret_cast<HB_PTRUINT>(hb_parptr(4)));
+         trans = reinterpret_cast<isc_tr_handle>(hb_parptr(4));
       } else {
          if( isc_start_transaction(status, &trans, 1, &db, 0, nullptr) ) {
             hb_retnl(isc_sqlcode(status));
@@ -315,7 +315,7 @@ HB_FUNC( FBQUERY )
       PHB_ITEM aTemp;
 
       if( HB_ISPOINTER(4) ) {
-         trans = reinterpret_cast<isc_tr_handle>(reinterpret_cast<HB_PTRUINT>(hb_parptr(4)));
+         trans = reinterpret_cast<isc_tr_handle>(hb_parptr(4));
       } else if( isc_start_transaction(status, &trans, 1, &db, 0, nullptr) ) {
          hb_retnl(isc_sqlcode(status));
          return;
@@ -422,11 +422,11 @@ HB_FUNC( FBQUERY )
 
       qry_handle = hb_itemArrayNew(6);
 
-      hb_arraySetPtr(qry_handle, 1, reinterpret_cast<void*>(reinterpret_cast<HB_PTRUINT>(stmt)));
+      hb_arraySetPtr(qry_handle, 1, reinterpret_cast<void*>(stmt));
       hb_arraySetPtr(qry_handle, 2, reinterpret_cast<void*>(reinterpret_cast<HB_PTRUINT>(sqlda)));
 
       if( !HB_ISPOINTER(4) ) {
-         hb_arraySetPtr(qry_handle, 3, reinterpret_cast<void*>(reinterpret_cast<HB_PTRUINT>(trans)));
+         hb_arraySetPtr(qry_handle, 3, reinterpret_cast<void*>(trans));
       }
 
       hb_arraySetNL(qry_handle, 4, static_cast<long>(num_cols));
@@ -445,7 +445,7 @@ HB_FUNC( FBFETCH )
    PHB_ITEM aParam = hb_param(1, Harbour::Item::ARRAY);
 
    if( aParam ) {
-      isc_stmt_handle  stmt  = reinterpret_cast<isc_stmt_handle>(reinterpret_cast<HB_PTRUINT>(hb_itemGetPtr(hb_itemArrayGet(aParam, 1))));
+      isc_stmt_handle  stmt  = reinterpret_cast<isc_stmt_handle>(hb_itemGetPtr(hb_itemArrayGet(aParam, 1)));
       XSQLDA *         sqlda = static_cast<XSQLDA*>(hb_itemGetPtr(hb_itemArrayGet(aParam, 2)));
       ISC_STATUS_ARRAY status;
       unsigned short   dialect = static_cast<unsigned short>(hb_itemGetNI(hb_itemArrayGet(aParam, 5)));
@@ -462,9 +462,9 @@ HB_FUNC( FBFREE )
    PHB_ITEM aParam = hb_param(1, Harbour::Item::ARRAY);
 
    if( aParam ) {
-      isc_stmt_handle  stmt  = reinterpret_cast<isc_stmt_handle>(reinterpret_cast<HB_PTRUINT>(hb_itemGetPtr(hb_itemArrayGet(aParam, 1))));
+      isc_stmt_handle  stmt  = reinterpret_cast<isc_stmt_handle>(hb_itemGetPtr(hb_itemArrayGet(aParam, 1)));
       XSQLDA *         sqlda = static_cast<XSQLDA*>(hb_itemGetPtr(hb_itemArrayGet(aParam, 2)));
-      isc_tr_handle    trans = reinterpret_cast<isc_tr_handle>(reinterpret_cast<HB_PTRUINT>(hb_itemGetPtr(hb_itemArrayGet(aParam, 3))));
+      isc_tr_handle    trans = reinterpret_cast<isc_tr_handle>(hb_itemGetPtr(hb_itemArrayGet(aParam, 3)));
       ISC_STATUS_ARRAY status;
 
       if( isc_dsql_free_statement(status, &stmt, DSQL_drop) ) {
@@ -661,7 +661,7 @@ HB_FUNC( FBGETBLOB )
       ISC_STATUS blob_stat;
 
       if( HB_ISPOINTER(3) ) {
-         trans = reinterpret_cast<isc_tr_handle>(reinterpret_cast<HB_PTRUINT>(hb_parptr(3)));
+         trans = reinterpret_cast<isc_tr_handle>(hb_parptr(3));
       } else {
          if( isc_start_transaction(status, &trans, 1, &db, 0, nullptr) ) {
             hb_retnl(isc_sqlcode(status));
