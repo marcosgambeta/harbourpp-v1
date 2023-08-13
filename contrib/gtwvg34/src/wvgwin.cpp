@@ -129,12 +129,9 @@ HB_FUNC( WVG_ISMENUITEMCHECKED )
    lpmii.cbSize = sizeof(lpmii);
    lpmii.fMask = MIIM_STATE;
 
-   if( GetMenuItemInfo(hbwapi_par_raw_HMENU(1), static_cast<UINT>(hb_parni(2)), TRUE, &lpmii) )
-   {
+   if( GetMenuItemInfo(hbwapi_par_raw_HMENU(1), static_cast<UINT>(hb_parni(2)), TRUE, &lpmii) ) {
       hb_retl((lpmii.fState & MFS_CHECKED) != 0);
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -146,12 +143,9 @@ HB_FUNC( WVG_ISMENUITEMENABLED )  /* = grayed */
    lpmii.cbSize = sizeof(lpmii);
    lpmii.fMask = MIIM_STATE;
 
-   if( GetMenuItemInfo(hbwapi_par_raw_HMENU(1), static_cast<UINT>(hb_parni(2)), TRUE, &lpmii) )
-   {
+   if( GetMenuItemInfo(hbwapi_par_raw_HMENU(1), static_cast<UINT>(hb_parni(2)), TRUE, &lpmii) ) {
       hb_retl((lpmii.fState & MFS_DISABLED /* equivalent to MFS_GRAYED */) == 0);
-   }
-   else
-   {
+   } else {
       hb_retl(true);
    }
 }
@@ -162,13 +156,10 @@ HB_FUNC( WVG_SETMENUITEM )
    void * hText = nullptr;
 
    lpmii.cbSize = sizeof(lpmii);
-   if( hb_parl(5) )
-   {
+   if( hb_parl(5) ) {
       lpmii.fMask = MIIM_STRING;
       lpmii.dwTypeData = static_cast<LPTSTR>(HB_UNCONST(HB_PARSTR(4, &hText, nullptr)));
-   }
-   else
-   {
+   } else {
       lpmii.fMask = MIIM_SUBMENU;
    }
 
@@ -253,12 +244,10 @@ HB_FUNC( WVG_SETLAYEREDWINDOWATTRIBUTES )
 {
    HINSTANCE h = GetModuleHandle(TEXT("user32.dll"));
 
-   if( h )
-   {
+   if( h ) {
       wvtSetLayeredWindowAttributes pfnLayered = reinterpret_cast<wvtSetLayeredWindowAttributes>(reinterpret_cast<void*>(HB_WINAPI_GETPROCADDRESS(h, "SetLayeredWindowAttributes")));
 
-      if( pfnLayered )
-      {
+      if( pfnLayered ) {
          HWND hWnd = hbwapi_par_raw_HWND(1);
          COLORREF cr = hbwapi_par_COLORREF_def(2, RGB(255, 255, 255));
 
@@ -274,10 +263,8 @@ HB_FUNC( WVG_SENDTOOLBARMESSAGE )
 {
    HWND hTB = hbwapi_par_raw_HWND(1);
 
-   switch( hbwapi_par_INT(2) )
-   {
-      case TB_ADDBITMAP:
-      {
+   switch( hbwapi_par_INT(2) ) {
+      case TB_ADDBITMAP: {
          TBADDBITMAP tbab;
 
          tbab.hInst = nullptr;
@@ -289,8 +276,7 @@ HB_FUNC( WVG_SENDTOOLBARMESSAGE )
          hbwapi_ret_NI(static_cast<int>(SendMessage(hTB, TB_ADDBITMAP, static_cast<WPARAM>(1), reinterpret_cast<LPARAM>(&tbab))));
          break;
       }
-      case TB_ADDBUTTONS:
-      {
+      case TB_ADDBUTTONS: {
          TBBUTTON tbb;
 
          tbb.iBitmap   = hbwapi_par_INT(3);
@@ -303,8 +289,7 @@ HB_FUNC( WVG_SENDTOOLBARMESSAGE )
          hbwapi_ret_L(SendMessage(hTB, TB_ADDBUTTONS, static_cast<WPARAM>(1), reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(&tbb))));
          break;
       }
-      case TB_ADDSTRING:
-      {
+      case TB_ADDSTRING: {
          void * hCaption;
          hbwapi_ret_NI(static_cast<int>(SendMessage(hTB, TB_ADDSTRING, 0, reinterpret_cast<LPARAM>(HB_PARSTR(3, &hCaption, nullptr)))));
          hb_strfree(hCaption);
@@ -415,8 +400,7 @@ HB_FUNC( WVG_SENDTOOLBARMESSAGE )
       case TB_MOVEBUTTON:
       case TB_GETINSERTMARK:
          break;
-      case TB_GETCOLORSCHEME:
-      {
+      case TB_GETCOLORSCHEME: {
          PHB_ITEM info = hb_itemArrayNew(2);
          COLORSCHEME colorScheme{};
 
@@ -446,10 +430,8 @@ HB_FUNC( WVG_SENDTOOLBARMESSAGE )
 
 HB_FUNC( WVG_SENDEDITCONTROLMESSAGE )
 {
-   switch( hbwapi_par_INT(2) )
-   {
-      case EM_GETSEL:
-      {
+   switch( hbwapi_par_INT(2) ) {
+      case EM_GETSEL: {
          DWORD min = 0;
          DWORD max = 0;
          SendMessage(hbwapi_par_raw_HWND(1), EM_GETSEL, reinterpret_cast<WPARAM>(&min), reinterpret_cast<LPARAM>(&max));
@@ -463,8 +445,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
    HWND hCB = hbwapi_par_raw_HWND(1);
    void * hText = nullptr;
 
-   switch( hbwapi_par_INT(2) )
-   {
+   switch( hbwapi_par_INT(2) ) {
       case CB_ADDSTRING:
          hb_retnint(SendMessage(hCB, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(static_cast<LPCTSTR>(HB_PARSTR(3, &hText, nullptr)))));
          break;
@@ -483,14 +464,12 @@ HB_FUNC( WVG_SENDCBMESSAGE )
          hb_retnint(SendMessage(hCB, CB_FINDSTRINGEXACT, static_cast<WPARAM>(hb_parni(3)), reinterpret_cast<LPARAM>(HB_PARSTR(4, &hText, nullptr))));
          break;
 #if defined(CB_GETCOMBOBOXINFO)
-      case CB_GETCOMBOBOXINFO:
-      {
+      case CB_GETCOMBOBOXINFO: {
          COMBOBOXINFO cbi{};
 
          cbi.cbSize = sizeof(cbi);
 
-         if( GetComboBoxInfo(hCB, &cbi) )
-         {
+         if( GetComboBoxInfo(hCB, &cbi) ) {
             PHB_ITEM pCbi = hb_itemArrayNew(6);
             PHB_ITEM pRc1 = hb_itemArrayNew(4);
             PHB_ITEM pRc2 = hb_itemArrayNew(4);
@@ -531,8 +510,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
       case CB_GETCURSEL:
          hb_retnint(SendMessage(hCB, CB_GETCURSEL, 0, 0));
          break;
-      case CB_GETDROPPEDCONTROLRECT:
-      {
+      case CB_GETDROPPEDCONTROLRECT: {
          RECT rc;
          PHB_ITEM pRect = hb_itemArrayNew(4);
 
@@ -552,8 +530,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
       case CB_GETDROPPEDWIDTH:
          hb_retnint(SendMessage(hCB, CB_GETDROPPEDWIDTH, 0, 0));
          break;
-      case CB_GETEDITSEL:
-      {
+      case CB_GETEDITSEL: {
          DWORD range = static_cast<DWORD>(SendMessage(hCB, CB_GETEDITSEL, 0, 0));
          PHB_ITEM pRng = hb_itemArrayNew(2);
 
@@ -575,8 +552,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
       case CB_GETITEMHEIGHT:
          hb_retnint(SendMessage(hCB, CB_GETITEMHEIGHT, 0, 0));
          break;
-      case CB_GETLBTEXT:
-      {
+      case CB_GETLBTEXT: {
          HB_ISIZ iSize = SendMessage(hCB, CB_GETLBTEXTLEN, static_cast<WPARAM>(hb_parnint(3)), 0);
          LPTSTR text = static_cast<LPTSTR>(hb_xgrab((iSize + 1) * sizeof(TCHAR)));
          SendMessage(hCB, CB_GETLBTEXT, iSize, reinterpret_cast<LPARAM>(text));
