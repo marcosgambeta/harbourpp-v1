@@ -327,8 +327,7 @@ BOOL CALLBACK hb_wvt_gtDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPAR
       }
    }
 
-   switch( message )
-   {
+   switch( message ) {
       case WM_COMMAND:
          switch( LOWORD(wParam) ) {
             case IDOK:
@@ -1545,8 +1544,7 @@ HB_FUNC( WVT_DRAWBUTTON )
          break;
    }
 
-   if( bText )
-   {
+   if( bText ) {
       void *  hText;
       LPCTSTR text = HB_PARSTR(5, &hText, nullptr);
       SelectObject(_s->hdc, GetStockObject(DEFAULT_GUI_FONT));
@@ -1828,8 +1826,7 @@ HB_FUNC( WVT_DRAWLINEEX )
 
    hPen = _s->pGUI->hUserPens[iSlot];
 
-   switch( iFormat )
-   {
+   switch( iFormat ) {
       case 0:                                         /* Raised */
          if( iOrient == 0 ) {                         /* Horizontal */
             SelectObject(_s->hdc, _s->pGUI->penWhite);
