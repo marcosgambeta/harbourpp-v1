@@ -92,8 +92,7 @@ HB_FUNC( WVW_CXCREATE )
 
    HWND hWnd = nullptr;
 
-   if( wvw_win && HB_ISEVALITEM(8) )
-   {
+   if( wvw_win && HB_ISEVALITEM(8) ) {
       int iTop    = hb_parni(2);
       int iLeft   = hb_parni(3);
       int iBottom = hb_parni(4);
@@ -117,9 +116,7 @@ HB_FUNC( WVW_CXCREATE )
                                       BS_AUTOCHECKBOX | hb_parni(13) /* nStyle */, &hWnd));
 
       hb_strfree(hCaption);
-   }
-   else
-   {
+   } else {
       hb_retni(0);
    }
 
@@ -134,37 +131,29 @@ HB_FUNC( WVW_CXDESTROY )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win )
-   {
+   if( wvw_win ) {
       int nCtrlId = hb_parni(2);
       PWVW_CTL wvw_ctl = wvw_win->ctlList;
       PWVW_CTL wvw_ctlPrev = nullptr;
 
-      while( wvw_ctl )
-      {
-         if( wvw_ctl->nClass == WVW_CONTROL_CHECKBOX && wvw_ctl->nId == nCtrlId )
-         {
+      while( wvw_ctl ) {
+         if( wvw_ctl->nClass == WVW_CONTROL_CHECKBOX && wvw_ctl->nId == nCtrlId ) {
             break;
          }
          wvw_ctlPrev = wvw_ctl;
          wvw_ctl = wvw_ctl->pNext;
       }
 
-      if( wvw_ctl )
-      {
+      if( wvw_ctl ) {
          DestroyWindow(wvw_ctl->hWnd);
 
-         if( wvw_ctlPrev )
-         {
+         if( wvw_ctlPrev ) {
             wvw_ctlPrev->pNext = wvw_ctl->pNext;
-         }
-         else
-         {
+         } else {
             wvw_win->ctlList = wvw_ctl->pNext;
          }
 
-         if( wvw_ctl->pBlock )
-         {
+         if( wvw_ctl->pBlock ) {
             hb_itemRelease(wvw_ctl->pBlock);
          }
 
@@ -195,19 +184,15 @@ HB_FUNC( WVW_CXENABLE )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
    HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_CHECKBOX, hb_parni(2), nullptr);
 
-   if( hWnd )
-   {
+   if( hWnd ) {
       bool fEnable = hb_parldef(3, true);
 
       hb_retl(EnableWindow(hWnd, fEnable) == 0);
 
-      if( !fEnable )
-      {
+      if( !fEnable ) {
          SetFocus(wvw_win->hWnd);
       }
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -221,19 +206,16 @@ HB_FUNC( WVW_CXSETCODEBLOCK )
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
-   if( wvw )
-   {
+   if( wvw ) {
       PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
       PHB_ITEM pBlock = hb_param(3, Harbour::Item::EVALITEM);
       bool fOldSetting = wvw->fRecurseCBlock;
 
-      if( pBlock && wvw_ctl && !wvw_ctl->fBusy )
-      {
+      if( pBlock && wvw_ctl && !wvw_ctl->fBusy ) {
          wvw->fRecurseCBlock = false;
          wvw_ctl->fBusy = true;
 
-         if( wvw_ctl->pBlock )
-         {
+         if( wvw_ctl->pBlock ) {
             hb_itemRelease(wvw_ctl->pBlock);
          }
 
@@ -262,8 +244,7 @@ HB_FUNC( WVW_CXSETCHECK )
 {
    PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
 
-   if( wvw_ctl && wvw_ctl->hWnd )
-   {
+   if( wvw_ctl && wvw_ctl->hWnd ) {
       SendMessage(wvw_ctl->hWnd, BM_SETCHECK, static_cast<WPARAM>(hb_parnidef(3, BST_CHECKED)), 0);
    }
 
@@ -281,12 +262,9 @@ HB_FUNC( WVW_CXGETCHECK )
 {
    PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
 
-   if( wvw_ctl && wvw_ctl->hWnd )
-   {
+   if( wvw_ctl && wvw_ctl->hWnd ) {
       hb_retni(static_cast<int>(SendMessage(wvw_ctl->hWnd, BM_GETCHECK, 0, 0)));
-   }
-   else
-   {
+   } else {
       hb_retni(0);
    }
 }
@@ -299,8 +277,7 @@ HB_FUNC( WVW_CXSETFONT )
    PWVW_GLO wvw = hb_gt_wvw();
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw && wvw_win )
-   {
+   if( wvw && wvw_win ) {
       wvw->lfCX.lfHeight         = hb_parnldef(3, wvw_win->fontHeight - 2);
       wvw->lfCX.lfWidth          = hb_parnldef(4, wvw->lfCX.lfWidth);
       wvw->lfCX.lfEscapement     = 0;
@@ -313,25 +290,20 @@ HB_FUNC( WVW_CXSETFONT )
       wvw->lfCX.lfCharSet        = DEFAULT_CHARSET;
       wvw->lfCX.lfPitchAndFamily = FF_DONTCARE;
 
-      if( HB_ISCHAR(2) )
-      {
+      if( HB_ISCHAR(2) ) {
          HB_ITEMCOPYSTR(hb_param(2, Harbour::Item::STRING), wvw->lfCX.lfFaceName, HB_SIZEOFARRAY(wvw->lfCX.lfFaceName));
          wvw_win->fontFace[HB_SIZEOFARRAY(wvw->lfCX.lfFaceName) - 1] = TEXT('\0');
       }
 
-      if( wvw_win->hCXfont )
-      {
+      if( wvw_win->hCXfont ) {
          HFONT hOldFont = wvw_win->hCXfont;
          HFONT hFont = CreateFontIndirect(&wvw->lfCX);
-         if( hFont )
-         {
+         if( hFont ) {
 #if 0
             PWVW_CTL wvw_ctl = wvw_win->ctlList;
 
-            while( wvw_ctl )
-            {
-               if( wvw_ctl->nClass == WVW_CONTROL_PUSHBUTTON && static_cast<HFONT>(SendMessage(wvw_ctl->hWnd, WM_GETFONT, 0, 0)) == hOldFont )
-               {
+            while( wvw_ctl ) {
+               if( wvw_ctl->nClass == WVW_CONTROL_PUSHBUTTON && static_cast<HFONT>(SendMessage(wvw_ctl->hWnd, WM_GETFONT, 0, 0)) == hOldFont ) {
                   SendMessage(wvw_ctl->hWnd, WM_SETFONT, static_cast<WPARAM>(hFont), static_cast<LPARAM>(TRUE));
                }
 
@@ -355,8 +327,7 @@ HB_FUNC( WVW_CXSTATUSFONT )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
    PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
 
-   if( wvw_ctl && wvw_ctl->hWnd )
-   {
+   if( wvw_ctl && wvw_ctl->hWnd ) {
       SendMessage(wvw_ctl->hWnd, WM_SETFONT, reinterpret_cast<WPARAM>((hb_parldef(3, true) /* fFocus */ ? wvw_win->hCXfont : wvw_win->hPBfont)), static_cast<LPARAM>(TRUE));
    }
 

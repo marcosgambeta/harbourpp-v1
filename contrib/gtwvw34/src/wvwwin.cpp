@@ -54,8 +54,7 @@ static bool hb_gt_wvw_SetCentreWindow(PWVW_WIN wvw_win, bool fCentre, bool fPain
 
    wvw_win->CentreWindow = fCentre;
 
-   if( fPaint )
-   {
+   if( fPaint ) {
       ShowWindow(wvw_win->hWnd, IsZoomed(wvw_win->hWnd) ? SW_MAXIMIZE : SW_RESTORE);
 
       hb_gt_wvw_ResetWindowSize(wvw_win, wvw_win->hWnd);
@@ -95,8 +94,7 @@ HB_FUNC( WVW_NOPENWINDOW )
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
-   if( wvw )
-   {
+   if( wvw ) {
       LPCTSTR szWinName;
       void *  hWinName = nullptr;
 
@@ -110,61 +108,48 @@ HB_FUNC( WVW_NOPENWINDOW )
       DWORD     dwStyle    = static_cast<DWORD>(hb_parnldef(6, WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_CLIPCHILDREN));
       int       iParentWin = hb_gt_wvw_nWin_N(7);
 
-      if( wvw->iNumWindows <= 0 )
-      {
+      if( wvw->iNumWindows <= 0 ) {
          hb_retni(0);
          return;
       }
 
-      if( wvw->iNumWindows == HB_SIZEOFARRAY(wvw->pWin) )
-      {
+      if( wvw->iNumWindows == HB_SIZEOFARRAY(wvw->pWin) ) {
          hb_errRT_TERM(EG_BOUND, 10002, "Too many windows to open", HB_ERR_FUNCNAME, 0, 0);
          hb_retni(0);
          return;
       }
 
-      if( iParentWin > (wvw->iNumWindows - 1) )
-      {
+      if( iParentWin > (wvw->iNumWindows - 1) ) {
          hb_errRT_TERM(EG_ARG, 10003, "Invalid parent window", HB_ERR_FUNCNAME, 0, 0);
          hb_retni(0);
          return;
       }
 
-      if( iParentWin < 0 )
-      {
-         if( hb_gt_wvw_GetMainCoordMode() )
-         {
+      if( iParentWin < 0 ) {
+         if( hb_gt_wvw_GetMainCoordMode() ) {
             wvw_par = hb_gt_wvw_win_top();
-         }
-         else
-         {
+         } else {
             wvw_par = hb_gt_wvw_win(wvw->iCurWindow);
          }
 
          hWndParent = nullptr;
-      }
-      else
-      {
+      } else {
          wvw_par = hb_gt_wvw_win(iParentWin);
 
          hWndParent = wvw_par->hWnd;
       }
 
-      if( HB_ISCHAR(1) )
-      {
+      if( HB_ISCHAR(1) ) {
          HB_SIZE nLen;
 
          szWinName = HB_PARSTR(1, &hWinName, &nLen);
 
-         if( nLen > HB_SIZEOFARRAY(wvw_par->szWinName) - 1 )
-         {
+         if( nLen > HB_SIZEOFARRAY(wvw_par->szWinName) - 1 ) {
             hb_errRT_TERM(EG_LIMIT, 10004, "Window name too long", HB_ERR_FUNCNAME, 0, 0);
             hb_retni(0);
             return;
          }
-      }
-      else
-      {
+      } else {
          PHB_ITEM pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
          szWinName = HB_ITEMGETSTR(pItem, &hWinName, nullptr);
          hb_itemRelease(pItem);
@@ -179,32 +164,27 @@ HB_FUNC( WVW_NOPENWINDOW )
 
       hb_strfree(hWinName);
 
-      if( nWin > 0 )
-      {
+      if( nWin > 0 ) {
          PWVW_WIN wvw_win = hb_gt_wvw_win(nWin);
 
          RECT wi{}, rcWorkArea{};
 
          GetWindowRect(wvw_win->hWnd, &wi);
 
-         if( SystemParametersInfo(SPI_GETWORKAREA, 0, &rcWorkArea, 0) )
-         {
-            if( wi.right < rcWorkArea.left || wi.left > rcWorkArea.right || wi.top > rcWorkArea.bottom || wi.bottom < rcWorkArea.top )
-            {
+         if( SystemParametersInfo(SPI_GETWORKAREA, 0, &rcWorkArea, 0) ) {
+            if( wi.right < rcWorkArea.left || wi.left > rcWorkArea.right || wi.top > rcWorkArea.bottom || wi.bottom < rcWorkArea.top ) {
                hb_gt_wvw_SetCentreWindow(hb_gt_wvw_win_top(), true, true);
                hb_gt_wvw_SetCentreWindow(wvw_win, wvw->fDevCentreWindow, true);
             }
          }
 
-         if( hb_gt_wvw_GetMainCoordMode() )
-         {
+         if( hb_gt_wvw_GetMainCoordMode() ) {
             wvw->iCurWindow = nWin;
          }
 
          hb_gtSetMode(wvw_win->ROWS, wvw_win->COLS);
 
-         if( hb_gt_wvw_GetMainCoordMode() )
-         {
+         if( hb_gt_wvw_GetMainCoordMode() ) {
             hb_gt_wvw_SetCurWindow(0);
          }
 
@@ -212,9 +192,7 @@ HB_FUNC( WVW_NOPENWINDOW )
       }
 
       hb_retni(nWin);
-   }
-   else
-   {
+   } else {
       hb_retni(0);
    }
 }
@@ -228,12 +206,10 @@ HB_FUNC( WVW_LCLOSEWINDOW )
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
-   if( wvw )
-   {
+   if( wvw ) {
       PWVW_WIN wvw_top;
 
-      if( wvw->iNumWindows <= 1 )
-      {
+      if( wvw->iNumWindows <= 1 ) {
          hb_errRT_TERM(EG_BOUND, 10005, "No more window to close", HB_ERR_FUNCNAME, 0, 0);
          hb_retl(false);
          return;
@@ -243,16 +219,12 @@ HB_FUNC( WVW_LCLOSEWINDOW )
 
       wvw_top = hb_gt_wvw_win_top();
 
-      if( wvw_top )
-      {
-         if( !hb_gt_wvw_GetMainCoordMode() )
-         {
+      if( wvw_top ) {
+         if( !hb_gt_wvw_GetMainCoordMode() ) {
             wvw->fQuickSetMode = true;
             hb_gtSetMode(wvw_top->ROWS, wvw_top->COLS);
             wvw->fQuickSetMode = false;
-         }
-         else
-         {
+         } else {
             hb_gt_wvw_SetCurWindow(0);
          }
 
@@ -260,9 +232,7 @@ HB_FUNC( WVW_LCLOSEWINDOW )
 
          hb_retl(true);
       }
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -299,26 +269,20 @@ HB_FUNC( WVW_XREPOSWINDOW )
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
-   if( wvw )
-   {
+   if( wvw ) {
       bool fAnchored = hb_parldef(1, true);
 
       /* centerize Main Window, only if not maximized */
       hb_gt_wvw_SetCentreWindow(hb_gt_wvw_win_top(), true, true);
 
       /* reposition all subwindows */
-      for( int i = 1; i < wvw->iNumWindows; i++ )
-      {
+      for( int i = 1; i < wvw->iNumWindows; i++ ) {
          PWVW_WIN wvw_win = hb_gt_wvw_win(i);
 
-         if( wvw_win )
-         {
-            if( fAnchored )
-            {
+         if( wvw_win ) {
+            if( fAnchored ) {
                hb_gt_wvw_SetCentreWindow(wvw_win, false, true);
-            }
-            else
-            {
+            } else {
                hb_gt_wvw_SetCentreWindow(wvw_win, wvw_win->CentreWindow, true);
             }
          }
@@ -339,26 +303,19 @@ HB_FUNC( WVW_NSETCURWINDOW )
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
-   if( wvw )
-   {
+   if( wvw ) {
       hb_retni(wvw->iCurWindow);
 
-      if( HB_ISNUM(1) )
-      {
+      if( HB_ISNUM(1) ) {
          int nWin = hb_parni(1);
 
-         if( nWin >= 0 && nWin < wvw->iNumWindows )
-         {
+         if( nWin >= 0 && nWin < wvw->iNumWindows ) {
             hb_gt_wvw_SetCurWindow(nWin);
-         }
-         else
-         {
+         } else {
             hb_errRT_TERM(EG_BOUND, 10001, "Window number out of range", "wvw_nSetCurWindow()", 0, 0);
          }
       }
-   }
-   else
-   {
+   } else {
       hb_retni(0);
    }
 }
@@ -395,17 +352,14 @@ HB_FUNC( WVW_MAXMAXROW )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win )
-   {
+   if( wvw_win ) {
       int iMaxRows;
 
       /* rows and cols passed are dummy ones */
       hb_gt_wvw_ValidWindowSize(wvw_win, 10, 10, wvw_win->hFont, wvw_win->fontWidth, &iMaxRows, nullptr);
 
       hb_retni(iMaxRows - 1);
-   }
-   else
-   {
+   } else {
       hb_retni(0);
    }
 }
@@ -418,17 +372,14 @@ HB_FUNC( WVW_MAXMAXCOL )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win )
-   {
+   if( wvw_win ) {
       int iMaxCols;
 
       /* rows and cols passed are dummy ones */
       hb_gt_wvw_ValidWindowSize(wvw_win, 10, 10, wvw_win->hFont, wvw_win->fontWidth, nullptr, &iMaxCols);
 
       hb_retni(iMaxCols - 1);
-   }
-   else
-   {
+   } else {
       hb_retni(0);
    }
 }
@@ -445,8 +396,7 @@ HB_FUNC( WVW_UNREACHEDBR )
 
    int iCols, iRows;
 
-   if( wvw_win && IsZoomed(wvw_win->hWnd) )
-   {
+   if( wvw_win && IsZoomed(wvw_win->hWnd) ) {
       POINT xy = hb_gt_wvw_GetXYFromColRow(wvw_win, wvw_win->COLS, wvw_win->ROWS);
       RECT  ci{};
 
@@ -454,9 +404,7 @@ HB_FUNC( WVW_UNREACHEDBR )
 
       iRows = ci.bottom - xy.y - wvw_win->iSBHeight;
       iCols = ci.right - xy.x;
-   }
-   else
-   {
+   } else {
       iCols = iRows = 0;
    }
 
@@ -473,26 +421,19 @@ HB_FUNC( WVW_SETMAINCOORD )
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
-   if( wvw )
-   {
+   if( wvw ) {
       hb_retl(hb_gt_wvw_GetMainCoordMode());
 
-      if( HB_ISLOG(1) )
-      {
+      if( HB_ISLOG(1) ) {
          wvw->fMainCoordMode = hb_parl(1);
 
-         if( wvw->fMainCoordMode )
-         {
+         if( wvw->fMainCoordMode ) {
             hb_gt_wvw_SetCurWindow(0);
-         }
-         else
-         {
+         } else {
             hb_gt_wvw_SetCurWindow(wvw->iNumWindows - 1);
          }
       }
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -511,38 +452,28 @@ HB_FUNC( WVW_SETPAINTREFRESH )
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
-   if( wvw )
-   {
+   if( wvw ) {
       hb_retni(wvw->iPaintRefresh);
 
-      if( HB_ISNUM(1) && (hb_parni(1) >= 50 || hb_parni(1) == 0) )
-      {
+      if( HB_ISNUM(1) && (hb_parni(1) >= 50 || hb_parni(1) == 0) ) {
          wvw->iPaintRefresh = hb_parni(1);
 
-         if( wvw->a.pSymWVW_PAINT )
-         {
+         if( wvw->a.pSymWVW_PAINT ) {
             int i;
-            for( i = 0; i < wvw->iNumWindows; i++ )
-            {
+            for( i = 0; i < wvw->iNumWindows; i++ ) {
                PWVW_WIN wvw_win = hb_gt_wvw_win(i);
 
-               if( wvw_win )
-               {
-                  if( wvw->iPaintRefresh > 0 )
-                  {
+               if( wvw_win ) {
+                  if( wvw->iPaintRefresh > 0 ) {
                      SetTimer(wvw_win->hWnd, WVW_ID_SYSTEM_TIMER, static_cast<UINT>(wvw->iPaintRefresh), nullptr);
-                  }
-                  else
-                  {
+                  } else {
                      KillTimer(wvw_win->hWnd, WVW_ID_SYSTEM_TIMER);
                   }
                }
             }
          }
       }
-   }
-   else
-   {
+   } else {
       hb_retni(0);
    }
 }
@@ -558,26 +489,21 @@ HB_FUNC( WVW_SETVERTCARET )  /* TODO: do you want to make it window selective? *
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
-   if( wvw )
-   {
+   if( wvw ) {
       hb_retl(wvw->fVertCaret);
 
-      if( HB_ISLOG(1) )
-      {
+      if( HB_ISLOG(1) ) {
          PWVW_WIN wvw_win = hb_gt_wvw_win_top();
 
          wvw->fVertCaret = hb_parl(1);
 
-         if( wvw_win )
-         {
+         if( wvw_win ) {
             /* TODO: we should recalculate width and height of caret! */
             hb_gt_wvw_KillCaret(wvw_win);
             hb_gt_wvw_CreateCaret(wvw_win);
          }
       }
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -593,17 +519,13 @@ HB_FUNC( WVW_SETDEFCENTREWINDOW )
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
-   if( wvw )
-   {
+   if( wvw ) {
       hb_retl(wvw->fDevCentreWindow);
 
-      if( HB_ISLOG(1) )
-      {
+      if( HB_ISLOG(1) ) {
          wvw->fDevCentreWindow = hb_parl(1);
       }
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -619,17 +541,13 @@ HB_FUNC( WVW_SETDEFHCENTREWINDOW )
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
-   if( wvw )
-   {
+   if( wvw ) {
       hb_retl(wvw->fDevHCentreWindow);
 
-      if( HB_ISLOG(1) )
-      {
+      if( HB_ISLOG(1) ) {
          wvw->fDevHCentreWindow = hb_parl(1);
       }
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -645,17 +563,13 @@ HB_FUNC( WVW_SETDEFVCENTREWINDOW )
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
-   if( wvw )
-   {
+   if( wvw ) {
       hb_retl(wvw->fDevVCentreWindow);
 
-      if( HB_ISLOG(1) )
-      {
+      if( HB_ISLOG(1) ) {
          wvw->fDevVCentreWindow = hb_parl(1);
       }
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -674,17 +588,13 @@ HB_FUNC( WVW_SETDEFLINESPACING )
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
-   if( wvw )
-   {
+   if( wvw ) {
       hb_retni(wvw->iDefLineSpacing);
 
-      if( HB_ISNUM(1) && hb_parni(1) >= 0 && hb_parni(1) <= 40 && /* nobody is crazy enough to use > 40 */ fmod(hb_parnd(1), 2) == 0 )
-      {
+      if( HB_ISNUM(1) && hb_parni(1) >= 0 && hb_parni(1) <= 40 && /* nobody is crazy enough to use > 40 */ fmod(hb_parnd(1), 2) == 0 ) {
          wvw->iDefLineSpacing = hb_parni(1);
       }
-   }
-   else
-   {
+   } else {
       hb_retni(0);
    }
 }
@@ -704,17 +614,13 @@ HB_FUNC( WVW_SETDEFLSPACECOLOR )
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
-   if( wvw )
-   {
+   if( wvw ) {
       hb_retni(wvw->iDefLSpaceColor);
 
-      if( HB_ISNUM(1) && hb_parni(1) >= -1 && hb_parni(1) <= 15 )
-      {
+      if( HB_ISNUM(1) && hb_parni(1) >= -1 && hb_parni(1) <= 15 ) {
          wvw->iDefLSpaceColor = hb_parni(1);
       }
-   }
-   else
-   {
+   } else {
       hb_retni(0);
    }
 }
@@ -734,24 +640,19 @@ HB_FUNC( WVW_SETLSPACECOLOR )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win )
-   {
+   if( wvw_win ) {
       int iOldValue = wvw_win->iLSpaceColor;
 
       hb_retni(iOldValue);
 
-      if( HB_ISNUM(2) && hb_parni(2) >= -1 && hb_parni(2) <= 15 )
-      {
+      if( HB_ISNUM(2) && hb_parni(2) >= -1 && hb_parni(2) <= 15 ) {
          wvw_win->iLSpaceColor = hb_parni(2);
 
-         if( wvw_win->iLSpaceColor != iOldValue )
-         {
+         if( wvw_win->iLSpaceColor != iOldValue ) {
             hb_gt_wvw_SetInvalidRect(wvw_win, 0, 0, wvw_win->COLS - 1, wvw_win->ROWS - 1);
          }
       }
-   }
-   else
-   {
+   } else {
       hb_retni(0);
    }
 }
@@ -774,17 +675,13 @@ HB_FUNC( WVW_ALLOWNONTOPEVENT )
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
-   if( wvw )
-   {
+   if( wvw ) {
       hb_retl(wvw->fAllowNonTop);
 
-      if( HB_ISLOG(1) )
-      {
+      if( HB_ISLOG(1) ) {
          wvw->fAllowNonTop = hb_parl(1);
       }
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -806,17 +703,13 @@ HB_FUNC( WVW_RECURSECBLOCK )
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
-   if( wvw )
-   {
+   if( wvw ) {
       hb_retl(wvw->fRecurseCBlock);
 
-      if( HB_ISLOG(1) )
-      {
+      if( HB_ISLOG(1) ) {
          wvw->fRecurseCBlock = hb_parl(1);
       }
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -832,17 +725,13 @@ HB_FUNC( WVW_NOSTARTUPSUBWINDOW )
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
-   if( wvw )
-   {
+   if( wvw ) {
       hb_retl(wvw->fNOSTARTUPSUBWINDOW);
 
-      if( HB_ISLOG(1) )
-      {
+      if( HB_ISLOG(1) ) {
          wvw->fNOSTARTUPSUBWINDOW = hb_parl(1);
       }
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -856,8 +745,7 @@ HB_FUNC( WVW_SETWINDOWCENTRE )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win )
-   {
+   if( wvw_win ) {
       hb_gt_wvw_SetCentreWindow(wvw_win, hb_parl(2), hb_parl(3));
    }
 }
@@ -871,14 +759,11 @@ HB_FUNC( WVW_ENABLESHORTCUTS )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win )
-   {
+   if( wvw_win ) {
       hb_retl(wvw_win->EnableShortCuts);
 
       wvw_win->EnableShortCuts = hb_parldef(2, true);
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -887,14 +772,11 @@ HB_FUNC( WVW_SETALTF4CLOSE )
 {
    PWVW_GLO wvw = hb_gt_wvw();
 
-   if( wvw )
-   {
+   if( wvw ) {
       hb_retl(wvw->a.AltF4Close);
 
       wvw->a.AltF4Close = hb_parl(1);
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -910,8 +792,7 @@ HB_FUNC( WVW_INVALIDATERECT )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win )
-   {
+   if( wvw_win ) {
       int iTop    = hb_parni(2);
       int iLeft   = hb_parni(3);
       int iBottom = hb_parni(4);
@@ -940,8 +821,7 @@ HB_FUNC( WVW_CLIENTTOSCREEN )
    PHB_ITEM aXY = hb_itemArrayNew(2);
    POINT    xy{};
 
-   if( wvw_win )
-   {
+   if( wvw_win ) {
       int iTop  = hb_parni(2);
       int iLeft = hb_parni(3);
 

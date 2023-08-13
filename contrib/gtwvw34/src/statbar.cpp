@@ -63,20 +63,16 @@ HB_FUNC( WVW_SBCREATE )
    PWVW_GLO wvw = hb_gt_wvw();
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw && wvw_win && wvw_win->hStatusBar == nullptr )
-   {
+   if( wvw && wvw_win && wvw_win->hStatusBar == nullptr ) {
       HWND hWnd = CreateStatusWindow(WS_CHILD | WS_VISIBLE | WS_BORDER | SBT_TOOLTIPS, nullptr, wvw_win->hWnd, WVW_ID_BASE_STATUSBAR + wvw_win->nWinId);
-      if( hWnd )
-      {
-         if( wvw_win->hSBfont == nullptr )
-         {
+      if( hWnd ) {
+         if( wvw_win->hSBfont == nullptr ) {
             wvw_win->hSBfont = CreateFontIndirect(&wvw->lfSB);
          }
 
          RECT rSB{};
 
-         if( GetClientRect(hWnd, &rSB) )
-         {
+         if( GetClientRect(hWnd, &rSB) ) {
             wvw_win->iSBHeight = rSB.bottom;
          }
 
@@ -91,9 +87,7 @@ HB_FUNC( WVW_SBCREATE )
       }
 
       hbwapi_ret_raw_HANDLE(hWnd);
-   }
-   else
-   {
+   } else {
       hbwapi_ret_raw_HANDLE(nullptr);
    }
 }
@@ -106,10 +100,8 @@ HB_FUNC( WVW_SBDESTROY )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win && wvw_win->hStatusBar != nullptr )
-   {
-      if( wvw_win->hSBfont )
-      {
+   if( wvw_win && wvw_win->hStatusBar != nullptr ) {
+      if( wvw_win->hSBfont ) {
          DeleteObject(wvw_win->hSBfont);
          wvw_win->hSBfont = nullptr;
       }
@@ -139,16 +131,14 @@ HB_FUNC( WVW_SBADDPART )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
    HWND hWnd;
 
-   if( wvw_win && (hWnd = wvw_win->hStatusBar) != nullptr )
-   {
+   if( wvw_win && (hWnd = wvw_win->hStatusBar) != nullptr ) {
       int piArray[WVW_MAX_STATUS_PARTS];
       int iNumOfParts;
       WORD displayFlags = static_cast<WORD>(hb_parnl(4));
       bool fResetParts = hb_parl(5);
       int iWidth = hb_parni(3) <= 0 ? 5 * WVW_SPACE_BETWEEN_PARTS : hb_parni(3);
 
-      if( HB_ISCHAR(2) )
-      {
+      if( HB_ISCHAR(2) ) {
          HDC hDCSB = GetDC(hWnd);
 
          HB_SIZE nLen;
@@ -159,8 +149,7 @@ HB_FUNC( WVW_SBADDPART )
 
          SelectObject(hDCSB, reinterpret_cast<HFONT>(SendMessage(hWnd, WM_GETFONT, 0, 0)));
 
-         if( GetTextExtentPoint32(hDCSB, szText, static_cast<int>(nLen + 1), &size) )
-         {
+         if( GetTextExtentPoint32(hDCSB, szText, static_cast<int>(nLen + 1), &size) ) {
             iWidth = size.cx;
          }
 
@@ -169,12 +158,9 @@ HB_FUNC( WVW_SBADDPART )
          ReleaseDC(hWnd, hDCSB);
       }
 
-      if( !fResetParts )
-      {
+      if( !fResetParts ) {
          iNumOfParts = static_cast<int>(SendMessage(hWnd, SB_GETPARTS, HB_SIZEOFARRAY(piArray) - 1, reinterpret_cast<LPARAM>(static_cast<LPINT>(piArray))));
-      }
-      else
-      {
+      } else {
          iNumOfParts = 0;
       }
       iNumOfParts++;
@@ -183,18 +169,15 @@ HB_FUNC( WVW_SBADDPART )
       GetClientRect(hWnd, &rSB);
 
       piArray[iNumOfParts - 1] = rSB.right;
-      if( !fResetParts )
-      {
-         for( int n = 0; n < iNumOfParts - 1; n++ )
-         {
+      if( !fResetParts ) {
+         for( int n = 0; n < iNumOfParts - 1; n++ ) {
             piArray[n] -= iWidth + WVW_SPACE_BETWEEN_PARTS;
          }
       }
 
       SendMessage(hWnd, SB_SETPARTS, iNumOfParts, reinterpret_cast<LPARAM>(piArray));
 
-      if( HB_ISCHAR(6) )
-      {
+      if( HB_ISCHAR(6) ) {
          int cy = rSB.bottom - rSB.top - 4;
          int cx = cy;
 
@@ -202,31 +185,26 @@ HB_FUNC( WVW_SBADDPART )
          LPCTSTR szName = HB_PARSTR(6, &hName, nullptr);
 
          HICON hIcon = static_cast<HICON>(LoadImage(0, szName, IMAGE_ICON, cx, cy, LR_LOADFROMFILE | LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT | LR_DEFAULTSIZE));
-         if( hIcon == nullptr )
-         {
+         if( hIcon == nullptr ) {
             hIcon = static_cast<HICON>(LoadImage(GetModuleHandle(nullptr), szName, IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_DEFAULTSIZE));
          }
 
          hb_strfree(hName);
 
-         if( hIcon != nullptr )
-         {
+         if( hIcon != nullptr ) {
             SendMessage(hWnd, SB_SETICON, static_cast<WPARAM>(iNumOfParts) - 1, reinterpret_cast<LPARAM>(hIcon));
          }
       }
 
       SendMessage(hWnd, SB_SETTEXT, (iNumOfParts - 1) | displayFlags, 0);
-      if( HB_ISCHAR(7) )
-      {
+      if( HB_ISCHAR(7) ) {
          void * hText;
          SendMessage(hWnd, SB_SETTIPTEXT, static_cast<WPARAM>(iNumOfParts - 1), reinterpret_cast<LPARAM>(HB_PARSTR(7, &hText, nullptr)));
          hb_strfree(hText);
       }
 
       hb_retni(iNumOfParts);
-   }
-   else
-   {
+   } else {
       hb_retni(0);
    }
 }
@@ -243,18 +221,15 @@ HB_FUNC( WVW_SBREFRESH )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
    HWND hWnd;
 
-   if( wvw_win && (hWnd = wvw_win->hStatusBar) != nullptr )
-   {
+   if( wvw_win && (hWnd = wvw_win->hStatusBar) != nullptr ) {
       int piArray[WVW_MAX_STATUS_PARTS];
       int iNumOfParts = static_cast<int>(SendMessage(hWnd, SB_GETPARTS, HB_SIZEOFARRAY(piArray), reinterpret_cast<LPARAM>(static_cast<LPINT>(piArray))));
-      if( iNumOfParts > 0 )
-      {
+      if( iNumOfParts > 0 ) {
          RECT rSB{};
          GetClientRect(hWnd, &rSB);
          int iDiff = rSB.right - piArray[iNumOfParts - 1];
 
-         for( int n = 0; n <= iNumOfParts - 1; n++ )
-         {
+         for( int n = 0; n <= iNumOfParts - 1; n++ ) {
             piArray[n] += iDiff;
          }
 
@@ -275,38 +250,28 @@ HB_FUNC( WVW_SBSETTEXT )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win )
-   {
+   if( wvw_win ) {
       int iPart = hb_parnidef(2, 1);
 
       void * hText;
 
-      if( HB_ISCHAR(4) )
-      {
+      if( HB_ISCHAR(4) ) {
          wvw_win->cSBColorForeground = strtol(hb_parc(4), nullptr, 10);
-      }
-      else if( HB_ISNUM(4) )
-      {
+      } else if( HB_ISNUM(4) ) {
          wvw_win->cSBColorForeground = hbwapi_par_COLORREF(4);
       }
 
-      if( HB_ISCHAR(5) )
-      {
+      if( HB_ISCHAR(5) ) {
          wvw_win->cSBColorBackground = strtol(hb_parc(5), nullptr, 10);
-      }
-      else if( HB_ISNUM(5) )
-      {
+      } else if( HB_ISNUM(5) ) {
          wvw_win->cSBColorBackground = hbwapi_par_COLORREF(5);
       }
 
-      if( iPart == 0 && (wvw_win->cSBColorForeground || wvw_win->cSBColorBackground) )
-      {
+      if( iPart == 0 && (wvw_win->cSBColorForeground || wvw_win->cSBColorBackground) ) {
          wvw_win->fSBPaint = true;
          SendMessage(wvw_win->hStatusBar, SB_SETTEXT, SBT_OWNERDRAW, reinterpret_cast<LPARAM>(HB_PARSTRDEF(3, &hText, nullptr)));
          hb_gt_wvw_ProcessMessages(wvw_win);
-      }
-      else
-      {
+      } else {
          SendMessage(wvw_win->hStatusBar, SB_SETTEXT, iPart, reinterpret_cast<LPARAM>(HB_PARSTRDEF(3, &hText, nullptr)));
       }
 
@@ -322,8 +287,7 @@ HB_FUNC( WVW_SBGETTEXT )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win )
-   {
+   if( wvw_win ) {
       int iPart = hb_parnidef(2, 1);
       WORD nLen = LOWORD(SendMessage(wvw_win->hStatusBar, SB_GETTEXTLENGTH, static_cast<WPARAM>(iPart), 0));
       TCHAR * szText = new TCHAR[nLen + 1];
@@ -341,8 +305,7 @@ HB_FUNC( WVW_SBGETPARTS )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win )
-   {
+   if( wvw_win ) {
       hb_retni(static_cast<int>(SendMessage(wvw_win->hStatusBar, SB_GETPARTS, WVW_MAX_STATUS_PARTS, 0)));
    }
 }
@@ -356,8 +319,7 @@ HB_FUNC( WVW_SBSETFONT )
    PWVW_GLO wvw = hb_gt_wvw();
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw && wvw_win )
-   {
+   if( wvw && wvw_win ) {
       bool fResult = true;
 
       wvw->lfSB.lfHeight         = hb_parnldef(3, wvw_win->fontHeight - 2);
@@ -372,31 +334,24 @@ HB_FUNC( WVW_SBSETFONT )
       wvw->lfSB.lfCharSet        = DEFAULT_CHARSET;
       wvw->lfSB.lfPitchAndFamily = FF_DONTCARE;
 
-      if( HB_ISCHAR(2) )
-      {
+      if( HB_ISCHAR(2) ) {
          HB_ITEMCOPYSTR(hb_param(2, Harbour::Item::STRING), wvw->lfSB.lfFaceName, HB_SIZEOFARRAY(wvw->lfSB.lfFaceName));
          wvw_win->fontFace[HB_SIZEOFARRAY(wvw->lfSB.lfFaceName) - 1] = TEXT('\0');
       }
 
-      if( wvw_win->hSBfont )
-      {
+      if( wvw_win->hSBfont ) {
          HFONT hOldFont = wvw_win->hSBfont;
          HFONT hFont = CreateFontIndirect(&wvw->lfSB);
-         if( hFont )
-         {
+         if( hFont ) {
             wvw_win->hSBfont = hFont;
             DeleteObject(hOldFont);
-         }
-         else
-         {
+         } else {
             fResult = false;
          }
       }
 
       hb_retl(fResult);
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
