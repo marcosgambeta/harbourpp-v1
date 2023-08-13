@@ -1811,9 +1811,8 @@ HB_FUNC( WVW_SETPEN )
 
    if( hPen ) {
       /* 20040923, was:
-         if ( s_pWvwData->s_pWindows[usWinNum]->currentPen )
-         {
-         DeleteObject(static_cast<HPEN>(s_pWvwData->s_pWindows[usWinNum]->currentPen));
+         if( s_pWvwData->s_pWindows[usWinNum]->currentPen ) {
+            DeleteObject(static_cast<HPEN>(s_pWvwData->s_pWindows[usWinNum]->currentPen));
          }
          s_pWvwData->s_pWindows[usWinNum]->currentPen = hPen;
        */
@@ -1856,9 +1855,8 @@ HB_FUNC( WVW_SETBRUSH )
 
    if( hBrush ) {
       /* 20040923,was:
-         if ( s_pWvwData->s_pWindows[usWinNum]->currentBrush )
-         {
-         DeleteObject(static_cast<HBRUSH>(s_pWvwData->s_pWindows[usWinNum]->currentBrush));
+         if( s_pWvwData->s_pWindows[usWinNum]->currentBrush ) {
+            DeleteObject(static_cast<HBRUSH>(s_pWvwData->s_pWindows[usWinNum]->currentBrush));
          }
          s_pWvwData->s_pWindows[usWinNum]->currentBrush = hBrush;
        */

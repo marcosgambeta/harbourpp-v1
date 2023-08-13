@@ -61,7 +61,7 @@ HB_FUNC( WVW_SETPOPUPMENU )
    HMENU      hPopup   = pWinData->hPopup;
 
    pWinData->hPopup = reinterpret_cast<HMENU>(HB_PARHANDLE(2));
-   /* if ( hPopup ) */
+   /* if( hPopup ) */
    {
       HB_RETHANDLE(hPopup);
    }

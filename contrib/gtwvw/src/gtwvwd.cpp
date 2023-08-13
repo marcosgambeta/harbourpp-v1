@@ -1126,8 +1126,7 @@ static BOOL hb_gt_wvwGetCharFromInputQueue(int * c)
  * c = 0;
 
    iNextPos = ( s_pWvwData->s_pWindows[s_pWvwData->s_usNumWindows-1]->keyPointerOut >= WVW_CHAR_QUEUE_SIZE - 1 ) ? 0 : s_pWvwData->s_pWindows[s_pWvwData->s_usNumWindows-1]->keyPointerOut+1 ;
-   if ( iNextPos != s_pWvwData->s_pWindows[s_pWvwData->s_usNumWindows-1]->keyPointerIn )
-   {
+   if( iNextPos != s_pWvwData->s_pWindows[s_pWvwData->s_usNumWindows-1]->keyPointerIn ) {
  * c = s_pWvwData->s_pWindows[s_pWvwData->s_usNumWindows-1]->Keys[iNextPos] ;
     s_pWvwData->s_pWindows[s_pWvwData->s_usNumWindows-1]->keyPointerOut = iNextPos ;
     bRet =  TRUE;
@@ -1459,8 +1458,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          }
          break;
 
-      case HB_GTI_DESKTOPWIDTH:
-      {
+      case HB_GTI_DESKTOPWIDTH: {
          RECT rDesk{};
          HWND hDesk;
 
@@ -1470,8 +1468,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          break;
       }
 
-      case HB_GTI_DESKTOPHEIGHT:
-      {
+      case HB_GTI_DESKTOPHEIGHT: {
          /* NOTE 2004-06-18 currently includes StatusBar and ToolBar, if any.
           * TODO            Think: should it return chars area only?
           * SEEALSO         hb_gt_wvwCalcPixelHeight() - usSBHeight - usTBHeight
@@ -1484,8 +1481,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          break;
       }
 
-      case HB_GTI_DESKTOPCOLS:
-      {
+      case HB_GTI_DESKTOPCOLS: {
          RECT rDesk{};
          HWND hDesk;
 
@@ -1496,8 +1492,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          break;
       }
 
-      case HB_GTI_DESKTOPROWS:
-      {
+      case HB_GTI_DESKTOPROWS: {
          /* NOTE 2004-06-18 currently includes StatusBar and ToolBar, if any.
           * TODO            I Think it should it return chars area only?
           * SEEALSO         hb_gt_wvwCalcPixelHeight() - usSBHeight - usTBHeight
@@ -1530,8 +1525,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          }
          break;
 
-      case HB_GTI_ICONFILE:
-      {
+      case HB_GTI_ICONFILE: {
          HICON hIcon = nullptr;
          if( hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING ) {
             void * hImageName;
@@ -1542,8 +1536,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          break;
       }
 
-      case HB_GTI_ICONRES:
-      {
+      case HB_GTI_ICONRES: {
          HICON hIcon = nullptr;
          if( hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING ) {
             LPSTR lpIcon = const_cast<LPSTR>(hb_itemGetCPtr(pInfo->pNewVal));
@@ -1597,8 +1590,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          }
          break;
 
-      case HB_GTI_SCREENSIZE:
-      {
+      case HB_GTI_SCREENSIZE: {
          int iX, iY;
 
          if( !pInfo->pResult ) {
@@ -1714,8 +1706,7 @@ static int hb_gt_wvw_gfxPrimitive(PHB_GT pGT, int iType, int iTop, int iLeft, in
 
          iRet = 1;
          break;
-      case HB_GFX_RECT:
-      {
+      case HB_GFX_RECT: {
          RECT r{};
          r.left   = iLeft;
          r.top    = iTop;
@@ -1851,8 +1842,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPAR
 
             /*
 
-               if (s_pWvwData->s_sApp->pFunc[iIndex]->type == Harbour::Item::BLOCK)
-               {
+               if( s_pWvwData->s_sApp->pFunc[iIndex]->type == Harbour::Item::BLOCK ) {
                HB_ITEM hihDlg, himessage, hiwParam, hilParam;
                PHB_ITEM pReturn;
 
@@ -1978,8 +1968,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPAR
          case 2:
             /* eval the codeblock */
             /*
-               if (s_pWvwData->s_sApp->pFuncModal[iIndex]->type == Harbour::Item::BLOCK )
-               {
+               if( s_pWvwData->s_sApp->pFuncModal[iIndex]->type == Harbour::Item::BLOCK ) {
                HB_ITEM hihDlg, himessage, hiwParam, hilParam;
                PHB_ITEM pReturn;
 
@@ -2498,8 +2487,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
 
          return bRet;
 
-      case WM_COMMAND: /* handle menu items */
-      {
+      case WM_COMMAND: { /* handle menu items */
 
          BOOL bTopMost = (s_pWvwData->s_usNumWindows == usWinNum + 1);
          int  iEvent   = static_cast<int>(HIWORD(wParam));
@@ -2646,8 +2634,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
 
          return 0;
 
-      case WM_PAINT:
-      {
+      case WM_PAINT: {
          PAINTSTRUCT ps{};
          HDC         hdc;
          USHORT      irow;
@@ -2945,11 +2932,10 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
          return 0;
 
       case WM_KEYDOWN:
-      case WM_SYSKEYDOWN:
+      case WM_SYSKEYDOWN: {
 /*    case WM_CHAR: */
          /* case WM_SYSCHAR: */
 
-      {
          BOOL bAlt = GetKeyState(VK_MENU) & 0x8000;
 
          if( !hb_gt_wvwAcceptingInput() ) {
@@ -3031,8 +3017,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
             case VK_F12:
                hb_gt_wvwTranslateKey(K_F12, K_SH_F12, K_ALT_F12, K_CTRL_F12);
                break;
-            default:
-            {
+            default: {
                BOOL bCtrl     = GetKeyState(VK_CONTROL) & 0x8000;
                BOOL bShift    = GetKeyState(VK_SHIFT) & 0x8000;
                int  iScanCode = HIWORD(lParam) & 0xFF;
@@ -3081,8 +3066,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
          return 0;
       }
 
-      case WM_CHAR:
-      {
+      case WM_CHAR: {
          BOOL bCtrl     = GetKeyState(VK_CONTROL) & 0x8000;
          int  iScanCode = HIWORD(lParam) & 0xFF;
          int  c         = static_cast<int>(wParam);
@@ -3346,8 +3330,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
          return 0;
 
       case WM_HSCROLL:
-      case WM_VSCROLL:
-      {
+      case WM_VSCROLL: {
          HWND hWndCtrl = reinterpret_cast<HWND>(lParam);
          UINT uiXBid;
          byte bStyle;
@@ -4546,8 +4529,7 @@ static void hb_gt_wvwMouseEvent(WIN_DATA * pWindowData, HWND hWnd, UINT message,
          keyCode = K_RDBLCLK;
          break;
 
-      case WM_LBUTTONDOWN:
-      {
+      case WM_LBUTTONDOWN: {
          HWND hWndFocus = static_cast<HWND>(GetFocus());
 
          if( GetControlClass(pWindowData->byWinId, hWndFocus) > 0 ) {
@@ -4672,8 +4654,7 @@ static void hb_gt_wvwTBMouseEvent(WIN_DATA * pWindowData, HWND hWnd, UINT messag
          keyCode = K_RDBLCLK;
          break;
 
-      case WM_LBUTTONDOWN:
-      {
+      case WM_LBUTTONDOWN: {
          HWND hWndFocus = static_cast<HWND>(GetFocus());
 
          if( GetControlClass(pWindowData->byWinId, hWndFocus) > 0 ) {
@@ -5033,10 +5014,8 @@ static void hb_gt_wvwCloseWindow(void) /*assume s_pWvwData->s_usNumWindows >= 2 
 
    /*
 
-      if (s_pWvwData->s_usNumWindows == 1)
-      {
-      if (!UnregisterClass( s_pWvwData->szSubWinName,s_pWvwData->hInstance ))
-      {
+      if( s_pWvwData->s_usNumWindows == 1 ) {
+      if( !UnregisterClass(s_pWvwData->szSubWinName,s_pWvwData->hInstance) ) {
        MessageBox(NULL, TEXT("Failed UnregisterClass"), s_pWvwData->szAppName, MB_ICONERROR);
       }
       }
@@ -8655,8 +8634,7 @@ LRESULT CALLBACK hb_gt_wvwTBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
          return 0;
          TB_ISBUTTONHIGHLIGHTED
 #endif
-      case WM_PAINT:
-      {
+      case WM_PAINT: {
 
          HGDIOBJ hOldObj;
          HDC     hdc;
@@ -9137,8 +9115,7 @@ LRESULT CALLBACK hb_gt_wvwBtnProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
    switch( message ) {
 
       case WM_KEYDOWN:
-      case WM_SYSKEYDOWN:
-      {
+      case WM_SYSKEYDOWN: {
          BOOL bAlt   = GetKeyState(VK_MENU) & 0x8000;
          BOOL bCtrl  = GetKeyState(VK_CONTROL) & 0x8000;
          BOOL bShift = GetKeyState(VK_SHIFT) & 0x8000;
@@ -9156,8 +9133,7 @@ LRESULT CALLBACK hb_gt_wvwBtnProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
          switch( c ) {
 
             /*
-               case VK_RETURN:
-               {
+               case VK_RETURN: {
 
                SendMessage(hWnd, BM_CLICK, 0, 0);
 
@@ -9356,8 +9332,7 @@ LRESULT CALLBACK hb_gt_wvwCBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
    switch( message ) {
 
       case WM_KEYDOWN:
-      case WM_SYSKEYDOWN:
-      {
+      case WM_SYSKEYDOWN: {
          BOOL bAlt   = GetKeyState(VK_MENU) & 0x8000;
          BOOL bCtrl  = GetKeyState(VK_CONTROL) & 0x8000;
          BOOL bShift = GetKeyState(VK_SHIFT) & 0x8000;
@@ -9539,8 +9514,7 @@ LRESULT CALLBACK hb_gt_wvwEBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
    iKey = 0;
    switch( message ) {
       case WM_KEYDOWN:
-      case WM_SYSKEYDOWN:
-      {
+      case WM_SYSKEYDOWN: {
          BOOL bAlt = GetKeyState(VK_MENU) & 0x8000;
          int  c    = static_cast<int>(wParam);
          switch( c ) {
@@ -9590,8 +9564,7 @@ LRESULT CALLBACK hb_gt_wvwEBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
          break;
       }
 
-      case WM_CHAR:
-      {
+      case WM_CHAR: {
          BOOL bCtrl     = GetKeyState(VK_CONTROL) & 0x8000;
          int  iScanCode = HIWORD(lParam) & 0xFF;
          int  c         = static_cast<int>(wParam);
@@ -9625,8 +9598,7 @@ LRESULT CALLBACK hb_gt_wvwEBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
          break;
       }
 
-      case WM_SYSCHAR:
-      {
+      case WM_SYSCHAR: {
          int c, iScanCode = HIWORD(lParam) & 0xFF;
          switch( iScanCode ) {
             case  2:
@@ -9777,8 +9749,7 @@ LRESULT CALLBACK hb_gt_wvwEBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
 
    switch( message ) {
       case WM_KEYDOWN:
-      case WM_SYSKEYDOWN:
-      {
+      case WM_SYSKEYDOWN: {
          BOOL bAlt   = GetKeyState(VK_MENU) & 0x8000;
          BOOL bCtrl  = GetKeyState(VK_CONTROL) & 0x8000;
          BOOL bShift = GetKeyState(VK_SHIFT) & 0x8000;
@@ -9854,8 +9825,7 @@ LRESULT CALLBACK hb_gt_wvwEBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
          break;
       }
 
-      case WM_CHAR:
-      {
+      case WM_CHAR: {
          BOOL bCtrl = GetKeyState(VK_CONTROL) & 0x8000;
          int  c     = static_cast<int>(wParam);
          switch( c ) {

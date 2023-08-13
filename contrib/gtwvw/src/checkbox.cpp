@@ -312,14 +312,12 @@ HB_FUNC( WVW_CXSETFONT )
          /*CONTROL_DATA * pcd = pWindowData->pcdCtrlList;
 
             while (pcd) {
-            if ((pcd->byCtrlClass == WVW_CONTROL_PUSHBUTTON) &&
-               ((HFONT) SendMessage(pcd->hWndCtrl, WM_GETFONT, (WPARAM) 0, (LPARAM) 0) == hOldFont)
-              )
-            {
-              SendMessage(pcd->hWndCtrl, WM_SETFONT, (WPARAM) hFont, (LPARAM) TRUE);
-            }
+               if( (pcd->byCtrlClass == WVW_CONTROL_PUSHBUTTON) &&
+                  ((HFONT) SendMessage(pcd->hWndCtrl, WM_GETFONT, (WPARAM) 0, (LPARAM) 0) == hOldFont) ) {
+                 SendMessage(pcd->hWndCtrl, WM_SETFONT, (WPARAM) hFont, (LPARAM) TRUE);
+               }
 
-            pcd = pcd->pNext;
+               pcd = pcd->pNext;
             } */
 
          pWindowData->hCXfont = hFont;
