@@ -24,14 +24,14 @@
 
 #include "hbvm.hpp"
 
-typedef struct
+struct amfContext
 {
    char *   cBuf;
    HB_ISIZ  position;
    HB_ISIZ  length;
-   HB_BOOL  use_refs;
-   HB_BOOL  use_strstr;
-   HB_BOOL  str_rtrim;
+   bool     use_refs;
+   bool     use_strstr;
+   bool     str_rtrim;
    HB_SIZE  strstr_count; /* used only when str_ref is disabled */
    HB_SIZE  objnref_count; /* items that should normally appear in obj_ref, but GC says that they are not referenced */
    PHB_ITEM obj_ref;
@@ -39,66 +39,68 @@ typedef struct
    PHB_ITEM strstr_ref;
    PHB_ITEM class_ref;
    PHB_ITEM conv_function;
-   HB_BOOL  encode_ba;
-} amfContext;
+   bool     encode_ba;
+};
 
-static HB_BOOL amf3_encode(amfContext * context, PHB_ITEM pItem);
-extern HB_BOOL hbamf_is_cls_externalizable(HB_USHORT uiClass);
+static bool amf3_encode(amfContext * context, PHB_ITEM pItem);
+extern bool hbamf_is_cls_externalizable(HB_USHORT uiClass);
 
 static void _ref_realItemPtr(PHB_ITEM pKey, PHB_ITEM pItem)
 {
-   if( HB_IS_STRING(pItem) )
+   if( HB_IS_STRING(pItem) ) {
       hb_itemPutPtr(pKey, const_cast<char*>(hb_itemGetCPtr(pItem)));
-   else if( HB_IS_ARRAY(pItem) )
+   } else if( HB_IS_ARRAY(pItem) ) {
       hb_itemPutPtr(pKey, hb_arrayId(pItem));
-   else if( HB_IS_HASH(pItem) )
+   } else if( HB_IS_HASH(pItem) ) {
       hb_itemPutPtr(pKey, hb_hashId(pItem));
-   else if( HB_IS_DATETIME(pItem) )
+   } else if( HB_IS_DATETIME(pItem) ) {
       hb_itemCopy(pKey, pItem);
+   }
 }
 
-static HB_ISIZ bufferGrow( amfContext * context, HB_ISIZ len )
+static HB_ISIZ bufferGrow(amfContext * context, HB_ISIZ len)
 {
    HB_ISIZ new_len     = context->position + len;
    HB_ISIZ current_len = context->length;
 
-   while( new_len > current_len )
-   {
+   while( new_len > current_len ) {
       current_len *= 2;
    }
-   
-   if( current_len != context->length )
-   {
+
+   if( current_len != context->length ) {
       context->cBuf = static_cast<char*>(hb_xrealloc(context->cBuf, sizeof(char) * current_len));
-      if( !context->cBuf )
+      if( !context->cBuf ) {
          return -1;
+      }
 
       context->length = current_len;
    }
    return current_len;
 }
 
-static int writeByte( amfContext * context, char byte )
+static int writeByte(amfContext * context, char byte)
 {
-   if( bufferGrow( context, 1 ) == -1 )
+   if( bufferGrow(context, 1) == -1 ) {
       return 0;
+   }
 
    memcpy(context->cBuf + context->position, &byte, 1);
    context->position += 1;
    return 1;
 }
 
-static HB_ISIZ writeBuffer( amfContext * context, const char * str, HB_ISIZ len )
+static HB_ISIZ writeBuffer(amfContext * context, const char * str, HB_ISIZ len)
 {
-   if( bufferGrow( context, len ) == -1 )
+   if( bufferGrow(context, len) == -1 ) {
       return 0;
+   }
 
    memcpy(context->cBuf + context->position, str, len);
    context->position += len;
    return len;
 }
 
-static HB_BOOL amfX_encode_double( amfContext * context, double value )
+static bool amfX_encode_double(amfContext * context, double value)
 {
    char   c_value[8];
    char * c_value_ref = &c_value[0];
@@ -110,8 +112,9 @@ static HB_BOOL amfX_encode_double( amfContext * context, double value )
    memcpy(c_value_ref, &value, 8);
 
    #ifdef HB_BIG_ENDIAN
-   if( writeBuffer( context, c_value_ref, 8 ) == 0 )
+   if( writeBuffer(context, c_value_ref, 8) == 0 ) {
       return false;
+   }
    #else
    flipped[0] = c_value[7];
    flipped[1] = c_value[6];
@@ -121,23 +124,25 @@ static HB_BOOL amfX_encode_double( amfContext * context, double value )
    flipped[5] = c_value[2];
    flipped[6] = c_value[1];
    flipped[7] = c_value[0];
-   if( writeBuffer( context, flipped, 8 ) == 0 )
+   if( writeBuffer(context, flipped, 8) == 0 ) {
       return false;
+   }
    #endif
 
    return true;
 }
 
-static HB_BOOL amfX_write_double( amfContext * context, PHB_ITEM pItem )
+static bool amfX_write_double(amfContext * context, PHB_ITEM pItem)
 {
    double d = hb_itemGetND(pItem);
 
-   if( !writeByte( context, DOUBLE_TYPE ) )
+   if( !writeByte(context, DOUBLE_TYPE) ) {
       return false;
+   }
    return amfX_encode_double(context, d);
 }
 
-static HB_BOOL amf3_encode_int( amfContext * context, int value )
+static bool amf3_encode_int(amfContext * context, int value)
 {
    char    tmp[4];
    HB_SIZE tmp_size;
@@ -155,42 +160,36 @@ static HB_BOOL amf3_encode_int( amfContext * context, int value )
     * The int is negative if the 1st bit of the 29 int is set.
     */
    value &= 0x1fffffff; /* Ignore 1st 3 bits of 32-bit int, since we're encoding to 29 bit. */
-   if( value < 0x80 )
-   {
+   if( value < 0x80 ) {
       tmp_size = 1;
       tmp[0] = static_cast<char>(value);  /* TODO: some explicit casts in here to keep the compiler silent */
-   }
-   else if( value < 0x4000 )
-   {
+   } else if( value < 0x4000 ) {
       tmp_size = 2;
       tmp[0] = static_cast<char>((value >> 7) & 0x7f) | 0x80;  /* Shift bits by 7 to fill 1st byte and set next byte flag */
       tmp[1] = static_cast<char>(value) & 0x7f;                      /* Shift bits by 7 to fill 2nd byte, leave next byte flag unset */
-   }
-   else if( value < 0x200000 )
-   {
+   } else if( value < 0x200000 ) {
       tmp_size = 3;
       tmp[0] = static_cast<char>((value >> 14) & 0x7f) | 0x80;
       tmp[1] = static_cast<char>((value >> 7) & 0x7f) | 0x80;
       tmp[2] = static_cast<char>(value) & 0x7f;
-   }
-   else if( value < 0x40000000 )
-   {
+   } else if( value < 0x40000000 ) {
       tmp_size = 4;
       tmp[0] = static_cast<char>((value >> 22) & 0x7f) | 0x80;
       tmp[1] = static_cast<char>((value >> 15) & 0x7f) | 0x80;
       tmp[2] = static_cast<char>((value >> 8) & 0x7f) | 0x80; /* Shift bits by 8, since we can use all bits in the 4th byte */
       tmp[3] = static_cast<char>(value & 0xff);
+   } else {
+      return false;
    }
-   else
-      return false;
 
-   if( static_cast<HB_SIZE>(writeBuffer(context, tmp, tmp_size)) != tmp_size )
+   if( static_cast<HB_SIZE>(writeBuffer(context, tmp, tmp_size)) != tmp_size ) {
       return false;
+   }
 
    return true;
 }
 
-static HB_BOOL amf3_write_int( amfContext * context, PHB_ITEM pItem )
+static bool amf3_write_int(amfContext * context, PHB_ITEM pItem)
 {
 #ifndef HB_LONG_LONG_OFF
    HB_LONGLONG n = hb_itemGetNLL(pItem);
@@ -198,22 +197,21 @@ static HB_BOOL amf3_write_int( amfContext * context, PHB_ITEM pItem )
    long n = hb_itemGetNL(pItem);
 #endif
 
-   if( n > MIN_INT && n < MAX_INT )
-   {
-      if( !writeByte( context, INT_TYPE ) )
+   if( n > MIN_INT && n < MAX_INT ) {
+      if( !writeByte(context, INT_TYPE) ) {
          return false;
+      }
       return amf3_encode_int(context, static_cast<int>(n));
-   }
-   else
-   {
-      if( !writeByte( context, DOUBLE_TYPE ) )
+   } else {
+      if( !writeByte(context, DOUBLE_TYPE) ) {
          return false;
+      }
       return amfX_encode_double(context, static_cast<double>(n));
    }
 }
 
 #if 0
-static HB_BOOL amf3_encode_float( amfContext * context, PHB_ITEM pItem )
+static bool amf3_encode_float(amfContext * context, PHB_ITEM pItem)
 {
    float n = static_cast<float>(hb_itemGetND(pItem));
 
@@ -221,34 +219,38 @@ static HB_BOOL amf3_encode_float( amfContext * context, PHB_ITEM pItem )
 }
 #endif
 
-static HB_BOOL amf3_encode_nil( amfContext * context )
+static bool amf3_encode_nil(amfContext * context)
 {
    return writeByte(context, NULL_TYPE);
 }
 
-static HB_BOOL amf3_encode_bool( amfContext * context, PHB_ITEM pItem )
+static bool amf3_encode_bool(amfContext * context, PHB_ITEM pItem)
 {
-   if( hb_itemGetL(pItem) )
+   if( hb_itemGetL(pItem) ) {
       return writeByte(context, TRUE_TYPE);
-   else
+   } else {
       return writeByte(context, FALSE_TYPE);
+   }
 }
 
-static HB_BOOL amf3_encode_string( amfContext * context, PHB_ITEM pItem )
+static bool amf3_encode_string(amfContext * context, PHB_ITEM pItem)
 {
-   void *       hStr = nullptr;       /* = hb_itemGetCPtr(pItem); not needed with UTF-8 conversion */
-   HB_SIZE      len;
+   void * hStr = nullptr;       /* = hb_itemGetCPtr(pItem); not needed with UTF-8 conversion */
+   HB_SIZE len;
    const char * utf8str = hb_itemGetStrUTF8(pItem, &hStr, &len);
-   HB_BOOL      result;
+   bool result;
 
-   if( !hStr )
+   if( !hStr ) {
       return false;
+   }
 
-   if( context->str_rtrim )
+   if( context->str_rtrim ) {
       len = hb_strRTrimLen(utf8str, len, false);
+   }
 
-   if( !amf3_encode_int( context, ( ( int ) len << 1 ) | REFERENCE_BIT ) )
+   if( !amf3_encode_int(context, (static_cast<int>(len) << 1) | REFERENCE_BIT) ) {
       return false;
+   }
 
    result = (writeBuffer(context, utf8str, len) != 0);
 
@@ -257,36 +259,34 @@ static HB_BOOL amf3_encode_string( amfContext * context, PHB_ITEM pItem )
    return result;
 }
 
-static int amf3_add_index( amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem )
+static int amf3_add_index(amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem)
 {
    PHB_ITEM pVal;
    int      result = 0;
 
-   if( context->use_refs )
-   {
+   if( context->use_refs ) {
       PHB_ITEM pKey = hb_itemNew(nullptr);
 
       _ref_realItemPtr(pKey, pItem);
-      if( !HB_IS_POINTER(pKey) && !HB_IS_DATETIME(pKey) )
-      {
+      if( !HB_IS_POINTER(pKey) && !HB_IS_DATETIME(pKey) ) {
          hb_itemRelease(pKey);
          return -1;
       }
 
-      if( pHash == context->str_ref )
+      if( pHash == context->str_ref ) {
          result = static_cast<int>(hb_hashLen(pHash) + context->strstr_count);
          /* ->strstr_count > 0 only when some inner context inside
           * user-defined conversion function uses only strstr mode
           * like amf3_FromWA() function f.e. */
-      else if( pHash == context->obj_ref )
+      } else if( pHash == context->obj_ref ) {
          result = static_cast<int>(hb_hashLen(pHash) + context->objnref_count);
-      else
+      } else {
          result = static_cast<int>(hb_hashLen(pHash));
+      }
 
       pVal = hb_itemPutNS(nullptr, result);
 
-      if( !hb_hashAdd(pHash, pKey, pVal) )
-      {
+      if( !hb_hashAdd(pHash, pKey, pVal) ) {
          hb_itemRelease(pKey);
          hb_itemRelease(pVal);
          return -1;
@@ -297,122 +297,122 @@ static int amf3_add_index( amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem 
 
    }
 
-   if( (HB_IS_STRING(pItem) || HB_IS_MEMO(pItem)) && context->use_strstr )
-   {
+   if( (HB_IS_STRING(pItem) || HB_IS_MEMO(pItem)) && context->use_strstr ) {
       HB_SIZE str_len = hb_itemGetCLen(pItem);
-      if( str_len > 3 && str_len < 32 ) /* do this only for mid-sized strings */
-      {
-         if( !context->use_refs )
+      if( str_len > 3 && str_len < 32 ) { /* do this only for mid-sized strings */
+         if( !context->use_refs ) {
             result = static_cast<int>(context->strstr_count);
+         }
 
          pVal = hb_itemPutNS(nullptr, result); /* put the AMF reference id as value */
          hb_hashAdd(context->strstr_ref, pItem, pVal);
          hb_itemRelease(pVal);
       }
-      if( !context->use_refs )
+      if( !context->use_refs ) {
          context->strstr_count++;
+      }
    }
 
    return result;
 }
 
-static int amf3_get_index( amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem )
+static int amf3_get_index(amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem)
 {
-   if( context->use_refs )
-   {
+   if( context->use_refs ) {
       PHB_ITEM pKey = hb_itemNew(nullptr);
       HB_SIZE nPos;
       PHB_ITEM pVal;
 
       _ref_realItemPtr(pKey, pItem);
-      if( !HB_IS_POINTER(pKey) && !HB_IS_DOUBLE(pKey) )
-      {
+      if( !HB_IS_POINTER(pKey) && !HB_IS_DOUBLE(pKey) ) {
          hb_itemRelease(pKey);
          return -1;
       }
 
-      if( context->objnref_count )
-      {
+      if( context->objnref_count ) {
          pVal = hb_hashGetItemPtr(pHash, pKey, 0);
          hb_itemRelease(pKey);
-         if( pVal )
+         if( pVal ) {
             return static_cast<int>(hb_itemGetNS(pVal));
-      }
-      else if( hb_hashScan(pHash, pKey, &nPos) )
-      {
+         }
+      } else if( hb_hashScan(pHash, pKey, &nPos) ) {
          hb_itemRelease(pKey);
          return static_cast<int>(nPos - 1);
-      }
-      else
+      } else {
          hb_itemRelease(pKey);
+      }
    }
 
-   if( (HB_IS_STRING(pItem) || HB_IS_MEMO(pItem)) && context->use_strstr )
-   {
+   if( (HB_IS_STRING(pItem) || HB_IS_MEMO(pItem)) && context->use_strstr ) {
       HB_SIZE str_len = hb_itemGetCLen(pItem);
-      if( str_len > 3 && str_len < 32 )  /* do this only for mid-sized strings */
-      {
+      if( str_len > 3 && str_len < 32 ) { /* do this only for mid-sized strings */
          PHB_ITEM pStrIdx = hb_hashGetItemPtr(context->strstr_ref, pItem, 0);
-         if( pStrIdx )
+         if( pStrIdx ) {
             return static_cast<int>(hb_itemGetNS(pStrIdx));
+         }
       }
    }
 
    return -1;
 }
 
-static int amf3_encode_reference( amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem, int bit )
+static int amf3_encode_reference(amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem, int bit)
 {
    int idx;
 
-   if( pItem == nullptr )
+   if( pItem == nullptr ) {
       return -1;
+   }
 
    idx = amf3_get_index(context, pHash, pItem);
-   if( idx > -1 )
-   {
-      if( idx < MAX_INT )
-      {
-         if( !amf3_encode_int( context, ( idx << ( bit + 1 ) ) | (0x00 + bit) ) )
+   if( idx > -1 ) {
+      if( idx < MAX_INT ) {
+         if( !amf3_encode_int(context, (idx << (bit + 1)) | (0x00 + bit)) ) {
             return 0;
+         }
          return 1;
       }
    }
 
-   if( amf3_add_index( context, pHash, pItem ) == -1 )
+   if( amf3_add_index(context, pHash, pItem) == -1 ) {
       return 0;
+   }
 
    return -1;
 }
 
-static HB_BOOL amf3_serialize_string( amfContext * context, PHB_ITEM pItem )
+static bool amf3_serialize_string(amfContext * context, PHB_ITEM pItem)
 {
    int     result;
    HB_SIZE len = hb_itemGetCLen(pItem);
 
-   if( len == 0 )
+   if( len == 0 ) {
       return writeByte(context, EMPTY_STRING_TYPE);
-   else if( context->str_rtrim && hb_strRTrimLen( hb_itemGetCPtr(pItem), len, false ) == 0 )
+   } else if( context->str_rtrim && hb_strRTrimLen(hb_itemGetCPtr(pItem), len, false) == 0 ) {
       return writeByte(context, EMPTY_STRING_TYPE);
+   }
 
    result = amf3_encode_reference(context, context->str_ref, pItem, 0);
-   if( result > -1 )
+   if( result > -1 ) {
       return result;
+   }
 
    return amf3_encode_string(context, pItem);
 }
 
 #if 0
-static HB_BOOL amf3_serialize_object_as_string( amfContext * context, PHB_ITEM pItem )
+static bool amf3_serialize_object_as_string(amfContext * context, PHB_ITEM pItem)
 {
    PHB_ITEM pStr;
-   HB_BOOL  result;
+   bool result;
 
-   if( HB_IS_STRING(pItem) || HB_IS_MEMO(pItem) )
+   if( HB_IS_STRING(pItem) || HB_IS_MEMO(pItem) ) {
       return amf3_serialize_string(context, pItem);
+   }
 
-   if( !hb_itemPutC(pStr, hb_itemGetCPtr(pItem)) )
+   if( !hb_itemPutC(pStr, hb_itemGetCPtr(pItem)) ) {
       return false;
+   }
 
    result = amf3_serialize_string(context, pStr);
 
@@ -421,7 +421,7 @@ static HB_BOOL amf3_serialize_object_as_string( amfContext * context, PHB_ITEM p
 }
 #endif
 
-static HB_BOOL amf3_encode_hash( amfContext * context, PHB_ITEM pItem )
+static bool amf3_encode_hash(amfContext * context, PHB_ITEM pItem)
 {
    PHB_ITEM pKey;
    PHB_ITEM pVal;
@@ -429,45 +429,44 @@ static HB_BOOL amf3_encode_hash( amfContext * context, PHB_ITEM pItem )
    HB_ISIZ  len      = hb_hashLen(pItem);
    HB_ISIZ  nIntKeys = 0;
 
-   if( (((hb_hashGetFlags(pItem) & HB_HASH_KEEPORDER) != 0 && HB_IS_INTEGER(hb_hashGetKeyAt(pItem, 1))) || hb_hashGetFlags(pItem) & HB_HASH_KEEPORDER) == 0 )
-   {
-      for( i = 1; i <= len; i++ )
-      {
+   if( (((hb_hashGetFlags(pItem) & HB_HASH_KEEPORDER) != 0 && HB_IS_INTEGER(hb_hashGetKeyAt(pItem, 1))) || hb_hashGetFlags(pItem) & HB_HASH_KEEPORDER) == 0 ) {
+      for( i = 1; i <= len; i++ ) {
          pKey = hb_hashGetKeyAt(pItem, i);
-         if( HB_IS_INTEGER(pKey) )
+         if( HB_IS_INTEGER(pKey) ) {
             nIntKeys++;
+         }
       }
    }
 
-   if( !amf3_encode_int( context, static_cast<int>((nIntKeys << 1) | REFERENCE_BIT) ) )
+   if( !amf3_encode_int(context, static_cast<int>((nIntKeys << 1) | REFERENCE_BIT)) ) {
       return false;
+   }
 
-   for( i = 1; i <= len; i++ )
-   {
+   for( i = 1; i <= len; i++ ) {
       pKey = hb_hashGetKeyAt(pItem, i);
       pVal = hb_hashGetValueAt(pItem, i);
-      if( HB_IS_STRING(pKey) )
-      {
-         if( !amf3_serialize_string( context, pKey ) )
+      if( HB_IS_STRING(pKey) ) {
+         if( !amf3_serialize_string(context, pKey) ) {
             return false;
-         if( !amf3_encode( context, pVal ) )
+         }
+         if( !amf3_encode(context, pVal) ) {
             return false;
+         }
       }
    }
 
-   if( !writeByte( context, EMPTY_STRING_TYPE ) )
+   if( !writeByte(context, EMPTY_STRING_TYPE) ) {
       return false;
+   }
 
-   if( nIntKeys > 0 )
-   {
-      for( i = 1; i <= len; i++ )
-      {
+   if( nIntKeys > 0 ) {
+      for( i = 1; i <= len; i++ ) {
          pKey = hb_hashGetKeyAt(pItem, i);
          pVal = hb_hashGetValueAt(pItem, i);
-         if( HB_IS_INTEGER(pKey) )
-         {
-            if( !amf3_encode( context, pVal ) )
+         if( HB_IS_INTEGER(pKey) ) {
+            if( !amf3_encode(context, pVal) ) {
                return false;
+            }
          }
       }
    }
@@ -475,161 +474,169 @@ static HB_BOOL amf3_encode_hash( amfContext * context, PHB_ITEM pItem )
    return true;
 }
 
-static HB_BOOL amf3_encode_dynamic_dict( amfContext * context, PHB_ITEM pItem )
+static bool amf3_encode_dynamic_dict(amfContext * context, PHB_ITEM pItem)
 {
    HB_ISIZ i;
    HB_ISIZ len = hb_hashLen(pItem);
 
-   for( i = 1; i <= len; i++ )
-   {
+   for( i = 1; i <= len; i++ ) {
       PHB_ITEM pKey = hb_hashGetKeyAt(pItem, i);
       PHB_ITEM pVal = hb_hashGetValueAt(pItem, i);
-      if( HB_IS_STRING(pKey) )
-      {
-         if( !amf3_serialize_string( context, pKey ) )
+      if( HB_IS_STRING(pKey) ) {
+         if( !amf3_serialize_string(context, pKey) ) {
             return false;
-         if( !amf3_encode( context, pVal ) )
+         }
+         if( !amf3_encode(context, pVal) ) {
             return false;
+         }
       }
    }
 
-   if( !writeByte( context, EMPTY_STRING_TYPE ) )
+   if( !writeByte(context, EMPTY_STRING_TYPE) ) {
       return false;
+   }
 
    return true;
 }
 
-static HB_BOOL amf3_serialize_hash( amfContext * context, PHB_ITEM pItem )
+static bool amf3_serialize_hash(amfContext * context, PHB_ITEM pItem)
 {
-   if( context->use_refs )
-   {
-      if( hb_hashRefs(pItem) > 1 )
-      {
-         HB_BOOL result = amf3_encode_reference(context, context->obj_ref, pItem, 0);
+   if( context->use_refs ) {
+      if( hb_hashRefs(pItem) > 1 ) {
+         HB_BOOL result = amf3_encode_reference(context, context->obj_ref, pItem, 0); // TODO: HB_BOOL -> bool
 
-         if( result > -1 )
+         if( result > -1 ) {
             return result;
-      }
-      else
+         }
+      } else {
          context->objnref_count++;
+      }
    }
 
    return amf3_encode_hash(context, pItem);
 }
 
-static HB_BOOL amf3_write_hash( amfContext * context, PHB_ITEM pItem )
+static bool amf3_write_hash(amfContext * context, PHB_ITEM pItem)
 {
-   if( !writeByte( context, ARRAY_TYPE ) )
+   if( !writeByte(context, ARRAY_TYPE) ) {
       return 0;
+   }
 
    return amf3_serialize_hash(context, pItem);
 }
 
-static HB_ISIZ amf3_encode_byte_array( amfContext * context, PHB_ITEM pItem )
+static HB_ISIZ amf3_encode_byte_array(amfContext * context, PHB_ITEM pItem)
 {
    HB_ISIZ      item_len;
    const char * bytes;
 
-   if( HB_IS_STRING(pItem) || HB_IS_MEMO(pItem) )
-   {
+   if( HB_IS_STRING(pItem) || HB_IS_MEMO(pItem) ) {
       item_len = hb_itemGetCLen(pItem);
       bytes    = hb_itemGetCPtr(pItem);
+   } else {
+      return false;
    }
-   else
-      return false;
 
-   if( !bytes )
+   if( !bytes ) {
       return false;
+   }
 
    return writeBuffer(context, bytes, item_len);
 }
 
-static HB_ISIZ amf3_serialize_byte_array( amfContext * context, PHB_ITEM pItem )
+static HB_ISIZ amf3_serialize_byte_array(amfContext * context, PHB_ITEM pItem)
 {
    int result;
 
-   if( hb_itemGetCLen(pItem) == 0 )
+   if( hb_itemGetCLen(pItem) == 0 ) {
       return writeByte(context, EMPTY_STRING_TYPE);
+   }
 
    result = amf3_encode_reference(context, context->obj_ref, pItem, 0);
-   if( result > -1 )
+   if( result > -1 ) {
       return result;
+   }
 
-   if( !amf3_encode_int( context, ( ( int ) hb_itemGetCLen(pItem) << 1 ) | REFERENCE_BIT ) )
+   if( !amf3_encode_int(context, (static_cast<int>(hb_itemGetCLen(pItem)) << 1) | REFERENCE_BIT) ) {
       return false;
+   }
 
    return amf3_encode_byte_array(context, pItem);
 }
 
-static int amf3_encode_date( amfContext * context, PHB_ITEM pItem )
+static int amf3_encode_date(amfContext * context, PHB_ITEM pItem)
 {
    double timestamp;
 
-   if( !amf3_encode_int( context, REFERENCE_BIT ) )
+   if( !amf3_encode_int(context, REFERENCE_BIT) ) {
       return 0;
+   }
 
    timestamp = ((hb_itemGetTD(pItem) - 2440587.5) * 86400000);
 
    return amfX_encode_double(context, timestamp);
 }
 
-static int amf3_serialize_date( amfContext * context, PHB_ITEM pItem )
+static int amf3_serialize_date(amfContext * context, PHB_ITEM pItem)
 {
    int result = amf3_encode_reference(context, context->obj_ref, pItem, 0);
 
-   if( result > -1 )
+   if( result > -1 ) {
       return result;
+   }
 
    return amf3_encode_date(context, pItem);
 }
 
-static HB_BOOL amf3_encode_array( amfContext * context, PHB_ITEM pItem )
+static bool amf3_encode_array(amfContext * context, PHB_ITEM pItem)
 {
    HB_SIZE item_len = hb_arrayLen(pItem);
    int     i;
 
-   if( !amf3_encode_int( context, ( ( int ) item_len << 1 ) | REFERENCE_BIT ) )
+   if( !amf3_encode_int(context, (static_cast<int>(item_len) << 1) | REFERENCE_BIT) ) {
       return false;
+   }
 
-   if( !writeByte( context, NULL_TYPE ) )
+   if( !writeByte(context, NULL_TYPE) ) {
       return false;
+   }
 
-   for( i = 1; i <= static_cast<int>(item_len); i++ )
-   {
+   for( i = 1; i <= static_cast<int>(item_len); i++ ) {
       PHB_ITEM pArrayItem;
       int result;
 
       pArrayItem = hb_arrayGetItemPtr(pItem, i);
-      if( !pArrayItem )
+      if( !pArrayItem ) {
          return false;
+      }
 
       result = amf3_encode(context, pArrayItem);
-      if( !result )
+      if( !result ) {
          return false;
+      }
    }
 
    return true;
 }
 
-static HB_BOOL amf3_serialize_array( amfContext * context, PHB_ITEM pItem )
+static bool amf3_serialize_array(amfContext * context, PHB_ITEM pItem)
 {
-   if( context->use_refs )
-   {
-      if( hb_arrayRefs(pItem) > 1 )
-      {
+   if( context->use_refs ) {
+      if( hb_arrayRefs(pItem) > 1 ) {
          int result = amf3_encode_reference(context, context->obj_ref, pItem, 0);
 
-         if( result > -1 )
+         if( result > -1 ) {
             return result;
-      }
-      else
+         }
+      } else {
          context->objnref_count++;
+      }
    }
 
    return amf3_encode_array(context, pItem);
 }
 
-static int amf3_encode_class_def( amfContext * context, PHB_ITEM pClass )
+static int amf3_encode_class_def(amfContext * context, PHB_ITEM pClass)
 {
    int      header;
    int      result;
@@ -641,86 +648,94 @@ static int amf3_encode_class_def( amfContext * context, PHB_ITEM pClass )
    PHB_ITEM attr_len = nullptr;
 #endif
 
-   if( !pClass )
-   {
-      if( !writeByte( context, DYNAMIC ) )
+   if( !pClass ) {
+      if( !writeByte(context, DYNAMIC) ) {
          return 0;
+      }
 
-      if( !writeByte( context, EMPTY_STRING_TYPE ) )
+      if( !writeByte(context, EMPTY_STRING_TYPE) ) {
          return 0;
+      }
       return 1;
    }
 
-   if( hb_hashGetCItemPos(pClass, "CLASS_DEF") == 0 )
+   if( hb_hashGetCItemPos(pClass, "CLASS_DEF") == 0 ) {
       return 0;
+   }
 
-   if( hb_hashGetCItemPos(pClass, "EXTERNALIZABLE_CLASS_DEF") != 0 )
+   if( hb_hashGetCItemPos(pClass, "EXTERNALIZABLE_CLASS_DEF") != 0 ) {
       header = EXTERNALIZABLE;
-   else if( hb_hashGetCItemPos(pClass, "DYNAMIC_CLASS_DEF") != 0 )
+   } else if( hb_hashGetCItemPos(pClass, "DYNAMIC_CLASS_DEF") != 0 ) {
       header = DYNAMIC;
-   else
+   } else {
       header = STATIC;
+   }
 
    class_alias = hb_hashGetCItemPtr(pClass, "alias");
-   if( !class_alias )
+   if( !class_alias ) {
       return 0;
+   }
 
-   if( header == EXTERNALIZABLE )
-   {
-      if( !amf3_encode_int( context, header ) )
+   if( header == EXTERNALIZABLE ) {
+      if( !amf3_encode_int(context, header) ) {
          return 0;
+      }
 
       result = amf3_serialize_string(context, class_alias);
       return result;
    }
 
    static_attrs = hb_hashGetCItemPtr(pClass, "static_attrs");
-   if( !static_attrs )
+   if( !static_attrs ) {
       return 0;
+   }
 
    static_attr_len = hb_arrayLen(static_attrs); /* array this is -- hb_itemGetCLen(static_attrs); */
-   if( static_attr_len == -1 || static_attr_len > ( MAX_INT >> 4 ) )
+   if( static_attr_len == -1 || static_attr_len > (MAX_INT >> 4) ) {
       return 0;
+   }
 
-   header |= ( static_cast<int>(static_attr_len) ) << 4;
-   if( !amf3_encode_int( context, header ) )
+   header |= (static_cast<int>(static_attr_len)) << 4;
+   if( !amf3_encode_int(context, header) ) {
       return 0;
+   }
 
    result = amf3_serialize_string(context, class_alias);
    /* not needed hb_itemRelease(class_alias); */
-   if( !result )
+   if( !result ) {
       return 0;
+   }
 
-   for( i = 0; i < static_attr_len; i++ )
-   {
+   for( i = 0; i < static_attr_len; i++ ) {
       PHB_ITEM attr_name = hb_itemArrayGet(static_attrs, i);
-      if( !attr_name )
-      {
+      if( !attr_name ) {
          /* not needed hb_itemRelease(static_attrs); */
          return 0;
       }
       result = amf3_serialize_string(context, attr_name);
       hb_itemRelease(attr_name);
-      if( !result )
+      if( !result ) {
          return 0;
+      }
    }
 
    /* not needed hb_itemRelease(static_attrs); */
    return 1;
 }
 
-static int amf3_serialize_class_def( amfContext * context, PHB_ITEM pClass )
+static int amf3_serialize_class_def(amfContext * context, PHB_ITEM pClass)
 {
    int result = amf3_encode_reference(context, context->class_ref, pClass, 0);
 
-   if( result > -1 )
+   if( result > -1 ) {
       return result;
+   }
 
    return amf3_encode_class_def(context, pClass);
 }
 
 /* Get an object's class def. */
-static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem )
+static PHB_ITEM class_def_from_class(/* amfContext * context, */ PHB_ITEM pItem)
 {
    HB_USHORT uiClass;
    PHB_ITEM  pClass;
@@ -729,8 +744,9 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
 
    /* get Harbour's class id/handle */
    uiClass = hb_objGetClass(pItem);
-   if( !uiClass )
+   if( !uiClass ) {
       return nullptr;
+   }
 
    /* we left this (python-originated) indirect method of storing
       class "properties" in a hash, this it may be easier in the
@@ -742,8 +758,7 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
 
    pKey   = hb_itemPutC(nullptr, "CLASS_DEF");
    pValue = hb_itemNew(nullptr);
-   if( !hb_hashAdd(pClass, pKey, pValue) )
-   {
+   if( !hb_hashAdd(pClass, pKey, pValue) ) {
       hb_itemRelease(pKey);
       hb_itemRelease(pValue);
       hb_itemRelease(pClass);
@@ -754,8 +769,7 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
 
    pKey   = hb_itemPutC(nullptr, "alias");
    pValue = hb_itemPutC(nullptr, hb_clsName(uiClass));
-   if( !hb_hashAdd(pClass, pKey, pValue) )
-   {
+   if( !hb_hashAdd(pClass, pKey, pValue) ) {
       hb_itemRelease(pKey);
       hb_itemRelease(pValue);
       hb_itemRelease(pClass);
@@ -764,12 +778,10 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
    hb_itemRelease(pKey);
    hb_itemRelease(pValue);
 
-   if( hbamf_is_cls_externalizable( uiClass ) )
-   {
+   if( hbamf_is_cls_externalizable(uiClass) ) {
       pKey   = hb_itemPutC(nullptr, "EXTERNALIZABLE_CLASS_DEF");
       pValue = hb_itemNew(nullptr);
-      if( !hb_hashAdd(pClass, pKey, pValue) )
-      {
+      if( !hb_hashAdd(pClass, pKey, pValue) ) {
          hb_itemRelease(pKey);
          hb_itemRelease(pValue);
          hb_itemRelease(pClass);
@@ -783,8 +795,7 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
 #if 0
    hb_itemPutC(pKey, "DYNAMIC_CLASS_DEF");
    hb_itemNew(pValue);
-   if( !hb_hashAdd(pClass, pKey, pValue) )
-   {
+   if( !hb_hashAdd(pClass, pKey, pValue) ) {
       hb_itemRelease(pKey);
       hb_itemRelease(pValue);
       hb_itemRelease(pClass);
@@ -795,18 +806,16 @@ static PHB_ITEM class_def_from_class( /* amfContext * context, */ PHB_ITEM pItem
    return pClass;
 }
 
-static HB_BOOL amf3_encode_object( amfContext * context, PHB_ITEM pItem )
+static bool amf3_encode_object(amfContext * context, PHB_ITEM pItem)
 {
-   HB_BOOL  result;
+   bool result;
    PHB_ITEM pClass;
 
    /* serialize emulated ActionScript dynamic object */
-   if( strcmp(hb_clsName(hb_objGetClass(pItem)), "AMF_OBJ") == 0 )
-   {
+   if( strcmp(hb_clsName(hb_objGetClass(pItem)), "AMF_OBJ") == 0 ) {
       PHB_ITEM pAnonHash = hb_itemNew(nullptr);
 
-      if( amf3_serialize_class_def(context, nullptr) == 0 )
-      {
+      if( amf3_serialize_class_def(context, nullptr) == 0 ) {
          hb_itemRelease(pAnonHash);
          return false;
       }
@@ -818,38 +827,37 @@ static HB_BOOL amf3_encode_object( amfContext * context, PHB_ITEM pItem )
    }
 
    pClass = class_def_from_class(/* context, */ pItem);
-   if( !pClass )
+   if( !pClass ) {
       return false;
+   }
 
-   if( !amf3_serialize_class_def( context, pClass ) )
-   {
+   if( !amf3_serialize_class_def(context, pClass) ) {
       hb_itemRelease(pClass);
       return false;
    }
 
-   if( hb_hashGetCItemPos(pClass, "EXTERNALIZABLE_CLASS_DEF") != 0 )
-   {
+   if( hb_hashGetCItemPos(pClass, "EXTERNALIZABLE_CLASS_DEF") != 0 ) {
       PHB_ITEM pStr;
       PHB_ITEM pRetCopy = hb_itemNew(nullptr);
       PHB_ITEM pObject;
 
-      if( pItem == hb_stackReturnItem() )
+      if( pItem == hb_stackReturnItem() ) {
          pObject = pRetCopy;
-      else
+      } else {
          pObject = pItem;
+      }
 
       hb_itemMove(pRetCopy, hb_stackReturnItem());
 
       pStr = hb_objSendMsg(pObject, "WRITEEXTERNAL", 0);
-      if( !pStr )
-      {
+      if( !pStr ) {
          hb_itemMove(hb_stackReturnItem(), pRetCopy);
          hb_itemRelease(pRetCopy);
          hb_itemRelease(pClass);
          return false;
       }
 
-      result = amf3_encode_byte_array( context, pStr ) != 0;
+      result = amf3_encode_byte_array(context, pStr) != 0;
       hb_itemRelease(pClass);
 
       hb_itemMove(hb_stackReturnItem(), pRetCopy);
@@ -866,26 +874,22 @@ static HB_BOOL amf3_encode_object( amfContext * context, PHB_ITEM pItem )
 
    /* Encode static attrs */
    PyObject * static_attrs = static_attr_vals_from_class_def(context, class_def, value);
-   if( !static_attrs )
-   {
+   if( !static_attrs ) {
       Py_DECREF(class_def);
       return 0;
    }
 
    Py_ssize_t static_attr_len = PySequence_Size(static_attrs);
-   if( static_attr_len == -1 )
-   {
+   if( static_attr_len == -1 ) {
       Py_DECREF(class_def);
       Py_DECREF(static_attrs);
       return 0;
    }
 
    int i;
-   for( i = 0; i < static_attr_len; i++ )
-   {
+   for( i = 0; i < static_attr_len; i++ ) {
       PyObject * static_attr = PySequence_GetItem(static_attrs, i);
-      if( !static_attr )
-      {
+      if( !static_attr ) {
          Py_DECREF(static_attrs);
          Py_DECREF(class_def);
          return 0;
@@ -893,8 +897,7 @@ static HB_BOOL amf3_encode_object( amfContext * context, PHB_ITEM pItem )
 
       int result = encode_AMF3(context, static_attr);
       Py_DECREF(static_attr);
-      if( !result )
-      {
+      if( !result ) {
          Py_DECREF(static_attrs);
          Py_DECREF(class_def);
          return 0;
@@ -903,19 +906,16 @@ static HB_BOOL amf3_encode_object( amfContext * context, PHB_ITEM pItem )
    Py_DECREF(static_attrs);
 
    /* Encode dynamic attrs */
-   if( PyObject_HasAttrString( class_def, "DYNAMIC_CLASS_DEF" ) )
-   {
+   if( PyObject_HasAttrString(class_def, "DYNAMIC_CLASS_DEF") ) {
       PyObject * dynamic_attrs = dynamic_attrs_from_class_def(context, class_def, value);
-      if( !dynamic_attrs )
-      {
+      if( !dynamic_attrs ) {
          Py_DECREF(class_def);
          return 0;
       }
 
       int result = encode_dynamic_dict_AMF3(context, dynamic_attrs);
       Py_DECREF(dynamic_attrs);
-      if( !result )
-      {
+      if( !result ) {
          Py_DECREF(class_def);
          return 0;
       }
@@ -927,52 +927,47 @@ static HB_BOOL amf3_encode_object( amfContext * context, PHB_ITEM pItem )
 #endif
 }
 
-static HB_BOOL amf3_serialize_object( amfContext * context, PHB_ITEM pItem )
+static bool amf3_serialize_object(amfContext * context, PHB_ITEM pItem)
 {
    int result;
 
-   if( strcmp(hb_clsName(hb_objGetClass(pItem)), "AMF_RAW") == 0 )
-   {
+   if( strcmp(hb_clsName(hb_objGetClass(pItem)), "AMF_RAW") == 0 ) {
       PHB_ITEM pStr = hb_itemNew(nullptr);
       hb_arrayGet(pItem, 1, pStr);
       context->position--;
-      result = amf3_encode_byte_array( context, pStr ) != 0;
+      result = amf3_encode_byte_array(context, pStr) != 0;
       hb_itemRelease(pStr);
       return result;
    }
 
-   if( context->use_refs )
-   {
-      if( hb_arrayRefs(pItem) > 1 )
-      {
+   if( context->use_refs ) {
+      if( hb_arrayRefs(pItem) > 1 ) {
          result = amf3_encode_reference(context, context->obj_ref, pItem, 0);
 
-         if( result > -1 )
+         if( result > -1 ) {
             return result;
-      }
-      else
+         }
+      } else {
          context->objnref_count++;
+      }
    }
 
    return amf3_encode_object(context, pItem);
 }
 
-static void amf3_conversion_out( amfContext * context, PHB_ITEM pItem )
+static void amf3_conversion_out(amfContext * context, PHB_ITEM pItem)
 {
    PHB_ITEM pRetCopy      = hb_itemNew(nullptr);
    PHB_ITEM pOuterContext = hb_itemPutPtr(nullptr, context);
    PHB_SYMB pSym = hb_itemGetSymbol(context->conv_function);
 
-   if( pItem == hb_stackReturnItem() )
-   {
+   if( pItem == hb_stackReturnItem() ) {
       hb_vmPushSymbol(pSym);
       hb_vmPushNil();
       hb_vmPush(pItem);
       hb_vmPush(pOuterContext);
       hb_vmDo(2);
-   }
-   else
-   {
+   } else {
       hb_itemMove(pRetCopy, hb_stackReturnItem());
       hb_vmPushSymbol(pSym);
       hb_vmPushNil();
@@ -986,66 +981,62 @@ static void amf3_conversion_out( amfContext * context, PHB_ITEM pItem )
    hb_itemRelease(pRetCopy);
 }
 
-static HB_BOOL amf3_encode( amfContext * context, PHB_ITEM pItem )
+static bool amf3_encode(amfContext * context, PHB_ITEM pItem)
 {
-   HB_BOOL result = false;
+   bool result = false;
 
-   if( context->conv_function )
+   if( context->conv_function ) {
       amf3_conversion_out(context, pItem);
+   }
 
-   if( HB_IS_NIL(pItem) )
+   if( HB_IS_NIL(pItem) ) {
       result = amf3_encode_nil(context);
-   else if( HB_IS_LOGICAL(pItem) )
+   } else if( HB_IS_LOGICAL(pItem) ) {
       result = amf3_encode_bool(context, pItem);
-   else if( HB_IS_INTEGER(pItem) || HB_IS_LONG(pItem) )
+   } else if( HB_IS_INTEGER(pItem) || HB_IS_LONG(pItem) ) {
       result = amf3_write_int(context, pItem);
-   else if( HB_IS_DOUBLE(pItem) )
+   } else if( HB_IS_DOUBLE(pItem) ) {
       result = amfX_write_double(context, pItem);
-   else if( HB_IS_STRING(pItem) || HB_IS_MEMO(pItem) )
-   {
-      if( context->encode_ba )
-      {
-         if( !writeByte( context, BYTE_ARRAY_TYPE ) )
+   } else if( HB_IS_STRING(pItem) || HB_IS_MEMO(pItem) ) {
+      if( context->encode_ba ) {
+         if( !writeByte(context, BYTE_ARRAY_TYPE) ) {
             result = false;
-         else
-            result = amf3_serialize_byte_array( context, pItem ) != 0;
-      }
-      else
-      {
-         if( !writeByte( context, STRING_TYPE ) )
+         } else {
+            result = amf3_serialize_byte_array(context, pItem) != 0;
+         }
+      } else {
+         if( !writeByte(context, STRING_TYPE) ) {
             result = false;
-         else
+         } else {
             result = amf3_serialize_string(context, pItem);
+         }
       }
-   }
-   else if( HB_IS_DATETIME(pItem) )
-   {
-      if( !writeByte( context, DATE_TYPE ) )
+   } else if( HB_IS_DATETIME(pItem) ) {
+      if( !writeByte(context, DATE_TYPE) ) {
          result = false;
-      else
+      } else {
          result = amf3_serialize_date(context, pItem);
-   }
-   else if( HB_IS_OBJECT(pItem) )
-   {
-      if( !writeByte( context, OBJECT_TYPE ) )
+      }
+   } else if( HB_IS_OBJECT(pItem) ) {
+      if( !writeByte(context, OBJECT_TYPE) ) {
          result = false;
-      else
+      } else {
          result = amf3_serialize_object(context, pItem);
-   }
-   else if( HB_IS_ARRAY(pItem) )
-   {
-      if( !writeByte( context, ARRAY_TYPE ) )
+      }
+   } else if( HB_IS_ARRAY(pItem) ) {
+      if( !writeByte(context, ARRAY_TYPE) ) {
          result = false;
-      else
+      } else {
          result = amf3_serialize_array(context, pItem);
-   }
-   else if( HB_IS_HASH(pItem) )
+      }
+   } else if( HB_IS_HASH(pItem) ) {
       result = amf3_write_hash(context, pItem);
+   }
 
    return result;
 }
 
-static amfContext * context_setup(PHB_ITEM pFuncSym, HB_BOOL use_refs, HB_BOOL str_rtrim, amfContext * outer_context)
+static amfContext * context_setup(PHB_ITEM pFuncSym, bool use_refs, bool str_rtrim, amfContext * outer_context)
 {
    amfContext * context;
 
@@ -1057,25 +1048,19 @@ static amfContext * context_setup(PHB_ITEM pFuncSym, HB_BOOL use_refs, HB_BOOL s
    context->length    = sizeof(char) * 8;
    context->str_rtrim = str_rtrim;
    context->use_refs  = use_refs;
-   if( use_refs )
-   {
-      if( outer_context && outer_context->use_refs )
-      {
+   if( use_refs ) {
+      if( outer_context && outer_context->use_refs ) {
          context->obj_ref   = outer_context->obj_ref;
          context->str_ref   = outer_context->str_ref;
          context->class_ref = outer_context->class_ref;
          context->objnref_count = outer_context->objnref_count;
-      }
-      else
-      {
+      } else {
          context->obj_ref   = hb_hashNew(nullptr);
          context->str_ref   = hb_hashNew(nullptr);
          context->class_ref = hb_hashNew(nullptr);
          context->objnref_count = 0;
       }
-   }
-   else
-   {
+   } else {
       context->obj_ref   = nullptr;
       context->str_ref   = nullptr;
       context->class_ref = nullptr;
@@ -1088,19 +1073,18 @@ static amfContext * context_setup(PHB_ITEM pFuncSym, HB_BOOL use_refs, HB_BOOL s
       itself and the value is id of the reference */
    context->use_strstr = true;
 
-   if( outer_context )
-   {
+   if( outer_context ) {
       context->strstr_count = outer_context->strstr_count;
-      if( outer_context->use_strstr )
+      if( outer_context->use_strstr ) {
          context->strstr_ref = outer_context->strstr_ref;
-      else
+      } else {
          context->strstr_ref = hb_hashNew(nullptr);
+      }
 
-      if( !context->use_refs && outer_context->use_refs )
+      if( !context->use_refs && outer_context->use_refs ) {
          context->strstr_count += hb_hashLen(outer_context->str_ref);
-   }
-   else
-   {
+      }
+   } else {
       context->strstr_count = 0;
       context->strstr_ref   = hb_hashNew(nullptr);
    }
@@ -1108,31 +1092,30 @@ static amfContext * context_setup(PHB_ITEM pFuncSym, HB_BOOL use_refs, HB_BOOL s
    return context;
 }
 
-static void context_release( amfContext * context, amfContext * outer_context )
+static void context_release(amfContext * context, amfContext * outer_context)
 {
-   if( outer_context && outer_context->use_refs )
+   if( outer_context && outer_context->use_refs ) {
       outer_context->objnref_count = context->objnref_count;
-   else if( context->use_refs )
-   {
+   } else if( context->use_refs ) {
       hb_itemRelease(context->obj_ref);
       hb_itemRelease(context->str_ref);
       hb_itemRelease(context->class_ref);
    }
 
-   if( context->use_strstr )
-   {
-      if( outer_context )
-      {
-         if( !context->use_refs && outer_context->use_refs )
+   if( context->use_strstr ) {
+      if( outer_context ) {
+         if( !context->use_refs && outer_context->use_refs ) {
             context->strstr_count -= hb_hashLen(outer_context->str_ref);
+         }
 
          outer_context->strstr_count = context->strstr_count;
 
-         if( !outer_context->strstr_ref )
+         if( !outer_context->strstr_ref ) {
             hb_itemRelease(context->strstr_ref);
-      }
-      else
+         }
+      } else {
          hb_itemRelease(context->strstr_ref);
+      }
    }
 }
 
@@ -1142,93 +1125,91 @@ HB_FUNC( AMF3_FROMWA )
    PHB_ITEM     pFor          = hb_param(2, Harbour::Item::BLOCK);
    PHB_ITEM     pFields       = hb_param(3, Harbour::Item::ARRAY);
    HB_ULONG     nCount        = hb_parnldef(4, 0);
-   HB_BOOL      str_rtrim     = hb_parldef(5, true);
+   bool         str_rtrim     = hb_parldef(5, true);
    HB_USHORT    nPkg          = static_cast<HB_USHORT>(hb_parnidef(6, 0));
-   amfContext * outer_context = ( amfContext * ) hb_parptr(7);
+   amfContext * outer_context = static_cast<amfContext*>(hb_parptr(7));
 
    DBORDERINFO  pInfo;
    int          iOrd;
    HB_USHORT    uiFields;
    HB_ULONG     uiRecCount     = 0;
    HB_ULONG     uiRecNo        = 0;
-   HB_BOOL      bNoFieldPassed = (pFields == nullptr || hb_arrayLen(pFields) == 0);
+   bool         bNoFieldPassed = (pFields == nullptr || hb_arrayLen(pFields) == 0);
    HB_BOOL      bEof  = false;
    AREAP        pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    PHB_ITEM     pItem;
    HB_USHORT    uiFieldCopy = 0;      /* GCC knows better (warns) */
    HB_USHORT    uiIter;
    amfContext * context;
-   HB_BOOL      bPredictLen = (!pWhile && !pFor);
+   bool         bPredictLen = (!pWhile && !pFor);
 
-   HB_BOOL  bAsArray    = !nPkg;
+   bool bAsArray = !nPkg;
    PHB_ITEM pFieldNames = nullptr;          /* again GCC knows better */
    PHB_ITEM pField;
 
-   if( pArea != nullptr )
-   {
+   if( pArea != nullptr ) {
       memset(&pInfo, 0, sizeof(pInfo));
       pInfo.itmResult = hb_itemPutNI(nullptr, 0);
       SELF_ORDINFO(pArea, DBOI_NUMBER, &pInfo);
       iOrd = hb_itemGetNI(pInfo.itmResult);
-      if( iOrd > 0 )
-      {
+      if( iOrd > 0 ) {
          SELF_ORDINFO(pArea, DBOI_KEYCOUNT, &pInfo);
          uiRecCount = hb_itemGetNL(pInfo.itmResult);
          SELF_ORDINFO(pArea, DBOI_POSITION, &pInfo);
          uiRecNo = hb_itemGetNL(pInfo.itmResult);
 
          hb_itemRelease(pInfo.itmResult);
-      }
-      else
-      {
+      } else {
          hb_itemRelease(pInfo.itmResult);
 
-         if( SELF_RECCOUNT(pArea, &uiRecCount) != Harbour::SUCCESS )
+         if( SELF_RECCOUNT(pArea, &uiRecCount) != Harbour::SUCCESS ) {
             return;
+         }
 
-         if( SELF_RECNO(pArea, &uiRecNo) != Harbour::SUCCESS )
+         if( SELF_RECNO(pArea, &uiRecNo) != Harbour::SUCCESS ) {
             return;
+         }
       }
 
       pItem = hb_itemNew(nullptr);
 
       context = context_setup(nullptr, false, str_rtrim, outer_context);
 
-      if( bPredictLen )
-      {
-         if( nCount == 0 || uiRecNo + nCount > uiRecCount )
+      if( bPredictLen ) {
+         if( nCount == 0 || uiRecNo + nCount > uiRecCount ) {
             nCount = uiRecCount - uiRecNo + 1;
-      }
-      else
-      {
+         }
+      } else {
          uiRecCount = 0;
-         while( (nCount == 0 || uiRecCount < nCount) && (!pWhile || hb_itemGetL(hb_vmEvalBlock(pWhile))) )
-         {
-            if( SELF_EOF(pArea, &bEof) != Harbour::SUCCESS )
+         while( (nCount == 0 || uiRecCount < nCount) && (!pWhile || hb_itemGetL(hb_vmEvalBlock(pWhile))) ) {
+            if( SELF_EOF(pArea, &bEof) != Harbour::SUCCESS ) {
                break;
+            }
 
-            if( bEof )
+            if( bEof ) {
                break;
+            }
 
-            if( !pFor || hb_itemGetL(hb_vmEvalBlock(pFor)) )
+            if( !pFor || hb_itemGetL(hb_vmEvalBlock(pFor)) ) {
                uiRecCount++;
+            }
 
-            if( SELF_SKIP(pArea, 1) != Harbour::SUCCESS )
+            if( SELF_SKIP(pArea, 1) != Harbour::SUCCESS ) {
                break;
+            }
          }
          nCount = uiRecCount;
 
-         if( iOrd > 0 )
-         {
+         if( iOrd > 0 ) {
             memset(&pInfo, 0, sizeof(pInfo));
             pInfo.itmNewVal = hb_itemPutNL(nullptr, uiRecNo);
             pInfo.itmResult = hb_itemPutL(nullptr, false);
             SELF_ORDINFO(pArea, DBOI_POSITION, &pInfo);
             hb_itemRelease(pInfo.itmNewVal);
             hb_itemRelease(pInfo.itmResult);
-         }
-         else
+         } else {
             SELF_GOTO(pArea, uiRecNo);
+         }
       }
 
       /* TODO: should be if( writeByte() ), before we make a variant that operates on streams directly */
@@ -1239,19 +1220,15 @@ HB_FUNC( AMF3_FROMWA )
 
       SELF_FIELDCOUNT(pArea, &uiFields);
 
-      if( !bNoFieldPassed )
-      {
+      if( !bNoFieldPassed ) {
          uiFieldCopy = static_cast<HB_USHORT>(hb_arrayLen(pFields));
 
-         for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ )
-         {
+         for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ ) {
             const char * szFieldName = hb_arrayGetCPtr(pFields, uiIter);
-            if( szFieldName )
-            {
+            if( szFieldName ) {
                int iPos = hb_rddFieldIndex(pArea, szFieldName);
 
-               if( iPos )
-               {
+               if( iPos ) {
                   PHB_ITEM pFieldNum = hb_itemPutNI(nullptr, iPos);
                   hb_itemArrayPut(pFields, uiIter, pFieldNum);
                   hb_itemRelease(pFieldNum);
@@ -1259,8 +1236,7 @@ HB_FUNC( AMF3_FROMWA )
                }
             }
 
-            if( hb_arrayDel(pFields, uiIter) )
-            {
+            if( hb_arrayDel(pFields, uiIter) ) {
                hb_arraySize(pFields, hb_arrayLen(pFields) - 1);
                uiIter--;
                uiFieldCopy--;
@@ -1269,14 +1245,11 @@ HB_FUNC( AMF3_FROMWA )
          }
       }
 
-      if( !bAsArray )
-      {
+      if( !bAsArray ) {
          pFieldNames = hb_itemNew(nullptr);
-         if( bNoFieldPassed )
-         {
+         if( bNoFieldPassed ) {
             hb_arrayNew(pFieldNames, uiFields);
-            for( uiIter = 1; uiIter <= uiFields; uiIter++ )
-            {
+            for( uiIter = 1; uiIter <= uiFields; uiIter++ ) {
                char * szName = static_cast<char*>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
                pField      = hb_itemNew(nullptr);
                szName[0] = '\0';
@@ -1285,12 +1258,9 @@ HB_FUNC( AMF3_FROMWA )
                hb_arraySet(pFieldNames, uiIter, pField);
                hb_itemRelease(pField);
             }
-         }
-         else
-         {
+         } else {
             hb_arrayNew(pFieldNames, uiFieldCopy);
-            for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ )
-            {
+            for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ ) {
                char * szName = static_cast<char*>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
                pField      = hb_itemNew(nullptr);
                szName[0] = '\0';
@@ -1303,42 +1273,34 @@ HB_FUNC( AMF3_FROMWA )
       }
 
       uiRecCount = 0;
-      while( (nCount == 0 || uiRecCount <= nCount) && (!pWhile || hb_itemGetL(hb_vmEvalBlock(pWhile))) )
-      {
-         if( SELF_EOF(pArea, &bEof) != Harbour::SUCCESS )
+      while( (nCount == 0 || uiRecCount <= nCount) && (!pWhile || hb_itemGetL(hb_vmEvalBlock(pWhile))) ) {
+         if( SELF_EOF(pArea, &bEof) != Harbour::SUCCESS ) {
             break;
+         }
 
-         if( bEof )
+         if( bEof ) {
             break;
+         }
 
-         if( !pFor || hb_itemGetL(hb_vmEvalBlock(pFor)) )
-         {
-            if( bAsArray )
-            {
+         if( !pFor || hb_itemGetL(hb_vmEvalBlock(pFor)) ) {
+            if( bAsArray ) {
                writeByte(context, ARRAY_TYPE);
-               if( bNoFieldPassed )
-               {
+               if( bNoFieldPassed ) {
                   amf3_encode_int(context, (static_cast<int>(uiFields) << 1) | REFERENCE_BIT);
                   writeByte(context, NULL_TYPE);
-                  for( uiIter = 1; uiIter <= uiFields; uiIter++ )
-                  {
+                  for( uiIter = 1; uiIter <= uiFields; uiIter++ ) {
                      SELF_GETVALUE(pArea, uiIter, pItem);
                      amf3_encode(context, pItem);
                   }
-               }
-               else
-               {
+               } else {
                   amf3_encode_int(context, (static_cast<int>(uiFieldCopy) << 1) | REFERENCE_BIT);
                   writeByte(context, NULL_TYPE);
-                  for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ )
-                  {
+                  for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ ) {
                      SELF_GETVALUE(pArea, static_cast<HB_USHORT>(hb_itemGetNI(hb_arrayGetItemPtr(pFields, uiIter))) /* hb_arrayGetNI(pFields, uiIter) */, pItem);
                      amf3_encode(context, pItem);
                   }
                }
-            }
-            else
-            {
+            } else {
                PHB_ITEM pValue = hb_itemNew(nullptr);
 
                writeByte(context, OBJECT_TYPE);
@@ -1347,19 +1309,14 @@ HB_FUNC( AMF3_FROMWA )
 #endif
                writeByte(context, DYNAMIC);
                writeByte(context, EMPTY_STRING_TYPE);
-               if( bNoFieldPassed )
-               {
-                  for( uiIter = 1; uiIter <= uiFields; uiIter++ )
-                  {
+               if( bNoFieldPassed ) {
+                  for( uiIter = 1; uiIter <= uiFields; uiIter++ ) {
                      SELF_GETVALUE(pArea, uiIter, pValue);
                      amf3_serialize_string(context, hb_arrayGetItemPtr(pFieldNames, uiIter));
                      amf3_encode(context, pValue);
                   }
-               }
-               else
-               {
-                  for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ )
-                  {
+               } else {
+                  for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ ) {
                      SELF_GETVALUE(pArea, static_cast<HB_USHORT>(hb_itemGetNI(hb_arrayGetItemPtr(pFields, uiIter))), pValue);
                      amf3_serialize_string(context, hb_arrayGetItemPtr(pFieldNames, uiIter));
                      amf3_encode(context, pValue);
@@ -1372,15 +1329,17 @@ HB_FUNC( AMF3_FROMWA )
             uiRecCount++;
          }
 
-         if( SELF_SKIP(pArea, 1) != Harbour::SUCCESS )
+         if( SELF_SKIP(pArea, 1) != Harbour::SUCCESS ) {
             break;
+         }
 
       }
 
       hb_itemRelease(pItem);
 
-      if( !bAsArray )
+      if( !bAsArray ) {
          hb_itemRelease(pFieldNames);
+      }
 
       context->cBuf = static_cast<char*>(hb_xrealloc(context->cBuf, sizeof(char) * context->position + 1));
 
@@ -1390,22 +1349,23 @@ HB_FUNC( AMF3_FROMWA )
 
       hb_xfree(context);
 
-   }
-   else
+   } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
+   }
 }
 
 HB_FUNC( AMF3_ENCODE )
 {
    PHB_ITEM pItem    = hb_param(1, Harbour::Item::ANY);
    PHB_ITEM pFuncSym = hb_param(2, Harbour::Item::SYMBOL);
-   HB_BOOL  lBA      = hb_parldef(3, false);
-   HB_BOOL  lRetval;
+   bool     lBA      = hb_parldef(3, false);
+   bool     lRetval;
 
    amfContext * context;
 
-   if( !pItem )
+   if( !pItem ) {
       return;
+   }
 
    context = static_cast<amfContext*>(hb_xgrab(sizeof(amfContext)));
    memset(context, 0, sizeof(amfContext));
@@ -1431,23 +1391,23 @@ HB_FUNC( AMF3_ENCODE )
 
    lRetval = amf3_encode(context, pItem);
 
-   if( context->use_refs )
-   {
+   if( context->use_refs ) {
       hb_itemRelease(context->obj_ref);
       hb_itemRelease(context->str_ref);
       hb_itemRelease(context->class_ref);
    }
 
-   if( context->use_strstr )
+   if( context->use_strstr ) {
       hb_itemRelease(context->strstr_ref);
+   }
 
 #if 0
-   if( context->conv_function )
+   if( context->conv_function ) {
       hb_itemRelease(context->conv_function);
+   }
 #endif
 
-   if( !lRetval )
-   {
+   if( !lRetval ) {
       hb_xfree(context->cBuf);
       hb_xfree(context);
       return;

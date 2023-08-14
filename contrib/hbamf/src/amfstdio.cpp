@@ -55,14 +55,13 @@
 
 static int s_nCount = 0;
 
-static void countCheck( int n )
+static void countCheck(int n)
 {
    /* yes, this is flow-control */
 
    s_nCount += n;
 
-   while( s_nCount >= SINGLEBUF )
-   {
+   while( s_nCount >= SINGLEBUF ) {
       hb_conOutStd("\0\0\0\0", 4);
       s_nCount -= SINGLEBUF;
    }
@@ -83,10 +82,9 @@ HB_FUNC( AMFSTDIO_READ )
    int        nToRead;
    HB_FHANDLE hStdIn = hb_fsGetOsHandle(HB_STDIN_HANDLE);
 
-   while( nTotal < 4 )
-   {
+   while( nTotal < 4 ) {
       nToRead = (s_nCount + 4 - nTotal > SINGLEBUF ? SINGLEBUF - s_nCount : 4 - nTotal);
-      nBytes  = hb_fsRead( hStdIn, pszStrIn, static_cast<HB_USHORT>(nToRead));
+      nBytes  = hb_fsRead(hStdIn, pszStrIn, static_cast<HB_USHORT>(nToRead));
 
       countCheck(nBytes);
 
@@ -98,8 +96,7 @@ HB_FUNC( AMFSTDIO_READ )
    pszLenPrefix[4] = '\0';
    nLen = HB_GET_LE_UINT32(pszLenPrefix);
 
-   if( nLen >= MAXLEN )
-   {
+   if( nLen >= MAXLEN ) {
       hb_ret();
       return;
    }
@@ -108,19 +105,19 @@ HB_FUNC( AMFSTDIO_READ )
    pszBuf = static_cast<char*>(hb_xgrab(nLen + 1));
    pszTmp = pszBuf;
 
-   while( nTotal < nLen )
-   {
+   while( nTotal < nLen ) {
       /*
        * here it's being decided that nToRead is never over 32768 bytes long,
        * so hb_fsRead() is fine, no hb_fsReadLarge() needed
        */
 
-      if( nLen - nTotal > SINGLEBUF )
+      if( nLen - nTotal > SINGLEBUF ) {
          nToRead = SINGLEBUF - s_nCount;
-      else
+      } else {
          nToRead = (s_nCount + nLen - nTotal > SINGLEBUF ? SINGLEBUF - s_nCount : nLen - nTotal);
+      }
 
-      nBytes = hb_fsRead( hStdIn, pszStrIn, static_cast<HB_USHORT>(nToRead));
+      nBytes = hb_fsRead(hStdIn, pszStrIn, static_cast<HB_USHORT>(nToRead));
 
       countCheck(nBytes);
 

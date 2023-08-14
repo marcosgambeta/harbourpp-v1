@@ -50,15 +50,14 @@
 #include "hbvm.hpp"
 #include "hboo.ch"
 
-HB_BOOL hbamf_is_cls_externalizable( HB_USHORT uiClass )
+HB_BOOL hbamf_is_cls_externalizable(HB_USHORT uiClass)
 {
    PHB_DYNS pSymbol = hb_dynsymGet("__CLSMSGTYPE");
-   HB_BOOL  result  = false;
+   bool     result  = false;
 
    /* as far as i know, there is no exported Harbour C level api for this */
 
-   if( uiClass && pSymbol )
-   {
+   if( uiClass && pSymbol ) {
       PHB_ITEM pRetCopy = hb_itemNew(nullptr);
 
       hb_itemMove(pRetCopy, hb_stackReturnItem());
@@ -69,8 +68,9 @@ HB_BOOL hbamf_is_cls_externalizable( HB_USHORT uiClass )
       hb_vmPushString("EXTERNALIZABLE", 14);
       hb_vmDo(2);
 
-      if( hb_itemGetNI(hb_stackReturnItem()) == HB_OO_MSG_CLASSDATA )
+      if( hb_itemGetNI(hb_stackReturnItem()) == HB_OO_MSG_CLASSDATA ) {
          result = true;
+      }
 
       hb_itemMove(hb_stackReturnItem(), pRetCopy);
       hb_itemRelease(pRetCopy);
