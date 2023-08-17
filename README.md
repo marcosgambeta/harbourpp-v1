@@ -25,6 +25,9 @@ HWGUI for Harbour++
 https://github.com/marcosgambeta/hmgextpp  
 Harbour MiniGUI Extended for Harbour++
 
+https://github.com/marcosgambeta/sqlrddpp  
+SQLRDD for Harbour++
+
 ## Portuguese
 
 Harbour++ é um projeto derivado do projeto Harbour, tendo como objetivo principal
@@ -89,6 +92,9 @@ HWGUI++ - fork da HWGUI para Harbour++
 
 https://github.com/marcosgambeta/hmgextpp  
 HMGEXT++ - fork da Harbour MiniGUI Extended para Harbour++
+
+https://github.com/marcosgambeta/sqlrddpp  
+SQLRDD for Harbour++
 
 ### Contato
 
