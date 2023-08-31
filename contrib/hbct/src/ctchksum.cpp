@@ -52,8 +52,7 @@ HB_FUNC( CHECKSUM )
    HB_SIZE nLen = hb_parclen(1);
    HB_U32 u32Result = 0;
 
-   for( HB_SIZE nPos = 0; nPos < nLen; nPos++ )
-   {
+   for( HB_SIZE nPos = 0; nPos < nLen; nPos++ ) {
       u32Result += pbyString[nPos] | (pbyString[nPos + 1] << 8);
    }
 

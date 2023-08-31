@@ -47,53 +47,53 @@
  *
  */
 
-FUNCTION ScreenMark( cSearch, xAttr, lUpperLower, lAll, cForward, cTrailing )
+FUNCTION ScreenMark(cSearch, xAttr, lUpperLower, lAll, cForward, cTrailing)
 
    LOCAL lFound := .F.
    LOCAL nCount := 1
    LOCAL nAt, nLen, nLast, nRow, nCol, nEnd, nCols
    LOCAL cScreen
 
-   hb_default( @lUpperLower, .F. )
-   hb_default( @lAll, .F. )
+   hb_default(@lUpperLower, .F.)
+   hb_default(@lAll, .F.)
 
-   IF ! HB_ISSTRING( cForward ) .OR. cForward == ""
+   IF !HB_ISSTRING(cForward) .OR. cForward == ""
       cForward := NIL
    ENDIF
-   IF ! HB_ISSTRING( cTrailing ) .OR. cTrailing == ""
+   IF !HB_ISSTRING(cTrailing) .OR. cTrailing == ""
       cTrailing := NIL
    ENDIF
 
    nCols := MaxCol()
-   cScreen := ScreenText( 0, 0, MaxRow(), nCols++ )
-   nLen := Len( cSearch )
-   nLast := Len( cScreen ) - nLen + 1
+   cScreen := ScreenText(0, 0, MaxRow(), nCols++)
+   nLen := Len(cSearch)
+   nLast := Len(cScreen) - nLen + 1
 
-   IF ! lUpperLower
-      cSearch := Upper( cSearch )
-      cScreen := Upper( cScreen )
+   IF !lUpperLower
+      cSearch := Upper(cSearch)
+      cScreen := Upper(cScreen)
    ENDIF
 
-   DO WHILE ( nAt := AtNum( cSearch, cScreen, nCount ) ) != 0
+   DO WHILE (nAt := AtNum(cSearch, cScreen, nCount)) != 0
 
-      IF ( nAt == 1 .OR. cForward == NIL .OR. ;
-           SubStr( cScreen, nAt, 1 ) $ cForward ) .AND. ;
-         ( nAt == nLast .OR. cTrailing == NIL .OR. ;
-           SubStr( cScreen, nAt + nLen ) $ cTrailing )
+      IF (nAt == 1 .OR. cForward == NIL .OR. ;
+           SubStr(cScreen, nAt, 1) $ cForward) .AND. ;
+         (nAt == nLast .OR. cTrailing == NIL .OR. ;
+           SubStr(cScreen, nAt + nLen) $ cTrailing)
 
          lFound := .T.
          --nAt
-         nRow := Int( nAt / nCols )
-         nCol := Int( nAt % nCols )
-         nEnd := nCol + Len( cSearch ) - 1
-         ColorWin( nRow, nCol, nRow, nEnd, xAttr )
+         nRow := Int(nAt / nCols)
+         nCol := Int(nAt % nCols)
+         nEnd := nCol + Len(cSearch) - 1
+         ColorWin(nRow, nCol, nRow, nEnd, xAttr)
          DO WHILE nEnd >= nCols
             nEnd -= nCols
             nCol := 0
             ++nRow
-            ColorWin( nRow, nCol, nRow, nEnd, xAttr )
+            ColorWin(nRow, nCol, nRow, nEnd, xAttr)
          ENDDO
-         IF ! lAll
+         IF !lAll
             EXIT
          ENDIF
       ENDIF

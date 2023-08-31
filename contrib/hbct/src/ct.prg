@@ -49,7 +49,7 @@ STATIC s_bInitialized := .F.
 
 FUNCTION ctinit()
 
-   IF ! s_bInitialized
+   IF !s_bInitialized
       s_bInitialized := ctcinit()
    ENDIF
 
@@ -57,7 +57,7 @@ FUNCTION ctinit()
 
 INIT PROCEDURE _CTINIT()
 
-   IF ! s_bInitialized
+   IF !s_bInitialized
       s_bInitialized := ctcinit()
    ENDIF
 

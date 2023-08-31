@@ -63,8 +63,7 @@ HB_FUNC( MANTISSA )
 
    xConvert.value = hb_parnd(1);
 
-   if( xConvert.value != 0 )
-   {
+   if( xConvert.value != 0 ) {
       xConvert.string[6] |= 0xF0;
       xConvert.string[7] |= 0x3F;
       xConvert.string[7] &= 0xBF;
@@ -78,25 +77,19 @@ HB_FUNC( MANTISSA )
 
    dValue = hb_parnd(1);
 
-   if( dValue == 0.0 )
-   {
+   if( dValue == 0.0 ) {
       hb_retnd(0.0);
       return;
    }
 
-   if( fabs( dValue ) < 1.0 )
-   {
-      while( fabs( dValue ) < 1.0 )
-      {
+   if( fabs(dValue) < 1.0 ) {
+      while( fabs(dValue) < 1.0 ) {
          dValue *= 2.0;
-      }   
-   }
-   else if( fabs( dValue ) >= 2.0 )
-   {
-      while( fabs( dValue ) >= 2.0 )
-      {
+      }
+   } else if( fabs(dValue) >= 2.0 ) {
+      while( fabs(dValue) >= 2.0 ) {
          dValue /= 2.0;
-      }   
+      }
    }
    hb_retnd(dValue);
 
@@ -117,8 +110,7 @@ HB_FUNC( EXPONENT )
 
    xConvert.value = hb_parnd(1);
 
-   if( xConvert.value != 0 )
-   {
+   if( xConvert.value != 0 ) {
       iExponent = static_cast<int>(xConvert.string[7] & 0x07F);
       iExponent = iExponent << 4;
       iExponent += static_cast<int>((xConvert.string[6] & 0xF0) >> 4);
@@ -134,24 +126,18 @@ HB_FUNC( EXPONENT )
 
    dValue = hb_parnd(1);
 
-   if( dValue == 0.0 )
-   {
+   if( dValue == 0.0 ) {
       hb_retni(0);
       return;
    }
 
-   if( fabs( dValue ) < 1.0 )
-   {
-      while( fabs( dValue ) < 1.0 )
-      {
+   if( fabs(dValue) < 1.0 ) {
+      while( fabs(dValue) < 1.0 ) {
          dValue *= 2.0;
          iExponent--;
       }
-   }
-   else if( fabs( dValue ) >= 2.0 )
-   {
-      while( fabs( dValue ) >= 2.0 )
-      {
+   } else if( fabs(dValue) >= 2.0 ) {
+      while( fabs(dValue) >= 2.0 ) {
          dValue /= 2.0;
          iExponent++;
       }

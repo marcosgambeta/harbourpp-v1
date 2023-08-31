@@ -44,14 +44,13 @@
  *
  */
 
-FUNCTION Random( lMode )
-   RETURN iif( HB_ISLOGICAL( lMode ) .AND. lMode, ;
-      hb_RandomInt( -32768, 32767 ), hb_RandomInt( 0, 65535 ) )
+FUNCTION Random(lMode)
+   RETURN iif(HB_ISLOGICAL(lMode) .AND. lMode, hb_RandomInt(-32768, 32767), hb_RandomInt(0, 65535))
 
-FUNCTION Rand( nStart )
+FUNCTION Rand(nStart)
 
    IF nStart != NIL
-      hb_RandomSeed( nStart )
+      hb_RandomSeed(nStart)
    ENDIF
 
    RETURN hb_Random()

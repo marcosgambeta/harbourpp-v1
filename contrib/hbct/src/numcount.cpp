@@ -50,14 +50,10 @@ static HB_LONG s_lCounter = 0;
 
 HB_FUNC( NUMCOUNT )
 {
-   if( HB_ISNUM(1) )
-   {
-      if( hb_parl(2) )
-      {
+   if( HB_ISNUM(1) ) {
+      if( hb_parl(2) ) {
          s_lCounter = hb_parnl(1);
-      }
-      else
-      {
+      } else {
          s_lCounter += hb_parnl(1);
       }
    }

@@ -60,72 +60,55 @@ static const HB_ERRCODE sulErrorSubcodes[] =
 };
 
 /* helper function for the Repl*() functions */
-static void do_replace( int iSwitch )
+static void do_replace(int iSwitch)
 {
    /* suppressing return value ? */
    int iNoRet = ct_getref() && HB_ISBYREF(1);
 
    /* param check */
-   if( HB_ISCHAR(1) && ( hb_parclen(2) > 0 || HB_ISNUM(2) ) )
-   {
+   if( HB_ISCHAR(1) && (hb_parclen(2) > 0 || HB_ISNUM(2)) ) {
       const char * pcString = hb_parc(1);
       HB_SIZE sStrLen = hb_parclen(1);
       char * pcRet, * pc;
       char cSearch, cReplace;
 
-      if( sStrLen == 0 )
-      {
-         if( iNoRet )
-         {
+      if( sStrLen == 0 ) {
+         if( iNoRet ) {
             hb_ret();
-         }
-         else
-         {
+         } else {
             hb_retc_null();
          }
          return;
       }
 
-      if( HB_ISNUM(2) )
-      {
+      if( HB_ISNUM(2) ) {
          cReplace = static_cast<char>(hb_parnl(2) % 256);
-      }
-      else
-      {
+      } else {
          cReplace = *(static_cast<const char*>(hb_parc(2)));
       }
 
-      if( hb_parclen(3) > 0 )
-      {
+      if( hb_parclen(3) > 0 ) {
          cSearch = *(static_cast<const char *>(hb_parc(3)));
-      }
-      else if( HB_ISNUM(3) )
-      {
+      } else if( HB_ISNUM(3) ) {
          cSearch = static_cast<char>(hb_parnl(3) % 256);
-      }
-      else
-      {
+      } else {
          cSearch = 0x20;
       }
 
       pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
       hb_xmemcpy(pcRet, pcString, sStrLen);
 
-      if( iSwitch != DO_REPLACE_REPLRIGHT )
-      {
+      if( iSwitch != DO_REPLACE_REPLRIGHT ) {
          pc = pcRet;
-         while( *pc == cSearch && pc < pcRet + sStrLen )
-         {
+         while( *pc == cSearch && pc < pcRet + sStrLen ) {
             *pc = cReplace;
             pc++;
          }
       }
 
-      if( iSwitch != DO_REPLACE_REPLLEFT )
-      {
+      if( iSwitch != DO_REPLACE_REPLLEFT ) {
          pc = pcRet + sStrLen - 1;
-         while( *pc == cSearch && pc >= pcRet )
-         {
+         while( *pc == cSearch && pc >= pcRet ) {
             *pc = cReplace;
             pc--;
          }
@@ -133,36 +116,25 @@ static void do_replace( int iSwitch )
 
       hb_storclen(pcRet, sStrLen, 1);
 
-      if( iNoRet )
-      {
+      if( iNoRet ) {
          hb_xfree(pcRet);
          hb_ret();
-      }
-      else
-      {
+      } else {
          hb_retclen_buffer(pcRet, sStrLen);
       }
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, sulErrorSubcodes[iSwitch], nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else if( iNoRet )
-      {
+      } else if( iNoRet ) {
          hb_ret();
-      }
-      else
-      {
+      } else {
          hb_retc_null();
       }
    }

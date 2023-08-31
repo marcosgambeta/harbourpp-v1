@@ -47,23 +47,23 @@
 /*
  * CT3 NET Functions Comments:
  *
- * NetCancel( <cLocalDevice> ) --> lReleased
+ * NetCancel(<cLocalDevice>) --> lReleased
  * Return true if <cLocalDevice> was disconnected.
  *
- * NetDisk( cDrive ) --> lSuccess
+ * NetDisk(cDrive) --> lSuccess
  * Return true if <cDrive> is a network drive, otherwise return false if is a local drive.
  *
- * NetLocName( cSahredDevice ) --> cLocalDevice
+ * NetLocName(cSahredDevice) --> cLocalDevice
  * Not implemented yet.
  *
  * NetPrinter() --> lSuccess
  * Return true if a current local printer set by SET PRINTER TO was connected to a
  * network printer.
  *
- * NetRedir( cLocalDevice, cSharedDevice, [cPassword], [lShowError] ) --> lSuccess
+ * NetRedir(cLocalDevice, cSharedDevice, [cPassword], [lShowError]) --> lSuccess
  * Return true if <cLocalDevice> was connected to <cSharedDevice> with <cPassword>, if any.
  *
- * NetRmtname( cLocalDevice ) --> cSharedName
+ * NetRmtname(cLocalDevice) --> cSharedName
  * Return the shared resource name connected to a <cLocalDevice>.
  * The original parameter <nDevice> in CA-Cl*pper Tools was changed to <cLocalName> in
  * xHarbour because in Windows Network I didn't find a number table like in MS-DOS. See
@@ -90,7 +90,7 @@
 #endif
 
 #if defined(HB_OS_WIN)
-static HB_BOOL hb_IsNetShared( const char * szLocalDevice )
+static HB_BOOL hb_IsNetShared(const char * szLocalDevice)
 {
    TCHAR lpRemoteDevice[HB_PATH_MAX];
    LPCTSTR lpLocalDevice;
@@ -102,8 +102,7 @@ static HB_BOOL hb_IsNetShared( const char * szLocalDevice )
    hb_vmUnlock();
    dwResult = WNetGetConnection(lpLocalDevice, lpRemoteDevice, &dwLen);
    hb_vmLock();
-   if( lpFree )
-   {
+   if( lpFree ) {
       hb_xfree(lpFree);
    }
 
@@ -133,8 +132,7 @@ HB_FUNC( NETPRINTER )
 #if defined(HB_OS_WIN)
    const char * cPrn = hb_setGetCPtr(HB_SET_PRINTFILE);  /* query default local printer port. */
 
-   if( !cPrn || !*cPrn || hb_stricmp( cPrn, "PRN" ) == 0 )
-   {
+   if( !cPrn || !*cPrn || hb_stricmp(cPrn, "PRN") == 0 ) {
       cPrn = "LPT1";
    }
    hb_retl(hb_IsNetShared(cPrn));
@@ -148,8 +146,7 @@ HB_FUNC( NETDISK )
 #if defined(HB_OS_WIN)
    const char * pszDrive = hb_parc(1);
 
-   if( pszDrive )
-   {
+   if( pszDrive ) {
       char szDrive[3];
 
       szDrive[0] = pszDrive[0];
@@ -192,19 +189,13 @@ HB_FUNC( NETRMTNAME )
    DWORD dwSize = 0;
    LPCTSTR lpLocalName = HB_PARSTRDEF(1, &hLocalDev, nullptr);
 
-   if( WNetGetConnection( lpLocalName, lpRemoteDevice, &dwSize ) == ERROR_MORE_DATA )
-   {
-      if( dwSize > 0 && dwSize <= dwLen && WNetGetConnection( lpLocalName, lpRemoteDevice, &dwSize ) == NO_ERROR )
-      {
+   if( WNetGetConnection(lpLocalName, lpRemoteDevice, &dwSize) == ERROR_MORE_DATA ) {
+      if( dwSize > 0 && dwSize <= dwLen && WNetGetConnection(lpLocalName, lpRemoteDevice, &dwSize) == NO_ERROR ) {
          HB_RETSTRLEN(lpRemoteDevice, static_cast<HB_SIZE>(dwSize - 1));
-      }
-      else
-      {
+      } else {
          hb_retc_null();
       }
-   }
-   else
-   {
+   } else {
       hb_retc_null();
    }
 
@@ -223,12 +214,10 @@ HB_FUNC( NETWORK )
 
    dwResult = WNetGetProviderName(WNNC_NET_MSNET, lpProviderName, &dwLen);
 
-   if( dwResult != NO_ERROR )
-   {
+   if( dwResult != NO_ERROR ) {
       dwResult = WNetGetProviderName(WNNC_NET_LANMAN, lpProviderName, &dwLen);
 
-      if( dwResult != NO_ERROR )
-      {
+      if( dwResult != NO_ERROR ) {
          dwResult = WNetGetProviderName(WNNC_NET_NETWARE, lpProviderName, &dwLen);
       }
    }

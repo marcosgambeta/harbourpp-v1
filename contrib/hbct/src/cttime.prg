@@ -45,25 +45,25 @@
  *
  */
 
-FUNCTION TimeToSec( cTime )
+FUNCTION TimeToSec(cTime)
 
    LOCAL nSec := 0
    LOCAL nLen, i, aLim, aMod, nInd, n
 
    IF cTime == NIL
       nSec := Seconds()
-   ELSEIF HB_ISSTRING( cTime )
-      nLen := Len( cTime )
-      IF ( nLen + 1 ) % 3 == 0 .AND. nLen <= 11
+   ELSEIF HB_ISSTRING(cTime)
+      nLen := Len(cTime)
+      IF (nLen + 1) % 3 == 0 .AND. nLen <= 11
          nInd := 1
-         aLim := { 24, 60, 60, 100 }
-         aMod := { 3600, 60, 1, 1 / 100 }
+         aLim := {24, 60, 60, 100}
+         aMod := {3600, 60, 1, 1 / 100}
          FOR i := 1 TO nLen STEP 3
-            IF IsDigit( SubStr( cTime, i    , 1 ) ) .AND. ;
-               IsDigit( SubStr( cTime, i + 1, 1 ) ) .AND. ;
-               ( i == nLen - 1 .OR. SubStr( cTime, i + 2, 1 ) == ":" ) .AND. ;
-               ( n := Val( SubStr( cTime, i, 2 ) ) ) < aLim[ nInd ]
-               nSec += n * aMod[ nInd ]
+            IF IsDigit(SubStr(cTime, i, 1)) .AND. ;
+               IsDigit(SubStr(cTime, i + 1, 1)) .AND. ;
+               (i == nLen - 1 .OR. SubStr(cTime, i + 2, 1) == ":") .AND. ;
+               (n := Val(SubStr(cTime, i, 2))) < aLim[nInd]
+               nSec += n * aMod[nInd]
             ELSE
                nSec := 0
                EXIT
@@ -73,31 +73,31 @@ FUNCTION TimeToSec( cTime )
       ENDIF
    ENDIF
 
-   RETURN Round( nSec, 2 )  /* round FL val to be sure that you can compare it */
+   RETURN Round(nSec, 2)  /* round FL val to be sure that you can compare it */
 
-FUNCTION SecToTime( nSec, lHundredth )
+FUNCTION SecToTime(nSec, lHundredth)
 
    LOCAL i, h, n
 
-   n := iif( ! HB_ISNUMERIC( nSec ), Seconds(), nSec )
+   n := iif(!HB_ISNUMERIC(nSec), Seconds(), nSec)
 
-   IF HB_ISLOGICAL( lHundredth ) .AND. lHundredth
-      h := StrZero( ( nSec * 100 ) % 100, 2 )
+   IF HB_ISLOGICAL(lHundredth) .AND. lHundredth
+      h := StrZero((nSec * 100) % 100, 2)
    ELSE
       h := ""
    ENDIF
 
-   n := Int( n % 86400 )
+   n := Int(n % 86400)
 
    FOR i := 1 TO 3
-      h := StrZero( n % 60, 2 ) + iif( h == "", "", ":" + h )
-      n := Int( n / 60 )
+      h := StrZero(n % 60, 2) + iif(h == "", "", ":" + h)
+      n := Int(n / 60)
    NEXT
 
    RETURN h
 
-FUNCTION Millisec( nDelay )
+FUNCTION Millisec(nDelay)
 
-   hb_idleSleep( nDelay / 1000 )
+   hb_idleSleep(nDelay / 1000)
 
    RETURN ""

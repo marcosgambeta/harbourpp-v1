@@ -52,38 +52,30 @@
 #define DO_COUNT_COUNTRIGHT  1
 
 /* helper function for the Count*() functions */
-static void do_count( int iSwitch )
+static void do_count(int iSwitch)
 {
    /* param check */
-   if( HB_ISCHAR(1) )
-   {
+   if( HB_ISCHAR(1) ) {
       const char * pcString = hb_parc(1);
       HB_SIZE sStrLen = hb_parclen(1);
       HB_SIZE sRetVal;
       const char * pc;
       char cSearch;
 
-      if( hb_parclen(2) > 0 )
-      {
+      if( hb_parclen(2) > 0 ) {
          cSearch = *(hb_parc(2));
-      }
-      else if( HB_ISNUM(2) )
-      {
+      } else if( HB_ISNUM(2) ) {
          cSearch = static_cast<char>(hb_parnl(2) % 256);
-      }
-      else
-      {
+      } else {
          cSearch = 0x20;
       }
 
       sRetVal = 0;
 
-      switch( iSwitch )
-      {
+      switch( iSwitch ) {
          case DO_COUNT_COUNTLEFT:
             pc = pcString;
-            while( *pc == cSearch && pc < ( pcString + sStrLen ) )
-            {
+            while( *pc == cSearch && pc < (pcString + sStrLen) ) {
                sRetVal++;
                pc++;
             }
@@ -91,8 +83,7 @@ static void do_count( int iSwitch )
 
          case DO_COUNT_COUNTRIGHT:
             pc = pcString + sStrLen - 1;
-            while( *pc == cSearch && pc >= pcString )
-            {
+            while( *pc == cSearch && pc >= pcString ) {
                sRetVal++;
                pc--;
             }
@@ -100,14 +91,11 @@ static void do_count( int iSwitch )
       }
 
       hb_retns(sRetVal);
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
                                  iSwitch == DO_COUNT_COUNTLEFT ?
                                  CT_ERROR_COUNTLEFT : CT_ERROR_COUNTRIGHT,
@@ -115,12 +103,9 @@ static void do_count( int iSwitch )
                                  HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retns(0);
       }
    }

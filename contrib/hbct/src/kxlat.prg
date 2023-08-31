@@ -53,77 +53,77 @@
 
 /* Trick to make it work in the STATIC initializer.
    It's safe because it's only used with ASCII chars. */
-#define hb_keyCode( x )  Asc( x )
+#define hb_keyCode(x)  Asc(x)
 
-STATIC s_hTrs := { => }
+STATIC s_hTrs := {=>}
 STATIC s_hMutex := hb_mutexCreate()
 
 STATIC sc_hCnv := { ;
    KS_DISABLE        => 0                 , ;
-   KS_A              => hb_keyCode( "A" ) , ;
-   KS_B              => hb_keyCode( "B" ) , ;
-   KS_C              => hb_keyCode( "C" ) , ;
-   KS_D              => hb_keyCode( "D" ) , ;
-   KS_E              => hb_keyCode( "E" ) , ;
-   KS_F              => hb_keyCode( "F" ) , ;
-   KS_G              => hb_keyCode( "G" ) , ;
-   KS_H              => hb_keyCode( "H" ) , ;
-   KS_I              => hb_keyCode( "I" ) , ;
-   KS_J              => hb_keyCode( "J" ) , ;
-   KS_K              => hb_keyCode( "K" ) , ;
-   KS_L              => hb_keyCode( "L" ) , ;
-   KS_M              => hb_keyCode( "M" ) , ;
-   KS_N              => hb_keyCode( "N" ) , ;
-   KS_O              => hb_keyCode( "O" ) , ;
-   KS_P              => hb_keyCode( "P" ) , ;
-   KS_Q              => hb_keyCode( "Q" ) , ;
-   KS_R              => hb_keyCode( "R" ) , ;
-   KS_S              => hb_keyCode( "S" ) , ;
-   KS_T              => hb_keyCode( "T" ) , ;
-   KS_U              => hb_keyCode( "U" ) , ;
-   KS_V              => hb_keyCode( "V" ) , ;
-   KS_W              => hb_keyCode( "W" ) , ;
-   KS_X              => hb_keyCode( "X" ) , ;
-   KS_Y              => hb_keyCode( "Y" ) , ;
-   KS_Z              => hb_keyCode( "Z" ) , ;
-   KS_a              => hb_keyCode( "a" ) , ;
-   KS_b              => hb_keyCode( "b" ) , ;
-   KS_c              => hb_keyCode( "c" ) , ;
-   KS_d              => hb_keyCode( "d" ) , ;
-   KS_e              => hb_keyCode( "e" ) , ;
-   KS_f              => hb_keyCode( "f" ) , ;
-   KS_g              => hb_keyCode( "g" ) , ;
-   KS_h              => hb_keyCode( "h" ) , ;
-   KS_i              => hb_keyCode( "i" ) , ;
-   KS_j              => hb_keyCode( "j" ) , ;
-   KS_k              => hb_keyCode( "k" ) , ;
-   KS_l              => hb_keyCode( "l" ) , ;
-   KS_m              => hb_keyCode( "m" ) , ;
-   KS_n              => hb_keyCode( "n" ) , ;
-   KS_o              => hb_keyCode( "o" ) , ;
-   KS_p              => hb_keyCode( "p" ) , ;
-   KS_q              => hb_keyCode( "q" ) , ;
-   KS_r              => hb_keyCode( "r" ) , ;
-   KS_s              => hb_keyCode( "s" ) , ;
-   KS_t              => hb_keyCode( "t" ) , ;
-   KS_u              => hb_keyCode( "u" ) , ;
-   KS_v              => hb_keyCode( "v" ) , ;
-   KS_w              => hb_keyCode( "w" ) , ;
-   KS_x              => hb_keyCode( "x" ) , ;
-   KS_y              => hb_keyCode( "y" ) , ;
-   KS_z              => hb_keyCode( "z" ) , ;
-   KS_1              => hb_keyCode( "1" ) , ;
-   KS_2              => hb_keyCode( "2" ) , ;
-   KS_3              => hb_keyCode( "3" ) , ;
-   KS_4              => hb_keyCode( "4" ) , ;
-   KS_5              => hb_keyCode( "5" ) , ;
-   KS_6              => hb_keyCode( "6" ) , ;
-   KS_7              => hb_keyCode( "7" ) , ;
-   KS_8              => hb_keyCode( "8" ) , ;
-   KS_9              => hb_keyCode( "9" ) , ;
-   KS_0              => hb_keyCode( "0" ) , ;
-   KS_DOT            => hb_keyCode( "." ) , ;
-   KS_COMMA          => hb_keyCode( "," ) , ;
+   KS_A              => hb_keyCode("A") , ;
+   KS_B              => hb_keyCode("B") , ;
+   KS_C              => hb_keyCode("C") , ;
+   KS_D              => hb_keyCode("D") , ;
+   KS_E              => hb_keyCode("E") , ;
+   KS_F              => hb_keyCode("F") , ;
+   KS_G              => hb_keyCode("G") , ;
+   KS_H              => hb_keyCode("H") , ;
+   KS_I              => hb_keyCode("I") , ;
+   KS_J              => hb_keyCode("J") , ;
+   KS_K              => hb_keyCode("K") , ;
+   KS_L              => hb_keyCode("L") , ;
+   KS_M              => hb_keyCode("M") , ;
+   KS_N              => hb_keyCode("N") , ;
+   KS_O              => hb_keyCode("O") , ;
+   KS_P              => hb_keyCode("P") , ;
+   KS_Q              => hb_keyCode("Q") , ;
+   KS_R              => hb_keyCode("R") , ;
+   KS_S              => hb_keyCode("S") , ;
+   KS_T              => hb_keyCode("T") , ;
+   KS_U              => hb_keyCode("U") , ;
+   KS_V              => hb_keyCode("V") , ;
+   KS_W              => hb_keyCode("W") , ;
+   KS_X              => hb_keyCode("X") , ;
+   KS_Y              => hb_keyCode("Y") , ;
+   KS_Z              => hb_keyCode("Z") , ;
+   KS_a              => hb_keyCode("a") , ;
+   KS_b              => hb_keyCode("b") , ;
+   KS_c              => hb_keyCode("c") , ;
+   KS_d              => hb_keyCode("d") , ;
+   KS_e              => hb_keyCode("e") , ;
+   KS_f              => hb_keyCode("f") , ;
+   KS_g              => hb_keyCode("g") , ;
+   KS_h              => hb_keyCode("h") , ;
+   KS_i              => hb_keyCode("i") , ;
+   KS_j              => hb_keyCode("j") , ;
+   KS_k              => hb_keyCode("k") , ;
+   KS_l              => hb_keyCode("l") , ;
+   KS_m              => hb_keyCode("m") , ;
+   KS_n              => hb_keyCode("n") , ;
+   KS_o              => hb_keyCode("o") , ;
+   KS_p              => hb_keyCode("p") , ;
+   KS_q              => hb_keyCode("q") , ;
+   KS_r              => hb_keyCode("r") , ;
+   KS_s              => hb_keyCode("s") , ;
+   KS_t              => hb_keyCode("t") , ;
+   KS_u              => hb_keyCode("u") , ;
+   KS_v              => hb_keyCode("v") , ;
+   KS_w              => hb_keyCode("w") , ;
+   KS_x              => hb_keyCode("x") , ;
+   KS_y              => hb_keyCode("y") , ;
+   KS_z              => hb_keyCode("z") , ;
+   KS_1              => hb_keyCode("1") , ;
+   KS_2              => hb_keyCode("2") , ;
+   KS_3              => hb_keyCode("3") , ;
+   KS_4              => hb_keyCode("4") , ;
+   KS_5              => hb_keyCode("5") , ;
+   KS_6              => hb_keyCode("6") , ;
+   KS_7              => hb_keyCode("7") , ;
+   KS_8              => hb_keyCode("8") , ;
+   KS_9              => hb_keyCode("9") , ;
+   KS_0              => hb_keyCode("0") , ;
+   KS_DOT            => hb_keyCode(".") , ;
+   KS_COMMA          => hb_keyCode(",") , ;
    KS_CTRL_A         => K_CTRL_A          , ;
    KS_CTRL_B         => K_CTRL_B          , ;
    KS_CTRL_C         => K_CTRL_C          , ;
@@ -315,19 +315,19 @@ STATIC sc_hCnv := { ;
    KS_PAD_0          => 0                 , ; /* no Harbour equivalent */
    KS_PAD_DECIMAL    => 0                 }   /* no Harbour equivalent */
 
-FUNCTION __hbct_key_c_to_n( cKey )
+FUNCTION __hbct_key_c_to_n(cKey)
 
-   IF HB_ISSTRING( cKey )
-      RETURN hb_HGetDef( sc_hCnv, cKey, 0 )
+   IF HB_ISSTRING(cKey)
+      RETURN hb_HGetDef(sc_hCnv, cKey, 0)
    ENDIF
 
    RETURN NIL
 
-FUNCTION __hbct_key_n_to_c( nKey )
+FUNCTION __hbct_key_n_to_c(nKey)
 
    LOCAL hKey
 
-   IF HB_ISNUMERIC( nKey )
+   IF HB_ISNUMERIC(nKey)
       FOR EACH hKey IN sc_hCnv
          IF hKey:__enumValue() == nKey
             RETURN hKey:__enumKey()
@@ -335,40 +335,40 @@ FUNCTION __hbct_key_n_to_c( nKey )
       NEXT
    ENDIF
 
-   RETURN hb_BChar( 0 ) + hb_BChar( 0 )
+   RETURN hb_BChar(0) + hb_BChar(0)
 
-FUNCTION SetKXLat( cOrgKeyValue, cNewKeyValue )
+FUNCTION SetKXLat(cOrgKeyValue, cNewKeyValue)
 
    SWITCH PCount()
    CASE 0 ; RETURN hbct_SetKXLat()
-   CASE 1 ; RETURN hbct_SetKXLat( __hbct_key_c_to_n( cOrgKeyValue ) )
+   CASE 1 ; RETURN hbct_SetKXLat(__hbct_key_c_to_n(cOrgKeyValue))
    ENDSWITCH
 
-   RETURN hbct_SetKXLat( __hbct_key_c_to_n( cOrgKeyValue ), __hbct_key_c_to_n( cNewKeyValue ) )
+   RETURN hbct_SetKXLat(__hbct_key_c_to_n(cOrgKeyValue), __hbct_key_c_to_n(cNewKeyValue))
 
-FUNCTION GetKXLat( cKeyValue )
+FUNCTION GetKXLat(cKeyValue)
 
-   LOCAL xKey := hbct_GetKXLat( __hbct_key_c_to_n( cKeyValue ) )
+   LOCAL xKey := hbct_GetKXLat(__hbct_key_c_to_n(cKeyValue))
 
    /* doc is unclear. should this return a numeric in these cases? */
-   IF HB_ISNUMERIC( xKey )
+   IF HB_ISNUMERIC(xKey)
       RETURN xKey
    ENDIF
 
-   RETURN __hbct_key_n_to_c( xKey )
+   RETURN __hbct_key_n_to_c(xKey)
 
-FUNCTION SetKXTab( cTrs )
+FUNCTION SetKXTab(cTrs)
 
-   LOCAL hTrs := { => }
+   LOCAL hTrs := {=>}
    LOCAL tmp
 
-   IF HB_ISSTRING( cTrs )
-      FOR tmp := 1 TO hb_BLen( cTrs ) STEP 4
-         hTrs[ __hbct_key_c_to_n( hb_BSubStr( cTrs, tmp, 2 ) ) ] := __hbct_key_c_to_n( hb_BSubStr( cTrs, tmp + 2, 2 ) )
+   IF HB_ISSTRING(cTrs)
+      FOR tmp := 1 TO hb_BLen(cTrs) STEP 4
+         hTrs[__hbct_key_c_to_n(hb_BSubStr(cTrs, tmp, 2))] := __hbct_key_c_to_n(hb_BSubStr(cTrs, tmp + 2, 2))
       NEXT
    ENDIF
 
-   RETURN hbct_SetKXTab( hTrs )
+   RETURN hbct_SetKXTab(hTrs)
 
 FUNCTION GetKXTab()
 
@@ -377,89 +377,89 @@ FUNCTION GetKXTab()
    LOCAL hKey
 
    FOR EACH hKey IN hTrs
-      cTrs += __hbct_key_n_to_c( hKey:__enumKey() ) + __hbct_key_n_to_c( hKey:__enumValue() )
+      cTrs += __hbct_key_n_to_c(hKey:__enumKey()) + __hbct_key_n_to_c(hKey:__enumValue())
    NEXT
 
    RETURN cTrs
 
 /* Harbour extensions using standard numeric key values */
 
-FUNCTION hbct_SetKXLat( nOrgKeyValue, nNewKeyValue )
+FUNCTION hbct_SetKXLat(nOrgKeyValue, nNewKeyValue)
 
    LOCAL lAccepted := .F.
 
    IF PCount() == 0
-      IF hb_mutexLock( s_hMutex )
+      IF hb_mutexLock(s_hMutex)
          lAccepted := .T.
-         IF ! Empty( s_hTrs )
-            hb_HClear( s_hTrs )
-            hb_gtInfo( HB_GTI_INKEYFILTER, NIL )
+         IF !Empty(s_hTrs)
+            hb_HClear(s_hTrs)
+            hb_gtInfo(HB_GTI_INKEYFILTER, NIL)
          ENDIF
-         hb_mutexUnlock( s_hMutex )
+         hb_mutexUnlock(s_hMutex)
       ENDIF
    ELSE
-      IF HB_ISNUMERIC( nOrgKeyValue ) .AND. nOrgKeyValue != 0
-         IF hb_mutexLock( s_hMutex )
+      IF HB_ISNUMERIC(nOrgKeyValue) .AND. nOrgKeyValue != 0
+         IF hb_mutexLock(s_hMutex)
             IF PCount() == 1
                IF nOrgKeyValue $ s_hTrs
                   lAccepted := .T.
-                  hb_HDel( s_hTrs, nOrgKeyValue )
-                  IF Empty( s_hTrs )
-                     hb_gtInfo( HB_GTI_INKEYFILTER, NIL )
+                  hb_HDel(s_hTrs, nOrgKeyValue)
+                  IF Empty(s_hTrs)
+                     hb_gtInfo(HB_GTI_INKEYFILTER, NIL)
                   ENDIF
                ENDIF
-            ELSEIF HB_ISNUMERIC( nNewKeyValue )
+            ELSEIF HB_ISNUMERIC(nNewKeyValue)
                /* refuse overwriting custom HB_GTI_INKEYFILTER */
-               IF hb_gtInfo( HB_GTI_INKEYFILTER ) == NIL .OR. ! Empty( s_hTrs )
+               IF hb_gtInfo(HB_GTI_INKEYFILTER) == NIL .OR. !Empty(s_hTrs)
                   lAccepted := .T.
-                  IF Empty( s_hTrs )
-                     hb_gtInfo( HB_GTI_INKEYFILTER, {| nKey | __hbct_kxlat( nKey ) } )
+                  IF Empty(s_hTrs)
+                     hb_gtInfo(HB_GTI_INKEYFILTER, {|nKey|__hbct_kxlat(nKey)})
                   ENDIF
-                  s_hTrs[ nOrgKeyValue ] := nNewKeyValue
+                  s_hTrs[nOrgKeyValue] := nNewKeyValue
                ENDIF
             ENDIF
-            hb_mutexUnlock( s_hMutex )
+            hb_mutexUnlock(s_hMutex)
          ENDIF
       ENDIF
    ENDIF
 
    RETURN lAccepted
 
-FUNCTION hbct_GetKXLat( nKeyValue )
+FUNCTION hbct_GetKXLat(nKeyValue)
 
    LOCAL nNewValue := 0
 
-   IF HB_ISNUMERIC( nKeyValue )
-      IF hb_mutexLock( s_hMutex )
+   IF HB_ISNUMERIC(nKeyValue)
+      IF hb_mutexLock(s_hMutex)
          IF nKeyValue $ s_hTrs
-            nNewValue := s_hTrs[ nKeyValue ]
+            nNewValue := s_hTrs[nKeyValue]
             IF nNewValue == 0
                nNewValue := -1
             ENDIF
          ENDIF
-         hb_mutexUnlock( s_hMutex )
+         hb_mutexUnlock(s_hMutex)
       ENDIF
    ENDIF
 
    RETURN nNewValue
 
-FUNCTION hbct_SetKXTab( hTrs )
+FUNCTION hbct_SetKXTab(hTrs)
 
    LOCAL lAccepted := .F.
 
-   IF HB_ISHASH( hTrs )
-      IF hb_mutexLock( s_hMutex )
-         IF hb_gtInfo( HB_GTI_INKEYFILTER ) == NIL .OR. ! Empty( s_hTrs )
+   IF HB_ISHASH(hTrs)
+      IF hb_mutexLock(s_hMutex)
+         IF hb_gtInfo(HB_GTI_INKEYFILTER) == NIL .OR. !Empty(s_hTrs)
             lAccepted := .T.
-            IF Empty( s_hTrs ) .AND. ! Empty( hTrs )
-               hb_gtInfo( HB_GTI_INKEYFILTER, {| nKey | __hbct_kxlat( nKey ) } )
-            ELSEIF ! Empty( s_hTrs ) .AND. Empty( hTrs )
-               hb_gtInfo( HB_GTI_INKEYFILTER, NIL )
+            IF Empty(s_hTrs) .AND. !Empty(hTrs)
+               hb_gtInfo(HB_GTI_INKEYFILTER, {|nKey|__hbct_kxlat(nKey)})
+            ELSEIF !Empty(s_hTrs) .AND. Empty(hTrs)
+               hb_gtInfo(HB_GTI_INKEYFILTER, NIL)
             ENDIF
-            hb_HClear( s_hTrs )
-            hb_HCopy( hTrs, s_hTrs )
+            hb_HClear(s_hTrs)
+            hb_HCopy(hTrs, s_hTrs)
          ENDIF
-         hb_mutexUnlock( s_hMutex )
+         hb_mutexUnlock(s_hMutex)
       ENDIF
    ENDIF
 
@@ -469,18 +469,18 @@ FUNCTION hbct_GetKXTab()
 
    LOCAL xRetVal
 
-   IF hb_mutexLock( s_hMutex )
-      xRetVal := hb_HClone( s_hTrs )
-      hb_mutexUnlock( s_hMutex )
+   IF hb_mutexLock(s_hMutex)
+      xRetVal := hb_HClone(s_hTrs)
+      hb_mutexUnlock(s_hMutex)
    ENDIF
 
    RETURN xRetVal
 
-STATIC FUNCTION __hbct_kxlat( nKey )
+STATIC FUNCTION __hbct_kxlat(nKey)
 
-   IF hb_mutexLock( s_hMutex )
-      nKey := hb_HGetDef( s_hTrs, nKey, nKey )
-      hb_mutexUnlock( s_hMutex )
+   IF hb_mutexLock(s_hMutex)
+      nKey := hb_HGetDef(s_hTrs, nKey, nKey)
+      hb_mutexUnlock(s_hMutex)
    ENDIF
 
    RETURN nKey

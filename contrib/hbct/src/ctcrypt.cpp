@@ -53,8 +53,7 @@ HB_FUNC( CRYPT )
 {
    HB_SIZE nCryptLen = hb_parclen(2);
 
-   if( nCryptLen >= 2 )
-   {
+   if( nCryptLen >= 2 ) {
       const HB_BYTE * pbyCrypt = reinterpret_cast<const HB_BYTE*>(hb_parc(2));
       HB_SIZE nCryptPos = 0;
 
@@ -68,8 +67,7 @@ HB_FUNC( CRYPT )
            0xFFFF) ^ (static_cast<HB_USHORT>(nCryptLen) & 0xFFFF);
       HB_USHORT uiCount1 = 0xAAAA;
 
-      for( HB_SIZE nStringPos = 0; nStringPos < nStringLen; )
-      {
+      for( HB_SIZE nStringPos = 0; nStringPos < nStringLen; ) {
          HB_USHORT uiTmpCount1 = uiCount1;
          HB_USHORT uiTmpCount2 = uiCount2;
          HB_BYTE byte = pbyString[nStringPos] ^ pbyCrypt[nCryptPos++];
@@ -77,8 +75,7 @@ HB_FUNC( CRYPT )
 
          uiTmpCount2 = HB_MKUSHORT((HB_LOBYTE(uiTmpCount2) ^ HB_HIBYTE(uiTmpCount2)), HB_HIBYTE(uiTmpCount2));
 
-         for( tmp = HB_LOBYTE(uiTmpCount2); tmp; tmp-- )
-         {
+         for( tmp = HB_LOBYTE(uiTmpCount2); tmp; tmp-- ) {
             uiTmpCount2 = (uiTmpCount2 >> 1) | ((uiTmpCount2 & 1) << 15);
          }
 
@@ -90,14 +87,12 @@ HB_FUNC( CRYPT )
          uiTmpCount2 &= 0x1E;
          uiTmpCount2 += 2;
 
-         do
-         {
+         do {
             HB_BYTE byTmp;
 
             uiTmpCount2--;
 
-            for( tmp = HB_LOBYTE(uiTmpCount2); tmp; tmp-- )
-            {
+            for( tmp = HB_LOBYTE(uiTmpCount2); tmp; tmp-- ) {
                uiTmpCount1 = (uiTmpCount1 >> 1) | ((uiTmpCount1 & 1) << 15);
             }
 
@@ -111,23 +106,19 @@ HB_FUNC( CRYPT )
 
             uiTmpCount1 = HB_MKUSHORT(byTmp, HB_HIBYTE(uiTmpCount1));
 
-         }
-         while( --uiTmpCount2 );
+         } while( --uiTmpCount2 );
 
          uiCount1 = uiTmpCount1;
 
          pbyResult[nStringPos++] = byte ^ HB_LOBYTE(uiTmpCount1);
 
-         if( nCryptPos == nCryptLen )
-         {
+         if( nCryptPos == nCryptLen ) {
             nCryptPos = 0;
          }
       }
 
       hb_retclen_buffer(reinterpret_cast<char*>(pbyResult), nStringLen);
-   }
-   else
-   {
+   } else {
       hb_retc_null();
    }
 }

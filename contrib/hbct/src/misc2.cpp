@@ -51,60 +51,40 @@ HB_FUNC( COMPLEMENT )
 {
    PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
 
-   if( pItem != nullptr )
-   {
-      if( HB_IS_STRING(pItem) )
-      {
+   if( pItem != nullptr ) {
+      if( HB_IS_STRING(pItem) ) {
          HB_SIZE nLen = hb_itemGetCLen(pItem);
 
-         if( nLen > 0 )
-         {
+         if( nLen > 0 ) {
             const char * szSrc = hb_itemGetCPtr(pItem);
             char * szBuffer = static_cast<char*>(hb_xgrab(nLen + 1));
 
-            for( HB_SIZE nPos = 0; nPos < nLen; nPos++ )
-            {
+            for( HB_SIZE nPos = 0; nPos < nLen; nPos++ ) {
                szBuffer[nPos] = ~szSrc[nPos];
             }
             hb_retclen_buffer(szBuffer, nLen);
-         }
-         else
-         {
+         } else {
             hb_retc_null();
          }
-      }
-      else if( HB_IS_DATE(pItem) )
-      {
+      } else if( HB_IS_DATE(pItem) ) {
          hb_retdl(4537847 - hb_itemGetDL(pItem));
-      }
-      else if( HB_IS_TIMESTAMP(pItem) )
-      {
+      } else if( HB_IS_TIMESTAMP(pItem) ) {
          hb_rettd(4537847.0 - hb_itemGetTD(pItem));
-      }
-      else if( HB_IS_NUMINT(pItem) )
-      {
+      } else if( HB_IS_NUMINT(pItem) ) {
          hb_retnint(-hb_itemGetNInt(pItem));
-      }
-      else if( HB_IS_NUMERIC(pItem) )
-      {
+      } else if( HB_IS_NUMERIC(pItem) ) {
          int iWidth, iDec;
          double dValue;
 
          dValue = hb_itemGetND(pItem);
          hb_itemGetNLen(pItem, &iWidth, &iDec);
          hb_retndlen(-dValue, iWidth, iDec);
-      }
-      else if( HB_IS_LOGICAL(pItem) )
-      {
+      } else if( HB_IS_LOGICAL(pItem) ) {
          hb_retl(!hb_itemGetL(pItem));
-      }
-      else
-      {
+      } else {
          hb_ret();
       }
-   }
-   else
-   {
+   } else {
       hb_ret();
    }
 }

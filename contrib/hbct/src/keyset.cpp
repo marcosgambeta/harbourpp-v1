@@ -56,25 +56,21 @@ static void SetGet(int iFlag)
    memset(&gtInfo, 0, sizeof(gtInfo));
 
    hb_gtInfo(HB_GTI_KBDSHIFTS, &gtInfo);
-   if( gtInfo.pResult )
-   {
+   if( gtInfo.pResult ) {
       iState = hb_itemGetNI(gtInfo.pResult);
       gtInfo.pNewVal = gtInfo.pResult;
       gtInfo.pResult = nullptr;
    }
 
-   if( HB_ISLOG(1) )
-   {
+   if( HB_ISLOG(1) ) {
       gtInfo.pNewVal = hb_itemPutNI(gtInfo.pNewVal, hb_parl(1) ? (iState | iFlag) : (iState & ~iFlag));
       hb_gtInfo(HB_GTI_KBDSHIFTS, &gtInfo);
    }
 
-   if( gtInfo.pNewVal )
-   {
+   if( gtInfo.pNewVal ) {
       hb_itemRelease(gtInfo.pNewVal);
    }
-   if( gtInfo.pResult )
-   {
+   if( gtInfo.pResult ) {
       hb_itemRelease(gtInfo.pResult);
    }
 

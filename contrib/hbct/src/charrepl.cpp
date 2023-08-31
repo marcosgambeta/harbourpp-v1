@@ -55,8 +55,7 @@ HB_FUNC( CHARREPL )
    HB_SIZE sSearchLen, sReplaceLen;
 
    /* param check */
-   if( (sSearchLen = hb_parclen(1)) > 0 && HB_ISCHAR(2) && (sReplaceLen = hb_parclen(3)) > 0 )
-   {
+   if( (sSearchLen = hb_parclen(1)) > 0 && HB_ISCHAR(2) && (sReplaceLen = hb_parclen(3)) > 0 ) {
       /* get parameters */
       const char * pcSearch = hb_parc(1);
       const char * pcString = hb_parc(2);
@@ -66,14 +65,10 @@ HB_FUNC( CHARREPL )
       char * pcRet;
 
       /* if sStrLen == 0, we can return immediately */
-      if( sStrLen == 0 )
-      {
-         if( iNoRet )
-         {
+      if( sStrLen == 0 ) {
+         if( iNoRet ) {
             hb_retl(false);
-         }
-         else
-         {
+         } else {
             hb_retc_null();
          }
          return;
@@ -82,34 +77,27 @@ HB_FUNC( CHARREPL )
       pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
       hb_xmemcpy(pcRet, pcString, sStrLen);
 
-      for( HB_SIZE sIndex = 0; sIndex < sSearchLen; sIndex++ )
-      {
+      for( HB_SIZE sIndex = 0; sIndex < sSearchLen; sIndex++ ) {
          HB_SIZE sMatchStrLen;
          HB_SIZE sReplIndex = sIndex;
 
-         if( sReplIndex > sReplaceLen - 1 )
-         {
+         if( sReplIndex > sReplaceLen - 1 ) {
             sReplIndex = sReplaceLen - 1;
          }
 
-         if( iMode )
-         {
+         if( iMode ) {
             /* no multiple replacements: searching in pcString,
                replacing in pcRet */
             const char * pc = pcString;
 
-            while( ( pc = ct_at_exact_forward( pc, sStrLen - ( pc - pcString ), pcSearch + sIndex, 1, &sMatchStrLen ) ) != nullptr )
-            {
+            while( (pc = ct_at_exact_forward(pc, sStrLen - (pc - pcString), pcSearch + sIndex, 1, &sMatchStrLen)) != nullptr ) {
                *(pcRet + (pc - pcString)) = *(pcReplace + sReplIndex);
                pc++;
             }
-         }
-         else
-         {
+         } else {
             /* multiple replacements: searching & replacing in pcRet */
             char * pcw = pcRet;
-            while( (pcw = const_cast<char*>(ct_at_exact_forward(pcw, sStrLen - (pcw - pcRet), pcSearch + sIndex, 1, &sMatchStrLen))) != nullptr )
-            {
+            while( (pcw = const_cast<char*>(ct_at_exact_forward(pcw, sStrLen - (pcw - pcRet), pcSearch + sIndex, 1, &sMatchStrLen))) != nullptr ) {
                *pcw++ = *(pcReplace + sReplIndex);
             }
          }
@@ -118,40 +106,27 @@ HB_FUNC( CHARREPL )
       /* return string */
       hb_storclen(pcRet, sStrLen, 2);
 
-      if( iNoRet )
-      {
+      if( iNoRet ) {
          hb_retl(false);
          hb_xfree(pcRet);
-      }
-      else
-      {
+      } else {
          hb_retclen_buffer(pcRet, sStrLen);
       }
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARREPL, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else if( iNoRet )
-      {
+      } else if( iNoRet ) {
          hb_retl(false);
-      }
-      else if( HB_ISCHAR(2) )
-      {
+      } else if( HB_ISCHAR(2) ) {
          hb_retclen(hb_parc(2), hb_parclen(2));
-      }
-      else
-      {
+      } else {
          hb_retc_null();
       }
    }

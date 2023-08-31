@@ -74,7 +74,7 @@ int ct_math_exit(void)
 /* ---------------- */
 static int s_iPrecision = 16; /* TODO: make this thread safe */
 
-void ct_setprecision( int iPrecision )
+void ct_setprecision(int iPrecision)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_setprecision (%i)", iPrecision));
@@ -96,16 +96,12 @@ HB_FUNC( SETPREC )
 {
    int iPrec = hb_parni(1);
 
-   if( iPrec >= 1 && iPrec <= 16 )
-   {
+   if( iPrec >= 1 && iPrec <= 16 ) {
       ct_setprecision(iPrec);
-   }
-   else
-   {
+   } else {
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SETPREC, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
    }
@@ -115,12 +111,10 @@ HB_FUNC( SETPREC )
 HB_FUNC( GETPREC )
 {
    hb_retni(ct_getprecision());
-   if( hb_pcount() > 0 )
-   {
+   if( hb_pcount() > 0 ) {
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_GETPREC, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
    }

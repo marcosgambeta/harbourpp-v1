@@ -44,21 +44,21 @@
  *
  */
 
-FUNCTION ClearEol( nRow, nCol, xAttr, xChar )
+FUNCTION ClearEol(nRow, nCol, xAttr, xChar)
 
-   IF ! HB_ISNUMERIC( nRow )
+   IF !HB_ISNUMERIC(nRow)
       nRow := Row()
    ENDIF
 
-   RETURN ClearWin( nRow, nCol, nRow, /* MaxCol() */, xAttr, xChar )
+   RETURN ClearWin(nRow, nCol, nRow, /* MaxCol() */, xAttr, xChar)
 
-FUNCTION ClEol( nRow, nCol )
+FUNCTION ClEol(nRow, nCol)
 
-   IF ! HB_ISNUMERIC( nRow )
+   IF !HB_ISNUMERIC(nRow)
       nRow := Row()
    ENDIF
 
-   RETURN ClearWin( nRow, nCol, nRow, /* MaxCol() */, 7 /* "W/N" */, " " )
+   RETURN ClearWin(nRow, nCol, nRow, /* MaxCol() */, 7 /* "W/N" */, " ")
 
-FUNCTION ClWin( nRow, nCol )
-   RETURN ClearWin( nRow, nCol, /* MaxRow() */, /* MaxCol() */, 7 /* "W/N" */, " " )
+FUNCTION ClWin(nRow, nCol)
+   RETURN ClearWin(nRow, nCol, /* MaxRow() */, /* MaxCol() */, 7 /* "W/N" */, " ")

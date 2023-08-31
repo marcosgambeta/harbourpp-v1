@@ -52,9 +52,9 @@
 
 /* throwing a CT-subsystem error without value substitution
    - function adapted from errorapi.c */
-HB_USHORT ct_error( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode,
-                    const char * szDescription, const char * szOperation,
-                    HB_ERRCODE errOsCode, HB_USHORT uiFlags, HB_ULONG ulArgCount, ... )
+HB_USHORT ct_error(HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode,
+                   const char * szDescription, const char * szOperation,
+                   HB_ERRCODE errOsCode, HB_USHORT uiFlags, HB_ULONG ulArgCount, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_error(%hu, %d, %d, %s, %s, %d, %hu, %lu)", uiSeverity, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags, ulArgCount));
@@ -69,39 +69,27 @@ HB_USHORT ct_error( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errS
    pError = hb_errRT_New(uiSeverity, CT_SUBSYSTEM, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags);
 
    /* Build the array from the passed arguments. */
-   if( ulArgCount == 0 )
-   {
+   if( ulArgCount == 0 ) {
       pArray = nullptr;
-   }
-   else if( ulArgCount == HB_ERR_ARGS_BASEPARAMS )
-   {
-      if( hb_pcount() == 0 )
-      {
+   } else if( ulArgCount == HB_ERR_ARGS_BASEPARAMS ) {
+      if( hb_pcount() == 0 ) {
          pArray = nullptr;
-      }
-      else
-      {
+      } else {
          pArray = hb_arrayBaseParams();
       }
-   }
-   else if( ulArgCount == HB_ERR_ARGS_SELFPARAMS )
-   {
+   } else if( ulArgCount == HB_ERR_ARGS_SELFPARAMS ) {
       pArray = hb_arraySelfParams();
-   }
-   else
-   {
+   } else {
       pArray = hb_itemArrayNew(ulArgCount);
 
       va_start(va, ulArgCount);
-      for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
-      {
+      for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ ) {
          hb_itemArrayPut(pArray, ulArgPos, va_arg(va, PHB_ITEM));
       }
       va_end(va);
    }
 
-   if( pArray )
-   {
+   if( pArray ) {
       /* Assign the new array to the object data item. */
       hb_vmPushSymbol(hb_dynsymGetSymbol("_ARGS"));
       hb_vmPush(pError);
@@ -123,9 +111,9 @@ HB_USHORT ct_error( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errS
 
 /* throwing a CT-subsystem error with value substitution
    - function adapted from errorapi.c */
-PHB_ITEM ct_error_subst( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode,
-                         const char * szDescription, const char * szOperation,
-                         HB_ERRCODE errOsCode, HB_USHORT uiFlags, HB_ULONG ulArgCount, ... )
+PHB_ITEM ct_error_subst(HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode,
+                        const char * szDescription, const char * szOperation,
+                        HB_ERRCODE errOsCode, HB_USHORT uiFlags, HB_ULONG ulArgCount, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_error_subst(%hu, %d, %d, %s, %s, %d, %hu, %lu)", uiSeverity, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags, ulArgCount));
@@ -140,39 +128,27 @@ PHB_ITEM ct_error_subst( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE
    pError = hb_errRT_New_Subst(uiSeverity, CT_SUBSYSTEM, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags);
 
    /* Build the array from the passed arguments. */
-   if( ulArgCount == 0 )
-   {
+   if( ulArgCount == 0 ) {
       pArray = nullptr;
-   }
-   else if( ulArgCount == HB_ERR_ARGS_BASEPARAMS )
-   {
-      if( hb_pcount() == 0 )
-      {
+   } else if( ulArgCount == HB_ERR_ARGS_BASEPARAMS ) {
+      if( hb_pcount() == 0 ) {
          pArray = nullptr;
-      }
-      else
-      {
+      } else {
          pArray = hb_arrayBaseParams();
       }
-   }
-   else if( ulArgCount == HB_ERR_ARGS_SELFPARAMS )
-   {
+   } else if( ulArgCount == HB_ERR_ARGS_SELFPARAMS ) {
       pArray = hb_arraySelfParams();
-   }
-   else
-   {
+   } else {
       pArray = hb_itemArrayNew(ulArgCount);
 
       va_start(va, ulArgCount);
-      for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ )
-      {
+      for( HB_ULONG ulArgPos = 1; ulArgPos <= ulArgCount; ulArgPos++ ) {
          hb_itemArrayPut(pArray, ulArgPos, va_arg(va, PHB_ITEM));
       }
       va_end(va);
    }
 
-   if( pArray )
-   {
+   if( pArray ) {
       /* Assign the new array to the object data item. */
       hb_vmPushSymbol(hb_dynsymGetSymbol("_ARGS"));
       hb_vmPush(pError);
@@ -193,7 +169,7 @@ PHB_ITEM ct_error_subst( HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE
 /* argument error behaviour */
 static int s_iArgErrMode = CT_ARGERR_IGNORE;
 
-void ct_setargerrormode( int iMode )
+void ct_setargerrormode(int iMode)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_setargerrormode(%i)", iMode));
@@ -215,34 +191,26 @@ HB_FUNC( CSETARGERR )
 {
    hb_retni(ct_getargerrormode());
 
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       int iNewMode = hb_parni(1);
 
-      if( iNewMode == CT_ARGERR_WHOCARES ||
-          iNewMode == CT_ARGERR_WARNING ||
-          iNewMode == CT_ARGERR_ERROR ||
-          iNewMode == CT_ARGERR_CATASTROPHIC ||
-          iNewMode == CT_ARGERR_IGNORE )
-      {
+      if(    iNewMode == CT_ARGERR_WHOCARES
+          || iNewMode == CT_ARGERR_WARNING
+          || iNewMode == CT_ARGERR_ERROR
+          || iNewMode == CT_ARGERR_CATASTROPHIC
+          || iNewMode == CT_ARGERR_IGNORE ) {
          ct_setargerrormode(hb_parni(1));
-      }
-      else
-      {
+      } else {
          int iArgErrorMode = ct_getargerrormode();
 
-         if( iArgErrorMode != CT_ARGERR_IGNORE )
-         {
+         if( iArgErrorMode != CT_ARGERR_IGNORE ) {
             ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETARGERR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
          }
       }
-   }
-   else if( hb_pcount() > 0 ) /* more than one param but not integer */
-   {
+   } else if( hb_pcount() > 0 ) { /* more than one param but not integer */
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETARGERR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
    }
@@ -253,8 +221,7 @@ static int s_initialized = 0;   /* TODO: make this thread safe */
 
 HB_FUNC( CTCINIT )
 {
-   if( s_initialized == 0 )
-   {
+   if( s_initialized == 0 ) {
       int iSuccess;
 
       iSuccess = ct_str_init();

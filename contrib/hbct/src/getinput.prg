@@ -44,19 +44,19 @@
  *
  */
 
-FUNCTION GetInput( xVar, nRow, nCol, lSay, xPrompt )
+FUNCTION GetInput(xVar, nRow, nCol, lSay, xPrompt)
 
    LOCAL nCursorRow := Row()
    LOCAL nCursorCol := Col()
    LOCAL GetList := {}
 
-   hb_default( @nRow, nCursorRow )
-   hb_default( @nCol, nCursorCol )
-   hb_default( @lSay, .F. )
+   hb_default(@nRow, nCursorRow)
+   hb_default(@nCol, nCursorCol)
+   hb_default(@lSay, .F.)
 
-   SetPos( nRow, nCol )
+   SetPos(nRow, nCol)
    IF xPrompt != NIL
-      DevOut( xPrompt )
+      DevOut(xPrompt)
       nRow := Row()
       nCol := Col() + 1
    ENDIF
@@ -65,10 +65,10 @@ FUNCTION GetInput( xVar, nRow, nCol, lSay, xPrompt )
    READ
 
    IF lSay
-      SetPos( nRow, nCol )
-      DevOut( xVar )
+      SetPos(nRow, nCol)
+      DevOut(xVar)
    ENDIF
 
-   SetPos( nCursorRow, nCursorCol )
+   SetPos(nCursorRow, nCursorCol)
 
    RETURN xVar

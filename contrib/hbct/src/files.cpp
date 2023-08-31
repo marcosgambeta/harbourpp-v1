@@ -74,12 +74,11 @@ struct HB_FFDATA
 
 using PHB_FFDATA = HB_FFDATA *;
 
-static void hb_fileFindRelease( void * cargo )
+static void hb_fileFindRelease(void * cargo)
 {
    PHB_FFDATA pFFData = static_cast<PHB_FFDATA>(cargo);
 
-   if( pFFData->ffind )
-   {
+   if( pFFData->ffind ) {
       hb_fsFindClose(pFFData->ffind);
    }
 }
@@ -91,49 +90,39 @@ static HB_TSD_NEW(s_FFData, sizeof(HB_FFDATA), nullptr, hb_fileFindRelease);
 /* limit attributes to DOS ones for code portability */
 #define HB_FF_ATTR(ff) ((ff)->attr & 0xFF)
 
-static PHB_FFIND _hb_fileStart( HB_BOOL fNext, HB_BOOL fAny )
+static PHB_FFIND _hb_fileStart(HB_BOOL fNext, HB_BOOL fAny)
 {
    PHB_FFDATA pFFData = HB_GET_FFDATA();
 
-   if( hb_pcount() > 0 )
-   {
+   if( hb_pcount() > 0 ) {
       const char * szFile = hb_parc(1);
 
-      if( pFFData->ffind )
-      {
+      if( pFFData->ffind ) {
          hb_fsFindClose(pFFData->ffind);
          pFFData->ffind = nullptr;
       }
 
-      if( szFile )
-      {
+      if( szFile ) {
          HB_FATTR ulAttr;
 
          ulAttr = static_cast<HB_FATTR>(hb_parnldef(2, fAny ? HB_FA_ANY : HB_FA_ALL));
          pFFData->ulAttr = hb_parl(3) ? ulAttr : 0;
          pFFData->ffind  = hb_fsFindFirst(szFile, ulAttr);
-         while( pFFData->ffind && pFFData->ulAttr && HB_FF_ATTR(pFFData->ffind) != pFFData->ulAttr )
-         {
-            if( !hb_fsFindNext( pFFData->ffind ) )
-            {
+         while( pFFData->ffind && pFFData->ulAttr && HB_FF_ATTR(pFFData->ffind) != pFFData->ulAttr ) {
+            if( !hb_fsFindNext(pFFData->ffind) ) {
                hb_fsFindClose(pFFData->ffind);
                pFFData->ffind = nullptr;
             }
          }
       }
-   }
-   else if( fNext && pFFData->ffind )
-   {
-      do
-      {
-         if( !hb_fsFindNext(pFFData->ffind) )
-         {
+   } else if( fNext && pFFData->ffind ) {
+      do {
+         if( !hb_fsFindNext(pFFData->ffind) ) {
             hb_fsFindClose(pFFData->ffind);
             pFFData->ffind = nullptr;
             break;
          }
-      }
-      while( pFFData->ulAttr && HB_FF_ATTR(pFFData->ffind) != pFFData->ulAttr );
+      } while( pFFData->ulAttr && HB_FF_ATTR(pFFData->ffind) != pFFData->ulAttr );
    }
 
    return pFFData->ffind;
@@ -178,12 +167,9 @@ HB_FUNC( SETFATTR )
 {
    int iResult;
 
-   if( hb_fsSetAttr(hb_parcx(1), hb_parnldef(2, HB_FA_ARCHIVE)) )
-   {
+   if( hb_fsSetAttr(hb_parcx(1), hb_parnldef(2, HB_FA_ARCHIVE)) ) {
       iResult = 0;
-   }
-   else
-   {
+   } else {
       iResult = -1;
    }
 
@@ -195,37 +181,27 @@ HB_FUNC( SETFDATI )
    const char * szFile = hb_parc(1);
    HB_BOOL fResult = false;
 
-   if( szFile && *szFile )
-   {
+   if( szFile && *szFile ) {
       long lJulian, lMillisec;
 
-      if( HB_ISTIMESTAMP(1) )
-      {
+      if( HB_ISTIMESTAMP(1) ) {
          hb_partdt(&lJulian, &lMillisec, 1);
-      }
-      else
-      {
+      } else {
          PHB_ITEM pDate, pTime;
 
          pDate = hb_param(2, Harbour::Item::DATE);
-         if( pDate )
-         {
+         if( pDate ) {
             pTime = hb_param(3, Harbour::Item::STRING);
-         }
-         else
-         {
+         } else {
             pTime = hb_param(2, Harbour::Item::STRING);
             pDate = hb_param(3, Harbour::Item::DATE);
          }
-         lJulian = pDate ? hb_itemGetDL( pDate ) : -1;
-         if( pTime )
-         {
+         lJulian = pDate ? hb_itemGetDL(pDate) : -1;
+         if( pTime ) {
             int hour = 0, minute = 0, second = 0, msec = 0;
             hb_timeStrGet(hb_itemGetCPtr(pTime), &hour, &minute, &second, &msec);
             lMillisec = hb_timeEncode(hour, minute, second, msec);
-         }
-         else
-         {
+         } else {
             lMillisec = -1;
          }
       }
@@ -240,45 +216,36 @@ HB_FUNC( FILEDELETE )
    const char * pszDirSpec = hb_parc(1);
    HB_BOOL fResult = false;
 
-   if( pszDirSpec )
-   {
+   if( pszDirSpec ) {
       HB_FATTR nAttr = hb_parnldef(2, HB_FA_ALL);
       PHB_FFIND ffind;
 
       /* In CT3 this function does not remove directories */
       nAttr &= ~HB_FA_DIRECTORY;
 
-      if( (ffind = hb_fsFindFirst(pszDirSpec, nAttr)) != nullptr )
-      {
+      if( (ffind = hb_fsFindFirst(pszDirSpec, nAttr)) != nullptr ) {
          PHB_FNAME pFilepath;
 
          pFilepath = hb_fsFNameSplit(pszDirSpec);
          pFilepath->szExtension = nullptr;
 
-         do
-         {
+         do {
             char szPath[HB_PATH_MAX];
 
             pFilepath->szName = ffind->szName;
             hb_fsFNameMerge(szPath, pFilepath);
 
-            if( ffind->attr & HB_FA_READONLY )
-            {
-               if( nAttr & HB_FA_READONLY )
-               {
+            if( ffind->attr & HB_FA_READONLY ) {
+               if( nAttr & HB_FA_READONLY ) {
                   hb_fsSetAttr(szPath, ffind->attr & ~ static_cast<HB_FATTR>(HB_FA_READONLY));
-               }
-               else
-               {
+               } else {
                   continue;
                }
             }
-            if( hb_fsDelete( szPath ) )
-            {
+            if( hb_fsDelete(szPath) ) {
                fResult = true;
             }
-         }
-         while( hb_fsFindNext(ffind) );
+         } while( hb_fsFindNext(ffind) );
 
          hb_xfree(pFilepath);
          hb_fsFindClose(ffind);

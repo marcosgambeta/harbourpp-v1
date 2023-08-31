@@ -50,25 +50,21 @@
 #include "hbapigt.hpp"
 #include "hbchksum.h"
 
-/* com_DosCon( <cString>, [<nLine>], [<nColumn>] ) --> <cNull>
+/* com_DosCon(<cString>, [<nLine>], [<nColumn>]) --> <cNull>
  */
 HB_FUNC( COM_DOSCON )
 {
    HB_SIZE nLen = hb_parclen(1);
 
-   if( nLen > 0 )
-   {
-      if( HB_ISNUM(2) || HB_ISNUM(3) )
-      {
+   if( nLen > 0 ) {
+      if( HB_ISNUM(2) || HB_ISNUM(3) ) {
          int iRow, iCol;
 
          hb_gtGetPos(&iRow, &iCol);
-         if( HB_ISNUM(2) )
-         {
+         if( HB_ISNUM(2) ) {
             iRow = hb_parni(1);
          }
-         if( HB_ISNUM(3) )
-         {
+         if( HB_ISNUM(3) ) {
             iCol = hb_parni(2);
          }
          hb_gtSetPos(iRow, iCol);
@@ -78,19 +74,17 @@ HB_FUNC( COM_DOSCON )
    hb_retc_null();
 }
 
-/* com_CRC( <cString>, [<nStart>], [<nPolynomial>] ) --> <nCRC>
+/* com_CRC(<cString>, [<nStart>], [<nPolynomial>]) --> <nCRC>
  */
 HB_FUNC( COM_CRC )
 {
    HB_MAXUINT crc = hb_parnint(2);
    const char * szString = hb_parc(1);
 
-   if( szString )
-   {
+   if( szString ) {
       HB_MAXUINT nPolynomial = static_cast<HB_MAXUINT>(hb_parnint(3));
 
-      if( nPolynomial == 0 )
-      {
+      if( nPolynomial == 0 ) {
          nPolynomial = 0x11021;  /* CRC_16_X25 */
       }
 
@@ -108,18 +102,17 @@ HB_FUNC( COM_CRC )
    hb_retnint(crc);
 }
 
-static char s_xmoblock_sum( const char * szData, HB_SIZE nLen )
+static char s_xmoblock_sum(const char * szData, HB_SIZE nLen)
 {
    unsigned char uc = 0;
 
-   while( nLen-- )
-   {
+   while( nLen-- ) {
       uc += static_cast<unsigned char>(*szData++);
    }
    return static_cast<char>(uc);
 }
 
-/* XMoBlock( <cString>, <nBlockNumber>, [<lCRC>], [<nMode>] ) --> <cXModemBlock>
+/* XMoBlock(<cString>, <nBlockNumber>, [<lCRC>], [<nMode>]) --> <cXModemBlock>
  */
 HB_FUNC( XMOBLOCK )
 {
@@ -136,65 +129,51 @@ HB_FUNC( XMOBLOCK )
    nSize = hb_parni(4) == 2 ? 1024 : 128;
 
    iBlock &= 0xFF;
-   if( nLen > nSize )
-   {
+   if( nLen > nSize ) {
       nLen = nSize;
    }
    pszBlock = static_cast<char*>(hb_xgrab(nSize + (fCRC ? 6 : 5)));
    pszBlock[0] = nSize == 128 ? 1 : 2;
    pszBlock[1] = static_cast<char>(iBlock);
    pszBlock[2] = static_cast<char>(0xFF - iBlock);
-   if( szData )
-   {
+   if( szData ) {
       memcpy(pszBlock + 3, szData, nLen);
    }
-   if( nLen < nSize )
-   {
+   if( nLen < nSize ) {
       memset(pszBlock + nLen + 3, 0, nSize - nLen);
    }
-   if( fCRC )
-   {
+   if( fCRC ) {
       HB_U16 crc = static_cast<HB_U16>(hb_crcct(0, pszBlock + 3, nSize, 0x11021));
       HB_PUT_BE_UINT16(&pszBlock[3 + nSize], crc);
       nSize += 5;
-   }
-   else
-   {
+   } else {
       pszBlock[3 + nSize] = s_xmoblock_sum(szData, nLen);
       nSize += 4;
    }
    hb_retclen_buffer(pszBlock, nSize);
 }
 
-/* XMoCheck( <cString>, [<lCRC>] ) --> <nBlockNumber>|-1
+/* XMoCheck(<cString>, [<lCRC>]) --> <nBlockNumber>|-1
  */
 HB_FUNC( XMOCHECK )
 {
    HB_SIZE nLen = hb_parclen(1);
    int iResult = -1;
 
-   if( nLen >= 132 )
-   {
+   if( nLen >= 132 ) {
       const char * szBlock = hb_parc(1);
       HB_BOOL fCRC = hb_parl(2);
       HB_SIZE nSize;
 
-      if( *szBlock == 0x01 )
-      {
+      if( *szBlock == 0x01 ) {
          nSize = 128;
-      }
-      else if( *szBlock == 0x02 )
-      {
+      } else if( *szBlock == 0x02 ) {
          nSize = 1024;
-      }
-      else
-      {
+      } else {
          nSize = nLen;
       }
-      if( nLen == nSize + ( fCRC ? 5 : 4 ) && static_cast<unsigned char>(szBlock[1]) + static_cast<unsigned char>(szBlock[2]) == 0xFF )
-      {
-         if( fCRC ? hb_crcct(0, szBlock + 3, nSize + 2, 0x11021) == 0 : s_xmoblock_sum( szBlock + 3, nSize ) == szBlock[3 + nSize] )
-         {
+      if( nLen == nSize + (fCRC ? 5 : 4) && static_cast<unsigned char>(szBlock[1]) + static_cast<unsigned char>(szBlock[2]) == 0xFF ) {
+         if( fCRC ? hb_crcct(0, szBlock + 3, nSize + 2, 0x11021) == 0 : s_xmoblock_sum(szBlock + 3, nSize) == szBlock[3 + nSize] ) {
             iResult = static_cast<unsigned char>(szBlock[1]);
          }
       }
@@ -202,14 +181,13 @@ HB_FUNC( XMOCHECK )
    hb_retni(iResult);
 }
 
-/* ZeroInsert( <cString> ) --> <cDataBlock>
+/* ZeroInsert(<cString>) --> <cDataBlock>
  */
 HB_FUNC( ZEROINSERT )
 {
    PHB_ITEM pString = hb_param(1, Harbour::Item::STRING);
 
-   if( pString )
-   {
+   if( pString ) {
       const char * szText;
       HB_SIZE nLen, nBits, n;
       unsigned int uiVal;
@@ -220,21 +198,17 @@ HB_FUNC( ZEROINSERT )
       uiVal = 0;
       nBits = 0;
       /* NOTE: trailing zero accessed intentionally */
-      for( n = 0; n <= nLen; ++n )
-      {
+      for( n = 0; n <= nLen; ++n ) {
          uiVal |= static_cast<unsigned char>(szText[n]);
-         for( i = 0; i < 8; ++i )
-         {
-            if( (uiVal & 0xF800) == 0xF800 )
-            {
+         for( i = 0; i < 8; ++i ) {
+            if( (uiVal & 0xF800) == 0xF800 ) {
                uiVal &= 0xF7FF;
                ++nBits;
             }
             uiVal <<= 1;
          }
       }
-      if( nBits )
-      {
+      if( nBits ) {
          HB_SIZE nDest = nLen + ((nBits + 7) >> 3);
          char * pszDest = static_cast<char*>(hb_xgrab(nDest + 1));
          unsigned char c = 0;
@@ -245,33 +219,26 @@ HB_FUNC( ZEROINSERT )
          j = 8;
          uiVal = static_cast<unsigned char>(szText[n]);
          uiVal <<= 8;
-         while( nBits < nDest )
-         {
-            if( --i == 0 )
-            {
-               if( ++n < nLen )
-               {
+         while( nBits < nDest ) {
+            if( --i == 0 ) {
+               if( ++n < nLen ) {
                   uiVal |= static_cast<unsigned char>(szText[n]);
                   i = 8;
                }
             }
-            if( (uiVal & 0xF800) == 0xF800 )
-            {
-               c = ( c << 1 ) | 1;
-               if( --j == 0 )
-               {
+            if( (uiVal & 0xF800) == 0xF800 ) {
+               c = (c << 1) | 1;
+               if( --j == 0 ) {
                   pszDest[nBits++] = c;
                   j = 8;
                }
                uiVal &= 0xF7FF;
             }
             c <<= 1;
-            if( uiVal & 0x8000 )
-            {
+            if( uiVal & 0x8000 ) {
                c |= 1;
             }
-            if( --j == 0 )
-            {
+            if( --j == 0 ) {
                pszDest[nBits++] = c;
                j = 8;
             }
@@ -279,26 +246,21 @@ HB_FUNC( ZEROINSERT )
          }
 
          hb_retclen_buffer(pszDest, nDest);
-      }
-      else
-      {
+      } else {
          hb_itemReturn(pString);
       }
-   }
-   else
-   {
+   } else {
       hb_retc_null();
    }
 }
 
-/* ZeroRemove( <cDataBlock> ) --> cString
+/* ZeroRemove(<cDataBlock>) --> cString
  */
 HB_FUNC( ZEROREMOVE )
 {
    PHB_ITEM pString = hb_param(1, Harbour::Item::STRING);
 
-   if( pString )
-   {
+   if( pString ) {
       const char * szText;
       HB_SIZE nLen, nDest, nBits, n;
       int i, j, l;
@@ -310,16 +272,12 @@ HB_FUNC( ZEROREMOVE )
       l = 0;
       ucVal = 0;
 
-      for( n = nDest = nBits = 0; n < nLen; ++n )
-      {
+      for( n = nDest = nBits = 0; n < nLen; ++n ) {
          unsigned char c = szText[n];
 
-         for( i = 0; i < 8; ++i )
-         {
-            if( l == 5 )
-            {
-               if( c & 0x80 )
-               {
+         for( i = 0; i < 8; ++i ) {
+            if( l == 5 ) {
+               if( c & 0x80 ) {
                   /* wrong string encoding which does not confirm
                    * CCITT specification.
                    */
@@ -328,21 +286,15 @@ HB_FUNC( ZEROREMOVE )
                }
                l = 0;
                ++nBits;
-            }
-            else
-            {
+            } else {
                ucVal <<= 1;
-               if( c & 0x80 )
-               {
+               if( c & 0x80 ) {
                   ++l;
                   ucVal |= 1;
-               }
-               else
-               {
+               } else {
                   l = 0;
                }
-               if( --j == 0 )
-               {
+               if( --j == 0 ) {
                   ucVal = 0;
                   ++nDest;
                   j = 8;
@@ -354,16 +306,15 @@ HB_FUNC( ZEROREMOVE )
 
       /* NOTE: CT3 decodes some wrong CCITT strings which does not have
        *       trailing 0 instead of returning empty string "", i.e.:
-       *          ? Len( ZeroRemove( Chr(31) ) )
-       *          ? Len( ZeroRemove( Chr(31) + Chr(31) ) )
+       *          ? Len(ZeroRemove(Chr(31)))
+       *          ? Len(ZeroRemove(Chr(31) + Chr(31)))
        *       this implementation fixed this bug but if you need strict
        *       CT3 behavior for compatibility in some broken code then
        *       you can disable this fix setting HB_CT3_ZEROREMOVE_BUG
        *       macro. [druzus]
        */
 #ifdef HB_CT3_ZEROREMOVE_BUG
-      if( l == 5 )
-      {
+      if( l == 5 ) {
          ++nLen;
          ++nDest;
          ucVal = 0;
@@ -374,38 +325,27 @@ HB_FUNC( ZEROREMOVE )
 #endif
       {
          hb_retc_null();
-      }
-      else if( nBits )
-      {
+      } else if( nBits ) {
          char * pszDest = static_cast<char*>(hb_xgrab(nDest + 1));
 
          j = 8;
          l = 0;
          ucVal = 0;
-         for( n = nDest = 0; n < nLen; ++n )
-         {
+         for( n = nDest = 0; n < nLen; ++n ) {
             unsigned char c = szText[n];
 
-            for( i = 0; i < 8; ++i )
-            {
-               if( l == 5 )
-               {
+            for( i = 0; i < 8; ++i ) {
+               if( l == 5 ) {
                   l = 0;
-               }
-               else
-               {
+               } else {
                   ucVal <<= 1;
-                  if( c & 0x80 )
-                  {
+                  if( c & 0x80 ) {
                      ++l;
                      ucVal |= 1;
-                  }
-                  else
-                  {
+                  } else {
                      l = 0;
                   }
-                  if( --j == 0 )
-                  {
+                  if( --j == 0 ) {
                      pszDest[nDest++] = ucVal;
                      j = 8;
                   }
@@ -415,14 +355,10 @@ HB_FUNC( ZEROREMOVE )
          }
 
          hb_retclen_buffer(pszDest, nDest);
-      }
-      else
-      {
+      } else {
          hb_itemReturn(pString);
       }
-   }
-   else
-   {
+   } else {
       hb_retc_null();
    }
 }

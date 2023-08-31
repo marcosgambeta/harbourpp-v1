@@ -49,8 +49,7 @@
 
 HB_FUNC( POSDIFF )
 {
-   if( HB_ISCHAR(1) && HB_ISCHAR(2) )
-   {
+   if( HB_ISCHAR(1) && HB_ISCHAR(2) ) {
       const char * pcString1 = hb_parc(1);
       HB_SIZE sStrLen1 = hb_parclen(1);
       const char * pcString2 = hb_parc(2);
@@ -58,12 +57,10 @@ HB_FUNC( POSDIFF )
       const char * pc1, * pc2;
       HB_SIZE sIgnore = hb_parnsdef(3, 0);
 
-      if( sIgnore > sStrLen1 || sIgnore > sStrLen2 )
-      {
+      if( sIgnore > sStrLen1 || sIgnore > sStrLen2 ) {
          int iArgErrorMode = ct_getargerrormode();
 
-         if( iArgErrorMode != CT_ARGERR_IGNORE )
-         {
+         if( iArgErrorMode != CT_ARGERR_IGNORE ) {
             ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_POSDIFF, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
          }
 
@@ -74,10 +71,8 @@ HB_FUNC( POSDIFF )
       pc1 = pcString1 + sIgnore;
       pc2 = pcString2 + sIgnore;
 
-      while( pc1 < ( pcString1 + sStrLen1 ) && pc2 < ( pcString2 + sStrLen2 ) )
-      {
-         if( *pc1 != *pc2 )
-         {
+      while( pc1 < (pcString1 + sStrLen1) && pc2 < (pcString2 + sStrLen2) ) {
+         if( *pc1 != *pc2 ) {
             hb_retns((pc1 - pcString1) + 1);
             return;
          }
@@ -85,35 +80,24 @@ HB_FUNC( POSDIFF )
          pc2++;
       }
 
-      if( sStrLen1 != sStrLen2 )
-      {
+      if( sStrLen1 != sStrLen2 ) {
          hb_retns((sStrLen1 < sStrLen2 ? sStrLen1 : sStrLen2) + 1);
-      }
-      else
-      {
+      } else {
          hb_retns(0);
       }
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_POSDIFF, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else if( HB_ISCHAR(1) || HB_ISCHAR(2) )
-      {
+      } else if( HB_ISCHAR(1) || HB_ISCHAR(2) ) {
          hb_retns(1);
-      }
-      else
-      {
+      } else {
          hb_retns(0);
       }
    }
@@ -121,8 +105,7 @@ HB_FUNC( POSDIFF )
 
 HB_FUNC( POSEQUAL )
 {
-   if( HB_ISCHAR(1) && HB_ISCHAR(2) )
-   {
+   if( HB_ISCHAR(1) && HB_ISCHAR(2) ) {
       const char * pcString1 = hb_parc(1);
       HB_SIZE sStrLen1 = hb_parclen(1);
       const char * pcString2 = hb_parc(2);
@@ -131,21 +114,16 @@ HB_FUNC( POSEQUAL )
       HB_SIZE sIgnore = hb_parnsdef(4, 0);
       HB_SIZE sCompare, sCompareCnt, sRet = 0;
 
-      if( HB_ISNUM(3) )
-      {
+      if( HB_ISNUM(3) ) {
          sCompare = hb_parns(3);
-      }
-      else
-      {
-         sCompare = ( sStrLen1 < sStrLen2 ? sStrLen1 : sStrLen2 ) - sIgnore;
+      } else {
+         sCompare = (sStrLen1 < sStrLen2 ? sStrLen1 : sStrLen2) - sIgnore;
       }
 
-      if( sCompare == 0 || sIgnore > sStrLen1 || sIgnore > sStrLen2 )
-      {
+      if( sCompare == 0 || sIgnore > sStrLen1 || sIgnore > sStrLen2 ) {
          int iArgErrorMode = ct_getargerrormode();
 
-         if( iArgErrorMode != CT_ARGERR_IGNORE )
-         {
+         if( iArgErrorMode != CT_ARGERR_IGNORE ) {
             ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_POSEQUAL, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
          }
 
@@ -153,12 +131,10 @@ HB_FUNC( POSEQUAL )
          return;
       }
 
-      if( sStrLen1 < ( sCompare + sIgnore ) || sStrLen2 < ( sCompare + sIgnore ) )
-      {
+      if( sStrLen1 < (sCompare + sIgnore) || sStrLen2 < (sCompare + sIgnore) ) {
          int iArgErrorMode = ct_getargerrormode();
 
-         if( iArgErrorMode != CT_ARGERR_IGNORE )
-         {
+         if( iArgErrorMode != CT_ARGERR_IGNORE ) {
             ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_POSEQUAL, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
          }
 
@@ -170,25 +146,19 @@ HB_FUNC( POSEQUAL )
       pc2 = pcString2 + sIgnore;
       sCompareCnt = 0;
 
-      while( pc1 < pcString1 + sStrLen1 )
-      {
-         if( *pc1 == *pc2 )
-         {
+      while( pc1 < pcString1 + sStrLen1 ) {
+         if( *pc1 == *pc2 ) {
             /* save possible return value */
-            if( sCompareCnt == 0 )
-            {
+            if( sCompareCnt == 0 ) {
                sRet = pc1 - pcString1 + 1;
             }
 
             sCompareCnt++;
-            if( sCompareCnt == sCompare )
-            {
+            if( sCompareCnt == sCompare ) {
                hb_retns(sRet);
                return;
             }
-         }
-         else
-         {
+         } else {
             /* reset compare counter */
             sCompareCnt = 0;
          }
@@ -196,23 +166,17 @@ HB_FUNC( POSEQUAL )
          pc2++;
       }
       hb_retns(0);
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_POSEQUAL, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retns(0);
       }
    }

@@ -46,25 +46,25 @@
 
 #include "fileio.ch"
 
-FUNCTION TempFile( cDir, cExt, nAttr )
+FUNCTION TempFile(cDir, cExt, nAttr)
 
    LOCAL cName
    LOCAL fhnd
 
-   IF HB_ISSTRING( cDir )
-      cDir := hb_DirSepAdd( cDir )
+   IF HB_ISSTRING(cDir)
+      cDir := hb_DirSepAdd(cDir)
    ENDIF
 
-   IF HB_ISSTRING( cExt ) .AND. !( Left( cExt, 1 ) == "." )
+   IF HB_ISSTRING(cExt) .AND. !(Left(cExt, 1) == ".")
       cExt := "." + cExt
    ENDIF
 
-   hb_default( @nAttr, SetFCreate() )
+   hb_default(@nAttr, SetFCreate())
 
-   fhnd := hb_FTempCreateEx( @cName, cDir,, cExt, nAttr )
+   fhnd := hb_FTempCreateEx(@cName, cDir, , cExt, nAttr)
 
    IF fhnd != F_ERROR
-      FClose( fhnd )
+      FClose(fhnd)
       RETURN cName
    ENDIF
 

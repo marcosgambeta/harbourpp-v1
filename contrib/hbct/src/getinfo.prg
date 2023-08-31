@@ -55,50 +55,50 @@ FUNCTION SaveGets()
 
    RETURN aGetList
 
-FUNCTION RestGets( aGetList )
-   RETURN ( GetList := aGetList ) != NIL
+FUNCTION RestGets(aGetList)
+   RETURN (GetList := aGetList) != NIL
 
 FUNCTION CountGets()
-   RETURN Len( GetList )
+   RETURN Len(GetList)
 
 FUNCTION CurrentGet()
 
    LOCAL oActive := GetActive()
 
-   RETURN AScan( GetList, {| oGet | oGet == oActive } )
+   RETURN AScan(GetList, {|oGet|oGet == oActive})
 
-FUNCTION GetFldRow( nField )
-
-   LOCAL oGet
-
-   IF ! HB_ISNUMERIC( nField )
-      oGet := GetActive()
-   ELSEIF nField >= 1 .AND. nField <= Len( GetList )
-      oGet := GetList[ nField ]
-   ENDIF
-
-   RETURN iif( oGet != NIL, oGet:Row, -1 )
-
-FUNCTION GetFldCol( nField )
+FUNCTION GetFldRow(nField)
 
    LOCAL oGet
 
-   IF ! HB_ISNUMERIC( nField )
+   IF !HB_ISNUMERIC(nField)
       oGet := GetActive()
-   ELSEIF nField >= 1 .AND. nField <= Len( GetList )
-      oGet := GetList[ nField ]
+   ELSEIF nField >= 1 .AND. nField <= Len(GetList)
+      oGet := GetList[nField]
    ENDIF
 
-   RETURN iif( oGet != NIL, oGet:Col, -1 )
+   RETURN iif(oGet != NIL, oGet:Row, -1)
 
-FUNCTION GetFldVar( nField )
+FUNCTION GetFldCol(nField)
 
    LOCAL oGet
 
-   IF ! HB_ISNUMERIC( nField )
+   IF !HB_ISNUMERIC(nField)
       oGet := GetActive()
-   ELSEIF nField >= 1 .AND. nField <= Len( GetList )
-      oGet := GetList[ nField ]
+   ELSEIF nField >= 1 .AND. nField <= Len(GetList)
+      oGet := GetList[nField]
    ENDIF
 
-   RETURN iif( oGet != NIL, oGet:Name, -1 )
+   RETURN iif(oGet != NIL, oGet:Col, -1)
+
+FUNCTION GetFldVar(nField)
+
+   LOCAL oGet
+
+   IF !HB_ISNUMERIC(nField)
+      oGet := GetActive()
+   ELSEIF nField >= 1 .AND. nField <= Len(GetList)
+      oGet := GetList[nField]
+   ENDIF
+
+   RETURN iif(oGet != NIL, oGet:Name, -1)

@@ -51,29 +51,23 @@ HB_FUNC( NUMLINE )
 {
    HB_ISIZ nLines = 0;
 
-   if( HB_ISCHAR(1) )
-   {
+   if( HB_ISCHAR(1) ) {
       HB_ISIZ nStrLen = hb_parclen(1);
       const char * pcString = hb_parc(1);
       HB_ISIZ nLineLength = hb_parnsdef(2, 80);
 
-      while( nStrLen > 0 )
-      {
+      while( nStrLen > 0 ) {
          const char * pBuffer = static_cast<const char*>(memchr(pcString, HB_CHAR_LF, nStrLen));
 
-         if( !pBuffer || (pBuffer - pcString) > nLineLength)
-         {
+         if( !pBuffer || (pBuffer - pcString) > nLineLength) {
             pBuffer = pcString + nLineLength;
-         }
-         else
-         {
+         } else {
             ++pBuffer;
          }
          nStrLen -= pBuffer - pcString;
          pcString = pBuffer;
          ++nLines;
-         if( nStrLen == 0 )
-         {
+         if( nStrLen == 0 ) {
             ++nLines;
          }
       }

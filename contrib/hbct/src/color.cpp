@@ -53,16 +53,12 @@ HB_FUNC( INVERTATTR )
 {
    int iAttr;
 
-   if( HB_ISCHAR(1) )
-   {
+   if( HB_ISCHAR(1) ) {
       iAttr = hb_gtColorToN(hb_parc(1));
-      if( iAttr == -1 )
-      {
+      if( iAttr == -1 ) {
          iAttr = 0;
       }
-   }
-   else
-   {
+   } else {
       iAttr = hb_parni(1);
    }
 
@@ -71,13 +67,10 @@ HB_FUNC( INVERTATTR )
 
 HB_FUNC( COLORTON )
 {
-   if( HB_ISCHAR(1) )
-   {
+   if( HB_ISCHAR(1) ) {
       int iColor = hb_gtColorToN(hb_parc(1));
       hb_retni(iColor == -1 ? 0 : iColor);
-   }
-   else
-   {
+   } else {
       hb_retni(hb_parni(1));
    }
 }
@@ -86,22 +79,16 @@ HB_FUNC( NTOCOLOR )
 {
    int iColor = hb_parnidef(1, -1);
 
-   if( iColor >= 0x00 && iColor <= 0xff )
-   {
+   if( iColor >= 0x00 && iColor <= 0xff ) {
       char szColorString[10];
 
-      if( hb_parl(2) )
-      {
+      if( hb_parl(2) ) {
          hb_gtColorsToString(&iColor, 1, szColorString, sizeof(szColorString));
-      }
-      else
-      {
+      } else {
          hb_snprintf(szColorString, sizeof(szColorString), "%02d/%02d", iColor & 0x0f, iColor >> 4);
       }
       hb_retc(szColorString);
-   }
-   else
-   {
+   } else {
       hb_retc_null();
    }
 }

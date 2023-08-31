@@ -56,21 +56,18 @@
 #define DO_CHAREVOD_CHARODD   1
 
 /* helper function */
-static void do_charevod( int iSwitch )
+static void do_charevod(int iSwitch)
 {
-   if( HB_ISCHAR(1) )
-   {
+   if( HB_ISCHAR(1) ) {
       const char * pcString = hb_parc(1);
       HB_SIZE sLen = hb_parclen(1);
       char * pcResult;
       HB_SIZE sPos, sResultPos;
 
-      if( sLen == 0 )
-      {
+      if( sLen == 0 ) {
          int iArgErrorMode = ct_getargerrormode();
 
-         if( iArgErrorMode != CT_ARGERR_IGNORE )
-         {
+         if( iArgErrorMode != CT_ARGERR_IGNORE ) {
             ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
                      iSwitch == DO_CHAREVOD_CHAREVEN ?
                      CT_ERROR_CHAREVEN : CT_ERROR_CHARODD,
@@ -84,39 +81,29 @@ static void do_charevod( int iSwitch )
 
       pcResult = static_cast<char*>(hb_xgrab((sLen + 1) / 2));
 
-      if( iSwitch == DO_CHAREVOD_CHAREVEN )
-      {
+      if( iSwitch == DO_CHAREVOD_CHAREVEN ) {
          sPos = 1;
-      }
-      else
-      {
+      } else {
          sPos = 0;
       }
 
       sResultPos = 0;
-      for( ; sPos < sLen; sPos += 2 )
-      {
+      for( ; sPos < sLen; sPos += 2 ) {
          pcResult[sResultPos++] = pcString[sPos];
       }
 
-      if( sResultPos == 0 )
-      {
+      if( sResultPos == 0 ) {
          hb_retc_null();
-      }
-      else
-      {
+      } else {
          hb_retclen(pcResult, sResultPos);
       }
 
       hb_xfree(pcResult);
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
                                  iSwitch == DO_CHAREVOD_CHAREVEN ?
                                  CT_ERROR_CHAREVEN : CT_ERROR_CHARODD, nullptr,
@@ -127,9 +114,7 @@ static void do_charevod( int iSwitch )
       if( pSubst != nullptr )
       {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retc_null();
       }
    }

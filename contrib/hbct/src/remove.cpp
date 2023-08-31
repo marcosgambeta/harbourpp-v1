@@ -60,81 +60,62 @@ static const HB_ERRCODE sulErrorSubcodes[] =
 };
 
 /* helper function for the Rem*() functions */
-static void do_remove( int iSwitch )
+static void do_remove(int iSwitch)
 {
    /* param check */
-   if( HB_ISCHAR(1) )
-   {
+   if( HB_ISCHAR(1) ) {
       const char * pcString = hb_parc(1);
       HB_SIZE sStrLen = hb_parclen(1);
       const char * pcRet;
       HB_SIZE sRetLen;
       char cSearch;
 
-      if( hb_parclen(2) > 0 )
-      {
+      if( hb_parclen(2) > 0 ) {
          cSearch = *(hb_parc(2));
-      }
-      else if( HB_ISNUM(2) )
-      {
+      } else if( HB_ISNUM(2) ) {
          cSearch = static_cast<char>(hb_parnl(2) % 256);
-      }
-      else
-      {
+      } else {
          cSearch = 0x20;
       }
 
       sRetLen = sStrLen;
       pcRet = pcString;
 
-      if( iSwitch != DO_REMOVE_REMRIGHT )
-      {
-         while( *pcRet == cSearch && pcRet < ( pcString + sStrLen ) )
-         {
+      if( iSwitch != DO_REMOVE_REMRIGHT ) {
+         while( *pcRet == cSearch && pcRet < (pcString + sStrLen) ) {
             pcRet++;
             sRetLen--;
          }
       }
 
-      if( iSwitch != DO_REMOVE_REMLEFT )
-      {
+      if( iSwitch != DO_REMOVE_REMLEFT ) {
          const char * pc = pcString + sStrLen - 1;
 
-         while( *pc == cSearch && pc >= pcRet )
-         {
+         while( *pc == cSearch && pc >= pcRet ) {
             pc--;
             sRetLen--;
          }
       }
 
-      if( sRetLen == 0 )
-      {
+      if( sRetLen == 0 ) {
          hb_retc_null();
-      }
-      else
-      {
+      } else {
          hb_retclen(pcRet, sRetLen);
       }
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
                                  sulErrorSubcodes[iSwitch],
                                  nullptr, HB_ERR_FUNCNAME, 0,
                                  EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retc_null();
       }
    }

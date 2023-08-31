@@ -57,52 +57,41 @@
 
 HB_FUNC( FV )
 {
-   if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) )
-   {
+   if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) ) {
       double dPayment = hb_parnd(1);
       double dRate = hb_parnd(2);
       double dTime = hb_parnd(3);
       double dResult;
 
-      if( dRate == 0.0 )
-      {
+      if( dRate == 0.0 ) {
          /* NOTE: CT3 crashes with dRate == 0.0 */
          dResult = dPayment * dTime;
-      }
-      else
-      {
+      } else {
          HB_MATH_EXCEPTION hb_exc;
          double dBase = 1.0 + dRate;
 
          hb_mathResetError(&hb_exc);
          dResult = pow(dBase, dTime);
 
-         if( hb_mathGetError(&hb_exc, "POW", dBase, dTime, dResult) )
-         {
+         if( hb_mathGetError(&hb_exc, "POW", dBase, dTime, dResult) ) {
             dResult = hb_exc.handled ? hb_exc.retval : 0.0;
          }
 
-         dResult = dPayment * ( dResult - 1.0 ) / dRate;
+         dResult = dPayment * (dResult - 1.0) / dRate;
       }
 
       hb_retnd(dResult);
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_FV, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retnd(0.0);
       }
    }
@@ -110,28 +99,23 @@ HB_FUNC( FV )
 
 HB_FUNC( PV )
 {
-   if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) )
-   {
+   if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) ) {
       double dPayment = hb_parnd(1);
       double dRate = hb_parnd(2);
       double dTime = hb_parnd(3);
       double dResult;
 
-      if( dRate == 0.0 )
-      {
+      if( dRate == 0.0 ) {
          /* NOTE: CT3 crashes with dRate == 0.0 */
          dResult = dPayment * dTime;
-      }
-      else
-      {
+      } else {
          HB_MATH_EXCEPTION hb_exc;
          double dBase = 1.0 + dRate;
 
          hb_mathResetError(&hb_exc);
          dResult = pow(dBase, -dTime);
 
-         if( hb_mathGetError(&hb_exc, "POW", dBase, -dTime, dResult) )
-         {
+         if( hb_mathGetError(&hb_exc, "POW", dBase, -dTime, dResult) ) {
             dResult = hb_exc.handled ? hb_exc.retval : 0.0;
          }
 
@@ -139,23 +123,17 @@ HB_FUNC( PV )
       }
 
       hb_retnd(dResult);
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_PV, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retnd(0.0);
       }
    }
@@ -163,28 +141,23 @@ HB_FUNC( PV )
 
 HB_FUNC( PAYMENT )
 {
-   if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) )
-   {
+   if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) ) {
       double dCapital = hb_parnd(1);
       double dRate = hb_parnd(2);
       double dTime = hb_parnd(3);
       double dResult;
 
-      if( dRate == 0.0 )
-      {
+      if( dRate == 0.0 ) {
          /* NOTE: CT3 crashes with dRate == 0.0 */
          dResult = dCapital / dTime;
-      }
-      else
-      {
+      } else {
          HB_MATH_EXCEPTION hb_exc;
          double dBase = 1.0 + dRate;
 
          hb_mathResetError(&hb_exc);
          dResult = pow(dBase, -dTime);
 
-         if( hb_mathGetError(&hb_exc, "POW", dBase, -dTime, dResult) )
-         {
+         if( hb_mathGetError(&hb_exc, "POW", dBase, -dTime, dResult) ) {
             dResult = hb_exc.handled ? hb_exc.retval : 0.0;
          }
 
@@ -192,23 +165,17 @@ HB_FUNC( PAYMENT )
       }
 
       hb_retnd(dResult);
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_PAYMENT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retnd(0.0);
       }
    }
@@ -216,44 +183,35 @@ HB_FUNC( PAYMENT )
 
 HB_FUNC( PERIODS )
 {
-   if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) )
-   {
+   if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) ) {
       double dCapital = hb_parnd(1);
       double dPayment = hb_parnd(2);
       double dRate = hb_parnd(3);
       double dResult;
 
-      if( dPayment <= dCapital * dRate )
-      {
+      if( dPayment <= dCapital * dRate ) {
          /* in this case infinite time is needed to cancel the loan */
          dResult = -1.0;
-      }
-      else if( dRate == 0.0 )
-      {
+      } else if( dRate == 0.0 ) {
          /* NOTE: CT3 crashes with dRate == 0.0 */
          dResult = dCapital / dPayment;
-      }
-      else
-      {
+      } else {
          HB_MATH_EXCEPTION hb_exc;
          double dBase = 1.0 + dRate;
 
          hb_mathResetError(&hb_exc);
          dResult = log(dBase);
-         if( hb_mathGetError(&hb_exc, "LOG", dBase, 0.0, dResult) )
-         {
+         if( hb_mathGetError(&hb_exc, "LOG", dBase, 0.0, dResult) ) {
             dResult = hb_exc.handled ? hb_exc.retval : 0.0;
          }
 
-         if( dResult )
-         {
+         if( dResult ) {
             double dResult2;
             hb_mathResetError(&hb_exc);
             dBase = 1.0 - (dCapital * dRate / dPayment);
             dResult2 = log(dBase);
 
-            if( hb_mathGetError(&hb_exc, "LOG", dBase, 0.0, dResult2) )
-            {
+            if( hb_mathGetError(&hb_exc, "LOG", dBase, 0.0, dResult2) ) {
                dResult2 = hb_exc.handled ? hb_exc.retval : 0.0;
             }
 
@@ -262,23 +220,17 @@ HB_FUNC( PERIODS )
       }
 
       hb_retnd(dResult);
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_PERIODS, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retnd(0.0);
       }
    }
@@ -286,8 +238,7 @@ HB_FUNC( PERIODS )
 
 HB_FUNC( RATE )
 {
-   if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) )
-   {
+   if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) ) {
       double dCapital = hb_parnd(1);
       double dPayment = hb_parnd(2);
       double dTime = hb_parnd(3);
@@ -295,8 +246,7 @@ HB_FUNC( RATE )
       double dScale = 1.0;      /* fractional step */
       double j = 1.0;           /* index */
 
-      while( j < 1020.0 )       /* maximum annual rate */
-      {
+      while( j < 1020.0 ) {     /* maximum annual rate */
          double dAux;           /* estimated payment to compare for */
          double r;              /* temptative rate */
          double dExp;
@@ -311,48 +261,37 @@ HB_FUNC( RATE )
          hb_mathResetError(&hb_exc);
          dBase = 1.0 + r;
          dExp = pow(dBase, dTime);
-         if( hb_mathGetError(&hb_exc, "POW", dBase, dTime, dExp) )
-         {
+         if( hb_mathGetError(&hb_exc, "POW", dBase, dTime, dExp) ) {
             /* TODO: Check if this is a correct default correction value for pow() */
             dExp = hb_exc.handled ? hb_exc.retval : 0.0;
          }
 
          dAux = dCapital * ((dExp * r) / (dExp - 1.0));
 
-         if( dAux > dPayment )
-         {
+         if( dAux > dPayment ) {
             j -= dScale;
             dScale = dScale * 0.10;
 
-            if( (dAux - dPayment) < dEpsilon )
-            {
+            if( (dAux - dPayment) < dEpsilon ) {
                break;
             }
-         }
-         else
-         {
+         } else {
             j += dScale;
          }
       }
 
       hb_retnd(j * 0.000833333);      /* return as mensual's rate */
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_RATE, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retnd(0.0);
       }
    }

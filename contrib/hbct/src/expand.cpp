@@ -50,66 +50,47 @@ HB_FUNC( EXPAND )
 {
    HB_SIZE nLen = hb_parclen(1);
 
-   if( nLen > 0 )
-   {
+   if( nLen > 0 ) {
       const char * szText = hb_parc(1);
-      if( nLen == 1 )
-      {
+      if( nLen == 1 ) {
          hb_retclen(szText, 1);
-      }
-      else
-      {
+      } else {
          char * szDest, * szPtr, cRepl;
          int iRepl, i;
          HB_SIZE nSize, nPos;
 
          iRepl = hb_parni(2);
          i = hb_pcount();
-         if( i == 2 && HB_ISCHAR(2) )
-         {
+         if( i == 2 && HB_ISCHAR(2) ) {
             iRepl = 1;
             cRepl = hb_parc(2)[0];
-         }
-         else if( i == 2 && iRepl == 0 && HB_ISNUM(2) )
-         {
+         } else if( i == 2 && iRepl == 0 && HB_ISNUM(2) ) {
             iRepl = 1;
             cRepl = 0;
-         }
-         else
-         {
-            if( iRepl < 1 )
-            {
+         } else {
+            if( iRepl < 1 ) {
                iRepl = 1;
             }
-            if( HB_ISNUM(3) )
-            {
+            if( HB_ISNUM(3) ) {
                cRepl = static_cast<char>(hb_parni(3));
-            }
-            else if( HB_ISCHAR(3) )
-            {
+            } else if( HB_ISCHAR(3) ) {
                cRepl = hb_parc(3)[0];
-            }
-            else
-            {
+            } else {
                cRepl = ' ';
             }
          }
-         nSize = ( nLen - 1 ) * ( iRepl + 1 ) + 1;
+         nSize = (nLen - 1) * (iRepl + 1) + 1;
          szPtr = szDest = static_cast<char*>(hb_xgrab(nSize + 1));
          *szPtr++ = szText[0];
-         for( nPos = 1; nPos < nLen; ++nPos )
-         {
-            for( i = 0; i < iRepl; ++i )
-            {
+         for( nPos = 1; nPos < nLen; ++nPos ) {
+            for( i = 0; i < iRepl; ++i ) {
                *szPtr++ = cRepl;
             }
             *szPtr++ = szText[nPos];
          }
          hb_retclen_buffer(szDest, nSize);
       }
-   }
-   else
-   {
+   } else {
       hb_retc_null();
    }
 }

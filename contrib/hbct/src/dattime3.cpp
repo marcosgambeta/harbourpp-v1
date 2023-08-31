@@ -87,14 +87,12 @@ HB_FUNC( WAITPERIOD )
 
    double d = hb_dateSeconds();
 
-   if( hb_pcount() > 0 )
-   {
+   if( hb_pcount() > 0 ) {
       ct_date->dTimeSet     = d;
       ct_date->dTimeCounter = d + hb_parnd(1) / 100.0;
    }
 
-   if( d < ct_date->dTimeSet )
-   {
+   if( d < ct_date->dTimeSet ) {
       d += 86400.0;
    }
 
@@ -105,24 +103,20 @@ static HB_BOOL _hb_timeValid(const char * szTime, HB_SIZE nLen, int * piDecode)
 {
    HB_BOOL fValid = false;
 
-   if( nLen == 2 || nLen == 5 || nLen == 8 || nLen == 11 )
-   {
+   if( nLen == 2 || nLen == 5 || nLen == 8 || nLen == 11 ) {
       static const int sc_iMax[] = { 23, 59, 59, 99 };
       int     i;
       HB_SIZE nPos;
 
       fValid = true;
-      for( nPos = 0; fValid && nPos < nLen; ++nPos )
-      {
+      for( nPos = 0; fValid && nPos < nLen; ++nPos ) {
          fValid = nPos % 3 == 2 ? szTime[nPos] == ':' : (szTime[nPos] >= '0' && szTime[nPos] <= '9');
       }
-      for( nPos = 0, i = 0; fValid && nPos < nLen; nPos += 3, ++i )
-      {
+      for( nPos = 0, i = 0; fValid && nPos < nLen; nPos += 3, ++i ) {
          int iVal;
          iVal   = 10 * (szTime[nPos] - '0') + (szTime[nPos + 1] - '0');
          fValid = iVal <= sc_iMax[i];
-         if( piDecode )
-         {
+         if( piDecode ) {
             piDecode[i] = iVal;
          }
       }
@@ -142,8 +136,7 @@ HB_FUNC( SETTIME )
    int     iTime[4];
 
    iTime[0] = iTime[1] = iTime[2] = iTime[3] = 0;
-   if( _hb_timeValid(hb_parc(1), hb_parclen(1), iTime) )
-   {
+   if( _hb_timeValid(hb_parc(1), hb_parclen(1), iTime) ) {
 #if defined(HB_OS_WIN)
       SYSTEMTIME st;
       GetLocalTime(&st);
@@ -178,13 +171,11 @@ HB_FUNC( SETDATE )
    HB_BOOL fResult = false;
    long    lDate   = hb_pardl(1);
 
-   if( lDate )
-   {
+   if( lDate ) {
       int iYear, iMonth, iDay;
 
       hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
-      if( iYear >= 1970 )
-      {
+      if( iYear >= 1970 ) {
 #if defined(HB_OS_WIN)
          SYSTEMTIME st;
          GetLocalTime(&st);

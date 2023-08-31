@@ -59,7 +59,7 @@ struct CT_STR
 
 using PCT_STR = CT_STR *;
 
-static void s_ct_str_init( void * cargo )
+static void s_ct_str_init(void * cargo)
 {
    PCT_STR ct_str = static_cast<PCT_STR>(cargo);
 
@@ -93,7 +93,7 @@ int ct_str_exit(void)
 }
 
 /* search for exact substring */
-const char * ct_at_exact_forward( const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, HB_SIZE * psMatchStrLen )
+const char * ct_at_exact_forward(const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, HB_SIZE * psMatchStrLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_at_exact_forward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcMatch, sMatchLen, static_cast<void*>(psMatchStrLen)));
@@ -101,20 +101,15 @@ const char * ct_at_exact_forward( const char * pcString, HB_SIZE sStrLen, const 
 
    HB_SIZE sPos;
 
-   if( sMatchLen == 0 || sStrLen < sMatchLen )
-   {
+   if( sMatchLen == 0 || sStrLen < sMatchLen ) {
       return nullptr;
    }
 
    sPos = hb_strAt(pcMatch, sMatchLen, pcString, sStrLen);
-   if( sPos == 0 )
-   {
+   if( sPos == 0 ) {
       return nullptr;
-   }
-   else
-   {
-      if( psMatchStrLen != nullptr )
-      {
+   } else {
+      if( psMatchStrLen != nullptr ) {
          *psMatchStrLen = sMatchLen;
       }
       return pcString + sPos - 1;
@@ -122,7 +117,7 @@ const char * ct_at_exact_forward( const char * pcString, HB_SIZE sStrLen, const 
 }
 
 /* search for exact substring in backward direction */
-const char * ct_at_exact_backward( const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, HB_SIZE * psMatchStrLen )
+const char * ct_at_exact_backward(const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, HB_SIZE * psMatchStrLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_at_exact_backward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcMatch, sMatchLen, static_cast<void*>(psMatchStrLen)));
@@ -131,25 +126,19 @@ const char * ct_at_exact_backward( const char * pcString, HB_SIZE sStrLen, const
    HB_SIZE sIndex;
    const char * pcRet;
 
-   if( sMatchLen == 0 || sStrLen < sMatchLen )
-   {
+   if( sMatchLen == 0 || sStrLen < sMatchLen ) {
       return nullptr;
    }
 
-   for( pcRet = pcString + sStrLen - sMatchLen; pcRet >= pcString; pcRet-- )
-   {
-      for( sIndex = 0; sIndex < sMatchLen; sIndex++ )
-      {
-         if( *( pcRet + sIndex ) != *( pcMatch + sIndex ) )
-         {
+   for( pcRet = pcString + sStrLen - sMatchLen; pcRet >= pcString; pcRet-- ) {
+      for( sIndex = 0; sIndex < sMatchLen; sIndex++ ) {
+         if( *(pcRet + sIndex) != *(pcMatch + sIndex) ) {
             break;
          }
       }
-      if( sIndex == sMatchLen )
-      {
+      if( sIndex == sMatchLen ) {
          /* last match found */
-         if( psMatchStrLen != nullptr )
-         {
+         if( psMatchStrLen != nullptr ) {
             *psMatchStrLen = sMatchLen;
          }
          return pcRet;
@@ -160,7 +149,7 @@ const char * ct_at_exact_backward( const char * pcString, HB_SIZE sStrLen, const
 }
 
 /* search for substring using wildcard */
-const char * ct_at_wildcard_forward( const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, char cWildCard, HB_SIZE * psMatchStrLen )
+const char * ct_at_wildcard_forward(const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, char cWildCard, HB_SIZE * psMatchStrLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_at_wildcard_forward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, \'%c\', %p)", pcString, sStrLen, pcMatch, sMatchLen, cWildCard, static_cast<void*>(psMatchStrLen)));
@@ -169,27 +158,21 @@ const char * ct_at_wildcard_forward( const char * pcString, HB_SIZE sStrLen, con
    HB_SIZE sIndex;
    const char * pcRet, * pcStop;
 
-   if( sMatchLen == 0 || sStrLen < sMatchLen )
-   {
+   if( sMatchLen == 0 || sStrLen < sMatchLen ) {
       return nullptr;
    }
 
    pcStop = pcString + sStrLen - sMatchLen;
-   for( pcRet = pcString; pcRet < pcStop; pcRet++ )
-   {
-      for( sIndex = 0; sIndex < sMatchLen; sIndex++ )
-      {
+   for( pcRet = pcString; pcRet < pcStop; pcRet++ ) {
+      for( sIndex = 0; sIndex < sMatchLen; sIndex++ ) {
          char c = *(pcMatch + sIndex);
 
-         if( c != cWildCard && c != *( pcRet + sIndex ) )
-         {
+         if( c != cWildCard && c != *(pcRet + sIndex) ) {
             break;
          }
       }
-      if( sIndex == sMatchLen )
-      {
-         if( psMatchStrLen != nullptr )
-         {
+      if( sIndex == sMatchLen ) {
+         if( psMatchStrLen != nullptr ) {
             *psMatchStrLen = sMatchLen;
          }
          return pcRet;
@@ -200,7 +183,7 @@ const char * ct_at_wildcard_forward( const char * pcString, HB_SIZE sStrLen, con
 }
 
 /* search for substring using wildcard in backward direction */
-const char * ct_at_wildcard_backward( const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, char cWildCard, HB_SIZE * psMatchStrLen )
+const char * ct_at_wildcard_backward(const char * pcString, HB_SIZE sStrLen, const char * pcMatch, HB_SIZE sMatchLen, char cWildCard, HB_SIZE * psMatchStrLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_at_wildcard_backward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, \'%c\', %p)", pcString, sStrLen, pcMatch, sMatchLen, cWildCard, static_cast<void*>(psMatchStrLen)));
@@ -209,27 +192,21 @@ const char * ct_at_wildcard_backward( const char * pcString, HB_SIZE sStrLen, co
    HB_SIZE sIndex;
    const char * pcRet;
 
-   if( sMatchLen == 0 || sStrLen < sMatchLen )
-   {
+   if( sMatchLen == 0 || sStrLen < sMatchLen ) {
       return nullptr;
    }
 
-   for( pcRet = pcString + sStrLen - sMatchLen; pcRet >= pcString; pcRet-- )
-   {
-      for( sIndex = 0; sIndex < sMatchLen; sIndex++ )
-      {
+   for( pcRet = pcString + sStrLen - sMatchLen; pcRet >= pcString; pcRet-- ) {
+      for( sIndex = 0; sIndex < sMatchLen; sIndex++ ) {
          char c = *(pcMatch + sIndex);
 
-         if( c != cWildCard && c != *( pcRet + sIndex ) )
-         {
+         if( c != cWildCard && c != *(pcRet + sIndex) ) {
             break;
          }
       }
-      if( sIndex == sMatchLen )
-      {
+      if( sIndex == sMatchLen ) {
          /* last match found */
-         if( psMatchStrLen != nullptr )
-         {
+         if( psMatchStrLen != nullptr ) {
             *psMatchStrLen = sMatchLen;
          }
          return pcRet;
@@ -240,7 +217,7 @@ const char * ct_at_wildcard_backward( const char * pcString, HB_SIZE sStrLen, co
 }
 
 /* search for character from a set */
-const char * ct_at_charset_forward( const char * pcString, HB_SIZE sStrLen, const char * pcCharSet, HB_SIZE sCharSetLen, HB_SIZE * psMatchedCharPos )
+const char * ct_at_charset_forward(const char * pcString, HB_SIZE sStrLen, const char * pcCharSet, HB_SIZE sCharSetLen, HB_SIZE * psMatchedCharPos)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_at_charset_forward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcCharSet, sCharSetLen, static_cast<void*>(psMatchedCharPos)));
@@ -248,23 +225,18 @@ const char * ct_at_charset_forward( const char * pcString, HB_SIZE sStrLen, cons
 
    const char * pcRet, * pcSet, * pcStop1, * pcStop2;
 
-   *( psMatchedCharPos ) = sCharSetLen;
+   *(psMatchedCharPos) = sCharSetLen;
 
-   if( sCharSetLen == 0 || sStrLen == 0 )
-   {
+   if( sCharSetLen == 0 || sStrLen == 0 ) {
       return nullptr;
    }
 
    pcStop1 = pcString + sStrLen;
    pcStop2 = pcCharSet + sCharSetLen;
-   for( pcRet = pcString; pcRet < pcStop1; pcRet++ )
-   {
-      for( pcSet = pcCharSet; pcSet < pcStop2; pcSet++ )
-      {
-         if( *pcSet == *pcRet )
-         {
-            if( psMatchedCharPos != nullptr )
-            {
+   for( pcRet = pcString; pcRet < pcStop1; pcRet++ ) {
+      for( pcSet = pcCharSet; pcSet < pcStop2; pcSet++ ) {
+         if( *pcSet == *pcRet ) {
+            if( psMatchedCharPos != nullptr ) {
                *psMatchedCharPos = pcSet - pcCharSet;
             }
             return pcRet;
@@ -276,7 +248,7 @@ const char * ct_at_charset_forward( const char * pcString, HB_SIZE sStrLen, cons
 }
 
 /* search for character from a set in backward direction */
-const char * ct_at_charset_backward( const char * pcString, HB_SIZE sStrLen, const char * pcCharSet, HB_SIZE sCharSetLen, HB_SIZE * psMatchedCharPos )
+const char * ct_at_charset_backward(const char * pcString, HB_SIZE sStrLen, const char * pcCharSet, HB_SIZE sCharSetLen, HB_SIZE * psMatchedCharPos)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_at_charset_backward (\"%s\", %" HB_PFS "u, \"%s\", %" HB_PFS "u, %p)", pcString, sStrLen, pcCharSet, sCharSetLen, static_cast<void*>(psMatchedCharPos)));
@@ -286,20 +258,15 @@ const char * ct_at_charset_backward( const char * pcString, HB_SIZE sStrLen, con
 
    *( psMatchedCharPos ) = sCharSetLen;
 
-   if( sCharSetLen == 0 || sStrLen == 0 )
-   {
+   if( sCharSetLen == 0 || sStrLen == 0 ) {
       return nullptr;
    }
 
    pcStop = pcCharSet + sCharSetLen;
-   for( pcRet = pcString + sStrLen - 1; pcRet >= pcString; pcRet-- )
-   {
-      for( pcSet = pcCharSet; pcSet < pcStop; pcSet++ )
-      {
-         if( *pcSet == *pcRet )
-         {
-            if( psMatchedCharPos != nullptr )
-            {
+   for( pcRet = pcString + sStrLen - 1; pcRet >= pcString; pcRet-- ) {
+      for( pcSet = pcCharSet; pcSet < pcStop; pcSet++ ) {
+         if( *pcSet == *pcRet ) {
+            if( psMatchedCharPos != nullptr ) {
                *psMatchedCharPos = pcSet - pcCharSet;
             }
             return pcRet;
@@ -312,7 +279,7 @@ const char * ct_at_charset_backward( const char * pcString, HB_SIZE sStrLen, con
 
 /* CSetRef() stuff */
 
-void ct_setref( int iNewSwitch )
+void ct_setref(int iNewSwitch)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_setref(%i)", iNewSwitch));
@@ -338,16 +305,12 @@ HB_FUNC( CSETREF )
 {
    hb_retl(ct_getref());
 
-   if( HB_ISLOG(1) )
-   {
+   if( HB_ISLOG(1) ) {
       ct_setref(hb_parl(1));
-   }
-   else if( hb_pcount() > 0 ) /* 1 params, but is not logical ! */
-   {
+   } else if( hb_pcount() > 0 ) { /* 1 params, but is not logical ! */
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETREF, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
    }
@@ -355,7 +318,7 @@ HB_FUNC( CSETREF )
 
 /* CSetAtMupa() stuff */
 
-void ct_setatmupa( int iNewSwitch )
+void ct_setatmupa(int iNewSwitch)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_setatmupa(%i)", iNewSwitch));
@@ -381,16 +344,12 @@ HB_FUNC( CSETATMUPA )
 {
    hb_retl(ct_getatmupa());
 
-   if( HB_ISLOG(1) )
-   {
+   if( HB_ISLOG(1) ) {
       ct_setatmupa(hb_parl(1));
-   }
-   else if( hb_pcount() > 0 ) /* 1 params, but is not logical ! */
-   {
+   } else if( hb_pcount() > 0 ) { /* 1 params, but is not logical ! */
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CSETATMUPA, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
    }
@@ -398,7 +357,7 @@ HB_FUNC( CSETATMUPA )
 
 /* SetAtLike() stuff */
 
-void ct_setatlike( int iNewMode )
+void ct_setatlike(int iNewMode)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_setatlike(%i)", iNewMode));
@@ -420,7 +379,7 @@ int ct_getatlike(void)
    return ct_str->iAtLikeMode;
 }
 
-void ct_setatlikechar( char cNewChar )
+void ct_setatlikechar(char cNewChar)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("ct_setatlikechar(\'%c\')", cNewChar));
@@ -448,52 +407,39 @@ HB_FUNC( SETATLIKE )
 
    /* set new mode if first parameter is CT_SETATLIKE_EXACT (==0)
       or CT_SETATLIKE_WILDCARD (==1) */
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       int iNewMode = hb_parni(1);
 
-      if( iNewMode == CT_SETATLIKE_EXACT || iNewMode == CT_SETATLIKE_WILDCARD )
-      {
+      if( iNewMode == CT_SETATLIKE_EXACT || iNewMode == CT_SETATLIKE_WILDCARD ) {
          ct_setatlike(iNewMode);
-      }
-      else
-      {
+      } else {
          int iArgErrorMode = ct_getargerrormode();
 
-         if( iArgErrorMode != CT_ARGERR_IGNORE )
-         {
+         if( iArgErrorMode != CT_ARGERR_IGNORE ) {
             ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SETATLIKE, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
          }
       }
    }
 
    /* set new wildcard character, if HB_ISCHAR(2) but ! HB_ISBYREF(2) */
-   if( HB_ISCHAR(2) )
-   {
-      if( HB_ISBYREF(2) )
-      {
+   if( HB_ISCHAR(2) ) {
+      if( HB_ISBYREF(2) ) {
          /* new behaviour: store the current wildcard char in second parameter */
          char cResult;
 
          cResult = ct_getatlikechar();
          hb_storclen(&cResult, 1, 2);
-      }
-      else
-      {
+      } else {
          const char * pcNewChar = hb_parc(2);
 
-         if( hb_parclen(2) > 0 )
-         {
+         if( hb_parclen(2) > 0 ) {
             ct_setatlikechar(*pcNewChar);
          }
       }
-   }
-   else if( hb_pcount() > 1 ) /* more than 2 params, but second is not string ! */
-   {
+   } else if( hb_pcount() > 1 ) { /* more than 2 params, but second is not string ! */
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SETATLIKE, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
    }

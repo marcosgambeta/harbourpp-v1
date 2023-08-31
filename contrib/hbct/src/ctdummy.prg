@@ -44,10 +44,10 @@
  *
  */
 
-FUNCTION DSetKBIOS( lNewKeyboardMode )
+FUNCTION DSetKBIOS(lNewKeyboardMode)
 
    THREAD STATIC t_lKeyboardMode := .T.
 
-   HB_SYMBOL_UNUSED( lNewKeyboardMode )
+   HB_SYMBOL_UNUSED(lNewKeyboardMode)
 
    RETURN t_lKeyboardMode

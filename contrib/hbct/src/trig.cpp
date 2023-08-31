@@ -72,45 +72,32 @@ HB_FUNC( PI )
 
 HB_FUNC( SIN )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
       double dResult, dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = sin(dArg);
-      if( hb_mathGetError(&hb_exc, "SIN", dArg, 0.0, dResult) )
-      {
-         if( hb_exc.handled )
-         {
+      if( hb_mathGetError(&hb_exc, "SIN", dArg, 0.0, dResult) ) {
+         if( hb_exc.handled ) {
             hb_retndlen(hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec);
-         }
-         else
-         {
+         } else {
             hb_retndlen(HUGE_VAL, -1, -1);
          }
-      }
-      else
-      {
+      } else {
          hb_retnd(dResult);
       }
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SIN, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retnd(0.0);
       }
    }
@@ -118,45 +105,32 @@ HB_FUNC( SIN )
 
 HB_FUNC( COS )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
       double dResult, dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = cos(dArg);
-      if( hb_mathGetError(&hb_exc, "COS", dArg, 0.0, dResult) )
-      {
-         if( hb_exc.handled )
-         {
+      if( hb_mathGetError(&hb_exc, "COS", dArg, 0.0, dResult) ) {
+         if( hb_exc.handled ) {
             hb_retndlen(hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec);
-         }
-         else
-         {
+         } else {
             hb_retndlen(HUGE_VAL, -1, -1);
          }
-      }
-      else
-      {
+      } else {
          hb_retnd(dResult);
       }
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_COS, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retnd(0.0);
       }
    }
@@ -164,45 +138,32 @@ HB_FUNC( COS )
 
 HB_FUNC( TAN )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
       double dResult, dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = tan(dArg);
-      if( hb_mathGetError(&hb_exc, "TAN", dArg, 0.0, dResult) )
-      {
-         if( hb_exc.handled )
-         {
+      if( hb_mathGetError(&hb_exc, "TAN", dArg, 0.0, dResult) ) {
+         if( hb_exc.handled ) {
             hb_retndlen(hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec);
-         }
-         else
-         {
+         } else {
             hb_retndlen(HUGE_VAL, -1, -1);
          }
-      }
-      else
-      {
+      } else {
          hb_retnd(dResult);
       }
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TAN, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retnd(0.0);
       }
    }
@@ -210,37 +171,29 @@ HB_FUNC( TAN )
 
 HB_FUNC( COT )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
       double dResult, dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = tan(dArg);
-      if( hb_mathGetError(&hb_exc, "TAN", dArg, 0.0, dResult) )
-      {
+      if( hb_mathGetError(&hb_exc, "TAN", dArg, 0.0, dResult) ) {
          dResult = hb_exc.handled ? hb_exc.retval : 0.0;
       }
 
       dResult = dResult ? 1 / dResult : HUGE_VAL;
       hb_retnd(dResult);
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_COT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retnd(0.0);
       }
    }
@@ -248,45 +201,32 @@ HB_FUNC( COT )
 
 HB_FUNC( ASIN )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
       double dResult, dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = asin(dArg);
-      if( hb_mathGetError(&hb_exc, "ASIN", dArg, 0.0, dResult) )
-      {
-         if( hb_exc.handled )
-         {
+      if( hb_mathGetError(&hb_exc, "ASIN", dArg, 0.0, dResult) ) {
+         if( hb_exc.handled ) {
             hb_retndlen(hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec);
-         }
-         else
-         {
+         } else {
             hb_retndlen(HUGE_VAL, -1, -1);
          }
-      }
-      else
-      {
+      } else {
          hb_retnd(dResult);
       }
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ASIN, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retnd(0.0);
       }
    }
@@ -294,45 +234,32 @@ HB_FUNC( ASIN )
 
 HB_FUNC( ACOS )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
       double dResult, dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = acos(dArg);
-      if( hb_mathGetError(&hb_exc, "ACOS", dArg, 0.0, dResult) )
-      {
-         if( hb_exc.handled )
-         {
+      if( hb_mathGetError(&hb_exc, "ACOS", dArg, 0.0, dResult) ) {
+         if( hb_exc.handled ) {
             hb_retndlen(hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec);
-         }
-         else
-         {
+         } else {
             hb_retndlen(HUGE_VAL, -1, -1);
          }
-      }
-      else
-      {
+      } else {
          hb_retnd(dResult);
       }
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ACOS, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retnd(0.0);
       }
    }
@@ -340,55 +267,39 @@ HB_FUNC( ACOS )
 
 HB_FUNC( ATAN )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
       double dResult, dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = atan(dArg);
-      if( hb_mathGetError(&hb_exc, "ATAN", dArg, 0.0, dResult) )
-      {
-         if( hb_exc.handled )
-         {
+      if( hb_mathGetError(&hb_exc, "ATAN", dArg, 0.0, dResult) ) {
+         if( hb_exc.handled ) {
             hb_retndlen(hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec);
-         }
-         else
-         {
+         } else {
             /* atan normally don't error, but it's save to return Pi()/2
                or -Pi()/2, respectively, as these
                are the boundary result values */
-            if( dArg < 0.0 )
-            {
+            if( dArg < 0.0 ) {
                hb_retnd(-CT_PI / 2.0);
-            }
-            else
-            {
+            } else {
                hb_retnd(CT_PI / 2.0);
             }
          }
-      }
-      else
-      {
+      } else {
          hb_retnd(dResult);
       }
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ATAN, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retnd(0.0);
       }
    }
@@ -396,8 +307,7 @@ HB_FUNC( ATAN )
 
 HB_FUNC( ATN2 )
 {
-   if( HB_ISNUM(1) && HB_ISNUM(2) )
-   {
+   if( HB_ISNUM(1) && HB_ISNUM(2) ) {
       HB_MATH_EXCEPTION hb_exc;
       double dY = hb_parnd(1);
       double dX = hb_parnd(2);
@@ -405,54 +315,37 @@ HB_FUNC( ATN2 )
 
       hb_mathResetError(&hb_exc);
       dResult = atan2(dY, dX);
-      if( hb_mathGetError(&hb_exc, "ATAN2", dY, dX, dResult) )
-      {
-         if( hb_exc.handled )
-         {
+      if( hb_mathGetError(&hb_exc, "ATAN2", dY, dX, dResult) ) {
+         if( hb_exc.handled ) {
             hb_retndlen(hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec);
-         }
-         else
-         {
+         } else {
             /* DOMAIN error: both arguments to atan2 have been 0 */
             /* CTIII behaves very strange here: atn2 (0.0, 0.0) == -PI
                atn2 (0.0, -0.0) == 0.0
                atn2 (-0.0, 0.0) == -PI
                atn2 (-0.0, -0.0) == -2*PI */
-            if( dX >= 0.0 )
-            {
+            if( dX >= 0.0 ) {
                hb_retnd(-CT_PI);
-            }
-            else if( dY < 0.0 )
-            {
+            } else if( dY < 0.0 ) {
                hb_retnd(-2.0 * CT_PI);
-            }
-            else
-            {
+            } else {
                hb_retnd(0.0);
             }
          }
-      }
-      else
-      {
+      } else {
          hb_retnd(dResult);
       }
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ATN2, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retnd(0.0);
       }
    }
@@ -460,54 +353,38 @@ HB_FUNC( ATN2 )
 
 HB_FUNC( SINH )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
       double dResult, dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = sinh(dArg);
-      if( hb_mathGetError(&hb_exc, "SINH", dArg, 0.0, dResult) )
-      {
-         if( hb_exc.handled )
-         {
+      if( hb_mathGetError(&hb_exc, "SINH", dArg, 0.0, dResult) ) {
+         if( hb_exc.handled ) {
             hb_retndlen(hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec);
-         }
-         else
-         {
+         } else {
             /* OVERFLOW error: we have no CTIII behaviour to follow,
                so return +INF or -INF, respectively */
-            if( dArg < 0.0 )
-            {
+            if( dArg < 0.0 ) {
                hb_retndlen(-HUGE_VAL, -1, -1);
-            }
-            else
-            {
+            } else {
                hb_retndlen(HUGE_VAL, -1, -1);
             }
          }
-      }
-      else
-      {
+      } else {
          hb_retnd(dResult);
       }
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SINH, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retnd(0.0);
       }
    }
@@ -515,47 +392,34 @@ HB_FUNC( SINH )
 
 HB_FUNC( COSH )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
       double dResult, dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = cosh(dArg);
-      if( hb_mathGetError(&hb_exc, "COSH", dArg, 0.0, dResult) )
-      {
-         if( hb_exc.handled )
-         {
+      if( hb_mathGetError(&hb_exc, "COSH", dArg, 0.0, dResult) ) {
+         if( hb_exc.handled ) {
             hb_retndlen(hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec);
-         }
-         else
-         {
+         } else {
             /* OVERFLOW error: we have no CTIII behaviour to follow,
                so return +INF */
             hb_retndlen(HUGE_VAL, -1, -1);
          }
-      }
-      else
-      {
+      } else {
          hb_retnd(dResult);
       }
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_COSH, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retnd(0.0);
       }
    }
@@ -563,54 +427,38 @@ HB_FUNC( COSH )
 
 HB_FUNC( TANH )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
       double dResult, dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = tanh(dArg);
-      if( hb_mathGetError(&hb_exc, "TANH", dArg, 0.0, dResult) )
-      {
-         if( hb_exc.handled )
-         {
+      if( hb_mathGetError(&hb_exc, "TANH", dArg, 0.0, dResult) ) {
+         if( hb_exc.handled ) {
             hb_retndlen(hb_exc.retval, hb_exc.retvalwidth, hb_exc.retvaldec);
-         }
-         else
-         {
+         } else {
             /* normally, Tanh() doesn't give errors, but let's return -1 or +1,
                respectively, as these are the boundary result values */
-            if( dArg < 0.0 )
-            {
+            if( dArg < 0.0 ) {
                hb_retnd(-1.0);
-            }
-            else
-            {
+            } else {
                hb_retnd(1.0);
             }
          }
-      }
-      else
-      {
+      } else {
          hb_retnd(dResult);
       }
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TANH, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retnd(0.0);
       }
    }
@@ -618,29 +466,22 @@ HB_FUNC( TANH )
 
 HB_FUNC( RTOD )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       double dInput = hb_parnd(1);
       double dResult = (180.0 / CT_PI) * dInput;
 
       hb_retnd(dResult);
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_RTOD, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retnd(0.0);
       }
    }
@@ -648,30 +489,23 @@ HB_FUNC( RTOD )
 
 HB_FUNC( DTOR )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       double dInput = hb_parnd(1);
-      double dResult = ( CT_PI / 180.0 ) * dInput;
+      double dResult = (CT_PI / 180.0) * dInput;
 
       hb_retnd(dResult);
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_DTOR, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
 
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else
-      {
+      } else {
          hb_retnd(0.0);
       }
    }

@@ -46,48 +46,47 @@
 
 THREAD STATIC t_hIdle
 
-FUNCTION KeySec( nKey, nTime, nCounter, lMode )
+FUNCTION KeySec(nKey, nTime, nCounter, lMode)
 
    LOCAL nSeconds
 
    IF t_hIdle != NIL
-      hb_idleDel( t_hIdle )
+      hb_idleDel(t_hIdle)
       t_hIdle := NIL
    ENDIF
 
-   IF HB_ISNUMERIC( nKey )
+   IF HB_ISNUMERIC(nKey)
 
-      IF ! HB_ISNUMERIC( nTime )
+      IF !HB_ISNUMERIC(nTime)
          nTime := 0
       ELSEIF nTime < 0
          nTime := -nTime / 18.2
       ENDIF
       nTime *= 1000
 
-      hb_default( @nCounter, 1 )
-      hb_default( @lMode, .F. )
+      hb_default(@nCounter, 1)
+      hb_default(@lMode, .F.)
 
       nSeconds := hb_MilliSeconds()
-      t_hIdle := hb_idleAdd( {|| doKeySec( nKey, nTime, lMode, ;
-         @nCounter, @nSeconds ) } )
+      t_hIdle := hb_idleAdd({||doKeySec(nKey, nTime, lMode, @nCounter, @nSeconds)})
       RETURN .T.
    ENDIF
 
    RETURN .F.
 
-STATIC PROCEDURE doKeySec( nKey, nTime, lMode, nCounter, nSeconds )
+STATIC PROCEDURE doKeySec(nKey, nTime, lMode, nCounter, nSeconds)
 
    LOCAL nSec := hb_MilliSeconds()
 
-   IF lMode .AND. ! Empty( NextKey() )
+   IF lMode .AND. !Empty(NextKey())
       nSeconds := nSec
    ELSEIF nCounter != 0 .AND. nSec - nSeconds >= nTime
-      hb_keyPut( nKey )
+      hb_keyPut(nKey)
       IF nCounter > 0
          nCounter--
       ENDIF
       IF nCounter == 0
-         hb_idleDel( t_hIdle )
+         hb_idleDel(t_hIdle)
          t_hIdle := NIL
       ELSE
          nSeconds := nSec

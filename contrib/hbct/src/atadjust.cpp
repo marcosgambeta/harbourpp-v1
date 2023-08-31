@@ -49,8 +49,7 @@
 
 HB_FUNC( ATADJUST )
 {
-   if( HB_ISCHAR(1) && HB_ISCHAR(2) && HB_ISNUM(3) )
-   {
+   if( HB_ISCHAR(1) && HB_ISCHAR(2) && HB_ISNUM(3) ) {
       const char * pcStringToMatch = hb_parc(1);
       HB_SIZE sStrToMatchLen = hb_parclen(1);
       const char * pcString = hb_parc(2);
@@ -71,45 +70,36 @@ HB_FUNC( ATADJUST )
       /* eventually ignore some characters */
       sIgnore = hb_parnsdef(5, 0);
 
-      if( sIgnore >= sStrLen )
-      {
+      if( sIgnore >= sStrLen ) {
          int iArgErrorMode = ct_getargerrormode();
 
-         if( iArgErrorMode != CT_ARGERR_IGNORE )
-         {
+         if( iArgErrorMode != CT_ARGERR_IGNORE ) {
             ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ATADJUST, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
          }
 
          hb_retclen(pcString, sStrLen);
          return;
-      }
-      else
-      {
+      } else {
          pcString += sIgnore;
          sStrLen -= sIgnore;
       }
 
       /* check for wrong adjust position */
-      if( sAdjustPosition == 0 )
-      {
+      if( sAdjustPosition == 0 ) {
          int iArgErrorMode = ct_getargerrormode();
 
-         if( iArgErrorMode != CT_ARGERR_IGNORE )
-         {
+         if( iArgErrorMode != CT_ARGERR_IGNORE ) {
             ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ATADJUST, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
          }
 
          hb_retclen(pcString, sStrLen);
          return;
-      }
-      else
-      {
+      } else {
          sAdjustPosition--;     /* makes live easier since C indices start at zero ! */
       }
 
       /* nth match or last match ? */
-      if( HB_ISNUM(4) && (nCounter = hb_parns(4)) != 0 )
-      {
+      if( HB_ISNUM(4) && (nCounter = hb_parns(4)) != 0 ) {
          /* find the <nCounter>th match */
          const char * pcSubStr;
          HB_SIZE sSubStrLen;
@@ -118,10 +108,8 @@ HB_FUNC( ATADJUST )
          pcSubStr = pcString;
          sSubStrLen = sStrLen;
 
-         while( nMatchCounter < nCounter )
-         {
-            switch( iAtLike )
-            {
+         while( nMatchCounter < nCounter ) {
+            switch( iAtLike ) {
                case CT_SETATLIKE_EXACT:
                   pc = ct_at_exact_forward(pcSubStr, sSubStrLen, pcStringToMatch, sStrToMatchLen, &sMatchStrLen);
                   break;
@@ -134,8 +122,7 @@ HB_FUNC( ATADJUST )
                   pc = nullptr;
             }
 
-            if( pc == nullptr )
-            {
+            if( pc == nullptr ) {
                /* no match found; if this happens at this point,
                   there are no <nCounter> matches, so return */
                hb_retclen(pcString, sStrLen);
@@ -143,22 +130,16 @@ HB_FUNC( ATADJUST )
             }
 
             nMatchCounter++;
-            if( iMultiPass )
-            {
+            if( iMultiPass ) {
                pcSubStr = pc + 1;
-            }
-            else
-            {
+            } else {
                pcSubStr = pc + sMatchStrLen;
             }
             sSubStrLen = sStrLen - (pcSubStr - pcString);
          }
-      }
-      else
-      {
+      } else {
          /* we have to find the last match */
-         switch( iAtLike )
-         {
+         switch( iAtLike ) {
             case CT_SETATLIKE_EXACT:
                pc = ct_at_exact_backward(pcString, sStrLen, pcStringToMatch, sStrToMatchLen, &sMatchStrLen);
                break;
@@ -171,8 +152,7 @@ HB_FUNC( ATADJUST )
                pc = nullptr;
          }
 
-         if( pc == nullptr )
-         {
+         if( pc == nullptr ) {
             /* no matches found */
             hb_retclen(pcString, sStrLen);
             return;
@@ -180,42 +160,28 @@ HB_FUNC( ATADJUST )
       }
 
       /* adjust string */
-      if( HB_ISCHAR(6) )
-      {
-         if( hb_parclen(6) > 0 )
-         {
+      if( HB_ISCHAR(6) ) {
+         if( hb_parclen(6) > 0 ) {
             cFillChar = *(hb_parc(6));
-         }
-         else
-         {
+         } else {
             cFillChar = 0x20;
          }
-      }
-      else if( HB_ISNUM(6) )
-      {
+      } else if( HB_ISNUM(6) ) {
          cFillChar = static_cast<char>(hb_parnl(6) % 256);
-      }
-      else
-      {
+      } else {
          cFillChar = 0x20;
       }
 
       /* position of pc == adjust position ? */
-      if( pc == pcString + sAdjustPosition )
-      {
+      if( pc == pcString + sAdjustPosition ) {
          /* do nothing */
          hb_retclen(pcString, sStrLen);
-      }
-      else
-      {
-         if( pc > pcString + sAdjustPosition )
-         {
+      } else {
+         if( pc > pcString + sAdjustPosition ) {
             /* adjust to left */
             /* check if we only delete cFillChar characters */
-            for( const char * pcCheckFill = pcString + sAdjustPosition; pcCheckFill < pc; pcCheckFill++ )
-            {
-               if( *pcCheckFill != cFillChar )
-               {
+            for( const char * pcCheckFill = pcString + sAdjustPosition; pcCheckFill < pc; pcCheckFill++ ) {
+               if( *pcCheckFill != cFillChar ) {
                   /* no -> return string unchanged */
                   hb_retclen(pcString, sStrLen);
                   return;
@@ -227,28 +193,23 @@ HB_FUNC( ATADJUST )
             pcRetStr = static_cast<char*>(hb_xgrab(sRetStrLen + 1));
 
             /* copy first portion of string */
-            if( sAdjustPosition > 0 )
-            {
+            if( sAdjustPosition > 0 ) {
                hb_xmemcpy(pcRetStr, pcString, sAdjustPosition);
             }
 
             /* copy second portion of string */
-            if( sRetStrLen > sAdjustPosition )
-            {
+            if( sRetStrLen > sAdjustPosition ) {
                hb_xmemcpy(pcRetStr + sAdjustPosition, pc, sRetStrLen - sAdjustPosition);
             }
 
             hb_retclen_buffer(pcRetStr, sRetStrLen);
-         }
-         else
-         {
+         } else {
             /* adjust to right */
             sRetStrLen = sStrLen + (pcString + sAdjustPosition) - pc;
             pcRetStr = static_cast<char*>(hb_xgrab(sRetStrLen + 1));
 
             /* copy first portion of string */
-            if( pc > pcString )
-            {
+            if( pc > pcString ) {
                hb_xmemcpy(pcRetStr, pcString, pc - pcString);
             }
 
@@ -256,35 +217,26 @@ HB_FUNC( ATADJUST )
             hb_xmemset(pcRetStr + (pc - pcString), cFillChar, sAdjustPosition - (pc - pcString));
 
             /* copy second portion of string */
-            if( sRetStrLen > sAdjustPosition )
-            {
+            if( sRetStrLen > sAdjustPosition ) {
                hb_xmemcpy(pcRetStr + sAdjustPosition, pc, sRetStrLen - sAdjustPosition);
             }
 
             hb_retclen_buffer(pcRetStr, sRetStrLen);
          }
       }
-   }
-   else
-   {
+   } else {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE )
-      {
+      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
          pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ATADJUST, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr )
-      {
+      if( pSubst != nullptr ) {
          hb_itemReturnRelease(pSubst);
-      }
-      else if( HB_ISCHAR(2) )
-      {
+      } else if( HB_ISCHAR(2) ) {
          hb_retclen(hb_parc(2), hb_parclen(2));
-      }
-      else
-      {
+      } else {
          hb_retc_null();
       }
    }

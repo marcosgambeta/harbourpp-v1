@@ -46,65 +46,64 @@
 
 THREAD STATIC t_hIdle
 
-FUNCTION KeyTime( nKey, cClockTime )
+FUNCTION KeyTime(nKey, cClockTime)
 
    LOCAL nHour, nMin, nSec, nLast
 
    IF t_hIdle != NIL
-      hb_idleDel( t_hIdle )
+      hb_idleDel(t_hIdle)
       t_hIdle := NIL
    ENDIF
 
-   IF HB_ISNUMERIC( nKey ) .AND. HB_ISSTRING( cClockTime )
-      nHour := Val( SubStr( cClockTime, 1, 2 ) )
-      nMin := Val( SubStr( cClockTime, 4, 2 ) )
-      nSec := Val( SubStr( cClockTime, 7, 2 ) )
+   IF HB_ISNUMERIC(nKey) .AND. HB_ISSTRING(cClockTime)
+      nHour := Val(SubStr(cClockTime, 1, 2))
+      nMin := Val(SubStr(cClockTime, 4, 2))
+      nSec := Val(SubStr(cClockTime, 7, 2))
       nLast := -1
-      t_hIdle := hb_idleAdd( ;
-         {|| doKeyTime( nKey, cClockTime, nHour, nMin, nSec, @nLast ) } )
+      t_hIdle := hb_idleAdd({||doKeyTime(nKey, cClockTime, nHour, nMin, nSec, @nLast)})
       RETURN .T.
    ENDIF
 
    RETURN .F.
 
-STATIC PROCEDURE doKeyTime( nKey, cClockTime, nHour, nMin, nSec, nLast )
+STATIC PROCEDURE doKeyTime(nKey, cClockTime, nHour, nMin, nSec, nLast)
 
    LOCAL cTime := Time()
-   LOCAL nHr := Val( SubStr( cTime, 1, 2 ) )
-   LOCAL nMn := Val( SubStr( cTime, 4, 2 ) )
-   LOCAL nSc := Val( SubStr( cTime, 7, 2 ) )
+   LOCAL nHr := Val(SubStr(cTime, 1, 2))
+   LOCAL nMn := Val(SubStr(cTime, 4, 2))
+   LOCAL nSc := Val(SubStr(cTime, 7, 2))
 
    DO CASE
    CASE nHour == 99
       IF nHr > nLast
-         hb_keyPut( nKey )
+         hb_keyPut(nKey)
          nLast := nHr
          IF nHr == 23
-            hb_idleDel( t_hIdle )
+            hb_idleDel(t_hIdle)
             t_hIdle := NIL
          ENDIF
       ENDIF
    CASE nMin == 99 .AND. nHr == nHour
       IF nMn > nLast
-         hb_keyPut( nKey )
+         hb_keyPut(nKey)
          nLast := nMn
          IF nMn == 59
-            hb_idleDel( t_hIdle )
+            hb_idleDel(t_hIdle)
             t_hIdle := NIL
          ENDIF
       ENDIF
    CASE nSec == 99 .AND. nHr == nHour .AND. nMn == nMin
       IF nSc > nLast
-         hb_keyPut( nKey )
+         hb_keyPut(nKey)
          nLast := nSc
          IF nSc == 59
-            hb_idleDel( t_hIdle )
+            hb_idleDel(t_hIdle)
             t_hIdle := NIL
          ENDIF
       ENDIF
    CASE cTime > cClockTime
-      hb_keyPut( nKey )
-      hb_idleDel( t_hIdle )
+      hb_keyPut(nKey)
+      hb_idleDel(t_hIdle)
       t_hIdle := NIL
    ENDCASE
 

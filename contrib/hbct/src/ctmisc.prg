@@ -49,55 +49,55 @@
 
 #include "hbmemory.ch"
 
-FUNCTION AlloFree( lMode )
+FUNCTION AlloFree(lMode)
 
-   hb_default( @lMode, .F. )
+   hb_default(@lMode, .F.)
 
-   RETURN Memory( iif( lMode, HB_MEM_CHAR, HB_MEM_BLOCK ) )
+   RETURN Memory(iif(lMode, HB_MEM_CHAR, HB_MEM_BLOCK))
 
-FUNCTION Center( c, n, p, lMode )
+FUNCTION Center(c, n, p, lMode)
 
    LOCAL cRet
 
-   IF ! HB_ISNUMERIC( n )
+   IF !HB_ISNUMERIC(n)
       n := MaxCol() + 1 - Col() * 2
    ENDIF
-   IF ! HB_ISSTRING( c )
+   IF !HB_ISSTRING(c)
       c := ""
    ENDIF
 
-   IF HB_ISLOGICAL( p )
+   IF HB_ISLOGICAL(p)
       lMode := p
       p := NIL
    ELSE
-      IF ! HB_ISLOGICAL( lMode )
+      IF !HB_ISLOGICAL(lMode)
          lMode := .F.
       ENDIF
    ENDIF
 
-   cRet := PadC( RTrim( c ), n, p )
+   cRet := PadC(RTrim(c), n, p)
 
-   RETURN iif( lMode, cRet, RTrim( cRet ) )
+   RETURN iif(lMode, cRet, RTrim(cRet))
 
-FUNCTION CSetCurs( l )
+FUNCTION CSetCurs(l)
 
-   IF ! HB_ISLOGICAL( l )
+   IF !HB_ISLOGICAL(l)
       RETURN SetCursor() != SC_NONE
    ENDIF
 
-   RETURN SetCursor( iif( l, SC_NORMAL, SC_NONE ) ) != SC_NONE
+   RETURN SetCursor(iif(l, SC_NORMAL, SC_NONE)) != SC_NONE
 
-FUNCTION CSetKey( n )
+FUNCTION CSetKey(n)
 
-   RETURN SetKey( n )
+   RETURN SetKey(n)
 
-FUNCTION CSetCent( nCentury )
+FUNCTION CSetCent(nCentury)
 
-   RETURN __SetCentury( nCentury )
+   RETURN __SetCentury(nCentury)
 
-FUNCTION LToC( l )
+FUNCTION LToC(l)
 
-   RETURN iif( l, "T", "F" )
+   RETURN iif(l, "T", "F")
 
 FUNCTION DosParam()
 
@@ -105,7 +105,7 @@ FUNCTION DosParam()
    LOCAL nCount := hb_argc(), i
 
    FOR i := 1 TO nCount
-      cRet += iif( i == 1, "", " " ) + hb_argv( i )
+      cRet += iif(i == 1, "", " ") + hb_argv(i)
    NEXT
 
    RETURN cRet
