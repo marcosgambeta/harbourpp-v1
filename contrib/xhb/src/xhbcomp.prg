@@ -53,8 +53,8 @@ ANNOUNCE XHB_LIB
  * It should not be used in user code. [druzus]
  */
 #xcommand OPTIONAL INHERIT <!className!> =>                 ;
-            IF hb_IsFunction( <"className"> )              ;;
-               AAdd( oClass:asSuper, @__<className>() )    ;;
+            IF hb_IsFunction(<"className">)              ;;
+               AAdd(oClass:asSuper, @__<className>())    ;;
             ENDIF
 
 

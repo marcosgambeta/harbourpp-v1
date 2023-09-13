@@ -80,7 +80,7 @@ static HB_BOOL  bSignalEnabled = true;
 static int      sb_isService   = 0;
 
 /* There is a service mutex in multithreading */
-static HB_CRITICAL_NEW( s_ServiceMutex );
+static HB_CRITICAL_NEW(s_ServiceMutex);
 
 /* This structure holds a translation to transform a certain OS level signal
    into abstract HB_SIGNAL; os specific implementation must provide the
@@ -93,7 +93,7 @@ typedef struct
    HB_UINT translated;
 } S_TUPLE;
 
-static int s_translateSignal( HB_UINT sig, HB_UINT subsig );
+static int s_translateSignal(HB_UINT sig, HB_UINT subsig);
 
 /* Unix specific signal handling implementation
  *
@@ -111,20 +111,20 @@ static struct sigaction s_aOldAction[SIGUSR2 + 1];
 /* Implementation of the signal translation table */
 static S_TUPLE s_sigTable[] =
 {
-   { SIGHUP,  0, HB_SIGNAL_REFRESH   },
-   { SIGINT,  0, HB_SIGNAL_INTERRUPT },
-   { SIGQUIT, 0, HB_SIGNAL_QUIT      },
-   { SIGILL,  0, HB_SIGNAL_FAULT     },
-   { SIGABRT, 0, HB_SIGNAL_QUIT      },
-   { SIGFPE,  0, HB_SIGNAL_MATHERR   },
-   { SIGSEGV, 0, HB_SIGNAL_FAULT     },
-   { SIGTERM, 0, HB_SIGNAL_QUIT      },
-   { SIGUSR1, 0, HB_SIGNAL_USER1     },
-   { SIGUSR2, 0, HB_SIGNAL_USER2     },
-   { 0,       0, 0                   }
+   {SIGHUP,  0, HB_SIGNAL_REFRESH  },
+   {SIGINT,  0, HB_SIGNAL_INTERRUPT},
+   {SIGQUIT, 0, HB_SIGNAL_QUIT     },
+   {SIGILL,  0, HB_SIGNAL_FAULT    },
+   {SIGABRT, 0, HB_SIGNAL_QUIT     },
+   {SIGFPE,  0, HB_SIGNAL_MATHERR  },
+   {SIGSEGV, 0, HB_SIGNAL_FAULT    },
+   {SIGTERM, 0, HB_SIGNAL_QUIT     },
+   {SIGUSR1, 0, HB_SIGNAL_USER1    },
+   {SIGUSR2, 0, HB_SIGNAL_USER2    },
+   {0,       0, 0                  }
 };
 
-static void s_signalHandler( int sig, siginfo_t * info, void * v )
+static void s_signalHandler(int sig, siginfo_t * info, void * v)
 {
    HB_UINT  uiSig;
    HB_SIZE  nPos;
@@ -132,11 +132,11 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
    HB_SYMBOL_UNUSED(v);
 
    /* let's find the right signal handler. */
-   hb_threadEnterCriticalSectionGC( &s_ServiceMutex );
+   hb_threadEnterCriticalSectionGC(&s_ServiceMutex);
 
    /* avoid working if PRG signal handling has been disabled */
    if( !bSignalEnabled ) {
-      hb_threadLeaveCriticalSection( &s_ServiceMutex );
+      hb_threadLeaveCriticalSection(&s_ServiceMutex);
       return;
    }
 
@@ -184,7 +184,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
             #endif
          }
 
-         pRet = hb_itemDo( pExecArray, 0 );
+         pRet = hb_itemDo(pExecArray, 0);
          iRet = hb_itemGetNI(pRet);
          hb_itemRelease(pRet);
          hb_itemRelease(pExecArray);
@@ -192,12 +192,12 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
          switch( iRet ) {
             case HB_SERVICE_HANDLED:
                bSignalEnabled = true;
-               hb_threadLeaveCriticalSection( &s_ServiceMutex );
+               hb_threadLeaveCriticalSection(&s_ServiceMutex);
                return;
 
             case HB_SERVICE_QUIT:
                bSignalEnabled = false;
-               hb_threadLeaveCriticalSection( &s_ServiceMutex );
+               hb_threadLeaveCriticalSection(&s_ServiceMutex);
                /* TODO: A service cleanup routine */
                hb_vmRequestQuit();
                /* Allow signals to go through pthreads */
@@ -222,9 +222,9 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
    #if 0
    if( uiSig != HB_SIGNAL_UNKNOWN ) {
       if( sa_oldAction[sig].sa_flags & SA_SIGINFO ) {
-         sa_oldAction[sig].sa_sigaction( sig, info, v );
+         sa_oldAction[sig].sa_sigaction(sig, info, v);
       } else {
-         sa_oldAction[sig].sa_handler( sig );
+         sa_oldAction[sig].sa_handler(sig);
       }   
    }
    #endif
@@ -234,7 +234,7 @@ static void s_signalHandler( int sig, siginfo_t * info, void * v )
    to fix as soon as thread support is ready on OS/2
  */
 #if defined(HB_THREAD_SUPPORT)
-static void * s_signalListener( void * my_stack )
+static void * s_signalListener(void * my_stack)
 {
    static HB_BOOL bFirst = true;
 
@@ -250,11 +250,11 @@ static void * s_signalListener( void * my_stack )
 #ifdef HB_THREAD_TLS_KEYWORD
    hb_thread_stack = my_stack;
 #else
-   pthread_setspecific( hb_pkCurrentStack, my_stack );
+   pthread_setspecific(hb_pkCurrentStack, my_stack);
 #endif
 
    pStack->th_id = HB_CURRENT_THREAD();
-   hb_threadLinkStack( pStack );
+   hb_threadLinkStack(pStack);
    HB_STACK_LOCK;
 
    /* and now accepts all signals */
@@ -295,9 +295,9 @@ static void * s_signalListener( void * my_stack )
          termination: no handler is set for them, so the DFL
          action is taken (and that should be fine). */
 #if defined(HB_OS_BSD)
-      sigwait( &passall, &sig );
+      sigwait(&passall, &sig);
 #else
-      sigwaitinfo( &passall, &sinfo );
+      sigwaitinfo(&passall, &sinfo);
 #endif
 
       /* lock stack before passing the ball to VM. */
@@ -336,54 +336,54 @@ static UINT s_uiErrorMode = 0;
 static S_TUPLE s_sigTable[] = {
 
    /* memory/processor fault exception */
-   { 0, EXCEPTION_ACCESS_VIOLATION,      HB_SIGNAL_FAULT     },
-   { 0, EXCEPTION_ILLEGAL_INSTRUCTION,   HB_SIGNAL_FAULT     },
-   { 0, EXCEPTION_IN_PAGE_ERROR,         HB_SIGNAL_FAULT     },
-   { 0, EXCEPTION_STACK_OVERFLOW,        HB_SIGNAL_FAULT     },
-   { 0, EXCEPTION_PRIV_INSTRUCTION,      HB_SIGNAL_FAULT     },
-   { 0, EXCEPTION_ARRAY_BOUNDS_EXCEEDED, HB_SIGNAL_FAULT     },
-   { 0, EXCEPTION_DATATYPE_MISALIGNMENT, HB_SIGNAL_FAULT     },
+   {0, EXCEPTION_ACCESS_VIOLATION,      HB_SIGNAL_FAULT    },
+   {0, EXCEPTION_ILLEGAL_INSTRUCTION,   HB_SIGNAL_FAULT    },
+   {0, EXCEPTION_IN_PAGE_ERROR,         HB_SIGNAL_FAULT    },
+   {0, EXCEPTION_STACK_OVERFLOW,        HB_SIGNAL_FAULT    },
+   {0, EXCEPTION_PRIV_INSTRUCTION,      HB_SIGNAL_FAULT    },
+   {0, EXCEPTION_ARRAY_BOUNDS_EXCEEDED, HB_SIGNAL_FAULT    },
+   {0, EXCEPTION_DATATYPE_MISALIGNMENT, HB_SIGNAL_FAULT    },
 
    /* Math exceptions */
-   { 0, EXCEPTION_FLT_DENORMAL_OPERAND,  HB_SIGNAL_MATHERR   },
-   { 0, EXCEPTION_FLT_INVALID_OPERATION, HB_SIGNAL_MATHERR   },
-   { 0, EXCEPTION_FLT_INEXACT_RESULT,    HB_SIGNAL_MATHERR   },
-   { 0, EXCEPTION_FLT_DIVIDE_BY_ZERO,    HB_SIGNAL_MATHERR   },
-   { 0, EXCEPTION_FLT_OVERFLOW,          HB_SIGNAL_MATHERR   },
-   { 0, EXCEPTION_FLT_STACK_CHECK,       HB_SIGNAL_MATHERR   },
-   { 0, EXCEPTION_FLT_UNDERFLOW,         HB_SIGNAL_MATHERR   },
-   { 0, EXCEPTION_INT_DIVIDE_BY_ZERO,    HB_SIGNAL_MATHERR   },
-   { 0, EXCEPTION_INT_OVERFLOW,          HB_SIGNAL_MATHERR   },
+   {0, EXCEPTION_FLT_DENORMAL_OPERAND,  HB_SIGNAL_MATHERR  },
+   {0, EXCEPTION_FLT_INVALID_OPERATION, HB_SIGNAL_MATHERR  },
+   {0, EXCEPTION_FLT_INEXACT_RESULT,    HB_SIGNAL_MATHERR  },
+   {0, EXCEPTION_FLT_DIVIDE_BY_ZERO,    HB_SIGNAL_MATHERR  },
+   {0, EXCEPTION_FLT_OVERFLOW,          HB_SIGNAL_MATHERR  },
+   {0, EXCEPTION_FLT_STACK_CHECK,       HB_SIGNAL_MATHERR  },
+   {0, EXCEPTION_FLT_UNDERFLOW,         HB_SIGNAL_MATHERR  },
+   {0, EXCEPTION_INT_DIVIDE_BY_ZERO,    HB_SIGNAL_MATHERR  },
+   {0, EXCEPTION_INT_OVERFLOW,          HB_SIGNAL_MATHERR  },
 
    /* User requests */
-   { 1, WM_USER,                         HB_SIGNAL_USER1     },
-   { 1, WM_USER + 1,                     HB_SIGNAL_USER2     },
-   { 1, WM_USER + 2,                     HB_SIGNAL_REFRESH   },
-   { 1, WM_USER + 3,                     HB_SIGNAL_INTERRUPT },
-   { 1, WM_QUIT,                         HB_SIGNAL_QUIT      },
+   {1, WM_USER,                         HB_SIGNAL_USER1    },
+   {1, WM_USER + 1,                     HB_SIGNAL_USER2    },
+   {1, WM_USER + 2,                     HB_SIGNAL_REFRESH  },
+   {1, WM_USER + 3,                     HB_SIGNAL_INTERRUPT},
+   {1, WM_QUIT,                         HB_SIGNAL_QUIT     },
 
    /* Console handler */
-   { 2, CTRL_C_EVENT,                    HB_SIGNAL_INTERRUPT },
-   { 2, CTRL_BREAK_EVENT,                HB_SIGNAL_INTERRUPT },
-   { 2, CTRL_CLOSE_EVENT,                HB_SIGNAL_QUIT      },
-   { 2, CTRL_LOGOFF_EVENT,               HB_SIGNAL_QUIT      },
-   { 2, CTRL_SHUTDOWN_EVENT,             HB_SIGNAL_QUIT      },
+   {2, CTRL_C_EVENT,                    HB_SIGNAL_INTERRUPT},
+   {2, CTRL_BREAK_EVENT,                HB_SIGNAL_INTERRUPT},
+   {2, CTRL_CLOSE_EVENT,                HB_SIGNAL_QUIT     },
+   {2, CTRL_LOGOFF_EVENT,               HB_SIGNAL_QUIT     },
+   {2, CTRL_SHUTDOWN_EVENT,             HB_SIGNAL_QUIT     },
 
-   { 0, 0,                               0                   }
+   {0, 0,                               0                  }
 };
 
 /* Manager of signals for windows */
-static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
+static LONG s_signalHandler(int type, int sig, PEXCEPTION_RECORD exc)
 {
    HB_SIZE  nPos;
    HB_UINT  uiSig;
 
    /* let's find the right signal handler. */
-   hb_threadEnterCriticalSectionGC( &s_ServiceMutex );
+   hb_threadEnterCriticalSectionGC(&s_ServiceMutex);
 
    /* avoid working if PRG signal handling has been disabled */
    if( !bSignalEnabled ) {
-      hb_threadLeaveCriticalSection( &s_ServiceMutex );
+      hb_threadLeaveCriticalSection(&s_ServiceMutex);
       return EXCEPTION_EXECUTE_HANDLER;
    }
 
@@ -406,7 +406,7 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
             a little dangerous. But we are in a signal hander...
             for now just 2 parameters */
          pExecArray = hb_itemArrayNew(3);
-         hb_arraySetForward( pExecArray, 1, hb_arrayGetItemPtr(pFunction, 2) );
+         hb_arraySetForward(pExecArray, 1, hb_arrayGetItemPtr(pFunction, 2));
          hb_arraySetNI(pExecArray, 2, uiSig);
 
          /* the third parameter is an array:
@@ -437,7 +437,7 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
          /* TODO: */
          hb_arraySetNI(pRet, HB_SERVICE_UID, 0);
 
-         pRet = hb_itemDo( pExecArray, 0 );
+         pRet = hb_itemDo(pExecArray, 0);
          iRet = hb_itemGetNI(pRet);
          hb_itemRelease(pRet);
          hb_itemRelease(pExecArray);
@@ -445,12 +445,12 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
          switch( iRet ) {
             case HB_SERVICE_HANDLED:
                bSignalEnabled = true;
-               hb_threadLeaveCriticalSection( &s_ServiceMutex );
+               hb_threadLeaveCriticalSection(&s_ServiceMutex);
                return EXCEPTION_CONTINUE_EXECUTION;
 
             case HB_SERVICE_QUIT:
                bSignalEnabled = false;
-               hb_threadLeaveCriticalSection( &s_ServiceMutex );
+               hb_threadLeaveCriticalSection(&s_ServiceMutex);
                hb_vmRequestQuit();
 #ifndef HB_THREAD_SUPPORT
                hb_vmQuit();
@@ -468,17 +468,17 @@ static LONG s_signalHandler( int type, int sig, PEXCEPTION_RECORD exc )
 }
 
 
-static LRESULT CALLBACK s_exceptionFilter( PEXCEPTION_POINTERS exInfo )
+static LRESULT CALLBACK s_exceptionFilter(PEXCEPTION_POINTERS exInfo)
 {
    return s_signalHandler(0, exInfo->ExceptionRecord->ExceptionCode, exInfo->ExceptionRecord);
 }
 
-static LRESULT CALLBACK s_MsgFilterFunc( int nCode, WPARAM wParam, LPARAM lParam )
+static LRESULT CALLBACK s_MsgFilterFunc(int nCode, WPARAM wParam, LPARAM lParam)
 {
    PMSG msg;
 
    if( nCode < 0 ) {
-      return CallNextHookEx( s_hMsgHook, nCode, wParam, lParam );
+      return CallNextHookEx(s_hMsgHook, nCode, wParam, lParam);
    }   
 
    msg = ( PMSG ) lParam;
@@ -495,14 +495,14 @@ static LRESULT CALLBACK s_MsgFilterFunc( int nCode, WPARAM wParam, LPARAM lParam
    }
 
    /* return next hook anyway */
-   return CallNextHookEx( s_hMsgHook, nCode, wParam, lParam );
+   return CallNextHookEx(s_hMsgHook, nCode, wParam, lParam);
 }
 
 #ifdef HB_THREAD_SUPPORT
 extern DWORD hb_dwCurrentStack;
 #endif
 
-BOOL WINAPI s_ConsoleHandlerRoutine( DWORD dwCtrlType )
+BOOL WINAPI s_ConsoleHandlerRoutine(DWORD dwCtrlType)
 {
 #ifdef HB_THREAD_SUPPORT
    HB_STACK * pStack = nullptr;
@@ -520,7 +520,7 @@ BOOL WINAPI s_ConsoleHandlerRoutine( DWORD dwCtrlType )
 
 #ifdef HB_THREAD_SUPPORT
    if( pStack ) {
-      hb_threadDestroyStack( pStack );
+      hb_threadDestroyStack(pStack);
    }   
 #endif
    /* We have handled it */
@@ -587,7 +587,7 @@ static void s_serviceSetHBSig(void)
    sigaction(SIGUSR2, &act, nullptr);
 
    /* IGNORE pipe */
-   signal( SIGPIPE, SIG_IGN );
+   signal(SIGPIPE, SIG_IGN);
 #endif
 
 #ifdef HB_OS_WIN
@@ -596,9 +596,9 @@ static void s_serviceSetHBSig(void)
       SEM_FAILCRITICALERRORS | SEM_NOALIGNMENTFAULTEXCEPT | SEM_NOGPFAULTERRORBOX |
       SEM_NOOPENFILEERRORBOX );
 
-   SetUnhandledExceptionFilter( s_exceptionFilter );
-   s_hMsgHook = SetWindowsHookEx( WH_GETMESSAGE, ( HOOKPROC ) s_MsgFilterFunc, nullptr, GetCurrentThreadId() );
-   SetConsoleCtrlHandler( s_ConsoleHandlerRoutine, TRUE );
+   SetUnhandledExceptionFilter(s_exceptionFilter);
+   s_hMsgHook = SetWindowsHookEx(WH_GETMESSAGE, (HOOKPROC) s_MsgFilterFunc, nullptr, GetCurrentThreadId());
+   SetConsoleCtrlHandler(s_ConsoleHandlerRoutine, TRUE);
 #endif
 }
 
@@ -607,26 +607,26 @@ static void s_serviceSetHBSig(void)
 static void s_serviceSetDflSig(void)
 {
 #ifdef HB_OS_UNIX
-   signal( SIGHUP, SIG_DFL );
-   signal( SIGQUIT, SIG_DFL );
-   signal( SIGILL, SIG_DFL );
-   signal( SIGABRT, SIG_DFL );
-   signal( SIGFPE, SIG_DFL );
-   signal( SIGSEGV, SIG_DFL );
-   signal( SIGTERM, SIG_DFL );
-   signal( SIGUSR1, SIG_DFL );
-   signal( SIGUSR2, SIG_DFL );
-   signal( SIGPIPE, SIG_DFL );
+   signal(SIGHUP, SIG_DFL);
+   signal(SIGQUIT, SIG_DFL);
+   signal(SIGILL, SIG_DFL);
+   signal(SIGABRT, SIG_DFL);
+   signal(SIGFPE, SIG_DFL);
+   signal(SIGSEGV, SIG_DFL);
+   signal(SIGTERM, SIG_DFL);
+   signal(SIGUSR1, SIG_DFL);
+   signal(SIGUSR2, SIG_DFL);
+   signal(SIGPIPE, SIG_DFL);
 #endif
 
 #ifdef HB_OS_WIN
    SetUnhandledExceptionFilter(nullptr);
    if( s_hMsgHook != nullptr ) {
-      UnhookWindowsHookEx( s_hMsgHook );
+      UnhookWindowsHookEx(s_hMsgHook);
       s_hMsgHook = nullptr;
    }
-   SetErrorMode( s_uiErrorMode );
-   SetConsoleCtrlHandler( s_ConsoleHandlerRoutine, FALSE );
+   SetErrorMode(s_uiErrorMode);
+   SetConsoleCtrlHandler(s_ConsoleHandlerRoutine, FALSE);
 #endif
 }
 
@@ -634,7 +634,7 @@ static void s_serviceSetDflSig(void)
 /* This translates a signal into abstract HB_SIGNAL
    from os specific representation */
 
-static int s_translateSignal( HB_UINT sig, HB_UINT subsig )
+static int s_translateSignal(HB_UINT sig, HB_UINT subsig)
 {
    int i = 0;
 
@@ -647,7 +647,7 @@ static int s_translateSignal( HB_UINT sig, HB_UINT subsig )
    return HB_SIGNAL_UNKNOWN;
 }
 
-static void hb_service_exit( void * cargo )
+static void hb_service_exit(void * cargo)
 {
    HB_SYMBOL_UNUSED(cargo);
 
@@ -667,7 +667,7 @@ static void s_signalHandlersInit()
    s_serviceSetHBSig();
 
    pStack = hb_threadCreateStack(0);
-   pthread_create( &res, nullptr, s_signalListener, pStack );
+   pthread_create(&res, nullptr, s_signalListener, pStack);
 #else
    s_serviceSetHBSig();
 #endif
@@ -713,7 +713,7 @@ HB_FUNC( HB_STARTSERVICE )
    #ifdef HB_THREAD_TLS_KEYWORD
          hb_thread_stack = &hb_stackMT;
    #else
-         pthread_setspecific( hb_pkCurrentStack, static_cast<void*>(&hb_stackMT) );
+         pthread_setspecific(hb_pkCurrentStack, static_cast<void*>(&hb_stackMT));
    #endif
 #endif
       }
@@ -784,8 +784,8 @@ HB_FUNC( HB_SERVICELOOP )
    /* This is just here to trigger our internal hook routine, if the
       final application does not any message handling.
     */
-   if( !PeekMessage( &msg, nullptr, WM_QUIT, WM_QUIT, PM_REMOVE ) ) {
-      PeekMessage( &msg, nullptr, WM_USER, WM_USER + 3, PM_REMOVE );
+   if( !PeekMessage(&msg, nullptr, WM_QUIT, WM_QUIT, PM_REMOVE) ) {
+      PeekMessage(&msg, nullptr, WM_USER, WM_USER + 3, PM_REMOVE);
    }
 #endif
 
@@ -811,11 +811,11 @@ HB_FUNC( HB_PUSHSIGNALHANDLER )
       s_signalHandlersInit();
    }   
 
-   hb_threadEnterCriticalSectionGC( &s_ServiceMutex );
+   hb_threadEnterCriticalSectionGC(&s_ServiceMutex);
 
-   hb_arrayAddForward( sp_hooks, pHandEntry );
+   hb_arrayAddForward(sp_hooks, pHandEntry);
 
-   hb_threadLeaveCriticalSection( &s_ServiceMutex );
+   hb_threadLeaveCriticalSection(&s_ServiceMutex);
 
    hb_itemRelease(pHandEntry);
 }
@@ -826,13 +826,13 @@ HB_FUNC( HB_POPSIGNALHANDLER )
    int nLen;
 
    if( sp_hooks != nullptr ) {
-      hb_threadEnterCriticalSectionGC( &s_ServiceMutex );
+      hb_threadEnterCriticalSectionGC(&s_ServiceMutex);
 
       nLen = hb_arrayLen(sp_hooks);
       if( nLen > 0 ) {
-         hb_arrayDel( sp_hooks, nLen );
-         hb_arrayDel( sp_hooks, nLen - 1 );
-         hb_arraySize( sp_hooks, nLen - 2 );
+         hb_arrayDel(sp_hooks, nLen);
+         hb_arrayDel(sp_hooks, nLen - 1);
+         hb_arraySize(sp_hooks, nLen - 2);
          hb_retl(true);
          if( hb_arrayLen(sp_hooks) == 0 ) {
             hb_itemRelease(sp_hooks);
@@ -842,7 +842,7 @@ HB_FUNC( HB_POPSIGNALHANDLER )
          hb_retl(false);
       }
 
-      hb_threadLeaveCriticalSection( &s_ServiceMutex );
+      hb_threadLeaveCriticalSection(&s_ServiceMutex);
    } else {
       hb_retl(false);
    }

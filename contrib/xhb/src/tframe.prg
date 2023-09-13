@@ -57,32 +57,27 @@ CREATE CLASS THtmlFrameSet
 
    VAR TITLE INIT "FrameSet01"
 
-   METHOD New( cFName, cTitle )
-
-   METHOD StartSet( aRows, aCols, onLoad, onUnload )
-
+   METHOD New(cFName, cTitle)
+   METHOD StartSet(aRows, aCols, onLoad, onUnload)
    METHOD EndSet()
-
    METHOD End()
-
-   METHOD Frame( cName, cURL, lBorder, lResize, lScrolling, ;
-      marginwidth, marginheight, cTarget, cScrolling )
+   METHOD Frame(cName, cURL, lBorder, lResize, lScrolling, marginwidth, marginheight, cTarget, cScrolling)
 
 ENDCLASS
 
 
-METHOD New( cFName, cTitle ) CLASS THtmlFrameSet
+METHOD New(cFName, cTitle) CLASS THtmlFrameSet
 
    LOCAL cStr
 
-   __defaultNIL( @cTitle, "" )
+   __defaultNIL(@cTitle, "")
 
    ::FName := cFName
    ::Title := cTitle
 
-   IF HB_ISSTRING( ::FName )
+   IF HB_ISSTRING(::FName)
       cStr := ""
-      ::nH := FCreate( ::FName )
+      ::nH := FCreate(::FName)
    ELSE
       cStr := "Content-Type: text/html" + CRLF() + CRLF()
       ::nH := STD_OUT
@@ -97,14 +92,14 @@ METHOD New( cFName, cTitle ) CLASS THtmlFrameSet
 
    RETURN Self
 
-METHOD StartSet( aRows, aCols, onLoad, onUnload ) CLASS THtmlFrameSet
+METHOD StartSet(aRows, aCols, onLoad, onUnload) CLASS THtmlFrameSet
 
    LOCAL cStr
    LOCAL cItem
 
    cStr := CRLF() + " <frameset "
 
-   IF HB_ISARRAY( aRows ) .AND. ! Empty( aRows )
+   IF HB_ISARRAY(aRows) .AND. !Empty(aRows)
 
       cStr += ' rows="'
 
@@ -118,7 +113,7 @@ METHOD StartSet( aRows, aCols, onLoad, onUnload ) CLASS THtmlFrameSet
       cStr += '"'
    ENDIF
 
-   IF HB_ISARRAY( aCols ) .AND. ! Empty( aCols )
+   IF HB_ISARRAY(aCols) .AND. !Empty(aCols)
 
       cStr += ' cols="'
 
@@ -132,12 +127,12 @@ METHOD StartSet( aRows, aCols, onLoad, onUnload ) CLASS THtmlFrameSet
       cStr += '"'
    ENDIF
 
-   IF HB_ISSTRING( onLoad )
-      cStr += Space( 7 ) + ' onLoad="' + onLoad + '"'
+   IF HB_ISSTRING(onLoad)
+      cStr += Space(7) + ' onLoad="' + onLoad + '"'
    ENDIF
 
-   IF HB_ISSTRING( onUnLoad )
-      cStr += Space( 5 ) + ' onUnLoad="' + onUnLoad + '"'
+   IF HB_ISSTRING(onUnLoad)
+      cStr += Space(5) + ' onUnLoad="' + onUnLoad + '"'
    ENDIF
 
    cStr += " >" + CRLF()
@@ -158,66 +153,65 @@ METHOD End() CLASS THtmlFrameSet
 
    ::cStr += "</html>" + CRLF()
 
-   FWrite( ::nH, ::cStr )
+   FWrite(::nH, ::cStr)
 
    IF ::FName != NIL
-      FClose( ::nH )
+      FClose(::nH)
    ENDIF
 
    RETURN Self
 
 
-METHOD Frame( cName, cURL, lBorder, lResize, lScrolling, ;
-      marginwidth, marginheight, cTarget, cScrolling ) CLASS THtmlFrameSet
+METHOD Frame(cName, cURL, lBorder, lResize, lScrolling, marginwidth, marginheight, cTarget, cScrolling) CLASS THtmlFrameSet
 
    LOCAL cStr
 
-   __defaultNIL( @lBorder, .T. )
-   __defaultNIL( @lResize, .T. )
-   __defaultNIL( @lScrolling, .F. )
-   __defaultNIL( @cScrolling, "AUTO" )
-   __defaultNIL( @cTarget, "_self" )
+   __defaultNIL(@lBorder, .T.)
+   __defaultNIL(@lResize, .T.)
+   __defaultNIL(@lScrolling, .F.)
+   __defaultNIL(@cScrolling, "AUTO")
+   __defaultNIL(@cTarget, "_self")
 
    cStr := "  <frame "
 
-   IF HB_ISSTRING( cName )
+   IF HB_ISSTRING(cName)
       cStr += ' name="' + cName + '"'
    ENDIF
 
-   IF HB_ISSTRING( cUrl )
+   IF HB_ISSTRING(cUrl)
       cStr += ' src="' + cURL + '"'
    ENDIF
 
-   IF HB_ISSTRING( cTarget )
+   IF HB_ISSTRING(cTarget)
       cStr += ' target="' + cTarget + '"'
    ENDIF
 
-   IF ! lBorder
+   IF !lBorder
       cStr += ' frameborder="0"'
    ELSE
       cStr += ' frameborder="1"'
    ENDIF
 
-   IF ! lResize
+   IF !lResize
       cStr += " noresize"
    ENDIF
 
-   IF HB_ISSTRING( cScrolling )
+   IF HB_ISSTRING(cScrolling)
       cStr += ' scrolling="' + cScrolling + '"'
    ELSE
       IF lScrolling != NIL
-         cStr += ' scrolling=' + iif( lScrolling, '"yes"', '"no"' )
+         cStr += ' scrolling=' + iif(lScrolling, '"yes"', '"no"')
       ELSE
          cStr += ' scrolling="auto"'
       ENDIF
    ENDIF
 
-   IF HB_ISNUMERIC( marginwidth )
-      cStr += " marginwidth= " + hb_ntos( marginwidth )
+   IF HB_ISNUMERIC(marginwidth)
+      cStr += " marginwidth= " + hb_ntos(marginwidth)
    ENDIF
 
-   IF HB_ISNUMERIC( marginheight )
-      cStr += " marginheight= " + hb_ntos( marginheight )
+   IF HB_ISNUMERIC(marginheight)
+      cStr += " marginheight= " + hb_ntos(marginheight)
    ENDIF
 
    cStr += ">" + CRLF()

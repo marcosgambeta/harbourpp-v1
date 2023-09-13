@@ -88,14 +88,14 @@ void nxs_crypt(
 #endif
 
    /* pass one: scramble the source using the key */
-   nxs_scramble( source, srclen, key, keylen, cipher );
+   nxs_scramble(source, srclen, key, keylen, cipher);
 
    /* pass two: xor the source with the key
       threebit mutual shift is done also here */
-   nxs_xorcode( cipher, srclen, key, keylen );
+   nxs_xorcode(cipher, srclen, key, keylen);
 
    /* pass three: xor the source with the cyclic key */
-   nxs_xorcyclic( cipher, srclen, key, keylen );
+   nxs_xorcyclic(cipher, srclen, key, keylen);
 }
 
 /* Decrypting the buffer */
@@ -112,14 +112,14 @@ void nxs_decrypt(
    memcpy(result, cipher, cipherlen);
 
    /* pass one: xor the source with the cyclic key */
-   nxs_xorcyclic( result, cipherlen, key, keylen );
+   nxs_xorcyclic(result, cipherlen, key, keylen);
 
    /* pass two: xor the source with the key
       threebit mutual shift is done also here */
-   nxs_xordecode( result, cipherlen, key, keylen );
+   nxs_xordecode(result, cipherlen, key, keylen);
 
    /* pass three: unscramble the source using the key */
-   nxs_unscramble( result, cipherlen, key, keylen );
+   nxs_unscramble(result, cipherlen, key, keylen);
 }
 
 /* This function scrambles the source using the letter ordering in the
@@ -141,15 +141,15 @@ void nxs_scramble(
    }   
 
    /* First step: find key ordering */
-   nxs_make_scramble( scramble, key, keylen );
+   nxs_make_scramble(scramble, key, keylen);
 
    /* Leave alone the last block */
    len = keylen > 0 ? ( srclen / keylen ) * keylen : 0;
-   nxs_partial_scramble( source, cipher, scramble, len, keylen );
+   nxs_partial_scramble(source, cipher, scramble, len, keylen);
 
    keylen = srclen - len;
-   nxs_make_scramble( scramble, key, keylen );
-   nxs_partial_scramble( source + len, cipher + len, scramble, keylen, keylen );
+   nxs_make_scramble(scramble, key, keylen);
+   nxs_partial_scramble(source + len, cipher + len, scramble, keylen, keylen);
 }
 
 
@@ -190,15 +190,15 @@ void nxs_unscramble(
    }   
 
    /* First step: find key ordering */
-   nxs_make_scramble( scramble, key, keylen );
+   nxs_make_scramble(scramble, key, keylen);
 
    /* Leave alone the last block */
    len = keylen > 0 ? ( cipherlen / keylen ) * keylen : 0;
-   nxs_partial_unscramble( cipher, scramble, len, keylen );
+   nxs_partial_unscramble(cipher, scramble, len, keylen);
 
    keylen = cipherlen - len;
-   nxs_make_scramble( scramble, key, keylen );
-   nxs_partial_unscramble( cipher + len, scramble, keylen, keylen );
+   nxs_make_scramble(scramble, key, keylen);
+   nxs_partial_unscramble(cipher + len, scramble, keylen, keylen);
 }
 
 
@@ -310,9 +310,9 @@ void nxs_xorcyclic(
    crc2 = keylen >= 4 ? hb_adler32(0, reinterpret_cast<const char*>(key) + 2, keylen - 4) : 1;
    crc3 = keylen >= 2 ? hb_adler32(0, reinterpret_cast<const char*>(key) + 1, keylen - 2) : 1;
 
-   crc1l = crc1 = nxs_cyclic_sequence( crc1 );
-   crc2l = crc2 = nxs_cyclic_sequence( crc2 );
-   crc3l = crc3 = nxs_cyclic_sequence( crc3 );
+   crc1l = crc1 = nxs_cyclic_sequence(crc1);
+   crc2l = crc2 = nxs_cyclic_sequence(crc2);
+   crc3l = crc3 = nxs_cyclic_sequence(crc3);
 
    while( pos < cipherlen ) {
       if( crcpos < 4 ) {
@@ -331,14 +331,14 @@ void nxs_xorcyclic(
 
       if( crcpos == 12 ) {
          crcpos = 0;
-         crc1l  = crc1 = nxs_cyclic_sequence( crc1 );
-         crc2l  = crc2 = nxs_cyclic_sequence( crc2 );
-         crc3l  = crc3 = nxs_cyclic_sequence( crc3 );
+         crc1l  = crc1 = nxs_cyclic_sequence(crc1);
+         crc2l  = crc2 = nxs_cyclic_sequence(crc2);
+         crc3l  = crc3 = nxs_cyclic_sequence(crc3);
       }
    }
 }
 
-HB_U32 nxs_cyclic_sequence( HB_U32 input )
+HB_U32 nxs_cyclic_sequence(HB_U32 input)
 {
    HB_U32 first  = input & 0xffff;
    HB_U32 second = input >> 16;
@@ -348,7 +348,7 @@ HB_U32 nxs_cyclic_sequence( HB_U32 input )
 }
 
 
-void nxs_make_scramble( HB_ISIZ * scramble, const unsigned char * key, HB_SIZE keylen )
+void nxs_make_scramble(HB_ISIZ * scramble, const unsigned char * key, HB_SIZE keylen)
 {
    HB_SIZE i, j, tmp;
 
@@ -374,7 +374,7 @@ void nxs_make_scramble( HB_ISIZ * scramble, const unsigned char * key, HB_SIZE k
 
 /* Encrypt a text using a key
  * Usage:
- * hb_Crypt( cSource, cKey ) --> cCipher
+ * hb_Crypt(cSource, cKey) --> cCipher
  */
 HB_FUNC( HB_CRYPT )
 {
@@ -391,7 +391,7 @@ HB_FUNC( HB_CRYPT )
 
 /* Decrypt a text using a key
  * Usage:
- * hb_Decrypt( cCrypt, cKey ) --> cSource
+ * hb_Decrypt(cCrypt, cKey) --> cSource
  */
 HB_FUNC( HB_DECRYPT )
 {

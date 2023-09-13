@@ -44,5 +44,5 @@
  *
  */
 
-FUNCTION hb_ArrayBlock( aArray, nIndex )
-   RETURN {| x | iif( PCount() == 0, aArray[ nIndex ], aArray[ nIndex ] := x ) }
+FUNCTION hb_ArrayBlock(aArray, nIndex)
+   RETURN {|x|iif(PCount() == 0, aArray[nIndex], aArray[nIndex] := x)}

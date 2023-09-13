@@ -46,8 +46,8 @@
 
 #include "hbgtinfo.ch"
 
-FUNCTION SetInkeyBeforeBlock( ... )
-   RETURN hb_gtInfo( HB_GTI_INKEYREAD, ... )
+FUNCTION SetInkeyBeforeBlock(...)
+   RETURN hb_gtInfo(HB_GTI_INKEYREAD, ...)
 
-FUNCTION SetInkeyAfterBlock( ... )
-   RETURN hb_gtInfo( HB_GTI_INKEYFILTER, ... )
+FUNCTION SetInkeyAfterBlock(...)
+   RETURN hb_gtInfo(HB_GTI_INKEYFILTER, ...)

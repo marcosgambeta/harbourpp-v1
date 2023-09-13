@@ -44,13 +44,13 @@
  *
  */
 
-PROCEDURE hb_HashAddMember( aName, cType, uInit, oObj )
+PROCEDURE hb_HashAddMember(aName, cType, uInit, oObj)
 
    LOCAL cName
 
-   IF !( cType == NIL )
+   IF !(cType == NIL)
 
-      SWITCH Upper( Left( cType, 1 ) )
+      SWITCH Upper(Left(cType, 1))
       CASE "S" // STRING
 
          IF uInit == NIL
@@ -106,7 +106,7 @@ PROCEDURE hb_HashAddMember( aName, cType, uInit, oObj )
    ENDIF
 
    FOR EACH cName IN aName
-      oObj[ cName ] := uInit
+      oObj[cName] := uInit
    NEXT
 
    RETURN

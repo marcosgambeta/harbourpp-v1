@@ -107,7 +107,7 @@ LONG WINAPI PRGUnhandledExceptionFilter(EXCEPTION_POINTERS * ExceptionInfo)
 
 HB_FUNC( SETUNHANDLEDEXCEPTIONFILTER )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    LPTOP_LEVEL_EXCEPTION_FILTER pDefaultHandler = nullptr;
    PHB_ITEM pFuncItm = hb_param(1, Harbour::Item::ANY);
    PHB_SYMB pFuncSym = s_pFuncSymbol;
@@ -151,7 +151,7 @@ HB_FUNC( SETUNHANDLEDEXCEPTIONFILTER )
 
 HB_FUNC( SETERRORMODE )
 {
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
    hb_retni(SetErrorMode(hb_parni(1)));
 #else
    hb_retni(0);

@@ -76,32 +76,32 @@ CREATE CLASS TJSWindow
    VAR onLoad
    VAR onUnLoad
 
-   METHOD New( cVarName, cUrl, cName, x, y, w, h )
-   METHOD setOnLoad( c ) INLINE ::onLoad := c
-   METHOD setOnUnLoad( c ) INLINE ::onUnLoad := c
-   METHOD Alert( c ) INLINE ::QOut( "Alert('" + c + "')" )
-   METHOD confirm( c ) INLINE ::QOut( "confirm('" + c + "')" )
-   METHOD SetSize( x, y, h, w )
-   METHOD Write( c )
-   METHOD lineBreak() INLINE ::QOut( "<br />" )
-   METHOD Paragraph() INLINE ::QOut( "<p></p>" )
-   METHOD Center( l ) INLINE ::QOut( iif( l, "<center>", "</center>" ) )
-   METHOD bold( l ) INLINE ::QOut( iif( l, "<b>", "</b>" ) )
-   METHOD Italic( l ) INLINE ::QOut( iif( l, "<i>", "</i>" ) )
-   METHOD ULine( l ) INLINE ::QOut( iif( l, "<u>", "</u>" ) )
+   METHOD New(cVarName, cUrl, cName, x, y, w, h)
+   METHOD setOnLoad(c) INLINE ::onLoad := c
+   METHOD setOnUnLoad(c) INLINE ::onUnLoad := c
+   METHOD Alert(c) INLINE ::QOut("Alert('" + c + "')")
+   METHOD confirm(c) INLINE ::QOut("confirm('" + c + "')")
+   METHOD SetSize(x, y, h, w)
+   METHOD Write(c)
+   METHOD lineBreak() INLINE ::QOut("<br />")
+   METHOD Paragraph() INLINE ::QOut("<p></p>")
+   METHOD Center(l) INLINE ::QOut(iif(l, "<center>", "</center>"))
+   METHOD bold(l) INLINE ::QOut(iif(l, "<b>", "</b>"))
+   METHOD Italic(l) INLINE ::QOut(iif(l, "<i>", "</i>"))
+   METHOD ULine(l) INLINE ::QOut(iif(l, "<u>", "</u>"))
    METHOD Put()
    METHOD Begin()
    METHOD End()
 
-   METHOD QOut( c )
-   METHOD WriteLN( c ) INLINE ::QOut( c )
-   METHOD SetFeatures( alwaysRaised, alwaysLowered, ;
+   METHOD QOut(c)
+   METHOD WriteLN(c) INLINE ::QOut(c)
+   METHOD SetFeatures(alwaysRaised, alwaysLowered, ;
       Resizable, Menubar, personalBar, ;
       dependent, location, directories, ;
-      Scrollbars, Status, TitleBar, Toolbar, copyHistory )
-   METHOD ImageURL( cImage, cUrl, nHeight, nBorder, ;
+      Scrollbars, Status, TitleBar, Toolbar, copyHistory)
+   METHOD ImageURL(cImage, cUrl, nHeight, nBorder, ;
       cOnClick, cOnMsover, cOnMsout, ;
-      cName, cAlt )
+      cName, cAlt)
 
 ENDCLASS
 
@@ -111,15 +111,15 @@ ENDCLASS
 *
 */
 
-METHOD New( cVarName, cUrl, cName, x, y, w, h ) CLASS TJSWindow
+METHOD New(cVarName, cUrl, cName, x, y, w, h) CLASS TJSWindow
 
-   __defaultNIL( @cVarName, "newWin" )
-   __defaultNIL( @cURL, " " )
-   __defaultNIL( @cName, cVarName )
-   __defaultNIL( @x, 100 )
-   __defaultNIL( @y, 100 )
-   __defaultNIL( @h, 300 )
-   __defaultNIL( @w, 300 )
+   __defaultNIL(@cVarName, "newWin")
+   __defaultNIL(@cURL, " ")
+   __defaultNIL(@cName, cVarName)
+   __defaultNIL(@x, 100)
+   __defaultNIL(@y, 100)
+   __defaultNIL(@h, 300)
+   __defaultNIL(@w, 300)
 
    ::nH      := HtmlPageHandle()
    ::oHtm    := HtmlPageObject()
@@ -135,26 +135,26 @@ METHOD New( cVarName, cUrl, cName, x, y, w, h ) CLASS TJSWindow
    RETURN Self
 
 /* Set the properties of the window */
-METHOD SetFeatures( alwaysRaised, alwaysLowered, ;
+METHOD SetFeatures(alwaysRaised, alwaysLowered, ;
       Resizable, Menubar, personalBar, ;
       dependent, location, directories, ;
-      Scrollbars, Status, TitleBar, Toolbar, copyHistory ) CLASS TJSWindow
+      Scrollbars, Status, TitleBar, Toolbar, copyHistory) CLASS TJSWindow
 
    LOCAL cStr := ""
 
-   __defaultNIL( @alwaysRaised, ::alwaysRaised )
-   __defaultNIL( @alwaysLowered, ::alwaysLowered )
-   __defaultNIL( @Resizable, ::Resizable )
-   __defaultNIL( @Menubar, ::Menubar )
-   __defaultNIL( @personalBar, ::personalBar )
-   __defaultNIL( @dependent, ::dependent )
-   __defaultNIL( @location, ::location )
-   __defaultNIL( @directories, ::directories )
-   __defaultNIL( @Scrollbars, ::Scrollbars )
-   __defaultNIL( @Status, ::Status )
-   __defaultNIL( @TitleBar, ::TitleBar )
-   __defaultNIL( @Toolbar, ::Toolbar )
-   __defaultNIL( @copyHistory, ::copyHistory )
+   __defaultNIL(@alwaysRaised, ::alwaysRaised)
+   __defaultNIL(@alwaysLowered, ::alwaysLowered)
+   __defaultNIL(@Resizable, ::Resizable)
+   __defaultNIL(@Menubar, ::Menubar)
+   __defaultNIL(@personalBar, ::personalBar)
+   __defaultNIL(@dependent, ::dependent)
+   __defaultNIL(@location, ::location)
+   __defaultNIL(@directories, ::directories)
+   __defaultNIL(@Scrollbars, ::Scrollbars)
+   __defaultNIL(@Status, ::Status)
+   __defaultNIL(@TitleBar, ::TitleBar)
+   __defaultNIL(@Toolbar, ::Toolbar)
+   __defaultNIL(@copyHistory, ::copyHistory)
 
    IF alwaysRaised
       cStr += "alwaysraised=yes,"
@@ -222,32 +222,32 @@ METHOD SetFeatures( alwaysRaised, alwaysLowered, ;
       cStr += "copyHistory=no,"
    ENDIF
 
-   ::features += iif( Empty( ::Features ), cStr + ",", cStr )
+   ::features += iif(Empty(::Features), cStr + ",", cStr)
 
    RETURN Self
 
 /* set the size for the window */
-METHOD SetSize( x, y, h, w ) CLASS TJSWindow
+METHOD SetSize(x, y, h, w) CLASS TJSWindow
 
    LOCAL cStr := ""
 
-   __defaultNIL( @x, ::ScreenX )
-   __defaultNIL( @y, ::ScreenY )
-   __defaultNIL( @h, ::height )
-   __defaultNIL( @w, ::width )
+   __defaultNIL(@x, ::ScreenX)
+   __defaultNIL(@y, ::ScreenY)
+   __defaultNIL(@h, ::height)
+   __defaultNIL(@w, ::width)
 
    ::ScreenX := x
    ::ScreenY := y
    ::height  := h
    ::width   := w
 
-   cStr := "screenX=" + hb_ntos( ::screenX ) + ","
+   cStr := "screenX=" + hb_ntos(::screenX) + ","
 
-   cStr += "screenY=" + hb_ntos( ::screenY ) + ","
-   cStr += "height=" + hb_ntos( ::height ) + ","
-   cStr += "width=" + hb_ntos( ::width )
+   cStr += "screenY=" + hb_ntos(::screenY) + ","
+   cStr += "height=" + hb_ntos(::height) + ","
+   cStr += "width=" + hb_ntos(::width)
 
-   ::features += iif( Empty( ::Features ), cStr + ",", cStr )
+   ::features += iif(Empty(::Features), cStr + ",", cStr)
 
    RETURN Self
 
@@ -263,34 +263,34 @@ METHOD Put() CLASS TJSWindow
       ENDIF
    ENDIF
 
-   IF Empty( ::features )
+   IF Empty(::features)
       ::setSize()
       ::setFeatures()
    ENDIF
 
-   hb_default( @::name, "newWin" )
+   hb_default(@::name, "newWin")
 
    cStr += ::varName + " = window.open('" + ;
       ::URL + "', '" + ;
       ::varName + "', '" + ;
       ::features + "')"
 
-   HtmlJSCmd( ::nH, cStr )
+   HtmlJSCmd(::nH, cStr)
 
    RETURN Self
 
 /* Output stand alone Javascript code in the current document */
-METHOD Write( c ) CLASS TJSWindow
+METHOD Write(c) CLASS TJSWindow
 
-   HtmlJSCmd( ::nH, ::varName + ".document.write('" + c + "')" + CRLF() )
+   HtmlJSCmd(::nH, ::varName + ".document.write('" + c + "')" + CRLF())
 
    RETURN Self
 
 /* Output Javascript (or HTML) code in the current document and
    in the current script */
-METHOD QOut( c ) CLASS TJSWindow
+METHOD QOut(c) CLASS TJSWindow
 
-   FWrite( ::nH, ::varName + ".document.write('" + c + "')" + CRLF() )
+   FWrite(::nH, ::varName + ".document.write('" + c + "')" + CRLF())
 
    RETURN Self
 
@@ -300,76 +300,72 @@ METHOD Begin() CLASS TJSWindow
 
    LOCAL i
 
-   FWrite( ::nH, "<script language=JavaScript 1.2>" + CRLF() )
-   FWrite( ::nH, "<!--" + CRLF() )
-   ::QOut( "<html><head>" )
+   FWrite(::nH, "<script language=JavaScript 1.2>" + CRLF())
+   FWrite(::nH, "<!--" + CRLF())
+   ::QOut("<html><head>")
 
    IF ::Title != NIL
-      ::QOut( "<title>" + ::Title + "</title>" )
+      ::QOut("<title>" + ::Title + "</title>")
    ENDIF
 
    IF ::aScriptSrc != NIL
-      FOR i := 1 TO Len( ::aScriptSrc )
-         ::QOut( ;
-            '<script language=JavaScript src="' + ::aScriptSrc[ i ] + '"></script>' )
+      FOR i := 1 TO Len(::aScriptSrc)
+         ::QOut('<script language=JavaScript src="' + ::aScriptSrc[i] + '"></script>')
       NEXT
    ENDIF
 
    IF ::aServerSrc != NIL
-      FOR i := 1 TO Len( ::aServerSrc )
-         ::QOut( ;
-            '<script language=JavaScript src="' + ::aServerSrc[ i ] + '" runat=SERVER></script>' )
+      FOR i := 1 TO Len(::aServerSrc)
+         ::QOut('<script language=JavaScript src="' + ::aServerSrc[i] + '" runat=SERVER></script>')
       NEXT
    ENDIF
 
    IF ::Style != NIL
-      ::QOut( "<style> " + ::Style + " </style>" )
+      ::QOut("<style> " + ::Style + " </style>")
    ENDIF
 
-   ::QOut( "</head>" + "<body" )
+   ::QOut("</head>" + "<body")
 
    IF ::onLoad != NIL
-      ::QOut( '   onLoad="' + ::onLoad + '"' )
+      ::QOut('   onLoad="' + ::onLoad + '"')
    ENDIF
 
    IF ::onUnLoad != NIL
-      ::QOut( ' onUnload="' + ::onUnLoad + '"' )
+      ::QOut(' onUnload="' + ::onUnLoad + '"')
    ENDIF
 
-   ::QOut( '>' )
+   ::QOut('>')
 
    IF ::bgColor != NIL
-      ::QOut( '<body bgcolor="' + ::bgColor + '">' )
+      ::QOut('<body bgcolor="' + ::bgColor + '">')
    ENDIF
 
    IF ::fontColor != nil
-      ::QOut( '<body text="' + ::fontColor + '">' )
+      ::QOut('<body text="' + ::fontColor + '">')
    ENDIF
 
    IF ::bgImage != nil
-      ::QOut( '<body background="' + ::bgImage + '">' )
+      ::QOut('<body background="' + ::bgImage + '">')
    ENDIF
 
-   FWrite( ::nH, "//-->" )
-   FWrite( ::nH, "</script>" + crlf() )
+   FWrite(::nH, "//-->")
+   FWrite(::nH, "</script>" + crlf())
 
    RETURN Self
 
 /* End HTML output to the window */
 METHOD End() CLASS TJSWindow
 
-   HtmlJSCmd( ::nH, ::varName + ".document.write('</body></html>')" + CRLF() )
+   HtmlJSCmd(::nH, ::varName + ".document.write('</body></html>')" + CRLF())
 
    RETURN Self
 
 /* Place an image link to the window */
-METHOD ImageURL( cImage, cUrl, nHeight, nBorder, ;
-      cOnClick, cOnMsover, cOnMsout, ;
-      cName, cAlt ) CLASS TJSWindow
+METHOD ImageURL(cImage, cUrl, nHeight, nBorder, cOnClick, cOnMsover, cOnMsout, cName, cAlt) CLASS TJSWindow
 
    LOCAL cStr := ""
 
-   __defaultNIL( @cUrl, "" )
+   __defaultNIL(@cUrl, "")
 
    IF cName != NIL
       cStr += ' name= "' + cName + '"' + CRLF()
@@ -379,11 +375,11 @@ METHOD ImageURL( cImage, cUrl, nHeight, nBorder, ;
    ENDIF
 
    IF nBorder != NIL
-      cStr += " border= " + hb_ntos( nBorder ) + CRLF()
+      cStr += " border= " + hb_ntos(nBorder) + CRLF()
    ENDIF
 
    IF nHeight != NIL
-      cStr += " height= " + hb_ntos( nHeight ) + "% " + CRLF()
+      cStr += " height= " + hb_ntos(nHeight) + "% " + CRLF()
    ENDIF
 
    IF cOnClick != NIL
@@ -397,11 +393,9 @@ METHOD ImageURL( cImage, cUrl, nHeight, nBorder, ;
    ENDIF
 
    IF cURL != NIL
-      ::QOut( '<a href=' + cUrl + '><img src="' + cImage + '"' + ;
-         cStr + '></a>' )
+      ::QOut('<a href=' + cUrl + '><img src="' + cImage + '"' + cStr + '></a>')
    ELSE
-      ::QOut( '<img src="' + cImage + '"' + ;
-         cStr + '></a>' )
+      ::QOut('<img src="' + cImage + '"' + cStr + '></a>')
    ENDIF
 
    RETURN Self

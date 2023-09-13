@@ -54,8 +54,8 @@ HB_FUNC_TRANSLATE( SETREGISTRY   , WIN_REGSET   )
 
 #else
 
-HB_FUNC( QUERYREGISTRY ) { hb_retl(false); }
-HB_FUNC( GETREGISTRY   ) { hb_ret(); }
-HB_FUNC( SETREGISTRY   ) { hb_retl(false); }
+HB_FUNC( QUERYREGISTRY ) {hb_retl(false);}
+HB_FUNC( GETREGISTRY   ) {hb_ret();}
+HB_FUNC( SETREGISTRY   ) {hb_retl(false);}
 
 #endif

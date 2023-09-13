@@ -1,5 +1,5 @@
 /*
- * dbModifyStructure( <cFile> ) --> lSuccess
+ * dbModifyStructure(<cFile>) --> lSuccess
  *
  * Copyright 2009 Ron Pinkas <Ron.Pinkas at xHarbour.com>
  *
@@ -53,9 +53,9 @@
 #define EG_RENAME       26
 #endif
 
-#xtranslate Throw( <oErr> ) => ( Eval( ErrorBlock(), <oErr> ), Break( <oErr> ) )
+#xtranslate Throw(<oErr>) => (Eval(ErrorBlock(), <oErr>), Break(<oErr>))
 
-FUNCTION dbModifyStructure( cFile )
+FUNCTION dbModifyStructure(cFile)
 
    LOCAL lRet
    LOCAL cExt
@@ -66,18 +66,18 @@ FUNCTION dbModifyStructure( cFile )
    LOCAL oErr
    LOCAL nPresetArea := Select()
    LOCAL nSourceArea
-   LOCAL cDateTime   := SubStr( DToS( Date() ), 3 ) + "." + StrTran( Left( Time(), 5 ), ":", "." )
+   LOCAL cDateTime   := SubStr(DToS(Date()), 3) + "." + StrTran(Left(Time(), 5), ":", ".")
 
-   BEGIN SEQUENCE WITH {| oErr | Break( oErr ) }
+   BEGIN SEQUENCE WITH {|oErr|Break(oErr)}
 
       // Open exclusively, get name info, and create the structure db.
       USE ( cFile ) ALIAS ModifySource EXCLUSIVE NEW
       nSourceArea := Select()
 
-      cFile := dbInfo( DBI_FULLPATH )
-      cExt  := dbInfo( DBI_TABLEEXT )
+      cFile := dbInfo(DBI_FULLPATH)
+      cExt  := dbInfo(DBI_TABLEEXT)
 
-      hb_FNameSplit( cFile, , @cTable )
+      hb_FNameSplit(cFile, , @cTable)
 
       cBakFile       := cTable + ".bak." + cDateTime + cExt
       cStructureFile := cTable + ".str." + cDateTime + cExt
@@ -88,7 +88,7 @@ FUNCTION dbModifyStructure( cFile )
       // Let user modify the structure.
       USE ( cStructureFile ) ALIAS NewStructure EXCLUSIVE NEW
 
-      Browse( 0, 0, Min( 20, MaxRow() - 1 ), Min( MaxCol() - 30, 50 ) )
+      Browse(0, 0, Min(20, MaxRow() - 1), Min(MaxCol() - 30, 50))
 
       PACK
       CLOSE
@@ -97,7 +97,7 @@ FUNCTION dbModifyStructure( cFile )
 
 
       // Import data into the new file, and close it
-      lRet := dbImport( nSourceArea )
+      lRet := dbImport(nSourceArea)
       CLOSE
 
       SELECT ( nSourceArea )
@@ -107,13 +107,13 @@ FUNCTION dbModifyStructure( cFile )
 
       // Rename original as backup, and new file as the new original.
       IF lRet
-         IF FRename( cFile, cBakFile ) == -1
+         IF FRename(cFile, cBakFile) == -1
             BREAK
          ENDIF
 
-         IF FRename( cNewFile, cFile ) == -1
+         IF FRename(cNewFile, cFile) == -1
             // If we can't then try to restore backup as original
-            IF FRename( cBakFile, cFile ) == -1
+            IF FRename(cBakFile, cFile) == -1
                // Oops - must advise the user!
                oErr := ErrorNew()
                oErr:severity     := ES_ERROR
@@ -124,7 +124,7 @@ FUNCTION dbModifyStructure( cFile )
                oErr:canSubtitute := .F.
                oErr:operation    := cFile
                oErr:subCode      := 1101
-               oErr:args         := { cNewFile, cBakFile }
+               oErr:args         := {cNewFile, cBakFile}
 
                BREAK oErr
             ENDIF
@@ -135,7 +135,7 @@ FUNCTION dbModifyStructure( cFile )
       IF oErr:className() == "ERROR"
          IF oErr:genCode == EG_RENAME
             // This kind of error must be reported
-            lRet := Throw( oErr )
+            lRet := Throw(oErr)
          ELSE
             lRet := .F.
          ENDIF
@@ -148,11 +148,11 @@ FUNCTION dbModifyStructure( cFile )
 
    RETURN lRet
 
-FUNCTION dbImport( xSource )
+FUNCTION dbImport(xSource)
 
-   RETURN dbMerge( xSource )
+   RETURN dbMerge(xSource)
 
-FUNCTION dbMerge( xSource, lAppend )
+FUNCTION dbMerge(xSource, lAppend)
 
    LOCAL nArea, nSource, nRecNo
    LOCAL aFields
@@ -163,20 +163,20 @@ FUNCTION dbMerge( xSource, lAppend )
 
    // Safety
    IF LastRec() > 0
-      IF ! lAppend
+      IF !lAppend
          RETURN .F.
       ENDIF
    ENDIF
 
    // Validate args
-   IF HB_ISSTRING( xSource )
+   IF HB_ISSTRING(xSource)
       nArea := Select()
 
       USE ( xSource ) ALIAS MergeSource EXCLUSIVE NEW
       nSource := Select()
 
       SELECT ( nArea )
-   ELSEIF HB_ISNUMERIC( xSource )
+   ELSEIF HB_ISNUMERIC(xSource)
       nSource := xSource
    ELSE
       RETURN .F.
@@ -188,46 +188,46 @@ FUNCTION dbMerge( xSource, lAppend )
    ENDIF
 
    // Create translation plan
-   aFields := Array( FCount() )
-   AFields( aFields )
+   aFields := Array(FCount())
+   AFields(aFields)
 
    FOR EACH cField IN aFields
-      nSourcePos := ( nSource )->( FieldPos( cField ) )
+      nSourcePos := ( nSource )->( FieldPos(cField) )
 
       IF nSourcePos > 0
-         BEGIN SEQUENCE WITH {| oErr | Break( oErr ) }
+         BEGIN SEQUENCE WITH {|oErr|Break(oErr)}
             // Save
-            xField := FieldGet( cField:__EnumIndex() )
+            xField := FieldGet(cField:__EnumIndex())
 
             // Test type compatability
-            FieldPut( cField:__EnumIndex(), ( nSource )->( FieldGet( nSourcePos ) ) )
+            FieldPut(cField:__EnumIndex(), ( nSource )->( FieldGet(nSourcePos) ))
 
             // Restore
-            FieldPut( cField:__EnumIndex(), xField )
+            FieldPut(cField:__EnumIndex(), xField)
 
             // Ok to process
-            AAdd( aTranslate, { cField:__EnumIndex(), nSourcePos, {| xSource | xSource } } )
+            AAdd(aTranslate, {cField:__EnumIndex(), nSourcePos, {|xSource | xSource}})
          RECOVER
-            cTargetType := ValType( FieldGet( cField:__EnumIndex() ) )
+            cTargetType := ValType(FieldGet(cField:__EnumIndex()))
 
-            BEGIN SEQUENCE WITH {| oErr | Break( oErr ) }
+            BEGIN SEQUENCE WITH {|oErr|Break(oErr)}
                // Test type compatability
-               FieldPut( cField:__EnumIndex(), ValToType( ( nSource )->( FieldGet( nSourcePos ) ), cTargetType ) )
+               FieldPut(cField:__EnumIndex(), ValToType((nSource)->(FieldGet(nSourcePos)), cTargetType ))
 
                // Restore
-               FieldPut( cField:__EnumIndex(), xField )
+               FieldPut(cField:__EnumIndex(), xField)
 
                // Ok to process
-               AAdd( aTranslate, { cField:__EnumIndex(), nSourcePos, {| xSource | ValToType( xSource, cTargetType ) } } )
+               AAdd(aTranslate, {cField:__EnumIndex(), nSourcePos, {|xSource|ValToType(xSource, cTargetType)}})
             RECOVER
-               // TraceLog( oErr:Description, oErr:Operation )
+               // TraceLog(oErr:Description, oErr:Operation)
             END SEQUENCE
          END SEQUENCE
       ENDIF
    NEXT
 
    // Reset
-   IF LastRec() == 1 .AND. ! lAppend
+   IF LastRec() == 1 .AND. !lAppend
       DELETE
       ZAP
    ENDIF
@@ -236,20 +236,20 @@ FUNCTION dbMerge( xSource, lAppend )
    nRecNo := ( nSource )->( RecNo() )
    ( nSource )->( dbGoTop() )
 
-   WHILE ! ( nSource )->( Eof() )
+   WHILE !( nSource )->( Eof() )
       APPEND BLANK
 
       FOR EACH aTranslation IN aTranslate
-         FieldPut( aTranslation[ 1 ], Eval( aTranslation[ 3 ], ( nSource )->( FieldGet( aTranslation[ 2 ] ) ) ) )
+         FieldPut(aTranslation[1], Eval(aTranslation[3], (nSource)->(FieldGet(aTranslation[2]))))
       NEXT
 
       ( nSource )->( dbSkip() )
    ENDDO
 
-   ( nSource )->( dbGoto( nRecNo ) )
+   ( nSource )->( dbGoto(nRecNo) )
 
    // Reset
-   IF ! Empty( nArea )
+   IF !Empty(nArea)
       SELECT ( nSource )
       CLOSE
       SELECT ( nArea )

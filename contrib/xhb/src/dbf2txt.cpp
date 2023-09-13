@@ -54,7 +54,7 @@
 #include "hbvm.hpp"
 
 /* Escaping delimited strings. Need to be cleaned/optimized/improved */
-static char * hb_strescape( const char * szInput, HB_ISIZ nLen, const char * cDelim )
+static char * hb_strescape(const char * szInput, HB_ISIZ nLen, const char * cDelim)
 {
    HB_ISIZ      nCnt = 0;
    const char * szChr;
@@ -63,7 +63,7 @@ static char * hb_strescape( const char * szInput, HB_ISIZ nLen, const char * cDe
 
    szReturn = szEscape = static_cast<char*>(hb_xgrab(nLen * 2 + 4));
 
-   while( nLen && HB_ISSPACE( szInput[nLen - 1] ) ) {
+   while( nLen && HB_ISSPACE(szInput[nLen - 1]) ) {
       nLen--;
    }
    
@@ -84,7 +84,7 @@ static char * hb_strescape( const char * szInput, HB_ISIZ nLen, const char * cDe
 /* Export field values to text file */
 static HB_BOOL hb_ExportVar(HB_FHANDLE handle, PHB_ITEM pValue, const char * cDelim, PHB_CODEPAGE cdp)
 {
-   switch( hb_itemType( pValue ) ) {
+   switch( hb_itemType(pValue) ) {
       /* a "C" field */
       case Harbour::Item::STRING: {
          char * szStrEsc;
@@ -97,7 +97,7 @@ static HB_BOOL hb_ExportVar(HB_FHANDLE handle, PHB_ITEM pValue, const char * cDe
          
          szString = hb_xstrcpy(nullptr, cDelim, szStrEsc, cDelim, nullptr);
 
-         /* FWrite( handle, szString ) */
+         /* FWrite(handle, szString) */
          hb_fsWriteLarge(handle, szString, strlen(szString));
 
          /* Orphaned, get rif off it */
@@ -197,7 +197,7 @@ HB_FUNC( DBF2TEXT )
 
    SELF_FIELDCOUNT(pArea, &uiFields);
 
-   while( ( nCount == -1 || nCount > 0 ) && ( !pWhile || hb_itemGetL(hb_vmEvalBlock(pWhile)) ) ) {
+   while( (nCount == -1 || nCount > 0) && (!pWhile || hb_itemGetL(hb_vmEvalBlock(pWhile))) ) {
       /* WHILE !Bof() .AND. !Eof() */
       SELF_EOF(pArea, &bEof);
       SELF_BOF(pArea, &bBof);

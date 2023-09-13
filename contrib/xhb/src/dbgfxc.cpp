@@ -55,7 +55,7 @@ static HB_BOOL s_bToLogFile     = true;
 
 static HB_BOOL s_bEmptyLogFile = true;
 
-HB_BOOL hb_ToOutDebugOnOff( HB_BOOL bOnOff )
+HB_BOOL hb_ToOutDebugOnOff(HB_BOOL bOnOff)
 {
    HB_BOOL bOld = s_bToOutputDebug;
 
@@ -63,21 +63,21 @@ HB_BOOL hb_ToOutDebugOnOff( HB_BOOL bOnOff )
    return bOld;
 }
 
-void hb_ToOutDebug( const char * sTraceMsg, ... )
+void hb_ToOutDebug(const char * sTraceMsg, ...)
 {
    if( sTraceMsg && s_bToOutputDebug ) {
       char    buffer[1024];
       va_list ap;
 
-      va_start( ap, sTraceMsg );
-      hb_vsnprintf( buffer, sizeof(buffer), sTraceMsg, ap );
-      va_end( ap );
+      va_start(ap, sTraceMsg);
+      hb_vsnprintf(buffer, sizeof(buffer), sTraceMsg, ap);
+      va_end(ap);
 
       hb_OutDebug(static_cast<const char*>(buffer), strlen(buffer));
    }
 }
 
-HB_BOOL hb_ToLogFileOnOff( HB_BOOL bOnOff )
+HB_BOOL hb_ToLogFileOnOff(HB_BOOL bOnOff)
 {
    HB_BOOL bOld = s_bToLogFile;
 
@@ -85,7 +85,7 @@ HB_BOOL hb_ToLogFileOnOff( HB_BOOL bOnOff )
    return bOld;
 }
 
-HB_BOOL hb_EmptyLogFile( HB_BOOL bOnOff )
+HB_BOOL hb_EmptyLogFile(HB_BOOL bOnOff)
 {
    HB_BOOL bOld = s_bEmptyLogFile;
 
@@ -93,7 +93,7 @@ HB_BOOL hb_EmptyLogFile( HB_BOOL bOnOff )
    return bOld;
 }
 
-void hb_ToLogFile( const char * sFile, const char * sTraceMsg, ... )
+void hb_ToLogFile(const char * sFile, const char * sTraceMsg, ...)
 {
    if( s_bToLogFile ) {
       FILE * hFile;
@@ -103,22 +103,22 @@ void hb_ToLogFile( const char * sFile, const char * sTraceMsg, ... )
             s_bEmptyLogFile = false;
 
             /* Empty the file if it exists. */
-            hFile = hb_fopen( "logfile.log", "w" );
+            hFile = hb_fopen("logfile.log", "w");
          } else {
-            hFile = hb_fopen( "logfile.log", "a" );
+            hFile = hb_fopen("logfile.log", "a");
          }   
       } else {
-         hFile = hb_fopen( sFile, "a" );
+         hFile = hb_fopen(sFile, "a");
       }   
 
       if( hFile ) {
          va_list ap;
 
-         va_start( ap, sTraceMsg );
-         vfprintf( hFile, sTraceMsg, ap );
-         va_end( ap );
+         va_start(ap, sTraceMsg);
+         vfprintf(hFile, sTraceMsg, ap);
+         va_end(ap);
 
-         fclose( hFile );
+         fclose(hFile);
       }
    }
 }

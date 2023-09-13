@@ -77,13 +77,13 @@ CREATE CLASS TCgi INHERIT THtml
 
    VAR aQueryFields INIT {}
 
-   METHOD New( cInBuffer )
-   METHOD Field( cQueryName )
+   METHOD New(cInBuffer)
+   METHOD Field(cQueryName)
    METHOD ToObject()
 
 ENDCLASS
 
-METHOD New( cInBuffer ) CLASS TCgi
+METHOD New(cInBuffer) CLASS TCgi
 
    LOCAL i
    LOCAL aTemp
@@ -91,48 +91,48 @@ METHOD New( cInBuffer ) CLASS TCgi
 
    ::nH := HtmlPageHandle()
 
-   ::Server_Software   := GetEnv( "SERVER_SOFTWARE" )
-   ::Server_Name       := GetEnv( "SERVER_NAME" )
-   ::Gateway_Interface := GetEnv( "GATEWAY_INTERFACE" )
-   ::Server_Protocol   := GetEnv( "SERVER_PROTOCOL" )
-   ::Server_Port       := GetEnv( "SERVER_PORT" )
-   ::Request_Method    := GetEnv( "REQUEST_METHOD" )
-   ::Http_Accept       := GetEnv( "HTTP_ACCEPT" )
-   ::Http_User_agent   := GetEnv( "HTTP_USER_AGENT" )
-   ::Http_Referer      := GetEnv( "HTTP_REFERER" )
-   ::Path_Info         := GetEnv( "PATH_INFO" )
-   ::Path_Translated   := GetEnv( "PATH_TRANSLATED" )
-   ::Script_Name       := GetEnv( "SCRIPT_NAME" )
-   ::Query_String      := GetEnv( "QUERY_STRING" )
-   ::Remote_Host       := GetEnv( "REMOTE_HOST" )
-   ::Remote_Addr       := GetEnv( "REMOTE_ADDR" )
-   ::ipAddress         := GetEnv( "REMOTE_ADDR" )
-   ::Remote_User       := GetEnv( "REMOTE_USER" )
-   ::Auth_Type         := GetEnv( "AUTH_TYPE" )
-   ::Auth_User         := GetEnv( "AUTH_USER" )
-   ::Auth_Pass         := GetEnv( "AUTH_PASS" )
-   ::Content_Type      := GetEnv( "CONTENT_TYPE" )
-   ::Content_Length    := GetEnv( "CONTENT_LENGTH" )
-   ::Annotation_Server := GetEnv( "ANNOTATION_SERVER" )
+   ::Server_Software   := GetEnv("SERVER_SOFTWARE")
+   ::Server_Name       := GetEnv("SERVER_NAME")
+   ::Gateway_Interface := GetEnv("GATEWAY_INTERFACE")
+   ::Server_Protocol   := GetEnv("SERVER_PROTOCOL")
+   ::Server_Port       := GetEnv("SERVER_PORT")
+   ::Request_Method    := GetEnv("REQUEST_METHOD")
+   ::Http_Accept       := GetEnv("HTTP_ACCEPT")
+   ::Http_User_agent   := GetEnv("HTTP_USER_AGENT")
+   ::Http_Referer      := GetEnv("HTTP_REFERER")
+   ::Path_Info         := GetEnv("PATH_INFO")
+   ::Path_Translated   := GetEnv("PATH_TRANSLATED")
+   ::Script_Name       := GetEnv("SCRIPT_NAME")
+   ::Query_String      := GetEnv("QUERY_STRING")
+   ::Remote_Host       := GetEnv("REMOTE_HOST")
+   ::Remote_Addr       := GetEnv("REMOTE_ADDR")
+   ::ipAddress         := GetEnv("REMOTE_ADDR")
+   ::Remote_User       := GetEnv("REMOTE_USER")
+   ::Auth_Type         := GetEnv("AUTH_TYPE")
+   ::Auth_User         := GetEnv("AUTH_USER")
+   ::Auth_Pass         := GetEnv("AUTH_PASS")
+   ::Content_Type      := GetEnv("CONTENT_TYPE")
+   ::Content_Length    := GetEnv("CONTENT_LENGTH")
+   ::Annotation_Server := GetEnv("ANNOTATION_SERVER")
 
    IF cInBuffer != NIL
-      ::Query_String := RTrim( cInBuffer )
+      ::Query_String := RTrim(cInBuffer)
    ELSE
-      IF "POST" $ Upper( ::Request_Method )
-         ::Query_String := RTrim( FReadStr( STD_IN, Val( ::CONTENT_LENGTH ) ) )
+      IF "POST" $ Upper(::Request_Method)
+         ::Query_String := RTrim(FReadStr(STD_IN, Val(::CONTENT_LENGTH)))
       ENDIF
    ENDIF
 
-   IF ! Empty( ::Query_String )
+   IF !Empty(::Query_String)
 
       ::aQueryFields := {}
 
-      aTemp := hb_ATokens( ::Query_String, "&" )           // separate fields
+      aTemp := hb_ATokens(::Query_String, "&")           // separate fields
 
-      FOR i := 1 TO Len( aTemp )
-         aVar := hb_ATokens( aTemp[ i ], "=" )
-         IF Len( aVar ) == 2
-            AAdd( ::aQueryFields, { aVar[ 1 ], HtmlDecodeUrl( aVar[ 2 ] ) } )
+      FOR i := 1 TO Len(aTemp)
+         aVar := hb_ATokens(aTemp[i], "=")
+         IF Len(aVar) == 2
+            AAdd(::aQueryFields, {aVar[1], HtmlDecodeUrl(aVar[2])})
          ENDIF
       NEXT
 
@@ -155,15 +155,15 @@ METHOD ToObject() CLASS TCgi
    STATIC s_n := 0
 
    // --> create new oObject class from this one...
-   aDb := HBClass():New( "NewCgi" + StrZero( ++s_n, 3 ), { "TCgi" } )
+   aDb := HBClass():New("NewCgi" + StrZero(++s_n, 3), {"TCgi"})
 
-   FOR i := 1 TO Len( ::aQueryFields )
+   FOR i := 1 TO Len(::aQueryFields)
 
-      IF ::aQueryFields[ i, 2 ] == NIL .OR. Empty( ::aQueryFields[ i, 2 ] )
-         ::aQueryFields[ i, 2 ] := ""
+      IF ::aQueryFields[i, 2] == NIL .OR. Empty(::aQueryFields[i, 2])
+         ::aQueryFields[i, 2] := ""
       ENDIF
 
-      adb:AddData( ::aQueryFields[ i, 1 ], ::aQueryFields[ i, 2 ], , nScope )
+      adb:AddData(::aQueryFields[i, 1], ::aQueryFields[i, 2], , nScope)
    NEXT
 
    adb:Create()
@@ -190,26 +190,26 @@ METHOD ToObject() CLASS TCgi
    oNew:Content_Type      := ::Content_Type
    oNew:Content_Length    := ::Content_Length
    oNew:Annotation_Server := ::Annotation_Server
-   oNew:nH                := iif( HtmlPageHandle() == NIL, STD_OUT, HtmlPageHandle() )
+   oNew:nH                := iif(HtmlPageHandle() == NIL, STD_OUT, HtmlPageHandle())
 
    RETURN oNew
 
-METHOD Field( cQueryName ) CLASS TCgi
+METHOD Field(cQueryName) CLASS TCgi
 
    LOCAL cRet := ""
    LOCAL nRet
 
-   __defaultNIL( @cQueryName, "" )
+   __defaultNIL(@cQueryName, "")
 
-   nRet := AScan( ::aQueryFields, {| x | Upper( x[ 1 ] ) == Upper( cQueryName ) } )
+   nRet := AScan(::aQueryFields, {|x|Upper(x[1]) == Upper(cQueryName)})
 
    IF nRet > 0
-      cRet := ::aQueryFields[ nRet, 2 ]
+      cRet := ::aQueryFields[nRet, 2]
    ENDIF
 
    RETURN cRet
 
-FUNCTION ParseString( cString, cDelim, nRet )
+FUNCTION ParseString(cString, cDelim, nRet)
 
    LOCAL cBuf
    LOCAL aElem
@@ -217,24 +217,24 @@ FUNCTION ParseString( cString, cDelim, nRet )
    LOCAL nSize
    LOCAL i
 
-   nSize := Len( cString ) - Len( StrTran( cString, cDelim ) ) + 1
-   aElem := Array( nSize )
+   nSize := Len(cString) - Len(StrTran(cString, cDelim)) + 1
+   aElem := Array(nSize)
 
    cBuf := cString
    FOR i := 1 TO nSize
-      nPosFim := At( cDelim, cBuf )
+      nPosFim := At(cDelim, cBuf)
 
       IF nPosFim > 0
-         aElem[ i ] := SubStr( cBuf, 1, nPosFim - 1 )
+         aElem[i] := SubStr(cBuf, 1, nPosFim - 1)
       ELSE
-         aElem[ i ] := cBuf
+         aElem[i] := cBuf
       ENDIF
 
-      cBuf := SubStr( cBuf, nPosFim + 1, Len( cBuf ) )
+      cBuf := SubStr(cBuf, nPosFim + 1, Len(cBuf))
 
    NEXT
 
-   RETURN aElem[ nRet ]
+   RETURN aElem[nRet]
 
 /****
 *
@@ -244,12 +244,12 @@ FUNCTION ParseString( cString, cDelim, nRet )
 *
 */
 
-FUNCTION CgiParseVar( cEnvVar )
+FUNCTION CgiParseVar(cEnvVar)
 
-   cEnvVar := HtmlDecodeUrl( cEnvVar )
+   cEnvVar := HtmlDecodeUrl(cEnvVar)
 
-   IF "=" $ cEnvVar .AND. Len( cEnvVar ) > At( "=", cEnvVar )
-      cEnvVar := AllTrim( SubStr( cEnvVar, At( "=", cEnvVar ) + 1 ) )
+   IF "=" $ cEnvVar .AND. Len(cEnvVar) > At("=", cEnvVar)
+      cEnvVar := AllTrim(SubStr(cEnvVar, At("=", cEnvVar) + 1))
    ELSE
       cEnvVar := ""
    ENDIF

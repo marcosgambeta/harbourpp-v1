@@ -53,7 +53,7 @@ HB_FUNC( THROW )
    PHB_ITEM pError = hb_param(1, Harbour::Item::ANY);
 
    if( pError && HB_IS_OBJECT(pError) ) {
-      PHB_ITEM pResult = hb_errLaunchSubst( pError );
+      PHB_ITEM pResult = hb_errLaunchSubst(pError);
       if( pResult ) {
          hb_itemReturnRelease(pResult);
       }

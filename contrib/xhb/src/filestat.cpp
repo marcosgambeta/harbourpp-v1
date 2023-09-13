@@ -100,7 +100,7 @@ HB_FUNC( FILESTATS )
       if( stat64(hb_parc(1), &statbuf) == 0 )
 #  else
       struct stat statbuf;
-      if( stat( hb_parc(1), &statbuf ) == 0 )
+      if( stat(hb_parc(1), &statbuf) == 0 )
 #  endif
       {
          /* determine if we can read/write/execute the file */
@@ -162,10 +162,10 @@ HB_FUNC( FILESTATS )
             *pszAttr++ = 'Y';  /* xHarbour extension */
          }
 
-         if( S_ISDIR( statbuf.st_mode ) ) {
+         if( S_ISDIR(statbuf.st_mode) ) {
             ushbAttr |= HB_FA_DIRECTORY;  /* xHarbour extension */
          /* Give the ARCHIVE if readwrite, not executable and not special */
-         } else if( S_ISREG( statbuf.st_mode ) && ushbAttr == 0 ) {
+         } else if( S_ISREG(statbuf.st_mode) && ushbAttr == 0 ) {
             ushbAttr |= HB_FA_ARCHIVE;
          }   
 
@@ -173,26 +173,24 @@ HB_FUNC( FILESTATS )
 
          ftime = statbuf.st_mtime;
 #if defined(HB_HAS_LOCALTIME_R)
-         ptms = localtime_r( &ftime, &tms );
+         ptms = localtime_r(&ftime, &tms);
 #else
-         ptms = localtime( &ftime );
+         ptms = localtime(&ftime);
 #endif
 
-         lcDate = hb_dateEncode( ptms->tm_year + 1900,
-                                 ptms->tm_mon + 1, ptms->tm_mday );
+         lcDate = hb_dateEncode(ptms->tm_year + 1900, ptms->tm_mon + 1, ptms->tm_mday);
          lcTime = ptms->tm_hour * 3600 + ptms->tm_min * 60 + ptms->tm_sec;
 
          ftime = statbuf.st_atime;
 #if defined(HB_HAS_LOCALTIME_R)
-         ptms = localtime_r( &ftime, &tms );
+         ptms = localtime_r(&ftime, &tms);
 #else
-         ptms = localtime( &ftime );
+         ptms = localtime(&ftime);
 #endif
-         lmDate = hb_dateEncode( ptms->tm_year + 1900,
-                                 ptms->tm_mon + 1, ptms->tm_mday );
+         lmDate = hb_dateEncode(ptms->tm_year + 1900, ptms->tm_mon + 1, ptms->tm_mday);
          lmTime = ptms->tm_hour * 3600 + ptms->tm_min * 60 + ptms->tm_sec;
 
-         hb_fsAttrDecode( ushbAttr, szAttr );
+         hb_fsAttrDecode(ushbAttr, szAttr);
 
          fResult = true;
       }
@@ -209,32 +207,30 @@ HB_FUNC( FILESTATS )
       SYSTEMTIME      time;
 
       /* Get attributes... */
-      dwAttribs = GetFileAttributes( lpFileName );
+      dwAttribs = GetFileAttributes(lpFileName);
       if( dwAttribs != INVALID_FILE_ATTRIBUTES ) {
          HANDLE hFind;
 
-         hb_fsAttrDecode( hb_fsAttrFromRaw( dwAttribs ), szAttr );
+         hb_fsAttrDecode(hb_fsAttrFromRaw(dwAttribs), szAttr);
 
          /* If file existed, do a find-first */
-         hFind = FindFirstFile( lpFileName, &ffind );
+         hFind = FindFirstFile(lpFileName, &ffind);
          if( hFind != INVALID_HANDLE_VALUE ) {
-            FindClose( hFind );
+            FindClose(hFind);
 
             /* get file times and work them out */
             llSize = static_cast<HB_FOFFSET>(ffind.nFileSizeLow) + (static_cast<HB_FOFFSET>(ffind.nFileSizeHigh) << 32);
 
-            if( FileTimeToLocalFileTime( &ffind.ftCreationTime, &filetime ) &&
-                FileTimeToSystemTime( &filetime, &time ) ) {
-               lcDate = hb_dateEncode( time.wYear, time.wMonth, time.wDay );
+            if( FileTimeToLocalFileTime(&ffind.ftCreationTime, &filetime) && FileTimeToSystemTime(&filetime, &time) ) {
+               lcDate = hb_dateEncode(time.wYear, time.wMonth, time.wDay);
                lcTime = time.wHour * 3600 + time.wMinute * 60 + time.wSecond;
             } else {
                lcDate = hb_dateEncode(0, 0, 0);
                lcTime = 0;
             }
 
-            if( FileTimeToLocalFileTime( &ffind.ftLastAccessTime, &filetime ) &&
-                FileTimeToSystemTime( &filetime, &time ) ) {
-               lmDate = hb_dateEncode( time.wYear, time.wMonth, time.wDay );
+            if( FileTimeToLocalFileTime(&ffind.ftLastAccessTime, &filetime) && FileTimeToSystemTime(&filetime, &time) ) {
+               lmDate = hb_dateEncode(time.wYear, time.wMonth, time.wDay);
                lmTime = time.wHour * 3600 + time.wMinute * 60 + time.wSecond;
             } else {
                lcDate = hb_dateEncode(0, 0, 0);
@@ -250,10 +246,10 @@ HB_FUNC( FILESTATS )
 
    /* Generic algorithm based on find-first */
    {
-      PHB_FFIND findinfo = hb_fsFindFirst( hb_parc(1), HB_FA_ALL );
+      PHB_FFIND findinfo = hb_fsFindFirst(hb_parc(1), HB_FA_ALL);
 
       if( findinfo ) {
-         hb_fsAttrDecode( findinfo->attr, szAttr );
+         hb_fsAttrDecode(findinfo->attr, szAttr);
          llSize = static_cast<HB_FOFFSET>(findinfo->size);
          lcDate = findinfo->lDate;
          lcTime = ( findinfo->szTime[0] - '0' ) * 36000 +
@@ -264,7 +260,7 @@ HB_FUNC( FILESTATS )
                   ( findinfo->szTime[7] - '0' );
          lmDate = hb_dateEncode(0, 0, 0);
          lmTime = 0;
-         hb_fsFindClose( findinfo );
+         hb_fsFindClose(findinfo);
          fResult = true;
       }
    }

@@ -65,7 +65,7 @@ static HB_SIZE s_nErrProcLine = 0;
 static HB_SIZE s_nErrProcModule = 0;
 static HB_SIZE s_nErrCallStack = 0;
 
-static HB_SYMB s_symErrorNew = { "XHB_ERRORNEW", { HB_FS_PUBLIC | HB_FS_LOCAL }, { HB_FUNCNAME(XHB_ERRORNEW) }, nullptr };
+static HB_SYMB s_symErrorNew = {"XHB_ERRORNEW", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME(XHB_ERRORNEW)}, nullptr};
 
 static void s_xhbErrorResize(PHB_ITEM pError)
 {
@@ -242,8 +242,8 @@ HB_FUNC_STATIC( ERRORINIT )
 
    if( s_nErrObjSize != 0 ) {
       PHB_ITEM pStack = hb_itemArrayNew(0), pItem = nullptr;
-      char szProcName[ HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5 ];
-      char szProcFile[ HB_PATH_MAX ];
+      char szProcName[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
+      char szProcFile[HB_PATH_MAX];
       HB_USHORT uiProcLine;
       int iLevel = 0;
 
@@ -331,22 +331,22 @@ static void xhb_errRedefineClass(void * cargo)
       s_nErrObjSize = hb_arrayLen(pError);
 
       s_nErrProcName = ++s_nErrObjSize;
-      hb_clsAdd(usClassH, "PROCNAME"   , HB_FUNCNAME( PROCNAME )   );
-      hb_clsAdd(usClassH, "_PROCNAME"  , HB_FUNCNAME( _PROCNAME )  );
+      hb_clsAdd(usClassH, "PROCNAME"   , HB_FUNCNAME(PROCNAME)   );
+      hb_clsAdd(usClassH, "_PROCNAME"  , HB_FUNCNAME(_PROCNAME)  );
 
       s_nErrProcLine = ++s_nErrObjSize;
-      hb_clsAdd(usClassH, "PROCLINE"   , HB_FUNCNAME( PROCLINE )   );
-      hb_clsAdd(usClassH, "_PROCLINE"  , HB_FUNCNAME( _PROCLINE )  );
+      hb_clsAdd(usClassH, "PROCLINE"   , HB_FUNCNAME(PROCLINE)   );
+      hb_clsAdd(usClassH, "_PROCLINE"  , HB_FUNCNAME(_PROCLINE)  );
 
       s_nErrProcModule = ++s_nErrObjSize;
-      hb_clsAdd(usClassH, "MODULENAME" , HB_FUNCNAME( MODULENAME ) );
-      hb_clsAdd(usClassH, "_MODULENAME", HB_FUNCNAME( _MODULENAME ));
+      hb_clsAdd(usClassH, "MODULENAME" , HB_FUNCNAME(MODULENAME) );
+      hb_clsAdd(usClassH, "_MODULENAME", HB_FUNCNAME(_MODULENAME));
 
       s_nErrCallStack = ++s_nErrObjSize;
-      hb_clsAdd(usClassH, "AASTACK"    , HB_FUNCNAME( AASTACK )    );
-      hb_clsAdd(usClassH, "_AASTACK"   , HB_FUNCNAME( _AASTACK )   );
+      hb_clsAdd(usClassH, "AASTACK"    , HB_FUNCNAME(AASTACK)    );
+      hb_clsAdd(usClassH, "_AASTACK"   , HB_FUNCNAME(_AASTACK)   );
 
-      hb_clsAdd(usClassH, "INIT"       , HB_FUNCNAME( ERRORINIT )  );
+      hb_clsAdd(usClassH, "INIT"       , HB_FUNCNAME(ERRORINIT)  );
 
 #ifdef XHB_ERROR_RESIZE_OBJECT
       s_xhbErrorResize(pError);
@@ -360,7 +360,7 @@ static void xhb_errRedefineClass(void * cargo)
          PHB_DYNS pDynSym = hb_dynsymFind("ERRORNEW");
          if( pDynSym ) {
             pDynSym->pSymbol = &s_symErrorNew;
-            hb_vmSetDynFunc( pDynSym );
+            hb_vmSetDynFunc(pDynSym);
          }
       }
 #endif

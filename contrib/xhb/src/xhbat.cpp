@@ -51,10 +51,10 @@
 
 /* locates a substring in a string */
 
-static HB_SIZE hb_AtSkipStrings( const char * szSub, HB_SIZE nSubLen, const char * szText, HB_SIZE nLen )
+static HB_SIZE hb_AtSkipStrings(const char * szSub, HB_SIZE nSubLen, const char * szText, HB_SIZE nLen)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_AtSkipStrings(%s, %" HB_PFS "u, %s, %" HB_PFS "u)", szSub, nSubLen, szText, nLen ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_AtSkipStrings(%s, %" HB_PFS "u, %s, %" HB_PFS "u)", szSub, nSubLen, szText, nLen));
 #endif
 
    if( nSubLen > 0 && nLen >= nSubLen ) {
@@ -97,7 +97,7 @@ static HB_SIZE hb_AtSkipStrings( const char * szSub, HB_SIZE nSubLen, const char
          }
 
          if( szText[nPos] == '[' && szSub[0] != '[' ) {
-            if( !( HB_ISALPHA(static_cast<HB_BYTE>(cLastChar)) || HB_ISDIGIT(static_cast<HB_BYTE>(cLastChar)) || strchr( "])}_.", cLastChar ) ) ) {
+            if( !(HB_ISALPHA(static_cast<HB_BYTE>(cLastChar)) || HB_ISDIGIT(static_cast<HB_BYTE>(cLastChar)) || strchr("])}_.", cLastChar)) ) {
                while( ++nPos < nLen && szText[nPos] != ']' ) {
                   /* Skip. */
                }
@@ -140,8 +140,8 @@ HB_FUNC( ATSKIPSTRINGS ) /* cFind, cWhere, nStart */
       }
 
       if( nStart < hb_itemGetCLen(pWhere) ) {
-         HB_SIZE nRet = hb_AtSkipStrings( hb_itemGetCPtr(pFind), hb_itemGetCLen(pFind),
-                                          hb_itemGetCPtr(pWhere) + nStart, hb_itemGetCLen(pWhere) - nStart );
+         HB_SIZE nRet = hb_AtSkipStrings(hb_itemGetCPtr(pFind), hb_itemGetCLen(pFind),
+                                         hb_itemGetCPtr(pWhere) + nStart, hb_itemGetCLen(pWhere) - nStart);
 
          if( nRet ) {
             hb_retns(nRet + nStart);
@@ -163,8 +163,8 @@ HB_FUNC( ATI )
       PHB_ITEM pStart = hb_param(3, Harbour::Item::NUMERIC);
       PHB_ITEM pEnd   = hb_param(4, Harbour::Item::NUMERIC);
       HB_ISIZ  nLen   = hb_itemGetCLen(pText);
-      HB_ISIZ  nStart = pStart ? hb_itemGetNS( pStart ) : 1;
-      HB_ISIZ  nEnd   = pEnd ? hb_itemGetNS( pEnd ) : nLen;
+      HB_ISIZ  nStart = pStart ? hb_itemGetNS(pStart) : 1;
+      HB_ISIZ  nEnd   = pEnd ? hb_itemGetNS(pEnd) : nLen;
 
       if( nStart < 0 ) {
          nStart += nLen;

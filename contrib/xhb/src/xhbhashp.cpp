@@ -59,7 +59,7 @@ HB_FUNC( HSETPARTITION )
 
    if( !pHash ) {
       hb_errRT_BASE(EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   } else if( hb_hashLen( pHash ) > 0 ) {
+   } else if( hb_hashLen(pHash) > 0 ) {
       hb_errRT_BASE(EG_ARG, 2017, "Cannot change partitioning in a non-empty hash", HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    } else if( (hb_hashGetFlags(pHash) & HB_HASH_KEEPORDER) != 0 ) {
       hb_errRT_BASE(EG_ARG, 2017, "Cannot set partitioning in a hash with associative array compatibility", HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);

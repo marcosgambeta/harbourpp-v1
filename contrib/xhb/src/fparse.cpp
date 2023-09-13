@@ -46,7 +46,7 @@
 
 /* FIXME: use Harbour VF IO API */
 
-/* FParse( cFile, cDelimiter ) --> array
+/* FParse(cFile, cDelimiter) --> array
 
    Purpose:
       Parse a delimited text file.
@@ -83,7 +83,7 @@ static void hb_ParseLine(PHB_ITEM pReturn, const char * szText, int iDelimiter, 
 
 #if 0
          while( nLen ) {
-            if( szText[nLen - 1] && !HB_ISSPACE( szText[nLen - 1] ) ) {
+            if( szText[nLen - 1] && !HB_ISSPACE(szText[nLen - 1]) ) {
                break;
             }   
 
@@ -211,7 +211,7 @@ static void hb_ParseLine(PHB_ITEM pReturn, const char * szText, int iDelimiter, 
    }
 }
 
-static char ** hb_tokensplit( const char * string, HB_BYTE delimiter, int iCharCount, int * iWord )
+static char ** hb_tokensplit(const char * string, HB_BYTE delimiter, int iCharCount, int * iWord)
 {
    char *  buffer, * bufptr;
    char ** token_list;
@@ -261,14 +261,14 @@ static char ** hb_tokensplit( const char * string, HB_BYTE delimiter, int iCharC
    return token_list;
 }
 
-static HB_BOOL file_read( FILE * stream, char * string, int * iCharCount )
+static HB_BOOL file_read(FILE * stream, char * string, int * iCharCount)
 {
    int cnbr = 0;
 
    memset(string, ' ', MAX_READ);
 
    for( ;; ) {
-      int ch = fgetc( stream );
+      int ch = fgetc(stream);
 
       if( ch == '\n' || ch == EOF || ch == 26 ) {
          *iCharCount    = cnbr;
@@ -311,7 +311,7 @@ HB_FUNC( FPARSE )
    }
 
    /* open file for read */
-   inFile = hb_fopen( hb_itemGetCPtr(pSrc), "r" );
+   inFile = hb_fopen(hb_itemGetCPtr(pSrc), "r");
 
    /* return empty array on failure */
    if( !inFile ) {
@@ -330,11 +330,11 @@ HB_FUNC( FPARSE )
    string = static_cast<char*>(hb_xgrab(MAX_READ + 1));
 
    /* read the file until EOF */
-   while( file_read( inFile, string, &iCharCount ) ) {
+   while( file_read(inFile, string, &iCharCount) ) {
       /* parse the read line */
       int iWord = 0;
 
-      char ** tokens = hb_tokensplit( string, nByte, iCharCount, &iWord );
+      char ** tokens = hb_tokensplit(string, nByte, iCharCount, &iWord);
 
       /* prepare empty array */
       hb_arrayNew(pItem, iWord);
@@ -345,7 +345,7 @@ HB_FUNC( FPARSE )
       }
 
       /* add array containing parsed text to main array */
-      hb_arrayAddForward( pArray, pItem );
+      hb_arrayAddForward(pArray, pItem);
 
       /* clean up */
       tokens--;
@@ -359,7 +359,7 @@ HB_FUNC( FPARSE )
 
    /* clean up */
    hb_xfree(string);
-   fclose( inFile );
+   fclose(inFile);
 }
 
 HB_FUNC( FPARSEEX )
@@ -385,7 +385,7 @@ HB_FUNC( FPARSEEX )
    }
 
    /* open file for read */
-   inFile = hb_fopen( hb_itemGetCPtr(pSrc), "r" );
+   inFile = hb_fopen(hb_itemGetCPtr(pSrc), "r");
 
    /* return empty array on failure */
    if( !inFile ) {
@@ -404,15 +404,15 @@ HB_FUNC( FPARSEEX )
    string = static_cast<char*>(hb_xgrab(MAX_READ + 1));
 
    /* read the file until EOF */
-   while( file_read( inFile, string, &iCharCount ) ) {
+   while( file_read(inFile, string, &iCharCount) ) {
       /* parse the read line */
       int iWord = 0;
       hb_arrayNew(pSubArray, 0);
 
-      hb_ParseLine( pSubArray, string, nByte, &iWord );
+      hb_ParseLine(pSubArray, string, nByte, &iWord);
 
       /* add array containing parsed text to main array */
-      hb_arrayAddForward( pArray, pSubArray );
+      hb_arrayAddForward(pArray, pSubArray);
    }
 
    /* return main array */
@@ -421,7 +421,7 @@ HB_FUNC( FPARSEEX )
 
    /* clean up */
    hb_xfree(string);
-   fclose( inFile );
+   fclose(inFile);
 }
 
 HB_FUNC( FWORDCOUNT )
@@ -445,7 +445,7 @@ HB_FUNC( FWORDCOUNT )
    }
 
    /* open file for read */
-   inFile = hb_fopen( hb_itemGetCPtr(pSrc), "r" );
+   inFile = hb_fopen(hb_itemGetCPtr(pSrc), "r");
 
    /* return 0 on failure */
    if( !inFile ) {
@@ -457,10 +457,10 @@ HB_FUNC( FWORDCOUNT )
    string = static_cast<char*>(hb_xgrab(MAX_READ + 1));
 
    /* read the file until EOF */
-   while( file_read( inFile, string, &iCharCount ) ) {
+   while( file_read(inFile, string, &iCharCount) ) {
       int iWord = 0;
 
-      char ** tokens = hb_tokensplit( string, nByte, iCharCount, &iWord );
+      char ** tokens = hb_tokensplit(string, nByte, iCharCount, &iWord);
 
       nWordCount += iWord;
 
@@ -475,7 +475,7 @@ HB_FUNC( FWORDCOUNT )
 
    /* clean up */
    hb_xfree(string);
-   fclose( inFile );
+   fclose(inFile);
 }
 
 HB_FUNC( FLINECOUNT )
@@ -497,7 +497,7 @@ HB_FUNC( FLINECOUNT )
    }
 
    /* open file for read */
-   inFile = hb_fopen( hb_itemGetCPtr(pSrc), "r" );
+   inFile = hb_fopen(hb_itemGetCPtr(pSrc), "r");
 
    /* return 0 on failure */
    if( !inFile ) {
@@ -506,7 +506,7 @@ HB_FUNC( FLINECOUNT )
    }
 
    /* read the file until EOF */
-   while( ( ch = fgetc( inFile ) ) != EOF ) {
+   while( ( ch = fgetc(inFile) ) != EOF ) {
       if( ch == '\n' ) {
          nLineCount++;
       }   
@@ -516,7 +516,7 @@ HB_FUNC( FLINECOUNT )
    hb_retns(nLineCount);
 
    /* clean up */
-   fclose( inFile );
+   fclose(inFile);
 }
 
 HB_FUNC( FCHARCOUNT )
@@ -538,7 +538,7 @@ HB_FUNC( FCHARCOUNT )
    }
 
    /* open file for read */
-   inFile = hb_fopen( hb_itemGetCPtr(pSrc), "r" );
+   inFile = hb_fopen(hb_itemGetCPtr(pSrc), "r");
 
    /* return 0 on failure */
    if( !inFile ) {
@@ -547,7 +547,7 @@ HB_FUNC( FCHARCOUNT )
    }
 
    /* read the file until EOF */
-   while( ( ch = fgetc( inFile ) ) != EOF ) {
+   while( ( ch = fgetc(inFile) ) != EOF ) {
       switch( ch ) {
          case '\n':
          case '\r':
@@ -563,7 +563,7 @@ HB_FUNC( FCHARCOUNT )
    hb_retns(nResult);
 
    /* clean up */
-   fclose( inFile );
+   fclose(inFile);
 }
 
 HB_FUNC( FPARSELINE )
@@ -578,10 +578,10 @@ HB_FUNC( FPARSELINE )
    if( szText ) {
       const char * szDelim = hb_parc(2);
       int          iWords  = 0;
-      hb_ParseLine( pArray, szText, szDelim ? static_cast<unsigned char>(*szDelim) : ',', &iWords);
+      hb_ParseLine(pArray, szText, szDelim ? static_cast<unsigned char>(*szDelim) : ',', &iWords);
       nWords = iWords;
    }
 
    hb_itemReturnRelease(pArray);
-   hb_storns( nWords, 3 );
+   hb_storns(nWords, 3);
 }

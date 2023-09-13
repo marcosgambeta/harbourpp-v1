@@ -49,7 +49,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
-/* ASplice( <aArray> [, <nPos>] [, <nCount>] [, <xVal1>] [, ...] [, <xValN>] ) --> <aDeleted>
+/* ASplice(<aArray> [, <nPos>] [, <nCount>] [, <xVal1>] [, ...] [, <xValN>]) --> <aDeleted>
  * Removes elements and return them as array, optionally add items
  */
 HB_FUNC( ASPLICE )
@@ -76,7 +76,7 @@ HB_FUNC( ASPLICE )
          nRemove = hb_parns(3);
       } else {
          nRemove = ( hb_pcount() > 3 && nStart == nLen + 1 ) ? 0 : 1;
-      }   
+      }
 
       if( nStart == 0 || nStart > nLen ) {
          if( !( nStart == nLen + 1 && hb_pcount() > 3 && nRemove == 0 ) ) {
@@ -87,7 +87,7 @@ HB_FUNC( ASPLICE )
 
       if( nStart + nRemove - 1 > nLen ) {
          nRemove = nLen - nStart + 1;
-      }   
+      }
 
       hb_arrayNew(pReturn, nRemove);
 
@@ -96,7 +96,7 @@ HB_FUNC( ASPLICE )
 
       for( nIndex = nStart + 1; ( nIndex - nStart ) <= nRemove; nIndex++ ) {
          hb_itemMove(hb_arrayGetItemPtr(pReturn, nIndex - nStart), hb_arrayGetItemPtr(pArray, nIndex));
-      }   
+      }
 
       if( hb_pcount() > 3 ) {
          int nNew = 0;
@@ -106,22 +106,22 @@ HB_FUNC( ASPLICE )
             HB_SIZE nMore  = nAdd - nRemove;
             HB_SIZE nShift = nLen - ( nStart + nRemove );
 
-            hb_arraySize( pArray, nLen + nMore );
+            hb_arraySize(pArray, nLen + nMore);
 
             /* Shift right BEFORE adding, so that new items will not override existing values. */
             for( nIndex = nLen; nIndex && --nShift; --nIndex ) {
                hb_itemMove(hb_arrayGetItemPtr(pArray, nIndex + nMore), hb_arrayGetItemPtr(pArray, nIndex));
-            }   
+            }
 
             /* Now insert new values into emptied space. */
             for( nIndex = nStart; ++nNew <= nAdd; nIndex++ ) {
                hb_itemMove(hb_arrayGetItemPtr(pArray, nIndex + 1), hb_param(3 + nNew, Harbour::Item::ANY));
-            }   
+            }
          } else {
             /* Insert over the space emptied by removed items */
             for( nIndex = nStart; ++nNew <= nAdd; nIndex++ ) {
                hb_itemMove(hb_arrayGetItemPtr(pArray, nIndex + 1), hb_param(3 + nNew, Harbour::Item::ANY));
-            }   
+            }
 
             if( nRemove > static_cast<HB_SIZE>(nAdd) ) {
                nRemove -= nAdd;
@@ -129,15 +129,15 @@ HB_FUNC( ASPLICE )
                /* Shift left to compact the emptied hole. */
                for( nIndex = nStart + nAdd + 1; nIndex + nRemove <= nLen; nIndex++ ) {
                   hb_itemMove(hb_arrayGetItemPtr(pArray, nIndex), hb_arrayGetItemPtr(pArray, nIndex + nRemove));
-               }   
+               }
             }
          }
       } else {
          for( nIndex = nStart + 1; nIndex + nRemove <= nLen; nIndex++ ) {
             hb_itemMove(hb_arrayGetItemPtr(pArray, nIndex), hb_arrayGetItemPtr(pArray, nIndex + nRemove));
-         }   
+         }
 
-         hb_arraySize( pArray, nLen - nRemove );
+         hb_arraySize(pArray, nLen - nRemove);
       }
    }
 }
@@ -146,7 +146,7 @@ HB_FUNC( ASPLICE )
 /* Synonym of ASplice() Xbase++ compatibility (extended with optional replacemenet values) */
 HB_FUNC_TRANSLATE( AREMOVE, ASPLICE )
 
-/* AMerge( <aTarget>, <aSource> [, <nPos>] ) --> aTarget */
+/* AMerge(<aTarget>, <aSource> [, <nPos>]) --> aTarget */
 HB_FUNC( AMERGE )
 {
    PHB_ITEM pArray1 = hb_param(1, Harbour::Item::ARRAY);
@@ -157,7 +157,7 @@ HB_FUNC( AMERGE )
       HB_SIZE nAdd = hb_arrayLen(pArray2);
       HB_SIZE nIndex, nStart;
 
-      hb_arraySize( pArray1, nLen + nAdd );
+      hb_arraySize(pArray1, nLen + nAdd);
 
       if( HB_ISNUM(3) ) {
          nStart = hb_parns(3) - 1;
@@ -197,9 +197,9 @@ HB_FUNC( XHB_ADEL )
          nPos += hb_arrayLen(pArray) + 1;
       }
 
-      if( hb_arrayDel( pArray, nPos ) ) {
+      if( hb_arrayDel(pArray, nPos) ) {
          if( hb_parl(3) ) {
-            hb_arraySize( pArray, hb_arrayLen(pArray) - 1 );
+            hb_arraySize(pArray, hb_arrayLen(pArray) - 1);
          }   
       }
 
@@ -222,7 +222,7 @@ HB_FUNC( XHB_AINS )
             nPos += nLen + 1;
          }
          if( nPos >= 1 && static_cast<HB_SIZE>(nPos) <= nLen ) {
-            hb_arraySize( pArray, nLen );
+            hb_arraySize(pArray, nLen);
          }
       } else if( nPos == 0 ) {
          nPos = 1;
@@ -230,7 +230,7 @@ HB_FUNC( XHB_AINS )
          nPos += hb_arrayLen(pArray) + 1;
       }
 
-      if( hb_arrayIns( pArray, nPos ) ) {
+      if( hb_arrayIns(pArray, nPos) ) {
          if( !HB_ISNIL(3) ) {
             hb_arraySet(pArray, nPos, hb_param(3, Harbour::Item::ANY));
          }

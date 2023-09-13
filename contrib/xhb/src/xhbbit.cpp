@@ -52,7 +52,7 @@
 #define XHB_OR    1
 #define XHB_XOR   2
 
-static void s_xhb_bitOper( int iOper )
+static void s_xhb_bitOper(int iOper)
 {
    PHB_ITEM pItem1 = hb_param(1, Harbour::Item::ANY),
             pItem2 = hb_param(2, Harbour::Item::ANY);
@@ -180,15 +180,15 @@ static void s_xhb_bitOper( int iOper )
 
 HB_FUNC( XHB_BITAND )
 {
-   s_xhb_bitOper( XHB_AND );
+   s_xhb_bitOper(XHB_AND);
 }
 
 HB_FUNC( XHB_BITOR )
 {
-   s_xhb_bitOper( XHB_OR );
+   s_xhb_bitOper(XHB_OR);
 }
 
 HB_FUNC( XHB_BITXOR )
 {
-   s_xhb_bitOper( XHB_XOR );
+   s_xhb_bitOper(XHB_XOR);
 }

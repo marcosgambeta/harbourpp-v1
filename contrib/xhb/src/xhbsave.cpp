@@ -47,7 +47,7 @@
 #include "hbapi.hpp"
 #include "hbapigt.hpp"
 
-static void hb_getScreenRange( int * piMin, int * piMax, HB_BOOL fNoCheck, HB_BOOL fVertical )
+static void hb_getScreenRange(int * piMin, int * piMax, HB_BOOL fNoCheck, HB_BOOL fVertical)
 {
    int iFrom, iTo, iMax;
 
@@ -89,13 +89,13 @@ HB_FUNC( XHB_SAVESCREEN )
    void *  pBuffer;
    HB_BOOL fNoCheck = hb_parl(5);
 
-   hb_getScreenRange( &iTop, &iBottom, fNoCheck, true );
-   hb_getScreenRange( &iLeft, &iRight, fNoCheck, false );
+   hb_getScreenRange(&iTop, &iBottom, fNoCheck, true);
+   hb_getScreenRange(&iLeft, &iRight, fNoCheck, false);
 
-   hb_gtRectSize( iTop, iLeft, iBottom, iRight, &nSize );
+   hb_gtRectSize(iTop, iLeft, iBottom, iRight, &nSize);
    pBuffer = hb_xgrab(nSize + 1);
 
-   hb_gtSave( iTop, iLeft, iBottom, iRight, pBuffer );
+   hb_gtSave(iTop, iLeft, iBottom, iRight, pBuffer);
    hb_retclen_buffer(static_cast<char*>(pBuffer), nSize);
 }
 
@@ -105,9 +105,9 @@ HB_FUNC( XHB_RESTSCREEN )
       int     iTop, iLeft, iBottom, iRight;
       HB_BOOL fNoCheck = hb_parl(6);
 
-      hb_getScreenRange( &iTop, &iBottom, fNoCheck, true );
-      hb_getScreenRange( &iLeft, &iRight, fNoCheck, false );
+      hb_getScreenRange(&iTop, &iBottom, fNoCheck, true);
+      hb_getScreenRange(&iLeft, &iRight, fNoCheck, false);
 
-      hb_gtRest( iTop, iLeft, iBottom, iRight, hb_parc(5) );
+      hb_gtRest(iTop, iLeft, iBottom, iRight, hb_parc(5));
    }
 }

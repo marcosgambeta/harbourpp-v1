@@ -76,9 +76,9 @@ FUNCTION OleDefaultArg()
 #define EG_OLEEXCEPTION 1001
 #define DISPID_VALUE    0
 
-STATIC s_bBreak := {| oError | Break( oError ) }
+STATIC s_bBreak := {|oError|Break(oError)}
 
-STATIC FUNCTION s_oleOpError( cOperator, ... )
+STATIC FUNCTION s_oleOpError(cOperator, ...)
 
    STATIC sc_hErrCode := { ;
       "==" => 1070, ;
@@ -95,7 +95,7 @@ STATIC FUNCTION s_oleOpError( cOperator, ... )
    LOCAL oErr
 
    oErr := ErrorNew()
-   oErr:Args          := { ... }
+   oErr:Args          := {...}
    oErr:CanDefault    := .F.
    oErr:CanRetry      := .F.
    oErr:CanSubstitute := .T.
@@ -103,17 +103,17 @@ STATIC FUNCTION s_oleOpError( cOperator, ... )
    oErr:GenCode       := EG_ARG
    oErr:Operation     := cOperator
    oErr:Severity      := ES_ERROR
-   oErr:SubCode       := sc_hErrCode[ cOperator ]
+   oErr:SubCode       := sc_hErrCode[cOperator]
    oErr:SubSystem     := "BASE"
 
    RETURN oErr
 
-STATIC FUNCTION s_oleError( nGenCode, cDescript )
+STATIC FUNCTION s_oleError(nGenCode, cDescript)
 
    LOCAL oErr
 
    oErr := ErrorNew()
-   oErr:Args          := hb_AParams( 1 )
+   oErr:Args          := hb_AParams(1)
    oErr:CanDefault    := .F.
    oErr:CanRetry      := .F.
    oErr:CanSubstitute := .T.
@@ -124,7 +124,7 @@ STATIC FUNCTION s_oleError( nGenCode, cDescript )
       oErr:GenCode       := EG_OLEEXCEPTION
       oErr:Description   := win_oleErrorText()
    ENDIF
-   oErr:Operation     := ProcName( 1 )
+   oErr:Operation     := ProcName(1)
    oErr:Severity      := ES_ERROR
    oErr:SubCode       := -1
    oErr:SubSystem     := "TOleAuto"
@@ -136,9 +136,9 @@ CREATE CLASS TOleAuto FROM win_oleAuto
 
    VAR cClassName
 
-   METHOD hObj( xOle ) SETGET
-   METHOD New( xOle, cClass, cLicense )
-   METHOD GetActiveObject( cClass )
+   METHOD hObj(xOle) SETGET
+   METHOD New(xOle, cClass, cLicense)
+   METHOD GetActiveObject(cClass)
 
    METHOD Invoke()      EXTERN __oleInvokeMethod()
    MESSAGE CallMethod   EXTERN __oleInvokeMethod()
@@ -150,78 +150,77 @@ CREATE CLASS TOleAuto FROM win_oleAuto
    MESSAGE GetProperty  EXTERN __oleInvokeGet()
 
    METHOD OleValue()
-   METHOD _OleValue( xValue )
+   METHOD _OleValue(xValue)
 
-   METHOD OleValueExactEqual( xArg )      OPERATOR "=="
-   METHOD OleValueEqual( xArg )           OPERATOR "="
-   METHOD OleValueNotEqual( xArg )        OPERATOR "!="
-   METHOD OleValuePlus( xArg )            OPERATOR "+"
-   METHOD OleValueMinus( xArg )           OPERATOR "-"
-   METHOD OleValueMultiply( xArg )        OPERATOR "*"
-   METHOD OleValueDivide( xArg )          OPERATOR "/"
-   METHOD OleValueModulus( xArg )         OPERATOR "%"
-   METHOD OleValuePower( xArg )           OPERATOR "^"
-   METHOD OleValueInc()                   OPERATOR "++"
-   METHOD OleValueDec()                   OPERATOR "--"
+   METHOD OleValueExactEqual(xArg)      OPERATOR "=="
+   METHOD OleValueEqual(xArg)           OPERATOR "="
+   METHOD OleValueNotEqual(xArg)        OPERATOR "!="
+   METHOD OleValuePlus(xArg)            OPERATOR "+"
+   METHOD OleValueMinus(xArg)           OPERATOR "-"
+   METHOD OleValueMultiply(xArg)        OPERATOR "*"
+   METHOD OleValueDivide(xArg)          OPERATOR "/"
+   METHOD OleValueModulus(xArg)         OPERATOR "%"
+   METHOD OleValuePower(xArg)           OPERATOR "^"
+   METHOD OleValueInc()                 OPERATOR "++"
+   METHOD OleValueDec()                 OPERATOR "--"
 
 ENDCLASS
 
-METHOD hObj( xOle ) CLASS TOleAuto
+METHOD hObj(xOle) CLASS TOleAuto
 
    IF xOle != NIL
-      IF HB_ISNUMERIC( xOle )
-         xOle := __olePDisp( xOle )
+      IF HB_ISNUMERIC(xOle)
+         xOle := __olePDisp(xOle)
       ENDIF
-      IF __oleIsDisp( xOle )
+      IF __oleIsDisp(xOle)
          ::__hObj := xOle
       ENDIF
    ENDIF
 
    RETURN ::__hObj
 
-METHOD New( xOle, cClass, cLicense ) CLASS TOleAuto
+METHOD New(xOle, cClass, cLicense) CLASS TOleAuto
 
    LOCAL hOle
 
-   IF HB_ISSTRING( xOle )
-      IF Empty( hOle := __oleCreateObject( xOle,, cLicense ) )
-         RETURN Throw( s_oleError() )
+   IF HB_ISSTRING(xOle)
+      IF Empty(hOle := __oleCreateObject(xOle, , cLicense))
+         RETURN Throw(s_oleError())
       ENDIF
       ::__hObj := hOle
       ::cClassName := xOle
    ELSE
       ::hObj := xOle
       IF ::__hObj == NIL
-         RETURN Throw( s_oleError( 0, "Invalid argument to contructor!" ) )
-      ELSEIF HB_ISSTRING( cClass )
+         RETURN Throw(s_oleError(0, "Invalid argument to contructor!"))
+      ELSEIF HB_ISSTRING(cClass)
          ::cClassName := cClass
       ELSE
-         ::cClassName := hb_ntos( win_P2N( ::__hObj ) )
+         ::cClassName := hb_ntos(win_P2N(::__hObj))
       ENDIF
    ENDIF
 
    RETURN Self
 
-METHOD GetActiveObject( cClass ) CLASS TOleAuto
+METHOD GetActiveObject(cClass) CLASS TOleAuto
 
-   IF HB_ISSTRING( cClass )
-      IF Empty( ::__hObj := __oleGetActiveObject( cClass ) )
-         RETURN Throw( s_oleError() )
+   IF HB_ISSTRING(cClass)
+      IF Empty(::__hObj := __oleGetActiveObject(cClass))
+         RETURN Throw(s_oleError())
       ENDIF
       ::cClassName := cClass
    ELSE
-      wapi_MessageBox( , "Invalid parameter type to constructor TOleAuto():GetActiveObject()!", ;
-         "OLE Interface", )
+      wapi_MessageBox(, "Invalid parameter type to constructor TOleAuto():GetActiveObject()!", "OLE Interface",)
       ::__hObj := NIL
    ENDIF
 
    RETURN Self
 
 METHOD OleValue() CLASS TOleAuto
-   RETURN __oleInvokeGet( ::__hObj, DISPID_VALUE )
+   RETURN __oleInvokeGet(::__hObj, DISPID_VALUE)
 
-METHOD _OleValue( xValue ) CLASS TOleAuto
-   RETURN __oleInvokePut( ::__hObj, DISPID_VALUE, xValue )
+METHOD _OleValue(xValue) CLASS TOleAuto
+   RETURN __oleInvokePut(::__hObj, DISPID_VALUE, xValue)
 
 #xcommand OLE OPERATOR <op> METHOD <!mth!> [WITH <!arg!>] IS <exp> => ;
    METHOD <mth>( <arg> ) CLASS TOleAuto                     ;;
@@ -229,7 +228,7 @@ METHOD _OleValue( xValue ) CLASS TOleAuto
    BEGIN SEQUENCE WITH s_bBreak                             ;;
       xRet := ( <exp> )                                     ;;
    RECOVER                                                  ;;
-      RETURN Throw( s_oleOpError( <op>, Self [, <arg>] ) )  ;;
+      RETURN Throw(s_oleOpError(<op>, Self [, <arg>]))      ;;
    END SEQUENCE                                             ;;
    RETURN xRet
 
@@ -245,16 +244,16 @@ OLE OPERATOR "^" METHOD OleValuePower WITH xArg IS ::OleValue ^ xArg
 OLE OPERATOR "++" METHOD OleValueInc IS ++::OleValue
 OLE OPERATOR "--" METHOD OleValueDec IS --::OleValue
 
-FUNCTION CreateObject( xOle, cLicense )
-   RETURN TOleAuto():New( xOle,, cLicense )
+FUNCTION CreateObject(xOle, cLicense)
+   RETURN TOleAuto():New(xOle, , cLicense)
 
-FUNCTION GetActiveObject( cString )
-   RETURN TOleAuto():GetActiveObject( cString )
+FUNCTION GetActiveObject(cString)
+   RETURN TOleAuto():GetActiveObject(cString)
 
-FUNCTION CreateOleObject( ... )
-   RETURN __oleCreateObject( ... )
+FUNCTION CreateOleObject(...)
+   RETURN __oleCreateObject(...)
 
 FUNCTION OleDefaultArg()
-   RETURN __oleVariantNew( WIN_VT_ERROR, WIN_DISP_E_PARAMNOTFOUND )
+   RETURN __oleVariantNew(WIN_VT_ERROR, WIN_DISP_E_PARAMNOTFOUND)
 
 #endif /* __PLATFORM__WINDOWS */

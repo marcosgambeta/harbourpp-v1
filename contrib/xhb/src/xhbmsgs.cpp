@@ -57,12 +57,12 @@ HB_FUNC( XHB_HASHERROR )
 
    if( iPCount == 1 ) {
       if( szMessage[0] == '_' ) { /* ASSIGN */
-         PHB_ITEM pIndex = hb_itemPutCConst( hb_stackAllocItem(), szMessage + 1 );
+         PHB_ITEM pIndex = hb_itemPutCConst(hb_stackAllocItem(), szMessage + 1);
          PHB_ITEM pDest  = hb_hashGetItemPtr(hb_stackSelfItem(), pIndex, HB_HASH_AUTOADD_ASSIGN);
          hb_stackPop();
          if( pDest ) {
             PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY);
-            hb_itemCopyFromRef( pDest, pValue );
+            hb_itemCopyFromRef(pDest, pValue);
             hb_itemReturn(pValue);
             return;
          }
@@ -91,7 +91,7 @@ HB_FUNC( XHB_INCLUDE )
 
    if( HB_IS_ARRAY(pSelf) ) {
       hb_retl(hb_arrayScan(pSelf, pKey, nullptr, nullptr, true) != 0);
-   } else if( HB_IS_HASH(pSelf) && ( HB_IS_HASHKEY(pKey) || hb_hashLen( pKey ) == 1 ) ) {
+   } else if( HB_IS_HASH(pSelf) && ( HB_IS_HASHKEY(pKey) || hb_hashLen(pKey) == 1 ) ) {
       hb_retl(hb_hashScan(pSelf, pKey, nullptr));
    } else {
       PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1109, nullptr, "$", 2, pKey, pSelf);
@@ -259,7 +259,7 @@ HB_FUNC( XHB_GREATEREQ )
  * in xHarbour compatibility mode where negative indexes are used to access
  * data from tail
  */
-#define XHB_IS_VALID_INDEX( idx, max )  ( ( static_cast<HB_ISIZ>(idx) < 0 ? ( idx ) += ( max ) + 1 : ( idx ) ) > 0 && static_cast<HB_SIZE>(idx) <= ( max ) )
+#define XHB_IS_VALID_INDEX(idx, max)  ((static_cast<HB_ISIZ>(idx) < 0 ? (idx) += (max) + 1 : (idx)) > 0 && static_cast<HB_SIZE>(idx) <= (max))
 
 HB_FUNC( XHB_INDEX )
 {
@@ -269,23 +269,23 @@ HB_FUNC( XHB_INDEX )
    if( hb_pcount() == 2 ) { /* ASSIGN */
       PHB_ITEM pValue = hb_param(2, Harbour::Item::ANY);
       if( HB_IS_NUMERIC(pIndex) ) {
-         HB_SIZE nIndex = hb_itemGetNS( pIndex );
+         HB_SIZE nIndex = hb_itemGetNS(pIndex);
          if( HB_IS_ARRAY(pSelf) ) {
             HB_SIZE nLen = hb_arrayLen(pSelf);
-            if( XHB_IS_VALID_INDEX( nIndex, nLen ) ) {
-               hb_itemMoveRef( hb_arrayGetItemPtr(pSelf, nIndex), pValue );
+            if( XHB_IS_VALID_INDEX(nIndex, nLen) ) {
+               hb_itemMoveRef(hb_arrayGetItemPtr(pSelf, nIndex), pValue);
             } else {
                hb_errRT_BASE(EG_BOUND, 1133, nullptr, hb_langDGetErrorDesc(EG_ARRASSIGN), 1, pIndex);
-            }   
+            }
          } else if( HB_IS_STRING(pSelf) ) {
             HB_SIZE nLen = hb_itemGetCLen(pSelf);
-            if( XHB_IS_VALID_INDEX( nIndex, nLen ) ) {
+            if( XHB_IS_VALID_INDEX(nIndex, nLen) ) {
                char cValue = HB_IS_STRING(pValue) ? hb_itemGetCPtr(pValue)[0] : static_cast<char>(hb_itemGetNI(pValue));
                if( nLen == 1 ) {
-                  hb_itemPutCL( pSelf, &cValue, 1 );
+                  hb_itemPutCL(pSelf, &cValue, 1);
                } else {
                   char * pszText;
-                  if( hb_itemGetWriteCL( pSelf, &pszText, &nLen ) && nIndex > 0 && nIndex <= nLen ) {
+                  if( hb_itemGetWriteCL(pSelf, &pszText, &nLen) && nIndex > 0 && nIndex <= nLen ) {
                      pszText[nIndex - 1] = cValue;
                   }   
                }
@@ -302,17 +302,17 @@ HB_FUNC( XHB_INDEX )
       hb_itemReturn(pSelf);
    } else { /* ACCESS */
       if( HB_IS_NUMERIC(pIndex) ) {
-         HB_SIZE nIndex = hb_itemGetNS( pIndex );
+         HB_SIZE nIndex = hb_itemGetNS(pIndex);
          if( HB_IS_ARRAY(pSelf) ) {
             HB_SIZE nLen = hb_arrayLen(pSelf);
-            if( XHB_IS_VALID_INDEX( nIndex, nLen ) ) {
+            if( XHB_IS_VALID_INDEX(nIndex, nLen) ) {
                hb_itemReturn(hb_arrayGetItemPtr(pSelf, nIndex));
             } else {
                hb_errRT_BASE(EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc(EG_ARRACCESS), 2, pSelf, pIndex);
             }
          } else if( HB_IS_STRING(pSelf) ) {
             HB_SIZE nLen = hb_itemGetCLen(pSelf);
-            if( XHB_IS_VALID_INDEX( nIndex, nLen ) ) {
+            if( XHB_IS_VALID_INDEX(nIndex, nLen) ) {
                hb_retclen(hb_itemGetCPtr(pSelf) + nIndex - 1, 1);
             } else {
                hb_errRT_BASE(EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc(EG_ARRACCESS), 2, pSelf, pIndex);
@@ -337,15 +337,15 @@ HB_FUNC( XHB_PLUS )
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
       int      iDec;
-      double   dValue = hb_itemGetNDDec( pSelf, &iDec );
-      hb_retnlen( dValue + uc, 0, iDec  );
+      double   dValue = hb_itemGetNDDec(pSelf, &iDec);
+      hb_retnlen(dValue + uc, 0, iDec);
    } else if( HB_IS_STRING(pSelf) && hb_itemGetCLen(pSelf) == 1 && pValue && HB_IS_NUMERIC(pValue) ) {
       HB_UCHAR uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
       uc += static_cast<HB_UCHAR>(hb_itemGetNI(pValue));
       hb_retclen(reinterpret_cast<char*>(&uc), 1);
    } else if( HB_IS_HASH(pSelf) && HB_IS_HASH(pValue) ) {
-      PHB_ITEM pHash = hb_hashClone( pSelf );
-      hb_hashJoin( pHash, pValue, HB_HASH_UNION );
+      PHB_ITEM pHash = hb_hashClone(pSelf);
+      hb_hashJoin(pHash, pValue, HB_HASH_UNION);
       hb_itemReturnRelease(pHash);
    } else {
       PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1081, nullptr, "+", 2, pSelf, pValue);
@@ -363,15 +363,15 @@ HB_FUNC( XHB_MINUS )
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
       int      iDec;
-      double   dValue = hb_itemGetNDDec( pSelf, &iDec );
-      hb_retnlen( dValue - uc, 0, iDec  );
+      double   dValue = hb_itemGetNDDec(pSelf, &iDec);
+      hb_retnlen(dValue - uc, 0, iDec);
    } else if( HB_IS_STRING(pSelf) && hb_itemGetCLen(pSelf) == 1 && pValue && HB_IS_NUMERIC(pValue) ) {
       HB_UCHAR uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
       uc -= static_cast<HB_UCHAR>(hb_itemGetNI(pValue));
       hb_retclen(reinterpret_cast<char*>(&uc), 1);
    } else if( HB_IS_HASH(pSelf) && HB_IS_HASH(pValue) ) {
-      PHB_ITEM pHash = hb_hashClone( pSelf );
-      hb_hashRemove( pHash, pValue );
+      PHB_ITEM pHash = hb_hashClone(pSelf);
+      hb_hashRemove(pHash, pValue);
       hb_itemReturnRelease(pHash);
    } else {
       PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1082, nullptr, "-", 2, pSelf, pValue);
@@ -423,13 +423,13 @@ HB_FUNC( XHB_MULT )
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
       int      iDec;
-      double   dValue = hb_itemGetNDDec( pSelf, &iDec );
-      hb_retndlen( dValue * uc, 0, iDec );
+      double   dValue = hb_itemGetNDDec(pSelf, &iDec);
+      hb_retndlen(dValue * uc, 0, iDec);
    } else if( HB_IS_STRING(pSelf) && hb_itemGetCLen(pSelf) == 1 && pValue && HB_IS_NUMERIC(pValue) ) {
       HB_UCHAR uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]);
       int      iDec;
-      double   dValue = hb_itemGetNDDec( pValue, &iDec );
-      hb_retndlen( static_cast<double>(uc) * dValue, 0, iDec );
+      double   dValue = hb_itemGetNDDec(pValue, &iDec);
+      hb_retndlen(static_cast<double>(uc) * dValue, 0, iDec);
    } else if( HB_IS_STRING(pSelf) && hb_itemGetCLen(pSelf) == 1 && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc1 = static_cast<HB_UCHAR>(hb_itemGetCPtr(pSelf)[0]),
                uc2 = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
@@ -450,7 +450,7 @@ HB_FUNC( XHB_DIV )
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
       if( uc == 0 ) {
-         PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ZERODIV, 1340, nullptr, "/", 2, pSelf, pValue );
+         PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ZERODIV, 1340, nullptr, "/", 2, pSelf, pValue);
          if( pResult ) {
             hb_itemReturnRelease(pResult);
          }   
@@ -462,7 +462,7 @@ HB_FUNC( XHB_DIV )
       double   dDivisor = HB_IS_NUMERIC(pValue) ? hb_itemGetND(pValue) : static_cast<double>(static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]));
 
       if( dDivisor == 0 ) {
-         PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ZERODIV, 1340, nullptr, "/", 2, pSelf, pValue );
+         PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ZERODIV, 1340, nullptr, "/", 2, pSelf, pValue);
          if( pResult ) {
             hb_itemReturnRelease(pResult);
          }
@@ -485,7 +485,7 @@ HB_FUNC( XHB_MOD )
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
       if( uc == 0 ) {
-         PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ZERODIV, 1341, nullptr, "%", 2, pSelf, pValue );
+         PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ZERODIV, 1341, nullptr, "%", 2, pSelf, pValue);
          if( pResult ) {
             hb_itemReturnRelease(pResult);
          }
@@ -498,7 +498,7 @@ HB_FUNC( XHB_MOD )
                           static_cast<double>(static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]));
 
       if( dDivisor == 0 ) {
-         PHB_ITEM pResult = hb_errRT_BASE_Subst( EG_ZERODIV, 1341, nullptr, "%", 2, pSelf, pValue );
+         PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ZERODIV, 1341, nullptr, "%", 2, pSelf, pValue);
          if( pResult ) {
             hb_itemReturnRelease(pResult);
          }

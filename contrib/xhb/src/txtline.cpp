@@ -50,12 +50,12 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
-static void hb_readLine( const char * szText, HB_SIZE nTextLen, HB_SIZE nLineLen, HB_SIZE nTabLen, HB_BOOL bWrap, const char ** pTerm, HB_SIZE * pnTermSizes, HB_SIZE nTerms, HB_BOOL * pbFound, HB_BOOL * pbEOF, HB_ISIZ * pnEnd, HB_SIZE * pnEndOffset )
+static void hb_readLine(const char * szText, HB_SIZE nTextLen, HB_SIZE nLineLen, HB_SIZE nTabLen, HB_BOOL bWrap, const char ** pTerm, HB_SIZE * pnTermSizes, HB_SIZE nTerms, HB_BOOL * pbFound, HB_BOOL * pbEOF, HB_ISIZ * pnEnd, HB_SIZE * pnEndOffset)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_readLine(%p, %" HB_PFS "u, %" HB_PFS "u, %" HB_PFS "u, %d, %p, %p, %" HB_PFS "u, %p, %p, %p, %p)",
-             static_cast<const void*>(szText), nTextLen, nLineLen, nTabLen, bWrap, static_cast<const void*>(pTerm),
-             static_cast<void*>(pnTermSizes), nTerms, static_cast<void*>(pbFound), static_cast<void*>(pbEOF), static_cast<void*>(pnEnd), static_cast<void*>(pnEndOffset) ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_readLine(%p, %" HB_PFS "u, %" HB_PFS "u, %" HB_PFS "u, %d, %p, %p, %" HB_PFS "u, %p, %p, %p, %p)",
+            static_cast<const void*>(szText), nTextLen, nLineLen, nTabLen, bWrap, static_cast<const void*>(pTerm),
+            static_cast<void*>(pnTermSizes), nTerms, static_cast<void*>(pbFound), static_cast<void*>(pbEOF), static_cast<void*>(pnEnd), static_cast<void*>(pnEndOffset)));
 #endif
 
    HB_SIZE nPosTerm, nPosition;
@@ -149,7 +149,7 @@ static void hb_readLine( const char * szText, HB_SIZE nTextLen, HB_SIZE nLineLen
    }
 }
 
-static HB_ISIZ hb_tabexpand( const char * szString, char * szRet, HB_ISIZ nEnd, HB_SIZE nTabLen )
+static HB_ISIZ hb_tabexpand(const char * szString, char * szRet, HB_ISIZ nEnd, HB_SIZE nTabLen)
 {
    HB_ISIZ nPos, nSpAdded = 0;
 
@@ -188,12 +188,12 @@ HB_FUNC( HB_TABEXPAND )
       nSize = nStrLen + nTabCount * ( nTabLen - 1 );
       szRet = static_cast<char*>(hb_xgrab(nSize + 1));
       memset(szRet, ' ', nSize);
-      nStrLen = hb_tabexpand( szText, szRet, nStrLen, nTabLen );
+      nStrLen = hb_tabexpand(szText, szRet, nStrLen, nTabLen);
       hb_retclen_buffer(szRet, nStrLen);
    }
 }
 
-/* hb_ReadLine( <cText>, [<aTerminators | cTerminator>], <nLineLen>, <nTabLen>, <lWrap>, [<nStartOffset>], @nOffSet, @nEnd, @lFound, @lEOF ) */
+/* hb_ReadLine(<cText>, [<aTerminators | cTerminator>], <nLineLen>, <nTabLen>, <lWrap>, [<nStartOffset>], @nOffSet, @nEnd, @lFound, @lEOF) */
 HB_FUNC( HB_READLINE )
 {
    PHB_ITEM      pTerm1;
@@ -221,7 +221,7 @@ HB_FUNC( HB_READLINE )
    nStartOffset = hb_parns(6);
 
    if( !( HB_ISARRAY(2) || HB_ISCHAR(2) ) ) {
-      if( !hb_setGetCPtr( HB_SET_EOL ) ) {
+      if( !hb_setGetCPtr(HB_SET_EOL) ) {
          PHB_ITEM pEOL = hb_itemNew(nullptr);
          hb_itemPutC(pEOL, hb_conNewLine());
          hb_setSetItem(HB_SET_EOL, pEOL);
@@ -260,12 +260,12 @@ HB_FUNC( HB_READLINE )
 
    nStartOffset--;
 
-   hb_readLine( szText + nStartOffset, nTextLen - nStartOffset, nLineSize, nTabLen, bWrap, pTerm, pnTermSizes, nTerms, &bFound, &bEOF, &nEnd, &nEndOffset );
+   hb_readLine(szText + nStartOffset, nTextLen - nStartOffset, nLineSize, nTabLen, bWrap, pTerm, pnTermSizes, nTerms, &bFound, &bEOF, &nEnd, &nEndOffset);
 
    hb_storl(bFound, 7);
    hb_storl(bEOF, 8);
-   hb_storns( nEnd + nStartOffset + 1, 9 );
-   hb_storns( nEndOffset + nStartOffset + 1, 10 );
+   hb_storns(nEnd + nStartOffset + 1, 9);
+   hb_storns(nEndOffset + nStartOffset + 1, 10);
 
    if( bAlloc_Term1 ) {
       hb_itemRelease(pTerm1);

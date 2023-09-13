@@ -52,12 +52,12 @@
 THREAD STATIC t_nLastError := HB_ZLIB_RES_OK
 
 /* COMPRESSOR WRAPPER
- * hb_Compress(               cSource [,nSourceLen ] ) --> cDest
- * hb_Compress( nComprFactor, cSource [,nSourceLen ] ) --> cDest
- * hb_Compress(               cSource, nSourceLen, @cDest, @nDestLen ) --> nError
- * hb_Compress( nComprFactor, cSource, nSourceLen, @cDest, @nDestLen ) --> nError
+ * hb_Compress(              cSource [,nSourceLen ]) --> cDest
+ * hb_Compress(nComprFactor, cSource [,nSourceLen ]) --> cDest
+ * hb_Compress(              cSource, nSourceLen, @cDest, @nDestLen) --> nError
+ * hb_Compress(nComprFactor, cSource, nSourceLen, @cDest, @nDestLen) --> nError
  */
-FUNCTION hb_Compress( xPar1, xPar2, xPar3, xPar4, xPar5 )
+FUNCTION hb_Compress(xPar1, xPar2, xPar3, xPar4, xPar5)
 
    LOCAL nComprFactor
    LOCAL cSource
@@ -68,7 +68,7 @@ FUNCTION hb_Compress( xPar1, xPar2, xPar3, xPar4, xPar5 )
 
    LOCAL oError
 
-   IF HB_ISNUMERIC( xPar1 )
+   IF HB_ISNUMERIC(xPar1)
       nComprFactor := xPar1
       cSource      := xPar2
       nSourceLen   := xPar3
@@ -82,52 +82,51 @@ FUNCTION hb_Compress( xPar1, xPar2, xPar3, xPar4, xPar5 )
       lReturnByRef := PCount() >= 3
    ENDIF
 
-   IF ! HB_ISSTRING( cSource )
+   IF !HB_ISSTRING(cSource)
       oError := ErrorNew()
 
       oError:severity    := ES_ERROR
       oError:genCode     := EG_ARG
       oError:subSystem   := "BASE"
       oError:subCode     := 3012
-      oError:args        := { cSource }
+      oError:args        := {cSource}
 
-      Eval( ErrorBlock(), oError )
+      Eval(ErrorBlock(), oError)
       RETURN NIL
    ENDIF
 
-   IF ! HB_ISNUMERIC( nDestLen )
+   IF !HB_ISNUMERIC(nDestLen)
       nDestLen := NIL
    ENDIF
 
-   IF HB_ISNUMERIC( nSourceLen ) .AND. nSourceLen >= 0 .AND. nSourceLen < Len( cSource )
-      cSource := Left( cSource, nSourceLen )
+   IF HB_ISNUMERIC(nSourceLen) .AND. nSourceLen >= 0 .AND. nSourceLen < Len(cSource)
+      cSource := Left(cSource, nSourceLen)
    ENDIF
 
    IF lReturnByRef
-      IF HB_ISNUMERIC( xPar1 )
-         xPar4 := hb_ZCompress( cSource, nDestLen, @t_nLastError, nComprFactor )
-         hb_default( @xPar4, "" )
-         xPar5 := Len( xPar4 )
+      IF HB_ISNUMERIC(xPar1)
+         xPar4 := hb_ZCompress(cSource, nDestLen, @t_nLastError, nComprFactor)
+         hb_default(@xPar4, "")
+         xPar5 := Len(xPar4)
       ELSE
-         xPar3 := hb_ZCompress( cSource, nDestLen, @t_nLastError, nComprFactor )
-         hb_default( @xPar3, "" )
-         xPar4 := Len( xPar3 )
+         xPar3 := hb_ZCompress(cSource, nDestLen, @t_nLastError, nComprFactor)
+         hb_default(@xPar3, "")
+         xPar4 := Len(xPar3)
       ENDIF
       RETURN t_nLastError
    ENDIF
 
-   RETURN hb_ZCompress( cSource, nDestLen, @t_nLastError, nComprFactor )
+   RETURN hb_ZCompress(cSource, nDestLen, @t_nLastError, nComprFactor)
 
 /* DECOMPRESSOR WRAPPER
- * hb_Uncompress( nDestLen, cSource [, nSourceLen ] ) --> cDest
- * hb_Uncompress( nDestLen, cSource, nSourceLen, @cDest ) --> nError
+ * hb_Uncompress(nDestLen, cSource [, nSourceLen ]) --> cDest
+ * hb_Uncompress(nDestLen, cSource, nSourceLen, @cDest) --> nError
  */
-FUNCTION hb_Uncompress( nDestLen, cSource, nSourceLen, /* @ */ cDest )
+FUNCTION hb_Uncompress(nDestLen, cSource, nSourceLen, /* @ */ cDest)
 
    LOCAL oError
 
-   IF ! HB_ISNUMERIC( nDestLen ) .OR. ;
-      ! HB_ISSTRING( cSource )
+   IF !HB_ISNUMERIC(nDestLen) .OR. !HB_ISSTRING(cSource)
 
       oError := ErrorNew()
 
@@ -135,42 +134,42 @@ FUNCTION hb_Uncompress( nDestLen, cSource, nSourceLen, /* @ */ cDest )
       oError:genCode     := EG_ARG
       oError:subSystem   := "BASE"
       oError:subCode     := 3012
-      oError:args        := { nDestLen }
+      oError:args        := {nDestLen}
 
-      Eval( ErrorBlock(), oError )
+      Eval(ErrorBlock(), oError)
       RETURN NIL
    ENDIF
 
-   IF HB_ISNUMERIC( nSourceLen ) .AND. nSourceLen >= 0 .AND. nSourceLen < Len( cSource )
-      cSource := Left( cSource, nSourceLen )
+   IF HB_ISNUMERIC(nSourceLen) .AND. nSourceLen >= 0 .AND. nSourceLen < Len(cSource)
+      cSource := Left(cSource, nSourceLen)
    ENDIF
 
    IF PCount() >= 4
-      cDest := hb_ZUncompress( cSource, nDestLen, @t_nLastError )
+      cDest := hb_ZUncompress(cSource, nDestLen, @t_nLastError)
       RETURN t_nLastError
    ENDIF
 
-   RETURN hb_ZUncompress( cSource, nDestLen, @t_nLastError )
+   RETURN hb_ZUncompress(cSource, nDestLen, @t_nLastError)
 
 /* hb_CompressError() --> nError */
 FUNCTION hb_CompressError()
    RETURN t_nLastError
 
-/* hb_CompressErrorDesc( nErrorCode ) --> cDesc */
-FUNCTION hb_CompressErrorDesc( nError )
-   RETURN hb_ZError( nError )
+/* hb_CompressErrorDesc(nErrorCode) --> cDesc */
+FUNCTION hb_CompressErrorDesc(nError)
+   RETURN hb_ZError(nError)
 
-/* hb_CompressBufLen( nSrcLen ) --> nDestLen */
-FUNCTION hb_CompressBufLen( nSrcLen )
+/* hb_CompressBufLen(nSrcLen) --> nDestLen */
+FUNCTION hb_CompressBufLen(nSrcLen)
 
    LOCAL nRet
 
-   hb_default( @nSrcLen, 0 )
+   hb_default(@nSrcLen, 0)
 
    nRet := nSrcLen
    nRet += nRet / 100 * 15 + 12
 
-   IF ( nSrcLen % 100 ) != 0
+   IF (nSrcLen % 100) != 0
       nRet += 15
    ENDIF
 

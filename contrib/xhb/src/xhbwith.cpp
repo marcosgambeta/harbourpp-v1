@@ -55,7 +55,7 @@ static PHB_ITEM hb_vmWithObjectItem(HB_ISIZ nLevel)
    HB_ISIZ nOffset = hb_stackWithObjectOffset();
 
    while( nOffset && nLevel > 0 ) {
-      HB_ISIZ * pnOffset = ( HB_ISIZ * ) hb_itemGetPtr( hb_stackItem(nOffset + 1) );
+      HB_ISIZ * pnOffset = ( HB_ISIZ * ) hb_itemGetPtr(hb_stackItem(nOffset + 1));
       if( !pnOffset ) {
          break;
       }
@@ -71,7 +71,7 @@ static HB_ISIZ hb_vmWithObjectCount(void)
    HB_ISIZ nOffset = hb_stackWithObjectOffset(), nCount = 0;
 
    while( nOffset ) {
-      HB_ISIZ * pnOffset = ( HB_ISIZ * ) hb_itemGetPtr( hb_stackItem(nOffset + 1) );
+      HB_ISIZ * pnOffset = ( HB_ISIZ * ) hb_itemGetPtr(hb_stackItem(nOffset + 1));
       if( !pnOffset ) {
          break;
       }   

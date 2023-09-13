@@ -66,21 +66,20 @@
 
 #include "directry.ch"
 
-FUNCTION DirectoryRecurse( cPath, cAttr )
+FUNCTION DirectoryRecurse(cPath, cAttr)
 
    LOCAL aResult
    LOCAL cFilePath, cExt, cMask
 
-   hb_FNameSplit( cPath, @cFilePath, @cMask, @cExt )
+   hb_FNameSplit(cPath, @cFilePath, @cMask, @cExt)
    cMask += cExt
-   hb_default( @cAttr, "" )
+   hb_default(@cAttr, "")
    /* The trick with StrTran() below if for strict xHarbour
     * compatibility though it should be reverted when it will
     * be fixed in xHarbour
     */
-   aResult := hb_DirScan( cFilePath, cMask, ;
-      StrTran( Upper( cAttr ), "D" ) )
+   aResult := hb_DirScan(cFilePath, cMask, StrTran(Upper(cAttr), "D"))
 
-   AEval( aResult, {| x | x[ F_NAME ] := cFilePath + x[ F_NAME ] } )
+   AEval(aResult, {|x|x[F_NAME] := cFilePath + x[F_NAME]})
 
    RETURN aResult

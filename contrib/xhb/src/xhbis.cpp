@@ -65,25 +65,25 @@
 #undef tolower
 #undef toupper
 
-#define isalnum( c )     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISALNUM )
-#define isalpha( c )     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISALPHA )
-#define iscntrl( c )     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISCNTRL )
-#define isdigit( c )     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISDIGIT )
-#define isgraph( c )     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISGRAPH )
-#define islower( c )     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISLOWER )
-#define isprint( c )     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISPRINT )
-#define ispunct( c )     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISPUNCT )
-#define isspace( c )     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISSPACE )
-#define isupper( c )     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISUPPER )
-#define isxdigit( c )    ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISXDIGIT )
+#define isalnum(c)     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISALNUM )
+#define isalpha(c)     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISALPHA )
+#define iscntrl(c)     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISCNTRL )
+#define isdigit(c)     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISDIGIT )
+#define isgraph(c)     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISGRAPH )
+#define islower(c)     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISLOWER )
+#define isprint(c)     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISPRINT )
+#define ispunct(c)     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISPUNCT )
+#define isspace(c)     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISSPACE )
+#define isupper(c)     ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISUPPER )
+#define isxdigit(c)    ( __dj_ctype_flags[static_cast<unsigned char>(c) + 1] & __dj_ISXDIGIT )
 
-#define tolower( c )     ( __dj_ctype_tolower[static_cast<unsigned char>(c) + 1] )
-#define toupper( c )     ( __dj_ctype_toupper[static_cast<unsigned char>(c) + 1] )
+#define tolower(c)     ( __dj_ctype_tolower[static_cast<unsigned char>(c) + 1] )
+#define toupper(c)     ( __dj_ctype_toupper[static_cast<unsigned char>(c) + 1] )
 
 #endif /* __dj_include_inline_ctype_ha_ */
 
 #if !defined(isascii)
-   #define isascii( c )  ( static_cast<unsigned>(c) <= 0x7F )
+   #define isascii(c)  ( static_cast<unsigned>(c) <= 0x7F )
 #endif
 
 /* determines if first char of a string is an alphanumeric character */

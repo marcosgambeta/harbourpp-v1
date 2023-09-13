@@ -47,7 +47,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 
-/* ASizeAlloc( <array>, <num> ) --> <array> - Set the pre-alloc step. */
+/* ASizeAlloc(<array>, <num>) --> <array> - Set the pre-alloc step. */
 HB_FUNC( ASIZEALLOC )
 {
    PHB_ITEM pArray    = hb_param(1, Harbour::Item::ARRAY);

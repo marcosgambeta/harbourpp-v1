@@ -47,20 +47,20 @@
  */
 
 /* Return the number of times s1 occurs in s2 */
-FUNCTION Occurs( s1, s2 )
+FUNCTION Occurs(s1, s2)
 
    LOCAL nCount := 0
    LOCAL nPos := 0
 
-   IF HB_ISSTRING( s1 ) .AND. HB_ISSTRING( s2 )
-#if defined( HB_CLP_STRICT )
-      DO WHILE ( nPos := hb_At( s1, s2, nPos + 1 ) ) != 0
+   IF HB_ISSTRING(s1) .AND. HB_ISSTRING(s2)
+#if defined(HB_CLP_STRICT)
+      DO WHILE ( nPos := hb_At(s1, s2, nPos + 1) ) != 0
          nCount++
       ENDDO
 #else
-      DO WHILE ( nPos := hb_At( s1, s2, nPos ) ) != 0
+      DO WHILE ( nPos := hb_At(s1, s2, nPos) ) != 0
          nCount++
-         nPos += Len( s1 )
+         nPos += Len(s1)
       ENDDO
 #endif
    ENDIF

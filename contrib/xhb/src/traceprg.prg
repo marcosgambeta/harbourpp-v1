@@ -54,15 +54,15 @@ STATIC s_cSET_TRACEFILE  := "trace.log"
 STATIC s_cSET_TRACEFILER := nil
 STATIC s_nSET_TRACESTACK := HB_SET_TRACESTACK_ALL
 
-FUNCTION xhb_SetTrace( xTrace )
+FUNCTION xhb_SetTrace(xTrace)
 
    LOCAL lTrace := s_lSET_TRACE
 
    DO CASE
-   CASE HB_ISLOGICAL( xTrace )
+   CASE HB_ISLOGICAL(xTrace)
       s_lSET_TRACE := xTrace
-   CASE HB_ISSTRING( xTrace )
-      SWITCH Upper( xTrace )
+   CASE HB_ISSTRING(xTrace)
+      SWITCH Upper(xTrace)
       CASE "ON"
          s_lSET_TRACE := .T.
          EXIT
@@ -74,27 +74,27 @@ FUNCTION xhb_SetTrace( xTrace )
 
    RETURN lTrace
 
-FUNCTION xhb_SetTraceFile( xFile, lAppend )
+FUNCTION xhb_SetTraceFile(xFile, lAppend)
 
    LOCAL cTraceFile := s_cSET_TRACEFILE
    LOCAL hFile
 
-   IF HB_ISSTRING( xFile ) .AND. ! Empty( xFile )
-      s_cSET_TRACEFILER := s_cSET_TRACEFILE := s_RealPath( xFile )
-      IF ! hb_defaultValue( lAppend, .F. ) .AND. ;
-         ( hFile := hb_vfOpen( @s_cSET_TRACEFILER, FO_CREAT + FO_TRUNC + FO_WRITE ) ) != NIL
-         hb_vfClose( hFile )
+   IF HB_ISSTRING(xFile) .AND. !Empty(xFile)
+      s_cSET_TRACEFILER := s_cSET_TRACEFILE := s_RealPath(xFile)
+      IF !hb_defaultValue(lAppend, .F.) .AND. ;
+         (hFile := hb_vfOpen(@s_cSET_TRACEFILER, FO_CREAT + FO_TRUNC + FO_WRITE)) != NIL
+         hb_vfClose(hFile)
       ENDIF
    ENDIF
 
    RETURN cTraceFile
 
-FUNCTION xhb_SetTraceStack( xLevel )
+FUNCTION xhb_SetTraceStack(xLevel)
 
    LOCAL nTraceLevel := s_nSET_TRACESTACK
 
    DO CASE
-   CASE HB_ISSTRING( xLevel )
+   CASE HB_ISSTRING(xLevel)
       SWITCH xLevel
       CASE "NONE"
          s_nSET_TRACESTACK := HB_SET_TRACESTACK_NONE
@@ -106,7 +106,7 @@ FUNCTION xhb_SetTraceStack( xLevel )
          s_nSET_TRACESTACK := HB_SET_TRACESTACK_ALL
          EXIT
       ENDSWITCH
-   CASE HB_ISNUMERIC( xLevel )
+   CASE HB_ISNUMERIC(xLevel)
       IF xLevel >= 0
          s_nSET_TRACESTACK := xLevel
       ENDIF
@@ -116,7 +116,7 @@ FUNCTION xhb_SetTraceStack( xLevel )
 
 /* --- */
 
-FUNCTION TraceLog( ... )
+FUNCTION TraceLog(...)
 
    // Using PRIVATE instead of LOCALs so TraceLog() is DIVERT friendly.
    LOCAL hFile, nLevel, ProcName, xParam, cData
@@ -128,70 +128,68 @@ FUNCTION TraceLog( ... )
       nLevel := s_nSET_TRACESTACK
 
       IF nLevel > 0
-         cData += "[" + ProcFile( 1 ) + "->" + ProcName( 1 ) + "] (" + hb_ntos( ProcLine( 1 ) ) + ")"
+         cData += "[" + ProcFile(1) + "->" + ProcName(1) + "] (" + hb_ntos(ProcLine(1)) + ")"
       ENDIF
 
-      IF nLevel > 1 .AND. ! ProcName( 2 ) == ""
+      IF nLevel > 1 .AND. !ProcName(2) == ""
          cData += " Called from:" + hb_eol()
          nLevel := 1
-         DO WHILE ! ( ProcName := ProcName( ++nLevel ) ) == ""
-            cData += Space( 30 ) + ProcFile( nLevel ) + "->" + ProcName + "(" + hb_ntos( ProcLine( nLevel ) ) + ")" + hb_eol()
+         DO WHILE !(ProcName := ProcName(++nLevel)) == ""
+            cData += Space(30) + ProcFile(nLevel) + "->" + ProcName + "(" + hb_ntos(ProcLine(nLevel)) + ")" + hb_eol()
          ENDDO
       ELSE
          cData += hb_eol()
       ENDIF
 
       FOR EACH xParam IN hb_AParams()
-         cData += "Type: " + ValType( xParam ) + " >>>" + hb_CStr( xParam ) + "<<<" + hb_eol()
+         cData += "Type: " + ValType(xParam) + " >>>" + hb_CStr(xParam) + "<<<" + hb_eol()
       NEXT
 
       cData += hb_eol()
 
       IF s_cSET_TRACEFILER == nil
-         s_cSET_TRACEFILER := s_cSET_TRACEFILE := s_RealPath( s_cSET_TRACEFILE )
+         s_cSET_TRACEFILER := s_cSET_TRACEFILE := s_RealPath(s_cSET_TRACEFILE)
       ENDIF
-      IF ( hFile := hb_vfOpen( @s_cSET_TRACEFILER, FO_CREAT + FO_WRITE ) ) != NIL
-         hb_vfSeek( hFile, 0, FS_END )
-         hb_vfWrite( hFile, cData )
-         hb_vfClose( hFile )
+      IF (hFile := hb_vfOpen(@s_cSET_TRACEFILER, FO_CREAT + FO_WRITE)) != NIL
+         hb_vfSeek(hFile, 0, FS_END)
+         hb_vfWrite(hFile, cData)
+         hb_vfClose(hFile)
       ENDIF
    ENDIF
 
    RETURN .T.
 
-STATIC FUNCTION s_RealPath( cFilename )
+STATIC FUNCTION s_RealPath(cFilename)
 
    LOCAL cPath, cName, cExt, cDrv, cDir, nStart
 
-   IF hb_vfIsLocal( cFilename )
-      hb_FNameSplit( cFilename, @cPath, @cName, @cExt, @cDrv )
-      IF Empty( hb_osDriveSeparator() )
+   IF hb_vfIsLocal(cFilename)
+      hb_FNameSplit(cFilename, @cPath, @cName, @cExt, @cDrv)
+      IF Empty(hb_osDriveSeparator())
          cDrv := ""
       ENDIF
-      nStart := iif( Empty( cDrv ), 1, 3 )
-      IF ! SubStr( cPath, nStart, 1 ) $ hb_osPathDelimiters()
-         IF Empty( cDrv ) .OR. cDrv == DiskName()
-            cPath := hb_cwd() + SubStr( cPath, nStart )
+      nStart := iif(Empty(cDrv), 1, 3)
+      IF !SubStr(cPath, nStart, 1) $ hb_osPathDelimiters()
+         IF Empty(cDrv) .OR. cDrv == DiskName()
+            cPath := hb_cwd() + SubStr(cPath, nStart)
          ELSE
             #ifdef __PLATFORM__WINDOWS
                /* WIN API used by Harbour binds current directory with
                   process not with drive letters, due to side effects in
-                  current Harbour code for MS-Windows using CurDir( cDrv )
+                  current Harbour code for MS-Windows using CurDir(cDrv)
                   changes current directory to root path [druzus] */
                cDir := ""
             #else
-               IF ! Empty( cDir := CurDir( cDrv ) )
+               IF !Empty(cDir := CurDir(cDrv))
                   cDir += hb_ps()
                ENDIF
             #endif
-            cPath := cDrv + hb_osDriveSeparator() + hb_ps() + cDir + ;
-                     SubStr( cPath, nStart )
+            cPath := cDrv + hb_osDriveSeparator() + hb_ps() + cDir + SubStr(cPath, nStart)
          ENDIF
-         cFilename := hb_FNameMerge( cPath, cName, cExt )
-      ELSEIF Empty( cDrv ) .AND. ! Empty( cDrv := DiskName() ) .AND. ;
-             ! SubStr( cPath, 2, 1 ) $ hb_osPathDelimiters()
+         cFilename := hb_FNameMerge(cPath, cName, cExt)
+      ELSEIF Empty(cDrv) .AND. !Empty(cDrv := DiskName()) .AND. !SubStr(cPath, 2, 1) $ hb_osPathDelimiters()
          cPath := cDrv + hb_osDriveSeparator() + cPath
-         cFilename := hb_FNameMerge( cPath, cName, cExt )
+         cFilename := hb_FNameMerge(cPath, cName, cExt)
       ENDIF
    ENDIF
 

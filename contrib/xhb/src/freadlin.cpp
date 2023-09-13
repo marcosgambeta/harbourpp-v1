@@ -52,10 +52,10 @@
 
 #define READING_BLOCK  4096
 
-static char * hb_fsReadLine( HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const char ** pTerm, HB_ISIZ * pnTermSizes, HB_ISIZ nTerms, HB_BOOL * pbFound, HB_BOOL * pbEOF )
+static char * hb_fsReadLine(HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const char ** pTerm, HB_ISIZ * pnTermSizes, HB_ISIZ nTerms, HB_BOOL * pbFound, HB_BOOL * pbEOF)
 {
 #if 0
-   HB_TRACE( HB_TR_DEBUG, ( "hb_fsReadLine(%p, %" HB_PFS "d, %p, %p, %" HB_PFS "d, %p, %p)", static_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), *plBuffLen, pTerm, pnTermSizes, nTerms, pbFound, pbEOF ) );
+   HB_TRACE(HB_TR_DEBUG, ("hb_fsReadLine(%p, %" HB_PFS "d, %p, %p, %" HB_PFS "d, %p, %p)", static_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), *plBuffLen, pTerm, pnTermSizes, nTerms, pbFound, pbEOF));
 #endif
 
    HB_ISIZ nPosTerm = 0, nPos, nPosition;
@@ -142,7 +142,7 @@ static char * hb_fsReadLine( HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const 
    return pBuff;
 }
 
-/* hb_FReadLine( <Handle>, <@buffer>, [<aTerminators | cTerminator>], [<nReadingBlock>] ) --> nError */
+/* hb_FReadLine(<Handle>, <@buffer>, [<aTerminators | cTerminator>], [<nReadingBlock>]) --> nError */
 HB_FUNC( HB_FREADLINE )
 {
    PHB_ITEM      pTerm1;
@@ -196,9 +196,9 @@ HB_FUNC( HB_FREADLINE )
       nSize = READING_BLOCK;
    }   
 
-   pBuffer = hb_fsReadLine( hFileHandle, &nSize, Term, pnTermSizes, nTerms, &bFound, &bEOF );
+   pBuffer = hb_fsReadLine(hFileHandle, &nSize, Term, pnTermSizes, nTerms, &bFound, &bEOF);
 
-   if( !hb_storclen_buffer( pBuffer, nSize, 2 ) ) {
+   if( !hb_storclen_buffer(pBuffer, nSize, 2) ) {
       hb_xfree(pBuffer);
    }
    hb_retns(bEOF ? -1 : 0);

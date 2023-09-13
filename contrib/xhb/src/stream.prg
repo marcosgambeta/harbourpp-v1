@@ -48,15 +48,15 @@
 
 #include "fileio.ch"
 
-#xtranslate Throw( <oErr> ) => ( Eval( ErrorBlock(), <oErr> ), Break( <oErr> ) )
+#xtranslate Throw(<oErr>) => (Eval(ErrorBlock(), <oErr>), Break(<oErr>))
 
 #define BUFFER_SIZE 16384
 
-FUNCTION FileReader( cFile, nMode )
-   RETURN TStreamFileReader():New( cFile, nMode )
+FUNCTION FileReader(cFile, nMode)
+   RETURN TStreamFileReader():New(cFile, nMode)
 
-FUNCTION FileWriter( cFile, nMode )
-   RETURN TStreamFileWriter():New( cFile, nMode )
+FUNCTION FileWriter(cFile, nMode)
+   RETURN TStreamFileWriter():New(cFile, nMode)
 
 CREATE CLASS TStream
 
@@ -68,55 +68,55 @@ CREATE CLASS TStream
    VAR nPosition INIT 0
 
 #if 0
-   METHOD BeginRead( sBuffer, nOffset, nCount, bCallback, oState )
-   METHOD EndRead( oAsync ) VIRTUAL
+   METHOD BeginRead(sBuffer, nOffset, nCount, bCallback, oState)
+   METHOD EndRead(oAsync) VIRTUAL
 
-   METHOD BeginWrite( sBuffer, nOffset, nCount, bCallback, oState )
-   METHOD EndWrite( oAsync ) VIRTUAL
+   METHOD BeginWrite(sBuffer, nOffset, nCount, bCallback, oState)
+   METHOD EndWrite(oAsync) VIRTUAL
 #endif
 
    METHOD Close() VIRTUAL
    METHOD Flush() VIRTUAL
-   METHOD Seek( nOffset, Origin ) VIRTUAL
+   METHOD Seek(nOffset, Origin) VIRTUAL
 
-   METHOD Read( sBuffer, nOffset, nCount ) VIRTUAL
+   METHOD Read(sBuffer, nOffset, nCount) VIRTUAL
    METHOD ReadByte() VIRTUAL
 
-   METHOD Write( sBuffer, nOffset, nCount ) VIRTUAL
+   METHOD Write(sBuffer, nOffset, nCount) VIRTUAL
    METHOD WriteByte() VIRTUAL
 
-   METHOD CopyTo( oTargetStream )
+   METHOD CopyTo(oTargetStream)
 
 ENDCLASS
 
-METHOD PROCEDURE CopyTo( oTargetStream ) CLASS TStream
+METHOD PROCEDURE CopyTo(oTargetStream) CLASS TStream
 
    LOCAL nBytesToRead := ::nLength
-   LOCAL sBuffer := Space( BUFFER_SIZE )
+   LOCAL sBuffer := Space(BUFFER_SIZE)
    LOCAL nRead
    LOCAL nPosition
 
-   IF ! oTargetStream:lCanWrite
-      Throw( xhb_ErrorNew( "Stream", 0, 1001, ProcName(), "Target not writable.", hb_AParams() ) )
+   IF !oTargetStream:lCanWrite
+      Throw(xhb_ErrorNew("Stream", 0, 1001, ProcName(), "Target not writable.", hb_AParams()))
    ENDIF
 
    // Save.
    nPosition := ::nPosition
 
-   ::Seek( 0, FS_SET )
-   oTargetStream:Seek( 0, FS_SET )
+   ::Seek(0, FS_SET)
+   oTargetStream:Seek(0, FS_SET)
 
    DO WHILE nBytesToRead > 0
-      nRead := ::Read( @sBuffer, 0, BUFFER_SIZE )
-      oTargetStream:Write( sBuffer, 0, nRead )
+      nRead := ::Read(@sBuffer, 0, BUFFER_SIZE)
+      oTargetStream:Write(sBuffer, 0, nRead)
       nBytesToRead -= nRead
    ENDDO
 
    // Truncate incase it was a bigger file.
-   oTargetStream:Write( "", 0, 0 )
+   oTargetStream:Write("", 0, 0)
 
    // Restore.
-   ::Seek( nPosition, FS_SET )
+   ::Seek(nPosition, FS_SET)
 
    RETURN
 
@@ -125,19 +125,19 @@ CREATE CLASS TStreamFileReader FROM TStream
    VAR cFile
    VAR Handle
 
-   METHOD New( cFile, nMode ) CONSTRUCTOR
+   METHOD New(cFile, nMode) CONSTRUCTOR
 
-   METHOD Close() INLINE iif( ::Handle > 0, FClose( ::Handle ), ), ::Handle := -2
-   METHOD Seek( nOffset Origin ) INLINE FSeek( ::Handle, nOffset, Origin )
+   METHOD Close() INLINE iif(::Handle > 0, FClose(::Handle), ), ::Handle := -2
+   METHOD Seek(nOffset Origin) INLINE FSeek(::Handle, nOffset, Origin)
 
-   METHOD Read( sBuffer, nOffset, nCount )
+   METHOD Read(sBuffer, nOffset, nCount)
    METHOD ReadByte()
 
    DESTRUCTOR Finalize
 
 ENDCLASS
 
-METHOD New( cFile, nMode ) CLASS TStreamFileReader
+METHOD New(cFile, nMode) CLASS TStreamFileReader
 
    ::lCanRead := .T.
 
@@ -147,15 +147,15 @@ METHOD New( cFile, nMode ) CLASS TStreamFileReader
       nMode := 2
    ENDIF
 
-   ::Handle := FOpen( cFile, nMode )
+   ::Handle := FOpen(cFile, nMode)
    IF ::Handle == F_ERROR
-      Throw( xhb_ErrorNew( "Stream", 0, 1004, ProcName(), "Open Error: " + Str( FError() ), hb_AParams() ) )
+      Throw(xhb_ErrorNew("Stream", 0, 1004, ProcName(), "Open Error: " + Str(FError()), hb_AParams()))
    ENDIF
 
    ::nPosition := 0
-   ::nLength := FSeek( ::Handle, 0, FS_END )
+   ::nLength := FSeek(::Handle, 0, FS_END)
 
-   FSeek( ::Handle, 0, FS_SET )
+   FSeek(::Handle, 0, FS_SET)
 
    RETURN Self
 
@@ -165,17 +165,17 @@ METHOD PROCEDURE Finalize CLASS TStreamFileReader
 
    RETURN
 
-METHOD Read( sBuffer, nOffset, nCount ) CLASS TStreamFileReader
+METHOD Read(sBuffer, nOffset, nCount) CLASS TStreamFileReader
 
    LOCAL nRead
 
 /*
-   IF ! HB_ISBYREF( @sBuffer )
-      Throw( xhb_ErrorNew( "Stream", 0, 1002, ProcName(), "Buffer not BYREF.", hb_AParams() ) )
+   IF !HB_ISBYREF(@sBuffer)
+      Throw(xhb_ErrorNew("Stream", 0, 1002, ProcName(), "Buffer not BYREF.", hb_AParams()))
    ENDIF
 */
 
-   nRead := FRead( ::Handle, @sBuffer, nCount, nOffset )
+   nRead := FRead(::Handle, @sBuffer, nCount, nOffset)
 
    ::nPosition += nRead
 
@@ -185,7 +185,7 @@ METHOD ReadByte()  CLASS TStreamFileReader
 
    LOCAL sBuffer := " "
 
-   IF FRead( ::Handle, @sBuffer, 1 ) == 1
+   IF FRead(::Handle, @sBuffer, 1) == 1
       ::nPosition++
       RETURN sBuffer
    ENDIF
@@ -197,40 +197,40 @@ CREATE CLASS TStreamFileWriter FROM TStream
    VAR cFile
    VAR Handle
 
-   METHOD New( cFile, nMode ) CONSTRUCTOR
+   METHOD New(cFile, nMode) CONSTRUCTOR
 
-   METHOD Close() INLINE iif( ::Handle > 0, FClose( ::Handle ), ), ::Handle := -2
-   METHOD Seek( nOffset Origin ) INLINE ::nPosition := FSeek( ::Handle, nOffset, Origin )
+   METHOD Close() INLINE iif(::Handle > 0, FClose(::Handle), ), ::Handle := -2
+   METHOD Seek(nOffset Origin) INLINE ::nPosition := FSeek(::Handle, nOffset, Origin)
 
-   METHOD Write( sBuffer, nOffset, nCount )
-   METHOD WriteByte( cByte )
+   METHOD Write(sBuffer, nOffset, nCount)
+   METHOD WriteByte(cByte)
 
    DESTRUCTOR Finalize
 
 ENDCLASS
 
-METHOD New( cFile, nMode ) CLASS TStreamFileWriter
+METHOD New(cFile, nMode) CLASS TStreamFileWriter
 
    ::lCanWrite := .T.
 
    ::cFile := cFile
 
-   IF hb_FileExists( cFile )
-      __defaultNIL( @nMode, FO_READWRITE )
+   IF hb_FileExists(cFile)
+      __defaultNIL(@nMode, FO_READWRITE)
 
-      ::Handle := FOpen( cFile, nMode )
+      ::Handle := FOpen(cFile, nMode)
       IF ::Handle == F_ERROR
-         Throw( xhb_ErrorNew( "Stream", 0, 1004, ProcName(), "Open Error: " + Str( FError() ), hb_AParams() ) )
+         Throw(xhb_ErrorNew("Stream", 0, 1004, ProcName(), "Open Error: " + Str(FError()), hb_AParams()))
       ENDIF
 
-      ::nLength := FSeek( ::Handle, 0, FS_END )
+      ::nLength := FSeek(::Handle, 0, FS_END)
       ::nPosition := ::nLength
    ELSE
-      __defaultNIL( @nMode, FC_NORMAL )
+      __defaultNIL(@nMode, FC_NORMAL)
 
-      ::Handle := FCreate( cFile, nMode )
+      ::Handle := FCreate(cFile, nMode)
       IF ::Handle == F_ERROR
-         Throw( xhb_ErrorNew( "Stream", 0, 1004, ProcName(), "Create Error: " + Str( FError() ), hb_AParams() ) )
+         Throw(xhb_ErrorNew("Stream", 0, 1004, ProcName(), "Create Error: " + Str(FError()), hb_AParams()))
       ENDIF
 
       ::nPosition := 0
@@ -245,28 +245,28 @@ METHOD PROCEDURE Finalize CLASS TStreamFileWriter
 
    RETURN
 
-METHOD Write( sBuffer, nOffset, nCount ) CLASS TStreamFileWriter
+METHOD Write(sBuffer, nOffset, nCount) CLASS TStreamFileWriter
 
    LOCAL nWritten
 
-   nWritten := FWrite( ::Handle, sBuffer, nCount, nOffset )
+   nWritten := FWrite(::Handle, sBuffer, nCount, nOffset)
 
    ::nPosition += nWritten
 
    IF nWritten != nCount
-      Throw( xhb_ErrorNew( "Stream", 0, 1003, ProcName(), "Write failed - written:" + Str( nWritten ) + " bytes", hb_AParams() ) )
+      Throw(xhb_ErrorNew("Stream", 0, 1003, ProcName(), "Write failed - written:" + Str(nWritten) + " bytes", hb_AParams()))
    ENDIF
 
    RETURN nWritten
 
-METHOD PROCEDURE WriteByte( cByte ) CLASS TStreamFileWriter
+METHOD PROCEDURE WriteByte(cByte) CLASS TStreamFileWriter
 
-   LOCAL nWritten := FWrite( ::Handle, cByte, 1 )
+   LOCAL nWritten := FWrite(::Handle, cByte, 1)
 
    ::nPosition += nWritten
 
    IF nWritten != 1
-      Throw( xhb_ErrorNew( "Stream", 0, 1006, ProcName(), "Write failed", hb_AParams() ) )
+      Throw(xhb_ErrorNew("Stream", 0, 1006, ProcName(), "Write failed", hb_AParams()))
    ENDIF
 
    RETURN

@@ -46,73 +46,68 @@
 
 /* real functions used as wrappers in above translations */
 
-FUNCTION StartThread( p1, p2, ... )
+FUNCTION StartThread(p1, p2, ...)
 
    IF PCount() < 2
-      RETURN hb_threadStart( p1 )
-   ELSEIF HB_ISOBJECT( p1 ) .AND. HB_ISSTRING( p2 )
-      RETURN hb_threadStart( {| ...| p1:&p2( ... ) }, ... )
+      RETURN hb_threadStart(p1)
+   ELSEIF HB_ISOBJECT(p1) .AND. HB_ISSTRING(p2)
+      RETURN hb_threadStart({|...|p1:&p2(...)}, ...)
    ENDIF
 
-   RETURN hb_threadStart( p1, p2, ... )
+   RETURN hb_threadStart(p1, p2, ...)
 
-FUNCTION Subscribe( mtx, nTimeOut, /* @ */ lSubscribed )
-
-   LOCAL xSubscribed
-
-   lSubscribed := hb_mutexSubscribe( mtx, ;
-      iif( HB_ISNUMERIC( nTimeOut ), nTimeOut / 1000, ), ;
-      @xSubscribed )
-
-   RETURN xSubscribed
-
-FUNCTION SubscribeNow( mtx, nTimeOut, /* @ */ lSubscribed )
+FUNCTION Subscribe(mtx, nTimeOut, /* @ */ lSubscribed)
 
    LOCAL xSubscribed
 
-   lSubscribed := hb_mutexSubscribeNow( mtx, ;
-      iif( HB_ISNUMERIC( nTimeOut ), nTimeOut / 1000, ), ;
-      @xSubscribed )
+   lSubscribed := hb_mutexSubscribe(mtx, iif(HB_ISNUMERIC(nTimeOut), nTimeOut / 1000,), @xSubscribed)
 
    RETURN xSubscribed
 
-FUNCTION IsSameThread( pThID1, pThID2 )
-   RETURN hb_threadID( pThID1 ) == iif( PCount() < 2, hb_threadID(), ;
-      hb_threadID( pThID2 ) )
+FUNCTION SubscribeNow(mtx, nTimeOut, /* @ */ lSubscribed)
 
-FUNCTION IsValidThread( pThID )
+   LOCAL xSubscribed
+
+   lSubscribed := hb_mutexSubscribeNow(mtx, iif(HB_ISNUMERIC(nTimeOut), nTimeOut / 1000,), @xSubscribed)
+
+   RETURN xSubscribed
+
+FUNCTION IsSameThread(pThID1, pThID2)
+   RETURN hb_threadID(pThID1) == iif(PCount() < 2, hb_threadID(), hb_threadID(pThID2))
+
+FUNCTION IsValidThread(pThID)
 
    LOCAL lValid
 
    BEGIN SEQUENCE WITH {|| Break() }
-      lValid := hb_threadID( pThID ) != 0
+      lValid := hb_threadID(pThID) != 0
    RECOVER
       lValid := .F.
    END SEQUENCE
 
    RETURN lValid
 
-PROCEDURE KillThread( pThID )
+PROCEDURE KillThread(pThID)
 
-   hb_threadQuitRequest( pThID )
-
-   RETURN
-
-PROCEDURE StopThread( pThID )
-
-   hb_threadQuitRequest( pThID )
-   hb_threadJoin( pThID )
+   hb_threadQuitRequest(pThID)
 
    RETURN
 
-FUNCTION ThreadSleep( nTimeOut )
-   RETURN hb_idleSleep( nTimeOut / 1000 )
+PROCEDURE StopThread(pThID)
 
-FUNCTION hb_MutexTryLock( mtx )
-   RETURN hb_mutexLock( mtx, 0 )
+   hb_threadQuitRequest(pThID)
+   hb_threadJoin(pThID)
 
-FUNCTION hb_MutexTimeOutLock( mtx, nTimeOut )
-   RETURN hb_mutexLock( mtx, iif( HB_ISNUMERIC( nTimeOut ), nTimeOut / 1000, 0 ) )
+   RETURN
 
-FUNCTION GetSystemThreadId( pThID )
-   RETURN iif( PCount() < 1, hb_threadID(), hb_threadID( pThID ) )
+FUNCTION ThreadSleep(nTimeOut)
+   RETURN hb_idleSleep(nTimeOut / 1000)
+
+FUNCTION hb_MutexTryLock(mtx)
+   RETURN hb_mutexLock(mtx, 0)
+
+FUNCTION hb_MutexTimeOutLock(mtx, nTimeOut)
+   RETURN hb_mutexLock(mtx, iif(HB_ISNUMERIC(nTimeOut), nTimeOut / 1000, 0))
+
+FUNCTION GetSystemThreadId(pThID)
+   RETURN iif(PCount() < 1, hb_threadID(), hb_threadID(pThID))

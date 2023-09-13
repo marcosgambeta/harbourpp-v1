@@ -46,8 +46,8 @@
 
 #include "directry.ch"
 
-FUNCTION GetVolInfo( cDir )
+FUNCTION GetVolInfo(cDir)
 
-   LOCAL aFiles := Directory( cDir, "V" )
+   LOCAL aFiles := Directory(cDir, "V")
 
-   RETURN iif( Len( aFiles ) >= 1, aFiles[ 1 ][ F_NAME ], "" )
+   RETURN iif(Len(aFiles) >= 1, aFiles[1][F_NAME], "")

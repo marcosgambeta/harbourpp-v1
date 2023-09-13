@@ -48,11 +48,11 @@
 #include "error.ch"
 #include "cgi.ch"
 
-#define DEF_ERR_HEADER "Date : " + DToC( Date() ) + "<br />" + "Time : " + Time() + "<br />"
+#define DEF_ERR_HEADER "Date : " + DToC(Date()) + "<br />" + "Time : " + Time() + "<br />"
 
 // put messages to STDERR
-#command ? <list,...>   =>  ?? Chr( 13 ) + Chr( 10 ) ; ?? <list>
-#command ?? <list,...>  =>  OutErr( <list> )
+#command ? <list,...>   =>  ?? Chr(13) + Chr(10) ; ?? <list>
+#command ?? <list,...>  =>  OutErr(<list>)
 
 REQUEST HardCR
 REQUEST MemoWrit
@@ -62,12 +62,12 @@ STATIC s_cErrFooter  := " "
 
 #if 0
 
-STATIC FUNCTION xhb_cgi_DefError( e )
+STATIC FUNCTION xhb_cgi_DefError(e)
 
    LOCAL i
    LOCAL cMessage   := ""
    LOCAL cErrString := ""
-   LOCAL nH         := iif( HtmlPageHandle() == NIL, 0, HtmlPageHandle() )
+   LOCAL nH         := iif(HtmlPageHandle() == NIL, 0, HtmlPageHandle())
 
    // by default, division by zero yields zero
    IF e:genCode == EG_ZERODIV
@@ -75,8 +75,8 @@ STATIC FUNCTION xhb_cgi_DefError( e )
    ENDIF
 
    IF e:genCode == EG_CORRUPTION
-      IF HB_ISBLOCK( s_bFixCorrupt )
-         Eval( s_bFixCorrupt, e )
+      IF HB_ISBLOCK(s_bFixCorrupt)
+         Eval(s_bFixCorrupt, e)
          RETURN .F.
       ELSE
          RETURN .F.
@@ -84,26 +84,25 @@ STATIC FUNCTION xhb_cgi_DefError( e )
    ENDIF
 
    // for network open error, set NetErr() and subsystem default
-   IF e:genCode == EG_OPEN .AND. ( e:osCode == 32 .OR. e:osCode == 5 ) ;
-         .AND. e:canDefault
+   IF e:genCode == EG_OPEN .AND. (e:osCode == 32 .OR. e:osCode == 5) .AND. e:canDefault
 
-      NetErr( .T. )
+      NetErr(.T.)
       RETURN .F.
    ENDIF
 
    // for lock error during dbAppend(), set NetErr() and subsystem default
    IF e:genCode == EG_APPENDLOCK .AND. e:canDefault
 
-      NetErr( .T. )
+      NetErr(.T.)
       RETURN .F.
    ENDIF
 
    // build error message
-   cMessage += ErrorMessage( e )
+   cMessage += ErrorMessage(e)
 
    // display message and traceback
-   IF ! Empty( e:osCode )
-      cMessage += " (DOS Error   : " + hb_ntos( e:osCode ) + ")"
+   IF !Empty(e:osCode)
+      cMessage += " (DOS Error   : " + hb_ntos(e:osCode) + ")"
    ENDIF
 
    // RESET System //
@@ -127,12 +126,12 @@ STATIC FUNCTION xhb_cgi_DefError( e )
 
    cErrString += '</td></tr><tr><td bgcolor="cyan">' + CRLF()
    cErrstring += '<font face ="verdana" size ="2" color="black">' + CRLF()
-   cErrString += "ERRORCODE...... :" + hb_ntos( e:GenCode ) + "<br />" + CRLF()
+   cErrString += "ERRORCODE...... :" + hb_ntos(e:GenCode) + "<br />" + CRLF()
    cErrString += "SUBSYSTEM..... :" + e:SubSystem + "<br />" + CRLF()
    cErrString += "DESCRIPTION...:" + e:Description + "<br />" + CRLF()
    cErrString += "OPERATION......:" + e:Operation + "<br />" + CRLF()
    cErrString += "FILENAME........ :" + e:FileName + "<br />" + CRLF()
-   cErrString += "TRIES............. :" + hb_ntos( e:Tries ) + CRLF()
+   cErrString += "TRIES............. :" + hb_ntos(e:Tries) + CRLF()
 
    cErrString += '</td></tr>'
    cErrString += '<tr><td bgcolor="red">'
@@ -141,10 +140,9 @@ STATIC FUNCTION xhb_cgi_DefError( e )
 
    i := 2
 
-   DO WHILE ! Empty( ProcName( i ) )
+   DO WHILE !Empty(ProcName(i))
 
-      cErrString += "Called from " + RTrim( ProcName( i ) ) + ;
-         "(" + hb_ntos( ProcLine( i ) ) + ") <br />" + CRLF()
+      cErrString += "Called from " + RTrim(ProcName(i)) + "(" + hb_ntos(ProcLine(i)) + ") <br />" + CRLF()
 
       i++
    ENDDO
@@ -156,29 +154,28 @@ STATIC FUNCTION xhb_cgi_DefError( e )
    cErrstring += "Extra Notes..."
 
    cErrString += "</td>" + CRLF() + "</tr>" + CRLF() + "</table>" + CRLF()
-   FWrite( nH, "<br />" + cErrString + CRLF() )
-   MemoWrit( "Error.Log", HardCR( cErrString ) + CRLF() + ;
-      HardCR( MemoRead( "Error.Log" ) ) )
+   FWrite(nH, "<br />" + cErrString + CRLF())
+   MemoWrit("Error.Log", HardCR(cErrString) + CRLF() + HardCR(MemoRead("Error.Log")))
 
-   FWrite( nH, "</td>" + CRLF() + "</tr>" + CRLF() + "</table>" + CRLF() )
+   FWrite(nH, "</td>" + CRLF() + "</tr>" + CRLF() + "</table>" + CRLF())
 
-   HtmlJSCmd( nH, 'Alert("There was an error processing your request:\n' + ;
+   HtmlJSCmd(nH, 'Alert("There was an error processing your request:\n' + ;
       'Look at the bottom of this page for\n' + ;
-      'error description and parameters...");' )
-   FWrite( nH, "</font>" + CRLF() + "</body></html>" + CRLF() )
+      'error description and parameters...");')
+   FWrite(nH, "</font>" + CRLF() + "</body></html>" + CRLF())
 
    CLOSE ALL
 
-   ErrorLevel( 1 )
+   ErrorLevel(1)
    QUIT
 
    RETURN .F.
 
 #endif
 
-FUNCTION SetCorruptFunc( bFunc )
+FUNCTION SetCorruptFunc(bFunc)
 
-   IF HB_ISBLOCK( bFunc )
+   IF HB_ISBLOCK(bFunc)
       s_bFixCorrupt := bFunc
    ENDIF
 
@@ -194,37 +191,37 @@ FUNCTION SetErrorFooter()
 
 #if 0
 
-STATIC FUNCTION ErrorMessage( e )
+STATIC FUNCTION ErrorMessage(e)
 
    LOCAL cMessage := ""
 
    // start error message
-   cMessage += iif( e:severity > ES_WARNING, "Error ", "Warning " )
+   cMessage += iif(e:severity > ES_WARNING, "Error ", "Warning ")
 
    // add subsystem name if available
-   IF HB_ISSTRING( e:subsystem )
+   IF HB_ISSTRING(e:subsystem)
       cMessage += e:subsystem()
    ELSE
       cMessage += "???"
    ENDIF
 
    // add subsystem's error code if available
-   IF HB_ISNUMERIC( e:subCode )
-      cMessage += "/" + hb_ntos( e:subCode )
+   IF HB_ISNUMERIC(e:subCode)
+      cMessage += "/" + hb_ntos(e:subCode)
    ELSE
       cMessage += "/???"
    ENDIF
 
    // add error description if available
-   IF HB_ISSTRING( e:description )
+   IF HB_ISSTRING(e:description)
       cMessage += "<br />  " + e:description
    ENDIF
 
    // add either filename or operation
-   IF ! Empty( e:filename )
+   IF !Empty(e:filename)
       cMessage += ": " + e:filename
 
-   ELSEIF ! Empty( e:operation )
+   ELSEIF !Empty(e:operation)
       cMessage += ": " + e:operation
 
    ENDIF

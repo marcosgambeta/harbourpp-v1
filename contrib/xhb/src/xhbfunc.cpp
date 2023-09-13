@@ -66,11 +66,11 @@ HB_FUNC( HB_POINTER2STRING )
    PHB_ITEM pLen     = hb_param(2, Harbour::Item::NUMERIC);
 
    if( HB_IS_POINTER(pPointer) && pLen ) {
-      hb_retclen_const( static_cast<char*>(hb_itemGetPtr(pPointer)), hb_itemGetNS( pLen ) );
+      hb_retclen_const(static_cast<char*>(hb_itemGetPtr(pPointer)), hb_itemGetNS(pLen));
    } else if( HB_IS_INTEGER(pPointer) && pLen ) {
-      hb_retclen_const( static_cast<char*>(hb_itemGetNI(pPointer)), hb_itemGetNS( pLen ) );
+      hb_retclen_const(static_cast<char*>(hb_itemGetNI(pPointer)), hb_itemGetNS(pLen));
    } else if( HB_IS_LONG(pPointer) && pLen ) {
-      hb_retclen_const( static_cast<char*>(hb_itemGetNL(pPointer)), hb_itemGetNS( pLen ) );
+      hb_retclen_const(static_cast<char*>(hb_itemGetNL(pPointer)), hb_itemGetNS(pLen));
    } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, 2, hb_paramError(1), hb_paramError(2));
    }   
@@ -117,7 +117,7 @@ HB_FUNC( XHB__KEYBOARD )
    if( HB_ISNUM(1) ) {
       hb_inkeyPut(hb_parni(1));
    } else if( HB_ISCHAR(1) ) {
-      hb_inkeySetText( hb_parc(1), hb_parclen(1), false );
+      hb_inkeySetText(hb_parc(1), hb_parclen(1), false);
    } else if( HB_ISARRAY(1) ) {
       PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
       HB_SIZE  nIndex;
@@ -129,7 +129,7 @@ HB_FUNC( XHB__KEYBOARD )
          if( HB_IS_NUMBER(pItem) ) {
             hb_inkeyPut(hb_itemGetNI(pItem));
          } else if( HB_IS_STRING(pItem) ) {
-            hb_inkeySetText( hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), false );
+            hb_inkeySetText(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), false);
          }
       }
    }
@@ -200,7 +200,7 @@ HB_FUNC( CURDIRX )
    if( pDrv && hb_parclen(1) > 0 ) {
       iDrv = static_cast<int>(HB_TOUPPER(*hb_itemGetCPtr(pDrv)) - 'A');
       if( iDrv != iCurDrv ) {
-         hb_fsChDrv( iDrv );
+         hb_fsChDrv(iDrv);
       }
    } else {
       iDrv = iCurDrv;
@@ -208,11 +208,11 @@ HB_FUNC( CURDIRX )
 
    /* NOTE: hb_fsCurDirBuffEx() in xHarbour, but I couldn't decipher the
             difference. [vszakats] */
-   hb_fsCurDirBuff( iDrv, pbyBuffer, HB_PATH_MAX );
+   hb_fsCurDirBuff(iDrv, pbyBuffer, HB_PATH_MAX);
 
-   hb_retc_buffer( pbyBuffer );
+   hb_retc_buffer(pbyBuffer);
 
-   hb_fsChDrv( iCurDrv );
+   hb_fsChDrv(iCurDrv);
 
    hb_fsSetError(uiErrorOld);
 }
@@ -251,9 +251,9 @@ HB_FUNC( HB_EXEC )
          hb_vmPushNil();
       }   
       if( fSend ) {
-         hb_vmSend( static_cast<HB_USHORT>(iParams) );
+         hb_vmSend(static_cast<HB_USHORT>(iParams));
       } else {
-         hb_vmDo( static_cast<HB_USHORT>(iParams) );
+         hb_vmDo(static_cast<HB_USHORT>(iParams));
       }
    } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -287,10 +287,10 @@ HB_FUNC( XHB_MEMOWRIT )
 #if !defined(HB_LEGACY_LEVEL4)
 
 #if defined(HB_OS_UNIX) && !defined(HB_EOL_CRLF)
-   static const char s_szCrLf[CRLF_BUFFER_LEN] = { HB_CHAR_LF, 0 };
+   static const char s_szCrLf[CRLF_BUFFER_LEN] = {HB_CHAR_LF, 0};
    static const int  s_iCrLfLen = 1;
 #else
-   static const char s_szCrLf[CRLF_BUFFER_LEN] = { HB_CHAR_CR, HB_CHAR_LF, 0 };
+   static const char s_szCrLf[CRLF_BUFFER_LEN] = {HB_CHAR_CR, HB_CHAR_LF, 0};
    static const int  s_iCrLfLen = 2;
 #endif
 

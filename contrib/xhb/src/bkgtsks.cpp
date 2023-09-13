@@ -172,7 +172,7 @@ void hb_backgroundRun(void)
          pBkgTask = static_cast<PHB_BACKGROUNDTASK>(s_pBackgroundTasks[s_uiBackgroundTask]);
 
          /* check if hb_dateSeconds() is lower than pBkgTask->dSeconds, if so midnight is reached */
-         if( !( pBkgTask->dSeconds ) || dCurrSeconds < pBkgTask->dSeconds ) {
+         if( !(pBkgTask->dSeconds) || dCurrSeconds < pBkgTask->dSeconds ) {
             pBkgTask->dSeconds = dCurrSeconds;
          }
 

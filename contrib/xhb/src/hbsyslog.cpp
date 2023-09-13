@@ -65,7 +65,7 @@ HB_FUNC( HB_SYSLOGOPEN )
 {
 #if defined(HB_OS_WIN)
 
-#  if ( WINVER >= 0x0400 )
+#  if (WINVER >= 0x0400)
 
    /* Ok, we compiled under NT, but we must not use this function
       when RUNNING on a win98. */
@@ -83,7 +83,7 @@ HB_FUNC( HB_SYSLOGOPEN )
 #  endif
 
 #elif defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS)
-   openlog( hb_parcx(1), LOG_NDELAY | LOG_NOWAIT | LOG_PID, LOG_USER );
+   openlog(hb_parcx(1), LOG_NDELAY | LOG_NOWAIT | LOG_PID, LOG_USER);
    hb_retl(true);
 #else
    hb_retl(false);
@@ -94,10 +94,10 @@ HB_FUNC( HB_SYSLOGCLOSE )
 {
 #if defined(HB_OS_WIN)
 
-#  if ( WINVER >= 0x0400 )
+#  if (WINVER >= 0x0400)
 
    if( hb_iswinnt() ) {
-      DeregisterEventSource( s_RegHandle );
+      DeregisterEventSource(s_RegHandle);
       hb_retl(true);
    } else {
       hb_retl(false);
@@ -118,7 +118,7 @@ HB_FUNC( HB_SYSLOGMESSAGE )
 {
 #if defined(HB_OS_WIN)
 
-#  if ( WINVER >= 0x0400 )
+#  if (WINVER >= 0x0400)
    if( hb_iswinnt() ) {
       WORD    logval;
       void *  hMsg;
@@ -161,7 +161,7 @@ HB_FUNC( HB_SYSLOGMESSAGE )
       default:              logval = LOG_DEBUG;
    }
 
-   syslog( logval, "[%lX]: %s", hb_parnl(3), hb_parcx(1) );
+   syslog(logval, "[%lX]: %s", hb_parnl(3), hb_parcx(1));
    hb_retl(true);
 #else
    hb_retl(false);

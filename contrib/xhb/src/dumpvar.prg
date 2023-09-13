@@ -47,12 +47,12 @@
 #include "hbclass.ch"
 
 /* Send to hb_OutDebug() more parameters */
-PROCEDURE __OutDebug( ... )
+PROCEDURE __OutDebug(...)
 
    LOCAL xVal
 
    FOR EACH xVal IN hb_AParams()
-      hb_OutDebug( hb_DumpVar( xVal ) )
+      hb_OutDebug(hb_DumpVar(xVal))
    NEXT
 
    RETURN
@@ -63,242 +63,241 @@ PROCEDURE __OutDebug( ... )
  * - Added recursion limit
  * - Added front function with limited parameters and removed support for TAssociative Array
  */
-FUNCTION hb_DumpVar( xVar, lRecursive, nMaxRecursionLevel )
+FUNCTION hb_DumpVar(xVar, lRecursive, nMaxRecursionLevel)
 
    LOCAL nRecursionLevel := 1
    LOCAL nIndent         := 0
 
-   // TraceLog( "HB_DumpVariable: xVar, lAssocAsObj, lRecursive", xVar, lAssocAsObj, lRecursive )
+   // TraceLog("HB_DumpVariable: xVar, lAssocAsObj, lRecursive", xVar, lAssocAsObj, lRecursive)
 
-   __defaultNIL( @nMaxRecursionLevel, 0 )
+   __defaultNIL(@nMaxRecursionLevel, 0)
 
-   RETURN __HB_DumpVar( xVar, , lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel )
+   RETURN __HB_DumpVar(xVar, , lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel)
 
-STATIC FUNCTION __HB_DumpVar( xVar, lAssocAsObj, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel )
+STATIC FUNCTION __HB_DumpVar(xVar, lAssocAsObj, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel)
 
    LOCAL cString := "", cKey
    LOCAL nEolLen
 
-   __defaultNIL( @lAssocAsObj, .F. )
-   __defaultNIL( @lRecursive, .F. )
+   __defaultNIL(@lAssocAsObj, .F.)
+   __defaultNIL(@lRecursive, .F.)
 
-   // TraceLog( "Recursion: xVar, nRecursionLevel, nMaxRecursionLevel", xVar, nRecursionLevel, nMaxRecursionLevel )
+   // TraceLog("Recursion: xVar, nRecursionLevel, nMaxRecursionLevel", xVar, nRecursionLevel, nMaxRecursionLevel)
 
    // return if there is limit in recursion
-   IF nMaxRecursionLevel > 0 .AND. ;
-         nRecursionLevel > nMaxRecursionLevel
-      RETURN AsString( xVar )
+   IF nMaxRecursionLevel > 0 .AND. nRecursionLevel > nMaxRecursionLevel
+      RETURN AsString(xVar)
    ENDIF
 
-   SWITCH ValType( xVar )
+   SWITCH ValType(xVar)
    CASE "O"
 
-      IF ! lAssocAsObj .AND. xVar:className() == "TASSOCIATIVEARRAY"
-         cString += Space( nIndent ) + "Type='Associative' -> " + hb_eol()
+      IF !lAssocAsObj .AND. xVar:className() == "TASSOCIATIVEARRAY"
+         cString += Space(nIndent) + "Type='Associative' -> " + hb_eol()
          // Keys extraction.
-         IF Len( xVar:Keys ) > 0
-            nEolLen := Len( hb_eol() )
-            cString += Space( nIndent ) + "{" + hb_eol()
+         IF Len(xVar:Keys) > 0
+            nEolLen := Len(hb_eol())
+            cString += Space(nIndent) + "{" + hb_eol()
             FOR EACH cKey IN xVar:Keys
-               cString += Space( nIndent ) + " '" + cKey + "' => " + asString( xVar:SendKey( cKey ) ) + ", " + hb_eol()
-               IF lRecursive .AND. ValType( xVar:SendKey( cKey ) ) $ "AOH"
-                  cString := SubStr( cString, 1, Len( cString ) - 2 - nEolLen ) + hb_eol()
-                  cString += __HB_DumpVar( xVar:SendKey( cKey ), , lRecursive, nIndent + 3, nRecursionLevel + 1, nMaxRecursionLevel )
-                  cString := SubStr( cString, 1, Len( cString ) - nEolLen ) + ", " + hb_eol()
+               cString += Space(nIndent) + " '" + cKey + "' => " + asString(xVar:SendKey(cKey)) + ", " + hb_eol()
+               IF lRecursive .AND. ValType(xVar:SendKey(cKey)) $ "AOH"
+                  cString := SubStr(cString, 1, Len(cString) - 2 - nEolLen) + hb_eol()
+                  cString += __HB_DumpVar(xVar:SendKey(cKey), , lRecursive, nIndent + 3, nRecursionLevel + 1, nMaxRecursionLevel)
+                  cString := SubStr(cString, 1, Len(cString) - nEolLen) + ", " + hb_eol()
                ENDIF
             NEXT
-            cString := SubStr( cString, 1, Len( cString ) - 2 - nEolLen ) + hb_eol()
-            cString += Space( nIndent ) + "}" + hb_eol()
+            cString := SubStr(cString, 1, Len(cString) - 2 - nEolLen) + hb_eol()
+            cString += Space(nIndent) + "}" + hb_eol()
          ENDIF
       ELSE
-         cString += Space( nIndent ) + "<" + xVar:className() + " Object>" + hb_eol()
-         cString += Space( nIndent ) + " | " + hb_eol()
-         cString += Space( nIndent ) + " +- PRIVATE/HIDDEN:" + hb_eol()
-         cString += DShowProperties( xVar, HB_OO_CLSTP_HIDDEN, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel )
-         cString += Space( nIndent ) + " +- PROTECTED:" + hb_eol()
-         cString += DShowProperties( xVar, HB_OO_CLSTP_PROTECTED, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel )
-         cString += Space( nIndent ) + " +- EXPORTED/VISIBLE/PUBLIC:" + hb_eol()
-         cString += DShowProperties( xVar, HB_OO_CLSTP_EXPORTED, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel )
+         cString += Space(nIndent) + "<" + xVar:className() + " Object>" + hb_eol()
+         cString += Space(nIndent) + " | " + hb_eol()
+         cString += Space(nIndent) + " +- PRIVATE/HIDDEN:" + hb_eol()
+         cString += DShowProperties(xVar, HB_OO_CLSTP_HIDDEN, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel)
+         cString += Space(nIndent) + " +- PROTECTED:" + hb_eol()
+         cString += DShowProperties(xVar, HB_OO_CLSTP_PROTECTED, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel)
+         cString += Space(nIndent) + " +- EXPORTED/VISIBLE/PUBLIC:" + hb_eol()
+         cString += DShowProperties(xVar, HB_OO_CLSTP_EXPORTED, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel)
 #ifdef __XHARBOUR__
-         cString += Space( nIndent ) + " +- PUBLISHED:" + hb_eol()
-         cString += DShowProperties( xVar, HB_OO_CLSTP_PUBLISHED, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel )
+         cString += Space(nIndent) + " +- PUBLISHED:" + hb_eol()
+         cString += DShowProperties(xVar, HB_OO_CLSTP_PUBLISHED, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel)
 #endif
-         cString += Space( nIndent ) + " +----------->" + hb_eol()
+         cString += Space(nIndent) + " +----------->" + hb_eol()
       ENDIF
       EXIT
 
    CASE "A"
       IF nRecursionLevel == 1
-         cString += Space( nIndent ) + "Type='A' -> { Array of " + hb_ntos( Len( xVar ) ) + " Items }" + hb_eol()
+         cString += Space(nIndent) + "Type='A' -> { Array of " + hb_ntos(Len(xVar)) + " Items }" + hb_eol()
       ENDIF
       IF nMaxRecursionLevel > 0 .AND. nRecursionLevel > nMaxRecursionLevel
-         cString += AsString( xVar )
+         cString += AsString(xVar)
       ELSE
-         cString += DShowArray( xVar, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel )
+         cString += DShowArray(xVar, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel)
       ENDIF
       EXIT
 
    CASE "H"
       IF nRecursionLevel == 1
-         cString += Space( nIndent ) + "Type='H' -> { Hash of " + hb_ntos( Len( xVar ) ) + " Items }" + hb_eol()
+         cString += Space(nIndent) + "Type='H' -> { Hash of " + hb_ntos(Len(xVar)) + " Items }" + hb_eol()
       ENDIF
       IF nMaxRecursionLevel > 0 .AND. nRecursionLevel > nMaxRecursionLevel
-         cString += AsString( xVar )
+         cString += AsString(xVar)
       ELSE
-         cString += DShowHash( xVar, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel )
+         cString += DShowHash(xVar, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel)
       ENDIF
       EXIT
 
    OTHERWISE
-      cString += Space( nIndent ) + AsString( xVar ) + hb_eol()
+      cString += Space(nIndent) + AsString(xVar) + hb_eol()
    ENDSWITCH
 
    RETURN cString
 
-STATIC FUNCTION DShowProperties( oVar, nScope, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel )
+STATIC FUNCTION DShowProperties(oVar, nScope, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel)
 
    LOCAL xProp, aProps
    LOCAL aMethods, aMth
    LOCAL cString := ""
 
-   __defaultNIL( @nIndent, 0 )
+   __defaultNIL(@nIndent, 0)
 
-   IF HB_ISOBJECT( oVar )
+   IF HB_ISOBJECT(oVar)
 #if 0
-      lOldScope := __SetClassScope( .F. )
+      lOldScope := __SetClassScope(.F.)
 #endif
-      aMethods  := __objGetMsgFullList( oVar, .F., HB_MSGLISTALL, nScope )
-      aProps    := __objGetValueFullList( oVar, NIL, nScope )
+      aMethods  := __objGetMsgFullList(oVar, .F., HB_MSGLISTALL, nScope)
+      aProps    := __objGetValueFullList(oVar, NIL, nScope)
 #if 0
-      __SetClassScope( lOldScope )
+      __SetClassScope(lOldScope)
 #endif
 
-      IF Len( aProps ) > 0
-         cString += Space( nIndent ) + " |  +- >> Begin Data    ------" + hb_eol()
+      IF Len(aProps) > 0
+         cString += Space(nIndent) + " |  +- >> Begin Data    ------" + hb_eol()
          FOR EACH xProp IN aProps
-            cString += Space( nIndent ) + " |  +- " + PadR( xProp[ HB_OO_DATA_SYMBOL ], 20 ) + " [" + DecodeType( xProp[ HB_OO_DATA_TYPE ] ) +  "] [" + DecodeScope( xProp[ HB_OO_DATA_SCOPE ] ) + "] " + ValType( xProp[ HB_OO_DATA_VALUE ] ) + " => " + AsString( xProp[ HB_OO_DATA_VALUE ] ) + hb_eol()
-            IF lRecursive .AND. ValType( xProp[ HB_OO_DATA_VALUE ] ) $ "AO"
-               cString += __HB_DumpVar( xProp[ HB_OO_DATA_VALUE ], , lRecursive, nIndent + 3, nRecursionLevel + 1, nMaxRecursionLevel ) + hb_eol()
+            cString += Space(nIndent) + " |  +- " + PadR(xProp[HB_OO_DATA_SYMBOL], 20) + " [" + DecodeType(xProp[HB_OO_DATA_TYPE]) +  "] [" + DecodeScope(xProp[HB_OO_DATA_SCOPE]) + "] " + ValType(xProp[HB_OO_DATA_VALUE]) + " => " + AsString(xProp[HB_OO_DATA_VALUE]) + hb_eol()
+            IF lRecursive .AND. ValType(xProp[HB_OO_DATA_VALUE]) $ "AO"
+               cString += __HB_DumpVar(xProp[HB_OO_DATA_VALUE], , lRecursive, nIndent + 3, nRecursionLevel + 1, nMaxRecursionLevel) + hb_eol()
             ENDIF
          NEXT
-         cString += Space( nIndent ) + " |  +- >> End   Data    ------" + hb_eol()
-         cString += Space( nIndent ) + " |   " + hb_eol()
+         cString += Space(nIndent) + " |  +- >> End   Data    ------" + hb_eol()
+         cString += Space(nIndent) + " |   " + hb_eol()
       ENDIF
-      IF Len( aMethods ) > 0
-         cString += Space( nIndent ) + " |  +- >> Begin Methods ------" + hb_eol()
+      IF Len(aMethods) > 0
+         cString += Space(nIndent) + " |  +- >> Begin Methods ------" + hb_eol()
          FOR EACH aMth IN aMethods
-            cString += Space( nIndent ) + " |  +- " + PadR( aMth[ HB_OO_DATA_SYMBOL ], 20 ) + " [" + DecodeType( aMth[ HB_OO_DATA_TYPE ] ) + "]" + " [" + DecodeScope( aMth[ HB_OO_DATA_SCOPE ] ) +  "] " + hb_eol()
+            cString += Space(nIndent) + " |  +- " + PadR(aMth[HB_OO_DATA_SYMBOL], 20) + " [" + DecodeType(aMth[HB_OO_DATA_TYPE]) + "]" + " [" + DecodeScope(aMth[HB_OO_DATA_SCOPE]) +  "] " + hb_eol()
          NEXT
-         cString += Space( nIndent ) + " |  +- >> End   Methods ------" + hb_eol()
-         cString += Space( nIndent ) + " |     " + hb_eol()
+         cString += Space(nIndent) + " |  +- >> End   Methods ------" + hb_eol()
+         cString += Space(nIndent) + " |     " + hb_eol()
       ENDIF
    ENDIF
-   IF Empty( cString )
-      cString := Space( nIndent ) + " | " + hb_eol()
+   IF Empty(cString)
+      cString := Space(nIndent) + " | " + hb_eol()
    ENDIF
 
    RETURN cString
 
-STATIC FUNCTION DShowArray( aVar, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel )
+STATIC FUNCTION DShowArray(aVar, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel)
 
    LOCAL xVal, nChar, nEolLen
    LOCAL cString := ""
 
-   __defaultNIL( @nIndent, 0 )
+   __defaultNIL(@nIndent, 0)
 
-   // TraceLog( "DShowArray: aVar, lRecursive", aVar, lRecursive )
+   // TraceLog("DShowArray: aVar, lRecursive", aVar, lRecursive)
 
-   IF HB_ISARRAY( aVar )
-      nEolLen := Len( hb_eol() )
-      nChar := Len( hb_ntos( Len( aVar ) ) )  // return number of chars to display that value
-      // i.e. if Len( aVar ) == 99, then nChar := 2
-      cString += Space( nIndent ) + "{" + hb_eol()
+   IF HB_ISARRAY(aVar)
+      nEolLen := Len(hb_eol())
+      nChar := Len(hb_ntos(Len(aVar)))  // return number of chars to display that value
+      // i.e. if Len(aVar) == 99, then nChar := 2
+      cString += Space(nIndent) + "{" + hb_eol()
       FOR EACH xVal IN aVar
-         cString += Space( nIndent ) + " [" + LTrim( StrZero( xVal:__EnumIndex(), nChar ) ) + "] => " + AsString( xVal ) + ", " + hb_eol()
-         IF lRecursive .AND. ValType( xVal ) $ "AOH"
-            cString := SubStr( cString, 1, Len( cString ) - 2 - nEolLen ) + hb_eol()
-            cString += __HB_DumpVar( xVal, , lRecursive, nIndent + 3, nRecursionLevel + 1, nMaxRecursionLevel )
-            cString := SubStr( cString, 1, Len( cString ) - nEolLen ) + ", " + hb_eol()
+         cString += Space(nIndent) + " [" + LTrim(StrZero(xVal:__EnumIndex(), nChar)) + "] => " + AsString(xVal) + ", " + hb_eol()
+         IF lRecursive .AND. ValType(xVal) $ "AOH"
+            cString := SubStr(cString, 1, Len(cString) - 2 - nEolLen) + hb_eol()
+            cString += __HB_DumpVar(xVal, , lRecursive, nIndent + 3, nRecursionLevel + 1, nMaxRecursionLevel)
+            cString := SubStr(cString, 1, Len(cString) - nEolLen) + ", " + hb_eol()
          ENDIF
       NEXT
-      IF Len( aVar ) > 0
-         cString := SubStr( cString, 1, Len( cString ) - 2 - nEolLen ) + hb_eol()
+      IF Len(aVar) > 0
+         cString := SubStr(cString, 1, Len(cString) - 2 - nEolLen) + hb_eol()
       ENDIF
-      cString += Space( nIndent ) + "}" + hb_eol()
+      cString += Space(nIndent) + "}" + hb_eol()
    ENDIF
 
    RETURN cString
 
-STATIC FUNCTION DShowHash( hVar, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel )
+STATIC FUNCTION DShowHash(hVar, lRecursive, nIndent, nRecursionLevel, nMaxRecursionLevel)
 
    LOCAL xVal
    LOCAL nEolLen
    LOCAL cString := ""
 
-   __defaultNIL( @nIndent, 0 )
+   __defaultNIL(@nIndent, 0)
 
-   // TraceLog( "DShowHash: hVar, ValType( hVar ), lRecursive", hVar, ValType( hVar ), ValToPrg( hVar ), lRecursive )
+   // TraceLog("DShowHash: hVar, ValType(hVar), lRecursive", hVar, ValType(hVar), ValToPrg(hVar), lRecursive)
 
-   IF HB_ISHASH( hVar )
-      nEolLen := Len( hb_eol() )
-      cString += Space( nIndent ) + "{" + hb_eol()
+   IF HB_ISHASH(hVar)
+      nEolLen := Len(hb_eol())
+      cString += Space(nIndent) + "{" + hb_eol()
       FOR EACH xVal IN hVar
-         cString += Space( nIndent ) + " [" + LTrim( AsString( xVal:__enumKey() ) ) + "] => " + AsString( xVal ) + ", " + hb_eol()
-         IF lRecursive .AND. ValType( xVal ) $ "AOH"
-            cString := SubStr( cString, 1, Len( cString ) - 2 - nEolLen ) + hb_eol()
-            cString += __HB_DumpVar( xVal, , lRecursive, nIndent + 3, nRecursionLevel + 1, nMaxRecursionLevel )
-            cString := SubStr( cString, 1, Len( cString ) - nEolLen ) + ", " + hb_eol()
+         cString += Space(nIndent) + " [" + LTrim(AsString(xVal:__enumKey())) + "] => " + AsString(xVal) + ", " + hb_eol()
+         IF lRecursive .AND. ValType(xVal) $ "AOH"
+            cString := SubStr(cString, 1, Len(cString) - 2 - nEolLen) + hb_eol()
+            cString += __HB_DumpVar(xVal, , lRecursive, nIndent + 3, nRecursionLevel + 1, nMaxRecursionLevel)
+            cString := SubStr(cString, 1, Len(cString) - nEolLen) + ", " + hb_eol()
          ENDIF
       NEXT
-      IF Len( hVar ) > 0
-         cString := SubStr( cString, 1, Len( cString ) - 2 - nEolLen ) + hb_eol()
+      IF Len(hVar) > 0
+         cString := SubStr(cString, 1, Len(cString) - 2 - nEolLen) + hb_eol()
       ENDIF
-      cString += Space( nIndent ) + "}" + hb_eol()
+      cString += Space(nIndent) + "}" + hb_eol()
    ENDIF
 
    RETURN cString
 
-STATIC FUNCTION DecodeScope( nScope AS NUMERIC )
+STATIC FUNCTION DecodeScope(nScope AS NUMERIC)
 
    LOCAL cString := ""
 
-   IF hb_bitAnd( nScope, HB_OO_CLSTP_EXPORTED  ) != 0
+   IF hb_bitAnd(nScope, HB_OO_CLSTP_EXPORTED) != 0
       cString += "Ex,"
    ENDIF
 #ifdef __XHARBOUR__
-   IF hb_bitAnd( nScope, HB_OO_CLSTP_PUBLISHED ) != 0
+   IF hb_bitAnd(nScope, HB_OO_CLSTP_PUBLISHED) != 0
       cString += "Pu,"
    ENDIF
 #endif
-   IF hb_bitAnd( nScope, HB_OO_CLSTP_PROTECTED ) != 0
+   IF hb_bitAnd(nScope, HB_OO_CLSTP_PROTECTED) != 0
       cString += "Pr,"
    ENDIF
-   IF hb_bitAnd( nScope, HB_OO_CLSTP_HIDDEN    ) != 0
+   IF hb_bitAnd(nScope, HB_OO_CLSTP_HIDDEN) != 0
       cString += "Hi,"
    ENDIF
-   IF hb_bitAnd( nScope, HB_OO_CLSTP_CTOR      ) != 0
+   IF hb_bitAnd(nScope, HB_OO_CLSTP_CTOR) != 0
       cString += "Ct,"
    ENDIF
-   IF hb_bitAnd( nScope, HB_OO_CLSTP_READONLY  ) != 0
+   IF hb_bitAnd(nScope, HB_OO_CLSTP_READONLY) != 0
       cString += "Ro,"
    ENDIF
-   IF hb_bitAnd( nScope, HB_OO_CLSTP_SHARED    ) != 0
+   IF hb_bitAnd(nScope, HB_OO_CLSTP_SHARED) != 0
       cString += "Sh,"
    ENDIF
-   IF hb_bitAnd( nScope, HB_OO_CLSTP_CLASS     ) != 0
+   IF hb_bitAnd(nScope, HB_OO_CLSTP_CLASS) != 0
       cString += "Cl,"
    ENDIF
-   IF hb_bitAnd( nScope, HB_OO_CLSTP_SUPER     ) != 0
+   IF hb_bitAnd(nScope, HB_OO_CLSTP_SUPER) != 0
       cString += "Su,"
    ENDIF
 
-   IF Right( cString, 1 ) == ","
-      cString := SubStr( cString, 1, Len( cString ) - 1 )
+   IF Right(cString, 1) == ","
+      cString := SubStr(cString, 1, Len(cString) - 1)
    ENDIF
 
-   RETURN PadR( cString, 18 )
+   RETURN PadR(cString, 18)
 
-STATIC FUNCTION DecodeType( nType AS NUMERIC )
+STATIC FUNCTION DecodeType(nType AS NUMERIC)
 
    LOCAL cString := ""
 
@@ -333,10 +332,10 @@ STATIC FUNCTION DecodeType( nType AS NUMERIC )
       cString += "Perform"
    ENDCASE
 
-   RETURN PadR( cString, 7 )
+   RETURN PadR(cString, 7)
 
-STATIC FUNCTION asString( x )
-   RETURN iif( HB_ISSTRING( x ), '"' + x + '"', hb_CStr( x ) )
+STATIC FUNCTION asString(x)
+   RETURN iif(HB_ISSTRING(x), '"' + x + '"', hb_CStr(x))
 
 #include "error.ch"
 
@@ -346,35 +345,35 @@ STATIC FUNCTION asString( x )
  * return all informations about classes, included type and scope
 */
 
-STATIC FUNCTION __objGetMsgFullList( oObject, lData, nRange, nScope, nNoScope )
+STATIC FUNCTION __objGetMsgFullList(oObject, lData, nRange, nScope, nNoScope)
 
    LOCAL aMessages
    LOCAL aReturn
    LOCAL nFirstProperty, aMsg
 
-   IF ! HB_ISOBJECT( oObject )
-      __errRT_BASE( EG_ARG, 3101, NIL, ProcName() )
+   IF !HB_ISOBJECT(oObject)
+      __errRT_BASE(EG_ARG, 3101, NIL, ProcName())
    ENDIF
 
-   hb_default( @lData, .T. )
-   hb_default( @nNoScope, 0 )
+   hb_default(@lData, .T.)
+   hb_default(@nNoScope, 0)
 
    // nRange is already defaulted in ClassFullSel in classes.c
 
-   aMessages := ASort( oObject:ClassSel( nRange, nScope, .T. ), , , {| x, y | x[ HB_OO_DATA_SYMBOL ] < y[ HB_OO_DATA_SYMBOL ] } )
+   aMessages := ASort(oObject:ClassSel(nRange, nScope, .T.), , , {|x, y|x[HB_OO_DATA_SYMBOL] < y[HB_OO_DATA_SYMBOL]})
    aReturn   := {}
 
-   nFirstProperty := AScan( aMessages, {| aElement | Left( aElement[ HB_OO_DATA_SYMBOL ], 1 ) == "_" } )
+   nFirstProperty := AScan(aMessages, {|aElement|Left(aElement[HB_OO_DATA_SYMBOL], 1) == "_"})
 
    FOR EACH aMsg IN aMessages
 
-      IF Left( aMsg[ HB_OO_DATA_SYMBOL ], 1 ) == "_"
+      IF Left(aMsg[HB_OO_DATA_SYMBOL], 1) == "_"
          LOOP
       ENDIF
 
-      IF ( AScan( aMessages, {| aElement | aElement[ HB_OO_DATA_SYMBOL ] == "_" + aMsg[ HB_OO_DATA_SYMBOL ] }, nFirstProperty ) != 0 ) == lData
-         IF nNoScope == 0 .OR. hb_bitAnd( aMsg[ HB_OO_DATA_SCOPE ], nNoScope ) == 0
-            AAdd( aReturn, aMsg )
+      IF (AScan(aMessages, {|aElement|aElement[HB_OO_DATA_SYMBOL] == "_" + aMsg[HB_OO_DATA_SYMBOL]}, nFirstProperty) != 0) == lData
+         IF nNoScope == 0 .OR. hb_bitAnd(aMsg[HB_OO_DATA_SCOPE], nNoScope) == 0
+            AAdd(aReturn, aMsg)
          ENDIF
       ENDIF
    NEXT
@@ -387,24 +386,24 @@ STATIC FUNCTION __objGetMsgFullList( oObject, lData, nRange, nScope, nNoScope )
  * return all values from classes, included type and scope
 */
 
-STATIC FUNCTION __objGetValueFullList( oObject, aExcept, nScope, nNoScope )
+STATIC FUNCTION __objGetValueFullList(oObject, aExcept, nScope, nNoScope)
 
    LOCAL aVars
    LOCAL aReturn
    LOCAL aVar
 
-   IF ! HB_ISOBJECT( oObject )
-      __errRT_BASE( EG_ARG, 3101, NIL, ProcName( 0 ) )
+   IF !HB_ISOBJECT(oObject)
+      __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ENDIF
 
-   hb_default( @aExcept, {} )
+   hb_default(@aExcept, {})
 
-   aVars   := __objGetMsgFullList( oObject, .T., HB_MSGLISTALL, nScope, nNoScope )
+   aVars   := __objGetMsgFullList(oObject, .T., HB_MSGLISTALL, nScope, nNoScope)
    aReturn := {}
    FOR EACH aVar IN aVars
-      IF hb_AScan( aExcept, aVar[ HB_OO_DATA_SYMBOL ], , , .T. ) == 0
-         // TraceLog( "__objGetValueFullList():  aVar[HB_OO_DATA_SYMBOL]",  aVar[ HB_OO_DATA_SYMBOL ] )
-         AAdd( aReturn, { aVar[ HB_OO_DATA_SYMBOL ], __SendRawMsg( oObject, aVar[ HB_OO_DATA_SYMBOL ] ), aVar[ HB_OO_DATA_TYPE ], aVar[ HB_OO_DATA_SCOPE ] } )
+      IF hb_AScan(aExcept, aVar[HB_OO_DATA_SYMBOL], , , .T.) == 0
+         // TraceLog("__objGetValueFullList():  aVar[HB_OO_DATA_SYMBOL]",  aVar[HB_OO_DATA_SYMBOL])
+         AAdd(aReturn, {aVar[HB_OO_DATA_SYMBOL], __SendRawMsg(oObject, aVar[HB_OO_DATA_SYMBOL]), aVar[HB_OO_DATA_TYPE], aVar[HB_OO_DATA_SCOPE]})
       ENDIF
    NEXT
 

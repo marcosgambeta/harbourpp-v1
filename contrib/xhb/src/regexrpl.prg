@@ -1,5 +1,5 @@
 /*
- * hb_regexReplace( cRegex, cString, cReplace, lCaseSensitive, lNewLine, nMaxMatches, nGetMatch ) --> cReturn
+ * hb_regexReplace(cRegex, cString, cReplace, lCaseSensitive, lNewLine, nMaxMatches, nGetMatch) --> cReturn
  *
  * Copyright 2006 Francesco Saverio Giudice <info/at/fsgiudice.com>
  *
@@ -48,27 +48,26 @@
 #define MATCH_START   2
 #define MATCH_END     3
 
-FUNCTION hb_regexReplace( cRegex, cString, cReplace, lCaseSensitive, lNewLine, nMaxMatches, nGetMatch )
+FUNCTION hb_regexReplace(cRegex, cString, cReplace, lCaseSensitive, lNewLine, nMaxMatches, nGetMatch)
 
    LOCAL aMatches, aMatch
    LOCAL cReturn
    LOCAL nOffSet := 0
    LOCAL cSearch, nStart, nLenSearch, nLenReplace
 
-   aMatches := hb_regexAll( cRegEx, cString, lCaseSensitive, lNewLine, nMaxMatches, nGetMatch, .F. )
+   aMatches := hb_regexAll(cRegEx, cString, lCaseSensitive, lNewLine, nMaxMatches, nGetMatch, .F.)
    cReturn := cString
 
-   IF ! Empty( aMatches )
+   IF !Empty(aMatches)
       FOR EACH aMatch IN aMatches
-         IF HB_ISARRAY( aMatch ) .AND. Len( aMatch ) >= 1 .AND. ;
-            HB_ISARRAY( aMatch[ 1 ] )
-            aMatch := aMatch[ 1 ]
-            IF Len( aMatch ) == 3 // if regex matches I must have an array of 3 elements
-               cSearch := aMatch[ MATCH_STRING ]
-               nStart  := aMatch[ MATCH_START ]
-               nLenSearch  := Len( cSearch )
-               nLenReplace := Len( cReplace )
-               cReturn := Stuff( cReturn, nStart - nOffSet, nLenSearch, cReplace )
+         IF HB_ISARRAY(aMatch) .AND. Len(aMatch) >= 1 .AND. HB_ISARRAY(aMatch[1])
+            aMatch := aMatch[1]
+            IF Len(aMatch) == 3 // if regex matches I must have an array of 3 elements
+               cSearch := aMatch[MATCH_STRING]
+               nStart  := aMatch[MATCH_START]
+               nLenSearch  := Len(cSearch)
+               nLenReplace := Len(cReplace)
+               cReturn := Stuff(cReturn, nStart - nOffSet, nLenSearch, cReplace)
                nOffSet += nLenSearch - nLenReplace
             ENDIF
          ENDIF

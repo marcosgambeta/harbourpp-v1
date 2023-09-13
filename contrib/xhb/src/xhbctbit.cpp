@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 
-static HB_ULONG hb_hextonum( const char * cHex )
+static HB_ULONG hb_hextonum(const char * cHex)
 {
    HB_ULONG ulNum = 0;
    char     c;
@@ -73,7 +73,7 @@ static HB_ULONG hb_hextonum( const char * cHex )
    return ulNum;
 }
 
-static HB_LONG __getparam( int iParam )
+static HB_LONG __getparam(int iParam)
 {
    const char * szHexNum = hb_parc(iParam);
 
@@ -84,29 +84,29 @@ static HB_LONG __getparam( int iParam )
    }   
 }
 
-static HB_LONG __numand( HB_LONG lNum1, HB_LONG lNum2 )
+static HB_LONG __numand(HB_LONG lNum1, HB_LONG lNum2)
 {
    return lNum1 & lNum2;
 }
 
-static HB_LONG __numor( HB_LONG lNum1, HB_LONG lNum2 )
+static HB_LONG __numor(HB_LONG lNum1, HB_LONG lNum2)
 {
    return lNum1 | lNum2;
 }
 
-static HB_LONG __numxor( HB_LONG lNum1, HB_LONG lNum2 )
+static HB_LONG __numxor(HB_LONG lNum1, HB_LONG lNum2)
 {
    return lNum1 ^ lNum2;
 }
 
-static HB_LONG __numnot( HB_LONG lNum1, HB_LONG lNum2 )
+static HB_LONG __numnot(HB_LONG lNum1, HB_LONG lNum2)
 {
    HB_SYMBOL_UNUSED(lNum2);
 
    return ~lNum1;
 }
 
-static void sizeofbits( HB_USHORT * pusBytes, HB_LONG * plPattern, HB_LONG * plTestMSB )
+static void sizeofbits(HB_USHORT * pusBytes, HB_LONG * plPattern, HB_LONG * plTestMSB)
 {
    *pusBytes = ( HB_ISNIL(1) || hb_parni(1) == 0 ) ? sizeof(int) * 8 : static_cast<HB_USHORT>(hb_parni(1));
 
@@ -119,7 +119,7 @@ static void sizeofbits( HB_USHORT * pusBytes, HB_LONG * plPattern, HB_LONG * plT
    *plTestMSB = (*pusBytes == 0) ? 0 : (1 << (*pusBytes - 1));
 }
 
-static HB_LONG __numfun( int iPCount, HB_LONG ( * operation )( HB_LONG wNum1, HB_LONG wNum2 ), HB_BOOL * pbOk )
+static HB_LONG __numfun(int iPCount, HB_LONG (* operation)(HB_LONG wNum1, HB_LONG wNum2), HB_BOOL * pbOk)
 {
    if( (HB_ISNUM(1) || HB_ISNIL(1)) && (HB_ISNUM(2) || HB_ISCHAR(2)) ) {
       HB_LONG   lNum1 = __getparam(2);
@@ -127,7 +127,7 @@ static HB_LONG __numfun( int iPCount, HB_LONG ( * operation )( HB_LONG wNum1, HB
       HB_LONG   lPattern, lTestMSB;
       HB_USHORT usBytes;
 
-      sizeofbits( &usBytes, &lPattern, &lTestMSB );
+      sizeofbits(&usBytes, &lPattern, &lTestMSB);
 
       if( iPCount == 2 ) {
          lNumOp = ( *operation )( lNum1, 0 );  /* If unary operation: NOT */
@@ -136,7 +136,7 @@ static HB_LONG __numfun( int iPCount, HB_LONG ( * operation )( HB_LONG wNum1, HB
 
          for( iFor = 3; iFor <= iPCount; iFor++ ) {
             if( HB_ISNUM(iFor) || HB_ISCHAR(iFor) ) {
-               lNumOp = ( *operation )( lNum1, __getparam( iFor ) );  /* Call to operation: AND, OR, XOR */
+               lNumOp = ( *operation )( lNum1, __getparam(iFor) );  /* Call to operation: AND, OR, XOR */
             } else {
                *pbOk = HB_FALSE;
                return 0;
@@ -157,7 +157,7 @@ static HB_LONG __numfun( int iPCount, HB_LONG ( * operation )( HB_LONG wNum1, HB
 HB_FUNC( NUMANDX )
 {
    HB_BOOL bOk;
-   HB_LONG lNumOp = __numfun( hb_pcount(), __numand, &bOk );
+   HB_LONG lNumOp = __numfun(hb_pcount(), __numand, &bOk);
 
    if( bOk ) {
       hb_retnl(lNumOp);
@@ -167,7 +167,7 @@ HB_FUNC( NUMANDX )
 HB_FUNC( NUMORX )
 {
    HB_BOOL bOk;
-   HB_LONG lNumOp = __numfun( hb_pcount(), __numor, &bOk );
+   HB_LONG lNumOp = __numfun(hb_pcount(), __numor, &bOk);
 
    if( bOk ) {
       hb_retnl(lNumOp);
@@ -203,7 +203,7 @@ HB_FUNC( NUMROLX )
       lNum1  = __getparam(2);                /* Number to do ROL */
       usNum2 = static_cast<HB_USHORT>(__getparam(3));  /* Iterations */
 
-      sizeofbits( &usBytes, &lPattern, &lTestRol );
+      sizeofbits(&usBytes, &lPattern, &lTestRol);
 
       usNum2 %= usBytes;   /* Set usNum2 < usBytes */
 
@@ -230,7 +230,7 @@ HB_FUNC( NUMMIRRX )
 
       lNum1 = __getparam(2);
 
-      sizeofbits( &usBytes, &lPattern, &lTestMSB );
+      sizeofbits(&usBytes, &lPattern, &lTestMSB);
 
       lNumBak = lNum1 & lPattern;
 
