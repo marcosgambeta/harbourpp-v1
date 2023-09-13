@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbcairo.h"
+#include "hbcairo.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
@@ -53,8 +53,7 @@ static HB_GARBAGE_FUNC(hb_cairo_pattern_destructor)
 {
    cairo_pattern_t ** ppPattern = static_cast<cairo_pattern_t**>(Cargo);
 
-   if( *ppPattern )
-   {
+   if( *ppPattern ) {
       cairo_pattern_destroy(*ppPattern);
       *ppPattern = nullptr;
    }
@@ -85,8 +84,7 @@ cairo_pattern_t * hb_cairo_pattern_param(int iParam)
 {
    cairo_pattern_t ** ppPattern = static_cast<cairo_pattern_t**>(hb_parptrGC(&s_gcPatternFuncs, iParam));
 
-   if( ppPattern && *ppPattern )
-   {
+   if( ppPattern && *ppPattern ) {
       return *ppPattern;
    }
 
@@ -103,13 +101,10 @@ HB_FUNC( CAIRO_PATTERN_DESTROY )
 {
    cairo_pattern_t ** ppPattern = static_cast<cairo_pattern_t**>(hb_parptrGC(&s_gcPatternFuncs, 1));
 
-   if( ppPattern && *ppPattern )
-   {
+   if( ppPattern && *ppPattern ) {
       cairo_pattern_destroy(*ppPattern);
       *ppPattern = nullptr;
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -118,8 +113,7 @@ HB_FUNC( CAIRO_PATTERN_ADD_COLOR_STOP_RGB )
 {
    cairo_pattern_t * pPattern = hb_cairo_pattern_param(1);
 
-   if( pPattern )
-   {
+   if( pPattern != nullptr ) {
       cairo_pattern_add_color_stop_rgb(pPattern, hb_parnd(2), hb_parnd(3), hb_parnd(4), hb_parnd(5));
    }
 }
@@ -128,8 +122,7 @@ HB_FUNC( CAIRO_PATTERN_ADD_COLOR_STOP_RGBA )
 {
    cairo_pattern_t * pPattern = hb_cairo_pattern_param(1);
 
-   if( pPattern )
-   {
+   if( pPattern != nullptr ) {
       cairo_pattern_add_color_stop_rgba(pPattern, hb_parnd(2), hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6));
    }
 }
@@ -139,15 +132,11 @@ HB_FUNC( CAIRO_PATTERN_GET_COLOR_STOP_COUNT )
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 4, 0)
    cairo_pattern_t * pPattern = hb_cairo_pattern_param(1);
 
-   if( pPattern )
-   {
+   if( pPattern != nullptr ) {
       int iCount;
-
       hb_retni(cairo_pattern_get_color_stop_count(pPattern, &iCount));
       hb_storni(iCount, 2);
-   }
-   else
-   {
+   } else {
       hb_retni(-1);
    }
 #else
@@ -161,24 +150,19 @@ HB_FUNC( CAIRO_PATTERN_GET_COLOR_STOP_RGBA )
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 4, 0)
    cairo_pattern_t * pPattern = hb_cairo_pattern_param(1);
 
-   if( pPattern )
-   {
+   if( pPattern != nullptr ) {
       double dOffset;
       double dRed;
       double dGreen;
       double dBlue;
       double dAlpha;
-
       hb_retni(cairo_pattern_get_color_stop_rgba(pPattern, hb_parni(2), &dOffset, &dRed, &dGreen, &dBlue, &dAlpha));
-
       hb_stornd(dOffset, 3);
       hb_stornd(dRed, 4);
       hb_stornd(dGreen, 5);
       hb_stornd(dBlue, 6);
       hb_stornd(dAlpha, 7);
-   }
-   else
-   {
+   } else {
       hb_retni(-1);
    }
 #else
@@ -202,22 +186,17 @@ HB_FUNC( CAIRO_PATTERN_GET_RGBA )
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 4, 0)
    cairo_pattern_t * pPattern = hb_cairo_pattern_param(1);
 
-   if( pPattern )
-   {
+   if( pPattern != nullptr ) {
       double dRed;
       double dGreen;
       double dBlue;
       double dAlpha;
-
       hb_retni(cairo_pattern_get_rgba(pPattern, &dRed, &dGreen, &dBlue, &dAlpha));
-
       hb_stornd(dRed, 2);
       hb_stornd(dGreen, 3);
       hb_stornd(dBlue, 4);
       hb_stornd(dAlpha, 5);
-   }
-   else
-   {
+   } else {
       hb_retni(-1);
    }
 #else
@@ -236,16 +215,11 @@ HB_FUNC( CAIRO_PATTERN_GET_SURFACE )
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 4, 0)
    cairo_pattern_t * pPattern = hb_cairo_pattern_param(1);
 
-   if( pPattern )
-   {
+   if( pPattern != nullptr ) {
       cairo_surface_t * pSurface;
-
       hb_retni(cairo_pattern_get_surface(pPattern, &pSurface));
-
       hb_cairoSurfaceStor(pSurface, 2);
-   }
-   else
-   {
+   } else {
       hb_retni(-1);
    }
 #else
@@ -264,22 +238,17 @@ HB_FUNC( CAIRO_PATTERN_GET_LINEAR_POINTS )
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 4, 0)
    cairo_pattern_t * pPattern = hb_cairo_pattern_param(1);
 
-   if( pPattern )
-   {
+   if( pPattern != nullptr ) {
       double dX0;
       double dY0;
       double dX1;
       double dY1;
-
       hb_retni(cairo_pattern_get_linear_points(pPattern, &dX0, &dY0, &dX1, &dY1));
-
       hb_stornd(dX0, 2);
       hb_stornd(dY0, 3);
       hb_stornd(dX1, 4);
       hb_stornd(dY1, 5);
-   }
-   else
-   {
+   } else {
       hb_retni(-1);
    }
 #else
@@ -298,26 +267,21 @@ HB_FUNC( CAIRO_PATTERN_GET_RADIAL_CIRCLES )
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 4, 0)
    cairo_pattern_t * pPattern = hb_cairo_pattern_param(1);
 
-   if( pPattern )
-   {
+   if( pPattern != nullptr ) {
       double dX0;
       double dY0;
       double dR0;
       double dX1;
       double dY1;
       double dR1;
-
       hb_retni(cairo_pattern_get_radial_circles(pPattern, &dX0, &dY0, &dR0, &dX1, &dY1, &dR1));
-
       hb_stornd(dX0, 2);
       hb_stornd(dY0, 3);
       hb_stornd(dR0, 4);
       hb_stornd(dX1, 5);
       hb_stornd(dY1, 6);
       hb_stornd(dR1, 7);
-   }
-   else
-   {
+   } else {
       hb_retni(-1);
    }
 #else
@@ -330,12 +294,9 @@ HB_FUNC( CAIRO_PATTERN_STATUS )
 {
    cairo_pattern_t * pPattern = hb_cairo_pattern_param(1);
 
-   if( pPattern )
-   {
+   if( pPattern != nullptr ) {
       hb_retni(cairo_pattern_status(pPattern));
-   }
-   else
-   {
+   } else {
       hb_retni(-1);
    }
 }

@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbcairo.h"
+#include "hbcairo.hpp"
 
 HB_FUNC( CAIRO_STATUS_TO_STRING )
 {

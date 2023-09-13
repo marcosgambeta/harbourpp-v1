@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbcairo.h"
+#include "hbcairo.hpp"
 
 HB_FUNC( CAIRO_IMAGE_SURFACE_CREATE_FROM_PNG )
 {
@@ -59,8 +59,7 @@ HB_FUNC( CAIRO_SURFACE_WRITE_TO_PNG )
 {
 #ifdef CAIRO_HAS_PNG_FUNCTIONS
    cairo_surface_t * pSurface = hb_cairo_surface_param(1);
-   if( pSurface )
-   {
+   if( pSurface != nullptr ) {
       hb_retni(cairo_surface_write_to_png(pSurface, hb_parc(2)));
    }
 #else

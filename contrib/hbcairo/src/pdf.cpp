@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbcairo.h"
+#include "hbcairo.hpp"
 #include "cairo-pdf.h"
 
 HB_FUNC( CAIRO_PDF_SURFACE_CREATE )
@@ -60,8 +60,7 @@ HB_FUNC( CAIRO_PDF_SURFACE_SET_SIZE )
 {
 #ifdef CAIRO_HAS_PDF_SURFACE
    cairo_surface_t * pSurface = hb_cairo_surface_param(1);
-   if( pSurface )
-   {
+   if( pSurface != nullptr ) {
       cairo_pdf_surface_set_size(pSurface, hb_parnd(2), hb_parnd(3));
    }
 #else
