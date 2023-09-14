@@ -62,45 +62,50 @@
 
 PROCEDURE Main()
 
-   LOCAL cFileSource := ":memory:", cFileDest := "backup.db", cSQLTEXT
-   LOCAL pDbSource, pDbDest, pBackup, cb, nDbFlags
+   LOCAL cFileSource := ":memory:"
+   LOCAL cFileDest := "backup.db"
+   LOCAL cSQLTEXT
+   LOCAL pDbSource
+   LOCAL pDbDest
+   LOCAL pBackup
+   LOCAL cb
+   LOCAL nDbFlags
 
    IF sqlite3_libversion_number() < 3006011
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       RETURN
    ENDIF
 
-   IF Empty( pDbSource := PrepareDB( cFileSource ) )
-      ErrorLevel( 1 )
+   IF Empty(pDbSource := PrepareDB(cFileSource))
+      ErrorLevel(1)
       RETURN
    ENDIF
 
-   nDbFlags := SQLITE_OPEN_CREATE + SQLITE_OPEN_READWRITE + ;
-      SQLITE_OPEN_EXCLUSIVE
-   pDbDest := sqlite3_open_v2( cFileDest, nDbFlags )
+   nDbFlags := SQLITE_OPEN_CREATE + SQLITE_OPEN_READWRITE + SQLITE_OPEN_EXCLUSIVE
+   pDbDest := sqlite3_open_v2(cFileDest, nDbFlags)
 
-   IF Empty( pDbDest )
+   IF Empty(pDbDest)
       ? "Can't open database : ", cFileDest
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       RETURN
    ENDIF
 
-   sqlite3_trace( pDbDest, .T., "backup.log" )
+   sqlite3_trace(pDbDest, .T., "backup.log")
 
-   pBackup := sqlite3_backup_init( pDbDest, "main", pDbSource, "main" )
-   IF Empty( pBackup )
+   pBackup := sqlite3_backup_init(pDbDest, "main", pDbSource, "main")
+   IF Empty(pBackup)
       ? "Can't initialize backup"
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       RETURN
    ELSE
       ? "Start backup.."
    ENDIF
 
-   IF sqlite3_backup_step( pBackup, -1 ) == SQLITE_DONE
+   IF sqlite3_backup_step(pBackup, -1) == SQLITE_DONE
       ? "Backup successful."
    ENDIF
 
-   sqlite3_backup_finish( pBackup ) /* !!! */
+   sqlite3_backup_finish(pBackup) /* !!! */
 
    pDbSource := NIL /* close :memory: database */
 
@@ -108,65 +113,67 @@ PROCEDURE Main()
    ?
    ? cSQLTEXT := "SELECT * FROM main.person WHERE age BETWEEN 20 AND 40"
    cb := @CallBack() // "CallBack"
-   ? cErrorMsg( sqlite3_exec( pDbDest, cSQLTEXT, cb ) )
+   ? cErrorMsg(sqlite3_exec(pDbDest, cSQLTEXT, cb))
 
    pDbDest := NIL // close database
 
-   sqlite3_sleep( 3000 )
+   sqlite3_sleep(3000)
 
    RETURN
 
 /**
 */
 
-FUNCTION CallBack( nColCount, aValue, aColName )
+FUNCTION CallBack(nColCount, aValue, aColName)
 
    LOCAL nI
-   LOCAL oldColor := SetColor( "G/N" )
+   LOCAL oldColor := SetColor("G/N")
 
    FOR nI := 1 TO nColCount
-      ? PadR( aColName[ nI ], 5 ), " == ", aValue[ nI ]
+      ? PadR(aColName[nI], 5), " == ", aValue[nI]
    NEXT
 
-   SetColor( oldColor )
+   SetColor(oldColor)
 
    RETURN 0
 
 /**
 */
 
-STATIC FUNCTION cErrorMsg( nError, lShortMsg )
+STATIC FUNCTION cErrorMsg(nError, lShortMsg)
 
-   hb_default( @lShortMsg, .T. )
+   hb_default(@lShortMsg, .T.)
 
-   RETURN iif( lShortMsg, hb_sqlite3_errstr_short( nError ), sqlite3_errstr( nError ) )
+   RETURN iif(lShortMsg, hb_sqlite3_errstr_short(nError), sqlite3_errstr(nError))
 
 /**
 */
 
-STATIC FUNCTION PrepareDB( cFile )
+STATIC FUNCTION PrepareDB(cFile)
 
    LOCAL cSQLTEXT
-   LOCAL pDb, pStmt
+   LOCAL pDb
+   LOCAL pStmt
    LOCAL hPerson := { ;
       "Bob" => 52, ;
       "Fred" => 32, ;
       "Sasha" => 17, ;
       "Andy" => 20, ;
       "Ivet" => 28 ;
-      }, enum
+      }
+   LOCAL enum
 
-   pDb := sqlite3_open( cFile, .T. )
-   IF Empty( pDb )
+   pDb := sqlite3_open(cFile, .T.)
+   IF Empty(pDb)
       ? "Can't open/create database : ", cFile
 
       RETURN NIL
    ENDIF
 
-   sqlite3_trace( pDb, .T., "backup.log" )
+   sqlite3_trace(pDb, .T., "backup.log")
 
    cSQLTEXT := "CREATE TABLE person( name TEXT, age INTEGER )"
-   IF sqlite3_exec( pDb, cSQLTEXT ) != SQLITE_OK
+   IF sqlite3_exec(pDb, cSQLTEXT) != SQLITE_OK
       ? "Can't create table : person"
       pDb := NIL // close database
 
@@ -174,8 +181,8 @@ STATIC FUNCTION PrepareDB( cFile )
    ENDIF
 
    cSQLTEXT := "INSERT INTO person( name, age ) VALUES( :name, :age )"
-   pStmt := sqlite3_prepare( pDb, cSQLTEXT )
-   IF Empty( pStmt )
+   pStmt := sqlite3_prepare(pDb, cSQLTEXT)
+   IF Empty(pStmt)
       ? "Can't prepare statement : ", cSQLTEXT
       pDb := NIL
 
@@ -183,13 +190,13 @@ STATIC FUNCTION PrepareDB( cFile )
    ENDIF
 
    FOR EACH enum IN hPerson
-      sqlite3_reset( pStmt )
-      sqlite3_bind_text( pStmt, 1, enum:__enumKey() )
-      sqlite3_bind_int( pStmt, 2, enum:__enumValue() )
-      sqlite3_step( pStmt )
+      sqlite3_reset(pStmt)
+      sqlite3_bind_text(pStmt, 1, enum:__enumKey())
+      sqlite3_bind_int(pStmt, 2, enum:__enumValue())
+      sqlite3_step(pStmt)
    NEXT
 
-   sqlite3_clear_bindings( pStmt )
-   sqlite3_finalize( pStmt )
+   sqlite3_clear_bindings(pStmt)
+   sqlite3_finalize(pStmt)
 
    RETURN pDb

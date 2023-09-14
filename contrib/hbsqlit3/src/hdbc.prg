@@ -61,7 +61,7 @@ CREATE CLASS hdbcSQLTConnection
 
    EXPORTED:
 
-   METHOD new( cDBFile, lCreateIfNotExist )
+   METHOD new(cDBFile, lCreateIfNotExist)
    METHOD close()
 
    METHOD startTransaction()
@@ -72,19 +72,19 @@ CREATE CLASS hdbcSQLTConnection
    METHOD getMetadata()
 
    METHOD createStatement()
-   METHOD prepareStatement( cSql )
+   METHOD prepareStatement(cSql)
 
 ENDCLASS
 
-METHOD new( cDBFile, lCreateIfNotExist ) CLASS hdbcSQLTConnection
+METHOD new(cDBFile, lCreateIfNotExist) CLASS hdbcSQLTConnection
 
-   ::pDB := sqlite3_open( cDbFile, lCreateIfNotExist )
+   ::pDB := sqlite3_open(cDbFile, lCreateIfNotExist)
 
-   IF sqlite3_errcode( ::pDb ) != SQLITE_OK
-      raiseError( sqlite3_errmsg( ::pDb ) )
+   IF sqlite3_errcode(::pDb) != SQLITE_OK
+      raiseError(sqlite3_errmsg(::pDb))
    ENDIF
 
-   RETURN Self
+   RETURN SELF
 
 METHOD close() CLASS hdbcSQLTConnection
 
@@ -94,39 +94,39 @@ METHOD close() CLASS hdbcSQLTConnection
 
 METHOD startTransaction() CLASS hdbcSQLTConnection
 
-   IF sqlite3_exec( ::pDB, "BEGIN TRANSACTION" ) != SQLITE_OK
-      raiseError( sqlite3_errmsg( ::pDb ) )
+   IF sqlite3_exec(::pDB, "BEGIN TRANSACTION") != SQLITE_OK
+      raiseError(sqlite3_errmsg(::pDb))
    ENDIF
 
    RETURN NIL
 
 METHOD commit() CLASS hdbcSQLTConnection
 
-   IF sqlite3_exec( ::pDB, "COMMIT" ) != SQLITE_OK
-      raiseError( sqlite3_errmsg( ::pDb ) )
+   IF sqlite3_exec(::pDB, "COMMIT") != SQLITE_OK
+      raiseError(sqlite3_errmsg(::pDb))
    ENDIF
 
    RETURN NIL
 
 METHOD rollback() CLASS hdbcSQLTConnection
 
-   IF sqlite3_exec( ::pDB, "ROLLBACK" ) != SQLITE_OK
-      raiseError( sqlite3_errmsg( ::pDb ) )
+   IF sqlite3_exec(::pDB, "ROLLBACK") != SQLITE_OK
+      raiseError(sqlite3_errmsg(::pDb))
    ENDIF
 
    RETURN NIL
 
 METHOD createStatement() CLASS hdbcSQLTConnection
 
-   RETURN hdbcSQLTStatement():new( ::pDB )
+   RETURN hdbcSQLTStatement():new(::pDB)
 
-METHOD prepareStatement( cSql ) CLASS hdbcSQLTConnection
+METHOD prepareStatement(cSql) CLASS hdbcSQLTConnection
 
-   RETURN hdbcSQLTPreparedStatement():new( ::pDB, cSql )
+   RETURN hdbcSQLTPreparedStatement():new(::pDB, cSql)
 
 METHOD getMetadata() CLASS hdbcSQLTConnection
 
-   RETURN hdbcSQLTDatabaseMetaData():new( ::pDB )
+   RETURN hdbcSQLTDatabaseMetaData():new(::pDB)
 
 CREATE CLASS hdbcSQLTStatement
 
@@ -140,49 +140,49 @@ CREATE CLASS hdbcSQLTStatement
 
    VAR pRes
 
-   METHOD new( pDB, cSql )
-   METHOD executeQuery( cSql )
-   METHOD executeUpdate( cSql )
+   METHOD new(pDB, cSql)
+   METHOD executeQuery(cSql)
+   METHOD executeUpdate(cSql)
    METHOD close()
 
 ENDCLASS
 
-METHOD new( pDB, cSql ) CLASS hdbcSQLTStatement
+METHOD new(pDB, cSql) CLASS hdbcSQLTStatement
 
    ::pDB := pDB
    ::cSql := cSql
 
-   RETURN self
+   RETURN SELF
 
-METHOD executeQuery( cSql ) CLASS hdbcSQLTStatement
+METHOD executeQuery(cSql) CLASS hdbcSQLTStatement
 
-   ::pRes := sqlite3_prepare( ::pDB, cSql )
+   ::pRes := sqlite3_prepare(::pDB, cSql)
 
-   IF ! HB_ISPOINTER( ::pRes )
-      raiseError( sqlite3_errmsg( ::pDb ) )
+   IF !HB_ISPOINTER(::pRes)
+      raiseError(sqlite3_errmsg(::pDb))
    ELSE
-      ::oRs := hdbcSQLTResultSet():new( ::pDB, Self )
+      ::oRs := hdbcSQLTResultSet():new(::pDB, SELF)
    ENDIF
 
    return ::oRs
 
-METHOD executeUpdate( cSql ) CLASS hdbcSQLTStatement
+METHOD executeUpdate(cSql) CLASS hdbcSQLTStatement
 
    LOCAL nRows
 
-   IF sqlite3_exec( ::pDB, cSql ) != SQLITE_OK
-      raiseError( sqlite3_errmsg( ::pDb ) )
+   IF sqlite3_exec(::pDB, cSql) != SQLITE_OK
+      raiseError(sqlite3_errmsg(::pDb))
    ELSE
-      nRows := sqlite3_changes( ::pDB )
+      nRows := sqlite3_changes(::pDB)
    ENDIF
 
    RETURN nRows
 
 METHOD close() CLASS hdbcSQLTStatement
 
-   IF ! HB_ISNIL( ::pRes )
+   IF !HB_ISNIL(::pRes)
 
-      sqlite3_finalize( ::pRes )
+      sqlite3_finalize(::pRes)
 
       ::pRes := NIL
 
@@ -202,33 +202,33 @@ CREATE CLASS hdbcSQLTPreparedStatement
 
    VAR lPrepared INIT .F.
    VAR nParams INIT 0
-   VAR aParams INIT Array( 128 )
+   VAR aParams INIT Array(128)
 
    EXPORTED:
 
-   METHOD new( pDB, cSql )
+   METHOD new(pDB, cSql)
    METHOD executeQuery()
    METHOD executeUpdate()
    METHOD close()
 
-   METHOD setString( nParam, xValue )
-   METHOD SetNumber( n, x ) INLINE ::setString( n, Str( x ) )
-   METHOD SetDate( n, x ) INLINE ::setString( n, DToS( x ) )
-   METHOD SetBoolean( n, x ) INLINE ::setString( n, iif( x, "t", "f" ) )
+   METHOD setString(nParam, xValue)
+   METHOD SetNumber(n, x) INLINE ::setString(n, Str(x))
+   METHOD SetDate(n, x) INLINE ::setString(n, DToS(x))
+   METHOD SetBoolean(n, x) INLINE ::setString(n, iif(x, "t", "f"))
 
 ENDCLASS
 
-METHOD new( pDB, cSql ) CLASS hdbcSQLTPreparedStatement
+METHOD new(pDB, cSql) CLASS hdbcSQLTPreparedStatement
 
    ::pDB := pDB
    ::cSql := cSql
 
-   RETURN self
+   RETURN SELF
 
 METHOD executeQuery() CLASS hdbcSQLTPreparedStatement
 
-   IF ! ::lPrepared
-      ::aParams := ASize( ::aParams, ::nParams )
+   IF !::lPrepared
+      ::aParams := ASize(::aParams, ::nParams)
       /* TODO */
    ENDIF
 
@@ -240,8 +240,8 @@ METHOD executeQuery() CLASS hdbcSQLTPreparedStatement
 
 METHOD executeUpdate() CLASS hdbcSQLTPreparedStatement
 
-   IF ! ::lPrepared
-      ::aParams := ASize( ::aParams, ::nParams )
+   IF !::lPrepared
+      ::aParams := ASize(::aParams, ::nParams)
       /* TODO */
    ENDIF
 
@@ -251,11 +251,11 @@ METHOD executeUpdate() CLASS hdbcSQLTPreparedStatement
 
    RETURN _TODO_
 
-METHOD setString( nParam, xValue ) CLASS hdbcSQLTPreparedStatement
+METHOD setString(nParam, xValue) CLASS hdbcSQLTPreparedStatement
 
-   ::aParams[ nParam ] := xValue
+   ::aParams[nParam] := xValue
 
-   IF ! ::lPrepared
+   IF !::lPrepared
       IF nParam > ::nParams
          ::nParams := nParam
       ENDIF
@@ -265,9 +265,9 @@ METHOD setString( nParam, xValue ) CLASS hdbcSQLTPreparedStatement
 
 METHOD close() CLASS hdbcSQLTPreparedStatement
 
-   IF ! Empty( ::pRes )
+   IF !Empty(::pRes)
 
-      sqlite3_finalize( ::pRes )
+      sqlite3_finalize(::pRes)
 
       ::pRes := NIL
 
@@ -299,35 +299,35 @@ CREATE CLASS hdbcSQLTResultSet
 
    VAR nRows INIT 0
 
-   METHOD new( pDB, pStmt )
+   METHOD new(pDB, pStmt)
    METHOD close()
 
    METHOD beforeFirst()
-   METHOD first() INLINE ::absolute( 1 )
-   METHOD previous() INLINE ::relative( - 1 )
-   METHOD next() INLINE ( sqlite3_step( ::pRes ) == SQLITE_ROW ) // ::relative( 1 )
-   METHOD last() INLINE ::absolute( ::nRows )
+   METHOD first() INLINE ::absolute(1)
+   METHOD previous() INLINE ::relative(-1)
+   METHOD next() INLINE (sqlite3_step(::pRes) == SQLITE_ROW) // ::relative(1)
+   METHOD last() INLINE ::absolute(::nRows)
    METHOD afterLast()
 
-   METHOD relative( nMove )
-   METHOD absolute( nMove )
+   METHOD relative(nMove)
+   METHOD absolute(nMove)
 
    METHOD isBeforeFirst() INLINE ::lBeforeFirst
-   METHOD isFirst() INLINE ( ::nRow == 1 )
-   METHOD isLast() INLINE ( ::nRow == ::nRows )
+   METHOD isFirst() INLINE (::nRow == 1)
+   METHOD isLast() INLINE (::nRow == ::nRows)
    METHOD isAfterLast() INLINE ::lAfterLast
    METHOD getRow() INLINE ::nRow
-   METHOD findColumn( cField )
+   METHOD findColumn(cField)
 
-   METHOD getString( nField )
-   METHOD getNumber( nField ) INLINE Val( ::getString( nField ) )
-   METHOD getDate( nField ) INLINE hb_SToD( StrTran( ::getString( nField ), "-" ) )
-   METHOD getBoolean( nField ) INLINE ( ::getString( nField ) == "t" )
+   METHOD getString(nField)
+   METHOD getNumber(nField) INLINE Val(::getString(nField))
+   METHOD getDate(nField) INLINE hb_SToD(StrTran(::getString(nField), "-"))
+   METHOD getBoolean(nField) INLINE (::getString(nField) == "t")
 
    METHOD getMetaData()
 
-   METHOD setTableName( cTable ) INLINE ::cTableName := cTable
-   METHOD setPrimaryKeys( aKeys ) INLINE ::aPrimaryKeys := aKeys
+   METHOD setTableName(cTable) INLINE ::cTableName := cTable
+   METHOD setPrimaryKeys(aKeys) INLINE ::aPrimaryKeys := aKeys
 
    METHOD moveToInsertRow()
    METHOD moveToCurrentRow()
@@ -335,15 +335,15 @@ CREATE CLASS hdbcSQLTResultSet
    METHOD updateRow()
    METHOD deleteRow()
 
-   METHOD updateBuffer( nField, xValue, cType )
-   METHOD updateString( nField, cValue ) INLINE ::updateBuffer( nField, cValue, "C" )
-   METHOD updateNumber( nField, nValue ) INLINE ::updateBuffer( nField, hb_ntos( nValue ), "N" )
-   METHOD updateDate( nField, dValue ) INLINE ::updateBuffer( nField, DToS( dValue ), "D" )
-   METHOD updateBoolean( nField, lValue ) INLINE ::updateBuffer( nField, iif( lValue, "t", "f" ), "L" )
+   METHOD updateBuffer(nField, xValue, cType)
+   METHOD updateString(nField, cValue) INLINE ::updateBuffer(nField, cValue, "C")
+   METHOD updateNumber(nField, nValue) INLINE ::updateBuffer(nField, hb_ntos(nValue), "N")
+   METHOD updateDate(nField, dValue) INLINE ::updateBuffer(nField, DToS(dValue), "D")
+   METHOD updateBoolean(nField, lValue) INLINE ::updateBuffer(nField, iif(lValue, "t", "f"), "L")
 
 ENDCLASS
 
-METHOD new( pDB, pStmt ) CLASS hdbcSQLTResultSet
+METHOD new(pDB, pStmt) CLASS hdbcSQLTResultSet
 
    ::pDB := pDB
    ::pStmt := pStmt
@@ -357,7 +357,7 @@ METHOD new( pDB, pStmt ) CLASS hdbcSQLTResultSet
       ::lAfterLast := .F.
    ENDIF
 
-   RETURN Self
+   RETURN SELF
 
 METHOD close() CLASS hdbcSQLTResultSet
 
@@ -379,7 +379,7 @@ METHOD afterLast() CLASS hdbcSQLTResultSet
 
    RETURN NIL
 
-METHOD relative( nMove ) CLASS hdbcSQLTResultSet
+METHOD relative(nMove) CLASS hdbcSQLTResultSet
 
    LOCAL nRowNew := ::nRow + nMove
 
@@ -405,7 +405,7 @@ METHOD relative( nMove ) CLASS hdbcSQLTResultSet
 
    RETURN .F.
 
-METHOD absolute( nMove ) CLASS hdbcSQLTResultSet
+METHOD absolute(nMove) CLASS hdbcSQLTResultSet
 
    IF nMove > 0
       IF nMove <= ::nRows
@@ -425,40 +425,40 @@ METHOD absolute( nMove ) CLASS hdbcSQLTResultSet
 
    RETURN .F.
 
-METHOD findColumn( cField ) CLASS hdbcSQLTResultSet
+METHOD findColumn(cField) CLASS hdbcSQLTResultSet
 
    LOCAL nCount
    LOCAL nMax
 
-   IF ! HB_ISHASH( ::hColNames )
-      ::hColNames := { => }
-      nMax := sqlite3_column_count( ::pRes )
+   IF !HB_ISHASH(::hColNames)
+      ::hColNames := {=>}
+      nMax := sqlite3_column_count(::pRes)
       FOR nCount := 1 TO nMax
-         ::hColNames[ Lower( sqlite3_column_name( ::pRes, nCount ) ) ] := nCount
+         ::hColNames[Lower(sqlite3_column_name(::pRes, nCount))] := nCount
       NEXT
    ENDIF
 
-   nCount := ::hColNames[ cField ]
+   nCount := ::hColNames[cField]
 
    RETURN nCount
 
-METHOD getString( nField ) CLASS hdbcSQLTResultSet
+METHOD getString(nField) CLASS hdbcSQLTResultSet
 
-   IF HB_ISSTRING( nField )
-      nField := ::findColumn( nField )
+   IF HB_ISSTRING(nField)
+      nField := ::findColumn(nField)
    ENDIF
 
-   RETURN sqlite3_column_text( ::pRes, nField )
+   RETURN sqlite3_column_text(::pRes, nField)
 
 METHOD getMetaData() CLASS hdbcSQLTResultSet
 
-   RETURN hdbcSQLTResultSetMetaData():new( ::pRes )
+   RETURN hdbcSQLTResultSetMetaData():new(::pRes)
 
 METHOD moveToInsertRow() CLASS hdbcSQLTResultSet
 
    ::nCurrentRow := ::nRow
 
-   ::aBuffer := Array( _TODO_ )
+   ::aBuffer := Array(_TODO_)
 
    RETURN NIL
 
@@ -468,17 +468,17 @@ METHOD moveToCurrentRow() CLASS hdbcSQLTResultSet
 
    RETURN NIL
 
-METHOD updateBuffer( nField, xValue, cType ) CLASS hdbcSQLTResultSet
+METHOD updateBuffer(nField, xValue, cType) CLASS hdbcSQLTResultSet
 
-   IF HB_ISSTRING( nField )
-      nField := ::findColumn( nField )
+   IF HB_ISSTRING(nField)
+      nField := ::findColumn(nField)
    ENDIF
 
    if ::aBuffer == NIL
-      ::aBuffer := Array( _TODO_ )
+      ::aBuffer := Array(_TODO_)
    ENDIF
 
-   ::aBuffer[ nField ] := { xValue, cType }
+   ::aBuffer[nField] := {xValue, cType}
 
    RETURN NIL
 
@@ -508,30 +508,30 @@ CREATE CLASS hdbcSQLTResultSetMetaData
 
    EXPORTED:
 
-   METHOD new( pRes )
+   METHOD new(pRes)
    METHOD getColumnCount()
-   METHOD getColumnName( nColumn )
-   METHOD getColumnDisplaySize( nColumn )
+   METHOD getColumnName(nColumn)
+   METHOD getColumnDisplaySize(nColumn)
 
 ENDCLASS
 
-METHOD new( pRes ) CLASS hdbcSQLTResultSetMetaData
+METHOD new(pRes) CLASS hdbcSQLTResultSetMetaData
 
    ::pRes := pRes
 
-   RETURN Self
+   RETURN SELF
 
 METHOD getColumnCount() CLASS hdbcSQLTResultSetMetaData
 
-   RETURN sqlite3_column_count( ::pRes )
+   RETURN sqlite3_column_count(::pRes)
 
-METHOD getColumnName( nColumn ) CLASS hdbcSQLTResultSetMetaData
+METHOD getColumnName(nColumn) CLASS hdbcSQLTResultSetMetaData
 
-   RETURN sqlite3_column_name( ::pRes, nColumn )
+   RETURN sqlite3_column_name(::pRes, nColumn)
 
-METHOD getColumnDisplaySize( nColumn ) CLASS hdbcSQLTResultSetMetaData
+METHOD getColumnDisplaySize(nColumn) CLASS hdbcSQLTResultSetMetaData
 
-   HB_SYMBOL_UNUSED( nColumn )
+   HB_SYMBOL_UNUSED(nColumn)
 
    RETURN _TODO_
 
@@ -543,17 +543,17 @@ CREATE CLASS hdbcSQLTDatabaseMetaData
 
    EXPORTED:
 
-   METHOD new( pDB )
+   METHOD new(pDB)
    METHOD getTables()
    METHOD getPrimaryKeys()
 
 ENDCLASS
 
-METHOD new( pDB ) CLASS hdbcSQLTDatabaseMetaData
+METHOD new(pDB) CLASS hdbcSQLTDatabaseMetaData
 
    ::pDB := pDB
 
-   RETURN Self
+   RETURN SELF
 
 METHOD getTables() CLASS hdbcSQLTDatabaseMetaData
 
@@ -567,7 +567,7 @@ METHOD getPrimaryKeys() CLASS hdbcSQLTDatabaseMetaData
 
    RETURN _TODO_
 
-STATIC PROCEDURE raiseError( cErrMsg )
+STATIC PROCEDURE raiseError(cErrMsg)
 
    LOCAL oErr
 
@@ -578,6 +578,6 @@ STATIC PROCEDURE raiseError( cErrMsg )
    oErr:SubCode := 1000
    oErr:Description := cErrMsg
 
-   Eval( ErrorBlock(), oErr )
+   Eval(ErrorBlock(), oErr)
 
    RETURN

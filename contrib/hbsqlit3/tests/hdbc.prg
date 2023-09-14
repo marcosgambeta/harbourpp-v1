@@ -4,18 +4,23 @@
 
 PROCEDURE Main()
 
-   LOCAL oConn, oMeta, oStmt, cSql, n, oRs
+   LOCAL oConn
+   LOCAL oMeta
+   LOCAL oStmt
+   LOCAL cSql
+   LOCAL n
+   LOCAL oRs
 
-   oConn := hdbcSQLTConnection():New( "test.db", .T. )
+   oConn := hdbcSQLTConnection():New("test.db", .T.)
 
    oMeta := oConn:getMetaData()
 
-   ? hb_ValToExp( oMeta:getTables() )
+   ? hb_ValToExp(oMeta:getTables())
 
-   IF AScan( oMeta:getTables(), {| a | "test" == a[ 3 ] } ) > 0
+   IF AScan(oMeta:getTables(), {|a|"test" == a[3]}) > 0
       ? "test table already exist let's drop it"
       oStmt := oConn:createStatement()
-      oStmt:executeUpdate( "DROP TABLE test" )
+      oStmt:executeUpdate("DROP TABLE test")
       oStmt:Close()
       ? "dropped"
    ENDIF
@@ -34,7 +39,7 @@ PROCEDURE Main()
    cSql += "     Description text ) "
 
    oStmt := oConn:createStatement()
-   oStmt:executeUpdate( cSql )
+   oStmt:executeUpdate(cSql)
    oStmt:Close()
    ? "created"
 
@@ -46,10 +51,10 @@ PROCEDURE Main()
    ? Time()
    FOR n := 1 TO _NUMROWS_
       cSql := "INSERT INTO test(code, dept, name, sales, tax, salary, budget, Discount, Creation, Description) "
-      cSql += "VALUES( " + Str( n ) + ", 2, 'TEST', '" + iif( n % 2 != 0, "y", "n" ) + "', 5, 3000, 1500.2, 7.5, '12-22-2003', 'Short Description ')"
+      cSql += "VALUES( " + Str(n) + ", 2, 'TEST', '" + iif(n % 2 != 0, "y", "n") + "', 5, 3000, 1500.2, 7.5, '12-22-2003', 'Short Description ')"
 
       oStmt := oConn:createStatement()
-      oStmt:executeUpdate( cSql )
+      oStmt:executeUpdate(cSql)
 
       oStmt:close()
    NEXT
@@ -59,19 +64,19 @@ PROCEDURE Main()
    ? "Creating prepared statement"
 
    ? Time()
-   oStmt := oConn:prepareStatement( "INSERT INTO test(code, dept, name, sales, tax, salary, budget, Discount, Creation, Description) VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10 )" )
+   oStmt := oConn:prepareStatement("INSERT INTO test(code, dept, name, sales, tax, salary, budget, Discount, Creation, Description) VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10 )")
 
    FOR n := _NUMROWS_ + 1 TO _NUMROWS_ * 2
-      oStmt:SetNumber( 1, n )
-      oStmt:SetNumber( 2, 2 )
-      oStmt:SetString( 3, "TEST" )
-      oStmt:SetBoolean( 4, iif( n % 2 != 0, .T., .F. ) )
-      oStmt:SetNumber( 5, 5 )
-      oStmt:SetNumber( 6, 3000 )
-      oStmt:SetNumber( 7, 1500 )
-      oStmt:SetNumber( 8, 7.5 )
-      oStmt:SetDate( 9, Date() )
-      oStmt:SetString( 10, "Short Description" )
+      oStmt:SetNumber(1, n)
+      oStmt:SetNumber(2, 2)
+      oStmt:SetString(3, "TEST")
+      oStmt:SetBoolean(4, iif(n % 2 != 0, .T., .F.))
+      oStmt:SetNumber(5, 5)
+      oStmt:SetNumber(6, 3000)
+      oStmt:SetNumber(7, 1500)
+      oStmt:SetNumber(8, 7.5)
+      oStmt:SetDate(9, Date())
+      oStmt:SetString(10, "Short Description")
       oStmt:executeUpdate()
    NEXT
 
@@ -85,7 +90,7 @@ PROCEDURE Main()
 
    ? "Excecuting query"
 
-   oRs := oStmt:executeQuery( "SELECT code, name, description, sales FROM test" )
+   oRs := oStmt:executeQuery("SELECT code, name, description, sales FROM test")
 
    ? "Showing metadata"
 
@@ -111,7 +116,7 @@ PROCEDURE Main()
    ? "ascending"
 
    DO WHILE oRs:next()
-      ? oRs:getrow(), oRs:getString( "code" ), oRs:getString( "name" ), oRs:getString( "description" ), oRs:getBoolean( "sales" )
+      ? oRs:getrow(), oRs:getString("code"), oRs:getString("name"), oRs:getString("description"), oRs:getBoolean("sales")
    ENDDO
 
    ? "isafterlast", oRs:isAfterLast()
@@ -121,7 +126,7 @@ PROCEDURE Main()
    ? "descending"
 
    DO WHILE oRs:previous()
-      ? oRs:getrow(), oRs:getString( "code" ), oRs:getString( "name" ), oRs:getString( "description" ), oRs:getBoolean( "sales" )
+      ? oRs:getrow(), oRs:getString("code"), oRs:getString("name"), oRs:getString("description"), oRs:getBoolean("sales")
    ENDDO
 
    ? "isbeforefirst", oRs:isBeforeFirst()
@@ -130,26 +135,26 @@ PROCEDURE Main()
 
    oStmt:Close()
 
-   ? hb_ValToExp( oConn:getMetaData():getPrimaryKeys( "", "public", "test" ) )
+   ? hb_ValToExp(oConn:getMetaData():getPrimaryKeys("", "public", "test"))
 
    oStmt := oConn:createStatement()
 
    ? "Excecuting query"
 
-   oRs := oStmt:executeQuery( "SELECT * FROM test" )
+   oRs := oStmt:executeQuery("SELECT * FROM test")
 
-   oRs:setTableName( "TEST" )
-   oRs:setPrimaryKeys( { { "code", "N" } } )
+   oRs:setTableName("TEST")
+   oRs:setPrimaryKeys({{"code", "N"}})
 
    oRs:moveToInsertRow()
-   oRs:updateNumber( 1, 11 )
-   oRs:updateString( "description", "Inserted" )
+   oRs:updateNumber(1, 11)
+   oRs:updateString("description", "Inserted")
    oRs:insertRow()
 
    oRs:first()
-   oRs:updateNumber( 8, 99.99 )
-   oRs:updateDate( 9, Date() )
-   oRs:updateString( "description", "Updated" )
+   oRs:updateNumber(8, 99.99)
+   oRs:updateDate(9, Date())
+   oRs:updateString("description", "Updated")
    oRs:updateRow()
 
    oRs:next()
@@ -159,10 +164,10 @@ PROCEDURE Main()
 
    oRs:Close()
 
-   oRs := oStmt:executeQuery( "SELECT * FROM test order by code" )
+   oRs := oStmt:executeQuery("SELECT * FROM test order by code")
 
    DO WHILE oRs:next()
-      ? oRs:getrow(), oRs:getString( "code" ), oRs:getString( "name" ), oRs:getString( "description" ), oRs:getBoolean( "sales" ), oRs:getString( "Creation" )
+      ? oRs:getrow(), oRs:getString("code"), oRs:getString("name"), oRs:getString("description"), oRs:getBoolean("sales"), oRs:getString("Creation")
    ENDDO
 
    oRs:close()
@@ -171,18 +176,18 @@ PROCEDURE Main()
 #if 0
    ? "Creating query prepared statement"
 
-   oStmt := oConn:prepareStatement( "SELECT code FROM test WHERE name = $1" )
+   oStmt := oConn:prepareStatement("SELECT code FROM test WHERE name = $1")
 
-   oStmt:SetString( 1, "TEST" )
+   oStmt:SetString(1, "TEST")
    oStmt:executeQuery()
 
    ? oRs:getMetaData():getColumnCount()
-   ? oRs:getMetaData():getColumnName( 1 )
+   ? oRs:getMetaData():getColumnName(1)
    ?
 
    DO WHILE oRs:next()
       FOR n := 1 TO 1
-         ? oRs:getString( n )
+         ? oRs:getString(n)
       NEXT
    ENDDO
 

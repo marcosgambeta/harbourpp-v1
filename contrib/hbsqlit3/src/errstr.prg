@@ -47,9 +47,9 @@
 
 #include "hbsqlit3.ch"
 
-FUNCTION hb_sqlite3_errstr_short( nError )
+FUNCTION hb_sqlite3_errstr_short(nError)
 
-   IF ! HB_ISNUMERIC( nError )
+   IF !HB_ISNUMERIC(nError)
       RETURN "HB_SQLITE_INVALID"
    ENDIF
 
@@ -85,4 +85,4 @@ FUNCTION hb_sqlite3_errstr_short( nError )
    CASE SQLITE_DONE       ; RETURN "SQLITE_DONE"
    ENDSWITCH
 
-   RETURN "HB_SQLITE_UNKNOWN_" + hb_ntos( nError )
+   RETURN "HB_SQLITE_UNKNOWN_" + hb_ntos(nError)
