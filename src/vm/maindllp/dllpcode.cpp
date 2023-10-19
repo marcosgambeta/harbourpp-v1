@@ -111,7 +111,7 @@ PHB_FUNC hb_dllGetProcAddress(const char * szProcName)
 
          do {
             static const char * s_szGetProcAddr = "_dll_hb_vmProcAddress";
-            s_pProcGet = reinterpret_cast<HB_PROC_GET>(GetProcAddress(s_hModule, s_szGetProcAddr + i));
+            s_pProcGet = reinterpret_cast<HB_PROC_GET>(reinterpret_cast<void*>(GetProcAddress(s_hModule, s_szGetProcAddr + i)));
          } while( s_pProcGet == nullptr && (i -= i == 4 ? 3 : 1) >= 0 );
          if( s_pProcGet == nullptr ) {
             HB_DLL_MSG_NO_FUNC("hb_vmProcAddress");
