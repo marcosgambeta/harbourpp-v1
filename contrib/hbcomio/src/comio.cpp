@@ -72,8 +72,7 @@ static int s_fileGetValue(const char * pszName, int * piLen)
 {
    int iLen = 0, iValue = 0;
 
-   while( HB_ISDIGIT(pszName[iLen]) )
-   {
+   while( HB_ISDIGIT(pszName[iLen]) ) {
       iValue = iValue * 10 + (pszName[iLen++] - '0');
    }
 
@@ -89,119 +88,75 @@ static int s_filePortParams(const char * pszName, HB_MAXINT * pTimeout, int * pi
    *piBaud = *piParity = *piSize = *piStop = *piFlow = 0;
 
    pszName += 3;
-   if( *pszName == '$' )
-   {
+   if( *pszName == '$' ) {
       const char * pszParams = strchr(pszName, ':');
 
-      if( pszParams != nullptr && pszParams - pszName > 1 )
-      {
+      if( pszParams != nullptr && pszParams - pszName > 1 ) {
          char * pszPort = hb_strndup(pszName + 1, pszParams - pszName - 1);
 
          iPort = hb_comFindPort(pszPort, true);
          hb_xfree(pszPort);
          pszName = pszParams;
       }
-   }
-   else
-   {
-      while( HB_ISDIGIT(*pszName) )
-      {
+   } else {
+      while( HB_ISDIGIT(*pszName) ) {
          iPort = iPort * 10 + (*pszName++ - '0');
       }
    }
 
-   while( iPort > 0 && *pszName )
-   {
-      if( HB_ISDIGIT(*pszName) )
-      {
+   while( iPort > 0 && *pszName ) {
+      if( HB_ISDIGIT(*pszName) ) {
          iValue = s_fileGetValue(pszName, &iLen);
-         if( iLen == 1 )
-         {
-            if( iValue >= 1 && iValue <= 2 && *piStop == 0 )
-            {
+         if( iLen == 1 ) {
+            if( iValue >= 1 && iValue <= 2 && *piStop == 0 ) {
                *piStop = iValue;
-            }
-            else if( iValue >= 5 && iValue <= 8 && *piSize == 0 )
-            {
+            } else if( iValue >= 5 && iValue <= 8 && *piSize == 0 ) {
                *piSize = iValue;
-            }
-            else
-            {
+            } else {
                iPort = -1;
             }
-         }
-         else if( iLen == 2 && *piStop == 0 && *piSize == 0 )
-         {
-            if( pszName[0] >= '1' && pszName[0] <= '2' && pszName[1] >= '5' && pszName[1] <= '8' )
-            {
+         } else if( iLen == 2 && *piStop == 0 && *piSize == 0 ) {
+            if( pszName[0] >= '1' && pszName[0] <= '2' && pszName[1] >= '5' && pszName[1] <= '8' ) {
                *piStop = pszName[0] - '0';
                *piSize = pszName[1] - '0';
-            }
-            else if( pszName[0] >= '5' && pszName[0] <= '8' && pszName[1] >= '1' && pszName[1] <= '2' )
-            {
+            } else if( pszName[0] >= '5' && pszName[0] <= '8' && pszName[1] >= '1' && pszName[1] <= '2' ) {
                *piStop = pszName[1] - '0';
                *piSize = pszName[0] - '0';
-            }
-            else if( *piBaud )
-            {
+            } else if( *piBaud ) {
                iPort = -1;
-            }
-            else
-            {
+            } else {
                *piBaud = iValue;
             }
-         }
-         else if( *piBaud )
-         {
+         } else if( *piBaud ) {
             iPort = -1;
-         }
-         else
-         {
+         } else {
             *piBaud = iValue;
          }
          pszName += iLen;
-      }
-      else if( HB_ISALPHA(*pszName) )
-      {
-         if( hb_strnicmp(pszName, "RTS", 3) == 0 )
-         {
+      } else if( HB_ISALPHA(*pszName) ) {
+         if( hb_strnicmp(pszName, "RTS", 3) == 0 ) {
             *piFlow |= HB_COM_FLOW_IRTSCTS;
             pszName += 3;
-         }
-         else if( hb_strnicmp(pszName, "CTS", 3) == 0 )
-         {
+         } else if( hb_strnicmp(pszName, "CTS", 3) == 0 ) {
             *piFlow |= HB_COM_FLOW_ORTSCTS;
             pszName += 3;
-         }
-         else if( hb_strnicmp(pszName, "DTR", 3) == 0 )
-         {
+         } else if( hb_strnicmp(pszName, "DTR", 3) == 0 ) {
             *piFlow |= HB_COM_FLOW_IDTRDSR;
             pszName += 3;
-         }
-         else if( hb_strnicmp(pszName, "DSR", 3) == 0 )
-         {
+         } else if( hb_strnicmp(pszName, "DSR", 3) == 0 ) {
             *piFlow |= HB_COM_FLOW_ODTRDSR;
             pszName += 3;
-         }
-         else if( hb_strnicmp(pszName, "DCD", 3) == 0 )
-         {
+         } else if( hb_strnicmp(pszName, "DCD", 3) == 0 ) {
             *piFlow |= HB_COM_FLOW_DCD;
             pszName += 3;
-         }
-         else if( hb_strnicmp(pszName, "XOFF", 4) == 0 )
-         {
+         } else if( hb_strnicmp(pszName, "XOFF", 4) == 0 ) {
             *piFlow |= HB_COM_FLOW_XOFF;
             pszName += 4;
-         }
-         else if( hb_strnicmp(pszName, "XON", 3) == 0 )
-         {
+         } else if( hb_strnicmp(pszName, "XON", 3) == 0 ) {
             *piFlow |= HB_COM_FLOW_XON;
             pszName += 3;
-         }
-         else if( *piParity == 0 && !HB_ISALPHA(pszName[1]) )
-         {
-            switch( *pszName )
-            {
+         } else if( *piParity == 0 && !HB_ISALPHA(pszName[1]) ) {
+            switch( *pszName ) {
                case 'N':
                case 'n':
                case 'E':
@@ -219,36 +174,26 @@ static int s_filePortParams(const char * pszName, HB_MAXINT * pTimeout, int * pi
                   iPort = -1;
                   break;
             }
-         }
-         else
-         {
+         } else {
             iPort = -1;
          }
-      }
-      else if( *pszName == ':' || *pszName == ',' || *pszName == ' ' )
-      {
+      } else if( *pszName == ':' || *pszName == ',' || *pszName == ' ' ) {
          pszName++;
-      }
-      else
-      {
+      } else {
          iPort = -1;
       }
    }
 
-   if( *piBaud == 0 )
-   {
+   if( *piBaud == 0 ) {
       *piBaud = 9600;
    }
-   if( *piParity == 0 )
-   {
+   if( *piParity == 0 ) {
       *piParity = 'N';
    }
-   if( *piSize == 0 )
-   {
+   if( *piSize == 0 ) {
       *piSize = 8;
    }
-   if( *piStop == 0 )
-   {
+   if( *piStop == 0 ) {
       *piStop = 1;
    }
 
@@ -259,17 +204,12 @@ static HB_BOOL s_fileAccept(PHB_FILE_FUNCS pFuncs, const char * pszFileName)
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
-   if( HB_TOUPPER(pszFileName[0]) == 'C' && HB_TOUPPER(pszFileName[1]) == 'O' && HB_TOUPPER(pszFileName[2]) == 'M' )
-   {
-      if( pszFileName[3] == '$' )
-      {
+   if( HB_TOUPPER(pszFileName[0]) == 'C' && HB_TOUPPER(pszFileName[1]) == 'O' && HB_TOUPPER(pszFileName[2]) == 'M' ) {
+      if( pszFileName[3] == '$' ) {
          return strchr(pszFileName + 4, ':') != nullptr;
-      }
-      else if( pszFileName[3] >= '1' && pszFileName[3] <= '9' )
-      {
+      } else if( pszFileName[3] >= '1' && pszFileName[3] <= '9' ) {
          pszFileName += 4;
-         while( HB_ISDIGIT(*pszFileName) )
-         {
+         while( HB_ISDIGIT(*pszFileName) ) {
             ++pszFileName;
          }
          return *pszFileName == ':';
@@ -292,12 +232,9 @@ static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * pszName, const ch
 
    fRead = fWrite = true;
    iPort = s_filePortParams(pszName, &timeout, &iBaud, &iParity, &iSize, &iStop, &iFlow);
-   if( iPort > 0 )
-   {
-      if( hb_comOpen(iPort) == 0 && hb_comInit(iPort, iBaud, iParity, iSize, iStop) == 0 && hb_comFlowControl(iPort, nullptr, iFlow) == 0 )
-      {
-         switch( nExFlags & (FO_READ | FO_WRITE | FO_READWRITE) )
-         {
+   if( iPort > 0 ) {
+      if( hb_comOpen(iPort) == 0 && hb_comInit(iPort, iBaud, iParity, iSize, iStop) == 0 && hb_comFlowControl(iPort, nullptr, iFlow) == 0 ) {
+         switch( nExFlags & (FO_READ | FO_WRITE | FO_READWRITE) ) {
             case FO_READ:
                fWrite = false;
                break;
@@ -306,24 +243,18 @@ static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * pszName, const ch
                break;
          }
          pFile = s_fileNew(iPort, timeout, fRead, fWrite);
-      }
-      else
-      {
+      } else {
          errcode = hb_comGetError(iPort);
       }
-   }
-   else
-   {
+   } else {
       errcode = HB_COM_ERR_WRONGPORT;
    }
 
    hb_fsSetError(errcode);
 
-   if( pError )
-   {
+   if( pError ) {
       hb_errPutFileName(pError, pszName);
-      if( pFile == nullptr )
-      {
+      if( pFile == nullptr ) {
          hb_errPutOsCode(pError, errcode);
          hb_errPutGenCode(pError, static_cast<HB_ERRCODE>(EG_OPEN));
       }
@@ -344,26 +275,19 @@ static HB_SIZE s_fileRead(PHB_FILE pFile, void * data, HB_SIZE nSize, HB_MAXINT 
    HB_ERRCODE errcode;
    long lRead = -1;
 
-   if( pFile->fRead )
-   {
+   if( pFile->fRead ) {
       lRead = nSize > LONG_MAX ? LONG_MAX : static_cast<long>(nSize);
-      if( timeout == -1 )
-      {
+      if( timeout == -1 ) {
          timeout = pFile->timeout;
       }
       lRead = hb_comRecv(pFile->port, data, lRead, timeout);
       errcode = hb_comGetError(pFile->port);
-      if( lRead <= 0 && errcode == HB_COM_ERR_TIMEOUT )
-      {
+      if( lRead <= 0 && errcode == HB_COM_ERR_TIMEOUT ) {
          lRead = 0;
-      }
-      else if( lRead == 0 )
-      {
+      } else if( lRead == 0 ) {
          lRead = -1;
       }
-   }
-   else
-   {
+   } else {
       errcode = HB_COM_ERR_ACCESS;
    }
 
@@ -377,26 +301,19 @@ static HB_SIZE s_fileWrite(PHB_FILE pFile, const void * data, HB_SIZE nSize, HB_
    HB_ERRCODE errcode;
    long lSent = -1;
 
-   if( pFile->fWrite )
-   {
+   if( pFile->fWrite ) {
       lSent = nSize > LONG_MAX ? LONG_MAX : static_cast<long>(nSize);
-      if( timeout == -1 )
-      {
+      if( timeout == -1 ) {
          timeout = pFile->timeout;
       }
       lSent = hb_comSend(pFile->port, data, lSent, timeout);
       errcode = hb_comGetError(pFile->port);
-      if( lSent <= 0 && errcode == HB_COM_ERR_TIMEOUT )
-      {
+      if( lSent <= 0 && errcode == HB_COM_ERR_TIMEOUT ) {
          lSent = 0;
-      }
-      else if( lSent == 0 )
-      {
+      } else if( lSent == 0 ) {
          lSent = -1;
       }
-   }
-   else
-   {
+   } else {
       errcode = HB_COM_ERR_ACCESS;
    }
 
@@ -407,14 +324,11 @@ static HB_SIZE s_fileWrite(PHB_FILE pFile, const void * data, HB_SIZE nSize, HB_
 
 static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue)
 {
-   switch( iIndex )
-   {
-      case HB_VF_TIMEOUT:
-      {
+   switch( iIndex ) {
+      case HB_VF_TIMEOUT: {
          HB_MAXINT timeout = pFile->timeout;
 
-         if( HB_IS_NUMERIC(pValue) )
-         {
+         if( HB_IS_NUMERIC(pValue) ) {
             pFile->timeout = hb_itemGetNInt(pValue);
          }
          hb_itemPutNInt(pValue, timeout);
@@ -425,14 +339,11 @@ static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue)
          hb_itemPutNInt(pValue, pFile->port);
          return true;
 
-      case HB_VF_SHUTDOWN:
-      {
+      case HB_VF_SHUTDOWN: {
          int iMode = pFile->fRead ? (pFile->fWrite ? FO_READWRITE : FO_READ) : (pFile->fWrite ? FO_WRITE : -1);
 
-         if( HB_IS_NUMERIC(pValue) )
-         {
-            switch( hb_itemGetNI(pValue) )
-            {
+         if( HB_IS_NUMERIC(pValue) ) {
+            switch( hb_itemGetNI(pValue) ) {
                case FO_READ:
                   pFile->fRead = false;
                   break;
