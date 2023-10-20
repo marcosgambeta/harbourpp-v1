@@ -170,8 +170,7 @@ static PMIXKEY mixKeyNew(PHB_ITEM pItem, HB_ULONG ulRecNo, HB_BYTE bType, HB_USH
    pKey->rec = ulRecNo;
 
    switch( bType ) {
-      case 'C':
-      {
+      case 'C': {
          HB_SIZE nLen = hb_itemGetCLen(pItem);
          if( nLen > static_cast<HB_SIZE>(uiLen) ) {
             nLen = uiLen;
@@ -1369,8 +1368,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, pTag->uiLen);
          break;
 
-      case DBOI_KEYVAL:
-      {
+      case DBOI_KEYVAL: {
          PHB_ITEM pItem;
          PHB_CODEPAGE pCodepage = hb_cdpSelect( pArea->adsarea.area.cdPage );
 
@@ -1466,8 +1464,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          pOrderInfo->itmResult = hb_itemPutC(pOrderInfo->itmResult, "mix");
          break;
 
-      case DBOI_ORDERCOUNT:
-      {
+      case DBOI_ORDERCOUNT: {
          UNSIGNED16 usOrder = 0;
 
          AdsGetNumIndexes( pArea->adsarea.hTable, &usOrder );
@@ -1480,8 +1477,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          break;
       }
 
-      case DBOI_NUMBER:
-      {
+      case DBOI_NUMBER: {
          PMIXTAG    pTag2;
          UNSIGNED16 usOrder = 0;
 
@@ -1690,30 +1686,29 @@ static void hb_adsxRddInit( void * cargo )
 {
    HB_SYMBOL_UNUSED(cargo);
 
-   if( hb_rddRegister( "ADSX",    RDT_FULL ) > 1 ||
-       hb_rddRegister( "ADSNTXX", RDT_FULL ) > 1 ||
-       hb_rddRegister( "ADSCDXX", RDT_FULL ) > 1 ||
+   if( hb_rddRegister("ADSX",    RDT_FULL) > 1 ||
+       hb_rddRegister("ADSNTXX", RDT_FULL) > 1 ||
+       hb_rddRegister("ADSCDXX", RDT_FULL) > 1 ||
 #if ADS_LIB_VERSION >= 900
-       hb_rddRegister( "ADSVFPX", RDT_FULL ) > 1 ||
+       hb_rddRegister("ADSVFPX", RDT_FULL) > 1 ||
 #endif
-       hb_rddRegister( "ADSADTX", RDT_FULL ) > 1 )
-   {
+       hb_rddRegister("ADSADTX", RDT_FULL) > 1 ) {
       /* try different RDD register order */
-      hb_rddRegister( "ADS",    RDT_FULL );
-      hb_rddRegister( "ADSNTX", RDT_FULL );
-      hb_rddRegister( "ADSCDX", RDT_FULL );
+      hb_rddRegister("ADS",    RDT_FULL);
+      hb_rddRegister("ADSNTX", RDT_FULL);
+      hb_rddRegister("ADSCDX", RDT_FULL);
 #if ADS_LIB_VERSION >= 900
-      hb_rddRegister( "ADSVFP", RDT_FULL );
+      hb_rddRegister("ADSVFP", RDT_FULL);
 #endif
-      hb_rddRegister( "ADSADT", RDT_FULL );
+      hb_rddRegister("ADSADT", RDT_FULL);
 
-      if( hb_rddRegister( "ADSX",    RDT_FULL ) > 1 ||
-          hb_rddRegister( "ADSNTXX", RDT_FULL ) > 1 ||
-          hb_rddRegister( "ADSCDXX", RDT_FULL ) > 1 ||
+      if( hb_rddRegister("ADSX",    RDT_FULL) > 1 ||
+          hb_rddRegister("ADSNTXX", RDT_FULL) > 1 ||
+          hb_rddRegister("ADSCDXX", RDT_FULL) > 1 ||
 #if ADS_LIB_VERSION >= 900
-          hb_rddRegister( "ADSVFPX", RDT_FULL ) > 1 ||
+          hb_rddRegister("ADSVFPX", RDT_FULL) > 1 ||
 #endif
-          hb_rddRegister( "ADSADTX", RDT_FULL ) > 1 ) {
+          hb_rddRegister("ADSADTX", RDT_FULL) > 1 ) {
          hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
          /* not executed, only to force linking ADS RDD */
          HB_FUNC_EXEC( ADSCDX );

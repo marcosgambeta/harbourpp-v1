@@ -403,8 +403,7 @@ HB_FUNC( ADSGETSERVERTIME )
    }
    /* QUESTION: Returning NIL on error. Is this what we want? [vszakats] */
 #if HB_TR_LEVEL >= HB_TR_DEBUG
-   else
-   {
+   else {
 #if 0
       HB_TRACE( HB_TR_DEBUG, ( "AdsGetServerTime() error" ) );
 #endif
@@ -1960,8 +1959,7 @@ HB_FUNC( ADSDDGETDATABASEPROPERTY )
       /* Integer properties */
 #if ADS_LIB_VERSION >= 620
       case ADS_DD_VERSION_MAJOR:
-      case ADS_DD_VERSION_MINOR:
-      {
+      case ADS_DD_VERSION_MINOR: {
          UNSIGNED16 ulBuffer;
          UNSIGNED16 ulLength = sizeof(ulBuffer);
 
